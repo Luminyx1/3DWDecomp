@@ -5154,15 +5154,15 @@ src/al/Project/AreaObj/AreaObjMtxConnecter.cpp:
     .text   start:0x008E6930 end:0x008E6DA8
 src/al/Project/AreaObj/AreaObjUtil.cpp:
     .text   start:0x008E6DB0 end:0x008E8F88
-src/al/Project/AreaObj/AreaShape.cpp:
+src/al/Project/AreaObj/AreaShape.cpp: done
     .text   start:0x008E8F90 end:0x008E9340
 src/al/Project/AreaObj/AreaShapes.cpp:
     .text   start:0x008E9340 end:0x008EA398
-src/al/Project/AreaObj/SwitchAreaDirector.cpp:
+src/al/Project/AreaObj/SwitchAreaDirector.cpp: done
     .text   start:0x008EA3A0 end:0x008EA73C
 src/al/Project/AreaObj/SwitchKeepOnAreaGroup.cpp:
     .text   start:0x008EA740 end:0x008EAAAC
-src/al/Project/AreaObj/SwitchOnAreaGroup.cpp:
+src/al/Project/AreaObj/SwitchOnAreaGroup.cpp: done
     .text   start:0x008EAAB0 end:0x008EADE8
 src/al/Project/Audio/AudioDirector.cpp:
     .text   start:0x008EADF0 end:0x008EB228
