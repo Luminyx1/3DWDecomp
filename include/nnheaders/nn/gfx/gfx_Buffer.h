@@ -17,18 +17,35 @@ public:
 
     static const bool IsMemoryPoolRequired = true;
 
-    static size_t GetBufferAlignment(TDevice<TTarget>*, const InfoType&);
+    static size_t GetBufferAlignment(TDevice<TTarget>* pDevice, const InfoType& info) {
+        return Impl::GetBufferAlignment(pDevice, info);
+    }
 
     TBuffer() {}
-    void Initialize(TDevice<TTarget>*, const InfoType&, TMemoryPool<TTarget>*, ptrdiff_t, size_t);
+    void Initialize(TDevice<TTarget>* pDevice, const InfoType& info,
+                    TMemoryPool<TTarget>* pMemoryPool, ptrdiff_t memoryPoolOffset,
+                    size_t memoryPoolSize) {
+        return Impl::Initialize(pDevice, info, pMemoryPool, memoryPoolOffset, memoryPoolSize);
+    }
 
     void Finalize(TDevice<Target>* pDevice) { return Impl::Finalize(pDevice); }
 
-    void* Map() const;
-    void Unmap() const;
-    void FlushMappedRange(ptrdiff_t, size_t) const;
-    void InvalidateMappedRange(ptrdiff_t, size_t) const;
-    void GetGpuAddress(GpuAddress*) const;
+    void* Map() const { return Impl::Map(); }
+
+    template <typename T>
+    T* Map() const {
+        return static_cast<T*>(Impl::Map());
+    }
+    void Unmap() const { return Impl::Unmap(); }
+    void FlushMappedRange(ptrdiff_t offset, size_t size) const {
+        return Impl::FlushMappedRange(offset, size);
+    }
+    void InvalidateMappedRange(ptrdiff_t offset, size_t size) const {
+        return Impl::InvalidateMappedRange(offset, size);
+    }
+    void GetGpuAddress(GpuAddress* pOutGpuAddress) const {
+        return Impl::GetGpuAddress(pOutGpuAddress);
+    }
     void SetUserPtr(void*);
     void* GetUserPtr();
     const void* GetUserPtr() const;

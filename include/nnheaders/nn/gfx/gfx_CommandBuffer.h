@@ -35,14 +35,22 @@ public:
     void Draw(PrimitiveTopology, int, int);
     void Draw(PrimitiveTopology, int, int, int, int);
     void DrawIndexed(PrimitiveTopology, IndexFormat, const GpuAddress&, int, int);
-    void DrawIndexed(PrimitiveTopology, IndexFormat, const GpuAddress&, int, int, int, int);
+    void DrawIndexed(PrimitiveTopology primitiveTopology, IndexFormat indexFormat,
+                     const GpuAddress& indexBufferAddress, int indexCount, int baseVertex,
+                     int instanceCount, int baseInstance) {
+        return Impl::DrawIndexed(primitiveTopology, indexFormat, indexBufferAddress, indexCount,
+                                 baseVertex, instanceCount, baseInstance);
+    }
     void DispatchIndirect(const GpuAddress&);
     void DrawIndirect(PrimitiveTopology, const GpuAddress&);
     void DrawIndexedIndirect(PrimitiveTopology, IndexFormat, const GpuAddress&, const GpuAddress&);
     void SetPipeline(const TPipeline<TTarget>*);
     void SetRenderTargets(int, const TColorTargetView<TTarget>* const*,
                           const TDepthStencilView<TTarget>*);
-    void SetVertexBuffer(int, const GpuAddress&, ptrdiff_t, size_t);
+    void SetVertexBuffer(int bufferIndex, const GpuAddress& vertexBuffer, ptrdiff_t stride,
+                         size_t size) {
+        return Impl::SetVertexBuffer(bufferIndex, vertexBuffer, stride, size);
+    }
     void SetViewportScissorState(const TViewportScissorState<TTarget>*);
     void CopyBuffer(TBuffer<TTarget>*, ptrdiff_t, const TBuffer<TTarget>*, ptrdiff_t, size_t);
     void CopyImage(TTexture<TTarget>*, const TextureSubresource&, int, int, int,
@@ -91,10 +99,19 @@ public:
     void WriteTimestamp(const GpuAddress&);
     void UpdateBuffer(const GpuAddress&, size_t, ptrdiff_t, size_t, const void*);
     void SetConstantBuffer(int, ShaderStage, const DescriptorSlot&);
-    void SetConstantBuffer(int, ShaderStage, const GpuAddress&, size_t);
+    void SetConstantBuffer(int slot, ShaderStage stage, const GpuAddress& constantBuffer,
+                           size_t size) {
+        return Impl::SetConstantBuffer(slot, stage, constantBuffer, size);
+    }
     void SetUnorderedAccessBuffer(int, ShaderStage, const DescriptorSlot&);
-    void SetUnorderedAccessBuffer(int, ShaderStage, const GpuAddress&, size_t);
-    void SetTextureAndSampler(int, ShaderStage, const DescriptorSlot&, const DescriptorSlot&);
+    void SetUnorderedAccessBuffer(int slot, ShaderStage stage,
+                                  const GpuAddress& unorderedAccessBuffer, size_t size) {
+        return Impl::SetUnorderedAccessBuffer(slot, stage, unorderedAccessBuffer, size);
+    }
+    void SetTextureAndSampler(int slot, ShaderStage stage, const DescriptorSlot& textureDescriptor,
+                              const DescriptorSlot& samplerDescriptor) {
+        return Impl::SetTextureAndSampler(slot, stage, textureDescriptor, samplerDescriptor);
+    }
     void SetTextureAndSampler(int, ShaderStage, const TTextureView<TTarget>*,
                               const TSampler<TTarget>*);
     void SetTexture(int, ShaderStage, const DescriptorSlot&);

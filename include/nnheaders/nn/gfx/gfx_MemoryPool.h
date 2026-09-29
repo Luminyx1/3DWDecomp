@@ -15,13 +15,19 @@ public:
     typedef typename Impl::Target Target;
     typedef MemoryPoolInfo InfoType;
 
-    static size_t GetPoolMemoryAlignment(TDevice<TTarget>*, const InfoType&);
-    static size_t GetPoolMemorySizeGranularity(TDevice<TTarget>*, const InfoType&);
+    static size_t GetPoolMemoryAlignment(TDevice<TTarget>* pDevice, const InfoType& info) {
+        return Impl::GetPoolMemoryAlignment(pDevice, info);
+    }
+    static size_t GetPoolMemorySizeGranularity(TDevice<TTarget>* pDevice, const InfoType& info) {
+        return Impl::GetPoolMemorySizeGranularity(pDevice, info);
+    }
 
     TMemoryPool() {}
 
-    void Initialize(TDevice<TTarget>*, const InfoType&);
-    void Finalize(TDevice<TTarget>*);
+    void Initialize(TDevice<TTarget>* pDevice, const InfoType& info) {
+        return Impl::Initialize(pDevice, info);
+    }
+    void Finalize(TDevice<TTarget>* pDevice) { return Impl::Finalize(pDevice); }
     void* Map() const;
     void Unmap() const;
     void FlushMappedRange(ptrdiff_t, size_t) const;

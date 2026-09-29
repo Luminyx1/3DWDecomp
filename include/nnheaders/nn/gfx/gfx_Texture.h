@@ -20,7 +20,7 @@ public:
     static size_t GetRowPitch(TDevice<TTarget>*, const InfoType&);
     void Initialize(TDevice<TTarget>*, const InfoType&, TMemoryPool<TTarget>*, ptrdiff_t, size_t);
 
-    TTexture();
+    TTexture() {}
     void Finalize(TDevice<TTarget>*);
     void SetUserPtr(void*);
     void* GetUserPtr();
@@ -34,7 +34,7 @@ class TTextureView : public detail::TextureViewImpl<TTarget> {
 public:
     typedef TextureViewInfo InfoType;
 
-    TTextureView();
+    TTextureView() {}
     void Initialize(TDevice<TTarget>*, const InfoType&);
     void Finalize(TDevice<TTarget>*);
     void SetUserPtr(void*);

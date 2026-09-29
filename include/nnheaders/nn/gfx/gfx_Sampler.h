@@ -12,9 +12,13 @@ class TSampler : public detail::SamplerImpl<TTarget> {
 public:
     typedef SamplerInfo InfoType;
 
-    TSampler();
-    void Initialize(TDevice<TTarget>*, const InfoType&);
-    void Finalize(TDevice<TTarget>*);
+    TSampler() {}
+    void Initialize(TDevice<TTarget>* pDevice, const InfoType& info) {
+        return detail::SamplerImpl<TTarget>::Initialize(pDevice, info);
+    }
+    void Finalize(TDevice<TTarget>* pDevice) {
+        return detail::SamplerImpl<TTarget>::Finalize(pDevice);
+    }
     void SetUserPtr(void*);
     void* GetUserPtr();
     const void* GetUserPtr() const;

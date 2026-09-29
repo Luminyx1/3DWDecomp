@@ -13,6 +13,6 @@ class GpuAddress : public detail::DataContainer<GpuAddressData> {
 public:
     GpuAddress() {}
 
-    void Offset(ptrdiff_t);
+    void Offset(ptrdiff_t offset) { value += offset; }
 };
 }  // namespace nn::gfx

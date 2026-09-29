@@ -125,6 +125,16 @@ public:
 
     void push_back(T& rValue) { m_Root.LinkPrev(&NodeTraits::GetNode(rValue)); }
     void push_front(T& rValue) { m_Root.LinkNext(&NodeTraits::GetNode(rValue)); }
+    void pop_front() { m_Root.GetNext()->Unlink(); }
+
+    T& back() { return NodeTraits::GetItem(*m_Root.GetPrev()); }
+    const T& back() const { return NodeTraits::GetItem(*m_Root.GetPrev()); }
+
+    void clear() {
+        while (!empty()) {
+            pop_front();
+        }
+    }
 
     iterator begin() { return iterator(m_Root.GetNext()); }
     const_iterator begin() const { return const_iterator(m_Root.GetNext()); }
