@@ -988,7 +988,7 @@ void setRailClippingInfo(sead::Vector3f* pPos, LiveActor* pActor, const RailKeep
  * @return The number of rail points.
  */
 s32 getRailPointNum(const IUseRail* pRailHolder) {
-    return pRailHolder->getRailKeeper()->getRail()->getRailPointsCount();
+    return pRailHolder->getRailRider()->getRail()->getRailPointsCount();
 }
 
 /**
@@ -998,7 +998,7 @@ s32 getRailPointNum(const IUseRail* pRailHolder) {
  * @return The placement info.
  */
 PlacementInfo* getRailPointInfo(const IUseRail* pRailHolder, s32 index) {
-    return pRailHolder->getRailKeeper()->getRail()->getRailPoint(index);
+    return pRailHolder->getRailRider()->getRail()->getRailPoint(index);
 }
 
 }  // namespace al
