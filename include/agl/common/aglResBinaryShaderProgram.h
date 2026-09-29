@@ -23,15 +23,35 @@ public:
 
     ResShaderVariationArray getResShaderVariationArray() const {
         const DataType* const data = ptr();
-        return (const ResShaderVariationArrayData*)((uintptr_t)(data + 1) + data->mNameLen);
+        return reinterpret_cast<const ResShaderVariationArrayData*>(
+            reinterpret_cast<const char*>(data + 1) + data->mNameLen);
     }
 
     ResShaderVariationArray getResShaderVariationDefaultArray() const {
         const ResShaderVariationArrayData* const data = getResShaderVariationArray().ptr();
-        return (const ResShaderVariationArrayData*)((uintptr_t)data + data->mSize);
+        return reinterpret_cast<const ResShaderVariationArrayData*>(
+            reinterpret_cast<const char*>(data) + data->mSize);
     }
 
     ResShaderSymbolArray getResShaderSymbolArray(ShaderSymbolType type) const;
+
+    s32 getShaderBinaryIndex(s32 variation, ShaderType type) const {
+        const DataType* const data = ptr();
+        if (!(data->mKind & (1 << type))) {
+            return -1;
+        }
+
+        switch (type) {
+        case cShaderType_Vertex:
+            return ((data->mKind & 4) ? 3 : 2) * variation + data->mBaseIndex;
+        case cShaderType_Fragment:
+            return ((data->mKind & 4) ? 3 : 2) * variation + data->mBaseIndex + 1;
+        case cShaderType_Geometry:
+            return 3 * variation + 2 + data->mBaseIndex;
+        default:
+            return data->mBaseIndex + variation;
+        }
+    }
 };
 
 using ResBinaryShaderProgramArray = ResArray<ResBinaryShaderProgram>;

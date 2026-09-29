@@ -45,7 +45,13 @@ public:
     TaskClassID(TaskFactory f) : mType(Type::cFactory) { mID.mFactory = f; }
     TaskClassID(const char* s) : mType(Type::cString) { mID.mString = s; }
 
+    using IntTaskCreator = TaskBase* (*)(s32, const TaskConstructArg&);
+    using StringTaskCreator = TaskBase* (*)(const char*, const TaskConstructArg&);
+
     TaskBase* create(const TaskConstructArg& arg) const;
+
+    static IntTaskCreator sIntTaskCreator;
+    static StringTaskCreator sStringTaskCreator;
 
     bool operator==(const TaskClassID& rhs) const
     {

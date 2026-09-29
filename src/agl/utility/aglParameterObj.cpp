@@ -1,6 +1,8 @@
 #include "utility/aglParameterObj.h"
 #include <basis/seadRawPrint.h>
 #include <prim/seadFormatPrint.h>
+#include <xml/seadXmlElement.h>
+#include <xml/seadXmlUtil.h>
 #include "detail/aglPrivateResource.h"
 #include "utility/aglParameter.h"
 #include "utility/aglParameterList.h"
@@ -35,6 +37,22 @@ void IParameterObj::pushBackListNode(ParameterBase* pNode)
 }
 
 /**
+ * Creates this object's XML element as a child of the given element.
+ * @param pElement parent element
+ * @param pHeap heap used for the element and its attributes
+ * @return the created element
+ */
+sead::XmlElement* IParameterObj::createAttribute(sead::XmlElement* pElement,
+                                                 sead::Heap* pHeap) const
+{
+    sead::XmlElement* element =
+        sead::XmlUtil::createBackChildAndSetupElement(pElement, getTagName(), "", pHeap);
+    element->expandAttributeList(1, pHeap);
+    element->addAttribute(ParameterBase::getAttributeNameString(), getParameterObjName(), pHeap);
+    return element;
+}
+
+/**
  * Returns the XML tag used for parameter objects.
  * @return the tag name
  */
@@ -54,6 +72,56 @@ sead::SafeString IParameterObj::getParameterObjName() const
 #else
     return sead::SafeString::cEmptyString;
 #endif
+}
+
+/**
+ * Writes this object and all of its parameters to XML.
+ * @param pElement parent element
+ * @param pHeap heap used for the created elements
+ */
+void IParameterObj::writeToXML(sead::XmlElement* pElement, sead::Heap* pHeap) const
+{
+    if (!preWrite_())
+    {
+        return;
+    }
+
+    sead::XmlElement* element = createAttribute(pElement, pHeap);
+    for (auto* param = mParamListHead; param; param = param->mNext)
+    {
+        param->writeToXML(element, pHeap);
+    }
+    postWrite_();
+}
+
+/**
+ * Reads all parameters of this object from XML.
+ * @param rElement element holding the parameters
+ * @param x forwarded to ParameterBase::readFromXML
+ * @return number of parameters read, or -1 on a parse error
+ */
+s32 IParameterObj::readFromXML(const sead::XmlElement& rElement, bool x)
+{
+    if (!preRead_())
+    {
+        return 0;
+    }
+
+    s32 count = 0;
+    for (auto* param = mParamListHead; param; param = param->mNext)
+    {
+        const s32 result = param->readFromXML(rElement, x);
+        if (result == 0)
+        {
+            ++count;
+        }
+        else if (result == 1)
+        {
+            return -1;
+        }
+    }
+    postRead_();
+    return count;
 }
 
 /**
@@ -404,7 +472,7 @@ void IParameterObj::copyLerp(const IParameterObj& rObj1, const IParameterObj& rO
         it2 = it2->mNext;
     }
 
-    while (it1 && it2 && head)
+    while (head && it2 && it1)
     {
         const bool result = head->copyLerp(*it1, *it2, t);
         SEAD_ASSERT(result);

@@ -279,7 +279,7 @@ template <typename T>
 inline s32 SafeStringBase<T>::comparen(const SafeStringBase<T>& str, s32 n) const
 {
     assureTerminationImpl_();
-    const char* top = cstr();
+    const T* top = cstr();
     if (top == str.cstr())
         return 0;
 
@@ -539,7 +539,7 @@ inline s32 BufferedSafeStringBase<T>::copyAtWithTerminate(s32 at, const SafeStri
     {
         SEAD_ASSERT_MSG(false, "Buffer overflow. (Buffer Size: %d, At: %d, Copy Length: %d)",
                         mBufferSize, at, copyLength);
-        copyLength = mBufferSize - at - 1;
+        copyLength = mBufferSize - 1 - at;
     }
 
     if (copyLength <= 0)

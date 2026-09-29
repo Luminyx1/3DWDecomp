@@ -33,47 +33,6 @@ bool tryParseNumber(T* pOut, const SafeString& rStr, CardinalNumber base);
 template <typename T>
 T parseNumber(const SafeString& rStr, CardinalNumber base);
 
-template <>
-bool tryParseNumber<u8>(u8* pOut, const SafeString& rStr, CardinalNumber base);
-template <>
-bool tryParseNumber<s8>(s8* pOut, const SafeString& rStr, CardinalNumber base);
-template <>
-bool tryParseNumber<u16>(u16* pOut, const SafeString& rStr, CardinalNumber base);
-template <>
-bool tryParseNumber<s16>(s16* pOut, const SafeString& rStr, CardinalNumber base);
-template <>
-bool tryParseNumber<u32>(u32* pOut, const SafeString& rStr, CardinalNumber base);
-template <>
-bool tryParseNumber<s32>(s32* pOut, const SafeString& rStr, CardinalNumber base);
-template <>
-bool tryParseNumber<u64>(u64* pOut, const SafeString& rStr, CardinalNumber base);
-template <>
-bool tryParseNumber<s64>(s64* pOut, const SafeString& rStr, CardinalNumber base);
-template <>
-bool tryParseNumber<f32>(f32* pOut, const SafeString& rStr, CardinalNumber base);
-template <>
-bool tryParseNumber<f64>(f64* pOut, const SafeString& rStr, CardinalNumber base);
-template <>
-u8 parseNumber<u8>(const SafeString& rStr, CardinalNumber base);
-template <>
-s8 parseNumber<s8>(const SafeString& rStr, CardinalNumber base);
-template <>
-u16 parseNumber<u16>(const SafeString& rStr, CardinalNumber base);
-template <>
-s16 parseNumber<s16>(const SafeString& rStr, CardinalNumber base);
-template <>
-u32 parseNumber<u32>(const SafeString& rStr, CardinalNumber base);
-template <>
-s32 parseNumber<s32>(const SafeString& rStr, CardinalNumber base);
-template <>
-u64 parseNumber<u64>(const SafeString& rStr, CardinalNumber base);
-template <>
-s64 parseNumber<s64>(const SafeString& rStr, CardinalNumber base);
-template <>
-f32 parseNumber<f32>(const SafeString& rStr, CardinalNumber base);
-template <>
-f64 parseNumber<f64>(const SafeString& rStr, CardinalNumber base);
-
 bool tryParseU64(u64* pOut, const SafeString& rStr, CardinalNumber base);
 bool tryParseS64(s64* pOut, const SafeString& rStr, CardinalNumber base);
 bool tryParseU32(u32* pOut, const SafeString& rStr, CardinalNumber base);
@@ -134,17 +93,17 @@ s32 vsw16printf(char16* s, size_t n, const char16* format, std::va_list args);
 // TODO
 s32 vsnw16printf(char16* s, size_t n, const char16* format, std::va_list args);
 
-bool tryConvertSjisToUtf16(s32* pOutLength, char16* pDst, u32 dstLength, const char* pSrc,
-                           s32 srcLength);
-bool tryConvertUtf16ToSjis(s32* pOutLength, char* pDst, u32 dstLength, const char16* pSrc,
-                           s32 srcLength);
-bool tryConvertUtf8ToUtf16(s32* pOutLength, char16* pDst, u32 dstLength, const char* pSrc,
-                           s32 srcLength);
-bool tryConvertUtf16ToUtf8(s32* pOutLength, char* pDst, u32 dstLength, const char16* pSrc,
-                           s32 srcLength);
-bool tryConvertSjisToUtf8(s32* pOutLength, char* pDst, u32 dstLength, const char* pSrc,
+s64 tryConvertSjisToUtf16(s32* pOutLength, char16* pDst, u32 dstLength, const char* pSrc,
                           s32 srcLength);
-bool tryConvertUtf8ToSjis(s32* pOutLength, char* pDst, u32 dstLength, const char* pSrc,
+s64 tryConvertUtf16ToSjis(s32* pOutLength, char* pDst, u32 dstLength, const char16* pSrc,
+                          s32 srcLength);
+s64 tryConvertUtf8ToUtf16(s32* pOutLength, char16* pDst, u32 dstLength, const char* pSrc,
+                          s32 srcLength);
+s64 tryConvertUtf16ToUtf8(s32* pOutLength, char* pDst, u32 dstLength, const char16* pSrc,
+                          s32 srcLength);
+s64 tryConvertSjisToUtf8(s32* pOutLength, char* pDst, u32 dstLength, const char* pSrc,
+                          s32 srcLength);
+s64 tryConvertUtf8ToSjis(s32* pOutLength, char* pDst, u32 dstLength, const char* pSrc,
                           s32 srcLength);
 
 s32 convertSjisToUtf16(char16* dst, u32 dst_len, const char* src, s32 src_len);
@@ -174,6 +133,9 @@ inline char toLowerCapital(char c)
 }
 void toLowerCapitalFirstCharactor(WBufferedSafeString* str);
 void toLowerCapitalFirstCharactor(BufferedSafeString* pStr);
+
+bool isIncludeInStringList(const SafeString& rStr, const SafeString& rList, char delimiter);
+bool isIncludeInStringList(const WSafeString& rStr, const WSafeString& rList, char16 delimiter);
 
 }  // namespace StringUtil
 }  // namespace sead

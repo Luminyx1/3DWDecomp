@@ -106,6 +106,28 @@ public:
         return &item->item;
     }
 
+    T* birthBack()
+    {
+        Node* item = new (mFreeList.alloc()) Node{T{}, {}};
+        ListImpl::pushBack(&item->node);
+        return &item->item;
+    }
+
+    template <class... Args>
+    T* emplaceBefore(T* basis, Args&&... args)
+    {
+        if (isFull())
+        {
+            SEAD_ASSERT_MSG(false, "buffer full.");
+            return nullptr;
+        }
+        Node* item = new (mFreeList.alloc()) Node{T{std::forward<Args>(args)...}, {}};
+        ListImpl::insertBefore(objToListNode(basis), &item->node);
+        return &item->item;
+    }
+
+    s32 getMaxNum() const { return mMaxNum; }
+
     void erase(T* item)
     {
         ListImpl::erase(objToListNode(item));

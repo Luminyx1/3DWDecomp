@@ -41,6 +41,7 @@ public:
     void run();
     void sync();
     bool isAllWorkerSleep() const;
+    void dump();
 
 protected:
     void onInfLoop_(const InfLoopChecker::InfLoopParam& param);

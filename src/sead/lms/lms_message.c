@@ -56,11 +56,16 @@ libms_s32_t LMS_GetTextNum(LMSMsgFile* pMsg) {
     return *(const libms_s32_t*)pMsg->commonInfo.mBlockInfo[pMsg->mTextBlockIndex].pData;
 }
 
-/* LBL1 is a hash table: u32 slot count, then per slot {u32 labelCount, u32 offset};
- * each pLabel pEntry is {u8 length, char pName[length], u32 textIndex}. */
+/**
+ * Looks up a label in the LBL1 hash table (u32 slot count, then per slot {u32 labelCount, u32 offset};
+ * each entry is {u8 length, char name[length], u32 textIndex}).
+ * @param pMsg the message file
+ * @param pLabel label to look up
+ * @return the text index of pLabel, -1 if it is not found, or -2 if there is no LBL1 block.
+ */
 libms_s32_t LMS_GetTextIndexByLabel(LMSMsgFile* pMsg, const char* pLabel) {
     LMSBlockInfo* pBlock;
-    int slot;
+    libms_u32_t hash;
     libms_u32_t count;
     libms_u32_t offset;
     libms_u32_t i;
@@ -75,18 +80,17 @@ libms_s32_t LMS_GetTextIndexByLabel(LMSMsgFile* pMsg, const char* pLabel) {
     }
 
     pBlock = &pMsg->commonInfo.mBlockInfo[pMsg->mLabelBlockIndex];
-    slot = LMSi_GetHashTableIndexFromLabel(pLabel, *(const libms_u32_t*)pBlock->pData);
-    count = ((const libms_u32_t*)pBlock->pData)[slot * 2 + 1];
+    hash = LMSi_GetHashTableIndexFromLabel(pLabel, *(const libms_u32_t*)pBlock->pData) * 2 + 1;
+    count = ((const libms_u32_t*)pBlock->pData)[(int)hash];
     if (count == 0) {
         return -1;
     }
 
-    offset = ((const libms_u32_t*)pBlock->pData)[slot * 2 + 2];
+    offset = ((const libms_u32_t*)pBlock->pData)[(int)(hash + 1)];
     for (i = 0; i < count; i++) {
-        const char* pEntry = pBlock->pData;
-        libms_u8_t len = pEntry[offset];
-        if (len + 1 == length && LMSi_MemCmp(pLabel, pEntry + offset + 1, length - 1)) {
-            return *(const libms_s32_t*)(pBlock->pData + offset + 1 + len);
+        libms_u8_t len = pBlock->pData[offset];
+        if (len + 1 == length && LMSi_MemCmp(pLabel, pBlock->pData + (offset + sizeof(libms_u8_t)), length - 1)) {
+            return *(const libms_s32_t*)(pBlock->pData + (offset + sizeof(libms_u8_t) + len));
         }
         offset += len + 5;
     }
@@ -183,6 +187,11 @@ libms_s32_t LMS_GetTextSize(LMSMsgFile* pMsg, libms_s32_t index) {
     return pCur - pText;
 }
 
+/**
+ * @param pMsg the message file
+ * @param pLabel label to look up
+ * @return the text labelled pLabel, or NULL.
+ */
 const void* LMS_GetTextByLabel(LMSMsgFile* pMsg, const char* pLabel) {
     libms_s32_t index = LMS_GetTextIndexByLabel(pMsg, pLabel);
     if (index < 0) {
@@ -191,15 +200,21 @@ const void* LMS_GetTextByLabel(LMSMsgFile* pMsg, const char* pLabel) {
     return LMS_GetText(pMsg, index);
 }
 
+/**
+ * Copies the label of a text into pOutLabel by scanning every LBL1 entry.
+ * @param pMsg the message file
+ * @param index text index
+ * @param pOutLabel receives the NUL-terminated label
+ * @return 1 if a label was found, otherwise 0.
+ */
 int LMS_GetLabelByTextIndex(LMSMsgFile* pMsg, libms_s32_t index, char* pOutLabel) {
     LMSBlockInfo* pBlock = &pMsg->commonInfo.mBlockInfo[pMsg->mLabelBlockIndex];
-    const char* pBlockData = pBlock->pData;
-    libms_u32_t offset = *(const libms_u32_t*)pBlockData * 8 + 4;
+    libms_u32_t offset = *(const libms_u32_t*)pBlock->pData * 8 + 4;
 
     while (offset < pBlock->mDataSize) {
-        libms_u8_t len = pBlockData[offset];
-        if (*(const libms_s32_t*)(pBlockData + offset + 1 + len) == index) {
-            LMSi_MemCopy(pOutLabel, pBlockData + offset + 1, len);
+        libms_u8_t len = pBlock->pData[offset];
+        if (*(const libms_s32_t*)(&pBlock->pData[offset + sizeof(libms_u8_t) + len]) == index) {
+            LMSi_MemCopy(pOutLabel, &pBlock->pData[offset + 1], len);
             pOutLabel[len] = '\0';
             return 1;
         }
@@ -259,6 +274,11 @@ libms_s32_t LMS_GetTextStyle(LMSMsgFile* pMsg, libms_s32_t index) {
     return ((const libms_s32_t*)pMsg->commonInfo.mBlockInfo[pMsg->mStyleBlockIndex].pData)[index];
 }
 
+/**
+ * @param pMsg the message file
+ * @param pLabel label to look up
+ * @return the style of the text labelled pLabel, or a negative error from LMS_GetTextIndexByLabel.
+ */
 libms_s32_t LMS_GetTextStyleByLabel(LMSMsgFile* pMsg, const char* pLabel) {
     libms_s32_t index = LMS_GetTextIndexByLabel(pMsg, pLabel);
     if (index < 0) {

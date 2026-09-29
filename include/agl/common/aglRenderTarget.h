@@ -66,6 +66,24 @@ public:
     u16 getSlice() const { return mSlice; }
     u8 getMipLevel() const { return mMipLevel; }
 
+    void applyTextureData(const TextureData& rTextureData)
+    {
+        applyTextureData(rTextureData, mMipLevel, mSlice);
+    }
+
+    const GPUMemVoidAddr& getZCullBuffer() const { return mZCullBuffer; }
+    void setZCullBufferDirect(const GPUMemVoidAddr& rBuffer) { mZCullBuffer = rBuffer; }
+    void setZCullBuffer(const GPUMemVoidAddr& rBuffer)
+    {
+        if (mZCullBuffer.getMemoryPool() != rBuffer.getMemoryPool() ||
+            mZCullBuffer.getByteOffset() != rBuffer.getByteOffset() ||
+            mZCullBuffer.getMemoryBlock() != rBuffer.getMemoryBlock())
+        {
+            mZCullBuffer = rBuffer;
+            changeUpdateFlag_(1 << 3, true);
+        }
+    }
+
 protected:
     void changeUpdateFlag_(u32 mask, bool on)
     {

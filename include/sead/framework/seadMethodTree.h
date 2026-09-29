@@ -54,7 +54,6 @@ public:
         mUserID = nullptr;
         mDelegateHolder.construct(sead::Delegate<MethodTreeNode>());
         mPauseFlag.makeAllZero();
-        setPauseFlag(cPause_Both);
     }
 
     ~MethodTreeNode() override { detachAll(); }

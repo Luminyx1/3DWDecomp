@@ -18,7 +18,14 @@ public:
 
     s64 toNanoSeconds() const;
 
-    s64 toMicroSeconds() const { return toNanoSeconds() / 1000; }
+    s64 toMicroSeconds() const
+    {
+        if (u64(mSpan) + (LLONG_MAX / 1000000) < u64(ULLONG_MAX / 1000000) - 1)
+            return 1000000 * mSpan / cFrequency;
+        if (u64(mSpan) + (LLONG_MAX / 1000) < u64(ULLONG_MAX / 1000) - 1)
+            return 1000 * mSpan / cFrequency * 1000;
+        return mSpan / cFrequency * 1000000;
+    }
 
     s64 toMilliSeconds() const
     {
@@ -108,6 +115,8 @@ public:
     }
 
 private:
+    friend class CuckooClock;
+
     s64 mSpan;
 
     /// Number of ticks per second. This is platform specific.

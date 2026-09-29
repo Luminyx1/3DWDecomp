@@ -115,7 +115,7 @@ public:
     TaskBase* mRootTask;
     TaskBase::CreateArg mRootTaskCreateArg;
     TaskMgr::InitializeArg mInitializeArg;
-    MethodTreeNode mCalcDestructionTreeNode;
+    MethodTreeNode mCalcDestructionTreeNode{nullptr};
 };
 
 }  // namespace sead

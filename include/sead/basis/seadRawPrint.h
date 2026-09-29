@@ -85,6 +85,7 @@ void DebugBreak();
 void Print(const char* format, ...);
 void PrintV(const char* format, std::va_list);
 void PrintString(const char* format, s32);
+void PrintStringImpl(const char* str, s32 length);
 
 #ifdef __GNUC__
 [[gnu::format(printf, 3, 4)]]

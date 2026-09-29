@@ -185,6 +185,57 @@ protected:
     }
     void heapSort(CompareCallbackImpl cmp);
 
+public:
+    /// Heap sort with a statically known comparer (inlined at the call site).
+    template <typename T, typename Compare>
+    void heapSort_(Compare&& cmp)
+    {
+        if (mPtrNum < 2)
+            return;
+
+        T** ptrs = reinterpret_cast<T**>(mPtrs);
+        const s32 num = mPtrNum;
+        for (s32 i = num / 2; i > 0; --i)
+        {
+            T* value = ptrs[i - 1];
+            s32 parent = i;
+            s32 child = parent * 2;
+            while (child <= num)
+            {
+                if (child < num && cmp(ptrs[child - 1], ptrs[child]) < 0)
+                    ++child;
+                if (cmp(value, ptrs[child - 1]) >= 0)
+                    break;
+                ptrs[parent - 1] = ptrs[child - 1];
+                parent = child;
+                child = parent * 2;
+            }
+            ptrs[parent - 1] = value;
+        }
+
+        for (s32 i = num; i >= 2; --i)
+        {
+            const s32 last = i - 1;
+            T* value = ptrs[last];
+            ptrs[last] = ptrs[0];
+            s32 parent = 1;
+            s32 child = 2;
+            while (child <= last)
+            {
+                if (child < last && cmp(ptrs[child - 1], ptrs[child]) < 0)
+                    ++child;
+                if (cmp(value, ptrs[child - 1]) >= 0)
+                    break;
+                ptrs[parent - 1] = ptrs[child - 1];
+                parent = child;
+                child = parent * 2;
+            }
+            ptrs[parent - 1] = value;
+        }
+    }
+
+protected:
+
     s32 compare(const PtrArrayImpl& other, CompareCallbackImpl cmp) const;
     void uniq(CompareCallbackImpl cmp);
 

@@ -23,152 +23,135 @@ public:
     class QuadArg
     {
     public:
-        QuadArg(Vector3f pos, Vector2f size, Color4f color = Color4f::cWhite,
-                Color4f color2 = Color4f::cWhite, bool isHorizontal = false)
-            : mCenter(pos), mSize(size), mColor0(color), mColor1(color2), mHorizontal(isHorizontal)
-        {
-        }
         QuadArg() = default;
 
-        void setCornerAndSize(const Vector3f& corner, const Vector2f& size);
-        void setBoundBox(const BoundBox2f& box, float z);
-        void setColor(const Color4f& color0, const Color4f& color1);
-        void setColorHorizontal(const Color4f& color0, const Color4f& color1);
+        void setCornerAndSize(const Vector3f& rCorner, const Vector2f& rSize);
+        QuadArg& setBoundBox(const BoundBox2f& rBox, f32 z);
+        QuadArg& setColor(const Color4f& rColor0, const Color4f& rColor1);
+        QuadArg& setColor(const Color4f& rColor) { return setColor(rColor, rColor); }
+        void setColorHorizontal(const Color4f& rColor0, const Color4f& rColor1);
 
+        const Vector3f& getCenter() const { return mCenter; }
+        const Vector2f& getSize() const { return mSize; }
+        const Color4f& getColor0() const { return mColor0; }
+        const Color4f& getColor1() const { return mColor1; }
+        bool isHorizontal() const { return mIsHorizontal; }
+
+    private:
         Vector3f mCenter = Vector3f::zero;
-        Vector2f mSize = Vector2f::zero;
+        Vector2f mSize = Vector2f(Vector3f::ones.x, Vector3f::ones.y);
         Color4f mColor0 = Color4f::cWhite;
         Color4f mColor1 = Color4f::cWhite;
-        bool mHorizontal = false;
+        bool mIsHorizontal = false;
     };
 
     class CubeArg
     {
     public:
-        CubeArg(const BoundBox3f& box, const Color4f& color)
-            : mCenter(box.getCenter()), mSize(box.getSizeX(), box.getSizeY(), box.getSizeZ()),
-              mColor0(color), mColor1(color)
-        {
-        }
-        CubeArg(const Vector3f& pos, const Vector3f& size, const Color4f& color)
-            : mCenter(pos), mSize(size), mColor0(color), mColor1(color)
-        {
-        }
-        void setCornerAndSize(const Vector3f& corner, const Vector3f& size);
-        void setBoundBox(const BoundBox3f& box);
+        CubeArg() = default;
+
+        void setCornerAndSize(const Vector3f& rCorner, const Vector3f& rSize);
+        void setBoundBox(const BoundBox3f& rBox);
+
+        const Vector3f& getCenter() const { return mCenter; }
+        const Vector3f& getSize() const { return mSize; }
+        const Color4f& getColor0() const { return mColor0; }
+        const Color4f& getColor1() const { return mColor1; }
 
     private:
-        Vector3f mCenter;
-        Vector3f mSize;
-        Color4f mColor0;
-        Color4f mColor1;
+        Vector3f mCenter = Vector3f::zero;
+        Vector3f mSize = Vector3f::ones;
+        Color4f mColor0 = Color4f::cWhite;
+        Color4f mColor1 = Color4f::cWhite;
     };
 
     class UVArg
     {
     public:
-        UVArg(const Vector2f& v1, const Vector2f& v2) : vec1(v1), vec2(v2) {}
+        UVArg(const Vector2f& rUVSrc, const Vector2f& rUVSize) : mUVSrc(rUVSrc), mUVSize(rUVSize)
+        {
+        }
+
+        const Vector2f& getUVSrc() const { return mUVSrc; }
+        const Vector2f& getUVSize() const { return mUVSize; }
 
     private:
-        Vector2f vec1;
-        Vector2f vec2;
+        Vector2f mUVSrc;
+        Vector2f mUVSize;
     };
 
-    explicit PrimitiveDrawer(DrawContext* context);
+    explicit PrimitiveDrawer(DrawContext* pDrawContext);
     virtual ~PrimitiveDrawer();
 
-    void prepareMgrFromBinary(Heap* heap, const void* bin_data, u32 bin_size);
-    void createDrawMgrInstance_(Heap* heap);
-    void prepareMgr(Heap* heap, const SafeString& path);
-    void prepareMgrFromBinary(Heap*, const void*, u32, u32, bool);
-    void prepareMgr(Heap*, const SafeString&, u32, bool);
-    void setCamera(const Camera* camera);
-    void setCameraViewMatrix(const Matrix34f* cameraViewMtx);
-    void setProjection(const Projection* projection);
-    void setProjectionMatrix(const Matrix44f* projectionMtx);
-    void setModelMatrix(const Matrix34f* modelMtx);
-    void setDrawContext(DrawContext* context);
+    static void prepareMgrFromBinary(Heap* pHeap, const void* pBinary, u32 binarySize);
+    static PrimitiveDrawMgrNvn* createDrawMgrInstance_(Heap* pHeap);
+    static void prepareMgr(Heap* pHeap, const SafeString& rPath);
+    static void prepareMgrFromBinary(Heap* pHeap, const void* pBinary, u32 binarySize,
+                                     u32 uniformBufferSize, bool isTextureEnable);
+    static void prepareMgr(Heap* pHeap, const SafeString& rPath, u32 uniformBufferSize,
+                           bool isTextureEnable);
+
+    void setCamera(const Camera* pCamera);
+    void setCameraViewMatrix(const Matrix34f* pViewMatrix);
+    void setProjection(const Projection* pProjection);
+    void setProjectionMatrix(const Matrix44f* pProjectionMatrix);
+    void setModelMatrix(const Matrix34f* pModelMatrix);
+    void setDrawContext(DrawContext* pDrawContext);
     void begin();
-    PrimitiveDrawMgrNvn* getDrawMgr_();
+    static PrimitiveDrawMgrNvn* getDrawMgr_();
     void end();
-    void drawQuad(const Color4f&, const Color4f&);
-    void drawQuad(const Texture&, const Color4f&, const Color4f&, const Vector2f&, const Vector2f&);
-    void drawBox(const Color4f&, const Color4f&);
-    void drawCube(const Color4f&, const Color4f&);
-    void drawWireCube(const Color4f&, const Color4f&);
-    void drawLine(const Color4f&, const Color4f&);
-    void drawSphere4x8(const Color4f&, const Color4f&);
-    void drawSphere8x16(const Color4f&, const Color4f&);
-    void drawDisk16(const Color4f&, const Color4f&);
-    void drawDisk32(const Color4f&, const Color4f&);
-    void drawCircle16(const Color4f&);
-    void drawCircle32(const Color4f&);
-    void drawCylinder16(const Color4f&, const Color4f&);
-    void drawCylinder32(const Color4f&, const Color4f&);
-    void drawQuad(const QuadArg&);
-    void drawQuad(const Texture&, const QuadArg&, const UVArg&);
-    void drawBox(const QuadArg&);
-    void drawCube(const CubeArg&);
-    void drawWireCube(const CubeArg&);
-    void drawLine(const Vector3f&, const Vector3f&, const Color4f&, const Color4f&);
-    void drawLine(const Vector3f&, const Vector3f&, const Color4f&);
-    void drawSphere4x8(const Vector3f&, float, const Color4f&, const Color4f&);
-    void drawSphere4x8(const Vector3f&, float, const Color4f&);
-    void drawSphere8x16(const Vector3f&, float, const Color4f&, const Color4f&);
-    void drawSphere8x16(const Vector3f&, float, const Color4f&);
-    void drawDisk16(const Vector3f&, float, const Color4f&, const Color4f&);
-    void drawDisk16(const Vector3f&, float, const Color4f&);
-    void drawDisk32(const Vector3f&, float, const Color4f&, const Color4f&);
-    void drawDisk32(const Vector3f&, float, const Color4f&);
-    void drawCircle16(const Vector3f&, float, const Color4f&);
-    void drawCircle32(const Vector3f&, float, const Color4f&);
-    void drawCylinder16(const Vector3f&, float, float, const Color4f&, const Color4f&);
-    void drawCylinder16(const Vector3f&, float, float, const Color4f&);
-    void drawCylinder32(const Vector3f&, float, float, const Color4f&, const Color4f&);
-    void drawCylinder32(const Vector3f&, float, float, const Color4f&);
-    void drawAxis(const Vector3f&, float);
+
+    void drawQuad(const Color4f& rColor0, const Color4f& rColor1);
+    void drawQuad(const Texture& rTexture, const Color4f& rColor0, const Color4f& rColor1,
+                  const Vector2f& rUVSrc, const Vector2f& rUVSize);
+    void drawBox(const Color4f& rColor0, const Color4f& rColor1);
+    void drawCube(const Color4f& rColor0, const Color4f& rColor1);
+    void drawWireCube(const Color4f& rColor0, const Color4f& rColor1);
+    void drawLine(const Color4f& rColor0, const Color4f& rColor1);
+    void drawSphere4x8(const Color4f& rNorth, const Color4f& rSouth);
+    void drawSphere8x16(const Color4f& rNorth, const Color4f& rSouth);
+    void drawDisk16(const Color4f& rCenter, const Color4f& rEdge);
+    void drawDisk32(const Color4f& rCenter, const Color4f& rEdge);
+    void drawCircle16(const Color4f& rEdge);
+    void drawCircle32(const Color4f& rEdge);
+    void drawCylinder16(const Color4f& rTop, const Color4f& rBottom);
+    void drawCylinder32(const Color4f& rTop, const Color4f& rBottom);
+
+    void drawQuad(const QuadArg& rArg);
+    void drawQuad(const Texture& rTexture, const QuadArg& rArg, const UVArg& rUVArg);
+    void drawBox(const QuadArg& rArg);
+    void drawCube(const CubeArg& rArg);
+    void drawWireCube(const CubeArg& rArg);
+    void drawLine(const Vector3f& rFrom, const Vector3f& rTo, const Color4f& rColor0,
+                  const Color4f& rColor1);
+    void drawLine(const Vector3f& rFrom, const Vector3f& rTo, const Color4f& rColor);
+    void drawSphere4x8(const Vector3f& rPos, f32 radius, const Color4f& rNorth,
+                       const Color4f& rSouth);
+    void drawSphere4x8(const Vector3f& rPos, f32 radius, const Color4f& rColor);
+    void drawSphere8x16(const Vector3f& rPos, f32 radius, const Color4f& rNorth,
+                        const Color4f& rSouth);
+    void drawSphere8x16(const Vector3f& rPos, f32 radius, const Color4f& rColor);
+    void drawDisk16(const Vector3f& rPos, f32 radius, const Color4f& rCenter,
+                    const Color4f& rEdge);
+    void drawDisk16(const Vector3f& rPos, f32 radius, const Color4f& rColor);
+    void drawDisk32(const Vector3f& rPos, f32 radius, const Color4f& rCenter,
+                    const Color4f& rEdge);
+    void drawDisk32(const Vector3f& rPos, f32 radius, const Color4f& rColor);
+    void drawCircle16(const Vector3f& rPos, f32 radius, const Color4f& rColor);
+    void drawCircle32(const Vector3f& rPos, f32 radius, const Color4f& rColor);
+    void drawCylinder16(const Vector3f& rPos, f32 radius, f32 height, const Color4f& rTop,
+                        const Color4f& rBottom);
+    void drawCylinder16(const Vector3f& rPos, f32 radius, f32 height, const Color4f& rColor);
+    void drawCylinder32(const Vector3f& rPos, f32 radius, f32 height, const Color4f& rTop,
+                        const Color4f& rBottom);
+    void drawCylinder32(const Vector3f& rPos, f32 radius, f32 height, const Color4f& rColor);
+    void drawAxis(const Vector3f& rPos, f32 scale);
 
 private:
-    Matrix34f* mModel;
-    Matrix34f* mCamera;
-    Matrix44f* mProjection;
+    const Matrix34f* mModelMatrix;
+    const Matrix34f* mViewMatrix;
+    const Matrix44f* mProjectionMatrix;
     DrawContext* mDrawContext;
-};
-
-class PrimitiveRendererBase
-{
-public:
-    virtual void prepareFromBinaryImpl(Heap* heap, const void* bin_data, u32 bin_size) = 0;
-    virtual void prepareImpl(Heap* heap, const SafeString& path) = 0;
-    virtual void setCameraImpl(const Camera& camera) = 0;
-    virtual void setProjectionImpl(const Projection& projection) = 0;
-    virtual void beginImpl() = 0;
-    virtual void endImpl() = 0;
-    virtual void drawQuadImpl(const Matrix34f& model_mtx, const Color4f& colorL,
-                              const Color4f& colorR) = 0;
-    virtual void drawQuadImpl(const Matrix34f& model_mtx, const Texture& texture,
-                              const Color4f& colorL, const Color4f& colorR, const Vector2f& uv_src,
-                              const Vector2f& uv_size) = 0;
-    virtual void drawBoxImpl(const Matrix34f& model_mtx, const Color4f& colorL,
-                             const Color4f& colorR) = 0;
-    virtual void drawCubeImpl(const Matrix34f& model_mtx, const Color4f& c0, const Color4f& c1) = 0;
-    virtual void drawWireCubeImpl(const Matrix34f& model_mtx, const Color4f& c0,
-                                  const Color4f& c1) = 0;
-    virtual void drawLineImpl(const Matrix34f& model_mtx, const Color4f& c0, const Color4f& c1) = 0;
-    virtual void drawSphere4x8Impl(const Matrix34f& model_mtx, const Color4f& north,
-                                   const Color4f& south) = 0;
-    virtual void drawSphere8x16Impl(const Matrix34f& model_mtx, const Color4f& north,
-                                    const Color4f& south) = 0;
-    virtual void drawDisk16Impl(const Matrix34f& model_mtx, const Color4f& center,
-                                const Color4f& edge) = 0;
-    virtual void drawDisk32Impl(const Matrix34f& model_mtx, const Color4f& center,
-                                const Color4f& edge) = 0;
-    virtual void drawCircle16Impl(const Matrix34f& model_mtx, const Color4f& edge) = 0;
-    virtual void drawCircle32Impl(const Matrix34f& model_mtx, const Color4f& edge) = 0;
-    virtual void drawCylinder16Impl(const Matrix34f& model_mtx, const Color4f& top,
-                                    const Color4f& btm) = 0;
-    virtual void drawCylinder32Impl(const Matrix34f& model_mtx, const Color4f& top,
-                                    const Color4f& btm) = 0;
 };
 
 class PrimitiveRenderer
@@ -176,63 +159,70 @@ class PrimitiveRenderer
     SEAD_SINGLETON_DISPOSER(PrimitiveRenderer)
 public:
     PrimitiveRenderer();
-    virtual ~PrimitiveRenderer() {}
+    virtual ~PrimitiveRenderer();
 
-    void prepareFromBinary(Heap* heap, const void* bin_data, u32 bin_size);
-    void prepare(Heap* heap, const SafeString& path);
-    void setCamera(const Camera& camera);
-    void setProjection(const Projection& projection);
-    void setModelMatrix(const Matrix34f& model_mtx);
+    void prepareFromBinary(Heap* pHeap, const void* pBinary, u32 binarySize);
+    void prepare(Heap* pHeap, const SafeString& rPath);
+    void setCamera(const Camera& rCamera);
+    void setProjection(const Projection& rProjection);
+    void setModelMatrix(const Matrix34f& rModelMatrix);
     void begin();
     void end();
 
-    void drawQuad(const Color4f&, const Color4f&);
-    void drawQuad(const Texture&, const Color4f&, const Color4f&, const Vector2f&, const Vector2f&);
-    void drawBox(const Color4f&, const Color4f&);
-    void drawCube(const Color4f&, const Color4f&);
-    void drawWireCube(const Color4f&, const Color4f&);
-    void drawLine(const Color4f&, const Color4f&);
-    void drawSphere4x8(const Color4f&, const Color4f&);
-    void drawSphere8x16(const Color4f&, const Color4f&);
-    void drawDisk16(const Color4f&, const Color4f&);
-    void drawDisk32(const Color4f&, const Color4f&);
-    void drawCircle16(const Color4f&);
-    void drawCircle32(const Color4f&);
-    void drawCylinder16(const Color4f&, const Color4f&);
-    void drawCylinder32(const Color4f&, const Color4f&);
+    void drawQuad(const Color4f& rColor0, const Color4f& rColor1);
+    void drawQuad(const Texture& rTexture, const Color4f& rColor0, const Color4f& rColor1,
+                  const Vector2f& rUVSrc, const Vector2f& rUVSize);
+    void drawBox(const Color4f& rColor0, const Color4f& rColor1);
+    void drawCube(const Color4f& rColor0, const Color4f& rColor1);
+    void drawWireCube(const Color4f& rColor0, const Color4f& rColor1);
+    void drawLine(const Color4f& rColor0, const Color4f& rColor1);
+    void drawSphere4x8(const Color4f& rNorth, const Color4f& rSouth);
+    void drawSphere8x16(const Color4f& rNorth, const Color4f& rSouth);
+    void drawDisk16(const Color4f& rCenter, const Color4f& rEdge);
+    void drawDisk32(const Color4f& rCenter, const Color4f& rEdge);
+    void drawCircle16(const Color4f& rEdge);
+    void drawCircle32(const Color4f& rEdge);
+    void drawCylinder16(const Color4f& rTop, const Color4f& rBottom);
+    void drawCylinder32(const Color4f& rTop, const Color4f& rBottom);
 
-    void drawQuad(const PrimitiveDrawer::QuadArg&);
-    void drawQuad(const Texture&, const PrimitiveDrawer::QuadArg&, const PrimitiveDrawer::UVArg&);
-    void drawBox(const PrimitiveDrawer::QuadArg&);
-    void drawCube(const PrimitiveDrawer::CubeArg&);
-    void drawWireCube(const PrimitiveDrawer::CubeArg&);
-    void drawLine(const Vector3f&, const Vector3f&, const Color4f&, const Color4f&);
-    void drawLine(const Vector3f&, const Vector3f&, const Color4f&);
-    void drawSphere4x8(const Vector3f&, float, const Color4f&, const Color4f&);
-    void drawSphere4x8(const Vector3f&, float, const Color4f&);
-    void drawSphere8x16(const Vector3f&, float, const Color4f&, const Color4f&);
-    void drawSphere8x16(const Vector3f&, float, const Color4f&);
-    void drawDisk16(const Vector3f&, float, const Color4f&, const Color4f&);
-    void drawDisk16(const Vector3f&, float, const Color4f&);
-    void drawDisk32(const Vector3f&, float, const Color4f&, const Color4f&);
-    void drawDisk32(const Vector3f&, float, const Color4f&);
-    void drawCircle16(const Vector3f&, float, const Color4f&);
-    void drawCircle32(const Vector3f&, float, const Color4f&);
-    void drawCylinder16(const Vector3f&, float, float, const Color4f&, const Color4f&);
-    void drawCylinder16(const Vector3f&, float, float, const Color4f&);
-    void drawCylinder32(const Vector3f&, float, float, const Color4f&, const Color4f&);
-    void drawCylinder32(const Vector3f&, float, float, const Color4f&);
-
-    void drawAxis(const Vector3f&, float);
+    void drawQuad(const PrimitiveDrawer::QuadArg& rArg);
+    void drawQuad(const Texture& rTexture, const PrimitiveDrawer::QuadArg& rArg,
+                  const PrimitiveDrawer::UVArg& rUVArg);
+    void drawBox(const PrimitiveDrawer::QuadArg& rArg);
+    void drawCube(const PrimitiveDrawer::CubeArg& rArg);
+    void drawWireCube(const PrimitiveDrawer::CubeArg& rArg);
+    void drawLine(const Vector3f& rFrom, const Vector3f& rTo, const Color4f& rColor0,
+                  const Color4f& rColor1);
+    void drawLine(const Vector3f& rFrom, const Vector3f& rTo, const Color4f& rColor);
+    void drawSphere4x8(const Vector3f& rPos, f32 radius, const Color4f& rNorth,
+                       const Color4f& rSouth);
+    void drawSphere4x8(const Vector3f& rPos, f32 radius, const Color4f& rColor);
+    void drawSphere8x16(const Vector3f& rPos, f32 radius, const Color4f& rNorth,
+                        const Color4f& rSouth);
+    void drawSphere8x16(const Vector3f& rPos, f32 radius, const Color4f& rColor);
+    void drawDisk16(const Vector3f& rPos, f32 radius, const Color4f& rCenter,
+                    const Color4f& rEdge);
+    void drawDisk16(const Vector3f& rPos, f32 radius, const Color4f& rColor);
+    void drawDisk32(const Vector3f& rPos, f32 radius, const Color4f& rCenter,
+                    const Color4f& rEdge);
+    void drawDisk32(const Vector3f& rPos, f32 radius, const Color4f& rColor);
+    void drawCircle16(const Vector3f& rPos, f32 radius, const Color4f& rColor);
+    void drawCircle32(const Vector3f& rPos, f32 radius, const Color4f& rColor);
+    void drawCylinder16(const Vector3f& rPos, f32 radius, f32 height, const Color4f& rTop,
+                        const Color4f& rBottom);
+    void drawCylinder16(const Vector3f& rPos, f32 radius, f32 height, const Color4f& rColor);
+    void drawCylinder32(const Vector3f& rPos, f32 radius, f32 height, const Color4f& rTop,
+                        const Color4f& rBottom);
+    void drawCylinder32(const Vector3f& rPos, f32 radius, f32 height, const Color4f& rColor);
+    void drawAxis(const Vector3f& rPos, f32 scale);
 
 private:
-    void doPrepare_(Heap* heap);
-
-    PrimitiveDrawer mDrawer;
-    Matrix34f mCameraMatrix;
-    Matrix44f mProjection;
-    Matrix34f mModelMatrix;
+    PrimitiveDrawer mDrawer{nullptr};
+    Matrix34f mViewMatrix = Matrix34f::ident;
+    Matrix44f mProjectionMatrix = Matrix44f::ident;
+    Matrix34f mModelMatrix = Matrix34f::ident;
 };
+static_assert(sizeof(PrimitiveRenderer) == 0xf0);
 
 }  // namespace sead
 

@@ -20,7 +20,7 @@ public:
                                               f32 t);
 
     bool load(const sead::SafeString& rPath, bool dump);
-    bool loadText(const void* pData, u32 size, bool x);
+    s32 loadText(const void* pData, u32 size, bool x);
 
     bool isCompleteArchive(ResParameterArchive archive, bool checkValues) const;
 

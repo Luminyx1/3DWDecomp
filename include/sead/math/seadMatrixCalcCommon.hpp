@@ -794,6 +794,16 @@ inline void Matrix44CalcCommon<f32>::copy(Base& o, const Base& n)
     }
 }
 
+template <>
+inline void Matrix44CalcCommon<f32>::copy(Base& o, const Mtx34& n, const Vec4& v)
+{
+    for (int i = 0; i < 3; ++i)
+    {
+        vst1q_f32(o.m[i], vld1q_f32(n.m[i]));
+    }
+    vst1q_f32(o.m[3], vld1q_f32(&v.x));
+}
+
 #endif
 
 #ifdef cafe
@@ -2421,6 +2431,48 @@ void Matrix44CalcCommon<T>::multiply(Base& o, const Base& a, const Mtx34& b)
     o.m[3][2] = a41 * b13 + a42 * b23 + a43 * b33;
     o.m[3][3] = a41 * b14 + a42 * b24 + a43 * b34 + a44;
 }
+
+#ifdef __aarch64__
+template <>
+inline void Matrix44CalcCommon<f32>::multiply(Base& o, const Base& a, const Mtx34& b)
+{
+    auto a0 = vld1q_f32(a.m[0]);
+    auto a1 = vld1q_f32(a.m[1]);
+    auto a2 = vld1q_f32(a.m[2]);
+    auto a3 = vld1q_f32(a.m[3]);
+
+    auto b0 = vld1q_f32(b.m[0]);
+    auto b1 = vld1q_f32(b.m[1]);
+    auto b2 = vld1q_f32(b.m[2]);
+
+    float32x4_t c0, c1, c2, c3;
+
+    c0 = vmulq_laneq_f32(b0, a0, 0);
+    c0 = vfmaq_laneq_f32(c0, b1, a0, 1);
+    c0 = vfmaq_laneq_f32(c0, b2, a0, 2);
+    c0 += vcopyq_laneq_f32(vmovq_n_f32(0), 3, vmovq_n_f32(a0[3]), 1);
+
+    c1 = vmulq_laneq_f32(b0, a1, 0);
+    c1 = vfmaq_laneq_f32(c1, b1, a1, 1);
+    c1 = vfmaq_laneq_f32(c1, b2, a1, 2);
+    c1 += vcopyq_laneq_f32(vmovq_n_f32(0), 3, vmovq_n_f32(a1[3]), 1);
+
+    c2 = vmulq_laneq_f32(b0, a2, 0);
+    c2 = vfmaq_laneq_f32(c2, b1, a2, 1);
+    c2 = vfmaq_laneq_f32(c2, b2, a2, 2);
+    c2 += vcopyq_laneq_f32(vmovq_n_f32(0), 3, vmovq_n_f32(a2[3]), 1);
+
+    c3 = vmulq_laneq_f32(b0, a3, 0);
+    c3 = vfmaq_laneq_f32(c3, b1, a3, 1);
+    c3 = vfmaq_laneq_f32(c3, b2, a3, 2);
+    c3 += vcopyq_laneq_f32(vmovq_n_f32(0), 3, vmovq_n_f32(a3[3]), 1);
+
+    vst1q_f32(o.m[0], c0);
+    vst1q_f32(o.m[1], c1);
+    vst1q_f32(o.m[2], c2);
+    vst1q_f32(o.m[3], c3);
+}
+#endif
 
 template <typename T>
 void Matrix44CalcCommon<T>::transpose(Base& o)

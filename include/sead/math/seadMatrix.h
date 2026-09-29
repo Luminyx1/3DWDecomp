@@ -20,6 +20,15 @@ template <typename T>
 class Matrix44;
 
 template <typename T>
+class Matrix23
+{
+public:
+    T operator()(s32 i, s32 j) const { return m[i][j]; }
+
+    T m[2][3];
+};
+
+template <typename T>
 class Matrix22 : public Policies<T>::Mtx22Base
 {
 private:
@@ -272,6 +281,7 @@ public:
 };
 
 typedef Matrix22<f32> Matrix22f;
+typedef Matrix23<f32> Matrix23f;
 typedef Matrix33<f32> Matrix33f;
 typedef Matrix34<f32> Matrix34f;
 typedef Matrix44<f32> Matrix44f;

@@ -29,6 +29,10 @@ namespace utl {
 class ImageFilter2D {
 public:
     enum Channel {};
+
+    static void drawTextureMSAA(DrawContext* pDrawContext, const TextureSampler& rSampler,
+                                const sead::Viewport& rViewport, const sead::Vector2f& rScale,
+                                const sead::Vector2f& rTranslate);
 };
 
 namespace DevTools {
@@ -39,7 +43,7 @@ void setMeterScale(float scale);
 float getMeterScale();
 float calcScale(float factor);
 float calcMeter(float factor);
-sead::SafeString getStringMinMax(float min, float max);
+sead::FixedSafeString<256> getStringMinMax(float min, float max);
 void setFrameSpeed(float frame_speed);
 float getFrameSpeed();
 void setCameraOperationSpeed(float speed);
@@ -91,6 +95,7 @@ void controlCamera(sead::LookAtCamera*, const sead::Controller&, float, CameraCo
 void controlCamera(sead::LookAtCamera*, const sead::Vector2f&, const sead::Vector2f&, float, float,
                    float, bool, CameraControlType);
 void controlCameraPou32er(sead::LookAtCamera*, PoiningControlBuffer*, const sead::Viewport&);
+void controlCameraPointer(sead::LookAtCamera*, PoiningControlBuffer*, const sead::Viewport&);
 void controlCameraPou32er(sead::LookAtCamera*, PoiningControlBuffer*, float, float);
 void controlCameraPou32er(sead::LookAtCamera*, PoiningControlBuffer*, bool, bool, bool, bool,
                           const sead::Vector2f&, bool, float, float);

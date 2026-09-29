@@ -1030,6 +1030,7 @@ void* ExpHeap::resizeFront(void* pPtr, size_t size)
     ConditionalScopedLock<CriticalSection> lock(&mCS, isLockEnabled());
 
     MemBlock* block = MemBlock::FindManageArea(pPtr);
+    u8* memory = block->getMemory();
     size_t newSize = (size + 7) & ~size_t(7);
     if (block->mSize < newSize)
     {
@@ -1039,7 +1040,7 @@ void* ExpHeap::resizeFront(void* pPtr, size_t size)
     size_t diff = block->mSize - newSize;
     if (diff == 0)
     {
-        return block->getMemory();
+        return memory;
     }
 
     size_t newBlockOffset = block->getTotalSize() - newSize - sizeof(MemBlock);

@@ -30,32 +30,43 @@ protected:
 
 class UniformLocation : public ShaderLocation, public sead::INamable {
 public:
+    UniformLocation() : INamable("Undefined") {}
+
     void search(const ShaderProgram&);
     void setUniformNVN(DrawContext*, u32, const void*) const;
 };
 
 class SamplerLocation : public ShaderLocation, public sead::INamable {
 public:
+    SamplerLocation() : INamable("Undefined") {}
+
     void search(const ShaderProgram&);
 };
 
 class ImageLocation : public ShaderLocation, public sead::INamable {
 public:
+    ImageLocation() : INamable("Undefined") {}
+
     void search(const ShaderProgram&);
 };
 
 class UniformBlockLocation : public ShaderLocation, public sead::INamable {
 public:
+    UniformBlockLocation() : INamable("Undefined") {}
+
     void search(const ShaderProgram&);
 };
 
 class ShaderStorageBlockLocation : public ShaderLocation, public sead::INamable {
 public:
+    ShaderStorageBlockLocation() : INamable("Undefined") {}
+
     void search(const ShaderProgram&);
 };
 
 class AttributeLocation : public ShaderLocation, public sead::INamable {
 public:
+    AttributeLocation() : INamable("Undefined") {}
     AttributeLocation(const sead::SafeString&, s32);
 
     void search(const ShaderProgram&);

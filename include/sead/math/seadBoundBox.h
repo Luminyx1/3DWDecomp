@@ -37,6 +37,7 @@ struct BoundBox2
     void set(const Vector2& min, const Vector2& max);
     void setMin(const Vector2& min);
     void setMax(const Vector2& max);
+    void addPoint(const Vector2& p);
     void setFromCenterAndXY(T centerX, T centerY, T sizeX, T sizeY);
     void setFromCornerAndXY(T cornerX, T cornerY, T sizeX, T sizeY);
     void setFromCenterAndXY(const Vector2& center, T sizeX, T sizeY)

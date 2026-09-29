@@ -37,7 +37,7 @@ inline void FreeList::setWork(void* work, s32 elem_size, s32 num)
     SEAD_ASSERT(elem_size > 0 && elem_size % cPtrSize == 0);
     SEAD_ASSERT(num > 0);
 
-    const s32 nodeSize = elem_size / cPtrSize;
+    const s32 nodeSize = elem_size / s32(cPtrSize);
     FreeList::Node* nodes = reinterpret_cast<FreeList::Node*>(work);
 
     mFree = &nodes[0];

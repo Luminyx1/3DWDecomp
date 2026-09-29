@@ -75,6 +75,8 @@ public:
     void setHeap(Heap* pHeap) { mHeap = pHeap; }
 
 private:
+    friend class XmlDocument;
+
     const XmlElement* findElementImpl_(const SafeString& rPath) const;
     const XmlElement* findElementByAbsolutePath_(const SafeString& rPath) const;
     const XmlElement* findElementByRelativePath_(const SafeString& rPath) const;

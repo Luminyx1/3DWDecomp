@@ -80,6 +80,15 @@ enum class TextureFormat {
     cTextureFormat_Num,
 };
 
+enum TextureCompSel {
+    cTextureCompSel_0,
+    cTextureCompSel_1,
+    cTextureCompSel_R,
+    cTextureCompSel_G,
+    cTextureCompSel_B,
+    cTextureCompSel_A,
+};
+
 enum class TextureAttribute {};
 
 enum class MultiSampleType {};

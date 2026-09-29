@@ -63,7 +63,7 @@ protected:
 
     void pushBack(void* ptr) {
         const s32 idx = mPtrNum++;
-        SEAD_ASSERT_MSG(idx < mPtrNumMax, "index = %d, mPtrNumMax = %d", idx, mPtrNumMax.load());
+        SEAD_ASSERT_MSG(idx < mPtrNumMax, "index = %d, mPtrNumMax = %d", idx, mPtrNumMax);
         mPtrs[idx] = ptr;
     }
 
@@ -117,7 +117,7 @@ protected:
     void heapSort(CompareCallbackImpl cmp);
 
     sead::Atomic<s32> mPtrNum = 0;
-    sead::Atomic<s32> mPtrNumMax = 0;
+    s32 mPtrNumMax = 0;
     void** mPtrs = nullptr;
 };
 
@@ -149,9 +149,15 @@ public:
     using CompareCallback = s32 (*)(const T*, const T*);
 
     void sort() { AtomicPtrArrayImpl::sort(compareT); }
-    void sort(CompareCallback cmp) { AtomicPtrArrayImpl::sort(cmp); }
+    void sort(CompareCallback cmp)
+    {
+        AtomicPtrArrayImpl::sort(reinterpret_cast<CompareCallbackImpl>(cmp));
+    }
     void heapSort() { AtomicPtrArrayImpl::heapSort(compareT); }
-    void heapSort(CompareCallback cmp) { AtomicPtrArrayImpl::heapSort(cmp); }
+    void heapSort(CompareCallback cmp)
+    {
+        AtomicPtrArrayImpl::heapSort(reinterpret_cast<CompareCallbackImpl>(cmp));
+    }
 
     bool equal(const AtomicPtrArray& other, CompareCallback cmp) const {
         return AtomicPtrArrayImpl::equal(other, cmp);

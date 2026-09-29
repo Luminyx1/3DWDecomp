@@ -82,7 +82,7 @@ public:
     void genMessageParameter(sead::hostio::Context* pContext, const sead::SafeString& rLabel);
 
     virtual void writeToXML(sead::XmlElement* element, sead::Heap* heap) const;
-    virtual bool readFromXML(const sead::XmlElement& element, bool x);
+    virtual s32 readFromXML(const sead::XmlElement& element, bool x);
 
     virtual ParameterType getParameterType() const = 0;
     virtual const void* ptr() const = 0;
@@ -376,7 +376,7 @@ public:
     void copyUnsafe(const ParameterBase& other) override;
 
     void writeToXML(sead::XmlElement* element, sead::Heap* heap) const override;
-    bool readFromXML(const sead::XmlElement& element, bool x) override;
+    s32 readFromXML(const sead::XmlElement& element, bool x) override;
 
     ParameterType getParameterType() const override;
 

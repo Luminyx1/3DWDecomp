@@ -108,13 +108,6 @@ static void getName_(sead::BufferedSafeString* pName, u32 hash,
     pName->format("0x%08x", hash);
 }
 
-template <typename T>
-static void dumpBuffer_(ResParameter param)
-{
-    ParameterBuffer<T> buffer;
-    buffer.postApplyResource_(param.getData<void>(), param.getDataSize());
-}
-
 void ResParameterList::dump(s32 indent, const sead::TreeMap<u32, const char*>* pNameTable) const
 {
     sead::FixedSafeString<32> name;
@@ -122,7 +115,7 @@ void ResParameterList::dump(s32 indent, const sead::TreeMap<u32, const char*>* p
 
     for (auto it = listBegin(), end = listEnd(); it != end; ++it)
     {
-        (*it).dump(++indent, pNameTable);
+        (*it).dump(indent + 1, pNameTable);
     }
 
     for (auto obj_it = objBegin(), obj_end = objEnd(); obj_it != obj_end; ++obj_it)
@@ -130,25 +123,37 @@ void ResParameterList::dump(s32 indent, const sead::TreeMap<u32, const char*>* p
         const ResParameterObj obj = *obj_it;
         getName_(&name, obj.getParameterObjNameHash(), pNameTable);
 
-        for (auto it = obj.begin(), end = obj.end(); it != end; ++it)
+        for (s32 i = 0; i < obj.getNum(); ++i)
         {
-            const ResParameter param = *it;
+            const ResParameter param = obj.getResParameter(i);
             getName_(&name, param.getParameterNameHash(), pNameTable);
 
             switch (ParameterType(param.ptr()->getType()))
             {
             case ParameterType::BufferInt:
-                dumpBuffer_<s32>(param);
+            {
+                ParameterBuffer<s32> buffer;
+                buffer.postApplyResource_(param.getData<void>(), param.getDataSize());
                 break;
+            }
             case ParameterType::BufferF32:
-                dumpBuffer_<f32>(param);
+            {
+                ParameterBuffer<f32> buffer;
+                buffer.postApplyResource_(param.getData<void>(), param.getDataSize());
                 break;
+            }
             case ParameterType::BufferU32:
-                dumpBuffer_<u32>(param);
+            {
+                ParameterBuffer<u32> buffer;
+                buffer.postApplyResource_(param.getData<void>(), param.getDataSize());
                 break;
+            }
             case ParameterType::BufferBinary:
-                dumpBuffer_<u8>(param);
+            {
+                ParameterBuffer<u8> buffer;
+                buffer.postApplyResource_(param.getData<void>(), param.getDataSize());
                 break;
+            }
             default:
                 break;
             }
@@ -240,14 +245,14 @@ ResParameterArchive::ResParameterArchive(const void* pData)
 
     u8* lists = reinterpret_cast<u8*>(data) + sizeof(ResParameterArchiveData) + data->offset_to_pio;
     const size_t lists_size = data->num_lists * sizeof(ResParameterListData);
-    const size_t objs_size = data->num_objects * sizeof(ResParameterObjData);
-    const size_t params_size = data->num_parameters * sizeof(ResParameterData);
-    const size_t data_size = data->data_section_size;
-    const u32 string_size = data->string_section_size;
     u8* objs = lists + lists_size;
+    const size_t objs_size = data->num_objects * sizeof(ResParameterObjData);
     u8* params = objs + objs_size;
+    const size_t params_size = data->num_parameters * sizeof(ResParameterData);
     u8* data_section = params + params_size;
+    const size_t data_size = data->data_section_size;
     char* strings = reinterpret_cast<char*>(data_section + data_size);
+    const u32 string_size = data->string_section_size;
     u8* unk = reinterpret_cast<u8*>(strings + string_size);
 
     if (!is_little_endian)
@@ -286,8 +291,8 @@ ResParameterArchive::ResParameterArchive(const void* pData)
             const s32 length = sead::SafeString(strings).calcLength();
             if (length > 0)
             {
-                sead::Heap* heap = detail::PrivateResource::instance()->getWorkHeap();
                 const s32 utf16_length = length + 1;
+                sead::Heap* heap = detail::PrivateResource::instance()->getWorkHeap();
                 auto* utf16 = new (heap) char16[utf16_length];
                 const s32 utf8_length = utf16_length * 2;
                 auto* utf8 = new (heap) char[utf8_length];

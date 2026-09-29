@@ -17,6 +17,7 @@ class PrivateResource : public sead::hostio::Node {
 public:
     sead::Heap* getWorkHeap() const { return mWorkHeap; }
     sead::Heap* getDebugHeap() const { return mDebugHeap; }
+    sead::Heap* getShaderTextHeap() const { return static_cast<sead::Heap*>(_30); }
 
 private:
     static void debugPrintFn(const sead::SafeString& str);

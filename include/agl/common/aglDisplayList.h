@@ -68,6 +68,14 @@ public:
     u32 getValidSize() const { return mValidSize; }
     bool isValid() const { return mFlags.isOn(cFlag_Valid); }
     bool isRecording() const { return mFlags.isOn(cFlag_Recording); }
+    u32 getControlMemoryUsed() const { return mControlMemoryUsed; }
+    const char* getName() const { return mName; }
+    void setName(const char* pName) { mName = pName; }
+    void invalidate() { mFlags.reset(cFlag_Valid | cFlag_Recorded); }
+    bool isUserControlMemory() const { return mFlags.isOn(cFlag_UserControlMemory); }
+    void* getControlMemory() const { return mControlMemory; }
+    NVNcommandHandle getHandle() const { return mHandle; }
+    const NVNcommandHandle* getHandlePtr() const { return &mHandle; }
 
 private:
     static void outOfMemoryCallback_(NVNcommandBuffer* pCommandBuffer,

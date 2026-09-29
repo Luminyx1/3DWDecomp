@@ -112,6 +112,8 @@ public:
         mOffset = offset;
         setDirty();
     }
+    void setFovy(f32 fovy) { setFovy_(fovy); }
+    const Vector2f& getOffsetDirect() const { return mOffset; }
 
 private:
     void setFovy_(f32 fovy);

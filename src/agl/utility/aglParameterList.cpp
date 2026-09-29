@@ -5,6 +5,8 @@
 #include "utility/aglParameter.h"
 #include "utility/aglParameterObj.h"
 #include "utility/aglParameterStringMgr.h"
+#include <xml/seadXmlElement.h>
+#include <xml/seadXmlUtil.h>
 #include "detail/aglPrivateResource.h"
 
 namespace agl::utl
@@ -205,6 +207,23 @@ bool IParameterList::isComplete(ResParameterList res, bool checkValues) const
 }
 
 /**
+ * Creates this list's XML element as a child of the given element.
+ * @param pElement parent element
+ * @param pHeap heap used for the element and its attributes
+ * @return the created element
+ */
+sead::XmlElement* IParameterList::createAttribute(sead::XmlElement* pElement,
+                                                  sead::Heap* pHeap) const
+{
+    sead::XmlElement* element =
+        sead::XmlUtil::createBackChildAndSetupElement(pElement, getTagName(), "", pHeap);
+    element->expandAttributeList(1, pHeap);
+    element->addAttribute(ParameterBase::getAttributeNameString(), getParameterListName(),
+                          pHeap);
+    return element;
+}
+
+/**
  * Returns the list's name (empty in release builds).
  * @return the list name
  */
@@ -224,6 +243,95 @@ sead::SafeString IParameterList::getParameterListName() const
 const char* IParameterList::getTagName()
 {
     return "param_list";
+}
+
+/**
+ * Writes this list with all child objects and lists to XML.
+ * @param pElement parent element
+ * @param pHeap heap used for the created elements
+ */
+void IParameterList::writeToXML(sead::XmlElement* pElement, sead::Heap* pHeap) const
+{
+    if (!preWrite_())
+    {
+        return;
+    }
+
+    sead::XmlElement* element = createAttribute(pElement, pHeap);
+    for (auto* obj = mpChildObjHead; obj; obj = obj->mNext)
+    {
+        obj->writeToXML(element, pHeap);
+    }
+    for (auto* list = mpChildListHead; list; list = list->mNext)
+    {
+        list->writeToXML(element, pHeap);
+    }
+    postWrite_();
+}
+
+/**
+ * Reads all child objects and lists from XML.
+ * @param rElement element holding the children
+ * @param x forwarded to the parameters' readFromXML
+ * @return number of parameters read, or -1 on a parse error
+ */
+s32 IParameterList::readFromXML(const sead::XmlElement& rElement, bool x)
+{
+    if (!preRead_())
+    {
+        return 0;
+    }
+
+    s32 count = 0;
+    for (const sead::XmlElement* child = rElement.child(); child != nullptr;
+         child = child->next())
+    {
+        const sead::SafeString name =
+            child->findAttributeValue(ParameterBase::getAttributeNameString());
+
+        for (auto* obj = mpChildObjHead; obj; obj = obj->mNext)
+        {
+            if (child->getName() != IParameterObj::getTagName())
+            {
+                continue;
+            }
+            if (name != obj->getParameterObjName())
+            {
+                continue;
+            }
+
+            const s32 result = obj->readFromXML(*child, x);
+            if (result == -1)
+            {
+                return -1;
+            }
+            count += result;
+            break;
+        }
+
+        for (auto* list = mpChildListHead; list; list = list->mNext)
+        {
+            if (child->getName() != getTagName())
+            {
+                continue;
+            }
+            if (name != list->getParameterListName())
+            {
+                continue;
+            }
+
+            const s32 result = list->readFromXML(*child, x);
+            if (result == -1)
+            {
+                return -1;
+            }
+            count += result;
+            break;
+        }
+    }
+
+    postRead_();
+    return count;
 }
 
 /**

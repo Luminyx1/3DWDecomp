@@ -19,6 +19,21 @@ class Worker;
 
 SEAD_ENUM(SyncType, cNoSync, cCore, cThread)
 
+#ifdef SEAD_DEBUG
+using PerfJobQueueBar = MultiProcessMeterBar<512>;
+using PerfJobQueueTotalBar = MultiProcessMeterBar<1>;
+#else
+// Release builds strip process meter bars down to their name.
+class PerfJobQueueBar : public INamable
+{
+public:
+    void measureBegin(const Color4f&) {}
+    void measureEnd() {}
+    void setColor(const Color4f&) {}
+};
+using PerfJobQueueTotalBar = PerfJobQueueBar;
+#endif
+
 class PerfJobQueue
 {
 public:
@@ -36,9 +51,11 @@ public:
     void detachProcessMeter();
 
 private:
-    Buffer<MultiProcessMeterBar<512>> mBars;
+    static s32 getCurrentCoreIdx_() { return CoreInfo::getCurrentCoreId(); }
+
+    Buffer<PerfJobQueueBar> mBars;
     Buffer<u32> mInts;
-    MultiProcessMeterBar<1> mProcessMeterBar;
+    PerfJobQueueTotalBar mProcessMeterBar;
 };
 
 class JobQueueLock
@@ -112,15 +129,12 @@ protected:
     CoreIdMask mMask;
     Event mFinishEvent{true};
     SafeArray<u32, 3> mGranularity;
-    SafeArray<u32, 3> mCoreEnabled;
+    SafeArray<volatile u32, 3> mCoreEnabled;
     Atomic<u32> mNumDoneJobs = 0;
 
-    Atomic<Status> mStatus = Status::_0;
+    Atomic<Status> mStatus{AtomicDirectInitTag{}, Status::_0};
     const char* mDescription = "NoName";
-
-#ifdef SEAD_DEBUG
     PerfJobQueue mPerf;
-#endif
 };
 
 class FixedSizeJQ : public JobQueue
@@ -153,6 +167,5 @@ protected:
     Buffer<Job*> mJobs;
     u32 mNumJobs;
     u32 mNumProcessedJobs;
-    bool _230;
 };
 }  // namespace sead

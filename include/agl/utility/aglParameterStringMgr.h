@@ -16,6 +16,7 @@ class ParameterStringMgr : public sead::hostio::Node {
 public:
     void initialize(sead::Heap* pHeap);
     const char* appendString(const sead::SafeString& rString);
+    sead::Heap* getHeap() const { return mHeap; }
 
     void genMessage(sead::hostio::Context* pContext);
     void listenPropertyEvent(const sead::hostio::PropertyEvent* pEvent);

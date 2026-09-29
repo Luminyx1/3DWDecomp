@@ -29,9 +29,9 @@
 # ---- hand-maintained units (tools/gen_splits.py never touches these) ----
 
 # LibMessageStudio (MSBT runtime, part of sead), plain C
-src/sead/lms/lms_message.c:
+src/sead/lms/lms_message.c: done
     .text   start:0x006B2490 end:0x006B2CC0
-src/sead/lms/lms_analyze.c:
+src/sead/lms/lms_analyze.c: done
     .text   start:0x006B2CC0 end:0x006B3050
 src/sead/lms/lms_memory.c: done
     .text   start:0x006B3050 end:0x006B3160
@@ -3876,10 +3876,12 @@ src/sead/filedevice/seadFileDevice.cpp: done
     .text   start:0x00652F70 end:0x0065575C
 src/sead/filedevice/seadFileDeviceMgr.cpp: done
     .text   start:0x00655760 end:0x00656848
-src/sead/filedevice/seadMainFileDevice.cpp:
-    .text   start:0x00656850 end:0x006572C4
+src/sead/filedevice/seadMainFileDevice.cpp: done
+    .text   start:0x00656850 end:0x00656E0C
+src/sead/filedevice/nin/seadNinContentFileDevice.cpp:
+    .text   start:0x00656E10 end:0x0065713C
 src/sead/filedevice/nin/seadNinFileDeviceBaseNin.cpp:
-    .text   start:0x006572D0 end:0x006581CC
+    .text   start:0x00657140 end:0x006581CC
 src/sead/filedevice/seadPath.cpp: done
     .text   start:0x006581D0 end:0x00659BFC
 src/sead/framework/nx/seadGameFrameworkNx.cpp:
@@ -3887,31 +3889,29 @@ src/sead/framework/nx/seadGameFrameworkNx.cpp:
 src/sead/framework/nx/seadPerformanceMgrNx.cpp:
     .text   start:0x0065B720 end:0x0065B8D8
 src/sead/framework/nx/seadFramework.cpp:
-    .text   start:0x0065B8E0 end:0x0065BECC
-src/sead/framework/nx/seadMethodTreeNode.cpp:
-    .text   start:0x0065BED0 end:0x0065C0CC
+    .text   start:0x0065B8E0 end:0x0065C0CC
 src/sead/framework/seadGameFramework.cpp: done
     .text   start:0x0065C0D0 end:0x0065C97C
 src/sead/framework/seadMethodTree.cpp: done
     .text   start:0x0065C980 end:0x0065CCA0
 src/sead/container/seadTreeNode.cpp: done
     .text   start:0x0065CCA0 end:0x0065D1F4
-src/sead/framework/seadProcessMeter.cpp:
+src/sead/framework/seadProcessMeter.cpp: done
     .text   start:0x0065D200 end:0x0065D370
 src/sead/framework/seadSingleScreenMethodTreeMgr.cpp:
     .text   start:0x0065D370 end:0x0065DDC4
-src/sead/framework/seadMethodTreeMgr.cpp:
+src/sead/framework/seadMethodTreeMgr.cpp: done
     .text   start:0x0065DDD0 end:0x0065DF0C
-src/sead/framework/seadTask.cpp:
+src/sead/framework/seadTask.cpp: done
     .text   start:0x0065DF10 end:0x0065E954
 src/sead/framework/seadTaskBase.cpp: done
     .text   start:0x0065E960 end:0x0065F734
 src/sead/framework/seadTaskMgr.cpp:
     .text   start:0x0065F740 end:0x00661AC8
-src/sead/framework/seadFaderTaskBase.cpp:
-    .text   start:0x00661AD0 end:0x00661DCC
-src/sead/framework/seadFaderTask.cpp:
-    .text   start:0x00661DD0 end:0x006636A0
+src/sead/framework/seadFaderTask.cpp: done
+    .text   start:0x00661AD0 end:0x00663634
+src/sead/framework/seadTaskID.cpp: done
+    .text   start:0x00663640 end:0x006636A0
 src/sead/gfx/nvn/seadDebugFontMgrJis1Nvn.cpp:
     .text   start:0x006636A0 end:0x006643C8
 src/sead/gfx/nvn/seadDebugFontMgrNvn.cpp:
@@ -3922,7 +3922,7 @@ src/sead/gfx/nvn/seadGraphicsNvn.cpp:
     .text   start:0x00666020 end:0x00666850
 src/sead/gfx/nvn/seadPrimitiveDrawMgrNvn.cpp:
     .text   start:0x00666850 end:0x0066847C
-src/sead/gfx/nvn/seadDrawContext.cpp:
+src/sead/gfx/nvn/seadDrawContext.cpp: done
     .text   start:0x00668480 end:0x006686AC
 src/sead/gfx/nvn/seadPrimitiveDrawer.cpp:
     .text   start:0x006686B0 end:0x0066AE3C
@@ -3930,7 +3930,7 @@ src/sead/heap/seadDisposer.cpp: done
     .text   start:0x0066AE40 end:0x0066AFE4
 src/sead/heap/seadExpHeap.cpp:
     .text   start:0x0066AFF0 end:0x0066E7EC
-src/sead/heap/seadFrameHeap.cpp:
+src/sead/heap/seadFrameHeap.cpp: done
     .text   start:0x0066E7F0 end:0x0066FC7C
 src/sead/heap/seadHeap.cpp: done
     .text   start:0x0066FC80 end:0x006713D4
@@ -4018,7 +4018,7 @@ src/sead/gfx/seadDrawLockContext.cpp:
     .text   start:0x00697110 end:0x00697164
 src/sead/gfx/seadGraphicsContext.cpp:
     .text   start:0x00697170 end:0x00697B74
-src/sead/gfx/seadPrimitiveRenderer.cpp:
+src/sead/gfx/seadPrimitiveRenderer.cpp: done
     .text   start:0x00697B80 end:0x006981F8
 src/sead/gfx/seadProjection.cpp:
     .text   start:0x00698200 end:0x0069A8EC
@@ -4051,7 +4051,13 @@ src/sead/time/seadTickSpan.cpp: done
 src/sead/mc/seadCoreInfo.cpp: done
     .text   start:0x006A3CF0 end:0x006A3F14
 src/sead/heap/seadSeparateHeap.cpp:
-    .text   start:0x006A3F20 end:0x006A5A74
+    .text   start:0x006A3F20 end:0x006A5328
+src/sead/codec/seadHashCRC16.cpp:
+    .text   start:0x006A5330 end:0x006A5654
+src/sead/codec/seadHashCRC32.cpp:
+    .text   start:0x006A5660 end:0x006A5988
+src/sead/basis/seadMemUtil.cpp:
+    .text   start:0x006A5990 end:0x006A5A74
 src/sead/xml/seadXmlElement.cpp: done
     .text   start:0x006A5A80 end:0x006A7C08
 src/sead/xml/seadXmlUtil.cpp: done
@@ -4061,25 +4067,43 @@ src/sead/filedevice/nin/seadNinHostIOFileDevice.cpp:
 src/sead/xml/seadXmlDocument.cpp:
     .text   start:0x006A8420 end:0x006AEB6C
 src/sead/framework/seadInfLoopChecker.cpp:
-    .text   start:0x006AEB70 end:0x006AF2F4
-src/sead/heap/seadUnitHeap.cpp:
-    .text   start:0x006AF300 end:0x006B0DAC
+    .text   start:0x006AEB70 end:0x006AF20C
+src/sead/heap/seadUnitHeap.cpp: done
+    .text   start:0x006AF210 end:0x006B045C
+src/sead/mc/seadJob.cpp: done
+    .text   start:0x006B0460 end:0x006B0464
 src/sead/mc/seadJobQueue.cpp:
-    .text   start:0x006B0DB0 end:0x006B1608
+    .text   start:0x006B0480 end:0x006B1608
 src/sead/resource/seadSharcArchiveRes.cpp: done
     .text   start:0x006B1610 end:0x006B248C
-src/sead/message/seadMessageSet.cpp:
+src/sead/message/seadMessageSet.cpp: done
     .text   start:0x006B3160 end:0x006B3360
 src/sead/controller/seadControllerWrapperBase.cpp: done
     .text   start:0x006B3360 end:0x006B37BC
 src/sead/controller/seadMaskControllerWrapper.cpp: done
     .text   start:0x006B37C0 end:0x006B3D58
 src/sead/system/seadSystem.cpp:
-    .text   start:0x006B3D60 end:0x006B4A3C
-src/sead/mc/seadWorkerMgr.cpp:
-    .text   start:0x006B4A40 end:0x006B5D0C
+    .text   start:0x006B3D60 end:0x006B3EF4
+src/sead/devenv/seadAssertConfig.cpp:
+    .text   start:0x006B3F00 end:0x006B41E8
+src/sead/basis/seadRawPrint.cpp: done
+    .text   start:0x006B41F0 end:0x006B4318
+src/sead/devenv/seadPrintConfig.cpp:
+    .text   start:0x006B4320 end:0x006B4638
+src/sead/basis/nin/seadRawPrintNin.cpp: done
+    .text   start:0x006B4640 end:0x006B4644
+src/sead/filedevice/nin/seadNinSaveFileDevice.cpp:
+    .text   start:0x006B4650 end:0x006B490C
+src/sead/mc/seadWorkerMgr.cpp: done
+    .text   start:0x006B4910 end:0x006B5548
+src/sead/mc/seadWorker.cpp:
+    .text   start:0x006B5550 end:0x006B5C68
 src/sead/resource/seadSZSDecompressor.cpp:
-    .text   start:0x006B5D10 end:0x006BB55C
+    .text   start:0x006B5C70 end:0x006B69B4
+src/sead/resource/seadParallelSZSDecompressor.cpp:
+    .text   start:0x006B69C0 end:0x006B74C0
+src/aal/seadaudio/seadAudioSettingParameter.cpp:
+    .text   start:0x006B74C0 end:0x006BB55C
 src/aal/seadaudio/seadAudioMgr.cpp:
     .text   start:0x006BB560 end:0x006BF2D8
 src/aal/seadaudio/seadAudioResetter.cpp:
@@ -4092,10 +4116,24 @@ src/sead/controller/nin/seadNinDebugPadDeviceNin.cpp: done
     .text   start:0x006C06A0 end:0x006C086C
 src/sead/controller/nin/seadNinDebugControllerNin.cpp: done
     .text   start:0x006C0870 end:0x006C0AC8
-src/sead/lms/lms_project.c:
+src/sead/lms/lms_project.c: done
     .text   start:0x006C0AD0 end:0x006C26E4
 src/sead/message/seadMessageProject.cpp:
-    .text   start:0x006C26F0 end:0x006C9370
+    .text   start:0x006C26F0 end:0x006C2A88
+src/aal/seadaudio/seadAudioFxDelayNin.cpp:
+    .text   start:0x006C2A90 end:0x006C372C
+src/sead/audio/seadAudioFxBaseNin.cpp:
+    .text   start:0x006C3730 end:0x006C3B4C
+src/sead/audio/seadAudioFxReverbHiNin.cpp:
+    .text   start:0x006C3B50 end:0x006C4AC4
+src/sead/audio/seadAudioFxReverbStdNin.cpp:
+    .text   start:0x006C4AD0 end:0x006C66F4
+src/sead/audio/seadAudioFxI3DL2ReverbNin.cpp:
+    .text   start:0x006C6700 end:0x006C8984
+src/sead/audio/seadAudioVolumeUtil.cpp:
+    .text   start:0x006C8990 end:0x006C8B74
+src/sead/audio/seadAudio3DActorNin.cpp:
+    .text   start:0x006C8B80 end:0x006C9370
 src/agl/common/aglDrawContext.cpp: done
     .text   start:0x006C9370 end:0x006C98AC
 src/agl/common/aglGPUMemAddr.cpp: done
@@ -4140,37 +4178,25 @@ src/agl/common/aglShaderLocation.cpp:
     .text   start:0x006D4AF0 end:0x006D5B0C
 src/agl/common/PrintFormatter.cpp:
     .text   start:0x006D5B10 end:0x006D5BE0
-src/agl/common/ShaderCompileInfo.cpp:
-    .text   start:0x006D5BE0 end:0x006D5C84
 src/agl/common/aglShaderCompileInfo.cpp:
-    .text   start:0x006D5C90 end:0x006D6CBC
-src/agl/common/ShaderProgram.cpp:
-    .text   start:0x006D6CC0 end:0x006D7AC0
+    .text   start:0x006D5BE0 end:0x006D6CBC
 src/agl/common/aglShaderProgram.cpp:
-    .text   start:0x006D7AC0 end:0x006DB048
-src/agl/common/Shader.cpp:
+    .text   start:0x006D6CC0 end:0x006DB048
+src/agl/common/aglShader.cpp: done
     .text   start:0x006DB050 end:0x006DB078
 src/agl/common/aglResShaderArchive.cpp:
     .text   start:0x006DB090 end:0x006DB664
 src/agl/common/aglResCommon.cpp: done
     .text   start:0x006DB670 end:0x006DB6E0
-src/agl/common/TextureData.cpp:
-    .text   start:0x006DB6E0 end:0x006DB81C
 src/agl/common/aglTextureData.cpp:
-    .text   start:0x006DB820 end:0x006DE00C
-src/agl/common/CompSel.cpp:
-    .text   start:0x006DE010 end:0x006DE080
-src/agl/common/Surface.cpp:
-    .text   start:0x006DE080 end:0x006DE138
-src/agl/detail/aglTextureDetail.cpp:
-    .text   start:0x006DE140 end:0x006DE598
+    .text   start:0x006DB6E0 end:0x006DE00C
+src/agl/detail/aglTextureDetail.cpp: done
+    .text   start:0x006DE010 end:0x006DE598
 src/agl/detail/SamplerObject.cpp:
     .text   start:0x006DE5A0 end:0x006DE5C8
-src/agl/detail/TextureDataImageAccessor.cpp:
-    .text   start:0x006DE5D0 end:0x006DE9CC
 src/agl/common/aglTextureDataImageAccessor.cpp:
-    .text   start:0x006DE9D0 end:0x006DF580
-src/agl/common/TextureFormatInfo.cpp:
+    .text   start:0x006DE5D0 end:0x006DF580
+src/agl/common/aglTextureFormatInfo.cpp:
     .text   start:0x006DF580 end:0x006DF754
 src/agl/common/aglTextureSampler.cpp: done
     .text   start:0x006DF760 end:0x006DFCD4
@@ -4208,16 +4234,12 @@ src/agl/utility/PrimitiveTexture.cpp:
     .text   start:0x00704950 end:0x00704A3C
 src/agl/utility/aglPrimitiveTexture.cpp:
     .text   start:0x00704A40 end:0x00705434
-src/agl/utility/PrimitiveVertex.cpp:
-    .text   start:0x00705440 end:0x0070552C
-src/agl/utility/aglPrimitiveVertex.cpp:
-    .text   start:0x00705530 end:0x00705A94
+src/agl/utility/aglPrimitiveVertex.cpp: done
+    .text   start:0x00705440 end:0x00705A94
 src/agl/utility/aglResParameter.cpp:
     .text   start:0x00705AA0 end:0x0070670C
-src/agl/utility/TextureMemoryAllocator.cpp:
-    .text   start:0x00706710 end:0x00706820
 src/agl/utility/aglTextureMemoryAllocator.cpp:
-    .text   start:0x00706820 end:0x00707690
+    .text   start:0x00706710 end:0x00707690
 src/agl/utility/VertexAttributeHolder.cpp:
     .text   start:0x00707690 end:0x00707D2C
 src/agl/g3d/aglModelShaderAssign.cpp:
@@ -4244,16 +4266,10 @@ src/agl/utility/ShaderHolder.cpp:
     .text   start:0x00715E30 end:0x00715F1C
 src/agl/detail/aglShaderHolder.cpp:
     .text   start:0x00715F20 end:0x0071AD24
-src/agl/detail/ShaderProgramArchive.cpp:
-    .text   start:0x0071AD30 end:0x0071AF04
 src/agl/common/aglShaderProgramArchive.cpp:
-    .text   start:0x0071AF10 end:0x00720038
-src/agl/common/ResBinaryShaderArchiveData.cpp:
-    .text   start:0x00720040 end:0x0072006C
+    .text   start:0x0071AD30 end:0x00720038
 src/agl/common/aglResBinaryShaderArchive.cpp:
-    .text   start:0x00720070 end:0x007206E4
-src/agl/common/ResShaderBinary.cpp:
-    .text   start:0x007206F0 end:0x00720AF8
+    .text   start:0x00720040 end:0x00720AF8
 src/agl/effect/aglStar.cpp:
     .text   start:0x00720B00 end:0x007222FC
 src/agl/effect/Sky.cpp:
@@ -4266,10 +4282,8 @@ src/agl/utility/aglParameterList.cpp:
     .text   start:0x0072AF50 end:0x0072CA1C
 src/agl/detail/aglShaderTextUtil.cpp:
     .text   start:0x0072CA20 end:0x007331D4
-src/agl/detail/TextureDataUtil.cpp:
-    .text   start:0x007331E0 end:0x00733250
 src/agl/detail/aglTextureDataUtil.cpp:
-    .text   start:0x00733250 end:0x007336F4
+    .text   start:0x007331E0 end:0x007336F4
 src/agl/detail/shtxt.cpp:
     .text   start:0x00733700 end:0x007341C4
 src/agl/shader_text/aglShaderTextPreprocessor.cpp:
@@ -4304,40 +4318,26 @@ src/agl/postfx/DynamicTextureCache.cpp:
     .text   start:0x00747980 end:0x00747D80
 src/agl/utility/aglDynamicTextureCache.cpp:
     .text   start:0x00747D80 end:0x0074872C
-src/agl/utility/Renderer.cpp:
-    .text   start:0x00748730 end:0x0074881C
 src/agl/layer/aglRenderer.cpp:
-    .text   start:0x00748820 end:0x0074A910
-src/agl/layer/RenderDisplay.cpp:
-    .text   start:0x0074A910 end:0x0074AD44
+    .text   start:0x00748730 end:0x0074A910
 src/agl/layer/aglRenderDisplay.cpp:
-    .text   start:0x0074AD50 end:0x0074D384
-src/agl/layer/aglRenderInfo.cpp:
+    .text   start:0x0074A910 end:0x0074D384
+src/agl/layer/aglRenderInfo.cpp: done
     .text   start:0x0074D390 end:0x0074D4DC
-src/agl/layer/Layer.cpp:
-    .text   start:0x0074D4E0 end:0x0074D5D0
 src/agl/layer/aglLayer.cpp:
-    .text   start:0x0074D5D0 end:0x00750984
-src/agl/layer/RenderStep.cpp:
-    .text   start:0x00750990 end:0x00750B04
+    .text   start:0x0074D4E0 end:0x00750984
 src/agl/layer/aglRenderStep.cpp:
-    .text   start:0x00750B10 end:0x00750D64
-src/agl/layer/DrawMethod.cpp:
+    .text   start:0x00750990 end:0x00750D64
+src/agl/layer/aglDrawMethod.cpp: done
     .text   start:0x00750D70 end:0x00750E78
 src/agl/detail/aglSeadUtil.cpp:
     .text   start:0x00750E80 end:0x007516BC
-src/agl/detail/RenderDLBuffer.cpp:
-    .text   start:0x007516C0 end:0x00751864
 src/agl/layer/aglRenderDLBuffer.cpp:
-    .text   start:0x00751870 end:0x007521F0
-src/agl/layer/RenderDL.cpp:
-    .text   start:0x007521F0 end:0x00752274
-src/agl/layer/aglRenderDL.cpp:
-    .text   start:0x00752280 end:0x007522E4
-src/agl/layer/LayerJob.cpp:
-    .text   start:0x007522F0 end:0x00752364
-src/agl/layer/aglLayerJob.cpp:
-    .text   start:0x00752370 end:0x00752620
+    .text   start:0x007516C0 end:0x007521F0
+src/agl/layer/aglRenderDL.cpp: done
+    .text   start:0x007521F0 end:0x007522E4
+src/agl/layer/aglLayerJob.cpp: done
+    .text   start:0x007522F0 end:0x00752620
 src/agl/detail/aglAtomicPtrArray.cpp:
     .text   start:0x00752620 end:0x00752A40
 src/agl/detail/fctr.cpp:
@@ -4402,30 +4402,26 @@ src/agl/effect/aglOcclusionRenderer.cpp:
     .text   start:0x0078FB60 end:0x00791898
 src/agl/effect/GPUCache.cpp:
     .text   start:0x007918A0 end:0x007918B8
-src/agl/effect/env.cpp:
-    .text   start:0x007918C0 end:0x00791E90
-src/agl/environment/aglEnvObj.cpp:
-    .text   start:0x00791EB0 end:0x00792EB4
-src/agl/environment/INamedObjIndex.cpp:
+src/agl/environment/aglEnvObj.cpp: done
+    .text   start:0x007918C0 end:0x00792EB4
+src/agl/utility/aglNamedObjIndex.cpp: done
     .text   start:0x00792EC0 end:0x00793920
-src/agl/environment/INamedObj.cpp:
-    .text   start:0x00793920 end:0x00793B10
+src/agl/environment/aglNamedObj.cpp:
+    .text   start:0x00793920 end:0x00793A08
 src/agl/environment/aglEnvObjMgr.cpp:
-    .text   start:0x00793B10 end:0x007960E8
+    .text   start:0x00793A10 end:0x007960A4
 src/agl/environment/aglEnvObjBuffer.cpp:
-    .text   start:0x007960F0 end:0x00796F58
+    .text   start:0x007960B0 end:0x00796C04
 src/agl/environment/aglEnvObjSet.cpp:
-    .text   start:0x00796F60 end:0x007987AC
-src/agl/environment/INamedObjMgr.cpp:
+    .text   start:0x00796C10 end:0x007987AC
+src/agl/utility/aglNamedObjMgr.cpp:
     .text   start:0x007987B0 end:0x0079A0E0
-src/agl/environment/RadialBlur.cpp:
-    .text   start:0x0079A0E0 end:0x0079A898
 src/agl/effect/aglRadialBlur.cpp:
-    .text   start:0x0079A8A0 end:0x0079CCF0
+    .text   start:0x0079A0E0 end:0x0079C968
 src/agl/environment/aglCubeMap.cpp:
-    .text   start:0x0079CCF0 end:0x0079FF38
+    .text   start:0x0079C970 end:0x0079F094
 src/agl/shadow/aglDepthShadow.cpp:
-    .text   start:0x0079FF40 end:0x007A3DC0
+    .text   start:0x0079F0A0 end:0x007A3DC0
 src/agl/shadow/aglDepthShadowUnit.cpp:
     .text   start:0x007A3DC0 end:0x007A705C
 src/agl/shadow/aglShadowFrustum.cpp:

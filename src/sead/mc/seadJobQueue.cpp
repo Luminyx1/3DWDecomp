@@ -1,21 +1,30 @@
 #include <atomic>
 
 #include "basis/seadRawPrint.h"
-#include "framework/seadProcessMeter.h"
 #include "mc/seadJobQueue.h"
 #include "mc/seadWorker.h"
 #include "prim/seadScopedLock.h"
 
 namespace sead
 {
-// NON_MATCHING
+/**
+ * Constructs a job queue with every core disabled and a granularity of 8.
+ */
 JobQueue::JobQueue()
 {
-    mCoreEnabled.fill(0);
-    mNumDoneJobs = 0;
+    for (auto& enabled : mCoreEnabled.mBuffer)
+    {
+        enabled = 0;
+    }
+
+    mNumDoneJobs.storeNonAtomic(0);
     mGranularity.fill(8);
 }
 
+/**
+ * Runs jobs until the whole queue has been processed.
+ * @param pFinishedJobs Receives the number of jobs run.
+ */
 void JobQueue::runAll(u32* pFinishedJobs)
 {
     const u32 size = getNumJobs();
@@ -33,6 +42,10 @@ void JobQueue::runAll(u32* pFinishedJobs)
     SEAD_ASSERT(*pFinishedJobs == size);
 }
 
+/**
+ * Checks whether every participating core has finished.
+ * @return true if no core is still marked as enabled.
+ */
 bool JobQueue::isAllParticipantThrough() const
 {
     for (auto value : mCoreEnabled.mBuffer)
@@ -45,11 +58,20 @@ bool JobQueue::isAllParticipantThrough() const
     return true;
 }
 
+/**
+ * Sets how many jobs one core takes at a time.
+ * @param core Core to configure.
+ * @param x Number of jobs per batch; 0 is treated as 1.
+ */
 void JobQueue::setGranularity(CoreId core, u32 x)
 {
     mGranularity[core] = x ? x : 1;
 }
 
+/**
+ * Sets how many jobs every core takes at a time.
+ * @param x Number of jobs per batch; 0 is treated as 1.
+ */
 void JobQueue::setGranularity(u32 x)
 {
     for (s32 i = 0; i < mGranularity.size(); ++i)
@@ -58,7 +80,11 @@ void JobQueue::setGranularity(u32 x)
     }
 }
 
-// NON_MATCHING: CMP (AND x y), #0 gets optimized into a TST
+/**
+ * Selects the participating cores and the synchronisation mode.
+ * @param mask Cores that take part in running the queue.
+ * @param type How waiting on the queue is synchronised.
+ */
 void JobQueue::setCoreMaskAndWaitType(CoreIdMask mask, SyncType type)
 {
     mStatus = Status::_6;
@@ -71,6 +97,10 @@ void JobQueue::setCoreMaskAndWaitType(CoreIdMask mask, SyncType type)
     mSyncType = type;
 }
 
+/**
+ * Marks a core as finished and waits for the queue to complete.
+ * @param core Core that finished its work.
+ */
 void JobQueue::FINISH(CoreId core)
 {
     std::atomic_thread_fence(std::memory_order_seq_cst);
@@ -78,47 +108,64 @@ void JobQueue::FINISH(CoreId core)
     wait_AT_WORKER();
 }
 
+/**
+ * Waits for the queue to complete from a worker thread.
+ */
 void JobQueue::wait_AT_WORKER()
 {
     std::atomic_thread_fence(std::memory_order_seq_cst);
 
     switch (mSyncType)
     {
-    case SyncType::cCore:
-        if (!isDone_())
-        {
-            mFinishEvent.wait();
-        }
-        break;
-    case SyncType::cThread:
-        SEAD_ASSERT_MSG(false, "*NOT YET\n");
-        if (!isDone_())
-        {
-            mFinishEvent.wait();
-        }
-        break;
-    default:
-        break;
+        case SyncType::cCore:
+            if (!isDone_())
+            {
+                mFinishEvent.wait();
+            }
+            break;
+        case SyncType::cThread:
+            SEAD_ASSERT_MSG(false, "*NOT YET\n");
+            if (!isDone_())
+            {
+                mFinishEvent.wait();
+            }
+            break;
+        default:
+            break;
     }
 }
 
+/**
+ * Waits for the queue to complete.
+ */
 void JobQueue::wait()
 {
-    if (u32(mSyncType) >= 2)
+    switch (mSyncType)
     {
-        if (mSyncType != SyncType::cThread)
-        {
-            return;
-        }
-        SEAD_ASSERT_MSG(false, "NOT IMPLEMENTED.\n");
-    }
-    if (!isDone_())
-    {
-        mFinishEvent.wait();
+        case SyncType::cNoSync:
+        case SyncType::cCore:
+            if (!isDone_())
+            {
+                mFinishEvent.wait();
+            }
+            break;
+        case SyncType::cThread:
+            SEAD_ASSERT_MSG(false, "NOT IMPLEMENTED.\n");
+            if (!isDone_())
+            {
+                mFinishEvent.wait();
+            }
+            break;
+        default:
+            break;
     }
 }
 
-// NON_MATCHING: stack
+/**
+ * Allocates the per-core bars and counters.
+ * @param pName Name given to the process meter bar.
+ * @param pHeap Heap used for the per-core buffers.
+ */
 void PerfJobQueue::initialize(const char* pName, Heap* pHeap)
 {
     mBars.allocBufferAssert(CoreInfo::getNumCores(), pHeap);
@@ -131,19 +178,25 @@ void PerfJobQueue::initialize(const char* pName, Heap* pHeap)
 
     for (s32 i = 0; i < mBars.size(); ++i)
     {
-        mBars[i].setName(CoreId(i).text());
+        mBars[i].setName("?");
     }
 
     mProcessMeterBar.setColor({1, 1, 0, 1});
     mProcessMeterBar.setName(pName);
 }
 
+/**
+ * Frees the per-core bars and counters.
+ */
 void PerfJobQueue::finalize()
 {
     mInts.freeBuffer();
     mBars.freeBuffer();
 }
 
+/**
+ * Resets the per-core colour counters.
+ */
 void PerfJobQueue::reset()
 {
     for (s32 i = 0; i < mInts.size(); ++i)
@@ -152,33 +205,43 @@ void PerfJobQueue::reset()
     }
 }
 
-// NON_MATCHING: stack
+/**
+ * Starts measuring job dequeuing on the current core.
+ */
 void PerfJobQueue::measureBeginDeque()
 {
-    auto& bar = mBars[CoreInfo::getCurrentCoreId()];
-    static_cast<void>(mInts[CoreInfo::getCurrentCoreId()]);
+    auto& bar = mBars[getCurrentCoreIdx_()];
+    auto& idx = mInts[getCurrentCoreIdx_()];
+    static_cast<void>(idx);
     bar.measureBegin(Color4f::cWhite);
 }
 
+/**
+ * Stops measuring job dequeuing on the current core.
+ */
 void PerfJobQueue::measureEndDeque()
 {
-    mBars[CoreInfo::getCurrentCoreId()].measureEnd();
+    mBars[getCurrentCoreIdx_()].measureEnd();
 }
 
+// NON_MATCHING: inlined getBarColor references lbl_ symbols in the target
 void PerfJobQueue::measureBeginRun()
 {
-    auto& bar = mBars[CoreInfo::getCurrentCoreId()];
-    auto& idx = mInts[CoreInfo::getCurrentCoreId()];
+    auto& bar = mBars[getCurrentCoreIdx_()];
+    auto& idx = mInts[getCurrentCoreIdx_()];
     bar.measureBegin(getBarColor(idx));
     idx = (idx + 1) % 9;
 }
 
+/**
+ * Stops measuring job execution on the current core.
+ */
 void PerfJobQueue::measureEndRun()
 {
-    mBars[CoreInfo::getCurrentCoreId()].measureEnd();
+    mBars[getCurrentCoreIdx_()].measureEnd();
 }
 
-// NON_MATCHING: loading sColors...
+// NON_MATCHING: sColors and its guard are lbl_ symbols in the target
 const Color4f& PerfJobQueue::getBarColor(u32 idx) const
 {
     static const SafeArray<Color4f, 9> sColors = {{
@@ -189,63 +252,44 @@ const Color4f& PerfJobQueue::getBarColor(u32 idx) const
         {1.0, 0.6000000238418579, 0.0, 1.0},
         {1.0, 0.6980392336845398, 0.250980406999588, 1.0},
         {0.6901960968971252, 0.1725490242242813, 0.29411765933036804, 1.0},
-        {0.0, 0.9176470637321472, 0.21568627655506134, 1.0},
+        {0.9176470637321472, 0.0, 0.21568627655506134, 1.0},
         {0.9607843160629272, 0.239215686917305, 0.40784314274787903, 1.0},
     }};
     return sColors.mBuffer[idx];
 }
 
-void PerfJobQueue::attachProcessMeter()
-{
-    if (!ProcessMeter::instance())
-    {
-        return;
-    }
+/**
+ * Attaches the bars to the process meter; does nothing in release builds.
+ */
+void PerfJobQueue::attachProcessMeter() {}
 
-    for (s32 i = 0; i < mBars.size(); ++i)
-    {
-        ProcessMeter::instance()->attachProcessMeterBar(&mBars[i]);
-    }
+/**
+ * Detaches the bars from the process meter; does nothing in release builds.
+ */
+void PerfJobQueue::detachProcessMeter() {}
 
-    ProcessMeter::instance()->attachProcessMeterBar(&mProcessMeterBar);
-}
-
-void PerfJobQueue::detachProcessMeter()
-{
-    if (!ProcessMeter::instance())
-    {
-        return;
-    }
-
-    for (s32 i = 0; i < mBars.size(); ++i)
-    {
-        ProcessMeter::instance()->detachProcessMeterBar(&mBars[i]);
-    }
-
-    ProcessMeter::instance()->detachProcessMeterBar(&mProcessMeterBar);
-}
-
+/**
+ * Constructs an empty fixed-size job queue.
+ */
 FixedSizeJQ::FixedSizeJQ()
 {
-    _230 = true;
-    mStatus = Status::_0;
+    mStatus.storeNonAtomic(Status::_0);
     mNumJobs = 0;
     mNumProcessedJobs = 0;
 }
 
+/**
+ * Prepares the queue for running; nothing to do for a fixed-size queue.
+ */
 void FixedSizeJQ::begin() {}
 
-// TODO: Splatoon 2 and BotW sead have a different implementation which checks _230 and the current
-// core number...
+// NON_MATCHING: register allocation and scheduling of begin/end
 bool FixedSizeJQ::run(u32 size, u32* pFinishedJobs, Worker* pWorker)
 {
     *pFinishedJobs = 0;
 
-#ifdef SEAD_DEBUG
     mPerf.measureBeginDeque();
-#endif
     u32 num_finished = 0;
-    // NON_MATCHING: Clang refuses to materialize these variables here...
     bool ret = true;
     s32 begin = 0;
     s32 end = -1;
@@ -268,17 +312,13 @@ bool FixedSizeJQ::run(u32 size, u32* pFinishedJobs, Worker* pWorker)
         num_finished = std::min(num_jobs - begin, size);
 
         mNumProcessedJobs = num_finished + begin;
-        mLock.unlock();
         end = num_finished + begin - 1;
+        mLock.unlock();
         ret = num_finished + begin >= num_jobs;
     }
-#ifdef SEAD_DEBUG
     mPerf.measureEndDeque();
-#endif
 
-#ifdef SEAD_DEBUG
     mPerf.measureBeginRun();
-#endif
     if (pWorker)
     {
         pWorker->setState(Worker::State::cRunning_Run);
@@ -293,9 +333,7 @@ bool FixedSizeJQ::run(u32 size, u32* pFinishedJobs, Worker* pWorker)
     {
         pWorker->setState(Worker::State::cRunning_AfterRun);
     }
-#ifdef SEAD_DEBUG
     mPerf.measureEndRun();
-#endif
 
     if (ret)
     {
@@ -316,11 +354,14 @@ bool FixedSizeJQ::run(u32 size, u32* pFinishedJobs, Worker* pWorker)
     return ret;
 }
 
+/**
+ * Allocates storage for the jobs.
+ * @param size Maximum number of jobs.
+ * @param pHeap Heap used for the job array.
+ */
 void FixedSizeJQ::initialize(u32 size, Heap* pHeap)
 {
-#ifdef SEAD_DEBUG
     mPerf.initialize(getName().cstr(), pHeap);
-#endif
 
     ScopedLock<JobQueueLock> lock(&mLock);
     mJobs.allocBufferAssert(size, pHeap);
@@ -329,14 +370,20 @@ void FixedSizeJQ::initialize(u32 size, Heap* pHeap)
     mStatus = Status::_1;
 }
 
+/**
+ * Frees the job storage.
+ */
 void FixedSizeJQ::finalize()
 {
-#ifdef SEAD_DEBUG
     mPerf.finalize();
-#endif
     mJobs.freeBuffer();
 }
 
+/**
+ * Adds a job without locking.
+ * @param pJob Job to add.
+ * @return false if the queue is full.
+ */
 bool FixedSizeJQ::enque(Job* pJob)
 {
     mStatus = Status::_3;
@@ -350,6 +397,11 @@ bool FixedSizeJQ::enque(Job* pJob)
     return true;
 }
 
+/**
+ * Adds a job while holding the queue lock.
+ * @param pJob Job to add.
+ * @return false if the queue is full.
+ */
 bool FixedSizeJQ::enqueSafe(Job* pJob)
 {
     mStatus = Status::_3;
@@ -364,6 +416,10 @@ bool FixedSizeJQ::enqueSafe(Job* pJob)
     return true;
 }
 
+/**
+ * Takes the next unprocessed job.
+ * @return The job, or nullptr if all jobs have been taken.
+ */
 Job* FixedSizeJQ::deque()
 {
     ScopedLock<JobQueueLock> lock(&mLock);
@@ -376,6 +432,12 @@ Job* FixedSizeJQ::deque()
     return mJobs[mNumProcessedJobs++];
 }
 
+/**
+ * Takes up to count unprocessed jobs.
+ * @param pJobs Receives the jobs.
+ * @param count Maximum number of jobs to take.
+ * @return Number of jobs taken.
+ */
 u32 FixedSizeJQ::deque(Job** pJobs, u32 count)
 {
     ScopedLock<JobQueueLock> lock(&mLock);
@@ -389,26 +451,33 @@ u32 FixedSizeJQ::deque(Job** pJobs, u32 count)
     return ret;
 }
 
+/**
+ * Marks every job as unprocessed again.
+ * @return Always true.
+ */
 bool FixedSizeJQ::rewind()
 {
-#ifdef SEAD_DEBUG
     mPerf.reset();
-#endif
     mNumProcessedJobs = 0;
     return true;
 }
 
+/**
+ * Removes all jobs.
+ */
 void FixedSizeJQ::clear()
 {
     mStatus = Status::_5;
-#ifdef SEAD_DEBUG
     mPerf.reset();
-#endif
     mNumJobs = 0;
     mNumProcessedJobs = 0;
     mSyncType = SyncType::cNoSync;
 }
 
+/**
+ * Checks whether every job has been taken.
+ * @return true if no unprocessed job remains.
+ */
 bool FixedSizeJQ::debug_IsAllJobDone()
 {
     return mNumProcessedJobs >= mNumJobs;

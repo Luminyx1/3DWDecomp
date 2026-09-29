@@ -108,7 +108,7 @@ private:
         {                                                                                          \
             for (int i = 0; i < size(); ++i)                                                       \
             {                                                                                      \
-                if (name.isEqual(text(i)))                                                         \
+                if (sead::SafeString(text(i)) == name)                                             \
                 {                                                                                  \
                     mIdx = i;                                                                      \
                     return true;                                                                   \

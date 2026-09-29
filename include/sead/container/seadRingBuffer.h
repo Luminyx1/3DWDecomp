@@ -218,8 +218,25 @@ public:
     T* unsafeGet(s32 idx) { return &mBuffer[calcRealIdx(idx)]; }
     const T* unsafeGet(s32 idx) const { return &mBuffer[calcRealIdx(idx)]; }
 
-    T& front() { return *unsafeGet(0); }
-    const T& front() const { return *unsafeGet(0); }
+    T& front()
+    {
+        if (mSize < 1)
+        {
+            SEAD_ASSERT_MSG(false, "no element");
+            return mBuffer[0];
+        }
+        return *unsafeGet(0);
+    }
+
+    const T& front() const
+    {
+        if (mSize < 1)
+        {
+            SEAD_ASSERT_MSG(false, "no element");
+            return mBuffer[0];
+        }
+        return *unsafeGet(0);
+    }
 
     T& back()
     {
@@ -313,6 +330,17 @@ public:
         {
             *item = *unsafeGet(0);
             mHead = mHead + 1 < mCapacity ? mHead + 1 : 0;
+            --mSize;
+            return true;
+        }
+        return false;
+    }
+
+    bool popBack(T* item)
+    {
+        if (mSize >= 1)
+        {
+            *item = *unsafeGet(mSize - 1);
             --mSize;
             return true;
         }

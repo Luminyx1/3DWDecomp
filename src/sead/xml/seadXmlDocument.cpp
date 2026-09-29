@@ -1,5 +1,7 @@
 #include <basis/seadNew.h>
 #include <codec/seadBase64.h>
+#include <container/seadObjArray.h>
+#include <container/seadRingBuffer.h>
 #include <heap/seadHeapMgr.h>
 #include <prim/seadEndian.h>
 #include <prim/seadMemUtil.h>
@@ -131,7 +133,12 @@ bool XmlDocument::eraseEntity(const SafeString& rName)
     return false;
 }
 
-// NON_MATCHING: the rebuild loop has no isFull check in the original
+/**
+ * Grows the entity buffer to hold at least num entities, keeping the current entities.
+ * @param num minimum number of entities
+ * @param pHeap heap for the buffers, or nullptr for the document's heap
+ * @return the entity list.
+ */
 XmlDocument::EntityList* XmlDocument::expandEntityList(s32 num, Heap* pHeap)
 {
     if (!pHeap)
@@ -163,7 +170,7 @@ XmlDocument::EntityList* XmlDocument::expandEntityList(s32 num, Heap* pHeap)
     mEntityList.allocBuffer(num, pHeap);
     for (auto& copy : copies)
     {
-        Entity* entity = mEntityList.emplaceBack();
+        Entity* entity = mEntityList.birthBack();
         entity->mName = copy.mName;
         entity->mValue = copy.mValue;
     }
@@ -218,15 +225,15 @@ static void writeXmlInstanceAsBinary_(WriteStream* pStream, XmlElement* pElement
         }
         else if (pElement->child())
         {
+            XmlElement* next = pElement->next();
             pStream->writeU16(0);
-            if (!pElement->next())
+            if (!next)
             {
                 pStream->writeU8(1);
                 pElement = pElement->child();
             }
             else
             {
-                XmlElement* next = pElement->next();
                 pStream->writeU8(2);
                 writeXmlInstanceAsBinary_(pStream, pElement->child());
                 pElement = next;
@@ -631,13 +638,12 @@ XmlElement* XmlDocument::makeXmlInstance_(ReadStream* pStream, Heap* pHeap)
     return root;
 }
 
-static u32 skipXmlUntil_(ReadStream* pStream, char terminator)
+static s32 skipXmlUntil_(ReadStream* pStream, char terminator)
 {
-    u32 count = 0;
-    char c;
+    s32 count = 0;
+    char c = 0;
     do
     {
-        c = 0;
         if (!pStream->readMemBlock(&c, 1))
         {
             return 0;
@@ -647,7 +653,7 @@ static u32 skipXmlUntil_(ReadStream* pStream, char terminator)
     return count;
 }
 
-// NON_MATCHING: block layout and register allocation
+// NON_MATCHING: 83%, block layout (the target keeps the skipped-length check of the <? and <!DOCTYPE paths)
 s32 XmlDocument::parseXmlDeclare_(ReadStream* pStream, Heap* pHeap)
 {
     u8 c = 0;
@@ -658,21 +664,26 @@ s32 XmlDocument::parseXmlDeclare_(ReadStream* pStream, Heap* pHeap)
 
     s32 state = 0;
     s32 pos = 0;
-    while (true)
+    do
     {
+        s32 next = pos + 1;
         switch (state)
         {
         case 0:
-            state = c == '<' ? 1 : 0;
+            state = c == '<';
             break;
         case 1:
             if (c == '!')
             {
                 state = 2;
+                break;
             }
-            else if (c == '?')
+            if (c != '?')
             {
-                u32 count = skipXmlUntil_(pStream, '?');
+                return pos - 1;
+            }
+            {
+                s32 count = skipXmlUntil_(pStream, '?');
                 if (count == 0)
                 {
                     return -1;
@@ -682,11 +693,7 @@ s32 XmlDocument::parseXmlDeclare_(ReadStream* pStream, Heap* pHeap)
                     return -1;
                 }
                 state = 0;
-                pos += count + 1;
-            }
-            else
-            {
-                return pos - 1;
+                next = pos + 2 + count;
             }
             break;
         case 2:
@@ -696,35 +703,35 @@ s32 XmlDocument::parseXmlDeclare_(ReadStream* pStream, Heap* pHeap)
                 {
                     return -1;
                 }
-                pos += 1;
+                next = pos + 2;
                 state = 3;
             }
             else if (c == 'D')
             {
-                const SafeString keyword = "OCTYPE";
-                s32 keywordLength = keyword.calcLength();
+                const char* keyword = "OCTYPE";
+                s32 keywordLength = SafeString(keyword).calcLength();
                 for (s32 i = 0; i < keywordLength; i++)
                 {
-                    if (pStream->readU8() != static_cast<u8>(keyword.cstr()[i]))
+                    if (pStream->readU8() != static_cast<u8>(keyword[i]))
                     {
                         return -1;
                     }
                 }
-                u32 count = skipXmlUntil_(pStream, '[');
+                s32 count = skipXmlUntil_(pStream, '[');
                 if (count == 0)
                 {
                     return -1;
                 }
                 state = 0;
-                pos += count + 6;
+                next = pos + 7 + count;
             }
             else if (c == 'E')
             {
-                const SafeString keyword = "NTITY ";
-                s32 keywordLength = keyword.calcLength();
+                const char* keyword = "NTITY ";
+                s32 keywordLength = SafeString(keyword).calcLength();
                 for (s32 i = 0; i < keywordLength; i++)
                 {
-                    if (pStream->readU8() != static_cast<u8>(keyword.cstr()[i]))
+                    if (pStream->readU8() != static_cast<u8>(keyword[i]))
                     {
                         return -1;
                     }
@@ -753,7 +760,8 @@ s32 XmlDocument::parseXmlDeclare_(ReadStream* pStream, Heap* pHeap)
                 {
                     return -1;
                 }
-                if (c != '\'' && c != '"')
+                const u8 quote = c;
+                if (quote != '\'' && quote != '"')
                 {
                     return -1;
                 }
@@ -764,7 +772,7 @@ s32 XmlDocument::parseXmlDeclare_(ReadStream* pStream, Heap* pHeap)
                 for (i = 0; i < valueBufferSize; i++)
                 {
                     valueBuffer[i] = pStream->readU8();
-                    if (valueBuffer[i] == c)
+                    if (valueBuffer[i] == quote)
                     {
                         break;
                     }
@@ -790,7 +798,7 @@ s32 XmlDocument::parseXmlDeclare_(ReadStream* pStream, Heap* pHeap)
                 entity->mName = name;
                 entity->mValue = value;
                 state = 0;
-                pos += nameLength + valueLength + 8;
+                next = pos + nameLength + valueLength + 9;
             }
             else
             {
@@ -812,23 +820,781 @@ s32 XmlDocument::parseXmlDeclare_(ReadStream* pStream, Heap* pHeap)
                     return -1;
                 }
                 state = 0;
-                pos += 1;
+                next = pos + 2;
             }
             else
             {
                 state = 3;
             }
             break;
-        default:
+        }
+        pos = next;
+    } while (pStream->readMemBlock(&c, 1));
+    return -1;
+}
+
+namespace
+{
+struct XmlAttributeWork
+{
+    FixedSafeString<1024> mName;
+    FixedSafeString<1024> mValue;
+};
+
+bool isXmlSpace_(char c)
+{
+    return c == ' ' || c == '\t' || c == '\n' || c == '\r';
+}
+
+void rstripXmlName_(BufferedSafeString* pString)
+{
+    char* buffer = const_cast<char*>(pString->cstr());
+    for (s32 i = SafeString(buffer).calcLength(); i > 0; i--)
+    {
+        if (buffer[i - 1] > ' ' && buffer[i - 1] != 0x7f)
+        {
             break;
         }
-
-        if (!pStream->readMemBlock(&c, 1))
-        {
-            return -1;
-        }
-        pos++;
+        buffer[i - 1] = SafeString::cNullChar;
     }
+}
+}  // namespace
+
+// NON_MATCHING: ~42%, same logic; block layout, loop unswitching of the closing-tag loop and register allocation differ
+XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
+{
+    u8 c = 0;
+    RingBuffer<XmlElement*> stack;
+    stack.allocBuffer(32, pHeap, -static_cast<s32>(sizeof(void*)));
+    ObjArray<XmlAttributeWork> attributes;
+    attributes.allocBuffer(24, pHeap, -static_cast<s32>(sizeof(void*)));
+    FixedSafeString<64> tagName;
+    char* textBuffer = mWorkBuffer2;
+    char* nameBuffer = tagName.getBuffer();
+
+    XmlElement* root = nullptr;
+    XmlElement* element = nullptr;
+    XmlElement* base64Element = nullptr;
+    XmlElement* closeElement = nullptr;
+    XmlElement* textElement = nullptr;
+
+    {
+        s32 state = 0;
+        u32 textLength = 0;
+        u32 nameLength = 0;
+        u32 replaceStart = 0;
+        bool isInText = false;
+        bool isTopLevelComment = false;
+        bool isBase64InCData = false;
+
+        while (pStream->readMemBlock(&c, 1))
+        {
+            if (state == 1)
+            {
+                if (isXmlSpace_(c))
+                {
+                    state = 1;
+                }
+                else if (c == '!')
+                {
+                    const char* keyword = "--";
+                    s32 keywordLength = SafeString(keyword).calcLength();
+                    for (s32 i = 0; i < keywordLength; i++)
+                    {
+                        if (pStream->readU8() != static_cast<u8>(keyword[i]))
+                        {
+                            goto fail;
+                        }
+                    }
+                    state = 3;
+                    isTopLevelComment = true;
+                }
+                else if (c == '/')
+                {
+                    tagName.clear();
+                    bool isSkippingSpace = true;
+                    nameLength = 0;
+                    while (true)
+                    {
+                        if (!pStream->readMemBlock(&c, 1))
+                        {
+                            goto fail;
+                        }
+                        if (c == '>')
+                        {
+                            tagName.trim(nameLength);
+                            rstripXmlName_(&tagName);
+                            if (tagName == stack.back()->getName())
+                            {
+                                XmlElement* closed;
+                                stack.popBack(&closed);
+                                if (stack.size() == 0)
+                                {
+                                    goto success;
+                                }
+                                isInText = false;
+                                textLength = 0;
+                                state = 0;
+                                break;
+                            }
+                        }
+                        if (isSkippingSpace && isXmlSpace_(c))
+                        {
+                            continue;
+                        }
+                        nameBuffer[nameLength] = c;
+                        isSkippingSpace = false;
+                        if (nameLength++ >= 64)
+                        {
+                            goto fail;
+                        }
+                    }
+                }
+                else
+                {
+                    nameBuffer[0] = c;
+                    nameLength = 1;
+                    state = 10;
+                }
+            }
+            else
+            {
+                switch (state)
+                {
+                case 0:
+                    if (c == '<')
+                    {
+                        if (textLength != 0)
+                        {
+                            if (stack.size() == 0)
+                            {
+                                stack.clear();
+                            }
+                            else
+                            {
+                                u32 end = textLength;
+                                while (end != 0 && isXmlSpace_(mWorkBuffer2[end - 1]))
+                                {
+                                    end--;
+                                }
+                                mWorkBuffer2[end] = SafeString::cNullChar;
+                                replaceXmlNumericCharacterReference_(textBuffer, mWorkSize, 0);
+                                replaceXmlCharacterEntityReference_(textBuffer, mWorkSize, 0);
+                                u32 length = 0;
+                                while (mWorkBuffer2[length] != SafeString::cNullChar)
+                                {
+                                    length++;
+                                }
+                                if (length != 0)
+                                {
+                                    auto* text = new (pHeap, sizeof(void*)) XmlElement();
+                                    u8* content = new (pHeap, sizeof(void*)) u8[length + 1];
+                                    MemUtil::copy(content, mWorkBuffer2, length);
+                                    content[length] = SafeString::cNullChar;
+                                    text->setContent(content, length, true);
+                                    stack.back()->pushBackChild(text);
+                                }
+                                textLength = 0;
+                            }
+                        }
+                        state = 1;
+                    }
+                    else
+                    {
+                        if (isInText || !isXmlSpace_(c))
+                        {
+                            textBuffer[textLength++] = c;
+                            isInText = true;
+                        }
+                        if (textLength + 1 > mWorkSize)
+                        {
+                            goto fail;
+                        }
+                        state = 0;
+                    }
+                    break;
+                case 3:
+                    state = c == '-' ? 4 : 3;
+                    break;
+                case 4:
+                    if (c == '-')
+                    {
+                        if (!pStream->readMemBlock(&c, 1))
+                        {
+                            goto fail;
+                        }
+                        if (c != '>')
+                        {
+                            goto fail;
+                        }
+                        if (isTopLevelComment)
+                        {
+                            isInText = false;
+                            textLength = 0;
+                            state = 0;
+                        }
+                        else
+                        {
+                            state = 6;
+                        }
+                    }
+                    else
+                    {
+                        state = 3;
+                    }
+                    break;
+                case 5:
+                {
+                    FixedSafeString<1024> name;
+                    FixedSafeString<1024> value;
+                    char* attrNameBuffer = name.getBuffer();
+                    char* attrValueBuffer = value.getBuffer();
+                    while (true)
+                    {
+                        while (isXmlSpace_(c))
+                        {
+                            if (!pStream->readMemBlock(&c, 1))
+                            {
+                                break;
+                            }
+                        }
+
+                        if (c == '/' || c == '>')
+                        {
+                            break;
+                        }
+
+                        u32 i = 0;
+                        if (c != '=')
+                        {
+                            while (true)
+                            {
+                                attrNameBuffer[i] = c;
+                                if (i >= 0x3ff)
+                                {
+                                    goto fail;
+                                }
+                                if (!pStream->readMemBlock(&c, 1))
+                                {
+                                    goto readValue;
+                                }
+                                i++;
+                                if (c == '=')
+                                {
+                                    break;
+                                }
+                            }
+                        }
+                        name.trim(i);
+                        rstripXmlName_(&name);
+                        if (i == 0)
+                        {
+                            goto fail;
+                        }
+
+                    readValue:
+                        u8 quote;
+                        while (true)
+                        {
+                            if (!pStream->readMemBlock(&c, 1))
+                            {
+                                quote = c;
+                                if (quote != '"' && quote != '\'')
+                                {
+                                    goto fail;
+                                }
+                                break;
+                            }
+                            quote = c;
+                            if (quote > '\'')
+                            {
+                                goto fail;
+                            }
+                            if (isXmlSpace_(quote))
+                            {
+                                continue;
+                            }
+                            if (quote != '"' && quote != '\'')
+                            {
+                                goto fail;
+                            }
+                            break;
+                        }
+
+                        for (i = 0;; i++)
+                        {
+                            if (!pStream->readMemBlock(&c, 1))
+                            {
+                                goto addAttribute;
+                            }
+                            if (c == quote)
+                            {
+                                break;
+                            }
+                            attrValueBuffer[i] = c;
+                            if (i > 0x3fe)
+                            {
+                                goto fail;
+                            }
+                        }
+                        value.trim(i);
+                        replaceXmlCharacterEntityReference_(attrValueBuffer, value.getBufferSize(), 0);
+                        replaceXmlNumericCharacterReference_(attrValueBuffer, value.getBufferSize(), 0);
+
+                    addAttribute:
+                        XmlAttributeWork* attribute = attributes.emplaceBack();
+                        if (!attribute)
+                        {
+                            goto fail;
+                        }
+                        attribute->mName = name;
+                        attribute->mValue = value;
+
+                        if (!pStream->readMemBlock(&c, 1))
+                        {
+                            goto fail;
+                        }
+                    }
+
+                    XmlElement** ppElement;
+                    if (c == '/')
+                    {
+                        u32 count = skipXmlUntil_(pStream, '>');
+                        if (stack.size() == 0 || count == 0)
+                        {
+                            goto fail;
+                        }
+                        ppElement = stack.get(stack.size() - 1);
+                        stack.popBack(&element);
+                        isInText = false;
+                        state = 0;
+                    }
+                    else
+                    {
+                        if (stack.size() == 0)
+                        {
+                            goto fail;
+                        }
+                        ppElement = stack.get(stack.size() - 1);
+                        replaceStart = 0;
+                        state = 6;
+                    }
+                    if (!ppElement)
+                    {
+                        goto fail;
+                    }
+
+                    if (attributes.size() != 0)
+                    {
+                        XmlElement* target = *ppElement;
+                        target->expandAttributeList(attributes.size(), pHeap);
+                        target->mAttributes.clear();
+                        for (auto& attribute : attributes)
+                        {
+                            target->mAttributes.emplaceBack(pHeap, attribute);
+                        }
+                        attributes.clear();
+                    }
+                    textLength = 0;
+                    break;
+                }
+                case 6:
+                {
+                    bool isAllSpace = true;
+                    while (true)
+                    {
+                        if (c == '<')
+                        {
+                            if (!pStream->readMemBlock(&c, 1))
+                            {
+                                goto fail;
+                            }
+                            if (c == '!')
+                            {
+                                if (!pStream->readMemBlock(&c, 1))
+                                {
+                                    goto fail;
+                                }
+                                if (c == '-')
+                                {
+                                    if (pStream->readU8() != '-')
+                                    {
+                                        goto fail;
+                                    }
+                                    isTopLevelComment = false;
+                                    state = 3;
+                                    break;
+                                }
+                                if (c == '[')
+                                {
+                                    const char* keyword = "CDATA[";
+                                    s32 keywordLength = SafeString(keyword).calcLength();
+                                    for (s32 i = 0; i < keywordLength; i++)
+                                    {
+                                        if (pStream->readU8() != static_cast<u8>(keyword[i]))
+                                        {
+                                            goto fail;
+                                        }
+                                    }
+                                    u32 end = isAllSpace ? 0 : textLength;
+                                    mWorkBuffer2[end] = SafeString::cNullChar;
+                                    replaceXmlNumericCharacterReference_(textBuffer, mWorkSize, replaceStart);
+                                    replaceXmlCharacterEntityReference_(textBuffer, mWorkSize, replaceStart);
+                                    u32 length = 0;
+                                    while (mWorkBuffer2[length] != SafeString::cNullChar)
+                                    {
+                                        length++;
+                                    }
+                                    state = 7;
+                                    replaceStart = end < length ? length : end;
+                                    textLength = replaceStart;
+                                    break;
+                                }
+                                if (c == 'B')
+                                {
+                                    const char* keyword = "ASE64[";
+                                    s32 keywordLength = SafeString(keyword).calcLength();
+                                    for (s32 i = 0; i < keywordLength; i++)
+                                    {
+                                        if (pStream->readU8() != static_cast<u8>(keyword[i]))
+                                        {
+                                            goto fail;
+                                        }
+                                    }
+                                    u32 end = isAllSpace ? 0 : textLength;
+                                    mWorkBuffer2[end] = SafeString::cNullChar;
+                                    replaceXmlNumericCharacterReference_(textBuffer, mWorkSize, replaceStart);
+                                    replaceXmlCharacterEntityReference_(textBuffer, mWorkSize, replaceStart);
+                                    u32 length = 0;
+                                    while (mWorkBuffer2[length] != SafeString::cNullChar)
+                                    {
+                                        length++;
+                                    }
+                                    isBase64InCData = false;
+                                    state = 8;
+                                    replaceStart = end < length ? length : end;
+                                    textLength = replaceStart;
+                                    break;
+                                }
+                                textBuffer[textLength] = '<';
+                                textBuffer[textLength + 1] = '!';
+                                textLength += 2;
+                            }
+                            else if (c == '/')
+                            {
+                                mWorkBuffer2[textLength] = SafeString::cNullChar;
+                                replaceXmlNumericCharacterReference_(textBuffer, mWorkSize, replaceStart);
+                                replaceXmlCharacterEntityReference_(textBuffer, mWorkSize, replaceStart);
+                                stack.popBack(&textElement);
+                                if (textElement->getElementType() != XmlElement::cElementType_Base64)
+                                {
+                                    textLength = 0;
+                                    while (mWorkBuffer2[textLength] != SafeString::cNullChar)
+                                    {
+                                        textLength++;
+                                    }
+                                }
+                                stack.pushBack(textElement);
+                                state = 9;
+                                break;
+                            }
+                            else
+                            {
+                                if (textLength != 0)
+                                {
+                                    u32 end = textLength;
+                                    while (end != 0 && isXmlSpace_(mWorkBuffer2[end - 1]))
+                                    {
+                                        end--;
+                                    }
+                                    mWorkBuffer2[end] = SafeString::cNullChar;
+                                    u32 start = 0;
+                                    while (start < end && isXmlSpace_(mWorkBuffer2[start]))
+                                    {
+                                        start++;
+                                    }
+                                    u32 length = end - start;
+                                    for (u32 i = 0; i < length; i++)
+                                    {
+                                        mWorkBuffer2[i] = mWorkBuffer2[start + i];
+                                    }
+                                    mWorkBuffer2[length] = SafeString::cNullChar;
+                                    replaceXmlNumericCharacterReference_(textBuffer, mWorkSize, 0);
+                                    replaceXmlCharacterEntityReference_(textBuffer, mWorkSize, 0);
+                                    length = 0;
+                                    while (mWorkBuffer2[length] != SafeString::cNullChar)
+                                    {
+                                        length++;
+                                    }
+                                    if (length != 0)
+                                    {
+                                        auto* text = new (pHeap, sizeof(void*)) XmlElement();
+                                        u8* content = new (pHeap, sizeof(void*)) u8[length + 1];
+                                        MemUtil::copy(content, mWorkBuffer2, length);
+                                        content[length] = SafeString::cNullChar;
+                                        text->setContent(content, length, true);
+                                        stack.back()->pushBackChild(text);
+                                    }
+                                }
+                                nameBuffer[0] = c;
+                                nameLength = 1;
+                                textLength = 0;
+                                state = 10;
+                                break;
+                            }
+                        }
+
+                        textBuffer[textLength] = c;
+                        isAllSpace = isAllSpace && isXmlSpace_(c);
+                        if (textLength + 2 > mWorkSize)
+                        {
+                            goto fail;
+                        }
+                        textLength++;
+                        if (!pStream->readMemBlock(&c, 1))
+                        {
+                            goto fail;
+                        }
+                    }
+                    break;
+                }
+                case 7:
+                    if (c == ']')
+                    {
+                        if (!pStream->readMemBlock(&c, 1))
+                        {
+                            goto fail;
+                        }
+                        if (c == ']')
+                        {
+                            if (!pStream->readMemBlock(&c, 1))
+                            {
+                                goto fail;
+                            }
+                            if (c == '>')
+                            {
+                                replaceStart = textLength;
+                                state = 6;
+                                break;
+                            }
+                            textBuffer[textLength] = ']';
+                            textBuffer[textLength + 1] = ']';
+                            textLength += 2;
+                        }
+                        else
+                        {
+                            textBuffer[textLength] = ']';
+                            textLength += 1;
+                        }
+                    }
+                    else if (c == '<')
+                    {
+                        if (!pStream->readMemBlock(&c, 1))
+                        {
+                            goto fail;
+                        }
+                        if (c == '!')
+                        {
+                            const char* keyword = "BASE64[";
+                            s32 keywordLength = SafeString(keyword).calcLength();
+                            for (s32 i = 0; i < keywordLength; i++)
+                            {
+                                if (pStream->readU8() != static_cast<u8>(keyword[i]))
+                                {
+                                    goto fail;
+                                }
+                            }
+                            state = 8;
+                            isBase64InCData = true;
+                            break;
+                        }
+                        textBuffer[textLength] = '<';
+                        textLength += 1;
+                    }
+                    textBuffer[textLength] = c;
+                    textLength++;
+                    state = 7;
+                    break;
+                case 8:
+                {
+                    stack.popBack(&base64Element);
+                    base64Element->setElementType(XmlElement::cElementType_Base64);
+                    stack.pushBack(base64Element);
+                    char* encoded = mWorkBuffer0;
+                    char* decoded = mWorkBuffer1;
+                    s32 encodedLength = 0;
+                    while (true)
+                    {
+                        if (c == ']')
+                        {
+                            if (!pStream->readMemBlock(&c, 1))
+                            {
+                                goto fail;
+                            }
+                            if (c == '>')
+                            {
+                                size_t decodedSize = 0;
+                                if (!Base64::decode(decoded, mWorkSize, encoded, encodedLength, &decodedSize))
+                                {
+                                    goto fail;
+                                }
+                                u32 i = 0;
+                                for (; i < decodedSize; i++)
+                                {
+                                    textBuffer[i] = decoded[i];
+                                }
+                                state = isBase64InCData ? 7 : 6;
+                                replaceStart = i;
+                                textLength = i;
+                                break;
+                            }
+                        }
+                        if (!isXmlSpace_(c))
+                        {
+                            encoded[encodedLength++] = c;
+                        }
+                        if (!pStream->readMemBlock(&c, 1))
+                        {
+                            textLength = 0;
+                            state = 8;
+                            break;
+                        }
+                    }
+                    break;
+                }
+                case 9:
+                    if (c == '>')
+                    {
+                        tagName.trim(nameLength);
+                        rstripXmlName_(&tagName);
+                        if (tagName == stack.back()->getName())
+                        {
+                            stack.popBack(&closeElement);
+                            if (textLength != 0)
+                            {
+                                u32 length = closeElement->getElementType() == XmlElement::cElementType_Base64 ?
+                                                 textLength & ~3u :
+                                                 textLength;
+                                u8* content = new (pHeap, sizeof(void*)) u8[length + 1];
+                                MemUtil::copy(content, mWorkBuffer2, length);
+                                content[length] = SafeString::cNullChar;
+                                closeElement->setContent(content, length, true);
+                                replaceStart = 0;
+                                textLength = 0;
+                            }
+                            isInText = false;
+                            state = 0;
+                            break;
+                        }
+                        nameBuffer[nameLength] = c;
+                        if (++nameLength > 64)
+                        {
+                            goto fail;
+                        }
+                    }
+                    break;
+                case 10:
+                {
+                    if (stack.size() >= stack.capacity())
+                    {
+                        goto fail;
+                    }
+                    auto* newElement = new (pHeap, sizeof(void*)) XmlElement();
+                    while (true)
+                    {
+                        if (isXmlSpace_(c) || c == '>')
+                        {
+                            tagName.trim(nameLength);
+                            if (tagName.at(0) == SafeString::cNullChar)
+                            {
+                                delete newElement;
+                                goto fail;
+                            }
+                            newElement->setName(tagName);
+                            if (stack.size() == 0)
+                            {
+                                root = newElement;
+                            }
+                            else
+                            {
+                                stack.back()->pushBackChild(newElement);
+                            }
+                            stack.pushBack(newElement);
+                            if (c == '>')
+                            {
+                                textLength = 0;
+                                replaceStart = 0;
+                                state = 6;
+                            }
+                            else
+                            {
+                                state = 5;
+                            }
+                            break;
+                        }
+                        if (c == '/')
+                        {
+                            if (pStream->readU8() != '>')
+                            {
+                                delete newElement;
+                                goto fail;
+                            }
+                            tagName.trim(nameLength);
+                            rstripXmlName_(&tagName);
+                            newElement->setName(tagName);
+                            if (stack.size() == 0)
+                            {
+                                if (root)
+                                {
+                                    delete newElement;
+                                    goto fail;
+                                }
+                                stack.freeBuffer();
+                                attributes.freeBuffer();
+                                return newElement;
+                            }
+                            stack.back()->pushBackChild(newElement);
+                            isInText = false;
+                            textLength = 0;
+                            state = 0;
+                            break;
+                        }
+                        nameBuffer[nameLength] = c;
+                        if (++nameLength >= 0x41)
+                        {
+                            delete newElement;
+                            goto fail;
+                        }
+                        if (!pStream->readMemBlock(&c, 1))
+                        {
+                            delete newElement;
+                            goto fail;
+                        }
+                    }
+                    break;
+                }
+                default:
+                    break;
+                }
+            }
+        }
+
+        if (!root)
+        {
+            goto fail;
+        }
+    }
+
+success:
+    stack.freeBuffer();
+    attributes.freeBuffer();
+    return root;
+
+fail:
+    stack.freeBuffer();
+    attributes.freeBuffer();
+    freeXmlElement_(root);
+    return nullptr;
 }
 
 /**
@@ -927,52 +1693,55 @@ bool XmlDocument::replaceXmlNumericCharacterReference_(char* pText, u32 bufferSi
     for (u32 i = 0; pos < bufferSize && i < length; i++)
     {
         char c = pText[i];
-        if (i >= startIndex && i <= length - 4 && c == '&')
+        if (i < startIndex || i > length - 4 || c != '&')
         {
-            if (i + 1 >= bufferSize)
+            dst[pos++] = c;
+            continue;
+        }
+
+        if (i + 1 >= bufferSize)
+        {
+            break;
+        }
+
+        if (pText[i + 1] == '#')
+        {
+            u32 code;
+            if (i + 2 >= bufferSize)
             {
                 break;
             }
 
-            if (pText[i + 1] == '#')
+            if (pText[i + 2] == 'x')
             {
-                u32 code;
-                if (i + 2 >= bufferSize)
+                if (i + 5 >= bufferSize)
                 {
                     break;
                 }
-
-                if (pText[i + 2] == 'x')
+                if (pText[i + 5] != ';')
                 {
-                    if (i + 5 >= bufferSize)
-                    {
-                        break;
-                    }
-                    if (pText[i + 5] != ';')
-                    {
-                        continue;
-                    }
-                    code = convertHexCharToInt_(pText[i + 3]) * 16 +
-                           convertHexCharToInt_(pText[i + 4]);
-                    i += 5;
+                    continue;
                 }
-                else
-                {
-                    if (i + 4 >= bufferSize)
-                    {
-                        break;
-                    }
-                    if (pText[i + 4] != ';')
-                    {
-                        continue;
-                    }
-                    code = convertHexCharToInt_(pText[i + 2]) * 10 +
-                           convertHexCharToInt_(pText[i + 3]);
-                    i += 4;
-                }
-                pos += convertCodeToUtf8_(&dst[pos], code);
-                continue;
+                code = convertHexCharToInt_(pText[i + 3]) * 16 +
+                       convertHexCharToInt_(pText[i + 4]);
+                i += 5;
             }
+            else
+            {
+                if (i + 4 >= bufferSize)
+                {
+                    break;
+                }
+                if (pText[i + 4] != ';')
+                {
+                    continue;
+                }
+                code = convertHexCharToInt_(pText[i + 2]) * 10 +
+                       convertHexCharToInt_(pText[i + 3]);
+                i += 4;
+            }
+            pos += convertCodeToUtf8_(&dst[pos], code);
+            continue;
         }
         dst[pos++] = c;
     }

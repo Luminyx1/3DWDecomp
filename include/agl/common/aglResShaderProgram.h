@@ -25,6 +25,10 @@ public:
 
     const char* getName() const { return (const char*)(ptr() + 1); }
 
+    s16 getSourceIndex(ShaderType type) const {
+        return *reinterpret_cast<const s16*>(&ptr()->mSourceIndex[type]);
+    }
+
     ResShaderMacroArray getResShaderMacroArray(ShaderType type) const;
 
     ResShaderVariationArray getResShaderVariationArray() const;

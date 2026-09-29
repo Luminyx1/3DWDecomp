@@ -7,7 +7,7 @@
 
 namespace sead
 {
-namespace PrimitiveRendererUtil
+namespace PrimitiveDrawUtil
 {
 class Vertex
 {
@@ -22,15 +22,17 @@ public:
     Color4f color;
 };
 
-void setQuadVertex(Vertex* vtx, u16* idx);
-void setLineVertex(Vertex* vtx, u16* idx);
-void setCubeVertex(Vertex* vtx, u16* idx);
-void setWireCubeVertex(Vertex* vtx, u16* idx);
-void setSphereVertex(Vertex* vtx, u16* idx, s32 x, s32 y);
-void setDiskVertex(Vertex* vtx, u16* idx, s32 div);
-void setCylinderVertex(Vertex* vtx, u16* idx, s32 div);
+void setQuadVertex(Vertex* pVertex, u16* pIndex);
+void setLineVertex(Vertex* pVertex, u16* pIndex);
+void setCubeVertex(Vertex* pVertex, u16* pIndex);
+void setWireCubeVertex(Vertex* pVertex, u16* pIndex);
+void setSphereVertex(Vertex* pVertex, u16* pIndex, s32 x, s32 y);
+void setDiskVertex(Vertex* pVertex, u16* pIndex, s32 divNum);
+void setCylinderVertex(Vertex* pVertex, u16* pIndex, s32 divNum);
 
-}  // namespace PrimitiveRendererUtil
+}  // namespace PrimitiveDrawUtil
+
+namespace PrimitiveRendererUtil = PrimitiveDrawUtil;
 }  // namespace sead
 
 #endif  // SEAD_PRIMITIVE_RENDERER_UTIL_H_

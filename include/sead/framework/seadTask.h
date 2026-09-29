@@ -26,8 +26,8 @@ public:
     void detachDrawImpl() override;
     const RuntimeTypeInfo::Interface* getCorrespondingMethodTreeMgrTypeInfo() const override;
     MethodTreeNode* getMethodTreeNode(s32 method_type) override;
-    virtual void calc() {}
-    virtual void draw() {}
+    virtual void calc();
+    virtual void draw();
 
 protected:
     MethodTreeNode mCalcNode{nullptr};

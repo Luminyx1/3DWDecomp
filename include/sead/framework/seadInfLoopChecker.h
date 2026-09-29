@@ -31,10 +31,10 @@ public:
 private:
     void onInfLoop_();
 
-    u32 mLoopCount;
-    u32 mLoopThreshold;
-    bool mEnabled;
+    u32 mLoopCount = 0;
+    u32 mLoopThreshold = 600;
+    bool mEnabled = true;
     InfLoopEvent mEvent;
-    sead::Atomic<u32> mSkipCounter;
+    Atomic<u32> mSkipCounter = 0;
 };
 }  // namespace sead

@@ -4,37 +4,66 @@
 
 namespace sead
 {
+/**
+ * Constructs the manager with its infinite-loop event slot bound to onInfLoop_.
+ */
 WorkerMgr::WorkerMgr()
     : mInfLoopEventSlot{
           Delegate1<WorkerMgr, const InfLoopChecker::InfLoopParam&>(this, &WorkerMgr::onInfLoop_)}
 {
 }
 
+/**
+ * Handles an infinite-loop report; only samples the current tick in release builds.
+ */
 void WorkerMgr::onInfLoop_(const InfLoopChecker::InfLoopParam&)
 {
     TickTime time;
 }
 
+/**
+ * Dumps the worker states; only samples the current tick in release builds.
+ */
+void WorkerMgr::dump()
+{
+    TickTime time;
+}
+
+/**
+ * Sets the default job count, name, stack sizes and priorities.
+ */
 WorkerMgr::InitializeArg::InitializeArg()
 {
     worker_num_jobs = 0x20;
     name = "WorkerMgr";
     thread_stack_sizes[0] = 0x1000;
+    thread_stack_sizes[1] = 0x8000;
     thread_priorities.fill(Thread::cDefaultPriority);
-    thread_stack_sizes[1] = thread_stack_sizes[2] = 0x8000;
+    thread_stack_sizes[2] = 0x8000;
 }
 
+/**
+ * Builds the name of the worker thread for a core.
+ * @param pHeap Heap the name string is allocated from.
+ * @param rArg Initialisation arguments providing the manager name.
+ * @param core Core index of the worker.
+ * @return Newly allocated name.
+ */
 static SafeString* makeWorkerName(Heap* pHeap, const WorkerMgr::InitializeArg& rArg, u32 core)
 {
     FixedSafeString<128> name;
     const char* core_name = "?";
 #ifdef SEAD_DEBUG
-    core_name = CoreId(i).text();
+    core_name = CoreId(core).text();
 #endif
     name.format("%s/Worker%d(%s)", rArg.name, core, core_name);
     return new HeapSafeString(pHeap, name);
 }
 
+/**
+ * Creates one worker per core and starts every worker except the one on the main core.
+ * @param rArg Initialisation arguments.
+ */
 void WorkerMgr::initialize(const InitializeArg& rArg)
 {
     if (InfLoopChecker::instance())
@@ -66,6 +95,9 @@ void WorkerMgr::initialize(const InitializeArg& rArg)
     mNumJobQueues = 0;
 }
 
+/**
+ * Stops the worker threads and destroys the workers.
+ */
 void WorkerMgr::finalize()
 {
     if (mWorkers.size() > 1)
@@ -84,12 +116,27 @@ void WorkerMgr::finalize()
     }
 }
 
+/**
+ * Pushes a job queue to the workers of the selected cores without a context name.
+ * @param pQueue Queue to run.
+ * @param coreIdMask Cores that run the queue.
+ * @param syncType How waiting on the queue is synchronised.
+ * @param pushType Where the queue is inserted in each worker.
+ */
 void WorkerMgr::pushJobQueue(JobQueue* pQueue, CoreIdMask coreIdMask, SyncType syncType,
                              JobQueuePushType pushType)
 {
     pushJobQueue("nocontext", pQueue, coreIdMask, syncType, pushType);
 }
 
+/**
+ * Pushes a job queue to the workers of the selected cores.
+ * @param pContextName Name of the caller, used for diagnostics.
+ * @param pQueue Queue to run.
+ * @param coreIdMask Cores that run the queue.
+ * @param syncType How waiting on the queue is synchronised.
+ * @param pushType Where the queue is inserted in each worker.
+ */
 void WorkerMgr::pushJobQueue(const char* pContextName, JobQueue* pQueue, CoreIdMask coreIdMask,
                              SyncType syncType, JobQueuePushType pushType)
 {
@@ -110,6 +157,9 @@ void WorkerMgr::pushJobQueue(const char* pContextName, JobQueue* pQueue, CoreIdM
     ++mNumJobQueues;
 }
 
+/**
+ * Runs the pushed queues on the calling thread or wakes up the worker threads.
+ */
 void WorkerMgr::run()
 {
     if (mProcessJobQueues)
@@ -142,6 +192,9 @@ void WorkerMgr::run()
     }
 }
 
+/**
+ * Waits until every worker has finished its queues.
+ */
 void WorkerMgr::sync()
 {
     if (!mProcessJobQueues)
@@ -178,6 +231,10 @@ void WorkerMgr::sync()
     mNumJobQueues = 0;
 }
 
+/**
+ * Checks whether every worker is sleeping.
+ * @return true if all workers are in the sleep state.
+ */
 bool WorkerMgr::isAllWorkerSleep() const
 {
     for (int i = 0; i < mWorkers.size(); ++i)

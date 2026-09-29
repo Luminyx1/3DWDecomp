@@ -1,34 +1,36 @@
 #pragma once
 
-#include "message/libms.h"
-#include "prim/seadSafeString.hpp"
+#include "basis/seadTypes.h"
+#include "lms/lms.h"
+#include "prim/seadSafeString.h"
 
 namespace sead {
-    class Heap;
+class Heap;
 
-    class MessageSetBase {
-    public:
-        virtual ~MessageSetBase();
+class MessageSetBase {
+public:
+    virtual ~MessageSetBase();
 
-        void initialize(void*, Heap*);
-        void* allocForLibm_(u32);
-        void freeForLibms_(void*);
-        void finalize();
-        const char* getInitializeData() const;
-        u32 calcTextSizeByIndex(s32) const;
-        bool searchTextLabelByIndex(BufferedSafeString*, s32) const;
+    bool initialize(void* pData, Heap* pHeap);
+    void finalize();
+    const void* getInitializeData() const;
+    s32 calcTextSizeByIndex(s32 index) const;
+    bool searchTextLabelByIndex(BufferedSafeString* pLabel, s32 index) const;
 
-        LMSMsgFile* mMsgFile = nullptr;  // 0x08
-        s32 mTextNum = 0;                // 0x10
+    static void* allocForLibms_(size_t size);
+    static void freeForLibms_(void* pPtr);
 
-        static Heap* sHeap;
-    };
+protected:
+    LMSMsgFile* mMsgFile = nullptr;
+    s32 mTextNum = 0;
 
-    template <typename T>
-    class MessageSet : public MessageSetBase {
-    public:
-        inline MessageSet() {}
+    static Heap* sHeap;
+};
 
-        virtual ~MessageSet() {}
-    };
-};  // namespace sead
+template <typename T>
+class MessageSet : public MessageSetBase {
+public:
+    MessageSet() = default;
+    ~MessageSet() override = default;
+};
+}  // namespace sead

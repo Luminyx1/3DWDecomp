@@ -33,6 +33,9 @@ public:
 
     DisplayList* getDisplayList() const { return mCommandBuffer; }
     const RenderBuffer* getBoundRenderBuffer() const { return mBoundRenderBuffer; }
+    u8 getShaderMode() const { return mShaderMode; }
+    u8 get_fa() const { return _fa; }
+    void invalidateShaderMode() { mShaderMode = 4; }
 
     NVNcommandBuffer* getNvnCommandBuffer()
     {

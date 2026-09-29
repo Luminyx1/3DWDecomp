@@ -39,6 +39,7 @@ public:
     using ResCommon::ResCommon;
 
     const char* getName() const { return reinterpret_cast<const char*>(ptr() + 1); }
+    s32 getLocation() const { return ref().mLocation; }
 
     ResShaderUniformArray getResShaderUniformArray() const {
         const DataType* const data = ptr();

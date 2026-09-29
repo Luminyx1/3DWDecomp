@@ -33,40 +33,6 @@ ResourceMgr::~ResourceMgr()
     mNullResourceFactory = NULL;
 }
 
-// NON_MATCHING: tail call for factory->create
-Resource* ResourceMgr::create(const ResourceMgr::CreateArg& rArg)
-{
-    if (!rArg.buffer)
-    {
-        SEAD_ASSERT_MSG(false, "buffer null");
-        return nullptr;
-    }
-    if (rArg.file_size == 0)
-    {
-        SEAD_ASSERT_MSG(false, "file_size is 0");
-        return nullptr;
-    }
-    if (rArg.buffer_size == 0)
-    {
-        SEAD_ASSERT_MSG(false, "buffer_size is 0");
-        return nullptr;
-    }
-
-    ResourceFactory* pFactory = rArg.factory;
-    if (!pFactory)
-    {
-        pFactory = findFactory(rArg.ext);
-    }
-
-    if (!pFactory)
-    {
-        SEAD_ASSERT_MSG(false, "factory not found: %s", rArg.ext.cstr());
-        return nullptr;
-    }
-
-    return pFactory->create(rArg);
-}
-
 void ResourceMgr::registerFactory(ResourceFactory* pFactory, const SafeString& rName)
 {
     pFactory->setExt(rName);
@@ -184,20 +150,25 @@ Resource* ResourceMgr::tryLoad(const ResourceMgr::LoadArg& rArg, const SafeStrin
 }
 #endif
 
+/**
+ * Loads a resource without decompression, picking the factory from the argument or the path
+ * extension.
+ * @param rArg Load parameters.
+ * @return Created resource, or nullptr on failure.
+ */
 Resource* ResourceMgr::tryLoadWithoutDecomp(const ResourceMgr::LoadArg& rArg)
 {
     auto* factory = rArg.factory;
     if (!factory)
     {
         FixedSafeString<32> ext;
-        if (Path::getExt(&ext, rArg.path))
+        if (!Path::getExt(&ext, rArg.path))
         {
-            factory = findFactory(ext);
-            SEAD_ASSERT(factory);
+            factory = mDefaultResourceFactory;
         }
         else
         {
-            factory = mDefaultResourceFactory;
+            factory = findFactory(ext);
         }
     }
     return factory->tryCreate(rArg);
@@ -210,4 +181,38 @@ void ResourceMgr::unload(Resource* pRes)
         delete pRes;
     }
 }
+// NON_MATCHING: tail call for factory->create
+Resource* ResourceMgr::create(const ResourceMgr::CreateArg& rArg)
+{
+    if (!rArg.buffer)
+    {
+        SEAD_ASSERT_MSG(false, "buffer null");
+        return nullptr;
+    }
+    if (rArg.file_size == 0)
+    {
+        SEAD_ASSERT_MSG(false, "file_size is 0");
+        return nullptr;
+    }
+    if (rArg.buffer_size == 0)
+    {
+        SEAD_ASSERT_MSG(false, "buffer_size is 0");
+        return nullptr;
+    }
+
+    if (rArg.factory)
+    {
+        return rArg.factory->create(rArg);
+    }
+
+    auto* factory = findFactory(rArg.ext);
+    if (factory)
+    {
+        return factory->create(rArg);
+    }
+
+    SEAD_ASSERT_MSG(false, "factory not found: %s", rArg.ext.cstr());
+    return nullptr;
+}
+
 }  // namespace sead

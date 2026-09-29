@@ -39,6 +39,8 @@ public:
 
     GPUMemBlockBase* getNext() const { return mpTail; }
     void setNext(GPUMemBlockBase* pNext) { mpTail = pNext; }
+    detail::MemoryPool* getMemoryPool() const { return mpMemoryPool; }
+    u64 getSize() const { return mMemoryBufferSize; }
 
     // TODO: the rest of the methods...
 
@@ -59,10 +61,18 @@ template <typename T>
 class GPUMemBlockT : public GPUMemBlockBase {
 public:
     ~GPUMemBlockT() override { ; }
+
+    void allocBuffer(s32 num, sead::Heap* pHeap, s32 alignment, MemoryAttribute attribute)
+    {
+        allocBuffer_(sizeof(T) * num, pHeap, alignment, attribute);
+    }
 };
 
 // TODO
 template <typename T>
-class GPUMemBlock : public GPUMemBlockT<T> {};
+class GPUMemBlock : public GPUMemBlockT<T> {
+public:
+    ~GPUMemBlock() override { ; }
+};
 
 }  // namespace agl

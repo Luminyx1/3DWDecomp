@@ -26,6 +26,9 @@ class TaskEvent
     SEAD_RTTI_BASE(TaskEvent)
 
 public:
+    TaskEvent() = default;
+    explicit TaskEvent(s32 type) : mType(type) {}
+
     s32 mType = 0;
 };
 

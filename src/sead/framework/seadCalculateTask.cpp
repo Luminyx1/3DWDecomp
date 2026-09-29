@@ -11,6 +11,7 @@ namespace sead
  */
 CalculateTask::CalculateTask(const TaskConstructArg& rArg) : TaskBase(rArg)
 {
+    mCalcNode.setPauseFlag(MethodTreeNode::cPause_Both);
     mCalcNode.bind(sead::Delegate<CalculateTask>{this, &CalculateTask::calc}, "CalculateTask");
 }
 
@@ -22,6 +23,7 @@ CalculateTask::CalculateTask(const TaskConstructArg& rArg) : TaskBase(rArg)
 CalculateTask::CalculateTask(const TaskConstructArg& rArg, const char* pName)
     : TaskBase(rArg, pName)
 {
+    mCalcNode.setPauseFlag(MethodTreeNode::cPause_Both);
     mCalcNode.bind(sead::Delegate<CalculateTask>{this, &CalculateTask::calc}, pName);
 }
 

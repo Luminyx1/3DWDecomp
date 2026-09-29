@@ -56,6 +56,7 @@ public:
     const Vector3f& getPos() const { return mPos; }
     const Vector3f& getAt() const { return mAt; }
     const Vector3f& getUp() const { return mUp; }
+    Vector3f& getUp() { return mUp; }
 
     void setPos(const Vector3f& pos) { mPos = pos; }
     void setAt(const Vector3f& at) { mAt = at; }

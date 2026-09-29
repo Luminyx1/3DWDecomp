@@ -233,6 +233,19 @@ inline void BoundBox3<T>::setMax(const Vector3& max)
 }
 
 template <typename T>
+inline void BoundBox2<T>::addPoint(const Vector2& p)
+{
+    if (mMin.x > p.x)
+        mMin.x = p.x;
+    if (mMin.y > p.y)
+        mMin.y = p.y;
+    if (mMax.x < p.x)
+        mMax.x = p.x;
+    if (mMax.y < p.y)
+        mMax.y = p.y;
+}
+
+template <typename T>
 inline void BoundBox3<T>::addPoint(const Vector3& p)
 {
     if (mMin.x > p.x)

@@ -3,6 +3,7 @@
 #include "basis/seadTypes.h"
 #include "prim/seadSafeString.h"
 #include "stream/seadBufferStream.h"
+#include "stream/seadPrintStream.h"
 
 namespace sead
 {
@@ -13,18 +14,21 @@ class StreamSrc;
 class PrintOutput
 {
 public:
-    virtual ~PrintOutput() = default;
-    virtual void write(const char* string, s32 size) = 0;
+    virtual ~PrintOutput();
+    virtual void write(const char* pString, s32 size) = 0;
     void writeLineBreak();
-    PrintFormatter& operator<<(PrintFormatter& formatter);
+    PrintFormatter& operator<<(PrintFormatter& rFormatter);
 };
 
 class StringPrintOutput : public PrintOutput
 {
 public:
-    explicit StringPrintOutput(BufferedSafeString* buffer);
+    explicit StringPrintOutput(BufferedSafeString* pBuffer) : mBuffer(pBuffer), mPos(0)
+    {
+        pBuffer->clear();
+    }
     ~StringPrintOutput() override = default;
-    void write(const char* string, s32 size) override;
+    void write(const char* pString, s32 size) override;
 
 protected:
     BufferedSafeString* mBuffer;
@@ -34,9 +38,12 @@ protected:
 class StringCutOffPrintOutput : public PrintOutput
 {
 public:
-    explicit StringCutOffPrintOutput(BufferedSafeString* buffer);
+    explicit StringCutOffPrintOutput(BufferedSafeString* pBuffer) : mBuffer(pBuffer), mPos(0)
+    {
+        pBuffer->clear();
+    }
     ~StringCutOffPrintOutput() override = default;
-    void write(const char* string, s32 size) override;
+    void write(const char* pString, s32 size) override;
 
 protected:
     BufferedSafeString* mBuffer;
@@ -46,20 +53,25 @@ protected:
 class StreamPrintOutput : public PrintOutput
 {
 public:
-    explicit StreamPrintOutput(StreamSrc* src);
+    explicit StreamPrintOutput(StreamSrc* pSrc) : mSrc(pSrc) {}
     ~StreamPrintOutput() override;
-    void write(const char* string, s32 size) override;
+    void write(const char* pString, s32 size) override;
 
 protected:
+    friend class StreamPrintFormatter;
+
     StreamSrc* mSrc;
 };
 
 class BufferingPrintOutput : public PrintOutput
 {
 public:
-    BufferingPrintOutput(char* buffer, u32 buffer_size);
+    BufferingPrintOutput(char* pBuffer, u32 bufferSize)
+        : mSrc(&PrintStreamSrc::sPrintStreamSrc, pBuffer, bufferSize - 1)
+    {
+    }
     ~BufferingPrintOutput() override;
-    void write(const char* string, s32 size) override;
+    void write(const char* pString, s32 size) override;
 
 protected:
     BufferMultiByteNullTerminatedTextWriteStreamSrc mSrc;
@@ -75,12 +87,12 @@ public:
     class OutImpl
     {
     public:
-        static void out(const Class<T>&, const char*, PrintOutput* output);
+        static void out(const Class<T>& rValue, const char* pFormat, PrintOutput* pOutput);
     };
 
-    PrintFormatter(const char*, PrintOutput* output);
+    PrintFormatter(const char* pFormat, PrintOutput* pOutput);
 
-    void setPrintOutput(PrintOutput* output);
+    void setPrintOutput(PrintOutput* pOutput) { mPrintOutput = pOutput; }
 
     void flush();
     void flushWithLineBreak();
@@ -92,7 +104,7 @@ public:
     PrintFormatter& operator,(s32);
     PrintFormatter& operator,(u32);
     PrintFormatter& operator<<(char*);
-    PrintFormatter& operator<<(const char*);
+    PrintFormatter& operator<<(const char* pFormat);
 
     PrintFormatter& operator<<(PrintFormatter& (&fn)(PrintFormatter&)) { return fn(*this); }
 
@@ -100,31 +112,51 @@ public:
     PrintFormatter& operator,(const T&);
 
     template <typename T>
-    static void out(const T&, const char*, PrintOutput* output);
+    static void out(const T& rValue, const char* pFormat, PrintOutput* pOutput);
+    template <typename T>
+    static void out(const T* pValue, const char* pFormat, PrintOutput* pOutput);
 
 protected:
-    bool proceedToFormatMark_(char*);
-    static void outputString_(const char*, PrintOutput*, const char*, s32);
-    static void outputPtr_(const char*, PrintOutput*, uintptr_t);
+    bool proceedToFormatMark_(char* pFormat);
+    static bool isQualification_(char c)
+    {
+        switch (c)
+        {
+        case ' ':
+        case '#':
+        case '+':
+        case '-':
+        case '.':
+        case 'L':
+        case 'h':
+        case 'l':
+            return true;
+        default:
+            return (c >= '0' && c <= '9') || c == 'z';
+        }
+    }
+    static void outputString_(const char* pFormat, PrintOutput* pOutput, const char* pString,
+                              s32 length);
+    static void outputPtr_(const char* pFormat, PrintOutput* pOutput, uintptr_t ptr);
 
     const char* mFormatStr;
-    class PrintOutput* mPrintOutput;
+    PrintOutput* mPrintOutput;
     s32 mPos;
     s32 mFormatStrLength;
-    bool mX;
+    bool mIsFormatSkipped;
 };
 
-inline PrintFormatter& flush(PrintFormatter& formatter)
+inline PrintFormatter& flush(PrintFormatter& rFormatter)
 {
-    formatter.flush();
-    return formatter;
+    rFormatter.flush();
+    return rFormatter;
 }
 
 class StringPrintFormatter : public PrintFormatter
 {
 public:
-    explicit StringPrintFormatter(BufferedSafeString* string);
-    StringPrintFormatter(BufferedSafeString* string, const char*);
+    explicit StringPrintFormatter(BufferedSafeString* pString);
+    StringPrintFormatter(BufferedSafeString* pString, const char* pFormat);
 
 protected:
     StringPrintOutput mOutput;
@@ -133,8 +165,8 @@ protected:
 class StringCutOffPrintFormatter : public PrintFormatter
 {
 public:
-    explicit StringCutOffPrintFormatter(BufferedSafeString* string);
-    StringCutOffPrintFormatter(BufferedSafeString* string, const char*);
+    explicit StringCutOffPrintFormatter(BufferedSafeString* pString);
+    StringCutOffPrintFormatter(BufferedSafeString* pString, const char* pFormat);
 
 protected:
     StringCutOffPrintOutput mOutput;
@@ -143,8 +175,8 @@ protected:
 class StreamPrintFormatter : public PrintFormatter
 {
 public:
-    explicit StreamPrintFormatter(StreamSrc* src);
-    StreamPrintFormatter(StreamSrc* src, const char*);
+    explicit StreamPrintFormatter(StreamSrc* pSrc);
+    StreamPrintFormatter(StreamSrc* pSrc, const char* pFormat);
     void flushAndWriteNullChar();
 
 protected:
@@ -155,11 +187,21 @@ class BufferingPrintFormatter : public PrintFormatter
 {
 public:
     BufferingPrintFormatter();
-    explicit BufferingPrintFormatter(const char*);
+    explicit BufferingPrintFormatter(const char* pFormat);
 
 protected:
     BufferingPrintOutput mOutput;
     char mBuffer[128];
+};
+
+class TimeBufferingPrintFormatter : public BufferingPrintFormatter
+{
+public:
+    TimeBufferingPrintFormatter();
+    explicit TimeBufferingPrintFormatter(const char* pFormat);
+
+private:
+    void outputTimeStamp_();
 };
 // endregion
 }  // namespace sead

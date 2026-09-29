@@ -22,15 +22,18 @@ void LMSi_AnalyzeMessageHeader(LMSCommonBinaryFormat* pBin) {
 void LMSi_AnalyzeMessageBlocks(LMSCommonBinaryFormat* pBin) {
     size_t offset = 0x20;
     int i;
-    size_t pos;
     for (i = 0; i < pBin->mBlockNum; i++) {
         LMSBlockInfo* pInfo = &pBin->mBlockInfo[i];
+        size_t pos = offset;
         pInfo->pData = pBin->pResource + offset + 0x10;
-        pos = offset;
-        pInfo->mBlockName[0] = pBin->pResource[pos++];
-        pInfo->mBlockName[1] = pBin->pResource[pos++];
-        pInfo->mBlockName[2] = pBin->pResource[pos++];
-        pInfo->mBlockName[3] = pBin->pResource[pos++];
+        pInfo->mBlockName[0] = pBin->pResource[pos];
+        pos++;
+        pInfo->mBlockName[1] = pBin->pResource[pos];
+        pos++;
+        pInfo->mBlockName[2] = pBin->pResource[pos];
+        pos++;
+        pInfo->mBlockName[3] = pBin->pResource[pos];
+        pos++;
         pInfo->mDataSize = *(const libms_u32_t*)(pBin->pResource + pos);
         pos += 4;
         pInfo->mUnk10 = *(const libms_u16_t*)(pBin->pResource + pos);

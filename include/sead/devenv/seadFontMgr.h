@@ -16,7 +16,7 @@ public:
     void swap(u32 temp, u32 size)
     {
         _4 = temp;
-        if (temp + size < size)
+        if (size + temp < temp)
         {
             u32 mod = temp % size;
             _4 = mod;
@@ -25,16 +25,19 @@ public:
     }
 
     u32 get_0() const { return _0; }
+    u32 get_4() const { return _4; }
+    u32 fetchAdd_0(u32 size) { return _0.fetchAdd(size); }
 
 private:
-    Atomic<u32> _0, _4;
+    Atomic<u32> _0;
+    u32 _4 = 0;
 };
 
 // unknown contents and size
 class FontBase
 {
 public:
-    virtual ~FontBase();
+    virtual ~FontBase() {}
 
     virtual float getHeight() const = 0;
     virtual float getWidth() const = 0;

@@ -1,10 +1,13 @@
 #pragma once
 
 #include <framework/seadGameFramework.h>
+#include <gfx/seadColor.h>
 #include <gfx/seadFrameBuffer.h>
 #include <math/seadVector.h>
+#include <nn/os.h>
 #include <nvn/nvn.h>
 #include <thread/seadThread.h>
+#include <time/seadTickSpan.h>
 
 namespace nn
 {
@@ -21,102 +24,117 @@ class Display;
 
 namespace sead
 {
+class DelegateThread;
 class DisplayBufferNvn;
 
 class GameFrameworkNx : public GameFramework
 {
     SEAD_RTTI_OVERRIDE(GameFrameworkNx, GameFramework)
+
 public:
     struct CreateArg
     {
-        s32 mVBlankWaitInterval;
-        Color4f mClearColor;
-        Vector2u mDisplayResolution;
-        bool _1c;
-        bool mIsTripleBuffer;
-        bool mIsUseDebug;
-        bool _1f;
-        u32 _20;
-        u32 _24;
-        u32 _28;
-        s32 mTransferMemorySize;
-        s32 mGraphicsDevToolsMemorySize;
-        s32 mComputeMemorySize;
-        s32 mCommandMemorySize;
-        s32 mControlMemorySize;
-        u32 mDebugLevel;
-        u32 _44;
+        u32 vblank_wait_interval;
+        Color4f clear_color;
+        u32 display_width;
+        u32 display_height;
+        bool create_method_frame_buffer;
+        bool is_triple_buffer;
+        bool is_debug;
+        bool is_apply_deferred_finalizes;
+        u32 command_memory_size;
+        u32 control_memory_size;
+        u32 shader_scratch_memory_scale;
+        u32 graphics_memory_size;
+        u32 graphics_devtools_memory_size;
+        s32 queue_compute_memory_size;
+        s32 queue_command_memory_size;
+        s32 queue_control_memory_size;
+        u32 nvn_debug_level;
+        s32 texture_descriptor_num;
+        s32 present_thread_priority;
     };
 
-    static_assert(sizeof(CreateArg) == 0x48);
+    static_assert(sizeof(CreateArg) == 0x4c);
 
-    static void initialize(const Framework::InitializeArg&);
+    static void initialize(const Framework::InitializeArg& rArg);
 
-    GameFrameworkNx(const CreateArg&);
+    explicit GameFrameworkNx(const CreateArg& rArg);
     ~GameFrameworkNx() override;
 
-    FrameBuffer* getMethodFrameBuffer(int) const override;
-    LogicalFrameBuffer* getMethodLogicalFrameBuffer(int) const override;
-    void initRun_(Heap*) override;
+    FrameBuffer* getMethodFrameBuffer(s32 methodType) const override;
+    LogicalFrameBuffer* getMethodLogicalFrameBuffer(s32 methodType) const override;
+    void initRun_(Heap* pHeap) override;
     void runImpl_() override;
-    MethodTreeMgr* createMethodTreeMgr_(Heap*) override;
-    float calcFps() override;
-    virtual void setCaption(const SafeString&);
+    MethodTreeMgr* createMethodTreeMgr_(Heap* pHeap) override;
+    f32 calcFps() override { return f32(TickSpan::makeFromSeconds(1).toS64()) / f32(mFrameTicks); }
+    virtual void setCaption(const SafeString&) {}
     virtual void mainLoop_();
     virtual void procFrame_();
     virtual void procDraw_();
     virtual void procCalc_();
     virtual void present_();
     virtual void swapBuffer_();
-    virtual void clearFrameBuffers_(int);
+    virtual void clearFrameBuffers_(s32 flags);
     virtual void waitForGpuDone_();
     virtual void setGpuTimeStamp_();
 
-    void initializeArg(const Framework::InitializeArg&);
-    void initializeGraphicsSystem(Heap*, const Vector2f&);
-    void outOfMemoryCallback_(NVNcommandBuffer*, NVNcommandBufferMemoryEvent, size_t, void*);
-    void presentAsync_(Thread*, long);
-    void getAcquiredDisplayBufferTexture() const;  // unknown return type
-    void setVBlankWaitInterval(u32);
-    void requestChangeUseGPU(bool);
-    void getGraphicsDevToolsAllocatorTotalFreeSize() const;  // unknown return type
+    void initializeGraphicsSystem(Heap* pHeap, const Vector2f& rVirtualSize);
+    NVNtexture* getAcquiredDisplayBufferTexture() const;
+    void setVBlankWaitInterval(u32 interval);
+    void requestChangeUseGPU(bool useGpu);
+    size_t getGraphicsDevToolsAllocatorTotalFreeSize() const;
+
+    NVNcommandBuffer* get158() const { return mCommandBuffer; }
+    NVNcommandBuffer* getCommandBuffer() const { return mCommandBuffer; }
+
+protected:
+    enum FrameStepFlag
+    {
+        cFrameStep_Enabled = 1 << 0,
+        cFrameStep_Advance = 1 << 1
+    };
+
+    static void outOfMemoryCallback_(NVNcommandBuffer* pCommandBuffer,
+                                     NVNcommandBufferMemoryEvent event, size_t minSize,
+                                     void* pCallbackData);
+
+    void presentAsync_(Thread* pThread, s64 msg);
     void waitVsyncEvent_();
 
-private:
     CreateArg mCreateArg;
-    u64 mFrameDuration;
-    u64 mPrevFrameTick;
+    s64 mFrameTicks;
+    s64 mPrevFrameTick;
     FrameBuffer* mMethodFrameBuffer;
     LogicalFrameBuffer mMethodLogicalFrameBuffer;
-    u64 mVBlankWaitTicks;
+    s64 mVBlankWaitTicks;
     DisplayBufferNvn* mDisplayBuffer;
-    char _130[8];
-    void* mGpuErrorCallback;
-    NVNmemoryPool* _140;
-    void* mCommandBufferControl;
+    void (*mGpuWaitCallback)(int);
+    void* _140;
+    NVNmemoryPool* mCommandMemoryPool;
+    void* mControlMemory;
     NVNcommandBuffer* mCommandBuffer;
-    NVNbuffer* _158;
-    NVNcounterData* _160;
-    NVNmemoryPool* mShaderScratchMemory;
-    u32 _170;
+    NVNbuffer* mCounterBuffer;
+    NVNcounterData* mCounterData;
+    NVNmemoryPool* mShaderScratchMemoryPool;
+    u32 mShaderScratchMemorySize;
     nn::mem::StandardAllocator* mGraphicsDevToolsAllocator;
-    u64 mCommandBufferCommandMemoryUsed;
-    u64 mCommandBufferControlMemoryUsed;
-    NVNqueue* _190;
-    FrameBuffer* mCurFrameBuffer;
+    u64 mCommandMemoryUsedMax;
+    u64 mControlMemoryUsedMax;
+    NVNqueue* mQueue;
+    FrameBuffer* mOverrideFrameBuffer;
     nn::vi::Display* mDisplay;
     nn::vi::Layer* mLayer;
     DelegateThread* mPresentationThread;
-    NVNsync* _1B8;
-    SafeString _1C0;
+    NVNsync* mGpuSync;
+    SafeString mCaption;
     NVNcommandHandle mCommandHandle;
     nn::os::SystemEventType mVsyncEvent;
-    bool _208;
-    u8 _209;
-    bool _20a;
-    u8 _20b;
+    bool mIsPresentAsync;
+    bool mIsPresentDone;
+    u8 mFrameStepFlags;
+    bool mIsUseGpu;
+    u8 mRequestChangeUseGpu;
 };
-
-static_assert(sizeof(GameFrameworkNx) == 0x210);
 
 }  // namespace sead

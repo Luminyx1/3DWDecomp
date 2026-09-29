@@ -422,6 +422,56 @@ public:
         std::sort_heap(mBuffer + start_idx, mBuffer + end_idx, cmp_);
     }
 
+    /// Heap sort of the elements with indices in [startIdx .. endIdx] with a statically known
+    /// comparer taking pointers to the elements.
+    template <typename Compare>
+    void heapSort(Compare&& cmp, s32 startIdx, s32 endIdx)
+    {
+        if (u32(mSize) <= u32(startIdx) || u32(mSize) <= u32(endIdx) || endIdx - startIdx < 1)
+            return;
+
+        T* buffer = mBuffer + startIdx;
+        const s32 last = endIdx - startIdx;
+        const s32 num = last + 1;
+        for (s32 i = num / 2; i > 0; --i)
+        {
+            T value = buffer[i - 1];
+            s32 parent = i;
+            s32 child = parent * 2;
+            while (child <= num)
+            {
+                if (child <= last && cmp(&buffer[child - 1], &buffer[child]) < 0)
+                    ++child;
+                if (cmp(&value, &buffer[child - 1]) >= 0)
+                    break;
+                buffer[parent - 1] = buffer[child - 1];
+                parent = child;
+                child = parent * 2;
+            }
+            buffer[parent - 1] = value;
+        }
+
+        for (s32 i = num; i >= 2; --i)
+        {
+            const s32 end = i - 1;
+            T value = buffer[end];
+            buffer[end] = buffer[0];
+            s32 parent = 1;
+            s32 child = 2;
+            while (child <= end)
+            {
+                if (child < end && cmp(&buffer[child - 1], &buffer[child]) < 0)
+                    ++child;
+                if (cmp(&value, &buffer[child - 1]) >= 0)
+                    break;
+                buffer[parent - 1] = buffer[child - 1];
+                parent = child;
+                child = parent * 2;
+            }
+            buffer[parent - 1] = value;
+        }
+    }
+
 protected:
     static s32 compareT(const T* lhs, const T* rhs)
     {

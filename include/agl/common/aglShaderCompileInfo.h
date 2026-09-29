@@ -14,31 +14,36 @@ class Heap;
 namespace agl {
 
 class ShaderCompileInfo : public sead::hostio::Node {
+public:
     // this value is used as an index to a table of version lists
     // on SMO 1.2.0, located at 0x7101E80B30
-    using Target = s32;
+    enum Target {};
 
-public:
     ShaderCompileInfo();
 
     virtual ~ShaderCompileInfo();
 
     void destroy();
-    void create(s32, s32 bufferSize, sead::Heap*);
+    void create(s32 macroNum, s32 variationNum, sead::Heap* pHeap);
     void clearVariation();
     void pushBackVariation(const char*, const char*);
-    void calcCompileSource(ShaderType, sead::BufferedSafeString*, Target, bool);
+    void calcCompileSource(ShaderType, sead::BufferedSafeString*, Target, bool) const;
     static const sead::SafeString& getRegitserUniformBlockName();  // "RegisterUBO"
 
+    void setName(const sead::SafeString& rName) { mName = rName; }
+    void setSource(const sead::SafeString* pSource) { mSource = pSource; }
+
 private:
-    void* _8;
-    const char* mName;
-    void* _18;
+    friend class ShaderProgramEdit;
+
+    sead::SafeString mName;
+    const sead::SafeString* mSource;
     void* _20;
-    sead::PtrArray<const char*> _28;
-    sead::PtrArray<const char*> _38;
-    sead::PtrArray<const char*> _48;
-    sead::PtrArray<const char*> _58;
+    sead::PtrArray<const char> mMacroName;
+    sead::PtrArray<const char> mMacroValue;
+    sead::PtrArray<const char> mVariationName;
+    sead::PtrArray<const char> mVariationValue;
 };
+static_assert(sizeof(ShaderCompileInfo) == 0x68);
 
 }  // namespace agl

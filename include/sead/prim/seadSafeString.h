@@ -181,6 +181,23 @@ public:
         }
     }
 
+    BufferedSafeStringBase(BufferedSafeStringBase<T>* pOriginal, s32 pos)
+        : SafeStringBase<T>(pOriginal->getBuffer()), mBufferSize(0)
+    {
+        if (pos < 0 || pos >= pOriginal->getBufferSize())
+        {
+            this->mStringTop = nullptr;
+            this->mBufferSize = 0;
+        }
+        else
+        {
+            const T* top = pOriginal->mStringTop;
+            this->mBufferSize = pOriginal->getBufferSize() - pos;
+            this->mStringTop = &top[pos];
+            this->assureTerminationImpl_();
+        }
+    }
+
     BufferedSafeStringBase(const BufferedSafeStringBase&) = default;
     ~BufferedSafeStringBase() SEAD_SAFESTRING_OVERRIDE_TOKEN = default;
 

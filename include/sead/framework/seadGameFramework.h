@@ -50,7 +50,7 @@ public:
     void lockFrameDrawContext();
     void unlockFrameDrawContext();
 
-private:
+protected:
     int mDisplayStarted = 0;
     sead::SafeString mUnk1 = "";
     sead::SafeString mUnk2 = "";

@@ -8,7 +8,26 @@
 namespace sead
 {
 class DrawContext;
-class DisplayBuffer;
+class Heap;
+
+class DisplayBuffer
+{
+    SEAD_RTTI_BASE(DisplayBuffer)
+
+public:
+    void initialize(const Vector2f& size, Heap* heap)
+    {
+        mSize = size;
+        initializeImpl_(heap);
+    }
+
+    const Vector2f& getSize() const { return mSize; }
+
+protected:
+    virtual void initializeImpl_(Heap* heap) = 0;
+
+    Vector2f mSize{0.0f, 0.0f};
+};
 
 class LogicalFrameBuffer
 {

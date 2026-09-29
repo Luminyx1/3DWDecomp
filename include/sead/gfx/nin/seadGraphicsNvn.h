@@ -2,49 +2,78 @@
 
 #include <gfx/seadColor.h>
 #include <gfx/seadGraphics.h>
+#include <prim/seadDelegate.h>
+#include <thread/seadAtomic.h>
 #include <thread/seadCriticalSection.h>
+#include <time/seadTickTime.h>
+#include <nn/gfx/gfx_Variation-api.nvn.h>
 #include "nvn/nvn.h"
+
+namespace nn::gfx::detail
+{
+template <typename TTarget>
+class DeviceImpl;
+}  // namespace nn::gfx::detail
 
 namespace sead
 {
 class DisplayBufferNvn;
-enum class NVNdebugCallbackSource;
-enum class NVNdebugCallbackType;
-enum class NVNdebugCallbackSeverity;
 
 class GraphicsNvn : public Graphics
 {
+    friend class GameFrameworkNx;
+
 public:
-    class CreateArg;
-    struct NvnDebugCallbackParam;
+    class CreateArg
+    {
+    public:
+        NVNdevice* mNvnDevice;
+        s32 mTextureDescriptorNum;
+        bool mIsApplyDeferredFinalizes;
+        bool _d;
+    };
 
-    GraphicsNvn(const CreateArg& arg);
+    struct NvnDebugCallbackParam
+    {
+        NVNdebugCallbackSource mSource;
+        NVNdebugCallbackType mType;
+        s32 mId;
+        NVNdebugCallbackSeverity mSeverity;
+        const char* mMessage;
+    };
 
-    void initializeDrawLockContext(Heap*) override;
-    void initializeImpl(Heap*) override;
+    using NvnDebugCallback = IDelegate1<const NvnDebugCallbackParam&>;
+    using GfxDevice = nn::gfx::detail::DeviceImpl<nn::gfx::ApiVariationNvn8>;
+
+    GraphicsNvn(const CreateArg& rArg);
+
+    void initializeDrawLockContext(Heap* pHeap) override;
+    void initializeImpl(Heap* pHeap) override;
 
     s32 getNewSamplerId();
     s32 getNewTextureId();
 
-    void setDisplayBufferWindowCrop(s32, s32, s32, s32);
-    void getDisplayBufferWindowCrop(s32*, s32*, s32*, s32*) const;
+    void setDisplayBufferWindowCrop(s32 x, s32 y, s32 w, s32 h);
+    void getDisplayBufferWindowCrop(s32* pX, s32* pY, s32* pW, s32* pH) const;
 
-    void registerQueue(NVNqueue*);
-    void registerDefaultCommandBuffer(NVNcommandBuffer*);
-    void registerDisplayBufferNvn(DisplayBufferNvn*);
+    void registerQueue(NVNqueue* pQueue);
+    void registerDefaultCommandBuffer(NVNcommandBuffer* pCommandBuffer);
+    void registerDisplayBufferNvn(DisplayBufferNvn* pDisplayBuffer);
     void applyDeferredFinalizes();
 
-    void nvnDebugCallback(NVNdebugCallbackSource, NVNdebugCallbackType, s32,
-                          NVNdebugCallbackSeverity, const char*, void*);
+    static void nvnDebugCallback(NVNdebugCallbackSource source, NVNdebugCallbackType type, s32 id,
+                                 NVNdebugCallbackSeverity severity, const char* pMessage,
+                                 void* pUserParam);
 
-    u64 convertGPUTimeStampToSystemTick(const NVNcounterData*);
-    s32 convertNvnDebugLevel(u32);
+    static u64 convertGPUTimeStampToSystemTick(const NVNcounterData* pCounterData);
+    static s32 convertNvnDebugLevel(u32 level);
+
     void setViewportImpl(f32, f32, f32, f32) override;
     void setScissorImpl(f32, f32, f32, f32) override;
     void setDepthTestEnableImpl(bool) override;
     void setDepthWriteEnableImpl(bool) override;
     void setDepthFuncImpl(Graphics::DepthFunc) override;
-    void setVBlankWaitIntervalImpl(u32) override;
+    bool setVBlankWaitIntervalImpl(u32 interval) override;
     void setCullingModeImpl(Graphics::CullingMode) override;
     void setBlendEnableImpl(bool) override;
     void setBlendEnableMRTImpl(u32, bool) override;
@@ -54,7 +83,7 @@ public:
                                Graphics::BlendFactor, Graphics::BlendFactor) override;
     void setBlendEquationImpl(Graphics::BlendEquation, Graphics::BlendEquation) override;
     void setBlendEquationMRTImpl(u32, Graphics::BlendEquation, Graphics::BlendEquation) override;
-    void setBlendConstantColorImpl(sead::Color4f const&) override;
+    void setBlendConstantColorImpl(const Color4f&) override;
     void waitForVBlankImpl() override;
     void setColorMaskImpl(bool, bool, bool, bool) override;
     void setColorMaskMRTImpl(u32, bool, bool, bool, bool) override;
@@ -68,57 +97,48 @@ public:
     void setPolygonOffsetEnableImpl(bool, bool, bool) override;
 
     NVNdevice* getNvnDevice() const { return mNvnDevice; }
+    NVNqueue* getNvnQueue() const { return mNvnQueue; }
+    NVNcommandBuffer* getDefaultCommandBuffer() const { return mDefaultCommandBuffer; }
+    GfxDevice* getGfxDevice() const { return mGfxDevice; }
+    DisplayBufferNvn* getDisplayBuffer() const { return mDisplayBuffer; }
 
     NVNtexturePool* getTexturePool() { return &mNvnTexturePool; }
+    NVNsamplerPool* getSamplerPool() { return &mNvnSamplerPool; }
 
     s32 getTextureSamplerID() const { return mTextureSamplerID; }
 
     CriticalSection* getCriticalSection1() { return &mCriticalSection1; }
     CriticalSection* getCriticalSection2() { return &mCriticalSection2; }
 
-    static GraphicsNvn* instance() { return (GraphicsNvn*)Graphics::instance(); }
+    static GraphicsNvn* instance() { return static_cast<GraphicsNvn*>(Graphics::instance()); }
+
+    static TickTime sBaseTime;
 
 private:
-    void defaultNvnDebugCallback_(const NvnDebugCallbackParam&);
+    void defaultNvnDebugCallback_(const NvnDebugCallbackParam& rParam);
 
     NVNdevice* mNvnDevice;
-    void* _38;
-    void* _40;
-    void* _48;
-    void* _50;
+    NVNqueue* mNvnQueue = nullptr;
+    NVNcommandBuffer* mDefaultCommandBuffer = nullptr;
+    GfxDevice* mGfxDevice = nullptr;
+    DisplayBufferNvn* mDisplayBuffer = nullptr;
     NVNtexturePool mNvnTexturePool;
-    void* _78;
-    void* _80;
-    void* _88;
-    void* _90;
-    void* _98;
-    void* _A0;
-    void* _A8;
-    void* _B0;
-    void* _B8;
-    void* _C0;
-    void* _C8;
-    void* _D0;
-    void* _D8;
-    void* _E0;
-    void* _E8;
-    void* _F0;
-    s32 mTextureSamplerID;
-    void* _100;
-    s32 _108;
-    s32 _10C;
-    s32 _110;
-    s32 _114;
+    NVNsamplerPool mNvnSamplerPool;
+    NVNsampler mNvnSampler;
+    s32 mTextureSamplerID = 0;
+    u32 mVBlankWaitInterval = 0;
+    NVNmemoryPool* mDescriptorMemoryPool;
+    Atomic<s32> mSamplerIdCounter = 0;
+    Atomic<s32> mTextureIdCounter = 0;
+    s32 mTextureDescriptorNum;
+    s32 mSamplerDescriptorNum = 0x1000;
     CriticalSection mCriticalSection1;
     CriticalSection mCriticalSection2;
     CriticalSection mCriticalSection3;
-    void* _1D8;
-    void* _1E0;
-    void* _1E8;
-    void* _1F0;
-    void* _1F8;
-    bool _200;
-    bool _201;
+    Delegate1<GraphicsNvn, const NvnDebugCallbackParam&> mDefaultDebugCallback;
+    NvnDebugCallback* mDebugCallback;
+    bool _200 = false;
+    bool mIsApplyDeferredFinalizes;
     bool _202;
 };
 static_assert(sizeof(GraphicsNvn) == 0x208);

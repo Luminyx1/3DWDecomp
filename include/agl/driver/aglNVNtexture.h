@@ -2,6 +2,7 @@
 
 #include <nvn/nvn.h>
 #include <basis/seadTypes.h>
+#include <nn/gfx/gfx_Types.h>
 
 namespace agl::driver {
 
@@ -17,6 +18,7 @@ public:
     bool registerTexture(const NVNtexture*, const NVNtextureView*, const char*, bool);
 
     void setReference_() const;
+    void initializeGfxTexture(nn::gfx::Texture* pTexture) const;
 
     NVNtexture* getTexture() { return &mTexture; }
     const NVNtexture* getTexture() const { return &mTexture; }

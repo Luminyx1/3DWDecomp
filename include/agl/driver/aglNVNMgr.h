@@ -86,6 +86,8 @@ public:
 
     NVNdevice* getNvnDevice() const { return mDevice; }
     NVNqueue* getNvnQueue() const { return mQueue; }
+    sead::CriticalSection* getCriticalSection() { return &mCS; }
+    bool isPrintTextureInfo() const { return *reinterpret_cast<const u8*>(&_400) & 1; }
     u32 getTextureFlags(bool compressible, bool renderTarget, NVNformat format) const;
     void setMemoryPoolSettingTexture(sead::BitFlag32* pFlags) const;
 
@@ -93,6 +95,9 @@ public:
     void disableTiledCaching(DrawContext* pDrawContext) const;
     void beginTiledCachingDebug(DrawContext* pDrawContext) const;
     void endTiledCachingDebug(DrawContext* pDrawContext) const;
+
+    void toTile(TextureData* pTextureData, const void* pLinearImage);
+    void toTile(TextureData* pTextureData);
 
     void countDown(s32 index);
     void dampRegisteredTextureList() const;
