@@ -1,22 +1,24 @@
 #pragma once
 
 #include <nn/font/font_Util.h>
+#include <nn/util/util_IntrusiveList.h>
 
 namespace eui {
 
 class ControlBase {
 public:
-    // is this a macro?
-    virtual const char* getClassName() { return "ControlBase"; }
+    virtual const char* getClassName() const;
 
     NN_RUNTIME_TYPEINFO_BASE();
 
     ControlBase();
-    virtual ~ControlBase() = default;
+    virtual ~ControlBase();
 
     virtual void Update(float);
 
-    char filler[0x20];
+    nn::util::IntrusiveListNode m_Link;
+    void* _18;
+    void* _20;
 };
 
 }  // namespace eui

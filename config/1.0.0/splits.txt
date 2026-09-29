@@ -4436,11 +4436,11 @@ src/eui/message/euiFontMgr_dup2.cpp:
     .text   start:0x007BC030 end:0x007BD0F8
 src/eui/lytex/euiTextBoxEx.cpp:
     .text   start:0x007BD100 end:0x007BE4EC
-src/eui/message/euiMessageString.cpp:
+src/eui/message/euiMessageString.cpp: done
     .text   start:0x007BE4F0 end:0x007BE854
 src/eui/ctrl/euiLetterAnimControl.cpp:
     .text   start:0x007BE860 end:0x007BF744
-src/eui/ctrl/euiControlBase.cpp:
+src/eui/ctrl/euiControlBase.cpp: done
     .text   start:0x007BF750 end:0x007BF810
 src/eui/message/euiTagProcessor.cpp:
     .text   start:0x007BF810 end:0x007C1454
