@@ -17,6 +17,8 @@ namespace al {
 
     f32 getActionFrame(const LiveActor*);
     f32 getActionFrameMax(const LiveActor*, const char*);
+    f32 getActionFrameRate(const LiveActor*);
+    const char* getActionName(const LiveActor*);
 
     void startHitReaction(const LiveActor*, const char*);
     void startHitReactionHit(LiveActor*);

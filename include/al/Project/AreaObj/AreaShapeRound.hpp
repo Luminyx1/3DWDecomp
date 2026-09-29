@@ -12,7 +12,7 @@ public:
     virtual bool calcNearestEdgePoint(sead::Vector3f*, const sead::Vector3f&) const;
     virtual bool checkArrowCollision(sead::Vector3f*, sead::Vector3f*, const sead::Vector3f&,
                                      const sead::Vector3f&) const;
-    virtual bool calcLocalBoundingBox(sead::BoundBox3f*) const;
+    virtual bool calcLocalBoundingBox(sead::BoundBox3f*) const { return false; }
     virtual bool calcWorldBoundingBox(sead::BoundBox3f*) const;
 };
 
@@ -25,7 +25,7 @@ public:
     virtual bool calcNearestEdgePoint(sead::Vector3f*, const sead::Vector3f&) const;
     virtual bool checkArrowCollision(sead::Vector3f*, sead::Vector3f*, const sead::Vector3f&,
                                      const sead::Vector3f&) const;
-    virtual bool calcLocalBoundingBox(sead::BoundBox3f*) const;
+    virtual bool calcLocalBoundingBox(sead::BoundBox3f*) const { return false; }
     virtual bool calcWorldBoundingBox(sead::BoundBox3f*) const;
 };
 
@@ -38,7 +38,7 @@ public:
     virtual bool calcNearestEdgePoint(sead::Vector3f*, const sead::Vector3f&) const;
     virtual bool checkArrowCollision(sead::Vector3f*, sead::Vector3f*, const sead::Vector3f&,
                                      const sead::Vector3f&) const;
-    virtual bool calcLocalBoundingBox(sead::BoundBox3f*) const;
+    virtual bool calcLocalBoundingBox(sead::BoundBox3f*) const { return false; }
     virtual bool calcWorldBoundingBox(sead::BoundBox3f*) const;
 };
 }  // namespace al

@@ -33,8 +33,8 @@ public:
 
     virtual void initStageSwitchKeeper();
     virtual void init(const AreaInitInfo&);
-    virtual void init(const AreaInitInfo&, SceneObjHolder*);
-    virtual bool isInVolume(const sead::Vector3f&);
+    virtual void init(const AreaInitInfo&, const SceneObjHolder*);
+    virtual bool isInVolume(const sead::Vector3f&) const;
     virtual bool isInVolumeCheck(const sead::Vector3f&) const;
 
     void invalidate();
