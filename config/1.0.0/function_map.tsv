@@ -48219,8 +48219,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71007D7260			FALSE	_ZN3eui8RootPaneD2Ev	eui::RootPane::~RootPane()	
 0x71007D7270			FALSE	_ZN3eui8RootPaneD0Ev	eui::RootPane::~RootPane()	
 0x71007D72A0			FALSE	_ZNK3eui8RootPane18GetRuntimeTypeInfoEv	eui::RootPane::GetRuntimeTypeInfo() const	
-0x71007D7350			FALSE	_ZN3eui9AlignPaneC1ENS0_9AlignKindEbfb	eui::AlignPane::AlignPane(eui::AlignPane::AlignKind, bool, float, bool)	
-0x71007D73D0		euiAlignPane.o	FALSE	_ZN3eui9AlignPaneC1EPKN2nn4ui2d7ResPaneERKNS2_11BuildArgSetE	eui::AlignPane::AlignPane(nn::ui2d::ResPane const*, nn::ui2d::BuildArgSet const&)	object (smo)
+0x71007D7350		euiAlignPane.o	FALSE	_ZN3eui9AlignPaneC1ENS0_9AlignKindEbfb	eui::AlignPane::AlignPane(eui::AlignPane::AlignKind, bool, float, bool)	object start fixed by hand
+0x71007D73D0			FALSE	_ZN3eui9AlignPaneC1EPKN2nn4ui2d7ResPaneERKNS2_11BuildArgSetE	eui::AlignPane::AlignPane(nn::ui2d::ResPane const*, nn::ui2d::BuildArgSet const&)	object (smo)
 0x71007D76E0			FALSE	_ZN3eui9AlignPaneC2EPKN2nn4ui2d12ResAlignmentERKNS2_11BuildArgSetE	eui::AlignPane::AlignPane(nn::ui2d::ResAlignment const*, nn::ui2d::BuildArgSet const&)	
 0x71007D7800			FALSE	_ZN3eui9AlignPaneC1ERKS0_PNS_8LayoutExE	eui::AlignPane::AlignPane(eui::AlignPane const&, eui::LayoutEx*)	
 0x71007D78D0			FALSE	_ZN3eui9AlignPaneD1Ev	eui::AlignPane::~AlignPane()	

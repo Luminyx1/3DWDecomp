@@ -8,31 +8,67 @@
 #include <nn/font/font_Util.h>
 #include <nn/types.h>
 
+#include <nn/gfx/gfx_Types.h>
+#include <nn/util/util_MathTypes.h>
+#include <nn/util/util_IntrusiveList.h>
+
 namespace nn::ui2d {
 class AnimTransform;
 class Layout;
-
-class Pane {
+class Material;
+class DrawInfo;
+struct Size;
+struct ResPane;
+struct BuildArgSet;
+namespace detail {
+class BuildPaneTreeContext;
+class PaneBase {
 public:
-    NN_RUNTIME_TYPEINFO_BASE();
+    PaneBase();
+    virtual ~PaneBase();
+    nn::util::IntrusiveListNode m_Link;
+};
+}
 
+class Pane : public detail::PaneBase {
+public:
+    class CalculateContext;
     Pane();
-    Pane(const Pane&);
+    Pane(const Pane& rOther) { CopyImpl(rOther, nullptr, nullptr, nullptr); }
+    Pane(const ResPane*, const BuildArgSet&);
+    ~Pane() override = default;
 
-    virtual ~Pane();
-
-    virtual s32 GetVertexColor(s32);
-    virtual u8 GetColorElement(s32);
-    virtual void SetColorElement(u32, u8);
-    virtual u8 GetVertexColorElement(s32);
-    virtual void SetVertexColorElement(u32, u8);
+    NN_RUNTIME_TYPEINFO_BASE();
+    virtual void Finalize(nn::gfx::Device*);
+    virtual nn::util::Unorm8x4 GetVertexColor(int) const;
+    virtual void SetVertexColor(int, const nn::util::Unorm8x4&);
+    virtual u8 GetColorElement(int) const;
+    virtual void SetColorElement(int, u8);
+    virtual u8 GetVertexColorElement(int) const;
+    virtual void SetVertexColorElement(int, u8);
     virtual u32 GetMaterialCount() const;
-    virtual u64* GetMaterial(s32) const;
-
+    virtual Material* GetMaterial(int) const;
+    virtual void GetSizeWithCaptureEffect(Size*) const;
+    virtual void GetVertexPosWithCaptureEffect(nn::util::Float2*) const;
+    virtual float GetItalicSize() const;
+    virtual Pane* FindPaneByName(const char*, bool);
+    virtual const Pane* FindPaneByName(const char*, bool) const;
+    virtual Material* FindMaterialByName(const char*, bool);
+    virtual const Material* FindMaterialByName(const char*, bool) const;
     virtual void BindAnimation(AnimTransform*, bool, bool);
     virtual void UnbindAnimation(AnimTransform*, bool);
+    virtual void UnbindAnimationSelf(AnimTransform*);
+    virtual void Calculate(DrawInfo&, CalculateContext&, bool);
+    virtual void Draw(DrawInfo&, nn::gfx::CommandBuffer&);
+    virtual void DrawSelf(DrawInfo&, nn::gfx::CommandBuffer&);
+    virtual void SetupPaneEffectSourceImageRenderState(nn::gfx::CommandBuffer&) const;
+    virtual void LoadMtx(DrawInfo&);
+    virtual Pane* FindPaneByNameRecursive(const char*);
+    virtual const Pane* FindPaneByNameRecursive(const char*) const;
+    virtual Material* FindMaterialByNameRecursive(const char*);
+    virtual const Material* FindMaterialByNameRecursive(const char*) const;
 
-    void Initialize();
+    void CopyImpl(const Pane&, nn::gfx::Device*, const Layout*, detail::BuildPaneTreeContext*);
     void SetName(const char*);
     void SetUserData(const char*);
     void AppendChild(Pane*);
@@ -42,10 +78,7 @@ public:
     void GetVertexPos() const;
 
     Pane* mParent;
-    u64 _10;
-    u64 _18;
-    u64 _20;
-    u64 _28;
+    nn::util::IntrusiveListNode m_Children;
     float mPositionX;
     float mPositionY;
     float mPositionZ;
@@ -63,17 +96,11 @@ public:
     u32 _5C;
     u64 _60;
     Layout* mLayout;
-    u128 _70;
-    u128 _80;
-    u128 _90;
+    float mGlobalMtx[12];
     u64 _A0;
-    u64 _A8;
     void* mAnimExtUserData;
     char mPanelName[0x18];
-    u8 _D0;
     char mUserData[8];
-    u8 _D9;
-    u16 _DA;
-    u32 _DC;
+    u16 _D0;
 };
 }  // namespace nn::ui2d

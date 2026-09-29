@@ -4404,11 +4404,11 @@ src/eui/sys/euiUtility.cpp:
     .text   start:0x007B1380 end:0x007B4E6C
 src/eui/message/euiFontMgr.cpp:
     .text   start:0x007B4E70 end:0x007B5398
-src/eui/message/euiBoundingEx.cpp:
+src/eui/message/euiBoundingEx.cpp: done
     .text   start:0x007B53A0 end:0x007B5548
 src/eui/lytex/euiCapturePane.cpp:
     .text   start:0x007B5550 end:0x007B6F74
-src/eui/lytex/euiDrawInfoEx.cpp:
+src/eui/lytex/euiDrawInfoEx.cpp: done cflags=-fno-strict-aliasing
     .text   start:0x007B6F80 end:0x007B7048
 src/eui/lytex/euiDynamicCapturePane.cpp:
     .text   start:0x007B7050 end:0x007B7984
@@ -4424,7 +4424,7 @@ src/eui/lytex/euiMultiFilterWindowEx.cpp:
     .text   start:0x007B9320 end:0x007B9718
 src/eui/lytex/euiFrameBufferMultiFilter.cpp:
     .text   start:0x007B9720 end:0x007B9F24
-src/eui/lytex/euiWindowEx.cpp:
+src/eui/lytex/euiWindowEx.cpp: done
     .text   start:0x007B9F30 end:0x007BA188
 src/eui/lytex/euiMultiFilterPictureEx.cpp:
     .text   start:0x007BA190 end:0x007BA5CC
@@ -4454,7 +4454,7 @@ src/eui/message/euiDynamicCaptureUseWindowEx.cpp:
     .text   start:0x007C3600 end:0x007C3908
 src/eui/message/euiDynamicCaptureUsePictureEx.cpp:
     .text   start:0x007C3910 end:0x007C3C58
-src/eui/message/euiPartsEx.cpp:
+src/eui/message/euiPartsEx.cpp: done
     .text   start:0x007C3C60 end:0x007C3E08
 src/eui/lytex/euiLayoutEx.cpp:
     .text   start:0x007C3E10 end:0x007C6E64
@@ -4508,10 +4508,10 @@ src/eui/ctrl/euiDecisionButton.cpp:
     .text   start:0x007D68B0 end:0x007D6B98
 src/eui/ctrl/euiTapButton.cpp:
     .text   start:0x007D6BA0 end:0x007D7158
-src/eui/ctrl/euiRootPane.cpp:
-    .text   start:0x007D7160 end:0x007D73C8
+src/eui/ctrl/euiRootPane.cpp: done
+    .text   start:0x007D7160 end:0x007D7344
 src/eui/ctrl/euiAlignPane.cpp:
-    .text   start:0x007D73D0 end:0x007DAC6C
+    .text   start:0x007D7350 end:0x007DAC6C
 src/al/Library/Collision/CollisionPartsConnector.cpp:
     .text   start:0x007DAC70 end:0x007DACA4
 src/al/Library/Collision/PartsConnector.cpp:
