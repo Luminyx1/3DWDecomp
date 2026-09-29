@@ -5298,7 +5298,7 @@ src/al/Project/Camera/CameraVerticalAbsorber2DGalaxy.cpp:
     .text   start:0x00915450 end:0x00918C88
 src/al/Project/Camera/Param/CameraFunction.cpp:
     .text   start:0x00918C90 end:0x00919538
-src/al/Project/Camera/Param/CameraHolder.cpp:
+src/al/Project/Camera/Param/CameraHolder.cpp: done
     .text   start:0x00919540 end:0x009197AC
 src/al/Project/Camera/Param/CameraInfo.cpp: done
     .text   start:0x009197B0 end:0x009197FC
@@ -5314,7 +5314,7 @@ src/al/Project/Camera/Poser/CameraPoserEntrance.cpp:
     .text   start:0x0091B4F0 end:0x0091BD68
 src/al/Project/Camera/Poser/CameraPoserFixedAll.cpp:
     .text   start:0x0091BD70 end:0x0091C2B8
-src/al/Project/Camera/Poser/CameraPoserFixedPoint.cpp:
+src/al/Project/Camera/Poser/CameraPoserFixedPoint.cpp: done
     .text   start:0x0091C2C0 end:0x0091C578
 src/al/Project/Camera/Poser/CameraPoserKinopioBrigade.cpp:
     .text   start:0x0091C580 end:0x0091D140
@@ -5334,10 +5334,8 @@ src/al/Project/Camera/Poser/CameraPoserZoomParam.cpp:
     .text   start:0x00927DA0 end:0x00928CD4
 src/al/Project/Camera/Poser/CameraRail.cpp:
     .text   start:0x00928CE0 end:0x00928FC0
-src/al/Project/Camera/Poser/CameraRailHolder.cpp:
-    .text   start:0x00928FC0 end:0x00929180
-src/al/Project/Camera/Poser/CameraRailInfo.cpp: done
-    .text   start:0x00929180 end:0x00929190
+src/al/Project/Camera/Poser/CameraRailHolder.cpp: done
+    .text   start:0x00928FC0 end:0x00929190
 src/al/Project/Camera/Poser/CameraShaker.cpp:
     .text   start:0x00929190 end:0x009293BC
 src/al/Project/Camera/Poser/CameraSwitcher.cpp:
@@ -5376,7 +5374,7 @@ src/al/Project/Camera/Area/CameraLimitRailKeeper.cpp:
     .text   start:0x009336E0 end:0x00933D8C
 src/al/Project/Camera/Area/CameraOffsetPreset.cpp: done
     .text   start:0x00933D90 end:0x00933E58
-src/al/Project/Camera/Area/CameraParamTransfer.cpp:
+src/al/Project/Camera/Area/CameraParamTransfer.cpp: done
     .text   start:0x00933E60 end:0x00934038
 src/al/Project/Camera/Area/CameraPoserFactory_RS.cpp: done
     .text   start:0x00934040 end:0x0093418C
@@ -5410,9 +5408,9 @@ src/al/Project/Camera/Holder/CameraTargetCollideInfoHolder.cpp:
     .text   start:0x00941870 end:0x00941C48
 src/al/Project/Camera/Holder/CameraTargetHolder.cpp:
     .text   start:0x00941C50 end:0x009425C8
-src/al/Project/Camera/Holder/CameraTicketHolder.cpp:
+src/al/Project/Camera/Holder/CameraTicketHolder.cpp: done
     .text   start:0x009425D0 end:0x009427B0
-src/al/Project/Camera/Holder/CameraTicketId.cpp:
+src/al/Project/Camera/Holder/CameraTicketId.cpp: done
     .text   start:0x009427B0 end:0x00942A98
 src/al/Project/Camera/Holder/CameraTriangleFilter.cpp:
     .text   start:0x00942AA0 end:0x009493DC

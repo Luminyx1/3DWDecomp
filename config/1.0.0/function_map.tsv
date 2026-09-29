@@ -56964,7 +56964,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100929140			FALSE	_ZNK2al16CameraRailHolder13getCameraRailEi	al::CameraRailHolder::getCameraRail(int) const	
 0x7100929150			FALSE	_ZN2al16CameraRailHolder22setCameraRailValidFlagEib	al::CameraRailHolder::setCameraRailValidFlag(int, bool)	
 0x7100929170			FALSE	_ZNK2al16CameraRailHolder17isCameraRailValidEi	al::CameraRailHolder::isCameraRailValid(int) const	
-0x7100929180		CameraRailInfo.o	FALSE	_ZN2al14CameraRailInfoC2Ev	al::CameraRailInfo::CameraRailInfo()	object (class)
+0x7100929180			FALSE	_ZN2al14CameraRailInfoC2Ev	al::CameraRailInfo::CameraRailInfo()	joined CameraRailHolder.o (was CameraRailInfo.o, defined in the same file)
 0x7100929190		CameraShaker.o	FALSE	_ZN2al12CameraShakerC1EPN4sead21PerspectiveProjectionE	al::CameraShaker::CameraShaker(sead::PerspectiveProjection*)	object (class)
 0x71009291A0			FALSE	_ZN2al12CameraShaker6updateEv	al::CameraShaker::update()	
 0x7100929290			FALSE	_ZN2al12CameraShaker10startShakeEi	al::CameraShaker::startShake(int)	

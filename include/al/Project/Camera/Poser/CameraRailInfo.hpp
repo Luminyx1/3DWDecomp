@@ -9,6 +9,6 @@ public:
     CameraRailInfo();
 
     CameraRail* mRail;  // _0
-    bool _8;            // _8
+    bool mIsValid;      // _8
 };
 }  // namespace al

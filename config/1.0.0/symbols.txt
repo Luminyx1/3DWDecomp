@@ -4593,3 +4593,4 @@
 0x71016C2314 3600 object _ZN2nn4font12_GLOBAL__N_120PairTableAlternativeE
 0x71016C3124 3600 object _ZN2nn4font12_GLOBAL__N_116PairTableDefaultE
 0x7101B02A10 480 object _ZN2al12_GLOBAL__N_115sDefaultPresetsE
+0x7101B02090 144 object _ZN2al12_GLOBAL__N_110sShakeInfoE

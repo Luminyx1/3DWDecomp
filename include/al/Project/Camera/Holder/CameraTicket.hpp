@@ -9,6 +9,11 @@ class CameraTicketId;
 /// A handle for starting and ending a camera poser with a priority.
 class CameraTicket {
 public:
+    enum Priority {
+        Priority_Default = 0,
+        Priority_Entrance = 2,
+    };
+
     CameraTicket(CameraPoser_RS* pPoser, const CameraTicketId* pTicketId, s32 priority);
 
     void setPriority(s32 priority);
@@ -23,5 +28,7 @@ public:
     const CameraTicketId* mTicketId;   // _8
     s32 mPriority;                     // _10
     bool mIsActiveCamera = false;      // _14
+    bool _15 = false;                  // _15
+    bool _16 = false;                  // _16
 };
 }  // namespace al

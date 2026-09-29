@@ -69,7 +69,7 @@ public:
     bool _8A = false;                                 // _8A
     ControlAngleParam* mControlAngleParam = nullptr;  // _90
     bool mIsFirstCalc = true;                         // _98
-    bool _99 = false;                                 // _99
+    bool mIsNoNormalInterpole = false;                // _99
     s32 _9C = -1;                                     // _9C
     bool mIsActivateGyroMode = false;                 // _A0
     bool mIsSnapshotMode = false;                     // _A1

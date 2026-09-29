@@ -46,6 +46,8 @@ bool tryGetPlacementInfoByKey(PlacementInfo*, const PlacementInfo&, const char*)
 
 bool isEqualPlacementID(const PlacementInfo&, const PlacementInfo&);
 
+bool isEqualPlacementID(const PlacementId&, const PlacementId&);
+
 bool isSingleMode(const ActorInitInfo&);
 
 s32 getCountPlacementInfo(const PlacementInfo&);
