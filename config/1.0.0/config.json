@@ -32,14 +32,15 @@
   },
 
   "$path_flags_note": [
-    "Extra flags for sources under a path.  sead and agl are prebuilt libraries built with",
+    "Extra flags for sources under a path.  sead, agl and al are prebuilt libraries built with",
     "-fno-strict-aliasing: it reloads members after every store through another pointer",
-    "(e.g. sead::TreeNode::detachSubTree), which the game and al code does not."
+    "(e.g. sead::TreeNode::detachSubTree, al::LiveActorGroup::registerActor), which the game code does not."
   ],
   "path_flags": {
     "src/sead/": "-fno-strict-aliasing",
     "src/agl/": "-fno-strict-aliasing",
     "src/aal/": "-fno-strict-aliasing",
+    "src/al/": "-fno-strict-aliasing",
     "src/erepo/": "-fno-strict-aliasing",
     "src/nw/": "-fno-strict-aliasing -frtti"
   },

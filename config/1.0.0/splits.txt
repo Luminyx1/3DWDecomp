@@ -4672,7 +4672,7 @@ src/al/Library/Light/Keeper/PrePassLightKeeper.cpp:
     .text   start:0x0080C3E0 end:0x00813974
 src/al/Library/Light/Keeper/SSIIKeeper.cpp:
     .text   start:0x00813980 end:0x00814DF8
-src/al/Library/LiveActor/LiveActorGroup.cpp:
+src/al/Library/LiveActor/LiveActorGroup.cpp: done
     .text   start:0x00814E00 end:0x008151C0
 src/al/Library/LiveActor/LiveActorKit.cpp:
     .text   start:0x008151C0 end:0x00815988
@@ -4858,7 +4858,7 @@ src/al/Library/Nerve/NerveKeeper.cpp: done
     .text   start:0x00878860 end:0x00878A28
 src/al/Library/Nerve/NerveStateBase.cpp: done
     .text   start:0x00878A30 end:0x00878B64
-src/al/Library/Nerve/NerveStateCtrl.cpp:
+src/al/Library/Nerve/NerveStateCtrl.cpp: done
     .text   start:0x00878B70 end:0x00878D7C
 src/al/Library/Nerve/NerveUtil.cpp:
     .text   start:0x00878D80 end:0x00879F30
