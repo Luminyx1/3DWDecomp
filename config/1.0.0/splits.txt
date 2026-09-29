@@ -5150,7 +5150,7 @@ src/al/Project/AreaObj/AreaObjFactory.cpp: done
     .text   start:0x008E63A0 end:0x008E63C0
 src/al/Project/AreaObj/AreaObjGroup.cpp:
     .text   start:0x008E63C0 end:0x008E6928
-src/al/Project/AreaObj/AreaObjMtxConnecter.cpp:
+src/al/Project/AreaObj/AreaObjMtxConnecter.cpp: done
     .text   start:0x008E6930 end:0x008E6DA8
 src/al/Project/AreaObj/AreaObjUtil.cpp:
     .text   start:0x008E6DB0 end:0x008E8F88

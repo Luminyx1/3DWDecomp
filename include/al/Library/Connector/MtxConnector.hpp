@@ -19,7 +19,7 @@ public:
     void init(const sead::Matrix34f*, const sead::Matrix34f&);
     void init(const sead::Matrix34f*);
 
-    void multMtx(sead::Matrix34f*, const sead::Matrix34f&);
+    void multMtx(sead::Matrix34f*, const sead::Matrix34f&) const;
 
 private:
     sead::Matrix34f mBaseMtx = sead::Matrix34f::zero;
