@@ -24,6 +24,9 @@ namespace al {
     void setActionFrame(LiveActor*, f32);
 
     void startNerveAction(LiveActor*, const char*);
+    bool tryStartEffectAction(LiveActor*, const char*);
+    void stopAction(LiveActor*);
+    void restartAction(LiveActor*);
 
     void startHitReactionDisappear(const LiveActor*);
 

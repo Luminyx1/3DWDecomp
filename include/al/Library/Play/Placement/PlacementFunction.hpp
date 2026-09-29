@@ -64,7 +64,7 @@ void initLinksActor(LiveActor *, const ActorInitInfo &, const char *, int);
 
 namespace alPlacementFunction {
 s32 getCameraId(const al::ActorInitInfo&);
-s32 getLinkGroupId(al::PlacementId*, const al::ActorInitInfo&, const char*);
+bool getLinkGroupId(al::PlacementId*, const al::ActorInitInfo&, const char*);
 bool isEnableLinkGroupId(const al::ActorInitInfo&, const char*);
 bool isEnableGroupClipping(const al::ActorInitInfo&);
 bool getClippingGroupId(al::PlacementId*, const al::ActorInitInfo&);

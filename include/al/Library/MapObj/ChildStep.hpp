@@ -16,4 +16,5 @@ public:
 };
 
 void createChildStep(const ActorInitInfo&, LiveActor*, bool);
+s32 calcChildStepCount(const ActorInitInfo&);
 }  // namespace al

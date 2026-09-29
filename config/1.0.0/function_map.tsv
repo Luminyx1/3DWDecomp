@@ -51906,19 +51906,19 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100854420			FALSE	_ZN2al14RotateMapParts9exeRotateEv	al::RotateMapParts::exeRotate()	
 0x7100854530			FALSE	_ZN2al14RotateMapParts13exeAssistStopEv	al::RotateMapParts::exeAssistStop()	
 0x71008545C0			FALSE	_ZN2al14RotateMapParts17exeAssistStopSyncEv	al::RotateMapParts::exeAssistStopSync()	
-0x71008545D0			FALSE	nullsub_327	nullsub_327	
-0x71008545E0			FALSE	sub_71008545E0	sub_71008545E0	
+0x71008545D0			FALSE	_ZNK12_GLOBAL__N_124RotateMapPartsNrvStandBy7executeEPN2al11NerveKeeperE	(anonymous namespace)::RotateMapPartsNrvStandBy::execute(al::NerveKeeper*) const	
+0x71008545E0			FALSE	_ZNK12_GLOBAL__N_124RotateMapPartsNrvStandBy13getActionNameEv	(anonymous namespace)::RotateMapPartsNrvStandBy::getActionName() const	
 0x71008545F0			FALSE	_ZNK12_GLOBAL__N_123RotateMapPartsNrvRotate7executeEPN2al11NerveKeeperE	(anonymous namespace)::RotateMapPartsNrvRotate::execute(al::NerveKeeper*) const	
-0x7100854600			FALSE	sub_7100854600	sub_7100854600	
-0x7100854610			FALSE	nullsub_328	nullsub_328	
-0x7100854620			FALSE	sub_7100854620	sub_7100854620	
-0x7100854630			FALSE	sub_7100854630	sub_7100854630	
-0x71008546C0			FALSE	sub_71008546C0	sub_71008546C0	
-0x71008546D0			FALSE	nullsub_329	nullsub_329	
-0x71008546E0			FALSE	sub_71008546E0	sub_71008546E0	
+0x7100854600			FALSE	_ZNK12_GLOBAL__N_123RotateMapPartsNrvRotate13getActionNameEv	(anonymous namespace)::RotateMapPartsNrvRotate::getActionName() const	
+0x7100854610			FALSE	_ZNK12_GLOBAL__N_130RotateMapPartsNrvEffectOnAngle7executeEPN2al11NerveKeeperE	(anonymous namespace)::RotateMapPartsNrvEffectOnAngle::execute(al::NerveKeeper*) const	
+0x7100854620			FALSE	_ZNK12_GLOBAL__N_130RotateMapPartsNrvEffectOnAngle13getActionNameEv	(anonymous namespace)::RotateMapPartsNrvEffectOnAngle::getActionName() const	
+0x7100854630			FALSE	_ZNK12_GLOBAL__N_127RotateMapPartsNrvAssistStop7executeEPN2al11NerveKeeperE	(anonymous namespace)::RotateMapPartsNrvAssistStop::execute(al::NerveKeeper*) const	
+0x71008546C0			FALSE	_ZNK12_GLOBAL__N_127RotateMapPartsNrvAssistStop13getActionNameEv	(anonymous namespace)::RotateMapPartsNrvAssistStop::getActionName() const	
+0x71008546D0			FALSE	_ZNK12_GLOBAL__N_131RotateMapPartsNrvAssistStopSync7executeEPN2al11NerveKeeperE	(anonymous namespace)::RotateMapPartsNrvAssistStopSync::execute(al::NerveKeeper*) const	
+0x71008546E0			FALSE	_ZNK12_GLOBAL__N_131RotateMapPartsNrvAssistStopSync13getActionNameEv	(anonymous namespace)::RotateMapPartsNrvAssistStopSync::getActionName() const	
 0x71008546F0			FALSE	_ZNK2al10FunctorV0MIPNS_14RotateMapPartsEMS1_FvvEEclEv	al::FunctorV0M<al::RotateMapParts*, void (al::RotateMapParts::*)()>::operator()() const	
 0x7100854710			FALSE	_ZNK2al10FunctorV0MIPNS_14RotateMapPartsEMS1_FvvEE5cloneEv	al::FunctorV0M<al::RotateMapParts*, void (al::RotateMapParts::*)()>::clone() const	
-0x7100854760			FALSE	sub_7100854760	sub_7100854760	
+0x7100854760			FALSE	_GLOBAL__sub_I_RotateMapParts.cpp	_GLOBAL__sub_I_RotateMapParts.cpp	
 0x71008547F0		SeesawMapParts.o	FALSE	_ZN2al14SeesawMapPartsC2EPKc	al::SeesawMapParts::SeesawMapParts(char const*)	object (smo)
 0x71008548F0			FALSE	_ZN2al14SeesawMapPartsC1EPKc	al::SeesawMapParts::SeesawMapParts(char const*)	
 0x71008549F0			FALSE	_ZN2al14SeesawMapParts4initERKNS_13ActorInitInfoE	al::SeesawMapParts::init(al::ActorInitInfo const&)	
