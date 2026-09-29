@@ -1,0 +1,78 @@
+/**
+ * @file Layout.h
+ * @brief UI Layout implementation.
+ */
+
+#pragma once
+
+#include <nn/types.h>
+
+namespace nn {
+namespace ui2d {
+class AnimTransform;
+class Pane;
+
+class Layout {
+public:
+    Layout();
+
+    virtual ~Layout();
+
+    virtual void DeleteAnimTransform(nn::ui2d::AnimTransform*);
+    virtual void BindAnimation(nn::ui2d::AnimTransform*);
+    virtual void UnbindAnimation(nn::ui2d::AnimTransform*);
+    virtual void UnbindAnimation(nn::ui2d::Pane*);
+    virtual void UnbindAllAnimation();
+
+    virtual void Animate();
+    virtual void UpdateAnimFrame(f32 frame);
+    virtual void AnimateAndUpdateAnimFrame(f32 frame);
+
+    static void SetAllocator(void* (*)(size_t, size_t, void*), void (*)(void*, void*), void*);
+    static void* AllocateMemory(size_t, size_t);
+    static void* AllocateMemory(size_t);
+    static void FreeMemory(void* src);
+
+    template <typename T>
+    static T* NewArray(int count) {
+        void* pMem = Layout::AllocateMemory(sizeof(T) * count);
+        if (!pMem) {
+            return 0;
+        }
+
+        T* const objAry = static_cast<T*>(pMem);
+
+        for (int i = 0; i < count; ++i) {
+            new (&objAry[i]) T();
+        }
+
+        return objAry;
+    }
+
+    template <typename T>
+    static void DeleteArray(T objs[], int count) {
+        if (objs) {
+            for (int i = 0; i < count; ++i) {
+                objs[i].~T();
+            }
+            FreeMemory(objs);
+        }
+    }
+
+    u64 _10;
+    u64 _18;
+    u64 _20;
+    u64 _28;
+    u64 _30;
+
+    u64 _40;
+    u64 _48;
+    u64 _50;
+    u64 _58;
+    u64 _60;
+
+    static void* g_pAllocateFunction;
+    static void* g_pFreeFunction;
+};
+}  // namespace ui2d
+}  // namespace nn

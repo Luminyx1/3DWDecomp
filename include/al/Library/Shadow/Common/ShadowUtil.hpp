@@ -1,0 +1,20 @@
+#pragma once
+
+namespace al {
+    class LiveActor;
+
+    bool isExistShadow(LiveActor*);
+    bool isExistShadow(LiveActor*, const char*);
+    bool isHideShadow(const LiveActor*);
+    void hideShadow(LiveActor*);
+    void showShadow(LiveActor*);
+    void hideShadowDepth(LiveActor*);
+    void showShadowDepth(LiveActor*);
+
+    void setShadowFixed(LiveActor*, bool);
+
+    void setShadowDropLength(LiveActor*, f32, const char*);
+
+    void setShadowIntensityUser(LiveActor*, u8, const char*);
+
+};  // namespace al
