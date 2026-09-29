@@ -5307,58 +5307,44 @@ src/al/Project/Camera/CameraVerticalAbsorber2DGalaxy.cpp:
     .text   start:0x00915450 end:0x00918C88
 src/al/Project/Camera/Param/CameraFunction.cpp:
     .text   start:0x00918C90 end:0x00919538
-src/al/Project/Camera/Param/CameraHolder.cpp:
+src/al/Project/Camera/Param/CameraHolder.cpp: done
     .text   start:0x00919540 end:0x009197AC
-src/al/Project/Camera/Param/CameraInfo.cpp:
+src/al/Project/Camera/Param/CameraInfo.cpp: done
     .text   start:0x009197B0 end:0x009197FC
 src/al/Project/Camera/Param/CameraInterpole.cpp:
     .text   start:0x00919800 end:0x0091A96C
-src/al/Project/Camera/Param/ControlAngleParam.cpp:
+src/al/Project/Camera/Param/ControlAngleParam.cpp: done
     .text   start:0x0091A970 end:0x0091A99C
-src/al/Project/Camera/Param/SettingParam.cpp:
+src/al/Project/Camera/Param/SettingParam.cpp: done
     .text   start:0x0091A9A0 end:0x0091AE38
 src/al/Project/Camera/Poser/CameraPoserAnim.cpp:
     .text   start:0x0091AE40 end:0x0091B4F0
 src/al/Project/Camera/Poser/CameraPoserEntrance.cpp:
-    .text   start:0x0091B4F0 end:0x0091BCF8
-src/al/Project/Camera/Poser/CameraPoserEntranceParam.cpp:
-    .text   start:0x0091BD00 end:0x0091BD68
+    .text   start:0x0091B4F0 end:0x0091BD68
 src/al/Project/Camera/Poser/CameraPoserFixedAll.cpp:
-    .text   start:0x0091BD70 end:0x0091C268
-src/al/Project/Camera/Poser/CameraPoserFixedAllParam.cpp:
-    .text   start:0x0091C270 end:0x0091C2B8
-src/al/Project/Camera/Poser/CameraPoserFixedPoint.cpp:
+    .text   start:0x0091BD70 end:0x0091C2B8
+src/al/Project/Camera/Poser/CameraPoserFixedPoint.cpp: done
     .text   start:0x0091C2C0 end:0x0091C578
 src/al/Project/Camera/Poser/CameraPoserKinopioBrigade.cpp:
     .text   start:0x0091C580 end:0x0091D140
 src/al/Project/Camera/Poser/CameraPoserParallel.cpp:
     .text   start:0x0091D140 end:0x00922BA4
 src/al/Project/Camera/Poser/CameraPoserParallelOnRail.cpp:
-    .text   start:0x00922BB0 end:0x009244C4
-src/al/Project/Camera/Poser/CameraPoserParallelOnRailParam.cpp:
-    .text   start:0x009244D0 end:0x00924548
-src/al/Project/Camera/Poser/CameraPoserProgramable.cpp:
+    .text   start:0x00922BB0 end:0x00924548
+src/al/Project/Camera/Poser/CameraPoserProgramable.cpp: done
     .text   start:0x00924550 end:0x009246F4
 src/al/Project/Camera/Poser/CameraPoserRail.cpp:
-    .text   start:0x00924700 end:0x0092504C
-src/al/Project/Camera/Poser/CameraPoserRailParam.cpp:
-    .text   start:0x00925050 end:0x009250E8
+    .text   start:0x00924700 end:0x009250E8
 src/al/Project/Camera/Poser/CameraPoserRailTower.cpp:
-    .text   start:0x009250F0 end:0x00925618
-src/al/Project/Camera/Poser/CameraPoserRailTowerParam.cpp:
-    .text   start:0x00925620 end:0x009256A8
+    .text   start:0x009250F0 end:0x009256A8
 src/al/Project/Camera/Poser/CameraPoserTower.cpp:
-    .text   start:0x009256B0 end:0x00927CE4
-src/al/Project/Camera/Poser/CameraPoserTowerParam.cpp:
-    .text   start:0x00927CF0 end:0x00927D98
+    .text   start:0x009256B0 end:0x00927D98
 src/al/Project/Camera/Poser/CameraPoserZoomParam.cpp:
     .text   start:0x00927DA0 end:0x00928CD4
 src/al/Project/Camera/Poser/CameraRail.cpp:
     .text   start:0x00928CE0 end:0x00928FC0
-src/al/Project/Camera/Poser/CameraRailHolder.cpp:
-    .text   start:0x00928FC0 end:0x00929180
-src/al/Project/Camera/Poser/CameraRailInfo.cpp:
-    .text   start:0x00929180 end:0x00929190
+src/al/Project/Camera/Poser/CameraRailHolder.cpp: done
+    .text   start:0x00928FC0 end:0x00929190
 src/al/Project/Camera/Poser/CameraShaker.cpp:
     .text   start:0x00929190 end:0x009293BC
 src/al/Project/Camera/Poser/CameraSwitcher.cpp:
@@ -5366,18 +5352,16 @@ src/al/Project/Camera/Poser/CameraSwitcher.cpp:
 src/al/Project/Camera/Poser/CameraUtil.cpp:
     .text   start:0x00929F50 end:0x0092C028
 src/al/Project/Camera/Poser/GyroCameraController.cpp:
-    .text   start:0x0092C030 end:0x0092C94C
-src/al/Project/Camera/Poser/GyroCameraControllerParam.cpp:
-    .text   start:0x0092C950 end:0x0092C998
+    .text   start:0x0092C030 end:0x0092C998
 src/al/Project/Camera/Poser/PlayerWatcher.cpp:
     .text   start:0x0092C9A0 end:0x0092DBC8
-src/al/Project/Camera/Info/CameraViewInfo.cpp:
+src/al/Project/Camera/Info/CameraViewInfo.cpp: done
     .text   start:0x0092DBD0 end:0x0092DC58
-src/al/Project/Camera/Info/CameraViewRenderInfo.cpp:
+src/al/Project/Camera/Info/CameraViewRenderInfo.cpp: done
     .text   start:0x0092DC60 end:0x0092DC6C
-src/al/Project/Camera/Info/SceneCameraControlInfo.cpp:
+src/al/Project/Camera/Info/SceneCameraControlInfo.cpp: done
     .text   start:0x0092DC70 end:0x0092DCAC
-src/al/Project/Camera/Info/SceneCameraInfo.cpp:
+src/al/Project/Camera/Info/SceneCameraInfo.cpp: done
     .text   start:0x0092DCB0 end:0x0092DD7C
 src/al/Project/Camera/Info/UserCameraController.cpp:
     .text   start:0x0092DD80 end:0x0092F948
@@ -5385,23 +5369,23 @@ src/al/Project/Camera/Info/UserCameraControllerParam.cpp:
     .text   start:0x0092F950 end:0x00932408
 src/al/Project/Camera/Area/AreaCameraSwitcher_RS.cpp:
     .text   start:0x00932410 end:0x00932DA8
-src/al/Project/Camera/Area/AreaCameraSwitchInfo.cpp:
+src/al/Project/Camera/Area/AreaCameraSwitchInfo.cpp: done
     .text   start:0x00932DB0 end:0x00932E28
-src/al/Project/Camera/Area/CameraAngleVerticalRequester.cpp:
+src/al/Project/Camera/Area/CameraAngleVerticalRequester.cpp: done
     .text   start:0x00932E30 end:0x00932F08
 src/al/Project/Camera/Area/CameraDistanceCurve.cpp:
     .text   start:0x00932F10 end:0x0093343C
-src/al/Project/Camera/Area/CameraInputHolder.cpp:
+src/al/Project/Camera/Area/CameraInputHolder.cpp: done
     .text   start:0x00933440 end:0x0093358C
-src/al/Project/Camera/Area/CameraInSwitchOnAreaDirector.cpp:
+src/al/Project/Camera/Area/CameraInSwitchOnAreaDirector.cpp: done
     .text   start:0x00933590 end:0x009336D8
 src/al/Project/Camera/Area/CameraLimitRailKeeper.cpp:
     .text   start:0x009336E0 end:0x00933D8C
-src/al/Project/Camera/Area/CameraOffsetPreset.cpp:
+src/al/Project/Camera/Area/CameraOffsetPreset.cpp: done
     .text   start:0x00933D90 end:0x00933E58
-src/al/Project/Camera/Area/CameraParamTransfer.cpp:
+src/al/Project/Camera/Area/CameraParamTransfer.cpp: done
     .text   start:0x00933E60 end:0x00934038
-src/al/Project/Camera/Area/CameraPoserFactory_RS.cpp:
+src/al/Project/Camera/Area/CameraPoserFactory_RS.cpp: done
     .text   start:0x00934040 end:0x0093418C
 src/al/Project/Camera/Area/CameraPoserFunction.cpp:
     .text   start:0x00934190 end:0x00938718
@@ -5417,15 +5401,15 @@ src/al/Project/Camera/Holder/CameraShaker_RS.cpp:
     .text   start:0x0093FAA0 end:0x00940358
 src/al/Project/Camera/Holder/CameraStartParamCtrl.cpp:
     .text   start:0x00940360 end:0x00940558
-src/al/Project/Camera/Holder/CameraStopJudge.cpp:
+src/al/Project/Camera/Holder/CameraStopJudge.cpp: done
     .text   start:0x00940560 end:0x009405F8
 src/al/Project/Camera/Holder/CameraSwitcher_RS.cpp:
     .text   start:0x00940600 end:0x00941214
-src/al/Project/Camera/Holder/CameraSwitchInfo.cpp:
+src/al/Project/Camera/Holder/CameraSwitchInfo.cpp: done
     .text   start:0x00941220 end:0x00941254
-src/al/Project/Camera/Holder/CameraSwitchRequester.cpp:
+src/al/Project/Camera/Holder/CameraSwitchRequester.cpp: done
     .text   start:0x00941260 end:0x00941380
-src/al/Project/Camera/Holder/CameraSwitchRequestInfo.cpp:
+src/al/Project/Camera/Holder/CameraSwitchRequestInfo.cpp: done
     .text   start:0x00941380 end:0x00941538
 src/al/Project/Camera/Holder/CameraTargetAreaLimitter.cpp:
     .text   start:0x00941540 end:0x0094186C
@@ -5433,13 +5417,13 @@ src/al/Project/Camera/Holder/CameraTargetCollideInfoHolder.cpp:
     .text   start:0x00941870 end:0x00941C48
 src/al/Project/Camera/Holder/CameraTargetHolder.cpp:
     .text   start:0x00941C50 end:0x009425C8
-src/al/Project/Camera/Holder/CameraTicketHolder.cpp:
+src/al/Project/Camera/Holder/CameraTicketHolder.cpp: done
     .text   start:0x009425D0 end:0x009427B0
-src/al/Project/Camera/Holder/CameraTicketId.cpp:
+src/al/Project/Camera/Holder/CameraTicketId.cpp: done
     .text   start:0x009427B0 end:0x00942A98
 src/al/Project/Camera/Holder/CameraTriangleFilter.cpp:
     .text   start:0x00942AA0 end:0x009493DC
-src/al/Project/Camera/Holder/SimpleCameraInput.cpp:
+src/al/Project/Camera/Holder/SimpleCameraInput.cpp: done
     .text   start:0x009493E0 end:0x009496CC
 src/al/Project/Camera/Holder/SimpleCameraShooter.cpp:
     .text   start:0x009496D0 end:0x00949E1C

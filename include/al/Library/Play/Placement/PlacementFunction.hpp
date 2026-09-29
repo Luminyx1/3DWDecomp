@@ -25,6 +25,8 @@ bool tryGetArg(bool*, const PlacementInfo&, const char*);
 
 bool tryGetArg(bool*, const ActorInitInfo&, const char*);
 
+void getArg(f32*, const PlacementInfo&, const char*);
+
 bool tryGetScale(sead::Vector3f*, const PlacementInfo&);
 
 bool tryGetMatrixTR(sead::Matrix34f*, const PlacementInfo&);
@@ -53,6 +55,8 @@ bool tryGetLinksInfo(PlacementInfo*, const ActorInitInfo&, const char*);
 bool tryGetPlacementInfoByKey(PlacementInfo*, const PlacementInfo&, const char*);
 
 bool isEqualPlacementID(const PlacementInfo&, const PlacementInfo&);
+
+bool isEqualPlacementID(const PlacementId&, const PlacementId&);
 
 bool isSingleMode(const ActorInitInfo&);
 
