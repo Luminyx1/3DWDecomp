@@ -2276,63 +2276,63 @@ src/Game/Player/PlayerActionCommonNodeConnector.cpp:
     .text   start:0x003DE5D0 end:0x003DE6AC
 src/Game/Player/PlayerActionCompositeCondition.cpp:
     .text   start:0x003DE6B0 end:0x003DE8B4
-src/Game/Player/PlayerActionConditionAfterPunch.cpp:
+src/Game/Player/PlayerActionConditionAfterPunch.cpp: done
     .text   start:0x003DE8C0 end:0x003DE904
-src/Game/Player/PlayerActionConditionAirMoveToGroundMove.cpp:
+src/Game/Player/PlayerActionConditionAirMoveToGroundMove.cpp: done
     .text   start:0x003DE910 end:0x003DE984
 src/Game/Player/PlayerActionConditionAirMoveToHipDrop.cpp:
     .text   start:0x003DE990 end:0x003DEA94
-src/Game/Player/PlayerActionConditionAirMoveToJump.cpp:
+src/Game/Player/PlayerActionConditionAirMoveToJump.cpp: done
     .text   start:0x003DEAA0 end:0x003DEB24
-src/Game/Player/PlayerActionConditionAirMoveToLand.cpp:
+src/Game/Player/PlayerActionConditionAirMoveToLand.cpp: done
     .text   start:0x003DEB30 end:0x003DEBD4
-src/Game/Player/PlayerActionConditionAirMoveToSquat.cpp:
+src/Game/Player/PlayerActionConditionAirMoveToSquat.cpp: done
     .text   start:0x003DEBE0 end:0x003DEC64
 src/Game/Player/PlayerActionConditionAirMoveToWall.cpp:
     .text   start:0x003DEC70 end:0x003DEFC4
-src/Game/Player/PlayerActionConditionAirTurn.cpp:
+src/Game/Player/PlayerActionConditionAirTurn.cpp: done
     .text   start:0x003DEFD0 end:0x003DF004
 src/Game/Player/PlayerActionConditionAnimEnd.cpp:
     .text   start:0x003DF010 end:0x003DF164
-src/Game/Player/PlayerActionConditionArea.cpp:
+src/Game/Player/PlayerActionConditionArea.cpp: done
     .text   start:0x003DF170 end:0x003DF1C4
-src/Game/Player/PlayerActionConditionBigTrig.cpp:
+src/Game/Player/PlayerActionConditionBigTrig.cpp: done
     .text   start:0x003DF1D0 end:0x003DF204
-src/Game/Player/PlayerActionConditionBindEndDeathMapCode.cpp:
+src/Game/Player/PlayerActionConditionBindEndDeathMapCode.cpp: done
     .text   start:0x003DF210 end:0x003DF244
-src/Game/Player/PlayerActionConditionBindEndOnGround.cpp:
+src/Game/Player/PlayerActionConditionBindEndOnGround.cpp: done
     .text   start:0x003DF250 end:0x003DF284
-src/Game/Player/PlayerActionConditionBindJump.cpp:
+src/Game/Player/PlayerActionConditionBindJump.cpp: done
     .text   start:0x003DF290 end:0x003DF2E4
-src/Game/Player/PlayerActionConditionBindSquat.cpp:
+src/Game/Player/PlayerActionConditionBindSquat.cpp: done
     .text   start:0x003DF2F0 end:0x003DF324
-src/Game/Player/PlayerActionConditionBoolDelegate.cpp:
+src/Game/Player/PlayerActionConditionBoolDelegate.cpp: done
     .text   start:0x003DF330 end:0x003DF364
-src/Game/Player/PlayerActionConditionBrakeToTurn.cpp:
+src/Game/Player/PlayerActionConditionBrakeToTurn.cpp: done
     .text   start:0x003DF370 end:0x003DF3E4
-src/Game/Player/PlayerActionConditionBrakeToTurnJump.cpp:
+src/Game/Player/PlayerActionConditionBrakeToTurnJump.cpp: done
     .text   start:0x003DF3F0 end:0x003DF464
-src/Game/Player/PlayerActionConditionCancel.cpp:
+src/Game/Player/PlayerActionConditionCancel.cpp: done
     .text   start:0x003DF470 end:0x003DF4A4
-src/Game/Player/PlayerActionConditionCeilingCheck.cpp:
+src/Game/Player/PlayerActionConditionCeilingCheck.cpp: done
     .text   start:0x003DF4B0 end:0x003DF4E4
-src/Game/Player/PlayerActionConditionCharaType.cpp:
+src/Game/Player/PlayerActionConditionCharaType.cpp: done
     .text   start:0x003DF4F0 end:0x003DF534
-src/Game/Player/PlayerActionConditionCheckEnd.cpp:
+src/Game/Player/PlayerActionConditionCheckEnd.cpp: done
     .text   start:0x003DF540 end:0x003DF574
-src/Game/Player/PlayerActionConditionClimbAirAttackInhibit.cpp:
+src/Game/Player/PlayerActionConditionClimbAirAttackInhibit.cpp: done
     .text   start:0x003DF580 end:0x003DF5C4
-src/Game/Player/PlayerActionConditionClimbAttackHoldOn.cpp:
+src/Game/Player/PlayerActionConditionClimbAttackHoldOn.cpp: done
     .text   start:0x003DF5D0 end:0x003DF65C
-src/Game/Player/PlayerActionConditionClimbAttackTrigOn.cpp:
+src/Game/Player/PlayerActionConditionClimbAttackTrigOn.cpp: done
     .text   start:0x003DF660 end:0x003DF694
-src/Game/Player/PlayerActionConditionDamageToFall.cpp:
+src/Game/Player/PlayerActionConditionDamageToFall.cpp: done
     .text   start:0x003DF6A0 end:0x003DF6D4
 src/Game/Player/PlayerActionConditionDamageToGroundMove.cpp:
     .text   start:0x003DF6E0 end:0x003DF7D4
 src/Game/Player/PlayerActionConditionDashInput.cpp:
     .text   start:0x003DF7E0 end:0x003DF924
-src/Game/Player/PlayerActionConditionFalling.cpp:
+src/Game/Player/PlayerActionConditionFalling.cpp: done
     .text   start:0x003DF930 end:0x003DF974
 src/Game/Player/PlayerActionConditionFigureChangeFrom.cpp:
     .text   start:0x003DF980 end:0x003DF9D4
@@ -2340,7 +2340,7 @@ src/Game/Player/PlayerActionConditionFigureChangeTrig.cpp:
     .text   start:0x003DF9E0 end:0x003DFA24
 src/Game/Player/PlayerActionConditionFigureType.cpp:
     .text   start:0x003DFA30 end:0x003DFA84
-src/Game/Player/PlayerActionConditionFlag.cpp:
+src/Game/Player/PlayerActionConditionFlag.cpp: done
     .text   start:0x003DFA90 end:0x003DFAF4
 src/Game/Player/PlayerActionConditionFloorAngle.cpp:
     .text   start:0x003DFB00 end:0x003DFCA4
@@ -2348,7 +2348,7 @@ src/Game/Player/PlayerActionConditionFloorCode.cpp:
     .text   start:0x003DFCB0 end:0x003DFD54
 src/Game/Player/PlayerActionConditionFrontInput.cpp:
     .text   start:0x003DFD60 end:0x003DFE44
-src/Game/Player/PlayerActionConditionFrontWall.cpp:
+src/Game/Player/PlayerActionConditionFrontWall.cpp: done
     .text   start:0x003DFE50 end:0x003DFE84
 src/Game/Player/PlayerActionConditionFrontWallForGroundWall.cpp:
     .text   start:0x003DFE90 end:0x003DFF64
@@ -2356,7 +2356,7 @@ src/Game/Player/PlayerActionConditionFrontWallNoAction.cpp:
     .text   start:0x003DFF70 end:0x003E0014
 src/Game/Player/PlayerActionConditionGigaClimbAirMoveToWall.cpp:
     .text   start:0x003E0020 end:0x003E0374
-src/Game/Player/PlayerActionConditionGlideInhibit.cpp:
+src/Game/Player/PlayerActionConditionGlideInhibit.cpp: done
     .text   start:0x003E0380 end:0x003E03B4
 src/Game/Player/PlayerActionConditionGroundMoveToBrake.cpp:
     .text   start:0x003E03C0 end:0x003E06C4
@@ -2364,113 +2364,113 @@ src/Game/Player/PlayerActionConditionGroundMoveToDashRolling.cpp:
     .text   start:0x003E06D0 end:0x003E07B4
 src/Game/Player/PlayerActionConditionGroundMoveToNormalRolling.cpp:
     .text   start:0x003E07C0 end:0x003E0894
-src/Game/Player/PlayerActionConditionGroundMoveToSquat.cpp:
+src/Game/Player/PlayerActionConditionGroundMoveToSquat.cpp: done
     .text   start:0x003E08A0 end:0x003E08D4
 src/Game/Player/PlayerActionConditionGroundMoveToTurnJump.cpp:
     .text   start:0x003E08E0 end:0x003E0B44
-src/Game/Player/PlayerActionConditionHeadOnFrontWall.cpp:
+src/Game/Player/PlayerActionConditionHeadOnFrontWall.cpp: done
     .text   start:0x003E0B50 end:0x003E0B84
 src/Game/Player/PlayerActionConditionHipDropLand.cpp:
     .text   start:0x003E0B90 end:0x003E0C74
 src/Game/Player/PlayerActionConditionHVelLess.cpp:
     .text   start:0x003E0C80 end:0x003E0D04
-src/Game/Player/PlayerActionConditionInSinkSand.cpp:
+src/Game/Player/PlayerActionConditionInSinkSand.cpp: done
     .text   start:0x003E0D10 end:0x003E0D44
-src/Game/Player/PlayerActionConditionInvincible.cpp:
+src/Game/Player/PlayerActionConditionInvincible.cpp: done
     .text   start:0x003E0D50 end:0x003E0D84
-src/Game/Player/PlayerActionConditionInWater.cpp:
+src/Game/Player/PlayerActionConditionInWater.cpp: done
     .text   start:0x003E0D90 end:0x003E0DC4
-src/Game/Player/PlayerActionConditionInWaterFlowField.cpp:
+src/Game/Player/PlayerActionConditionInWaterFlowField.cpp: done
     .text   start:0x003E0DD0 end:0x003E0E34
 src/Game/Player/PlayerActionConditionInWaterSurface.cpp:
     .text   start:0x003E0E40 end:0x003E0F24
-src/Game/Player/PlayerActionConditionIsEquipped.cpp:
+src/Game/Player/PlayerActionConditionIsEquipped.cpp: done
     .text   start:0x003E0F30 end:0x003E0F74
-src/Game/Player/PlayerActionConditionIsInhibit.cpp:
+src/Game/Player/PlayerActionConditionIsInhibit.cpp: done
     .text   start:0x003E0F80 end:0x003E0FB4
-src/Game/Player/PlayerActionConditionIsPropeller.cpp:
+src/Game/Player/PlayerActionConditionIsPropeller.cpp: done
     .text   start:0x003E0FC0 end:0x003E1004
-src/Game/Player/PlayerActionConditionJumpButtonOn.cpp:
+src/Game/Player/PlayerActionConditionJumpButtonOn.cpp: done
     .text   start:0x003E1010 end:0x003E1024
-src/Game/Player/PlayerActionConditionJumpTrigOn.cpp:
+src/Game/Player/PlayerActionConditionJumpTrigOn.cpp: done
     .text   start:0x003E1030 end:0x003E1064
-src/Game/Player/PlayerActionConditionLandToGroundMove.cpp:
+src/Game/Player/PlayerActionConditionLandToGroundMove.cpp: done
     .text   start:0x003E1070 end:0x003E10F4
-src/Game/Player/PlayerActionConditionLongFall.cpp:
+src/Game/Player/PlayerActionConditionLongFall.cpp: done
     .text   start:0x003E1100 end:0x003E1134
-src/Game/Player/PlayerActionConditionNot.cpp:
+src/Game/Player/PlayerActionConditionNot.cpp: done
     .text   start:0x003E1140 end:0x003E11A4
-src/Game/Player/PlayerActionConditionNoWaterSurface.cpp:
+src/Game/Player/PlayerActionConditionNoWaterSurface.cpp: done
     .text   start:0x003E11B0 end:0x003E1204
-src/Game/Player/PlayerActionConditionOnCeiling.cpp:
+src/Game/Player/PlayerActionConditionOnCeiling.cpp: done
     .text   start:0x003E1210 end:0x003E1234
-src/Game/Player/PlayerActionConditionOnFloor.cpp:
+src/Game/Player/PlayerActionConditionOnFloor.cpp: done
     .text   start:0x003E1240 end:0x003E1254
-src/Game/Player/PlayerActionConditionOutInWater.cpp:
+src/Game/Player/PlayerActionConditionOutInWater.cpp: done
     .text   start:0x003E1260 end:0x003E12F4
-src/Game/Player/PlayerActionConditionRaccoonDogFall1st.cpp:
+src/Game/Player/PlayerActionConditionRaccoonDogFall1st.cpp: done
     .text   start:0x003E1300 end:0x003E1334
-src/Game/Player/PlayerActionConditionRef.cpp:
+src/Game/Player/PlayerActionConditionRef.cpp: done
     .text   start:0x003E1340 end:0x003E1374
-src/Game/Player/PlayerActionConditionRefOrg.cpp:
+src/Game/Player/PlayerActionConditionRefOrg.cpp: done
     .text   start:0x003E1380 end:0x003E13F4
-src/Game/Player/PlayerActionConditionRise.cpp:
+src/Game/Player/PlayerActionConditionRise.cpp: done
     .text   start:0x003E1400 end:0x003E1464
 src/Game/Player/PlayerActionConditionRollingAttackToSquat.cpp:
     .text   start:0x003E1470 end:0x003E1544
-src/Game/Player/PlayerActionConditionRollingTrigger.cpp:
+src/Game/Player/PlayerActionConditionRollingTrigger.cpp: done
     .text   start:0x003E1550 end:0x003E1584
 src/Game/Player/PlayerActionConditionSinkWater.cpp:
     .text   start:0x003E1590 end:0x003E16A4
 src/Game/Player/PlayerActionConditionSlideVel.cpp:
     .text   start:0x003E16B0 end:0x003E1794
-src/Game/Player/PlayerActionConditionSnapWall.cpp:
+src/Game/Player/PlayerActionConditionSnapWall.cpp: done
     .text   start:0x003E17A0 end:0x003E17D4
-src/Game/Player/PlayerActionConditionSpin.cpp:
+src/Game/Player/PlayerActionConditionSpin.cpp: done
     .text   start:0x003E17E0 end:0x003E1824
-src/Game/Player/PlayerActionConditionSquatEnergyFull.cpp:
+src/Game/Player/PlayerActionConditionSquatEnergyFull.cpp: done
     .text   start:0x003E1830 end:0x003E1884
-src/Game/Player/PlayerActionConditionStickOn.cpp:
+src/Game/Player/PlayerActionConditionStickOn.cpp: done
     .text   start:0x003E1890 end:0x003E18C4
 src/Game/Player/PlayerActionConditionStickThreshold.cpp:
     .text   start:0x003E18D0 end:0x003E1944
-src/Game/Player/PlayerActionConditionStoneStatueSustainButton.cpp:
+src/Game/Player/PlayerActionConditionStoneStatueSustainButton.cpp: done
     .text   start:0x003E1950 end:0x003E1984
-src/Game/Player/PlayerActionConditionStoneStatueTrig.cpp:
+src/Game/Player/PlayerActionConditionStoneStatueTrig.cpp: done
     .text   start:0x003E1990 end:0x003E19C4
-src/Game/Player/PlayerActionConditionSubActionRunning.cpp:
+src/Game/Player/PlayerActionConditionSubActionRunning.cpp: done
     .text   start:0x003E19D0 end:0x003E1A04
 src/Game/Player/PlayerActionConditionSwimJump.cpp:
     .text   start:0x003E1A10 end:0x003E1B34
-src/Game/Player/PlayerActionConditionSwimPaddleTrigOn.cpp:
+src/Game/Player/PlayerActionConditionSwimPaddleTrigOn.cpp: done
     .text   start:0x003E1B40 end:0x003E1B54
-src/Game/Player/PlayerActionConditionSwimSquatInhibit.cpp:
+src/Game/Player/PlayerActionConditionSwimSquatInhibit.cpp: done
     .text   start:0x003E1B60 end:0x003E1BA4
-src/Game/Player/PlayerActionConditionTimer.cpp:
+src/Game/Player/PlayerActionConditionTimer.cpp: done
     .text   start:0x003E1BB0 end:0x003E1C74
-src/Game/Player/PlayerActionConditionToAbyss.cpp:
+src/Game/Player/PlayerActionConditionToAbyss.cpp: done
     .text   start:0x003E1C80 end:0x003E1CB4
 src/Game/Player/PlayerActionConditionToDamage.cpp:
     .text   start:0x003E1CC0 end:0x003E1D54
-src/Game/Player/PlayerActionConditionToNormalDie.cpp:
+src/Game/Player/PlayerActionConditionToNormalDie.cpp: done
     .text   start:0x003E1D60 end:0x003E1DD4
-src/Game/Player/PlayerActionConditionToTrampleJump.cpp:
+src/Game/Player/PlayerActionConditionToTrampleJump.cpp: done
     .text   start:0x003E1DE0 end:0x003E1DF4
-src/Game/Player/PlayerActionConditionTrigger.cpp:
+src/Game/Player/PlayerActionConditionTrigger.cpp: done
     .text   start:0x003E1E00 end:0x003E1E74
-src/Game/Player/PlayerActionConditionUnableWallClimb.cpp:
+src/Game/Player/PlayerActionConditionUnableWallClimb.cpp: done
     .text   start:0x003E1E80 end:0x003E1EB4
-src/Game/Player/PlayerActionConditionUnderWallJumpPos.cpp:
+src/Game/Player/PlayerActionConditionUnderWallJumpPos.cpp: done
     .text   start:0x003E1EC0 end:0x003E1EF4
 src/Game/Player/PlayerActionConditionWaitToPivot.cpp:
     .text   start:0x003E1F00 end:0x003E1FE4
-src/Game/Player/PlayerActionConditionWallInhibitAfterBind.cpp:
+src/Game/Player/PlayerActionConditionWallInhibitAfterBind.cpp: done
     .text   start:0x003E1FF0 end:0x003E2044
 src/Game/Player/PlayerActionConditionWallToFall.cpp:
     .text   start:0x003E2050 end:0x003E21F4
-src/Game/Player/PlayerActionConditionWallToGroundMove.cpp:
+src/Game/Player/PlayerActionConditionWallToGroundMove.cpp: done
     .text   start:0x003E2200 end:0x003E2234
-src/Game/Player/PlayerActionConditionWallToWallJump.cpp:
+src/Game/Player/PlayerActionConditionWallToWallJump.cpp: done
     .text   start:0x003E2240 end:0x003E22B4
 src/Game/Player/PlayerActionDamage.cpp:
     .text   start:0x003E22C0 end:0x003E2624

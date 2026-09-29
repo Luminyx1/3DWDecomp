@@ -28,6 +28,7 @@ tools/
   complete_map.py               fill in missing objects in the function map
   gen_splits.py                 function map -> generated part of splits.txt
   diff.py                       text diffs / match summary via objdiff-cli
+  vtable.py                     print a class's vtable (slot offsets -> method names)
   pair_names.py                 name the game's sub_/lbl_ symbols after our source
   bin/objdiff-cli(.exe)         objdiff 3.8.1
   nnsdk/                        Nintendo SDK compiler (Clang for NX 1.8.14) - not committed
@@ -45,6 +46,7 @@ tools/bin/objdiff-cli report generate -o build/report.json -f json-pretty
 python tools/diff.py BgmStopObj                  # match % per function of one unit
 python tools/diff.py BgmStopObj _ZN10BgmStopObj4initERKN2al13ActorInitInfoE
 python tools/diff.py --status                    # every unit that has source
+python tools/diff.py --mark-done                 # ... and mark the fully matching ones done
 ```
 
 For interactive work, point the objdiff GUI / VS Code extension at `objdiff.json`.
@@ -69,7 +71,8 @@ Every object in the function map already has a unit in `splits.txt` with its
    `python tools/pair_names.py <unit>` - it matches them to our names through
    the relocations (and by order/size for nerve `execute`s) and writes them to
    `function_map.tsv` / `symbols.txt`. Re-run `ninja` to re-carve.
-4. Add `done` after the unit's header in `splits.txt` and rerun `configure.py`.
+4. `python tools/diff.py --mark-done` adds `done` to every fully matching unit's
+   header in `splits.txt`; rerun `configure.py`.
 
 ### Conventions learned so far
 
@@ -87,6 +90,13 @@ Every object in the function map already has a unit in `splits.txt` with its
 * **Sections**: a unit's own functions are in one `.text` (no
   `-ffunction-sections`); weak/inline functions each get a COMDAT
   `.text.<name>`, both in our objects and in the carved targets.
+* **Interfaces** (`IUsePlayerCollision`, `IUsePlayerInput`, ...) have no symbols of
+  their own, but their implementers' vtables do: `python tools/vtable.py PlayerCollider`
+  lists every slot with its offset and name, and secondary groups (other bases)
+  with their offset-to-top. A call through `ldr x8, [x8, #0x50]` on an
+  `IUsePlayerCollision*` is slot +0x50 there (`isOnFloor`). See `include/Game/Player/`.
+* **Classes whose constructor is missing** from the binary had it inline in the
+  header (it was only used in other files).
 * **objdiff's report** ignores relocation targets (e.g. which nerve a function
   sets); `tools/diff.py` does not. Only mark a unit `done` when `diff.py` says 100%.
 

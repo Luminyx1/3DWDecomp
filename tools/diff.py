@@ -6,6 +6,8 @@ side-by-side instruction diffs, for terminals and scripted use.
     python tools/diff.py <unit> <symbol>        # side-by-side diff of one function
     python tools/diff.py <unit> --all           # diffs of every non-matching function
     python tools/diff.py --status               # all units that have source
+    python tools/diff.py --mark-done            # --status, then mark fully matching units
+                                                # `done` in config/1.0.0/splits.txt
 
 <unit> is the unit name from objdiff.json (the source path without its
 extension, e.g. src/nw/lms/lms_message) or just a unique part of it.
@@ -128,19 +130,43 @@ def render(unit: dict, symbol: str) -> None:
         print(f"{m} {lt[:width]:<{width}}  {rt[:width]}")
 
 
+def mark_done(units: set[str], version: str = "1.0.0") -> None:
+    """Add `done` to the splits.txt header of every unit in units."""
+    path = ROOT / "config" / version / "splits.txt"
+    lines = path.read_text(encoding="utf-8").split("\n")
+    marked = []
+    for i, line in enumerate(lines):
+        if line.startswith((" ", "\t")) or ":" not in line:
+            continue
+        src, _, opts = line.partition(":")
+        name = src.rsplit(".", 1)[0]
+        if name in units and "done" not in opts.split():
+            lines[i] = f"{src}: {' '.join(opts.split() + ['done'])}"
+            marked.append(name)
+    path.write_text("\n".join(lines), encoding="utf-8")
+    for n in marked:
+        print(f"marked done: {n}")
+    print(f"{len(marked)} unit(s) newly marked done; run configure.py to update objdiff.json")
+
+
 def main(argv: list[str]) -> int:
     if not argv or argv[0] in ("-h", "--help"):
         print(__doc__)
         return 0
-    if argv[0] == "--status":
+    if argv[0] in ("--status", "--mark-done"):
         tot_m = tot = 0
+        full = set()
         for u in load_units():
             if "base_path" not in u or not (ROOT / u["base_path"]).is_file():
                 continue
             m, t = summary(u)
             tot_m += m
             tot += t
+            if t and m == t:
+                full.add(u["name"])
         print(f"\nall units with source: {tot_m}/{tot} bytes fully matching")
+        if argv[0] == "--mark-done":
+            mark_done(full)
         return 0
     unit = find_unit(argv[0])
     if len(argv) == 1:
