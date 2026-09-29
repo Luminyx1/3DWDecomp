@@ -42,6 +42,7 @@ public:
     bool listenPropertyEvent(const sead::hostio::PropertyEvent* pEvent);
 
     s32 getIndex() const { return mIndex; }
+    void setIndex(s32 index) { mIndex = index; }
     void setCallback(INamedObjIndexCallback* pCallback) { mCallback = pCallback; }
     INamedObjMgr* getMgr() const { return mMgr; }
 

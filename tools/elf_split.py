@@ -450,7 +450,7 @@ class Carver:
         memory base with an immediate, until `reg` is overwritten or control
         flow leaves the straight line."""
         out = []
-        for j in range(idx + 1, min(idx + 24, len(insns))):
+        for j in range(idx + 1, min(idx + 128, len(insns))):
             ins = insns[j]
             ops = ins.operands
             if ins.id == ARM64_INS_ADD and len(ops) >= 3 and ops[1].type == ARM64_OP_REG \

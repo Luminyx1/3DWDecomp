@@ -1634,7 +1634,7 @@ XmlDocument* XmlDocument::create(ReadStream* pStream, Heap* pHeap, bool isBinary
 
 static u32 convertHexCharToInt_(char c)
 {
-    if (c >= '0' && c <= '9')
+    if (static_cast<u32>(c - '0') < 10)
     {
         return c - '0';
     }
@@ -1651,29 +1651,30 @@ static u32 convertHexCharToInt_(char c)
 
 static u32 convertCodeToUtf8_(char* pDst, u32 code)
 {
-    if (code < 0x80)
+    if (code > 0x7f)
     {
-        pDst[0] = code;
-        return 1;
-    }
-    if (code < 0x800)
-    {
+        if (code > 0x7ff)
+        {
+            if (code < 0x10000)
+            {
+                pDst[0] = 0xe0 | (code >> 12);
+                pDst[1] = 0x80 | ((code >> 6) & 0x3f);
+                pDst[2] = 0x80 | (code & 0x3f);
+                return 3;
+            }
+            pDst[0] = '?';
+            return 1;
+        }
         pDst[0] = 0xc0 | (code >> 6);
         pDst[1] = 0x80 | (code & 0x3f);
         return 2;
     }
-    if (code < 0x10000)
-    {
-        pDst[0] = 0xe0 | (code >> 12);
-        pDst[1] = 0x80 | ((code >> 6) & 0x3f);
-        pDst[2] = 0x80 | (code & 0x3f);
-        return 3;
-    }
-    pDst[0] = '?';
+    pDst[0] = code;
     return 1;
 }
 
-// NON_MATCHING: loop structure
+// NON_MATCHING: ~70%; the final length clamp is a select instead of a branch on the loop condition
+// and the UTF-8 encoding blocks are tail-duplicated differently
 bool XmlDocument::replaceXmlNumericCharacterReference_(char* pText, u32 bufferSize, u32 startIndex)
 {
     u32 length = 0;
@@ -1693,7 +1694,7 @@ bool XmlDocument::replaceXmlNumericCharacterReference_(char* pText, u32 bufferSi
     for (u32 i = 0; pos < bufferSize && i < length; i++)
     {
         char c = pText[i];
-        if (i < startIndex || i > length - 4 || c != '&')
+        if (i > length - 4 || i < startIndex || c != '&')
         {
             dst[pos++] = c;
             continue;

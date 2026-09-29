@@ -300,7 +300,13 @@ class ParameterBuffer : public Parameter<T*> {
 public:
     ParameterBuffer() = default;
 
+    ParameterBuffer(const sead::SafeString& name, const sead::SafeString& label,
+                    IParameterObj* obj)
+        : Parameter<T*>(nullptr, name, label, obj) {}
+
     ~ParameterBuffer() override { freeBuffer(); }
+
+    u32 getBufferSize() const { return mBufferSize; }
 
     void allocateBuffer(sead::Heap* heap, u32 num) {
         SEAD_ASSERT(!isBinaryInternalBuffer());
@@ -397,6 +403,15 @@ public:
 #endif
 
     static constexpr u32 cUnitCurveParamNum = 30;
+
+    sead::hostio::Curve<f32>& getCurve(u32 index) { return mCurves[index]; }
+    f32 interpolateToF32(u32 index, f32 t)
+    {
+        return mCurves[index].sead::hostio::template Curve<f32>::interpolateToF32(t);
+    }
+    const sead::hostio::Curve<f32>& getCurve(u32 index) const { return mCurves[index]; }
+    sead::hostio::CurveData& getCurveData(u32 index) { return mCurveData[index]; }
+    const sead::hostio::CurveData& getCurveData(u32 index) const { return mCurveData[index]; }
 
 protected:
     std::array<sead::hostio::Curve<f32>, N> mCurves;

@@ -85,6 +85,11 @@ public:
     {
         return *mObj.unsafeGet(mTypeRange[type].mStart + index);
     }
+    EnvObj* tryGetObj(s32 type, s32 index) const
+    {
+        const TypeRange& rRange = mTypeRange[type];
+        return index < rRange.mNum ? *mObj.unsafeGet(rRange.mStart + index) : nullptr;
+    }
     s32 getBufferSize() const { return mObj.size(); }
     EnvObj* getBufferObj(s32 index) const { return mObj[index]; }
 

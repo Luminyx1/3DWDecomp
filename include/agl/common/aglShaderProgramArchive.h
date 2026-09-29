@@ -102,6 +102,9 @@ public:
     s32 getShaderProgramNum() const { return mShaderPrograms.size(); }
     ShaderProgram& getShaderProgram(s32 index) { return mShaderPrograms[index]; }
     const ShaderProgram& getShaderProgram(s32 index) const { return mShaderPrograms[index]; }
+    ShaderProgram* getShaderProgramPtr(s32 index) { return mShaderPrograms.get(index); }
+    s32 getVariationNum() const { return mVariationNum; }
+    bool isValid() const { return mResBinaryShaderArchive.isValid() || mResShaderArchive.isValid(); }
 
 private:
     friend class ShaderSource;

@@ -1,29 +1,39 @@
 #pragma once
 
 #include <container/seadObjArray.h>
+#include <prim/seadDelegate.h>
 
 namespace sead {
 class Heap;
-
-template <typename T>
-class AnyDelegate1Const;
 }  // namespace sead
 
 namespace agl::shtxt {
 
 class Clause;
-class SyntaxLeash;
+class SyntaxTree;
+
+class SyntaxLeash {
+public:
+    SyntaxTree* mTree;
+    Clause* mClause;
+};
 
 class ExpressionEvaluator {
 public:
     ExpressionEvaluator();
-    ExpressionEvaluator(sead::Heap*, sead::Heap*, const sead::AnyDelegate1Const<Clause*>*);
+    ExpressionEvaluator(sead::Heap* pHeap, sead::Heap* pClauseHeap,
+                        const sead::AnyDelegate1Const<Clause*>* pRemoveDelegate);
 
-    void initialize(sead::Heap*, sead::Heap*, const sead::AnyDelegate1Const<Clause*>*);
-    u64 findSyntaxLeash(sead::ObjArray<SyntaxLeash>*, const Clause*) const;
-    u64* createBinaryOperatorSyntaxTree(sead::ObjArray<SyntaxLeash>*, Clause*);
-    u64* createTernaryOperatorSyntaxTree(sead::ObjArray<SyntaxLeash>*, Clause*);
-    u64* createTokenOperatorSyntaxTree(sead::ObjArray<SyntaxLeash>*, Clause*);
+    void initialize(sead::Heap* pHeap, sead::Heap* pClauseHeap,
+                    const sead::AnyDelegate1Const<Clause*>* pRemoveDelegate);
+    SyntaxLeash* findSyntaxLeash(sead::ObjArray<SyntaxLeash>* pLeashes,
+                                 const Clause* pClause) const;
+    Clause* createBinaryOperatorSyntaxTree(sead::ObjArray<SyntaxLeash>* pLeashes,
+                                               Clause* pClause);
+    Clause* createTernaryOperatorSyntaxTree(sead::ObjArray<SyntaxLeash>* pLeashes,
+                                                Clause* pClause);
+    Clause* createTokenOperatorSyntaxTree(sead::ObjArray<SyntaxLeash>* pLeashes,
+                                              Clause* pClause);
     void resolveOperatorTokenConnect(sead::ObjArray<SyntaxLeash>*, Clause*, Clause*);
     void resolveOperatorUnary(sead::ObjArray<SyntaxLeash>*, Clause*, Clause*);
     void resolveOperatorMathHigh(sead::ObjArray<SyntaxLeash>*, Clause*, Clause*);
@@ -39,13 +49,13 @@ public:
     void resolveOperatorTernary(sead::ObjArray<SyntaxLeash>*, Clause*, Clause*);
     void resolveOperatorAssignment(sead::ObjArray<SyntaxLeash>*, Clause*, Clause*);
     void resolveOperator(sead::ObjArray<SyntaxLeash>*, Clause*, Clause*);
-    void resolveParenthesis(sead::ObjArray<SyntaxLeash>*, Clause*, Clause*);
-    void resolve(Clause*, Clause*, bool);
+    Clause* resolveParenthesis(sead::ObjArray<SyntaxLeash>* pLeashes, Clause* pClose, Clause* pEnd);
+    SyntaxTree* resolve(Clause* pBegin, Clause* pEnd, bool);
 
 private:
-    sead::Heap* _0;
-    sead::Heap* _8;
-    sead::AnyDelegate1Const<Clause*>* _10;
+    sead::Heap* mHeap = nullptr;
+    sead::Heap* mClauseHeap = nullptr;
+    const sead::AnyDelegate1Const<Clause*>* mRemoveDelegate = nullptr;
 };
 
 }  // namespace agl::shtxt

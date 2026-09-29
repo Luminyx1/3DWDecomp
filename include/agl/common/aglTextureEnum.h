@@ -91,6 +91,16 @@ enum TextureCompSel {
 
 enum class TextureAttribute {};
 
+enum CubeMapFace {
+    cCubeMapFace_PositiveX = 0,
+    cCubeMapFace_NegativeX = 1,
+    cCubeMapFace_PositiveY = 2,
+    cCubeMapFace_NegativeY = 3,
+    cCubeMapFace_PositiveZ = 4,
+    cCubeMapFace_NegativeZ = 5,
+    cCubeMapFace_Num = 6,
+};
+
 enum class MultiSampleType {};
 
 }  // namespace agl

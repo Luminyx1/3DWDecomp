@@ -1,6 +1,7 @@
 #pragma once
 
-#include <basis/seadTypes.h>
+#include <prim/seadSafeString.h>
+#include "shader_text/aglShaderTextClause.h"
 
 namespace sead {
 class Heap;
@@ -8,26 +9,28 @@ class Heap;
 
 namespace agl::shtxt {
 
-class Clause;
-
 class Lexer {
 public:
     Lexer();
     ~Lexer();
 
-    void initialize(sead::Heap*, const char*, Clause*);
-    void setupCurrentRange(u64 range);
-    u32 findNumberBlock() const;
-    Clause* createClause(u32) const;
-    bool execute(bool);
+    void initialize(sead::Heap* pHeap, const char* pText, Clause* pRoot);
+    const char* setupCurrentRange(u64 length);
+    Clause::Type findNumberBlock() const;
+    Clause* createClause(u32 type) const;
+    bool execute(bool skipSpace);
+
+    sead::SafeString getErrorMessage() const { return mErrorMessage; }
 
 private:
-    sead::Heap* _0;
-    Clause* _8;
-    const char* mRefName;
-    void* _18;
-    void* _20;
-    void* _28;
+    sead::Heap* mHeap = nullptr;
+    Clause* mRoot = nullptr;
+    const char* mText = nullptr;
+    const char* mCurrent = nullptr;
+    mutable const char* mBegin = nullptr;
+    mutable const char* mEnd = nullptr;
+    sead::SafeString mErrorMessage;
 };
+static_assert(sizeof(Lexer) == 0x40);
 
 }  // namespace agl::shtxt

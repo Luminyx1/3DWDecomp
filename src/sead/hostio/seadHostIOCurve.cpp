@@ -53,6 +53,13 @@ static T fracPart(T x)
     return x - T(int(x));
 }
 
+/**
+ * Linearly interpolates between evenly spaced values.
+ * @param t position in [0, 1]
+ * @param info curve info (number of values)
+ * @param f values
+ * @return interpolated value
+ */
 template <typename T>
 T curveLinear_(f32 t, const CurveDataInfo* info, const T* f)
 {
@@ -67,10 +74,17 @@ T curveLinear_(f32 t, const CurveDataInfo* info, const T* f)
     {
         return f[n];
     }
-    return f[i] + (fracPart(n * t) * (f[i + 1] - f[i]));
+    const auto x = fracPart(n * t);
+    return f[i] + ((f[i + 1] - f[i]) * x);
 }
 
-// NON_MATCHING: instruction ordering
+/**
+ * Evaluates a Hermite curve over evenly spaced (value, tangent) pairs.
+ * @param t position in [0, 1]
+ * @param info curve info (number of values)
+ * @param f (value, tangent) pairs
+ * @return interpolated value
+ */
 template <typename T>
 T curveHermit_(f32 t, const CurveDataInfo* info, const T* f)
 {
@@ -92,13 +106,12 @@ T curveHermit_(f32 t, const CurveDataInfo* info, const T* f)
     }
 
     const auto x = fracPart(n * t);
-    const auto coeff = &f[j];
+    const T h00 = (2 * x * x * x) - (3 * x * x) + 1;
+    const T h01 = (-2 * x * x * x) + (3 * x * x);
+    const T h10 = (x * x * x) - (2 * x * x) + x;
+    const T h11 = (x * x * x) - (x * x);
 
-    return ((2 * x * x * x) - (3 * x * x) + 1) * coeff[0]  // (2t^3 - 3t^2 + 1)p0
-           + ((-2 * x * x * x) + (3 * x * x)) * coeff[2]   // (-2t^3 + 2t^2)p1
-           + ((x * x * x) - (x * x)) * coeff[3]            // (t^3 - t^2)m1
-           + ((x * x * x) - (2 * x * x) + x) * f[j | 1]    // (t^3 - 2t^2 + t)m0
-        ;
+    return h00 * f[j] + h01 * f[j + 2] + h10 * f[j | 1] + h11 * f[j + 3];
 }
 
 template <typename T>
@@ -130,7 +143,13 @@ T curveSinPow2_(f32 t_, const CurveDataInfo*, const T* f)
     return y * y * f[1];
 }
 
-// NON_MATCHING: instruction reordering (which results in localized regalloc differences)
+/**
+ * Linearly interpolates between (x, y) points.
+ * @param t_ x position
+ * @param info curve info (number of values)
+ * @param f (x, y) points sorted by x
+ * @return interpolated y value
+ */
 template <typename T>
 T curveLinear2D_(f32 t_, const CurveDataInfo* info, const T* f)
 {
@@ -157,16 +176,18 @@ T curveLinear2D_(f32 t_, const CurveDataInfo* info, const T* f)
     return 0;
 }
 
-// NON_MATCHING: same as curveHermit_<T>
+// NON_MATCHING: ~98%; the last point's address is computed once as i64 instead of zext(i32) +
+// i64 (same for curveHermit2DSmooth_ and both Vec2 wrappers)
 template <typename T>
-T curveHermit2D_(f32 t_, const CurveDataInfo* info, const T* f)
+inline T curveHermit2D_(f32 t_, const CurveDataInfo* info, const T* f)
 {
     const T t = t_;
-    const s8 n = info->numUse / 3;
     if (f[0] >= t)
     {
         return f[1];
     }
+
+    const auto n = info->numUse / 3;
 
     if (f[3 * (n - 1)] <= t)
     {
@@ -179,11 +200,11 @@ T curveHermit2D_(f32 t_, const CurveDataInfo* info, const T* f)
         if (f[j + 3] > t)
         {
             const auto x = (t - f[j]) / (f[j + 3] - f[j]);
-            return ((2 * x * x * x) - (3 * x * x) + 1) * f[j + 1]  // (2t^3 - 3t^2 + 1)p0
-                   + ((-2 * x * x * x) + (3 * x * x)) * f[j + 4]   // (-2t^3 + 2t^2)p1
-                   + ((x * x * x) - (x * x)) * f[j + 5]            // (t^3 - t^2)m1
-                   + ((x * x * x) - (2 * x * x) + x) * f[j + 2]    // (t^3 - 2t^2 + t)m0
-                ;
+            const T h00 = (2 * x * x * x) - (3 * x * x) + 1;
+            const T h01 = (-2 * x * x * x) + (3 * x * x);
+            const T h10 = (x * x * x) - (2 * x * x) + x;
+            const T h11 = (x * x * x) - (x * x);
+            return h00 * f[j + 1] + h01 * f[j + 4] + h10 * f[j + 2] + h11 * f[j + 5];
         }
     }
 
@@ -219,6 +240,40 @@ template <typename T>
 T curveNonuniformSpline_(f32, const CurveDataInfo*, const T*)
 {
     SEAD_ASSERT_MSG(false, "You must call ICurve::interpolateToVec2 at this curve type.");
+    return 0;
+}
+
+template <typename T>
+inline T curveHermit2DSmooth_(f32 t_, const CurveDataInfo* info, const T* f)
+{
+    const T t = t_;
+    if (f[0] >= t)
+    {
+        return f[1];
+    }
+
+    const auto n = info->numUse / 3;
+
+    if (f[3 * (n - 1)] <= t)
+    {
+        return f[3 * (n - 1) + 1];
+    }
+
+    for (s32 i = 0; i < n; ++i)
+    {
+        const auto j = 3 * i;
+        if (f[j + 3] > t)
+        {
+            const T dx = f[j + 3] - f[j];
+            const auto x = (t - f[j]) / dx;
+            const T h00 = (2 * x * x * x) - (3 * x * x) + 1;
+            const T h01 = (-2 * x * x * x) + (3 * x * x);
+            const T h10 = ((x * x * x) - (2 * x * x) + x) * dx;
+            const T h11 = ((x * x * x) - (x * x)) * dx;
+            return h00 * f[j + 1] + h01 * f[j + 4] + h10 * f[j + 2] + h11 * f[j + 5];
+        }
+    }
+
     return 0;
 }
 

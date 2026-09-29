@@ -34,6 +34,22 @@ public:
 
     void search(const ShaderProgram&);
     void setUniformNVN(DrawContext*, u32, const void*) const;
+
+    void setUniform(DrawContext* pDrawContext, u32 num, const void* pData) const
+    {
+        if (isValid())
+        {
+            setUniformNVN(pDrawContext, num, pData);
+        }
+    }
+
+    void setUniform(DrawContext* pDrawContext, f32 value) const
+    {
+        if (isValid())
+        {
+            setUniformNVN(pDrawContext, 1, &value);
+        }
+    }
 };
 
 class SamplerLocation : public ShaderLocation, public sead::INamable {

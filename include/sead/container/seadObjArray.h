@@ -108,6 +108,8 @@ public:
 
     void insert(s32 pos, const T& item) { PtrArrayImpl::insert(pos, alloc(item)); }
 
+    s32 indexOf(const T* ptr) const { return PtrArrayImpl::indexOf(ptr); }
+
     void erase(int index) { erase(index, 1); }
 
     void erase(int index, int count)

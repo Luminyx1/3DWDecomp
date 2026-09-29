@@ -6,6 +6,10 @@
 #include <prim/seadSafeString.h>
 #include "common/aglGPUMemBlock.h"
 
+namespace agl {
+class TextureSampler;
+}  // namespace agl
+
 namespace agl::detail {
 
 class PrivateResource : public sead::hostio::Node {
@@ -18,6 +22,10 @@ public:
     sead::Heap* getWorkHeap() const { return mWorkHeap; }
     sead::Heap* getDebugHeap() const { return mDebugHeap; }
     sead::Heap* getShaderTextHeap() const { return static_cast<sead::Heap*>(_30); }
+    const TextureSampler* getCursorTextureSampler() const
+    {
+        return static_cast<const TextureSampler*>(_88);
+    }
 
 private:
     static void debugPrintFn(const sead::SafeString& str);

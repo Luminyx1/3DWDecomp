@@ -1,0 +1,40 @@
+#pragma once
+
+#include "container/seadOffsetList.h"
+#include "thread/seadCriticalSection.h"
+
+namespace aal {
+class IAudioFrameProcess {
+public:
+    virtual ~IAudioFrameProcess() {}
+
+    virtual void audioFrameProcess() = 0;
+
+    sead::ListNode mListNode;
+};
+
+class AudioFrameProcessMgr {
+public:
+    static AudioFrameProcessMgr* instance() { return sInstance; }
+
+    AudioFrameProcessMgr();
+    ~AudioFrameProcessMgr();
+
+    void clearProcess();
+    bool addProcess(IAudioFrameProcess* pProcess);
+    void removeProcess(IAudioFrameProcess* pProcess);
+
+private:
+    bool registerAudioFrameCallback_();
+    bool unregisterAudioFrameCallback_();
+    void audioFrameProcess_();
+    static void audioFrameCallback_(uintptr_t arg);
+
+    static AudioFrameProcessMgr* sInstance;
+
+    sead::OffsetList<IAudioFrameProcess> mProcessList;
+    sead::CriticalSection mCriticalSection;
+    bool mIsCallbackRegistered = false;
+};
+static_assert(sizeof(AudioFrameProcessMgr) == 0x60);
+}  // namespace aal

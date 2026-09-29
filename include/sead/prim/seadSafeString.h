@@ -476,6 +476,12 @@ public:
         this->copy(string);
     }
 
+    HeapSafeStringBase(Heap* heap, s32 size, s32 alignment = sizeof(void*))
+        : BufferedSafeStringBase<T>(new (heap, alignment) T[size](), size)
+    {
+        this->clear();
+    }
+
     HeapSafeStringBase(const HeapSafeStringBase&) = delete;
     HeapSafeStringBase& operator=(const HeapSafeStringBase&) = delete;
 

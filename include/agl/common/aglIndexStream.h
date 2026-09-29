@@ -27,6 +27,17 @@ public:
     u32 getCount() const { return mCount; }
     u32 getStride() const { return mStride; }
     ConstGPUMemVoidAddr getBuffer() const { return mBuffer; }
+    NVNdrawPrimitive getPrimitiveType() const { return mPrimitiveType; }
+
+    void setUpStream(GPUMemAddr<u16> addr, u32 count)
+    {
+        setUpStream_(addr, cIndexStreamFormat_u16, count);
+    }
+    void setUpStream(GPUMemAddr<u32> addr, u32 count)
+    {
+        setUpStream_(addr, cIndexStreamFormat_u32, count);
+    }
+    void setPrimitiveType(NVNdrawPrimitive primitiveType) { mPrimitiveType = primitiveType; }
     const NVNbuffer* getNvnBuffer() const { return &mNvnBuffer; }
 
 protected:

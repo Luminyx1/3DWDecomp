@@ -34,12 +34,18 @@ public:
     public:
         ~Ref() override;
 
+        bool isUsed() const
+        {
+            return mIndex.getIndex() >= 0 ||
+                   mIndex.getIndex() == utl::INamedObjIndex::cIndexNotFound;
+        }
+
     protected:
         bool isApply_(utl::ResParameterObj obj) const override;
 
     public:
         EnvObj::Index mIndex;
-        utl::Parameter<sead::FixedSafeString<32>> mName;
+        utl::Parameter<sead::FixedSafeString<32>> mTypeName;
     };
     static_assert(sizeof(Ref) == 0x100);
 
@@ -58,8 +64,8 @@ public:
     virtual void genMessageEachObj(sead::hostio::Context* pContext, s32 type, const EnvObj* pObj);
 
     void bind(EnvObjMgr* pMgr);
-    void pushBack(EnvObj* pObj);
-    void erase(EnvObj* pObj);
+    bool pushBack(EnvObj* pObj);
+    bool erase(EnvObj* pObj);
 
     void genMessage(sead::hostio::Context* pContext);
     void listenPropertyEvent(const sead::hostio::PropertyEvent* pEvent);
@@ -68,6 +74,8 @@ public:
     EnvObj* getSelectedObj(EnvObj::MetaInfo metaInfo) const { return mSelectedObj[metaInfo]; }
 
 protected:
+    void syncIndex_(utl::INamedObjIndex* pIndex);
+
     utl::Parameter<sead::FixedSafeString<32>> mSetName;
     utl::ParameterList mRefList;
     EnvObjMgr* mMgr = nullptr;

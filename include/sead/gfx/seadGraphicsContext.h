@@ -36,8 +36,16 @@ public:
 
     void setDepthTestEnable(bool enable) { mDepthTestEnable = enable; }
     void setDepthWriteEnable(bool enable) { mDepthWriteEnable = enable; }
+    void setAlphaTestEnable(bool enable) { mAlphaTestEnable = enable; }
     void setCullingMode(u8 mode) { mCullingMode = mode; }
     void setColorMask(u32 mask) { mColorMask = mask; }
+    void setColorMask(bool r, bool g, bool b, bool a)
+    {
+        r ? mColorMask |= 1 : mColorMask &= ~1u;
+        g ? mColorMask |= 2 : mColorMask &= ~2u;
+        b ? mColorMask |= 4 : mColorMask &= ~4u;
+        a ? mColorMask |= 8 : mColorMask &= ~8u;
+    }
     void setDepthFunc(u8 func) { mDepthFunc = func; }
 
     void setDepthEnable(bool test_enable, bool write_enable)
@@ -45,12 +53,33 @@ public:
         mDepthTestEnable = test_enable;
         mDepthWriteEnable = write_enable;
     }
+    void setBlendEnableMask(u32 mask) { mBlendEnableMask = mask; }
+    void setBlendConstantColor(const Color4f& color) { mBlendConstantColor = color; }
+    void setBlendFactor(s32 target, u8 src, u8 dst)
+    {
+        mBlendTargets[target].mBlendFactorSrcRGB = src;
+        mBlendTargets[target].mBlendFactorSrcA = src;
+        mBlendTargets[target].mBlendFactorDstRGB = dst;
+        mBlendTargets[target].mBlendFactorDstA = dst;
+    }
+    void setBlendEquation(s32 target, u8 equation)
+    {
+        mBlendTargets[target].mBlendEquationRGB = equation;
+        mBlendTargets[target].mBlendEquationA = equation;
+    }
     void setBlendEnable(bool enable)
     {
         if (enable)
             mBlendEnableMask |= 1;
         else
             mBlendEnableMask &= ~1u;
+    }
+    void setBlendEnable(s32 target, bool enable)
+    {
+        if (enable)
+            mBlendEnableMask |= 1u << target;
+        else
+            mBlendEnableMask &= ~(1u << target);
     }
 
 private:

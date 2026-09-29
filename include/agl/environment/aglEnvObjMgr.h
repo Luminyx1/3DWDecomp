@@ -32,15 +32,33 @@ class RenderBuffer;
 
 namespace agl::env {
 
+struct EnvObj::ViewData {
+    ViewData(const sead::Matrix34f& rViewMtx, const sead::Matrix34f& rInvViewMtx,
+             const sead::Matrix44f& rProjMtx)
+    {
+        mViewMtx = rViewMtx;
+        mInvViewMtx = rInvViewMtx;
+        mProjMtx = rProjMtx;
+    }
+
+    sead::Matrix34f mViewMtx;
+    sead::Matrix34f mInvViewMtx;
+    sead::Matrix44f mProjMtx;
+};
+static_assert(sizeof(EnvObj::ViewData) == 0xa0);
+
 class EnvObjMgr : public EnvObjBuffer, public utl::INamedObjMgr, public utl::IParameterIO {
 public:
     class InitArg : public EnvObjBuffer::AllocateArg {
     public:
         InitArg();
 
+        s32 getGroupNum() const { return mGroupNum; }
+        s32 getViewNum() const { return mViewNum; }
+
     private:
-        u32 _20c = 0x100;
-        u32 _210 = 1;
+        s32 mGroupNum = 0x100;
+        s32 mViewNum = 1;
     };
 
     class TypeNode : public utl::IParameterList, public sead::hostio::Node {
@@ -57,20 +75,44 @@ public:
     };
     static_assert(sizeof(TypeNode) == 0xb0);
 
+    struct View {
+        View() = default;
+
+        sead::Matrix34f mViewMtx;
+        sead::Matrix34f mInvViewMtx;
+        sead::Matrix44f mProjMtx;
+        f32 mNear;
+        f32 mFar;
+        s32 mDirectionalLightNum;
+        s32 _ac = 0;
+        const RenderBuffer* mRenderBuffer;
+        f32 mDebugScale;
+    };
+    static_assert(sizeof(View) == 0xc0);
+
     EnvObjMgr();
     ~EnvObjMgr() override;
 
-    bool save(const sead::SafeString& rPath, u32 flag) const override;
-    void applyResParameterArchive(utl::ResParameterArchive arc) override;
+    bool save(const sead::SafeString& rPath, u32 flag) const override
+    {
+        return saveImpl_(rPath, 1, -1);
+    }
+    void applyResParameterArchive(utl::ResParameterArchive arc) override
+    {
+        applyResource_(arc, arc, 1.0f, -1);
+    }
     void listenPropertyEventFromGroup(GroupEventType type, Group* pGroup) override;
-    const sead::SafeString& getSaveFilePath() const override;
-    const sead::SafeString& getNamedObjName(s32 index, s32 type) const override;
-    s32 getNamedObjNum(s32 type) const override;
+    const sead::SafeString& getSaveFilePath() const override { return mPath; }
+    const sead::SafeString& getNamedObjName(s32 index, s32 type) const override
+    {
+        return getObj(type, index)->getEnvObjName();
+    }
+    s32 getNamedObjNum(s32 type) const override { return getObjNum(type); }
     void constructList() override;
 
     void initialize(const InitArg& rArg, sead::Heap* pHeap);
     void removeObj(EnvObj* pObj);
-    void clear(s32 type);
+    void clear(s32 group);
     void reconstruct();
     void update();
     void updateView(const sead::Matrix34f& rViewMtx, const sead::Matrix44f& rProjMtx,
@@ -85,7 +127,7 @@ public:
                          const sead::Color4f& rColor1) const;
     void drawFog_(DrawContext* pDrawContext, s32 viewIndex, const EnvObj& rObj, f32 start,
                   f32 end, const sead::Vector3f& rDir, const sead::Color4f& rColor) const;
-    bool saveToGroupFilePath(const sead::SafeString& rGroupName) const;
+    bool saveToGroupFilePath(const sead::SafeString& rPath) const;
 
     void genMessage(sead::hostio::Context* pContext);
     void listenPropertyEvent(const sead::hostio::PropertyEvent* pEvent);
@@ -94,23 +136,24 @@ public:
     EnvObjSet& getEnvObjSet() { return mEnvObjSet; }
 
 protected:
-    bool saveImpl_(const sead::SafeString& rPath, u32 flag, s32 type) const;
+    bool saveImpl_(const sead::SafeString& rPath, u32 flag, s32 group) const;
     void applyResource_(utl::ResParameterArchive arc0, utl::ResParameterArchive arc1, f32 t,
-                        s32 type);
+                        s32 group);
 
     friend class EnvObj;
 
     sead::BitFlag32 mFlag;
     sead::PtrArray<EnvObj> mUpdateObj;
-    sead::Buffer<u8> mWork;
+    mutable sead::Buffer<View> mView;
     f32 mDebugDrawScale = 1.0f;
     sead::CriticalSection mCS;
     EnvObjSet mEnvObjSet;
-    s32 _550 = 2;
+    s32 mListMode = 2;
     sead::Buffer<TypeNode> mTypeNode;
     void* _568 = nullptr;
     void* _570 = nullptr;
-    void* _578 = nullptr;
+    s32 mSelectedType = 0;
+    s32 mSelectedDirectionalLight = 0;
 };
 static_assert(sizeof(EnvObjMgr) == 0x580);
 

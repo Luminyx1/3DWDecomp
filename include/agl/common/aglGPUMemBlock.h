@@ -41,6 +41,7 @@ public:
     void setNext(GPUMemBlockBase* pNext) { mpTail = pNext; }
     detail::MemoryPool* getMemoryPool() const { return mpMemoryPool; }
     u64 getSize() const { return mMemoryBufferSize; }
+    bool isAllocated() const { return mMemoryBuffer != nullptr || mMemoryPoolHeap != nullptr; }
 
     // TODO: the rest of the methods...
 

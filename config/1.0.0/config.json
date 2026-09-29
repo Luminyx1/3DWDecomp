@@ -38,7 +38,8 @@
   ],
   "path_flags": {
     "src/sead/": "-fno-strict-aliasing",
-    "src/agl/": "-fno-strict-aliasing"
+    "src/agl/": "-fno-strict-aliasing",
+    "src/aal/": "-fno-strict-aliasing"
   },
 
   "$include_note": [

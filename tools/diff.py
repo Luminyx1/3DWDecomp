@@ -12,6 +12,8 @@ side-by-side instruction diffs, for terminals and scripted use.
 <unit> is the unit name from objdiff.json (the source path without its
 extension, e.g. src/nw/lms/lms_message) or just a unique part of it.
 Build first (`ninja`); this reads build/target/... and build/obj/...
+Data relocations are compared by the value they point at (objdiff functionRelocDiffs=data_value),
+so merged constant pools and linker-folded string/table labels do not count as differences.
 
 Uses tools/bin/objdiff-cli(.exe), or `objdiff-cli` on PATH.
 """
@@ -63,7 +65,8 @@ def run_diff(unit: dict, symbol: str | None = None) -> dict:
         raise SystemExit(f"missing {tgt} (run ninja)")
     if base is None or not base.is_file():
         raise SystemExit(f"missing compiled object for {unit['name']} (no source yet, or run ninja)")
-    cmd = [objdiff_cli(), "diff", "-1", str(tgt), "-2", str(base), "-o", "-", "--format", "json"]
+    cmd = [objdiff_cli(), "diff", "-1", str(tgt), "-2", str(base), "-o", "-", "--format", "json",
+           "-c", "functionRelocDiffs=data_value"]
     if symbol:
         cmd.append(symbol)
     else:

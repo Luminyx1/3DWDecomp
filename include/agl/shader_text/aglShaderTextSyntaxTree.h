@@ -1,12 +1,10 @@
 #pragma once
 
 #include <basis/seadTypes.h>
+#include <prim/seadDelegate.h>
 
 namespace sead {
 class Heap;
-
-template <typename T>
-class AnyDelegate1Const;
 }  // namespace sead
 
 namespace agl::shtxt {
@@ -15,24 +13,24 @@ class Clause;
 
 class SyntaxTree {
 public:
-    explicit SyntaxTree(Clause*);
+    explicit SyntaxTree(Clause* pValue);
     ~SyntaxTree();
 
-    void removeClauseRecursive(const sead::AnyDelegate1Const<Clause*>*);
-    f64 checkAndGetValue();
-    void checkAndEvaluate(const SyntaxTree*) const;
-    f64 evaluate();
-    void constructRecursive(sead::Heap*, sead::Heap*);
-    u64* construct(sead::Heap*, sead::Heap*) const;
+    void removeClauseRecursive(const sead::AnyDelegate1Const<Clause*>* pRemoveDelegate);
+    f64 checkAndGetValue() const;
+    f64 checkAndEvaluate(const SyntaxTree* pTree) const;
+    f64 evaluate() const;
+    Clause* constructRecursive(sead::Heap* pHeap, sead::Heap* pStringHeap) const;
+    Clause* construct(sead::Heap* pHeap, sead::Heap* pStringHeap) const;
 
-private:
-    SyntaxTree* _0;
-    SyntaxTree* _8;
-    SyntaxTree* _10;
-    void* _18;
-    Clause* _20;
-    void* _28;
-    u32 _30;
+    SyntaxTree* mLeft = nullptr;
+    SyntaxTree* mCenter = nullptr;
+    SyntaxTree* mRight = nullptr;
+    Clause* mOperator = nullptr;
+    Clause* mValue;
+    mutable f64 mResult = 0.0;
+    mutable bool mIsValid = false;
 };
+static_assert(sizeof(SyntaxTree) == 0x38);
 
 }  // namespace agl::shtxt

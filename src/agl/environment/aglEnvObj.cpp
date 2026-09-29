@@ -425,14 +425,6 @@ s32 EnvObj::Index::getNamedObjNum() const
 }
 
 /**
- * Destroys the index.
- */
-EnvObj::Index::~Index()
-{
-    ;
-}
-
-/**
  * Initializes the type specific resources of the object (no-op by default).
  * @param viewNum number of views
  * @param pHeap heap to allocate from

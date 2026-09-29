@@ -6,6 +6,18 @@ namespace nn {
 namespace util {
 namespace neon {
 
+struct alignas(16) Vector3fType {
+    float32x4_t _v;
+};
+
+struct alignas(16) Vector4fType {
+    float32x4_t _v;
+};
+
+struct alignas(16) MatrixRowMajor4x3fType {
+    float32x4x4_t _m;
+};
+
 struct MatrixColumnMajor4x3fType {
     float32x4x3_t _m;
 };

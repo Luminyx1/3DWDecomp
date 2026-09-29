@@ -96,11 +96,12 @@ protected:
 
     void* popFront()
     {
-        if (isEmpty())
+        if (mPtrNum < 1)
             return nullptr;
 
         void* result = mPtrs[0];
-        erase(0);
+        MemUtil::copyOverlap(mPtrs, mPtrs + 1, s32((mPtrNum - 1) * sizeof(void*)));
+        --mPtrNum;
         return result;
     }
 

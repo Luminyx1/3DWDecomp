@@ -43,6 +43,7 @@ public:
         void listenPropertyEvent(const sead::hostio::PropertyEvent* pEvent);
 
         const sead::SafeString& getName() const { return mName; }
+        const sead::SafeString& getComment() const { return mComment; }
         s32 getIndex() const { return mIndex; }
 
     private:

@@ -38,6 +38,21 @@ public:
         nvnTextureViewSetDefaults(&mTextureView);
     }
 
+    RenderTarget& operator=(const RenderTarget& rOther)
+    {
+        TextureData::operator=(rOther);
+        sead::detail::atomicReadModifyWrite(reinterpret_cast<volatile u32*>(&mUpdateFlags),
+                                            [](u32) { return 0x7fffffffu; });
+        __builtin_memcpy(&mSlice, &rOther.mSlice,
+                         reinterpret_cast<const u8*>(&mZCullSize) -
+                             reinterpret_cast<const u8*>(&mSlice));
+        __builtin_memcpy(&mZCullSize, &rOther.mZCullSize,
+                         reinterpret_cast<const u8*>(&mTextureView) -
+                             reinterpret_cast<const u8*>(&mZCullSize));
+        mTextureView = rOther.mTextureView;
+        return *this;
+    }
+
     void applyTextureData(const TextureData& rTextureData, u32 mipLevel, u32 slice);
 
     void updateRegs_() const
@@ -69,6 +84,25 @@ public:
     void applyTextureData(const TextureData& rTextureData)
     {
         applyTextureData(rTextureData, mMipLevel, mSlice);
+    }
+
+    void setSlice(u32 slice)
+    {
+        if (mSlice != slice)
+        {
+            changeUpdateFlag_(cUpdateFlag_Slice, true);
+            mSlice = slice;
+        }
+    }
+    void setMipLevel(u32 mipLevel)
+    {
+        if (mMipLevel != mipLevel)
+        {
+            sead::detail::atomicReadModifyWrite(
+                reinterpret_cast<volatile u32*>(&mUpdateFlags),
+                [](u32 value) { return value | cUpdateFlag_MipLevel; });
+            mMipLevel = mipLevel;
+        }
     }
 
     const GPUMemVoidAddr& getZCullBuffer() const { return mZCullBuffer; }

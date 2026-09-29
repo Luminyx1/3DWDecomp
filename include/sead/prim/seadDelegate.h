@@ -205,6 +205,24 @@ public:
     Delegate1* clone(Heap* heap) const override { return new (heap) Delegate1(*this); }
 };
 
+/// Delegate for a const member function with one argument.
+/// @tparam T  Class type
+/// @tparam A1 Type of the argument
+template <typename T, typename A1>
+class Delegate1<const T, A1> : public DelegateBase<const T, void (T::*)(A1) const, IDelegate1<A1>>
+{
+public:
+    using Base = DelegateBase<const T, void (T::*)(A1) const, IDelegate1<A1>>;
+    using Base::Base;
+    void invoke(A1 a1) override { operator()(a1); }
+    void operator()(A1 a1) const
+    {
+        if (this->mInstance && this->mFunctionPtr)
+            return (this->mInstance->*(this->mFunctionPtr))(a1);
+    }
+    Delegate1* clone(Heap* heap) const override { return new (heap) Delegate1(*this); }
+};
+
 /// @tparam T  Class type
 /// @tparam A1 Type of the argument
 /// @tparam R  Return type
@@ -615,6 +633,33 @@ public:
     };
     using Base::Base;
     using Base::operator=;
+};
+
+/// Type-erased delegate with one argument that can be invoked through a const reference.
+template <typename A1>
+class AnyDelegate1Const
+    : public detail::AnyDelegateImpl<IDelegate1<A1>, AnyDelegate1Const<A1>,
+                                     sizeof(Delegate1<detail::DummyClassForDelegate, A1>)>
+{
+public:
+    using Base = detail::AnyDelegateImpl<IDelegate1<A1>, AnyDelegate1Const<A1>,
+                                         sizeof(Delegate1<detail::DummyClassForDelegate, A1>)>;
+
+    class UnbindDummy final : public Base::Interface_
+    {
+    public:
+        void invoke(A1) override {}
+#if SEAD_DELEGATE_ISNODUMMY
+        bool isNoDummy() const override { return false; }
+#endif
+    };
+    using Base::Base;
+    using Base::operator=;
+
+    void operator()(A1 a1) const
+    {
+        const_cast<IDelegate1<A1>*>(this->getDelegate())->invoke(a1);
+    }
 };
 
 template <typename A1, typename R>

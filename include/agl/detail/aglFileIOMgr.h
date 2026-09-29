@@ -1,13 +1,18 @@
 #pragma once
 
+#include <container/seadBuffer.h>
 #include <heap/seadDisposer.h>
 #include <hostio/seadHostIONode.h>
+#include <prim/seadBitFlag.h>
 #include <prim/seadSafeString.h>
+#include <thread/seadCriticalSection.h>
 
 namespace sead {
 namespace hostio {
+class Context;
 class FileInfo;
-}
+class PropertyEvent;
+}  // namespace hostio
 class Heap;
 class NinHostIOFileDevice;
 class XmlDocument;
@@ -22,51 +27,58 @@ public:
     public:
         CreateArg();
 
-    private:
-        u32 mArg;
+        bool mUseCheckout;
     };
 
     class DialogArg {
     public:
         DialogArg();
 
-    private:
-        u64* _0;
-        u64* _8;
-        void* _10;
-        void* _18;
-        void* _20;
-        const char* mMsg;
-        u64* _30;
-        u64* _38;
-        void* _40;
-        u32 _48;  // set to 0x20
-        u8 _4c;
-        u8 _4d;
-        u8 _4e;
-        u8 _4f;
-        u32 _50;
+        sead::SafeString mFilter = sead::SafeString::cEmptyString;
+        sead::SafeString mFileName = sead::SafeString::cEmptyString;
+        sead::SafeString mId = "agl_default";
+        sead::SafeString mPath = sead::SafeString::cEmptyString;
+        sead::BufferedSafeString* mOutPath = nullptr;
+        s32 mAlignment = 0x20;
+        bool mSkipCheckout = false;
+        u32 mUserData = 0;
     };
+    static_assert(sizeof(DialogArg) == 0x58);
+
+    struct File {
+        u8* mData;
+        u32 mSize;
+        void* _10;
+        u8 mUserData;
+    };
+    static_assert(sizeof(File) == 0x20);
 
     FileIOMgr();
+    virtual ~FileIOMgr();
 
-    void initialize(const FileIOMgr::CreateArg& create_arg, sead::Heap* heap);
-    void setCheckoutCommandPath(const sead::SafeString& path);
-    void save(const sead::XmlDocument& document, const FileIOMgr::DialogArg& dialog_arg,
-              u32 buffer_size);
-    void showDialog(sead::hostio::FileInfo* file_info, const sead::SafeString& mode,
-                    const sead::SafeString& id1, const sead::SafeString& id2_or_filter,
-                    const sead::SafeString& file_name) const;
-    void checkout_(const sead::SafeString& arg) const;
-    void showErrorDialog_(const sead::SafeString& file) const;
-    void save(const void* data, u32 size, const FileIOMgr::DialogArg& dialog_arg);
-    s32 load(const FileIOMgr::DialogArg& dialog_arg);
-    void close(s32 handle_index);
-    void genMessage(sead::hostio::Context* unused);
-    void listenPropertyEvent(const sead::hostio::PropertyEvent* unused);
+    void initialize(const CreateArg& rArg, sead::Heap* pHeap);
+    void setCheckoutCommandPath(const sead::SafeString& rPath);
+    bool save(const sead::XmlDocument& rDocument, const DialogArg& rArg, u32 bufferSize);
+    bool showDialog(sead::hostio::FileInfo* pInfo, const sead::SafeString& rMode,
+                    const sead::SafeString& rId, const sead::SafeString& rFilter,
+                    const sead::SafeString& rFileName) const;
+    void checkout_(const sead::SafeString& rPath) const;
+    void showErrorDialog_(const sead::SafeString& rPath) const;
+    bool save(const void* pData, u32 size, const DialogArg& rArg);
+    s32 load(const DialogArg& rArg);
+    void close(s32 handle);
+    void genMessage(sead::hostio::Context* pContext);
+    void listenPropertyEvent(const sead::hostio::PropertyEvent* pEvent);
+
+    const File& getFile(s32 handle) const { return mFiles[handle]; }
 
 private:
-    sead::NinHostIOFileDevice* _28;
+    sead::NinHostIOFileDevice* mDevice = nullptr;
+    sead::Buffer<File> mFiles;
+    sead::CriticalSection mCS;
+    sead::BitFlag32 mFlags;
+    sead::FixedSafeString<256> mCheckoutCommandPath;
 };
+static_assert(sizeof(FileIOMgr) == 0x1a0);
 
 }  // namespace agl::detail

@@ -127,6 +127,7 @@ public:
 
     const Vector3<T>& getNormal() const { return mNormal; }
     T getD() const { return mD; }
+    void setD(T d) { mD = d; }
 
 private:
     Vector3<T> mNormal;

@@ -53,6 +53,8 @@ public:
     void setModelMatrix(const Matrix34f* pModelMatrix) { mModelMatrix = pModelMatrix; }
     void setWrapWidth(f32 wrapWidth) { mWrapWidth = wrapWidth; }
     void setFont(FontBase* pFont) { mFont = pFont; }
+    FontBase* getFont() const { return mFont; }
+    void setViewport(const Viewport* pViewport) { mViewport = pViewport; }
 
 private:
     enum class LineEnd

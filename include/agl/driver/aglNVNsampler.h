@@ -11,6 +11,8 @@ public:
     NVNsampler_(const NVNsampler_& other);
     ~NVNsampler_();
 
+    NVNsampler_& operator=(const NVNsampler_& other);
+
     void releaseSampler();
     bool registerSampler(const NVNsampler& sampler, const char*);
     void updateTextureId(s32);

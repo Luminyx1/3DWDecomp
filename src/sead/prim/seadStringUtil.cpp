@@ -4890,6 +4890,1007 @@ char16* wcs16cpy(char16* pDst, size_t n, const char16* pSrc)
     return pDst;
 }
 
+enum PrintfFlag : u32
+{
+    cPrintfFlag_Left = 1 << 0,
+    cPrintfFlag_Plus = 1 << 1,
+    cPrintfFlag_Zero = 1 << 2,
+    cPrintfFlag_Space = 1 << 3,
+    cPrintfFlag_Alternate = 1 << 4,
+};
+
+enum PrintfLength : s32
+{
+    cPrintfLength_Char,
+    cPrintfLength_Short,
+    cPrintfLength_Int,
+    cPrintfLength_Long,
+    cPrintfLength_LongLong,
+};
+
+struct PrintfContext
+{
+    void reset()
+    {
+        flags = 0;
+        width = 0;
+        precision = 0;
+        hasPrecision = false;
+        length = cPrintfLength_Int;
+    }
+
+    std::va_list args;
+    u32 flags;
+    u32 width;
+    u32 precision;
+    bool hasPrecision;
+    s32 length;
+};
+
+struct PrintfOutput
+{
+    void put(char16 c)
+    {
+        if (length < maxLength)
+        {
+            buffer[length] = c;
+            length++;
+        }
+        else
+        {
+            isOverflow = true;
+        }
+    }
+
+    void fill(char16 c, u32 n)
+    {
+        for (u32 i = n; i != 0; --i)
+        {
+            if (length >= maxLength)
+            {
+                isOverflow = true;
+                return;
+            }
+            buffer[length] = c;
+            length++;
+        }
+    }
+
+    char16* buffer;
+    s32 maxLength;
+    s32 length;
+    bool isOverflow;
+};
+
+template <typename T>
+static const T* getEmptyString_();
+
+template <>
+const char* getEmptyString_<char>()
+{
+    return "";
+}
+
+template <>
+const char16* getEmptyString_<char16>()
+{
+    return u"";
+}
+
+/**
+ * Writes a %s argument, applying width, precision and the left-justify/zero flags.
+ * @param pCtx current conversion specification
+ * @param pOut output buffer
+ * @param pStr string to write (null is treated as an empty string)
+ */
+template <typename T>
+static void formatString_(PrintfContext* pCtx, PrintfOutput* pOut, const T* pStr)
+{
+    if (pStr == nullptr)
+    {
+        pStr = getEmptyString_<T>();
+    }
+
+    if (pCtx->flags & cPrintfFlag_Left)
+    {
+        const T* p = pStr;
+        u32 len = 0;
+        if (pCtx->hasPrecision)
+        {
+            while (*p != 0)
+            {
+                if (len >= pCtx->precision)
+                {
+                    break;
+                }
+                pOut->put(*p);
+                ++p;
+                len = p - pStr;
+            }
+        }
+        else
+        {
+            while (*p != 0)
+            {
+                pOut->put(*p);
+                ++p;
+            }
+            len = p - pStr;
+        }
+
+        if (pCtx->width > len)
+        {
+            pOut->fill(' ', pCtx->width - len);
+        }
+    }
+    else
+    {
+        const T* p = pStr;
+        u32 len = 0;
+        if (pCtx->hasPrecision)
+        {
+            while (*p != 0)
+            {
+                if (len >= pCtx->precision)
+                {
+                    break;
+                }
+                ++p;
+                len = p - pStr;
+            }
+        }
+        else
+        {
+            while (*p != 0)
+            {
+                ++p;
+            }
+            len = p - pStr;
+        }
+
+        if (pCtx->width > len)
+        {
+            pOut->fill((pCtx->flags & cPrintfFlag_Zero) ? '0' : ' ', pCtx->width - len);
+        }
+
+        for (u32 i = 0; i < len; ++i)
+        {
+            pOut->put(pStr[i]);
+        }
+    }
+}
+
+template <typename T>
+static s32 toDigits_(char16* pBuf, T value, s32 base, bool isUpper)
+{
+    if (value == 0)
+    {
+        pBuf[0] = '0';
+        return 1;
+    }
+
+    s32 len = 0;
+    if (base == 8)
+    {
+        do
+        {
+            if (len < 31)
+            {
+                pBuf[len++] = '0' + (value & 7);
+            }
+            value >>= 3;
+        } while (value != 0);
+    }
+    else if (base == 16)
+    {
+        do
+        {
+            if (len < 31)
+            {
+                const s32 digit = value & 0xf;
+                pBuf[len++] = (digit < 10 ? '0' : (isUpper ? 'A' - 10 : 'a' - 10)) + digit;
+            }
+            value >>= 4;
+        } while (value != 0);
+    }
+    else if (base == 10)
+    {
+        for (;;)
+        {
+            const T next = value / 10;
+            if (len < 31)
+            {
+                pBuf[len++] = '0' + (value - next * 10);
+            }
+            if (value < 10)
+            {
+                break;
+            }
+            value = next;
+        }
+    }
+    return len;
+}
+
+template <typename S, typename U>
+static s32 toSignedDigits_(char16* pBuf, S value, s32 base, bool isUpper, bool* pIsNegative)
+{
+    if (value >= 0)
+    {
+        return toDigits_<U>(pBuf, value, base, isUpper);
+    }
+    *pIsNegative = true;
+    return toDigits_<U>(pBuf, -value, base, isUpper);
+}
+
+// NON_MATCHING: ~92%; the per-length va_arg blocks and the padding tail are scheduled and
+// register-allocated differently
+static void formatInteger_(PrintfContext* pCtx, PrintfOutput* pOut, s32 base, bool isSigned,
+                           bool isUpper)
+{
+    char16 buf[32];
+    s32 len = 0;
+    bool isNegative = false;
+
+    switch (pCtx->length)
+    {
+    case cPrintfLength_Char:
+        if (isSigned)
+        {
+            len = toSignedDigits_<s32, u32>(buf, static_cast<s8>(va_arg(pCtx->args, s32)), base,
+                                            isUpper, &isNegative);
+        }
+        else
+        {
+            len = toDigits_<u32>(buf, static_cast<u8>(va_arg(pCtx->args, u32)), base, isUpper);
+        }
+        break;
+    case cPrintfLength_Short:
+        if (isSigned)
+        {
+            len = toSignedDigits_<s32, u32>(buf, static_cast<s16>(va_arg(pCtx->args, s32)), base,
+                                            isUpper, &isNegative);
+        }
+        else
+        {
+            len = toDigits_<u32>(buf, static_cast<u16>(va_arg(pCtx->args, u32)), base, isUpper);
+        }
+        break;
+    case cPrintfLength_Int:
+    case cPrintfLength_Long:
+        if (isSigned)
+        {
+            len = toSignedDigits_<s32, u32>(buf, va_arg(pCtx->args, s32), base, isUpper,
+                                            &isNegative);
+        }
+        else
+        {
+            len = toDigits_<u32>(buf, va_arg(pCtx->args, u32), base, isUpper);
+        }
+        break;
+    case cPrintfLength_LongLong:
+        if (isSigned)
+        {
+            len = toSignedDigits_<s64, u64>(buf, va_arg(pCtx->args, s64), base, isUpper,
+                                            &isNegative);
+        }
+        else
+        {
+            len = toDigits_<u64>(buf, va_arg(pCtx->args, u64), base, isUpper);
+        }
+        break;
+    }
+
+    u32 zeroLen = 0;
+    u32 bodyLen = len;
+    if (pCtx->hasPrecision)
+    {
+        bodyLen = pCtx->precision > static_cast<u32>(len) ? pCtx->precision : len;
+        zeroLen = bodyLen - len;
+    }
+
+    if (isSigned)
+    {
+        if (isNegative || (pCtx->flags & (cPrintfFlag_Plus | cPrintfFlag_Space)))
+        {
+            bodyLen++;
+        }
+    }
+    else if (pCtx->flags & cPrintfFlag_Alternate)
+    {
+        if (base == 8)
+        {
+            bodyLen += 1;
+        }
+        else if (base == 16)
+        {
+            bodyLen += 2;
+        }
+    }
+
+    u32 padLen = 0;
+    if (pCtx->width > bodyLen)
+    {
+        padLen = pCtx->width - bodyLen;
+        if (pCtx->flags & cPrintfFlag_Left)
+        {
+        }
+        else if ((pCtx->flags & cPrintfFlag_Zero) && !pCtx->hasPrecision)
+        {
+            zeroLen += padLen;
+            padLen = 0;
+        }
+        else
+        {
+            pOut->fill(' ', padLen);
+            padLen = 0;
+        }
+    }
+
+    if (isSigned)
+    {
+        if (isNegative)
+        {
+            pOut->put('-');
+        }
+        else if (pCtx->flags & cPrintfFlag_Plus)
+        {
+            pOut->put('+');
+        }
+        else if (pCtx->flags & cPrintfFlag_Space)
+        {
+            pOut->put(' ');
+        }
+    }
+    else if (pCtx->flags & cPrintfFlag_Alternate)
+    {
+        if (base == 8)
+        {
+            pOut->put('0');
+        }
+        else if (base == 16)
+        {
+            pOut->put('0');
+            pOut->put(isUpper ? 'X' : 'x');
+        }
+    }
+
+    pOut->fill('0', zeroLen);
+
+    for (s32 i = len - 1; i >= 0; --i)
+    {
+        pOut->put(buf[i]);
+    }
+
+    pOut->fill(' ', padLen);
+}
+
+static s32 roundDigits_(u32* pAcc, u32*& rpDigits, s32& rExp, s32 numDigits)
+{
+    if (numDigits < 0)
+    {
+        return 0;
+    }
+
+    numDigits = numDigits < 17 ? numDigits : 17;
+
+    if (rpDigits[numDigits] >= 5)
+    {
+        u32* p = &rpDigits[numDigits - 1];
+        ++*p;
+        while (p >= pAcc && *p >= 10)
+        {
+            *p -= 10;
+            --p;
+            ++*p;
+        }
+
+        if (p == rpDigits - 1)
+        {
+            --rpDigits;
+            ++rExp;
+        }
+    }
+    return numDigits;
+}
+
+// NON_MATCHING: ~63%; the digit rounding is not shared between e/f/g like in the target and the
+// layout tail branches differently
+static void formatFloat_(PrintfContext* pCtx, PrintfOutput* pOut, char16 conversion, bool isUpper)
+{
+    union
+    {
+        f64 f;
+        u64 u;
+    } value;
+    value.f = va_arg(pCtx->args, f64);
+
+    const u32 exponent = (value.u >> 52) & 0x7ff;
+    const u64 fraction = value.u & 0xfffffffffffffull;
+    const bool isNegative = value.u >> 63;
+
+    if (exponent == 0x7ff)
+    {
+        pCtx->hasPrecision = false;
+        if (fraction != 0)
+        {
+            if (isNegative)
+            {
+                formatString_(pCtx, pOut, "-NaN");
+            }
+            else if (pCtx->flags & cPrintfFlag_Plus)
+            {
+                formatString_(pCtx, pOut, "+NaN");
+            }
+            else if (pCtx->flags & cPrintfFlag_Space)
+            {
+                formatString_(pCtx, pOut, " NaN");
+            }
+            else
+            {
+                formatString_(pCtx, pOut, "NaN");
+            }
+        }
+        else
+        {
+            if (isNegative)
+            {
+                formatString_(pCtx, pOut, "-Inf");
+            }
+            else if (pCtx->flags & cPrintfFlag_Plus)
+            {
+                formatString_(pCtx, pOut, "+Inf");
+            }
+            else if (pCtx->flags & cPrintfFlag_Space)
+            {
+                formatString_(pCtx, pOut, " Inf");
+            }
+            else
+            {
+                formatString_(pCtx, pOut, "Inf");
+            }
+        }
+        return;
+    }
+
+    s32 precision = 6;
+    if (pCtx->hasPrecision)
+    {
+        precision = pCtx->precision;
+        if (static_cast<u32>(precision) > 0x200)
+        {
+            precision = 0x200;
+        }
+    }
+
+    u64 mantissa;
+    u32 index;
+    s32 exp10;
+    if (exponent != 0)
+    {
+        mantissa = (1ull << 63) | (fraction << 11);
+        index = exponent + 51;
+        exp10 = cPowerOfTwoTable[index].exponent;
+    }
+    else if (fraction != 0)
+    {
+        mantissa = fraction << 11;
+        index = 52;
+        do
+        {
+            mantissa <<= 1;
+            --index;
+        } while ((mantissa >> 63) == 0);
+        exp10 = cPowerOfTwoTable[index].exponent;
+    }
+    else
+    {
+        mantissa = 0;
+        index = 0;
+        exp10 = 1;
+    }
+
+    u32 acc[21] = {};
+    for (; mantissa != 0; mantissa <<= 1, --index)
+    {
+        if (mantissa >> 63)
+        {
+            const PowerOfTwo& rEntry = cPowerOfTwoTable[index];
+            const s32 shift = exp10 - rEntry.exponent;
+            const s32 start = shift + 1;
+            for (s32 i = start; i <= 20; ++i)
+            {
+                acc[i] += rEntry.digits[i - start];
+            }
+            if (shift >= 20 && rEntry.digits[21 - start] >= 5)
+            {
+                ++acc[20];
+            }
+        }
+    }
+
+    for (s32 i = 20; i > 0; --i)
+    {
+        const u32 carry = acc[i] / 10;
+        acc[i - 1] += carry;
+        acc[i] -= carry * 10;
+    }
+
+    const s32 offset = acc[0] == 0;
+    u32* pDigits = &acc[offset];
+    if (acc[0] != 0)
+    {
+        ++exp10;
+    }
+
+    s32 numDigits = -1;
+    switch (conversion)
+    {
+    case 'e':
+        numDigits = precision + 1;
+        break;
+    case 'f':
+        numDigits = exp10 + precision;
+        break;
+    case 'g':
+        numDigits = precision != 0 ? precision : 1;
+        break;
+    }
+    numDigits = roundDigits_(acc, pDigits, exp10, numDigits);
+
+    const u32 signLen =
+        (isNegative || (pCtx->flags & (cPrintfFlag_Plus | cPrintfFlag_Space))) ? 1 : 0;
+
+    u32 intDigits = 0;
+    u32 intZeros = 0;
+    bool hasDot = false;
+    u32 fracZeros = 0;
+    u32 fracDigits = 0;
+    u32 trailZeros = 0;
+    bool hasExp = false;
+
+    if (conversion == 'e')
+    {
+        intDigits = 1;
+        fracDigits = numDigits - 1;
+        trailZeros = precision - fracDigits;
+        hasDot = precision != 0 || (pCtx->flags & cPrintfFlag_Alternate);
+        hasExp = true;
+    }
+    else if (conversion == 'g')
+    {
+        if (!(pCtx->flags & cPrintfFlag_Alternate))
+        {
+            while (numDigits != 0 && pDigits[numDigits - 1] == 0)
+            {
+                --numDigits;
+            }
+        }
+
+        if (exp10 < -3 || static_cast<s32>(precision) < exp10)
+        {
+            intDigits = 1;
+            fracDigits = numDigits - 1;
+            if (pCtx->flags & cPrintfFlag_Alternate)
+            {
+                trailZeros = precision - numDigits;
+            }
+            hasDot = precision > 1 || (pCtx->flags & cPrintfFlag_Alternate);
+            hasExp = true;
+        }
+        else if (exp10 >= numDigits)
+        {
+            intDigits = numDigits;
+            intZeros = exp10 - numDigits;
+            if (pCtx->flags & cPrintfFlag_Alternate)
+            {
+                if (static_cast<s32>(precision) > exp10)
+                {
+                    trailZeros = precision - exp10;
+                }
+                hasDot = true;
+            }
+        }
+        else if (exp10 < 1)
+        {
+            intZeros = 1;
+            fracZeros = -exp10;
+            fracDigits = numDigits;
+            if (pCtx->flags & cPrintfFlag_Alternate)
+            {
+                trailZeros = precision - numDigits;
+            }
+            hasDot = true;
+        }
+        else
+        {
+            intDigits = exp10;
+            fracDigits = numDigits - exp10;
+            if (pCtx->flags & cPrintfFlag_Alternate)
+            {
+                trailZeros = precision - numDigits;
+            }
+            hasDot = true;
+        }
+    }
+    else if (conversion == 'f')
+    {
+        if (numDigits > exp10)
+        {
+            if (exp10 < 0)
+            {
+                intZeros = 1;
+                fracZeros = -exp10;
+                if (static_cast<s32>(precision) <= -exp10)
+                {
+                    fracZeros = precision;
+                }
+                else if (precision > static_cast<u32>(numDigits - exp10))
+                {
+                    fracDigits = numDigits;
+                    trailZeros = exp10 + precision - numDigits;
+                }
+                else
+                {
+                    fracDigits = exp10 + precision;
+                }
+            }
+            else
+            {
+                intDigits = exp10;
+                fracDigits = numDigits - exp10;
+                trailZeros = exp10 + precision - numDigits;
+            }
+            hasDot = true;
+        }
+        else
+        {
+            intDigits = numDigits;
+            intZeros = exp10 - numDigits;
+            trailZeros = precision;
+            hasDot = precision != 0 || (pCtx->flags & cPrintfFlag_Alternate);
+        }
+    }
+
+    const u32 totalLen = signLen + intDigits + intZeros + hasDot + fracZeros + fracDigits +
+                         trailZeros + (hasExp ? 5 : 0);
+
+    u32 spacePadLen = 0;
+    u32 zeroPadLen = 0;
+    u32 rightPadLen = 0;
+    if (pCtx->width > totalLen)
+    {
+        const u32 padLen = pCtx->width - totalLen;
+        if (pCtx->flags & cPrintfFlag_Left)
+        {
+            rightPadLen = padLen;
+        }
+        else if (pCtx->flags & cPrintfFlag_Zero)
+        {
+            zeroPadLen = padLen;
+        }
+        else
+        {
+            spacePadLen = padLen;
+        }
+    }
+
+    if (intDigits + intZeros + zeroPadLen == 0)
+    {
+        intZeros = 1;
+        if (spacePadLen != 0)
+        {
+            spacePadLen--;
+        }
+    }
+
+    pOut->fill(' ', spacePadLen);
+
+    if (isNegative)
+    {
+        pOut->put('-');
+    }
+    else if (pCtx->flags & cPrintfFlag_Plus)
+    {
+        pOut->put('+');
+    }
+    else if (pCtx->flags & cPrintfFlag_Space)
+    {
+        pOut->put(' ');
+    }
+
+    pOut->fill('0', zeroPadLen);
+
+    for (u32 i = 0; i < intDigits; ++i)
+    {
+        pOut->put('0' + pDigits[i]);
+    }
+
+    pOut->fill('0', intZeros);
+
+    if (hasDot)
+    {
+        pOut->put('.');
+    }
+
+    pOut->fill('0', fracZeros);
+
+    for (u32 i = 0; i < fracDigits; ++i)
+    {
+        pOut->put('0' + pDigits[intDigits + i]);
+    }
+
+    pOut->fill('0', trailZeros);
+
+    if (hasExp)
+    {
+        pOut->put(isUpper ? 'E' : 'e');
+        pOut->put(exp10 > 0 ? '+' : '-');
+        const u32 e = exp10 > 0 ? exp10 - 1 : 1 - exp10;
+        pOut->put('0' + e / 100 % 10);
+        pOut->put('0' + e / 10 % 10);
+        pOut->put('0' + e % 10);
+    }
+
+    pOut->fill(' ', rightPadLen);
+}
+
+static s32 formatArgument_(PrintfContext* pCtx, PrintfOutput* pOut, const char16* pFormat)
+{
+    pCtx->reset();
+
+    const char16* p = pFormat;
+    bool isFlag = true;
+    while (isFlag)
+    {
+        switch (*p)
+        {
+        case '-':
+            pCtx->flags |= cPrintfFlag_Left;
+            ++p;
+            break;
+        case '+':
+            pCtx->flags |= cPrintfFlag_Plus;
+            ++p;
+            break;
+        case '0':
+            pCtx->flags |= cPrintfFlag_Zero;
+            ++p;
+            break;
+        case ' ':
+            pCtx->flags |= cPrintfFlag_Space;
+            ++p;
+            break;
+        case '#':
+            pCtx->flags |= cPrintfFlag_Alternate;
+            ++p;
+            break;
+        default:
+            isFlag = false;
+            break;
+        }
+    }
+
+    if (*p == '*')
+    {
+        pCtx->width = va_arg(pCtx->args, s32);
+        ++p;
+    }
+    else if (*p >= '1' && *p <= '9')
+    {
+        pCtx->width = *p - '0';
+        ++p;
+        while (*p >= '0' && *p <= '9')
+        {
+            pCtx->width = pCtx->width * 10 + *p - '0';
+            ++p;
+        }
+    }
+
+    if (*p == '.')
+    {
+        pCtx->hasPrecision = true;
+        ++p;
+        if (*p == '*')
+        {
+            pCtx->precision = va_arg(pCtx->args, s32);
+            ++p;
+        }
+        else if (*p >= '0' && *p <= '9')
+        {
+            pCtx->precision = *p - '0';
+            ++p;
+            while (*p >= '0' && *p <= '9')
+            {
+                pCtx->precision = pCtx->precision * 10 + *p - '0';
+                ++p;
+            }
+        }
+    }
+
+    if (*p == 'h')
+    {
+        ++p;
+        if (*p == 'h')
+        {
+            ++p;
+            pCtx->length = cPrintfLength_Char;
+        }
+        else
+        {
+            pCtx->length = cPrintfLength_Short;
+        }
+    }
+    else if (*p == 'l')
+    {
+        ++p;
+        if (*p == 'l')
+        {
+            ++p;
+            pCtx->length = cPrintfLength_LongLong;
+        }
+        else
+        {
+            pCtx->length = cPrintfLength_Long;
+        }
+    }
+
+    switch (*p)
+    {
+    case 'd':
+    case 'i':
+        formatInteger_(pCtx, pOut, 10, true, false);
+        break;
+    case 'u':
+        formatInteger_(pCtx, pOut, 10, false, false);
+        break;
+    case 'o':
+        formatInteger_(pCtx, pOut, 8, false, false);
+        break;
+    case 'x':
+        formatInteger_(pCtx, pOut, 16, false, false);
+        break;
+    case 'X':
+        formatInteger_(pCtx, pOut, 16, false, true);
+        break;
+    case 'p':
+        pCtx->precision = 8;
+        pCtx->flags &= ~cPrintfFlag_Zero;
+        pCtx->length = cPrintfLength_Int;
+        formatInteger_(pCtx, pOut, 16, false, false);
+        break;
+    case 'e':
+        formatFloat_(pCtx, pOut, 'e', false);
+        break;
+    case 'E':
+        formatFloat_(pCtx, pOut, 'e', true);
+        break;
+    case 'f':
+        formatFloat_(pCtx, pOut, 'f', false);
+        break;
+    case 'g':
+        formatFloat_(pCtx, pOut, 'g', false);
+        break;
+    case 'G':
+        formatFloat_(pCtx, pOut, 'g', true);
+        break;
+    case 'c':
+    {
+        char16 c;
+        switch (pCtx->length)
+        {
+        case cPrintfLength_Char:
+        case cPrintfLength_Short:
+            c = static_cast<u8>(va_arg(pCtx->args, s32));
+            break;
+        case cPrintfLength_Int:
+        case cPrintfLength_Long:
+        case cPrintfLength_LongLong:
+            c = static_cast<char16>(va_arg(pCtx->args, s32));
+            break;
+        }
+
+        const u32 len = c != 0 ? 1 : 0;
+        if (pCtx->width > len)
+        {
+            const u32 padLen = pCtx->width - len;
+            if (!(pCtx->flags & cPrintfFlag_Left))
+            {
+                pOut->fill((pCtx->flags & cPrintfFlag_Zero) ? '0' : ' ', padLen);
+            }
+            if (c != 0)
+            {
+                pOut->put(c);
+            }
+            if (pCtx->flags & cPrintfFlag_Left)
+            {
+                pOut->fill(' ', padLen);
+            }
+        }
+        else if (c != 0)
+        {
+            pOut->put(c);
+        }
+        break;
+    }
+    case 's':
+        switch (pCtx->length)
+        {
+        case cPrintfLength_Char:
+        case cPrintfLength_Short:
+            formatString_(pCtx, pOut, va_arg(pCtx->args, const char*));
+            break;
+        case cPrintfLength_Int:
+        case cPrintfLength_Long:
+        case cPrintfLength_LongLong:
+            formatString_(pCtx, pOut, va_arg(pCtx->args, const char16*));
+            break;
+        }
+        break;
+    case '%':
+        pOut->put('%');
+        break;
+    default:
+        return 0;
+    }
+
+    return (p + 1) - pFormat;
+}
+
+/**
+ * Formats a UTF-16 string into a buffer, always terminating it.
+ * @param pDst destination buffer
+ * @param n size of the destination buffer in characters
+ * @param pFormat format string
+ * @param args format arguments
+ * @return length written, or -1 if n is 0 or the output was truncated
+ */
+s32 vsw16printf(char16* pDst, size_t n, const char16* pFormat, std::va_list args)
+{
+    s32 ret = -1;
+    if (n != 0)
+    {
+        PrintfOutput out;
+        out.buffer = pDst;
+        out.maxLength = n - 1;
+        out.length = 0;
+        out.isOverflow = false;
+
+        PrintfContext ctx;
+        va_copy(ctx.args, args);
+        ctx.reset();
+
+        u32 i = 0;
+        for (;;)
+        {
+            const char16 c = pFormat[i];
+            ++i;
+            if (c == '%')
+            {
+                i += formatArgument_(&ctx, &out, &pFormat[i]);
+            }
+            else if (c == 0)
+            {
+                ret = out.length;
+                break;
+            }
+            else
+            {
+                out.put(c);
+            }
+
+            if (out.isOverflow)
+            {
+                break;
+            }
+        }
+
+        va_end(ctx.args);
+        out.buffer[out.length] = 0;
+    }
+    return ret;
+}
+
 /**
  * Formats a UTF-16 string into a buffer.
  * @param pDst destination buffer
@@ -4960,7 +5961,8 @@ s32 convertSjisToUtf16(char16* pDst, u32 dstLength, const char* pSrc, s32 srcLen
     return length;
 }
 
-// NON_MATCHING: ~75%; the exit paths are not merged into one terminating block like in the target
+// NON_MATCHING: ~87%; the result/length exit values are kept in 64-bit registers and one more
+// callee-saved register is needed
 s64 tryConvertSjisToUtf16(s32* pOutLength, char16* pDst, u32 dstLength, const char* pSrc,
                           s32 srcLength)
 {
@@ -4970,7 +5972,7 @@ s64 tryConvertSjisToUtf16(s32* pOutLength, char16* pDst, u32 dstLength, const ch
     }
 
     s64 result = 0;
-    u32 dstIdx = 0;
+    u64 dstIdx = 0;
     s32 srcIdx = 0;
     while (srcLength == -1 || srcIdx < srcLength)
     {
@@ -5056,10 +6058,11 @@ s64 tryConvertSjisToUtf16(s32* pOutLength, char16* pDst, u32 dstLength, const ch
         srcIdx = next;
     }
 
-    pDst[dstIdx] = 0;
+    const u32 length = dstIdx;
+    pDst[length] = 0;
     if (pOutLength)
     {
-        *pOutLength = dstIdx;
+        *pOutLength = length;
     }
     return result;
 }

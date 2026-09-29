@@ -677,13 +677,13 @@ inline Matrix44<T>& Matrix44<T>::operator=(const Self& n)
 template <typename T>
 inline void Matrix44<T>::makeIdentity()
 {
-    Matrix44CalcCommon<T>::makeIdentity();
+    Matrix44CalcCommon<T>::makeIdentity(*this);
 }
 
 template <typename T>
 inline void Matrix44<T>::makeZero()
 {
-    Matrix44CalcCommon<T>::makeZero();
+    Matrix44CalcCommon<T>::makeZero(*this);
 }
 
 template <typename T>

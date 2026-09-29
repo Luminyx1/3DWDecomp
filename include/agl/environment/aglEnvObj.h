@@ -64,13 +64,16 @@ public:
 
     class Index : public utl::INamedObjIndex {
     public:
-        ~Index() override;
+        ~Index() override { ; }
 
         const sead::SafeString& getNamedObjName(s32 index) const override;
         s32 getNamedObjNum() const override;
 
+        s32 getType() const { return mType; }
+        void setType(s32 type) { mType = type; }
+
     protected:
-        s32 mType;
+        s32 mType = 0;
     };
     static_assert(sizeof(Index) == 0x80);
 

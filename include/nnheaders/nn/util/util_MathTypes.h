@@ -52,6 +52,9 @@ struct Unorm8x4 {
 
 typedef Unorm8x4 Color4u8Type;
 
+typedef neon::Vector3fType Vector3fType;
+typedef neon::Vector4fType Vector4fType;
+typedef neon::MatrixRowMajor4x3fType Matrix4x3fType;
 typedef neon::MatrixColumnMajor4x3fType MatrixT4x3fType;
 typedef neon::MatrixColumnMajor4x4fType MatrixT4x4fType;
 

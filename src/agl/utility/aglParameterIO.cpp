@@ -234,9 +234,4 @@ s32 IParameterIO::listenPropertyEventIO(sead::hostio::Reflexible* pReflexible,
     return 0;
 }
 
-/**
- * Destroys the parameter IO.
- */
-IParameterIO::~IParameterIO() = default;
-
 }  // namespace agl::utl

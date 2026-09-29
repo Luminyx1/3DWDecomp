@@ -78,6 +78,7 @@ public:
                                 u32 mipLevelNum, TextureAttribute attribute);
 
     GPUMemVoidAddr getImagePtr() const { return mImagePtr; }
+    GPUMemVoidAddr getMipPtr() const { return mMipPtr; }
     const detail::Surface& getSurface() const { return mSurface; }
     u16 getTextureType() const { return mSurface.getTextureType(); }
     u16 getWidth() const { return mSurface.getWidth(); }
@@ -87,6 +88,8 @@ public:
     u8 getMipLevelNum() const { return mSurface.getMipLevelNum(); }
     u8 getTextureAttribute() const { return mSurface.getTextureAttribute(); }
     u16 getTextureFormat() const { return mTextureFormat; }
+    u32 getAlignment() const { return mSurface.mAlignment; }
+    u32 getImageByteSize() const { return mSurface.mStorageSize; }
     const driver::NVNtexture_& getTexture() const { return mTexture; }
     driver::NVNtexture_& getTexture() { return mTexture; }
     s32 getTextureID() const { return mTexture.getTextureID(); }
@@ -94,6 +97,17 @@ public:
     bool isMultiSample() const {
         return mSurface.mTarget == NVN_TEXTURE_TARGET_2D_MULTISAMPLE ||
                mSurface.mTarget == NVN_TEXTURE_TARGET_2D_MULTISAMPLE_ARRAY;
+    }
+
+    u32 getWidth(s32 mipLevel) const {
+        u32 width = mSurface.mWidth >> mipLevel;
+        return width > 1 ? width : 1;
+    }
+
+    u32 getHeight(s32 mipLevel) const {
+        s32 min = getMinHeight_();
+        s32 height = mSurface.mHeight >> mipLevel;
+        return height < min ? min : height;
     }
 
     s32 getMipWidth(s32 mipLevel) const {

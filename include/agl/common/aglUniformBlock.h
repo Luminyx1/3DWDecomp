@@ -14,6 +14,7 @@ class Heap;
 namespace agl {
 
 class DrawContext;
+class ShaderLocation;
 
 class UniformBlock {
 public:
@@ -88,6 +89,39 @@ public:
     u32 getBufferSize() const { return mBufferSize; }
     void* getCurrentBuffer() const { return mCurrentBuffer; }
     GPUMemVoidAddr getBuffer() const { return mBuffer; }
+
+    void declare(Type type, s32 num) { declare_(type, num, 0, 1); }
+    void declareStruct(s32 num, u64 size, u64 alignment)
+    {
+        declare_(cType_Struct, num, size, alignment);
+    }
+    void setDataStruct(s32 memberIndex, const void* pData, s32 arrayIndex, s32 count,
+                       u32 structSize) const
+    {
+        setDataStruct_(mCurrentBuffer, memberIndex, pData, arrayIndex, count, structSize);
+    }
+    void setData(s32 memberIndex, const void* pData, s32 arrayIndex, s32 count) const
+    {
+        setData_(mCurrentBuffer, memberIndex, pData, arrayIndex, count);
+    }
+    void setCurrentBufferIndex(s32 bufferIndex)
+    {
+        mCurrentBufferIndex = bufferIndex;
+        mCurrentBuffer = getBlockPtr_(-1, 0);
+    }
+    void setUniform(DrawContext* pDrawContext, const u64& rAddress, const ShaderLocation& rLocation,
+                    u32 offset, u64 size) const;
+    void activate(DrawContext* pDrawContext, const ShaderLocation& rLocation) const
+    {
+        u64 address = nvnBufferGetAddress(&mNvnBuffer) +
+                      mCurrentBufferIndex * mBlockNum * mAlignedBlockSize;
+        setUniform(pDrawContext, address, rLocation, 0, mBlockSize);
+    }
+    void flushCurrentBuffer() const
+    {
+        GPUMemVoidAddr(mBuffer, mCurrentBufferIndex * mBlockNum * mAlignedBlockSize)
+            .flushCPUCache(mBlockSize);
+    }
 
 protected:
     void declare_(Type type, s32 num, u64 size, u64 alignment);

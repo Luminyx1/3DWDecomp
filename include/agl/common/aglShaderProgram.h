@@ -165,6 +165,37 @@ public:
 
     const void* getRegisterUniformArray() const { return mVariation->mUniformBlockArray; }
 
+    const ShaderProgram* getVariation(s32 index) const
+    {
+        VariationBuffer& buffer = mVariation->mVariationBuffer;
+        return index <= 0 ? buffer.mProgram : &buffer.mPrograms[index - 1];
+    }
+    const ShaderProgram* searchVariationShaderProgram(s32 macroNum, const char* const* pMacros,
+                                                      const char* const* pValues) const
+    {
+        s32 index = mVariation->mVariationBuffer.searchShaderProgramIndex(macroNum, pMacros,
+                                                                          pValues, mVariationIndex) -
+                    1;
+        VariationBuffer& buffer = mVariation->mVariationBuffer;
+        return index < 0 ? buffer.mProgram : &buffer.mPrograms[index];
+    }
+    s32 getVariationProgramNum() const { return mVariation->mVariationBuffer.mPrograms.size(); }
+    u16 getVariationMacroStride(s32 macroIndex) const
+    {
+        return mVariation->mVariationBuffer.mMacros[macroIndex].mStride;
+    }
+    const UniformLocation& getUniformLocation(s32 index) const { return mUniformLocation[index]; }
+    const SamplerLocation& getSamplerLocation(s32 index) const { return mSamplerLocation[index]; }
+    const SamplerLocation& getSamplerLocationValidate(s32 index) const
+    {
+        validate_();
+        return mSamplerLocation[index];
+    }
+    const UniformBlockLocation& getUniformBlockLocation(s32 index) const
+    {
+        return mUniformBlockLocation[index];
+    }
+
 private:
     friend class ShaderProgramArchive;
     friend class ShaderProgramEdit;
