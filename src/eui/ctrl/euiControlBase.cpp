@@ -2,7 +2,10 @@
 
 namespace eui {
 
-/** @brief Returns the base control class name. */
+/**
+ * @brief Returns the base control class name.
+ * @return The base control class name.
+ */
 const char* ControlBase::getClassName() const {
     return "ControlBase";
 }

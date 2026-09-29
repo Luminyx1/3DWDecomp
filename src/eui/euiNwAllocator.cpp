@@ -23,6 +23,7 @@ void NwAllocator::initialize(sead::Heap* pHeap) {
  * @param[in] size Number of bytes to allocate.
  * @param[in] alignment Alignment requested by the UI allocator.
  * @param[in] pUserData Heap pointer supplied when the callbacks were installed.
+ * @return Allocated memory returned by the heap.
  */
 void* NwAllocator::ui2dAllocateFunction(size_t size, size_t alignment, void* pUserData) {
     return static_cast<sead::Heap*>(pUserData)->alloc(size, static_cast<s32>(alignment));

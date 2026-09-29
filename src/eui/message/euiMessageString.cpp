@@ -38,6 +38,7 @@ MessageString::MessageString(const MessageString& rOther)
 /**
  * @brief Assigns another message view.
  * @param[in] rOther Source object to copy.
+ * @return This message view after assignment.
  */
 MessageString& MessageString::operator=(const MessageString& rOther) {
     m_pText = rOther.m_pText;
@@ -48,17 +49,24 @@ MessageString& MessageString::operator=(const MessageString& rOther) {
 /**
  * @brief Returns a character, falling back to the first for an invalid index.
  * @param[in] index Zero-based UTF-16 code-unit index in the message view.
+ * @return The selected code unit, or the first code unit if the index is out of range.
  */
 const char16_t& MessageString::operator[](int index) const {
     return static_cast<u32>(index) < mLength ? m_pText[index] : *m_pText;
 }
 
-/** @brief Returns the beginning of the message view. */
+/**
+ * @brief Returns the beginning of the message view.
+ * @return Iterator at the first code unit.
+ */
 MessageString::Iterator MessageString::begin() const {
     return {m_pText, 0};
 }
 
-/** @brief Returns the end of the message view. */
+/**
+ * @brief Returns the end of the message view.
+ * @return Iterator one past the last code unit.
+ */
 MessageString::Iterator MessageString::end() const {
     return {m_pText, mLength};
 }
@@ -66,6 +74,7 @@ MessageString::Iterator MessageString::end() const {
 /**
  * @brief Returns an iterator clamped to the end of the message.
  * @param[in] index Zero-based UTF-16 code-unit index in the message view.
+ * @return Iterator at the requested index, clamped to the end of the view.
  */
 MessageString::Iterator MessageString::toIterator(int index) const {
     if (static_cast<u32>(index) >= mLength) {
@@ -77,6 +86,7 @@ MessageString::Iterator MessageString::toIterator(int index) const {
 /**
  * @brief Copies message characters while skipping embedded control tags.
  * @param[out] pOutput Destination buffer for the null-terminated text with control tags removed.
+ * @return True if all text fits; false if the destination buffer is too small.
  */
 bool MessageString::tryMakeTagStrippedString(sead::BufferedSafeStringBase<char16_t>* pOutput) const {
     auto* pBuffer = pOutput->getBuffer();
@@ -110,7 +120,10 @@ bool MessageString::tryMakeTagStrippedString(sead::BufferedSafeStringBase<char16
     return !overflow;
 }
 
-/** @brief Counts printable characters, including text represented by ruby tags. */
+/**
+ * @brief Counts printable characters, including text represented by ruby tags.
+ * @return Printable character count, including text represented by ruby tags.
+ */
 int MessageString::countPrintableStringLength() const {
     int length = 0;
     const auto* pCurrent = m_pText;
