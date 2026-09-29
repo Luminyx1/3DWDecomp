@@ -20,7 +20,7 @@ namespace al {
      * @brief Checks the switch state and notifies the listener on changes.
      */
     void StageSwitchWatcher::update() {
-        if (mAccesser->mIsDisasterMode && !mCameraDirector->_102) {
+        if (mAccesser->mIsDisasterMode && !mCameraDirector->mIsDisasterMode) {
             return;
         }
 
