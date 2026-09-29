@@ -1,0 +1,26 @@
+# 3DWDecomp splits
+#
+# One block per translation unit.  A unit is the contiguous span the linker
+# gave that object file in each section, so a block lists a start/end address
+# range per section it contributes to:
+#
+#   <source path>:
+#       .text     start:0x006B2540 end:0x006B256C
+#       .rodata   start:0x00A12000 end:0x00A12040
+#       .data     start:0x0194B000 end:0x0194B010
+#       .bss      start:0x01B1C800 end:0x01B1C820
+#
+# The splitter carves those byte ranges out of build/fury.elf, discovers the
+# symbols inside them from the binary's own symbol table, and reconstructs the
+# relocations.  Addresses are hex; `start:`/`end:` prefixes are optional
+# (`.text 0x6b2540 0x6b256c` and `.text 0x6b2540-0x6b256c` also work).
+#
+# Header options after the ':' -
+#   done            marks complete in objdiff metadata (linking not implemented)
+#   c | c++         force the source language (default: from the extension)
+#   cflags="-x -y"  extra compiler flags for this TU only
+#
+# Blank lines and '#' comments are ignored.
+
+src/nw/lms/lms_message.c:
+    .text   start:0x006B2540 end:0x006B256C

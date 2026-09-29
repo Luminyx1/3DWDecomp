@@ -1,0 +1,19 @@
+# the game binary — keep locally, never commit
+fury.nso
+
+# generated
+/build/
+/build.ninja
+/objdiff.json
+/.ninja_log
+/.ninja_deps
+__pycache__/
+*.pyc
+
+# toolchain / SDK drops (large, machine-specific, proprietary)
+/toolchain/
+tools/nnsdk/
+tools/bin/
+
+# Nintendo SDK HTML documentation — local reference only, never commit
+docs/nnsdk/
