@@ -4568,9 +4568,9 @@ src/al/Library/Execute/ExecutorListActorMovement.cpp:
     .text   start:0x007EE200 end:0x007EE2D4
 src/al/Library/Execute/ExecutorListActorMovementCalcAnim.cpp:
     .text   start:0x007EE2E0 end:0x007EE7B4
-src/al/Library/Execute/ExecutorListBase.cpp:
+src/al/Library/Execute/ExecutorListBase.cpp: done
     .text   start:0x007EE7C0 end:0x007EE7E4
-src/al/Library/Execute/ExecutorListFunctor.cpp:
+src/al/Library/Execute/ExecutorListFunctor.cpp: done
     .text   start:0x007EE7F0 end:0x007EE890
 src/al/Library/Execute/ExecutorListIUseExecutorBase.cpp:
     .text   start:0x007EE890 end:0x007EE918
@@ -4828,7 +4828,7 @@ src/al/Library/Movement/AnimScaleController.cpp:
     .text   start:0x00873E60 end:0x008747E8
 src/al/Library/Movement/FlashingCtrl.cpp:
     .text   start:0x008747F0 end:0x00874B54
-src/al/Library/Movement/FlashingTimer.cpp:
+src/al/Library/Movement/FlashingTimer.cpp: done
     .text   start:0x00874B60 end:0x00874BFC
 src/al/Library/Movement/KeyMoveMovement.cpp:
     .text   start:0x00874C00 end:0x00874ED8
@@ -4916,7 +4916,7 @@ src/al/Library/Play/Layout/WipeSimple.cpp:
     .text   start:0x008836A0 end:0x00883E58
 src/al/Library/Placement/PlacementId.cpp:
     .text   start:0x00883E60 end:0x00883FF4
-src/al/Library/Placement/PlacementInfo.cpp:
+src/al/Library/Placement/PlacementInfo.cpp: done
     .text   start:0x00884000 end:0x0088405C
 src/al/Library/Placement/PlacementUtil.cpp:
     .text   start:0x00884060 end:0x008889C8
@@ -4968,7 +4968,7 @@ src/al/Library/SaveData/SavaDataDirector.cpp:
     .text   start:0x008A1580 end:0x008A1708
 src/al/Library/SaveData/SaveDataDirector.cpp:
     .text   start:0x008A1710 end:0x008A2024
-src/al/Library/SaveData/SaveDataFunction.cpp:
+src/al/Library/SaveData/SaveDataFunction.cpp: done
     .text   start:0x008A2030 end:0x008A2078
 src/al/Library/SaveData/SaveDataSequence.cpp:
     .text   start:0x008A2080 end:0x008A20C0
@@ -4980,7 +4980,7 @@ src/al/Library/Scene/DemoDirector.cpp:
     .text   start:0x008A2390 end:0x008A2EB4
 src/al/Library/Scene/Scene.cpp:
     .text   start:0x008A2EC0 end:0x008A3854
-src/al/Library/Scene/SceneFactory.cpp:
+src/al/Library/Scene/SceneFactory.cpp: done
     .text   start:0x008A3860 end:0x008A3888
 src/al/Library/Scene/SceneObjHolder.cpp:
     .text   start:0x008A3890 end:0x008A3B3C
@@ -5098,7 +5098,7 @@ src/al/Project/Action/ActionAnimCtrl.cpp:
     .text   start:0x008D8BC0 end:0x008D9C38
 src/al/Project/Action/ActionEffectCtrl.cpp:
     .text   start:0x008D9C40 end:0x008DA2E0
-src/al/Project/Action/ActionFunction.cpp:
+src/al/Project/Action/ActionFunction.cpp: done
     .text   start:0x008DA2E0 end:0x008DA2F8
 src/al/Project/Action/ActionPadAndCameraData.cpp:
     .text   start:0x008DA300 end:0x008DAF08
@@ -5454,7 +5454,7 @@ src/al/Project/Clipping/ClippingDirectorBase.cpp:
     .text   start:0x00951010 end:0x00951120
 src/al/Project/Clipping/ClippingFarAreaObserver.cpp:
     .text   start:0x00951130 end:0x00951298
-src/al/Project/Clipping/ClippingFunction.cpp:
+src/al/Project/Clipping/ClippingFunction.cpp: done
     .text   start:0x009512A0 end:0x00951300
 src/al/Project/Clipping/ClippingInfoGroup.cpp:
     .text   start:0x00951300 end:0x00951AAC
