@@ -14,6 +14,8 @@ public:
     ScreenPointTarget* getTarget(s32) const;
     void setTarget(ScreenPointTarget*);
 
+    s32 getValidTargetNum() const { return mValidTargetNum; }
+
 private:
     s32 mCapacity;                  // _0
     s32 mTargetNum = 0;             // _4

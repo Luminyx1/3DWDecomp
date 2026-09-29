@@ -46,4 +46,8 @@ namespace al {
 
     f32 lerpValue(f32, f32, f32);
 
+    bool checkHitSegmentSphereNearDepth(const sead::Vector3f&, const sead::Vector3f&,
+                                        const sead::Vector3f&, f32, sead::Vector3f*,
+                                        sead::Vector3f*);
+
 }  // namespace al
