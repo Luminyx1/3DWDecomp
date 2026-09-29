@@ -78,9 +78,9 @@ Every object in the function map already has a unit in `splits.txt` with its
   `-mno-implicit-float` is what keeps pointer copies in `ldp/stp x` registers and
   stops loop vectorization, as the game does.
 * **Nerves** are one constant object per nerve in an anonymous namespace
-  (`nrv<Class><Action>`, placed right after its vtable), not a struct:
+  (`Nrv<Class><Action>`, placed right after its vtable), not a struct:
   `NERVE_DECL(Foo, Wait) ... NERVES_MAKE_NOSTRUCT(Foo, Wait, Run)` then
-  `al::setNerve(this, &nrvFooWait)`. See `src/Game/MapObj/BgmStopObj.cpp`.
+  `al::setNerve(this, &NrvFooWait)`. See `src/Game/MapObj/BgmStopObj.cpp`.
 * **Weak / inline functions** (header code) are emitted in whichever object
   first used them; objdiff lists our extra copies as "extra in source" - ignore.
   Their bodies stay in headers (see FUNCTIONS.md).

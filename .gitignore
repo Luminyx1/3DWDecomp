@@ -21,3 +21,6 @@ docs/nnsdk/
 
 # generated docs
 /doxygen/
+
+# generated progress website (tools/website.py)
+/site/

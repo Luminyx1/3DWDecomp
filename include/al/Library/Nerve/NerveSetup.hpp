@@ -27,10 +27,10 @@
     } Nrv##Class;
 
 // 3DW: each nerve is its own constant object in .data.rel.ro, laid out
-// right after its vtable (nrvFooWait at vtable+0x20), e.g.
+// right after its vtable (NrvFooWait at vtable+0x20), e.g.
 //   namespace { NERVE_DECL(Foo, Wait) NERVE_DECL(Foo, Run) NERVES_MAKE_NOSTRUCT(Foo, Wait, Run) }
-//   al::setNerve(this, &nrvFooWait);
-#define NERVE_MAKE_CONST(Class, Action) const Class##Nrv##Action nrv##Class##Action{};
+//   al::setNerve(this, &NrvFooWait);
+#define NERVE_MAKE_CONST(Class, Action) const Class##Nrv##Action Nrv##Class##Action{};
 #define NERVES_MAKE_NOSTRUCT(Class, ...) FOR_EACH(NERVE_MAKE_CONST, Class, __VA_ARGS__)
 
 #define NERVE_ACTION_IMPL_(Class, Action, ActionFunc)                                              \

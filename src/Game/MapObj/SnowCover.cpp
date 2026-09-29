@@ -22,24 +22,24 @@ SnowCover::SnowCover(const char* a1, const char* a2, const char* a3, al::LiveAct
 
 void SnowCover::init(const al::ActorInitInfo& rInfo) {
     al::initActorWithArchiveName(this, rInfo, sead::SafeString(_148), _150);
-    al::initNerve(this, &nrvSnowCoverWait, 0);
+    al::initNerve(this, &NrvSnowCoverWait, 0);
     makeActorAppeared();
 }
 
 void SnowCover::respawn() {
     if (al::isDead(this)) {
-        al::setNerve(this, &nrvSnowCoverWait);
+        al::setNerve(this, &NrvSnowCoverWait);
         appear();
     }
 }
 
 bool SnowCover::receiveMsg(const al::SensorMsg* pMsg, al::HitSensor* pSender, al::HitSensor* pReceiver) {
-    if (!al::isNerve(this, &nrvSnowCoverWait)) {
+    if (!al::isNerve(this, &NrvSnowCoverWait)) {
         return false;
     }
 
     if (al::isMsgPlayerFireBallAttack(pMsg)) {
-        al::setNerve(this, &nrvSnowCoverThaw);
+        al::setNerve(this, &NrvSnowCoverThaw);
         return true;
     }
 
@@ -60,8 +60,8 @@ bool SnowCover::receiveMsg(const al::SensorMsg* pMsg, al::HitSensor* pSender, al
 }
 
 void SnowCover::tryBreak() {
-    if (!al::isDead(this) && al::isNerve(this, &nrvSnowCoverWait)) {
-        al::setNerve(this, &nrvSnowCoverBreak);
+    if (!al::isDead(this) && al::isNerve(this, &NrvSnowCoverWait)) {
+        al::setNerve(this, &NrvSnowCoverBreak);
     }
 }
 

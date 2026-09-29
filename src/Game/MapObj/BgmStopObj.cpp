@@ -37,7 +37,7 @@ void BgmStopObj::init(const al::ActorInitInfo& rInfo) {
     al::invalidateClipping(this);
 
     if (al::listenStageSwitchOnStart(this, al::Functor(this, &BgmStopObj::start))) {
-        al::initNerve(this, &nrvBgmStopObjWait, 0);
+        al::initNerve(this, &NrvBgmStopObjWait, 0);
     }
 
     makeActorAppeared();
@@ -47,7 +47,7 @@ void BgmStopObj::init(const al::ActorInitInfo& rInfo) {
  * Stage switch callback: go to the Stop nerve.
  */
 void BgmStopObj::start() {
-    al::setNerve(this, &nrvBgmStopObjStop);
+    al::setNerve(this, &NrvBgmStopObjStop);
 }
 
 /**

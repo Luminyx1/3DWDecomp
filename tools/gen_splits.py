@@ -16,7 +16,7 @@ To take a unit over by hand, move its block above the marker.
 Source paths:
   game folders            src/Game/<Folder>/<Object>.cpp
   al (Library/, Project/) src/al/<Folder>/<Object>.cpp
-  sead / agl / eui        src/<lib>/<Object>.cpp
+  sead / agl / eui / aal  src/<lib>/<subfolder>/<Object>.cpp
   NintendoWare/<x>        src/nw/<x>/<Object>.cpp
   anything else           src/<Folder>/<Object>.cpp
 
@@ -44,7 +44,7 @@ def src_path(folder: str, obj: str, is_c: bool) -> str:
     f = folder.strip("/")
     if f.startswith(("Library", "Project")):
         base = f"src/al/{f}"
-    elif f in ("sead", "agl", "eui", "erepo", "aal"):
+    elif f.split("/")[0] in ("sead", "agl", "eui", "erepo", "aal"):
         base = f"src/{f}"
     elif f.startswith("NintendoWare/"):
         base = "src/nw/" + f.split("/", 1)[1]

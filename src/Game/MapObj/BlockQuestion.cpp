@@ -19,11 +19,11 @@ void BlockQuestion::init(const al::ActorInitInfo& rInfo) {
     bool isLong = al::isObjectName(rInfo, "BlockQuestionLong");
     bool isSingle = al::isSingleMode(rInfo);
     al::initActorSuffix(this, rInfo, rc::getBlockSuffixName(rInfo, isSingle));
-    al::initNerve(this, &nrvBlockQuestionState, 1);
+    al::initNerve(this, &NrvBlockQuestionState, 1);
     bool isForceAppearCoin = false;
     al::tryGetArg(&isForceAppearCoin, rInfo, "IsForceAppearBoxCoin");
     mStateItem = new BlockStateItem(this, rInfo, isLong, false, false, false, isForceAppearCoin);
-    al::initNerveState(this, mStateItem, &nrvBlockQuestionState, "BlockItem");
+    al::initNerveState(this, mStateItem, &NrvBlockQuestionState, "BlockItem");
     f32 shadowLength = -1.0f;
     al::tryGetArg(&shadowLength, rInfo, "ShadowLength");
 
@@ -41,11 +41,11 @@ void BlockQuestion::init(const al::ActorInitInfo& rInfo) {
 }
 
 void BlockQuestion::respawn() {
-    if (!al::isNerve(this, &nrvBlockQuestionState) || al::isDead(this)) {
+    if (!al::isNerve(this, &NrvBlockQuestionState) || al::isDead(this)) {
         if (mStateItem->reset()) {
             al::validateCollisionParts(this);
             al::validateHitSensors(this);
-            al::setNerve(this, &nrvBlockQuestionState);
+            al::setNerve(this, &NrvBlockQuestionState);
             if (al::isDead(this)) {
                 makeActorAppeared();
             }
@@ -89,7 +89,7 @@ void BlockQuestion::exeState() {
     if (al::updateNerveState(this)) {
         if (_144) {
             al::hideModel(this);
-            al::setNerve(this, &nrvBlockQuestionEmpty);
+            al::setNerve(this, &NrvBlockQuestionEmpty);
         } else {
             kill();
         }

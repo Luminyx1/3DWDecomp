@@ -71,7 +71,8 @@ class Unit:
         n = self.name
         for prefix, cat in (("src/Game/", "game"), ("src/al/", "al"), ("src/sead/", "sead"),
                             ("src/agl/", "agl"), ("src/eui/", "eui"), ("src/nw/", "nw"),
-                            ("src/NintendoSDK/", "nw")):
+                            ("src/NintendoSDK/", "nw"), ("src/aal/", "aal"),
+                            ("src/erepo/", "erepo")):
             if n.startswith(prefix):
                 return cat
         return "other"
@@ -84,6 +85,8 @@ CATEGORIES = [
     ("agl", "agl"),
     ("eui", "eui"),
     ("nw", "NintendoWare / SDK"),
+    ("aal", "aal"),
+    ("erepo", "erepo"),
     ("other", "Other"),
 ]
 

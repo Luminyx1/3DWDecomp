@@ -24,7 +24,7 @@ namespace al {
 
     void BreakModel::init(const ActorInitInfo& rInfo) {
         al::initActorWithArchiveName(this, rInfo, sead::SafeString(_158), _168);
-        al::initNerve(this, &nrvBreakModelWait, 0);
+        al::initNerve(this, &NrvBreakModelWait, 0);
         al::invalidateClipping(this);
         makeActorDead();
     }
@@ -40,7 +40,7 @@ namespace al {
             al::startAction(this, _160);
         }
 
-        al::setNerve(this, &nrvBreakModelBreak);
+        al::setNerve(this, &NrvBreakModelBreak);
         LiveActor::makeActorAppeared();
     }
 

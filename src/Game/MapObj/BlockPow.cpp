@@ -32,7 +32,7 @@ BlockPow::BlockPow(const char* pName) : al::LiveActor(pName) {
 
 void BlockPow::init(const al::ActorInitInfo& rInfo) {
     al::initActorSuffix(this, rInfo, rc::getBlockSuffixName(rInfo, false));
-    al::initNerve(this, &nrvBlockPowWait, 0);
+    al::initNerve(this, &NrvBlockPowWait, 0);
     mSnowCover = SnowCoverFunction::tryCreateSnowCover(this, rInfo, "BlockSnowCover", true, nullptr);
     al::tryGetArg(&mIsAppearEmpty, rInfo, "IsAppearBlockEmpty");
 
@@ -91,7 +91,7 @@ void BlockPow::respawn() {
         makeActorAppeared();
     }
 
-    al::setNerve(this, &nrvBlockPowWait);
+    al::setNerve(this, &NrvBlockPowWait);
     al::showModelIfHide(this);
     al::onCollide(this);
     al::validateCollisionParts(this);
@@ -111,7 +111,7 @@ void BlockPow::respawn() {
 }
 
 void BlockPow::attackSensor(al::HitSensor* pSender, al::HitSensor* pReceiver) {
-    if (!al::isNerve(this, &nrvBlockPowWait)) {
+    if (!al::isNerve(this, &NrvBlockPowWait)) {
         if (!al::isSensorPlayer(pReceiver)) {
             if (al::isSensorName(pSender, "Explosion")) {
                 al::sendMsgExplosion(pReceiver, pSender, mComboCounter);
@@ -126,14 +126,14 @@ void BlockPow::startExplosion(bool a1) {
     al::startAction(this, a1 ? "ReactionHipDrop" : "Reaction");
     al::invalidateHitSensors(this);
     al::invalidateClipping(this);
-    al::setNerve(this, &nrvBlockPowReaction);
+    al::setNerve(this, &NrvBlockPowReaction);
     al::onStageSwitch(this, "SwitchKnockOn");
 }
 
 bool BlockPow::receiveMsgScreenPoint(const al::SensorMsg* pMsg, al::ScreenPointer* pPointer, al::ScreenPointTarget* pTarget) {
     al::IUseStageSwitch* sw = (al::IUseStageSwitch*)(al::LiveActor*)this;
 
-    if ((al::isValidStageSwitch(sw, "EnableKnockSwitch") && !al::isOnStageSwitch(sw, "EnableKnockSwitch")) || !isNerve(this, &nrvBlockPowWait) ||
+    if ((al::isValidStageSwitch(sw, "EnableKnockSwitch") && !al::isOnStageSwitch(sw, "EnableKnockSwitch")) || !isNerve(this, &NrvBlockPowWait) ||
         !al::isMsgTouchAssistTrig(pMsg)) {
         return false;
     }
@@ -143,7 +143,7 @@ bool BlockPow::receiveMsgScreenPoint(const al::SensorMsg* pMsg, al::ScreenPointe
     al::startAction(this, "Reaction");
     al::invalidateHitSensors(this);
     al::invalidateClipping(this);
-    al::setNerve(this, &nrvBlockPowReaction);
+    al::setNerve(this, &NrvBlockPowReaction);
     al::onStageSwitch(this, "SwitchKockOn");
     rc::addScoreByFactor(this, pPointer, "壊れ", 0.0f, 0);
 
@@ -206,7 +206,7 @@ void BlockPow::exeReaction() {
             mEmptyBlock->appear();
         }
 
-        al::setNerve(this, &nrvBlockPowEmpty);
+        al::setNerve(this, &NrvBlockPowEmpty);
     }
 }
 

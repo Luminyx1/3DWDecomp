@@ -35,6 +35,8 @@ ORDER = [
     ("agl", "agl"),
     ("eui", "eui"),
     ("nw", "NintendoWare"),
+    ("aal", "aal"),
+    ("erepo", "erepo"),
     ("other", "Other"),
 ]
 
@@ -82,7 +84,7 @@ def table(rep: dict) -> str:
             "|---|---:|---:|---:|---:|"]
     for cid, label in ORDER:
         m = cats.get(cid)
-        if not m:
+        if not m or not n(m.get("total_code")):
             continue
         tc, mc = n(m.get("total_code")), n(m.get("matched_code"))
         tf, mf = n(m.get("total_functions")), n(m.get("matched_functions"))

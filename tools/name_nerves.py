@@ -7,7 +7,7 @@ and the nerve object (vptr only) follows that vtable.  So from the exe name we
 get, with the project's naming (see NERVE_DECL / NERVES_MAKE_NOSTRUCT):
 
     execute  (anonymous namespace)::FooNrvWait::execute(al::NerveKeeper*) const
-    object   (anonymous namespace)::nrvFooWait            -> symbols.txt
+    object   (anonymous namespace)::NrvFooWait            -> symbols.txt
     vtable   vtable for (anonymous namespace)::FooNrvWait  -> symbols.txt
 
 Only `sub_`/`nullsub_` rows of the function map are renamed, and names that
@@ -106,7 +106,7 @@ def main(argv=None) -> int:
             objs = rel_to.get(slot, [])
             data_new.append((vt, 0x20, f"_ZTVN12_GLOBAL__N_1{src_name(struct)}E"))
             if len(objs) == 1:
-                data_new.append((objs[0], 8, f"_ZN12_GLOBAL__N_1{src_name('nrv' + cls + act)}E"))
+                data_new.append((objs[0], 8, f"_ZN12_GLOBAL__N_1{src_name('Nrv' + cls + act)}E"))
 
     lines = fmap.read_text(encoding="utf-8").split("\n")
     renamed = 0

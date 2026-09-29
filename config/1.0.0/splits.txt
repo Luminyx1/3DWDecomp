@@ -918,355 +918,355 @@ src/Game/GhostPlayer/ShadowRacer.cpp:
     .text   start:0x0017F680 end:0x001810E8
 src/Game/Item/HeadIslandClear.cpp:
     .text   start:0x001810F0 end:0x001818E4
-src/Game/Layout/BasicActionGuide.cpp:
+src/Game/Layout/Switch/BasicActionGuide.cpp:
     .text   start:0x001818F0 end:0x00181D78
-src/Game/Layout/ButtonRCSFileParts.cpp:
+src/Game/Layout/Switch/ButtonRCSFileParts.cpp:
     .text   start:0x00181D80 end:0x001828C8
-src/Game/Layout/CatShineCounterParts.cpp:
+src/Game/Layout/Switch/CatShineCounterParts.cpp:
     .text   start:0x001828D0 end:0x0018405C
-src/Game/Layout/ChallengeTimerParts.cpp:
+src/Game/Layout/Switch/ChallengeTimerParts.cpp:
     .text   start:0x00184060 end:0x00184A58
-src/Game/Layout/CounterCoinInfo.cpp:
+src/Game/Layout/Switch/CounterCoinInfo.cpp:
     .text   start:0x00184A60 end:0x0018521C
-src/Game/Layout/CounterLockGigaBell.cpp:
+src/Game/Layout/Switch/CounterLockGigaBell.cpp:
     .text   start:0x00185220 end:0x00185874
-src/Game/Layout/CounterTimerGate.cpp:
+src/Game/Layout/Switch/CounterTimerGate.cpp:
     .text   start:0x00185880 end:0x00186084
-src/Game/Layout/CourseSelectMenuHeader.cpp:
+src/Game/Layout/Switch/CourseSelectMenuHeader.cpp:
     .text   start:0x00186090 end:0x001866D8
-src/Game/Layout/DemoSkipLayout.cpp:
+src/Game/Layout/Switch/DemoSkipLayout.cpp:
     .text   start:0x001866E0 end:0x00186F14
-src/Game/Layout/IslandCounterParts.cpp:
+src/Game/Layout/Switch/IslandCounterParts.cpp:
     .text   start:0x00186F20 end:0x001881E8
-src/Game/Layout/ItemStockTray.cpp:
+src/Game/Layout/Switch/ItemStockTray.cpp:
     .text   start:0x001881F0 end:0x0018AB3C
-src/Game/Layout/OptionsMenu.cpp:
+src/Game/Layout/Switch/OptionsMenu.cpp:
     .text   start:0x0018AB40 end:0x0018C3A0
-src/Game/Layout/PlayerUserNameplate.cpp:
+src/Game/Layout/Switch/PlayerUserNameplate.cpp:
     .text   start:0x0018C3A0 end:0x0018D0AC
-src/Game/Layout/QuadrantMapParts.cpp:
+src/Game/Layout/Switch/QuadrantMapParts.cpp:
     .text   start:0x0018D0B0 end:0x0018D450
-src/Game/Layout/ShardCounterParts.cpp:
+src/Game/Layout/Switch/ShardCounterParts.cpp:
     .text   start:0x0018D450 end:0x0018DEA8
-src/Game/Layout/SingleModeCounterBase.cpp:
+src/Game/Layout/Switch/SingleModeCounterBase.cpp:
     .text   start:0x0018DEB0 end:0x0018E2C4
-src/Game/Layout/SnapshotLayout.cpp:
+src/Game/Layout/Switch/SnapshotLayout.cpp:
     .text   start:0x0018E2D0 end:0x0018F7CC
-src/Game/Layout2/BallYarn.cpp:
+src/Game/MapObj/Fury/BallYarn.cpp:
     .text   start:0x0018F7D0 end:0x00192628
-src/Game/Layout2/BlockHardLaserOnly.cpp:
+src/Game/MapObj/Fury/BlockHardLaserOnly.cpp:
     .text   start:0x00192630 end:0x00193DD0
-src/Game/Layout2/BlockHardLaserOnlyDebris.cpp:
+src/Game/MapObj/Fury/BlockHardLaserOnlyDebris.cpp:
     .text   start:0x00193DD0 end:0x00194240
-src/Game/Layout2/CloudBonusWatcher.cpp:
+src/Game/MapObj/Fury/CloudBonusWatcher.cpp:
     .text   start:0x00194240 end:0x0019476C
-src/Game/Layout2/CoinBlowConcentric.cpp:
+src/Game/MapObj/Fury/CoinBlowConcentric.cpp:
     .text   start:0x00194770 end:0x00195998
-src/Game/Layout2/CoinStackMoving.cpp:
+src/Game/MapObj/Fury/CoinStackMoving.cpp:
     .text   start:0x001959A0 end:0x001960F8
-src/Game/Layout2/DisasterBlockDeadWatcher.cpp:
+src/Game/MapObj/Fury/DisasterBlockDeadWatcher.cpp:
     .text   start:0x00196100 end:0x00196370
-src/Game/Layout2/DisasterBlockDirector.cpp:
+src/Game/MapObj/Fury/DisasterBlockDirector.cpp:
     .text   start:0x00196370 end:0x001969E8
-src/Game/Layout2/DisasterFixMapParts.cpp:
+src/Game/MapObj/Fury/DisasterFixMapParts.cpp:
     .text   start:0x001969F0 end:0x001975AC
-src/Game/Layout2/DisasterLightning.cpp:
+src/Game/MapObj/Fury/DisasterLightning.cpp:
     .text   start:0x001975B0 end:0x00197938
-src/Game/Layout2/DisasterSpikeBouncy.cpp:
+src/Game/MapObj/Fury/DisasterSpikeBouncy.cpp:
     .text   start:0x00197940 end:0x00198090
-src/Game/Layout2/DisasterSpikeDirector.cpp:
+src/Game/MapObj/Fury/DisasterSpikeDirector.cpp:
     .text   start:0x00198090 end:0x0019D350
-src/Game/Layout2/DisasterSpikeDirt.cpp:
+src/Game/MapObj/Fury/DisasterSpikeDirt.cpp:
     .text   start:0x0019D350 end:0x0019DA00
-src/Game/Layout2/DisasterSpikeLaunch.cpp:
+src/Game/MapObj/Fury/DisasterSpikeLaunch.cpp:
     .text   start:0x0019DA00 end:0x0019E008
-src/Game/Layout2/DisasterSpikeTorpedo.cpp:
+src/Game/MapObj/Fury/DisasterSpikeTorpedo.cpp:
     .text   start:0x0019E010 end:0x001A0A98
-src/Game/Layout2/DrcTouchEffectTraceTracker.cpp:
+src/Game/MapObj/Fury/DrcTouchEffectTraceTracker.cpp:
     .text   start:0x001A0AA0 end:0x001A0AF8
-src/Game/Layout2/EffectObjFollowCameraGame.cpp:
+src/Game/MapObj/Fury/EffectObjFollowCameraGame.cpp:
     .text   start:0x001A0B00 end:0x001A0F3C
-src/Game/Layout2/EffectObjGame.cpp:
+src/Game/MapObj/Fury/EffectObjGame.cpp:
     .text   start:0x001A0F40 end:0x001A1250
-src/Game/Layout2/EffectObjBattleArenaBunBun.cpp:
+src/Game/MapObj/Fury/EffectObjBattleArenaBunBun.cpp:
     .text   start:0x001A1250 end:0x001A1624
-src/Game/Layout2/FallingPillar.cpp:
+src/Game/MapObj/Fury/FallingPillar.cpp:
     .text   start:0x001A1630 end:0x001A1E74
-src/Game/Layout2/FieryRotateParts.cpp:
+src/Game/MapObj/Fury/FieryRotateParts.cpp:
     .text   start:0x001A1E80 end:0x001A2180
-src/Game/Layout2/FloatingIslandRailPart.cpp:
+src/Game/MapObj/Fury/FloatingIslandRailPart.cpp:
     .text   start:0x001A2180 end:0x001A2880
-src/Game/Layout2/FloatingTerrain.cpp:
+src/Game/MapObj/Fury/FloatingTerrain.cpp:
     .text   start:0x001A2880 end:0x001A3394
-src/Game/Layout2/FlowerCat.cpp:
+src/Game/MapObj/Fury/FlowerCat.cpp:
     .text   start:0x001A33A0 end:0x001A3AD8
-src/Game/Layout2/GameSkyProjection.cpp:
+src/Game/MapObj/Fury/GameSkyProjection.cpp:
     .text   start:0x001A3AE0 end:0x001A3CA0
-src/Game/Layout2/GigaBell3in1.cpp:
+src/Game/MapObj/Fury/GigaBell3in1.cpp:
     .text   start:0x001A3CA0 end:0x001A5248
-src/Game/Layout2/GigaBellBindPuppeteer.cpp:
+src/Game/MapObj/Fury/GigaBellBindPuppeteer.cpp:
     .text   start:0x001A5250 end:0x001A5500
-src/Game/Layout2/GigaBellItem.cpp:
+src/Game/MapObj/Fury/GigaBellItem.cpp:
     .text   start:0x001A5500 end:0x001A5D70
-src/Game/Layout2/GigaBellPedestal.cpp:
+src/Game/MapObj/Fury/GigaBellPedestal.cpp:
     .text   start:0x001A5D70 end:0x001A60E0
-src/Game/Layout2/GoalPedestal.cpp:
+src/Game/MapObj/Fury/GoalPedestal.cpp:
     .text   start:0x001A60E0 end:0x001A62C0
-src/Game/Layout2/InkPatch.cpp:
+src/Game/MapObj/Fury/InkPatch.cpp:
     .text   start:0x001A62C0 end:0x001A6C28
-src/Game/Layout2/InkPatchSpecial.cpp:
+src/Game/MapObj/Fury/InkPatchSpecial.cpp:
     .text   start:0x001A6C30 end:0x001A6D9C
-src/Game/Layout2/InteractableCatToy.cpp:
+src/Game/MapObj/Fury/InteractableCatToy.cpp:
     .text   start:0x001A6DA0 end:0x001A76F8
-src/Game/Layout3/AmiiboLayout.cpp:
+src/Game/Layout/AmiiboLayout.cpp:
     .text   start:0x001A7700 end:0x001A7C7C
-src/Game/Layout3/AreaNameParts.cpp:
+src/Game/Layout/AreaNameParts.cpp:
     .text   start:0x001A7C80 end:0x001A95C8
-src/Game/Layout3/ButtonArrowParts.cpp:
+src/Game/Layout/ButtonArrowParts.cpp:
     .text   start:0x001A95D0 end:0x001A9ABC
-src/Game/Layout3/ButtonBackParts.cpp:
+src/Game/Layout/ButtonBackParts.cpp:
     .text   start:0x001A9AC0 end:0x001AA464
-src/Game/Layout3/ButtonConfigParts.cpp:
+src/Game/Layout/ButtonConfigParts.cpp:
     .text   start:0x001AA470 end:0x001AACA8
-src/Game/Layout3/ButtonCursorParts.cpp:
+src/Game/Layout/ButtonCursorParts.cpp:
     .text   start:0x001AACB0 end:0x001AB328
-src/Game/Layout3/ButtonGroup.cpp:
+src/Game/Layout/ButtonGroup.cpp:
     .text   start:0x001AB330 end:0x001AD9D4
-src/Game/Layout3/ButtonItemStockParts.cpp:
+src/Game/Layout/ButtonItemStockParts.cpp:
     .text   start:0x001AD9E0 end:0x001AF218
-src/Game/Layout3/ButtonShortCutAndTouchParts.cpp:
+src/Game/Layout/ButtonShortCutAndTouchParts.cpp:
     .text   start:0x001AF220 end:0x001AFC38
-src/Game/Layout3/ButtonShortCutParts.cpp:
+src/Game/Layout/ButtonShortCutParts.cpp:
     .text   start:0x001AFC40 end:0x001B01D4
-src/Game/Layout3/ButtonSquareIconParts.cpp:
+src/Game/Layout/ButtonSquareIconParts.cpp:
     .text   start:0x001B01E0 end:0x001B0CF0
-src/Game/Layout3/ButtonTextScrollParts.cpp:
+src/Game/Layout/ButtonTextScrollParts.cpp:
     .text   start:0x001B0CF0 end:0x001B2058
-src/Game/Layout3/ButtonTouch.cpp:
+src/Game/Layout/ButtonTouch.cpp:
     .text   start:0x001B2060 end:0x001B2A18
-src/Game/Layout3/CameraChangeLayout.cpp:
+src/Game/Layout/CameraChangeLayout.cpp:
     .text   start:0x001B2A20 end:0x001B35E8
-src/Game/Layout3/CameraGyroDrc.cpp:
+src/Game/Layout/CameraGyroDrc.cpp:
     .text   start:0x001B35F0 end:0x001B3BC8
-src/Game/Layout3/CameraIcon.cpp:
+src/Game/Layout/CameraIcon.cpp:
     .text   start:0x001B3BD0 end:0x001B4584
-src/Game/Layout3/CollectNumber.cpp:
+src/Game/Layout/CollectNumber.cpp:
     .text   start:0x001B4590 end:0x001B4C18
-src/Game/Layout3/ControlGuide.cpp:
+src/Game/Layout/ControlGuide.cpp:
     .text   start:0x001B4C20 end:0x001B60B8
-src/Game/Layout3/CounterCoinParts.cpp:
+src/Game/Layout/CounterCoinParts.cpp:
     .text   start:0x001B60C0 end:0x001B6874
-src/Game/Layout3/CounterGoalItemParts.cpp:
+src/Game/Layout/CounterGoalItemParts.cpp:
     .text   start:0x001B6880 end:0x001B6ED8
-src/Game/Layout3/CounterGreenStarAppend.cpp:
+src/Game/Layout/CounterGreenStarAppend.cpp:
     .text   start:0x001B6EE0 end:0x001B7644
-src/Game/Layout3/CounterGreenStarParts.cpp:
+src/Game/Layout/CounterGreenStarParts.cpp:
     .text   start:0x001B7650 end:0x001B812C
-src/Game/Layout3/CounterMysteryBox.cpp:
+src/Game/Layout/CounterMysteryBox.cpp:
     .text   start:0x001B8130 end:0x001B8304
-src/Game/Layout3/CounterPlayerInfo.cpp:
+src/Game/Layout/CounterPlayerInfo.cpp:
     .text   start:0x001B8310 end:0x001B8A44
-src/Game/Layout3/CounterPlayerParts.cpp:
+src/Game/Layout/CounterPlayerParts.cpp:
     .text   start:0x001B8A50 end:0x001B9B04
-src/Game/Layout3/CounterRecordParts.cpp:
+src/Game/Layout/CounterRecordParts.cpp:
     .text   start:0x001B9B10 end:0x001B9F8C
-src/Game/Layout3/CounterScoreParts.cpp:
+src/Game/Layout/CounterScoreParts.cpp:
     .text   start:0x001B9F90 end:0x001BA294
-src/Game/Layout3/CounterStampParts.cpp:
+src/Game/Layout/CounterStampParts.cpp:
     .text   start:0x001BA2A0 end:0x001BA72C
-src/Game/Layout3/CounterWarpCube.cpp:
+src/Game/Layout/CounterWarpCube.cpp:
     .text   start:0x001BA730 end:0x001BB4A4
-src/Game/Layout3/CourseSelectInfo.cpp:
+src/Game/Layout/CourseSelectInfo.cpp:
     .text   start:0x001BB4B0 end:0x001BB638
-src/Game/Layout3/CourseSelectInfoA.cpp:
+src/Game/Layout/CourseSelectInfoA.cpp:
     .text   start:0x001BB640 end:0x001BB78C
-src/Game/Layout3/CourseSelectInfoBase.cpp:
+src/Game/Layout/CourseSelectInfoBase.cpp:
     .text   start:0x001BB790 end:0x001BBF3C
-src/Game/Layout3/CourseSelectInfoLayoutFunction.cpp:
+src/Game/Layout/CourseSelectInfoLayoutFunction.cpp:
     .text   start:0x001BBF40 end:0x001BCE94
-src/Game/Layout3/CourseSelectInfoDecideButton.cpp:
+src/Game/Layout/CourseSelectInfoDecideButton.cpp:
     .text   start:0x001BCEA0 end:0x001BD5D4
-src/Game/Layout3/CourseSelectInfoMystery10.cpp:
+src/Game/Layout/CourseSelectInfoMystery10.cpp:
     .text   start:0x001BD5E0 end:0x001BD71C
-src/Game/Layout3/CourseSelectInfoMysteryMax.cpp:
+src/Game/Layout/CourseSelectInfoMysteryMax.cpp:
     .text   start:0x001BD720 end:0x001BD864
-src/Game/Layout3/CourseSelectLayout.cpp:
+src/Game/Layout/CourseSelectLayout.cpp:
     .text   start:0x001BD870 end:0x001BDEE8
-src/Game/Layout3/CourseSelectMiniatureCursor.cpp:
+src/Game/Layout/CourseSelectMiniatureCursor.cpp:
     .text   start:0x001BDEF0 end:0x001BE910
-src/Game/Layout3/CourseSelectSceneLayout.cpp:
+src/Game/Layout/CourseSelectSceneLayout.cpp:
     .text   start:0x001BE910 end:0x001C03A4
-src/Game/Layout3/CourseSelectStartInfo.cpp:
+src/Game/Layout/CourseSelectStartInfo.cpp:
     .text   start:0x001C03B0 end:0x001C06F4
-src/Game/Layout3/CursorTarget.cpp:
+src/Game/Layout/CursorTarget.cpp:
     .text   start:0x001C0700 end:0x001C07F8
-src/Game/Layout3/DokanGuideBalloon.cpp:
+src/Game/Layout/DokanGuideBalloon.cpp:
     .text   start:0x001C0800 end:0x001C0DB8
-src/Game/Layout3/FileSelect.cpp:
+src/Game/Layout/FileSelect.cpp:
     .text   start:0x001C0DC0 end:0x001C3DE4
-src/Game/Layout3/GameOverMenu.cpp:
+src/Game/Layout/GameOverMenu.cpp:
     .text   start:0x001C3DF0 end:0x001C4298
-src/Game/Layout3/GhostMiiNameplate.cpp:
+src/Game/Layout/GhostMiiNameplate.cpp:
     .text   start:0x001C42A0 end:0x001C47A4
-src/Game/Layout3/GuideBalloon.cpp:
+src/Game/Layout/GuideBalloon.cpp:
     .text   start:0x001C47B0 end:0x001C55D8
-src/Game/Layout3/GuideCourse.cpp:
+src/Game/Layout/GuideCourse.cpp:
     .text   start:0x001C55E0 end:0x001C5B44
-src/Game/Layout3/GuideFrameOut.cpp:
+src/Game/Layout/GuideFrameOut.cpp:
     .text   start:0x001C5B50 end:0x001C68E4
-src/Game/Layout3/GuideGameWindow.cpp:
+src/Game/Layout/GuideGameWindow.cpp:
     .text   start:0x001C68F0 end:0x001C751C
-src/Game/Layout3/GuideMessage.cpp:
+src/Game/Layout/GuideMessage.cpp:
     .text   start:0x001C7520 end:0x001C8A68
-src/Game/Layout3/GuideObj.cpp:
+src/Game/Layout/GuideObj.cpp:
     .text   start:0x001C8A70 end:0x001C9168
-src/Game/Layout3/GuideWindowParts.cpp:
+src/Game/Layout/GuideWindowParts.cpp:
     .text   start:0x001C9170 end:0x001C9534
-src/Game/Layout3/IslandMap.cpp:
+src/Game/Layout/IslandMap.cpp:
     .text   start:0x001C9540 end:0x001CCFC8
-src/Game/Layout3/LayoutFontUtil.cpp:
+src/Game/Layout/LayoutFontUtil.cpp:
     .text   start:0x001CCFD0 end:0x001CD79C
-src/Game/Layout3/ListClearParts.cpp:
+src/Game/Layout/ListClearParts.cpp:
     .text   start:0x001CD7A0 end:0x001CE80C
-src/Game/Layout3/ListClearStar.cpp:
+src/Game/Layout/ListClearStar.cpp:
     .text   start:0x001CE810 end:0x001CF8A4
-src/Game/Layout3/ListClearStarFairyParts.cpp:
+src/Game/Layout/ListClearStarFairyParts.cpp:
     .text   start:0x001CF8B0 end:0x001CFCB8
-src/Game/Layout3/ListClearStarMaxParts.cpp:
+src/Game/Layout/ListClearStarMaxParts.cpp:
     .text   start:0x001CFCC0 end:0x001D0BC8
-src/Game/Layout3/ListStamp.cpp:
+src/Game/Layout/ListStamp.cpp:
     .text   start:0x001D0BD0 end:0x001D10F4
-src/Game/Layout3/ListStampDemoParts.cpp:
+src/Game/Layout/ListStampDemoParts.cpp:
     .text   start:0x001D1100 end:0x001D16C8
-src/Game/Layout3/ListStampParts.cpp:
+src/Game/Layout/ListStampParts.cpp:
     .text   start:0x001D16D0 end:0x001D1FC4
-src/Game/Layout3/ListStampResult.cpp:
+src/Game/Layout/ListStampResult.cpp:
     .text   start:0x001D1FD0 end:0x001D2488
-src/Game/Layout3/LockOnButton.cpp:
+src/Game/Layout/LockOnButton.cpp:
     .text   start:0x001D2490 end:0x001D3050
-src/Game/Layout3/MapMenu.cpp:
+src/Game/Layout/MapMenu.cpp:
     .text   start:0x001D3050 end:0x001D4518
-src/Game/Layout3/MapMenuPlayerParts.cpp:
+src/Game/Layout/MapMenuPlayerParts.cpp:
     .text   start:0x001D4520 end:0x001D4A38
-src/Game/Layout3/MiiverseBalloon.cpp:
+src/Game/Layout/MiiverseBalloon.cpp:
     .text   start:0x001D4A40 end:0x001D54DC
-src/Game/Layout3/MiiverseBalloonParts.cpp:
+src/Game/Layout/MiiverseBalloonParts.cpp:
     .text   start:0x001D54E0 end:0x001D5E38
-src/Game/Layout3/MiiverseStateDetail.cpp:
+src/Game/Layout/MiiverseStateDetail.cpp:
     .text   start:0x001D5E40 end:0x001D6360
-src/Game/Layout3/MiiverseStateTimeLine.cpp:
+src/Game/Layout/MiiverseStateTimeLine.cpp:
     .text   start:0x001D6360 end:0x001D6ADC
-src/Game/Layout3/PauseMenu.cpp:
+src/Game/Layout/PauseMenu.cpp:
     .text   start:0x001D6AE0 end:0x001DA13C
-src/Game/Layout3/PauseMenuMap.cpp:
+src/Game/Layout/PauseMenuMap.cpp:
     .text   start:0x001DA140 end:0x001DC068
-src/Game/Layout3/PlayerEntry.cpp:
+src/Game/Layout/PlayerEntry.cpp:
     .text   start:0x001DC070 end:0x001DD0C8
-src/Game/Layout3/PlayerEntryFunction.cpp:
+src/Game/Layout/PlayerEntryFunction.cpp:
     .text   start:0x001DD0D0 end:0x001DD584
-src/Game/Layout3/PlayerEntryItem.cpp:
+src/Game/Layout/PlayerEntryItem.cpp:
     .text   start:0x001DD590 end:0x001E0CEC
-src/Game/Layout3/PlayerEntryMini.cpp:
+src/Game/Layout/PlayerEntryMini.cpp:
     .text   start:0x001E0CF0 end:0x001E1EE8
-src/Game/Layout3/PlayerEntryMiniParts.cpp:
+src/Game/Layout/PlayerEntryMiniParts.cpp:
     .text   start:0x001E1EF0 end:0x001E23C4
-src/Game/Layout3/PlayerEntryParts.cpp:
+src/Game/Layout/PlayerEntryParts.cpp:
     .text   start:0x001E23D0 end:0x001E477C
-src/Game/Layout3/PlayerEntryPlayer.cpp:
+src/Game/Layout/PlayerEntryPlayer.cpp:
     .text   start:0x001E4780 end:0x001E5568
-src/Game/Layout3/PlayerEntryPlayerHolder.cpp:
+src/Game/Layout/PlayerEntryPlayerHolder.cpp:
     .text   start:0x001E5570 end:0x001E58C8
-src/Game/Layout3/ProjectReplaceTagProcessor.cpp:
+src/Game/Layout/ProjectReplaceTagProcessor.cpp:
     .text   start:0x001E58D0 end:0x001E5958
-src/Game/Layout3/RCSControlGuideBar.cpp:
+src/Game/Layout/RCSControlGuideBar.cpp:
     .text   start:0x001E5960 end:0x001E6774
-src/Game/Layout3/RCS_SaveDataLayout.cpp:
+src/Game/Layout/RCS_SaveDataLayout.cpp:
     .text   start:0x001E6780 end:0x001EA66C
-src/Game/Layout3/RescueButton.cpp:
+src/Game/Layout/RescueButton.cpp:
     .text   start:0x001EA670 end:0x001EB220
-src/Game/Layout3/ResultTimerCount.cpp:
+src/Game/Layout/ResultTimerCount.cpp:
     .text   start:0x001EB220 end:0x001EB554
-src/Game/Layout3/RingPlayerSelect.cpp:
+src/Game/Layout/RingPlayerSelect.cpp:
     .text   start:0x001EB560 end:0x001EC4C8
-src/Game/Layout3/RingPlayerSelectParts.cpp:
+src/Game/Layout/RingPlayerSelectParts.cpp:
     .text   start:0x001EC4D0 end:0x001ECE28
-src/Game/Layout3/ScoreNumber.cpp:
+src/Game/Layout/ScoreNumber.cpp:
     .text   start:0x001ECE30 end:0x001EDB58
-src/Game/Layout3/ShowCourseSelect.cpp:
+src/Game/Layout/ShowCourseSelect.cpp:
     .text   start:0x001EDB60 end:0x001EE358
-src/Game/Layout3/SimpleAppearWaitEndParts.cpp:
+src/Game/Layout/SimpleAppearWaitEndParts.cpp:
     .text   start:0x001EE360 end:0x001EE6D4
-src/Game/Layout3/SingleModeSceneLayout.cpp:
+src/Game/Layout/SingleModeSceneLayout.cpp:
     .text   start:0x001EE6E0 end:0x001F0D58
-src/Game/Layout3/SingleModeTitle.cpp:
+src/Game/Layout/SingleModeTitle.cpp:
     .text   start:0x001F0D60 end:0x001F15A4
-src/Game/Layout3/StaffRollFin.cpp:
+src/Game/Layout/StaffRollFin.cpp:
     .text   start:0x001F15B0 end:0x001F1A54
-src/Game/Layout3/StaffRollJob.cpp:
+src/Game/Layout/StaffRollJob.cpp:
     .text   start:0x001F1A60 end:0x001F2064
-src/Game/Layout3/StaffRollLayoutHolder.cpp:
+src/Game/Layout/StaffRollLayoutHolder.cpp:
     .text   start:0x001F2070 end:0x001F37E8
-src/Game/Layout3/StaffRollName.cpp:
+src/Game/Layout/StaffRollName.cpp:
     .text   start:0x001F37F0 end:0x001F3D14
-src/Game/Layout3/StaffRollNintendo.cpp:
+src/Game/Layout/StaffRollNintendo.cpp:
     .text   start:0x001F3D20 end:0x001F41C4
-src/Game/Layout3/StageSceneLayout.cpp:
+src/Game/Layout/StageSceneLayout.cpp:
     .text   start:0x001F41D0 end:0x001F5568
-src/Game/Layout3/StageTimer.cpp:
+src/Game/Layout/StageTimer.cpp:
     .text   start:0x001F5570 end:0x001F6824
-src/Game/Layout3/StockBlurEffect.cpp:
+src/Game/Layout/StockBlurEffect.cpp:
     .text   start:0x001F6830 end:0x001F6BF8
-src/Game/Layout3/SimpleMenuLayout.cpp:
+src/Game/Layout/SimpleMenuLayout.cpp:
     .text   start:0x001F6C00 end:0x001F7308
-src/Game/Layout3/TestAoyagiLayout.cpp:
+src/Game/Layout/TestAoyagiLayout.cpp:
     .text   start:0x001F7310 end:0x001F7AC4
-src/Game/Layout3/TestAoyagiPlayerEntry.cpp:
+src/Game/Layout/TestAoyagiPlayerEntry.cpp:
     .text   start:0x001F7AD0 end:0x001F7DD4
-src/Game/Layout3/TestAoyagiPlayerEntryItem.cpp:
+src/Game/Layout/TestAoyagiPlayerEntryItem.cpp:
     .text   start:0x001F7DE0 end:0x001F8680
-src/Game/Layout3/TestAoyagiPlayerEntryStateEntry.cpp:
+src/Game/Layout/TestAoyagiPlayerEntryStateEntry.cpp:
     .text   start:0x001F8680 end:0x001F8C08
-src/Game/Layout3/TestAoyagiPlayerEntryStatePlay.cpp:
+src/Game/Layout/TestAoyagiPlayerEntryStatePlay.cpp:
     .text   start:0x001F8C10 end:0x001F9004
-src/Game/Layout3/TestAoyagiPlayerEntryStateSelect.cpp:
+src/Game/Layout/TestAoyagiPlayerEntryStateSelect.cpp:
     .text   start:0x001F9010 end:0x001F9904
-src/Game/Layout3/TestLayoutPartsActor.cpp:
+src/Game/Layout/TestLayoutPartsActor.cpp:
     .text   start:0x001F9910 end:0x001F9B34
-src/Game/Layout3/TestMusaLayout.cpp:
+src/Game/Layout/TestMusaLayout.cpp:
     .text   start:0x001F9B40 end:0x001F9F38
-src/Game/Layout3/TimerClockNumber.cpp:
+src/Game/Layout/TimerClockNumber.cpp:
     .text   start:0x001F9F40 end:0x001FA338
-src/Game/Layout3/TitleLogo.cpp:
+src/Game/Layout/TitleLogo.cpp:
     .text   start:0x001FA340 end:0x001FB478
-src/Game/Layout3/TopMenu.cpp:
+src/Game/Layout/TopMenu.cpp:
     .text   start:0x001FB480 end:0x001FC530
-src/Game/Layout3/TouchEffect.cpp:
+src/Game/Layout/TouchEffect.cpp:
     .text   start:0x001FC530 end:0x001FC93C
-src/Game/Layout3/Utl.cpp:
+src/Game/Layout/Utl.cpp:
     .text   start:0x001FC940 end:0x001FD6EC
-src/Game/Layout3/WindowCameraChange.cpp:
+src/Game/Layout/WindowCameraChange.cpp:
     .text   start:0x001FD6F0 end:0x001FE728
-src/Game/Layout3/WindowConfirm.cpp:
+src/Game/Layout/WindowConfirm.cpp:
     .text   start:0x001FE730 end:0x001FF500
-src/Game/Layout3/WindowControllerChange.cpp:
+src/Game/Layout/WindowControllerChange.cpp:
     .text   start:0x001FF500 end:0x00200618
-src/Game/Layout3/WindowMessage.cpp:
+src/Game/Layout/WindowMessage.cpp:
     .text   start:0x00200620 end:0x00200F18
-src/Game/Layout3/WindowMiiSetUp.cpp:
+src/Game/Layout/WindowMiiSetUp.cpp:
     .text   start:0x00200F20 end:0x00201AC4
-src/Game/Layout3/WindowMiiverseDetail.cpp:
+src/Game/Layout/WindowMiiverseDetail.cpp:
     .text   start:0x00201AD0 end:0x00202498
-src/Game/Layout3/WindowProcessing.cpp:
+src/Game/Layout/WindowProcessing.cpp:
     .text   start:0x002024A0 end:0x002029E4
-src/Game/Layout3/WindowSave.cpp:
+src/Game/Layout/WindowSave.cpp:
     .text   start:0x002029F0 end:0x00202F14
-src/Game/Layout3/WipeCurtainRanking.cpp:
+src/Game/Layout/WipeCurtainRanking.cpp:
     .text   start:0x00202F20 end:0x00203DF4
-src/Game/Layout3/WipeCurtainRankingParts.cpp:
+src/Game/Layout/WipeCurtainRankingParts.cpp:
     .text   start:0x00203E00 end:0x00204A20
-src/Game/Layout3/WipeCurtainResult.cpp:
+src/Game/Layout/WipeCurtainResult.cpp:
     .text   start:0x00204A20 end:0x00205AF4
-src/Game/Layout3/WipeCurtainStart.cpp:
+src/Game/Layout/WipeCurtainStart.cpp:
     .text   start:0x00205B00 end:0x00206268
 src/Game/unk/Backup.cpp:
     .text   start:0x00206270 end:0x00207214
@@ -3337,260 +3337,280 @@ src/Game/Util/SceneUtil.cpp:
 src/Game/Util/ScoreUtil.cpp:
     .text   start:0x00535330 end:0x00536178
 src/nw/atk/atk_HardwareManager.cpp:
-    .text   start:0x00536180 end:0x005389E4
-src/nw/atk/atk_BiquadFilterPresets.cpp:
+    .text   start:0x00536180 end:0x005363D0
+src/nw/atk/detail/dsp/atk_HardwareManager.cpp:
+    .text   start:0x00536580 end:0x005389E4
+src/nw/atk/detail/dsp/atk_BiquadFilterPresets.cpp:
     .text   start:0x005389F0 end:0x00538DA4
-src/nw/atk/atk_CommandManager.cpp:
+src/nw/atk/detail/thread/atk_CommandManager.cpp:
     .text   start:0x00538DB0 end:0x00539B5C
-src/nw/atk/atk_DriverCommand.cpp:
+src/nw/atk/detail/thread/atk_DriverCommand.cpp:
     .text   start:0x0053A640 end:0x0053A7B4
-src/nw/atk/atk_OutputAdditionalParam.cpp:
+src/nw/atk/detail/thread/atk_OutputAdditionalParam.cpp:
     .text   start:0x0053A7C0 end:0x0053AE90
-src/nw/atk/atk_BusMixVolumePacket.cpp:
+src/nw/atk/detail/thread/atk_BusMixVolumePacket.cpp:
     .text   start:0x0053AE90 end:0x0053AFC4
-src/nw/atk/atk_VolumeThroughModePacket.cpp:
+src/nw/atk/detail/thread/atk_VolumeThroughModePacket.cpp:
     .text   start:0x0053AFD0 end:0x0053B150
-src/nw/atk/atk_SequenceTrack.cpp:
+src/nw/atk/detail/seq/atk_SequenceTrack.cpp:
     .text   start:0x0053B150 end:0x0053C350
-src/nw/atk/atk_SequenceSoundPlayer.cpp:
+src/nw/atk/detail/seq/atk_SequenceSoundPlayer.cpp:
     .text   start:0x0053C350 end:0x0053F6C4
 src/nw/atk/atk_SoundPlayer.cpp:
     .text   start:0x0053F6D0 end:0x00540A38
 src/nw/atk/_ZN2nn3atk6detail10BasicSoundC2Ev.cpp:
-    .text   start:0x00540A40 end:0x005433C0
-src/nw/atk/atk_SoundHandle.cpp:
+    .text   start:0x00540A40 end:0x00540CA4
+src/nw/atk/detail/atk_BasicSound.cpp:
+    .text   start:0x00540CB0 end:0x005433C0
+src/nw/atk/detail/atk_SoundHandle.cpp:
     .text   start:0x005433C0 end:0x00543540
-src/nw/atk/atk_ExternalSoundPlayer.cpp:
+src/nw/atk/detail/atk_ExternalSoundPlayer.cpp:
     .text   start:0x00543540 end:0x00543BE4
-src/nw/atk/atk_PlayerHeap.cpp:
+src/nw/atk/detail/atk_PlayerHeap.cpp:
     .text   start:0x00543BF0 end:0x00543EBC
-src/nw/atk/atk_BankFileReader.cpp:
+src/nw/atk/detail/seq/atk_BankFileReader.cpp:
     .text   start:0x00543EC0 end:0x00544664
-src/nw/atk/atk_SoundArchiveLoader.cpp:
+src/nw/atk/detail/atk_SoundArchiveLoader.cpp:
     .text   start:0x00544670 end:0x00546980
-src/nw/atk/atk_GroupFileReader.cpp:
+src/nw/atk/detail/atk_GroupFileReader.cpp:
     .text   start:0x00546980 end:0x00546C54
-src/nw/atk/atk_WaveArchiveFileReader.cpp:
-    .text   start:0x00546C60 end:0x00547128
+src/nw/atk/detail/atk_WaveArchiveFileReader.cpp:
+    .text   start:0x00546C60 end:0x00546FEC
+src/nw/atk/detail/atk_WaveArchiveFile.cpp:
+    .text   start:0x00546FF0 end:0x00547128
 src/nw/atk/atk_SoundArchive.cpp:
     .text   start:0x00547130 end:0x005482E8
-src/nw/atk/atk_SoundArchiveFileReader.cpp:
+src/nw/atk/detail/atk_SoundArchiveFileReader.cpp:
     .text   start:0x005482F0 end:0x0054905C
-src/nw/atk/atk_SoundArchiveFile.cpp:
+src/nw/atk/detail/atk_SoundArchiveFile.cpp:
     .text   start:0x00549060 end:0x0054A3C4
-src/nw/atk/atk_PlayerHeapDataManager.cpp:
+src/nw/atk/detail/atk_PlayerHeapDataManager.cpp:
     .text   start:0x0054A3D0 end:0x0054ACC4
-src/nw/atk/atk_SequenceSoundFileReader.cpp:
+src/nw/atk/detail/seq/atk_SequenceSoundFileReader.cpp:
     .text   start:0x0054ACE0 end:0x0054AE00
-src/nw/atk/atk_SequenceSoundFile.cpp:
+src/nw/atk/detail/seq/atk_SequenceSoundFile.cpp:
     .text   start:0x0054AE00 end:0x0054B020
-src/nw/atk/atk_BasicSoundPlayer.cpp:
+src/nw/atk/detail/atk_BasicSoundPlayer.cpp:
     .text   start:0x0054B020 end:0x0054B164
-src/nw/atk/atk_DisposeCallbackManager.cpp:
+src/nw/atk/detail/atk_DisposeCallbackManager.cpp:
     .text   start:0x0054B180 end:0x0054B2EC
-src/nw/atk/atk_Bank.cpp:
-    .text   start:0x0054B2F0 end:0x0054B5E0
-src/nw/atk/atk_WaveFileReader.cpp:
-    .text   start:0x0054B5E0 end:0x0054B8C0
-src/nw/atk/atk_WaveFile.cpp:
+src/nw/atk/detail/atk_Bank.cpp:
+    .text   start:0x0054B2F0 end:0x0054B4E8
+src/nw/atk/detail/atk_WaveFileReader.cpp:
+    .text   start:0x0054B4F0 end:0x0054B8C0
+src/nw/atk/detail/atk_WaveFile.cpp:
     .text   start:0x0054B8C0 end:0x0054B9BC
-src/nw/atk/atk_StreamSoundPlayer.cpp:
+src/nw/atk/detail/strm/atk_StreamSoundPlayer.cpp:
     .text   start:0x0054B9C0 end:0x00551FDC
 src/nw/atk/atk_SoundSystem.cpp:
     .text   start:0x00551FE0 end:0x00554A48
 src/nw/atk/atk_RegionManager.cpp:
     .text   start:0x00554A50 end:0x00555000
-src/nw/atk/atk_StreamSoundLoader.cpp:
+src/nw/atk/detail/strm/atk_StreamSoundLoader.cpp:
     .text   start:0x00555000 end:0x00558390
-src/nw/atk/atk_StreamSoundFileLoader.cpp:
-    .text   start:0x00558390 end:0x00558798
-src/nw/atk/atk_StreamSoundFile.cpp:
+src/nw/atk/detail/strm/atk_StreamSoundFileLoader.cpp:
+    .text   start:0x00558390 end:0x005583B8
+src/nw/atk/detail/strm/atk_StreamSoundFileReader.cpp:
+    .text   start:0x005583C0 end:0x00558798
+src/nw/atk/detail/strm/atk_StreamSoundFile.cpp:
     .text   start:0x005587A0 end:0x00558B40
-src/nw/atk/_ZN2nn3atk6detail29StreamSoundPrefetchFileReaderC2Ev.cpp:
-    .text   start:0x00558B40 end:0x005591B4
-src/nw/atk/atk_StreamTrack.cpp:
-    .text   start:0x005591C0 end:0x0055938C
-src/nw/atk/atk_AdvancedWaveSoundPlayer.cpp:
+src/nw/atk/detail/strm/_ZN2nn3atk6detail29StreamSoundPrefetchFileReaderC2Ev.cpp:
+    .text   start:0x00558B40 end:0x00558B7C
+src/nw/atk/detail/strm/atk_StreamSoundPrefetchFileReader.cpp:
+    .text   start:0x00558B80 end:0x005591B4
+src/nw/atk/detail/strm/atk_StreamTrack.cpp:
+    .text   start:0x005591C0 end:0x005591E0
+src/nw/atk/detail/strm/atk_StreamBufferPool.cpp:
+    .text   start:0x005591E0 end:0x0055938C
+src/nw/atk/detail/atk_AdvancedWaveSoundPlayer.cpp:
     .text   start:0x00559390 end:0x0055A37C
-src/nw/atk/atk_AdvancedWaveSoundFileReader.cpp:
-    .text   start:0x0055A380 end:0x0055A63C
-src/nw/atk/atk_SoundThread.cpp:
+src/nw/atk/detail/atk_AdvancedWaveSoundFileReader.cpp:
+    .text   start:0x0055A380 end:0x0055A5CC
+src/nw/atk/detail/atk_AdvancedWaveSoundFile.cpp:
+    .text   start:0x0055A5D0 end:0x0055A63C
+src/nw/atk/detail/thread/atk_SoundThread.cpp:
     .text   start:0x0055A640 end:0x0055BB84
-src/nw/atk/atk_Task.cpp:
+src/nw/atk/detail/thread/atk_Task.cpp:
     .text   start:0x0055BB90 end:0x0055BBF4
-src/nw/atk/atk_TaskManager.cpp:
+src/nw/atk/detail/thread/atk_TaskManager.cpp:
     .text   start:0x0055BC10 end:0x0055C464
-src/nw/atk/atk_TaskThread.cpp:
+src/nw/atk/detail/thread/atk_TaskThread.cpp:
     .text   start:0x0055C470 end:0x0055C7DC
-src/nw/atk/atk_CurveAdshr.cpp:
+src/nw/atk/detail/util/atk_CurveAdshr.cpp:
     .text   start:0x0055C7E0 end:0x0055CCB8
-src/nw/atk/atk_CurveLfo.cpp:
+src/nw/atk/detail/util/atk_CurveLfo.cpp:
     .text   start:0x0055CCC0 end:0x0055CE7C
-src/nw/atk/atk_InstancePool.cpp:
+src/nw/atk/detail/util/atk_InstancePool.cpp:
     .text   start:0x0055CE80 end:0x0055D0A0
-src/nw/atk/atk_MemoryFileStream.cpp:
+src/nw/atk/detail/util/atk_MemoryFileStream.cpp:
     .text   start:0x0055D0A0 end:0x0055D2B8
-src/nw/atk/atk_Util.cpp:
+src/nw/atk/detail/util/atk_Util.cpp:
     .text   start:0x0055D2C0 end:0x0055DCF4
-src/nw/atk/_ZN2nn3atk18SoundArchivePlayerC2Ev.cpp:
-    .text   start:0x0055DD00 end:0x005615F4
+src/nw/atk/detail/util/_ZN2nn3atk18SoundArchivePlayerC2Ev.cpp:
+    .text   start:0x0055DD00 end:0x0055DE98
+src/nw/atk/atk_SoundArchivePlayer.cpp:
+    .text   start:0x0055DEA0 end:0x005615F4
 src/nw/atk/atk_StartInfoReader.cpp:
     .text   start:0x00561600 end:0x005617A0
-src/nw/atk/atk_SequenceSoundRuntime.cpp:
-    .text   start:0x005617A0 end:0x0056282C
-src/nw/atk/atk_StreamSoundRuntime.cpp:
-    .text   start:0x00562830 end:0x00563140
-src/nw/atk/atk_StreamSound.cpp:
+src/nw/atk/detail/seq/atk_SequenceSoundRuntime.cpp:
+    .text   start:0x005617A0 end:0x00561804
+src/nw/atk/detail/strm/atk_StreamSoundRuntime.cpp:
+    .text   start:0x00561810 end:0x00563140
+src/nw/atk/detail/strm/atk_StreamSound.cpp:
     .text   start:0x00563140 end:0x005643B8
-src/nw/atk/atk_StreamSoundHandle.cpp:
+src/nw/atk/detail/strm/atk_StreamSoundHandle.cpp:
     .text   start:0x005643C0 end:0x00564518
-src/nw/atk/atk_Debug.cpp:
+src/nw/atk/detail/debug/atk_Debug.cpp:
     .text   start:0x00564520 end:0x005645E4
 src/nw/atk/atk_SoundDataManager.cpp:
     .text   start:0x005645F0 end:0x00564E00
-src/nw/atk/atk_SoundArchiveManager.cpp:
+src/nw/atk/detail/atk_SoundArchiveManager.cpp:
     .text   start:0x00564E00 end:0x00565258
-src/nw/atk/atk_AddonSoundArchiveContainer.cpp:
+src/nw/atk/detail/atk_AddonSoundArchiveContainer.cpp:
     .text   start:0x00565260 end:0x005653CC
-src/nw/atk/atk_SequenceSoundRuntime_dup2.cpp:
+src/nw/atk/detail/seq/atk_SequenceSoundRuntime_dup2.cpp:
     .text   start:0x005653D0 end:0x00567710
-src/nw/atk/atk_SequenceSound.cpp:
+src/nw/atk/detail/seq/atk_SequenceSound.cpp:
     .text   start:0x00567710 end:0x00568824
-src/nw/atk/atk_SequenceSoundHandle.cpp:
+src/nw/atk/detail/seq/atk_SequenceSoundHandle.cpp:
     .text   start:0x00568830 end:0x00568988
-src/nw/atk/atk_MmlSequenceTrackAllocator.cpp:
+src/nw/atk/detail/seq/atk_MmlSequenceTrackAllocator.cpp:
     .text   start:0x00568990 end:0x00568A78
-src/nw/atk/atk_MmlSequenceTrack.cpp:
+src/nw/atk/detail/seq/atk_MmlSequenceTrack.cpp:
     .text   start:0x00568A80 end:0x00568AF4
-src/nw/atk/atk_MmlParser.cpp:
+src/nw/atk/detail/seq/atk_MmlParser.cpp:
     .text   start:0x00568B00 end:0x00569C54
-src/nw/atk/atk_AdvancedWaveSoundRuntime.cpp:
+src/nw/atk/detail/atk_AdvancedWaveSoundRuntime.cpp:
     .text   start:0x00569C60 end:0x0056A9F0
-src/nw/atk/atk_AdvancedWaveSound.cpp:
+src/nw/atk/detail/atk_AdvancedWaveSound.cpp:
     .text   start:0x0056A9F0 end:0x0056AD58
-src/nw/atk/atk_Channel.cpp:
+src/nw/atk/detail/voice/atk_Channel.cpp:
     .text   start:0x0056AD60 end:0x0056BF34
-src/nw/atk/atk_ChannelManager.cpp:
+src/nw/atk/detail/voice/atk_ChannelManager.cpp:
     .text   start:0x0056BF40 end:0x0056C528
-src/nw/atk/atk_MultiVoice.cpp:
+src/nw/atk/detail/voice/atk_MultiVoice.cpp:
     .text   start:0x0056C530 end:0x0056ECA0
-src/nw/atk/atk_DecodeAdpcm.cpp:
+src/nw/atk/detail/voice/atk_DecodeAdpcm.cpp:
     .text   start:0x0056ECA0 end:0x0056EDB8
-src/nw/atk/atk_MultiVoiceManager.cpp:
+src/nw/atk/detail/voice/atk_MultiVoiceManager.cpp:
     .text   start:0x0056EDC0 end:0x0056F928
-src/nw/atk/atk_LowLevelVoice.cpp:
+src/nw/atk/detail/voice/atk_LowLevelVoice.cpp:
     .text   start:0x0056F930 end:0x00570E2C
-src/nw/atk/atk_Voice.cpp:
+src/nw/atk/detail/voice/atk_Voice.cpp:
     .text   start:0x00570E30 end:0x005716A4
-src/nw/atk/atk_VoiceCommand.cpp:
+src/nw/atk/detail/voice/atk_VoiceCommand.cpp:
     .text   start:0x005716B0 end:0x00571C20
-src/nw/atk/atk_WaveSoundFileReader.cpp:
+src/nw/atk/detail/wsd/atk_WaveSoundFileReader.cpp:
     .text   start:0x00571C20 end:0x00571EDC
-src/nw/atk/atk_WaveSoundFile.cpp:
+src/nw/atk/detail/wsd/atk_WaveSoundFile.cpp:
     .text   start:0x00571EE0 end:0x005725C4
-src/nw/atk/atk_WaveSoundPlayer.cpp:
+src/nw/atk/detail/wsd/atk_WaveSoundPlayer.cpp:
     .text   start:0x005725D0 end:0x0057360C
-src/nw/atk/atk_WaveSoundLoader.cpp:
+src/nw/atk/detail/wsd/atk_WaveSoundLoader.cpp:
     .text   start:0x00573610 end:0x00573A14
-src/nw/atk/atk_WaveSoundRuntime.cpp:
+src/nw/atk/detail/wsd/atk_WaveSoundRuntime.cpp:
     .text   start:0x00573A20 end:0x00574D20
-src/nw/atk/atk_WaveSound.cpp:
+src/nw/atk/detail/wsd/atk_WaveSound.cpp:
     .text   start:0x00574D20 end:0x00575484
-src/nw/atk/atk_EffectAux.cpp:
+src/nw/atk/effect/atk_EffectAux.cpp:
     .text   start:0x00575490 end:0x00575C08
-src/nw/atk/atkfnd_FileStreamImpl.cpp:
-    .text   start:0x00575C10 end:0x005765F0
-src/nw/atk/atkfnd_StreamCache.cpp:
+src/nw/atk/fnd/io/atkfnd_FileStreamImpl.cpp:
+    .text   start:0x00575C10 end:0x00575EA0
+src/nw/atk/fnd/io/atkfnd_FileStreamImpl.win32.cpp:
+    .text   start:0x00575EA0 end:0x005765F0
+src/nw/atk/fnd/io/atkfnd_StreamCache.cpp:
     .text   start:0x005765F0 end:0x00577304
-src/nw/atk/atkfnd_Thread.cpp:
-    .text   start:0x00577310 end:0x00577718
-src/nw/atk/atkfnd_Time.win32.cpp:
+src/nw/atk/fnd/os/atkfnd_Thread.cpp:
+    .text   start:0x00577310 end:0x005775B4
+src/nw/atk/fnd/os/atkfnd_Thread.win32.cpp:
+    .text   start:0x005775C0 end:0x00577718
+src/nw/atk/fnd/os/atkfnd_Time.win32.cpp:
     .text   start:0x00577720 end:0x00577828
-src/nw/atk/atk_ChannelMixVolume.cpp:
+src/nw/atk/fnd/os/atk_ChannelMixVolume.cpp:
     .text   start:0x00577830 end:0x005779D8
-src/nw/atk/atk_FinalMix.cpp:
+src/nw/atk/fnd/os/atk_FinalMix.cpp:
     .text   start:0x005779E0 end:0x00577BB8
-src/nw/atk/atkfnd_WorkBufferAllocator.cpp:
+src/nw/atk/fnd/os/atkfnd_WorkBufferAllocator.cpp:
     .text   start:0x00577BC0 end:0x00577D04
-src/nw/atk/atk_OutputMixer.cpp:
+src/nw/atk/fnd/os/atk_OutputMixer.cpp:
     .text   start:0x00577D10 end:0x00578A3C
-src/nw/atk/atk_EffectBase.cpp:
+src/nw/atk/effect/atk_EffectBase.cpp:
     .text   start:0x00578A40 end:0x00578B78
-src/nw/atk/atk_SubMix.cpp:
+src/nw/atk/effect/atk_SubMix.cpp:
     .text   start:0x00578B80 end:0x0057AE78
-src/nw/atk/atk_AudioRendererPerformanceReader.cpp:
+src/nw/atk/util/atk_AudioRendererPerformanceReader.cpp:
     .text   start:0x0057AE80 end:0x0057B024
-src/nw/atk/atk_DeviceOutRecorder.cpp:
+src/nw/atk/util/atk_DeviceOutRecorder.cpp:
     .text   start:0x0057B030 end:0x0057C178
-src/nw/atk/atk_WavOutFileStream.cpp:
+src/nw/atk/detail/util/atk_WavOutFileStream.cpp:
     .text   start:0x0057C180 end:0x0057C9E8
-src/nw/atk/atk_ProfileReader.cpp:
+src/nw/atk/detail/util/atk_ProfileReader.cpp:
     .text   start:0x0057C9F0 end:0x0057DD18
-src/nw/atk/atk_TaskProfileReader.cpp:
+src/nw/atk/detail/util/atk_TaskProfileReader.cpp:
     .text   start:0x0057DD20 end:0x0057E180
-src/nw/atk/atk_Sound3DManager.cpp:
+src/nw/atk/detail/util/atk_Sound3DManager.cpp:
     .text   start:0x0057E180 end:0x0057E5FC
-src/nw/atk/atk_Sound3DEngine.cpp:
+src/nw/atk/detail/util/atk_Sound3DEngine.cpp:
     .text   start:0x0057E600 end:0x0057EA94
-src/nw/atk/atk_Sound3DCalculator.cpp:
+src/nw/atk/detail/util/atk_Sound3DCalculator.cpp:
     .text   start:0x0057EAA0 end:0x0057F488
-src/nw/atk/atk_Sound3DListener.cpp:
+src/nw/atk/detail/util/atk_Sound3DListener.cpp:
     .text   start:0x0057F520 end:0x0057F678
 src/nw/atk/atk_FsSoundArchive.cpp:
     .text   start:0x0057F680 end:0x0057FDA0
-src/nw/atk/atkfnd_FileStreamProxy.cpp:
+src/nw/atk/fnd/io/atkfnd_FileStreamProxy.cpp:
     .text   start:0x0057FDA0 end:0x00580000
 src/nw/atk/atk_MemorySoundArchive.cpp:
     .text   start:0x00580000 end:0x005802E8
 src/nw/atk/atk_SoundHeap.cpp:
     .text   start:0x005802F0 end:0x00580878
-src/nw/atk/atk_FrameHeap.cpp:
+src/nw/atk/detail/util/atk_FrameHeap.cpp:
     .text   start:0x00580880 end:0x00581534
-src/nw/atk/atkfnd_FrameHeapImpl.cpp:
+src/nw/atk/fnd/basis/atkfnd_FrameHeapImpl.cpp:
     .text   start:0x00581540 end:0x00581B34
-src/nw/atk/atkfnd_HeapBase.cpp:
+src/nw/atk/fnd/basis/atkfnd_HeapBase.cpp:
     .text   start:0x00581B40 end:0x00581E90
-src/nw/atk/atk_SoundStartable.cpp:
+src/nw/atk/fnd/basis/atk_SoundStartable.cpp:
     .text   start:0x00581E90 end:0x00582528
-src/nw/atk/atk_SoundActor.cpp:
+src/nw/atk/fnd/basis/atk_SoundActor.cpp:
     .text   start:0x00582530 end:0x00582CD0
-src/nw/atk/atk_Sound3DActor.cpp:
+src/nw/atk/fnd/basis/atk_Sound3DActor.cpp:
     .text   start:0x00582CD0 end:0x00583A28
-src/nw/gfx/gfx_MemoryPool-api.nvn.8.cpp:
+src/nw/gfx/detail/gfx_MemoryPool-api.nvn.8.cpp:
     .text   start:0x00583A30 end:0x00583CA8
-src/nw/gfx/gfx_NvnHelper.cpp:
+src/nw/gfx/detail/gfx_NvnHelper.cpp:
     .text   start:0x00583CB0 end:0x00588168
-src/nw/gfx/gfx_CommonHelper.cpp:
-    .text   start:0x00588170 end:0x00588520
-src/nw/gfx/gfx_Shader-api.nvn.8.cpp:
-    .text   start:0x00588520 end:0x005896F4
-src/nw/gfx/gfx_ShaderInfo.cpp:
+src/nw/gfx/detail/gfx_CommonHelper.cpp:
+    .text   start:0x00588170 end:0x00588580
+src/nw/gfx/detail/gfx_Shader-api.nvn.8.cpp:
+    .text   start:0x00588580 end:0x005896F4
+src/nw/gfx/detail/gfx_ShaderInfo.cpp:
     .text   start:0x00589700 end:0x00589764
-src/nw/gfx/gfx_Texture-api.nvn.8.cpp:
+src/nw/gfx/detail/gfx_Texture-api.nvn.8.cpp:
     .text   start:0x00589770 end:0x0058A368
-src/nw/gfx/gfx_NvnHelper-os.horizon.cpp:
+src/nw/gfx/detail/gfx_NvnHelper-os.horizon.cpp:
     .text   start:0x0058A370 end:0x0058A52C
-src/nw/gfx/gfx_CommandBuffer-api.nvn.8.cpp:
+src/nw/gfx/detail/gfx_CommandBuffer-api.nvn.8.cpp:
     .text   start:0x0058A530 end:0x0058CAFC
-src/nw/gfx/gfx_TextureInfo.cpp:
+src/nw/gfx/detail/gfx_TextureInfo.cpp:
     .text   start:0x0058CB00 end:0x0058CC34
-src/nw/gfx/gfx_State-api.nvn.8.cpp:
+src/nw/gfx/detail/gfx_State-api.nvn.8.cpp:
     .text   start:0x0058CC40 end:0x0058D928
-src/nw/gfx/gfx_StateInfo.cpp:
+src/nw/gfx/detail/gfx_StateInfo.cpp:
     .text   start:0x0058D930 end:0x0058DB20
-src/nw/gfx/gfx_Buffer-api.nvn.8.cpp:
+src/nw/gfx/detail/gfx_Buffer-api.nvn.8.cpp:
     .text   start:0x0058DB20 end:0x0058E308
-src/nw/gfx/gfx_SamplerInfo.cpp:
+src/nw/gfx/detail/gfx_SamplerInfo.cpp:
     .text   start:0x0058E310 end:0x0058E334
-src/nw/gfx/gfx_MemoryPoolInfo.cpp:
+src/nw/gfx/detail/gfx_MemoryPoolInfo.cpp:
     .text   start:0x0058E340 end:0x0058E34C
-src/nw/gfx/gfx_Sampler-api.nvn.8.cpp:
+src/nw/gfx/detail/gfx_Sampler-api.nvn.8.cpp:
     .text   start:0x0058E350 end:0x0058E568
 src/nw/gfx/gfx_ResShader.cpp:
     .text   start:0x0058E570 end:0x0058E5D4
-src/nw/gfx/gfx_ResShader-api.nvn.8.cpp:
+src/nw/gfx/detail/gfx_ResShader-api.nvn.8.cpp:
     .text   start:0x0058E5E0 end:0x0058EB44
-src/nw/gfx/gfx_Device-api.nvn.8-os.horizon.cpp:
+src/nw/gfx/detail/gfx_Device-api.nvn.8-os.horizon.cpp:
     .text   start:0x0058EB50 end:0x0058EC8C
 src/nw/gfx/gfx_Interop-api.nvn.cpp:
     .text   start:0x0058EC90 end:0x0058EF84
@@ -3619,9 +3639,7 @@ src/nw/ui2d/ui2d_TouchOffButton.cpp:
 src/nw/ui2d/ui2d_TouchOffCheckButton.cpp:
     .text   start:0x00592A50 end:0x00592C98
 src/nw/ui2d/ui2d_Animation.cpp:
-    .text   start:0x00592CA0 end:0x00595568
-src/nw/ui2d/ui2d_Animation_dup2.cpp:
-    .text   start:0x00595570 end:0x0059653C
+    .text   start:0x00592CA0 end:0x0059653C
 src/nw/ui2d/ui2d_ControlCreator.cpp:
     .text   start:0x00596540 end:0x005967D0
 src/nw/ui2d/ui2d_Layout.cpp:
@@ -3755,7 +3773,9 @@ src/nw/g3d/g3d_ResModel.cpp:
 src/nw/g3d/g3d_ResSceneAnim.cpp:
     .text   start:0x00602DD0 end:0x00603C64
 src/nw/g3d/g3d_ResShape.cpp:
-    .text   start:0x00603C70 end:0x006055EC
+    .text   start:0x00603C70 end:0x00604AC8
+src/nw/g3d/g3d_ResShapeAnim.cpp:
+    .text   start:0x00604AD0 end:0x006055EC
 src/nw/g3d/g3d_ResSkeletalAnim.cpp:
     .text   start:0x006055F0 end:0x00605E08
 src/nw/g3d/g3d_ResSkeleton.cpp:
@@ -3765,7 +3785,9 @@ src/nw/g3d/g3d_ShaderObj.cpp:
 src/nw/g3d/g3d_ResShader.cpp:
     .text   start:0x00607240 end:0x006093EC
 src/nw/g3d/g3d_ShaderObj_dup2.cpp:
-    .text   start:0x006093F0 end:0x0060DF00
+    .text   start:0x006093F0 end:0x0060A80C
+src/nw/g3d/g3d_ShapeObj.cpp:
+    .text   start:0x0060A940 end:0x0060DF00
 src/nw/g3d/g3d_ShaderUtility.cpp:
     .text   start:0x0060DF80 end:0x0060E7D4
 src/nw/g3d/g3d_SkeletonObj.cpp:
@@ -3825,7 +3847,9 @@ src/nw/vfx/vfx_Callback.cpp:
 src/nw/vfx/vfx_BufferAllocator.cpp:
     .text   start:0x0063DCD0 end:0x0063E374
 src/nw/vfx/vfx_EmitterCalc.cpp:
-    .text   start:0x0063E380 end:0x00644A64
+    .text   start:0x0063E380 end:0x006424B0
+src/nw/vfx/vfx_EmitterVolume.cpp:
+    .text   start:0x006424B0 end:0x00644A64
 src/nw/vfx/vfx_SuperStripe.cpp:
     .text   start:0x00644A70 end:0x006489C0
 src/nw/vfx/vfx_AreaLoop.cpp:
@@ -3840,577 +3864,699 @@ src/nw/vfx/vfx_UniformBlock.cpp:
     .text   start:0x0064C590 end:0x0064C784
 src/nw/vfx/vfx_VertexBuffer.cpp:
     .text   start:0x0064C790 end:0x00650BBC
-src/sead/seadNew.cpp:
+src/sead/basis/seadNew.cpp:
     .text   start:0x00650BC0 end:0x00651894
-src/sead/seadListImpl.cpp:
+src/sead/container/seadListImpl.cpp:
     .text   start:0x006518A0 end:0x00651E28
-src/sead/seadPtrArray.cpp:
+src/sead/container/seadPtrArray.cpp:
     .text   start:0x00651E30 end:0x00652294
-src/sead/seadNinJoyNpadDevice.cpp:
-    .text   start:0x006522A0 end:0x00652DA8
-src/sead/seadDelegateThread.cpp:
+src/sead/container/seadNinJoyNpadDevice.cpp:
+    .text   start:0x006522A0 end:0x00652890
+src/sead/controller/nin/seadNinJoyNpadDeviceNin.cpp:
+    .text   start:0x00652890 end:0x00652DA8
+src/sead/controller/nin/seadDelegateThread.cpp:
     .text   start:0x00652DB0 end:0x00652F6C
-src/sead/seadFileDevice.cpp:
+src/sead/filedevice/seadFileDevice.cpp:
     .text   start:0x00652F70 end:0x0065561C
-src/sead/seadArchiveFileDevice.cpp:
+src/sead/filedevice/seadArchiveFileDevice.cpp:
     .text   start:0x00655620 end:0x0065575C
-src/sead/seadFileDeviceMgr.cpp:
+src/sead/filedevice/seadFileDeviceMgr.cpp:
     .text   start:0x00655760 end:0x00656848
-src/sead/seadMainFileDevice.cpp:
-    .text   start:0x00656850 end:0x006581CC
-src/sead/seadPath.cpp:
+src/sead/filedevice/seadMainFileDevice.cpp:
+    .text   start:0x00656850 end:0x006572C4
+src/sead/filedevice/nin/seadNinFileDeviceBaseNin.cpp:
+    .text   start:0x006572D0 end:0x006581CC
+src/sead/filedevice/seadPath.cpp:
     .text   start:0x006581D0 end:0x00659BFC
-src/sead/seadGameFrameworkNx.cpp:
+src/sead/framework/nx/seadGameFrameworkNx.cpp:
     .text   start:0x00659C00 end:0x0065B71C
-src/sead/seadPerformanceMgrNx.cpp:
+src/sead/framework/nx/seadPerformanceMgrNx.cpp:
     .text   start:0x0065B720 end:0x0065B8D8
-src/sead/seadFramework.cpp:
+src/sead/framework/nx/seadFramework.cpp:
     .text   start:0x0065B8E0 end:0x0065BECC
-src/sead/seadMethodTreeNode.cpp:
+src/sead/framework/nx/seadMethodTreeNode.cpp:
     .text   start:0x0065BED0 end:0x0065C0CC
-src/sead/seadGameFramework.cpp:
+src/sead/framework/seadGameFramework.cpp:
     .text   start:0x0065C0D0 end:0x0065C97C
-src/sead/seadMethodTree.cpp:
+src/sead/framework/seadMethodTree.cpp:
     .text   start:0x0065C980 end:0x0065CCA0
-src/sead/seadTreeNode.cpp:
+src/sead/container/seadTreeNode.cpp:
     .text   start:0x0065CCA0 end:0x0065D1F4
-src/sead/seadProcessMeter.cpp:
+src/sead/framework/seadProcessMeter.cpp:
     .text   start:0x0065D200 end:0x0065D370
-src/sead/seadSingleScreenMethodTreeMgr.cpp:
+src/sead/framework/seadSingleScreenMethodTreeMgr.cpp:
     .text   start:0x0065D370 end:0x0065DDC4
-src/sead/seadMethodTreeMgr.cpp:
+src/sead/framework/seadMethodTreeMgr.cpp:
     .text   start:0x0065DDD0 end:0x0065DF0C
-src/sead/seadTask.cpp:
+src/sead/framework/seadTask.cpp:
     .text   start:0x0065DF10 end:0x0065E954
-src/sead/seadTaskBase.cpp:
+src/sead/framework/seadTaskBase.cpp:
     .text   start:0x0065E960 end:0x0065F734
-src/sead/seadTaskMgr.cpp:
+src/sead/framework/seadTaskMgr.cpp:
     .text   start:0x0065F740 end:0x00661AC8
-src/sead/seadFaderTaskBase.cpp:
-    .text   start:0x00661AD0 end:0x00662A00
-src/sead/seadFaderTask.cpp:
-    .text   start:0x00662A00 end:0x006636A0
-src/sead/seadDebugFontMgrJis1Nvn.cpp:
+src/sead/framework/seadFaderTaskBase.cpp:
+    .text   start:0x00661AD0 end:0x00661DCC
+src/sead/framework/seadFaderTask.cpp:
+    .text   start:0x00661DD0 end:0x006636A0
+src/sead/gfx/nvn/seadDebugFontMgrJis1Nvn.cpp:
     .text   start:0x006636A0 end:0x006643C8
-src/sead/seadDebugFontMgrNvn.cpp:
+src/sead/gfx/nvn/seadDebugFontMgrNvn.cpp:
     .text   start:0x006643D0 end:0x00664F68
-src/sead/seadFrameBufferNvn.cpp:
+src/sead/gfx/nvn/seadFrameBufferNvn.cpp:
     .text   start:0x00664F70 end:0x0066601C
-src/sead/seadGraphicsNvn.cpp:
+src/sead/gfx/nvn/seadGraphicsNvn.cpp:
     .text   start:0x00666020 end:0x00666850
-src/sead/seadPrimitiveDrawMgrNvn.cpp:
+src/sead/gfx/nvn/seadPrimitiveDrawMgrNvn.cpp:
     .text   start:0x00666850 end:0x0066847C
-src/sead/seadDrawContext.cpp:
+src/sead/gfx/nvn/seadDrawContext.cpp:
     .text   start:0x00668480 end:0x006686AC
-src/sead/seadPrimitiveDrawer.cpp:
+src/sead/gfx/nvn/seadPrimitiveDrawer.cpp:
     .text   start:0x006686B0 end:0x0066AE3C
-src/sead/seadDisposer.cpp:
+src/sead/heap/seadDisposer.cpp:
     .text   start:0x0066AE40 end:0x0066AFE4
-src/sead/seadExpHeap.cpp:
+src/sead/heap/seadExpHeap.cpp:
     .text   start:0x0066AFF0 end:0x0066E7EC
-src/sead/seadFrameHeap.cpp:
+src/sead/heap/seadFrameHeap.cpp:
     .text   start:0x0066E7F0 end:0x0066FC7C
-src/sead/seadHeap.cpp:
+src/sead/heap/seadHeap.cpp:
     .text   start:0x0066FC80 end:0x006713D4
-src/sead/seadHeapMgr.cpp:
-    .text   start:0x006713E0 end:0x00672344
-src/sead/seadBitFlag.cpp:
+src/sead/heap/seadHeapMgr.cpp:
+    .text   start:0x006713E0 end:0x006720F4
+src/sead/heap/nin/seadArenaNin.cpp:
+    .text   start:0x00672100 end:0x00672344
+src/sead/prim/seadBitFlag.cpp:
     .text   start:0x00672350 end:0x006725BC
-src/sead/seadEnum.cpp:
-    .text   start:0x006725C0 end:0x00675D6C
-src/sead/seadFormatPrint.cpp:
+src/sead/prim/seadEnum.cpp:
+    .text   start:0x006725C0 end:0x00672A5C
+src/sead/prim/seadEnvUtil.cpp:
+    .text   start:0x00672A60 end:0x00675D6C
+src/sead/prim/seadFormatPrint.cpp:
     .text   start:0x00675D70 end:0x0067A944
-src/sead/seadCuckooClock.cpp:
+src/sead/prim/seadCuckooClock.cpp:
     .text   start:0x0067A950 end:0x0067B46C
-src/sead/seadCalculateTask.cpp:
+src/sead/framework/seadCalculateTask.cpp:
     .text   start:0x0067B470 end:0x0067BC84
-src/sead/seadSafeString.cpp:
-    .text   start:0x0067BC90 end:0x00682D7C
-src/sead/seadStringUtil.cpp:
+src/sead/prim/seadSafeString.cpp:
+    .text   start:0x0067BC90 end:0x0067DCFC
+src/sead/prim/seadStringBuilder.cpp:
+    .text   start:0x0067DD00 end:0x00682D7C
+src/sead/prim/seadStringUtil.cpp:
     .text   start:0x00682D80 end:0x00687D9C
-src/sead/seadArchiveRes.cpp:
-    .text   start:0x00687DA0 end:0x00688E38
-src/sead/seadResource.cpp:
+src/sead/prim/seadArchiveRes.cpp:
+    .text   start:0x00687DA0 end:0x006881F8
+src/sead/filedevice/seadArchiveFileDevice_dup2.cpp:
+    .text   start:0x00688200 end:0x00688E38
+src/sead/resource/seadResource.cpp:
     .text   start:0x00688E40 end:0x00689F4C
-src/sead/seadResourceMgr.cpp:
+src/sead/resource/seadResourceMgr.cpp:
     .text   start:0x00689F50 end:0x0068B2DC
-src/sead/seadBufferStream.cpp:
+src/sead/stream/seadBufferStream.cpp:
     .text   start:0x0068B2E0 end:0x0068BBF0
-src/sead/seadFileDeviceStream.cpp:
+src/sead/stream/seadFileDeviceStream.cpp:
     .text   start:0x0068BBF0 end:0x0068CE04
-src/sead/seadStream.cpp:
-    .text   start:0x0068CE10 end:0x0068EA04
-src/sead/seadTextStreamFormat.cpp:
+src/sead/stream/seadStream.cpp:
+    .text   start:0x0068CE10 end:0x0068DF68
+src/sead/stream/seadBinaryStreamFormat.cpp:
+    .text   start:0x0068DF70 end:0x0068EA04
+src/sead/stream/seadTextStreamFormat.cpp:
     .text   start:0x0068EA10 end:0x0069124C
-src/sead/seadCriticalSectionNin.cpp:
-    .text   start:0x00691250 end:0x006917E0
-src/sead/seadMutexNin.cpp:
+src/sead/stream/seadCriticalSectionNin.cpp:
+    .text   start:0x00691250 end:0x00691434
+src/sead/thread/nin/seadEventNin.cpp:
+    .text   start:0x00691440 end:0x006917E0
+src/sead/thread/nin/seadMutexNin.cpp:
     .text   start:0x006917E0 end:0x00691948
-src/sead/seadThreadNin.cpp:
-    .text   start:0x00691950 end:0x00691F58
-src/sead/seadThread.cpp:
-    .text   start:0x00691F60 end:0x00692980
-src/sead/seadThreadUtil.cpp:
+src/sead/thread/nin/seadThreadNin.cpp:
+    .text   start:0x00691950 end:0x006923B8
+src/sead/thread/seadThread.cpp:
+    .text   start:0x006923C0 end:0x00692980
+src/sead/thread/seadThreadUtil.cpp:
     .text   start:0x00692980 end:0x006929BC
-src/sead/seadControllerMgr.cpp:
-    .text   start:0x006929C0 end:0x006944CC
-src/sead/seadCamera.cpp:
+src/sead/controller/seadControllerMgr.cpp:
+    .text   start:0x006929C0 end:0x006937D8
+src/sead/controller/seadControllerBase.cpp:
+    .text   start:0x006937E0 end:0x006944CC
+src/sead/gfx/seadCamera.cpp:
     .text   start:0x006944D0 end:0x006956AC
-src/sead/seadColor.cpp:
+src/sead/gfx/seadColor.cpp:
     .text   start:0x006956B0 end:0x00696ADC
-src/sead/seadFrameBuffer.cpp:
+src/sead/gfx/seadFrameBuffer.cpp:
     .text   start:0x00696AF0 end:0x00696FD0
-src/sead/seadGraphics.cpp:
+src/sead/gfx/seadGraphics.cpp:
     .text   start:0x00696FD0 end:0x00697164
-src/sead/seadGraphicsContext.cpp:
+src/sead/gfx/seadGraphicsContext.cpp:
     .text   start:0x00697170 end:0x00697B74
-src/sead/seadPrimitiveRenderer.cpp:
+src/sead/gfx/seadPrimitiveRenderer.cpp:
     .text   start:0x00697B80 end:0x006981F8
-src/sead/seadProjection.cpp:
-    .text   start:0x00698200 end:0x0069BB70
-src/sead/seadViewport.cpp:
+src/sead/gfx/seadProjection.cpp:
+    .text   start:0x00698200 end:0x0069AB80
+src/sead/gfx/seadTextWriter.cpp:
+    .text   start:0x0069AB80 end:0x0069BB70
+src/sead/gfx/seadViewport.cpp:
     .text   start:0x0069BB70 end:0x0069C314
-src/sead/seadGlobalRandom.cpp:
+src/sead/random/seadGlobalRandom.cpp:
     .text   start:0x0069C320 end:0x0069C620
-src/sead/seadRandom.cpp:
+src/sead/random/seadRandom.cpp:
     .text   start:0x0069C620 end:0x0069F848
-src/sead/seadBase64.cpp:
+src/sead/codec/seadBase64.cpp:
     .text   start:0x0069F850 end:0x0069FD54
-src/sead/seadHostIOCurve.cpp:
+src/sead/hostio/seadHostIOCurve.cpp:
     .text   start:0x0069FD60 end:0x006A1B14
-src/sead/seadCalendarTime.cpp:
+src/sead/time/seadCalendarTime.cpp:
     .text   start:0x006A1B20 end:0x006A1EC4
-src/sead/seadDateTime.cpp:
+src/sead/time/seadDateTime.cpp:
     .text   start:0x006A1ED0 end:0x006A2CF8
-src/sead/seadDateUtil.cpp:
+src/sead/time/seadDateUtil.cpp:
     .text   start:0x006A2D00 end:0x006A3ADC
-src/sead/seadTickSpan.cpp:
+src/sead/time/seadTickSpan.cpp:
     .text   start:0x006A3AE0 end:0x006A3CF0
-src/sead/seadCoreInfo.cpp:
-    .text   start:0x006A3CF0 end:0x006A5A74
-src/sead/seadXmlElement.cpp:
+src/sead/mc/seadCoreInfo.cpp:
+    .text   start:0x006A3CF0 end:0x006A3F14
+src/sead/heap/seadSeparateHeap.cpp:
+    .text   start:0x006A3F20 end:0x006A5A74
+src/sead/xml/seadXmlElement.cpp:
     .text   start:0x006A5A80 end:0x006A7C08
-src/sead/seadXmlUtil.cpp:
-    .text   start:0x006A7C10 end:0x006AEB6C
-src/sead/seadInfLoopChecker.cpp:
-    .text   start:0x006AEB70 end:0x006B248C
-src/sead/seadInfLoopChecker_2.cpp:
-    .text   start:0x006B3160 end:0x006C9370
+src/sead/xml/seadXmlUtil.cpp:
+    .text   start:0x006A7C10 end:0x006A89C0
+src/sead/xml/seadXmlDocument.cpp:
+    .text   start:0x006A89C0 end:0x006AEB6C
+src/sead/framework/seadInfLoopChecker.cpp:
+    .text   start:0x006AEB70 end:0x006AF2F4
+src/sead/heap/seadUnitHeap.cpp:
+    .text   start:0x006AF300 end:0x006B0DAC
+src/sead/mc/seadJobQueue.cpp:
+    .text   start:0x006B0DB0 end:0x006B1694
+src/sead/resource/seadSharcArchiveRes.cpp:
+    .text   start:0x006B16A0 end:0x006B248C
+src/sead/resource/seadSharcArchiveRes_2.cpp:
+    .text   start:0x006B3160 end:0x006B3174
+src/sead/message/seadMessageSet.cpp:
+    .text   start:0x006B3180 end:0x006B4A3C
+src/sead/mc/seadWorkerMgr.cpp:
+    .text   start:0x006B4A40 end:0x006B5D0C
+src/sead/resource/seadSZSDecompressor.cpp:
+    .text   start:0x006B5D10 end:0x006BB55C
+src/aal/seadaudio/seadAudioMgr.cpp:
+    .text   start:0x006BB560 end:0x006BF2D8
+src/aal/seadaudio/seadAudioResetter.cpp:
+    .text   start:0x006BF2E0 end:0x006BFEF0
+src/sead/controller/seadControllerWrapper.cpp:
+    .text   start:0x006BFEF0 end:0x006C2704
+src/sead/message/seadMessageProject.cpp:
+    .text   start:0x006C2710 end:0x006C9370
 src/agl/DrawContext.cpp:
-    .text   start:0x006C9370 end:0x006C98AC
-src/agl/GPUMemAddrBase.cpp:
+    .text   start:0x006C9370 end:0x006C93C8
+src/agl/common/aglDrawContext.cpp:
+    .text   start:0x006C93D0 end:0x006C98AC
+src/agl/common/aglGPUMemAddr.cpp:
     .text   start:0x006C98B0 end:0x006C9B10
-src/agl/GPUMemBlockBase.cpp:
-    .text   start:0x006C9B10 end:0x006CA084
-src/agl/MemoryPoolType.cpp:
+src/agl/common/GPUMemBlockBase.cpp:
+    .text   start:0x006C9B10 end:0x006C9B60
+src/agl/common/aglGPUMemBlock.cpp:
+    .text   start:0x006C9B60 end:0x006CA084
+src/agl/common/MemoryPoolType.cpp:
     .text   start:0x006CA090 end:0x006CA144
-src/agl/MemoryPool.cpp:
-    .text   start:0x006CA150 end:0x006CA3A4
-src/agl/MemoryPoolHeap.cpp:
-    .text   start:0x006CA3B0 end:0x006CA934
-src/agl/GPUMemBlockMgrHeapEx.cpp:
-    .text   start:0x006CA940 end:0x006CAD3C
-src/agl/GPUMemBlockMgr.cpp:
-    .text   start:0x006CAD40 end:0x006CC0C4
-src/agl/GraphicsDriverMgr.cpp:
-    .text   start:0x006CC0D0 end:0x006CC484
-src/agl/NVNMgr.cpp:
+src/agl/common/MemoryPool.cpp:
+    .text   start:0x006CA150 end:0x006CA158
+src/agl/detail/aglGPUMemBlockMgr.cpp:
+    .text   start:0x006CA160 end:0x006CC0C4
+src/agl/detail/GraphicsDriverMgr.cpp:
+    .text   start:0x006CC0D0 end:0x006CC1BC
+src/agl/driver/aglGraphicsDriverMgr.cpp:
+    .text   start:0x006CC1C0 end:0x006CC484
+src/agl/driver/aglNVNMgr.cpp:
     .text   start:0x006CC490 end:0x006CEFCC
-src/agl/NVNtexture_.cpp:
-    .text   start:0x006CEFD0 end:0x006CF4E0
-src/agl/NVNsampler_.cpp:
-    .text   start:0x006CF4E0 end:0x006CF720
-src/agl/NVNimage_.cpp:
+src/agl/driver/NVNtexture_.cpp:
+    .text   start:0x006CEFD0 end:0x006CF0EC
+src/agl/driver/aglNVNObject.cpp:
+    .text   start:0x006CF0F0 end:0x006CF720
+src/agl/driver/NVNimage_.cpp:
     .text   start:0x006CF720 end:0x006CF7A0
-src/agl/ResFile.cpp:
-    .text   start:0x006CF7A0 end:0x006CFB24
-src/agl/ResTexture.cpp:
-    .text   start:0x006CFB30 end:0x006D0834
-src/agl/ResMaterial.cpp:
-    .text   start:0x006D0840 end:0x006D08CC
-src/agl/ResMaterialAnim.cpp:
-    .text   start:0x006D08D0 end:0x006D096C
-src/agl/MaterialObj.cpp:
-    .text   start:0x006D0970 end:0x006D09AC
-src/agl/MaterialAnimObj.cpp:
-    .text   start:0x006D09B0 end:0x006D0BD0
-src/agl/ShapeObj.cpp:
-    .text   start:0x006D0BD0 end:0x006D0CFC
-src/agl/ShaderUtilG3D.cpp:
+src/agl/g3d/aglNW4FToNN.cpp:
+    .text   start:0x006CF7A0 end:0x006D0CFC
+src/agl/g3d/aglShaderUtilG3D.cpp:
     .text   start:0x006D0D00 end:0x006D1614
-src/agl/DisplayList.cpp:
+src/agl/common/aglDisplayList.cpp:
     .text   start:0x006D1620 end:0x006D20C4
-src/agl/InitArg.cpp:
-    .text   start:0x006D20D0 end:0x006D280C
-src/agl/DynamicUniformBlock.cpp:
-    .text   start:0x006D2810 end:0x006D2C14
-src/agl/IndexStream.cpp:
-    .text   start:0x006D2C20 end:0x006D2FC4
-src/agl/RenderBuffer.cpp:
-    .text   start:0x006D2FD0 end:0x006D43FC
-src/agl/RenderTargetColor.cpp:
-    .text   start:0x006D4400 end:0x006D45B8
-src/agl/RenderTargetDepth.cpp:
-    .text   start:0x006D45C0 end:0x006D4AF0
-src/agl/ShaderLocation.cpp:
-    .text   start:0x006D4AF0 end:0x006D4B30
-src/agl/UniformLocation.cpp:
-    .text   start:0x006D4B30 end:0x006D4FA0
-src/agl/SamplerLocation.cpp:
-    .text   start:0x006D4FA0 end:0x006D51DC
-src/agl/ImageLocation.cpp:
-    .text   start:0x006D51E0 end:0x006D541C
-src/agl/UniformBlockLocation.cpp:
-    .text   start:0x006D5420 end:0x006D565C
-src/agl/ShaderStorageBlockLocation.cpp:
-    .text   start:0x006D5660 end:0x006D589C
-src/agl/AttributeLocation.cpp:
-    .text   start:0x006D58A0 end:0x006D5B0C
-src/agl/PrintFormatter.cpp:
+src/agl/common/InitArg.cpp:
+    .text   start:0x006D20D0 end:0x006D2668
+src/agl/common/aglFramework.cpp:
+    .text   start:0x006D2670 end:0x006D280C
+src/agl/common/DynamicUniformBlock.cpp:
+    .text   start:0x006D2810 end:0x006D28FC
+src/agl/detail/aglDynamicUniformBlock.cpp:
+    .text   start:0x006D2900 end:0x006D2C14
+src/agl/detail/IndexStream.cpp:
+    .text   start:0x006D2C20 end:0x006D2D58
+src/agl/common/aglIndexStream.cpp:
+    .text   start:0x006D2D60 end:0x006D2FC4
+src/agl/common/RenderBuffer.cpp:
+    .text   start:0x006D2FD0 end:0x006D3134
+src/agl/common/aglRenderBuffer.cpp:
+    .text   start:0x006D3140 end:0x006D43FC
+src/agl/common/RenderTargetColor.cpp:
+    .text   start:0x006D4400 end:0x006D4454
+src/agl/common/aglRenderTarget.cpp:
+    .text   start:0x006D4460 end:0x006D4AF0
+src/agl/common/aglShaderLocation.cpp:
+    .text   start:0x006D4AF0 end:0x006D5B0C
+src/agl/common/PrintFormatter.cpp:
     .text   start:0x006D5B10 end:0x006D5BE0
-src/agl/ShaderCompileInfo.cpp:
-    .text   start:0x006D5BE0 end:0x006D6CBC
-src/agl/ShaderProgram.cpp:
-    .text   start:0x006D6CC0 end:0x006DB048
-src/agl/Shader.cpp:
+src/agl/common/ShaderCompileInfo.cpp:
+    .text   start:0x006D5BE0 end:0x006D5C84
+src/agl/common/aglShaderCompileInfo.cpp:
+    .text   start:0x006D5C90 end:0x006D6CBC
+src/agl/common/ShaderProgram.cpp:
+    .text   start:0x006D6CC0 end:0x006D7AC0
+src/agl/common/aglShaderProgram.cpp:
+    .text   start:0x006D7AC0 end:0x006DB048
+src/agl/common/Shader.cpp:
     .text   start:0x006DB050 end:0x006DB078
-src/agl/ResShaderArchiveData.cpp:
+src/agl/common/ResShaderArchiveData.cpp:
     .text   start:0x006DB090 end:0x006DB0BC
-src/agl/ResShaderArchive.cpp:
-    .text   start:0x006DB0C0 end:0x006DB534
-src/agl/ResShaderProgram.cpp:
-    .text   start:0x006DB540 end:0x006DB5E0
-src/agl/ResShaderVariation.cpp:
-    .text   start:0x006DB5E0 end:0x006DB6E0
-src/agl/TextureData.cpp:
-    .text   start:0x006DB6E0 end:0x006DE00C
-src/agl/CompSel.cpp:
+src/agl/common/aglResShaderArchive.cpp:
+    .text   start:0x006DB0C0 end:0x006DB6E0
+src/agl/common/TextureData.cpp:
+    .text   start:0x006DB6E0 end:0x006DB81C
+src/agl/common/aglTextureData.cpp:
+    .text   start:0x006DB820 end:0x006DE00C
+src/agl/common/CompSel.cpp:
     .text   start:0x006DE010 end:0x006DE080
-src/agl/Surface.cpp:
-    .text   start:0x006DE080 end:0x006DE598
-src/agl/SamplerObject.cpp:
+src/agl/common/Surface.cpp:
+    .text   start:0x006DE080 end:0x006DE138
+src/agl/detail/aglTextureDetail.cpp:
+    .text   start:0x006DE140 end:0x006DE598
+src/agl/detail/SamplerObject.cpp:
     .text   start:0x006DE5A0 end:0x006DE5C8
-src/agl/TextureDataImageAccessor.cpp:
-    .text   start:0x006DE5D0 end:0x006DF580
-src/agl/TextureFormatInfo.cpp:
+src/agl/detail/TextureDataImageAccessor.cpp:
+    .text   start:0x006DE5D0 end:0x006DE9CC
+src/agl/common/aglTextureDataImageAccessor.cpp:
+    .text   start:0x006DE9D0 end:0x006DF580
+src/agl/common/TextureFormatInfo.cpp:
     .text   start:0x006DF580 end:0x006DF754
-src/agl/TextureSampler.cpp:
-    .text   start:0x006DF760 end:0x006DFCD4
-src/agl/UniformBlock.cpp:
-    .text   start:0x006DFCE0 end:0x006E0B14
-src/agl/VertexAttribute.cpp:
-    .text   start:0x006E0B20 end:0x006E1584
-src/agl/VertexBuffer.cpp:
-    .text   start:0x006E1590 end:0x006E1AE0
-src/agl/DebugTextureDrawer.cpp:
+src/agl/common/TextureSampler.cpp:
+    .text   start:0x006DF760 end:0x006DF980
+src/agl/common/aglTextureSampler.cpp:
+    .text   start:0x006DF980 end:0x006DFCD4
+src/agl/common/UniformBlock.cpp:
+    .text   start:0x006DFCE0 end:0x006DFE44
+src/agl/common/aglUniformBlock.cpp:
+    .text   start:0x006DFE50 end:0x006E0B14
+src/agl/common/VertexAttribute.cpp:
+    .text   start:0x006E0B20 end:0x006E0DD0
+src/agl/common/aglVertexAttribute.cpp:
+    .text   start:0x006E0DD0 end:0x006E1584
+src/agl/common/VertexBuffer.cpp:
+    .text   start:0x006E1590 end:0x006E1808
+src/agl/common/aglVertexBuffer.cpp:
+    .text   start:0x006E1810 end:0x006E1AE0
+src/agl/common/DebugTextureDrawer.cpp:
     .text   start:0x006E1AE0 end:0x006E2C6C
-src/agl/DebugTexturePage.cpp:
-    .text   start:0x006E2C70 end:0x006E3060
-src/agl/DebugTexture.cpp:
-    .text   start:0x006E3060 end:0x006E6734
-src/agl/DynamicTextureAllocator.cpp:
-    .text   start:0x006E6740 end:0x006E856C
-src/agl/TextureDataEx.cpp:
-    .text   start:0x006E8570 end:0x006E9670
-src/agl/ImageFilter2D.cpp:
-    .text   start:0x006E9670 end:0x006ED688
-src/agl/ParameterBase.cpp:
-    .text   start:0x006ED690 end:0x006EFAE0
-src/agl/ParameterDirection3f.cpp:
-    .text   start:0x006EFAE0 end:0x006F6E68
-src/agl/ParameterStringMgr.cpp:
+src/agl/common/DebugTexturePage.cpp:
+    .text   start:0x006E2C70 end:0x006E2DD4
+src/agl/utility/aglDebugTexturePage.cpp:
+    .text   start:0x006E2DE0 end:0x006E6734
+src/agl/utility/DynamicTextureAllocator.cpp:
+    .text   start:0x006E6740 end:0x006E682C
+src/agl/utility/aglDynamicTextureAllocator.cpp:
+    .text   start:0x006E6830 end:0x006E9670
+src/agl/utility/ImageFilter2D.cpp:
+    .text   start:0x006E9670 end:0x006E96F0
+src/agl/utility/aglImageFilter2D.cpp:
+    .text   start:0x006E96F0 end:0x006ED688
+src/agl/utility/ParameterBase.cpp:
+    .text   start:0x006ED690 end:0x006ED86C
+src/agl/utility/aglParameter.cpp:
+    .text   start:0x006ED870 end:0x006F6E68
+src/agl/utility/ParameterStringMgr.cpp:
     .text   start:0x006F6E70 end:0x006F770C
-src/agl/IParameterObj.cpp:
-    .text   start:0x006F7710 end:0x006F85C4
-src/agl/PrimitiveShape.cpp:
-    .text   start:0x006F85D0 end:0x00704944
-src/agl/PrimitiveTexture.cpp:
-    .text   start:0x00704950 end:0x00705434
-src/agl/PrimitiveVertex.cpp:
-    .text   start:0x00705440 end:0x00705A94
-src/agl/ResParameterObj.cpp:
+src/agl/utility/IParameterObj.cpp:
+    .text   start:0x006F7710 end:0x006F772C
+src/agl/utility/aglParameterObj.cpp:
+    .text   start:0x006F7730 end:0x006F85C4
+src/agl/utility/PrimitiveShape.cpp:
+    .text   start:0x006F85D0 end:0x006F86BC
+src/agl/utility/aglPrimitiveShape.cpp:
+    .text   start:0x006F86C0 end:0x00704944
+src/agl/utility/PrimitiveTexture.cpp:
+    .text   start:0x00704950 end:0x00704A3C
+src/agl/utility/aglPrimitiveTexture.cpp:
+    .text   start:0x00704A40 end:0x00705434
+src/agl/utility/PrimitiveVertex.cpp:
+    .text   start:0x00705440 end:0x0070552C
+src/agl/utility/aglPrimitiveVertex.cpp:
+    .text   start:0x00705530 end:0x00705A94
+src/agl/utility/ResParameterObj.cpp:
     .text   start:0x00705AA0 end:0x00705AF4
-src/agl/ResParameterList.cpp:
+src/agl/utility/ResParameterList.cpp:
     .text   start:0x00705B00 end:0x00705BB4
-src/agl/ResParameter.cpp:
-    .text   start:0x00705BC0 end:0x00706404
-src/agl/ResParameterArchiveData.cpp:
-    .text   start:0x00706410 end:0x0070642C
-src/agl/ResParameterArchive.cpp:
-    .text   start:0x00706430 end:0x0070670C
-src/agl/TextureMemoryAllocator.cpp:
-    .text   start:0x00706710 end:0x00707690
-src/agl/VertexAttributeHolder.cpp:
+src/agl/utility/aglResParameter.cpp:
+    .text   start:0x00705BC0 end:0x0070670C
+src/agl/utility/TextureMemoryAllocator.cpp:
+    .text   start:0x00706710 end:0x00706820
+src/agl/utility/aglTextureMemoryAllocator.cpp:
+    .text   start:0x00706820 end:0x00707690
+src/agl/utility/VertexAttributeHolder.cpp:
     .text   start:0x00707690 end:0x00707D2C
-src/agl/ModelShaderAttribute.cpp:
-    .text   start:0x00707D30 end:0x00708EB8
-src/agl/ModelShaderSampler.cpp:
-    .text   start:0x00708EC0 end:0x00709714
-src/agl/TextureDataInitializerG3D.cpp:
+src/agl/g3d/aglModelShaderAssign.cpp:
+    .text   start:0x00707D30 end:0x00709714
+src/agl/g3d/aglTextureDataInitializerG3D.cpp:
     .text   start:0x00709720 end:0x007099AC
-src/agl/FileIOMgr.cpp:
-    .text   start:0x007099B0 end:0x0070B004
-src/agl/PrivateResource.cpp:
-    .text   start:0x0070B010 end:0x0070B694
-src/agl/TextureDataInitializerGTX.cpp:
-    .text   start:0x0070B6A0 end:0x0070BBAC
-src/agl/TextureDataInitializerTGA.cpp:
-    .text   start:0x0070BBB0 end:0x0070CC28
-src/agl/TextureDataInitializerRAW.cpp:
-    .text   start:0x0070CC30 end:0x0070CDA4
-src/agl/TextureTileConverter.cpp:
-    .text   start:0x0070CDB0 end:0x0070D644
-src/agl/RootNode.cpp:
-    .text   start:0x0070D650 end:0x0070E044
-src/agl/DevTools.cpp:
+src/agl/g3d/FileIOMgr.cpp:
+    .text   start:0x007099B0 end:0x00709A9C
+src/agl/detail/aglFileIOMgr.cpp:
+    .text   start:0x00709AA0 end:0x0070B004
+src/agl/detail/PrivateResource.cpp:
+    .text   start:0x0070B010 end:0x0070B0FC
+src/agl/detail/aglPrivateResource.cpp:
+    .text   start:0x0070B100 end:0x0070B694
+src/agl/common/aglTextureDataInitializer.cpp:
+    .text   start:0x0070B6A0 end:0x0070D644
+src/agl/common/RootNode.cpp:
+    .text   start:0x0070D650 end:0x0070D73C
+src/agl/detail/aglRootNode.cpp:
+    .text   start:0x0070D740 end:0x0070E044
+src/agl/utility/aglDevTools.cpp:
     .text   start:0x0070E050 end:0x00715E24
-src/agl/ShaderHolder.cpp:
-    .text   start:0x00715E30 end:0x0071AD24
-src/agl/ShaderProgramArchive.cpp:
-    .text   start:0x0071AD30 end:0x0071BBEC
-src/agl/ShaderSource.cpp:
-    .text   start:0x0071BBF0 end:0x0071BCDC
-src/agl/ShaderProgramEdit.cpp:
-    .text   start:0x0071BCE0 end:0x00720038
-src/agl/ResBinaryShaderArchiveData.cpp:
+src/agl/utility/ShaderHolder.cpp:
+    .text   start:0x00715E30 end:0x00715F1C
+src/agl/detail/aglShaderHolder.cpp:
+    .text   start:0x00715F20 end:0x0071AD24
+src/agl/detail/ShaderProgramArchive.cpp:
+    .text   start:0x0071AD30 end:0x0071AF04
+src/agl/common/aglShaderProgramArchive.cpp:
+    .text   start:0x0071AF10 end:0x00720038
+src/agl/common/ResBinaryShaderArchiveData.cpp:
     .text   start:0x00720040 end:0x0072006C
-src/agl/ResBinaryShaderArchive.cpp:
+src/agl/common/aglResBinaryShaderArchive.cpp:
     .text   start:0x00720070 end:0x007206E4
-src/agl/ResShaderBinary.cpp:
+src/agl/common/ResShaderBinary.cpp:
     .text   start:0x007206F0 end:0x00720AF8
-src/agl/eft.cpp:
+src/agl/effect/aglStar.cpp:
     .text   start:0x00720B00 end:0x007222FC
-src/agl/Sky.cpp:
-    .text   start:0x00722300 end:0x00729EDC
-src/agl/IParameterIO.cpp:
-    .text   start:0x00729EE0 end:0x0072AF44
-src/agl/IParameterList.cpp:
-    .text   start:0x0072AF50 end:0x0072CA1C
-src/agl/ShaderTextUtil.cpp:
+src/agl/effect/Sky.cpp:
+    .text   start:0x00722300 end:0x0072341C
+src/agl/postfx/aglSky.cpp:
+    .text   start:0x00723420 end:0x00729EDC
+src/agl/postfx/IParameterIO.cpp:
+    .text   start:0x00729EE0 end:0x0072A4A0
+src/agl/utility/aglParameterIO.cpp:
+    .text   start:0x0072A4A0 end:0x0072AF44
+src/agl/utility/IParameterList.cpp:
+    .text   start:0x0072AF50 end:0x0072B018
+src/agl/utility/aglParameterList.cpp:
+    .text   start:0x0072B020 end:0x0072CA1C
+src/agl/detail/aglShaderTextUtil.cpp:
     .text   start:0x0072CA20 end:0x007331D4
-src/agl/TextureDataUtil.cpp:
-    .text   start:0x007331E0 end:0x007336F4
-src/agl/shtxt.cpp:
-    .text   start:0x00733700 end:0x0073F038
-src/agl/MultiFilter.cpp:
-    .text   start:0x0073F040 end:0x007409C4
-src/agl/MultiFilterUnit.cpp:
+src/agl/detail/TextureDataUtil.cpp:
+    .text   start:0x007331E0 end:0x00733250
+src/agl/detail/aglTextureDataUtil.cpp:
+    .text   start:0x00733250 end:0x007336F4
+src/agl/detail/shtxt.cpp:
+    .text   start:0x00733700 end:0x007341C4
+src/agl/shader_text/aglShaderTextPreprocessor.cpp:
+    .text   start:0x007341D0 end:0x0073593C
+src/agl/shader_text/aglShaderTextDefineLinker.cpp:
+    .text   start:0x00735940 end:0x00735E14
+src/agl/shader_text/aglShaderTextClause.cpp:
+    .text   start:0x00735E20 end:0x00737F30
+src/agl/shader_text/aglShaderTextResolver.cpp:
+    .text   start:0x00737F30 end:0x0073C88C
+src/agl/shader_text/aglShaderTextExpressionEvaluator.cpp:
+    .text   start:0x0073C890 end:0x0073E260
+src/agl/shader_text/aglShaderTextSyntaxTree.cpp:
+    .text   start:0x0073E260 end:0x0073F038
+src/agl/shader_text/MultiFilter.cpp:
+    .text   start:0x0073F040 end:0x0073F5A8
+src/agl/utility/aglMultiFilter.cpp:
+    .text   start:0x0073F5B0 end:0x007409C4
+src/agl/utility/MultiFilterUnit.cpp:
     .text   start:0x007409D0 end:0x00740C90
-src/agl/ColorCorrectionFilter.cpp:
-    .text   start:0x00740C90 end:0x007414F4
-src/agl/ReduceFilter.cpp:
-    .text   start:0x00741500 end:0x00741C9C
-src/agl/ExpandFilter.cpp:
-    .text   start:0x00741CA0 end:0x0074242C
-src/agl/BlurFilter.cpp:
-    .text   start:0x00742430 end:0x00742FF0
-src/agl/ChangeFormat.cpp:
-    .text   start:0x00742FF0 end:0x00743404
-src/agl/ColorDrift.cpp:
-    .text   start:0x00743410 end:0x00743A1C
-src/agl/Trimming.cpp:
-    .text   start:0x00743A20 end:0x00744054
-src/agl/ColorCorrection.cpp:
-    .text   start:0x00744060 end:0x00747230
-src/agl/proc.cpp:
+src/agl/utility/ColorCorrectionFilter.cpp:
+    .text   start:0x00740C90 end:0x00740D2C
+src/agl/utility/aglMultiFilterUnit.cpp:
+    .text   start:0x00740D50 end:0x00744054
+src/agl/utility/ColorCorrection.cpp:
+    .text   start:0x00744060 end:0x00744D18
+src/agl/postfx/aglColorCorrection.cpp:
+    .text   start:0x00744D20 end:0x00747230
+src/agl/postfx/proc.cpp:
     .text   start:0x00747230 end:0x00747980
-src/agl/DynamicTextureCache.cpp:
-    .text   start:0x00747980 end:0x0074872C
-src/agl/Renderer.cpp:
-    .text   start:0x00748730 end:0x0074A910
-src/agl/RenderDisplay.cpp:
-    .text   start:0x0074A910 end:0x0074D384
-src/agl/RenderInfo.cpp:
+src/agl/postfx/DynamicTextureCache.cpp:
+    .text   start:0x00747980 end:0x00747D80
+src/agl/utility/aglDynamicTextureCache.cpp:
+    .text   start:0x00747D80 end:0x0074872C
+src/agl/utility/Renderer.cpp:
+    .text   start:0x00748730 end:0x0074881C
+src/agl/layer/aglRenderer.cpp:
+    .text   start:0x00748820 end:0x0074A910
+src/agl/layer/RenderDisplay.cpp:
+    .text   start:0x0074A910 end:0x0074AD44
+src/agl/layer/aglRenderDisplay.cpp:
+    .text   start:0x0074AD50 end:0x0074D384
+src/agl/layer/aglRenderInfo.cpp:
     .text   start:0x0074D390 end:0x0074D4DC
-src/agl/Layer.cpp:
-    .text   start:0x0074D4E0 end:0x00750984
-src/agl/RenderStep.cpp:
-    .text   start:0x00750990 end:0x00750D64
-src/agl/DrawMethod.cpp:
+src/agl/layer/Layer.cpp:
+    .text   start:0x0074D4E0 end:0x0074D5D0
+src/agl/layer/aglLayer.cpp:
+    .text   start:0x0074D5D0 end:0x00750984
+src/agl/layer/RenderStep.cpp:
+    .text   start:0x00750990 end:0x00750B04
+src/agl/layer/aglRenderStep.cpp:
+    .text   start:0x00750B10 end:0x00750D64
+src/agl/layer/DrawMethod.cpp:
     .text   start:0x00750D70 end:0x00750E78
-src/agl/SeadUtil.cpp:
+src/agl/detail/aglSeadUtil.cpp:
     .text   start:0x00750E80 end:0x007516BC
-src/agl/RenderDLBuffer.cpp:
-    .text   start:0x007516C0 end:0x007521F0
-src/agl/RenderDL.cpp:
-    .text   start:0x007521F0 end:0x007522E4
-src/agl/LayerJob.cpp:
-    .text   start:0x007522F0 end:0x00752620
-src/agl/AtomicPtrArrayImpl.cpp:
+src/agl/detail/RenderDLBuffer.cpp:
+    .text   start:0x007516C0 end:0x00751864
+src/agl/layer/aglRenderDLBuffer.cpp:
+    .text   start:0x00751870 end:0x007521F0
+src/agl/layer/RenderDL.cpp:
+    .text   start:0x007521F0 end:0x00752274
+src/agl/layer/aglRenderDL.cpp:
+    .text   start:0x00752280 end:0x007522E4
+src/agl/layer/LayerJob.cpp:
+    .text   start:0x007522F0 end:0x00752364
+src/agl/layer/aglLayerJob.cpp:
+    .text   start:0x00752370 end:0x00752620
+src/agl/detail/aglAtomicPtrArray.cpp:
     .text   start:0x00752620 end:0x00752A40
-src/agl/fctr.cpp:
-    .text   start:0x00752A40 end:0x007534C4
-src/agl/perf.cpp:
-    .text   start:0x007534D0 end:0x00753EE4
-src/agl/FlareFilterParameter.cpp:
+src/agl/detail/fctr.cpp:
+    .text   start:0x00752A40 end:0x00752B2C
+src/agl/frame_control/aglGPUStressChecker.cpp:
+    .text   start:0x00752B30 end:0x007534C4
+src/agl/frame_control/perf.cpp:
+    .text   start:0x007534D0 end:0x007534E0
+src/agl/performance/aglGPUTimeStamp.cpp:
+    .text   start:0x007534E0 end:0x00753EE4
+src/agl/performance/FlareFilterParameter.cpp:
     .text   start:0x00753EF0 end:0x007546F4
-src/agl/FlareFilter.cpp:
+src/agl/postfx/aglFlareFilter.cpp:
     .text   start:0x00754700 end:0x00756E3C
-src/agl/ContextParameterBufferImpl.cpp:
+src/agl/postfx/ContextParameterBufferImpl.cpp:
     .text   start:0x00756E40 end:0x007572FC
-src/agl/cull.cpp:
+src/agl/postfx/cull.cpp:
     .text   start:0x00757300 end:0x007585C0
-src/agl/FilterAA.cpp:
-    .text   start:0x007585C0 end:0x0075B500
-src/agl/sdw.cpp:
-    .text   start:0x0075B500 end:0x0075F2C4
-src/agl/BloomParameter.cpp:
-    .text   start:0x0075F2D0 end:0x007608B0
-src/agl/Bloom.cpp:
-    .text   start:0x007608B0 end:0x00764B9C
-src/agl/LightPrePass.cpp:
-    .text   start:0x00764BA0 end:0x007707E4
-src/agl/SSII.cpp:
+src/agl/postfx/FilterAA.cpp:
+    .text   start:0x007585C0 end:0x00758DC4
+src/agl/postfx/aglFilterAA.cpp:
+    .text   start:0x00758DD0 end:0x0075B500
+src/agl/postfx/sdw.cpp:
+    .text   start:0x0075B500 end:0x0075B7CC
+src/agl/shadow/aglSSAO.cpp:
+    .text   start:0x0075B7D0 end:0x0075F2C4
+src/agl/shadow/BloomParameter.cpp:
+    .text   start:0x0075F2D0 end:0x00760834
+src/agl/postfx/aglBloom.cpp:
+    .text   start:0x00760840 end:0x00764B9C
+src/agl/postfx/LightPrePass.cpp:
+    .text   start:0x00764BA0 end:0x007657D8
+src/agl/lighting/aglLightPrePass.cpp:
+    .text   start:0x007657E0 end:0x00768C5C
+src/agl/lighting/aglLightPrePass_LightImpl.cpp:
+    .text   start:0x00768C60 end:0x007707E4
+src/agl/lighting/aglSSII.cpp:
     .text   start:0x007707F0 end:0x007772C0
-src/agl/DepthOfFieldParameter.cpp:
+src/agl/lighting/DepthOfFieldParameter.cpp:
     .text   start:0x007772C0 end:0x00777E9C
-src/agl/DepthOfField.cpp:
-    .text   start:0x00777EA0 end:0x0077D914
-src/agl/AutoExposureVtxStream.cpp:
+src/agl/lighting/DepthOfField.cpp:
+    .text   start:0x00777EA0 end:0x007786BC
+src/agl/postfx/aglDepthOfField.cpp:
+    .text   start:0x007786C0 end:0x0077D914
+src/agl/postfx/AutoExposureVtxStream.cpp:
     .text   start:0x0077D920 end:0x0077DB98
-src/agl/AutoExposure.cpp:
-    .text   start:0x0077DBA0 end:0x0077FA18
-src/agl/OccludedEffectMgr.cpp:
-    .text   start:0x0077FA20 end:0x00786B14
-src/agl/OfxBase.cpp:
-    .text   start:0x00786B20 end:0x0078A218
-src/agl/OfxLensFlare.cpp:
-    .text   start:0x0078A220 end:0x0078B6F8
-src/agl/OfxLensFlareDynamic.cpp:
-    .text   start:0x0078B700 end:0x0078EE10
-src/agl/OcclusionRenderer.cpp:
-    .text   start:0x0078EE10 end:0x00791898
-src/agl/GPUCache.cpp:
+src/agl/postfx/AutoExposure.cpp:
+    .text   start:0x0077DBA0 end:0x0077DDE8
+src/agl/postfx/aglAutoExposure.cpp:
+    .text   start:0x0077DDF0 end:0x0077FA18
+src/agl/postfx/OccludedEffectMgr.cpp:
+    .text   start:0x0077FA20 end:0x0077FEA0
+src/agl/effect/aglOccludedEffectMgr.cpp:
+    .text   start:0x0077FEA0 end:0x00786B14
+src/agl/effect/OfxBase.cpp:
+    .text   start:0x00786B20 end:0x00787ADC
+src/agl/effect/aglOccludedEffect.cpp:
+    .text   start:0x00787AE0 end:0x0078EE10
+src/agl/effect/OcclusionRenderer.cpp:
+    .text   start:0x0078EE10 end:0x0078FB54
+src/agl/effect/aglOcclusionRenderer.cpp:
+    .text   start:0x0078FB60 end:0x00791898
+src/agl/effect/GPUCache.cpp:
     .text   start:0x007918A0 end:0x007918B8
-src/agl/env.cpp:
-    .text   start:0x007918C0 end:0x00792EB4
-src/agl/INamedObjIndex.cpp:
+src/agl/effect/env.cpp:
+    .text   start:0x007918C0 end:0x00791E90
+src/agl/environment/aglEnvObj.cpp:
+    .text   start:0x00791EB0 end:0x00792EB4
+src/agl/environment/INamedObjIndex.cpp:
     .text   start:0x00792EC0 end:0x00793920
-src/agl/INamedObj.cpp:
-    .text   start:0x00793920 end:0x007987AC
-src/agl/INamedObjMgr.cpp:
+src/agl/environment/INamedObj.cpp:
+    .text   start:0x00793920 end:0x00793B10
+src/agl/environment/aglEnvObjMgr.cpp:
+    .text   start:0x00793B10 end:0x007960E8
+src/agl/environment/aglEnvObjBuffer.cpp:
+    .text   start:0x007960F0 end:0x00796F58
+src/agl/environment/aglEnvObjSet.cpp:
+    .text   start:0x00796F60 end:0x007987AC
+src/agl/environment/INamedObjMgr.cpp:
     .text   start:0x007987B0 end:0x0079A0E0
-src/agl/RadialBlur.cpp:
-    .text   start:0x0079A0E0 end:0x007AFA08
-src/agl/HDRCompose.cpp:
+src/agl/environment/RadialBlur.cpp:
+    .text   start:0x0079A0E0 end:0x0079A898
+src/agl/effect/aglRadialBlur.cpp:
+    .text   start:0x0079A8A0 end:0x0079CCF0
+src/agl/environment/aglCubeMap.cpp:
+    .text   start:0x0079CCF0 end:0x0079FF38
+src/agl/shadow/aglDepthShadow.cpp:
+    .text   start:0x0079FF40 end:0x007A3DC0
+src/agl/shadow/aglDepthShadowUnit.cpp:
+    .text   start:0x007A3DC0 end:0x007A705C
+src/agl/shadow/aglShadowFrustum.cpp:
+    .text   start:0x007A7060 end:0x007A9DC8
+src/agl/shadow/aglShadowMap.cpp:
+    .text   start:0x007A9DD0 end:0x007ADBD8
+src/agl/shadow/aglShadowPrePass.cpp:
+    .text   start:0x007ADBE0 end:0x007AFA08
+src/agl/shadow/HDRCompose.cpp:
     .text   start:0x007AFA10 end:0x007B0DEC
-src/agl/ResTextureDataEx.cpp:
+src/agl/shadow/ResTextureDataEx.cpp:
     .text   start:0x007B0DF0 end:0x007B0EF4
-src/agl/TextureUtilG3D.cpp:
+src/agl/shadow/TextureUtilG3D.cpp:
     .text   start:0x007B0F00 end:0x007B0F74
 src/eui/euiConstantBuffer.cpp:
     .text   start:0x007B0F80 end:0x007B12C0
 src/eui/euiNwAllocator.cpp:
     .text   start:0x007B12C0 end:0x007B137C
-src/eui/euiUtility.cpp:
+src/eui/sys/euiUtility.cpp:
     .text   start:0x007B1380 end:0x007B4E6C
-src/eui/euiFontMgr.cpp:
+src/eui/message/euiFontMgr.cpp:
     .text   start:0x007B4E70 end:0x007B5398
-src/eui/euiBoundingEx.cpp:
+src/eui/message/euiBoundingEx.cpp:
     .text   start:0x007B53A0 end:0x007B5548
-src/eui/euiCapturePane.cpp:
+src/eui/lytex/euiCapturePane.cpp:
     .text   start:0x007B5550 end:0x007B6F74
-src/eui/euiDrawInfoEx.cpp:
+src/eui/lytex/euiDrawInfoEx.cpp:
     .text   start:0x007B6F80 end:0x007B7048
-src/eui/euiDynamicCapturePane.cpp:
+src/eui/lytex/euiDynamicCapturePane.cpp:
     .text   start:0x007B7050 end:0x007B7984
-src/eui/euiScissorPane.cpp:
+src/eui/lytex/euiScissorPane.cpp:
     .text   start:0x007B7990 end:0x007B7D54
-src/eui/euiMassDrawPane.cpp:
+src/eui/lytex/euiMassDrawPane.cpp:
     .text   start:0x007B7D60 end:0x007B87E8
-src/eui/euiPictureEx.cpp:
+src/eui/lytex/euiPictureEx.cpp:
     .text   start:0x007B87F0 end:0x007B8CF8
-src/eui/euiSharcArchive.cpp:
+src/eui/lytex/euiSharcArchive.cpp:
     .text   start:0x007B8D00 end:0x007B931C
-src/eui/euiMultiFilterWindowEx.cpp:
+src/eui/lytex/euiMultiFilterWindowEx.cpp:
     .text   start:0x007B9320 end:0x007B9718
-src/eui/euiFrameBufferMultiFilter.cpp:
+src/eui/lytex/euiFrameBufferMultiFilter.cpp:
     .text   start:0x007B9720 end:0x007B9F24
-src/eui/euiWindowEx.cpp:
+src/eui/lytex/euiWindowEx.cpp:
     .text   start:0x007B9F30 end:0x007BA188
-src/eui/euiMultiFilterPictureEx.cpp:
+src/eui/lytex/euiMultiFilterPictureEx.cpp:
     .text   start:0x007BA190 end:0x007BA5CC
-src/eui/euiScalableFontTextBoxEx.cpp:
+src/eui/lytex/euiScalableFontTextBoxEx.cpp:
     .text   start:0x007BA5D0 end:0x007BABB8
-src/eui/euiScalableFontMgr.cpp:
-    .text   start:0x007BABC0 end:0x007BD0F8
-src/eui/euiTextBoxEx.cpp:
+src/eui/message/euiScalableFontMgr.cpp:
+    .text   start:0x007BABC0 end:0x007BC02C
+src/eui/message/euiFontMgr_dup2.cpp:
+    .text   start:0x007BC030 end:0x007BD0F8
+src/eui/lytex/euiTextBoxEx.cpp:
     .text   start:0x007BD100 end:0x007BE4EC
-src/eui/euiMessageString.cpp:
+src/eui/message/euiMessageString.cpp:
     .text   start:0x007BE4F0 end:0x007BE854
-src/eui/euiLetterAnimControl.cpp:
+src/eui/ctrl/euiLetterAnimControl.cpp:
     .text   start:0x007BE860 end:0x007BF744
-src/eui/euiControlBase.cpp:
+src/eui/ctrl/euiControlBase.cpp:
     .text   start:0x007BF750 end:0x007BF810
-src/eui/euiTagProcessor.cpp:
+src/eui/message/euiTagProcessor.cpp:
     .text   start:0x007BF810 end:0x007C1454
-src/eui/euiMessageMgr.cpp:
+src/eui/message/euiMessageMgr.cpp:
     .text   start:0x007C1460 end:0x007C2434
-src/eui/euiMessageSet.cpp:
+src/eui/message/euiMessageSet.cpp:
     .text   start:0x007C2440 end:0x007C2934
-src/eui/euiGrammar.cpp:
+src/eui/message/euiGrammar.cpp:
     .text   start:0x007C2940 end:0x007C35FC
-src/eui/euiDynamicCaptureUseWindowEx.cpp:
+src/eui/message/euiDynamicCaptureUseWindowEx.cpp:
     .text   start:0x007C3600 end:0x007C3908
-src/eui/euiDynamicCaptureUsePictureEx.cpp:
+src/eui/message/euiDynamicCaptureUsePictureEx.cpp:
     .text   start:0x007C3910 end:0x007C3C58
-src/eui/euiPartsEx.cpp:
+src/eui/message/euiPartsEx.cpp:
     .text   start:0x007C3C60 end:0x007C3E08
-src/eui/euiLayoutEx.cpp:
+src/eui/lytex/euiLayoutEx.cpp:
     .text   start:0x007C3E10 end:0x007C6E64
-src/eui/euiAnimatorSet.cpp:
+src/eui/sys/euiAnimatorSet.cpp:
     .text   start:0x007C6E70 end:0x007C75EC
-src/eui/euiMultiArcResourceAccessor.cpp:
+src/eui/lytex/euiMultiArcResourceAccessor.cpp:
     .text   start:0x007C75F0 end:0x007C86A4
-src/eui/euiAnimator.cpp:
+src/eui/sys/euiAnimator.cpp:
     .text   start:0x007C86B0 end:0x007C91F8
-src/eui/euiScreen.cpp:
+src/eui/sys/euiScreen.cpp:
     .text   start:0x007C9200 end:0x007CCFD8
-src/eui/euiButtonGroup.cpp:
+src/eui/sys/euiButtonGroup.cpp:
     .text   start:0x007CCFE0 end:0x007CDE5C
-src/eui/euiAnimButton.cpp:
+src/eui/ctrl/euiAnimButton.cpp:
     .text   start:0x007CDE60 end:0x007CEDA4
-src/eui/euiButtonBase.cpp:
+src/eui/ctrl/euiButtonBase.cpp:
     .text   start:0x007CEDB0 end:0x007CFBB4
-src/eui/euiHoverButton.cpp:
+src/eui/ctrl/euiHoverButton.cpp:
     .text   start:0x007CFBC0 end:0x007CFFF8
-src/eui/euiBoxCursorMgr.cpp:
+src/eui/ctrl/euiBoxCursorMgr.cpp:
     .text   start:0x007D0000 end:0x007D05DC
-src/eui/euiBoxCursorControl.cpp:
+src/eui/cursor/euiBoxCursorControl.cpp:
     .text   start:0x007D05E0 end:0x007D14F4
-src/eui/euiBoxCursorNode.cpp:
+src/eui/cursor/euiBoxCursorNode.cpp:
     .text   start:0x007D1500 end:0x007D18EC
-src/eui/euiScreenMgr.cpp:
+src/eui/sys/euiScreenMgr.cpp:
     .text   start:0x007D18F0 end:0x007D2A34
-src/eui/euiTextSearcher.cpp:
+src/eui/message/euiTextSearcher.cpp:
     .text   start:0x007D2A40 end:0x007D2BC4
-src/eui/euiUIController.cpp:
+src/eui/message/euiUIController.cpp:
     .text   start:0x007D2BD0 end:0x007D3058
-src/eui/euiControlCreator.cpp:
+src/eui/ctrl/euiControlCreator.cpp:
     .text   start:0x007D3060 end:0x007D3474
-src/eui/euiDragButton.cpp:
+src/eui/ctrl/euiDragButton.cpp:
     .text   start:0x007D3480 end:0x007D3998
-src/eui/euiSelectButton.cpp:
+src/eui/ctrl/euiSelectButton.cpp:
     .text   start:0x007D39A0 end:0x007D3D34
-src/eui/euiUniteButton.cpp:
+src/eui/ctrl/euiUniteButton.cpp:
     .text   start:0x007D3D40 end:0x007D52E8
-src/eui/euiTraceGaugeControl.cpp:
+src/eui/ctrl/euiTraceGaugeControl.cpp:
     .text   start:0x007D52F0 end:0x007D5B64
-src/eui/euiTwoTouchCheckKeepButton.cpp:
+src/eui/ctrl/euiTwoTouchCheckKeepButton.cpp:
     .text   start:0x007D5B70 end:0x007D6298
-src/eui/euiCheckButton.cpp:
+src/eui/ctrl/euiCheckButton.cpp:
     .text   start:0x007D62A0 end:0x007D6524
-src/eui/euiCheckKeepButton.cpp:
+src/eui/ctrl/euiCheckKeepButton.cpp:
     .text   start:0x007D6530 end:0x007D66C4
-src/eui/euiNormalButton.cpp:
+src/eui/ctrl/euiNormalButton.cpp:
     .text   start:0x007D66D0 end:0x007D68A8
-src/eui/euiDecisionButton.cpp:
+src/eui/ctrl/euiDecisionButton.cpp:
     .text   start:0x007D68B0 end:0x007D6B98
-src/eui/euiTapButton.cpp:
+src/eui/ctrl/euiTapButton.cpp:
     .text   start:0x007D6BA0 end:0x007D7158
-src/eui/euiRootPane.cpp:
+src/eui/ctrl/euiRootPane.cpp:
     .text   start:0x007D7160 end:0x007D73C8
-src/eui/euiAlignPane.cpp:
+src/eui/ctrl/euiAlignPane.cpp:
     .text   start:0x007D73D0 end:0x007DAC6C
 src/al/Library/Collision/CollisionPartsConnector.cpp:
     .text   start:0x007DAC70 end:0x007DACA4
@@ -5568,7 +5714,7 @@ src/al/Project/Se/StageSwitchListenerList.cpp:
     .text   start:0x00A03050 end:0x00A0386C
 src/al/Project/Se/TextureUtil.cpp:
     .text   start:0x00A03870 end:0x00A04E8C
-src/aal/AudioFrameProcessMgr.cpp:
+src/aal/components/aalAudioFrameProcessMgr.cpp:
     .text   start:0x00A04E90 end:0x00A05244
 src/erepo/Manager.cpp:
     .text   start:0x00A05250 end:0x00A073F0
@@ -5580,15 +5726,15 @@ src/erepo/Reporter.cpp:
     .text   start:0x00A095F0 end:0x00A096C0
 src/erepo/UserInfoObserver.cpp:
     .text   start:0x00A096C0 end:0x00A0B56C
-src/Game/erepo/Data/Array.cpp:
+src/erepo/Data/Array.cpp:
     .text   start:0x00A0B570 end:0x00A0C05C
-src/Game/erepo/Data/SaveDataInfo.cpp:
+src/erepo/Data/SaveDataInfo.cpp:
     .text   start:0x00A0C060 end:0x00A0C244
-src/Game/erepo/Data/SendData.cpp:
+src/erepo/Data/SendData.cpp:
     .text   start:0x00A0C250 end:0x00A0D7BC
-src/Game/erepo/Data/SendDataBase.cpp:
+src/erepo/Data/SendDataBase.cpp:
     .text   start:0x00A0D7C0 end:0x00A0E908
-src/Game/erepo/Data/SendThread.cpp:
+src/erepo/Data/SendThread.cpp:
     .text   start:0x00A0E910 end:0x00A0EEA4
-src/Game/erepo/Data/Struct.cpp:
+src/erepo/Data/Struct.cpp:
     .text   start:0x00A0EEB0 end:0x00A0F5A8
