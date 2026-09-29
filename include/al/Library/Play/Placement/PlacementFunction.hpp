@@ -60,6 +60,11 @@ const char* getLinksActorDisplayName(const ActorInitInfo &, const char *, int);
 
 void initLinksActor(LiveActor *, const ActorInitInfo &, const char *, int);
 
+bool tryGetUp(sead::Vector3f*, const PlacementInfo&);
+bool tryGetRailPointPos(sead::Vector3f*, const PlacementInfo&);
+void getRailPointHandleNext(sead::Vector3f*, const PlacementInfo&);
+void getRailPointHandlePrev(sead::Vector3f*, const PlacementInfo&);
+
 }  // namespace al
 
 namespace alPlacementFunction {

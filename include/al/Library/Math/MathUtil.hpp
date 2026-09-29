@@ -45,6 +45,7 @@ namespace al {
     f32 getRandom(f32, f32);
 
     f32 lerpValue(f32, f32, f32);
+    f32 modf(f32, f32);
 
     bool checkHitSegmentSphereNearDepth(const sead::Vector3f&, const sead::Vector3f&,
                                         const sead::Vector3f&, f32, sead::Vector3f*,
