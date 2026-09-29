@@ -43,6 +43,7 @@ namespace al {
     void initActor(LiveActor*, const ActorInitInfo&);
 
     void initExecutorWatchObj(LiveActor*, const ActorInitInfo&);
+    void initExecutorMapObjMovement(LiveActor*, const ActorInitInfo&);
 
     void initActorAudioKeeperWithout3D(LiveActor*, const ActorInitInfo&, const char*, const char*);
 

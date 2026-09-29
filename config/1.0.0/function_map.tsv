@@ -51661,8 +51661,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710084D460			FALSE	_ZN2al16ConveyerMapParts7exeMoveEv	al::ConveyerMapParts::exeMove()	
 0x710084D560			FALSE	_ZN2al16ConveyerMapPartsD1Ev	al::ConveyerMapParts::~ConveyerMapParts()	
 0x710084D570			FALSE	_ZN2al16ConveyerMapPartsD0Ev	al::ConveyerMapParts::~ConveyerMapParts()	
-0x710084D5A0			FALSE	sub_710084D5A0	sub_710084D5A0	
-0x710084D6A0			FALSE	nullsub_323	nullsub_323	
+0x710084D5A0			FALSE	_ZNK12_GLOBAL__N_123ConveyerMapPartsNrvMove7executeEPN2al11NerveKeeperE	(anonymous namespace)::ConveyerMapPartsNrvMove::execute(al::NerveKeeper*) const	
+0x710084D6A0			FALSE	_ZNK12_GLOBAL__N_126ConveyerMapPartsNrvStandBy7executeEPN2al11NerveKeeperE	(anonymous namespace)::ConveyerMapPartsNrvStandBy::execute(al::NerveKeeper*) const	
 0x710084D6B0			FALSE	_ZNK2al10FunctorV0MIPNS_16ConveyerMapPartsEMS1_FvvEEclEv	al::FunctorV0M<al::ConveyerMapParts*, void (al::ConveyerMapParts::*)()>::operator()() const	
 0x710084D6D0			FALSE	_ZNK2al10FunctorV0MIPNS_16ConveyerMapPartsEMS1_FvvEE5cloneEv	al::FunctorV0M<al::ConveyerMapParts*, void (al::ConveyerMapParts::*)()>::clone() const	
 0x710084D720		ConveyerStep.o	FALSE	_ZN2al12ConveyerStepC2EPKc	al::ConveyerStep::ConveyerStep(char const*)	object (smo)

@@ -33,4 +33,5 @@ namespace al {
     bool listenStageSwitchOnKill(IUseStageSwitch*, const FunctorBase&);
     bool listenStageSwitchOnOff(IUseStageSwitch*, const char*, const FunctorBase&, const FunctorBase&);
     bool listenStageSwitchOnStart(IUseStageSwitch*, const FunctorBase&);
+    bool listenStageSwitchOnOffStart(IUseStageSwitch*, const FunctorBase&, const FunctorBase&);
 }  // namespace al
