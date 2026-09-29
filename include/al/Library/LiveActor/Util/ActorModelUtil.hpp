@@ -1,5 +1,6 @@
 #pragma once
 
+#include <gfx/seadColor.h>
 #include <math/seadMatrix.h>
 
 namespace al {

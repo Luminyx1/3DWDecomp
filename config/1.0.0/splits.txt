@@ -4716,7 +4716,7 @@ src/al/Library/LiveActor/HitReactionKeeper.cpp:
     .text   start:0x008473E0 end:0x008480FC
 src/al/Library/LiveActor/LiveActor.cpp:
     .text   start:0x00848100 end:0x0084A15C
-src/al/Library/LiveActor/LiveActorFunction.cpp:
+src/al/Library/LiveActor/LiveActorFunction.cpp: done
     .text   start:0x0084A160 end:0x0084A4EC
 src/al/Library/LiveActor/SubActorKeeper.cpp:
     .text   start:0x0084A4F0 end:0x0084B14C
