@@ -83,7 +83,7 @@ Every object in the function map already has a unit in `splits.txt` with its
 ### Conventions learned so far
 
 * **Flags** (config.json): `-O3 -mno-implicit-float`, no `-ffunction-sections`, `-std=gnu++17 -fno-rtti
-  -fno-exceptions` for C++; C (LMS) also needs `-fno-strict-aliasing`.
+  -fno-exceptions` for C++; C (LMS) also needs `-fno-strict-aliasing`, and so do the sead/agl/aal/al libraries (see `path_flags`).
   `-mno-implicit-float` is what keeps pointer copies in `ldp/stp x` registers and
   stops loop vectorization, as the game does.
 * **Nerves** are one constant object per nerve in an anonymous namespace

@@ -5,14 +5,14 @@
 
 #pragma once
 
-#include <nn/ui2d/Pane.h>
+#include <nn/ui2d/ui2d_Pane.h>
 
 namespace nn {
 namespace ui2d {
 struct BuildArgSet;
 struct ResParts;
 
-class Parts : nn::ui2d::Pane {
+class Parts : public nn::ui2d::Pane {
 public:
     NN_RUNTIME_TYPEINFO(nn::ui2d::Pane);
 
@@ -22,9 +22,13 @@ public:
 
     virtual ~Parts();
 
-    u64 _E0;
-    u64 _E8;
-    u32 _F0;
+    Pane* FindPaneByNameRecursive(const char*) override;
+    const Pane* FindPaneByNameRecursive(const char*) const override;
+    Material* FindMaterialByNameRecursive(const char*) override;
+    const Material* FindMaterialByNameRecursive(const char*) const override;
+
+    nn::util::IntrusiveListNode m_PartsList;
+    Layout* m_pLayout;
 };
 }  // namespace ui2d
 }  // namespace nn

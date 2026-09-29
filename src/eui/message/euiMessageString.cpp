@@ -5,45 +5,77 @@ namespace eui {
 /** @brief Creates an empty message view. */
 MessageString::MessageString() : m_pText(nullptr), mLength(0) {}
 
-/** @brief Creates a message view with an explicit character count. */
+/**
+ * @brief Creates a message view with an explicit character count.
+ * @param[in] length Number of UTF-16 code units in the message view.
+ * @param[in] pText Character storage referenced by the view; not copied.
+ */
 MessageString::MessageString(int length, const char16_t* pText)
     : m_pText(pText), mLength(length) {}
 
-/** @brief Creates a message view from a character range. */
+/**
+ * @brief Creates a message view from a character range.
+ * @param[in] pBegin First UTF-16 code unit in the message range.
+ * @param[in] pEnd One-past-the-end pointer for the message range.
+ */
 MessageString::MessageString(const char16_t* pBegin, const char16_t* pEnd)
     : m_pText(pBegin), mLength(pEnd - pBegin) {}
 
-/** @brief Creates a message view over a null-terminated safe string. */
+/**
+ * @brief Creates a message view over a null-terminated safe string.
+ * @param[in] rText Safe string whose character storage is referenced by the view.
+ */
 MessageString::MessageString(const sead::SafeStringBase<char16_t>& rText)
     : m_pText(rText.cstr()), mLength(rText.calcLength()) {}
 
-/** @brief Copies a message view without copying its characters. */
+/**
+ * @brief Copies a message view without copying its characters.
+ * @param[in] rOther Source object to copy.
+ */
 MessageString::MessageString(const MessageString& rOther)
     : m_pText(rOther.m_pText), mLength(rOther.mLength) {}
 
-/** @brief Assigns another message view. */
+/**
+ * @brief Assigns another message view.
+ * @param[in] rOther Source object to copy.
+ * @return This message view after assignment.
+ */
 MessageString& MessageString::operator=(const MessageString& rOther) {
     m_pText = rOther.m_pText;
     mLength = rOther.mLength;
     return *this;
 }
 
-/** @brief Returns a character, falling back to the first for an invalid index. */
+/**
+ * @brief Returns a character, falling back to the first for an invalid index.
+ * @param[in] index Zero-based UTF-16 code-unit index in the message view.
+ * @return The selected code unit, or the first code unit if the index is out of range.
+ */
 const char16_t& MessageString::operator[](int index) const {
     return static_cast<u32>(index) < mLength ? m_pText[index] : *m_pText;
 }
 
-/** @brief Returns the beginning of the message view. */
+/**
+ * @brief Returns the beginning of the message view.
+ * @return Iterator at the first code unit.
+ */
 MessageString::Iterator MessageString::begin() const {
     return {m_pText, 0};
 }
 
-/** @brief Returns the end of the message view. */
+/**
+ * @brief Returns the end of the message view.
+ * @return Iterator one past the last code unit.
+ */
 MessageString::Iterator MessageString::end() const {
     return {m_pText, mLength};
 }
 
-/** @brief Returns an iterator clamped to the end of the message. */
+/**
+ * @brief Returns an iterator clamped to the end of the message.
+ * @param[in] index Zero-based UTF-16 code-unit index in the message view.
+ * @return Iterator at the requested index, clamped to the end of the view.
+ */
 MessageString::Iterator MessageString::toIterator(int index) const {
     if (static_cast<u32>(index) >= mLength) {
         index = mLength;
@@ -51,7 +83,11 @@ MessageString::Iterator MessageString::toIterator(int index) const {
     return {m_pText, static_cast<u32>(index)};
 }
 
-/** @brief Copies message characters while skipping embedded control tags. */
+/**
+ * @brief Copies message characters while skipping embedded control tags.
+ * @param[out] pOutput Destination buffer for the null-terminated text with control tags removed.
+ * @return True if all text fits; false if the destination buffer is too small.
+ */
 bool MessageString::tryMakeTagStrippedString(sead::BufferedSafeStringBase<char16_t>* pOutput) const {
     auto* pBuffer = pOutput->getBuffer();
     const int capacity = pOutput->getBufferSize();
@@ -84,7 +120,10 @@ bool MessageString::tryMakeTagStrippedString(sead::BufferedSafeStringBase<char16
     return !overflow;
 }
 
-/** @brief Counts printable characters, including text represented by ruby tags. */
+/**
+ * @brief Counts printable characters, including text represented by ruby tags.
+ * @return Printable character count, including text represented by ruby tags.
+ */
 int MessageString::countPrintableStringLength() const {
     int length = 0;
     const auto* pCurrent = m_pText;

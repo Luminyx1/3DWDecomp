@@ -2,7 +2,10 @@
 
 namespace eui {
 
-/** @brief Returns the base control class name. */
+/**
+ * @brief Returns the base control class name.
+ * @return The base control class name.
+ */
 const char* ControlBase::getClassName() const {
     return "ControlBase";
 }
@@ -13,8 +16,11 @@ ControlBase::ControlBase() : _18(nullptr), _20(nullptr) {}
 /** @brief Destroys the base control. */
 ControlBase::~ControlBase() = default;
 
-/** @brief Provides the default no-op control update. */
-void ControlBase::Update(float) {}
+/**
+ * @brief Provides the default no-op control update.
+ * @param[in] deltaTime Update interval, unused by the base implementation.
+ */
+void ControlBase::Update(float deltaTime) {}
 
 static_assert(sizeof(ControlBase) == 0x28, "ControlBase size");
 

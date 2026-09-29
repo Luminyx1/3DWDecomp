@@ -87,6 +87,23 @@ def _parse_elf(path: str) -> dict:
     return out
 
 
+def _write_cache(path: Path, value) -> None:
+    """Publish an optional cache without failing when Windows readers hold it open."""
+    tmp = path.with_suffix(".tmp%d" % os.getpid())
+    try:
+        with tmp.open("wb") as fh:
+            pickle.dump(value, fh, protocol=pickle.HIGHEST_PROTOCOL)
+        os.replace(tmp, path)
+    except OSError:
+        # The caller already has the parsed data; cache publication is best effort.
+        pass
+    finally:
+        try:
+            tmp.unlink(missing_ok=True)
+        except OSError:
+            pass
+
+
 def _load_cached(path: str) -> dict:
     st = os.stat(path)
     key = (_CACHE_VERSION, st.st_size, st.st_mtime_ns)
@@ -100,10 +117,7 @@ def _load_cached(path: str) -> dict:
         except Exception:
             pass
     data = _parse_elf(path)
-    tmp = cache.with_suffix(".tmp")
-    with tmp.open("wb") as fh:
-        pickle.dump((key, data), fh, protocol=pickle.HIGHEST_PROTOCOL)
-    os.replace(tmp, cache)
+    _write_cache(cache, (key, data))
     return data
 
 
@@ -175,10 +189,7 @@ class FuryImage:
                 pass
         self._build(path, extra_map, extra_syms)
         state = dict(self.__dict__)
-        tmp = idx_cache.with_suffix(".tmp%d" % os.getpid())
-        with tmp.open("wb") as fh:
-            pickle.dump((key, state), fh, protocol=pickle.HIGHEST_PROTOCOL)
-        os.replace(tmp, idx_cache)
+        _write_cache(idx_cache, (key, state))
 
     def _build(self, path, extra_map, extra_syms):
         d = _load_cached(path)

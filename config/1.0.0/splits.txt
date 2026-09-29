@@ -4404,11 +4404,11 @@ src/eui/sys/euiUtility.cpp:
     .text   start:0x007B1380 end:0x007B4E6C
 src/eui/message/euiFontMgr.cpp:
     .text   start:0x007B4E70 end:0x007B5398
-src/eui/message/euiBoundingEx.cpp:
+src/eui/message/euiBoundingEx.cpp: done
     .text   start:0x007B53A0 end:0x007B5548
 src/eui/lytex/euiCapturePane.cpp:
     .text   start:0x007B5550 end:0x007B6F74
-src/eui/lytex/euiDrawInfoEx.cpp:
+src/eui/lytex/euiDrawInfoEx.cpp: done cflags=-fno-strict-aliasing
     .text   start:0x007B6F80 end:0x007B7048
 src/eui/lytex/euiDynamicCapturePane.cpp:
     .text   start:0x007B7050 end:0x007B7984
@@ -4416,20 +4416,20 @@ src/eui/lytex/euiScissorPane.cpp:
     .text   start:0x007B7990 end:0x007B7D54
 src/eui/lytex/euiMassDrawPane.cpp:
     .text   start:0x007B7D60 end:0x007B87E8
-src/eui/lytex/euiPictureEx.cpp:
+src/eui/lytex/euiPictureEx.cpp: done
     .text   start:0x007B87F0 end:0x007B8CF8
 src/eui/lytex/euiSharcArchive.cpp:
     .text   start:0x007B8D00 end:0x007B931C
-src/eui/lytex/euiMultiFilterWindowEx.cpp:
+src/eui/lytex/euiMultiFilterWindowEx.cpp: done
     .text   start:0x007B9320 end:0x007B9718
 src/eui/lytex/euiFrameBufferMultiFilter.cpp:
     .text   start:0x007B9720 end:0x007B9F24
-src/eui/lytex/euiWindowEx.cpp:
+src/eui/lytex/euiWindowEx.cpp: done
     .text   start:0x007B9F30 end:0x007BA188
-src/eui/lytex/euiMultiFilterPictureEx.cpp:
-    .text   start:0x007BA190 end:0x007BA5CC
+src/eui/lytex/euiMultiFilterPictureEx.cpp: done
+    .text   start:0x007BA190 end:0x007BA588
 src/eui/lytex/euiScalableFontTextBoxEx.cpp:
-    .text   start:0x007BA5D0 end:0x007BABB8
+    .text   start:0x007BA590 end:0x007BABB8
 src/eui/message/euiScalableFontMgr.cpp:
     .text   start:0x007BABC0 end:0x007BC02C
 src/eui/message/euiFontMgr_dup2.cpp:
@@ -4450,11 +4450,11 @@ src/eui/message/euiMessageSet.cpp:
     .text   start:0x007C2440 end:0x007C2934
 src/eui/message/euiGrammar.cpp:
     .text   start:0x007C2940 end:0x007C35FC
-src/eui/message/euiDynamicCaptureUseWindowEx.cpp:
+src/eui/message/euiDynamicCaptureUseWindowEx.cpp: done
     .text   start:0x007C3600 end:0x007C3908
-src/eui/message/euiDynamicCaptureUsePictureEx.cpp:
+src/eui/message/euiDynamicCaptureUsePictureEx.cpp: done
     .text   start:0x007C3910 end:0x007C3C58
-src/eui/message/euiPartsEx.cpp:
+src/eui/message/euiPartsEx.cpp: done
     .text   start:0x007C3C60 end:0x007C3E08
 src/eui/lytex/euiLayoutEx.cpp:
     .text   start:0x007C3E10 end:0x007C6E64
@@ -4508,10 +4508,10 @@ src/eui/ctrl/euiDecisionButton.cpp:
     .text   start:0x007D68B0 end:0x007D6B98
 src/eui/ctrl/euiTapButton.cpp:
     .text   start:0x007D6BA0 end:0x007D7158
-src/eui/ctrl/euiRootPane.cpp:
-    .text   start:0x007D7160 end:0x007D73C8
+src/eui/ctrl/euiRootPane.cpp: done
+    .text   start:0x007D7160 end:0x007D7344
 src/eui/ctrl/euiAlignPane.cpp:
-    .text   start:0x007D73D0 end:0x007DAC6C
+    .text   start:0x007D7350 end:0x007DAC6C
 src/al/Library/Collision/CollisionPartsConnector.cpp:
     .text   start:0x007DAC70 end:0x007DACA4
 src/al/Library/Collision/PartsConnector.cpp:
@@ -4672,7 +4672,7 @@ src/al/Library/Light/Keeper/PrePassLightKeeper.cpp:
     .text   start:0x0080C3E0 end:0x00813974
 src/al/Library/Light/Keeper/SSIIKeeper.cpp:
     .text   start:0x00813980 end:0x00814DF8
-src/al/Library/LiveActor/LiveActorGroup.cpp:
+src/al/Library/LiveActor/LiveActorGroup.cpp: done
     .text   start:0x00814E00 end:0x008151C0
 src/al/Library/LiveActor/LiveActorKit.cpp:
     .text   start:0x008151C0 end:0x00815988
@@ -4858,7 +4858,7 @@ src/al/Library/Nerve/NerveKeeper.cpp: done
     .text   start:0x00878860 end:0x00878A28
 src/al/Library/Nerve/NerveStateBase.cpp: done
     .text   start:0x00878A30 end:0x00878B64
-src/al/Library/Nerve/NerveStateCtrl.cpp:
+src/al/Library/Nerve/NerveStateCtrl.cpp: done
     .text   start:0x00878B70 end:0x00878D7C
 src/al/Library/Nerve/NerveUtil.cpp:
     .text   start:0x00878D80 end:0x00879F30
