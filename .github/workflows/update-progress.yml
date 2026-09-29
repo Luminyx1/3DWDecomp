@@ -22,6 +22,9 @@ jobs:
 
       # Matching is measured locally with the original binary and compiler.
       # Publish the committed objdiff snapshot without those local dependencies.
+      - name: Check report freshness
+        run: python tools/report_snapshot.py
+
       - name: Validate report
         run: |
           python - <<'PY'

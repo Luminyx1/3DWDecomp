@@ -22,6 +22,8 @@ import subprocess
 import sys
 from pathlib import Path
 
+from report_snapshot import write_snapshot
+
 ROOT = Path(__file__).resolve().parent.parent
 README = ROOT / "README.md"
 REPORT = ROOT / "build" / "report.json"
@@ -132,6 +134,7 @@ def main(argv=None) -> int:
         print(tbl)
     else:
         shutil.copyfile(REPORT, PUBLIC_REPORT)
+        write_snapshot(ROOT)
         changed = update_readme(tbl)
         print(tbl)
         print("README.md updated" if changed else "README.md already up to date")

@@ -12,7 +12,7 @@ fi
 mkdir -p build
 echo "pre-commit: measuring progress (ninja all + objdiff report)..."
 if "$PY" tools/progress.py > build/progress.log 2>&1; then
-    git add README.md report.json
+    git add README.md report.json report-metadata.json
     tail -n 1 build/progress.log
 else
     echo "pre-commit: tools/progress.py failed, README not updated (see build/progress.log)" >&2

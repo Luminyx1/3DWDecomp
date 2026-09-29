@@ -4708,7 +4708,7 @@ src/al/Library/LiveActor/ActorSceneInfo.cpp: done
     .text   start:0x00828DF0 end:0x00828E18
 src/al/Library/LiveActor/ActorSceneUtil.cpp: done
     .text   start:0x00828E20 end:0x00829098
-src/al/Library/LiveActor/ActorSensorController.cpp:
+src/al/Library/LiveActor/ActorSensorController.cpp: done
     .text   start:0x008290A0 end:0x0082933C
 src/al/Library/LiveActor/ActorSensorUtil.cpp:
     .text   start:0x00829340 end:0x008473D4
