@@ -4998,11 +4998,11 @@ src/al/Library/Screen/ScreenPointDirector.cpp:
     .text   start:0x008A6480 end:0x008A6D2C
 src/al/Library/Screen/ScreenPointerCheckGroup.cpp: done
     .text   start:0x008A6D30 end:0x008A6EAC
-src/al/Library/Screen/ScreenPointer.cpp:
+src/al/Library/Screen/ScreenPointer.cpp: done
     .text   start:0x008A6EB0 end:0x008A6FC8
-src/al/Library/Screen/ScreenPointerUtil.cpp:
+src/al/Library/Screen/ScreenPointerUtil.cpp: done
     .text   start:0x008A7050 end:0x008A7168
-src/al/Library/Screen/ScreenPointKeeper.cpp:
+src/al/Library/Screen/ScreenPointKeeper.cpp: done
     .text   start:0x008A7170 end:0x008A74CC
 src/al/Library/Screen/ScreenPointTarget.cpp:
     .text   start:0x008A74D0 end:0x008A841C
