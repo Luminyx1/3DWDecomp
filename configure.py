@@ -196,10 +196,12 @@ def gen_ninja(cfg: dict, units: list[Unit]) -> str:
             aobj = f"build/obj/{u.name}.o"
             rule = "cxx" if u.is_cxx else "cc"
             w(f"build {ninja_escape(aobj)}: {rule} {ninja_escape(u.src)} | tools/nxcc.py tools/strip_mapsyms.py")
-            if u.cflags:
+            extra = " ".join(v for k, v in cfg.get("path_flags", {}).items()
+                             if u.src.startswith(k) and not k.startswith("$"))
+            if u.cflags or extra:
                 key = "cxxflags" if u.is_cxx else "cflags"
                 base = fl["cxx"] if u.is_cxx else fl["c"]
-                w(f"  {key} = {common} {base} {u.cflags}")
+                w(f"  {key} = {common} {base} {extra} {u.cflags}".rstrip())
             targets.append(aobj)
         w("")
 

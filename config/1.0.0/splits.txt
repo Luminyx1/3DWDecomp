@@ -3866,16 +3866,14 @@ src/nw/vfx/vfx_VertexBuffer.cpp:
     .text   start:0x0064C790 end:0x00650BBC
 src/sead/basis/seadNew.cpp:
     .text   start:0x00650BC0 end:0x00651894
-src/sead/container/seadListImpl.cpp:
+src/sead/container/seadListImpl.cpp: done
     .text   start:0x006518A0 end:0x00651E28
-src/sead/container/seadPtrArray.cpp:
+src/sead/container/seadPtrArray.cpp: done
     .text   start:0x00651E30 end:0x00652294
 src/sead/container/seadNinJoyNpadDevice.cpp:
     .text   start:0x006522A0 end:0x00652890
 src/sead/controller/nin/seadNinJoyNpadDeviceNin.cpp:
-    .text   start:0x00652890 end:0x00652DA8
-src/sead/controller/nin/seadDelegateThread.cpp:
-    .text   start:0x00652DB0 end:0x00652F6C
+    .text   start:0x00652890 end:0x00652F6C
 src/sead/filedevice/seadFileDevice.cpp:
     .text   start:0x00652F70 end:0x0065561C
 src/sead/filedevice/seadArchiveFileDevice.cpp:
@@ -3900,7 +3898,7 @@ src/sead/framework/seadGameFramework.cpp:
     .text   start:0x0065C0D0 end:0x0065C97C
 src/sead/framework/seadMethodTree.cpp:
     .text   start:0x0065C980 end:0x0065CCA0
-src/sead/container/seadTreeNode.cpp:
+src/sead/container/seadTreeNode.cpp: done
     .text   start:0x0065CCA0 end:0x0065D1F4
 src/sead/framework/seadProcessMeter.cpp:
     .text   start:0x0065D200 end:0x0065D370
@@ -3932,7 +3930,7 @@ src/sead/gfx/nvn/seadDrawContext.cpp:
     .text   start:0x00668480 end:0x006686AC
 src/sead/gfx/nvn/seadPrimitiveDrawer.cpp:
     .text   start:0x006686B0 end:0x0066AE3C
-src/sead/heap/seadDisposer.cpp:
+src/sead/heap/seadDisposer.cpp: done
     .text   start:0x0066AE40 end:0x0066AFE4
 src/sead/heap/seadExpHeap.cpp:
     .text   start:0x0066AFF0 end:0x0066E7EC
@@ -3942,8 +3940,10 @@ src/sead/heap/seadHeap.cpp:
     .text   start:0x0066FC80 end:0x006713D4
 src/sead/heap/seadHeapMgr.cpp:
     .text   start:0x006713E0 end:0x006720F4
-src/sead/heap/nin/seadArenaNin.cpp:
-    .text   start:0x00672100 end:0x00672344
+src/sead/heap/nin/seadArenaNin.cpp: done
+    .text   start:0x00672100 end:0x00672180
+src/sead/math/nerdMath.cpp:
+    .text   start:0x00672180 end:0x00672344
 src/sead/prim/seadBitFlag.cpp:
     .text   start:0x00672350 end:0x006725BC
 src/sead/prim/seadEnum.cpp:
@@ -3980,17 +3980,19 @@ src/sead/stream/seadBinaryStreamFormat.cpp:
     .text   start:0x0068DF70 end:0x0068EA04
 src/sead/stream/seadTextStreamFormat.cpp:
     .text   start:0x0068EA10 end:0x0069124C
-src/sead/stream/seadCriticalSectionNin.cpp:
-    .text   start:0x00691250 end:0x00691434
-src/sead/thread/nin/seadEventNin.cpp:
-    .text   start:0x00691440 end:0x006917E0
-src/sead/thread/nin/seadMutexNin.cpp:
+src/sead/thread/nin/seadCriticalSectionNin.cpp: done
+    .text   start:0x00691250 end:0x006913B8
+src/sead/thread/nin/seadEventNin.cpp: done
+    .text   start:0x006913C0 end:0x00691648
+src/sead/thread/nin/seadMessageQueueNin.cpp: done
+    .text   start:0x00691650 end:0x006917E0
+src/sead/thread/nin/seadMutexNin.cpp: done
     .text   start:0x006917E0 end:0x00691948
 src/sead/thread/nin/seadThreadNin.cpp:
     .text   start:0x00691950 end:0x006923B8
 src/sead/thread/seadThread.cpp:
     .text   start:0x006923C0 end:0x00692980
-src/sead/thread/seadThreadUtil.cpp:
+src/sead/thread/seadThreadUtil.cpp: done
     .text   start:0x00692980 end:0x006929BC
 src/sead/controller/seadControllerMgr.cpp:
     .text   start:0x006929C0 end:0x006937D8
@@ -4014,10 +4016,12 @@ src/sead/gfx/seadTextWriter.cpp:
     .text   start:0x0069AB80 end:0x0069BB70
 src/sead/gfx/seadViewport.cpp:
     .text   start:0x0069BB70 end:0x0069C314
-src/sead/random/seadGlobalRandom.cpp:
+src/sead/random/seadGlobalRandom.cpp: done
     .text   start:0x0069C320 end:0x0069C620
-src/sead/random/seadRandom.cpp:
-    .text   start:0x0069C620 end:0x0069F848
+src/sead/random/seadRandom.cpp: done
+    .text   start:0x0069C620 end:0x0069C7B4
+src/sead/math/seadGeometry.cpp:
+    .text   start:0x0069C7C0 end:0x0069F848
 src/sead/codec/seadBase64.cpp:
     .text   start:0x0069F850 end:0x0069FD54
 src/sead/hostio/seadHostIOCurve.cpp:
@@ -4028,9 +4032,9 @@ src/sead/time/seadDateTime.cpp:
     .text   start:0x006A1ED0 end:0x006A2CF8
 src/sead/time/seadDateUtil.cpp:
     .text   start:0x006A2D00 end:0x006A3ADC
-src/sead/time/seadTickSpan.cpp:
+src/sead/time/seadTickSpan.cpp: done
     .text   start:0x006A3AE0 end:0x006A3CF0
-src/sead/mc/seadCoreInfo.cpp:
+src/sead/mc/seadCoreInfo.cpp: done
     .text   start:0x006A3CF0 end:0x006A3F14
 src/sead/heap/seadSeparateHeap.cpp:
     .text   start:0x006A3F20 end:0x006A5A74

@@ -263,7 +263,7 @@ class Carver:
         return None
 
     def _pick_alias(self, name: str, target_addr: int, caller: str | None,
-                    after_new: bool = False) -> str:
+                    after_new: bool = False, base_ctor: bool = False) -> str:
         """C1/C2 and D1/D2 are one function in the binary; pick the name clang
         references: a ctor right after `operator new` is C1, a ctor called from
         another ctor is the base-object C2; a dtor called from a *different*
@@ -278,7 +278,7 @@ class Carver:
         want = None
         kinds = {split(g)[1] for g in group}
         if kinds & {"C1", "C2"}:
-            want = "C1" if after_new or ck not in ("C1", "C2") else "C2"
+            want = "C2" if base_ctor else ("C1" if after_new or ck not in ("C1", "C2") else "C2")
         elif kinds & {"D1", "D2"}:
             tcls = split(group[0])[0]
             want = "D2" if ck in ("D0", "D1", "D2") and tcls != ccls else "D1"
@@ -306,7 +306,8 @@ class Carver:
         got = self.img.got_target(insns[0].operands[1].imm + mem[0].mem.disp)
         return got[0] if got and got[1] == 0 else None
 
-    def _ref_code(self, target_addr: int, caller: str | None = None, after_new: bool = False):
+    def _ref_code(self, target_addr: int, caller: str | None = None, after_new: bool = False,
+                  base_ctor: bool = False):
         imp = self._plt_import(target_addr)
         if imp:
             self.undefs.add(imp)
@@ -314,7 +315,7 @@ class Carver:
         r = self._ref_sym(target_addr)
         if r:
             if r[1] == 0:
-                return self._pick_alias(r[0], target_addr, caller, after_new), 0
+                return self._pick_alias(r[0], target_addr, caller, after_new, base_ctor), 0
             return r
         nm = f"sub_{target_addr + BASE:X}"
         self.undefs.add(nm)
@@ -371,8 +372,11 @@ class Carver:
             rel_off = base_off + ins.address - addr
             gid = ins.id
             if gid == ARM64_INS_BL:
-                ref = self._ref_code(ins.operands[0].imm, name,
-                                     after_new=last_call.startswith(("_Znw", "_Zna")))
+                after_new = last_call.startswith(("_Znw", "_Zna"))
+                base = after_new and self._stores_other_vtable(insns, idx)
+                if base:
+                    after_new = False   # a base ctor inside an inlined derived ctor: C2
+                ref = self._ref_code(ins.operands[0].imm, name, after_new=after_new, base_ctor=base)
                 if not self._local_same_section(ref[0], sec):
                     sec.reloc(rel_off, ref[0], R_CALL26, ref[1])
                 last_call = ref[0]
@@ -386,6 +390,25 @@ class Carver:
                     sec.reloc(rel_off, ref[0], R_JUMP26, ref[1])
             elif gid == ARM64_INS_ADRP:
                 self._recon_adrp(sec, name, insns, idx, addr - base_off)
+
+    def _stores_other_vtable(self, insns, idx) -> bool:
+        """Right after calling a constructor at insns[idx], does the code load another class's
+        vtable (the inlined derived constructor setting its own vtable)?"""
+        callee = self.img.sym_covering(insns[idx].operands[0].imm)
+        m = re.match(r"^_ZN(.*?)C[12]E", callee[0].name) if callee else None
+        if not m:
+            return False
+        cls = m.group(1)
+        for ins in insns[idx + 1: idx + 9]:
+            if ins.id == ARM64_INS_BL:
+                return False
+            if ins.id != ARM64_INS_ADRP:
+                continue
+            for how, cins, lo12, acc in self._consumers(insns, insns.index(ins), ins.operands[0].reg):
+                got = self.img.got_target(ins.operands[1].imm + lo12)
+                if got and got[0].startswith("_ZTV") and cls not in got[0]:
+                    return True
+        return False
 
     def _consumers(self, insns, idx, reg):
         """Instructions after insns[idx] that use `reg` as an ADD base or a

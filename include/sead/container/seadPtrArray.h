@@ -148,7 +148,7 @@ protected:
         if (mPtrNum <= pos)
             return;
 
-        MemUtil::copyOverlap(mPtrs + pos + count, mPtrs + pos,
+        MemUtil::copyOverlap(mPtrs + (pos + count), mPtrs + pos,
                              s32(sizeof(void*)) * (mPtrNum - pos));
     }
 

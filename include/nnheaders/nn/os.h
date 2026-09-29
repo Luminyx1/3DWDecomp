@@ -39,7 +39,17 @@ struct InterProcessEventType {
 };
 }  // namespace detail
 
-typedef u64 Tick;
+class Tick {
+public:
+    Tick() = default;
+    constexpr Tick(s64 tick) : mTick(tick) {}
+
+    s64 GetInt64Value() const { return mTick; }
+    operator s64() const { return mTick; }
+
+private:
+    s64 mTick;
+};
 
 struct LightEventType {
     std::aligned_storage_t<0xc, 4> storage;

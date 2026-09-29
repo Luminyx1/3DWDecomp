@@ -12,6 +12,8 @@ public:
     static int countOnBit(u32 x);
     /// Count trailing zeroes (ctz).
     static int countContinuousOffBitFromRight(u32 x) { return countOnBit((x & -x) - 1); }
+    /// Count leading zeroes (clz).
+    static int countContinuousOffBitFromLeft(u32 x);
     static int countRightOnBit(u32 x, int bit);
     static int findOnBitFromRight(u32 x, int num);
 
@@ -22,6 +24,8 @@ public:
     }
     /// Count trailing zeroes (ctz).
     static int countContinuousOffBitFromRight64(u64 x) { return countOnBit64((x & -x) - 1); }
+    /// Count leading zeroes (clz).
+    static int countContinuousOffBitFromLeft64(u64 x);
     static int countRightOnBit64(u64 x, int bit);
     static int findOnBitFromRight64(u64 x, int num);
 };

@@ -41116,7 +41116,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100652C00			FALSE	_ZN4sead16NinJoyNpadDevice15VibrationThreadC2EPNS_4HeapE	sead::NinJoyNpadDevice::VibrationThread::VibrationThread(sead::Heap*)	
 0x7100652CA0			FALSE	_ZN4sead16NinJoyNpadDevice15VibrationThread5calc_El	sead::NinJoyNpadDevice::VibrationThread::calc_(long)	
 0x7100652D60			FALSE	_ZN4sead16NinJoyNpadDevice15VibrationThreadD0Ev	sead::NinJoyNpadDevice::VibrationThread::~VibrationThread()	
-0x7100652DB0		seadDelegateThread.o	FALSE	_ZN4sead6Thread7destroyEv	sead::Thread::destroy()	
+0x7100652DB0			FALSE	_ZN4sead6Thread7destroyEv	sead::Thread::destroy()	part of seadNinJoyNpadDeviceNin (only its weak functions)
 0x7100652DC0			FALSE	_ZNK4sead6Thread15getMessageQueueEv	sead::Thread::getMessageQueue() const	
 0x7100652DD0			FALSE	_ZNK4sead6Thread12getBlockTypeEv	sead::Thread::getBlockType() const	
 0x7100652DE0			FALSE	_ZNK4sead6Thread12getStackSizeEv	sead::Thread::getStackSize() const	
@@ -41941,7 +41941,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71006720F0			FALSE	_ZN4sead5ArenaD2Ev	sead::Arena::~Arena()	
 0x7100672100	sead/heap/nin	seadArenaNin.o	FALSE	_ZN4sead5Arena10initializeEm	sead::Arena::initialize(unsigned long)	object/folder from debug builds' assert paths
 0x7100672140			FALSE	_ZN4sead5Arena7destroyEv	sead::Arena::destroy()	
-0x7100672180			FALSE	_ZN4nerd15setUseFastsqrteEb	nerd::setUseFastsqrte(bool)	
+0x7100672180	sead/math	nerdMath.o	FALSE	_ZN4nerd15setUseFastsqrteEb	nerd::setUseFastsqrte(bool)	object start set by hand
 0x7100672190			FALSE	_ZN4nerd4sqrtEf	nerd::sqrt(float)	
 0x71006721F0			FALSE	_ZN4nerd5rsqrtEf	nerd::rsqrt(float)	
 0x7100672350	sead/prim	seadBitFlag.o	FALSE	_ZN4sead11BitFlagUtil10countOnBitEj	sead::BitFlagUtil::countOnBit(unsigned int)	object (smo)
@@ -42576,7 +42576,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71006910C0			TRUE	_ZN4sead15FixedSafeStringILi1024EED0Ev	sead::FixedSafeString<1024>::~FixedSafeString()	
 0x71006910D0			TRUE	_ZN4sead15FixedSafeStringILi1024EEaSERKNS_14SafeStringBaseIcEE	sead::FixedSafeString<1024>::operator=(sead::SafeStringBase<char> const&)	
 0x71006911C0			FALSE	sub_71006911C0	sub_71006911C0	
-0x7100691250		seadCriticalSectionNin.o	FALSE	_ZN4sead15CriticalSectionC2Ev	sead::CriticalSection::CriticalSection()	object (smo)
+0x7100691250	sead/thread/nin	seadCriticalSectionNin.o	FALSE	_ZN4sead15CriticalSectionC2Ev	sead::CriticalSection::CriticalSection()	folder fixed by hand (sead)
 0x7100691290			FALSE	_ZN4sead15CriticalSectionC2EPNS_4HeapE	sead::CriticalSection::CriticalSection(sead::Heap*)	
 0x71006912D0			FALSE	_ZN4sead15CriticalSectionC2EPNS_4HeapENS_9IDisposer14HeapNullOptionE	sead::CriticalSection::CriticalSection(sead::Heap*, sead::IDisposer::HeapNullOption)	
 0x7100691310			FALSE	_ZN4sead15CriticalSectionD2Ev	sead::CriticalSection::~CriticalSection()	
@@ -42584,9 +42584,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100691390			FALSE	_ZN4sead15CriticalSection4lockEv	sead::CriticalSection::lock()	
 0x71006913A0			FALSE	_ZN4sead15CriticalSection7tryLockEv	sead::CriticalSection::tryLock()	
 0x71006913B0			FALSE	_ZN4sead15CriticalSection6unlockEv	sead::CriticalSection::unlock()	
-0x71006913C0			FALSE	_ZN4sead5EventC1Ev	sead::Event::Event()	
+0x71006913C0		seadEventNin.o	FALSE	_ZN4sead5EventC1Ev	sead::Event::Event()	object start fixed by hand
 0x71006913F0			FALSE	_ZN4sead5EventC1Eb	sead::Event::Event(bool)	
-0x7100691440	sead/thread/nin	seadEventNin.o	FALSE	_ZN4sead5Event10initializeEb	sead::Event::initialize(bool)	object/folder from debug builds' assert paths
+0x7100691440			FALSE	_ZN4sead5Event10initializeEb	sead::Event::initialize(bool)	object/folder from debug builds' assert paths
 0x7100691460			FALSE	_ZN4sead5EventC2EPNS_4HeapE	sead::Event::Event(sead::Heap*)	
 0x71006914A0			FALSE	_ZN4sead5EventC1EPNS_4HeapENS_9IDisposer14HeapNullOptionE	sead::Event::Event(sead::Heap*, sead::IDisposer::HeapNullOption)	
 0x71006914D0			FALSE	_ZN4sead5EventC1EPNS_4HeapEb	sead::Event::Event(sead::Heap*, bool)	
@@ -42597,7 +42597,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100691600			FALSE	_ZN4sead5Event4waitENS_8TickSpanE	sead::Event::wait(sead::TickSpan)	
 0x7100691630			FALSE	_ZN4sead5Event9setSignalEv	sead::Event::setSignal()	
 0x7100691640			FALSE	_ZN4sead5Event11resetSignalEv	sead::Event::resetSignal()	
-0x7100691650			FALSE	_ZN4sead12MessageQueueC2Ev	sead::MessageQueue::MessageQueue()	
+0x7100691650		seadMessageQueueNin.o	FALSE	_ZN4sead12MessageQueueC2Ev	sead::MessageQueue::MessageQueue()	object start set by hand
 0x7100691660			FALSE	_ZN4sead12MessageQueueD2Ev	sead::MessageQueue::~MessageQueue()	
 0x7100691670			FALSE	_ZN4sead12MessageQueue8allocateEiPNS_4HeapE	sead::MessageQueue::allocate(int, sead::Heap*)	
 0x71006916D0			FALSE	_ZN4sead12MessageQueue4freeEv	sead::MessageQueue::free()	
@@ -43050,7 +43050,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710069C720			FALSE	_ZN4sead6Random6getU32Ev	sead::Random::getU32()	
 0x710069C750			FALSE	_ZN4sead6Random6getU64Ev	sead::Random::getU64()	
 0x710069C790			FALSE	_ZNK4sead6Random10getContextEPjS1_S1_S1_	sead::Random::getContext(unsigned int*, unsigned int*, unsigned int*, unsigned int*) const	
-0x710069C7C0			FALSE	_ZN4sead8Geometry30calcSquaredDistancePointToLineERKNS_7Vector2IfEERKNS_4LineIS2_EEPf	sead::Geometry::calcSquaredDistancePointToLine(sead::Vector2<float> const&, sead::Line<sead::Vector2<float> > const&, float*)	
+0x710069C7C0	sead/math	seadGeometry.o	FALSE	_ZN4sead8Geometry30calcSquaredDistancePointToLineERKNS_7Vector2IfEERKNS_4LineIS2_EEPf	sead::Geometry::calcSquaredDistancePointToLine(sead::Vector2<float> const&, sead::Line<sead::Vector2<float> > const&, float*)	object start set by hand
 0x710069C810			FALSE	_ZN4sead8Geometry30calcSquaredDistancePointToLineERKNS_7Vector3IfEERKNS_4LineIS2_EEPf	sead::Geometry::calcSquaredDistancePointToLine(sead::Vector3<float> const&, sead::Line<sead::Vector3<float> > const&, float*)	
 0x710069C890			FALSE	_ZN4sead8Geometry29calcSquaredDistancePointToRayERKNS_7Vector2IfEERKNS_3RayIS2_EEPf	sead::Geometry::calcSquaredDistancePointToRay(sead::Vector2<float> const&, sead::Ray<sead::Vector2<float> > const&, float*)	
 0x710069C900			FALSE	_ZN4sead8Geometry29calcSquaredDistancePointToRayERKNS_7Vector3IfEERKNS_3RayIS2_EEPf	sead::Geometry::calcSquaredDistancePointToRay(sead::Vector3<float> const&, sead::Ray<sead::Vector3<float> > const&, float*)	
@@ -43223,12 +43223,12 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71006A39F0			TRUE	_ZN4sead15FixedSafeStringILi8EEaSERKNS_14SafeStringBaseIcEE	sead::FixedSafeString<8>::operator=(sead::SafeStringBase<char> const&)	
 0x71006A3AE0		seadTickSpan.o	FALSE	_ZNK4sead8TickSpan13toNanoSecondsEv	sead::TickSpan::toNanoSeconds() const	object (smo)
 0x71006A3BC0			FALSE	_ZN4sead8TickSpan14setNanoSecondsEl	sead::TickSpan::setNanoSeconds(long)	
-0x71006A3CD0			FALSE	sub_71006A3CD0	sub_71006A3CD0	
+0x71006A3CD0			FALSE	_GLOBAL__sub_I_seadTickSpan.cpp	_GLOBAL__sub_I_seadTickSpan.cpp	
 0x71006A3CF0	sead/mc	seadCoreInfo.o	FALSE	_ZNK4sead10CoreIdMask11countOnBitsEv	sead::CoreIdMask::countOnBits() const	object (smo)
 0x71006A3D40			FALSE	_ZN4sead8CoreInfo9configureEv	sead::CoreInfo::configure()	
 0x71006A3E00			FALSE	_ZN4sead8CoreInfo15getPlatformMaskENS_6CoreIdE	sead::CoreInfo::getPlatformMask(sead::CoreId)	
 0x71006A3E30			FALSE	_ZN4sead8CoreInfo4dumpEv	sead::CoreInfo::dump()	
-0x71006A3E40			FALSE	sub_71006A3E40	sub_71006A3E40	
+0x71006A3E40			FALSE	_GLOBAL__sub_I_seadCoreInfo.cpp	_GLOBAL__sub_I_seadCoreInfo.cpp	
 0x71006A3F20	sead/heap	seadSeparateHeap.o	FALSE	_ZN4sead12SeparateHeapC2ERKNS_14SafeStringBaseIcEEPNS_4HeapEPvmS7_mb	sead::SeparateHeap::SeparateHeap(sead::SafeStringBase<char> const&, sead::Heap*, void*, unsigned long, void*, unsigned long, bool)	object/folder from debug builds' assert paths
 0x71006A4040			FALSE	_ZN4sead12SeparateHeapD2Ev	sead::SeparateHeap::~SeparateHeap()	
 0x71006A4080			FALSE	_ZN4sead12SeparateHeapD0Ev	sead::SeparateHeap::~SeparateHeap()	
