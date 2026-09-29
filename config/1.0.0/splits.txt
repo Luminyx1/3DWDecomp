@@ -4396,7 +4396,7 @@ src/agl/postfx/aglBlurFilter.cpp: done
     .text   start:0x007B0370 end:0x007B0DEC
 src/agl/g3d/aglResTextureDataEx.cpp: done
     .text   start:0x007B0DF0 end:0x007B0F74
-src/eui/euiConstantBuffer.cpp:
+src/eui/euiConstantBuffer.cpp: done
     .text   start:0x007B0F80 end:0x007B12C0
 src/eui/euiNwAllocator.cpp: done
     .text   start:0x007B12C0 end:0x007B137C
@@ -4418,7 +4418,7 @@ src/eui/lytex/euiMassDrawPane.cpp:
     .text   start:0x007B7D60 end:0x007B87E8
 src/eui/lytex/euiPictureEx.cpp: done
     .text   start:0x007B87F0 end:0x007B8CF8
-src/eui/lytex/euiSharcArchive.cpp:
+src/eui/lytex/euiSharcArchive.cpp: done
     .text   start:0x007B8D00 end:0x007B931C
 src/eui/lytex/euiMultiFilterWindowEx.cpp: done
     .text   start:0x007B9320 end:0x007B9718

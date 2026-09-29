@@ -19,12 +19,24 @@ typedef void (*FreeFunction)(void* ptr, void* pUserData);
 
 class GpuBuffer {
 public:
+    /** @brief Creates an empty GPU buffer with no active mapping. */
+    GpuBuffer()
+        : m_Flags(0), m_pBuffers(nullptr), m_pGpuAddresses(nullptr), m_BufferSize(0),
+          m_BufferAlignment(1), m_BufferCount(0), m_MappedBufferIndex(-1),
+          m_GpuAccessBufferIndex(0), m_pMappedPointer(nullptr) {}
+
     enum Flag {
         Flag_AtomicAllocation = 1 << 0,
         Flag_Unallocated = 1 << 1,
     };
 
     struct InitializeArg {
+        /** @brief Defaults to a single constant buffer with optional allocation modes disabled. */
+        InitializeArg()
+            : gpuAccessFlag(nn::gfx::GpuAccess_ConstantBuffer), bufferSize(0), bufferCount(1),
+              pMemoryPool(nullptr), memoryPoolOffset(0), pAllocateFunction(nullptr),
+              pUserData(nullptr), isAtomicAllocation(false), isUnallocated(false) {}
+
         int gpuAccessFlag;
         size_t bufferSize;
         uint32_t bufferCount;

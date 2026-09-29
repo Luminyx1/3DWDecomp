@@ -15,6 +15,14 @@ public:
     }
     ~ArchiveFileDevice() override = default;
 
+    /** @brief Returns the associated archive. @return Archive resource, or null if unset. */
+    ArchiveRes* getArchive() const { return mArchive; }
+    /**
+     * @brief Associates an archive without transferring ownership.
+     * @param[in] pArchive Archive resource to use, or null to clear the association.
+     */
+    void setArchive(ArchiveRes* pArchive) { mArchive = pArchive; }
+
     u8* tryLoadWithEntryID(s32 id, LoadArg& arg);
     FileDevice* tryOpenWithEntryID(FileHandle* handle, s32 id, FileOpenFlag flag, u32 div_size);
     s32 tryConvertPathToEntryID(const SafeString& path);
