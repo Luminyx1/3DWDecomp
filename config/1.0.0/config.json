@@ -13,11 +13,30 @@
     "Required: -std=gnu++14 -fno-common -fno-short-enums -ffunction-sections",
     "-fdata-sections -fPIC.  64-bit adds -mcpu=cortex-a57+fp+simd+crypto+crc.",
     "Retail builds: -O3 -fno-omit-frame-pointer, -DNN_SDK_BUILD_RELEASE.",
-    "Prohibited: -fshort-wchar, -fpack-struct.  It is gnu++14, not 17."
+    "Prohibited: -fshort-wchar, -fpack-struct.  The SDK default is gnu++14; we use gnu++17",
+    "because the sead/al/nn community headers need it (no codegen difference seen so far).",
+    "-mno-implicit-float: no SIMD registers for integer/pointer data. Matches LMSi_MemCopy (no",
+    "loop vectorization) and BgmStopObj's ctor/Functor copies (GPR ldp/stp, no SLP q-regs).",
+    "(The SDK project settings also say <Vectorization>false</Vectorization>; -fno-vectorize",
+    "alone is not enough, and in clang 8 it must come after -O3 to take effect.)",
+    "-fno-strict-aliasing (C, LMS): the game reloads through pointers after every store.",
+    "-fno-rtti: only NintendoWare has typeinfo in the binary; game/al/sead do not.",
+    "On non-Windows hosts the same clang.exe runs under wine (tools/nxcc.py)."
   ],
   "flags": {
-    "common": "-fPIC -fno-common -fno-short-enums -ffunction-sections -fdata-sections -fno-omit-frame-pointer -mcpu=cortex-a57+fp+simd+crypto+crc -DNN_NINTENDO_SDK -DNN_SDK_BUILD_RELEASE -g0 -Iinclude",
-    "c":      "-O3 -std=gnu11",
-    "cxx":    "-O3 -std=gnu++14"
-  }
+    "common": "-fPIC -fno-common -fno-short-enums -ffunction-sections -fdata-sections -fno-omit-frame-pointer -mcpu=cortex-a57+fp+simd+crypto+crc -mno-implicit-float -DNN_NINTENDO_SDK -DNN_SDK_BUILD_RELEASE -DNNSDK -DSWITCH -g0",
+    "c":      "-O3 -fno-strict-aliasing -std=gnu11",
+    "cxx":    "-O3 -std=gnu++17 -fno-exceptions -fno-rtti"
+  },
+
+  "$include_note": [
+    "include/Game   game (RedCarpet) headers (\"MapObj/Foo.hpp\")",
+    "include/al     ActionLibrary (\"Library/...\", \"Project/...\")",
+    "include/sead   sead (<heap/seadHeap.h>, \"lms/lms.h\")",
+    "include/agl, include/eui",
+    "include/nnheaders  community NintendoSDK headers (open-ead/3DWCommunity nnheaders)",
+    "Headers under al/sead/agl/eui/nnheaders/Game started from the 3dcomp project."
+  ],
+  "include_dirs": ["include", "include/Game", "include/al", "include/sead", "include/agl", "include/eui"],
+  "system_include_dirs": ["include/nnheaders"]
 }

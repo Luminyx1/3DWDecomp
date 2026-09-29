@@ -84,12 +84,13 @@ def build(nso: nsomod.Nso) -> bytes:
     add(".data", SHT_PROGBITS, SHF_ALLOC | SHF_WRITE, data.memory_offset, data.decompressed_size, align=0x1000)
     add(".bss", SHT_NOBITS, SHF_ALLOC | SHF_WRITE, bss_start, nso.bss_size, align=0x1000)
 
+    hash_secs = []  # sh_link must point at .dynsym; patched once it exists
     if gnu_hash:
-        add(".gnu.hash", SHT_GNU_HASH, SHF_ALLOC, gnu_hash, (symtab - gnu_hash), align=8)
+        hash_secs.append(add(".gnu.hash", SHT_GNU_HASH, SHF_ALLOC, gnu_hash, (symtab - gnu_hash), align=8))
     if hash_:
         nbucket = struct.unpack_from("<I", img, hash_)[0]
         nchain = struct.unpack_from("<I", img, hash_ + 4)[0]
-        add(".hash", SHT_HASH, SHF_ALLOC, hash_, 8 + 4 * (nbucket + nchain), align=8, entsize=4)
+        hash_secs.append(add(".hash", SHT_HASH, SHF_ALLOC, hash_, 8 + 4 * (nbucket + nchain), align=8, entsize=4))
 
     i_dynstr = add(".dynstr", SHT_STRTAB, SHF_ALLOC, strtab, strsz, align=1)
 
@@ -121,6 +122,8 @@ def build(nso: nsomod.Nso) -> bytes:
 
     i_dynsym = add(".dynsym", SHT_DYNSYM, SHF_ALLOC, symtab, len(new_dynsym),
                    link=i_dynstr, info=first_global, align=8, entsize=24)
+    for i in hash_secs:
+        secs[i][6] = i_dynsym
 
     if rela:
         add(".rela.dyn", SHT_RELA, SHF_ALLOC, rela, relasz, link=i_dynsym, align=8, entsize=24)
