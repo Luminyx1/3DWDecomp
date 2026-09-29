@@ -110,4 +110,45 @@ void MethodTreeNode::callRec_()
     }
 }
 
+/**
+ * Searches the tree depth first, starting at this node, then its children, then its later siblings.
+ * @param rCondition test the node has to pass
+ * @return the first node that passes, or nullptr
+ */
+MethodTreeNode* MethodTreeNode::find(Condition& rCondition)
+{
+    if (rCondition.isMatch(this))
+    {
+        return this;
+    }
+
+    if (child())
+    {
+        MethodTreeNode* pChild = child()->value();
+        if (pChild)
+        {
+            MethodTreeNode* pFound = pChild->find(rCondition);
+            if (pFound)
+            {
+                return pFound;
+            }
+        }
+    }
+
+    if (next())
+    {
+        MethodTreeNode* pNext = next()->value();
+        if (pNext)
+        {
+            MethodTreeNode* pFound = pNext->find(rCondition);
+            if (pFound)
+            {
+                return pFound;
+            }
+        }
+    }
+
+    return nullptr;
+}
+
 }  // namespace sead

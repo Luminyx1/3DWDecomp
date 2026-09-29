@@ -31,6 +31,13 @@ public:
 
     using PauseEventDelegate = IDelegate2<MethodTreeNode*, PauseFlag>;
 
+    /// A test for find().
+    class Condition
+    {
+    public:
+        virtual bool isMatch(MethodTreeNode* node) = 0;
+    };
+
     // NON_MATCHING: stores for mPauseFlag, mPauseEventDelegate, mUserID
     explicit MethodTreeNode(CriticalSection* cs) : TTreeNode(this)
     {
@@ -55,6 +62,7 @@ public:
     }
 
     void call();
+    MethodTreeNode* find(Condition& condition);
     void detachAll();
     void pushBackChild(MethodTreeNode* node);
     void pushFrontChild(MethodTreeNode* node);

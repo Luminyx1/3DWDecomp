@@ -338,6 +338,10 @@ class Carver:
         if sec == ".rodata":
             if how == "ldst" and fp and access in (4, 8, 16):
                 return self._const(tgt, access)
+            if how == "add" and jt and not jt[2] and _is_c_string(self.img.bytes_at(tgt, 0x1000)) \
+                    and self.img.bytes_at(tgt, 1) != b"\0":
+                # a string compared character by character looks like an indexed table
+                return self._string(tgt)
             if how == "add" and jt:
                 ent, count, is_fp = jt
                 if is_fp and ent * count in (4, 8, 16):

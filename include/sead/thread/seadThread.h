@@ -187,8 +187,8 @@ public:
     }
 #endif
 
-#ifdef SEAD_DEBUG
     void initHostIO();
+#ifdef SEAD_DEBUG
     void genMessage(hostio::Context* context) override;
     void listenPropertyEvent(const hostio::PropertyEvent* event) override;
 #endif

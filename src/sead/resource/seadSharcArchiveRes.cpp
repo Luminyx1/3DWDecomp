@@ -230,7 +230,8 @@ u32 SharcArchiveRes::readDirectoryImpl_(HandleBuffer* pHandle, DirectoryEntry* p
         }
         else
         {
-            if (reinterpret_cast<const u8*>(mFNTBlock + (offset & 0xffffff)) > mDataBlock)
+            const u8* pName = reinterpret_cast<const u8*>(mFNTBlock + (offset & 0xffffff));
+            if (mDataBlock < pName)
             {
                 SEAD_WARN("Invalid data start offset");
                 pEntry[count].name.clear();

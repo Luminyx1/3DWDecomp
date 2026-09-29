@@ -42625,7 +42625,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100691F20			FALSE	_ZNK4sead6Thread26getStackCheckStartAddress_Ev	sead::Thread::getStackCheckStartAddress_() const	
 0x7100691F30			FALSE	_ZN4sead6Thread11setPriorityEi	sead::Thread::setPriority(int)	
 0x7100691F50			FALSE	_ZNK4sead6Thread11getPriorityEv	sead::Thread::getPriority() const	
-0x7100691F60			FALSE	_ZN4sead9ThreadMgr18SingletonDisposer_D2Ev	sead::ThreadMgr::SingletonDisposer_::~SingletonDisposer_()	part of seadThreadNin.o (debug builds)
+0x7100691F60			FALSE	_ZN4sead9ThreadMgr18SingletonDisposer_D2Ev	sead::ThreadMgr::SingletonDisposer_::~SingletonDisposer_()	object start fixed by hand
 0x7100691FE0			FALSE	_ZN4sead9ThreadMgr18SingletonDisposer_D0Ev	sead::ThreadMgr::SingletonDisposer_::~SingletonDisposer_()	
 0x7100692050			FALSE	_ZN4sead9ThreadMgr14createInstanceEPNS_4HeapE	sead::ThreadMgr::createInstance(sead::Heap*)	
 0x71006920E0			FALSE	_ZN4sead9ThreadMgr14deleteInstanceEv	sead::ThreadMgr::deleteInstance()	
@@ -42639,11 +42639,11 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71006922D0			FALSE	_ZN4sead10MainThread26quitAndDestroySingleThreadEb	sead::MainThread::quitAndDestroySingleThread(bool)	
 0x71006922E0			FALSE	_ZN4sead10MainThread11setPriorityEi	sead::MainThread::setPriority(int)	
 0x71006922F0			FALSE	_ZN4sead10MainThread5calc_El	sead::MainThread::calc_(long)	
-0x7100692300			FALSE	_ZN4sead14DelegateThreadC2ERKNS_14SafeStringBaseIcEEPNS_10IDelegate2IPNS_6ThreadElEEPNS_4HeapEiNS_12MessageQueue9BlockTypeElii	sead::DelegateThread::DelegateThread(sead::SafeStringBase<char> const&, sead::IDelegate2<sead::Thread*, long>*, sead::Heap*, int, sead::MessageQueue::BlockType, long, int, int)	
+0x7100692300	sead/thread	seadDelegateThread.o	FALSE	_ZN4sead14DelegateThreadC2ERKNS_14SafeStringBaseIcEEPNS_10IDelegate2IPNS_6ThreadElEEPNS_4HeapEiNS_12MessageQueue9BlockTypeElii	sead::DelegateThread::DelegateThread(sead::SafeStringBase<char> const&, sead::IDelegate2<sead::Thread*, long>*, sead::Heap*, int, sead::MessageQueue::BlockType, long, int, int)	object start set by hand
 0x7100692360			FALSE	_ZN4sead14DelegateThreadD2Ev	sead::DelegateThread::~DelegateThread()	
 0x7100692370			FALSE	_ZN4sead14DelegateThreadD0Ev	sead::DelegateThread::~DelegateThread()	
 0x71006923A0			FALSE	_ZN4sead14DelegateThread5calc_El	sead::DelegateThread::calc_(long)	
-0x71006923C0	sead/thread	seadThread.o	FALSE	_ZN4sead6Thread4run_Ev	sead::Thread::run_()	object/folder from debug builds' assert paths
+0x71006923C0		seadThread.o	FALSE	_ZN4sead6Thread4run_Ev	sead::Thread::run_()	object start fixed by hand
 0x7100692430			FALSE	_ZNK4sead6Thread18checkStackOverFlowEPKci	sead::Thread::checkStackOverFlow(char const*, int) const	
 0x7100692440			FALSE	_ZNK4sead6Thread23checkStackEndCorruptionEPKci	sead::Thread::checkStackEndCorruption(char const*, int) const	
 0x7100692450			FALSE	_ZNK4sead6Thread25checkStackPointerOverFlowEPKci	sead::Thread::checkStackPointerOverFlow(char const*, int) const	

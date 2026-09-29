@@ -101,14 +101,12 @@ bool Thread::start()
 
 void Thread::waitDone()
 {
-    if ((mState.value() | State::cReleased) == State::cReleased)
+    if (mState != State::cInitialized && mState != State::cReleased)
     {
-        return;
+        nn::os::WaitThread(mThreadInner);
+        SEAD_ASSERT_MSG(mState == State::cTerminated, "Join failed?");
+        mState = State::cReleased;
     }
-
-    nn::os::WaitThread(mThreadInner);
-    SEAD_ASSERT_MSG(mState == State::cTerminated, "Join failed?");
-    mState = State::cReleased;
 }
 
 void Thread::setPriority(s32 prio)
@@ -202,7 +200,7 @@ Thread::Thread(Heap* pHeap, nn::os::ThreadType* pNnThread, u32 threadId)
     setAffinity(mAffinity);
 }
 
-ThreadMgr::ThreadMgr() = default;
+SEAD_SINGLETON_DISPOSER_IMPL(ThreadMgr)
 
 u32 ThreadMgr::getCurrentThreadID_()
 {
@@ -221,4 +219,5 @@ void ThreadMgr::initMainThread_(Heap* pHeap)
 
     nn::os::SetTlsValue(CoreInfo::getCoreNumberTlsSlot(), int(nn::os::GetCurrentCoreNumber()) + 1);
 }
+
 }  // namespace sead

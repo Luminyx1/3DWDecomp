@@ -3896,7 +3896,7 @@ src/sead/framework/nx/seadMethodTreeNode.cpp:
     .text   start:0x0065BED0 end:0x0065C0CC
 src/sead/framework/seadGameFramework.cpp:
     .text   start:0x0065C0D0 end:0x0065C97C
-src/sead/framework/seadMethodTree.cpp:
+src/sead/framework/seadMethodTree.cpp: done
     .text   start:0x0065C980 end:0x0065CCA0
 src/sead/container/seadTreeNode.cpp: done
     .text   start:0x0065CCA0 end:0x0065D1F4
@@ -3988,9 +3988,11 @@ src/sead/thread/nin/seadMessageQueueNin.cpp: done
     .text   start:0x00691650 end:0x006917E0
 src/sead/thread/nin/seadMutexNin.cpp: done
     .text   start:0x006917E0 end:0x00691948
-src/sead/thread/nin/seadThreadNin.cpp:
-    .text   start:0x00691950 end:0x006923B8
-src/sead/thread/seadThread.cpp:
+src/sead/thread/nin/seadThreadNin.cpp: done
+    .text   start:0x00691950 end:0x006922F4
+src/sead/thread/seadDelegateThread.cpp: done
+    .text   start:0x00692300 end:0x006923B8
+src/sead/thread/seadThread.cpp: done
     .text   start:0x006923C0 end:0x00692980
 src/sead/thread/seadThreadUtil.cpp: done
     .text   start:0x00692980 end:0x006929BC
@@ -4050,7 +4052,7 @@ src/sead/heap/seadUnitHeap.cpp:
     .text   start:0x006AF300 end:0x006B0DAC
 src/sead/mc/seadJobQueue.cpp:
     .text   start:0x006B0DB0 end:0x006B1694
-src/sead/resource/seadSharcArchiveRes.cpp:
+src/sead/resource/seadSharcArchiveRes.cpp: done
     .text   start:0x006B16A0 end:0x006B248C
 src/sead/resource/seadSharcArchiveRes_2.cpp:
     .text   start:0x006B3160 end:0x006B3174

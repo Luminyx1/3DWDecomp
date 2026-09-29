@@ -89,12 +89,15 @@ s32 Thread::calcStackUsedSizePeak() const
 
 void Thread::checkStackOverFlow(const char* pSourceFile, s32 sourceLine) const
 {
+#ifdef SEAD_DEBUG
     checkStackPointerOverFlow(pSourceFile, sourceLine);
     checkStackEndCorruption(pSourceFile, sourceLine);
+#endif
 }
 
 void Thread::checkStackEndCorruption(const char* pSourceFile, s32 sourceLine) const
 {
+#ifdef SEAD_DEBUG
     if (ThreadMgr::instance()->getMainThread() == this)
     {
         return;
@@ -114,10 +117,12 @@ void Thread::checkStackEndCorruption(const char* pSourceFile, s32 sourceLine) co
                     getName().cstr(), this,
                     pSourceFile ? pSourceFile : SafeString::cEmptyString.cstr(), sourceLine,
                     getStackSize());
+#endif
 }
 
 void Thread::checkStackPointerOverFlow(const char* pSourceFile, s32 sourceLine) const
 {
+#ifdef SEAD_DEBUG
     if (!ThreadMgr::instance() || ThreadMgr::instance()->getCurrentThread() != this)
     {
         SEAD_WARN("sead::Thread::checkStackPointerOverFlow cannot be called from other thread.");
@@ -141,6 +146,7 @@ void Thread::checkStackPointerOverFlow(const char* pSourceFile, s32 sourceLine) 
     {
         ThreadMgr::instance()->getCurrentThread();
     }
+#endif
 }
 
 void Thread::setStackOverflowExceptionEnable(bool)
@@ -166,9 +172,9 @@ void Thread::run_()
     }
 }
 
-// NON_MATCHING: the first loop gets unrolled and the loop counter is not negated
 void Thread::initStackCheck_()
 {
+#ifdef SEAD_DEBUG
     void* const start = reinterpret_cast<void*>(getStackCheckStartAddress_());
     void* const end = PtrUtil::addOffset(mStackTopForCheck, mStackSize);
     u32* addr = static_cast<u32*>(start);
@@ -195,11 +201,12 @@ void Thread::initStackCheck_()
             }
         } while (addr < end);
     }
+#endif
 }
 
-// NON_MATCHING: see Thread::initStackCheck_
 void Thread::initStackCheckWithCurrentStackPointer_()
 {
+#ifdef SEAD_DEBUG
     void* const start = reinterpret_cast<void*>(getStackCheckStartAddress_());
     void* const end = reinterpret_cast<void*>(ThreadUtil::GetCurrentStackPointer());
     u32* addr = static_cast<u32*>(start);
@@ -226,9 +233,11 @@ void Thread::initStackCheckWithCurrentStackPointer_()
             }
         } while (addr < end);
     }
+#endif
 }
 
-SEAD_SINGLETON_DISPOSER_IMPL(ThreadMgr)
+
+ThreadMgr::ThreadMgr() = default;
 
 ThreadMgr::~ThreadMgr()
 {
@@ -256,6 +265,10 @@ ThreadMgr::~ThreadMgr()
     }
 
     sInstance = nullptr;
+}
+
+void ThreadMgr::initHostIO()
+{
 }
 
 void ThreadMgr::initialize(Heap* pHeap)
@@ -314,6 +327,7 @@ void ThreadMgr::quitAndWaitDoneMultipleThread(Thread** pThreads, s32 num, bool i
 
 void ThreadMgr::checkCurrentThreadStackOverFlow(const char* pSourceFile, s32 sourceLine)
 {
+#ifdef SEAD_DEBUG
     if (!ThreadMgr::instance())
     {
         return;
@@ -322,10 +336,12 @@ void ThreadMgr::checkCurrentThreadStackOverFlow(const char* pSourceFile, s32 sou
     {
         thread->checkStackOverFlow(pSourceFile, sourceLine);
     }
+#endif
 }
 
 void ThreadMgr::checkCurrentThreadStackEndCorruption(const char* pSourceFile, s32 sourceLine)
 {
+#ifdef SEAD_DEBUG
     if (!ThreadMgr::instance())
     {
         return;
@@ -334,10 +350,12 @@ void ThreadMgr::checkCurrentThreadStackEndCorruption(const char* pSourceFile, s3
     {
         thread->checkStackEndCorruption(pSourceFile, sourceLine);
     }
+#endif
 }
 
 void ThreadMgr::checkCurrentThreadStackPointerOverFlow(const char* pSourceFile, s32 sourceLine)
 {
+#ifdef SEAD_DEBUG
     if (!ThreadMgr::instance())
     {
         return;
@@ -346,5 +364,6 @@ void ThreadMgr::checkCurrentThreadStackPointerOverFlow(const char* pSourceFile, 
     {
         thread->checkStackPointerOverFlow(pSourceFile, sourceLine);
     }
+#endif
 }
 }  // namespace sead

@@ -60,6 +60,7 @@ template <typename A1>
 class IDelegate1
 {
 public:
+    virtual ~IDelegate1() = default;
     virtual void invoke(A1 a1) = 0;
     virtual IDelegate1* clone(Heap*) const { return nullptr; }
 #if SEAD_DELEGATE_ISNODUMMY
@@ -89,6 +90,7 @@ template <typename A1, typename A2>
 class IDelegate2
 {
 public:
+    virtual ~IDelegate2() = default;
     virtual void invoke(A1 a1, A2 a2) = 0;
     virtual IDelegate2* clone(Heap*) const { return nullptr; }
 #if SEAD_DELEGATE_ISNODUMMY
@@ -513,7 +515,6 @@ public:
     template <typename DelegateType>
     AnyDelegateImpl& operator=(DelegateType other)
     {
-        static_assert(std::is_trivially_destructible<DelegateType>());
         static_assert(std::is_base_of<Interface, DelegateType>());
         static_assert(sizeof(DelegateType) <= sizeof(mStorage));
         new (&mStorage) DelegateType(std::move(other));
