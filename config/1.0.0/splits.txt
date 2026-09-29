@@ -5118,13 +5118,13 @@ src/al/Project/Action/Ctrl/ActionScreenEffectCtrl.cpp:
     .text   start:0x008DDB20 end:0x008DE024
 src/al/Project/Action/Ctrl/YamlFormatter.cpp:
     .text   start:0x008DE030 end:0x008DEFB8
-src/al/Project/Action/Ctrl/YamlWriter.cpp:
+src/al/Project/Action/Ctrl/YamlWriter.cpp: done
     .text   start:0x008DEFC0 end:0x008DF074
 src/al/Project/Actor/ActorParam.cpp:
     .text   start:0x008DF080 end:0x008DF10C
-src/al/Project/Actor/ActorParamHolder.cpp:
+src/al/Project/Actor/ActorParamHolder.cpp: done
     .text   start:0x008DF110 end:0x008DF8C0
-src/al/Project/Actor/InitResourceDataAction.cpp:
+src/al/Project/Actor/InitResourceDataAction.cpp: done
     .text   start:0x008DF8C0 end:0x008DF8F8
 src/al/Project/Actor/InitResourceDataActionAnim.cpp:
     .text   start:0x008DF900 end:0x008E0648
@@ -5140,13 +5140,13 @@ src/al/Project/Anim/Player/ModelAnimInterp.cpp:
     .text   start:0x008E3810 end:0x008E4750
 src/al/Project/Anim/Player/SklAnimRetargettingInfo.cpp:
     .text   start:0x008E4750 end:0x008E4EF0
-src/al/Project/Area/AreaInitInfo.cpp:
+src/al/Project/Area/AreaInitInfo.cpp: done
     .text   start:0x008E4EF0 end:0x008E4FF8
 src/al/Project/AreaObj/AreaObj.cpp:
     .text   start:0x008E5000 end:0x008E5664
 src/al/Project/AreaObj/AreaObjDirector.cpp:
     .text   start:0x008E5670 end:0x008E6394
-src/al/Project/AreaObj/AreaObjFactory.cpp:
+src/al/Project/AreaObj/AreaObjFactory.cpp: done
     .text   start:0x008E63A0 end:0x008E63C0
 src/al/Project/AreaObj/AreaObjGroup.cpp:
     .text   start:0x008E63C0 end:0x008E6928
@@ -5202,15 +5202,15 @@ src/al/Project/Audio/Keeper/SoundSubArchiveKeeper.cpp:
     .text   start:0x008F2A50 end:0x008F3080
 src/al/Project/Audio/Sound/SoundHandle.cpp:
     .text   start:0x008F3080 end:0x008F31A8
-src/al/Project/Base/HashUtil.cpp:
+src/al/Project/Base/HashUtil.cpp: done
     .text   start:0x008F31B0 end:0x008F33D4
-src/al/Project/Base/RequestInterp.cpp:
+src/al/Project/Base/RequestInterp.cpp: done
     .text   start:0x008F33E0 end:0x008F33EC
-src/al/Project/Base/StringMatcher.cpp:
+src/al/Project/Base/StringMatcher.cpp: done
     .text   start:0x008F33F0 end:0x008F3780
 src/al/Project/Base/StringOpUtil.cpp:
     .text   start:0x008F3780 end:0x008F5344
-src/al/Project/Base/StringUtil.cpp:
+src/al/Project/Base/StringUtil.cpp: done
     .text   start:0x008F5350 end:0x008F5484
 src/al/Project/Bgm/BgmLineInfo.cpp:
     .text   start:0x008F5490 end:0x008F56CC
@@ -5450,15 +5450,15 @@ src/al/Project/Clipping/ClippingAreaDirector.cpp:
     .text   start:0x0094FE20 end:0x009501D0
 src/al/Project/Clipping/ClippingDirector.cpp:
     .text   start:0x009501D0 end:0x00951008
-src/al/Project/Clipping/ClippingDirectorBase.cpp:
+src/al/Project/Clipping/ClippingDirectorBase.cpp: done
     .text   start:0x00951010 end:0x00951120
-src/al/Project/Clipping/ClippingFarAreaObserver.cpp:
+src/al/Project/Clipping/ClippingFarAreaObserver.cpp: done
     .text   start:0x00951130 end:0x00951298
 src/al/Project/Clipping/ClippingFunction.cpp: done
     .text   start:0x009512A0 end:0x00951300
 src/al/Project/Clipping/ClippingInfoGroup.cpp:
     .text   start:0x00951300 end:0x00951AAC
-src/al/Project/Clipping/ClippingJudge.cpp:
+src/al/Project/Clipping/ClippingJudge.cpp: done
     .text   start:0x00951AB0 end:0x00951DD8
 src/al/Project/Clipping/ClippingViewFadeInAreas.cpp:
     .text   start:0x00951DE0 end:0x009524D4
@@ -5538,9 +5538,9 @@ src/al/Project/Framework/PadTouchDevice.cpp:
     .text   start:0x0099E6F0 end:0x0099E9DC
 src/al/Project/Framework/PadUiKeyInputAddon.cpp:
     .text   start:0x0099E9E0 end:0x0099F0F4
-src/al/Project/Framework/Application/ApplicationMessageReceiver.cpp:
+src/al/Project/Framework/Application/ApplicationMessageReceiver.cpp: done
     .text   start:0x0099F100 end:0x0099F2D8
-src/al/Project/Framework/Application/GpuPerf.cpp:
+src/al/Project/Framework/Application/GpuPerf.cpp: done
     .text   start:0x0099F2E0 end:0x0099F3B0
 src/al/Project/Layout/LayoutActionFunction.cpp:
     .text   start:0x0099F3B0 end:0x009A0204
@@ -5566,9 +5566,9 @@ src/al/Project/Layout/LayoutSystem.cpp:
     .text   start:0x009A9420 end:0x009AC5FC
 src/al/Project/Layout/LayoutTextPaneAnimator.cpp:
     .text   start:0x009AC600 end:0x009ADB6C
-src/al/Project/Math/IntervalTrigger.cpp:
+src/al/Project/Math/IntervalTrigger.cpp: done
     .text   start:0x009ADB70 end:0x009ADC0C
-src/al/Project/Math/MatrixPtrHolder.cpp:
+src/al/Project/Math/MatrixPtrHolder.cpp: done
     .text   start:0x009ADC10 end:0x009ADF84
 src/al/Project/Math/MatrixUtil.cpp:
     .text   start:0x009ADF90 end:0x009B1D64

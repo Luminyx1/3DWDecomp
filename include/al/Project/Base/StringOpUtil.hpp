@@ -29,4 +29,8 @@ s32 compareStringIgnoreCase(const char*, const char*);
 
 void copyString(char*, const char*, u32);
 void copyStringW(char16*, const char16*, u32);
+
+class MatchStr;
+const char* getSubStringUnmatched(const char**, const char*, const MatchStr&,
+                                  void (*)(const char*, const char*, void*), void*);
 }  // namespace al

@@ -82,6 +82,8 @@ public:
     void genMessage(sead::hostio::Context* pContext);
     void listenPropertyEvent(const sead::hostio::PropertyEvent* pEvent);
 
+    void setFlag(u32 flag) { mFlags.set(flag); }
+
 private:
     static void pushHistory_(sead::RingBuffer<History>* pHistory, const History& rEntry)
     {

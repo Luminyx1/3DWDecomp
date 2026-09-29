@@ -17,7 +17,7 @@ struct PlacementInfo {
 
     ByamlIter placementIter;
     ByamlIter zoneIter;
-    PlacementInfo* _20 = nullptr;
-    s32 _28 = -1;
+    PlacementInfo* _20;
+    s32 _28;
 };
 }  // namespace al

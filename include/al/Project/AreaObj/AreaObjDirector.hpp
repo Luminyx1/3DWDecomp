@@ -5,6 +5,12 @@
 
 namespace al {
 class AreaObj;
+class AreaObjGroup;
+
+class AreaObjDirector {
+public:
+    AreaObjGroup* getAreaObjGroup(const char* pName) const;
+};
 
 class AreaObjDirectorGrid {
 public:

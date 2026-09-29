@@ -16,6 +16,7 @@ public:
     u32 skip(s32 offset) override;
     void rewind() override { mCurrentPos = 0; }
     bool isEOF() override { return mCurrentPos >= mBufferSize; }
+    u32 getCurrentPos() const { return mCurrentPos; }
 
 private:
     u8* mBuffer = nullptr;
@@ -40,6 +41,8 @@ public:
     RamWriteStream(void* buffer, u32 buffer_size, Stream::Modes mode);
     RamWriteStream(void* buffer, u32 buffer_size, StreamFormat* format);
     ~RamWriteStream() override;
+
+    const RamStreamSrc& getSrc() const { return mSrc; }
 
 private:
     RamStreamSrc mSrc;

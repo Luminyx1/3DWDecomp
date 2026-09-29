@@ -8,6 +8,8 @@ namespace al {
 
     void preScaleMtx(sead::Matrix34f*, const sead::Vector3f&);
 
+    void calcMxtInvertOrtho(sead::Matrix34f*, const sead::Matrix34f&);
+
     void calcMtxLocalTrans(sead::Vector3f*, const sead::Matrix34f&, const sead::Vector3f&);
 
     void makeMtxUpFrontPos(sead::Matrix34f *, const sead::Vector3f &, const sead::Vector3f &, const sead::Vector3f &);
