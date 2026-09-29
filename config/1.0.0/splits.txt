@@ -4850,7 +4850,7 @@ src/al/Library/Nerve/NerveAction.cpp:
     .text   start:0x008785D0 end:0x00878618
 src/al/Library/Nerve/NerveActionCollector.cpp:
     .text   start:0x00878620 end:0x00878668
-src/al/Library/Nerve/NerveActionCtrl.cpp:
+src/al/Library/Nerve/NerveActionCtrl.cpp: done
     .text   start:0x00878670 end:0x00878774
 src/al/Library/Nerve/NerveExecutor.cpp: done
     .text   start:0x00878780 end:0x00878860
@@ -4860,7 +4860,7 @@ src/al/Library/Nerve/NerveStateBase.cpp: done
     .text   start:0x00878A30 end:0x00878B64
 src/al/Library/Nerve/NerveStateCtrl.cpp: done
     .text   start:0x00878B70 end:0x00878D7C
-src/al/Library/Nerve/NerveUtil.cpp:
+src/al/Library/Nerve/NerveUtil.cpp: done
     .text   start:0x00878D80 end:0x00879F30
 src/al/Library/Nfp/NfpDirector.cpp:
     .text   start:0x00879F30 end:0x0087BAFC
@@ -4914,7 +4914,7 @@ src/al/Library/Play/Layout/SimpleLayoutAppearWaitEnd.cpp:
     .text   start:0x00883240 end:0x00883694
 src/al/Library/Play/Layout/WipeSimple.cpp:
     .text   start:0x008836A0 end:0x00883E58
-src/al/Library/Placement/PlacementId.cpp:
+src/al/Library/Placement/PlacementId.cpp: done
     .text   start:0x00883E60 end:0x00883FF4
 src/al/Library/Placement/PlacementInfo.cpp: done
     .text   start:0x00884000 end:0x0088405C
@@ -4982,15 +4982,15 @@ src/al/Library/Scene/Scene.cpp:
     .text   start:0x008A2EC0 end:0x008A3854
 src/al/Library/Scene/SceneFactory.cpp: done
     .text   start:0x008A3860 end:0x008A3888
-src/al/Library/Scene/SceneObjHolder.cpp:
+src/al/Library/Scene/SceneObjHolder.cpp: done
     .text   start:0x008A3890 end:0x008A3B3C
 src/al/Library/Scene/SceneStopCtrl.cpp: done
     .text   start:0x008A3B40 end:0x008A3BD0
 src/al/Library/Scene/SceneUtil.cpp:
     .text   start:0x008A3BD0 end:0x008A55B0
-src/al/Library/Stage/StageResourceKeeper.cpp:
+src/al/Library/Stage/StageResourceKeeper.cpp: done
     .text   start:0x008A55B0 end:0x008A576C
-src/al/Library/Stage/StageInfo.cpp:
+src/al/Library/Stage/StageInfo.cpp: done
     .text   start:0x008A5770 end:0x008A590C
 src/al/Library/Stage/StageResourceList.cpp:
     .text   start:0x008A5910 end:0x008A6480

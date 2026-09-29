@@ -25,11 +25,36 @@ namespace al {
     f32 calcNerveRate(const IUseNerve*, s32, s32);
     f32 calcNerveEaseInRate(const IUseNerve*, s32);
     f32 calcNerveEaseInRate(const IUseNerve*, s32, s32);
-
+    f32 calcNerveEaseOutRate(const IUseNerve*, s32);
+    f32 calcNerveEaseOutRate(const IUseNerve*, s32, s32);
+    f32 calcNerveEaseInOutRate(const IUseNerve*, s32);
+    f32 calcNerveEaseInOutRate(const IUseNerve*, s32, s32);
+    f32 calcNerveSquareInRate(const IUseNerve*, s32);
+    f32 calcNerveSquareInRate(const IUseNerve*, s32, s32);
+    f32 calcNerveSquareOutRate(const IUseNerve*, s32);
+    f32 calcNerveSquareOutRate(const IUseNerve*, s32, s32);
     f32 calcNerveValue(const IUseNerve*, s32, f32, f32);
-
-    bool updateNerveState(al::IUseNerve*);
+    f32 calcNerveValue(const IUseNerve*, s32, s32, f32, f32);
+    f32 calcNerveEaseInValue(const IUseNerve*, s32, f32, f32);
+    f32 calcNerveEaseInValue(const IUseNerve*, s32, s32, f32, f32);
+    f32 calcNerveEaseOutValue(const IUseNerve*, s32, f32, f32);
+    f32 calcNerveEaseOutValue(const IUseNerve*, s32, s32, f32, f32);
+    f32 calcNerveEaseInOutValue(const IUseNerve*, s32, f32, f32);
+    f32 calcNerveEaseInOutValue(const IUseNerve*, s32, s32, f32, f32);
+    f32 calcNerveSquareInValue(const IUseNerve*, s32, f32, f32);
+    f32 calcNerveSquareInValue(const IUseNerve*, s32, s32, f32, f32);
+    f32 calcNerveSquareOutValue(const IUseNerve*, s32, f32, f32);
+    f32 calcNerveSquareOutValue(const IUseNerve*, s32, s32, f32, f32);
+    f32 calcNerveJumpValue(const IUseNerve*, s32, s32, s32, f32);
 
     void initNerveState(al::IUseNerve*, al::NerveStateBase*, const al::Nerve*, const char*);
+    void addNerveState(al::IUseNerve*, al::NerveStateBase*, const al::Nerve*, const char*);
+    bool updateNerveState(al::IUseNerve*);
+    bool updateNerveStateAndNextNerve(al::IUseNerve*, const al::Nerve*);
+    bool isStateEnd(const al::IUseNerve*);
 
 }  // namespace al
+
+namespace alNerveFunction {
+    void setNerveAction(al::IUseNerve*, const char*);
+}  // namespace alNerveFunction
