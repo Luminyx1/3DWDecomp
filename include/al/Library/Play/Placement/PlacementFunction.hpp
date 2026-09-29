@@ -37,6 +37,7 @@ s32 calcLinkCountClassName(const PlacementInfo&, const char*);
 void getLinksInfo(PlacementInfo*, const PlacementInfo&, const char*);
 
 void getLinksInfoByIndex(PlacementInfo*, const ActorInitInfo&, const char*, s32);
+void getLinksInfoByIndex(PlacementInfo*, const PlacementInfo&, const char*, s32);
 
 bool tryGetLinksInfo(PlacementInfo*, const PlacementInfo&, const char*);
 

@@ -1,0 +1,91 @@
+#pragma once
+
+#include <basis/seadTypes.h>
+#include <math/seadVector.h>
+
+namespace al {
+class IUseRail;
+class LiveActor;
+struct PlacementInfo;
+class RailKeeper;
+
+void setRailPosToStart(const LiveActor*);
+void setRailPosToEnd(const LiveActor*);
+void setRailPosToNearestPos(const LiveActor*, const sead::Vector3f&);
+void setRailPosToCoord(const LiveActor*, f32);
+void setRailPosToRailPoint(const LiveActor*, s32);
+void setSyncRailToStart(LiveActor*);
+void syncRailTrans(LiveActor*);
+void setSyncRailToEnd(LiveActor*);
+void setSyncRailToNearestPos(LiveActor*, const sead::Vector3f&);
+void setSyncRailToNearestPos(LiveActor*);
+void setSyncRailToCoord(LiveActor*, f32);
+void setSyncRailToRailPoint(LiveActor*, s32);
+bool moveRail(const LiveActor*, f32);
+bool isRailReachedGoal(const LiveActor*);
+bool moveRailLoop(const LiveActor*, f32);
+f32 getRailCoord(const LiveActor*);
+bool isRailGoingToEnd(const LiveActor*);
+f32 getRailTotalLength(const LiveActor*);
+bool moveRailTurn(const LiveActor*, f32, f32);
+void reverseRail(const LiveActor*);
+bool isRailReachedNearGoal(const LiveActor*, f32);
+bool moveRailPause(const LiveActor*, f32);
+s32 getRailPartIndex(const LiveActor*);
+bool isRailReachedNearEndRailPoint(const LiveActor*, f32);
+bool turnToRailDir(LiveActor*, f32);
+const sead::Vector3f& getRailDir(const LiveActor*);
+bool turnToRailDirImmediately(LiveActor*);
+const sead::Vector3f& getRailPos(const LiveActor*);
+void syncRailTransOffset(LiveActor*, const sead::Vector3f&);
+bool moveSyncRail(LiveActor*, f32);
+bool moveSyncRailOffset(LiveActor*, f32, const sead::Vector3f&);
+bool moveSyncRailLoop(LiveActor*, f32);
+bool moveSyncRailTurn(LiveActor*, f32);
+bool moveSyncRailPause(LiveActor*, f32);
+f32 calcNearestRailCoord(const LiveActor*, const sead::Vector3f&);
+f32 calcNearestRailCoord(const RailKeeper*, const sead::Vector3f&);
+f32 calcNearestRailPos(sead::Vector3f*, const LiveActor*, const sead::Vector3f&);
+f32 calcNearestRailPos(sead::Vector3f*, const RailKeeper*, const sead::Vector3f&);
+s32 calcRailPointNum(const LiveActor*, f32, f32);
+void calcRailPointPos(sead::Vector3f*, const LiveActor*, s32);
+f32 calcRailToGoalLength(const LiveActor*);
+f32 calcRailPartRate(const LiveActor*);
+f32 calcRailToNextRailPointLength(const LiveActor*);
+f32 calcRailToPreviousRailPointLength(const LiveActor*);
+s32 getRailNum(const LiveActor*);
+s32 getRailPointNum(const LiveActor*);
+s32 getRailPointNum(const RailKeeper*);
+const sead::Vector3f& getRailPos(const RailKeeper*);
+void getRailUpDir(const LiveActor*, sead::Vector3f*);
+f32 getRailPartLength(const LiveActor*, s32);
+s32 getRailPointNo(const LiveActor*);
+bool isLoopRail(const LiveActor*);
+bool isRailReachedEnd(const LiveActor*);
+void getRailPartAccels(const LiveActor*, s32, f32*, f32*);
+bool getRailPartAngleS(const LiveActor*, s32, f32*);
+bool getRailPartAngleE(const LiveActor*, s32, f32*);
+f32 getRailPartRate(const LiveActor*, s32, f32);
+bool isExistRail(const LiveActor*);
+bool isRailReachedStart(const LiveActor*);
+bool isRailReachedNearGoal(const LiveActor*, f32, f32);
+bool isRailReachedEdge(const LiveActor*);
+bool isRailReachedNearRailPoint(const LiveActor*, f32);
+bool isRailReachedNearStartRailPoint(const LiveActor*, f32);
+bool isRailPlusDir(const LiveActor*, const sead::Vector3f&);
+bool isRailPlusPoseSide(const LiveActor*);
+bool isRailPlusPoseUp(const LiveActor*);
+bool isRailPlusPoseFront(const LiveActor*);
+void calcRailPosAtCoord(sead::Vector3f*, const LiveActor*, f32);
+void calcRailMoveDir(sead::Vector3f*, const LiveActor*);
+void calcRailDirAtCoord(sead::Vector3f*, const LiveActor*, f32);
+void calcRailDirAtCoord(sead::Vector3f*, const RailKeeper*, f32);
+void calcRailPosFront(sead::Vector3f*, const LiveActor*, f32);
+f32 calcRailCoordByPoint(const LiveActor*, s32);
+void calcRailClippingInfo(sead::Vector3f*, f32*, const LiveActor*, f32, f32);
+void calcRailClippingInfo(sead::Vector3f*, f32*, const RailKeeper*, f32, f32);
+void setRailClippingInfo(sead::Vector3f*, LiveActor*, f32, f32);
+void setRailClippingInfo(sead::Vector3f*, LiveActor*, const RailKeeper*, f32, f32);
+s32 getRailPointNum(const IUseRail*);
+PlacementInfo* getRailPointInfo(const IUseRail*, s32);
+}  // namespace al

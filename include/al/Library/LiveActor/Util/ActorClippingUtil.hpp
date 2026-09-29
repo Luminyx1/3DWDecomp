@@ -24,4 +24,6 @@ namespace al {
     void offUseCameraClippingPos(LiveActor*);
 
     bool tryExpandClippingByShadowLength(LiveActor*, sead::Vector3f*);
+
+    void setClippingInfo(LiveActor*, f32, const sead::Vector3f*);
 };  // namespace al

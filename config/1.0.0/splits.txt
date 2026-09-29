@@ -4952,7 +4952,7 @@ src/al/Library/Rail/RailPart.cpp: done
     .text   start:0x00899CC0 end:0x0089A1E8
 src/al/Library/Rail/BezierCurve.cpp:
     .text   start:0x0089A1F0 end:0x0089B12C
-src/al/Library/Rail/RailRider.cpp:
+src/al/Library/Rail/RailRider.cpp: done
     .text   start:0x0089B130 end:0x0089B61C
 src/al/Library/Rail/RailUtil.cpp:
     .text   start:0x0089B620 end:0x0089CDF4

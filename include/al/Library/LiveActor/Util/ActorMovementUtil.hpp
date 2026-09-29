@@ -18,4 +18,7 @@ namespace al {
     void scaleVelocity(LiveActor*, f32);
 
     void faceToTarget(LiveActor*, const sead::Vector3f&);
+
+    bool turnQuatFrontToDirDegreeH(LiveActor*, const sead::Vector3f&, f32);
+    bool turnDirectionDegree(const LiveActor*, sead::Vector3f*, const sead::Vector3f&, f32);
 };  // namespace al
