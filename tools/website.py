@@ -10,7 +10,7 @@ current; the post-commit hook runs this too.  The page is self-contained
 web server as-is.
 
 Layout (docs/WEBSITE.md): overall % (XX.XX%) and a progress bar, then each
-library, then the ten best files of every sub-library of Game, al/Library and
+library, then every file (best first, in a scrollable list) of every sub-library of Game, al/Library and
 al/Project with the sub-library's total.  The look borrows Super Mario 3D
 World's bright sky, clouds, glossy HUD bars and checkered floors - drawn in
 CSS, no game assets.
@@ -102,7 +102,7 @@ def build(report: dict) -> str:
             files = groups[title][sub]
             tm, tt = sum(f[1] for f in files), sum(f[2] for f in files)
             sp = pct(tm, tt)
-            best = sorted(files, key=lambda f: (-pct(f[1], f[2]), -f[1], f[0].upper()))[:10]
+            best = sorted(files, key=lambda f: (-pct(f[1], f[2]), -f[1], f[0].upper()))
             rows = "".join(
                 f'<li><span class="fname" title="{html.escape(f)}">{html.escape(f)}</span>{bar(pct(fm, ft), "", "bar tiny")}'
                 f'<span class="fp">{pct(fm, ft):.2f}%</span></li>' for f, fm, ft in best)
@@ -317,7 +317,12 @@ h2 {{
 .count {{ color: var(--muted); font-size: 13px; }}
 .fp {{ margin-left: auto; font-weight: 700; font-variant-numeric: tabular-nums; }}
 .fp.big {{ font-size: 20px; color: var(--accent, var(--navy)); }}
-.folder ol {{ margin: 0; padding: 4px 20px 18px 42px; position: relative; z-index: 1; }}
+.folder ol {{
+  margin: 0 12px 16px 0; padding: 4px 12px 4px 42px; position: relative; z-index: 1;
+  max-height: 290px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--navy) transparent;
+}}
+.folder ol::-webkit-scrollbar {{ width: 8px; }}
+.folder ol::-webkit-scrollbar-thumb {{ background: var(--navy); border-radius: 8px; }}
 .folder li {{ display: flex; align-items: center; gap: 10px; padding: 5px 0; font-size: 14px; }}
 .folder li .fname {{ flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }}
 .folder li .fp {{ flex: 0 0 64px; text-align: right; font-weight: 600; }}

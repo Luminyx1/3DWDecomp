@@ -71,6 +71,10 @@ def pct(a: int, b: int) -> str:
     return f"{100.0 * a / b:.3f}%" if b else "-"
 
 
+def pct2(a: int, b: int) -> str:
+    return f"{100.0 * a / b:.2f}%" if b else "-"
+
+
 def table(rep: dict) -> str:
     cats = {c["id"]: c["measures"] for c in rep.get("categories", [])}
     units = {}
@@ -80,6 +84,10 @@ def table(rep: dict) -> str:
             units[cid][1] += 1
             if (u.get("metadata", {}) or {}).get("complete"):
                 units[cid][0] += 1
+    tot = rep["measures"]
+    head = (f"**{pct2(n(tot.get('matched_code')), n(tot.get('total_code')))} matched** "
+            f"({n(tot.get('matched_code')):,} of {n(tot.get('total_code')):,} bytes of code, "
+            f"{n(tot.get('matched_functions')):,} of {n(tot.get('total_functions')):,} functions)\n\n")
     rows = ["| Library | Code matched | Bytes | Functions | Units done |",
             "|---|---:|---:|---:|---:|"]
     for cid, label in ORDER:
@@ -95,7 +103,7 @@ def table(rep: dict) -> str:
     tf, mf = n(m.get("total_functions")), n(m.get("matched_functions"))
     rows.append(f"| **Total** | **{pct(mc, tc)}** | {mc:,} / {tc:,} | {mf:,} / {tf:,} | "
                 f"{n(m.get('complete_units'))} / {n(m.get('total_units'))} |")
-    return "\n".join(rows)
+    return head + "\n".join(rows)
 
 
 def update_readme(tbl: str) -> bool:
