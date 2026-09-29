@@ -4584,13 +4584,13 @@ src/al/Library/Factory/ActorFactory.cpp:
     .text   start:0x007EF2B0 end:0x007EF400
 src/al/Library/File/FileUtil.cpp:
     .text   start:0x007EF400 end:0x007F066C
-src/al/Library/File/Holder/ArchiveHolder.cpp:
+src/al/Library/File/Holder/ArchiveHolder.cpp: done
     .text   start:0x007F0670 end:0x007F08F0
-src/al/Library/File/Holder/FileLoaderThread.cpp:
+src/al/Library/File/Holder/FileLoaderThread.cpp: done
     .text   start:0x007F08F0 end:0x007F0A74
-src/al/Library/File/Holder/SoundItemEntry.cpp:
+src/al/Library/File/Holder/SoundItemEntry.cpp: done
     .text   start:0x007F0A90 end:0x007F0B8C
-src/al/Library/File/Holder/SoundItemHolder.cpp:
+src/al/Library/File/Holder/SoundItemHolder.cpp: done
     .text   start:0x007F0B90 end:0x007F0E30
 src/al/Library/Fog/FogParam.cpp:
     .text   start:0x007F0E30 end:0x007F11A4
@@ -5012,7 +5012,7 @@ src/al/Library/Sequence/Sequence.cpp:
     .text   start:0x008AA460 end:0x008AAD5C
 src/al/Library/Sequence/Scene/SceneCreator.cpp:
     .text   start:0x008AAD60 end:0x008AB064
-src/al/Library/Sequence/Scene/SceneInitInfo.cpp:
+src/al/Library/Sequence/Scene/SceneInitInfo.cpp: done
     .text   start:0x008AB070 end:0x008AB180
 src/al/Library/Shader/AtmosScatter.cpp:
     .text   start:0x008AB180 end:0x008AE254
