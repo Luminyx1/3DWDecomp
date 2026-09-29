@@ -45,5 +45,11 @@ namespace al {
     f32 getRandom(f32, f32);
 
     f32 lerpValue(f32, f32, f32);
+    f32 normalize(f32, f32, f32);
+    f32 easeIn(f32);
+    f32 easeOut(f32);
+    f32 easeInOut(f32);
+    f32 squareIn(f32);
+    f32 squareOut(f32);
 
 }  // namespace al

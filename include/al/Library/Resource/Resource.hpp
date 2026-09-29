@@ -5,6 +5,10 @@
 #include <resource/seadArchiveRes.h>
 #include "filedevice/seadArchiveFileDevice.h"
 
+namespace nn::g3d {
+class ResFile;
+}
+
 namespace al {
 class Resource {
 public:
@@ -24,6 +28,7 @@ public:
     // ...
 
     void* getOtherFile(const sead::SafeString&, u32*) const;
+    nn::g3d::ResFile* tryCreateResGraphicsFile(const sead::SafeString&, nn::g3d::ResFile*);
     const char* getArchiveName() const;
 
     sead::ArchiveRes* mArchive;                 // 0x00

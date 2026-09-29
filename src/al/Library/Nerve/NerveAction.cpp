@@ -1,18 +1,20 @@
 #include "Library/Nerve/NerveAction.hpp"
 
-namespace alNerveFunction {
-    void NerveActionCollector::addNerve(al::NerveAction* pAction) {
-        if (mStartAction == nullptr)
-            mStartAction = pAction;
+namespace al {
+/**
+ * @brief Constructs a nerve action and appends it to the currently active action collector.
+ */
+NerveAction::NerveAction() {
+    alNerveFunction::NerveActionCollector* pCollector =
+        alNerveFunction::NerveActionCollector::sCurrentCollector;
 
-        else
-            mEndAction->mNextNode = pAction;
-
-        mEndAction = pAction;
-        mNumActions++;
+    if (pCollector->mStartAction != nullptr) {
+        pCollector->mEndAction->mNextNode = this;
+    } else {
+        pCollector->mStartAction = this;
     }
 
-    NerveActionCollector::NerveActionCollector() {
-        sCurrentCollector = this;
-    }
-};
+    pCollector->mEndAction = this;
+    pCollector->mNumActions++;
+}
+}  // namespace al

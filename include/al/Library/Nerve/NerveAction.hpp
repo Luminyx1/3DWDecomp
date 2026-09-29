@@ -11,7 +11,7 @@ public:
 
     virtual const char* getActionName() const = 0;
 
-    NerveAction* mNextNode;
+    NerveAction* mNextNode = nullptr;
 };
 }  // namespace al
 

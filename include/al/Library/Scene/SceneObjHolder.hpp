@@ -6,7 +6,7 @@
 typedef al::ISceneObj* (*CreateFunc)(int);
 
 namespace al {
-    class SceneObjHolder : public IUseSceneObjHolder {
+    class SceneObjHolder {
     public:
         SceneObjHolder(CreateFunc, int);
         ISceneObj* create(int);

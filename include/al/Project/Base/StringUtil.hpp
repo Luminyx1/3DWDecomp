@@ -13,6 +13,8 @@ bool isEqualStringCase(const sead::SafeString&, const sead::SafeString&);
 template <s32 Length>
 class StringTmp : public sead::FixedSafeString<Length> {
 public:
+    StringTmp() : sead::FixedSafeString<Length>() {}
+
     StringTmp(const char* pStr, ...) : sead::FixedSafeString<Length>() {
         std::va_list va_args;
         va_start(va_args, pStr);
