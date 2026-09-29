@@ -17,7 +17,10 @@ class AnimTransform;
 class Layout;
 class Material;
 class DrawInfo;
-struct Size;
+struct Size {
+    float width;
+    float height;
+};
 struct ResPane;
 struct BuildArgSet;
 namespace detail {
@@ -32,7 +35,15 @@ public:
 
 class Pane : public detail::PaneBase {
 public:
-    class CalculateContext;
+    class CalculateContext {
+    public:
+        struct LayoutInformation {
+            unsigned char _00[0x28];
+            Size size;
+        };
+        unsigned char _00[0x20];
+        const LayoutInformation* pLayoutInformation;
+    };
     Pane();
     Pane(const Pane& rOther) { CopyImpl(rOther, nullptr, nullptr, nullptr); }
     Pane(const ResPane*, const BuildArgSet&);
@@ -69,6 +80,7 @@ public:
     virtual const Material* FindMaterialByNameRecursive(const char*) const;
 
     void CopyImpl(const Pane&, nn::gfx::Device*, const Layout*, detail::BuildPaneTreeContext*);
+    Material* GetMaterial() const;
     void SetName(const char*);
     void SetUserData(const char*);
     void AppendChild(Pane*);

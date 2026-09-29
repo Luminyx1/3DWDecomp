@@ -2,6 +2,10 @@
 
 #include "nn/gfx/gfx_Sampler.h"
 
+namespace nn::gfx {
+class DescriptorSlot;
+}
+
 namespace nn {
 namespace ui2d {
 

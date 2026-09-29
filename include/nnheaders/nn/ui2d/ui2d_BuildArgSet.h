@@ -5,7 +5,8 @@
 namespace nn::ui2d {
 
 struct BuildArgSet {
-    unsigned char _00[0x28];
+    unsigned char _00[0x20];
+    Layout* m_pPartsLayout;
     Layout* m_pLayout;
 };
 
