@@ -1,0 +1,28 @@
+# Extra symbols for things the binary's .dynsym does not name: local (static /
+# anonymous-namespace) data, and any function the function map lacks.
+#
+#   <address> <size> <func|object> <mangled name>
+#
+# Addresses are absolute (0x71...) like the function map.  The splitter uses
+# these names for relocations, so they must be the exact (mangled) names our
+# source produces - e.g. a nerve `_ZN12_GLOBAL__N_117FooNrvWaitE` or a C
+# static `sMalloc`.
+
+# LibMessageStudio (src/sead/lms/lms_memory.c)
+0x7102120908 8 object sMalloc
+0x7102120910 8 object sFree
+
+# src/Game/MapObj/BgmStopObj
+0x71019F2538 8 object _ZN12_GLOBAL__N_117nrvBgmStopObjStopE
+
+# src/Game/MapObj/BgmStopObj
+0x71019F2510 8 object _ZN12_GLOBAL__N_117nrvBgmStopObjWaitE
+
+# src/Game/MapObj/BlockPow
+0x71019F6448 32 object _ZN12_GLOBAL__N_111NrvBlockPowE
+
+# src/Game/MapObj/SnowCover
+0x7101A4DC68 24 object _ZN12_GLOBAL__N_112NrvSnowCoverE
+
+# src/al/Library/Obj/BreakModel
+0x7101AF4AE8 16 object _ZN2al12_GLOBAL__N_113NrvBreakModelE
