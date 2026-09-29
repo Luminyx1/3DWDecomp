@@ -1,5 +1,5 @@
 #!/bin/sh
-# Update the progress table in README.md and include it in this commit.
+# Update the progress table and public report and include them in this commit.
 # Enable with: git config core.hooksPath tools/hooks
 # Skip once with: SKIP_PROGRESS=1 git commit ...
 [ -n "$SKIP_PROGRESS" ] && exit 0
@@ -12,7 +12,7 @@ fi
 mkdir -p build
 echo "pre-commit: measuring progress (ninja all + objdiff report)..."
 if "$PY" tools/progress.py > build/progress.log 2>&1; then
-    git add README.md
+    git add README.md report.json
     tail -n 1 build/progress.log
 else
     echo "pre-commit: tools/progress.py failed, README not updated (see build/progress.log)" >&2

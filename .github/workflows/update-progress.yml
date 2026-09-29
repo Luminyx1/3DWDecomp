@@ -1,0 +1,46 @@
+name: Update Progress
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  update-progress:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: '3.11'
+
+      # Matching is measured locally with the original binary and compiler.
+      # Publish the committed objdiff snapshot without those local dependencies.
+      - name: Validate report
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          report = json.loads(Path('report.json').read_text(encoding='utf-8'))
+          assert report['version'] == 2, 'Expected an objdiff version 2 report'
+          units = report['units']
+          measures = report['measures']
+          assert units, 'Report must contain units'
+          assert int(measures['total_units']) == len(units), 'Unit count mismatch'
+          assert 0 <= int(measures['matched_code']) <= int(measures['total_code'])
+          assert int(measures['total_code']) > 0, 'Report must contain code'
+          print(f"Validated {len(units)} units")
+          PY
+
+      - name: Upload report
+        uses: actions/upload-artifact@v7
+        with:
+          name: 1.0.0_report
+          path: report.json
+          if-no-files-found: error

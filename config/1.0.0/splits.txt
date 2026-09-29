@@ -4684,9 +4684,9 @@ src/al/Library/LiveActor/ActorAnimUtil.cpp:
     .text   start:0x00817480 end:0x00819248
 src/al/Library/LiveActor/ActorClippingUtil.cpp:
     .text   start:0x00819250 end:0x00819D7C
-src/al/Library/LiveActor/SensorFunction.cpp:
+src/al/Library/LiveActor/SensorFunction.cpp: done
     .text   start:0x00819D80 end:0x0081A158
-src/al/Library/LiveActor/ActorFlagUtil.cpp:
+src/al/Library/LiveActor/ActorFlagUtil.cpp: done
     .text   start:0x0081A160 end:0x0081A2AC
 src/al/Library/LiveActor/ActorInitUtil.cpp:
     .text   start:0x0081A2B0 end:0x0081DE94
@@ -4696,7 +4696,7 @@ src/al/Library/LiveActor/ActorModelUtil.cpp:
     .text   start:0x0081EFA0 end:0x00821938
 src/al/Library/LiveActor/ActorMovementUtil.cpp:
     .text   start:0x00821940 end:0x00825E7C
-src/al/Library/LiveActor/ActorParamHolderUtil.cpp:
+src/al/Library/LiveActor/ActorParamHolderUtil.cpp: done
     .text   start:0x00825E80 end:0x00825F54
 src/al/Library/LiveActor/ActorPoseKeeper.cpp:
     .text   start:0x00825F60 end:0x00826FD8
@@ -4704,11 +4704,11 @@ src/al/Library/LiveActor/ActorPoseUtil.cpp:
     .text   start:0x00826FE0 end:0x0082850C
 src/al/Library/LiveActor/ActorResourceUtil.cpp:
     .text   start:0x00828510 end:0x00828DE8
-src/al/Library/LiveActor/ActorSceneInfo.cpp:
+src/al/Library/LiveActor/ActorSceneInfo.cpp: done
     .text   start:0x00828DF0 end:0x00828E18
-src/al/Library/LiveActor/ActorSceneUtil.cpp:
+src/al/Library/LiveActor/ActorSceneUtil.cpp: done
     .text   start:0x00828E20 end:0x00829098
-src/al/Library/LiveActor/ActorSensorController.cpp:
+src/al/Library/LiveActor/ActorSensorController.cpp: done
     .text   start:0x008290A0 end:0x0082933C
 src/al/Library/LiveActor/ActorSensorUtil.cpp:
     .text   start:0x00829340 end:0x008473D4
@@ -4716,7 +4716,7 @@ src/al/Library/LiveActor/HitReactionKeeper.cpp:
     .text   start:0x008473E0 end:0x008480FC
 src/al/Library/LiveActor/LiveActor.cpp:
     .text   start:0x00848100 end:0x0084A15C
-src/al/Library/LiveActor/LiveActorFunction.cpp:
+src/al/Library/LiveActor/LiveActorFunction.cpp: done
     .text   start:0x0084A160 end:0x0084A4EC
 src/al/Library/LiveActor/SubActorKeeper.cpp:
     .text   start:0x0084A4F0 end:0x0084B14C
