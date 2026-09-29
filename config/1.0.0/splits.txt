@@ -4771,9 +4771,9 @@ src/al/Library/MapObj/SeesawMapParts.cpp:
     .text   start:0x008547F0 end:0x00854EDC
 src/al/Library/MapObj/SlideMapParts.cpp:
     .text   start:0x00854EE0 end:0x0085599C
-src/al/Library/MapObj/SurfMapParts.cpp:
+src/al/Library/MapObj/SurfMapParts.cpp: done
     .text   start:0x00856030 end:0x008564D8
-src/al/Library/MapObj/SwingMapParts.cpp:
+src/al/Library/MapObj/SwingMapParts.cpp: done
     .text   start:0x008564E0 end:0x00856CAC
 src/al/Library/MapObj/VisibleSwitchMapParts.cpp:
     .text   start:0x00856CB0 end:0x00857344

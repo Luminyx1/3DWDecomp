@@ -51986,17 +51986,17 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71008569B0			FALSE	_ZN2al13SwingMapParts7exeStopEv	al::SwingMapParts::exeStop()	
 0x7100856A20			FALSE	_ZN2al13SwingMapPartsD1Ev	al::SwingMapParts::~SwingMapParts()	
 0x7100856A30			FALSE	_ZN2al13SwingMapPartsD0Ev	al::SwingMapParts::~SwingMapParts()	
-0x7100856A60			FALSE	nullsub_331	nullsub_331	
-0x7100856A70			FALSE	sub_7100856A70	sub_7100856A70	
-0x7100856A80			FALSE	sub_7100856A80	sub_7100856A80	
-0x7100856AD0			FALSE	sub_7100856AD0	sub_7100856AD0	
-0x7100856AE0			FALSE	sub_7100856AE0	sub_7100856AE0	
-0x7100856B30			FALSE	sub_7100856B30	sub_7100856B30	
-0x7100856B40			FALSE	sub_7100856B40	sub_7100856B40	
-0x7100856BB0			FALSE	sub_7100856BB0	sub_7100856BB0	
+0x7100856A60			FALSE	_ZNK12_GLOBAL__N_123SwingMapPartsNrvStandBy7executeEPN2al11NerveKeeperE	(anonymous namespace)::SwingMapPartsNrvStandBy::execute(al::NerveKeeper*) const	
+0x7100856A70			FALSE	_ZNK12_GLOBAL__N_123SwingMapPartsNrvStandBy13getActionNameEv	(anonymous namespace)::SwingMapPartsNrvStandBy::getActionName() const	
+0x7100856A80			FALSE	_ZNK12_GLOBAL__N_125SwingMapPartsNrvMoveRight7executeEPN2al11NerveKeeperE	(anonymous namespace)::SwingMapPartsNrvMoveRight::execute(al::NerveKeeper*) const	
+0x7100856AD0			FALSE	_ZNK12_GLOBAL__N_125SwingMapPartsNrvMoveRight13getActionNameEv	(anonymous namespace)::SwingMapPartsNrvMoveRight::getActionName() const	
+0x7100856AE0			FALSE	_ZNK12_GLOBAL__N_124SwingMapPartsNrvMoveLeft7executeEPN2al11NerveKeeperE	(anonymous namespace)::SwingMapPartsNrvMoveLeft::execute(al::NerveKeeper*) const	
+0x7100856B30			FALSE	_ZNK12_GLOBAL__N_124SwingMapPartsNrvMoveLeft13getActionNameEv	(anonymous namespace)::SwingMapPartsNrvMoveLeft::getActionName() const	
+0x7100856B40			FALSE	_ZNK12_GLOBAL__N_120SwingMapPartsNrvStop7executeEPN2al11NerveKeeperE	(anonymous namespace)::SwingMapPartsNrvStop::execute(al::NerveKeeper*) const	
+0x7100856BB0			FALSE	_ZNK12_GLOBAL__N_120SwingMapPartsNrvStop13getActionNameEv	(anonymous namespace)::SwingMapPartsNrvStop::getActionName() const	
 0x7100856BC0			FALSE	_ZNK2al10FunctorV0MIPNS_13SwingMapPartsEMS1_FvvEEclEv	al::FunctorV0M<al::SwingMapParts*, void (al::SwingMapParts::*)()>::operator()() const	
 0x7100856BE0			FALSE	_ZNK2al10FunctorV0MIPNS_13SwingMapPartsEMS1_FvvEE5cloneEv	al::FunctorV0M<al::SwingMapParts*, void (al::SwingMapParts::*)()>::clone() const	
-0x7100856C30			FALSE	sub_7100856C30	sub_7100856C30	
+0x7100856C30			FALSE	_GLOBAL__sub_I_SwingMapParts.cpp	_GLOBAL__sub_I_SwingMapParts.cpp	
 0x7100856CB0		VisibleSwitchMapParts.o	FALSE	_ZN21VisibleSwitchMapPartsC2EPKc	VisibleSwitchMapParts::VisibleSwitchMapParts(char const*)	object (class)
 0x7100856D30			FALSE	_ZN21VisibleSwitchMapPartsC1EPKc	VisibleSwitchMapParts::VisibleSwitchMapParts(char const*)	
 0x7100856DB0			FALSE	_ZN21VisibleSwitchMapParts4initERKN2al13ActorInitInfoE	VisibleSwitchMapParts::init(al::ActorInitInfo const&)	

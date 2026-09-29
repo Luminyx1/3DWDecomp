@@ -58,5 +58,7 @@ namespace al {
     void normalizeOrDirZ(sead::Vector3f*);
     void normalizeOrDirZ(sead::Vector3f*, const sead::Vector3f&);
     void makeQuatFrontUp(sead::Quatf*, const sead::Vector3f&, const sead::Vector3f&);
+    void calcQuatUp(sead::Vector3f*, const sead::Quatf&);
+    void turnQuatYDirRate(sead::Quatf*, const sead::Quatf&, const sead::Vector3f&, f32);
 
 }  // namespace al
