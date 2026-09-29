@@ -1,161 +1,196 @@
 #include "lms/lms.h"
 
-LMSMsgFile* LMS_InitMessage(const char* data) {
-    LMSMsgFile* msg = (LMSMsgFile*)LMSi_Malloc(sizeof(LMSMsgFile));
-    msg->commonInfo.pResource = data;
-    LMSi_AnalyzeMessageBinary(&msg->commonInfo, "MsgStdBn", 3);
-    msg->mLabelBlockIndex = LMSi_SearchBlockByName(&msg->commonInfo, "LBL1");
-    msg->mTextBlockIndex = LMSi_SearchBlockByName(&msg->commonInfo, "TXT2");
-    msg->mAttributeBlockIndex = LMSi_SearchBlockByName(&msg->commonInfo, "ATR1");
-    msg->mATOBlockIndex = LMSi_SearchBlockByName(&msg->commonInfo, "ATO1");
-    msg->mStyleBlockIndex = LMSi_SearchBlockByName(&msg->commonInfo, "TSY1");
-    return msg;
+/**
+ * Opens an MSBT file in memory and locates its LBL1, TXT2, ATR1, ATO1 and TSY1 blocks.
+ */
+LMSMsgFile* LMS_InitMessage(const char* pBlockData) {
+    LMSMsgFile* pMsg = (LMSMsgFile*)LMSi_Malloc(sizeof(LMSMsgFile));
+    pMsg->commonInfo.pResource = pBlockData;
+    LMSi_AnalyzeMessageBinary(&pMsg->commonInfo, "MsgStdBn", 3);
+    pMsg->mLabelBlockIndex = LMSi_SearchBlockByName(&pMsg->commonInfo, "LBL1");
+    pMsg->mTextBlockIndex = LMSi_SearchBlockByName(&pMsg->commonInfo, "TXT2");
+    pMsg->mAttributeBlockIndex = LMSi_SearchBlockByName(&pMsg->commonInfo, "ATR1");
+    pMsg->mATOBlockIndex = LMSi_SearchBlockByName(&pMsg->commonInfo, "ATO1");
+    pMsg->mStyleBlockIndex = LMSi_SearchBlockByName(&pMsg->commonInfo, "TSY1");
+    return pMsg;
 }
 
-void LMS_CloseMessage(LMSMsgFile* msg) {
-    if (msg->commonInfo.mBlockInfo)
-        LMSi_Free(msg->commonInfo.mBlockInfo);
-    LMSi_Free(msg);
+/**
+ * Frees a message file opened with LMS_InitMessage (the data itself is not freed).
+ */
+void LMS_CloseMessage(LMSMsgFile* pMsg) {
+    if (pMsg->commonInfo.mBlockInfo) {
+        LMSi_Free(pMsg->commonInfo.mBlockInfo);
+    }
+    LMSi_Free(pMsg);
 }
 
-libms_s32_t LMS_SearchMessageBlockByName(LMSMsgFile* msg, const char* name) {
-    return LMSi_SearchBlockByName(&msg->commonInfo, name);
+/**
+ * @return the index of the block named pName, or -1.
+ */
+libms_s32_t LMS_SearchMessageBlockByName(LMSMsgFile* pMsg, const char* pName) {
+    return LMSi_SearchBlockByName(&pMsg->commonInfo, pName);
 }
 
-LMSBlockInfo* LMS_GetMessageBlockInfoByName(LMSMsgFile* msg, const char* name) {
-    return LMSi_GetBlockInfoByName(&msg->commonInfo, name);
+/**
+ * @return the block named pName, or NULL.
+ */
+LMSBlockInfo* LMS_GetMessageBlockInfoByName(LMSMsgFile* pMsg, const char* pName) {
+    return LMSi_GetBlockInfoByName(&pMsg->commonInfo, pName);
 }
 
-libms_s32_t LMS_GetTextNum(LMSMsgFile* msg) {
-    if (msg->mTextBlockIndex == -1)
+/**
+ * @return the number of texts in the TXT2 block, or -1 if there is none.
+ */
+libms_s32_t LMS_GetTextNum(LMSMsgFile* pMsg) {
+    if (pMsg->mTextBlockIndex == -1) {
         return -1;
-    return *(const libms_s32_t*)msg->commonInfo.mBlockInfo[msg->mTextBlockIndex].pData;
+    }
+    return *(const libms_s32_t*)pMsg->commonInfo.mBlockInfo[pMsg->mTextBlockIndex].pData;
 }
 
 /* LBL1 is a hash table: u32 slot count, then per slot {u32 labelCount, u32 offset};
- * each label entry is {u8 length, char name[length], u32 textIndex}. */
-libms_s32_t LMS_GetTextIndexByLabel(LMSMsgFile* msg, const char* label) {
-    LMSBlockInfo* block;
+ * each pLabel pEntry is {u8 length, char pName[length], u32 textIndex}. */
+libms_s32_t LMS_GetTextIndexByLabel(LMSMsgFile* pMsg, const char* pLabel) {
+    LMSBlockInfo* pBlock;
     int slot;
     libms_u32_t count;
     libms_u32_t offset;
     libms_u32_t i;
     int length;
 
-    if (msg->mLabelBlockIndex == -1)
+    if (pMsg->mLabelBlockIndex == -1) {
         return -2;
-
-    length = 0;
-    while (label[length++] != '\0') {
     }
 
-    block = &msg->commonInfo.mBlockInfo[msg->mLabelBlockIndex];
-    slot = LMSi_GetHashTableIndexFromLabel(label, *(const libms_u32_t*)block->pData);
-    count = ((const libms_u32_t*)block->pData)[slot * 2 + 1];
-    if (count == 0)
-        return -1;
+    length = 0;
+    while (pLabel[length++] != '\0') {
+    }
 
-    offset = ((const libms_u32_t*)block->pData)[slot * 2 + 2];
+    pBlock = &pMsg->commonInfo.mBlockInfo[pMsg->mLabelBlockIndex];
+    slot = LMSi_GetHashTableIndexFromLabel(pLabel, *(const libms_u32_t*)pBlock->pData);
+    count = ((const libms_u32_t*)pBlock->pData)[slot * 2 + 1];
+    if (count == 0) {
+        return -1;
+    }
+
+    offset = ((const libms_u32_t*)pBlock->pData)[slot * 2 + 2];
     for (i = 0; i < count; i++) {
-        const char* entry = block->pData;
-        libms_u8_t len = entry[offset];
-        if (len + 1 == length && LMSi_MemCmp(label, entry + offset + 1, length - 1))
-            return *(const libms_s32_t*)(block->pData + offset + 1 + len);
+        const char* pEntry = pBlock->pData;
+        libms_u8_t len = pEntry[offset];
+        if (len + 1 == length && LMSi_MemCmp(pLabel, pEntry + offset + 1, length - 1)) {
+            return *(const libms_s32_t*)(pBlock->pData + offset + 1 + len);
+        }
         offset += len + 5;
     }
     return -1;
 }
 
-const void* LMS_GetText(LMSMsgFile* msg, libms_s32_t index) {
-    const char* data;
-    if (msg->mTextBlockIndex == -1)
+/**
+ * @return text number index from the TXT2 block, or NULL.
+ */
+const void* LMS_GetText(LMSMsgFile* pMsg, libms_s32_t index) {
+    const char* pBlockData;
+    if (pMsg->mTextBlockIndex == -1) {
         return NULL;
-    data = msg->commonInfo.mBlockInfo[msg->mTextBlockIndex].pData;
-    if (*(const libms_s32_t*)data <= index)
+    }
+    pBlockData = pMsg->commonInfo.mBlockInfo[pMsg->mTextBlockIndex].pData;
+    if (*(const libms_s32_t*)pBlockData <= index) {
         return NULL;
-    return data + ((const libms_u32_t*)data)[index + 1];
+    }
+    return pBlockData + ((const libms_u32_t*)pBlockData)[index + 1];
 }
 
-/* Size in bytes of a text, up to (not including) its terminator.  Tags are
+/* Size in bytes of a pText, up to (not including) its terminator.  Tags are
  * 0x0E <group> <type> <paramSize> <params...>; 0x0F closes a tag. */
-libms_s32_t LMS_GetTextSize(LMSMsgFile* msg, libms_s32_t index) {
-    const char* data;
-    const char* text;
-    const char* p;
+/**
+ * @return the size in bytes of text number index (tags included, terminator excluded), or -1.
+ */
+libms_s32_t LMS_GetTextSize(LMSMsgFile* pMsg, libms_s32_t index) {
+    const char* pBlockData;
+    const char* pText;
+    const char* pCur;
 
-    if (msg->mTextBlockIndex == -1)
+    if (pMsg->mTextBlockIndex == -1) {
         return -1;
-    data = msg->commonInfo.mBlockInfo[msg->mTextBlockIndex].pData;
-    if (*(const libms_s32_t*)data <= index)
+    }
+    pBlockData = pMsg->commonInfo.mBlockInfo[pMsg->mTextBlockIndex].pData;
+    if (*(const libms_s32_t*)pBlockData <= index) {
         return -1;
-    text = data + ((const libms_u32_t*)data)[index + 1];
-    if (text == NULL)
+    }
+    pText = pBlockData + ((const libms_u32_t*)pBlockData)[index + 1];
+    if (pText == NULL) {
         return -1;
+    }
 
-    p = text;
-    switch (msg->commonInfo.mEncoding) {
+    pCur = pText;
+    switch (pMsg->commonInfo.mEncoding) {
     case 0:
         for (;;) {
-            libms_u8_t c = *(const libms_u8_t*)p;
-            if (c == 0x0E)
-                p += *(const libms_u16_t*)(p + 5) + 7;
-            else if (c == 0x0F)
-                p += 6;
-            else if (c == 0)
+            libms_u8_t c = *(const libms_u8_t*)pCur;
+            if (c == 0x0E) {
+                pCur += *(const libms_u16_t*)(pCur + 5) + 7;
+            } else if (c == 0x0F) {
+                pCur += 6;
+            } else if (c == 0) {
                 break;
-            else
-                p += 1;
+            } else {
+                pCur += 1;
+            }
         }
         break;
     case 1:
         for (;;) {
-            libms_u16_t c = *(const libms_u16_t*)p;
-            if (c == 0x0E)
-                p += *(const libms_u16_t*)(p + 6) + 8;
-            else if (c == 0x0F)
-                p += 6;
-            else if (c == 0)
+            libms_u16_t c = *(const libms_u16_t*)pCur;
+            if (c == 0x0E) {
+                pCur += *(const libms_u16_t*)(pCur + 6) + 8;
+            } else if (c == 0x0F) {
+                pCur += 6;
+            } else if (c == 0) {
                 break;
-            else
-                p += 2;
+            } else {
+                pCur += 2;
+            }
         }
         break;
     case 2:
         for (;;) {
-            libms_u32_t c = *(const libms_u32_t*)p;
-            if (c == 0x0E)
-                p += *(const libms_u16_t*)(p + 8) + 10;
-            else if (c == 0x0F)
-                p += 6;
-            else if (c == 0)
+            libms_u32_t c = *(const libms_u32_t*)pCur;
+            if (c == 0x0E) {
+                pCur += *(const libms_u16_t*)(pCur + 8) + 10;
+            } else if (c == 0x0F) {
+                pCur += 6;
+            } else if (c == 0) {
                 break;
-            else
-                p += 4;
+            } else {
+                pCur += 4;
+            }
         }
         break;
     default:
         return -1;
     }
-    return p - text;
+    return pCur - pText;
 }
 
-const void* LMS_GetTextByLabel(LMSMsgFile* msg, const char* label) {
-    libms_s32_t index = LMS_GetTextIndexByLabel(msg, label);
-    if (index < 0)
+const void* LMS_GetTextByLabel(LMSMsgFile* pMsg, const char* pLabel) {
+    libms_s32_t index = LMS_GetTextIndexByLabel(pMsg, pLabel);
+    if (index < 0) {
         return NULL;
-    return LMS_GetText(msg, index);
+    }
+    return LMS_GetText(pMsg, index);
 }
 
-int LMS_GetLabelByTextIndex(LMSMsgFile* msg, libms_s32_t index, char* outLabel) {
-    LMSBlockInfo* block = &msg->commonInfo.mBlockInfo[msg->mLabelBlockIndex];
-    const char* data = block->pData;
-    libms_u32_t offset = *(const libms_u32_t*)data * 8 + 4;
+int LMS_GetLabelByTextIndex(LMSMsgFile* pMsg, libms_s32_t index, char* pOutLabel) {
+    LMSBlockInfo* pBlock = &pMsg->commonInfo.mBlockInfo[pMsg->mLabelBlockIndex];
+    const char* pBlockData = pBlock->pData;
+    libms_u32_t offset = *(const libms_u32_t*)pBlockData * 8 + 4;
 
-    while (offset < block->mDataSize) {
-        libms_u8_t len = data[offset];
-        if (*(const libms_s32_t*)(data + offset + 1 + len) == index) {
-            LMSi_MemCopy(outLabel, data + offset + 1, len);
-            outLabel[len] = '\0';
+    while (offset < pBlock->mDataSize) {
+        libms_u8_t len = pBlockData[offset];
+        if (*(const libms_s32_t*)(pBlockData + offset + 1 + len) == index) {
+            LMSi_MemCopy(pOutLabel, pBlockData + offset + 1, len);
+            pOutLabel[len] = '\0';
             return 1;
         }
         offset += len + 5;
@@ -163,34 +198,52 @@ int LMS_GetLabelByTextIndex(LMSMsgFile* msg, libms_s32_t index, char* outLabel) 
     return 0;
 }
 
-libms_s32_t LMS_GetAttributeSize(LMSMsgFile* msg) {
-    return ((const libms_s32_t*)msg->commonInfo.mBlockInfo[msg->mAttributeBlockIndex].pData)[1];
+/**
+ * @return the size of one attribute entry in the ATR1 block.
+ */
+libms_s32_t LMS_GetAttributeSize(LMSMsgFile* pMsg) {
+    return ((const libms_s32_t*)pMsg->commonInfo.mBlockInfo[pMsg->mAttributeBlockIndex].pData)[1];
 }
 
-const void* LMS_GetAttribute(LMSMsgFile* msg, libms_s32_t index) {
-    const char* data = msg->commonInfo.mBlockInfo[msg->mAttributeBlockIndex].pData;
-    return data + ((const libms_u32_t*)data)[1] * index + 8;
+/**
+ * @return the attribute entry of text number index.
+ */
+const void* LMS_GetAttribute(LMSMsgFile* pMsg, libms_s32_t index) {
+    const char* pBlockData = pMsg->commonInfo.mBlockInfo[pMsg->mAttributeBlockIndex].pData;
+    return pBlockData + ((const libms_u32_t*)pBlockData)[1] * index + 8;
 }
 
-const char* LMS_GetAttributeText(LMSMsgFile* msg, libms_s32_t offset) {
-    return msg->commonInfo.mBlockInfo[msg->mAttributeBlockIndex].pData + offset;
+/**
+ * @return the string at offset in the ATR1 block.
+ */
+const char* LMS_GetAttributeText(LMSMsgFile* pMsg, libms_s32_t offset) {
+    return pMsg->commonInfo.mBlockInfo[pMsg->mAttributeBlockIndex].pData + offset;
 }
 
-libms_s32_t LMS_GetAttrFilteredOffset(LMSMsgFile* msg, libms_s32_t index) {
-    if (msg->mATOBlockIndex == -1)
+/**
+ * @return entry index of the ATO1 block, or -11 if there is none.
+ */
+libms_s32_t LMS_GetAttrFilteredOffset(LMSMsgFile* pMsg, libms_s32_t index) {
+    if (pMsg->mATOBlockIndex == -1) {
         return -11;
-    return ((const libms_s32_t*)msg->commonInfo.mBlockInfo[msg->mATOBlockIndex].pData)[index];
+    }
+    return ((const libms_s32_t*)pMsg->commonInfo.mBlockInfo[pMsg->mATOBlockIndex].pData)[index];
 }
 
-libms_s32_t LMS_GetTextStyle(LMSMsgFile* msg, libms_s32_t index) {
-    if (msg->mStyleBlockIndex == -1)
+/**
+ * @return the style of text number index from the TSY1 block, or -3 if there is none.
+ */
+libms_s32_t LMS_GetTextStyle(LMSMsgFile* pMsg, libms_s32_t index) {
+    if (pMsg->mStyleBlockIndex == -1) {
         return -3;
-    return ((const libms_s32_t*)msg->commonInfo.mBlockInfo[msg->mStyleBlockIndex].pData)[index];
+    }
+    return ((const libms_s32_t*)pMsg->commonInfo.mBlockInfo[pMsg->mStyleBlockIndex].pData)[index];
 }
 
-libms_s32_t LMS_GetTextStyleByLabel(LMSMsgFile* msg, const char* label) {
-    libms_s32_t index = LMS_GetTextIndexByLabel(msg, label);
-    if (index < 0)
+libms_s32_t LMS_GetTextStyleByLabel(LMSMsgFile* pMsg, const char* pLabel) {
+    libms_s32_t index = LMS_GetTextIndexByLabel(pMsg, pLabel);
+    if (index < 0) {
         return index;
-    return LMS_GetTextStyle(msg, index);
+    }
+    return LMS_GetTextStyle(pMsg, index);
 }

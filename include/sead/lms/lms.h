@@ -20,9 +20,9 @@ typedef unsigned int libms_u32_t;
 typedef void* (*LMSMallocPtr)(size_t);
 typedef void (*LMSFreePtr)(void*);
 
-/* One section ("block") of an LMS binary, e.g. LBL1 / TXT2 / ATR1. */
+/* One section ("pBlock") of an LMS binary, e.g. LBL1 / TXT2 / ATR1. */
 typedef struct LMSBlockInfo {
-    const char* pData;       /* block contents (after its 16-byte header) */
+    const char* pData;       /* pBlock contents (after its 16-byte header) */
     char mBlockName[4];
     libms_u32_t mDataSize;
     libms_u16_t mUnk10;
@@ -49,37 +49,37 @@ typedef struct LMSMsgFile {
 } LMSMsgFile;
 
 /* lms_memory.c */
-void LMS_SetMemFuncs(LMSMallocPtr mallocFunc, LMSFreePtr freeFunc);
+void LMS_SetMemFuncs(LMSMallocPtr pMallocFunc, LMSFreePtr pFreeFunc);
 void* LMSi_Malloc(size_t size);
-void LMSi_Free(void* ptr);
-int LMSi_MemCmp(const char* a, const char* b, int size);
-void LMSi_MemCopy(void* dst, const void* src, int size);
+void LMSi_Free(void* pPtr);
+int LMSi_MemCmp(const char* pA, const char* pB, int size);
+void LMSi_MemCopy(void* pDst, const void* pSrc, int size);
 
 /* lms_analyze.c */
-void LMSi_AnalyzeMessageHeader(LMSCommonBinaryFormat* bin);
-void LMSi_AnalyzeMessageBlocks(LMSCommonBinaryFormat* bin);
-void LMSi_AnalyzeMessageBinary(LMSCommonBinaryFormat* bin, const char* magic, int version);
-libms_s32_t LMSi_SearchBlockByName(LMSCommonBinaryFormat* bin, const char* name);
-LMSBlockInfo* LMSi_GetBlockInfoByName(LMSCommonBinaryFormat* bin, const char* name);
-libms_u32_t LMSi_GetHashTableIndexFromLabel(const char* label, libms_u32_t numSlots);
+void LMSi_AnalyzeMessageHeader(LMSCommonBinaryFormat* pBin);
+void LMSi_AnalyzeMessageBlocks(LMSCommonBinaryFormat* pBin);
+void LMSi_AnalyzeMessageBinary(LMSCommonBinaryFormat* pBin, const char* pMagic, int version);
+libms_s32_t LMSi_SearchBlockByName(LMSCommonBinaryFormat* pBin, const char* pName);
+LMSBlockInfo* LMSi_GetBlockInfoByName(LMSCommonBinaryFormat* pBin, const char* pName);
+libms_u32_t LMSi_GetHashTableIndexFromLabel(const char* pLabel, libms_u32_t numSlots);
 
 /* lms_message.c */
-LMSMsgFile* LMS_InitMessage(const char* data);
-void LMS_CloseMessage(LMSMsgFile* msg);
-libms_s32_t LMS_SearchMessageBlockByName(LMSMsgFile* msg, const char* name);
-LMSBlockInfo* LMS_GetMessageBlockInfoByName(LMSMsgFile* msg, const char* name);
-libms_s32_t LMS_GetTextNum(LMSMsgFile* msg);
-libms_s32_t LMS_GetTextIndexByLabel(LMSMsgFile* msg, const char* label);
-const void* LMS_GetText(LMSMsgFile* msg, libms_s32_t index);
-libms_s32_t LMS_GetTextSize(LMSMsgFile* msg, libms_s32_t index);
-const void* LMS_GetTextByLabel(LMSMsgFile* msg, const char* label);
-int LMS_GetLabelByTextIndex(LMSMsgFile* msg, libms_s32_t index, char* outLabel);
-libms_s32_t LMS_GetAttributeSize(LMSMsgFile* msg);
-const void* LMS_GetAttribute(LMSMsgFile* msg, libms_s32_t index);
-const char* LMS_GetAttributeText(LMSMsgFile* msg, libms_s32_t offset);
-libms_s32_t LMS_GetAttrFilteredOffset(LMSMsgFile* msg, libms_s32_t index);
-libms_s32_t LMS_GetTextStyle(LMSMsgFile* msg, libms_s32_t index);
-libms_s32_t LMS_GetTextStyleByLabel(LMSMsgFile* msg, const char* label);
+LMSMsgFile* LMS_InitMessage(const char* pBlockData);
+void LMS_CloseMessage(LMSMsgFile* pMsg);
+libms_s32_t LMS_SearchMessageBlockByName(LMSMsgFile* pMsg, const char* pName);
+LMSBlockInfo* LMS_GetMessageBlockInfoByName(LMSMsgFile* pMsg, const char* pName);
+libms_s32_t LMS_GetTextNum(LMSMsgFile* pMsg);
+libms_s32_t LMS_GetTextIndexByLabel(LMSMsgFile* pMsg, const char* pLabel);
+const void* LMS_GetText(LMSMsgFile* pMsg, libms_s32_t index);
+libms_s32_t LMS_GetTextSize(LMSMsgFile* pMsg, libms_s32_t index);
+const void* LMS_GetTextByLabel(LMSMsgFile* pMsg, const char* pLabel);
+int LMS_GetLabelByTextIndex(LMSMsgFile* pMsg, libms_s32_t index, char* pOutLabel);
+libms_s32_t LMS_GetAttributeSize(LMSMsgFile* pMsg);
+const void* LMS_GetAttribute(LMSMsgFile* pMsg, libms_s32_t index);
+const char* LMS_GetAttributeText(LMSMsgFile* pMsg, libms_s32_t offset);
+libms_s32_t LMS_GetAttrFilteredOffset(LMSMsgFile* pMsg, libms_s32_t index);
+libms_s32_t LMS_GetTextStyle(LMSMsgFile* pMsg, libms_s32_t index);
+libms_s32_t LMS_GetTextStyleByLabel(LMSMsgFile* pMsg, const char* pLabel);
 
 #ifdef __cplusplus
 }
