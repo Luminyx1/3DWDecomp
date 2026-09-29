@@ -4684,7 +4684,7 @@ src/al/Library/LiveActor/ActorAnimUtil.cpp:
     .text   start:0x00817480 end:0x00819248
 src/al/Library/LiveActor/ActorClippingUtil.cpp:
     .text   start:0x00819250 end:0x00819D7C
-src/al/Library/LiveActor/SensorFunction.cpp:
+src/al/Library/LiveActor/SensorFunction.cpp: done
     .text   start:0x00819D80 end:0x0081A158
 src/al/Library/LiveActor/ActorFlagUtil.cpp: done
     .text   start:0x0081A160 end:0x0081A2AC

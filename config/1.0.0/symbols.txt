@@ -4600,3 +4600,6 @@
 0x71016FE9AC 8 object _ZN2alL17sDefaultParamJumpE
 0x71016FE9B4 12 object _ZN2alL18sDefaultParamSightE
 0x71016FE9C0 12 object _ZN2alL20sDefaultParamReboundE
+
+# al/Library/LiveActor/SensorFunction
+0x7101AE91C8 512 object _ZN12_GLOBAL__N_116cSensorTypeTableE
