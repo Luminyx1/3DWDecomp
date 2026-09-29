@@ -13567,7 +13567,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710020A720			FALSE	_ZN2nn3atk6detail6driver15HardwareManagerD2Ev	nn::atk::detail::driver::HardwareManager::~HardwareManager()	
 0x710020A820			FALSE	_ZN13_SAudioSample18ProgressVideoFrameEv	_SAudioSample::ProgressVideoFrame()	
 0x710020AA60			FALSE	sub_710020AA60	sub_710020AA60	
-0x710020AB20	unk_2	Emulator.o	FALSE	_ZN6Vessel8Emulator7Virtual11PlatformHvc4CHvcC2Ev	Vessel::Emulator::Virtual::PlatformHvc::CHvc::CHvc()	folder (alphabetical reset); object (class, new folder (alphabetical reset))
+0x710020AB20	unk/Emulator	Emulator.o	FALSE	_ZN6Vessel8Emulator7Virtual11PlatformHvc4CHvcC2Ev	Vessel::Emulator::Virtual::PlatformHvc::CHvc::CHvc()	folder (alphabetical reset); object (class, new folder (alphabetical reset))
 0x710020AD10			FALSE	_ZN6Vessel8Emulator7Virtual11PlatformHvc4CHvcD2Ev	Vessel::Emulator::Virtual::PlatformHvc::CHvc::~CHvc()	
 0x710020AED0			FALSE	_ZN6Vessel8Emulator7Virtual11PlatformHvc4CHvcD0Ev	Vessel::Emulator::Virtual::PlatformHvc::CHvc::~CHvc()	
 0x710020AF00			FALSE	_ZN6Vessel8Emulator7Virtual11PlatformHvc4CHvc8CommenceEPvS4_S4_S4_mm	Vessel::Emulator::Virtual::PlatformHvc::CHvc::Commence(void*, void*, void*, void*, unsigned long, unsigned long)	
@@ -14232,7 +14232,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100231D40			FALSE	_ZN6vessel15setDRCSensorBarEb	vessel::setDRCSensorBar(bool)	
 0x7100231D50			FALSE	_Z10patch_dataj	patch_data(unsigned int)	
 0x7100231D90			FALSE	_ZN4Perf3CPU4TickD2Ev	Perf::CPU::Tick::~Tick()	
-0x7100231DA0	unk_3	performance.o	FALSE	_ZN11performance4initENS_4DISPE	performance::init(performance::DISP)	folder (alphabetical reset); object (class, new folder (alphabetical reset))
+0x7100231DA0	unk/Vessel	performance.o	FALSE	_ZN11performance4initENS_4DISPE	performance::init(performance::DISP)	folder (alphabetical reset); object (class, new folder (alphabetical reset))
 0x7100231E10			FALSE	_ZN11performance3cpuEv	performance::cpu()	
 0x7100231E20			FALSE	_ZN11performance3gpuEv	performance::gpu()	
 0x7100231E30			FALSE	_ZN11performance9cpu_startEv	performance::cpu_start()	
@@ -14448,7 +14448,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710023A270			FALSE	_Z11VESSEL_freePv	VESSEL_free(void*)	
 0x710023A280			FALSE	_Z15VESSE_STACKINITv	VESSE_STACKINIT()	
 0x710023A290			FALSE	_Z16VESSEL_STACKDISPPKcjS0_	VESSEL_STACKDISP(char const*, unsigned int, char const*)	
-0x710023A2A0	Utility	Utility.o	FALSE	_ZN6Vessel7Utility12CTickWatcherC2Ev	Vessel::Utility::CTickWatcher::CTickWatcher()	folder (alphabetical reset); object (class, new folder (alphabetical reset))
+0x710023A2A0	unk/Utility	Utility.o	FALSE	_ZN6Vessel7Utility12CTickWatcherC2Ev	Vessel::Utility::CTickWatcher::CTickWatcher()	folder (alphabetical reset); object (class, new folder (alphabetical reset))
 0x710023A2D0			FALSE	_ZN6Vessel7Utility12CTickWatcherD1Ev	Vessel::Utility::CTickWatcher::~CTickWatcher()	
 0x710023A2E0			FALSE	_ZN6Vessel7Utility12CTickWatcherD0Ev	Vessel::Utility::CTickWatcher::~CTickWatcher()	
 0x710023A2F0			FALSE	_ZN6Vessel7Utility12CTickWatcher5ResetEv	Vessel::Utility::CTickWatcher::Reset()	
@@ -21423,9 +21423,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100361310			FALSE	_ZN15SplatterPlotter7disableEb	SplatterPlotter::disable(bool)	
 0x7100361320			FALSE	_ZN15SplatterPlotterD1Ev	SplatterPlotter::~SplatterPlotter()	
 0x7100361330			FALSE	_ZN15SplatterPlotterD0Ev	SplatterPlotter::~SplatterPlotter()	
-0x7100361360		TriangleWallFilter.o	FALSE	_ZNK2rc18TriangleWallFilter17isInvalidTriangleERKN2al8TriangleE	rc::TriangleWallFilter::isInvalidTriangle(al::Triangle const&) const	object (class)
-0x7100361370		TriangleWallNoCodeFilter.o	FALSE	_ZNK2rc24TriangleWallNoCodeFilter17isInvalidTriangleERKN2al8TriangleE	rc::TriangleWallNoCodeFilter::isInvalidTriangle(al::Triangle const&) const	object (class)
-0x71003613E0	MapObj_2	Stamp.o	FALSE	_ZN2rc5Stamp17getStampActorNameEv	rc::Stamp::getStampActorName()	folder (alphabetical reset); object (class, new folder (alphabetical reset))
+0x7100361360			FALSE	_ZNK2rc18TriangleWallFilter17isInvalidTriangleERKN2al8TriangleE	rc::TriangleWallFilter::isInvalidTriangle(al::Triangle const&) const	merged into SplatterPlotter.o (secondary class TriangleWallFilter.o)
+0x7100361370			FALSE	_ZNK2rc24TriangleWallNoCodeFilter17isInvalidTriangleERKN2al8TriangleE	rc::TriangleWallNoCodeFilter::isInvalidTriangle(al::Triangle const&) const	merged into SplatterPlotter.o (secondary class TriangleWallNoCodeFilter.o)
+0x71003613E0		Stamp.o	FALSE	_ZN2rc5Stamp17getStampActorNameEv	rc::Stamp::getStampActorName()	object (class)
 0x71003613F0			FALSE	_ZN2rc5Stamp12isStampActorEPKN2al9LiveActorE	rc::Stamp::isStampActor(al::LiveActor const*)	
 0x7100361430			FALSE	_ZN2rc5StampC2ERKN2al13ActorInitInfoEPKcPK18DrcTouchAssistInfoPNS_13StampDirectorEi	rc::Stamp::Stamp(al::ActorInitInfo const&, char const*, DrcTouchAssistInfo const*, rc::StampDirector*, int)	
 0x71003615C0			FALSE	_ZN2rc5StampC1ERKN2al13ActorInitInfoEPKcPK18DrcTouchAssistInfoPNS_13StampDirectorEi	rc::Stamp::Stamp(al::ActorInitInfo const&, char const*, DrcTouchAssistInfo const*, rc::StampDirector*, int)	
@@ -25254,7 +25254,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71003EC3C0			FALSE	_ZNK20PlayerActionGigaMove18getRuntimeTypeInfoEv	PlayerActionGigaMove::getRuntimeTypeInfo() const	
 0x71003EC430			FALSE	_ZN20PlayerActionGigaMoveD0Ev	PlayerActionGigaMove::~PlayerActionGigaMove()	
 0x71003EC440			FALSE	_ZNK20PlayerActionGigaMove15getMoveAnimNameEv	PlayerActionGigaMove::getMoveAnimName() const	
-0x71003EC450	Player_2	GigaNormalRollingParam.o	FALSE	_ZNK22GigaNormalRollingParam11getMinSpeedEv	GigaNormalRollingParam::getMinSpeed() const	folder (alphabetical reset); object (class, new folder (alphabetical reset))
+0x71003EC450	Player/Giga	GigaNormalRollingParam.o	FALSE	_ZNK22GigaNormalRollingParam11getMinSpeedEv	GigaNormalRollingParam::getMinSpeed() const	folder (alphabetical reset); object (class, new folder (alphabetical reset))
 0x71003EC460			FALSE	_ZNK22GigaNormalRollingParam11getAnimNameEv	GigaNormalRollingParam::getAnimName() const	
 0x71003EC470			FALSE	_ZNK22GigaNormalRollingParam11getAnimRateEv	GigaNormalRollingParam::getAnimRate() const	
 0x71003EC480			FALSE	_ZNK22GigaNormalRollingParam16getClimbAnimNameEv	GigaNormalRollingParam::getClimbAnimName() const	
@@ -25942,7 +25942,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710040D9C0			FALSE	_ZNK36RaccoonDogWaitRollingAttackHighParam15getFallSpeedMaxEv	RaccoonDogWaitRollingAttackHighParam::getFallSpeedMax() const	
 0x710040D9D0			FALSE	_ZNK36RaccoonDogWaitRollingAttackHighParam11getAnimNameEv	RaccoonDogWaitRollingAttackHighParam::getAnimName() const	
 0x710040D9E0			FALSE	_ZNK36RaccoonDogWaitRollingAttackHighParam16getClimbAnimNameEv	RaccoonDogWaitRollingAttackHighParam::getClimbAnimName() const	
-0x710040D9F0	Player_3	GigaNormalRollingAttackParam.o	FALSE	_ZNK28GigaNormalRollingAttackParam12getAttackVelEv	GigaNormalRollingAttackParam::getAttackVel() const	folder (alphabetical reset); object (class, new folder (alphabetical reset))
+0x710040D9F0	Player/Normal	GigaNormalRollingAttackParam.o	FALSE	_ZNK28GigaNormalRollingAttackParam12getAttackVelEv	GigaNormalRollingAttackParam::getAttackVel() const	folder (alphabetical reset); object (class, new folder (alphabetical reset))
 0x710040DA00			FALSE	_ZNK28GigaNormalRollingAttackParam10getJumpPowEv	GigaNormalRollingAttackParam::getJumpPow() const	
 0x710040DA10			FALSE	_ZNK28GigaNormalRollingAttackParam10getGravityEv	GigaNormalRollingAttackParam::getGravity() const	
 0x710040DA20			FALSE	_ZNK28GigaNormalRollingAttackParam15getFallSpeedMaxEv	GigaNormalRollingAttackParam::getFallSpeedMax() const	
@@ -28899,7 +28899,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100466830			FALSE	_ZNK20PlayerGlideInhibitor9isInhibitEv	PlayerGlideInhibitor::isInhibit() const	
 0x7100466840		PlayerGroundFollower.o	FALSE	_ZN20PlayerGroundFollowerC2EP21IUseCollisionPartsMtx	PlayerGroundFollower::PlayerGroundFollower(IUseCollisionPartsMtx*)	object (class)
 0x7100466850			FALSE	_ZN20PlayerGroundFollower12followGroundEP14PlayerPropertyPN4sead7Vector3IfEES5_S5_PKN2al14CollisionPartsE	PlayerGroundFollower::followGround(PlayerProperty*, sead::Vector3<float>*, sead::Vector3<float>*, sead::Vector3<float>*, al::CollisionParts const*)	
-0x7100466D80	Player_4	PlayerActorAccessor.o	FALSE	_ZNK19PlayerActorAccessor8getCharaEPK11PlayerActor	PlayerActorAccessor::getChara(PlayerActor const*) const	folder (alphabetical reset); object (class, new folder (alphabetical reset))
+0x7100466D80			FALSE	_ZNK19PlayerActorAccessor8getCharaEPK11PlayerActor	PlayerActorAccessor::getChara(PlayerActor const*) const	merged into PlayerGroundFollower.o (secondary class PlayerActorAccessor.o)
 0x7100466DB0			FALSE	_ZNK19PlayerActorAccessor13getFigureTypeEPK11PlayerActor	PlayerActorAccessor::getFigureType(PlayerActor const*) const	
 0x7100466DC0			FALSE	_ZN19PlayerActorAccessor6changeEP11PlayerActor13EPlayerFigure	PlayerActorAccessor::change(PlayerActor*, EPlayerFigure)	
 0x7100466E30			FALSE	_ZN19PlayerActorAccessor11changeForceEP11PlayerActor13EPlayerFigure	PlayerActorAccessor::changeForce(PlayerActor*, EPlayerFigure)	
@@ -33220,7 +33220,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100502940			FALSE	_ZN12ScenarioData4initEiPKcS1_S1_ibb	ScenarioData::init(int, char const*, char const*, char const*, int, bool, bool)	
 0x7100502BC0			FALSE	_ZNK12ScenarioData14isMainScenarioEv	ScenarioData::isMainScenario() const	
 0x7100502BD0			FALSE	_ZNK12ScenarioData17isSpecialScenarioEv	ScenarioData::isSpecialScenario() const	
-0x7100502BE0	System_2	OceanScenarioList.o	FALSE	_ZN17OceanScenarioList23tryGetOceanScenarioListEPKN2al18IUseSceneObjHolderEi	OceanScenarioList::tryGetOceanScenarioList(al::IUseSceneObjHolder const*, int)	folder (alphabetical reset); object (class, new folder (alphabetical reset))
+0x7100502BE0	System/Data	OceanScenarioList.o	FALSE	_ZN17OceanScenarioList23tryGetOceanScenarioListEPKN2al18IUseSceneObjHolderEi	OceanScenarioList::tryGetOceanScenarioList(al::IUseSceneObjHolder const*, int)	folder (alphabetical reset); object (class, new folder (alphabetical reset))
 0x7100502C30			FALSE	_ZN17OceanScenarioList25getScenarioListByQuadrantEi	OceanScenarioList::getScenarioListByQuadrant(int)	
 0x7100502C50			FALSE	_ZN17OceanScenarioListC2Ei	OceanScenarioList::OceanScenarioList(int)	
 0x7100502C80			FALSE	_ZN17OceanScenarioList7addListEP12ScenarioList	OceanScenarioList::addList(ScenarioList*)	
@@ -33707,15 +33707,15 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100509DB0			FALSE	_ZNK15StageDataHolder19calcStageTimerCountEv	StageDataHolder::calcStageTimerCount() const	
 0x7100509DE0			FALSE	_ZNK15StageDataHolder19calcTimeAttackCountEv	StageDataHolder::calcTimeAttackCount() const	
 0x7100509E10			FALSE	_ZN15StageDataHolder26calcStageTimerCountToFrameEi	StageDataHolder::calcStageTimerCountToFrame(int)	
-0x7100509E20		WorldInfo.o	FALSE	_ZN9WorldInfoC2Ev	WorldInfo::WorldInfo()	object (class)
+0x7100509E20			FALSE	_ZN9WorldInfoC2Ev	WorldInfo::WorldInfo()	merged into StageDataHolder.o (secondary class WorldInfo.o)
 0x7100509E30			FALSE	_ZN9WorldInfo4initEiP17StageDatabaseInfoi	WorldInfo::init(int, StageDatabaseInfo*, int)	
 0x7100509E40			FALSE	_ZNK9WorldInfo19getStageInfoByIndexEi	WorldInfo::getStageInfoByIndex(int) const	
-0x7100509E50		WorldInfoList.o	FALSE	_ZN13WorldInfoListC2Eii	WorldInfoList::WorldInfoList(int, int)	object (class)
+0x7100509E50			FALSE	_ZN13WorldInfoListC2Eii	WorldInfoList::WorldInfoList(int, int)	merged into StageDataHolder.o (secondary class WorldInfoList.o)
 0x7100509F60			FALSE	_ZNK13WorldInfoList13findWorldInfoEi	WorldInfoList::findWorldInfo(int) const	
 0x7100509F70			FALSE	_ZNK13WorldInfoList19getStageInfoByIndexEi	WorldInfoList::getStageInfoByIndex(int) const	
 0x7100509F80			FALSE	_ZNK13WorldInfoList21findStageDatabaseInfoEi	WorldInfoList::findStageDatabaseInfo(int) const	
 0x7100509FE0			FALSE	_ZN17StageInfoFunction19createWorldInfoListEPN2al8ResourceE	StageInfoFunction::createWorldInfoList(al::Resource*)	
-0x710050A440	System_3	StageListHolder.o	FALSE	_ZN15StageListHolderC2Ev	StageListHolder::StageListHolder()	folder (alphabetical reset); object (class, new folder (alphabetical reset))
+0x710050A440		StageListHolder.o	FALSE	_ZN15StageListHolderC2Ev	StageListHolder::StageListHolder()	object (class)
 0x710050A5B0			FALSE	_ZNK15StageListHolder23findKoopaCastleCourseIdEi	StageListHolder::findKoopaCastleCourseId(int) const	
 0x710050A630			FALSE	_ZNK15StageListHolder12calcCourseIdEii	StageListHolder::calcCourseId(int, int) const	
 0x710050A6B0			FALSE	_ZNK15StageListHolder11getWorldNumEv	StageListHolder::getWorldNum() const	
@@ -48503,7 +48503,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71007E6AD0			FALSE	_ZN2al23setContextMRTMiiFaceXluEPN4sead18GraphicsContextMRTE	al::setContextMRTMiiFaceXlu(sead::GraphicsContextMRT*)	
 0x71007E6B10			FALSE	_ZN2al22setContextMRTOnlyDepthEPN4sead18GraphicsContextMRTE	al::setContextMRTOnlyDepth(sead::GraphicsContextMRT*)	
 0x71007E6B60			FALSE	_ZN2al23setContextMRTSilhouetteEPN4sead18GraphicsContextMRTE	al::setContextMRTSilhouette(sead::GraphicsContextMRT*)	
-0x71007E6BD0	Library/Render	RenderBufferAttacher.o	FALSE	_ZN2al20RenderBufferAttacherC2EPN3agl12RenderBufferEPKNS1_11TextureDataES6_S6_S6_PKNS1_17RenderTargetDepthE	al::RenderBufferAttacher::RenderBufferAttacher(agl::RenderBuffer*, agl::TextureData const*, agl::TextureData const*, agl::TextureData const*, agl::TextureData const*, agl::RenderTargetDepth const*)	folder (alphabetical reset); object (class, new folder (alphabetical reset))
+0x71007E6BD0	Library/Debug/Render	RenderBufferAttacher.o	FALSE	_ZN2al20RenderBufferAttacherC2EPN3agl12RenderBufferEPKNS1_11TextureDataES6_S6_S6_PKNS1_17RenderTargetDepthE	al::RenderBufferAttacher::RenderBufferAttacher(agl::RenderBuffer*, agl::TextureData const*, agl::TextureData const*, agl::TextureData const*, agl::TextureData const*, agl::RenderTargetDepth const*)	folder (alphabetical reset); object (class, new folder (alphabetical reset))
 0x71007E6C00			FALSE	_ZN2al20RenderBufferAttacherC2EPN3agl11DrawContextEPNS1_12RenderBufferEPKNS1_11TextureDataES8_S8_S8_PKNS1_17RenderTargetDepthE	al::RenderBufferAttacher::RenderBufferAttacher(agl::DrawContext*, agl::RenderBuffer*, agl::TextureData const*, agl::TextureData const*, agl::TextureData const*, agl::TextureData const*, agl::RenderTargetDepth const*)	
 0x71007E70A0			FALSE	_ZN2al20RenderBufferAttacherC1EPN3agl12RenderBufferEPKN4sead8ViewportEPKNS1_11TextureDataESA_SA_SA_PKNS1_17RenderTargetDepthE	al::RenderBufferAttacher::RenderBufferAttacher(agl::RenderBuffer*, sead::Viewport const*, agl::TextureData const*, agl::TextureData const*, agl::TextureData const*, agl::TextureData const*, agl::RenderTargetDepth const*)	
 0x71007E7550			FALSE	_ZN2al20RenderBufferAttacherC2EPN3agl12RenderBufferEiPKNS1_11TextureDataES6_S6_S6_PKNS1_17RenderTargetDepthE	al::RenderBufferAttacher::RenderBufferAttacher(agl::RenderBuffer*, int, agl::TextureData const*, agl::TextureData const*, agl::TextureData const*, agl::TextureData const*, agl::RenderTargetDepth const*)	
@@ -48814,7 +48814,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71007F0600			FALSE	_ZN2al13FileEntryBase12waitLoadDoneEv	al::FileEntryBase::waitLoadDone()	
 0x71007F0630			FALSE	_ZN2al13FileEntryBase5clearEv	al::FileEntryBase::clear()	
 0x71007F0660			FALSE	_ZN2al13FileEntryBase21setLoadStateRequestedEv	al::FileEntryBase::setLoadStateRequested()	
-0x71007F0670	Library/File_2	ArchiveHolder.o	FALSE	_ZN2al13ArchiveHolderC2Ev	al::ArchiveHolder::ArchiveHolder()	folder (alphabetical reset); object (class, new folder (alphabetical reset))
+0x71007F0670	Library/File/Holder	ArchiveHolder.o	FALSE	_ZN2al13ArchiveHolderC2Ev	al::ArchiveHolder::ArchiveHolder()	folder (alphabetical reset); object (class, new folder (alphabetical reset))
 0x71007F0700			FALSE	_ZN2al13ArchiveHolder22addNewLoadRequestEntryERKN4sead14SafeStringBaseIcEEPNS1_4HeapEPNS1_10FileDeviceE	al::ArchiveHolder::addNewLoadRequestEntry(sead::SafeStringBase<char> const&, sead::Heap*, sead::FileDevice*)	
 0x71007F0760			FALSE	_ZN2al13ArchiveHolder12tryFindEntryERKN4sead14SafeStringBaseIcEE	al::ArchiveHolder::tryFindEntry(sead::SafeStringBase<char> const&)	
 0x71007F07F0			FALSE	_ZN2al13ArchiveHolder15waitLoadDoneAllEv	al::ArchiveHolder::waitLoadDoneAll()	
@@ -48999,7 +48999,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71007F7CD0			FALSE	_ZN2al24isPausedJointControllersEv	al::isPausedJointControllers()	
 0x71007F7CE0			FALSE	_ZN2al18JointAimControllerC2EPKNS_12JointAimInfoE	al::JointAimController::JointAimController(al::JointAimInfo const*)	
 0x71007F7D30			FALSE	_ZN2al18JointAimController17calcJointCallbackEiPN4sead8Matrix34IfEE	al::JointAimController::calcJointCallback(int, sead::Matrix34<float>*)	
-0x71007F7FF0	Library/Joint_2	JointControllerBase.o	FALSE	_ZN2al19JointControllerBaseC2Ev	al::JointControllerBase::JointControllerBase()	folder (alphabetical reset); object (class, new folder (alphabetical reset))
+0x71007F7FF0			FALSE	_ZN2al19JointControllerBaseC2Ev	al::JointControllerBase::JointControllerBase()	merged into JointControllerKeeper.o (secondary class JointControllerBase.o)
 0x71007F8060			FALSE	_ZN2al19JointControllerBase13appendJointIdEi	al::JointControllerBase::appendJointId(int)	
 0x71007F8290			FALSE	_ZNK2al19JointControllerBase10findNextIdEPii	al::JointControllerBase::findNextId(int*, int) const	
 0x71007F82E0			FALSE	_ZNK2al19JointControllerBase9isExistIdEi	al::JointControllerBase::isExistId(int) const	
@@ -49457,7 +49457,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710080B940			FALSE	_ZNK2al22AlbedoModeSpotLightMgr10updateUBO_ERKNS_16LppLightDataBaseINS_14SpotLightParamEEEiRKN3agl4lght12LightPrePass7ContextE	al::AlbedoModeSpotLightMgr::updateUBO_(al::LppLightDataBase<al::SpotLightParam> const&, int, agl::lght::LightPrePass::Context const&) const	
 0x710080C060			FALSE	_ZNK2al22AlbedoModeSpotLightMgr9drawImpl_EPN3agl11DrawContextERKNS_16LppLightDataBaseINS_14SpotLightParamEEEiRKNS1_4lght12LightPrePass7ContextERNSA_11CallbackArgE	al::AlbedoModeSpotLightMgr::drawImpl_(agl::DrawContext*, al::LppLightDataBase<al::SpotLightParam> const&, int, agl::lght::LightPrePass::Context const&, agl::lght::LightPrePass::CallbackArg&) const	
 0x710080C3B0			FALSE	_ZNK2al22AlbedoModeSpotLightMgr14drawDebugImpl_EPN3agl11DrawContextERKNS_16LppLightDataBaseINS_14SpotLightParamEEEiRKNS1_4lght12LightPrePass7ContextE	al::AlbedoModeSpotLightMgr::drawDebugImpl_(agl::DrawContext*, al::LppLightDataBase<al::SpotLightParam> const&, int, agl::lght::LightPrePass::Context const&) const	
-0x710080C3E0	Library/Light_2	PrePassLightKeeper.o	FALSE	_ZN2al22AlbedoModeLineLightMgrC2EPNS_18PrePassLightKeeperE	al::AlbedoModeLineLightMgr::AlbedoModeLineLightMgr(al::PrePassLightKeeper*)	folder (alphabetical reset); object (smo, new folder (alphabetical reset))
+0x710080C3E0	Library/Light/Keeper	PrePassLightKeeper.o	FALSE	_ZN2al22AlbedoModeLineLightMgrC2EPNS_18PrePassLightKeeperE	al::AlbedoModeLineLightMgr::AlbedoModeLineLightMgr(al::PrePassLightKeeper*)	folder (alphabetical reset); object (smo, new folder (alphabetical reset))
 0x710080C470			FALSE	_ZN2al22AlbedoModeLineLightMgr16initPrepareImpl_EPN4sead4HeapE	al::AlbedoModeLineLightMgr::initPrepareImpl_(sead::Heap*)	
 0x710080C480			FALSE	_ZN2al22AlbedoModeLineLightMgr9initImpl_ERNS_16LppLightDataBaseINS_14LineLightParamEEEPN4sead4HeapE	al::AlbedoModeLineLightMgr::initImpl_(al::LppLightDataBase<al::LineLightParam>&, sead::Heap*)	
 0x710080C520			FALSE	_ZN2al22AlbedoModeLineLightMgr16initViewUboImpl_EPN3agl12UniformBlockEPN4sead4HeapE	al::AlbedoModeLineLightMgr::initViewUboImpl_(agl::UniformBlock*, sead::Heap*)	
@@ -52407,7 +52407,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100869A90			FALSE	_ZN2al18ModelDrawerCubeMap11removeModelEP11alModelCafe	al::ModelDrawerCubeMap::removeModel(alModelCafe*)	
 0x7100869AA0			FALSE	_ZNK2al18ModelDrawerCubeMap4drawEv	al::ModelDrawerCubeMap::draw() const	
 0x7100869BB0			FALSE	_ZN2al18ModelDrawerCubeMapD0Ev	al::ModelDrawerCubeMap::~ModelDrawerCubeMap()	
-0x7100869BC0	Library/Model_2	MeshDrawer.o	FALSE	_ZN2al10MeshDrawerC2EPKcPKN2nn3g3d8ModelObjEPKNS4_8ShapeObjEPKNS4_14ShaderSelectorEi	al::MeshDrawer::MeshDrawer(char const*, nn::g3d::ModelObj const*, nn::g3d::ShapeObj const*, nn::g3d::ShaderSelector const*, int)	folder (alphabetical reset); object (class, new folder (alphabetical reset))
+0x7100869BC0	Library/Model/Drawer	MeshDrawer.o	FALSE	_ZN2al10MeshDrawerC2EPKcPKN2nn3g3d8ModelObjEPKNS4_8ShapeObjEPKNS4_14ShaderSelectorEi	al::MeshDrawer::MeshDrawer(char const*, nn::g3d::ModelObj const*, nn::g3d::ShapeObj const*, nn::g3d::ShaderSelector const*, int)	folder (alphabetical reset); object (class, new folder (alphabetical reset))
 0x7100869E70			FALSE	_ZN2al10MeshDrawer18initForDepthShadowEv	al::MeshDrawer::initForDepthShadow()	
 0x7100869F30			FALSE	_ZN2al10MeshDrawer20clearDepthShadowFlagEv	al::MeshDrawer::clearDepthShadowFlag()	
 0x7100869F80			FALSE	_ZN2al10MeshDrawer20preDrawToDepthShadowEPNS_17DepthShadowDrawerE	al::MeshDrawer::preDrawToDepthShadow(al::DepthShadowDrawer*)	
@@ -52471,7 +52471,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710086D7A0			FALSE	_ZN2al21ModelDrawerInvincible11createTableEv	al::ModelDrawerInvincible::createTable()	
 0x710086D8F0			FALSE	_ZNK2al21ModelDrawerInvincible4drawEv	al::ModelDrawerInvincible::draw() const	
 0x710086DA00			FALSE	_ZN2al21ModelDrawerInvincibleD0Ev	al::ModelDrawerInvincible::~ModelDrawerInvincible()	
-0x710086DA10	Library/Model_3	alModelFunction.o	FALSE	_ZN15alModelFunction18calcBoundingSphereEPK11alModelCafe	alModelFunction::calcBoundingSphere(alModelCafe const*)	folder (alphabetical reset); object (class, new folder (alphabetical reset))
+0x710086DA10	Library/Model/Function	alModelFunction.o	FALSE	_ZN15alModelFunction18calcBoundingSphereEPK11alModelCafe	alModelFunction::calcBoundingSphere(alModelCafe const*)	folder (alphabetical reset); object (class, new folder (alphabetical reset))
 0x710086DA80			FALSE	_ZN15alModelFunction15calcBoundingBoxEPN4sead9BoundBox3IfEEPK11alModelCafe	alModelFunction::calcBoundingBox(sead::BoundBox3<float>*, alModelCafe const*)	
 0x710086DBC0		ModelFunction.o	FALSE	_ZN15alModelFunction23updateRenderMaterialUboEPN2nn3g3d11MaterialObjE	alModelFunction::updateRenderMaterialUbo(nn::g3d::MaterialObj*)	object (smo)
 0x710086DF40			FALSE	_ZN15alModelFunction23getRoughnessPresetIndexEPKN2nn3g3d13ResRenderInfoE	alModelFunction::getRoughnessPresetIndex(nn::g3d::ResRenderInfo const*)	
@@ -52565,7 +52565,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100872640			FALSE	_ZN2al23CategoryLightInfoHolder17initStageResourceEPKNS_8ResourceE	al::CategoryLightInfoHolder::initStageResource(al::Resource const*)	
 0x7100872710			FALSE	_ZNK2al23CategoryLightInfoHolder15tryGetLightInfoEPKc	al::CategoryLightInfoHolder::tryGetLightInfo(char const*) const	
 0x71008727F0			FALSE	_ZN2al23CategoryLightInfoHolderD0Ev	al::CategoryLightInfoHolder::~CategoryLightInfoHolder()	
-0x7100872800	Library/Model_4	ModelAdditionalInfo.o	FALSE	_ZN2al19ModelAdditionalInfoC1EPKNS_18GraphicsSystemInfoEb	al::ModelAdditionalInfo::ModelAdditionalInfo(al::GraphicsSystemInfo const*, bool)	folder (alphabetical reset); object (class, new folder (alphabetical reset))
+0x7100872800	Library/Movement	ModelAdditionalInfo.o	FALSE	_ZN2al19ModelAdditionalInfoC1EPKNS_18GraphicsSystemInfoEb	al::ModelAdditionalInfo::ModelAdditionalInfo(al::GraphicsSystemInfo const*, bool)	folder (alphabetical reset); object (class, new folder (alphabetical reset))
 0x7100872870		ModelAdditionalInfoRenderCubeMap.o	FALSE	_ZN2al32ModelAdditionalInfoRenderCubeMapC1EPKNS_18GraphicsSystemInfoE	al::ModelAdditionalInfoRenderCubeMap::ModelAdditionalInfoRenderCubeMap(al::GraphicsSystemInfo const*)	object (class)
 0x71008728D0			FALSE	_ZN2al19ModelAdditionalInfo28activateEnvTextureIndividualEiPKNS_14SimpleModelG3DE	al::ModelAdditionalInfo::activateEnvTextureIndividual(int, al::SimpleModelG3D const*)	
 0x7100872970			FALSE	_ZN2al19ModelAdditionalInfo18activateEnvTextureEiPKNS_14SimpleModelG3DE	al::ModelAdditionalInfo::activateEnvTexture(int, al::SimpleModelG3D const*)	
@@ -53221,7 +53221,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100888900			FALSE	_ZN2al18tryGetDisplayScaleEPN4sead7Vector3IfEERKNS_13ActorInitInfoE	al::tryGetDisplayScale(sead::Vector3<float>*, al::ActorInitInfo const&)	
 0x7100888990			FALSE	_ZN2al12isSingleModeERKNS_13ActorInitInfoE	al::isSingleMode(al::ActorInitInfo const&)	
 0x71008889A0			FALSE	_ZN2al16isExistLinkChildERKNS_13PlacementInfoEPKci	al::isExistLinkChild(al::PlacementInfo const&, char const*, int)	
-0x71008889D0	Library/Placement_2	PlacementFunction.o	FALSE	_ZN19alPlacementFunction11getCameraIdERKN2al13ActorInitInfoE	alPlacementFunction::getCameraId(al::ActorInitInfo const&)	folder (alphabetical reset); object (smo, new folder (alphabetical reset))
+0x71008889D0	Library/Placement/Function	PlacementFunction.o	FALSE	_ZN19alPlacementFunction11getCameraIdERKN2al13ActorInitInfoE	alPlacementFunction::getCameraId(al::ActorInitInfo const&)	folder (alphabetical reset); object (smo, new folder (alphabetical reset))
 0x7100888A10			FALSE	_ZN19alPlacementFunction14getLinkGroupIdEPN2al11PlacementIdERKNS0_13ActorInitInfoEPKc	alPlacementFunction::getLinkGroupId(al::PlacementId*, al::ActorInitInfo const&, char const*)	
 0x7100888A80			FALSE	_ZN19alPlacementFunction19isEnableLinkGroupIdERKN2al13ActorInitInfoEPKc	alPlacementFunction::isEnableLinkGroupId(al::ActorInitInfo const&, char const*)	
 0x7100888B00			FALSE	_ZN19alPlacementFunction21isEnableGroupClippingERKN2al13ActorInitInfoE	alPlacementFunction::isEnableGroupClipping(al::ActorInitInfo const&)	
@@ -53370,7 +53370,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710088CAC0			FALSE	_ZN2al11GodRayParam6interpERKS0_S2_f	al::GodRayParam::interp(al::GodRayParam const&, al::GodRayParam const&, float)	
 0x710088CC30			FALSE	_ZN2al14GodRayDirectorC2EPNS_18GraphicsSystemInfoE	al::GodRayDirector::GodRayDirector(al::GraphicsSystemInfo*)	
 0x710088CDE0			FALSE	_ZN2al32GraphicsParamRequestInterpKeeperINS_11GodRayParamEEC2EPNS_18GraphicsSystemInfoEiPKcS6_S6_	al::GraphicsParamRequestInterpKeeper<al::GodRayParam>::GraphicsParamRequestInterpKeeper(al::GraphicsSystemInfo*, int, char const*, char const*, char const*)	
-0x710088D520	Library/Player_2	GodRayDirector.o	FALSE	_ZN2al14GodRayDirectorD2Ev	al::GodRayDirector::~GodRayDirector()	folder (alphabetical reset); object (smo, new folder (alphabetical reset))
+0x710088D520	Library/PostProcessing	GodRayDirector.o	FALSE	_ZN2al14GodRayDirectorD2Ev	al::GodRayDirector::~GodRayDirector()	folder (alphabetical reset); object (smo, new folder (alphabetical reset))
 0x710088D6E0			FALSE	_ZN2al14GodRayDirectorD0Ev	al::GodRayDirector::~GodRayDirector()	
 0x710088D710			FALSE	_ZN2al14GodRayDirector17initStageResourceEPKNS_8ResourceEPKc	al::GodRayDirector::initStageResource(al::Resource const*, char const*)	
 0x710088D770			FALSE	_ZNK2al14GodRayDirector8isEnableEv	al::GodRayDirector::isEnable() const	
@@ -53466,7 +53466,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100897760			FALSE	_ZN3agl2fx17OccludedEffectMgr9CreateArgD0Ev	agl::fx::OccludedEffectMgr::CreateArg::~CreateArg()	
 0x7100897770			FALSE	_ZNK4sead15RuntimeTypeInfo6DeriveIN3agl2fx12OfxLensFlareEE9isDerivedEPKNS0_9InterfaceE	sead::RuntimeTypeInfo::Derive<agl::fx::OfxLensFlare>::isDerived(sead::RuntimeTypeInfo::Interface const*) const	
 0x7100897800			FALSE	_ZNK4sead15RuntimeTypeInfo6DeriveIN3agl2fx7OfxBaseEE9isDerivedEPKNS0_9InterfaceE	sead::RuntimeTypeInfo::Derive<agl::fx::OfxBase>::isDerived(sead::RuntimeTypeInfo::Interface const*) const	
-0x7100897890	Library/Player_3	OccludedEffectRequester.o	FALSE	_ZN2al23OccludedEffectRequesterC2EPKc	al::OccludedEffectRequester::OccludedEffectRequester(char const*)	folder (alphabetical reset); object (smo, new folder (alphabetical reset))
+0x7100897890	Library/PostProcessing/Occluded	OccludedEffectRequester.o	FALSE	_ZN2al23OccludedEffectRequesterC2EPKc	al::OccludedEffectRequester::OccludedEffectRequester(char const*)	folder (alphabetical reset); object (smo, new folder (alphabetical reset))
 0x7100897920			FALSE	_ZN2al23OccludedEffectRequesterC1EPKc	al::OccludedEffectRequester::OccludedEffectRequester(char const*)	
 0x71008979C0			FALSE	_ZN2al23OccludedEffectRequester4initERKNS_13ActorInitInfoE	al::OccludedEffectRequester::init(al::ActorInitInfo const&)	
 0x7100897BD0			FALSE	_ZN2al23OccludedEffectRequester10switchKillEv	al::OccludedEffectRequester::switchKill()	
@@ -54142,7 +54142,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71008AABB0			FALSE	_ZN2al31setSequenceNameForActorPickToolEPNS_8SequenceEPNS_5SceneE	al::setSequenceNameForActorPickTool(al::Sequence*, al::Scene*)	
 0x71008AABC0			FALSE	_ZN2al12SceneCreatorC1EPKNS_14GameSystemInfoEPNS_13AudioDirectorEPNS_18GameDataHolderBaseEPNS_21ScreenCaptureExecutorEPN15alSceneFunction12SceneFactoryE	al::SceneCreator::SceneCreator(al::GameSystemInfo const*, al::AudioDirector*, al::GameDataHolderBase*, al::ScreenCaptureExecutor*, alSceneFunction::SceneFactory*)	
 0x71008AABD0			FALSE	_ZN2al12SceneCreator11createSceneEPKcS2_iS2_biS2_	al::SceneCreator::createScene(char const*, char const*, int, char const*, bool, int, char const*)	
-0x71008AAD60	Library/Scene_2	SceneCreator.o	FALSE	_ZN2al12SceneCreator21setSceneAndThreadInitEPNS_5SceneEPKciS4_iPN4sead4HeapE	al::SceneCreator::setSceneAndThreadInit(al::Scene*, char const*, int, char const*, int, sead::Heap*)	folder (alphabetical reset); object (smo, new folder (alphabetical reset))
+0x71008AAD60	Library/Sequence/Scene	SceneCreator.o	FALSE	_ZN2al12SceneCreator21setSceneAndThreadInitEPNS_5SceneEPKciS4_iPN4sead4HeapE	al::SceneCreator::setSceneAndThreadInit(al::Scene*, char const*, int, char const*, int, sead::Heap*)	folder (alphabetical reset); object (smo, new folder (alphabetical reset))
 0x71008AAED0			FALSE	_ZN2al12SceneCreator15setSceneAndInitEPNS_5SceneEPKciS4_	al::SceneCreator::setSceneAndInit(al::Scene*, char const*, int, char const*)	
 0x71008AAF90			FALSE	_ZN2al12SceneCreator16tryEndInitThreadEv	al::SceneCreator::tryEndInitThread()	
 0x71008AAFE0			FALSE	_ZNK2al12SceneCreator17isExistInitThreadEv	al::SceneCreator::isExistInitThread() const	
@@ -54629,7 +54629,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71008C7040			FALSE	_ZN2al14ShadowDirector5clearEv	al::ShadowDirector::clear()	
 0x71008C7070			FALSE	_ZN2al14ShadowDirector6updateEv	al::ShadowDirector::update()	
 0x71008C71A0			FALSE	_ZN14ShadowFunction17getShadowDirectorEPKN2al9LiveActorE	ShadowFunction::getShadowDirector(al::LiveActor const*)	
-0x71008C71C0	Library/Shadow_2	DepthShadowDrawer.o	FALSE	_ZN2al17DepthShadowDrawerC2Ev	al::DepthShadowDrawer::DepthShadowDrawer()	folder (alphabetical reset); object (smo, new folder (alphabetical reset))
+0x71008C71C0	Library/Shadow/Depth	DepthShadowDrawer.o	FALSE	_ZN2al17DepthShadowDrawerC2Ev	al::DepthShadowDrawer::DepthShadowDrawer()	folder (alphabetical reset); object (smo, new folder (alphabetical reset))
 0x71008C7290			FALSE	_ZN2al17DepthShadowDrawerD2Ev	al::DepthShadowDrawer::~DepthShadowDrawer()	
 0x71008C7320			FALSE	_ZNK2al17DepthShadowDrawer18cleanupDepthShadowEv	al::DepthShadowDrawer::cleanupDepthShadow() const	
 0x71008C7330			FALSE	_ZN2al17DepthShadowDrawer14setNearFarInitEv	al::DepthShadowDrawer::setNearFarInit()	
@@ -54683,7 +54683,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71008C9D00			FALSE	_ZN2al17isShadowIntensityEi	al::isShadowIntensity(int)	
 0x71008C9D10			FALSE	_ZN2al18isShadowLightScaleEi	al::isShadowLightScale(int)	
 0x71008C9D30			FALSE	_ZN2al11isShadowMrtEi	al::isShadowMrt(int)	
-0x71008C9D60	Library/Shadow_3	ShadowDirector.o	FALSE	_ZN2al14ShadowMaskBaseC2EPKc	al::ShadowMaskBase::ShadowMaskBase(char const*)	folder (alphabetical reset); object (smo, new folder (alphabetical reset))
+0x71008C9D60	Library/Shadow/Mask	ShadowDirector.o	FALSE	_ZN2al14ShadowMaskBaseC2EPKc	al::ShadowMaskBase::ShadowMaskBase(char const*)	folder (alphabetical reset); object (smo, new folder (alphabetical reset))
 0x71008C9ED0			FALSE	_ZN2al14ShadowMaskBase18initAfterPlacementEv	al::ShadowMaskBase::initAfterPlacement()	
 0x71008C9EF0			FALSE	_ZN2al14ShadowMaskBase18createMtxConnectorEv	al::ShadowMaskBase::createMtxConnector()	
 0x71008C9F20			FALSE	_ZNK2al14ShadowMaskBase8getColorEv	al::ShadowMaskBase::getColor() const	
@@ -54735,7 +54735,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71008CC900			FALSE	_ZN2al18ShadowMaskCylinder8addMultiEv	al::ShadowMaskCylinder::addMulti()	
 0x71008CC970			FALSE	_ZN2al18ShadowMaskCylinderD0Ev	al::ShadowMaskCylinder::~ShadowMaskCylinder()	
 0x71008CC980			FALSE	_ZNK2al18ShadowMaskCylinder17getShadowMaskTypeEv	al::ShadowMaskCylinder::getShadowMaskType() const	
-0x71008CC990		ShadowMaskParam.o	FALSE	_ZN2al15ShadowMaskParam4initEv	al::ShadowMaskParam::init()	object (class)
+0x71008CC990		ShadowMaskDrawer.o	FALSE	_ZN2al15ShadowMaskParam4initEv	al::ShadowMaskParam::init()	object ShadowMaskDrawer.o (was ShadowMaskParam.o, a secondary class)
 0x71008CCB00			FALSE	_ZNK2al15ShadowMaskParameqERKS0_	al::ShadowMaskParam::operator==(al::ShadowMaskParam const&) const	
 0x71008CCB80			FALSE	_ZN2al15ShadowMaskParamaSERKS0_	al::ShadowMaskParam::operator=(al::ShadowMaskParam const&)	
 0x71008CCBB0			FALSE	_ZN2al15ShadowMaskParam6interpERKS0_S2_f	al::ShadowMaskParam::interp(al::ShadowMaskParam const&, al::ShadowMaskParam const&, float)	
@@ -54794,7 +54794,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71008D2620			FALSE	_ZN2al13RequestInterpINS_15ShadowMaskParamEE12requestParamEiiRKS1_	al::RequestInterp<al::ShadowMaskParam>::requestParam(int, int, al::ShadowMaskParam const&)	
 0x71008D27E0			FALSE	_ZN2al13RequestInterpINS_15ShadowMaskParamEE12updateInterpEv	al::RequestInterp<al::ShadowMaskParam>::updateInterp()	
 0x71008D29C0			FALSE	sub_71008D29C0	sub_71008D29C0	
-0x71008D2A20	Library/Shadow_4	ShadowMaskDrawer.o	FALSE	_ZN2al16ShadowMaskDrawerC1EPNS_16ShadowMaskKeeperEiPNS_15ExecuteDirectorE	al::ShadowMaskDrawer::ShadowMaskDrawer(al::ShadowMaskKeeper*, int, al::ExecuteDirector*)	folder (alphabetical reset); object (class, new folder (alphabetical reset))
+0x71008D2A20			FALSE	_ZN2al16ShadowMaskDrawerC1EPNS_16ShadowMaskKeeperEiPNS_15ExecuteDirectorE	al::ShadowMaskDrawer::ShadowMaskDrawer(al::ShadowMaskKeeper*, int, al::ExecuteDirector*)	part of ShadowMaskDrawer.o
 0x71008D2A80			FALSE	_ZNK2al16ShadowMaskDrawer4drawEv	al::ShadowMaskDrawer::draw() const	
 0x71008D2B50			FALSE	_ZNK2al16ShadowMaskDrawer17drawToTextureDataEPKN3agl11TextureDataES4_NS1_10ShaderModeE	al::ShadowMaskDrawer::drawToTextureData(agl::TextureData const*, agl::TextureData const*, agl::ShaderMode) const	
 0x71008D2FB0			FALSE	_ZNK2al16ShadowMaskDrawer29drawLightScaleToAlbedoGBufferEN3agl10ShaderModeE	al::ShadowMaskDrawer::drawLightScaleToAlbedoGBuffer(agl::ShaderMode) const	
@@ -54890,7 +54890,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71008D4E70			FALSE	_ZN19alSystemKitFunction16applyViewportTopERKN4sead8ViewportE	alSystemKitFunction::applyViewportTop(sead::Viewport const&)	
 0x71008D4EB0			FALSE	_ZN19alSystemKitFunction16applyViewportBtmERKN4sead8ViewportE	alSystemKitFunction::applyViewportBtm(sead::Viewport const&)	
 0x71008D4EF0			FALSE	_ZN2al14GameSystemInfoC2Ev	al::GameSystemInfo::GameSystemInfo()	
-0x71008D4F10	Library/System_2	AsyncFunctorThread.o	FALSE	_ZN2al18AsyncFunctorThreadC2ERKN4sead14SafeStringBaseIcEERKNS_11FunctorBaseEii	al::AsyncFunctorThread::AsyncFunctorThread(sead::SafeStringBase<char> const&, al::FunctorBase const&, int, int)	folder (alphabetical reset); object (class, new folder (alphabetical reset))
+0x71008D4F10	Library/Thread	AsyncFunctorThread.o	FALSE	_ZN2al18AsyncFunctorThreadC2ERKN4sead14SafeStringBaseIcEERKNS_11FunctorBaseEii	al::AsyncFunctorThread::AsyncFunctorThread(sead::SafeStringBase<char> const&, al::FunctorBase const&, int, int)	folder (alphabetical reset); object (class, new folder (alphabetical reset))
 0x71008D5000			FALSE	_ZN2al18AsyncFunctorThread14threadFunctionEPN4sead6ThreadEl	al::AsyncFunctorThread::threadFunction(sead::Thread*, long)	
 0x71008D5040			FALSE	_ZN2al18AsyncFunctorThreadD2Ev	al::AsyncFunctorThread::~AsyncFunctorThread()	
 0x71008D5070			FALSE	_ZN2al18AsyncFunctorThreadD0Ev	al::AsyncFunctorThread::~AsyncFunctorThread()	
@@ -55095,7 +55095,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71008DBE60			FALSE	_ZN2al17ActorActionKeeper17tryUpdateSeEffectEff	al::ActorActionKeeper::tryUpdateSeEffect(float, float)	
 0x71008DBF10			FALSE	_ZN2al17ActorActionKeeperC1EPNS_9LiveActorEPKcPNS_14ActionAnimCtrlEPNS_15NerveActionCtrlEPNS_14ActionFlagCtrlEPNS_16ActionEffectCtrlEPNS_12ActionSeCtrlEPNS_13ActionBgmCtrlEPNS_19ActionOceanWaveCtrlEPNS_22ActionPadAndCameraCtrlEPNS_22ActionScreenEffectCtrlE	al::ActorActionKeeper::ActorActionKeeper(al::LiveActor*, char const*, al::ActionAnimCtrl*, al::NerveActionCtrl*, al::ActionFlagCtrl*, al::ActionEffectCtrl*, al::ActionSeCtrl*, al::ActionBgmCtrl*, al::ActionOceanWaveCtrl*, al::ActionPadAndCameraCtrl*, al::ActionScreenEffectCtrl*)	
 0x71008DBF40			FALSE	_ZN2al17ActorActionKeeper4initEv	al::ActorActionKeeper::init()	
-0x71008DBF50	Project/Action/Ctrl	ActionBgmCtrl.o	FALSE	_ZN2al13ActionBgmCtrl9tryCreateEPNS_11AudioKeeperE	al::ActionBgmCtrl::tryCreate(al::AudioKeeper*)	folder (alphabetical reset after Project/Action; name is a guess); note: sorts before the previous object (folder boundary or misnamed object?)
+0x71008DBF50	Project/Action/Ctrl	ActionBgmCtrl.o	FALSE	_ZN2al13ActionBgmCtrl9tryCreateEPNS_11AudioKeeperE	al::ActionBgmCtrl::tryCreate(al::AudioKeeper*)	folder (Action*Ctrl objects after Project/Action; name is a guess); note: sorts before the previous object (folder boundary or misnamed object?)
 0x71008DBFE0			FALSE	_ZN2al13ActionBgmCtrlC1EPNS_11AudioKeeperEPNS_11BgmUserInfoE	al::ActionBgmCtrl::ActionBgmCtrl(al::AudioKeeper*, al::BgmUserInfo*)	
 0x71008DC000			FALSE	_ZN2al13ActionBgmCtrl24tryPrepareActionFirstBgmEPKcbi	al::ActionBgmCtrl::tryPrepareActionFirstBgm(char const*, bool, int)	
 0x71008DC0F0			FALSE	_ZN2al13ActionBgmCtrl24tryPrepareActionFirstBgmEPKNS_13BgmActionInfoEbi	al::ActionBgmCtrl::tryPrepareActionFirstBgm(al::BgmActionInfo const*, bool, int)	
@@ -55168,7 +55168,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71008DF010			FALSE	_ZNK2al18YamlWriterToMemory17getUsedBufferSizeEv	al::YamlWriterToMemory::getUsedBufferSize() const	
 0x71008DF020			FALSE	_ZN2al18YamlWriterToMemoryD2Ev	al::YamlWriterToMemory::~YamlWriterToMemory()	
 0x71008DF040			FALSE	_ZN2al18YamlWriterToMemoryD0Ev	al::YamlWriterToMemory::~YamlWriterToMemory()	
-0x71008DF080	Project/Actor	ActorParam.o	FALSE	_ZN2al14ActorParamInfoC2Ev	al::ActorParamInfo::ActorParamInfo()	folder (alphabetical reset; ActorParam*)
+0x71008DF080	Project/Actor	ActorParam.o	FALSE	_ZN2al14ActorParamInfoC2Ev	al::ActorParamInfo::ActorParamInfo()	folder (ActorParam* objects)
 0x71008DF0A0			FALSE	_ZN2al16ActorParamHolder9tryCreateEPNS_9LiveActorE	al::ActorParamHolder::tryCreate(al::LiveActor*)	
 0x71008DF110		ActorParamHolder.o	FALSE	_ZNK2al16ActorParamHolder12findParamS32EPKc	al::ActorParamHolder::findParamS32(char const*) const	object (smo)
 0x71008DF1A0			FALSE	_ZNK2al16ActorParamHolder22tryFindParamInfoByNameEPKc	al::ActorParamHolder::tryFindParamInfoByName(char const*) const	
@@ -55264,7 +55264,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71008E27C0			FALSE	_ZNK2al13AnimPlayerSkl23getPartialAnimFrameRateEi	al::AnimPlayerSkl::getPartialAnimFrameRate(int) const	
 0x71008E27F0			FALSE	_ZN2al13AnimPlayerSkl23setPartialAnimFrameRateEif	al::AnimPlayerSkl::setPartialAnimFrameRate(int, float)	
 0x71008E2820			FALSE	_ZN2al13AnimPlayerSklC1EPKNS_18AnimPlayerInitInfoEi	al::AnimPlayerSkl::AnimPlayerSkl(al::AnimPlayerInitInfo const*, int)	
-0x71008E2BE0	Project/Anim_2	AnimPlayerSimple.o	FALSE	_ZN2al13AnimPlayerVis9tryCreateEPKNS_18AnimPlayerInitInfoE	al::AnimPlayerVis::tryCreate(al::AnimPlayerInitInfo const*)	folder (alphabetical reset inside Project/Anim; name unknown)
+0x71008E2BE0	Project/Anim/Player	AnimPlayerSimple.o	FALSE	_ZN2al13AnimPlayerVis9tryCreateEPKNS_18AnimPlayerInitInfoE	al::AnimPlayerVis::tryCreate(al::AnimPlayerInitInfo const*)	folder (resets inside Project/Anim; name unknown)
 0x71008E2C70			FALSE	_ZN2al13AnimPlayerVisC2Ev	al::AnimPlayerVis::AnimPlayerVis()	
 0x71008E2CA0			FALSE	_ZN2al13AnimPlayerVis4initEPKNS_18AnimPlayerInitInfoE	al::AnimPlayerVis::init(al::AnimPlayerInitInfo const*)	
 0x71008E2E30			FALSE	_ZN2al13AnimPlayerVis14setAnimToModelEPKNS_11AnimResInfoE	al::AnimPlayerVis::setAnimToModel(al::AnimResInfo const*)	
@@ -55442,7 +55442,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71008E9FF0			FALSE	_ZNK2al13AreaShapeOval20calcNearestEdgePointEPN4sead7Vector3IfEERKS3_	al::AreaShapeOval::calcNearestEdgePoint(sead::Vector3<float>*, sead::Vector3<float> const&) const	
 0x71008EA0A0			FALSE	_ZNK2al13AreaShapeOval19checkArrowCollisionEPN4sead7Vector3IfEES4_RKS3_S6_	al::AreaShapeOval::checkArrowCollision(sead::Vector3<float>*, sead::Vector3<float>*, sead::Vector3<float> const&, sead::Vector3<float> const&) const	
 0x71008EA0B0			FALSE	_ZNK2al13AreaShapeOval20calcWorldBoundingBoxEPN4sead9BoundBox3IfEE	al::AreaShapeOval::calcWorldBoundingBox(sead::BoundBox3<float>*) const	
-0x71008EA0C0	Project/Switch	AreaShapeCylinder.o	FALSE	_ZN2al17AreaShapeCylinderC2Ev	al::AreaShapeCylinder::AreaShapeCylinder()	folder (alphabetical reset); object (class, new folder (alphabetical reset))
+0x71008EA0C0			FALSE	_ZN2al17AreaShapeCylinderC2Ev	al::AreaShapeCylinder::AreaShapeCylinder()	merged into AreaShapes.o (secondary class AreaShapeCylinder.o)
 0x71008EA0F0			FALSE	_ZNK2al17AreaShapeCylinder10isInVolumeERKN4sead7Vector3IfEE	al::AreaShapeCylinder::isInVolume(sead::Vector3<float> const&) const	
 0x71008EA170			FALSE	_ZNK2al17AreaShapeCylinder13calcNearPointEPN4sead7Vector3IfEERKS3_	al::AreaShapeCylinder::calcNearPoint(sead::Vector3<float>*, sead::Vector3<float> const&) const	
 0x71008EA260			FALSE	_ZNK2al17AreaShapeCylinder20calcNearestEdgePointEPN4sead7Vector3IfEERKS3_	al::AreaShapeCylinder::calcNearestEdgePoint(sead::Vector3<float>*, sead::Vector3<float> const&) const	
@@ -55672,7 +55672,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71008F0670			FALSE	_ZN2al16AudioSystemDebugC2Ev	al::AudioSystemDebug::AudioSystemDebug()	
 0x71008F0690			FALSE	_ZN2al16AudioSystemDebug6updateEv	al::AudioSystemDebug::update()	
 0x71008F06C0			FALSE	_ZNK2al16AudioSystemDebug4drawEv	al::AudioSystemDebug::draw() const	
-0x71008F06D0	Project/Audio_2	AudioKeeperFunction.o	FALSE	_ZN21alAudioSystemFunction18getAudioSystemInfoEPKN2al14GameSystemInfoE	alAudioSystemFunction::getAudioSystemInfo(al::GameSystemInfo const*)	folder (alphabetical reset); object (smo, new folder (alphabetical reset))
+0x71008F06D0	Project/Audio/Keeper	AudioKeeperFunction.o	FALSE	_ZN21alAudioSystemFunction18getAudioSystemInfoEPKN2al14GameSystemInfoE	alAudioSystemFunction::getAudioSystemInfo(al::GameSystemInfo const*)	folder (alphabetical reset); object (smo, new folder (alphabetical reset))
 0x71008F06E0			FALSE	_ZN21alAudioSystemFunction34loadResourceFromUserManagementFileEPKcPN2al15SeadAudioPlayerEb	alAudioSystemFunction::loadResourceFromUserManagementFile(char const*, al::SeadAudioPlayer*, bool)	
 0x71008F08D0			FALSE	_ZN21alAudioSystemFunction19tryAttachMemoryPoolEPKcPN2al15SeadAudioPlayerE	alAudioSystemFunction::tryAttachMemoryPool(char const*, al::SeadAudioPlayer*)	
 0x71008F0960			FALSE	_ZN21alAudioSystemFunction18pauseBySystemErrorEPKN2al13AudioDirectorES3_bj	alAudioSystemFunction::pauseBySystemError(al::AudioDirector const*, al::AudioDirector const*, bool, unsigned int)	
@@ -55819,7 +55819,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71008F2F10			FALSE	_ZN2al22AcLSoundHandlePlatform16setSeqTempoRatioEf	al::AcLSoundHandlePlatform::setSeqTempoRatio(float)	
 0x71008F2F50			FALSE	_ZN2al22AcLSoundHandlePlatform28setOutputDeviceSpeakerVolumeEiffffff	al::AcLSoundHandlePlatform::setOutputDeviceSpeakerVolume(int, float, float, float, float, float, float)	
 0x71008F2FF0			FALSE	_ZN2al22AcLSoundHandlePlatform31setAllOutputDeviceSpeakerVolumeEffffff	al::AcLSoundHandlePlatform::setAllOutputDeviceSpeakerVolume(float, float, float, float, float, float)	
-0x71008F3080	Project/Sound	SoundHandle.o	FALSE	_ZN2al14AcLSoundHandleC2Ev	al::AcLSoundHandle::AcLSoundHandle()	folder (alphabetical reset); object (smo, new folder (alphabetical reset))
+0x71008F3080	Project/Audio/Sound	SoundHandle.o	FALSE	_ZN2al14AcLSoundHandleC2Ev	al::AcLSoundHandle::AcLSoundHandle()	folder (alphabetical reset); object (smo, new folder (alphabetical reset))
 0x71008F30A0			FALSE	_ZN2al14AcLSoundHandle11detachSoundEv	al::AcLSoundHandle::detachSound()	
 0x71008F30B0			FALSE	_ZThn16_N2al14AcLSoundHandle11detachSoundEv	non-virtual thunk to al::AcLSoundHandle::detachSound()	
 0x71008F30C0			FALSE	_ZN2al14AcLSoundHandle4stopEi	al::AcLSoundHandle::stop(int)	
@@ -56352,7 +56352,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71009081C0			FALSE	_ZN2al22BlockRailShapeStraight10calcOffsetERKN4sead7Vector3IfEE	al::BlockRailShapeStraight::calcOffset(sead::Vector3<float> const&)	
 0x71009081F0			FALSE	_ZN2al22BlockRailShapeStraight17updateLinkedTransERKN4sead7Vector3IfEE	al::BlockRailShapeStraight::updateLinkedTrans(sead::Vector3<float> const&)	
 0x7100908220			FALSE	_ZNK2al22BlockRailShapeStraight16calcNearestParamEPN4sead7Vector3IfEEPfRKS3_	al::BlockRailShapeStraight::calcNearestParam(sead::Vector3<float>*, float*, sead::Vector3<float> const&) const	
-0x71009082A0	Project/Block_2	BlockRailShapeCurve.o	FALSE	_ZN2al19BlockRailShapeCurveC1EPKc	al::BlockRailShapeCurve::BlockRailShapeCurve(char const*)	folder (alphabetical reset); object (class, new folder (alphabetical reset))
+0x71009082A0			FALSE	_ZN2al19BlockRailShapeCurveC1EPKc	al::BlockRailShapeCurve::BlockRailShapeCurve(char const*)	merged into BlockRailShapeStraight.o (secondary class BlockRailShapeCurve.o)
 0x7100908330			FALSE	_ZN2al19BlockRailShapeCurve4initERKN4sead4QuatIfEERKNS1_7Vector3IfEERKNS_9ByamlIterE	al::BlockRailShapeCurve::init(sead::Quat<float> const&, sead::Vector3<float> const&, al::ByamlIter const&)	
 0x71009084A0			FALSE	_ZNK2al19BlockRailShapeCurve6isRideEPfRKN4sead7Vector3IfEES6_	al::BlockRailShapeCurve::isRide(float*, sead::Vector3<float> const&, sead::Vector3<float> const&) const	
 0x7100908660			FALSE	_ZNK2al19BlockRailShapeCurve7calcPosEPN4sead7Vector3IfEEf	al::BlockRailShapeCurve::calcPos(sead::Vector3<float>*, float) const	
@@ -56693,7 +56693,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71009189E0			FALSE	_ZN2al18CameraAreaObserver6updateEv	al::CameraAreaObserver::update()	
 0x7100918B70			FALSE	_ZN2al18CameraAreaObserver25tryFindAreaObjAllPlayerInEv	al::CameraAreaObserver::tryFindAreaObjAllPlayerIn()	
 0x7100918C80			FALSE	_ZNK2al18CameraAreaObserver18getAreaObjDirectorEv	al::CameraAreaObserver::getAreaObjDirector() const	
-0x7100918C90	Project/Camera_2	CameraFunction.o	FALSE	_ZN2al14CameraFunction16tryGetCameraIterEPNS_9ByamlIterEPKNS_8ResourceEPKc	al::CameraFunction::tryGetCameraIter(al::ByamlIter*, al::Resource const*, char const*)	folder (alphabetical reset); object (class, new folder (alphabetical reset))
+0x7100918C90	Project/Camera/Param	CameraFunction.o	FALSE	_ZN2al14CameraFunction16tryGetCameraIterEPNS_9ByamlIterEPKNS_8ResourceEPKc	al::CameraFunction::tryGetCameraIter(al::ByamlIter*, al::Resource const*, char const*)	folder (alphabetical reset); object (class, new folder (alphabetical reset))
 0x7100918D10			FALSE	_ZN2al14CameraFunction21calcPosFromZoneToRootEPN4sead7Vector3IfEERKS3_RKNS1_8Matrix34IfEE	al::CameraFunction::calcPosFromZoneToRoot(sead::Vector3<float>*, sead::Vector3<float> const&, sead::Matrix34<float> const&)	
 0x7100918DB0			FALSE	_ZN2al14CameraFunction21calcPosFromRootToZoneEPN4sead7Vector3IfEERKS3_RKNS1_8Matrix34IfEE	al::CameraFunction::calcPosFromRootToZone(sead::Vector3<float>*, sead::Vector3<float> const&, sead::Matrix34<float> const&)	
 0x7100918E70			FALSE	_ZN2al14CameraFunction24calcAngleHFromZoneToRootEfRKN4sead8Matrix34IfEE	al::CameraFunction::calcAngleHFromZoneToRoot(float, sead::Matrix34<float> const&)	
@@ -56756,7 +56756,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710091AE10			FALSE	_ZNK2al11CameraPoser23getInterpoleGoAwayFrameEv	al::CameraPoser::getInterpoleGoAwayFrame() const	
 0x710091AE20			FALSE	_ZN2al11CameraPoser17startSnapshotModeEf	al::CameraPoser::startSnapshotMode(float)	
 0x710091AE30			FALSE	_ZNK2al11CameraPoser17getSnapshotOffsetEv	al::CameraPoser::getSnapshotOffset() const	
-0x710091AE40	Project/Camera_3	CameraPoserAnim.o	FALSE	_ZN2al15CameraPoserAnimC2EPNS_14CameraSwitcherE	al::CameraPoserAnim::CameraPoserAnim(al::CameraSwitcher*)	folder (alphabetical reset); object (class, new folder (alphabetical reset))
+0x710091AE40	Project/Camera/Poser	CameraPoserAnim.o	FALSE	_ZN2al15CameraPoserAnimC2EPNS_14CameraSwitcherE	al::CameraPoserAnim::CameraPoserAnim(al::CameraSwitcher*)	folder (alphabetical reset); object (class, new folder (alphabetical reset))
 0x710091AE90			FALSE	_ZN2al15CameraPoserAnim8initAnimEPKNS_8ResourceERKNS_11PlacementIdERKNS_13ActorInitInfoE	al::CameraPoserAnim::initAnim(al::Resource const*, al::PlacementId const&, al::ActorInitInfo const&)	
 0x710091AF30			FALSE	_ZN2al15CameraPoserAnim17setAnimAndBaseMtxEPKcPKN4sead8Matrix34IfEE	al::CameraPoserAnim::setAnimAndBaseMtx(char const*, sead::Matrix34<float> const*)	
 0x710091AF90			FALSE	_ZNK2nn3g3d12ResSceneAnim14FindCameraAnimEPKc	nn::g3d::ResSceneAnim::FindCameraAnim(char const*) const	
@@ -56831,7 +56831,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71009223E0			FALSE	_ZNK2al19CameraPoserParallel39isExistCameraPosWithinMoveLimitForMultiEv	al::CameraPoserParallel::isExistCameraPosWithinMoveLimitForMulti() const	
 0x7100922440			FALSE	_ZNK2al19CameraPoserParallel16makeLookAtCameraEPN4sead12LookAtCameraE	al::CameraPoserParallel::makeLookAtCamera(sead::LookAtCamera*) const	
 0x71009227E0			FALSE	_ZN2al19CameraPoserParallel9loadParamEPKNS_9ByamlIterE	al::CameraPoserParallel::loadParam(al::ByamlIter const*)	
-0x7100922BB0		CameraPoserParallelParam.o	FALSE	_ZN2al24CameraPoserParallelParamC2Ev	al::CameraPoserParallelParam::CameraPoserParallelParam()	object (class)
+0x7100922BB0		CameraPoserParallelOnRail.o	FALSE	_ZN2al24CameraPoserParallelParamC2Ev	al::CameraPoserParallelParam::CameraPoserParallelParam()	object CameraPoserParallelOnRail.o (was CameraPoserParallelParam.o, a secondary class)
 0x7100922C30			FALSE	_ZNK2al19CameraPoserParallel24calcPlayerWorldCenterPosEPN4sead7Vector3IfEE	al::CameraPoserParallel::calcPlayerWorldCenterPos(sead::Vector3<float>*) const	
 0x7100922D00			FALSE	_ZNK2al19CameraPoserParallel19isPlayerInLayoutBoxEi	al::CameraPoserParallel::isPlayerInLayoutBox(int) const	
 0x7100922DC0			FALSE	_ZNK2al19CameraPoserParallel29calcLayoutBoxIncludeAllPlayerEPN4sead9BoundBox2IfEEPb	al::CameraPoserParallel::calcLayoutBoxIncludeAllPlayer(sead::BoundBox2<float>*, bool*) const	
@@ -56848,7 +56848,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100923290			FALSE	_ZN2al19CameraPoserParallel21setSpeedCompensationVEf	al::CameraPoserParallel::setSpeedCompensationV(float)	
 0x71009232A0			FALSE	_ZNK2al19CameraPoserParallel20getCollisionDirectorEv	al::CameraPoserParallel::getCollisionDirector() const	
 0x71009232B0			FALSE	_ZThn168_NK2al19CameraPoserParallel20getCollisionDirectorEv	non-virtual thunk to al::CameraPoserParallel::getCollisionDirector() const	
-0x71009232C0	Project/Camera_4	CameraPoserParallelOnRail.o	FALSE	_ZN2al25CameraPoserParallelOnRailC1ERKNS_30CameraPoserParallelOnRailParamEPKNS_13PlayerWatcherEPKN4sead21PerspectiveProjectionEPKNS_11PlacementIdE	al::CameraPoserParallelOnRail::CameraPoserParallelOnRail(al::CameraPoserParallelOnRailParam const&, al::PlayerWatcher const*, sead::PerspectiveProjection const*, al::PlacementId const*)	folder (alphabetical reset); object (class, new folder (alphabetical reset))
+0x71009232C0			FALSE	_ZN2al25CameraPoserParallelOnRailC1ERKNS_30CameraPoserParallelOnRailParamEPKNS_13PlayerWatcherEPKN4sead21PerspectiveProjectionEPKNS_11PlacementIdE	al::CameraPoserParallelOnRail::CameraPoserParallelOnRail(al::CameraPoserParallelOnRailParam const&, al::PlayerWatcher const*, sead::PerspectiveProjection const*, al::PlacementId const*)	part of CameraPoserParallelOnRail.o
 0x71009233F0			FALSE	_ZN2al25CameraPoserParallelOnRail8initRailEPKNS_13PlacementInfoE	al::CameraPoserParallelOnRail::initRail(al::PlacementInfo const*)	
 0x7100923430			FALSE	_ZN2al25CameraPoserParallelOnRail6updateEv	al::CameraPoserParallelOnRail::update()	
 0x71009236C0			FALSE	_ZNK2al25CameraPoserParallelOnRail21calcDirAngleTypeFixedEPN4sead7Vector3IfEE	al::CameraPoserParallelOnRail::calcDirAngleTypeFixed(sead::Vector3<float>*) const	
@@ -57113,7 +57113,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710092DBA0			FALSE	_ZN2al13PlayerWatcher20quitPlayerLookAtStopEi	al::PlayerWatcher::quitPlayerLookAtStop(int)	
 0x710092DBB0			FALSE	_ZN2al14CameraViewFlagC2Ev	al::CameraViewFlag::CameraViewFlag()	
 0x710092DBC0			FALSE	_ZN2al14CameraViewFlag12resetAllFlagEv	al::CameraViewFlag::resetAllFlag()	
-0x710092DBD0	Project/Camera_5	CameraViewInfo.o	FALSE	_ZN2al14CameraViewInfoC1EiRKN4sead12LookAtCameraERNS_10ProjectionERKNS_14CameraViewFlagERKNS_19OrthoProjectionInfoE	al::CameraViewInfo::CameraViewInfo(int, sead::LookAtCamera const&, al::Projection&, al::CameraViewFlag const&, al::OrthoProjectionInfo const&)	folder (alphabetical reset); object (class, new folder (alphabetical reset))
+0x710092DBD0	Project/Camera/Info	CameraViewInfo.o	FALSE	_ZN2al14CameraViewInfoC1EiRKN4sead12LookAtCameraERNS_10ProjectionERKNS_14CameraViewFlagERKNS_19OrthoProjectionInfoE	al::CameraViewInfo::CameraViewInfo(int, sead::LookAtCamera const&, al::Projection&, al::CameraViewFlag const&, al::OrthoProjectionInfo const&)	folder (alphabetical reset); object (class, new folder (alphabetical reset))
 0x710092DBF0			FALSE	_ZN2al14CameraViewInfo17getProjectionSeadEv	al::CameraViewInfo::getProjectionSead()	
 0x710092DC00			FALSE	_ZNK2al14CameraViewInfo17getProjectionSeadEv	al::CameraViewInfo::getProjectionSead() const	
 0x710092DC10			FALSE	_ZNK2al14CameraViewInfo10getProjMtxEv	al::CameraViewInfo::getProjMtx() const	
@@ -57225,7 +57225,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71009323E0			FALSE	_ZN2al17CameraDirector_RS13setJustWarpedEv	al::CameraDirector_RS::setJustWarped()	
 0x71009323F0			FALSE	_ZNK2al17CameraDirector_RS18getSceneCameraInfoEv	al::CameraDirector_RS::getSceneCameraInfo() const	
 0x7100932400			FALSE	_ZThn8_NK2al17CameraDirector_RS18getSceneCameraInfoEv	non-virtual thunk to al::CameraDirector_RS::getSceneCameraInfo() const	
-0x7100932410	Project/Camera_6	AreaCameraSwitcher_RS.o	FALSE	_ZN2al21AreaCameraSwitcher_RSC2EPNS_17CameraDirector_RSEPNS_15AreaObjDirectorEi	al::AreaCameraSwitcher_RS::AreaCameraSwitcher_RS(al::CameraDirector_RS*, al::AreaObjDirector*, int)	folder (alphabetical reset); object (class, new folder (alphabetical reset))
+0x7100932410	Project/Camera/Area	AreaCameraSwitcher_RS.o	FALSE	_ZN2al21AreaCameraSwitcher_RSC2EPNS_17CameraDirector_RSEPNS_15AreaObjDirectorEi	al::AreaCameraSwitcher_RS::AreaCameraSwitcher_RS(al::CameraDirector_RS*, al::AreaObjDirector*, int)	folder (alphabetical reset); object (class, new folder (alphabetical reset))
 0x7100932440			FALSE	_ZN2al21AreaCameraSwitcher_RS31makeAllAreaCameraAfterPlacementEv	al::AreaCameraSwitcher_RS::makeAllAreaCameraAfterPlacement()	
 0x71009328F0			FALSE	_ZNK2al21AreaCameraSwitcher_RS16getSwitchInfoPtrEi	al::AreaCameraSwitcher_RS::getSwitchInfoPtr(int) const	
 0x7100932900			FALSE	_ZN2al21AreaCameraSwitcher_RS20findCameraAreaTicketEPNS_7AreaObjE	al::AreaCameraSwitcher_RS::findCameraAreaTicket(al::AreaObj*)	
@@ -57634,7 +57634,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710093C6B0			FALSE	sub_710093C6B0	sub_710093C6B0	
 0x710093C750			FALSE	sub_710093C750	sub_710093C750	
 0x710093C780			FALSE	_ZNK12_GLOBAL__N_126CameraPoseUpdaterNrvActive7executeEPN2al11NerveKeeperE	(anonymous namespace)::CameraPoseUpdaterNrvActive::execute(al::NerveKeeper*) const	
-0x710093C790	Project/Camera_7	CameraInterpole_RS.o	FALSE	_ZN2al18CameraInterpole_RSC2Ev	al::CameraInterpole_RS::CameraInterpole_RS()	folder (alphabetical reset); object (class, new folder (alphabetical reset))
+0x710093C790	Project/Camera/Holder	CameraInterpole_RS.o	FALSE	_ZN2al18CameraInterpole_RSC2Ev	al::CameraInterpole_RS::CameraInterpole_RS()	folder (alphabetical reset); object (class, new folder (alphabetical reset))
 0x710093C920			FALSE	_ZN2al18CameraInterpole_RS5startEPKNS_12CameraTicketEfi	al::CameraInterpole_RS::start(al::CameraTicket const*, float, int)	
 0x710093CD40			FALSE	_ZN2al18CameraInterpole_RS6updateERKN4sead12LookAtCameraE	al::CameraInterpole_RS::update(sead::LookAtCamera const&)	
 0x710093D410			FALSE	_ZNK2al18CameraInterpole_RS8isActiveEv	al::CameraInterpole_RS::isActive() const	
@@ -57719,7 +57719,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100940ED0			FALSE	_ZNK2al17CameraSwitcher_RS14isNextKeepPoseEv	al::CameraSwitcher_RS::isNextKeepPose() const	
 0x7100940EE0			FALSE	_ZNK2al17CameraSwitcher_RS17isSetNextPoseInfoEv	al::CameraSwitcher_RS::isSetNextPoseInfo() const	
 0x7100940EF0			FALSE	_ZNK2al17CameraSwitcher_RS15getNextPoseInfoEv	al::CameraSwitcher_RS::getNextPoseInfo() const	
-0x7100940F00	Project/Camera_8	CameraPlayingInfo.o	FALSE	_ZN2al17CameraPlayingInfoC2Ei	al::CameraPlayingInfo::CameraPlayingInfo(int)	folder (alphabetical reset); object (class, new folder (alphabetical reset))
+0x7100940F00			FALSE	_ZN2al17CameraPlayingInfoC2Ei	al::CameraPlayingInfo::CameraPlayingInfo(int)	merged into CameraSwitcher_RS.o (secondary class CameraPlayingInfo.o)
 0x7100940FE0			FALSE	_ZN2al17CameraPlayingInfo9addCameraERKNS_23CameraSwitchRequestInfoE	al::CameraPlayingInfo::addCamera(al::CameraSwitchRequestInfo const&)	
 0x7100941060			FALSE	_ZN2al17CameraPlayingInfo12removeCameraERKNS_23CameraSwitchRequestInfoE	al::CameraPlayingInfo::removeCamera(al::CameraSwitchRequestInfo const&)	
 0x7100941100			FALSE	_ZN2al17CameraPlayingInfo32tryEndAndRemoveCameraByOverwriteEv	al::CameraPlayingInfo::tryEndAndRemoveCameraByOverwrite()	
@@ -59334,7 +59334,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710098C310			FALSE	_ZN2al21ReducedBufferRenderer4drawERKNS_15RenderVariablesEPKN3agl11TextureDataERKN4sead8Matrix44IfEERKNS8_8Matrix34IfEEfffb	al::ReducedBufferRenderer::draw(al::RenderVariables const&, agl::TextureData const*, sead::Matrix44<float> const&, sead::Matrix34<float> const&, float, float, float, bool)	
 0x710098C800		ViewRendererCreator.o	FALSE	_ZN2al19ViewRendererCreator18createViewRendererEPNS_18GraphicsSystemInfoE	al::ViewRendererCreator::createViewRenderer(al::GraphicsSystemInfo*)	object (class)
 0x710098C840			FALSE	_ZN2al19ViewRendererCreator18deleteViewRendererEPNS_12ViewRendererE	al::ViewRendererCreator::deleteViewRenderer(al::ViewRenderer*)	
-0x710098C860	Project/Render	RenderVariables.o	FALSE	_ZN2al15RenderVariablesC2EPNS_18GraphicsSystemInfoEPNS_12LiveActorKitEPKNS_14SimpleModelEnvEiiibb	al::RenderVariables::RenderVariables(al::GraphicsSystemInfo*, al::LiveActorKit*, al::SimpleModelEnv const*, int, int, int, bool, bool)	folder (alphabetical reset); object (class, new folder (alphabetical reset))
+0x710098C860	Project/Draw/Render	RenderVariables.o	FALSE	_ZN2al15RenderVariablesC2EPNS_18GraphicsSystemInfoEPNS_12LiveActorKitEPKNS_14SimpleModelEnvEiiibb	al::RenderVariables::RenderVariables(al::GraphicsSystemInfo*, al::LiveActorKit*, al::SimpleModelEnv const*, int, int, int, bool, bool)	folder (alphabetical reset); object (class, new folder (alphabetical reset))
 0x710098C9B0			FALSE	_ZN2al15RenderVariables16allocDepthBufferEv	al::RenderVariables::allocDepthBuffer()	
 0x710098CB90			FALSE	_ZN2al15RenderVariablesD2Ev	al::RenderVariables::~RenderVariables()	
 0x710098CC60			FALSE	_ZN2al15RenderVariables16allocColorBufferEPN3agl4lght12LightPrePassEb	al::RenderVariables::allocColorBuffer(agl::lght::LightPrePass*, bool)	
@@ -59712,7 +59712,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710099EF00			FALSE	_ZNK2al24JoyPadAccelerometerAddon27checkDerivedRuntimeTypeInfoEPKN4sead15RuntimeTypeInfo9InterfaceE	al::JoyPadAccelerometerAddon::checkDerivedRuntimeTypeInfo(sead::RuntimeTypeInfo::Interface const*) const	
 0x710099F080			FALSE	_ZNK2al24JoyPadAccelerometerAddon18getRuntimeTypeInfoEv	al::JoyPadAccelerometerAddon::getRuntimeTypeInfo() const	
 0x710099F0F0			FALSE	_ZN2al24JoyPadAccelerometerAddonD0Ev	al::JoyPadAccelerometerAddon::~JoyPadAccelerometerAddon()	
-0x710099F100	Project/Framework_2	ApplicationMessageReceiver.o	FALSE	_ZN2al26ApplicationMessageReceiverC2Ev	al::ApplicationMessageReceiver::ApplicationMessageReceiver()	folder (alphabetical reset); object (smo, new folder (alphabetical reset))
+0x710099F100	Project/Framework/Application	ApplicationMessageReceiver.o	FALSE	_ZN2al26ApplicationMessageReceiverC2Ev	al::ApplicationMessageReceiver::ApplicationMessageReceiver()	folder (alphabetical reset); object (smo, new folder (alphabetical reset))
 0x710099F110			FALSE	_ZN2al26ApplicationMessageReceiver4initEv	al::ApplicationMessageReceiver::init()	
 0x710099F170			FALSE	_ZNK2al26ApplicationMessageReceiver16getOperationModeEv	al::ApplicationMessageReceiver::getOperationMode() const	
 0x710099F190			FALSE	_ZNK2al26ApplicationMessageReceiver17getPerformaceModeEv	al::ApplicationMessageReceiver::getPerformaceMode() const	
@@ -61314,7 +61314,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71009F1860			FALSE	_ZN2al16SeListenerKeeper18resetListenerParamEv	al::SeListenerKeeper::resetListenerParam()	
 0x71009F18B0			FALSE	_ZN2al16SeListenerKeeper19changeListenerPoserEPKc	al::SeListenerKeeper::changeListenerPoser(char const*)	
 0x71009F1950			FALSE	_ZN2al16SeListenerKeeper25changeListenerPoserToLastEv	al::SeListenerKeeper::changeListenerPoserToLast()	
-0x71009F19F0	Project/Model_2	SeListener.o	FALSE	_ZN2al10SeListenerC2Ei	al::SeListener::SeListener(int)	folder (alphabetical reset); object (class, new folder (alphabetical reset))
+0x71009F19F0	Project/Se	SeListener.o	FALSE	_ZN2al10SeListenerC2Ei	al::SeListener::SeListener(int)	folder (alphabetical reset); object (class, new folder (alphabetical reset))
 0x71009F1A10			FALSE	_ZN2al10SeListener8addPoserEPNS_16ISeListenerPoserE	al::SeListener::addPoser(al::ISeListenerPoser*)	
 0x71009F1A40			FALSE	_ZN2al10SeListener20setCurrentPoserIndexEi	al::SeListener::setCurrentPoserIndex(int)	
 0x71009F1A50			FALSE	_ZN2al10SeListener15setCurrentPoserERKN4sead14SafeStringBaseIcEE	al::SeListener::setCurrentPoser(sead::SafeStringBase<char> const&)	
@@ -61683,12 +61683,12 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100A00CA0			FALSE	_ZN2al12ShaderHolder21cleanupShaderArchivesEv	al::ShaderHolder::cleanupShaderArchives()	
 0x7100A00D40			FALSE	_ZN2al12ShaderHolderD2Ev	al::ShaderHolder::~ShaderHolder()	
 0x7100A00D50			FALSE	_ZN2al12ShaderHolderD0Ev	al::ShaderHolder::~ShaderHolder()	
-0x7100A00D60		SkyboxParam.o	FALSE	_ZN2al11SkyboxParamC2Ev	al::SkyboxParam::SkyboxParam()	object (class)
+0x7100A00D60			FALSE	_ZN2al11SkyboxParamC2Ev	al::SkyboxParam::SkyboxParam()	merged into ShaderHolder.o (secondary class SkyboxParam.o)
 0x7100A01220			FALSE	_ZN2al16NamedSkyboxParamC2Ev	al::NamedSkyboxParam::NamedSkyboxParam()	
 0x7100A01410			FALSE	_ZNK2al11SkyboxParameqERKS0_	al::SkyboxParam::operator==(al::SkyboxParam const&) const	
 0x7100A01420			FALSE	_ZN2al11SkyboxParamaSERKS0_	al::SkyboxParam::operator=(al::SkyboxParam const&)	
 0x7100A01430			FALSE	_ZN2al11SkyboxParam6interpERKS0_S2_f	al::SkyboxParam::interp(al::SkyboxParam const&, al::SkyboxParam const&, float)	
-0x7100A01440	Project/Model_3	SkyboxDirector.o	FALSE	_ZN2al14SkyboxDirectorC1EPNS_18GraphicsSystemInfoE	al::SkyboxDirector::SkyboxDirector(al::GraphicsSystemInfo*)	folder (alphabetical reset); object (class, new folder (alphabetical reset))
+0x7100A01440		SkyboxDirector.o	FALSE	_ZN2al14SkyboxDirectorC1EPNS_18GraphicsSystemInfoE	al::SkyboxDirector::SkyboxDirector(al::GraphicsSystemInfo*)	object (class)
 0x7100A01640			FALSE	_ZN2al14SkyboxDirector7endInitEv	al::SkyboxDirector::endInit()	
 0x7100A01650			FALSE	_ZN2al14SkyboxDirector12clearRequestEv	al::SkyboxDirector::clearRequest()	
 0x7100A01660			FALSE	_ZN2al14SkyboxDirector7executeEv	al::SkyboxDirector::execute()	
@@ -61873,7 +61873,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100A0B410			FALSE	_ZN4sead22BufferedSafeStringBaseIcE20appendWithSeadFormatIJiEEEiPKcDpOT_	int sead::BufferedSafeStringBase<char>::appendWithSeadFormat<int>(char const*, int&&)	
 0x7100A0B550			FALSE	_ZN5erepo16PlayTimeObserverD0Ev	erepo::PlayTimeObserver::~PlayTimeObserver()	
 0x7100A0B560			FALSE	_ZNK5erepo16PlayTimeObserver7getNameEv	erepo::PlayTimeObserver::getName() const	
-0x7100A0B570	Project/Model_4	Array.o	FALSE	_ZN5erepo5ArrayC2Ev	erepo::Array::Array()	folder (alphabetical reset); object (class, new folder (alphabetical reset))
+0x7100A0B570	erepo/Data	Array.o	FALSE	_ZN5erepo5ArrayC2Ev	erepo::Array::Array()	folder (alphabetical reset); object (class, new folder (alphabetical reset))
 0x7100A0B5B0			FALSE	_ZN5erepo5ArrayD2Ev	erepo::Array::~Array()	
 0x7100A0B640			FALSE	_ZN5erepo5ArrayD0Ev	erepo::Array::~Array()	
 0x7100A0B6D0			FALSE	_ZN5erepo5Array7addDataIbEEvRKT_	void erepo::Array::addData<bool>(bool const&)	
