@@ -3,6 +3,8 @@
 # report the pre-commit hook just made and upload it (tools/deploy_site.py,
 # only when deploy.ini exists), then the Doxygen docs (doxygen/index.html).
 # Enable with: git config core.hooksPath tools/hooks
+# Skipped for per-file commits made with SKIP_PROGRESS=1 (the final progress commit runs it).
+[ -n "$SKIP_PROGRESS" ] && exit 0
 cd "$(git rev-parse --show-toplevel)" || exit 0
 mkdir -p build
 PY=$(command -v python || command -v python3)
