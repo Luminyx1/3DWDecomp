@@ -6,8 +6,11 @@ namespace nn::atk {
 class SoundHandle {
 public:
     SoundHandle() : m_pSound(nullptr) {}
+    ~SoundHandle() { DetachSound(); }
 
     bool IsAttachedSound() const { return m_pSound != nullptr; }
+
+    void DetachSound();
 
     void Stop(int fadeFrames) {
         if (IsAttachedSound()) {
