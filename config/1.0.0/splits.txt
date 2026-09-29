@@ -4743,7 +4743,7 @@ src/al/Library/MapObj/ConveyerKeyKeeper.cpp:
     .text   start:0x0084C580 end:0x0084CDB0
 src/al/Library/MapObj/ConveyerMapParts.cpp:
     .text   start:0x0084CDB0 end:0x0084D714
-src/al/Library/MapObj/ConveyerStep.cpp:
+src/al/Library/MapObj/ConveyerStep.cpp: done
     .text   start:0x0084D720 end:0x0084DB04
 src/al/Library/MapObj/EffectMtxSetter.cpp:
     .text   start:0x0084DB10 end:0x0084E080

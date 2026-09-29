@@ -51643,7 +51643,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710084C550			FALSE	sub_710084C550	sub_710084C550	
 0x710084C580		ConveyerKeyKeeper.o	FALSE	_ZN2al17ConveyerKeyKeeperC2Ev	al::ConveyerKeyKeeper::ConveyerKeyKeeper()	object (smo)
 0x710084C5D0			FALSE	_ZN2al17ConveyerKeyKeeper4initERKNS_13ActorInitInfoE	al::ConveyerKeyKeeper::init(al::ActorInitInfo const&)	
-0x710084C7C0			FALSE	sub_710084C7C0	sub_710084C7C0	
+0x710084C7C0			FALSE	_ZN12_GLOBAL__N_115initConveyerKeyEPN2al11ConveyerKeyERKNS0_13PlacementInfoERKN4sead7Vector3IfEESA_	(anonymous namespace)::initConveyerKey(al::ConveyerKey*, al::PlacementInfo const&, sead::Vector3<float> const&, sead::Vector3<float> const&)	
 0x710084C8F0			FALSE	_ZNK2al17ConveyerKeyKeeper14calcPosAndQuatEPN4sead7Vector3IfEEPNS1_4QuatIfEEPif	al::ConveyerKeyKeeper::calcPosAndQuat(sead::Vector3<float>*, sead::Quat<float>*, int*, float) const	
 0x710084CBF0			FALSE	_ZNK2al17ConveyerKeyKeeper24calcPosAndQuatByKeyIndexEPN4sead7Vector3IfEEPNS1_4QuatIfEEi	al::ConveyerKeyKeeper::calcPosAndQuatByKeyIndex(sead::Vector3<float>*, sead::Quat<float>*, int) const	
 0x710084CC70			FALSE	_ZNK2al17ConveyerKeyKeeper18calcClippingSphereEPN4sead7Vector3IfEEPff	al::ConveyerKeyKeeper::calcClippingSphere(sead::Vector3<float>*, float*, float) const	
@@ -51677,7 +51677,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710084DAB0			FALSE	_ZN2al12ConveyerStep7exeWaitEv	al::ConveyerStep::exeWait()	
 0x710084DAC0			FALSE	_ZN2al12ConveyerStepD1Ev	al::ConveyerStep::~ConveyerStep()	
 0x710084DAD0			FALSE	_ZN2al12ConveyerStepD0Ev	al::ConveyerStep::~ConveyerStep()	
-0x710084DB00			FALSE	nullsub_324	nullsub_324	
+0x710084DB00			FALSE	_ZNK12_GLOBAL__N_119ConveyerStepNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::ConveyerStepNrvWait::execute(al::NerveKeeper*) const	
 0x710084DB10		EffectMtxSetter.o	FALSE	_ZN2al15EffectMtxSetterC1EPNS_9LiveActorE	al::EffectMtxSetter::EffectMtxSetter(al::LiveActor*)	object (class)
 0x710084DB20			FALSE	_ZN2al15EffectMtxSetter4initERKNS_9ByamlIterE	al::EffectMtxSetter::init(al::ByamlIter const&)	
 0x710084DCB0			FALSE	_ZN2al13EffectMtxInfo4initERKNS_9ByamlIterE	al::EffectMtxInfo::init(al::ByamlIter const&)	

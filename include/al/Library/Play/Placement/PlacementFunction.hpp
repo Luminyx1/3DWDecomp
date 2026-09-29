@@ -2,6 +2,7 @@
 
 #include <basis/seadTypes.h>
 #include <math/seadMatrix.h>
+#include <math/seadQuat.h>
 #include <math/seadVector.h>
 
 namespace al {
@@ -33,6 +34,13 @@ s32 calcLinkChildNum(const ActorInitInfo&, const char*);
 s32 calcLinkChildNum(const PlacementInfo&, const char*);
 
 s32 calcLinkCountClassName(const PlacementInfo&, const char*);
+
+s32 calcLinkNestNum(const ActorInitInfo&, const char*);
+s32 calcLinkNestNum(const PlacementInfo&, const char*);
+bool tryGetQuat(sead::Quatf*, const ActorInitInfo&);
+bool tryGetQuat(sead::Quatf*, const PlacementInfo&);
+bool tryGetLocalAxis(sead::Vector3f*, const ActorInitInfo&, s32);
+bool tryGetLocalAxis(sead::Vector3f*, const PlacementInfo&, s32);
 
 void getLinksInfo(PlacementInfo*, const PlacementInfo&, const char*);
 

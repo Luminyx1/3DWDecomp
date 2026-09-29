@@ -46,6 +46,10 @@ namespace al {
     f32 getRandom(f32, f32);
 
     f32 lerpValue(f32, f32, f32);
+    f32 modf(f32, f32);
+    f32 easeByType(f32, s32);
+    void lerpVec(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f&, f32);
+    void slerpQuat(sead::Quatf*, const sead::Quatf&, const sead::Quatf&, f32);
     void calcSphereMargeSpheres(sead::Vector3f*, f32*, const sead::Vector3f&, f32, const sead::Vector3f&, f32);
     void normalizeOrDirZ(sead::Vector3f*);
     void normalizeOrDirZ(sead::Vector3f*, const sead::Vector3f&);

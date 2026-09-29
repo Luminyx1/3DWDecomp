@@ -4597,3 +4597,4 @@
 0x7101AF0C80 40 object _ZTVN12_GLOBAL__N_130RotateMapPartsNrvEffectOnAngleE
 0x7101AF0CA8 40 object _ZTVN12_GLOBAL__N_127RotateMapPartsNrvAssistStopE
 0x7101AF0CD0 40 object _ZTVN12_GLOBAL__N_131RotateMapPartsNrvAssistStopSyncE
+0x7101AED188 8 object _ZN12_GLOBAL__N_119NrvConveyerStepWaitE
