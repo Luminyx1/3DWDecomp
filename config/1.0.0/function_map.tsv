@@ -61334,7 +61334,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71009F1D40			FALSE	_ZN2al24SeListenerPoserMiddlePos20setBaseToMiddleRatioEf	al::SeListenerPoserMiddlePos::setBaseToMiddleRatio(float)	
 0x71009F1D50			FALSE	_ZN2al24SeListenerPoserMiddlePos16calcListenerPoseEPN4sead8Matrix34IfEEPNS1_7Vector3IfEERKNS_16ISeListenerParamE	al::SeListenerPoserMiddlePos::calcListenerPose(sead::Matrix34<float>*, sead::Vector3<float>*, al::ISeListenerParam const&)	
 0x71009F1FD0			FALSE	_ZN2al24SeListenerPoserMiddlePosD0Ev	al::SeListenerPoserMiddlePos::~SeListenerPoserMiddlePos()	
-0x71009F1FE0			FALSE	_ZN2al15SeListenerPoserC2ERKN4sead14SafeStringBaseIcEES5_	al::SeListenerPoser::SeListenerPoser(sead::SafeStringBase<char> const&, sead::SafeStringBase<char> const&)	
+0x71009F1FE0		SeListenerPoserUtil.o	FALSE	_ZN2al15SeListenerPoserC2ERKN4sead14SafeStringBaseIcEES5_	al::SeListenerPoser::SeListenerPoser(sead::SafeStringBase<char> const&, sead::SafeStringBase<char> const&)	
 0x71009F2010			FALSE	_ZN2al15SeListenerPoser17tryCalcViewMatrixEPN4sead8Matrix34IfEERKNS1_7Vector3IfEES8_S8_	al::SeListenerPoser::tryCalcViewMatrix(sead::Matrix34<float>*, sead::Vector3<float> const&, sead::Vector3<float> const&, sead::Vector3<float> const&)	
 0x71009F21C0			FALSE	_ZNK2al16ISeListenerParam31calcLookAtDirNormFromViewMatrixEPN4sead7Vector3IfEE	al::ISeListenerParam::calcLookAtDirNormFromViewMatrix(sead::Vector3<float>*) const	
 0x71009F2210			FALSE	_ZNK2al16ISeListenerParam27calcUpDirNormFromViewMatrixEPN4sead7Vector3IfEE	al::ISeListenerParam::calcUpDirNormFromViewMatrix(sead::Vector3<float>*) const	
