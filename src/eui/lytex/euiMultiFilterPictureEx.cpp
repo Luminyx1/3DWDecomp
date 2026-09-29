@@ -8,11 +8,19 @@
 
 namespace eui {
 
-/** @brief Creates a pane without a framebuffer filter. */
+/**
+ * @brief Creates a pane without a framebuffer filter.
+ * @param[in] textureCount Number of texture slots to allocate.
+ */
 MultiFilterPictureEx::MultiFilterPictureEx(u8 textureCount)
     : PictureEx(textureCount), m_pFilter(nullptr) {}
 
-/** @brief Builds the pane and initializes its framebuffer filter. */
+/**
+ * @brief Builds the pane and initializes its framebuffer filter.
+ * @param[in] pResource Base pane resource to construct from.
+ * @param[in] pOverride Override pane resource passed to the NintendoWare constructor.
+ * @param[in] rArgs Layout construction arguments and resource context.
+ */
 MultiFilterPictureEx::MultiFilterPictureEx(const nn::ui2d::ResPicture* pResource,
     const nn::ui2d::ResPicture* pOverride, const nn::ui2d::BuildArgSet& rArgs)
     : PictureEx(pResource, pOverride, rArgs), m_pFilter(nullptr) {
@@ -21,7 +29,11 @@ MultiFilterPictureEx::MultiFilterPictureEx(const nn::ui2d::ResPicture* pResource
     m_pFilter->initialize(pHeap, *this, reinterpret_cast<LayoutEx*>(rArgs.m_pPartsLayout));
 }
 
-/** @brief Copies the pane and creates a filter for the destination layout. */
+/**
+ * @brief Copies the pane and creates a filter for the destination layout.
+ * @param[in] rOther Source object to copy.
+ * @param[in] pLayout Layout that owns the new pane.
+ */
 MultiFilterPictureEx::MultiFilterPictureEx(const MultiFilterPictureEx& rOther, LayoutEx* pLayout)
     : PictureEx(rOther) {
     auto* pHeap = GetNwAllocatorHeap();
@@ -37,7 +49,11 @@ MultiFilterPictureEx::~MultiFilterPictureEx() {
     }
 }
 
-/** @brief Draws the filtered capture unless capture rendering is already in progress. */
+/**
+ * @brief Draws the filtered capture unless capture rendering is already in progress.
+ * @param[in,out] rDrawInfo Drawing state used to calculate or render the pane.
+ * @param[in,out] rCommands Command buffer that receives the draw commands.
+ */
 void MultiFilterPictureEx::DrawSelf(nn::ui2d::DrawInfo& rDrawInfo, nn::gfx::CommandBuffer& rCommands) {
     auto& rDrawInfoEx = static_cast<DrawInfoEx&>(rDrawInfo);
     if (rDrawInfoEx._1A8) {

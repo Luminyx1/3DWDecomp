@@ -16,7 +16,10 @@ void DrawInfoEx::freeDynamicTexture() {
     }
 }
 
-/** @brief Applies the framebuffer, viewport, optional scissor, and graphics state. */
+/**
+ * @brief Applies the framebuffer, viewport, optional scissor, and graphics state.
+ * @param[in] pInfo Framebuffer, viewport, scissor, and graphics state to apply.
+ */
 void DrawInfoEx::applyRenderBufferInfo(const RenderBufferInfo* pInfo) {
     pInfo->pFrameBuffer->bind(pInfo->pDrawContext);
     if (pInfo->pScissor) {

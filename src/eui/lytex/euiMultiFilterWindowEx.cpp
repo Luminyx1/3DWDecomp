@@ -8,11 +8,20 @@
 
 namespace eui {
 
-/** @brief Creates a pane without a framebuffer filter. */
+/**
+ * @brief Creates a pane without a framebuffer filter.
+ * @param[in] frameCount Number of window frames to allocate.
+ * @param[in] textureCount Number of texture slots to allocate.
+ */
 MultiFilterWindowEx::MultiFilterWindowEx(u8 frameCount, u8 textureCount)
     : WindowEx(frameCount, textureCount), m_pFilter(nullptr) {}
 
-/** @brief Builds the pane and initializes its framebuffer filter. */
+/**
+ * @brief Builds the pane and initializes its framebuffer filter.
+ * @param[in] pResource Base pane resource to construct from.
+ * @param[in] pOverride Override pane resource passed to the NintendoWare constructor.
+ * @param[in] rArgs Layout construction arguments and resource context.
+ */
 MultiFilterWindowEx::MultiFilterWindowEx(const nn::ui2d::ResWindow* pResource,
     const nn::ui2d::ResWindow* pOverride, const nn::ui2d::BuildArgSet& rArgs)
     : WindowEx(pResource, pOverride, rArgs), m_pFilter(nullptr) {
@@ -21,7 +30,11 @@ MultiFilterWindowEx::MultiFilterWindowEx(const nn::ui2d::ResWindow* pResource,
     m_pFilter->initialize(pHeap, *this, reinterpret_cast<LayoutEx*>(rArgs.m_pPartsLayout));
 }
 
-/** @brief Copies the pane and creates a filter for the destination layout. */
+/**
+ * @brief Copies the pane and creates a filter for the destination layout.
+ * @param[in] rOther Source object to copy.
+ * @param[in] pLayout Layout that owns the new pane.
+ */
 MultiFilterWindowEx::MultiFilterWindowEx(const MultiFilterWindowEx& rOther, LayoutEx* pLayout)
     : WindowEx(rOther), m_pFilter(nullptr) {
     auto* pHeap = GetNwAllocatorHeap();
@@ -37,7 +50,11 @@ MultiFilterWindowEx::~MultiFilterWindowEx() {
     }
 }
 
-/** @brief Draws the filtered capture unless capture rendering is already in progress. */
+/**
+ * @brief Draws the filtered capture unless capture rendering is already in progress.
+ * @param[in,out] rDrawInfo Drawing state used to calculate or render the pane.
+ * @param[in,out] rCommands Command buffer that receives the draw commands.
+ */
 void MultiFilterWindowEx::DrawSelf(nn::ui2d::DrawInfo& rDrawInfo, nn::gfx::CommandBuffer& rCommands) {
     auto& rDrawInfoEx = static_cast<DrawInfoEx&>(rDrawInfo);
     if (rDrawInfoEx._1A8) {

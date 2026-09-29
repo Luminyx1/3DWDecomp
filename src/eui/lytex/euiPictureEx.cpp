@@ -8,7 +8,10 @@ extern nn::ui2d::BuildResultInformation lbl_7102122AB0 __attribute__((visibility
 
 namespace eui {
 
-/** @brief Creates a picture and initializes its texture state and vertex colors. */
+/**
+ * @brief Creates a picture and initializes its texture state and vertex colors.
+ * @param[in] textureCount Number of texture slots to allocate.
+ */
 PictureEx::PictureEx(u8 textureCount) : Picture(textureCount) {
     if (textureCount == 0) {
         GetMaterial()->SetTextureNum(0);
@@ -33,20 +36,31 @@ void PictureEx::initializeVertexColor_() {
     }
 }
 
-/** @brief Creates a picture from an existing texture. */
+/**
+ * @brief Creates a picture from an existing texture.
+ * @param[in] rTexture Texture used to initialize the picture.
+ */
 PictureEx::PictureEx(const nn::ui2d::TextureInfo& rTexture) : Picture(rTexture) {
     setupForSingleTexture_();
     initializeVertexColor_();
 }
 
-/** @brief Builds a picture from layout resources using the active graphics device. */
+/**
+ * @brief Builds a picture from layout resources using the active graphics device.
+ * @param[in] pResource Base pane resource to construct from.
+ * @param[in] pOverride Override pane resource passed to the NintendoWare constructor.
+ * @param[in] rArgs Layout construction arguments and resource context.
+ */
 PictureEx::PictureEx(const nn::ui2d::ResPicture* pResource,
                      const nn::ui2d::ResPicture* pOverride, const nn::ui2d::BuildArgSet& rArgs)
     : Picture(&lbl_7102122AB0,
               reinterpret_cast<nn::gfx::Device*>(sead::GraphicsNvn::instance()->getGfxDevice()),
               pResource, pOverride, rArgs) {}
 
-/** @brief Copies a picture and its graphics resources. */
+/**
+ * @brief Copies a picture and its graphics resources.
+ * @param[in] rOther Source object to copy.
+ */
 PictureEx::PictureEx(const PictureEx& rOther)
     : Picture(rOther, reinterpret_cast<nn::gfx::Device*>(sead::GraphicsNvn::instance()->getGfxDevice())) {}
 
