@@ -4581,3 +4581,8 @@
 0x71016FCDDC 16 object _ZN3agl3utl12_GLOBAL__N_114cBlurDirectionE
 0x71016FCDEC 16 object _ZN3agl3utl12_GLOBAL__N_115cFxaaLumaWeightE
 0x71016FCDFC 16 object _ZN3agl3utl12_GLOBAL__N_110cFxaaParamE
+
+# src/erepo/Manager
+0x7102256200 8 object _ZN5erepo12_GLOBAL__N_111sLaunchTimeE
+0x7102256208 4 object _ZN5erepo12_GLOBAL__N_114sUpdateCounterE
+0x71022562E0 88 object _ZN5erepo12_GLOBAL__N_112sSendLogNameE

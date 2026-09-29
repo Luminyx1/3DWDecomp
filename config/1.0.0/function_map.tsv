@@ -61820,7 +61820,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100A07130			FALSE	_ZNK5erepo7Manager9isSendingEv	erepo::Manager::isSending() const	
 0x7100A07170			FALSE	_ZNK5erepo7Manager12isSendThreadEv	erepo::Manager::isSendThread() const	
 0x7100A071D0			FALSE	_ZN5erepo7Manager17waitFinishSendingEi	erepo::Manager::waitFinishSending(int)	
-0x7100A073E0			FALSE	sub_7100A073E0	sub_7100A073E0	
+0x7100A073E0			FALSE	_GLOBAL__sub_I_Manager.cpp	_GLOBAL__sub_I_Manager.cpp	
 0x7100A073F0		NetworkStatusObserver.o	FALSE	_ZN5erepo21NetworkStatusObserverC2Ev	erepo::NetworkStatusObserver::NetworkStatusObserver()	object (class)
 0x7100A07410			FALSE	_ZN5erepo21NetworkStatusObserver10initializeEPN4sead4HeapE	erepo::NetworkStatusObserver::initialize(sead::Heap*)	
 0x7100A07420			FALSE	_ZN5erepo21NetworkStatusObserver6updateERKNS_7Manager9UpdateArgE	erepo::NetworkStatusObserver::update(erepo::Manager::UpdateArg const&)	
@@ -61848,9 +61848,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100A091E0			TRUE	_ZN4sead15FixedSafeStringILi42EEaSERKNS_14SafeStringBaseIcEE	sead::FixedSafeString<42>::operator=(sead::SafeStringBase<char> const&)	
 0x7100A092D0			TRUE	_ZN4sead19FixedSafeStringBaseIcLi42EED0Ev	sead::FixedSafeStringBase<char, 42>::~FixedSafeStringBase()	
 0x7100A092E0			TRUE	_ZN4sead19FixedSafeStringBaseIcLi42EEaSERKNS_14SafeStringBaseIcEE	sead::FixedSafeStringBase<char, 42>::operator=(sead::SafeStringBase<char> const&)	
-0x7100A093D0			FALSE	_ZN5erepo12ObserverBase15createSendData_ERKN4sead15FixedSafeStringILi31EEEiiiRKNS1_12StringIdBaseILj4096ELj32ELj1936023908EjEEb	erepo::ObserverBase::createSendData_(sead::FixedSafeString<31> const&, int, int, int, sead::StringIdBase<4096u, 32u, 1936023908u, unsigned int> const&, bool)	
+0x7100A093D0		ObserverBase.o	FALSE	_ZN5erepo12ObserverBase15createSendData_ERKN4sead15FixedSafeStringILi31EEEiiiRKNS1_12StringIdBaseILj4096ELj32ELj1936023908EjEEb	erepo::ObserverBase::createSendData_(sead::FixedSafeString<31> const&, int, int, int, sead::StringIdBase<4096u, 32u, 1936023908u, unsigned int> const&, bool)	
 0x7100A09460			FALSE	_ZN5erepo12ObserverBase15createSendData_ERKNS_12SendDataBase9CreateArgE	erepo::ObserverBase::createSendData_(erepo::SendDataBase::CreateArg const&)	
-0x7100A094E0			FALSE	sub_7100A094E0	sub_7100A094E0	
+0x7100A094E0			FALSE	_GLOBAL__sub_I_ObserverBase.cpp	_GLOBAL__sub_I_ObserverBase.cpp	
 0x7100A095F0		Reporter.o	FALSE	_ZN5erepo8Reporter10initializeEPN4sead4HeapE	erepo::Reporter::initialize(sead::Heap*)	object (class)
 0x7100A09600			FALSE	_ZNK5erepo8Reporter7getNameEv	erepo::Reporter::getName() const	
 0x7100A09610			FALSE	_ZN5erepo8Reporter4loadEv	erepo::Reporter::load()	
@@ -61863,7 +61863,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100A09BE0			FALSE	_ZN5erepo16UserInfoObserverD0Ev	erepo::UserInfoObserver::~UserInfoObserver()	
 0x7100A09BF0			FALSE	_ZNK5erepo16UserInfoObserver7getNameEv	erepo::UserInfoObserver::getName() const	
 0x7100A09C00			FALSE	_ZN5erepo12ObserverBase6updateERKNS_7Manager9UpdateArgE	erepo::ObserverBase::update(erepo::Manager::UpdateArg const&)	
-0x7100A09C10			FALSE	_ZN5erepo16PlayTimeObserverC2Ev	erepo::PlayTimeObserver::PlayTimeObserver()	
+0x7100A09C10		PlayTimeObserver.o	FALSE	_ZN5erepo16PlayTimeObserverC2Ev	erepo::PlayTimeObserver::PlayTimeObserver()	
 0x7100A09C40			FALSE	_ZN5erepo16PlayTimeObserver10initializeEPN4sead4HeapE	erepo::PlayTimeObserver::initialize(sead::Heap*)	
 0x7100A09C60			FALSE	_ZN5erepo16PlayTimeObserver4loadEv	erepo::PlayTimeObserver::load()	
 0x7100A09D50			FALSE	_ZN5erepo12SaveDataInfoC2ERKS0_	erepo::SaveDataInfo::SaveDataInfo(erepo::SaveDataInfo const&)	
@@ -61969,6 +61969,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100A0E800			FALSE	_ZNK5erepo12SendDataBase13checkCanSave_Ev	erepo::SendDataBase::checkCanSave_() const	
 0x7100A0E890			FALSE	_ZN5erepo12SendDataBase9clearLog_Ev	erepo::SendDataBase::clearLog_()	
 0x7100A0E8A0			FALSE	_ZN5erepo12SendDataBaseD2Ev	erepo::SendDataBase::~SendDataBase()	
+0x7100A0E8B0			FALSE	_ZN5erepo12SendDataBaseD0Ev	erepo::SendDataBase::~SendDataBase()	
 0x7100A0E8C0			FALSE	_ZNK5erepo12SendDataBase8isValid_Ev	erepo::SendDataBase::isValid_() const	
 0x7100A0E8D0			FALSE	_ZN5erepo12SendDataBase20initializeInnerData_EPN4sead4HeapE	erepo::SendDataBase::initializeInnerData_(sead::Heap*)	
 0x7100A0E8E0			FALSE	_ZN5erepo12SendDataBase18finalizeInnerData_Ev	erepo::SendDataBase::finalizeInnerData_()	

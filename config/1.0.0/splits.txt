@@ -5672,23 +5672,27 @@ src/aal/components/aalAudioFrameProcessMgr.cpp: done
     .text   start:0x00A04E90 end:0x00A05244
 src/erepo/Manager.cpp:
     .text   start:0x00A05250 end:0x00A073F0
-src/erepo/NetworkStatusObserver.cpp:
+src/erepo/NetworkStatusObserver.cpp: done
     .text   start:0x00A073F0 end:0x00A075E4
 src/erepo/PlayStyleObserver.cpp:
-    .text   start:0x00A075F0 end:0x00A095E8
-src/erepo/Reporter.cpp:
+    .text   start:0x00A075F0 end:0x00A093CC
+src/erepo/ObserverBase.cpp: done
+    .text   start:0x00A093D0 end:0x00A095E8
+src/erepo/Reporter.cpp: done
     .text   start:0x00A095F0 end:0x00A096C0
-src/erepo/UserInfoObserver.cpp:
-    .text   start:0x00A096C0 end:0x00A0B56C
-src/erepo/Data/Array.cpp:
+src/erepo/UserInfoObserver.cpp: done
+    .text   start:0x00A096C0 end:0x00A09C04
+src/erepo/PlayTimeObserver.cpp:
+    .text   start:0x00A09C10 end:0x00A0B56C
+src/erepo/Data/Array.cpp: done
     .text   start:0x00A0B570 end:0x00A0C05C
-src/erepo/Data/SaveDataInfo.cpp:
+src/erepo/Data/SaveDataInfo.cpp: done
     .text   start:0x00A0C060 end:0x00A0C244
-src/erepo/Data/SendData.cpp:
+src/erepo/Data/SendData.cpp: done
     .text   start:0x00A0C250 end:0x00A0D7BC
-src/erepo/Data/SendDataBase.cpp:
+src/erepo/Data/SendDataBase.cpp: done
     .text   start:0x00A0D7C0 end:0x00A0E908
-src/erepo/Data/SendThread.cpp:
+src/erepo/Data/SendThread.cpp: done
     .text   start:0x00A0E910 end:0x00A0EEA4
-src/erepo/Data/Struct.cpp:
+src/erepo/Data/Struct.cpp: done
     .text   start:0x00A0EEB0 end:0x00A0F5A8
