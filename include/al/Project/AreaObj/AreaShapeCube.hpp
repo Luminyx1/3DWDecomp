@@ -17,6 +17,12 @@ public:
     virtual bool calcLocalBoundingBox(sead::BoundBox3f*) const;
     virtual bool calcWorldBoundingBox(sead::BoundBox3f*) const;
 
-    OriginType mOriginType;
+    bool isInLocalVolume(const sead::Vector3f&) const;
+
+    f32 calcBottom() const { return mOriginType == Base ? 0.0f : -500.0f; }
+
+    f32 calcTop() const { return mOriginType == Base ? 1000.0f : 500.0f; }
+
+    OriginType mOriginType;  // _1C
 };
 }  // namespace al

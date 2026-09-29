@@ -46,5 +46,6 @@ namespace al {
 
     f32 lerpValue(f32, f32, f32);
     f32 modf(f32, f32);
+    f32 calcRate01(f32, f32, f32);
 
 }  // namespace al
