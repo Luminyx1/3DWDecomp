@@ -4466,9 +4466,9 @@ src/eui/ctrl/euiControlBase.cpp: done
 src/eui/message/euiTagProcessor.cpp:
     .text   start:0x007BF810 end:0x007C1454
 src/eui/message/euiMessageMgr.cpp:
-    .text   start:0x007C1460 end:0x007C2434
-src/eui/message/euiMessageSet.cpp:
-    .text   start:0x007C2440 end:0x007C2934
+    .text   start:0x007C1460 end:0x007C261C
+src/eui/message/euiMessageSet.cpp: done
+    .text   start:0x007C2620 end:0x007C2934
 src/eui/message/euiGrammar.cpp:
     .text   start:0x007C2940 end:0x007C35FC
 src/eui/message/euiDynamicCaptureUseWindowEx.cpp: done
@@ -4505,10 +4505,10 @@ src/eui/sys/euiScreenMgr.cpp:
     .text   start:0x007D18F0 end:0x007D2A34
 src/eui/message/euiTextSearcher.cpp:
     .text   start:0x007D2A40 end:0x007D2BC4
-src/eui/message/euiUIController.cpp:
-    .text   start:0x007D2BD0 end:0x007D3058
+src/eui/message/euiUIController.cpp: done
+    .text   start:0x007D2BD0 end:0x007D303C
 src/eui/ctrl/euiControlCreator.cpp:
-    .text   start:0x007D3060 end:0x007D3474
+    .text   start:0x007D3040 end:0x007D3474
 src/eui/ctrl/euiDragButton.cpp:
     .text   start:0x007D3480 end:0x007D3998
 src/eui/ctrl/euiSelectButton.cpp:

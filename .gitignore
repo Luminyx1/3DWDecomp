@@ -15,7 +15,7 @@ __pycache__/
 tools/nnsdk/
 tools/bin/
 
-# Local documentation and reference material
+# Local Nintendo SDK documentation: compiler settings reference only; never commit
 /docs/
 /tools/nnsdk
 
