@@ -32,6 +32,8 @@ public:
     static TimeSpan FromDays(u64 days) {
         return FromNanoSeconds(days * 1000 * 1000 * 1000 * 60 * 60 * 24);
     }
+
+    s64 GetSeconds() const { return static_cast<s64>(nanoseconds) / (1000 * 1000 * 1000); }
 };
 
 namespace time {

@@ -9,6 +9,10 @@
 #include <nn/settings.h>
 #include <nn/types.h>
 
+namespace nn {
+class TimeSpan;
+}
+
 namespace nn::oe {
 
 enum OperationMode {
@@ -61,5 +65,6 @@ FocusState GetCurrentFocusState();
 OperationMode GetOperationMode();
 PerformanceMode GetPerformanceMode();
 nn::settings::LanguageCode GetDesiredLanguage();
+nn::TimeSpan GetProgramTotalActiveTime();
 
 }  // namespace nn::oe
