@@ -91,6 +91,16 @@ public:
         return mCylinderTriangleIndexStreams[quality];
     }
 
+    const IndexStream& getCylinderLineIndexStream(s32 quality) const
+    {
+        return mCylinderLineIndexStreams[quality];
+    }
+
+    const IndexStream& getConeLineIndexStream(s32 quality) const
+    {
+        return mConeLineIndexStreams[quality];
+    }
+
     static u32 calcVtxArrayNumCircle(u32 divNum);
     static u32 calcIdxArrayNumCircle(u32 divNum, DrawType drawType);
     static void setupVtxBufferCircle(VertexBuffer* pVertexBuffer, GPUMemAddr<Vertex> addr,

@@ -486,9 +486,4 @@ void TextWriter::printImpl_(const char* pStr, s32 length, bool isDraw, BoundBox2
     printImpl_(buffer, -1, isDraw, pRect);
 }
 
-/**
- * Destroys the text writer.
- */
-TextWriter::~TextWriter() = default;
-
 }  // namespace sead

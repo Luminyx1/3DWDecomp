@@ -6,6 +6,16 @@
 #include <prim/seadSafeString.h>
 #include "common/aglGPUMemBlock.h"
 
+namespace sead {
+class ArchiveFileDevice;
+class ArchiveRes;
+}  // namespace sead
+
+namespace sead::hostio {
+class Context;
+class PropertyEvent;
+}  // namespace sead::hostio
+
 namespace agl {
 class TextureSampler;
 }  // namespace agl
@@ -19,30 +29,46 @@ class PrivateResource : public sead::hostio::Node {
     virtual ~PrivateResource();
 
 public:
+    struct LockedCacheMemory {
+        void* mpBuffer;
+        u32 mSize;
+    };
+
+    void initialize(sead::Heap* pHeap, sead::Heap* pDebugHeap, u64 workHeapSize, u64 unused);
+    void createArchive(sead::ArchiveRes* pArchive);
+    const void* getFileFromArc(const sead::SafeString& rPath);
+    void setLockedCacheMemory(u32 index, void* pBuffer, u32 size);
+
+    void genMessage(sead::hostio::Context* pContext);
+    void listenPropertyEvent(const sead::hostio::PropertyEvent* pEvent);
+
     sead::Heap* getWorkHeap() const { return mWorkHeap; }
     sead::Heap* getDebugHeap() const { return mDebugHeap; }
     sead::Heap* getShaderTextHeap() const { return static_cast<sead::Heap*>(_30); }
-    const TextureSampler* getCursorTextureSampler() const
+    sead::BufferedSafeString* getShaderSourceBuffer(s32 type) const
     {
-        return static_cast<const TextureSampler*>(_88);
+        return reinterpret_cast<sead::BufferedSafeString* const*>(_38)[type];
     }
+    char* getWorkBuffer() const { return static_cast<char*>(_60); }
+    s32 getWorkBufferSize() const { return _58; }
+    const TextureSampler* getCursorTextureSampler() const { return mCursorTextureSampler; }
 
 private:
-    static void debugPrintFn(const sead::SafeString& str);
-
-    sead::Heap* mWorkHeap{};
-    void* _30{};
+    sead::Heap* mWorkHeap = nullptr;
+    void* _30 = nullptr;
     u8 _38[0x58 - 0x38];
-    u32 _58{};
-    void* _60{};
-    void* _68{};
-    void* _70{};
-    sead::Heap* mDebugHeap{};
-    void* _80{};
-    void* _88{};
-    GPUMemBlock<u8> _90;
-    void (*mDebugPrintFn)(const sead::SafeString& str) = debugPrintFn;
-    u8 _d0[0x100 - 0xd0];
+    u32 _58 = 0;
+    void* _60 = nullptr;
+    sead::ArchiveFileDevice* mArchiveFileDevice = nullptr;
+    sead::ArchiveRes* mArchive = nullptr;
+    sead::Heap* mDebugHeap = nullptr;
+    u8* mCursorTextureSamplerBuffer = nullptr;
+    TextureSampler* mCursorTextureSampler = nullptr;
+    GPUMemBlock<u8> mCursorTextureMemory;
+    void (*mDebugPrintFn)(const sead::SafeString& rString);
+    LockedCacheMemory mLockedCacheMemory[3];
 };
+
+static_assert(sizeof(PrivateResource) == 0x100);
 
 }  // namespace agl::detail

@@ -62,7 +62,7 @@ void EnvObj::initialize_(s32 index, s32 viewNum, EnvObjMgr* pMgr, sead::Heap* pH
     getEnvObjName();
     detail::RootNode::setNodeMeta(
         this, sead::FormatFixedSafeString<1024>(
-                  "Icon = %s", cMetaInfoIconName[sTypeInfoTable[getTypeId()].mMetaInfo]));
+                  "Icon = %s", cMetaInfoIconName[sTypeInfoTable[getTypeID()].mMetaInfo]));
     initialize(viewNum, pHeap);
     clear_();
 }
@@ -82,7 +82,7 @@ void EnvObj::clear_()
  */
 void EnvObj::becomeDefaultName_()
 {
-    mEnvObjName->format("%s%d", sTypeInfoTable[getTypeId()].mName, mIndex);
+    mEnvObjName->format("%s%d", sTypeInfoTable[getTypeID()].mName, mIndex);
 }
 
 /**
@@ -236,7 +236,7 @@ void EnvObj::genMessage(sead::hostio::Context* pContext)
     mEnable.genMessageParameter(pContext, mEnable.getMeta());
     mEnvObjName.genMessageParameter(pContext, mEnvObjName.getMeta());
     mGroupName.genMessageParameter(pContext, mGroupName.getMeta());
-    getTypeId();
+    getTypeID();
     for (auto it = mMgr->begin(getObjType()), itEnd = mMgr->end(getObjType()); it != itEnd;
          ++it)
     {
@@ -246,7 +246,7 @@ void EnvObj::genMessage(sead::hostio::Context* pContext)
         }
     }
     sead::FormatFixedSafeString<1024> str("GroupHeader = %s settings, IsEnable = %s",
-                                          sTypeInfoTable[getTypeId()].mLabel,
+                                          sTypeInfoTable[getTypeID()].mLabel,
                                           *mEnable ? "true" : "false");
 }
 
@@ -271,11 +271,11 @@ void EnvObj::listenPropertyEvent(const sead::hostio::PropertyEvent* pEvent)
         break;
     case 1004:
     {
-        mMgr->getEnvObjSet().setSelectedObj(sTypeInfoTable[getTypeId()].mMetaInfo, this);
+        mMgr->getEnvObjSet().setSelectedObj(sTypeInfoTable[getTypeID()].mMetaInfo, this);
         for (auto& rpObj : mMgr->mObj)
         {
-            if (sTypeInfoTable[rpObj->getTypeId()].mMetaInfo ==
-                sTypeInfoTable[getTypeId()].mMetaInfo)
+            if (sTypeInfoTable[rpObj->getTypeID()].mMetaInfo ==
+                sTypeInfoTable[getTypeID()].mMetaInfo)
             {
                 rpObj->mFlag.change(1 << 1, rpObj != this);
             }
@@ -284,11 +284,11 @@ void EnvObj::listenPropertyEvent(const sead::hostio::PropertyEvent* pEvent)
     }
     case 1005:
     {
-        mMgr->getEnvObjSet().setSelectedObj(sTypeInfoTable[getTypeId()].mMetaInfo, nullptr);
+        mMgr->getEnvObjSet().setSelectedObj(sTypeInfoTable[getTypeID()].mMetaInfo, nullptr);
         for (auto& rpObj : mMgr->mObj)
         {
-            if (sTypeInfoTable[rpObj->getTypeId()].mMetaInfo ==
-                sTypeInfoTable[getTypeId()].mMetaInfo)
+            if (sTypeInfoTable[rpObj->getTypeID()].mMetaInfo ==
+                sTypeInfoTable[getTypeID()].mMetaInfo)
             {
                 rpObj->mFlag.reset(1 << 1);
             }

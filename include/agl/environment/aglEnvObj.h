@@ -1,6 +1,7 @@
 #pragma once
 
 #include <basis/seadTypes.h>
+#include <basis/seadNew.h>
 #include <gfx/seadColor.h>
 #include <math/seadMatrix.h>
 #include <math/seadVector.h>
@@ -62,6 +63,11 @@ public:
 
     struct ViewData;
 
+    template <typename T>
+    struct TypeToID {
+        static EnvObj* createInstance(sead::Heap* pHeap) { return new (pHeap) T(); }
+    };
+
     class Index : public utl::INamedObjIndex {
     public:
         ~Index() override { ; }
@@ -96,13 +102,13 @@ public:
     const sead::SafeString& getGroupName() const override { return *mGroupName; }
     const sead::SafeString& getObjName() const override { return getEnvObjName(); }
     bool isHostIOEnabled() const override { return mFlag.isOn(1); }
-    s32 getObjType() const override { return getTypeId(); }
+    s32 getObjType() const override { return getTypeID(); }
 
 protected:
     virtual void copyFromImpl_(const EnvObj& rOther);
 
 public:
-    virtual s32 getTypeId() const = 0;
+    virtual s32 getTypeID() const = 0;
 
     void initialize_(s32 index, s32 viewNum, EnvObjMgr* pMgr, sead::Heap* pHeap);
     void clear_();

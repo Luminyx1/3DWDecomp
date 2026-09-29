@@ -308,18 +308,20 @@ void ColorCorrection::genMessageHsbParameters(sead::hostio::Context* pContext)
     mBrightness.genMessageParameter(pContext, mBrightness.getMeta());
 }
 
+/**
+ * Handles a host property edit, resetting all parameters or updating the level curves as needed.
+ * @param pEvent Property event received from the host.
+ */
 void ColorCorrection::listenPropertyEvent(const sead::hostio::PropertyEvent* pEvent)
 {
     listenPropertyEventIO(this, pEvent);
-    switch (reinterpret_cast<uintptr_t>(pEvent->getId()))
+    if (pEvent->getIdValue() == 100001)
     {
-    case 100001:
         resetAll();
-        break;
-    default:
-        break;
     }
-    if (pEvent->getId() >= &mLevelCurve && pEvent->getId() < &mDebugTexturePage)
+    uintptr_t id = pEvent->getIdValue();
+    if (id >= reinterpret_cast<uintptr_t>(&mLevelCurve) &&
+        id < reinterpret_cast<uintptr_t>(&mDebugTexturePage))
     {
         mLevelCurve.listenPropertyEventParameters(this, pEvent);
         updateCurves_();

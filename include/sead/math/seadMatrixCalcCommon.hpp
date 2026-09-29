@@ -1340,8 +1340,8 @@ void Matrix34CalcCommon<T>::makeR(Base& o, const Vec3& r)
 template <typename T>
 void Matrix34CalcCommon<T>::makeRIdx(Base& o, u32 xr, u32 yr, u32 zr)
 {
-    const T sinV[3];
-    const T cosV[3];
+    T sinV[3];
+    T cosV[3];
 
     MathCalcCommon<T>::sinCosIdx(&sinV[0], &cosV[0], xr);
     MathCalcCommon<T>::sinCosIdx(&sinV[1], &cosV[1], yr);

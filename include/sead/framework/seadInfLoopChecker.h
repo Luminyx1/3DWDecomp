@@ -27,6 +27,8 @@ public:
     void calc() override;
 
     InfLoopEvent& getEvent() { return mEvent; }
+    bool isEnabled() const { return mEnabled; }
+    void setEnabled(bool enabled) { mEnabled = enabled; }
 
 private:
     void onInfLoop_();

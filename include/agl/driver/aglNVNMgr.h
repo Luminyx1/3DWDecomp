@@ -32,6 +32,7 @@ namespace agl::driver {
 class NVNMgr : public GraphicsDriverMgr {
     friend class agl::DrawContext;
     friend class agl::DisplayList;
+    friend class NVNtexture_;
 
 public:
     struct SamplerKey {

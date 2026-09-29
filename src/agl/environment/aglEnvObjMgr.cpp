@@ -65,7 +65,7 @@ void EnvObjMgr::initialize(const InitArg& rArg, sead::Heap* pHeap)
             mObj[mTypeRange[type].mStart + i] = pObj;
             mEnvObjSet.pushBack(pObj);
             it->addObj(pObj, sead::FormatFixedSafeString<1024>(
-                                 "%s%d", EnvObj::getTypeData(pObj->getTypeId()).mName, i));
+                                 "%s%d", EnvObj::getTypeData(pObj->getTypeID()).mName, i));
         }
     }
 

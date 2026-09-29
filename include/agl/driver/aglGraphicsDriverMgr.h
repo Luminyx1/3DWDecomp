@@ -45,6 +45,7 @@ public:
     void setPolygonOffset(DrawContext* pDrawContext, f32 factor, f32 units) const;
 
     DisplayList* getDefaultCommandBuffer();
+    void* getGfxDevice() const { return _30; }
 
     void genMessage(sead::hostio::Context* pContext);
     void listenPropertyEvent(const sead::hostio::PropertyEvent* pEvent);

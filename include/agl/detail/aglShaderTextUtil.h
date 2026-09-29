@@ -17,12 +17,15 @@ public:
     struct ShaderDumpTextAnalyzeResult {
         ShaderDumpTextAnalyzeResult();
 
-        u64 _0;
-        u64 _8;
-        u32 _10;
-        u64 _18;
-        u64 _20;
+        s32 mAluClauseInstNum;
+        s32 mTexClauseInstNum;
+        s32 mExportNum;
+        s32 mVaryingInNum;
+        s32 mVaryingOutNum;
+        const char* mDisassembly;
+        s64 mDisassemblySize;
     };
+    static_assert(sizeof(ShaderDumpTextAnalyzeResult) == 0x28);
 
     static void replaceMacro(sead::BufferedSafeString* pText, const char* const* pMacros,
                              const char* const* pValues, s32 macroNum, char* pWork,

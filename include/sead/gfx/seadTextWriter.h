@@ -21,7 +21,7 @@ class TextWriter
 public:
     explicit TextWriter(DrawContext* pDrawContext);
     TextWriter(DrawContext* pDrawContext, const Viewport* pViewport);
-    virtual ~TextWriter();
+    virtual ~TextWriter() {}
 
     static FontBase* getDefaultFont();
     static void setDefaultFont(FontBase* pFont);

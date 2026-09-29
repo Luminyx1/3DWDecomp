@@ -89,6 +89,11 @@ public:
     u32 getBufferSize() const { return mBufferSize; }
     void* getCurrentBuffer() const { return mCurrentBuffer; }
     GPUMemVoidAddr getBuffer() const { return mBuffer; }
+    const NVNbuffer* getNvnBuffer() const { return &mNvnBuffer; }
+    u32 getCurrentBlockOffset(s32 blockIndex) const
+    {
+        return (mCurrentBufferIndex * mBlockNum + blockIndex) * mAlignedBlockSize;
+    }
 
     void declare(Type type, s32 num) { declare_(type, num, 0, 1); }
     void declareStruct(s32 num, u64 size, u64 alignment)
@@ -170,5 +175,7 @@ private:
     alignas(8) NVNbuffer mNvnBuffer;
 };
 static_assert(sizeof(UniformBlock) == 0x78);
+
+class ShaderStorageBlock : public UniformBlock {};
 
 }  // namespace agl

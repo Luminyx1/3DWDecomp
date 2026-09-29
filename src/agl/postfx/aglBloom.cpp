@@ -21,8 +21,15 @@ namespace {
 bool isEventTarget(const sead::hostio::PropertyEvent* pEvent, const void* pStart,
                    const void* pEnd)
 {
-    const void* id = pEvent->getId();
-    return id >= pStart && id < pEnd;
+    uintptr_t id = pEvent->getIdValue();
+    return id >= reinterpret_cast<uintptr_t>(pStart) && id < reinterpret_cast<uintptr_t>(pEnd);
+}
+
+inline s32 getMipHeight(const TextureData& rTexture, s32 mipLevel)
+{
+    s32 min = rTexture.getMinHeight_();
+    s32 height = rTexture.getHeight() >> mipLevel;
+    return min > height ? min : height;
 }
 
 }  // namespace
@@ -196,6 +203,11 @@ void BloomParameter::Unit::genMessage(sead::hostio::Context* pContext, bool isEd
     }
 }
 
+/**
+ * Requests a message regeneration or updates the balance when a relevant property changes.
+ * @param pReflexible host IO reflexible that owns the parameters
+ * @param pEvent property event
+ */
 void BloomParameter::listenPropertyEventBloomParameter(sead::hostio::Reflexible* pReflexible,
                                                        const sead::hostio::PropertyEvent* pEvent)
 {
@@ -656,8 +668,11 @@ void Bloom::drawDetect_(DrawContext* pDrawContext, s32 context, bool isLinearDep
 {
     const BloomParameter& rParam = getParameter(context);
     Context& rContext = getContext_(context);
+    const RenderTargetColor& rTarget = rContext.mMRTs[0].mTarget;
     u32 width = rContext.mColorSampler.getTextureData().getWidth(0);
     u32 height = rContext.mColorSampler.getTextureData().getHeight(0);
+    f32 texelWidth = 1.0f / f32(width);
+    f32 texelHeight = 1.0f / f32(height);
 
     sead::GraphicsContext graphicsContext;
     graphicsContext.setDepthEnable(false, false);
@@ -695,8 +710,6 @@ void Bloom::drawDetect_(DrawContext* pDrawContext, s32 context, bool isLinearDep
         rParam.mShaft.getUniformThreshold(&param0, &param1, rContext.mThresholdScale, mBalance);
         pProgram->getUniformLocation(8).setUniform(pDrawContext, 4, &param0);
 
-        f32 texelWidth = 1.0f / f32(width);
-        f32 texelHeight = 1.0f / f32(height);
         rContext.mMaskSampler.activate(pDrawContext, pProgram->getSamplerLocation(2), -1, false);
         param0.set(*mLuminanceIntensity + *mLuminanceIntensity, 0.0f, 0.0f, 0.0f);
         pProgram->getUniformLocation(7).setUniform(pDrawContext, 4, &param0);
@@ -712,11 +725,11 @@ void Bloom::drawDetect_(DrawContext* pDrawContext, s32 context, bool isLinearDep
         f32 gainScale = range / (*rGain.mEnd - *rGain.mStart);
         f32 offsetScale = range / (*rOffset.mEnd - *rOffset.mStart);
         f32 shaftScale = range / (*rShaft.mEnd - *rShaft.mStart);
-        param0.set(gainScale, -(invRange * (gainScale * *rGain.mStart)), offsetScale,
-                   -(invRange * (offsetScale * *rOffset.mStart)));
+        param0.set(gainScale, -(invRange * (*rGain.mStart * gainScale)), offsetScale,
+                   -(invRange * (*rOffset.mStart * offsetScale)));
         param1.set(*rGain.mValueStart, *rGain.mValue, *rOffset.mValue, 0.0f);
-        sead::Vector4f param2(1.0f - near / far, invRange * near, texelWidth, texelHeight);
-        sead::Vector4f param3(shaftScale, -(invRange * (shaftScale * *rShaft.mStart)),
+        sead::Vector4f param2(1.0f - near / far, near * invRange, texelWidth, texelHeight);
+        sead::Vector4f param3(shaftScale, -(invRange * (*rShaft.mStart * shaftScale)),
                               *rShaft.mValueStart, *rShaft.mValue);
         pProgram->getUniformLocation(2).setUniform(pDrawContext, 4, &param0);
         pProgram->getUniformLocation(3).setUniform(pDrawContext, 4, &param1);
@@ -724,7 +737,6 @@ void Bloom::drawDetect_(DrawContext* pDrawContext, s32 context, bool isLinearDep
         pProgram->getUniformLocation(9).setUniform(pDrawContext, 4, &param3);
     }
 
-    const RenderTargetColor& rTarget = rContext.mMRTs[0].mTarget;
     f32 w = rTarget.getWidth(0);
     f32 h = rTarget.getHeight(0);
     rContext.mRenderBuffer.setVirtualSize(sead::Vector2f(w, h));
@@ -740,6 +752,13 @@ void Bloom::drawDetect_(DrawContext* pDrawContext, s32 context, bool isLinearDep
     rContext.mMRTs[1].mTarget.invalidateGPUCache(pDrawContext);
 }
 
+/**
+ * Copies one bloom level to the next and applies a separable gaussian blur to it.
+ * @param pDrawContext draw context
+ * @param context context index
+ * @param level source level
+ * @param scale blur offset scale
+ */
 void Bloom::drawGaussian_(DrawContext* pDrawContext, s32 context, s32 level, f32 scale) const
 {
     Context& rContext = getContext_(context);
@@ -766,7 +785,7 @@ void Bloom::drawGaussian_(DrawContext* pDrawContext, s32 context, s32 level, f32
 
     u32 mipLevel = rTarget.getMipLevel();
     f32 w = u32(rTarget.getMipWidth(mipLevel));
-    f32 h = u32(rTarget.getMipHeight(mipLevel));
+    f32 h = u32(getMipHeight(rTarget, mipLevel));
     rContext.mRenderBuffer.setVirtualSize(sead::Vector2f(w, h));
     rContext.mRenderBuffer.setPhysicalArea(sead::BoundBox2f(0.0f, 0.0f, w, h));
     rContext.mRenderBuffer.bind(pDrawContext);
@@ -784,6 +803,7 @@ void Bloom::drawGaussian_(DrawContext* pDrawContext, s32 context, s32 level, f32
 
     const ShaderProgram* pBlur = agl::detail::ShaderHolder::instance()->getShaderProgram(
         agl::detail::ShaderHolder::cBloomGaussian);
+    sead::Vector2f texel(1.0f / w, 1.0f / h);
     TextureData* pTemp =
         rContext.mTextureCache.alloc(pDrawContext, "blur",
                                      TextureFormat::cTextureFormat_R11_G11_B10_float, w, h, 1,
@@ -795,7 +815,6 @@ void Bloom::drawGaussian_(DrawContext* pDrawContext, s32 context, s32 level, f32
         rTarget.setMipLevel(0);
     }
     rMRT.mTarget.applyTextureData(*pTemp);
-    sead::Vector2f texel(1.0f / w, 1.0f / h);
     rContext.mRenderBuffer.bind(pDrawContext);
 
     const ShaderProgram* pBlurH = pBlur->getVariation(0);
@@ -862,6 +881,11 @@ void Bloom::drawGather_(DrawContext* pDrawContext, const TextureSampler& rSample
                             utl::PrimitiveShape::instance()->getQuadTriangleIndexStream());
 }
 
+/**
+ * Draws the light shaft pass and gathers it into the bloom result.
+ * @param pDrawContext draw context
+ * @param context context index
+ */
 void Bloom::drawShaft_(DrawContext* pDrawContext, s32 context) const
 {
     const BloomParameter& rParam = getParameter(context);
@@ -968,15 +992,16 @@ void Bloom::drawShaft_(DrawContext* pDrawContext, s32 context) const
     }
 
     const TextureData& rResult = rContext.mResultSampler.getTextureData();
+    RenderTargetColor& rTarget = rMRT.mTarget;
     u32 mipLevel = sead::Mathu::min(u32(rContext.mResultSampler.getMinLod()),
                                     rResult.getMipLevelNum() - 1);
     f32 resultWidth = u32(rResult.getMipWidth(mipLevel));
-    f32 resultHeight = u32(rResult.getMipHeight(mipLevel));
+    f32 resultHeight = u32(getMipHeight(rResult, mipLevel));
     rContext.mRenderBuffer.setVirtualSize(sead::Vector2f(resultWidth, resultHeight));
     rContext.mRenderBuffer.setPhysicalArea(
         sead::BoundBox2f(0.0f, 0.0f, resultWidth, resultHeight));
-    rMRT.mTarget.applyTextureData(rResult, mipLevel, 0);
-    rContext.mRenderBuffer.setRenderTargetColor(&rMRT.mTarget);
+    rTarget.applyTextureData(rResult, mipLevel, 0);
+    rContext.mRenderBuffer.setRenderTargetColor(&rTarget);
     rContext.mRenderBuffer.bind(pDrawContext);
     sead::Viewport viewport(rContext.mRenderBuffer);
     viewport.apply(pDrawContext, rContext.mRenderBuffer);

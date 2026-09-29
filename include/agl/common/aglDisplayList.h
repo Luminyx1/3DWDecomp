@@ -62,7 +62,7 @@ public:
     static void resume(void* pMemory, u64 size);
     static u64 calcRemainingSize();
     u32 calcUsedSize() const;
-    void genMessage(sead::hostio::Context* pContext);
+    static void genMessage(sead::hostio::Context* pContext);
 
     GPUMemAddr<u8> getBuffer() const { return mBuffer; }
     u32 getValidSize() const { return mValidSize; }

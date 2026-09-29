@@ -205,7 +205,7 @@ void TextureDataImageAccessor::initializeImageBuffer(const TextureData& rTexture
     auto* pBlock = new (pHeap) GPUMemBlock<u8>;
     pBlock->allocBuffer_(size, pHeap, alignment, MemoryAttribute::CpuCached);
     mImageAddr = GPUMemAddrBase(*pBlock, 0);
-    texture.setImagePtr(mImageAddr, 0);
+    texture.setImagePtr(mImageAddr);
 
     mRenderTarget.applyTextureData(texture);
     updateLinearInfo_(texture);

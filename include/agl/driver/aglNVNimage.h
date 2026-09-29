@@ -10,7 +10,7 @@ public:
     NVNimage_(const NVNimage_& other);
     ~NVNimage_();
 
-    NVNimage_ operator=(const NVNimage_& other);
+    NVNimage_& operator=(const NVNimage_& other);
     void updateImageId(s32 id);
 
 private:

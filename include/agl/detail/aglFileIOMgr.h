@@ -71,6 +71,7 @@ public:
     void listenPropertyEvent(const sead::hostio::PropertyEvent* pEvent);
 
     const File& getFile(s32 handle) const { return mFiles[handle]; }
+    sead::NinHostIOFileDevice* getDevice() const { return mDevice; }
 
 private:
     sead::NinHostIOFileDevice* mDevice = nullptr;

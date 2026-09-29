@@ -118,6 +118,7 @@ public:
     void removeHeap(GPUMemBlockMgrHeapEx* pHeapEx);
     static u64 calcGPUMemorySize(u64 userSize);
     static s32 calcGPUMemoryAlignment(s32 userAlignment);
+    void setMinBlockSize(size_t size) { mMinBlockSize = size; }
 
     void genMessage(sead::hostio::Context* pContext);
     void listenPropertyEvent(const sead::hostio::PropertyEvent* pEvent);

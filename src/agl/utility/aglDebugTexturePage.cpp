@@ -10,9 +10,12 @@
 #include "common/aglRenderBuffer.h"
 #include "common/aglRenderTarget.h"
 #include "common/aglTextureData.h"
+#include "common/aglTextureFormatInfo.h"
+#include "common/aglTextureSampler.h"
 #include "detail/aglRootNode.h"
 #include "utility/aglDebugTextureDrawer.h"
 #include "utility/aglDynamicTextureAllocator.h"
+#include "utility/aglImageFilter2D.h"
 
 namespace agl::utl {
 
@@ -20,35 +23,114 @@ namespace {
 
 inline u32 getMipWidth(const TextureData& rTexture, s32 mipLevel)
 {
-    s32 width = rTexture.getWidth() >> mipLevel;
+    s32 width = rTexture.getSurface().mWidth >> mipLevel;
     return width > 1 ? width : 1;
 }
 
 inline u32 getMipHeight(const TextureData& rTexture, s32 mipLevel)
 {
     s32 min = rTexture.getMinHeight_();
-    s32 height = rTexture.getHeight() >> mipLevel;
+    s32 height = rTexture.getSurface().mHeight >> mipLevel;
     return min > height ? min : height;
 }
 
 inline u32 getWidth(const TextureData& rTexture)
 {
-    u32 width = rTexture.getWidth();
+    u32 width = rTexture.getSurface().mWidth;
     return width > 1 ? width : 1;
 }
 
 inline u32 getHeight(const TextureData& rTexture)
 {
     s32 min = rTexture.getMinHeight_();
-    s32 height = rTexture.getHeight();
+    s32 height = rTexture.getSurface().mHeight;
     return min > height ? min : height;
 }
 
 inline u32 getSlice(const TextureData& rTexture)
 {
     s32 min = rTexture.getMinSlice_();
-    s32 slice = rTexture.getDepth();
+    s32 slice = rTexture.getSurface().mDepth;
     return min > slice ? min : slice;
+}
+
+inline f32 calcMipWidthSum(const TextureData& rTexture, u32 startMip, u32 endMip, u32 faceNum)
+{
+    f32 width = 0.0f;
+    for (u32 i = startMip; i < endMip; i++)
+    {
+        width += getMipWidth(rTexture, i) * faceNum;
+    }
+    return width;
+}
+
+inline f32 calcMipHeightSum(const TextureData& rTexture, u32 startMip, u32 endMip)
+{
+    f32 height = 0.0f;
+    for (u32 i = startMip; i < endMip; i++)
+    {
+        height += getMipHeight(rTexture, i);
+    }
+    return height;
+}
+
+inline void setNodeMeta(sead::hostio::Node* pNode, const char* pMeta)
+{
+    detail::RootNode::setNodeMeta(pNode, pMeta);
+}
+
+inline u32 getMipSlice(const TextureData& rTexture, s32 mipLevel)
+{
+    s32 min = rTexture.getMinSlice_();
+    s32 slice = rTexture.getSurface().mDepth >> mipLevel;
+    return min > slice ? min : slice;
+}
+
+inline void applyDrawOption(TextureSampler* pSampler, const TextureData& rTex,
+                            const DebugTexturePage::DrawOption& rOption, bool isSpecial)
+{
+    if (rOption.mIsFilterLinear)
+    {
+        pSampler->setFilter(1, 1, 2);
+    }
+    else
+    {
+        pSampler->setFilter(0, 0, 1);
+    }
+
+    switch (rOption.mChannel)
+    {
+    case 1:
+    {
+        TextureCompSel compSel =
+            TextureFormatInfo::getDefaultCompSel(TextureFormat(rTex.getTextureFormat()), 0);
+        pSampler->setCompSel(compSel, compSel, compSel, cTextureCompSel_1);
+        break;
+    }
+    case 2:
+    {
+        TextureCompSel compSel =
+            TextureFormatInfo::getDefaultCompSel(TextureFormat(rTex.getTextureFormat()), 1);
+        pSampler->setCompSel(compSel, compSel, compSel, cTextureCompSel_1);
+        break;
+    }
+    case 3:
+    {
+        TextureCompSel compSel =
+            TextureFormatInfo::getDefaultCompSel(TextureFormat(rTex.getTextureFormat()), 2);
+        pSampler->setCompSel(compSel, compSel, compSel, cTextureCompSel_1);
+        break;
+    }
+    case 4:
+    {
+        TextureCompSel compSel =
+            TextureFormatInfo::getDefaultCompSel(TextureFormat(rTex.getTextureFormat()), 3);
+        pSampler->setCompSel(compSel, compSel, compSel, cTextureCompSel_1);
+        break;
+    }
+    default:
+        break;
+    }
 }
 
 }  // namespace
@@ -350,7 +432,7 @@ bool DebugTexture::copyCurrentRenderTargetDepth(DrawContext* pDrawContext)
  */
 void DebugTexturePage::setActive(bool active)
 {
-    if (mIsActive == active)
+    if (active == mIsActive)
     {
         return;
     }
@@ -365,7 +447,7 @@ void DebugTexturePage::setActive(bool active)
     {
         if (pDrawer->mActivePages.isFull())
         {
-            pDrawer->mActivePages.erase(0);
+            pDrawer->mActivePages.popFront();
         }
         pDrawer->mActivePages.pushBack(this);
     }
@@ -493,12 +575,13 @@ void DebugTexturePage::genMessagePage(sead::hostio::Context* pContext,
  */
 bool DebugTexturePage::updateNodeMeta_()
 {
+    sead::hostio::Node* pNode = this;
     sead::FormatFixedSafeString<64> meta("Icon=%s, BgColor=%s", mIsActive ? "TEXTURE" : "NOTE",
                                          "Transparent");
-    detail::RootNode::setNodeMeta(this, meta.cstr());
-    if (mNodeMeta != sead::SafeString::cEmptyString.cstr())
+    setNodeMeta(pNode, meta.cstr());
+    if (mNodeMeta != sead::SafeString(sead::SafeString::cEmptyString))
     {
-        mNodeMeta.copy(sead::SafeString::cEmptyString.cstr());
+        mNodeMeta.copy(sead::SafeString(sead::SafeString::cEmptyString));
         return true;
     }
     return false;
@@ -740,7 +823,8 @@ void DebugTexture::allocTexture(DrawContext* pDrawContext, const TextureData& rT
  */
 sead::Vector2f DebugTexturePage::Context::calcTextureDrawSize_(const TextureData& rTexture) const
 {
-    u32 endMip = mMipLevel < 0 ? rTexture.getMipLevelNum() : mMipLevel + 1;
+    u32 mipLevelNum = rTexture.getMipLevelNum();
+    u32 endMip = mMipLevel < 0 ? mipLevelNum : mMipLevel + 1;
     u32 startMip = mMipLevel < 0 ? 0 : mMipLevel;
 
     sead::Vector2f size;
@@ -748,11 +832,7 @@ sead::Vector2f DebugTexturePage::Context::calcTextureDrawSize_(const TextureData
     {
     case NVN_TEXTURE_TARGET_2D:
         size.x = getMipWidth(rTexture, startMip);
-        size.y = 0.0f;
-        for (u32 i = startMip; i < endMip; i++)
-        {
-            size.y += getMipHeight(rTexture, i);
-        }
+        size.y = calcMipHeightSum(rTexture, startMip, endMip);
         break;
     case NVN_TEXTURE_TARGET_3D:
     case NVN_TEXTURE_TARGET_2D_ARRAY:
@@ -760,11 +840,7 @@ sead::Vector2f DebugTexturePage::Context::calcTextureDrawSize_(const TextureData
         size.y = getMipHeight(rTexture, startMip);
         f32 sliceNum = mSliceIndex < 0 ? getSlice(rTexture) : 1.0f;
         size.y = sliceNum * size.y;
-        size.x = 0.0f;
-        for (u32 i = startMip; i < endMip; i++)
-        {
-            size.x += getMipWidth(rTexture, i);
-        }
+        size.x = calcMipWidthSum(rTexture, startMip, endMip, 1);
         break;
     }
     case NVN_TEXTURE_TARGET_CUBEMAP:
@@ -772,11 +848,7 @@ sead::Vector2f DebugTexturePage::Context::calcTextureDrawSize_(const TextureData
         size.y = getMipHeight(rTexture, startMip);
         f32 sliceNum = mSliceIndex < 0 ? getSlice(rTexture) : 1.0f;
         size.y = sliceNum * size.y * 0.5f;
-        size.x = 0.0f;
-        for (u32 i = startMip; i < endMip; i++)
-        {
-            size.x += getMipWidth(rTexture, i) * 4;
-        }
+        size.x = calcMipWidthSum(rTexture, startMip, endMip, 4);
         break;
     }
     default:
@@ -784,6 +856,313 @@ sead::Vector2f DebugTexturePage::Context::calcTextureDrawSize_(const TextureData
         break;
     }
     return size;
+}
+
+/**
+ * Draws a texture with its mip levels, slices or cube map faces laid out next to each other.
+ * @param pDrawContext draw context
+ * @param rTexture debug texture to draw
+ * @param rViewport viewport to draw into
+ * @param rPos top left position
+ * @param rScale draw scale
+ * @param rOption draw options
+ * @param isSpecial unused
+ */
+void DebugTexturePage::Context::drawTexture_(DrawContext* pDrawContext,
+                                             const DebugTexture& rTexture,
+                                             const sead::Viewport& rViewport,
+                                             const sead::Vector2f& rPos,
+                                             const sead::Vector2f& rScale,
+                                             const DrawOption& rOption, bool isSpecial) const
+{
+    sead::GraphicsContext graphicsContext;
+    graphicsContext.setDepthEnable(false, false);
+    switch (rOption.mBlendType)
+    {
+    case 1:
+        graphicsContext.setBlendEnable(true);
+        graphicsContext.setBlendEquation(0, NVN_BLEND_EQUATION_ADD);
+        graphicsContext.setBlendFactor(0, NVN_BLEND_FUNC_SRC_ALPHA,
+                                       NVN_BLEND_FUNC_ONE_MINUS_SRC_ALPHA);
+        break;
+    case 2:
+        graphicsContext.setBlendEnable(true);
+        graphicsContext.setBlendEquation(0, NVN_BLEND_EQUATION_ADD);
+        graphicsContext.setBlendFactor(0, NVN_BLEND_FUNC_ONE, NVN_BLEND_FUNC_ONE);
+        break;
+    case 3:
+        graphicsContext.setBlendEnable(true);
+        graphicsContext.setBlendEquation(0, NVN_BLEND_EQUATION_ADD);
+        graphicsContext.setBlendFactor(0, NVN_BLEND_FUNC_ZERO, NVN_BLEND_FUNC_SRC_COLOR);
+        break;
+    default:
+        graphicsContext.setBlendEnable(false);
+        break;
+    }
+    graphicsContext.apply(pDrawContext);
+
+    const TextureData& rTex = *rTexture.getTexture();
+    TextureSampler sampler(rTex);
+    sampler.applyTextureData(rTex);
+    sampler.setStencilMode(rTexture.mType == DebugTexture::cType_2);
+    applyDrawOption(&sampler, rTex, rOption, isSpecial);
+
+    u32 mipLevelNum = rTex.getMipLevelNum();
+    u32 endMip = mMipLevel < 0 ? mipLevelNum : mMipLevel + 1;
+    u32 startMip = mMipLevel & ~(mMipLevel >> 31);
+
+    switch (rTex.getTextureType())
+    {
+    case NVN_TEXTURE_TARGET_2D:
+    {
+        sead::Vector2f pos = rPos;
+        switch (rTexture.getType())
+        {
+        case DebugTexture::cType_1:
+            ImageFilter2D::drawLinearDepth(pDrawContext, sampler, rViewport, rTexture.getMin(),
+                                           rTexture.getMax(), rScale, rPos);
+            break;
+        case DebugTexture::cType_2:
+        {
+            f32 scale = 1.0f / rTexture.getIndex();
+            ImageFilter2D::drawUint(pDrawContext, sampler, rViewport,
+                                    sead::Vector4f(scale, scale, scale, 1.0f), rScale, rPos);
+            break;
+        }
+        default:
+            for (u32 mip = startMip; mip < endMip; mip++)
+            {
+                sead::Vector2f scale = rScale;
+                scale.x = f32(getMipWidth(rTex, mip)) / f32(getWidth(rTex)) * scale.x;
+                scale.y *= f32(getMipHeight(rTex, mip)) / f32(getHeight(rTex));
+                ImageFilter2D::drawTextureMipLevel(pDrawContext, sampler, rViewport, mip, scale,
+                                                   pos);
+                pos.y += f32(getMipHeight(rTex, mip)) * rScale.y;
+            }
+            break;
+        }
+        break;
+    }
+    case NVN_TEXTURE_TARGET_3D:
+    {
+        sead::Vector2f pos = rPos;
+        if (mSliceIndex >= 0)
+        {
+            u32 slice;
+            if (mSliceIndex >= s32(getSlice(rTex)))
+            {
+                slice = getSlice(rTex) - 1;
+            }
+            else
+            {
+                slice = mSliceIndex;
+            }
+            for (u32 mip = startMip; mip < endMip; mip++)
+            {
+                sead::Vector2f scale = rScale;
+                scale.x = f32(getMipWidth(rTex, mip)) / f32(getWidth(rTex)) * scale.x;
+                scale.y *= f32(getMipHeight(rTex, mip)) / f32(getHeight(rTex));
+                ImageFilter2D::drawTexture3D(pDrawContext, sampler, rViewport,
+                                             f32(slice) / f32(getMipSlice(rTex, mip)), scale, pos,
+                                             mip);
+                pos.x += f32(getMipWidth(rTex, mip)) * rScale.x;
+            }
+        }
+        else
+        {
+            for (u32 mip = startMip; mip < endMip; mip++)
+            {
+                sead::Vector2f scale = rScale;
+                scale.x = f32(getMipWidth(rTex, mip)) / f32(getWidth(rTex)) * scale.x;
+                scale.y *= f32(getMipHeight(rTex, mip)) / f32(getHeight(rTex));
+                for (u32 slice = 0; slice < getMipSlice(rTex, mip); slice++)
+                {
+                    ImageFilter2D::drawTexture3D(pDrawContext, sampler, rViewport,
+                                                 f32(slice) / f32(getMipSlice(rTex, mip)), scale,
+                                                 pos, mip);
+                    pos.y += f32(getMipHeight(rTex, mip)) * rScale.y;
+                }
+                pos.y = rPos.y;
+                pos.x += f32(getMipWidth(rTex, mip)) * rScale.x;
+            }
+        }
+        break;
+    }
+    case NVN_TEXTURE_TARGET_2D_ARRAY:
+    {
+        sead::Vector2f pos = rPos;
+        if (mSliceIndex >= 0)
+        {
+            s32 slice;
+            if (mSliceIndex >= s32(getSlice(rTex)))
+            {
+                slice = getSlice(rTex) - 1;
+            }
+            else
+            {
+                slice = mSliceIndex;
+            }
+            if (rTexture.getType() == DebugTexture::cType_2)
+            {
+                ImageFilter2D::drawUintArray(pDrawContext, sampler, rViewport, slice,
+                                             sead::Vector4f(255.0f, 255.0f, 255.0f, 255.0f), rScale,
+                                             rPos);
+            }
+            else if (rTexture.getType() == DebugTexture::cType_1)
+            {
+                ImageFilter2D::drawLinearDepthArray(pDrawContext, sampler, rViewport, slice,
+                                                    rTexture.getMin(), rTexture.getMax(), rScale,
+                                                    rPos);
+            }
+            else
+            {
+                pos.x = rPos.x;
+                for (u32 mip = startMip; mip < endMip; mip++)
+                {
+                    sead::Vector2f scale = rScale;
+                    scale.x = f32(getMipWidth(rTex, mip)) / f32(getWidth(rTex)) * scale.x;
+                    scale.y *= f32(getMipHeight(rTex, mip)) / f32(getHeight(rTex));
+                    ImageFilter2D::drawTexture2DArray(pDrawContext, sampler, rViewport, slice,
+                                                      scale, pos, mip);
+                    pos.x += f32(getMipWidth(rTex, mip)) * rScale.x;
+                }
+            }
+        }
+        else
+        {
+            for (u32 slice = 0; slice < getSlice(rTex); slice++)
+            {
+                pos.x = rPos.x;
+                switch (rTexture.getType())
+                {
+                case DebugTexture::cType_2:
+                {
+                    f32 scale = 1.0f / rTexture.getIndex();
+                    ImageFilter2D::drawUintArray(pDrawContext, sampler, rViewport, slice,
+                                                 sead::Vector4f(scale, scale, scale, 1.0f), rScale,
+                                                 pos);
+                    break;
+                }
+                case DebugTexture::cType_1:
+                    ImageFilter2D::drawLinearDepthArray(pDrawContext, sampler, rViewport, slice,
+                                                        rTexture.getMin(), rTexture.getMax(),
+                                                        rScale, pos);
+                    break;
+                default:
+                    for (u32 mip = startMip; mip < endMip; mip++)
+                    {
+                        sead::Vector2f scale = rScale;
+                        scale.x = f32(getMipWidth(rTex, mip)) / f32(getWidth(rTex)) * scale.x;
+                        scale.y *= f32(getMipHeight(rTex, mip)) / f32(getHeight(rTex));
+                        ImageFilter2D::drawTexture2DArray(pDrawContext, sampler, rViewport, slice,
+                                                          scale, pos, mip);
+                        pos.x += f32(getMipWidth(rTex, mip)) * rScale.x;
+                    }
+                    break;
+                }
+                pos.y += f32(getMipHeight(rTex, startMip)) * rScale.y;
+            }
+        }
+        break;
+    }
+    case NVN_TEXTURE_TARGET_CUBEMAP:
+    {
+        sead::Vector2f pos = rPos;
+        if (mSliceIndex >= 0)
+        {
+            u32 cube;
+            if (mSliceIndex >= s32(getSlice(rTex)))
+            {
+                cube = getSlice(rTex) - 1;
+            }
+            else
+            {
+                cube = mSliceIndex;
+            }
+            for (u32 mip = startMip; mip < endMip; mip++)
+            {
+                sead::Vector2f scale = rScale;
+                scale.x = f32(getMipWidth(rTex, mip)) / f32(getWidth(rTex)) * scale.x;
+                scale.y *= f32(getMipHeight(rTex, mip)) / f32(getHeight(rTex));
+                ImageFilter2D::drawTextureCubeArray(
+                    pDrawContext, sampler, rViewport, cube, cCubeMapFace_PositiveY, scale,
+                    pos + sead::Vector2f(f32(getMipWidth(rTex, mip)) * rScale.x, 0.0f), mip);
+                ImageFilter2D::drawTextureCubeArray(
+                    pDrawContext, sampler, rViewport, cube, cCubeMapFace_NegativeX, scale,
+                    pos + sead::Vector2f(f32(getMipWidth(rTex, mip)) * rScale.x * 0.0f,
+                                         f32(getMipHeight(rTex, mip)) * rScale.y),
+                    mip);
+                ImageFilter2D::drawTextureCubeArray(
+                    pDrawContext, sampler, rViewport, cube, cCubeMapFace_PositiveZ, scale,
+                    pos + sead::Vector2f(f32(getMipWidth(rTex, mip)) * rScale.x,
+                                         f32(getMipHeight(rTex, mip)) * rScale.y),
+                    mip);
+                ImageFilter2D::drawTextureCubeArray(
+                    pDrawContext, sampler, rViewport, cube, cCubeMapFace_PositiveX, scale,
+                    pos + sead::Vector2f(f32(getMipWidth(rTex, mip)) * rScale.x * 2.0f,
+                                         f32(getMipHeight(rTex, mip)) * rScale.y),
+                    mip);
+                ImageFilter2D::drawTextureCubeArray(
+                    pDrawContext, sampler, rViewport, cube, cCubeMapFace_NegativeZ, scale,
+                    pos + sead::Vector2f(f32(getMipWidth(rTex, mip)) * rScale.x * 3.0f,
+                                         f32(getMipHeight(rTex, mip)) * rScale.y),
+                    mip);
+                ImageFilter2D::drawTextureCubeArray(
+                    pDrawContext, sampler, rViewport, cube, cCubeMapFace_NegativeY, scale,
+                    pos + sead::Vector2f(f32(getMipWidth(rTex, mip)) * rScale.x,
+                                         f32(getMipHeight(rTex, mip)) * rScale.y * 2.0f),
+                    mip);
+                pos.x += f32(getMipWidth(rTex, mip)) * rScale.x * 4.0f;
+            }
+        }
+        else
+        {
+            for (u32 cube = 0; cube < getSlice(rTex) / 6; cube++)
+            {
+                pos.x = rPos.x;
+                for (u32 mip = startMip; mip < endMip; mip++)
+                {
+                    sead::Vector2f scale = rScale;
+                    scale.x = f32(getMipWidth(rTex, mip)) / f32(getWidth(rTex)) * scale.x;
+                    scale.y *= f32(getMipHeight(rTex, mip)) / f32(getHeight(rTex));
+                    ImageFilter2D::drawTextureCubeArray(
+                        pDrawContext, sampler, rViewport, cube, cCubeMapFace_PositiveY, scale,
+                        pos + sead::Vector2f(f32(getMipWidth(rTex, mip)) * rScale.x, 0.0f), mip);
+                    ImageFilter2D::drawTextureCubeArray(
+                        pDrawContext, sampler, rViewport, cube, cCubeMapFace_NegativeX, scale,
+                        pos + sead::Vector2f(f32(getMipWidth(rTex, mip)) * rScale.x * 0.0f,
+                                             f32(getMipHeight(rTex, mip)) * rScale.y),
+                        mip);
+                    ImageFilter2D::drawTextureCubeArray(
+                        pDrawContext, sampler, rViewport, cube, cCubeMapFace_PositiveZ, scale,
+                        pos + sead::Vector2f(f32(getMipWidth(rTex, mip)) * rScale.x,
+                                             f32(getMipHeight(rTex, mip)) * rScale.y),
+                        mip);
+                    ImageFilter2D::drawTextureCubeArray(
+                        pDrawContext, sampler, rViewport, cube, cCubeMapFace_PositiveX, scale,
+                        pos + sead::Vector2f(f32(getMipWidth(rTex, mip)) * rScale.x * 2.0f,
+                                             f32(getMipHeight(rTex, mip)) * rScale.y),
+                        mip);
+                    ImageFilter2D::drawTextureCubeArray(
+                        pDrawContext, sampler, rViewport, cube, cCubeMapFace_NegativeZ, scale,
+                        pos + sead::Vector2f(f32(getMipWidth(rTex, mip)) * rScale.x * 3.0f,
+                                             f32(getMipHeight(rTex, mip)) * rScale.y),
+                        mip);
+                    ImageFilter2D::drawTextureCubeArray(
+                        pDrawContext, sampler, rViewport, cube, cCubeMapFace_NegativeY, scale,
+                        pos + sead::Vector2f(f32(getMipWidth(rTex, mip)) * rScale.x,
+                                             f32(getMipHeight(rTex, mip)) * rScale.y * 2.0f),
+                        mip);
+                    pos.x += f32(getMipWidth(rTex, mip)) * rScale.x * 4.0f;
+                }
+                pos.y += f32(getMipHeight(rTex, startMip) * 3) * rScale.y;
+            }
+        }
+        break;
+    }
+    default:
+        break;
+    }
 }
 
 /**
@@ -875,8 +1254,8 @@ void DebugTexturePage::Context::draw(DrawContext* pDrawContext,
 
         sead::Vector2f size = calcTextureDrawSize_(*pTexture->getTexture());
         const sead::BoundBox2f& rArea = rFrameBuffer.getPhysicalArea();
-        f32 ratio = mScale * sead::Mathf::min(rArea.getSizeX() / size.x,
-                                              rArea.getSizeY() / size.y);
+        f32 fit = sead::Mathf::min(rArea.getSizeX() / size.x, rArea.getSizeY() / size.y);
+        f32 ratio = mScale * fit;
         scale.set(rFrameBuffer.getVirtualSize().x / rArea.getSizeX() * ratio,
                   rFrameBuffer.getVirtualSize().y / rArea.getSizeY() * ratio);
         drawTexture_(pDrawContext, *pTexture, rViewport, pos, scale, rOption,

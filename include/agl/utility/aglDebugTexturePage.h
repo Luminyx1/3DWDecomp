@@ -24,6 +24,7 @@ namespace agl {
 class DrawContext;
 class RenderTargetDepth;
 class TextureData;
+class TextureSampler;
 }  // namespace agl
 
 namespace agl::utl {
@@ -60,6 +61,10 @@ public:
 
     const sead::SafeString& getName() const { return mName; }
     const TextureData* getTexture() const { return mTexture; }
+    Type getType() const { return mType; }
+    f32 getMin() const { return mMin; }
+    f32 getMax() const { return mMax; }
+    u8 getIndex() const { return mIndex; }
 
 private:
     sead::FixedSafeString<32> mName;
@@ -84,9 +89,9 @@ public:
     struct DrawOption {
         bool mIsDrawLabel = true;
         bool mIsDrawLabelBg = false;
-        bool _2 = false;
+        bool mIsFilterLinear = false;
         s32 mBlendType = 0;
-        s32 _8 = 0;
+        s32 mChannel = 0;
         s32 _c;
     };
     static_assert(sizeof(DrawOption) == 0x10);

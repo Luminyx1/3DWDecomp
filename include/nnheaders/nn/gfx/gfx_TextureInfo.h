@@ -170,7 +170,7 @@ public:
 
     void SetDefault();
 
-    TextureMipRange& EditMipRange() { return gfx::detail::DataToAccessor(mipRange); }
+    TextureMipRange& EditMipRange() { return gfx::DataToAccessor(mipRange); }
     TextureArrayRange& EditArrayRange() { return gfx::DataToAccessor(arrayRange); }
 
     const TextureMipRange& GetMipRange() const { return gfx::DataToAccessor(mipRange); }

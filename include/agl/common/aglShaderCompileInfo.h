@@ -17,7 +17,15 @@ class ShaderCompileInfo : public sead::hostio::Node {
 public:
     // this value is used as an index to a table of version lists
     // on SMO 1.2.0, located at 0x7101E80B30
-    enum Target {};
+    enum Target {
+        cTarget_GL = 0,
+        cTarget_GX2 = 1,
+        cTarget_GLES3 = 2,
+        cTarget_GLES2 = 3,
+        cTarget_NVN = 4,
+        cTarget_NVNBinary = 5,
+        cTarget_Num = 5,
+    };
 
     ShaderCompileInfo();
 
@@ -27,7 +35,8 @@ public:
     void create(s32 macroNum, s32 variationNum, sead::Heap* pHeap);
     void clearVariation();
     void pushBackVariation(const char*, const char*);
-    void calcCompileSource(ShaderType, sead::BufferedSafeString*, Target, bool) const;
+    void calcCompileSource(ShaderType type, sead::BufferedSafeString* pDst, Target target,
+                           bool usePreprocessor) const;
     static const sead::SafeString& getRegitserUniformBlockName();  // "RegisterUBO"
 
     void setName(const sead::SafeString& rName) { mName = rName; }
@@ -38,7 +47,7 @@ private:
 
     sead::SafeString mName;
     const sead::SafeString* mSource;
-    void* _20;
+    sead::BufferedSafeString* mCompiledSource;
     sead::PtrArray<const char> mMacroName;
     sead::PtrArray<const char> mMacroValue;
     sead::PtrArray<const char> mVariationName;

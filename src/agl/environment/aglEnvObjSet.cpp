@@ -84,9 +84,9 @@ bool EnvObjSet::pushBack(EnvObj* pObj)
         return false;
     }
 
-    for (s32 i = 0; i < mTypeRange[pObj->getTypeId()].mNum; i++)
+    for (s32 i = 0; i < mTypeRange[pObj->getTypeID()].mNum; i++)
     {
-        s32 index = mTypeRange[pObj->getTypeId()].mStart + i;
+        s32 index = mTypeRange[pObj->getTypeID()].mStart + i;
         EnvObj::Index& rIndex = mRef[index].mIndex;
         if (!(rIndex.getIndex() >= 0 || rIndex.getIndex() == utl::INamedObjIndex::cIndexNotFound))
         {
@@ -111,11 +111,11 @@ bool EnvObjSet::erase(EnvObj* pObj)
         return false;
     }
 
-    for (s32 i = 0; i < mTypeRange[pObj->getTypeId()].mNum; i++)
+    for (s32 i = 0; i < mTypeRange[pObj->getTypeID()].mNum; i++)
     {
-        if (tryGetObj(pObj->getTypeId(), i) == pObj)
+        if (tryGetObj(pObj->getTypeID(), i) == pObj)
         {
-            s32 index = mTypeRange[pObj->getTypeId()].mStart + i;
+            s32 index = mTypeRange[pObj->getTypeID()].mStart + i;
             mObj[index] = nullptr;
             Ref& rRef = mRef[index];
             rRef.mIndex.setIndex(utl::INamedObjIndex::cIndexNone);

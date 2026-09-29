@@ -11,8 +11,26 @@ inline bool isSpace(char c) {
     return c == ' ' || c == '\t' || c == '\r' || c == '\n';
 }
 
+inline const char* findChar(const char* p, char c) {
+    while (*p != '\0') {
+        if (*p == c) {
+            return p;
+        }
+        p++;
+    }
+    return nullptr;
+}
+
+inline const char* skipSpace(const char* p) {
+    while (isSpace(*p)) {
+        p++;
+    }
+    return *p == '\0' ? nullptr : p;
+}
+
 }  // namespace
 
+// NON_MATCHING: register allocation of the line feed length and the matched macro index
 void ShaderTextUtil::replaceMacro(sead::BufferedSafeString* pText, const char* const* pMacros,
                                   const char* const* pValues, s32 macroNum, char* pWork,
                                   s32 workSize) {
@@ -23,75 +41,87 @@ void ShaderTextUtil::replaceMacro(sead::BufferedSafeString* pText, const char* c
 
     const char* src = pText->cstr();
     char* dst = pWork;
+
     s32 replacedNum = 0;
     for (;;) {
         s32 lineFeedLength;
-        s32 lineLength = findLineFeedCode(src, &lineFeedLength);
-        if (lineLength == -1) {
-            break;
-        }
-
-        if (src[0] == '#') {
-            const char* p = src + 1;
-            while (isSpace(*p)) {
-                p++;
+        s32 lineFeedPos;
+        s32 i;
+        const char* macro;
+        for (;;) {
+            lineFeedPos = findLineFeedCode(src, &lineFeedLength);
+            if (lineFeedPos == -1) {
+                goto end;
             }
-            if (p[0] == 'd' && p[1] == 'e' && p[2] == 'f' && p[3] == 'i' && p[4] == 'n' &&
-                p[5] == 'e' && (p[6] == ' ' || p[6] == '\t')) {
-                const char* name = p + 7;
-                while (isSpace(*name)) {
-                    name++;
+
+            if (*src == '#') {
+                const char* p = src + 1;
+                while (isSpace(*p)) {
+                    p++;
                 }
-                for (s32 i = 0; i < macroNum; i++) {
-                    if (isReplaced[i]) {
-                        continue;
+
+                if (p[0] == 'd' && p[1] == 'e' && p[2] == 'f' && p[3] == 'i' && p[4] == 'n' &&
+                    p[5] == 'e' && (p[6] == ' ' || p[6] == '\t')) {
+                    const char* name = p + 7;
+                    while (isSpace(*name)) {
+                        name++;
                     }
-                    const char* macro = pMacros[i];
-                    const char* m = macro;
-                    const char* n = name;
-                    while (*m != '\0') {
-                        if (*n != *m) {
-                            goto next;
+
+                    for (i = 0; i < macroNum; i++) {
+                        if (isReplaced[i]) {
+                            continue;
                         }
-                        m++;
-                        n++;
-                    }
-                    if (*n == '\t' || *n == ' ') {
-                        sead::BufferedSafeString define(dst, workSize - (dst - pWork));
-                        dst += define.format("#define %s %s", macro, pValues[i]);
-                        for (s32 j = 0; j < lineFeedLength; j++) {
-                            sead::BufferedSafeString lineFeed(dst, workSize - (dst - pWork));
-                            dst += lineFeed.append(src[lineLength + j]);
+
+                        macro = pMacros[i];
+                        bool match = true;
+                        s32 j = 0;
+                        for (; macro[j] != '\0'; j++) {
+                            if (name[j] != macro[j]) {
+                                match = false;
+                                break;
+                            }
                         }
-                        isReplaced[i] = true;
-                        src += lineLength + lineFeedLength;
-                        goto replaced;
+
+                        if (match && (name[j] == ' ' || name[j] == '\t')) {
+                            break;
+                        }
                     }
-                next:;
+                    if (i < macroNum) {
+                        break;
+                    }
                 }
             }
-        }
 
-        {
-            s32 length = lineLength + lineFeedLength;
-            sead::MemUtil::copy(dst, src, length);
-            dst += length;
+            sead::MemUtil::copy(dst, src, lineFeedPos + lineFeedLength);
+            dst += lineFeedPos + lineFeedLength;
             *dst = '\0';
-            src += length;
+            src += lineFeedPos + lineFeedLength;
         }
-        continue;
 
-    replaced:
-        if (++replacedNum == macroNum) {
+        dst += sead::BufferedSafeString(dst, workSize - s32(dst - pWork))
+                   .format("#define %s %s", macro, pValues[i]);
+
+        for (s32 k = 0; k < lineFeedLength; k++) {
+            dst += sead::BufferedSafeString(dst, workSize - s32(dst - pWork))
+                       .append(src[lineFeedPos + k]);
+        }
+
+        isReplaced[i] = true;
+        src += lineFeedPos + lineFeedLength;
+
+        replacedNum++;
+        if (replacedNum == macroNum) {
             break;
         }
     }
 
+end:
     while (*src != '\0') {
         *dst++ = *src++;
     }
     *dst = '\0';
-    pText->copy(pWork);
+
+    pText->copy(sead::SafeString(pWork));
 }
 
 /**
@@ -157,6 +187,7 @@ bool ShaderTextUtil::isUTF8(const char* pText) {
            static_cast<u8>(pText[2]) == 0xbf;
 }
 
+// NON_MATCHING: include search loop structure and register allocation
 sead::HeapSafeString* ShaderTextUtil::createRawText(const sead::SafeString& rText,
                                                     const char* const* pSourceNames,
                                                     const char* const* pSourceTexts,
@@ -168,97 +199,76 @@ sead::HeapSafeString* ShaderTextUtil::createRawText(const sead::SafeString& rTex
         }
     }
 
-    sead::HeapSafeString* text = new (pHeap) sead::HeapSafeString(pHeap, rText, 8);
+    sead::HeapSafeString* text = new (pHeap) sead::HeapSafeString(pHeap, rText);
     s32 length = text->calcLength();
-    const char* p = text->cstr();
-    while (*p != '\0') {
-        const char* sharp = p;
-        while (*sharp != '#') {
-            sharp++;
-            if (*sharp == '\0') {
-                return text;
+    const char* src = text->cstr();
+
+    while (*src != '\0') {
+        const char* const directiveBegin = findChar(src, '#') + 1;
+        if (directiveBegin - 1 == nullptr) {
+            break;
+        }
+
+        const char* directive = skipSpace(directiveBegin);
+        if (directive[0] == 'i' && directive[1] == 'n' && directive[2] == 'c' &&
+            directive[3] == 'l' && directive[4] == 'u' && directive[5] == 'd' &&
+            directive[6] == 'e') {
+            const char* const nameBegin = findChar(directive + 7, '"') + 1;
+            if (nameBegin - 1 == nullptr) {
+                continue;
             }
-        }
 
-        const char* directive = sharp + 1;
-        while (isSpace(*directive)) {
-            directive++;
-        }
-        if (*directive == '\0') {
-            directive = nullptr;
-        }
-
-        if (directive[0] != 'i' || directive[1] != 'n' || directive[2] != 'c' ||
-            directive[3] != 'l' || directive[4] != 'u' || directive[5] != 'd' ||
-            directive[6] != 'e') {
-            p = directive;
-            continue;
-        }
-
-        const char* nameBegin = directive + 7;
-        while (*nameBegin != '"') {
-            if (*nameBegin == '\0') {
-                break;
+            const char* const includeEnd = findChar(nameBegin, '"') + 1;
+            if (includeEnd - 1 == nullptr) {
+                continue;
             }
-            nameBegin++;
-        }
-        if (*nameBegin == '\0') {
-            continue;
-        }
-        nameBegin++;
-        const char* nameEnd = nameBegin;
-        while (*nameEnd != '"') {
-            if (*nameEnd == '\0') {
-                break;
+
+            sead::FixedSafeString<1024> name;
+            name.copy(nameBegin, s32(includeEnd - nameBegin) - 1);
+
+            s32 i = 0;
+            for (; i < sourceNum; i++) {
+                if (name.isEqual(pSourceNames[i])) {
+                    break;
+                }
             }
-            nameEnd++;
-        }
-        if (*nameEnd == '\0') {
-            continue;
-        }
-        const char* includeEnd = nameEnd + 1;
-
-        sead::FixedSafeString<1024> name;
-        name.copy(nameBegin, includeEnd - nameBegin - 1);
-
-        s32 i = 0;
-        for (;; i++) {
             if (i >= sourceNum) {
-                return text;
-            }
-            if (name == sead::SafeString(pSourceNames[i])) {
                 break;
             }
+
+            const char* source = pSourceTexts[i];
+            if (pUsedFlags) {
+                pUsedFlags[i] = true;
+            }
+            if (!source) {
+                break;
+            }
+            if (isUTF8(source)) {
+                source += 3;
+            }
+
+            const s32 sourceLength = sead::SafeString(source).calcLength();
+            sead::HeapSafeString* newText =
+                new (pHeap) sead::HeapSafeString(pHeap, sourceLength + length + 1);
+            newText->copy(*text);
+
+            const char* top = text->cstr();
+            char* work = new (pHeap) char[length + 1];
+            replace(const_cast<char*>(newText->cstr()), source, s32(directiveBegin - top) - 1,
+                    s32(includeEnd - top), work, length + 1);
+            delete[] work;
+
+            delete text;
+            text = new (pHeap) sead::HeapSafeString(pHeap, *newText);
+            delete newText;
+
+            src = text->cstr();
+            length = text->calcLength();
+        } else {
+            src = directive;
         }
-
-        const char* source = pSourceTexts[i];
-        if (pUsedFlags) {
-            pUsedFlags[i] = true;
-        }
-        if (!source) {
-            return text;
-        }
-        if (isUTF8(source)) {
-            source += 3;
-        }
-        s32 sourceLength = sead::SafeString(source).calcLength();
-
-        sead::HeapSafeString* newText =
-            new (pHeap) sead::HeapSafeString(pHeap, sourceLength + length + 1);
-        newText->copy(*text);
-
-        const char* top = text->cstr();
-        char* work = new (pHeap, 8) char[length + 1];
-        replace(newText->getBuffer(), source, sharp - top, includeEnd - top, work, length + 1);
-        delete[] work;
-
-        delete text;
-        text = new (pHeap) sead::HeapSafeString(pHeap, *newText, 8);
-        delete newText;
-
-        p = text->cstr();
-        length = text->calcLength();
     }
+
     return text;
 }
 
@@ -315,7 +325,137 @@ bool IsDelimiter(char c) {
  * Constructs an empty analyze result.
  */
 ShaderTextUtil::ShaderDumpTextAnalyzeResult::ShaderDumpTextAnalyzeResult()
-    : _0(0), _8(0), _10(0), _18(0), _20(0) {}
+    : mAluClauseInstNum(0), mTexClauseInstNum(0), mExportNum(0), mVaryingInNum(0),
+      mVaryingOutNum(0), mDisassembly(nullptr), mDisassemblySize(0) {}
+
+// NON_MATCHING: clause loop layout and register allocation in the symbol section
+void ShaderTextUtil::analyzeShaderDumpText(const sead::SafeString& rText,
+                                           ShaderDumpTextAnalyzeResult* pResult) {
+    ShaderDumpTextAnalyzeResult result;
+
+    const char* p = "";
+    for (const char* text = rText.cstr(); *text != '\0'; text++) {
+        if (text[0] == ';' && text[1] == ' ' && text[2] == '-' && text[3] == '-') {
+            p = text;
+            result.mDisassembly = text;
+        }
+    }
+
+    s32 exportNum = 0;
+    s32 clauseNum = 0;
+    s32* counter = nullptr;
+    while (*p != '\0') {
+        if (p[0] == 'E' && clauseNum > 0) {
+            if (p[1] == 'N' && p[2] == 'D' && p[3] == '_' && p[4] == 'O' && p[5] == 'F') {
+                while (*p != '\n') {
+                    p++;
+                }
+                result.mDisassemblySize = p - result.mDisassembly;
+                break;
+            }
+        } else if ('0' <= *p && *p <= '9') {
+            s32 digit[256];
+            s32 digitNum;
+            if (clauseNum < 100) {
+                digit[0] = clauseNum / 10;
+                digit[1] = clauseNum - digit[0] * 10;
+                digitNum = 2;
+            } else if (clauseNum < 1000) {
+                digit[0] = clauseNum / 100;
+                digit[1] = (clauseNum - digit[0] * 100) / 10;
+                digit[2] = clauseNum - digit[0] * 100 - digit[1] * 10;
+                digitNum = 3;
+            } else {
+                digit[0] = clauseNum / 1000;
+                digit[1] = (clauseNum - digit[0] * 1000) / 100;
+                digit[2] = clauseNum - digit[0] * 1000 - digit[1] * 100;
+                digit[3] = clauseNum - digit[0] * 1000 - digit[1] * 100 - digit[2] * 10;
+                digitNum = 4;
+            }
+
+            for (s32 i = 0; digit[i] == *p - '0'; p++) {
+                if (++i >= digitNum) {
+                    const char* type = p + 2;
+                    if (type[0] == 'A' && type[1] == 'L' && type[2] == 'U') {
+                        counter = &result.mAluClauseInstNum;
+                    } else if (type[0] == 'E' && type[1] == 'X' && type[2] == 'P') {
+                        exportNum++;
+                    } else if (type[0] == 'T' && type[1] == 'E' && type[2] == 'X') {
+                        counter = &result.mTexClauseInstNum;
+                    } else {
+                        counter = nullptr;
+                    }
+                    clauseNum++;
+                    break;
+                }
+            }
+        } else if (*p == ' ') {
+            skipChar(' ', &p);
+            if ('0' <= *p && *p <= '9') {
+                while ('0' <= *p && *p <= '9') {
+                    p++;
+                }
+                if (counter) {
+                    (*counter)++;
+                }
+            }
+        }
+
+        char c;
+        do {
+            c = *p++;
+        } while (c != '\0' && c != '\n');
+        if (c != '\n') {
+            p--;
+        }
+    }
+
+    const sead::SafeString name = "Name: ";
+    const sead::SafeString symbolType = "Symbol Type: ";
+    const sead::SafeString dataType = "Data Type :";
+    const sead::SafeString attrib = "ATTRIB";
+    const sead::SafeString uniformBlock = "UNIFORM_BLOCK";
+    const sead::SafeString uniform = "UNIFORM";
+    const sead::SafeString varyingIn = "VARYING IN";
+    const sead::SafeString varyingOut = "VARYING OUT";
+    const sead::SafeString samplerImage = "SAMPLER_IMAGE";
+
+    findFirstChar('-', &p);
+    skipChar('-', &p);
+    skipFirstMatchedString("Symbol Section ", &p);
+    skipChar('-', &p);
+
+    s32 varyingInNum = 0;
+    s32 varyingOutNum = 0;
+    while (*p != '\0') {
+        skipChar(' ', &p);
+        skipFirstMatchedString(name, &p);
+        skipFirstMatchedString(symbolType, &p);
+        if (matchString(attrib, p)) {
+            skipString(attrib, &p);
+        } else if (matchString(uniformBlock, p)) {
+            skipString(uniformBlock, &p);
+        } else if (matchString(uniform, p)) {
+            skipString(uniform, &p);
+            skipFirstMatchedString(dataType, &p);
+            if (matchString(samplerImage, p)) {
+                skipString(samplerImage, &p);
+            }
+        } else if (matchString(varyingIn, p)) {
+            skipString(varyingIn, &p);
+            varyingInNum++;
+        } else if (matchString(varyingOut, p)) {
+            skipString(varyingOut, &p);
+            varyingOutNum++;
+        }
+        skipChar(' ', &p);
+    }
+
+    result.mExportNum = exportNum;
+    result.mVaryingInNum = varyingInNum;
+    result.mVaryingOutNum = varyingOutNum;
+    *pResult = result;
+}
 
 /**
  * Advances a text pointer to the first occurrence of a character or the end of the text.

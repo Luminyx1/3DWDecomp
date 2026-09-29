@@ -16,6 +16,7 @@ public:
     void updateTexId_(s32 newID);
     NVNtexture_& operator=(const NVNtexture_& other);
     bool registerTexture(const NVNtexture*, const NVNtextureView*, const char*, bool);
+    void setDirect(const NVNtexture& rTexture, s32 textureId);
 
     void setReference_() const;
     void initializeGfxTexture(nn::gfx::Texture* pTexture) const;

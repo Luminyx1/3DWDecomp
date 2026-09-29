@@ -130,6 +130,9 @@ public:
     bool isEnable() const { return mEnable; }
 
 private:
+    friend class OfxBase;
+    friend class OfxLensFlare;
+
     sead::Buffer<Context> mContext;
     sead::GraphicsContext mClearGraphicsContext;
     sead::GraphicsContext mDrawGraphicsContext;

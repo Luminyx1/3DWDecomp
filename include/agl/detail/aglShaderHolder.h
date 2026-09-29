@@ -247,6 +247,7 @@ public:
     ShaderProgram* getShaderProgram(s32 type) const { return mShaderPrograms[type]; }
     ShaderProgram* getShaderProgramUnsafe(s32 type) const { return mShaderPrograms(type); }
     ShaderProgramArchive& getArchive(s32 type) { return mArchives[type]; }
+    void setNoOption(bool noOption) { mNoOption = noOption; }
 
 private:
     sead::FixedPtrArray<ShaderProgram, cProgram_Num> mShaderPrograms;

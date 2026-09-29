@@ -20,6 +20,8 @@ public:
         : mMemoryPool(other.mMemoryPool), mAlignmentAddr(other.mAlignmentAddr + alignmentOffset),
           mMemoryBlock(other.mMemoryBlock) {}
     GPUMemAddrBase(const GPUMemBlockBase& memBlock, u64 offset);
+    GPUMemAddrBase(detail::MemoryPool* pMemoryPool, s32 offset)
+        : mMemoryPool(pMemoryPool), mAlignmentAddr(offset) {}
 
     u32 verify_() const;
     void deleteGPUMemBlock() const;
@@ -65,6 +67,8 @@ public:
     GPUMemVoidAddr(const GPUMemAddrBase& rAddr) : GPUMemAddrBase(rAddr) {}
     GPUMemVoidAddr(const GPUMemAddrBase& rAddr, int offset) : GPUMemAddrBase(rAddr, offset) {}
     GPUMemVoidAddr(const GPUMemBlockBase& rBlock, u64 offset) : GPUMemAddrBase(rBlock, offset) {}
+    GPUMemVoidAddr(detail::MemoryPool* pMemoryPool, s32 offset)
+        : GPUMemAddrBase(pMemoryPool, offset) {}
 };
 
 class ConstGPUMemVoidAddr : public GPUMemAddrBase {

@@ -19,6 +19,10 @@ public:
 
     s32 getLocation(ShaderType type) const { return mLocation[type]; }
     bool isValid() const { return mUniformLocation != -1; }
+    bool operator==(const ShaderLocation& rOther) const
+    {
+        return mUniformLocation == rOther.mUniformLocation;
+    }
 
 protected:
     union {
@@ -55,6 +59,10 @@ public:
 class SamplerLocation : public ShaderLocation, public sead::INamable {
 public:
     SamplerLocation() : INamable("Undefined") {}
+    SamplerLocation(const ShaderLocation& rLocation, const sead::SafeString& rName)
+        : ShaderLocation(rLocation), INamable(rName)
+    {
+    }
 
     void search(const ShaderProgram&);
 };
@@ -69,6 +77,10 @@ public:
 class UniformBlockLocation : public ShaderLocation, public sead::INamable {
 public:
     UniformBlockLocation() : INamable("Undefined") {}
+    UniformBlockLocation(const ShaderLocation& rLocation, const sead::SafeString& rName)
+        : ShaderLocation(rLocation), INamable(rName)
+    {
+    }
 
     void search(const ShaderProgram&);
 };

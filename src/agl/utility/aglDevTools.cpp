@@ -82,8 +82,7 @@ inline void setUniform(DrawContext* pDrawContext, const UniformLocation& rLocati
         sead::Vector4f values[256];
         for (s32 i = 0; i < num; i++)
         {
-            __builtin_memcpy(&values[i], &pValues[i], sizeof(sead::Vector3f));
-            values[i].w = 0.0f;
+            values[i].set(pValues[i].x, pValues[i].y, pValues[i].z, 0.0f);
         }
         rLocation.setUniformNVN(pDrawContext, num * 4, values);
     }
@@ -987,6 +986,107 @@ void DevTools::drawCamera(DrawContext* pDrawContext, const sead::Matrix34f& rCam
 }
 
 /**
+ * Draws a camera model with its axes and the axes at its target.
+ * @param pDrawContext draw context
+ * @param rCameraMtx camera matrix
+ * @param rTarget camera target position
+ * @param rViewMtx view matrix
+ * @param rProjMtx projection matrix
+ * @param isWire whether to draw the model as lines
+ * @param rColor model color
+ * @param size model size
+ */
+void DevTools::drawCamera_(DrawContext* pDrawContext, const sead::Matrix34f& rCameraMtx,
+                           const sead::Vector3f& rTarget, const sead::Matrix34f& rViewMtx,
+                           const sead::Matrix44f& rProjMtx, bool isWire,
+                           const sead::Color4f& rColor, f32 size)
+{
+    sead::Matrix34f scaleMtx;
+    scaleMtx.makeS(size, size, size);
+    sead::Matrix34f cameraMtx;
+    cameraMtx.setMul(rCameraMtx, scaleMtx);
+
+    const PrimitiveShape* pShape = PrimitiveShape::instance();
+    const ShaderProgram* pProgram = getProgram(detail::ShaderHolder::cDevUtil);
+    const VertexAttributeHolder* pAttributeHolder = VertexAttributeHolder::instance();
+
+    const sead::Vector3f lightDir(-1.0f, -1.0f, -1.0f);
+    const sead::Color4f color =
+        isWire ? rColor :
+                 sead::Color4f(rColor.r * 0.5f, rColor.g * 0.5f, rColor.b * 0.5f, rColor.a);
+    pProgram->activate(pDrawContext, true);
+
+    sead::Matrix34f transMtx;
+    transMtx.makeT(0.0f, 0.0f, 2.25f);
+    sead::Matrix34f bodyMtx;
+    bodyMtx.setMul(cameraMtx, transMtx);
+
+    {
+        scaleMtx.makeS(1.0f, 1.5f, 2.0f);
+        sead::Matrix34f mtx;
+        mtx.setMul(bodyMtx, scaleMtx);
+        setUniformToDevToolsShader_(pDrawContext, mtx, rViewMtx, rProjMtx, color, rColor,
+                                    lightDir);
+        pAttributeHolder->getVertexAttribute(VertexAttributeHolder::cAttribute_CubeNormal)
+            .activate(pDrawContext);
+        drawIndexStream(pDrawContext, pShape->getCubeIndexStream(isWire));
+    }
+
+    {
+        sead::Matrix34f rotMtx;
+        rotMtx.makeRIdx(0x40000000, 0, 0);
+        transMtx.makeT(0.0f, 0.0f, -1.5f);
+        sead::Matrix34f mtx;
+        mtx.setMul(transMtx, rotMtx);
+        scaleMtx.makeS(1.0f, 1.5f, 1.0f);
+        mtx.setMul(mtx, scaleMtx);
+        mtx.setMul(bodyMtx, mtx);
+        setUniformToDevToolsShader_(pDrawContext, mtx, rViewMtx, rProjMtx, color, rColor,
+                                    lightDir);
+        pAttributeHolder->getVertexAttribute(VertexAttributeHolder::cAttribute_ConeNormal)
+            .activate(pDrawContext);
+        drawIndexStream(pDrawContext,
+                        isWire ? pShape->getConeLineIndexStream(PrimitiveShape::cQuality_Middle) :
+                                 pShape->getConeTriangleIndexStream(PrimitiveShape::cQuality_Middle));
+    }
+
+    {
+        sead::Matrix34f rotMtx;
+        rotMtx.makeRIdx(0, 0, 0x40000000);
+        pAttributeHolder->getVertexAttribute(VertexAttributeHolder::cAttribute_CylinderNormal)
+            .activate(pDrawContext);
+        const IndexStream& rStream =
+            isWire ? pShape->getCylinderLineIndexStream(PrimitiveShape::cQuality_Middle) :
+                     pShape->getCylinderTriangleIndexStream(PrimitiveShape::cQuality_Middle);
+        scaleMtx.makeS(1.2f, 0.6f, 1.2f);
+
+        sead::Matrix34f mtx;
+        transMtx.makeT(0.0f, 1.35f, -0.6f);
+        mtx.setMul(transMtx, rotMtx);
+        mtx.setMul(mtx, scaleMtx);
+        mtx.setMul(bodyMtx, mtx);
+        setUniformToDevToolsShader_(pDrawContext, mtx, rViewMtx, rProjMtx, color, rColor,
+                                    lightDir);
+        drawIndexStream(pDrawContext, rStream);
+
+        transMtx.makeT(0.0f, 1.35f, 0.6f);
+        mtx.setMul(transMtx, rotMtx);
+        mtx.setMul(mtx, scaleMtx);
+        mtx.setMul(bodyMtx, mtx);
+        setUniformToDevToolsShader_(pDrawContext, mtx, rViewMtx, rProjMtx, color, rColor,
+                                    lightDir);
+        drawIndexStream(pDrawContext, rStream);
+    }
+
+    beginDrawImm(pDrawContext, rViewMtx, rProjMtx);
+    sead::Matrix34f targetMtx = cameraMtx;
+    targetMtx.setTranslation(rTarget);
+    drawAxisImm(pDrawContext, targetMtx, 1.0f, 1.0f, 1.0f);
+    drawAxisImm(pDrawContext, cameraMtx, 1.0f, 1.0f, 1.0f);
+}
+
+
+/**
  * Draws the wireframe frustum of a camera object and projection.
  * @param pDrawContext draw context
  * @param rCamera camera to visualize
@@ -1094,6 +1194,131 @@ void DevTools::controlCamera(sead::LookAtCamera* pCamera, const sead::Controller
     controlCamera(pCamera, rLeftStick, rController.getRightStick(), zoom, moveUD, moveLR, speed,
                   true, type);
 }
+
+/**
+ * Moves, zooms and rotates a look-at camera.
+ * @param pCamera camera to control
+ * @param rLeftStick left stick input
+ * @param rRightStick right stick input
+ * @param zoom zoom input
+ * @param moveUD up and down movement input
+ * @param moveLR left and right movement input
+ * @param roll roll angle around the view direction
+ * @param isEnable whether to move along the horizontal plane instead of the view plane
+ * @param type camera control type
+ */
+void DevTools::controlCamera(sead::LookAtCamera* pCamera, const sead::Vector2f& rLeftStick,
+                             const sead::Vector2f& rRightStick, f32 zoom, f32 moveUD, f32 moveLR,
+                             f32 roll, bool isEnable, CameraControlType type)
+{
+    const sead::Vector2f moveStick = sIsStickReverse ? rLeftStick : rRightStick;
+    const sead::Vector2f rotateStick = sIsStickReverse ? rRightStick : rLeftStick;
+
+    sead::Vector3f right;
+    sead::Vector3f up;
+    sead::Vector3f look;
+    pCamera->getRightVectorByMatrix(&right);
+    pCamera->getUpVectorByMatrix(&up);
+    pCamera->getLookVectorByMatrix(&look);
+
+    {
+        sead::Vector3f horizontal;
+        horizontal.setCross(sead::Vector3f(0.0f, 1.0f, 0.0f), look);
+        sead::Vector3f cross;
+        cross.setCross(right, horizontal);
+        const f32 angle = std::atan2(look.dot(cross), horizontal.dot(right));
+        sead::Quatf rotation;
+        rotation.setAxisRadian(look, angle);
+    }
+
+    const f32 minLength = sMeterScale * 0.01f;
+    const f32 maxLength = sMeterScale * 100000.0f;
+    sead::Vector3f pos = pCamera->getPos();
+    sead::Vector3f at = pCamera->getAt();
+    sead::Vector3f dir = at - pos;
+    const f32 length = dir.normalize();
+
+    const f32 rate = std::fmax((length - minLength) / (maxLength - minLength), 0.00001f);
+    const f32 speed = (minLength + (maxLength - minLength) * rate) * 0.0005f * sFrameSpeed;
+    const f32 distance = sead::Mathf::clamp(
+        length + speed * (sCameraOperationSpeed * 30.0f) * zoom, minLength, maxLength);
+
+    sead::Vector3f side;
+    side.setCross(right, sead::Vector3f::ey);
+    side.normalize();
+    const f32 moveSpeed = speed * (sCameraOperationSpeed * 25.0f);
+    sead::Vector3f front;
+    front.setCross(side, right);
+    front.normalize();
+    sead::Vector3f third;
+    third.setCross(front, side);
+
+    const f32 moveX = moveStick.x + moveLR;
+    const f32 moveY = moveStick.y + 0.0f;
+    if (isEnable)
+    {
+        const sead::Vector3f move = third * moveSpeed * moveX + front * moveSpeed * moveUD -
+                                    side * moveSpeed * moveY;
+        if (type == cCameraControlType_0)
+        {
+            at += move;
+        }
+        else if (type == cCameraControlType_1)
+        {
+            pos += move;
+        }
+    }
+    else
+    {
+        const sead::Vector3f move = right * moveSpeed * moveX + up * moveSpeed * moveY;
+        if (type == cCameraControlType_0)
+        {
+            at += move;
+        }
+        else if (type == cCameraControlType_1)
+        {
+            pos += move;
+        }
+    }
+
+    const f32 rotateSpeed = (type == cCameraControlType_0 ? 0.05f : 0.01f) *
+                            (sCameraOperationSpeed * sFrameSpeed);
+    const f32 rotateUD = rotateStick.y * rotateSpeed * (sIsRotateUDReverse ? -1.0f : 1.0f);
+    const f32 rotateLR = rotateStick.x * rotateSpeed * (sIsRotateLRReverse ? -1.0f : 1.0f);
+
+    sead::Quatf rotationUD;
+    rotationUD.setAxisRadian(third, type == cCameraControlType_1 ? rotateUD : -rotateUD);
+    sead::Quatf rotationLR;
+    rotationLR.setAxisRadian(front, type == cCameraControlType_1 ? -rotateLR : rotateLR);
+    sead::Quatf rotation = rotationLR * rotationUD;
+    dir.rotate(rotation);
+    dir.normalize();
+
+    if (type == cCameraControlType_0)
+    {
+        pos = at - dir * distance;
+    }
+    else if (type == cCameraControlType_1)
+    {
+        at = pos + dir * distance;
+    }
+
+    sead::Quatf rollRotation;
+    rollRotation.setAxisRadian(dir, -roll);
+    right.rotate(rollRotation);
+    const f32 sign = dir.x * right.z - dir.z * right.x >= 0.0f ? 1.0f : -1.0f;
+
+    rollRotation.setAxisRadian(dir, roll);
+    sead::Vector3f side2;
+    side2.setCross(dir, sead::Vector3f(0.0f, sign, 0.0f));
+    sead::Vector3f newUp;
+    newUp.setCross(side2, dir);
+    pCamera->getUp().setRotated(rollRotation, newUp);
+    pCamera->normalizeUp();
+    pCamera->setPos(pos);
+    pCamera->setAt(at);
+}
+
 
 /**
  * Does nothing.

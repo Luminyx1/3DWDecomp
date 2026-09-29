@@ -4,6 +4,7 @@
 #include <prim/seadScopedLock.h>
 #include "common/aglDrawContext.h"
 #include "common/aglResShaderBinary.h"
+#include "common/aglUniformBlock.h"
 #include "driver/aglNVNMgr.h"
 
 extern void* sDynamicUniformBlockInstance asm("_ZN3agl6detail19DynamicUniformBlock9sInstanceE");
@@ -196,8 +197,9 @@ void ShaderProgram::VariationBuffer::create(sead::Heap* pHeap)
 
     mPrograms.tryAllocBuffer(program_num - 1, pHeap);
     for (auto it = mPrograms.begin(), it_end = mPrograms.end(); it != it_end; ++it) {
+        Variation* variation = mProgram->mVariation;
         it->mVariationIndex = it.getIndex() + 1;
-        it->mVariation = mProgram->mVariation;
+        it->mVariation = variation;
         it->mDisplayList.setName(it->mVariation->mName.cstr());
     }
 }
@@ -246,7 +248,8 @@ void ShaderProgram::initialize(ResShaderProgram program, sead::Heap* pHeap)
     if (block_array.isValid()) {
         for (auto it = block_array.begin(), it_end = block_array.end(); it != it_end; ++it) {
             ResShaderUniformBlock block(&(*it));
-            if (ShaderCompileInfo::getRegitserUniformBlockName().isEqual(block.getName())) {
+            const char* name = block.getName();
+            if (ShaderCompileInfo::getRegitserUniformBlockName().isEqual(name)) {
                 mVariation->mRegisterUniformBlockLocation = block.getLocation();
             }
         }
@@ -726,7 +729,7 @@ void ShaderProgram::activate(DrawContext* pDrawContext, bool) const
         return;
     }
 
-    if (mVariation->mShaderMode != pDrawContext->getShaderMode() || pDrawContext->get_fa()) {
+    if (pDrawContext->getShaderMode() != mVariation->mShaderMode || pDrawContext->get_fa()) {
         pDrawContext->changeShaderMode(ShaderMode(mVariation->mShaderMode), ShaderOptimizeType(0));
     }
 
@@ -809,6 +812,22 @@ Shader* ShaderProgram::getShader(ShaderType type)
 void ShaderProgram::dispatchCompute(DrawContext* pDrawContext, s32 x, s32 y, s32 z) const
 {
     nvnCommandBufferDispatchCompute(pDrawContext->getNvnCommandBuffer(), x, y, z);
+}
+
+/**
+ * Dispatches this compute program with work group counts read from a shader storage block.
+ * @param pDrawContext Draw context whose command buffer receives the dispatch.
+ * @param rBlock Shader storage block holding the indirect dispatch arguments.
+ * @param blockIndex Index of the block within the current buffer.
+ * @param offset Byte offset of the arguments within the block.
+ */
+void ShaderProgram::dispatchComputeIndirect(DrawContext* pDrawContext,
+                                            const ShaderStorageBlock& rBlock, s32 blockIndex,
+                                            s64 offset) const
+{
+    NVNbufferAddress address = nvnBufferGetAddress(rBlock.getNvnBuffer()) +
+                               rBlock.getCurrentBlockOffset(blockIndex) + offset;
+    nvnCommandBufferDispatchComputeIndirect(pDrawContext->getNvnCommandBuffer(), address);
 }
 
 /**
@@ -1050,22 +1069,20 @@ s32 ShaderProgram::VariationBuffer::searchShaderProgramIndex(s32 macroNum,
         return 0;
     }
 
-    if (macroNum > 0) {
-        for (auto it = mMacros.begin(), it_end = mMacros.end(); it != it_end; ++it) {
-            for (s32 i = 0; i < macroNum; i++) {
-                if (!it->mName.isEqual(pMacros[i])) {
-                    continue;
-                }
-
-                for (auto value = it->mValues.begin(), value_end = it->mValues.end();
-                     value != value_end; ++value) {
-                    if (value->isEqual(pValues[i])) {
-                        value_index[it.getIndex()] = value.getIndex();
-                        break;
-                    }
-                }
-                break;
+    for (auto it = mMacros.begin(), it_end = mMacros.end(); it != it_end; ++it) {
+        for (s32 i = 0; i < macroNum; i++) {
+            if (!it->mName.isEqual(pMacros[i])) {
+                continue;
             }
+
+            for (auto value = it->mValues.begin(), value_end = it->mValues.end();
+                 value != value_end; ++value) {
+                if (value->isEqual(pValues[i])) {
+                    value_index[it.getIndex()] = value.getIndex();
+                    break;
+                }
+            }
+            break;
         }
     }
 
@@ -1088,10 +1105,10 @@ const char* ShaderProgram::VariationBuffer::searchMacroValue(s32 programIndex,
 {
     for (const auto& macro : mMacros) {
         const s32 value = programIndex / macro.mStride;
+        programIndex -= value * macro.mStride;
         if (macro.mName.isEqual(pName)) {
             return macro.mValues[value].cstr();
         }
-        programIndex -= value * macro.mStride;
     }
 
     return sead::SafeString::cEmptyString.cstr();

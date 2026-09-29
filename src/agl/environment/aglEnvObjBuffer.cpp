@@ -134,7 +134,7 @@ s32 EnvObjBuffer::searchTypeIndex(const EnvObj* pObj) const
         return -1;
     }
 
-    s32 type = pObj->getTypeId();
+    s32 type = pObj->getTypeID();
     for (auto it = begin(type), itEnd = end(type); it != itEnd; ++it)
     {
         if (*it == pObj)

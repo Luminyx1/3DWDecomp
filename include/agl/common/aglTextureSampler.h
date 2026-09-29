@@ -115,6 +115,12 @@ public:
         setUpdateFlag_(cUpdateFlag_TextureData);
     }
 
+    void setStencilMode(bool enable)
+    {
+        mFlags.change(1 << 4, enable);
+        setUpdateFlag_(cUpdateFlag_TextureData);
+    }
+
     void setCompSel(TextureCompSel r, TextureCompSel g, TextureCompSel b, TextureCompSel a)
     {
         mCompSel.mR = r;

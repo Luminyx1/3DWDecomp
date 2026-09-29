@@ -514,15 +514,20 @@ void FilterAA::genMessage(sead::hostio::Context* pContext)
     mDebugTexturePage.genMessagePage(pContext, this);
 }
 
+/**
+ * Handles a host property edit, updating the debug mode or resetting the luma coefficients.
+ * @param pEvent Property event received from the host.
+ */
 void FilterAA::listenPropertyEvent(const sead::hostio::PropertyEvent* pEvent)
 {
     if (listenPropertyEventIO(this, pEvent) == 0)
     {
-        if (pEvent->getId() == reinterpret_cast<const void*>(100))
+        uintptr_t id = pEvent->getIdValue();
+        if (id == 100)
         {
             *mLumaCoeff = cDefaultLumaCoeff;
         }
-        else if (pEvent->getId() == &mDebugFlag)
+        else if (id == reinterpret_cast<uintptr_t>(&mDebugFlag))
         {
             if (mDebugFlag.isOn(1 << 2))
             {

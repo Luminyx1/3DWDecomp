@@ -44176,9 +44176,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71006CBFC0			FALSE	_ZN3agl6detail14GPUMemBlockMgr10genMessageEPN4sead6hostio7ContextE	agl::detail::GPUMemBlockMgr::genMessage(sead::hostio::Context*)	
 0x71006CC0B0			FALSE	_ZN3agl6detail14GPUMemBlockMgr19listenPropertyEventEPKN4sead6hostio13PropertyEventE	agl::detail::GPUMemBlockMgr::listenPropertyEvent(sead::hostio::PropertyEvent const*)	
 0x71006CC0C0			FALSE	_ZN4sead21FormatFixedSafeStringILi1024EED0Ev	sead::FormatFixedSafeString<1024>::~FormatFixedSafeString()	
-0x71006CC0D0		GraphicsDriverMgr.o	FALSE	_ZN3agl6driver17GraphicsDriverMgr18SingletonDisposer_D2Ev	agl::driver::GraphicsDriverMgr::SingletonDisposer_::~SingletonDisposer_()	object (class)
+0x71006CC0D0	agl/driver	aglGraphicsDriverMgr.o	FALSE	_ZN3agl6driver17GraphicsDriverMgr18SingletonDisposer_D2Ev	agl::driver::GraphicsDriverMgr::SingletonDisposer_::~SingletonDisposer_()	object (class)
 0x71006CC150			FALSE	_ZN3agl6driver17GraphicsDriverMgr18SingletonDisposer_D0Ev	agl::driver::GraphicsDriverMgr::SingletonDisposer_::~SingletonDisposer_()	
-0x71006CC1C0	agl/driver	aglGraphicsDriverMgr.o	FALSE	_ZN3agl6driver17GraphicsDriverMgr14createInstanceEPN4sead4HeapE	agl::driver::GraphicsDriverMgr::createInstance(sead::Heap*)	object/folder from debug builds' assert paths
+0x71006CC1C0			FALSE	_ZN3agl6driver17GraphicsDriverMgr14createInstanceEPN4sead4HeapE	agl::driver::GraphicsDriverMgr::createInstance(sead::Heap*)	object/folder from debug builds' assert paths
 0x71006CC260			FALSE	_ZN3agl6driver17GraphicsDriverMgr14deleteInstanceEv	agl::driver::GraphicsDriverMgr::deleteInstance()	
 0x71006CC2C0			FALSE	_ZN3agl6driver17GraphicsDriverMgrC2Ev	agl::driver::GraphicsDriverMgr::GraphicsDriverMgr()	
 0x71006CC2E0			FALSE	_ZN3agl6driver17GraphicsDriverMgrD2Ev	agl::driver::GraphicsDriverMgr::~GraphicsDriverMgr()	
@@ -44196,7 +44196,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71006CC460			FALSE	_ZN3agl6driver17GraphicsDriverMgr19listenPropertyEventEPKN4sead6hostio13PropertyEventE	agl::driver::GraphicsDriverMgr::listenPropertyEvent(sead::hostio::PropertyEvent const*)	
 0x71006CC470			FALSE	_ZNK3agl6driver17GraphicsDriverMgr8dumpInfoEv	agl::driver::GraphicsDriverMgr::dumpInfo() const	
 0x71006CC480			FALSE	_ZNK3agl6driver17GraphicsDriverMgr12waitDrawDoneEPNS_11DrawContextE	agl::driver::GraphicsDriverMgr::waitDrawDone(agl::DrawContext*) const	
-0x71006CC490		aglNVNMgr.o	FALSE	_ZN3agl6driver6NVNMgr14createInstanceEPN4sead4HeapE	agl::driver::NVNMgr::createInstance(sead::Heap*)	object/folder from debug builds' assert paths
+0x71006CC490	agl/driver	aglNVNMgr.o	FALSE	_ZN3agl6driver6NVNMgr14createInstanceEPN4sead4HeapE	agl::driver::NVNMgr::createInstance(sead::Heap*)	object/folder from debug builds' assert paths
 0x71006CC520			FALSE	_ZN3agl6driver6NVNMgrC2Ev	agl::driver::NVNMgr::NVNMgr()	
 0x71006CC7E0			FALSE	_ZN3agl6driver6NVNMgr14debugCallback_ERKN4sead11GraphicsNvn21NvnDebugCallbackParamE	agl::driver::NVNMgr::debugCallback_(sead::GraphicsNvn::NvnDebugCallbackParam const&)	
 0x71006CC7F0			FALSE	_ZN3agl6driver6NVNMgrD2Ev	agl::driver::NVNMgr::~NVNMgr()	
@@ -44250,10 +44250,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71006CEE60			FALSE	_ZNK4sead9Delegate1IN3agl6driver6NVNMgrERKNS_11GraphicsNvn21NvnDebugCallbackParamEE5cloneEPNS_4HeapE	sead::Delegate1<agl::driver::NVNMgr, sead::GraphicsNvn::NvnDebugCallbackParam const&>::clone(sead::Heap*) const	
 0x71006CEED0			FALSE	_ZN4sead21FormatFixedSafeStringILi65EED0Ev	sead::FormatFixedSafeString<65>::~FormatFixedSafeString()	
 0x71006CEEE0			TRUE	_ZN4sead15FixedSafeStringILi65EEaSERKNS_14SafeStringBaseIcEE	sead::FixedSafeString<65>::operator=(sead::SafeStringBase<char> const&)	
-0x71006CEFD0		NVNtexture_.o	FALSE	_ZN3agl6driver11NVNtexture_C2Ev	agl::driver::NVNtexture_::NVNtexture_()	object (class)
+0x71006CEFD0		aglNVNObject.o	FALSE	_ZN3agl6driver11NVNtexture_C2Ev	agl::driver::NVNtexture_::NVNtexture_()	object (class)
 0x71006CF010			FALSE	_ZN3agl6driver11NVNtexture_D1Ev	agl::driver::NVNtexture_::~NVNtexture_()	
 0x71006CF080			FALSE	_ZN3agl6driver11NVNtexture_14releaseTextureEv	agl::driver::NVNtexture_::releaseTexture()	
-0x71006CF0F0		aglNVNObject.o	FALSE	_ZN3agl6driver11NVNtexture_C2ERKS1_	agl::driver::NVNtexture_::NVNtexture_(agl::driver::NVNtexture_ const&)	object/folder from debug builds' assert paths
+0x71006CF0F0			FALSE	_ZN3agl6driver11NVNtexture_C2ERKS1_	agl::driver::NVNtexture_::NVNtexture_(agl::driver::NVNtexture_ const&)	object/folder from debug builds' assert paths
 0x71006CF170			FALSE	_ZN3agl6driver11NVNtexture_12updateTexId_Ei	agl::driver::NVNtexture_::updateTexId_(int)	
 0x71006CF180			FALSE	_ZN3agl6driver11NVNtexture_aSERKS1_	agl::driver::NVNtexture_::operator=(agl::driver::NVNtexture_ const&)	
 0x71006CF260			FALSE	_ZN3agl6driver11NVNtexture_15registerTextureEPK10NVNtexturePK14NVNtextureViewPKcb	agl::driver::NVNtexture_::registerTexture(NVNtexture const*, NVNtextureView const*, char const*, bool)	
@@ -44267,7 +44267,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71006CF5A0			FALSE	_ZN3agl6driver11NVNsampler_aSERKS1_	agl::driver::NVNsampler_::operator=(agl::driver::NVNsampler_ const&)	
 0x71006CF610			FALSE	_ZN3agl6driver11NVNsampler_15registerSamplerERK10NVNsamplerPKc	agl::driver::NVNsampler_::registerSampler(NVNsampler const&, char const*)	
 0x71006CF6C0			FALSE	_ZN3agl6driver11NVNsampler_15updateTextureIdEi	agl::driver::NVNsampler_::updateTextureId(int)	
-0x71006CF720		NVNimage_.o	FALSE	_ZN3agl6driver9NVNimage_C2Ev	agl::driver::NVNimage_::NVNimage_()	object (class)
+0x71006CF720			FALSE	_ZN3agl6driver9NVNimage_C2Ev	agl::driver::NVNimage_::NVNimage_()	object (class)
 0x71006CF730			FALSE	_ZN3agl6driver9NVNimage_D2Ev	agl::driver::NVNimage_::~NVNimage_()	
 0x71006CF740			FALSE	_ZN3agl6driver9NVNimage_C2ERKS1_	agl::driver::NVNimage_::NVNimage_(agl::driver::NVNimage_ const&)	
 0x71006CF750			FALSE	_ZN3agl6driver9NVNimage_aSERKS1_	agl::driver::NVNimage_::operator=(agl::driver::NVNimage_ const&)	
@@ -44343,16 +44343,16 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71006D20A0			FALSE	_ZN3agl11DisplayList17calcRemainingSizeEv	agl::DisplayList::calcRemainingSize()	
 0x71006D20B0			FALSE	_ZNK3agl11DisplayList12calcUsedSizeEv	agl::DisplayList::calcUsedSize() const	
 0x71006D20C0			FALSE	_ZN3agl11DisplayList10genMessageEPN4sead6hostio7ContextE	agl::DisplayList::genMessage(sead::hostio::Context*)	
-0x71006D20D0		InitArg.o	FALSE	_ZN3agl7InitArgC2Ev	agl::InitArg::InitArg()	object (class)
+0x71006D20D0		aglFramework.o	FALSE	_ZN3agl7InitArgC2Ev	agl::InitArg::InitArg()	object (class)
 0x71006D2250			FALSE	_ZN3agl10InitializeERKNS_7InitArgE	agl::Initialize(agl::InitArg const&)	
-0x71006D2670		aglFramework.o	FALSE	_ZN3agl18AppendRootNodeToOREPN4sead6hostio4NodeE	agl::AppendRootNodeToOR(sead::hostio::Node*)	object/folder from debug builds' assert paths
+0x71006D2670			FALSE	_ZN3agl18AppendRootNodeToOREPN4sead6hostio4NodeE	agl::AppendRootNodeToOR(sead::hostio::Node*)	object/folder from debug builds' assert paths
 0x71006D2680			FALSE	_ZN3agl12LoadResourceEPN4sead10ArchiveResE	agl::LoadResource(sead::ArchiveRes*)	
 0x71006D26D0			FALSE	_ZN3agl8FinalizeEv	agl::Finalize()	
 0x71006D2710			TRUE	_ZN4sead19FixedSafeStringBaseIcLi256EED0Ev	sead::FixedSafeStringBase<char, 256>::~FixedSafeStringBase()	
 0x71006D2720			TRUE	_ZN4sead19FixedSafeStringBaseIcLi256EEaSERKNS_14SafeStringBaseIcEE	sead::FixedSafeStringBase<char, 256>::operator=(sead::SafeStringBase<char> const&)	
-0x71006D2810		DynamicUniformBlock.o	FALSE	_ZN3agl6detail19DynamicUniformBlock18SingletonDisposer_D2Ev	agl::detail::DynamicUniformBlock::SingletonDisposer_::~SingletonDisposer_()	object (class)
+0x71006D2810	agl/detail	aglDynamicUniformBlock.o	FALSE	_ZN3agl6detail19DynamicUniformBlock18SingletonDisposer_D2Ev	agl::detail::DynamicUniformBlock::SingletonDisposer_::~SingletonDisposer_()	object (class)
 0x71006D2890			FALSE	_ZN3agl6detail19DynamicUniformBlock18SingletonDisposer_D0Ev	agl::detail::DynamicUniformBlock::SingletonDisposer_::~SingletonDisposer_()	
-0x71006D2900	agl/detail	aglDynamicUniformBlock.o	FALSE	_ZN3agl6detail19DynamicUniformBlock14createInstanceEPN4sead4HeapE	agl::detail::DynamicUniformBlock::createInstance(sead::Heap*)	object/folder from debug builds' assert paths
+0x71006D2900			FALSE	_ZN3agl6detail19DynamicUniformBlock14createInstanceEPN4sead4HeapE	agl::detail::DynamicUniformBlock::createInstance(sead::Heap*)	object/folder from debug builds' assert paths
 0x71006D29B0			FALSE	_ZN3agl6detail19DynamicUniformBlock14deleteInstanceEv	agl::detail::DynamicUniformBlock::deleteInstance()	
 0x71006D2A10			FALSE	_ZN3agl6detail19DynamicUniformBlockC2Ev	agl::detail::DynamicUniformBlock::DynamicUniformBlock()	
 0x71006D2A60			FALSE	_ZN3agl6detail19DynamicUniformBlockD2Ev	agl::detail::DynamicUniformBlock::~DynamicUniformBlock()	
@@ -44428,7 +44428,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71006D5660			FALSE	_ZN3agl26ShaderStorageBlockLocation6searchERKNS_13ShaderProgramE	agl::ShaderStorageBlockLocation::search(agl::ShaderProgram const&)	part of aglShaderLocation.o (debug builds)
 0x71006D58A0			FALSE	_ZN3agl17AttributeLocationC1ERKN4sead14SafeStringBaseIcEEi	agl::AttributeLocation::AttributeLocation(sead::SafeStringBase<char> const&, int)	part of aglShaderLocation.o (debug builds)
 0x71006D58D0			FALSE	_ZN3agl17AttributeLocation6searchERKNS_13ShaderProgramE	agl::AttributeLocation::search(agl::ShaderProgram const&)	
-0x71006D5B10		PrintFormatter.o	FALSE	_ZN4sead14PrintFormatter3outIN3agl14ShaderLocationEEEvRKT_PKcPNS_11PrintOutputE	void sead::PrintFormatter::out<agl::ShaderLocation>(agl::ShaderLocation const&, char const*, sead::PrintOutput*)	object (class)
+0x71006D5B10			FALSE	_ZN4sead14PrintFormatter3outIN3agl14ShaderLocationEEEvRKT_PKcPNS_11PrintOutputE	void sead::PrintFormatter::out<agl::ShaderLocation>(agl::ShaderLocation const&, char const*, sead::PrintOutput*)	object (class)
 0x71006D5BE0		aglShaderCompileInfo.o	FALSE	_ZN3agl17ShaderCompileInfoC2Ev	agl::ShaderCompileInfo::ShaderCompileInfo()	object (class)
 0x71006D5C20			FALSE	_ZN3agl17ShaderCompileInfoD2Ev	agl::ShaderCompileInfo::~ShaderCompileInfo()	
 0x71006D5C90			FALSE	_ZN3agl17ShaderCompileInfo7destroyEv	agl::ShaderCompileInfo::destroy()	object/folder from debug builds' assert paths
@@ -44702,10 +44702,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71006E2AE0			FALSE	_ZN3agl3utl18DebugTextureDrawer15listenNodeEventEPKN4sead6hostio9NodeEventE	agl::utl::DebugTextureDrawer::listenNodeEvent(sead::hostio::NodeEvent const*)	
 0x71006E2AF0			FALSE	_ZN3agl3utl18DebugTextureDrawer21invalidateHostIoNode_EPNS0_16DebugTexturePageE	agl::utl::DebugTextureDrawer::invalidateHostIoNode_(agl::utl::DebugTexturePage*)	
 0x71006E2B60			FALSE	_ZN3agl3utl18DebugTextureDrawer17copyTextureLabel_EiRKN4sead14SafeStringBaseIcEE	agl::utl::DebugTextureDrawer::copyTextureLabel_(int, sead::SafeStringBase<char> const&)	
-0x71006E2C70	agl/common	DebugTexturePage.o	FALSE	_ZN3agl3utl16DebugTexturePageC2Ev	agl::utl::DebugTexturePage::DebugTexturePage()	object (class)
+0x71006E2C70	agl/utility	aglDebugTexturePage.o	FALSE	_ZN3agl3utl16DebugTexturePageC2Ev	agl::utl::DebugTexturePage::DebugTexturePage()	object (class)
 0x71006E2DC0			FALSE	_ZN3agl3utl16DebugTexturePage5setUpEjRKN4sead14SafeStringBaseIcEEPNS2_4HeapE	agl::utl::DebugTexturePage::setUp(unsigned int, sead::SafeStringBase<char> const&, sead::Heap*)	
 0x71006E2DD0			FALSE	_ZN3agl3utl16DebugTexturePage7cleanUpEv	agl::utl::DebugTexturePage::cleanUp()	
-0x71006E2DE0	agl/utility	aglDebugTexturePage.o	FALSE	_ZNK3agl3utl16DebugTexturePage13entryTexture_EPNS_11DrawContextEiRKNS_11TextureDataERKN4sead14SafeStringBaseIcEENS0_12DebugTexture4TypeEffbbbb	agl::utl::DebugTexturePage::entryTexture_(agl::DrawContext*, int, agl::TextureData const&, sead::SafeStringBase<char> const&, agl::utl::DebugTexture::Type, float, float, bool, bool, bool, bool) const	object/folder from debug builds' assert paths
+0x71006E2DE0			FALSE	_ZNK3agl3utl16DebugTexturePage13entryTexture_EPNS_11DrawContextEiRKNS_11TextureDataERKN4sead14SafeStringBaseIcEENS0_12DebugTexture4TypeEffbbbb	agl::utl::DebugTexturePage::entryTexture_(agl::DrawContext*, int, agl::TextureData const&, sead::SafeStringBase<char> const&, agl::utl::DebugTexture::Type, float, float, bool, bool, bool, bool) const	object/folder from debug builds' assert paths
 0x71006E3060			FALSE	_ZN3agl3utl12DebugTexture10initializeERKN4sead14SafeStringBaseIcEE	agl::utl::DebugTexture::initialize(sead::SafeStringBase<char> const&)	part of aglDebugTexturePage.o (debug builds)
 0x71006E3140			FALSE	_ZNK3agl3utl16DebugTexturePage7Context8pushBackEPNS0_12DebugTextureERKN4sead14SafeStringBaseIcEE	agl::utl::DebugTexturePage::Context::pushBack(agl::utl::DebugTexture*, sead::SafeStringBase<char> const&) const	
 0x71006E3310			FALSE	_ZN3agl3utl12DebugTexture11copyTextureEPNS_11DrawContextERKNS_11TextureDataENS1_4TypeEffbbb	agl::utl::DebugTexture::copyTexture(agl::DrawContext*, agl::TextureData const&, agl::utl::DebugTexture::Type, float, float, bool, bool, bool)	
@@ -44753,7 +44753,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71006E6630			FALSE	_ZN4sead21FormatFixedSafeStringILi160EED0Ev	sead::FormatFixedSafeString<160>::~FormatFixedSafeString()	
 0x71006E6640			TRUE	_ZN4sead15FixedSafeStringILi160EEaSERKNS_14SafeStringBaseIcEE	sead::FixedSafeString<160>::operator=(sead::SafeStringBase<char> const&)	
 0x71006E6730			FALSE	_ZN4sead21FormatFixedSafeStringILi32EED0Ev	sead::FormatFixedSafeString<32>::~FormatFixedSafeString()	
-0x71006E6740		aglDynamicTextureAllocator.o	FALSE	_ZN3agl3utl23DynamicTextureAllocator18SingletonDisposer_D2Ev	agl::utl::DynamicTextureAllocator::SingletonDisposer_::~SingletonDisposer_()	object (class)
+0x71006E6740	agl/utility	aglDynamicTextureAllocator.o	FALSE	_ZN3agl3utl23DynamicTextureAllocator18SingletonDisposer_D2Ev	agl::utl::DynamicTextureAllocator::SingletonDisposer_::~SingletonDisposer_()	object (class)
 0x71006E67C0			FALSE	_ZN3agl3utl23DynamicTextureAllocator18SingletonDisposer_D0Ev	agl::utl::DynamicTextureAllocator::SingletonDisposer_::~SingletonDisposer_()	
 0x71006E6830			FALSE	_ZN3agl3utl23DynamicTextureAllocator14createInstanceEPN4sead4HeapE	agl::utl::DynamicTextureAllocator::createInstance(sead::Heap*)	object/folder from debug builds' assert paths
 0x71006E6990			FALSE	_ZN3agl3utl23DynamicTextureAllocator14deleteInstanceEv	agl::utl::DynamicTextureAllocator::deleteInstance()	
@@ -44798,8 +44798,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71006E9490			FALSE	_ZN3agl3utl23DynamicTextureAllocator19listenPropertyEventEPKN4sead6hostio13PropertyEventE	agl::utl::DynamicTextureAllocator::listenPropertyEvent(sead::hostio::PropertyEvent const*)	
 0x71006E9560			FALSE	_ZN3agl3utl13TextureDataExC2Ev	agl::utl::TextureDataEx::TextureDataEx()	
 0x71006E9640			FALSE	_ZN3agl3utl13TextureDataEx5clearEv	agl::utl::TextureDataEx::clear()	
-0x71006E9670		ImageFilter2D.o	FALSE	_ZN3agl3utl13ImageFilter2D11drawTextureEPNS_11DrawContextERKNS_14TextureSamplerERKN4sead8ViewportERKNS7_7Vector2IfEESE_	agl::utl::ImageFilter2D::drawTexture(agl::DrawContext*, agl::TextureSampler const&, sead::Viewport const&, sead::Vector2<float> const&, sead::Vector2<float> const&)	object (class)
-0x71006E96F0		aglImageFilter2D.o	FALSE	_ZN3agl3utl13ImageFilter2D4drawEPNS_11DrawContextERKNS_13ShaderProgramERKNS_14TextureSamplerERKN4sead8ViewportERKNSA_7Vector2IfEESH_	agl::utl::ImageFilter2D::draw(agl::DrawContext*, agl::ShaderProgram const&, agl::TextureSampler const&, sead::Viewport const&, sead::Vector2<float> const&, sead::Vector2<float> const&)	object/folder from debug builds' assert paths
+0x71006E9670		aglImageFilter2D.o	FALSE	_ZN3agl3utl13ImageFilter2D11drawTextureEPNS_11DrawContextERKNS_14TextureSamplerERKN4sead8ViewportERKNS7_7Vector2IfEESE_	agl::utl::ImageFilter2D::drawTexture(agl::DrawContext*, agl::TextureSampler const&, sead::Viewport const&, sead::Vector2<float> const&, sead::Vector2<float> const&)	object (class)
+0x71006E96F0			FALSE	_ZN3agl3utl13ImageFilter2D4drawEPNS_11DrawContextERKNS_13ShaderProgramERKNS_14TextureSamplerERKN4sead8ViewportERKNSA_7Vector2IfEESH_	agl::utl::ImageFilter2D::draw(agl::DrawContext*, agl::ShaderProgram const&, agl::TextureSampler const&, sead::Viewport const&, sead::Vector2<float> const&, sead::Vector2<float> const&)	object/folder from debug builds' assert paths
 0x71006E9A30			FALSE	_ZN3agl3utl13ImageFilter2D23drawTextureQuadTriangleEPNS_11DrawContextERKNS_14TextureSamplerE	agl::utl::ImageFilter2D::drawTextureQuadTriangle(agl::DrawContext*, agl::TextureSampler const&)	
 0x71006E9A90			FALSE	_ZN3agl3utl13ImageFilter2D16drawQuadTriangleEPNS_11DrawContextERKNS_13ShaderProgramERKNS_14TextureSamplerE	agl::utl::ImageFilter2D::drawQuadTriangle(agl::DrawContext*, agl::ShaderProgram const&, agl::TextureSampler const&)	
 0x71006E9C00			FALSE	_ZN3agl3utl13ImageFilter2D21drawDepthQuadTriangleEPNS_11DrawContextERKNS_14TextureSamplerE	agl::utl::ImageFilter2D::drawDepthQuadTriangle(agl::DrawContext*, agl::TextureSampler const&)	
@@ -45332,12 +45332,12 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710070AF80			FALSE	_ZN3agl6detail9FileIOMgr5closeEi	agl::detail::FileIOMgr::close(int)	
 0x710070AFF0			FALSE	_ZN3agl6detail9FileIOMgr10genMessageEPN4sead6hostio7ContextE	agl::detail::FileIOMgr::genMessage(sead::hostio::Context*)	
 0x710070B000			FALSE	_ZN3agl6detail9FileIOMgr19listenPropertyEventEPKN4sead6hostio13PropertyEventE	agl::detail::FileIOMgr::listenPropertyEvent(sead::hostio::PropertyEvent const*)	
-0x710070B010	agl/detail	PrivateResource.o	FALSE	_ZN3agl6detail15PrivateResource18SingletonDisposer_D2Ev	agl::detail::PrivateResource::SingletonDisposer_::~SingletonDisposer_()	object (class)
+0x710070B010	agl/detail	aglPrivateResource.o	FALSE	_ZN3agl6detail15PrivateResource18SingletonDisposer_D2Ev	agl::detail::PrivateResource::SingletonDisposer_::~SingletonDisposer_()	object (class)
 0x710070B090			FALSE	_ZN3agl6detail15PrivateResource18SingletonDisposer_D0Ev	agl::detail::PrivateResource::SingletonDisposer_::~SingletonDisposer_()	
-0x710070B100		aglPrivateResource.o	FALSE	_ZN3agl6detail15PrivateResource14createInstanceEPN4sead4HeapE	agl::detail::PrivateResource::createInstance(sead::Heap*)	object/folder from debug builds' assert paths
+0x710070B100			FALSE	_ZN3agl6detail15PrivateResource14createInstanceEPN4sead4HeapE	agl::detail::PrivateResource::createInstance(sead::Heap*)	object/folder from debug builds' assert paths
 0x710070B1D0			FALSE	_ZN3agl6detail15PrivateResource14deleteInstanceEv	agl::detail::PrivateResource::deleteInstance()	
 0x710070B230			FALSE	_ZN3agl6detail15PrivateResourceC2Ev	agl::detail::PrivateResource::PrivateResource()	
-0x710070B2A0			FALSE	nullsub_318	nullsub_318	
+0x710070B2A0			FALSE	_ZN3agl6detail12_GLOBAL__N_110debugPrintERKN4sead14SafeStringBaseIcEE	_ZN3agl6detail12_GLOBAL__N_110debugPrintERKN4sead14SafeStringBaseIcEE	
 0x710070B2B0			FALSE	_ZN3agl6detail15PrivateResourceD2Ev	agl::detail::PrivateResource::~PrivateResource()	
 0x710070B320			FALSE	_ZN3agl6detail15PrivateResourceD0Ev	agl::detail::PrivateResource::~PrivateResource()	
 0x710070B3A0			FALSE	_ZN3agl6detail15PrivateResource10initializeEPN4sead4HeapES4_mm	agl::detail::PrivateResource::initialize(sead::Heap*, sead::Heap*, unsigned long, unsigned long)	
@@ -45363,9 +45363,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710070CCD0			FALSE	_ZN3agl25TextureDataInitializerRAW13copyTileImageEPNS_11TextureDataENS_19ConstGPUMemVoidAddrEj	agl::TextureDataInitializerRAW::copyTileImage(agl::TextureData*, agl::ConstGPUMemVoidAddr, unsigned int)	
 0x710070CDB0			FALSE	_ZN3agl20TextureTileConverter12calcByteSizeENS_11TextureTypeENS_13TextureFormatEiiiiNS0_4ModeE	agl::TextureTileConverter::calcByteSize(agl::TextureType, agl::TextureFormat, int, int, int, int, agl::TextureTileConverter::Mode)	part of aglTextureDataInitializer.o (debug builds)
 0x710070D0B0			FALSE	_ZN3agl20TextureTileConverter7convertENS_14GPUMemVoidAddrEjS1_jNS0_4ModeENS_19ConstGPUMemVoidAddrES3_S2_NS_11TextureTypeENS_13TextureFormatEiiii	agl::TextureTileConverter::convert(agl::GPUMemVoidAddr, unsigned int, agl::GPUMemVoidAddr, unsigned int, agl::TextureTileConverter::Mode, agl::ConstGPUMemVoidAddr, agl::ConstGPUMemVoidAddr, agl::TextureTileConverter::Mode, agl::TextureType, agl::TextureFormat, int, int, int, int)	
-0x710070D650		RootNode.o	FALSE	_ZN3agl6detail8RootNode18SingletonDisposer_D2Ev	agl::detail::RootNode::SingletonDisposer_::~SingletonDisposer_()	object (class)
+0x710070D650	agl/detail	aglRootNode.o	FALSE	_ZN3agl6detail8RootNode18SingletonDisposer_D2Ev	agl::detail::RootNode::SingletonDisposer_::~SingletonDisposer_()	object (class)
 0x710070D6D0			FALSE	_ZN3agl6detail8RootNode18SingletonDisposer_D0Ev	agl::detail::RootNode::SingletonDisposer_::~SingletonDisposer_()	
-0x710070D740	agl/detail	aglRootNode.o	FALSE	_ZN3agl6detail8RootNode14createInstanceEPN4sead4HeapE	agl::detail::RootNode::createInstance(sead::Heap*)	object/folder from debug builds' assert paths
+0x710070D740			FALSE	_ZN3agl6detail8RootNode14createInstanceEPN4sead4HeapE	agl::detail::RootNode::createInstance(sead::Heap*)	object/folder from debug builds' assert paths
 0x710070D8F0			FALSE	_ZN3agl6detail8RootNode14deleteInstanceEv	agl::detail::RootNode::deleteInstance()	
 0x710070D950			FALSE	_ZN3agl6detail8RootNodeC2Ev	agl::detail::RootNode::RootNode()	
 0x710070DAA0			FALSE	_ZN3agl6detail8RootNodeD2Ev	agl::detail::RootNode::~RootNode()	
@@ -45523,14 +45523,14 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100724460			FALSE	_ZN3agl3pfx3Sky15allocateTextureEPN4sead4HeapE	agl::pfx::Sky::allocateTexture(sead::Heap*)	
 0x7100724710			FALSE	_ZN3agl3pfx3Sky20setBasisTextureImageEPKvj	agl::pfx::Sky::setBasisTextureImage(void const*, unsigned int)	
 0x7100724750			FALSE	_ZN3agl3pfx3Sky11freeTextureEv	agl::pfx::Sky::freeTexture()	
-0x71007248B0			FALSE	sub_71007248B0	sub_71007248B0	
+0x71007248B0			FALSE	_ZN3agl3pfx12_GLOBAL__N_115createTexture2DEPNS_14TextureSamplerEPN4sead4HeapEjj	_ZN3agl3pfx12_GLOBAL__N_115createTexture2DEPNS_14TextureSamplerEPN4sead4HeapEjj	
 0x71007249F0			FALSE	_ZN3agl3pfx3Sky20setBasisTextureImageEPKvjS3_jS3_j	agl::pfx::Sky::setBasisTextureImage(void const*, unsigned int, void const*, unsigned int, void const*, unsigned int)	
 0x7100724B80			FALSE	_ZN3agl3pfx3Sky9drawBasisEPNS_11DrawContextEj	agl::pfx::Sky::drawBasis(agl::DrawContext*, unsigned int)	
 0x7100724C30			FALSE	_ZN3agl3pfx3Sky13drawBasisImplEPNS_11DrawContextEj	agl::pfx::Sky::drawBasisImpl(agl::DrawContext*, unsigned int)	
 0x71007262D0			FALSE	_ZN3agl3pfx3Sky11drawContextEPNS_11DrawContextEjRKN4sead8Matrix34IfEEff	agl::pfx::Sky::drawContext(agl::DrawContext*, unsigned int, sead::Matrix34<float> const&, float, float)	
 0x71007270B0			FALSE	_ZN3agl3pfx3Sky17setUpRenderBufferEPNS_11DrawContextEjPKNS_11TextureDataEjjjj	agl::pfx::Sky::setUpRenderBuffer(agl::DrawContext*, unsigned int, agl::TextureData const*, unsigned int, unsigned int, unsigned int, unsigned int)	
 0x7100727340			FALSE	_ZN3agl3pfx3Sky27invalidateRenderBufferCacheEPNS_11DrawContextEj	agl::pfx::Sky::invalidateRenderBufferCache(agl::DrawContext*, unsigned int)	
-0x71007273C0			FALSE	sub_71007273C0	sub_71007273C0	
+0x71007273C0			FALSE	_ZNK3agl3pfx12_GLOBAL__N_110BakeDrawer9drawLayerEbf	_ZNK3agl3pfx12_GLOBAL__N_110BakeDrawer9drawLayerEbf	
 0x71007275B0			FALSE	_ZNK3agl3pfx3Sky27getRenderingParameterStaticEPNS1_24RenderingParameterStaticE	agl::pfx::Sky::getRenderingParameterStatic(agl::pfx::Sky::RenderingParameterStatic*) const	
 0x7100727600			FALSE	_ZN3agl3pfx3Sky27setRenderingParameterStaticERKNS1_24RenderingParameterStaticEb	agl::pfx::Sky::setRenderingParameterStatic(agl::pfx::Sky::RenderingParameterStatic const&, bool)	
 0x7100727660			FALSE	_ZNK3agl3pfx3Sky21getRenderingParameterEPNS1_18RenderingParameterE	agl::pfx::Sky::getRenderingParameter(agl::pfx::Sky::RenderingParameter*) const	
@@ -45541,11 +45541,11 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71007277D0			FALSE	_ZN3agl3pfx3Sky16setAdhocFogParamERKNS1_13AdhocFogParamE	agl::pfx::Sky::setAdhocFogParam(agl::pfx::Sky::AdhocFogParam const&)	
 0x7100727820			FALSE	_ZNK3agl3pfx3Sky16getBakeInfoParamEPNS1_13BakeInfoParamEj	agl::pfx::Sky::getBakeInfoParam(agl::pfx::Sky::BakeInfoParam*, unsigned int) const	
 0x7100727860			FALSE	_ZN3agl3pfx3Sky8drawBothEPNS_11DrawContextEjRKN4sead8Matrix44IfEERKNS4_8Matrix34IfEEffRKNS_11TextureDataESF_bf	agl::pfx::Sky::drawBoth(agl::DrawContext*, unsigned int, sead::Matrix44<float> const&, sead::Matrix34<float> const&, float, float, agl::TextureData const&, agl::TextureData const&, bool, float)	
-0x7100727CC0			FALSE	sub_7100727CC0	sub_7100727CC0	
+0x7100727CC0			FALSE	_ZNK3agl3pfx12_GLOBAL__N_112PostFxDrawer4drawEPNS_11DrawContextEPKNS_13ShaderProgramERKNS0_3Sky5SizesE	_ZNK3agl3pfx12_GLOBAL__N_112PostFxDrawer4drawEPNS_11DrawContextEPKNS_13ShaderProgramERKNS0_3Sky5SizesE	
 0x7100728660			FALSE	_ZN3agl3pfx3Sky7drawSkyEPNS_11DrawContextEjRKN4sead8Matrix44IfEERKNS4_8Matrix34IfEEfff	agl::pfx::Sky::drawSky(agl::DrawContext*, unsigned int, sead::Matrix44<float> const&, sead::Matrix34<float> const&, float, float, float)	
 0x71007289B0			FALSE	_ZN3agl3pfx3Sky10drawGroundEPNS_11DrawContextEjRKN4sead8Matrix44IfEERKNS4_8Matrix34IfEEffRKNS_11TextureDataESF_bf	agl::pfx::Sky::drawGround(agl::DrawContext*, unsigned int, sead::Matrix44<float> const&, sead::Matrix34<float> const&, float, float, agl::TextureData const&, agl::TextureData const&, bool, float)	
-0x7100728CA0			FALSE	sub_7100728CA0	sub_7100728CA0	
-0x7100728F50			FALSE	sub_7100728F50	sub_7100728F50	
+0x7100728CA0			FALSE	_ZN3agl3pfx12_GLOBAL__N_111BasisDrawer10setProgramEPKNS_13ShaderProgramERKNS0_3Sky5SizesE	_ZN3agl3pfx12_GLOBAL__N_111BasisDrawer10setProgramEPKNS_13ShaderProgramERKNS0_3Sky5SizesE	
+0x7100728F50			FALSE	_ZNK3agl3pfx12_GLOBAL__N_111BasisDrawer9drawLayerEf	_ZNK3agl3pfx12_GLOBAL__N_111BasisDrawer9drawLayerEf	
 0x71007290C0			FALSE	_ZNK3agl3pfx3Sky9preWrite_Ev	agl::pfx::Sky::preWrite_() const	
 0x71007290E0			FALSE	_ZN3agl3pfx3Sky8preRead_Ev	agl::pfx::Sky::preRead_()	
 0x71007290F0			FALSE	_ZN3agl3pfx3Sky9postRead_Ev	agl::pfx::Sky::postRead_()	
@@ -45553,7 +45553,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71007295B0			FALSE	_ZN3agl3pfx3Sky26updateDirectionFromLatLongEv	agl::pfx::Sky::updateDirectionFromLatLong()	
 0x7100729630			FALSE	_ZN3agl3pfx3Sky24updateDirectionToLatLongEv	agl::pfx::Sky::updateDirectionToLatLong()	
 0x7100729710			FALSE	_ZN3agl3pfx3Sky19listenPropertyEventEPKN4sead6hostio13PropertyEventE	agl::pfx::Sky::listenPropertyEvent(sead::hostio::PropertyEvent const*)	
-0x7100729BD0			FALSE	sub_7100729BD0	sub_7100729BD0	
+0x7100729BD0			FALSE	_ZN3agl3pfx12_GLOBAL__N_120calcColorTemperatureERKN4sead7Color4fEffff	_ZN3agl3pfx12_GLOBAL__N_120calcColorTemperatureERKN4sead7Color4fEffff	
 0x7100729D50			FALSE	_ZNK3agl3utl14IParameterList10postWrite_Ev	agl::utl::IParameterList::postWrite_() const	
 0x7100729D60			FALSE	_ZNK3agl3utl14IParameterList8isApply_ENS0_16ResParameterListE	agl::utl::IParameterList::isApply_(agl::utl::ResParameterList) const	
 0x7100729D80			FALSE	_ZN3agl3utl14IParameterList21callbackNotAppliable_EPNS0_13IParameterObjEPNS0_13ParameterBaseENS0_15ResParameterObjE	agl::utl::IParameterList::callbackNotAppliable_(agl::utl::IParameterObj*, agl::utl::ParameterBase*, agl::utl::ResParameterObj)	
@@ -45789,12 +45789,12 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71007409A0			FALSE	_ZN3agl3utl13ParameterListD0Ev	agl::utl::ParameterList::~ParameterList()	
 0x71007409B0			FALSE	_ZN4sead21FormatFixedSafeStringILi8EED0Ev	sead::FormatFixedSafeString<8>::~FormatFixedSafeString()	
 0x71007409C0			FALSE	_ZN4sead21FormatFixedSafeStringILi128EED0Ev	sead::FormatFixedSafeString<128>::~FormatFixedSafeString()	
-0x71007409D0	agl/utility	MultiFilterUnit.o	FALSE	_ZN3agl3utl15MultiFilterUnit14getFilterLabelENS1_10FilterTypeE	agl::utl::MultiFilterUnit::getFilterLabel(agl::utl::MultiFilterUnit::FilterType)	object (class)
+0x71007409D0	agl/utility	aglMultiFilterUnit.o	FALSE	_ZN3agl3utl15MultiFilterUnit14getFilterLabelENS1_10FilterTypeE	agl::utl::MultiFilterUnit::getFilterLabel(agl::utl::MultiFilterUnit::FilterType)	object (class)
 0x7100740A50			FALSE	_ZN3agl3utl15MultiFilterUnit13getFilterNameENS1_10FilterTypeE	agl::utl::MultiFilterUnit::getFilterName(agl::utl::MultiFilterUnit::FilterType)	
 0x7100740AD0			FALSE	_ZN3agl3utl15MultiFilterUnitC2ENS1_10FilterTypeEi	agl::utl::MultiFilterUnit::MultiFilterUnit(agl::utl::MultiFilterUnit::FilterType, int)	
-0x7100740C90		ColorCorrectionFilter.o	FALSE	_ZN3agl3utl21ColorCorrectionFilterD2Ev	agl::utl::ColorCorrectionFilter::~ColorCorrectionFilter()	object (class)
+0x7100740C90			FALSE	_ZN3agl3utl21ColorCorrectionFilterD2Ev	agl::utl::ColorCorrectionFilter::~ColorCorrectionFilter()	object (class)
 0x7100740CE0			FALSE	_ZThn40_N3agl3utl15MultiFilterUnitD1Ev	non-virtual thunk to agl::utl::MultiFilterUnit::~MultiFilterUnit()	
-0x7100740D50		aglMultiFilterUnit.o	FALSE	_ZN3agl3utl15MultiFilterUnit6createENS1_10FilterTypeEiPN4sead4HeapE	agl::utl::MultiFilterUnit::create(agl::utl::MultiFilterUnit::FilterType, int, sead::Heap*)	object/folder from debug builds' assert paths
+0x7100740D50			FALSE	_ZN3agl3utl15MultiFilterUnit6createENS1_10FilterTypeEiPN4sead4HeapE	agl::utl::MultiFilterUnit::create(agl::utl::MultiFilterUnit::FilterType, int, sead::Heap*)	object/folder from debug builds' assert paths
 0x7100741110			FALSE	_ZN3agl3utl15MultiFilterUnit10initializeEPNS0_11MultiFilterEPN4sead5TListIPS1_EEPNS4_4HeapE	agl::utl::MultiFilterUnit::initialize(agl::utl::MultiFilter*, sead::TList<agl::utl::MultiFilterUnit*>*, sead::Heap*)	
 0x71007411A0			FALSE	_ZN3agl3utl15MultiFilterUnit7destroyEv	agl::utl::MultiFilterUnit::destroy()	
 0x7100741240			FALSE	_ZN3agl3utl15MultiFilterUnit10inactivateEv	agl::utl::MultiFilterUnit::inactivate()	
@@ -45871,14 +45871,14 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100744030			FALSE	_ZN3agl3utl15MultiFilterUnit10doDestroy_Ev	agl::utl::MultiFilterUnit::doDestroy_()	
 0x7100744040			FALSE	_ZNK3agl3utl15MultiFilterUnit17doCalcResultInfo_EPNS0_21MultiFilterResultInfoE	agl::utl::MultiFilterUnit::doCalcResultInfo_(agl::utl::MultiFilterResultInfo*) const	
 0x7100744050			FALSE	_ZN3agl3utl15MultiFilterUnit22doListenPropertyEvent_EPKN4sead6hostio13PropertyEventE	agl::utl::MultiFilterUnit::doListenPropertyEvent_(sead::hostio::PropertyEvent const*)	
-0x7100744060		ColorCorrection.o	FALSE	_ZN3agl3pfx15ColorCorrectionC2Ev	agl::pfx::ColorCorrection::ColorCorrection()	object (class)
+0x7100744060	agl/postfx	aglColorCorrection.o	FALSE	_ZN3agl3pfx15ColorCorrectionC2Ev	agl::pfx::ColorCorrection::ColorCorrection()	object (class)
 0x7100744940			FALSE	_ZN3agl3pfx15ColorCorrection8resetAllEv	agl::pfx::ColorCorrection::resetAll()	
 0x7100744AE0			FALSE	_ZN3agl3pfx15ColorCorrectionD2Ev	agl::pfx::ColorCorrection::~ColorCorrection()	
 0x7100744C00			FALSE	_ZN3agl3pfx15ColorCorrection8destroy_Ev	agl::pfx::ColorCorrection::destroy_()	
 0x7100744CB0			FALSE	_ZThn8_N3agl3pfx15ColorCorrectionD1Ev	non-virtual thunk to agl::pfx::ColorCorrection::~ColorCorrection()	
 0x7100744CC0			FALSE	_ZN3agl3pfx15ColorCorrectionD0Ev	agl::pfx::ColorCorrection::~ColorCorrection()	
 0x7100744CF0			FALSE	_ZThn8_N3agl3pfx15ColorCorrectionD0Ev	non-virtual thunk to agl::pfx::ColorCorrection::~ColorCorrection()	
-0x7100744D20	agl/postfx	aglColorCorrection.o	FALSE	_ZN3agl3pfx15ColorCorrection10initializeEiPN4sead4HeapEb	agl::pfx::ColorCorrection::initialize(int, sead::Heap*, bool)	object/folder from debug builds' assert paths
+0x7100744D20			FALSE	_ZN3agl3pfx15ColorCorrection10initializeEiPN4sead4HeapEb	agl::pfx::ColorCorrection::initialize(int, sead::Heap*, bool)	object/folder from debug builds' assert paths
 0x7100745070			FALSE	_ZNK3agl3pfx15ColorCorrection7drawMapEPNS_11DrawContextE	agl::pfx::ColorCorrection::drawMap(agl::DrawContext*) const	
 0x71007455C0			FALSE	_ZNK3agl3pfx15ColorCorrection14updateProgram_Ev	agl::pfx::ColorCorrection::updateProgram_() const	
 0x7100745700			FALSE	_ZNK3agl3pfx15ColorCorrection4drawEPNS_11DrawContextEiRKNS_12RenderBufferE	agl::pfx::ColorCorrection::draw(agl::DrawContext*, int, agl::RenderBuffer const&) const	
@@ -45910,7 +45910,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100746F80			FALSE	_ZNK3agl3pfx15ColorCorrection8calcRGB_EPjfff	agl::pfx::ColorCorrection::calcRGB_(unsigned int*, float, float, float) const	
 0x7100747160			FALSE	_ZNK3agl3pfx15ColorCorrection15calcSaturation_EPfS2_S2_f	agl::pfx::ColorCorrection::calcSaturation_(float*, float*, float*, float) const	
 0x71007471E0			FALSE	_ZNK3agl3pfx15ColorCorrection13calcContrast_EPfff	agl::pfx::ColorCorrection::calcContrast_(float*, float, float) const	
-0x7100747230		proc.o	FALSE	_ZN3agl4proc3LUTC2Ev	agl::proc::LUT::LUT()	object (class)
+0x7100747230	agl/postfx	proc.o	FALSE	_ZN3agl4proc3LUTC2Ev	agl::proc::LUT::LUT()	object (class)
 0x71007472B0			FALSE	_ZN3agl4proc3LUTC2ERKN4sead14SafeStringBaseIcEEPNS_3utl13IParameterObjE	agl::proc::LUT::LUT(sead::SafeStringBase<char> const&, agl::utl::IParameterObj*)	
 0x7100747330			FALSE	_ZN3agl4proc3LUTC1ERKN4sead14SafeStringBaseIcEES6_PNS_3utl13IParameterObjE	agl::proc::LUT::LUT(sead::SafeStringBase<char> const&, sead::SafeStringBase<char> const&, agl::utl::IParameterObj*)	
 0x71007473B0			FALSE	_ZN3agl4proc3LUTD1Ev	agl::proc::LUT::~LUT()	
@@ -46125,9 +46125,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100752730			FALSE	_ZN3agl6detail18AtomicPtrArrayImpl7shuffleEPN4sead6RandomE	agl::detail::AtomicPtrArrayImpl::shuffle(sead::Random*)	
 0x71007527B0			FALSE	_ZN3agl6detail18AtomicPtrArrayImpl4sortEPFiPKvS3_E	agl::detail::AtomicPtrArrayImpl::sort(int (*)(void const*, void const*))	
 0x71007528B0			FALSE	_ZN3agl6detail18AtomicPtrArrayImpl8heapSortEPFiPKvS3_E	agl::detail::AtomicPtrArrayImpl::heapSort(int (*)(void const*, void const*))	
-0x7100752A40		fctr.o	FALSE	_ZN3agl4fctr16GPUStressChecker18SingletonDisposer_D2Ev	agl::fctr::GPUStressChecker::SingletonDisposer_::~SingletonDisposer_()	object (class)
+0x7100752A40	agl/frame_control	aglGPUStressChecker.o	FALSE	_ZN3agl4fctr16GPUStressChecker18SingletonDisposer_D2Ev	agl::fctr::GPUStressChecker::SingletonDisposer_::~SingletonDisposer_()	object (class)
 0x7100752AC0			FALSE	_ZN3agl4fctr16GPUStressChecker18SingletonDisposer_D0Ev	agl::fctr::GPUStressChecker::SingletonDisposer_::~SingletonDisposer_()	
-0x7100752B30	agl/frame_control	aglGPUStressChecker.o	FALSE	_ZN3agl4fctr16GPUStressChecker14createInstanceEPN4sead4HeapE	agl::fctr::GPUStressChecker::createInstance(sead::Heap*)	object/folder from debug builds' assert paths
+0x7100752B30			FALSE	_ZN3agl4fctr16GPUStressChecker14createInstanceEPN4sead4HeapE	agl::fctr::GPUStressChecker::createInstance(sead::Heap*)	object/folder from debug builds' assert paths
 0x7100752C00			FALSE	_ZN3agl4fctr16GPUStressChecker14deleteInstanceEv	agl::fctr::GPUStressChecker::deleteInstance()	
 0x7100752C60			FALSE	_ZN3agl4fctr16GPUStressChecker8StampObj10initializeEPN4sead4HeapE	agl::fctr::GPUStressChecker::StampObj::initialize(sead::Heap*)	
 0x7100752C90			FALSE	_ZN3agl4fctr16GPUStressCheckerC2Ev	agl::fctr::GPUStressChecker::GPUStressChecker()	
@@ -46141,8 +46141,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71007534A0			FALSE	_ZN3agl4fctr16GPUStressChecker19listenPropertyEventEPKN4sead6hostio13PropertyEventE	agl::fctr::GPUStressChecker::listenPropertyEvent(sead::hostio::PropertyEvent const*)	
 0x71007534B0			FALSE	_ZN3agl4fctr16GPUStressCheckerD2Ev	agl::fctr::GPUStressChecker::~GPUStressChecker()	
 0x71007534C0			FALSE	_ZN3agl4fctr16GPUStressCheckerD0Ev	agl::fctr::GPUStressChecker::~GPUStressChecker()	
-0x71007534D0		perf.o	FALSE	_ZN3agl4perf12GPUTimeStampC2Ev	agl::perf::GPUTimeStamp::GPUTimeStamp()	object (class)
-0x71007534E0	agl/performance	aglGPUTimeStamp.o	FALSE	_ZN3agl4perf12GPUTimeStamp8startTopEPNS_11DrawContextE	agl::perf::GPUTimeStamp::startTop(agl::DrawContext*)	object/folder from debug builds' assert paths
+0x71007534D0	agl/performance	aglGPUTimeStamp.o	FALSE	_ZN3agl4perf12GPUTimeStampC2Ev	agl::perf::GPUTimeStamp::GPUTimeStamp()	object (class)
+0x71007534E0			FALSE	_ZN3agl4perf12GPUTimeStamp8startTopEPNS_11DrawContextE	agl::perf::GPUTimeStamp::startTop(agl::DrawContext*)	object/folder from debug builds' assert paths
 0x7100753500			FALSE	_ZN3agl4perf12GPUTimeStamp11startBottomEPNS_11DrawContextE	agl::perf::GPUTimeStamp::startBottom(agl::DrawContext*)	
 0x7100753520			FALSE	_ZNK3agl4perf12GPUTimeStamp3getEv	agl::perf::GPUTimeStamp::get() const	
 0x71007535A0			FALSE	_ZN3agl4perf17GPUTimeStampArrayC2Ev	agl::perf::GPUTimeStampArray::GPUTimeStampArray()	
@@ -46154,11 +46154,11 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100753E50			FALSE	_ZN3agl11GPUMemBlockI14NVNcounterDataED0Ev	agl::GPUMemBlock<NVNcounterData>::~GPUMemBlock()	
 0x7100753E90			FALSE	_ZN3agl12GPUMemBlockTI14NVNcounterDataED2Ev	agl::GPUMemBlockT<NVNcounterData>::~GPUMemBlockT()	
 0x7100753EB0			FALSE	_ZN3agl12GPUMemBlockTI14NVNcounterDataED0Ev	agl::GPUMemBlockT<NVNcounterData>::~GPUMemBlockT()	
-0x7100753EF0		FlareFilterParameter.o	FALSE	_ZN3agl3pfx20FlareFilterParameterC2Ev	agl::pfx::FlareFilterParameter::FlareFilterParameter()	object (class)
+0x7100753EF0	agl/postfx	aglFlareFilter.o	FALSE	_ZN3agl3pfx20FlareFilterParameterC2Ev	agl::pfx::FlareFilterParameter::FlareFilterParameter()	object (class)
 0x7100754030			FALSE	_ZN3agl3pfx20FlareFilterParameter10initializeEPNS_3utl13IParameterObjEPN4sead4HeapE	agl::pfx::FlareFilterParameter::initialize(agl::utl::IParameterObj*, sead::Heap*)	
 0x7100754500			FALSE	_ZN3agl3pfx20FlareFilterParameter30genMessageFlareFilterParameterEPN4sead6hostio7ContextE	agl::pfx::FlareFilterParameter::genMessageFlareFilterParameter(sead::hostio::Context*)	
 0x71007546F0			FALSE	_ZN3agl3pfx20FlareFilterParameter39listenPropertyEventFlareFilterParameterEPN4sead6hostio10ReflexibleEPKNS3_13PropertyEventE	agl::pfx::FlareFilterParameter::listenPropertyEventFlareFilterParameter(sead::hostio::Reflexible*, sead::hostio::PropertyEvent const*)	
-0x7100754700	agl/postfx	aglFlareFilter.o	FALSE	_ZNK3agl3pfx11FlareFilter3Tex5allocEPNS_11DrawContextENS_13TextureFormatEjjPKcb	agl::pfx::FlareFilter::Tex::alloc(agl::DrawContext*, agl::TextureFormat, unsigned int, unsigned int, char const*, bool) const	object/folder from debug builds' assert paths
+0x7100754700			FALSE	_ZNK3agl3pfx11FlareFilter3Tex5allocEPNS_11DrawContextENS_13TextureFormatEjjPKcb	agl::pfx::FlareFilter::Tex::alloc(agl::DrawContext*, agl::TextureFormat, unsigned int, unsigned int, char const*, bool) const	object/folder from debug builds' assert paths
 0x71007547E0			FALSE	_ZNK3agl3pfx11FlareFilter3Tex5referEPNS_11DrawContextEPKNS_11TextureDataE	agl::pfx::FlareFilter::Tex::refer(agl::DrawContext*, agl::TextureData const*) const	
 0x7100754AB0			FALSE	_ZNK3agl3pfx11FlareFilter3Tex7releaseEv	agl::pfx::FlareFilter::Tex::release() const	
 0x7100754B00			FALSE	_ZN3agl3pfx11FlareFilterC2Ev	agl::pfx::FlareFilter::FlareFilter()	
@@ -46253,14 +46253,14 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710075ED60			FALSE	_ZN3agl3sdw10ShadowUtil14calcViewMatrixEPN4sead8Matrix34IfEERKNS2_7Vector3IfEES9_S9_	agl::sdw::ShadowUtil::calcViewMatrix(sead::Matrix34<float>*, sead::Vector3<float> const&, sead::Vector3<float> const&, sead::Vector3<float> const&)	
 0x710075EEA0			FALSE	_ZN3agl3sdw10ShadowUtil11calcNearFarEPfS2_RKN4sead8Matrix44IfEE	agl::sdw::ShadowUtil::calcNearFar(float*, float*, sead::Matrix44<float> const&)	
 0x710075EF20			FALSE	_ZN3agl3sdw10ShadowUtil11drawFrustumEPNS_11DrawContextERKN4sead8Matrix34IfEERKNS4_8Matrix44IfEES8_SC_RKNS4_7Color4fE	agl::sdw::ShadowUtil::drawFrustum(agl::DrawContext*, sead::Matrix34<float> const&, sead::Matrix44<float> const&, sead::Matrix34<float> const&, sead::Matrix44<float> const&, sead::Color4f const&)	
-0x710075F2D0	agl/postfx	aglBloomParameter.o	FALSE	_ZN3agl3pfx14BloomParameterC2Ev	agl::pfx::BloomParameter::BloomParameter()	object (class)
+0x710075F2D0	agl/postfx	aglBloom.o	FALSE	_ZN3agl3pfx14BloomParameterC2Ev	agl::pfx::BloomParameter::BloomParameter()	object (class)
 0x710075F4F0			FALSE	_ZN4sead11UnsafeArrayIN3agl3pfx14BloomParameter5DepthELi3EEC2Ev	sead::UnsafeArray<agl::pfx::BloomParameter::Depth, 3>::UnsafeArray()	
 0x710075F5E0			FALSE	_ZN3agl3pfx14BloomParameter10initializeEPNS_3utl13IParameterObjEPN4sead4HeapE	agl::pfx::BloomParameter::initialize(agl::utl::IParameterObj*, sead::Heap*)	
 0x7100760140			FALSE	_ZN3agl3pfx14BloomParameter14updateBalance_Ev	agl::pfx::BloomParameter::updateBalance_()	
 0x71007601F0			FALSE	_ZN3agl3pfx14BloomParameter24genMessageBloomParameterEPN4sead6hostio7ContextE	agl::pfx::BloomParameter::genMessageBloomParameter(sead::hostio::Context*)	
 0x71007605F0			FALSE	_ZN3agl3pfx14BloomParameter4Unit10genMessageEPN4sead6hostio7ContextEb	agl::pfx::BloomParameter::Unit::genMessage(sead::hostio::Context*, bool)	
 0x71007606A0			FALSE	_ZN3agl3pfx14BloomParameter33listenPropertyEventBloomParameterEPN4sead6hostio10ReflexibleEPKNS3_13PropertyEventE	agl::pfx::BloomParameter::listenPropertyEventBloomParameter(sead::hostio::Reflexible*, sead::hostio::PropertyEvent const*)	
-0x7100760840	agl/postfx	aglBloom.o	FALSE	_ZNK3agl3pfx14BloomParameter4Unit19getUniformThresholdEPN4sead7Vector4IfEES6_fRKNS3_7Vector3IfEE	agl::pfx::BloomParameter::Unit::getUniformThreshold(sead::Vector4<float>*, sead::Vector4<float>*, float, sead::Vector3<float> const&) const	object/folder from debug builds' assert paths
+0x7100760840			FALSE	_ZNK3agl3pfx14BloomParameter4Unit19getUniformThresholdEPN4sead7Vector4IfEES6_fRKNS3_7Vector3IfEE	agl::pfx::BloomParameter::Unit::getUniformThreshold(sead::Vector4<float>*, sead::Vector4<float>*, float, sead::Vector3<float> const&) const	object/folder from debug builds' assert paths
 0x71007608B0			FALSE	_ZN3agl3pfx5BloomC2Ev	agl::pfx::Bloom::Bloom()	part of aglBloom.o (debug builds)
 0x71007609B0			FALSE	_ZN3agl3pfx5BloomD2Ev	agl::pfx::Bloom::~Bloom()	
 0x7100760A40			FALSE	_ZN3agl3utl22ContextParameterBufferINS_3pfx5BloomENS2_14BloomParameterEED2Ev	agl::utl::ContextParameterBuffer<agl::pfx::Bloom, agl::pfx::BloomParameter>::~ContextParameterBuffer()	
@@ -46602,10 +46602,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710077D880			FALSE	_ZN3agl11GPUMemBlockINS_3pfx12DepthOfField6VertexEED0Ev	agl::GPUMemBlock<agl::pfx::DepthOfField::Vertex>::~GPUMemBlock()	
 0x710077D8C0			FALSE	_ZN3agl12GPUMemBlockTINS_3pfx12DepthOfField6VertexEED2Ev	agl::GPUMemBlockT<agl::pfx::DepthOfField::Vertex>::~GPUMemBlockT()	
 0x710077D8E0			FALSE	_ZN3agl12GPUMemBlockTINS_3pfx12DepthOfField6VertexEED0Ev	agl::GPUMemBlockT<agl::pfx::DepthOfField::Vertex>::~GPUMemBlockT()	
-0x710077D920	agl/postfx	AutoExposureVtxStream.o	FALSE	_ZN3agl3pfx21AutoExposureVtxStream10initializeEPN4sead4HeapE	agl::pfx::AutoExposureVtxStream::initialize(sead::Heap*)	object (class)
+0x710077D920	agl/postfx	aglAutoExposure.o	FALSE	_ZN3agl3pfx21AutoExposureVtxStream10initializeEPN4sead4HeapE	agl::pfx::AutoExposureVtxStream::initialize(sead::Heap*)	object (class)
 0x710077D9E0			FALSE	_ZN3agl3pfx21AutoExposureVtxStream6createEi	agl::pfx::AutoExposureVtxStream::create(int)	
-0x710077DBA0		AutoExposure.o	FALSE	_ZN3agl3pfx12AutoExposure12ResultBuffer6CreateEPN4sead4HeapEiiNS_13TextureFormatE	agl::pfx::AutoExposure::ResultBuffer::Create(sead::Heap*, int, int, agl::TextureFormat)	object (class)
-0x710077DDF0		aglAutoExposure.o	FALSE	_ZN3agl3pfx12AutoExposure12ResultBuffer4BindEPNS_11DrawContextE	agl::pfx::AutoExposure::ResultBuffer::Bind(agl::DrawContext*)	object/folder from debug builds' assert paths
+0x710077DBA0			FALSE	_ZN3agl3pfx12AutoExposure12ResultBuffer6CreateEPN4sead4HeapEiiNS_13TextureFormatE	agl::pfx::AutoExposure::ResultBuffer::Create(sead::Heap*, int, int, agl::TextureFormat)	object (class)
+0x710077DDF0			FALSE	_ZN3agl3pfx12AutoExposure12ResultBuffer4BindEPNS_11DrawContextE	agl::pfx::AutoExposure::ResultBuffer::Bind(agl::DrawContext*)	object/folder from debug builds' assert paths
 0x710077DF90			FALSE	_ZN3agl3pfx12AutoExposure12ResultBuffer5ClearEPNS_11DrawContextERKN4sead7Color4fE	agl::pfx::AutoExposure::ResultBuffer::Clear(agl::DrawContext*, sead::Color4f const&)	
 0x710077DFB0			FALSE	_ZN3agl3pfx12AutoExposureC2Ev	agl::pfx::AutoExposure::AutoExposure()	
 0x710077E420			FALSE	_ZN3agl3pfx12AutoExposureD2Ev	agl::pfx::AutoExposure::~AutoExposure()	
@@ -46802,7 +46802,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710078EC10			FALSE	_ZThn48_N3agl2fx19OfxLensFlareDynamic6PresetD1Ev	non-virtual thunk to agl::fx::OfxLensFlareDynamic::Preset::~Preset()	
 0x710078EC20			FALSE	_ZThn48_N3agl2fx19OfxLensFlareDynamic6PresetD0Ev	non-virtual thunk to agl::fx::OfxLensFlareDynamic::Preset::~Preset()	
 0x710078EC50			FALSE	_ZNK4sead15RuntimeTypeInfo6DeriveIN3agl2fx12OfxLensFlare6PresetEE9isDerivedEPKNS0_9InterfaceE	sead::RuntimeTypeInfo::Derive<agl::fx::OfxLensFlare::Preset>::isDerived(sead::RuntimeTypeInfo::Interface const*) const	
-0x710078ECE0			FALSE	sub_710078ECE0	sub_710078ECE0	
+0x710078ECE0			FALSE	_GLOBAL__sub_I_aglOccludedEffect.cpp	_GLOBAL__sub_I_aglOccludedEffect.cpp	
 0x710078EE10		aglOcclusionRenderer.o	FALSE	_ZN3agl2fx17OcclusionRendererC2Ev	agl::fx::OcclusionRenderer::OcclusionRenderer()	object (class)
 0x710078EF80			FALSE	_ZN3agl2fx17OcclusionRendererD2Ev	agl::fx::OcclusionRenderer::~OcclusionRenderer()	
 0x710078F1A0			FALSE	_ZN3agl2fx17OcclusionRendererD0Ev	agl::fx::OcclusionRenderer::~OcclusionRenderer()	

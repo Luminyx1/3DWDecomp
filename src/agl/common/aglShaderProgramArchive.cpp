@@ -1,13 +1,31 @@
 #include "common/aglShaderProgramArchive.h"
 #include <cstring>
+#include <heap/seadHeap.h>
 #include <hostio/seadHostIOPropertyEvent.h>
 #include <nvn/nvn_FuncPtrInline.h>
 #include <time/seadTickTime.h>
+#include "detail/aglFileIOMgr.h"
 #include "detail/aglPrivateResource.h"
 #include "detail/aglRootNode.h"
 #include "detail/aglShaderTextUtil.h"
+#include "shader_text/aglShaderTextPreprocessor.h"
 
 namespace agl {
+
+namespace {
+
+bool isEventTarget(const sead::hostio::PropertyEvent* pEvent, const char* pTarget)
+{
+    return !(pEvent->getType() & 2) && pEvent->getId() < pTarget + 1 && pEvent->getId() >= pTarget;
+}
+
+// TODO: add the event field at 0x20 to sead::hostio::PropertyEvent
+s64 getEventValue(const sead::hostio::PropertyEvent* pEvent)
+{
+    return *reinterpret_cast<const s64*>(reinterpret_cast<const u8*>(pEvent) + 0x20);
+}
+
+}  // namespace
 
 /**
  * Constructs an empty shader program archive.
@@ -238,28 +256,26 @@ void ShaderProgramEdit::initialize(ShaderProgramArchive* pArchive, s32 index,
     mProgramIndex = index;
     ShaderProgram& shader_program = pArchive->mShaderPrograms[mProgramIndex];
 
-    for (ShaderType type = cShaderType_Vertex; type < cShaderType_Num;
-         type = static_cast<ShaderType>(type + 1)) {
-        const u16 source_index =
-            *reinterpret_cast<const u16*>(&program.ref().mSourceIndex[type]);
-        if (source_index != 0xffff) {
-            mStage[type].mSource = &mArchive->mShaderSources[static_cast<s16>(source_index)];
-            ResShaderMacroArray macros = program.getResShaderMacroArray(type);
-            mStage[type].mCompileInfo.create(
-                macros.getNum(), shader_program.mVariation->mVariationBuffer.mMacros.size(),
-                pHeap);
-            mStage[type].mCompileInfo.setName(mStage[type].mSource->mResShaderSource.getName());
-
-            for (auto it = macros.constBegin(), end = macros.constEnd(); it != end; ++it) {
-                ResShaderMacro macro(&(*it));
-                mStage[type].mCompileInfo.mMacroName.pushBack(macro.getName());
-                mStage[type].mCompileInfo.mMacroValue.pushBack(macro.getValue());
-            }
-
-            shader_program.getShader(type)->setCompileInfo(&mStage[type].mCompileInfo);
-        } else {
-            mStage[type].mSource = nullptr;
+    for (s32 i = 0; i < cShaderType_Num; i++) {
+        const ShaderType type = static_cast<ShaderType>(i);
+        if (*reinterpret_cast<const u16*>(&program.ref().mSourceIndex[type]) == 0xffff) {
+            mStage[i].mSource = nullptr;
+            continue;
         }
+
+        mStage[i].mSource = &mArchive->mShaderSources[program.getSourceIndex(type)];
+        ResShaderMacroArray macros = program.getResShaderMacroArray(type);
+        mStage[i].mCompileInfo.create(
+            macros.getNum(), shader_program.mVariation->mVariationBuffer.mMacros.size(), pHeap);
+        mStage[i].mCompileInfo.setName(mStage[i].mSource->mResShaderSource.getName());
+
+        for (auto it = macros.constBegin(), end = macros.constEnd(); it != end; ++it) {
+            ResShaderMacro macro(&(*it));
+            mStage[i].mCompileInfo.mMacroName.pushBack(macro.getName());
+            mStage[i].mCompileInfo.mMacroValue.pushBack(macro.getValue());
+        }
+
+        shader_program.getShader(type)->setCompileInfo(&mStage[i].mCompileInfo);
     }
 
     const s32 macro_num = shader_program.mVariation->mVariationBuffer.mMacros.size();
@@ -375,6 +391,34 @@ void ShaderSource::expand()
 }
 
 /**
+ * Reallocates the edit text of the shader source and copies a text into it.
+ * @param rText text to copy into the edit text
+ * @param scale factor applied to the current source text length for the new buffer size
+ */
+void ShaderSource::resize(const sead::SafeString& rText, s32 scale)
+{
+    const s32 textLength = mResShaderSource.ref().mTextLen;
+    const s32 length =
+        sead::SafeString(mArchive->mSourceTexts[mIndex]).calcLength() * scale + 1;
+    const s32 size = length <= textLength ? textLength : length;
+
+    if (u32(size) + sizeof(sead::HeapSafeString) >
+        detail::PrivateResource::instance()->getDebugHeap()->getMaxAllocatableSize(8)) {
+        return;
+    }
+
+    sead::HeapSafeString* old_text = mEditText;
+    mEditText = new (detail::PrivateResource::instance()->getDebugHeap())
+        sead::HeapSafeString(detail::PrivateResource::instance()->getDebugHeap(), size);
+    mEditText->copy(rText);
+    if (old_text) {
+        delete old_text;
+    }
+
+    mArchive->mSourceTexts[mIndex] = mEditText->cstr();
+}
+
+/**
  * Passes the expanded source text of dirty shader sources to the compile information.
  */
 void ShaderProgramEdit::updateRawText()
@@ -473,6 +517,108 @@ void ShaderProgramArchive::listenPropertyEvent(const sead::hostio::PropertyEvent
 }
 
 /**
+ * Handles a property event of the shader program editor sent from the host.
+ * @param pEvent property event
+ */
+// NON_MATCHING: range checks get merged (ccmp) instead of jump-threaded to the id switch; block layout
+void ShaderProgramEdit::listenPropertyEvent(const sead::hostio::PropertyEvent* pEvent)
+{
+    const uintptr_t id = reinterpret_cast<uintptr_t>(pEvent->getId());
+    const u32 num = mArchive->mShaderPrograms.size();
+
+    if (id >= 101014 && id < num * 4 + 101014) {
+    } else if (id >= 102014 && id < num * 4 + 1000 + 102014) {
+        const bool is_nvn = id >= num * 4 + 102014;
+        const s32 local = id - (is_nvn ? 103014 : 102014);
+        const s32 program_index = local / 4;
+        const s32 type = local % 4;
+
+        sead::BufferedSafeString* source =
+            detail::PrivateResource::instance()->getShaderSourceBuffer(type);
+        ShaderProgram* program =
+            mArchive->mShaderPrograms[program_index].getVariationProgram_(mVariationIndex);
+        program->calcCompileSource(ShaderType(type), source,
+                                   is_nvn ? ShaderCompileInfo::cTarget_NVNBinary :
+                                            ShaderCompileInfo::cTarget_GL);
+
+        detail::FileIOMgr::DialogArg arg;
+        arg.mFilter = "sh";
+        arg.mFileName =
+            mArchive->mSourceNames[mArchive->mResShaderArchive.getResShaderProgramArray()
+                                       .get(program_index)
+                                       .getSourceIndex(ShaderType(type))];
+        detail::FileIOMgr::instance()->save(source->cstr(), source->calcLength(), arg);
+    } else if (id >= 104014 && id < num * 4 + 104014) {
+        sead::Heap* heap = detail::PrivateResource::instance()->getDebugHeap();
+        const u32 program_index = (id - 104014) / 4;
+        const u32 type = (id - 104014) % 4;
+
+        shtxt::Preprocessor preprocessor(heap, heap);
+        sead::BufferedSafeString* source =
+            detail::PrivateResource::instance()->getShaderSourceBuffer(type);
+        ShaderProgram* program =
+            mArchive->mShaderPrograms[program_index].getVariationProgram_(mVariationIndex);
+        program->calcCompileSource(ShaderType(type), source, ShaderCompileInfo::cTarget_NVNBinary);
+
+        preprocessor.initialize(source->cstr());
+        preprocessor.preprocess(0x7a3, 0, 0);
+        const s32 length = preprocessor.calcConstructLength();
+        sead::HeapSafeString text(heap, length + 1);
+        preprocessor.construct(&text);
+        preprocessor.finalize();
+
+        detail::FileIOMgr::DialogArg arg;
+        arg.mFilter = "sh";
+        arg.mFileName =
+            mArchive->mSourceNames[mArchive->mResShaderArchive.getResShaderProgramArray()
+                                       .get(program_index)
+                                       .getSourceIndex(ShaderType(type))];
+        detail::FileIOMgr::instance()->save(text.cstr(), length, arg);
+    } else if (id >= 105014 && id < num * 4 + 105014) {
+        sead::Heap* heap = detail::PrivateResource::instance()->getDebugHeap();
+        const u32 program_index = (id - 105014) / 4;
+        const u32 type = (id - 105014) % 4;
+
+        shtxt::Preprocessor preprocessor(heap, heap);
+        sead::BufferedSafeString* source =
+            detail::PrivateResource::instance()->getShaderSourceBuffer(type);
+        ShaderProgram* program =
+            mArchive->mShaderPrograms[program_index].getVariationProgram_(mVariationIndex);
+        program->calcCompileSource(ShaderType(type), source, ShaderCompileInfo::cTarget_NVNBinary);
+
+        preprocessor.initialize(source->cstr());
+        preprocessor.preprocess(0x7a7, 0, 0);
+        const s32 length = preprocessor.calcConstructLength();
+        sead::HeapSafeString text(heap, length + 1);
+        preprocessor.construct(&text);
+        preprocessor.finalize();
+
+        detail::FileIOMgr::DialogArg arg;
+        arg.mFilter = "sh";
+        arg.mFileName =
+            mArchive->mSourceNames[mArchive->mResShaderArchive.getResShaderProgramArray()
+                                       .get(program_index)
+                                       .getSourceIndex(ShaderType(type))];
+        detail::FileIOMgr::instance()->save(text.cstr(), length, arg);
+    } else if (id >= 106014 && id < num * 4 + 106014) {
+        mArchive->mShaderPrograms[id - 106014].validate_();
+        updateAnalyze();
+    } else if (id == 100015) {
+        sead::FormatFixedSafeString<1024> str(
+            "File = %%AGL_ROOT%%/tools/temporary/shader_analyze, Verb = open");
+    } else if (id == 100013) {
+        const ShaderProgram* program = mArchive->mShaderPrograms[mProgramIndex].getVariation(0);
+        s32 index = 0;
+        s32 i = 0;
+        for (const auto& macro : program->mVariation->mVariationBuffer.mMacros) {
+            index += mMacroValueIndex(i) * macro.mStride;
+            i++;
+        }
+        mVariationIndex = index;
+    }
+}
+
+/**
  * Constructs an empty shader program editor.
  */
 ShaderProgramEdit::ShaderProgramEdit() : mProgramIndex(0), mVariationIndex(0), mArchive(nullptr)
@@ -529,6 +675,65 @@ void ShaderSource::genMessage(sead::hostio::Context* pContext)
             "Font = FixedPitch, EditorExtension = sh, IsReadOnly = True, IsEnable=False, "
             "Encode=%s",
             detail::ShaderTextUtil::isUTF8(text.cstr()) ? "UTF8" : "SJIS");
+    }
+}
+
+/**
+ * Handles a property event of the shader source sent from the host.
+ * @param pEvent property event
+ */
+void ShaderSource::listenPropertyEvent(const sead::hostio::PropertyEvent* pEvent)
+{
+    if (!mEditText) {
+        if (reinterpret_cast<uintptr_t>(pEvent->getId()) == 100012) {
+            resize(sead::SafeString(mResShaderSource.getText()), 2);
+        }
+        return;
+    }
+
+    if (isEventTarget(pEvent, mEditText->cstr())) {
+        mFlags |= cFlag_Dirty;
+    }
+
+    if (isEventTarget(pEvent, mEditText->cstr()) && getEventValue(pEvent) == 1) {
+        goto compile;
+    }
+
+    switch (reinterpret_cast<uintptr_t>(pEvent->getId())) {
+    case 100007: {
+        detail::FileIOMgr::DialogArg arg;
+        arg.mFileName = sead::SafeString(sead::SafeString::cEmptyString);
+        arg.mFilter = "sh";
+        detail::FileIOMgr::instance()->save(mEditText->cstr(), mEditText->calcLength(), arg);
+        break;
+    }
+    case 100008:
+        if (mEditText) {
+            delete mEditText;
+        }
+        mEditText = nullptr;
+        mArchive->mSourceTexts[mIndex] = mResShaderSource.getText();
+        mFlags |= cFlag_Dirty;
+        [[fallthrough]];
+    case 100001:
+    case 100006:
+    compile:
+        if (mFlags & cFlag_Dirty) {
+            ShaderProgramArchive* archive = mArchive;
+            s32 index = 0;
+            for (auto& source : archive->mShaderSources) {
+                if (mIncludeFlags[index]) {
+                    source.mFlags |= cFlag_Dirty;
+                }
+                index++;
+            }
+            mArchive->setUpFromObjectReflector(
+                false, reinterpret_cast<uintptr_t>(pEvent->getId()) == 100006);
+        }
+        break;
+    case 100011:
+        resize(*mEditText, 2);
+        break;
     }
 }
 

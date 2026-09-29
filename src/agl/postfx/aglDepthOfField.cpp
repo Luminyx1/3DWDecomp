@@ -1408,16 +1408,22 @@ void DepthOfField::listenPropertyEvent(const sead::hostio::PropertyEvent* pEvent
     copyParameterToAllContext(0);
 }
 
+/**
+ * Clamps the mip level and rebuilds the indirect matrix when an indirect texture parameter changes.
+ * @param pNode Node that received the event.
+ * @param pEvent Property event received from the host.
+ */
 void DepthOfFieldParameter::listenPropertyEventDepthOfFieldParameter(
     sead::hostio::Node* pNode, const sead::hostio::PropertyEvent* pEvent)
 {
     *mLevel = sead::Mathf::clamp(*mLevel, 0.0f, 14.0f);
-    const void* id = pEvent->getId();
-    if (id != &*mIndirectTexScale && id != &*mIndirectTexRotate && id != &*mIndirectTexTrans)
+    uintptr_t id = pEvent->getIdValue();
+    if (id == reinterpret_cast<uintptr_t>(&*mIndirectTexScale) ||
+        id == reinterpret_cast<uintptr_t>(&*mIndirectTexRotate) ||
+        id == reinterpret_cast<uintptr_t>(&*mIndirectTexTrans))
     {
-        return;
+        updateIndirectMatrix_();
     }
-    updateIndirectMatrix_();
 }
 
 void DepthOfField::tempVignettingPostRead_(s32 index, const TempVignetting& rVignetting)
