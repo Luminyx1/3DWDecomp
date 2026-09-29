@@ -1,5 +1,5 @@
 # the game binary — keep locally, never commit
-fury.nso
+*.nso
 
 # generated
 /build/
