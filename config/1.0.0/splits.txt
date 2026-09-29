@@ -158,7 +158,7 @@ src/Game/Boss/KoopaChaseStateDemo.cpp:
     .text   start:0x0002DA50 end:0x0002E8B0
 src/Game/Boss/KoopaChaseStateFire.cpp:
     .text   start:0x0002E8B0 end:0x0002F14C
-src/Game/Boss/KooapStateChaseJump.cpp:
+src/Game/Boss/KoopaStateChaseJump.cpp:
     .text   start:0x0002F150 end:0x0002F568
 src/Game/Boss/KoopaChaseStateProvocation.cpp:
     .text   start:0x0002F570 end:0x0002F934
@@ -168,7 +168,7 @@ src/Game/Boss/KoopaChaseStateWarp.cpp:
     .text   start:0x000305B0 end:0x000308D8
 src/Game/Boss/KoopaChaseWarpDummy.cpp:
     .text   start:0x000308E0 end:0x00030EB8
-src/Game/Boss/KoopaLasttAttack.cpp:
+src/Game/Boss/KoopaLastAttack.cpp:
     .text   start:0x00030EC0 end:0x000310F8
 src/Game/Boss/KoopaLastBeforeCheckPoint.cpp:
     .text   start:0x00031100 end:0x00031E60
@@ -178,7 +178,7 @@ src/Game/Boss/KoopaLastBlockPowStateDemo.cpp:
     .text   start:0x00032B50 end:0x00033410
 src/Game/Boss/KoopaLastBreakWall.cpp:
     .text   start:0x00033410 end:0x00034094
-src/Game/Boss/KoopaLastDefendedBlockPow.cpp:
+src/Game/Boss/KoopaLastDefendeBlockPow.cpp:
     .text   start:0x000340A0 end:0x00034F1C
 src/Game/Boss/KoopaLastDemoAppear.cpp:
     .text   start:0x00034F20 end:0x000359B4
@@ -206,7 +206,7 @@ src/Game/Boss/KoopaLastWallClimbDown.cpp:
     .text   start:0x00039F50 end:0x0003A874
 src/Game/Boss/KoopaNeedleBall.cpp:
     .text   start:0x0003A880 end:0x0003B22C
-src/Game/Boss/Kyruppon.cpp:
+src/Game/Boss/Kyuppon.cpp:
     .text   start:0x0003B230 end:0x0003F654
 src/Game/Boss/Punpun.cpp:
     .text   start:0x0003F660 end:0x00041838
@@ -1422,7 +1422,7 @@ src/Game/MapObj/BreakMapParts.cpp:
     .text   start:0x0025FD10 end:0x00260804
 src/Game/MapObj/Bush.cpp:
     .text   start:0x00260810 end:0x00261B18
-src/Game/MapObj/CameaInSwitchOnAreaWatcher.cpp:
+src/Game/MapObj/CameraInSwitchOnAreaWatcher.cpp:
     .text   start:0x00261B20 end:0x00261D90
 src/Game/MapObj/CameraRailObserver.cpp:
     .text   start:0x00261D90 end:0x002622D4
@@ -1590,7 +1590,7 @@ src/Game/MapObj/FishColony.cpp:
     .text   start:0x002AAEB0 end:0x002ABD08
 src/Game/MapObj/FlingPole.cpp:
     .text   start:0x002ABD10 end:0x002B0C88
-src/Game/MapObj/FlipCircuisDoor.cpp:
+src/Game/MapObj/FlipCircusDoor.cpp:
     .text   start:0x002B0C90 end:0x002B0ED8
 src/Game/MapObj/FlipPanel.cpp:
     .text   start:0x002B0EE0 end:0x002B1F14
@@ -1634,11 +1634,11 @@ src/Game/MapObj/GoalItemWatcher.cpp:
     .text   start:0x002CF140 end:0x002CF438
 src/Game/MapObj/GoalObjHolder.cpp:
     .text   start:0x002CF440 end:0x002CF674
-src/Game/MapObj/GoalObjStateGoalDemoParam.cpp:
+src/Game/MapObj/GoalObjStateGoalDemo.cpp:
     .text   start:0x002CF680 end:0x002D0C98
 src/Game/MapObj/GoalPole.cpp:
     .text   start:0x002D0CA0 end:0x002D4B94
-src/Game/MapObj/GolePoleBindPuppeteer.cpp:
+src/Game/MapObj/GoalPoleBindPuppeteer.cpp:
     .text   start:0x002D4BA0 end:0x002D7008
 src/Game/MapObj/GoalPoleFlag.cpp:
     .text   start:0x002D7010 end:0x002D7D08
@@ -1700,7 +1700,7 @@ src/Game/MapObj/ItemBubble.cpp:
     .text   start:0x002E7E70 end:0x002E8AE8
 src/Game/MapObj/ItemBubbleBuoyant.cpp:
     .text   start:0x002E8AF0 end:0x002E8F48
-src/Game/MapObj/ItemBubbleSingleModel.cpp:
+src/Game/MapObj/ItemBubbleSingleMode.cpp:
     .text   start:0x002E8F50 end:0x002E9360
 src/Game/MapObj/ItemHolder.cpp:
     .text   start:0x002E9360 end:0x002EB4C8
@@ -1872,7 +1872,7 @@ src/Game/MapObj/PressureDeathObj.cpp:
     .text   start:0x00346990 end:0x003473F4
 src/Game/MapObj/PSwitchTimerCoinWatcher.cpp:
     .text   start:0x00347400 end:0x00347BE4
-src/Game/MapObj/PuppetStickRouteSelector.cpp:
+src/Game/MapObj/PuppetStickRouteSelecter.cpp:
     .text   start:0x00347BF0 end:0x003480DC
 src/Game/MapObj/RaftConveyer.cpp:
     .text   start:0x003480E0 end:0x00348720
@@ -1950,7 +1950,7 @@ src/Game/MapObj_2/StepScrollParts.cpp:
     .text   start:0x00364D40 end:0x003650E0
 src/Game/MapObj_2/StepScrollWatcher.cpp:
     .text   start:0x003650E0 end:0x00365CB4
-src/Game/MapObj_2/StongHipDropReactPoint.cpp:
+src/Game/MapObj_2/StrongHipDropReactPoint.cpp:
     .text   start:0x00365CC0 end:0x00365F10
 src/Game/MapObj_2/SuperBell.cpp:
     .text   start:0x00365F10 end:0x00366B64
@@ -2110,7 +2110,7 @@ src/Game/MapObj_2/TransparentWall.cpp:
     .text   start:0x00395FA0 end:0x00396300
 src/Game/MapObj_2/Trapeze.cpp:
     .text   start:0x00396300 end:0x00397AC8
-src/Game/MapObj_2/TrapzeBindPuppeteer.cpp:
+src/Game/MapObj_2/TrapezeBindPuppeteer.cpp:
     .text   start:0x00397AD0 end:0x00398788
 src/Game/MapObj_2/TrapezePuppeteerInfo.cpp:
     .text   start:0x00398790 end:0x003990A8
@@ -2132,7 +2132,7 @@ src/Game/MapObj_2/WarpCube.cpp:
     .text   start:0x003A0990 end:0x003A2EB4
 src/Game/MapObj_2/WarpCubeBindPuppeteer.cpp:
     .text   start:0x003A2EC0 end:0x003A32C0
-src/Game/MapObj_2/War_pCubeLockedPiece.cpp:
+src/Game/MapObj_2/WarpCubeLockedPiece.cpp:
     .text   start:0x003A32C0 end:0x003A3BD8
 src/Game/MapObj_2/WarpDoor.cpp:
     .text   start:0x003A3BE0 end:0x003A5708
@@ -2200,7 +2200,7 @@ src/Game/NPC/NekoParent.cpp:
     .text   start:0x003C5F20 end:0x003C947C
 src/Game/NPC/NekoStateWaitParam.cpp:
     .text   start:0x003C9480 end:0x003C9490
-src/Game/NPC/NpcHeadControllerParam.cpp:
+src/Game/NPC/NpcHeadController.cpp:
     .text   start:0x003C9490 end:0x003C9AD4
 src/Game/NPC/NpcStateChaseParam.cpp:
     .text   start:0x003C9AE0 end:0x003CA3EC
@@ -2208,7 +2208,7 @@ src/Game/NPC/NpcStateFunction.cpp:
     .text   start:0x003CA3F0 end:0x003CAB90
 src/Game/NPC/NpcStateParam.cpp:
     .text   start:0x003CAB90 end:0x003CABE4
-src/Game/NPC/NpcStateRunAwayParam.cpp:
+src/Game/NPC/NpcStateRunAway.cpp:
     .text   start:0x003CABF0 end:0x003CB96C
 src/Game/NPC/NpcStateWait.cpp:
     .text   start:0x003CB970 end:0x003CCAB4
@@ -3708,7 +3708,7 @@ src/nw/ui2d/ui2d_FontContainer.cpp:
     .text   start:0x005E6FD0 end:0x005E739C
 src/nw/ui2d/ui2d_TextureContainer_dup2.cpp:
     .text   start:0x005E73A0 end:0x005E7B48
-src/nw/ui2d/i2d_ScalableFontMgr.cpp:
+src/nw/ui2d/ui2d_ScalableFontMgr.cpp:
     .text   start:0x005E7B50 end:0x005E8AB0
 src/nw/ui2d/ui2d_Init.cpp:
     .text   start:0x005E8AB0 end:0x005E8C48
@@ -4754,7 +4754,7 @@ src/al/Library/Model_4/RailMoveMovement.cpp:
     .text   start:0x00875870 end:0x00875CA8
 src/al/Library/Model_4/RumbleCalculator.cpp:
     .text   start:0x00875CB0 end:0x00875F04
-src/al/Library/Model_4/SpringDyanmics.cpp:
+src/al/Library/Model_4/SpringDynamics.cpp:
     .text   start:0x00875F10 end:0x00878114
 src/al/Library/Model_4/SwingMovement.cpp:
     .text   start:0x00878120 end:0x008785C4
@@ -5006,53 +5006,53 @@ src/al/Library/Yaml/ByamlIter.cpp:
     .text   start:0x008D5500 end:0x008D87CC
 src/al/Library/Yaml/MacroUtil.cpp:
     .text   start:0x008D87D0 end:0x008D8A24
-src/al/Project/AccountUtil.cpp:
+src/al/Project/Account/AccountUtil.cpp:
     .text   start:0x008D8A30 end:0x008D8BB8
-src/al/Project/ActionAnimCtrl.cpp:
+src/al/Project/Action/ActionAnimCtrl.cpp:
     .text   start:0x008D8BC0 end:0x008D9C38
-src/al/Project/ActionEffectCtrl.cpp:
+src/al/Project/Action/ActionEffectCtrl.cpp:
     .text   start:0x008D9C40 end:0x008DA2E0
-src/al/Project/ActionFunction.cpp:
+src/al/Project/Action/ActionFunction.cpp:
     .text   start:0x008DA2E0 end:0x008DA2F8
-src/al/Project/ActionPadAndCameraData.cpp:
+src/al/Project/Action/ActionPadAndCameraData.cpp:
     .text   start:0x008DA300 end:0x008DAF08
-src/al/Project/ActionSeCtrl.cpp:
+src/al/Project/Action/ActionSeCtrl.cpp:
     .text   start:0x008DAF10 end:0x008DB9C8
-src/al/Project/ActorActionKeeper.cpp:
+src/al/Project/Action/ActorActionKeeper.cpp:
     .text   start:0x008DB9D0 end:0x008DBF50
-src/al/Project/ActionBgmCtrl.cpp:
+src/al/Project/Action/Ctrl/ActionBgmCtrl.cpp:
     .text   start:0x008DBF50 end:0x008DC8FC
-src/al/Project/ActionFlagCtrl.cpp:
+src/al/Project/Action/Ctrl/ActionFlagCtrl.cpp:
     .text   start:0x008DC900 end:0x008DD458
-src/al/Project/ActionOceanWaveCtrl.cpp:
+src/al/Project/Action/Ctrl/ActionOceanWaveCtrl.cpp:
     .text   start:0x008DD460 end:0x008DD7AC
-src/al/Project/ActionPadAndCameraCtrl.cpp:
+src/al/Project/Action/Ctrl/ActionPadAndCameraCtrl.cpp:
     .text   start:0x008DD7B0 end:0x008DDB20
-src/al/Project/ActionScreenEffectCtrl.cpp:
+src/al/Project/Action/Ctrl/ActionScreenEffectCtrl.cpp:
     .text   start:0x008DDB20 end:0x008DE024
-src/al/Project/YamlFormatter.cpp:
+src/al/Project/Action/Ctrl/YamlFormatter.cpp:
     .text   start:0x008DE030 end:0x008DEFB8
-src/al/Project/YamlWriter.cpp:
+src/al/Project/Action/Ctrl/YamlWriter.cpp:
     .text   start:0x008DEFC0 end:0x008DF074
-src/al/Project/ActorParam.cpp:
+src/al/Project/Actor/ActorParam.cpp:
     .text   start:0x008DF080 end:0x008DF10C
-src/al/Project/ActorParamHolder.cpp:
+src/al/Project/Actor/ActorParamHolder.cpp:
     .text   start:0x008DF110 end:0x008DF8C0
-src/al/Project/InitResourceDataAction.cpp:
+src/al/Project/Actor/InitResourceDataAction.cpp:
     .text   start:0x008DF8C0 end:0x008DF8F8
-src/al/Project/InitResourceDataActionAnim.cpp:
+src/al/Project/Actor/InitResourceDataActionAnim.cpp:
     .text   start:0x008DF900 end:0x008E0648
 src/al/Project/Anim/AnimInfo.cpp:
     .text   start:0x008E0650 end:0x008E0AF8
 src/al/Project/Anim/AnimPlayerSkl.cpp:
     .text   start:0x008E0B00 end:0x008E2BE0
-src/al/Project_2/AnimPlayerSimple.cpp:
+src/al/Project/Anim_2/AnimPlayerSimple.cpp:
     .text   start:0x008E2BE0 end:0x008E2E7C
-src/al/Project_2/InitResourceDataAnim.cpp:
+src/al/Project/Anim_2/InitResourceDataAnim.cpp:
     .text   start:0x008E2E80 end:0x008E3808
-src/al/Project_2/ModelAnimInterp.cpp:
+src/al/Project/Anim_2/ModelAnimInterp.cpp:
     .text   start:0x008E3810 end:0x008E4750
-src/al/Project_2/SklAnimRetargettingInfo.cpp:
+src/al/Project/Anim_2/SklAnimRetargettingInfo.cpp:
     .text   start:0x008E4750 end:0x008E4EF0
 src/al/Project/Area/AreaInitInfo.cpp:
     .text   start:0x008E4EF0 end:0x008E4FF8
