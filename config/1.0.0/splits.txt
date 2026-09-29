@@ -5104,7 +5104,7 @@ src/al/Project/Action/ActionPadAndCameraData.cpp:
     .text   start:0x008DA300 end:0x008DAF08
 src/al/Project/Action/ActionSeCtrl.cpp:
     .text   start:0x008DAF10 end:0x008DB9C8
-src/al/Project/Action/ActorActionKeeper.cpp:
+src/al/Project/Action/ActorActionKeeper.cpp: done
     .text   start:0x008DB9D0 end:0x008DBF50
 src/al/Project/Action/Ctrl/ActionBgmCtrl.cpp:
     .text   start:0x008DBF50 end:0x008DC8FC

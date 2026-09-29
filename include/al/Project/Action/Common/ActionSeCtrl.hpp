@@ -3,11 +3,14 @@
 #include <basis/seadTypes.h>
 
 namespace al {
+class AudioKeeper;
 class SeKeeper;
 class SeUserInfo;
 
 class ActionSeCtrl {
 public:
+    static ActionSeCtrl* tryCreate(AudioKeeper*);
+
     ActionSeCtrl(SeKeeper*, const SeUserInfo*);
 
     void init();
