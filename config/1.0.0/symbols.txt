@@ -4586,3 +4586,9 @@
 0x7102256200 8 object _ZN5erepo12_GLOBAL__N_111sLaunchTimeE
 0x7102256208 4 object _ZN5erepo12_GLOBAL__N_114sUpdateCounterE
 0x71022562E0 88 object _ZN5erepo12_GLOBAL__N_112sSendLogNameE
+
+# src/nw/font
+0x7101ACC000 33848 object _ZN2nn4font24g_RectDrawerShaderBinaryE
+0x71016C040C 7944 object _ZN2nn4font12_GLOBAL__N_115LineBreakRangesE
+0x71016C2314 3600 object _ZN2nn4font12_GLOBAL__N_120PairTableAlternativeE
+0x71016C3124 3600 object _ZN2nn4font12_GLOBAL__N_116PairTableDefaultE

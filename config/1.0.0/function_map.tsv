@@ -39640,14 +39640,14 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71005EF1B0			FALSE	_ZNK2nn4font14TextWriterBaseIcE32GetIgnoringKerningWithFixedWidthEv	nn::font::TextWriterBase<char>::GetIgnoringKerningWithFixedWidth() const	
 0x71005EF1C0			FALSE	_ZN2nn4font14TextWriterBaseIcE18CalculateLineWidthEPKci	nn::font::TextWriterBase<char>::CalculateLineWidth(char const*, int)	
 0x71005EF250			FALSE	_ZN2nn4font14TextWriterBaseIcE19CalculateLineHeightEPKci	nn::font::TextWriterBase<char>::CalculateLineHeight(char const*, int)	
-0x71005EF2E0			FALSE	sub_71005EF2E0	sub_71005EF2E0	
+0x71005EF2E0			FALSE	_ZN2nn4font12_GLOBAL__N_115IsPrintableCharEj	_ZN2nn4font12_GLOBAL__N_115IsPrintableCharEj	
 0x71005EF350			FALSE	_ZN2nn4font14TextWriterBaseIcE12AdjustCursorEPfS3_PKci	nn::font::TextWriterBase<char>::AdjustCursor(float*, float*, char const*, int)	
 0x71005EF730			FALSE	_ZNK2nn4font14TextWriterBaseIcE13GetLineOffsetEiPKfi	nn::font::TextWriterBase<char>::GetLineOffset(int, float const*, int) const	
 0x71005EF750			FALSE	_ZNK2nn4font14TextWriterBaseIcE12GetLineWidthEiPKfi	nn::font::TextWriterBase<char>::GetLineWidth(int, float const*, int) const	
 0x71005EF770			FALSE	_ZN2nn4font14TextWriterBaseIcE26MoveOriginAsFirstLineScaleEfPKci	nn::font::TextWriterBase<char>::MoveOriginAsFirstLineScale(float, char const*, int)	
 0x71005EF830			FALSE	_ZNK2nn4font14TextWriterBaseIcE13IsDrawFlagSetEjj	nn::font::TextWriterBase<char>::IsDrawFlagSet(unsigned int, unsigned int) const	
-0x71005EF850			FALSE	sub_71005EF850	sub_71005EF850	
-0x71005EF8B0			FALSE	sub_71005EF8B0	sub_71005EF8B0	
+0x71005EF850			FALSE	__cxx_global_var_init	__cxx_global_var_init	
+0x71005EF8B0			FALSE	__cxx_global_var_init.1	__cxx_global_var_init.1	
 0x71005EF920			FALSE	_ZN2nn4font14TextWriterBaseItEC2Ev	nn::font::TextWriterBase<unsigned short>::TextWriterBase()	
 0x71005EF970			FALSE	_ZN2nn4font14TextWriterBaseItED2Ev	nn::font::TextWriterBase<unsigned short>::~TextWriterBase()	
 0x71005EF980			FALSE	_ZN2nn4font14TextWriterBaseItE12SetLineSpaceEf	nn::font::TextWriterBase<unsigned short>::SetLineSpace(float)	
@@ -39708,8 +39708,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71005F2270			FALSE	_ZNK2nn4font14TextWriterBaseItE12GetLineWidthEiPKfi	nn::font::TextWriterBase<unsigned short>::GetLineWidth(int, float const*, int) const	
 0x71005F2290			FALSE	_ZN2nn4font14TextWriterBaseItE26MoveOriginAsFirstLineScaleEfPKti	nn::font::TextWriterBase<unsigned short>::MoveOriginAsFirstLineScale(float, unsigned short const*, int)	
 0x71005F2350			FALSE	_ZNK2nn4font14TextWriterBaseItE13IsDrawFlagSetEjj	nn::font::TextWriterBase<unsigned short>::IsDrawFlagSet(unsigned int, unsigned int) const	
-0x71005F2370			FALSE	sub_71005F2370	sub_71005F2370	
-0x71005F23D0			FALSE	sub_71005F23D0	sub_71005F23D0	
+0x71005F2370			FALSE	__cxx_global_var_init.2	__cxx_global_var_init.2	
+0x71005F23D0			FALSE	__cxx_global_var_init.3	__cxx_global_var_init.3	
 0x71005F2440			FALSE	_ZNK2nn4font24ExtendedTagProcessorBaseIcE18GetRuntimeTypeInfoEv	nn::font::ExtendedTagProcessorBase<char>::GetRuntimeTypeInfo() const	
 0x71005F24F0			FALSE	_ZN2nn4font24ExtendedTagProcessorBaseIcED0Ev	nn::font::ExtendedTagProcessorBase<char>::~ExtendedTagProcessorBase()	
 0x71005F2520			FALSE	_ZN2nn4font24ExtendedTagProcessorBaseIcE7ProcessEjPNS0_12PrintContextIcEE	nn::font::ExtendedTagProcessorBase<char>::Process(unsigned int, nn::font::PrintContext<char>*)	
@@ -39883,8 +39883,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71005F5BA0			FALSE	_ZNK2nn4font12ScalableFont18GetRuntimeTypeInfoEv	nn::font::ScalableFont::GetRuntimeTypeInfo() const	
 0x71005F5C50			FALSE	_ZNK2nn4font12ScalableFont18IsGlyphExistInFontEj	nn::font::ScalableFont::IsGlyphExistInFont(unsigned int) const	
 0x71005F5C60			FALSE	_ZNK2nn4font12ScalableFont17IsBorderAvailableEv	nn::font::ScalableFont::IsBorderAvailable() const	
-0x71005F5C70			FALSE	_ZN2nn4font12TextureCache13InitializeArg10SetDefaultEv	nn::font::TextureCache::InitializeArg::SetDefault()	
-0x71005F5EF0		font_TextureCache.o	FALSE	_ZN2nn4font12TextureCacheC2Ev	nn::font::TextureCache::TextureCache()	
+0x71005F5C70		font_TextureCache.o	FALSE	_ZN2nn4font12TextureCache13InitializeArg10SetDefaultEv	nn::font::TextureCache::InitializeArg::SetDefault()	
+0x71005F5EF0			FALSE	_ZN2nn4font12TextureCacheC2Ev	nn::font::TextureCache::TextureCache()	
 0x71005F6070			FALSE	_ZN2nn4font12TextureCacheD2Ev	nn::font::TextureCache::~TextureCache()	
 0x71005F6100			FALSE	_ZN2nn4font12TextureCacheD0Ev	nn::font::TextureCache::~TextureCache()	
 0x71005F61A0			FALSE	_ZN2nn4font12TextureCache17SetMemoryPoolInfoEPNS_3gfx14MemoryPoolInfoE	nn::font::TextureCache::SetMemoryPoolInfo(nn::gfx::MemoryPoolInfo*)	
@@ -40005,9 +40005,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71005FB9A0			FALSE	_ZN2nn4font27DefaultWordWrapCallbackBaseIcED2Ev	nn::font::DefaultWordWrapCallbackBase<char>::~DefaultWordWrapCallbackBase()	
 0x71005FB9C0			FALSE	_ZN2nn4font27DefaultWordWrapCallbackBaseIcED0Ev	nn::font::DefaultWordWrapCallbackBase<char>::~DefaultWordWrapCallbackBase()	
 0x71005FBA00			FALSE	_ZN2nn4font12WordWrapping13FindLineBreakEPKtS3_RNS0_20WordWrapCallbackBaseItEERKNS0_14WordWrapConfigE	nn::font::WordWrapping::FindLineBreak(unsigned short const*, unsigned short const*, nn::font::WordWrapCallbackBase<unsigned short>&, nn::font::WordWrapConfig const&)	
-0x71005FBA10			FALSE	_ZN2nn4font12WordWrapping13FindLineBreakEPKtS3_RNS0_20WordWrapCallbackBaseItEERKNS0_14WordWrapConfigE_0	_ZN2nn4font12WordWrapping13FindLineBreakEPKtS3_RNS0_20WordWrapCallbackBaseItEERKNS0_14WordWrapConfigE_0	
+0x71005FBA10			FALSE	_ZN2nn4font12_GLOBAL__N_117FindLineBreakImplItEEPKT_S5_S5_RNS0_20WordWrapCallbackBaseIS3_EERKNS0_14WordWrapConfigE	_ZN2nn4font12_GLOBAL__N_117FindLineBreakImplItEEPKT_S5_S5_RNS0_20WordWrapCallbackBaseIS3_EERKNS0_14WordWrapConfigE	
 0x71005FC000			FALSE	_ZN2nn4font12WordWrapping17FindLineBreakUtf8EPKcS3_RNS0_20WordWrapCallbackBaseIcEERKNS0_14WordWrapConfigE	nn::font::WordWrapping::FindLineBreakUtf8(char const*, char const*, nn::font::WordWrapCallbackBase<char>&, nn::font::WordWrapConfig const&)	
-0x71005FC010			FALSE	_ZN2nn4font12WordWrapping17FindLineBreakUtf8EPKcS3_RNS0_20WordWrapCallbackBaseIcEERKNS0_14WordWrapConfigE_0	_ZN2nn4font12WordWrapping17FindLineBreakUtf8EPKcS3_RNS0_20WordWrapCallbackBaseIcEERKNS0_14WordWrapConfigE_0	
+0x71005FC010			FALSE	_ZN2nn4font12_GLOBAL__N_117FindLineBreakImplIcEEPKT_S5_S5_RNS0_20WordWrapCallbackBaseIS3_EERKNS0_14WordWrapConfigE	_ZN2nn4font12_GLOBAL__N_117FindLineBreakImplIcEEPKT_S5_S5_RNS0_20WordWrapCallbackBaseIS3_EERKNS0_14WordWrapConfigE	
 0x71005FC5D0			FALSE	_ZN2nn4font12WordWrapping21CalculateWordWrappingEPjPtjPKtjRNS0_20WordWrapCallbackBaseItEERKNS0_14WordWrapConfigE	nn::font::WordWrapping::CalculateWordWrapping(unsigned int*, unsigned short*, unsigned int, unsigned short const*, unsigned int, nn::font::WordWrapCallbackBase<unsigned short>&, nn::font::WordWrapConfig const&)	
 0x71005FC880			FALSE	_ZN2nn4font12WordWrapping25CalculateWordWrappingUtf8EPjPcjPKcjRNS0_20WordWrapCallbackBaseIcEERKNS0_14WordWrapConfigE	nn::font::WordWrapping::CalculateWordWrappingUtf8(unsigned int*, char*, unsigned int, char const*, unsigned int, nn::font::WordWrapCallbackBase<char>&, nn::font::WordWrapConfig const&)	
 0x71005FCB90			FALSE	_ZN2nn4font27DefaultWordWrapCallbackBaseItE17GetLineBreakLimitEPKtS4_	nn::font::DefaultWordWrapCallbackBase<unsigned short>::GetLineBreakLimit(unsigned short const*, unsigned short const*)	

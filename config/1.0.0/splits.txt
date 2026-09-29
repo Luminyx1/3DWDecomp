@@ -3724,7 +3724,7 @@ src/nw/ui2d/ui2d_LayoutPaneFactory.cpp:
     .text   start:0x005E8C50 end:0x005E9BF4
 src/nw/ui2d/ui2d_Scissor.cpp:
     .text   start:0x005E9C00 end:0x005E9FE4
-src/nw/font/font_GpuBuffer.cpp:
+src/nw/font/font_GpuBuffer.cpp: done
     .text   start:0x005E9FF0 end:0x005EA350
 src/nw/font/font_RectDrawer.cpp:
     .text   start:0x005EA350 end:0x005EB72C
@@ -3734,25 +3734,25 @@ src/nw/font/font_DispStringBuffer.cpp:
     .text   start:0x005EBEE0 end:0x005ED058
 src/nw/font/font_TextWriterBase.cpp:
     .text   start:0x005ED060 end:0x005F2640
-src/nw/font/font_TagProcessorBase.cpp:
+src/nw/font/font_TagProcessorBase.cpp: done
     .text   start:0x005F2640 end:0x005F30E0
 src/nw/font/font_ExtendedTagProcessorBase.cpp:
     .text   start:0x005F30E0 end:0x005F3A90
-src/nw/font/font_Font.cpp:
+src/nw/font/font_Font.cpp: done
     .text   start:0x005F3A90 end:0x005F3C54
-src/nw/font/font_CharStrmReader.cpp:
+src/nw/font/font_CharStrmReader.cpp: done
     .text   start:0x005F3C60 end:0x005F3D30
 src/nw/font/font_ResFontBase.cpp:
     .text   start:0x005F3D30 end:0x005F4FA4
-src/nw/font/font_ScalableFont.cpp:
-    .text   start:0x005F4FC0 end:0x005F5EE8
+src/nw/font/font_ScalableFont.cpp: done
+    .text   start:0x005F4FC0 end:0x005F5C68
 src/nw/font/font_TextureCache.cpp:
-    .text   start:0x005F5EF0 end:0x005F98B8
+    .text   start:0x005F5C70 end:0x005F98B8
 src/nw/font/font_GlyphTreeMap.cpp:
     .text   start:0x005F98C0 end:0x005FA6A4
 src/nw/font/font_ResFont.cpp:
     .text   start:0x005FA6B0 end:0x005FAC98
-src/nw/font/font_PairFont.cpp:
+src/nw/font/font_PairFont.cpp: done
     .text   start:0x005FACA0 end:0x005FB88C
 src/nw/font/font_WordWrapping.cpp:
     .text   start:0x005FB890 end:0x005FCC60

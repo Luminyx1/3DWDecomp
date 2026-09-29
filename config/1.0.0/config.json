@@ -40,7 +40,8 @@
     "src/sead/": "-fno-strict-aliasing",
     "src/agl/": "-fno-strict-aliasing",
     "src/aal/": "-fno-strict-aliasing",
-    "src/erepo/": "-fno-strict-aliasing"
+    "src/erepo/": "-fno-strict-aliasing",
+    "src/nw/": "-fno-strict-aliasing -frtti"
   },
 
   "$include_note": [
