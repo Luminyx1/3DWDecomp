@@ -55538,7 +55538,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71008EC5A0			FALSE	_ZN2al11AudioKeeper4killEv	al::AudioKeeper::kill()	
 0x71008EC5C0			FALSE	_ZN21alAudioKeeperFunction24createAndInitAudioKeeperEPKN2al13AudioDirectorEb	alAudioKeeperFunction::createAndInitAudioKeeper(al::AudioDirector const*, bool)	
 0x71008EC640		AudioRequestKeeperSyncedBgm.o	FALSE	_ZN2al27AudioRequestKeeperSyncedBgmC2Ev	al::AudioRequestKeeperSyncedBgm::AudioRequestKeeperSyncedBgm()	
-0x71008EC9C0		System.o	FALSE	_ZN2al27AudioRequestKeeperSyncedBgm4initEPKNS_13AudioDirectorE	al::AudioRequestKeeperSyncedBgm::init(al::AudioDirector const*)	object (smo)
+0x71008EC9C0			FALSE	_ZN2al27AudioRequestKeeperSyncedBgm4initEPKNS_13AudioDirectorE	al::AudioRequestKeeperSyncedBgm::init(al::AudioDirector const*)	object (smo)
 0x71008EC9F0			FALSE	_ZN2al27AudioRequestKeeperSyncedBgm6updateEv	al::AudioRequestKeeperSyncedBgm::update()	
 0x71008ECB30			FALSE	_ZN2al27AudioRequestKeeperSyncedBgm10requestBgmENS_14BgmPlayingTypeERKNS_17BgmPlayingRequestEi	al::AudioRequestKeeperSyncedBgm::requestBgm(al::BgmPlayingType, al::BgmPlayingRequest const&, int)	
 0x71008ECBC0			FALSE	_ZNK2al27AudioRequestKeeperSyncedBgm14getAudioKeeperEv	al::AudioRequestKeeperSyncedBgm::getAudioKeeper() const	
@@ -55891,19 +55891,19 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71008F56C0			FALSE	_ZN2al19BgmCombinedLineInfo11compareInfoEPKS0_S2_	al::BgmCombinedLineInfo::compareInfo(al::BgmCombinedLineInfo const*, al::BgmCombinedLineInfo const*)	
 0x71008F56D0		BgmPlayInfo.o	FALSE	_ZN2al11BgmPlayInfo10createInfoERKNS_9ByamlIterE	al::BgmPlayInfo::createInfo(al::ByamlIter const&)	object (smo)
 0x71008F5780			FALSE	_ZN2al11BgmPlayInfo11compareInfoEPKS0_S2_	al::BgmPlayInfo::compareInfo(al::BgmPlayInfo const*, al::BgmPlayInfo const*)	
-0x71008F5790			FALSE	_ZN2al21BgmResourceSuffixInfo10createInfoERKNS_9ByamlIterE	al::BgmResourceSuffixInfo::createInfo(al::ByamlIter const&)	
+0x71008F5790		BgmResourceCategoryInfo.o	FALSE	_ZN2al21BgmResourceSuffixInfo10createInfoERKNS_9ByamlIterE	al::BgmResourceSuffixInfo::createInfo(al::ByamlIter const&)	
 0x71008F5850			FALSE	_ZN2al22BgmEnableSituationInfo10createInfoERKNS_9ByamlIterE	al::BgmEnableSituationInfo::createInfo(al::ByamlIter const&)	
 0x71008F58D0			FALSE	_ZN2al28BgmStartTriggerSituationInfo10createInfoERKNS_9ByamlIterE	al::BgmStartTriggerSituationInfo::createInfo(al::ByamlIter const&)	
 0x71008F5920			FALSE	_ZN2al15BgmResourceInfo10createInfoERKNS_9ByamlIterE	al::BgmResourceInfo::createInfo(al::ByamlIter const&)	
 0x71008F5AE0			FALSE	_ZN2al14createInfoListINS_21BgmResourceSuffixInfoEEEPNS_13AudioInfoListIT_EERKNS_9ByamlIterE	al::AudioInfoList<al::BgmResourceSuffixInfo>* al::createInfoList<al::BgmResourceSuffixInfo>(al::ByamlIter const&)	
 0x71008F5C70			FALSE	_ZN2al14createInfoListINS_22BgmEnableSituationInfoEEEPNS_13AudioInfoListIT_EERKNS_9ByamlIterE	al::AudioInfoList<al::BgmEnableSituationInfo>* al::createInfoList<al::BgmEnableSituationInfo>(al::ByamlIter const&)	
 0x71008F5DB0			FALSE	_ZN2al14createInfoListINS_28BgmStartTriggerSituationInfoEEEPNS_13AudioInfoListIT_EERKNS_9ByamlIterE	al::AudioInfoList<al::BgmStartTriggerSituationInfo>* al::createInfoList<al::BgmStartTriggerSituationInfo>(al::ByamlIter const&)	
-0x71008F5EB0		BgmResourceCategoryInfo.o	FALSE	_ZN2al21BgmResourceSuffixInfo11compareInfoEPKS0_S2_	al::BgmResourceSuffixInfo::compareInfo(al::BgmResourceSuffixInfo const*, al::BgmResourceSuffixInfo const*)	object (smo)
+0x71008F5EB0			FALSE	_ZN2al21BgmResourceSuffixInfo11compareInfoEPKS0_S2_	al::BgmResourceSuffixInfo::compareInfo(al::BgmResourceSuffixInfo const*, al::BgmResourceSuffixInfo const*)	object (smo)
 0x71008F5EC0			FALSE	_ZN2al22BgmEnableSituationInfo11compareInfoEPKS0_S2_	al::BgmEnableSituationInfo::compareInfo(al::BgmEnableSituationInfo const*, al::BgmEnableSituationInfo const*)	
 0x71008F5ED0			FALSE	_ZN2al28BgmStartTriggerSituationInfo11compareInfoEPKS0_S2_	al::BgmStartTriggerSituationInfo::compareInfo(al::BgmStartTriggerSituationInfo const*, al::BgmStartTriggerSituationInfo const*)	
 0x71008F5EE0			FALSE	_ZN2al15BgmResourceInfo11compareInfoEPKS0_S2_	al::BgmResourceInfo::compareInfo(al::BgmResourceInfo const*, al::BgmResourceInfo const*)	
-0x71008F5EF0			FALSE	_ZN2al16BgmStagePlayInfo10createInfoERKNS_9ByamlIterE	al::BgmStagePlayInfo::createInfo(al::ByamlIter const&)	
-0x71008F5FC0		BgmStageScenarioInfo.o	FALSE	_ZN2al12BgmStageInfo10createInfoERKNS_9ByamlIterE	al::BgmStageInfo::createInfo(al::ByamlIter const&)	object (smo)
+0x71008F5EF0		BgmStageScenarioInfo.o	FALSE	_ZN2al16BgmStagePlayInfo10createInfoERKNS_9ByamlIterE	al::BgmStagePlayInfo::createInfo(al::ByamlIter const&)	
+0x71008F5FC0			FALSE	_ZN2al12BgmStageInfo10createInfoERKNS_9ByamlIterE	al::BgmStageInfo::createInfo(al::ByamlIter const&)	object (smo)
 0x71008F6040			FALSE	_ZN2al14createInfoListINS_16BgmStagePlayInfoEEEPNS_13AudioInfoListIT_EERKNS_9ByamlIterE	al::AudioInfoList<al::BgmStagePlayInfo>* al::createInfoList<al::BgmStagePlayInfo>(al::ByamlIter const&)	
 0x71008F6110			FALSE	_ZN2al16BgmStagePlayInfo11compareInfoEPKS0_S2_	al::BgmStagePlayInfo::compareInfo(al::BgmStagePlayInfo const*, al::BgmStagePlayInfo const*)	
 0x71008F6120			FALSE	_ZN2al12BgmStageInfo11compareInfoEPKS0_S2_	al::BgmStageInfo::compareInfo(al::BgmStageInfo const*, al::BgmStageInfo const*)	
@@ -61334,7 +61334,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71009F1D40			FALSE	_ZN2al24SeListenerPoserMiddlePos20setBaseToMiddleRatioEf	al::SeListenerPoserMiddlePos::setBaseToMiddleRatio(float)	
 0x71009F1D50			FALSE	_ZN2al24SeListenerPoserMiddlePos16calcListenerPoseEPN4sead8Matrix34IfEEPNS1_7Vector3IfEERKNS_16ISeListenerParamE	al::SeListenerPoserMiddlePos::calcListenerPose(sead::Matrix34<float>*, sead::Vector3<float>*, al::ISeListenerParam const&)	
 0x71009F1FD0			FALSE	_ZN2al24SeListenerPoserMiddlePosD0Ev	al::SeListenerPoserMiddlePos::~SeListenerPoserMiddlePos()	
-0x71009F1FE0			FALSE	_ZN2al15SeListenerPoserC2ERKN4sead14SafeStringBaseIcEES5_	al::SeListenerPoser::SeListenerPoser(sead::SafeStringBase<char> const&, sead::SafeStringBase<char> const&)	
+0x71009F1FE0		SeListenerPoserUtil.o	FALSE	_ZN2al15SeListenerPoserC2ERKN4sead14SafeStringBaseIcEES5_	al::SeListenerPoser::SeListenerPoser(sead::SafeStringBase<char> const&, sead::SafeStringBase<char> const&)	
 0x71009F2010			FALSE	_ZN2al15SeListenerPoser17tryCalcViewMatrixEPN4sead8Matrix34IfEERKNS1_7Vector3IfEES8_S8_	al::SeListenerPoser::tryCalcViewMatrix(sead::Matrix34<float>*, sead::Vector3<float> const&, sead::Vector3<float> const&, sead::Vector3<float> const&)	
 0x71009F21C0			FALSE	_ZNK2al16ISeListenerParam31calcLookAtDirNormFromViewMatrixEPN4sead7Vector3IfEE	al::ISeListenerParam::calcLookAtDirNormFromViewMatrix(sead::Vector3<float>*) const	
 0x71009F2210			FALSE	_ZNK2al16ISeListenerParam27calcUpDirNormFromViewMatrixEPN4sead7Vector3IfEE	al::ISeListenerParam::calcUpDirNormFromViewMatrix(sead::Vector3<float>*) const	
@@ -61526,14 +61526,14 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71009F8CD0			FALSE	_ZNK2al26SeSourcePose3DMtxOffsetPtr8get3DMtxEv	al::SeSourcePose3DMtxOffsetPtr::get3DMtx() const	
 0x71009F8CE0			FALSE	_ZN2al26SeSourcePose3DMtxOffsetPtr33checkDerivedRuntimeTypeInfoStaticEPKN4sead15RuntimeTypeInfo9InterfaceE	al::SeSourcePose3DMtxOffsetPtr::checkDerivedRuntimeTypeInfoStatic(sead::RuntimeTypeInfo::Interface const*)	
 0x71009F8F00			FALSE	_ZNK4sead15RuntimeTypeInfo6DeriveIN2al21SeSourcePose3DMtxBaseEE9isDerivedEPKNS0_9InterfaceE	sead::RuntimeTypeInfo::Derive<al::SeSourcePose3DMtxBase>::isDerived(sead::RuntimeTypeInfo::Interface const*) const	
-0x71009F8F90			FALSE	_ZN2al21SeSourcePose3DMtxBaseC2ERKN4sead14SafeStringBaseIcEE	al::SeSourcePose3DMtxBase::SeSourcePose3DMtxBase(sead::SafeStringBase<char> const&)	
+0x71009F8F90		SeSourcePose3DMtxBase.o	FALSE	_ZN2al21SeSourcePose3DMtxBaseC2ERKN4sead14SafeStringBaseIcEE	al::SeSourcePose3DMtxBase::SeSourcePose3DMtxBase(sead::SafeStringBase<char> const&)	
 0x71009F8FC0			FALSE	_ZNK2al21SeSourcePose3DMtxBase27checkDerivedRuntimeTypeInfoEPKN4sead15RuntimeTypeInfo9InterfaceE	al::SeSourcePose3DMtxBase::checkDerivedRuntimeTypeInfo(sead::RuntimeTypeInfo::Interface const*) const	
 0x71009F9140			FALSE	_ZNK2al21SeSourcePose3DMtxBase18getRuntimeTypeInfoEv	al::SeSourcePose3DMtxBase::getRuntimeTypeInfo() const	
 0x71009F91C0			FALSE	_ZNK2al21SeSourcePose3DMtxBase8get3DMtxEv	al::SeSourcePose3DMtxBase::get3DMtx() const	
-0x71009F91E0			FALSE	_ZN2al14SeSourcePose3DC2ERKN4sead14SafeStringBaseIcEE	al::SeSourcePose3D::SeSourcePose3D(sead::SafeStringBase<char> const&)	
+0x71009F91E0		SeSourcePose3D.o	FALSE	_ZN2al14SeSourcePose3DC2ERKN4sead14SafeStringBaseIcEE	al::SeSourcePose3D::SeSourcePose3D(sead::SafeStringBase<char> const&)	
 0x71009F9210			FALSE	_ZNK2al14SeSourcePose3D27checkDerivedRuntimeTypeInfoEPKN4sead15RuntimeTypeInfo9InterfaceE	al::SeSourcePose3D::checkDerivedRuntimeTypeInfo(sead::RuntimeTypeInfo::Interface const*) const	
 0x71009F9310			FALSE	_ZNK2al14SeSourcePose3D18getRuntimeTypeInfoEv	al::SeSourcePose3D::getRuntimeTypeInfo() const	
-0x71009F9390			FALSE	_ZN2al12SeSourcePoseC2ERKN4sead14SafeStringBaseIcEE	al::SeSourcePose::SeSourcePose(sead::SafeStringBase<char> const&)	
+0x71009F9390		SeSourcePose.o	FALSE	_ZN2al12SeSourcePoseC2ERKN4sead14SafeStringBaseIcEE	al::SeSourcePose::SeSourcePose(sead::SafeStringBase<char> const&)	
 0x71009F93B0			FALSE	_ZNK2al12SeSourcePose27checkDerivedRuntimeTypeInfoEPKN4sead15RuntimeTypeInfo9InterfaceE	al::SeSourcePose::checkDerivedRuntimeTypeInfo(sead::RuntimeTypeInfo::Interface const*) const	
 0x71009F9430			FALSE	_ZNK2al12SeSourcePose18getRuntimeTypeInfoEv	al::SeSourcePose::getRuntimeTypeInfo() const	
 0x71009F94B0		SeSourcePose3DMtxPtr.o	FALSE	_ZN2al20SeSourcePose3DMtxPtrC1EPKN4sead8Matrix34IfEE	al::SeSourcePose3DMtxPtr::SeSourcePose3DMtxPtr(sead::Matrix34<float> const*)	object (class)

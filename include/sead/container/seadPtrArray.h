@@ -235,6 +235,48 @@ public:
         }
     }
 
+    /// Bidirectional bubble sort with a statically known comparer (inlined at the call site).
+    template <typename T, typename Compare>
+    void sort_(Compare&& cmp)
+    {
+        if (mPtrNum < 2)
+            return;
+
+        T** ptrs = reinterpret_cast<T**>(mPtrs);
+        s32 lo = 0;
+        s32 hi = mPtrNum - 1;
+        while (lo < hi)
+        {
+            s32 last = lo;
+            for (s32 i = lo; i < hi; ++i)
+            {
+                if (cmp(ptrs[i], ptrs[i + 1]) > 0)
+                {
+                    T* tmp = ptrs[i];
+                    ptrs[i] = ptrs[i + 1];
+                    ptrs[i + 1] = tmp;
+                    last = i;
+                }
+            }
+            hi = last;
+            if (lo >= hi)
+                break;
+
+            last = hi;
+            for (s32 i = hi; i > lo; --i)
+            {
+                if (cmp(ptrs[i], ptrs[i - 1]) < 0)
+                {
+                    T* tmp = ptrs[i];
+                    ptrs[i] = ptrs[i - 1];
+                    ptrs[i - 1] = tmp;
+                    last = i;
+                }
+            }
+            lo = last;
+        }
+    }
+
 protected:
 
     s32 compare(const PtrArrayImpl& other, CompareCallbackImpl cmp) const;
@@ -334,7 +376,7 @@ public:
     s32 binarySearch(const T* ptr) const { return PtrArrayImpl::binarySearch(ptr, compareT); }
     s32 binarySearch(const T* ptr, CompareCallback cmp) const
     {
-        return PtrArrayImpl::binarySearch(ptr, cmp);
+        return PtrArrayImpl::binarySearch(ptr, reinterpret_cast<CompareCallbackImpl>(cmp));
     }
 
     bool operator==(const PtrArray& other) const { return equal(other, compareT); }

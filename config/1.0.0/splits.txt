@@ -5182,14 +5182,12 @@ src/al/Project/Audio/AudioGeneralPurposeAreaChecker.cpp:
 src/al/Project/Audio/AudioKeeper.cpp:
     .text   start:0x008EC2F0 end:0x008EC63C
 src/al/Project/Audio/AudioRequestKeeperSyncedBgm.cpp:
-    .text   start:0x008EC640 end:0x008EC9B4
-src/al/Project/Audio/System.cpp:
-    .text   start:0x008EC9C0 end:0x008ECBC8
+    .text   start:0x008EC640 end:0x008ECBC8
 src/al/Project/Audio/AudioResourceDirector.cpp:
     .text   start:0x008ECBD0 end:0x008ED274
 src/al/Project/Audio/AudioResourceLoader.cpp:
     .text   start:0x008ED280 end:0x008ED474
-src/al/Project/Audio/AudioSituation.cpp:
+src/al/Project/Audio/AudioSituation.cpp: done
     .text   start:0x008ED480 end:0x008ED518
 src/al/Project/Audio/AudioSituationDirector.cpp:
     .text   start:0x008ED520 end:0x008EDB94
@@ -5203,13 +5201,13 @@ src/al/Project/Audio/Keeper/NWSound3DEngineCustomCAFE.cpp:
     .text   start:0x008F1740 end:0x008F1A44
 src/al/Project/Audio/Keeper/SeadAudioPlayer.cpp:
     .text   start:0x008F1A50 end:0x008F262C
-src/al/Project/Audio/Keeper/SeadAudioResourceLoader.cpp:
+src/al/Project/Audio/Keeper/SeadAudioResourceLoader.cpp: done
     .text   start:0x008F2630 end:0x008F2634
 src/al/Project/Audio/Keeper/SoundHeapPtrWrapper.cpp:
     .text   start:0x008F2640 end:0x008F2A4C
 src/al/Project/Audio/Keeper/SoundSubArchiveKeeper.cpp:
     .text   start:0x008F2A50 end:0x008F3080
-src/al/Project/Audio/Sound/SoundHandle.cpp:
+src/al/Project/Audio/Sound/SoundHandle.cpp: done
     .text   start:0x008F3080 end:0x008F31A8
 src/al/Project/Base/HashUtil.cpp: done
     .text   start:0x008F31B0 end:0x008F33D4
@@ -5221,21 +5219,21 @@ src/al/Project/Base/StringOpUtil.cpp:
     .text   start:0x008F3780 end:0x008F5344
 src/al/Project/Base/StringUtil.cpp: done
     .text   start:0x008F5350 end:0x008F5484
-src/al/Project/Bgm/BgmLineInfo.cpp:
+src/al/Project/Bgm/BgmLineInfo.cpp: done
     .text   start:0x008F5490 end:0x008F56CC
-src/al/Project/Bgm/BgmPlayInfo.cpp:
-    .text   start:0x008F56D0 end:0x008F5EA8
-src/al/Project/Bgm/BgmResourceCategoryInfo.cpp:
-    .text   start:0x008F5EB0 end:0x008F5FC0
-src/al/Project/Bgm/BgmStageScenarioInfo.cpp:
-    .text   start:0x008F5FC0 end:0x008F612C
+src/al/Project/Bgm/BgmPlayInfo.cpp: done
+    .text   start:0x008F56D0 end:0x008F578C
+src/al/Project/Bgm/BgmResourceCategoryInfo.cpp: done
+    .text   start:0x008F5790 end:0x008F5EEC
+src/al/Project/Bgm/BgmStageScenarioInfo.cpp: done
+    .text   start:0x008F5EF0 end:0x008F612C
 src/al/Project/Bgm/BgmSuffixProcInfo.cpp:
     .text   start:0x008F6130 end:0x008F9EBC
 src/al/Project/Bgm/BgmDirector.cpp:
     .text   start:0x008F9EC0 end:0x008FA318
 src/al/Project/Bgm/BgmFunction.cpp:
     .text   start:0x008FA320 end:0x008FAA98
-src/al/Project/Bgm/BgmKeeper.cpp:
+src/al/Project/Bgm/BgmKeeper.cpp: done
     .text   start:0x008FAAA0 end:0x008FAB98
 src/al/Project/Bgm/BgmLine.cpp:
     .text   start:0x008FABA0 end:0x008FCB88
@@ -5553,7 +5551,7 @@ src/al/Project/Layout/LayoutPartsActorKeeper.cpp:
     .text   start:0x009A8B10 end:0x009A8D6C
 src/al/Project/Layout/LayoutResource.cpp:
     .text   start:0x009A8D70 end:0x009A93F4
-src/al/Project/Layout/LayoutSceneInfo.cpp:
+src/al/Project/Layout/LayoutSceneInfo.cpp: done
     .text   start:0x009A9400 end:0x009A9414
 src/al/Project/Layout/LayoutSystem.cpp:
     .text   start:0x009A9420 end:0x009AC5FC
@@ -5603,19 +5601,21 @@ src/al/Project/Model/ViewDepthDrawer.cpp:
     .text   start:0x009DCC80 end:0x009DD528
 src/al/Project/Model/VignettingDrawer.cpp:
     .text   start:0x009DD530 end:0x009F19EC
-src/al/Project/Se/SeListener.cpp:
+src/al/Project/Se/SeListener.cpp: done
     .text   start:0x009F19F0 end:0x009F1B24
-src/al/Project/Se/SeListenerParamTargetViewPos.cpp:
+src/al/Project/Se/SeListenerParamTargetViewPos.cpp: done
     .text   start:0x009F1B30 end:0x009F1B88
 src/al/Project/Se/SeListenerPoserAdjustMiddlePos.cpp:
     .text   start:0x009F1B90 end:0x009F1CF8
-src/al/Project/Se/SeListenerPoserMiddlePos.cpp:
-    .text   start:0x009F1D00 end:0x009F2248
-src/al/Project/Se/SeListenerPoserViewPos.cpp:
+src/al/Project/Se/SeListenerPoserMiddlePos.cpp: done
+    .text   start:0x009F1D00 end:0x009F1FD4
+src/al/Project/Se/SeListenerPoserUtil.cpp: done
+    .text   start:0x009F1FE0 end:0x009F2248
+src/al/Project/Se/SeListenerPoserViewPos.cpp: done
     .text   start:0x009F2250 end:0x009F2304
 src/al/Project/Se/SeListenerPoserViewPosOffset.cpp:
     .text   start:0x009F2310 end:0x009F2524
-src/al/Project/Se/SeListenerPoserViewPosOffsetFovy.cpp:
+src/al/Project/Se/SeListenerPoserViewPosOffsetFovy.cpp: done
     .text   start:0x009F2530 end:0x009F2624
 src/al/Project/Se/SePlayParamList.cpp:
     .text   start:0x009F2630 end:0x009F3434
@@ -5627,19 +5627,25 @@ src/al/Project/Se/SeSource3DLine.cpp:
     .text   start:0x009F7D70 end:0x009F8044
 src/al/Project/Se/SeSource3DPlaneRect.cpp:
     .text   start:0x009F8050 end:0x009F8294
-src/al/Project/Se/SeSource3DPoint.cpp:
+src/al/Project/Se/SeSource3DPoint.cpp: done
     .text   start:0x009F82A0 end:0x009F8334
-src/al/Project/Se/SeSource3DRing.cpp:
+src/al/Project/Se/SeSource3DRing.cpp: done
     .text   start:0x009F8340 end:0x009F8594
-src/al/Project/Se/SeSource3DSphere.cpp:
+src/al/Project/Se/SeSource3DSphere.cpp: done
     .text   start:0x009F85A0 end:0x009F8714
 src/al/Project/Se/SeSourceAmbient.cpp:
     .text   start:0x009F8720 end:0x009F8AA8
 src/al/Project/Se/SeSourcePose3DMtxOffsetPtr.cpp:
-    .text   start:0x009F8AB0 end:0x009F949C
-src/al/Project/Se/SeSourcePose3DMtxPtr.cpp:
+    .text   start:0x009F8AB0 end:0x009F8F8C
+src/al/Project/Se/SeSourcePose3DMtxBase.cpp: done
+    .text   start:0x009F8F90 end:0x009F91DC
+src/al/Project/Se/SeSourcePose3D.cpp: done
+    .text   start:0x009F91E0 end:0x009F937C
+src/al/Project/Se/SeSourcePose.cpp: done
+    .text   start:0x009F9390 end:0x009F949C
+src/al/Project/Se/SeSourcePose3DMtxPtr.cpp: done
     .text   start:0x009F94B0 end:0x009F981C
-src/al/Project/Se/SeSourcePose3DPosPtr.cpp:
+src/al/Project/Se/SeSourcePose3DPosPtr.cpp: done
     .text   start:0x009F9820 end:0x009F9A98
 src/al/Project/Se/SeSourcePoseNull.cpp:
     .text   start:0x009F9AA0 end:0x009FEAD8
@@ -5651,7 +5657,7 @@ src/al/Project/Se/ShaderHolder.cpp:
     .text   start:0x009FFC60 end:0x00A01434
 src/al/Project/Se/SkyboxDirector.cpp:
     .text   start:0x00A01440 end:0x00A018E8
-src/al/Project/Se/SkyboxFunction.cpp:
+src/al/Project/Se/SkyboxFunction.cpp: done
     .text   start:0x00A018F0 end:0x00A0190C
 src/al/Project/Se/SSR.cpp:
     .text   start:0x00A01910 end:0x00A02964
