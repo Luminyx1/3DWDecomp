@@ -49,19 +49,44 @@ public:
 
     struct CreateArg
     {
+        CreateArg();
+        CreateArg(const TaskClassID& factory);
+
         typedef void (*SingletonFunc)(TaskBase*);
 
         TaskClassID factory;
         HeapPolicies heap_policies;
-        TaskBase* parent;
-        TaskParameter* parameter;
-        FaderTaskBase* fader;
-        TaskBase* src_task;
-        TaskBase** created_task;
-        DelegateEvent<TaskBase*>::Slot* create_callback;
+        TaskBase* parent = nullptr;
+        TaskParameter* parameter = nullptr;
+        FaderTaskBase* fader = nullptr;
+        TaskBase* src_task = nullptr;
+        TaskBase** created_task = nullptr;
+        DelegateEvent<TaskBase*>::Slot* create_callback = nullptr;
         TaskUserID user_id;
-        Tag tag;
-        SingletonFunc instance_cb;
+        Tag tag = cApp;
+        SingletonFunc instance_cb = nullptr;
+    };
+
+    struct TakeoverArg : public CreateArg
+    {
+        TakeoverArg(TaskBase* src, const TaskClassID& dst, FaderTaskBase* fader);
+        TakeoverArg(const TaskClassID& dst, FaderTaskBase* fader);
+    };
+
+    struct PushArg : public CreateArg
+    {
+        PushArg(TaskBase* src, const TaskClassID& dst, FaderTaskBase* fader);
+        PushArg(const TaskClassID& dst, FaderTaskBase* fader);
+    };
+
+    struct MgrTaskArg : public CreateArg
+    {
+        explicit MgrTaskArg(const TaskClassID& classID);
+    };
+
+    struct SystemMgrTaskArg : public MgrTaskArg
+    {
+        explicit SystemMgrTaskArg(const TaskClassID& classID);
     };
 
 public:

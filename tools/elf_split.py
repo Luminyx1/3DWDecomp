@@ -127,6 +127,7 @@ class Carver:
         self.offs: dict[str, int] = {}                  # symname -> offset in its section
         self._sec_base: dict[str, int] = {}             # shared section -> address of offset 0
         self._pools: dict[str, tuple[E.Section, dict[bytes, int]]] = {}
+        self.ours_refs: dict[str, set[str]] = {}
         self.warnings: list[str] = []
 
     def _in_ranges(self, addr: int) -> bool:
@@ -271,6 +272,12 @@ class Carver:
         group = [s.name for s in self.img.syms_at(target_addr) if s.section == ".text"]
         if len(group) < 2 or not caller:
             return name
+        ours = self.ours_refs.get(caller, set())
+        for g in group:
+            if g in ours:
+                if g not in self.included:
+                    self.undefs.add(g)
+                return g
         def split(n):
             m = re.search(r"^(.*?)([CD][0-2])E", n)
             return (m.group(1), m.group(2)) if m else (None, None)
@@ -594,6 +601,31 @@ def _parse_range(tok: str) -> tuple[str, int, int]:
     return sec, lo_i, hi_i
 
 
+def _object_refs(path: str) -> dict[str, set[str]]:
+    """function name -> names its relocations reference, for a compiled object"""
+    from elftools.elf.elffile import ELFFile
+    from elftools.elf.relocation import RelocationSection
+    out: dict[str, set[str]] = {}
+    with open(path, "rb") as fh:
+        elf = ELFFile(fh)
+        symtab = elf.get_section_by_name(".symtab")
+        funcs = {}
+        for sym in symtab.iter_symbols():
+            if sym["st_info"]["type"] == "STT_FUNC" and sym["st_shndx"] not in ("SHN_UNDEF", "SHN_ABS"):
+                funcs.setdefault(sym["st_shndx"], []).append((sym["st_value"], sym["st_size"], sym.name))
+        for sec in elf.iter_sections():
+            if not isinstance(sec, RelocationSection):
+                continue
+            target = sec["sh_info"]
+            for r in sec.iter_relocations():
+                nm = symtab.get_symbol(r["r_info_sym"]).name
+                off = r["r_offset"]
+                for lo, size, fn in funcs.get(target, []):
+                    if lo <= off < lo + max(size, 1):
+                        out.setdefault(fn, set()).add(nm)
+    return out
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", required=True)
@@ -602,6 +634,9 @@ def main(argv=None):
     ap.add_argument("--syms", default=None, help="extra symbols (default: config/1.0.0/symbols.txt if present)")
     ap.add_argument("--range", action="append", default=[], metavar="SEC:LO:HI",
                     help="a section range this TU owns (repeatable)")
+    ap.add_argument("--ours", default=None,
+                    help="our compiled object for this unit: where a call could name either of "
+                         "two aliases (C1/C2, D1/D2), use the one our code references")
     ap.add_argument("-q", "--quiet", action="store_true")
     ap.add_argument("symbols", nargs="*", help="explicit symbol names (alternative to --range)")
     a = ap.parse_args(argv)
@@ -614,6 +649,8 @@ def main(argv=None):
 
     img = FuryImage(a.elf, extra_map=a.map, extra_syms=syms)
     c = Carver(img)
+    if a.ours and Path(a.ours).is_file():
+        c.ours_refs = _object_refs(a.ours)
     if a.range:
         c.include_ranges([_parse_range(t) for t in a.range])
     if a.symbols:

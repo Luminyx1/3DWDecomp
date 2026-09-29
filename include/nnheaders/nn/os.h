@@ -42,13 +42,12 @@ struct InterProcessEventType {
 class Tick {
 public:
     Tick() = default;
-    constexpr Tick(s64 tick) : mTick(tick) {}
+    constexpr Tick(s64 tick) : value(tick) {}
 
-    s64 GetInt64Value() const { return mTick; }
-    operator s64() const { return mTick; }
+    s64 GetInt64Value() const { return value; }
+    operator s64() const { return value; }
 
-private:
-    s64 mTick;
+    s64 value;
 };
 
 struct LightEventType {

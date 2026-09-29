@@ -20,6 +20,13 @@ inline void Vector2CalcCommon<T>::add(Base& o, const Base& a, const Base& b)
 }
 
 template <typename T>
+inline void Vector2CalcCommon<T>::multScalar(Base& o, const Base& v, T t)
+{
+    o.x = v.x * t;
+    o.y = v.y * t;
+}
+
+template <typename T>
 inline void Vector2CalcCommon<T>::sub(Base& o, const Base& a, const Base& b)
 {
     o.x = a.x - b.x;
@@ -67,6 +74,20 @@ template <typename T>
 inline T Vector2CalcCommon<T>::length(const Base& v)
 {
     return MathCalcCommon<T>::sqrt(squaredLength(v));
+}
+
+template <typename T>
+T Vector2CalcCommon<T>::normalize(Base& v)
+{
+    const T len = length(v);
+    if (len > 0)
+    {
+        const T inv_len = 1 / len;
+        v.x *= inv_len;
+        v.y *= inv_len;
+    }
+
+    return len;
 }
 
 template <typename T>
@@ -126,6 +147,17 @@ inline void Vector3CalcCommon<T>::mul(Base& o, const Mtx34& m, const Base& a)
 }
 
 template <typename T>
+inline void Vector3CalcCommon<T>::mul(Base& o, const Mtx44& m, const Base& a)
+{
+    const Base tmp = a;
+    T inv = T(1) / (m.m[3][0] * tmp.x + m.m[3][1] * tmp.y + m.m[3][2] * tmp.z + m.m[3][3]);
+
+    o.x = inv * (m.m[0][0] * tmp.x + m.m[0][1] * tmp.y + m.m[0][2] * tmp.z + m.m[0][3]);
+    o.y = inv * (m.m[1][0] * tmp.x + m.m[1][1] * tmp.y + m.m[1][2] * tmp.z + m.m[1][3]);
+    o.z = inv * (m.m[2][0] * tmp.x + m.m[2][1] * tmp.y + m.m[2][2] * tmp.z + m.m[2][3]);
+}
+
+template <typename T>
 inline void Vector3CalcCommon<T>::rotate(Base& o, const Mtx33& m, const Base& a)
 {
     mul(o, m, a);
@@ -149,12 +181,10 @@ inline void Vector3CalcCommon<T>::rotate(Base& o, const Quat& q, const Base& v)
     r.z = (q.x * v.y) - (q.y * v.x) + (q.w * v.z);
     r.w = -(q.x * v.x) - (q.y * v.y) - (q.z * v.z);
 
-    r.w *= -1;
-
-    // quat-multiplication
-    o.x = (q.w * r.x) - (q.z * r.y) + (q.y * r.z) + (q.x * r.w);
-    o.y = (q.z * r.x) + (q.w * r.y) - (q.x * r.z) + (q.y * r.w);
-    o.z = -(q.y * r.x) + (q.x * r.y) + (q.w * r.z) + (q.z * r.w);
+    // quat-multiplication with zero on o.w and everything is negated
+    o.x = (r.x * q.w) - (r.y * q.z) + (r.z * q.y) - (r.w * q.x);
+    o.y = (r.x * q.z) + (r.y * q.w) - (r.z * q.x) - (r.w * q.y);
+    o.z = -(r.x * q.y) + (r.y * q.x) + (r.z * q.w) - (r.w * q.z);
 }
 
 template <typename T>
@@ -298,12 +328,40 @@ inline void Vector3CalcCommon<T>::set(Base& v, T x, T y, T z)
 }
 
 template <typename T>
+T Vector4CalcCommon<T>::normalize(Base& v)
+{
+    const T len = length(v);
+    if (len > 0)
+    {
+        const T inv_len = 1 / len;
+        v.x *= inv_len;
+        v.y *= inv_len;
+        v.z *= inv_len;
+        v.w *= inv_len;
+    }
+
+    return len;
+}
+
+template <typename T>
 inline void Vector4CalcCommon<T>::negate(Base& v)
 {
     v.x = -v.x;
     v.y = -v.y;
     v.z = -v.z;
     v.w = -v.w;
+}
+
+template <typename T>
+inline T Vector4CalcCommon<T>::squaredLength(const Base& v)
+{
+    return v.x * v.x + v.y * v.y + v.z * v.z + v.w * v.w;
+}
+
+template <typename T>
+inline T Vector4CalcCommon<T>::length(const Base& v)
+{
+    return MathCalcCommon<T>::sqrt(squaredLength(v));
 }
 
 template <typename T>

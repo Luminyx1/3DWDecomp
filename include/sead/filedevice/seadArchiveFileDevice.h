@@ -10,7 +10,9 @@ class ArchiveFileDevice : public FileDevice
 {
     SEAD_RTTI_OVERRIDE(ArchiveFileDevice, FileDevice)
 public:
-    explicit ArchiveFileDevice(ArchiveRes* archive_res);
+    explicit ArchiveFileDevice(ArchiveRes* archive_res) : FileDevice("arc"), mArchive(archive_res)
+    {
+    }
     ~ArchiveFileDevice() override = default;
 
     u8* tryLoadWithEntryID(s32 id, LoadArg& arg);
@@ -47,7 +49,7 @@ protected:
     virtual s32 doConvertPathToEntryID_(const SafeString& path);
     virtual bool doSetCurrentDirectory_(const SafeString& path);
 
-    ArchiveFileHandle* getArchiveFileHandle_(FileHandle* handle) const;
+    ArchiveFileHandle* getArchiveFileHandle_(FileHandle* handle);
     ArchiveFileHandle* constructArchiveFileHandle_(FileHandle* handle) const;
 
     ArchiveRes* mArchive;

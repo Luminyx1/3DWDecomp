@@ -1,5 +1,4 @@
-#ifndef SEAD_TASKMGR_H_
-#define SEAD_TASKMGR_H_
+#pragma once
 
 #include <framework/seadHeapPolicies.h>
 #include <framework/seadMethodTree.h>
@@ -14,24 +13,22 @@ class Framework;
 class Heap;
 class NullFaderTask;
 
-class TaskMgr
+class TaskMgr final : public sead::hostio::Node
 {
 public:
     struct InitializeArg
     {
     public:
-        InitializeArg(const TaskBase::CreateArg& roottask_arg)
-            : create_queue_size(0x20), prepare_stack_size(0x8000), prepare_priority(-1),
-              roottask_create_arg(roottask_arg), heap(NULL), parent_framework(NULL)
+        InitializeArg(const TaskBase::CreateArg& roottask_arg) : roottask_create_arg(roottask_arg)
         {
         }
 
-        u32 create_queue_size;
-        u32 prepare_stack_size;
-        s32 prepare_priority;
+        u32 create_queue_size = 0x20;
+        u32 prepare_stack_size = 0x8000;
+        s32 prepare_priority = -1;
         const TaskBase::CreateArg& roottask_create_arg;
-        Heap* heap;
-        Framework* parent_framework;
+        Heap* heap = nullptr;
+        Framework* parent_framework = nullptr;
     };
 
     class TaskCreateContextMgr;
@@ -47,6 +44,22 @@ public:
 
     void beforeCalc();
     void afterCalc();
+
+    TaskBase* createTaskSync(const TaskBase::CreateArg& arg);
+
+    template <typename T>
+    T* createSingletonTaskSync(const TaskBase::CreateArg& arg)
+    {
+        TaskBase::CreateArg arg_ = arg;
+        arg_.instance_cb = &T::setInstance_;
+
+        TaskBase* task = createTaskSync(arg_);
+
+        T* derived = DynamicCast<T>(task);
+        SEAD_ASSERT(derived != nullptr);
+
+        return T::instance();
+    }
 
     CriticalSection mCriticalSection;
     Framework* mParentFramework;
@@ -124,5 +137,3 @@ protected:                                                                      
     }                                                                                              \
                                                                                                    \
     CLASS* CLASS::sInstance = nullptr;
-
-#endif  // SEAD_TASKMGR_H_

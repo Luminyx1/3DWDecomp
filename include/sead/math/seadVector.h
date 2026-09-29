@@ -42,8 +42,7 @@ struct Vector2 : public Policies<T>::Vec2Base
     friend Vector2 operator*(const Vector2& a, T t)
     {
         Vector2 o;
-        o.x = a.x * t;
-        o.y = a.y * t;
+        Vector2CalcCommon<T>::multScalar(o, a, t);
         return o;
     }
 
@@ -56,16 +55,21 @@ struct Vector2 : public Policies<T>::Vec2Base
     bool operator==(const Vector2& rhs) const { return this->x == rhs.x && this->y == rhs.y; }
     bool operator!=(const Vector2& rhs) const { return !operator==(rhs); }
 
+    void multScalar(T t);
     void negate();
     void set(const Vector2& other);
     void set(T x_, T y_);
+    void setAdd(const Vector2<T>& a, const Vector2<T>& b);
+    void setScale(const Vector2<T>& a, T t);
 
     T dot(const Vector2& other) const;
     T cross(const Vector2& other) const;
     T length() const;
     T squaredLength() const;
+    T normalize();
 
     bool isZero() const { return *this == zero; }
+    bool isNan() const { return sead::Mathf::isNan(this->x) || sead::Mathf::isNan(this->y); }
 
     static const Vector2 zero;
     static const Vector2 ex;
@@ -78,6 +82,7 @@ struct Vector3 : public Policies<T>::Vec3Base
 {
     using Mtx33 = typename Policies<T>::Mtx33Base;
     using Mtx34 = typename Policies<T>::Mtx34Base;
+    using Mtx44 = typename Policies<T>::Mtx44Base;
     using Quat = typename Policies<T>::QuatBase;
 
     /// @warning This constructor leaves member variables uninitialized.
@@ -108,6 +113,7 @@ struct Vector3 : public Policies<T>::Vec3Base
     Vector3& operator*=(T t);
     Vector3& operator*=(const Mtx33& m);
     Vector3& operator*=(const Mtx34& m);
+    Vector3& operator*=(const Mtx44& m);
     friend Vector3 operator*(const Vector3& a, T t)
     {
         Vector3 o;
@@ -127,11 +133,24 @@ struct Vector3 : public Policies<T>::Vec3Base
         o.setMul(m, a);
         return o;
     }
+    friend Vector3 operator*(const Mtx44& m, const Vector3& a)
+    {
+        Vector3 o;
+        o.setMul(m, a);
+        return o;
+    }
 
     Vector3& operator/=(T t);
     friend Vector3 operator/(const Vector3& a, T t) { return {a.x / t, a.y / t, a.z / t}; }
 
     Vector3 operator-() const { return {-this->x, -this->y, -this->z}; }
+
+    Vector3 cross(const Vector3& t) const
+    {
+        Vector3 o;
+        o.setCross(*this, t);
+        return o;
+    }
 
     T dot(const Vector3& t) const;
     T length() const;
@@ -142,18 +161,12 @@ struct Vector3 : public Policies<T>::Vec3Base
     bool equals(const Vector3& rhs, T epsilon = 0) const;
 
     void add(const Vector3& a);
-
-    inline void add(T _x, T _y, T _z)
-    {
-        this->x += _x;
-        this->y += _y;
-        this->z += _z;
-    }
-
     /// Apply a rotation `m` to this vector.
     void mul(const Mtx33& m);
     /// Apply a transformation `m` (rotation then translation) to this vector.
     void mul(const Mtx34& m);
+    /// Apply a transformation `m` (rotation, translation, homogenous coordinates) to this vector.
+    void mul(const Mtx44& m);
     /// Apply a rotation `m` to this vector.
     void rotate(const Mtx33& m);
     /// Apply a rotation `m` to this vector.
@@ -166,13 +179,23 @@ struct Vector3 : public Policies<T>::Vec3Base
     void negate();
     void set(const Vector3& other);
     void set(T x, T y, T z);
+    void setAdd(const Vector3<T>& a, const Vector3<T>& b);
     void setCross(const Vector3<T>& a, const Vector3<T>& b);
+    void setScale(const Vector3<T>& a, T t);
     void setScaleAdd(T t, const Vector3<T>& a, const Vector3<T>& b);
     void setMul(const Mtx33& m, const Vector3& a);
     void setMul(const Mtx34& m, const Vector3& a);
+    void setMul(const Mtx44& m, const Vector3& a);
     void setRotated(const Mtx33& m, const Vector3& a);
     void setRotated(const Mtx34& m, const Vector3& a);
     void setRotated(const Quat& q, const Vector3& a);
+    void setSub(const Vector3& a, const Vector3& b);
+
+    bool isNan() const
+    {
+        return sead::Mathf::isNan(this->x) || sead::Mathf::isNan(this->y) ||
+               sead::Mathf::isNan(this->z);
+    }
 
     static const Vector3 zero;
     static const Vector3 ex;
@@ -221,9 +244,18 @@ struct Vector4 : public Policies<T>::Vec4Base
     }
     bool operator!=(const Vector4& rhs) const { return !operator==(rhs); }
 
+    T normalize();
     void negate();
+    T length() const;
+    T squaredLength() const;
     void set(const Vector4& v);
     void set(T x_, T y_, T z_, T w_);
+
+    bool isNan() const
+    {
+        return sead::Mathf::isNan(this->x) || sead::Mathf::isNan(this->y) ||
+               sead::Mathf::isNan(this->z) || sead::Mathf::isNan(this->w);
+    }
 
     static const Vector4 zero;
     static const Vector4 ex;

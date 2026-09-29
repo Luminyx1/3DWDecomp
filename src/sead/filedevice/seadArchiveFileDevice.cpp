@@ -1,0 +1,522 @@
+#include "filedevice/seadArchiveFileDevice.h"
+#include "basis/seadRawPrint.h"
+#include "math/seadMathCalcCommon.h"
+#include "prim/seadPtrUtil.h"
+#include "resource/seadArchiveRes.h"
+
+namespace sead
+{
+struct ArchiveFileDevice::ArchiveFileHandle
+{
+    const u8* mFileData;
+    ArchiveRes::FileInfo mFileInfo;
+    u32 mPos;
+};
+
+u8* ArchiveFileDevice::tryLoadWithEntryID(s32 id, FileDevice::LoadArg& rArg)
+{
+    SEAD_ASSERT_MSG(mPermission, "Device permission error.");
+    if (!mPermission)
+    {
+        return nullptr;
+    }
+
+    return doLoadWithEntryID_(id, rArg);
+}
+
+FileDevice* ArchiveFileDevice::tryOpenWithEntryID(FileHandle* pHandle, s32 id,
+                                                  FileDevice::FileOpenFlag flag, u32 divSize)
+{
+    SEAD_ASSERT_MSG(mPermission, "Device permission error.");
+    if (!mPermission)
+    {
+        return nullptr;
+    }
+
+    setFileHandleDivSize_(pHandle, divSize);
+    FileDevice* ret = doOpenWithEntryID_(pHandle, id, flag);
+    setHandleBaseFileDevice_(pHandle, ret);
+    return ret;
+}
+
+s32 ArchiveFileDevice::tryConvertPathToEntryID(const SafeString& rPath)
+{
+    return doConvertPathToEntryID_(rPath);
+}
+
+bool ArchiveFileDevice::setCurrentDirectory(const SafeString& rDir)
+{
+    SEAD_ASSERT_MSG(mPermission, "Device permission error.");
+    if (!mPermission)
+    {
+        return false;
+    }
+
+    return doSetCurrentDirectory_(rDir);
+}
+
+bool ArchiveFileDevice::doGetFileSize_(u32* pFileSize, const SafeString& rPath)
+{
+    if (!mArchive)
+    {
+        SEAD_ASSERT_MSG(false, "no archive mounted");
+        return false;
+    }
+
+    if (!rPath.cstr())
+    {
+        SEAD_ASSERT_MSG(false, "invalid rPath");
+        return false;
+    }
+
+    ArchiveRes::FileInfo info{};
+    if (!mArchive->getFile(rPath, &info))
+    {
+        return false;
+    }
+
+    *pFileSize = info.mLength;
+    return true;
+}
+
+bool ArchiveFileDevice::doGetFileSize_(u32* pFileSize, FileHandle* pHandle)
+{
+    if (!pHandle)
+    {
+        SEAD_ASSERT_MSG(false, "invalid pHandle");
+        return false;
+    }
+
+    if (!mArchive)
+    {
+        SEAD_ASSERT_MSG(false, "no archive mounted");
+        return false;
+    }
+
+    *pFileSize = getArchiveFileHandle_(pHandle)->mFileInfo.mLength;
+    return true;
+}
+
+ArchiveFileDevice::ArchiveFileHandle* ArchiveFileDevice::getArchiveFileHandle_(FileHandle* pHandle)
+{
+    return reinterpret_cast<ArchiveFileHandle*>(getHandleBaseHandleBuffer_(pHandle).getBufferPtr());
+}
+
+ArchiveFileDevice::ArchiveFileHandle*
+ArchiveFileDevice::constructArchiveFileHandle_(FileHandle* pHandle) const
+{
+    return new (getHandleBaseHandleBuffer_(pHandle).getBufferPtr()) ArchiveFileHandle;
+}
+
+bool ArchiveFileDevice::doIsExistFile_(bool* pExists, const SafeString& rPath)
+{
+    if (!mArchive)
+    {
+        SEAD_ASSERT_MSG(false, "no archive mounted");
+        return false;
+    }
+
+    if (!rPath.cstr())
+    {
+        SEAD_ASSERT_MSG(false, "invalid rPath");
+        return false;
+    }
+
+#if SEAD_ARCHIVERES_ISEXISTFILEIMPL
+    *pExists = mArchive->isExistFile(rPath);
+#else
+    *pExists = mArchive->getFile(rPath) != nullptr;
+#endif
+    return true;
+}
+
+bool ArchiveFileDevice::doIsExistDirectory_(bool* pExists, const SafeString& rPath)
+{
+    if (!mArchive)
+    {
+        SEAD_ASSERT_MSG(false, "no archive mounted");
+        return false;
+    }
+
+    if (!rPath.cstr())
+    {
+        SEAD_ASSERT_MSG(false, "invalid rPath");
+        return false;
+    }
+
+    *pExists = false;
+    return true;
+}
+
+u8* ArchiveFileDevice::doLoadWithEntryID_(s32 entryId, LoadArg& rArg)
+{
+    if (entryId == -1)
+    {
+        SEAD_ASSERT_MSG(false, "Invalid entryId");
+        return nullptr;
+    }
+
+    if (rArg.buffer_size_alignment % 32 != 0)
+    {
+        SEAD_ASSERT_MSG(false, "rArg.buffer_size_alignment[%u] is not multipe of 32",
+                        rArg.buffer_size_alignment);
+        return nullptr;
+    }
+
+    if (rArg.buffer || rArg.heap)
+    {
+        FileHandle handle;
+        if (!tryOpenWithEntryID(&handle, entryId, {}, rArg.div_size))
+        {
+            return nullptr;
+        }
+
+        // Determine the buffer size.
+        u32 buffer_size = rArg.buffer_size;
+        if (buffer_size == 0)
+        {
+            u32 file_size = 0;
+            if (!tryGetFileSize(&file_size, &handle))
+            {
+                return nullptr;
+            }
+
+            SEAD_ASSERT(file_size != 0);
+
+            if (rArg.buffer_size_alignment)
+            {
+                buffer_size = Mathu::roundUp(file_size, rArg.buffer_size_alignment);
+            }
+            else
+            {
+                buffer_size = Mathi::roundUpPow2(file_size, cBufferMinAlignment);
+            }
+        }
+
+        // Allocate the buffer if need be.
+        u8* buffer = rArg.buffer;
+        bool buffer_allocated = false;
+        if (!buffer)
+        {
+            const s32 aligment_sign = Mathi::sign(rArg.alignment);
+            const s32 alignment = std::max(Mathi::abs(rArg.alignment), 32);
+            buffer = new (rArg.heap, alignment * aligment_sign) u8[buffer_size];
+            buffer_allocated = true;
+        }
+
+        u32 bytes_read = 0;
+        if (!tryRead(&bytes_read, &handle, buffer, buffer_size) || !tryClose(&handle))
+        {
+            // Clean up the allocation on failure.
+            if (buffer && buffer_allocated)
+            {
+                delete[] buffer;
+            }
+            return nullptr;
+        }
+
+        rArg.read_size = bytes_read;
+        rArg.need_unload = buffer_allocated;
+        rArg.roundup_size = buffer_size;
+        return buffer;
+    }
+
+    ArchiveRes::FileInfo info{};
+    auto* ret = mArchive->getFileFast(entryId, &info);
+    if (!ret)
+    {
+        return nullptr;
+    }
+
+    SEAD_ASSERT(rArg.alignment == 0 || PtrUtil::isAligned(ret, Mathi::abs(rArg.alignment)));
+    if (rArg.buffer_size_alignment && info.mLength % rArg.buffer_size_alignment != 0)
+    {
+        SEAD_WARN("archive file size[%u] is not multipe of rArg.buffer_size_alignment[%u]",
+                  info.mLength, rArg.buffer_size_alignment);
+        return nullptr;
+    }
+
+    rArg.read_size = info.mLength;
+    rArg.roundup_size = info.mLength;
+    rArg.need_unload = false;
+    return const_cast<u8*>(static_cast<const u8*>(ret));
+}
+
+u8* ArchiveFileDevice::doLoad_(LoadArg& rArg)
+{
+    if (!mArchive)
+    {
+        SEAD_ASSERT_MSG(false, "no archive mounted");
+        return nullptr;
+    }
+
+    if (rArg.buffer || rArg.heap)
+    {
+        return FileDevice::doLoad_(rArg);
+    }
+
+    ArchiveRes::FileInfo info{};
+    auto* ret = mArchive->getFile(rArg.path, &info);
+    if (!ret)
+    {
+        return nullptr;
+    }
+
+    SEAD_ASSERT(rArg.alignment == 0 || PtrUtil::isAligned(ret, Mathi::abs(rArg.alignment)));
+    if (rArg.buffer_size_alignment && info.mLength % rArg.buffer_size_alignment != 0)
+    {
+        SEAD_WARN("archive file size[%u] is not multipe of rArg.buffer_size_alignment[%u]",
+                  info.mLength, rArg.buffer_size_alignment);
+        return nullptr;
+    }
+
+    rArg.read_size = info.mLength;
+    rArg.roundup_size = info.mLength;
+    rArg.need_unload = false;
+    return const_cast<u8*>(static_cast<const u8*>(ret));
+}
+
+FileDevice* ArchiveFileDevice::doOpen_(FileHandle* pHandle, const SafeString& rPath,
+                                       FileDevice::FileOpenFlag)
+{
+    if (!pHandle)
+    {
+        SEAD_ASSERT_MSG(false, "invalid pHandle");
+        return nullptr;
+    }
+
+    if (!mArchive)
+    {
+        SEAD_ASSERT_MSG(false, "no archive mounted");
+        return nullptr;
+    }
+
+    if (!rPath.cstr())
+    {
+        SEAD_ASSERT_MSG(false, "invalid filename");
+        return nullptr;
+    }
+
+    auto* inner = constructArchiveFileHandle_(pHandle);
+
+    auto* file_data = static_cast<const u8*>(mArchive->getFile(rPath, &inner->mFileInfo));
+    if (!file_data)
+    {
+        return nullptr;
+    }
+
+    inner->mFileData = file_data;
+    inner->mPos = 0;
+    return this;
+}
+
+FileDevice* ArchiveFileDevice::doOpenWithEntryID_(FileHandle* pHandle, s32 id,
+                                                  FileDevice::FileOpenFlag)
+{
+    if (!pHandle)
+    {
+        SEAD_ASSERT_MSG(false, "invalid pHandle");
+        return nullptr;
+    }
+
+    if (!mArchive)
+    {
+        SEAD_ASSERT_MSG(false, "no archive mounted");
+        return nullptr;
+    }
+
+    auto* inner = constructArchiveFileHandle_(pHandle);
+
+    auto* file_data = static_cast<const u8*>(mArchive->getFileFast(id, &inner->mFileInfo));
+    if (!file_data)
+    {
+        return nullptr;
+    }
+
+    inner->mFileData = file_data;
+    inner->mPos = 0;
+    return this;
+}
+
+s32 ArchiveFileDevice::doConvertPathToEntryID_(const SafeString& rPath)
+{
+    if (!mArchive)
+    {
+        SEAD_ASSERT_MSG(false, "no archive mounted");
+        return 0;
+    }
+    return mArchive->convertPathToEntryID(rPath);
+}
+
+bool ArchiveFileDevice::doClose_(FileHandle*)
+{
+    return true;
+}
+
+bool ArchiveFileDevice::doFlush_(FileHandle*)
+{
+    SEAD_ASSERT_MSG(false, "not supported");
+    return false;
+}
+
+bool ArchiveFileDevice::doRemove_(const SafeString&)
+{
+    SEAD_ASSERT_MSG(false, "not supported");
+    return false;
+}
+
+bool ArchiveFileDevice::doRead_(u32* pBytesRead, FileHandle* pHandle, u8* pOutBuffer,
+                                u32 bytesToRead)
+{
+    ArchiveFileHandle* inner = getArchiveFileHandle_(pHandle);
+
+    u32 read_size;
+    if (inner->mPos + bytesToRead <= inner->mFileInfo.mLength)
+    {
+        read_size = bytesToRead;
+    }
+    else
+    {
+        read_size = inner->mFileInfo.mLength - inner->mPos;
+    }
+
+    MemUtil::copy(pOutBuffer, inner->mFileData + inner->mPos, read_size);
+
+    inner->mPos += read_size;
+    if (pBytesRead)
+    {
+        *pBytesRead = read_size;
+    }
+
+    return true;
+}
+
+bool ArchiveFileDevice::doSeek_(FileHandle* pHandle, s32 offset, FileDevice::SeekOrigin origin)
+{
+    ArchiveFileHandle* inner = getArchiveFileHandle_(pHandle);
+    u32 new_position;
+    switch (origin)
+    {
+    case cSeekOrigin_Begin:
+        new_position = offset;
+        break;
+    case cSeekOrigin_Current:
+        new_position = inner->mPos + offset;
+        break;
+    case cSeekOrigin_End:
+        new_position = inner->mFileInfo.mLength + offset;
+        break;
+    default:
+        SEAD_ASSERT_MSG(false, "Unexpected origin");
+        return false;
+    }
+
+    if (new_position > inner->mFileInfo.mLength)
+    {
+        return false;
+    }
+
+    inner->mPos = new_position;
+    return true;
+}
+
+bool ArchiveFileDevice::doGetCurrentSeekPos_(u32* pSeekPos, FileHandle* pHandle)
+{
+    if (!pHandle)
+    {
+        SEAD_ASSERT_MSG(false, "invalid pHandle");
+        return false;
+    }
+
+    if (!mArchive)
+    {
+        SEAD_ASSERT_MSG(false, "no archive mounted");
+        return false;
+    }
+
+    ArchiveFileHandle* inner = getArchiveFileHandle_(pHandle);
+    *pSeekPos = inner->mPos;
+    return true;
+}
+
+FileDevice* ArchiveFileDevice::doOpenDirectory_(DirectoryHandle* pHandle, const SafeString& rPath)
+{
+    if (!pHandle)
+    {
+        SEAD_ASSERT_MSG(false, "invalid pHandle");
+        return nullptr;
+    }
+
+    if (!mArchive)
+    {
+        SEAD_ASSERT_MSG(false, "no archive mounted");
+        return nullptr;
+    }
+
+    if (!mArchive->openDirectory(&getHandleBaseHandleBuffer_(pHandle), rPath))
+    {
+        return nullptr;
+    }
+
+    return this;
+}
+
+bool ArchiveFileDevice::doCloseDirectory_(DirectoryHandle* pHandle)
+{
+    if (!mArchive)
+    {
+        SEAD_ASSERT_MSG(false, "no archive mounted");
+        return false;
+    }
+    return mArchive->closeDirectory(&getHandleBaseHandleBuffer_(pHandle));
+}
+
+bool ArchiveFileDevice::doReadDirectory_(u32* pEntriesRead, DirectoryHandle* pHandle,
+                                         DirectoryEntry* pEntry, u32 entriesToRead)
+{
+    auto* archive = mArchive;
+    if (!archive)
+    {
+        SEAD_ASSERT_MSG(false, "no archive mounted");
+        return false;
+    }
+
+    auto* buffer = &getHandleBaseHandleBuffer_(pHandle);
+    SEAD_ASSERT(pEntry);
+    const u32 actual_read_count = archive->readDirectory(buffer, pEntry, entriesToRead);
+    if (pEntriesRead)
+    {
+        *pEntriesRead = actual_read_count;
+    }
+
+    return true;
+}
+
+bool ArchiveFileDevice::doSetCurrentDirectory_(const SafeString& rPath)
+{
+    if (!mArchive)
+    {
+        SEAD_ASSERT_MSG(false, "no archive mounted");
+        return false;
+    }
+
+    if (!rPath.cstr())
+    {
+        SEAD_ASSERT_MSG(false, "invalid filename");
+        return false;
+    }
+
+    return mArchive->setCurrentDirectory(rPath);
+}
+
+bool ArchiveFileDevice::doMakeDirectory_(const SafeString&, u32)
+{
+    return false;
+}
+
+s32 ArchiveFileDevice::doGetLastRawError_() const
+{
+    SEAD_ASSERT_MSG(false, "not impremented");
+    return 0;
+}
+}  // namespace sead

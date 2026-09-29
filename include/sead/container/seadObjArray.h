@@ -58,7 +58,7 @@ public:
         }
 
         mFreeList.setWork(buf, ElementSize, max_num);
-        PtrArrayImpl::setBuffer(max_num, reinterpret_cast<u8*>(buf) + ElementSize * max_num);
+        PtrArrayImpl::setBuffer(max_num, PtrUtil::addOffset(buf, ElementSize * max_num));
     }
 
     void freeBuffer()
@@ -138,9 +138,9 @@ public:
     using CompareCallback = s32 (*)(const T*, const T*);
 
     void sort() { sort(compareT); }
-    void sort(CompareCallback cmp) { PtrArrayImpl::sort_<T>(cmp); }
+    void sort(CompareCallback cmp) { PtrArrayImpl::sort<T>(cmp); }
     void heapSort() { heapSort(compareT); }
-    void heapSort(CompareCallback cmp) { PtrArrayImpl::heapSort_<T>(cmp); }
+    void heapSort(CompareCallback cmp) { PtrArrayImpl::heapSort<T>(cmp); }
 
     bool equal(const ObjArray& other, CompareCallback cmp) const
     {
@@ -236,10 +236,13 @@ protected:
         return new (storage) T(item);
     }
 
-    static int compareT(const void* a_, const void* b_)
+    static s32 compareT(const void* a, const void* b)
     {
-        const T* a = static_cast<const T*>(a_);
-        const T* b = static_cast<const T*>(b_);
+        return compareT(static_cast<const T*>(a), static_cast<const T*>(b));
+    }
+
+    static s32 compareT(const T* a, const T* b)
+    {
         if (*a < *b)
             return -1;
         if (*b < *a)

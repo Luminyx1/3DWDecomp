@@ -13,6 +13,7 @@ public:
 public:
     static void add(Base& o, const Base& a, const Base& b);
     static void sub(Base& o, const Base& a, const Base& b);
+    static void multScalar(Base& o, const Base& v, T t);
 
     static void negate(Base& v);
     static void set(Base& o, const Base& v);
@@ -22,6 +23,7 @@ public:
     static T cross(const Base& a, const Base& b);
     static T squaredLength(const Base& v);
     static T length(const Base& v);
+    static T normalize(Base& v);
 };
 
 template <typename T>
@@ -31,6 +33,7 @@ public:
     using Base = typename Policies<T>::Vec3Base;
     using Mtx33 = typename Policies<T>::Mtx33Base;
     using Mtx34 = typename Policies<T>::Mtx34Base;
+    using Mtx44 = typename Policies<T>::Mtx44Base;
     using Quat = typename Policies<T>::QuatBase;
 
     static void add(Base& o, const Base& a, const Base& b);
@@ -39,6 +42,8 @@ public:
     static void mul(Base& o, const Mtx33& m, const Base& a);
     /// Apply a transformation `m` (rotation then translation) to the vector `a`.
     static void mul(Base& o, const Mtx34& m, const Base& a);
+    /// Apply a transformation `m` (rotation, translation, homogenous coord) to the vector `a`.
+    static void mul(Base& o, const Mtx44& m, const Base& a);
 
     /// Apply a rotation `m` to the vector `a`.
     static void rotate(Base& o, const Mtx33& m, const Base& a);
@@ -67,7 +72,10 @@ public:
     using Base = typename Policies<T>::Vec4Base;
 
 public:
+    static T normalize(Base& v);
     static void negate(Base& v);
+    static T squaredLength(const Base& v);
+    static T length(const Base& v);
     static void set(Base& o, const Base& v);
     static void set(Base& v, T x, T y, T z, T w);
 };

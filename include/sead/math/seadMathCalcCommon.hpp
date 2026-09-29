@@ -26,7 +26,7 @@ const MathCalcCommon<float>::LogSample MathCalcCommon<float>::cLogTbl[];
 template <typename T>
 inline T MathCalcCommon<T>::sign(T value)
 {
-    return value < 0 ? -1 : 1;
+    return value >= 0 ? 1 : -1;
 }
 
 template <typename T>
@@ -35,17 +35,17 @@ inline T MathCalcCommon<T>::sqrt(T t)
     return std::sqrt(t);
 }
 
-template <typename T>
-inline T MathCalcCommon<T>::rsqrt(T t)
-{
-    return 1 / std::sqrt(t);
-}
-
 // the NX build routes f32 square roots through nerd
 template <>
 inline f32 MathCalcCommon<f32>::sqrt(f32 t)
 {
     return nerd::sqrt(t);
+}
+
+template <typename T>
+inline T MathCalcCommon<T>::rsqrt(T t)
+{
+    return 1 / std::sqrt(t);
 }
 
 template <typename T>
@@ -435,6 +435,12 @@ inline T MathCalcCommon<T>::idx2rad(u32 a)
 }
 
 template <typename T>
+inline s32 MathCalcCommon<T>::round(T val)
+{
+    return static_cast<s32>(val >= 0 ? val + 0.5f : val - 0.5f);
+}
+
+template <typename T>
 inline s32 MathCalcCommon<T>::roundOff(T val)
 {
     return std::floor(val + 0.5f);
@@ -449,7 +455,12 @@ inline s32 MathCalcCommon<s32>::roundOff(s32 val)
 template <typename T>
 inline s32 MathCalcCommon<T>::floor(T val)
 {
-    return std::floor(val);
+    s32 x = static_cast<s32>(val);
+
+    if (x == val)
+        return x;
+
+    return val >= 0 ? x : x - 1;
 }
 
 template <>
@@ -461,7 +472,12 @@ inline s32 MathCalcCommon<s32>::floor(s32 val)
 template <typename T>
 inline s32 MathCalcCommon<T>::ceil(T val)
 {
-    return std::ceil(val);
+    s32 x = static_cast<s32>(val);
+
+    if (x == val)
+        return x;
+
+    return val >= 0 ? x + 1 : x;
 }
 
 template <>
@@ -471,25 +487,25 @@ inline s32 MathCalcCommon<s32>::ceil(s32 val)
 }
 
 template <typename T>
-inline T MathCalcCommon<T>::roundUp(T x, s32 multNumber)
+inline T MathCalcCommon<T>::roundUp(T x, u32 multNumber)
 {
     SEAD_ASSERT(multNumber > 0);
     return (x + multNumber - 1) / multNumber * multNumber;
 }
 
 template <>
-inline s32 MathCalcCommon<u32>::roundUpPow2(u32 val, s32 base)
+inline s32 MathCalcCommon<u32>::roundUpPow2(u32 val, u32 base)
 {
-    SEAD_ASSERT_MSG((u32(base - 1) & u32(base)) == 0, "illegal param[val:%d, base:%d]", val, base);
-    return (val + base - 1) & (u32)-base;
+    SEAD_ASSERT_MSG(((base - 1) & base) == 0, "illegal param[val:%d, base:%d]", val, base);
+    return (val + base - 1) & ~(base - 1);
 }
 
 template <>
-inline s32 MathCalcCommon<s32>::roundUpPow2(s32 val, s32 base)
+inline s32 MathCalcCommon<s32>::roundUpPow2(s32 val, u32 base)
 {
-    SEAD_ASSERT_MSG(val >= 0 && (u32(base - 1) & u32(base)) == 0, "illegal param[val:%d, base:%d]",
-                    val, base);
-    return (val + base - 1) & (u32)-base;
+    SEAD_ASSERT_MSG(val >= 0 && ((base - 1) & base) == 0, "illegal param[val:%d, base:%d]", val,
+                    base);
+    return (val + base - 1) & ~(base - 1);
 }
 
 template <typename T>
@@ -518,6 +534,12 @@ inline T MathCalcCommon<T>::clamp(T value, T low, T high)
     else if (value > high)
         value = high;
     return value;
+}
+
+template <typename T>
+inline bool MathCalcCommon<T>::isNan(T value)
+{
+    return std::isnan(value);
 }
 
 template <typename T>

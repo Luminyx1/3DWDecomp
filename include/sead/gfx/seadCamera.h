@@ -49,13 +49,9 @@ class LookAtCamera : public Camera
 public:
     LookAtCamera() = default;
     LookAtCamera(const Vector3f& pos, const Vector3f& at, const Vector3f& up);
-    ~LookAtCamera() override = default;
+    ~LookAtCamera() override;
 
     void doUpdateMatrix(Matrix34f* dst) const override;
-
-    Vector3f& getPos() { return mPos; }
-    Vector3f& getAt() { return mAt; }
-    Vector3f& getUp() { return mUp; }
 
     const Vector3f& getPos() const { return mPos; }
     const Vector3f& getAt() const { return mAt; }
@@ -79,7 +75,7 @@ class DirectCamera : public Camera
 {
     SEAD_RTTI_OVERRIDE(DirectCamera, Camera)
 public:
-    virtual ~DirectCamera();
+    ~DirectCamera() override;
 
     void doUpdateMatrix(Matrix34f* dst) const override;
 

@@ -50,12 +50,13 @@ public:
     };
 
     explicit Controller(ControllerMgr* mgr);
-    virtual ~Controller();
+    virtual ~Controller() = default;
 
     virtual void calc();
-    virtual bool isConnected() const;
+    virtual bool isConnected() const { return true; }
     ControllerAddon* getAddonByOrder(ControllerDefine::AddonId id, int index) const;
     ControllerAddon* getAddon(ControllerDefine::AddonId id) const;
+    ControllerMgr* getMgr() const { return mMgr; }
 
     template <typename T>
     T getAddonAs() const;
@@ -65,8 +66,9 @@ protected:
     virtual bool isIdle_();
     virtual void setIdle_();
 
-private:
     ControllerDefine::ControllerId mId;
+
+private:
     ControllerMgr* mMgr;
     OffsetList<ControllerAddon> mAddons;
     OffsetList<ControllerWrapperBase> mWrappers;
@@ -83,7 +85,7 @@ T Controller::getAddonAs() const
 {
     for (auto& addon : mAddons)
     {
-        T result = DynamicCast<std::remove_pointer<T>>(addon);
+        T result = DynamicCast<typename std::remove_pointer<T>>(addon);
         if (result)
             return result;
     }

@@ -11,11 +11,12 @@ class DateTimeUtc;
 class DateTime
 {
 public:
-    DateTime(u64 unix_time);
+    DateTime(u64 unix_time = 0);
     DateTime(const CalendarTime& time);
     DateTime(const CalendarTime::Year& year, const CalendarTime::Month& month,
              const CalendarTime::Day& day, const CalendarTime::Hour& hour,
              const CalendarTime::Minute& minute, const CalendarTime::Second& second);
+    DateTime(const DateTimeUtc& unused);
 
     DateTime& operator+=(DateSpan span)
     {

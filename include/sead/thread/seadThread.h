@@ -96,7 +96,14 @@ protected:
 
     virtual void run_();
     virtual void calc_(MessageQueue::Element msg) = 0;
+#if SEAD_THREAD_GETFIBER
+public:
+    virtual nn::os::FiberType* getFiber() const;
+
+protected:
+#else
     virtual uintptr_t getStackCheckStartAddress_() const;
+#endif
 
     void initStackCheck_();
     void initStackCheckWithCurrentStackPointer_();
@@ -125,7 +132,9 @@ protected:
 
 class ThreadMgr : public hostio::Node
 {
+#if not SEAD_THREADMGR_MOVED_SINGLETON_DISPOSER
     SEAD_SINGLETON_DISPOSER(ThreadMgr)
+#endif
 public:
     ThreadMgr();
     virtual ~ThreadMgr();
@@ -146,6 +155,22 @@ public:
 
     CriticalSection* getListCS() { return &mListCS; }
 
+#if SEAD_FINDCONTAINHEAPCACHE_FIXED
+    bool tryRemoveFromFindContainHeapCache(Heap* heap)
+    {
+        ScopedLock<CriticalSection> lock(getListCS());
+        const auto end = mList.end();
+        bool found = false;
+        for (auto it = mList.begin(); it != end; ++it)
+        {
+            bool result = !(*it)->getFindContainHeapCache()->tryRemoveHeap(heap);
+            found |= result;
+            if (found)
+                break;
+        }
+        return found;
+    }
+#else
     bool tryRemoveFromFindContainHeapCache(Heap* heap)
     {
         const auto end = mList.end();
@@ -160,6 +185,7 @@ public:
         }
         return found;
     }
+#endif
 
 #ifdef SEAD_DEBUG
     void initHostIO();
@@ -191,6 +217,10 @@ private:
     CriticalSection mListCS;
     Thread* mMainThread = nullptr;
     ThreadLocalStorage mThreadPtrTLS;
+
+#if SEAD_THREADMGR_MOVED_SINGLETON_DISPOSER
+    SEAD_SINGLETON_DISPOSER(ThreadMgr)
+#endif
 };
 
 class MainThread : public Thread

@@ -10,7 +10,7 @@ namespace sead
 {
 /// Sorted associative container with fixed-length string keys.
 /// This is essentially std::map<char[MaxKeyLength], Value>
-template <size_t MaxKeyLength, typename Value>
+template <s32 MaxKeyLength, typename Value>
 class StrTreeMap : public TreeMapImpl<SafeString>
 {
 public:
@@ -38,12 +38,31 @@ public:
         char mKeyData[MaxKeyLength + 1];
     };
 
-    ~StrTreeMap();
+    template <typename T>
+    class ForEachConstContext
+    {
+    public:
+        ForEachConstContext(const T& callback) : context(callback) {}
+
+        void call(TreeMapNode<SafeString>* node)
+        {
+            Node* strNode = static_cast<Node*>(node);
+            context(strNode->key(), strNode->value());
+        }
+
+    private:
+        const T& context;
+    };
 
     void allocBuffer(s32 node_max, Heap* heap, s32 alignment = sizeof(void*));
     void setBuffer(s32 node_max, void* buffer);
     void freeBuffer();
 
+    bool isBufferReady() const { return mFreeList.work() != nullptr; }
+
+    bool isEmpty() const { return mSize == 0; }
+
+    bool replace(const SafeString& key, const Value& value);
     Value* insert(const SafeString& key, const Value& value);
     void clear();
 
@@ -61,7 +80,7 @@ private:
     s32 mCapacity = 0;
 };
 
-template <size_t N, typename Value>
+template <s32 N, typename Value>
 inline void StrTreeMap<N, Value>::Node::erase_()
 {
     StrTreeMap* const map = mMap;
@@ -71,40 +90,32 @@ inline void StrTreeMap<N, Value>::Node::erase_()
     --map->mSize;
 }
 
-template <size_t N, typename Value>
-inline StrTreeMap<N, Value>::~StrTreeMap()
-{
-    void* work = mFreeList.work();
-    if (!work)
-        return;
-
-    clear();
-    freeBuffer();
-}
-
-template <size_t N, typename Value>
+template <s32 N, typename Value>
 inline void StrTreeMap<N, Value>::allocBuffer(s32 node_max, Heap* heap, s32 alignment)
 {
+    s32 node_size = sizeof(Node);
+
     SEAD_ASSERT(mFreeList.work() == nullptr);
     if (node_max <= 0)
     {
         SEAD_ASSERT_MSG(false, "node_max[%d] must be larger than zero", node_max);
-        AllocFailAssert(heap, node_max * sizeof(Node), alignment);
+        AllocFailAssert(heap, node_max * node_size, alignment);
+        return;
     }
 
-    void* work = AllocBuffer(node_max * sizeof(Node), heap, alignment);
+    void* work = AllocBuffer(node_max * node_size, heap, alignment);
     if (work)
         setBuffer(node_max, work);
 }
 
-template <size_t N, typename Value>
+template <s32 N, typename Value>
 inline void StrTreeMap<N, Value>::setBuffer(s32 node_max, void* buffer)
 {
     mCapacity = node_max;
     mFreeList.setWork(buffer, sizeof(Node), node_max);
 }
 
-template <size_t N, typename Value>
+template <s32 N, typename Value>
 inline void StrTreeMap<N, Value>::freeBuffer()
 {
     void* buffer = mFreeList.work();
@@ -116,27 +127,43 @@ inline void StrTreeMap<N, Value>::freeBuffer()
     mFreeList.reset();
 }
 
-template <size_t N, typename Value>
-inline Value* StrTreeMap<N, Value>::insert(const SafeString& key, const Value& value)
+template <s32 N, typename Value>
+inline bool StrTreeMap<N, Value>::replace(const SafeString& key, const Value& value)
 {
-    if (mSize >= mCapacity)
-    {
-        if (Node* node = find(key))
-        {
-            node->value() = value;
-            return &node->value();
-        }
-        SEAD_ASSERT_MSG(false, "map is full.");
-        return nullptr;
-    }
+    Node* node = find(key);
+    if (!node)
+        return false;
 
-    Node* node = new (mFreeList.alloc()) Node(this, key, value);
-    ++mSize;
-    MapImpl::insert(node);
-    return &node->value();
+    node->value() = value;
+    return true;
 }
 
-template <size_t N, typename Value>
+template <s32 N, typename Value>
+inline Value* StrTreeMap<N, Value>::insert(const SafeString& key, const Value& value)
+{
+    Value* ptr = nullptr;
+
+    if (mSize < mCapacity)
+    {
+        Node* node = new (mFreeList.alloc()) Node(this, key, value);
+        ptr = &node->value();
+        ++mSize;
+        MapImpl::insert(node);
+    }
+    else if (Node* node = find(key))
+    {
+        ptr = &node->value();
+        new (ptr) Value(value);
+    }
+    else
+    {
+        SEAD_ASSERT_MSG(false, "map is full.");
+    }
+
+    return ptr;
+}
+
+template <s32 N, typename Value>
 inline void StrTreeMap<N, Value>::clear()
 {
     Delegate1<StrTreeMap<N, Value>, typename MapImpl::Node*> delegate(
@@ -146,23 +173,25 @@ inline void StrTreeMap<N, Value>::clear()
     MapImpl::clear();
 }
 
-template <size_t N, typename Value>
+template <s32 N, typename Value>
 inline typename StrTreeMap<N, Value>::Node* StrTreeMap<N, Value>::find(const SafeString& key) const
 {
     return static_cast<Node*>(MapImpl::find(key));
 }
 
-template <size_t N, typename Value>
+template <s32 N, typename Value>
 template <typename Callable>
-inline void StrTreeMap<N, Value>::forEach(const Callable& delegate) const
+inline void StrTreeMap<N, Value>::forEach(const Callable& callback) const
 {
-    MapImpl::forEach([&delegate](auto* base_node) {
-        auto* node = static_cast<Node*>(base_node);
-        delegate(node->key(), node->value());
-    });
+    ForEachConstContext<Callable> ctx(callback);
+
+    Delegate1<ForEachConstContext<Callable>, typename MapImpl::Node*> delegate(
+        &ctx, &ForEachConstContext<Callable>::call);
+
+    MapImpl::forEach(delegate);
 }
 
-template <size_t N, typename Value>
+template <s32 N, typename Value>
 inline void StrTreeMap<N, Value>::eraseNodeForClear_(typename MapImpl::Node* node)
 {
     // Note: Nintendo does not call the destructor, which is dangerous...

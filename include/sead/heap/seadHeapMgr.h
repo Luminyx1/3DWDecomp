@@ -13,7 +13,7 @@
 
 namespace sead
 {
-class HeapMgr : hostio::Node
+class HeapMgr : public hostio::Node
 {
     struct AllocCallbackArg;
     struct CreateCallbackArg;
@@ -25,11 +25,18 @@ class HeapMgr : hostio::Node
     using IFreeCallback = IDelegate1<const FreeCallbackArg*>;
 
 public:
-    struct AllocFailedCallbackArg;
+    struct AllocFailedCallbackArg
+    {
+        Heap* heap;
+        size_t request_size;
+        s32 request_alignment;
+        size_t alloc_size;
+        s32 alloc_alignment;
+    };
     using IAllocFailedCallback = IDelegate1<const AllocFailedCallbackArg*>;
 
     HeapMgr();
-    virtual ~HeapMgr() {}
+    virtual ~HeapMgr();
 
     static void initialize(size_t size);
     static void initializeImpl_();
@@ -76,6 +83,7 @@ private:
     static RootHeaps sRootHeaps;
     static IndependentHeaps sIndependentHeaps;
     static CriticalSection sHeapTreeLockCS;
+    static Atomic<u32> sHeapCheckTag;
     static TickSpan sSleepSpanAtRemoveCacheFailure;
 
     /// fallback heap that is returned when getting the current heap outside of an sead::Thread
@@ -115,7 +123,7 @@ protected:
         return reinterpret_cast<Heap*>(mPreviousHeap) != reinterpret_cast<Heap*>(1);
     }
 
-    uintptr_t mPreviousHeap;
+    uintptr_t mPreviousHeap = 0;
 };
 
 class FindContainHeapCache

@@ -8,7 +8,7 @@
 #include <nn/os/os_MutexTypes.h>
 #include <nn/types.h>
 #include <nn/util.h>
-#include <nn/util/MathTypes.h>
+#include <nn/util/util_MathTypes.h>
 #include <nn/util/util_BitFlagSet.h>
 #include <nn/xcd.h>
 

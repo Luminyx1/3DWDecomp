@@ -35,7 +35,9 @@ class IDelegate
 public:
     virtual void invoke() = 0;
     virtual IDelegate* clone(Heap*) const { return nullptr; }
+#if SEAD_DELEGATE_ISNODUMMY
     virtual bool isNoDummy() const { return true; }
+#endif
     void operator()() { return invoke(); }
 };
 
@@ -46,7 +48,9 @@ class IDelegateR
 public:
     virtual R invoke() = 0;
     virtual IDelegateR* clone(Heap*) const { return nullptr; }
+#if SEAD_DELEGATE_ISNODUMMY
     virtual bool isNoDummy() const { return true; }
+#endif
     R operator()() { return invoke(); }
 };
 
@@ -58,7 +62,9 @@ class IDelegate1
 public:
     virtual void invoke(A1 a1) = 0;
     virtual IDelegate1* clone(Heap*) const { return nullptr; }
+#if SEAD_DELEGATE_ISNODUMMY
     virtual bool isNoDummy() const { return true; }
+#endif
     void operator()(A1 a1) { return invoke(a1); }
 };
 
@@ -70,7 +76,9 @@ class IDelegate1R
 public:
     virtual R invoke(A1 a1) = 0;
     virtual IDelegate1R* clone(Heap*) const { return nullptr; }
+#if SEAD_DELEGATE_ISNODUMMY
     virtual bool isNoDummy() const { return true; }
+#endif
     R operator()(A1 a1) { return invoke(a1); }
 };
 
@@ -83,7 +91,9 @@ class IDelegate2
 public:
     virtual void invoke(A1 a1, A2 a2) = 0;
     virtual IDelegate2* clone(Heap*) const { return nullptr; }
+#if SEAD_DELEGATE_ISNODUMMY
     virtual bool isNoDummy() const { return true; }
+#endif
     void operator()(A1 a1, A2 a2) { return invoke(a1, a2); }
 };
 
@@ -96,7 +106,9 @@ class IDelegate2R
 public:
     virtual R invoke(A1 a1, A2 a2) = 0;
     virtual IDelegate2R* clone(Heap*) const { return nullptr; }
+#if SEAD_DELEGATE_ISNODUMMY
     virtual bool isNoDummy() const { return true; }
+#endif
     R operator()(A1 a1, A2 a2) { return invoke(a1, a2); }
 };
 
@@ -346,9 +358,9 @@ class LambdaDelegate : public IDelegate
 {
 public:
     explicit LambdaDelegate(Lambda l) : mLambda(std::move(l)) {}
-    auto invoke() override { return mLambda(); }
-    auto operator()() const { return mLambda(); }
-    auto clone(Heap* heap) const override { return new (heap) LambdaDelegate(*this); }
+    void invoke() override { mLambda(); }
+    void operator()() const { mLambda(); }
+    LambdaDelegate* clone(Heap* heap) const override { return new (heap) LambdaDelegate(*this); }
 
 protected:
     Lambda mLambda;
@@ -359,9 +371,9 @@ class LambdaDelegateR : public IDelegateR<R>
 {
 public:
     explicit LambdaDelegateR(Lambda l) : mLambda(std::move(l)) {}
-    auto invoke() override { return mLambda(); }
-    auto operator()() const { return mLambda(); }
-    auto clone(Heap* heap) const override { return new (heap) LambdaDelegateR(*this); }
+    R invoke() override { return mLambda(); }
+    R operator()() const { return mLambda(); }
+    LambdaDelegateR* clone(Heap* heap) const override { return new (heap) LambdaDelegateR(*this); }
 
 protected:
     Lambda mLambda;
@@ -372,9 +384,9 @@ class LambdaDelegate1 : public IDelegate1<A1>
 {
 public:
     explicit LambdaDelegate1(Lambda l) : mLambda(std::move(l)) {}
-    auto invoke(A1 a1) override { return mLambda(a1); }
-    auto operator()(A1 a1) const { return mLambda(a1); }
-    auto clone(Heap* heap) const override { return new (heap) LambdaDelegate1(*this); }
+    void invoke(A1 a1) override { mLambda(a1); }
+    void operator()(A1 a1) const { mLambda(a1); }
+    LambdaDelegate1* clone(Heap* heap) const override { return new (heap) LambdaDelegate1(*this); }
 
 protected:
     Lambda mLambda;
@@ -385,9 +397,12 @@ class LambdaDelegate1R : public IDelegate1R<A1, R>
 {
 public:
     explicit LambdaDelegate1R(Lambda l) : mLambda(std::move(l)) {}
-    auto invoke(A1 a1) override { return mLambda(a1); }
-    auto operator()(A1 a1) const { return mLambda(a1); }
-    auto clone(Heap* heap) const override { return new (heap) LambdaDelegate1R(*this); }
+    R invoke(A1 a1) override { return mLambda(a1); }
+    R operator()(A1 a1) const { return mLambda(a1); }
+    LambdaDelegate1R* clone(Heap* heap) const override
+    {
+        return new (heap) LambdaDelegate1R(*this);
+    }
 
 protected:
     Lambda mLambda;
@@ -398,9 +413,9 @@ class LambdaDelegate2 : public IDelegate2<A1, A2>
 {
 public:
     explicit LambdaDelegate2(Lambda l) : mLambda(std::move(l)) {}
-    auto invoke(A1 a1, A2 a2) override { return mLambda(a1, a2); }
-    auto operator()(A1 a1, A2 a2) const { return mLambda(a1, a2); }
-    auto clone(Heap* heap) const override { return new (heap) LambdaDelegate2(*this); }
+    void invoke(A1 a1, A2 a2) override { mLambda(a1, a2); }
+    void operator()(A1 a1, A2 a2) const { mLambda(a1, a2); }
+    LambdaDelegate2* clone(Heap* heap) const override { return new (heap) LambdaDelegate2(*this); }
 
 protected:
     Lambda mLambda;
@@ -411,9 +426,12 @@ class LambdaDelegate2R : public IDelegate2R<A1, A2, R>
 {
 public:
     explicit LambdaDelegate2R(Lambda l) : mLambda(std::move(l)) {}
-    auto invoke(A1 a1, A2 a2) override { return mLambda(a1, a2); }
-    auto operator()(A1 a1, A2 a2) const { return mLambda(a1, a2); }
-    auto clone(Heap* heap) const override { return new (heap) LambdaDelegate2R(*this); }
+    R invoke(A1 a1, A2 a2) override { return mLambda(a1, a2); }
+    R operator()(A1 a1, A2 a2) const { return mLambda(a1, a2); }
+    LambdaDelegate2R* clone(Heap* heap) const override
+    {
+        return new (heap) LambdaDelegate2R(*this);
+    }
 
 protected:
     Lambda mLambda;
@@ -429,7 +447,11 @@ static auto makeLambdaDelegate(Lambda&& l)
 template <typename Lambda>
 static auto makeLambdaDelegateR(Lambda&& l)
 {
+#if __cplusplus < 202002L
     using R = std::result_of_t<Lambda()>;
+#else
+    using R = std::invoke_result_t<Lambda>;
+#endif
     return LambdaDelegateR<Lambda, R>(std::forward<Lambda>(l));
 }
 
@@ -442,7 +464,11 @@ static auto makeLambdaDelegate1(Lambda&& l)
 template <typename A1, typename Lambda>
 static auto makeLambdaDelegate1R(Lambda&& l)
 {
+#if __cplusplus < 202002L
     using R = std::result_of_t<Lambda(A1)>;
+#else
+    using R = std::invoke_result_t<Lambda, A1>;
+#endif
     return LambdaDelegate1R<Lambda, A1, R>(std::forward<Lambda>(l));
 }
 
@@ -455,7 +481,11 @@ static auto makeLambdaDelegate2(Lambda&& l)
 template <typename A1, typename A2, typename Lambda>
 static auto makeLambdaDelegate2R(Lambda&& l)
 {
+#if __cplusplus < 202002L
     using R = std::result_of_t<Lambda(A1, A2)>;
+#else
+    using R = std::invoke_result_t<Lambda, A1, A2>;
+#endif
     return LambdaDelegate2R<Lambda, A1, A2, R>(std::forward<Lambda>(l));
 }
 
@@ -504,8 +534,10 @@ public:
         return getDelegate()->invoke(std::forward<Args>(args)...);
     }
 
+#if SEAD_DELEGATE_ISNODUMMY
     /// Checks if a non-dummy function is stored.
     explicit operator bool() const { return getDelegate()->isNoDummy(); }
+#endif
 
     Interface* getDelegate() { return reinterpret_cast<Interface*>(&mStorage); }
     const Interface* getDelegate() const { return reinterpret_cast<const Interface*>(&mStorage); }
@@ -528,7 +560,9 @@ public:
     {
     public:
         void invoke() override {}
+#if SEAD_DELEGATE_ISNODUMMY
         bool isNoDummy() const override { return false; }
+#endif
     };
     using Base::Base;
     using Base::operator=;
@@ -546,9 +580,17 @@ public:
     class UnbindDummy final : public Base::Interface_
     {
     public:
+        UnbindDummy() {}
         R invoke() override { return {}; }
+#if SEAD_DELEGATE_ISNODUMMY
         bool isNoDummy() const override { return false; }
+#endif
+    private:
+        s32 mUnk = 1;
     };
+
+    AnyDelegateR() {}
+
     using Base::Base;
     using Base::operator=;
 };
@@ -566,7 +608,9 @@ public:
     {
     public:
         void invoke(A1) override {}
+#if SEAD_DELEGATE_ISNODUMMY
         bool isNoDummy() const override { return false; }
+#endif
     };
     using Base::Base;
     using Base::operator=;
@@ -585,7 +629,9 @@ public:
     {
     public:
         R invoke(A1) override { return {}; }
+#if SEAD_DELEGATE_ISNODUMMY
         bool isNoDummy() const override { return false; }
+#endif
     };
     using Base::Base;
     using Base::operator=;
@@ -604,7 +650,9 @@ public:
     {
     public:
         void invoke(A1, A2) override {}
+#if SEAD_DELEGATE_ISNODUMMY
         bool isNoDummy() const override { return false; }
+#endif
     };
     using Base::Base;
     using Base::operator=;
@@ -624,7 +672,9 @@ public:
     {
     public:
         R invoke(A1, A2) override { return {}; }
+#if SEAD_DELEGATE_ISNODUMMY
         bool isNoDummy() const override { return false; }
+#endif
     };
     using Base::Base;
     using Base::operator=;

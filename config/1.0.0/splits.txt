@@ -3864,7 +3864,7 @@ src/nw/vfx/vfx_UniformBlock.cpp:
     .text   start:0x0064C590 end:0x0064C784
 src/nw/vfx/vfx_VertexBuffer.cpp:
     .text   start:0x0064C790 end:0x00650BBC
-src/sead/basis/seadNew.cpp:
+src/sead/basis/seadNew.cpp: done
     .text   start:0x00650BC0 end:0x00651894
 src/sead/container/seadListImpl.cpp: done
     .text   start:0x006518A0 end:0x00651E28
@@ -3878,7 +3878,7 @@ src/sead/filedevice/seadFileDevice.cpp:
     .text   start:0x00652F70 end:0x0065561C
 src/sead/filedevice/seadArchiveFileDevice.cpp:
     .text   start:0x00655620 end:0x0065575C
-src/sead/filedevice/seadFileDeviceMgr.cpp:
+src/sead/filedevice/seadFileDeviceMgr.cpp: done
     .text   start:0x00655760 end:0x00656848
 src/sead/filedevice/seadMainFileDevice.cpp:
     .text   start:0x00656850 end:0x006572C4
@@ -3966,13 +3966,13 @@ src/sead/prim/seadArchiveRes.cpp:
     .text   start:0x00687DA0 end:0x006881F8
 src/sead/filedevice/seadArchiveFileDevice_dup2.cpp:
     .text   start:0x00688200 end:0x00688E38
-src/sead/resource/seadResource.cpp:
+src/sead/resource/seadResource.cpp: done
     .text   start:0x00688E40 end:0x00689F4C
 src/sead/resource/seadResourceMgr.cpp:
     .text   start:0x00689F50 end:0x0068B2DC
 src/sead/stream/seadBufferStream.cpp:
     .text   start:0x0068B2E0 end:0x0068BBF0
-src/sead/stream/seadFileDeviceStream.cpp:
+src/sead/stream/seadFileDeviceStream.cpp: done
     .text   start:0x0068BBF0 end:0x0068CE04
 src/sead/stream/seadStream.cpp:
     .text   start:0x0068CE10 end:0x0068DF68

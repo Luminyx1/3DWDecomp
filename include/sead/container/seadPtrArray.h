@@ -54,7 +54,7 @@ public:
     void shuffle(Random* random);
 
 protected:
-    using CompareCallbackImpl = int (*)(const void* a, const void* b);
+    using CompareCallbackImpl = s32 (*)(const void* a, const void* b);
 
     void* at(s32 idx) const
     {
@@ -72,21 +72,27 @@ protected:
     void* front() const { return mPtrs[0]; }
     void* back() const { return mPtrs[mPtrNum - 1]; }
 
-    void pushBack(void* ptr)
+    bool pushBack(void* ptr)
     {
         if (isFull())
         {
             SEAD_ASSERT_MSG(false, "list is full.");
-            return;
+            return false;
         }
         // Simplest insert case, so this is implemented directly without using insert().
         mPtrs[mPtrNum] = ptr;
         ++mPtrNum;
+        return true;
     }
 
     void pushFront(void* ptr) { insert(0, ptr); }
 
-    void* popBack() { return isEmpty() ? nullptr : mPtrs[--mPtrNum]; }
+    void* popBack()
+    {
+        if (mPtrNum >= 1)
+            return mPtrs[--mPtrNum];
+        return nullptr;
+    }
 
     void* popFront()
     {
@@ -156,26 +162,27 @@ protected:
     void insertArray(s32 idx, void* array, s32 array_length, s32 elem_size);
     bool checkInsert(s32 idx, s32 num);
 
-    template <typename T, typename Compare>
-    void sort_(Compare cmp)
+    template <typename T>
+    void sort(s32 (*cmpT)(const T* a, const T* b))
     {
-        // Note: Nintendo did not use <algorithm>
-        std::sort(mPtrs, mPtrs + size(), [&](const void* a, const void* b) {
-            return cmp(static_cast<const T*>(a), static_cast<const T*>(b)) < 0;
-        });
+        // Symbols show that `sort()` accepts a `void*` comparer, but needs to receive a `T*`
+        // comparer in order to match SMO. This overload exists to safely accept a `T*` comparer.
+        // This cast is UB, but we know that `cmpT` and `cmpVoid` have the same representation.
+        auto cmpVoid = reinterpret_cast<s32 (*)(const void*, const void*)>(cmpT);
+        sort(cmpVoid);
     }
 
-    template <typename T, typename Compare>
-    void heapSort_(Compare cmp)
-    {
-        // Note: Nintendo did not use <algorithm>
-        const auto less_cmp = [&](const void* a, const void* b) {
-            return cmp(static_cast<const T*>(a), static_cast<const T*>(b)) < 0;
-        };
-        std::make_heap(mPtrs, mPtrs + size(), less_cmp);
-        std::sort_heap(mPtrs, mPtrs + size(), less_cmp);
-    }
+    void sort(CompareCallbackImpl cmp);
 
+    template <typename T>
+    void heapSort(s32 (*cmpT)(const T* a, const T* b))
+    {
+        // Symbols show that `sort()` accepts a `void*` comparer, but needs to receive a `T*`
+        // comparer in order to match SMO. This overload exists to safely accept a `T*` comparer.
+        // This cast is UB, but we know that `cmpT` and `cmpVoid` have the same representation.
+        auto cmpVoid = reinterpret_cast<s32 (*)(const void*, const void*)>(cmpT);
+        heapSort(cmpVoid);
+    }
     void heapSort(CompareCallbackImpl cmp);
 
     s32 compare(const PtrArrayImpl& other, CompareCallbackImpl cmp) const;
@@ -227,7 +234,7 @@ public:
     T* front() const { return at(0); }
     T* back() const { return at(mPtrNum - 1); }
 
-    void pushBack(T* ptr) { PtrArrayImpl::pushBack(constCast(ptr)); }
+    bool pushBack(T* ptr) { return PtrArrayImpl::pushBack(constCast(ptr)); }
     void pushFront(T* ptr) { PtrArrayImpl::pushFront(constCast(ptr)); }
 
     T* popBack() { return static_cast<T*>(PtrArrayImpl::popBack()); }
@@ -246,9 +253,9 @@ public:
     using CompareCallback = s32 (*)(const T*, const T*);
 
     void sort() { sort(compareT); }
-    void sort(CompareCallback cmp) { PtrArrayImpl::sort_<T>(cmp); }
+    void sort(CompareCallback cmp) { PtrArrayImpl::sort<T>(cmp); }
     void heapSort() { heapSort(compareT); }
-    void heapSort(CompareCallback cmp) { PtrArrayImpl::heapSort_<T>(cmp); }
+    void heapSort(CompareCallback cmp) { PtrArrayImpl::heapSort<T>(cmp); }
 
     bool equal(const PtrArray& other, CompareCallback cmp) const
     {
@@ -306,8 +313,8 @@ public:
         T* const* mPPtr;
     };
 
-    iterator begin() const { return iterator(data()); }
-    iterator end() const { return iterator(data() + mPtrNum); }
+    iterator begin() const { return iterator(dataBegin()); }
+    iterator end() const { return iterator(dataEnd()); }
 
     class constIterator
     {
@@ -327,12 +334,12 @@ public:
         const T* const* mPPtr;
     };
 
-    constIterator constBegin() const { return constIterator(data()); }
-    constIterator constEnd() const { return constIterator(data() + mPtrNum); }
+    constIterator constBegin() const { return constIterator(dataBegin()); }
+    constIterator constEnd() const { return constIterator(dataEnd()); }
 
     T** data() const { return reinterpret_cast<T**>(mPtrs); }
     T** dataBegin() const { return data(); }
-    T** dataEnd() const { return data() + mPtrNum; }
+    T** dataEnd() const { return &data()[mPtrNum]; }
 
 protected:
     static void* constCast(const T* ptr)
@@ -342,10 +349,13 @@ protected:
         return static_cast<void*>(const_cast<std::remove_const_t<T>*>(ptr));
     }
 
-    static int compareT(const void* a_, const void* b_)
+    static s32 compareT(const void* a, const void* b)
     {
-        const T* a = static_cast<const T*>(a_);
-        const T* b = static_cast<const T*>(b_);
+        return compareT(static_cast<const T*>(a), static_cast<const T*>(b));
+    }
+
+    static s32 compareT(const T* a, const T* b)
+    {
         if (*a < *b)
             return -1;
         if (*b < *a)
@@ -370,6 +380,12 @@ private:
     // Nintendo uses an untyped u8[N*sizeof(void*)] buffer. That is undefined behavior,
     // so we will not do that.
     T* mWork[N];
+};
+
+// TODO: Restrict usage of this object type
+template <typename T>
+class ConstPtrArray : public PtrArray<T>
+{
 };
 
 }  // namespace sead

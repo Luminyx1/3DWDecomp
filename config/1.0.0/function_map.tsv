@@ -41360,7 +41360,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710065BFD0			FALSE	_ZNK4sead14MethodTreeNode18getRuntimeTypeInfoEv	sead::MethodTreeNode::getRuntimeTypeInfo() const	
 0x710065C040			FALSE	_ZN4sead13DelegateEventIPvED0Ev	sead::DelegateEvent<void*>::~DelegateEvent()	
 0x710065C0D0	sead/framework	seadGameFramework.o	FALSE	_ZN4sead13GameFrameworkC2Ev	sead::GameFramework::GameFramework()	object (smo)
-0x710065C140			FALSE	sub_710065C140	sub_710065C140	
+0x710065C140			FALSE	_ZZN4sead13GameFrameworkC1EvEN3$_08__invokeEb	sead::GameFramework::GameFramework()::$_0::__invoke(bool)	
 0x710065C160			FALSE	_ZN4sead13GameFrameworkD2Ev	sead::GameFramework::~GameFramework()	
 0x710065C1D0			FALSE	_ZN4sead13GameFramework12startDisplayEv	sead::GameFramework::startDisplay()	
 0x710065C1F0			FALSE	_ZN4sead13GameFramework17createSystemTasksEPNS_8TaskBaseERKNS_9Framework19CreateSystemTaskArgE	sead::GameFramework::createSystemTasks(sead::TaskBase*, sead::Framework::CreateSystemTaskArg const&)	

@@ -58,6 +58,12 @@ inline void Vector2<T>::negate()
 }
 
 template <typename T>
+inline void Vector2<T>::multScalar(T t)
+{
+    Vector2CalcCommon<T>::multScalar(*this, *this, t);
+}
+
+template <typename T>
 inline void Vector2<T>::set(const Vector2<T>& other)
 {
     Vector2CalcCommon<T>::set(*this, other);
@@ -67,6 +73,18 @@ template <typename T>
 inline void Vector2<T>::set(T x_, T y_)
 {
     Vector2CalcCommon<T>::set(*this, x_, y_);
+}
+
+template <typename T>
+inline void Vector2<T>::setAdd(const Vector2<T>& a, const Vector2<T>& b)
+{
+    Vector2CalcCommon<T>::add(*this, a, b);
+}
+
+template <typename T>
+inline void Vector2<T>::setScale(const Vector2<T>& a, T t)
+{
+    Vector2CalcCommon<T>::multScalar(*this, a, t);
 }
 
 template <typename T>
@@ -91,6 +109,12 @@ template <typename T>
 inline T Vector2<T>::squaredLength() const
 {
     return Vector2CalcCommon<T>::squaredLength(*this);
+}
+
+template <typename T>
+inline T Vector2<T>::normalize()
+{
+    return Vector2CalcCommon<T>::normalize(*this);
 }
 
 template <typename T>
@@ -156,6 +180,13 @@ inline Vector3<T>& Vector3<T>::operator*=(const Mtx34& m)
 }
 
 template <typename T>
+inline Vector3<T>& Vector3<T>::operator*=(const Mtx44& m)
+{
+    mul(m);
+    return *this;
+}
+
+template <typename T>
 inline Vector3<T>& Vector3<T>::operator/=(T t)
 {
     this->x /= t;
@@ -202,6 +233,12 @@ inline void Vector3<T>::mul(const Mtx33& m)
 
 template <typename T>
 inline void Vector3<T>::mul(const Mtx34& m)
+{
+    setMul(m, *this);
+}
+
+template <typename T>
+inline void Vector3<T>::mul(const Mtx44& m)
 {
     setMul(m, *this);
 }
@@ -255,9 +292,21 @@ inline void Vector3<T>::set(T x_, T y_, T z_)
 }
 
 template <typename T>
+inline void Vector3<T>::setAdd(const Vector3<T>& a, const Vector3<T>& b)
+{
+    Vector3CalcCommon<T>::add(*this, a, b);
+}
+
+template <typename T>
 inline void Vector3<T>::setCross(const Vector3<T>& a, const Vector3<T>& b)
 {
     Vector3CalcCommon<T>::cross(*this, a, b);
+}
+
+template <typename T>
+inline void Vector3<T>::setScale(const Vector3<T>& a, T t)
+{
+    Vector3CalcCommon<T>::multScalar(*this, a, t);
 }
 
 template <typename T>
@@ -279,6 +328,12 @@ inline void Vector3<T>::setMul(const Mtx34& m, const Vector3<T>& a)
 }
 
 template <typename T>
+inline void Vector3<T>::setMul(const Mtx44& m, const Vector3<T>& a)
+{
+    Vector3CalcCommon<T>::mul(*this, m, a);
+}
+
+template <typename T>
 inline void Vector3<T>::setRotated(const Mtx33& m, const Vector3<T>& a)
 {
     Vector3CalcCommon<T>::rotate(*this, m, a);
@@ -294,6 +349,12 @@ template <typename T>
 inline void Vector3<T>::setRotated(const Quat& q, const Vector3<T>& a)
 {
     Vector3CalcCommon<T>::rotate(*this, q, a);
+}
+
+template <typename T>
+inline void Vector3<T>::setSub(const Vector3<T>& a, const Vector3<T>& b)
+{
+    Vector3CalcCommon<T>::sub(*this, a, b);
 }
 
 template <typename T>
@@ -353,9 +414,27 @@ inline Vector4<T>& Vector4<T>::operator=(const Vector4<T>& other)
 }
 
 template <typename T>
+inline T Vector4<T>::normalize()
+{
+    return Vector4CalcCommon<T>::normalize(*this);
+}
+
+template <typename T>
 inline void Vector4<T>::negate()
 {
     Vector4CalcCommon<T>::negate(*this);
+}
+
+template <typename T>
+inline T Vector4<T>::length() const
+{
+    return Vector4CalcCommon<T>::length(*this);
+}
+
+template <typename T>
+inline T Vector4<T>::squaredLength() const
+{
+    return Vector4CalcCommon<T>::squaredLength(*this);
 }
 
 template <typename T>

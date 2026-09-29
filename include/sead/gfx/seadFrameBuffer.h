@@ -52,6 +52,15 @@ class FrameBuffer : public LogicalFrameBuffer
 {
     SEAD_RTTI_OVERRIDE(FrameBuffer, LogicalFrameBuffer)
 public:
+    enum ClearFlag
+    {
+        cNone = 0,
+        cColor = 1 << 0,
+        cDepth = 1 << 1,
+        cStencil = 1 << 2,
+        cAll = cColor | cDepth | cStencil
+    };
+
     FrameBuffer(const Vector2f& virtual_size, const BoundBox2f& physical_area)
         : LogicalFrameBuffer(virtual_size, physical_area)
     {
@@ -70,8 +79,14 @@ public:
     }
     ~FrameBuffer() override;
 
-    virtual void copyToDisplayBuffer(DrawContext* draw_context,
-                                     const DisplayBuffer* display_buffer) const;
+#if SEAD_FRAMEBUFFER_BINDCLEAR_UNBIND
+    virtual void bindClear_(DrawContext* draw_context) const;
+    virtual void unbindImpl_(DrawContext* draw_context) const;
+#endif
+    virtual void copyToDisplayBuffer([[maybe_unused]] DrawContext* draw_context,
+                                     [[maybe_unused]] const DisplayBuffer* display_buffer) const
+    {
+    }
     virtual void clear(DrawContext* draw_context, u32 clr_flag, const Color4f& color, f32 depth,
                        u32 stencil) const = 0;
     virtual void clearMRT(DrawContext* draw_context, u32 target, const Color4f& color) const;

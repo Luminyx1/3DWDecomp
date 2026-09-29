@@ -174,7 +174,7 @@ def gen_ninja(cfg: dict, units: list[Unit]) -> str:
     w(f"cxxflags = {common} {fl['cxx']}")
     w("")
     w(f"rule nx2elf\n  command = {PY} tools/nx2elf.py fury.nso -o $out\n  description = nx2elf $out\n")
-    w(f"rule split\n  command = {PY} tools/elf_split.py --elf $elf {fmap_arg} --out $out $ranges\n"
+    w(f"rule split\n  command = {PY} tools/elf_split.py --elf $elf {fmap_arg} --out $out $ranges $ours\n"
       f"  description = split $out\n")
     w(f"rule cc\n  command = {cc} $cflags -MD -MF $out.d -c $in -o $out\n  depfile = $out.d\n  deps = gcc\n  description = cc $in\n")
     w(f"rule cxx\n  command = {cxx} $cxxflags -MD -MF $out.d -c $in -o $out\n  depfile = $out.d\n  deps = gcc\n  description = cxx $in\n")
@@ -188,9 +188,13 @@ def gen_ninja(cfg: dict, units: list[Unit]) -> str:
     for u in units:
         tobj = f"build/target/{u.name}.o"
         ranges = " ".join("--range " + r for r in u.range_args)
-        w(f"build {ninja_escape(tobj)}: split build/fury.elf | {split_deps}")
+        ours = f"build/obj/{u.name}.o" if u.has_source else ""
+        w(f"build {ninja_escape(tobj)}: split build/fury.elf | {split_deps}"
+          + (f" {ninja_escape(ours)}" if ours else ""))
         w(f"  elf = build/fury.elf")
         w(f"  ranges = {ranges}")
+        if ours:
+            w(f"  ours = --ours {ours}")
         targets.append(tobj)
         if u.has_source:
             aobj = f"build/obj/{u.name}.o"

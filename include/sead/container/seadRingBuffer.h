@@ -30,7 +30,7 @@ public:
         explicit iterator(RingBuffer* buffer, s32 index = 0) : mIndex(index), mBuffer(buffer) {}
         bool operator==(const iterator& rhs) const
         {
-            return mIndex == rhs.mIndex && mBuffer == rhs.mBuffer;
+            return mBuffer == rhs.mBuffer && mIndex == rhs.mIndex;
         }
         bool operator!=(const iterator& rhs) const { return !operator==(rhs); }
         iterator& operator++()
@@ -58,7 +58,7 @@ public:
         }
         bool operator==(const constIterator& rhs) const
         {
-            return mIndex == rhs.mIndex && mBuffer == rhs.mBuffer;
+            return mBuffer == rhs.mBuffer && mIndex == rhs.mIndex;
         }
         bool operator!=(const constIterator& rhs) const { return !operator==(rhs); }
         constIterator& operator++()
@@ -249,17 +249,15 @@ public:
     T* data() { return mBuffer; }
     const T* data() const { return mBuffer; }
 
-    void forcePushBack(const T& item)
+    bool forcePushBack(const T& item)
     {
-        if (mSize < mCapacity)
+        bool isEnoughSpace = pushBack(item);
+        if (!isEnoughSpace)
         {
-            pushBack(item);
-            return;
-        }
-
-        if (mSize >= 1)
             popFront();
-        pushBack(item);
+            pushBack(item);
+        }
+        return isEnoughSpace;
     }
 
     bool pushBack(const T& item)
@@ -296,6 +294,18 @@ public:
         }
         SEAD_ASSERT_MSG(false, "no element");
         return {};
+    }
+
+    void remove(s32 index)
+    {
+        if (index >= mSize || mSize <= 0 || index < 0)
+            return;
+
+        for (s32 i = index; i < mSize - 1; i++)
+        {
+            *unsafeGet(i) = *unsafeGet(i + 1);
+        }
+        mSize--;
     }
 
     void clear() { mHead = mSize = 0; }

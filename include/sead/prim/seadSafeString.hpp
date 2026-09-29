@@ -558,6 +558,24 @@ inline s32 BufferedSafeStringBase<T>::append(const SafeStringBase<T>& str, s32 a
 }
 
 template <typename T>
+inline s32 BufferedSafeStringBase<T>::append(T c)
+{
+    const s32 length = this->calcLength();
+
+    if (length >= getBufferSize() - 1)
+    {
+        SEAD_ASSERT_MSG(false, "Buffer overflow. (Buffer Size: %d, Length: %d)", getBufferSize(),
+                        length);
+        return 0;
+    }
+
+    T* top = getMutableStringTop_();
+    top[length] = c;
+    top[length + 1] = this->cNullChar;
+    return 1;
+}
+
+template <typename T>
 inline s32 BufferedSafeStringBase<T>::append(T c, s32 num)
 {
     if (num < 0)
@@ -571,7 +589,7 @@ inline s32 BufferedSafeStringBase<T>::append(T c, s32 num)
 
     const s32 length = this->calcLength();
 
-    if (getBufferSize() - length <= num)
+    if (length >= getBufferSize() - num)
     {
         SEAD_ASSERT_MSG(false, "Buffer overflow. (Buffer Size: %d, Length: %d, Num: %d)",
                         getBufferSize(), length, num);
@@ -747,8 +765,6 @@ inline s32 BufferedSafeStringBase<T>::rstripUnprintableAsciiChars()
 template <typename T>
 inline s32 BufferedSafeStringBase<T>::trim(s32 trim_length)
 {
-    T* mutableString = getMutableStringTop_();
-
     if (trim_length >= mBufferSize)
     {
         SEAD_ASSERT_MSG(false, "trim_length(%d) out of bounds.  [0, %d)", trim_length, mBufferSize);
@@ -761,6 +777,7 @@ inline s32 BufferedSafeStringBase<T>::trim(s32 trim_length)
         trim_length = 0;
     }
 
+    T* mutableString = getMutableStringTop_();
     mutableString[trim_length] = SafeStringBase<T>::cNullChar;
     return trim_length;
 }
@@ -778,7 +795,6 @@ template <typename T>
 inline s32 BufferedSafeStringBase<T>::trimMatchedString(const SafeStringBase<T>& suffix)
 {
     const s32 length = this->calcLength();
-    T* buffer = getMutableStringTop_();
 
     const s32 suffix_length = suffix.calcLength();
     const s32 new_length = length - suffix_length;
@@ -786,10 +802,10 @@ inline s32 BufferedSafeStringBase<T>::trimMatchedString(const SafeStringBase<T>&
     if (length < suffix_length)
         return length;
 
-    if (SafeStringBase<T>(&buffer[new_length]).comparen(suffix, suffix_length) != 0)
+    if (SafeStringBase<T>(&getMutableStringTop_()[new_length]).comparen(suffix, suffix_length) != 0)
         return length;
 
-    buffer[new_length] = SafeStringBase<T>::cNullChar;
+    getMutableStringTop_()[new_length] = SafeStringBase<T>::cNullChar;
     return new_length;
 }
 
