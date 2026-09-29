@@ -31,7 +31,7 @@ public:
           mPhysicalArea(physical_x, physical_y, physical_x + physical_w, physical_y + physical_h)
     {
     }
-    virtual ~LogicalFrameBuffer();
+    virtual ~LogicalFrameBuffer() = default;
 
     const Vector2f& getVirtualSize() const { return mVirtualSize; }
     const BoundBox2f& getPhysicalArea() const { return mPhysicalArea; }
@@ -93,6 +93,25 @@ public:
     virtual void bindImpl_(DrawContext* draw_context) const = 0;
 
     void bind(DrawContext* draw_context) const;
+};
+
+class ReferenceFrameBuffer : public FrameBuffer
+{
+    SEAD_RTTI_OVERRIDE(ReferenceFrameBuffer, FrameBuffer)
+public:
+    ReferenceFrameBuffer(const FrameBuffer* original, const Vector2f& virtual_size,
+                         const BoundBox2f& physical_area);
+    ReferenceFrameBuffer(const FrameBuffer* original, const Vector2f& virtual_size,
+                         const Vector2f& physical_pos, const Vector2f& physical_size);
+    ~ReferenceFrameBuffer() override;
+
+    void clear(DrawContext* draw_context, u32 clr_flag, const Color4f& color, f32 depth,
+               u32 stencil) const override;
+    void clearMRT(DrawContext* draw_context, u32 target, const Color4f& color) const override;
+    void bindImpl_(DrawContext* draw_context) const override;
+
+private:
+    const FrameBuffer* mOriginalFrameBuffer;
 };
 
 }  // namespace sead

@@ -30,6 +30,9 @@ class TextureData;
 namespace agl::driver {
 
 class NVNMgr : public GraphicsDriverMgr {
+    friend class agl::DrawContext;
+    friend class agl::DisplayList;
+
 public:
     struct SamplerKey {
         SamplerKey() : mFlags(0) {}
@@ -80,6 +83,9 @@ public:
     static bool isEqual(const NVNtexture& rA, const NVNtexture& rB);
 
     static NVNshaderStage getNVNshaderStage(ShaderType type);
+
+    NVNdevice* getNvnDevice() const { return mDevice; }
+    NVNqueue* getNvnQueue() const { return mQueue; }
     u32 getTextureFlags(bool compressible, bool renderTarget, NVNformat format) const;
     void setMemoryPoolSettingTexture(sead::BitFlag32* pFlags) const;
 
@@ -97,6 +103,10 @@ public:
     void nvnCommandBufferBindImage(DrawContext* pDrawContext, u64 handle,
                                    const ShaderLocation& rLocation, s32 textureId);
     void invalidateGPUCacheColor(DrawContext* pDrawContext, s32 textureId) const;
+    void clearCompressedFrameBufferColor(DrawContext* pDrawContext,
+                                         const TextureData& rTextureData);
+    void clearCompressedFrameBufferDepth(DrawContext* pDrawContext,
+                                         const TextureData& rTextureData);
     void invalidateGPUCacheDepth(DrawContext* pDrawContext, s32 textureId) const;
     void nvnCommandBufferBarrier(DrawContext* pDrawContext, Barrier barrier);
     void nvnCommandBufferBarrier_Shader(DrawContext* pDrawContext, bool enable);

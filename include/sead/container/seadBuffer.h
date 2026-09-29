@@ -340,7 +340,7 @@ public:
             if (c < 0)
                 a = m + 1;
             else
-                b = m;
+                b = m - 1;
         }
 
         if (cmp(&mBuffer[a], &item) == 0)
@@ -366,7 +366,7 @@ public:
             if (c < 0)
                 a = m + 1;
             else
-                b = m;
+                b = m - 1;
         }
 
         if (cmp(mBuffer[a], key) == 0)
@@ -392,7 +392,7 @@ public:
             if (c < 0)
                 a = m + 1;
             else
-                b = m;
+                b = m - 1;
         }
 
         if (cmp(mBuffer[a]) == 0)

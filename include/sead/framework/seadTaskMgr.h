@@ -125,11 +125,7 @@ public:                                                                         
     class SingletonDisposer_                                                                       \
     {                                                                                              \
     public:                                                                                        \
-        ~SingletonDisposer_()                                                                      \
-        {                                                                                          \
-            if (mActive)                                                                           \
-                CLASS::sInstance = nullptr;                                                        \
-        }                                                                                          \
+        ~SingletonDisposer_();                                                                     \
                                                                                                    \
         bool mActive = false;                                                                      \
     };                                                                                             \
@@ -150,6 +146,14 @@ protected:                                                                      
     SingletonDisposer_ mSingletonDisposer;
 
 #define SEAD_TASK_SINGLETON_IMPL(CLASS)                                                            \
+    CLASS::SingletonDisposer_::~SingletonDisposer_()                                               \
+    {                                                                                              \
+        if (mActive)                                                                               \
+        {                                                                                          \
+            CLASS::sInstance = nullptr;                                                            \
+        }                                                                                          \
+    }                                                                                              \
+                                                                                                   \
     void CLASS::setInstance_(sead::TaskBase* task)                                                 \
     {                                                                                              \
         if (!sInstance)                                                                            \

@@ -524,6 +524,23 @@ void GetNpadStates(NpadJoyDualState*, s32, const u32& port);
 void GetNpadStates(NpadJoyLeftState*, s32, const u32& port);
 void GetNpadStates(NpadJoyRightState*, s32, const u32& port);
 
+void SetNpadJoyHoldType(NpadJoyHoldType);
+NpadJoyAssignmentMode GetNpadJoyAssignment(const u32& port);
+void SetNpadJoyAssignmentModeSingle(const u32& port);
+void SetNpadJoyAssignmentModeSingle(const u32& port, NpadJoyDeviceType);
+void SetNpadJoyAssignmentModeDual(const u32& port);
+Result MergeSingleJoyAsDualJoy(const u32& port1, const u32& port2);
+void SwapNpadAssignment(const u32& port1, const u32& port2);
+void DisconnectNpad(const u32& port);
+
+s32 GetSixAxisSensorHandles(SixAxisSensorHandle*, s32, const u32& port, NpadStyleSet);
+void StartSixAxisSensor(const SixAxisSensorHandle&);
+s32 GetSixAxisSensorStates(SixAxisSensorState*, s32, const SixAxisSensorHandle&);
+
+s32 GetVibrationDeviceHandles(VibrationDeviceHandle*, s32, const u32& port, NpadStyleSet);
+void InitializeVibrationDevice(const VibrationDeviceHandle&);
+void SendVibrationValue(const VibrationDeviceHandle&, const VibrationValue&);
+
 void InitializeMouse();
 void InitializeKeyboard();
 

@@ -77,7 +77,7 @@ class DirectCamera : public Camera
 public:
     ~DirectCamera() override;
 
-    void doUpdateMatrix(Matrix34f* dst) const override;
+    void doUpdateMatrix(Matrix34f* pDst) const override { *pDst = mDirectMatrix; }
 
 private:
     Matrix34f mDirectMatrix = Matrix34f::ident;

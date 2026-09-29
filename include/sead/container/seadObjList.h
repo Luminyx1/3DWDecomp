@@ -22,8 +22,7 @@ public:
         if (capacity < 1)
             return;
 
-        setBuffer(capacity,
-                  new (heap, alignment, std::nothrow) u8[calculateWorkBufferSize(capacity)]);
+        setBuffer(capacity, new (heap, alignment, std::nothrow) u8[capacity * s32(ElementSize)]);
     }
 
     bool tryAllocBuffer(s32 capacity, Heap* heap, s32 alignment = sizeof(void*))

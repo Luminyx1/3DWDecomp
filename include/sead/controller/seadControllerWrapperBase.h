@@ -16,16 +16,16 @@ public:
     ControllerWrapperBase();
     virtual ~ControllerWrapperBase();
 
-    virtual void calc(u32 prev_hold, bool prev_pointer_on) = 0;
+    virtual void calc(u32 prevHold, bool prevPointerOn) = 0;
     virtual void setIdle();
 
 protected:
     virtual bool isIdle_();
 
 public:
-    void registerWith(Controller* controller, bool copy_repeat_setting);
+    void registerWith(Controller* pController, bool copyRepeatSetting_);
     void unregister();
-    void copyRepeatSetting(const Controller* controller);
+    void copyRepeatSetting(const Controller* pController);
     void setEnable(bool enable);
     void setEnableOtherWrappers(bool enable) const;
 

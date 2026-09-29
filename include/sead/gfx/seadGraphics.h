@@ -34,8 +34,10 @@ public:
     enum class BlendFactor;
     enum class CullingMode;
 
+    Graphics();
     virtual ~Graphics();
 
+    void initialize(Heap* heap);
     void lockDrawContext();
     void unlockDrawContext();
     void initHostIO();

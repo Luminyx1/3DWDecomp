@@ -18,6 +18,7 @@ public:
 private:
     [[maybe_unused]] u32 _8 = 0;
     CriticalSection mCriticalSection{};
+    u8 _50[0x10];
 };
 
 }  // namespace sead

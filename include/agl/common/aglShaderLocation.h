@@ -18,6 +18,7 @@ public:
     void setRegisterLocation(ShaderType, s32);
 
     s32 getLocation(ShaderType type) const { return mLocation[type]; }
+    bool isValid() const { return mUniformLocation != -1; }
 
 protected:
     union {

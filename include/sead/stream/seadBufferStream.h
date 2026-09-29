@@ -100,6 +100,10 @@ private:
 class BufferMultiByteNullTerminatedTextWriteStreamSrc : public BufferMultiByteTextWriteStreamSrc
 {
 public:
+    BufferMultiByteNullTerminatedTextWriteStreamSrc(StreamSrc* pSrc, void* pBuffer, u32 bufferSize)
+        : BufferMultiByteTextWriteStreamSrc(pSrc, pBuffer, bufferSize)
+    {
+    }
     ~BufferMultiByteNullTerminatedTextWriteStreamSrc() override = default;
     bool flush() override;
 };

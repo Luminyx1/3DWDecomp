@@ -18,7 +18,6 @@ struct CommandBufferImplData<ApiVariationNvn8> {
     nn::util::BitPack8 flags;
     char reserved[6];
     detail::Ptr<detail::DeviceImpl<ApiVariationNvn8>> pNnDevice;
-    detail::Ptr<const detail::RootSignatureImpl<ApiVariationNvn8>> pGfxRootSignature;
 
     struct {
         char reserved[160];
@@ -26,10 +25,11 @@ struct CommandBufferImplData<ApiVariationNvn8> {
 
     detail::Ptr<void> pNvnCommandBuffer;
     detail::NvnHandle hNvnCommandBuffer;
-    char reserved2[4];
+    detail::Ptr<const detail::RootSignatureImpl<ApiVariationNvn8>> pGfxRootSignature;
     detail::Ptr<void()> pOutOfCommandMemoryCallback;
     detail::Ptr<void()> pOutOfControlMemoryCallback;
     detail::Ptr<void> userPtr;
 };
+static_assert(sizeof(CommandBufferImplData<ApiVariationNvn8>) == 0xE0);
 
 }  // namespace nn::gfx

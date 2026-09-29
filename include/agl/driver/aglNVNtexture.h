@@ -13,10 +13,14 @@ public:
 
     void releaseTexture();
     void updateTexId_(s32 newID);
-    NVNtexture_ operator=(const NVNtexture_& other);
+    NVNtexture_& operator=(const NVNtexture_& other);
     bool registerTexture(const NVNtexture*, const NVNtextureView*, const char*, bool);
 
     void setReference_() const;
+
+    NVNtexture* getTexture() { return &mTexture; }
+    const NVNtexture* getTexture() const { return &mTexture; }
+    s32 getTextureID() const { return mTextureID; }
 
 private:
     NVNtexture mTexture;

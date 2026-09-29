@@ -15,6 +15,8 @@ public:
     bool registerSampler(const NVNsampler& sampler, const char*);
     void updateTextureId(s32);
 
+    u64 getHandle() const { return reinterpret_cast<u64>(_0); }
+
 private:
     void* _0;
     s16 _8;

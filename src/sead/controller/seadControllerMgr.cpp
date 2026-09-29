@@ -10,18 +10,27 @@ namespace sead
 {
 SEAD_TASK_SINGLETON_IMPL(ControllerMgr)
 
-// NON_MATCHING: storing too much 00s into stack (for ConstructArg)
+/**
+ * Constructs the manager as a standalone calculate task with its own heap array.
+ */
 ControllerMgr::ControllerMgr() : CalculateTask(ConstructArg(), "sead::ControllerMgr")
 {
     mDevices.initOffset(offsetof(ControlDevice, mListNode));
 }
 
+/**
+ * Constructs the manager as a calculate task created by the task manager.
+ * @param rArg task construction arguments
+ */
 ControllerMgr::ControllerMgr(const TaskConstructArg& rArg)
     : CalculateTask(rArg, "sead::ControllerMgr")
 {
     mDevices.initOffset(offsetof(ControlDevice, mListNode));
 }
 
+/**
+ * Initializes from the task parameter if one was given, otherwise with the default setup.
+ */
 void ControllerMgr::prepare()
 {
     auto* parameter = DynamicCast<Parameter>(mParameter);
@@ -39,51 +48,53 @@ void ControllerMgr::prepare()
     }
 }
 
+/**
+ * Allocates the controller pointer array.
+ * @param controllerMax maximum number of controllers
+ * @param pHeap heap to allocate from
+ */
 void ControllerMgr::initialize(s32 controllerMax, Heap* pHeap)
 {
     mControllers.allocBuffer(controllerMax, pHeap);
 }
 
+/**
+ * Frees the controller pointer array.
+ */
 void ControllerMgr::finalize()
 {
     mControllers.freeBuffer();
 }
 
+/**
+ * Allocates room for 16 controllers and registers a NinJoyNpadDevice.
+ * @param pHeap heap to allocate from
+ */
 void ControllerMgr::initializeDefault(Heap* pHeap)
 {
-    s32 controller_max;
-#ifdef cafe
-    controller_max = 6;
-#elif defined(NNSDK)
-    controller_max = 16;
-#else
-#error "Unknown Platform"
-#endif
-    initialize(controller_max, pHeap);
+    initialize(16, pHeap);
 
-#ifdef NNSDK
     mDevices.pushBack(new (pHeap) NinJoyNpadDevice(this, pHeap));
-#endif
 }
 
+/**
+ * Removes and deletes the NinJoyNpadDevice, then frees the controller array.
+ */
 void ControllerMgr::finalizeDefault()
 {
-#ifdef NNSDK
-    // NON_MATCHING: missing cbz instruction within loop
-    for (auto& device : mDevices)
+    auto* device = getControlDevice(ControllerDefine::cDevice_NinJoyNpad);
+    if (device)
     {
-        if (device.getId() == 13)
-        {
-            mDevices.erase(&device);
-            delete &device;
-            break;
-        }
+        mDevices.erase(device);
+        delete device;
     }
-#endif  // cafe
 
     finalize();
 }
 
+/**
+ * Updates every control device, then every controller.
+ */
 void ControllerMgr::calc()
 {
     for (auto it = mDevices.begin(); it != mDevices.end(); ++it)
@@ -97,6 +108,12 @@ void ControllerMgr::calc()
     }
 }
 
+/**
+ * Finds the index-th controller with the given id.
+ * @param id controller id to look for
+ * @param index how many matching controllers to skip
+ * @return the controller, or nullptr if there is none
+ */
 Controller* ControllerMgr::getControllerByOrder(ControllerDefine::ControllerId id, s32 index) const
 {
     for (auto& controller : mControllers)
@@ -107,7 +124,6 @@ Controller* ControllerMgr::getControllerByOrder(ControllerDefine::ControllerId i
             {
                 return &controller;
             }
-
             index--;
         }
     }
@@ -115,19 +131,30 @@ Controller* ControllerMgr::getControllerByOrder(ControllerDefine::ControllerId i
     return nullptr;
 }
 
+/**
+ * Finds the first control device with the given id.
+ * @param id device id to look for
+ * @return the device, or nullptr if there is none
+ */
 ControlDevice* ControllerMgr::getControlDevice(ControllerDefine::DeviceId id) const
 {
-    for (auto& device : mDevices)
+    for (auto it = mDevices.begin(); it != mDevices.end(); ++it)
     {
-        if (device.mId == id)
+        if (it->mId == id)
         {
-            return &device;
+            return &*it;
         }
     }
 
     return nullptr;
 }
 
+/**
+ * Finds the first addon with the given id on the controller in a port.
+ * @param index controller port
+ * @param id addon id to look for
+ * @return the addon, or nullptr if there is none
+ */
 ControllerAddon* ControllerMgr::getControllerAddon(s32 index, ControllerDefine::AddonId id) const
 {
     Controller* controller = mControllers.at(index);
@@ -139,6 +166,13 @@ ControllerAddon* ControllerMgr::getControllerAddon(s32 index, ControllerDefine::
     return nullptr;
 }
 
+/**
+ * Finds the addonIndex-th addon with the given id on the controller in a port.
+ * @param controllerIndex controller port
+ * @param id addon id to look for
+ * @param addonIndex how many matching addons to skip
+ * @return the addon, or nullptr if there is none
+ */
 ControllerAddon* ControllerMgr::getControllerAddonByOrder(s32 controllerIndex,
                                                           ControllerDefine::AddonId id,
                                                           s32 addonIndex) const
@@ -152,14 +186,17 @@ ControllerAddon* ControllerMgr::getControllerAddonByOrder(s32 controllerIndex,
     return nullptr;
 }
 
+/**
+ * Finds the port a controller is registered in.
+ * @param pController controller to look for
+ * @return the port, or -1 if the controller is not registered
+ */
 s32 ControllerMgr::findControllerPort(const Controller* pController) const
 {
-    SEAD_ASSERT(pController);
-
     s32 i = 0;
-    for (auto& controller_it : mControllers)
+    for (auto& controller : mControllers)
     {
-        if (&controller_it == pController)
+        if (&controller == pController)
         {
             return i;
         }
@@ -168,6 +205,50 @@ s32 ControllerMgr::findControllerPort(const Controller* pController) const
     return -1;
 }
 
+/**
+ * Appends a control device to the device list.
+ * @param pDevice device to add
+ */
+void ControllerMgr::pushBackControlDevice(ControlDevice* pDevice)
+{
+    mDevices.pushBack(pDevice);
+}
+
+/**
+ * Removes a control device from the device list.
+ * @param pDevice device to remove
+ */
+void ControllerMgr::removeControlDevice(ControlDevice* pDevice)
+{
+    mDevices.erase(pDevice);
+}
+
+/**
+ * Appends a controller to the next free port.
+ * @param pController controller to add
+ */
+void ControllerMgr::pushBackController(Controller* pController)
+{
+    mControllers.pushBack(pController);
+}
+
+/**
+ * Removes a controller from its port.
+ * @param pController controller to remove
+ */
+void ControllerMgr::removeController(Controller* pController)
+{
+    s32 index = mControllers.indexOf(pController);
+    if (index >= 0)
+    {
+        mControllers.erase(index);
+    }
+}
+
+/**
+ * Gets the framework that owns the task manager of this task.
+ * @return the framework, or nullptr if the task has no manager
+ */
 Framework* ControllerMgr::getFramework() const
 {
     if (mTaskMgr)

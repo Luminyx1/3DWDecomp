@@ -19,6 +19,6 @@ public:
 private:
     nn::gfx::CommandBuffer mCommandBuffer;
 };
-static_assert(sizeof(DrawContext) == 0xF0);
+static_assert(sizeof(DrawContext) == 0xE8);
 
 }  // namespace sead

@@ -50,21 +50,21 @@ public:
         return (repeat | trig) & mask;
     }
 
-    void setPadRepeat(u32 mask, u8 delay_frame, u8 pulse_frame);
+    void setPadRepeat(u32 mask, u8 delayFrame, u8 pulseFrame);
 
     void setLeftStickCrossThreshold(f32 hold, f32 release);
     void setRightStickCrossThreshold(f32 hold, f32 release);
 
-    void setPointerBound(const BoundBox2f& bound);
+    void setPointerBound(const BoundBox2f& rBound);
     const BoundBox2f& getPointerBound() const { return mPointerBound; }
 
 protected:
     bool isIdleBase_();
     void setIdleBase_();
-    void setPointerWithBound_(bool is_on, bool touchkey_hold, const Vector2f& pos);
-    void updateDerivativeParams_(u32 prev_hold, bool prev_pointer_on);
-    u32 getStickHold_(u32 prev_hold, const Vector2f& stick, f32 hold_threshold,
-                      f32 release_threshold, s32 start_bit);
+    void setPointerWithBound_(bool isOn, bool touchkeyHold, const Vector2f& rPos);
+    void updateDerivativeParams_(u32 prevHold, bool prevPointerOn);
+    u32 getStickHold_(u32 prevHold, const Vector2f& rStick, f32 holdThreshold,
+                      f32 releaseThreshold, s32 startBit);
     u32 createStickCrossMask_();
 
     enum

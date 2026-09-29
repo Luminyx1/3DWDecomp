@@ -14,10 +14,10 @@ public:
     ControllerWrapper();
     ~ControllerWrapper() override = default;
 
-    void calc(u32 prev_hold, bool prev_pointer_on) override;
+    void calc(u32 prevHold, bool prevPointerOn) override;
 
-    u32 createPadMaskFromControllerPadMask_(u32 controller_mask) const;
-    void setPadConfig(s32 padbit_max, const u8* pad_config, bool enable_stickcross_emulation);
+    u32 createPadMaskFromControllerPadMask_(u32 controllerMask) const;
+    void setPadConfig(s32 padBitMax, const u8* pPadConfig, bool enableStickCrossEmulation);
 
 protected:
     u8 mPadConfig[cPadIdx_MaxBase];

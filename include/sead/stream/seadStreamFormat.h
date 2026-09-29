@@ -82,6 +82,8 @@ public:
 class TextStreamFormat : public StreamFormat
 {
 public:
+    TextStreamFormat();
+
     u8 readU8(StreamSrc* src, Endian::Types endian) override;
     u16 readU16(StreamSrc* src, Endian::Types endian) override;
     u32 readU32(StreamSrc* src, Endian::Types endian) override;
@@ -109,8 +111,13 @@ public:
     void writeDecorationText(StreamSrc* src, const SafeString& text) override;
     void writeNullChar(StreamSrc* src) override;
     void skip(StreamSrc* src, u32 offset) override;
-    void flush(StreamSrc* src) override;
+    void flush([[maybe_unused]] StreamSrc* src) override {}
     void rewind(StreamSrc* src) override;
+
+private:
+    void getNextData_(StreamSrc* src);
+
+    FixedSafeString<128> mDelimiter;
 };
 
 }  // namespace sead

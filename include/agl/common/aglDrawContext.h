@@ -2,6 +2,8 @@
 
 #include <basis/seadTypes.h>
 #include <gfx/seadDrawContext.h>
+#include <nvn/nvn.h>
+#include <prim/seadBitFlag.h>
 #include <prim/seadRuntimeTypeInfo.h>
 #include <thread/seadCriticalSection.h>
 
@@ -19,28 +21,40 @@ public:
     DrawContext();
     ~DrawContext() override;
 
-    void setCommandBuffer(DisplayList* buffer);
+    void setCommandBuffer(DisplayList* pDisplayList);
     void flushCommandBuffer();
-    void setBoundRenderBuffer(const RenderBuffer* buffer);
+    void setBoundRenderBuffer(const RenderBuffer* pRenderBuffer);
     void barrierTexture(u32 flags);
     void barrierShader(u32 flags);
     bool isTextureDirty(u32 unused, s32 index) const;
     void setTextureDirty(s32 index);
-    void changeShaderType(ShaderMode mode, ShaderOptimizeType optimizeType);
+    void changeShaderMode(ShaderMode mode, ShaderOptimizeType optimizeType);
     void setCommandBufferTemporary();
 
+    DisplayList* getDisplayList() const { return mCommandBuffer; }
+    const RenderBuffer* getBoundRenderBuffer() const { return mBoundRenderBuffer; }
+
+    NVNcommandBuffer* getNvnCommandBuffer()
+    {
+        return static_cast<NVNcommandBuffer*>(getCommandBuffer()->ToData()->pNvnCommandBuffer);
+    }
+
 private:
-    void* gap[5];
+    static u64 makeTextureMask_(s32 index) { return 1ull << (index & 63); }
+
+    void setNvnCommandBuffer_(NVNcommandBuffer* pCommandBuffer)
+    {
+        getCommandBuffer()->ToData()->pNvnCommandBuffer = pCommandBuffer;
+    }
+
     DisplayList* mCommandBuffer;
     const RenderBuffer* mBoundRenderBuffer;
-    u8 _100;
-    ShaderMode mShaderMode;
-    u8 _102;
-    u8 _103;
-    u32 _104;
-    u32 _10c;
-    void* gap2[19];
-    long mTextureDirty;
+    sead::BitFlag8 mFlags;
+    u8 mShaderMode;
+    u8 _fa;
+    alignas(8) NVNcommandBuffer mNvnCommandBuffer;
+    u64 mTextureDirty;
 };
+static_assert(sizeof(DrawContext) == 0x1a8);
 
 }  // namespace agl

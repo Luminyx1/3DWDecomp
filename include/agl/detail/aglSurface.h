@@ -19,6 +19,14 @@ public:
     void printInfo() const;
     void copyFrom(const NVNtexture&);
 
+    u16 getWidth() const { return _0; }
+    u16 getHeight() const { return _2; }
+    u16 getDepth() const { return _4; }
+    u8 getMultiSampleType() const { return _8; }
+    u8 getMipLevelNum() const { return _9; }
+    u16 getTextureType() const { return _a; }
+    u8 getTextureAttribute() const { return _1a; }
+
 private:
     u16 _0;
     u16 _2;

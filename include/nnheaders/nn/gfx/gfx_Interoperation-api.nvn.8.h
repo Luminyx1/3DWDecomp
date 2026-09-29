@@ -9,6 +9,7 @@ namespace nn::gfx {
 
 template <>
 class TInteroperation<ApiVariationNvn8> {
+public:
     static void ConvertToGfxDevice(TDevice<ApiVariationNvn8>*, NVNdevice*);
     static void ConvertToGfxQueue(TQueue<ApiVariationNvn8>*, NVNqueue*, TDevice<ApiVariationNvn8>*);
     static void ConvertToGfxMemoryPool(TMemoryPool<ApiVariationNvn8>*, NVNmemoryPool*, void*);

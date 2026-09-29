@@ -31,6 +31,8 @@ public:
 
     sead::SeparateHeap* getHeap() const { return mHeap; }
     MemoryPoolHeap* getNext() const { return mNext; }
+    void* getBuffer() const { return mBuffer; }
+    MemoryPool* getMemoryPool() { return &mMemoryPool; }
 
 private:
     friend class GPUMemBlockMgrHeapEx;

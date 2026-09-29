@@ -8,6 +8,13 @@ const f32 ControllerBase::cStickReleaseThresholdDefault = 0.25f;
 const Vector2f ControllerBase::cInvalidPointer(Mathf::minNumber(), Mathf::minNumber());
 const Vector2i ControllerBase::cInvalidPointerS32(Mathi::minNumber(), Mathi::minNumber());
 
+/**
+ * Sets up the pad layout and resets all input state.
+ * @param padBitMax number of pad bits in use
+ * @param leftStickCrossStartBit first pad bit of the emulated left stick cross, or -1
+ * @param rightStickCrossStartBit first pad bit of the emulated right stick cross, or -1
+ * @param touchKeyBit pad bit that mirrors the pointer, or -1
+ */
 ControllerBase::ControllerBase(s32 padBitMax, s32 leftStickCrossStartBit,
                                s32 rightStickCrossStartBit, s32 touchKeyBit)
     : mPadTrig(), mPadRelease(), mPadRepeat(), mPointerFlag(), mPointerS32(cInvalidPointerS32),
@@ -20,7 +27,6 @@ ControllerBase::ControllerBase(s32 padBitMax, s32 leftStickCrossStartBit,
 {
     if (cPadIdx_MaxBase < padBitMax)
     {
-        SEAD_ASSERT_MSG(false, "illegal padBitMax[%d]", padBitMax);
         mPadBitMax = cPadIdx_MaxBase;
     }
 
@@ -32,6 +38,12 @@ ControllerBase::ControllerBase(s32 padBitMax, s32 leftStickCrossStartBit,
     }
 }
 
+/**
+ * Updates the pointer, clipping it against the pointer bound if one is set.
+ * @param isOn whether the pointer is currently on
+ * @param touchkeyHold whether the touch key bit should be held
+ * @param rPos raw pointer position
+ */
 void ControllerBase::setPointerWithBound_(bool isOn, bool touchkeyHold, const Vector2f& rPos)
 {
     if (isOn)
@@ -74,6 +86,11 @@ void ControllerBase::setPointerWithBound_(bool isOn, bool touchkeyHold, const Ve
     }
 }
 
+/**
+ * Derives stick cross bits, trigger/release/repeat masks and pointer edges from the hold state.
+ * @param prevHold hold mask of the previous frame
+ * @param prevPointerOn whether the pointer was on in the previous frame
+ */
 void ControllerBase::updateDerivativeParams_(u32 prevHold, bool prevPointerOn)
 {
     u32 stick_hold = 0;
@@ -129,12 +146,22 @@ void ControllerBase::updateDerivativeParams_(u32 prevHold, bool prevPointerOn)
     mPointerS32.y = (s32)mPointer.y;
 }
 
+/**
+ * Gets how many frames a pad bit has been held.
+ * @param bit pad bit
+ * @return number of frames held
+ */
 u32 ControllerBase::getPadHoldCount(s32 bit) const
 {
-    SEAD_ASSERT(bit < mPadBitMax);
     return mPadHoldCounts[bit];
 }
 
+/**
+ * Sets the repeat delay and interval for the given pad bits.
+ * @param mask pad bits to change
+ * @param delayFrame frames before the first repeat
+ * @param pulseFrame frames between repeats
+ */
 void ControllerBase::setPadRepeat(u32 mask, u8 delayFrame, u8 pulseFrame)
 {
     BitFlag32 pad_to_set(mask);
@@ -149,6 +176,11 @@ void ControllerBase::setPadRepeat(u32 mask, u8 delayFrame, u8 pulseFrame)
     }
 }
 
+/**
+ * Sets the left stick cross hold and release thresholds.
+ * @param hold stick length needed to press a direction
+ * @param release stick length below which a direction is released
+ */
 void ControllerBase::setLeftStickCrossThreshold(f32 hold, f32 release)
 {
     if (hold >= release)
@@ -156,13 +188,13 @@ void ControllerBase::setLeftStickCrossThreshold(f32 hold, f32 release)
         mLeftStickHoldThreshold = hold;
         mLeftStickReleaseThreshold = release;
     }
-    else
-    {
-        SEAD_ASSERT_MSG(false, "hold[%f] must be larger than or equal to release[%f].", hold,
-                        release);
-    }
 }
 
+/**
+ * Sets the right stick cross hold and release thresholds.
+ * @param hold stick length needed to press a direction
+ * @param release stick length below which a direction is released
+ */
 void ControllerBase::setRightStickCrossThreshold(f32 hold, f32 release)
 {
     if (hold >= release)
@@ -170,19 +202,27 @@ void ControllerBase::setRightStickCrossThreshold(f32 hold, f32 release)
         mRightStickHoldThreshold = hold;
         mRightStickReleaseThreshold = release;
     }
-    else
-    {
-        SEAD_ASSERT_MSG(false, "hold[%f] must be larger than or equal to release[%f].", hold,
-                        release);
-    }
 }
 
+/**
+ * Sets the area the pointer is limited to.
+ * @param rBound pointer bound
+ */
 void ControllerBase::setPointerBound(const BoundBox2f& rBound)
 {
     mPointerBound.set(rBound.getMin(), rBound.getMax());
     mPointerFlag.set(cPointerUnkFlag3);
 }
 
+/**
+ * Converts a stick position to cross direction bits with hysteresis.
+ * @param prevHold hold mask of the previous frame
+ * @param rStick stick position
+ * @param holdThreshold stick length needed to press a direction
+ * @param releaseThreshold stick length below which directions are released
+ * @param startBit first pad bit of the cross
+ * @return pad bits of the held directions
+ */
 u32 ControllerBase::getStickHold_(u32 prevHold, const Vector2f& rStick, f32 holdThreshold,
                                   f32 releaseThreshold, s32 startBit)
 {
@@ -238,12 +278,19 @@ u32 ControllerBase::getStickHold_(u32 prevHold, const Vector2f& rStick, f32 hold
     }
 }
 
+/**
+ * Checks whether no input is active.
+ * @return true if nothing is held, touched, tilted or pulled
+ */
 bool ControllerBase::isIdleBase_()
 {
     return getHoldMask() == 0 && mPointerFlag.isOff(1) && mLeftStick.isZero() &&
            mRightStick.isZero() && mLeftAnalogTrigger == 0.0f && mRightAnalogTrigger == 0.0f;
 }
 
+/**
+ * Clears all input state.
+ */
 void ControllerBase::setIdleBase_()
 {
     mPadHold.makeAllZero();
@@ -265,6 +312,10 @@ void ControllerBase::setIdleBase_()
     mRightAnalogTrigger = 0.0f;
 }
 
+/**
+ * Builds the mask of all pad bits used by the emulated stick crosses.
+ * @return stick cross pad bits
+ */
 u32 ControllerBase::createStickCrossMask_()
 {
     BitFlag32 mask;

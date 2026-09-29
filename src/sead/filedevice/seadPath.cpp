@@ -59,25 +59,30 @@ char getLastChar(const SafeString& rStr)
 }
 }  // namespace
 
-// NON_MATCHING: redundant checks for dot_index < 0 in SafeString::getPart() are optimized out
-bool Path::getExt(BufferedSafeString* ext, const SafeString& rPath)
+/**
+ * Gets the extension of a path (the part after the last dot, if it is not part of a directory).
+ * @param pExt receives the extension (cleared on failure)
+ * @param rPath path to examine
+ * @return whether the path has an extension
+ */
+bool Path::getExt(BufferedSafeString* pExt, const SafeString& rPath)
 {
-    SEAD_ASSERT_MSG(ext, "destination buffer is null");
+    SEAD_ASSERT_MSG(pExt, "destination buffer is null");
 
-    ext->trim(0);
+    pExt->trim(0);
 
-    const s32 dot_index = rfindCharIndex(rPath, '.');
-    if (dot_index < 0)
+    const s32 dotIndex = rfindCharIndex(rPath, '.');
+    if (!(dotIndex >= 0))
     {
         return false;
     }
 
-    if (rPath.getPart(dot_index).include('/') || rPath.getPart(dot_index).include('\\'))
+    if (rPath.getPart(dotIndex).include('/') || rPath.getPart(dotIndex).include('\\'))
     {
         return false;
     }
 
-    ext->copy(rPath.getPart(dot_index + 1));
+    pExt->copy(rPath.getPart(dotIndex + 1));
     return true;
 }
 

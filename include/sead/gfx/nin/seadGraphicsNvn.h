@@ -73,6 +73,7 @@ public:
 
     s32 getTextureSamplerID() const { return mTextureSamplerID; }
 
+    CriticalSection* getCriticalSection1() { return &mCriticalSection1; }
     CriticalSection* getCriticalSection2() { return &mCriticalSection2; }
 
     static GraphicsNvn* instance() { return (GraphicsNvn*)Graphics::instance(); }

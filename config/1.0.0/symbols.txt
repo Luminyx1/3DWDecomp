@@ -4496,3 +4496,9 @@
 
 # src/sead/framework/seadTaskMgr
 0x710211F2F8 4 object _ZN4seadL23sDefaultPreparePriorityE
+
+# src/sead/stream
+0x710211FB18 64 object _ZN4seadL6sMutexE
+0x710211FB58 1048 object _ZN4seadL7sBufferE
+0x7101AD8210 8 object _ZN4seadL21sBinaryStreamInstanceE
+0x710211FA78 160 object _ZN4seadL19sTextStreamInstanceE

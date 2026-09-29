@@ -785,6 +785,15 @@ inline void Matrix34CalcCommon<f32>::copy(Base& o, const Base& n)
     }
 }
 
+template <>
+inline void Matrix44CalcCommon<f32>::copy(Base& o, const Base& n)
+{
+    for (int i = 0; i < 4; ++i)
+    {
+        vst1q_f32(o.m[i], vld1q_f32(n.m[i]));
+    }
+}
+
 #endif
 
 #ifdef cafe

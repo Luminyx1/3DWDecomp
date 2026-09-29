@@ -41,13 +41,15 @@ public:
     void MarkValid() { *this = *this | cValidPoolType; }
 
 private:
+    friend class agl::GPUMemBlockBase;
+
     static const MemoryPoolType cInvalidPoolType;
     static const MemoryPoolType cValidPoolType;
 };
 
 class MemoryPool {
 public:
-    MemoryPool() { mMemoryType.setDirect(0); }
+    MemoryPool();
 
     void initialize(void* pStorage, u64 size, const MemoryPoolType& rType);
     void initialize(void* pStorage, u64 size, const MemoryPoolType& rType,

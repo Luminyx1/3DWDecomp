@@ -41095,13 +41095,13 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71006520C0			FALSE	_ZN4sead12PtrArrayImpl6insertEiPv	sead::PtrArrayImpl::insert(int, void*)	
 0x7100652150			FALSE	_ZN4sead12PtrArrayImpl11checkInsertEii	sead::PtrArrayImpl::checkInsert(int, int)	
 0x7100652180			FALSE	_ZN4sead12PtrArrayImpl11insertArrayEiPvii	sead::PtrArrayImpl::insertArray(int, void*, int, int)	
-0x71006522A0		seadNinJoyNpadDevice.o	FALSE	_ZN4sead16NinJoyNpadDeviceC2EPNS_13ControllerMgrEPNS_4HeapE	sead::NinJoyNpadDevice::NinJoyNpadDevice(sead::ControllerMgr*, sead::Heap*)	
+0x71006522A0	sead/controller/nin	seadNinJoyNpadDeviceNin.o	FALSE	_ZN4sead16NinJoyNpadDeviceC2EPNS_13ControllerMgrEPNS_4HeapE	sead::NinJoyNpadDevice::NinJoyNpadDevice(sead::ControllerMgr*, sead::Heap*)	
 0x71006524D0			FALSE	_ZN4sead16NinJoyNpadDeviceD2Ev	sead::NinJoyNpadDevice::~NinJoyNpadDevice()	
 0x7100652550			FALSE	_ZN4sead6Thread26quitAndDestroySingleThreadEb	sead::Thread::quitAndDestroySingleThread(bool)	
 0x7100652560			FALSE	_ZN4sead16NinJoyNpadDevice15VibrationThreadD2Ev	sead::NinJoyNpadDevice::VibrationThread::~VibrationThread()	
 0x71006525A0			FALSE	_ZN4sead16NinJoyNpadDeviceD0Ev	sead::NinJoyNpadDevice::~NinJoyNpadDevice()	
 0x7100652620			FALSE	_ZN4sead16NinJoyNpadDevice4calcEv	sead::NinJoyNpadDevice::calc()	
-0x7100652890	sead/controller/nin	seadNinJoyNpadDeviceNin.o	FALSE	_ZN4sead16NinJoyNpadDevice18setNpadIdUpdateNumEj	sead::NinJoyNpadDevice::setNpadIdUpdateNum(unsigned int)	object/folder from debug builds' assert paths
+0x7100652890			FALSE	_ZN4sead16NinJoyNpadDevice18setNpadIdUpdateNumEj	sead::NinJoyNpadDevice::setNpadIdUpdateNum(unsigned int)	object/folder from debug builds' assert paths
 0x71006528A0			FALSE	_ZN4sead16NinJoyNpadDevice24setSupportedNpadStyleSetEN2nn4util10BitFlagSetILi32ENS1_3hid12NpadStyleTagEEE	sead::NinJoyNpadDevice::setSupportedNpadStyleSet(nn::util::BitFlagSet<32, nn::hid::NpadStyleTag>)	
 0x71006528B0			FALSE	_ZN4sead16NinJoyNpadDevice18setNpadJoyHoldTypeEN2nn3hid15NpadJoyHoldTypeE	sead::NinJoyNpadDevice::setNpadJoyHoldType(nn::hid::NpadJoyHoldType)	
 0x71006528C0			FALSE	_ZN4sead16NinJoyNpadDevice20getNpadJoyAssignmentEi	sead::NinJoyNpadDevice::getNpadJoyAssignment(int)	
@@ -42143,10 +42143,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710067D6C0			FALSE	_ZN4sead22BufferedSafeStringBaseIDsE17appendWithFormatVEPKDsSt9__va_list	sead::BufferedSafeStringBase<char16_t>::appendWithFormatV(char16_t const*, std::__va_list)	
 0x710067D7A0			FALSE	_ZN4sead22BufferedSafeStringBaseIcE16appendWithFormatEPKcz	sead::BufferedSafeStringBase<char>::appendWithFormat(char const*, ...)	
 0x710067D8C0			FALSE	_ZN4sead22BufferedSafeStringBaseIDsE16appendWithFormatEPKDsz	sead::BufferedSafeStringBase<char16_t>::appendWithFormat(char16_t const*, ...)	
-0x710067D9E0			FALSE	_ZN4sead17StringBuilderBaseIcE6createEiPNS_4HeapEi	sead::StringBuilderBase<char>::create(int, sead::Heap*, int)	
+0x710067D9E0		seadStringBuilder.o	FALSE	_ZN4sead17StringBuilderBaseIcE6createEiPNS_4HeapEi	sead::StringBuilderBase<char>::create(int, sead::Heap*, int)	
 0x710067DAB0			FALSE	_ZN4sead17StringBuilderBaseIDsE6createEiPNS_4HeapEi	sead::StringBuilderBase<char16_t>::create(int, sead::Heap*, int)	
 0x710067DB80			FALSE	_ZN4sead17StringBuilderBaseIcE6createEPKcPNS_4HeapEi	sead::StringBuilderBase<char>::create(char const*, sead::Heap*, int)	
-0x710067DD00		seadStringBuilder.o	FALSE	_ZN4sead17StringBuilderBaseIcE4copyEPKci	sead::StringBuilderBase<char>::copy(char const*, int)	object/folder from debug builds' assert paths
+0x710067DD00			FALSE	_ZN4sead17StringBuilderBaseIcE4copyEPKci	sead::StringBuilderBase<char>::copy(char const*, int)	object/folder from debug builds' assert paths
 0x710067DDB0			FALSE	_ZN4sead17StringBuilderBaseIDsE6createEPKDsPNS_4HeapEi	sead::StringBuilderBase<char16_t>::create(char16_t const*, sead::Heap*, int)	
 0x710067DF30			FALSE	_ZN4sead17StringBuilderBaseIDsE4copyEPKDsi	sead::StringBuilderBase<char16_t>::copy(char16_t const*, int)	
 0x710067DFE0			FALSE	_ZNK4sead17StringBuilderBaseIcE8endsWithEPKc	sead::StringBuilderBase<char>::endsWith(char const*) const	
@@ -42201,22 +42201,22 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710067FFD0			FALSE	_ZN4sead17StringBuilderBaseIDsE15replaceCharListERKNS_14SafeStringBaseIDsEES5_	sead::StringBuilderBase<char16_t>::replaceCharList(sead::SafeStringBase<char16_t> const&, sead::SafeStringBase<char16_t> const&)	
 0x7100680180			FALSE	_ZN4sead17StringBuilderBaseIDsE26convertFromMultiByteStringEPKci	sead::StringBuilderBase<char16_t>::convertFromMultiByteString(char const*, int)	
 0x7100680280			FALSE	_ZN4sead17StringBuilderBaseIDsE25convertFromWideCharStringEPKDsi	sead::StringBuilderBase<char16_t>::convertFromWideCharString(char16_t const*, int)	
-0x7100680330			FALSE	_ZN4sead10StringUtil14tryParseNumberIhEEbPT_RKNS_14SafeStringBaseIcEENS0_14CardinalNumberE	bool sead::StringUtil::tryParseNumber<unsigned char>(unsigned char*, sead::SafeStringBase<char> const&, sead::StringUtil::CardinalNumber)	
-0x7100680340			FALSE	_ZN4sead10StringUtil14tryParseNumberIhEEbPT_RKNS_14SafeStringBaseIcEENS0_14CardinalNumberE_0	_ZN4sead10StringUtil14tryParseNumberIhEEbPT_RKNS_14SafeStringBaseIcEENS0_14CardinalNumberE_0	
+0x7100680330		seadStringUtil.o	FALSE	_ZN4sead10StringUtil14tryParseNumberIhEEbPT_RKNS_14SafeStringBaseIcEENS0_14CardinalNumberE	bool sead::StringUtil::tryParseNumber<unsigned char>(unsigned char*, sead::SafeStringBase<char> const&, sead::StringUtil::CardinalNumber)	
+0x7100680340			FALSE	_ZN4sead10StringUtil10tryParseU8EPhRKNS_14SafeStringBaseIcEENS0_14CardinalNumberE	_ZN4sead10StringUtil10tryParseU8EPhRKNS_14SafeStringBaseIcEENS0_14CardinalNumberE	
 0x7100680830			FALSE	_ZN4sead10StringUtil14tryParseNumberIaEEbPT_RKNS_14SafeStringBaseIcEENS0_14CardinalNumberE	bool sead::StringUtil::tryParseNumber<signed char>(signed char*, sead::SafeStringBase<char> const&, sead::StringUtil::CardinalNumber)	
-0x7100680840			FALSE	_ZN4sead10StringUtil14tryParseNumberIaEEbPT_RKNS_14SafeStringBaseIcEENS0_14CardinalNumberE_0	_ZN4sead10StringUtil14tryParseNumberIaEEbPT_RKNS_14SafeStringBaseIcEENS0_14CardinalNumberE_0	
+0x7100680840			FALSE	_ZN4sead10StringUtil10tryParseS8EPaRKNS_14SafeStringBaseIcEENS0_14CardinalNumberE	_ZN4sead10StringUtil10tryParseS8EPaRKNS_14SafeStringBaseIcEENS0_14CardinalNumberE	
 0x7100680D30			FALSE	_ZN4sead10StringUtil14tryParseNumberItEEbPT_RKNS_14SafeStringBaseIcEENS0_14CardinalNumberE	bool sead::StringUtil::tryParseNumber<unsigned short>(unsigned short*, sead::SafeStringBase<char> const&, sead::StringUtil::CardinalNumber)	
-0x7100680D40			FALSE	_ZN4sead10StringUtil14tryParseNumberItEEbPT_RKNS_14SafeStringBaseIcEENS0_14CardinalNumberE_0	_ZN4sead10StringUtil14tryParseNumberItEEbPT_RKNS_14SafeStringBaseIcEENS0_14CardinalNumberE_0	
+0x7100680D40			FALSE	_ZN4sead10StringUtil11tryParseU16EPtRKNS_14SafeStringBaseIcEENS0_14CardinalNumberE	_ZN4sead10StringUtil11tryParseU16EPtRKNS_14SafeStringBaseIcEENS0_14CardinalNumberE	
 0x7100681230			FALSE	_ZN4sead10StringUtil14tryParseNumberIsEEbPT_RKNS_14SafeStringBaseIcEENS0_14CardinalNumberE	bool sead::StringUtil::tryParseNumber<short>(short*, sead::SafeStringBase<char> const&, sead::StringUtil::CardinalNumber)	
-0x7100681240			FALSE	_ZN4sead10StringUtil14tryParseNumberIsEEbPT_RKNS_14SafeStringBaseIcEENS0_14CardinalNumberE_0	_ZN4sead10StringUtil14tryParseNumberIsEEbPT_RKNS_14SafeStringBaseIcEENS0_14CardinalNumberE_0	
+0x7100681240			FALSE	_ZN4sead10StringUtil11tryParseS16EPsRKNS_14SafeStringBaseIcEENS0_14CardinalNumberE	_ZN4sead10StringUtil11tryParseS16EPsRKNS_14SafeStringBaseIcEENS0_14CardinalNumberE	
 0x7100681730			FALSE	_ZN4sead10StringUtil14tryParseNumberIjEEbPT_RKNS_14SafeStringBaseIcEENS0_14CardinalNumberE	bool sead::StringUtil::tryParseNumber<unsigned int>(unsigned int*, sead::SafeStringBase<char> const&, sead::StringUtil::CardinalNumber)	
-0x7100681740			FALSE	_ZN4sead10StringUtil14tryParseNumberIjEEbPT_RKNS_14SafeStringBaseIcEENS0_14CardinalNumberE_0	_ZN4sead10StringUtil14tryParseNumberIjEEbPT_RKNS_14SafeStringBaseIcEENS0_14CardinalNumberE_0	
+0x7100681740			FALSE	_ZN4sead10StringUtil11tryParseU32EPjRKNS_14SafeStringBaseIcEENS0_14CardinalNumberE	_ZN4sead10StringUtil11tryParseU32EPjRKNS_14SafeStringBaseIcEENS0_14CardinalNumberE	
 0x7100681C10			FALSE	_ZN4sead10StringUtil14tryParseNumberIiEEbPT_RKNS_14SafeStringBaseIcEENS0_14CardinalNumberE	bool sead::StringUtil::tryParseNumber<int>(int*, sead::SafeStringBase<char> const&, sead::StringUtil::CardinalNumber)	
-0x7100681C20			FALSE	_ZN4sead10StringUtil14tryParseNumberIiEEbPT_RKNS_14SafeStringBaseIcEENS0_14CardinalNumberE_0	_ZN4sead10StringUtil14tryParseNumberIiEEbPT_RKNS_14SafeStringBaseIcEENS0_14CardinalNumberE_0	
+0x7100681C20			FALSE	_ZN4sead10StringUtil11tryParseS32EPiRKNS_14SafeStringBaseIcEENS0_14CardinalNumberE	_ZN4sead10StringUtil11tryParseS32EPiRKNS_14SafeStringBaseIcEENS0_14CardinalNumberE	
 0x7100682140			FALSE	_ZN4sead10StringUtil14tryParseNumberImEEbPT_RKNS_14SafeStringBaseIcEENS0_14CardinalNumberE	bool sead::StringUtil::tryParseNumber<unsigned long>(unsigned long*, sead::SafeStringBase<char> const&, sead::StringUtil::CardinalNumber)	
-0x7100682150			FALSE	_ZN4sead10StringUtil14tryParseNumberImEEbPT_RKNS_14SafeStringBaseIcEENS0_14CardinalNumberE_0	_ZN4sead10StringUtil14tryParseNumberImEEbPT_RKNS_14SafeStringBaseIcEENS0_14CardinalNumberE_0	
+0x7100682150			FALSE	_ZN4sead10StringUtil11tryParseU64EPmRKNS_14SafeStringBaseIcEENS0_14CardinalNumberE	_ZN4sead10StringUtil11tryParseU64EPmRKNS_14SafeStringBaseIcEENS0_14CardinalNumberE	
 0x7100682630			FALSE	_ZN4sead10StringUtil14tryParseNumberIlEEbPT_RKNS_14SafeStringBaseIcEENS0_14CardinalNumberE	bool sead::StringUtil::tryParseNumber<long>(long*, sead::SafeStringBase<char> const&, sead::StringUtil::CardinalNumber)	
-0x7100682640			FALSE	_ZN4sead10StringUtil14tryParseNumberIlEEbPT_RKNS_14SafeStringBaseIcEENS0_14CardinalNumberE_0	_ZN4sead10StringUtil14tryParseNumberIlEEbPT_RKNS_14SafeStringBaseIcEENS0_14CardinalNumberE_0	
+0x7100682640			FALSE	_ZN4sead10StringUtil11tryParseS64EPlRKNS_14SafeStringBaseIcEENS0_14CardinalNumberE	_ZN4sead10StringUtil11tryParseS64EPlRKNS_14SafeStringBaseIcEENS0_14CardinalNumberE	
 0x7100682B80			FALSE	_ZN4sead10StringUtil14tryParseNumberIfEEbPT_RKNS_14SafeStringBaseIcEENS0_14CardinalNumberE	bool sead::StringUtil::tryParseNumber<float>(float*, sead::SafeStringBase<char> const&, sead::StringUtil::CardinalNumber)	
 0x7100682B90			FALSE	_ZN4sead10StringUtil14tryParseNumberIdEEbPT_RKNS_14SafeStringBaseIcEENS0_14CardinalNumberE	bool sead::StringUtil::tryParseNumber<double>(double*, sead::SafeStringBase<char> const&, sead::StringUtil::CardinalNumber)	
 0x7100682BA0			FALSE	_ZN4sead10StringUtil11parseNumberIhEET_RKNS_14SafeStringBaseIcEENS0_14CardinalNumberE	unsigned char sead::StringUtil::parseNumber<unsigned char>(sead::SafeStringBase<char> const&, sead::StringUtil::CardinalNumber)	
@@ -42229,7 +42229,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100682CF0			FALSE	_ZN4sead10StringUtil11parseNumberIlEET_RKNS_14SafeStringBaseIcEENS0_14CardinalNumberE	long sead::StringUtil::parseNumber<long>(sead::SafeStringBase<char> const&, sead::StringUtil::CardinalNumber)	
 0x7100682D20			FALSE	_ZN4sead10StringUtil11parseNumberIfEET_RKNS_14SafeStringBaseIcEENS0_14CardinalNumberE	float sead::StringUtil::parseNumber<float>(sead::SafeStringBase<char> const&, sead::StringUtil::CardinalNumber)	
 0x7100682D50			FALSE	_ZN4sead10StringUtil11parseNumberIdEET_RKNS_14SafeStringBaseIcEENS0_14CardinalNumberE	double sead::StringUtil::parseNumber<double>(sead::SafeStringBase<char> const&, sead::StringUtil::CardinalNumber)	
-0x7100682D80		seadStringUtil.o	FALSE	_ZN4sead10StringUtil8wcs16cpyEPDsmPKDs	sead::StringUtil::wcs16cpy(char16_t*, unsigned long, char16_t const*)	object (smo)
+0x7100682D80			FALSE	_ZN4sead10StringUtil8wcs16cpyEPDsmPKDs	sead::StringUtil::wcs16cpy(char16_t*, unsigned long, char16_t const*)	object (smo)
 0x7100682DB0			FALSE	_ZN4sead10StringUtil11vsw16printfEPDsmPKDsSt9__va_list	sead::StringUtil::vsw16printf(char16_t*, unsigned long, char16_t const*, std::__va_list)	
 0x7100683720			FALSE	_ZN4sead10StringUtil10sw16printfEPDsmPKDsz	sead::StringUtil::sw16printf(char16_t*, unsigned long, char16_t const*, ...)	
 0x7100683790			FALSE	_ZN4sead10StringUtil9vsnprintfEPcmPKcSt9__va_list	sead::StringUtil::vsnprintf(char*, unsigned long, char const*, std::__va_list)	
@@ -42256,8 +42256,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100684EC0			FALSE	_ZN4sead10StringUtil28toLowerCapitalFirstCharactorEPNS_22BufferedSafeStringBaseIDsEE	sead::StringUtil::toLowerCapitalFirstCharactor(sead::BufferedSafeStringBase<char16_t>*)	
 0x7100684F70			FALSE	_ZN4sead10StringUtil21isIncludeInStringListERKNS_14SafeStringBaseIcEES4_c	sead::StringUtil::isIncludeInStringList(sead::SafeStringBase<char> const&, sead::SafeStringBase<char> const&, char)	
 0x7100685270			FALSE	_ZN4sead10StringUtil21isIncludeInStringListERKNS_14SafeStringBaseIDsEES4_Ds	sead::StringUtil::isIncludeInStringList(sead::SafeStringBase<char16_t> const&, sead::SafeStringBase<char16_t> const&, char16_t)	
-0x7100685570			FALSE	_ZN4sead10StringUtil14tryParseNumberIfEEbPT_RKNS_14SafeStringBaseIcEENS0_14CardinalNumberE_0	_ZN4sead10StringUtil14tryParseNumberIfEEbPT_RKNS_14SafeStringBaseIcEENS0_14CardinalNumberE_0	
-0x71006859C0			FALSE	_ZN4sead10StringUtil14tryParseNumberIdEEbPT_RKNS_14SafeStringBaseIcEENS0_14CardinalNumberE_0	_ZN4sead10StringUtil14tryParseNumberIdEEbPT_RKNS_14SafeStringBaseIcEENS0_14CardinalNumberE_0	
+0x7100685570			FALSE	_ZN4sead10StringUtil11tryParseF32EPfRKNS_14SafeStringBaseIcEE	_ZN4sead10StringUtil11tryParseF32EPfRKNS_14SafeStringBaseIcEE	
+0x71006859C0			FALSE	_ZN4sead10StringUtil11tryParseF64EPdRKNS_14SafeStringBaseIcEE	_ZN4sead10StringUtil11tryParseF64EPdRKNS_14SafeStringBaseIcEE	
 0x7100685E10			FALSE	sub_7100685E10	sub_7100685E10	
 0x7100686E00			FALSE	sub_7100686E00	sub_7100686E00	
 0x7100687B50			FALSE	sub_7100687B50	sub_7100687B50	
@@ -42424,7 +42424,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710068CBB0			FALSE	_ZN4sead26BufferFileDeviceReadStreamC2EPNS_10FileHandleEPNS_12StreamFormatE	sead::BufferFileDeviceReadStream::BufferFileDeviceReadStream(sead::FileHandle*, sead::StreamFormat*)	
 0x710068CC90			FALSE	_ZN4sead27BufferFileDeviceWriteStreamD2Ev	sead::BufferFileDeviceWriteStream::~BufferFileDeviceWriteStream()	
 0x710068CD50			FALSE	_ZN4sead27BufferFileDeviceWriteStreamD0Ev	sead::BufferFileDeviceWriteStream::~BufferFileDeviceWriteStream()	
-0x710068CE10		seadStream.o	FALSE	_ZN4sead14PrintStreamSrc5writeEPKvj	sead::PrintStreamSrc::write(void const*, unsigned int)	object (smo)
+0x710068CE10		seadPrintStream.o	FALSE	_ZN4sead14PrintStreamSrc5writeEPKvj	sead::PrintStreamSrc::write(void const*, unsigned int)	object (smo)
 0x710068CE20			FALSE	_ZN4sead14PrintStreamSrc4skipEi	sead::PrintStreamSrc::skip(int)	
 0x710068CE30			FALSE	_ZN4sead14PrintStreamSrc4readEPvj	sead::PrintStreamSrc::read(void*, unsigned int)	
 0x710068CE40			FALSE	_ZN4sead14PrintStreamSrc6rewindEv	sead::PrintStreamSrc::rewind()	
@@ -42433,7 +42433,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710068CF50			FALSE	_ZN4sead16PrintWriteStreamD2Ev	sead::PrintWriteStream::~PrintWriteStream()	
 0x710068CFC0			FALSE	_ZN4sead16PrintWriteStreamD0Ev	sead::PrintWriteStream::~PrintWriteStream()	
 0x710068D020			FALSE	_ZN4sead14PrintStreamSrc5isEOFEv	sead::PrintStreamSrc::isEOF()	
-0x710068D030			FALSE	_ZN4sead12RamStreamSrcC1EPvj	sead::RamStreamSrc::RamStreamSrc(void*, unsigned int)	
+0x710068D030		seadRamStream.o	FALSE	_ZN4sead12RamStreamSrcC1EPvj	sead::RamStreamSrc::RamStreamSrc(void*, unsigned int)	
 0x710068D050			FALSE	_ZN4sead12RamStreamSrcD2Ev	sead::RamStreamSrc::~RamStreamSrc()	
 0x710068D060			FALSE	_ZN4sead12RamStreamSrcD0Ev	sead::RamStreamSrc::~RamStreamSrc()	
 0x710068D070			FALSE	_ZN4sead12RamStreamSrc4readEPvj	sead::RamStreamSrc::read(void*, unsigned int)	
@@ -42450,7 +42450,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710068D3F0			FALSE	_ZN4sead12RamStreamSrc6rewindEv	sead::RamStreamSrc::rewind()	
 0x710068D400			FALSE	_ZN4sead12RamStreamSrc5isEOFEv	sead::RamStreamSrc::isEOF()	
 0x710068D410			FALSE	_ZN4sead16TextStreamFormatD2Ev	sead::TextStreamFormat::~TextStreamFormat()	
-0x710068D420			FALSE	_ZN4sead6StreamC2Ev	sead::Stream::Stream()	
+0x710068D420		seadStream.o	FALSE	_ZN4sead6StreamC2Ev	sead::Stream::Stream()	
 0x710068D450			FALSE	_ZN4sead6StreamC1EPNS_9StreamSrcENS0_5ModesE	sead::Stream::Stream(sead::StreamSrc*, sead::Stream::Modes)	
 0x710068D490			FALSE	_ZN4sead6Stream7setModeENS0_5ModesE	sead::Stream::setMode(sead::Stream::Modes)	
 0x710068D4B0			FALSE	_ZN4sead6StreamC2EPNS_9StreamSrcEPNS_12StreamFormatE	sead::Stream::Stream(sead::StreamSrc*, sead::StreamFormat*)	
@@ -42504,16 +42504,16 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710068DE40			FALSE	_ZN4sead10ReadStream15readF64BitImpl_Ejj	sead::ReadStream::readF64BitImpl_(unsigned int, unsigned int)	
 0x710068DEC0			FALSE	_ZN4sead6StreamD2Ev	sead::Stream::~Stream()	
 0x710068DED0			FALSE	_ZN4sead6StreamD0Ev	sead::Stream::~Stream()	
-0x710068DEE0			FALSE	sub_710068DEE0	sub_710068DEE0	
-0x710068DEF0			FALSE	nullsub_313	nullsub_313	
-0x710068DF00			FALSE	nullsub_314	nullsub_314	
-0x710068DF10			FALSE	nullsub_315	nullsub_315	
-0x710068DF20			FALSE	sub_710068DF20	sub_710068DF20	
-0x710068DF30			FALSE	nullsub_316	nullsub_316	
-0x710068DF40			FALSE	sub_710068DF40	sub_710068DF40	
-0x710068DF50			FALSE	nullsub_317	nullsub_317	
-0x710068DF60			FALSE	sub_710068DF60	sub_710068DF60	
-0x710068DF70		seadBinaryStreamFormat.o	FALSE	_ZN4sead18BinaryStreamFormat6readU8EPNS_9StreamSrcENS_6Endian5TypesE	sead::BinaryStreamFormat::readU8(sead::StreamSrc*, sead::Endian::Types)	object/folder from debug builds' assert paths
+0x710068DEE0			FALSE	_GLOBAL__sub_I_seadStream.cpp	_GLOBAL__sub_I_seadStream.cpp	
+0x710068DEF0	sead/prim	seadEndian.o	FALSE	_ZN12_GLOBAL__N_15Null8Eh	_ZN12_GLOBAL__N_15Null8Eh	
+0x710068DF00			FALSE	_ZN12_GLOBAL__N_15Swap8Eh	_ZN12_GLOBAL__N_15Swap8Eh	
+0x710068DF10			FALSE	_ZN12_GLOBAL__N_16Null16Et	_ZN12_GLOBAL__N_16Null16Et	
+0x710068DF20			FALSE	_ZN12_GLOBAL__N_16Swap16Et	_ZN12_GLOBAL__N_16Swap16Et	
+0x710068DF30			FALSE	_ZN12_GLOBAL__N_16Null32Ej	_ZN12_GLOBAL__N_16Null32Ej	
+0x710068DF40			FALSE	_ZN12_GLOBAL__N_16Swap32Ej	_ZN12_GLOBAL__N_16Swap32Ej	
+0x710068DF50			FALSE	_ZN12_GLOBAL__N_16Null64Em	_ZN12_GLOBAL__N_16Null64Em	
+0x710068DF60			FALSE	_ZN12_GLOBAL__N_16Swap64Em	_ZN12_GLOBAL__N_16Swap64Em	
+0x710068DF70	sead/stream	seadBinaryStreamFormat.o	FALSE	_ZN4sead18BinaryStreamFormat6readU8EPNS_9StreamSrcENS_6Endian5TypesE	sead::BinaryStreamFormat::readU8(sead::StreamSrc*, sead::Endian::Types)	object/folder from debug builds' assert paths
 0x710068DFD0			FALSE	_ZN4sead18BinaryStreamFormat7readU16EPNS_9StreamSrcENS_6Endian5TypesE	sead::BinaryStreamFormat::readU16(sead::StreamSrc*, sead::Endian::Types)	
 0x710068E030			FALSE	_ZN4sead18BinaryStreamFormat7readU32EPNS_9StreamSrcENS_6Endian5TypesE	sead::BinaryStreamFormat::readU32(sead::StreamSrc*, sead::Endian::Types)	
 0x710068E090			FALSE	_ZN4sead18BinaryStreamFormat7readU64EPNS_9StreamSrcENS_6Endian5TypesE	sead::BinaryStreamFormat::readU64(sead::StreamSrc*, sead::Endian::Types)	
@@ -42575,7 +42575,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71006910B0			FALSE	_ZN4sead16TextStreamFormat5flushEPNS_9StreamSrcE	sead::TextStreamFormat::flush(sead::StreamSrc*)	
 0x71006910C0			TRUE	_ZN4sead15FixedSafeStringILi1024EED0Ev	sead::FixedSafeString<1024>::~FixedSafeString()	
 0x71006910D0			TRUE	_ZN4sead15FixedSafeStringILi1024EEaSERKNS_14SafeStringBaseIcEE	sead::FixedSafeString<1024>::operator=(sead::SafeStringBase<char> const&)	
-0x71006911C0			FALSE	sub_71006911C0	sub_71006911C0	
+0x71006911C0			FALSE	_GLOBAL__sub_I_seadTextStreamFormat.cpp	_GLOBAL__sub_I_seadTextStreamFormat.cpp	
 0x7100691250	sead/thread/nin	seadCriticalSectionNin.o	FALSE	_ZN4sead15CriticalSectionC2Ev	sead::CriticalSection::CriticalSection()	folder fixed by hand (sead)
 0x7100691290			FALSE	_ZN4sead15CriticalSectionC2EPNS_4HeapE	sead::CriticalSection::CriticalSection(sead::Heap*)	
 0x71006912D0			FALSE	_ZN4sead15CriticalSectionC2EPNS_4HeapENS_9IDisposer14HeapNullOptionE	sead::CriticalSection::CriticalSection(sead::Heap*, sead::IDisposer::HeapNullOption)	
@@ -42697,7 +42697,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71006930E0			FALSE	_ZNK4sead13ControllerMgr27checkDerivedRuntimeTypeInfoEPKNS_15RuntimeTypeInfo9InterfaceE	sead::ControllerMgr::checkDerivedRuntimeTypeInfo(sead::RuntimeTypeInfo::Interface const*) const	
 0x7100693260			FALSE	_ZNK4sead13ControllerMgr18getRuntimeTypeInfoEv	sead::ControllerMgr::getRuntimeTypeInfo() const	
 0x71006932D0			FALSE	_ZNK4sead15RuntimeTypeInfo6DeriveINS_13TaskParameterEE9isDerivedEPKNS0_9InterfaceE	sead::RuntimeTypeInfo::Derive<sead::TaskParameter>::isDerived(sead::RuntimeTypeInfo::Interface const*) const	
-0x7100693360			FALSE	_ZN4sead10ControllerC2EPNS_13ControllerMgrE	sead::Controller::Controller(sead::ControllerMgr*)	
+0x7100693360		seadController.o	FALSE	_ZN4sead10ControllerC2EPNS_13ControllerMgrE	sead::Controller::Controller(sead::ControllerMgr*)	
 0x71006933D0			FALSE	_ZN4sead10Controller4calcEv	sead::Controller::calc()	
 0x7100693510			FALSE	_ZNK4sead10Controller8getAddonENS_16ControllerDefine7AddonIdE	sead::Controller::getAddon(sead::ControllerDefine::AddonId) const	
 0x7100693560			FALSE	_ZNK4sead10Controller15getAddonByOrderENS_16ControllerDefine7AddonIdEi	sead::Controller::getAddonByOrder(sead::ControllerDefine::AddonId, int) const	
@@ -42722,7 +42722,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100694030			FALSE	_ZN4sead14ControllerBase12setIdleBase_Ev	sead::ControllerBase::setIdleBase_()	
 0x7100694080			FALSE	_ZNK4sead14ControllerBase27checkDerivedRuntimeTypeInfoEPKNS_15RuntimeTypeInfo9InterfaceE	sead::ControllerBase::checkDerivedRuntimeTypeInfo(sead::RuntimeTypeInfo::Interface const*) const	
 0x7100694100			FALSE	_ZNK4sead14ControllerBase18getRuntimeTypeInfoEv	sead::ControllerBase::getRuntimeTypeInfo() const	
-0x7100694170			FALSE	_ZN4sead14MathCalcCommonIiE3gcdEii	sead::MathCalcCommon<int>::gcd(int, int)	
+0x7100694170	sead/math	seadMathCalcCommon.o	FALSE	_ZN4sead14MathCalcCommonIiE3gcdEii	sead::MathCalcCommon<int>::gcd(int, int)	
 0x71006941B0			FALSE	_ZN4sead14MathCalcCommonIiE3lcmEii	sead::MathCalcCommon<int>::lcm(int, int)	
 0x7100694200			FALSE	_ZN4sead14MathCalcCommonIjE3gcdEjj	sead::MathCalcCommon<unsigned int>::gcd(unsigned int, unsigned int)	
 0x7100694240			FALSE	_ZN4sead14MathCalcCommonIjE3lcmEjj	sead::MathCalcCommon<unsigned int>::lcm(unsigned int, unsigned int)	
@@ -42834,7 +42834,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71006970D0			FALSE	_ZN4sead8Graphics17unlockDrawContextEv	sead::Graphics::unlockDrawContext()	
 0x71006970F0			FALSE	_ZN4sead8Graphics10initHostIOEv	sead::Graphics::initHostIO()	
 0x7100697100			FALSE	_ZN4sead8Graphics25initializeDrawLockContextEPNS_4HeapE	sead::Graphics::initializeDrawLockContext(sead::Heap*)	
-0x7100697110			FALSE	_ZN4sead15DrawLockContextC2Ev	sead::DrawLockContext::DrawLockContext()	
+0x7100697110		seadDrawLockContext.o	FALSE	_ZN4sead15DrawLockContextC2Ev	sead::DrawLockContext::DrawLockContext()	
 0x7100697130			FALSE	_ZN4sead15DrawLockContext10initializeEPNS_4HeapE	sead::DrawLockContext::initialize(sead::Heap*)	
 0x7100697140			FALSE	_ZN4sead15DrawLockContext4lockEv	sead::DrawLockContext::lock()	
 0x7100697150			FALSE	_ZN4sead15DrawLockContext6unlockEv	sead::DrawLockContext::unlock()	
@@ -42990,7 +42990,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710069A7E0			FALSE	_ZNK4sead16DirectProjection18getRuntimeTypeInfoEv	sead::DirectProjection::getRuntimeTypeInfo() const	
 0x710069A850			FALSE	_ZNK4sead16DirectProjection17getProjectionTypeEv	sead::DirectProjection::getProjectionType() const	
 0x710069A860			FALSE	_ZNK4sead15RuntimeTypeInfo6DeriveINS_10ProjectionEE9isDerivedEPKNS0_9InterfaceE	sead::RuntimeTypeInfo::Derive<sead::Projection>::isDerived(sead::RuntimeTypeInfo::Interface const*) const	
-0x710069A8F0			FALSE	_ZN4sead8FontBaseD2Ev	sead::FontBase::~FontBase()	
+0x710069A8F0		seadTextWriter.o	FALSE	_ZN4sead8FontBaseD2Ev	sead::FontBase::~FontBase()	
 0x710069A900			FALSE	_ZN4sead10TextWriterC2EPNS_11DrawContextE	sead::TextWriter::TextWriter(sead::DrawContext*)	
 0x710069A970			FALSE	_ZN4sead10TextWriter14getDefaultFontEv	sead::TextWriter::getDefaultFont()	
 0x710069A9A0			FALSE	_ZN4sead10TextWriterC1EPNS_11DrawContextEPKNS_8ViewportE	sead::TextWriter::TextWriter(sead::DrawContext*, sead::Viewport const*)	
@@ -43000,7 +43000,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710069AA90			FALSE	_ZN4sead10TextWriter20setCursorFromTopLeftERKNS_7Vector2IfEE	sead::TextWriter::setCursorFromTopLeft(sead::Vector2<float> const&)	
 0x710069AAE0			FALSE	_ZN4sead10TextWriter20setScaleFromFontSizeERKNS_7Vector2IfEE	sead::TextWriter::setScaleFromFontSize(sead::Vector2<float> const&)	
 0x710069AB40			FALSE	_ZN4sead10TextWriter22setScaleFromFontHeightEf	sead::TextWriter::setScaleFromFontHeight(float)	
-0x710069AB80		seadTextWriter.o	FALSE	_ZN4sead10TextWriter22setProjectionAndCameraEPKNS_10ProjectionEPKNS_6CameraE	sead::TextWriter::setProjectionAndCamera(sead::Projection const*, sead::Camera const*)	object/folder from debug builds' assert paths
+0x710069AB80			FALSE	_ZN4sead10TextWriter22setProjectionAndCameraEPKNS_10ProjectionEPKNS_6CameraE	sead::TextWriter::setProjectionAndCamera(sead::Projection const*, sead::Camera const*)	object/folder from debug builds' assert paths
 0x710069AB90			FALSE	_ZN4sead10TextWriter26setLineSpaceFromLineHeightEf	sead::TextWriter::setLineSpaceFromLineHeight(float)	
 0x710069ABF0			FALSE	_ZN4sead10TextWriter15setFormatBufferEPDsi	sead::TextWriter::setFormatBuffer(char16_t*, int)	
 0x710069AC00			FALSE	_ZN4sead10TextWriter14setDrawContextEPNS_11DrawContextE	sead::TextWriter::setDrawContext(sead::DrawContext*)	
@@ -43194,14 +43194,14 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71006A26A0			FALSE	_ZN4seadmiENS_8DateTimeES0_	sead::operator-(sead::DateTime, sead::DateTime)	
 0x71006A26D0			FALSE	_ZN4seadmiENS_8DateTimeENS_8DateSpanE	sead::operator-(sead::DateTime, sead::DateSpan)	
 0x71006A26E0			FALSE	_ZN4seadplENS_8DateTimeENS_8DateSpanE	sead::operator+(sead::DateTime, sead::DateSpan)	
-0x71006A26F0			FALSE	_ZN4sead8DateSpanC2El	sead::DateSpan::DateSpan(long)	
+0x71006A26F0		seadDateSpan.o	FALSE	_ZN4sead8DateSpanC2El	sead::DateSpan::DateSpan(long)	
 0x71006A2700			FALSE	_ZN4sead8DateSpanC2ERKNS_12CalendarSpanE	sead::DateSpan::DateSpan(sead::CalendarSpan const&)	
 0x71006A2730			FALSE	_ZN4sead8DateSpan12setTimeImpl_Eiiii	sead::DateSpan::setTimeImpl_(int, int, int, int)	
 0x71006A2760			FALSE	_ZN4sead8DateSpanC2ERKNS_12CalendarSpan3DayERKNS1_4HourERKNS1_6MinuteERKNS1_6SecondE	sead::DateSpan::DateSpan(sead::CalendarSpan::Day const&, sead::CalendarSpan::Hour const&, sead::CalendarSpan::Minute const&, sead::CalendarSpan::Second const&)	
 0x71006A27A0			FALSE	_ZNK4sead8DateSpan15getCalendarSpanEPNS_12CalendarSpanE	sead::DateSpan::getCalendarSpan(sead::CalendarSpan*) const	
 0x71006A27B0			FALSE	_ZN4sead8DateSpan3setERKNS_12CalendarSpanE	sead::DateSpan::set(sead::CalendarSpan const&)	
 0x71006A27F0			FALSE	_ZN4sead8DateSpan3setERKNS_12CalendarSpan3DayERKNS1_4HourERKNS1_6MinuteERKNS1_6SecondE	sead::DateSpan::set(sead::CalendarSpan::Day const&, sead::CalendarSpan::Hour const&, sead::CalendarSpan::Minute const&, sead::CalendarSpan::Second const&)	
-0x71006A2830			FALSE	_ZN4sead11DateTimeUtcC2Em	sead::DateTimeUtc::DateTimeUtc(unsigned long)	
+0x71006A2830		seadDateTimeUtc.o	FALSE	_ZN4sead11DateTimeUtcC2Em	sead::DateTimeUtc::DateTimeUtc(unsigned long)	
 0x71006A2840			FALSE	_ZN4sead11DateTimeUtcC1ERKNS_12CalendarTime4YearERKNS1_5MonthERKNS1_3DayERKNS1_4HourERKNS1_6MinuteERKNS1_6SecondE	sead::DateTimeUtc::DateTimeUtc(sead::CalendarTime::Year const&, sead::CalendarTime::Month const&, sead::CalendarTime::Day const&, sead::CalendarTime::Hour const&, sead::CalendarTime::Minute const&, sead::CalendarTime::Second const&)	
 0x71006A28F0			FALSE	_ZN4sead11DateTimeUtc11setUnixTimeERKNS_12CalendarTime4YearERKNS1_5MonthERKNS1_3DayERKNS1_4HourERKNS1_6MinuteERKNS1_6SecondE	sead::DateTimeUtc::setUnixTime(sead::CalendarTime::Year const&, sead::CalendarTime::Month const&, sead::CalendarTime::Day const&, sead::CalendarTime::Hour const&, sead::CalendarTime::Minute const&, sead::CalendarTime::Second const&)	
 0x71006A29A0			FALSE	_ZN4sead11DateTimeUtcC1ERKNS_12CalendarTimeE	sead::DateTimeUtc::DateTimeUtc(sead::CalendarTime const&)	
@@ -43218,7 +43218,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71006A2D50			FALSE	_ZN4sead8DateUtil11calcWeekDayERKNS_12CalendarTime4YearERKNS1_5MonthERKNS1_3DayE	sead::DateUtil::calcWeekDay(sead::CalendarTime::Year const&, sead::CalendarTime::Month const&, sead::CalendarTime::Day const&)	
 0x71006A2E10			FALSE	_ZN4sead8DateUtil24calcSecondToCalendarSpanEPNS_12CalendarSpanEm	sead::DateUtil::calcSecondToCalendarSpan(sead::CalendarSpan*, unsigned long)	
 0x71006A2EA0			FALSE	_ZN4sead8DateUtil17parseW3CDTFStringEPNS_12CalendarTimeEPNS_12CalendarSpanERKNS_14SafeStringBaseIcEE	sead::DateUtil::parseW3CDTFString(sead::CalendarTime*, sead::CalendarSpan*, sead::SafeStringBase<char> const&)	
-0x71006A3640			FALSE	sub_71006A3640	sub_71006A3640	
+0x71006A3640			FALSE	_ZN4sead8DateUtilL20parseW3CDTFSubStringEPbPjPNS_14SafeStringBaseIcEEPiPciRKS4_bjj	_ZN4sead8DateUtilL20parseW3CDTFSubStringEPbPjPNS_14SafeStringBaseIcEEPiPciRKS4_bjj	
 0x71006A39E0			TRUE	_ZN4sead15FixedSafeStringILi8EED0Ev	sead::FixedSafeString<8>::~FixedSafeString()	
 0x71006A39F0			TRUE	_ZN4sead15FixedSafeStringILi8EEaSERKNS_14SafeStringBaseIcEE	sead::FixedSafeString<8>::operator=(sead::SafeStringBase<char> const&)	
 0x71006A3AE0		seadTickSpan.o	FALSE	_ZNK4sead8TickSpan13toNanoSecondsEv	sead::TickSpan::toNanoSeconds() const	object (smo)
@@ -43298,22 +43298,22 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71006A7D00			FALSE	_ZN4sead7XmlUtil32createBackSiblingAndSetupElementEPNS_10XmlElementERKNS_14SafeStringBaseIcEES6_PNS_4HeapE	sead::XmlUtil::createBackSiblingAndSetupElement(sead::XmlElement*, sead::SafeStringBase<char> const&, sead::SafeStringBase<char> const&, sead::Heap*)	
 0x71006A7E80			FALSE	_ZN4sead7XmlUtil30createBackChildAndSetupElementEPNS_10XmlElementERKNS_14SafeStringBaseIcEES6_PNS_4HeapE	sead::XmlUtil::createBackChildAndSetupElement(sead::XmlElement*, sead::SafeStringBase<char> const&, sead::SafeStringBase<char> const&, sead::Heap*)	
 0x71006A8000			FALSE	_ZN4sead7XmlUtil31createFrontChildAndSetupElementEPNS_10XmlElementERKNS_14SafeStringBaseIcEES6_PNS_4HeapE	sead::XmlUtil::createFrontChildAndSetupElement(sead::XmlElement*, sead::SafeStringBase<char> const&, sead::SafeStringBase<char> const&, sead::Heap*)	
-0x71006A8180			FALSE	_ZN4sead19NinHostIOFileDeviceC2Ev	sead::NinHostIOFileDevice::NinHostIOFileDevice()	
+0x71006A8180	sead/filedevice/nin	seadNinHostIOFileDevice.o	FALSE	_ZN4sead19NinHostIOFileDeviceC2Ev	sead::NinHostIOFileDevice::NinHostIOFileDevice()	
 0x71006A81E0			FALSE	_ZNK4sead19NinHostIOFileDevice14doIsAvailable_Ev	sead::NinHostIOFileDevice::doIsAvailable_() const	
 0x71006A81F0			FALSE	_ZNK4sead19NinHostIOFileDevice16formatPathForFS_EPNS_22BufferedSafeStringBaseIcEERKNS_14SafeStringBaseIcEE	sead::NinHostIOFileDevice::formatPathForFS_(sead::BufferedSafeStringBase<char>*, sead::SafeStringBase<char> const&) const	
 0x71006A8200			FALSE	_ZN4sead19NinHostIOFileDeviceD0Ev	sead::NinHostIOFileDevice::~NinHostIOFileDevice()	
 0x71006A8230			FALSE	_ZNK4sead19NinHostIOFileDevice27checkDerivedRuntimeTypeInfoEPKNS_15RuntimeTypeInfo9InterfaceE	sead::NinHostIOFileDevice::checkDerivedRuntimeTypeInfo(sead::RuntimeTypeInfo::Interface const*) const	
 0x71006A83B0			FALSE	_ZNK4sead19NinHostIOFileDevice18getRuntimeTypeInfoEv	sead::NinHostIOFileDevice::getRuntimeTypeInfo() const	
-0x71006A8420			FALSE	_ZN4sead11XmlDocumentC2Ev	sead::XmlDocument::XmlDocument()	
+0x71006A8420	sead/xml	seadXmlDocument.o	FALSE	_ZN4sead11XmlDocumentC2Ev	sead::XmlDocument::XmlDocument()	
 0x71006A8460			FALSE	_ZN4sead11XmlDocumentD2Ev	sead::XmlDocument::~XmlDocument()	
 0x71006A8520			FALSE	_ZN4sead11XmlDocument17freeXmlElementAllEv	sead::XmlDocument::freeXmlElementAll()	
 0x71006A8550			FALSE	_ZN4sead11XmlDocumentD0Ev	sead::XmlDocument::~XmlDocument()	
 0x71006A8610			FALSE	_ZN4sead11XmlDocument12resetEntity_EPNS_4HeapE	sead::XmlDocument::resetEntity_(sead::Heap*)	
-0x71006A89C0		seadXmlDocument.o	FALSE	_ZN4sead11XmlDocument9addEntityERKNS_14SafeStringBaseIcEES4_	sead::XmlDocument::addEntity(sead::SafeStringBase<char> const&, sead::SafeStringBase<char> const&)	object/folder from debug builds' assert paths
+0x71006A89C0			FALSE	_ZN4sead11XmlDocument9addEntityERKNS_14SafeStringBaseIcEES4_	sead::XmlDocument::addEntity(sead::SafeStringBase<char> const&, sead::SafeStringBase<char> const&)	object/folder from debug builds' assert paths
 0x71006A8DF0			FALSE	_ZN4sead11XmlDocument11eraseEntityERKNS_14SafeStringBaseIcEE	sead::XmlDocument::eraseEntity(sead::SafeStringBase<char> const&)	
 0x71006A8F30			FALSE	_ZN4sead11XmlDocument16expandEntityListEiPNS_4HeapE	sead::XmlDocument::expandEntityList(int, sead::Heap*)	
 0x71006A9730			FALSE	_ZNK4sead11XmlDocument4saveEPNS_11WriteStreamEPNS_4HeapEbPNS_10XmlElementE	sead::XmlDocument::save(sead::WriteStream*, sead::Heap*, bool, sead::XmlElement*) const	
-0x71006A9C80			FALSE	sub_71006A9C80	sub_71006A9C80	
+0x71006A9C80			FALSE	_ZN4seadL25writeXmlInstanceAsBinary_EPNS_11WriteStreamEPNS_10XmlElementE	_ZN4seadL25writeXmlInstanceAsBinary_EPNS_11WriteStreamEPNS_10XmlElementE	
 0x71006A9FC0			FALSE	_ZN4sead11XmlDocument23writeXmlInstanceAsText_EPNS_11WriteStreamEPNS_10XmlElementEijPNS_4HeapE	sead::XmlDocument::writeXmlInstanceAsText_(sead::WriteStream*, sead::XmlElement*, int, unsigned int, sead::Heap*)	
 0x71006AA5E0			FALSE	_ZN4sead11XmlDocument9parseXml_EPNS_10ReadStreamEPNS_4HeapEb	sead::XmlDocument::parseXml_(sead::ReadStream*, sead::Heap*, bool)	
 0x71006AA960			FALSE	_ZN4sead11XmlDocument16makeXmlInstance_EPNS_10ReadStreamEPNS_4HeapE	sead::XmlDocument::makeXmlInstance_(sead::ReadStream*, sead::Heap*)	
@@ -43322,12 +43322,12 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71006AD870			FALSE	_ZN4sead11XmlDocument6createEPNS_10ReadStreamEPNS_4HeapEbj	sead::XmlDocument::create(sead::ReadStream*, sead::Heap*, bool, unsigned int)	
 0x71006AD970			FALSE	_ZN4sead11XmlDocument36replaceXmlNumericCharacterReference_EPcjj	sead::XmlDocument::replaceXmlNumericCharacterReference_(char*, unsigned int, unsigned int)	
 0x71006ADCB0			FALSE	_ZN4sead11XmlDocument35replaceXmlCharacterEntityReference_EPcjj	sead::XmlDocument::replaceXmlCharacterEntityReference_(char*, unsigned int, unsigned int)	
-0x71006AE0A0			FALSE	sub_71006AE0A0	sub_71006AE0A0	
-0x71006AE360			FALSE	sub_71006AE360	sub_71006AE360	
+0x71006AE0A0			FALSE	_ZN4seadL24readXmlInstanceAsBinary_EPNS_10XmlElementEPNS_10ReadStreamEPNS_4HeapEPNS_22BufferedSafeStringBaseIcEES8_	_ZN4seadL24readXmlInstanceAsBinary_EPNS_10XmlElementEPNS_10ReadStreamEPNS_4HeapEPNS_22BufferedSafeStringBaseIcEES8_	
+0x71006AE360			FALSE	_ZN4seadL15freeXmlElement_EPNS_10XmlElementE	_ZN4seadL15freeXmlElement_EPNS_10XmlElementE	
 0x71006AE3C0			FALSE	_ZN4sead11XmlDocument11findElementERKNS_14SafeStringBaseIcEE	sead::XmlDocument::findElement(sead::SafeStringBase<char> const&)	
 0x71006AE3D0			FALSE	_ZN4sead11XmlDocument16setDefaultEntityEPPKcS3_j	sead::XmlDocument::setDefaultEntity(char const**, char const**, unsigned int)	
 0x71006AE400			FALSE	_ZN4sead11XmlDocument16writeXmlContent_EPNS_11WriteStreamEPKNS_10XmlElementENS3_11ElementTypeEjPNS_4HeapE	sead::XmlDocument::writeXmlContent_(sead::WriteStream*, sead::XmlElement const*, sead::XmlElement::ElementType, unsigned int, sead::Heap*)	
-0x71006AE8E0			FALSE	sub_71006AE8E0	sub_71006AE8E0	
+0x71006AE8E0			FALSE	_ZN4seadL19writeXmlAttributes_EPNS_11WriteStreamEPKNS_10XmlElementE	_ZN4seadL19writeXmlAttributes_EPNS_11WriteStreamEPKNS_10XmlElementE	
 0x71006AEA70			TRUE	_ZN4sead15FixedSafeStringILi150EED0Ev	sead::FixedSafeString<150>::~FixedSafeString()	
 0x71006AEA80			TRUE	_ZN4sead15FixedSafeStringILi150EEaSERKNS_14SafeStringBaseIcEE	sead::FixedSafeString<150>::operator=(sead::SafeStringBase<char> const&)	
 0x71006AEB70	sead/framework	seadInfLoopChecker.o	FALSE	_ZN4sead14InfLoopChecker18SingletonDisposer_D2Ev	sead::InfLoopChecker::SingletonDisposer_::~SingletonDisposer_()	object (smo)
@@ -43460,7 +43460,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71006B3290			FALSE	_ZNK4sead14MessageSetBase17getInitializeDataEv	sead::MessageSetBase::getInitializeData() const	
 0x71006B32B0			FALSE	_ZNK4sead14MessageSetBase19calcTextSizeByIndexEi	sead::MessageSetBase::calcTextSizeByIndex(int) const	
 0x71006B32D0			FALSE	_ZNK4sead14MessageSetBase22searchTextLabelByIndexEPNS_22BufferedSafeStringBaseIcEEi	sead::MessageSetBase::searchTextLabelByIndex(sead::BufferedSafeStringBase<char>*, int) const	
-0x71006B3360			FALSE	_ZN4sead21ControllerWrapperBaseC2Ev	sead::ControllerWrapperBase::ControllerWrapperBase()	
+0x71006B3360	sead/controller	seadControllerWrapperBase.o	FALSE	_ZN4sead21ControllerWrapperBaseC2Ev	sead::ControllerWrapperBase::ControllerWrapperBase()	
 0x71006B33C0			FALSE	_ZN4sead21ControllerWrapperBaseD2Ev	sead::ControllerWrapperBase::~ControllerWrapperBase()	
 0x71006B3430			FALSE	_ZN4sead21ControllerWrapperBase10unregisterEv	sead::ControllerWrapperBase::unregister()	
 0x71006B3470			FALSE	_ZThn312_N4sead21ControllerWrapperBaseD1Ev	non-virtual thunk to sead::ControllerWrapperBase::~ControllerWrapperBase()	
@@ -43472,7 +43472,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71006B3640			FALSE	_ZN4sead21ControllerWrapperBase7isIdle_Ev	sead::ControllerWrapperBase::isIdle_()	
 0x71006B3650			FALSE	_ZNK4sead21ControllerWrapperBase27checkDerivedRuntimeTypeInfoEPKNS_15RuntimeTypeInfo9InterfaceE	sead::ControllerWrapperBase::checkDerivedRuntimeTypeInfo(sead::RuntimeTypeInfo::Interface const*) const	
 0x71006B3750			FALSE	_ZNK4sead21ControllerWrapperBase18getRuntimeTypeInfoEv	sead::ControllerWrapperBase::getRuntimeTypeInfo() const	
-0x71006B37C0			FALSE	_ZN4sead21MaskControllerWrapperC2Ev	sead::MaskControllerWrapper::MaskControllerWrapper()	
+0x71006B37C0		seadMaskControllerWrapper.o	FALSE	_ZN4sead21MaskControllerWrapperC2Ev	sead::MaskControllerWrapper::MaskControllerWrapper()	
 0x71006B3840			FALSE	_ZN4sead21MaskControllerWrapper4calcEjb	sead::MaskControllerWrapper::calc(unsigned int, bool)	
 0x71006B39D0			FALSE	_ZNK4sead21MaskControllerWrapper35createPadMaskFromControllerPadMask_Ej	sead::MaskControllerWrapper::createPadMaskFromControllerPadMask_(unsigned int) const	
 0x71006B3A20			FALSE	_ZN4sead21MaskControllerWrapper12setPadConfigEiPKjb	sead::MaskControllerWrapper::setPadConfig(int, unsigned int const*, bool)	
@@ -43481,7 +43481,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71006B3CF0			FALSE	_ZN4sead21MaskControllerWrapperD0Ev	sead::MaskControllerWrapper::~MaskControllerWrapper()	
 0x71006B3D20			FALSE	_ZThn312_N4sead21MaskControllerWrapperD1Ev	non-virtual thunk to sead::MaskControllerWrapper::~MaskControllerWrapper()	
 0x71006B3D30			FALSE	_ZThn312_N4sead21MaskControllerWrapperD0Ev	non-virtual thunk to sead::MaskControllerWrapper::~MaskControllerWrapper()	
-0x71006B3D60			FALSE	_ZN4sead6system4HaltEv	sead::system::Halt()	
+0x71006B3D60	sead/system	seadSystem.o	FALSE	_ZN4sead6system4HaltEv	sead::system::Halt()	
 0x71006B3D80			FALSE	_ZN4sead6system14HaltWithDetailEPKciS2_z	sead::system::HaltWithDetail(char const*, int, char const*, ...)	
 0x71006B3EF0			FALSE	_ZN4sead6system10DebugBreakEv	sead::system::DebugBreak()	
 0x71006B3F00			FALSE	_ZN4sead13DelegateEventIPKcED2Ev	sead::DelegateEvent<char const*>::~DelegateEvent()	
@@ -43875,16 +43875,16 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71006BFC60			FALSE	_ZN4sead11SoundHandle6setPanEf	sead::SoundHandle::setPan(float)	
 0x71006BFC70			FALSE	_ZNK4sead11SoundHandle15isAttachedSoundEv	sead::SoundHandle::isAttachedSound() const	
 0x71006BFC80			FALSE	_ZNK4sead11SoundHandle10getSoundIdEv	sead::SoundHandle::getSoundId() const	
-0x71006BFCA0			FALSE	_ZN4sead17ControllerWrapperC2Ev	sead::ControllerWrapper::ControllerWrapper()	
+0x71006BFCA0	sead/controller	seadControllerWrapper.o	FALSE	_ZN4sead17ControllerWrapperC2Ev	sead::ControllerWrapper::ControllerWrapper()	
 0x71006BFD00			FALSE	_ZN4sead17ControllerWrapper4calcEjb	sead::ControllerWrapper::calc(unsigned int, bool)	
 0x71006BFEA0			FALSE	_ZNK4sead17ControllerWrapper35createPadMaskFromControllerPadMask_Ej	sead::ControllerWrapper::createPadMaskFromControllerPadMask_(unsigned int) const	
-0x71006BFEF0	sead/controller	seadControllerWrapper.o	FALSE	_ZN4sead17ControllerWrapper12setPadConfigEiPKhb	sead::ControllerWrapper::setPadConfig(int, unsigned char const*, bool)	object/folder from debug builds' assert paths
+0x71006BFEF0			FALSE	_ZN4sead17ControllerWrapper12setPadConfigEiPKhb	sead::ControllerWrapper::setPadConfig(int, unsigned char const*, bool)	object/folder from debug builds' assert paths
 0x71006C0060			FALSE	_ZNK4sead17ControllerWrapper27checkDerivedRuntimeTypeInfoEPKNS_15RuntimeTypeInfo9InterfaceE	sead::ControllerWrapper::checkDerivedRuntimeTypeInfo(sead::RuntimeTypeInfo::Interface const*) const	
 0x71006C01E0			FALSE	_ZNK4sead17ControllerWrapper18getRuntimeTypeInfoEv	sead::ControllerWrapper::getRuntimeTypeInfo() const	
 0x71006C0250			FALSE	_ZN4sead17ControllerWrapperD0Ev	sead::ControllerWrapper::~ControllerWrapper()	
 0x71006C0280			FALSE	_ZThn312_N4sead17ControllerWrapperD1Ev	non-virtual thunk to sead::ControllerWrapper::~ControllerWrapper()	
 0x71006C0290			FALSE	_ZThn312_N4sead17ControllerWrapperD0Ev	non-virtual thunk to sead::ControllerWrapper::~ControllerWrapper()	
-0x71006C02C0			FALSE	_ZN4sead13DelegateEventIRKNS_16ExceptionHandler11InformationEED2Ev	sead::DelegateEvent<sead::ExceptionHandler::Information const&>::~DelegateEvent()	
+0x71006C02C0	sead/system	seadExceptionHandler.o	FALSE	_ZN4sead13DelegateEventIRKNS_16ExceptionHandler11InformationEED2Ev	sead::DelegateEvent<sead::ExceptionHandler::Information const&>::~DelegateEvent()	
 0x71006C0340			FALSE	_ZN4sead16ExceptionHandler11InformationC2Ev	sead::ExceptionHandler::Information::Information()	
 0x71006C0360			FALSE	_ZN4sead16ExceptionHandler10initializeEv	sead::ExceptionHandler::initialize()	
 0x71006C0370			FALSE	_ZN4sead16ExceptionHandler16registerCallbackERNS_13DelegateEventIRKNS0_11InformationEE4SlotE	sead::ExceptionHandler::registerCallback(sead::DelegateEvent<sead::ExceptionHandler::Information const&>::Slot&)	
@@ -43896,19 +43896,19 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71006C04E0			FALSE	_ZN4sead16ExceptionHandler15makeLogMessage_EPNS_22BufferedSafeStringBaseIcEEPKN2nn4diag10LogMessageE	sead::ExceptionHandler::makeLogMessage_(sead::BufferedSafeStringBase<char>*, nn::diag::LogMessage const*)	
 0x71006C05D0			FALSE	_ZN4sead13DelegateEventIRKNS_16ExceptionHandler11InformationEED0Ev	sead::DelegateEvent<sead::ExceptionHandler::Information const&>::~DelegateEvent()	
 0x71006C0660			FALSE	sub_71006C0660	sub_71006C0660	
-0x71006C06A0			FALSE	_ZN4sead17NinDebugPadDeviceC2EPNS_13ControllerMgrE	sead::NinDebugPadDevice::NinDebugPadDevice(sead::ControllerMgr*)	
+0x71006C06A0	sead/controller/nin	seadNinDebugPadDeviceNin.o	FALSE	_ZN4sead17NinDebugPadDeviceC2EPNS_13ControllerMgrE	sead::NinDebugPadDevice::NinDebugPadDevice(sead::ControllerMgr*)	
 0x71006C06D0			FALSE	_ZN4sead17NinDebugPadDeviceD2Ev	sead::NinDebugPadDevice::~NinDebugPadDevice()	
 0x71006C06E0			FALSE	_ZN4sead17NinDebugPadDeviceD0Ev	sead::NinDebugPadDevice::~NinDebugPadDevice()	
 0x71006C06F0			FALSE	_ZN4sead17NinDebugPadDevice4calcEv	sead::NinDebugPadDevice::calc()	
 0x71006C0700			FALSE	_ZNK4sead17NinDebugPadDevice27checkDerivedRuntimeTypeInfoEPKNS_15RuntimeTypeInfo9InterfaceE	sead::NinDebugPadDevice::checkDerivedRuntimeTypeInfo(sead::RuntimeTypeInfo::Interface const*) const	
 0x71006C0800			FALSE	_ZNK4sead17NinDebugPadDevice18getRuntimeTypeInfoEv	sead::NinDebugPadDevice::getRuntimeTypeInfo() const	
-0x71006C0870			FALSE	_ZN4sead18NinDebugControllerC2EPNS_13ControllerMgrE	sead::NinDebugController::NinDebugController(sead::ControllerMgr*)	
+0x71006C0870		seadNinDebugControllerNin.o	FALSE	_ZN4sead18NinDebugControllerC2EPNS_13ControllerMgrE	sead::NinDebugController::NinDebugController(sead::ControllerMgr*)	
 0x71006C08B0			FALSE	_ZN4sead18NinDebugController9calcImpl_Ev	sead::NinDebugController::calcImpl_()	
 0x71006C08C0			FALSE	_ZNK4sead18NinDebugController27checkDerivedRuntimeTypeInfoEPKNS_15RuntimeTypeInfo9InterfaceE	sead::NinDebugController::checkDerivedRuntimeTypeInfo(sead::RuntimeTypeInfo::Interface const*) const	
 0x71006C0A40			FALSE	_ZNK4sead18NinDebugController18getRuntimeTypeInfoEv	sead::NinDebugController::getRuntimeTypeInfo() const	
 0x71006C0AB0			FALSE	_ZN4sead18NinDebugControllerD0Ev	sead::NinDebugController::~NinDebugController()	
 0x71006C0AC0			FALSE	_ZNK4sead18NinDebugController11isConnectedEv	sead::NinDebugController::isConnected() const	
-0x71006C0AD0			FALSE	LMS_InitProject	LMS_InitProject	
+0x71006C0AD0	sead/lms	lms_project.o	FALSE	LMS_InitProject	LMS_InitProject	
 0x71006C0C00			FALSE	LMS_CloseProject	LMS_CloseProject	
 0x71006C0C30			FALSE	LMS_SearchProjectBlockByName	LMS_SearchProjectBlockByName	
 0x71006C0C40			FALSE	LMS_GetContentsNum	LMS_GetContentsNum	
@@ -43945,9 +43945,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71006C2400			FALSE	LMS_GetFontIndexByName	LMS_GetFontIndexByName	
 0x71006C2550			FALSE	LMS_GetBaseColorIndex	LMS_GetBaseColorIndex	
 0x71006C25A0			FALSE	LMS_GetBaseColorIndexByName	LMS_GetBaseColorIndexByName	
-0x71006C26F0			FALSE	_ZN4sead14MessageProjectD2Ev	sead::MessageProject::~MessageProject()	
+0x71006C26F0	sead/message	seadMessageProject.o	FALSE	_ZN4sead14MessageProjectD2Ev	sead::MessageProject::~MessageProject()	
 0x71006C2700			FALSE	_ZN4sead14MessageProjectD0Ev	sead::MessageProject::~MessageProject()	
-0x71006C2710	sead/message	seadMessageProject.o	FALSE	_ZN4sead14MessageProject10initializeEPvPNS_4HeapE	sead::MessageProject::initialize(void*, sead::Heap*)	object/folder from debug builds' assert paths
+0x71006C2710			FALSE	_ZN4sead14MessageProject10initializeEPvPNS_4HeapE	sead::MessageProject::initialize(void*, sead::Heap*)	object/folder from debug builds' assert paths
 0x71006C29C0			FALSE	_ZN4sead14MessageProject14allocForLibms_Em	sead::MessageProject::allocForLibms_(unsigned long)	
 0x71006C29E0			FALSE	_ZN4sead14MessageProject13freeForLibms_EPv	sead::MessageProject::freeForLibms_(void*)	
 0x71006C29F0			FALSE	_ZN4sead14MessageProject8finalizeEv	sead::MessageProject::finalize()	
@@ -44091,8 +44091,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71006C92E0			FALSE	_ZThn16_N4sead15Audio3DActorNinD0Ev	non-virtual thunk to sead::Audio3DActorNin::~Audio3DActorNin()	
 0x71006C9310			FALSE	_ZThn224_N4sead15Audio3DActorNinD1Ev	non-virtual thunk to sead::Audio3DActorNin::~Audio3DActorNin()	
 0x71006C9340			FALSE	_ZThn224_N4sead15Audio3DActorNinD0Ev	non-virtual thunk to sead::Audio3DActorNin::~Audio3DActorNin()	
-0x71006C9370	agl	DrawContext.o	FALSE	_ZN3agl11DrawContextC2Ev	agl::DrawContext::DrawContext()	object (class)
-0x71006C93D0	agl/common	aglDrawContext.o	FALSE	_ZN3agl11DrawContext16setCommandBufferEPNS_11DisplayListE	agl::DrawContext::setCommandBuffer(agl::DisplayList*)	object/folder from debug builds' assert paths
+0x71006C9370	agl/common	aglDrawContext.o	FALSE	_ZN3agl11DrawContextC2Ev	agl::DrawContext::DrawContext()	object (class)
+0x71006C93D0			FALSE	_ZN3agl11DrawContext16setCommandBufferEPNS_11DisplayListE	agl::DrawContext::setCommandBuffer(agl::DisplayList*)	object/folder from debug builds' assert paths
 0x71006C9400			FALSE	_ZN3agl11DrawContextD2Ev	agl::DrawContext::~DrawContext()	
 0x71006C9480			FALSE	_ZN3agl11DrawContext18flushCommandBufferEv	agl::DrawContext::flushCommandBuffer()	
 0x71006C94E0			FALSE	_ZN3agl11DrawContextD0Ev	agl::DrawContext::~DrawContext()	
@@ -44115,9 +44115,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71006C9A30			FALSE	_ZN3agl14GPUMemAddrBase7roundUpEi	agl::GPUMemAddrBase::roundUp(int)	
 0x71006C9A50			FALSE	_ZNK3agl14GPUMemAddrBase13flushCPUCacheEm	agl::GPUMemAddrBase::flushCPUCache(unsigned long) const	
 0x71006C9AB0			FALSE	_ZNK3agl14GPUMemAddrBase18invalidateCPUCacheEm	agl::GPUMemAddrBase::invalidateCPUCache(unsigned long) const	
-0x71006C9B10		GPUMemBlockBase.o	FALSE	_ZN3agl15GPUMemBlockBaseC2Ev	agl::GPUMemBlockBase::GPUMemBlockBase()	object (class)
+0x71006C9B10		aglGPUMemBlock.o	FALSE	_ZN3agl15GPUMemBlockBaseC2Ev	agl::GPUMemBlockBase::GPUMemBlockBase()	object (class)
 0x71006C9B40			FALSE	_ZN3agl15GPUMemBlockBase5clearEv	agl::GPUMemBlockBase::clear()	
-0x71006C9B60		aglGPUMemBlock.o	FALSE	_ZN3agl15GPUMemBlockBaseD2Ev	agl::GPUMemBlockBase::~GPUMemBlockBase()	object/folder from debug builds' assert paths
+0x71006C9B60			FALSE	_ZN3agl15GPUMemBlockBaseD2Ev	agl::GPUMemBlockBase::~GPUMemBlockBase()	object/folder from debug builds' assert paths
 0x71006C9C20			FALSE	_ZN3agl15GPUMemBlockBase10freeBufferEv	agl::GPUMemBlockBase::freeBuffer()	
 0x71006C9CA0			FALSE	_ZN3agl15GPUMemBlockBaseD0Ev	agl::GPUMemBlockBase::~GPUMemBlockBase()	
 0x71006C9CD0			FALSE	_ZN3agl15GPUMemBlockBase4freeEv	agl::GPUMemBlockBase::free()	
@@ -44359,22 +44359,22 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71006D2B10			FALSE	_ZN3agl6detail19DynamicUniformBlock10initializeEmPN4sead4HeapE	agl::detail::DynamicUniformBlock::initialize(unsigned long, sead::Heap*)	
 0x71006D2C00			FALSE	_ZN3agl6detail19DynamicUniformBlock10genMessageEPN4sead6hostio7ContextE	agl::detail::DynamicUniformBlock::genMessage(sead::hostio::Context*)	
 0x71006D2C10			FALSE	_ZN3agl6detail19DynamicUniformBlock19listenPropertyEventEPKN4sead6hostio13PropertyEventE	agl::detail::DynamicUniformBlock::listenPropertyEvent(sead::hostio::PropertyEvent const*)	
-0x71006D2C20		IndexStream.o	FALSE	_ZN3agl11IndexStreamC2Ev	agl::IndexStream::IndexStream()	object (class)
+0x71006D2C20	agl/common	aglIndexStream.o	FALSE	_ZN3agl11IndexStreamC2Ev	agl::IndexStream::IndexStream()	object (class)
 0x71006D2C50			FALSE	_ZN3agl11IndexStreamD2Ev	agl::IndexStream::~IndexStream()	
 0x71006D2CB0			FALSE	_ZN3agl11IndexStream8cleanUp_Ev	agl::IndexStream::cleanUp_()	
 0x71006D2D00			FALSE	_ZN3agl11IndexStreamD0Ev	agl::IndexStream::~IndexStream()	
-0x71006D2D60	agl/common	aglIndexStream.o	FALSE	_ZN3agl11IndexStream12setUpStream_ENS_19ConstGPUMemVoidAddrENS_17IndexStreamFormatEj	agl::IndexStream::setUpStream_(agl::ConstGPUMemVoidAddr, agl::IndexStreamFormat, unsigned int)	object/folder from debug builds' assert paths
+0x71006D2D60			FALSE	_ZN3agl11IndexStream12setUpStream_ENS_19ConstGPUMemVoidAddrENS_17IndexStreamFormatEj	agl::IndexStream::setUpStream_(agl::ConstGPUMemVoidAddr, agl::IndexStreamFormat, unsigned int)	object/folder from debug builds' assert paths
 0x71006D2E90			FALSE	_ZNK3agl11IndexStream13flushCPUCacheEjj	agl::IndexStream::flushCPUCache(unsigned int, unsigned int) const	
 0x71006D2EE0			FALSE	_ZNK3agl11IndexStream18invalidateGPUCacheEPNS_11DrawContextE	agl::IndexStream::invalidateGPUCache(agl::DrawContext*) const	
 0x71006D2F00			FALSE	_ZN3agl11IndexStream12setBufferPtrENS_19ConstGPUMemVoidAddrEj	agl::IndexStream::setBufferPtr(agl::ConstGPUMemVoidAddr, unsigned int)	
-0x71006D2FD0		RenderBuffer.o	FALSE	_ZN3agl12RenderBufferC2Ev	agl::RenderBuffer::RenderBuffer()	object (class)
+0x71006D2FD0		aglRenderBuffer.o	FALSE	_ZN3agl12RenderBufferC2Ev	agl::RenderBuffer::RenderBuffer()	object (class)
 0x71006D3000			FALSE	_ZN3agl12RenderBuffer11initialize_Ev	agl::RenderBuffer::initialize_()	
 0x71006D3020			FALSE	_ZN3agl12RenderBufferC1ERKN4sead7Vector2IfEERKNS1_9BoundBox2IfEE	agl::RenderBuffer::RenderBuffer(sead::Vector2<float> const&, sead::BoundBox2<float> const&)	
 0x71006D3070			FALSE	_ZN3agl12RenderBufferC1ERKN4sead7Vector2IfEEffff	agl::RenderBuffer::RenderBuffer(sead::Vector2<float> const&, float, float, float, float)	
 0x71006D30E0			FALSE	_ZN3agl12RenderBufferD2Ev	agl::RenderBuffer::~RenderBuffer()	
 0x71006D30F0			FALSE	_ZN3agl12RenderBufferD0Ev	agl::RenderBuffer::~RenderBuffer()	
 0x71006D3120			FALSE	_ZN3agl12RenderBuffer27setRenderTargetColorNullAllEv	agl::RenderBuffer::setRenderTargetColorNullAll()	
-0x71006D3140		aglRenderBuffer.o	FALSE	_ZN3agl12RenderBuffer47adjustPhysicalAreaAndVirtualSizeFromColorTargetEj	agl::RenderBuffer::adjustPhysicalAreaAndVirtualSizeFromColorTarget(unsigned int)	object/folder from debug builds' assert paths
+0x71006D3140			FALSE	_ZN3agl12RenderBuffer47adjustPhysicalAreaAndVirtualSizeFromColorTargetEj	agl::RenderBuffer::adjustPhysicalAreaAndVirtualSizeFromColorTarget(unsigned int)	object/folder from debug builds' assert paths
 0x71006D31C0			FALSE	_ZNK3agl12RenderBuffer18invalidateGPUCacheEPNS_11DrawContextE	agl::RenderBuffer::invalidateGPUCache(agl::DrawContext*) const	
 0x71006D3280			FALSE	_ZNK3agl12RenderBuffer5bind_EPNS_11DrawContextEt	agl::RenderBuffer::bind_(agl::DrawContext*, unsigned short) const	
 0x71006D34E0			FALSE	_ZNK3agl12RenderBuffer9bindImpl_EPN4sead11DrawContextE	agl::RenderBuffer::bindImpl_(sead::DrawContext*) const	
@@ -44396,8 +44396,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71006D4200			FALSE	_ZNK3agl12RenderBuffer22checkValidTextureSize_ERKNS_11TextureDataEi	agl::RenderBuffer::checkValidTextureSize_(agl::TextureData const&, int) const	
 0x71006D4210			FALSE	_ZNK3agl12RenderBuffer27checkDerivedRuntimeTypeInfoEPKN4sead15RuntimeTypeInfo9InterfaceE	agl::RenderBuffer::checkDerivedRuntimeTypeInfo(sead::RuntimeTypeInfo::Interface const*) const	
 0x71006D4390			FALSE	_ZNK3agl12RenderBuffer18getRuntimeTypeInfoEv	agl::RenderBuffer::getRuntimeTypeInfo() const	
-0x71006D4400		RenderTargetColor.o	FALSE	_ZN3agl17RenderTargetColorC2Ev	agl::RenderTargetColor::RenderTargetColor()	object (class)
-0x71006D4460		aglRenderTarget.o	FALSE	_ZN3agl17RenderTargetColorC2ERKNS_11TextureDataEjj	agl::RenderTargetColor::RenderTargetColor(agl::TextureData const&, unsigned int, unsigned int)	object/folder from debug builds' assert paths
+0x71006D4400		aglRenderTarget.o	FALSE	_ZN3agl17RenderTargetColorC2Ev	agl::RenderTargetColor::RenderTargetColor()	object (class)
+0x71006D4460			FALSE	_ZN3agl17RenderTargetColorC2ERKNS_11TextureDataEjj	agl::RenderTargetColor::RenderTargetColor(agl::TextureData const&, unsigned int, unsigned int)	object/folder from debug builds' assert paths
 0x71006D45B0			FALSE	_ZN3agl17RenderTargetColorD2Ev	agl::RenderTargetColor::~RenderTargetColor()	
 0x71006D45C0			FALSE	_ZN3agl17RenderTargetDepthC2Ev	agl::RenderTargetDepth::RenderTargetDepth()	part of aglRenderTarget.o (debug builds)
 0x71006D4620			FALSE	_ZN3agl17RenderTargetDepthC1ERKNS_11TextureDataEjj	agl::RenderTargetDepth::RenderTargetDepth(agl::TextureData const&, unsigned int, unsigned int)	
@@ -44623,17 +44623,17 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71006DF720			FALSE	_ZN3agl17TextureFormatInfo17getDefaultCompSelENS_13TextureFormatEi	agl::TextureFormatInfo::getDefaultCompSel(agl::TextureFormat, int)	
 0x71006DF740			FALSE	_ZN3agl17TextureFormatInfo21convFormatDriverToAGLE9NVNformat	agl::TextureFormatInfo::convFormatDriverToAGL(NVNformat)	
 0x71006DF750			FALSE	_ZN3agl17TextureFormatInfo21convFormatAGLToDriverENS_13TextureFormatE	agl::TextureFormatInfo::convFormatAGLToDriver(agl::TextureFormat)	
-0x71006DF760		TextureSampler.o	FALSE	_ZN3agl14TextureSamplerC2Ev	agl::TextureSampler::TextureSampler()	object (class)
+0x71006DF760		aglTextureSampler.o	FALSE	_ZN3agl14TextureSamplerC2Ev	agl::TextureSampler::TextureSampler()	object (class)
 0x71006DF840			FALSE	_ZN3agl14TextureSampler16applyTextureDataERKNS_11TextureDataE	agl::TextureSampler::applyTextureData(agl::TextureData const&)	
 0x71006DF8C0			FALSE	_ZN3agl14TextureSamplerC1ERKNS_11TextureDataE	agl::TextureSampler::TextureSampler(agl::TextureData const&)	
-0x71006DF980		aglTextureSampler.o	FALSE	_ZNK3agl14TextureSampler8activateEPNS_11DrawContextERKNS_14ShaderLocationEib	agl::TextureSampler::activate(agl::DrawContext*, agl::ShaderLocation const&, int, bool) const	object/folder from debug builds' assert paths
+0x71006DF980			FALSE	_ZNK3agl14TextureSampler8activateEPNS_11DrawContextERKNS_14ShaderLocationEib	agl::TextureSampler::activate(agl::DrawContext*, agl::ShaderLocation const&, int, bool) const	object/folder from debug builds' assert paths
 0x71006DFA70			FALSE	_ZNK3agl14TextureSampler12setReferenceEv	agl::TextureSampler::setReference() const	
 0x71006DFA80			FALSE	_ZNK3agl14TextureSampler9initRegs_Ej	agl::TextureSampler::initRegs_(unsigned int) const	
-0x71006DFCE0		UniformBlock.o	FALSE	_ZN3agl12UniformBlockC2Ev	agl::UniformBlock::UniformBlock()	object (class)
+0x71006DFCE0		aglUniformBlock.o	FALSE	_ZN3agl12UniformBlockC2Ev	agl::UniformBlock::UniformBlock()	object (class)
 0x71006DFD20			FALSE	_ZN3agl12UniformBlockD2Ev	agl::UniformBlock::~UniformBlock()	
 0x71006DFD40			FALSE	_ZN3agl12UniformBlock7destroyEv	agl::UniformBlock::destroy()	
 0x71006DFE10			FALSE	_ZN3agl12UniformBlockD0Ev	agl::UniformBlock::~UniformBlock()	
-0x71006DFE50		aglUniformBlock.o	FALSE	_ZN3agl12UniformBlock12startDeclareEiPN4sead4HeapE	agl::UniformBlock::startDeclare(int, sead::Heap*)	object/folder from debug builds' assert paths
+0x71006DFE50			FALSE	_ZN3agl12UniformBlock12startDeclareEiPN4sead4HeapE	agl::UniformBlock::startDeclare(int, sead::Heap*)	object/folder from debug builds' assert paths
 0x71006DFEE0			FALSE	_ZNK3agl12UniformBlock15getStrideArray_Eh	agl::UniformBlock::getStrideArray_(unsigned char) const	
 0x71006DFF00			FALSE	_ZN3agl12UniformBlock8declare_ENS0_4TypeEimm	agl::UniformBlock::declare_(agl::UniformBlock::Type, int, unsigned long, unsigned long)	
 0x71006E0060			FALSE	_ZN3agl12UniformBlock7declareERKS0_	agl::UniformBlock::declare(agl::UniformBlock const&)	
@@ -44656,12 +44656,12 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71006E0AD0			FALSE	_ZNK3agl12UniformBlock16getBlockSizeMax_Ev	agl::UniformBlock::getBlockSizeMax_() const	
 0x71006E0AE0			FALSE	_ZNK3agl12UniformBlock17verifyStructSize_Ej	agl::UniformBlock::verifyStructSize_(unsigned int) const	
 0x71006E0AF0			FALSE	_ZNK3agl12UniformBlock14bindBufferNVN_EP16NVNcommandBuffer14NVNshaderStageimm	agl::UniformBlock::bindBufferNVN_(NVNcommandBuffer*, NVNshaderStage, int, unsigned long, unsigned long) const	
-0x71006E0B20		VertexAttribute.o	FALSE	_ZN3agl15VertexAttributeC2Ev	agl::VertexAttribute::VertexAttribute()	object (class)
+0x71006E0B20		aglVertexAttribute.o	FALSE	_ZN3agl15VertexAttributeC2Ev	agl::VertexAttribute::VertexAttribute()	object (class)
 0x71006E0BC0			FALSE	_ZN3agl15VertexAttributeD2Ev	agl::VertexAttribute::~VertexAttribute()	
 0x71006E0C70			FALSE	_ZN3agl15VertexAttribute7cleanUpEv	agl::VertexAttribute::cleanUp()	
 0x71006E0CF0			FALSE	_ZN3agl15VertexAttribute7destroyEv	agl::VertexAttribute::destroy()	
 0x71006E0D30			FALSE	_ZN3agl15VertexAttributeD0Ev	agl::VertexAttribute::~VertexAttribute()	
-0x71006E0DD0		aglVertexAttribute.o	FALSE	_ZN3agl15VertexAttribute6createEjPN4sead4HeapE	agl::VertexAttribute::create(unsigned int, sead::Heap*)	object/folder from debug builds' assert paths
+0x71006E0DD0			FALSE	_ZN3agl15VertexAttribute6createEjPN4sead4HeapE	agl::VertexAttribute::create(unsigned int, sead::Heap*)	object/folder from debug builds' assert paths
 0x71006E0E90			FALSE	_ZN3agl15VertexAttribute15setVertexStreamEiPKNS_12VertexBufferEj	agl::VertexAttribute::setVertexStream(int, agl::VertexBuffer const*, unsigned int)	
 0x71006E1030			FALSE	_ZN3agl15VertexAttribute20disableVertexBuffer_EPNS0_10Attribute_E	agl::VertexAttribute::disableVertexBuffer_(agl::VertexAttribute::Attribute_*)	
 0x71006E1120			FALSE	_ZN3agl15VertexAttribute19enableVertexBuffer_EPNS0_10Attribute_EPKNS_12VertexBufferEj	agl::VertexAttribute::enableVertexBuffer_(agl::VertexAttribute::Attribute_*, agl::VertexBuffer const*, unsigned int)	
@@ -44669,11 +44669,11 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71006E11D0			FALSE	_ZN3agl15VertexAttribute5setUpEv	agl::VertexAttribute::setUp()	
 0x71006E14B0			FALSE	_ZNK3agl15VertexAttribute8activateEPNS_11DrawContextE	agl::VertexAttribute::activate(agl::DrawContext*) const	
 0x71006E1580			FALSE	_ZN3agl15VertexAttribute19disableAttributeAllEPNS_11DrawContextE	agl::VertexAttribute::disableAttributeAll(agl::DrawContext*)	
-0x71006E1590		VertexBuffer.o	FALSE	_ZN3agl12VertexBufferC2Ev	agl::VertexBuffer::VertexBuffer()	object (class)
+0x71006E1590		aglVertexBuffer.o	FALSE	_ZN3agl12VertexBufferC2Ev	agl::VertexBuffer::VertexBuffer()	object (class)
 0x71006E1640			FALSE	_ZN3agl12VertexBufferD2Ev	agl::VertexBuffer::~VertexBuffer()	
 0x71006E16E0			FALSE	_ZN3agl12VertexBuffer8cleanUp_Ev	agl::VertexBuffer::cleanUp_()	
 0x71006E1770			FALSE	_ZN3agl12VertexBufferD0Ev	agl::VertexBuffer::~VertexBuffer()	
-0x71006E1810		aglVertexBuffer.o	FALSE	_ZN3agl12VertexBuffer11setUpBufferENS_19ConstGPUMemVoidAddrEmm	agl::VertexBuffer::setUpBuffer(agl::ConstGPUMemVoidAddr, unsigned long, unsigned long)	object/folder from debug builds' assert paths
+0x71006E1810			FALSE	_ZN3agl12VertexBuffer11setUpBufferENS_19ConstGPUMemVoidAddrEmm	agl::VertexBuffer::setUpBuffer(agl::ConstGPUMemVoidAddr, unsigned long, unsigned long)	object/folder from debug builds' assert paths
 0x71006E1990			FALSE	_ZNK3agl12VertexBuffer13flushCPUCacheEjm	agl::VertexBuffer::flushCPUCache(unsigned int, unsigned long) const	
 0x71006E19D0			FALSE	_ZNK3agl12VertexBuffer18invalidateGPUCacheEPNS_11DrawContextE	agl::VertexBuffer::invalidateGPUCache(agl::DrawContext*) const	
 0x71006E19F0			FALSE	_ZN3agl12VertexBuffer11setUpStreamEiNS_18VertexStreamFormatEmb	agl::VertexBuffer::setUpStream(int, agl::VertexStreamFormat, unsigned long, bool)	

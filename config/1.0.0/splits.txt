@@ -3870,10 +3870,8 @@ src/sead/container/seadListImpl.cpp: done
     .text   start:0x006518A0 end:0x00651E28
 src/sead/container/seadPtrArray.cpp: done
     .text   start:0x00651E30 end:0x00652294
-src/sead/container/seadNinJoyNpadDevice.cpp:
-    .text   start:0x006522A0 end:0x00652890
 src/sead/controller/nin/seadNinJoyNpadDeviceNin.cpp:
-    .text   start:0x00652890 end:0x00652F6C
+    .text   start:0x006522A0 end:0x00652F6C
 src/sead/filedevice/seadFileDevice.cpp: done
     .text   start:0x00652F70 end:0x0065575C
 src/sead/filedevice/seadFileDeviceMgr.cpp: done
@@ -3882,7 +3880,7 @@ src/sead/filedevice/seadMainFileDevice.cpp:
     .text   start:0x00656850 end:0x006572C4
 src/sead/filedevice/nin/seadNinFileDeviceBaseNin.cpp:
     .text   start:0x006572D0 end:0x006581CC
-src/sead/filedevice/seadPath.cpp:
+src/sead/filedevice/seadPath.cpp: done
     .text   start:0x006581D0 end:0x00659BFC
 src/sead/framework/nx/seadGameFrameworkNx.cpp:
     .text   start:0x00659C00 end:0x0065B71C
@@ -3955,11 +3953,11 @@ src/sead/prim/seadCuckooClock.cpp:
 src/sead/framework/seadCalculateTask.cpp: done
     .text   start:0x0067B470 end:0x0067BC84
 src/sead/prim/seadSafeString.cpp:
-    .text   start:0x0067BC90 end:0x0067DCFC
+    .text   start:0x0067BC90 end:0x0067D9E0
 src/sead/prim/seadStringBuilder.cpp:
-    .text   start:0x0067DD00 end:0x00682D7C
+    .text   start:0x0067D9E0 end:0x00680328
 src/sead/prim/seadStringUtil.cpp:
-    .text   start:0x00682D80 end:0x00687D9C
+    .text   start:0x00680330 end:0x00687D9C
 src/sead/prim/seadArchiveRes.cpp: done
     .text   start:0x00687DA0 end:0x006881F8
 src/sead/filedevice/seadArchiveFileDevice.cpp: done
@@ -3972,9 +3970,15 @@ src/sead/stream/seadBufferStream.cpp: done
     .text   start:0x0068B2E0 end:0x0068BBF0
 src/sead/stream/seadFileDeviceStream.cpp: done
     .text   start:0x0068BBF0 end:0x0068CE04
-src/sead/stream/seadStream.cpp:
-    .text   start:0x0068CE10 end:0x0068DF68
-src/sead/stream/seadBinaryStreamFormat.cpp:
+src/sead/stream/seadPrintStream.cpp: done
+    .text   start:0x0068CE10 end:0x0068D028
+src/sead/stream/seadRamStream.cpp:
+    .text   start:0x0068D030 end:0x0068D414
+src/sead/stream/seadStream.cpp: done
+    .text   start:0x0068D420 end:0x0068DEEC
+src/sead/prim/seadEndian.cpp: done
+    .text   start:0x0068DEF0 end:0x0068DF68
+src/sead/stream/seadBinaryStreamFormat.cpp: done
     .text   start:0x0068DF70 end:0x0068EA04
 src/sead/stream/seadTextStreamFormat.cpp:
     .text   start:0x0068EA10 end:0x0069124C
@@ -3994,26 +3998,32 @@ src/sead/thread/seadThread.cpp: done
     .text   start:0x006923C0 end:0x00692980
 src/sead/thread/seadThreadUtil.cpp: done
     .text   start:0x00692980 end:0x006929BC
-src/sead/controller/seadControllerMgr.cpp:
-    .text   start:0x006929C0 end:0x006937D8
-src/sead/controller/seadControllerBase.cpp:
-    .text   start:0x006937E0 end:0x006944CC
+src/sead/controller/seadControllerMgr.cpp: done
+    .text   start:0x006929C0 end:0x0069335C
+src/sead/controller/seadController.cpp: done
+    .text   start:0x00693360 end:0x006937D8
+src/sead/controller/seadControllerBase.cpp: done
+    .text   start:0x006937E0 end:0x0069416C
+src/sead/math/seadMathCalcCommon.cpp:
+    .text   start:0x00694170 end:0x006944CC
 src/sead/gfx/seadCamera.cpp:
     .text   start:0x006944D0 end:0x006956AC
 src/sead/gfx/seadColor.cpp:
     .text   start:0x006956B0 end:0x00696ADC
-src/sead/gfx/seadFrameBuffer.cpp:
+src/sead/gfx/seadFrameBuffer.cpp: done
     .text   start:0x00696AF0 end:0x00696FD0
-src/sead/gfx/seadGraphics.cpp:
-    .text   start:0x00696FD0 end:0x00697164
+src/sead/gfx/seadGraphics.cpp: done
+    .text   start:0x00696FD0 end:0x00697108
+src/sead/gfx/seadDrawLockContext.cpp:
+    .text   start:0x00697110 end:0x00697164
 src/sead/gfx/seadGraphicsContext.cpp:
     .text   start:0x00697170 end:0x00697B74
 src/sead/gfx/seadPrimitiveRenderer.cpp:
     .text   start:0x00697B80 end:0x006981F8
 src/sead/gfx/seadProjection.cpp:
-    .text   start:0x00698200 end:0x0069AB80
+    .text   start:0x00698200 end:0x0069A8EC
 src/sead/gfx/seadTextWriter.cpp:
-    .text   start:0x0069AB80 end:0x0069BB70
+    .text   start:0x0069A8F0 end:0x0069BB70
 src/sead/gfx/seadViewport.cpp:
     .text   start:0x0069BB70 end:0x0069C314
 src/sead/random/seadGlobalRandom.cpp: done
@@ -4028,8 +4038,12 @@ src/sead/hostio/seadHostIOCurve.cpp:
     .text   start:0x0069FD60 end:0x006A1B14
 src/sead/time/seadCalendarTime.cpp:
     .text   start:0x006A1B20 end:0x006A1EC4
-src/sead/time/seadDateTime.cpp:
-    .text   start:0x006A1ED0 end:0x006A2CF8
+src/sead/time/seadDateTime.cpp: done
+    .text   start:0x006A1ED0 end:0x006A26E8
+src/sead/time/seadDateSpan.cpp: done
+    .text   start:0x006A26F0 end:0x006A282C
+src/sead/time/seadDateTimeUtc.cpp:
+    .text   start:0x006A2830 end:0x006A2CF8
 src/sead/time/seadDateUtil.cpp:
     .text   start:0x006A2D00 end:0x006A3ADC
 src/sead/time/seadTickSpan.cpp: done
@@ -4038,12 +4052,14 @@ src/sead/mc/seadCoreInfo.cpp: done
     .text   start:0x006A3CF0 end:0x006A3F14
 src/sead/heap/seadSeparateHeap.cpp:
     .text   start:0x006A3F20 end:0x006A5A74
-src/sead/xml/seadXmlElement.cpp:
+src/sead/xml/seadXmlElement.cpp: done
     .text   start:0x006A5A80 end:0x006A7C08
-src/sead/xml/seadXmlUtil.cpp:
-    .text   start:0x006A7C10 end:0x006A89C0
+src/sead/xml/seadXmlUtil.cpp: done
+    .text   start:0x006A7C10 end:0x006A8174
+src/sead/filedevice/nin/seadNinHostIOFileDevice.cpp:
+    .text   start:0x006A8180 end:0x006A841C
 src/sead/xml/seadXmlDocument.cpp:
-    .text   start:0x006A89C0 end:0x006AEB6C
+    .text   start:0x006A8420 end:0x006AEB6C
 src/sead/framework/seadInfLoopChecker.cpp:
     .text   start:0x006AEB70 end:0x006AF2F4
 src/sead/heap/seadUnitHeap.cpp:
@@ -4053,7 +4069,13 @@ src/sead/mc/seadJobQueue.cpp:
 src/sead/resource/seadSharcArchiveRes.cpp: done
     .text   start:0x006B1610 end:0x006B248C
 src/sead/message/seadMessageSet.cpp:
-    .text   start:0x006B3160 end:0x006B4A3C
+    .text   start:0x006B3160 end:0x006B3360
+src/sead/controller/seadControllerWrapperBase.cpp: done
+    .text   start:0x006B3360 end:0x006B37BC
+src/sead/controller/seadMaskControllerWrapper.cpp: done
+    .text   start:0x006B37C0 end:0x006B3D58
+src/sead/system/seadSystem.cpp:
+    .text   start:0x006B3D60 end:0x006B4A3C
 src/sead/mc/seadWorkerMgr.cpp:
     .text   start:0x006B4A40 end:0x006B5D0C
 src/sead/resource/seadSZSDecompressor.cpp:
@@ -4061,26 +4083,30 @@ src/sead/resource/seadSZSDecompressor.cpp:
 src/aal/seadaudio/seadAudioMgr.cpp:
     .text   start:0x006BB560 end:0x006BF2D8
 src/aal/seadaudio/seadAudioResetter.cpp:
-    .text   start:0x006BF2E0 end:0x006BFEF0
-src/sead/controller/seadControllerWrapper.cpp:
-    .text   start:0x006BFEF0 end:0x006C2704
+    .text   start:0x006BF2E0 end:0x006BFC98
+src/sead/controller/seadControllerWrapper.cpp: done
+    .text   start:0x006BFCA0 end:0x006C02B8
+src/sead/system/seadExceptionHandler.cpp:
+    .text   start:0x006C02C0 end:0x006C0698
+src/sead/controller/nin/seadNinDebugPadDeviceNin.cpp: done
+    .text   start:0x006C06A0 end:0x006C086C
+src/sead/controller/nin/seadNinDebugControllerNin.cpp: done
+    .text   start:0x006C0870 end:0x006C0AC8
+src/sead/lms/lms_project.c:
+    .text   start:0x006C0AD0 end:0x006C26E4
 src/sead/message/seadMessageProject.cpp:
-    .text   start:0x006C2710 end:0x006C9370
-src/agl/DrawContext.cpp:
-    .text   start:0x006C9370 end:0x006C93C8
-src/agl/common/aglDrawContext.cpp:
-    .text   start:0x006C93D0 end:0x006C98AC
-src/agl/common/aglGPUMemAddr.cpp:
+    .text   start:0x006C26F0 end:0x006C9370
+src/agl/common/aglDrawContext.cpp: done
+    .text   start:0x006C9370 end:0x006C98AC
+src/agl/common/aglGPUMemAddr.cpp: done
     .text   start:0x006C98B0 end:0x006C9B10
-src/agl/common/GPUMemBlockBase.cpp:
-    .text   start:0x006C9B10 end:0x006C9B60
-src/agl/common/aglGPUMemBlock.cpp:
-    .text   start:0x006C9B60 end:0x006CA084
+src/agl/common/aglGPUMemBlock.cpp: done
+    .text   start:0x006C9B10 end:0x006CA084
 src/agl/detail/aglGPUMemBlockMgr.cpp:
     .text   start:0x006CA090 end:0x006CC0C4
 src/agl/detail/GraphicsDriverMgr.cpp:
     .text   start:0x006CC0D0 end:0x006CC1BC
-src/agl/driver/aglGraphicsDriverMgr.cpp:
+src/agl/driver/aglGraphicsDriverMgr.cpp: done
     .text   start:0x006CC1C0 end:0x006CC484
 src/agl/driver/aglNVNMgr.cpp:
     .text   start:0x006CC490 end:0x006CEFCC
@@ -4104,18 +4130,12 @@ src/agl/common/DynamicUniformBlock.cpp:
     .text   start:0x006D2810 end:0x006D28FC
 src/agl/detail/aglDynamicUniformBlock.cpp:
     .text   start:0x006D2900 end:0x006D2C14
-src/agl/detail/IndexStream.cpp:
-    .text   start:0x006D2C20 end:0x006D2D58
-src/agl/common/aglIndexStream.cpp:
-    .text   start:0x006D2D60 end:0x006D2FC4
-src/agl/common/RenderBuffer.cpp:
-    .text   start:0x006D2FD0 end:0x006D3134
+src/agl/common/aglIndexStream.cpp: done
+    .text   start:0x006D2C20 end:0x006D2FC4
 src/agl/common/aglRenderBuffer.cpp:
-    .text   start:0x006D3140 end:0x006D43FC
-src/agl/common/RenderTargetColor.cpp:
-    .text   start:0x006D4400 end:0x006D4454
-src/agl/common/aglRenderTarget.cpp:
-    .text   start:0x006D4460 end:0x006D4AF0
+    .text   start:0x006D2FD0 end:0x006D43FC
+src/agl/common/aglRenderTarget.cpp: done
+    .text   start:0x006D4400 end:0x006D4AF0
 src/agl/common/aglShaderLocation.cpp:
     .text   start:0x006D4AF0 end:0x006D5B0C
 src/agl/common/PrintFormatter.cpp:
@@ -4152,22 +4172,14 @@ src/agl/common/aglTextureDataImageAccessor.cpp:
     .text   start:0x006DE9D0 end:0x006DF580
 src/agl/common/TextureFormatInfo.cpp:
     .text   start:0x006DF580 end:0x006DF754
-src/agl/common/TextureSampler.cpp:
-    .text   start:0x006DF760 end:0x006DF980
-src/agl/common/aglTextureSampler.cpp:
-    .text   start:0x006DF980 end:0x006DFCD4
-src/agl/common/UniformBlock.cpp:
-    .text   start:0x006DFCE0 end:0x006DFE44
+src/agl/common/aglTextureSampler.cpp: done
+    .text   start:0x006DF760 end:0x006DFCD4
 src/agl/common/aglUniformBlock.cpp:
-    .text   start:0x006DFE50 end:0x006E0B14
-src/agl/common/VertexAttribute.cpp:
-    .text   start:0x006E0B20 end:0x006E0DD0
+    .text   start:0x006DFCE0 end:0x006E0B14
 src/agl/common/aglVertexAttribute.cpp:
-    .text   start:0x006E0DD0 end:0x006E1584
-src/agl/common/VertexBuffer.cpp:
-    .text   start:0x006E1590 end:0x006E1808
-src/agl/common/aglVertexBuffer.cpp:
-    .text   start:0x006E1810 end:0x006E1AE0
+    .text   start:0x006E0B20 end:0x006E1584
+src/agl/common/aglVertexBuffer.cpp: done
+    .text   start:0x006E1590 end:0x006E1AE0
 src/agl/common/DebugTextureDrawer.cpp:
     .text   start:0x006E1AE0 end:0x006E2C6C
 src/agl/common/DebugTexturePage.cpp:

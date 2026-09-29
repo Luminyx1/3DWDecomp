@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <type_traits>
+#include <utility>
 
 #include <basis/seadNew.h>
 #include <basis/seadRawPrint.h>
@@ -268,6 +269,16 @@ public:
         return true;
     }
 
+    template <typename... Args>
+    T* emplaceBack(Args&&... args)
+    {
+        if (mSize >= mCapacity)
+            return nullptr;
+        T* item = unsafeGet(mSize++);
+        new (item) T(std::forward<Args>(args)...);
+        return item;
+    }
+
     void forcePushBackwards(const T& item, u32 offset = 1)
     {
         mHead = (mHead < 1 ? mCapacity : mHead) - offset;
@@ -294,6 +305,18 @@ public:
         }
         SEAD_ASSERT_MSG(false, "no element");
         return {};
+    }
+
+    bool popFront(T* item)
+    {
+        if (mSize >= 1)
+        {
+            *item = *unsafeGet(0);
+            mHead = mHead + 1 < mCapacity ? mHead + 1 : 0;
+            --mSize;
+            return true;
+        }
+        return false;
     }
 
     void remove(s32 index)

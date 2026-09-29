@@ -1,8 +1,4 @@
-#ifdef NNSDK
 #include <nn/time.h>
-#else
-#error "Unknown platform"
-#endif
 
 #include "basis/seadRawPrint.h"
 #include "time/seadDateTime.h"
@@ -120,16 +116,24 @@ s32 convertDaysToMonth(u32* pDays, u32 year)
 
 bool DateTime::mIsInitialized = false;
 
+/**
+ * Creates a date-time from a Unix timestamp.
+ * @param unixTime seconds since the Unix epoch
+ */
 DateTime::DateTime(u64 unixTime)
 {
     mUnixTime = unixTime;
 }
 
-DateTime::DateTime(const CalendarTime& rTime)
-{
-    setUnixTime(rTime);
-}
-
+/**
+ * Creates a date-time from calendar components.
+ * @param rYear year
+ * @param rMonth month
+ * @param rDay day
+ * @param rHour hour
+ * @param rMinute minute
+ * @param rSecond second
+ */
 DateTime::DateTime(const CalendarTime::Year& rYear, const CalendarTime::Month& rMonth,
                    const CalendarTime::Day& rDay, const CalendarTime::Hour& rHour,
                    const CalendarTime::Minute& rMinute, const CalendarTime::Second& rSecond)
@@ -137,13 +141,56 @@ DateTime::DateTime(const CalendarTime::Year& rYear, const CalendarTime::Month& r
     setUnixTime(rYear, rMonth, rDay, rHour, rMinute, rSecond);
 }
 
+/**
+ * Sets the time from calendar components.
+ * @param rYear year
+ * @param rMonth month
+ * @param rDay day
+ * @param rHour hour
+ * @param rMinute minute
+ * @param rSecond second
+ * @return seconds since the Unix epoch
+ */
+u64 DateTime::setUnixTime(const CalendarTime::Year& rYear, const CalendarTime::Month& rMonth,
+                          const CalendarTime::Day& rDay, const CalendarTime::Hour& rHour,
+                          const CalendarTime::Minute& rMinute, const CalendarTime::Second& rSecond)
+{
+    CalendarTime::Date date(rYear, rMonth, rDay);
+    CalendarTime::Time time(rHour, rMinute, rSecond);
+    mUnixTime = convertCalendarDateTimeToSeconds(date, time);
+    return mUnixTime;
+}
+
+/**
+ * Creates a date-time from a calendar time.
+ * @param rTime calendar time
+ */
+DateTime::DateTime(const CalendarTime& rTime)
+{
+    setUnixTime(rTime);
+}
+
+/**
+ * Sets the time from a calendar time.
+ * @param rTime calendar time
+ * @return seconds since the Unix epoch
+ */
+u64 DateTime::setUnixTime(const CalendarTime& rTime)
+{
+    mUnixTime = convertCalendarDateTimeToSeconds(rTime.getDate(), rTime.getTime());
+    return mUnixTime;
+}
+
+/**
+ * Creates a local date-time from a UTC date-time (the argument is ignored and the uninitialized
+ * member is converted instead).
+ * @param rUnused UTC date-time
+ */
 DateTime::DateTime([[maybe_unused]] const DateTimeUtc& rUnused)
 {
-#ifdef NNSDK
     initializeSystemTimeModule();
 
     nn::time::CalendarTime ctime;
-    // BUG: uses uninitialized `mUnixTime` instead of parameter `time`.
     nn::time::PosixTime time = {mUnixTime};
     nn::time::ToCalendarTime(&ctime, nullptr, time);
 
@@ -154,12 +201,56 @@ DateTime::DateTime([[maybe_unused]] const DateTimeUtc& rUnused)
     const auto minute = CalendarTime::Minute(ctime.minute);
     const auto second = CalendarTime::Second(ctime.second);
     setUnixTime(year, month, day, hour, minute, second);
-#endif
 }
 
+/**
+ * Initializes the nn::time module once.
+ */
+void DateTime::initializeSystemTimeModule()
+{
+    if (mIsInitialized)
+    {
+        return;
+    }
+
+    if (!nn::time::IsInitialized())
+    {
+        nn::time::Initialize();
+    }
+
+    mIsInitialized = true;
+}
+
+/**
+ * Converts the time to a calendar time.
+ * @param pCalendar destination calendar time (may be null)
+ */
+void DateTime::getCalendarTime(CalendarTime* pCalendar) const
+{
+    u32 d = mUnixTime / (3600 * 24);
+    const u32 y = convertDaysToYears(&d);
+    const u32 m = convertDaysToMonth(&d, y);
+
+    CalendarTime::Time time;
+    const auto reducedTime = mUnixTime % (3600 * 24);
+    time.mHour.setValue(reducedTime / 3600);
+    time.mMinute.setValue((reducedTime % 3600) / 60);
+    time.mSecond.setValue(reducedTime % 60);
+
+    if (pCalendar)
+    {
+        pCalendar->setDate(
+            CalendarTime::Date(y, CalendarTime::Month::makeFromValueOneOrigin(m), d));
+        pCalendar->setTime(time);
+    }
+}
+
+/**
+ * Sets the time to the current local time of the user system clock.
+ * @return seconds since the Unix epoch
+ */
 u64 DateTime::setNow()
 {
-#ifdef NNSDK
     initializeSystemTimeModule();
 
     nn::time::PosixTime now;
@@ -174,51 +265,23 @@ u64 DateTime::setNow()
     const auto minute = CalendarTime::Minute(ctime.minute);
     const auto second = CalendarTime::Second(ctime.second);
     setUnixTime(year, month, day, hour, minute, second);
-#endif
     return mUnixTime;
 }
 
-u64 DateTime::setUnixTime(const CalendarTime& rTime)
-{
-    mUnixTime = convertCalendarDateTimeToSeconds(rTime.getDate(), rTime.getTime());
-    return mUnixTime;
-}
-
-u64 DateTime::setUnixTime(const CalendarTime::Year& rYear, const CalendarTime::Month& rMonth,
-                          const CalendarTime::Day& rDay, const CalendarTime::Hour& rHour,
-                          const CalendarTime::Minute& rMinute, const CalendarTime::Second& rSecond)
-{
-    CalendarTime::Date date(rYear, rMonth, rDay);
-    CalendarTime::Time time(rHour, rMinute, rSecond);
-    mUnixTime = convertCalendarDateTimeToSeconds(date, time);
-    return mUnixTime;
-}
-
-void DateTime::getCalendarTime(CalendarTime* pCalendar) const
-{
-    u32 d = mUnixTime / (3600 * 24);
-    const u32 y = convertDaysToYears(&d);
-    const u32 m = convertDaysToMonth(&d, y);
-
-    CalendarTime::Time time;
-    const auto reduced_time = mUnixTime % (3600 * 24);
-    time.mHour.setValue(reduced_time / 3600);
-    time.mMinute.setValue((reduced_time % 3600) / 60);
-    time.mSecond.setValue(reduced_time % 60);
-
-    if (pCalendar)
-    {
-        pCalendar->setDate(
-            CalendarTime::Date(y, CalendarTime::Month::makeFromValueOneOrigin(m), d));
-        pCalendar->setTime(time);
-    }
-}
-
+/**
+ * Calculates the span between this time and another time.
+ * @param time time to subtract
+ * @return difference in seconds
+ */
 DateSpan DateTime::diff(DateTime time) const
 {
     return DateSpan(mUnixTime - time.mUnixTime);
 }
 
+/**
+ * Calculates the span from this time to now.
+ * @return difference in seconds
+ */
 DateSpan DateTime::diffToNow() const
 {
     DateTime now(0);
@@ -226,33 +289,34 @@ DateSpan DateTime::diffToNow() const
     return now.diff(*this);
 }
 
-void DateTime::initializeSystemTimeModule()
-{
-    if (mIsInitialized)
-    {
-        return;
-    }
-
-#ifdef NNSDK
-    if (!nn::time::IsInitialized())
-    {
-        nn::time::Initialize();
-    }
-#endif
-
-    mIsInitialized = true;
-}
-
+/**
+ * Calculates the span between two times.
+ * @param lhs time
+ * @param rhs time to subtract
+ * @return difference in seconds
+ */
 DateSpan operator-(DateTime lhs, DateTime rhs)
 {
     return DateSpan(lhs.getUnixTime() - rhs.getUnixTime());
 }
 
+/**
+ * Subtracts a span from a time.
+ * @param time time
+ * @param span span to subtract
+ * @return resulting time
+ */
 DateTime operator-(DateTime time, DateSpan span)
 {
     return DateTime(time.getUnixTime() - span.getSpan());
 }
 
+/**
+ * Adds a span to a time.
+ * @param time time
+ * @param span span to add
+ * @return resulting time
+ */
 DateTime operator+(DateTime time, DateSpan span)
 {
     return DateTime(time.getUnixTime() + span.getSpan());

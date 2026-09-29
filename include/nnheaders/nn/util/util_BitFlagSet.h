@@ -58,7 +58,7 @@ struct BitFlagSet {
 
     static const int StorageBitCount = 8 * sizeof(StorageT);
     static const int StorageCount = (N + StorageBitCount - 1) / StorageBitCount;
-    StorageT _storage[StorageCount]{};
+    StorageT _storage[StorageCount];
 
     class Reference {
     public:

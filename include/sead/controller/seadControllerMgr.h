@@ -24,7 +24,7 @@ private:
     class ConstructArg : public TaskConstructArg
     {
     public:
-        ConstructArg() : TaskConstructArg(), mHeapArray() { heap_array = &mHeapArray; }
+        ConstructArg() : TaskConstructArg() { heap_array = &mHeapArray; }
 
     private:
         HeapArray mHeapArray;
@@ -54,14 +54,17 @@ public:
     void initializeDefault(Heap* heap);
     void finalizeDefault();
 
-    // TODO: Add/remove devices & controllers
+    void pushBackControlDevice(ControlDevice* pDevice);
+    void removeControlDevice(ControlDevice* pDevice);
+    void pushBackController(Controller* pController);
+    void removeController(Controller* pController);
 
     Controller* getControllerByOrder(ControllerDefine::ControllerId id, s32 index) const;
     ControlDevice* getControlDevice(ControllerDefine::DeviceId id) const;
     ControllerAddon* getControllerAddon(s32 index, ControllerDefine::AddonId id) const;
     ControllerAddon* getControllerAddonByOrder(s32 controller_index,
                                                ControllerDefine::AddonId addon_id,
-                                               int addon_index) const;
+                                               s32 addon_index) const;
 
     template <typename T>
     T getControllerByOrderAs(s32 index) const;

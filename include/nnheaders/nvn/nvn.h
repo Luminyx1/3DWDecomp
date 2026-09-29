@@ -188,7 +188,7 @@ typedef struct {
 } NVNsamplerBuilder;
 
 typedef struct {
-    char reserved[0x30];
+    char reserved[0x60];
 } NVNsampler;
 
 typedef struct {

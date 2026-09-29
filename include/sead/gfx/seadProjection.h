@@ -21,7 +21,7 @@ class Projection
 
 public:
     Projection();
-    virtual ~Projection() = default;
+    virtual ~Projection();
 
     virtual f32 getNear() const = 0;
     virtual f32 getFar() const = 0;
@@ -80,12 +80,12 @@ public:
     f32 getAspect() const override;
     void getOffset(Vector2f* offset) const override;
     void doScreenPosToCameraPosTo(Vector3f* cameraPos, const Vector3f& screenPos) const override;
-    u32 getProjectionType() const override;
+    u32 getProjectionType() const override { return 0; }
 
     void set(f32 near, f32 far, f32 fovy_rad, f32 aspect);
     void doUpdateMatrix(Matrix44f* mtx) const override;
     void setFovx(f32);
-    void createDividedProjection(PerspectiveProjection* projection, s32, s32, s32, s32);
+    void createDividedProjection(PerspectiveProjection* projection, s32, s32, s32, s32) const;
     f32 getTop() const;
     f32 getBottom() const;
     f32 getLeft() const;
@@ -114,6 +114,8 @@ public:
     }
 
 private:
+    void setFovy_(f32 fovy);
+
     f32 mNear;
     f32 mFar;
     f32 mFovyRad;
@@ -140,7 +142,7 @@ public:
     f32 getFovy() const override;
     f32 getAspect() const override;
     void getOffset(Vector2f* offset) const override;
-    u32 getProjectionType() const override;
+    u32 getProjectionType() const override { return 1; }
     void doUpdateMatrix(Matrix44f* mtx) const override;
     void doScreenPosToCameraPosTo(Vector3f* cameraPos, const Vector3f& screenPos) const override;
 
@@ -148,6 +150,42 @@ public:
     void setBoundBox(const BoundBox2f& boundBox);
     void setByViewport(const Viewport& viewport);
     void setTBLR(f32 top, f32 bottom, f32 left, f32 right);
+
+    void setNear(f32 near)
+    {
+        mNear = near;
+        setDirty();
+    }
+    void setFar(f32 far)
+    {
+        mFar = far;
+        setDirty();
+    }
+    void setTop(f32 top)
+    {
+        mTop = top;
+        setDirty();
+    }
+    void setBottom(f32 bottom)
+    {
+        mBottom = bottom;
+        setDirty();
+    }
+    void setLeft(f32 left)
+    {
+        mLeft = left;
+        setDirty();
+    }
+    void setRight(f32 right)
+    {
+        mRight = right;
+        setDirty();
+    }
+
+    f32 getTop() const { return mTop; }
+    f32 getBottom() const { return mBottom; }
+    f32 getLeft() const { return mLeft; }
+    f32 getRight() const { return mRight; }
 
 private:
     f32 mNear;
@@ -175,14 +213,45 @@ public:
     void getOffset(Vector2f* offset) const override;
     f32 getOffsetX() const;
     f32 getOffsetY() const;
-    u32 getProjectionType() const override;
+    u32 getProjectionType() const override { return 0; }
 
     void doUpdateMatrix(Matrix44f* mtx) const override;
     void doScreenPosToCameraPosTo(Vector3f* cameraPos, const Vector3f& screenPos) const override;
     void setTBLR(f32 top, f32 bottom, f32 left, f32 right);
-    void setBoundBox(BoundBox2f& boundBox);
+    void setBoundBox(const BoundBox2f& boundBox);
     void createDividedProjection(FrustumProjection* out, s32, s32, s32, s32) const;
     void setFovyAspectOffset(f32 fovy, f32 aspect, const Vector2f& offset);
+
+    void setNear(f32 near)
+    {
+        mNear = near;
+        setDirty();
+    }
+    void setFar(f32 far)
+    {
+        mFar = far;
+        setDirty();
+    }
+    void setTop(f32 top)
+    {
+        mTop = top;
+        setDirty();
+    }
+    void setBottom(f32 bottom)
+    {
+        mBottom = bottom;
+        setDirty();
+    }
+    void setLeft(f32 left)
+    {
+        mLeft = left;
+        setDirty();
+    }
+    void setRight(f32 right)
+    {
+        mRight = right;
+        setDirty();
+    }
 
 private:
     f32 mNear;
@@ -211,7 +280,7 @@ public:
     void updateAttributesForDirectProjection() override;
     void doUpdateMatrix(Matrix44f* mtx) const override;
     void doScreenPosToCameraPosTo(Vector3f* cameraPos, const Vector3f& screenPos) const override;
-    u32 getProjectionType() const override;
+    u32 getProjectionType() const override { return 2; }
 
 private:
     Matrix44f mProjectionMatrix;

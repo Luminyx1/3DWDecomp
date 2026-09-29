@@ -49,12 +49,12 @@ public:
         cPadIdx_Max = 28
     };
 
-    explicit Controller(ControllerMgr* mgr);
+    explicit Controller(ControllerMgr* pMgr);
     virtual ~Controller() = default;
 
     virtual void calc();
     virtual bool isConnected() const { return true; }
-    ControllerAddon* getAddonByOrder(ControllerDefine::AddonId id, int index) const;
+    ControllerAddon* getAddonByOrder(ControllerDefine::AddonId id, s32 index) const;
     ControllerAddon* getAddon(ControllerDefine::AddonId id) const;
     ControllerMgr* getMgr() const { return mMgr; }
 
@@ -85,7 +85,7 @@ T Controller::getAddonAs() const
 {
     for (auto& addon : mAddons)
     {
-        T result = DynamicCast<typename std::remove_pointer<T>>(addon);
+        T result = DynamicCast<typename std::remove_pointer<T>::type>(&addon);
         if (result)
             return result;
     }

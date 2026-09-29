@@ -111,6 +111,14 @@ MemoryPoolType MemoryPoolType::convert(MemoryAttribute attribute)
     return type;
 }
 
+/**
+ * Constructs an uninitialized memory pool.
+ */
+MemoryPool::MemoryPool()
+{
+    mMemoryType.setDirect(0);
+}
+
 void MemoryPool::initialize(void* pStorage, u64 size, const MemoryPoolType& rType)
 {
     NVNmemoryPoolBuilder builder;

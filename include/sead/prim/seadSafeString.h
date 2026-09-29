@@ -135,6 +135,12 @@ public:
     bool startsWith(const SafeStringBase<T>& prefix) const;
     bool endsWith(const SafeStringBase<T>& suffix) const;
 
+    bool includeIgnoreCase(const T& c) const;
+    bool includeIgnoreCase(const SafeStringBase<T>& str) const;
+    bool isEqualIgnoreCase(const SafeStringBase<T>& str) const;
+    bool startsWithIgnoreCase(const SafeStringBase<T>& prefix) const;
+    bool endsWithIgnoreCase(const SafeStringBase<T>& suffix) const;
+
     static const T cNullChar;
     static const T cLineBreakChar;
     static const SafeStringBase cEmptyString;

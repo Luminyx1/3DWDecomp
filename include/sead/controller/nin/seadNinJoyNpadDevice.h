@@ -2,6 +2,7 @@
 
 #include <nn/hid.h>
 
+#include "container/seadRingBuffer.h"
 #include "container/seadSafeArray.h"
 #include "controller/seadControlDevice.h"
 #include "controller/seadController.h"
@@ -19,15 +20,21 @@ public:
     class VibrationThread : public Thread
     {
     public:
-        VibrationThread(Heap* heap);
-        ~VibrationThread() override;
+        explicit VibrationThread(Heap* pHeap);
+        ~VibrationThread() override = default;
 
-        void calc_(s64) override;
-        void requestVibration(const nn::hid::VibrationDeviceHandle& handle,
-                              const nn::hid::VibrationValue& value);
+        void calc_(MessageQueue::Element msg) override;
+        void requestVibration(const nn::hid::VibrationDeviceHandle& rHandle,
+                              const nn::hid::VibrationValue& rValue);
 
     private:
-        u8 _fc[0x158];
+        struct Request
+        {
+            nn::hid::VibrationDeviceHandle handle;
+            nn::hid::VibrationValue value;
+        };
+
+        FixedRingBuffer<Request, 16> mRequests;
         CriticalSection mCS;
     };
 
@@ -55,21 +62,21 @@ public:
 
     static_assert(sizeof(NpadState) == 0xe98);
 
-    NinJoyNpadDevice(ControllerMgr* mgr, Heap* heap);
+    NinJoyNpadDevice(ControllerMgr* pMgr, Heap* pHeap);
     ~NinJoyNpadDevice() override;
 
     void calc() override;
-    void setNpadIdUpdateNum(u32);
-    void setSupportedNpadStyleSet(nn::hid::NpadStyleSet);
-    void setNpadJoyHoldType(nn::hid::NpadJoyHoldType);
-    nn::hid::NpadJoyAssignmentMode getNpadJoyAssignment(s32);
-    void setNpadJoyAssignmentModeSingle(s32);
-    void setNpadJoyAssignmentModeSingle(s32, nn::hid::NpadJoyDeviceType);
-    void setNpadJoyAssignmentModeDual(s32);
-    void mergeSingleJoyAsDualJoy(s32, s32);
-    void swapNpadAssignment(s32, s32);
-    void disconnectNpad(s32);
-    void sendVibrationValue(s32, s32, const nn::hid::VibrationValue&);
+    void setNpadIdUpdateNum(u32 num);
+    void setSupportedNpadStyleSet(nn::hid::NpadStyleSet styleSet);
+    void setNpadJoyHoldType(nn::hid::NpadJoyHoldType holdType);
+    nn::hid::NpadJoyAssignmentMode getNpadJoyAssignment(s32 port);
+    void setNpadJoyAssignmentModeSingle(s32 port);
+    void setNpadJoyAssignmentModeSingle(s32 port, nn::hid::NpadJoyDeviceType deviceType);
+    void setNpadJoyAssignmentModeDual(s32 port);
+    nn::Result mergeSingleJoyAsDualJoy(s32 port1, s32 port2);
+    void swapNpadAssignment(s32 port1, s32 port2);
+    void disconnectNpad(s32 port);
+    void sendVibrationValue(s32 port, s32 deviceIdx, const nn::hid::VibrationValue& rValue);
 
     nn::hid::NpadJoyHoldType getNpadJoyHoldType() const { return mNpadJoyHoldType; }
 

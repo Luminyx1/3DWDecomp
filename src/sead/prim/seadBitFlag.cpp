@@ -40,6 +40,7 @@ int BitFlagUtil::countRightOnBit(u32 x, int bit)
     return countOnBit(x & mask);
 }
 
+// NON_MATCHING: loop exit compares against 2 with b.lt instead of 1 with b.le
 /**
  * Finds the position of the num-th set bit, counting from bit 0.
  * @param x value to search
@@ -54,7 +55,7 @@ int BitFlagUtil::findOnBitFromRight(u32 x, int num)
         return -1;
     }
 
-    for (int i = num; i > 1; --i)
+    while (num-- > 1)
     {
         x &= x - 1;
         if (!x)
@@ -88,6 +89,7 @@ int BitFlagUtil::countRightOnBit64(u64 x, int bit)
     return countOnBit64(x & mask);
 }
 
+// NON_MATCHING: loop exit compares against 2 with b.lt instead of 1 with b.le
 /**
  * Finds the position of the num-th set bit, counting from bit 0.
  * @param x value to search
@@ -102,7 +104,7 @@ int BitFlagUtil::findOnBitFromRight64(u64 x, int num)
         return -1;
     }
 
-    for (int i = num; i > 1; --i)
+    while (num-- > 1)
     {
         x &= x - 1;
         if (!x)

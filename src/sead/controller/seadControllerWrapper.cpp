@@ -34,11 +34,19 @@ const u8 ControllerWrapper::cPadConfigDefault[Controller::cPadIdx_Max] = {
     Controller::cPadIdx_RightStickLeft,
     Controller::cPadIdx_RightStickRight};
 
+/**
+ * Constructs the wrapper with the identity pad mapping.
+ */
 ControllerWrapper::ControllerWrapper()
 {
     MemUtil::copy(mPadConfig, cPadConfigDefault, Controller::cPadIdx_Max);
 }
 
+/**
+ * Remaps the wrapped controller's input through the pad config, or goes idle if disabled.
+ * @param prevHold hold mask of the wrapped controller in the previous frame
+ * @param prevPointerOn whether the wrapped controller's pointer was on in the previous frame
+ */
 void ControllerWrapper::calc(u32 prevHold, bool prevPointerOn)
 {
     if (mIsEnable && mController && mController->isConnected())
@@ -76,30 +84,35 @@ void ControllerWrapper::calc(u32 prevHold, bool prevPointerOn)
     }
 }
 
-void ControllerWrapper::setPadConfig(s32 padbitMax, const u8* padConfig,
-                                     bool enableStickcrossEmulation)
+/**
+ * Sets the controller pad bit for each wrapper pad bit and locates the stick cross and touch bits.
+ * @param padBitMax number of wrapper pad bits
+ * @param pPadConfig controller pad bit for each wrapper pad bit
+ * @param enableStickCrossEmulation whether to derive stick cross bits from the sticks
+ */
+void ControllerWrapper::setPadConfig(s32 padBitMax, const u8* pPadConfig,
+                                     bool enableStickCrossEmulation)
 {
-    if (padbitMax > 32)
+    if (padBitMax > 32)
     {
         return;
     }
-    mPadBitMax = padbitMax;
+    mPadBitMax = padBitMax;
 
-    MemUtil::copy(mPadConfig, padConfig, padbitMax);
+    MemUtil::copy(mPadConfig, pPadConfig, padBitMax);
 
     mLeftStickCrossStartBit = -1;
     mRightStickCrossStartBit = -1;
 
-    if (enableStickcrossEmulation)
+    if (enableStickCrossEmulation)
     {
-        for (s32 i = 0; i < padbitMax; i++)
+        for (s32 i = 0; i < padBitMax; i++)
         {
-            if (padConfig[i] == Controller::cPadIdx_LeftStickUp)
+            if (pPadConfig[i] == Controller::cPadIdx_LeftStickUp)
             {
                 mLeftStickCrossStartBit = i;
             }
-
-            else if (padConfig[i] == Controller::cPadIdx_RightStickUp)
+            else if (pPadConfig[i] == Controller::cPadIdx_RightStickUp)
             {
                 mRightStickCrossStartBit = i;
             }
@@ -108,9 +121,9 @@ void ControllerWrapper::setPadConfig(s32 padbitMax, const u8* padConfig,
 
     mTouchKeyBit = -1;
 
-    for (s32 i = 0; i < padbitMax; i++)
+    for (s32 i = 0; i < padBitMax; i++)
     {
-        if (padConfig[i] == Controller::cPadIdx_Touch)
+        if (pPadConfig[i] == Controller::cPadIdx_Touch)
         {
             mTouchKeyBit = i;
             break;
@@ -118,12 +131,17 @@ void ControllerWrapper::setPadConfig(s32 padbitMax, const u8* padConfig,
     }
 }
 
+/**
+ * Converts a controller pad mask to a wrapper pad mask.
+ * @param controllerMask controller pad mask
+ * @return wrapper pad mask
+ */
 u32 ControllerWrapper::createPadMaskFromControllerPadMask_(u32 controllerMask) const
 {
     BitFlag32 controller_pad_mask(controllerMask);
     BitFlag32 pad_mask;
 
-    for (int i = 0; i < mPadBitMax; i++)
+    for (s32 i = 0; i < mPadBitMax; i++)
     {
         if (controller_pad_mask.isOnBit(mPadConfig[i]))
         {

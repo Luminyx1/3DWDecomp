@@ -19,6 +19,7 @@ public:
         cController_CafeRemote = 7,
         cController_CafeDRC = 8,
         cController_Merge = 9,
+        cController_NinDebug = 9,
         cController_UserDefine = 10,
         cController_Npad = 15,
         cController_PadTouch = 16

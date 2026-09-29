@@ -17,6 +17,8 @@ class MemoryPoolHeap;
 }  // namespace detail
 
 class GPUMemBlockBase {
+    friend class GPUMemAddrBase;
+
 public:
     GPUMemBlockBase();
     virtual ~GPUMemBlockBase();
@@ -29,11 +31,11 @@ public:
     void setBuffer_(u64, void*, void*, MemoryAttribute);
     void setVirtual_(u64, sead::Heap*, MemoryAttribute, GPUMemVoidAddr, s32);
     void initializeGfxMemoryPool(nn::gfx::MemoryPool*) const;
-    void addList(GPUMemBlockBase*);
+    s32 addList(GPUMemBlockBase*);
     void setMemoryPool(void*, u64, detail::MemoryPool*);
     void setMemoryPoolHeap(void*, u64, detail::MemoryPoolHeap*);
     u64 getByteOffset() const;
-    u64 getMemoryPoolType() const;
+    u32 getMemoryPoolType() const;
 
     GPUMemBlockBase* getNext() const { return mpTail; }
     void setNext(GPUMemBlockBase* pNext) { mpTail = pNext; }
@@ -46,6 +48,7 @@ private:
     detail::MemoryPool* mpMemoryPool;
     detail::MemoryPoolHeap* mMemoryPoolHeap;
     uint8_t mFlags;
+    u16 mAttribute;
     GPUMemBlockBase* mpTail;
 };
 

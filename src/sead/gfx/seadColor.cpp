@@ -108,7 +108,7 @@ const u8 Color4u8::cElementMin = 0;
 // NON_MATCHING: but semantically equivalent (setLerp is matching after all)
 Color4u8 Color4u8::lerp(const Color4u8& color1, const Color4u8& rColor2, f32 t)
 {
-    Color4u8 result = color1;
+    Color4u8 result;
     result.setLerp(color1, rColor2, t);
     return result;
 }
