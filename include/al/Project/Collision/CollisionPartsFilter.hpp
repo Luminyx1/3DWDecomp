@@ -1,5 +1,7 @@
 #pragma once
 
+#include <basis/seadTypes.h>
+
 namespace al {
 class CollisionParts;
 class LiveActor;
@@ -15,8 +17,7 @@ public:
 
     bool isInvalidParts(const CollisionParts&) const override;
 
-private:
-    const LiveActor* mActor;         // _8
-    bool mIsCompareEqual = true;     // _10
+    const LiveActor* mActor;          // _8
+    bool mIsInvalidSelf = true;       // _10
 };
 }  // namespace al

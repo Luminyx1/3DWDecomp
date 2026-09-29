@@ -2,6 +2,7 @@
 
 #include <basis/seadTypes.h>
 #include <math/seadMatrix.h>
+#include <math/seadQuat.h>
 #include <math/seadVector.h>
 
 namespace al {
@@ -56,5 +57,18 @@ namespace al {
     bool checkHitSegmentSphereNearDepth(const sead::Vector3f&, const sead::Vector3f&,
                                         const sead::Vector3f&, f32, sead::Vector3f*,
                                         sead::Vector3f*);
+
+    inline f32 wrapValue(f32 value, f32 max) {
+        return modf(value + max, max) + 0.0f;
+    }
+    f32 easeByType(f32, s32);
+    void lerpVec(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f&, f32);
+    void slerpQuat(sead::Quatf*, const sead::Quatf&, const sead::Quatf&, f32);
+    void calcSphereMargeSpheres(sead::Vector3f*, f32*, const sead::Vector3f&, f32, const sead::Vector3f&, f32);
+    void normalizeOrDirZ(sead::Vector3f*);
+    void normalizeOrDirZ(sead::Vector3f*, const sead::Vector3f&);
+    void makeQuatFrontUp(sead::Quatf*, const sead::Vector3f&, const sead::Vector3f&);
+    void calcQuatUp(sead::Vector3f*, const sead::Quatf&);
+    void turnQuatYDirRate(sead::Quatf*, const sead::Quatf&, const sead::Vector3f&, f32);
 
 }  // namespace al

@@ -51643,7 +51643,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710084C550			FALSE	sub_710084C550	sub_710084C550	
 0x710084C580		ConveyerKeyKeeper.o	FALSE	_ZN2al17ConveyerKeyKeeperC2Ev	al::ConveyerKeyKeeper::ConveyerKeyKeeper()	object (smo)
 0x710084C5D0			FALSE	_ZN2al17ConveyerKeyKeeper4initERKNS_13ActorInitInfoE	al::ConveyerKeyKeeper::init(al::ActorInitInfo const&)	
-0x710084C7C0			FALSE	sub_710084C7C0	sub_710084C7C0	
+0x710084C7C0			FALSE	_ZN12_GLOBAL__N_115initConveyerKeyEPN2al11ConveyerKeyERKNS0_13PlacementInfoERKN4sead7Vector3IfEESA_	(anonymous namespace)::initConveyerKey(al::ConveyerKey*, al::PlacementInfo const&, sead::Vector3<float> const&, sead::Vector3<float> const&)	
 0x710084C8F0			FALSE	_ZNK2al17ConveyerKeyKeeper14calcPosAndQuatEPN4sead7Vector3IfEEPNS1_4QuatIfEEPif	al::ConveyerKeyKeeper::calcPosAndQuat(sead::Vector3<float>*, sead::Quat<float>*, int*, float) const	
 0x710084CBF0			FALSE	_ZNK2al17ConveyerKeyKeeper24calcPosAndQuatByKeyIndexEPN4sead7Vector3IfEEPNS1_4QuatIfEEi	al::ConveyerKeyKeeper::calcPosAndQuatByKeyIndex(sead::Vector3<float>*, sead::Quat<float>*, int) const	
 0x710084CC70			FALSE	_ZNK2al17ConveyerKeyKeeper18calcClippingSphereEPN4sead7Vector3IfEEPff	al::ConveyerKeyKeeper::calcClippingSphere(sead::Vector3<float>*, float*, float) const	
@@ -51661,8 +51661,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710084D460			FALSE	_ZN2al16ConveyerMapParts7exeMoveEv	al::ConveyerMapParts::exeMove()	
 0x710084D560			FALSE	_ZN2al16ConveyerMapPartsD1Ev	al::ConveyerMapParts::~ConveyerMapParts()	
 0x710084D570			FALSE	_ZN2al16ConveyerMapPartsD0Ev	al::ConveyerMapParts::~ConveyerMapParts()	
-0x710084D5A0			FALSE	sub_710084D5A0	sub_710084D5A0	
-0x710084D6A0			FALSE	nullsub_323	nullsub_323	
+0x710084D5A0			FALSE	_ZNK12_GLOBAL__N_123ConveyerMapPartsNrvMove7executeEPN2al11NerveKeeperE	(anonymous namespace)::ConveyerMapPartsNrvMove::execute(al::NerveKeeper*) const	
+0x710084D6A0			FALSE	_ZNK12_GLOBAL__N_126ConveyerMapPartsNrvStandBy7executeEPN2al11NerveKeeperE	(anonymous namespace)::ConveyerMapPartsNrvStandBy::execute(al::NerveKeeper*) const	
 0x710084D6B0			FALSE	_ZNK2al10FunctorV0MIPNS_16ConveyerMapPartsEMS1_FvvEEclEv	al::FunctorV0M<al::ConveyerMapParts*, void (al::ConveyerMapParts::*)()>::operator()() const	
 0x710084D6D0			FALSE	_ZNK2al10FunctorV0MIPNS_16ConveyerMapPartsEMS1_FvvEE5cloneEv	al::FunctorV0M<al::ConveyerMapParts*, void (al::ConveyerMapParts::*)()>::clone() const	
 0x710084D720		ConveyerStep.o	FALSE	_ZN2al12ConveyerStepC2EPKc	al::ConveyerStep::ConveyerStep(char const*)	object (smo)
@@ -51677,7 +51677,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710084DAB0			FALSE	_ZN2al12ConveyerStep7exeWaitEv	al::ConveyerStep::exeWait()	
 0x710084DAC0			FALSE	_ZN2al12ConveyerStepD1Ev	al::ConveyerStep::~ConveyerStep()	
 0x710084DAD0			FALSE	_ZN2al12ConveyerStepD0Ev	al::ConveyerStep::~ConveyerStep()	
-0x710084DB00			FALSE	nullsub_324	nullsub_324	
+0x710084DB00			FALSE	_ZNK12_GLOBAL__N_119ConveyerStepNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::ConveyerStepNrvWait::execute(al::NerveKeeper*) const	
 0x710084DB10		EffectMtxSetter.o	FALSE	_ZN2al15EffectMtxSetterC1EPNS_9LiveActorE	al::EffectMtxSetter::EffectMtxSetter(al::LiveActor*)	object (class)
 0x710084DB20			FALSE	_ZN2al15EffectMtxSetter4initERKNS_9ByamlIterE	al::EffectMtxSetter::init(al::ByamlIter const&)	
 0x710084DCB0			FALSE	_ZN2al13EffectMtxInfo4initERKNS_9ByamlIterE	al::EffectMtxInfo::init(al::ByamlIter const&)	
@@ -51906,19 +51906,19 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100854420			FALSE	_ZN2al14RotateMapParts9exeRotateEv	al::RotateMapParts::exeRotate()	
 0x7100854530			FALSE	_ZN2al14RotateMapParts13exeAssistStopEv	al::RotateMapParts::exeAssistStop()	
 0x71008545C0			FALSE	_ZN2al14RotateMapParts17exeAssistStopSyncEv	al::RotateMapParts::exeAssistStopSync()	
-0x71008545D0			FALSE	nullsub_327	nullsub_327	
-0x71008545E0			FALSE	sub_71008545E0	sub_71008545E0	
+0x71008545D0			FALSE	_ZNK12_GLOBAL__N_124RotateMapPartsNrvStandBy7executeEPN2al11NerveKeeperE	(anonymous namespace)::RotateMapPartsNrvStandBy::execute(al::NerveKeeper*) const	
+0x71008545E0			FALSE	_ZNK12_GLOBAL__N_124RotateMapPartsNrvStandBy13getActionNameEv	(anonymous namespace)::RotateMapPartsNrvStandBy::getActionName() const	
 0x71008545F0			FALSE	_ZNK12_GLOBAL__N_123RotateMapPartsNrvRotate7executeEPN2al11NerveKeeperE	(anonymous namespace)::RotateMapPartsNrvRotate::execute(al::NerveKeeper*) const	
-0x7100854600			FALSE	sub_7100854600	sub_7100854600	
-0x7100854610			FALSE	nullsub_328	nullsub_328	
-0x7100854620			FALSE	sub_7100854620	sub_7100854620	
-0x7100854630			FALSE	sub_7100854630	sub_7100854630	
-0x71008546C0			FALSE	sub_71008546C0	sub_71008546C0	
-0x71008546D0			FALSE	nullsub_329	nullsub_329	
-0x71008546E0			FALSE	sub_71008546E0	sub_71008546E0	
+0x7100854600			FALSE	_ZNK12_GLOBAL__N_123RotateMapPartsNrvRotate13getActionNameEv	(anonymous namespace)::RotateMapPartsNrvRotate::getActionName() const	
+0x7100854610			FALSE	_ZNK12_GLOBAL__N_130RotateMapPartsNrvEffectOnAngle7executeEPN2al11NerveKeeperE	(anonymous namespace)::RotateMapPartsNrvEffectOnAngle::execute(al::NerveKeeper*) const	
+0x7100854620			FALSE	_ZNK12_GLOBAL__N_130RotateMapPartsNrvEffectOnAngle13getActionNameEv	(anonymous namespace)::RotateMapPartsNrvEffectOnAngle::getActionName() const	
+0x7100854630			FALSE	_ZNK12_GLOBAL__N_127RotateMapPartsNrvAssistStop7executeEPN2al11NerveKeeperE	(anonymous namespace)::RotateMapPartsNrvAssistStop::execute(al::NerveKeeper*) const	
+0x71008546C0			FALSE	_ZNK12_GLOBAL__N_127RotateMapPartsNrvAssistStop13getActionNameEv	(anonymous namespace)::RotateMapPartsNrvAssistStop::getActionName() const	
+0x71008546D0			FALSE	_ZNK12_GLOBAL__N_131RotateMapPartsNrvAssistStopSync7executeEPN2al11NerveKeeperE	(anonymous namespace)::RotateMapPartsNrvAssistStopSync::execute(al::NerveKeeper*) const	
+0x71008546E0			FALSE	_ZNK12_GLOBAL__N_131RotateMapPartsNrvAssistStopSync13getActionNameEv	(anonymous namespace)::RotateMapPartsNrvAssistStopSync::getActionName() const	
 0x71008546F0			FALSE	_ZNK2al10FunctorV0MIPNS_14RotateMapPartsEMS1_FvvEEclEv	al::FunctorV0M<al::RotateMapParts*, void (al::RotateMapParts::*)()>::operator()() const	
 0x7100854710			FALSE	_ZNK2al10FunctorV0MIPNS_14RotateMapPartsEMS1_FvvEE5cloneEv	al::FunctorV0M<al::RotateMapParts*, void (al::RotateMapParts::*)()>::clone() const	
-0x7100854760			FALSE	sub_7100854760	sub_7100854760	
+0x7100854760			FALSE	_GLOBAL__sub_I_RotateMapParts.cpp	_GLOBAL__sub_I_RotateMapParts.cpp	
 0x71008547F0		SeesawMapParts.o	FALSE	_ZN2al14SeesawMapPartsC2EPKc	al::SeesawMapParts::SeesawMapParts(char const*)	object (smo)
 0x71008548F0			FALSE	_ZN2al14SeesawMapPartsC1EPKc	al::SeesawMapParts::SeesawMapParts(char const*)	
 0x71008549F0			FALSE	_ZN2al14SeesawMapParts4initERKNS_13ActorInitInfoE	al::SeesawMapParts::init(al::ActorInitInfo const&)	
@@ -51986,17 +51986,17 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71008569B0			FALSE	_ZN2al13SwingMapParts7exeStopEv	al::SwingMapParts::exeStop()	
 0x7100856A20			FALSE	_ZN2al13SwingMapPartsD1Ev	al::SwingMapParts::~SwingMapParts()	
 0x7100856A30			FALSE	_ZN2al13SwingMapPartsD0Ev	al::SwingMapParts::~SwingMapParts()	
-0x7100856A60			FALSE	nullsub_331	nullsub_331	
-0x7100856A70			FALSE	sub_7100856A70	sub_7100856A70	
-0x7100856A80			FALSE	sub_7100856A80	sub_7100856A80	
-0x7100856AD0			FALSE	sub_7100856AD0	sub_7100856AD0	
-0x7100856AE0			FALSE	sub_7100856AE0	sub_7100856AE0	
-0x7100856B30			FALSE	sub_7100856B30	sub_7100856B30	
-0x7100856B40			FALSE	sub_7100856B40	sub_7100856B40	
-0x7100856BB0			FALSE	sub_7100856BB0	sub_7100856BB0	
+0x7100856A60			FALSE	_ZNK12_GLOBAL__N_123SwingMapPartsNrvStandBy7executeEPN2al11NerveKeeperE	(anonymous namespace)::SwingMapPartsNrvStandBy::execute(al::NerveKeeper*) const	
+0x7100856A70			FALSE	_ZNK12_GLOBAL__N_123SwingMapPartsNrvStandBy13getActionNameEv	(anonymous namespace)::SwingMapPartsNrvStandBy::getActionName() const	
+0x7100856A80			FALSE	_ZNK12_GLOBAL__N_125SwingMapPartsNrvMoveRight7executeEPN2al11NerveKeeperE	(anonymous namespace)::SwingMapPartsNrvMoveRight::execute(al::NerveKeeper*) const	
+0x7100856AD0			FALSE	_ZNK12_GLOBAL__N_125SwingMapPartsNrvMoveRight13getActionNameEv	(anonymous namespace)::SwingMapPartsNrvMoveRight::getActionName() const	
+0x7100856AE0			FALSE	_ZNK12_GLOBAL__N_124SwingMapPartsNrvMoveLeft7executeEPN2al11NerveKeeperE	(anonymous namespace)::SwingMapPartsNrvMoveLeft::execute(al::NerveKeeper*) const	
+0x7100856B30			FALSE	_ZNK12_GLOBAL__N_124SwingMapPartsNrvMoveLeft13getActionNameEv	(anonymous namespace)::SwingMapPartsNrvMoveLeft::getActionName() const	
+0x7100856B40			FALSE	_ZNK12_GLOBAL__N_120SwingMapPartsNrvStop7executeEPN2al11NerveKeeperE	(anonymous namespace)::SwingMapPartsNrvStop::execute(al::NerveKeeper*) const	
+0x7100856BB0			FALSE	_ZNK12_GLOBAL__N_120SwingMapPartsNrvStop13getActionNameEv	(anonymous namespace)::SwingMapPartsNrvStop::getActionName() const	
 0x7100856BC0			FALSE	_ZNK2al10FunctorV0MIPNS_13SwingMapPartsEMS1_FvvEEclEv	al::FunctorV0M<al::SwingMapParts*, void (al::SwingMapParts::*)()>::operator()() const	
 0x7100856BE0			FALSE	_ZNK2al10FunctorV0MIPNS_13SwingMapPartsEMS1_FvvEE5cloneEv	al::FunctorV0M<al::SwingMapParts*, void (al::SwingMapParts::*)()>::clone() const	
-0x7100856C30			FALSE	sub_7100856C30	sub_7100856C30	
+0x7100856C30			FALSE	_GLOBAL__sub_I_SwingMapParts.cpp	_GLOBAL__sub_I_SwingMapParts.cpp	
 0x7100856CB0		VisibleSwitchMapParts.o	FALSE	_ZN21VisibleSwitchMapPartsC2EPKc	VisibleSwitchMapParts::VisibleSwitchMapParts(char const*)	object (class)
 0x7100856D30			FALSE	_ZN21VisibleSwitchMapPartsC1EPKc	VisibleSwitchMapParts::VisibleSwitchMapParts(char const*)	
 0x7100856DB0			FALSE	_ZN21VisibleSwitchMapParts4initERKN2al13ActorInitInfoE	VisibleSwitchMapParts::init(al::ActorInitInfo const&)	

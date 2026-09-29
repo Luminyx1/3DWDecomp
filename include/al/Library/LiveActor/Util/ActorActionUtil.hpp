@@ -18,12 +18,15 @@ namespace al {
     f32 getActionFrame(const LiveActor*);
     f32 getActionFrameMax(const LiveActor*, const char*);
 
-    void startHitReaction(LiveActor*, const char*);
+    void startHitReaction(const LiveActor*, const char*);
     void startHitReactionHit(LiveActor*);
 
     void setActionFrame(LiveActor*, f32);
 
     void startNerveAction(LiveActor*, const char*);
+    bool tryStartEffectAction(LiveActor*, const char*);
+    void stopAction(LiveActor*);
+    void restartAction(LiveActor*);
 
     void startHitReactionDisappear(const LiveActor*);
 

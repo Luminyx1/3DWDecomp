@@ -88,4 +88,6 @@ void setRailClippingInfo(sead::Vector3f*, LiveActor*, f32, f32);
 void setRailClippingInfo(sead::Vector3f*, LiveActor*, const RailKeeper*, f32, f32);
 s32 getRailPointNum(const IUseRail*);
 PlacementInfo* getRailPointInfo(const IUseRail*, s32);
+
+
 }  // namespace al

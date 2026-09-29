@@ -43,6 +43,7 @@ Result GetNickname(Nickname* nickname, Uid const& userID);
 
 Result GetUserId(Uid* uid, const UserHandle& handle);
 Result OpenPreselectedUser(UserHandle* handle);
+bool TryOpenPreselectedUser(UserHandle* handle);
 
 class AsyncContext {
 public:

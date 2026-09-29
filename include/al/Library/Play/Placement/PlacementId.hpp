@@ -14,6 +14,8 @@ public:
     bool isEqual(const PlacementId&) const;
     static bool isEqual(const PlacementId&, const PlacementId&);
 
+    bool isValid() const { return mPlacementID != nullptr; }
+
     const char* mPlacementID = nullptr;
     const char* mLayerConfigName = nullptr;
     const char* mUnitConfigName = nullptr;

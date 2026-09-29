@@ -1,8 +1,10 @@
 #pragma once
 
+#include <math/seadVector.h>
 #include <prim/seadRuntimeTypeInfo.h>
 
 namespace al {
+    class ActorInitInfo;
     class ComboCounter;
     class HitSensor;
     class LiveActor;
@@ -60,6 +62,9 @@ namespace al {
     bool isMsgShowModel(const SensorMsg*);
 
     bool isMsgTouchAssist(const SensorMsg*);
+    bool isMsgIsNerveSupportFreeze(const SensorMsg*);
+    bool isMsgOnSyncSupportFreeze(const SensorMsg*);
+    bool isMsgOffSyncSupportFreeze(const SensorMsg*);
 
     bool isMsgTouchAssistTrig(const SensorMsg*);
 
@@ -80,6 +85,11 @@ namespace al {
     bool sendMsgExplosion(HitSensor*, HitSensor*, ComboCounter*);
 
     bool sendMsgEnemyAttack(HitSensor*, HitSensor*);
+    bool sendMsgIsNerveSupportFreeze(HitSensor*, HitSensor*);
+    bool sendMsgOnSyncSupportFreeze(HitSensor*, HitSensor*);
+    bool sendMsgOffSyncSupportFreeze(HitSensor*, HitSensor*);
+    HitSensor* getHitSensor(const LiveActor*, s32);
+    HitSensor* addHitSensorMapObj(LiveActor*, const ActorInitInfo&, const char*, f32, u16, const sead::Vector3f&);
 
     bool sendMsgPushAndKillVelocityToTarget(LiveActor*, HitSensor*, HitSensor*);
 

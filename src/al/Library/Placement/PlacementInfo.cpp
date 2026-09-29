@@ -2,7 +2,7 @@
 
 namespace al {
     /** @brief Creates placement info with empty iterators and no parent. */
-    PlacementInfo::PlacementInfo() {}
+    PlacementInfo::PlacementInfo() : _20(nullptr), _28(-1) {}
 
     /**
      * @brief Sets every member of the placement info.

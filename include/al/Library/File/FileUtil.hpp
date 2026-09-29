@@ -6,4 +6,6 @@ namespace al {
     sead::ArchiveRes* loadArchive(const sead::SafeString &);
     bool isExistArchive(const sead::SafeString &);
     bool isExistArchive(const sead::SafeString &, const char *);
+    bool isExistArchive(const sead::SafeString&);
+    bool isExistArchive(const sead::SafeString&, const char*);
 };
