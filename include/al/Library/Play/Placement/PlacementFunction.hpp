@@ -39,6 +39,7 @@ void getLinksInfo(PlacementInfo*, const PlacementInfo&, const char*);
 void getLinksInfoByIndex(PlacementInfo*, const ActorInitInfo&, const char*, s32);
 
 bool tryGetLinksInfo(PlacementInfo*, const PlacementInfo&, const char*);
+bool tryGetLinksInfo(PlacementInfo*, const ActorInitInfo&, const char*);
 
 bool tryGetPlacementInfoByKey(PlacementInfo*, const PlacementInfo&, const char*);
 

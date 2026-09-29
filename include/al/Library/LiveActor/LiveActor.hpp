@@ -44,6 +44,7 @@ namespace al {
     class ShadowKeeper;
     class StageSwitchKeeper;
     class SubActorKeeper;
+    class ClippingAreaActorInfoNode;
     struct ActorSceneInfo;
     struct LiveActorFlag;
 
@@ -199,7 +200,7 @@ namespace al {
         SubActorKeeper* mSubActorKeeper = nullptr;
         ActorParamHolder* mActorParamHolder = nullptr;
         ActorSceneInfo* mActorSceneInfo = nullptr;
-        u64* _100 = nullptr;
+        ClippingAreaActorInfoNode* mClippingAreaActorInfoNode = nullptr;
         LiveActorFlag* mActorFlags = nullptr;
         ActorAlphaCtrl* mAlphaCtrl = nullptr;
         PlacementHolder* mPlacementHolder = nullptr;

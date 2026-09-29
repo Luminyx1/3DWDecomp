@@ -8,6 +8,7 @@ public:
     void update();
     void deleteAndClearEffectAll();
 
+    void onCalcAndDraw();
     void offCalcAndDraw();
 };
 }  // namespace al

@@ -7,10 +7,21 @@
 namespace al {
     class LiveActor;
     class ActorInitInfo;
+    class AreaObjDirector;
+    class CameraDirector_RS;
+    class ClippingActorInfo;
+    class ClippingJudge;
+    class ExecuteDirector;
+    class PlayerHolder;
+    class SceneCameraInfo;
 
     /// Interface of the scene's clipping director (see ClippingDirector for the implementation).
     class ClippingDirectorBase : public IUseExecutor {
     public:
+        ClippingDirectorBase(ExecuteDirector* pExecuteDirector, const AreaObjDirector* pAreaObjDirector, const PlayerHolder* pPlayerHolder,
+                             SceneCameraInfo* pCameraInfo, CameraDirector_RS* pCameraDirector);
+
+        void execute() override;
         virtual ~ClippingDirectorBase();
 
         virtual void registerActor(LiveActor* pActor, const ActorInitInfo& rInfo) = 0;
@@ -27,5 +38,25 @@ namespace al {
         virtual void invalidateActorClipping(LiveActor* pActor) = 0;
         virtual void validateActorClipping(LiveActor* pActor) = 0;
         virtual void setActorClippingInfo(LiveActor* pActor, f32 radius, const sead::Vector3f* pOffset) = 0;
+        virtual void setActorClippingOffset(LiveActor* pActor, const sead::Vector3f& rOffset);
+        virtual const sead::Vector3f& getActorClippingCenterPos(const LiveActor* pActor) = 0;
+        virtual void setActorNearClipDistance(LiveActor* pActor, f32 distance) = 0;
+        virtual void setActorNearFarClipDistance(LiveActor* pActor, f32 nearDistance, f32 farDistance) = 0;
+        virtual void setShadowClippingDistance(LiveActor* pActor, f32 distance);
+        virtual void setDrawClippingRadius(LiveActor* pActor, f32 radius);
+        virtual void endInit();
+        virtual void resetClippingDistanceStates();
+        virtual void setExpandedClippingMode(bool isExpanded);
+        virtual ClippingActorInfo* findActorInfo(const LiveActor* pActor) const = 0;
+        virtual void disableForceClipAreas();
+        virtual void executeRequestAsyncUpdate();
+        virtual void waitPendingClippingRequest();
+        virtual void setLODDisabled(LiveActor* pActor, bool isDisabled);
+
+        void setClippingJudgeUsClippingPosAsPlayerPos(bool isUse);
+
+        static bool sLODDisabled;
+
+        ClippingJudge* mClippingJudge;  // _8
     };
 };

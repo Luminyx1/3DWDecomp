@@ -14,6 +14,7 @@ namespace al {
     void setShadowFixed(LiveActor*, bool);
 
     void setShadowDropLength(LiveActor*, f32, const char*);
+    f32 getShadowDropLengthMax(const LiveActor*);
 
     void setShadowIntensityUser(LiveActor*, u8, const char*);
 
