@@ -19,10 +19,21 @@
 0x71019F2510 8 object _ZN12_GLOBAL__N_117nrvBgmStopObjWaitE
 
 # src/Game/MapObj/BlockPow
-0x71019F6448 32 object _ZN12_GLOBAL__N_111NrvBlockPowE
 
 # src/Game/MapObj/SnowCover
-0x7101A4DC68 24 object _ZN12_GLOBAL__N_112NrvSnowCoverE
 
 # src/al/Library/Obj/BreakModel
-0x7101AF4AE8 16 object _ZN2al12_GLOBAL__N_113NrvBreakModelE
+
+# src/Game/MapObj/SnowCover
+0x7101A4DC68 8 object _ZN12_GLOBAL__N_116nrvSnowCoverWaitE
+0x7101A4DC70 8 object _ZN12_GLOBAL__N_116nrvSnowCoverThawE
+0x7101A4DC78 8 object _ZN12_GLOBAL__N_117nrvSnowCoverBreakE
+
+# src/Game/MapObj/BlockPow
+0x71019F6448 8 object _ZN12_GLOBAL__N_115nrvBlockPowWaitE
+0x71019F6450 8 object _ZN12_GLOBAL__N_119nrvBlockPowReactionE
+0x71019F63F8 8 object _ZN12_GLOBAL__N_116nrvBlockPowEmptyE
+
+# src/al/Library/Obj/BreakModel
+0x7101AF4AE8 8 object _ZN2al12_GLOBAL__N_117nrvBreakModelWaitE
+0x7101AF4B10 8 object _ZN2al12_GLOBAL__N_118nrvBreakModelBreakE

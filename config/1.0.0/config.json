@@ -21,10 +21,12 @@
     "alone is not enough, and in clang 8 it must come after -O3 to take effect.)",
     "-fno-strict-aliasing (C, LMS): the game reloads through pointers after every store.",
     "-fno-rtti: only NintendoWare has typeinfo in the binary; game/al/sead do not.",
+    "No -ffunction-sections/-fdata-sections: objects get one .text/.data/... section, like the",
+    "carved targets (inline/template code still gets its own COMDAT .text.<name> section).",
     "On non-Windows hosts the same clang.exe runs under wine (tools/nxcc.py)."
   ],
   "flags": {
-    "common": "-fPIC -fno-common -fno-short-enums -ffunction-sections -fdata-sections -fno-omit-frame-pointer -mcpu=cortex-a57+fp+simd+crypto+crc -mno-implicit-float -DNN_NINTENDO_SDK -DNN_SDK_BUILD_RELEASE -DNNSDK -DSWITCH -g0",
+    "common": "-fPIC -fno-common -fno-short-enums -fno-omit-frame-pointer -mcpu=cortex-a57+fp+simd+crypto+crc -mno-implicit-float -DNN_NINTENDO_SDK -DNN_SDK_BUILD_RELEASE -DNNSDK -DSWITCH -g0",
     "c":      "-O3 -fno-strict-aliasing -std=gnu11",
     "cxx":    "-O3 -std=gnu++17 -fno-exceptions -fno-rtti"
   },

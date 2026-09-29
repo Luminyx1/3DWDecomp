@@ -16,7 +16,7 @@ in an object file, so objdiff can pair them with the compiled side:
 
   * C string literals        -> section `.rodata.str1.1`  (+offset, first-use order)
   * FP/SIMD constant loads   -> `.rodata.cst4` / `.cst8` / `.cst16` (deduplicated)
-  * switch jump tables       -> `.rodata.<function>` (the table bytes)
+  * switch jump tables       -> `.rodata` (the table bytes)
   * named data outside the TU (dynsym, or config/<ver>/symbols.txt)
                              -> an undefined reference by name
   * unnamed data             -> undefined `lbl_<address>` (name it in symbols.txt)
@@ -124,6 +124,8 @@ class Carver:
         self.ranges: list[tuple[str, int, int]] = []    # (section, lo, hi) owned by this TU
         self.funcs: list[tuple[str, int, int]] = []     # (primary name, addr, size) of carved code
         self.datas: list[tuple[str, int, int]] = []     # same for carved .rodata/.data objects
+        self.offs: dict[str, int] = {}                  # symname -> offset in its section
+        self._sec_base: dict[str, int] = {}             # shared section -> address of offset 0
         self._pools: dict[str, tuple[E.Section, dict[bytes, int]]] = {}
         self.warnings: list[str] = []
 
@@ -132,23 +134,40 @@ class Carver:
 
     # -- placement -------------------------------------------------------
     def _place_group(self, group, size):
+        """Strong symbols of a kind share one section (`.text`, `.data`, ...)
+        at their original relative offsets, like an object compiled without
+        -ffunction-sections; weak (inline/template) code keeps its own
+        COMDAT-style `.text.<name>` section, as the compiler emits it."""
         s0 = _primary(group)
         kind = self.img.data_kind(s0.addr)
+        weak = all(s.bind == "STB_WEAK" for s in group)
         typ = E.SHT_NOBITS if kind == ".bss" else E.SHT_PROGBITS
-        sec = self.o.section(f"{kind}.{s0.name}", typ, _SEC_FLAGS[kind],
-                             align=4 if kind == ".text" else 8)
+        name = f"{kind}.{s0.name}" if weak else kind
+        sec = self.o.section(name, typ, _SEC_FLAGS[kind], align=16 if kind == ".text" else 8)
+        cur = sec.nobits_size if kind == ".bss" else len(sec.data)
+        if not weak:
+            base = self._sec_base.setdefault(name, s0.addr - cur)
+            want = s0.addr - base
+            if want > cur:
+                if kind == ".bss":
+                    sec.nobits_size = want
+                else:
+                    sec.data += self.img.bytes_at(base + cur, want - cur)
+                cur = want
+        off = cur
         if kind == ".bss":
-            sec.nobits_size = size
+            sec.nobits_size = off + size
         else:
             sec.data += self.img.bytes_at(s0.addr, size)
         for s in sorted(group, key=lambda s: s is not s0):
             if s.name in self.included:
                 continue
             self.placed[s.name] = sec
+            self.offs[s.name] = off
             self.sizes[s.name] = size
             self.included.add(s.name)
             bind = {"STB_WEAK": E.STB_WEAK, "STB_LOCAL": E.STB_LOCAL}.get(s.bind, E.STB_GLOBAL)
-            self.o.define(s.name, sec, 0, s.size or size,
+            self.o.define(s.name, sec, off, s.size or size,
                           typ=E.STT_FUNC if kind == ".text" else E.STT_OBJECT, bind=bind)
         if kind == ".text":
             self.funcs.append((s0.name, s0.addr, size))
@@ -217,7 +236,7 @@ class Carver:
         return self._pool(f".rodata.cst{size}", self.img.bytes_at(addr, size), size, size, SHF_MERGE)
 
     def _jump_table(self, func: str, addr: int, entsize: int, count: int) -> tuple[str, int]:
-        name = f".rodata.{func}"
+        name = ".rodata"
         key = (name, addr)
         if key in self.anon:
             return self.anon[key]
@@ -308,19 +327,29 @@ class Carver:
         for u in sorted(self.undefs - self.included):
             self.o.undef(u)
 
+    def _local_same_section(self, ref_name: str, sec) -> bool:
+        """A branch to a local function in the same section is resolved by the
+        assembler and has no relocation in a compiled object."""
+        if self.placed.get(ref_name) is not sec:
+            return False
+        s = self.img.sym(ref_name)
+        return s is not None and s.bind == "STB_LOCAL"
+
     def _recon_text(self, name: str, addr: int, size: int):
         sec = self.placed[name]
+        base_off = self.offs[name]
         code = self.img.bytes_at(addr, size)
         fn_lo, fn_hi = addr, addr + size
         insns = list(_MD.disasm(code, addr))
         last_call = ""
         for idx, ins in enumerate(insns):
-            rel_off = ins.address - addr
+            rel_off = base_off + ins.address - addr
             gid = ins.id
             if gid == ARM64_INS_BL:
                 ref = self._ref_code(ins.operands[0].imm, name,
                                      after_new=last_call.startswith(("_Znw", "_Zna")))
-                sec.reloc(rel_off, ref[0], R_CALL26, ref[1])
+                if not self._local_same_section(ref[0], sec):
+                    sec.reloc(rel_off, ref[0], R_CALL26, ref[1])
                 last_call = ref[0]
             elif gid == ARM64_INS_B and len(ins.operands) == 1 and ins.operands[0].type == ARM64_OP_IMM \
                     and ins.mnemonic == "b":
@@ -328,9 +357,10 @@ class Carver:
                 if fn_lo <= tgt < fn_hi:
                     continue  # local branch
                 ref = self._ref_code(tgt, name)
-                sec.reloc(rel_off, ref[0], R_JUMP26, ref[1])
+                if not self._local_same_section(ref[0], sec):
+                    sec.reloc(rel_off, ref[0], R_JUMP26, ref[1])
             elif gid == ARM64_INS_ADRP:
-                self._recon_adrp(sec, name, insns, idx, addr)
+                self._recon_adrp(sec, name, insns, idx, addr - base_off)
 
     def _consumers(self, insns, idx, reg):
         """Instructions after insns[idx] that use `reg` as an ADD base or a
@@ -433,7 +463,8 @@ class Carver:
     def _recon_data_abs64(self):
         for name, base, size in self.datas:
             sec = self.placed[name]
-            for addr in range(base, base + size, 8):
+            base -= self.offs[name]
+            for addr in range(base + self.offs[name], base + self.offs[name] + size, 8):
                 ent = self.img.dyn_relocs.get(addr)
                 if not ent:
                     continue

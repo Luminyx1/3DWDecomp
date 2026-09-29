@@ -2,6 +2,7 @@
 
 /**
  * Opens an MSBT file in memory and locates its LBL1, TXT2, ATR1, ATO1 and TSY1 blocks.
+ * @param pBlockData
  */
 LMSMsgFile* LMS_InitMessage(const char* pBlockData) {
     LMSMsgFile* pMsg = (LMSMsgFile*)LMSi_Malloc(sizeof(LMSMsgFile));
@@ -17,6 +18,7 @@ LMSMsgFile* LMS_InitMessage(const char* pBlockData) {
 
 /**
  * Frees a message file opened with LMS_InitMessage (the data itself is not freed).
+ * @param pMsg the message file
  */
 void LMS_CloseMessage(LMSMsgFile* pMsg) {
     if (pMsg->commonInfo.mBlockInfo) {
@@ -26,6 +28,8 @@ void LMS_CloseMessage(LMSMsgFile* pMsg) {
 }
 
 /**
+ * @param pMsg the message file
+ * @param pName 4-character block name, e.g. "TXT2"
  * @return the index of the block named pName, or -1.
  */
 libms_s32_t LMS_SearchMessageBlockByName(LMSMsgFile* pMsg, const char* pName) {
@@ -33,6 +37,8 @@ libms_s32_t LMS_SearchMessageBlockByName(LMSMsgFile* pMsg, const char* pName) {
 }
 
 /**
+ * @param pMsg the message file
+ * @param pName 4-character block name, e.g. "TXT2"
  * @return the block named pName, or NULL.
  */
 LMSBlockInfo* LMS_GetMessageBlockInfoByName(LMSMsgFile* pMsg, const char* pName) {
@@ -40,6 +46,7 @@ LMSBlockInfo* LMS_GetMessageBlockInfoByName(LMSMsgFile* pMsg, const char* pName)
 }
 
 /**
+ * @param pMsg the message file
  * @return the number of texts in the TXT2 block, or -1 if there is none.
  */
 libms_s32_t LMS_GetTextNum(LMSMsgFile* pMsg) {
@@ -87,6 +94,8 @@ libms_s32_t LMS_GetTextIndexByLabel(LMSMsgFile* pMsg, const char* pLabel) {
 }
 
 /**
+ * @param pMsg the message file
+ * @param index text index
  * @return text number index from the TXT2 block, or NULL.
  */
 const void* LMS_GetText(LMSMsgFile* pMsg, libms_s32_t index) {
@@ -101,9 +110,10 @@ const void* LMS_GetText(LMSMsgFile* pMsg, libms_s32_t index) {
     return pBlockData + ((const libms_u32_t*)pBlockData)[index + 1];
 }
 
-/* Size in bytes of a pText, up to (not including) its terminator.  Tags are
- * 0x0E <group> <type> <paramSize> <params...>; 0x0F closes a tag. */
 /**
+ * Measures a text. Tags are 0x0E <group> <type> <paramSize> <params...>; 0x0F closes a tag.
+ * @param pMsg the message file
+ * @param index text index
  * @return the size in bytes of text number index (tags included, terminator excluded), or -1.
  */
 libms_s32_t LMS_GetTextSize(LMSMsgFile* pMsg, libms_s32_t index) {
@@ -199,6 +209,7 @@ int LMS_GetLabelByTextIndex(LMSMsgFile* pMsg, libms_s32_t index, char* pOutLabel
 }
 
 /**
+ * @param pMsg the message file
  * @return the size of one attribute entry in the ATR1 block.
  */
 libms_s32_t LMS_GetAttributeSize(LMSMsgFile* pMsg) {
@@ -206,6 +217,8 @@ libms_s32_t LMS_GetAttributeSize(LMSMsgFile* pMsg) {
 }
 
 /**
+ * @param pMsg the message file
+ * @param index text index
  * @return the attribute entry of text number index.
  */
 const void* LMS_GetAttribute(LMSMsgFile* pMsg, libms_s32_t index) {
@@ -214,6 +227,8 @@ const void* LMS_GetAttribute(LMSMsgFile* pMsg, libms_s32_t index) {
 }
 
 /**
+ * @param pMsg the message file
+ * @param offset byte offset into the ATR1 block
  * @return the string at offset in the ATR1 block.
  */
 const char* LMS_GetAttributeText(LMSMsgFile* pMsg, libms_s32_t offset) {
@@ -221,6 +236,8 @@ const char* LMS_GetAttributeText(LMSMsgFile* pMsg, libms_s32_t offset) {
 }
 
 /**
+ * @param pMsg the message file
+ * @param index text index
  * @return entry index of the ATO1 block, or -11 if there is none.
  */
 libms_s32_t LMS_GetAttrFilteredOffset(LMSMsgFile* pMsg, libms_s32_t index) {
@@ -231,6 +248,8 @@ libms_s32_t LMS_GetAttrFilteredOffset(LMSMsgFile* pMsg, libms_s32_t index) {
 }
 
 /**
+ * @param pMsg the message file
+ * @param index text index
  * @return the style of text number index from the TSY1 block, or -3 if there is none.
  */
 libms_s32_t LMS_GetTextStyle(LMSMsgFile* pMsg, libms_s32_t index) {

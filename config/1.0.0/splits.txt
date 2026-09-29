@@ -1924,7 +1924,7 @@ src/Game/MapObj/WindowMessageAppear.cpp:
     .text   start:0x0035AE30 end:0x0035BAD0
 src/Game/MapObj/SinkedItem.cpp:
     .text   start:0x0035BAD0 end:0x0035D1C8
-src/Game/MapObj/SnowCover.cpp:
+src/Game/MapObj/SnowCover.cpp: done
     .text   start:0x0035D1D0 end:0x0035D81C
 src/Game/MapObj/SoundKeyMoveParts.cpp:
     .text   start:0x0035D820 end:0x0035E124
@@ -4764,11 +4764,11 @@ src/al/Library/Nerve/NerveActionCollector.cpp:
     .text   start:0x00878620 end:0x00878668
 src/al/Library/Nerve/NerveActionCtrl.cpp:
     .text   start:0x00878670 end:0x00878774
-src/al/Library/Nerve/NerveExecutor.cpp:
+src/al/Library/Nerve/NerveExecutor.cpp: done
     .text   start:0x00878780 end:0x00878860
-src/al/Library/Nerve/NerveKeeper.cpp:
+src/al/Library/Nerve/NerveKeeper.cpp: done
     .text   start:0x00878860 end:0x00878A28
-src/al/Library/Nerve/NerveStateBase.cpp:
+src/al/Library/Nerve/NerveStateBase.cpp: done
     .text   start:0x00878A30 end:0x00878B64
 src/al/Library/Nerve/NerveStateCtrl.cpp:
     .text   start:0x00878B70 end:0x00878D7C
@@ -4778,7 +4778,7 @@ src/al/Library/Nfp/NfpDirector.cpp:
     .text   start:0x00879F30 end:0x0087BAFC
 src/al/Library/Nfp/NfpUtil.cpp:
     .text   start:0x0087BB00 end:0x0087C14C
-src/al/Library/Obj/BreakModel.cpp:
+src/al/Library/Obj/BreakModel.cpp: done
     .text   start:0x0087C150 end:0x0087C4A0
 src/al/Library/Obj/DepthShadowModel.cpp:
     .text   start:0x0087C4A0 end:0x0087C720
@@ -4896,7 +4896,7 @@ src/al/Library/Scene/SceneFactory.cpp:
     .text   start:0x008A3860 end:0x008A3888
 src/al/Library/Scene/SceneObjHolder.cpp:
     .text   start:0x008A3890 end:0x008A3B3C
-src/al/Library/Scene/SceneStopCtrl.cpp:
+src/al/Library/Scene/SceneStopCtrl.cpp: done
     .text   start:0x008A3B40 end:0x008A3BD0
 src/al/Library/Scene/SceneUtil.cpp:
     .text   start:0x008A3BD0 end:0x008A55B0

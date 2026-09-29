@@ -73,7 +73,7 @@ Every object in the function map already has a unit in `splits.txt` with its
 
 ### Conventions learned so far
 
-* **Flags** (config.json): `-O3 -mno-implicit-float`, `-std=gnu++17 -fno-rtti
+* **Flags** (config.json): `-O3 -mno-implicit-float`, no `-ffunction-sections`, `-std=gnu++17 -fno-rtti
   -fno-exceptions` for C++; C (LMS) also needs `-fno-strict-aliasing`.
   `-mno-implicit-float` is what keeps pointer copies in `ldp/stp x` registers and
   stops loop vectorization, as the game does.
@@ -83,6 +83,12 @@ Every object in the function map already has a unit in `splits.txt` with its
   `al::setNerve(this, &nrvFooWait)`. See `src/Game/MapObj/BgmStopObj.cpp`.
 * **Weak / inline functions** (header code) are emitted in whichever object
   first used them; objdiff lists our extra copies as "extra in source" - ignore.
+  Their bodies stay in headers (see FUNCTIONS.md).
+* **Sections**: a unit's own functions are in one `.text` (no
+  `-ffunction-sections`); weak/inline functions each get a COMDAT
+  `.text.<name>`, both in our objects and in the carved targets.
+* **objdiff's report** ignores relocation targets (e.g. which nerve a function
+  sets); `tools/diff.py` does not. Only mark a unit `done` when `diff.py` says 100%.
 
 ## The function map
 
@@ -126,7 +132,7 @@ and uses the retained dynamic relocations for data pointers:
 
 Merged data is rebuilt the way clang lays it out in an object: string literals
 go to `.rodata.str1.1` (first-use order), FP constants to `.rodata.cst4/8/16`,
-switch tables to `.rodata.<function>`. Named data outside the unit becomes an
+switch tables to `.rodata`. Named data outside the unit becomes an
 undefined reference by name; unnamed data becomes `lbl_<address>` until it is
 named in `symbols.txt`. Relocated instruction fields are zeroed, as in a real
 object file.

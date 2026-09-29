@@ -6,7 +6,7 @@ namespace al {
     namespace {
         NERVE_DECL(BreakModel, Wait);
         NERVE_DECL(BreakModel, Break);
-        NERVES_MAKE_STRUCT(BreakModel, Wait, Break);
+        NERVES_MAKE_NOSTRUCT(BreakModel, Wait, Break)
     };  // namespace
 
     BreakModel::BreakModel(LiveActor* a1, const char* a2, const char* a3, const char* a4, const sead::Matrix34f* a5, const char* a6, bool a7)
@@ -24,7 +24,7 @@ namespace al {
 
     void BreakModel::init(const ActorInitInfo& rInfo) {
         al::initActorWithArchiveName(this, rInfo, sead::SafeString(_158), _168);
-        al::initNerve(this, &NrvBreakModel.Wait, 0);
+        al::initNerve(this, &nrvBreakModelWait, 0);
         al::invalidateClipping(this);
         makeActorDead();
     }
@@ -40,7 +40,7 @@ namespace al {
             al::startAction(this, _160);
         }
 
-        al::setNerve(this, &NrvBreakModel.Break);
+        al::setNerve(this, &nrvBreakModelBreak);
         LiveActor::makeActorAppeared();
     }
 

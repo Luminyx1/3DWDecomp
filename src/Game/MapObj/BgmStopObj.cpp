@@ -10,11 +10,17 @@ namespace {
     NERVES_MAKE_NOSTRUCT(BgmStopObj, Wait, Stop)
 };  // namespace
 
-/// Stage object that fades out all BGM once its stage switch turns on.
+/**
+ * Stage object that fades out all BGM once its stage switch turns on.
+ * @param pName actor name
+ */
 BgmStopObj::BgmStopObj(const char* pName) : al::LiveActor(pName) {
 }
 
-/// Reads FadeOutFrameNum and waits for the "start" stage switch.
+/**
+ * Reads FadeOutFrameNum and waits for the "start" stage switch.
+ * @param rInfo placement / init info
+ */
 void BgmStopObj::init(const al::ActorInitInfo& rInfo) {
     al::initActorSceneInfo(this, rInfo);
     al::initActorPoseTRMSV(this);
@@ -37,16 +43,22 @@ void BgmStopObj::init(const al::ActorInitInfo& rInfo) {
     makeActorAppeared();
 }
 
-/// Stage switch callback: go to the Stop nerve.
+/**
+ * Stage switch callback: go to the Stop nerve.
+ */
 void BgmStopObj::start() {
     al::setNerve(this, &nrvBgmStopObjStop);
 }
 
-/// Idle until the stage switch fires.
+/**
+ * Idle until the stage switch fires.
+ */
 void BgmStopObj::exeWait() {
 }
 
-/// Stops all BGM over mFadeOutFrameNum frames, then removes itself.
+/**
+ * Stops all BGM over mFadeOutFrameNum frames, then removes itself.
+ */
 void BgmStopObj::exeStop() {
     if (al::isFirstStep(this)) {
         al::tryStopAllBgm(this, mFadeOutFrameNum);

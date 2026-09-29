@@ -8,7 +8,7 @@
 namespace {
     NERVE_DECL(BlockQuestion, State);
     NERVE_DECL(BlockQuestion, Empty);
-    NERVES_MAKE_STRUCT(BlockQuestion, State, Empty);
+    NERVES_MAKE_NOSTRUCT(BlockQuestion, State, Empty)
 };  // namespace
 
 BlockQuestion::BlockQuestion(const char* pName) : al::LiveActor(pName) {
@@ -19,11 +19,11 @@ void BlockQuestion::init(const al::ActorInitInfo& rInfo) {
     bool isLong = al::isObjectName(rInfo, "BlockQuestionLong");
     bool isSingle = al::isSingleMode(rInfo);
     al::initActorSuffix(this, rInfo, rc::getBlockSuffixName(rInfo, isSingle));
-    al::initNerve(this, &NrvBlockQuestion.State, 1);
+    al::initNerve(this, &nrvBlockQuestionState, 1);
     bool isForceAppearCoin = false;
     al::tryGetArg(&isForceAppearCoin, rInfo, "IsForceAppearBoxCoin");
     mStateItem = new BlockStateItem(this, rInfo, isLong, false, false, false, isForceAppearCoin);
-    al::initNerveState(this, mStateItem, &NrvBlockQuestion.State, "BlockItem");
+    al::initNerveState(this, mStateItem, &nrvBlockQuestionState, "BlockItem");
     f32 shadowLength = -1.0f;
     al::tryGetArg(&shadowLength, rInfo, "ShadowLength");
 
@@ -41,11 +41,11 @@ void BlockQuestion::init(const al::ActorInitInfo& rInfo) {
 }
 
 void BlockQuestion::respawn() {
-    if (!al::isNerve(this, &NrvBlockQuestion.State) || al::isDead(this)) {
+    if (!al::isNerve(this, &nrvBlockQuestionState) || al::isDead(this)) {
         if (mStateItem->reset()) {
             al::validateCollisionParts(this);
             al::validateHitSensors(this);
-            al::setNerve(this, &NrvBlockQuestion.State);
+            al::setNerve(this, &nrvBlockQuestionState);
             if (al::isDead(this)) {
                 makeActorAppeared();
             }
@@ -89,7 +89,7 @@ void BlockQuestion::exeState() {
     if (al::updateNerveState(this)) {
         if (_144) {
             al::hideModel(this);
-            al::setNerve(this, &NrvBlockQuestion.Empty);
+            al::setNerve(this, &nrvBlockQuestionEmpty);
         } else {
             kill();
         }
