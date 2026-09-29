@@ -1,0 +1,54 @@
+# Doxygen configuration - run `doxygen Doxyfile`, then open doxygen/index.html.
+# Everything not set here uses Doxygen's defaults.
+PROJECT_NAME           = 3DWDecomp
+PROJECT_BRIEF          = "A decompilation of Super Mario 3D World + Bowser's Fury"
+OUTPUT_DIRECTORY       = doxygen
+HTML_OUTPUT            = .
+EXTRACT_ALL            = YES
+EXTRACT_PRIVATE        = YES
+EXTRACT_PRIV_VIRTUAL   = YES
+EXTRACT_STATIC         = YES
+EXTRACT_ANON_NSPACES   = YES
+INPUT                  = README.md \
+                         docs/ABOUT.md \
+                         docs/getting_started.md \
+                         docs/CONVENTIONS.md \
+                         docs/FUNCTIONS.md \
+                         src \
+                         include/Game \
+                         include/al \
+                         include/sead/lms
+FILE_PATTERNS          = *.c \
+                         *.cpp \
+                         *.h \
+                         *.hpp \
+                         *.md
+RECURSIVE              = YES
+STRIP_FROM_PATH        = src \
+                         include/Game \
+                         include/al \
+                         include/sead
+STRIP_FROM_INC_PATH    = include/Game \
+                         include/al \
+                         include/sead
+USE_MDFILE_AS_MAINPAGE = README.md
+MARKDOWN_SUPPORT       = YES
+HTML_COLORSTYLE        = TOGGLE
+GENERATE_TREEVIEW      = YES
+GENERATE_LATEX         = NO
+HAVE_DOT               = NO
+COLLABORATION_GRAPH    = NO
+DIRECTORY_GRAPH        = NO
+INCLUDE_GRAPH          = NO
+INCLUDED_BY_GRAPH      = NO
+CALL_GRAPH             = NO
+SHOW_INCLUDE_FILES     = NO
+SHOW_USED_FILES        = NO
+SOURCE_BROWSER         = YES
+SOURCE_TOOLTIPS        = YES
+SORT_MEMBER_DOCS       = NO
+MACRO_EXPANSION        = YES
+PREDEFINED             = NNSDK SWITCH NN_NINTENDO_SDK __cplusplus
+QUIET                  = YES
+WARNINGS               = NO
+WARN_IF_UNDOCUMENTED   = NO

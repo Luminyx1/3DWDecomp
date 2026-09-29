@@ -111,7 +111,7 @@ const void* LMS_GetText(LMSMsgFile* pMsg, libms_s32_t index) {
 }
 
 /**
- * Measures a text. Tags are 0x0E <group> <type> <paramSize> <params...>; 0x0F closes a tag.
+ * Measures a text. Tags are 0x0E [group] [type] [paramSize] [params...]; 0x0F closes a tag.
  * @param pMsg the message file
  * @param index text index
  * @return the size in bytes of text number index (tags included, terminator excluded), or -1.
