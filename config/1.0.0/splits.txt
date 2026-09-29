@@ -4512,13 +4512,13 @@ src/eui/ctrl/euiRootPane.cpp: done
     .text   start:0x007D7160 end:0x007D7344
 src/eui/ctrl/euiAlignPane.cpp:
     .text   start:0x007D7350 end:0x007DAC6C
-src/al/Library/Collision/CollisionPartsConnector.cpp:
+src/al/Library/Collision/CollisionPartsConnector.cpp: done
     .text   start:0x007DAC70 end:0x007DACA4
-src/al/Library/Collision/PartsConnector.cpp:
+src/al/Library/Collision/PartsConnector.cpp: done
     .text   start:0x007DACB0 end:0x007DAD54
 src/al/Library/Collision/PartsConnectorUtil.cpp:
     .text   start:0x007DAD60 end:0x007DBB14
-src/al/Library/Collision/MtxConnector.cpp:
+src/al/Library/Collision/MtxConnector.cpp: done
     .text   start:0x007DBB20 end:0x007DBB80
 src/al/Library/Collision/PartsMtxConnector.cpp:
     .text   start:0x007DBB80 end:0x007DC5A4
@@ -4904,7 +4904,7 @@ src/al/Library/Obj/Sky.cpp:
     .text   start:0x00880F40 end:0x008821B4
 src/al/Library/Obj/WarpedMtxPartsModel.cpp:
     .text   start:0x008821C0 end:0x00882C90
-src/al/Library/Play/Area/SePlayArea.cpp:
+src/al/Library/Play/Area/SePlayArea.cpp: done
     .text   start:0x00882C90 end:0x00882D90
 src/al/Library/Play/Layout/SimpleLayoutAppear.cpp:
     .text   start:0x00882D90 end:0x00882F04
@@ -4996,7 +4996,7 @@ src/al/Library/Stage/StageResourceList.cpp:
     .text   start:0x008A5910 end:0x008A6480
 src/al/Library/Screen/ScreenPointDirector.cpp:
     .text   start:0x008A6480 end:0x008A6D2C
-src/al/Library/Screen/ScreenPointerCheckGroup.cpp:
+src/al/Library/Screen/ScreenPointerCheckGroup.cpp: done
     .text   start:0x008A6D30 end:0x008A6EAC
 src/al/Library/Screen/ScreenPointer.cpp:
     .text   start:0x008A6EB0 end:0x008A6FC8
