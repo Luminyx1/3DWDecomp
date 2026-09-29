@@ -51,6 +51,12 @@ python tools/diff.py --mark-done                 # ... and mark the fully matchi
 
 For interactive work, point the objdiff GUI / VS Code extension at `objdiff.json`.
 
+On Windows, Capstone 5.0.1 can omit AArch64 load memory operands, leaving GOT
+relocations out of carved targets. Capstone 5.0.6 correctly reconstructs these
+relocations for `euiNwAllocator`. To use it without changing a shared Python
+installation, run `python -m pip install --target build/python-deps capstone==5.0.6`
+and set `$env:PYTHONPATH = "$PWD/build/python-deps"` in PowerShell before building.
+
 The compiler is always the SDK's own `clang.exe` (Clang for NX 1.8.14, LLVM 8.0.1).
 On Windows it runs directly; on Linux/macOS it runs under wine (`wine` on PATH,
 or set `$WINE`; start `wineserver -p` once so each compile doesn't pay wine's

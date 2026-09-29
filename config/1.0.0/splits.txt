@@ -4398,7 +4398,7 @@ src/agl/g3d/aglResTextureDataEx.cpp: done
     .text   start:0x007B0DF0 end:0x007B0F74
 src/eui/euiConstantBuffer.cpp:
     .text   start:0x007B0F80 end:0x007B12C0
-src/eui/euiNwAllocator.cpp:
+src/eui/euiNwAllocator.cpp: done
     .text   start:0x007B12C0 end:0x007B137C
 src/eui/sys/euiUtility.cpp:
     .text   start:0x007B1380 end:0x007B4E6C
