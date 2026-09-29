@@ -245,6 +245,10 @@ public:
     s32 formatV(const T* format, std::va_list args);
     s32 appendWithFormat(const T* formatStr, ...);
     s32 appendWithFormatV(const T* formatStr, std::va_list args);
+    /// Append text formatted with sead's PrintFormatter ("%@" placeholders).
+    /// Defined in prim/seadFormatPrint.h.
+    template <typename... Args>
+    s32 appendWithSeadFormat(const T* formatStr, Args&&... args);
 
     /// Append append_length characters from str.
     s32 append(const SafeStringBase<T>& str, s32 append_length = -1);

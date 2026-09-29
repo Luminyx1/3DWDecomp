@@ -78,6 +78,7 @@ public:
     Framework* getFramework() const;
 
     Controller* getController(int port) { return mControllers[port]; }
+    s32 getControllerNum() const { return mControllers.size(); }
 
 private:
     OffsetList<ControlDevice> mDevices;

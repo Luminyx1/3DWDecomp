@@ -45,6 +45,8 @@ public:
     ~StringCutOffPrintOutput() override = default;
     void write(const char* pString, s32 size) override;
 
+    s32 getPos() const { return mPos; }
+
 protected:
     BufferedSafeString* mBuffer;
     s32 mPos;
@@ -107,6 +109,8 @@ public:
     PrintFormatter& operator<<(const char* pFormat);
 
     PrintFormatter& operator<<(PrintFormatter& (&fn)(PrintFormatter&)) { return fn(*this); }
+    template <typename T>
+    PrintFormatter& operator<<(const T& rValue);
 
     template <typename T>
     PrintFormatter& operator,(const T&);
@@ -168,6 +172,8 @@ public:
     explicit StringCutOffPrintFormatter(BufferedSafeString* pString);
     StringCutOffPrintFormatter(BufferedSafeString* pString, const char* pFormat);
 
+    const StringCutOffPrintOutput& getOutput() const { return mOutput; }
+
 protected:
     StringCutOffPrintOutput mOutput;
 };
@@ -204,4 +210,36 @@ private:
     void outputTimeStamp_();
 };
 // endregion
+
+template <typename T>
+inline PrintFormatter& PrintFormatter::operator,(const T& rValue)
+{
+    char format[32];
+    if (proceedToFormatMark_(format))
+        out(rValue, format[0] != '\0' ? format : nullptr, mPrintOutput);
+    return *this;
+}
+
+template <typename T>
+inline PrintFormatter& PrintFormatter::operator<<(const T& rValue)
+{
+    char format[32];
+    if (proceedToFormatMark_(format))
+        out(rValue, format[0] != '\0' ? format : nullptr, mPrintOutput);
+    return *this;
+}
+
+template <>
+template <typename... Args>
+inline s32 BufferedSafeStringBase<char>::appendWithSeadFormat(const char* formatStr,
+                                                              Args&&... args)
+{
+    char* top = getMutableStringTop_();
+    const s32 length = this->calcLength();
+    BufferedSafeStringBase<char> buffer(top + length, getBufferSize() - length);
+    StringCutOffPrintFormatter formatter(&buffer, formatStr);
+    (formatter << ... << args);
+    formatter.flush();
+    return formatter.getOutput().getPos() + length;
+}
 }  // namespace sead

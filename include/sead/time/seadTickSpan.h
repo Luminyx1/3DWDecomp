@@ -114,6 +114,8 @@ public:
         return span;
     }
 
+    static s64 getFrequency() { return cFrequency; }
+
 private:
     friend class CuckooClock;
 

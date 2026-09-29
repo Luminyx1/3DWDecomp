@@ -81,6 +81,7 @@ public:
     nn::hid::NpadJoyHoldType getNpadJoyHoldType() const { return mNpadJoyHoldType; }
 
     const NpadState& getNpadState(s32 idx) { return mNpadStates[idx]; }
+    nn::hid::NpadStyleTag getNpadStyleTag(s32 idx) const { return mNpadStyleTags[idx]; }
 
 private:
     u32 mNpadIdUpdateNum;
