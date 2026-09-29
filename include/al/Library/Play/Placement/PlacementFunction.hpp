@@ -37,6 +37,7 @@ s32 calcLinkCountClassName(const PlacementInfo&, const char*);
 void getLinksInfo(PlacementInfo*, const PlacementInfo&, const char*);
 
 void getLinksInfoByIndex(PlacementInfo*, const ActorInitInfo&, const char*, s32);
+void getLinksInfoByIndex(PlacementInfo*, const PlacementInfo&, const char*, s32);
 
 bool tryGetLinksInfo(PlacementInfo*, const PlacementInfo&, const char*);
 bool tryGetLinksInfo(PlacementInfo*, const ActorInitInfo&, const char*);
@@ -60,6 +61,11 @@ s32 calcLinkChildNum(const ActorInitInfo&, const char*);
 const char* getLinksActorDisplayName(const ActorInitInfo &, const char *, int);
 
 void initLinksActor(LiveActor *, const ActorInitInfo &, const char *, int);
+
+bool tryGetUp(sead::Vector3f*, const PlacementInfo&);
+bool tryGetRailPointPos(sead::Vector3f*, const PlacementInfo&);
+void getRailPointHandleNext(sead::Vector3f*, const PlacementInfo&);
+void getRailPointHandlePrev(sead::Vector3f*, const PlacementInfo&);
 
 }  // namespace al
 

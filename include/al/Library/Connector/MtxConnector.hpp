@@ -12,20 +12,31 @@ public:
     MtxConnector();
     MtxConnector(const sead::Quatf&, const sead::Vector3f&);
 
-    virtual ~MtxConnector();
+    virtual ~MtxConnector() {}
     virtual bool isConnecting() const;
     virtual void clear();
 
     void init(const sead::Matrix34f*, const sead::Matrix34f&);
     void init(const sead::Matrix34f*);
 
-    void multMtx(sead::Matrix34f*, const sead::Matrix34f&);
+    void multVec(sead::Vector3f*, const sead::Vector3f&) const;
+    void multTrans(sead::Vector3f*, const sead::Vector3f&) const;
+    void multMtx(sead::Matrix34f*, const sead::Matrix34f&) const;
+    void multQT(sead::Quatf*, sead::Vector3f*) const;
+    void multQT(sead::Quatf*, sead::Vector3f*, const sead::Quatf&, const sead::Vector3f&) const;
+    const sead::Quatf& getBaseQuat() const;
+    const sead::Vector3f& getBaseTrans() const;
+    void setBaseQuatTrans(const sead::Quatf&, const sead::Vector3f&);
+    void calcConnectInfo(sead::Vector3f*, sead::Quatf*, sead::Vector3f*, const sead::Vector3f&,
+                         const sead::Vector3f&) const;
+    void calcMtxWithOffset(sead::Matrix34f*, const sead::Vector3f&, const sead::Vector3f&) const;
+    bool tryGetParentTrans(sead::Vector3f*) const;
 
 private:
-    sead::Matrix34f mBaseMtx = sead::Matrix34f::zero;
-    const sead::Matrix34f* mParentMtx = nullptr;
-    sead::Quatf mBaseQuat = sead::Quatf::unit;
-    sead::Vector3f mBaseTrans = sead::Vector3f::zero;
+    sead::Matrix34f mMtx = sead::Matrix34f::ident;       // _8
+    const sead::Matrix34f* mParentMtx = nullptr;         // _38
+    sead::Quatf mBaseQuat = sead::Quatf::unit;           // _40
+    sead::Vector3f mBaseTrans = sead::Vector3f::zero;    // _50
 };
 
 static_assert(sizeof(MtxConnector) == 0x60);

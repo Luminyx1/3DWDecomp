@@ -51,5 +51,10 @@ namespace al {
     f32 easeInOut(f32);
     f32 squareIn(f32);
     f32 squareOut(f32);
+    f32 modf(f32, f32);
+
+    bool checkHitSegmentSphereNearDepth(const sead::Vector3f&, const sead::Vector3f&,
+                                        const sead::Vector3f&, f32, sead::Vector3f*,
+                                        sead::Vector3f*);
 
 }  // namespace al

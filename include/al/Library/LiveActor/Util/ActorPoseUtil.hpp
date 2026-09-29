@@ -56,5 +56,9 @@ namespace al {
     void setRotate(LiveActor*, const sead::Vector3f&);
 
     sead::Quatf* getQuatPtr(LiveActor*);
+    const sead::Quatf& getQuat(const LiveActor*);
+    void setQuat(LiveActor*, const sead::Quatf&);
+    sead::Quatf* tryGetQuatPtr(LiveActor*);
+    sead::Vector3f* getFrontPtr(LiveActor*);
 
 }  // namespace al
