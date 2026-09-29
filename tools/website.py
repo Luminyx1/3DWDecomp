@@ -104,7 +104,7 @@ def build(report: dict) -> str:
             sp = pct(tm, tt)
             best = sorted(files, key=lambda f: (-pct(f[1], f[2]), -f[1], f[0].upper()))[:10]
             rows = "".join(
-                f'<li><span class="fname">{html.escape(f)}</span>{bar(pct(fm, ft), "", "bar tiny")}'
+                f'<li><span class="fname" title="{html.escape(f)}">{html.escape(f)}</span>{bar(pct(fm, ft), "", "bar tiny")}'
                 f'<span class="fp">{pct(fm, ft):.2f}%</span></li>' for f, fm, ft in best)
             cards.append(
                 f'<details class="card folder"><summary><span class="fold">{html.escape(sub)}</span>'
@@ -246,7 +246,7 @@ body::after {{
 @keyframes drift {{ from {{ translate: 0 0; }} to {{ translate: 150vw 0; }} }}
 @media (prefers-reduced-motion: reduce) {{ .cloud {{ animation: none; left: 10vw; }} }}
 
-main {{ position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; padding: 32px 16px 120px; }}
+main {{ position: relative; z-index: 1; max-width: 1240px; margin: 0 auto; padding: 32px 16px 120px; }}
 header {{ text-align: center; margin: 12px 0 28px; }}
 .title {{
   font-size: clamp(40px, 8vw, 76px); font-weight: 700; margin: 0; letter-spacing: 1px;
@@ -292,7 +292,7 @@ header {{ text-align: center; margin: 12px 0 28px; }}
 }}
 .bar.main {{ height: 38px; --c: #ffc400; border: 4px solid var(--card); box-shadow: inset 0 3px 6px rgba(20,60,110,.3), 0 4px 0 var(--navy); }}
 .bar.small {{ height: 16px; margin: 10px 0 6px; }}
-.bar.tiny {{ height: 10px; margin: 0; flex: 1 1 auto; --c: #3a8dff; }}
+.bar.tiny {{ height: 10px; margin: 0; flex: 0 0 22%; --c: #3a8dff; }}
 
 h2 {{
   display: inline-block; margin: 44px 0 16px; padding: 8px 22px; border-radius: 999px;
@@ -305,7 +305,7 @@ h2 {{
 .lib .pct {{ font-size: 40px; font-weight: 700; color: var(--c); text-shadow: 0 3px 0 rgba(0,0,0,.08); }}
 .sub {{ color: var(--muted); font-size: 14px; }}
 
-.folders {{ display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; }}
+.folders {{ display: grid; grid-template-columns: repeat(auto-fill, minmax(520px, 1fr)); gap: 16px; }}
 .folder {{ padding: 0; }}
 .folder summary {{
   list-style: none; cursor: pointer; padding: 16px 20px 12px; display: flex; flex-wrap: wrap;
@@ -319,10 +319,10 @@ h2 {{
 .fp.big {{ font-size: 20px; color: var(--accent, var(--navy)); }}
 .folder ol {{ margin: 0; padding: 4px 20px 18px 42px; position: relative; z-index: 1; }}
 .folder li {{ display: flex; align-items: center; gap: 10px; padding: 5px 0; font-size: 14px; }}
-.folder li .fname {{ flex: 0 1 46%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }}
+.folder li .fname {{ flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }}
 .folder li .fp {{ flex: 0 0 64px; text-align: right; font-weight: 600; }}
 footer {{ text-align: center; margin-top: 48px; color: #fff; font-weight: 600; text-shadow: 0 2px 0 rgba(20,70,140,.5); }}
-@media (max-width: 520px) {{ .folders {{ grid-template-columns: 1fr; }} .hero {{ padding: 20px 14px; }} }}
+@media (max-width: 600px) {{ .folders {{ grid-template-columns: 1fr; }} .hero {{ padding: 20px 14px; }} }}
 </style>
 </head>
 <body>

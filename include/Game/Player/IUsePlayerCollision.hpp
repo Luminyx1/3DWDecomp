@@ -2,10 +2,21 @@
 
 #include <math/seadVector.h>
 
+namespace al {
+    class CollisionParts;
+}
+
 /// Player collision queries and solving (implemented by PlayerCollider).
 class IUsePlayerCollision {
 public:
-    struct Info;
+    /// What the player touches on one side: the hit's normal, its codes and parts.
+    struct Info {
+        sead::Vector3f mNormal = {0.0f, 0.0f, 0.0f};  // 0x0
+        const char* mMapCode = "";                     // 0x10
+        const char* mWallCode = "";                    // 0x18
+        const char* mMaterialCode = "";                // 0x20
+        const al::CollisionParts* mParts = nullptr;    // 0x28
+    };
 
     virtual void clear() = 0;
     virtual void moveSimple(bool) = 0;

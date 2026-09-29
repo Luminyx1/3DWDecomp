@@ -2,7 +2,7 @@
 
 #include <basis/seadTypes.h>
 
-struct PlayerConstParam;
+class PlayerConstParam;
 
 /// Blocks the cat's climb air attack for a while.
 class PlayerClimbAirAttackInhibitor {

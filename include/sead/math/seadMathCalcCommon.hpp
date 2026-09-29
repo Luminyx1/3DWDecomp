@@ -2,6 +2,7 @@
 
 #include <basis/seadRawPrint.h>
 #include <cmath>
+#include <nerd/nerdMath.h>
 #ifndef SEAD_MATH_MATH_CALC_COMMON_H_
 #include <math/seadMathCalcCommon.h>
 #endif
@@ -38,6 +39,13 @@ template <typename T>
 inline T MathCalcCommon<T>::rsqrt(T t)
 {
     return 1 / std::sqrt(t);
+}
+
+// the NX build routes f32 square roots through nerd
+template <>
+inline f32 MathCalcCommon<f32>::sqrt(f32 t)
+{
+    return nerd::sqrt(t);
 }
 
 template <typename T>

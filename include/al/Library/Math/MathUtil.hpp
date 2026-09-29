@@ -17,7 +17,8 @@ namespace al {
     void normalize(sead::Vector3f*, const sead::Vector3f&);
 
     void normalizeOrZero(sead::Vector3f*, const sead::Vector3f&);
-    void normalizeOrZero(sead::Vector3f*);
+    bool normalizeOrZero(sead::Vector3f*);
+    void verticalizeVec(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f&);
 
     bool isNear(f32, f32, f32);
     bool isNear(const sead::Vector2f&, const sead::Vector2f&, f32);
@@ -38,7 +39,6 @@ namespace al {
     void normalize(sead::Matrix33f*);
     void normalize(sead::Matrix34f*);
 
-    void normalizeOrZero(sead::Vector3f*);
 
     bool isHalfProbability();
 

@@ -289,7 +289,28 @@ class Carver:
                 return g
         return name
 
+    def _plt_import(self, target_addr: int) -> str | None:
+        """The imported function a PLT stub (adrp x16; ldr x17, [x16, #lo]; add x16, x16, #lo;
+        br x17) jumps to, e.g. memcpy or acosf - what clang's object references."""
+        if self.img.section_of(target_addr) != ".text":
+            return None
+        code = self.img.bytes_at(target_addr, 16)
+        if len(code) < 16 or code[12:16] != bytes.fromhex("20021fd6"):   # br x17
+            return None
+        insns = list(_MD.disasm(code, target_addr))
+        if len(insns) != 4 or insns[0].id != ARM64_INS_ADRP or insns[0].reg_name(insns[0].operands[0].reg) != "x16":
+            return None
+        mem = [op for op in insns[1].operands if op.type == ARM64_OP_MEM]
+        if not mem:
+            return None
+        got = self.img.got_target(insns[0].operands[1].imm + mem[0].mem.disp)
+        return got[0] if got and got[1] == 0 else None
+
     def _ref_code(self, target_addr: int, caller: str | None = None, after_new: bool = False):
+        imp = self._plt_import(target_addr)
+        if imp:
+            self.undefs.add(imp)
+            return imp, 0
         r = self._ref_sym(target_addr)
         if r:
             if r[1] == 0:
@@ -310,7 +331,11 @@ class Carver:
             if how == "ldst" and fp and access in (4, 8, 16):
                 return self._const(tgt, access)
             if how == "add" and jt:
-                return self._jump_table(func, tgt, jt[0], jt[1])
+                ent, count, is_fp = jt
+                if is_fp and ent * count in (4, 8, 16):
+                    # a small FP lookup table is a mergeable constant, like clang emits it
+                    return self._const(tgt, ent * count)
+                return self._jump_table(func, tgt, ent, count)
             if how == "add" and _is_c_string(self.img.bytes_at(tgt, 0x1000)):
                 return self._string(tgt)
         if sec in (".rodata", ".data", ".bss", ".text"):
@@ -328,12 +353,12 @@ class Carver:
             self.o.undef(u)
 
     def _local_same_section(self, ref_name: str, sec) -> bool:
-        """A branch to a local function in the same section is resolved by the
-        assembler and has no relocation in a compiled object."""
+        """A branch to a (non-weak) function in the same section is resolved by the
+        assembler and has no relocation in a compiled object - even a global one."""
         if self.placed.get(ref_name) is not sec:
             return False
         s = self.img.sym(ref_name)
-        return s is not None and s.bind == "STB_LOCAL"
+        return s is not None and s.bind != "STB_WEAK"
 
     def _recon_text(self, name: str, addr: int, size: int):
         sec = self.placed[name]
@@ -400,22 +425,35 @@ class Carver:
         return out
 
     def _jump_table_shape(self, insns, idx, base_reg, fn_hi):
-        """If the ADRP+ADD at idx builds a jump-table base, return (entsize, count)."""
+        """If the ADRP+ADD at idx builds a table base (jump table, or a lookup table
+        clang made from a switch/select), return (entsize, count, is_fp)."""
         for j in range(idx + 1, min(idx + 10, len(insns))):
             ins = insns[j]
             if ins.id in (ARM64_INS_LDRB, ARM64_INS_LDRH, ARM64_INS_LDRSW, ARM64_INS_LDR):
                 mem = [op for op in ins.operands if op.type == ARM64_OP_MEM]
                 if mem and mem[0].mem.base == base_reg and mem[0].mem.index != 0:
                     ent = {ARM64_INS_LDRB: 1, ARM64_INS_LDRH: 2, ARM64_INS_LDRSW: 4}.get(ins.id, 4)
+                    dst = ins.reg_name(ins.operands[0].reg) or ""
+                    is_fp = dst[:1] in ("s", "d", "q")
+                    if is_fp:
+                        ent = {"s": 4, "d": 8, "q": 16}[dst[0]]
+                    elif dst.startswith("x"):
+                        ent = 8
                     # bound check: cmp wN, #k ; b.hi -> k+1 entries
                     count = 0
-                    for k in range(idx - 1, max(idx - 12, -1), -1):
+                    idx_reg = ins.reg_name(mem[0].mem.index)[1:]
+                    for k in range(j - 1, max(idx - 12, -1), -1):
                         c = insns[k]
-                        if c.id == ARM64_INS_CMP and len(c.operands) == 2 and c.operands[1].type == ARM64_OP_IMM:
+                        if c.id == ARM64_INS_CMP and len(c.operands) == 2 and c.operands[1].type == ARM64_OP_IMM \
+                                and k < idx:
                             nxt = insns[k + 1].mnemonic if k + 1 < len(insns) else ""
                             count = c.operands[1].imm + (0 if nxt in ("b.hs", "b.cs") else 1)
                             break
-                    return ent, count
+                        # a bool index (cset) selects one of two entries
+                        if c.mnemonic == "cset" and (c.reg_name(c.operands[0].reg) or "")[1:] == idx_reg:
+                            count = 2
+                            break
+                    return ent, count, is_fp
         return None
 
     def _recon_adrp(self, sec, func, insns, idx, fn_addr):

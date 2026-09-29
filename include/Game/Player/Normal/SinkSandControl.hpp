@@ -5,7 +5,7 @@
 
 class IUsePlayerCheckArea;
 class PlayerSimpleFlag;
-struct PlayerConstParam;
+class PlayerConstParam;
 struct PlayerProperty;
 
 /// Sinking into quicksand and poison-free ink.

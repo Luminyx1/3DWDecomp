@@ -2,7 +2,7 @@
 
 #include <basis/seadTypes.h>
 
-struct PlayerConstParam;
+class PlayerConstParam;
 
 /// Blocks squatting while swimming for a while.
 class PlayerSwimSquatInhibitor {
