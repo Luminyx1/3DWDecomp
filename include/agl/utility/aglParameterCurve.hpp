@@ -13,23 +13,12 @@ inline ParameterCurve<N>::ParameterCurve(const sead::SafeString& name,
     reset();
 }
 
-// NOTE: This is a hack to match ParameterBase::createByTypeName. It doesn't inline using the
-// general template.
-template <>
-inline void ParameterCurve<4>::reset() {
-    static f32 s_initialize[9] = {0.0, 0.0, 0.5, 0.5, 0.5, 0.5, 1.0, 1.0, 0.5};
-    for (u32 i = 0; i < 4; ++i) {
-        sead::MemUtil::copy(mCurveData[i].f, s_initialize, sizeof(s_initialize));
-        for (u32 j = 9; j < cUnitCurveParamNum; ++j)
-            mCurveData[i].f[j] = 1.0;
-        mCurves[i].setData(&mCurveData[i], sead::hostio::CurveType::Hermit2D, cUnitCurveParamNum,
-                           9);
-    }
-}
-
+/**
+ * Resets every curve to the default Hermite 2D shape.
+ */
 template <u32 N>
-inline void ParameterCurve<N>::reset() {
-    static f32 s_initialize[9] = {0.0, 0.0, 0.5, 0.5, 0.5, 0.5, 1.0, 1.0, 0.5};
+void ParameterCurve<N>::reset() {
+    static const f32 s_initialize[9] = {0.0, 0.0, 0.5, 0.5, 0.5, 0.5, 1.0, 1.0, 0.5};
     for (u32 i = 0; i < N; ++i) {
         sead::MemUtil::copy(mCurveData[i].f, s_initialize, sizeof(s_initialize));
         for (u32 j = 9; j < cUnitCurveParamNum; ++j)
@@ -93,8 +82,8 @@ inline void ParameterCurve<N>::postApplyResource_(const void*, size_t size) {
     if (this->size() == size) {
         for (u32 i = 0; i < N; ++i) {
             mCurves[i].setCurveType(sead::hostio::CurveType(mCurveData[i].curveType));
-            mCurves[i].mFloats = mCurveData[i].f;
             mCurves[i].mInfo.numFloats = cUnitCurveParamNum;
+            mCurves[i].mFloats = mCurveData[i].f;
             mCurves[i].setNumUse(mCurveData[i].numUse);
         }
     } else {

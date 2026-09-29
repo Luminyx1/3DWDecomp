@@ -12,36 +12,34 @@ class IParameterIO : public IParameterList {
 public:
     IParameterIO();
     IParameterIO(const sead::SafeString& name, u32 version);
-    ~IParameterIO() override { ; }
+    ~IParameterIO() override;
 
     virtual bool save(const sead::SafeString& path, u32) const;
     virtual void applyResParameterArchive(ResParameterArchive arc);
     virtual void applyResParameterArchiveLerp(ResParameterArchive arc_a, ResParameterArchive arc_b,
                                               f32 t);
 
-    void load(const sead::SafeString& path, bool);
-    void loadText(const void* data, u32 size, bool);
+    bool load(const sead::SafeString& rPath, bool dump);
+    bool loadText(const void* pData, u32 size, bool x);
 
-    bool isCompleteArchive(ResParameterArchive archive, bool) const;
+    bool isCompleteArchive(ResParameterArchive archive, bool checkValues) const;
 
-    void genMessageIO(sead::hostio::Context* context, u32);
-    void listenPropertyEventIO(sead::hostio::Reflexible* reflexible,
-                               sead::hostio::PropertyEvent* event);
+    void genMessageIO(sead::hostio::Context* pContext, u32 flags);
+    s32 listenPropertyEventIO(sead::hostio::Reflexible* pReflexible,
+                              const sead::hostio::PropertyEvent* pEvent);
 
 protected:
     virtual void callbackInvalidVersion_(ResParameterArchive) {}
 
-#ifdef SEAD_DEBUG
-    virtual void writeHeader_(sead::XmlElement* element, sead::Heap* heap) const;
-#endif
-    void save_(const sead::SafeString& path, const sead::XmlDocument* document) const;
+    void writeHeader_(sead::XmlElement* pElement, sead::Heap* pHeap) const;
+    bool save_(const sead::SafeString& rPath, const sead::XmlDocument* pDocument) const;
 
     sead::FixedSafeString<64> mType;
     u32 mVersion;
-    void* _a8 = nullptr;
-    sead::FixedSafeString<256> _b0 = sead::SafeString::cEmptyString;
+    void* _f8 = nullptr;
+    sead::FixedSafeString<256> mPath = sead::SafeString::cEmptyString;
     u32 mResFileSize = 0;
-    u32 _1cc;
+    u32 _21c = 0;
 };
 
 }  // namespace agl::utl

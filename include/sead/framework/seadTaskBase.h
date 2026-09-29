@@ -15,10 +15,19 @@
 namespace sead
 {
 class FaderTaskBase;
+class Framework;
+class MethodTreeMgr;
 class MethodTreeNode;
-class TaskEvent;
 class TaskMgr;
 class TaskParameter;
+
+class TaskEvent
+{
+    SEAD_RTTI_BASE(TaskEvent)
+
+public:
+    s32 mType = 0;
+};
 
 class TaskBase : public TTreeNode<TaskBase*>, public IDisposer, public INamable
 {
@@ -114,7 +123,27 @@ public:
     virtual MethodTreeNode* getMethodTreeNode(s32 method_type) = 0;
     virtual void onDestroy();
 
-    DelegateThread* getFramework() const;  // seems to return mTaskMgr->mPrepareThread;
+    void attachCalc();
+    void attachDraw();
+    void attachCalcDraw();
+    bool isDescendantOf(TaskBase* pTask) const;
+    void adjustHeap(s32 index);
+    void adjustHeapWithSlackWithoutLock_(s32 index, u32 slack);
+    void adjustHeapAll();
+    void adjustHeapWithSlack(s32 index, u32 slack);
+    bool requestCreateTask(const CreateArg& rArg);
+    TaskBase* createTaskSync(const CreateArg& rArg);
+    TaskBase* createChildTaskSync(CreateArg& rArg);
+    bool requestTakeover(const TakeoverArg& rArg);
+    bool requestTransition(TaskBase* pNextTask, FaderTaskBase* pFader);
+    bool requestPush(const PushArg& rArg);
+    TaskBase* pushSync(const PushArg& rArg);
+    bool requestPop();
+    void doneDestroy();
+    Framework* getFramework() const;
+    MethodTreeMgr* getMethodTreeMgr() const;
+    bool isConnectable(TaskBase* pTask) const;
+    void attachMethodWithCheck(s32 methodType, MethodTreeNode* pNode);
 
     TaskParameter* mParameter;
     BitFlag32 mInternalFlag;

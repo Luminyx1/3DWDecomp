@@ -18,10 +18,11 @@ public:
     IParameterObj();
     virtual ~IParameterObj() { ; }
 
-    void pushBackListNode(ParameterBase* p_node);
+    void pushBackListNode(ParameterBase* pNode);
     void sortByHash();
 
-    sead::SafeString getName() const;
+    sead::SafeString getParameterObjName() const;
+    sead::SafeString getName() const { return getParameterObjName(); }
     u32 getNameHash() const { return mNameHash; }
 
     ParameterBase* getParamListHead() const { return mParamListHead; }
@@ -29,35 +30,33 @@ public:
     u32 getParamListSize() const { return mParamListSize; }
     IParameterObj* getNext() const { return mNext; }
 
-    void writeToXML(sead::XmlElement* element, sead::Heap* heap);
-    bool readFromXML(const sead::XmlElement& element, bool x);
-    void createAttribute(sead::XmlElement* element, sead::Heap* heap) const;
+    void writeToXML(sead::XmlElement* pElement, sead::Heap* pHeap) const;
+    s32 readFromXML(const sead::XmlElement& rElement, bool x);
+    sead::XmlElement* createAttribute(sead::XmlElement* pElement, sead::Heap* pHeap) const;
     static const char* getTagName();
 
     void applyResParameterObj(ResParameterObj obj1, ResParameterObj obj2, f32 t,
-                              IParameterList* list);
+                              IParameterList* pList);
 
-    void applyResParameterObj(ResParameterObj obj, IParameterList* list = nullptr) {
-        applyResParameterObj_(false, obj, {}, 0.0, list);
+    void applyResParameterObj(ResParameterObj obj, IParameterList* pList = nullptr) {
+        applyResParameterObj_(false, obj, {}, 0.0, pList);
     }
 
-    bool isComplete(ResParameterObj obj, bool) const;
+    bool isComplete(ResParameterObj obj, bool checkValues) const;
     bool verify() const;
-    bool verify(ParameterBase* p_check, ParameterBase* other) const;
+    bool verify(ParameterBase* pCheck, ParameterBase* pOther) const;
 
-    void copy(ParameterBase* first, ParameterBase* last, const ParameterBase* src_first,
-              const ParameterBase* src_last);
-    void copy(const IParameterObj& obj);
-    void copyLerp(ParameterBase* first, ParameterBase* last, const ParameterBase* src1_first,
-                  const ParameterBase* src1_last, const ParameterBase* src2_first,
-                  const ParameterBase* src2_last, f32 t);
-    void copyLerp(const IParameterObj& obj1, const IParameterObj& obj2, f32 t);
+    void copy(ParameterBase* pFirst, ParameterBase* pLast, const ParameterBase* pSrcFirst,
+              const ParameterBase* pSrcLast);
+    void copy(const IParameterObj& rObj);
+    void copyLerp(ParameterBase* pFirst, ParameterBase* pLast, const ParameterBase* pSrc1First,
+                  const ParameterBase* pSrc1Last, const ParameterBase* pSrc2First,
+                  const ParameterBase* pSrc2Last, f32 t);
+    void copyLerp(const IParameterObj& rObj1, const IParameterObj& rObj2, f32 t);
 
-#ifdef SEAD_DEBUG
-    void genMessageParameter(sead::hostio::Context* context);
-    void listenPropertyEventParameter(sead::hostio::Reflexible* reflexible,
-                                      const sead::hostio::PropertyEvent* event);
-#endif
+    void genMessageParameter(sead::hostio::Context* pContext);
+    void listenPropertyEventParameter(sead::hostio::Reflexible* pReflexible,
+                                      const sead::hostio::PropertyEvent* pEvent);
 
 protected:
     friend class IParameterList;
@@ -73,15 +72,15 @@ protected:
     }
 
     void applyResParameterObj_(bool interpolate, ResParameterObj obj1, ResParameterObj obj2, f32 t,
-                               IParameterList* list);
+                               IParameterList* pList);
     ParameterBase* searchParameter_(u32 hash);
     ParameterBase* searchParameter_(u32 hash) const;
 
-    void copy_(ParameterBase* first, ParameterBase* last, const ParameterBase* src_first,
-               const ParameterBase* src_last);
-    void copyLerp_(ParameterBase* first, ParameterBase* last, const ParameterBase* src1_first,
-                   const ParameterBase* src1_last, const ParameterBase* src2_first,
-                   const ParameterBase* src2_last, f32 t);
+    void copy_(ParameterBase* pFirst, ParameterBase* pLast, const ParameterBase* pSrcFirst,
+               const ParameterBase* pSrcLast);
+    void copyLerp_(ParameterBase* pFirst, ParameterBase* pLast, const ParameterBase* pSrc1First,
+                   const ParameterBase* pSrc1Last, const ParameterBase* pSrc2First,
+                   const ParameterBase* pSrc2Last, f32 t);
 
     ParameterBase* mParamListHead = nullptr;
     ParameterBase* mParamListTail = nullptr;

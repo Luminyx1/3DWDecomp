@@ -1,10 +1,12 @@
 #pragma once
 
+#include <container/seadObjList.h>
 #include <framework/seadHeapPolicies.h>
 #include <framework/seadMethodTree.h>
 #include <framework/seadTaskBase.h>
 #include <heap/seadHeapMgr.h>
 #include <thread/seadCriticalSection.h>
+#include <thread/seadMessageQueue.h>
 
 namespace sead
 {
@@ -12,6 +14,7 @@ class DelegateThread;
 class Framework;
 class Heap;
 class NullFaderTask;
+class Thread;
 
 class TaskMgr final : public sead::hostio::Node
 {
@@ -19,33 +22,54 @@ public:
     struct InitializeArg
     {
     public:
-        InitializeArg(const TaskBase::CreateArg& roottask_arg) : roottask_create_arg(roottask_arg)
-        {
-        }
+        InitializeArg(const TaskBase::CreateArg& roottask_arg);
 
         u32 create_queue_size = 0x20;
-        u32 prepare_stack_size = 0x8000;
+        u32 prepare_stack_size = 0x10000;
         s32 prepare_priority = -1;
         const TaskBase::CreateArg& roottask_create_arg;
         Heap* heap = nullptr;
         Framework* parent_framework = nullptr;
     };
 
-    class TaskCreateContextMgr;
+    struct TaskCreateContext
+    {
+        TaskCreateContext() : task(nullptr) {}
+
+        TaskBase* task;
+        TaskBase::CreateArg arg;
+        DelegateEvent<TaskBase*> event;
+    };
+
+    class TaskCreateContextMgr : public ObjList<TaskCreateContext>
+    {
+    public:
+        TaskCreateContextMgr(s32 capacity, Heap* pHeap) { allocBuffer(capacity, pHeap); }
+    };
 
 public:
     TaskMgr(const InitializeArg& arg);
 
-    void appendToList_(TaskBase::List& ls, TaskBase* task);
-    bool changeTaskState_(TaskBase* task, TaskBase::State state);
-    void destroyTaskSync(TaskBase* task);
-    void doDestroyTask_(TaskBase* task);
+    static TaskMgr* initialize(const InitializeArg& rArg);
+    void initHostIO();
     void finalize();
+
+    bool requestCreateTask(const TaskBase::CreateArg& rArg);
+    TaskBase* createTaskSync(const TaskBase::CreateArg& arg);
+    bool requestTakeover(const TaskBase::TakeoverArg& rArg);
+    bool requestTransition(TaskBase* pFrom, TaskBase* pTo, FaderTaskBase* pFader);
+    bool requestPush(const TaskBase::PushArg& rArg);
+    TaskBase* pushSync(const TaskBase::PushArg& rArg);
+    bool requestPop(TaskBase* pTask, FaderTaskBase* pFader);
+    bool requestPop(TaskBase* pFrom, TaskBase* pTo, FaderTaskBase* pFader);
+    bool popSync(TaskBase* pTask);
+    void requestDestroyTask(TaskBase* pTask, FaderTaskBase* pFader);
+    void destroyTaskSync(TaskBase* task);
+    void destroyAllAndCreateRoot();
+    TaskBase* findTask(const TaskClassID& rClassID);
 
     void beforeCalc();
     void afterCalc();
-
-    TaskBase* createTaskSync(const TaskBase::CreateArg& arg);
 
     template <typename T>
     T* createSingletonTaskSync(const TaskBase::CreateArg& arg)
@@ -60,6 +84,20 @@ public:
 
         return T::instance();
     }
+
+    void doInit_();
+    void beginCreateRootTask_();
+    void prepare_(Thread* pThread, MessageQueue::Element msg);
+    void createHeap_(HeapArray* pHeapArray, const TaskBase::CreateArg& rArg);
+    TaskBase* doCreateTask_(const TaskBase::CreateArg& rArg, HeapArray* pHeapArray);
+    bool changeTaskState_(TaskBase* task, TaskBase::State state);
+    bool doRequestCreateTask_(const TaskBase::CreateArg& rArg,
+                              DelegateEvent<TaskBase*>::Slot* pSlot);
+    void appendToList_(TaskBase::List& ls, TaskBase* task);
+    void doDestroyTask_(TaskBase* task);
+    bool destroyable_(TaskBase* pTask);
+    void calcCreation_();
+    void calcDestruction_();
 
     CriticalSection mCriticalSection;
     Framework* mParentFramework;
@@ -78,8 +116,6 @@ public:
     TaskBase::CreateArg mRootTaskCreateArg;
     TaskMgr::InitializeArg mInitializeArg;
     MethodTreeNode mCalcDestructionTreeNode;
-    u32 useless1;
-    u32 useless2;
 };
 
 }  // namespace sead

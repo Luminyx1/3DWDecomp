@@ -11,6 +11,9 @@ namespace agl {
 class GPUMemAddrBase {
 public:
     GPUMemAddrBase() {}
+    GPUMemAddrBase(const GPUMemAddrBase& rOther)
+        : mMemoryPool(rOther.mMemoryPool), mAlignmentAddr(rOther.mAlignmentAddr),
+          mMemoryBlock(rOther.mMemoryBlock) {}
     GPUMemAddrBase(const GPUMemAddrBase& other, int alignmentOffset)
         : mMemoryPool(other.mMemoryPool), mAlignmentAddr(other.mAlignmentAddr + alignmentOffset),
           mMemoryBlock(other.mMemoryBlock) {}
@@ -34,5 +37,10 @@ private:
 };
 
 template <typename T>
-class GPUMemAddr : public GPUMemAddrBase {};
+class GPUMemAddr : public GPUMemAddrBase {
+public:
+    GPUMemAddr() = default;
+    GPUMemAddr(const GPUMemAddrBase& rAddr) : GPUMemAddrBase(rAddr) {}
+    GPUMemAddr(const GPUMemBlockBase& rBlock, u64 offset) : GPUMemAddrBase(rBlock, offset) {}
+};
 }  // namespace agl

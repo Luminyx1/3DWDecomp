@@ -18,56 +18,10 @@ static constexpr const char* sParameterTypeNames[] = {
     "buffer_f32", "string256", "quat",   "u32",    "buffer_u32", "buffer_binary", "stringRef",
 };
 
-u32 ParameterBase::calcHash(const sead::SafeString& key)
-{
-    return sead::HashCRC32::calcStringHash(key);
-}
-
-ParameterBase::ParameterBase()
-{
-    initializeListNode("default", "parameter", "", nullptr);
-}
-
-ParameterBase::ParameterBase(const sead::SafeString& name, const sead::SafeString& label,
-                             IParameterObj* param_obj)
-{
-    initializeListNode(name, label, "", param_obj);
-}
-
-ParameterBase::ParameterBase(const sead::SafeString& name, const sead::SafeString& label,
-                             const sead::SafeString& meta, IParameterObj* param_obj)
-{
-    initializeListNode(name, label, meta, param_obj);
-}
-
-void ParameterBase::initializeListNode(const sead::SafeString& name, const sead::SafeString& label,
-                                       const sead::SafeString& meta, IParameterObj* param_obj)
-{
-    mNext = nullptr;
-
-#ifdef SEAD_DEBUG
-    if (ParameterStringMgr::instance())
-    {
-        mName = ParameterStringMgr::instance()->appendString(name);
-        mLabel = ParameterStringMgr::instance()->appendString(label);
-        mMeta = ParameterStringMgr::instance()->appendString(meta);
-    }
-    else
-    {
-        mName = nullptr;
-        mLabel = nullptr;
-        mMeta = nullptr;
-    }
-#endif
-
-    mNameHash = calcHash(name);
-
-    if (param_obj)
-    {
-        param_obj->pushBackListNode(this);
-    }
-}
-
+/**
+ * Returns the parameter's name (empty in release builds).
+ * @return the parameter name
+ */
 sead::SafeString ParameterBase::getParameterName() const
 {
 #ifdef SEAD_DEBUG
@@ -77,6 +31,10 @@ sead::SafeString ParameterBase::getParameterName() const
 #endif
 }
 
+/**
+ * Returns the parameter's label (empty in release builds).
+ * @return the parameter label
+ */
 sead::SafeString ParameterBase::getLabel() const
 {
 #ifdef SEAD_DEBUG
@@ -86,6 +44,10 @@ sead::SafeString ParameterBase::getLabel() const
 #endif
 }
 
+/**
+ * Returns the parameter's meta string (empty in release builds).
+ * @return the parameter meta string
+ */
 sead::SafeString ParameterBase::getMeta() const
 {
 #ifdef SEAD_DEBUG
@@ -95,6 +57,10 @@ sead::SafeString ParameterBase::getMeta() const
 #endif
 }
 
+/**
+ * Returns the XML tag used for parameters.
+ * @return the tag name
+ */
 const char* ParameterBase::getTagName()
 {
     return "param";
@@ -120,7 +86,11 @@ const char* ParameterBase::getParameterTypeName(ParameterType type)
     return sParameterTypeNames[u32(type)];
 }
 
-// NON_MATCHING: Clang emits a switch...
+/**
+ * Checks whether a resource of the given type can be applied to this parameter.
+ * @param type resource parameter type
+ * @return whether the type is compatible
+ */
 bool ParameterBase::isSafeType(ParameterType type) const
 {
     if (getParameterType() == type)
@@ -139,7 +109,8 @@ bool ParameterBase::isSafeType(ParameterType type) const
 
     for (const auto pair : pairs)
     {
-        if (type == pair.first && getParameterType() == pair.second)
+        const auto current = getParameterType();
+        if (type == pair.first && current == pair.second)
         {
             return true;
         }
@@ -155,62 +126,82 @@ bool ParameterBase::isSafeType(ParameterType type) const
     return false;
 }
 
+/**
+ * Verifies a resource type against this parameter (always succeeds in release builds).
+ * @param type resource parameter type
+ * @return true
+ */
 bool ParameterBase::verifyType(ParameterType type) const
 {
-    if (isSafeType(type))
-    {
-        return true;
-    }
-
-    sead::BufferingPrintFormatter ss;
-    ss << "!!! AGL ERROR !!! Instance ParameterType = %s Resource ParameterType = %s\n"
-       << sParameterTypeNames[u32(getParameterType())] << sParameterTypeNames[u32(type)]
-       << sead::flush;
-    return false;
+    return true;
 }
 
-bool ParameterBase::copy(const ParameterBase& other)
+/**
+ * Copies another parameter's value if its type and name hash match.
+ * @param rOther parameter to copy from
+ * @return whether the value was copied
+ */
+bool ParameterBase::copy(const ParameterBase& rOther)
 {
-    if (getParameterType() != other.getParameterType() || mNameHash != other.mNameHash)
+    if (getParameterType() != rOther.getParameterType() || mNameHash != rOther.mNameHash)
     {
         return false;
     }
 
-    copyUnsafe(other);
+    copyUnsafe(rOther);
     return true;
 }
 
-void ParameterBase::copyUnsafe(const ParameterBase& other)
+/**
+ * Copies another parameter's value without checking the type.
+ * @param rOther parameter to copy from
+ */
+void ParameterBase::copyUnsafe(const ParameterBase& rOther)
 {
-    if (other.getParameterType() == ParameterType::StringRef)
+    if (rOther.getParameterType() == ParameterType::StringRef)
     {
-        auto* source = static_cast<const sead::SafeString*>(other.typePtr());
+        auto* source = static_cast<const sead::SafeString*>(rOther.typePtr());
         auto* dest = static_cast<sead::SafeString*>(typePtr());
         *dest = *source;
         return;
     }
 
     auto* dest = ptrT<u8>();
-    auto* src = other.ptrT<u8>();
+    auto* src = rOther.ptrT<u8>();
     const s32 n = size();
     for (s32 i = 0; i < n; ++i)
     {
-        *dest++ = *src++;
+        *dest = *src;
+        ++dest;
+        ++src;
     }
 }
 
+/**
+ * Sets this f32 parameter to the linear interpolation of two parameters.
+ * @param rParam1 value at t = 0
+ * @param rParam2 value at t = 1
+ * @param t interpolation factor
+ */
 template <>
-void ParameterBase::copyLerp_<f32>(const ParameterBase& param1, const ParameterBase& param2, f32 t)
+void ParameterBase::copyLerp_<f32>(const ParameterBase& rParam1, const ParameterBase& rParam2,
+                                   f32 t)
 {
-    *ptrT<f32>() = sead::lerp(*param1.ptrT<f32>(), *param2.ptrT<f32>(), t);
+    *ptrT<f32>() = sead::lerp(*rParam1.ptrT<f32>(), *rParam2.ptrT<f32>(), t);
 }
 
+/**
+ * Sets this quaternion parameter to the spherical interpolation of two parameters.
+ * @param rParam1 value at t = 0
+ * @param rParam2 value at t = 1
+ * @param t interpolation factor
+ */
 template <>
-void ParameterBase::copyLerp_<sead::Quatf>(const ParameterBase& param1, const ParameterBase& param2,
-                                           f32 t)
+void ParameterBase::copyLerp_<sead::Quatf>(const ParameterBase& rParam1,
+                                           const ParameterBase& rParam2, f32 t)
 {
-    sead::QuatCalcCommon<f32>::slerpTo(*ptrT<sead::Quatf>(), *param1.ptrT<sead::Quatf>(),
-                                       *param2.ptrT<sead::Quatf>(), t);
+    sead::QuatCalcCommon<f32>::slerpTo(*ptrT<sead::Quatf>(), *rParam1.ptrT<sead::Quatf>(),
+                                       *rParam2.ptrT<sead::Quatf>(), t);
 }
 
 template <typename T>
@@ -301,6 +292,10 @@ static void applyResourceSimple_(ParameterBase& param, const ResParameter& res)
     sead::MemUtil::copy(dest, src, copy_size);
 }
 
+/**
+ * Applies a resource parameter's value to this parameter.
+ * @param res resource parameter
+ */
 void ParameterBase::applyResource(ResParameter res)
 {
 #ifdef SEAD_DEBUG
@@ -420,6 +415,10 @@ void ParameterBase::applyResource(ResParameter res, f32 t)
     postApplyResource_(res.getData<void>(), res.getDataSize());
 }
 
+/**
+ * Checks whether this parameter's type supports interpolation.
+ * @return whether the parameter can be interpolated
+ */
 bool ParameterBase::isInterpolatable() const
 {
     const auto type = getParameterType();
@@ -428,20 +427,79 @@ bool ParameterBase::isInterpolatable() const
            type == ParameterType::Color || type == ParameterType::Quat;
 }
 
-size_t ParameterBase::binarize(void* binary) const
+void ParameterBase::genMessageParameter(sead::hostio::Context* pContext,
+                                        const sead::SafeString& rLabel)
 {
-    SEAD_ASSERT(binary != nullptr);
+    const char* name = getParameterName().cstr();
+
+    switch (getParameterType())
+    {
+    case ParameterType::Bool:
+        typePtr();
+        break;
+    case ParameterType::F32:
+        typePtr();
+        break;
+    case ParameterType::Int:
+        typePtr();
+        break;
+    case ParameterType::Vec2:
+        typePtr();
+        break;
+    case ParameterType::Vec3:
+        typePtr();
+        break;
+    case ParameterType::Vec4:
+        typePtr();
+        break;
+    case ParameterType::Color:
+        typePtr();
+        break;
+    case ParameterType::String32:
+        typePtr();
+        break;
+    case ParameterType::String64:
+        typePtr();
+        break;
+    case ParameterType::String256:
+        typePtr();
+        break;
+    case ParameterType::Quat:
+        typePtr();
+        break;
+    case ParameterType::U32:
+        typePtr();
+        break;
+    case ParameterType::StringRef:
+    {
+        const auto* string = static_cast<const sead::SafeString*>(typePtr());
+        sead::FormatFixedSafeString<1024> meta("%s (unmodifiable) [%s]", name, string->cstr());
+        break;
+    }
+    default:
+        break;
+    }
+}
+
+/**
+ * Writes this parameter's binary representation.
+ * @param pBinary destination buffer
+ * @return number of bytes written
+ */
+size_t ParameterBase::binarize(void* pBinary) const
+{
+    SEAD_ASSERT(pBinary != nullptr);
 
     size_t binary_size;
     if (getParameterType() != ParameterType::Bool)
     {
         binary_size = calcBinarizeSize();
-        sead::MemUtil::copy(binary, ptr(), binary_size);
+        sead::MemUtil::copy(pBinary, ptr(), binary_size);
     }
     else
     {
         binary_size = sizeof(u32);
-        *static_cast<u32*>(binary) = *ptrT<bool>();
+        *static_cast<u32*>(pBinary) = *ptrT<bool>();
     }
     return binary_size;
 }
@@ -494,78 +552,84 @@ bool ParameterBase::makeZero()
     return false;
 }
 
+/**
+ * Generates host IO messages for the direction (empty in release builds).
+ * @param pContext host IO context
+ */
+void ParameterDirection3f::genMessageParameter(sead::hostio::Context* pContext) {}
+
 ParameterBase* ParameterBase::createByTypeName(const sead::SafeString& name,
                                                const sead::SafeString& bufferSize)
 {
-    if (name.isEqual(getParameterTypeName(ParameterType::Bool)))
+    if (name.isEqual("bool"))
     {
         return new Parameter<bool>;
     }
-    if (name.isEqual(getParameterTypeName(ParameterType::F32)))
+    if (name.isEqual("f32"))
     {
         return new Parameter<f32>;
     }
-    if (name.isEqual(getParameterTypeName(ParameterType::Int)))
+    if (name.isEqual("int"))
     {
         return new Parameter<s32>;
     }
-    if (name.isEqual(getParameterTypeName(ParameterType::U32)))
+    if (name.isEqual("u32"))
     {
         return new Parameter<u32>;
     }
-    if (name.isEqual(getParameterTypeName(ParameterType::Vec2)))
+    if (name.isEqual("vec2"))
     {
         return new Parameter<sead::Vector2f>;
     }
-    if (name.isEqual(getParameterTypeName(ParameterType::Vec3)))
+    if (name.isEqual("vec3"))
     {
         return new Parameter<sead::Vector3f>;
     }
-    if (name.isEqual(getParameterTypeName(ParameterType::Vec4)))
+    if (name.isEqual("vec4"))
     {
         return new Parameter<sead::Vector4f>;
     }
-    if (name.isEqual(getParameterTypeName(ParameterType::Color)))
+    if (name.isEqual("color"))
     {
         return new Parameter<sead::Color4f>;
     }
-    if (name.isEqual(getParameterTypeName(ParameterType::Quat)))
+    if (name.isEqual("quat"))
     {
         return new Parameter<sead::Quatf>;
     }
-    if (name.isEqual(getParameterTypeName(ParameterType::String32)))
+    if (name.isEqual("string32"))
     {
         return new Parameter<sead::FixedSafeString<32>>;
     }
-    if (name.isEqual(getParameterTypeName(ParameterType::String64)))
+    if (name.isEqual("string64"))
     {
         return new Parameter<sead::FixedSafeString<64>>;
     }
-    if (name.isEqual(getParameterTypeName(ParameterType::String256)))
+    if (name.isEqual("string256"))
     {
         return new Parameter<sead::FixedSafeString<256>>;
     }
-    if (name.isEqual(getParameterTypeName(ParameterType::StringRef)))
+    if (name.isEqual("stringRef"))
     {
         return new Parameter<sead::SafeString>;
     }
-    if (name.isEqual(getParameterTypeName(ParameterType::Curve1)))
+    if (name.isEqual("curve1"))
     {
         return new ParameterCurve<1>;
     }
-    if (name.isEqual(getParameterTypeName(ParameterType::Curve2)))
+    if (name.isEqual("curve2"))
     {
         return new ParameterCurve<2>;
     }
-    if (name.isEqual(getParameterTypeName(ParameterType::Curve3)))
+    if (name.isEqual("curve3"))
     {
         return new ParameterCurve<3>;
     }
-    if (name.isEqual(getParameterTypeName(ParameterType::Curve4)))
+    if (name.isEqual("curve4"))
     {
         return new ParameterCurve<4>;
     }
-    if (name.isEqual(getParameterTypeName(ParameterType::BufferInt)))
+    if (name.isEqual("buffer_int"))
     {
         ParameterBuffer<s32>* buffer = new ParameterBuffer<s32>;
         u32 size =
@@ -573,7 +637,7 @@ ParameterBase* ParameterBase::createByTypeName(const sead::SafeString& name,
         buffer->allocateBuffer(nullptr, size);
         return buffer;
     }
-    if (name.isEqual(getParameterTypeName(ParameterType::BufferF32)))
+    if (name.isEqual("buffer_f32"))
     {
         ParameterBuffer<f32>* buffer = new ParameterBuffer<f32>;
         u32 size =
@@ -581,7 +645,7 @@ ParameterBase* ParameterBase::createByTypeName(const sead::SafeString& name,
         buffer->allocateBuffer(nullptr, size);
         return buffer;
     }
-    if (name.isEqual(getParameterTypeName(ParameterType::BufferU32)))
+    if (name.isEqual("buffer_u32"))
     {
         ParameterBuffer<u32>* buffer = new ParameterBuffer<u32>;
         u32 size =
@@ -589,7 +653,7 @@ ParameterBase* ParameterBase::createByTypeName(const sead::SafeString& name,
         buffer->allocateBuffer(nullptr, size);
         return buffer;
     }
-    if (name.isEqual(getParameterTypeName(ParameterType::BufferBinary)))
+    if (name.isEqual("buffer_binary"))
     {
         ParameterBuffer<u8>* buffer = new ParameterBuffer<u8>;
         u32 size =
@@ -598,6 +662,56 @@ ParameterBase* ParameterBase::createByTypeName(const sead::SafeString& name,
         return buffer;
     }
     return nullptr;
+}
+
+u32 ParameterBase::calcHash(const sead::SafeString& key)
+{
+    return sead::HashCRC32::calcStringHash(key);
+}
+
+ParameterBase::ParameterBase()
+{
+    initializeListNode("default", "parameter", "", nullptr);
+}
+
+ParameterBase::ParameterBase(const sead::SafeString& name, const sead::SafeString& label,
+                             IParameterObj* param_obj)
+{
+    initializeListNode(name, label, "", param_obj);
+}
+
+ParameterBase::ParameterBase(const sead::SafeString& name, const sead::SafeString& label,
+                             const sead::SafeString& meta, IParameterObj* param_obj)
+{
+    initializeListNode(name, label, meta, param_obj);
+}
+
+void ParameterBase::initializeListNode(const sead::SafeString& name, const sead::SafeString& label,
+                                       const sead::SafeString& meta, IParameterObj* param_obj)
+{
+    mNext = nullptr;
+
+#ifdef SEAD_DEBUG
+    if (ParameterStringMgr::instance())
+    {
+        mName = ParameterStringMgr::instance()->appendString(name);
+        mLabel = ParameterStringMgr::instance()->appendString(label);
+        mMeta = ParameterStringMgr::instance()->appendString(meta);
+    }
+    else
+    {
+        mName = nullptr;
+        mLabel = nullptr;
+        mMeta = nullptr;
+    }
+#endif
+
+    mNameHash = calcHash(name);
+
+    if (param_obj)
+    {
+        param_obj->pushBackListNode(this);
+    }
 }
 
 }  // namespace agl::utl

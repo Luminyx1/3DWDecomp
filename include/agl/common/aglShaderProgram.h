@@ -35,6 +35,7 @@ public:
     bool hasStage(ShaderType) const;
     const Shader& getShader(ShaderType) const;
     Shader* getShader(ShaderType);
+    const void* getRegisterUniformArray() const { return reinterpret_cast<const void*>(_8[11]); }
 
 private:
     u64* _8;

@@ -6,7 +6,6 @@ namespace agl::utl
 
 IParameterIO::IParameterIO()
 {
-    _1cc = 1;
     mType = "xml";
     mVersion = 0;
     setParameterListName_("param_root");
@@ -14,12 +13,15 @@ IParameterIO::IParameterIO()
 
 IParameterIO::IParameterIO(const sead::SafeString& name, u32 version)
 {
-    _1cc = 0;
     mType = name;
     mVersion = version;
     setParameterListName_("param_root");
 }
 
+/**
+ * Applies a parameter archive to this IO, reporting version mismatches.
+ * @param arc archive to apply
+ */
 void IParameterIO::applyResParameterArchive(ResParameterArchive arc)
 {
     SEAD_ASSERT(arc.isValid());
@@ -33,6 +35,12 @@ void IParameterIO::applyResParameterArchive(ResParameterArchive arc)
     applyResParameterList(arc.getRootList());
 }
 
+/**
+ * Applies the interpolation of two parameter archives to this IO.
+ * @param arc_a archive used at t = 0
+ * @param arc_b archive used at t = 1
+ * @param t interpolation factor
+ */
 void IParameterIO::applyResParameterArchiveLerp(ResParameterArchive arc_a,
                                                 ResParameterArchive arc_b, f32 t)
 {
@@ -52,9 +60,47 @@ void IParameterIO::applyResParameterArchiveLerp(ResParameterArchive arc_a,
     applyResParameterList(arc_a.getRootList(), arc_b.getRootList(), t);
 }
 
-bool IParameterIO::isCompleteArchive(ResParameterArchive archive, bool x) const
+void IParameterIO::genMessageIO(sead::hostio::Context* pContext, u32 flags)
 {
-    return isComplete(archive.getRootList(), x);
+    if (flags & 1)
+    {
+        sead::FormatFixedSafeString<1024> meta("Save (*.%s)", mType.cstr());
+    }
+
+    if (flags & 2)
+    {
+        sead::FormatFixedSafeString<1024> meta("Load (*.%s)", mType.cstr());
+    }
+
+    const char* is_enable = "false";
+    if (mPath != sead::SafeString::cEmptyString)
+    {
+        sead::FormatFixedSafeString<1024> meta("%s", mPath.cstr());
+        is_enable = "true";
+    }
+
+    {
+        sead::FormatFixedSafeString<1024> meta("Mode = Small, IsEnable=%s", is_enable);
+    }
+    {
+        sead::FormatFixedSafeString<1024> meta("Size of last binary loaded:%d[byte]", mResFileSize);
+    }
 }
+
+/**
+ * Checks whether an archive contains every list and object of this IO.
+ * @param archive archive to check
+ * @param checkValues forwarded to isComplete
+ * @return whether the archive is complete
+ */
+bool IParameterIO::isCompleteArchive(ResParameterArchive archive, bool checkValues) const
+{
+    return isComplete(archive.getRootList(), checkValues);
+}
+
+/**
+ * Destroys the parameter IO.
+ */
+IParameterIO::~IParameterIO() = default;
 
 }  // namespace agl::utl

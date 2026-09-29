@@ -3,6 +3,7 @@
 
 #include <basis/seadTypes.h>
 #include <framework/seadHeapPolicies.h>
+#include <prim/seadSafeString.h>
 
 namespace sead
 {
@@ -43,6 +44,28 @@ public:
     TaskClassID(s32 i) : mType(Type::cInt) { mID.mInt = i; }
     TaskClassID(TaskFactory f) : mType(Type::cFactory) { mID.mFactory = f; }
     TaskClassID(const char* s) : mType(Type::cString) { mID.mString = s; }
+
+    TaskBase* create(const TaskConstructArg& arg) const;
+
+    bool operator==(const TaskClassID& rhs) const
+    {
+        if (mType != rhs.mType)
+        {
+            return false;
+        }
+
+        switch (mType)
+        {
+        case Type::cInt:
+            return mID.mInt == rhs.mID.mInt;
+        case Type::cFactory:
+            return mID.mFactory == rhs.mID.mFactory;
+        case Type::cString:
+            return SafeString(mID.mString) == SafeString(rhs.mID.mString);
+        default:
+            return false;
+        }
+    }
 
 public:
     Type mType = Type::cInvalid;

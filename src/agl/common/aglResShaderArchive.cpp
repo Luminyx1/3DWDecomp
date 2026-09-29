@@ -74,6 +74,33 @@ void* modifyBinaryPtr(void* base_ptr, void* ptr)
 namespace agl
 {
 
+/**
+ * Gets the supported archive version.
+ * @return the archive version
+ */
+u32 ResShaderArchiveData::getVersion()
+{
+    return cVersion;
+}
+
+/**
+ * Gets the archive signature ("SHAA").
+ * @return the archive signature
+ */
+u32 ResShaderArchiveData::getSignature()
+{
+    return cSignature;
+}
+
+/**
+ * Gets the archive file extension.
+ * @return the file extension
+ */
+const char* ResShaderArchiveData::getExtension()
+{
+    return "sharc";
+}
+
 void ResShaderBinary::modifyBinaryEndian()
 {
     size_t size = 0;
@@ -189,29 +216,14 @@ void ResShaderBinary::setUp()
 
 const char* ResShaderVariation::getID() const
 {
-    const char* value = getName() + ref().mNameLen;
-
-    for (s32 i = 0, index = static_cast<s32>(ref().mValueNum);; i++)
-    {
-        while (*value == '\0')
-        {
-            value++;
-        }
-
-        if (i == index)
-        {
-            break;
-        }
-
-        while (*value != '\0')
-        {
-            value++;
-        }
-    }
-
-    return value;
+    return getValue(ref().mValueNum);
 }
 
+/**
+ * Gets one of the variation's values.
+ * @param index value index
+ * @return the value string
+ */
 const char* ResShaderVariation::getValue(s32 index) const
 {
     // clang-format off
@@ -255,36 +267,44 @@ ResShaderSymbol ResShaderSymbolArray::searchResShaderSymbolByID(const sead::Safe
     return nullptr;
 }
 
-// NON_MATCHING: weird optimizations with bit magic to tell whether more than one loop iteration has
-// to be done
+/**
+ * Gets the macro array of a shader stage.
+ * @param type shader stage
+ * @return the macro array
+ */
 ResShaderMacroArray ResShaderProgram::getResShaderMacroArray(ShaderType type) const
 {
     const ResShaderMacroArrayData* macro_array;
     {
         const DataType* const data = ptr();
-        macro_array = (const ResShaderMacroArrayData*)((uintptr_t)(data + 1) + data->mNameLen);
+        macro_array = (const ResShaderMacroArrayData*)(reinterpret_cast<const char*>(data + 1) + data->mNameLen);
     }
 
     for (s32 i = 0; i < type; i++)
     {
-        macro_array = (const ResShaderMacroArrayData*)((uintptr_t)macro_array + macro_array->mSize);
+        macro_array = (const ResShaderMacroArrayData*)(reinterpret_cast<const char*>(macro_array) +
+                                                       macro_array->mSize);
     }
 
     return macro_array;
 }
 
-// NON_MATCHING: operand order in ADD
+/**
+ * Gets the variation array, which follows the macro arrays of all shader stages.
+ * @return the variation array
+ */
 ResShaderVariationArray ResShaderProgram::getResShaderVariationArray() const
 {
     const ResShaderMacroArrayData* macro_array;
     {
         const DataType* const data = ptr();
-        macro_array = (const ResShaderMacroArrayData*)((uintptr_t)(data + 1) + data->mNameLen);
+        macro_array = (const ResShaderMacroArrayData*)(reinterpret_cast<const char*>(data + 1) + data->mNameLen);
     }
 
     for (s32 i = 0; i < cShaderType_Num; i++)
     {
-        macro_array = (const ResShaderMacroArrayData*)((uintptr_t)macro_array + macro_array->mSize);
+        macro_array = (const ResShaderMacroArrayData*)(reinterpret_cast<const char*>(macro_array) +
+                                                       macro_array->mSize);
     }
 
     return (const ResShaderVariationArrayData*)macro_array;
@@ -326,33 +346,34 @@ ResShaderSymbolArray ResBinaryShaderProgram::getResShaderSymbolArray(ShaderSymbo
     return symbol_array;
 }
 
-// NON_MATCHING: heavily depends on the two (mismatching) functions above, probably a lot of
-// mismatches carried over
+namespace
+{
+ResShaderUniformBlockArray getResShaderUniformBlockArray(const ResShaderProgram& rProgram)
+{
+    const auto* const data = rProgram.getResShaderVariationDefaultArray().ptr();
+    return reinterpret_cast<const ResShaderUniformBlockArray::DataType*>(
+        reinterpret_cast<uintptr_t>(data) + data->mSize);
+}
+}  // namespace
+
+/**
+ * Converts the archive to host endianness if that has not been done yet.
+ * @return true
+ */
 bool ResShaderArchive::setUp()
 {
-#ifdef cafe
-    SEAD_ASSERT(isValid());
-#endif
-
     if (!isEndianResolved())
     {
-#ifdef cafe
         ModifyEndianU32(modifyEndian(), ptr(), sizeof(DataType));
 
-        verify();
-#endif
-#ifdef SWITCH
-        ModifyEndianU32(false, ptr(), sizeof(DataType));
-#endif
+        ResShaderProgramArray progArray = getResShaderProgramArray();
+        progArray.modifyEndianArray(modifyEndian());
 
-        ResShaderProgramArray prog_arr = getResShaderProgramArray();
-        prog_arr.modifyEndianArray(modifyEndian());
+        ResShaderSourceArray sourceArray = getResShaderSourceArray();
+        sourceArray.modifyEndianArray(modifyEndian());
 
-        ResShaderSourceArray source_arr = getResShaderSourceArray();
-        source_arr.modifyEndianArray(modifyEndian());
-
-        for (ResShaderProgramArray::iterator it = prog_arr.begin(), it_end = prog_arr.end();
-             it != it_end; ++it)
+        for (ResShaderProgramArray::iterator it = progArray.begin(), itEnd = progArray.end();
+             it != itEnd; ++it)
         {
             ResShaderProgram prog(&(*it));
 
@@ -364,22 +385,22 @@ bool ResShaderArchive::setUp()
             prog.getResShaderVariationArray().modifyEndianArray(modifyEndian());
             prog.getResShaderVariationDefaultArray().modifyEndianArray(modifyEndian());
 
-            for (s32 type = 0; type < cShaderSymbolType_Num; type++)
+            ResShaderUniformBlockArray blockArray = getResShaderUniformBlockArray(prog);
+            blockArray.modifyEndianArray(modifyEndian());
+            for (ResShaderUniformBlockArray::iterator block = blockArray.begin(),
+                                                      blockEnd = blockArray.end();
+                 block != blockEnd; ++block)
             {
-                modifyEndianResSymbolArray(modifyEndian(),
-                                           prog.getResShaderSymbolArray(ShaderSymbolType(type)),
-                                           ShaderSymbolType(type));
+                ResShaderUniformBlock(&(*block))
+                    .getResShaderUniformArray()
+                    .modifyEndianArray(modifyEndian());
             }
         }
 
+        getResShaderArchiveInfoArray().modifyEndianArray(modifyEndian());
+
         setEndianResolved();
     }
-#ifdef cafe
-    else
-    {
-        verify();
-    }
-#endif
 
     return true;
 }
@@ -459,11 +480,6 @@ bool ResBinaryShaderArchive::setUp(bool le_resolve_pointers)
     }
 
     return true;
-}
-
-const char* ResShaderArchiveData::getExtension()
-{
-    return "sharc";
 }
 
 const char* ResBinaryShaderArchiveData::getExtension()

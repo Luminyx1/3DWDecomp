@@ -1,21 +1,25 @@
 #include "utility/aglAtomicPtrArray.h"
-#include <algorithm>
 #include <basis/seadNew.h>
 
 namespace agl::detail
 {
 
-void AtomicPtrArrayImpl::setBuffer(s32 ptrNumMax, void* buf)
+/**
+ * Uses an external buffer for the pointers.
+ * @param ptrNumMax capacity of the buffer
+ * @param pBuffer buffer to use
+ */
+void AtomicPtrArrayImpl::setBuffer(s32 ptrNumMax, void* pBuffer)
 {
     if (ptrNumMax >= 1)
     {
-        if (!buf)
+        if (!pBuffer)
         {
             SEAD_ASSERT_MSG(false, "buf is null");
             return;
         }
 
-        mPtrs = static_cast<void**>(buf);
+        mPtrs = static_cast<void**>(pBuffer);
         mPtrNum = 0;
         mPtrNumMax = ptrNumMax;
     }
@@ -25,13 +29,19 @@ void AtomicPtrArrayImpl::setBuffer(s32 ptrNumMax, void* buf)
     }
 }
 
-void AtomicPtrArrayImpl::allocBuffer(s32 ptrNumMax, sead::Heap* heap, s32 alignment)
+/**
+ * Allocates the pointer buffer from a heap.
+ * @param ptrNumMax capacity of the buffer
+ * @param pHeap heap to allocate from
+ * @param alignment buffer alignment
+ */
+void AtomicPtrArrayImpl::allocBuffer(s32 ptrNumMax, sead::Heap* pHeap, s32 alignment)
 {
     SEAD_ASSERT(mPtrs == nullptr);
 
     if (ptrNumMax >= 1)
     {
-        setBuffer(ptrNumMax, new (heap, alignment) u8[s32(sizeof(void*)) * ptrNumMax]);
+        setBuffer(ptrNumMax, new (pHeap, alignment) u8[s32(sizeof(void*)) * ptrNumMax]);
     }
     else
     {
@@ -39,6 +49,9 @@ void AtomicPtrArrayImpl::allocBuffer(s32 ptrNumMax, sead::Heap* heap, s32 alignm
     }
 }
 
+/**
+ * Frees the pointer buffer.
+ */
 void AtomicPtrArrayImpl::freeBuffer()
 {
     if (isBufferReady())
@@ -50,6 +63,11 @@ void AtomicPtrArrayImpl::freeBuffer()
     }
 }
 
+/**
+ * Removes a range of pointers, moving the following ones forward.
+ * @param pos index of the first pointer to remove
+ * @param count number of pointers to remove
+ */
 void AtomicPtrArrayImpl::erase(s32 pos, s32 count)
 {
     if (pos < 0)
@@ -82,27 +100,119 @@ void AtomicPtrArrayImpl::erase(s32 pos, s32 count)
     mPtrNum = ptr_num - count;
 }
 
-// NON_MATCHING: semantically equivalent (Fisher–Yates)
-void AtomicPtrArrayImpl::shuffle(sead::Random* random)
+/**
+ * Shuffles the pointers (Fisher-Yates).
+ * @param pRandom random number generator to use
+ */
+void AtomicPtrArrayImpl::shuffle(sead::Random* pRandom)
 {
-    SEAD_ASSERT(random);
-    for (s32 i = mPtrNum - 1; i > 0; --i)
+    SEAD_ASSERT(pRandom);
+    for (s32 i = mPtrNum; i > 1; --i)
     {
-        swap(i, random->getS32Range(0, i + 1));
+        swap(i - 1, pRandom->getS32Range(0, i));
     }
+
 }
 
-// NON_MATCHING: Nintendo implemented a sorting algorithm manually
 void AtomicPtrArrayImpl::sort(CompareCallbackImpl cmp)
 {
-    std::sort(mPtrs, mPtrs + mPtrNum, [cmp](void* a, void* b) { return cmp(a, b) < 0; });
+    void** ptrs = mPtrs;
+    if (mPtrNum < 2)
+    {
+        return;
+    }
+
+    s32 lo = 0;
+    s32 hi = mPtrNum - 1;
+    do
+    {
+        s32 last = lo;
+        for (s32 i = lo; i < hi; ++i)
+        {
+            void** p = &ptrs[i];
+            if (cmp(p[0], p[1]) > 0)
+            {
+                void* tmp = p[1];
+                p[1] = p[0];
+                p[0] = tmp;
+                last = i;
+            }
+        }
+        if (last <= lo)
+        {
+            break;
+        }
+        hi = last;
+
+        for (s32 i = hi; i > lo; --i)
+        {
+            void** p = &ptrs[i];
+            if (cmp(p[0], p[-1]) < 0)
+            {
+                void* tmp = p[-1];
+                p[-1] = p[0];
+                p[0] = tmp;
+                last = i;
+            }
+        }
+        lo = last;
+    } while (lo != hi);
 }
 
-// NON_MATCHING: Nintendo implemented heap sort manually
 void AtomicPtrArrayImpl::heapSort(CompareCallbackImpl cmp)
 {
-    std::make_heap(mPtrs, mPtrs + mPtrNum);
-    std::sort_heap(mPtrs, mPtrs + mPtrNum, [cmp](void* a, void* b) { return cmp(a, b) < 0; });
+    const s32 num = mPtrNum;
+    if (num < 2)
+    {
+        return;
+    }
+
+    void** ptrs = mPtrs;
+    for (s32 root = num / 2; root > 0; --root)
+    {
+        void* value = ptrs[root - 1];
+        s32 parent = root;
+        s32 child = parent * 2;
+        while (child <= num)
+        {
+            if (child < num && cmp(ptrs[child - 1], ptrs[child]) < 0)
+            {
+                child++;
+            }
+            if (cmp(value, ptrs[child - 1]) >= 0)
+            {
+                break;
+            }
+            ptrs[parent - 1] = ptrs[child - 1];
+            parent = child;
+            child = parent * 2;
+        }
+        ptrs[parent - 1] = value;
+    }
+
+    for (s64 size = num; size > 1; --size)
+    {
+        const s64 last = size - 1;
+        void* value = ptrs[last];
+        ptrs[last] = ptrs[0];
+        s32 parent = 1;
+        s32 child = 2;
+        while (child <= last)
+        {
+            if (child < last && cmp(ptrs[child - 1], ptrs[child]) < 0)
+            {
+                child++;
+            }
+            if (cmp(value, ptrs[child - 1]) >= 0)
+            {
+                break;
+            }
+            ptrs[parent - 1] = ptrs[child - 1];
+            parent = child;
+            child = parent * 2;
+        }
+        ptrs[parent - 1] = value;
+    }
 }
 
 }  // namespace agl::detail

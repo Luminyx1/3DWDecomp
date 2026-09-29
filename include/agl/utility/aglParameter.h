@@ -75,16 +75,11 @@ public:
     bool isSafeType(ParameterType type) const;
     bool verifyType(ParameterType type) const;
 
-    virtual bool copy(const ParameterBase& other);
-    virtual void copyUnsafe(const ParameterBase& other);
+    virtual bool copy(const ParameterBase& rOther);
+    virtual void copyUnsafe(const ParameterBase& rOther);
     virtual bool copyLerp(const ParameterBase& param1, const ParameterBase& param2, f32 t);
 
-#ifdef SEAD_DEBUG
-    virtual void genMessageParameter(sead::hostio::Context* context);
-    void genMessageParameter(sead::hostio::Context* context, const sead::SafeString&);
-    virtual void listenPropertyEventParameter(sead::hostio::Reflexible* reflexible,
-                                              const sead::hostio::PropertyEvent* event);
-#endif
+    void genMessageParameter(sead::hostio::Context* pContext, const sead::SafeString& rLabel);
 
     virtual void writeToXML(sead::XmlElement* element, sead::Heap* heap) const;
     virtual bool readFromXML(const sead::XmlElement& element, bool x);
@@ -100,7 +95,7 @@ public:
 
     void applyResource(ResParameter res);
     void applyResource(ResParameter res, f32 t);
-    void applyString(const sead::SafeString& string, bool x);
+    bool applyString(const sead::SafeString& rString, bool x);
     virtual void postApplyResource_(const void*, size_t) {}
     static ParameterBase* createByTypeName(const sead::SafeString& name,
                                            const sead::SafeString& bufferSize);
@@ -108,7 +103,7 @@ public:
     virtual bool isBinary() const { return false; }
     virtual bool isBinaryInternalBuffer() const { return true; }
     bool isInterpolatable() const;
-    size_t binarize(void* binary) const;
+    size_t binarize(void* pBinary) const;
     bool makeZero();
 
     static u32 calcHash(const sead::SafeString& key);
@@ -127,7 +122,7 @@ protected:
     friend class IParameterObj;
 
     template <typename T>
-    void copyLerp_(const ParameterBase& param1, const ParameterBase& param2, f32 t);
+    void copyLerp_(const ParameterBase& rParam1, const ParameterBase& rParam2, f32 t);
 
     u32 mNameHash;
     ParameterBase* mNext;
@@ -354,19 +349,17 @@ public:
     bool isBinaryInternalBuffer() const override { return mBufferAllocated; }
 
 protected:
-    s32 mBufferSize;
-    bool mBufferAllocated;
+    s32 mBufferSize = 0;
+    bool mBufferAllocated = false;
 };
 
 class ParameterDirection3f : public Parameter<sead::Vector3f> {
 public:
     ~ParameterDirection3f() override = default;
 
-#ifdef SEAD_DEBUG
-    void genMessageParameter(sead::hostio::Context* context) override;
-    void listenPropertyEventParameter(sead::hostio::Reflexible* reflexible,
-                                      const sead::hostio::PropertyEvent* event) override;
-#endif
+    void genMessageParameter(sead::hostio::Context* pContext);
+    void listenPropertyEventParameter(sead::hostio::Reflexible* pReflexible,
+                                      const sead::hostio::PropertyEvent* pEvent);
 };
 
 template <u32 N>

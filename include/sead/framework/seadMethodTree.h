@@ -16,7 +16,7 @@ class CriticalSection;
 template <typename T, typename U>
 class IDelegate2;
 
-class MethodTreeNode : public IDisposer, public TTreeNode<MethodTreeNode*>, public INamable
+class MethodTreeNode : public TTreeNode<MethodTreeNode*>, public INamable, public IDisposer
 {
     SEAD_RTTI_BASE(MethodTreeNode)
 
@@ -38,13 +38,22 @@ public:
         virtual bool isMatch(MethodTreeNode* node) = 0;
     };
 
-    // NON_MATCHING: stores for mPauseFlag, mPauseEventDelegate, mUserID
-    explicit MethodTreeNode(CriticalSection* cs) : TTreeNode(this)
+    MethodTreeNode() : TTreeNode(this), INamable("")
     {
-        mCriticalSection = cs;
         mPauseEventDelegate = nullptr;
+        mCriticalSection = nullptr;
         mUserID = nullptr;
         mDelegateHolder.construct(sead::Delegate<MethodTreeNode>());
+        mPauseFlag.makeAllZero();
+    }
+
+    explicit MethodTreeNode(CriticalSection* pCS) : TTreeNode(this), INamable("")
+    {
+        mPauseEventDelegate = nullptr;
+        mCriticalSection = pCS;
+        mUserID = nullptr;
+        mDelegateHolder.construct(sead::Delegate<MethodTreeNode>());
+        mPauseFlag.makeAllZero();
         setPauseFlag(cPause_Both);
     }
 

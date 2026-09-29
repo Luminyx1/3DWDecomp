@@ -1,12 +1,21 @@
 #include "utility/aglResParameter.h"
 #include <basis/seadRawPrint.h>
+#include <container/seadTreeMap.h>
 #include <math/seadVector.h>
 #include <prim/seadPtrUtil.h>
+#include <heap/seadHeap.h>
+#include <prim/seadMemUtil.h>
+#include <prim/seadStringUtil.h>
+#include "detail/aglPrivateResource.h"
 #include "utility/aglParameter.h"
 
 namespace agl::utl
 {
 
+/**
+ * Computes the size in bytes of this parameter's payload.
+ * @return payload size in bytes, 0 for an unknown type
+ */
 size_t ResParameter::getDataSize() const
 {
     switch (ParameterType(ptr()->getType()))
@@ -37,12 +46,12 @@ size_t ResParameter::getDataSize() const
         return 3 * 0x80;
     case ParameterType::Curve4:
         return 4 * 0x80;
+    case ParameterType::BufferBinary:
+        return getBufferSize();
     case ParameterType::BufferInt:
     case ParameterType::BufferF32:
     case ParameterType::BufferU32:
         return 4 * getBufferSize();
-    case ParameterType::BufferBinary:
-        return getBufferSize();
     default:
         SEAD_ASSERT_MSG(false, "illigal type:%d", ptr()->getType());
         return 0;
@@ -85,33 +94,217 @@ s32 ResParameterList::searchObjIndex(u32 obj_hash) const
     return -1;
 }
 
-// NON_MATCHING: partial implementation (unused conversion code is unimplemented)
-ResParameterArchive::ResParameterArchive(const void* p_data)
+static void getName_(sead::BufferedSafeString* pName, u32 hash,
+                     const sead::TreeMap<u32, const char*>* pNameTable)
 {
-    mpData = static_cast<ResParameterArchiveData*>(const_cast<void*>(p_data));
-    if (!p_data)
+    if (pNameTable)
+    {
+        if (const auto* node = pNameTable->find(hash))
+        {
+            pName->copy(node->value());
+            return;
+        }
+    }
+    pName->format("0x%08x", hash);
+}
+
+template <typename T>
+static void dumpBuffer_(ResParameter param)
+{
+    ParameterBuffer<T> buffer;
+    buffer.postApplyResource_(param.getData<void>(), param.getDataSize());
+}
+
+void ResParameterList::dump(s32 indent, const sead::TreeMap<u32, const char*>* pNameTable) const
+{
+    sead::FixedSafeString<32> name;
+    getName_(&name, getParameterListNameHash(), pNameTable);
+
+    for (auto it = listBegin(), end = listEnd(); it != end; ++it)
+    {
+        (*it).dump(++indent, pNameTable);
+    }
+
+    for (auto obj_it = objBegin(), obj_end = objEnd(); obj_it != obj_end; ++obj_it)
+    {
+        const ResParameterObj obj = *obj_it;
+        getName_(&name, obj.getParameterObjNameHash(), pNameTable);
+
+        for (auto it = obj.begin(), end = obj.end(); it != end; ++it)
+        {
+            const ResParameter param = *it;
+            getName_(&name, param.getParameterNameHash(), pNameTable);
+
+            switch (ParameterType(param.ptr()->getType()))
+            {
+            case ParameterType::BufferInt:
+                dumpBuffer_<s32>(param);
+                break;
+            case ParameterType::BufferF32:
+                dumpBuffer_<f32>(param);
+                break;
+            case ParameterType::BufferU32:
+                dumpBuffer_<u32>(param);
+                break;
+            case ParameterType::BufferBinary:
+                dumpBuffer_<u8>(param);
+                break;
+            default:
+                break;
+            }
+        }
+    }
+}
+
+/**
+ * Reads the payload as a string pointer if the parameter is a string type.
+ * @param pOut receives the string pointer
+ * @return whether the parameter is a string type
+ */
+template <>
+bool ResParameter::copyData<const char*>(const char** pOut) const
+{
+    switch (ParameterType(ptr()->getType()))
+    {
+    case ParameterType::String32:
+    case ParameterType::String64:
+    case ParameterType::String256:
+    case ParameterType::StringRef:
+        *pOut = getData<char>();
+        return true;
+    default:
+        return false;
+    }
+}
+
+/**
+ * Reads the payload as a bool if the parameter is a bool.
+ * @param pOut receives the value
+ * @return whether the parameter is a bool
+ */
+template <>
+bool ResParameter::copyData<bool>(bool* pOut) const
+{
+    if (ParameterType(ptr()->getType()) != ParameterType::Bool)
+    {
+        return false;
+    }
+
+    *pOut = *getData<u32>() != 0;
+    return true;
+}
+
+/**
+ * Returns the supported AAMP version.
+ * @return the version number
+ */
+u32 ResParameterArchiveData::getVersion()
+{
+    return 2;
+}
+
+/**
+ * Returns the AAMP file signature.
+ * @return the signature as a little-endian u32
+ */
+u32 ResParameterArchiveData::getSignature()
+{
+    return 0x504D4141;
+}
+
+ResParameterArchive::ResParameterArchive(const void* pData)
+{
+    mpData = static_cast<const ResParameterArchiveData*>(pData);
+    if (!pData)
     {
         return;
     }
 
-    SEAD_ASSERT(sead::PtrUtil::isAlignedN(p_data, 4));
-    if (mpData->flags.isOff(ResParameterArchiveFlag::LittleEndian))
+    auto* data = const_cast<ResParameterArchiveData*>(mpData);
+    const bool is_little_endian = data->flags.isOn(ResParameterArchiveFlag::LittleEndian);
+    bool is_utf8;
+    if (is_little_endian)
     {
-        ModifyEndianU32(false, const_cast<ResParameterArchiveData*>(mpData),
-                        sizeof(ResParameterArchiveData));
+        if (data->flags.isOn(ResParameterArchiveFlag::Utf8))
+        {
+            return;
+        }
+        is_utf8 = false;
+    }
+    else
+    {
+        ModifyEndianU32(false, data, sizeof(ResParameterArchiveData));
+        data = const_cast<ResParameterArchiveData*>(mpData);
+        is_utf8 = data->flags.isOn(ResParameterArchiveFlag::Utf8);
     }
 
-    verify();
+    u8* lists = reinterpret_cast<u8*>(data) + sizeof(ResParameterArchiveData) + data->offset_to_pio;
+    const size_t lists_size = data->num_lists * sizeof(ResParameterListData);
+    const size_t objs_size = data->num_objects * sizeof(ResParameterObjData);
+    const size_t params_size = data->num_parameters * sizeof(ResParameterData);
+    const size_t data_size = data->data_section_size;
+    const u32 string_size = data->string_section_size;
+    u8* objs = lists + lists_size;
+    u8* params = objs + objs_size;
+    u8* data_section = params + params_size;
+    char* strings = reinterpret_cast<char*>(data_section + data_size);
+    u8* unk = reinterpret_cast<u8*>(strings + string_size);
 
-    if (mpData->flags.isOn(ResParameterArchiveFlag::LittleEndian) &&
-        mpData->flags.isOn(ResParameterArchiveFlag::Utf8))
+    if (!is_little_endian)
     {
-        // Nothing else to do.
+        const size_t size = lists_size + objs_size + params_size + data_size;
+        if (size != 0)
+        {
+            ModifyEndianU32(false, lists, size);
+        }
+
+        const u32 unk_size = mpData->unk_section_size;
+        if (unk_size != 0)
+        {
+            u32 offset = 0;
+            do
+            {
+                u32* entry = reinterpret_cast<u32*>(unk + offset);
+                ModifyEndianU32(false, entry, sizeof(u32));
+                offset += *entry;
+            } while (offset < unk_size);
+        }
+
+        const_cast<ResParameterArchiveData*>(mpData)->flags.set(
+            ResParameterArchiveFlag::LittleEndian);
+    }
+
+    if (is_utf8 || mpData->string_section_size == 0)
+    {
         return;
     }
 
-    // FIXME: implement endianness and string encoding conversion (requires PrivateResource)
-    SEAD_ASSERT_MSG(false, "endianness and string conversion is unimplemented");
+    if (string_size != 0)
+    {
+        do
+        {
+            const s32 length = sead::SafeString(strings).calcLength();
+            if (length > 0)
+            {
+                sead::Heap* heap = detail::PrivateResource::instance()->getWorkHeap();
+                const s32 utf16_length = length + 1;
+                auto* utf16 = new (heap) char16[utf16_length];
+                const s32 utf8_length = utf16_length * 2;
+                auto* utf8 = new (heap) char[utf8_length];
+                sead::StringUtil::convertSjisToUtf16(utf16, utf16_length, strings, -1);
+                sead::StringUtil::convertUtf16ToUtf8(utf8, utf8_length, utf16, -1);
+                const s32 converted_length = sead::SafeString(utf8).calcLength() + 1;
+                sead::MemUtil::copy(strings, utf8,
+                                    converted_length < utf16_length ? converted_length :
+                                                                      utf16_length);
+                heap->free(utf16);
+                heap->free(utf8);
+            }
+            strings += (length + 4) & ~3;
+        } while (strings < reinterpret_cast<char*>(unk));
+    }
+
+    const_cast<ResParameterArchiveData*>(mpData)->flags.set(ResParameterArchiveFlag::Utf8);
 }
 
 }  // namespace agl::utl

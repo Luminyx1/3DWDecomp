@@ -100,7 +100,7 @@ public:
     PrintFormatter& operator,(const T&);
 
     template <typename T>
-    void out(const T&, const char*, PrintOutput* output);
+    static void out(const T&, const char*, PrintOutput* output);
 
 protected:
     bool proceedToFormatMark_(char*);

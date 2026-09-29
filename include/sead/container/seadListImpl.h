@@ -47,9 +47,30 @@ protected:
     using CompareCallbackImpl = int (*)(const void*, const void*);
 
     template <class T, class ComparePredicate>
-    void sort(s32 offset, const ComparePredicate& cmp)
+    void sort([[maybe_unused]] s32 offset, const ComparePredicate& cmp)
     {
-        this->mergeSort<T, ComparePredicate>(offset, cmp);
+        if (mCount < 2)
+        {
+            return;
+        }
+
+        ListNode* node = nth(1);
+        while (node != &mStartEnd)
+        {
+            ListNode* prev = node->mPrev;
+            ListNode* next = node->mNext;
+            if (cmp(reinterpret_cast<T*>(prev), reinterpret_cast<T*>(node)) >= 0)
+            {
+                do
+                {
+                    prev = prev->mPrev;
+                } while (prev != &mStartEnd &&
+                         cmp(reinterpret_cast<T*>(prev), reinterpret_cast<T*>(node)) >= 0);
+                node->erase_();
+                prev->insertBack_(node);
+            }
+            node = next;
+        }
     }
 
     template <class T, class ComparePredicate>

@@ -129,6 +129,7 @@ class Carver:
         self._pools: dict[str, tuple[E.Section, dict[bytes, int]]] = {}
         self.ours_refs: dict[str, set[str]] = {}
         self.ours_str_align: dict[bytes, int] = {}
+        self.ours_pools: dict[str, bytes] = {}
         self.warnings: list[str] = []
 
     def _in_ranges(self, addr: int) -> bool:
@@ -219,6 +220,20 @@ class Carver:
         if name not in self._pools:
             sec = self.o.section(name, E.SHT_PROGBITS, E.SHF_ALLOC | flags, align=align, entsize=entsize)
             self._pools[name] = (sec, {})
+            if name in self.ours_pools and flags & SHF_STRINGS:
+                # lay the strings out in the order our object has them, so string offsets agree
+                seed = self.ours_pools[name]
+                seen = self._pools[name][1]
+                i = 0
+                while i < len(seed):
+                    j = seed.find(b"\0", i)
+                    if j < 0:
+                        break
+                    seen.setdefault(seed[i:j + 1], i)
+                    i = j + 1
+                    while i < len(seed) and i % align and seed[i] == 0:
+                        i += 1
+                sec.data += seed
         sec, seen = self._pools[name]
         if data in seen:
             return name, seen[data]
@@ -346,9 +361,10 @@ class Carver:
         if sec == ".rodata":
             if how == "ldst" and fp and access in (4, 8, 16):
                 return self._const(tgt, access)
-            if how == "add" and jt and not jt[2] and _is_c_string(self.img.bytes_at(tgt, 0x1000)) \
+            if how == "add" and jt and not jt[2] and not jt[1] and _is_c_string(self.img.bytes_at(tgt, 0x1000)) \
                     and self.img.bytes_at(tgt, 1) != b"\0":
-                # a string compared character by character looks like an indexed table
+                # a string compared character by character looks like an indexed table, but
+                # has no bounds check in front of it (a switch's jump table always does)
                 return self._string(tgt)
             if how == "add" and jt:
                 ent, count, is_fp = jt
@@ -613,6 +629,17 @@ def _parse_range(tok: str) -> tuple[str, int, int]:
     return sec, lo_i, hi_i
 
 
+def _object_string_pools(path: str) -> dict[str, bytes]:
+    """.rodata.str1.N section name -> contents, for a compiled object"""
+    from elftools.elf.elffile import ELFFile
+    out: dict[str, bytes] = {}
+    with open(path, "rb") as fh:
+        for sec in ELFFile(fh).iter_sections():
+            if re.fullmatch(r"\.rodata\.str1\.\d+", sec.name):
+                out[sec.name] = sec.data()
+    return out
+
+
 def _object_string_aligns(path: str) -> dict[bytes, int]:
     """string (with its NUL) -> alignment, for strings in a compiled object's .rodata.str1.N (N > 1)"""
     from elftools.elf.elffile import ELFFile
@@ -687,6 +714,7 @@ def main(argv=None):
     if a.ours and Path(a.ours).is_file():
         c.ours_refs = _object_refs(a.ours)
         c.ours_str_align = _object_string_aligns(a.ours)
+        c.ours_pools = _object_string_pools(a.ours)
     if a.range:
         c.include_ranges([_parse_range(t) for t in a.range])
     if a.symbols:

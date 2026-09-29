@@ -18,6 +18,7 @@ class ShaderCompileInfo : public sead::hostio::Node {
     // on SMO 1.2.0, located at 0x7101E80B30
     using Target = s32;
 
+public:
     ShaderCompileInfo();
 
     virtual ~ShaderCompileInfo();
@@ -27,7 +28,7 @@ class ShaderCompileInfo : public sead::hostio::Node {
     void clearVariation();
     void pushBackVariation(const char*, const char*);
     void calcCompileSource(ShaderType, sead::BufferedSafeString*, Target, bool);
-    const sead::SafeString& getRegitserUniformBlockName();  // "RegisterUBO"
+    static const sead::SafeString& getRegitserUniformBlockName();  // "RegisterUBO"
 
 private:
     void* _8;

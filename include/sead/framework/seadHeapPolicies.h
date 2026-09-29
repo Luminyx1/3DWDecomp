@@ -13,7 +13,7 @@ class HeapArray
 public:
     Heap* getHeap(s32 index) const
     {
-        if (index < HeapMgr::getRootHeapNum())
+        if (u32(index) < u32(HeapMgr::getRootHeapNum()))
             return mHeaps[index];
         return mHeaps[0];
     }
@@ -38,6 +38,13 @@ struct HeapPolicy
 
 struct HeapPolicies
 {
+    const HeapPolicy& getPolicy(s32 index) const
+    {
+        if (u32(index) < u32(HeapMgr::getRootHeapNum()))
+            return mPolicies[index];
+        return mPolicies[0];
+    }
+
     HeapPolicy mPolicies[4];
     s32 mPrimaryIndex{};
 };

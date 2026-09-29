@@ -69,11 +69,11 @@ protected:
 
 #define AGL_RES_FILE_HEADER()                                                                      \
 public:                                                                                            \
-    bool modifyEndian() const { return ref().mEndian & DataType::cEndianCheckBit; }                \
+    bool modifyEndian() const { return false; }                                                    \
                                                                                                    \
-    bool isEndianResolved() const { return !modifyEndian(); }                                      \
+    bool isEndianResolved() const { return ref().mEndian & DataType::cEndianCheckBit; }            \
                                                                                                    \
-    void setEndianResolved() { ref().mEndian = 1 - ref().mEndian; }
+    void setEndianResolved() { ref().mEndian |= DataType::cEndianCheckBit; }
 
 template <typename DataType>
 struct ResArrayData {
@@ -109,7 +109,7 @@ public:
 
         iterator& operator++() {
             ++mIndex;
-            mElem = (ElemDataType*)((uintptr_t)mElem + Type(mElem).ref().mSize);
+            mElem = (ElemDataType*)((uintptr_t)mElem + static_cast<s32>(Type(mElem).ref().mSize));
             return *this;
         }
 
@@ -136,7 +136,8 @@ public:
 
         constIterator& operator++() {
             ++mIndex;
-            mElem = (const ElemDataType*)((uintptr_t)mElem + Type(mElem).ref().mSize);
+            mElem = (const ElemDataType*)((uintptr_t)mElem +
+                                       static_cast<s32>(Type(mElem).ref().mSize));
             return *this;
         }
 

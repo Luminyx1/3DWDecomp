@@ -3906,7 +3906,7 @@ src/sead/framework/seadMethodTreeMgr.cpp:
     .text   start:0x0065DDD0 end:0x0065DF0C
 src/sead/framework/seadTask.cpp:
     .text   start:0x0065DF10 end:0x0065E954
-src/sead/framework/seadTaskBase.cpp:
+src/sead/framework/seadTaskBase.cpp: done
     .text   start:0x0065E960 end:0x0065F734
 src/sead/framework/seadTaskMgr.cpp:
     .text   start:0x0065F740 end:0x00661AC8
@@ -3934,7 +3934,7 @@ src/sead/heap/seadExpHeap.cpp:
     .text   start:0x0066AFF0 end:0x0066E7EC
 src/sead/heap/seadFrameHeap.cpp:
     .text   start:0x0066E7F0 end:0x0066FC7C
-src/sead/heap/seadHeap.cpp:
+src/sead/heap/seadHeap.cpp: done
     .text   start:0x0066FC80 end:0x006713D4
 src/sead/heap/seadHeapMgr.cpp:
     .text   start:0x006713E0 end:0x006720DC
@@ -3952,7 +3952,7 @@ src/sead/prim/seadFormatPrint.cpp:
     .text   start:0x00675D70 end:0x0067A944
 src/sead/prim/seadCuckooClock.cpp:
     .text   start:0x0067A950 end:0x0067B46C
-src/sead/framework/seadCalculateTask.cpp:
+src/sead/framework/seadCalculateTask.cpp: done
     .text   start:0x0067B470 end:0x0067BC84
 src/sead/prim/seadSafeString.cpp:
     .text   start:0x0067BC90 end:0x0067DCFC
@@ -4076,12 +4076,8 @@ src/agl/common/GPUMemBlockBase.cpp:
     .text   start:0x006C9B10 end:0x006C9B60
 src/agl/common/aglGPUMemBlock.cpp:
     .text   start:0x006C9B60 end:0x006CA084
-src/agl/common/MemoryPoolType.cpp:
-    .text   start:0x006CA090 end:0x006CA144
-src/agl/common/MemoryPool.cpp:
-    .text   start:0x006CA150 end:0x006CA158
 src/agl/detail/aglGPUMemBlockMgr.cpp:
-    .text   start:0x006CA160 end:0x006CC0C4
+    .text   start:0x006CA090 end:0x006CC0C4
 src/agl/detail/GraphicsDriverMgr.cpp:
     .text   start:0x006CC0D0 end:0x006CC1BC
 src/agl/driver/aglGraphicsDriverMgr.cpp:
@@ -4134,10 +4130,10 @@ src/agl/common/aglShaderProgram.cpp:
     .text   start:0x006D7AC0 end:0x006DB048
 src/agl/common/Shader.cpp:
     .text   start:0x006DB050 end:0x006DB078
-src/agl/common/ResShaderArchiveData.cpp:
-    .text   start:0x006DB090 end:0x006DB0BC
 src/agl/common/aglResShaderArchive.cpp:
-    .text   start:0x006DB0C0 end:0x006DB6E0
+    .text   start:0x006DB090 end:0x006DB664
+src/agl/common/aglResCommon.cpp: done
+    .text   start:0x006DB670 end:0x006DB6E0
 src/agl/common/TextureData.cpp:
     .text   start:0x006DB6E0 end:0x006DB81C
 src/agl/common/aglTextureData.cpp:
@@ -4186,16 +4182,12 @@ src/agl/utility/ImageFilter2D.cpp:
     .text   start:0x006E9670 end:0x006E96F0
 src/agl/utility/aglImageFilter2D.cpp:
     .text   start:0x006E96F0 end:0x006ED688
-src/agl/utility/ParameterBase.cpp:
-    .text   start:0x006ED690 end:0x006ED86C
 src/agl/utility/aglParameter.cpp:
-    .text   start:0x006ED870 end:0x006F6E68
-src/agl/utility/ParameterStringMgr.cpp:
+    .text   start:0x006ED690 end:0x006F6E68
+src/agl/utility/ParameterStringMgr.cpp: done
     .text   start:0x006F6E70 end:0x006F770C
-src/agl/utility/IParameterObj.cpp:
-    .text   start:0x006F7710 end:0x006F772C
 src/agl/utility/aglParameterObj.cpp:
-    .text   start:0x006F7730 end:0x006F85C4
+    .text   start:0x006F7710 end:0x006F85C4
 src/agl/utility/PrimitiveShape.cpp:
     .text   start:0x006F85D0 end:0x006F86BC
 src/agl/utility/aglPrimitiveShape.cpp:
@@ -4208,12 +4200,8 @@ src/agl/utility/PrimitiveVertex.cpp:
     .text   start:0x00705440 end:0x0070552C
 src/agl/utility/aglPrimitiveVertex.cpp:
     .text   start:0x00705530 end:0x00705A94
-src/agl/utility/ResParameterObj.cpp:
-    .text   start:0x00705AA0 end:0x00705AF4
-src/agl/utility/ResParameterList.cpp:
-    .text   start:0x00705B00 end:0x00705BB4
 src/agl/utility/aglResParameter.cpp:
-    .text   start:0x00705BC0 end:0x0070670C
+    .text   start:0x00705AA0 end:0x0070670C
 src/agl/utility/TextureMemoryAllocator.cpp:
     .text   start:0x00706710 end:0x00706820
 src/agl/utility/aglTextureMemoryAllocator.cpp:
@@ -4260,14 +4248,10 @@ src/agl/effect/Sky.cpp:
     .text   start:0x00722300 end:0x0072341C
 src/agl/postfx/aglSky.cpp:
     .text   start:0x00723420 end:0x00729EDC
-src/agl/postfx/IParameterIO.cpp:
-    .text   start:0x00729EE0 end:0x0072A4A0
 src/agl/utility/aglParameterIO.cpp:
-    .text   start:0x0072A4A0 end:0x0072AF44
-src/agl/utility/IParameterList.cpp:
-    .text   start:0x0072AF50 end:0x0072B018
+    .text   start:0x00729EE0 end:0x0072AF44
 src/agl/utility/aglParameterList.cpp:
-    .text   start:0x0072B020 end:0x0072CA1C
+    .text   start:0x0072AF50 end:0x0072CA1C
 src/agl/detail/aglShaderTextUtil.cpp:
     .text   start:0x0072CA20 end:0x007331D4
 src/agl/detail/TextureDataUtil.cpp:

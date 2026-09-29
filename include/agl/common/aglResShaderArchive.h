@@ -6,6 +6,64 @@
 
 namespace agl {
 
+struct ResShaderUniformData {
+    s32 mSize;
+    s32 mLocation;
+    u32 mNameLen;
+    // char mName[];
+};
+static_assert(sizeof(ResShaderUniformData) == 0xc, "agl::ResShaderUniformData size mismatch");
+
+class ResShaderUniform : public ResCommon<ResShaderUniformData> {
+public:
+    using ResCommon::ResCommon;
+
+    const char* getName() const { return reinterpret_cast<const char*>(ptr() + 1); }
+    s32 getLocation() const { return ref().mLocation; }
+};
+
+using ResShaderUniformArray = ResArray<ResShaderUniform>;
+
+struct ResShaderUniformBlockData {
+    s32 mSize;
+    s32 mLocation;
+    u32 mNameLen;
+    // char mName[];
+    // ResShaderUniformArrayData mUniforms;
+};
+static_assert(sizeof(ResShaderUniformBlockData) == 0xc,
+              "agl::ResShaderUniformBlockData size mismatch");
+
+class ResShaderUniformBlock : public ResCommon<ResShaderUniformBlockData> {
+public:
+    using ResCommon::ResCommon;
+
+    const char* getName() const { return reinterpret_cast<const char*>(ptr() + 1); }
+
+    ResShaderUniformArray getResShaderUniformArray() const {
+        const DataType* const data = ptr();
+        return reinterpret_cast<const char*>(data + 1) + data->mNameLen;
+    }
+};
+
+using ResShaderUniformBlockArray = ResArray<ResShaderUniformBlock>;
+
+struct ResShaderArchiveInfoData {
+    u32 mSize;
+    u32 _4;
+    u32 _8;
+    u32 _c;
+};
+static_assert(sizeof(ResShaderArchiveInfoData) == 0x10,
+              "agl::ResShaderArchiveInfoData size mismatch");
+
+class ResShaderArchiveInfo : public ResCommon<ResShaderArchiveInfoData> {
+public:
+    using ResCommon::ResCommon;
+};
+
+using ResShaderArchiveInfoArray = ResArray<ResShaderArchiveInfo>;
+
 struct ResShaderArchiveData {
     union {
         char mSignature[4];
@@ -23,7 +81,7 @@ public:
     static const char* getExtension();
 
 private:
-    static const u32 cVersion = 11;
+    static const u32 cVersion = 13;
     static const u32 cSignature = 0x53484141;  // SHAA
 #ifdef cafe
     static const u32 cEndianCheckBit = 0x01000001;
@@ -61,6 +119,11 @@ public:
     }
 
     s32 getResShaderSourceNum() const { return getResShaderSourceArray().getNum(); }
+
+    ResShaderArchiveInfoArray getResShaderArchiveInfoArray() const {
+        const ResShaderSourceArrayData* const data = getResShaderSourceArray().ptr();
+        return (const ResShaderArchiveInfoArray::DataType*)((uintptr_t)data + data->mSize);
+    }
 
     bool setUp();
 };

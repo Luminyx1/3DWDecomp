@@ -1,6 +1,11 @@
 #pragma once
 
 #include <basis/seadTypes.h>
+#include "detail/aglGPUMemBlockMgr.h"
+
+namespace sead {
+class SeparateHeap;
+}
 
 namespace agl {
 
@@ -8,26 +13,36 @@ class GPUMemBlockBase;
 
 namespace detail {
 
-class GPUMemBlockMgrHeapEx;
-class MemoryPoolType;
-
 class MemoryPoolHeap {
 public:
-    MemoryPoolHeap(void*, u64, u64, const MemoryPoolType&, void*, u64, GPUMemBlockMgrHeapEx*);
+    MemoryPoolHeap(void* pBuffer, u64 bufferSize, u64 poolSize, const MemoryPoolType& rType,
+                   void* pManagementArea, u64 managementAreaSize, GPUMemBlockMgrHeapEx* pHeapEx);
     ~MemoryPoolHeap();
 
-    static MemoryPoolHeap* create(u64, s32, u64, s32, u64, u64, const MemoryPoolType&,
-                                  GPUMemBlockMgrHeapEx*);
-    static void destroy(MemoryPoolHeap*);
+    static MemoryPoolHeap* create(u64 size, s32 alignment, u64 userSize, s32 userAlignment,
+                                  u64 minBlockSize, u64 maxNodeNum, const MemoryPoolType& rType,
+                                  GPUMemBlockMgrHeapEx* pHeapEx);
+    static void destroy(MemoryPoolHeap* pPoolHeap);
 
-    void pushBack(GPUMemBlockBase*);
-    u64* allocFromMemoryPool(u64, s32);
-    void freeToHeap(GPUMemBlockBase*);
-    bool isAllocatable(const MemoryPoolType&, u64, s32) const;
+    void pushBack(GPUMemBlockBase* pBlock);
+    void* allocFromMemoryPool(u64 size, s32 alignment);
+    void freeToHeap(GPUMemBlockBase* pBlock);
+    bool isAllocatable(const MemoryPoolType& rType, u64 size, s32 alignment) const;
+
+    sead::SeparateHeap* getHeap() const { return mHeap; }
+    MemoryPoolHeap* getNext() const { return mNext; }
 
 private:
-    GPUMemBlockBase* _120;
+    friend class GPUMemBlockMgrHeapEx;
+
+    GPUMemBlockMgrHeapEx* mHeapEx;
+    sead::SeparateHeap* mHeap;
+    void* mBuffer;
+    MemoryPool mMemoryPool;
+    GPUMemBlockBase* mBlockList;
+    MemoryPoolHeap* mNext;
 };
+static_assert(sizeof(MemoryPoolHeap) == 0x130);
 
 }  // namespace detail
 }  // namespace agl

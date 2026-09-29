@@ -233,8 +233,8 @@ enum class ResParameterArchiveFlag : u32 {
 };
 
 struct ResParameterArchiveData {
-    static u32 getVersion() { return 2; }
-    static u32 getSignature() { return 'AAMP'; }
+    static u32 getVersion();
+    static u32 getSignature();
 
     std::array<char, 4> magic;
     u32 version;

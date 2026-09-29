@@ -106,7 +106,7 @@ inline void QuatCalcCommon<T>::setInverse(Base& out, const Base& q)
 }
 
 template <typename T>
-inline void QuatCalcCommon<T>::slerpTo(Base& out, const Base& q1, const Base& q2, f32 t)
+void QuatCalcCommon<T>::slerpTo(Base& out, const Base& q1, const Base& q2, f32 t)
 {
     T dot = (q1.x * q2.x) + (q1.y * q2.y) + (q1.z * q2.z) + (q1.w * q2.w);
     if (dot > 1)

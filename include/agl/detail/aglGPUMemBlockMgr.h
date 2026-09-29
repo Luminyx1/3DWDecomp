@@ -10,7 +10,18 @@
 #include <thread/seadCriticalSection.h>
 #include "common/aglGPUCommon.hpp"
 
+namespace sead::hostio {
+class Context;
+class PropertyEvent;
+}  // namespace sead::hostio
+
+namespace agl {
+class GPUMemBlockBase;
+}
+
 namespace agl::detail {
+
+class MemoryPoolHeap;
 
 using MemoryPoolDriverBitFlag = sead::BitFlag32;
 
@@ -18,12 +29,12 @@ constexpr s32 VALID_POOL_TYPE_VALUE = -1;
 constexpr s32 cGPUAccessMask = 0xF0000000;
 constexpr u64 cGPUPhysicalMemorySizeAlignment = 0x1000;
 
-class MemoryPoolType : MemoryPoolDriverBitFlag {
+class MemoryPoolType : public MemoryPoolDriverBitFlag {
 public:
     MemoryPoolType() : MemoryPoolDriverBitFlag() {}
-    MemoryPoolType(s32 p_value) : MemoryPoolDriverBitFlag(p_value) {}
+    MemoryPoolType(u32 value) : MemoryPoolDriverBitFlag(value) {}
 
-    MemoryPoolType convert(MemoryAttribute attribute);
+    static MemoryPoolType convert(MemoryAttribute attribute);
 
     bool IsValid() const { return (*this & cValidPoolType) == cValidPoolType; }
 
@@ -36,39 +47,53 @@ private:
 
 class MemoryPool {
 public:
-    MemoryPool();
+    MemoryPool() { mMemoryType.setDirect(0); }
 
-    void initialize(void* storage_1, u64 storage_2, const MemoryPoolType& flags);
-    void initialize(void* map_virtual_1, u64 storage, const MemoryPoolType& flags,
-                    const MemoryPool& map_virtual_2, s32 map_virtual_3);
+    void initialize(void* pStorage, u64 size, const MemoryPoolType& rType);
+    void initialize(void* pStorage, u64 size, const MemoryPoolType& rType,
+                    const MemoryPool& rPhysicalPool, s32 storageClass);
 
     void finalize();
+
+    NVNmemoryPool* getDriverPool() { return &mDriverPool; }
+    const NVNmemoryPool* getDriverPool() const { return &mDriverPool; }
+    const MemoryPoolType& getMemoryType() const { return mMemoryType; }
 
 private:
     NVNmemoryPool mDriverPool;
     MemoryPoolType mMemoryType;
-    uint32_t idk;
+    u32 _104;
 };
 static_assert(sizeof(MemoryPool) == 0x108);
 
 class GPUMemBlockMgrHeapEx : public sead::hostio::Node, public sead::IDisposer {
 public:
-    GPUMemBlockMgrHeapEx(sead::Heap* p_heap);
+    GPUMemBlockMgrHeapEx(sead::Heap* pHeap);
     ~GPUMemBlockMgrHeapEx() override;
 
-    void finalize();
+    bool tryAlloc(GPUMemBlockBase* pBlock, u64 size, s32 alignment, u64 userSize,
+                  s32 userAlignment, u64 minBlockSize, u64 maxNodeNum, const MemoryPoolType& rType,
+                  bool allowSharing, bool debug);
+    void freeMemoryPoolHeap(MemoryPoolHeap* pPoolHeap);
+    s32 countMemoryPoolNum() const;
+    u64 countMemoryPoolSize() const;
+
+    void genMessage(sead::hostio::Context* pContext);
+    void listenPropertyEvent(const sead::hostio::PropertyEvent* pEvent);
+
+    sead::Heap* getHeap() const { return getDisposerHeap_(); }
+    sead::CriticalSection* getCriticalSection() { return &mCS; }
+    void setAllowSharing(bool allow) { mAllowSharing.change(1, allow); }
 
 private:
-    s32 mAllowSharing;
-    void* m08;
-    void* m10;
+    friend class GPUMemBlockMgr;
+
+    sead::BitFlag32 mAllowSharing;
+    MemoryPoolHeap* mHead;
+    MemoryPoolHeap* mTail;
     sead::CriticalSection mCS;
 };
-#if not SEAD_HOSTIO_NONVIRTUAL
 static_assert(sizeof(GPUMemBlockMgrHeapEx) == 0x80);
-#else
-static_assert(sizeof(GPUMemBlockMgrHeapEx) == 0x78);
-#endif
 
 enum class GPUMemBlockMgrFlags : u8 {
     MemoryPoolRelated = 1 << 0,
@@ -82,18 +107,21 @@ public:
     GPUMemBlockMgr();
     virtual ~GPUMemBlockMgr();
 
-    void initialize(sead::Heap* heap1, sead::Heap* heap2);
+    void initialize(sead::Heap* pHeap, sead::Heap* pDebugHeap);
+    bool tryAllocMemory(GPUMemBlockBase* pBlock, sead::Heap* pHeap, u64 size, s32 alignment,
+                        MemoryAttribute attribute);
     void enableSharedMemoryPool(bool enabled);
+    void enableSharedMemoryPool(sead::Heap* pHeap, bool enabled);
+    bool removeGPUMemBlockMgrHeapExIfNoMemoryPool(sead::Heap* pHeap);
+    void removeHeap(GPUMemBlockMgrHeapEx* pHeapEx);
     static u64 calcGPUMemorySize(u64 userSize);
     static s32 calcGPUMemoryAlignment(s32 userAlignment);
 
-#ifdef SEAD_DEBUG
-    void listenPropertyEvent(const sead::hostio::PropertyEvent* event) override;
-    void genMessage(sead::hostio::Context* context) override;
-#endif
+    void genMessage(sead::hostio::Context* pContext);
+    void listenPropertyEvent(const sead::hostio::PropertyEvent* pEvent);
 
 private:
-    GPUMemBlockMgrHeapEx* findGPUMemBlockMgrHeapEx_(sead::Heap* p_heap, int* p_outIndex);
+    GPUMemBlockMgrHeapEx* findGPUMemBlockMgrHeapEx_(sead::Heap* pHeap, s32* pOutIndex);
 
     sead::CriticalSection mCS;
     sead::PtrArray<GPUMemBlockMgrHeapEx> mMngrHeaps;

@@ -35,6 +35,9 @@ public:
     u64 getByteOffset() const;
     u64 getMemoryPoolType() const;
 
+    GPUMemBlockBase* getNext() const { return mpTail; }
+    void setNext(GPUMemBlockBase* pNext) { mpTail = pNext; }
+
     // TODO: the rest of the methods...
 
 private:

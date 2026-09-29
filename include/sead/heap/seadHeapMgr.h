@@ -74,6 +74,7 @@ public:
     using IndependentHeaps = FixedPtrArray<Heap, 4>;
 
 private:
+    friend class Heap;
     friend class ScopedCurrentHeapSetter;
 
     /// Set the current heap to the specified heap and returns the previous "current heap".

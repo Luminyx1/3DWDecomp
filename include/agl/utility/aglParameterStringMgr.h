@@ -14,17 +14,15 @@ class ParameterStringMgr : public sead::hostio::Node {
     virtual ~ParameterStringMgr();
 
 public:
-    void initialize(sead::Heap* heap);
-    const char* appendString(const sead::SafeString& string);
+    void initialize(sead::Heap* pHeap);
+    const char* appendString(const sead::SafeString& rString);
 
-#ifdef SEAD_DEBUG
-    void listenPropertyEvent(const sead::hostio::PropertyEvent* event) override;
-    void genMessage(sead::hostio::Context* context) override;
-#endif
+    void genMessage(sead::hostio::Context* pContext);
+    void listenPropertyEvent(const sead::hostio::PropertyEvent* pEvent);
 
 private:
     sead::Heap* mHeap = nullptr;
-    sead::PtrArray<sead::SafeString> mStrings;
+    sead::PtrArray<sead::HeapSafeString> mStrings;
     sead::CriticalSection mCS;
 };
 

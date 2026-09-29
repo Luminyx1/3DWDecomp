@@ -5,6 +5,7 @@
 #include "utility/aglParameter.h"
 #include "utility/aglParameterObj.h"
 #include "utility/aglParameterStringMgr.h"
+#include "detail/aglPrivateResource.h"
 
 namespace agl::utl
 {
@@ -14,48 +15,54 @@ IParameterList::IParameterList()
     setParameterListName_(sead::SafeString::cEmptyString);
 }
 
-void IParameterList::setParameterListName_(const sead::SafeString& name)
+void IParameterList::setParameterListName_(const sead::SafeString& rName)
 {
+#ifdef SEAD_DEBUG
+    mName = rName;
+#endif
+
+    mNameHash = ParameterBase::calcHash(rName);
+}
+
+/**
+ * Appends a child list and names it.
+ * @param pChild list to append
+ * @param rName name of the child list
+ */
+void IParameterList::addList(IParameterList* pChild, const sead::SafeString& rName)
+{
+    SEAD_ASSERT(pChild != nullptr);
+    pChild->setParameterListName_(rName);
+
+    (!mpChildListTail ? mpChildListHead : mpChildListTail->mNext) = pChild;
+    mpChildListTail = pChild;
+    pChild->mParent = this;
+}
+
+/**
+ * Appends a child object and names it.
+ * @param pChild object to append
+ * @param rName name of the child object
+ */
+void IParameterList::addObj(IParameterObj* pChild, const sead::SafeString& rName)
+{
+    SEAD_ASSERT(pChild != nullptr);
+
 #ifdef SEAD_DEBUG
     if (ParameterStringMgr::instance())
     {
-        mName = ParameterStringMgr::instance()->appendString(name);
-    }
-    else
-    {
-        mName = nullptr;
+        pChild->mName = ParameterStringMgr::instance()->appendString(rName);
     }
 #endif
+    pChild->mNameHash = ParameterBase::calcHash(rName);
 
-    mNameHash = ParameterBase::calcHash(name);
+    (!mpChildObjTail ? mpChildObjHead : mpChildObjTail->mNext) = pChild;
+    mpChildObjTail = pChild;
 }
 
-void IParameterList::addList(IParameterList* child, const sead::SafeString& name)
-{
-    SEAD_ASSERT(child != nullptr);
-    child->setParameterListName_(name);
-
-    (!mpChildListTail ? mpChildListHead : mpChildListTail->mNext) = child;
-    mpChildListTail = child;
-    child->mParent = this;
-}
-
-void IParameterList::addObj(IParameterObj* child, const sead::SafeString& name)
-{
-    SEAD_ASSERT(child != nullptr);
-
-#ifdef SEAD_DEBUG
-    if (ParameterStringMgr::instance())
-    {
-        child->mName = ParameterStringMgr::instance()->appendString(name);
-    }
-#endif
-    child->mNameHash = ParameterBase::calcHash(name);
-
-    (!mpChildObjTail ? mpChildObjHead : mpChildObjTail->mNext) = child;
-    mpChildObjTail = child;
-}
-
+/**
+ * Unlinks every child list.
+ */
 void IParameterList::clearList()
 {
     for (auto* i = mpChildListHead; i;)
@@ -68,6 +75,9 @@ void IParameterList::clearList()
     mpChildListTail = nullptr;
 }
 
+/**
+ * Unlinks every child object.
+ */
 void IParameterList::clearObj()
 {
     for (auto* i = mpChildObjHead; i;)
@@ -80,77 +90,67 @@ void IParameterList::clearObj()
     mpChildObjTail = nullptr;
 }
 
-void IParameterList::removeList(IParameterList* child)
+/**
+ * Unlinks a child list if it belongs to this list.
+ * @param pChild list to remove
+ */
+void IParameterList::removeList(IParameterList* pChild)
 {
-    SEAD_ASSERT(child != nullptr);
-    auto* i = mpChildListHead;
-    if (!i)
-    {
-        return;
-    }
-
     IParameterList* prev = nullptr;
-    while (true)
+    for (auto* it = mpChildListHead; it; it = it->mNext)
     {
-        if (i == child)
+        if (it == pChild)
         {
-            break;
-        }
-        prev = i;
-        i = i->mNext;
-        if (!i)
-        {
+            (prev ? prev->mNext : mpChildListHead) = pChild->mNext;
+            if (!pChild->mNext)
+            {
+                mpChildListTail = prev;
+            }
+            pChild->mNext = nullptr;
             return;
         }
+        prev = it;
     }
-
-    (prev ? prev->mNext : mpChildListHead) = child->mNext;
-    if (!child->mNext)
-    {
-        SEAD_ASSERT(mpChildListTail == child);
-        mpChildListTail = prev;
-    }
-    child->mNext = nullptr;
 }
 
-void IParameterList::removeObj(IParameterObj* child)
+/**
+ * Unlinks a child object if it belongs to this list.
+ * @param pChild object to remove
+ */
+void IParameterList::removeObj(IParameterObj* pChild)
 {
-    SEAD_ASSERT(child != nullptr);
-    auto* i = mpChildObjHead;
-    if (!i)
-    {
-        return;
-    }
-
     IParameterObj* prev = nullptr;
-    while (true)
+    for (auto* it = mpChildObjHead; it; it = it->mNext)
     {
-        if (i == child)
+        if (it == pChild)
         {
-            break;
-        }
-        prev = i;
-        i = i->mNext;
-        if (!i)
-        {
+            (prev ? prev->mNext : mpChildObjHead) = pChild->mNext;
+            if (!pChild->mNext)
+            {
+                mpChildObjTail = prev;
+            }
+            pChild->mNext = nullptr;
             return;
         }
+        prev = it;
     }
-
-    (prev ? prev->mNext : mpChildObjHead) = child->mNext;
-    if (!child->mNext)
-    {
-        SEAD_ASSERT(mpChildObjTail == child);
-        mpChildObjTail = prev;
-    }
-    child->mNext = nullptr;
 }
 
+/**
+ * Applies a resource list to this list and its children.
+ * @param list resource list to apply
+ */
 void IParameterList::applyResParameterList(ResParameterList list)
 {
     return applyResParameterList_(false, list, {}, 0.0);
 }
 
+/**
+ * Applies one resource list, or the interpolation of two, to this list.
+ * @param list1 resource list used at t = 0
+ * @param list2 resource list used at t = 1
+ * @param t interpolation factor
+ */
 void IParameterList::applyResParameterList(ResParameterList list1, ResParameterList list2, f32 t)
 {
     if (list1.ptr() && t <= 0.0)
@@ -164,7 +164,13 @@ void IParameterList::applyResParameterList(ResParameterList list1, ResParameterL
     return applyResParameterList_(true, list1, list2, t);
 }
 
-bool IParameterList::isComplete(ResParameterList res, bool) const
+/**
+ * Checks whether a resource list contains exactly the children of this list.
+ * @param res resource list to check
+ * @param checkValues unused
+ * @return whether the resource list is complete
+ */
+bool IParameterList::isComplete(ResParameterList res, bool checkValues) const
 {
     if (!res.ptr())
     {
@@ -191,10 +197,18 @@ bool IParameterList::isComplete(ResParameterList res, bool) const
         ++list_count;
     }
 
-    return obj_count == res.getResParameterObjNum() && list_count == res.getResParameterListNum();
+    if (obj_count != res.getResParameterObjNum() || list_count != res.getResParameterListNum())
+    {
+        return false;
+    }
+    return true;
 }
 
-sead::SafeString IParameterList::getName() const
+/**
+ * Returns the list's name (empty in release builds).
+ * @return the list name
+ */
+sead::SafeString IParameterList::getParameterListName() const
 {
 #ifdef SEAD_DEBUG
     return mName;
@@ -203,16 +217,22 @@ sead::SafeString IParameterList::getName() const
 #endif
 }
 
+/**
+ * Returns the XML tag used for parameter lists.
+ * @return the tag name
+ */
 const char* IParameterList::getTagName()
 {
     return "param_list";
 }
 
+/**
+ * Checks recursively that no two siblings share a name hash.
+ * @return whether all hashes are unique
+ */
 bool IParameterList::verify() const
 {
-    bool ok = true;
-    ok &= verifyList();
-    ok &= verifyObj();
+    bool ok = verifyList() & verifyObj();
     for (auto* i = mpChildListHead; i; i = i->mNext)
     {
         ok &= i->verify();
@@ -224,6 +244,10 @@ bool IParameterList::verify() const
     return ok;
 }
 
+/**
+ * Checks that no two child lists share a name hash.
+ * @return whether all hashes are unique
+ */
 bool IParameterList::verifyList() const
 {
     bool ret = true;
@@ -234,6 +258,10 @@ bool IParameterList::verifyList() const
     return ret;
 }
 
+/**
+ * Checks that no two child objects share a name hash.
+ * @return whether all hashes are unique
+ */
 bool IParameterList::verifyObj() const
 {
     bool ret = true;
@@ -244,46 +272,52 @@ bool IParameterList::verifyObj() const
     return ret;
 }
 
-bool IParameterList::verifyList(IParameterList* p_check, IParameterList* other) const
+/**
+ * Checks that no list from pOther onwards shares pCheck's name hash.
+ * @param pCheck list whose hash is checked
+ * @param pOther first list to compare against
+ * @return whether no collision was found
+ */
+bool IParameterList::verifyList(IParameterList* pCheck, IParameterList* pOther) const
 {
-    SEAD_ASSERT(p_check != nullptr);
-    auto* list = other;
     bool ok = true;
-    while (list)
+    for (auto* it = pOther; it; it = it->mNext)
     {
-        if (p_check->getNameHash() == list->getNameHash())
+        if (pCheck->getNameHash() == it->getNameHash())
         {
-            sead::BufferingPrintFormatter ss;
-            ss << "Same hash code at [%s] and [%s]. Please change.\n"
-               << p_check->getName().cstr() << list->getName().cstr() << sead::flush;
             ok = false;
         }
-        list = list->mNext;
     }
     return ok;
 }
 
-bool IParameterList::verifyObj(IParameterObj* p_check, IParameterObj* other) const
+/**
+ * Checks that no object from pOther onwards shares pCheck's name hash.
+ * @param pCheck object whose hash is checked
+ * @param pOther first object to compare against
+ * @return whether no collision was found
+ */
+bool IParameterList::verifyObj(IParameterObj* pCheck, IParameterObj* pOther) const
 {
-    SEAD_ASSERT(p_check != nullptr);
-    auto* list = other;
     bool ok = true;
-    while (list)
+    for (auto* it = pOther; it; it = it->mNext)
     {
-        if (p_check->getNameHash() == list->getNameHash())
+        if (pCheck->getNameHash() == it->getNameHash())
         {
-            sead::BufferingPrintFormatter ss;
-            ss << "Same hash code at [%s] and [%s]. Please change.\n"
-               << p_check->getName().cstr() << list->getName().cstr() << sead::flush;
             ok = false;
         }
-        list = list->mNext;
     }
     return ok;
 }
 
+/**
+ * Finds the resource object that applies to a child object.
+ * @param res resource list to search
+ * @param rObj child object
+ * @return the matching resource object, or an empty one
+ */
 ResParameterObj IParameterList::searchResParameterObj_(ResParameterList res,
-                                                       const IParameterObj& obj) const
+                                                       const IParameterObj& rObj) const
 {
     if (!res.ptr())
     {
@@ -291,7 +325,7 @@ ResParameterObj IParameterList::searchResParameterObj_(ResParameterList res,
     }
     for (auto it = res.objBegin(), end = res.objEnd(); it != end; ++it)
     {
-        if (obj.isApply_(*it))
+        if (rObj.isApply_(*it))
         {
             return *it;
         }
@@ -299,15 +333,21 @@ ResParameterObj IParameterList::searchResParameterObj_(ResParameterList res,
     return {};
 }
 
+/**
+ * Finds the child object a resource object applies to, starting after the last match.
+ * @param res resource object
+ * @param pObj child object to start from, or nullptr to start at the head
+ * @return the matching child object, or nullptr
+ */
 IParameterObj* IParameterList::searchChildParameterObj_(ResParameterObj res,
-                                                        IParameterObj* obj) const
+                                                        IParameterObj* pObj) const
 {
     if (!res.ptr() || !mpChildObjHead)
     {
         return nullptr;
     }
 
-    auto* start = obj ? obj : mpChildObjHead;
+    auto* start = pObj ? pObj : mpChildObjHead;
     auto* child = start;
     while (!child->isApply_(res))
     {
@@ -325,8 +365,14 @@ IParameterObj* IParameterList::searchChildParameterObj_(ResParameterObj res,
     return child;
 }
 
+/**
+ * Finds the resource list that applies to a child list.
+ * @param res resource list to search
+ * @param rList child list
+ * @return the matching resource list, or an empty one
+ */
 ResParameterList IParameterList::searchResParameterList_(ResParameterList res,
-                                                         const IParameterList& list) const
+                                                         const IParameterList& rList) const
 {
     if (!res.ptr())
     {
@@ -334,7 +380,7 @@ ResParameterList IParameterList::searchResParameterList_(ResParameterList res,
     }
     for (auto it = res.listBegin(), end = res.listEnd(); it != end; ++it)
     {
-        if (list.isApply_(it.getList()))
+        if (rList.isApply_(it.getList()))
         {
             return it.getList();
         }
@@ -342,6 +388,11 @@ ResParameterList IParameterList::searchResParameterList_(ResParameterList res,
     return {};
 }
 
+/**
+ * Finds the child list a resource list applies to.
+ * @param res resource list
+ * @return the matching child list, or nullptr
+ */
 IParameterList* IParameterList::searchChildParameterList_(ResParameterList res) const
 {
     if (!res.ptr())
@@ -359,6 +410,12 @@ IParameterList* IParameterList::searchChildParameterList_(ResParameterList res) 
     return nullptr;
 }
 
+/**
+ * Applies every object of a resource list to the matching child objects.
+ * @param interpolate whether the objects are interpolated
+ * @param res resource list
+ * @param t interpolation factor
+ */
 void IParameterList::applyResParameterObjB_(bool interpolate, ResParameterList res, f32 t)
 {
     if (!res.ptr())
@@ -377,6 +434,12 @@ void IParameterList::applyResParameterObjB_(bool interpolate, ResParameterList r
     }
 }
 
+/**
+ * Applies every list of a resource list to the matching child lists.
+ * @param interpolate whether the lists are interpolated
+ * @param res resource list
+ * @param t interpolation factor
+ */
 void IParameterList::applyResParameterListB_(bool interpolate, ResParameterList res, f32 t)
 {
     if (!res.ptr())
@@ -393,6 +456,13 @@ void IParameterList::applyResParameterListB_(bool interpolate, ResParameterList 
     }
 }
 
+/**
+ * Applies resource lists recursively to the child objects and lists.
+ * @param interpolate whether l1 and l2 are interpolated
+ * @param l1 resource list used at t = 0
+ * @param l2 resource list used at t = 1
+ * @param t interpolation factor
+ */
 void IParameterList::applyResParameterList_(bool interpolate, ResParameterList l1,
                                             ResParameterList l2, f32 t)
 {
@@ -401,7 +471,6 @@ void IParameterList::applyResParameterList_(bool interpolate, ResParameterList l
         return;
     }
 
-    // Recursively apply all parameter objects.
     if (l1.ptr())
     {
         IParameterObj* obj = nullptr;
@@ -425,7 +494,6 @@ void IParameterList::applyResParameterList_(bool interpolate, ResParameterList l
         applyResParameterObjB_(interpolate, l2, t);
     }
 
-    // Now recursively apply all parameter lists.
     if (l1.ptr())
     {
         for (auto it = l1.listBegin(), end = l1.listEnd(); it != end; ++it)
@@ -462,6 +530,120 @@ void IParameterList::applyResParameterList_(bool interpolate, ResParameterList l
     }
 
     postRead_();
+}
+
+void IParameterList::sortByHash()
+{
+    sead::Heap* heap = detail::PrivateResource::instance()->getWorkHeap();
+
+    s32 list_num = 0;
+    for (auto* list = mpChildListHead; list; list = list->mNext)
+    {
+        ++list_num;
+    }
+
+    s32 obj_num = 0;
+    for (auto* obj = mpChildObjHead; obj; obj = obj->mNext)
+    {
+        ++obj_num;
+    }
+
+    if (list_num != 0)
+    {
+        sead::PtrArray<IParameterList> array;
+        array.allocBuffer(list_num, heap);
+
+        for (auto* list = mpChildListHead; list; list = list->mNext)
+        {
+            array.pushBack(list);
+        }
+
+        heapSortByHash(array);
+
+        mpChildListHead = nullptr;
+        mpChildListTail = nullptr;
+        for (auto it = array.begin(); it != array.end(); ++it)
+        {
+            if (!mpChildListHead)
+            {
+                mpChildListHead = &*it;
+            }
+            it->mNext = nullptr;
+            if (mpChildListTail)
+            {
+                mpChildListTail->mNext = &*it;
+            }
+            mpChildListTail = &*it;
+        }
+
+        array.freeBuffer();
+    }
+
+    if (obj_num != 0)
+    {
+        sead::PtrArray<IParameterObj> array;
+        array.allocBuffer(obj_num, heap);
+
+        for (auto* obj = mpChildObjHead; obj; obj = obj->mNext)
+        {
+            array.pushBack(obj);
+        }
+
+        heapSortByHash(array);
+
+        mpChildObjHead = nullptr;
+        mpChildObjTail = nullptr;
+        for (auto it = array.begin(); it != array.end(); ++it)
+        {
+            if (!mpChildObjHead)
+            {
+                mpChildObjHead = &*it;
+            }
+            it->mNext = nullptr;
+            if (mpChildObjTail)
+            {
+                mpChildObjTail->mNext = &*it;
+            }
+            mpChildObjTail = &*it;
+        }
+
+        array.freeBuffer();
+    }
+}
+
+void IParameterList::genMessageParameterList(sead::hostio::Context* pContext)
+{
+    for (auto* obj = mpChildObjHead; obj; obj = obj->mNext)
+    {
+        sead::FormatFixedSafeString<256> meta("GroupHeader=%s", obj->getParameterObjName().cstr());
+        obj->genMessageParameter(pContext);
+    }
+
+    for (auto* list = mpChildListHead; list; list = list->mNext)
+    {
+        sead::FormatFixedSafeString<256> meta("GroupHeader=%s",
+                                              list->getParameterListName().cstr());
+        list->genMessageParameterList(pContext);
+    }
+}
+
+/**
+ * Forwards a host IO property event to every child object and list.
+ * @param pReflexible node that received the event
+ * @param pEvent property event
+ */
+void IParameterList::listenPropertyEventParameter(sead::hostio::Reflexible* pReflexible,
+                                                  const sead::hostio::PropertyEvent* pEvent)
+{
+    for (auto* obj = mpChildObjHead; obj; obj = obj->mNext)
+    {
+        obj->listenPropertyEventParameter(pReflexible, pEvent);
+    }
+
+    for (auto* list = mpChildListHead; list; list = list->mNext)
+    {
+        list->listenPropertyEventParameter(pReflexible, pEvent);
+    }
 }
 
 }  // namespace agl::utl

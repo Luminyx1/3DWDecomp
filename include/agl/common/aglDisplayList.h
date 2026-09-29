@@ -29,6 +29,7 @@ public:
     bool suspend(void**);     // unused parameter
     void resume(void*, u64);  // unused parameters
     u64 calcRemainingSize();
+    GPUMemAddr<u8> getBuffer() const { return mBuffer; }
 
 private:
     GPUMemAddr<u8> mBuffer;
