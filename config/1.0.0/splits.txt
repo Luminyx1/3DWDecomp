@@ -4049,13 +4049,11 @@ src/sead/framework/seadInfLoopChecker.cpp:
 src/sead/heap/seadUnitHeap.cpp:
     .text   start:0x006AF300 end:0x006B0DAC
 src/sead/mc/seadJobQueue.cpp:
-    .text   start:0x006B0DB0 end:0x006B1694
+    .text   start:0x006B0DB0 end:0x006B1608
 src/sead/resource/seadSharcArchiveRes.cpp: done
-    .text   start:0x006B16A0 end:0x006B248C
-src/sead/resource/seadSharcArchiveRes_2.cpp:
-    .text   start:0x006B3160 end:0x006B3174
+    .text   start:0x006B1610 end:0x006B248C
 src/sead/message/seadMessageSet.cpp:
-    .text   start:0x006B3180 end:0x006B4A3C
+    .text   start:0x006B3160 end:0x006B4A3C
 src/sead/mc/seadWorkerMgr.cpp:
     .text   start:0x006B4A40 end:0x006B5D0C
 src/sead/resource/seadSZSDecompressor.cpp:

@@ -43409,10 +43409,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71006B15E0			FALSE	_ZN4sead12PerfJobQueue18attachProcessMeterEv	sead::PerfJobQueue::attachProcessMeter()	
 0x71006B15F0			FALSE	_ZN4sead12PerfJobQueue18detachProcessMeterEv	sead::PerfJobQueue::detachProcessMeter()	
 0x71006B1600			FALSE	_ZNK4sead11FixedSizeJQ10getNumJobsEv	sead::FixedSizeJQ::getNumJobs() const	
-0x71006B1610			FALSE	_ZN4sead15SharcArchiveResC2Ev	sead::SharcArchiveRes::SharcArchiveRes()	
+0x71006B1610	sead/resource	seadSharcArchiveRes.o	FALSE	_ZN4sead15SharcArchiveResC2Ev	sead::SharcArchiveRes::SharcArchiveRes()	
 0x71006B1660			FALSE	_ZN4sead15SharcArchiveResD2Ev	sead::SharcArchiveRes::~SharcArchiveRes()	
 0x71006B1670			FALSE	_ZN4sead15SharcArchiveResD0Ev	sead::SharcArchiveRes::~SharcArchiveRes()	
-0x71006B16A0	sead/resource	seadSharcArchiveRes.o	FALSE	_ZN4sead15SharcArchiveRes15prepareArchive_EPKv	sead::SharcArchiveRes::prepareArchive_(void const*)	object/folder from debug builds' assert paths
+0x71006B16A0			FALSE	_ZN4sead15SharcArchiveRes15prepareArchive_EPKv	sead::SharcArchiveRes::prepareArchive_(void const*)	object/folder from debug builds' assert paths
 0x71006B1980			FALSE	_ZNK4sead15SharcArchiveRes12getFileImpl_ERKNS_14SafeStringBaseIcEEPNS_10ArchiveRes8FileInfoE	sead::SharcArchiveRes::getFileImpl_(sead::SafeStringBase<char> const&, sead::ArchiveRes::FileInfo*) const	
 0x71006B19E0			FALSE	_ZNK4sead15SharcArchiveRes16getFileFastImpl_EiPNS_10ArchiveRes8FileInfoE	sead::SharcArchiveRes::getFileFastImpl_(int, sead::ArchiveRes::FileInfo*) const	
 0x71006B1AA0			FALSE	_ZNK4sead15SharcArchiveRes25convertPathToEntryIDImpl_ERKNS_14SafeStringBaseIcEE	sead::SharcArchiveRes::convertPathToEntryIDImpl_(sead::SafeStringBase<char> const&) const	
@@ -43451,9 +43451,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71006B3070			FALSE	LMSi_Free	LMSi_Free	
 0x71006B3080			FALSE	LMSi_MemCmp	LMSi_MemCmp	
 0x71006B30D0			FALSE	LMSi_MemCopy	LMSi_MemCopy	
-0x71006B3160			FALSE	_ZN4sead14MessageSetBaseD2Ev	sead::MessageSetBase::~MessageSetBase()	
+0x71006B3160	sead/message	seadMessageSet.o	FALSE	_ZN4sead14MessageSetBaseD2Ev	sead::MessageSetBase::~MessageSetBase()	
 0x71006B3170			FALSE	_ZN4sead14MessageSetBaseD0Ev	sead::MessageSetBase::~MessageSetBase()	
-0x71006B3180	sead/message	seadMessageSet.o	FALSE	_ZN4sead14MessageSetBase10initializeEPvPNS_4HeapE	sead::MessageSetBase::initialize(void*, sead::Heap*)	object/folder from debug builds' assert paths
+0x71006B3180			FALSE	_ZN4sead14MessageSetBase10initializeEPvPNS_4HeapE	sead::MessageSetBase::initialize(void*, sead::Heap*)	object/folder from debug builds' assert paths
 0x71006B3210			FALSE	_ZN4sead14MessageSetBase14allocForLibms_Em	sead::MessageSetBase::allocForLibms_(unsigned long)	
 0x71006B3230			FALSE	_ZN4sead14MessageSetBase13freeForLibms_EPv	sead::MessageSetBase::freeForLibms_(void*)	
 0x71006B3240			FALSE	_ZN4sead14MessageSetBase8finalizeEv	sead::MessageSetBase::finalize()	

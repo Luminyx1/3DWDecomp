@@ -1,5 +1,12 @@
 #pragma once
 
+namespace nn::gfx::detail {
+template <class T>
+class Caster;
+template <class T>
+class DataContainer;
+}  // namespace nn::gfx::detail
+
 #include "nn/gfx/detail/gfx_DataContainer.h"
 
 namespace nn {
