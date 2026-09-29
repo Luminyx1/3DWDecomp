@@ -1,6 +1,7 @@
 #pragma once
 
 #include <basis/seadTypes.h>
+#include <math/seadVector.h>
 
 namespace al {
 class ActorInitInfo;
@@ -13,6 +14,8 @@ bool tryGetAreaObjStringArg(const char**, const AreaObj*, const char*);
 bool tryGetAreaObjArg(s32*, const AreaObj*, const char*);
 bool tryGetAreaObjArg(f32*, const AreaObj*, const char*);
 bool tryGetAreaObjArg(bool*, const AreaObj*, const char*);
+
+bool tryIsInAreaPos(const AreaObj*, const sead::Vector3f&);
 
 AreaObjGroup* createLinkAreaGroup(LiveActor*, const ActorInitInfo&, const char*, const char*, const char*);
 

@@ -5466,7 +5466,7 @@ src/al/Project/Clipping/FrustumRadar.cpp:
     .text   start:0x009524E0 end:0x0095335C
 src/al/Project/Clipping/ViewFrustum.cpp:
     .text   start:0x00953360 end:0x0095431C
-src/al/Project/Clipping/ViewInfoCtrl.cpp:
+src/al/Project/Clipping/ViewInfoCtrl.cpp: done
     .text   start:0x00954320 end:0x009546C0
 src/al/Project/Collision/Collider.cpp:
     .text   start:0x009546C0 end:0x00956248
