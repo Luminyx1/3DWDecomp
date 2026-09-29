@@ -41,9 +41,8 @@ protected:
 
     virtual bool formatPathForFS_(BufferedSafeString* out, const SafeString& path) const;
 
-    FileHandleInner* getFileHandleInner_(HandleBase* handle, bool construct = false) const;
-    DirectoryHandleInner* getDirectoryHandleInner_(HandleBase* handle,
-                                                   bool construct = false) const;
+    FileHandleInner* getFileHandleInner_(HandleBase* handle) const;
+    DirectoryHandleInner* getDirHandleInner_(HandleBase* handle) const;
 
     nn::Result mLastError = nn::ResultSuccess{};
     SafeString mMountPoint;

@@ -8,6 +8,7 @@
 #include <heap/seadHeap.h>
 #include <prim/seadSafeString.h>
 #include <resource/seadResource.h>
+#include <resource/seadResourceMgr.h>
 
 namespace sead
 {
@@ -28,6 +29,8 @@ public:
 
     s32 getLoadDataAlignment() const override { return 0x80; }
     void doCreate_(u8* buf, u32, Heap*) override;
+
+    Resource* load(ResourceMgr::LoadArg& arg);
 
     const void* getFile(const SafeString& file_path,
                         FileInfo* info = nullptr) SEAD_ARCHIVERES_CONST_TOKEN

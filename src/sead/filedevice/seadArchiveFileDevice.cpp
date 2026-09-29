@@ -13,6 +13,12 @@ struct ArchiveFileDevice::ArchiveFileHandle
     u32 mPos;
 };
 
+/**
+ * Loads an archive file by entry ID if the device has permission.
+ * @param id the entry ID
+ * @param rArg the load settings
+ * @return the loaded data, or null on failure
+ */
 u8* ArchiveFileDevice::tryLoadWithEntryID(s32 id, FileDevice::LoadArg& rArg)
 {
     SEAD_ASSERT_MSG(mPermission, "Device permission error.");
@@ -24,6 +30,14 @@ u8* ArchiveFileDevice::tryLoadWithEntryID(s32 id, FileDevice::LoadArg& rArg)
     return doLoadWithEntryID_(id, rArg);
 }
 
+/**
+ * Opens an archive file by entry ID if the device has permission.
+ * @param pHandle the handle to open
+ * @param id the entry ID
+ * @param flag the open mode
+ * @param divSize the read division size
+ * @return the device that opened the file, or null on failure
+ */
 FileDevice* ArchiveFileDevice::tryOpenWithEntryID(FileHandle* pHandle, s32 id,
                                                   FileDevice::FileOpenFlag flag, u32 divSize)
 {
@@ -39,11 +53,21 @@ FileDevice* ArchiveFileDevice::tryOpenWithEntryID(FileHandle* pHandle, s32 id,
     return ret;
 }
 
+/**
+ * Converts a path to an archive entry ID.
+ * @param rPath the file path
+ * @return the entry ID
+ */
 s32 ArchiveFileDevice::tryConvertPathToEntryID(const SafeString& rPath)
 {
     return doConvertPathToEntryID_(rPath);
 }
 
+/**
+ * Sets the archive's current directory if the device has permission.
+ * @param rDir the directory path
+ * @return true on success
+ */
 bool ArchiveFileDevice::setCurrentDirectory(const SafeString& rDir)
 {
     SEAD_ASSERT_MSG(mPermission, "Device permission error.");
@@ -55,6 +79,12 @@ bool ArchiveFileDevice::setCurrentDirectory(const SafeString& rDir)
     return doSetCurrentDirectory_(rDir);
 }
 
+/**
+ * Gets the size of the archive file at a path.
+ * @param pFileSize receives the file size in bytes
+ * @param rPath the file path
+ * @return true on success
+ */
 bool ArchiveFileDevice::doGetFileSize_(u32* pFileSize, const SafeString& rPath)
 {
     if (!mArchive)
@@ -79,6 +109,12 @@ bool ArchiveFileDevice::doGetFileSize_(u32* pFileSize, const SafeString& rPath)
     return true;
 }
 
+/**
+ * Gets the size of an open archive file.
+ * @param pFileSize receives the file size in bytes
+ * @param pHandle the file handle
+ * @return true on success
+ */
 bool ArchiveFileDevice::doGetFileSize_(u32* pFileSize, FileHandle* pHandle)
 {
     if (!pHandle)
@@ -97,17 +133,33 @@ bool ArchiveFileDevice::doGetFileSize_(u32* pFileSize, FileHandle* pHandle)
     return true;
 }
 
+/**
+ * Gets the archive handle data stored in a file handle.
+ * @param pHandle the file handle
+ * @return the archive file handle
+ */
 ArchiveFileDevice::ArchiveFileHandle* ArchiveFileDevice::getArchiveFileHandle_(FileHandle* pHandle)
 {
     return reinterpret_cast<ArchiveFileHandle*>(getHandleBaseHandleBuffer_(pHandle).getBufferPtr());
 }
 
+/**
+ * Constructs archive handle data in a file handle's buffer.
+ * @param pHandle the file handle
+ * @return the constructed archive file handle
+ */
 ArchiveFileDevice::ArchiveFileHandle*
 ArchiveFileDevice::constructArchiveFileHandle_(FileHandle* pHandle) const
 {
     return new (getHandleBaseHandleBuffer_(pHandle).getBufferPtr()) ArchiveFileHandle;
 }
 
+/**
+ * Checks whether a file exists in the archive.
+ * @param pExists receives whether the file exists
+ * @param rPath the file path
+ * @return true on success
+ */
 bool ArchiveFileDevice::doIsExistFile_(bool* pExists, const SafeString& rPath)
 {
     if (!mArchive)
@@ -130,6 +182,12 @@ bool ArchiveFileDevice::doIsExistFile_(bool* pExists, const SafeString& rPath)
     return true;
 }
 
+/**
+ * Reports that no directory exists, since archives do not support this check.
+ * @param pExists receives false
+ * @param rPath the directory path
+ * @return true on success
+ */
 bool ArchiveFileDevice::doIsExistDirectory_(bool* pExists, const SafeString& rPath)
 {
     if (!mArchive)
@@ -148,6 +206,12 @@ bool ArchiveFileDevice::doIsExistDirectory_(bool* pExists, const SafeString& rPa
     return true;
 }
 
+/**
+ * Loads an archive file by entry ID, copying it into a buffer when one or a heap is given, otherwise returning the archive data directly.
+ * @param entryId the entry ID
+ * @param rArg the load settings, updated with the read and rounded-up sizes
+ * @return the loaded data, or null on failure
+ */
 u8* ArchiveFileDevice::doLoadWithEntryID_(s32 entryId, LoadArg& rArg)
 {
     if (entryId == -1)
@@ -242,6 +306,11 @@ u8* ArchiveFileDevice::doLoadWithEntryID_(s32 entryId, LoadArg& rArg)
     return const_cast<u8*>(static_cast<const u8*>(ret));
 }
 
+/**
+ * Loads an archive file by path, copying it into a buffer when one or a heap is given, otherwise returning the archive data directly.
+ * @param rArg the load settings, updated with the read and rounded-up sizes
+ * @return the loaded data, or null on failure
+ */
 u8* ArchiveFileDevice::doLoad_(LoadArg& rArg)
 {
     if (!mArchive)
@@ -276,6 +345,12 @@ u8* ArchiveFileDevice::doLoad_(LoadArg& rArg)
     return const_cast<u8*>(static_cast<const u8*>(ret));
 }
 
+/**
+ * Opens an archive file by path.
+ * @param pHandle the handle to open
+ * @param rPath the file path
+ * @return this device, or null on failure
+ */
 FileDevice* ArchiveFileDevice::doOpen_(FileHandle* pHandle, const SafeString& rPath,
                                        FileDevice::FileOpenFlag)
 {
@@ -310,6 +385,12 @@ FileDevice* ArchiveFileDevice::doOpen_(FileHandle* pHandle, const SafeString& rP
     return this;
 }
 
+/**
+ * Opens an archive file by entry ID.
+ * @param pHandle the handle to open
+ * @param id the entry ID
+ * @return this device, or null on failure
+ */
 FileDevice* ArchiveFileDevice::doOpenWithEntryID_(FileHandle* pHandle, s32 id,
                                                   FileDevice::FileOpenFlag)
 {
@@ -338,6 +419,11 @@ FileDevice* ArchiveFileDevice::doOpenWithEntryID_(FileHandle* pHandle, s32 id,
     return this;
 }
 
+/**
+ * Converts a path to an archive entry ID.
+ * @param rPath the file path
+ * @return the entry ID
+ */
 s32 ArchiveFileDevice::doConvertPathToEntryID_(const SafeString& rPath)
 {
     if (!mArchive)
@@ -348,23 +434,43 @@ s32 ArchiveFileDevice::doConvertPathToEntryID_(const SafeString& rPath)
     return mArchive->convertPathToEntryID(rPath);
 }
 
+/**
+ * Closes an archive file, which needs no work.
+ * @return true
+ */
 bool ArchiveFileDevice::doClose_(FileHandle*)
 {
     return true;
 }
 
+/**
+ * Fails because flushing is not supported.
+ * @return false
+ */
 bool ArchiveFileDevice::doFlush_(FileHandle*)
 {
     SEAD_ASSERT_MSG(false, "not supported");
     return false;
 }
 
+/**
+ * Fails because removing files is not supported.
+ * @return false
+ */
 bool ArchiveFileDevice::doRemove_(const SafeString&)
 {
     SEAD_ASSERT_MSG(false, "not supported");
     return false;
 }
 
+/**
+ * Copies data from the archive file at the current position, clamped to the file end.
+ * @param pBytesRead receives the number of bytes read
+ * @param pHandle the file handle
+ * @param pOutBuffer the buffer that receives the data
+ * @param bytesToRead the number of bytes to read
+ * @return true
+ */
 bool ArchiveFileDevice::doRead_(u32* pBytesRead, FileHandle* pHandle, u8* pOutBuffer,
                                 u32 bytesToRead)
 {
@@ -391,6 +497,13 @@ bool ArchiveFileDevice::doRead_(u32* pBytesRead, FileHandle* pHandle, u8* pOutBu
     return true;
 }
 
+/**
+ * Moves the seek position of an archive file, failing if it would pass the file end.
+ * @param pHandle the file handle
+ * @param offset the offset relative to the origin
+ * @param origin the seek origin
+ * @return true on success
+ */
 bool ArchiveFileDevice::doSeek_(FileHandle* pHandle, s32 offset, FileDevice::SeekOrigin origin)
 {
     ArchiveFileHandle* inner = getArchiveFileHandle_(pHandle);
@@ -420,6 +533,12 @@ bool ArchiveFileDevice::doSeek_(FileHandle* pHandle, s32 offset, FileDevice::See
     return true;
 }
 
+/**
+ * Gets the seek position of an archive file.
+ * @param pSeekPos receives the current seek position
+ * @param pHandle the file handle
+ * @return true on success
+ */
 bool ArchiveFileDevice::doGetCurrentSeekPos_(u32* pSeekPos, FileHandle* pHandle)
 {
     if (!pHandle)
@@ -439,6 +558,12 @@ bool ArchiveFileDevice::doGetCurrentSeekPos_(u32* pSeekPos, FileHandle* pHandle)
     return true;
 }
 
+/**
+ * Opens a directory in the archive.
+ * @param pHandle the handle to open
+ * @param rPath the directory path
+ * @return this device, or null on failure
+ */
 FileDevice* ArchiveFileDevice::doOpenDirectory_(DirectoryHandle* pHandle, const SafeString& rPath)
 {
     if (!pHandle)
@@ -461,6 +586,11 @@ FileDevice* ArchiveFileDevice::doOpenDirectory_(DirectoryHandle* pHandle, const 
     return this;
 }
 
+/**
+ * Closes a directory in the archive.
+ * @param pHandle the directory handle
+ * @return true on success
+ */
 bool ArchiveFileDevice::doCloseDirectory_(DirectoryHandle* pHandle)
 {
     if (!mArchive)
@@ -471,6 +601,14 @@ bool ArchiveFileDevice::doCloseDirectory_(DirectoryHandle* pHandle)
     return mArchive->closeDirectory(&getHandleBaseHandleBuffer_(pHandle));
 }
 
+/**
+ * Reads entries from a directory in the archive.
+ * @param pEntriesRead receives the number of entries read
+ * @param pHandle the directory handle
+ * @param pEntry the array that receives the entries
+ * @param entriesToRead the maximum number of entries to read
+ * @return true on success
+ */
 bool ArchiveFileDevice::doReadDirectory_(u32* pEntriesRead, DirectoryHandle* pHandle,
                                          DirectoryEntry* pEntry, u32 entriesToRead)
 {
@@ -492,6 +630,11 @@ bool ArchiveFileDevice::doReadDirectory_(u32* pEntriesRead, DirectoryHandle* pHa
     return true;
 }
 
+/**
+ * Sets the archive's current directory.
+ * @param rPath the directory path
+ * @return true on success
+ */
 bool ArchiveFileDevice::doSetCurrentDirectory_(const SafeString& rPath)
 {
     if (!mArchive)
@@ -509,11 +652,19 @@ bool ArchiveFileDevice::doSetCurrentDirectory_(const SafeString& rPath)
     return mArchive->setCurrentDirectory(rPath);
 }
 
+/**
+ * Fails because creating directories is not supported.
+ * @return false
+ */
 bool ArchiveFileDevice::doMakeDirectory_(const SafeString&, u32)
 {
     return false;
 }
 
+/**
+ * Fails because raw errors are not implemented.
+ * @return 0
+ */
 s32 ArchiveFileDevice::doGetLastRawError_() const
 {
     SEAD_ASSERT_MSG(false, "not impremented");

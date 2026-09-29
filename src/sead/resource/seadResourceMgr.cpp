@@ -52,19 +52,19 @@ Resource* ResourceMgr::create(const ResourceMgr::CreateArg& rArg)
         return nullptr;
     }
 
-    if (rArg.factory)
+    ResourceFactory* pFactory = rArg.factory;
+    if (!pFactory)
     {
-        return rArg.factory->create(rArg);
+        pFactory = findFactory(rArg.ext);
     }
 
-    auto* factory = findFactory(rArg.ext);
-    if (factory)
+    if (!pFactory)
     {
-        return factory->create(rArg);
+        SEAD_ASSERT_MSG(false, "factory not found: %s", rArg.ext.cstr());
+        return nullptr;
     }
 
-    SEAD_ASSERT_MSG(false, "factory not found: %s", rArg.ext.cstr());
-    return nullptr;
+    return pFactory->create(rArg);
 }
 
 void ResourceMgr::registerFactory(ResourceFactory* pFactory, const SafeString& rName)
@@ -78,13 +78,15 @@ ResourceFactory* ResourceMgr::setDefaultFactory(ResourceFactory* pFactory)
 {
     ResourceFactory* const previous_default = mDefaultResourceFactory;
 
-    if (!pFactory)
+    if (pFactory)
     {
-        pFactory = mNullResourceFactory;
+        mDefaultResourceFactory = pFactory;
     }
-
-    mDefaultResourceFactory = pFactory;
-    registerFactory(pFactory, "");
+    else
+    {
+        mDefaultResourceFactory = mNullResourceFactory;
+    }
+    registerFactory(mDefaultResourceFactory, "");
 
     return previous_default;
 }

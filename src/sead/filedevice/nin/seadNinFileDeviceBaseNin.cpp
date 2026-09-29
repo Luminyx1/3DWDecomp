@@ -19,22 +19,40 @@ struct NinFileDeviceBase::DirectoryHandleInner
     nn::fs::DirectoryHandle mHandle;
 };
 
+/**
+ * Constructs the device with a name and a file system mount point.
+ * @param rName the device name
+ * @param rMountPoint the mount point name
+ */
 NinFileDeviceBase::NinFileDeviceBase(const SafeString& rName, const SafeString& rMountPoint)
     : FileDevice(rName), mMountPoint(rMountPoint)
 {
 }
 
-// NON_MATCHING: inverted branching for should_set_size
+/**
+ * Opens a file through nn::fs, creating or truncating it as the open flag requires.
+ * @param pHandle the handle to open
+ * @param rPath the file path
+ * @param flag the open mode
+ * @return this device, or null on failure
+ */
 FileDevice* NinFileDeviceBase::doOpen_(FileHandle* pHandle, const SafeString& rPath,
                                        FileDevice::FileOpenFlag flag)
 {
-    static constexpr u32 sModes[4] = {
-        nn::fs::OpenMode_Read,
-        nn::fs::OpenMode_Write | nn::fs::OpenMode_Append,
-        nn::fs::OpenMode_ReadWrite | nn::fs::OpenMode_Append,
-        nn::fs::OpenMode_Write | nn::fs::OpenMode_Append,
-    };
-    const u32 mode = flag <= 3u ? sModes[s32(flag)] : u32(nn::fs::OpenMode_Read);
+    u32 mode;
+    switch (flag)
+    {
+    case cFileOpenFlag_WriteOnly:
+    case cFileOpenFlag_Create:
+        mode = nn::fs::OpenMode_Write | nn::fs::OpenMode_Append;
+        break;
+    case cFileOpenFlag_ReadWrite:
+        mode = nn::fs::OpenMode_ReadWrite | nn::fs::OpenMode_Append;
+        break;
+    default:
+        mode = nn::fs::OpenMode_Read;
+        break;
+    }
 
     FixedSafeString<256> fs_path;
     if (!formatPathForFS_(&fs_path, rPath))
@@ -44,7 +62,7 @@ FileDevice* NinFileDeviceBase::doOpen_(FileHandle* pHandle, const SafeString& rP
         return nullptr;
     }
 
-    bool should_set_size = true;
+    bool is_new_file = true;
     if ((flag | cFileOpenFlag_ReadWrite) == cFileOpenFlag_Create)
     {
         bool is_file = false;
@@ -64,28 +82,30 @@ FileDevice* NinFileDeviceBase::doOpen_(FileHandle* pHandle, const SafeString& rP
             return nullptr;
         }
 
-        should_set_size = flag == cFileOpenFlag_Create || !is_file;
-        if (flag == cFileOpenFlag_Create || !is_file)
+        if (flag == cFileOpenFlag_Create)
         {
             if (is_file)
             {
                 mLastError = nn::fs::ResultPathAlreadyExists();
                 return nullptr;
             }
+        }
+        else if (is_file)
+        {
+            is_new_file = false;
+        }
+        if (is_new_file)
+        {
             const auto create_result = nn::fs::CreateFile(fs_path.cstr(), 0);
             if (create_result.IsFailure())
             {
-                SEAD_WARN("nn::fs::CreateFile failed. module = %d desc = %d inner_value = 0x%08x "
-                          "rPath = %s",
-                          create_result.GetModule(), create_result.GetDescription(),
-                          create_result.GetInnerValueForDebug(), fs_path.cstr());
                 mLastError = create_result;
                 return nullptr;
             }
         }
     }
 
-    auto* handle_inner = getFileHandleInner_(pHandle, true);
+    auto* handle_inner = new (getHandleBaseHandleBuffer_(pHandle).getBufferPtr()) FileHandleInner;
     handle_inner->mOffset = 0;
     handle_inner->mIsWriteMode = (mode >> 1) & 1;
     handle_inner->mDoNotFlushOnClose = false;
@@ -104,7 +124,7 @@ FileDevice* NinFileDeviceBase::doOpen_(FileHandle* pHandle, const SafeString& rP
         return nullptr;
     }
 
-    if (flag == cFileOpenFlag_WriteOnly && !should_set_size)
+    if (flag == cFileOpenFlag_WriteOnly && !is_new_file)
     {
         const auto set_result = nn::fs::SetFileSize(handle_inner->mHandle, 0);
         if (set_result.IsFailure())
@@ -123,6 +143,11 @@ FileDevice* NinFileDeviceBase::doOpen_(FileHandle* pHandle, const SafeString& rP
     return this;
 }
 
+/**
+ * Closes a file, flushing it first if it was opened for writing.
+ * @param pHandle the file handle
+ * @return true on success
+ */
 bool NinFileDeviceBase::doClose_(FileHandle* pHandle)
 {
     const auto* inner = getFileHandleInner_(pHandle);
@@ -143,6 +168,11 @@ bool NinFileDeviceBase::doClose_(FileHandle* pHandle)
     return true;
 }
 
+/**
+ * Flushes a file, disabling the flush on close if it fails.
+ * @param pHandle the file handle
+ * @return true on success
+ */
 bool NinFileDeviceBase::doFlush_(FileHandle* pHandle)
 {
     auto* inner = getFileHandleInner_(pHandle);
@@ -156,6 +186,11 @@ bool NinFileDeviceBase::doFlush_(FileHandle* pHandle)
     return true;
 }
 
+/**
+ * Deletes a file.
+ * @param rPath the file path
+ * @return true on success
+ */
 bool NinFileDeviceBase::doRemove_(const SafeString& rPath)
 {
     FixedSafeString<256> fs_path;
@@ -178,6 +213,14 @@ bool NinFileDeviceBase::doRemove_(const SafeString& rPath)
     return true;
 }
 
+/**
+ * Reads from a file at the current offset and advances it.
+ * @param pBytesRead receives the number of bytes read
+ * @param pHandle the file handle
+ * @param pOutBuffer the buffer that receives the data
+ * @param bytesToRead the number of bytes to read
+ * @return true on success
+ */
 bool NinFileDeviceBase::doRead_(u32* pBytesRead, FileHandle* pHandle, u8* pOutBuffer,
                                 u32 bytesToRead)
 {
@@ -203,6 +246,14 @@ bool NinFileDeviceBase::doRead_(u32* pBytesRead, FileHandle* pHandle, u8* pOutBu
     return true;
 }
 
+/**
+ * Writes to a file at the current offset and advances it.
+ * @param pBytesWritten receives the number of bytes written
+ * @param pHandle the file handle
+ * @param pInBuffer the data to write
+ * @param bytesToWrite the number of bytes to write
+ * @return true on success
+ */
 bool NinFileDeviceBase::doWrite_(u32* pBytesWritten, FileHandle* pHandle, const u8* pInBuffer,
                                  u32 bytesToWrite)
 {
@@ -227,6 +278,13 @@ bool NinFileDeviceBase::doWrite_(u32* pBytesWritten, FileHandle* pHandle, const 
     return false;
 }
 
+/**
+ * Moves the file offset.
+ * @param pHandle the file handle
+ * @param offset the offset relative to the origin
+ * @param origin the seek origin
+ * @return true on success
+ */
 bool NinFileDeviceBase::doSeek_(FileHandle* pHandle, s32 offset, FileDevice::SeekOrigin origin)
 {
     auto* inner = getFileHandleInner_(pHandle);
@@ -253,12 +311,24 @@ bool NinFileDeviceBase::doSeek_(FileHandle* pHandle, s32 offset, FileDevice::See
     return false;
 }
 
+/**
+ * Gets the current file offset.
+ * @param pSeekPos receives the current offset
+ * @param pHandle the file handle
+ * @return true
+ */
 bool NinFileDeviceBase::doGetCurrentSeekPos_(u32* pSeekPos, FileHandle* pHandle)
 {
     *pSeekPos = getFileHandleInner_(pHandle)->mOffset;
     return true;
 }
 
+/**
+ * Gets the size of the file at a path by opening it temporarily.
+ * @param pFileSize receives the file size in bytes
+ * @param rPath the file path
+ * @return true on success
+ */
 bool NinFileDeviceBase::doGetFileSize_(u32* pFileSize, const SafeString& rPath)
 {
     FileHandle handle;
@@ -272,6 +342,12 @@ bool NinFileDeviceBase::doGetFileSize_(u32* pFileSize, const SafeString& rPath)
     return ret;
 }
 
+/**
+ * Gets the size of an open file.
+ * @param pFileSize receives the file size in bytes
+ * @param pHandle the file handle
+ * @return true on success
+ */
 bool NinFileDeviceBase::doGetFileSize_(u32* pFileSize, FileHandle* pHandle)
 {
     const auto* inner = getFileHandleInner_(pHandle);
@@ -289,6 +365,12 @@ bool NinFileDeviceBase::doGetFileSize_(u32* pFileSize, FileHandle* pHandle)
     return false;
 }
 
+/**
+ * Checks whether a file exists.
+ * @param pExists receives whether the file exists
+ * @param rPath the file path
+ * @return true on success
+ */
 bool NinFileDeviceBase::doIsExistFile_(bool* pExists, const SafeString& rPath)
 {
     FixedSafeString<256> fs_path;
@@ -320,6 +402,12 @@ bool NinFileDeviceBase::doIsExistFile_(bool* pExists, const SafeString& rPath)
     return false;
 }
 
+/**
+ * Checks whether a directory exists.
+ * @param pExists receives whether the directory exists
+ * @param rPath the directory path
+ * @return true on success
+ */
 bool NinFileDeviceBase::doIsExistDirectory_(bool* pExists, const SafeString& rPath)
 {
     FixedSafeString<256> fs_path;
@@ -351,9 +439,15 @@ bool NinFileDeviceBase::doIsExistDirectory_(bool* pExists, const SafeString& rPa
     return false;
 }
 
+/**
+ * Opens a directory for reading all entries.
+ * @param pHandle the handle to open
+ * @param rPath the directory path
+ * @return this device, or null on failure
+ */
 FileDevice* NinFileDeviceBase::doOpenDirectory_(DirectoryHandle* pHandle, const SafeString& rPath)
 {
-    auto* inner = getDirectoryHandleInner_(pHandle, true);
+    auto* inner = new (getHandleBaseHandleBuffer_(pHandle).getBufferPtr()) DirectoryHandleInner;
 
     FixedSafeString<256> fs_path;
     if (!formatPathForFS_(&fs_path, rPath))
@@ -381,16 +475,29 @@ FileDevice* NinFileDeviceBase::doOpenDirectory_(DirectoryHandle* pHandle, const 
     return nullptr;
 }
 
+/**
+ * Closes a directory.
+ * @param pHandle the directory handle
+ * @return true
+ */
 bool NinFileDeviceBase::doCloseDirectory_(DirectoryHandle* pHandle)
 {
-    nn::fs::CloseDirectory(getDirectoryHandleInner_(pHandle)->mHandle);
+    nn::fs::CloseDirectory(getDirHandleInner_(pHandle)->mHandle);
     return true;
 }
 
+/**
+ * Reads directory entries one at a time until the count is reached or none remain.
+ * @param pEntriesRead receives the number of entries read
+ * @param pHandle the directory handle
+ * @param pEntries the array that receives the entries
+ * @param numEntries the maximum number of entries to read
+ * @return true on success
+ */
 bool NinFileDeviceBase::doReadDirectory_(u32* pEntriesRead, DirectoryHandle* pHandle,
                                          DirectoryEntry* pEntries, u32 numEntries)
 {
-    const auto* inner = getDirectoryHandleInner_(pHandle);
+    const auto* inner = getDirHandleInner_(pHandle);
 
     for (u32 i = 0; i < numEntries; ++i)
     {
@@ -426,6 +533,11 @@ bool NinFileDeviceBase::doReadDirectory_(u32* pEntriesRead, DirectoryHandle* pHa
     return true;
 }
 
+/**
+ * Creates a directory.
+ * @param rPath the directory path
+ * @return true on success
+ */
 bool NinFileDeviceBase::doMakeDirectory_(const SafeString& rPath, u32)
 {
     FixedSafeString<256> fs_path;
@@ -449,16 +561,31 @@ bool NinFileDeviceBase::doMakeDirectory_(const SafeString& rPath, u32)
     return false;
 }
 
+/**
+ * Gets the inner value of the last nn::fs result.
+ * @return the raw error code
+ */
 s32 NinFileDeviceBase::doGetLastRawError_() const
 {
     return mLastError.GetInnerValueForDebug();
 }
 
+/**
+ * Resolves a path to its file system form.
+ * @param pOut receives the resolved path
+ * @param rPath the path to resolve
+ */
 void NinFileDeviceBase::doResolvePath_(BufferedSafeString* pOut, const SafeString& rPath) const
 {
     formatPathForFS_(pOut, rPath);
 }
 
+/**
+ * Formats a path as "mountpoint:/path" with '/' delimiters.
+ * @param pOut receives the formatted path
+ * @param rPath the path to format
+ * @return true
+ */
 bool NinFileDeviceBase::formatPathForFS_(BufferedSafeString* pOut, const SafeString& rPath) const
 {
     pOut->format("%s:/%s", mMountPoint.cstr(), rPath.cstr());
@@ -466,29 +593,23 @@ bool NinFileDeviceBase::formatPathForFS_(BufferedSafeString* pOut, const SafeStr
     return true;
 }
 
-NinFileDeviceBase::FileHandleInner* NinFileDeviceBase::getFileHandleInner_(HandleBase* pHandle,
-                                                                           bool construct) const
+/**
+ * Gets the file handle data stored in a handle.
+ * @param pHandle the handle
+ * @return the inner file handle
+ */
+NinFileDeviceBase::FileHandleInner* NinFileDeviceBase::getFileHandleInner_(HandleBase* pHandle) const
 {
-    auto* buffer = getHandleBaseHandleBuffer_(pHandle).getBufferPtr();
-    static_assert(sizeof(FileHandleInner) <= sizeof(HandleBuffer));
-    static_assert(alignof(FileHandleInner) <= alignof(HandleBase));
-    if (construct)
-    {
-        return new (buffer) FileHandleInner;
-    }
-    return reinterpret_cast<FileHandleInner*>(buffer);
+    return reinterpret_cast<FileHandleInner*>(getHandleBaseHandleBuffer_(pHandle).getBufferPtr());
 }
 
-NinFileDeviceBase::DirectoryHandleInner*
-NinFileDeviceBase::getDirectoryHandleInner_(HandleBase* pHandle, bool construct) const
+/**
+ * Gets the directory handle data stored in a handle.
+ * @param pHandle the handle
+ * @return the inner directory handle
+ */
+NinFileDeviceBase::DirectoryHandleInner* NinFileDeviceBase::getDirHandleInner_(HandleBase* pHandle) const
 {
-    auto* buffer = getHandleBaseHandleBuffer_(pHandle).getBufferPtr();
-    static_assert(sizeof(DirectoryHandleInner) <= sizeof(HandleBuffer));
-    static_assert(alignof(DirectoryHandleInner) <= alignof(HandleBase));
-    if (construct)
-    {
-        return new (buffer) DirectoryHandleInner;
-    }
-    return reinterpret_cast<DirectoryHandleInner*>(buffer);
+    return reinterpret_cast<DirectoryHandleInner*>(getHandleBaseHandleBuffer_(pHandle).getBufferPtr());
 }
 }  // namespace sead

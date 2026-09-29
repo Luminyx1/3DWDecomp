@@ -132,11 +132,7 @@ public:
     FindContainHeapCache();
 
     bool tryRemoveHeap(Heap* heap);
-    Heap* tryAddHeap()
-    {
-        mHeap |= 1;
-        return reinterpret_cast<Heap*>(mHeap.load());
-    }
+    Heap* tryAddHeap() { return reinterpret_cast<Heap*>(mHeap.fetchOr(1)); }
     Heap* getHeap() const { return reinterpret_cast<Heap*>(mHeap.load()); }
     void setHeap(Heap* heap) { mHeap.storeNonAtomic(uintptr_t(heap)); }
     void resetHeap() { mHeap.fetchAnd(~1LL); }

@@ -128,6 +128,7 @@ class Carver:
         self._sec_base: dict[str, int] = {}             # shared section -> address of offset 0
         self._pools: dict[str, tuple[E.Section, dict[bytes, int]]] = {}
         self.ours_refs: dict[str, set[str]] = {}
+        self.ours_str_align: dict[bytes, int] = {}
         self.warnings: list[str] = []
 
     def _in_ranges(self, addr: int) -> bool:
@@ -231,7 +232,14 @@ class Carver:
     def _string(self, addr: int) -> tuple[str, int]:
         raw = self.img.bytes_at(addr, 0x1000)
         end = raw.find(b"\0")
-        return self._pool(".rodata.str1.1", raw[:end + 1], 1, 1, SHF_MERGE | SHF_STRINGS)
+        data = raw[:end + 1]
+        # the linker merges strings, so their alignment is lost; when our object puts this
+        # string in a more aligned pool (clang raises it for some uses) and the target's
+        # address is aligned that much too, follow our object
+        al = self.ours_str_align.get(data, 1)
+        if al > 1 and (addr + BASE) % al == 0:
+            return self._pool(f".rodata.str1.{al}", data, al, 1, SHF_MERGE | SHF_STRINGS)
+        return self._pool(".rodata.str1.1", data, 1, 1, SHF_MERGE | SHF_STRINGS)
 
     def _const(self, addr: int, size: int) -> tuple[str, int]:
         return self._pool(f".rodata.cst{size}", self.img.bytes_at(addr, size), size, size, SHF_MERGE)
@@ -605,6 +613,29 @@ def _parse_range(tok: str) -> tuple[str, int, int]:
     return sec, lo_i, hi_i
 
 
+def _object_string_aligns(path: str) -> dict[bytes, int]:
+    """string (with its NUL) -> alignment, for strings in a compiled object's .rodata.str1.N (N > 1)"""
+    from elftools.elf.elffile import ELFFile
+    out: dict[bytes, int] = {}
+    with open(path, "rb") as fh:
+        for sec in ELFFile(fh).iter_sections():
+            m = re.fullmatch(r"\.rodata\.str1\.(\d+)", sec.name)
+            if not m or int(m.group(1)) <= 1:
+                continue
+            al = int(m.group(1))
+            data = sec.data()
+            i = 0
+            while i < len(data):
+                j = data.find(b"\0", i)
+                if j < 0:
+                    break
+                out.setdefault(data[i:j + 1], al)
+                i = j + 1
+                while i < len(data) and i % al and data[i] == 0:
+                    i += 1
+    return out
+
+
 def _object_refs(path: str) -> dict[str, set[str]]:
     """function name -> names its relocations reference, for a compiled object"""
     from elftools.elf.elffile import ELFFile
@@ -655,6 +686,7 @@ def main(argv=None):
     c = Carver(img)
     if a.ours and Path(a.ours).is_file():
         c.ours_refs = _object_refs(a.ours)
+        c.ours_str_align = _object_string_aligns(a.ours)
     if a.range:
         c.include_ranges([_parse_range(t) for t in a.range])
     if a.symbols:

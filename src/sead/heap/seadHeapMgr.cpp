@@ -112,6 +112,108 @@ void HeapMgr::setAllocFromNotSeadThreadHeap(Heap* pHeap)
     mAllocFromNotSeadThreadHeap = pHeap;
 }
 
+/**
+ * Finds the heap that contains an address, trying the current thread's cached heap and current
+ * heap first and then searching the heap tree.
+ * @param ptr the address to look up
+ * @return the innermost heap containing ptr, or nullptr if no heap contains it
+ */
+Heap* HeapMgr::findContainHeap(const void* ptr) const
+{
+    ThreadMgr* pThreadMgr = ThreadMgr::instance();
+    Thread* pThread = pThreadMgr ? pThreadMgr->getCurrentThread() : nullptr;
+
+    Heap* pCurrentHeap = nullptr;
+    Heap* pCheckedHeap = nullptr;
+    FindContainHeapCache* pCache = nullptr;
+    Heap* pHeap = nullptr;
+    if (pThread)
+    {
+        pCache = pThread->getFindContainHeapCache();
+        pCurrentHeap = pThread->getCurrentHeap();
+
+        pHeap = pCache->tryAddHeap();
+        bool isMiss = true;
+        if (pHeap && pHeap->mChildren.size() == 0)
+        {
+            isMiss = !pHeap->isInclude(ptr);
+            pCheckedHeap = isMiss ? pHeap : nullptr;
+        }
+        pCache->resetHeap();
+        if (!isMiss)
+        {
+            return pHeap;
+        }
+
+        if (pCurrentHeap && pCheckedHeap != pCurrentHeap && pCurrentHeap->mChildren.size() == 0)
+        {
+            if (pCurrentHeap->isInclude(ptr))
+            {
+                pCache->setHeap(pCurrentHeap);
+                return pCurrentHeap;
+            }
+            pCurrentHeap = nullptr;
+        }
+    }
+
+    ScopedLock<CriticalSection> lock(&sHeapTreeLockCS);
+
+    if (pThread)
+    {
+        pHeap = pCache->getHeap();
+        if (pHeap && pHeap != pCheckedHeap)
+        {
+            Heap* pFound = pHeap->findContainHeap_(ptr);
+            if (pFound)
+            {
+                if (pFound != pHeap)
+                {
+                    pCache->setHeap(pFound);
+                }
+                return pFound;
+            }
+            pCheckedHeap = pHeap;
+        }
+
+        if (pCurrentHeap && pCheckedHeap != pCurrentHeap)
+        {
+            pHeap = pCurrentHeap->findContainHeap_(ptr);
+            if (pHeap)
+            {
+                pCache->setHeap(pHeap);
+                return pHeap;
+            }
+        }
+    }
+
+    for (Heap& rRoot : sRootHeaps)
+    {
+        pHeap = rRoot.findContainHeap_(ptr);
+        if (pHeap)
+        {
+            goto found;
+        }
+    }
+
+    for (Heap& rRoot : sIndependentHeaps)
+    {
+        pHeap = rRoot.findContainHeap_(ptr);
+        if (pHeap)
+        {
+            goto found;
+        }
+    }
+
+    return nullptr;
+
+found:
+    if (pCache)
+    {
+        pCache->setHeap(pHeap);
+    }
+    return pHeap;
+}
+
 void HeapMgr::removeFromFindContainHeapCache_(Heap* pHeap)
 {
     auto* threadMgr = ThreadMgr::instance();

@@ -48,7 +48,7 @@ public:
     bool isEOF() override { return mSrc->isEOF(); }
     bool flush() override;
 
-private:
+protected:
     StreamSrc* mSrc;
     void* mBuffer;
     u32 mBufferSize = 0;
@@ -71,6 +71,20 @@ public:
     BufferMultiByteTextWriteStreamSrc(StreamSrc* src, void* buffer, u32 buffer_size);
     ~BufferMultiByteTextWriteStreamSrc() override = default;
     u32 write(const void* data, u32 size) override;
+
+private:
+    static u32 getUtf8CharLength_(u8 lead)
+    {
+        if ((lead & 0xe0) == 0xc0)
+        {
+            return 2;
+        }
+        if ((lead & 0xf0) == 0xe0)
+        {
+            return 3;
+        }
+        return (lead & 0xf8) == 0xf0 ? 4 : 0;
+    }
 };
 
 class BufferMultiByteTextWriteStream : public WriteStream

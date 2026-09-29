@@ -37,16 +37,29 @@ static EnumInitValueArrayCriticalSection sEnumInitValueArrayCriticalSection;
 
 namespace sead
 {
+/**
+ * Returns the critical section guarding enum text parsing.
+ * @return the parse text critical section
+ */
 CriticalSection* EnumUtil::getParseTextCS_()
 {
     return sEnumParseTextCriticalSection.getObject();
 }
 
+/**
+ * Returns the critical section guarding enum value array initialization.
+ * @return the value array initialization critical section
+ */
 CriticalSection* EnumUtil::getInitValueArrayCS_()
 {
     return sEnumInitValueArrayCriticalSection.getObject();
 }
 
+/**
+ * Reports a failed enum text parse, printing the parsed words in debug builds.
+ * @param pTextPtr the array of parsed word pointers
+ * @param v the number of words parsed
+ */
 void ParseFailed_([[maybe_unused]] char** pTextPtr, [[maybe_unused]] int v)
 {
 #ifdef SEAD_DEBUG
@@ -60,6 +73,12 @@ void ParseFailed_([[maybe_unused]] char** pTextPtr, [[maybe_unused]] int v)
 #endif
 }
 
+/**
+ * Splits a comma-separated enum text into null-terminated words, skipping any value initializers.
+ * @param pTextPtr the array that receives the word pointers
+ * @param pTextAll the full enum text, modified in place
+ * @param size the expected number of words
+ */
 void EnumUtil::parseText_(char** pTextPtr, char* pTextAll, int size)
 {
     int index = 0;
@@ -115,6 +134,11 @@ void EnumUtil::parseText_(char** pTextPtr, char* pTextAll, int size)
 // ^               ^  ^
 // initial p       |  next (pNext)
 //                 end (p_ptr)
+/**
+ * Advances to the end of the current word, trimming trailing whitespace.
+ * @param p_ptr in: the word start; out: one past the last non-whitespace character
+ * @param pNext receives the position of the terminating separator
+ */
 void EnumUtil::skipToWordEnd_(char** p_ptr, char** pNext)
 {
     char* p = *p_ptr;
@@ -134,6 +158,10 @@ void EnumUtil::skipToWordEnd_(char** p_ptr, char** pNext)
     *p_ptr = p + 1;
 }
 
+/**
+ * Advances past whitespace and commas to the start of the next word.
+ * @param pPtr the text position to advance
+ */
 void EnumUtil::skipToWordStart_(char** pPtr)
 {
     char* p = *pPtr;

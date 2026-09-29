@@ -7,6 +7,20 @@
 
 namespace sead
 {
+class GameFrameworkUnk
+{
+public:
+    virtual ~GameFrameworkUnk();
+    virtual void unk2() = 0;
+    virtual void unk3() = 0;
+    virtual void unk4() = 0;
+    virtual void unk5() = 0;
+    virtual void unk6() = 0;
+    virtual void unk7() = 0;
+    virtual void unk8() = 0;
+    virtual void unk9(bool) = 0;
+};
+
 class GameFramework : public Framework
 {
     SEAD_RTTI_OVERRIDE(GameFramework, Framework);
@@ -15,7 +29,6 @@ public:
     static void initialize(const Framework::InitializeArg&);
 
     GameFramework();
-    // TODO: implement (missing unk1)
     ~GameFramework() override;
 
     void createSystemTasks(TaskBase* base,
@@ -42,7 +55,7 @@ private:
     sead::SafeString mUnk1 = "";
     sead::SafeString mUnk2 = "";
     sead::SafeString mUnk3 = "";
-    [[maybe_unused]] void* mUnk4 = nullptr;  // TODO: remove [[maybe_unused]] once mUnk4 is used
+    GameFrameworkUnk* mUnk4 = nullptr;
     void (*mUnk5)(bool) = nullptr;
     void (*mUnk6)(bool);
 };

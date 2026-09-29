@@ -3874,10 +3874,8 @@ src/sead/container/seadNinJoyNpadDevice.cpp:
     .text   start:0x006522A0 end:0x00652890
 src/sead/controller/nin/seadNinJoyNpadDeviceNin.cpp:
     .text   start:0x00652890 end:0x00652F6C
-src/sead/filedevice/seadFileDevice.cpp:
-    .text   start:0x00652F70 end:0x0065561C
-src/sead/filedevice/seadArchiveFileDevice.cpp:
-    .text   start:0x00655620 end:0x0065575C
+src/sead/filedevice/seadFileDevice.cpp: done
+    .text   start:0x00652F70 end:0x0065575C
 src/sead/filedevice/seadFileDeviceMgr.cpp: done
     .text   start:0x00655760 end:0x00656848
 src/sead/filedevice/seadMainFileDevice.cpp:
@@ -3894,7 +3892,7 @@ src/sead/framework/nx/seadFramework.cpp:
     .text   start:0x0065B8E0 end:0x0065BECC
 src/sead/framework/nx/seadMethodTreeNode.cpp:
     .text   start:0x0065BED0 end:0x0065C0CC
-src/sead/framework/seadGameFramework.cpp:
+src/sead/framework/seadGameFramework.cpp: done
     .text   start:0x0065C0D0 end:0x0065C97C
 src/sead/framework/seadMethodTree.cpp: done
     .text   start:0x0065C980 end:0x0065CCA0
@@ -3939,17 +3937,17 @@ src/sead/heap/seadFrameHeap.cpp:
 src/sead/heap/seadHeap.cpp:
     .text   start:0x0066FC80 end:0x006713D4
 src/sead/heap/seadHeapMgr.cpp:
-    .text   start:0x006713E0 end:0x006720F4
+    .text   start:0x006713E0 end:0x006720DC
 src/sead/heap/nin/seadArenaNin.cpp: done
-    .text   start:0x00672100 end:0x00672180
+    .text   start:0x006720E0 end:0x00672180
 src/sead/math/nerdMath.cpp:
     .text   start:0x00672180 end:0x00672344
 src/sead/prim/seadBitFlag.cpp:
     .text   start:0x00672350 end:0x006725BC
-src/sead/prim/seadEnum.cpp:
-    .text   start:0x006725C0 end:0x00672A5C
+src/sead/prim/seadEnum.cpp: done
+    .text   start:0x006725C0 end:0x00672970
 src/sead/prim/seadEnvUtil.cpp:
-    .text   start:0x00672A60 end:0x00675D6C
+    .text   start:0x00672970 end:0x00675D6C
 src/sead/prim/seadFormatPrint.cpp:
     .text   start:0x00675D70 end:0x0067A944
 src/sead/prim/seadCuckooClock.cpp:
@@ -3962,15 +3960,15 @@ src/sead/prim/seadStringBuilder.cpp:
     .text   start:0x0067DD00 end:0x00682D7C
 src/sead/prim/seadStringUtil.cpp:
     .text   start:0x00682D80 end:0x00687D9C
-src/sead/prim/seadArchiveRes.cpp:
+src/sead/prim/seadArchiveRes.cpp: done
     .text   start:0x00687DA0 end:0x006881F8
-src/sead/filedevice/seadArchiveFileDevice_dup2.cpp:
+src/sead/filedevice/seadArchiveFileDevice.cpp: done
     .text   start:0x00688200 end:0x00688E38
 src/sead/resource/seadResource.cpp: done
     .text   start:0x00688E40 end:0x00689F4C
 src/sead/resource/seadResourceMgr.cpp:
     .text   start:0x00689F50 end:0x0068B2DC
-src/sead/stream/seadBufferStream.cpp:
+src/sead/stream/seadBufferStream.cpp: done
     .text   start:0x0068B2E0 end:0x0068BBF0
 src/sead/stream/seadFileDeviceStream.cpp: done
     .text   start:0x0068BBF0 end:0x0068CE04

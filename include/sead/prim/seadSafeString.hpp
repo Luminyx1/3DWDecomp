@@ -452,7 +452,7 @@ inline s32 BufferedSafeStringBase<T>::copyAt(s32 at, const SafeStringBase<T>& sr
     {
         SEAD_ASSERT_MSG(false, "Buffer overflow. (Buffer Size: %d, At: %d, Copy Length: %d)",
                         mBufferSize, at, copyLength);
-        copyLength = mBufferSize - at - 1;
+        copyLength = mBufferSize - 1 - at;
     }
 
     if (copyLength <= 0)

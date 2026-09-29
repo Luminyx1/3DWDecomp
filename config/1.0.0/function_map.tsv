@@ -3,7 +3,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100000170			TRUE	_fini	_fini	
 0x7100000190			TRUE	sub_7100000190	sub_7100000190	
 0x71000001C0			TRUE	sub_71000001C0	sub_71000001C0	
-0x7100000250			TRUE	sub_7100000250	sub_7100000250	
+0x7100000250			TRUE	__cxa_atexit	__cxa_atexit	
 0x71000002E0			TRUE	__nnDetailNintendoSdkRuntimeObjectFileRefer	__nnDetailNintendoSdkRuntimeObjectFileRefer	
 0x71000002F0			TRUE	sub_71000002F0	sub_71000002F0	
 0x71000003C0			TRUE	nndetailRoGetRoDataStart	nndetailRoGetRoDataStart	
@@ -41176,7 +41176,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100655480			FALSE	_ZN4sead15DirectoryHandle7tryReadEPjPNS_14DirectoryEntryEj	sead::DirectoryHandle::tryRead(unsigned int*, sead::DirectoryEntry*, unsigned int)	
 0x7100655530			FALSE	_ZNK4sead10FileDevice27checkDerivedRuntimeTypeInfoEPKNS_15RuntimeTypeInfo9InterfaceE	sead::FileDevice::checkDerivedRuntimeTypeInfo(sead::RuntimeTypeInfo::Interface const*) const	
 0x71006555B0			FALSE	_ZNK4sead10FileDevice18getRuntimeTypeInfoEv	sead::FileDevice::getRuntimeTypeInfo() const	
-0x7100655620		seadArchiveFileDevice.o	FALSE	_ZNK4sead10FileDevice13traceFilePathERKNS_14SafeStringBaseIcEE	sead::FileDevice::traceFilePath(sead::SafeStringBase<char> const&) const	object (smo)
+0x7100655620			FALSE	_ZNK4sead10FileDevice13traceFilePathERKNS_14SafeStringBaseIcEE	sead::FileDevice::traceFilePath(sead::SafeStringBase<char> const&) const	object (smo)
 0x7100655630			FALSE	_ZNK4sead10FileDevice18traceDirectoryPathERKNS_14SafeStringBaseIcEE	sead::FileDevice::traceDirectoryPath(sead::SafeStringBase<char> const&) const	
 0x7100655640			FALSE	_ZNK4sead10FileDevice15resolveFilePathEPNS_22BufferedSafeStringBaseIcEERKNS_14SafeStringBaseIcEE	sead::FileDevice::resolveFilePath(sead::BufferedSafeStringBase<char>*, sead::SafeStringBase<char> const&) const	
 0x7100655650			FALSE	_ZNK4sead10FileDevice20resolveDirectoryPathEPNS_22BufferedSafeStringBaseIcEERKNS_14SafeStringBaseIcEE	sead::FileDevice::resolveDirectoryPath(sead::BufferedSafeStringBase<char>*, sead::SafeStringBase<char> const&) const	
@@ -41936,10 +41936,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100671F90			FALSE	_ZN4sead7HeapMgr14removeRootHeapEPNS_4HeapE	sead::HeapMgr::removeRootHeap(sead::Heap*)	
 0x7100671FF0			FALSE	_ZN4sead7HeapMgr22setAllocFailedCallbackEPNS_10IDelegate1IPKNS0_22AllocFailedCallbackArgEEE	sead::HeapMgr::setAllocFailedCallback(sead::IDelegate1<sead::HeapMgr::AllocFailedCallbackArg const*>*)	
 0x7100672000			FALSE	_ZN4sead20FindContainHeapCacheC2Ev	sead::FindContainHeapCache::FindContainHeapCache()	
-0x7100672010			FALSE	sub_7100672010	sub_7100672010	
-0x71006720E0			FALSE	_ZN4sead5ArenaC2Ev	sead::Arena::Arena()	
+0x7100672010			FALSE	_GLOBAL__sub_I_seadHeapMgr.cpp	_GLOBAL__sub_I_seadHeapMgr.cpp	
+0x71006720E0	sead/heap/nin	seadArenaNin.o	FALSE	_ZN4sead5ArenaC2Ev	sead::Arena::Arena()	
 0x71006720F0			FALSE	_ZN4sead5ArenaD2Ev	sead::Arena::~Arena()	
-0x7100672100	sead/heap/nin	seadArenaNin.o	FALSE	_ZN4sead5Arena10initializeEm	sead::Arena::initialize(unsigned long)	object/folder from debug builds' assert paths
+0x7100672100			FALSE	_ZN4sead5Arena10initializeEm	sead::Arena::initialize(unsigned long)	object/folder from debug builds' assert paths
 0x7100672140			FALSE	_ZN4sead5Arena7destroyEv	sead::Arena::destroy()	
 0x7100672180	sead/math	nerdMath.o	FALSE	_ZN4nerd15setUseFastsqrteEb	nerd::setUseFastsqrte(bool)	object start set by hand
 0x7100672190			FALSE	_ZN4nerd4sqrtEf	nerd::sqrt(float)	
@@ -41957,10 +41957,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71006726D0			FALSE	_ZN4sead8EnumUtil10parseText_EPPcS1_i	sead::EnumUtil::parseText_(char**, char*, int)	
 0x71006727E0			FALSE	_ZN4sead8EnumUtil16skipToWordStart_EPPc	sead::EnumUtil::skipToWordStart_(char**)	
 0x7100672820			FALSE	_ZN4sead8EnumUtil14skipToWordEnd_EPPcS2_	sead::EnumUtil::skipToWordEnd_(char**, char**)	
-0x71006728A0			FALSE	sub_71006728A0	sub_71006728A0	
-0x7100672970			FALSE	_ZN4sead17RegionLanguageMgr18SingletonDisposer_D2Ev	sead::RegionLanguageMgr::SingletonDisposer_::~SingletonDisposer_()	
+0x71006728A0			FALSE	_GLOBAL__sub_I_seadEnum.cpp	_GLOBAL__sub_I_seadEnum.cpp	
+0x7100672970		seadEnvUtil.o	FALSE	_ZN4sead17RegionLanguageMgr18SingletonDisposer_D2Ev	sead::RegionLanguageMgr::SingletonDisposer_::~SingletonDisposer_()	
 0x71006729F0			FALSE	_ZN4sead17RegionLanguageMgr18SingletonDisposer_D0Ev	sead::RegionLanguageMgr::SingletonDisposer_::~SingletonDisposer_()	
-0x7100672A60		seadEnvUtil.o	FALSE	_ZN4sead17RegionLanguageMgr14createInstanceEPNS_4HeapE	sead::RegionLanguageMgr::createInstance(sead::Heap*)	object/folder from debug builds' assert paths
+0x7100672A60			FALSE	_ZN4sead17RegionLanguageMgr14createInstanceEPNS_4HeapE	sead::RegionLanguageMgr::createInstance(sead::Heap*)	object/folder from debug builds' assert paths
 0x7100672B00			FALSE	_ZN4sead17RegionLanguageMgr14deleteInstanceEv	sead::RegionLanguageMgr::deleteInstance()	
 0x7100672B60			FALSE	_ZN4sead17RegionLanguageMgrC2Ev	sead::RegionLanguageMgr::RegionLanguageMgr()	
 0x7100672B90			FALSE	_ZN4sead17RegionLanguageMgrD2Ev	sead::RegionLanguageMgr::~RegionLanguageMgr()	

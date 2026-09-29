@@ -4,6 +4,16 @@
 namespace sead
 {
 /**
+ * Constructs an empty arena.
+ */
+Arena::Arena() = default;
+
+/**
+ * Destroys the arena object (the memory is released by destroy()).
+ */
+Arena::~Arena() = default;
+
+/**
  * Allocates the arena's memory from the OS, in whole 2 MiB blocks.
  * @param size bytes to allocate (rounded up to 2 MiB)
  */
