@@ -9,16 +9,15 @@ class FixMapParts : public LiveActor {
 public:
     FixMapParts(const char*);
 
-    virtual ~FixMapParts();
-    virtual void init(const ActorInitInfo&);
-    virtual void initAfterPlacement();
-    virtual void appear();
-    virtual void updateLinkedTrans(const sead::Vector3f&);
-    virtual bool receiveMsg(const SensorMsg* msg, HitSensor* self, HitSensor* other);
-    virtual void control();
+    virtual void init(const ActorInitInfo&) override;
+    virtual void initAfterPlacement() override;
+    virtual void appear() override;
+    virtual void updateLinkedTrans(const sead::Vector3f&) override;
+    virtual bool receiveMsg(const SensorMsg* msg, HitSensor* self, HitSensor* other) override;
+    virtual void control() override;
 
     void initWithSuffix(const ActorInitInfo&, const char*);
 
-    MtxConnector* mConnector = nullptr;
+    MtxConnector* mConnector = nullptr;  // _148
 };
 }  // namespace al

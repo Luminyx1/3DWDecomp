@@ -47,5 +47,8 @@ namespace al {
     void initActorAudioKeeperWithout3D(LiveActor*, const ActorInitInfo&, const char*, const char*);
 
     void initActorSceneInfo(LiveActor*, const ActorInitInfo&);
+    void initExecutorUpdate(LiveActor*, const ActorInitInfo&, const char*);
+    void initActorEffectKeeper(LiveActor*, const ActorInitInfo&, const char*, bool);
+    void initActorAudioKeeper(LiveActor*, const ActorInitInfo&, const char*, const char*);
 
 }  // namespace al

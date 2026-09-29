@@ -2,6 +2,7 @@
 
 #include <basis/seadTypes.h>
 #include <math/seadMatrix.h>
+#include <math/seadQuat.h>
 #include <math/seadVector.h>
 
 namespace al {
@@ -45,5 +46,9 @@ namespace al {
     f32 getRandom(f32, f32);
 
     f32 lerpValue(f32, f32, f32);
+    void calcSphereMargeSpheres(sead::Vector3f*, f32*, const sead::Vector3f&, f32, const sead::Vector3f&, f32);
+    void normalizeOrDirZ(sead::Vector3f*);
+    void normalizeOrDirZ(sead::Vector3f*, const sead::Vector3f&);
+    void makeQuatFrontUp(sead::Quatf*, const sead::Vector3f&, const sead::Vector3f&);
 
 }  // namespace al
