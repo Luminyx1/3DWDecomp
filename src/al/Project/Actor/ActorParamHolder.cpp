@@ -9,9 +9,9 @@ namespace al {
      * @param pName The name of the parameter.
      * @return A pointer to the parameter's value, or to a zero value if it doesn't exist.
      */
-    const s32* ActorParamHolder::findParamS32(const char* pName) const {
-        const ActorParamInfo* info = tryFindParamInfoByName(pName);
-        return info != nullptr ? &info->mS32 : reinterpret_cast<const s32*>("");
+    const ActorParamS32* ActorParamHolder::findParamS32(const char* pName) const {
+        ActorParamInfo* info = tryFindParamInfoByName(pName);
+        return info != nullptr ? &info->mS32 : reinterpret_cast<const ActorParamS32*>("");
     }
 
     /**
@@ -19,7 +19,7 @@ namespace al {
      * @param pName The name of the parameter.
      * @return The parameter, or nullptr if it doesn't exist.
      */
-    const ActorParamInfo* ActorParamHolder::tryFindParamInfoByName(const char* pName) const {
+    ActorParamInfo* ActorParamHolder::tryFindParamInfoByName(const char* pName) const {
         for (s32 i = 0; i < mNumParams; i++) {
             ActorParamInfo* info = &mParams[i];
             if (isEqualString(info->mName, pName)) {
@@ -35,9 +35,9 @@ namespace al {
      * @param pName The name of the parameter.
      * @return A pointer to the parameter's value, or to a zero value if it doesn't exist.
      */
-    const f32* ActorParamHolder::findParamF32(const char* pName) const {
-        const ActorParamInfo* info = tryFindParamInfoByName(pName);
-        return info != nullptr ? &info->mF32 : reinterpret_cast<const f32*>("");
+    const ActorParamF32* ActorParamHolder::findParamF32(const char* pName) const {
+        ActorParamInfo* info = tryFindParamInfoByName(pName);
+        return info != nullptr ? &info->mF32 : reinterpret_cast<const ActorParamF32*>("");
     }
 
     /**
@@ -46,7 +46,7 @@ namespace al {
      * @return The movement parameters, or zeroed parameters if it doesn't exist.
      */
     const ActorParamMove* ActorParamHolder::findParamMove(const char* pName) const {
-        const ActorParamInfo* info = tryFindParamInfoByName(pName);
+        ActorParamInfo* info = tryFindParamInfoByName(pName);
         if (info != nullptr) {
             return info->mMove;
         }
@@ -60,7 +60,7 @@ namespace al {
      * @return The jump parameters, or zeroed parameters if it doesn't exist.
      */
     const ActorParamJump* ActorParamHolder::findParamJump(const char* pName) const {
-        const ActorParamInfo* info = tryFindParamInfoByName(pName);
+        ActorParamInfo* info = tryFindParamInfoByName(pName);
         if (info != nullptr) {
             return info->mJump;
         }
@@ -74,7 +74,7 @@ namespace al {
      * @return The sight parameters, or zeroed parameters if it doesn't exist.
      */
     const ActorParamSight* ActorParamHolder::findParamSight(const char* pName) const {
-        const ActorParamInfo* info = tryFindParamInfoByName(pName);
+        ActorParamInfo* info = tryFindParamInfoByName(pName);
         if (info != nullptr) {
             return info->mSight;
         }
@@ -88,7 +88,7 @@ namespace al {
      * @return The rebound parameters, or zeroed parameters if it doesn't exist.
      */
     const ActorParamRebound* ActorParamHolder::findParamRebound(const char* pName) const {
-        const ActorParamInfo* info = tryFindParamInfoByName(pName);
+        ActorParamInfo* info = tryFindParamInfoByName(pName);
         if (info != nullptr) {
             return info->mRebound;
         }
@@ -115,10 +115,10 @@ namespace al {
             ByamlIter valueIter;
             if (paramIter.tryGetIterByKey(&valueIter, "S32")) {
                 info->mType = ActorParamInfo::Type_S32;
-                valueIter.tryGetIntByKey(&info->mS32, "ParamS32");
+                valueIter.tryGetIntByKey(&info->mS32.mValue, "ParamS32");
             } else if (paramIter.tryGetIterByKey(&valueIter, "F32")) {
                 info->mType = ActorParamInfo::Type_F32;
-                valueIter.tryGetFloatByKey(&info->mF32, "ParamF32");
+                valueIter.tryGetFloatByKey(&info->mF32.mValue, "ParamF32");
             } else if (paramIter.tryGetIterByKey(&valueIter, "ActorParamMove")) {
                 info->mType = ActorParamInfo::Type_Move;
                 ActorParamMove* move = new ActorParamMove;

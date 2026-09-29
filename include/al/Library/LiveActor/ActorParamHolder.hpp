@@ -4,7 +4,6 @@
 
 namespace al {
     class LiveActor;
-    struct ActorParamInfo;
 
     struct ActorParamS32 {
         s32 mValue;
@@ -38,6 +37,32 @@ namespace al {
         f32 mFrictionH;         // _8
     };
 
+    /// One named parameter read from an actor's ActorParam resource.
+    struct ActorParamInfo {
+        enum Type {
+            Type_None = -1,
+            Type_S32 = 0,
+            Type_F32 = 1,
+            Type_Move = 2,
+            Type_Jump = 3,
+            Type_Sight = 4,
+            Type_Rebound = 5
+        };
+
+        __attribute__((used)) ActorParamInfo() : mName(nullptr), mType(Type_None) { mS32.mValue = 0; }
+
+        const char* mName;                  // _0
+        s32 mType;                          // _8
+        union {
+            ActorParamS32 mS32;
+            ActorParamF32 mF32;
+            ActorParamMove* mMove;
+            ActorParamJump* mJump;
+            ActorParamSight* mSight;
+            ActorParamRebound* mRebound;
+        };                                  // _10
+    };
+
     /// Named parameters read from an actor's ActorParam resource file.
     class ActorParamHolder {
     public:
@@ -52,6 +77,9 @@ namespace al {
         const ActorParamSight* findParamSight(const char* pName) const;
         const ActorParamRebound* findParamRebound(const char* pName) const;
         ActorParamInfo* tryFindParamInfoByName(const char* pName) const;
+
+        s32 mNumParams;                 // _0
+        ActorParamInfo* mParams;        // _8
     };
 
     const ActorParamF32* findActorParamF32(const LiveActor* pActor, const char* pName);
