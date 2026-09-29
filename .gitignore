@@ -24,3 +24,6 @@ docs/nnsdk/
 
 # generated progress website (tools/website.py)
 /site/
+
+# website upload settings (tools/deploy_site.py) - contains credentials
+/deploy.ini

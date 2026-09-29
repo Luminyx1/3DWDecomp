@@ -73,3 +73,10 @@ Website
 `site/index.html` (inline CSS, no scripts): overall and per-library progress, and the ten
 best files of every sub-library of Game, al/Library and al/Project. Upload the `site/`
 folder as-is. The post-commit hook regenerates it after every commit.
+
+To publish it automatically to https://shibbo.net/3dw/, copy `deploy.ini.example` to
+`deploy.ini` (git-ignored) and fill in the host's SFTP/FTP details. From then on
+`tools/deploy_site.py` uploads `site/` whenever it changed: after every commit (in the
+background, log in `build/deploy.log`) and before every push (`pre-push` hook, which
+also covers commits merged in from elsewhere). Run `python tools/deploy_site.py --force`
+to upload by hand. SFTP needs `pip install paramiko`.
