@@ -5,7 +5,7 @@ namespace al {
 
     bool isAlive(const LiveActor*);
     bool isDead(const LiveActor*);
-    bool isDeadAlive(const LiveActor*);
+    bool isDeadAlive(LiveActor*);
     bool isCountAsAlive(LiveActor*);
     bool isNoCollide(const LiveActor*);
     void onCalcAnim(LiveActor*);
@@ -15,4 +15,11 @@ namespace al {
     void onCollide(LiveActor*);
     void offCollide(LiveActor*);
     void validateMaterialCode(LiveActor*);
+    void validateCeilWallFloorMaterialCode(LiveActor*);
+    bool isAreaTarget(const LiveActor*);
+    void onAreaTarget(LiveActor*);
+    void offAreaTarget(LiveActor*);
+    bool isUpdateMovementEffectAudioCollision(const LiveActor*);
+    void onUpdateMovementEffectAudioCollision(LiveActor*);
+    void offUpdateMovementEffectAudioCollision(LiveActor*);
 };  // namespace al

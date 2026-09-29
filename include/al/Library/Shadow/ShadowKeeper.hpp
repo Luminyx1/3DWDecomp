@@ -19,6 +19,8 @@ public:
     void show();
     void initAfterPlacement();
     void hide();
+    void validate();
+    void invalidate();
 
     sead::PtrArray<ShadowMaskBase*> mMaskArray;
     void* _10;
