@@ -16,7 +16,7 @@ tools/nnsdk/
 tools/bin/
 
 # Nintendo SDK HTML documentation — local reference only, never commit
-docs/nnsdk/
+/docs/
 /tools/nnsdk
 
 # generated docs
