@@ -11,4 +11,6 @@ bool tryGetByamlU8(u8*, const ByamlIter&, const char*);
 bool tryGetByamlS32(s32*, const ByamlIter&, const char*);
 
 bool tryGetByamlV3f(sead::Vector3f*, const ByamlIter&, const char*);
+
+const char* tryGetByamlKeyStringOrNULL(const ByamlIter&, const char*);
 }  // namespace al

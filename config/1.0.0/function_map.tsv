@@ -56773,7 +56773,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710091B6A0			FALSE	_ZN2al19CameraPoserEntrance6updateEv	al::CameraPoserEntrance::update()	
 0x710091B8B0			FALSE	_ZNK2al19CameraPoserEntrance16makeLookAtCameraEPN4sead12LookAtCameraE	al::CameraPoserEntrance::makeLookAtCamera(sead::LookAtCamera*) const	
 0x710091BC40			FALSE	_ZN2al19CameraPoserEntrance9loadParamEPKNS_9ByamlIterE	al::CameraPoserEntrance::loadParam(al::ByamlIter const*)	
-0x710091BD00		CameraPoserEntranceParam.o	FALSE	_ZN2al24CameraPoserEntranceParamC2Ev	al::CameraPoserEntranceParam::CameraPoserEntranceParam()	object (class)
+0x710091BD00			FALSE	_ZN2al24CameraPoserEntranceParamC2Ev	al::CameraPoserEntranceParam::CameraPoserEntranceParam()	joined CameraPoserEntrance.o (was CameraPoserEntranceParam.o, host weak functions follow it)
 0x710091BD20			FALSE	_ZNK2al19CameraPoserEntrance9getAngleVEv	al::CameraPoserEntrance::getAngleV() const	
 0x710091BD30			FALSE	_ZNK2al19CameraPoserEntrance9getAngleHEv	al::CameraPoserEntrance::getAngleH() const	
 0x710091BD40			FALSE	_ZN2al19CameraPoserEntrance11getDistanceEv	al::CameraPoserEntrance::getDistance()	
@@ -56783,7 +56783,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710091BE10			FALSE	_ZN2al19CameraPoserFixedAll6updateEv	al::CameraPoserFixedAll::update()	
 0x710091BE30			FALSE	_ZNK2al19CameraPoserFixedAll16makeLookAtCameraEPN4sead12LookAtCameraE	al::CameraPoserFixedAll::makeLookAtCamera(sead::LookAtCamera*) const	
 0x710091C1D0			FALSE	_ZN2al19CameraPoserFixedAll9loadParamEPKNS_9ByamlIterE	al::CameraPoserFixedAll::loadParam(al::ByamlIter const*)	
-0x710091C270		CameraPoserFixedAllParam.o	FALSE	_ZN2al24CameraPoserFixedAllParamC2Ev	al::CameraPoserFixedAllParam::CameraPoserFixedAllParam()	object (class)
+0x710091C270			FALSE	_ZN2al24CameraPoserFixedAllParamC2Ev	al::CameraPoserFixedAllParam::CameraPoserFixedAllParam()	joined CameraPoserFixedAll.o (was CameraPoserFixedAllParam.o, host weak functions follow it)
 0x710091C290			FALSE	_ZN2al19CameraPoserFixedAll11getDistanceEv	al::CameraPoserFixedAll::getDistance()	
 0x710091C2A0			FALSE	_ZN2al19CameraPoserFixedAll14getDistanceMinEv	al::CameraPoserFixedAll::getDistanceMin()	
 0x710091C2B0			FALSE	_ZN2al19CameraPoserFixedAll14getDistanceMaxEv	al::CameraPoserFixedAll::getDistanceMax()	
@@ -56862,7 +56862,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100924040			FALSE	_ZNK2al25CameraPoserParallelOnRail30makeLookAtCameraRailTypeLookAtEPN4sead12LookAtCameraE	al::CameraPoserParallelOnRail::makeLookAtCameraRailTypeLookAt(sead::LookAtCamera*) const	
 0x7100924170			FALSE	_ZN2al25CameraPoserParallelOnRail29calcLayoutBoxIncludeAllPlayerEPN4sead9BoundBox2IfEE	al::CameraPoserParallelOnRail::calcLayoutBoxIncludeAllPlayer(sead::BoundBox2<float>*)	
 0x7100924360			FALSE	_ZN2al25CameraPoserParallelOnRail9loadParamEPKNS_9ByamlIterE	al::CameraPoserParallelOnRail::loadParam(al::ByamlIter const*)	
-0x71009244D0		CameraPoserParallelOnRailParam.o	FALSE	_ZN2al30CameraPoserParallelOnRailParamC2Ev	al::CameraPoserParallelOnRailParam::CameraPoserParallelOnRailParam()	object (class)
+0x71009244D0			FALSE	_ZN2al30CameraPoserParallelOnRailParamC2Ev	al::CameraPoserParallelOnRailParam::CameraPoserParallelOnRailParam()	joined CameraPoserParallelOnRail.o (was CameraPoserParallelOnRailParam.o, host weak functions follow it)
 0x7100924520			FALSE	_ZNK2al25CameraPoserParallelOnRail9getAngleVEv	al::CameraPoserParallelOnRail::getAngleV() const	
 0x7100924530			FALSE	_ZNK2al25CameraPoserParallelOnRail9getAngleHEv	al::CameraPoserParallelOnRail::getAngleH() const	
 0x7100924540			FALSE	_ZN2al25CameraPoserParallelOnRail14getDistanceMaxEv	al::CameraPoserParallelOnRail::getDistanceMax()	
@@ -56881,7 +56881,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100924F60			FALSE	_ZN2al15CameraPoserRail9loadParamEPKNS_9ByamlIterE	al::CameraPoserRail::loadParam(al::ByamlIter const*)	
 0x7100925030			FALSE	_ZNK2al15CameraPoserRail12getRailCoordEv	al::CameraPoserRail::getRailCoord() const	
 0x7100925040			FALSE	_ZN2al15CameraPoserRail12setRailCoordEf	al::CameraPoserRail::setRailCoord(float)	
-0x7100925050		CameraPoserRailParam.o	FALSE	_ZN2al20CameraPoserRailParamC2Ev	al::CameraPoserRailParam::CameraPoserRailParam()	object (class)
+0x7100925050			FALSE	_ZN2al20CameraPoserRailParamC2Ev	al::CameraPoserRailParam::CameraPoserRailParam()	joined CameraPoserRail.o (was CameraPoserRailParam.o, host weak functions follow it)
 0x7100925080			FALSE	sub_7100925080	sub_7100925080	
 0x71009250E0			FALSE	_ZNK12_GLOBAL__N_122CameraPoserRailNrvMove7executeEPN2al11NerveKeeperE	(anonymous namespace)::CameraPoserRailNrvMove::execute(al::NerveKeeper*) const	
 0x71009250F0		CameraPoserRailTower.o	FALSE	_ZN2al20CameraPoserRailTowerC2ERKNS_25CameraPoserRailTowerParamEPKNS_11PlacementIdE	al::CameraPoserRailTower::CameraPoserRailTower(al::CameraPoserRailTowerParam const&, al::PlacementId const*)	object (class)
@@ -56892,7 +56892,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100925350			FALSE	_ZN2al20CameraPoserRailTower7exeMoveEv	al::CameraPoserRailTower::exeMove()	
 0x7100925440			FALSE	_ZNK2al20CameraPoserRailTower16makeLookAtCameraEPN4sead12LookAtCameraE	al::CameraPoserRailTower::makeLookAtCamera(sead::LookAtCamera*) const	
 0x7100925590			FALSE	_ZN2al20CameraPoserRailTower9loadParamEPKNS_9ByamlIterE	al::CameraPoserRailTower::loadParam(al::ByamlIter const*)	
-0x7100925620		CameraPoserRailTowerParam.o	FALSE	_ZN2al25CameraPoserRailTowerParamC2Ev	al::CameraPoserRailTowerParam::CameraPoserRailTowerParam()	object (class)
+0x7100925620			FALSE	_ZN2al25CameraPoserRailTowerParamC2Ev	al::CameraPoserRailTowerParam::CameraPoserRailTowerParam()	joined CameraPoserRailTower.o (was CameraPoserRailTowerParam.o, host weak functions follow it)
 0x7100925640			FALSE	sub_7100925640	sub_7100925640	
 0x71009256A0			FALSE	_ZNK12_GLOBAL__N_127CameraPoserRailTowerNrvMove7executeEPN2al11NerveKeeperE	(anonymous namespace)::CameraPoserRailTowerNrvMove::execute(al::NerveKeeper*) const	
 0x71009256B0		CameraPoserTower.o	FALSE	_ZN2al16CameraPoserTowerC2ERKNS_21CameraPoserTowerParamEPKN4sead21PerspectiveProjectionEPKNS_13PlayerWatcherEPKNS_11PlacementIdE	al::CameraPoserTower::CameraPoserTower(al::CameraPoserTowerParam const&, sead::PerspectiveProjection const*, al::PlayerWatcher const*, al::PlacementId const*)	object (class)
@@ -56919,7 +56919,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100927B40			FALSE	_ZNK2al16CameraPoserTower39isExistCameraPosWithinMoveLimitForMultiEv	al::CameraPoserTower::isExistCameraPosWithinMoveLimitForMulti() const	
 0x7100927C00			FALSE	_ZN2al16CameraPoserTower23calcWorldPosToLayoutPosEPN4sead7Vector2IfEENS1_7Vector3IfEE	al::CameraPoserTower::calcWorldPosToLayoutPos(sead::Vector2<float>*, sead::Vector3<float>)	
 0x7100927C70			FALSE	_ZN2al16CameraPoserTower24calcVecOutsideBaseScreenERKN4sead7Vector2IfEEPS3_	al::CameraPoserTower::calcVecOutsideBaseScreen(sead::Vector2<float> const&, sead::Vector2<float>*)	
-0x7100927CF0		CameraPoserTowerParam.o	FALSE	_ZN2al21CameraPoserTowerParamC2Ev	al::CameraPoserTowerParam::CameraPoserTowerParam()	object (class)
+0x7100927CF0			FALSE	_ZN2al21CameraPoserTowerParamC2Ev	al::CameraPoserTowerParam::CameraPoserTowerParam()	joined CameraPoserTower.o (was CameraPoserTowerParam.o, host weak functions follow it)
 0x7100927D70			FALSE	_ZN2al16CameraPoserTower14getDistanceMinEv	al::CameraPoserTower::getDistanceMin()	
 0x7100927D80			FALSE	_ZN2al16CameraPoserTower14getDistanceMaxEv	al::CameraPoserTower::getDistanceMax()	
 0x7100927D90			FALSE	_ZN2al16CameraPoserTower10getDstanceEv	al::CameraPoserTower::getDstance()	
@@ -57076,7 +57076,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710092C450			FALSE	_ZN2al20GyroCameraController16updateGyroParamsERKN4sead12LookAtCameraEffb	al::GyroCameraController::updateGyroParams(sead::LookAtCamera const&, float, float, bool)	
 0x710092C830			FALSE	_ZN2al20GyroCameraController15resetGyroParamsEv	al::GyroCameraController::resetGyroParams()	
 0x710092C840			FALSE	_ZN2al20GyroCameraController14calcInputStickEPN4sead7Vector2IfEEi	al::GyroCameraController::calcInputStick(sead::Vector2<float>*, int)	
-0x710092C950		GyroCameraControllerParam.o	FALSE	_ZN2al25GyroCameraControllerParamC2Ev	al::GyroCameraControllerParam::GyroCameraControllerParam()	object (class)
+0x710092C950			FALSE	_ZN2al25GyroCameraControllerParamC2Ev	al::GyroCameraControllerParam::GyroCameraControllerParam()	joined GyroCameraController.o (was GyroCameraControllerParam.o, host weak functions follow it)
 0x710092C970			FALSE	_ZNK2al20GyroCameraController20getCollisionDirectorEv	al::GyroCameraController::getCollisionDirector() const	
 0x710092C980			FALSE	_ZNK2al20GyroCameraController18getAreaObjDirectorEv	al::GyroCameraController::getAreaObjDirector() const	
 0x710092C990			FALSE	_ZThn8_NK2al20GyroCameraController18getAreaObjDirectorEv	non-virtual thunk to al::GyroCameraController::getAreaObjDirector() const	
