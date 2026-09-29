@@ -5084,9 +5084,9 @@ src/al/Library/Switch/StageSwitchWatcher.cpp:
     .text   start:0x008D4970 end:0x008D4AA8
 src/al/Library/System/SystemKit.cpp:
     .text   start:0x008D4AB0 end:0x008D4F0C
-src/al/Library/Thread/AsyncFunctorThread.cpp:
+src/al/Library/Thread/AsyncFunctorThread.cpp: done
     .text   start:0x008D4F10 end:0x008D5244
-src/al/Library/Thread/InitializeThread.cpp:
+src/al/Library/Thread/InitializeThread.cpp: done
     .text   start:0x008D5250 end:0x008D54E4
 src/al/Library/Yaml/ByamlIter.cpp:
     .text   start:0x008D5500 end:0x008D87CC
