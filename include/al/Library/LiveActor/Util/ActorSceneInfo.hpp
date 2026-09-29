@@ -18,21 +18,23 @@ class ShadowDirector;
 class AreaObjDirector;
 
 struct ActorSceneInfo {
-    SceneObjHolder* sceneObjHolder;
-    ClippingDirectorBase* clippingDirectorBase;
-    CollisionDirector* collisionDirector;
-    PlayerHolder* playerHolder;
-    SceneCameraInfo* sceneCameraInfo;
-    SceneStopCtrl* sceneStopCtrl;
-    ScreenCoverCtrl* screenCoverCtrl;
-    ItemDirectorBase* itemDirectorBase;
-    DemoDirector* demoDirector;
-    AreaObjDirector* areaObjDirector;
-    ShadowDirector* shadowDirector;
-    PadRumbleDirector* padRumbleDirector;
-    CameraDirector_RS* cameraDirector;
-    bool isSingleMode;
-    void* _70;
-    void* _78;
+    ActorSceneInfo();
+
+    SceneObjHolder* sceneObjHolder = nullptr;
+    ClippingDirectorBase* clippingDirectorBase = nullptr;
+    CollisionDirector* collisionDirector = nullptr;
+    PlayerHolder* playerHolder = nullptr;
+    SceneCameraInfo* sceneCameraInfo = nullptr;
+    SceneStopCtrl* sceneStopCtrl = nullptr;
+    ScreenCoverCtrl* screenCoverCtrl = nullptr;
+    ItemDirectorBase* itemDirectorBase = nullptr;
+    DemoDirector* demoDirector = nullptr;
+    AreaObjDirector* areaObjDirector = nullptr;
+    ShadowDirector* shadowDirector = nullptr;
+    PadRumbleDirector* padRumbleDirector = nullptr;
+    CameraDirector_RS* cameraDirector = nullptr;
+    bool isSingleMode = false;
+    void* _70 = nullptr;
+    void* _78 = nullptr;
 };
 }  // namespace al

@@ -31,6 +31,8 @@ public:
     virtual ~CameraDirector_RS();
     virtual SceneCameraInfo* getSceneCameraInfo() const;
 
+    void setDisasterAreaCheck(bool isCheck);
+
     s32 _10;
     s32 _14;
     SceneCameraInfo* mSceneCameraInfo;
@@ -64,7 +66,7 @@ public:
     u64 _f8;
     u8 _100;
     u8 _101;
-    u8 _102;
+    bool mIsDisasterMode;   // _102
     u8 _103;
     u8 _104;
 };
