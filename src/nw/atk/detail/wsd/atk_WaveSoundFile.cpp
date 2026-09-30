@@ -6,11 +6,13 @@ namespace {
 const AdshrCurve DefaultAdshrCurve = {127, 127, 127, 127, 127};
 
 // base is the origin of the signed byte offset to the requested record type.
-template <typename T> const T* AtOffset(const void* base, s32 offset) {
+template <typename T>
+const T* AtOffset(const void* base, s32 offset) {
     return reinterpret_cast<const T*>(static_cast<const u8*>(base) + offset);
 }
 // table contains typed references; index selects one and type is the expected tag.
-template <typename T> const T* GetRecord(const WaveSoundFile::ReferenceTable* table, u32 index, u16 type) {
+template <typename T>
+const T* GetRecord(const WaveSoundFile::ReferenceTable* table, u32 index, u16 type) {
     if (index >= table->count) return nullptr;
     if (table->items[index].type != type) return nullptr;
     return AtOffset<T>(table, table->items[index].offset);

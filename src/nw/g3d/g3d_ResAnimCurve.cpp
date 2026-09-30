@@ -41,7 +41,8 @@ ResAnimCurve::Impl::IntEvaluator ResAnimCurve::Impl::s_pFuncEvaluateInt[4][3] = 
     {&ResAnimCurve::EvaluateStepBool, &ResAnimCurve::EvaluateStepBool, &ResAnimCurve::EvaluateStepBool},
     {&ResAnimCurve::EvaluateBakedBool, &ResAnimCurve::EvaluateBakedBool, &ResAnimCurve::EvaluateBakedBool}};
 // frame is the requested sample time; cache supplies the initial key and receives its interval.
-template <class T> void ResAnimCurve::FindFrame(AnimFrameCache* cache, float frame) const {
+template <class T>
+void ResAnimCurve::FindFrame(AnimFrameCache* cache, float frame) const {
     using Frame = FrameValue<T>;
     Frame target;
     if (std::is_same<T, s16>::value)
@@ -84,7 +85,8 @@ void ResAnimCurve::UpdateFrameCache(AnimFrameCache* cache, float frame) const {
     }
 }
 // frame is sample time; cache reuses the key interval; T specifies the coefficient storage type.
-template <class T> float ResAnimCurve::EvaluateCubic(float frame, AnimFrameCache* cache) const {
+template <class T>
+float ResAnimCurve::EvaluateCubic(float frame, AnimFrameCache* cache) const {
     UpdateFrameCache(cache, frame);
     float t = cache->GetInterpolationWeight(frame);
     const T* c = GetKeyArray<T>() + cache->keyIndex * 4;
@@ -93,14 +95,16 @@ template <class T> float ResAnimCurve::EvaluateCubic(float frame, AnimFrameCache
     return c0 + t * c1 + high;
 }
 // frame is sample time; cache reuses the key interval; T specifies the coefficient storage type.
-template <class T> float ResAnimCurve::EvaluateLinear(float frame, AnimFrameCache* cache) const {
+template <class T>
+float ResAnimCurve::EvaluateLinear(float frame, AnimFrameCache* cache) const {
     UpdateFrameCache(cache, frame);
     float t = cache->GetInterpolationWeight(frame);
     const T* c = GetKeyArray<T>() + cache->keyIndex * 2;
     return float(c[0]) + t * float(c[1]);
 }
 // frame selects adjacent baked samples; cache is unused; T specifies the sample storage type.
-template <class T> float ResAnimCurve::EvaluateBakedFloat(float frame, AnimFrameCache*) const {
+template <class T>
+float ResAnimCurve::EvaluateBakedFloat(float frame, AnimFrameCache*) const {
     int start = int(startFrame);
     int sample = int(frame);
     int index = sample - start;
@@ -110,12 +114,14 @@ template <class T> float ResAnimCurve::EvaluateBakedFloat(float frame, AnimFrame
     return t * c1 + (1.0f - t) * c0;
 }
 // frame selects a discrete key; cache retains its interval; T specifies the integer storage type.
-template <class T> int ResAnimCurve::EvaluateStepInt(float frame, AnimFrameCache* cache) const {
+template <class T>
+int ResAnimCurve::EvaluateStepInt(float frame, AnimFrameCache* cache) const {
     UpdateFrameCache(cache, frame);
     return GetKeyArray<T>()[cache->keyIndex];
 }
 // frame selects a baked integer sample; cache is unused; T specifies the sample storage type.
-template <class T> int ResAnimCurve::EvaluateBakedInt(float frame, AnimFrameCache*) const {
+template <class T>
+int ResAnimCurve::EvaluateBakedInt(float frame, AnimFrameCache*) const {
     int start = int(startFrame);
     int index = int(frame) - start;
     return GetKeyArray<T>()[index];
@@ -136,7 +142,8 @@ int ResAnimCurve::EvaluateBakedBool(float frame, AnimFrameCache*) const {
 namespace {
 // frame receives the wrapped time; curve supplies the interval/wrap modes; offset is the initial value bias.
 // The returned bias includes any relative-repeat displacement.
-template <class T> inline T WrapFrame(float& frame, const ResAnimCurve* curve, T offset) {
+template <class T>
+inline T WrapFrame(float& frame, const ResAnimCurve* curve, T offset) {
     float start = curve->startFrame;
     float end = curve->endFrame;
     if (start <= frame && frame <= end)
@@ -211,7 +218,8 @@ int ResAnimCurve::EvaluateInt(float frame, AnimFrameCache* cache) const {
            offset;
 }
 // buffer receives count integer samples; firstFrame is the integer-grid origin and T is storage type.
-template <class T> void ResAnimCurve::BakeImpl(void* buffer, float firstFrame, int count) {
+template <class T>
+void ResAnimCurve::BakeImpl(void* buffer, float firstFrame, int count) {
     AnimFrameCache cache;
     T* output = static_cast<T*>(buffer);
     int last = count - 1;
@@ -221,7 +229,8 @@ template <class T> void ResAnimCurve::BakeImpl(void* buffer, float firstFrame, i
     output[last] = EvaluateStepInt<T>(endFrame, &cache);
 }
 // buffer receives count packed boolean samples; firstFrame is the integer-grid origin.
-template <> void ResAnimCurve::BakeImpl<bool>(void* buffer, float firstFrame, int count) {
+template <>
+void ResAnimCurve::BakeImpl<bool>(void* buffer, float firstFrame, int count) {
     AnimFrameCache cache;
     u32* output = static_cast<u32*>(buffer);
     int last = count - 1;
@@ -234,7 +243,8 @@ template <> void ResAnimCurve::BakeImpl<bool>(void* buffer, float firstFrame, in
     output[last >> 5] = (output[last >> 5] & ~(1u << (last & 31))) | (value << (last & 31));
 }
 // buffer receives count floating-point samples; firstFrame is the integer-grid origin.
-template <> void ResAnimCurve::BakeImpl<float>(void* buffer, float firstFrame, int count) {
+template <>
+void ResAnimCurve::BakeImpl<float>(void* buffer, float firstFrame, int count) {
     AnimFrameCache cache;
     float* output = static_cast<float*>(buffer);
     int last = count - 1;

@@ -14,7 +14,8 @@
 #include <new>
 namespace nn::ui2d {
 namespace {
-template<class T> T* AllocateControl() {
+template<class T>
+T* AllocateControl() {
     void* memory = Layout::AllocateMemory(sizeof(T));
     return memory ? new (memory) T : nullptr;
 }

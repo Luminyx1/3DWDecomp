@@ -3,7 +3,8 @@
 
 namespace nn::g3d {
 // result receives curve values at frame; indices skips unbound parameters; cache retains intervals when cached.
-template <bool cached> void ResPerMaterialAnim::EvaluateShaderParamAnim(void* result, float frame, const u16* indices, AnimFrameCache* cache) const {
+template <bool cached>
+void ResPerMaterialAnim::EvaluateShaderParamAnim(void* result, float frame, const u16* indices, AnimFrameCache* cache) const {
     int count = parameterCount;
     const ResAnimCurve* allCurves = curves;
     const ResShaderParamAnimInfo* info = parameters;
@@ -30,7 +31,8 @@ template <bool cached> void ResPerMaterialAnim::EvaluateShaderParamAnim(void* re
     }
 }
 // result receives bound texture indices at frame; indices skips unbound samplers; cache retains intervals when cached.
-template <bool cached> void ResPerMaterialAnim::EvaluateTexturePatternAnim(int* result, float frame, const u16* indices, AnimFrameCache* cache) const {
+template <bool cached>
+void ResPerMaterialAnim::EvaluateTexturePatternAnim(int* result, float frame, const u16* indices, AnimFrameCache* cache) const {
     int count = textureCount;
     const ResTexturePatternAnimInfo* info = textures;
     int output = 0;
@@ -42,7 +44,8 @@ template <bool cached> void ResPerMaterialAnim::EvaluateTexturePatternAnim(int* 
     }
 }
 // result receives visibility at frame; cache retains the curve interval when cached.
-template <bool cached> void ResPerMaterialAnim::EvaluateVisibilityAnim(int* result, float frame, AnimFrameCache* cache) const {
+template <bool cached>
+void ResPerMaterialAnim::EvaluateVisibilityAnim(int* result, float frame, AnimFrameCache* cache) const {
     int index = visibilityCurve;
     if (index == 0xffff) return;
     const ResAnimCurve* curve = &curves[index];

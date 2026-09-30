@@ -163,7 +163,8 @@ static int HighestBit(u32 value) {
     return 31 - ((value & 31) + (value >> 16));
 }
 // destination is mapped GPU storage; dirtyFlags selects parameters in addition to volatile ones.
-template <bool swap> void MaterialObj::ConvertDirtyParams(void* destination, u32* dirtyFlags) {
+template <bool swap>
+void MaterialObj::ConvertDirtyParams(void* destination, u32* dirtyFlags) {
     int wordCount = (m_pRes->ToData().shaderParamCount + 31) >> 5;
     const u32* volatileFlags = m_pRes->ToData().pVolatileParamFlags.Get();
     for (int i = 0; i < wordCount; ++i) {

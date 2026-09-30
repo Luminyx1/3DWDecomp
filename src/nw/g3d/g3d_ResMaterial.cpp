@@ -28,7 +28,8 @@ size_t ResShaderParam::GetSrcSize(Type type) {
     return sizes[type - 28];
 }
 // destination receives source scalars or matrix rows; swap is unused for these representations.
-template <bool swap> void ResShaderParam::Convert(void* destination, const void* source) const {
+template <bool swap>
+void ResShaderParam::Convert(void* destination, const void* source) const {
     Type format = Type(type);
     if (format <= 15) {
         std::memcpy(destination, source, ((format & 3) + 1) * 4);
