@@ -7,19 +7,20 @@ class ScreenPointTarget;
 
 class ScreenPointCheckGroup {
 public:
-    ScreenPointCheckGroup(s32);
+    ScreenPointCheckGroup(s32 maxTargets);
 
-    void setValid(ScreenPointTarget*);
-    void setInvalid(ScreenPointTarget*);
-    ScreenPointTarget* getTarget(s32) const;
-    void setTarget(ScreenPointTarget*);
+    void setValid(ScreenPointTarget* pTarget);
+    void setInvalid(ScreenPointTarget* pTarget);
+    ScreenPointTarget* getTarget(s32 index) const;
+    void setTarget(ScreenPointTarget* pTarget);
 
+    s32 getTargetNum() const { return mTargetNum; }
     s32 getValidTargetNum() const { return mValidTargetNum; }
 
 private:
-    s32 mCapacity;                  // _0
-    s32 mTargetNum = 0;             // _4
-    s32 mValidTargetNum = 0;        // _8
-    ScreenPointTarget** mTargets;   // _10
+    s32 mMaxTargets;
+    s32 mTargetNum = 0;
+    s32 mValidTargetNum = 0;
+    ScreenPointTarget** mTargets;
 };
 }  // namespace al
