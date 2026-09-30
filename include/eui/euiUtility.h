@@ -3,6 +3,7 @@
 #include <nn/ui2d/ui2d_Pane.h>
 #include <prim/seadEnum.h>
 #include <common/aglTextureEnum.h>
+#include <math/seadVector.h>
 
 namespace nn::gfx { class DescriptorSlot; }
 namespace nn::ui2d { class TextureInfo; }
@@ -12,6 +13,7 @@ namespace agl::utl { class MultiFilter; }
 
 namespace eui {
 class LayoutEx;
+bool IsHitPane(const sead::Vector2f& rPosition, const nn::ui2d::Pane* pPane);
 agl::utl::MultiFilter* InitializeMultiFilter(sead::Heap* pHeap,
     const nn::ui2d::Pane& rPane, LayoutEx* pLayout);
 SEAD_ENUM(Direction, cUp, cDown, cLeft, cRight)

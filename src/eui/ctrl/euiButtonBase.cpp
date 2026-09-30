@@ -64,23 +64,27 @@ void ButtonBase::ChangeState(State state) { mState = state; }
 // state is selected immediately, without starting a transition animation.
 void ButtonBase::ForceChangeState(State state) { mState = state; }
 
-// NON_MATCHING: compiler branch ordering differs for the two cancellation states.
 bool ButtonBase::ProcessCancel() {
     bool processed = true;
-    if (mState == cState_Down) {
+    switch (mState) {
+    case cState_DownStart:
+        processed = false;
+        break;
+    case cState_Down:
         StartCancel();
         ChangeState(cState_CancelStart);
-    } else if (mState == cState_DownStart) {
-        processed = false;
+        break;
     }
     return processed;
 }
 
-// NON_MATCHING: register scheduling around the state jump table differs.
 bool ButtonBase::ProcessOn() {
     bool processed = true;
     switch (mState) {
     case cState_Off:
+        StartOn();
+        ChangeState(cState_OnStart);
+        break;
     case cState_OffStart:
         StartOn();
         ChangeState(cState_OnStart);

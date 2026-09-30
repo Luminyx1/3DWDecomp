@@ -4521,11 +4521,11 @@ src/eui/ctrl/euiTwoTouchCheckKeepButton.cpp:
     .text   start:0x007D5B70 end:0x007D6298
 src/eui/ctrl/euiCheckButton.cpp:
     .text   start:0x007D62A0 end:0x007D6524
-src/eui/ctrl/euiCheckKeepButton.cpp:
+src/eui/ctrl/euiCheckKeepButton.cpp: done
     .text   start:0x007D6530 end:0x007D66C4
-src/eui/ctrl/euiNormalButton.cpp:
+src/eui/ctrl/euiNormalButton.cpp: done
     .text   start:0x007D66D0 end:0x007D68A8
-src/eui/ctrl/euiDecisionButton.cpp:
+src/eui/ctrl/euiDecisionButton.cpp: done
     .text   start:0x007D68B0 end:0x007D6B98
 src/eui/ctrl/euiTapButton.cpp:
     .text   start:0x007D6BA0 end:0x007D7158
