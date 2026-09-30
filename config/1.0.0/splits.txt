@@ -3363,7 +3363,7 @@ src/nw/atk/detail/dsp/atk_HardwareManager.cpp:
     .text   start:0x00536580 end:0x005389E4
 src/nw/atk/detail/dsp/atk_BiquadFilterPresets.cpp:
     .text   start:0x005389F0 end:0x00538DA4
-src/nw/atk/detail/thread/atk_CommandManager.cpp:
+src/nw/atk/detail/thread/atk_CommandManager.cpp: done
     .text   start:0x00538DB0 end:0x00539B5C
 src/nw/atk/detail/thread/atk_DriverCommand.cpp:
     .text   start:0x0053A640 end:0x0053A7B4
