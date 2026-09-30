@@ -25,12 +25,14 @@ u32 convertCalendarDateToDaysSince1970(const CalendarTime::Date& rDate)
     const u32 days_since_jan1 = sDaysSinceJan1[m - 1];
 
     u32 num_days = d0 + days_since_jan1;
+
     if (m >= 3 && DateUtil::isLeapYear(rDate.mYear.getValue()))
     {
         num_days = d0 + days_since_jan1 + 1;
     }
 
     u32 num_days_since_1970 = num_days + 365 * (rDate.mYear.getValue() - 1970);
+
     if (rDate.mYear.getValue() > 1970)
     {
         u32 year = 1970;
@@ -60,6 +62,7 @@ u64 convertCalendarDateTimeToSeconds(const CalendarTime::Date& rDate,
     SEAD_ASSERT_MSG(1 <= m && m <= 12, "wrong month. correct range is [1, 12]. your param %d", m);
 
     u32 num_days;
+
     if (m == 2 && DateUtil::isLeapYear(y))
     {
         num_days = sDaysOfMonth[m_idx] + 1;
@@ -103,6 +106,7 @@ s32 convertDaysToMonth(u32* pDays, u32 year)
     {
         days_to_remove = i;
         i += (month_idx == 1 && DateUtil::isLeapYear(year)) ? 29 : sDaysOfMonth[month_idx];
+
         if (*pDays < i)
         {
             break;

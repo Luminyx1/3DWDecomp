@@ -51,6 +51,7 @@ bool FileDeviceStreamSrc::isEOF()
 void FileDeviceStreamSrc::setFileHandle(sead::FileHandle* pFileHandle)
 {
     mFileHandle = pFileHandle;
+
     if (pFileHandle)
     {
         mStartingPos = pFileHandle->getCurrentSeekPos();

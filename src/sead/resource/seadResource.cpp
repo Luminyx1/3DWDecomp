@@ -51,12 +51,14 @@ void IndirectResource::create(sead::ReadStream* pStream, u32 size, sead::Heap* p
 ResourceFactory::~ResourceFactory()
 {
     auto* mgr = ResourceMgr::instance();
+
     if (mgr == nullptr)
     {
         return;
     }
 
     mgr->unregisterFactory(this);
+
     if (mgr->getDefaultFactory() == this)
     {
         mgr->setDefaultFactory(nullptr);
@@ -66,6 +68,7 @@ ResourceFactory::~ResourceFactory()
 Resource* DirectResourceFactoryBase::create(const ResourceMgr::CreateArg& rCreateArg)
 {
     DirectResource* resource = newResource_(rCreateArg.heap, rCreateArg.alignment);
+
     if (resource == nullptr)
     {
         SEAD_ASSERT_MSG(false, "resource new failed.");
@@ -88,6 +91,7 @@ Resource* DirectResourceFactoryBase::create(const ResourceMgr::CreateArg& rCreat
 Resource* DirectResourceFactoryBase::tryCreate(const ResourceMgr::LoadArg& rLoadArg)
 {
     DirectResource* resource = newResource_(rLoadArg.instance_heap, rLoadArg.instance_alignment);
+
     if (resource == nullptr)
     {
         return nullptr;
@@ -138,6 +142,7 @@ Resource* DirectResourceFactoryBase::tryCreateWithDecomp(const ResourceMgr::Load
                                                          Decompressor* pDecompressor)
 {
     DirectResource* resource = newResource_(rLoadArg.instance_heap, rLoadArg.instance_alignment);
+
     if (resource == nullptr)
     {
         return nullptr;
@@ -163,6 +168,7 @@ Resource* DirectResourceFactoryBase::tryCreateWithDecomp(const ResourceMgr::Load
 Resource* IndirectResourceFactoryBase::create(const ResourceMgr::CreateArg& rCreateArg)
 {
     IndirectResource* resource = newResource_(rCreateArg.heap, rCreateArg.alignment);
+
     if (resource == nullptr)
     {
         return nullptr;
@@ -177,6 +183,7 @@ Resource* IndirectResourceFactoryBase::create(const ResourceMgr::CreateArg& rCre
 Resource* IndirectResourceFactoryBase::tryCreate(const ResourceMgr::LoadArg& rLoadArg)
 {
     IndirectResource* resource = newResource_(rLoadArg.instance_heap, rLoadArg.instance_alignment);
+
     if (resource == nullptr)
     {
         return nullptr;
@@ -185,6 +192,7 @@ Resource* IndirectResourceFactoryBase::tryCreate(const ResourceMgr::LoadArg& rLo
     FileHandle handle;
 
     bool isOpen;
+
     if (rLoadArg.device)
     {
         isOpen =
@@ -218,6 +226,7 @@ Resource* IndirectResourceFactoryBase::tryCreateWithDecomp(const ResourceMgr::Lo
                                                            Decompressor* pDecompressor)
 {
     IndirectResource* resource = newResource_(rLoadArg.instance_heap, rLoadArg.instance_alignment);
+
     if (resource == nullptr)
     {
         return nullptr;

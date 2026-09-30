@@ -90,6 +90,7 @@ void Viewport::getOnFrameBufferPos(Vector2f* pPos, const LogicalFrameBuffer& rFr
     *pPos = getMin();
 
     const Vector2f& virtual_size = rFrameBuffer.getVirtualSize();
+
     switch (mDevicePosture)
     {
     case Graphics::cDevicePosture_RotateRight:
@@ -127,6 +128,7 @@ void Viewport::getOnFrameBufferPos(Vector2f* pPos, const LogicalFrameBuffer& rFr
 void Viewport::getOnFrameBufferSize(Vector2f* pSize, const LogicalFrameBuffer& rFrameBuffer) const
 {
     pSize->set(getSizeX(), getSizeY());
+
     if (mDevicePosture == Graphics::cDevicePosture_RotateRight ||
         mDevicePosture == Graphics::cDevicePosture_RotateLeft)
     {

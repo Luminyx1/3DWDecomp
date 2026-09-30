@@ -18,10 +18,12 @@ bool MemUtil::isStack(const void* pAddress)
     };
 
     Thread* main = ThreadMgr::instance()->getMainThread();
+
     if (main && contains(pAddress, main->mThreadInner->_stack, main->mStackSize))
         return true;
     {
         ScopedLock<CriticalSection> lock(ThreadMgr::instance()->getListCS());
+
         for (Thread* thread : ThreadMgr::instance()->mList) {
             if (contains(pAddress, thread->mThreadInner->_stack, thread->mStackSize))
                 return true;

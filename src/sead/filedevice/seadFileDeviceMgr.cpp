@@ -67,6 +67,7 @@ void FileDeviceMgr::mount_([[maybe_unused]] Heap* pHeap)
     // SEAD_NIN_CONTENT_DIR on the host computer and the host root and SD are also mounted.
 #ifdef SEAD_DEBUG
     const auto mount_host_result = nn::fs::MountHostRoot();
+
     if (mount_host_result.IsFailure())
     {
         SEAD_WARN("nn::fs::MountHostRoot() failed. module = %d desc = %d innervalue = 0x%08x",
@@ -105,6 +106,7 @@ void FileDeviceMgr::mount_([[maybe_unused]] Heap* pHeap)
     else
     {
         FixedSafeString<256> content_dir;
+
         if (EnvUtil::getEnvironmentVariable(&content_dir, "SEAD_NIN_CONTENT_DIR") == -1)
         {
             SEAD_WARN("SEAD_NIN_CONTENT_DIR is not set.");
@@ -122,6 +124,7 @@ void FileDeviceMgr::mount_([[maybe_unused]] Heap* pHeap)
 
     const auto sd_result = nn::fs::MountSdCardForDebug("sd");
     mMountedSd = sd_result.IsSuccess();
+
     if (sd_result.IsSuccess())
     {
         system::Print("FileDeviceMgr: mount SD card\n");
@@ -155,6 +158,7 @@ void FileDeviceMgr::unmount_()
 #endif
 
     nn::fs::Unmount("content");
+
     if (mRomCache)
     {
         delete[] mRomCache;
@@ -256,6 +260,7 @@ void FileDeviceMgr::unmount(FileDevice* pDevice)
 void FileDeviceMgr::unmount(const SafeString& rName)
 {
     auto* device = findDevice(rName);
+
     if (!device)
     {
         SEAD_ASSERT_MSG(false, "drive not found: %s\n", rName.cstr());
@@ -274,6 +279,7 @@ FileDevice* FileDeviceMgr::findDeviceFromPath(const SafeString& rPath,
     if (!Path::getDriveName(&driveName, rPath))
     {
         device = mDefaultFileDevice;
+
         if (!device)
         {
             SEAD_ASSERT_MSG(false, "drive name not found and default file device is null");
@@ -329,6 +335,7 @@ FileDevice* FileDeviceMgr::tryOpenDirectory(DirectoryHandle* pHandle, const Safe
 {
     FixedSafeString<256> pathNoDrive;
     FileDevice* device = findDeviceFromPath(rPath, &pathNoDrive);
+
     if (!device)
     {
         return nullptr;
@@ -369,6 +376,7 @@ u8* FileDeviceMgr::tryLoad(FileDevice::LoadArg& rArg)
 void FileDeviceMgr::unload(u8* pData)
 {
     SEAD_ASSERT(pData);
+
     if (pData)
     {
         delete pData;
@@ -381,6 +389,7 @@ bool FileDeviceMgr::trySave(FileDevice::SaveArg& rArg)
 
     FixedSafeString<256> pathNoDrive;
     FileDevice* device = findDeviceFromPath(rArg.path, &pathNoDrive);
+
     if (!device)
     {
         return false;

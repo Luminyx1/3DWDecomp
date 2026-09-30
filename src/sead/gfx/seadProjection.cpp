@@ -1034,6 +1034,7 @@ void DirectProjection::updateAttributesForDirectProjection()
                                   {-1.0f, -1.0f, 1.0f, 1.0f},  {-1.0f, 1.0f, 1.0f, 1.0f},
                                   {1.0f, 1.0f, 1.0f, 1.0f},    {1.0f, -1.0f, 1.0f, 1.0f}};
     Vector3f corners[8];
+
     for (s32 i = 0; i < 8; i++)
     {
         const Vector4f& c = cCorners[i];
@@ -1055,6 +1056,7 @@ void DirectProjection::updateAttributesForDirectProjection()
     mOffset.y = (corners[1].y + corners[0].y) * 0.5f / h;
 
     auto abs = [](f32 x) { return x > 0 ? x : -x; };
+
     if (abs(corners[0].x - corners[4].x) > 0.0001f || abs(corners[1].x - corners[5].x) > 0.0001f ||
         abs(corners[2].x - corners[6].x) > 0.0001f || abs(corners[3].x - corners[7].x) > 0.0001f)
     {

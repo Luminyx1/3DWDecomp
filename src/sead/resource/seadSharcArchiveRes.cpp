@@ -77,6 +77,7 @@ struct SharcArchiveRes::HandleInner
 static SharcArchiveRes::HandleInner* getHandleInner_(HandleBuffer* pHandle, bool createNew = false)
 {
     static_assert(sizeof(SharcArchiveRes::HandleInner) <= sizeof(HandleBuffer));
+
     if (createNew)
     {
         return new (pHandle) SharcArchiveRes::HandleInner;
@@ -104,6 +105,7 @@ const void* SharcArchiveRes::getFileImpl_(const SafeString& rFilePath,
                                           FileInfo* pFileInfo) SEAD_ARCHIVERES_CONST_TOKEN
 {
     s32 id = convertPathToEntryIDImpl_(rFilePath);
+
     if (id < 0)
     {
         return NULL;
@@ -125,6 +127,7 @@ const void* SharcArchiveRes::getFileFastImpl_(s32 entryId,
     if (pFileInfo != NULL)
     {
         u32 end = Endian::toHostU32(mEndianType, mFATEntrys(entryId).data_end_offset);
+
         if (start > end)
         {
             return NULL;
@@ -158,6 +161,7 @@ s32 SharcArchiveRes::convertPathToEntryIDImpl_(const SafeString& file_path)
     }
 
     u32 offset = Endian::toHostU32(mEndianType, mFATEntrys(id).name_offset);
+
     if (offset != 0)
     {
         id -= (offset >> 24) - 1;
@@ -165,6 +169,7 @@ s32 SharcArchiveRes::convertPathToEntryIDImpl_(const SafeString& file_path)
         while (id < end)
         {
             const FATEntry* entry = mFATEntrys.unsafeGet(id);
+
             if (Endian::toHostU32(mEndianType, entry->hash) != hash)
             {
                 return -1;
@@ -225,6 +230,7 @@ u32 SharcArchiveRes::readDirectoryImpl_(HandleBuffer* pHandle, DirectoryEntry* p
         SEAD_ASSERT(id >= handle->x);
 
         u32 offset = Endian::toHostU32(mEndianType, mFATEntrys(id).name_offset);
+
         if (offset == 0)
         {
             pEntry[count].name.format("%08x", Endian::toHostU32(mEndianType, mFATEntrys(id).hash));
@@ -232,6 +238,7 @@ u32 SharcArchiveRes::readDirectoryImpl_(HandleBuffer* pHandle, DirectoryEntry* p
         else
         {
             const u8* pName = reinterpret_cast<const u8*>(mFNTBlock + (offset & 0xffffff));
+
             if (mDataBlock < pName)
             {
                 SEAD_WARN("Invalid data start offset");
@@ -262,6 +269,7 @@ bool SharcArchiveRes::prepareArchive_(const void* pArchive)
     const u8* archive_ = reinterpret_cast<const u8*>(pArchive);
 
     mArchiveBlockHeader = reinterpret_cast<const ArchiveBlockHeader*>(archive_);
+
     if (std::memcmp(mArchiveBlockHeader->signature, "SARC", 4) != 0)
     {
         SEAD_ASSERT_MSG(false, "Invalid ArchiveBlockHeader");

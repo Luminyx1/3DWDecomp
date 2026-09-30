@@ -105,6 +105,7 @@ void Thread::checkStackEndCorruption(const char* pSourceFile, s32 sourceLine) co
     }
 
     const uintptr_t start = getStackCheckStartAddress_();
+
     if (!start)
     {
         return;
@@ -132,6 +133,7 @@ void Thread::checkStackPointerOverFlow(const char* pSourceFile, s32 sourceLine) 
 
     const uintptr_t ptr = ThreadUtil::GetCurrentStackPointer();
     const uintptr_t start = getStackCheckStartAddress_();
+
     if (start)
     {
         SEAD_ASSERT_MSG(start <= ptr,
@@ -164,6 +166,7 @@ void Thread::run_()
 #endif
 
         const MessageQueue::Element msg = mMessageQueue.pop(mBlockType);
+
         if (msg == mQuitMsg)
         {
             break;
@@ -253,6 +256,7 @@ ThreadMgr::~ThreadMgr()
     do
     {
         all_done = true;
+
         for (Thread* thread : mList)
         {
             all_done &= thread->isDone();
@@ -304,6 +308,7 @@ void ThreadMgr::waitDoneMultipleThread(Thread* const* pThreads, s32 num)
     do
     {
         all_done = true;
+
         for (s32 i = 0; i < num; ++i)
         {
             all_done &= pThreads[i]->isDone();

@@ -34,6 +34,7 @@ TaskMgr::TaskMgr(const InitializeArg& rArg)
     mRootTask = nullptr;
 
     const s32 rootHeapNum = HeapMgr::getRootHeapNum();
+
     for (s32 i = 0; i < rootHeapNum; i++)
     {
         mHeapArray.mHeaps[i] = ExpHeap::create(0, "sead::TaskMgr", HeapMgr::getRootHeap(i), 8,
@@ -119,9 +120,11 @@ void TaskMgr::finalize()
     }
 
     s32 rootHeapNum = HeapMgr::getRootHeapNum();
+
     for (s32 i = 0; i < rootHeapNum; i++)
     {
         Heap* heap = mHeapArray.mHeaps[i];
+
         if (heap)
         {
             heap->destroy();
@@ -151,6 +154,7 @@ void TaskMgr::prepare_(Thread*, MessageQueue::Element)
     TaskBase* task = nullptr;
 
     mCriticalSection.lock();
+
     if (mPrepareList.begin() != mPrepareList.end())
     {
         task = *mPrepareList.begin();
@@ -164,6 +168,7 @@ void TaskMgr::prepare_(Thread*, MessageQueue::Element)
         task->prepare();
 
         TaskCreateContext* context = mTaskCreateContextMgr->front();
+
         for (; context; context = mTaskCreateContextMgr->next(context))
         {
             if (context->task == task)
@@ -175,6 +180,7 @@ void TaskMgr::prepare_(Thread*, MessageQueue::Element)
         for (s32 i = 0; i < HeapMgr::getRootHeapNum(); i++)
         {
             const HeapPolicy& policy = context->arg.heap_policies.getPolicy(i);
+
             if (policy.adjust)
             {
                 task->adjustHeapWithSlackWithoutLock_(i, policy.adjust_slack);
@@ -195,6 +201,7 @@ void TaskMgr::prepare_(Thread*, MessageQueue::Element)
 bool TaskMgr::requestCreateTask(const TaskBase::CreateArg& rArg)
 {
     ScopedLock<CriticalSection> lock(&mCriticalSection);
+
     if (rArg.fader)
     {
         return rArg.fader->startAsCreate_(rArg);
@@ -214,16 +221,19 @@ void TaskMgr::createHeap_(HeapArray* pHeapArray, const TaskBase::CreateArg& rArg
     const s32 rootHeapNum = HeapMgr::getRootHeapNum();
 
     ScopedLock<CriticalSection> lock(&mCriticalSection);
+
     for (s32 i = 0; i < rootHeapNum; i++)
     {
         auto create = [&]() -> Heap* {
             const HeapPolicy& policy = rArg.heap_policies.getPolicy(i);
+
             if (policy.dont_create)
             {
                 return nullptr;
             }
 
             Heap* parent = policy.parent;
+
             if (!parent)
             {
                 parent = rArg.parent ? rArg.parent->mHeapArray.mHeaps[i] : mHeapArray.mHeaps[i];
@@ -239,6 +249,7 @@ void TaskMgr::createHeap_(HeapArray* pHeapArray, const TaskBase::CreateArg& rArg
             if (policy.create_slack != 0 && policy.size == 0)
             {
                 const size_t allocatable = parent->getMaxAllocatableSize(8);
+
                 if (allocatable <= policy.create_slack)
                 {
                     return nullptr;
@@ -269,9 +280,11 @@ TaskBase* TaskMgr::createTaskSync(const TaskBase::CreateArg& rArg)
     TaskBase* task = doCreateTask_(rArg, &heapArray);
 
     const s32 rootHeapNum = HeapMgr::getRootHeapNum();
+
     for (s32 i = 0; i < rootHeapNum; i++)
     {
         Heap* heap = task->mHeapArray.mHeaps[i];
+
         if (heap)
         {
             heap->setName(task->getName());
@@ -292,6 +305,7 @@ TaskBase* TaskMgr::createTaskSync(const TaskBase::CreateArg& rArg)
     for (s32 i = 0; i < HeapMgr::getRootHeapNum(); i++)
     {
         const HeapPolicy& policy = rArg.heap_policies.getPolicy(i);
+
         if (policy.adjust)
         {
             task->adjustHeapWithSlackWithoutLock_(i, policy.adjust_slack);
@@ -441,6 +455,7 @@ bool TaskMgr::doRequestCreateTask_(const TaskBase::CreateArg& rArg,
     ScopedLock<CriticalSection> lock(&mCriticalSection);
 
     TaskCreateContext* context = mTaskCreateContextMgr->emplaceBack();
+
     if (!context)
     {
         return false;
@@ -448,6 +463,7 @@ bool TaskMgr::doRequestCreateTask_(const TaskBase::CreateArg& rArg,
 
     context->arg = rArg;
     DelegateEvent<TaskBase*>::Slot* callback = rArg.create_callback;
+
     if (pSlot)
     {
         context->event.connect(*pSlot);
@@ -471,6 +487,7 @@ void TaskMgr::appendToList_(TaskBase::List& rList, TaskBase* pTask)
     ScopedLock<CriticalSection> lock(&mCriticalSection);
 
     pTask->mTaskListNode.erase();
+
     for (auto it = rList.begin(); it != rList.end(); ++it)
     {
         if ((*it)->mTag < pTask->mTag)
@@ -495,6 +512,7 @@ bool TaskMgr::requestTakeover(const TaskBase::TakeoverArg& rArg)
 
     FaderTaskBase* fader = rArg.fader;
     TaskBase* src = rArg.src_task;
+
     if (!fader)
     {
         fader = mNullFaderTask;
@@ -547,6 +565,7 @@ bool TaskMgr::requestPush(const TaskBase::PushArg& rArg)
     ScopedLock<CriticalSection> lock(&mCriticalSection);
 
     FaderTaskBase* fader = rArg.fader;
+
     if (!fader)
     {
         fader = mNullFaderTask;
@@ -618,6 +637,7 @@ bool TaskMgr::popSync(TaskBase* pTask)
     }
 
     TaskBase* parentTask = pTask->parent()->value();
+
     if (!parentTask)
     {
         return false;
@@ -641,6 +661,7 @@ void TaskMgr::doDestroyTask_(TaskBase* pTask)
     sead::ScopedLock<CriticalSection> lock{&mCriticalSection};
 
     TreeNode* node = pTask->child();
+
     while (node != nullptr)
     {
         doDestroyTask_(static_cast<TTreeNode<TaskBase*>*>(node)->value());
@@ -653,9 +674,11 @@ void TaskMgr::doDestroyTask_(TaskBase* pTask)
 
         HeapArray heapArray(pTask->mHeapArray);
         s32 rootHeapNum = HeapMgr::getRootHeapNum();
+
         for (s32 i = 0; i < rootHeapNum; i++)
         {
             Heap* heap = heapArray.mHeaps[i];
+
             if (heap != nullptr)
             {
                 heap->destroy();
@@ -744,14 +767,17 @@ void TaskMgr::calcCreation_()
     }
 
     TaskCreateContext* context = mTaskCreateContextMgr->front();
+
     if (context)
     {
         TaskBase* task = context->task;
+
         if (task)
         {
             if (task->mState == TaskBase::cPrepareDone)
             {
                 changeTaskState_(task, TaskBase::cRunning);
+
                 if (context->arg.created_task)
                 {
                     *context->arg.created_task = task;
@@ -768,9 +794,11 @@ void TaskMgr::calcCreation_()
             task = doCreateTask_(context->arg, &heapArray);
 
             const s32 rootHeapNum = HeapMgr::getRootHeapNum();
+
             for (s32 i = 0; i < rootHeapNum; i++)
             {
                 Heap* heap = task->mHeapArray.mHeaps[i];
+
                 if (heap)
                 {
                     heap->setName(task->getName());
@@ -806,6 +834,7 @@ void TaskMgr::calcDestruction_()
     {
         TaskBase* task = *it;
         ++it;
+
         if (task->mInternalFlag.isOnBit(1) && destroyable_(task))
         {
             changeTaskState_(task, TaskBase::cDestroyable);
@@ -869,6 +898,7 @@ void TaskMgr::destroyAllAndCreateRoot()
     for (s32 i = 0; i < HeapMgr::getRootHeapNum(); i++)
     {
         Heap* heap = mHeapArray.mHeaps[i];
+
         if (heap)
         {
             heap->freeAll();
@@ -891,6 +921,7 @@ TaskBase* TaskMgr::findTask(const TaskClassID& rClassID)
     for (auto it = mActiveList.begin(); it != mActiveList.end(); ++it)
     {
         TaskBase* task = *it;
+
         if (task->mState == TaskBase::cRunning && task->mClassID == rClassID)
         {
             return task;

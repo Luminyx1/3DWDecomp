@@ -132,6 +132,7 @@ Resource* ResourceMgr::tryLoad(const ResourceMgr::LoadArg& rArg, const SafeStrin
     }
 
     auto* factory = rArg.factory;
+
     if (!factory)
     {
         factory = findFactory(actual_factory_name);
@@ -161,9 +162,11 @@ Resource* ResourceMgr::tryLoad(const ResourceMgr::LoadArg& rArg, const SafeStrin
 Resource* ResourceMgr::tryLoadWithoutDecomp(const ResourceMgr::LoadArg& rArg)
 {
     auto* factory = rArg.factory;
+
     if (!factory)
     {
         FixedSafeString<32> ext;
+
         if (!Path::getExt(&ext, rArg.path))
         {
             factory = mDefaultResourceFactory;
@@ -212,6 +215,7 @@ Resource* ResourceMgr::create(const ResourceMgr::CreateArg& rArg)
     }
 
     auto* factory = findFactory(rArg.ext);
+
     if (factory)
     {
         return factory->create(rArg);

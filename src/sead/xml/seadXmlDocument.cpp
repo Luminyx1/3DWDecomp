@@ -82,6 +82,7 @@ void XmlDocument::resetEntity_(Heap* pHeap)
     mEntityList.freeBuffer();
     mEntityList.allocBuffer(sDefaultEntityNum, pHeap);
     mEntityList.clear();
+
     for (u32 i = 0; i < sDefaultEntityNum; i++)
     {
         Entity* entity = mEntityList.emplaceBack();
@@ -163,6 +164,7 @@ XmlDocument::EntityList* XmlDocument::expandEntityList(s32 num, Heap* pHeap)
 
     EntityList copies;
     copies.allocBuffer(mEntityList.size(), pHeap, -static_cast<s32>(sizeof(void*)));
+
     for (auto& entity : mEntityList)
     {
         Entity* copy = copies.emplaceBack();
@@ -172,6 +174,7 @@ XmlDocument::EntityList* XmlDocument::expandEntityList(s32 num, Heap* pHeap)
 
     mEntityList.freeBuffer();
     mEntityList.allocBuffer(num, pHeap);
+
     for (auto& copy : copies)
     {
         Entity* entity = mEntityList.birthBack();
@@ -193,9 +196,11 @@ static void writeXmlInstanceAsBinary_(WriteStream* pStream, XmlElement* pElement
         pStream->writeString(pElement->getName(), nameLength);
 
         const XmlElement::AttributeList& attributes = pElement->getAttributes();
+
         if (attributes.size() > 0)
         {
             pStream->writeU8(attributes.size());
+
             for (auto& attribute : attributes)
             {
                 u8 length = attribute.mName.calcLength();
@@ -215,6 +220,7 @@ static void writeXmlInstanceAsBinary_(WriteStream* pStream, XmlElement* pElement
         {
             u16 size = Endian::fromHostU16(Endian::cLittle, pElement->getContentSize());
             pStream->writeU16(size);
+
             if (size != 0)
             {
                 pStream->writeMemBlock(pElement->getContent(), size);
@@ -233,6 +239,7 @@ static void writeXmlInstanceAsBinary_(WriteStream* pStream, XmlElement* pElement
         {
             XmlElement* next = pElement->next();
             pStream->writeU16(0);
+
             if (!next)
             {
                 pStream->writeU8(1);
@@ -248,6 +255,7 @@ static void writeXmlInstanceAsBinary_(WriteStream* pStream, XmlElement* pElement
         else
         {
             pStream->writeU16(0);
+
             if (!pElement->next())
             {
                 pStream->writeU8(5);
@@ -272,9 +280,11 @@ bool XmlDocument::save(WriteStream* pStream, Heap* pHeap, bool isBinary,
                        XmlElement* pElement) const
 {
     pStream->setMode(Stream::Modes::Binary);
+
     if (!pElement)
     {
         pElement = mRoot;
+
         if (!pElement)
         {
             return false;
@@ -282,14 +292,17 @@ bool XmlDocument::save(WriteStream* pStream, Heap* pHeap, bool isBinary,
     }
 
     s32 userEntityNum = mEntityList.size() - sDefaultEntityNum;
+
     if (isBinary)
     {
         u8 num = userEntityNum;
         pStream->writeMemBlock(&num, 1);
+
         if (userEntityNum > 0)
         {
             auto it = mEntityList.begin();
             auto end = mEntityList.end();
+
             for (u32 i = 0; i < sDefaultEntityNum; i++)
             {
                 ++it;
@@ -313,6 +326,7 @@ bool XmlDocument::save(WriteStream* pStream, Heap* pHeap, bool isBinary,
     {
         SafeString header = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
         pStream->writeString(header, header.calcLength());
+
         if (userEntityNum > 0)
         {
             SafeString doctype = "<!DOCTYPE doc[\n";
@@ -320,6 +334,7 @@ bool XmlDocument::save(WriteStream* pStream, Heap* pHeap, bool isBinary,
 
             auto it = mEntityList.begin();
             auto end = mEntityList.end();
+
             for (u32 i = 0; i < sDefaultEntityNum; i++)
             {
                 ++it;
@@ -376,6 +391,7 @@ void XmlDocument::writeXmlInstanceAsText_(WriteStream* pStream, XmlElement* pEle
     }
 
     const bool hasName = !pElement->getName().isEmpty();
+
     if (hasName)
     {
         for (s32 i = 0; i < depth; i++)
@@ -389,10 +405,12 @@ void XmlDocument::writeXmlInstanceAsText_(WriteStream* pStream, XmlElement* pEle
     }
 
     XmlElement* child = pElement->child();
+
     if (child)
     {
         pStream->writeString(">\n", 2);
         writeXmlInstanceAsText_(pStream, child, depth + 1, workSize, pHeap);
+
         for (XmlElement* sibling = child->next(); sibling; sibling = sibling->next())
         {
             if (sibling->child())
@@ -402,6 +420,7 @@ void XmlDocument::writeXmlInstanceAsText_(WriteStream* pStream, XmlElement* pEle
             }
 
             const bool siblingHasName = !sibling->getName().isEmpty();
+
             if (siblingHasName)
             {
                 for (s32 i = 0; i < depth + 1; i++)
@@ -510,6 +529,7 @@ static void readXmlInstanceAsBinary_(XmlElement* pElement, ReadStream* pStream, 
     while (true)
     {
         u8 nameLength = pStream->readU8();
+
         if (nameLength != 0)
         {
             pStream->readString(&pElement->getName(), nameLength);
@@ -518,9 +538,11 @@ static void readXmlInstanceAsBinary_(XmlElement* pElement, ReadStream* pStream, 
         pElement->getName().trim(nameLength);
 
         u8 attributeNum = pStream->readU8();
+
         if (attributeNum != 0)
         {
             pElement->expandAttributeList(attributeNum, pHeap);
+
             for (u8 i = 0; i < attributeNum; i++)
             {
                 u8 length = pStream->readU8();
@@ -534,6 +556,7 @@ static void readXmlInstanceAsBinary_(XmlElement* pElement, ReadStream* pStream, 
         }
 
         u16 size = Endian::toHostU16(Endian::cLittle, pStream->readU16());
+
         if (size != 0)
         {
             u8* content = new (pHeap, sizeof(void*)) u8[size + 1];
@@ -554,6 +577,7 @@ static void readXmlInstanceAsBinary_(XmlElement* pElement, ReadStream* pStream, 
         case 0:
         case 4:
             pElement = XmlUtil::createBackSiblingElement(pElement, pHeap);
+
             if (!pElement)
             {
                 return;
@@ -581,12 +605,14 @@ void XmlDocument::parseXml_(ReadStream* pStream, Heap* pHeap, bool isBinary)
 
     pStream->setMode(Stream::Modes::Binary);
     pStream->rewind();
+
     if (isBinary)
     {
         FixedSafeString<8> name;
         FixedSafeString<128> value;
         u8 length = 0;
         u8 entityNum = 0;
+
         if (!pStream->readMemBlock(&entityNum, 1))
         {
             return;
@@ -594,6 +620,7 @@ void XmlDocument::parseXml_(ReadStream* pStream, Heap* pHeap, bool isBinary)
 
         resetEntity_(pHeap);
         expandEntityList(entityNum, pHeap);
+
         for (u8 i = 0; i < entityNum; i++)
         {
             if (!pStream->readMemBlock(&length, 1))
@@ -632,6 +659,7 @@ void XmlDocument::parseXml_(ReadStream* pStream, Heap* pHeap, bool isBinary)
         mWorkBuffer2 = new (pHeap, -static_cast<s32>(sizeof(void*))) char[mWorkSize];
         resetEntity_(pHeap);
         s32 offset = parseXmlDeclare_(pStream, pHeap);
+
         if (offset >= 0)
         {
             pStream->rewind();
@@ -683,6 +711,7 @@ static s32 skipXmlUntil_(ReadStream* pStream, char terminator)
 s32 XmlDocument::parseXmlDeclare_(ReadStream* pStream, Heap* pHeap)
 {
     u8 c = 0;
+
     if (!pStream->readMemBlock(&c, 1))
     {
         return -1;
@@ -693,6 +722,7 @@ s32 XmlDocument::parseXmlDeclare_(ReadStream* pStream, Heap* pHeap)
     do
     {
         s32 next = pos + 1;
+
         switch (state)
         {
         case 0:
@@ -712,6 +742,7 @@ s32 XmlDocument::parseXmlDeclare_(ReadStream* pStream, Heap* pHeap)
 
             {
                 s32 count = skipXmlUntil_(pStream, '?');
+
                 if (count == 0)
                 {
                     return -1;
@@ -742,6 +773,7 @@ s32 XmlDocument::parseXmlDeclare_(ReadStream* pStream, Heap* pHeap)
             {
                 const char* keyword = "OCTYPE";
                 s32 keywordLength = SafeString(keyword).calcLength();
+
                 for (s32 i = 0; i < keywordLength; i++)
                 {
                     if (pStream->readU8() != static_cast<u8>(keyword[i]))
@@ -751,6 +783,7 @@ s32 XmlDocument::parseXmlDeclare_(ReadStream* pStream, Heap* pHeap)
                 }
 
                 s32 count = skipXmlUntil_(pStream, '[');
+
                 if (count == 0)
                 {
                     return -1;
@@ -763,6 +796,7 @@ s32 XmlDocument::parseXmlDeclare_(ReadStream* pStream, Heap* pHeap)
             {
                 const char* keyword = "NTITY ";
                 s32 keywordLength = SafeString(keyword).calcLength();
+
                 for (s32 i = 0; i < keywordLength; i++)
                 {
                     if (pStream->readU8() != static_cast<u8>(keyword[i]))
@@ -775,9 +809,11 @@ s32 XmlDocument::parseXmlDeclare_(ReadStream* pStream, Heap* pHeap)
                 char* nameBuffer = name.getBuffer();
                 s32 nameBufferSize = name.getBufferSize();
                 s32 i = 0;
+
                 for (; i < nameBufferSize; i++)
                 {
                     nameBuffer[i] = pStream->readU8();
+
                     if (nameBuffer[i] == ' ')
                     {
                         break;
@@ -798,6 +834,7 @@ s32 XmlDocument::parseXmlDeclare_(ReadStream* pStream, Heap* pHeap)
                 }
 
                 const u8 quote = c;
+
                 if (quote != '\'' && quote != '"')
                 {
                     return -1;
@@ -806,9 +843,11 @@ s32 XmlDocument::parseXmlDeclare_(ReadStream* pStream, Heap* pHeap)
                 FixedSafeString<128> value;
                 char* valueBuffer = value.getBuffer();
                 s32 valueBufferSize = value.getBufferSize();
+
                 for (i = 0; i < valueBufferSize; i++)
                 {
                     valueBuffer[i] = pStream->readU8();
+
                     if (valueBuffer[i] == quote)
                     {
                         break;
@@ -894,6 +933,7 @@ bool isXmlSpace_(char c)
 void rstripXmlName_(BufferedSafeString* pString)
 {
     char* buffer = const_cast<char*>(pString->cstr());
+
     for (s32 i = SafeString(buffer).calcLength(); i > 0; i--)
     {
         if (buffer[i - 1] > ' ' && buffer[i - 1] != 0x7f)
@@ -945,6 +985,7 @@ XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
                 {
                     const char* keyword = "--";
                     s32 keywordLength = SafeString(keyword).calcLength();
+
                     for (s32 i = 0; i < keywordLength; i++)
                     {
                         if (pStream->readU8() != static_cast<u8>(keyword[i]))
@@ -961,6 +1002,7 @@ XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
                     tagName.clear();
                     bool isSkippingSpace = true;
                     nameLength = 0;
+
                     while (true)
                     {
                         if (!pStream->readMemBlock(&c, 1))
@@ -972,10 +1014,12 @@ XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
                         {
                             tagName.trim(nameLength);
                             rstripXmlName_(&tagName);
+
                             if (tagName == stack.back()->getName())
                             {
                                 XmlElement* closed;
                                 stack.popBack(&closed);
+
                                 if (stack.size() == 0)
                                 {
                                     goto success;
@@ -995,6 +1039,7 @@ XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
 
                         nameBuffer[nameLength] = c;
                         isSkippingSpace = false;
+
                         if (nameLength++ >= 64)
                         {
                             goto fail;
@@ -1024,6 +1069,7 @@ XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
                             else
                             {
                                 u32 end = textLength;
+
                                 while (end != 0 && isXmlSpace_(mWorkBuffer2[end - 1]))
                                 {
                                     end--;
@@ -1033,6 +1079,7 @@ XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
                                 replaceXmlNumericCharacterReference_(textBuffer, mWorkSize, 0);
                                 replaceXmlCharacterEntityReference_(textBuffer, mWorkSize, 0);
                                 u32 length = 0;
+
                                 while (mWorkBuffer2[length] != SafeString::cNullChar)
                                 {
                                     length++;
@@ -1110,6 +1157,7 @@ XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
                     FixedSafeString<1024> value;
                     char* attrNameBuffer = name.getBuffer();
                     char* attrValueBuffer = value.getBuffer();
+
                     while (true)
                     {
                         while (isXmlSpace_(c))
@@ -1126,11 +1174,13 @@ XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
                         }
 
                         u32 i = 0;
+
                         if (c != '=')
                         {
                             while (true)
                             {
                                 attrNameBuffer[i] = c;
+
                                 if (i >= 0x3ff)
                                 {
                                     goto fail;
@@ -1142,6 +1192,7 @@ XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
                                 }
 
                                 i++;
+
                                 if (c == '=')
                                 {
                                     break;
@@ -1151,6 +1202,7 @@ XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
 
                         name.trim(i);
                         rstripXmlName_(&name);
+
                         if (i == 0)
                         {
                             goto fail;
@@ -1158,11 +1210,13 @@ XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
 
                     readValue:
                         u8 quote;
+
                         while (true)
                         {
                             if (!pStream->readMemBlock(&c, 1))
                             {
                                 quote = c;
+
                                 if (quote != '"' && quote != '\'')
                                 {
                                     goto fail;
@@ -1172,6 +1226,7 @@ XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
                             }
 
                             quote = c;
+
                             if (quote > '\'')
                             {
                                 goto fail;
@@ -1203,6 +1258,7 @@ XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
                             }
 
                             attrValueBuffer[i] = c;
+
                             if (i > 0x3fe)
                             {
                                 goto fail;
@@ -1215,6 +1271,7 @@ XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
 
                     addAttribute:
                         XmlAttributeWork* attribute = attributes.emplaceBack();
+
                         if (!attribute)
                         {
                             goto fail;
@@ -1230,9 +1287,11 @@ XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
                     }
 
                     XmlElement** ppElement;
+
                     if (c == '/')
                     {
                         u32 count = skipXmlUntil_(pStream, '>');
+
                         if (stack.size() == 0 || count == 0)
                         {
                             goto fail;
@@ -1265,6 +1324,7 @@ XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
                         XmlElement* target = *ppElement;
                         target->expandAttributeList(attributes.size(), pHeap);
                         target->mAttributes.clear();
+
                         for (auto& attribute : attributes)
                         {
                             target->mAttributes.emplaceBack(pHeap, attribute);
@@ -1279,6 +1339,7 @@ XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
                 case 6:
                 {
                     bool isAllSpace = true;
+
                     while (true)
                     {
                         if (c == '<')
@@ -1311,6 +1372,7 @@ XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
                                 {
                                     const char* keyword = "CDATA[";
                                     s32 keywordLength = SafeString(keyword).calcLength();
+
                                     for (s32 i = 0; i < keywordLength; i++)
                                     {
                                         if (pStream->readU8() != static_cast<u8>(keyword[i]))
@@ -1324,6 +1386,7 @@ XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
                                     replaceXmlNumericCharacterReference_(textBuffer, mWorkSize, replaceStart);
                                     replaceXmlCharacterEntityReference_(textBuffer, mWorkSize, replaceStart);
                                     u32 length = 0;
+
                                     while (mWorkBuffer2[length] != SafeString::cNullChar)
                                     {
                                         length++;
@@ -1339,6 +1402,7 @@ XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
                                 {
                                     const char* keyword = "ASE64[";
                                     s32 keywordLength = SafeString(keyword).calcLength();
+
                                     for (s32 i = 0; i < keywordLength; i++)
                                     {
                                         if (pStream->readU8() != static_cast<u8>(keyword[i]))
@@ -1352,6 +1416,7 @@ XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
                                     replaceXmlNumericCharacterReference_(textBuffer, mWorkSize, replaceStart);
                                     replaceXmlCharacterEntityReference_(textBuffer, mWorkSize, replaceStart);
                                     u32 length = 0;
+
                                     while (mWorkBuffer2[length] != SafeString::cNullChar)
                                     {
                                         length++;
@@ -1374,9 +1439,11 @@ XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
                                 replaceXmlNumericCharacterReference_(textBuffer, mWorkSize, replaceStart);
                                 replaceXmlCharacterEntityReference_(textBuffer, mWorkSize, replaceStart);
                                 stack.popBack(&textElement);
+
                                 if (textElement->getElementType() != XmlElement::cElementType_Base64)
                                 {
                                     textLength = 0;
+
                                     while (mWorkBuffer2[textLength] != SafeString::cNullChar)
                                     {
                                         textLength++;
@@ -1392,6 +1459,7 @@ XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
                                 if (textLength != 0)
                                 {
                                     u32 end = textLength;
+
                                     while (end != 0 && isXmlSpace_(mWorkBuffer2[end - 1]))
                                     {
                                         end--;
@@ -1399,12 +1467,14 @@ XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
 
                                     mWorkBuffer2[end] = SafeString::cNullChar;
                                     u32 start = 0;
+
                                     while (start < end && isXmlSpace_(mWorkBuffer2[start]))
                                     {
                                         start++;
                                     }
 
                                     u32 length = end - start;
+
                                     for (u32 i = 0; i < length; i++)
                                     {
                                         mWorkBuffer2[i] = mWorkBuffer2[start + i];
@@ -1414,6 +1484,7 @@ XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
                                     replaceXmlNumericCharacterReference_(textBuffer, mWorkSize, 0);
                                     replaceXmlCharacterEntityReference_(textBuffer, mWorkSize, 0);
                                     length = 0;
+
                                     while (mWorkBuffer2[length] != SafeString::cNullChar)
                                     {
                                         length++;
@@ -1440,12 +1511,14 @@ XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
 
                         textBuffer[textLength] = c;
                         isAllSpace = isAllSpace && isXmlSpace_(c);
+
                         if (textLength + 2 > mWorkSize)
                         {
                             goto fail;
                         }
 
                         textLength++;
+
                         if (!pStream->readMemBlock(&c, 1))
                         {
                             goto fail;
@@ -1497,6 +1570,7 @@ XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
                         {
                             const char* keyword = "BASE64[";
                             s32 keywordLength = SafeString(keyword).calcLength();
+
                             for (s32 i = 0; i < keywordLength; i++)
                             {
                                 if (pStream->readU8() != static_cast<u8>(keyword[i]))
@@ -1526,6 +1600,7 @@ XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
                     char* encoded = mWorkBuffer0;
                     char* decoded = mWorkBuffer1;
                     s32 encodedLength = 0;
+
                     while (true)
                     {
                         if (c == ']')
@@ -1538,12 +1613,14 @@ XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
                             if (c == '>')
                             {
                                 size_t decodedSize = 0;
+
                                 if (!Base64::decode(decoded, mWorkSize, encoded, encodedLength, &decodedSize))
                                 {
                                     goto fail;
                                 }
 
                                 u32 i = 0;
+
                                 for (; i < decodedSize; i++)
                                 {
                                     textBuffer[i] = decoded[i];
@@ -1576,9 +1653,11 @@ XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
                     {
                         tagName.trim(nameLength);
                         rstripXmlName_(&tagName);
+
                         if (tagName == stack.back()->getName())
                         {
                             stack.popBack(&closeElement);
+
                             if (textLength != 0)
                             {
                                 u32 length = closeElement->getElementType() == XmlElement::cElementType_Base64 ?
@@ -1598,6 +1677,7 @@ XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
                         }
 
                         nameBuffer[nameLength] = c;
+
                         if (++nameLength > 64)
                         {
                             goto fail;
@@ -1613,11 +1693,13 @@ XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
                     }
 
                     auto* newElement = new (pHeap, sizeof(void*)) XmlElement();
+
                     while (true)
                     {
                         if (isXmlSpace_(c) || c == '>')
                         {
                             tagName.trim(nameLength);
+
                             if (tagName.at(0) == SafeString::cNullChar)
                             {
                                 delete newElement;
@@ -1625,6 +1707,7 @@ XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
                             }
 
                             newElement->setName(tagName);
+
                             if (stack.size() == 0)
                             {
                                 root = newElement;
@@ -1635,6 +1718,7 @@ XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
                             }
 
                             stack.pushBack(newElement);
+
                             if (c == '>')
                             {
                                 textLength = 0;
@@ -1660,6 +1744,7 @@ XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
                             tagName.trim(nameLength);
                             rstripXmlName_(&tagName);
                             newElement->setName(tagName);
+
                             if (stack.size() == 0)
                             {
                                 if (root)
@@ -1681,6 +1766,7 @@ XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
                         }
 
                         nameBuffer[nameLength] = c;
+
                         if (++nameLength >= 0x41)
                         {
                             delete newElement;
@@ -1737,9 +1823,11 @@ XmlDocument* XmlDocument::create(ReadStream* pStream, Heap* pHeap, bool isBinary
 
     auto* document = new (pHeap, sizeof(void*)) XmlDocument();
     document->mWorkSize = workSize;
+
     if (pStream)
     {
         document->parseXml_(pStream, pHeap, isBinary);
+
         if (!document->mRoot)
         {
             delete document;
@@ -1808,6 +1896,7 @@ static u32 convertCodeToUtf8_(char* pDst, u32 code)
 bool XmlDocument::replaceXmlNumericCharacterReference_(char* pText, u32 bufferSize, u32 startIndex)
 {
     u32 length = 0;
+
     for (; pText[length] != SafeString::cNullChar; length++)
     {
         mWorkBuffer0[length] = pText[length];
@@ -1822,9 +1911,11 @@ bool XmlDocument::replaceXmlNumericCharacterReference_(char* pText, u32 bufferSi
 
     char* dst = mWorkBuffer1;
     u32 pos = 0;
+
     for (u32 i = 0; pos < bufferSize && i < length; i++)
     {
         char c = pText[i];
+
         if (i > length - 4 || i < startIndex || c != '&')
         {
             dst[pos++] = c;
@@ -1839,6 +1930,7 @@ bool XmlDocument::replaceXmlNumericCharacterReference_(char* pText, u32 bufferSi
         if (pText[i + 1] == '#')
         {
             u32 code;
+
             if (i + 2 >= bufferSize)
             {
                 break;
@@ -1898,6 +1990,7 @@ bool XmlDocument::replaceXmlNumericCharacterReference_(char* pText, u32 bufferSi
 bool XmlDocument::replaceXmlCharacterEntityReference_(char* pText, u32 bufferSize, u32 startIndex)
 {
     u32 length = 0;
+
     for (; pText[length] != SafeString::cNullChar; length++)
     {
         mWorkBuffer0[length] = pText[length];
@@ -1907,9 +2000,11 @@ bool XmlDocument::replaceXmlCharacterEntityReference_(char* pText, u32 bufferSiz
 
     char* dst = mWorkBuffer1;
     u32 pos = 0;
+
     for (u32 i = 0; i < length && pos < bufferSize; i++)
     {
         char c = pText[i];
+
         if (i > length - 2 || i < startIndex || c != '&')
         {
             dst[pos++] = c;
@@ -1917,9 +2012,11 @@ bool XmlDocument::replaceXmlCharacterEntityReference_(char* pText, u32 bufferSiz
         }
 
         u32 nameLength = 0;
+
         for (auto& entity : mEntityList)
         {
             nameLength = entity.mName.calcLength();
+
             if (bufferSize - i - 1 < nameLength)
             {
                 return false;
@@ -1932,6 +2029,7 @@ bool XmlDocument::replaceXmlCharacterEntityReference_(char* pText, u32 bufferSiz
 
             const char* name = entity.mName.cstr();
             bool isMatch = true;
+
             for (u32 k = 0; k < nameLength; k++)
             {
                 if (name[k] != mWorkBuffer0[i + 1 + k])
@@ -1948,12 +2046,14 @@ bool XmlDocument::replaceXmlCharacterEntityReference_(char* pText, u32 bufferSiz
             }
 
             u32 valueLength = entity.mValue.calcLength();
+
             if (bufferSize - i - 1 < valueLength)
             {
                 return false;
             }
 
             const char* value = entity.mValue.cstr();
+
             for (u32 k = 0; k < valueLength; k++)
             {
                 dst[pos++] = value[k];
@@ -2030,6 +2130,7 @@ void XmlDocument::writeXmlContent_(WriteStream* pStream, const XmlElement* pElem
     {
         u32 size = pElement->getContentSize();
         u32 encodedSize = (size / 3 + (size % 3 != 0 ? 1 : 0)) * 4;
+
         if (encodedSize > workSize)
         {
             return;
@@ -2049,6 +2150,7 @@ void XmlDocument::writeXmlContent_(WriteStream* pStream, const XmlElement* pElem
         s32 length = pElement->getContentString().calcLength();
 
         s32 entityCharNum = 0;
+
         for (s32 i = 0; i < length; i++)
         {
             for (u32 j = 0; j < sDefaultEntityNum; j++)
@@ -2070,9 +2172,11 @@ void XmlDocument::writeXmlContent_(WriteStream* pStream, const XmlElement* pElem
         char* escaped =
             new (pHeap, -static_cast<s32>(sizeof(void*))) char[entityCharNum * 5 + length];
         s32 pos = 0;
+
         for (s32 i = 0; i < length; i++)
         {
             char c = text[i];
+
             if (c == '&' && text[i + 1] == '&')
             {
                 escaped[pos++] = '&';
@@ -2081,6 +2185,7 @@ void XmlDocument::writeXmlContent_(WriteStream* pStream, const XmlElement* pElem
             }
 
             bool isEntity = false;
+
             for (u32 j = 0; j < sDefaultEntityNum; j++)
             {
                 if (sDefaultEntityValues[j][0] == c)
@@ -2088,6 +2193,7 @@ void XmlDocument::writeXmlContent_(WriteStream* pStream, const XmlElement* pElem
                     escaped[pos++] = '&';
                     SafeString name = sDefaultEntityNames[j];
                     s32 nameLength = name.calcLength();
+
                     for (s32 k = 0; k < nameLength; k++)
                     {
                         escaped[pos++] = sDefaultEntityNames[j][k];

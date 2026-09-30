@@ -82,6 +82,7 @@ void ControllerWrapperBase::setEnableOtherWrappers(bool enable) const
     }
 
     OffsetList<ControllerWrapperBase>& wrappers = mController->mWrappers;
+
     for (auto it = wrappers.begin(); it != wrappers.end(); ++it)
     {
         if (&*it != this)

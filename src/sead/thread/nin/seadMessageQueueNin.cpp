@@ -37,6 +37,7 @@ void MessageQueue::allocate(s32 size, Heap* pHeap)
 void MessageQueue::free()
 {
     nn::os::FinalizeMessageQueue(&mMessageQueueInner);
+
     if (mBuffer)
     {
         delete[] mBuffer;

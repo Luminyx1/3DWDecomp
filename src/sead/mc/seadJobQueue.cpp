@@ -91,6 +91,7 @@ void JobQueue::setCoreMaskAndWaitType(CoreIdMask mask, SyncType type)
 {
     mStatus = Status::_6;
     mMask = mask;
+
     for (u32 i = 0; i < CoreInfo::getNumCores(); ++i)
     {
         mCoreEnabled[i] = mask.isOn(i);
@@ -129,6 +130,7 @@ void JobQueue::wait_AT_WORKER()
             break;
         case SyncType::cThread:
             SEAD_ASSERT_MSG(false, "*NOT YET\n");
+
             if (!isDone_())
             {
                 mFinishEvent.wait();
@@ -157,6 +159,7 @@ void JobQueue::wait()
             break;
         case SyncType::cThread:
             SEAD_ASSERT_MSG(false, "NOT IMPLEMENTED.\n");
+
             if (!isDone_())
             {
                 mFinishEvent.wait();
@@ -300,6 +303,7 @@ bool FixedSizeJQ::run(u32 size, u32* pFinishedJobs, Worker* pWorker)
     bool ret = true;
     s32 begin = 0;
     s32 end = -1;
+
     if (size > 0 && mNumJobs > 0)
     {
         if (pWorker)
@@ -327,6 +331,7 @@ bool FixedSizeJQ::run(u32 size, u32* pFinishedJobs, Worker* pWorker)
     mPerf.measureEndDeque();
 
     mPerf.measureBeginRun();
+
     if (pWorker)
     {
         pWorker->setState(Worker::State::cRunning_Run);
@@ -416,6 +421,7 @@ bool FixedSizeJQ::enqueSafe(Job* pJob)
     mStatus = Status::_3;
 
     ScopedLock<JobQueueLock> lock(&mLock);
+
     if (mNumJobs >= u32(mJobs.size()))
     {
         return false;
@@ -452,6 +458,7 @@ u32 FixedSizeJQ::deque(Job** pJobs, u32 count)
     ScopedLock<JobQueueLock> lock(&mLock);
 
     u32 ret = 0;
+
     while (mNumProcessedJobs < mNumJobs && ret < count)
     {
         pJobs[ret] = mJobs[mNumProcessedJobs++];

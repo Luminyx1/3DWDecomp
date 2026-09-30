@@ -22,6 +22,7 @@ struct ArchiveFileDevice::ArchiveFileHandle
 u8* ArchiveFileDevice::tryLoadWithEntryID(s32 id, FileDevice::LoadArg& rArg)
 {
     SEAD_ASSERT_MSG(mPermission, "Device permission error.");
+
     if (!mPermission)
     {
         return nullptr;
@@ -42,6 +43,7 @@ FileDevice* ArchiveFileDevice::tryOpenWithEntryID(FileHandle* pHandle, s32 id,
                                                   FileDevice::FileOpenFlag flag, u32 divSize)
 {
     SEAD_ASSERT_MSG(mPermission, "Device permission error.");
+
     if (!mPermission)
     {
         return nullptr;
@@ -71,6 +73,7 @@ s32 ArchiveFileDevice::tryConvertPathToEntryID(const SafeString& rPath)
 bool ArchiveFileDevice::setCurrentDirectory(const SafeString& rDir)
 {
     SEAD_ASSERT_MSG(mPermission, "Device permission error.");
+
     if (!mPermission)
     {
         return false;
@@ -100,6 +103,7 @@ bool ArchiveFileDevice::doGetFileSize_(u32* pFileSize, const SafeString& rPath)
     }
 
     ArchiveRes::FileInfo info{};
+
     if (!mArchive->getFile(rPath, &info))
     {
         return false;
@@ -230,6 +234,7 @@ u8* ArchiveFileDevice::doLoadWithEntryID_(s32 entryId, LoadArg& rArg)
     if (rArg.buffer || rArg.heap)
     {
         FileHandle handle;
+
         if (!tryOpenWithEntryID(&handle, entryId, {}, rArg.div_size))
         {
             return nullptr;
@@ -237,9 +242,11 @@ u8* ArchiveFileDevice::doLoadWithEntryID_(s32 entryId, LoadArg& rArg)
 
         // Determine the buffer size.
         u32 buffer_size = rArg.buffer_size;
+
         if (buffer_size == 0)
         {
             u32 file_size = 0;
+
             if (!tryGetFileSize(&file_size, &handle))
             {
                 return nullptr;
@@ -260,6 +267,7 @@ u8* ArchiveFileDevice::doLoadWithEntryID_(s32 entryId, LoadArg& rArg)
         // Allocate the buffer if need be.
         u8* buffer = rArg.buffer;
         bool buffer_allocated = false;
+
         if (!buffer)
         {
             const s32 aligment_sign = Mathi::sign(rArg.alignment);
@@ -269,6 +277,7 @@ u8* ArchiveFileDevice::doLoadWithEntryID_(s32 entryId, LoadArg& rArg)
         }
 
         u32 bytes_read = 0;
+
         if (!tryRead(&bytes_read, &handle, buffer, buffer_size) || !tryClose(&handle))
         {
             // Clean up the allocation on failure.
@@ -288,12 +297,14 @@ u8* ArchiveFileDevice::doLoadWithEntryID_(s32 entryId, LoadArg& rArg)
 
     ArchiveRes::FileInfo info{};
     auto* ret = mArchive->getFileFast(entryId, &info);
+
     if (!ret)
     {
         return nullptr;
     }
 
     SEAD_ASSERT(rArg.alignment == 0 || PtrUtil::isAligned(ret, Mathi::abs(rArg.alignment)));
+
     if (rArg.buffer_size_alignment && info.mLength % rArg.buffer_size_alignment != 0)
     {
         SEAD_WARN("archive file size[%u] is not multipe of rArg.buffer_size_alignment[%u]",
@@ -327,12 +338,14 @@ u8* ArchiveFileDevice::doLoad_(LoadArg& rArg)
 
     ArchiveRes::FileInfo info{};
     auto* ret = mArchive->getFile(rArg.path, &info);
+
     if (!ret)
     {
         return nullptr;
     }
 
     SEAD_ASSERT(rArg.alignment == 0 || PtrUtil::isAligned(ret, Mathi::abs(rArg.alignment)));
+
     if (rArg.buffer_size_alignment && info.mLength % rArg.buffer_size_alignment != 0)
     {
         SEAD_WARN("archive file size[%u] is not multipe of rArg.buffer_size_alignment[%u]",
@@ -376,6 +389,7 @@ FileDevice* ArchiveFileDevice::doOpen_(FileHandle* pHandle, const SafeString& rP
     auto* inner = constructArchiveFileHandle_(pHandle);
 
     auto* file_data = static_cast<const u8*>(mArchive->getFile(rPath, &inner->mFileInfo));
+
     if (!file_data)
     {
         return nullptr;
@@ -410,6 +424,7 @@ FileDevice* ArchiveFileDevice::doOpenWithEntryID_(FileHandle* pHandle, s32 id,
     auto* inner = constructArchiveFileHandle_(pHandle);
 
     auto* file_data = static_cast<const u8*>(mArchive->getFileFast(id, &inner->mFileInfo));
+
     if (!file_data)
     {
         return nullptr;
@@ -479,6 +494,7 @@ bool ArchiveFileDevice::doRead_(u32* pBytesRead, FileHandle* pHandle, u8* pOutBu
     ArchiveFileHandle* inner = getArchiveFileHandle_(pHandle);
 
     u32 read_size;
+
     if (inner->mPos + bytesToRead <= inner->mFileInfo.mLength)
     {
         read_size = bytesToRead;
@@ -491,6 +507,7 @@ bool ArchiveFileDevice::doRead_(u32* pBytesRead, FileHandle* pHandle, u8* pOutBu
     MemUtil::copy(pOutBuffer, inner->mFileData + inner->mPos, read_size);
 
     inner->mPos += read_size;
+
     if (pBytesRead)
     {
         *pBytesRead = read_size;
@@ -510,6 +527,7 @@ bool ArchiveFileDevice::doSeek_(FileHandle* pHandle, s32 offset, FileDevice::See
 {
     ArchiveFileHandle* inner = getArchiveFileHandle_(pHandle);
     u32 new_position;
+
     switch (origin)
     {
     case cSeekOrigin_Begin:
@@ -616,6 +634,7 @@ bool ArchiveFileDevice::doReadDirectory_(u32* pEntriesRead, DirectoryHandle* pHa
                                          DirectoryEntry* pEntry, u32 entriesToRead)
 {
     auto* archive = mArchive;
+
     if (!archive)
     {
         SEAD_ASSERT_MSG(false, "no archive mounted");
@@ -625,6 +644,7 @@ bool ArchiveFileDevice::doReadDirectory_(u32* pEntriesRead, DirectoryHandle* pHa
     auto* buffer = &getHandleBaseHandleBuffer_(pHandle);
     SEAD_ASSERT(pEntry);
     const u32 actual_read_count = archive->readDirectory(buffer, pEntry, entriesToRead);
+
     if (pEntriesRead)
     {
         *pEntriesRead = actual_read_count;

@@ -43,6 +43,7 @@ void TextStreamFormat::getNextData_(StreamSrc* pSrc)
     sBuffer.clear();
 
     char c;
+
     if (pSrc->read(&c, 1) == 0)
     {
         return;
@@ -115,6 +116,7 @@ void TextStreamFormat::getNextData_(StreamSrc* pSrc)
             sBuffer.append(c);
             s32 newLength = length + 1;
             commentEnd = '\0';
+
             if (length >= 0 && sBuffer[length] == '#')
             {
                 sBuffer.trim(length);
@@ -258,6 +260,7 @@ f32 TextStreamFormat::readF32(StreamSrc* pSrc, [[maybe_unused]] Endian::Types en
     ScopedLock<Mutex> lock(&sMutex);
     f32 value = 0.0f;
     getNextData_(pSrc);
+
     if (sBuffer.calcLength() != 0)
     {
         std::sscanf(sBuffer.cstr(), "%f", &value);
@@ -294,6 +297,7 @@ void TextStreamFormat::readBit(StreamSrc* pSrc, void* pData, u32 bits)
 
     u8* data = static_cast<u8*>(pData);
     SafeString str = sBuffer;
+
     if (str.comparen("0b", 2) == 0)
     {
         str = str.getPart(2);
@@ -302,10 +306,12 @@ void TextStreamFormat::readBit(StreamSrc* pSrc, void* pData, u32 bits)
     const s32 length = str.calcLength();
     u32 bitIndex = 0;
     u8 value = 0;
+
     for (s32 i = 0; bitIndex < bits && i <= length; i++)
     {
         value = (value << 1) | (str.at(i) == '1');
         bitIndex++;
+
         if (bitIndex % 8 == 0)
         {
             data[bitIndex / 8 - 1] = value;
@@ -486,9 +492,11 @@ void TextStreamFormat::writeBit(StreamSrc* pSrc, const void* pData, u32 bits)
     sBuffer.copy("0b");
 
     const u32 byteCount = (bits + 7) / 8;
+
     for (u32 i = 0; i < byteCount; i++)
     {
         const s32 bitCount = bits - i * 8 < 8 ? bits - i * 8 : 8;
+
         for (s32 j = bitCount - 1; j >= 0; j--)
         {
             if (data[i] & (1 << j))
@@ -515,6 +523,7 @@ void TextStreamFormat::writeBit(StreamSrc* pSrc, const void* pData, u32 bits)
 void TextStreamFormat::writeString(StreamSrc* pSrc, const SafeString& rStr, u32 size)
 {
     u32 length = rStr.calcLength();
+
     if (length > size)
     {
         length = size;
@@ -523,6 +532,7 @@ void TextStreamFormat::writeString(StreamSrc* pSrc, const SafeString& rStr, u32 
     char quote = '"';
     char backslash = '\\';
     pSrc->write(&quote, 1);
+
     for (u32 i = 0; i < length; i++)
     {
         if (rStr.at(i) == '"')
@@ -548,6 +558,7 @@ void TextStreamFormat::writeMemBlock(StreamSrc* pSrc, const void* pBuffer, u32 s
     sBuffer.clear();
 
     u32 blockCount = size / 3;
+
     if (size % 3 != 0)
     {
         blockCount++;

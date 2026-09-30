@@ -31,6 +31,7 @@ CalendarTime::Week calcWeekDay(const CalendarTime::Year& rYear, const CalendarTi
     int y = rYear.getValue();
     int m = rMonth.getValueOneOrigin();
     int d = rDay.getValue();
+
     if (m < 3)
     {
         y -= 1;
@@ -86,6 +87,7 @@ static bool parseW3CDTFSubString(bool* pOk, u32* pValue, SafeString* pStr, s32* 
     }
 
     const char c = pStr->at(parseLength);
+
     if (!rSeparators.include(c) && (!allowNullSeparator || c != SafeString::cNullChar))
     {
         *pOk = false;
@@ -217,6 +219,7 @@ static bool parseW3CDTFStringImpl(u32* pYear, u32* pMonth, u32* pDay, u32* pHour
 
         u32 tzMinuteAbs = 0;
         done = parseW3CDTFSubString(&ok, &tzMinuteAbs, &substr, &len, nullptr, 2, "", true, 0, 59);
+
         if (!ok)
         {
             return false;

@@ -60,6 +60,7 @@ void HaltWithDetail(const char* file, int line, const char* msg, ...)
             if (footerLength > 0)
             {
                 length += footerLength;
+
                 if (length < s32(cHaltMessageSize) - 2)
                 {
                     sHaltMessage[length] = '\n';
@@ -79,6 +80,7 @@ void HaltWithDetail(const char* file, int line, const char* msg, ...)
     }
 
     sHaltMessage[cHaltMessageSize - 1] = '\0';
+
     if (length < 0)
     {
         PrintString(sHaltMessage, std::strlen(sHaltMessage));

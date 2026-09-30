@@ -226,6 +226,7 @@ u8* SZSDecompressor::tryDecompFromDevice(const ResourceMgr::LoadArg& rLoadArg, R
                                          u32* pOutSize, u32* pOutAllocSize, bool* pOutAllocated)
 {
     Heap* heap = rLoadArg.load_data_heap;
+
     if (heap == nullptr)
     {
         heap = HeapMgr::sInstancePtr->getCurrentHeap();
@@ -239,6 +240,7 @@ u8* SZSDecompressor::tryDecompFromDevice(const ResourceMgr::LoadArg& rLoadArg, R
     FileHandle handle;
     FileDevice* device;
     u8* src;
+
     if (rLoadArg.device != nullptr)
     {
         device = rLoadArg.device->tryOpen(&handle, rLoadArg.path,
@@ -256,6 +258,7 @@ u8* SZSDecompressor::tryDecompFromDevice(const ResourceMgr::LoadArg& rLoadArg, R
     }
 
     src = mWorkBuffer;
+
     if (src == nullptr)
     {
         src = new (heap, -FileDevice::cBufferMinAlignment, std::nothrow) u8[mWorkSize];
@@ -267,6 +270,7 @@ u8* SZSDecompressor::tryDecompFromDevice(const ResourceMgr::LoadArg& rLoadArg, R
     }
 
     u32 bytesRead = 0;
+
     if (!handle.tryRead(&bytesRead, src, mWorkSize))
     {
         if (mWorkBuffer == nullptr)
@@ -291,6 +295,7 @@ u8* SZSDecompressor::tryDecompFromDevice(const ResourceMgr::LoadArg& rLoadArg, R
     s32 decompAlignment = getDecompAlignment(src);
 
     u32 bufferSize = rLoadArg.load_data_buffer_size;
+
     if (!(decompSize <= bufferSize || bufferSize == 0))
     {
         decompSize = bufferSize;
@@ -298,6 +303,7 @@ u8* SZSDecompressor::tryDecompFromDevice(const ResourceMgr::LoadArg& rLoadArg, R
 
     u32 allocSize;
     s32 bufferAlignment = rLoadArg.load_data_buffer_alignment;
+
     if (bufferAlignment != 0)
     {
         allocSize = (decompSize + bufferAlignment - 1) / bufferAlignment * bufferAlignment;
@@ -309,10 +315,12 @@ u8* SZSDecompressor::tryDecompFromDevice(const ResourceMgr::LoadArg& rLoadArg, R
 
     u8* dst = rLoadArg.load_data_buffer;
     bool allocated = false;
+
     if (dst == nullptr)
     {
         s32 alignment;
         DirectResource* directResource = DynamicCast<DirectResource>(pResource);
+
         if (directResource != nullptr)
         {
             if (rLoadArg.load_data_alignment != 0)
@@ -336,6 +344,7 @@ u8* SZSDecompressor::tryDecompFromDevice(const ResourceMgr::LoadArg& rLoadArg, R
         }
 
         dst = new (heap, alignment, std::nothrow) u8[allocSize];
+
         if (dst == nullptr)
         {
             if (mWorkBuffer == nullptr)
@@ -382,6 +391,7 @@ u8* SZSDecompressor::tryDecompFromDevice(const ResourceMgr::LoadArg& rLoadArg, R
         while (bytesRead != 0)
         {
             s32 error = streamDecomp(&context, src, bytesRead);
+
             if (error == 0)
             {
                 break;
@@ -497,6 +507,7 @@ s32 SZSDecompressor::readHeader_(DecompContext* pContext, const u8* pSrc, u32 sr
 
         pSrc++;
         len += 1;
+
         if (--srcSize == 0 && pContext->headerSize != 0)
         {
             return len;
@@ -524,12 +535,14 @@ s32 SZSDecompressor::streamDecomp(DecompContext* pContext, const void* pSrc, u32
     if (pContext->headerSize != 0)
     {
         s32 len = readHeader_(pContext, src, srcSize);
+
         if (len < 0)
         {
             return len;
         }
 
         srcSize -= len;
+
         if (srcSize == 0)
         {
             if (pContext->headerSize == 0)
@@ -556,6 +569,7 @@ s32 SZSDecompressor::streamDecomp(DecompContext* pContext, const void* pSrc, u32
         if (step == cStepLong)
         {
             u32 n = *src + 0x12;
+
             if (n > u32(destCount))
             {
                 if (pContext->forceDestCount == 0)
@@ -578,9 +592,11 @@ s32 SZSDecompressor::streamDecomp(DecompContext* pContext, const void* pSrc, u32
         {
             lzOffset = (((packHigh << 8) & 0xf00) | *src) + 1;
             u32 n = packHigh >> 4;
+
             if (n != 0)
             {
                 n += 2;
+
                 if (n > u32(destCount))
                 {
                     if (pContext->forceDestCount == 0)
@@ -610,6 +626,7 @@ s32 SZSDecompressor::streamDecomp(DecompContext* pContext, const void* pSrc, u32
             {
                 flags = *src++;
                 flagMask = 0x80;
+
                 if (--srcSize == 0)
                 {
                     break;
@@ -631,6 +648,7 @@ s32 SZSDecompressor::streamDecomp(DecompContext* pContext, const void* pSrc, u32
         }
 
         src++;
+
         if (--srcSize == 0)
         {
             break;
@@ -663,12 +681,14 @@ s32 SZSDecompressor::streamDecomp(DecompContext* pContext, const void* pSrc, u32
 s32 SZSDecompressor::decomp(void* pDst, u32 dstSize, const void* pSrc, u32)
 {
     u32 magic = Endian::toHostU32(Endian::cBig, BitUtil::bitCastPtr<u32>(pSrc));
+
     if (magic != 0x59617A30)
     {
         return -1;
     }
 
     u32 decompSize = getDecompSize(pSrc);
+
     if (dstSize < decompSize)
     {
         return -2;

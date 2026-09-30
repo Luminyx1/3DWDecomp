@@ -110,6 +110,7 @@ void PrintFormatter::flush()
     if (mFormatStr)
     {
         mIsFormatSkipped = false;
+
         while (mPos < mFormatStrLength)
         {
             char format[32];
@@ -122,6 +123,7 @@ void PrintFormatter::flush()
 bool PrintFormatter::proceedToFormatMark_(char* pFormat)
 {
     pFormat[0] = '\0';
+
     if (!mFormatStr)
     {
         return false;
@@ -139,6 +141,7 @@ bool PrintFormatter::proceedToFormatMark_(char* pFormat)
 
     const char* str = mFormatStr + mPos;
     s32 i = 0;
+
     while (str[i] != '\0')
     {
         if (str[i] != '%')
@@ -148,6 +151,7 @@ bool PrintFormatter::proceedToFormatMark_(char* pFormat)
         }
 
         const char* mark = &str[i];
+
         if (mark[1] == '%')
         {
             mPrintOutput->write(str, i + 1);
@@ -166,6 +170,7 @@ bool PrintFormatter::proceedToFormatMark_(char* pFormat)
         }
 
         s32 len = i + 1;
+
         if (str[len] == '<' || str[len] == '@')
         {
             if (str[len] == '<')
@@ -178,6 +183,7 @@ bool PrintFormatter::proceedToFormatMark_(char* pFormat)
         }
 
         pFormat[0] = '%';
+
         while (isQualification_(str[len]))
         {
             if (len >= 31)
@@ -224,6 +230,7 @@ void PrintFormatter::flushWithLineBreak()
     }
 
     flush();
+
     if (mFormatStr)
     {
         mPrintOutput->writeLineBreak();
@@ -245,6 +252,7 @@ PrintFormatter& PrintFormatter::operator<<(const char* pFormat)
     }
 
     char format[32];
+
     if (proceedToFormatMark_(format))
     {
         outputString_(format[0] != '\0' ? format : nullptr, mPrintOutput, pFormat, -1);
@@ -321,6 +329,7 @@ void PrintFormatter::outputPtr_(const char* pFormat, PrintOutput* pOutput, uintp
 {
     FixedSafeString<32> str;
     s32 len;
+
     if (pFormat)
     {
         len = str.format(pFormat, ptr);
@@ -362,6 +371,7 @@ TimeBufferingPrintFormatter::TimeBufferingPrintFormatter()
 void TimeBufferingPrintFormatter::outputTimeStamp_()
 {
     CuckooClock* clock = CuckooClock::instance();
+
     if (!clock)
     {
         return;
@@ -461,6 +471,7 @@ void PrintFormatter::out<u8>(const u8& rValue, const char* pFormat, PrintOutput*
 {
     FixedSafeString<32> str;
     s32 len;
+
     if (pFormat)
     {
         len = str.format(pFormat, rValue);
@@ -484,6 +495,7 @@ void PrintFormatter::out<u16>(const u16& rValue, const char* pFormat, PrintOutpu
 {
     FixedSafeString<32> str;
     s32 len;
+
     if (pFormat)
     {
         len = str.format(pFormat, rValue);
@@ -507,6 +519,7 @@ void PrintFormatter::out<u32>(const u32& rValue, const char* pFormat, PrintOutpu
 {
     FixedSafeString<32> str;
     s32 len;
+
     if (pFormat)
     {
         len = str.format(pFormat, rValue);
@@ -530,6 +543,7 @@ void PrintFormatter::out<u64>(const u64& rValue, const char* pFormat, PrintOutpu
 {
     FixedSafeString<32> str;
     s32 len;
+
     if (pFormat)
     {
         len = str.format(pFormat, rValue);
@@ -553,6 +567,7 @@ void PrintFormatter::out<s8>(const s8& rValue, const char* pFormat, PrintOutput*
 {
     FixedSafeString<32> str;
     s32 len;
+
     if (pFormat)
     {
         len = str.format(pFormat, rValue);
@@ -576,6 +591,7 @@ void PrintFormatter::out<s16>(const s16& rValue, const char* pFormat, PrintOutpu
 {
     FixedSafeString<32> str;
     s32 len;
+
     if (pFormat)
     {
         len = str.format(pFormat, rValue);
@@ -599,6 +615,7 @@ void PrintFormatter::out<s32>(const s32& rValue, const char* pFormat, PrintOutpu
 {
     FixedSafeString<32> str;
     s32 len;
+
     if (pFormat)
     {
         len = str.format(pFormat, rValue);
@@ -622,6 +639,7 @@ void PrintFormatter::out<s64>(const s64& rValue, const char* pFormat, PrintOutpu
 {
     FixedSafeString<32> str;
     s32 len;
+
     if (pFormat)
     {
         len = str.format(pFormat, rValue);
@@ -645,6 +663,7 @@ void PrintFormatter::out<f32>(const f32& rValue, const char* pFormat, PrintOutpu
 {
     FixedSafeString<32> str;
     s32 len;
+
     if (pFormat)
     {
         len = str.format(pFormat, rValue);
@@ -668,6 +687,7 @@ void PrintFormatter::out<f64>(const f64& rValue, const char* pFormat, PrintOutpu
 {
     FixedSafeString<32> str;
     s32 len;
+
     if (pFormat)
     {
         len = str.format(pFormat, rValue);
@@ -691,6 +711,7 @@ void PrintFormatter::out<char>(const char& rValue, const char* pFormat, PrintOut
 {
     FixedSafeString<32> str;
     s32 len;
+
     if (pFormat)
     {
         len = str.format(pFormat, rValue);
@@ -713,6 +734,7 @@ template <>
 void PrintFormatter::out<bool>(const bool& rValue, const char* pFormat, PrintOutput* pOutput)
 {
     const bool value = rValue;
+
     if (pFormat)
     {
         FixedSafeString<32> str;
@@ -785,6 +807,7 @@ void PrintFormatter::out<std::nullptr_t>(const std::nullptr_t& rValue, const cha
     const u64 value = reinterpret_cast<const u64&>(rValue);
     FixedSafeString<32> str;
     s32 len;
+
     if (pFormat)
     {
         len = str.format(pFormat, value);
@@ -923,11 +946,13 @@ static void outMatrix_(const Matrix& rMtx, s32 rows, s32 cols, const char* pForm
                        PrintOutput* pOutput)
 {
     pOutput->write("(", 1);
+
     for (s32 i = 0; i < rows; ++i)
     {
         for (s32 j = 0; j < cols; ++j)
         {
             PrintFormatter::out<f32>(rMtx(i, j), pFormat, pOutput);
+
             if (j < cols - 1)
             {
                 pOutput->write(" ", 1);
@@ -956,11 +981,13 @@ void PrintFormatter::OutImpl<f32, Matrix22>::out(const Matrix22f& rValue, const 
                                                  PrintOutput* pOutput)
 {
     pOutput->write("(", 1);
+
     for (s32 i = 0; i < 2; ++i)
     {
         for (s32 j = 0; j < 2; ++j)
         {
             PrintFormatter::out<f32>(rValue(i, j), pFormat, pOutput);
+
             if (j < 1)
             {
                 pOutput->write(" ", 1);
@@ -1114,6 +1141,7 @@ void PrintFormatter::OutImpl<u8, BitFlag>::out(const BitFlag8& rValue, const cha
     const auto bits = rValue.getDirect();
     FixedSafeString<32> str;
     s32 len;
+
     if (pFormat)
     {
         len = str.format(pFormat, bits);
@@ -1139,6 +1167,7 @@ void PrintFormatter::OutImpl<u16, BitFlag>::out(const BitFlag16& rValue, const c
     const auto bits = rValue.getDirect();
     FixedSafeString<32> str;
     s32 len;
+
     if (pFormat)
     {
         len = str.format(pFormat, bits);
@@ -1164,6 +1193,7 @@ void PrintFormatter::OutImpl<u32, BitFlag>::out(const BitFlag32& rValue, const c
     const auto bits = rValue.getDirect();
     FixedSafeString<32> str;
     s32 len;
+
     if (pFormat)
     {
         len = str.format(pFormat, bits);
@@ -1189,6 +1219,7 @@ void PrintFormatter::OutImpl<u64, BitFlag>::out(const BitFlag64& rValue, const c
     const auto bits = rValue.getDirect();
     FixedSafeString<32> str;
     s32 len;
+
     if (pFormat)
     {
         len = str.format(pFormat, bits);

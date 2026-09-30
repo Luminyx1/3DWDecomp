@@ -50,6 +50,7 @@ static const SafeArray<s8, 66> cRegionLanguageTable = {{
 static RegionID getDefaultRegion_()
 {
     const nn::settings::LanguageCode code = nn::oe::GetDesiredLanguage();
+
     if (code == nn::settings::Language_Japanese)
     {
         return RegionID::JP;
@@ -96,6 +97,7 @@ static RegionID getDefaultRegion_()
 static LanguageID getDefaultLanguage_()
 {
     const nn::settings::LanguageCode code = nn::oe::GetDesiredLanguage();
+
     if (code == nn::settings::Language_Japanese)
     {
         return LanguageID::ja;
@@ -186,6 +188,7 @@ bool RegionLanguageMgr::parseRegionLanguageMaskStr_(RingBuffer<RegionLanguageID>
     const SafeString delimiter = " ";
     auto it = rMaskStr.tokenBegin(delimiter);
     const auto end = rMaskStr.tokenEnd(delimiter);
+
     while (end != it)
     {
         if (it.getAndForward(&token) != 4)
@@ -195,6 +198,7 @@ bool RegionLanguageMgr::parseRegionLanguageMaskStr_(RingBuffer<RegionLanguageID>
         }
 
         RegionLanguageID regionLanguage;
+
         if (!EnvUtil::getRegionLanguageFromString(&regionLanguage, token))
         {
             pMask->clear();
@@ -239,6 +243,7 @@ void RegionLanguageMgr::setRegionLanguageWithCheckMask_(RegionID region, Languag
                                                         const RingBuffer<RegionLanguageID>& rMask)
 {
     RegionLanguageID regionLanguage;
+
     if (EnvUtil::convertToRegionLanguage(&regionLanguage, region, language))
     {
         for (auto it = rMask.begin(); it != rMask.end(); ++it)
@@ -256,6 +261,7 @@ void RegionLanguageMgr::setRegionLanguageWithCheckMask_(RegionID region, Languag
         RegionID maskRegion;
         LanguageID maskLanguage;
         EnvUtil::convertToRegionAndLanguage(&maskRegion, &maskLanguage, *it);
+
         if (static_cast<s32>(region) == static_cast<s32>(maskRegion))
         {
             mRegionLanguage = *it;
@@ -277,6 +283,7 @@ bool EnvUtil::convertToRegionLanguage(RegionLanguageID* pRegionLanguage, RegionI
                                       LanguageID language)
 {
     const s32 regionLanguage = cRegionLanguageTable[region + language * RegionID::size()];
+
     if (regionLanguage < 0)
     {
         return false;
@@ -311,6 +318,7 @@ void RegionLanguageMgr::initialize(const InitArg& rArg)
     }
 
     FixedRingBuffer<RegionLanguageID, RegionLanguageID::size()> mask;
+
     if (!parseRegionLanguageMaskStr_(&mask, rArg.maskString))
     {
         for (auto it = RegionLanguageID::begin(); it != RegionLanguageID::end(); ++it)
@@ -320,6 +328,7 @@ void RegionLanguageMgr::initialize(const InitArg& rArg)
     }
 
     mRomType = rArg.romType;
+
     if (rArg.maskFilePath)
     {
         loadMask_(&mask, rArg);
@@ -417,6 +426,7 @@ s32 EnvUtil::getTarget()
 RegionID EnvUtil::getRegion()
 {
     RegionLanguageMgr* mgr = RegionLanguageMgr::instance();
+
     if (mgr && mgr->isInitialized())
     {
         return mgr->getRegion();
@@ -432,6 +442,7 @@ RegionID EnvUtil::getRegion()
 LanguageID EnvUtil::getLanguage()
 {
     RegionLanguageMgr* mgr = RegionLanguageMgr::instance();
+
     if (mgr && mgr->isInitialized())
     {
         return mgr->getLanguage();
@@ -466,6 +477,7 @@ static LanguageID getDefaultLanguageOfRegion_(RegionID region)
 RegionLanguageID EnvUtil::getRegionLanguage()
 {
     RegionLanguageMgr* mgr = RegionLanguageMgr::instance();
+
     if (mgr && mgr->isInitialized())
     {
         return mgr->getRegionLanguage();
@@ -473,6 +485,7 @@ RegionLanguageID EnvUtil::getRegionLanguage()
 
     const RegionID region = getDefaultRegion_();
     RegionLanguageID regionLanguage;
+
     if (convertToRegionLanguage(&regionLanguage, region, getDefaultLanguage_()))
     {
         return regionLanguage;
@@ -489,6 +502,7 @@ RegionLanguageID EnvUtil::getRegionLanguage()
 const SafeString& EnvUtil::getRomType()
 {
     RegionLanguageMgr* mgr = RegionLanguageMgr::instance();
+
     if (mgr && mgr->isInitialized())
     {
         return mgr->getRomType();
@@ -552,6 +566,7 @@ s32 EnvUtil::convertToWinPath(BufferedSafeString* pOut, const SafeString& rPath)
 {
     pOut->clear();
     FileDeviceMgr* mgr = FileDeviceMgr::instance();
+
     if (!mgr)
     {
         return 0;
@@ -559,6 +574,7 @@ s32 EnvUtil::convertToWinPath(BufferedSafeString* pOut, const SafeString& rPath)
 
     {
         FixedSafeString<64> drive;
+
         if (Path::getDriveName(&drive, rPath))
         {
             if (!mgr->findDevice(drive))

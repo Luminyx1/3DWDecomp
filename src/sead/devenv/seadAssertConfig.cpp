@@ -39,6 +39,7 @@ void AssertConfig::registerFinalCallback(IDelegate1<const char*>* cb)
 void AssertConfig::execCallbacks(const char* assertMessage)
 {
     sAssertEvent.emit(assertMessage);
+
     if (sFinalCallback)
     {
         sFinalCallback->invoke(assertMessage);

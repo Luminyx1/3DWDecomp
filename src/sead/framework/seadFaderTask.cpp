@@ -107,6 +107,7 @@ void FaderTaskBase::calcCore_()
         {
             CriticalSection& cs = mTaskMgr->mCriticalSection;
             mFrame = mFadeOutEndFrame + 1;
+
             if (cs.tryLock())
             {
                 onFadeEvent_(FadeEvent(FadeEvent::cFadeOutEnd));
@@ -143,6 +144,7 @@ void FaderTaskBase::calcCore_()
                     TaskBase* task = mFromTask->parent() ? mFromTask->parent()->value() : nullptr;
                     TaskBase* to = mToTask;
                     mTaskMgr->doDestroyTask_(mFromTask);
+
                     if (to)
                     {
                         while (task != mToTask)
@@ -171,6 +173,7 @@ void FaderTaskBase::calcCore_()
         if (mFrame > mWaitEndFrame)
         {
             mFrame = mWaitEndFrame + 1;
+
             if (mFadeInRequested)
             {
                 if (mStartType == cStartType_Takeover)
@@ -228,6 +231,7 @@ void FaderTaskBase::enter()
 void FaderTaskBase::setFaderState_(FaderState state)
 {
     mFaderState = state;
+
     if (state == cFaderState_None)
     {
         detachCalcImpl();
@@ -264,6 +268,7 @@ bool FaderTaskBase::startAsCreate_(const CreateArg& rArg)
 
     mStartType = cStartType_Create;
     mCreateArg = rArg;
+
     if (!startCreate_())
     {
         return false;
@@ -311,6 +316,7 @@ bool FaderTaskBase::startAsTakeover_(TaskBase* pFrom, const CreateArg& rArg)
     }
 
     mStartType = cStartType_Takeover;
+
     if (!mTaskMgr->changeTaskState_(pFrom, cDying))
     {
         return false;
@@ -374,6 +380,7 @@ bool FaderTaskBase::startAsPush_(TaskBase* pFrom, const CreateArg& rArg)
 
     mStartType = cStartType_Push;
     mCreateArg = rArg;
+
     if (!startCreate_())
     {
         return false;
@@ -514,6 +521,7 @@ void FaderTaskBase::calc()
         break;
     case cFaderState_FadeIn:
         doCalc_();
+
         if (mFadeInEndFrame - mWaitEndFrame != 0)
         {
             mAlpha = 1.0f - static_cast<f32>(mFrame - mWaitEndFrame) /

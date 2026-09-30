@@ -52,6 +52,7 @@ void Base64::encode(char* pDst, const void* pSrc, size_t length, bool urlSafe)
     const size_t rest = length % 3;
     const size_t mainLength = length - rest;
     size_t i = 0;
+
     for (; i < mainLength; i += 3)
     {
         *pDst++ = table[src[i] >> 2];
@@ -97,11 +98,13 @@ bool Base64::decode(void* pDst, size_t dstSize, const char* pSrc, size_t srcSize
     u8* dst = static_cast<u8*>(pDst);
     size_t decoded = 0;
     size_t i = 0;
+
     while (i < srcSize)
     {
         if (u8(*pSrc) < 0x20)
         {
             i++;
+
             if (i >= srcSize)
             {
                 break;
@@ -112,6 +115,7 @@ bool Base64::decode(void* pDst, size_t dstSize, const char* pSrc, size_t srcSize
             if (u8(*pSrc) < 0x20)
             {
                 i++;
+
                 if (i >= srcSize)
                 {
                     break;
@@ -122,6 +126,7 @@ bool Base64::decode(void* pDst, size_t dstSize, const char* pSrc, size_t srcSize
         }
 
         i += 4;
+
         if (i > srcSize)
         {
             return false;

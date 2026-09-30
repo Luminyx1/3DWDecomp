@@ -97,6 +97,7 @@ void ExceptionHandler::makeLogMessage_(BufferedSafeString* pOut,
                                        const nn::diag::LogMessage* pMessage)
 {
     pOut->formatV(pMessage->format, *pMessage->args);
+
     if (pOut->isEmpty())
     {
         pOut->copy("SDK has been aborted or failed assertion with no message.");

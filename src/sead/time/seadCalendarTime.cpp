@@ -95,6 +95,7 @@ s32 CalendarTime::Month::sub(CalendarTime::Month rhs) const
 SafeString CalendarTime::Month::makeStringOneOrigin(u32 m)
 {
     SEAD_ASSERT_MSG(1 <= m && m <= 12, "wrong month. correct range is [1, 12]. your param %d", m);
+
     switch (m)
     {
     case 1:

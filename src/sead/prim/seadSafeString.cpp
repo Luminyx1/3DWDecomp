@@ -59,6 +59,7 @@ s32 replaceStringImpl_(T* pDst, s32* pLength, s32 dstSize, const T* pSrc, s32 sr
         {
             MemUtil::copy(pDst, pSrc, dst_max_idx * sizeof(T));
             pDst[dst_max_idx] = SafeStringBase<T>::cNullChar;
+
             if (pLength)
             {
                 *pLength = dst_max_idx;
@@ -67,6 +68,7 @@ s32 replaceStringImpl_(T* pDst, s32* pLength, s32 dstSize, const T* pSrc, s32 sr
         else
         {
             MemUtil::copy(pDst, pSrc, (srcSize + 1) * sizeof(T));
+
             if (pLength)
             {
                 *pLength = srcSize;
@@ -92,6 +94,7 @@ s32 replaceStringImpl_(T* pDst, s32* pLength, s32 dstSize, const T* pSrc, s32 sr
             const s32 src_step = cmp == 0 ? old_str_len : 1;
             dst_final_size += dst_step;
             src_final_size += src_step;
+
             if (dst_final_size >= dstSize)
             {
                 *pIsBufferOverflow = true;
@@ -102,6 +105,7 @@ s32 replaceStringImpl_(T* pDst, s32* pLength, s32 dstSize, const T* pSrc, s32 sr
         if (*pIsBufferOverflow)
         {
             pDst[dst_max_idx] = SafeStringBase<T>::cNullChar;
+
             if (pLength)
             {
                 *pLength = dst_max_idx;
@@ -110,6 +114,7 @@ s32 replaceStringImpl_(T* pDst, s32* pLength, s32 dstSize, const T* pSrc, s32 sr
         else
         {
             pDst[dst_final_size] = SafeStringBase<T>::cNullChar;
+
             if (pLength)
             {
                 *pLength = dst_final_size;
@@ -118,12 +123,14 @@ s32 replaceStringImpl_(T* pDst, s32* pLength, s32 dstSize, const T* pSrc, s32 sr
 
         s32 dst_i = dst_final_size - 1;
         s32 src_i = src_final_size - 1;
+
         while (src_i >= 0)
         {
             if (MemUtil::compare(pDst + src_i - old_str_len + 1, old_cstr, old_str_len * sizeof(T)) == 0)
             {
                 dst_i -= new_str_len;
                 const s32 copy_size = std::min(dst_max_idx - dst_i - 1, new_str_len);
+
                 if (copy_size > 0)
                 {
                     MemUtil::copy(pDst + dst_i + 1, new_cstr, copy_size * sizeof(T));
@@ -148,24 +155,29 @@ s32 replaceStringImpl_(T* pDst, s32* pLength, s32 dstSize, const T* pSrc, s32 sr
     {
         s32 buffer_i = 0;
         s32 target_i = 0;
+
         while (target_i < srcSize)
         {
             s32 dst_step;
             s32 src_step;
+
             if (MemUtil::compare(&pSrc[target_i], old_cstr, old_str_len * sizeof(T)) == 0)
             {
                 const s32 rest = dst_max_idx - buffer_i;
                 const s32 copy_size = std::min(rest, new_str_len);
+
                 if (copy_size >= 1)
                 {
                     MemUtil::copy(&pDst[buffer_i], new_cstr, copy_size * sizeof(T));
                 }
 
                 ret += new_str_len == 0 || copy_size > 0;
+
                 if (new_str_len > rest)
                 {
                     *pIsBufferOverflow = true;
                     pDst[dst_max_idx] = SafeStringBase<T>::cNullChar;
+
                     if (pLength)
                     {
                         *pLength = dst_max_idx;
@@ -183,6 +195,7 @@ s32 replaceStringImpl_(T* pDst, s32* pLength, s32 dstSize, const T* pSrc, s32 sr
                 {
                     *pIsBufferOverflow = true;
                     pDst[dst_max_idx] = SafeStringBase<T>::cNullChar;
+
                     if (pLength)
                     {
                         *pLength = dst_max_idx;
@@ -201,6 +214,7 @@ s32 replaceStringImpl_(T* pDst, s32* pLength, s32 dstSize, const T* pSrc, s32 sr
         }
 
         pDst[buffer_i] = SafeStringBase<T>::cNullChar;
+
         if (pLength)
         {
             *pLength = buffer_i;
@@ -230,6 +244,7 @@ template <typename T>
 bool SafeStringBase<T>::includeIgnoreCase(const T& c) const
 {
     assureTerminationImpl_();
+
     for (s32 i = 0; i <= cMaximumLength; ++i)
     {
         if (unsafeAt_(i) == cNullChar)
@@ -260,6 +275,7 @@ bool SafeStringBase<T>::includeIgnoreCase(const SafeStringBase<T>& str) const
     assureTerminationImpl_();
     const s32 len = calcLength();
     const s32 subStrLen = str.calcLength();
+
     for (s32 i = 0; i <= len - subStrLen; ++i)
     {
         for (s32 j = 0; j < subStrLen; ++j)
@@ -291,6 +307,7 @@ template <typename T>
 bool SafeStringBase<T>::isEqualIgnoreCase(const SafeStringBase<T>& str) const
 {
     assureTerminationImpl_();
+
     if (cstr() == str.cstr())
     {
         return true;
@@ -326,6 +343,7 @@ bool SafeStringBase<T>::startsWithIgnoreCase(const SafeStringBase<T>& prefix) co
     const T* strc = mStringTop;
     const T* prefixc = prefix.mStringTop;
     s32 i = 0;
+
     while (prefixc[i] != cNullChar)
     {
         if (!isEqualCharIgnoreCase(strc[i], prefixc[i]))
@@ -352,6 +370,7 @@ template <typename T>
 bool SafeStringBase<T>::endsWithIgnoreCase(const SafeStringBase<T>& suffix) const
 {
     const s32 subStrLen = suffix.calcLength();
+
     if (subStrLen == 0)
     {
         return true;
@@ -361,6 +380,7 @@ bool SafeStringBase<T>::endsWithIgnoreCase(const SafeStringBase<T>& suffix) cons
     const T* suffixc = suffix.mStringTop;
 
     const s32 len = calcLength();
+
     if (len < subStrLen)
     {
         return false;
@@ -444,6 +464,7 @@ s32 BufferedSafeStringBase<char16>::formatImpl_(char16* pS, s32 n, const char16*
                                                 va_list args)
 {
     const s32 ret = StringUtil::vsw16printf(pS, n, pFormatStr, args);
+
     if (ret >= 0 && ret < n)
     {
         return ret;

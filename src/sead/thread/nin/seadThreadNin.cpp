@@ -112,6 +112,7 @@ void Thread::waitDone()
 void Thread::setPriority(s32 prio)
 {
     mPriority = prio;
+
     if (isActive())
     {
         nn::os::ChangeThreadPriority(mThreadInner, prio);

@@ -184,6 +184,7 @@ void GameFramework::waitStartDisplayLoop_()
     }
 
     mMethodTreeMgr->pauseAll(false);
+
     if (!mDisplayStarted)
     {
         mDisplayStarted = 1;

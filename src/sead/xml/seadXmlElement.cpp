@@ -99,6 +99,7 @@ XmlElement::AttributeList* XmlElement::expandAttributeList(s32 num, Heap* pHeap)
 
     ObjArray<AttributeCopy> copies;
     copies.allocBuffer(mAttributes.size(), pHeap, -static_cast<s32>(sizeof(void*)));
+
     for (auto& attribute : mAttributes)
     {
         AttributeCopy* copy = copies.emplaceBack();
@@ -108,6 +109,7 @@ XmlElement::AttributeList* XmlElement::expandAttributeList(s32 num, Heap* pHeap)
 
     mAttributes.freeBuffer();
     mAttributes.allocBuffer(num, pHeap);
+
     for (auto& copy : copies)
     {
         mAttributes.emplaceBack(pHeap, copy);
@@ -162,6 +164,7 @@ bool XmlElement::updateAttribute(const SafeString& rName, const SafeString& rVal
         if (attribute.mName == rName)
         {
             s32 length = rValue.calcLength();
+
             if (attribute.mValue.calcLength() > length)
             {
                 attribute.mValue.copy(rValue, length);
@@ -231,12 +234,14 @@ const XmlElement* XmlElement::findElementByAbsolutePath_(const SafeString& rPath
     do
     {
         name = path.getPart(1);
+
         if (name.isEmpty())
         {
             return element;
         }
 
         element = element->child();
+
         if (!findSiblingElement_(&element, name))
         {
             return nullptr;
@@ -258,11 +263,13 @@ const XmlElement* XmlElement::findElementByRelativePath_(const SafeString& rPath
     FixedSafeString<256> name;
     FixedSafeString<256> path(rPath);
     const XmlElement* element = this;
+
     while (true)
     {
         if (path.comparen("..", 2) == 0)
         {
             element = element->parent();
+
             if (!element)
             {
                 return nullptr;
@@ -279,12 +286,14 @@ const XmlElement* XmlElement::findElementByRelativePath_(const SafeString& rPath
             }
 
             element = element->child();
+
             if (!findSiblingElement_(&element, path))
             {
                 return nullptr;
             }
 
             name = path.getPart(element->mName.calcLength());
+
             if (name.isEmpty())
             {
                 return element;
@@ -332,6 +341,7 @@ SafeString XmlElement::getContentString() const
 const XmlElement* XmlElement::findRoot() const
 {
     const XmlElement* element = this;
+
     while (element->parent())
     {
         element = element->parent();
@@ -347,6 +357,7 @@ const XmlElement* XmlElement::findRoot() const
 XmlElement* XmlElement::findRoot()
 {
     XmlElement* element = this;
+
     while (element->parent())
     {
         element = element->parent();
@@ -366,6 +377,7 @@ bool XmlElement::findSiblingElement_(const XmlElement** ppElement, SafeString na
     for (const XmlElement* element = *ppElement; element; element = element->next())
     {
         s32 length = element->mName.calcLength();
+
         if (element->mName.comparen(name, length) == 0)
         {
             if (name.at(length) == '/')

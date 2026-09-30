@@ -9,6 +9,7 @@ void HashCRC16::initialize()
 {
     for (u32 i = 0; i < 256; ++i) {
         u32 value = i;
+
         for (u32 bit = 0; bit < 8; ++bit)
             value = (value & 1) ? (value >> 1) ^ 0xa001 : value >> 1;
         sTable[i] = value;
@@ -42,6 +43,7 @@ u32 HashCRC16::calcHashWithContext(Context* pContext, const void* pData, u32 siz
         initialize();
     u32 hash = pContext->hash;
     const u8* data = static_cast<const u8*>(pData);
+
     while (size--) {
         const u8 byte = *data++;
         hash = sTable[(hash & 0xff) ^ byte] ^ (hash >> 8);
@@ -73,6 +75,7 @@ u32 HashCRC16::calcStringHashWithContext(Context* pContext, const char* pString)
     if (!sInitialized)
         initialize();
     u32 hash = pContext->hash;
+
     while (*pString) {
         hash = sTable[(hash ^ *pString++) & 0xff] ^ (hash >> 8);
     }

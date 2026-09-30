@@ -25,6 +25,7 @@ inline void notifyAllocFailed(HeapMgr* pMgr, Heap* pHeap, size_t size, s32 align
     }
 
     HeapMgr::IAllocFailedCallback* callback = pMgr->getAllocFailedCallback();
+
     if (!callback)
     {
         return;
@@ -94,12 +95,14 @@ UnitHeap* UnitHeap::tryCreate(size_t size, const SafeString& rName, u32 blockSiz
                               s32 alignment, Heap* pParent, bool enableLock)
 {
     s32 absAlignment = alignment < 0 ? -alignment : alignment;
+
     if (blockSize == 0)
     {
         return nullptr;
     }
 
     s32 blockAlignment = absAlignment > 8 ? absAlignment : 8;
+
     if (((blockAlignment - 1) & blockAlignment) != 0)
     {
         return nullptr;
@@ -108,6 +111,7 @@ UnitHeap* UnitHeap::tryCreate(size_t size, const SafeString& rName, u32 blockSiz
     if (!pParent)
     {
         pParent = HeapMgr::instance()->getCurrentHeap();
+
         if (!pParent)
         {
             return nullptr;
@@ -126,12 +130,14 @@ UnitHeap* UnitHeap::tryCreate(size_t size, const SafeString& rName, u32 blockSiz
     size &= ~size_t(7);
 
     size_t alignedBlockSize = (size_t(blockSize) + (blockAlignment - 1)) & -blockAlignment;
+
     if (size < alignedBlockSize + sizeof(UnitHeap))
     {
         return nullptr;
     }
 
     void* memory = pParent->tryAlloc(size, 8);
+
     if (!memory)
     {
         return nullptr;
@@ -154,6 +160,7 @@ void UnitHeap::doCreate(s32 alignment, bool isPadded, Heap* pParent)
 
     uintptr_t base = uintptr_t(this) + sizeof(UnitHeap);
     u8* areaStart = reinterpret_cast<u8*>(alignUp(base, alignment));
+
     if (isPadded && uintptr_t(areaStart) == base)
     {
         areaStart += alignment;
@@ -182,12 +189,14 @@ UnitHeap* UnitHeap::tryCreateWithBlockNum(u32 blockSize, u32 blockNum, const Saf
                                           s32 alignment, Heap* pParent, bool enableLock)
 {
     s32 absAlignment = alignment < 0 ? -alignment : alignment;
+
     if (blockSize == 0 || blockNum == 0)
     {
         return nullptr;
     }
 
     s32 blockAlignment = absAlignment > 8 ? absAlignment : 8;
+
     if (((blockAlignment - 1) & blockAlignment) != 0)
     {
         return nullptr;
@@ -196,6 +205,7 @@ UnitHeap* UnitHeap::tryCreateWithBlockNum(u32 blockSize, u32 blockNum, const Saf
     if (!pParent)
     {
         pParent = HeapMgr::instance()->getCurrentHeap();
+
         if (!pParent)
         {
             return nullptr;
@@ -206,6 +216,7 @@ UnitHeap* UnitHeap::tryCreateWithBlockNum(u32 blockSize, u32 blockNum, const Saf
     size_t size = alignedBlockSize * blockNum + getManagementAreaSize(blockAlignment);
 
     void* memory = pParent->tryAlloc(size, 8);
+
     if (!memory)
     {
         return nullptr;
@@ -291,6 +302,7 @@ size_t UnitHeap::adjust()
 void* UnitHeap::tryAlloc(size_t size, s32 alignment)
 {
     HeapMgr* mgr = HeapMgr::instance();
+
     if (alignment < 0)
     {
         notifyAllocFailed(mgr, this, size, alignment, size, alignment);
@@ -305,9 +317,11 @@ void* UnitHeap::tryAlloc(size_t size, s32 alignment)
 
     ConditionalScopedLock<CriticalSection> lock(&mCS, isLockEnabled());
     void* ptr = mFreeList.getFree();
+
     if (!ptr)
     {
         HeapMgr::IAllocFailedCallback* callback = mgr ? mgr->getAllocFailedCallback() : nullptr;
+
         if (callback)
         {
             HeapMgr::AllocFailedCallbackArg arg;

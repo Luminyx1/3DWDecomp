@@ -26,8 +26,10 @@ bool MessageProject::initialize(void* pData, Heap* pHeap) {
     sHeap = nullptr;
 
     s32 colorNum = LMS_GetColorNum(mProjFile);
+
     if (colorNum > 0) {
         mColors.tryAllocBuffer(colorNum, pHeap);
+
         for (auto it = mColors.begin(), end = mColors.end(); it != end; ++it) {
             LMSColor color;
             LMS_GetColor(mProjFile, it.getIndex(), &color);
@@ -36,8 +38,10 @@ bool MessageProject::initialize(void* pData, Heap* pHeap) {
     }
 
     s32 styleNum = LMS_GetStyleNum(mProjFile);
+
     if (styleNum > 0) {
         mStyles.tryAllocBuffer(styleNum, pHeap);
+
         for (auto it = mStyles.begin(), end = mStyles.end(); it != end; ++it) {
             it->regionWidth = LMS_GetRegionWidth(mProjFile, it.getIndex());
             it->lineNum = LMS_GetLineNum(mProjFile, it.getIndex());
@@ -49,8 +53,10 @@ bool MessageProject::initialize(void* pData, Heap* pHeap) {
     }
 
     s32 attrNum = LMS_GetAttrNum(mProjFile);
+
     if (attrNum > 0) {
         mAttributeInfos.tryAllocBuffer(attrNum, pHeap);
+
         for (auto it = mAttributeInfos.begin(), end = mAttributeInfos.end(); it != end; ++it) {
             it->dataType = LMS_GetAttrType(mProjFile, it.getIndex());
             it->offset = LMS_GetAttrOffset(mProjFile, it.getIndex());

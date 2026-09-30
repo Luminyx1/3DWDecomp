@@ -853,6 +853,7 @@ void setSphereVertex(Vertex* pVertex, u16* pIndex, s32 x, s32 y)
             {
                 s32 pos = i * x + j;
                 f32 angle_x = (numbers::pi * 2.0f) * j / x;
+
                 if (i % 2 == 0)
                 {
                     angle_x -= (numbers::pi * 2.0f) / x / 2;

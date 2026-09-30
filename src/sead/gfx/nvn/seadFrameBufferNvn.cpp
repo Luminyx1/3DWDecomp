@@ -159,6 +159,7 @@ DisplayBufferNvn::DisplayBufferNvn()
     mWindowCropY = 0;
     mWindowCropW = 0;
     mWindowCropH = 0;
+
     for (s32 i = 0; i < cTextureNumMax; i++)
     {
         mTextures[i] = nullptr;
@@ -189,6 +190,7 @@ void DisplayBufferNvn::waitAcquireDone()
 void DisplayBufferNvn::setPresentInterval(u8 interval)
 {
     mPresentInterval = interval;
+
     if (mWindow)
     {
         nvnWindowSetPresentInterval(mWindow, interval);
@@ -261,6 +263,7 @@ void DisplayBufferNvn::initializeImpl_(Heap* pHeap)
     SafeArray<NVNtextureBuilder, cTextureNumMax> builders;
     size_t poolSize = 0;
     const u8 textureNum = getTextureNum_();
+
     for (s32 i = 0; i < textureNum; i++)
     {
         NVNtextureBuilder* builder = &builders[i];
@@ -291,6 +294,7 @@ void DisplayBufferNvn::initializeImpl_(Heap* pHeap)
 
     size_t offset = 0;
     const u8 textureNum2 = getTextureNum_();
+
     for (s32 i = 0; i < textureNum2; i++)
     {
         mTextures[i] = new (pHeap, 8) NVNtexture;

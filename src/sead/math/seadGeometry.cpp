@@ -16,6 +16,7 @@ f32 Geometry::calcSquaredDistancePointToLine(const Vector2f& rPoint, const Line<
     const f32 t = (rPoint - rLine.getPos()).dot(rLine.getDir());
     const Vector2f closest = rLine.getPos() + rLine.getDir() * t;
     const f32 distance = (rPoint - closest).squaredLength();
+
     if (pT)
     {
         *pT = t;
@@ -39,6 +40,7 @@ f32 Geometry::calcSquaredDistancePointToLine(const Vector3f& rPoint, const Line<
     const f32 t = diff.dot(rLine.getDir());
     const Vector3f closest = rLine.getPos() + rLine.getDir() * t;
     const f32 distance = (rPoint - closest).squaredLength();
+
     if (pT)
     {
         *pT = t;
@@ -54,6 +56,7 @@ f32 Geometry::calcSquaredDistancePointToRay(const Vector2f& rPoint, const Ray<Ve
     const Vector2f diff = rPoint - rRay.getPos();
     f32 t = diff.dot(rRay.getDir());
     f32 distance = (rPoint - (rRay.getPos() + rRay.getDir() * t)).squaredLength();
+
     if (t < 0.0f)
     {
         t = 0.0f;
@@ -75,6 +78,7 @@ f32 Geometry::calcSquaredDistancePointToRay(const Vector3f& rPoint, const Ray<Ve
     const Vector3f diff = rPoint - rRay.getPos();
     f32 t = diff.dot(rRay.getDir());
     f32 distance = (rPoint - (rRay.getPos() + rRay.getDir() * t)).squaredLength();
+
     if (t < 0.0f)
     {
         t = 0.0f;
@@ -96,6 +100,7 @@ f32 Geometry::calcSquaredDistancePointToSegment(const Vector2f& rPoint,
     const Vector2f dir = rSegment.getPos1() - rSegment.getPos0();
     f32 t = dir.dot(rPoint - rSegment.getPos0());
     Vector2f closest;
+
     if (t <= 0.0f)
     {
         t = 0.0f;
@@ -104,6 +109,7 @@ f32 Geometry::calcSquaredDistancePointToSegment(const Vector2f& rPoint,
     else
     {
         const f32 lengthSq = dir.squaredLength();
+
         if (t >= lengthSq)
         {
             t = 1.0f;
@@ -131,6 +137,7 @@ f32 Geometry::calcSquaredDistancePointToSegment(const Vector3f& rPoint,
     const Vector3f dir = rSegment.getPos1() - rSegment.getPos0();
     f32 t = dir.dot(rPoint - rSegment.getPos0());
     Vector3f closest;
+
     if (t <= 0.0f)
     {
         t = 0.0f;
@@ -139,6 +146,7 @@ f32 Geometry::calcSquaredDistancePointToSegment(const Vector3f& rPoint,
     else
     {
         const f32 lengthSq = dir.squaredLength();
+
         if (t >= lengthSq)
         {
             t = 1.0f;
@@ -198,6 +206,7 @@ f32 Geometry::calcSquaredDistanceSphereToPlane(const Sphere<Vector2f>& rSphere,
     const Plane2<f32> plane = rPlane;
     const f32 distance = plane.getNormal().dot(rSphere.getCenter()) - plane.getD();
     const f32 radius = rSphere.getRadius();
+
     if (distance > radius)
     {
         return (distance - radius) * (distance - radius);
@@ -222,6 +231,7 @@ f32 Geometry::calcSquaredDistanceSphereToPlane(const Sphere<Vector3f>& rSphere,
 {
     const f32 distance = rPlane.getNormal().dot(rSphere.getCenter()) - rPlane.getD();
     const f32 radius = rSphere.getRadius();
+
     if (distance > radius)
     {
         return (distance - radius) * (distance - radius);
@@ -248,6 +258,7 @@ f32 Geometry::calcSquaredDistancePointToAABB(const Vector2f& rPoint, const Bound
     f32 distance = 0.0f;
     {
         f32 closest = rPoint.x;
+
         if (rPoint.x < rBox.getMin().x)
         {
             closest = rBox.getMin().x;
@@ -267,6 +278,7 @@ f32 Geometry::calcSquaredDistancePointToAABB(const Vector2f& rPoint, const Bound
 
     {
         f32 closest = rPoint.y;
+
         if (rPoint.y < rBox.getMin().y)
         {
             closest = rBox.getMin().y;
@@ -300,6 +312,7 @@ f32 Geometry::calcSquaredDistancePointToAABB(const Vector3f& rPoint, const Bound
     f32 distance = 0.0f;
     {
         f32 closest = rPoint.x;
+
         if (rPoint.x < rBox.getMin().x)
         {
             closest = rBox.getMin().x;
@@ -319,6 +332,7 @@ f32 Geometry::calcSquaredDistancePointToAABB(const Vector3f& rPoint, const Bound
 
     {
         f32 closest = rPoint.y;
+
         if (rPoint.y < rBox.getMin().y)
         {
             closest = rBox.getMin().y;
@@ -338,6 +352,7 @@ f32 Geometry::calcSquaredDistancePointToAABB(const Vector3f& rPoint, const Bound
 
     {
         f32 closest = rPoint.z;
+
         if (rPoint.z < rBox.getMin().z)
         {
             closest = rBox.getMin().z;
@@ -387,6 +402,7 @@ f32 calcSquaredDistanceSegmentToSegment_(const Segment<T>& rSegment0, const Segm
 
     f32 t;
     f32 s;
+
     if (isNearlyZero(a))
     {
         if (isNearlyZero(e))
@@ -406,6 +422,7 @@ f32 calcSquaredDistanceSegmentToSegment_(const Segment<T>& rSegment0, const Segm
 
         s = 0.0f;
         t = f / e;
+
         if (t < 0.0f)
         {
             t = 0.0f;
@@ -422,6 +439,7 @@ f32 calcSquaredDistanceSegmentToSegment_(const Segment<T>& rSegment0, const Segm
             const f32 c = r.dot(d0);
             t = 0.0f;
             s = -c / a;
+
             if (s < 0.0f)
             {
                 s = 0.0f;
@@ -437,9 +455,11 @@ f32 calcSquaredDistanceSegmentToSegment_(const Segment<T>& rSegment0, const Segm
             const f32 b = d0.dot(d1);
             const f32 denom = a * e - b * b;
             s = 0.0f;
+
             if (!isNearlyZero(denom))
             {
                 s = (b * f - c * e) / denom;
+
                 if (s < 0.0f)
                 {
                     s = 0.0f;
@@ -451,10 +471,12 @@ f32 calcSquaredDistanceSegmentToSegment_(const Segment<T>& rSegment0, const Segm
             }
 
             const f32 tnom = f + b * s;
+
             if (tnom < 0.0f)
             {
                 t = 0.0f;
                 s = -c / a;
+
                 if (s < 0.0f)
                 {
                     s = 0.0f;
@@ -468,6 +490,7 @@ f32 calcSquaredDistanceSegmentToSegment_(const Segment<T>& rSegment0, const Segm
             {
                 t = 1.0f;
                 s = (b - c) / a;
+
                 if (s < 0.0f)
                 {
                     s = 0.0f;
@@ -486,6 +509,7 @@ f32 calcSquaredDistanceSegmentToSegment_(const Segment<T>& rSegment0, const Segm
 
     const T c0 = rSegment0.getPos0() + d0 * s;
     const T c1 = rSegment1.getPos0() + d1 * t;
+
     if (pT0)
     {
         *pT0 = s;
@@ -518,6 +542,7 @@ f32 calcSquaredDistanceLineToSegment_(const Line<T>& rLine, const Segment<T>& rS
 
     f32 s;
     f32 t;
+
     if (isNearlyZero(e))
     {
         s = 0.0f;
@@ -528,9 +553,11 @@ f32 calcSquaredDistanceLineToSegment_(const Line<T>& rLine, const Segment<T>& rS
         const f32 b = d.dot(rLine.getDir());
         const f32 denom = e - b * b;
         s = 0.0f;
+
         if (!isNearlyZero(denom))
         {
             s = (r.dot(d) - b * c) / denom;
+
             if (s < 0.0f)
             {
                 s = 0.0f;
@@ -546,6 +573,7 @@ f32 calcSquaredDistanceLineToSegment_(const Line<T>& rLine, const Segment<T>& rS
 
     const T c0 = rLine.getPos() + rLine.getDir() * t;
     const T c1 = rSegment.getPos0() + d * s;
+
     if (pT0)
     {
         *pT0 = t;
@@ -578,6 +606,7 @@ f32 calcSquaredDistanceRayToSegment_(const Ray<T>& rRay, const Segment<T>& rSegm
 
     f32 s;
     f32 t;
+
     if (isNearlyZero(e))
     {
         s = 0.0f;
@@ -589,9 +618,11 @@ f32 calcSquaredDistanceRayToSegment_(const Ray<T>& rRay, const Segment<T>& rSegm
         const f32 denom = e - b * b;
         const f32 f = r.dot(d);
         s = 0.0f;
+
         if (!isNearlyZero(denom))
         {
             s = (f - b * c) / denom;
+
             if (s < 0.0f)
             {
                 s = 0.0f;
@@ -603,10 +634,12 @@ f32 calcSquaredDistanceRayToSegment_(const Ray<T>& rRay, const Segment<T>& rSegm
         }
 
         t = b * s - c;
+
         if (t < 0.0f)
         {
             t = 0.0f;
             s = f / e;
+
             if (s < 0.0f)
             {
                 s = 0.0f;
@@ -620,6 +653,7 @@ f32 calcSquaredDistanceRayToSegment_(const Ray<T>& rRay, const Segment<T>& rSegm
 
     const T c0 = rRay.getPos() + rRay.getDir() * t;
     const T c1 = rSegment.getPos0() + d * s;
+
     if (pT0)
     {
         *pT0 = t;
@@ -664,6 +698,7 @@ bool calcIntersectionLineToAABB_(const Vector2f& rPos, const Vector2f& rDir, con
         const f32 tNear = t0 > t1 ? t1 : t0;
         tMin = Mathf::max(tNear, tMin);
         tMax = Mathf::min(tFar, tMax);
+
         if (tMin > tMax)
         {
             return false;
@@ -682,6 +717,7 @@ bool calcIntersectionLineToAABB_(const Vector2f& rPos, const Vector2f& rDir, con
         const f32 inv = 1.0f / rDir.y;
         f32 t0 = inv * (rMin.y - rPos.y);
         f32 t1 = inv * (rMax.y - rPos.y);
+
         if (t0 > t1)
         {
             const f32 tmp = t0;
@@ -691,6 +727,7 @@ bool calcIntersectionLineToAABB_(const Vector2f& rPos, const Vector2f& rDir, con
 
         tMin = Mathf::max(t0, tMin);
         tMax = Mathf::min(t1, tMax);
+
         if (tMin > tMax)
         {
             return false;
@@ -737,6 +774,7 @@ bool calcIntersectionLineToAABB_(const Vector3f& rPos, const Vector3f& rDir, con
         const f32 inv = 1.0f / rDir.x;
         f32 t0 = inv * (rMin.x - rPos.x);
         f32 t1 = inv * (rMax.x - rPos.x);
+
         if (t0 > t1)
         {
             const f32 tmp = t0;
@@ -746,6 +784,7 @@ bool calcIntersectionLineToAABB_(const Vector3f& rPos, const Vector3f& rDir, con
 
         tMin = Mathf::max(t0, tMin);
         tMax = Mathf::min(t1, tMax);
+
         if (tMin > tMax)
         {
             return false;
@@ -764,6 +803,7 @@ bool calcIntersectionLineToAABB_(const Vector3f& rPos, const Vector3f& rDir, con
         const f32 inv = 1.0f / rDir.y;
         f32 t0 = inv * (rMin.y - rPos.y);
         f32 t1 = inv * (rMax.y - rPos.y);
+
         if (t0 > t1)
         {
             const f32 tmp = t0;
@@ -773,6 +813,7 @@ bool calcIntersectionLineToAABB_(const Vector3f& rPos, const Vector3f& rDir, con
 
         tMin = Mathf::max(t0, tMin);
         tMax = Mathf::min(t1, tMax);
+
         if (tMin > tMax)
         {
             return false;
@@ -791,6 +832,7 @@ bool calcIntersectionLineToAABB_(const Vector3f& rPos, const Vector3f& rDir, con
         const f32 inv = 1.0f / rDir.z;
         f32 t0 = inv * (rMin.z - rPos.z);
         f32 t1 = inv * (rMax.z - rPos.z);
+
         if (t0 > t1)
         {
             const f32 tmp = t0;
@@ -800,6 +842,7 @@ bool calcIntersectionLineToAABB_(const Vector3f& rPos, const Vector3f& rDir, con
 
         tMin = Mathf::max(t0, tMin);
         tMax = Mathf::min(t1, tMax);
+
         if (tMin > tMax)
         {
             return false;
@@ -832,6 +875,7 @@ f32 Geometry::calcSquaredDistanceLineToLine(const Line<Vector2f>& rLine0,
                                             const Line<Vector2f>& rLine1, f32* pT0, f32* pT1)
 {
     const f32 denom = rLine0.getDir().x * rLine1.getDir().y - rLine0.getDir().y * rLine1.getDir().x;
+
     if (isNearlyZero(denom))
     {
         if (pT0)
@@ -871,6 +915,7 @@ f32 Geometry::calcSquaredDistanceLineToLine(const Line<Vector3f>& rLine0,
     const Vector3f r = rLine0.getPos() - rLine1.getPos();
     const f32 a = rLine0.getDir().dot(rLine1.getDir());
     const f32 denom = 1.0f - a * a;
+
     if (isNearlyZero(denom))
     {
         if (pT0)
@@ -887,6 +932,7 @@ f32 Geometry::calcSquaredDistanceLineToLine(const Line<Vector3f>& rLine0,
     const f32 t1 = (c - b * a) / denom;
     const Vector3f c0 = rLine0.getPos() + rLine0.getDir() * t0;
     const Vector3f c1 = rLine1.getPos() + rLine1.getDir() * t1;
+
     if (pT0)
     {
         *pT0 = t0;
@@ -918,12 +964,14 @@ f32 Geometry::calcSquaredDistanceRayToRay(const Ray<Vector2f>& rRay0, const Ray<
     const f32 c = r.dot(rRay1.getDir());
 
     f32 t0 = 0.0f;
+
     if (!isNearlyZero(denom))
     {
         t0 = Mathf::max(0.0f, (a * c - b) / denom);
     }
 
     f32 t1 = c + a * t0;
+
     if (t1 < 0.0f)
     {
         t1 = 0.0f;
@@ -932,6 +980,7 @@ f32 Geometry::calcSquaredDistanceRayToRay(const Ray<Vector2f>& rRay0, const Ray<
 
     const Vector2f c0 = rRay0.getPos() + rRay0.getDir() * t0;
     const Vector2f c1 = rRay1.getPos() + rRay1.getDir() * t1;
+
     if (pT0)
     {
         *pT0 = t0;
@@ -963,12 +1012,14 @@ f32 Geometry::calcSquaredDistanceRayToRay(const Ray<Vector3f>& rRay0, const Ray<
     const f32 c = r.dot(rRay1.getDir());
 
     f32 t0 = 0.0f;
+
     if (!isNearlyZero(denom))
     {
         t0 = Mathf::max(0.0f, (a * c - b) / denom);
     }
 
     f32 t1 = c + a * t0;
+
     if (t1 < 0.0f)
     {
         t1 = 0.0f;
@@ -977,6 +1028,7 @@ f32 Geometry::calcSquaredDistanceRayToRay(const Ray<Vector3f>& rRay0, const Ray<
 
     const Vector3f c0 = rRay0.getPos() + rRay0.getDir() * t0;
     const Vector3f c1 = rRay1.getPos() + rRay1.getDir() * t1;
+
     if (pT0)
     {
         *pT0 = t0;
@@ -1089,6 +1141,7 @@ s32 Geometry::calcIntersectionLineToPlane(const Line<Vector2f>& rLine, const Pla
                                           f32* pT)
 {
     const f32 denom = rLine.getDir().dot(rPlane.getNormal());
+
     if (isNearlyZero(denom))
     {
         const f32 distance = rPlane.getNormal().dot(rLine.getPos()) - rPlane.getD();
@@ -1114,6 +1167,7 @@ s32 Geometry::calcIntersectionLineToPlane(const Line<Vector3f>& rLine, const Pla
                                           f32* pT)
 {
     const f32 denom = rLine.getDir().dot(rPlane.getNormal());
+
     if (isNearlyZero(denom))
     {
         const f32 distance = rPlane.getNormal().dot(rLine.getPos()) - rPlane.getD();
@@ -1142,12 +1196,14 @@ s32 Geometry::calcIntersectionRayToPlane(const Ray<Vector2f>& rRay, const Plane2
     const Ray<Vector2f> ray = rRay;
     const f32 denom = ray.getDir().dot(plane.getNormal());
     const f32 distance = ray.getPos().dot(plane.getNormal()) - plane.getD();
+
     if (isNearlyZero(denom))
     {
         return isNearlyZero(distance) ? 3 : 0;
     }
 
     const f32 t = -distance / denom;
+
     if (!(t >= 0.0f))
     {
         return 0;
@@ -1174,12 +1230,14 @@ s32 Geometry::calcIntersectionRayToPlane(const Ray<Vector3f>& rRay, const Plane3
     const Ray<Vector3f> ray = rRay;
     const f32 denom = ray.getDir().dot(rPlane.getNormal());
     const f32 distance = ray.getPos().dot(rPlane.getNormal()) - rPlane.getD();
+
     if (isNearlyZero(denom))
     {
         return isNearlyZero(distance) ? 3 : 0;
     }
 
     const f32 t = -distance / denom;
+
     if (!(t >= 0.0f))
     {
         return 0;
@@ -1206,6 +1264,7 @@ s32 Geometry::calcIntersectionSegmentToPlane(const Segment<Vector2f>& rSegment,
     const Vector2f dir = rSegment.getPos1() - rSegment.getPos0();
     const f32 distance = rSegment.getPos0().dot(rPlane.getNormal()) - rPlane.getD();
     const f32 denom = dir.dot(rPlane.getNormal());
+
     if (denom == 0.0f)
     {
         if (distance == 0.0f)
@@ -1222,6 +1281,7 @@ s32 Geometry::calcIntersectionSegmentToPlane(const Segment<Vector2f>& rSegment,
     }
 
     const f32 t = -distance / denom;
+
     if (t >= 0.0f && t <= 1.0f)
     {
         if (pT)
@@ -1248,6 +1308,7 @@ s32 Geometry::calcIntersectionSegmentToPlane(const Segment<Vector3f>& rSegment,
     const Vector3f dir = rSegment.getPos1() - rSegment.getPos0();
     const f32 distance = rSegment.getPos0().dot(rPlane.getNormal()) - rPlane.getD();
     const f32 denom = dir.dot(rPlane.getNormal());
+
     if (denom == 0.0f)
     {
         if (distance == 0.0f)
@@ -1264,6 +1325,7 @@ s32 Geometry::calcIntersectionSegmentToPlane(const Segment<Vector3f>& rSegment,
     }
 
     const f32 t = -distance / denom;
+
     if (t >= 0.0f && t <= 1.0f)
     {
         if (pT)
@@ -1292,11 +1354,13 @@ s32 Geometry::calcIntersectionLineToSphere(const Line<Vector2f>& rLine,
     const f32 b = 2.0f * diff.dot(rLine.getDir());
     const f32 c = diff.squaredLength() - rSphere.getRadius() * rSphere.getRadius();
     const f32 discriminant = b * b + -4.0f * c;
+
     if (discriminant > 0.0f)
     {
         if (pT0 || pT1)
         {
             const f32 root = Mathf::sqrt(discriminant);
+
             if (pT0)
             {
                 *pT0 = (-b - root) * 0.5f;
@@ -1339,11 +1403,13 @@ s32 Geometry::calcIntersectionLineToSphere(const Line<Vector3f>& rLine,
     const f32 b = 2.0f * diff.dot(rLine.getDir());
     const f32 c = diff.squaredLength() - rSphere.getRadius() * rSphere.getRadius();
     const f32 discriminant = b * b + -4.0f * c;
+
     if (discriminant > 0.0f)
     {
         if (pT0 || pT1)
         {
             const f32 root = Mathf::sqrt(discriminant);
+
             if (pT0)
             {
                 *pT0 = (-b - root) * 0.5f;
@@ -1386,6 +1452,7 @@ s32 Geometry::calcIntersectionRayToSphere(const Ray<Vector2f>& rRay,
     const f32 b = 2.0f * diff.dot(rRay.getDir());
     const f32 c = diff.squaredLength() - rSphere.getRadius() * rSphere.getRadius();
     const f32 discriminant = b * b + -4.0f * c;
+
     if (discriminant > 0.0f)
     {
         if (b > 0.0f && b * b > discriminant)
@@ -1398,6 +1465,7 @@ s32 Geometry::calcIntersectionRayToSphere(const Ray<Vector2f>& rRay,
             if (pT0 || pT1)
             {
                 const f32 root = Mathf::sqrt(discriminant);
+
                 if (pT0)
                 {
                     *pT0 = (-b - root) * 0.5f;
@@ -1448,6 +1516,7 @@ s32 Geometry::calcIntersectionRayToSphere(const Ray<Vector3f>& rRay,
     const f32 b = 2.0f * diff.dot(rRay.getDir());
     const f32 c = diff.squaredLength() - rSphere.getRadius() * rSphere.getRadius();
     const f32 discriminant = b * b + -4.0f * c;
+
     if (discriminant > 0.0f)
     {
         if (b > 0.0f && b * b > discriminant)
@@ -1460,6 +1529,7 @@ s32 Geometry::calcIntersectionRayToSphere(const Ray<Vector3f>& rRay,
             if (pT0 || pT1)
             {
                 const f32 root = Mathf::sqrt(discriminant);
+
                 if (pT0)
                 {
                     *pT0 = (-b - root) * 0.5f;
@@ -1502,15 +1572,18 @@ static s32 calcIntersectionSegmentToSphere_(const Segment<T>& rSegment, const Sp
 {
     T dir = rSegment.getPos1() - rSegment.getPos0();
     const f32 length = Mathf::sqrt(dir.squaredLength());
+
     if (length > 0.0f)
     {
         dir *= 1.0f / length;
     }
 
     const T diff = rSegment.getPos0() - rSphere.getCenter();
+
     if (length <= 0.0f)
     {
         const f32 c = diff.squaredLength() - rSphere.getRadius() * rSphere.getRadius();
+
         if (!isNearlyZero(c))
         {
             return 0;
@@ -1532,6 +1605,7 @@ static s32 calcIntersectionSegmentToSphere_(const Segment<T>& rSegment, const Sp
     const f32 b = 2.0f * dir.dot(diff);
     const f32 c = diff.squaredLength() - rSphere.getRadius() * rSphere.getRadius();
     const f32 discriminant = b * b + -4.0f * c;
+
     if (discriminant > 0.0f)
     {
         if (b > 0.0f && b * b > discriminant)
@@ -1540,6 +1614,7 @@ static s32 calcIntersectionSegmentToSphere_(const Segment<T>& rSegment, const Sp
         }
 
         const f32 bEnd = length + length + b;
+
         if (!(b > 0.0f) && !(b * b < discriminant))
         {
             if (bEnd >= 0.0f && bEnd * bEnd >= discriminant)
@@ -1547,6 +1622,7 @@ static s32 calcIntersectionSegmentToSphere_(const Segment<T>& rSegment, const Sp
                 if (pT0 || pT1)
                 {
                     const f32 root = Mathf::sqrt(discriminant);
+
                     if (pT0)
                     {
                         *pT0 = (-b - root) * 0.5f / length;
@@ -1598,6 +1674,7 @@ static s32 calcIntersectionSegmentToSphere_(const Segment<T>& rSegment, const Sp
     }
 
     const f32 bEnd = length + length + b;
+
     if (bEnd < 0.0f && discriminant < bEnd * bEnd)
     {
         return 0;
@@ -1780,6 +1857,7 @@ bool Geometry::calcIntersectionPlaneToAABB(const Plane2<f32>& rPlane, const Boun
                           rBox.getMin().y + rBox.getHalfSizeY());
     const Vector2f extent = rBox.getMax() - center;
     f32 radius = 0.0f;
+
     for (s32 i = 0; i < 2; i++)
     {
         radius += extent.e[i] * Mathf::abs(rPlane.getNormal().e[i]);
@@ -1798,6 +1876,7 @@ bool Geometry::calcIntersectionPlaneToAABB(const Plane3<f32>& rPlane, const Boun
     center.z += rBox.getHalfSizeZ();
     const Vector3f extent = rBox.getMax() - center;
     f32 radius = 0.0f;
+
     for (s32 i = 0; i < 3; i++)
     {
         radius += extent.e[i] * Mathf::abs(rPlane.getNormal().e[i]);
@@ -1932,6 +2011,7 @@ bool Geometry::calcIntersectionPlaneToCapsule(const Plane2<f32>& rPlane,
 {
     const f32 distance0 = rPlane.getNormal().dot(rCapsule.getSegment().getPos0()) - rPlane.getD();
     const f32 distance1 = rPlane.getNormal().dot(rCapsule.getSegment().getPos1()) - rPlane.getD();
+
     if (distance0 * distance1 < 0.0f)
     {
         return true;
@@ -1951,6 +2031,7 @@ bool Geometry::calcIntersectionPlaneToCapsule(const Plane3<f32>& rPlane,
 {
     const f32 distance0 = rPlane.getNormal().dot(rCapsule.getSegment().getPos0()) - rPlane.getD();
     const f32 distance1 = rPlane.getNormal().dot(rCapsule.getSegment().getPos1()) - rPlane.getD();
+
     if (distance0 * distance1 < 0.0f)
     {
         return true;

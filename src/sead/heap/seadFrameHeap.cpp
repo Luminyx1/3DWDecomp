@@ -33,6 +33,7 @@ inline void notifyAllocFailed(HeapMgr* pMgr, Heap* pHeap, size_t size, s32 align
     }
 
     HeapMgr::IAllocFailedCallback* callback = pMgr->getAllocFailedCallback();
+
     if (!callback)
     {
         return;
@@ -103,6 +104,7 @@ FrameHeap* FrameHeap::tryCreate(size_t size, const SafeString& rName, Heap* pPar
     if (!pParent)
     {
         pParent = HeapMgr::instance()->getCurrentHeap();
+
         if (!pParent)
         {
             return nullptr;
@@ -124,12 +126,14 @@ FrameHeap* FrameHeap::tryCreate(size_t size, const SafeString& rName, Heap* pPar
     }
 
     s32 absAlignment = alignment < 0 ? -alignment : alignment;
+
     if (((absAlignment + 0x7fffffff) & absAlignment) != 0)
     {
         return nullptr;
     }
 
     void* memory = pParent->tryAlloc(size, direction * alignment);
+
     if (!memory)
     {
         return nullptr;
@@ -141,6 +145,7 @@ FrameHeap* FrameHeap::tryCreate(size_t size, const SafeString& rName, Heap* pPar
     }
 
     FrameHeap* heap;
+
     if (direction == cHeapDirection_Forward)
     {
         heap = new (memory) FrameHeap(rName, pParent, memory, size, direction, enableLock);
@@ -261,12 +266,14 @@ size_t FrameHeap::adjust()
 
     ConditionalScopedLock<CriticalSection> lock(&mCS, isLockEnabled());
     Heap* parent = mParent;
+
     if (parent->isLockEnabled())
     {
         parent->mCS.lock();
     }
 
     size_t size;
+
     if (mDirection == cHeapDirection_Forward)
     {
         if (mState.mTailPtr == PtrUtil::addOffset(mStart, mSize))
@@ -305,6 +312,7 @@ size_t FrameHeap::adjust()
 size_t FrameHeap::adjustBack_()
 {
     size_t newSize = uintptr_t(mState.mHeadPtr) - getStartAddress();
+
     if (!mParent->resizeBack(mStart, newSize))
     {
         return mSize;
@@ -322,6 +330,7 @@ size_t FrameHeap::adjustBack_()
 size_t FrameHeap::adjustFront_()
 {
     size_t newSize = getEndAddress() - uintptr_t(mState.mTailPtr);
+
     if (!mParent->resizeFront(mStart, newSize))
     {
         return mSize;
@@ -347,6 +356,7 @@ void* FrameHeap::tryAlloc(size_t size, s32 alignment)
     allocSize = (allocSize + 7) & ~size_t(7);
 
     s32 absAlignment = alignment < 0 ? -alignment : alignment;
+
     if (((absAlignment + 0x7fffffff) & absAlignment) != 0)
     {
         notifyAllocFailed(mgr, this, size, alignment, allocSize, alignment);
@@ -356,10 +366,12 @@ void* FrameHeap::tryAlloc(size_t size, s32 alignment)
     ConditionalScopedLock<CriticalSection> lock(&mCS, isLockEnabled());
 
     s32 allocAlignment = mDirection * alignment;
+
     if (allocAlignment >= 0)
     {
         void* ptr = reinterpret_cast<void*>(alignUp(uintptr_t(mState.mHeadPtr), allocAlignment));
         void* newHead = PtrUtil::addOffset(ptr, allocSize);
+
         if (newHead < ptr || mState.mTailPtr < newHead)
         {
             notifyAllocFailed(mgr, this, size, alignment, allocSize, allocAlignment);
@@ -373,6 +385,7 @@ void* FrameHeap::tryAlloc(size_t size, s32 alignment)
     allocAlignment = -allocAlignment;
     void* tail = mState.mTailPtr;
     void* newTail = PtrUtil::addOffset(tail, -allocSize);
+
     if (tail < newTail)
     {
         notifyAllocFailed(mgr, this, size, alignment, allocSize, allocAlignment);
@@ -380,6 +393,7 @@ void* FrameHeap::tryAlloc(size_t size, s32 alignment)
     }
 
     uintptr_t ptr = alignDown(uintptr_t(newTail), allocAlignment);
+
     if (uintptr_t(mState.mHeadPtr) > ptr)
     {
         notifyAllocFailed(mgr, this, size, alignment, allocSize, allocAlignment);
@@ -424,6 +438,7 @@ void* FrameHeap::resizeBack(void* pPtr, size_t size)
 void FrameHeap::freeHead()
 {
     ConditionalScopedLock<CriticalSection> lock(&mCS, isLockEnabled());
+
     if (mDirection == cHeapDirection_Forward)
     {
         dispose_(getAreaStart_(), mState.mHeadPtr);
@@ -442,6 +457,7 @@ void FrameHeap::freeHead()
 void FrameHeap::freeTail()
 {
     ConditionalScopedLock<CriticalSection> lock(&mCS, isLockEnabled());
+
     if (mDirection == cHeapDirection_Forward)
     {
         dispose_(mState.mTailPtr, PtrUtil::addOffset(mStart, mSize));
@@ -515,6 +531,7 @@ size_t FrameHeap::getMaxAllocatableSize(int alignment) const
 {
     s32 absAlignment = alignment < 0 ? -alignment : alignment;
     u32 mask = absAlignment - 1;
+
     if ((mask & absAlignment) != 0)
     {
         return 0;
@@ -523,6 +540,7 @@ size_t FrameHeap::getMaxAllocatableSize(int alignment) const
     ConditionalScopedLock<CriticalSection> lock(const_cast<CriticalSection*>(&mCS),
                                                 isLockEnabled());
     void* head = reinterpret_cast<void*>((uintptr_t(mState.mHeadPtr) + mask) & ~uintptr_t(mask));
+
     if (mState.mTailPtr < head)
     {
         return 0;

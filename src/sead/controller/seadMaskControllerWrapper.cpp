@@ -61,6 +61,7 @@ void MaskControllerWrapper::calc(u32 prevHold, bool prevPointerOn)
         bool pointer_on = mController->isPointerOn();
 
         bool touchkey_hold = false;
+
         if (mTouchKeyBit >= 0)
         {
             touchkey_hold = mPadHold.isOnBit(mTouchKeyBit);

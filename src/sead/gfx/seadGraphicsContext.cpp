@@ -20,6 +20,7 @@ GraphicsContext::GraphicsContext()
     mColorMask = 0xffffffff;
     mStencilTestRef = 0;
     mStencilTestMask = 0xffffffff;
+
     for (s32 i = 0; i < cRenderTargetNum; i++)
     {
         mBlendTargets[i].mBlendFactorSrcRGB = NVN_BLEND_FUNC_SRC_ALPHA;
@@ -62,6 +63,7 @@ void GraphicsContext::apply(DrawContext* pDrawContext) const
     NVNpolygonState polygonState;
     nvnBlendStateSetDefaults(&blendState);
     nvnColorStateSetDefaults(&colorState);
+
     if (mBlendEnableMask != 0)
     {
         for (s32 i = 0; i < cRenderTargetNum; i++)
@@ -107,6 +109,7 @@ void GraphicsContext::apply(DrawContext* pDrawContext) const
                                      NVNstencilOp(mStencilOpFail), NVNstencilOp(mStencilOpZFail),
                                      NVNstencilOp(mStencilOpZPass));
     nvnCommandBufferBindDepthStencilState(commandBuffer, &depthStencilState);
+
     if (mStencilTestEnable)
     {
         nvnCommandBufferSetStencilValueMask(commandBuffer, NVN_FACE_FRONT_AND_BACK,
@@ -165,6 +168,7 @@ void GraphicsContext::applyDepthAndStencilTest(DrawContext* pDrawContext) const
 void GraphicsContext::applyColorMask(DrawContext* pDrawContext) const
 {
     NVNchannelMaskState channelMaskState;
+
     for (s32 i = 0; i < cRenderTargetNum; i++)
     {
         nvnChannelMaskStateSetChannelMask(
@@ -187,6 +191,7 @@ void GraphicsContext::applyBlendAndFastZ(DrawContext* pDrawContext) const
     nvnBlendStateSetDefaults(&blendState);
     NVNcolorState colorState;
     nvnColorStateSetDefaults(&colorState);
+
     if (mBlendEnableMask != 0)
     {
         for (s32 i = 0; i < cRenderTargetNum; i++)

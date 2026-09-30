@@ -206,6 +206,7 @@ void GraphicsNvn::nvnDebugCallback(NVNdebugCallbackSource source, NVNdebugCallba
                                    void* pUserParam)
 {
     GraphicsNvn* graphics = instance();
+
     if (!graphics)
     {
         return;
@@ -217,6 +218,7 @@ void GraphicsNvn::nvnDebugCallback(NVNdebugCallbackSource source, NVNdebugCallba
     param.mId = id;
     param.mSeverity = severity;
     param.mMessage = pMessage;
+
     if (graphics->mDebugCallback)
     {
         graphics->mDebugCallback->invoke(param);

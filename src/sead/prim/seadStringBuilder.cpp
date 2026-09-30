@@ -64,6 +64,7 @@ template <typename T>
 bool StringBuilderBase<T>::endsWith(const T* suffix) const
 {
     const s32 sub_str_len = calcStrLength_(suffix);
+
     if (sub_str_len == 0)
     {
         return true;
@@ -72,6 +73,7 @@ bool StringBuilderBase<T>::endsWith(const T* suffix) const
     const T* strc = mBuffer;
 
     const s32 len = calcLength();
+
     if (len < sub_str_len)
     {
         return false;
@@ -97,6 +99,7 @@ s32 StringBuilderBase<T>::copy(const T* src, s32 copy_length)
     T* dst = mBuffer;
     const s32 buffer_size = mBufferSize;
     SEAD_ASSERT_MSG(src, "str must not be null");
+
     if (dst == src)
     {
         return 0;
@@ -147,9 +150,11 @@ s32 StringBuilderBase<T>::copyAt(s32 at_, const T* src, s32 copy_length)
 
     s32 len = this->calcLength();
     s32 at = at_;
+
     if (at_ < 0)
     {
         const s32 at_new = len + at_ + 1;
+
         if (at_new < 0)
         {
             SEAD_ASSERT_MSG(false, "at(%d) out of range[%d, %d]", at_, -len - 1, len);
@@ -181,6 +186,7 @@ check_buffer_overflow:
     }
 
     MemUtil::copy(dst + at, src, copy_length * sizeof(T));
+
     if (mLength < at + copy_length)
     {
         dst[at + copy_length] = SafeStringBase<T>::cNullChar;
@@ -203,6 +209,7 @@ s32 StringBuilderBase<T>::cutOffCopy(const T* src, s32 copy_length)
     T* dst = mBuffer;
     const s32 buffer_size = mBufferSize;
     SEAD_ASSERT_MSG(src, "str must not be null");
+
     if (dst == src)
     {
         return 0;
@@ -251,9 +258,11 @@ s32 StringBuilderBase<T>::cutOffCopyAt(s32 at_, const T* src, s32 copy_length)
 
     s32 len = this->calcLength();
     s32 at = at_;
+
     if (at_ < 0)
     {
         const s32 at_new = len + at_ + 1;
+
         if (at_new < 0)
         {
             SEAD_ASSERT_MSG(false, "at(%d) out of range[%d, %d]", at_, -len - 1, len);
@@ -283,6 +292,7 @@ check_buffer_overflow:
     }
 
     MemUtil::copy(dst + at, src, copy_length * sizeof(T));
+
     if (mLength < at + copy_length)
     {
         dst[at + copy_length] = SafeStringBase<T>::cNullChar;
@@ -314,9 +324,11 @@ s32 StringBuilderBase<T>::copyAtWithTerminate(s32 at_, const T* src, s32 copy_le
 
     s32 len = this->calcLength();
     s32 at = at_;
+
     if (at_ < 0)
     {
         const s32 at_new = len + at_ + 1;
+
         if (at_new < 0)
         {
             SEAD_ASSERT_MSG(false, "at(%d) out of range[%d, %d]", at_, -len - 1, len);
@@ -385,6 +397,7 @@ template <>
 s32 WStringBuilder::formatImpl_(char16* s, s32 n, const char16* format, va_list args)
 {
     const s32 ret = StringUtil::vsw16printf(s, n, format, args);
+
     if (ret >= 0 && ret < n)
     {
         return ret;
@@ -459,6 +472,7 @@ s32 StringBuilderBase<T>::append(T c, s32 num)
     }
 
     const s32 length = mLength;
+
     if (length + num >= mBufferSize)
     {
         num = mBufferSize - length - 1;
@@ -470,6 +484,7 @@ s32 StringBuilderBase<T>::append(T c, s32 num)
     }
 
     T* buffer = mBuffer;
+
     for (s32 i = 0; i < num; ++i)
     {
         buffer[length + i] = c;
@@ -498,6 +513,7 @@ s32 StringBuilderBase<T>::chop(s32 chopNum)
 
     T* buffer = mBuffer;
     const s32 length = mLength;
+
     if (chopNum > length)
     {
         chopNum = length;
@@ -516,12 +532,14 @@ template <typename T>
 s32 StringBuilderBase<T>::chopMatchedChar(T c)
 {
     const s32 length = this->calcLength();
+
     if (length < 1)
     {
         return 0;
     }
 
     const s32 new_length = length - 1;
+
     if (mBuffer[new_length] == c)
     {
         mBuffer[new_length] = SafeStringBase<T>::cNullChar;
@@ -539,12 +557,14 @@ template <typename T>
 s32 StringBuilderBase<T>::chopMatchedChar(const T* characters)
 {
     const s32 length = this->calcLength();
+
     if (length < 1)
     {
         return 0;
     }
 
     T* buffer = getMutableStringTop_();
+
     for (const T* it = characters; *it; ++it)
     {
         if (buffer[length - 1] == *it)
@@ -565,12 +585,14 @@ template <typename T>
 s32 StringBuilderBase<T>::chopUnprintableAsciiChar()
 {
     const s32 length = this->calcLength();
+
     if (length < 1)
     {
         return 0;
     }
 
     const s32 new_length = length - 1;
+
     if (mBuffer[new_length] <= ' ' || mBuffer[new_length] == 0x7F)
     {
         mBuffer[new_length] = SafeStringBase<T>::cNullChar;
@@ -593,6 +615,7 @@ template <typename T>
 s32 StringBuilderBase<T>::rstrip(const T* pCharacters)
 {
     const s32 length = mLength;
+
     if (length < 1)
     {
         return 0;
@@ -600,9 +623,11 @@ s32 StringBuilderBase<T>::rstrip(const T* pCharacters)
 
     T* buffer = mBuffer;
     s32 newLength = length;
+
     for (s32 i = length - 1; i >= 0; --i)
     {
         bool isFound = false;
+
         for (const T* it = pCharacters; *it; ++it)
         {
             if (buffer[i] == *it)
@@ -639,6 +664,7 @@ template <typename T>
 s32 StringBuilderBase<T>::rstripUnprintableAsciiChars()
 {
     const s32 length = mLength;
+
     if (length < 1)
     {
         return 0;
@@ -646,6 +672,7 @@ s32 StringBuilderBase<T>::rstripUnprintableAsciiChars()
 
     T* buffer = mBuffer;
     s32 newLength = length;
+
     for (s32 i = length - 1; i >= 0; --i)
     {
         if (!(buffer[i] <= 0x20 || buffer[i] == 0x7F))
@@ -688,6 +715,7 @@ s32 StringBuilderBase<T>::trim(s32 trim_length)
     }
 
     mutableString[trim_length] = SafeStringBase<T>::cNullChar;
+
     if (trim_length < mLength)
     {
         mLength = trim_length;
@@ -717,6 +745,7 @@ s32 StringBuilderBase<T>::trimMatchedString(const T* pStr)
     }
 
     const s32 newLength = length - trimLength;
+
     for (s32 i = 0; i < trimLength; ++i)
     {
         if (buffer[newLength + i] != pStr[i])
@@ -740,6 +769,7 @@ s32 StringBuilderBase<T>::replaceChar(T old_char, T new_char)
     T* buffer = getMutableStringTop_();
 
     s32 replaced_count = 0;
+
     for (s32 i = 0; i < length; ++i)
     {
         if (buffer[i] == old_char)
@@ -796,6 +826,7 @@ s32 StringBuilderBase<T>::replaceCharList(const SafeStringBase<T>& old_chars,
     }
 
     s32 replaced_count = 0;
+
     for (s32 i = 0; i < length; ++i)
     {
         for (s32 character_idx = 0; character_idx < old_chars_len; ++character_idx)
@@ -826,6 +857,7 @@ s32 StringBuilderBase<T>::convertFromOtherType_(const OtherType* src, s32 src_si
     SEAD_ASSERT_MSG(src, "str must not be null");
 
     s32 copy_size = src_size;
+
     if (src_size == -1)
     {
         copy_size = calcStrLength_(src);
@@ -950,6 +982,7 @@ s32 StringBuilderBase<T>::cutOffAppend(T c, s32 num)
     }
 
     T* buffer = mBuffer;
+
     for (s32 i = 0; i < num; ++i)
     {
         buffer[length + i] = c;
@@ -985,6 +1018,7 @@ s32 StringBuilderBase<T>::prepend(const T* pStr, s32 prependLength)
     const s32 length = this->calcLength();
 
     s32 move_length;
+
     if (prependLength >= buffer_size - length)
     {
         SEAD_ASSERT_MSG(false, "Buffer overflow. (Buffer Size: %d, Length: %d, Prepend Length: %d)",
@@ -1027,6 +1061,7 @@ s32 StringBuilderBase<T>::prepend(T c, s32 num)
     T* buffer = mBuffer;
 
     s32 moveLength = length;
+
     if (bufferSize - length <= num)
     {
         if (bufferSize <= num)
@@ -1038,6 +1073,7 @@ s32 StringBuilderBase<T>::prepend(T c, s32 num)
     }
 
     MemUtil::copyOverlap(buffer + num, buffer, moveLength * sizeof(T));
+
     for (s32 i = 0; i < num; ++i)
     {
         buffer[i] = c;

@@ -229,6 +229,7 @@ void TaskBase::adjustHeap(s32 index)
 {
     ScopedLock<CriticalSection> lock(&mTaskMgr->mCriticalSection);
     Heap* heap = mHeapArray.getHeap(index);
+
     if (heap && !mHeapArray.mAdjusted[index])
     {
         mHeapArray.mAdjusted[index] = true;
@@ -244,6 +245,7 @@ void TaskBase::adjustHeap(s32 index)
 void TaskBase::adjustHeapWithSlackWithoutLock_(s32 index, u32 slack)
 {
     Heap* heap = mHeapArray.getHeap(index);
+
     if (!heap || mHeapArray.mAdjusted[index])
     {
         return;
@@ -252,6 +254,7 @@ void TaskBase::adjustHeapWithSlackWithoutLock_(s32 index, u32 slack)
     mHeapArray.mAdjusted[index] = true;
     void* slackBuffer = slack != 0 ? heap->tryAlloc(slack, 8) : nullptr;
     heap->adjust();
+
     if (slackBuffer)
     {
         heap->free(slackBuffer);
@@ -264,9 +267,11 @@ void TaskBase::adjustHeapWithSlackWithoutLock_(s32 index, u32 slack)
 void TaskBase::adjustHeapAll()
 {
     ScopedLock<CriticalSection> lock(&mTaskMgr->mCriticalSection);
+
     for (s32 i = 0; i < HeapMgr::getRootHeapNum(); i++)
     {
         Heap* heap = mHeapArray.getHeap(i);
+
         if (heap && !mHeapArray.mAdjusted[i])
         {
             mHeapArray.mAdjusted[i] = true;

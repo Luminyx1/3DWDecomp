@@ -66,6 +66,7 @@ bool PtrArrayImpl::tryAllocBuffer(s32 ptrNumMax, Heap* pHeap, s32 alignment)
     }
 
     auto* buf = new (pHeap, alignment, std::nothrow) u8[s32(sizeof(void*)) * ptrNumMax];
+
     if (!buf)
     {
         return false;
@@ -115,6 +116,7 @@ void PtrArrayImpl::erase(s32 pos, s32 count)
     }
 
     const s32 endPos = pos + count;
+
     if (mPtrNum > endPos)
     {
         MemUtil::copyOverlap(mPtrs + pos, mPtrs + endPos, sizeof(void*) * (mPtrNum - endPos));
@@ -129,6 +131,7 @@ void PtrArrayImpl::erase(s32 pos, s32 count)
 void PtrArrayImpl::reverse()
 {
     const s32 half = mPtrNum / 2;
+
     for (s32 i = 0; i < half; ++i)
     {
         swap(mPtrNum - i - 1, i);
@@ -143,6 +146,7 @@ void PtrArrayImpl::reverse()
 void PtrArrayImpl::shuffle(Random* pRandom)
 {
     SEAD_ASSERT(pRandom);
+
     for (s32 i = mPtrNum; i > 1; --i)
     {
         swap(i - 1, pRandom->getS32Range(0, i));
@@ -210,6 +214,7 @@ void PtrArrayImpl::insertArray(s32 pos, void* pArray, s32 arrayLength, s32 elemS
     }
 
     createVacancy(pos, arrayLength);
+
     for (s32 i = 0; i < arrayLength; ++i)
     {
         mPtrs[pos + i] = reinterpret_cast<void*>(reinterpret_cast<uintptr_t>(pArray) + i * elemSize);

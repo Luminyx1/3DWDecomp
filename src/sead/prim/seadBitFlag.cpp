@@ -50,6 +50,7 @@ int BitFlagUtil::countRightOnBit(u32 x, int bit)
 int BitFlagUtil::findOnBitFromRight(u32 x, int num)
 {
     SEAD_ASSERT(num > 0);
+
     if (!x)
     {
         return -1;
@@ -58,6 +59,7 @@ int BitFlagUtil::findOnBitFromRight(u32 x, int num)
     while (num-- > 1)
     {
         x &= x - 1;
+
         if (!x)
         {
             return -1;
@@ -100,6 +102,7 @@ int BitFlagUtil::countRightOnBit64(u64 x, int bit)
 int BitFlagUtil::findOnBitFromRight64(u64 x, int num)
 {
     SEAD_ASSERT(num > 0);
+
     if (!x)
     {
         return -1;
@@ -108,6 +111,7 @@ int BitFlagUtil::findOnBitFromRight64(u64 x, int num)
     while (num-- > 1)
     {
         x &= x - 1;
+
         if (!x)
         {
             return -1;

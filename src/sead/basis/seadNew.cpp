@@ -19,6 +19,7 @@ void* NewImpl(Heap* pHeap, size_t size, s32 alignment, bool)
     if (!pHeap)
     {
         pHeap = sead::HeapMgr::sInstancePtr->getCurrentHeap();
+
         if (!pHeap)
         {
             SEAD_ASSERT_MSG(false, "Current pHeap is null. Cannot alloc.");
@@ -44,6 +45,7 @@ void DeleteImpl(void* ptr)
     }
 
     Heap* containHeap = sead::HeapMgr::sInstancePtr->findContainHeap(ptr);
+
     if (containHeap)
     {
         containHeap->free(ptr);

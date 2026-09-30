@@ -34,9 +34,11 @@ ControllerMgr::ControllerMgr(const TaskConstructArg& rArg)
 void ControllerMgr::prepare()
 {
     auto* parameter = DynamicCast<Parameter>(mParameter);
+
     if (parameter)
     {
         initialize(parameter->controllerMax, nullptr);
+
         if (parameter->proc)
         {
             parameter->proc->invoke(this);
@@ -83,6 +85,7 @@ void ControllerMgr::initializeDefault(Heap* pHeap)
 void ControllerMgr::finalizeDefault()
 {
     auto* device = getControlDevice(ControllerDefine::cDevice_NinJoyNpad);
+
     if (device)
     {
         mDevices.erase(device);
@@ -159,6 +162,7 @@ ControlDevice* ControllerMgr::getControlDevice(ControllerDefine::DeviceId id) co
 ControllerAddon* ControllerMgr::getControllerAddon(s32 index, ControllerDefine::AddonId id) const
 {
     Controller* controller = mControllers.at(index);
+
     if (controller)
     {
         return controller->getAddon(id);
@@ -179,6 +183,7 @@ ControllerAddon* ControllerMgr::getControllerAddonByOrder(s32 controllerIndex,
                                                           s32 addonIndex) const
 {
     Controller* controller = mControllers.at(controllerIndex);
+
     if (controller)
     {
         return controller->getAddonByOrder(id, addonIndex);
@@ -195,6 +200,7 @@ ControllerAddon* ControllerMgr::getControllerAddonByOrder(s32 controllerIndex,
 s32 ControllerMgr::findControllerPort(const Controller* pController) const
 {
     s32 i = 0;
+
     for (auto& controller : mControllers)
     {
         if (&controller == pController)
@@ -242,6 +248,7 @@ void ControllerMgr::pushBackController(Controller* pController)
 void ControllerMgr::removeController(Controller* pController)
 {
     s32 index = mControllers.indexOf(pController);
+
     if (index >= 0)
     {
         mControllers.erase(index);

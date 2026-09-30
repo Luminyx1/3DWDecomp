@@ -48,6 +48,7 @@ bool Worker::pushJobQueue(const char* pName, JobQueue* pQueue, JobQueuePushType 
 {
     ScopedLock<JobQueueLock> lock(&mLock);
     bool result;
+
     if (type == JobQueuePushType::cForward)
         result = mJobQueues.pushBack(pQueue);
     else
@@ -87,6 +88,7 @@ void Worker::proc_()
     mWorkerState = State::cRunning;
     JobQueue* queue = getNextJQ_();
     const u32 core = mCore;
+
     while (queue) {
         mCurrentQueue = queue;
         mCurrentQueueDescription = queue->getDescription();
@@ -94,6 +96,7 @@ void Worker::proc_()
         queue->resetFinishEvent();
         volatile bool done = false;
         u32 total = 0;
+
         while (!done) {
             u32 finished = 0;
             done = queue->run(granularity, &finished, this);

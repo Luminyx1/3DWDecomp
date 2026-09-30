@@ -268,6 +268,7 @@ void DebugFontMgrJis1Nvn::print(DrawContext* pDrawContext, const Projection& rPr
     u32 vertexUniformSize = (num * 4 + 0x40 + 0xff) & ~0xff;
     u32 allocSize = vertexUniformSize + 0x100;
     u32 start = mUniformBlockBuffer.fetchAdd_0(allocSize);
+
     if (start + allocSize - mUniformBlockBuffer.get_4() > mUniformBufferSize)
     {
         mIsUniformBufferFull = true;
@@ -285,13 +286,16 @@ void DebugFontMgrJis1Nvn::print(DrawContext* pDrawContext, const Projection& rPr
     const char16_t* text = static_cast<const char16_t*>(pText);
     s32 count = 0;
     u32 x = 2;
+
     for (s32 i = 0; i < num; i++)
     {
         u32 c = text[i];
         u32 index;
+
         if (c >= 0x7f)
         {
             index = searchCharIndexFormCharCode_(c);
+
             if (index == 0)
             {
                 index = 0x1f;
@@ -345,6 +349,7 @@ u32 DebugFontMgrJis1Nvn::searchCharIndexFormCharCode_(u32 code) const
     u32 hi = 0xe88;
     u32 lo = 0x5e;
     u32 mid = (lo + hi) / 2;
+
     while (table[mid] != code)
     {
         if (table[mid] < code)

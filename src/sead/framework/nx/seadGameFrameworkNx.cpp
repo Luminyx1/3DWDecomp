@@ -185,6 +185,7 @@ void GameFrameworkNx::initializeGraphicsSystem(Heap* pHeap, const Vector2f& rVir
                                      0);
 
         device = new (pHeap, 8) NVNdevice;
+
         if (!deviceInitialize(device, &deviceBuilder))
         {
             return;
@@ -198,6 +199,7 @@ void GameFrameworkNx::initializeGraphicsSystem(Heap* pHeap, const Vector2f& rVir
         int minorVersion;
         nvnDeviceGetInteger(device, NVN_DEVICE_INFO_API_MAJOR_VERSION, &majorVersion);
         nvnDeviceGetInteger(device, NVN_DEVICE_INFO_API_MINOR_VERSION, &minorVersion);
+
         if (majorVersion != 53 || minorVersion < 313)
         {
             return;
@@ -228,6 +230,7 @@ void GameFrameworkNx::initializeGraphicsSystem(Heap* pHeap, const Vector2f& rVir
         nvnQueueBuilderSetDevice(&queueBuilder, GraphicsNvn::instance()->getNvnDevice());
 
         int memorySize = mCreateArg.queue_compute_memory_size;
+
         if (memorySize == -1)
         {
             nvnDeviceGetInteger(device, NVN_DEVICE_INFO_QUEUE_COMPUTE_MEMORY_DEFAULT_SIZE,
@@ -237,6 +240,7 @@ void GameFrameworkNx::initializeGraphicsSystem(Heap* pHeap, const Vector2f& rVir
         nvnQueueBuilderSetComputeMemorySize(&queueBuilder, memorySize);
 
         memorySize = mCreateArg.queue_command_memory_size;
+
         if (memorySize == -1)
         {
             nvnDeviceGetInteger(device, NVN_DEVICE_INFO_QUEUE_COMMAND_MEMORY_DEFAULT_SIZE,
@@ -247,6 +251,7 @@ void GameFrameworkNx::initializeGraphicsSystem(Heap* pHeap, const Vector2f& rVir
         nvnQueueBuilderSetCommandFlushThreshold(&queueBuilder, memorySize);
 
         memorySize = mCreateArg.queue_control_memory_size;
+
         if (memorySize == -1)
         {
             nvnDeviceGetInteger(device, NVN_DEVICE_INFO_QUEUE_CONTROL_MEMORY_DEFAULT_SIZE,
@@ -539,6 +544,7 @@ void GameFrameworkNx::procDraw_()
     }
 
     mIsPresentDone = false;
+
     if (mUnk6)
     {
         mUnk6(true);
@@ -710,6 +716,7 @@ void GameFrameworkNx::waitForGpuDone_()
                                f32(TickSpan::makeFromSeconds(1).toS64());
         const s64 prevTick = mPrevFrameTick;
         const s64 sleepTicks = prevTick - nn::os::GetSystemTick().GetInt64Value() + frameTicks;
+
         if (sleepTicks > 0)
         {
             Thread::sleep(TickSpan(sleepTicks));

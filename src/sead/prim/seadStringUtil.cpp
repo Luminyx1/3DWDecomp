@@ -4523,9 +4523,11 @@ static bool tryParseDecimal_(T* pOut, const SafeString& rStr, u32& rIdx, s32 sig
 {
     T value = 0;
     bool isParsed = false;
+
     for (;;)
     {
         const s32 digit = toDecimalDigit_(rStr[rIdx]);
+
         if (digit < 0)
         {
             break;
@@ -4538,6 +4540,7 @@ static bool tryParseDecimal_(T* pOut, const SafeString& rStr, u32& rIdx, s32 sig
         }
 
         const T next = value * 10;
+
         if (sign < 0)
         {
             if (next < std::numeric_limits<T>::lowest() + digit)
@@ -4581,6 +4584,7 @@ static bool tryParseInteger_(T* pOut, const SafeString& rStr, CardinalNumber car
     s32 sign;
     u32 idx;
     const char first = rStr[0];
+
     if (first == '-')
     {
         sign = -1;
@@ -4598,9 +4602,11 @@ static bool tryParseInteger_(T* pOut, const SafeString& rStr, CardinalNumber car
     }
 
     s32 base = static_cast<s32>(cardinalNumber);
+
     if (base <= 0)
     {
         const char c = rStr[idx];
+
         if (c < '0' || c > '9')
         {
             return false;
@@ -4609,6 +4615,7 @@ static bool tryParseInteger_(T* pOut, const SafeString& rStr, CardinalNumber car
         if (c == '0')
         {
             const char prefix = rStr[idx + 1];
+
             if (prefix == 'x')
             {
                 idx += 2;
@@ -4639,9 +4646,11 @@ static bool tryParseInteger_(T* pOut, const SafeString& rStr, CardinalNumber car
     const U limit = max / base;
     U value = 0;
     bool isParsed = false;
+
     for (;;)
     {
         const s32 digit = toHexDigit_(static_cast<char>(std::tolower(rStr[idx])));
+
         if (digit < 0 || digit >= base)
         {
             break;
@@ -4653,6 +4662,7 @@ static bool tryParseInteger_(T* pOut, const SafeString& rStr, CardinalNumber car
         }
 
         const U next = value * base;
+
         if (next > max - digit)
         {
             return false;
@@ -4881,6 +4891,7 @@ char16* wcs16cpy(char16* pDst, size_t n, const char16* pSrc)
     }
 
     size_t i = 0;
+
     for (; i < n - 1; ++i)
     {
         if (pSrc[i] == 0)
@@ -5001,6 +5012,7 @@ static void formatString_(PrintfContext* pCtx, PrintfOutput* pOut, const T* pStr
     {
         const T* p = pStr;
         u32 len = 0;
+
         if (pCtx->hasPrecision)
         {
             while (*p != 0)
@@ -5035,6 +5047,7 @@ static void formatString_(PrintfContext* pCtx, PrintfOutput* pOut, const T* pStr
     {
         const T* p = pStr;
         u32 len = 0;
+
         if (pCtx->hasPrecision)
         {
             while (*p != 0)
@@ -5080,6 +5093,7 @@ static s32 toDigits_(char16* pBuf, T value, s32 base, bool isUpper)
     }
 
     s32 len = 0;
+
     if (base == 8)
     {
         do
@@ -5110,6 +5124,7 @@ static s32 toDigits_(char16* pBuf, T value, s32 base, bool isUpper)
         for (;;)
         {
             const T next = value / 10;
+
             if (len < 31)
             {
                 pBuf[len++] = '0' + (value - next * 10);
@@ -5203,6 +5218,7 @@ static void formatInteger_(PrintfContext* pCtx, PrintfOutput* pOut, s32 base, bo
 
     u32 zeroLen = 0;
     u32 bodyLen = len;
+
     if (pCtx->hasPrecision)
     {
         bodyLen = pCtx->precision > static_cast<u32>(len) ? pCtx->precision : len;
@@ -5229,9 +5245,11 @@ static void formatInteger_(PrintfContext* pCtx, PrintfOutput* pOut, s32 base, bo
     }
 
     u32 padLen = 0;
+
     if (pCtx->width > bodyLen)
     {
         padLen = pCtx->width - bodyLen;
+
         if (pCtx->flags & cPrintfFlag_Left)
         {
         }
@@ -5298,6 +5316,7 @@ static s32 roundDigits_(u32* pAcc, u32*& rpDigits, s32& rExp, s32 numDigits)
     {
         u32* p = &rpDigits[numDigits - 1];
         ++*p;
+
         while (p >= pAcc && *p >= 10)
         {
             *p -= 10;
@@ -5333,6 +5352,7 @@ static void formatFloat_(PrintfContext* pCtx, PrintfOutput* pOut, char16 convers
     if (exponent == 0x7ff)
     {
         pCtx->hasPrecision = false;
+
         if (fraction != 0)
         {
             if (isNegative)
@@ -5376,9 +5396,11 @@ static void formatFloat_(PrintfContext* pCtx, PrintfOutput* pOut, char16 convers
     }
 
     s32 precision = 6;
+
     if (pCtx->hasPrecision)
     {
         precision = pCtx->precision;
+
         if (static_cast<u32>(precision) > 0x200)
         {
             precision = 0x200;
@@ -5388,6 +5410,7 @@ static void formatFloat_(PrintfContext* pCtx, PrintfOutput* pOut, char16 convers
     u64 mantissa;
     u32 index;
     s32 exp10;
+
     if (exponent != 0)
     {
         mantissa = (1ull << 63) | (fraction << 11);
@@ -5413,6 +5436,7 @@ static void formatFloat_(PrintfContext* pCtx, PrintfOutput* pOut, char16 convers
     }
 
     u32 acc[21] = {};
+
     for (; mantissa != 0; mantissa <<= 1, --index)
     {
         if (mantissa >> 63)
@@ -5420,6 +5444,7 @@ static void formatFloat_(PrintfContext* pCtx, PrintfOutput* pOut, char16 convers
             const PowerOfTwo& rEntry = cPowerOfTwoTable[index];
             const s32 shift = exp10 - rEntry.exponent;
             const s32 start = shift + 1;
+
             for (s32 i = start; i <= 20; ++i)
             {
                 acc[i] += rEntry.digits[i - start];
@@ -5441,12 +5466,14 @@ static void formatFloat_(PrintfContext* pCtx, PrintfOutput* pOut, char16 convers
 
     const s32 offset = acc[0] == 0;
     u32* pDigits = &acc[offset];
+
     if (acc[0] != 0)
     {
         ++exp10;
     }
 
     s32 numDigits = -1;
+
     switch (conversion)
     {
     case 'e':
@@ -5495,6 +5522,7 @@ static void formatFloat_(PrintfContext* pCtx, PrintfOutput* pOut, char16 convers
         {
             intDigits = 1;
             fracDigits = numDigits - 1;
+
             if (pCtx->flags & cPrintfFlag_Alternate)
             {
                 trailZeros = precision - numDigits;
@@ -5507,6 +5535,7 @@ static void formatFloat_(PrintfContext* pCtx, PrintfOutput* pOut, char16 convers
         {
             intDigits = numDigits;
             intZeros = exp10 - numDigits;
+
             if (pCtx->flags & cPrintfFlag_Alternate)
             {
                 if (static_cast<s32>(precision) > exp10)
@@ -5522,6 +5551,7 @@ static void formatFloat_(PrintfContext* pCtx, PrintfOutput* pOut, char16 convers
             intZeros = 1;
             fracZeros = -exp10;
             fracDigits = numDigits;
+
             if (pCtx->flags & cPrintfFlag_Alternate)
             {
                 trailZeros = precision - numDigits;
@@ -5533,6 +5563,7 @@ static void formatFloat_(PrintfContext* pCtx, PrintfOutput* pOut, char16 convers
         {
             intDigits = exp10;
             fracDigits = numDigits - exp10;
+
             if (pCtx->flags & cPrintfFlag_Alternate)
             {
                 trailZeros = precision - numDigits;
@@ -5549,6 +5580,7 @@ static void formatFloat_(PrintfContext* pCtx, PrintfOutput* pOut, char16 convers
             {
                 intZeros = 1;
                 fracZeros = -exp10;
+
                 if (static_cast<s32>(precision) <= -exp10)
                 {
                     fracZeros = precision;
@@ -5587,9 +5619,11 @@ static void formatFloat_(PrintfContext* pCtx, PrintfOutput* pOut, char16 convers
     u32 spacePadLen = 0;
     u32 zeroPadLen = 0;
     u32 rightPadLen = 0;
+
     if (pCtx->width > totalLen)
     {
         const u32 padLen = pCtx->width - totalLen;
+
         if (pCtx->flags & cPrintfFlag_Left)
         {
             rightPadLen = padLen;
@@ -5607,6 +5641,7 @@ static void formatFloat_(PrintfContext* pCtx, PrintfOutput* pOut, char16 convers
     if (intDigits + intZeros + zeroPadLen == 0)
     {
         intZeros = 1;
+
         if (spacePadLen != 0)
         {
             spacePadLen--;
@@ -5670,6 +5705,7 @@ static s32 formatArgument_(PrintfContext* pCtx, PrintfOutput* pOut, const char16
 
     const char16* p = pFormat;
     bool isFlag = true;
+
     while (isFlag)
     {
         switch (*p)
@@ -5709,6 +5745,7 @@ static s32 formatArgument_(PrintfContext* pCtx, PrintfOutput* pOut, const char16
     {
         pCtx->width = *p - '0';
         ++p;
+
         while (*p >= '0' && *p <= '9')
         {
             pCtx->width = pCtx->width * 10 + *p - '0';
@@ -5720,6 +5757,7 @@ static s32 formatArgument_(PrintfContext* pCtx, PrintfOutput* pOut, const char16
     {
         pCtx->hasPrecision = true;
         ++p;
+
         if (*p == '*')
         {
             pCtx->precision = va_arg(pCtx->args, s32);
@@ -5729,6 +5767,7 @@ static s32 formatArgument_(PrintfContext* pCtx, PrintfOutput* pOut, const char16
         {
             pCtx->precision = *p - '0';
             ++p;
+
             while (*p >= '0' && *p <= '9')
             {
                 pCtx->precision = pCtx->precision * 10 + *p - '0';
@@ -5740,6 +5779,7 @@ static s32 formatArgument_(PrintfContext* pCtx, PrintfOutput* pOut, const char16
     if (*p == 'h')
     {
         ++p;
+
         if (*p == 'h')
         {
             ++p;
@@ -5753,6 +5793,7 @@ static s32 formatArgument_(PrintfContext* pCtx, PrintfOutput* pOut, const char16
     else if (*p == 'l')
     {
         ++p;
+
         if (*p == 'l')
         {
             ++p;
@@ -5806,6 +5847,7 @@ static s32 formatArgument_(PrintfContext* pCtx, PrintfOutput* pOut, const char16
     case 'c':
     {
         char16 c;
+
         switch (pCtx->length)
         {
         case cPrintfLength_Char:
@@ -5820,9 +5862,11 @@ static s32 formatArgument_(PrintfContext* pCtx, PrintfOutput* pOut, const char16
         }
 
         const u32 len = c != 0 ? 1 : 0;
+
         if (pCtx->width > len)
         {
             const u32 padLen = pCtx->width - len;
+
             if (!(pCtx->flags & cPrintfFlag_Left))
             {
                 pOut->fill((pCtx->flags & cPrintfFlag_Zero) ? '0' : ' ', padLen);
@@ -5881,6 +5925,7 @@ static s32 formatArgument_(PrintfContext* pCtx, PrintfOutput* pOut, const char16
 s32 vsw16printf(char16* pDst, size_t n, const char16* pFormat, std::va_list args)
 {
     s32 ret = -1;
+
     if (n != 0)
     {
         PrintfOutput out;
@@ -5894,10 +5939,12 @@ s32 vsw16printf(char16* pDst, size_t n, const char16* pFormat, std::va_list args
         ctx.reset();
 
         u32 i = 0;
+
         for (;;)
         {
             const char16 c = pFormat[i];
             ++i;
+
             if (c == '%')
             {
                 i += formatArgument_(&ctx, &out, &pFormat[i]);
@@ -5957,6 +6004,7 @@ s32 vsnprintf(char* pDst, size_t n, const char* pFormat, std::va_list args)
     }
 
     const s32 ret = nn::util::VSNPrintf(pDst, n, pFormat, args);
+
     if (ret < 0 || static_cast<size_t>(ret) >= n)
     {
         pDst[n - 1] = SafeString::cNullChar;
@@ -6009,9 +6057,11 @@ s64 tryConvertSjisToUtf16(s32* pOutLength, char16* pDst, u32 dstLength, const ch
     s64 result = 0;
     u64 dstIdx = 0;
     s32 srcIdx = 0;
+
     while (srcLength == -1 || srcIdx < srcLength)
     {
         const u8 c = pSrc[srcIdx];
+
         if (c == 0)
         {
             break;
@@ -6026,6 +6076,7 @@ s64 tryConvertSjisToUtf16(s32* pOutLength, char16* pDst, u32 dstLength, const ch
 
         s32 next = srcIdx + 1;
         char16 wc;
+
         if (c <= 0x80)
         {
             wc = c;
@@ -6051,6 +6102,7 @@ s64 tryConvertSjisToUtf16(s32* pOutLength, char16* pDst, u32 dstLength, const ch
             }
 
             const u8 c2 = pSrc[next];
+
             if (c2 < 0x40 || c2 >= 0xfd || c2 == 0x7f)
             {
                 result = 1;
@@ -6059,6 +6111,7 @@ s64 tryConvertSjisToUtf16(s32* pOutLength, char16* pDst, u32 dstLength, const ch
 
             next = srcIdx + 2;
             const s32 col = c2 < 0x80 ? c2 - 0x40 : c2 - 0x41;
+
             if (c >= 0xf0 && c <= 0xf9)
             {
                 wc = (c - 0xf0) * 188 + col + 0xe000;
@@ -6066,6 +6119,7 @@ s64 tryConvertSjisToUtf16(s32* pOutLength, char16* pDst, u32 dstLength, const ch
             else
             {
                 s32 row;
+
                 if (c < 0xa0)
                 {
                     row = c - 0x81;
@@ -6080,6 +6134,7 @@ s64 tryConvertSjisToUtf16(s32* pOutLength, char16* pDst, u32 dstLength, const ch
                 }
 
                 wc = cSjisToUtf16Table[row * 188 + col];
+
                 if (wc == 0)
                 {
                     result = 1;
@@ -6095,6 +6150,7 @@ s64 tryConvertSjisToUtf16(s32* pOutLength, char16* pDst, u32 dstLength, const ch
 
     const u32 length = dstIdx;
     pDst[length] = 0;
+
     if (pOutLength)
     {
         *pOutLength = length;
@@ -6151,6 +6207,7 @@ s64 tryConvertUtf8ToUtf16(s32* pOutLength, char16* pDst, u32 dstLength, const ch
         if (maxSrc <= static_cast<s32>(srcIdx))
         {
             pDst[dstIdx] = 0;
+
             if (pOutLength)
             {
                 *pOutLength = dstIdx;
@@ -6161,9 +6218,11 @@ s64 tryConvertUtf8ToUtf16(s32* pOutLength, char16* pDst, u32 dstLength, const ch
 
         const u8* p = reinterpret_cast<const u8*>(pSrc + srcIdx);
         char16 c = p[0];
+
         if (c == 0)
         {
             pDst[dstIdx] = 0;
+
             if (pOutLength)
             {
                 *pOutLength = dstIdx;
@@ -6181,6 +6240,7 @@ s64 tryConvertUtf8ToUtf16(s32* pOutLength, char16* pDst, u32 dstLength, const ch
             if (p[1] == 0)
             {
                 pDst[dstIdx] = 0;
+
                 if (pOutLength)
                 {
                     *pOutLength = dstIdx;
@@ -6197,6 +6257,7 @@ s64 tryConvertUtf8ToUtf16(s32* pOutLength, char16* pDst, u32 dstLength, const ch
             if (p[1] == 0 || p[2] == 0)
             {
                 pDst[dstIdx] = 0;
+
                 if (pOutLength)
                 {
                     *pOutLength = dstIdx;
@@ -6211,6 +6272,7 @@ s64 tryConvertUtf8ToUtf16(s32* pOutLength, char16* pDst, u32 dstLength, const ch
         else
         {
             pDst[dstIdx] = 0;
+
             if (pOutLength)
             {
                 *pOutLength = dstIdx;
@@ -6225,6 +6287,7 @@ s64 tryConvertUtf8ToUtf16(s32* pOutLength, char16* pDst, u32 dstLength, const ch
 
     --dstIdx;
     pDst[dstIdx] = 0;
+
     if (pOutLength)
     {
         *pOutLength = dstIdx;
@@ -6271,6 +6334,7 @@ s64 tryConvertUtf16ToUtf8(s32* pOutLength, char* pDst, u32 dstLength, const char
     do
     {
         char* p = pDst + dstIdx;
+
         if (srcIdx >= maxSrc)
         {
             *p = '\0';
@@ -6283,6 +6347,7 @@ s64 tryConvertUtf16ToUtf8(s32* pOutLength, char* pDst, u32 dstLength, const char
         }
 
         const char16 c = pSrc[srcIdx];
+
         if (c == 0)
         {
             *p = '\0';
@@ -6327,6 +6392,7 @@ s64 tryConvertUtf16ToUtf8(s32* pOutLength, char* pDst, u32 dstLength, const char
     } while (dstIdx < dstLength);
 
     pDst[dstIdx - 1] = '\0';
+
     if (pOutLength)
     {
         *pOutLength = dstIdx - 1;
@@ -6372,6 +6438,7 @@ s32 convertUtf8ToSjis(char* pDst, u32 dstLength, const char* pSrc, s32 srcLength
 void toUpperCapitalFirstCharactor(BufferedSafeString* pStr)
 {
     char* buffer = pStr->getBuffer();
+
     if (buffer[0] != '\0')
     {
         buffer[0] = toUpperCapital(buffer[0]);
@@ -6385,6 +6452,7 @@ void toUpperCapitalFirstCharactor(BufferedSafeString* pStr)
 void toLowerCapitalFirstCharactor(BufferedSafeString* pStr)
 {
     char* buffer = pStr->getBuffer();
+
     if (buffer[0] != '\0')
     {
         buffer[0] = toLowerCapital(buffer[0]);
@@ -6411,6 +6479,7 @@ s32 compareChar16Pair(const Char16Pair& rPair, const char16& rKey)
 char16 replace(char16 c, const Buffer<const Char16Pair>& rSortedTable)
 {
     const s32 idx = rSortedTable.binarySearch(c, compareChar16Pair);
+
     if (idx < 0)
     {
         return c;
@@ -6436,6 +6505,7 @@ char16 toUpperCapital(char16 c)
 void toUpperCapitalFirstCharactor(WBufferedSafeString* pStr)
 {
     char16* buffer = pStr->getBuffer();
+
     if (buffer[0] != 0)
     {
         buffer[0] = toUpperCapital(buffer[0]);
@@ -6459,6 +6529,7 @@ char16 toLowerCapital(char16 c)
 void toLowerCapitalFirstCharactor(WBufferedSafeString* pStr)
 {
     char16* buffer = pStr->getBuffer();
+
     if (buffer[0] != 0)
     {
         buffer[0] = toLowerCapital(buffer[0]);
@@ -6472,6 +6543,7 @@ bool isIncludeInStringList(const SafeString& rStr, const SafeString& rList, char
     const char* list = rList.cstr();
     const s32 listLength = rList.calcLength();
     s32 start = 0;
+
     for (s32 i = 0; i <= listLength; ++i)
     {
         if (i == listLength || list[i] == delimiter)
@@ -6495,6 +6567,7 @@ bool isIncludeInStringList(const WSafeString& rStr, const WSafeString& rList, ch
     const char16* list = rList.cstr();
     const s32 listLength = rList.calcLength();
     s32 start = 0;
+
     for (s32 i = 0; i <= listLength; ++i)
     {
         if (i == listLength || list[i] == delimiter)
@@ -6518,6 +6591,7 @@ static bool tryParseFloat_(T* pOut, const SafeString& rStr)
     u32 idx = 0;
     s32 sign = 1;
     const char first = rStr[0];
+
     if (first == '+')
     {
         idx = 1;
@@ -6542,9 +6616,11 @@ static bool tryParseFloat_(T* pOut, const SafeString& rStr)
     const T integer = *pOut;
     T divisor = 1;
     T fraction = 0;
+
     for (;;)
     {
         const s32 digit = toDecimalDigit_(rStr[idx]);
+
         if (digit < 0)
         {
             break;

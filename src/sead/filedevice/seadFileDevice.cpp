@@ -342,15 +342,18 @@ u8* FileDevice::doLoad_(LoadArg& rArg)
     }
 
     FileHandle handle;
+
     if (!tryOpen(&handle, rArg.path, FileDevice::cFileOpenFlag_ReadOnly, rArg.div_size))
     {
         return nullptr;
     }
 
     u32 bytesToRead = rArg.buffer_size;
+
     if (!rArg.buffer || rArg.check_read_entire_file)
     {
         u32 fileSize = 0;
+
         if (!tryGetFileSize(&fileSize, &handle))
         {
             return nullptr;
@@ -401,12 +404,14 @@ u8* FileDevice::doLoad_(LoadArg& rArg)
         alignment = sign * ((alignment < cBufferMinAlignment) ? cBufferMinAlignment : alignment);
 
         Heap* heap = rArg.heap;
+
         if (!heap)
         {
             heap = HeapMgr::instance()->getCurrentHeap();
         }
 
         void* raw_buf = heap->tryAlloc(bytesToRead, alignment);
+
         if (!raw_buf)
         {
             if (rArg.assert_on_alloc_fail)
@@ -423,6 +428,7 @@ u8* FileDevice::doLoad_(LoadArg& rArg)
     }
 
     u32 bytesRead = 0;
+
     if (!tryRead(&bytesRead, &handle, buf, bytesToRead))
     {
         if (allocated)
@@ -464,6 +470,7 @@ bool FileDevice::doSave_(FileDevice::SaveArg& rArg)
     }
 
     FileHandle handle;
+
     if (!tryOpen(&handle, rArg.path, cFileOpenFlag_WriteOnly))
     {
         return false;
@@ -509,6 +516,7 @@ void FileDevice::doResolvePath_(BufferedSafeString* pOut, const SafeString& rPat
 bool FileDevice::isAvailable() const
 {
     SEAD_ASSERT_MSG(mPermission, "Device permission error.");
+
     if (!mPermission)
     {
         return false;
@@ -525,6 +533,7 @@ bool FileDevice::isAvailable() const
 u8* FileDevice::tryLoad(LoadArg& rArg)
 {
     SEAD_ASSERT_MSG(mPermission, "Device permission error.");
+
     if (!mPermission)
     {
         return NULL;
@@ -541,6 +550,7 @@ u8* FileDevice::tryLoad(LoadArg& rArg)
 bool FileDevice::trySave(FileDevice::SaveArg& rArg)
 {
     SEAD_ASSERT_MSG(mPermission, "Device permission error.");
+
     if (!mPermission)
     {
         return false;
@@ -561,6 +571,7 @@ FileDevice* FileDevice::tryOpen(FileHandle* pHandle, const SafeString& rPath, Fi
                                 u32 divSize)
 {
     SEAD_ASSERT_MSG(mPermission, "Device permission error.");
+
     if (!mPermission)
     {
         return nullptr;
@@ -575,6 +586,7 @@ FileDevice* FileDevice::tryOpen(FileHandle* pHandle, const SafeString& rPath, Fi
     setFileHandleDivSize_(pHandle, divSize);
     FileDevice* device = doOpen_(pHandle, rPath, flag);
     setHandleBaseFileDevice_(pHandle, device);
+
     if (device)
     {
         setHandleBaseOriginalFileDevice_(pHandle, this);
@@ -591,6 +603,7 @@ FileDevice* FileDevice::tryOpen(FileHandle* pHandle, const SafeString& rPath, Fi
 bool FileDevice::tryClose(FileHandle* pHandle)
 {
     SEAD_ASSERT_MSG(mPermission, "Device permission error.");
+
     if (!mPermission)
     {
         return false;
@@ -609,6 +622,7 @@ bool FileDevice::tryClose(FileHandle* pHandle)
     }
 
     bool closed = doClose_(pHandle);
+
     if (closed)
     {
         setHandleBaseFileDevice_(pHandle, nullptr);
@@ -626,6 +640,7 @@ bool FileDevice::tryClose(FileHandle* pHandle)
 bool FileDevice::tryFlush(FileHandle* pHandle)
 {
     SEAD_ASSERT_MSG(mPermission, "Device permission error.");
+
     if (!mPermission)
     {
         return false;
@@ -654,6 +669,7 @@ bool FileDevice::tryFlush(FileHandle* pHandle)
 bool FileDevice::tryRemove(const SafeString& rStr)
 {
     SEAD_ASSERT_MSG(mPermission, "Device permission error.");
+
     if (!mPermission)
     {
         return false;
@@ -673,6 +689,7 @@ bool FileDevice::tryRemove(const SafeString& rStr)
 bool FileDevice::tryRead(u32* pBytesRead, FileHandle* pHandle, u8* pOutBuffer, u32 bytesToRead)
 {
     SEAD_ASSERT_MSG(mPermission, "Device permission error.");
+
     if (!mPermission)
     {
         return false;
@@ -722,6 +739,7 @@ bool FileDevice::tryRead(u32* pBytesRead, FileHandle* pHandle, u8* pOutBuffer, u
         }
 
         totalReadSize += readSize;
+
         if (readSize < size)
         {
             break;
@@ -751,6 +769,7 @@ bool FileDevice::tryWrite(u32* pBytesWritten, FileHandle* pHandle, const u8* pIn
                           u32 bytesToWrite)
 {
     SEAD_ASSERT_MSG(mPermission, "Device permission error.");
+
     if (!mPermission)
     {
         return false;
@@ -787,6 +806,7 @@ bool FileDevice::tryWrite(u32* pBytesWritten, FileHandle* pHandle, const u8* pIn
 bool FileDevice::trySeek(FileHandle* pHandle, s32 offset, FileDevice::SeekOrigin origin)
 {
     SEAD_ASSERT_MSG(mPermission, "Device permission error.");
+
     if (!mPermission)
     {
         return false;
@@ -816,6 +836,7 @@ bool FileDevice::trySeek(FileHandle* pHandle, s32 offset, FileDevice::SeekOrigin
 bool FileDevice::tryGetCurrentSeekPos(u32* pSeekPos, FileHandle* pHandle)
 {
     SEAD_ASSERT_MSG(mPermission, "Device permission error.");
+
     if (!mPermission)
     {
         return false;
@@ -851,6 +872,7 @@ bool FileDevice::tryGetCurrentSeekPos(u32* pSeekPos, FileHandle* pHandle)
 bool FileDevice::tryGetFileSize(u32* pFileSize, const SafeString& rPath)
 {
     SEAD_ASSERT_MSG(mPermission, "Device permission error.");
+
     if (!mPermission)
     {
         return false;
@@ -874,6 +896,7 @@ bool FileDevice::tryGetFileSize(u32* pFileSize, const SafeString& rPath)
 bool FileDevice::tryGetFileSize(u32* pSize, FileHandle* pHandle)
 {
     SEAD_ASSERT_MSG(mPermission, "Device permission error.");
+
     if (!mPermission)
     {
         return false;
@@ -903,6 +926,7 @@ bool FileDevice::tryGetFileSize(u32* pSize, FileHandle* pHandle)
 bool FileDevice::tryIsExistFile(bool* pExists, const SafeString& rPath)
 {
     SEAD_ASSERT_MSG(mPermission, "Device permission error.");
+
     if (!mPermission)
     {
         return false;
@@ -926,6 +950,7 @@ bool FileDevice::tryIsExistFile(bool* pExists, const SafeString& rPath)
 bool FileDevice::tryIsExistDirectory(bool* pExists, const SafeString& rPath)
 {
     SEAD_ASSERT_MSG(mPermission, "Device permission error.");
+
     if (!mPermission)
     {
         return false;
@@ -949,6 +974,7 @@ bool FileDevice::tryIsExistDirectory(bool* pExists, const SafeString& rPath)
 FileDevice* FileDevice::tryOpenDirectory(DirectoryHandle* pHandle, const SafeString& rPath)
 {
     SEAD_ASSERT_MSG(mPermission, "Device permission error.");
+
     if (!mPermission)
     {
         return NULL;
@@ -962,6 +988,7 @@ FileDevice* FileDevice::tryOpenDirectory(DirectoryHandle* pHandle, const SafeStr
 
     FileDevice* device = doOpenDirectory_(pHandle, rPath);
     setHandleBaseFileDevice_(pHandle, device);
+
     if (device != NULL)
     {
         setHandleBaseOriginalFileDevice_(pHandle, this);
@@ -978,6 +1005,7 @@ FileDevice* FileDevice::tryOpenDirectory(DirectoryHandle* pHandle, const SafeStr
 bool FileDevice::tryCloseDirectory(DirectoryHandle* pHandle)
 {
     SEAD_ASSERT_MSG(mPermission, "Device permission error.");
+
     if (!mPermission)
     {
         return false;
@@ -996,6 +1024,7 @@ bool FileDevice::tryCloseDirectory(DirectoryHandle* pHandle)
     }
 
     bool closed = doCloseDirectory_(pHandle);
+
     if (closed)
     {
         setHandleBaseFileDevice_(pHandle, NULL);
@@ -1017,6 +1046,7 @@ bool FileDevice::tryReadDirectory(u32* pEntriesRead, DirectoryHandle* pHandle,
                                   DirectoryEntry* pEntries, u32 entriesToRead)
 {
     SEAD_ASSERT_MSG(mPermission, "Device permission error.");
+
     if (!mPermission)
     {
         return false;
@@ -1060,6 +1090,7 @@ bool FileDevice::tryReadDirectory(u32* pEntriesRead, DirectoryHandle* pHandle,
 bool FileDevice::tryMakeDirectory(const SafeString& rPath, u32 permission)
 {
     SEAD_ASSERT_MSG(mPermission, "Device permission error.");
+
     if (!mPermission)
     {
         return false;
@@ -1077,12 +1108,14 @@ bool FileDevice::tryMakeDirectory(const SafeString& rPath, u32 permission)
 bool FileDevice::tryMakeDirectoryWithParent(const SafeString& rPath, u32 x)
 {
     SEAD_ASSERT_MSG(mPermission, "Device permission error.");
+
     if (!mPermission)
     {
         return false;
     }
 
     bool exists = false;
+
     if (!doIsExistDirectory_(&exists, rPath))
     {
         return false;
@@ -1097,9 +1130,11 @@ bool FileDevice::tryMakeDirectoryWithParent(const SafeString& rPath, u32 x)
     int num_existing_parents = 1;
     bool should_trim = true;
     bool reached_end = !Path::getDirectoryName(&dir_name, rPath);
+
     while (!reached_end)
     {
         exists = false;
+
         if (!tryIsExistDirectory(&exists, dir_name))
         {
             return false;
@@ -1123,6 +1158,7 @@ bool FileDevice::tryMakeDirectoryWithParent(const SafeString& rPath, u32 x)
     int num_path_components = 0;
     auto counting_iterator = rPath.tokenBegin("/");
     const auto end = rPath.tokenEnd("/");
+
     for (; end != counting_iterator; ++counting_iterator)
     {
         ++num_path_components;
@@ -1130,6 +1166,7 @@ bool FileDevice::tryMakeDirectoryWithParent(const SafeString& rPath, u32 x)
 
     auto it = rPath.tokenBegin("/");
     int num_levels_to_create = num_path_components - num_existing_parents;
+
     for (; end != it; ++it)
     {
         if (num_levels_to_create >= 1)

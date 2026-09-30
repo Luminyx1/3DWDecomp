@@ -66,6 +66,7 @@ void CoreInfo::configure()
 void CoreInfo::dump()
 {
     SEAD_DEBUG_PRINT("* num cores %d\n", sNumCores);
+
     for (u32 i = 0; i < sNumCores; ++i)
     {
         SEAD_DEBUG_PRINT("  [%d] : %s : PlatformCoreId=%d\n", i, i == 0 ? "Main" : "Sub ", sPlatformCoreId[i]);

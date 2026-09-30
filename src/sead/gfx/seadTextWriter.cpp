@@ -205,6 +205,7 @@ void TextWriter::vprintfImpl_(const char16_t* pFormat, std::va_list args, bool i
     char16_t localBuffer[0x200];
     char16_t* buffer;
     s32 bufferSize;
+
     if (mFormatBuffer)
     {
         buffer = mFormatBuffer;
@@ -259,6 +260,7 @@ void TextWriter::vprintfImpl_(const char* pFormat, std::va_list args, bool isDra
     char16_t localBuffer[0x200];
     char16_t* buffer;
     s32 bufferSize;
+
     if (mFormatBuffer)
     {
         buffer = mFormatBuffer;
@@ -335,6 +337,7 @@ void TextWriter::printImpl_(const char16_t* pStr, s32 length, bool isDraw, Bound
     f32 fontHeight = mFont->getHeight() * mScale.y;
 
     const f32 wrapX = x + mWrapWidth;
+
     if (pRect)
     {
         *pRect = BoundBox2f(x, y - fontHeight, x, y);
@@ -349,11 +352,13 @@ void TextWriter::printImpl_(const char16_t* pStr, s32 length, bool isDraw, Bound
     f32 endWidth = 0.0f;
     s32 lineStart = 0;
     const char16_t* line = pStr;
+
     while (*line != u'\0')
     {
         LineEnd lineEnd = LineEnd::cEnd;
         s32 count = 0;
         f32 width = 0.0f;
+
         for (char16_t c = *line; c != u'\0'; c = line[++count])
         {
             if (length >= 0 && lineStart + count >= length)
@@ -375,6 +380,7 @@ void TextWriter::printImpl_(const char16_t* pStr, s32 length, bool isDraw, Bound
             }
 
             f32 charWidth = mFont->getCharWidth(c) * mScale.x;
+
             if (mWrapWidth != std::numeric_limits<f32>::infinity() &&
                 wrapX < lineX + width + charWidth)
             {
@@ -388,6 +394,7 @@ void TextWriter::printImpl_(const char16_t* pStr, s32 length, bool isDraw, Bound
         if (isDraw && count != 0)
         {
             local.setTranslation(lineX, y - fontHeight, 0.0f);
+
             if (mModelMatrix)
             {
                 Matrix34f mtx;
@@ -418,6 +425,7 @@ void TextWriter::printImpl_(const char16_t* pStr, s32 length, bool isDraw, Bound
         {
             y -= fontHeight + mLineSpace;
             lineX = x;
+
             if (lineEnd == LineEnd::cNewLine)
             {
                 count++;
@@ -474,6 +482,7 @@ void TextWriter::printImpl_(const char* pStr, s32 length, bool isDraw, BoundBox2
     char16_t localBuffer[0x200];
     char16_t* buffer;
     s32 bufferSize;
+
     if (mFormatBuffer)
     {
         buffer = mFormatBuffer;

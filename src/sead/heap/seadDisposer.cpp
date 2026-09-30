@@ -23,6 +23,7 @@ IDisposer::IDisposer() : IDisposer(nullptr, HeapNullOption::UseSpecifiedOrContai
 IDisposer::IDisposer(Heap* const pDisposerHeap, HeapNullOption heapNullOption)
 {
     mDisposerHeap = pDisposerHeap;
+
     if (mDisposerHeap)
     {
         mDisposerHeap->appendDisposer_(this);
@@ -40,6 +41,7 @@ IDisposer::IDisposer(Heap* const pDisposerHeap, HeapNullOption heapNullOption)
         }
 
         mDisposerHeap = sead::HeapMgr::sInstancePtr->findContainHeap(this);
+
         if (mDisposerHeap)
         {
             mDisposerHeap->appendDisposer_(this);
@@ -55,6 +57,7 @@ IDisposer::IDisposer(Heap* const pDisposerHeap, HeapNullOption heapNullOption)
         }
 
         mDisposerHeap = sead::HeapMgr::sInstancePtr->getCurrentHeap();
+
         if (mDisposerHeap)
         {
             mDisposerHeap->appendDisposer_(this);

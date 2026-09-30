@@ -62,6 +62,7 @@ void Task::attachCalcImpl()
     ScopedLock<CriticalSection> lock(&getMethodTreeMgr()->mCS);
 
     TaskBase* parentTask = parent() ? parent()->value() : nullptr;
+
     if (mTag == cSystem)
     {
         attachMethodWithCheck(0, &mCalcNode);
@@ -84,6 +85,7 @@ void Task::attachDrawImpl()
     ScopedLock<CriticalSection> lock(&getMethodTreeMgr()->mCS);
 
     TaskBase* parentTask = parent() ? parent()->value() : nullptr;
+
     if (mTag == cSystem)
     {
         attachMethodWithCheck(2, &mDrawNode);

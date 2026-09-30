@@ -60,6 +60,7 @@ void NinJoyNpadDevice::calc()
         NpadState& state = mNpadStates[idx];
 
         nn::hid::NpadStyleTag style;
+
         if (style_set.Test(static_cast<s32>(nn::hid::NpadStyleTag::NpadStyleJoyDual)))
         {
             nn::hid::GetNpadStates(
@@ -101,6 +102,7 @@ void NinJoyNpadDevice::calc()
         }
 
         nn::hid::NpadStyleTag& prev_style = mNpadStyleTags[idx];
+
         if (prev_style != style)
         {
             if (style == nn::hid::NpadStyleTag::NpadStyleInvalid)
@@ -285,6 +287,7 @@ void NinJoyNpadDevice::VibrationThread::requestVibration(
     mCS.lock();
 
     Request* request = mRequests.emplaceBack();
+
     if (!request)
     {
         mCS.unlock();
@@ -317,6 +320,7 @@ void NinJoyNpadDevice::VibrationThread::calc_(MessageQueue::Element msg)
 
     bool has_request = !mRequests.empty();
     Request request;
+
     if (has_request)
     {
         mRequests.popFront(&request);

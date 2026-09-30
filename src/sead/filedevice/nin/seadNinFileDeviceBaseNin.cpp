@@ -40,6 +40,7 @@ FileDevice* NinFileDeviceBase::doOpen_(FileHandle* pHandle, const SafeString& rP
                                        FileDevice::FileOpenFlag flag)
 {
     u32 mode;
+
     switch (flag)
     {
     case cFileOpenFlag_WriteOnly:
@@ -55,6 +56,7 @@ FileDevice* NinFileDeviceBase::doOpen_(FileHandle* pHandle, const SafeString& rP
     }
 
     FixedSafeString<256> fs_path;
+
     if (!formatPathForFS_(&fs_path, rPath))
     {
         mLastError = nn::fs::ResultUnexpected();
@@ -63,11 +65,13 @@ FileDevice* NinFileDeviceBase::doOpen_(FileHandle* pHandle, const SafeString& rP
     }
 
     bool is_new_file = true;
+
     if ((flag | cFileOpenFlag_ReadWrite) == cFileOpenFlag_Create)
     {
         bool is_file = false;
         nn::fs::DirectoryEntryType type;
         const auto result = nn::fs::GetEntryType(&type, fs_path.cstr());
+
         if (result.IsSuccess())
         {
             is_file = type == nn::fs::DirectoryEntryType_File;
@@ -98,6 +102,7 @@ FileDevice* NinFileDeviceBase::doOpen_(FileHandle* pHandle, const SafeString& rP
         if (is_new_file)
         {
             const auto create_result = nn::fs::CreateFile(fs_path.cstr(), 0);
+
             if (create_result.IsFailure())
             {
                 mLastError = create_result;
@@ -113,6 +118,7 @@ FileDevice* NinFileDeviceBase::doOpen_(FileHandle* pHandle, const SafeString& rP
 
     const auto open_result = nn::fs::OpenFile(&handle_inner->mHandle, fs_path.cstr(), mode);
     mLastError = open_result;
+
     if (open_result.IsFailure())
     {
         if (!nn::fs::ResultPathNotFound().Includes(open_result))
@@ -129,6 +135,7 @@ FileDevice* NinFileDeviceBase::doOpen_(FileHandle* pHandle, const SafeString& rP
     if (flag == cFileOpenFlag_WriteOnly && !is_new_file)
     {
         const auto set_result = nn::fs::SetFileSize(handle_inner->mHandle, 0);
+
         if (set_result.IsFailure())
         {
             SEAD_WARN(
@@ -157,6 +164,7 @@ bool NinFileDeviceBase::doClose_(FileHandle* pHandle)
     if (inner->mIsWriteMode && !inner->mDoNotFlushOnClose)
     {
         const auto result = nn::fs::FlushFile(inner->mHandle);
+
         if (result.IsFailure())
         {
             mLastError = result;
@@ -180,6 +188,7 @@ bool NinFileDeviceBase::doFlush_(FileHandle* pHandle)
     auto* inner = getFileHandleInner_(pHandle);
 
     mLastError = nn::fs::FlushFile(inner->mHandle);
+
     if (mLastError.IsFailure())
     {
         inner->mDoNotFlushOnClose = true;
@@ -197,6 +206,7 @@ bool NinFileDeviceBase::doFlush_(FileHandle* pHandle)
 bool NinFileDeviceBase::doRemove_(const SafeString& rPath)
 {
     FixedSafeString<256> fs_path;
+
     if (!formatPathForFS_(&fs_path, rPath))
     {
         mLastError = nn::fs::ResultUnexpected();
@@ -205,6 +215,7 @@ bool NinFileDeviceBase::doRemove_(const SafeString& rPath)
     }
 
     mLastError = nn::fs::DeleteFile(fs_path.cstr());
+
     if (mLastError.IsFailure())
     {
         SEAD_WARN(
@@ -242,6 +253,7 @@ bool NinFileDeviceBase::doRead_(u32* pBytesRead, FileHandle* pHandle, u8* pOutBu
     }
 
     inner->mOffset += out_size;
+
     if (pBytesRead)
     {
         *pBytesRead = out_size;
@@ -268,6 +280,7 @@ bool NinFileDeviceBase::doWrite_(u32* pBytesWritten, FileHandle* pHandle, const 
     if (mLastError.IsSuccess())
     {
         inner->mOffset += bytesToWrite;
+
         if (pBytesWritten)
         {
             *pBytesWritten = bytesToWrite;
@@ -293,6 +306,7 @@ bool NinFileDeviceBase::doWrite_(u32* pBytesWritten, FileHandle* pHandle, const 
 bool NinFileDeviceBase::doSeek_(FileHandle* pHandle, s32 offset, FileDevice::SeekOrigin origin)
 {
     auto* inner = getFileHandleInner_(pHandle);
+
     switch (origin)
     {
     case FileDevice::cSeekOrigin_Begin:
@@ -305,6 +319,7 @@ bool NinFileDeviceBase::doSeek_(FileHandle* pHandle, s32 offset, FileDevice::See
     {
         SEAD_ASSERT(offset <= 0);
         u32 file_size = 0;
+
         if (!doGetFileSize_(&file_size, pHandle))
         {
             break;
@@ -339,6 +354,7 @@ bool NinFileDeviceBase::doGetCurrentSeekPos_(u32* pSeekPos, FileHandle* pHandle)
 bool NinFileDeviceBase::doGetFileSize_(u32* pFileSize, const SafeString& rPath)
 {
     FileHandle handle;
+
     if (!doOpen_(&handle, rPath, cFileOpenFlag_ReadOnly))
     {
         return false;
@@ -360,6 +376,7 @@ bool NinFileDeviceBase::doGetFileSize_(u32* pFileSize, FileHandle* pHandle)
     const auto* inner = getFileHandleInner_(pHandle);
     s64 size = 0;
     mLastError = nn::fs::GetFileSize(&size, inner->mHandle);
+
     if (mLastError.IsSuccess())
     {
         *pFileSize = size;
@@ -381,6 +398,7 @@ bool NinFileDeviceBase::doGetFileSize_(u32* pFileSize, FileHandle* pHandle)
 bool NinFileDeviceBase::doIsExistFile_(bool* pExists, const SafeString& rPath)
 {
     FixedSafeString<256> fs_path;
+
     if (!formatPathForFS_(&fs_path, rPath))
     {
         mLastError = nn::fs::ResultUnexpected();
@@ -418,6 +436,7 @@ bool NinFileDeviceBase::doIsExistFile_(bool* pExists, const SafeString& rPath)
 bool NinFileDeviceBase::doIsExistDirectory_(bool* pExists, const SafeString& rPath)
 {
     FixedSafeString<256> fs_path;
+
     if (!formatPathForFS_(&fs_path, rPath))
     {
         mLastError = nn::fs::ResultUnexpected();
@@ -457,6 +476,7 @@ FileDevice* NinFileDeviceBase::doOpenDirectory_(DirectoryHandle* pHandle, const 
     auto* inner = new (getHandleBaseHandleBuffer_(pHandle).getBufferPtr()) DirectoryHandleInner;
 
     FixedSafeString<256> fs_path;
+
     if (!formatPathForFS_(&fs_path, rPath))
     {
         mLastError = nn::fs::ResultUnexpected();
@@ -511,6 +531,7 @@ bool NinFileDeviceBase::doReadDirectory_(u32* pEntriesRead, DirectoryHandle* pHa
         nn::fs::DirectoryEntry entry;
         s64 count = 0;
         mLastError = nn::fs::ReadDirectory(&count, &entry, inner->mHandle, 1);
+
         if (mLastError.IsFailure())
         {
             SEAD_WARN("nn::fs::ReadDirectory failed. module = %d desc = %d inner_value = 0x%08x",
@@ -550,6 +571,7 @@ bool NinFileDeviceBase::doReadDirectory_(u32* pEntriesRead, DirectoryHandle* pHa
 bool NinFileDeviceBase::doMakeDirectory_(const SafeString& rPath, u32)
 {
     FixedSafeString<256> fs_path;
+
     if (!formatPathForFS_(&fs_path, rPath))
     {
         mLastError = nn::fs::ResultUnexpected();
@@ -559,6 +581,7 @@ bool NinFileDeviceBase::doMakeDirectory_(const SafeString& rPath, u32)
 
     const auto result = nn::fs::CreateDirectory(fs_path.cstr());
     mLastError = result;
+
     if (result.IsSuccess())
     {
         return true;

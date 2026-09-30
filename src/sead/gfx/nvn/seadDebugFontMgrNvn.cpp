@@ -257,6 +257,7 @@ void DebugFontMgrNvn::print(DrawContext* pDrawContext, const Projection& rProjec
     u32 vertexUniformSize = (num * 4 + 0x40 + 0xff) & ~0xff;
     u32 allocSize = vertexUniformSize + 0x100;
     u32 start = mUniformBlockBuffer.fetchAdd_0(allocSize);
+
     if (start + allocSize - mUniformBlockBuffer.get_4() > mUniformBufferSize)
     {
         mIsUniformBufferFull = true;
@@ -273,9 +274,11 @@ void DebugFontMgrNvn::print(DrawContext* pDrawContext, const Projection& rProjec
     u32* chars = reinterpret_cast<u32*>(uniform + 0x40);
     const char16_t* text = static_cast<const char16_t*>(pText);
     s32 count = 0;
+
     for (s32 i = 0; i < num; i++)
     {
         u32 c = text[i];
+
         if (c < 0x20)
         {
             continue;

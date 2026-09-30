@@ -47,6 +47,7 @@ void Heap::destruct_()
     ConditionalScopedLock<CriticalSection> lock(&mCS, isLockEnabled());
     dispose_(nullptr, nullptr);
     HeapMgr::removeFromFindContainHeapCache_(this);
+
     if (mParent)
     {
         mParent->eraseChild_(this);
@@ -68,6 +69,7 @@ void Heap::dispose_(const void* pBegin, const void* pEnd)
 
     const bool disposeAll = pBegin == nullptr && pEnd == nullptr;
     auto it = mDisposerList.begin();
+
     while (it != mDisposerList.end())
     {
         if (it->mDisposerHeap && (disposeAll || (pBegin <= &*it && &*it < pEnd)))
@@ -164,6 +166,7 @@ void Heap::dumpTreeYAML(WriteStream& rStream, int indent) const
     dumpYAML(rStream, indent);
 
     FixedSafeString<128> str("");
+
     if (indent > 0)
     {
         str.append(' ', indent);

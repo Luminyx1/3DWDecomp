@@ -36,6 +36,7 @@ u8* ParallelSZSDecompressor::tryDecompFromDevice(const ResourceMgr::LoadArg& rLo
                                                  u32* pOutAllocSize, bool* pOutAllocated)
 {
     Heap* heap = rLoadArg.load_data_heap;
+
     if (heap == nullptr)
     {
         heap = HeapMgr::sInstancePtr->getCurrentHeap();
@@ -49,6 +50,7 @@ u8* ParallelSZSDecompressor::tryDecompFromDevice(const ResourceMgr::LoadArg& rLo
     FileHandle handle;
     FileDevice* device;
     u8* src;
+
     if (rLoadArg.device != nullptr)
     {
         device = rLoadArg.device->tryOpen(&handle, rLoadArg.path,
@@ -67,6 +69,7 @@ u8* ParallelSZSDecompressor::tryDecompFromDevice(const ResourceMgr::LoadArg& rLo
 
     const u32 fileSize = handle.getFileSize();
     src = mWorkBuffer;
+
     if (src == nullptr)
     {
         src = new (heap, -FileDevice::cBufferMinAlignment, std::nothrow) u8[mWorkSize * 2];
@@ -78,6 +81,7 @@ u8* ParallelSZSDecompressor::tryDecompFromDevice(const ResourceMgr::LoadArg& rLo
     }
 
     u32 bytesRead = 0;
+
     if (!handle.tryRead(&bytesRead, src, Mathu::min(mWorkSize, fileSize)))
     {
         if (mWorkBuffer == nullptr)
@@ -102,6 +106,7 @@ u8* ParallelSZSDecompressor::tryDecompFromDevice(const ResourceMgr::LoadArg& rLo
     s32 decompAlignment = SZSDecompressor::getDecompAlignment(src);
 
     u32 bufferSize = rLoadArg.load_data_buffer_size;
+
     if (!(decompSize <= bufferSize || bufferSize == 0))
     {
         decompSize = bufferSize;
@@ -109,6 +114,7 @@ u8* ParallelSZSDecompressor::tryDecompFromDevice(const ResourceMgr::LoadArg& rLo
 
     u32 allocSize;
     s32 bufferAlignment = rLoadArg.load_data_buffer_alignment;
+
     if (bufferAlignment != 0)
     {
         allocSize = (decompSize + bufferAlignment - 1) / bufferAlignment * bufferAlignment;
@@ -120,10 +126,12 @@ u8* ParallelSZSDecompressor::tryDecompFromDevice(const ResourceMgr::LoadArg& rLo
 
     u8* dst = rLoadArg.load_data_buffer;
     bool allocated = false;
+
     if (dst == nullptr)
     {
         s32 alignment;
         DirectResource* directResource = DynamicCast<DirectResource>(pResource);
+
         if (directResource != nullptr)
         {
             if (rLoadArg.load_data_alignment != 0)
@@ -147,6 +155,7 @@ u8* ParallelSZSDecompressor::tryDecompFromDevice(const ResourceMgr::LoadArg& rLo
         }
 
         dst = new (heap, alignment, std::nothrow) u8[allocSize];
+
         if (dst == nullptr)
         {
             if (mWorkBuffer == nullptr)
@@ -183,12 +192,14 @@ u8* ParallelSZSDecompressor::tryDecompFromDevice(const ResourceMgr::LoadArg& rLo
 
         u8* nextBuffer = src + mWorkSize;
         u32 part = 0;
+
         while (bytesRead < fileSize)
         {
             mThread.requestDecompPart(part);
 
             u32 readSize = 0;
             u8* buffer = ((part + 1) & 1) != 0 ? nextBuffer : src;
+
             if (!handle.tryRead(&readSize, buffer, Mathu::min(mWorkSize, fileSize - bytesRead)))
             {
                 if (allocated)
@@ -322,6 +333,7 @@ void ParallelSZSDecompressor::DecompThread::calc_(MessageQueue::Element msg)
     const u8* src = (part & 1) == 0 ? mSrc : mSrc + mDivSize;
     const u32 size = Mathu::min(mDivSize, mSrcSize - mDivSize * part);
     const s32 result = SZSDecompressor::streamDecomp(&mContext, src, size);
+
     if (result == 0)
     {
         mFinishEvent.setSignal();

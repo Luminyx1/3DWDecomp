@@ -69,6 +69,7 @@ void CuckooClock::calc()
     calcTime_(&hour, &minute, &second, &milliSecond);
 
     const TickSpan sinceCuckoo = TickTime().diff(mCuckooTime);
+
     if (sinceCuckoo.toS64() >= TickSpan::makeFromSeconds(1).toS64() && second == 0 && minute == 0)
     {
         updateLatest_();

@@ -27,6 +27,7 @@ inline void notifyAllocFailed(HeapMgr* pMgr, Heap* pHeap, size_t size, s32 align
     }
 
     HeapMgr::IAllocFailedCallback* callback = pMgr->getAllocFailedCallback();
+
     if (!callback)
     {
         return;
@@ -59,6 +60,7 @@ SeparateHeap::SeparateHeap(const SafeString& rName, Heap* pParent, void* pManage
 {
     ConditionalScopedLock<CriticalSection> lock(&mCS, isLockEnabled());
     s32 nodeNum = managementAreaSize / cBlockNodeSize;
+
     if (pManagementArea && nodeNum > 0)
     {
         mBlockList.setBuffer(nodeNum, pManagementArea);
@@ -113,6 +115,7 @@ SeparateHeap* SeparateHeap::tryCreate(const SafeString& rName, size_t management
     if (!pParent)
     {
         pParent = HeapMgr::instance()->getCurrentHeap();
+
         if (!pParent)
         {
             return nullptr;
@@ -120,9 +123,11 @@ SeparateHeap* SeparateHeap::tryCreate(const SafeString& rName, size_t management
     }
 
     size_t maxSize = pParent->getMaxAllocatableSize(8);
+
     if (heapSize != 0)
     {
         heapSize = (heapSize + 7) & ~size_t(7);
+
         if (maxSize < heapSize + managementAreaSize)
         {
             return nullptr;
@@ -212,6 +217,7 @@ void* SeparateHeap::tryAlloc(size_t size, s32 alignment)
     size_t allocSize = size > 8 ? size : 8;
 
     u32 mask = absAlignment - 1;
+
     if ((mask & absAlignment) != 0)
     {
         notifyAllocFailed(mgr, this, size, alignment, allocSize, absAlignment);
@@ -229,10 +235,12 @@ void* SeparateHeap::tryAlloc(size_t size, s32 alignment)
     Block* next = nullptr;
     uintptr_t address = 0;
     uintptr_t prevEnd = uintptr_t(mStart);
+
     for (auto& block : mBlockList)
     {
         uintptr_t blockStart = uintptr_t(block.mAddress);
         uintptr_t alignedEnd = (prevEnd + mask) & ~uintptr_t(mask);
+
         if (intptr_t(blockStart - alignedEnd) >= intptr_t(allocSize))
         {
             address = alignedEnd;
@@ -246,6 +254,7 @@ void* SeparateHeap::tryAlloc(size_t size, s32 alignment)
     if (address == 0)
     {
         address = (prevEnd + mask) & ~uintptr_t(mask);
+
         if (address == 0 || intptr_t(uintptr_t(mStart) - address + mSize) < intptr_t(allocSize))
         {
             notifyAllocFailed(mgr, this, size, alignment, allocSize, absAlignment);
@@ -254,6 +263,7 @@ void* SeparateHeap::tryAlloc(size_t size, s32 alignment)
     }
 
     Block* block;
+
     if (next)
     {
         block = mBlockList.emplaceBefore(next);
@@ -281,6 +291,7 @@ void SeparateHeap::free(void* pPtr)
 
     ConditionalScopedLock<CriticalSection> lock(&mCS, isLockEnabled());
     Block* block = findBlock_(pPtr);
+
     if (block)
     {
         mBlockList.erase(block);
@@ -315,17 +326,20 @@ void* SeparateHeap::resizeFront(void* pPtr, size_t size)
 {
     ConditionalScopedLock<CriticalSection> lock(&mCS, isLockEnabled());
     Block* block = findBlock_(pPtr);
+
     if (!block)
     {
         return nullptr;
     }
 
     size_t diff = block->mSize - size;
+
     if (block->mSize < size)
     {
         Block* prev = mBlockList.prev(block);
         uintptr_t prevEnd = prev ? uintptr_t(prev->mAddress) + prev->mSize : uintptr_t(mStart);
         void* newAddress = PtrUtil::addOffset(block->mAddress, diff);
+
         if (prevEnd > uintptr_t(newAddress))
         {
             return nullptr;
@@ -357,6 +371,7 @@ void* SeparateHeap::resizeBack(void* pPtr, size_t size)
 {
     ConditionalScopedLock<CriticalSection> lock(&mCS, isLockEnabled());
     Block* block = findBlock_(pPtr);
+
     if (!block)
     {
         return nullptr;
@@ -366,6 +381,7 @@ void* SeparateHeap::resizeBack(void* pPtr, size_t size)
     {
         Block* next = mBlockList.next(block);
         uintptr_t nextStart = next ? uintptr_t(next->mAddress) : uintptr_t(mStart) + mSize;
+
         if (nextStart < uintptr_t(pPtr) + size)
         {
             return nullptr;
@@ -400,6 +416,7 @@ void SeparateHeap::freeAll()
 size_t SeparateHeap::getFreeSize() const
 {
     size_t usedSize = 0;
+
     for (auto& block : mBlockList)
     {
         usedSize += block.mSize;
@@ -417,9 +434,11 @@ size_t SeparateHeap::getMaxAllocatableSize(int alignment) const
 {
     size_t maxSize = 0;
     const void* prevEnd = mStart;
+
     for (auto& block : mBlockList)
     {
         uintptr_t address = alignUp(uintptr_t(prevEnd), alignment);
+
         if (uintptr_t(block.mAddress) > address)
         {
             maxSize = std::max(maxSize, uintptr_t(block.mAddress) - address);
@@ -430,6 +449,7 @@ size_t SeparateHeap::getMaxAllocatableSize(int alignment) const
 
     const void* end = PtrUtil::addOffset(mStart, mSize);
     const void* address = reinterpret_cast<const void*>(alignUp(uintptr_t(prevEnd), alignment));
+
     if (address < end)
     {
         maxSize = std::max(maxSize, size_t(PtrUtil::diff(end, address)));

@@ -157,6 +157,7 @@ void PrimitiveDrawMgrNvn::prepareFromBinaryImpl(Heap* pHeap, const void* pBinary
     setupNVNBuffer_(&mCircleSIndexBuffer, &mMemoryPool, &offset, sizeof(u16) * 16);
     {
         auto* index = static_cast<u16*>(nvnBufferMap(&mCircleSIndexBuffer));
+
         for (s32 i = 0; i < 16; i++)
         {
             index[i] = i;
@@ -166,6 +167,7 @@ void PrimitiveDrawMgrNvn::prepareFromBinaryImpl(Heap* pHeap, const void* pBinary
     setupNVNBuffer_(&mCircleLIndexBuffer, &mMemoryPool, &offset, sizeof(u16) * 32);
     {
         auto* index = static_cast<u16*>(nvnBufferMap(&mCircleLIndexBuffer));
+
         for (s32 i = 0; i < 32; i++)
         {
             index[i] = i;
@@ -249,6 +251,7 @@ void PrimitiveDrawMgrNvn::beginImpl(DrawContext* pDrawContext, const Matrix34f& 
     }
 
     u32 start = mUniformBlockBuffer.fetchAdd_0(0x100);
+
     if (start - mUniformBlockBuffer.get_4() + 0x100 > mUniformBufferSize)
     {
         mIsUniformBufferFull = true;
@@ -329,6 +332,7 @@ void PrimitiveDrawMgrNvn::drawImpl_(NVNcommandBuffer* pCommandBuffer, NVNdrawPri
     if (mIsTextureEnable)
     {
         u32 start = mUniformBlockBuffer.fetchAdd_0(0x200);
+
         if (start - mUniformBlockBuffer.get_4() + 0x200 > mUniformBufferSize)
         {
             mIsUniformBufferFull = true;
@@ -341,6 +345,7 @@ void PrimitiveDrawMgrNvn::drawImpl_(NVNcommandBuffer* pCommandBuffer, NVNdrawPri
         Matrix44CalcCommon<f32>::copy(uniform->modelMatrix, rModelMatrix, Vector4f::ew);
         uniform->color0 = rColor0;
         uniform->color1 = rColor1;
+
         if (pUVSrc && pUVSize)
         {
             uniform->uv.set(pUVSize->x, pUVSize->y, pUVSrc->x, pUVSrc->y);
@@ -364,6 +369,7 @@ void PrimitiveDrawMgrNvn::drawImpl_(NVNcommandBuffer* pCommandBuffer, NVNdrawPri
     else
     {
         u32 start = mUniformBlockBuffer.fetchAdd_0(0x100);
+
         if (start - mUniformBlockBuffer.get_4() + 0x100 > mUniformBufferSize)
         {
             mIsUniformBufferFull = true;

@@ -68,6 +68,7 @@ void ParseFailed_([[maybe_unused]] char** pTextPtr, [[maybe_unused]] int v)
 {
 #ifdef SEAD_DEBUG
     system::Print("----------------------------------------\n");
+
     for (int i = 0; i < v; ++i)
     {
         system::Print("  text[%d] \"%s\"\n", i, pTextPtr[i]);
@@ -87,9 +88,11 @@ void ParseFailed_([[maybe_unused]] char** pTextPtr, [[maybe_unused]] int v)
 void EnumUtil::parseText_(char** pTextPtr, char* pTextAll, int size)
 {
     int index = 0;
+
     while (*pTextAll)
     {
         skipToWordStart_(&pTextAll);
+
         if (*pTextAll == 0)
         {
             break;
@@ -147,6 +150,7 @@ void EnumUtil::parseText_(char** pTextPtr, char* pTextAll, int size)
 void EnumUtil::skipToWordEnd_(char** p_ptr, char** pNext)
 {
     char* p = *p_ptr;
+
     while (!(*p == '\0' || *p == ',' || *p == '='))
     {
         ++p;
@@ -155,6 +159,7 @@ void EnumUtil::skipToWordEnd_(char** p_ptr, char** pNext)
     *pNext = p;
 
     --p;
+
     while ((*p == '\t' || *p == '\n' || *p == ' ') && intptr_t(p) > intptr_t(*p_ptr))
     {
         --p;
@@ -170,6 +175,7 @@ void EnumUtil::skipToWordEnd_(char** p_ptr, char** pNext)
 void EnumUtil::skipToWordStart_(char** pPtr)
 {
     char* p = *pPtr;
+
     while (*p == '\t' || *p == '\n' || *p == ' ' || *p == ',')
     {
         ++p;

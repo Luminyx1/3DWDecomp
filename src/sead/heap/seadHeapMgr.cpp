@@ -99,6 +99,7 @@ bool HeapMgr::isContainedInAnyHeap(const void* ptr)
 void HeapMgr::dumpTreeYAML(WriteStream& rStream)
 {
     sHeapTreeLockCS.lock();
+
     for (auto& heap : sRootHeaps)
     {
         heap.dumpTreeYAML(rStream, 0);
@@ -132,6 +133,7 @@ Heap* HeapMgr::findContainHeap(const void* ptr) const
     Heap* pCheckedHeap = nullptr;
     FindContainHeapCache* pCache = nullptr;
     Heap* pHeap = nullptr;
+
     if (pThread)
     {
         pCache = pThread->getFindContainHeapCache();
@@ -139,6 +141,7 @@ Heap* HeapMgr::findContainHeap(const void* ptr) const
 
         pHeap = pCache->tryAddHeap();
         bool isMiss = true;
+
         if (pHeap && pHeap->mChildren.size() == 0)
         {
             isMiss = !pHeap->isInclude(ptr);
@@ -146,6 +149,7 @@ Heap* HeapMgr::findContainHeap(const void* ptr) const
         }
 
         pCache->resetHeap();
+
         if (!isMiss)
         {
             return pHeap;
@@ -168,9 +172,11 @@ Heap* HeapMgr::findContainHeap(const void* ptr) const
     if (pThread)
     {
         pHeap = pCache->getHeap();
+
         if (pHeap && pHeap != pCheckedHeap)
         {
             Heap* pFound = pHeap->findContainHeap_(ptr);
+
             if (pFound)
             {
                 if (pFound != pHeap)
@@ -187,6 +193,7 @@ Heap* HeapMgr::findContainHeap(const void* ptr) const
         if (pCurrentHeap && pCheckedHeap != pCurrentHeap)
         {
             pHeap = pCurrentHeap->findContainHeap_(ptr);
+
             if (pHeap)
             {
                 pCache->setHeap(pHeap);
@@ -198,6 +205,7 @@ Heap* HeapMgr::findContainHeap(const void* ptr) const
     for (Heap& rRoot : sRootHeaps)
     {
         pHeap = rRoot.findContainHeap_(ptr);
+
         if (pHeap)
         {
             goto found;
@@ -207,6 +215,7 @@ Heap* HeapMgr::findContainHeap(const void* ptr) const
     for (Heap& rRoot : sIndependentHeaps)
     {
         pHeap = rRoot.findContainHeap_(ptr);
+
         if (pHeap)
         {
             goto found;
@@ -227,12 +236,14 @@ found:
 void HeapMgr::removeFromFindContainHeapCache_(Heap* pHeap)
 {
     auto* threadMgr = ThreadMgr::instance();
+
     if (!threadMgr)
     {
         return;
     }
 
     Thread* mainThread = threadMgr->getMainThread();
+
     if (mainThread)
     {
         while (!mainThread->getFindContainHeapCache()->tryRemoveHeap(pHeap))
@@ -250,9 +261,11 @@ void HeapMgr::removeFromFindContainHeapCache_(Heap* pHeap)
 Heap* HeapMgr::findHeapByName(const sead::SafeString& rName, int index) const
 {
     auto lock = makeScopedLock(sHeapTreeLockCS);
+
     for (auto& heap : sRootHeaps)
     {
         Heap* found = findHeapByName_(&heap, rName, &index);
+
         if (found)
         {
             return found;
@@ -262,6 +275,7 @@ Heap* HeapMgr::findHeapByName(const sead::SafeString& rName, int index) const
     for (auto& heap : sIndependentHeaps)
     {
         Heap* found = findHeapByName_(&heap, rName, &index);
+
         if (found)
         {
             return found;
@@ -286,6 +300,7 @@ Heap* HeapMgr::findHeapByName_(Heap* pHeap, const SafeString& rName, int* pIndex
     for (auto& child : pHeap->mChildren)
     {
         Heap* found = findHeapByName_(&child, rName, pIndex);
+
         if (found)
         {
             return found;
@@ -298,6 +313,7 @@ Heap* HeapMgr::findHeapByName_(Heap* pHeap, const SafeString& rName, int* pIndex
 Heap* HeapMgr::getCurrentHeap() const
 {
     Thread* currentThread = ThreadMgr::instance()->getCurrentThread();
+
     if (currentThread)
     {
         return currentThread->getCurrentHeap();
@@ -319,6 +335,7 @@ void HeapMgr::removeRootHeap(Heap* pHeap)
     }
 
     s32 index = sRootHeaps.indexOf(pHeap);
+
     if (index != -1)
     {
         sRootHeaps.erase(index);
@@ -336,6 +353,7 @@ FindContainHeapCache::FindContainHeapCache() = default;
 bool FindContainHeapCache::tryRemoveHeap(Heap* pHeap)
 {
     uintptr_t original;
+
     if (mHeap.compareExchange(uintptr_t(pHeap), 0, &original))
     {
         return true;

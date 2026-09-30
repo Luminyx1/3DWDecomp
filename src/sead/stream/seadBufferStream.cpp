@@ -30,6 +30,7 @@ BufferReadStreamSrc::~BufferReadStreamSrc() = default;
 u32 BufferReadStreamSrc::read(void* data, u32 size)
 {
     u32 totalBytesRead = 0;
+
     while (true)
     {
         if (mCurrentPos < mCurrentSize)
@@ -272,6 +273,7 @@ u32 BufferMultiByteTextWriteStreamSrc::write(const void* pData, u32 size)
         }
 
         u32 writeSize = mBufferSize - mCurrentPos;
+
         if (writeSize >= size - totalBytesWritten)
         {
             writeSize = size - totalBytesWritten;
@@ -280,9 +282,11 @@ u32 BufferMultiByteTextWriteStreamSrc::write(const void* pData, u32 size)
         {
             const u32 end = writeSize + totalBytesWritten;
             u8 c = pBytes[end - 1];
+
             if (c & 0x80)
             {
                 u32 cut = 0;
+
                 if ((c & 0xc0) != 0x80)
                 {
                     cut = 1;
@@ -290,9 +294,11 @@ u32 BufferMultiByteTextWriteStreamSrc::write(const void* pData, u32 size)
                 else
                 {
                     const s32 maxLength = Mathi::min(s32(writeSize), 4);
+
                     for (s32 i = 2; i <= maxLength; i++)
                     {
                         c = pBytes[end - i];
+
                         if ((c & 0xc0) != 0x80)
                         {
                             if (getUtf8CharLength_(c) > u32(i))

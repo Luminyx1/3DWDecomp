@@ -70,6 +70,7 @@ T curveLinear_(f32 t, const CurveDataInfo* info, const T* f)
 
     const auto n = info->numUse - 1;
     const int i = n * t;
+
     if (i >= n)
     {
         return f[n];
@@ -102,6 +103,7 @@ T curveHermit_(f32 t, const CurveDataInfo* info, const T* f)
     const auto n = (info->numUse / 2) - 1;
     const int i = n * t;
     const int j = 2 * i;
+
     if (i >= n)
     {
         return f[j];
@@ -156,12 +158,14 @@ template <typename T>
 T curveLinear2D_(f32 t_, const CurveDataInfo* info, const T* f)
 {
     const T t = t_;
+
     if (f[0] >= t)
     {
         return f[1];
     }
 
     const auto n = info->numUse / 2;
+
     if (f[2 * (n - 1)] <= t)
     {
         return f[2 * (n - 1) + 1];
@@ -170,6 +174,7 @@ T curveLinear2D_(f32 t_, const CurveDataInfo* info, const T* f)
     for (s32 i = 0; i < n; ++i)
     {
         const auto j = 2 * i;
+
         if (f[j + 2] > t)
         {
             return f[j + 1] + ((t - f[j]) / (f[j + 2] - f[j])) * (f[j + 3] - f[j + 1]);
@@ -185,6 +190,7 @@ template <typename T>
 inline T curveHermit2D_(f32 t_, const CurveDataInfo* info, const T* f)
 {
     const T t = t_;
+
     if (f[0] >= t)
     {
         return f[1];
@@ -200,6 +206,7 @@ inline T curveHermit2D_(f32 t_, const CurveDataInfo* info, const T* f)
     for (s32 i = 0; i < n; ++i)
     {
         const auto j = 3 * i;
+
         if (f[j + 3] > t)
         {
             const auto x = (t - f[j]) / (f[j + 3] - f[j]);
@@ -219,6 +226,7 @@ T curveStep2D_(f32 t_, const CurveDataInfo* info, const T* f)
 {
     const T t = t_;
     const s8 n = info->numUse / 2;
+
     if (t <= f[0])
     {
         return f[1];
@@ -251,6 +259,7 @@ template <typename T>
 inline T curveHermit2DSmooth_(f32 t_, const CurveDataInfo* info, const T* f)
 {
     const T t = t_;
+
     if (f[0] >= t)
     {
         return f[1];
@@ -266,6 +275,7 @@ inline T curveHermit2DSmooth_(f32 t_, const CurveDataInfo* info, const T* f)
     for (s32 i = 0; i < n; ++i)
     {
         const auto j = 3 * i;
+
         if (f[j + 3] > t)
         {
             const T dx = f[j + 3] - f[j];

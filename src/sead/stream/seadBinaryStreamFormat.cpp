@@ -157,6 +157,7 @@ void BinaryStreamFormat::readBit(StreamSrc* pSrc, void* pData, u32 bits)
 void BinaryStreamFormat::readString(StreamSrc* pSrc, BufferedSafeString* pStr, u32 size)
 {
     u32 remainingSize = 0;
+
     if (size > static_cast<u32>(pStr->getBufferSize()))
     {
         remainingSize = size - pStr->getBufferSize();
@@ -330,6 +331,7 @@ void BinaryStreamFormat::writeBit(StreamSrc* pSrc, const void* pData, u32 bits)
 void BinaryStreamFormat::writeString(StreamSrc* pSrc, const SafeString& rStr, u32 size)
 {
     u32 length = rStr.calcLength();
+
     if (length > size)
     {
         length = size;
@@ -338,6 +340,7 @@ void BinaryStreamFormat::writeString(StreamSrc* pSrc, const SafeString& rStr, u3
     pSrc->write(rStr.cstr(), length);
 
     char nullChar = '\0';
+
     for (; length < size; length++)
     {
         pSrc->write(&nullChar, 1);

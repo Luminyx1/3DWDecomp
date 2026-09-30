@@ -33,6 +33,7 @@ void ListNode::insertFront_(ListNode* pNode)
     this->mPrev = pNode;
     pNode->mPrev = prev;
     pNode->mNext = this;
+
     if (prev == NULL)
     {
         return;
@@ -47,6 +48,7 @@ void ListNode::insertFront_(ListNode* pNode)
 void ListNode::erase_()
 {
     SEAD_ASSERT_MSG(isLinked(), "node is not linked.");
+
     if (mPrev != nullptr)
     {
         mPrev->mNext = mNext;
@@ -107,6 +109,7 @@ ListNode* ListImpl::nth(s32 index) const
     }
 
     ListNode* node = mStartEnd.mNext;
+
     for (s32 i = 0; i < index; ++i)
     {
         node = node->mNext;
@@ -123,6 +126,7 @@ s32 ListImpl::indexOf(const ListNode* pN) const
 {
     ListNode* node = mStartEnd.mNext;
     s32 index = 0;
+
     while (node != &mStartEnd)
     {
         if (node == pN)
@@ -143,6 +147,7 @@ s32 ListImpl::indexOf(const ListNode* pN) const
 void ListImpl::clear()
 {
     ListNode* node = mStartEnd.mNext;
+
     while (node != &mStartEnd)
     {
         ListNode* next = node->mNext;
@@ -163,6 +168,7 @@ void ListImpl::clear()
 void ListImpl::swap(ListNode* pN1, ListNode* pN2)
 {
     SEAD_ASSERT(pN1->mPrev && pN1->mNext && pN2->mPrev && pN2->mNext);
+
     if (pN1 == pN2)
     {
         return;
@@ -245,6 +251,7 @@ void ListImpl::reverse()
 void ListImpl::shuffle(Random* pRandom)
 {
     SEAD_ASSERT(pRandom);
+
     for (s32 i = mCount; i > 1; --i)
     {
         const u32 j = pRandom->getU32(i);

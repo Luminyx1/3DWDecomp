@@ -23,6 +23,7 @@ bool MessageSetBase::initialize(void* pData, Heap* pHeap) {
     mMsgFile = LMS_InitMessage(static_cast<const char*>(pData));
     s32 textNum = LMS_GetTextNum(mMsgFile);
     s32 num = textNum;
+
     if (textNum < 0) {
         LMS_CloseMessage(mMsgFile);
         num = 0;

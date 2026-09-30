@@ -8,9 +8,11 @@ void MethodTreeNode::pushBackChild(MethodTreeNode* pNode)
     lock_();
     pNode->detachSubTree();
     pNode->mCriticalSection = mCriticalSection;
+
     if (pNode->child())
     {
         auto* parent = pNode->child()->value();
+
         if (parent)
         {
             parent->attachMutexRec_(mCriticalSection);
@@ -26,9 +28,11 @@ void MethodTreeNode::pushFrontChild(MethodTreeNode* pNode)
     lock_();
     pNode->detachSubTree();
     pNode->mCriticalSection = mCriticalSection;
+
     if (pNode->child())
     {
         auto* parent = pNode->child()->value();
+
         if (parent)
         {
             parent->attachMutexRec_(mCriticalSection);
@@ -47,6 +51,7 @@ void MethodTreeNode::attachMutexRec_(CriticalSection* pM) const
     {
         auto* child = node->child();
         node->mCriticalSection = pM;
+
         if (child && child->value())
         {
             child->value()->attachMutexRec_(pM);
@@ -102,6 +107,7 @@ void MethodTreeNode::callRec_()
     }
 
     auto* node = child();
+
     if (node && !mPauseFlag.isOn(cPause_Child))
     {
         while (node)
@@ -127,9 +133,11 @@ MethodTreeNode* MethodTreeNode::find(Condition& rCondition)
     if (child())
     {
         MethodTreeNode* pChild = child()->value();
+
         if (pChild)
         {
             MethodTreeNode* pFound = pChild->find(rCondition);
+
             if (pFound)
             {
                 return pFound;
@@ -140,9 +148,11 @@ MethodTreeNode* MethodTreeNode::find(Condition& rCondition)
     if (next())
     {
         MethodTreeNode* pNext = next()->value();
+
         if (pNext)
         {
             MethodTreeNode* pFound = pNext->find(rCondition);
+
             if (pFound)
             {
                 return pFound;

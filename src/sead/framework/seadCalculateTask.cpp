@@ -54,6 +54,7 @@ void CalculateTask::attachCalcImpl()
     ScopedLock<CriticalSection> lock(&getMethodTreeMgr()->mCS);
 
     TaskBase* parentTask = parent() ? parent()->value() : nullptr;
+
     if (mTag == cSystem)
     {
         attachMethodWithCheck(0, &mCalcNode);

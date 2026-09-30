@@ -84,6 +84,7 @@ void WorkerMgr::initialize(const InitializeArg& rArg)
                                   rArg.thread_priorities[i], *name);
         mWorkers[i] = worker;
         worker->mCore = i;
+
         if (worker->mCore)
         {
             worker->setAffinity(CoreIdMask(i));
@@ -183,6 +184,7 @@ void WorkerMgr::run()
     {
         ++mNumWakeups;
         mLastWakeup.setNow();
+
         for (int i = 0; i < mWorkers.size(); ++i)
         {
             if (mWorkers[i]->mCore)
@@ -215,6 +217,7 @@ void WorkerMgr::sync()
     {
         std::array<Worker::State, 256> states{};
         u32 idx = 0;
+
         for (int i = 0; i < mWorkers.size(); ++i)
         {
             states[idx] = mWorkers[i]->mWorkerState.load();

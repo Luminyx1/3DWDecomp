@@ -17,6 +17,7 @@ TreeNode::TreeNode()
 void TreeNode::clearChildLinksRecursively_()
 {
     TreeNode* node = this->mChild;
+
     while (node != nullptr)
     {
         TreeNode* next = node->mNext;
@@ -44,6 +45,7 @@ s32 TreeNode::countChildren() const
 {
     s32 count = 0;
     TreeNode* node = mChild;
+
     while (node)
     {
         ++count;
@@ -72,6 +74,7 @@ void TreeNode::detachSubTree()
     if (mParent && mParent->mChild == this)
     {
         mParent->mChild = mNext;
+
         if (mNext)
         {
             mNext->mPrev = mPrev;
@@ -138,6 +141,7 @@ void TreeNode::insertAfterSelf(TreeNode* pNode)
     mNext = pNode;
     pNode->mPrev = this;
     pNode->mNext = next;
+
     if (next)
     {
         next->mPrev = pNode;
@@ -162,6 +166,7 @@ void TreeNode::insertBeforeSelf(TreeNode* pNode)
     mPrev = pNode;
     pNode->mPrev = prev;
     pNode->mNext = this;
+
     if (mParent && mParent->mChild == this)
     {
         mParent->mChild = pNode;
@@ -208,6 +213,7 @@ void TreeNode::pushBackSibling(TreeNode* pNode)
     pNode->detachSubTree();
 
     TreeNode* m;
+
     if (mParent && mParent->mChild)
     {
         m = mParent->mChild->mPrev;
@@ -216,6 +222,7 @@ void TreeNode::pushBackSibling(TreeNode* pNode)
     else
     {
         m = this;
+
         while (m->mNext)
         {
             m = m->mNext;
@@ -234,6 +241,7 @@ void TreeNode::pushBackSibling(TreeNode* pNode)
 void TreeNode::pushFrontChild(TreeNode* pNode)
 {
     pNode->detachSubTree();
+
     if (mChild)
     {
         pNode->mNext = mChild;

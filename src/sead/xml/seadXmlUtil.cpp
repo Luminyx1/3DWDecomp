@@ -77,6 +77,7 @@ XmlElement* XmlUtil::createBackSiblingAndSetupElement(XmlElement* pElement, cons
     auto* element = new (pHeap, sizeof(void*)) XmlElement();
     pElement->pushBackSibling(element);
     element->setName(rName);
+
     if (rContent.isEmpty())
     {
         element->setContent(nullptr, 0, false);
@@ -108,6 +109,7 @@ XmlElement* XmlUtil::createBackChildAndSetupElement(XmlElement* pElement, const 
     auto* element = new (pHeap, sizeof(void*)) XmlElement();
     pElement->pushBackChild(element);
     element->setName(rName);
+
     if (rContent.isEmpty())
     {
         element->setContent(nullptr, 0, false);
@@ -139,6 +141,7 @@ XmlElement* XmlUtil::createFrontChildAndSetupElement(XmlElement* pElement, const
     auto* element = new (pHeap, sizeof(void*)) XmlElement();
     pElement->pushFrontChild(element);
     element->setName(rName);
+
     if (rContent.isEmpty())
     {
         element->setContent(nullptr, 0, false);

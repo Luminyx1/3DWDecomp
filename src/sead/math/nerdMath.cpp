@@ -28,6 +28,7 @@ double estimateReciprocalSqrt(double value)
     u64 bits;
     __builtin_memcpy(&bits, &value, sizeof(bits));
     const u64 magnitude = bits & 0x7fffffffffffffffULL;
+
     if (magnitude > 0x7ff0000000000000ULL)
         bits |= 0x0008000000000000ULL;
     else if (magnitude == 0)
@@ -39,12 +40,14 @@ double estimateReciprocalSqrt(double value)
     else {
         u32 exponent;
         u32 index;
+
         if (bits & 0x7ff0000000000000ULL) {
             exponent = 0x5fe - ((static_cast<u32>(bits >> 52) + 1) >> 1);
             index = (bits >> 37) & 0xffff;
         } else {
             u64 mask = 0x8000000000000000ULL;
             int shift = -12;
+
             do {
                 ++shift;
             } while (static_cast<u32>(shift + 12) < 64 && !(bits & (mask >>= 1)));
