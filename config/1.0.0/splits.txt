@@ -3667,7 +3667,7 @@ src/nw/ui2d/ui2d_Layout.cpp:
     .text   start:0x005967D0 end:0x0059F830
 src/nw/ui2d/ui2d_Animator.cpp: done
     .text   start:0x0059F830 end:0x005A01B8
-src/nw/ui2d/ui2d_Group.cpp:
+src/nw/ui2d/ui2d_Group.cpp: done
     .text   start:0x005A01C0 end:0x005A06BC
 src/nw/ui2d/ui2d_Capture.cpp:
     .text   start:0x005A06C0 end:0x005A19B0
@@ -3727,7 +3727,7 @@ src/nw/ui2d/ui2d_ArcExtractor.cpp:
     .text   start:0x005E2540 end:0x005E2EEC
 src/nw/ui2d/ui2d_ShaderContainer.cpp: done
     .text   start:0x005E2EF0 end:0x005E3374
-src/nw/ui2d/ui2d_ResourceAccessor_dup2.cpp:
+src/nw/ui2d/ui2d_ResourceAccessor_dup2.cpp: done
     .text   start:0x005E3380 end:0x005E36C0
 src/nw/ui2d/ui2d_FontMgr.cpp:
     .text   start:0x005E36C0 end:0x005E42AC
@@ -3739,7 +3739,7 @@ src/nw/ui2d/ui2d_TextureContainer_dup2.cpp:
     .text   start:0x005E73A0 end:0x005E7B48
 src/nw/ui2d/ui2d_ScalableFontMgr.cpp:
     .text   start:0x005E7B50 end:0x005E8AB0
-src/nw/ui2d/ui2d_Init.cpp:
+src/nw/ui2d/ui2d_Init.cpp: done
     .text   start:0x005E8AB0 end:0x005E8C48
 src/nw/ui2d/ui2d_LayoutPaneFactory.cpp:
     .text   start:0x005E8C50 end:0x005E9BF4

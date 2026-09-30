@@ -59,7 +59,7 @@ public:
     bool mModelViewLoaded;
     bool mVertexBufferDirty;
     bool _18D;
-    bool _18E;
+    u8 mFlags;
     const ShaderInfo* m_pCurrentShader;
     u16 mCurrentShaderVariation;
 

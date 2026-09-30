@@ -50,8 +50,12 @@ public:
     typedef ColorTargetViewInfo InfoType;
 
     TColorTargetView();
-    void Initialize(TDevice<TTarget>*, const InfoType&);
-    void Finalize(TDevice<TTarget>*);
+    // device owns the target; info describes its texture and subresource.
+    void Initialize(TDevice<TTarget>* device, const InfoType& info) {
+        detail::ColorTargetViewImpl<TTarget>::Initialize(device, info);
+    }
+    // device is the device used to initialize this view.
+    void Finalize(TDevice<TTarget>* device) { detail::ColorTargetViewImpl<TTarget>::Finalize(device); }
     void SetUserPtr(void*);
     void* GetUserPtr();
     const void* GetUserPtr() const;

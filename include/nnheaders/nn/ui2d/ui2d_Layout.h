@@ -10,6 +10,7 @@
 #include <nn/gfx/gfx_Types.h>
 #include <nn/util/util_IntrusiveList.h>
 namespace nn::font { template<class T> class TagProcessorBase; }
+namespace nn::gfx { class DescriptorSlot; class TextureInfo; }
 
 namespace nn {
 namespace ui2d {
@@ -18,6 +19,8 @@ class Pane;
 class DrawInfo;
 class AnimResource;
 class ResourceAccessor;
+class LayoutPaneFactory;
+enum RenderTargetTextureLifetime : int;
 class GroupAnimator;
 class GroupArrayAnimator;
 struct BuildResultInformation;
@@ -102,6 +105,16 @@ public:
 
     static void* g_pAllocateFunction;
     static void* g_pFreeFunction;
+    static LayoutPaneFactory* g_pLayoutPaneFactory;
+    // Four words of shared random-generator state, initialized from the UI seed.
+    static u32 g_Random[4];
+    static RenderTargetTextureLifetime (*g_pCreateRenderTargetTextureResourceCallback)(
+        nn::gfx::Texture**, nn::gfx::TextureView**, nn::gfx::DescriptorSlot**,
+        const Layout*, const nn::gfx::TextureInfo&, void*, RenderTargetTextureLifetime);
+    static void (*g_pDestroyRenderTargetTextureResourceCallback)(
+        nn::gfx::Texture*, nn::gfx::TextureView*, nn::gfx::DescriptorSlot*,
+        const Layout*, void*, RenderTargetTextureLifetime);
+    static void* g_pRenderTargetTextureCallbackUserData;
 };
 }  // namespace ui2d
 }  // namespace nn

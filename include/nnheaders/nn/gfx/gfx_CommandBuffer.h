@@ -95,7 +95,10 @@ public:
     void SetDepthBounds(float, float);
     void SetLineWidth(float);
     void SetViewports(int, int, const ViewportStateInfo*);
-    void SetScissors(int, int, const ScissorStateInfo*);
+    // first selects the first scissor slot; count rectangles are read from scissors.
+    void SetScissors(int first, int count, const ScissorStateInfo* scissors) {
+        Impl::SetScissors(first, count, scissors);
+    }
     void WriteTimestamp(const GpuAddress&);
     void UpdateBuffer(const GpuAddress&, size_t, ptrdiff_t, size_t, const void*);
     void SetConstantBuffer(int, ShaderStage, const DescriptorSlot&);

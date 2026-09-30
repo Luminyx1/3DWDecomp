@@ -105,8 +105,12 @@ public:
     void SetMemory(void*, size_t);
     void* GetMemory();
     const void* GetMemory() const;
-    void Initialize(TDevice<TTarget>*, const InfoType&);
-    void Finalize(TDevice<TTarget>*);
+    // device owns the state; info supplies the viewport and scissor arrays.
+    void Initialize(TDevice<TTarget>* device, const InfoType& info) {
+        detail::ViewportScissorStateImpl<TTarget>::Initialize(device, info);
+    }
+    // device is the device used to initialize this state.
+    void Finalize(TDevice<TTarget>* device) { detail::ViewportScissorStateImpl<TTarget>::Finalize(device); }
 };
 
 }  // namespace nn::gfx

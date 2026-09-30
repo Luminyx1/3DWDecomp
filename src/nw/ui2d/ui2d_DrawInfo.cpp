@@ -27,7 +27,7 @@ DrawInfo::DrawInfo()
     m_ModelViewMtx._m.val[0] = {1, 0, 0, 0};
     m_ModelViewMtx._m.val[1] = {0, 1, 0, 0};
     m_ModelViewMtx._m.val[2] = {0, 0, 1, 0};
-    _18E = false;
+    mFlags = 0;
 }
 
 DrawInfo::~DrawInfo() = default;

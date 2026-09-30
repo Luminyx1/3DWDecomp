@@ -32,7 +32,7 @@ public:
 class PlacementTextureInfo : public TextureInfo {
 public:
     PlacementTextureInfo() : mWidth(0), mHeight(0) {}
-    const nn::font::detail::RuntimeTypeInfo* GetRuntimeTypeInfo() const override;
+    NN_RUNTIME_TYPEINFO(TextureInfo);
     void Finalize(nn::gfx::Device*) override;
     TextureSize GetSize() const override;
     bool IsValid() const override;
