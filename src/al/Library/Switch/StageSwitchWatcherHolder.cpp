@@ -3,30 +3,30 @@
 #include "Library/StageSwitch/StageSwitchWatcher.hpp"
 
 namespace al {
-    /**
-     * @brief Constructs a holder for a fixed number of watchers.
-     * @param maxHolders The maximum number of watchers.
-     */
-    StageSwitchWatcherHolder::StageSwitchWatcherHolder(s32 maxHolders)
-        : mNumHolders(0), mMaxHolders(maxHolders) {
-        mWatchers = new StageSwitchWatcher*[maxHolders];
-    }
+/**
+ * Constructs a holder for switch watchers.
+ * @param maxNum maximum number of watchers
+ */
+StageSwitchWatcherHolder::StageSwitchWatcherHolder(s32 maxNum)
+    : mNumHolders(0), mMaxHolders(maxNum) {
+    mWatchers = new StageSwitchWatcher*[maxNum];
+}
 
-    /**
-     * @brief Adds a watcher to the holder.
-     * @param pWatcher The watcher to add.
-     */
-    void StageSwitchWatcherHolder::add(StageSwitchWatcher* pWatcher) {
-        mWatchers[mNumHolders] = pWatcher;
-        mNumHolders++;
-    }
+/**
+ * Adds a watcher.
+ * @param pWatcher watcher to add
+ */
+void StageSwitchWatcherHolder::add(StageSwitchWatcher* pWatcher) {
+    mWatchers[mNumHolders] = pWatcher;
+    mNumHolders++;
+}
 
-    /**
-     * @brief Updates all held watchers.
-     */
-    void StageSwitchWatcherHolder::movement() {
-        for (s32 i = 0; i < mNumHolders; i++) {
-            mWatchers[i]->update();
-        }
+/**
+ * Updates all watchers.
+ */
+void StageSwitchWatcherHolder::movement() {
+    for (s32 i = 0; i < mNumHolders; i++) {
+        mWatchers[i]->update();
     }
+}
 }  // namespace al
