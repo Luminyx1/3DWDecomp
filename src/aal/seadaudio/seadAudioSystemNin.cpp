@@ -24,6 +24,7 @@ void AudioSystemNin::initialize() {
         mTaskThread = new (mHeap) AudioTaskThreadNin(mTaskThreadPriority, mHeap,
                                                      SafeString("sead::AudioTaskThread"), 0x2000, 0x40);
     }
+
     if (mIsAtkEnabled) {
         nn::atk::SoundSystem::SoundSystemParam& param = mAtkInitializeParam.mSoundSystemParam;
         param.enableCompatibleDownMixSetting = false;
@@ -37,6 +38,7 @@ void AudioSystemNin::initialize() {
         mWorkBuffer = new (mHeap, 0x40) u8[size];
         mAtkInitializeParam.setWorkMemory(mWorkBuffer, size);
     }
+
     initializeMain_();
     mIsInitialized = true;
 }
@@ -76,15 +78,18 @@ void AudioSystemNin::finalize() {
     if (!mIsInitialized) {
         return;
     }
+
     finalizeMain_();
     if (mWorkBuffer) {
         delete[] mWorkBuffer;
     }
+
     mWorkBuffer = nullptr;
     if (mTaskThread) {
         delete mTaskThread;
         mTaskThread = nullptr;
     }
+
     mIsInitialized = false;
 }
 
@@ -95,6 +100,7 @@ void AudioSystemNin::finalizeMain_() {
     if (mTaskThread) {
         mTaskThread->quitAndWaitDoneSingleThread(false);
     }
+
     if (mIsAtkEnabled) {
         nn::atk::SoundSystem::Finalize();
     }
@@ -121,9 +127,11 @@ bool AudioSystemNin::setOutputMode(AudioGlobal::OutputMode mode) {
         default:
             return false;
         }
+
         nn::atk::detail::driver::HardwareManager::GetInstance().SetOutputMode(nwMode, nn::atk::OutputDevice_Main);
         return true;
     }
+
     return false;
 }
 
@@ -135,6 +143,7 @@ AudioGlobal::OutputMode AudioSystemNin::getOutputMode() const {
     if (!mIsAtkEnabled) {
         return AudioGlobal::cOutputMode_Invalid;
     }
+
     switch (nn::atk::detail::driver::HardwareManager::GetInstance().GetOutputMode(nn::atk::OutputDevice_Main)) {
     case nn::atk::OutputMode_Monaural:
         return AudioGlobal::cOutputMode_Monaural;
@@ -157,6 +166,7 @@ bool AudioSystemNin::appendEffect(AudioGlobal::AuxBus bus, AudioFx* pFx) {
     if (!mIsAtkEnabled) {
         return false;
     }
+
     nn::atk::OutputDevice device;
     nn::atk::AuxBus nwBus = getAuxBusNw_(bus, &device);
     DynamicCast<AudioFxNin>(pFx);
@@ -197,6 +207,7 @@ bool AudioSystemNin::appendFxObject(AudioGlobal::AuxBus bus, AudioFxObject* pFxO
     if (!mIsAtkEnabled) {
         return false;
     }
+
     nn::atk::OutputDevice device;
     nn::atk::AuxBus nwBus = getAuxBusNw_(bus, &device);
     AudioFxBaseNin* fx = pFxObject->getImpl()->getFxNin();
@@ -213,6 +224,7 @@ void AudioSystemNin::clearEffect(AudioGlobal::AuxBus bus, s32 fadeFrames) {
     if (!mIsAtkEnabled) {
         return;
     }
+
     nn::atk::OutputDevice device;
     nn::atk::AuxBus nwBus = getAuxBusNw_(bus, &device);
     nn::atk::SoundSystem::ClearEffect(nwBus, device);
@@ -227,6 +239,7 @@ bool AudioSystemNin::isFinishedClearEffect(AudioGlobal::AuxBus bus) {
     if (!mIsAtkEnabled) {
         return true;
     }
+
     nn::atk::OutputDevice device;
     nn::atk::AuxBus nwBus = getAuxBusNw_(bus, &device);
     return nn::atk::SoundSystem::IsClearEffectFinished(nwBus, device);
@@ -357,6 +370,7 @@ void AudioSystemNin::initializeAtk_() {
     if (!mIsAtkEnabled) {
         return;
     }
+
     uintptr_t workMemory = reinterpret_cast<uintptr_t>(mAtkInitializeParam.getWorkMemory());
     size_t workMemorySize = mAtkInitializeParam.getWorkMemorySize();
     nn::atk::SoundSystem::Initialize(*mAtkInitializeParam.getSoundSystemParam(), workMemory, workMemorySize);
@@ -386,14 +400,17 @@ void AudioSystemNin::appendSoundFrameCallback(ISoundFrameCallback& rCallback) {
     if (!mIsAtkEnabled) {
         return;
     }
+
     if (mSoundFrameCallbacks.isEmpty()) {
         nn::atk::detail::driver::SoundThread::GetInstance().RegisterSoundFrameUserCallback(
             soundFrameCallback_, reinterpret_cast<uintptr_t>(this));
     }
+
     mCriticalSection.lock();
     if (mSoundFrameCallbacks.indexOf(&rCallback) == -1) {
         mSoundFrameCallbacks.pushBack(&rCallback);
     }
+
     mCriticalSection.unlock();
 }
 
@@ -413,10 +430,12 @@ void AudioSystemNin::removeSoundFrameCallback(ISoundFrameCallback& rCallback) {
     if (!mIsAtkEnabled) {
         return;
     }
+
     mCriticalSection.lock();
     if (mSoundFrameCallbacks.indexOf(&rCallback) >= 0) {
         mSoundFrameCallbacks.erase(&rCallback);
     }
+
     mCriticalSection.unlock();
     if (mSoundFrameCallbacks.isEmpty()) {
         nn::atk::detail::driver::SoundThread::GetInstance().ClearSoundFrameUserCallback();
@@ -430,6 +449,7 @@ void AudioSystemNin::clearSoundFrameCallback() {
     if (!mIsAtkEnabled) {
         return;
     }
+
     mCriticalSection.lock();
     mSoundFrameCallbacks.clear();
     mCriticalSection.unlock();
@@ -446,6 +466,7 @@ void AudioSystemNin::soundFrameProc_() {
             it->onSoundFrame();
         }
     }
+
     mCriticalSection.unlock();
 }
 

@@ -50,8 +50,10 @@ bool AudioFxBaseNin::AssignWorkBuffer(void* pBuffer, u32 size) {
         nn::audio::RequestAttachMemoryPool(&mMemoryPool);
         while (!nn::audio::IsMemoryPoolAttached(&mMemoryPool)) {
         }
+
         mIsMemoryPoolAttached = true;
     }
+
     return true;
 }
 
@@ -65,6 +67,7 @@ void AudioFxBaseNin::ReleaseWorkBuffer() {
         nn::audio::RequestDetachMemoryPool(&mMemoryPool);
         while (nn::audio::IsMemoryPoolAttached(&mMemoryPool)) {
         }
+
         nn::audio::ReleaseMemoryPool(&hardwareManager.GetAudioRendererConfig(), &mMemoryPool);
     }
 }

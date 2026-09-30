@@ -22,9 +22,11 @@ void AudioSoundHeapNin::create_(size_t size, Heap* pHeap) {
     if (!pHeap) {
         pHeap = HeapMgr::instance()->getCurrentHeap();
     }
+
     if (size == 0) {
         size = pHeap->getMaxAllocatableSize(4) - 32;
     }
+
     mBuffer = new (pHeap, 4) u8[size];
     Create(mBuffer, size);
 }

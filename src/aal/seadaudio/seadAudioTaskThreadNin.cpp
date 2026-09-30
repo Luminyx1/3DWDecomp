@@ -43,9 +43,11 @@ void AudioTaskThreadNin::calc_(MessageQueue::Element msg) {
     if (!msg) {
         return;
     }
+
     if (mListener) {
         mListener->onTaskBegin();
     }
+
     IAudioTaskNin* task = reinterpret_cast<IAudioTaskNin*>(msg);
     task->execute(mState == State::cQuitting);
     task->mPendingCount.decrement();
@@ -63,10 +65,12 @@ bool AudioTaskThreadNin::addTask(IAudioTaskNin* pTask) {
     if (mState == State::cQuitting || mState == State::cTerminated) {
         return false;
     }
+
     if (sendMessage(reinterpret_cast<MessageQueue::Element>(pTask), MessageQueue::BlockType::NonBlocking)) {
         pTask->mPendingCount.increment();
         return true;
     }
+
     return false;
 }
 }  // namespace sead

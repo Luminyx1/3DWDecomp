@@ -18,6 +18,7 @@ bool convertStartResult(nn::atk::SoundStartable::StartResult result, AudioStartR
                                                      code :
                                                      cAudioStartResult_Unknown);
     }
+
     return result.IsSuccess();
 }
 }  // namespace
@@ -157,6 +158,7 @@ nn::atk::SoundStartable::StartResult Audio3DActorNin::SetupSound(nn::atk::SoundH
     if (mIsStartDisabled || AudioMgr::instance()->getResetter()->isResetting()) {
         return StartResult(StartResult::ResultCode_ErrorUser);
     }
+
     return Sound3DActor::SetupSound(pHandle, soundId, pStartInfo, pSetupArg);
 }
 }  // namespace sead

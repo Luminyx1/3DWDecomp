@@ -49,6 +49,7 @@ bool AudioPlayerNin::trySetSoundMemoryPoolHandler(SoundMemoryPoolHandler* pHandl
     if (mMemoryPoolHandlers->isFull()) {
         return false;
     }
+
     mMemoryPoolHandlers->pushBack(pHandler);
     return true;
 }
@@ -62,18 +63,22 @@ AudioPlayerNin::~AudioPlayerNin() {
         delete[] mSetupBuffer;
         mSetupBuffer = nullptr;
     }
+
     if (mStreamBuffer) {
         delete[] mStreamBuffer;
         mStreamBuffer = nullptr;
     }
+
     if (mStreamCacheBuffer) {
         delete[] mStreamCacheBuffer;
         mStreamCacheBuffer = nullptr;
     }
+
     if (mSoundHeap) {
         delete mSoundHeap;
         mSoundHeap = nullptr;
     }
+
     if (mSoundDataMgr) {
         delete mSoundDataMgr;
         mSoundDataMgr = nullptr;
@@ -88,6 +93,7 @@ void AudioPlayerNin::stopAll(s32 fadeFrames) {
     if (!isAtkEnabled_()) {
         return;
     }
+
     u32 count = GetSoundPlayerCount();
     for (u32 i = 0; i < count; i++) {
         GetSoundPlayer(0x4000000 + i).StopAllSound(fadeFrames);
@@ -106,16 +112,19 @@ void AudioPlayerNin::finalize() {
     if (!isAtkEnabled_() || !IsAvailable()) {
         return;
     }
+
     stopAll(0);
     destroySoundHeap();
     if (mStreamMemoryPool) {
         nn::audio::RequestDetachMemoryPool(mStreamMemoryPool);
         while (nn::audio::IsMemoryPoolAttached(mStreamMemoryPool)) {
         }
+
         nn::audio::ReleaseMemoryPool(
             &nn::atk::detail::driver::HardwareManager::GetInstance().GetAudioRendererConfig(),
             mStreamMemoryPool);
     }
+
     shutdownDataManagement();
     mSoundDataMgr->unmountSoundArchive();
 }
@@ -135,6 +144,7 @@ void AudioPlayerNin::destroySoundHeap() {
     if (!isAtkEnabled_()) {
         return;
     }
+
     mSoundDataMgr->connectSoundHeap(nullptr);
     if (mSoundHeap) {
         delete mSoundHeap;
@@ -149,11 +159,13 @@ void AudioPlayerNin::shutdownDataManagement() {
     if (!isAtkEnabled_()) {
         return;
     }
+
     Finalize();
     if (mStreamBuffer) {
         delete[] mStreamBuffer;
         mStreamBuffer = nullptr;
     }
+
     if (mSetupBuffer) {
         delete[] mSetupBuffer;
         mSetupBuffer = nullptr;
@@ -167,6 +179,7 @@ void AudioPlayerNin::calc() {
     if (!isAtkEnabled_() || !nn::atk::SoundSystem::IsInitialized()) {
         return;
     }
+
     if (mIsUsingCriticalSection) {
         mCriticalSection.lock();
         Update();
@@ -186,6 +199,7 @@ bool AudioPlayerNin::startSound(SoundHandle* pHandle, u32 soundId) {
     if (!isAtkEnabled_()) {
         return false;
     }
+
     return StartSound(pHandle, soundId).IsSuccess();
 }
 
@@ -199,6 +213,7 @@ bool AudioPlayerNin::startSound(SoundHandle* pHandle, const char* pSoundName) {
     if (!isAtkEnabled_()) {
         return false;
     }
+
     return StartSound(pHandle, pSoundName).IsSuccess();
 }
 
@@ -212,6 +227,7 @@ bool AudioPlayerNin::holdSound(SoundHandle* pHandle, u32 soundId) {
     if (!isAtkEnabled_()) {
         return false;
     }
+
     return HoldSound(pHandle, soundId).IsSuccess();
 }
 
@@ -225,6 +241,7 @@ bool AudioPlayerNin::holdSound(SoundHandle* pHandle, const char* pSoundName) {
     if (!isAtkEnabled_()) {
         return false;
     }
+
     return HoldSound(pHandle, pSoundName).IsSuccess();
 }
 
@@ -236,10 +253,12 @@ u32 AudioPlayerNin::getSoundCount() const {
     if (!isAtkEnabled_()) {
         return 0;
     }
+
     const nn::atk::SoundArchive* archive = mSoundDataMgr->getSoundArchive();
     if (!archive) {
         return 0;
     }
+
     return archive->GetSoundCount();
 }
 
@@ -251,16 +270,19 @@ u32 AudioPlayerNin::getTotalSoundCount() const {
     if (!isAtkEnabled_()) {
         return 0;
     }
+
     const nn::atk::SoundArchive* archive = mSoundDataMgr->getSoundArchive();
     if (!archive) {
         return 0;
     }
+
     u32 count = archive->GetSoundCount();
     for (u32 i = 0; i < mAddonArchiveCount - 1; i++) {
         if (GetAddonSoundArchive(i)->IsAvailable()) {
             count += GetAddonSoundArchive(i)->GetSoundCount();
         }
     }
+
     return count;
 }
 
@@ -273,10 +295,12 @@ const char* AudioPlayerNin::getSoundName(u32 soundId) const {
     if (!isAtkEnabled_()) {
         return nullptr;
     }
+
     const nn::atk::SoundArchive* archive = mSoundDataMgr->getSoundArchive();
     if (!archive) {
         return nullptr;
     }
+
     return archive->GetItemLabel(soundId);
 }
 
@@ -289,11 +313,13 @@ const char* AudioPlayerNin::getAddonSoundName(u32 soundId) const {
     if (!isAtkEnabled_()) {
         return nullptr;
     }
+
     for (u32 i = 0; i < mAddonArchiveCount - 1; i++) {
         if (GetAddonSoundArchive(i)) {
             return GetAddonSoundArchive(i)->GetItemLabel(soundId);
         }
     }
+
     return nullptr;
 }
 
@@ -306,11 +332,13 @@ const char* AudioPlayerNin::getAddonArchiveName(s32 soundId) const {
     if (!isAtkEnabled_()) {
         return nullptr;
     }
+
     for (u32 i = 0; i < mAddonArchiveCount - 1; i++) {
         if (GetAddonSoundArchive(i) && GetAddonSoundArchive(i)->GetItemLabel(soundId)) {
             return GetAddonSoundArchiveName(i);
         }
     }
+
     return nullptr;
 }
 
@@ -323,10 +351,12 @@ u32 AudioPlayerNin::getSoundId(const char* pSoundName) const {
     if (!isAtkEnabled_()) {
         return 0xffffffff;
     }
+
     const nn::atk::SoundArchive* archive = mSoundDataMgr->getSoundArchive();
     if (!archive) {
         return 0xffffffff;
     }
+
     return archive->GetItemId(pSoundName);
 }
 
@@ -339,12 +369,14 @@ u32 AudioPlayerNin::getAddonSoundId(u32 soundId) const {
     if (!isAtkEnabled_()) {
         return 0xffffffff;
     }
+
     for (u32 i = 0; i < mAddonArchiveCount - 1; i++) {
         if (GetAddonSoundArchive(i)) {
             GetAddonSoundArchive(i);
             return soundId | 0x1000000;
         }
     }
+
     return 0xffffffff;
 }
 
@@ -356,6 +388,7 @@ bool AudioPlayerNin::areAddonArchivesAdded() const {
     if (!isAtkEnabled_()) {
         return false;
     }
+
     return GetAddonSoundArchiveCount() > 0;
 }
 
@@ -367,13 +400,16 @@ void AudioPlayerNin::pauseAll(s32 fadeFrames) {
     if (!isAtkEnabled_()) {
         return;
     }
+
     u32 count = GetSoundPlayerCount();
     if (count == 0) {
         return;
     }
+
     for (u32 i = 0; i < count; i++) {
         GetSoundPlayer(0x4000000 + i).PauseAllSound(true, fadeFrames);
     }
+
     mIsPaused = true;
 }
 
@@ -386,13 +422,16 @@ void AudioPlayerNin::setPauseAll_(s32 fadeFrames, bool pause) {
     if (!isAtkEnabled_()) {
         return;
     }
+
     u32 count = GetSoundPlayerCount();
     if (count == 0) {
         return;
     }
+
     for (u32 i = 0; i < count; i++) {
         GetSoundPlayer(0x4000000 + i).PauseAllSound(pause, fadeFrames);
     }
+
     mIsPaused = pause;
 }
 
@@ -404,13 +443,16 @@ void AudioPlayerNin::unpauseAll(s32 fadeFrames) {
     if (!isAtkEnabled_()) {
         return;
     }
+
     u32 count = GetSoundPlayerCount();
     if (count == 0) {
         return;
     }
+
     for (u32 i = 0; i < count; i++) {
         GetSoundPlayer(0x4000000 + i).PauseAllSound(false, fadeFrames);
     }
+
     mIsPaused = false;
 }
 
@@ -429,10 +471,12 @@ AudioPlayerNin::detail_SetupSound(nn::atk::SoundHandle* pHandle, u32 soundId, bo
     if (!isAtkEnabled_()) {
         return StartResult(StartResult::ResultCode_ErrorUser);
     }
+
     DynamicCast<AudioSystemNin>(AudioMgr::instance()->getAudioSystem());
     if (mIsStartDisabled || AudioMgr::instance()->getResetter()->isResetting()) {
         return StartResult(StartResult::ResultCode_ErrorUser);
     }
+
     return SoundArchivePlayer::detail_SetupSound(pHandle, soundId, holdFlag, pSoundArchiveName,
                                                  pStartInfo);
 }
@@ -446,6 +490,7 @@ void AudioPlayerNin::createSoundHeap(size_t size, Heap* pHeap) {
     if (!isAtkEnabled_()) {
         return;
     }
+
     mSoundHeap = new (pHeap, 0x20) AudioSoundHeapNin(size, pHeap);
     mSoundDataMgr->connectSoundHeap(mSoundHeap);
 }
@@ -465,6 +510,7 @@ bool AudioPlayerNin::setupDataManagement(u32 streamBufferMargin, u32 streamReadC
     if (!isAtkEnabled_()) {
         return false;
     }
+
     const nn::atk::SoundArchive* archive = mSoundDataMgr->getSoundArchive();
     mRequiredStreamBufferSize = GetRequiredStreamBufferSize(archive);
     u32 streamBufferSize =
@@ -490,6 +536,7 @@ bool AudioPlayerNin::setupDataManagementInner_(const nn::atk::SoundArchive& rArc
     if (!isAtkEnabled_()) {
         return false;
     }
+
     mAddonArchiveCount = addonArchiveCount;
     size_t addonSize = addonArchiveCount * size_t(0x70);
     u32 setupBufferSize =
@@ -506,6 +553,7 @@ bool AudioPlayerNin::setupDataManagementInner_(const nn::atk::SoundArchive& rArc
         nn::audio::RequestAttachMemoryPool(mStreamMemoryPool);
         while (!nn::audio::IsMemoryPoolAttached(mStreamMemoryPool)) {
         }
+
         if (streamReadCacheSize != 0) {
             mStreamCacheBufferSize =
                 GetRequiredStreamCacheSize(&rArchive, (streamReadCacheSize + 0x3f) & ~0x3f);
@@ -541,6 +589,7 @@ bool AudioPlayerNin::setupDataManagement(const DataManagementSetupParam& rParam)
     if (!isAtkEnabled_()) {
         return false;
     }
+
     const nn::atk::SoundArchive* archive = mSoundDataMgr->getSoundArchive();
     mRequiredStreamBufferSize = GetRequiredStreamBufferSize(archive);
     u32 streamBufferSize =

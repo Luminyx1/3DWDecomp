@@ -36,5 +36,6 @@ private:
     sead::CriticalSection mCriticalSection;
     bool mIsCallbackRegistered = false;
 };
+
 static_assert(sizeof(AudioFrameProcessMgr) == 0x60);
 }  // namespace aal

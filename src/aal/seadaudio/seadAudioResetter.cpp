@@ -24,6 +24,7 @@ void AudioResetter::reset(s32 fadeFrames) {
     if (mAudioMgr->getSubsetList().isEmpty()) {
         return;
     }
+
     for (auto it = mAudioMgr->getSubsetList().begin(); it != mAudioMgr->getSubsetList().end(); ++it) {
         it->reset(fadeFrames);
     }
@@ -37,11 +38,13 @@ bool AudioResetter::isResetting() const {
     if (mAudioMgr->getSubsetList().isEmpty()) {
         return false;
     }
+
     for (auto it = mAudioMgr->getSubsetList().begin(); it != mAudioMgr->getSubsetList().end(); ++it) {
         if (it->isResetting()) {
             return true;
         }
     }
+
     return false;
 }
 
@@ -53,11 +56,13 @@ bool AudioResetter::isResetDone() const {
     if (mAudioMgr->getSubsetList().isEmpty()) {
         return true;
     }
+
     for (auto it = mAudioMgr->getSubsetList().begin(); it != mAudioMgr->getSubsetList().end(); ++it) {
         if (!it->isResetDone()) {
             return false;
         }
     }
+
     return true;
 }
 
@@ -68,6 +73,7 @@ void AudioResetter::recoverReset() {
     if (mAudioMgr->getSubsetList().isEmpty()) {
         return;
     }
+
     for (auto it = mAudioMgr->getSubsetList().begin(); it != mAudioMgr->getSubsetList().end(); ++it) {
         it->recoverReset();
     }
@@ -81,6 +87,7 @@ void AudioResetter::shutdown(s32 fadeFrames) {
     if (mAudioMgr->getSubsetList().isEmpty()) {
         return;
     }
+
     for (auto it = mAudioMgr->getSubsetList().begin(); it != mAudioMgr->getSubsetList().end(); ++it) {
         it->shutdown(fadeFrames);
     }
@@ -94,11 +101,13 @@ bool AudioResetter::isShuttingDown() const {
     if (mAudioMgr->getSubsetList().isEmpty()) {
         return false;
     }
+
     for (auto it = mAudioMgr->getSubsetList().begin(); it != mAudioMgr->getSubsetList().end(); ++it) {
         if (it->isShuttingDown()) {
             return true;
         }
     }
+
     return false;
 }
 
@@ -110,11 +119,13 @@ bool AudioResetter::isShutdownDone() const {
     if (mAudioMgr->getSubsetList().isEmpty()) {
         return true;
     }
+
     for (auto it = mAudioMgr->getSubsetList().begin(); it != mAudioMgr->getSubsetList().end(); ++it) {
         if (!it->isShutdownDone()) {
             return false;
         }
     }
+
     return true;
 }
 }  // namespace sead

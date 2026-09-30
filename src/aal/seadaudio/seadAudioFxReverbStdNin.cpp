@@ -65,10 +65,12 @@ void AudioFxReverbStdNin::initVars_() {
         mCombCoef[i][0] = 0.0f;
         mCombCoef[i][1] = 0.0f;
     }
+
     for (u32 i = 0; i < cAllPassCount; i++) {
         mAllPassDelaySize[i] = 0;
         mAllPassPos[i] = 0;
     }
+
     mAllPassCoef[0] = 0.0f;
     mAllPassCoef[1] = 0.0f;
     mLpfInGain[0] = 0.0f;
@@ -94,6 +96,7 @@ bool AudioFxReverbStdNin::Initialize() {
     if (mIsInitialized) {
         return false;
     }
+
     clearBuffer_();
     mIsInitialized = true;
     return true;
@@ -107,24 +110,29 @@ void AudioFxReverbStdNin::clearBuffer_() {
     for (u32 i = 0; i < pairCount; i++) {
         memset(mEarlyBuffer[i], 0, mEarlyDelaySize * sizeof(Vector2f));
     }
+
     for (u32 i = 0; i < pairCount; i++) {
         if (mPreDelayBuffer[i]) {
             memset(mPreDelayBuffer[i], 0, mPreDelaySize * sizeof(Vector2f));
         }
     }
+
     for (u32 j = 0; j < cCombCount; j++) {
         for (u32 i = 0; i < pairCount; i++) {
             memset(mCombBuffer[j][i], 0, mCombDelaySize[j] * sizeof(Vector2f));
         }
     }
+
     for (u32 j = 0; j < cAllPassCount; j++) {
         for (u32 i = 0; i < pairCount; i++) {
             memset(mAllPassBuffer[j][i], 0, mAllPassDelaySize[j] * sizeof(Vector2f));
         }
     }
+
     for (u32 i = 0; i < pairCount; i++) {
         mLpfHistory[i].set(0.0f, 0.0f);
     }
+
     initBufferPos_();
 }
 
@@ -196,6 +204,7 @@ void AudioFxReverbStdNin::updateFx2ch_(s32* pCh0, s32* pCh1, u32 sampleCount) {
             in0x = delayed0x;
             in0y = delayed0y;
         }
+
         Vector2f* comb00 = &mCombBuffer[0][0][mCombPos[0]];
         f32 comb00x = comb00->x;
         f32 comb00y = comb00->y;
@@ -233,9 +242,11 @@ void AudioFxReverbStdNin::updateFx2ch_(s32* pCh0, s32* pCh1, u32 sampleCount) {
         if (mPreDelaySize != 0) {
             mPreDelayPos = mPreDelayPos + 1 >= mPreDelaySize ? 0 : mPreDelayPos + 1;
         }
+
         for (u32 j = 0; j < cCombCount; j++) {
             mCombPos[j] = mCombPos[j] + 1 >= mCombDelaySize[j] ? 0 : mCombPos[j] + 1;
         }
+
         for (u32 j = 0; j < cAllPassCount; j++) {
             mAllPassPos[j] = mAllPassPos[j] + 1 >= mAllPassDelaySize[j] ? 0 : mAllPassPos[j] + 1;
         }
@@ -296,6 +307,7 @@ void AudioFxReverbStdNin::updateFx4ch_(s32* pCh0, s32* pCh1, s32* pCh2, s32* pCh
             in1x = delayed1x;
             in1y = delayed1y;
         }
+
         Vector2f* comb00 = &mCombBuffer[0][0][mCombPos[0]];
         f32 comb00x = comb00->x;
         f32 comb00y = comb00->y;
@@ -365,9 +377,11 @@ void AudioFxReverbStdNin::updateFx4ch_(s32* pCh0, s32* pCh1, s32* pCh2, s32* pCh
         if (mPreDelaySize != 0) {
             mPreDelayPos = mPreDelayPos + 1 >= mPreDelaySize ? 0 : mPreDelayPos + 1;
         }
+
         for (u32 j = 0; j < cCombCount; j++) {
             mCombPos[j] = mCombPos[j] + 1 >= mCombDelaySize[j] ? 0 : mCombPos[j] + 1;
         }
+
         for (u32 j = 0; j < cAllPassCount; j++) {
             mAllPassPos[j] = mAllPassPos[j] + 1 >= mAllPassDelaySize[j] ? 0 : mAllPassPos[j] + 1;
         }
@@ -444,6 +458,7 @@ void AudioFxReverbStdNin::updateFx6ch_(s32* pCh0, s32* pCh1, s32* pCh2, s32* pCh
             in2x = delayed2x;
             in2y = delayed2y;
         }
+
         Vector2f* comb00 = &mCombBuffer[0][0][mCombPos[0]];
         f32 comb00x = comb00->x;
         f32 comb00y = comb00->y;
@@ -545,9 +560,11 @@ void AudioFxReverbStdNin::updateFx6ch_(s32* pCh0, s32* pCh1, s32* pCh2, s32* pCh
         if (mPreDelaySize != 0) {
             mPreDelayPos = mPreDelayPos + 1 >= mPreDelaySize ? 0 : mPreDelayPos + 1;
         }
+
         for (u32 j = 0; j < cCombCount; j++) {
             mCombPos[j] = mCombPos[j] + 1 >= mCombDelaySize[j] ? 0 : mCombPos[j] + 1;
         }
+
         for (u32 j = 0; j < cAllPassCount; j++) {
             mAllPassPos[j] = mAllPassPos[j] + 1 >= mAllPassDelaySize[j] ? 0 : mAllPassPos[j] + 1;
         }
@@ -574,6 +591,7 @@ bool AudioFxReverbStdNin::SetParam(const AudioFxReverbStdParamNin& rParam) {
     if (!mIsBufferAssigned) {
         setupDelaySizes_(rParam);
     }
+
     setupGains_(rParam);
     _1e8 = rParam._38;
     _1ec = rParam._3c;
@@ -615,6 +633,7 @@ void AudioFxReverbStdNin::setupGains_(const AudioFxReverbStdParamNin& rParam) {
             10.0f, (mCombDelaySize[i] * -3.0f) / (rParam.mDecayTime * getSampleRate_()));
         mCombCoef[i][1] = mCombCoef[i][0];
     }
+
     mAllPassCoef[0] = rParam.mColoration;
     mAllPassCoef[1] = mAllPassCoef[0];
     f32 lpf = Mathf::clampMin(rParam.mLpfAmount, 0.05f);
@@ -639,11 +658,13 @@ size_t AudioFxReverbStdNin::GetRequiredMemSize() const {
         combSize += (mCombDelaySize[i] * sizeof(Vector2f) + 0x1f) & ~0x1f;
         combSize *= pairCount;
     }
+
     u32 allPassSize = 0;
     for (u32 i = 0; i < cAllPassCount; i++) {
         allPassSize += (mAllPassDelaySize[i] * sizeof(Vector2f) + 0x1f) & ~0x1f;
         allPassSize *= pairCount;
     }
+
     u32 size = AudioFxBaseNin::GetRequiredMemSize();
     size += delaySize * pairCount + combSize + allPassSize + 0x20;
     return size;
@@ -659,6 +680,7 @@ bool AudioFxReverbStdNin::AssignWorkBuffer(void* pBuffer, u32 size) {
     if (mIsBufferAssigned) {
         return false;
     }
+
     AudioFxBaseNin::AssignWorkBuffer(pBuffer, size);
     uintptr_t start = reinterpret_cast<uintptr_t>(mFxWorkBuffer);
     uintptr_t current = (start + 0x1f) & ~0x1f;
@@ -667,6 +689,7 @@ bool AudioFxReverbStdNin::AssignWorkBuffer(void* pBuffer, u32 size) {
         mEarlyBuffer[i] = reinterpret_cast<Vector2f*>(current);
         current = (reinterpret_cast<uintptr_t>(mEarlyBuffer[i] + mEarlyDelaySize) + 0x1f) & ~0x1f;
     }
+
     if (mPreDelaySize != 0) {
         for (u32 i = 0; i < pairCount; i++) {
             mPreDelayBuffer[i] = reinterpret_cast<Vector2f*>(current);
@@ -674,6 +697,7 @@ bool AudioFxReverbStdNin::AssignWorkBuffer(void* pBuffer, u32 size) {
                 (reinterpret_cast<uintptr_t>(mPreDelayBuffer[i] + mPreDelaySize) + 0x1f) & ~0x1f;
         }
     }
+
     for (u32 j = 0; j < cCombCount; j++) {
         for (u32 i = 0; i < pairCount; i++) {
             mCombBuffer[j][i] = reinterpret_cast<Vector2f*>(current);
@@ -681,6 +705,7 @@ bool AudioFxReverbStdNin::AssignWorkBuffer(void* pBuffer, u32 size) {
                       ~0x1f;
         }
     }
+
     for (u32 j = 0; j < cAllPassCount; j++) {
         for (u32 i = 0; i < pairCount; i++) {
             mAllPassBuffer[j][i] = reinterpret_cast<Vector2f*>(current);
@@ -689,9 +714,11 @@ bool AudioFxReverbStdNin::AssignWorkBuffer(void* pBuffer, u32 size) {
                 ~0x1f;
         }
     }
+
     if (static_cast<s64>(current - start) > size) {
         return false;
     }
+
     mIsBufferAssigned = true;
     return true;
 }
@@ -705,19 +732,23 @@ void AudioFxReverbStdNin::ReleaseWorkBuffer() {
         mEarlyBuffer[i] = nullptr;
         mPreDelayBuffer[i] = nullptr;
     }
+
     for (u32 j = 0; j < cCombCount; j++) {
         for (u32 i = 0; i < cPairCountMax; i++) {
             mCombBuffer[j][i] = nullptr;
         }
     }
+
     for (u32 j = 0; j < cAllPassCount; j++) {
         for (u32 i = 0; i < cPairCountMax; i++) {
             mAllPassBuffer[j][i] = nullptr;
         }
     }
+
     for (u32 i = 0; i < 6; i++) {
         _1b8[i] = nullptr;
     }
+
     AudioFxBaseNin::ReleaseWorkBuffer();
 }
 
@@ -730,9 +761,11 @@ void AudioFxReverbStdNin::initBufferPos_() {
     for (u32 i = 0; i < cCombCount; i++) {
         mCombPos[i] = 0;
     }
+
     for (u32 i = 0; i < cAllPassCount; i++) {
         mAllPassPos[i] = 0;
     }
+
     _1f0 = 0;
     _1f8 = 0;
 }

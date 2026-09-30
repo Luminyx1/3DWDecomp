@@ -30,6 +30,7 @@ void Audio3DListenerGroupNin::append(Audio3DListenerNin& rListener) {
     if (mMgr && !mMgr->isListenerAddedToNw(rListener)) {
         mMgr->getSound3DManager()->AddListener(&rListener);
     }
+
     mListeners.pushBack(&rListener);
 }
 
@@ -41,21 +42,27 @@ void Audio3DListenerGroupNin::reflectGroupParamToListener_(Audio3DListenerNin& r
     if (rListener.isFollowingGroup(Audio3DListenerNin::cGroupParam_InteriorSize)) {
         rListener.SetInteriorSize(mParam.mInteriorSize);
     }
+
     if (rListener.isFollowingGroup(Audio3DListenerNin::cGroupParam_MaxVolumeDistance)) {
         rListener.SetMaxVolumeDistance(mParam.mMaxVolumeDistance);
     }
+
     if (rListener.isFollowingGroup(Audio3DListenerNin::cGroupParam_UnitDistance)) {
         rListener.SetUnitDistance(mParam.mUnitDistance);
     }
+
     if (rListener.isFollowingGroup(Audio3DListenerNin::cGroupParam_UnitBiquadFilterValue)) {
         rListener.SetUnitBiquadFilterValue(mParam.mUnitBiquadFilterValue);
     }
+
     if (rListener.isFollowingGroup(Audio3DListenerNin::cGroupParam_MaxBiquadFilterValue)) {
         rListener.SetMaxBiquadFilterValue(mParam.mMaxBiquadFilterValue);
     }
+
     if (rListener.isFollowingGroup(Audio3DListenerNin::cGroupParam_UserParam)) {
         rListener.SetUserParam(mParam.mUserParam);
     }
+
     if (rListener.isFollowingGroup(Audio3DListenerNin::cGroupParam_OutputTypeFlag)) {
         rListener.SetOutputTypeFlag(mParam.mOutputTypeFlag);
     }
@@ -69,6 +76,7 @@ void Audio3DListenerGroupNin::remove(Audio3DListenerNin& rListener) {
     if (mMgr && mMgr->isListenerAddedToNw(rListener)) {
         mMgr->getSound3DManager()->RemoveListener(&rListener);
     }
+
     mListeners.erase(&rListener);
 }
 
@@ -83,6 +91,7 @@ void Audio3DListenerGroupNin::removeAll() {
             }
         }
     }
+
     mListeners.clear();
 }
 
@@ -331,6 +340,7 @@ void Audio3DListenerGroupNin::genMessage(hostio::Context* pContext) {
 
         }
     }
+
     FormatFixedSafeString<32> name("address : %08x", reinterpret_cast<uintptr_t>(this));
 }
 
@@ -342,15 +352,19 @@ void Audio3DListenerGroupNin::listenPropertyEvent(const hostio::PropertyEvent* p
     if (pEvent->getIdValue() == reinterpret_cast<uintptr_t>(&mParam.mInteriorSize)) {
         updateInteriorSizeAll_();
     }
+
     if (pEvent->getIdValue() == reinterpret_cast<uintptr_t>(&mParam.mMaxVolumeDistance)) {
         updateMaxVolumeDistanceAll_();
     }
+
     if (pEvent->getIdValue() == reinterpret_cast<uintptr_t>(&mParam.mUnitDistance)) {
         updateUnitDistanceAll_();
     }
+
     if (pEvent->getIdValue() == reinterpret_cast<uintptr_t>(&mParam.mUnitBiquadFilterValue)) {
         updateUnitBiquadFilterValueAll_();
     }
+
     if (pEvent->getIdValue() == reinterpret_cast<uintptr_t>(&mParam.mMaxBiquadFilterValue)) {
         updateMaxBiquadFilterValueAll_();
     }

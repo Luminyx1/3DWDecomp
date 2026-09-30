@@ -21,6 +21,7 @@ AudioFsSoundArchiveNin::~AudioFsSoundArchiveNin() {
         delete[] mHeaderBuffer;
         mHeaderBuffer = nullptr;
     }
+
     if (mLabelStringBuffer) {
         delete[] mLabelStringBuffer;
         mLabelStringBuffer = nullptr;
@@ -36,6 +37,7 @@ bool AudioFsSoundArchiveNin::open(const void* pFileName) {
     if (mIsFileAccessInFunction) {
         SetFileAccessMode(FileAccessMode_InFunction);
     }
+
     FixedSafeString<512> path;
     path.copy(mContentRootPath);
     path.append("/");
@@ -50,6 +52,7 @@ bool AudioFsSoundArchiveNin::open(const void* pFileName) {
         mLabelStringBuffer = new (mHeap, 0x40) u8[labelSize];
         LoadLabelStringData(mLabelStringBuffer, labelSize);
     }
+
     return true;
 }
 
@@ -132,10 +135,12 @@ AudioSoundDataMgrNin::~AudioSoundDataMgrNin() {
         Finalize();
         mIsSetup = false;
     }
+
     if (mSoundArchive) {
         delete mSoundArchive;
         mSoundArchive = nullptr;
     }
+
     if (mWorkBuffer) {
         delete[] mWorkBuffer;
         mWorkBuffer = nullptr;
@@ -158,10 +163,12 @@ void AudioSoundDataMgrNin::connectSoundHeap(AudioSoundHeapNin* pHeap) {
     if (!isNwEnabled_()) {
         return;
     }
+
     mDefaultSoundHeap = pHeap;
     if (!pHeap) {
         return;
     }
+
     const nn::atk::SoundArchive* archive = getSoundArchive();
     if (archive) {
         mDefaultSoundHeap->setSoundDataManagement(*this, const_cast<nn::atk::SoundArchive&>(*archive));
@@ -184,9 +191,11 @@ const nn::atk::SoundArchive* AudioSoundDataMgrNin::getSoundArchive() const {
     if (!isNwEnabled_()) {
         return nullptr;
     }
+
     if (!mSoundArchive) {
         return nullptr;
     }
+
     switch (mSoundArchive->getType()) {
     case AudioSoundArchiveBaseNin::cType_Fs:
         return DynamicCast<AudioFsSoundArchiveNin>(mSoundArchive);
@@ -210,12 +219,14 @@ bool AudioSoundDataMgrNin::mountSoundArchiveFromFs(const SafeString& rPath, Heap
     if (!isNwEnabled_()) {
         return false;
     }
+
     AudioFsSoundArchiveNin* archive = new (pHeap, 0x40) AudioFsSoundArchiveNin(pHeap);
     mSoundArchive = archive;
     archive->setLoadLabelString(loadLabelString);
     if (mContentRootPath) {
         archive->setContentRootPath(mContentRootPath);
     }
+
     archive->setFileAccessInFunction(fileAccessInFunction);
     archive->open(rPath.cstr());
     return setupManager_(pHeap);
@@ -230,6 +241,7 @@ bool AudioSoundDataMgrNin::setupManager_(Heap* pHeap) {
     if (!isNwEnabled_()) {
         return false;
     }
+
     u32 size = GetRequiredMemSize(getSoundArchive());
     mWorkBuffer = new (pHeap, 0x40) u8[size];
     bool result = Initialize(getSoundArchive(), mWorkBuffer, size);
@@ -247,6 +259,7 @@ bool AudioSoundDataMgrNin::mountSoundArchiveFromMemory(const void* pArchive, Hea
     if (!isNwEnabled_()) {
         return false;
     }
+
     mSoundArchive = new (pHeap, 0x40) AudioMemorySoundArchiveNin(pHeap);
     mSoundArchive->open(pArchive);
     return setupManager_(pHeap);
@@ -259,13 +272,16 @@ void AudioSoundDataMgrNin::unmountSoundArchive() {
     if (!isNwEnabled_()) {
         return;
     }
+
     if (mIsSetup) {
         Finalize();
         mIsSetup = false;
     }
+
     if (mSoundArchive) {
         delete mSoundArchive;
     }
+
     mSoundArchive = nullptr;
     if (mWorkBuffer) {
         delete[] mWorkBuffer;
@@ -285,9 +301,11 @@ bool AudioSoundDataMgrNin::loadData(u32 itemId, u32 loadFlag, u32 loadBlockSize,
     if (!isNwEnabled_()) {
         return false;
     }
+
     if (!tryGetDefaultSoundHeapAndCheckReady_(&pHeap)) {
         return false;
     }
+
     return LoadData(itemId, pHeap, loadFlag, loadBlockSize);
 }
 
@@ -300,12 +318,14 @@ bool AudioSoundDataMgrNin::tryGetDefaultSoundHeapAndCheckReady_(AudioSoundHeapNi
     if (!isNwEnabled_()) {
         return false;
     }
+
     if (!*ppHeap) {
         *ppHeap = mDefaultSoundHeap;
         if (!*ppHeap) {
             return false;
         }
     }
+
     return IsAvailable();
 }
 
@@ -322,9 +342,11 @@ bool AudioSoundDataMgrNin::loadData(const char* pItemName, u32 loadFlag, u32 loa
     if (!isNwEnabled_()) {
         return false;
     }
+
     if (!tryGetDefaultSoundHeapAndCheckReady_(&pHeap)) {
         return false;
     }
+
     return LoadData(pItemName, pHeap, loadFlag, loadBlockSize);
 }
 }  // namespace sead

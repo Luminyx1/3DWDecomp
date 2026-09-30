@@ -26,10 +26,12 @@ AudioMgr::~AudioMgr() {
         delete mAudioSystem;
         mAudioSystem = nullptr;
     }
+
     if (mIsPlayerOwned && mPlayer) {
         delete mPlayer;
         mPlayer = nullptr;
     }
+
     if (mIsResetterOwned && mResetter) {
         delete mResetter;
         mResetter = nullptr;
@@ -43,20 +45,25 @@ void AudioMgr::exit() {
     if (!mIsPrepared) {
         return;
     }
+
     if (mPlayer) {
         mPlayer->finalize();
     }
+
     if (mResourceLoader) {
         mResourceLoader->finalize();
     }
+
     if (!mSubsetList.isEmpty()) {
         for (auto it = mSubsetList.begin(); it != mSubsetList.end(); ++it) {
             it->finalize();
         }
     }
+
     if (mAudioSystem) {
         mAudioSystem->finalize();
     }
+
     mIsPrepared = false;
 }
 
@@ -77,40 +84,50 @@ void AudioMgr::prepare(AudioSettingParameter* pParam, Heap* pHeap, s32 addonArch
             mSubsetList.pushBack(pParam->mSubsetList.popFront());
         }
     }
+
     if (!mAudioSystem) {
         mAudioSystem = new (pHeap) AudioSystemNin();
         mIsAudioSystemOwned = true;
     }
+
     if (!mPlayer) {
         mPlayer = new (pHeap) AudioPlayerNin();
         mIsPlayerOwned = true;
     }
+
     if (!mResetter) {
         mResetter = new (pHeap) AudioResetterNin();
         mIsResetterOwned = true;
     }
+
     if (mAudioSystem) {
         static_cast<AudioSystemNin*>(mAudioSystem)->setVoiceCountMax(75);
         mAudioSystem->initialize();
     }
+
     if (mPlayer) {
         mPlayer->initialize();
     }
+
     if (mResetter) {
         mResetter->initialize(*this);
     }
+
     if (mResourceLoader) {
         mResourceLoader->initialize(*this);
     }
+
     if (!mSubsetList.isEmpty()) {
         for (auto it = mSubsetList.begin(); it != mSubsetList.end(); ++it) {
             it->initialize(*this, pHeap);
         }
     }
+
     DynamicCast<AudioSystemNin>(mAudioSystem)->mAddonArchiveCount = addonArchiveCount;
     if (mResourceLoader) {
         mResourceLoader->load();
     }
+
     mIsPrepared = true;
 }
 
@@ -135,9 +152,11 @@ bool AudioMgr::removeAudioSubset(AudioSubsetBase* pSubset) {
             break;
         }
     }
+
     if (it == mSubsetList.end()) {
         return false;
     }
+
     pSubset->executeOnRemove();
     mSubsetList.erase(&*it);
     return true;
@@ -150,12 +169,15 @@ void AudioMgr::calc() {
     if (!mIsPrepared) {
         return;
     }
+
     if (mPlayer) {
         mPlayer->calc();
     }
+
     if (mResetter) {
         mResetter->calc();
     }
+
     if (!mSubsetList.isEmpty()) {
         for (auto it = mSubsetList.begin(); it != mSubsetList.end(); ++it) {
             it->calc();
@@ -177,9 +199,11 @@ void AudioMgr::genMessage(hostio::Context* pContext) {
     if (mAudioSystem) {
         DynamicCast<AudioSystemNin>(mAudioSystem);
     }
+
     if (mPlayer) {
         DynamicCast<AudioPlayerNin>(mPlayer);
     }
+
     if (!mSubsetList.isEmpty()) {
         for (auto it = mSubsetList.begin(); it != mSubsetList.end(); ++it) {
         }

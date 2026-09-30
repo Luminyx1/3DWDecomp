@@ -30,9 +30,11 @@ void AudioResetterNin::calc() {
             return;
         }
     }
+
     if (mShutdownState == cState_Done) {
         return;
     }
+
     if (mResetState == cState_Running) {
         if (volume == 0.0f) {
             DynamicCast<AudioPlayerNin>(mAudioMgr->getPlayer())->stopAll(0);
@@ -49,6 +51,7 @@ void AudioResetterNin::reset(s32 fadeFrames) {
     if (mShutdownState != cState_None || mResetState != cState_None) {
         return;
     }
+
     mMasterVolume = nn::atk::detail::driver::HardwareManager::GetInstance().GetMasterVolume();
     nn::atk::detail::driver::HardwareManager::GetInstance().SetMasterVolume(0.0f, fadeFrames);
     AudioResetter::reset(fadeFrames);
@@ -63,6 +66,7 @@ bool AudioResetterNin::isResetting() const {
     if (mResetState != cState_None) {
         return true;
     }
+
     return AudioResetter::isResetting();
 }
 
@@ -74,6 +78,7 @@ bool AudioResetterNin::isResetDone() const {
     if (!AudioResetter::isResetDone()) {
         return false;
     }
+
     return mResetState == cState_Done;
 }
 
@@ -84,6 +89,7 @@ void AudioResetterNin::recoverReset() {
     if (mShutdownState != cState_None) {
         return;
     }
+
     f32 volume = mMasterVolume;
     nn::atk::detail::driver::HardwareManager::GetInstance().SetMasterVolume(volume, 0);
     AudioResetter::recoverReset();
@@ -99,6 +105,7 @@ void AudioResetterNin::shutdown(s32 fadeFrames) {
     if (mShutdownState != cState_None) {
         return;
     }
+
     nn::atk::detail::driver::HardwareManager::GetInstance().SetMasterVolume(0.0f, fadeFrames);
     AudioResetter::shutdown(fadeFrames);
     mShutdownState = cState_Running;
@@ -112,6 +119,7 @@ bool AudioResetterNin::isShuttingDown() const {
     if (mShutdownState != cState_None) {
         return true;
     }
+
     return AudioResetter::isShuttingDown();
 }
 
@@ -123,6 +131,7 @@ bool AudioResetterNin::isShutdownDone() const {
     if (!AudioResetter::isShutdownDone()) {
         return false;
     }
+
     return mShutdownState == cState_Done;
 }
 }  // namespace sead

@@ -15,6 +15,7 @@ Audio3DMgrNin::Audio3DMgrNin(bool createDefaultListener) {
     if (createDefaultListener) {
         mDefaultListener = new (static_cast<s32>(alignof(Audio3DListenerNin))) Audio3DListenerNin();
     }
+
     mListeners.initOffset(offsetof(Audio3DListenerNin, mListNode));
     mListenerGroups.initOffset(offsetof(Audio3DListenerGroupNin, mListNode));
 }
@@ -28,10 +29,12 @@ Audio3DMgrNin::~Audio3DMgrNin() {
         delete[] mWorkBuffer;
         mWorkBuffer = nullptr;
     }
+
     if (mDefaultListener) {
         delete mDefaultListener;
         mDefaultListener = nullptr;
     }
+
     if (mSound3DManager) {
         delete mSound3DManager;
         mSound3DManager = nullptr;
@@ -61,6 +64,7 @@ void Audio3DMgrNin::appendListener(Audio3DListenerNin& rListener) {
     if (!isListenerAddedToNw(rListener)) {
         mSound3DManager->AddListener(&rListener);
     }
+
     mListeners.pushBack(&rListener);
 }
 
@@ -192,6 +196,7 @@ bool Audio3DMgrNin::isListenerAddedToNw(Audio3DListenerNin& rListener) const {
             return true;
         }
     }
+
     return false;
 }
 
@@ -218,6 +223,7 @@ void Audio3DMgrNin::appendListenerGroup(Audio3DListenerGroupNin& rGroup) {
             }
         }
     }
+
     mListenerGroups.pushBack(&rGroup);
     rGroup.mMgr = this;
 }
@@ -234,6 +240,7 @@ void Audio3DMgrNin::removeListenerGroup(Audio3DListenerGroupNin& rGroup) {
             }
         }
     }
+
     mListenerGroups.erase(&rGroup);
     rGroup.mMgr = nullptr;
 }
@@ -246,10 +253,12 @@ void Audio3DMgrNin::genMessage(hostio::Context* pContext) {
     if (!mSound3DManager) {
         return;
     }
+
     if (!mListeners.isEmpty()) {
         for (auto it = mListeners.begin(); it != mListeners.end(); ++it) {
         }
     }
+
     if (!mListenerGroups.isEmpty()) {
         for (auto it = mListenerGroups.begin(); it != mListenerGroups.end(); ++it) {
         }

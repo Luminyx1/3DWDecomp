@@ -61,6 +61,7 @@ bool AudioFxDelayNin::Initialize() {
     if (mIsInitialized) {
         return false;
     }
+
     clearBuffer_();
     mIsInitialized = true;
     return true;
@@ -75,6 +76,7 @@ void AudioFxDelayNin::clearBuffer_() {
         memset(mDelayBuffer[i], 0, mDelaySize * sizeof(Vector2f));
         mLpfHistory[i].set(0.0f, 0.0f);
     }
+
     initBufferPos_();
 }
 
@@ -270,6 +272,7 @@ bool AudioFxDelayNin::SetParam(const AudioFxDelayParamNin& rParam) {
     if (!mIsBufferAssigned) {
         setupDelaySizes_(rParam);
     }
+
     setupGains_(rParam);
     _128 = rParam._24;
     _12c = rParam._28;
@@ -321,6 +324,7 @@ bool AudioFxDelayNin::AssignWorkBuffer(void* pBuffer, u32 size) {
     if (mIsBufferAssigned) {
         return false;
     }
+
     AudioFxBaseNin::AssignWorkBuffer(pBuffer, size);
     uintptr_t start = reinterpret_cast<uintptr_t>(mFxWorkBuffer);
     uintptr_t current = (start + 0x1f) & ~0x1f;
@@ -329,9 +333,11 @@ bool AudioFxDelayNin::AssignWorkBuffer(void* pBuffer, u32 size) {
         mDelayBuffer[i] = reinterpret_cast<Vector2f*>(current);
         current = (reinterpret_cast<uintptr_t>(mDelayBuffer[i] + mDelaySize) + 0x1f) & ~0x1f;
     }
+
     if (static_cast<s64>(current - start) > size) {
         return false;
     }
+
     mIsBufferAssigned = true;
     return true;
 }
@@ -344,9 +350,11 @@ void AudioFxDelayNin::ReleaseWorkBuffer() {
     for (u32 i = 0; i < cPairCountMax; i++) {
         mDelayBuffer[i] = nullptr;
     }
+
     for (u32 i = 0; i < 6; i++) {
         _f8[i] = nullptr;
     }
+
     AudioFxBaseNin::ReleaseWorkBuffer();
 }
 
