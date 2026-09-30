@@ -3417,7 +3417,7 @@ src/nw/atk/detail/atk_DisposeCallbackManager.cpp: done
     .text   start:0x0054B180 end:0x0054B2EC
 src/nw/atk/detail/atk_Bank.cpp:
     .text   start:0x0054B2F0 end:0x0054B4E8
-src/nw/atk/detail/atk_WaveFileReader.cpp:
+src/nw/atk/detail/atk_WaveFileReader.cpp: done
     .text   start:0x0054B4F0 end:0x0054B8C0
 src/nw/atk/detail/atk_WaveFile.cpp: done
     .text   start:0x0054B8C0 end:0x0054B9BC
