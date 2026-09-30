@@ -4129,13 +4129,13 @@ src/aal/seadaudio/seadAudio3DMgrNin.cpp: done
     .text   start:0x006B7700 end:0x006B801C
 src/aal/seadaudio/seadAudio3DMgr.cpp: done
     .text   start:0x006B8020 end:0x006B81C4
-src/aal/seadaudio/seadAudio3DListenerNin.cpp:
+src/aal/seadaudio/seadAudio3DListenerNin.cpp: done
     .text   start:0x006B81D0 end:0x006B8514
-src/aal/seadaudio/seadAudio3DListenerGroupNin.cpp:
+src/aal/seadaudio/seadAudio3DListenerGroupNin.cpp: done
     .text   start:0x006B8520 end:0x006B956C
 src/aal/seadaudio/seadAudioSoundDataMgrNin.cpp: done
     .text   start:0x006B9570 end:0x006BB16C
-src/aal/seadaudio/seadAudioSoundHeapNin.cpp:
+src/aal/seadaudio/seadAudioSoundHeapNin.cpp: done
     .text   start:0x006BB170 end:0x006BB46C
 src/aal/seadaudio/seadAudioMgr.cpp:
     .text   start:0x006BB470 end:0x006BBEB4
@@ -4146,9 +4146,9 @@ src/aal/seadaudio/seadAudioSystemNin.cpp: done
 src/aal/seadaudio/seadAudioTaskThreadNin.cpp: done
     .text   start:0x006BEBE0 end:0x006BEE78
 src/aal/seadaudio/seadAudioResetterNin.cpp: done
-    .text   start:0x006BEE80 end:0x006BF290
-src/aal/seadaudio/seadAudioResetter.cpp:
-    .text   start:0x006BF290 end:0x006BF6FC
+    .text   start:0x006BEE80 end:0x006BF2A4
+src/aal/seadaudio/seadAudioResetter.cpp: done
+    .text   start:0x006BF2B0 end:0x006BF6FC
 src/aal/seadaudio/seadAudioResourceLoaderNin.cpp: done
     .text   start:0x006BF710 end:0x006BFBF0
 src/aal/seadaudio/seadSoundHandle.cpp: done

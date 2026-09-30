@@ -39,7 +39,7 @@ public:
     };
 
     Audio3DListenerNin();
-    virtual ~Audio3DListenerNin() {}
+    virtual ~Audio3DListenerNin();
 
     void setMatrix(const Matrix34f& rMtx);
     Matrix34f getMatrix() const;

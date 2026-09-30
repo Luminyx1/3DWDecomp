@@ -9,7 +9,10 @@ class SoundDataManager;
 
 class SoundMemoryAllocatable {
 public:
-    typedef void (*DisposeCallback)(void* pMem, size_t size, void* pArg);
+    /** @brief Releases an allocation using the caller-provided context.
+     * @param pArg Context passed to Allocate as pCallbackArg.
+     */
+    typedef void (*DisposeCallback)(void* pArg);
 
     virtual ~SoundMemoryAllocatable() {}
     virtual void* Allocate(size_t size) = 0;

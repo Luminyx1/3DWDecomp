@@ -43840,9 +43840,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71006BF1E0			FALSE	_ZN4sead16AudioResetterNin8shutdownEi	sead::AudioResetterNin::shutdown(int)	
 0x71006BF230			FALSE	_ZNK4sead16AudioResetterNin14isShuttingDownEv	sead::AudioResetterNin::isShuttingDown() const	
 0x71006BF250			FALSE	_ZNK4sead16AudioResetterNin14isShutdownDoneEv	sead::AudioResetterNin::isShutdownDone() const	
-0x71006BF290		seadAudioResetter.o	FALSE	_ZN4sead13AudioResetterD2Ev	sead::AudioResetter::~AudioResetter()	
+0x71006BF290			FALSE	_ZN4sead13AudioResetterD2Ev	sead::AudioResetter::~AudioResetter()	
 0x71006BF2A0			FALSE	_ZN4sead16AudioResetterNinD0Ev	sead::AudioResetterNin::~AudioResetterNin()	
-0x71006BF2B0			FALSE	_ZN4sead13AudioResetterC2Ev	sead::AudioResetter::AudioResetter()	
+0x71006BF2B0		seadAudioResetter.o	FALSE	_ZN4sead13AudioResetterC2Ev	sead::AudioResetter::AudioResetter()	object start fixed by hand
 0x71006BF2D0			FALSE	_ZN4sead13AudioResetter10initializeERNS_8AudioMgrE	sead::AudioResetter::initialize(sead::AudioMgr&)	
 0x71006BF2E0			FALSE	_ZN4sead13AudioResetter5resetEi	sead::AudioResetter::reset(int)	object/folder from debug builds' assert paths
 0x71006BF370			FALSE	_ZNK4sead13AudioResetter11isResettingEv	sead::AudioResetter::isResetting() const	

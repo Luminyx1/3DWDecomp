@@ -9,6 +9,9 @@ namespace sead {
  */
 Audio3DListenerNin::Audio3DListenerNin() = default;
 
+/** @brief Destroys the listener without owning its group or audio resources. */
+Audio3DListenerNin::~Audio3DListenerNin() = default;
+
 /**
  * Sets the listener matrix.
  * @param rMtx Listener matrix.
@@ -51,7 +54,10 @@ Vector3f Audio3DListenerNin::getPosition() const {
  * @param rVelocity Velocity.
  */
 void Audio3DListenerNin::setVelocity(const Vector3f& rVelocity) {
-    nn::util::Vector3fType velocity = {{rVelocity.x, rVelocity.y, rVelocity.z}};
+    nn::util::Vector3fType velocity;
+    velocity._v[0] = rVelocity.x;
+    velocity._v[1] = rVelocity.y;
+    velocity._v[2] = rVelocity.z;
     SetVelocity(velocity);
 }
 

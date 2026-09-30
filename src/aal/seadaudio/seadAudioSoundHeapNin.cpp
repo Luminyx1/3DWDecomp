@@ -62,7 +62,7 @@ void AudioSoundHeapNin::genMessage(hostio::Context* pContext) {}
  * @param pEvent Property event.
  */
 void AudioSoundHeapNin::listenPropertyEvent(const hostio::PropertyEvent* pEvent) {
-    if (pEvent->getId() == reinterpret_cast<const void*>(0x64756d70)) {
+    if (pEvent->getIdValue() == 0x64756d70) {
         dump();
     }
 }

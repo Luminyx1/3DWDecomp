@@ -123,7 +123,10 @@ void Audio3DListenerGroupNin::setVelocity(const Vector3f& rVelocity) {
     if (!mListeners.isEmpty()) {
         for (auto it = mListeners.begin(); it != mListeners.end(); ++it) {
             if (it->isFollowingGroup(Audio3DListenerNin::cGroupParam_Velocity)) {
-                nn::util::Vector3fType velocity = {{rVelocity.x, rVelocity.y, rVelocity.z}};
+                nn::util::Vector3fType velocity;
+                velocity._v[0] = rVelocity.x;
+                velocity._v[1] = rVelocity.y;
+                velocity._v[2] = rVelocity.z;
                 it->SetVelocity(velocity);
             }
         }
@@ -336,19 +339,19 @@ void Audio3DListenerGroupNin::genMessage(hostio::Context* pContext) {
  * @param pEvent Property event.
  */
 void Audio3DListenerGroupNin::listenPropertyEvent(const hostio::PropertyEvent* pEvent) {
-    if (pEvent->getId() == &mParam.mInteriorSize) {
+    if (pEvent->getIdValue() == reinterpret_cast<uintptr_t>(&mParam.mInteriorSize)) {
         updateInteriorSizeAll_();
     }
-    if (pEvent->getId() == &mParam.mMaxVolumeDistance) {
+    if (pEvent->getIdValue() == reinterpret_cast<uintptr_t>(&mParam.mMaxVolumeDistance)) {
         updateMaxVolumeDistanceAll_();
     }
-    if (pEvent->getId() == &mParam.mUnitDistance) {
+    if (pEvent->getIdValue() == reinterpret_cast<uintptr_t>(&mParam.mUnitDistance)) {
         updateUnitDistanceAll_();
     }
-    if (pEvent->getId() == &mParam.mUnitBiquadFilterValue) {
+    if (pEvent->getIdValue() == reinterpret_cast<uintptr_t>(&mParam.mUnitBiquadFilterValue)) {
         updateUnitBiquadFilterValueAll_();
     }
-    if (pEvent->getId() == &mParam.mMaxBiquadFilterValue) {
+    if (pEvent->getIdValue() == reinterpret_cast<uintptr_t>(&mParam.mMaxBiquadFilterValue)) {
         updateMaxBiquadFilterValueAll_();
     }
 }
