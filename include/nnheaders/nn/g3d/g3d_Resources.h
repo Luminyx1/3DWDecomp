@@ -4,6 +4,7 @@
 
 #include <nn/gfx/gfx_Buffer.h>
 #include <nn/gfx/gfx_BufferInfo.h>
+#include <nn/gfx/gfx_SamplerInfo.h>
 #include <nn/util/util_BitFlagSet.h>
 #include <nn/gfx/gfx_DescriptorSlot.h>
 #include <nn/gfx/gfx_MemoryPoolInfo.h>
@@ -96,22 +97,34 @@ public:
 };
 class ResShaderParam;
 struct ResShaderParamData {
-    size_t (*callback)(void*, const void*, const ResShaderParam*, void*);
+    size_t (*callback)(void*, const void*, const ResShaderParam*, const void*);
     nn::util::BinPtrToString name;
     u8 type;
-    u8 _11;
+    u8 sourceSize;
     u16 sourceOffset;
     s32 offset;
-    u16 _18;
+    u16 index;
     u16 dependencyIndex;
     u8 _1c[4];
 };
 
 class ResShaderParam : public nn::util::AccessorBase<ResShaderParamData> {
 public:
-    enum Type { Type_Bool };
+    enum Type : int { Type_Bool, Type_Srt2d = 28, Type_Srt3d, Type_TexSrt, Type_TexSrtEx };
     // type selects the source parameter representation whose byte size is returned.
     static size_t GetSrcSize(Type type);
+    // type selects the GPU parameter representation whose byte size is returned.
+    static size_t GetSize(Type type);
+    // source holds parameter storage; dependency supplies the referenced parameter storage.
+    bool SetDependPointer(void* source, const void* dependency) const;
+    // dependency receives the stored pointer, or null when source has no pointer slot.
+    bool GetDependPointer(void** dependency, const void* source) const;
+    // destination receives converted source values; parameter describes them and user is callback context.
+    static size_t ConvertSrt2dCallback(void* destination, const void* source, const ResShaderParam* parameter, const void* user);
+    static size_t ConvertSrt3dCallback(void* destination, const void* source, const ResShaderParam* parameter, const void* user);
+    static size_t ConvertSrt2dExCallback(void* destination, const void* source, const ResShaderParam* parameter, const void* user);
+    static size_t ConvertTexSrtCallback(void* destination, const void* source, const ResShaderParam* parameter, const void* user);
+    static size_t ConvertTexSrtExCallback(void* destination, const void* source, const ResShaderParam* parameter, const void* user);
     // destination receives the GPU representation of source; swap enables byte swapping.
     template <bool swap> void Convert(void* destination, const void* source) const;
 };
@@ -122,14 +135,14 @@ struct ResMaterialData {
     nn::util::BinTPtr<const nn::gfx::TextureView*> pTextureArray;
     nn::util::BinTPtr<nn::util::BinPtrToString> pTextureNameArray;
     nn::util::BinTPtr<ResSamplerData> pSamplerArray;
-    u8 _40[0x48 - 0x40];
+    nn::util::BinTPtr<nn::gfx::SamplerInfo> pSamplerInfoArray;
     nn::util::BinTPtr<nn::util::ResDic> pSamplerDic;
     nn::util::BinTPtr<ResShaderParamData> pShaderParamArray;
     nn::util::BinTPtr<nn::util::ResDic> pShaderParamDic;
     nn::util::BinPtr pSourceParamData;
     u8 _68[0x10];
     nn::util::BinTPtr<u32> pVolatileParamFlags;
-    u8 _80[8];
+    nn::util::BinPtr pUserPtr;
     nn::util::BinTPtr<u64> pSamplerSlotArray;
     nn::util::BinTPtr<u64> pTextureSlotArray;
     u16 index;
