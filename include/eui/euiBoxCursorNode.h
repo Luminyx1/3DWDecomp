@@ -17,6 +17,8 @@ public:
     virtual bool isMovable(DrawTarget target) const;
     virtual bool isDecidable(DrawTarget target, bool requireDecidable) const;
     void getPosition(sead::Vector2f* pPosition) const;
+    // direction selects the outgoing route; pNode is its destination.
+    void setRouteNode(Direction direction, BoxCursorNode* pNode) { mRoutes[direction] = pNode; }
     void setRouteNodeEach(Direction direction, BoxCursorNode* pNode);
     void clearRouteAll();
     sead::ListNode mListNode;

@@ -56,6 +56,7 @@ public:
 
 protected:
     friend class ButtonGroup;
+    friend class BoxCursorNode;
     nn::util::IntrusiveListNode mUpdateLink;
     u8 mState;
     u8 _39;

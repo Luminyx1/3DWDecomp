@@ -4433,9 +4433,9 @@ src/eui/lytex/euiDrawInfoEx.cpp: done cflags=-fno-strict-aliasing
     .text   start:0x007B6F80 end:0x007B7048
 src/eui/lytex/euiDynamicCapturePane.cpp:
     .text   start:0x007B7050 end:0x007B7984
-src/eui/lytex/euiScissorPane.cpp:
+src/eui/lytex/euiScissorPane.cpp: done
     .text   start:0x007B7990 end:0x007B7D54
-src/eui/lytex/euiMassDrawPane.cpp:
+src/eui/lytex/euiMassDrawPane.cpp: done
     .text   start:0x007B7D60 end:0x007B87E8
 src/eui/lytex/euiPictureEx.cpp: done
     .text   start:0x007B87F0 end:0x007B8CF8
@@ -4495,11 +4495,11 @@ src/eui/ctrl/euiButtonBase.cpp:
     .text   start:0x007CEDB0 end:0x007CFBB4
 src/eui/ctrl/euiHoverButton.cpp: done
     .text   start:0x007CFBC0 end:0x007CFFF8
-src/eui/ctrl/euiBoxCursorMgr.cpp:
+src/eui/ctrl/euiBoxCursorMgr.cpp: done
     .text   start:0x007D0000 end:0x007D05DC
 src/eui/cursor/euiBoxCursorControl.cpp:
     .text   start:0x007D05E0 end:0x007D14F4
-src/eui/cursor/euiBoxCursorNode.cpp:
+src/eui/cursor/euiBoxCursorNode.cpp: done
     .text   start:0x007D1500 end:0x007D18EC
 src/eui/sys/euiScreenMgr.cpp:
     .text   start:0x007D18F0 end:0x007D2A34

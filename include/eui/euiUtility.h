@@ -17,7 +17,14 @@ class LayoutEx;
 void CreateLayoutItemUniqueName(sead::StringBuilderBase<char>* pName, const char* pItem, const LayoutEx* pLayout);
 void CreateLayoutItemUniqueNameByPath(sead::StringBuilderBase<char>* pName, const char* pPath, const LayoutEx* pLayout);
 // Draw targets are passed by value as a four-byte index.
-class DrawTarget { int mIndex; };
+class DrawTarget {
+public:
+    // index identifies one of the two display targets.
+    explicit DrawTarget(int index) : mIndex(index) {}
+    operator int() const volatile { return mIndex; }
+private:
+    int mIndex;
+};
 const nn::ui2d::ResExtUserData* FindExtUserDataFromList(const nn::ui2d::ResExtUserDataList* pList, const char* pName);
 void AdjustPaneSizeToTextSize(nn::ui2d::Pane* pPane, LayoutEx* pLayout);
 void CenteringPanePair(nn::ui2d::Pane* pPane);

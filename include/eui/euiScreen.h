@@ -16,7 +16,20 @@ class UIController; class MultiArcResourceAccessor; class TagProcessor;
 class DrawTarget;
 class Screen : public sead::IDisposer, public sead::hostio::Node {
 public:
-    class OpenOption; class CloseOption;
+    class OpenOption {
+    public:
+        // value contains the opening options passed to the screen.
+        explicit OpenOption(int value) : mValue(value) {}
+    private:
+        int mValue;
+    };
+    class CloseOption {
+    public:
+        // value contains the closing options passed to the screen.
+        explicit CloseOption(int value) : mValue(value) {}
+    private:
+        int mValue;
+    };
     enum AnimatorOperationType { cPlay, cPlayFromCurrent, cStop, cStopCurrent, cStopAtMin, cStopAtMax };
     Screen();
     ~Screen() override;
@@ -98,6 +111,9 @@ public:
     void setAnimatorActive(Animator* pAnimator);
     void eraseAnimatorFromActiveList(Animator* pAnimator);
     bool moveBoxCursorByButton(const AnimButton* pButton);
+    BoxCursorNode* findBoxCursorNodeByName_(const char* pName);
+    BoxCursorNode* findBoxCursorNodeByNameWithParentParts_(const char* pName, const char* pParentParts);
+    BoxCursorNode* findBoxCursorNodeByTag_(int tag);
     void buttonStateChangeCallback(AnimButton* pButton, ButtonBase::State oldState, ButtonBase::State newState);
     ScreenMgr* mScreenMgr;
     LayoutEx* mLayout;

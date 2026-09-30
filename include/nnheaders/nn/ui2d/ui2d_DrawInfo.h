@@ -12,6 +12,7 @@ public:
     DrawInfo();
     NN_RUNTIME_TYPEINFO_BASE();
     virtual ~DrawInfo();
+    void ResetDrawState();
 
     nn::util::MatrixT4x4fType m_ProjMtx;
     nn::util::MatrixT4x3fType m_ViewMtx;

@@ -25,6 +25,7 @@ public:
     void unloadScreen(int index);
     void resetScreenId(int index);
     void eraseBoxCursorNodeFromRouteNodes(const BoxCursorNode* pNode);
+    Screen* findScreenByName(const char* pName);
     sead::Buffer<Screen*> mScreens;
     sead::Buffer<s8> mScreenLayers;
     void* _48;

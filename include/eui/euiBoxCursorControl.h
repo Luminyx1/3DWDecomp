@@ -1,6 +1,7 @@
 #pragma once
 #include <eui/euiControlBase.h>
 #include <math/seadVector.h>
+#include <prim/seadSafeString.h>
 namespace nn::ui2d { class Pane; class ControlSrc; }
 namespace eui {
 class Animator;
@@ -21,6 +22,8 @@ public:
     void updateActiveNode(DrawTarget target);
     void selectActiveNode_();
     void setActiveNode_(const BoxCursorNode* pNode);
+    void decideNode(bool repeat);
+    bool isEqualActiveNodePartsLayoutName(const sead::SafeString& rName) const;
     nn::ui2d::Pane* mTopLeft;
     nn::ui2d::Pane* mTopRight;
     nn::ui2d::Pane* mBottomLeft;

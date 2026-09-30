@@ -37,6 +37,7 @@ public:
 
     void SetTextureNum(u8 count) { mTextureCount = (mTextureCount & 0xf) | (count << 4); }
     TexMap* GetFirstTexMap() { return m_pTexMaps; }
+    const u8* GetWhiteColor() const { return &_08[4]; }
     // index selects the material slot; pInfo supplies its texture description.
     void SetTextureInfo(int index, const TextureInfo* pInfo) {
         m_pTexMaps[index].m_pTextureInfo = pInfo;

@@ -3,6 +3,7 @@
 #include <gfx/seadFrameBuffer.h>
 #include <gfx/seadViewport.h>
 #include <math/seadBoundBox.hpp>
+#include <algorithm>
 
 namespace eui {
 
@@ -21,7 +22,6 @@ ScissorPane::~ScissorPane() = default;
 
 // rDrawInfo supplies the layout and render target; rCommandBuffer receives pane drawing.
 // Restrict drawing to the transformed pane rectangle, then restore the caller's scissor.
-// NON_MATCHING: floating-point instruction selection and scheduling still differ.
 void ScissorPane::Draw(nn::ui2d::DrawInfo& rDrawInfo,
                        nn::gfx::CommandBuffer& rCommandBuffer) {
     auto& drawInfo = static_cast<DrawInfoEx&>(rDrawInfo);
@@ -52,8 +52,8 @@ void ScissorPane::Draw(nn::ui2d::DrawInfo& rDrawInfo,
     centerY = targetSize.y * 0.5f + centerY;
     float minX = centerX - halfX, minY = centerY - halfY;
     float maxX = halfX + centerX, maxY = halfY + centerY;
-    if (minX < 0) minX = 0;
-    if (minY < 0) minY = 0;
+    minX = std::max(minX, 0.0f);
+    minY = std::max(minY, 0.0f);
     if (maxX > targetSize.x) maxX = targetSize.x;
     if (maxY > targetSize.y) maxY = targetSize.y;
     if (maxX - minX >= targetSize.x) { minX = 0; maxX = targetSize.x; }
