@@ -26,8 +26,14 @@ struct WaveSoundFile {
         u8 GetPan() const;
         u8 GetSurroundPan() const;
         u8 GetVolume() const;
+        void GetSendValue(u8* mainSend, u8** auxSends, u8 auxCount) const;
     };
-    struct TrackInfo;
+    struct NoteEvent;
+    struct TrackInfo {
+        Reference events;
+        const ReferenceTable* GetNoteEventReferenceTable() const;
+        const NoteEvent* GetNoteEvent(u32 index) const;
+    };
     struct WaveSoundData {
         Reference info, tracks, notes;
         const WaveSoundInfo* GetWaveSoundInfo() const;
