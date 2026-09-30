@@ -9,9 +9,9 @@ class SeUserInfo;
 
 class ActionSeCtrl {
 public:
-    static ActionSeCtrl* tryCreate(AudioKeeper*);
-
     ActionSeCtrl(SeKeeper*, const SeUserInfo*);
+
+    static ActionSeCtrl* tryCreate(AudioKeeper* pAudioKeeper);
 
     void init();
     void resetAction();
