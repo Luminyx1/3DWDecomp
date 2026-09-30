@@ -9,33 +9,32 @@ class RailRider;
 
 class RailKeeper {
 public:
-    RailKeeper(const PlacementInfo&);
+    RailKeeper(const PlacementInfo& rInfo);
 
     bool isValid() const;
 
     Rail* getRail() const { return mRail; }
-
     RailRider* getRailRider() const { return mRailRider; }
 
 private:
-    Rail* mRail = nullptr;            // _0
-    RailRider* mRailRider = nullptr;  // _8
+    Rail* mRail = nullptr;
+    RailRider* mRailRider = nullptr;
 };
 
 class RailKeeperGroup {
 public:
     RailKeeperGroup();
 
-    void init(const PlacementInfo&, const char*);
-    RailKeeper* getRailKeeper(s32) const;
+    void init(const PlacementInfo& rInfo, const char* pLinkName);
+    RailKeeper* getRailKeeper(s32 index) const;
 
     s32 getRailKeeperNum() const { return mRailKeeperNum; }
 
 private:
-    RailKeeper** mRailKeepers = nullptr;  // _0
-    s32 mRailKeeperNum = 0;               // _8
+    RailKeeper** mRailKeepers = nullptr;
+    s32 mRailKeeperNum = 0;
 };
 
-RailKeeper* tryCreateRailKeeper(const PlacementInfo&, const char*);
-RailKeeperGroup* tryCreateRailKeeperGroup(const PlacementInfo&, const char*);
+RailKeeper* tryCreateRailKeeper(const PlacementInfo& rInfo, const char* pLinkName);
+RailKeeperGroup* tryCreateRailKeeperGroup(const PlacementInfo& rInfo, const char* pLinkName);
 }  // namespace al
