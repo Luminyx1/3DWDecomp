@@ -7,26 +7,25 @@ class KeyPoseKeeper;
 
 class FloaterMapParts : public LiveActor {
 public:
-    FloaterMapParts(const char*);
+    FloaterMapParts(const char* pName);
 
-    virtual ~FloaterMapParts();
-    virtual void init(const ActorInitInfo&);
-    virtual bool receiveMsg(const SensorMsg* msg, HitSensor* self, HitSensor* other);
-    virtual void control();
+    void init(const ActorInitInfo& rInfo) override;
+    bool receiveMsg(const SensorMsg* pMsg, HitSensor* pOther, HitSensor* pSelf) override;
+    void control() override;
 
     void exeWait();
     void exeSink();
     void exeBack();
 
     KeyPoseKeeper* mKeyPoseKeeper = nullptr;
-    f32 _150 = 0;
-    f32 mNextKeyDist = 0;
+    f32 mCoord = 0.0f;
+    f32 mMaxCoord = 0.0f;
     f32 mSinkSpeed = 5.0f;
     f32 mBackSpeed = 5.0f;
-    s32 _160 = 0;
-    s32 _164 = 0;
+    s32 mSinkFrame = 0;
+    s32 mSinkTime = 0;
     s32 mSinkKeepTime = 10;
     s32 mMaxAccelCount = 10;
-    s32 _170 = 0;
+    s32 mAccelCount = 0;
 };
 }  // namespace al
