@@ -17,6 +17,7 @@ bool SendDataBase::addSendDataNum_(s32 num)
 {
     mSendDataNum += num;
     s32 max = mDataNum;
+
     if (Manager::instance()->isFlagOn(Manager::EFlag::cSystemReportTag)) {
         max++;
     }
@@ -271,6 +272,7 @@ Array* SendDataBase::CreateStructArray(s32 num, s32 memberNum)
 {
     sead::Heap* pHeap = Manager::instance()->getHeap();
     Array* pArray;
+
     if (mIsNothrow) {
         pArray = new (pHeap, std::nothrow) Array();
     } else {
@@ -283,6 +285,7 @@ Array* SendDataBase::CreateStructArray(s32 num, s32 memberNum)
             pHeap->getMaxAllocatableSize(sizeof(void*)));
     } else {
         pArray->constructStructBuffer(num, memberNum, pHeap);
+
         if (Array** pSlot = findEmptySlot_(mArrays)) {
             *pSlot = pArray;
             return pArray;
@@ -302,6 +305,7 @@ Array* SendDataBase::CreateStructArrayWithBufferSize(s32 num, s32 bufferSize)
 {
     sead::Heap* pHeap = Manager::instance()->getHeap();
     Array* pArray;
+
     if (mIsNothrow) {
         pArray = new (pHeap, std::nothrow) Array();
     } else {
@@ -314,6 +318,7 @@ Array* SendDataBase::CreateStructArrayWithBufferSize(s32 num, s32 bufferSize)
             pHeap->getMaxAllocatableSize(sizeof(void*)));
     } else {
         pArray->constructStructBufferWithBufferSize(num, bufferSize, pHeap);
+
         if (Array** pSlot = findEmptySlot_(mArrays)) {
             *pSlot = pArray;
             return pArray;
@@ -331,6 +336,7 @@ Array* SendDataBase::CreateStructArrayWithBufferSize(s32 num, s32 bufferSize)
 bool SendDataBase::save(ESendResult* pResult)
 {
     ESendResult result = saveImpl_();
+
     if (pResult) {
         *pResult = result;
     }
@@ -345,11 +351,13 @@ bool SendDataBase::save(ESendResult* pResult)
 SendDataBase::ESendResult SendDataBase::saveImpl_()
 {
     ESendResult result = checkCanSave_();
+
     if (static_cast<s32>(result) != ESendResult::cNone) {
         return result;
     }
 
     mFlags.setOn(EFlag::cSaving);
+
     if (Manager::instance()->isFlagOn(Manager::EFlag::cSystemReportTag)) {
         addData(sead::FixedSafeString<63>(sead::SafeString("system_report_tag")),
                 mReporterId.getId());
@@ -360,6 +368,7 @@ SendDataBase::ESendResult SendDataBase::saveImpl_()
     const u32 savingMask = 1u << EFlag::cSaving;
     const u32 savedMask = 1u << EFlag::cSaved;
     u32 bits = mFlags.getRaw().load(std::memory_order_relaxed);
+
     while (!mFlags.getRaw().compare_exchange_weak(bits, (bits & ~(savingMask | savedMask)) | savedMask,
                                                   std::memory_order_relaxed)) {
     }
@@ -414,11 +423,13 @@ void SendDataBase::initialize_(s32 dataNum, s32 arrayNum, s32 structNum, sead::H
 
     mDataNum = dataNum;
     mSendDataNum = 0;
+
     if (!pHeap) {
         pHeap = Manager::instance()->getHeap();
     }
 
     mUid = Manager::instance()->getUid();
+
     if (!initializeInnerData_(pHeap)) {
         return;
     }
@@ -452,6 +463,7 @@ void SendDataBase::finalize_()
     }
 
     finalizeInnerData_();
+
     if (mArrays.isBufferReady()) {
         for (auto* pArray : mArrays) {
             delete pArray;
@@ -483,6 +495,7 @@ void SendDataBase::setEventId_(const sead::FixedSafeString<31>& rEventId)
 
     sead::FixedSafeString<31> eventId(rEventId);
     eventId.replaceCharList("ABCDEFGHIJKLMNOPQRSTUVWXYZ", "abcdefghijklmnopqrstuvwxyz");
+
     if (trySetInnerDataEventId_(eventId)) {
         mFlags.setOn(EFlag::cInitialized);
     } else {

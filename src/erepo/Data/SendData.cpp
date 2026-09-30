@@ -50,16 +50,19 @@ SendData* SendData::CreateSendData(const sead::FixedSafeString<31>& rEventId, s3
                                    bool isNothrow)
 {
     Manager* pManager = Manager::instance();
+
     if (!pManager) {
         return nullptr;
     }
 
     sead::Heap* pHeap = pManager->getHeap();
+
     if (!pHeap) {
         return nullptr;
     }
 
     SendData* pSendData;
+
     if (isNothrow) {
         pSendData = new (pHeap, std::nothrow)
             SendData(pHeap, rEventId, dataNum, arrayNum, structNum, rReporterId, isNothrow);
@@ -428,6 +431,7 @@ bool SendData::initializeInnerData_(sead::Heap* pHeap)
     }
 
     const size_t size = nn::prepo::PlayReport::CalcBufferSize(mDataNum + 1);
+
     if (size > 0x4000) {
         return false;
     }
@@ -470,6 +474,7 @@ bool SendData::trySetInnerDataEventId_(const sead::FixedSafeString<31>& rEventId
 SendDataBase::ESendResult SendData::saveInnerData_()
 {
     nn::Result result;
+
     if (mUid.IsValid()) {
         result = mReport->Save(mUid);
     } else {
@@ -489,6 +494,7 @@ Array* SendDataBase::CreateArray(s32 num)
 {
     sead::Heap* pHeap = Manager::instance()->getHeap();
     Array* pArray;
+
     if (mIsNothrow) {
         pArray = new (pHeap, std::nothrow) Array();
     } else {
@@ -524,6 +530,7 @@ Array* SendDataBase::CreateArray(s32 num, s32 length)
 {
     sead::Heap* pHeap = Manager::instance()->getHeap();
     Array* pArray;
+
     if (mIsNothrow) {
         pArray = new (pHeap, std::nothrow) Array();
     } else {

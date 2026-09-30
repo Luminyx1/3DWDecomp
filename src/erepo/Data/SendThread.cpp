@@ -42,6 +42,7 @@ void SendThread::invokeQueue_()
 
     while (SendDataBase* pSendData = popQueue_()) {
         SendDataBase::ESendResult result;
+
         if (pSendData->save(&result) || result != SendDataBase::ESendResult::cBusy) {
             delete pSendData;
         }
@@ -58,6 +59,7 @@ void SendThread::invokeQueue_()
 bool SendThread::requestSave(SendDataBase* pSendData)
 {
     mFlags.setOn(EFlag::cSending);
+
     if (!pSendData) {
         return false;
     }

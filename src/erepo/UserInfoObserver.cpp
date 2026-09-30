@@ -26,6 +26,7 @@ void UserInfoObserver::initialize(sead::Heap* pHeap) {}
 bool UserInfoObserver::report(const StringId& rId)
 {
     SendData* data = createSendData_(sead::SafeString("erepo_region"), 4, 0, 0, rId, true);
+
     if (!data) {
         return false;
     }

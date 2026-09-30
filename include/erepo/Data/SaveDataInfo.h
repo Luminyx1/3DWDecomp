@@ -24,6 +24,7 @@ public:
     {
         const bool isValid = mIsValid;
         mValue = value;
+
         if (!isValid) {
             mIsValid = true;
         }

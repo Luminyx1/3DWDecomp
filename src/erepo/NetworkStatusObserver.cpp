@@ -32,6 +32,7 @@ bool NetworkStatusObserver::report(const StringId& rId)
                                      StringId(), false);
     if (data) {
         data->addInternetConnectionStatus();
+
         if (data->requestSave()) {
             return true;
         }

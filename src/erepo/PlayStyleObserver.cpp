@@ -62,6 +62,7 @@ void PlayStyleObserver::initialize(sead::Heap* pHeap)
 void PlayStyleObserver::checkCurrentStyle_(const Manager::UpdateArg& rArg, bool isForce)
 {
     auto* npad = sead::ControllerMgr::instance()->getControlDeviceAs<sead::NinJoyNpadDevice*>();
+
     if (npad) {
         for (s32 i = 0; i < 9; i++) {
             switch (static_cast<s32>(npad->getNpadStyleTag(i))) {
@@ -110,11 +111,13 @@ void PlayStyleObserver::checkCurrentStyle_(const Manager::UpdateArg& rArg, bool 
 void PlayStyleObserver::load()
 {
     Manager* manager = Manager::instance();
+
     if (!manager) {
         return;
     }
 
     const SaveDataInfo& info = manager->getSaveDataInfo();
+
     for (s32 i = 0; i < 3; i++) {
         for (s32 j = 0; j < 5; j++) {
             const auto& value = info.mValues[4 + i * 5 + j];
@@ -131,11 +134,13 @@ void PlayStyleObserver::load()
 void PlayStyleObserver::save(SaveData* pData) const
 {
     Manager* manager = Manager::instance();
+
     if (!manager) {
         return;
     }
 
     SaveDataInfo& info = manager->getSaveDataInfo();
+
     for (s32 i = 0; i < 3; i++) {
         for (s32 j = 0; j < 5; j++) {
             info.mValues[4 + i * 5 + j].set(
@@ -169,6 +174,7 @@ bool PlayStyleObserver::isControllerActive_() const
 bool PlayStyleObserver::report(const StringId& rId)
 {
     SendData* data = createSendData_(sead::SafeString("erepo_playstyle"), 60, 0, 0, rId, true);
+
     if (!data) {
         return false;
     }
@@ -177,6 +183,7 @@ bool PlayStyleObserver::report(const StringId& rId)
         for (s32 j = 0; j < 5; j++) {
             const UseInfo& useInfo = mUseInfo[i][j];
             const UseInfo& savedUseInfo = mSavedUseInfo[i][j];
+
             if (useInfo.time > sead::Mathf::epsilon() ||
                 savedUseInfo.time > sead::Mathf::epsilon()) {
                 sead::FixedSafeString<64> prefix;

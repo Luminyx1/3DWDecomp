@@ -48,6 +48,7 @@ private:
     bool pushQueue_(SendDataBase* pSendData)
     {
         u32 index = mWriteIndex.load();
+
         do {
             if (static_cast<s32>(index - mReadIndex) >= mQueue.size()) {
                 return false;
@@ -62,12 +63,14 @@ private:
     {
         while (true) {
             const u32 index = mReadIndex;
+
             if (static_cast<s32>(mWriteIndex.load() - index) < 1) {
                 return nullptr;
             }
 
             SendDataBase** pSlot = &mQueue.getBufferPtr()[(mQueue.size() - 1) & index];
             SendDataBase* pSendData = *pSlot;
+
             if (!pSendData) {
                 return nullptr;
             }
@@ -75,6 +78,7 @@ private:
             *pSlot = nullptr;
             asm volatile("dmb ish" ::: "memory");
             mReadIndex = index + 1;
+
             if (pSendData != reinterpret_cast<SendDataBase*>(-1)) {
                 return pSendData;
             }

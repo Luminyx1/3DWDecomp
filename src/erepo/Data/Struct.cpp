@@ -53,6 +53,7 @@ s32 Struct::calcBufferSize(s32 memberNum)
 Struct* Struct::createWithMemberNum(s32 memberNum, sead::Heap* pHeap, bool isNothrow)
 {
     Struct* pStruct;
+
     if (isNothrow) {
         pStruct = new (pHeap, std::nothrow) Struct();
     } else {
@@ -81,6 +82,7 @@ Struct* Struct::createWithMemberNum(s32 memberNum, sead::Heap* pHeap, bool isNot
 Struct* Struct::createWithBufferSize(s32 bufferSize, sead::Heap* pHeap, bool isNothrow)
 {
     Struct* pStruct;
+
     if (isNothrow) {
         pStruct = new (pHeap, std::nothrow) Struct();
     } else {

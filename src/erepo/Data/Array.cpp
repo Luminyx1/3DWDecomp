@@ -17,6 +17,7 @@ Array::Array() = default;
 Array::~Array()
 {
     mBuffer.freeBuffer();
+
     if (mStructs.isBufferReady()) {
         for (auto* pStruct : mStructs) {
             delete pStruct;
@@ -258,6 +259,7 @@ bool Array::constructStructBufferWithBufferSize(s32 num, s32 bufferSize, sead::H
 Struct* Array::CreateStruct(s32 memberNum)
 {
     Struct* pStruct = Struct::createWithMemberNum(memberNum, Manager::instance()->getHeap(), true);
+
     if (!pStruct) {
         return nullptr;
     }
@@ -280,6 +282,7 @@ Struct* Array::CreateStruct(s32 memberNum)
 Struct* Array::CreateStructWithBufferSize(s32 bufferSize)
 {
     Struct* pStruct = Struct::createWithBufferSize(bufferSize, Manager::instance()->getHeap(), true);
+
     if (!pStruct) {
         return nullptr;
     }

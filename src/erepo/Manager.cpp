@@ -21,6 +21,7 @@ void deleteReporters(sead::PtrArray<Reporter>& rReporters)
     }
 
     Reporter** end = rReporters.dataEnd();
+
     for (Reporter** it = rReporters.dataBegin(); it != end; ++it) {
         delete *it;
     }
@@ -69,6 +70,7 @@ bool Manager::initialize(const InitializeArg& rArg)
     mReporterLists[0].reporters.allocBuffer(1, rArg.heap);
     {
         auto* reporter = new (rArg.heap) Reporter(new (rArg.heap) UserInfoObserver());
+
         if (reporter) {
             reporter->setTimingOn(Reporter::ETiming::cStartup);
             mReporterLists[0].reporters.pushBack(reporter);
@@ -79,6 +81,7 @@ bool Manager::initialize(const InitializeArg& rArg)
     mReporterLists[1].reporters.allocBuffer(4, rArg.heap);
     {
         auto* reporter = new (rArg.heap) Reporter(new (rArg.heap) PlayTimeObserver());
+
         if (reporter) {
             reporter->setTimingOn(Reporter::ETiming::cDaily);
             reporter->setTimingOn(Reporter::ETiming::cStartup);
@@ -88,6 +91,7 @@ bool Manager::initialize(const InitializeArg& rArg)
 
     {
         auto* reporter = new (rArg.heap) Reporter(new (rArg.heap) PlayStyleObserver());
+
         if (reporter) {
             reporter->setTimingOn(Reporter::ETiming::cDaily);
             reporter->setTimingOn(Reporter::ETiming::cStartup);
@@ -98,6 +102,7 @@ bool Manager::initialize(const InitializeArg& rArg)
     mNetworkStatusObserver = new (rArg.heap) NetworkStatusObserver();
     {
         auto* reporter = new (rArg.heap) Reporter(mNetworkStatusObserver);
+
         if (reporter) {
             reporter->setTimingOn(Reporter::ETiming::cStartup);
             mReporterLists[1].reporters.pushBack(reporter);
@@ -150,6 +155,7 @@ bool Manager::startUp(const StartupArg& rArg)
 
     std::atomic<u32>& flags = mFlags.getRaw();
     u32 expected = flags.load(std::memory_order_relaxed);
+
     while (!flags.compare_exchange_weak(
         expected,
         (expected & ~((1u << EFlag::cStartupRequested) | (1u << EFlag::cStartupFinished))) |
@@ -216,6 +222,7 @@ void Manager::loadData(u32 value0, u32 value1, u32 value2, u32 value3, u32* pTim
     mSaveDataInfo.mValues[1].set(value1);
     mSaveDataInfo.mValues[2].set(value2);
     mSaveDataInfo.mValues[3].set(value3);
+
     for (s32 i = 0; i < 5; i++) {
         mSaveDataInfo.mValues[4 + i].set(pTimes0[i]);
         mSaveDataInfo.mValues[9 + i].set(pTimes1[i]);
@@ -388,6 +395,7 @@ void Manager::updateBeginStartup_()
 
         std::atomic<u32>& flags = mFlags.getRaw();
         u32 expected = flags.load(std::memory_order_relaxed);
+
         while (!flags.compare_exchange_weak(
             expected,
             (expected & ~((1u << EFlag::cStartupRequested) | (1u << EFlag::cStartupFinished))) |
@@ -408,6 +416,7 @@ void Manager::updateBeginStartup_()
 bool Manager::waitFinishSendingAsync_(s32 timeoutMs)
 {
     s64 elapsed = mWaitStartTime.diffToNow().toMilliSeconds();
+
     if (timeoutMs >= 0 && elapsed > timeoutMs) {
         mFlags.setOff(EFlag::cWaitFinishSendingAsync);
         return false;
@@ -420,12 +429,14 @@ void Manager::updateFinishStartup_(const UpdateArg& rArg)
 {
     s32 counter = sUpdateCounter;
     sUpdateCounter = counter + 1;
+
     if (counter % 3600 == 0 && checkSendDailyReport_()) {
         for (auto& reporter : mReporterLists[0].reporters) {
             reporter.update(rArg);
         }
 
         sendDailyReport_(mReporterLists[0].type);
+
         if (mReporterLists[0].requestFlag.testAndClear(ReporterType::cSystem)) {
             for (auto& reporter : mReporterLists[0].reporters) {
                 reporter.report(mReporterLists[0].requestId);
@@ -439,6 +450,7 @@ void Manager::updateFinishStartup_(const UpdateArg& rArg)
         }
 
         sendDailyReport_(mReporterLists[1].type);
+
         if (mReporterLists[1].requestFlag.testAndClear(ReporterType::cSystem)) {
             for (auto& reporter : mReporterLists[1].reporters) {
                 reporter.report(mReporterLists[1].requestId);
@@ -525,6 +537,7 @@ bool Manager::checkSendDailyReport_()
 
     u32 lastTime = mSaveDataInfo.mValues[1].get();
     u32 nowTime = getCurrentDateTime();
+
     if (lastTime > nowTime) {
         return false;
     }
@@ -563,6 +576,7 @@ void Manager::finalize()
     deleteReporters(mReporterLists[1].reporters);
 
     mSendThread->quitAndWaitDoneSingleThread(false);
+
     if (mSendThread) {
         delete mSendThread;
         mSendThread = nullptr;
@@ -646,6 +660,7 @@ void Manager::resetSaveState_() {}
 bool Manager::requestWaitFinishSendingAsync(s32 timeoutMs)
 {
     mWaitTimeoutMs = timeoutMs;
+
     if (mFlags.isOn(EFlag::cWaitFinishSendingAsync)) {
         return false;
     }
@@ -691,12 +706,14 @@ bool Manager::waitFinishSending(s32 timeoutMs)
 {
     mFlags.setOn(EFlag::cWaitFinishSending);
     mWaitStartTime.setNow();
+
     while (mSendThread) {
         if (!mSendThread->isSending()) {
             return true;
         }
 
         s64 elapsed = mWaitStartTime.diffToNow().toMilliSeconds();
+
         if (timeoutMs >= 0 && elapsed > timeoutMs) {
             mFlags.setOff(EFlag::cWaitFinishSending);
             return false;

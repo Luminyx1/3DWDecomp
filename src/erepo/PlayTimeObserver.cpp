@@ -37,11 +37,13 @@ void PlayTimeObserver::initialize(sead::Heap* pHeap)
 void PlayTimeObserver::load()
 {
     Manager* manager = Manager::instance();
+
     if (!manager) {
         return;
     }
 
     SaveDataInfo info = manager->getSaveDataInfo();
+
     if (info.mValues[3].isValid()) {
         mSavedPlayTime = info.mValues[3].get();
     }
@@ -66,6 +68,7 @@ void PlayTimeObserver::load()
 void PlayTimeObserver::save(SaveData* pData) const
 {
     Manager* manager = Manager::instance();
+
     if (!manager) {
         return;
     }
@@ -74,6 +77,7 @@ void PlayTimeObserver::save(SaveData* pData) const
     info.mValues[3].set(static_cast<u32>(static_cast<f32>(mSavedPlayTime) + mPlayTime));
     info.mValues[0].set(mSavedActiveTime + mActiveTime);
     info.mValues[2].set(mSavedSleepTime + mSleepTime);
+
     for (s32 i = 0; i < cPlayerNumMax; i++) {
         info.mFloats[i].set(mPlayerNumTimes[i] + mSavedPlayerNumTimes[i]);
     }
@@ -82,6 +86,7 @@ void PlayTimeObserver::save(SaveData* pData) const
 void PlayTimeObserver::update(const Manager::UpdateArg& rArg)
 {
     mPlayTime = rArg.deltaTime + mPlayTime;
+
     if (mBeaconIndex == 0 || mPlayTime > static_cast<f32>(mNextBeaconTime)) {
         sendActiveBeacon_();
         mBeaconIndex = mBeaconIndex + 1 >= 5 ? 5 : mBeaconIndex + 1;
@@ -90,10 +95,13 @@ void PlayTimeObserver::update(const Manager::UpdateArg& rArg)
     }
 
     s32 num = sead::ControllerMgr::instance()->getControllerNum();
+
     if (num > 0) {
         num = sead::Mathi::min(num, cPlayerNumMax);
+
         for (s32 i = 0; i < num; i++) {
             sead::Controller* controller = sead::ControllerMgr::instance()->getController(i);
+
             if (!controller || !controller->isConnected()) {
                 mControllerActiveTimes[i] = 0;
                 continue;
@@ -112,14 +120,17 @@ void PlayTimeObserver::update(const Manager::UpdateArg& rArg)
     }
 
     s32 activeNum = 0;
+
     for (s32 i = 0; i < cPlayerNumMax; i++) {
         mControllerActiveTimes[i] -= rArg.deltaTime;
+
         if (mControllerActiveTimes[i] != 0) {
             activeNum++;
         }
     }
 
     const s32 index = activeNum - 1;
+
     if (static_cast<u32>(index) >= 4) {
         return;
     }
@@ -149,6 +160,7 @@ bool PlayTimeObserver::sendActiveBeacon_()
 bool PlayTimeObserver::report(const StringId& rId)
 {
     SendData* data = createSendData_(sead::SafeString("erepo_time"), 16, 0, 0, rId, true);
+
     if (!data) {
         return false;
     }
@@ -161,8 +173,10 @@ bool PlayTimeObserver::report(const StringId& rId)
                   static_cast<u32>(mSleepTime));
 
     Manager* manager = Manager::instance();
+
     if (manager) {
         const SaveDataInfo& info = manager->getSaveDataInfo();
+
         if (info.mValues[0].isValid()) {
             data->addData(sead::FixedSafeString<63>(sead::SafeString("ActiveTotalTime")),
                           mActiveTime + mSavedActiveTime);
