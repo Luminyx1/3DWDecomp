@@ -361,11 +361,13 @@ void TextWriter::printImpl_(const char16_t* pStr, s32 length, bool isDraw, Bound
                 lineEnd = LineEnd::cEnd;
                 break;
             }
+
             if (c == u'\n')
             {
                 lineEnd = LineEnd::cNewLine;
                 break;
             }
+
             if (count >= maxDrawNum)
             {
                 lineEnd = LineEnd::cMaxDraw;
@@ -379,6 +381,7 @@ void TextWriter::printImpl_(const char16_t* pStr, s32 length, bool isDraw, Bound
                 lineEnd = LineEnd::cWrap;
                 break;
             }
+
             width += charWidth;
         }
 
@@ -431,6 +434,7 @@ void TextWriter::printImpl_(const char16_t* pStr, s32 length, bool isDraw, Bound
         {
             mFont->end(mDrawContext);
         }
+
         mCursor.set(lineX + endWidth, y);
     }
 }

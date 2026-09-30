@@ -126,10 +126,12 @@ void FaderTaskBase::calcCore_()
                         TaskEvent event(1);
                         mFromTask->onEvent(event);
                     }
+
                     {
                         TaskEvent event(2);
                         mToTask->onEvent(event);
                     }
+
                     fadein_();
                     break;
                 case cStartType_Push:
@@ -149,6 +151,7 @@ void FaderTaskBase::calcCore_()
                             task = task->parent() ? task->parent()->value() : nullptr;
                         }
                     }
+
                     task->pauseCalc(false);
                     task->pauseDraw(false);
                     task->onEvent(TaskEvent(0));
@@ -162,6 +165,7 @@ void FaderTaskBase::calcCore_()
                 cs.unlock();
             }
         }
+
         break;
     case cFaderState_Wait:
         if (mFrame > mWaitEndFrame)
@@ -174,6 +178,7 @@ void FaderTaskBase::calcCore_()
                     TaskEvent event(4);
                     mToTask->onEvent(event);
                 }
+
                 onFadeEvent_(FadeEvent(FadeEvent::cFadeInStart));
                 mFaderState = cFaderState_FadeIn;
             }
@@ -182,6 +187,7 @@ void FaderTaskBase::calcCore_()
                 mFrame = mWaitEndFrame + 1;
             }
         }
+
         break;
     case cFaderState_FadeIn:
         if (mFrame > mFadeInEndFrame)
@@ -200,6 +206,7 @@ void FaderTaskBase::calcCore_()
                 mToTask->mInternalFlag.resetBit(0);
             }
         }
+
         break;
     default:
         break;
@@ -512,6 +519,7 @@ void FaderTaskBase::calc()
             mAlpha = 1.0f - static_cast<f32>(mFrame - mWaitEndFrame) /
                                 static_cast<f32>(mFadeInEndFrame - mWaitEndFrame);
         }
+
         mFrame++;
         break;
     default:

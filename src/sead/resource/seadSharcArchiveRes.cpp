@@ -81,6 +81,7 @@ static SharcArchiveRes::HandleInner* getHandleInner_(HandleBuffer* pHandle, bool
     {
         return new (pHandle) SharcArchiveRes::HandleInner;
     }
+
     return reinterpret_cast<SharcArchiveRes::HandleInner*>(pHandle);
 }
 

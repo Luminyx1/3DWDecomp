@@ -74,6 +74,7 @@ T curveLinear_(f32 t, const CurveDataInfo* info, const T* f)
     {
         return f[n];
     }
+
     const auto x = fracPart(n * t);
     return f[i] + ((f[i + 1] - f[i]) * x);
 }
@@ -92,6 +93,7 @@ T curveHermit_(f32 t, const CurveDataInfo* info, const T* f)
     {
         return 0;
     }
+
     if (t < 0)
     {
         return f[0];
@@ -173,6 +175,7 @@ T curveLinear2D_(f32 t_, const CurveDataInfo* info, const T* f)
             return f[j + 1] + ((t - f[j]) / (f[j + 2] - f[j])) * (f[j + 3] - f[j + 1]);
         }
     }
+
     return 0;
 }
 
@@ -233,6 +236,7 @@ T curveStep2D_(f32 t_, const CurveDataInfo* info, const T* f)
             return f[2 * i + 1];
         }
     }
+
     return 0;
 }
 

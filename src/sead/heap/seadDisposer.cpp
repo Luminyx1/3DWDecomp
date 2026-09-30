@@ -38,11 +38,13 @@ IDisposer::IDisposer(Heap* const pDisposerHeap, HeapNullOption heapNullOption)
         {
             return;
         }
+
         mDisposerHeap = sead::HeapMgr::sInstancePtr->findContainHeap(this);
         if (mDisposerHeap)
         {
             mDisposerHeap->appendDisposer_(this);
         }
+
         return;
     case HeapNullOption::DoNotAppendDisposerIfNoHeapSpecified:
         return;
@@ -51,11 +53,13 @@ IDisposer::IDisposer(Heap* const pDisposerHeap, HeapNullOption heapNullOption)
         {
             return;
         }
+
         mDisposerHeap = sead::HeapMgr::sInstancePtr->getCurrentHeap();
         if (mDisposerHeap)
         {
             mDisposerHeap->appendDisposer_(this);
         }
+
         return;
     default:
         SEAD_ASSERT_MSG(false, "illegal option[%d]", int(heapNullOption));

@@ -122,6 +122,7 @@ UnitHeap* UnitHeap::tryCreate(size_t size, const SafeString& rName, u32 blockSiz
     {
         size = size + 7;
     }
+
     size &= ~size_t(7);
 
     size_t alignedBlockSize = (size_t(blockSize) + (blockAlignment - 1)) & -blockAlignment;
@@ -295,6 +296,7 @@ void* UnitHeap::tryAlloc(size_t size, s32 alignment)
         notifyAllocFailed(mgr, this, size, alignment, size, alignment);
         return nullptr;
     }
+
     if ((mBlockSize & (size_t(alignment) - 1)) != 0 || size > mBlockSize)
     {
         notifyAllocFailed(mgr, this, size, alignment, size, alignment);
@@ -316,8 +318,10 @@ void* UnitHeap::tryAlloc(size_t size, s32 alignment)
             arg.alloc_alignment = alignment;
             callback->invoke(&arg);
         }
+
         return ptr;
     }
+
     mFreeList.alloc();
     mFreeSize -= mBlockSize;
     return ptr;
@@ -413,6 +417,7 @@ size_t UnitHeap::getMaxAllocatableSize(int alignment) const
     {
         return 0;
     }
+
     return mBlockSize;
 }
 
@@ -434,6 +439,7 @@ void UnitHeap::dumpYAML(WriteStream& rStream, int indent) const
     {
         str.append(' ', indent);
     }
+
     str.appendWithFormat("  heap_type: UnitHeap\n");
     rStream.writeDecorationText(str);
     str.clear();
@@ -442,6 +448,7 @@ void UnitHeap::dumpYAML(WriteStream& rStream, int indent) const
     {
         str.append(' ', indent);
     }
+
     str.appendWithFormat("  block_size: %llu\n", mBlockSize);
     rStream.writeDecorationText(str);
     str.clear();
@@ -450,6 +457,7 @@ void UnitHeap::dumpYAML(WriteStream& rStream, int indent) const
     {
         str.append(' ', indent);
     }
+
     str.appendWithFormat("  area_start: %llu\n", mAreaStart);
     rStream.writeDecorationText(str);
     str.clear();
@@ -458,6 +466,7 @@ void UnitHeap::dumpYAML(WriteStream& rStream, int indent) const
     {
         str.append(' ', indent);
     }
+
     str.appendWithFormat("  area_size: %llu\n", mAreaSize);
     rStream.writeDecorationText(str);
 }

@@ -16,6 +16,7 @@ bool MemUtil::isStack(const void* pAddress)
         const uintptr_t end = start + size;
         return (start <= reinterpret_cast<uintptr_t>(address)) & (reinterpret_cast<uintptr_t>(address) < end);
     };
+
     Thread* main = ThreadMgr::instance()->getMainThread();
     if (main && contains(pAddress, main->mThreadInner->_stack, main->mStackSize))
         return true;
@@ -26,6 +27,7 @@ bool MemUtil::isStack(const void* pAddress)
                 return true;
         }
     }
+
     return false;
 }
 }  // namespace sead

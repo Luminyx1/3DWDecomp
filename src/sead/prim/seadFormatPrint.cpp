@@ -172,6 +172,7 @@ bool PrintFormatter::proceedToFormatMark_(char* pFormat)
             {
                 mIsFormatSkipped = true;
             }
+
             mPos += i + 2;
             return true;
         }
@@ -185,6 +186,7 @@ bool PrintFormatter::proceedToFormatMark_(char* pFormat)
                 mPos = mFormatStrLength;
                 return true;
             }
+
             pFormat[len] = str[len];
             ++len;
         }
@@ -207,6 +209,7 @@ bool PrintFormatter::proceedToFormatMark_(char* pFormat)
         mPrintOutput->write(str, i);
         mPos += i;
     }
+
     return false;
 }
 
@@ -246,6 +249,7 @@ PrintFormatter& PrintFormatter::operator<<(const char* pFormat)
     {
         outputString_(format[0] != '\0' ? format : nullptr, mPrintOutput, pFormat, -1);
     }
+
     return *this;
 }
 
@@ -265,6 +269,7 @@ void PrintFormatter::outputString_(const char* pFormat, PrintOutput* pOutput, co
         {
             length = std::strlen(pString);
         }
+
         pOutput->write(pString, length);
         return;
     }
@@ -294,8 +299,10 @@ void PrintFormatter::outputString_(const char* pFormat, PrintOutput* pOutput, co
             {
                 pOutput->write(" ", 1);
             }
+
             pOutput->write(pString, length == -1 ? std::strlen(pString) : length);
         }
+
         return;
     }
 
@@ -322,6 +329,7 @@ void PrintFormatter::outputPtr_(const char* pFormat, PrintOutput* pOutput, uintp
     {
         len = str.format("0x%016llX", ptr);
     }
+
     pOutput->write(str.cstr(), len);
 }
 
@@ -461,6 +469,7 @@ void PrintFormatter::out<u8>(const u8& rValue, const char* pFormat, PrintOutput*
     {
         len = str.format("%u", rValue);
     }
+
     pOutput->write(str.cstr(), len);
 }
 
@@ -483,6 +492,7 @@ void PrintFormatter::out<u16>(const u16& rValue, const char* pFormat, PrintOutpu
     {
         len = str.format("%u", rValue);
     }
+
     pOutput->write(str.cstr(), len);
 }
 
@@ -505,6 +515,7 @@ void PrintFormatter::out<u32>(const u32& rValue, const char* pFormat, PrintOutpu
     {
         len = str.format("%u", rValue);
     }
+
     pOutput->write(str.cstr(), len);
 }
 
@@ -527,6 +538,7 @@ void PrintFormatter::out<u64>(const u64& rValue, const char* pFormat, PrintOutpu
     {
         len = str.format("%llu", rValue);
     }
+
     pOutput->write(str.cstr(), len);
 }
 
@@ -549,6 +561,7 @@ void PrintFormatter::out<s8>(const s8& rValue, const char* pFormat, PrintOutput*
     {
         len = str.format("%d", rValue);
     }
+
     pOutput->write(str.cstr(), len);
 }
 
@@ -571,6 +584,7 @@ void PrintFormatter::out<s16>(const s16& rValue, const char* pFormat, PrintOutpu
     {
         len = str.format("%d", rValue);
     }
+
     pOutput->write(str.cstr(), len);
 }
 
@@ -593,6 +607,7 @@ void PrintFormatter::out<s32>(const s32& rValue, const char* pFormat, PrintOutpu
     {
         len = str.format("%d", rValue);
     }
+
     pOutput->write(str.cstr(), len);
 }
 
@@ -615,6 +630,7 @@ void PrintFormatter::out<s64>(const s64& rValue, const char* pFormat, PrintOutpu
     {
         len = str.format("%lld", rValue);
     }
+
     pOutput->write(str.cstr(), len);
 }
 
@@ -637,6 +653,7 @@ void PrintFormatter::out<f32>(const f32& rValue, const char* pFormat, PrintOutpu
     {
         len = str.format("%f", rValue);
     }
+
     pOutput->write(str.cstr(), len);
 }
 
@@ -659,6 +676,7 @@ void PrintFormatter::out<f64>(const f64& rValue, const char* pFormat, PrintOutpu
     {
         len = str.format("%f", rValue);
     }
+
     pOutput->write(str.cstr(), len);
 }
 
@@ -681,6 +699,7 @@ void PrintFormatter::out<char>(const char& rValue, const char* pFormat, PrintOut
     {
         len = str.format("%d", rValue);
     }
+
     pOutput->write(str.cstr(), len);
 }
 
@@ -774,6 +793,7 @@ void PrintFormatter::out<std::nullptr_t>(const std::nullptr_t& rValue, const cha
     {
         len = str.format("%llu", value);
     }
+
     pOutput->write(str.cstr(), len);
 }
 
@@ -913,6 +933,7 @@ static void outMatrix_(const Matrix& rMtx, s32 rows, s32 cols, const char* pForm
                 pOutput->write(" ", 1);
             }
         }
+
         if (i < rows - 1)
         {
             pOutput->write("\n ", 2);
@@ -945,11 +966,13 @@ void PrintFormatter::OutImpl<f32, Matrix22>::out(const Matrix22f& rValue, const 
                 pOutput->write(" ", 1);
             }
         }
+
         if (i < 1)
         {
             pOutput->write("\n ", 2);
         }
     }
+
     pOutput->write(")", 1);
 }
 
@@ -1099,6 +1122,7 @@ void PrintFormatter::OutImpl<u8, BitFlag>::out(const BitFlag8& rValue, const cha
     {
         len = str.format("0x%x", bits);
     }
+
     pOutput->write(str.cstr(), len);
 }
 
@@ -1123,6 +1147,7 @@ void PrintFormatter::OutImpl<u16, BitFlag>::out(const BitFlag16& rValue, const c
     {
         len = str.format("0x%x", bits);
     }
+
     pOutput->write(str.cstr(), len);
 }
 
@@ -1147,6 +1172,7 @@ void PrintFormatter::OutImpl<u32, BitFlag>::out(const BitFlag32& rValue, const c
     {
         len = str.format("0x%x", bits);
     }
+
     pOutput->write(str.cstr(), len);
 }
 
@@ -1171,6 +1197,7 @@ void PrintFormatter::OutImpl<u64, BitFlag>::out(const BitFlag64& rValue, const c
     {
         len = str.format("0x%llx", bits);
     }
+
     pOutput->write(str.cstr(), len);
 }
 

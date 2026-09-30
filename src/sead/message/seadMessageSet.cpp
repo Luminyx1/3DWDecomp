@@ -28,6 +28,7 @@ bool MessageSetBase::initialize(void* pData, Heap* pHeap) {
         num = 0;
         mMsgFile = nullptr;
     }
+
     mTextNum = num;
     LMS_SetMemFuncs(nullptr, nullptr);
     sHeap = nullptr;
@@ -69,6 +70,7 @@ const void* MessageSetBase::getInitializeData() const {
     if (mMsgFile) {
         return mMsgFile->commonInfo.pResource;
     }
+
     return nullptr;
 }
 
@@ -80,6 +82,7 @@ s32 MessageSetBase::calcTextSizeByIndex(s32 index) const {
     if (static_cast<u32>(index) < static_cast<u32>(mTextNum)) {
         return LMS_GetTextSize(mMsgFile, index);
     }
+
     return 0;
 }
 
@@ -95,9 +98,11 @@ bool MessageSetBase::searchTextLabelByIndex(BufferedSafeString* pLabel, s32 inde
             pLabel->clear();
             return false;
         }
+
         LMS_GetLabelByTextIndex(mMsgFile, index, pLabel->getBuffer());
         return true;
     }
+
     pLabel->clear();
     return false;
 }

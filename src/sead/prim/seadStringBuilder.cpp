@@ -84,6 +84,7 @@ bool StringBuilderBase<T>::endsWith(const T* suffix) const
             return false;
         }
     }
+
     return true;
 }
 
@@ -155,6 +156,7 @@ s32 StringBuilderBase<T>::copyAt(s32 at_, const T* src, s32 copy_length)
             at = 0;
             goto check_buffer_overflow;
         }
+
         at = at_new;
     }
 
@@ -188,6 +190,7 @@ check_buffer_overflow:
     {
         mLength = at + copy_length;
     }
+
     return copy_length;
 }
 
@@ -257,6 +260,7 @@ s32 StringBuilderBase<T>::cutOffCopyAt(s32 at_, const T* src, s32 copy_length)
             at = 0;
             goto check_buffer_overflow;
         }
+
         at = at_new;
     }
 
@@ -288,6 +292,7 @@ check_buffer_overflow:
     {
         mLength = at + copy_length;
     }
+
     return copy_length;
 }
 
@@ -318,6 +323,7 @@ s32 StringBuilderBase<T>::copyAtWithTerminate(s32 at_, const T* src, s32 copy_le
             at = 0;
             goto check_buffer_overflow;
         }
+
         at = at_new;
     }
 
@@ -348,6 +354,7 @@ check_buffer_overflow:
     {
         mLength = at + copy_length;
     }
+
     return copy_length;
 }
 
@@ -382,6 +389,7 @@ s32 WStringBuilder::formatImpl_(char16* s, s32 n, const char16* format, va_list 
     {
         return ret;
     }
+
     s[n - 1] = WSafeString::cNullChar;
     return n - 1;
 }
@@ -603,10 +611,12 @@ s32 StringBuilderBase<T>::rstrip(const T* pCharacters)
                 break;
             }
         }
+
         if (!isFound)
         {
             break;
         }
+
         newLength = i;
     }
 
@@ -642,6 +652,7 @@ s32 StringBuilderBase<T>::rstripUnprintableAsciiChars()
         {
             break;
         }
+
         newLength = i;
     }
 
@@ -681,6 +692,7 @@ s32 StringBuilderBase<T>::trim(s32 trim_length)
     {
         mLength = trim_length;
     }
+
     return trim_length;
 }
 
@@ -736,6 +748,7 @@ s32 StringBuilderBase<T>::replaceChar(T old_char, T new_char)
             buffer[i] = new_char;
         }
     }
+
     return replaced_count;
 }
 
@@ -767,6 +780,7 @@ s32 StringBuilderBase<T>::replaceCharList(const SafeStringBase<T>& old_chars,
             SEAD_ASSERT_MSG(false, "old_chars(%p).length is not equal to new_chars(%p).length.",
                             old_chars.cstr(), new_chars.cstr());
         }
+
         if (old_chars_len > new_chars_len)
         {
             old_chars_len = new_chars_len;
@@ -794,6 +808,7 @@ s32 StringBuilderBase<T>::replaceCharList(const SafeStringBase<T>& old_chars,
             }
         }
     }
+
     return replaced_count;
 }
 
@@ -836,6 +851,7 @@ s32 StringBuilderBase<T>::convertFromOtherType_(const OtherType* src, s32 src_si
 
         dst[copy_size] = SafeStringBase<T>::cNullChar;
     }
+
     mLength = copy_size;
     return copy_size;
 }
@@ -977,6 +993,7 @@ s32 StringBuilderBase<T>::prepend(const T* pStr, s32 prependLength)
         {
             prependLength = buffer_size - 1;
         }
+
         move_length = buffer_size - 1 - prependLength;
     }
     else
@@ -1016,6 +1033,7 @@ s32 StringBuilderBase<T>::prepend(T c, s32 num)
         {
             num = bufferSize - 1;
         }
+
         moveLength = bufferSize - 1 - num;
     }
 

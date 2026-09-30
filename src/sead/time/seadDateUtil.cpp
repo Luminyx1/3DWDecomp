@@ -36,6 +36,7 @@ CalendarTime::Week calcWeekDay(const CalendarTime::Year& rYear, const CalendarTi
         y -= 1;
         m += 12;
     }
+
     d += y + (y / 4) - (y / 100) + (y / 400);
     d += (26 * m + 16) / 10;
     return CalendarTime::Week(d % 7);
@@ -52,6 +53,7 @@ void calcSecondToCalendarSpan(CalendarSpan* pOutSpan, u64 sec)
     {
         return;
     }
+
     pOutSpan->setDays(sec / (3600 * 24));
     pOutSpan->setHours((sec % (3600 * 24)) / 3600);
     pOutSpan->setMinutes((sec % 3600) / 60);
@@ -112,6 +114,7 @@ static bool parseW3CDTFSubString(bool* pOk, u32* pValue, SafeString* pStr, s32* 
     {
         *pOutSeparator = c;
     }
+
     return false;
 }
 
@@ -141,18 +144,22 @@ static bool parseW3CDTFStringImpl(u32* pYear, u32* pMonth, u32* pDay, u32* pHour
     {
         return ok;
     }
+
     if (parseW3CDTFSubString(&ok, pMonth, &substr, &len, &separator, 2, "-", true, 1, 12))
     {
         return ok;
     }
+
     if (parseW3CDTFSubString(&ok, pDay, &substr, &len, &separator, 2, "T", true, 1, 31))
     {
         return ok;
     }
+
     if (parseW3CDTFSubString(&ok, pHour, &substr, &len, &separator, 2, ":", false, 0, 23))
     {
         return ok;
     }
+
     if (parseW3CDTFSubString(&ok, pMinute, &substr, &len, &separator, 2, ":+-Z", true, 0, 59))
     {
         return ok;
@@ -202,6 +209,7 @@ static bool parseW3CDTFStringImpl(u32* pYear, u32* pMonth, u32* pDay, u32* pHour
                 *pTzHour = -tzHourAbs;
             }
         }
+
         if (done)
         {
             return ok;
@@ -213,15 +221,18 @@ static bool parseW3CDTFStringImpl(u32* pYear, u32* pMonth, u32* pDay, u32* pHour
         {
             return false;
         }
+
         *pTzMinute = tzMinuteAbs;
         if (separator == '-')
         {
             *pTzMinute = -tzMinuteAbs;
         }
+
         if (!done)
         {
             return false;
         }
+
         len -= 2;
     }
 

@@ -112,6 +112,7 @@ void WorkerMgr::finalize()
         {
             delete mWorkers[i];
         }
+
         mWorkers[i] = nullptr;
     }
 }
@@ -244,6 +245,7 @@ bool WorkerMgr::isAllWorkerSleep() const
             return false;
         }
     }
+
     return true;
 }
 

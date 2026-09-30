@@ -274,6 +274,7 @@ void DisplayBufferNvn::initializeImpl_(Heap* pHeap)
         s32 alignment = nvnTextureBuilderGetStorageAlignment(builder);
         poolSize += (size + alignment - 1) / alignment * alignment;
     }
+
     poolSize = (poolSize + 0xfff) & ~size_t(0xfff);
 
     {
@@ -311,6 +312,7 @@ void DisplayBufferNvn::initializeImpl_(Heap* pHeap)
     nvnWindowBuilderSetPresentInterval(&windowBuilder, mPresentInterval);
     nvnWindowInitialize(mWindow, &windowBuilder);
     }
+
     nvnQueueAcquireTexture(GraphicsNvn::instance()->getNvnQueue(), mWindow, &mTextureIndex);
 
     mWindowCropX = 0;

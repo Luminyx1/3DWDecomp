@@ -19,6 +19,7 @@ TaskBase* TaskClassID::create(const TaskConstructArg& rArg) const
         {
             return sIntTaskCreator(mID.mInt, rArg);
         }
+
         return nullptr;
     case Type::cFactory:
         return mID.mFactory(rArg);
@@ -27,6 +28,7 @@ TaskBase* TaskClassID::create(const TaskConstructArg& rArg) const
         {
             return sStringTaskCreator(mID.mString, rArg);
         }
+
         return nullptr;
     default:
         return nullptr;

@@ -227,6 +227,7 @@ Color4u8& Color4u8::operator/=(float x)
             this->*m = 255;
             return;
         }
+
         const float q = float(this->*m) / x;
         if (q < 0.0f)
         {

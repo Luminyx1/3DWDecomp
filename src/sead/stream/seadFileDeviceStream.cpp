@@ -34,6 +34,7 @@ u32 FileDeviceStreamSrc::skip(s32 offset)
     {
         return 0;
     }
+
     return offset;
 }
 
@@ -96,6 +97,7 @@ void FileDeviceWriteStream::setFileHandle(sead::FileHandle* pFileHandle)
         flush();
         rewind();
     }
+
     src.setFileHandle(pFileHandle);
 }
 

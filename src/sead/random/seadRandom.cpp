@@ -42,6 +42,7 @@ void Random::init(u32 seedX, u32 seedY, u32 seedZ, u32 seedW)
         seedY = 0x6C078967;
         seedX = 1;
     }
+
     mX = seedX;
     mY = seedY;
     mZ = seedZ;

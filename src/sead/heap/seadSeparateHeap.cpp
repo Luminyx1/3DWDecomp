@@ -134,6 +134,7 @@ SeparateHeap* SeparateHeap::tryCreate(const SafeString& rName, size_t management
         {
             return nullptr;
         }
+
         heapSize = (maxSize - managementAreaSize) & ~size_t(7);
     }
 
@@ -238,6 +239,7 @@ void* SeparateHeap::tryAlloc(size_t size, s32 alignment)
             next = &block;
             break;
         }
+
         prevEnd = uintptr_t(block.mAddress) + block.mSize;
     }
 
@@ -299,6 +301,7 @@ SeparateHeap::Block* SeparateHeap::findBlock_(void* pPtr)
             return &block;
         }
     }
+
     return nullptr;
 }
 
@@ -327,6 +330,7 @@ void* SeparateHeap::resizeFront(void* pPtr, size_t size)
         {
             return nullptr;
         }
+
         block->mAddress = newAddress;
         block->mSize = size;
         return newAddress;
@@ -366,6 +370,7 @@ void* SeparateHeap::resizeBack(void* pPtr, size_t size)
         {
             return nullptr;
         }
+
         block->mSize = size;
         return pPtr;
     }
@@ -374,6 +379,7 @@ void* SeparateHeap::resizeBack(void* pPtr, size_t size)
     {
         block->mSize = size;
     }
+
     return pPtr;
 }
 
@@ -398,6 +404,7 @@ size_t SeparateHeap::getFreeSize() const
     {
         usedSize += block.mSize;
     }
+
     return mSize - usedSize;
 }
 
@@ -417,6 +424,7 @@ size_t SeparateHeap::getMaxAllocatableSize(int alignment) const
         {
             maxSize = std::max(maxSize, uintptr_t(block.mAddress) - address);
         }
+
         prevEnd = PtrUtil::addOffset(block.mAddress, block.mSize);
     }
 
@@ -426,6 +434,7 @@ size_t SeparateHeap::getMaxAllocatableSize(int alignment) const
     {
         maxSize = std::max(maxSize, size_t(PtrUtil::diff(end, address)));
     }
+
     return maxSize;
 }
 
@@ -470,6 +479,7 @@ void SeparateHeap::dumpYAML(WriteStream& rStream, int indent) const
     {
         str.append(' ', indent);
     }
+
     str.appendWithFormat("  heap_type: SeparateHeap\n");
     rStream.writeDecorationText(str);
     str.clear();
@@ -478,6 +488,7 @@ void SeparateHeap::dumpYAML(WriteStream& rStream, int indent) const
     {
         str.append(' ', indent);
     }
+
     str.appendWithFormat("  block_list_size: %d\n", mBlockList.size());
     rStream.writeDecorationText(str);
 }

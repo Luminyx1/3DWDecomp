@@ -117,6 +117,7 @@ void MaskControllerWrapper::setPadConfig(s32 padBitMax, const u32* pPadConfig,
     {
         return;
     }
+
     mPadBitMax = padBitMax;
 
     MemUtil::copy(mPadConfig, pPadConfig, padBitMax * sizeof(u32));

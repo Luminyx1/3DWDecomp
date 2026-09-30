@@ -29,6 +29,7 @@ GraphicsContext::GraphicsContext()
         mBlendTargets[i].mBlendEquationRGB = NVN_BLEND_EQUATION_ADD;
         mBlendTargets[i].mBlendEquationA = NVN_BLEND_EQUATION_ADD;
     }
+
     mPolygonOffsetFactor = 0.0f;
     mPolygonOffsetUnits = 0.0f;
     mPolygonOffsetClamp = 0.0f;
@@ -81,6 +82,7 @@ void GraphicsContext::apply(DrawContext* pDrawContext) const
             }
         }
     }
+
     nvnColorStateSetLogicOp(&colorState, NVN_LOGIC_OP_COPY);
     nvnCommandBufferBindColorState(commandBuffer, &colorState);
 
@@ -92,6 +94,7 @@ void GraphicsContext::apply(DrawContext* pDrawContext) const
             &channelMaskState, i, (mColorMask >> (i * 4)) & 1, (mColorMask >> (i * 4 + 1)) & 1,
             (mColorMask >> (i * 4 + 2)) & 1, (mColorMask >> (i * 4 + 3)) & 1);
     }
+
     nvnCommandBufferBindChannelMaskState(commandBuffer, &channelMaskState);
 
     nvnDepthStencilStateSetDepthTestEnable(&depthStencilState, mDepthTestEnable);
@@ -168,6 +171,7 @@ void GraphicsContext::applyColorMask(DrawContext* pDrawContext) const
             &channelMaskState, i, (mColorMask >> (i * 4)) & 1, (mColorMask >> (i * 4 + 1)) & 1,
             (mColorMask >> (i * 4 + 2)) & 1, (mColorMask >> (i * 4 + 3)) & 1);
     }
+
     nvnCommandBufferBindChannelMaskState(pDrawContext->getNvnCommandBuffer(), &channelMaskState);
 }
 
@@ -203,6 +207,7 @@ void GraphicsContext::applyBlendAndFastZ(DrawContext* pDrawContext) const
             }
         }
     }
+
     nvnColorStateSetLogicOp(&colorState, NVN_LOGIC_OP_COPY);
     nvnCommandBufferBindColorState(commandBuffer, &colorState);
 }

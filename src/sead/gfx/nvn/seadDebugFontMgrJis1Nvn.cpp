@@ -233,6 +233,7 @@ void DebugFontMgrJis1Nvn::begin(DrawContext* pDrawContext) const
     {
         return;
     }
+
     nvnCommandBufferBindProgram(pDrawContext->getNvnCommandBuffer(), &mNvnProgram,
                                 NVN_SHADER_STAGE_ALL_GRAPHICS_BITS);
 }
@@ -302,8 +303,10 @@ void DebugFontMgrJis1Nvn::print(DrawContext* pDrawContext, const Projection& rPr
             {
                 continue;
             }
+
             index = c - 0x20;
         }
+
         chars[count++] = index | x << 16;
         x += c < 0x7f ? 8 : 16;
     }
@@ -350,6 +353,7 @@ u32 DebugFontMgrJis1Nvn::searchCharIndexFormCharCode_(u32 code) const
             {
                 return 0;
             }
+
             lo = mid;
         }
         else
@@ -358,10 +362,13 @@ u32 DebugFontMgrJis1Nvn::searchCharIndexFormCharCode_(u32 code) const
             {
                 return 0;
             }
+
             hi = mid;
         }
+
         mid = (lo + hi) / 2;
     }
+
     return mid;
 }
 

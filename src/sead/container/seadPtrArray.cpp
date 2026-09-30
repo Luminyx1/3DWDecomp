@@ -214,6 +214,7 @@ void PtrArrayImpl::insertArray(s32 pos, void* pArray, s32 arrayLength, s32 elemS
     {
         mPtrs[pos + i] = reinterpret_cast<void*>(reinterpret_cast<uintptr_t>(pArray) + i * elemSize);
     }
+
     mPtrNum += arrayLength;
 }
 

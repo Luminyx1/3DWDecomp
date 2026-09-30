@@ -99,6 +99,7 @@ void Worker::proc_()
             done = queue->run(granularity, &finished, this);
             total += finished;
         }
+
         if (queue->addNumDoneJobs(total) + total >= queue->getNumJobs())
             queue->signalFinishEvent();
         mWorkerState = State::cFinished;
@@ -107,6 +108,7 @@ void Worker::proc_()
         mWorkerState = State::cRunning;
         queue = getNextJQ_();
     }
+
     mCurrentQueue = nullptr;
     mCurrentQueueDescription = nullptr;
     mWorkerState = State::cSleep;

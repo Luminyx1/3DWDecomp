@@ -54,6 +54,7 @@ u32 BufferReadStreamSrc::read(void* data, u32 size)
             break;
         }
     }
+
     return totalBytesRead;
 }
 
@@ -298,6 +299,7 @@ u32 BufferMultiByteTextWriteStreamSrc::write(const void* pData, u32 size)
                             {
                                 cut = i;
                             }
+
                             break;
                         }
                     }

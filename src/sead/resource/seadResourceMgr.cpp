@@ -52,6 +52,7 @@ ResourceFactory* ResourceMgr::setDefaultFactory(ResourceFactory* pFactory)
     {
         mDefaultResourceFactory = mNullResourceFactory;
     }
+
     registerFactory(mDefaultResourceFactory, "");
 
     return previous_default;
@@ -146,6 +147,7 @@ Resource* ResourceMgr::tryLoad(const ResourceMgr::LoadArg& rArg, const SafeStrin
     {
         return factory->tryCreateWithDecomp(rArg, pDecompressor);
     }
+
     return factory->tryCreate(rArg);
 }
 #endif
@@ -171,6 +173,7 @@ Resource* ResourceMgr::tryLoadWithoutDecomp(const ResourceMgr::LoadArg& rArg)
             factory = findFactory(ext);
         }
     }
+
     return factory->tryCreate(rArg);
 }
 
@@ -181,6 +184,7 @@ void ResourceMgr::unload(Resource* pRes)
         delete pRes;
     }
 }
+
 // NON_MATCHING: tail call for factory->create
 Resource* ResourceMgr::create(const ResourceMgr::CreateArg& rArg)
 {
@@ -189,11 +193,13 @@ Resource* ResourceMgr::create(const ResourceMgr::CreateArg& rArg)
         SEAD_ASSERT_MSG(false, "buffer null");
         return nullptr;
     }
+
     if (rArg.file_size == 0)
     {
         SEAD_ASSERT_MSG(false, "file_size is 0");
         return nullptr;
     }
+
     if (rArg.buffer_size == 0)
     {
         SEAD_ASSERT_MSG(false, "buffer_size is 0");

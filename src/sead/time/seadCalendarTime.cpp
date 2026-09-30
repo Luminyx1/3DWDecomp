@@ -251,6 +251,7 @@ u32 CalendarTime::getYearDays() const
     static const u32 sCumulativeNumberOfDays[] = {
         0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334,
     };
+
     u32 num_days = mDate.mDay.getValue() + sCumulativeNumberOfDays[m - 1];
 
     if (m >= 3)

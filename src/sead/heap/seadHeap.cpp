@@ -168,6 +168,7 @@ void Heap::dumpTreeYAML(WriteStream& rStream, int indent) const
     {
         str.append(' ', indent);
     }
+
     str.appendWithFormat("  children:\n");
     rStream.writeDecorationText(str);
 
@@ -193,6 +194,7 @@ void Heap::dumpYAML(WriteStream& rStream, int indent) const
     {
         str.append(' ', indent);
     }
+
     str.appendWithFormat("- name: \"%s\"\n", getName().cstr());
     rStream.writeDecorationText(str);
     str.clear();
@@ -201,6 +203,7 @@ void Heap::dumpYAML(WriteStream& rStream, int indent) const
     {
         str.append(' ', indent);
     }
+
     str.appendWithFormat("  start_address: 0x%016llX\n", getStartAddress());
     rStream.writeDecorationText(str);
     str.clear();
@@ -209,6 +212,7 @@ void Heap::dumpYAML(WriteStream& rStream, int indent) const
     {
         str.append(' ', indent);
     }
+
     str.appendWithFormat("  end_address: 0x%016llX\n", getEndAddress());
     rStream.writeDecorationText(str);
     str.clear();
@@ -217,6 +221,7 @@ void Heap::dumpYAML(WriteStream& rStream, int indent) const
     {
         str.append(' ', indent);
     }
+
     const char* parentName = mParent ? mParent->getName().cstr() : "--";
     str.appendWithFormat("  parent: %s\n", parentName);
     rStream.writeDecorationText(str);
@@ -226,6 +231,7 @@ void Heap::dumpYAML(WriteStream& rStream, int indent) const
     {
         str.append(' ', indent);
     }
+
     const char* directionName = mDirection != cHeapDirection_Forward ? "Reverse" : "Forward";
     str.appendWithFormat("  direction: %s\n", directionName);
     rStream.writeDecorationText(str);
@@ -235,6 +241,7 @@ void Heap::dumpYAML(WriteStream& rStream, int indent) const
     {
         str.append(' ', indent);
     }
+
     str.appendWithFormat("  size: %llu\n", getSize());
     rStream.writeDecorationText(str);
     str.clear();
@@ -243,6 +250,7 @@ void Heap::dumpYAML(WriteStream& rStream, int indent) const
     {
         str.append(' ', indent);
     }
+
     str.appendWithFormat("  free_size: %llu\n", getFreeSize());
     rStream.writeDecorationText(str);
     str.clear();
@@ -251,6 +259,7 @@ void Heap::dumpYAML(WriteStream& rStream, int indent) const
     {
         str.append(' ', indent);
     }
+
     str.appendWithFormat("  max_allocatable_size: %llu\n", getMaxAllocatableSize(8));
     rStream.writeDecorationText(str);
 }

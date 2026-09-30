@@ -11,12 +11,14 @@ public:
     {
         (void)getObject();  // force initialization of sObject
     }
+
     sead::CriticalSection* getObject()
     {
         static sead::CriticalSection sObject;
         return &sObject;
     }
 };
+
 static EnumParseTextCriticalSection sEnumParseTextCriticalSection;
 
 class EnumInitValueArrayCriticalSection
@@ -26,12 +28,14 @@ public:
     {
         (void)getObject();  // force initialization of sObject
     }
+
     sead::CriticalSection* getObject()
     {
         static sead::CriticalSection sObject;
         return &sObject;
     }
 };
+
 static EnumInitValueArrayCriticalSection sEnumInitValueArrayCriticalSection;
 }  // namespace
 
@@ -68,6 +72,7 @@ void ParseFailed_([[maybe_unused]] char** pTextPtr, [[maybe_unused]] int v)
     {
         system::Print("  text[%d] \"%s\"\n", i, pTextPtr[i]);
     }
+
     system::Print("----------------------------------------\n");
     SEAD_ASSERT_MSG(false, "SEAD_ENUM failed to parse text. Is number of comma correct?");
 #endif
@@ -169,6 +174,7 @@ void EnumUtil::skipToWordStart_(char** pPtr)
     {
         ++p;
     }
+
     *pPtr = p;
 }
 

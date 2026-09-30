@@ -50,6 +50,7 @@ s32 rfindCharIndex(const SafeString& rPath, char c)
             return i;
         }
     }
+
     return -1;
 }
 
@@ -146,6 +147,7 @@ bool Path::getDirectoryName(BufferedSafeString* pName, const SafeString& rPath)
 
         pName->copy(rPath, trim_index);
     }
+
     return true;
 }
 
@@ -178,6 +180,7 @@ void Path::join(BufferedSafeString* pOut, const char* path1, const char* path2)
                 return;
             }
         }
+
         pOut->format("%s%s", path1, path2);
     }
     else

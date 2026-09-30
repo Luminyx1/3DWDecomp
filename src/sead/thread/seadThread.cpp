@@ -38,6 +38,7 @@ MessageQueue::Element Thread::recvMessage(MessageQueue::BlockType blockType)
     {
         return 0;
     }
+
     return mMessageQueue.pop(blockType);
 }
 
@@ -256,6 +257,7 @@ ThreadMgr::~ThreadMgr()
         {
             all_done &= thread->isDone();
         }
+
         Thread::yield();
     } while (!all_done);
 
@@ -306,6 +308,7 @@ void ThreadMgr::waitDoneMultipleThread(Thread* const* pThreads, s32 num)
         {
             all_done &= pThreads[i]->isDone();
         }
+
         Thread::yield();
     } while (!all_done);
 
@@ -332,6 +335,7 @@ void ThreadMgr::checkCurrentThreadStackOverFlow(const char* pSourceFile, s32 sou
     {
         return;
     }
+
     if (Thread* thread = ThreadMgr::instance()->getCurrentThread())
     {
         thread->checkStackOverFlow(pSourceFile, sourceLine);
@@ -346,6 +350,7 @@ void ThreadMgr::checkCurrentThreadStackEndCorruption(const char* pSourceFile, s3
     {
         return;
     }
+
     if (Thread* thread = ThreadMgr::instance()->getCurrentThread())
     {
         thread->checkStackEndCorruption(pSourceFile, sourceLine);
@@ -360,6 +365,7 @@ void ThreadMgr::checkCurrentThreadStackPointerOverFlow(const char* pSourceFile, 
     {
         return;
     }
+
     if (Thread* thread = ThreadMgr::instance()->getCurrentThread())
     {
         thread->checkStackPointerOverFlow(pSourceFile, sourceLine);

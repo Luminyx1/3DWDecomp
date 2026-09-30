@@ -16,6 +16,7 @@ void MethodTreeNode::pushBackChild(MethodTreeNode* pNode)
             parent->attachMutexRec_(mCriticalSection);
         }
     }
+
     TreeNode::pushBackChild(pNode);
     unlock_();
 }
@@ -33,6 +34,7 @@ void MethodTreeNode::pushFrontChild(MethodTreeNode* pNode)
             parent->attachMutexRec_(mCriticalSection);
         }
     }
+
     TreeNode::pushFrontChild(pNode);
     unlock_();
 }

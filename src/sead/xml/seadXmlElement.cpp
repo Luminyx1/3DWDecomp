@@ -28,6 +28,7 @@ XmlElement::~XmlElement()
     {
         delete[] mContent;
     }
+
     mAttributes.freeBuffer();
 }
 
@@ -48,6 +49,7 @@ void XmlElement::setContent(u8* pContent, u32 size, bool isOwner)
     {
         delete[] mContent;
     }
+
     mIsContentOwner = isOwner;
     mContent = pContent;
     mContentSize = size;
@@ -67,6 +69,7 @@ SafeString XmlElement::findAttributeValue(const SafeString& rName) const
             return attribute.mValue;
         }
     }
+
     return SafeString::cEmptyString;
 }
 
@@ -109,6 +112,7 @@ XmlElement::AttributeList* XmlElement::expandAttributeList(s32 num, Heap* pHeap)
     {
         mAttributes.emplaceBack(pHeap, copy);
     }
+
     copies.freeBuffer();
     return &mAttributes;
 }
@@ -167,9 +171,11 @@ bool XmlElement::updateAttribute(const SafeString& rName, const SafeString& rVal
                 mAttributes.erase(&attribute);
                 addAttribute(rName, rValue, pHeap);
             }
+
             return true;
         }
     }
+
     return false;
 }
 
@@ -188,6 +194,7 @@ bool XmlElement::eraseAttribute(const SafeString& rName)
             return true;
         }
     }
+
     return false;
 }
 
@@ -260,6 +267,7 @@ const XmlElement* XmlElement::findElementByRelativePath_(const SafeString& rPath
             {
                 return nullptr;
             }
+
             name = path.getPart(2);
             path = name.getPart(1);
         }
@@ -281,6 +289,7 @@ const XmlElement* XmlElement::findElementByRelativePath_(const SafeString& rPath
             {
                 return element;
             }
+
             path = name.getPart(1);
         }
     }
@@ -327,6 +336,7 @@ const XmlElement* XmlElement::findRoot() const
     {
         element = element->parent();
     }
+
     return element;
 }
 
@@ -341,6 +351,7 @@ XmlElement* XmlElement::findRoot()
     {
         element = element->parent();
     }
+
     return element;
 }
 
@@ -362,6 +373,7 @@ bool XmlElement::findSiblingElement_(const XmlElement** ppElement, SafeString na
                 *ppElement = element;
                 return true;
             }
+
             if (name.at(length) == '\0')
             {
                 *ppElement = element;
@@ -369,6 +381,7 @@ bool XmlElement::findSiblingElement_(const XmlElement** ppElement, SafeString na
             }
         }
     }
+
     return false;
 }
 

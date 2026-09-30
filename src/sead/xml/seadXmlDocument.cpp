@@ -36,10 +36,12 @@ static void freeXmlElement_(XmlElement* pElement)
     {
         freeXmlElement_(pElement->child());
     }
+
     if (pElement->next())
     {
         freeXmlElement_(pElement->next());
     }
+
     pElement->clearLinks();
     delete pElement;
 }
@@ -58,6 +60,7 @@ XmlDocument::~XmlDocument()
     {
         freeXmlElementAll();
     }
+
     mEntityList.freeBuffer();
 }
 
@@ -130,6 +133,7 @@ bool XmlDocument::eraseEntity(const SafeString& rName)
             return true;
         }
     }
+
     return false;
 }
 
@@ -174,6 +178,7 @@ XmlDocument::EntityList* XmlDocument::expandEntityList(s32 num, Heap* pHeap)
         entity->mName = copy.mName;
         entity->mValue = copy.mValue;
     }
+
     copies.freeBuffer();
     return &mEntityList;
 }
@@ -220,6 +225,7 @@ static void writeXmlInstanceAsBinary_(WriteStream* pStream, XmlElement* pElement
                 pStream->writeU8(3);
                 return;
             }
+
             pStream->writeU8(0);
             pElement = pElement->next();
         }
@@ -247,6 +253,7 @@ static void writeXmlInstanceAsBinary_(WriteStream* pStream, XmlElement* pElement
                 pStream->writeU8(5);
                 return;
             }
+
             pStream->writeU8(4);
             pElement = pElement->next();
         }
@@ -299,6 +306,7 @@ bool XmlDocument::save(WriteStream* pStream, Heap* pHeap, bool isBinary,
                 pStream->writeMemBlock(it->mValue.cstr(), length);
             }
         }
+
         writeXmlInstanceAsBinary_(pStream, pElement);
     }
     else
@@ -327,8 +335,10 @@ bool XmlDocument::save(WriteStream* pStream, Heap* pHeap, bool isBinary,
             SafeString footer = "]>\n";
             pStream->writeString(footer, footer.calcLength());
         }
+
         writeXmlInstanceAsText_(pStream, pElement, 0, mWorkSize, pHeap);
     }
+
     pStream->flush();
     return true;
 }
@@ -372,6 +382,7 @@ void XmlDocument::writeXmlInstanceAsText_(WriteStream* pStream, XmlElement* pEle
         {
             pStream->writeU8('\t');
         }
+
         pStream->writeU8('<');
         pStream->writeString(pElement->getName(), pElement->getName().calcLength());
         writeXmlAttributes_(pStream, pElement);
@@ -397,6 +408,7 @@ void XmlDocument::writeXmlInstanceAsText_(WriteStream* pStream, XmlElement* pEle
                 {
                     pStream->writeU8('\t');
                 }
+
                 pStream->writeU8('<');
                 pStream->writeString(sibling->getName(), sibling->getName().calcLength());
                 writeXmlAttributes_(pStream, sibling);
@@ -410,6 +422,7 @@ void XmlDocument::writeXmlInstanceAsText_(WriteStream* pStream, XmlElement* pEle
                     {
                         pStream->writeU8('\t');
                     }
+
                     writeXmlContent_(pStream, sibling, sibling->getElementType(), workSize, pHeap);
                 }
                 else
@@ -427,8 +440,10 @@ void XmlDocument::writeXmlInstanceAsText_(WriteStream* pStream, XmlElement* pEle
                 {
                     continue;
                 }
+
                 pStream->writeString("/>", 2);
             }
+
             pStream->writeU8('\n');
         }
 
@@ -441,6 +456,7 @@ void XmlDocument::writeXmlInstanceAsText_(WriteStream* pStream, XmlElement* pEle
         {
             pStream->writeU8('\t');
         }
+
         pStream->writeString("</", 2);
         pStream->writeString(pElement->getName(), pElement->getName().calcLength());
         pStream->writeU8('>');
@@ -453,6 +469,7 @@ void XmlDocument::writeXmlInstanceAsText_(WriteStream* pStream, XmlElement* pEle
             {
                 pStream->writeU8('\t');
             }
+
             writeXmlContent_(pStream, pElement, pElement->getElementType(), workSize, pHeap);
             pStream->writeU8('\n');
             return;
@@ -472,8 +489,10 @@ void XmlDocument::writeXmlInstanceAsText_(WriteStream* pStream, XmlElement* pEle
         {
             return;
         }
+
         pStream->writeString("/>", 2);
     }
+
     pStream->writeU8('\n');
 }
 
@@ -495,6 +514,7 @@ static void readXmlInstanceAsBinary_(XmlElement* pElement, ReadStream* pStream, 
         {
             pStream->readString(&pElement->getName(), nameLength);
         }
+
         pElement->getName().trim(nameLength);
 
         u8 attributeNum = pStream->readU8();
@@ -538,6 +558,7 @@ static void readXmlInstanceAsBinary_(XmlElement* pElement, ReadStream* pStream, 
             {
                 return;
             }
+
             break;
         default:
             return;
@@ -579,20 +600,24 @@ void XmlDocument::parseXml_(ReadStream* pStream, Heap* pHeap, bool isBinary)
             {
                 return;
             }
+
             if (pStream->readMemBlock(name.getBuffer(), length) < length)
             {
                 return;
             }
+
             name.trim(length);
 
             if (!pStream->readMemBlock(&length, 1))
             {
                 return;
             }
+
             if (pStream->readMemBlock(value.getBuffer(), length) < length)
             {
                 return;
             }
+
             value.trim(length);
 
             addEntity(name, value);
@@ -648,6 +673,7 @@ static s32 skipXmlUntil_(ReadStream* pStream, char terminator)
         {
             return 0;
         }
+
         count++;
     } while (c != terminator);
     return count;
@@ -678,23 +704,28 @@ s32 XmlDocument::parseXmlDeclare_(ReadStream* pStream, Heap* pHeap)
                 state = 2;
                 break;
             }
+
             if (c != '?')
             {
                 return pos - 1;
             }
+
             {
                 s32 count = skipXmlUntil_(pStream, '?');
                 if (count == 0)
                 {
                     return -1;
                 }
+
                 if (pStream->readU8() != '>')
                 {
                     return -1;
                 }
+
                 state = 0;
                 next = pos + 2 + count;
             }
+
             break;
         case 2:
             if (c == '-')
@@ -703,6 +734,7 @@ s32 XmlDocument::parseXmlDeclare_(ReadStream* pStream, Heap* pHeap)
                 {
                     return -1;
                 }
+
                 next = pos + 2;
                 state = 3;
             }
@@ -717,11 +749,13 @@ s32 XmlDocument::parseXmlDeclare_(ReadStream* pStream, Heap* pHeap)
                         return -1;
                     }
                 }
+
                 s32 count = skipXmlUntil_(pStream, '[');
                 if (count == 0)
                 {
                     return -1;
                 }
+
                 state = 0;
                 next = pos + 7 + count;
             }
@@ -749,10 +783,12 @@ s32 XmlDocument::parseXmlDeclare_(ReadStream* pStream, Heap* pHeap)
                         break;
                     }
                 }
+
                 if (i >= nameBufferSize)
                 {
                     return -1;
                 }
+
                 nameBuffer[i] = SafeString::cNullChar;
                 s32 nameLength = name.calcLength();
 
@@ -760,6 +796,7 @@ s32 XmlDocument::parseXmlDeclare_(ReadStream* pStream, Heap* pHeap)
                 {
                     return -1;
                 }
+
                 const u8 quote = c;
                 if (quote != '\'' && quote != '"')
                 {
@@ -777,10 +814,12 @@ s32 XmlDocument::parseXmlDeclare_(ReadStream* pStream, Heap* pHeap)
                         break;
                     }
                 }
+
                 if (i >= valueBufferSize)
                 {
                     return -1;
                 }
+
                 valueBuffer[i] = SafeString::cNullChar;
                 s32 valueLength = value.calcLength();
 
@@ -788,6 +827,7 @@ s32 XmlDocument::parseXmlDeclare_(ReadStream* pStream, Heap* pHeap)
                 {
                     return -1;
                 }
+
                 if (!replaceXmlCharacterEntityReference_(valueBuffer, value.getBufferSize(), 0))
                 {
                     return -1;
@@ -804,6 +844,7 @@ s32 XmlDocument::parseXmlDeclare_(ReadStream* pStream, Heap* pHeap)
             {
                 state = 2;
             }
+
             break;
         case 3:
             state = c == '-' ? 4 : 3;
@@ -815,10 +856,12 @@ s32 XmlDocument::parseXmlDeclare_(ReadStream* pStream, Heap* pHeap)
                 {
                     return -1;
                 }
+
                 if (c != '>')
                 {
                     return -1;
                 }
+
                 state = 0;
                 next = pos + 2;
             }
@@ -826,8 +869,10 @@ s32 XmlDocument::parseXmlDeclare_(ReadStream* pStream, Heap* pHeap)
             {
                 state = 3;
             }
+
             break;
         }
+
         pos = next;
     } while (pStream->readMemBlock(&c, 1));
     return -1;
@@ -855,6 +900,7 @@ void rstripXmlName_(BufferedSafeString* pString)
         {
             break;
         }
+
         buffer[i - 1] = SafeString::cNullChar;
     }
 }
@@ -906,6 +952,7 @@ XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
                             goto fail;
                         }
                     }
+
                     state = 3;
                     isTopLevelComment = true;
                 }
@@ -920,6 +967,7 @@ XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
                         {
                             goto fail;
                         }
+
                         if (c == '>')
                         {
                             tagName.trim(nameLength);
@@ -932,16 +980,19 @@ XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
                                 {
                                     goto success;
                                 }
+
                                 isInText = false;
                                 textLength = 0;
                                 state = 0;
                                 break;
                             }
                         }
+
                         if (isSkippingSpace && isXmlSpace_(c))
                         {
                             continue;
                         }
+
                         nameBuffer[nameLength] = c;
                         isSkippingSpace = false;
                         if (nameLength++ >= 64)
@@ -977,6 +1028,7 @@ XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
                                 {
                                     end--;
                                 }
+
                                 mWorkBuffer2[end] = SafeString::cNullChar;
                                 replaceXmlNumericCharacterReference_(textBuffer, mWorkSize, 0);
                                 replaceXmlCharacterEntityReference_(textBuffer, mWorkSize, 0);
@@ -985,6 +1037,7 @@ XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
                                 {
                                     length++;
                                 }
+
                                 if (length != 0)
                                 {
                                     auto* text = new (pHeap, sizeof(void*)) XmlElement();
@@ -994,9 +1047,11 @@ XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
                                     text->setContent(content, length, true);
                                     stack.back()->pushBackChild(text);
                                 }
+
                                 textLength = 0;
                             }
                         }
+
                         state = 1;
                     }
                     else
@@ -1006,12 +1061,15 @@ XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
                             textBuffer[textLength++] = c;
                             isInText = true;
                         }
+
                         if (textLength + 1 > mWorkSize)
                         {
                             goto fail;
                         }
+
                         state = 0;
                     }
+
                     break;
                 case 3:
                     state = c == '-' ? 4 : 3;
@@ -1023,10 +1081,12 @@ XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
                         {
                             goto fail;
                         }
+
                         if (c != '>')
                         {
                             goto fail;
                         }
+
                         if (isTopLevelComment)
                         {
                             isInText = false;
@@ -1042,6 +1102,7 @@ XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
                     {
                         state = 3;
                     }
+
                     break;
                 case 5:
                 {
@@ -1074,10 +1135,12 @@ XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
                                 {
                                     goto fail;
                                 }
+
                                 if (!pStream->readMemBlock(&c, 1))
                                 {
                                     goto readValue;
                                 }
+
                                 i++;
                                 if (c == '=')
                                 {
@@ -1085,6 +1148,7 @@ XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
                                 }
                             }
                         }
+
                         name.trim(i);
                         rstripXmlName_(&name);
                         if (i == 0)
@@ -1103,21 +1167,26 @@ XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
                                 {
                                     goto fail;
                                 }
+
                                 break;
                             }
+
                             quote = c;
                             if (quote > '\'')
                             {
                                 goto fail;
                             }
+
                             if (isXmlSpace_(quote))
                             {
                                 continue;
                             }
+
                             if (quote != '"' && quote != '\'')
                             {
                                 goto fail;
                             }
+
                             break;
                         }
 
@@ -1127,16 +1196,19 @@ XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
                             {
                                 goto addAttribute;
                             }
+
                             if (c == quote)
                             {
                                 break;
                             }
+
                             attrValueBuffer[i] = c;
                             if (i > 0x3fe)
                             {
                                 goto fail;
                             }
                         }
+
                         value.trim(i);
                         replaceXmlCharacterEntityReference_(attrValueBuffer, value.getBufferSize(), 0);
                         replaceXmlNumericCharacterReference_(attrValueBuffer, value.getBufferSize(), 0);
@@ -1147,6 +1219,7 @@ XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
                         {
                             goto fail;
                         }
+
                         attribute->mName = name;
                         attribute->mValue = value;
 
@@ -1164,6 +1237,7 @@ XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
                         {
                             goto fail;
                         }
+
                         ppElement = stack.get(stack.size() - 1);
                         stack.popBack(&element);
                         isInText = false;
@@ -1175,10 +1249,12 @@ XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
                         {
                             goto fail;
                         }
+
                         ppElement = stack.get(stack.size() - 1);
                         replaceStart = 0;
                         state = 6;
                     }
+
                     if (!ppElement)
                     {
                         goto fail;
@@ -1193,8 +1269,10 @@ XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
                         {
                             target->mAttributes.emplaceBack(pHeap, attribute);
                         }
+
                         attributes.clear();
                     }
+
                     textLength = 0;
                     break;
                 }
@@ -1209,22 +1287,26 @@ XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
                             {
                                 goto fail;
                             }
+
                             if (c == '!')
                             {
                                 if (!pStream->readMemBlock(&c, 1))
                                 {
                                     goto fail;
                                 }
+
                                 if (c == '-')
                                 {
                                     if (pStream->readU8() != '-')
                                     {
                                         goto fail;
                                     }
+
                                     isTopLevelComment = false;
                                     state = 3;
                                     break;
                                 }
+
                                 if (c == '[')
                                 {
                                     const char* keyword = "CDATA[";
@@ -1236,6 +1318,7 @@ XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
                                             goto fail;
                                         }
                                     }
+
                                     u32 end = isAllSpace ? 0 : textLength;
                                     mWorkBuffer2[end] = SafeString::cNullChar;
                                     replaceXmlNumericCharacterReference_(textBuffer, mWorkSize, replaceStart);
@@ -1245,11 +1328,13 @@ XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
                                     {
                                         length++;
                                     }
+
                                     state = 7;
                                     replaceStart = end < length ? length : end;
                                     textLength = replaceStart;
                                     break;
                                 }
+
                                 if (c == 'B')
                                 {
                                     const char* keyword = "ASE64[";
@@ -1261,6 +1346,7 @@ XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
                                             goto fail;
                                         }
                                     }
+
                                     u32 end = isAllSpace ? 0 : textLength;
                                     mWorkBuffer2[end] = SafeString::cNullChar;
                                     replaceXmlNumericCharacterReference_(textBuffer, mWorkSize, replaceStart);
@@ -1270,12 +1356,14 @@ XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
                                     {
                                         length++;
                                     }
+
                                     isBase64InCData = false;
                                     state = 8;
                                     replaceStart = end < length ? length : end;
                                     textLength = replaceStart;
                                     break;
                                 }
+
                                 textBuffer[textLength] = '<';
                                 textBuffer[textLength + 1] = '!';
                                 textLength += 2;
@@ -1294,6 +1382,7 @@ XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
                                         textLength++;
                                     }
                                 }
+
                                 stack.pushBack(textElement);
                                 state = 9;
                                 break;
@@ -1307,17 +1396,20 @@ XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
                                     {
                                         end--;
                                     }
+
                                     mWorkBuffer2[end] = SafeString::cNullChar;
                                     u32 start = 0;
                                     while (start < end && isXmlSpace_(mWorkBuffer2[start]))
                                     {
                                         start++;
                                     }
+
                                     u32 length = end - start;
                                     for (u32 i = 0; i < length; i++)
                                     {
                                         mWorkBuffer2[i] = mWorkBuffer2[start + i];
                                     }
+
                                     mWorkBuffer2[length] = SafeString::cNullChar;
                                     replaceXmlNumericCharacterReference_(textBuffer, mWorkSize, 0);
                                     replaceXmlCharacterEntityReference_(textBuffer, mWorkSize, 0);
@@ -1326,6 +1418,7 @@ XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
                                     {
                                         length++;
                                     }
+
                                     if (length != 0)
                                     {
                                         auto* text = new (pHeap, sizeof(void*)) XmlElement();
@@ -1336,6 +1429,7 @@ XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
                                         stack.back()->pushBackChild(text);
                                     }
                                 }
+
                                 nameBuffer[0] = c;
                                 nameLength = 1;
                                 textLength = 0;
@@ -1350,12 +1444,14 @@ XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
                         {
                             goto fail;
                         }
+
                         textLength++;
                         if (!pStream->readMemBlock(&c, 1))
                         {
                             goto fail;
                         }
                     }
+
                     break;
                 }
                 case 7:
@@ -1365,18 +1461,21 @@ XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
                         {
                             goto fail;
                         }
+
                         if (c == ']')
                         {
                             if (!pStream->readMemBlock(&c, 1))
                             {
                                 goto fail;
                             }
+
                             if (c == '>')
                             {
                                 replaceStart = textLength;
                                 state = 6;
                                 break;
                             }
+
                             textBuffer[textLength] = ']';
                             textBuffer[textLength + 1] = ']';
                             textLength += 2;
@@ -1393,6 +1492,7 @@ XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
                         {
                             goto fail;
                         }
+
                         if (c == '!')
                         {
                             const char* keyword = "BASE64[";
@@ -1404,13 +1504,16 @@ XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
                                     goto fail;
                                 }
                             }
+
                             state = 8;
                             isBase64InCData = true;
                             break;
                         }
+
                         textBuffer[textLength] = '<';
                         textLength += 1;
                     }
+
                     textBuffer[textLength] = c;
                     textLength++;
                     state = 7;
@@ -1431,6 +1534,7 @@ XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
                             {
                                 goto fail;
                             }
+
                             if (c == '>')
                             {
                                 size_t decodedSize = 0;
@@ -1438,21 +1542,25 @@ XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
                                 {
                                     goto fail;
                                 }
+
                                 u32 i = 0;
                                 for (; i < decodedSize; i++)
                                 {
                                     textBuffer[i] = decoded[i];
                                 }
+
                                 state = isBase64InCData ? 7 : 6;
                                 replaceStart = i;
                                 textLength = i;
                                 break;
                             }
                         }
+
                         if (!isXmlSpace_(c))
                         {
                             encoded[encodedLength++] = c;
                         }
+
                         if (!pStream->readMemBlock(&c, 1))
                         {
                             textLength = 0;
@@ -1460,6 +1568,7 @@ XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
                             break;
                         }
                     }
+
                     break;
                 }
                 case 9:
@@ -1482,16 +1591,19 @@ XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
                                 replaceStart = 0;
                                 textLength = 0;
                             }
+
                             isInText = false;
                             state = 0;
                             break;
                         }
+
                         nameBuffer[nameLength] = c;
                         if (++nameLength > 64)
                         {
                             goto fail;
                         }
                     }
+
                     break;
                 case 10:
                 {
@@ -1499,6 +1611,7 @@ XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
                     {
                         goto fail;
                     }
+
                     auto* newElement = new (pHeap, sizeof(void*)) XmlElement();
                     while (true)
                     {
@@ -1510,6 +1623,7 @@ XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
                                 delete newElement;
                                 goto fail;
                             }
+
                             newElement->setName(tagName);
                             if (stack.size() == 0)
                             {
@@ -1519,6 +1633,7 @@ XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
                             {
                                 stack.back()->pushBackChild(newElement);
                             }
+
                             stack.pushBack(newElement);
                             if (c == '>')
                             {
@@ -1530,8 +1645,10 @@ XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
                             {
                                 state = 5;
                             }
+
                             break;
                         }
+
                         if (c == '/')
                         {
                             if (pStream->readU8() != '>')
@@ -1539,6 +1656,7 @@ XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
                                 delete newElement;
                                 goto fail;
                             }
+
                             tagName.trim(nameLength);
                             rstripXmlName_(&tagName);
                             newElement->setName(tagName);
@@ -1549,28 +1667,33 @@ XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
                                     delete newElement;
                                     goto fail;
                                 }
+
                                 stack.freeBuffer();
                                 attributes.freeBuffer();
                                 return newElement;
                             }
+
                             stack.back()->pushBackChild(newElement);
                             isInText = false;
                             textLength = 0;
                             state = 0;
                             break;
                         }
+
                         nameBuffer[nameLength] = c;
                         if (++nameLength >= 0x41)
                         {
                             delete newElement;
                             goto fail;
                         }
+
                         if (!pStream->readMemBlock(&c, 1))
                         {
                             delete newElement;
                             goto fail;
                         }
                     }
+
                     break;
                 }
                 default:
@@ -1628,6 +1751,7 @@ XmlDocument* XmlDocument::create(ReadStream* pStream, Heap* pHeap, bool isBinary
         document->mRoot = new (pHeap, sizeof(void*)) XmlElement();
         document->resetEntity_(pHeap);
     }
+
     document->mHeap = pHeap;
     return document;
 }
@@ -1638,14 +1762,17 @@ static u32 convertHexCharToInt_(char c)
     {
         return c - '0';
     }
+
     if (c >= 'A' && c <= 'F')
     {
         return c - 'A' + 10;
     }
+
     if (c >= 'a' && c <= 'f')
     {
         return c - 'a' + 10;
     }
+
     return 0;
 }
 
@@ -1662,13 +1789,16 @@ static u32 convertCodeToUtf8_(char* pDst, u32 code)
                 pDst[2] = 0x80 | (code & 0x3f);
                 return 3;
             }
+
             pDst[0] = '?';
             return 1;
         }
+
         pDst[0] = 0xc0 | (code >> 6);
         pDst[1] = 0x80 | (code & 0x3f);
         return 2;
     }
+
     pDst[0] = code;
     return 1;
 }
@@ -1682,6 +1812,7 @@ bool XmlDocument::replaceXmlNumericCharacterReference_(char* pText, u32 bufferSi
     {
         mWorkBuffer0[length] = pText[length];
     }
+
     mWorkBuffer0[length] = SafeString::cNullChar;
 
     if (length > bufferSize)
@@ -1719,10 +1850,12 @@ bool XmlDocument::replaceXmlNumericCharacterReference_(char* pText, u32 bufferSi
                 {
                     break;
                 }
+
                 if (pText[i + 5] != ';')
                 {
                     continue;
                 }
+
                 code = convertHexCharToInt_(pText[i + 3]) * 16 +
                        convertHexCharToInt_(pText[i + 4]);
                 i += 5;
@@ -1733,17 +1866,21 @@ bool XmlDocument::replaceXmlNumericCharacterReference_(char* pText, u32 bufferSi
                 {
                     break;
                 }
+
                 if (pText[i + 4] != ';')
                 {
                     continue;
                 }
+
                 code = convertHexCharToInt_(pText[i + 2]) * 10 +
                        convertHexCharToInt_(pText[i + 3]);
                 i += 4;
             }
+
             pos += convertCodeToUtf8_(&dst[pos], code);
             continue;
         }
+
         dst[pos++] = c;
     }
 
@@ -1751,6 +1888,7 @@ bool XmlDocument::replaceXmlNumericCharacterReference_(char* pText, u32 bufferSi
     {
         pos = bufferSize - 1;
     }
+
     dst[pos] = SafeString::cNullChar;
     MemUtil::copy(pText, dst, pos + 1);
     return true;
@@ -1764,6 +1902,7 @@ bool XmlDocument::replaceXmlCharacterEntityReference_(char* pText, u32 bufferSiz
     {
         mWorkBuffer0[length] = pText[length];
     }
+
     mWorkBuffer0[length] = SafeString::cNullChar;
 
     char* dst = mWorkBuffer1;
@@ -1785,6 +1924,7 @@ bool XmlDocument::replaceXmlCharacterEntityReference_(char* pText, u32 bufferSiz
             {
                 return false;
             }
+
             if (pText[i + 1 + nameLength] != ';')
             {
                 continue;
@@ -1800,6 +1940,7 @@ bool XmlDocument::replaceXmlCharacterEntityReference_(char* pText, u32 bufferSiz
                     break;
                 }
             }
+
             if (!isMatch)
             {
                 nameLength = 0;
@@ -1811,13 +1952,16 @@ bool XmlDocument::replaceXmlCharacterEntityReference_(char* pText, u32 bufferSiz
             {
                 return false;
             }
+
             const char* value = entity.mValue.cstr();
             for (u32 k = 0; k < valueLength; k++)
             {
                 dst[pos++] = value[k];
             }
+
             break;
         }
+
         i += 1 + nameLength;
     }
 
@@ -1825,6 +1969,7 @@ bool XmlDocument::replaceXmlCharacterEntityReference_(char* pText, u32 bufferSiz
     {
         pos = bufferSize - 1;
     }
+
     dst[pos] = SafeString::cNullChar;
     MemUtil::copy(pText, dst, pos + 1);
     return true;
@@ -1841,6 +1986,7 @@ XmlElement* XmlDocument::findElement(const SafeString& rPath)
     {
         return nullptr;
     }
+
     return mRoot->findElement(rPath);
 }
 
@@ -1946,6 +2092,7 @@ void XmlDocument::writeXmlContent_(WriteStream* pStream, const XmlElement* pElem
                     {
                         escaped[pos++] = sDefaultEntityNames[j][k];
                     }
+
                     escaped[pos++] = ';';
                     isEntity = true;
                     break;
@@ -1957,6 +2104,7 @@ void XmlDocument::writeXmlContent_(WriteStream* pStream, const XmlElement* pElem
                 escaped[pos++] = c;
             }
         }
+
         escaped[pos] = SafeString::cNullChar;
         pStream->writeMemBlock(escaped, pos);
         delete[] escaped;

@@ -195,6 +195,7 @@ Resource* IndirectResourceFactoryBase::tryCreate(const ResourceMgr::LoadArg& rLo
         isOpen = FileDeviceMgr::instance()->tryOpen(&handle, rLoadArg.path,
                                                     FileDevice::cFileOpenFlag_ReadOnly, 0);
     }
+
     if (!isOpen)
     {
         delete resource;

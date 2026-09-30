@@ -82,6 +82,7 @@ ControllerAddon* Controller::getAddonByOrder(ControllerDefine::AddonId id, s32 i
             {
                 return &*it;
             }
+
             index--;
         }
     }

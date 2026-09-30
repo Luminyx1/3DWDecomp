@@ -100,6 +100,7 @@ const void* MessageProject::getInitializeData() const {
     if (mProjFile) {
         return mProjFile->commonInfo.pResource;
     }
+
     return nullptr;
 }
 

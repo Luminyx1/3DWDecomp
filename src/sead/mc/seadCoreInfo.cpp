@@ -17,6 +17,7 @@ struct CoreInfoInitializer
 {
     CoreInfoInitializer() { CoreInfo::configure(); }
 };
+
 CoreInfoInitializer sInitializer;
 }  // namespace
 
@@ -69,6 +70,7 @@ void CoreInfo::dump()
     {
         SEAD_DEBUG_PRINT("  [%d] : %s : PlatformCoreId=%d\n", i, i == 0 ? "Main" : "Sub ", sPlatformCoreId[i]);
     }
+
     SEAD_DEBUG_PRINT("all mask : %x\n", u32(getMaskAll()));
     SEAD_DEBUG_PRINT("all sub mask : %x\n", u32(getMaskSubAll()));
 }

@@ -39,6 +39,7 @@ void JobQueue::runAll(u32* pFinishedJobs)
             break;
         }
     }
+
     SEAD_ASSERT(*pFinishedJobs == size);
 }
 
@@ -55,6 +56,7 @@ bool JobQueue::isAllParticipantThrough() const
             return false;
         }
     }
+
     return true;
 }
 
@@ -94,6 +96,7 @@ void JobQueue::setCoreMaskAndWaitType(CoreIdMask mask, SyncType type)
         mCoreEnabled[i] = mask.isOn(i);
         mNumDoneJobs = 0;
     }
+
     mSyncType = type;
 }
 
@@ -122,6 +125,7 @@ void JobQueue::wait_AT_WORKER()
             {
                 mFinishEvent.wait();
             }
+
             break;
         case SyncType::cThread:
             SEAD_ASSERT_MSG(false, "*NOT YET\n");
@@ -129,6 +133,7 @@ void JobQueue::wait_AT_WORKER()
             {
                 mFinishEvent.wait();
             }
+
             break;
         default:
             break;
@@ -148,6 +153,7 @@ void JobQueue::wait()
             {
                 mFinishEvent.wait();
             }
+
             break;
         case SyncType::cThread:
             SEAD_ASSERT_MSG(false, "NOT IMPLEMENTED.\n");
@@ -155,6 +161,7 @@ void JobQueue::wait()
             {
                 mFinishEvent.wait();
             }
+
             break;
         default:
             break;
@@ -316,6 +323,7 @@ bool FixedSizeJQ::run(u32 size, u32* pFinishedJobs, Worker* pWorker)
         mLock.unlock();
         ret = num_finished + begin >= num_jobs;
     }
+
     mPerf.measureEndDeque();
 
     mPerf.measureBeginRun();
@@ -333,6 +341,7 @@ bool FixedSizeJQ::run(u32 size, u32* pFinishedJobs, Worker* pWorker)
     {
         pWorker->setState(Worker::State::cRunning_AfterRun);
     }
+
     mPerf.measureEndRun();
 
     if (ret)
@@ -448,6 +457,7 @@ u32 FixedSizeJQ::deque(Job** pJobs, u32 count)
         pJobs[ret] = mJobs[mNumProcessedJobs++];
         ++ret;
     }
+
     return ret;
 }
 

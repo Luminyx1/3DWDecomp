@@ -349,6 +349,7 @@ void PrimitiveDrawMgrNvn::drawImpl_(NVNcommandBuffer* pCommandBuffer, NVNdrawPri
         {
             uniform->uv.set(0.0f, 0.0f, 0.0f, 0.0f);
         }
+
         nvnCommandBufferBindUniformBuffer(pCommandBuffer, NVN_SHADER_STAGE_VERTEX, 1,
                                           nvnBufferGetAddress(&mUniformBuffer) + offset, 0x100);
 

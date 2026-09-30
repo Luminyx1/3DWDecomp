@@ -63,6 +63,7 @@ int BitFlagUtil::findOnBitFromRight(u32 x, int num)
             return -1;
         }
     }
+
     return countContinuousOffBitFromRight(x);
 }
 
@@ -112,6 +113,7 @@ int BitFlagUtil::findOnBitFromRight64(u64 x, int num)
             return -1;
         }
     }
+
     return countContinuousOffBitFromRight64(x);
 }
 

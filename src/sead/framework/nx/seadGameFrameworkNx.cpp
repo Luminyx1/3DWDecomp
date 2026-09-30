@@ -233,6 +233,7 @@ void GameFrameworkNx::initializeGraphicsSystem(Heap* pHeap, const Vector2f& rVir
             nvnDeviceGetInteger(device, NVN_DEVICE_INFO_QUEUE_COMPUTE_MEMORY_DEFAULT_SIZE,
                                 &memorySize);
         }
+
         nvnQueueBuilderSetComputeMemorySize(&queueBuilder, memorySize);
 
         memorySize = mCreateArg.queue_command_memory_size;
@@ -241,6 +242,7 @@ void GameFrameworkNx::initializeGraphicsSystem(Heap* pHeap, const Vector2f& rVir
             nvnDeviceGetInteger(device, NVN_DEVICE_INFO_QUEUE_COMMAND_MEMORY_DEFAULT_SIZE,
                                 &memorySize);
         }
+
         nvnQueueBuilderSetCommandMemorySize(&queueBuilder, memorySize);
         nvnQueueBuilderSetCommandFlushThreshold(&queueBuilder, memorySize);
 
@@ -250,6 +252,7 @@ void GameFrameworkNx::initializeGraphicsSystem(Heap* pHeap, const Vector2f& rVir
             nvnDeviceGetInteger(device, NVN_DEVICE_INFO_QUEUE_CONTROL_MEMORY_DEFAULT_SIZE,
                                 &memorySize);
         }
+
         nvnQueueBuilderSetControlMemorySize(&queueBuilder, memorySize);
 
         size_t queueMemorySize = nvnQueueBuilderGetQueueMemorySize(&queueBuilder);
@@ -267,6 +270,7 @@ void GameFrameworkNx::initializeGraphicsSystem(Heap* pHeap, const Vector2f& rVir
         nn::vi::GetNativeWindow(&nativeWindow, mLayer);
         mDisplayBuffer->setNativeWindow(nativeWindow);
     }
+
     mDisplayBuffer->setPresentInterval(mCreateArg.vblank_wait_interval);
     mDisplayBuffer->setTripleBuffer(mCreateArg.is_triple_buffer);
     mDisplayBuffer->initialize(
@@ -304,6 +308,7 @@ void GameFrameworkNx::initializeGraphicsSystem(Heap* pHeap, const Vector2f& rVir
                                 &controlAlignment);
             mControlMemory = pHeap->alloc(mCreateArg.control_memory_size, controlAlignment);
         }
+
         nvnCommandBufferSetMemoryCallback(mCommandBuffer, outOfMemoryCallback_);
         nvnCommandBufferSetMemoryCallbackData(mCommandBuffer, mCommandBuffer);
         GraphicsNvn::instance()->registerDefaultCommandBuffer(mCommandBuffer);
@@ -429,6 +434,7 @@ size_t GameFrameworkNx::getGraphicsDevToolsAllocatorTotalFreeSize() const
     {
         return mGraphicsDevToolsAllocator->GetTotalFreeSize();
     }
+
     return 0;
 }
 
@@ -708,6 +714,7 @@ void GameFrameworkNx::waitForGpuDone_()
         {
             Thread::sleep(TickSpan(sleepTicks));
         }
+
         return;
     }
 

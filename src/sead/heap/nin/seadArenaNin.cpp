@@ -32,6 +32,7 @@ void Arena::destroy()
     {
         nn::os::FreeMemoryBlock(reinterpret_cast<uintptr_t>(mStart), (mSize + 0x1FFFFF) & 0xFFFFFFFFFFE00000LL);
     }
+
     mInitWithStartAddress = false;
     mStart = nullptr;
     mSize = 0;

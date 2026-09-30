@@ -155,6 +155,7 @@ void TaskMgr::prepare_(Thread*, MessageQueue::Element)
     {
         task = *mPrepareList.begin();
     }
+
     mCriticalSection.unlock();
 
     if (task)
@@ -198,6 +199,7 @@ bool TaskMgr::requestCreateTask(const TaskBase::CreateArg& rArg)
     {
         return rArg.fader->startAsCreate_(rArg);
     }
+
     return doRequestCreateTask_(rArg, nullptr);
 }
 
@@ -226,6 +228,7 @@ void TaskMgr::createHeap_(HeapArray* pHeapArray, const TaskBase::CreateArg& rArg
             {
                 parent = rArg.parent ? rArg.parent->mHeapArray.mHeaps[i] : mHeapArray.mHeaps[i];
             }
+
             if (!parent)
             {
                 return nullptr;
@@ -240,11 +243,14 @@ void TaskMgr::createHeap_(HeapArray* pHeapArray, const TaskBase::CreateArg& rArg
                 {
                     return nullptr;
                 }
+
                 return ExpHeap::create(allocatable - policy.create_slack, "TaskHeap", parent, 8,
                                        direction, false);
             }
+
             return ExpHeap::create(policy.size, "TaskHeap", parent, 8, direction, false);
         };
+
         pHeapArray->mHeaps[i] = create();
     }
 }
@@ -446,10 +452,12 @@ bool TaskMgr::doRequestCreateTask_(const TaskBase::CreateArg& rArg,
     {
         context->event.connect(*pSlot);
     }
+
     if (callback)
     {
         context->event.connect(*callback);
     }
+
     return true;
 }
 
@@ -472,6 +480,7 @@ void TaskMgr::appendToList_(TaskBase::List& rList, TaskBase* pTask)
             return;
         }
     }
+
     rList.pushBack(&pTask->mTaskListNode);
 }
 
@@ -495,6 +504,7 @@ bool TaskMgr::requestTakeover(const TaskBase::TakeoverArg& rArg)
     {
         return false;
     }
+
     return fader->startAsTakeover_(src, rArg);
 }
 
@@ -518,6 +528,7 @@ bool TaskMgr::requestTransition(TaskBase* pFrom, TaskBase* pTo, FaderTaskBase* p
     {
         return false;
     }
+
     return pFader->startAsTransit_(pFrom, pTo);
 }
 
@@ -545,6 +556,7 @@ bool TaskMgr::requestPush(const TaskBase::PushArg& rArg)
     {
         return false;
     }
+
     return fader->startAsPush_(rArg.src_task, rArg);
 }
 
@@ -587,6 +599,7 @@ bool TaskMgr::requestPop(TaskBase* pTask, FaderTaskBase* pFader)
     {
         return false;
     }
+
     return pFader->startAsPop_(pTask, nullptr);
 }
 
@@ -671,6 +684,7 @@ bool TaskMgr::requestPop(TaskBase* pFrom, TaskBase* pTo, FaderTaskBase* pFader)
     {
         return false;
     }
+
     return pFader->startAsPop_(pFrom, pTo);
 }
 
@@ -715,6 +729,7 @@ bool TaskMgr::destroyable_(TaskBase* pTask)
             return false;
         }
     }
+
     return true;
 }
 
@@ -741,6 +756,7 @@ void TaskMgr::calcCreation_()
                 {
                     *context->arg.created_task = task;
                 }
+
                 context->event.emit(task);
                 mTaskCreateContextMgr->erase(context);
             }
@@ -827,18 +843,21 @@ void TaskMgr::destroyAllAndCreateRoot()
         mPrepareList.erase(node);
         node = next;
     }
+
     for (TaskBase::ListNode* node = &*mActiveList.robustBegin(); node != &*mActiveList.robustEnd();)
     {
         auto* next = static_cast<TaskBase::ListNode*>(node->next());
         mActiveList.erase(node);
         node = next;
     }
+
     for (TaskBase::ListNode* node = &*mDyingList.robustBegin(); node != &*mDyingList.robustEnd();)
     {
         auto* next = static_cast<TaskBase::ListNode*>(node->next());
         mDyingList.erase(node);
         node = next;
     }
+
     for (TaskBase::ListNode* node = &*mDestroyableList.robustBegin();
          node != &*mDestroyableList.robustEnd();)
     {
@@ -877,6 +896,7 @@ TaskBase* TaskMgr::findTask(const TaskClassID& rClassID)
             return task;
         }
     }
+
     return nullptr;
 }
 

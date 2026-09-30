@@ -16,6 +16,7 @@ XmlElement* XmlUtil::createBackSiblingElement(XmlElement* pElement, Heap* pHeap)
     {
         pHeap = pElement->getHeap();
     }
+
     auto* element = new (pHeap, sizeof(void*)) XmlElement();
     pElement->pushBackSibling(element);
     return element;
@@ -33,6 +34,7 @@ XmlElement* XmlUtil::createBackChildElement(XmlElement* pElement, Heap* pHeap)
     {
         pHeap = pElement->getHeap();
     }
+
     auto* element = new (pHeap, sizeof(void*)) XmlElement();
     pElement->pushBackChild(element);
     return element;
@@ -50,6 +52,7 @@ XmlElement* XmlUtil::createFrontChildElement(XmlElement* pElement, Heap* pHeap)
     {
         pHeap = pElement->getHeap();
     }
+
     auto* element = new (pHeap, sizeof(void*)) XmlElement();
     pElement->pushFrontChild(element);
     return element;
@@ -70,6 +73,7 @@ XmlElement* XmlUtil::createBackSiblingAndSetupElement(XmlElement* pElement, cons
     {
         pHeap = pElement->getHeap();
     }
+
     auto* element = new (pHeap, sizeof(void*)) XmlElement();
     pElement->pushBackSibling(element);
     element->setName(rName);
@@ -81,6 +85,7 @@ XmlElement* XmlUtil::createBackSiblingAndSetupElement(XmlElement* pElement, cons
     {
         element->setContentString(rContent, pHeap);
     }
+
     return element;
 }
 
@@ -99,6 +104,7 @@ XmlElement* XmlUtil::createBackChildAndSetupElement(XmlElement* pElement, const 
     {
         pHeap = pElement->getHeap();
     }
+
     auto* element = new (pHeap, sizeof(void*)) XmlElement();
     pElement->pushBackChild(element);
     element->setName(rName);
@@ -110,6 +116,7 @@ XmlElement* XmlUtil::createBackChildAndSetupElement(XmlElement* pElement, const 
     {
         element->setContentString(rContent, pHeap);
     }
+
     return element;
 }
 
@@ -128,6 +135,7 @@ XmlElement* XmlUtil::createFrontChildAndSetupElement(XmlElement* pElement, const
     {
         pHeap = pElement->getHeap();
     }
+
     auto* element = new (pHeap, sizeof(void*)) XmlElement();
     pElement->pushFrontChild(element);
     element->setName(rName);
@@ -139,6 +147,7 @@ XmlElement* XmlUtil::createFrontChildAndSetupElement(XmlElement* pElement, const
     {
         element->setContentString(rContent, pHeap);
     }
+
     return element;
 }
 

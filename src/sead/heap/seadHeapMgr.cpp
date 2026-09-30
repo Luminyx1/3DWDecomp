@@ -84,6 +84,7 @@ bool HeapMgr::isContainedInAnyHeap(const void* ptr)
             return true;
         }
     }
+
     for (auto& heap : sIndependentHeaps)
     {
         if (heap.isInclude(ptr))
@@ -91,8 +92,10 @@ bool HeapMgr::isContainedInAnyHeap(const void* ptr)
             return true;
         }
     }
+
     return false;
 }
+
 void HeapMgr::dumpTreeYAML(WriteStream& rStream)
 {
     sHeapTreeLockCS.lock();
@@ -100,10 +103,12 @@ void HeapMgr::dumpTreeYAML(WriteStream& rStream)
     {
         heap.dumpTreeYAML(rStream, 0);
     }
+
     for (auto& heap : sIndependentHeaps)
     {
         heap.dumpTreeYAML(rStream, 0);
     }
+
     sHeapTreeLockCS.unlock();
 }
 
@@ -139,6 +144,7 @@ Heap* HeapMgr::findContainHeap(const void* ptr) const
             isMiss = !pHeap->isInclude(ptr);
             pCheckedHeap = isMiss ? pHeap : nullptr;
         }
+
         pCache->resetHeap();
         if (!isMiss)
         {
@@ -152,6 +158,7 @@ Heap* HeapMgr::findContainHeap(const void* ptr) const
                 pCache->setHeap(pCurrentHeap);
                 return pCurrentHeap;
             }
+
             pCurrentHeap = nullptr;
         }
     }
@@ -170,8 +177,10 @@ Heap* HeapMgr::findContainHeap(const void* ptr) const
                 {
                     pCache->setHeap(pFound);
                 }
+
                 return pFound;
             }
+
             pCheckedHeap = pHeap;
         }
 
@@ -211,6 +220,7 @@ found:
     {
         pCache->setHeap(pHeap);
     }
+
     return pHeap;
 }
 
@@ -248,6 +258,7 @@ Heap* HeapMgr::findHeapByName(const sead::SafeString& rName, int index) const
             return found;
         }
     }
+
     for (auto& heap : sIndependentHeaps)
     {
         Heap* found = findHeapByName_(&heap, rName, &index);
@@ -256,6 +267,7 @@ Heap* HeapMgr::findHeapByName(const sead::SafeString& rName, int index) const
             return found;
         }
     }
+
     return nullptr;
 }
 
@@ -267,8 +279,10 @@ Heap* HeapMgr::findHeapByName_(Heap* pHeap, const SafeString& rName, int* pIndex
         {
             return pHeap;
         }
+
         --*pIndex;
     }
+
     for (auto& child : pHeap->mChildren)
     {
         Heap* found = findHeapByName_(&child, rName, pIndex);
@@ -277,6 +291,7 @@ Heap* HeapMgr::findHeapByName_(Heap* pHeap, const SafeString& rName, int* pIndex
             return found;
         }
     }
+
     return nullptr;
 }
 
@@ -287,6 +302,7 @@ Heap* HeapMgr::getCurrentHeap() const
     {
         return currentThread->getCurrentHeap();
     }
+
     return mAllocFromNotSeadThreadHeap;
 }
 
@@ -301,6 +317,7 @@ void HeapMgr::removeRootHeap(Heap* pHeap)
     {
         return;
     }
+
     s32 index = sRootHeaps.indexOf(pHeap);
     if (index != -1)
     {

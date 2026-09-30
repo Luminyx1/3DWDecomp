@@ -94,6 +94,7 @@ FileDevice* NinFileDeviceBase::doOpen_(FileHandle* pHandle, const SafeString& rP
         {
             is_new_file = false;
         }
+
         if (is_new_file)
         {
             const auto create_result = nn::fs::CreateFile(fs_path.cstr(), 0);
@@ -121,6 +122,7 @@ FileDevice* NinFileDeviceBase::doOpen_(FileHandle* pHandle, const SafeString& rP
                 open_result.GetModule(), open_result.GetDescription(),
                 open_result.GetInnerValueForDebug(), fs_path.cstr());
         }
+
         return nullptr;
     }
 
@@ -183,6 +185,7 @@ bool NinFileDeviceBase::doFlush_(FileHandle* pHandle)
         inner->mDoNotFlushOnClose = true;
         return false;
     }
+
     return true;
 }
 
@@ -210,6 +213,7 @@ bool NinFileDeviceBase::doRemove_(const SafeString& rPath)
             fs_path.cstr());
         return false;
     }
+
     return true;
 }
 
@@ -268,6 +272,7 @@ bool NinFileDeviceBase::doWrite_(u32* pBytesWritten, FileHandle* pHandle, const 
         {
             *pBytesWritten = bytesToWrite;
         }
+
         return true;
     }
 
@@ -304,10 +309,12 @@ bool NinFileDeviceBase::doSeek_(FileHandle* pHandle, s32 offset, FileDevice::See
         {
             break;
         }
+
         inner->mOffset = file_size + offset;
         return true;
     }
     }
+
     return false;
 }
 
@@ -519,6 +526,7 @@ bool NinFileDeviceBase::doReadDirectory_(u32* pEntriesRead, DirectoryHandle* pHa
             {
                 *pEntriesRead = i;
             }
+
             return true;
         }
 
@@ -530,6 +538,7 @@ bool NinFileDeviceBase::doReadDirectory_(u32* pEntriesRead, DirectoryHandle* pHa
     {
         *pEntriesRead = numEntries;
     }
+
     return true;
 }
 

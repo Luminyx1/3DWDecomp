@@ -276,6 +276,7 @@ u8* ArchiveFileDevice::doLoadWithEntryID_(s32 entryId, LoadArg& rArg)
             {
                 delete[] buffer;
             }
+
             return nullptr;
         }
 
@@ -431,6 +432,7 @@ s32 ArchiveFileDevice::doConvertPathToEntryID_(const SafeString& rPath)
         SEAD_ASSERT_MSG(false, "no archive mounted");
         return 0;
     }
+
     return mArchive->convertPathToEntryID(rPath);
 }
 
@@ -598,6 +600,7 @@ bool ArchiveFileDevice::doCloseDirectory_(DirectoryHandle* pHandle)
         SEAD_ASSERT_MSG(false, "no archive mounted");
         return false;
     }
+
     return mArchive->closeDirectory(&getHandleBaseHandleBuffer_(pHandle));
 }
 

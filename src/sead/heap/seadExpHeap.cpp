@@ -307,6 +307,7 @@ size_t ExpHeap::destroyAndGetAllocatableSize(s32 alignment)
         {
             return expHeap->freeAndGetAllocatableSize(start, alignment);
         }
+
         parent->free(start);
     }
 
@@ -381,6 +382,7 @@ bool ExpHeap::isInclude(const void* pPtr) const
         start = uintptr_t(mStart);
         end = uintptr_t(mStart) + mSize - sizeof(ExpHeap);
     }
+
     return start <= uintptr_t(pPtr) && uintptr_t(pPtr) < end;
 }
 
@@ -428,6 +430,7 @@ size_t ExpHeap::adjust()
     {
         parent->mCS.unlock();
     }
+
     return size;
 }
 
@@ -493,6 +496,7 @@ MemBlock* ExpHeap::findLastMemBlockIfFree_()
     {
         return lastFree;
     }
+
     return nullptr;
 }
 
@@ -509,6 +513,7 @@ MemBlock* ExpHeap::findFirstMemBlockIfFree_()
     {
         return firstFree;
     }
+
     return nullptr;
 }
 
@@ -772,6 +777,7 @@ MemBlock* ExpHeap::findFreeMemBlockFromHead_(size_t size, FindMode mode) const
             found = &block;
         }
     }
+
     return found;
 }
 
@@ -810,6 +816,7 @@ MemBlock* ExpHeap::findFreeMemBlockFromHead_(size_t size, s32 alignment, FindMod
             found = &block;
         }
     }
+
     return found;
 }
 
@@ -840,6 +847,7 @@ MemBlock* ExpHeap::findFreeMemBlockFromTail_(size_t size, FindMode mode) const
             found = block;
         }
     }
+
     return found;
 }
 
@@ -878,6 +886,7 @@ MemBlock* ExpHeap::findFreeMemBlockFromTail_(size_t size, s32 alignment, FindMod
             found = block;
         }
     }
+
     return found;
 }
 
@@ -924,6 +933,7 @@ MemBlock* ExpHeap::pushToFreeList_(MemBlock* pBlock)
                 block->mHeapCheckTag = MemBlock::cFreeHeapCheckTag;
                 mFreeList.insertBefore(next, block);
             }
+
             block->mSize = block->mSize + next->mOffset + next->mSize + sizeof(MemBlock);
             mFreeList.erase(next);
         }
@@ -932,6 +942,7 @@ MemBlock* ExpHeap::pushToFreeList_(MemBlock* pBlock)
             block->mHeapCheckTag = MemBlock::cFreeHeapCheckTag;
             mFreeList.insertBefore(next, block);
         }
+
         return block;
     };
 
@@ -945,6 +956,7 @@ MemBlock* ExpHeap::pushToFreeList_(MemBlock* pBlock)
                 return block;
             }
         }
+
         block->mHeapCheckTag = MemBlock::cFreeHeapCheckTag;
         mFreeList.pushBack(block);
         return block;
@@ -973,6 +985,7 @@ MemBlock* ExpHeap::pushToFreeList_(MemBlock* pBlock)
             {
                 return insertBetween(prev, &block, pBlock);
             }
+
             prev = &block;
         }
     }
@@ -1053,6 +1066,7 @@ void* ExpHeap::resizeFront(void* pPtr, size_t size)
         {
             reinterpret_cast<uintptr_t*>(base + u16(newOffset))[-1] = uintptr_t(block) + 1;
         }
+
         return base + block->mOffset;
     }
 
@@ -1125,6 +1139,7 @@ void* ExpHeap::realloc_(void* pPtr, u8* pMemory, size_t copySize, size_t size, s
         std::memcpy(newPtr, pMemory, copySize);
         free(pPtr);
     }
+
     return newPtr;
 }
 
@@ -1165,6 +1180,7 @@ void* ExpHeap::tryRealloc(void* pPtr, size_t size, s32 alignment)
         {
             alignment = 8;
         }
+
         return realloc_(pPtr, block->getMemory(), blockSize, newSize, alignment);
     }
 
@@ -1175,6 +1191,7 @@ void* ExpHeap::tryRealloc(void* pPtr, size_t size, s32 alignment)
         {
             return realloc_(pPtr, memory, newSize, newSize, alignment);
         }
+
         return memory;
     }
 
@@ -1237,6 +1254,7 @@ size_t ExpHeap::getFreeSize() const
     {
         freeSize += block.mSize;
     }
+
     return freeSize;
 }
 
@@ -1276,6 +1294,7 @@ size_t ExpHeap::getMaxAllocatableSize(int alignment) const
     {
         return 0;
     }
+
     return block->mSize - padding;
 }
 
@@ -1291,6 +1310,7 @@ size_t ExpHeap::getPerAllocationOverhead(s32 alignment)
     {
         absAlignment = Mathi::roundUpPow2(absAlignment, 8);
     }
+
     return sizeof(MemBlock) - 8 + absAlignment;
 }
 
@@ -1306,6 +1326,7 @@ s32 ExpHeap::compareMemBlockAddr_(const MemBlock* pA, const MemBlock* pB)
     {
         return 1;
     }
+
     return -1;
 }
 
@@ -1323,11 +1344,13 @@ bool ExpHeap::tryCheckFreeList() const
         {
             return false;
         }
+
         if (block.mSize == 0 || !PtrUtil::isAligned(block.getMemory(), 8))
         {
             return false;
         }
     }
+
     return mFreeList.checkLinks();
 }
 
@@ -1353,6 +1376,7 @@ size_t ExpHeap::getAllocatedSize(void* pPtr)
     {
         return 0;
     }
+
     return MemBlock::FindManageArea(pPtr)->mSize;
 }
 
@@ -1374,6 +1398,7 @@ void ExpHeap::dumpYAML(WriteStream& rStream, int indent) const
     {
         str.append(' ', indent);
     }
+
     str.appendWithFormat("  heap_type: ExpHeap\n");
     rStream.writeDecorationText(str);
     str.clear();
@@ -1382,6 +1407,7 @@ void ExpHeap::dumpYAML(WriteStream& rStream, int indent) const
     {
         str.append(' ', indent);
     }
+
     const char* allocModeName = mAllocMode != AllocMode::FirstFit ? "Best Fit" : "First Fit";
     str.appendWithFormat("  alloc_mode: %s\n", allocModeName);
     rStream.writeDecorationText(str);
@@ -1391,6 +1417,7 @@ void ExpHeap::dumpYAML(WriteStream& rStream, int indent) const
     {
         str.append(' ', indent);
     }
+
     str.appendWithFormat("  find_free_block_mode: %s\n",
                          getFindFreeBlockModeString_(mFindFreeBlockMode));
     rStream.writeDecorationText(str);
@@ -1400,6 +1427,7 @@ void ExpHeap::dumpYAML(WriteStream& rStream, int indent) const
     {
         str.append(' ', indent);
     }
+
     str.appendWithFormat("  use_list_size: %d\n", mUseList.size());
     rStream.writeDecorationText(str);
     str.clear();
@@ -1408,6 +1436,7 @@ void ExpHeap::dumpYAML(WriteStream& rStream, int indent) const
     {
         str.append(' ', indent);
     }
+
     str.appendWithFormat("  free_list_size: %d\n", mFreeList.size());
     rStream.writeDecorationText(str);
 }

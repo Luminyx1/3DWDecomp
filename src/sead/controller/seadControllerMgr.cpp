@@ -124,6 +124,7 @@ Controller* ControllerMgr::getControllerByOrder(ControllerDefine::ControllerId i
             {
                 return &controller;
             }
+
             index--;
         }
     }
@@ -200,8 +201,10 @@ s32 ControllerMgr::findControllerPort(const Controller* pController) const
         {
             return i;
         }
+
         i++;
     }
+
     return -1;
 }
 
@@ -255,6 +258,7 @@ Framework* ControllerMgr::getFramework() const
     {
         return mTaskMgr->mParentFramework;
     }
+
     return nullptr;
 }
 

@@ -28,14 +28,17 @@ s64 TickSpan::toNanoSeconds() const
     {
         return 1'000'000'000 * mSpan / cFrequency;
     }
+
     if (absSpan < max / 1'000'000)
     {
         return 1000 * (1'000'000 * mSpan / cFrequency);
     }
+
     if (absSpan < max / 1000)
     {
         return 1'000'000 * (1000 * mSpan / cFrequency);
     }
+
     return 1'000'000'000 * (mSpan / cFrequency);
 }
 

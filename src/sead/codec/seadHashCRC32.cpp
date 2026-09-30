@@ -13,6 +13,7 @@ void HashCRC32::initialize()
             value = (value & 1) ? (value >> 1) ^ 0xedb88320 : value >> 1;
         sTable[i] = value;
     }
+
     sInitialized = true;
 }
 
@@ -45,6 +46,7 @@ u32 HashCRC32::calcHashWithContext(Context* pContext, const void* pData, u32 siz
         const u8 byte = *data++;
         hash = sTable[(hash & 0xff) ^ byte] ^ (hash >> 8);
     }
+
     pContext->hash = hash;
     return ~hash;
 }
@@ -74,6 +76,7 @@ u32 HashCRC32::calcStringHashWithContext(Context* pContext, const char* pString)
     while (*pString) {
         hash = sTable[(hash ^ *pString++) & 0xff] ^ (hash >> 8);
     }
+
     pContext->hash = hash;
     return ~hash;
 }

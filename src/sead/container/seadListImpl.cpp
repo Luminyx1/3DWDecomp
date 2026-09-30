@@ -111,6 +111,7 @@ ListNode* ListImpl::nth(s32 index) const
     {
         node = node->mNext;
     }
+
     return node;
 }
 
@@ -128,9 +129,11 @@ s32 ListImpl::indexOf(const ListNode* pN) const
         {
             return index;
         }
+
         ++index;
         node = node->mNext;
     }
+
     return -1;
 }
 
@@ -192,6 +195,7 @@ void ListImpl::moveAfter(ListNode* pBasis, ListNode* pNode)
     {
         return;
     }
+
     pNode->erase_();
     pBasis->insertBack_(pNode);
 }
@@ -207,6 +211,7 @@ void ListImpl::moveBefore(ListNode* pBasis, ListNode* pNode)
     {
         return;
     }
+
     pNode->erase_();
     pBasis->insertFront_(pNode);
 }

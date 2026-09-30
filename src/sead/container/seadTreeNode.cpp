@@ -49,6 +49,7 @@ s32 TreeNode::countChildren() const
         ++count;
         node = node->mNext;
     }
+
     return count;
 }
 
@@ -83,6 +84,7 @@ void TreeNode::detachSubTree()
         {
             mPrev->mNext = mNext;
         }
+
         if (mNext)
         {
             mNext->mPrev = mPrev;
@@ -93,6 +95,7 @@ void TreeNode::detachSubTree()
             mParent->mChild->mPrev = mPrev;
         }
     }
+
     mPrev = nullptr;
     mParent = nullptr;
 }
@@ -106,6 +109,7 @@ TreeNode* TreeNode::findRoot()
     {
         return mParent->findRoot();
     }
+
     return this;
 }
 
@@ -118,6 +122,7 @@ const TreeNode* TreeNode::findRoot() const
     {
         return static_cast<const TreeNode*>(mParent)->findRoot();
     }
+
     return this;
 }
 
@@ -141,6 +146,7 @@ void TreeNode::insertAfterSelf(TreeNode* pNode)
     {
         mParent->mChild->mPrev = pNode;
     }
+
     pNode->mParent = mParent;
 }
 
@@ -164,6 +170,7 @@ void TreeNode::insertBeforeSelf(TreeNode* pNode)
     {
         prev->mNext = pNode;
     }
+
     pNode->mParent = mParent;
 }
 
@@ -214,6 +221,7 @@ void TreeNode::pushBackSibling(TreeNode* pNode)
             m = m->mNext;
         }
     }
+
     m->mNext = pNode;
     pNode->mPrev = m;
     pNode->mParent = m->mParent;

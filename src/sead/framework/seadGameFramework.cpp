@@ -145,6 +145,7 @@ void GameFramework::initialize(const Framework::InitializeArg& rInitArg)
         ResourceMgr::createInstance(resourceMgrHeap);
         resourceMgrHeap->adjust();
     }
+
     {
         ExpHeap* fileDeviceMgrHeap =
             ExpHeap::create(systemManagersHeap->getMaxAllocatableSize(8), "sead::FileDeviceMgr",

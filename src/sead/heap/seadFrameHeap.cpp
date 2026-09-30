@@ -176,6 +176,7 @@ void* FrameHeap::getAreaStart_() const
     {
         return PtrUtil::addOffset(mStart, sizeof(FrameHeap));
     }
+
     return mStart;
 }
 
@@ -293,6 +294,7 @@ size_t FrameHeap::adjust()
     {
         parent->mCS.unlock();
     }
+
     return size;
 }
 
@@ -363,6 +365,7 @@ void* FrameHeap::tryAlloc(size_t size, s32 alignment)
             notifyAllocFailed(mgr, this, size, alignment, allocSize, allocAlignment);
             return nullptr;
         }
+
         mState.mHeadPtr = newHead;
         return ptr;
     }
@@ -382,6 +385,7 @@ void* FrameHeap::tryAlloc(size_t size, s32 alignment)
         notifyAllocFailed(mgr, this, size, alignment, allocSize, allocAlignment);
         return nullptr;
     }
+
     mState.mTailPtr = reinterpret_cast<void*>(ptr);
     return reinterpret_cast<void*>(ptr);
 }
@@ -523,6 +527,7 @@ size_t FrameHeap::getMaxAllocatableSize(int alignment) const
     {
         return 0;
     }
+
     return uintptr_t(mState.mTailPtr) - uintptr_t(head);
 }
 
@@ -544,6 +549,7 @@ void FrameHeap::dumpYAML(WriteStream& rStream, int indent) const
     {
         str.append(' ', indent);
     }
+
     str.appendWithFormat("  heap_type: FrameHeap\n");
     rStream.writeDecorationText(str);
     str.clear();
@@ -552,6 +558,7 @@ void FrameHeap::dumpYAML(WriteStream& rStream, int indent) const
     {
         str.append(' ', indent);
     }
+
     str.appendWithFormat("  head_ptr: 0x%016llX\n", mState.mHeadPtr);
     rStream.writeDecorationText(str);
     str.clear();
@@ -560,6 +567,7 @@ void FrameHeap::dumpYAML(WriteStream& rStream, int indent) const
     {
         str.append(' ', indent);
     }
+
     str.appendWithFormat("  tail_ptr: 0x%016llX\n", mState.mTailPtr);
     rStream.writeDecorationText(str);
 }

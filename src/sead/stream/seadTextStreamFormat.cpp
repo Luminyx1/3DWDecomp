@@ -61,6 +61,7 @@ void TextStreamFormat::getNextData_(StreamSrc* pSrc)
                 {
                     commentEnd = '*';
                 }
+
                 continue;
             }
 
@@ -81,6 +82,7 @@ void TextStreamFormat::getNextData_(StreamSrc* pSrc)
                 {
                     return;
                 }
+
                 sBuffer.copyAt(length - 1, "\"", 1);
             }
             else
@@ -88,6 +90,7 @@ void TextStreamFormat::getNextData_(StreamSrc* pSrc)
                 sBuffer.append(c);
                 length++;
             }
+
             commentEnd = '\0';
             isInString = true;
         }
@@ -103,6 +106,7 @@ void TextStreamFormat::getNextData_(StreamSrc* pSrc)
             {
                 return;
             }
+
             commentEnd = '\0';
             isInString = false;
         }
@@ -131,6 +135,7 @@ void TextStreamFormat::getNextData_(StreamSrc* pSrc)
                 sBuffer.trim(newLength);
                 commentEnd = '*';
             }
+
             length = newLength;
             isInString = false;
         }
@@ -257,6 +262,7 @@ f32 TextStreamFormat::readF32(StreamSrc* pSrc, [[maybe_unused]] Endian::Types en
     {
         std::sscanf(sBuffer.cstr(), "%f", &value);
     }
+
     return value;
 }
 
@@ -523,8 +529,10 @@ void TextStreamFormat::writeString(StreamSrc* pSrc, const SafeString& rStr, u32 
         {
             pSrc->write(&backslash, 1);
         }
+
         pSrc->write(rStr.cstr() + i, 1);
     }
+
     pSrc->write(&quote, 1);
 }
 
@@ -544,6 +552,7 @@ void TextStreamFormat::writeMemBlock(StreamSrc* pSrc, const void* pBuffer, u32 s
     {
         blockCount++;
     }
+
     const u32 encodedLength = blockCount * 4;
 
     if (encodedLength + 1 < static_cast<u32>(sBuffer.getBufferSize()))

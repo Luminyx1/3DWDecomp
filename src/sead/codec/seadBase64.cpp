@@ -59,6 +59,7 @@ void Base64::encode(char* pDst, const void* pSrc, size_t length, bool urlSafe)
         *pDst++ = table[((src[i + 1] & 0xf) << 2) | (src[i + 2] >> 6)];
         *pDst++ = table[src[i + 2] & 0x3f];
     }
+
     src += i;
 
     switch (rest)
@@ -105,6 +106,7 @@ bool Base64::decode(void* pDst, size_t dstSize, const char* pSrc, size_t srcSize
             {
                 break;
             }
+
             pSrc++;
 
             if (u8(*pSrc) < 0x20)
@@ -114,6 +116,7 @@ bool Base64::decode(void* pDst, size_t dstSize, const char* pSrc, size_t srcSize
                 {
                     break;
                 }
+
                 pSrc++;
             }
         }
@@ -133,6 +136,7 @@ bool Base64::decode(void* pDst, size_t dstSize, const char* pSrc, size_t srcSize
         {
             return false;
         }
+
         dst[decoded++] = (v0 << 2) | (v1 >> 4);
 
         if (v2 < 64)
@@ -141,6 +145,7 @@ bool Base64::decode(void* pDst, size_t dstSize, const char* pSrc, size_t srcSize
             {
                 return false;
             }
+
             dst[decoded++] = (v1 << 4) | (v2 >> 2);
 
             if (v3 < 64)
@@ -149,6 +154,7 @@ bool Base64::decode(void* pDst, size_t dstSize, const char* pSrc, size_t srcSize
                 {
                     return false;
                 }
+
                 dst[decoded++] = (v2 << 6) | v3;
             }
         }

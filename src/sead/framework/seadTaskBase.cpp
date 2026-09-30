@@ -29,6 +29,7 @@ TaskBase::MgrTaskArg::MgrTaskArg(const TaskClassID& rClassID) : CreateArg(rClass
     {
         heap_policies.mPolicies[i].adjust = true;
     }
+
     for (s32 i = 0, num = HeapMgr::getRootHeapNum(); i < num; i++)
     {
         heap_policies.mPolicies[i].dont_create = i != 0;
@@ -210,11 +211,13 @@ bool TaskBase::isDescendantOf(TaskBase* pTask) const
         {
             return false;
         }
+
         if (node->value() == pTask)
         {
             return true;
         }
     }
+
     return false;
 }
 

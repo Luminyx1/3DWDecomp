@@ -107,6 +107,7 @@ s32 convertDaysToMonth(u32* pDays, u32 year)
         {
             break;
         }
+
         ++month_idx;
     } while (month_idx < 12);
     *pDays -= days_to_remove - 1;

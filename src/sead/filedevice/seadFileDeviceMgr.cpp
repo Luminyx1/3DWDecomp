@@ -44,6 +44,7 @@ FileDeviceMgr::~FileDeviceMgr()
         delete mMainFileDevice;
         mMainFileDevice = NULL;
     }
+
     unmount_();
 }
 
@@ -260,6 +261,7 @@ void FileDeviceMgr::unmount(const SafeString& rName)
         SEAD_ASSERT_MSG(false, "drive not found: %s\n", rName.cstr());
         return;
     }
+
     unmount(device);
 }
 

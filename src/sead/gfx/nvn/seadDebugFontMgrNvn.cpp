@@ -222,6 +222,7 @@ void DebugFontMgrNvn::begin(DrawContext* pDrawContext) const
     {
         return;
     }
+
     nvnCommandBufferBindProgram(pDrawContext->getNvnCommandBuffer(), &mNvnProgram,
                                 NVN_SHADER_STAGE_ALL_GRAPHICS_BITS);
 }
@@ -279,10 +280,12 @@ void DebugFontMgrNvn::print(DrawContext* pDrawContext, const Projection& rProjec
         {
             continue;
         }
+
         if (c > 0x7e)
         {
             c = '?';
         }
+
         chars[count++] = c - 0x20;
     }
 

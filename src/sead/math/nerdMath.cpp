@@ -10,6 +10,7 @@ const u16 cEstimateBase[32] = {
     65512, 61604, 58024, 54728, 51684, 48860, 46232, 43776,
     41476, 39316, 37280, 35356, 33540, 31816, 30180, 28624
 };
+
 const u16 cEstimateSlope[32] = {
     5536, 5068, 4660, 4308, 3996, 3720, 3476, 3256,
     3056, 2880, 2720, 2572, 2436, 2316, 2200, 2092,
@@ -51,11 +52,13 @@ double estimateReciprocalSqrt(double value)
             index &= ((shift & 1) ? 0xffff : 0x7fff);
             exponent = 0x5fe + (static_cast<u32>(shift) >> 1);
         }
+
         const u32 tableIndex = static_cast<u32>(index) >> 11;
         bits = (static_cast<u64>(cEstimateBase[tableIndex]) << 36) -
                (static_cast<u64>(index & 0x7ff) * cEstimateSlope[tableIndex] << 24);
         bits |= static_cast<u64>(exponent) << 52;
     }
+
     __builtin_memcpy(&value, &bits, sizeof(value));
     return value;
 }

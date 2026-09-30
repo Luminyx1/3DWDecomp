@@ -200,6 +200,7 @@ bool RegionLanguageMgr::parseRegionLanguageMaskStr_(RingBuffer<RegionLanguageID>
             pMask->clear();
             return false;
         }
+
         pMask->pushBack(regionLanguage);
     }
 
@@ -208,6 +209,7 @@ bool RegionLanguageMgr::parseRegionLanguageMaskStr_(RingBuffer<RegionLanguageID>
         pMask->clear();
         return false;
     }
+
     return true;
 }
 
@@ -228,6 +230,7 @@ bool EnvUtil::getRegionLanguageFromString(RegionLanguageID* pRegionLanguage,
             return true;
         }
     }
+
     return false;
 }
 
@@ -278,6 +281,7 @@ bool EnvUtil::convertToRegionLanguage(RegionLanguageID* pRegionLanguage, RegionI
     {
         return false;
     }
+
     *pRegionLanguage = regionLanguage;
     return true;
 }
@@ -417,6 +421,7 @@ RegionID EnvUtil::getRegion()
     {
         return mgr->getRegion();
     }
+
     return getDefaultRegion_();
 }
 
@@ -431,6 +436,7 @@ LanguageID EnvUtil::getLanguage()
     {
         return mgr->getLanguage();
     }
+
     return getDefaultLanguage_();
 }
 
@@ -487,6 +493,7 @@ const SafeString& EnvUtil::getRomType()
     {
         return mgr->getRomType();
     }
+
     return SafeString::cEmptyString;
 }
 
@@ -558,6 +565,7 @@ s32 EnvUtil::convertToWinPath(BufferedSafeString* pOut, const SafeString& rPath)
             {
                 return 0;
             }
+
             mgr->resolveFilePath(pOut, rPath);
         }
         else

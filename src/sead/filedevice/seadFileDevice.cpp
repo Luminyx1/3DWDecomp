@@ -19,6 +19,7 @@ bool FileHandle::close()
         SEAD_ASSERT_MSG(false, "handle not opened");
         return false;
     }
+
     return mOriginalDevice->close(this);
 }
 
@@ -33,6 +34,7 @@ bool FileHandle::tryClose()
         SEAD_ASSERT_MSG(false, "handle not opened");
         return false;
     }
+
     return mOriginalDevice->tryClose(this);
 }
 
@@ -47,6 +49,7 @@ bool FileHandle::flush()
         SEAD_ASSERT_MSG(false, "handle not opened");
         return false;
     }
+
     return mOriginalDevice->flush(this);
 }
 
@@ -61,6 +64,7 @@ bool FileHandle::tryFlush()
         SEAD_ASSERT_MSG(false, "handle not opened");
         return false;
     }
+
     return mOriginalDevice->tryFlush(this);
 }
 
@@ -77,6 +81,7 @@ u32 FileHandle::read(u8* pOutBuffer, u32 bytesToRead)
         SEAD_ASSERT_MSG(false, "handle not opened");
         return 0;
     }
+
     return mDevice->read(this, pOutBuffer, bytesToRead);
 }
 
@@ -94,6 +99,7 @@ bool FileHandle::tryRead(u32* pActualSize, u8* pData, u32 size)
         SEAD_ASSERT_MSG(false, "handle not opened");
         return false;
     }
+
     return mDevice->tryRead(pActualSize, this, pData, size);
 }
 
@@ -110,6 +116,7 @@ u32 FileHandle::write(const u8* pData, u32 size)
         SEAD_ASSERT_MSG(false, "handle not opened");
         return 0;
     }
+
     return mDevice->write(this, pData, size);
 }
 
@@ -127,6 +134,7 @@ bool FileHandle::tryWrite(u32* pActualSize, const u8* pData, u32 size)
         SEAD_ASSERT_MSG(false, "handle not opened");
         return false;
     }
+
     return mDevice->tryWrite(pActualSize, this, pData, size);
 }
 
@@ -143,6 +151,7 @@ bool FileHandle::seek(s32 offset, FileDevice::SeekOrigin origin)
         SEAD_ASSERT_MSG(false, "handle not opened");
         return false;
     }
+
     return mDevice->seek(this, offset, origin);
 }
 
@@ -159,6 +168,7 @@ bool FileHandle::trySeek(s32 offset, FileDevice::SeekOrigin origin)
         SEAD_ASSERT_MSG(false, "handle not opened");
         return false;
     }
+
     return mDevice->trySeek(this, offset, origin);
 }
 
@@ -173,6 +183,7 @@ u32 FileHandle::getCurrentSeekPos()
         SEAD_ASSERT_MSG(false, "handle not opened");
         return 0;
     }
+
     return mDevice->getCurrentSeekPos(this);
 }
 
@@ -188,6 +199,7 @@ bool FileHandle::tryGetCurrentSeekPos(u32* pos)
         SEAD_ASSERT_MSG(false, "handle not opened");
         return false;
     }
+
     return mDevice->tryGetCurrentSeekPos(pos, this);
 }
 
@@ -202,6 +214,7 @@ u32 FileHandle::getFileSize()
         SEAD_ASSERT_MSG(false, "handle not opened");
         return 0;
     }
+
     return mDevice->getFileSize(this);
 }
 
@@ -217,6 +230,7 @@ bool FileHandle::tryGetFileSize(u32* pSize)
         SEAD_ASSERT_MSG(false, "handle not opened");
         return false;
     }
+
     return mDevice->tryGetFileSize(pSize, this);
 }
 
@@ -231,6 +245,7 @@ bool DirectoryHandle::close()
         SEAD_ASSERT_MSG(false, "handle not opened");
         return false;
     }
+
     return mOriginalDevice->closeDirectory(this);
 }
 
@@ -245,6 +260,7 @@ bool DirectoryHandle::tryClose()
         SEAD_ASSERT_MSG(false, "handle not opened");
         return false;
     }
+
     return mOriginalDevice->tryCloseDirectory(this);
 }
 
@@ -261,6 +277,7 @@ u32 DirectoryHandle::read(DirectoryEntry* pEntries, u32 count)
         SEAD_ASSERT_MSG(false, "handle not opened");
         return false;
     }
+
     return mDevice->readDirectory(this, pEntries, count);
 }
 
@@ -278,6 +295,7 @@ bool DirectoryHandle::tryRead(u32* pActualCount, DirectoryEntry* pEntries, u32 c
         SEAD_ASSERT_MSG(false, "handle not opened");
         return false;
     }
+
     return mDevice->tryReadDirectory(pActualCount, this, pEntries, count);
 }
 
@@ -396,8 +414,10 @@ u8* FileDevice::doLoad_(LoadArg& rArg)
                 SEAD_ASSERT_MSG(false, "alloc size[%u] failed in heap[%s] for file[%s]",
                                 bytesToRead, heap->getName().cstr(), rArg.path.cstr());
             }
+
             return nullptr;
         }
+
         buf = new (raw_buf) u8[bytesToRead];
         allocated = true;
     }
@@ -409,6 +429,7 @@ u8* FileDevice::doLoad_(LoadArg& rArg)
         {
             delete[] buf;
         }
+
         return nullptr;
     }
 
@@ -418,6 +439,7 @@ u8* FileDevice::doLoad_(LoadArg& rArg)
         {
             delete[] buf;
         }
+
         return nullptr;
     }
 
@@ -1092,6 +1114,7 @@ bool FileDevice::tryMakeDirectoryWithParent(const SafeString& rPath, u32 x)
         reached_end = !Path::getDirectoryName(&dir_name, dir_name);
         ++num_existing_parents;
     }
+
     if (should_trim)
     {
         dir_name.trim(0);

@@ -80,6 +80,7 @@ MessageQueue::Element MessageQueue::pop(MessageQueue::BlockType blockType)
     {
         return message;
     }
+
     return 0;
 }
 
@@ -102,6 +103,7 @@ MessageQueue::Element MessageQueue::peek(MessageQueue::BlockType blockType) cons
     {
         return message;
     }
+
     return 0;
 }
 

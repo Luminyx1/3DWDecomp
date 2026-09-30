@@ -97,6 +97,7 @@ void ControllerWrapper::setPadConfig(s32 padBitMax, const u8* pPadConfig,
     {
         return;
     }
+
     mPadBitMax = padBitMax;
 
     MemUtil::copy(mPadConfig, pPadConfig, padBitMax);

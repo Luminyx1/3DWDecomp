@@ -72,6 +72,7 @@ s32 replaceStringImpl_(T* pDst, s32* pLength, s32 dstSize, const T* pSrc, s32 sr
                 *pLength = srcSize;
             }
         }
+
         return 0;
     }
 
@@ -128,6 +129,7 @@ s32 replaceStringImpl_(T* pDst, s32* pLength, s32 dstSize, const T* pSrc, s32 sr
                     MemUtil::copy(pDst + dst_i + 1, new_cstr, copy_size * sizeof(T));
                     ret += 1;
                 }
+
                 src_i -= old_str_len;
             }
             else
@@ -136,6 +138,7 @@ s32 replaceStringImpl_(T* pDst, s32* pLength, s32 dstSize, const T* pSrc, s32 sr
                 {
                     pDst[dst_i] = pDst[src_i];
                 }
+
                 --dst_i;
                 --src_i;
             }
@@ -157,6 +160,7 @@ s32 replaceStringImpl_(T* pDst, s32* pLength, s32 dstSize, const T* pSrc, s32 sr
                 {
                     MemUtil::copy(&pDst[buffer_i], new_cstr, copy_size * sizeof(T));
                 }
+
                 ret += new_str_len == 0 || copy_size > 0;
                 if (new_str_len > rest)
                 {
@@ -166,8 +170,10 @@ s32 replaceStringImpl_(T* pDst, s32* pLength, s32 dstSize, const T* pSrc, s32 sr
                     {
                         *pLength = dst_max_idx;
                     }
+
                     return ret;
                 }
+
                 dst_step = new_str_len;
                 src_step = old_str_len;
             }
@@ -181,12 +187,15 @@ s32 replaceStringImpl_(T* pDst, s32* pLength, s32 dstSize, const T* pSrc, s32 sr
                     {
                         *pLength = dst_max_idx;
                     }
+
                     return ret;
                 }
+
                 pDst[buffer_i] = pSrc[target_i];
                 dst_step = 1;
                 src_step = 1;
             }
+
             buffer_i += dst_step;
             target_i += src_step;
         }
@@ -227,11 +236,13 @@ bool SafeStringBase<T>::includeIgnoreCase(const T& c) const
         {
             break;
         }
+
         if (isEqualCharIgnoreCase(unsafeAt_(i), c))
         {
             return true;
         }
     }
+
     return false;
 }
 
@@ -257,12 +268,14 @@ bool SafeStringBase<T>::includeIgnoreCase(const SafeStringBase<T>& str) const
             {
                 break;
             }
+
             if (j == subStrLen - 1)
             {
                 return true;
             }
         }
     }
+
     return false;
 }
 
@@ -289,11 +302,13 @@ bool SafeStringBase<T>::isEqualIgnoreCase(const SafeStringBase<T>& str) const
         {
             return false;
         }
+
         if (unsafeAt_(i) == cNullChar)
         {
             return true;
         }
     }
+
     return false;
 }
 
@@ -317,8 +332,10 @@ bool SafeStringBase<T>::startsWithIgnoreCase(const SafeStringBase<T>& prefix) co
         {
             return false;
         }
+
         ++i;
     }
+
     return true;
 }
 
@@ -356,6 +373,7 @@ bool SafeStringBase<T>::endsWithIgnoreCase(const SafeStringBase<T>& suffix) cons
             return false;
         }
     }
+
     return true;
 }
 
@@ -430,6 +448,7 @@ s32 BufferedSafeStringBase<char16>::formatImpl_(char16* pS, s32 n, const char16*
     {
         return ret;
     }
+
     pS[n - 1] = WSafeString::cNullChar;
     return n - 1;
 }
