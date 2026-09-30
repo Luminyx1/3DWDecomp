@@ -19,19 +19,19 @@ LfoCurveFunction CurveLfo::UnregisterUserCurve(u32 index) {
 }
 void CurveLfoParam::Initialize() { depth = 0; speed = 6.25f; delay = 0; range = 1; curve = 0; phase = 0; }
 void CurveLfo::Reset() {
-    mElapsedDelay = 0;
-    mPhase = 0;
     mRandomValue = 1;
-    mStarted = false;
+    mPhase = 0;
     mWrapped = false;
+    mElapsedDelay = 0;
+    mStarted = false;
 }
 // step advances the delay and oscillator phase in milliseconds.
 void CurveLfo::Update(int step) {
     if (mElapsedDelay < mParameter.delay) {
-        mElapsedDelay += step;
-        if (mElapsedDelay <= mParameter.delay) return;
-        step = mElapsedDelay - mParameter.delay;
-        mElapsedDelay = mParameter.delay;
+        if (mElapsedDelay + step > mParameter.delay) {
+            step -= mParameter.delay - mElapsedDelay;
+            mElapsedDelay = mParameter.delay;
+        } else { mElapsedDelay += step; return; }
     }
     if (!(mParameter.speed > 0)) return;
     if (!mStarted) {

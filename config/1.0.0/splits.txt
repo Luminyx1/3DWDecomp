@@ -3383,7 +3383,7 @@ src/nw/atk/_ZN2nn3atk6detail10BasicSoundC2Ev.cpp:
     .text   start:0x00540A40 end:0x00540CA4
 src/nw/atk/detail/atk_BasicSound.cpp:
     .text   start:0x00540CB0 end:0x005433C0
-src/nw/atk/detail/atk_SoundHandle.cpp:
+src/nw/atk/detail/atk_SoundHandle.cpp: done
     .text   start:0x005433C0 end:0x00543540
 src/nw/atk/detail/atk_ExternalSoundPlayer.cpp:
     .text   start:0x00543540 end:0x00543BE4
@@ -3439,7 +3439,7 @@ src/nw/atk/detail/strm/atk_StreamSoundPrefetchFileReader.cpp: done
     .text   start:0x00558B40 end:0x00558F34
 src/nw/atk/detail/strm/atk_StreamSoundPrefetchFile.cpp:
     .text   start:0x00558F40 end:0x005591B4
-src/nw/atk/detail/strm/atk_StreamTrack.cpp:
+src/nw/atk/detail/strm/atk_StreamTrack.cpp: done
     .text   start:0x005591C0 end:0x005591E0
 src/nw/atk/detail/strm/atk_StreamBufferPool.cpp: done
     .text   start:0x005591E0 end:0x0055938C
@@ -3479,7 +3479,7 @@ src/nw/atk/detail/strm/atk_StreamSoundRuntime.cpp:
     .text   start:0x00561810 end:0x00563140
 src/nw/atk/detail/strm/atk_StreamSound.cpp:
     .text   start:0x00563140 end:0x005643B8
-src/nw/atk/detail/strm/atk_StreamSoundHandle.cpp:
+src/nw/atk/detail/strm/atk_StreamSoundHandle.cpp: done
     .text   start:0x005643C0 end:0x00564518
 src/nw/atk/detail/debug/atk_Debug.cpp: done
     .text   start:0x00564520 end:0x005645E4
@@ -3495,7 +3495,7 @@ src/nw/atk/detail/seq/atk_SequenceSoundRuntime_dup2.cpp:
     .text   start:0x005653D0 end:0x00567710
 src/nw/atk/detail/seq/atk_SequenceSound.cpp:
     .text   start:0x00567710 end:0x00568824
-src/nw/atk/detail/seq/atk_SequenceSoundHandle.cpp:
+src/nw/atk/detail/seq/atk_SequenceSoundHandle.cpp: done
     .text   start:0x00568830 end:0x00568988
 src/nw/atk/detail/seq/atk_MmlSequenceTrackAllocator.cpp: done
     .text   start:0x00568990 end:0x00568A78

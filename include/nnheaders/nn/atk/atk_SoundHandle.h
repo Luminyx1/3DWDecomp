@@ -11,6 +11,10 @@ public:
     bool IsAttachedSound() const { return m_pSound != nullptr; }
 
     void DetachSound();
+    void detail_DuplicateHandle(SoundHandle* handle);
+    void detail_AttachSoundAsTempHandle(detail::BasicSound* sound);
+    void detail_AttachSound(detail::BasicSound* sound);
+    bool CalculateSoundParamCalculationValues(SoundParamCalculationValues* values) const;
 
     void Stop(int fadeFrames) {
         if (IsAttachedSound()) {
@@ -50,6 +54,8 @@ public:
     }
 
 private:
+    friend class StreamSoundHandle;
+    friend class SequenceSoundHandle;
     detail::BasicSound* m_pSound;
 };
 }  // namespace nn::atk
