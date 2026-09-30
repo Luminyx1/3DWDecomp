@@ -1,7 +1,8 @@
 #pragma once
 
-#include "Library/StageSwitch/Core/IUseStageSwitch.hpp"
 #include <basis/seadTypes.h>
+
+#include "Library/StageSwitch/Core/IUseStageSwitch.hpp"
 
 namespace al {
 class StageSwitchAccesser;
@@ -12,17 +13,15 @@ class StageSwitchKeeper {
 public:
     StageSwitchKeeper();
 
-    void init(StageSwitchDirector*, const PlacementInfo&);
-    StageSwitchAccesser* tryGetStageSwitchAccesser(const char*) const;
-    bool isUsingSwitchNo(s32);
+    void init(StageSwitchDirector* pDirector, const PlacementInfo& rInfo);
+    StageSwitchAccesser* tryGetStageSwitchAccesser(const char* pLinkName) const;
+    bool isUsingSwitchNo(s32 switchNo);
 
-    inline void setName(IUseStageSwitch *pSwitch) {
-        _10 = pSwitch->getName();
-    }
+    void setUseName(IUseName* pUseName) { mUseName = pUseName; }
 
     StageSwitchAccesser* mAccessors = nullptr;
     s32 mLinkCount = 0;
     u32 _C;
-    const char* _10 = nullptr;
+    IUseName* mUseName = nullptr;
 };
 }  // namespace al
