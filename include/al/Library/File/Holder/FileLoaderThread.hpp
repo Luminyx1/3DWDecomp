@@ -1,6 +1,7 @@
 #pragma once
 
 #include <basis/seadTypes.h>
+#include <thread/seadMessageQueue.h>
 
 namespace sead {
 class DelegateThread;
@@ -12,11 +13,13 @@ class FileEntryBase;
 
 class FileLoaderThread {
 public:
-    FileLoaderThread(s32);
+    FileLoaderThread(s32 priority);
 
-    void threadFunction(sead::Thread*, s64);
-    void requestLoadFile(FileEntryBase*);
+    void threadFunction(sead::Thread* pThread, sead::MessageQueue::Element message);
+    void requestLoadFile(FileEntryBase* pEntry);
 
-    sead::DelegateThread* mThread = nullptr;  // _0
+    sead::DelegateThread* getThread() const { return mThread; }
+
+    sead::DelegateThread* mThread = nullptr;
 };
 }  // namespace al

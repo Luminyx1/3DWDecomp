@@ -3,37 +3,37 @@
 #include <prim/seadDelegate.h>
 #include <thread/seadDelegateThread.h>
 
-#include "Library/File/FileEntryBase.hpp"
+#include "Project/File/FileEntryBase.hpp"
 
 namespace al {
 /**
- * @brief Creates and starts the thread that loads file entries in the background.
- * @param priority The priority of the loader thread.
+ * Creates and starts the file loader thread.
+ * @param priority Thread priority.
  */
 FileLoaderThread::FileLoaderThread(s32 priority) {
     mThread = new sead::DelegateThread(
         "FileLoadThread",
-        new sead::Delegate2<FileLoaderThread, sead::Thread*, s64>(
+        new sead::Delegate2<FileLoaderThread, sead::Thread*, sead::MessageQueue::Element>(
             this, &FileLoaderThread::threadFunction),
         nullptr, priority, sead::MessageQueue::BlockType::Blocking, 0x7fffffff, 0x10000, 0x200);
     mThread->start();
 }
 
 /**
- * @brief Thread entry point that loads the file entry passed as a message.
- * @param pThread The loader thread.
- * @param fileEntryPtr The address of the file entry to load.
+ * Loads the file entry passed as message.
+ * @param pThread Unused.
+ * @param message Pointer to the file entry.
  */
-void FileLoaderThread::threadFunction(sead::Thread* pThread, s64 fileEntryPtr) {
-    reinterpret_cast<FileEntryBase*>(fileEntryPtr)->load();
+void FileLoaderThread::threadFunction(sead::Thread* pThread, sead::MessageQueue::Element message) {
+    reinterpret_cast<FileEntryBase*>(message)->load();
 }
 
 /**
- * @brief Queues a file entry to be loaded on the loader thread.
- * @param pFileEntry The file entry to load.
+ * Queues a file entry for loading.
+ * @param pEntry The file entry.
  */
-void FileLoaderThread::requestLoadFile(FileEntryBase* pFileEntry) {
-    mThread->sendMessage(reinterpret_cast<s64>(pFileEntry),
+void FileLoaderThread::requestLoadFile(FileEntryBase* pEntry) {
+    mThread->sendMessage(reinterpret_cast<sead::MessageQueue::Element>(pEntry),
                          sead::MessageQueue::BlockType::NonBlocking);
 }
 }  // namespace al
