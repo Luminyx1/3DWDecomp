@@ -3,22 +3,22 @@
 #include <math/seadVector.h>
 
 namespace al {
-/// Scene wide state used to control the cameras.
-class SceneCameraControlInfo {
-public:
+
+struct SceneCameraControlInfo {
     SceneCameraControlInfo();
 
-    void* _0;                // _0
-    void* _8;                // _8
-    void* _10;               // _10
-    sead::Vector3f _18;      // _18
-    void* _28;               // _28
-    bool _30;                // _30
-    void* _38;               // _38
-    void* _40;               // _40
-    void* _48;               // _48
-    void* _50;               // _50
-    void* _58;               // _58
-    void* _60;               // _60
+    void* _0 = nullptr;
+    void* _8 = nullptr;
+    void* _10 = nullptr;
+    sead::Vector3f _18 = sead::Vector3f::zero;
+    void* _28 = nullptr;
+    bool _30 = true;
+    void* _38 = nullptr;
+    void* _40 = nullptr;
+    void* _48 = nullptr;
+    void* _50 = nullptr;
+    void* _58 = nullptr;
+    void* _60 = nullptr;
 };
+
 }  // namespace al
