@@ -21,6 +21,7 @@ PlayerActionConditionDamageToGroundMove::PlayerActionConditionDamageToGroundMove
  */
 bool PlayerActionConditionDamageToGroundMove::check() {
     mFrame++;
+
     if (!mCollision->isOnFloor()) {
         return false;
     }

@@ -68,6 +68,7 @@ void BlockPow::init(const al::ActorInitInfo& rInfo) {
 
 void BlockPow::appearBySwitch() {
     GameDataHolderAccessor accessor(this);
+
     if (GameDataFunction::isSingleMode(accessor)) {
         respawn();
     }
@@ -77,6 +78,7 @@ void BlockPow::appearBySwitch() {
 
 void BlockPow::killBySwitch() {
     GameDataHolderAccessor accessor(this);
+
     if (GameDataFunction::isSingleMode(accessor)) {
         if (mEmptyBlock != nullptr && al::isAlive(mEmptyBlock)) {
             mEmptyBlock->makeActorDead();
@@ -153,6 +155,7 @@ bool BlockPow::receiveMsgScreenPoint(const al::SensorMsg* pMsg, al::ScreenPointe
 void BlockPow::onConnectRailBlock() {
     _170 = 1;
     al::setShadowFixed(this, false);
+
     if (mIsAppearEmpty) {
         mEmptyBlock->onConnectRailBlock();
     }
@@ -161,11 +164,13 @@ void BlockPow::onConnectRailBlock() {
 bool BlockPow::updateSensor() {
     f32 radius = cSensorRadius[_171 == 0];
     f32 sensorRadius = al::getSensorRadius(this, "Explosion");
+
     if (radius <= sensorRadius) {
         return false;
     }
 
     f32 newRadius = 10.0f;
+
     if (!_171) {
         newRadius = 15.0f;
     }

@@ -25,6 +25,7 @@ bool PlayerActionConditionGroundMoveToTurnJump::check() {
     sead::Vector3f moveDir = mInput->getMoveVec();
     al::verticalizeVec(&moveDir, mProperty->mGroundUp, moveDir);
     al::normalizeOrZero(&moveDir);
+
     if (mDashChecker->isDashing() || mDashChecker->isDashingFast()) {
         return false;
     }
@@ -53,6 +54,7 @@ void PlayerActionConditionGroundMoveToTurnJump::checkStickOn(const sead::Vector3
     sead::Vector3f hDir = hVel;
     al::normalizeOrZero(&hDir);
     const sead::Vector3f& rFront = mProperty->mFront;
+
     if (hVel.length() < mConstParam->getDashBrakeSpeed() || hVel.dot(rStick) < 0.70710678f ||
         rStick.dot(rFront) < 0.70710678f) {
         mBrakeCommandFrame = 0;

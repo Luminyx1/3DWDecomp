@@ -26,13 +26,16 @@ bool PlayerActionConditionWallToFall::check() {
     }
 
     mNoWallFrame = 0;
+
     if (mInput->getMoveVec().length() > 0.7f) {
         sead::Vector3f moveDir = mInput->getMoveVec();
         al::normalize(&moveDir);
         IUsePlayerCollision::Info info = {};
         mCollision->getBackWallInfo(&info);
+
         if (info.mNormal.dot(moveDir) > 0.70710678f) {
             mApartFrame++;
+
             if (mApartFrame > mConstParam->getWallApartFrame()) {
                 return true;
             }

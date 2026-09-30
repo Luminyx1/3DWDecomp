@@ -22,6 +22,7 @@ PlayerActionConditionWaitToPivot::PlayerActionConditionWaitToPivot(const IUsePla
 bool PlayerActionConditionWaitToPivot::check() {
     sead::Vector3f moveDir = mInput->getMoveVec();
     al::verticalizeVec(&moveDir, mProperty->mGroundUp, moveDir);
+
     if (al::normalizeOrZero(&moveDir)) {
         return false;
     }

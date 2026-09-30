@@ -44,6 +44,7 @@ bool SnowCover::receiveMsg(const al::SensorMsg* pMsg, al::HitSensor* pSender, al
     }
 
     GameDataHolderAccessor accessor(this);
+
     if (GameDataFunction::isSingleMode(accessor) && _158) {
         if (al::isMsgPlayerHipDropAll(pMsg)) {
             auto sensor = _158->mHitSensorKeeper->getSensor("Body");
@@ -92,6 +93,7 @@ void SnowCover::exeThaw() {
 SnowCover* SnowCoverFunction::tryCreateSnowCover(al::LiveActor* pActor, const al::ActorInitInfo& rInfo, const char* a3, bool a4, const char* a5) {
     bool isSnow = false;
     al::tryGetArg(&isSnow, rInfo, "IsSnowCover");
+
     if (isSnow != false) {
         auto actor = al::isSingleMode(rInfo) ? pActor : nullptr;
         SnowCover* cover = new SnowCover("雪カバー", a3, a5, actor);

@@ -33,6 +33,7 @@ void BlockQuestion::init(const al::ActorInitInfo& rInfo) {
 
     bool isExpClipping = false;
     al::tryGetArg(&isExpClipping, rInfo, "IsExpandClippingShadowLength");
+
     if (isExpClipping) {
         al::tryExpandClippingByShadowLength(this, &_150);
     }
@@ -46,6 +47,7 @@ void BlockQuestion::respawn() {
             al::validateCollisionParts(this);
             al::validateHitSensors(this);
             al::setNerve(this, &NrvBlockQuestionState);
+
             if (al::isDead(this)) {
                 makeActorAppeared();
             }

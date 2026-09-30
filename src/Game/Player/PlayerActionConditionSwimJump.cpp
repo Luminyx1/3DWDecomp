@@ -19,6 +19,7 @@ PlayerActionConditionSwimJump::PlayerActionConditionSwimJump(const IUsePlayerWat
  */
 bool PlayerActionConditionSwimJump::check() {
     f32 upSpeed = mProperty->mVelocity.dot(mProperty->mUpDir);
+
     if (upSpeed >= 0.0f) {
         mIsRising = true;
     }

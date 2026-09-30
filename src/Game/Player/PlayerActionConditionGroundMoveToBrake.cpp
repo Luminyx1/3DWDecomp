@@ -29,11 +29,13 @@ bool PlayerActionConditionGroundMoveToBrake::check() {
     al::verticalizeVec(&moveDir, mProperty->mGroundUp, moveDir);
     al::normalizeOrZero(&moveDir);
     bool isOpposite = PlayerActionFunc::isOppositeSide(moveDir, mProperty->mFront);
+
     if (stickLength > 0.9f && !isOpposite) {
         checkStickOn(moveDir);
     }
 
     checkCancel();
+
     if (stickLength < 0.3f || isOpposite) {
         return mBrakeCommandFrame != 0;
     }
@@ -59,6 +61,7 @@ void PlayerActionConditionGroundMoveToBrake::checkStickOn(const sead::Vector3f& 
     sead::Vector3f hDir = hVel;
     al::normalizeOrZero(&hDir);
     const sead::Vector3f& rFront = mProperty->mFront;
+
     if (hVel.length() < mConstParam->getDashBrakeSpeed() || hVel.dot(rStick) < 0.70710678f ||
         rStick.dot(rFront) < 0.70710678f) {
         mBrakeCommandFrame = 0;
