@@ -13,8 +13,6 @@ class ControlAngleParam;
 class PlacementId;
 class SettingParam;
 struct PlacementInfo;
-
-/// Base class of the older camera posers, which calculate a camera pose each frame.
 class CameraPoser {
 public:
     CameraPoser();
@@ -53,26 +51,27 @@ public:
     virtual void endSnapshotMode();
     virtual f32 getSnapshotOffset() const { return 0.0f; }
 
-    const char* mName = nullptr;                      // _8
-    PlacementId* mPlacementId = nullptr;              // _10
-    sead::Vector3f mCameraPos = sead::Vector3f::zero;  // _18
-    sead::Vector3f mLookAtPos = sead::Vector3f::zero;  // _24
-    sead::Vector3f mCameraUp = sead::Vector3f::ey;     // _30
-    sead::Vector3f mCameraFront = sead::Vector3f::ez;  // _3C
-    f32 mFovyDegree = 35.0f;                          // _48
-    s32 mInterpolationFrame = 60;                     // _4C
-    s32 mInterpoleApproachFrame = 240;                // _50
-    s32 mInterpoleGoAwayFrame = 60;                   // _54
-    sead::Matrix34f mZoneMtx = sead::Matrix34f::ident;  // _58
-    bool _88 = false;                                 // _88
-    bool _89 = true;                                  // _89
-    bool _8A = false;                                 // _8A
-    ControlAngleParam* mControlAngleParam = nullptr;  // _90
-    bool mIsFirstCalc = true;                         // _98
-    bool mIsNoNormalInterpole = false;                // _99
-    s32 _9C = -1;                                     // _9C
-    bool mIsActivateGyroMode = false;                 // _A0
-    bool mIsSnapshotMode = false;                     // _A1
-    bool _A2 = false;                                 // _A2
+    const char* mName = nullptr;
+    PlacementId* mPlacementId = nullptr;
+    sead::Vector3f mCameraPos = sead::Vector3f::zero;
+    sead::Vector3f mLookAtPos = sead::Vector3f::zero;
+    sead::Vector3f mCameraUp = sead::Vector3f::ey;
+    sead::Vector3f mCameraFront = sead::Vector3f::ez;
+    f32 mFovyDegree = 35.0f;
+    s32 mInterpolationFrame = 60;
+    s32 mInterpoleApproachFrame = 240;
+    s32 mInterpoleGoAwayFrame = 60;
+    sead::Matrix34f mZoneMtx = sead::Matrix34f::ident;
+    bool _88 = false;
+    bool _89 = true;
+    bool _8A = false;
+    ControlAngleParam* mControlAngleParam = nullptr;
+    bool mIsFirstCalc = true;
+    bool mIsNoNormalInterpole = false;
+    s32 _9C = -1;
+    bool mIsActivateGyroMode = false;
+    bool mIsSnapshotMode = false;
+    bool _A2 = false;
 };
+static_assert(sizeof(CameraPoser) == 0xa8);
 }  // namespace al
