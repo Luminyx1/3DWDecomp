@@ -2,11 +2,12 @@
 
 #include <math/seadVector.h>
 
+#include "Library/HostIO/IUseHioNode.hpp"
 #include "Project/AreaObj/IUseAreaObj.hpp"
 
 namespace al {
-/// Decides whether the camera should stop following its target.
-class CameraStopJudge : public IUseAreaObj {
+
+class CameraStopJudge : public HioNode, public IUseAreaObj {
 public:
     CameraStopJudge();
 
@@ -15,9 +16,17 @@ public:
 
     AreaObjDirector* getAreaObjDirector() const override { return mAreaObjDirector; }
 
-    bool mIsInCameraStopArea = false;        // _8
-    bool _9 = false;                         // _9
-    bool mIsInvalidStopJudgeByDemo = false;  // _A
-    AreaObjDirector* mAreaObjDirector = nullptr;  // _10
+    void setAreaObjDirector(AreaObjDirector* pDirector) { mAreaObjDirector = pDirector; }
+
+    void setIsStopByDeathPlayer(bool isStop) { mIsStopByDeathPlayer = isStop; }
+
+    void setIsInvalidStopJudgeByDemo(bool isInvalid) { mIsInvalidStopJudgeByDemo = isInvalid; }
+
+private:
+    bool mIsInCameraStopArea = false;
+    bool mIsStopByDeathPlayer = false;
+    bool mIsInvalidStopJudgeByDemo = false;
+    AreaObjDirector* mAreaObjDirector = nullptr;
 };
+
 }  // namespace al
