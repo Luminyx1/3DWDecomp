@@ -5,10 +5,9 @@
 namespace al {
 class Sky : public LiveActor {
 public:
-    Sky(const char*);
+    Sky(const char* pName);
 
-    virtual ~Sky();
-    virtual void init(const ActorInitInfo&);
-    virtual void control();
+    void init(const ActorInitInfo& rInfo) override;
+    void control() override;
 };
 }  // namespace al
