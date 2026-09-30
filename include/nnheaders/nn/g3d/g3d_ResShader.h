@@ -5,8 +5,51 @@
 #include <nn/util/AccessorBase.h>
 #include <nn/util/util_BinTypes.h>
 #include <nn/util/util_ResDic.h>
+#include <nn/gfx/gfx_ResShader.h>
+#include <nn/gfx/gfx_CommandBuffer.h>
+#include <nn/os/os_MutexTypes.h>
 
 namespace nn::g3d {
+
+class ResShadingModel;
+struct ShaderSymbolInfo {
+    nn::util::BinPtrToString* samplerNames;
+    nn::util::BinPtrToString* imageNames;
+    nn::util::BinPtrToString* uniformBlockNames;
+    nn::util::BinPtrToString* storageBlockNames;
+};
+struct ResShaderArchive {
+    u8 _0[0x10];
+    ResShadingModel* models;
+    u8 _18[0x10];
+    // device owns the GPU shader; model and index select the program to prepare.
+    void (*updateProgram)(nn::gfx::Device* device, ResShadingModel* model, int index);
+    void* work;
+    u8 _38[8];
+    u16 modelCount;
+    u16 flags;
+    u8 _44[4];
+    // device owns the shaders; memory provides size bytes for optional model mutexes.
+    void Setup(nn::gfx::Device* device, void* memory, size_t size);
+    // pool provides poolSize bytes at offset; memory provides size bytes of mutex workspace.
+    void Setup(nn::gfx::Device* device, nn::gfx::MemoryPool* pool, ptrdiff_t offset,
+               size_t poolSize, void* memory, size_t size);
+    // device owns the programs and containers being finalized.
+    void Cleanup(nn::gfx::Device* device);
+};
+struct ResShaderFile {
+    nn::util::BinaryFileHeader fileHeader;
+    ResShaderArchive* archive;
+    void Relocate();
+    void Unrelocate();
+    // file is a mutable shader resource image whose pointers will be relocated.
+    static ResShaderFile* ResCast(void* file);
+    // file points to the header whose signature and format version are checked.
+    static bool IsValid(const void* file);
+    // device and pool provide poolSize bytes at offset; memory supplies size bytes for mutexes.
+    void Setup(nn::gfx::Device* device, nn::gfx::MemoryPool* pool, ptrdiff_t offset,
+               size_t poolSize, void* memory, size_t size);
+};
 
 enum ShaderStage {
     Stage_Vertex,
@@ -22,13 +65,27 @@ struct ResShaderProgramData {
     nn::util::BinTPtr<s32> pSamplerTable;
     nn::util::BinTPtr<s32> pImageTable;
     nn::util::BinTPtr<s32> pUniformBlockTable;
-    u8 _18[0x30 - 0x18];
+    nn::util::BinTPtr<s32> pStorageBlockTable;
+    nn::gfx::ResShaderVariation* variation;
+    ResShadingModel* model;
     u32 attribActiveFlag;
-    u8 _34[12];
+    u16 flags;
+    u8 _36[10];
 };
 
 class ResShaderProgram : public nn::util::AccessorBase<ResShaderProgramData> {
 public:
+    // device owns shader objects; type selects binary, intermediate, or source code.
+    bool IsBinaryAvailable(nn::gfx::Device* device);
+    bool InitializePerType(nn::gfx::Device* device, nn::gfx::ShaderCodeType type);
+    void Cleanup(nn::gfx::Device* device);
+    void Setup(nn::gfx::Device* device);
+    // skipBinary forces initialization from intermediate or source code on device.
+    void Initialize(nn::gfx::Device* device, bool skipBinary);
+    void UpdateTable();
+    // commandBuffer receives the initialized shader for all graphics stages.
+    void Load(nn::gfx::CommandBuffer* commandBuffer) const;
+    const nn::gfx::Shader* GetShader() const;
     // device prepares the selected GPU shader program.
     void Update(nn::gfx::Device* device);
     int GetSamplerLocation(int samplerIndex, ShaderStage stage) const {
@@ -53,22 +110,28 @@ class ResShaderOption {
 public:
     // key is the packed shader key to edit; choice identifies a value in this option's dictionary.
     void WriteStaticKey(u32* key, int choice) const;
-    // key contains packed option values; choice selects the value to encode.
+    // key contains the packed static option values to decode.
     int ReadStaticKey(const u32* key) const;
+    // key contains dynamic option words; choice selects the value to encode.
     void WriteDynamicKey(u32* key, int choice) const;
+    // key contains the packed dynamic option values to decode.
     int ReadDynamicKey(const u32* key) const;
     // name selects a value in this shader option's choice dictionary.
     int FindChoiceIndex(const char* name) const {
         return choiceDictionary ? choiceDictionary->FindIndex(name) : nn::util::ResDic::Npos;
     }
-    u8 _0[8];
+    nn::util::BinTPtr<nn::util::BinString> name;
     nn::util::ResDic* choiceDictionary;
     const u32* values;
     u8 _18;
     u8 defaultChoice;
     u16 blockOffset;
     u8 flags;
-    u8 _1d[11];
+    u8 dynamicWordOffset;
+    u8 wordIndex;
+    u8 shift;
+    u32 mask;
+    u8 _24[4];
 };
 struct ResUniformVar {
     u8 _0[12];
@@ -106,7 +169,12 @@ struct ResShadingModelData {
     char _68[0x88 - 0x68];
     nn::util::BinTPtr<ResShaderProgram> pPrograms;
     nn::util::BinTPtr<u32> pKeyTable;
-    char _98[0xe4 - 0x98];
+    ResShaderArchive* archive;
+    ShaderSymbolInfo* symbolInfo;
+    nn::gfx::ResShaderFile* shaderFile;
+    nn::os::MutexType* mutex;
+    u8 _b8[0xe0 - 0xb8];
+    s32 defaultProgramIndex;
     u16 staticOptionCount;
     u16 dynamicOptionCount;
     u16 programCount;
@@ -114,17 +182,38 @@ struct ResShadingModelData {
     u8 dynamicKeyLength;
     u8 attribCount;
     u8 samplerCount;
-    u8 _ee[2];
+    u8 imageCount;
+    u8 uniformBlockCount;
     s8 materialBlockIndex;
     u8 _f1[2];
     s8 optionBlockIndex;
-    u8 _f4[4];
+    u8 storageBlockCount;
+    u8 _f5[11];
 };
 
 struct ShaderRange { const u32* begin; const u32* end; };
 
 class ResShadingModel : public nn::util::AccessorBase<ResShadingModelData> {
 public:
+    void Relocate();
+    void Unrelocate();
+    // device owns shader objects; mutex optionally serializes program updates.
+    bool IsBinaryAvailable(nn::gfx::Device* device);
+    void Setup(nn::gfx::Device* device, nn::os::MutexType* mutex);
+    // pool supplies size bytes at offset; mutex optionally serializes updates on device.
+    void Setup(nn::gfx::Device* device, nn::gfx::MemoryPool* pool, ptrdiff_t offset,
+               size_t size, nn::os::MutexType* mutex);
+    // device owns the shader objects being released or updated; index selects a program.
+    void Cleanup(nn::gfx::Device* device);
+    void UpdateProgram(nn::gfx::Device* device, int index);
+    // index selects a program's packed key words.
+    const u32* GetStaticKey(int index) const;
+    const u32* GetDynamicKey(int index) const;
+    const u32* GetKey(int index) const;
+    // key supplies all static and dynamic option words for the requested program.
+    int FindProgramIndex(const u32* key) const;
+    // range receives programs sharing the static option words in key.
+    bool FindProgramRange(ShaderRange* range, const u32* key) const;
     // key receives the default packed static or dynamic shader option values.
     void WriteDefaultStaticKey(u32* key) const;
     void WriteDefaultDynamicKey(u32* key) const;
@@ -260,6 +349,7 @@ private:
     void* work;
 };
 static_assert(sizeof(ResShaderOption) == 0x28, "shader option size");
+static_assert(sizeof(ResShadingModel) == 0x100, "shading model resource size");
 static_assert(sizeof(ResShaderProgram) == 0x40, "shader program size");
 static_assert(sizeof(ShadingModelObj) == 0x88, "shading model size");
 static_assert(sizeof(ShaderSelector) == 0x30, "shader selector size");
