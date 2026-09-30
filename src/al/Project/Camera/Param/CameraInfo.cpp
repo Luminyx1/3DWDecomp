@@ -4,7 +4,7 @@
 
 namespace al {
 /**
- * @brief Creates the info, keeping its own copy of the placement id.
+ * Creates the info, keeping its own copy of the placement id.
  * @param pPlacementId The placement id of the camera.
  * @param pPoser The poser that controls the camera.
  * @param priority The priority of the camera.
