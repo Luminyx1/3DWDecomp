@@ -15,6 +15,7 @@ void FontRefLink::Finalize(nn::gfx::Device* device) {
         mFont = nullptr;
     }
 }
+
 // name is copied into the link, font is the referenced font, and owned transfers
 // responsibility for font finalization and deallocation to this link.
 void FontRefLink::Set(const char* name, nn::font::Font* font, bool owned) {
@@ -22,6 +23,7 @@ void FontRefLink::Set(const char* name, nn::font::Font* font, bool owned) {
     mFont = font;
     mOwned = owned;
 }
+
 FontContainer::~FontContainer() = default;
 // device finalizes every owned font before the registration links are freed.
 void FontContainer::Finalize(nn::gfx::Device* device) {
@@ -34,6 +36,7 @@ void FontContainer::Finalize(nn::gfx::Device* device) {
         Layout::FreeMemory(link);
     }
 }
+
 // name is compared through the stored name's 128-byte limit.
 nn::font::Font* FontContainer::FindFontByName(const char* name) const {
     for (auto& link : mFonts) {
@@ -42,10 +45,13 @@ nn::font::Font* FontContainer::FindFontByName(const char* name) const {
             if (name[i] != link.mName[i]) { same = false; break; }
             if (!name[i]) break;
         }
+
         if (same) return link.mFont;
     }
+
     return nullptr;
 }
+
 // name identifies font; owned makes the container responsible for its lifetime.
 // The returned handle identifies this registration for UnregisterFont.
 const void* FontContainer::RegisterFont(const char* name, nn::font::Font* font, bool owned) {
@@ -56,17 +62,20 @@ const void* FontContainer::RegisterFont(const char* name, nn::font::Font* font, 
     mFonts.push_back(*link);
     return link;
 }
+
 // handle identifies a registration to remove; the referenced font is retained.
 void FontContainer::UnregisterFont(const void* handle) {
     auto* link = const_cast<FontRefLink*>(static_cast<const FontRefLink*>(handle));
     mFonts.erase(List::iterator(reinterpret_cast<nn::util::IntrusiveListNode*>(link)));
     if (link) { link->~FontRefLink(); Layout::FreeMemory(link); }
 }
+
 // callback allocates descriptor slots for owned resource fonts; argument is its context.
 void FontContainer::RegisterTextureViewToDescriptorPool(nn::font::RegisterTextureViewSlot callback, void* argument) {
     for (auto& link : mFonts)
         if (link.mOwned) static_cast<nn::font::ResFontBase*>(link.mFont)->RegisterTextureViewToDescriptorPool(callback, argument);
 }
+
 // callback releases descriptor slots for owned resource fonts; argument is its context.
 void FontContainer::UnregisterTextureViewFromDescriptorPool(nn::font::UnregisterTextureViewSlot callback, void* argument) {
     for (auto& link : mFonts)

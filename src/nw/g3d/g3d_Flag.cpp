@@ -15,9 +15,11 @@ void FlagSet::Initialize(int flagCount, int bufferCount, void* buffer, size_t bu
         mPending = nullptr;
         mBufferFlags = nullptr;
     }
+
     mFlags = 0;
     mDirtyBuffers = 0;
 }
+
 void FlagSet::Caclulate() {
     if (!(mFlags & 1)) return;
     if (mBufferCount > 1 && mFlagCount > 0) {
@@ -28,6 +30,7 @@ void FlagSet::Caclulate() {
             mPending[word] = 0;
         }
     }
+
     mDirtyBuffers = 0xff;
     mFlags &= ~1;
 }

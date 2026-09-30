@@ -10,6 +10,7 @@ LfoCurveFunction CurveLfo::RegisterUserCurve(LfoCurveFunction function, u32 inde
     g_CurveLfoTable[slot] = function;
     return previous;
 }
+
 // index selects the user curve (0-63) to clear; returns its previous callback.
 LfoCurveFunction CurveLfo::UnregisterUserCurve(u32 index) {
     int slot = index + 64;
@@ -17,6 +18,7 @@ LfoCurveFunction CurveLfo::UnregisterUserCurve(u32 index) {
     g_CurveLfoTable[slot] = nullptr;
     return previous;
 }
+
 void CurveLfoParam::Initialize() { depth = 0; speed = 6.25f; delay = 0; range = 1; curve = 0; phase = 0; }
 void CurveLfo::Reset() {
     mRandomValue = 1;
@@ -25,6 +27,7 @@ void CurveLfo::Reset() {
     mElapsedDelay = 0;
     mStarted = false;
 }
+
 // step advances the delay and oscillator phase in milliseconds.
 void CurveLfo::Update(int step) {
     if (mElapsedDelay < mParameter.delay) {
@@ -33,15 +36,18 @@ void CurveLfo::Update(int step) {
             mElapsedDelay = mParameter.delay;
         } else { mElapsedDelay += step; return; }
     }
+
     if (!(mParameter.speed > 0)) return;
     if (!mStarted) {
         mPhase = mParameter.phase / 127.0f;
         mStarted = true;
     }
+
     float phase = mPhase + mParameter.speed * step / 1000.0f;
     mWrapped = phase >= 1;
     mPhase = phase - static_cast<int>(phase);
 }
+
 float CurveLfo::GetValue() const {
     if (mParameter.depth == 0 || mElapsedDelay < mParameter.delay) return 0;
     auto function = g_CurveLfoTable[mParameter.curve];
@@ -52,6 +58,7 @@ float CurveLfo::GetValue() const {
             value = mRandomValue;
         } else value = function(mPhase);
     }
+
     value *= mParameter.depth;
     value *= mParameter.range;
     return value;

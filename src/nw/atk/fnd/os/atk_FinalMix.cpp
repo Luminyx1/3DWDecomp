@@ -4,11 +4,13 @@
 namespace nn::audio {
 void ReleaseFinalMix(AudioRendererConfig* config, FinalMixType* mix);
 }
+
 namespace nn::atk {
 // effectsEnabled selects whether the single output bus needs effect storage.
 size_t FinalMix::GetRequiredMemorySize(bool effectsEnabled) {
     return OutputMixer::GetRequiredMemorySize(1, effectsEnabled);
 }
+
 // config owns the audio renderer; channelCount sets the final mix width.
 // effectsEnabled reserves effect resources, using bufferSize bytes supplied by buffer.
 bool FinalMix::Initialize(audio::AudioRendererConfig* config, int channelCount,
@@ -20,19 +22,23 @@ bool FinalMix::Initialize(audio::AudioRendererConfig* config, int channelCount,
     mReferenceCount.store(0, std::memory_order_release);
     return audio::AcquireFinalMix(config, &mFinalMix, GetBusCount() * GetChannelCount());
 }
+
 // config is the renderer configuration from which this final mix was acquired.
 void FinalMix::Finalize(audio::AudioRendererConfig* config) {
     audio::ReleaseFinalMix(config, &mFinalMix);
     OutputMixer::Finalize();
 }
+
 // effect is appended to bus zero; buffer supplies bufferSize bytes of effect work memory.
 bool FinalMix::AppendEffect(EffectBase* effect, void* buffer, size_t bufferSize) {
     return OutputMixer::AppendEffect(effect, 0, buffer, bufferSize);
 }
+
 // effect is appended to bus zero; buffer supplies bufferSize bytes of auxiliary work memory.
 bool FinalMix::AppendEffect(EffectAux* effect, void* buffer, size_t bufferSize) {
     return OutputMixer::AppendEffect(effect, 0, buffer, bufferSize);
 }
+
 // effect identifies the effect to remove from bus zero.
 bool FinalMix::RemoveEffect(EffectBase* effect) { return OutputMixer::RemoveEffect(effect, 0); }
 // effect identifies the auxiliary effect to remove from bus zero.

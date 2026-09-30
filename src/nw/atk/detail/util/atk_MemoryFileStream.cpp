@@ -29,8 +29,10 @@ fnd::FndResult MemoryFileStream::Seek(long offset, SeekOrigin origin) {
     case SeekOrigin_Current: mPosition += offset; break;
     default: return {0x80000000};
     }
+
     return {0};
 }
+
 size_t MemoryFileStream::GetCurrentPosition() const { return mPosition; }
 size_t MemoryFileStream::GetSize() const { return mSize; }
 bool MemoryFileStream::CanRead() const { return true; }

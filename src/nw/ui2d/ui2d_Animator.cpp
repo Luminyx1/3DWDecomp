@@ -10,12 +10,14 @@ void Animator::Play(PlayType type, float speed) {
     if (!(speed >= -float(GetFrameSize()) && speed <= float(GetFrameSize()))) {
         if (!IsWaitData() || type != PlayType_Once) { IsWaitData(); return; }
     }
+
     mSpeed = speed;
     mPlayType = type;
     mFlags &= ~0xfu;
     if (speed >= 0.0f) mFrame = 0.0f;
     else mFrame = float(GetFrameSize());
 }
+
 // speed is the playback rate; the animation resource determines looping.
 void Animator::PlayAuto(float speed) { Play(IsLoopData() ? PlayType_Loop : PlayType_Once, speed); }
 // type and speed select playback without resetting the current frame.
@@ -23,10 +25,12 @@ void Animator::PlayFromCurrent(PlayType type, float speed) {
     if (!(speed >= -float(GetFrameSize()) && speed <= float(GetFrameSize()))) {
         if (!IsWaitData() || type != PlayType_Once) { IsWaitData(); return; }
     }
+
     mSpeed = speed;
     mPlayType = type;
     mFlags &= ~0xfu;
 }
+
 // frame is the position to retain after stopping playback.
 void Animator::StopAt(float frame) { mSpeed = 0; mFrame = frame; mFlags &= ~0xfu; }
 void Animator::StopAtCurrentFrame() { mSpeed = 0; mFlags &= ~0xfu; }
@@ -56,8 +60,10 @@ void Animator::UpdateFrame(float step) {
             }
         }
     }
+
     mFrame = frame;
 }
+
 // resource is unused by the base animator; derived animators may retain its tag.
 void Animator::SetupAnimationResource(const AnimResource& resource) {}
 const char* Animator::GetTagName() const { return nullptr; }
@@ -67,6 +73,7 @@ void PaneAnimator::Setup(Pane* pane, bool enabled) {
     mPane = pane;
     SetEnabled(enabled);
 }
+
 void PaneAnimator::Unbind() { UnbindPane(mPane); }
 // group is the animation target; enabled selects whether its animation is applied.
 void GroupAnimator::Setup(Group* group, bool enabled) {
@@ -74,6 +81,7 @@ void GroupAnimator::Setup(Group* group, bool enabled) {
     mGroup = group;
     SetEnabled(enabled);
 }
+
 void GroupAnimator::Unbind() { UnbindGroup(mGroup); }
 // resource supplies group names, groups resolves them, index selects one entry,
 // and enabled sets the animator's initial application state.
@@ -81,6 +89,7 @@ void GroupAnimator::Setup(const AnimResource& resource, GroupContainer* groups, 
     SetupAnimationResource(resource);
     if (index < resource.GetGroupCount()) Setup(groups->FindGroupByName(resource.GetGroupArray()[index].name), enabled);
 }
+
 // resource supplies the group list, groups resolves its names, storage holds
 // the resulting pointers, and enabled selects the initial application state.
 void GroupArrayAnimator::Setup(const AnimResource& resource, GroupContainer* groups, Group** storage, bool enabled) {
@@ -91,8 +100,10 @@ void GroupArrayAnimator::Setup(const AnimResource& resource, GroupContainer* gro
         mGroups[i] = groups->FindGroupByName(resource.GetGroupArray()[i].name);
         BindGroup(mGroups[i]);
     }
+
     SetEnabled(enabled);
 }
+
 void GroupArrayAnimator::Unbind() {
     for (int i = 0; i < mGroupCount; ++i) UnbindGroup(mGroups[i]);
 }

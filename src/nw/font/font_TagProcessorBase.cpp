@@ -92,6 +92,7 @@ typename TagProcessorBase<CharType>::Operation TagProcessorBase<CharType>::Calcu
         if (!pContext->writer->GetLinefeedByCharacterHeightEnabled()) {
             pRect->bottom += pContext->writer->GetFontHeight();
         }
+
         pRect->Normalize();
         return Operation_NextLine;
     }

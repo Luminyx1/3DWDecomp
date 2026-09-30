@@ -19,6 +19,7 @@ T* AllocateControl() {
     void* memory = Layout::AllocateMemory(sizeof(T));
     return memory ? new (memory) T : nullptr;
 }
+
 // layout is checked against the runtime type hierarchy before using its extended interface.
 LayoutEx* AsLayoutEx(Layout* layout) {
     const auto* wanted = LayoutEx::GetRuntimeTypeInfoStatic();
@@ -28,6 +29,7 @@ LayoutEx* AsLayoutEx(Layout* layout) {
     return type ? static_cast<LayoutEx*>(layout) : nullptr;
 }
 }
+
 // buttons receives the button controls created from layout resources.
 DefaultControlCreator::DefaultControlCreator(ButtonGroup* buttons) : mButtons(buttons) {}
 // device owns resources, layout owns panes, and source describes the requested control.
@@ -57,6 +59,7 @@ void DefaultControlCreator::CreateControl(nn::gfx::Device* device, Layout* layou
     } else return;
     if (button) mButtons->mButtons.push_back(*button);
 }
+
 DefaultControlCreatorEx::DefaultControlCreatorEx() : DefaultControlCreator(nullptr), mControls(nullptr) {}
 // buttons and controls receive the two categories of created controls.
 DefaultControlCreatorEx::DefaultControlCreatorEx(ButtonGroup* buttons, ControlList* controls) : DefaultControlCreator(buttons), mControls(controls) {}
@@ -65,6 +68,7 @@ void DefaultControlCreatorEx::CreateControl(nn::gfx::Device* device, Layout* lay
     if (std::strcmp("TraceGaugeControl", source.mName) != 0) {
         DefaultControlCreator::CreateControl(device, layout, source); return;
     }
+
     LayoutEx* extended = AsLayoutEx(layout);
     auto* control = AllocateControl<TraceGaugeControl>();
     control->Initialize(device, source, extended);

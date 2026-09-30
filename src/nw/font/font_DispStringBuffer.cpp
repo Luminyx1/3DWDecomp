@@ -28,6 +28,7 @@ void MultiplyMatrixT4x3(nn::util::MatrixT4x4fType* pOut, const nn::util::MatrixT
         result.val[i] = vfmaq_laneq_f32(result.val[i], lhs.val[2], rhs.val[i], 2);
         result.val[i] = vfmaq_laneq_f32(result.val[i], lhs.val[3], rhs.val[i], 3);
     }
+
     pOut->_m = result;
 }
 
@@ -85,9 +86,11 @@ bool DispStringBuffer::Initialize(nn::gfx::Device* pDevice, const InitializeArg&
     if (m_CharCountMax > 0) {
         return false;
     }
+
     if (rArg.charCountMax < 1) {
         return false;
     }
+
     if (rArg.pDrawBuffer == nullptr) {
         return false;
     }
@@ -198,6 +201,7 @@ void DispStringBuffer::BuildConstantBuffer(const nn::util::MatrixT4x4fType& rPro
             ptr = nn::util::BytePtr(m_pConstantBuffer->GetMappedPointer(),
                                     shaderParamSize + m_ConstantBufferOffset);
         }
+
         BuildCommonConstantBufferData(*ptr.Get<ShaderParam>(), rProjection, rContent);
     }
 
@@ -208,6 +212,7 @@ void DispStringBuffer::BuildConstantBuffer(const nn::util::MatrixT4x4fType& rPro
     if (rContent.m_pShadowParam != nullptr) {
         m_ShaderVariationFlags |= ShaderVariationFlag_Shadow;
     }
+
     if (rContent.m_pPerCharacterTransformInfos != nullptr) {
         m_ShaderVariationFlags |= ShaderVariationFlag_PerCharacterTransform;
     }
@@ -226,9 +231,11 @@ void DispStringBuffer::BuildCommonConstantBufferData(
     } else {
         mtx = rProjection;
     }
+
     if (rContent.m_pLocalMatrix != nullptr) {
         MultiplyMatrixT4x3(&mtx, *rContent.m_pLocalMatrix, mtx);
     }
+
     rShaderParam.mtx = mtx;
 
     const nn::util::Float4 interpolateOffset =
@@ -307,13 +314,16 @@ void DispStringBuffer::BuildTextureUseInfos(bool isDrawFromRightToLeftEnabled) {
             if (m_pCharAttrs[i].IsBorderEffectEnabled()) {
                 rInfo.flags |= 2;
             }
+
             count++;
             if (count >= TextureUseInfoCountMax) {
                 break;
             }
         }
+
         m_pTextureUseInfoIndices[i] = index;
     }
+
     m_VertexBufferData.textureUseInfoCount = count;
 }
 
@@ -493,6 +503,7 @@ void DispStringBuffer::CalculatePerCharacterTransform(
             centerY = 0.0f;
             break;
         }
+
         centerY -= centerOffset;
     }
 
@@ -536,22 +547,28 @@ bool DispStringBuffer::CompareCopiedInstanceTest(const DispStringBuffer& rOther)
     if (m_CharCountMax != rOther.m_CharCountMax) {
         return false;
     }
+
     if (m_IsShadowEnabled != rOther.m_IsShadowEnabled) {
         return false;
     }
+
     if (m_IsDoubleDrawnBorder != rOther.m_IsDoubleDrawnBorder) {
         return false;
     }
+
     if (m_IsPerCharacterTransformEnabled != rOther.m_IsPerCharacterTransformEnabled) {
         return false;
     }
+
     if (m_IsPerCharacterTransformAutoShadowAlpha !=
         rOther.m_IsPerCharacterTransformAutoShadowAlpha) {
         return false;
     }
+
     if (m_FontHeight != rOther.m_FontHeight) {
         return false;
     }
+
     return true;
 }
 

@@ -5,6 +5,7 @@ namespace nn::fs {
 enum Priority : int;
 void SetPriorityOnCurrentThread(Priority priority);
 }
+
 namespace nn::os { void SetThreadCoreMask(ThreadType* thread, int core, u64 mask); }
 namespace nn::atk::detail::fnd {
 // thread receives the operating-system object; args supplies its stack and scheduling settings.
@@ -15,11 +16,13 @@ bool Thread::Create(os::ThreadType& thread, long& id, const RunArgs& args) {
         mId = 0xffffffffu;
         return false;
     }
+
     mFsPriority = args.fsPriority;
     os::StartThread(&thread);
     mId = reinterpret_cast<long>(&thread);
     return true;
 }
+
 // argument points to the owning Thread passed to CreateThread.
 void Thread::ThreadMain::Run(void* argument) {
     auto* thread = static_cast<Thread*>(argument);
@@ -32,6 +35,7 @@ void Thread::ThreadMain::Run(void* argument) {
     thread->OnExit();
     thread->mTerminated = true;
 }
+
 void Thread::Detach() { os::DestroyThread(&mThread); }
 // name remains caller-owned; a null pointer selects an empty name.
 void Thread::SetName(const char* name) { os::SetThreadNamePointer(&mThread, name ? name : ""); }

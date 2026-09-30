@@ -22,6 +22,7 @@ WaveFileReader::WaveFileReader(const void* file, s8 type)
         break;
     }
 }
+
 bool WaveFileReader::IsOriginalLoopAvailable() const { return mHeader->version >= 0x10200; }
 // info receives playback metadata; waveData is unused because this build reads embedded sample data.
 // As in the original, unsupported types leave info untouched and still report success.
@@ -47,22 +48,27 @@ bool WaveFileReader::ReadWaveInfo(WaveInfo* info, const void* waveData) const {
                 info->channels[i].adpcm = adpcm->adpcm;
                 info->channels[i].loopContext = adpcm->loopContext;
             }
+
             info->channels[i].samples = channel->GetSamplesAddress(mData);
             const auto* last = mInfo->GetChannelInfo(channelCount - 1);
             info->channels[i].size = mHeader->GetDataBlock()->size - 8 - last->samples.offset;
         }
+
         break;
     }
     case 1:
         mDsp.ReadWaveInfo(info);
         break;
     }
+
     return true;
 }
+
 // channel provides the sample offset; waveData is unused in favor of the reader's stored data base.
 const void* WaveFileReader::GetWaveDataAddress(const WaveFile::ChannelInfo* channel, const void* waveData) const {
     return channel->GetSamplesAddress(mData);
 }
+
 DspadpcmReader::DspadpcmReader() : mHeader(nullptr) {}
 // info receives the mono DSP ADPCM stream's format, sample address, coefficients, and initial context.
 bool DspadpcmReader::ReadWaveInfo(WaveInfo* info) const {

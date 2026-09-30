@@ -24,11 +24,13 @@ void Sound3DListener::SetMatrix(const nn::util::Matrix4x3fType& matrix) {
     if (m_ResetMatrixFlag) m_ResetMatrixFlag = false;
     else m_Velocity._v = vsubq_f32(position, previous);
 }
+
 void Sound3DListener::ResetMatrix() {
     std::memset(&m_Matrix, 0, sizeof(m_Matrix));
     m_ResetMatrixFlag = true;
     m_Velocity._v = vdupq_n_f32(0);
 }
+
 // velocity replaces the movement inferred from consecutive listener matrices.
 void Sound3DListener::SetVelocity(const nn::util::Vector3fType& velocity) { m_Velocity = velocity; }
 // size is the listener's interior region radius.

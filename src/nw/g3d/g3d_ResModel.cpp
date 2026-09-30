@@ -13,6 +13,7 @@ BindResult ResModel::BindTexture(TextureBindCallback callback, void* user) {
     for (int i = 0; i < count; ++i) result.Merge(pMaterialArray.Get()[i].BindTexture(callback, user));
     return result;
 }
+
 // texture replaces bindings with the requested name; return whether any material was updated.
 bool ResModel::ForceBindTexture(const TextureRef& texture, const char* name) {
     bool result = false;
@@ -20,14 +21,17 @@ bool ResModel::ForceBindTexture(const TextureRef& texture, const char* name) {
     for (int i = 0; i < count; ++i) result |= pMaterialArray.Get()[i].ForceBindTexture(texture, name);
     return result;
 }
+
 void ResModel::ReleaseTexture() {
     int count = materialCount;
     for (int i = 0; i < count; ++i) pMaterialArray.Get()[i].ReleaseTexture();
 }
+
 void ResModel::ActivateDynamicVertexAttrForShapeAnim() {
     int count = shapeCount;
     for (int i = 0; i < count; ++i) pShapeArray.Get()[i].ActivateDynamicVertexAttrForShapeAnim();
 }
+
 // device owns the graphics objects created for this model's materials, shapes, and vertices.
 void ResModel::Setup(nn::gfx::Device* device) {
     int count = materialCount;
@@ -37,6 +41,7 @@ void ResModel::Setup(nn::gfx::Device* device) {
     count = vertexCount;
     for (int i = 0; i < count; ++i) pVertexArray.Get()[i].Setup(device);
 }
+
 // device owns graphics objects; pool and offset locate the backing geometry storage.
 void ResModel::Setup(nn::gfx::Device* device, nn::gfx::MemoryPool* pool, ptrdiff_t offset) {
     int count = materialCount;
@@ -46,6 +51,7 @@ void ResModel::Setup(nn::gfx::Device* device, nn::gfx::MemoryPool* pool, ptrdiff
     count = vertexCount;
     for (int i = 0; i < count; ++i) pVertexArray.Get()[i].Setup(device, pool, offset);
 }
+
 // device owns the graphics objects being released.
 void ResModel::Cleanup(nn::gfx::Device* device) {
     int count = materialCount;
@@ -55,6 +61,7 @@ void ResModel::Cleanup(nn::gfx::Device* device) {
     count = vertexCount;
     for (int i = 0; i < count; ++i) pVertexArray.Get()[i].Cleanup(device);
 }
+
 void ResModel::Reset() { Reset(0); }
 // guard is forwarded to child resources; bit zero also preserves this model's user pointer.
 void ResModel::Reset(u32 guard) {

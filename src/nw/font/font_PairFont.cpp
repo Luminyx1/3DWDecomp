@@ -60,6 +60,7 @@ int PairFont::GetAscent() const {
     if (m_pFirstFont->GetHeight() < m_pSecondFont->GetHeight()) {
         return m_pSecondFont->GetAscent();
     }
+
     return m_pFirstFont->GetAscent();
 }
 
@@ -71,6 +72,7 @@ int PairFont::GetDescent() const {
     if (m_pFirstFont->GetHeight() < m_pSecondFont->GetHeight()) {
         return m_pSecondFont->GetDescent();
     }
+
     return m_pFirstFont->GetDescent();
 }
 
@@ -82,6 +84,7 @@ int PairFont::GetBaselinePos() const {
     if (m_pFirstFont->GetHeight() < m_pSecondFont->GetHeight()) {
         return m_pSecondFont->GetBaselinePos();
     }
+
     return m_pFirstFont->GetBaselinePos();
 }
 
@@ -93,6 +96,7 @@ int PairFont::GetCellHeight() const {
     if (m_pFirstFont->GetHeight() < m_pSecondFont->GetHeight()) {
         return m_pSecondFont->GetCellHeight();
     }
+
     return m_pFirstFont->GetCellHeight();
 }
 
@@ -104,6 +108,7 @@ int PairFont::GetCellWidth() const {
     if (m_pFirstFont->GetWidth() < m_pSecondFont->GetWidth()) {
         return m_pSecondFont->GetCellWidth();
     }
+
     return m_pFirstFont->GetCellWidth();
 }
 
@@ -151,6 +156,7 @@ const CharWidths PairFont::GetDefaultCharWidths() const {
     if (m_pFirstFont->GetWidth() < m_pSecondFont->GetWidth()) {
         return m_pSecondFont->GetDefaultCharWidths();
     }
+
     return m_pFirstFont->GetDefaultCharWidths();
 }
 
@@ -175,6 +181,7 @@ bool PairFont::SetAlternateChar(uint32_t c) {
         m_IsAlternateCharInFirstFont = isFirstSet;
         return true;
     }
+
     return false;
 }
 
@@ -200,6 +207,7 @@ int PairFont::GetCharWidth(uint32_t c) const {
         (!m_pSecondFont->IsGlyphExistInFont(c) && m_IsAlternateCharInFirstFont)) {
         return m_pFirstFont->GetCharWidth(c);
     }
+
     return m_pSecondFont->GetCharWidth(c);
 }
 
@@ -213,6 +221,7 @@ const CharWidths PairFont::GetCharWidths(uint32_t c) const {
         (!m_pSecondFont->IsGlyphExistInFont(c) && m_IsAlternateCharInFirstFont)) {
         return m_pFirstFont->GetCharWidths(c);
     }
+
     return m_pSecondFont->GetCharWidths(c);
 }
 
@@ -232,6 +241,7 @@ int PairFont::GetGlyph(Glyph* pGlyph, uint32_t c) const {
         result = m_pSecondFont->GetGlyph(pGlyph, c);
         pGlyph->baselineDifference += m_pSecondFont->GetBaselinePos() - GetBaselinePos();
     }
+
     return result;
 }
 
@@ -244,6 +254,7 @@ bool PairFont::HasGlyph(uint32_t c) const {
     if (m_pFirstFont->HasGlyph(c)) {
         return true;
     }
+
     return m_pSecondFont->HasGlyph(c);
 }
 
@@ -256,6 +267,7 @@ bool PairFont::IsGlyphExistInFont(uint32_t c) const {
     if (m_pFirstFont->IsGlyphExistInFont(c)) {
         return true;
     }
+
     return m_pSecondFont->IsGlyphExistInFont(c);
 }
 
@@ -269,9 +281,11 @@ int PairFont::GetKerning(uint32_t c0, uint32_t c1) const {
     if (m_pFirstFont->IsGlyphExistInFont(c0) && m_pFirstFont->IsGlyphExistInFont(c1)) {
         return m_pFirstFont->GetKerning(c0, c1);
     }
+
     if (m_pSecondFont->IsGlyphExistInFont(c0) && m_pSecondFont->IsGlyphExistInFont(c1)) {
         return m_pSecondFont->GetKerning(c0, c1);
     }
+
     return 0;
 }
 

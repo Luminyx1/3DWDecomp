@@ -8,6 +8,7 @@ void ResSkeleton::Reset() { pUserPtr.Clear(); }
 void ResSkeleton::Reset(nn::Bit32 guard) {
     if (!(guard & ResetGuardFlag_UserPtr)) pUserPtr.Clear();
 }
+
 // index selects a bone in depth-first order; return the first bone outside its branch.
 int ResSkeleton::GetBranchEndIndex(int index) const {
     int count = boneCount;
@@ -18,6 +19,7 @@ int ResSkeleton::GetBranchEndIndex(int index) const {
     while (end < count && bones[end].parentIndex > parent) ++end;
     return end;
 }
+
 void ResSkeleton::UpdateBillboardMode() {
     int count = boneCount;
     for (int i = 0; i < count; ++i) {

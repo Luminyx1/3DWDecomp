@@ -18,8 +18,10 @@ AnimatorEx* LayoutEx::FindAnimator(const char* name) {
             if (tag[i] != name[i]) { same = false; break; }
             if (!tag[i]) break;
         }
+
         if (same) return animator;
     }
+
     return nullptr;
 }
 }

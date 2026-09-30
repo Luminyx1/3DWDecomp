@@ -6,11 +6,13 @@ size_t FileStreamImpl::Read(void* output, size_t size, FndResult* result) {
     if (IsCacheEnabled()) return mCache.Read(output, size, result, mLog, this);
     return ReadDirect(output, size, result);
 }
+
 // input supplies size bytes; result receives status from the selected cached or direct path.
 size_t FileStreamImpl::Write(const void* input, size_t size, FndResult* result) {
     if (IsCacheEnabled()) return mCache.Write(input, size, result);
     return WriteDirect(input, size, result);
 }
+
 // offset and origin select a position through the active cached or direct path.
 FndResult FileStreamImpl::Seek(long offset, SeekOrigin origin) {
     FndResult result;
@@ -18,6 +20,7 @@ FndResult FileStreamImpl::Seek(long offset, SeekOrigin origin) {
     else result = SeekDirect(offset, origin);
     return {static_cast<u32>(result.value)};
 }
+
 bool FileStreamImpl::CanRead() const { return IsOpened(); }
 bool FileStreamImpl::CanWrite() const { return IsOpened(); }
 bool FileStreamImpl::CanSeek() const { return IsOpened(); }
@@ -29,6 +32,7 @@ void FileStreamImpl::EnableCache(void* buffer, size_t size) {
     size_t available = reinterpret_cast<uintptr_t>(buffer) + size - start;
     mCache.Initialize(&mDirectStream, reinterpret_cast<void*>(start), available);
 }
+
 void FileStreamImpl::DisableCache() { mCache.Finalize(); }
 // buffer is unused in this build; the original only queries the stream's alignment.
 void FileStreamImpl::ValidateAlignment(const void* buffer) const { GetIoBufferAlignment(); }

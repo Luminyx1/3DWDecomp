@@ -51,6 +51,7 @@ const CharStrmReader Font::GetCharStrmReader(char dummy) const {
         func = &CharStrmReader::ReadNextCharCp1252;
         break;
     }
+
     return CharStrmReader(func);
 }
 
@@ -68,6 +69,7 @@ const CharStrmReader Font::GetCharStrmReader(uint16_t dummy) const {
     default:
         break;
     }
+
     return CharStrmReader(func);
 }
 

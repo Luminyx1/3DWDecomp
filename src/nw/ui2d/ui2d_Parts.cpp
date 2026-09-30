@@ -9,6 +9,7 @@ bool SameName(const char* pStored, const char* pName, size_t length) {
         if (pStored[i] != pName[i]) return false;
         if (pStored[i] == '\0') return true;
     }
+
     return true;
 }
 }
@@ -43,6 +44,7 @@ Material* Parts::FindMaterialByNameRecursive(const char* pName) {
         auto* material = GetMaterial(i);
         if (material && SameName(material->mName, pName, 28)) return material;
     }
+
     return nullptr;
 }
 

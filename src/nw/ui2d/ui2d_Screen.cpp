@@ -7,5 +7,6 @@ void Screen::SetAnimatorActive(AnimatorEx* animator) { mActiveAnimators.LinkPrev
 void Screen::EraseAnimatorFromActiveList(AnimatorEx* animator) {
     if (&mActiveAnimators != &animator->mActiveLink) animator->mActiveLink.Unlink();
 }
+
 ControlCreator* Screen::GetControlCreator() const { return mControlCreator; }
 }

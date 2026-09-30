@@ -24,6 +24,7 @@ void MaterialObj::InitializeArgument::CalculateMemorySize() {
         }
     }
 }
+
 // argument describes the resource and buffering; memory supplies size bytes of working storage.
 bool MaterialObj::Initialize(const InitializeArgument& argument, void* memory, size_t size) {
     if (!argument.memoryAlignment || argument.memorySize > size) return false;
@@ -49,9 +50,11 @@ bool MaterialObj::Initialize(const InitializeArgument& argument, void* memory, s
         m_ppTextureArray[i] = resource->ToData().pTextureArray.Get()[i];
         m_pTextureSlotArray[i] = resource->ToData().pTextureSlotArray.Get()[i];
     }
+
     InitializeDependPointer();
     return true;
 }
+
 void MaterialObj::InitializeDependPointer() {
     int count = m_pRes->ToData().shaderParamCount;
     for (int i = 0; i < count; ++i) {
@@ -65,6 +68,7 @@ void MaterialObj::InitializeDependPointer() {
         }
     }
 }
+
 // device supplies the uniform-buffer alignment required by the graphics backend.
 size_t MaterialObj::GetBlockBufferAlignment(nn::gfx::Device* device) const {
     nn::gfx::BufferInfo info;
@@ -74,12 +78,14 @@ size_t MaterialObj::GetBlockBufferAlignment(nn::gfx::Device* device) const {
     info.SetGpuAccessFlags(16);
     return BufferImpl::GetBufferAlignment(device, info);
 }
+
 // device supplies alignment for each buffered copy of the material block.
 size_t MaterialObj::CalculateBlockBufferSize(nn::gfx::Device* device) const {
     u32 size = m_pRes->ToData().materialBlockSize;
     u32 alignment = GetBlockBufferAlignment(device);
     return ((size + alignment - 1) & -alignment) * m_BufferingCount;
 }
+
 void MaterialObj::ResetDirtyFlags() {
     int count = m_pRes->ToData().shaderParamCount;
     if (m_DirtyFlags.mWordCount > 0) memset(m_DirtyFlags.mPending, 0, static_cast<unsigned>(m_DirtyFlags.mWordCount) * sizeof(u32));
@@ -91,6 +97,7 @@ void MaterialObj::ResetDirtyFlags() {
         }
     }
 }
+
 // device creates buffers in pool at offset; size has already been checked by SetupBlockBuffer.
 void MaterialObj::SetupBlockBufferImpl(nn::gfx::Device* device, nn::gfx::MemoryPool* pool, ptrdiff_t offset, size_t size) {
     ResetDirtyFlags();
@@ -99,6 +106,7 @@ void MaterialObj::SetupBlockBufferImpl(nn::gfx::Device* device, nn::gfx::MemoryP
             if (m_DirtyFlags.mWordCount > 0) memset(m_DirtyFlags.mBufferFlags + i * m_DirtyFlags.mWordCount, 0, static_cast<unsigned>(m_DirtyFlags.mWordCount) * sizeof(u32));
         }
     }
+
     m_MaterialBlockSize = m_pRes->ToData().materialBlockSize;
     for (int i = 0; i < m_BufferingCount; ++i) {
         nn::gfx::BufferInfo info;
@@ -113,8 +121,10 @@ void MaterialObj::SetupBlockBufferImpl(nn::gfx::Device* device, nn::gfx::MemoryP
         size_t alignment = GetBlockBufferAlignment(device);
         offset += (blockSize + alignment - 1) & -alignment;
     }
+
     m_Flag |= Flag_BlockBufferValid;
 }
+
 // device/pool select storage; offset and size delimit the available memory-pool region.
 bool MaterialObj::SetupBlockBuffer(nn::gfx::Device* device, nn::gfx::MemoryPool* pool, ptrdiff_t offset, size_t size) {
     size_t required = CalculateBlockBufferSize(device);
@@ -124,8 +134,10 @@ bool MaterialObj::SetupBlockBuffer(nn::gfx::Device* device, nn::gfx::MemoryPool*
         m_MemoryPoolOffset = offset;
         SetupBlockBufferImpl(device, pool, offset, size);
     }
+
     return true;
 }
+
 // device owns the buffered GPU objects to finalize.
 void MaterialObj::CleanupBlockBuffer(nn::gfx::Device* device) {
     for (int i = 0; i < m_BufferingCount; ++i) {
@@ -133,11 +145,13 @@ void MaterialObj::CleanupBlockBuffer(nn::gfx::Device* device) {
         buffer->Finalize(device);
         buffer->~BufferImpl();
     }
+
     m_Flag &= ~Flag_BlockBufferValid;
     m_MaterialBlockSize = 0;
     m_pMemoryPool = nullptr;
     m_MemoryPoolOffset = 0;
 }
+
 // bufferIndex selects the buffered material copy receiving dirty parameter values.
 void MaterialObj::CalculateMaterial(int bufferIndex) {
     if (!m_MaterialBlockSize) return;
@@ -151,6 +165,7 @@ void MaterialObj::CalculateMaterial(int bufferIndex) {
     GetMaterialBlock(bufferIndex)->FlushMappedRange(0, m_MaterialBlockSize);
     GetMaterialBlock(bufferIndex)->Unmap();
 }
+
 // value is a nonzero mask; return the index of its highest set bit.
 static int HighestBit(u32 value) {
     value |= value >> 1; value |= value >> 2; value |= value >> 4;
@@ -162,6 +177,7 @@ static int HighestBit(u32 value) {
     value = (value & 0x000f000f) + ((value >> 8) & 0x000f000f);
     return 31 - ((value & 31) + (value >> 16));
 }
+
 // destination is mapped GPU storage; dirtyFlags selects parameters in addition to volatile ones.
 template <bool swap>
 void MaterialObj::ConvertDirtyParams(void* destination, u32* dirtyFlags) {

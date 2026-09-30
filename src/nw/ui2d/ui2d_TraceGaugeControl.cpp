@@ -13,6 +13,7 @@ void TraceGaugeControl::SetTracingWait(float wait) { if (wait >= 0) mTracingWait
 void TraceGaugeControl::SetShortageThreshold(float upper, float lower) {
     if (lower >= 0 && upper <= 100 && lower <= upper) { mShortageUpper = upper; mShortageLower = lower; }
 }
+
 // value immediately positions the trailing gauge and updates the animations.
 void TraceGaugeControl::SetTracingValue(float value) { mTracingValue = value; ApplyAnimation_(); }
 // device is unused; controls release their reference to the layout.

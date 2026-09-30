@@ -10,9 +10,11 @@ inline bool SameShaderName(const char* name, const char* candidate) {
         if (name[i] != candidate[i]) return false;
         if (!name[i]) return true;
     }
+
     return true;
 }
 }
+
 // shared leaves the underlying shader resource alive during finalization.
 ShaderRefLink::ShaderRefLink(bool shared) : mShared(shared) { m_Name[0] = 0; }
 ShaderRefLink::~ShaderRefLink() = default;
@@ -32,6 +34,7 @@ void ShaderContainer::Finalize(nn::gfx::Device* device) {
         Layout::FreeMemory(link);
     }
 }
+
 // name identifies the new shader; shared controls ownership of its resource.
 ShaderInfo* ShaderContainer::RegisterShader(const char* name, bool shared) {
     void* memory = Layout::AllocateMemory(sizeof(ShaderRefLink));
@@ -41,6 +44,7 @@ ShaderInfo* ShaderContainer::RegisterShader(const char* name, bool shared) {
     mShaders.push_back(*link);
     return &link->mShader;
 }
+
 // shader is the registered shader whose link should be removed and freed.
 void ShaderContainer::UnregisterShader(ShaderInfo* shader) {
     for (auto it = mShaders.begin(); it != mShaders.end(); ++it) {
@@ -53,11 +57,13 @@ void ShaderContainer::UnregisterShader(ShaderInfo* shader) {
         }
     }
 }
+
 // name is compared through the stored shader name's eight-byte limit.
 ShaderInfo* ShaderContainer::FindShaderByName(const char* name) const {
     for (auto& link : mShaders) {
         if (SameShaderName(name, link.m_Name)) return const_cast<ShaderInfo*>(&link.mShader);
     }
+
     return nullptr;
 }
 }

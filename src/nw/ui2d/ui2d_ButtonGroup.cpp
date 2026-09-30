@@ -8,9 +8,11 @@ inline bool SameName(const char* name, const char* candidate) {
         if (name[i] != candidate[i]) return false;
         if (!name[i]) return true;
     }
+
     return true;
 }
 }
+
 ButtonGroup::ButtonGroup() : mSelected(nullptr), mDragging(nullptr), mFlags(7) {}
 ButtonGroup::~ButtonGroup() = default;
 // position is nullable pointer input; pressed and released are this frame's edges.
@@ -32,11 +34,13 @@ void ButtonGroup::Update(const nn::util::Float2* position, bool pressed, bool re
             if ((button.mFlags & 0x10) && button.IsHit(*position)) { selected = &button; break; }
         }
     }
+
     if (mSelected != selected) {
         if (mSelected) mSelected->Off();
         if (selected) selected->On();
         mSelected = selected;
     }
+
     if (selected) {
         bool down = allowPress && pressed;
         if (down) { selected->Down(); selected = mSelected; }
@@ -46,49 +50,59 @@ void ButtonGroup::Update(const nn::util::Float2* position, bool pressed, bool re
             mDragging->InitializeDragPosition(*position);
         }
     }
+
     for (auto& button : mButtons) button.Update();
 }
+
 AnimButton* ButtonGroup::FindDownButton() {
     for (auto& button : mButtons) if (button.IsDowning()) return &button;
     return nullptr;
 }
+
 // name is the control name to locate in insertion order.
 AnimButton* ButtonGroup::FindButtonByName(const char* name) {
     for (auto& button : mButtons) if (SameName(name, button.mName)) return &button;
     return nullptr;
 }
+
 // name is located from the newest button toward the oldest.
 AnimButton* ButtonGroup::FindButtonByNameReverse(const char* name) {
     for (auto it = mButtons.rbegin(); it != mButtons.rend(); ++it)
         if (SameName(name, it->mName)) return &*it;
     return nullptr;
 }
+
 // tag is the integer identifier assigned to the desired button.
 AnimButton* ButtonGroup::FindButtonByTag(int tag) {
     for (auto& button : mButtons) if (button.mTag == tag) return &button;
     return nullptr;
 }
+
 // name is the control name to locate in insertion order.
 const AnimButton* ButtonGroup::FindButtonByName(const char* name) const {
     for (auto& button : mButtons) if (SameName(name, button.mName)) return &button;
     return nullptr;
 }
+
 // name is located from the newest button toward the oldest.
 const AnimButton* ButtonGroup::FindButtonByNameReverse(const char* name) const {
     for (auto it = mButtons.rbegin(); it != mButtons.rend(); ++it)
         if (SameName(name, it->mName)) return &*it;
     return nullptr;
 }
+
 // tag is the integer identifier assigned to the desired button.
 const AnimButton* ButtonGroup::FindButtonByTag(int tag) const {
     for (auto& button : mButtons) if (button.mTag == tag) return &button;
     return nullptr;
 }
+
 // layout is the owning layout whose button should be returned.
 AnimButton* ButtonGroup::FindButtonByLayout(const Layout* layout) {
     for (auto& button : mButtons) if (button.GetLayout() == layout) return &button;
     return nullptr;
 }
+
 void ButtonGroup::ForceOffAll() { for (auto& button : mButtons) button.ForceOff(); }
 void ButtonGroup::ForceOnAll() { for (auto& button : mButtons) button.ForceOn(); }
 void ButtonGroup::ForceDownAll() { for (auto& button : mButtons) button.ForceDown(); }
@@ -98,6 +112,7 @@ void ButtonGroup::CancelAll() { for (auto& button : mButtons) button.Cancel(); }
 void ButtonGroup::SetStateChangeCallbackAll(AnimButton::StateChangeCallback callback, void* argument) {
     for (auto& button : mButtons) button.SetStateChangeCallback(callback, argument);
 }
+
 void ButtonGroup::FreeAll() {
     for (auto it = mButtons.begin(); it != mButtons.end();) {
         auto current = it++;
@@ -106,6 +121,7 @@ void ButtonGroup::FreeAll() {
         button->~AnimButton();
         Layout::FreeMemory(button);
     }
+
     mSelected = nullptr;
     mDragging = nullptr;
 }

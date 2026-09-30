@@ -13,16 +13,19 @@ inline float32x4_t Sum(float32x4_t value) {
     sum = vpadd_f32(sum, sum);
     return vcombine_f32(sum, sum);
 }
+
 // first and second are padded three-component vectors whose dot product is returned.
 inline float Dot(float32x4_t first, float32x4_t second) {
     return vgetq_lane_f32(Sum(vmulq_f32(first, second)), 0);
 }
+
 // x/y/z supply vector components; its padding component is zero.
 inline float32x4_t Vector(float x, float y, float z) {
     nn::util::Vector3fType result;
     nn::util::VectorSet(&result, x, y, z);
     return result._v;
 }
+
 // value is transformed as a position by matrix, including translation.
 inline float32x4_t TransformPosition(float32x4_t value, const nn::util::Matrix4x3fType& matrix) {
     float32x4_t x = matrix._m.val[0], y = matrix._m.val[1], z = matrix._m.val[2], translation = matrix._m.val[3];
@@ -31,13 +34,16 @@ inline float32x4_t TransformPosition(float32x4_t value, const nn::util::Matrix4x
     result = vfmaq_laneq_f32(result, z, value, 2);
     return vaddq_f32(translation, result);
 }
+
 // first and second are vectors; select componentwise bounds while clearing padding.
 inline float32x4_t Minimum(float32x4_t first, float32x4_t second) {
     return Vector(std::min(first[0], second[0]), std::min(first[1], second[1]), std::min(first[2], second[2]));
 }
+
 inline float32x4_t Maximum(float32x4_t first, float32x4_t second) {
     return Vector(std::max(first[0], second[0]), std::max(first[1], second[1]), std::max(first[2], second[2]));
 }
+
 // first and second are vectors whose cross product is returned.
 inline float32x4_t Cross(float32x4_t first, float32x4_t second) {
     uint8x8_t yz = {4,5,6,7,8,9,10,11};
@@ -57,6 +63,7 @@ inline float32x4_t Cross(float32x4_t first, float32x4_t second) {
     float32x4_t rightB = vreinterpretq_f32_u8(vcombine_u8(vqtbl1_u8(b, yz), vqtbl1_u8(b, xw)));
     return vfmsq_f32(left, rightA, rightB);
 }
+
 // value is normalized with two reciprocal-square-root refinements; zero remains zero.
 inline float32x4_t Normalize(float32x4_t value) {
     float32x4_t length = Sum(vmulq_f32(value, value));
@@ -66,6 +73,7 @@ inline float32x4_t Normalize(float32x4_t value) {
     return vreinterpretq_f32_u32(vandq_u32(vreinterpretq_u32_f32(vmulq_f32(value, inverse)), vmvnq_u32(vceqzq_f32(length))));
 }
 }
+
 // source is transformed by matrix; the largest basis scale expands its radius.
 void Sphere::Transform(const Sphere& source, const nn::util::Matrix4x3fType& matrix) {
     center._v = TransformPosition(source.center._v, matrix);
@@ -75,6 +83,7 @@ void Sphere::Transform(const Sphere& source, const nn::util::Matrix4x3fType& mat
     float scale = std::max(std::max(x, y), z);
     radius = source.radius * scale;
 }
+
 // first and second are enclosed by the resulting sphere, including containment cases.
 void Sphere::Merge(const Sphere& first, const Sphere& second) {
     float32x4_t difference = vsubq_f32(second.center._v, first.center._v);
@@ -91,6 +100,7 @@ void Sphere::Merge(const Sphere& first, const Sphere& second) {
         center._v = position;
     }
 }
+
 // points supplies count positions; the first remains the result when count is nonpositive.
 void Aabb::Set(const nn::util::Vector3fType* points, int count) {
     float32x4_t high = points[0]._v;
@@ -99,9 +109,11 @@ void Aabb::Set(const nn::util::Vector3fType* points, int count) {
         low = Minimum(low, points[i]._v);
         high = Maximum(high, points[i]._v);
     }
+
     maximum._v = high;
     minimum._v = low;
 }
+
 // source provides center and extents; matrix produces the enclosing world-space box.
 void Aabb::Transform(const Bounding& source, const nn::util::Matrix4x3fType& matrix) {
     float32x4_t x = Vector(fabsf(matrix._m.val[0][0]), fabsf(matrix._m.val[0][1]), fabsf(matrix._m.val[0][2]));
@@ -114,16 +126,19 @@ void Aabb::Transform(const Bounding& source, const nn::util::Matrix4x3fType& mat
     minimum._v = vsubq_f32(center, extent);
     maximum._v = vaddq_f32(center, extent);
 }
+
 // first and second provide the coordinate bounds to combine.
 void Aabb::Merge(const Aabb& first, const Aabb& second) {
     minimum._v = Minimum(first.minimum._v, second.minimum._v);
     maximum._v = Maximum(first.maximum._v, second.maximum._v);
 }
+
 // first, second and third define a plane; winding controls the normal direction.
 void Plane::Set(const nn::util::Vector3fType& first, const nn::util::Vector3fType& second, const nn::util::Vector3fType& third) {
     normal._v = Normalize(Cross(vsubq_f32(third._v, first._v), vsubq_f32(second._v, first._v)));
     distance = -Dot(first._v, normal._v);
 }
+
 // fovy/aspect describe the lens; near/far give depths; matrix places the frustum.
 void ViewVolume::SetPerspective(float fovy, float aspect, float near, float far, const nn::util::Matrix4x3fType& matrix) {
     auto angle = nn::util::RadianToAngleIndex(fovy * 0.5f);
@@ -131,6 +146,7 @@ void ViewVolume::SetPerspective(float fovy, float aspect, float near, float far,
     float top = tangent * near;
     SetFrustum(top, -top, -(top * aspect), top * aspect, near, far, matrix);
 }
+
 // top/bottom/left/right define the lens bounds; near/far give depths; matrix places the volume.
 void ViewVolume::SetFrustum(float top, float bottom, float left, float right, float near, float far, const nn::util::Matrix4x3fType& matrix) {
     nn::util::Vector3fType points[8];
@@ -155,6 +171,7 @@ void ViewVolume::SetFrustum(float top, float bottom, float left, float right, fl
     planeCount = 6;
     useBounds = 0;
 }
+
 // top/bottom/left/right define the lens bounds; near/far give depths; matrix places the volume.
 void ViewVolume::SetOrtho(float top, float bottom, float left, float right, float near, float far, const nn::util::Matrix4x3fType& matrix) {
     nn::util::Vector3fType points[8];
@@ -177,13 +194,16 @@ void ViewVolume::SetOrtho(float top, float bottom, float left, float right, floa
     planeCount = 6;
     useBounds = 0;
 }
+
 // shape is accepted unless its sphere lies wholly outside one of the volume's planes.
 bool ViewVolume::TestIntersection(const Sphere& shape) const {
     for (int i = 0; i < planeCount; ++i) {
         if (Dot(planes[i].normal._v, shape.center._v) + planes[i].distance > shape.radius) return false;
     }
+
     return true;
 }
+
 // shape is classified as outside (-1), intersecting (0), or fully inside (1).
 int ViewVolume::TestIntersectionEx(const Sphere& shape) const {
     int result = 1;
@@ -192,8 +212,10 @@ int ViewVolume::TestIntersectionEx(const Sphere& shape) const {
         if (distance > shape.radius) return -1;
         if (distance >= -shape.radius) result = 0;
     }
+
     return result;
 }
+
 // shape supplies the axis-aligned box to test against the volume.
 bool ViewVolume::TestIntersection(const Aabb& shape) const {
     if (useBounds) {
@@ -204,6 +226,7 @@ bool ViewVolume::TestIntersection(const Aabb& shape) const {
         if (bounds.minimum._v[2] > shape.maximum._v[2]) return false;
         if (shape.minimum._v[2] > bounds.maximum._v[2]) return false;
     }
+
     for (int i = 0; i < planeCount; ++i) {
         float32x4_t normal = planes[i].normal._v;
         float32x4_t low = vdupq_n_f32(0);
@@ -214,8 +237,10 @@ bool ViewVolume::TestIntersection(const Aabb& shape) const {
         float distance = planes[i].distance;
         if (projected + distance > 0) return false;
     }
+
     return true;
 }
+
 // shape supplies the axis-aligned box to test against the volume.
 int ViewVolume::TestIntersectionEx(const Aabb& shape) const {
     if (useBounds) {
@@ -226,6 +251,7 @@ int ViewVolume::TestIntersectionEx(const Aabb& shape) const {
         if (bounds.minimum._v[2] > shape.maximum._v[2]) return -1;
         if (shape.minimum._v[2] > bounds.maximum._v[2]) return -1;
     }
+
     int result = 1;
     for (int i = 0; i < planeCount; ++i) {
         float32x4_t normal = planes[i].normal._v;
@@ -241,8 +267,10 @@ int ViewVolume::TestIntersectionEx(const Aabb& shape) const {
         if (projected + distance > 0) return -1;
         if (result && distance + Dot(normal, Vector(high0, high1, high2)) >= 0) result = 0;
     }
+
     return result;
 }
+
 // output receives overlaps from sorted, count-zero-terminated first and second range lists.
 int SubMeshRange::And(SubMeshRange* output, const SubMeshRange* first, const SubMeshRange* second) {
     const SubMeshRange* early = first;
@@ -257,6 +285,7 @@ int SubMeshRange::And(SubMeshRange* output, const SubMeshRange* first, const Sub
             if (early->start > late->start) std::swap(early, late);
             continue;
         }
+
         if (end < unsigned(late->start + late->count)) {
             output->start = late->start;
             output->count = end - late->start;
@@ -268,12 +297,14 @@ int SubMeshRange::And(SubMeshRange* output, const SubMeshRange* first, const Sub
             late = next;
             continue;
         }
+
         *output = *late;
         output->detail = std::max(early->detail, late->detail);
         ++late;
         ++output;
         ++count;
     }
+
     output->detail = 0;
     output->start = 0;
     output->count = 0;

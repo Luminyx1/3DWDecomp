@@ -21,9 +21,11 @@ void ResSceneAnim::Release() {
         anim->distanceFuncIndex = 0xff;
         anim->angleFuncIndex = 0xff;
     }
+
     count = mFogAnimCount;
     for (int i = 0; i < count; ++i) mFogAnims[i].fogFuncIndex = 0xff;
 }
+
 void ResSceneAnim::Reset() {
     int count = mCameraAnimCount;
     for (int i = 0; i < count; ++i)
@@ -33,6 +35,7 @@ void ResSceneAnim::Reset() {
     count = mFogAnimCount;
     for (int i = 0; i < count; ++i) mFogAnims[i].ResetCurves();
 }
+
 // device owns the buffers; the resource supplies its own memory pool and offset.
 void ResVertex::Setup(nn::gfx::Device* device) {
     ptrdiff_t offset = memoryPoolOffset;
@@ -50,6 +53,7 @@ void ResVertex::Setup(nn::gfx::Device* device) {
         offset += (info->GetSize() + 7) & ~size_t(7);
     }
 }
+
 // device owns the buffers; pool/offset locate external backing storage.
 void ResVertex::Setup(nn::gfx::Device* device, nn::gfx::MemoryPool* pool, ptrdiff_t offset) {
     int count = bufferCount;
@@ -65,6 +69,7 @@ void ResVertex::Setup(nn::gfx::Device* device, nn::gfx::MemoryPool* pool, ptrdif
         offset += (info->GetSize() + 7) & ~size_t(7);
     }
 }
+
 // device owns each initialized vertex buffer that must be finalized.
 void ResVertex::Cleanup(nn::gfx::Device* device) {
     int count = bufferCount;
@@ -74,6 +79,7 @@ void ResVertex::Cleanup(nn::gfx::Device* device) {
         if (buffer->ToData()->state) { buffer->Finalize(device); buffer->~TBuffer(); }
     }
 }
+
 void ResVertex::Reset() { Reset(0); }
 // guard bit 0 preserves user data; bit 1 preserves dynamic attribute flags.
 void ResVertex::Reset(u32 guard) {
@@ -83,12 +89,14 @@ void ResVertex::Reset(u32 guard) {
         nn::gfx::Buffer** table = pVertexBufferArray.Get();
         table[i] = object + i;
     }
+
     if (!(guard & 1)) pUserPtr.Clear();
     if (!(guard & 2)) {
         count = attribCount;
         for (int i = 0; i < count; ++i) pAttribArray.Get()[i].flags &= ~1;
     }
 }
+
 // indices receives one set bit for each buffer containing a dynamic vertex attribute.
 void ResVertex::CalculateDynamicVertexBufferIndex(nn::util::BitFlagSet<255, void>* indices) const {
     indices->Reset();
@@ -98,12 +106,14 @@ void ResVertex::CalculateDynamicVertexBufferIndex(nn::util::BitFlagSet<255, void
         if (attrib->flags & 1) indices->Set(attrib->bufferIndex);
     }
 }
+
 // device owns index buffers; each mesh supplies its backing memory pool.
 void ResShape::Setup(nn::gfx::Device* device) {
     if (flags & 8) return;
     int count = meshCount;
     for (int i = 0; i < count; ++i) pMeshArray.Get()[i].Setup(device);
 }
+
 // device owns this mesh's index buffer; use the memory pool stored in the resource.
 void ResMesh::Setup(nn::gfx::Device* device) {
     nn::gfx::BufferInfo* info = bufferInfo;
@@ -114,12 +124,14 @@ void ResMesh::Setup(nn::gfx::Device* device) {
     object->Initialize(device, *info, pool, memoryPoolOffset, info->GetSize());
     nn::gfx::util::SetBufferDebugLabel(object, "g3d_index");
 }
+
 // device owns index buffers; pool/offset specify external backing storage.
 void ResShape::Setup(nn::gfx::Device* device, nn::gfx::MemoryPool* pool, ptrdiff_t offset) {
     if (flags & 8) return;
     int count = meshCount;
     for (int i = 0; i < count; ++i) pMeshArray.Get()[i].Setup(device, pool, offset);
 }
+
 // device owns this mesh's index buffer; pool/offset specify its external backing storage.
 void ResMesh::Setup(nn::gfx::Device* device, nn::gfx::MemoryPool* pool, ptrdiff_t offset) {
     nn::gfx::Buffer* object = buffer;
@@ -130,17 +142,20 @@ void ResMesh::Setup(nn::gfx::Device* device, nn::gfx::MemoryPool* pool, ptrdiff_
     object->Initialize(device, *info, pool, memoryPoolOffset+ offset, info->GetSize());
     nn::gfx::util::SetBufferDebugLabel(object, "g3d_index");
 }
+
 // device owns the index buffers belonging to this shape's meshes.
 void ResShape::Cleanup(nn::gfx::Device* device) {
     if (flags & 8) return;
     int count = meshCount;
     for (int i = 0; i < count; ++i) pMeshArray.Get()[i].Cleanup(device);
 }
+
 // device owns this mesh's initialized index buffer.
 void ResMesh::Cleanup(nn::gfx::Device* device) {
     nn::gfx::Buffer* object = buffer;
     if (object->ToData()->state) { object->Finalize(device); object->~TBuffer(); }
 }
+
 void ResShape::Reset() { Reset(0); }
 // guard bit 0 preserves user data while restoring embedded index buffer pointers.
 void ResShape::Reset(u32 guard) {
@@ -150,8 +165,10 @@ void ResShape::Reset(u32 guard) {
             mesh->buffer = reinterpret_cast<nn::gfx::Buffer*>(mesh->subMeshes + mesh->subMeshCount);
         }
     }
+
     if (!(guard & 1)) pUserPtr.Clear();
 }
+
 void ResShape::ActivateDynamicVertexAttrForShapeAnim() {
     if (!keyShapeCount) return;
     const ResKeyShape* key = pKeyShapeArray.Get();
@@ -161,6 +178,7 @@ void ResShape::ActivateDynamicVertexAttrForShapeAnim() {
         if (index) vertex->ToData().pAttribArray.Get()[index - 1].flags |= 1;
     }
 }
+
 // command receives count submeshes starting at first; instances controls repetition.
 void ResMesh::DrawSubMesh(nn::gfx::CommandBuffer* command, int first, int count, int instances) const {
     ptrdiff_t offset = subMeshes[first].offset;
@@ -173,6 +191,7 @@ void ResMesh::DrawSubMesh(nn::gfx::CommandBuffer* command, int first, int count,
     address.Offset(offset);
     command->DrawIndexed(topology, indexFormat, address, indices, baseVertex, instances, 0);
 }
+
 // command receives count submeshes starting at first; instances controls repetition; baseInstance offsets the instance index.
 void ResMesh::DrawSubMesh(nn::gfx::CommandBuffer* command, int first, int count, int instances, int baseInstance) const {
     ptrdiff_t offset = subMeshes[first].offset;

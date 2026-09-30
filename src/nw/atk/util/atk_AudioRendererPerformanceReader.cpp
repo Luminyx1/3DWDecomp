@@ -10,6 +10,7 @@ AudioRendererPerformanceReader::AudioRendererPerformanceReader()
 size_t AudioRendererPerformanceReader::GetRequiredMemorySize(int frameCount) {
     return size_t(frameCount) * (SoundSystem::GetPerformanceFrameBufferSize() + sizeof(AudioRendererPerformanceInfo));
 }
+
 // frameCount sets the ring capacity; buffer holds descriptors followed by their frame buffers.
 // bufferSize describes the supplied allocation; the original relies on the caller to provide enough space.
 void AudioRendererPerformanceReader::Initialize(int frameCount, void* buffer, size_t bufferSize) {
@@ -22,10 +23,12 @@ void AudioRendererPerformanceReader::Initialize(int frameCount, void* buffer, si
         mFrames[i].bufferSize = frameSize;
         data += frameSize;
     }
+
     mWriteIndex.store(0, std::memory_order_release);
     mReadIndex.store(mFrameCount - 1, std::memory_order_release);
     mInitialized = true;
 }
+
 const AudioRendererPerformanceInfo* AudioRendererPerformanceReader::ReadPerformanceInfo() {
     int next = mReadIndex.load(std::memory_order_acquire) + 1;
     if (next >= mFrameCount) next = 0;
@@ -33,6 +36,7 @@ const AudioRendererPerformanceInfo* AudioRendererPerformanceReader::ReadPerforma
     mReadIndex.store(next, std::memory_order_release);
     return &mFrames[next];
 }
+
 // frame supplies frameSize bytes to copy, and tick timestamps the captured frame.
 // The caller must keep frameSize within a slot's capacity; a full ring drops the incoming frame.
 void AudioRendererPerformanceReader::Record(const void* frame, size_t frameSize, os::Tick tick) {

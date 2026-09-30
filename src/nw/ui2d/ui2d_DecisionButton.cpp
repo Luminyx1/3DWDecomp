@@ -18,8 +18,10 @@ bool DecisionButton::ProcessOn() {
     default:
         break;
     }
+
     return processed;
 }
+
 bool DecisionButton::ProcessOff() {
     switch (mState) {
     case cState_OnStart:
@@ -33,6 +35,7 @@ bool DecisionButton::ProcessOff() {
     default:
         break;
     }
+
     return true;
 }
 }

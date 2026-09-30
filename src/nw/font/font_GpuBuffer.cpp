@@ -72,6 +72,7 @@ void GpuBuffer::Finalize(nn::gfx::Device* pDevice, FreeFunction pFreeFunction, v
         for (uint32_t i = 0; i < m_BufferCount; i++) {
             m_pBuffers[i].Finalize(pDevice);
         }
+
         pFreeFunction(m_pBuffers, pUserData);
     }
 
@@ -123,6 +124,7 @@ void GpuBuffer::Unmap() {
     if (m_pBuffers != nullptr) {
         m_pBuffers[m_MappedBufferIndex].Unmap();
     }
+
     m_MappedBufferIndex = -1;
     m_pMappedPointer = nullptr;
 

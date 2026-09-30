@@ -15,6 +15,7 @@ size_t ResShaderParam::GetSize(Type type) {
     static const size_t sizes[] asm("lbl_71016C3F40") = {24, 48, 24};
     return sizes[type - 28];
 }
+
 // type identifies packed source data before uniform-block conversion.
 size_t ResShaderParam::GetSrcSize(Type type) {
     if (type <= 15)
@@ -24,9 +25,11 @@ size_t ResShaderParam::GetSrcSize(Type type) {
         size_t bytes = ((type & 3) + 1) * 4;
         return bytes * rows;
     }
+
     static const size_t sizes[] asm("lbl_710140A880") = {20, 36, 24, 32};
     return sizes[type - 28];
 }
+
 // destination receives source scalars or matrix rows; swap is unused for these representations.
 template <bool swap>
 void ResShaderParam::Convert(void* destination, const void* source) const {
@@ -45,6 +48,7 @@ void ResShaderParam::Convert(void* destination, const void* source) const {
         }
     }
 }
+
 template void ResShaderParam::Convert<true>(void*, const void*) const;
 template void ResShaderParam::Convert<false>(void*, const void*) const;
 // source holds parameter storage; dependency is installed only in a root parameter's extra pointer slot.
@@ -55,16 +59,19 @@ bool ResShaderParam::SetDependPointer(void* source, const void* dependency) cons
     *reinterpret_cast<const void**>(address) = dependency;
     return true;
 }
+
 // source holds parameter storage; dependency receives its optional aligned pointer.
 bool ResShaderParam::GetDependPointer(void** dependency, const void* source) const {
     if (sourceSize <= GetSrcSize(Type(type))) {
         *dependency = nullptr;
         return false;
     }
+
     uintptr_t address = (reinterpret_cast<uintptr_t>(source) + GetSrcSize(Type(type)) + 7) & ~uintptr_t(7);
     *dependency = *reinterpret_cast<void* const*>(address);
     return true;
 }
+
 // destination receives a 2D affine matrix from source scale, rotation, and translation.
 // parameter and user are unused by this built-in conversion.
 size_t ResShaderParam::ConvertSrt2dCallback(void* destination, const void* source,
@@ -82,6 +89,7 @@ size_t ResShaderParam::ConvertSrt2dCallback(void* destination, const void* sourc
     output[5] = input[4];
     return 24;
 }
+
 // callback resolves missing texture views and descriptors; user is passed to that callback.
 BindResult ResMaterial::BindTexture(TextureBindCallback callback, void* user) {
     BindResult result;
@@ -96,8 +104,10 @@ BindResult ResMaterial::BindTexture(TextureBindCallback callback, void* user) {
         else
             result.Merge(BindResult(BindResult::Flag_Success));
     }
+
     return result;
 }
+
 // texture replaces every binding whose stored name equals name.
 bool ResMaterial::ForceBindTexture(const TextureRef& texture, const char* name) {
     bool found = false;
@@ -108,13 +118,16 @@ bool ResMaterial::ForceBindTexture(const TextureRef& texture, const char* name) 
             found = true;
         }
     }
+
     return found;
 }
+
 void ResMaterial::ReleaseTexture() {
     int count = samplerCount;
     for (int i = 0; i < count; ++i)
         ReleaseTexture(i);
 }
+
 // device owns samplers constructed from resource descriptions and named for debugging.
 void ResMaterial::Setup(nn::gfx::Device* device) {
     int count = samplerCount;
@@ -127,6 +140,7 @@ void ResMaterial::Setup(nn::gfx::Device* device) {
         const char* name = (dictionary != nullptr) ? dictionary->GetKey(i).data() : nullptr;
         nn::gfx::util::SetSamplerDebugLabel(sampler, name);
     }
+
     static const ShaderParamConvertCallback callbacks[] asm(
         "lbl_7101AD4FA0") = {ResShaderParam::ConvertSrt2dCallback, ResShaderParam::ConvertSrt3dCallback,
                              ResShaderParam::ConvertTexSrtCallback, ResShaderParam::ConvertTexSrtExCallback};
@@ -137,6 +151,7 @@ void ResMaterial::Setup(nn::gfx::Device* device) {
             parameter->callback = callbacks[parameter->type - 28];
     }
 }
+
 // device owns initialized sampler objects being finalized and destroyed.
 void ResMaterial::Cleanup(nn::gfx::Device* device) {
     int count = samplerCount;
@@ -148,6 +163,7 @@ void ResMaterial::Cleanup(nn::gfx::Device* device) {
         }
     }
 }
+
 void ResMaterial::Reset() {
     int count = shaderParamCount;
     for (int i = 0; i < count; ++i) {
@@ -155,12 +171,14 @@ void ResMaterial::Reset() {
         parameter->offset = -1;
         parameter->callback = nullptr;
     }
+
     materialBlockSize = 0;
     pUserPtr.Clear();
     volatileParamCount = 0;
     textureCount = samplerCount;
     std::memset(pVolatileParamFlags.Get(), 0, size_t(count) / 32);
 }
+
 // guard bit zero preserves the caller-owned user pointer while clearing material state.
 void ResMaterial::Reset(u32 guard) {
     int count = shaderParamCount;
@@ -169,6 +187,7 @@ void ResMaterial::Reset(u32 guard) {
         parameter->offset = -1;
         parameter->callback = nullptr;
     }
+
     textureCount = samplerCount;
     materialBlockSize = 0;
     if (!(guard & 1))

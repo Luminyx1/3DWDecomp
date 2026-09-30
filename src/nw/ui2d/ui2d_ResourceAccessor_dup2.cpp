@@ -25,8 +25,10 @@ nn::font::Font* ResourceAccessor::LoadFont(nn::gfx::Device* device, const char* 
             }
         }
     }
+
     return font;
 }
+
 // device is unused by the base accessor, which owns no resources itself.
 void ResourceAccessor::Finalize(nn::gfx::Device* device) {}
 // output optionally receives the resolved name in a size-byte buffer; device
@@ -45,13 +47,16 @@ TextureInfo* ResourceAccessor::AcquireDynamicGenerateTexture(char* output, int s
             name = combined;
         }
     }
+
     TextureInfo* texture = AcquireTexture(device, name);
     if (output) {
         std::strncpy(output, name, size);
         output[size - 1] = 0;
     }
+
     return texture;
 }
+
 // output and size describe an optional resolved-name buffer. args supplies the
 // prefix hierarchy, alternate selects its alternate depth, device acquires the
 // texture, and name is the texture name before prefix resolution.
@@ -64,6 +69,7 @@ TextureInfo* ResourceAccessor::AcquireDynamicGenerateTextureWithResolvePrefix(ch
         prefix = static_cast<char*>(__builtin_alloca(length));
         ConcatDynamicGenerateTexturePrefixString(prefix, length, args, depth);
     }
+
     return AcquireDynamicGenerateTexture(output, size, device, prefix, name);
 }
 }

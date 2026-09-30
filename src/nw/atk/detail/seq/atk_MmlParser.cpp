@@ -14,12 +14,14 @@ int MmlParser::Parse(MmlSequenceTrack* track, bool playNotes) const {
         command = *track->mContext.mPosition++;
         execute = track->mContext.mCondition;
     }
+
     SeqArgType extra = SeqArgType_None;
     switch (static_cast<u8>(command)) {
     case 0xa3: extra = SeqArgType_Short; command = *track->mContext.mPosition++; break;
     case 0xa4: extra = SeqArgType_Random; command = *track->mContext.mPosition++; break;
     case 0xa5: extra = SeqArgType_Variable; command = *track->mContext.mPosition++; break;
     }
+
     SeqArgType argument = SeqArgType_None;
     bool overrideArg = false;
     if (command == 0xa0) {
@@ -31,6 +33,7 @@ int MmlParser::Parse(MmlSequenceTrack* track, bool playNotes) const {
         argument = SeqArgType_Variable;
         command = *track->mContext.mPosition++;
     }
+
     if ((command & 0x80) == 0) {
         int velocity = *track->mContext.mPosition++;
         int length = ReadArg(&track->mContext.mPosition, player, track, overrideArg ? argument : SeqArgType_VariableLength);
@@ -41,13 +44,16 @@ int MmlParser::Parse(MmlSequenceTrack* track, bool playNotes) const {
                 if (key > 127) key = 127;
                 NoteOnCommandProc(track, key, velocity, length > 0 ? length : -1, track->mContext.mTie);
             }
+
             if (track->mContext.mNoteWait) {
                 track->mContext.mWait = length;
                 if (length == 0) track->mWaitForNote = true;
             }
         }
+
         return 0;
     }
+
     switch (command & 0xf0) {
     case 0x80:
         switch (command) {
@@ -73,6 +79,7 @@ int MmlParser::Parse(MmlSequenceTrack* track, bool playNotes) const {
             break;
         }
         }
+
         break;
     case 0xb0: case 0xc0: case 0xd0: {
         int value = ReadArg(&track->mContext.mPosition, player, track, overrideArg ? argument : SeqArgType_Byte);
@@ -83,8 +90,10 @@ int MmlParser::Parse(MmlSequenceTrack* track, bool playNotes) const {
             case 0xc3: case 0xc4: first = static_cast<s8>(value); break;
             default: first = static_cast<u8>(value); break;
             }
+
             CommandProc(track, command, first, second);
         }
+
         break;
     }
     case 0xe0: {
@@ -117,15 +126,18 @@ int MmlParser::Parse(MmlSequenceTrack* track, bool playNotes) const {
                 break;
             }
             }
+
             break;
         }
         default: if (execute) CommandProc(track, command, 0, 0); break;
         }
+
         break;
     case 0x90:
         if (execute) CommandProc(track, command, 0, 0);
         break;
     }
+
     return 0;
 }
 
@@ -141,6 +153,7 @@ void MmlParser::CommandProc(MmlSequenceTrack* track, u32 command, int first, int
             if (other && other != track) {
                 other->Close(); other->SetSeqData(track->mContext.mSequenceData, second); other->Open();
             }
+
             break;
         }
         case 0x89: track->mContext.mPosition = track->mContext.mSequenceData + first; break;
@@ -149,6 +162,7 @@ void MmlParser::CommandProc(MmlSequenceTrack* track, u32 command, int first, int
                 track->mContext.PushCall();
                 track->mContext.mPosition = track->mContext.mSequenceData + first;
             }
+
             break;
         case 0xb0: player->mParamB0 = first; break;
         case 0xb1: track->mHold = static_cast<u8>(first); break;
@@ -198,6 +212,7 @@ void MmlParser::CommandProc(MmlSequenceTrack* track, u32 command, int first, int
                 entry.isLoop = true;
                 ++track->mContext.mStackDepth;
             }
+
             break;
         case 0xd5: track->mVolume2.Set(first, second); break;
         case 0xd6: if (mPrintVarEnabledFlag) GetVariablePtr(player, track, first); break;
@@ -237,6 +252,7 @@ void MmlParser::CommandProc(MmlSequenceTrack* track, u32 command, int first, int
                     else { entry.count = count; track->mContext.mPosition = entry.position; }
                 }
             }
+
             break;
         case 0xfd:
             while (track->mContext.mStackDepth) {
@@ -246,6 +262,7 @@ void MmlParser::CommandProc(MmlSequenceTrack* track, u32 command, int first, int
                     break;
                 }
             }
+
             break;
         }
     } else if (command <= 0xffff) {
@@ -254,6 +271,7 @@ void MmlParser::CommandProc(MmlSequenceTrack* track, u32 command, int first, int
             variable = GetVariablePtr(player, track, first);
             if (!variable) return;
         }
+
         switch (command & 0xff) {
         case 0x80: *variable = second; break;
         case 0x81: *variable += second; break;
@@ -338,12 +356,14 @@ u32 MmlParser::Read24(const u8** position) const {
     u32 third = *(*position)++;
     return first | second << 8 | third << 16;
 }
+
 // position points to the sequence cursor; consume a little-endian 16-bit argument.
 u16 MmlParser::Read16(const u8** position) const {
     int first = *(*position)++;
     int second = *(*position)++;
     return first | second << 8;
 }
+
 // position advances through seven-bit groups, most significant group first.
 u32 MmlParser::ReadVar(const u8** position) const {
     u32 result = 0;
@@ -354,6 +374,7 @@ u32 MmlParser::ReadVar(const u8** position) const {
     } while (value & 0x80);
     return result;
 }
+
 // index selects player variables 0-31 or track variables 32-47. player and track
 // own those respective banks; out-of-range positive indices return null.
 s16* MmlParser::GetVariablePtr(SequenceSoundPlayer* player, SequenceTrack* track, int index) const {
@@ -361,6 +382,7 @@ s16* MmlParser::GetVariablePtr(SequenceSoundPlayer* player, SequenceTrack* track
     if (index < 48) return track->GetVariablePtr(index - 32);
     return nullptr;
 }
+
 // position advances over an argument encoded by type. player and track supply
 // variable values; random arguments contain signed inclusive lower and upper bounds.
 int MmlParser::ReadArg(const u8** position, SequenceSoundPlayer* player, SequenceTrack* track,
@@ -385,10 +407,12 @@ int MmlParser::ReadArg(const u8** position, SequenceSoundPlayer* player, Sequenc
     default: return 0;
     }
 }
+
 // track receives a note with key, velocity, duration length, and tie state.
 Channel* MmlParser::NoteOnCommandProc(MmlSequenceTrack* track, int key, int velocity, int length, bool tie) const {
     return track->NoteOn(key, velocity, length, tie);
 }
+
 // data is the sequence base and offset selects its initial command. trackMask
 // receives the optional big-endian allocation mask, always including track zero.
 u32 MmlParser::ParseAllocTrack(const void* data, u32 offset, u32* trackMask) {
@@ -397,6 +421,7 @@ u32 MmlParser::ParseAllocTrack(const void* data, u32 offset, u32* trackMask) {
         *trackMask = (u32(position[1]) << 8 | position[2]) | 1;
         return offset + 3;
     }
+
     *trackMask = 1;
     return offset;
 }

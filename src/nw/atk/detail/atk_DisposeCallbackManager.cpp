@@ -25,6 +25,7 @@ void DisposeCallbackManager::Dispose(const void* memory, size_t size) {
         callback.InvalidateData(memory, static_cast<const u8*>(memory) + size);
     }
 }
+
 DisposeCallbackManager& DisposeCallbackManager::GetInstance() {
     static DisposeCallbackManager instance;
     return instance;

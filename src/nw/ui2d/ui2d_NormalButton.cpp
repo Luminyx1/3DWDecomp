@@ -7,6 +7,7 @@ void NormalButton::FinishDown() {
     ChangeState(cState_Down);
     ChangeState(cState_On);
 }
+
 NormalButtonEx::NormalButtonEx() : mLayout(nullptr) {}
 
 // device creates the cloned animators, source supplies their bindings, and
@@ -15,6 +16,7 @@ NormalButtonEx::NormalButtonEx(nn::gfx::Device* device, const NormalButtonEx& so
     : mLayout(nullptr) {
     CloneImpl_(device, source, layout);
 }
+
 void NormalButtonEx::FinishDown() {
     ChangeState(cState_Down);
     ChangeState(cState_On);

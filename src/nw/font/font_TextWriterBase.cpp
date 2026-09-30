@@ -332,6 +332,7 @@ int TextWriterBase<CharType>::StrLen(const uint16_t* pStr) {
     while (*pStr++ != 0) {
         length++;
     }
+
     return length;
 }
 
@@ -447,6 +448,7 @@ float TextWriterBase<CharType>::GetLineOffset(int lineOffsetCount, const float* 
     if (line < lineOffsetCount) {
         return pLineOffset[line];
     }
+
     return 0.0f;
 }
 
@@ -463,6 +465,7 @@ float TextWriterBase<CharType>::GetLineWidth(int lineOffsetCount, const float* p
     if (line < lineOffsetCount) {
         return pLineWidth[line];
     }
+
     return 0.0f;
 }
 
@@ -505,10 +508,12 @@ bool IsPrintableChar(uint32_t code) {
         default:
             break;
         }
+
         if (code >= 0x2066 && code <= 0x2069) {
             return false;
         }
     }
+
     return true;
 }
 
@@ -542,11 +547,13 @@ bool TextWriterBase<CharType>::CalculateLineRectImpl(Rectangle* pRect, const Cha
         if (static_cast<const CharType*>(reader.GetCurrentPos()) > pStrEnd) {
             break;
         }
+
         if (code < ' ') {
             if (code == '\n' && !m_IsLinefeedKerningEnabled) {
                 if (!isIgnoringKerning) {
                     x += GetFont()->GetKerning(context.prevCode, 0) * GetScaleH();
                 }
+
                 context.prevCode = 0;
             }
 
@@ -589,10 +596,12 @@ bool TextWriterBase<CharType>::CalculateLineRectImpl(Rectangle* pRect, const Cha
             if (operation == TagProcessorBase<CharType>::Operation_NextLine) {
                 break;
             }
+
             if (operation == TagProcessorBase<CharType>::Operation_EndDraw) {
                 *ppStr += length;
                 return false;
             }
+
             if (operation == TagProcessorBase<CharType>::Operation_NoCharSpace) {
                 isCharSpace = false;
             } else if (operation == TagProcessorBase<CharType>::Operation_CharSpace) {
@@ -616,6 +625,7 @@ bool TextWriterBase<CharType>::CalculateLineRectImpl(Rectangle* pRect, const Cha
                 right += GetFont()->GetKerning(context.prevCode, code) * GetScaleH();
                 kerning = GetFont()->GetKerning(code, 0) * GetScaleH();
             }
+
             right += kerning;
 
             if (widthLimit < FLT_MAX && pPrevStreamPos != nullptr &&
@@ -644,12 +654,14 @@ bool TextWriterBase<CharType>::CalculateLineRectImpl(Rectangle* pRect, const Cha
         if (widthLimit < FLT_MAX) {
             pPrevStreamPos = static_cast<const CharType*>(reader.GetCurrentPos());
         }
+
         code = reader.Next();
     }
 
     if (!isIgnoringKerning) {
         x += GetFont()->GetKerning(context.prevCode, 0) * GetScaleH();
     }
+
     pRect->left = std::min(pRect->left, x);
     pRect->right = std::max(pRect->right, x);
     *ppStr = static_cast<const CharType*>(reader.GetCurrentPos());
@@ -674,6 +686,7 @@ float TextWriterBase<CharType>::AdjustCursor(float* pXOrigin, float* pYOrigin,
             TextWriterBase<CharType> myCopy(*this);
             myCopy.CalculateStringRectImpl(&rect, pStr, length);
         }
+
         textWidth = rect.GetWidth();
         textHeight = rect.GetHeight();
     }
@@ -684,6 +697,7 @@ float TextWriterBase<CharType>::AdjustCursor(float* pXOrigin, float* pYOrigin,
         if (m_IsCenterCeilingEnabled) {
             offset = std::ceil(offset);
         }
+
         *pXOrigin -= offset;
         break;
     }
@@ -700,6 +714,7 @@ float TextWriterBase<CharType>::AdjustCursor(float* pXOrigin, float* pYOrigin,
         if (m_IsCenterCeilingEnabled) {
             offset = std::ceil(offset);
         }
+
         *pYOrigin -= offset;
         break;
     }
@@ -738,6 +753,7 @@ float TextWriterBase<CharType>::AdjustCursor(float* pXOrigin, float* pYOrigin,
     if (!IsDrawFlagSet(VerticalOrigin_Mask, VerticalOrigin_Baseline)) {
         y += GetFontAscent();
     }
+
     SetCursorY(y);
     return textWidth;
 }
@@ -819,10 +835,12 @@ float TextWriterBase<CharType>::PrintImpl(const CharType* pStr, int length, int 
                     if (m_IsCenterCeilingEnabled) {
                         offset = std::ceil(offset);
                     }
+
                     float lineOffsetCenter = lineWidth * 0.5f;
                     if (m_IsCenterCeilingEnabled) {
                         lineOffsetCenter = std::ceil(lineOffsetCenter);
                     }
+
                     SetCursorX(lineOffset + (context.xOrigin + (offset - lineOffsetCenter)));
                     break;
                 }
@@ -843,6 +861,7 @@ float TextWriterBase<CharType>::PrintImpl(const CharType* pStr, int length, int 
                 if (widthLimit < FLT_MAX) {
                     pLineHead = static_cast<const CharType*>(reader.GetCurrentPos());
                 }
+
                 isCharSpace = false;
             } else if (operation == TagProcessorBase<CharType>::Operation_EndDraw) {
                 break;
@@ -872,17 +891,20 @@ float TextWriterBase<CharType>::PrintImpl(const CharType* pStr, int length, int 
             if (isCharSpace) {
                 right += m_CharSpace;
             }
+
             if (IsWidthFixed()) {
                 right += GetFixedWidth();
             } else {
                 right += GetScaleH() * glyph.widths.charWidth;
             }
+
             right = kerning + right;
 
             float nextKerning = 0.0f;
             if (!isIgnoringKerning) {
                 nextKerning = GetFont()->GetKerning(code, 0) * GetScaleH();
             }
+
             right += nextKerning;
 
             if (!(!(widthLimit < FLT_MAX) || isLineHead) &&
@@ -896,6 +918,7 @@ float TextWriterBase<CharType>::PrintImpl(const CharType* pStr, int length, int 
             if (isCharSpace) {
                 MoveCursorX(m_CharSpace);
             }
+
             x = right - nextKerning;
             MoveCursorX(kerning);
 
@@ -911,12 +934,14 @@ float TextWriterBase<CharType>::PrintImpl(const CharType* pStr, int length, int 
         if (widthLimit < FLT_MAX) {
             pPrevStreamPos = static_cast<const CharType*>(reader.GetCurrentPos());
         }
+
         code = reader.Next();
     }
 
     if (!isIgnoringKerning) {
         MoveCursorX(GetFont()->GetKerning(context.prevCode, 0) * GetScaleH());
     }
+
     textWidth = std::max(textWidth, GetCursorX() - context.xOrigin);
 
     float y = cursorY;
@@ -924,6 +949,7 @@ float TextWriterBase<CharType>::PrintImpl(const CharType* pStr, int length, int 
         !IsDrawFlagSet(VerticalOrigin_Mask, VerticalOrigin_Bottom)) {
         y = cursorY - adjustedCursorY + GetCursorY();
     }
+
     SetCursorY(y);
 
     m_pTagProcessor->EndPrint(&context);

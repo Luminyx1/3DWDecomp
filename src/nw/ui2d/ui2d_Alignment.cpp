@@ -11,9 +11,11 @@ bool Alignment::IsVerticalAlignment() const { return (mAlignmentFlags & 2) != 0;
 void Alignment::MakeAlignment() {
     if (IsVerticalAlignment()) MakeVerticalAlignment(); else MakeHorizontalAlignment();
 }
+
 void Alignment::MakeHorizontalAlignment() {
     if (mAlignment <= 1) MakeForwardHorizontalAlignment(); else MakeReverseHorizontalAlignment();
 }
+
 void Alignment::MakeVerticalAlignment() {
     if (mAlignment <= 1) MakeForwardVerticalAlignment(); else MakeReverseVerticalAlignment();
 }

@@ -7,5 +7,6 @@ Task::Task() {
     mId = 0;
     nn::os::SignalEvent(&mCompletionEvent);
 }
+
 Task::~Task() { nn::os::FinalizeEvent(&mCompletionEvent); }
 }

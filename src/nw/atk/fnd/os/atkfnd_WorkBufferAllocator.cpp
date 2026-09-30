@@ -30,6 +30,7 @@ void* WorkBufferAllocator::Allocate(size_t size, size_t alignment) {
             result = reinterpret_cast<void*>(start);
         }
     }
+
     return result;
 }
 

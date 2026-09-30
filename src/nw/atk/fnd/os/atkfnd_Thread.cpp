@@ -5,6 +5,7 @@ namespace nn::fs {
 enum Priority : int;
 void SetPriorityOnCurrentThread(Priority priority);
 }
+
 namespace nn::atk::detail::fnd {
 Thread::RunArgs::RunArgs()
     : name(""), stack(nullptr), stackSize(0), core(-1), affinity(AffinityMask_Default),
@@ -15,6 +16,7 @@ bool Thread::RunArgs::IsValid() const {
     if (priority > 31) return false;
     return handler != nullptr;
 }
+
 Thread::~Thread() {}
 // args provides the stack, callback and argument, name, priorities, and core selection.
 bool Thread::Run(const RunArgs& args) {
@@ -28,6 +30,7 @@ bool Thread::Run(const RunArgs& args) {
     Resume();
     return true;
 }
+
 void Thread::WaitForExit() { Join(); }
 void Thread::Release() {
     if (mState == State_Exited) {
@@ -35,6 +38,7 @@ void Thread::Release() {
         mState = State_Released;
     }
 }
+
 // state replaces the thread's lifecycle marker.
 void Thread::SetState(State state) { mState = state; }
 int Thread::GetPriority() const { return mPriority; }
@@ -52,6 +56,7 @@ void Thread::SetFsPriority(FsPriority priority) {
     if (static_cast<u32>(priority) >= 3) NN_UNEXPECTED_DEFAULT;
     fs::SetPriorityOnCurrentThread(static_cast<fs::Priority>(priority));
 }
+
 Thread::FsPriority Thread::GetFsPriority() const { return mFsPriority; }
 // duration specifies how long the calling thread should sleep.
 void Thread::Sleep(const TimeSpan& duration) { os::SleepThread(nn::TimeSpan::FromNanoSeconds(duration.ToNanoSeconds())); }

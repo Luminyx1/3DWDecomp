@@ -198,6 +198,7 @@ bool ResFontBase::SetAlternateChar(uint32_t c) {
         m_pFontInfo->alterCharIndex = index;
         return true;
     }
+
     return false;
 }
 
@@ -212,8 +213,10 @@ uint16_t ResFontBase::FindGlyphIndex(uint32_t c) const {
         if (pMap->codeBegin <= c && c <= pMap->codeEnd) {
             return FindGlyphIndex(pMap, c);
         }
+
         offset = pMap->pNext;
     }
+
     return InvalidGlyphIndex;
 }
 
@@ -244,6 +247,7 @@ const CharWidths ResFontBase::GetCharWidths(uint32_t c) const {
     if (index == InvalidGlyphIndex) {
         index = m_pFontInfo->alterCharIndex;
     }
+
     return *GetCharWidthsFromIndex(index);
 }
 
@@ -258,8 +262,10 @@ const CharWidths* ResFontBase::GetCharWidthsFromIndex(uint16_t index) const {
         if (pWidth->indexBegin <= index && index <= pWidth->indexEnd) {
             return GetCharWidthsFromIndex(pWidth, index);
         }
+
         offset = pWidth->pNext;
     }
+
     return &m_pFontInfo->defaultWidth;
 }
 
@@ -288,6 +294,7 @@ uint16_t ResFontBase::GetGlyphIndex(bool* pIsFound, uint32_t c) const {
     if (index == InvalidGlyphIndex) {
         return m_pFontInfo->alterCharIndex;
     }
+
     return index;
 }
 
@@ -337,6 +344,7 @@ int ResFontBase::GetKerning(uint32_t c0, uint32_t c1) const {
     if (m_pKerningTable == nullptr || !m_IsKerningEnabled) {
         return 0;
     }
+
     if (!CheckCharCodeRange(c0) || !CheckCharCodeRange(c1)) {
         return 0;
     }
@@ -351,15 +359,18 @@ int ResFontBase::GetKerning(uint32_t c0, uint32_t c1) const {
         if (word == c0) {
             break;
         }
+
         if (word < c0) {
             if (firstLow == firstMid) {
                 return 0;
             }
+
             firstLow = firstMid;
         } else {
             if (firstHigh == firstMid) {
                 return 0;
             }
+
             firstHigh = firstMid;
         }
     }
@@ -374,15 +385,19 @@ int ResFontBase::GetKerning(uint32_t c0, uint32_t c1) const {
             if (secondLow == secondMid) {
                 return 0;
             }
+
             secondLow = secondMid;
         } else {
             if (secondHigh == secondMid) {
                 return 0;
             }
+
             secondHigh = secondMid;
         }
+
         secondMid = (secondLow + secondHigh) / 2;
     }
+
     return pSecond->elems[secondMid].kerningValue;
 }
 
@@ -395,11 +410,13 @@ bool ResFontBase::CheckCharCodeRange(uint32_t c) const {
     if (m_CharCodeRangeCount == 0) {
         return true;
     }
+
     for (int i = 0; i < m_CharCodeRangeCount; i++) {
         if (m_CharCodeRangeFirst[i] <= c && c <= m_CharCodeRangeLast[i]) {
             return true;
         }
     }
+
     return false;
 }
 
@@ -443,6 +460,7 @@ uint16_t ResFontBase::FindGlyphIndex(const FontCodeMap* pMap, uint32_t c) const 
                 return pMid->index;
             }
         }
+
         return InvalidGlyphIndex;
     }
     default:
@@ -498,8 +516,10 @@ void* ResFontBase::FindBlock(detail::BinaryFileHeader* pHeader, uint32_t signatu
             pResult = pBlock + 1;
             break;
         }
+
         pPtr += pBlock->size;
     }
+
     return pResult;
 }
 
@@ -591,6 +611,7 @@ void ResFontBase::GenTextureNames(nn::gfx::Device* pDevice) {
     if (m_TextureObject.IsInitialized()) {
         return;
     }
+
     const FontTextureGlyph& rTexGlyph = *GetTextureGlyph();
     const int sheetCount = GetActiveSheetCount();
     m_TextureObject.Set(GetResourcePtrOrNull<void>(rTexGlyph.sheetImage), rTexGlyph.sheetFormat,
@@ -608,6 +629,7 @@ bool ResFontBase::LoadTexture(nn::gfx::Device* pDevice, ResourceTextureObject* p
     if ((pTexObj->GetFormat() & FontSheetFormatMask) >= 20) {
         return false;
     }
+
     switch (pTexObj->GetFormat() & FontSheetFormatMask) {
     case 1:
     case 6:
@@ -616,6 +638,7 @@ bool ResFontBase::LoadTexture(nn::gfx::Device* pDevice, ResourceTextureObject* p
     default:
         break;
     }
+
     pTexObj->Initialize(
         pDevice, m_pMemoryPool,
         nn::util::BytePtr(m_pResource).Distance(pTexObj->GetImage()) + m_MemoryPoolOffset,
@@ -640,6 +663,7 @@ void ResFontBase::UnloadTexture(nn::gfx::Device* pDevice, ResourceTextureObject*
     if (!pTexObj->IsInitialized()) {
         return;
     }
+
     nn::gfx::ResTextureFile* pFile =
         nn::gfx::ResTextureFile::ResCast(const_cast<void*>(pTexObj->GetImage()));
     nn::gfx::ResTextureContainerData& rContainer = pFile->ToData().textureContainerData;
@@ -652,8 +676,10 @@ void ResFontBase::UnloadTexture(nn::gfx::Device* pDevice, ResourceTextureObject*
             static_cast<detail::GfxMemoryPoolImpl*>(rContainer.pTextureMemoryPool.Get())
                 ->Finalize(pDeviceImpl);
         }
+
         rContainer.pCurrentMemoryPool.Set(nullptr);
     }
+
     pTexObj->Reset();
 }
 

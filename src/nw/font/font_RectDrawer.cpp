@@ -145,6 +145,7 @@ void RectDrawer::Finalize(nn::gfx::Device* pDevice) {
     for (int i = 0; i < ShaderVariationCount; i++) {
         pContainer->GetResShaderVariation(i)->GetResShaderProgram(m_CodeType)->Finalize(pDevice);
     }
+
     pContainer->Finalize(pDevice);
 
     m_CharCountMax = 0;
@@ -212,9 +213,11 @@ void RectDrawer::Draw(nn::gfx::CommandBuffer& rCommandBuffer,
     if (rBuffer.m_CharCountMax < 1) {
         return;
     }
+
     if (rBuffer.m_pConstantBuffer->IsUnallocated()) {
         return;
     }
+
     if (m_CharCountMax < rBuffer.m_CharCount) {
         return;
     }
@@ -276,6 +279,7 @@ void RectDrawer::AddDrawCommand(nn::gfx::CommandBuffer& rCommandBuffer,
             variation =
                 (shaderVariationFlags & DispStringBuffer::ShaderVariationFlag_BorderPass) ? 2 : 1;
         }
+
         if (variation != currentVariation) {
             rCommandBuffer.SetShader(GetVertexShader(variation), nn::gfx::ShaderStageBit_All);
             rCommandBuffer.SetVertexState(&m_VertexStates[variation]);
@@ -315,6 +319,7 @@ void RectDrawer::AddDrawCommand(nn::gfx::CommandBuffer& rCommandBuffer,
             } else {
                 m_ShaderParamBlackWhiteInterpolationDisabledBuffer.GetGpuAddress(&gpuAddress);
             }
+
             rCommandBuffer.SetConstantBuffer(m_BlackWhiteInterpolationSlots[variation],
                                              nn::gfx::ShaderStage_Pixel, gpuAddress,
                                              sizeof(uint32_t));
@@ -378,6 +383,7 @@ bool RectDrawer::Initialize(nn::gfx::Device* pDevice, void* pWorkMemory, uint32_
         isInitialized =
             pProgram->Initialize(pDevice) == nn::gfx::ShaderInitializeResult_Success;
     }
+
     if (!isInitialized) {
         pProgram = pVariation->GetResShaderProgram(nn::gfx::ShaderCodeType_Ir);
         if (pProgram != nullptr) {
@@ -386,11 +392,13 @@ bool RectDrawer::Initialize(nn::gfx::Device* pDevice, void* pWorkMemory, uint32_
                 pProgram->Initialize(pDevice) == nn::gfx::ShaderInitializeResult_Success;
         }
     }
+
     if (!isInitialized) {
         pProgram = pVariation->GetResShaderProgram(nn::gfx::ShaderCodeType_Source);
         m_CodeType = nn::gfx::ShaderCodeType_Source;
         pProgram->Initialize(pDevice);
     }
+
     workMemory.Advance(ShaderBinarySize);
 
     for (int i = 1; i < ShaderVariationCount; i++) {
@@ -496,6 +504,7 @@ bool RectDrawer::Initialize(nn::gfx::Device* pDevice, void* pWorkMemory, uint32_
             pVertices[i].texCoord[1] = static_cast<float>(1 - (i >> 1));
             pVertices[i].texCoord[2] = 0.0f;
         }
+
         m_VertexBuffer.Unmap();
     }
 

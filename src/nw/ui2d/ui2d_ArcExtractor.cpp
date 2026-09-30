@@ -10,6 +10,7 @@ namespace nn::ui2d {
 static inline s16 Read16(bool reverse, s16 value) {
     return reverse ? __builtin_bswap16(value) : value;
 }
+
 // value is the serialized 32-bit field; endian identifies the archive byte order.
 static inline u32 Read32(const s32& value, EndianTypes endian) {
     return endian == EndianTypes_Big ? __builtin_bswap32(value) : value;
@@ -77,9 +78,11 @@ void ArcExtractor::Unrelocate(const void* archive) {
                 file->SetRelocated(false);
             }
         }
+
         if (*reinterpret_cast<u64*>(file) == 0x544e4646) nn::font::ResFont::Unrelocate(file);
     }
 }
+
 int ArcExtractor::GetFileCount() const { return m_FATEntryCount < 0 ? 0 : m_FATEntryCount; }
 // info optionally receives the resource offset and size; entryId selects a FAT entry.
 void* ArcExtractor::GetFileFast(ArcFileInfo* info, int entryId) {
@@ -92,6 +95,7 @@ void* ArcExtractor::GetFileFast(ArcFileInfo* info, int entryId) {
         info->m_StartOffset = start;
         info->m_Length = end - start;
     }
+
     return const_cast<u8*>(m_pDataBlock) + start;
 }
 
@@ -106,8 +110,10 @@ static inline int FindEntry(const ArcExtractor::FATEntry* entries, int count, u3
             if (high == middle) return -1;
             high = middle;
         }
+
         middle = (low + high) / 2;
     }
+
     return middle;
 }
 
@@ -126,6 +132,7 @@ int ArcExtractor::ConvertPathToEntryId(const char* path) const {
         if (m_pFNTBlock + offset > reinterpret_cast<const char*>(m_pDataBlock)) return -1;
         if (std::strcmp(path, m_pFNTBlock + offset * 4) == 0) break;
     }
+
     return index;
 }
 
@@ -147,6 +154,7 @@ int ArcExtractor::ReadEntry(int* entryId, ArcEntry* entries, int count) const {
             }
         }
     }
+
     *entryId = index;
     return read;
 }

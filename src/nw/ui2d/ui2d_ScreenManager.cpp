@@ -9,6 +9,7 @@ int ScreenManager::FindScreenId(Screen* screen) const {
     for (int i = 0; i < 8; ++i) if (mScreens[i] == screen) return i;
     return -1;
 }
+
 // index selects the registration to clear.
 void ScreenManager::UnregisterScreenById_(int index) { mScreens[index] = nullptr; }
 // index selects the registration and active ID to reset.

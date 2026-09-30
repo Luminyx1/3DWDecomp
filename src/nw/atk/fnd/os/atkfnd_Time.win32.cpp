@@ -6,6 +6,7 @@ Time Time::Current() { return {nn::os::GetSystemTick().GetInt64Value()}; }
 TimeSpan TimeSpan::FromNanoSeconds(long duration) {
     return {nn::os::ConvertToTick(nn::TimeSpan::FromNanoSeconds(duration)).GetInt64Value()};
 }
+
 // duration is a signed microsecond interval to convert to system ticks.
 TimeSpan TimeSpan::FromMicroSeconds(long duration) { return FromNanoSeconds(duration * 1000); }
 // duration is a signed millisecond interval to convert to system ticks.

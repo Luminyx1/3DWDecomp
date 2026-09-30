@@ -58,6 +58,7 @@ uint32_t CharStrmReader::ReadNextCharSjis() {
         code = *GetChar<uint8_t>();
         StepStrm<uint8_t>(1);
     }
+
     return code;
 }
 

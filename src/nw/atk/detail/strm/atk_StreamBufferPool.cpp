@@ -13,12 +13,14 @@ void StreamBufferPool::Initialize(void* memory, size_t size, int count) {
     std::memset(mAllocated, 0, sizeof(mAllocated));
     mBlockSize = (size / count) & ~size_t(63);
 }
+
 void StreamBufferPool::Finalize() {
     mBlockCount = 0;
     mBlockSize = 0;
     mSize = 0;
     mMemory = nullptr;
 }
+
 void* StreamBufferPool::Alloc() {
     if (mAllocatedCount >= mBlockCount) return nullptr;
     const int bytes = ((mBlockCount + 7) & ~7) / 8;
@@ -32,8 +34,10 @@ void* StreamBufferPool::Alloc() {
             }
         }
     }
+
     return nullptr;
 }
+
 // buffer is a currently allocated block returned by this pool.
 void StreamBufferPool::Free(void* buffer) {
     size_t index = (static_cast<u8*>(buffer) - mMemory) / mBlockSize;

@@ -78,10 +78,13 @@ void TextureCache::InitializeArg::SetDefault() {
                 charCodeRangeFirsts[i][j][k] = 0;
                 charCodeRangeLasts[i][j][k] = 0;
             }
+
             fontIndexes[i][j] = 0;
         }
+
         innerFontCounts[i] = 1;
     }
+
     fontFaceCount = 1;
     workMemorySize = WorkMemorySizeDefault;
     noPlotWorkMemorySize = NoPlotWorkMemorySizeDefault;
@@ -115,6 +118,7 @@ TextureCache::TextureCache()
         m_InnerFontCounts[i] = 0;
         m_pInnerFontFaceTables[i] = nullptr;
     }
+
     for (int i = 0; i < FontFaceCountMax * InnerFontCountMax; i++) {
         m_InnerFontFaceTable[i] = 0;
     }
@@ -176,9 +180,11 @@ void TextureCache::Initialize(nn::gfx::Device* pDevice, const InitializeArg& rAr
     if ((rArg.textureCacheWidth & (rArg.textureCacheWidth - 1)) != 0) {
         return;
     }
+
     if (rArg.pAllocateFunction == nullptr) {
         return;
     }
+
     if (rArg.fontFaceCount < 1 || rArg.fontFaceCount > FontFaceCountMax) {
         return;
     }
@@ -231,6 +237,7 @@ void TextureCache::Initialize(nn::gfx::Device* pDevice, const InitializeArg& rAr
     for (int i = 0; i < CoreCountMax; i++) {
         m_CurrentFontFacesNoPlot[i] = 0xffffffff;
     }
+
     m_IsDrawingAdvanceWidthUsed = rArg.isDrawingAdvanceWidthUsed;
 
     m_pFontEngine = static_cast<fontll::ScalableFontEngine*>(rArg.pAllocateFunction(
@@ -259,6 +266,7 @@ void TextureCache::Initialize(nn::gfx::Device* pDevice, const InitializeArg& rAr
                                        rArg.pUserDataForAllocateFunction),
                 rArg.noPlotWorkMemorySize * fontCount);
         }
+
         AssertFsErrorNoPlot("Initialize", i);
     }
 
@@ -273,6 +281,7 @@ void TextureCache::Initialize(nn::gfx::Device* pDevice, const InitializeArg& rAr
             } else {
                 pFontData = rArg.pFontDatas[face][inner];
             }
+
             m_pBoldWeights[fontIndex] = static_cast<int>(rArg.boldWeights[face][inner] * 65536.0f);
             m_pBorderWidths[fontIndex] = rArg.borderWidths[face][inner];
             m_pIsWidthFromBoundingBox[fontIndex] = rArg.isWidthFromBoundingBox[face][inner];
@@ -303,10 +312,12 @@ void TextureCache::Initialize(nn::gfx::Device* pDevice, const InitializeArg& rAr
                 metrics.boundingBoxMaxY = rArg.overwrittenAscents[face][inner];
                 metrics.ascender = rArg.overwrittenAscents[face][inner];
             }
+
             if (rArg.overwrittenDescents[face][inner] != 0) {
                 metrics.boundingBoxMinY = -rArg.overwrittenDescents[face][inner];
                 metrics.descender = rArg.overwrittenDescents[face][inner];
             }
+
             m_pFontMetrics[fontIndex].boundingBoxAscentRatio =
                 static_cast<float>(metrics.boundingBoxMaxY) / metrics.unitsPerEm;
             m_pFontMetrics[fontIndex].boundingBoxHeightRatio =
@@ -328,6 +339,7 @@ void TextureCache::Initialize(nn::gfx::Device* pDevice, const InitializeArg& rAr
                     rArg.pAllocateFunction, rArg.pUserDataForAllocateFunction,
                     rArg.ignorePalt[face][inner]);
             }
+
             m_pOtfKerningTables[fontIndex] = pKerningTable;
             fontIndex++;
         }
@@ -348,12 +360,14 @@ void TextureCache::Initialize(nn::gfx::Device* pDevice, const InitializeArg& rAr
                 ascentRatio = metrics.ascentRatio;
             }
         }
+
         for (int inner = 0; inner < m_InnerFontCounts[face]; inner++) {
             m_pFontMetrics[fontIndexBase + inner].boundingBoxAscentRatio = boundingBoxAscentRatio;
             m_pFontMetrics[fontIndexBase + inner].boundingBoxHeightRatio = boundingBoxHeightRatio;
             m_pFontMetrics[fontIndexBase + inner].ascentRatio = ascentRatio;
             m_pFontMetrics[fontIndexBase + inner].heightRatio = heightRatio;
         }
+
         fontIndexBase += m_InnerFontCounts[face];
     }
 
@@ -420,6 +434,7 @@ int TextureCache::InitializeFontFaceTable(const InitializeArg& rArg) {
         if (rArg.innerFontCounts[i] < 1 || rArg.innerFontCounts[i] > InnerFontCountMax) {
             return 0;
         }
+
         fontCount += rArg.innerFontCounts[i];
     }
 
@@ -434,9 +449,11 @@ int TextureCache::InitializeFontFaceTable(const InitializeArg& rArg) {
             offset += rArg.innerFontCounts[i];
         }
     }
+
     for (int i = 0; i < FontFaceCountMax * InnerFontCountMax; i++) {
         m_InnerFontFaceTable[i] = i;
     }
+
     return fontCount;
 }
 
@@ -465,6 +482,7 @@ void TextureCache::SetFontFace(u32 fontFace) {
     if (m_CurrentFontFace == fontFace) {
         return;
     }
+
     m_pFontEngine->SetFont(GetFontName(fontFace));
     AssertFsError("SetFont");
     m_pFontEngine->SetBoldWeight(m_pBoldWeights[fontFace]);
@@ -475,6 +493,7 @@ void TextureCache::SetFontFace(u32 fontFace) {
     } else {
         m_pFontEngine->SetFlags(fontll::ScalableFontEngine::Flags_NoEffect);
     }
+
     AssertFsError("SetFlags");
     m_CurrentFontFace = fontFace;
 }
@@ -501,6 +520,7 @@ void TextureCache::Finalize(nn::gfx::Device* pDevice, FreeFunction pFreeFunction
                                                        pFreeFunction, pUserData);
                 m_pOtfKerningTables[fontIndex] = nullptr;
             }
+
             fontIndex++;
         }
     }
@@ -524,6 +544,7 @@ void TextureCache::Finalize(nn::gfx::Device* pDevice, FreeFunction pFreeFunction
     for (int i = 0; i < LineCountMax; i++) {
         m_LineInfos[i].list.clear();
     }
+
     m_NeedPlotGlyphList.clear();
     m_NeedEraseGlyphList.clear();
     m_NotInFontGlyphList.clear();
@@ -561,6 +582,7 @@ void TextureCache::Finalize(nn::gfx::Device* pDevice, FreeFunction pFreeFunction
             m_MemoryPool.Finalize(pDevice);
         }
     }
+
     if (m_pActiveMemoryPool == &m_MemoryPool) {
         pFreeFunction(m_pTextureBitMap, pUserData);
         m_pTextureBitMap = nullptr;
@@ -613,6 +635,7 @@ bool TextureCache::RegisterGlyph(u32 code, u32 fontSize, u16 fontFace, int lockG
         if (lockGroup >= 0) {
             pNode->m_LockGroup |= 1 << lockGroup;
         }
+
         return pNode->IsFlagOn(GlyphNode::FlagBit_NotPlotted);
     }
 
@@ -622,6 +645,7 @@ bool TextureCache::RegisterGlyph(u32 code, u32 fontSize, u16 fontFace, int lockG
         if (lockGroup >= 0) {
             pNode->m_LockGroup |= 1 << lockGroup;
         }
+
         m_NeedPlotGlyphList.push_back(*pNode);
         return true;
     }
@@ -629,6 +653,7 @@ bool TextureCache::RegisterGlyph(u32 code, u32 fontSize, u16 fontFace, int lockG
     if (EraseNotInFontGlyphs() > 0) {
         return RegisterGlyph(code, fontSize, innerFontFace, lockGroup, false);
     }
+
     m_NoSpaceError = NoSpaceError_GlyphNodeSpaceShortage;
     return false;
 }
@@ -652,6 +677,7 @@ bool TextureCache::GetInnerFontFace(u32* pInnerFontFace, u32 fontFace, u32 code)
             }
         }
     }
+
     *pInnerFontFace = 0;
     return false;
 }
@@ -672,8 +698,10 @@ u32 TextureCache::EraseNotInFontGlyphs() {
             m_GlyphTreeMap.Erase(node.GetCode(), node.GetFontSize(), node.GetFontFace());
             count++;
         }
+
         it = next;
     }
+
     return count;
 }
 
@@ -695,8 +723,10 @@ u32 TextureCache::RegisterGlyphsWithLength(const u16* pCodes, u32 codeLength, u3
         if (pCodes[i] == 0) {
             break;
         }
+
         count += RegisterGlyph(pCodes[i], fontSize, fontFace, lockGroup, isNoBreakHyphenReplaced);
     }
+
     return count;
 }
 
@@ -721,9 +751,11 @@ u32 TextureCache::RegisterGlyphsWithLengthUtf8(const char* pCodes, u32 codeLengt
         if (buffer[0] == 0) {
             break;
         }
+
         count += RegisterGlyph(ConvertCharacterUtf8ToUtf32(buffer), fontSize, fontFace, lockGroup,
                                isNoBreakHyphenReplaced);
     }
+
     return count;
 }
 
@@ -772,6 +804,7 @@ void TextureCache::UpdateTextureCache() {
                 m_NoSpaceError = NoSpaceError_LineCountShortage;
                 continue;
             }
+
             pLine = CreateNewLineImpl(lineKind);
         }
 
@@ -790,6 +823,7 @@ void TextureCache::UpdateTextureCache() {
                 m_NoSpaceError = NoSpaceError_TextureSpaceShortage;
                 continue;
             }
+
             pNode->m_CachePosX = pEraseNode->m_CachePosX;
             pNode->m_CachePosY = pEraseNode->m_CachePosY;
             pNode->m_LineNo = pEraseNode->m_LineNo;
@@ -830,8 +864,10 @@ void TextureCache::UpdateTextureCache() {
                 pNode->m_AdvanceX = static_cast<int>(
                     scaleWidth * (advanceX + m_pLetterSpacings[pNode->GetFontFace()]));
             }
+
             left = m_pLetterSpacings[pNode->GetFontFace()] / 2 + pGlyph->left;
         }
+
         pNode->m_LeftOffset = static_cast<int>(scaleWidth * left);
         pNode->m_BaselineOffset = static_cast<int>(
             scaleHeight * baseline +
@@ -867,9 +903,11 @@ void TextureCache::UpdateTextureCache() {
                             0;
                     pLine[x + 1] = value - borderValue;
                 }
+
                 pLine[0] = 0;
                 pLine[pGlyph->width + 1] = 0;
             }
+
             m_pFontEngine->ReleasesGlyph(pGlyph);
             pGlyph = pBorderGlyph;
         } else {
@@ -909,9 +947,11 @@ TextureCache::LineInfo* TextureCache::CreateNewLineImpl(u8 lineKind) {
         LineInfo& lastLine = m_LineInfos[m_LineCurrentPos - 1];
         y = lastLine.y + m_pCalculateLineHeightFunction(lastLine.kind) + 2;
     }
+
     if (m_pCalculateLineHeightFunction(lineKind) + y >= m_TextureCacheHeight) {
         return nullptr;
     }
+
     LineInfo* pLine = &m_LineInfos[m_LineCurrentPos];
     pLine->currentX = 0;
     pLine->y = y;
@@ -927,6 +967,7 @@ GlyphNode* TextureCache::FindAndReserveEraseGlyph(u8 lineKind, u16 glyphWidth) {
         if (line.kind != lineKind) {
             continue;
         }
+
         GlyphLineList::iterator begin = line.list.begin();
         GlyphLineList::iterator end = line.list.end();
         int count = 0;
@@ -936,12 +977,14 @@ GlyphNode* TextureCache::FindAndReserveEraseGlyph(u8 lineKind, u16 glyphWidth) {
                 count = 0;
                 continue;
             }
+
             u32 width = it->m_CacheWidth;
             if (count != 0) {
                 width = it->m_CachePosX + width - first->m_CachePosX;
             } else {
                 first = it;
             }
+
             int space = 0;
             if (first != begin) {
                 GlyphLineList::iterator prev = first;
@@ -951,6 +994,7 @@ GlyphNode* TextureCache::FindAndReserveEraseGlyph(u8 lineKind, u16 glyphWidth) {
                 space = first->m_CachePosX - 2 - prev->m_CachePosX - prev->m_CacheWidth;
                 width += space > 0 ? space : 0;
             }
+
             if (width >= glyphWidth) {
                 GlyphLineList::iterator last = it;
                 ++last;
@@ -960,14 +1004,18 @@ GlyphNode* TextureCache::FindAndReserveEraseGlyph(u8 lineKind, u16 glyphWidth) {
                         m_NeedEraseGlyphList.push_back(*eraseIt);
                     }
                 }
+
                 if (space > 0) {
                     first->m_CachePosX -= space;
                 }
+
                 return &*first;
             }
+
             count++;
         }
     }
+
     return nullptr;
 }
 
@@ -990,11 +1038,14 @@ void TextureCache::CompleteTextureCache() {
             } else {
                 currentX = list.back().m_CachePosX + list.back().m_CacheWidth + 2;
             }
+
             m_LineInfos[pNode->m_LineNo].currentX = currentX;
         }
+
         m_GlyphTreeMap.Erase(pNode->GetCode(), pNode->GetFontSize(), pNode->GetFontFace());
         it = next;
     }
+
     m_GlyphTreeMap.UpdateFlagsForCompleteTextureCache();
 }
 
@@ -1023,13 +1074,16 @@ void TextureCache::ClearLockGlyphsWithLength(const u16* pCodes, u32 codeLength, 
         if (isNoBreakHyphenReplaced && code == 0x2011) {
             code = '-';
         }
+
         if (code == 0) {
             return;
         }
+
         u32 innerFontFace;
         if (!GetInnerFontFace(&innerFontFace, fontFace, code)) {
             return;
         }
+
         GlyphNode* pNode = m_GlyphTreeMap.Find(code, fontSize, innerFontFace);
         if (pNode != nullptr) {
             pNode->m_LockGroup &= ~(1 << lockGroup);
@@ -1056,12 +1110,14 @@ void TextureCache::ClearLockGlyphsWithLengthUtf8(const char* pCodes, u32 codeLen
         if (buffer[0] == 0) {
             return;
         }
+
         u32 code = ConvertCharacterUtf8ToUtf32(buffer);
         u32 convertedCode = isNoBreakHyphenReplaced && code == 0x2011 ? '-' : code;
         u32 innerFontFace;
         if (!GetInnerFontFace(&innerFontFace, fontFace, convertedCode)) {
             return;
         }
+
         GlyphNode* pNode = m_GlyphTreeMap.Find(convertedCode, fontSize, innerFontFace);
         if (pNode != nullptr) {
             pNode->m_LockGroup &= ~(1 << lockGroup);
@@ -1084,6 +1140,7 @@ void TextureCache::ResetTextureCache() {
     for (u32 i = 0; i < m_LineCurrentPos; i++) {
         m_LineInfos[i].list.clear();
     }
+
     m_LineCurrentPos = 0;
     m_GlyphTreeMap.Reset();
 }
@@ -1111,6 +1168,7 @@ u32 TextureCache::AcquireFontFaceContainingGlyph(u32 code) {
             return face;
         }
     }
+
     return 0xffffffff;
 }
 
@@ -1138,6 +1196,7 @@ bool TextureCache::IsBorderEffectEnabled(u16 fontFace) const {
             return true;
         }
     }
+
     return false;
 }
 
@@ -1157,10 +1216,12 @@ u32 TextureCache::CountPlottingGlyph(const u16* pCodes, u32 codeLength, u32 font
         if (code == 0) {
             break;
         }
+
         u32 innerFontFace;
         if (!GetInnerFontFace(&innerFontFace, fontFace, code)) {
             continue;
         }
+
         GlyphNode* pNode = m_GlyphTreeMap.Find(code, fontSize, innerFontFace);
         if (pNode == nullptr ||
             pNode->IsFlagOn(GlyphNode::FlagBit_NotPlotted | GlyphNode::FlagBit_NotInFont) ||
@@ -1170,6 +1231,7 @@ u32 TextureCache::CountPlottingGlyph(const u16* pCodes, u32 codeLength, u32 font
             count++;
         }
     }
+
     return count;
 }
 
@@ -1187,6 +1249,7 @@ const TextureCache::FontMetrics& TextureCache::GetFontMetrics(u16 fontFace) cons
             }
         }
     }
+
     return pFontMetrics[index];
 }
 
@@ -1202,6 +1265,7 @@ int TextureCache::CalculateCharWidth(u32 code, u32 fontSize, u16 fontFace) {
     if (!GetInnerFontFace(&innerFontFace, fontFace, code)) {
         return 0;
     }
+
     u32 coreId = GetCoreId();
     SetFontFaceNoPlot(innerFontFace, coreId);
     m_pFontEngineNoPlot[coreId].SetScale(fontSize << 16, 0, 0, fontSize << 16);
@@ -1219,6 +1283,7 @@ int TextureCache::CalculateCharWidth(u32 code, u32 fontSize, u16 fontFace) {
     } else if (result == 0xc9) {
         m_IsFsError = true;
     }
+
     return width;
 }
 
@@ -1239,6 +1304,7 @@ void TextureCache::SetFontFaceNoPlot(u32 fontFace, u32 coreId) {
     if (m_CurrentFontFacesNoPlot[coreId] == fontFace) {
         return;
     }
+
     fontll::ScalableFontEngine* pEngine = &m_pFontEngineNoPlot[coreId];
     pEngine->SetFont(GetFontName(fontFace));
     AssertFsErrorNoPlot("SetFont", coreId);
@@ -1250,6 +1316,7 @@ void TextureCache::SetFontFaceNoPlot(u32 fontFace, u32 coreId) {
     } else {
         m_pFontEngineNoPlot[coreId].SetFlags(fontll::ScalableFontEngine::Flags_NoEffect);
     }
+
     AssertFsErrorNoPlot("SetFlags", coreId);
     m_CurrentFontFacesNoPlot[coreId] = fontFace;
 }
@@ -1260,9 +1327,11 @@ int TextureCache::CalculateKerning(u32 code0, u32 code1, u32 fontSize, u16 fontF
         if (!GetInnerFontFace(&innerFontFace, fontFace, code1)) {
             return 0;
         }
+
         if (m_pIsWidthFromBoundingBox[innerFontFace] || m_pIsFixedWidth[innerFontFace]) {
             return 0;
         }
+
         u32 coreId = GetCoreId();
         SetFontFaceNoPlot(innerFontFace, coreId);
         m_pFontEngineNoPlot[coreId].SetScale(fontSize << 16, 0, 0, fontSize << 16);
@@ -1270,17 +1339,21 @@ int TextureCache::CalculateKerning(u32 code0, u32 code1, u32 fontSize, u16 fontF
         if (m_pOtfKerningTables[innerFontFace] == nullptr) {
             return 0;
         }
+
         return static_cast<int>(m_pFontMetrics[innerFontFace].scaleWidth *
                                 m_pFontEngineNoPlot[coreId].AcquireOtfKerningFirst(
                                     m_pOtfKerningTables[innerFontFace], code1, fontSize));
     }
+
     if (code1 == 0) {
         if (!GetInnerFontFace(&innerFontFace, fontFace, code0)) {
             return 0;
         }
+
         if (m_pIsWidthFromBoundingBox[innerFontFace] || m_pIsFixedWidth[innerFontFace]) {
             return 0;
         }
+
         u32 coreId = GetCoreId();
         SetFontFaceNoPlot(innerFontFace, coreId);
         m_pFontEngineNoPlot[coreId].SetScale(fontSize << 16, 0, 0, fontSize << 16);
@@ -1288,6 +1361,7 @@ int TextureCache::CalculateKerning(u32 code0, u32 code1, u32 fontSize, u16 fontF
         if (m_pOtfKerningTables[innerFontFace] == nullptr) {
             return 0;
         }
+
         return static_cast<int>(m_pFontMetrics[innerFontFace].scaleWidth *
                                 m_pFontEngineNoPlot[coreId].AcquireOtfKerningLast(
                                     m_pOtfKerningTables[innerFontFace], code0, fontSize));
@@ -1297,15 +1371,19 @@ int TextureCache::CalculateKerning(u32 code0, u32 code1, u32 fontSize, u16 fontF
     if (!GetInnerFontFace(&innerFontFace, fontFace, code0)) {
         return 0;
     }
+
     if (!GetInnerFontFace(&innerFontFace1, fontFace, code1)) {
         return 0;
     }
+
     if (innerFontFace != innerFontFace1) {
         return 0;
     }
+
     if (m_pIsWidthFromBoundingBox[innerFontFace] || m_pIsFixedWidth[innerFontFace]) {
         return 0;
     }
+
     u32 coreId = GetCoreId();
     SetFontFaceNoPlot(innerFontFace, coreId);
     m_pFontEngineNoPlot[coreId].SetScale(fontSize << 16, 0, 0, fontSize << 16);
@@ -1318,6 +1396,7 @@ int TextureCache::CalculateKerning(u32 code0, u32 code1, u32 fontSize, u16 fontF
         otfKerning = m_pFontEngineNoPlot[coreId].AcquireOtfKerning(
             m_pOtfKerningTables[innerFontFace], code0, code1, fontSize);
     }
+
     if (otfKerning != 0) {
         kerning = static_cast<int>(m_pFontMetrics[innerFontFace].scaleWidth * otfKerning);
     } else {
@@ -1329,9 +1408,11 @@ int TextureCache::CalculateKerning(u32 code0, u32 code1, u32 fontSize, u16 fontF
             kerning = static_cast<int>(m_pFontMetrics[innerFontFace].scaleWidth * kerningX) >> 16;
         }
     }
+
     if (isError) {
         return 0;
     }
+
     return kerning;
 }
 
@@ -1347,6 +1428,7 @@ GlyphNode* TextureCache::FindGlyphNode(u32 code, u32 fontSize, u16 fontFace) {
     if (!GetInnerFontFace(&innerFontFace, fontFace, code)) {
         return nullptr;
     }
+
     return m_GlyphTreeMap.Find(code, fontSize, innerFontFace);
 }
 
@@ -1366,10 +1448,12 @@ u32 TextureCache::CountUnusableGlyph(const u16* pCodes, u32 codeLength, u32 font
         if (code == 0) {
             break;
         }
+
         u32 innerFontFace;
         if (!GetInnerFontFace(&innerFontFace, fontFace, code)) {
             continue;
         }
+
         GlyphNode* pNode = m_GlyphTreeMap.Find(code, fontSize, innerFontFace);
         if (pNode == nullptr ||
             pNode->IsFlagOn(GlyphNode::FlagBit_NotPlotted | GlyphNode::FlagBit_NotInFont) ||
@@ -1379,6 +1463,7 @@ u32 TextureCache::CountUnusableGlyph(const u16* pCodes, u32 codeLength, u32 font
             count++;
         }
     }
+
     return count;
 }
 
@@ -1393,12 +1478,14 @@ bool TextureCache::CheckCharCodeRange(u32 innerFontFace, u32 code) const {
     if (rangeCount == 0) {
         return true;
     }
+
     for (int i = 0; i < rangeCount; i++) {
         u32 first = m_pCharCodeRangeFirsts[innerFontFace][i];
         if ((first & 0x7fffffff) <= code && code <= m_pCharCodeRangeLasts[innerFontFace][i]) {
             return (first & 0x80000000) == 0;
         }
     }
+
     return false;
 }
 

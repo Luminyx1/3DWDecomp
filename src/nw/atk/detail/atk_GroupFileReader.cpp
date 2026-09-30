@@ -14,9 +14,11 @@ GroupFileReader::GroupFileReader(const void* file)
         if (extra->signature != 0x58464e49) return;
         mInfoEx = &extra->body;
     }
+
     mInfo = &info->body;
     mFileData = data->data;
 }
+
 // info receives the file identifier and embedded address; index selects a group item.
 bool GroupFileReader::ReadGroupItemLocationInfo(GroupItemLocationInfo* info, u32 index) const {
     if (!mInfo) return false;
@@ -27,6 +29,7 @@ bool GroupFileReader::ReadGroupItemLocationInfo(GroupItemLocationInfo* info, u32
     info->address = item->GetFileAddress(mFileData);
     return true;
 }
+
 u32 GroupFileReader::GetGroupItemExCount() const { return mInfoEx ? mInfoEx->count : 0; }
 // info receives the extended item record; index selects an entry in the optional INFX block.
 bool GroupFileReader::ReadGroupItemInfoEx(GroupFile::GroupItemInfoEx* info, u32 index) const {
@@ -37,28 +40,34 @@ bool GroupFileReader::ReadGroupItemInfoEx(GroupFile::GroupItemInfoEx* info, u32 
     *info = *item;
     return true;
 }
+
 const GroupFile::InfoBlock* GroupFile::FileHeader::GetInfoBlock() const {
     for (size_t i = 0; i < blockCount; ++i)
         if (blocks[i].type == 0x7800) {
             s32 offset = blocks[i].offset;
             return offset ? reinterpret_cast<const InfoBlock*>(reinterpret_cast<const u8*>(this) + offset) : nullptr;
         }
+
     return nullptr;
 }
+
 const GroupFile::FileBlock* GroupFile::FileHeader::GetFileBlock() const {
     for (size_t i = 0; i < blockCount; ++i)
         if (blocks[i].type == 0x7801) {
             s32 offset = blocks[i].offset;
             return offset ? reinterpret_cast<const FileBlock*>(reinterpret_cast<const u8*>(this) + offset) : nullptr;
         }
+
     return nullptr;
 }
+
 const GroupFile::InfoExBlock* GroupFile::FileHeader::GetInfoExBlock() const {
     for (size_t i = 0; i < blockCount; ++i)
         if (blocks[i].type == 0x7802) {
             s32 offset = blocks[i].offset;
             return offset ? reinterpret_cast<const InfoExBlock*>(reinterpret_cast<const u8*>(this) + offset) : nullptr;
         }
+
     return nullptr;
 }
 }

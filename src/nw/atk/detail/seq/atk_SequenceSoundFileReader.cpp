@@ -15,11 +15,13 @@ SequenceSoundFileReader::SequenceSoundFileReader(const void* file)
     mSequenceData = data->data;
     mLabels = &labels->body;
 }
+
 const void* SequenceSoundFileReader::GetSequenceData() const { return mSequenceData; }
 // label is the search prefix; offset receives the matching sequence-data position.
 bool SequenceSoundFileReader::GetOffsetByLabel(const char* label, u32* offset) const {
     return mLabels->GetOffsetByLabel(label, offset);
 }
+
 // offset is the sequence-data position whose label is requested.
 const char* SequenceSoundFileReader::GetLabelByOffset(u32 offset) const {
     return mLabels->GetLabelByOffset(offset);

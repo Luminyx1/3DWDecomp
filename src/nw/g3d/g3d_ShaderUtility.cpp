@@ -16,6 +16,7 @@ void ShaderUtility::InitializeShaderKey(u32* key, int capacity, const ResShading
         if (choice >= 0) option->WriteStaticKey(key, choice);
     }
 }
+
 // object receives assignment's static option choices; check is unchecked in this build.
 void ShaderUtility::InitializeShaderKey(ShadingModelObj* object, const ResShaderAssign* assignment, bool check) {
     object->ClearStaticKey();
@@ -30,6 +31,7 @@ void ShaderUtility::InitializeShaderKey(ShadingModelObj* object, const ResShader
         if (choice >= 0) object->WriteStaticKey(index, choice);
     }
 }
+
 // material receives offsets for parameters found in model's material uniform block.
 void ShaderUtility::BindShaderParam(ResMaterial* material, const ResShadingModel* model) {
     int blockIndex = model->GetMaterialBlockIndex();
@@ -43,6 +45,7 @@ void ShaderUtility::BindShaderParam(ResMaterial* material, const ResShadingModel
         param->offset = (uniform != nullptr) ? uniform->offset - 1 : -1;
     }
 }
+
 // material receives model's default block contents in each buffered copy, then flushes the writes.
 void ShaderUtility::InitializeShaderParam(MaterialObj* material, const ResShadingModel* model) {
     int blockIndex = model->GetMaterialBlockIndex();

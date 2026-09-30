@@ -16,6 +16,7 @@ void TouchDragButton::Build(nn::gfx::Device* device, Layout* layout, const Contr
     mName = layout->mRootPane->mParent ? layout->mRootPane->mPanelName : static_cast<const char*>(layout->_30);
     mDragPane = layout->mRootPane;
 }
+
 bool TouchDragButton::ProcessOn() {
     switch (mState) {
     case cState_Off:
@@ -24,6 +25,7 @@ bool TouchDragButton::ProcessOn() {
     default: return true;
     }
 }
+
 bool TouchDragButton::ProcessCancel() {
     bool processed = true;
     switch (mState) {
@@ -36,6 +38,7 @@ bool TouchDragButton::ProcessCancel() {
         break;
     default: break;
     }
+
     return processed;
 }
 

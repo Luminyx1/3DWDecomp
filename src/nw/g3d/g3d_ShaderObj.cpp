@@ -32,6 +32,7 @@ void ShadingModelObj::InitializeArgument::CalculateMemorySize() {
         blocks[i].AppendTo(memorySize, memoryAlignment);
     }
 }
+
 // argument supplies resource and buffering; memory is a workspace of size bytes.
 bool ShadingModelObj::Initialize(const InitializeArgument& argument, void* memory, size_t size) {
     if (!argument.memoryAlignment || argument.memorySize > size) return false;
@@ -56,6 +57,7 @@ bool ShadingModelObj::Initialize(const InitializeArgument& argument, void* memor
     range.end = range.begin + (resource->GetStaticKeyLength() + resource->GetDynamicKeyLength()) * resource->ToData().programCount;
     return true;
 }
+
 // device supplies the alignment of a uniform buffer containing option values.
 size_t ShadingModelObj::GetBlockBufferAlignment(nn::gfx::Device* device) const {
     size_t size = resource->ToData().optionBlockIndex >= 0 ? resource->GetUniformBlock(resource->ToData().optionBlockIndex)->size : 0;
@@ -63,6 +65,7 @@ size_t ShadingModelObj::GetBlockBufferAlignment(nn::gfx::Device* device) const {
     InitializeOptionBufferInfo(&info, size);
     return BufferImpl::GetBufferAlignment(device, info);
 }
+
 // device determines alignment for all buffered copies of the option block.
 size_t ShadingModelObj::CalculateBlockBufferSize(nn::gfx::Device* device) {
     if (resource->ToData().optionBlockIndex < 0) return 0;
@@ -72,6 +75,7 @@ size_t ShadingModelObj::CalculateBlockBufferSize(nn::gfx::Device* device) {
     size_t alignment = BufferImpl::GetBufferAlignment(device, info);
     return ((size + alignment - 1) & -alignment) * bufferCount;
 }
+
 // device creates buffers in pool at offset; size has already been validated by the caller.
 void ShadingModelObj::SetupBlockBufferImpl(nn::gfx::Device* device, nn::gfx::MemoryPool* pool, ptrdiff_t offset, size_t size) {
     size_t bytes = CalculateBlockBufferSize(device) / bufferCount;
@@ -82,6 +86,7 @@ void ShadingModelObj::SetupBlockBufferImpl(nn::gfx::Device* device, nn::gfx::Mem
             if (dirtyFlags.mWordCount > 0) memset(dirtyFlags.mBufferFlags + i * dirtyFlags.mWordCount, 0, static_cast<unsigned>(dirtyFlags.mWordCount) * sizeof(u32));
         }
     }
+
     nn::gfx::BufferInfo info;
     InitializeOptionBufferInfo(&info, bytes);
     for (size_t i = 0; i < bufferCount; ++i) {
@@ -91,6 +96,7 @@ void ShadingModelObj::SetupBlockBufferImpl(nn::gfx::Device* device, nn::gfx::Mem
         size_t alignment = GetBlockBufferAlignment(device);
         offset += (bytes + alignment - 1) & -alignment;
     }
+
     blockSize = bytes;
     const ResUniformBlock* block = resource->ToData().optionBlockIndex >= 0 ? resource->GetUniformBlock(resource->ToData().optionBlockIndex) : nullptr;
     if (resource->ToData().optionBlockIndex >= 0 && block->size) {
@@ -102,8 +108,10 @@ void ShadingModelObj::SetupBlockBufferImpl(nn::gfx::Device* device, nn::gfx::Mem
             buffer->Unmap();
         }
     }
+
     flags |= 1;
 }
+
 // device/pool identify storage; offset and size delimit the available region.
 bool ShadingModelObj::SetupBlockBuffer(nn::gfx::Device* device, nn::gfx::MemoryPool* pool, ptrdiff_t offset, size_t size) {
     size_t required = CalculateBlockBufferSize(device);
@@ -113,8 +121,10 @@ bool ShadingModelObj::SetupBlockBuffer(nn::gfx::Device* device, nn::gfx::MemoryP
         poolOffset = offset;
         SetupBlockBufferImpl(device, pool, offset, size);
     }
+
     return true;
 }
+
 // device owns the option buffers to finalize.
 void ShadingModelObj::CleanupBlockBuffer(nn::gfx::Device* device) {
     for (int i = 0; i < bufferCount; ++i) buffers[i].Finalize(device);
@@ -122,6 +132,7 @@ void ShadingModelObj::CleanupBlockBuffer(nn::gfx::Device* device) {
     pool = nullptr;
     poolOffset = 0;
 }
+
 // value is a nonzero mask; return the index of its highest set bit.
 static int HighestBit(u32 value) {
     value |= value >> 1; value |= value >> 2; value |= value >> 4;
@@ -133,6 +144,7 @@ static int HighestBit(u32 value) {
     value = (value & 0x000f000f) + ((value >> 8) & 0x000f000f);
     return 31 - ((value & 31) + (value >> 16));
 }
+
 // bufferIndex selects the buffered option block receiving changed values.
 void ShadingModelObj::CalculateOptionBlock(int bufferIndex) {
     if (!blockSize) return;
@@ -154,9 +166,11 @@ void ShadingModelObj::CalculateOptionBlock(int bufferIndex) {
                 u32* destination = reinterpret_cast<u32*>(static_cast<u8*>(mapped) + offset);
                 *destination = values[choice];
             }
+
             value ^= 1u << bit;
         }
     }
+
     int wordCount = dirtyFlags.mWordCount;
     if (!(wordCount < 1)) memset(dirtyFlags.mBufferFlags + wordCount * bufferIndex, 0, static_cast<unsigned>(wordCount) * sizeof(u32));
     size_t size = blockSize;
@@ -164,6 +178,7 @@ void ShadingModelObj::CalculateOptionBlock(int bufferIndex) {
     buffer->FlushMappedRange(0, size);
     buffers[bufferIndex].Unmap();
 }
+
 void ShadingModelObj::ClearStaticKey() {
     int count = resource->GetStaticOptionCount();
     for (int i = 0; i < count; ++i) {
@@ -179,6 +194,7 @@ void ShadingModelObj::ClearStaticKey() {
         }
     }
 }
+
 // optionIndex selects a static option and choice selects its value.
 void ShadingModelObj::WriteStaticKey(int optionIndex, int choice) {
     const ResShaderOption* option = resource->GetStaticOption(optionIndex);
@@ -191,11 +207,13 @@ void ShadingModelObj::WriteStaticKey(int optionIndex, int choice) {
         }
     }
 }
+
 // optionIndex selects the static option whose current choice is returned.
 int ShadingModelObj::ReadStaticKey(int optionIndex) const {
     const ResShaderOption* option = resource->GetStaticOption(optionIndex);
     return option->ReadStaticKey(option->flags & 1 ? optionKey : staticKey);
 }
+
 void ShaderSelector::InitializeArgument::CalculateMemorySize() {
     const ResShadingModel* resource = model->GetResource();
     blocks[0].Initialize(0);
@@ -210,6 +228,7 @@ void ShaderSelector::InitializeArgument::CalculateMemorySize() {
         blocks[i].AppendTo(memorySize, memoryAlignment);
     }
 }
+
 // argument selects a model; memory provides size bytes for three packed dynamic keys.
 bool ShaderSelector::Initialize(const InitializeArgument& argument, void* memory, size_t size) {
     if (!argument.memoryAlignment || argument.memorySize > size) return false;
@@ -229,8 +248,10 @@ bool ShaderSelector::Initialize(const InitializeArgument& argument, void* memory
         int index = resource->FindProgramIndex(model->range, dynamicKey);
         program = resource->GetProgram(index);
     }
+
     return true;
 }
+
 // device initializes the program matching the current dynamic key.
 bool ShaderSelector::UpdateVariation(nn::gfx::Device* device) {
     const ResShadingModel* resource = model->GetResource();
@@ -246,14 +267,17 @@ bool ShaderSelector::UpdateVariation(nn::gfx::Device* device) {
                 program = nullptr;
                 return false;
             }
+
             std::copy(current, current + count, previous);
             program = resource->GetProgram(index);
             break;
         }
     }
+
     program->Update(device);
     return true;
 }
+
 void ShaderSelector::ClearDynamicKey() {
     int count = model->GetResource()->GetDynamicOptionCount();
     for (int i = 0; i < count; ++i) {
@@ -263,25 +287,30 @@ void ShaderSelector::ClearDynamicKey() {
         else option->WriteDynamicKey(optionKey, choice);
     }
 }
+
 // optionIndex selects a dynamic option and choice identifies its value.
 void ShaderSelector::WriteDynamicKey(int optionIndex, int choice) {
     const ResShaderOption* option = model->GetResource()->GetDynamicOption(optionIndex);
     if (!(option->flags & 1)) option->WriteDynamicKey(dynamicKey, choice);
     else option->WriteDynamicKey(optionKey, choice);
 }
+
 // optionIndex selects the dynamic option whose current choice is returned.
 int ShaderSelector::ReadDynamicKey(int optionIndex) const {
     const ResShaderOption* option = model->GetResource()->GetDynamicOption(optionIndex);
     return option->ReadDynamicKey(option->flags & 1 ? optionKey : dynamicKey);
 }
+
 // destination receives formatted text; capacity is its size in bytes.
 int ShadingModelObj::PrintRawKeyTo(char* destination, int capacity) const {
     return ResShadingModel::PrintKeyTo(destination, capacity, staticKey, resource->GetStaticKeyLength());
 }
+
 // destination receives formatted text; capacity is its size in bytes.
 int ShadingModelObj::PrintRawOptionTo(char* destination, int capacity) const {
     return resource->PrintStaticOptionTo(destination, capacity, staticKey);
 }
+
 // destination receives formatted text; capacity is its size in bytes.
 int ShadingModelObj::PrintKeyTo(char* destination, int capacity) const {
     u32 key[32] = {};
@@ -291,8 +320,10 @@ int ShadingModelObj::PrintKeyTo(char* destination, int capacity) const {
         int choice = option->ReadStaticKey(option->flags & 1 ? optionKey : staticKey);
         option->WriteStaticKey(key, choice);
     }
+
     return ResShadingModel::PrintKeyTo(destination, capacity, key, resource->GetStaticKeyLength());
 }
+
 // destination receives formatted text; capacity is its size in bytes.
 int ShadingModelObj::PrintOptionTo(char* destination, int capacity) const {
     u32 key[32] = {};
@@ -304,18 +335,22 @@ int ShadingModelObj::PrintOptionTo(char* destination, int capacity) const {
         option->WriteStaticKey(key, choice);
         current = resource;
     }
+
     return current->PrintStaticOptionTo(destination, capacity, key);
 }
+
 // destination receives formatted text; capacity is its size in bytes.
 int ShaderSelector::PrintRawKeyTo(char* destination, int capacity) const {
     const u32* key = dynamicKey;
     int length = model->GetResource()->GetDynamicKeyLength();
     return ResShadingModel::PrintKeyTo(destination, capacity, key, length);
 }
+
 // destination receives formatted text; capacity is its size in bytes.
 int ShaderSelector::PrintRawOptionTo(char* destination, int capacity) const {
     return model->GetResource()->PrintDynamicOptionTo(destination, capacity, dynamicKey);
 }
+
 // destination receives formatted text; capacity is its size in bytes.
 int ShaderSelector::PrintKeyTo(char* destination, int capacity) const {
     const ResShadingModel* resource = model->GetResource();
@@ -326,8 +361,10 @@ int ShaderSelector::PrintKeyTo(char* destination, int capacity) const {
         int choice = option->ReadDynamicKey(option->flags & 1 ? optionKey : dynamicKey);
         option->WriteDynamicKey(key, choice);
     }
+
     return ResShadingModel::PrintKeyTo(destination, capacity, key, resource->GetDynamicKeyLength());
 }
+
 // destination receives formatted text; capacity is its size in bytes.
 int ShaderSelector::PrintOptionTo(char* destination, int capacity) const {
     const ResShadingModel* resource = model->GetResource();
@@ -338,6 +375,7 @@ int ShaderSelector::PrintOptionTo(char* destination, int capacity) const {
         int choice = option->ReadDynamicKey(option->flags & 1 ? optionKey : dynamicKey);
         option->WriteDynamicKey(key, choice);
     }
+
     return resource->PrintDynamicOptionTo(destination, capacity, key);
 }
 }

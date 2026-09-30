@@ -9,6 +9,7 @@ FileStreamProxy::~FileStreamProxy() { mStream = nullptr; mBegin = 0; mLength = 0
 FndResult FileStreamProxy::Open(const char* path, AccessMode mode) {
     return {static_cast<u32>(mStream->Open(path, mode).value)};
 }
+
 void FileStreamProxy::Close() { mStream->Close(); }
 void FileStreamProxy::Flush() { mStream->Flush(); }
 bool FileStreamProxy::IsOpened() const { return mStream->IsOpened(); }
@@ -20,10 +21,12 @@ size_t FileStreamProxy::GetSize() const { return mStream->GetSize(); }
 size_t FileStreamProxy::Read(void* output, size_t size, FndResult* result) {
     return mStream->Read(output, size, result);
 }
+
 // input supplies size bytes; result receives the underlying stream's status.
 size_t FileStreamProxy::Write(const void* input, size_t size, FndResult* result) {
     return mStream->Write(input, size, result);
 }
+
 // offset is interpreted relative to origin, then clamped to the proxy's byte range.
 // The original passes the computed position and the unchanged origin to the underlying stream.
 FndResult FileStreamProxy::Seek(long offset, SeekOrigin origin) {
@@ -35,11 +38,13 @@ FndResult FileStreamProxy::Seek(long offset, SeekOrigin origin) {
     case SeekOrigin_Current: position = mStream->GetCurrentPosition() + offset; break;
     default: return {0x80000000};
     }
+
     long end = mBegin + length;
     long clamped = position > end ? end : position;
     if (position < mBegin) clamped = mBegin;
     return {static_cast<u32>(mStream->Seek(clamped, origin).value)};
 }
+
 size_t FileStreamProxy::GetCurrentPosition() const { return mStream->GetCurrentPosition(); }
 // buffer and size describe the cache storage to attach to the underlying stream.
 void FileStreamProxy::EnableCache(void* buffer, size_t size) { mStream->EnableCache(buffer, size); }

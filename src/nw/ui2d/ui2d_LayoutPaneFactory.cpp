@@ -9,6 +9,7 @@ Pane* LayoutPaneFactory::ClonePaneTree(const Pane* source, nn::gfx::Device* devi
         auto* child = reinterpret_cast<const Pane*>(reinterpret_cast<const char*>(node) - 8);
         clone->AppendChild(ClonePaneTree(child, device, layout, context));
     }
+
     return clone;
 }
 }

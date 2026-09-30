@@ -10,6 +10,7 @@ void CheckButton::Build(nn::gfx::Device* device, Layout* layout, const ControlSr
     mCheckAnimator = layout->CreateGroupAnimatorAuto(device, source.FindFunctionalAnimName("Check"), true);
     mCheckAnimator->StopAtStartFrame();
 }
+
 // checked selects the check animation's final or initial frame immediately.
 void CheckButton::ForceSetChecked(bool checked) {
     mChecked = checked;
@@ -18,15 +19,18 @@ void CheckButton::ForceSetChecked(bool checked) {
         else mCheckAnimator->StopAtStartFrame();
     }
 }
+
 void CheckButton::FinishDown() {
     ChangeState(cState_Down);
     ChangeState(cState_On);
 }
+
 void CheckButton::StartDown() {
     AnimButton::StartDown();
     if (mCheckAnimator) mCheckAnimator->Play(Animator::PlayType_Once, mChecked ? -1.0f : 1.0f);
     mChecked = !mChecked;
 }
+
 bool CheckButton::UpdateDown() {
     bool finished = AnimButton::UpdateDown();
     if (mCheckAnimator) {
@@ -37,6 +41,7 @@ bool CheckButton::UpdateDown() {
             finished = mDownAnimator->mFrame == float(mDownAnimator->GetFrameSize()) &&
                        mCheckAnimator->mFrame == 0.0f;
     }
+
     return finished;
 }
 }

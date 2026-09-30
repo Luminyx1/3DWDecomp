@@ -24,6 +24,7 @@ void ResBoneAnim::Initialize(BoneAnimResult* result, const ResBone* bone) const 
     result->flags = flag & 0x0f800000;
     if (bone != nullptr) result->flags |= bone->GetRotateMode();
 }
+
 // result receives curve samples at frame; each sample uses a temporary interval cache.
 void ResBoneAnim::Evaluate(BoneAnimResult* result, float frame) const {
     int count = curveCount;
@@ -34,6 +35,7 @@ void ResBoneAnim::Evaluate(BoneAnimResult* result, float frame) const {
         *reinterpret_cast<float*>(reinterpret_cast<u8*>(result) + offset) = curve->EvaluateFloat(frame, &temporary);
     }
 }
+
 // result receives curve samples at frame; cache stores one interval per curve.
 void ResBoneAnim::Evaluate(BoneAnimResult* result, float frame, AnimFrameCache* cache) const {
     int count = curveCount;
@@ -44,6 +46,7 @@ void ResBoneAnim::Evaluate(BoneAnimResult* result, float frame, AnimFrameCache* 
         *reinterpret_cast<float*>(reinterpret_cast<u8*>(result) + offset) = curve->EvaluateFloat(frame, &cache[i]);
     }
 }
+
 // skeleton supplies the named bones; retain it and populate the per-animation bind indices.
 BindResult ResSkeletalAnim::PreBind(const ResSkeleton* skeleton) {
     boundSkeleton = skeleton;
@@ -60,8 +63,10 @@ BindResult ResSkeletalAnim::PreBind(const ResSkeleton* skeleton) {
             result.Merge(BindResult(BindResult::Flag_Failure));
         }
     }
+
     return result;
 }
+
 // skeleton supplies named bones to check; resource bindings remain unchanged by this query.
 BindResult ResSkeletalAnim::BindCheck(const ResSkeleton* skeleton) const {
     BindResult result;
@@ -71,8 +76,10 @@ BindResult ResSkeletalAnim::BindCheck(const ResSkeleton* skeleton) const {
         if (index >= 0) result.Merge(BindResult(BindResult::Flag_Success));
         else result.Merge(BindResult(BindResult::Flag_Failure));
     }
+
     return result;
 }
+
 // buffer supplies size writable bytes; an empty request already succeeds.
 bool ResSkeletalAnim::BakeCurve(void* buffer, size_t size) {
     if (!size) return true;
@@ -89,9 +96,11 @@ bool ResSkeletalAnim::BakeCurve(void* buffer, size_t size) {
             output += bytes;
         }
     }
+
     flags |= 1;
     return true;
 }
+
 void* ResSkeletalAnim::ResetCurve() {
     if (!(flags & 1)) return nullptr;
     void* buffer = nullptr;
@@ -106,12 +115,15 @@ void* ResSkeletalAnim::ResetCurve() {
                 buffer = curve->keys;
                 found = true;
             }
+
             curve->Reset();
         }
     }
+
     flags ^= 1;
     return buffer;
 }
+
 void ResSkeletalAnim::Reset() {
     boundSkeleton = nullptr;
     int count = boneAnimCount;
@@ -124,6 +136,7 @@ void ResSkeletalAnim::Reset() {
         int curves = anim->curveCount;
         for (int j = 0; j < curves; ++j) anim->curves[j].Reset();
     }
+
     flags ^= 1;
 }
 }

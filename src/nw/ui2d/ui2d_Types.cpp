@@ -58,6 +58,7 @@ void RenderTargetTextureInfo::Initialize(nn::gfx::Device* device, const Layout* 
     mHeight = size.height;
     mFormat = info.GetImageFormat();
 }
+
 // device releases the GPU states before the callback releases the texture allocation.
 void RenderTargetTextureInfo::Finalize(nn::gfx::Device* device) {
     if (IsValid()) {
@@ -71,10 +72,12 @@ void RenderTargetTextureInfo::Finalize(nn::gfx::Device* device) {
         mTextureSlot = nullptr;
     }
 }
+
 // name is copied so the placeholder can outlive the caller's name buffer.
 DummyRenderTargetTextureInfo::DummyRenderTargetTextureInfo(const char* name) : mName(nullptr) {
     mName = detail::AllocateAndCopyString(name);
 }
+
 DummyRenderTargetTextureInfo::~DummyRenderTargetTextureInfo() {}
 // device is accepted by the common texture interface; this placeholder owns only a name.
 void DummyRenderTargetTextureInfo::Finalize(nn::gfx::Device* device) {

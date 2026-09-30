@@ -11,15 +11,18 @@ WaveSoundFileReader::WaveSoundFileReader(const void* file) : mHeader(nullptr), m
     if (!info || info->signature != 0x4f464e49) return;
     mInfo = &info->body;
 }
+
 u32 WaveSoundFileReader::GetWaveSoundCount() const { return mInfo->GetWaveSoundDataReferenceTable()->count; }
 // sound selects a valid wave-sound record whose note count is requested.
 u32 WaveSoundFileReader::GetNoteInfoCount(u32 sound) const {
     return mInfo->GetWaveSoundData(sound)->GetNoteInfoReferenceTable()->count;
 }
+
 // sound selects a valid wave-sound record whose track count is requested.
 u32 WaveSoundFileReader::GetTrackInfoCount(u32 sound) const {
     return mInfo->GetWaveSoundData(sound)->GetTrackInfoReferenceTable()->count;
 }
+
 // info receives playback settings for sound; sound must be a valid record index.
 bool WaveSoundFileReader::ReadWaveSoundInfo(WaveSoundInfo* info, u32 sound) const {
     const auto* source = mInfo->GetWaveSoundData(sound)->GetWaveSoundInfo();
@@ -37,8 +40,10 @@ bool WaveSoundFileReader::ReadWaveSoundInfo(WaveSoundInfo* info, u32 sound) cons
         info->biquadType = 0;
         info->biquadValue = 0;
     }
+
     return true;
 }
+
 bool WaveSoundFileReader::IsFilterSupportedVersion() const { return mHeader->version >= 0x10100; }
 // info receives the note's wave ID and playback settings; sound and note select valid records.
 // A note referring beyond the wave-ID table returns false without writing the output.

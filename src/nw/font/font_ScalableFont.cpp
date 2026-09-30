@@ -65,6 +65,7 @@ void ScalableFont::Initialize(const InitializeArg& rArg) {
         m_AlternateCharMode = AlternateCharMode_UseAlternateChar;
         m_AlternateChar = rArg.alternateChar;
     }
+
     m_IsNoBreakHyphenReplaced = rArg.isNoBreakHyphenReplaced;
 
     RegisterAlternateCharGlyph();
@@ -188,9 +189,11 @@ bool ScalableFont::SetAlternateChar(uint32_t c) {
     if (m_AlternateCharMode == AlternateCharMode_UseWhiteSpace) {
         return false;
     }
+
     if (!m_pTextureCache->IsGlyphExistInFont(code, m_FontFace)) {
         return false;
     }
+
     m_AlternateChar = code;
     return true;
 }
@@ -209,8 +212,10 @@ int ScalableFont::GetCharWidth(uint32_t c) const {
             m_pTextureCache->IsGlyphExistInFont(code, m_FontFace)) {
             return m_pTextureCache->CalculateCharWidth(code, m_FontSize, m_FontFace);
         }
+
         pNode = m_pTextureCache->FindGlyphNode(m_AlternateChar, m_FontSize, m_FontFace);
     }
+
     return pNode->m_AdvanceX;
 }
 
@@ -233,8 +238,10 @@ const CharWidths ScalableFont::GetCharWidths(uint32_t c) const {
             widths.charWidth = width;
             return widths;
         }
+
         pNode = m_pTextureCache->FindGlyphNode(m_AlternateChar, m_FontSize, m_FontFace);
     }
+
     widths.left = pNode->m_LeftOffset;
     widths.glyphWidth = pNode->m_GlyphWidth;
     widths.charWidth = pNode->m_AdvanceX;
@@ -270,6 +277,7 @@ int ScalableFont::GetGlyph(Glyph* pGlyph, uint32_t c) const {
             width = pNode->m_AdvanceX;
         }
     }
+
     SetGlyphNodeToGlyph(pGlyph, pNode, width);
     return result;
 }
@@ -284,6 +292,7 @@ GlyphNode* ScalableFont::FindAlternateCharGlyphNode(uint32_t c) const {
     if (pNode != nullptr) {
         return pNode;
     }
+
     u32 fontFace = m_pTextureCache->AcquireFontFaceContainingGlyph(c);
     if (fontFace != 0xffffffff) {
         pNode = m_pTextureCache->FindGlyphNode(c, m_FontSize, fontFace);
@@ -291,6 +300,7 @@ GlyphNode* ScalableFont::FindAlternateCharGlyphNode(uint32_t c) const {
             return pNode;
         }
     }
+
     return nullptr;
 }
 
@@ -331,13 +341,16 @@ bool ScalableFont::HasGlyph(uint32_t c) const {
     if (pNode == nullptr) {
         return false;
     }
+
     if (pNode->IsFlagOn(GlyphNode::FlagBit_NotPlotted | GlyphNode::FlagBit_NotInFont)) {
         return false;
     }
+
     if (pNode->IsFlagOn(GlyphNode::FlagBit_Requested | GlyphNode::FlagBit_Used |
                         GlyphNode::FlagBit_UsedInLastFrame | GlyphNode::FlagBit_System)) {
         return true;
     }
+
     return pNode->m_LockGroup != 0;
 }
 
@@ -351,6 +364,7 @@ int ScalableFont::GetKerning(uint32_t c0, uint32_t c1) const {
     if (!IsKerningEnabled()) {
         return 0;
     }
+
     uint32_t code1 = ConvertCode(c1);
     uint32_t code0 = ConvertCode(c0);
     return m_pTextureCache->CalculateKerning(code0, code1, m_FontSize, m_FontFace);
@@ -435,6 +449,7 @@ bool ScalableFont::IsBorderEffectEnabled() const {
     if (m_pTextureCache == nullptr) {
         return false;
     }
+
     return m_pTextureCache->IsBorderEffectEnabled(m_FontFace);
 }
 
@@ -461,6 +476,7 @@ void ScalableFont::GetAlternateCharGlyph(Glyph* pGlyph, uint32_t c) const {
         pNode = FindAlternateCharGlyphNode(m_AlternateChar);
         width = pNode->m_AdvanceX;
     }
+
     SetGlyphNodeToGlyph(pGlyph, pNode, width);
 }
 

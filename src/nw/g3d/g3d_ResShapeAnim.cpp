@@ -16,6 +16,7 @@ void ResVertexShapeAnim::Evaluate(float* result, float frame, const s8* indices)
         result[i] = curve->EvaluateFloat(frame, &temporary);
     }
 }
+
 // result receives weights at frame; indices skips unbound key shapes; cache stores curve intervals.
 void ResVertexShapeAnim::Evaluate(float* result, float frame, const s8* indices, AnimFrameCache* cache) const {
     int count = keyShapeCount;
@@ -28,6 +29,7 @@ void ResVertexShapeAnim::Evaluate(float* result, float frame, const s8* indices,
         result[i] = curves[index].EvaluateFloat(frame, &cache[index]);
     }
 }
+
 // shape supplies the named key shapes to resolve and retain.
 BindResult ResVertexShapeAnim::PreBind(const ResShape* shape) {
     BindResult result;
@@ -39,8 +41,10 @@ BindResult ResVertexShapeAnim::PreBind(const ResShape* shape) {
         if (index == -1) result.Merge(BindResult(BindResult::Flag_Failure));
         else result.Merge(BindResult(BindResult::Flag_Success));
     }
+
     return result;
 }
+
 // shape supplies the named key shapes to check without changing bindings.
 BindResult ResVertexShapeAnim::BindCheck(const ResShape* shape) const {
     BindResult result;
@@ -51,8 +55,10 @@ BindResult ResVertexShapeAnim::BindCheck(const ResShape* shape) const {
         if (index == -1) result.Merge(BindResult(BindResult::Flag_Failure));
         else result.Merge(BindResult(BindResult::Flag_Success));
     }
+
     return result;
 }
+
 // result receives zero for the base shape and stored values for the remaining keys.
 void ResVertexShapeAnim::Initialize(float* result) const {
     result[0] = 0.0f;
@@ -60,6 +66,7 @@ void ResVertexShapeAnim::Initialize(float* result) const {
     const float* values = baseValues;
     for (int i = 1; i < count; ++i) result[i] = values[i - 1];
 }
+
 // model supplies named shapes; retain the model and each successful shape/key-shape binding.
 BindResult ResShapeAnim::PreBind(const ResModel* model) {
     boundModel = model;
@@ -77,8 +84,10 @@ BindResult ResShapeAnim::PreBind(const ResModel* model) {
             result.Merge(BindResult(BindResult::Flag_Failure));
         }
     }
+
     return result;
 }
+
 // model supplies named shapes to check without updating the stored model or indices.
 BindResult ResShapeAnim::BindCheck(const ResModel* model) const {
     BindResult result;
@@ -89,8 +98,10 @@ BindResult ResShapeAnim::BindCheck(const ResModel* model) const {
         if (shape != nullptr) result.Merge(anim->BindCheck(shape));
         else result.Merge(BindResult(BindResult::Flag_Failure));
     }
+
     return result;
 }
+
 // buffer supplies size writable bytes; an empty request already succeeds.
 bool ResShapeAnim::BakeCurve(void* buffer, size_t size) {
     if (!size) return true;
@@ -107,9 +118,11 @@ bool ResShapeAnim::BakeCurve(void* buffer, size_t size) {
             output += bytes;
         }
     }
+
     flags |= 1;
     return true;
 }
+
 void* ResShapeAnim::ResetCurve() {
     if (!(flags & 1)) return nullptr;
     void* buffer = nullptr;
@@ -124,12 +137,15 @@ void* ResShapeAnim::ResetCurve() {
                 buffer = curve->keys;
                 found = true;
             }
+
             curve->Reset();
         }
     }
+
     flags ^= 1;
     return buffer;
 }
+
 void ResShapeAnim::Reset() {
     boundModel = nullptr;
     int count = shapeAnimCount;
@@ -141,6 +157,7 @@ void ResShapeAnim::Reset() {
         for (int j = 0; j < keys; ++j, ++info) info->bindIndex = -1;
         indices[i] = 0xffff;
     }
+
     if (!(flags & 1)) return;
     count = shapeAnimCount;
     for (int i = 0; i < count; ++i) {
@@ -148,6 +165,7 @@ void ResShapeAnim::Reset() {
         int curves = anim->curveCount;
         for (int j = 0; j < curves; ++j) anim->curves[j].Reset();
     }
+
     flags ^= 1;
 }
 }

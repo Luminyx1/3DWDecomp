@@ -14,6 +14,7 @@ static_assert(sizeof(ResFogAnim) == 0x48, "Fog animation size");
 void ResCameraAnim::Initialize(CameraAnimResult* result) const {
     *result = *static_cast<const CameraAnimResult*>(baseValues);
 }
+
 // result receives values at frame; a temporary cache is used for each sample.
 void ResCameraAnim::Evaluate(CameraAnimResult* result, float frame) const {
     int count = curveCount;
@@ -24,6 +25,7 @@ void ResCameraAnim::Evaluate(CameraAnimResult* result, float frame) const {
         *reinterpret_cast<float*>(reinterpret_cast<u8*>(result) + offset) = curve->EvaluateFloat(frame, &temporary);
     }
 }
+
 // result receives values at frame; cache stores the current interval for each curve.
 void ResCameraAnim::Evaluate(CameraAnimResult* result, float frame, AnimFrameCache* cache) const {
     int count = curveCount;
@@ -33,6 +35,7 @@ void ResCameraAnim::Evaluate(CameraAnimResult* result, float frame, AnimFrameCac
         *reinterpret_cast<float*>(reinterpret_cast<u8*>(result) + offset) = curve->EvaluateFloat(frame, &cache[i]);
     }
 }
+
 // buffer is the beginning of size writable bytes; an empty request already succeeds.
 bool ResCameraAnim::BakeCurve(void* buffer, size_t size) {
     if (!size) return true;
@@ -45,9 +48,11 @@ bool ResCameraAnim::BakeCurve(void* buffer, size_t size) {
         curve->BakeFloat(output, bytes);
         output += bytes;
     }
+
     flags |= 1;
     return true;
 }
+
 void* ResCameraAnim::ResetCurve() {
     if (!(flags & 1)) return nullptr;
     void* buffer = nullptr;
@@ -59,11 +64,14 @@ void* ResCameraAnim::ResetCurve() {
             buffer = curve->keys;
             found = true;
         }
+
         curve->Reset();
     }
+
     flags ^= 1;
     return buffer;
 }
+
 void ResCameraAnim::Reset() { ResetCurves(); }
 // result receives the constant values stored by this light animation.
 void ResLightAnim::Initialize(LightAnimResult* result) const {
@@ -76,6 +84,7 @@ void ResLightAnim::Initialize(LightAnimResult* result) const {
     if (flags & (1u << 14)) { std::memcpy(&result->color0, data, 12); data += 12; }
     if (static_cast<s16>(flags) < 0) { std::memcpy(&result->color1, data, 12); data += 12; }
 }
+
 // table supplies name/length pairs for each supported application function category.
 BindResult ResLightAnim::Bind(const BindFuncTable& table) {
     BindResult result;
@@ -88,9 +97,11 @@ BindResult ResLightAnim::Bind(const BindFuncTable& table) {
                 break;
             }
         }
+
         if (lightFuncIndex == 0xff) result.Merge(BindResult(BindResult::Flag_Failure));
         else result.Merge(BindResult(BindResult::Flag_Success));
     }
+
     if (distanceFuncIndex == 0xff) {
         int count = table.lengths[BindFuncTable::DistanceAttenuation];
         const BindFuncTable::StringLength* names = table.strings[BindFuncTable::DistanceAttenuation];
@@ -100,9 +111,11 @@ BindResult ResLightAnim::Bind(const BindFuncTable& table) {
                 break;
             }
         }
+
         if (distanceFuncIndex == 0xff) result.Merge(BindResult(BindResult::Flag_Failure));
         else result.Merge(BindResult(BindResult::Flag_Success));
     }
+
     if (angleFuncIndex == 0xff) {
         int count = table.lengths[BindFuncTable::AngleAttenuation];
         const BindFuncTable::StringLength* names = table.strings[BindFuncTable::AngleAttenuation];
@@ -112,11 +125,14 @@ BindResult ResLightAnim::Bind(const BindFuncTable& table) {
                 break;
             }
         }
+
         if (angleFuncIndex == 0xff) result.Merge(BindResult(BindResult::Flag_Failure));
         else result.Merge(BindResult(BindResult::Flag_Success));
     }
+
     return result;
 }
+
 void ResLightAnim::Release() { lightFuncIndex = 0xff; distanceFuncIndex = 0xff; angleFuncIndex = 0xff; }
 // result receives values at frame; a temporary cache is used for each sample.
 void ResLightAnim::Evaluate(LightAnimResult* result, float frame) const {
@@ -127,6 +143,7 @@ void ResLightAnim::Evaluate(LightAnimResult* result, float frame) const {
         result->enabled = curve->EvaluateInt(frame, &temporary);
         first = 1;
     }
+
     unsigned int count = curveCount;
     for (unsigned int i = first; i < count; ++i) {
         const ResAnimCurve* curve = &curves[i];
@@ -135,6 +152,7 @@ void ResLightAnim::Evaluate(LightAnimResult* result, float frame) const {
         *reinterpret_cast<float*>(reinterpret_cast<u8*>(result) + offset) = curve->EvaluateFloat(frame, &temporary);
     }
 }
+
 // result receives values at frame; cache stores the current interval for each curve.
 void ResLightAnim::Evaluate(LightAnimResult* result, float frame, AnimFrameCache* cache) const {
     unsigned int first = 0;
@@ -142,6 +160,7 @@ void ResLightAnim::Evaluate(LightAnimResult* result, float frame, AnimFrameCache
         result->enabled = curves[0].EvaluateInt(frame, cache);
         first = 1;
     }
+
     cache += first;
     unsigned int count = curveCount;
     for (unsigned int i = first; i < count; ++i, ++cache) {
@@ -150,6 +169,7 @@ void ResLightAnim::Evaluate(LightAnimResult* result, float frame, AnimFrameCache
         *reinterpret_cast<float*>(reinterpret_cast<u8*>(result) + offset) = curve->EvaluateFloat(frame, cache);
     }
 }
+
 // buffer is the beginning of size writable bytes; an empty request already succeeds.
 bool ResLightAnim::BakeCurve(void* buffer, size_t size) {
     if (!size) return true;
@@ -162,9 +182,11 @@ bool ResLightAnim::BakeCurve(void* buffer, size_t size) {
         curve->BakeFloat(output, bytes);
         output += bytes;
     }
+
     flags |= 1;
     return true;
 }
+
 void* ResLightAnim::ResetCurve() {
     if (!(flags & 1)) return nullptr;
     void* buffer = nullptr;
@@ -176,16 +198,20 @@ void* ResLightAnim::ResetCurve() {
             buffer = curve->keys;
             found = true;
         }
+
         curve->Reset();
     }
+
     flags ^= 1;
     return buffer;
 }
+
 void ResLightAnim::Reset() { ResetCurves(); }
 // result receives the constant values stored by this fog animation.
 void ResFogAnim::Initialize(FogAnimResult* result) const {
     *result = *static_cast<const FogAnimResult*>(baseValues);
 }
+
 // table supplies name/length pairs for each supported application function category.
 BindResult ResFogAnim::Bind(const BindFuncTable& table) {
     BindResult result;
@@ -198,10 +224,13 @@ BindResult ResFogAnim::Bind(const BindFuncTable& table) {
                 break;
             }
         }
+
         result.Merge(BindResult(fogFuncIndex == 0xff ? BindResult::Flag_Failure : BindResult::Flag_Success));
     }
+
     return result;
 }
+
 void ResFogAnim::Release() { fogFuncIndex = 0xff; }
 // result receives values at frame; a temporary cache is used for each sample.
 void ResFogAnim::Evaluate(FogAnimResult* result, float frame) const {
@@ -213,6 +242,7 @@ void ResFogAnim::Evaluate(FogAnimResult* result, float frame) const {
         *reinterpret_cast<float*>(reinterpret_cast<u8*>(result) + offset) = curve->EvaluateFloat(frame, &temporary);
     }
 }
+
 // result receives values at frame; cache stores the current interval for each curve.
 void ResFogAnim::Evaluate(FogAnimResult* result, float frame, AnimFrameCache* cache) const {
     int count = curveCount;
@@ -222,6 +252,7 @@ void ResFogAnim::Evaluate(FogAnimResult* result, float frame, AnimFrameCache* ca
         *reinterpret_cast<float*>(reinterpret_cast<u8*>(result) + offset) = curve->EvaluateFloat(frame, &cache[i]);
     }
 }
+
 // buffer is the beginning of size writable bytes; an empty request already succeeds.
 bool ResFogAnim::BakeCurve(void* buffer, size_t size) {
     if (!size) return true;
@@ -234,9 +265,11 @@ bool ResFogAnim::BakeCurve(void* buffer, size_t size) {
         curve->BakeFloat(output, bytes);
         output += bytes;
     }
+
     flags |= 1;
     return true;
 }
+
 void* ResFogAnim::ResetCurve() {
     if (!(flags & 1)) return nullptr;
     void* buffer = nullptr;
@@ -248,11 +281,14 @@ void* ResFogAnim::ResetCurve() {
             buffer = curve->keys;
             found = true;
         }
+
         curve->Reset();
     }
+
     flags ^= 1;
     return buffer;
 }
+
 void ResFogAnim::Reset() { ResetCurves(); }
 // table resolves the light and fog function names in this scene's child resources.
 BindResult ResSceneAnim::Bind(const BindFuncTable& table) {

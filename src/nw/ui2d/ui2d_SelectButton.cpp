@@ -9,11 +9,13 @@ void SelectButton::Build(nn::gfx::Device* device, Layout* layout, const ControlS
     AnimButton::Build(device, layout, source);
     mCancelAnimator = layout->CreateGroupAnimatorAuto(device, source.FindFunctionalAnimName("Cancel"), false);
 }
+
 // position is the pointer position in the hit box's coordinate system.
 bool SelectButton::IsHit(const nn::util::Float2& position) const {
     if (mState == cState_CancelStart) return false;
     return AnimButton::IsHit(position);
 }
+
 bool SelectButton::ProcessOff() {
     switch (mState) {
     case cState_OnStart:
@@ -27,6 +29,7 @@ bool SelectButton::ProcessOff() {
     default:
         break;
     }
+
     return true;
 }
 
@@ -42,6 +45,7 @@ bool SelectButton::ProcessCancel() {
         break;
     default: break;
     }
+
     return processed;
 }
 

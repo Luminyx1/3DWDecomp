@@ -17,12 +17,14 @@ void EffectBase::SetEffectBuffer(void* buffer, size_t size) {
     mBuffer = buffer;
     mBufferSize = size;
 }
+
 // mode selects mono, stereo, quad, or surround; return the corresponding channel count.
 int EffectBase::ConvertChannelModeToInt(ChannelMode mode) {
     static const int channelCounts[] = {1, 2, 4, 6};
     if (static_cast<u32>(mode) >= 4) NN_UNEXPECTED_DEFAULT;
     return channelCounts[static_cast<int>(mode)];
 }
+
 // buffers contains channels sample buffers of bufferSize bytes; format and sampleRate
 // describe their samples, and mode describes the output layout. No base processing is performed.
 void EffectBase::UpdateBuffer(int channels, void** buffers, size_t bufferSize, SampleFormat format,
@@ -34,6 +36,7 @@ bool EffectBase::SetSampleRate(SampleRate rate) {
     mSampleRate = rate;
     return true;
 }
+
 // output has room for count channel indices; the base implementation leaves it unchanged.
 void EffectBase::GetChannelIndex(ChannelIndex* output, int count) const {}
 int EffectBase::GetChannelSettingCountMax() const { return 0; }

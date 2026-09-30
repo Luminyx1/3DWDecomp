@@ -11,12 +11,14 @@ void Pane::AppendChild(Pane* child) {
     child->mParent = this;
     child->mFlags |= 0x10;
 }
+
 // child is inserted before the first child and its global transform becomes dirty.
 void Pane::PrependChild(Pane* child) {
     m_Children.GetNext()->LinkPrev(&child->m_Link);
     child->mParent = this;
     child->mFlags |= 0x10;
 }
+
 // child is detached from this pane's child list without destroying it.
 void Pane::RemoveChild(Pane* child) {
     if (&m_Children != &child->m_Link) child->m_Link.Unlink();

@@ -7,6 +7,7 @@ DragButton::DragButton()
     : mDragPane(nullptr), mDragStart{}, mPaneStart{}, mDragX(true), mDragY(true) {
     mFlags = (mFlags & ~0xc0u) | 0x40u;
 }
+
 // device creates animators, layout provides the root pane to drag, and source
 // identifies the standard and release animation resources.
 void DragButton::Build(nn::gfx::Device* device, Layout* layout, const ControlSrc& source) {
@@ -14,12 +15,14 @@ void DragButton::Build(nn::gfx::Device* device, Layout* layout, const ControlSrc
     mCancelAnimator = layout->CreateGroupAnimatorAuto(device, source.FindFunctionalAnimName("Release"), false);
     mDragPane = layout->mRootPane;
 }
+
 // position records the pointer origin; retain the pane's position at drag start.
 void DragButton::InitializeDragPosition(const nn::util::Float2& position) {
     mDragStart = position;
     mPaneStart.x = mDragPane->mPositionX;
     mPaneStart.y = mDragPane->mPositionY;
 }
+
 // position is the current pointer position, or null when no pointer is present.
 void DragButton::UpdateDragPosition(const nn::util::Float2* position) {
     if (!position) return;
@@ -32,6 +35,7 @@ void DragButton::UpdateDragPosition(const nn::util::Float2* position) {
     pane->mPositionY = y;
     pane->mFlags |= 0x10;
 }
+
 bool DragButton::ProcessOff() {
     bool processed = true;
     switch (mState) {
@@ -43,8 +47,10 @@ bool DragButton::ProcessOff() {
         processed = false; break;
     default: break;
     }
+
     return processed;
 }
+
 bool DragButton::ProcessCancel() {
     bool processed = true;
     switch (mState) {
@@ -54,7 +60,9 @@ bool DragButton::ProcessCancel() {
     case cState_CancelStart: processed = false; break;
     default: break;
     }
+
     return processed;
 }
+
 void DragButton::FinishCancel() { ChangeState(cState_On); }
 }

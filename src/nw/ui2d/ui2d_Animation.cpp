@@ -17,10 +17,12 @@ AnimTransformBasic::~AnimTransformBasic() {
     if (_30) Layout::FreeMemory(_30);
     if (_28) Layout::FreeMemory(_28);
 }
+
 // device and accessor resolve resources; resource supplies the default bind capacity.
 void AnimTransformBasic::SetResource(nn::gfx::Device* device, ResourceAccessor* accessor, const ResAnimationBlock* resource) {
     SetResource(device, accessor, resource, resource->contentCount);
 }
+
 void AnimTransformBasic::ResetAnimResource() {
     m_pResource = nullptr;
     if (_30) Layout::FreeMemory(_30);
@@ -28,6 +30,7 @@ void AnimTransformBasic::ResetAnimResource() {
     if (_28) Layout::FreeMemory(_28);
     _28 = nullptr;
 }
+
 void AnimTransformBasic::UnbindAll() { mBindCount = 0; }
 void AnimResource::Initialize() { mFile = nullptr; mAnimation = nullptr; mTag = nullptr; mSharedAnimations = nullptr; }
 bool AnimResource::CheckResource() const { return mAnimation != nullptr; }
@@ -37,11 +40,13 @@ u16 AnimResource::GetGroupCount() const { return mTag ? mTag->groupCount : 0; }
 const ResAnimationGroup* AnimResource::GetGroupArray() const {
     return mTag ? reinterpret_cast<const ResAnimationGroup*>(reinterpret_cast<const char*>(mTag) + mTag->groupOffset) : nullptr;
 }
+
 const ResExtUserDataList* AnimResource::GetExtUserDataList() const {
     if (!mTag) return nullptr;
     if (!mTag->userDataOffset) return nullptr;
     return reinterpret_cast<const ResExtUserDataList*>(reinterpret_cast<const char*>(mTag) + mTag->userDataOffset);
 }
+
 bool AnimResource::IsDescendingBind() const { return mTag ? (mTag->flags & 1) != 0 : false; }
 u16 AnimResource::GetAnimationShareInfoCount() const { return mSharedAnimations ? mSharedAnimations->infoCount : 0; }
 const ResAnimationShareInfo* AnimResource::GetAnimationShareInfoArray() const {

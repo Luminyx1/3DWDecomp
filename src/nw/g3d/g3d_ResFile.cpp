@@ -17,12 +17,15 @@ static_assert(sizeof(ResSceneAnim) == 0x60, "Scene animation resource size");
 bool ResFile::IsValid(const void* file) {
     return static_cast<const nn::util::BinaryFileHeader*>(file)->IsValid(0x2020202053455246, 9, 0, 0);
 }
+
 void ResFile::Relocate() {
     if (!fileHeader.IsRelocated()) fileHeader.GetRelocationTable()->Relocate();
 }
+
 void ResFile::Unrelocate() {
     if (fileHeader.IsRelocated()) fileHeader.GetRelocationTable()->Unrelocate();
 }
+
 // file supplies mutable resource storage; relocate its pointers before returning the typed view.
 ResFile* ResFile::ResCast(void* file) {
     ResFile* resource = static_cast<ResFile*>(file);
@@ -30,6 +33,7 @@ ResFile* ResFile::ResCast(void* file) {
     resource->fileHeader.IsEndianReverse();
     return resource;
 }
+
 // callback resolves texture names; user is passed through to model and animation bindings.
 BindResult ResFile::BindTexture(TextureBindCallback callback, void* user) {
     BindResult result;
@@ -39,12 +43,14 @@ BindResult ResFile::BindTexture(TextureBindCallback callback, void* user) {
     for (int i = 0; i < count; ++i) result.Merge(pMaterialAnimArray.Get()[i].BindTexture(callback, user));
     return result;
 }
+
 void ResFile::ReleaseTexture() {
     int count = modelCount;
     for (int i = 0; i < count; ++i) pModelArray.Get()[i].ReleaseTexture();
     count = materialAnimCount;
     for (int i = 0; i < count; ++i) pMaterialAnimArray.Get()[i].ReleaseTexture();
 }
+
 // device owns model graphics objects and the optional memory pool embedded in the file.
 void ResFile::Setup(nn::gfx::Device* device) {
     nn::util::ReferSymbol("SDK MW+Nintendo+NintendoWare_G3d-10_4_0-Release");
@@ -57,9 +63,11 @@ void ResFile::Setup(nn::gfx::Device* device) {
             nn::gfx::util::SetMemoryPoolDebugLabel(pool, "g3d");
         }
     }
+
     int count = modelCount;
     for (int i = 0; i < count; ++i) pModelArray.Get()[i].Setup(device);
 }
+
 // device owns graphics objects; pool/offset locate external backing storage. size is unchecked here.
 void ResFile::Setup(nn::gfx::Device* device, nn::gfx::MemoryPool* pool, ptrdiff_t offset, size_t size) {
     nn::util::ReferSymbol("SDK MW+Nintendo+NintendoWare_G3d-10_4_0-Release");
@@ -68,6 +76,7 @@ void ResFile::Setup(nn::gfx::Device* device, nn::gfx::MemoryPool* pool, ptrdiff_
     int count = modelCount;
     for (int i = 0; i < count; ++i) pModelArray.Get()[i].Setup(device, pool, offset);
 }
+
 // device owns the graphics objects to release, including an initialized embedded memory pool.
 void ResFile::Cleanup(nn::gfx::Device* device) {
     int count = modelCount;
@@ -80,6 +89,7 @@ void ResFile::Cleanup(nn::gfx::Device* device) {
         }
     }
 }
+
 void ResFile::Reset() {
     int count = modelCount;
     for (int i = 0; i < count; ++i) pModelArray.Get()[i].Reset();

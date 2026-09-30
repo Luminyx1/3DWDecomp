@@ -11,6 +11,7 @@ bool ResShaderProgram::IsBinaryAvailable(nn::gfx::Device* device) {
     Cleanup(device);
     return available;
 }
+
 // device owns the shader; type selects its stored code representation.
 bool ResShaderProgram::InitializePerType(nn::gfx::Device* device, nn::gfx::ShaderCodeType type) {
     nn::gfx::ResShaderProgram* program = variation->GetResShaderProgram(type);
@@ -29,9 +30,11 @@ bool ResShaderProgram::InitializePerType(nn::gfx::Device* device, nn::gfx::Shade
     default:
         break;
     }
+
     flags |= 2;
     return true;
 }
+
 // device owns each initialized shader representation being released.
 void ResShaderProgram::Cleanup(nn::gfx::Device* device) {
     if (flags & 2) {
@@ -43,8 +46,10 @@ void ResShaderProgram::Cleanup(nn::gfx::Device* device) {
         if (flags & 8)
             resource->GetResShaderProgram(nn::gfx::ShaderCodeType_Source)->Finalize(device);
     }
+
     flags = 0;
 }
+
 // device is unused until the pending program update is performed.
 void ResShaderProgram::Setup(nn::gfx::Device* device) { flags |= 1; }
 // device owns the shader; skipBinary starts the fallback sequence with intermediate code.
@@ -55,12 +60,14 @@ void ResShaderProgram::Initialize(nn::gfx::Device* device, bool skipBinary) {
         return;
     InitializePerType(device, nn::gfx::ShaderCodeType_Source);
 }
+
 // shader supplies Interface bindings; name identifies a resource in stage, or null for an absent binding.
 template <nn::gfx::ShaderInterfaceType Interface>
 static inline int GetInterfaceSlot(const nn::gfx::Shader* shader, const nn::util::BinPtrToString& name,
                                    nn::gfx::ShaderStage stage) {
     return (name.Get() != nullptr) ? shader->GetInterfaceSlot(stage, Interface, name.Get()->GetData()) : -1;
 }
+
 // names supplies six stage names for each of count resources; table receives slots from shader.
 template <nn::gfx::ShaderInterfaceType Interface>
 static void UpdateSlots(const nn::gfx::Shader* shader, s32* table, const nn::util::BinPtrToString* names,
@@ -76,6 +83,7 @@ static void UpdateSlots(const nn::gfx::Shader* shader, s32* table, const nn::uti
         slots[5] = GetInterfaceSlot<Interface>(shader, stageNames[5], nn::gfx::ShaderStage_Domain);
     }
 }
+
 void ResShaderProgram::UpdateTable() {
     ResShadingModel* resource = model;
     nn::gfx::ShaderCodeType type = GetCodeType();
@@ -89,6 +97,7 @@ void ResShaderProgram::UpdateTable() {
             UpdateSlots<nn::gfx::ShaderInterfaceType_Sampler>(shader, table, names, count);
         }
     }
+
     {
         int count = resource->ToData().imageCount;
         if (count) {
@@ -97,6 +106,7 @@ void ResShaderProgram::UpdateTable() {
             UpdateSlots<nn::gfx::ShaderInterfaceType_Image>(shader, table, names, count);
         }
     }
+
     {
         int count = resource->ToData().uniformBlockCount;
         if (count) {
@@ -105,6 +115,7 @@ void ResShaderProgram::UpdateTable() {
             UpdateSlots<nn::gfx::ShaderInterfaceType_ConstantBuffer>(shader, table, names, count);
         }
     }
+
     {
         int count = resource->ToData().storageBlockCount;
         if (count) {
@@ -114,6 +125,7 @@ void ResShaderProgram::UpdateTable() {
         }
     }
 }
+
 // device is passed to the archive callback; the model mutex protects lazy initialization.
 void ResShaderProgram::Update(nn::gfx::Device* device) {
     if (!(flags & 1))
@@ -129,17 +141,20 @@ void ResShaderProgram::Update(nn::gfx::Device* device) {
         resource->UpdateProgram(device, this - resource->ToData().pPrograms.Get());
     }
 }
+
 // device and index identify the shader program requested from the archive callback.
 void ResShadingModel::UpdateProgram(nn::gfx::Device* device, int index) {
     if (archive->updateProgram != nullptr)
         archive->updateProgram(device, this, index);
 }
+
 const nn::gfx::Shader* ResShaderProgram::GetShader() const {
     nn::gfx::ShaderCodeType type = GetCodeType();
     if (type == nn::gfx::ShaderCodeType_End)
         return nullptr;
     return variation->GetResShaderProgram(type)->GetShader();
 }
+
 // commandBuffer receives the selected shader at every stage.
 void ResShaderProgram::Load(nn::gfx::CommandBuffer* commandBuffer) const {
     nn::gfx::ShaderCodeType type = GetCodeType();
@@ -148,10 +163,12 @@ void ResShaderProgram::Load(nn::gfx::CommandBuffer* commandBuffer) const {
     const nn::gfx::Shader* shader = variation->GetResShaderProgram(type)->GetShader();
     commandBuffer->SetShader(shader, 0x3f);
 }
+
 // key receives choice in this option's packed static word and bit range.
 void ResShaderOption::WriteStaticKey(u32* key, int choice) const {
     key[wordIndex] = (key[wordIndex] & ~mask) | (u32(choice) << shift);
 }
+
 // key contains packed static words from which this option is decoded.
 int ResShaderOption::ReadStaticKey(const u32* key) const { return (key[wordIndex] & mask) >> shift; }
 // key receives choice relative to the first dynamic key word.
@@ -159,21 +176,25 @@ void ResShaderOption::WriteDynamicKey(u32* key, int choice) const {
     ptrdiff_t index = ptrdiff_t(wordIndex) - ptrdiff_t(dynamicWordOffset);
     key[index] = (key[index] & ~mask) | (u32(choice) << shift);
 }
+
 // key starts at the dynamic portion of a program key.
 int ResShaderOption::ReadDynamicKey(const u32* key) const {
     ptrdiff_t index = ptrdiff_t(wordIndex) - ptrdiff_t(dynamicWordOffset);
     return (key[index] & mask) >> shift;
 }
+
 void ResShadingModel::Relocate() {
     nn::gfx::ResShaderFile* file = shaderFile;
     if ((file != nullptr) && !file->GetBinaryFileHeader()->IsRelocated())
         file->GetBinaryFileHeader()->GetRelocationTable()->Relocate();
 }
+
 void ResShadingModel::Unrelocate() {
     nn::gfx::ResShaderFile* file = shaderFile;
     if ((file != nullptr) && file->GetBinaryFileHeader()->IsRelocated())
         file->GetBinaryFileHeader()->GetRelocationTable()->Unrelocate();
 }
+
 // device is used to probe the first program while its container is temporarily initialized.
 bool ResShadingModel::IsBinaryAvailable(nn::gfx::Device* device) {
     if (!programCount)
@@ -184,6 +205,7 @@ bool ResShadingModel::IsBinaryAvailable(nn::gfx::Device* device) {
     container->Finalize(device);
     return available;
 }
+
 // device owns the shader container; lock optionally protects later lazy updates.
 void ResShadingModel::Setup(nn::gfx::Device* device, nn::os::MutexType* lock) {
     shaderFile->GetShaderContainer()->Initialize(device);
@@ -192,6 +214,7 @@ void ResShadingModel::Setup(nn::gfx::Device* device, nn::os::MutexType* lock) {
         pPrograms.Get()[i].Setup(device);
     mutex = lock;
 }
+
 // device and pool provide size bytes at offset; lock serializes lazy program updates.
 void ResShadingModel::Setup(nn::gfx::Device* device, nn::gfx::MemoryPool* pool, ptrdiff_t offset, size_t size,
                             nn::os::MutexType* lock) {
@@ -203,6 +226,7 @@ void ResShadingModel::Setup(nn::gfx::Device* device, nn::gfx::MemoryPool* pool, 
         pPrograms.Get()[i].Setup(device);
     mutex = lock;
 }
+
 // device owns the programs and container being finalized.
 void ResShadingModel::Cleanup(nn::gfx::Device* device) {
     int count = programCount;
@@ -211,12 +235,14 @@ void ResShadingModel::Cleanup(nn::gfx::Device* device) {
     shaderFile->GetShaderContainer()->Finalize(device);
     mutex = nullptr;
 }
+
 // index selects a program's complete packed key; static words precede dynamic words.
 const u32* ResShadingModel::GetKey(int index) const {
     const u8* base = reinterpret_cast<const u8*>(pKeyTable.Get());
     int byteOffset = index * (staticKeyLength + dynamicKeyLength) * sizeof(u32);
     return reinterpret_cast<const u32*>(base + byteOffset);
 }
+
 // index selects the program whose static key is returned.
 const u32* ResShadingModel::GetStaticKey(int index) const { return GetKey(index); }
 // index selects the program whose dynamic key is returned.
@@ -224,6 +250,7 @@ const u32* ResShadingModel::GetDynamicKey(int index) const {
     const u32* first = pKeyTable.Get() + staticKeyLength;
     return first + index * (staticKeyLength + dynamicKeyLength);
 }
+
 // key receives either the default program key or the defaults encoded by individual options.
 void ResShadingModel::WriteDefaultStaticKey(u32* key) const {
     if (defaultProgramIndex != -1) {
@@ -238,6 +265,7 @@ void ResShadingModel::WriteDefaultStaticKey(u32* key) const {
         }
     }
 }
+
 // key receives the dynamic defaults for the model's default program or option descriptions.
 void ResShadingModel::WriteDefaultDynamicKey(u32* key) const {
     if (defaultProgramIndex != -1) {
@@ -252,6 +280,7 @@ void ResShadingModel::WriteDefaultDynamicKey(u32* key) const {
         }
     }
 }
+
 // key receives all-one words to invalidate a previously selected dynamic variant.
 void ResShadingModel::WriteInvalidDynamicKey(u32* key) const {
     std::fill(key, key + dynamicKeyLength, ~u32(0));
@@ -263,8 +292,10 @@ static bool KeyLess(const u32* first, const u32* second, size_t length) {
         if (first[i] != second[i])
             return first[i] < second[i];
     }
+
     return false;
 }
+
 // first/end delimit stride-word keys; advance first to the lower bound of key using length words.
 static const u32* LowerKey(const u32*& first, const u32* end, const u32* key, size_t stride, size_t length) {
     if (length && size_t(end - first) >= stride) {
@@ -279,8 +310,10 @@ static const u32* LowerKey(const u32*& first, const u32* end, const u32* key, si
                 count = half;
         }
     }
+
     return first;
 }
+
 // first/end delimit stride-word keys; find the first key above the requested length words.
 static const u32* UpperKey(const u32* first, const u32* end, const u32* key, size_t stride, size_t length) {
     if (size_t(end - first) < stride)
@@ -295,8 +328,10 @@ static const u32* UpperKey(const u32* first, const u32* end, const u32* key, siz
         } else
             count = half;
     }
+
     return first;
 }
+
 // key specifies all static and dynamic options of the desired program.
 int ResShadingModel::FindProgramIndex(const u32* key) const {
     size_t stride = size_t(staticKeyLength) + dynamicKeyLength;
@@ -308,6 +343,7 @@ int ResShadingModel::FindProgramIndex(const u32* key) const {
         return -1;
     return size_t(found - first) / stride;
 }
+
 // range limits static-compatible programs; key specifies their dynamic option words.
 int ResShadingModel::FindProgramIndex(const ShaderRange& range, const u32* key) const {
     const u32* begin = range.begin;
@@ -317,6 +353,7 @@ int ResShadingModel::FindProgramIndex(const ShaderRange& range, const u32* key) 
         return -1;
     return size_t(found - (pKeyTable.Get() + staticKeyLength)) / stride;
 }
+
 // range receives dynamic-key pointers spanning every program with the static words in key.
 bool ResShadingModel::FindProgramRange(ShaderRange* range, const u32* key) const {
     size_t length = staticKeyLength;
@@ -343,12 +380,15 @@ bool ResShadingModel::FindProgramRange(ShaderRange* range, const u32* key) const
                 return first != last;
             }
         }
+
         last = first;
     }
+
     range->begin = first + length;
     range->end = last + length;
     return first != last;
 }
+
 // destination receives capacity bytes of text; key contains length packed key words.
 int ResShadingModel::PrintKeyTo(char* destination, size_t capacity, const u32* key, int length) {
     size_t required = length < 1 ? size_t(0) : size_t(length * 9 - 1);
@@ -358,10 +398,12 @@ int ResShadingModel::PrintKeyTo(char* destination, size_t capacity, const u32* k
         *destination = 0;
         return -1;
     }
+
     if (!required) {
         *destination = 0;
         return 0;
     }
+
     {
         ptrdiff_t i = 0;
         do {
@@ -370,8 +412,10 @@ int ResShadingModel::PrintKeyTo(char* destination, size_t capacity, const u32* k
         } while (++i < length);
         destination[-1] = 0;
     }
+
     return required;
 }
+
 // destination receives capacity bytes of option text; key supplies packed static choices.
 int ResShadingModel::PrintStaticOptionTo(char* destination, size_t capacity, const u32* key) const {
     int count = staticOptionCount;
@@ -384,6 +428,7 @@ int ResShadingModel::PrintStaticOptionTo(char* destination, size_t capacity, con
             required += nameLength + std::strlen(options[i].choiceDictionary->GetKey(choice).data()) + 2;
         }
     }
+
     if (required)
         --required;
     if (destination == nullptr)
@@ -392,10 +437,12 @@ int ResShadingModel::PrintStaticOptionTo(char* destination, size_t capacity, con
         *destination = 0;
         return -1;
     }
+
     if (!required) {
         *destination = 0;
         return 0;
     }
+
     {
         for (int i = 0; i < count; ++i) {
             const ResShaderOption* option = &pStaticOptions.Get()[i];
@@ -411,10 +458,13 @@ int ResShadingModel::PrintStaticOptionTo(char* destination, size_t capacity, con
             destination += size;
             *destination++ = '\t';
         }
+
         destination[-1] = 0;
     }
+
     return required;
 }
+
 // destination receives capacity bytes of option text; key supplies packed dynamic choices.
 int ResShadingModel::PrintDynamicOptionTo(char* destination, size_t capacity, const u32* key) const {
     int count = dynamicOptionCount;
@@ -427,6 +477,7 @@ int ResShadingModel::PrintDynamicOptionTo(char* destination, size_t capacity, co
             required += nameLength + std::strlen(options[i].choiceDictionary->GetKey(choice).data()) + 2;
         }
     }
+
     if (required)
         --required;
     if (destination == nullptr)
@@ -435,10 +486,12 @@ int ResShadingModel::PrintDynamicOptionTo(char* destination, size_t capacity, co
         *destination = 0;
         return -1;
     }
+
     if (!required) {
         *destination = 0;
         return 0;
     }
+
     {
         for (int i = 0; i < count; ++i) {
             const ResShaderOption* option = &pDynamicOptions.Get()[i];
@@ -454,10 +507,13 @@ int ResShadingModel::PrintDynamicOptionTo(char* destination, size_t capacity, co
             destination += size;
             *destination++ = '\t';
         }
+
         destination[-1] = 0;
     }
+
     return required;
 }
+
 void ResShaderFile::Relocate() {
     if (!fileHeader.IsRelocated())
         fileHeader.GetRelocationTable()->Relocate();
@@ -466,6 +522,7 @@ void ResShaderFile::Relocate() {
     for (int i = 0; i < count; ++i)
         resource->models[i].Relocate();
 }
+
 void ResShaderFile::Unrelocate() {
     ResShaderArchive* resource = archive;
     int count = resource->modelCount;
@@ -474,6 +531,7 @@ void ResShaderFile::Unrelocate() {
     if (fileHeader.IsRelocated())
         fileHeader.GetRelocationTable()->Unrelocate();
 }
+
 // file supplies mutable resource storage whose offsets are converted to pointers.
 ResShaderFile* ResShaderFile::ResCast(void* file) {
     ResShaderFile* resource = static_cast<ResShaderFile*>(file);
@@ -481,16 +539,19 @@ ResShaderFile* ResShaderFile::ResCast(void* file) {
     resource->fileHeader.IsEndianReverse();
     return resource;
 }
+
 // file points to a shader archive file header; validate signature and version.
 bool ResShaderFile::IsValid(const void* file) {
     return static_cast<const nn::util::BinaryFileHeader*>(file)->IsValid(0x2020202041485346, 8, 0, 0);
 }
+
 // device and pool provide poolSize bytes at offset; memory supplies size bytes of mutex storage.
 void ResShaderFile::Setup(nn::gfx::Device* device, nn::gfx::MemoryPool* pool, ptrdiff_t offset,
                           size_t poolSize, void* memory, size_t size) {
     archive->Setup(device, pool, offset + (reinterpret_cast<u8*>(archive) - reinterpret_cast<u8*>(this)),
                    poolSize, memory, size);
 }
+
 // device owns model resources; release their shaders and the optional workspace mutexes.
 void ResShaderArchive::Cleanup(nn::gfx::Device* device) {
     int count = modelCount;
@@ -502,9 +563,11 @@ void ResShaderArchive::Cleanup(nn::gfx::Device* device) {
             ++lock;
         }
     }
+
     work = nullptr;
     flags &= ~0x80;
 }
+
 // device owns the shader; resource and index select a lazily initialized program.
 static void DefaultUpdate(nn::gfx::Device* device, ResShadingModel* resource,
                           int index) asm("sub_7100608DD0");
@@ -518,6 +581,7 @@ static void DefaultUpdate(nn::gfx::Device* device, ResShadingModel* resource, in
     __builtin_arm_dmb(0xa);
     program->ToData().flags &= ~1;
 }
+
 // archive supplies model resources; device probes whether their binary shaders are usable.
 static bool CheckBinary(ResShaderArchive* archive, nn::gfx::Device* device) {
     if (!archive->modelCount)
@@ -529,6 +593,7 @@ static bool CheckBinary(ResShaderArchive* archive, nn::gfx::Device* device) {
         archive->flags |= 8;
     return available;
 }
+
 // device owns shaders; memory supplies size bytes for optional per-model mutexes.
 void ResShaderArchive::Setup(nn::gfx::Device* device, void* memory, size_t size) {
     updateProgram = DefaultUpdate;
@@ -549,9 +614,11 @@ void ResShaderArchive::Setup(nn::gfx::Device* device, void* memory, size_t size)
                 models[i].Setup(device, nullptr);
         }
     }
+
     work = memory;
     flags |= 0x80;
 }
+
 // device and pool supply poolSize bytes at offset; memory holds size bytes of mutex workspace.
 void ResShaderArchive::Setup(nn::gfx::Device* device, nn::gfx::MemoryPool* pool, ptrdiff_t offset,
                              size_t poolSize, void* memory, size_t size) {
@@ -579,6 +646,7 @@ void ResShaderArchive::Setup(nn::gfx::Device* device, nn::gfx::MemoryPool* pool,
             }
         }
     }
+
     work = memory;
     flags |= 0x80;
 }

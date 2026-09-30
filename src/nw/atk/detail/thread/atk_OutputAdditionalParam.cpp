@@ -25,6 +25,7 @@ void OutputAdditionalParam::Initialize(void* memory, size_t size, const SoundIns
         mAdditionalSend->Initialize(cursor, count);
         cursor += bytes;
     }
+
     if (config.enableBusMixVolume) {
         mBusMix = reinterpret_cast<BusMixVolumePacket*>(cursor);
         new (mBusMix) BusMixVolumePacket;
@@ -33,6 +34,7 @@ void OutputAdditionalParam::Initialize(void* memory, size_t size, const SoundIns
         mBusMix->Initialize(cursor, bytes, config.busCount);
         cursor += bytes;
     }
+
     if (config.enableVolumeThroughMode) {
         mVolumeThrough = reinterpret_cast<VolumeThroughModePacket*>(cursor);
         new (mVolumeThrough) VolumeThroughModePacket;
@@ -41,21 +43,25 @@ void OutputAdditionalParam::Initialize(void* memory, size_t size, const SoundIns
         mVolumeThrough->Initialize(cursor, bytes, config.busCount);
     }
 }
+
 void OutputAdditionalParam::Finalize() {
     if (mAdditionalSend) { mAdditionalSend->Finalize(); mAdditionalSend = nullptr; }
     if (mBusMix) { mBusMix = nullptr; }
     if (mVolumeThrough) { mVolumeThrough->Finalize(); mVolumeThrough = nullptr; }
 }
+
 void OutputAdditionalParam::Reset() {
     if (mAdditionalSend) mAdditionalSend->Reset();
     if (mBusMix) mBusMix->Reset();
     if (mVolumeThrough) mVolumeThrough->Reset();
 }
+
 void* OutputAdditionalParam::GetBufferAddr() {
     if (mAdditionalSend) return mAdditionalSend;
     if (mBusMix) return mBusMix;
     return mVolumeThrough;
 }
+
 ValueArray<float>* OutputAdditionalParam::GetAdditionalSendAddr() { return mAdditionalSend; }
 const ValueArray<float>* OutputAdditionalParam::GetAdditionalSendAddr() const { return mAdditionalSend; }
 // bus is an output bus index; indices beyond the four built-in buses access the extra sends.
@@ -64,6 +70,7 @@ float OutputAdditionalParam::TryGetAdditionalSend(int bus) const {
     if (index < 0 || mAdditionalSend->mCount <= index) return 0.0f;
     return mAdditionalSend->mValues[index];
 }
+
 bool OutputAdditionalParam::IsAdditionalSendEnabled() const { return mAdditionalSend != nullptr; }
 // bus selects an extra send and send is its gain; out-of-range indices are ignored.
 void OutputAdditionalParam::TrySetAdditionalSend(int bus, float send) {
@@ -71,6 +78,7 @@ void OutputAdditionalParam::TrySetAdditionalSend(int bus, float send) {
     if (index < 0 || mAdditionalSend->mCount <= index) return;
     mAdditionalSend->mValues[index] = send;
 }
+
 BusMixVolumePacket* OutputAdditionalParam::GetBusMixVolumePacketAddr() { return mBusMix; }
 const BusMixVolumePacket* OutputAdditionalParam::GetBusMixVolumePacketAddr() const { return mBusMix; }
 // channel selects a mixing-table row and bus selects an entry within that row.
@@ -99,11 +107,13 @@ u8 OutputAdditionalParam::TryGetVolumeThroughMode(int bus) const {
     if (bus >= mVolumeThrough->mBusCount) return 0;
     return mVolumeThrough->mModes[bus];
 }
+
 // bus selects the mode byte and mode supplies its flags; absent packets and invalid buses are ignored.
 void OutputAdditionalParam::TrySetVolumeThroughMode(int bus, u8 mode) {
     if (bus < 0 || !mVolumeThrough || bus >= mVolumeThrough->mBusCount) return;
     mVolumeThrough->mModes[bus] = mode;
 }
+
 bool OutputAdditionalParam::IsVolumeThroughModeEnabled() const { return mVolumeThrough != nullptr; }
 bool OutputAdditionalParam::IsVolumeThroughModeUsed() const { return mVolumeThrough && mVolumeThrough->mUsed; }
 // used controls volume-through processing when its packet is present.
@@ -115,6 +125,7 @@ OutputAdditionalParam& OutputAdditionalParam::operator=(const OutputAdditionalPa
         if (other.mAdditionalSend) *mAdditionalSend = *other.mAdditionalSend;
         else mAdditionalSend->Reset();
     }
+
     if (mBusMix && other.mBusMix) {
         mBusMix->mUsed = other.mBusMix->mUsed;
         if (mBusMix->mUsed) {
@@ -129,10 +140,12 @@ OutputAdditionalParam& OutputAdditionalParam::operator=(const OutputAdditionalPa
             }
         }
     }
+
     if (mVolumeThrough) {
         if (other.mVolumeThrough) *mVolumeThrough = *other.mVolumeThrough;
         else mVolumeThrough->Reset();
     }
+
     return *this;
 }
 }

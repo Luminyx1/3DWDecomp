@@ -22,22 +22,28 @@ inline bool IsValidBinaryFile(const detail::BinaryFileHeader* pHeader, uint32_t 
             static_cast<char>(signature));
         return false;
     }
+
     if (pHeader->byteOrder != 0xfeff) {
         return false;
     }
+
     if ((pHeader->version >> 24) != (version >> 24)) {
         return false;
     }
+
     if (((pHeader->version >> 16) & 0xff) > ((version >> 16) & 0xff)) {
         return false;
     }
+
     if (pHeader->fileSize <
         sizeof(detail::BinaryFileHeader) + sizeof(detail::BinaryBlockHeader) * minBlocks) {
         return false;
     }
+
     if (pHeader->dataBlocks < minBlocks) {
         return false;
     }
+
     return true;
 }
 
@@ -72,15 +78,18 @@ void ResFont::RevertResource(void* pBfnt) {
     if (pHeader->signature != BinFileSignatureFontUnrelocated) {
         return;
     }
+
     detail::BinaryBlockHeader* pBlock = reinterpret_cast<detail::BinaryBlockHeader*>(
         reinterpret_cast<uint8_t*>(pHeader) + pHeader->headerSize);
     for (int i = 0; i < pHeader->dataBlocks; i++) {
         if (!IsKnownBlock(pBlock->kind)) {
             return;
         }
+
         pBlock = reinterpret_cast<detail::BinaryBlockHeader*>(reinterpret_cast<uint8_t*>(pBlock) +
                                                               pBlock->size);
     }
+
     pHeader->signature = BinFileSignatureFont;
 }
 
@@ -113,6 +122,7 @@ void* ResFont::RemoveResource(nn::gfx::Device* pDevice) {
     if (m_pResource == nullptr) {
         return nullptr;
     }
+
     DeleteTextureNames(pDevice);
     return RemoveResourceBuffer();
 }
@@ -131,15 +141,18 @@ bool ResFont::SetResource(nn::gfx::Device* pDevice, void* pBfnt, nn::gfx::Memory
     if (m_pResource != nullptr) {
         return false;
     }
+
     detail::BinaryFileHeader* pHeader = static_cast<detail::BinaryFileHeader*>(pBfnt);
     if (!detail::IsValidBinaryFile(pHeader, BinFileSignatureFont, FontFileVersion, 2)) {
         return false;
     }
+
     FontInformation* pFontInfo = Rebuild(pHeader);
     m_pResourceBase = pHeader;
     if (pFontInfo == nullptr) {
         return false;
     }
+
     FontKerningTable* pKerningTable =
         static_cast<FontKerningTable*>(FindBlock(pHeader, BinBlockSignatureKrng));
     SetResourceBuffer(pBfnt, pFontInfo, pKerningTable, pMemoryPool, memoryPoolOffset,
@@ -171,9 +184,11 @@ FontInformation* ResFont::Rebuild(detail::BinaryFileHeader* pHeader) {
         default:
             return nullptr;
         }
+
         pBlock = reinterpret_cast<detail::BinaryBlockHeader*>(reinterpret_cast<uint8_t*>(pBlock) +
                                                               pBlock->size);
     }
+
     return pFontInfo;
 }
 
@@ -187,6 +202,7 @@ void ResFont::Unrelocate(void* pBfnt) {
         reinterpret_cast<uint8_t*>(pHeader) + pHeader->headerSize);
     while (pBlock->kind != BinBlockSignatureFinf) {
     }
+
     FontInformation* pFontInfo = reinterpret_cast<FontInformation*>(pBlock + 1);
     const FontTextureGlyph* pTexGlyph = reinterpret_cast<const FontTextureGlyph*>(
         reinterpret_cast<uint8_t*>(pHeader) + pFontInfo->pGlyph);

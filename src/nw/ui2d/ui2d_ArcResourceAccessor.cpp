@@ -20,6 +20,7 @@ void ArchiveHandle::RegisterTextureViewToDescriptorPool(TextureContainer::Regist
     mFonts.RegisterTextureViewToDescriptorPool(callback, argument);
     mTextures.RegisterTextureViewToDescriptorPool(callback, argument);
 }
+
 // callback releases font and texture descriptors; argument is its context.
 void ArchiveHandle::UnregisterTextureViewFromDescriptorPool(TextureContainer::UnregisterCallback callback, void* argument) {
     mFonts.UnregisterTextureViewFromDescriptorPool(callback, argument);

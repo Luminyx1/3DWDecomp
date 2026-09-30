@@ -24,6 +24,7 @@ void BoneVisibilityAnimObj::InitializeArgument::CalculateMemorySize() {
         }
     }
 }
+
 // argument specifies capacities and caching; memory provides size bytes of working storage.
 bool BoneVisibilityAnimObj::Initialize(const InitializeArgument& argument, void* memory, size_t size) {
     if (!argument.memoryAlignment) return false;
@@ -41,6 +42,7 @@ bool BoneVisibilityAnimObj::Initialize(const InitializeArgument& argument, void*
     mAnimCapacity = argument.animCount;
     return true;
 }
+
 // resource supplies curves, initial visibility bits, and playback bounds.
 void BoneVisibilityAnimObj::SetResource(const ResBoneVisibilityAnim* resource) {
     mResource = resource;
@@ -53,6 +55,7 @@ void BoneVisibilityAnimObj::SetResource(const ResBoneVisibilityAnim* resource) {
     mBindTable.mAnimCount = resource->animCount;
     mContext.SetCurveCount(resource->curveCount);
 }
+
 // model supplies the bone names to bind to the animation's named targets.
 BindResult BoneVisibilityAnimObj::Bind(const ResModel* model) {
     const ResSkeleton* skeleton = model->ToData().pSkeleton.Get();
@@ -71,15 +74,18 @@ BindResult BoneVisibilityAnimObj::Bind(const ResModel* model) {
             result.Merge(BindResult(BindResult::Flag_Success));
         } else result.Merge(BindResult(BindResult::Flag_Failure));
     }
+
     mBindTable.mFlags |= 1;
     mContext.Reset();
     BoneVisibilityAnimObj::ClearResult();
     return result;
 }
+
 void BoneVisibilityAnimObj::ClearResult() {
     size_t size = ((mBindTable.mAnimCount + 31) >> 5) * sizeof(u32);
     memcpy(mResult, mResource->baseValues, size);
 }
+
 // model supplies its resource for virtual dispatch to the resource-binding implementation.
 BindResult BoneVisibilityAnimObj::Bind(const ModelObj* model) { BindResult result; result.Merge(Bind(model->GetResource())); return result; }
 // model must match the resource's precomputed bone-binding indices.
@@ -90,6 +96,7 @@ void BoneVisibilityAnimObj::BindFast(const ResModel* model) {
     mContext.Reset();
     BoneVisibilityAnimObj::ClearResult();
 }
+
 void BoneVisibilityAnimObj::Calculate() {
     float lastFrame = mContext.mLastFrame;
     float frame = mFrameCtrlPointer->GetFrame();
@@ -124,8 +131,10 @@ void BoneVisibilityAnimObj::Calculate() {
             }
         }
     }
+
     mContext.mLastFrame = mFrameCtrlPointer->GetFrame();
 }
+
 // model receives the calculated visibility values for bindings with application enabled.
 void BoneVisibilityAnimObj::ApplyTo(ModelObj* model) const {
     int count = mBindTable.mAnimCount;
@@ -136,6 +145,7 @@ void BoneVisibilityAnimObj::ApplyTo(ModelObj* model) const {
             model->SetBoneVisible(binding & 0x7fff, (result[static_cast<unsigned>(i) >> 5] & (1u << (i & 31))) != 0);
     }
 }
+
 // model receives its skeleton's default visibility for bindings with application enabled.
 void BoneVisibilityAnimObj::RevertTo(ModelObj* model) const {
     int count = mBindTable.mAnimCount;

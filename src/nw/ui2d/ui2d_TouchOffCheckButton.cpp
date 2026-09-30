@@ -23,8 +23,10 @@ bool TouchOffCheckButton::ProcessOn() {
     default:
         break;
     }
+
     return processed;
 }
+
 bool TouchOffCheckButton::ProcessOff() {
     switch (mState) {
     case cState_OnStart:
@@ -38,8 +40,10 @@ bool TouchOffCheckButton::ProcessOff() {
     default:
         break;
     }
+
     return true;
 }
+
 void TouchOffCheckButton::FinishDown() {
     ChangeState(cState_Down);
     ChangeState(cState_Off);

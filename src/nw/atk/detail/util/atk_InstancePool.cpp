@@ -5,6 +5,7 @@ namespace nn::atk::detail {
 int PoolImpl::CreateImpl(void* memory, size_t size, size_t elementSize) {
     return CreateImpl(memory, size, elementSize, 4);
 }
+
 // memory and size provide storage; elementSize and alignment determine the block stride.
 int PoolImpl::CreateImpl(void* memory, size_t size, size_t elementSize, size_t alignment) {
     u8* address = reinterpret_cast<u8*>((reinterpret_cast<uintptr_t>(memory) + alignment - 1) & -alignment);
@@ -14,10 +15,12 @@ int PoolImpl::CreateImpl(void* memory, size_t size, size_t elementSize, size_t a
         FreeImpl(address);
         address += stride;
     }
+
     mMemory = memory;
     mSize = size;
     return count;
 }
+
 void PoolImpl::DestroyImpl() {
     Node* previous = &mRoot;
     Node* node = mRoot.next;
@@ -30,10 +33,12 @@ void PoolImpl::DestroyImpl() {
             previous->next = node->next;
             nextPrevious = previous;
         }
+
         previous = nextPrevious;
         node = node->next;
     }
 }
+
 int PoolImpl::CountImpl() const {
     // The root is a sentinel, so only the following nodes count as free blocks.
     int count = -1;
@@ -41,11 +46,13 @@ int PoolImpl::CountImpl() const {
     do { node = node->next; ++count; } while (node);
     return count;
 }
+
 void* PoolImpl::AllocImpl() {
     Node* node = mRoot.next;
     if (node) mRoot.next = node->next;
     return node;
 }
+
 // memory is a free block large enough to hold the next pointer.
 void PoolImpl::FreeImpl(void* memory) {
     auto* node = static_cast<Node*>(memory);

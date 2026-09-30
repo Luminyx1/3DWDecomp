@@ -1062,6 +1062,7 @@ const LineBreakRange LineBreakRanges[] = {
     {0xffe8, 6, LineBreakClass_AL},   {0xfff9, 2, LineBreakClass_CM},
     {0xfffc, 0, LineBreakClass_CB},   {0xfffd, 0, LineBreakClass_AI},
 };
+
 const BreakAction PairTableAlternative[LineBreakClass_PairCount][LineBreakClass_PairCount] = {
     {PRO, PRO, PRO, PRO, PRO, PRO, PRO, PRO, PRO, PRO, PRO, PRO, PRO, PRO, PRO,
      PRO, PRO, PRO, PRO, PRO, PRO, CPB, PRO, PRO, PRO, PRO, PRO, PRO, PRO, PRO},
@@ -1124,6 +1125,7 @@ const BreakAction PairTableAlternative[LineBreakClass_PairCount][LineBreakClass_
     {IND, PRO, PRO, PRO, IND, IND, PRO, PRO, PRO, DIR, DIR, IND, IND, IND, DIR,
      IND, IND, IND, DIR, DIR, PRO, CIB, PRO, DIR, DIR, DIR, DIR, DIR, DIR, PRO},
 };
+
 const BreakAction PairTableDefault[LineBreakClass_PairCount][LineBreakClass_PairCount] = {
     {PRO, PRO, PRO, PRO, PRO, PRO, PRO, PRO, PRO, PRO, PRO, PRO, PRO, PRO, PRO,
      PRO, PRO, PRO, PRO, PRO, PRO, CPB, PRO, PRO, PRO, PRO, PRO, PRO, PRO, PRO},
@@ -1200,8 +1202,10 @@ LineBreakClass GetLineBreakClass(uint32_t code) {
             if (code <= rRange.first + rRange.length) {
                 return static_cast<LineBreakClass>(rRange.lineBreakClass);
             }
+
             break;
         }
+
         if (code < rRange.first) {
             high = mid;
         } else {
@@ -1215,21 +1219,27 @@ LineBreakClass ResolveLineBreakClass(LineBreakClass lineBreakClass) {
     if (lineBreakClass >= LineBreakClass_CR && lineBreakClass <= LineBreakClass_NL) {
         lineBreakClass = LineBreakClass_BK;
     }
+
     if (lineBreakClass == LineBreakClass_CJ) {
         lineBreakClass = LineBreakClass_NS;
     }
+
     if (lineBreakClass == LineBreakClass_AI) {
         lineBreakClass = LineBreakClass_AL;
     }
+
     if (lineBreakClass == LineBreakClass_SA) {
         lineBreakClass = LineBreakClass_AL;
     }
+
     if (lineBreakClass == LineBreakClass_SG) {
         lineBreakClass = LineBreakClass_AL;
     }
+
     if (lineBreakClass == LineBreakClass_CB) {
         lineBreakClass = LineBreakClass_ID;
     }
+
     return lineBreakClass;
 }
 
@@ -1277,10 +1287,12 @@ ReadLineBreakClass(const CharType** ppCharPos, const CharType** ppPos, const Cha
         if (code >= 0x20) {
             break;
         }
+
         const size_t tagSize = rCallback.GetTagSize(pSkipCount, *ppPos, pEnd);
         if (tagSize == 0) {
             break;
         }
+
         *ppPos =
             reinterpret_cast<const CharType*>(reinterpret_cast<const uint8_t*>(*ppPos) + tagSize);
         if (*ppPos == pEnd) {
@@ -1288,12 +1300,14 @@ ReadLineBreakClass(const CharType** ppCharPos, const CharType** ppPos, const Cha
             return ResolveLineBreakClass(GetLineBreakClass(0));
         }
     }
+
     *ppCharPos = *ppPos;
     StepChar(ppPos);
     if (*pSkipCount != 0) {
         (*pSkipCount)--;
         return LineBreakClass_GL;
     }
+
     return ResolveLineBreakClass(GetLineBreakClass(code));
 }
 
@@ -1312,6 +1326,7 @@ const CharType* FindLineBreakImpl(const CharType* pStart, const CharType* pEnd,
     if (prevClass == LineBreakClass_BK) {
         return pCharPos;
     }
+
     if (prevClass == LineBreakClass_SP) {
         prevClass = LineBreakClass_WJ;
     }
@@ -1346,6 +1361,7 @@ const CharType* FindLineBreakImpl(const CharType* pStart, const CharType* pEnd,
                     lineBreakClass = LineBreakClass_AL;
                 }
             }
+
             const BreakAction action = rConfig.isAlternativePairTableUsed ?
                                            PairTableAlternative[prevClass][lineBreakClass] :
                                            PairTableDefault[prevClass][lineBreakClass];
@@ -1363,15 +1379,19 @@ const CharType* FindLineBreakImpl(const CharType* pStart, const CharType* pEnd,
                 if (isSpace && isDirect) {
                     return pResult;
                 }
+
                 return pPrevPos == pEnd ? pResult : pPrevPos;
             }
+
             if (isMandatory) {
                 return pCharPos;
             }
+
             pBreak = pPrevPos;
         } else if (pCharPos >= pLimitPos) {
             return pBreak == pEnd ? pResult : pBreak;
         }
+
         isSpace = false;
         prevClass = lineBreakClass;
         pPrevPos = pCharPos;
@@ -1380,9 +1400,11 @@ const CharType* FindLineBreakImpl(const CharType* pStart, const CharType* pEnd,
     if (pLimitPos > pEnd) {
         return pCharPos;
     }
+
     if (isSpace) {
         return pResult;
     }
+
     return pBreak == pEnd ? pResult : pBreak;
 }
 
@@ -1394,9 +1416,11 @@ bool CalculateWordWrappingImpl(uint32_t* pOutLength, CharType* pDst, uint32_t ds
     if (pOutLength != nullptr) {
         *pOutLength = 0;
     }
+
     if (pSrc == nullptr || pDst == nullptr || dstSize == 0) {
         return false;
     }
+
     pDst[0] = 0;
     if (srcLength == 0 || pSrc[0] == 0) {
         return true;
@@ -1417,6 +1441,7 @@ bool CalculateWordWrappingImpl(uint32_t* pOutLength, CharType* pDst, uint32_t ds
         if (isSpace) {
             breakLength = lineLength;
         }
+
         std::memcpy(pDst + dstPos, pSrc, copyLength * sizeof(CharType));
         dstPos += copyLength;
         pDst[dstPos] = 0;
@@ -1424,6 +1449,7 @@ bool CalculateWordWrappingImpl(uint32_t* pOutLength, CharType* pDst, uint32_t ds
             if (pOutLength != nullptr) {
                 *pOutLength = dstPos;
             }
+
             return false;
         }
 
@@ -1433,26 +1459,33 @@ bool CalculateWordWrappingImpl(uint32_t* pOutLength, CharType* pDst, uint32_t ds
             if (pOutLength != nullptr) {
                 *pOutLength = dstPos;
             }
+
             return true;
         }
+
         lineCount++;
         if (maxLineCount > 0 && lineCount >= rConfig.maxLineCount) {
             if (pOutLength != nullptr) {
                 *pOutLength = dstPos;
             }
+
             return false;
         }
+
         if (*pBreak != '\n') {
             if (static_cast<uint32_t>(dstPos + 1) >= dstSize) {
                 if (pOutLength != nullptr) {
                     *pOutLength = dstPos;
                 }
+
                 return false;
             }
+
             pDst[dstPos] = '\n';
             dstPos++;
             pDst[dstPos] = 0;
         }
+
         if (rConfig.isLeadingSpaceRemoved) {
             while (IsSpace(PeekChar(pSrc))) {
                 StepChar(&pSrc);
@@ -1462,6 +1495,7 @@ bool CalculateWordWrappingImpl(uint32_t* pOutLength, CharType* pDst, uint32_t ds
                     if (pOutLength != nullptr) {
                         *pOutLength = dstPos;
                     }
+
                     return true;
                 }
             }
@@ -1503,6 +1537,7 @@ const CharType* DefaultWordWrapCallbackBase<CharType>::GetLineBreakLimit(const C
         m_pUpdatedPos = pStart;
         m_Writer.UpdateTextWriterWithTags(pUpdatedPos, length);
     }
+
     return m_Writer.FindPosOfWidthLimit(pStart, pEnd - pStart);
 }
 

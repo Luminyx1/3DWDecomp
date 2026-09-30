@@ -137,6 +137,7 @@ void CharWriter::PrintGlyph(float x, const Glyph& rGlyph) {
     if (pBuffer->m_CharCount >= pBuffer->m_CharCountMax) {
         return;
     }
+
     const int index = pBuffer->m_CharCount++;
     detail::CharAttribute* pAttr = &m_pDispStringBuffer->m_pCharAttrs[index];
 

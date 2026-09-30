@@ -15,6 +15,7 @@ public:
 private:
     os::Mutex& mMutex;
 };
+
 struct EffectCommand : detail::Command {
     int bus;
     void* effect;
@@ -22,13 +23,16 @@ struct EffectCommand : detail::Command {
     size_t bufferSize;
     OutputMixer* mixer;
 };
+
 static_assert(sizeof(EffectCommand) == 0x40, "Effect command size");
 }
+
 OutputMixer::OutputMixer() : mMutex(true), mEffects(nullptr), mAuxEffects(nullptr), mEffectsEnabled(false) {}
 // busCount is the number of effect chains; effectsEnabled controls whether they need storage.
 size_t OutputMixer::GetRequiredMemorySize(int busCount, bool effectsEnabled) {
     return effectsEnabled ? size_t(busCount) * (sizeof(EffectList) + sizeof(AuxList)) : 0;
 }
+
 // busCount selects the number of chains. buffer supplies bufferSize bytes for those
 // chains when effectsEnabled is true; the caller retains ownership of the storage.
 void OutputMixer::Initialize(int busCount, bool effectsEnabled, void* buffer, size_t bufferSize) {
@@ -39,13 +43,16 @@ void OutputMixer::Initialize(int busCount, bool effectsEnabled, void* buffer, si
         mAuxEffects = static_cast<AuxList*>(allocator.Allocate(sizeof(AuxList), alignof(AuxList), busCount));
         for (int i = 0; i < busCount; ++i) new (&mAuxEffects[i]) AuxList;
     }
+
     mEffectsEnabled = effectsEnabled;
 }
+
 void OutputMixer::Finalize() {
     mEffectsEnabled = false;
     mEffects = nullptr;
     mAuxEffects = nullptr;
 }
+
 // bus is the zero-based chain to inspect for either kind of effect.
 bool OutputMixer::HasEffect(int bus) const {
     bool result = false;
@@ -53,8 +60,10 @@ bool OutputMixer::HasEffect(int bus) const {
         MutexLock lock(mMutex);
         if (!mEffects[bus].empty() || !mAuxEffects[bus].empty()) result = true;
     }
+
     return result;
 }
+
 // effect is queued for bus; buffer supplies bufferSize bytes of effect work memory.
 bool OutputMixer::AppendEffect(EffectBase* effect, int bus, void* buffer, size_t bufferSize) {
     if (static_cast<u32>(effect->GetSampleRate()) >= 2) NN_UNEXPECTED_DEFAULT;
@@ -70,6 +79,7 @@ bool OutputMixer::AppendEffect(EffectBase* effect, int bus, void* buffer, size_t
     AddReferenceCount(1);
     return true;
 }
+
 // effect is queued for bus; buffer supplies bufferSize bytes of auxiliary work memory.
 bool OutputMixer::AppendEffect(EffectAux* effect, int bus, void* buffer, size_t bufferSize) {
     auto& driver = detail::DriverCommand::GetInstance();
@@ -84,6 +94,7 @@ bool OutputMixer::AppendEffect(EffectAux* effect, int bus, void* buffer, size_t 
     AddReferenceCount(1);
     return true;
 }
+
 // effect is removed from bus; wait for the driver to finish the removal.
 bool OutputMixer::RemoveEffect(EffectBase* effect, int bus) {
     auto& driver = detail::DriverCommand::GetInstance();
@@ -96,6 +107,7 @@ bool OutputMixer::RemoveEffect(EffectBase* effect, int bus) {
     driver.WaitCommandReply(driver.FlushCommand(true));
     return true;
 }
+
 // effect is removed from bus; wait for the driver to finish the removal.
 bool OutputMixer::RemoveEffect(EffectAux* effect, int bus) {
     auto& driver = detail::DriverCommand::GetInstance();
@@ -108,6 +120,7 @@ bool OutputMixer::RemoveEffect(EffectAux* effect, int bus) {
     driver.WaitCommandReply(driver.FlushCommand(true));
     return true;
 }
+
 // bus identifies the chain to clear; wait until the driver finishes clearing it.
 bool OutputMixer::ClearEffect(int bus) {
     auto& driver = detail::DriverCommand::GetInstance();
@@ -119,6 +132,7 @@ bool OutputMixer::ClearEffect(int bus) {
     driver.WaitCommandReply(driver.FlushCommand(true));
     return true;
 }
+
 void OutputMixer::UpdateEffectAux() {
     mMutex.Lock();
     int count = GetBusCount();
@@ -126,6 +140,7 @@ void OutputMixer::UpdateEffectAux() {
         for (auto it = mAuxEffects[bus].begin(); it != mAuxEffects[bus].end(); ++it) it->Update();
     mMutex.Unlock();
 }
+
 void OutputMixer::OnChangeOutputMode() {
     mMutex.Lock();
     int count = GetBusCount();
@@ -133,6 +148,7 @@ void OutputMixer::OnChangeOutputMode() {
         for (auto it = mAuxEffects[bus].begin(); it != mAuxEffects[bus].end(); ++it) it->OnChangeOutputMode();
     mMutex.Unlock();
 }
+
 // effect is installed on bus using bufferSize bytes at buffer, if its sample rate is compatible.
 void OutputMixer::AppendEffectImpl(EffectBase* effect, int bus, void* buffer, size_t bufferSize) {
     auto& hardware = detail::driver::HardwareManager::GetInstance();
@@ -148,6 +164,7 @@ void OutputMixer::AppendEffectImpl(EffectBase* effect, int bus, void* buffer, si
     mEffects[bus].push_back(*effect);
     mMutex.Unlock();
 }
+
 // effect is initialized and installed on bus using bufferSize bytes at buffer.
 void OutputMixer::AppendEffectImpl(EffectAux* effect, int bus, void* buffer, size_t bufferSize) {
     if (!effect->Initialize()) return;
@@ -163,6 +180,7 @@ void OutputMixer::AppendEffectImpl(EffectAux* effect, int bus, void* buffer, siz
     mAuxEffects[bus].push_back(*effect);
     mMutex.Unlock();
 }
+
 // effect is removed only when found in bus's chain, then its mixer reference is released.
 void OutputMixer::RemoveEffectImpl(EffectBase* effect, int bus) {
     auto& config = detail::driver::HardwareManager::GetInstance().GetAudioRendererConfig();
@@ -171,12 +189,14 @@ void OutputMixer::RemoveEffectImpl(EffectBase* effect, int bus) {
     for (; it != mEffects[bus].end(); ++it) {
         if (effect == &*it) break;
     }
+
     if (it != mEffects[bus].end()) {
         it->RemoveEffect(&config, this);
         mEffects[bus].erase(it);
         AddReferenceCount(-1);
     }
 }
+
 // effect is removed and finalized only when found in bus's auxiliary chain.
 void OutputMixer::RemoveEffectImpl(EffectAux* effect, int bus) {
     auto& hardware = detail::driver::HardwareManager::GetInstance();
@@ -190,8 +210,10 @@ void OutputMixer::RemoveEffectImpl(EffectAux* effect, int bus) {
             break;
         }
     }
+
     mMutex.Unlock();
 }
+
 // bus identifies both effect chains to detach; release one mixer reference per effect.
 void OutputMixer::ClearEffectImpl(int bus) {
     auto& config = detail::driver::HardwareManager::GetInstance().GetAudioRendererConfig();
@@ -201,12 +223,14 @@ void OutputMixer::ClearEffectImpl(int bus) {
         it->RemoveEffect(&config, this);
         ++count;
     }
+
     mEffects[bus].clear();
     for (auto it = mAuxEffects[bus].begin(); it != mAuxEffects[bus].end(); ++it) {
         it->RemoveEffect(&config, this);
         it->Finalize();
         ++count;
     }
+
     mAuxEffects[bus].clear();
     AddReferenceCount(-count);
     mMutex.Unlock();

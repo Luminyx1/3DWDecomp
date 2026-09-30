@@ -41,16 +41,19 @@ size_t StreamCache::Read(void* output, size_t size, FndResult* result, FsAccessL
         if (log) log->OnReadEnd(owner);
         return count;
     }
+
     FndResult flush = FlushWriteCache();
     if (static_cast<s32>(flush.value) < 0) {
         if (result) *result = flush;
         return 0;
     }
+
     size_t hit = GetReadCacheHitLength(size);
     if (hit) {
         std::memcpy(output, static_cast<u8*>(mBuffer) + (mPosition - mCachePosition), hit);
         mPosition += hit;
     }
+
     if (hit >= size)
         return size;
     FndResult sync = SyncStreamCurrentPosition(mPosition);
@@ -58,6 +61,7 @@ size_t StreamCache::Read(void* output, size_t size, FndResult* result, FsAccessL
         if (result) *result = sync;
         return 0;
     }
+
     size_t remaining = size - hit;
     size_t actual;
     if (remaining > mBufferSize) {
@@ -70,6 +74,7 @@ size_t StreamCache::Read(void* output, size_t size, FndResult* result, FsAccessL
             ClearCache();
             return hit;
         }
+
         size_t retained = mBufferSize < actual ? mBufferSize : actual;
         // Preserve the original signed-16-bit displacement and full-buffer copy.
         size_t position = mPosition;
@@ -88,18 +93,21 @@ size_t StreamCache::Read(void* output, size_t size, FndResult* result, FsAccessL
             ClearCache();
             return hit;
         }
+
         mState = Reading;
         mCachePosition = mPosition;
         mCachedLength = actual;
         size_t count = actual < remaining ? actual : remaining;
         std::memcpy(static_cast<u8*>(output) + hit, mBuffer, count);
     }
+
     mPosition += remaining;
     size_t total = hit + actual;
     if (total >= size) {
         if (result) result->value = 0;
         return size;
     }
+
     return total;
 }
 
@@ -154,8 +162,10 @@ size_t StreamCache::Write(const void* input, size_t size, FndResult* result) {
             if (result) *result = status;
             return 0;
         }
+
         return mStream->Write(input, size, result);
     }
+
     if (GetWritableCacheLength(size) < size) {
         FndResult status = FlushWriteCache();
         if (static_cast<s32>(status.value) < 0) {
@@ -163,6 +173,7 @@ size_t StreamCache::Write(const void* input, size_t size, FndResult* result) {
             return 0;
         }
     }
+
     std::memcpy(static_cast<u8*>(mBuffer) + mCachedLength, input, size);
     if (mState == Writing) {
         mCachedLength += size;
@@ -171,6 +182,7 @@ size_t StreamCache::Write(const void* input, size_t size, FndResult* result) {
         mCachePosition = mPosition;
         mCachedLength = size;
     }
+
     mPosition += size;
     if (mCachedLength && mCachedLength == mBufferSize) {
         FndResult status = FlushWriteCache();
@@ -179,6 +191,7 @@ size_t StreamCache::Write(const void* input, size_t size, FndResult* result) {
             return size;
         }
     }
+
     if (result) result->value = 0;
     return size;
 }

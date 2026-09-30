@@ -11,6 +11,7 @@ void ButtonBase::ActionQueue::PushWithOmit(Action action) {
     for (int i = 0; i < count; ++i) {
         if (actions[i] == action) { count = i + 1; return; }
     }
+
     if (count < 4) {
         actions[count] = action;
         ++count;
@@ -75,6 +76,7 @@ bool ButtonBase::ProcessCancel() {
         break;
     default: break;
     }
+
     return processed;
 }
 
@@ -95,6 +97,7 @@ bool ButtonBase::ProcessOn() {
         break;
     default: break;
     }
+
     return processed;
 }
 
@@ -112,6 +115,7 @@ bool ButtonBase::ProcessOff() {
         break;
     default: break;
     }
+
     return processed;
 }
 
@@ -131,6 +135,7 @@ bool ButtonBase::ProcessDown() {
         break;
     default: break;
     }
+
     return true;
 }
 
@@ -144,6 +149,7 @@ void ButtonBase::ProcessActionFromQueue() {
     case cAction_Down: processed = ProcessDown(); break;
     case cAction_Cancel: processed = ProcessCancel(); break;
     }
+
     if (processed) mActions.Pop();
 }
 

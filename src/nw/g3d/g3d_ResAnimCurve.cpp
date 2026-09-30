@@ -13,9 +13,11 @@ using FrameValue = typename std::conditional<
 inline int ResAnimCurve::GetBakedFloatIntervalCount() const {
     return int(std::floor(endFrame) + 1.0f) - int(std::floor(startFrame));
 }
+
 inline int ResAnimCurve::GetBakedIntIntervalCount() const {
     return int(std::floor(endFrame)) - int(std::floor(startFrame));
 }
+
 struct ResAnimCurve::Impl {
     using FrameFinder = void (ResAnimCurve::*)(AnimFrameCache*, float) const;
     using FloatEvaluator = float (ResAnimCurve::*)(float, AnimFrameCache*) const;
@@ -24,6 +26,7 @@ struct ResAnimCurve::Impl {
     static FloatEvaluator s_pFuncEvaluateFloat[3][3];
     static IntEvaluator s_pFuncEvaluateInt[4][3];
 };
+
 const ResAnimCurve::Impl::FrameFinder ResAnimCurve::Impl::s_pFuncFindFrame[3] = {
     &ResAnimCurve::FindFrame<float>, &ResAnimCurve::FindFrame<s16>, &ResAnimCurve::FindFrame<u8>};
 ResAnimCurve::Impl::FloatEvaluator ResAnimCurve::Impl::s_pFuncEvaluateFloat[3][3] = {
@@ -59,6 +62,7 @@ void ResAnimCurve::FindFrame(AnimFrameCache* cache, float frame) const {
         cache->end = cache->start + 1.0f;
         return;
     }
+
     ptrdiff_t index = cache->keyIndex;
     if (values[index] > target) {
         do {
@@ -68,10 +72,12 @@ void ResAnimCurve::FindFrame(AnimFrameCache* cache, float frame) const {
         while (values[index + 1] <= target)
             ++index;
     }
+
     cache->keyIndex = int(index);
     cache->start = float(values[cache->keyIndex]) * factor;
     cache->end = float(values[cache->keyIndex + 1]) * factor;
 }
+
 // cache stores the active key interval; frame selects the interval to locate when it is stale.
 void ResAnimCurve::UpdateFrameCache(AnimFrameCache* cache, float frame) const {
     if (cache->start > frame || cache->end <= frame) {
@@ -84,6 +90,7 @@ void ResAnimCurve::UpdateFrameCache(AnimFrameCache* cache, float frame) const {
         (this->*Impl::s_pFuncFindFrame[flags & 3])(cache, frame);
     }
 }
+
 // frame is sample time; cache reuses the key interval; T specifies the coefficient storage type.
 template <class T>
 float ResAnimCurve::EvaluateCubic(float frame, AnimFrameCache* cache) const {
@@ -94,6 +101,7 @@ float ResAnimCurve::EvaluateCubic(float frame, AnimFrameCache* cache) const {
     float high = t * (t * (c2 + t * c3));
     return c0 + t * c1 + high;
 }
+
 // frame is sample time; cache reuses the key interval; T specifies the coefficient storage type.
 template <class T>
 float ResAnimCurve::EvaluateLinear(float frame, AnimFrameCache* cache) const {
@@ -102,6 +110,7 @@ float ResAnimCurve::EvaluateLinear(float frame, AnimFrameCache* cache) const {
     const T* c = GetKeyArray<T>() + cache->keyIndex * 2;
     return float(c[0]) + t * float(c[1]);
 }
+
 // frame selects adjacent baked samples; cache is unused; T specifies the sample storage type.
 template <class T>
 float ResAnimCurve::EvaluateBakedFloat(float frame, AnimFrameCache*) const {
@@ -113,12 +122,14 @@ float ResAnimCurve::EvaluateBakedFloat(float frame, AnimFrameCache*) const {
     float c1 = c[index + 1], c0 = c[index];
     return t * c1 + (1.0f - t) * c0;
 }
+
 // frame selects a discrete key; cache retains its interval; T specifies the integer storage type.
 template <class T>
 int ResAnimCurve::EvaluateStepInt(float frame, AnimFrameCache* cache) const {
     UpdateFrameCache(cache, frame);
     return GetKeyArray<T>()[cache->keyIndex];
 }
+
 // frame selects a baked integer sample; cache is unused; T specifies the sample storage type.
 template <class T>
 int ResAnimCurve::EvaluateBakedInt(float frame, AnimFrameCache*) const {
@@ -126,6 +137,7 @@ int ResAnimCurve::EvaluateBakedInt(float frame, AnimFrameCache*) const {
     int index = int(frame) - start;
     return GetKeyArray<T>()[index];
 }
+
 // frame selects a packed boolean key and cache retains its interval.
 int ResAnimCurve::EvaluateStepBool(float frame, AnimFrameCache* cache) const {
     UpdateFrameCache(cache, frame);
@@ -133,12 +145,14 @@ int ResAnimCurve::EvaluateStepBool(float frame, AnimFrameCache* cache) const {
     int index = cache->keyIndex;
     return (values[index >> 5] >> (index & 31)) & 1;
 }
+
 // frame selects a packed baked boolean sample; cache is unused.
 int ResAnimCurve::EvaluateBakedBool(float frame, AnimFrameCache*) const {
     int start = int(startFrame);
     int index = int(frame) - start;
     return (GetKeyArray<u32>()[index >> 5] >> (index & 31)) & 1;
 }
+
 namespace {
 // frame receives the wrapped time; curve supplies the interval/wrap modes; offset is the initial value bias.
 // The returned bias includes any relative-repeat displacement.
@@ -156,6 +170,7 @@ inline T WrapFrame(float& frame, const ResAnimCurve* curve, T offset) {
             frame = start;
             return offset;
         }
+
         mode = curve->flags >> 8;
         after = 0;
     } else {
@@ -163,10 +178,12 @@ inline T WrapFrame(float& frame, const ResAnimCurve* curve, T offset) {
             frame = end;
             return offset;
         }
+
         mode = curve->flags >> 12;
         distance = frame - end;
         after = 1;
     }
+
     float length = end - start;
     int cycles = int(distance / length);
     float remainder = distance - length * cycles;
@@ -185,6 +202,7 @@ inline T WrapFrame(float& frame, const ResAnimCurve* curve, T offset) {
             shift = delta * repetitions;
         offset += shift;
     }
+
         [[fallthrough]];
     default:
         direction = 1;
@@ -193,16 +211,19 @@ inline T WrapFrame(float& frame, const ResAnimCurve* curve, T offset) {
         direction = cycles & 1;
         break;
     }
+
     frame = end - remainder;
     if (direction == after)
         frame = start + remainder;
     return offset;
 }
+
 // value is a byte count/address to round up to pointer alignment.
 inline size_t AlignPointer(size_t value) { return (value + 7) & ~size_t(7); }
 inline size_t FloatBackupSize() { return AlignPointer(12) + sizeof(void*); }
 inline size_t IntBackupSize() { return AlignPointer(4) + sizeof(void*); }
 } // namespace
+
 // frame is sample time, including wrap modes; cache retains the last key interval.
 float ResAnimCurve::EvaluateFloat(float frame, AnimFrameCache* cache) const {
     float offset = offsetFloat;
@@ -210,6 +231,7 @@ float ResAnimCurve::EvaluateFloat(float frame, AnimFrameCache* cache) const {
     float value = (this->*Impl::s_pFuncEvaluateFloat[(flags & 0x70) >> 4][(flags & 12) >> 2])(frame, cache);
     return offset + value * scale;
 }
+
 // frame is sample time, including wrap modes; cache retains the last key interval.
 int ResAnimCurve::EvaluateInt(float frame, AnimFrameCache* cache) const {
     int offset = offsetInt;
@@ -217,6 +239,7 @@ int ResAnimCurve::EvaluateInt(float frame, AnimFrameCache* cache) const {
     return (this->*Impl::s_pFuncEvaluateInt[((flags & 0x70) - 0x40u) >> 4][(flags & 12) >> 2])(frame, cache) +
            offset;
 }
+
 // buffer receives count integer samples; firstFrame is the integer-grid origin and T is storage type.
 template <class T>
 void ResAnimCurve::BakeImpl(void* buffer, float firstFrame, int count) {
@@ -228,6 +251,7 @@ void ResAnimCurve::BakeImpl(void* buffer, float firstFrame, int count) {
         output[i] = EvaluateStepInt<T>(firstFrame + i, &cache);
     output[last] = EvaluateStepInt<T>(endFrame, &cache);
 }
+
 // buffer receives count packed boolean samples; firstFrame is the integer-grid origin.
 template <>
 void ResAnimCurve::BakeImpl<bool>(void* buffer, float firstFrame, int count) {
@@ -239,9 +263,11 @@ void ResAnimCurve::BakeImpl<bool>(void* buffer, float firstFrame, int count) {
         u32 value = EvaluateStepBool(firstFrame + i, &cache);
         output[unsigned(i) >> 5] = (output[unsigned(i) >> 5] & ~(1u << (i & 31))) | (value << (i & 31));
     }
+
     u32 value = EvaluateStepBool(endFrame, &cache);
     output[last >> 5] = (output[last >> 5] & ~(1u << (last & 31))) | (value << (last & 31));
 }
+
 // buffer receives count floating-point samples; firstFrame is the integer-grid origin.
 template <>
 void ResAnimCurve::BakeImpl<float>(void* buffer, float firstFrame, int count) {
@@ -259,6 +285,7 @@ void ResAnimCurve::BakeImpl<float>(void* buffer, float firstFrame, int count) {
     if (fraction < 1.0f)
         output[last] = (output[last] - fraction * output[count - 2]) / (1.0f - fraction);
 }
+
 size_t ResAnimCurve::CalculateBakedFloatSize() const {
     int count = GetBakedFloatIntervalCount() + 1;
     if (count < 3)
@@ -266,6 +293,7 @@ size_t ResAnimCurve::CalculateBakedFloatSize() const {
     static const size_t backupSize = FloatBackupSize();
     return AlignPointer(size_t(count) * sizeof(float)) + backupSize;
 }
+
 size_t ResAnimCurve::CalculateBakedIntSize() const {
     int count = GetBakedIntIntervalCount() + 1;
     if (count < 3)
@@ -286,9 +314,11 @@ size_t ResAnimCurve::CalculateBakedIntSize() const {
         bytes = ((count + 31) & ~31) / 8;
         break;
     }
+
     static const size_t backupSize = IntBackupSize();
     return backupSize + AlignPointer(bytes);
 }
+
 // buffer holds size bytes for samples and the original curve state; size is validated only in debug builds.
 void ResAnimCurve::BakeFloat(void* buffer, size_t size) {
     if ((flags & 0x70) == 0x20)
@@ -310,6 +340,7 @@ void ResAnimCurve::BakeFloat(void* buffer, size_t size) {
     offsetFloat = 0.0f;
     keys = buffer;
 }
+
 // buffer holds size bytes for samples and the original curve state; size is validated only in debug builds.
 void ResAnimCurve::BakeInt(void* buffer, size_t size) {
     unsigned type = flags & 0x70;
@@ -332,6 +363,7 @@ void ResAnimCurve::BakeInt(void* buffer, size_t size) {
         BakeImpl<bool>(buffer, first, count);
         bakedFlags = 0x70;
     }
+
     static const size_t backupSize = IntBackupSize();
     u8* backup = static_cast<u8*>(buffer) + (CalculateBakedIntSize() - backupSize);
     *reinterpret_cast<u16*>(backup) = flags;
@@ -341,6 +373,7 @@ void ResAnimCurve::BakeInt(void* buffer, size_t size) {
     keyCount = count;
     keys = buffer;
 }
+
 void ResAnimCurve::ResetFloat() {
     if ((flags & 0x70) != 0x20)
         return;
@@ -353,6 +386,7 @@ void ResAnimCurve::ResetFloat() {
     offsetFloat = *reinterpret_cast<float*>(backup + 8);
     keys = *reinterpret_cast<void**>(AlignPointer(uintptr_t(backup + 12)));
 }
+
 void ResAnimCurve::ResetInt() {
     if ((flags & 0x50) != 0x50)
         return;

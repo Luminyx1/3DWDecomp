@@ -14,24 +14,31 @@ u8 GlyphNode::CalculateLineKind(u16 height) {
     if (height > 0x400) {
         return 0;
     }
+
     if (height > 0x200) {
         return 10;
     }
+
     if (height > 0x100) {
         return 9;
     }
+
     if (height > 0x80) {
         return 8;
     }
+
     if (height > 0x40) {
         return 7;
     }
+
     if (height > 0x20) {
         return 6;
     }
+
     if (height > 0x10) {
         return 5;
     }
+
     return 4;
 }
 
@@ -67,6 +74,7 @@ void GlyphTreeMap::Initialize(AllocateFunction pAllocateFunction, void* pUserDat
     for (int i = 0; i < lastIndex; i++) {
         NextFreeNode(&pNodes[i]) = &pNodes[i + 1];
     }
+
     reinterpret_cast<GlyphNode**>(pNodes)[lastIndex * NodePointerStride] = nullptr;
     m_pNodeBuffer = pNodes;
 }
@@ -113,6 +121,7 @@ GlyphNode* GlyphTreeMap::Find(GlyphNode* pNode, u64 key) const {
             return pNode;
         }
     }
+
     return nullptr;
 }
 
@@ -121,6 +130,7 @@ GlyphNode* GlyphTreeMap::Insert(u32 code, u16 fontSize, u16 fontFace) {
     if (pNode == nullptr) {
         return nullptr;
     }
+
     m_pFreeList = NextFreeNode(pNode);
     new (pNode) GlyphNode(code, fontSize, fontFace);
     m_pRootNode = Insert(m_pRootNode, pNode);
@@ -157,12 +167,15 @@ GlyphNode* GlyphTreeMap::Insert(GlyphNode* pNode, GlyphNode* pNewNode) {
     if (IsRed(pNode->m_pRightNode) && !IsRed(pNode->m_pLeftNode)) {
         pNode = RotateLeft(pNode);
     }
+
     if (IsRed(pNode->m_pLeftNode) && IsRed(pNode->m_pLeftNode->m_pLeftNode)) {
         pNode = RotateRight(pNode);
     }
+
     if (IsRed(pNode->m_pLeftNode) && IsRed(pNode->m_pRightNode)) {
         FlipColors(pNode);
     }
+
     return pNode;
 }
 
@@ -194,23 +207,28 @@ GlyphNode* GlyphTreeMap::Erase(GlyphNode* pNode, u64 key) {
         if (!IsRed(pNode->m_pLeftNode) && !IsRed(pNode->m_pLeftNode->m_pLeftNode)) {
             pNode = MoveRedLeft(pNode);
         }
+
         pNode->m_pLeftNode = Erase(pNode->m_pLeftNode, key);
     } else {
         if (IsRed(pNode->m_pLeftNode)) {
             pNode = RotateRight(pNode);
         }
+
         if (key == pNode->m_Key.raw && pNode->m_pRightNode == nullptr) {
             FreeNode(pNode);
             return nullptr;
         }
+
         if (pNode->m_pRightNode->m_IsRed != 1 && !IsRed(pNode->m_pRightNode->m_pLeftNode)) {
             pNode = MoveRedRight(pNode);
         }
+
         if (key == pNode->m_Key.raw) {
             GlyphNode* pMinNode = pNode->m_pRightNode;
             while (pMinNode->m_pLeftNode != nullptr) {
                 pMinNode = pMinNode->m_pLeftNode;
             }
+
             GlyphNode* pSuccessor = Find(pNode->m_pRightNode, pMinNode->m_Key.raw);
             pSuccessor->m_pRightNode = EraseMin(pNode->m_pRightNode);
             pSuccessor->m_pLeftNode = pNode->m_pLeftNode;
@@ -221,6 +239,7 @@ GlyphNode* GlyphTreeMap::Erase(GlyphNode* pNode, u64 key) {
             pNode->m_pRightNode = Erase(pNode->m_pRightNode, key);
         }
     }
+
     return FixUp(pNode);
 }
 
@@ -259,6 +278,7 @@ void GlyphTreeMap::Reset() {
     for (int i = 0; i < lastIndex; i++) {
         NextFreeNode(&pNodes[i]) = &pNodes[i + 1];
     }
+
     reinterpret_cast<GlyphNode**>(pNodes)[lastIndex * NodePointerStride] = nullptr;
     m_pNodeBuffer = pNodes;
 }
@@ -274,6 +294,7 @@ void GlyphTreeMap::UpdateFlagsForCompleteTextureCacheRecursive(GlyphNode* pNode)
     if (pNode->m_pLeftNode != nullptr) {
         UpdateFlagsForCompleteTextureCacheRecursive(pNode->m_pLeftNode);
     }
+
     if (pNode->m_pRightNode != nullptr) {
         UpdateFlagsForCompleteTextureCacheRecursive(pNode->m_pRightNode);
     }
@@ -289,6 +310,7 @@ void GlyphTreeMap::ClearLockGroupRecursive(GlyphNode* pNode, u32 group) {
     if (pNode->m_pLeftNode != nullptr) {
         ClearLockGroupRecursive(pNode->m_pLeftNode, group);
     }
+
     if (pNode->m_pRightNode != nullptr) {
         ClearLockGroupRecursive(pNode->m_pRightNode, group);
     }
@@ -306,9 +328,11 @@ int GlyphTreeMap::DumpRecursive(GlyphNode* pNode, u32 level) {
     if (pNode->m_pLeftNode != nullptr) {
         count += DumpRecursive(pNode->m_pLeftNode, level);
     }
+
     if (pNode->m_pRightNode != nullptr) {
         count += DumpRecursive(pNode->m_pRightNode, level);
     }
+
     return count;
 }
 
@@ -324,9 +348,11 @@ int GlyphTreeMap::DumpRecursiveLeftFirst(GlyphNode* pNode, u32 level) {
     if (pNode->m_pLeftNode != nullptr) {
         count += DumpRecursiveLeftFirst(pNode->m_pLeftNode, level);
     }
+
     if (pNode->m_pRightNode != nullptr) {
         count += DumpRecursiveLeftFirst(pNode->m_pRightNode, level);
     }
+
     return count;
 }
 
@@ -342,6 +368,7 @@ void GlyphTreeMap::DumpToFunctionRecursive(GlyphNode* pNode, DumpFunction pFunct
     if (pNode->m_pLeftNode != nullptr) {
         DumpToFunctionRecursive(pNode->m_pLeftNode, pFunction, pUserData);
     }
+
     if (pNode->m_pRightNode != nullptr) {
         DumpToFunctionRecursive(pNode->m_pRightNode, pFunction, pUserData);
     }
@@ -358,6 +385,7 @@ void GlyphTreeMap::DumpToFunctionRecursiveLeftFirst(GlyphNode* pNode, DumpFuncti
     if (pNode->m_pLeftNode != nullptr) {
         DumpToFunctionRecursiveLeftFirst(pNode->m_pLeftNode, pFunction, pUserData);
     }
+
     pFunction(pNode, pUserData);
     if (pNode->m_pRightNode != nullptr) {
         DumpToFunctionRecursiveLeftFirst(pNode->m_pRightNode, pFunction, pUserData);

@@ -7,9 +7,11 @@ const AdvancedWaveSoundFile::WaveSoundTrack* AdvancedWaveSoundFile::InfoBlockBod
     if (index >= table->count) return nullptr;
     return reinterpret_cast<const WaveSoundTrack*>(reinterpret_cast<const u8*>(table) + table->offsets[index]);
 }
+
 const AdvancedWaveSoundFile::ReferenceTable* AdvancedWaveSoundFile::WaveSoundTrack::GetClipReferenceTable() const {
     return reinterpret_cast<const ReferenceTable*>(reinterpret_cast<const u8*>(this) + clipTableOffset);
 }
+
 // index selects the clip in this track's relative-offset table.
 const AdvancedWaveSoundFile::WaveSoundClip* AdvancedWaveSoundFile::WaveSoundTrack::GetWaveSoundClip(int index) const {
     const auto* table = GetClipReferenceTable();

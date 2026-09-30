@@ -21,6 +21,7 @@ ExtendedTagProcessorBase<CharType>::ProcessTag(uint32_t code, PrintContext<CharT
         if (pRect != nullptr) {
             return TagProcessorBase<CharType>::CalculateRect(pRect, pContext, code);
         }
+
         return TagProcessorBase<CharType>::Process(code, pContext);
     }
 
@@ -29,9 +30,11 @@ ExtendedTagProcessorBase<CharType>::ProcessTag(uint32_t code, PrintContext<CharT
     if (pInfo == nullptr || pNext > pContext->strEnd) {
         return TagProcessorBase<CharType>::Operation_EndDraw;
     }
+
     if (pInfo->group == 0 && pInfo->index == 0) {
         return ProcessTagRuby(pInfo, pContext, pRect, pNext);
     }
+
     return TagProcessorBase<CharType>::Operation_Default;
 }
 
@@ -54,11 +57,13 @@ const CharType* ExtendedTagProcessorBase<CharType>::AcquireNextPrintableChar(boo
                 pNext = reinterpret_cast<const CharType*>(
                     reinterpret_cast<const RubyTagInfo*>(pInfo) + 1);
             }
+
             *pIsPrintable = false;
         }
     } else {
         *pIsPrintable = true;
     }
+
     return pNext;
 }
 
@@ -104,10 +109,12 @@ const CharType* ExtendedTagProcessorBase<CharType>::AnalyzeTagHeader(const TagIn
         return reinterpret_cast<const CharType*>(reinterpret_cast<const uint8_t*>(pStr) +
                                                  (*ppInfo)->paramSize + sizeof(TagInfo));
     }
+
     if (*pStr == TagEnd) {
         *ppInfo = reinterpret_cast<const TagInfo*>(pStr);
         return reinterpret_cast<const CharType*>(&(*ppInfo)->paramSize);
     }
+
     *ppInfo = nullptr;
     return pStr;
 }
@@ -171,9 +178,11 @@ ExtendedTagProcessorBase<CharType>::ProcessTagRuby(const TagInfo* pInfo,
         writer.MoveCursorX(rParent.GetItalicRatio() * rParent.GetScaleH() *
                            rParent.GetFont()->GetWidth() * 0.5f);
     }
+
     if ((pContext->flags & PrintFlag_Ruby) == 0) {
         writer.MoveCursorX(pContext->writer->GetCharSpace());
     }
+
     writer.MoveCursorY(
         -(pContext->writer->GetScaleV() * pContext->writer->GetFont()->GetBaselinePos()));
 

@@ -7,6 +7,7 @@ const ReferenceWithSize* StreamSoundFile::FileHeader::GetReferenceBy(u16 type) c
         if (blocks[i].type == type) return &blocks[i];
     return nullptr;
 }
+
 bool StreamSoundFile::FileHeader::HasSeekBlock() const { return GetReferenceBy(0x4001) != nullptr; }
 bool StreamSoundFile::FileHeader::HasRegionBlock() const { return GetReferenceBy(0x4003) != nullptr; }
 bool StreamSoundFile::FileHeader::HasMarkerBlock() const { return GetReferenceBy(0x4005) != nullptr; }
@@ -27,26 +28,31 @@ const StreamSoundFile::StreamSoundInfo* StreamSoundFile::InfoBlockBody::GetStrea
     if (sound.type != 0x4100) return nullptr;
     return reinterpret_cast<const StreamSoundInfo*>(reinterpret_cast<const u8*>(this) + sound.offset);
 }
+
 const StreamSoundFile::TrackInfoTable* StreamSoundFile::InfoBlockBody::GetTrackInfoTable() const {
     if (tracks.type != 0x101) return nullptr;
     return reinterpret_cast<const TrackInfoTable*>(reinterpret_cast<const u8*>(this) + tracks.offset);
 }
+
 const StreamSoundFile::ChannelInfoTable* StreamSoundFile::InfoBlockBody::GetChannelInfoTable() const {
     if (channels.type != 0x101) return nullptr;
     return reinterpret_cast<const ChannelInfoTable*>(reinterpret_cast<const u8*>(this) + channels.offset);
 }
+
 // index selects a track; out-of-range indices and incorrect tags return null.
 const StreamSoundFile::TrackInfo* StreamSoundFile::TrackInfoTable::GetTrackInfo(u32 index) const {
     if (index >= count) return nullptr;
     if (tracks[index].type != 0x4101) return nullptr;
     return reinterpret_cast<const TrackInfo*>(reinterpret_cast<const u8*>(this) + tracks[index].offset);
 }
+
 // index selects a channel; out-of-range indices and incorrect tags return null.
 const StreamSoundFile::ChannelInfo* StreamSoundFile::ChannelInfoTable::GetChannelInfo(u32 index) const {
     if (index >= count) return nullptr;
     if (channels[index].type != 0x4102) return nullptr;
     return reinterpret_cast<const ChannelInfo*>(reinterpret_cast<const u8*>(this) + channels[index].offset);
 }
+
 const StreamSoundFile::DspAdpcmChannelInfo* StreamSoundFile::ChannelInfo::GetDspAdpcmChannelInfo() const {
     if (adpcm.type != 0x300) return nullptr;
     return reinterpret_cast<const DspAdpcmChannelInfo*>(reinterpret_cast<const u8*>(this) + adpcm.offset);

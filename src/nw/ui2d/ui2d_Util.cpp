@@ -16,14 +16,17 @@ Pane* GetNextPane(Pane* pane) {
         if (next != &parent->m_Children) return reinterpret_cast<Pane*>(reinterpret_cast<char*>(next) - 8);
         pane = parent;
     }
+
     return nullptr;
 }
+
 namespace detail {
 // value is clamped in place to the inclusive interval from minimum to maximum.
 void ClampValue(float& value, float minimum, float maximum) {
     if (value < minimum) value = minimum;
     else if (value > maximum) value = maximum;
 }
+
 // source is a terminated string copied into layout-allocated storage.
 char* AllocateAndCopyString(const char* source) {
     size_t size = std::strlen(source) + 1;

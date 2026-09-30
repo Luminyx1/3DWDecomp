@@ -7,9 +7,11 @@ ReservedVectorGraphicsSceneMemory::~ReservedVectorGraphicsSceneMemory() = defaul
 void ReservedVectorGraphicsSceneMemory::Initialize(size_t size) {
     if (size) { mReservedSize = size; mMemory = static_cast<char*>(Layout::AllocateMemory(size)); mNext = mMemory; }
 }
+
 void ReservedVectorGraphicsSceneMemory::Finalize() {
     if (mMemory) { Layout::FreeMemory(mMemory); mMemory = nullptr; mReservedSize = 0; mNext = nullptr; }
 }
+
 size_t ReservedVectorGraphicsSceneMemory::GetReservedSize() const { return mReservedSize; }
 size_t ReservedVectorGraphicsSceneMemory::GetAllocatedSize() const { return mNext - mMemory; }
 // size consumes that many bytes from the pre-sized scene arena.

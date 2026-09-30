@@ -14,6 +14,7 @@ void TextureRefLink::Finalize(nn::gfx::Device* device) {
     TextureInfo* texture = mTexture;
     if (texture) { texture->~TextureInfo(); Layout::FreeMemory(texture); }
 }
+
 // name is copied into the fixed-length registration name.
 void TextureRefLink::SetName(const char* name) { nn::util::Strlcpy(mName, name, sizeof(mName)); }
 TextureContainer::~TextureContainer() = default;
@@ -28,6 +29,7 @@ void TextureContainer::Finalize(nn::gfx::Device* device) {
         Layout::FreeMemory(link);
     }
 }
+
 // name identifies the new resource texture, which owns its GPU resources.
 ResourceTextureInfo* TextureContainer::RegisterResourceTexture(const char* name) {
     void* memory = Layout::AllocateMemory(sizeof(ResourceTextureInfo));
@@ -39,6 +41,7 @@ ResourceTextureInfo* TextureContainer::RegisterResourceTexture(const char* name)
     mTextures.push_back(*link);
     return texture;
 }
+
 // name identifies the wrapper; owned controls GPU-resource finalization.
 PlacementTextureInfo* TextureContainer::RegisterPlacementTexture(const char* name, bool owned) {
     void* memory = Layout::AllocateMemory(sizeof(PlacementTextureInfo));
@@ -50,6 +53,7 @@ PlacementTextureInfo* TextureContainer::RegisterPlacementTexture(const char* nam
     mTextures.push_back(*link);
     return texture;
 }
+
 // name identifies the render target; owned controls GPU-resource finalization.
 RenderTargetTextureInfo* TextureContainer::RegisterRenderTargetTexture(const char* name, bool owned) {
     void* memory = Layout::AllocateMemory(sizeof(RenderTargetTextureInfo));
@@ -61,6 +65,7 @@ RenderTargetTextureInfo* TextureContainer::RegisterRenderTargetTexture(const cha
     mTextures.push_back(*link);
     return texture;
 }
+
 // texture identifies the registration to remove, retaining the texture wrapper.
 void TextureContainer::UnregisterTexture(TextureInfo* texture) {
     for (auto it = mTextures.begin(); it != mTextures.end(); ++it) {
@@ -72,6 +77,7 @@ void TextureContainer::UnregisterTexture(TextureInfo* texture) {
         }
     }
 }
+
 // callback allocates each missing owned descriptor; argument is its context.
 void TextureContainer::RegisterTextureViewToDescriptorPool(RegisterCallback callback, void* argument) {
     for (auto& link : mTextures) {
@@ -81,6 +87,7 @@ void TextureContainer::RegisterTextureViewToDescriptorPool(RegisterCallback call
             callback(&link.mTexture->mDescriptor, *link.mTexture->GetTextureView(), argument);
     }
 }
+
 // callback releases each valid owned descriptor; argument is its context.
 void TextureContainer::UnregisterTextureViewFromDescriptorPool(UnregisterCallback callback, void* argument) {
     for (auto& link : mTextures) {
@@ -92,6 +99,7 @@ void TextureContainer::UnregisterTextureViewFromDescriptorPool(UnregisterCallbac
         }
     }
 }
+
 // name is compared up to the registration's 128-byte name limit.
 TextureInfo* TextureContainer::FindTextureByName(const char* name) const {
     for (auto& link : mTextures) {
@@ -100,10 +108,13 @@ TextureInfo* TextureContainer::FindTextureByName(const char* name) const {
             if (name[i] != link.mName[i]) { same = false; break; }
             if (!name[i]) break;
         }
+
         if (same) return link.mTexture;
     }
+
     return nullptr;
 }
+
 // device is unused: a placement wrapper does not own a GPU texture.
 void PlacementTextureInfo::Finalize(nn::gfx::Device* device) {}
 bool PlacementTextureInfo::IsValid() const { return mDescriptor.IsValid(); }

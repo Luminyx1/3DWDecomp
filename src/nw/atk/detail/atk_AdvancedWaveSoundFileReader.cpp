@@ -10,6 +10,7 @@ u32 ReadPackedVersion(const nn::util::BinVersion& version) {
     return packed;
 }
 }
+
 // file points to a complete BAWSD resource. Invalid headers leave the reader uninitialized.
 AdvancedWaveSoundFileReader::AdvancedWaveSoundFileReader(const void* file) {
     const auto* header = static_cast<const AdvancedWaveSoundFile*>(file);
@@ -21,13 +22,16 @@ AdvancedWaveSoundFileReader::AdvancedWaveSoundFileReader(const void* file) {
     if (signature[0] != 'I' || signature[1] != 'N' || signature[2] != 'F' || signature[3] != 'O') return;
     mInfo = &block->body;
 }
+
 int AdvancedWaveSoundFileReader::GetWaveSoundTrackCount() const {
     return mInfo->GetTrackReferenceTable()->count;
 }
+
 // track selects a track in the file; it must be a valid index.
 int AdvancedWaveSoundFileReader::GetWaveSoundClipCount(int track) const {
     return mInfo->GetWaveSoundTrack(track)->GetClipReferenceTable()->count;
 }
+
 // info receives the decoded tracks and clips. The file must fit its four tracks and ten clips per track.
 bool AdvancedWaveSoundFileReader::ReadWaveSoundTrackInfoSet(AdvancedWaveSoundTrackInfoSet* info) {
     info->trackCount = GetWaveSoundTrackCount();
@@ -47,11 +51,14 @@ bool AdvancedWaveSoundFileReader::ReadWaveSoundTrackInfoSet(AdvancedWaveSoundTra
             result.pan = clip->pan;
         }
     }
+
     return true;
 }
+
 const AdvancedWaveSoundFile::InfoBlock* AdvancedWaveSoundFile::GetBlock() const {
     return static_cast<const InfoBlock*>(GetFirstBlock());
 }
+
 const AdvancedWaveSoundFile::ReferenceTable* AdvancedWaveSoundFile::InfoBlockBody::GetTrackReferenceTable() const {
     return reinterpret_cast<const ReferenceTable*>(reinterpret_cast<const u8*>(this) + trackTableOffset);
 }

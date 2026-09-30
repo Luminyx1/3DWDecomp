@@ -17,6 +17,7 @@ void Scissor::SetScissorStateInfoValue(nn::gfx::ScissorStateInfo* scissor, float
     scissor->SetWidth(int(right + 0.5f) - scissor->GetOriginX());
     scissor->SetHeight(int(bottom + 0.5f) - scissor->GetOriginY());
 }
+
 // pane provides its transformed rectangle; info supplies the framebuffer size.
 // The viewport bounds map it to pixels, returned through x/y/width/height.
 static inline void CalculateScissorRectangle(float& x, float& y, float& width, float& height,
@@ -41,6 +42,7 @@ static inline void CalculateScissorRectangle(float& x, float& y, float& width, f
         frameWidth = viewportWidth;
         frameHeight = viewportHeight;
     }
+
     float scaleX = viewportWidth / frameWidth, scaleY = viewportHeight / frameHeight;
     centerX -= width * 0.5f;
     centerY -= height * 0.5f;
@@ -51,6 +53,7 @@ static inline void CalculateScissorRectangle(float& x, float& y, float& width, f
     width *= scaleX;
     height *= scaleY;
 }
+
 // info supplies framebuffer and viewport dimensions; commands receives the
 // clipped drawing and restoration of the caller's previous scissor rectangle.
 void Scissor::Draw(DrawInfo& info, nn::gfx::CommandBuffer& commands) {
