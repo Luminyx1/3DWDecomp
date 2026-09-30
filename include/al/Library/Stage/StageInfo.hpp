@@ -1,6 +1,6 @@
 #pragma once
 
-#include <prim/seadSafeString.hpp>
+#include <prim/seadSafeString.h>
 
 namespace al {
 class Resource;
@@ -9,15 +9,19 @@ struct PlacementInfo;
 
 class StageInfo {
 public:
-    StageInfo(Resource*, const ByamlIter&, const ByamlIter&, const char*, PlacementInfo*, s32);
+    StageInfo(Resource* pResource, const ByamlIter& rPlacementIter, const ByamlIter& rZoneIter,
+              const char* pName, PlacementInfo* pParentInfo, s32 id);
 
     const ByamlIter& getPlacementIter() const;
     const ByamlIter& getZoneIter() const;
     PlacementInfo* getParentInfo() const;
     s32 getID() const;
 
-    Resource* mResource;               // _0
-    PlacementInfo* mPlacementInfo;     // _8
-    sead::FixedSafeString<128> mName;  // _10
+    Resource* getResource() const { return mResource; }
+    const PlacementInfo& getPlacementInfo() const { return *mPlacementInfo; }
+
+    Resource* mResource;
+    PlacementInfo* mPlacementInfo = nullptr;
+    sead::FixedSafeString<128> mName;
 };
 }  // namespace al
