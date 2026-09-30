@@ -38,4 +38,15 @@ namespace al {
 
         LiveActor* mHostActor;  // 0x18
     };
+
+    template <class T>
+    class HostStateBase : public NerveStateBase {
+    public:
+        HostStateBase(const char* pName, T* pHost) : NerveStateBase(pName), mHost(pHost) {}
+
+        T* getHost() const { return mHost; }
+
+    private:
+        T* mHost;  // 0x18
+    };
 }  // namespace al
