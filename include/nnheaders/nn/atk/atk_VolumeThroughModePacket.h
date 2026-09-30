@@ -4,6 +4,7 @@
 namespace nn::atk::detail {
 class VolumeThroughModePacket {
 public:
+    VolumeThroughModePacket() : mModes(nullptr), mBusCount(0), mUsed(false), mVolume(1.0f) {}
     static size_t GetRequiredMemSize(int busCount);
     bool Initialize(void* memory, size_t size, int busCount);
     void Finalize();
@@ -11,6 +12,7 @@ public:
     VolumeThroughModePacket& operator=(const VolumeThroughModePacket& other);
 
 private:
+    friend class OutputAdditionalParam;
     u8* mModes;
     int mBusCount;
     u8 _0c[4];
