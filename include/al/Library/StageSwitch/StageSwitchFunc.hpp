@@ -1,37 +1,56 @@
 #pragma once
 
+#include <basis/seadTypes.h>
+
 namespace al {
-    class FunctorBase;
-    class IUseStageSwitch;
-    class StageSwitchDirector;
-    struct PlacementInfo;
-    class ActorInitInfo;
+class ActorInitInfo;
+class FunctorBase;
+class IUseStageSwitch;
+class StageSwitchDirector;
+struct PlacementInfo;
 
-    void initStageSwitch(IUseStageSwitch*, const ActorInitInfo&);
-    void initStageSwitch(IUseStageSwitch*, StageSwitchDirector*, const PlacementInfo&);
-    bool tryInitStageSwitch(IUseStageSwitch*, StageSwitchDirector*, const PlacementInfo&);
-    bool isValidStageSwitch(const IUseStageSwitch*, const char*);
-    bool isOnStageSwitch(const IUseStageSwitch*, const char*);
-    void onStageSwitch(IUseStageSwitch*, const char*);
-    void offStageSwitch(IUseStageSwitch*, const char*);
-    bool tryOnStageSwitch(IUseStageSwitch*, const char*);
-    bool tryOffStageSwitch(IUseStageSwitch*, const char*);
-    bool tryOnStageSwitchInstant(IUseStageSwitch*, const char*);
-    bool tryOffStageSwitchInstant(IUseStageSwitch*, const char*);
-    bool isSameStageSwitch(const IUseStageSwitch*, const IUseStageSwitch*, const char*);
-    int findSwitchNo(const IUseStageSwitch*, const char*);
-    bool isUsingSwitchNo(const IUseStageSwitch*, int);
-    bool isValidSwitchAppear(const IUseStageSwitch*);
-    bool isOnSwitchAppear(const IUseStageSwitch*);
-    bool isValidSwitchKill(const IUseStageSwitch*);
-    bool isValidSwitchDeadOn(const IUseStageSwitch*);
-    void onSwitchDeadOn(IUseStageSwitch*);
-    void offSwitchDeadOn(IUseStageSwitch*);
-    bool tryOnSwitchDeadOn(IUseStageSwitch*);
-
-    bool listenStageSwitchOnOffAppear(IUseStageSwitch*, const FunctorBase&, const FunctorBase&);
-    bool listenStageSwitchOnKill(IUseStageSwitch*, const FunctorBase&);
-    bool listenStageSwitchOnOff(IUseStageSwitch*, const char*, const FunctorBase&, const FunctorBase&);
-    bool listenStageSwitchOnStart(IUseStageSwitch*, const FunctorBase&);
-    bool listenStageSwitchOnOffStart(IUseStageSwitch*, const FunctorBase&, const FunctorBase&);
+void initStageSwitch(IUseStageSwitch* pUser, const ActorInitInfo& rInfo);
+void initStageSwitch(IUseStageSwitch* pUser, StageSwitchDirector* pDirector,
+                     const PlacementInfo& rInfo);
+bool tryInitStageSwitch(IUseStageSwitch* pUser, StageSwitchDirector* pDirector,
+                        const PlacementInfo& rInfo);
+bool isValidStageSwitch(const IUseStageSwitch* pUser, const char* pLinkName);
+bool isOnStageSwitch(const IUseStageSwitch* pUser, const char* pLinkName);
+void onStageSwitch(IUseStageSwitch* pUser, const char* pLinkName);
+void offStageSwitch(IUseStageSwitch* pUser, const char* pLinkName);
+bool tryOnStageSwitch(IUseStageSwitch* pUser, const char* pLinkName);
+bool tryOffStageSwitch(IUseStageSwitch* pUser, const char* pLinkName);
+bool tryOnStageSwitchInstant(IUseStageSwitch* pUser, const char* pLinkName);
+bool tryOffStageSwitchInstant(IUseStageSwitch* pUser, const char* pLinkName);
+bool isSameStageSwitch(const IUseStageSwitch* pUser, const IUseStageSwitch* pOther,
+                       const char* pLinkName);
+s32 findSwitchNo(const IUseStageSwitch* pUser, const char* pLinkName);
+bool isUsingSwitchNo(const IUseStageSwitch* pUser, s32 switchNo);
+bool isValidSwitchAppear(const IUseStageSwitch* pUser);
+bool isOnSwitchAppear(const IUseStageSwitch* pUser);
+bool isValidSwitchKill(const IUseStageSwitch* pUser);
+bool isValidSwitchDeadOn(const IUseStageSwitch* pUser);
+void onSwitchDeadOn(IUseStageSwitch* pUser);
+void offSwitchDeadOn(IUseStageSwitch* pUser);
+bool tryOnSwitchDeadOn(IUseStageSwitch* pUser);
+bool tryOffSwitchDeadOn(IUseStageSwitch* pUser);
+bool isValidSwitchStart(const IUseStageSwitch* pUser);
+bool isOnSwitchStart(const IUseStageSwitch* pUser);
+bool listenStageSwitchOn(IUseStageSwitch* pUser, const char* pLinkName,
+                         const FunctorBase& rFunctor);
+bool listenStageSwitchOff(IUseStageSwitch* pUser, const char* pLinkName,
+                          const FunctorBase& rFunctor);
+bool listenStageSwitchOnOff(IUseStageSwitch* pUser, const char* pLinkName,
+                            const FunctorBase& rOnFunctor, const FunctorBase& rOffFunctor);
+bool listenStageSwitchOnAppear(IUseStageSwitch* pUser, const FunctorBase& rFunctor);
+bool listenStageSwitchOnOffAppear(IUseStageSwitch* pUser, const FunctorBase& rOnFunctor,
+                                  const FunctorBase& rOffFunctor);
+bool listenStageSwitchOnKill(IUseStageSwitch* pUser, const FunctorBase& rFunctor);
+bool listenStageSwitchOnOffKill(IUseStageSwitch* pUser, const FunctorBase& rOnFunctor,
+                                const FunctorBase& rOffFunctor);
+bool listenStageSwitchOnStart(IUseStageSwitch* pUser, const FunctorBase& rFunctor);
+bool listenStageSwitchOnOffStart(IUseStageSwitch* pUser, const FunctorBase& rOnFunctor,
+                                 const FunctorBase& rOffFunctor);
+bool listenStageSwitchOnStop(IUseStageSwitch* pUser, const FunctorBase& rFunctor);
+bool listenStageSwitchOnGoalItemGet(IUseStageSwitch* pUser, const FunctorBase& rFunctor);
 }  // namespace al
