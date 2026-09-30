@@ -1,6 +1,7 @@
 #pragma once
 
 #include <nn/types.h>
+#include <nn/g3d/g3d_SkeletonObj.h>
 
 namespace nn::g3d {
 
@@ -12,6 +13,14 @@ class SkeletonObj;
 // TODO
 class ModelObj {
 public:
+    const ResModel* GetResource() const { return m_ResModel; }
+    // index identifies the bone; visible is its new visibility state.
+    void SetBoneVisible(int index, bool visible) {
+        u32 mask = 1u << (index & 31);
+        bool previous = (m_BoneVisibility[static_cast<unsigned>(index) >> 5] & mask) != 0;
+        m_BoneVisibility[static_cast<unsigned>(index) >> 5] = (m_BoneVisibility[static_cast<unsigned>(index) >> 5] & ~mask) | (static_cast<u32>(visible) << (index & 31));
+        if ((m_VisibilityCallback != nullptr) & (previous != visible)) m_VisibilityCallback(this, index);
+    }
     SkeletonObj* GetSkeleton() const { return m_Skeleton; }
 
     s32 GetNumShapes() const { return m_NumShapes; }
@@ -22,7 +31,7 @@ private:
     bool Initialize(const InitializeArgument& arg, void* buffer, size_t bufferSize);
 
     const ResModel* m_ResModel;
-    void* _8;
+    u32* m_BoneVisibility;
     void* _10;
     u8 _18;
     u8 _19;
@@ -39,7 +48,7 @@ private:
     void* _60;
     void* _68;
     void* _70;
-    void* _78;
+    void (*m_VisibilityCallback)(ModelObj*, int);
     void* _80;
     bool _88;
     int _8c;

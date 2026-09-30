@@ -62,7 +62,7 @@ void AnimBindTable::BindAll(const u16* indices) {
 void AnimContext::Initialize(AnimFrameCache* cache, int count) {
     mCache = cache;
     mCount = cache ? count : 0;
-    mFlags = 0;
+    mCurveCount = 0;
 }
 // frameCount sets the end frame; loop chooses wrapping instead of clamping playback.
 void AnimObj::ResetFrameCtrl(int frameCount, bool loop) {
