@@ -1,14 +1,12 @@
-#include "Project/Bgm/BgmLineInfo.hpp"
-
-#include <cstring>
+#include "Library/Bgm/BgmDataBase.hpp"
 
 #include "Library/Yaml/ByamlIter.hpp"
 
 namespace al {
 /**
- * @brief Creates the info of one BGM line (a channel BGMs are played on).
- * @param rIter The yaml iterator of the line entry.
- * @return The new line info.
+ * Creates BGM line information from BYAML data.
+ * @param rIter BYAML data.
+ * @return Created information.
  */
 BgmLineInfo* BgmLineInfo::createInfo(const ByamlIter& rIter) {
     BgmLineInfo* info = new BgmLineInfo();
@@ -26,11 +24,10 @@ BgmLineInfo* BgmLineInfo::createInfo(const ByamlIter& rIter) {
     }
     return info;
 }
-
 /**
- * @brief Creates the info of a group of BGM lines combined under one name.
- * @param rIter The yaml iterator of the combined line entry.
- * @return The new combined line info.
+ * Creates combined BGM line information from BYAML data.
+ * @param rIter BYAML data.
+ * @return Created information.
  */
 BgmCombinedLineInfo* BgmCombinedLineInfo::createInfo(const ByamlIter& rIter) {
     BgmCombinedLineInfo* info = new BgmCombinedLineInfo();
@@ -40,24 +37,22 @@ BgmCombinedLineInfo* BgmCombinedLineInfo::createInfo(const ByamlIter& rIter) {
     info->mLineInfoList = createInfoList<BgmLineInfo>(lineIter);
     return info;
 }
-
 /**
- * @brief Orders two line infos by name.
- * @param pInfoA The first info.
- * @param pInfoB The second info.
- * @return Negative, zero or positive as the first name sorts before, equal to or after the second.
+ * Compares two BGM line information by name.
+ * @param pA First information.
+ * @param pB Second information.
+ * @return Comparison result.
  */
-s32 BgmLineInfo::compareInfo(const BgmLineInfo* pInfoA, const BgmLineInfo* pInfoB) {
-    return strcmp(pInfoA->mName, pInfoB->mName);
+s32 BgmLineInfo::compareInfo(const BgmLineInfo* pA, const BgmLineInfo* pB) {
+    return strcmp(pA->mName, pB->mName);
 }
-
 /**
- * @brief Orders two combined line infos by name.
- * @param pInfoA The first info.
- * @param pInfoB The second info.
- * @return Negative, zero or positive as the first name sorts before, equal to or after the second.
+ * Compares two combined BGM line information by name.
+ * @param pA First information.
+ * @param pB Second information.
+ * @return Comparison result.
  */
-s32 BgmCombinedLineInfo::compareInfo(const BgmCombinedLineInfo* pInfoA, const BgmCombinedLineInfo* pInfoB) {
-    return strcmp(pInfoA->mName, pInfoB->mName);
+s32 BgmCombinedLineInfo::compareInfo(const BgmCombinedLineInfo* pA, const BgmCombinedLineInfo* pB) {
+    return strcmp(pA->mName, pB->mName);
 }
 }  // namespace al
