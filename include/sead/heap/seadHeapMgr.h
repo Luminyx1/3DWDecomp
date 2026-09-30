@@ -35,6 +35,14 @@ public:
     };
     using IAllocFailedCallback = IDelegate1<const AllocFailedCallbackArg*>;
 
+    template <typename T>
+    class AllocFailedCallback : public Delegate1<T, const AllocFailedCallbackArg*>
+    {
+    public:
+        using Base = Delegate1<T, const AllocFailedCallbackArg*>;
+        using Base::Base;
+    };
+
     HeapMgr();
     virtual ~HeapMgr();
 

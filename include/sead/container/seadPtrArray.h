@@ -187,6 +187,47 @@ protected:
     void heapSort(CompareCallbackImpl cmp);
 
 public:
+    /// Bidirectional bubble (shaker) sort with a statically known comparer (inlined).
+    template <typename T, typename Compare>
+    void shakerSort_(Compare&& cmp)
+    {
+        T** ptrs = reinterpret_cast<T**>(mPtrs);
+        s32 lo = 0;
+        s32 hi = mPtrNum - 1;
+        while (lo < hi)
+        {
+            s32 last = lo;
+            for (s32 i = lo; i < hi; i++)
+            {
+                if (cmp(ptrs[i], ptrs[i + 1]) > 0)
+                {
+                    T* tmp = ptrs[i + 1];
+                    ptrs[i + 1] = ptrs[i];
+                    ptrs[i] = tmp;
+                    last = i;
+                }
+            }
+            hi = last;
+            if (hi <= lo)
+                break;
+
+            last = hi;
+            for (s32 i = hi; i > lo; i--)
+            {
+                if (cmp(ptrs[i], ptrs[i - 1]) < 0)
+                {
+                    T* tmp = ptrs[i - 1];
+                    ptrs[i - 1] = ptrs[i];
+                    ptrs[i] = tmp;
+                    last = i;
+                }
+            }
+            lo = last;
+            if (lo == hi)
+                break;
+        }
+    }
+
     /// Heap sort with a statically known comparer (inlined at the call site).
     template <typename T, typename Compare>
     void heapSort_(Compare&& cmp)

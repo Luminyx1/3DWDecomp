@@ -80,6 +80,8 @@ public:
 
     void doUpdateMatrix(Matrix34f* pDst) const override { *pDst = mDirectMatrix; }
 
+    void setDirectMatrix(const Matrix34f& rMatrix) { mDirectMatrix = rMatrix; }
+
 private:
     Matrix34f mDirectMatrix = Matrix34f::ident;
 };

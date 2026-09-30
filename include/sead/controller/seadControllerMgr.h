@@ -78,6 +78,7 @@ public:
     Framework* getFramework() const;
 
     Controller* getController(int port) { return mControllers[port]; }
+    Controller* getControllerUnsafe(int port) { return mControllers.unsafeAt(port); }
     s32 getControllerNum() const { return mControllers.size(); }
 
 private:

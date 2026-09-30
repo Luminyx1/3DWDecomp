@@ -28,6 +28,8 @@ public:
         Heap* heap;
     };
 
+    static const char* cRegionLanguageMaskStr_All;
+
     RegionLanguageMgr();
     ~RegionLanguageMgr();
 

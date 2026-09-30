@@ -93,6 +93,14 @@ public:
             PtrArrayImpl::pushBack(alloc(item));
     }
 
+    /// Allocates and value-initializes a new element at the end without a capacity check.
+    T* birthBack()
+    {
+        T* item = new (mFreeList.alloc()) T();
+        PtrArrayImpl::pushBack(item);
+        return item;
+    }
+
     template <class... Args>
     T* emplaceBack(Args&&... args)
     {

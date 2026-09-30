@@ -82,6 +82,38 @@ public:
             mBlendEnableMask &= ~(1u << target);
     }
 
+    void setAlphaTestFunc(u8 func) { mAlphaTestFunc = func; }
+    void setPolygonOffsetFrontEnable(bool enable)
+    {
+        if (enable)
+            mPolygonOffsetFrontEnable |= 1;
+        else
+            mPolygonOffsetFrontEnable &= ~1;
+    }
+    void setAlphaTestRef(f32 ref) { mAlphaTestRef = ref; }
+    void setColorMask(s32 target, bool r, bool g, bool b, bool a)
+    {
+        u32 mask = (r ? 1 : 0) | (g ? 2 : 0) | (b ? 4 : 0) | (a ? 8 : 0);
+        mColorMask = (mColorMask & ~(0xFu << (target * 4))) | (mask << (target * 4));
+    }
+    void setBlendFactorSrcRGB(s32 target, u8 factor) { mBlendTargets[target].mBlendFactorSrcRGB = factor; }
+    void setBlendFactorSrcA(s32 target, u8 factor) { mBlendTargets[target].mBlendFactorSrcA = factor; }
+    void setBlendFactorDstRGB(s32 target, u8 factor) { mBlendTargets[target].mBlendFactorDstRGB = factor; }
+    void setBlendFactorDstA(s32 target, u8 factor) { mBlendTargets[target].mBlendFactorDstA = factor; }
+    void setBlendEquationRGB(s32 target, u8 equation) { mBlendTargets[target].mBlendEquationRGB = equation; }
+    void setBlendEquationA(s32 target, u8 equation) { mBlendTargets[target].mBlendEquationA = equation; }
+    void setStencilTestEnable(bool enable) { mStencilTestEnable = enable; }
+    void setStencilTestFunc(u8 func) { mStencilTestFunc = func; }
+    void setStencilTestRef(s32 ref) { mStencilTestRef = ref; }
+    void setStencilTestMask(u32 mask) { mStencilTestMask = mask; }
+    void setStencilOp(u8 fail, u8 zfail, u8 zpass)
+    {
+        mStencilOpFail = fail;
+        mStencilOpZFail = zfail;
+        mStencilOpZPass = zpass;
+    }
+    void setStencilWriteMask(u32 mask) { mStencilWriteMask = mask; }
+
 private:
     bool mDepthTestEnable;
     bool mDepthWriteEnable;

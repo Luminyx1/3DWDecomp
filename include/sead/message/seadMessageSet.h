@@ -33,5 +33,31 @@ public:
     struct TagInfo;
     MessageSet() = default;
     ~MessageSet() override = default;
+
+    s32 getTextNum() const { return mTextNum; }
+
+    const T* getText(s32 index) const {
+        if (static_cast<u32>(index) < static_cast<u32>(mTextNum))
+            return static_cast<const T*>(LMS_GetText(mMsgFile, index));
+        return nullptr;
+    }
+
+    const T* getTextByLabel(const char* pLabel) const {
+        return static_cast<const T*>(LMS_GetTextByLabel(mMsgFile, pLabel));
+    }
+
+    s32 getTextIndexByLabel(const char* pLabel) const {
+        return LMS_GetTextIndexByLabel(mMsgFile, pLabel);
+    }
+
+    s32 getTextStyle(s32 index) const {
+        if (static_cast<u32>(index) < static_cast<u32>(mTextNum))
+            return LMS_GetTextStyle(mMsgFile, index);
+        return -1;
+    }
+
+    s32 getTextStyleByLabel(const char* pLabel) const {
+        return LMS_GetTextStyleByLabel(mMsgFile, pLabel);
+    }
 };
 }  // namespace sead

@@ -341,6 +341,16 @@ public:
         return false;
     }
 
+    bool popBack()
+    {
+        if (mSize >= 1)
+        {
+            --mSize;
+            return true;
+        }
+        return false;
+    }
+
     bool popBack(T* item)
     {
         if (mSize >= 1)

@@ -17,6 +17,16 @@ class NinJoyNpadDevice : public ControlDevice
     SEAD_RTTI_OVERRIDE(NinJoyNpadDevice, ControlDevice);
 
 public:
+    enum Style
+    {
+        cStyle_FullKey = 0,
+        cStyle_Handheld = 1,
+        cStyle_JoyDual = 2,
+        cStyle_JoyLeft = 3,
+        cStyle_JoyRight = 4,
+        cStyle_Invalid = 5,
+    };
+
     class VibrationThread : public Thread
     {
     public:
@@ -78,6 +88,7 @@ public:
     void disconnectNpad(s32 port);
     void sendVibrationValue(s32 port, s32 deviceIdx, const nn::hid::VibrationValue& rValue);
 
+    u32 getNpadIdUpdateNum() const { return mNpadIdUpdateNum; }
     nn::hid::NpadJoyHoldType getNpadJoyHoldType() const { return mNpadJoyHoldType; }
 
     const NpadState& getNpadState(s32 idx) { return mNpadStates[idx]; }

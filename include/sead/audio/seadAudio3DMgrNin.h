@@ -41,6 +41,7 @@ public:
     void listenPropertyEvent(const hostio::PropertyEvent* pEvent);
 
     nn::atk::Sound3DManager* getSound3DManager() const { return mSound3DManager; }
+    Audio3DListenerNin* getDefaultListener() const { return mDefaultListener; }
 
 private:
     nn::atk::Sound3DManager* mSound3DManager = nullptr;

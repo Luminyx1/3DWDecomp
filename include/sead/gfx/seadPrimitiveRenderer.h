@@ -30,6 +30,8 @@ public:
         QuadArg& setColor(const Color4f& rColor0, const Color4f& rColor1);
         QuadArg& setColor(const Color4f& rColor) { return setColor(rColor, rColor); }
         void setColorHorizontal(const Color4f& rColor0, const Color4f& rColor1);
+        void setCenter(const Vector3f& rCenter) { mCenter = rCenter; }
+        void setSize(const Vector2f& rSize) { mSize = rSize; }
 
         const Vector3f& getCenter() const { return mCenter; }
         const Vector2f& getSize() const { return mSize; }

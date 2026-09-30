@@ -31,6 +31,7 @@ public:
     f32 getLeftAnalogTrigger() const { return mLeftAnalogTrigger; }
     f32 getRightAnalogTrigger() const { return mRightAnalogTrigger; }
     const Vector2f& getPointer() const { return mPointer; }
+    s32 getIdleFrame() const { return mIdleFrame; }
     const Vector2i& getPointerPrev() const { return mPointerS32; }
     bool isPointerOn() const { return mPointerFlag.isOn(cPointerOn); }
     bool isPointerOnNow() const { return mPointerFlag.isOn(cPointerOnNow); }

@@ -49,6 +49,40 @@ public:
         cPadIdx_Max = 28
     };
 
+    enum PadMask
+    {
+        cPadMask_A = 1 << cPadIdx_A,
+        cPadMask_B = 1 << cPadIdx_B,
+        cPadMask_C = 1 << cPadIdx_C,
+        cPadMask_X = 1 << cPadIdx_X,
+        cPadMask_Y = 1 << cPadIdx_Y,
+        cPadMask_Z = 1 << cPadIdx_Z,
+        cPadMask_2 = 1 << cPadIdx_2,
+        cPadMask_1 = 1 << cPadIdx_1,
+        cPadMask_Home = 1 << cPadIdx_Home,
+        cPadMask_Minus = 1 << cPadIdx_Minus,
+        cPadMask_Plus = 1 << cPadIdx_Plus,
+        cPadMask_Start = 1 << cPadIdx_Start,
+        cPadMask_Select = 1 << cPadIdx_Select,
+        cPadMask_L = 1 << cPadIdx_L,
+        cPadMask_R = 1 << cPadIdx_R,
+        cPadMask_Touch = 1 << cPadIdx_Touch,
+        cPadMask_Up = 1 << cPadIdx_Up,
+        cPadMask_Down = 1 << cPadIdx_Down,
+        cPadMask_Left = 1 << cPadIdx_Left,
+        cPadMask_Right = 1 << cPadIdx_Right,
+        cPadMask_LeftStickUp = 1 << cPadIdx_LeftStickUp,
+        cPadMask_LeftStickDown = 1 << cPadIdx_LeftStickDown,
+        cPadMask_LeftStickLeft = 1 << cPadIdx_LeftStickLeft,
+        cPadMask_LeftStickRight = 1 << cPadIdx_LeftStickRight,
+        cPadMask_RightStickUp = 1 << cPadIdx_RightStickUp,
+        cPadMask_RightStickDown = 1 << cPadIdx_RightStickDown,
+        cPadMask_RightStickLeft = 1 << cPadIdx_RightStickLeft,
+        cPadMask_RightStickRight = 1 << cPadIdx_RightStickRight,
+        cPadMask_ZL = cPadMask_C,
+        cPadMask_ZR = cPadMask_Z,
+    };
+
     explicit Controller(ControllerMgr* pMgr);
     virtual ~Controller() = default;
 
@@ -60,6 +94,10 @@ public:
 
     template <typename T>
     T getAddonAs() const;
+    template <typename T>
+    T getAddonByOrderAs(s32 index) const;
+    template <typename T>
+    T getWrapperAs() const;
 
 protected:
     virtual void calcImpl_() = 0;
@@ -86,6 +124,36 @@ T Controller::getAddonAs() const
     for (auto& addon : mAddons)
     {
         T result = DynamicCast<typename std::remove_pointer<T>::type>(&addon);
+        if (result)
+            return result;
+    }
+
+    return nullptr;
+}
+
+template <typename T>
+T Controller::getAddonByOrderAs(s32 index) const
+{
+    for (auto it = mAddons.begin(); it != mAddons.end(); ++it)
+    {
+        T result = DynamicCast<typename std::remove_pointer<T>::type>(&*it);
+        if (result)
+        {
+            if (index == 0)
+                return result;
+            index--;
+        }
+    }
+
+    return nullptr;
+}
+
+template <typename T>
+T Controller::getWrapperAs() const
+{
+    for (auto it = mWrappers.begin(); it != mWrappers.end(); ++it)
+    {
+        T result = DynamicCast<typename std::remove_pointer<T>::type>(&*it);
         if (result)
             return result;
     }
