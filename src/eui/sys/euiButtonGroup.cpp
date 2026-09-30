@@ -9,25 +9,32 @@ void ButtonGroup::SetTouchDevice(bool touch) {
     else mFlags &= ~4;
     for (auto& rControl : mButtons) static_cast<AnimButton&>(rControl).SetTouch(touch);
 }
+
 AnimButton* ButtonGroup::FindDownButton() {
     for (auto& rControl : mButtons) {
         auto& rButton = static_cast<AnimButton&>(rControl);
         if (rButton.IsDowning()) return &rButton;
     }
+
     return nullptr;
 }
+
 void ButtonGroup::ForceOffAll() {
     for (auto& rControl : mButtons) static_cast<AnimButton&>(rControl).ForceOff();
 }
+
 void ButtonGroup::ForceOnAll() {
     for (auto& rControl : mButtons) static_cast<AnimButton&>(rControl).ForceOn();
 }
+
 void ButtonGroup::ForceDownAll() {
     for (auto& rControl : mButtons) static_cast<AnimButton&>(rControl).ForceDown();
 }
+
 void ButtonGroup::CancelAll() {
     for (auto& rControl : mButtons) static_cast<AnimButton&>(rControl).Cancel();
 }
+
 // allow permits a held touch to activate each button without a fresh trigger.
 void ButtonGroup::SetAllowNoTrigTouchAll(bool allow) {
     for (auto& rControl : mButtons) {
@@ -36,6 +43,7 @@ void ButtonGroup::SetAllowNoTrigTouchAll(bool allow) {
         else rButton.mFlags &= ~0x100;
     }
 }
+
 // enabled allows a press to begin when a touch first enters each button.
 void ButtonGroup::SetDownWithTouchOnAll(bool enabled) {
     for (auto& rControl : mButtons) {

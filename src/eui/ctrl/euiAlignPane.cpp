@@ -20,6 +20,7 @@ void AlignPane::updateScroll_() {
         pane->mPositionX = position;
     }
 }
+
 void AlignPane::updateScrollVertical_() {
     for (auto* link = m_Children.GetNext(); link != &m_Children; link = link->GetNext()) {
         auto* pane = reinterpret_cast<nn::ui2d::Pane*>(reinterpret_cast<char*>(link) - offsetof(nn::ui2d::Pane, m_Link));
@@ -28,6 +29,7 @@ void AlignPane::updateScrollVertical_() {
         pane->mPositionY = position;
     }
 }
+
 // NON_MATCHING: branch relocations await the alignment and sizing helpers.
 // adjustSize permits resizing this pane after its children have been aligned successfully.
 void AlignPane::updateAlign_(bool adjustSize) {
@@ -49,6 +51,7 @@ void AlignPane::Calculate(nn::ui2d::DrawInfo& rDrawInfo, CalculateContext& rCont
         else updateScroll_();
         _d8 = _d4;
     }
+
     nn::ui2d::Pane::Calculate(rDrawInfo, rContext, force);
 }
 }

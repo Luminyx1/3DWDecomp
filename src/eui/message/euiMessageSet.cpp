@@ -24,11 +24,13 @@ MessageString MessageSet::tryFindMessage(const char* pLabel) const {
     if (index < 0) {
         return MessageString();
     }
+
     const int length = calcTextSizeByIndex(index) >> 1;
     const char16_t* pText = nullptr;
     if (static_cast<u32>(mTextNum) > static_cast<u32>(index)) {
         pText = static_cast<const char16_t*>(LMS_GetText(mMsgFile, index));
     }
+
     return MessageString(length, pText);
 }
 
@@ -50,11 +52,13 @@ MessageString MessageSet::tryFindMessageByIndex(int index) const {
     if (!hasMessageByIndex(index)) {
         return MessageString();
     }
+
     const int length = calcTextSizeByIndex(index) >> 1;
     const char16_t* pText = nullptr;
     if (static_cast<u32>(mTextNum) > static_cast<u32>(index)) {
         pText = static_cast<const char16_t*>(LMS_GetText(mMsgFile, index));
     }
+
     return MessageString(length, pText);
 }
 

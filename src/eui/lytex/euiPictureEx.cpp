@@ -18,6 +18,7 @@ PictureEx::PictureEx(u8 textureCount) : Picture(textureCount) {
     } else if (textureCount == 1) {
         setupForSingleTexture_();
     }
+
     initializeVertexColor_();
 }
 

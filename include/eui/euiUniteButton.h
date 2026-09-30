@@ -36,5 +36,6 @@ public:
     bool mDragHorizontal;
     bool mDragVertical;
 };
+
 static_assert(sizeof(UniteButton) == 0x90, "UniteButton size");
 }

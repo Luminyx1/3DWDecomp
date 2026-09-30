@@ -38,6 +38,7 @@ private:
     bool mIsPaneBufferInitialized;
     bool mIsFontBufferInitialized;
 };
+
 static_assert(sizeof(ConstantBuffer) == 0x1d0, "ConstantBuffer size");
 
 }  // namespace eui

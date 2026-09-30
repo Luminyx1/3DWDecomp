@@ -25,5 +25,6 @@ public:
     AnimatorSet* mSecondTouchAnimators;
     u8 mTouched;
 };
+
 static_assert(sizeof(TwoTouchCheckKeepButton) == 0x90, "TwoTouchCheckKeepButton size");
 }

@@ -26,6 +26,7 @@ bool DecisionButton::ProcessOn() {
         processed = false;
         break;
     }
+
     return processed;
 }
 
@@ -37,6 +38,7 @@ bool DecisionButton::ProcessOff() {
         StartOff();
         ChangeState(cState_OffStart);
     }
+
     return true;
 }
 

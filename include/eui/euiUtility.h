@@ -25,6 +25,7 @@ public:
 private:
     int mIndex;
 };
+
 const nn::ui2d::ResExtUserData* FindExtUserDataFromList(const nn::ui2d::ResExtUserDataList* pList, const char* pName);
 void AdjustPaneSizeToTextSize(nn::ui2d::Pane* pPane, LayoutEx* pLayout);
 void CenteringPanePair(nn::ui2d::Pane* pPane);

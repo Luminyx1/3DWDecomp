@@ -80,6 +80,7 @@ MessageString::Iterator MessageString::toIterator(int index) const {
     if (static_cast<u32>(index) >= mLength) {
         index = mLength;
     }
+
     return {m_pText, static_cast<u32>(index)};
 }
 
@@ -101,6 +102,7 @@ bool MessageString::tryMakeTagStrippedString(sead::BufferedSafeStringBase<char16
                 pBuffer[capacity - 1] = 0;
                 return false;
             }
+
             const auto ch = *pCurrent;
             if ((ch | 1) == 0xf) {
                 if (ch == 0xe) {
@@ -113,9 +115,11 @@ bool MessageString::tryMakeTagStrippedString(sead::BufferedSafeStringBase<char16
                 pBuffer[length++] = ch;
                 ++pCurrent;
             }
+
             overflow = length >= capacity;
         } while (reinterpret_cast<uintptr_t>(pCurrent) < reinterpret_cast<uintptr_t>(pEnd));
     }
+
     pBuffer[overflow ? capacity - 1 : length] = 0;
     return !overflow;
 }
@@ -143,6 +147,7 @@ int MessageString::countPrintableStringLength() const {
             }
         } while (reinterpret_cast<uintptr_t>(pCurrent) < reinterpret_cast<uintptr_t>(pEnd));
     }
+
     return length;
 }
 

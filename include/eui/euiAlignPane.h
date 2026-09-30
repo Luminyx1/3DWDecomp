@@ -27,5 +27,6 @@ public:
     float mDefaultMargin;
     float _e4;
 };
+
 static_assert(sizeof(AlignPane) == 0xe8, "AlignPane size");
 }

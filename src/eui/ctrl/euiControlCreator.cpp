@@ -22,6 +22,7 @@ static T* AllocateControl() {
     void* memory = nn::ui2d::Layout::AllocateMemory(sizeof(T));
     return memory ? new (memory) T : nullptr;
 }
+
 // rSource selects the control type and its resources; pLayout owns the resulting control.
 ControlBase* ControlCreator::CreateControlImpl_(const nn::ui2d::ControlSrc& rSource, nn::ui2d::Layout* pLayout) {
     const char* name = rSource.mName;
@@ -55,6 +56,7 @@ registerControl:
     if (control) mControls->push_back(*control);
     return control;
 }
+
 // NON_MATCHING: backward traversal and insertion branches still differ.
 // pButton is inserted before the trailing buttons belonging to its child layouts.
 void ControlCreator::InsertButtonToButtonGroup_(AnimButton* pButton) {
@@ -69,14 +71,17 @@ void ControlCreator::InsertButtonToButtonGroup_(AnimButton* pButton) {
                     buttons.push_front(*pButton);
                     return;
                 }
+
                 insertBefore = current;
                 current = &nn::util::IntrusiveListMemberNodeTraits<ControlBase, &ControlBase::m_Link>::GetItem(*current->m_Link.GetPrev());
             } while (static_cast<LayoutEx*>(current->_20)->mParentLayout == layout);
         }
     }
+
     if (insertBefore) insertBefore->m_Link.LinkPrev(&pButton->m_Link);
     else buttons.push_back(*pButton);
 }
+
 // pButtons receives created buttons; pControls and pStaticControls receive the other controls.
 ControlCreator::ControlCreator(ButtonGroup* pButtons, ControlList* pControls, ControlList* pStaticControls)
     : mButtons(pButtons), mControls(pControls), mStaticControls(pStaticControls) {}

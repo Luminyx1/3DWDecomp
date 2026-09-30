@@ -16,6 +16,7 @@ public:
         nn::font::TextureCache* mTextureCache;
         volatile bool mUpdatePending;
     };
+
     struct FontParameter {
         FontParameter();
         FontParameter(const char* pName, int size, u16 face, int value);
@@ -24,6 +25,7 @@ public:
         u16 face;
         int _10;
     };
+
     struct FontEntry { sead::SafeString name; nn::font::ScalableFont font; };
     ScalableFontMgr();
     virtual ~ScalableFontMgr();
@@ -48,6 +50,7 @@ public:
     u32 _58;
     u8 _5c, _5d, _5e;
 };
+
 static_assert(sizeof(ScalableFontMgr) == 0x60, "ScalableFontMgr size");
 static_assert(sizeof(ScalableFontMgr::FontEntry) == 0x48, "FontEntry size");
 }

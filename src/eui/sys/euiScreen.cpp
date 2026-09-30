@@ -78,6 +78,7 @@ void Screen::setAnimatorActive(Animator* pAnimator) { mActiveAnimators.push_back
 void Screen::eraseAnimatorFromActiveList(Animator* pAnimator) {
     mActiveAnimators.erase(mActiveAnimators.iterator_to(*pAnimator));
 }
+
 // pNode is removed from every cursor node's navigation routes.
 void Screen::eraseBoxCursorNodeFromRouteNodes(const BoxCursorNode* pNode) {
     for (auto& node : mCursorNodes) node.eraseNodeFromRouteNodes(pNode);
@@ -94,25 +95,30 @@ void Screen::updateControl_() {
     const float step = getAnimationStep_();
     for (auto& control : mControls) control.Update(step);
 }
+
 void Screen::updateStaticControl_() {
     const float step = getAnimationStep_();
     for (auto& control : mStaticControls) control.Update(step);
 }
+
 bool Screen::isOpened() const { return mState == 2 && mOpenRequest >= 0; }
 bool Screen::isClosed() const { return mState == 0 && mOpenRequest < 1; }
 bool Screen::isOpening() const {
     if (mState == 1) return true;
     return mOpenRequest >= 1 && ((mState == 0) | (mState == 3));
 }
+
 // NON_MATCHING: the closing-state check still uses different boolean instructions.
 bool Screen::isClosing() const {
     if (mState == 3) return true;
     return mOpenRequest < 0 && ((mState == 1) | (mState == 2));
 }
+
 // own determines whether this screen owns its initialization heap.
 void Screen::setOwnInitializeHeap(bool own) {
     if (own) mFlags |= 1;
     else mFlags &= ~1;
 }
+
 void Screen::muteNextNoOperationButtonOnSE_() { mNoOperationButtonOnSE = 0; }
 }

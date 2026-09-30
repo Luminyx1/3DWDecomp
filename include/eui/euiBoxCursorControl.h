@@ -32,5 +32,6 @@ public:
     const BoxCursorNode* mReservedActiveNode;
     sead::Vector2f mPosition;
 };
+
 static_assert(sizeof(BoxCursorControl) == 0x60, "BoxCursorControl size");
 }

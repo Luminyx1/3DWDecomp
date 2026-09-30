@@ -29,6 +29,7 @@ bool TapButton::ProcessDown() {
         processed = false;
         break;
     }
+
     return processed;
 }
 
@@ -42,6 +43,7 @@ void TapButton::ForceOff() {
     ButtonBase::ForceOff();
     SelectStateAnim(4)->StopAtMin();
 }
+
 // pHeap stores the animator set; pPane supplies hit geometry; pAnimator supplies the
 // interaction animation, and pLayout provides ownership and the input mode.
 void TapButton::Initialize(sead::Heap* pHeap, nn::ui2d::Pane* pPane, Animator* pAnimator, LayoutEx* pLayout) {
@@ -56,6 +58,7 @@ void TapButton::Initialize(sead::Heap* pHeap, nn::ui2d::Pane* pPane, Animator* p
     _18 = pPane->mPanelName;
     mFlags |= 0x200;
 }
+
 // pPane supplies the interaction metadata; pLayout owns animations and pGroup receives the button.
 void TapButton::CreateTapButton(nn::ui2d::Pane* pPane, LayoutEx* pLayout, ButtonGroup* pGroup) {
     const auto* boundingType = BoundingEx::GetRuntimeTypeInfoStatic();
@@ -64,6 +67,7 @@ void TapButton::CreateTapButton(nn::ui2d::Pane* pPane, LayoutEx* pLayout, Button
     for (auto* type = pPane->GetRuntimeTypeInfo(); type; type = type->m_ParentTypeInfo) {
         if (type == boundingType) { isBounding = true; break; }
     }
+
     if (!isBounding) return;
     const auto* data = pPane->FindExtUserDataByName("TapButtonAnim");
     if (!data) return;

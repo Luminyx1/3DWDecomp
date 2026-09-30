@@ -36,5 +36,6 @@ public:
     float mTracingWait;
     u8 mFlags;
 };
+
 static_assert(sizeof(TraceGaugeControl) == 0x70, "TraceGaugeControl size");
 }

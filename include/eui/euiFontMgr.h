@@ -19,5 +19,6 @@ public:
     const nn::font::Font* mRubyFont;
     ScalableFontMgr* mScalableFontMgr;
 };
+
 static_assert(sizeof(FontMgr) == 0x60, "FontMgr size");
 }

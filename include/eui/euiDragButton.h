@@ -21,5 +21,6 @@ public:
     bool mDragX;
     bool mDragY;
 };
+
 static_assert(sizeof(DragButton) == 0x88, "DragButton size");
 }

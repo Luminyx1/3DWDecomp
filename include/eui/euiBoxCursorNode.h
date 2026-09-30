@@ -26,5 +26,6 @@ public:
     Screen* mScreen;
     sead::SafeArray<BoxCursorNode*, 4> mRoutes;
 };
+
 static_assert(sizeof(BoxCursorNode) == 0x48, "BoxCursorNode size");
 }

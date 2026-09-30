@@ -26,6 +26,7 @@ DynamicCapturePane::~DynamicCapturePane() {
         delete m_pClearColor;
         m_pClearColor = nullptr;
     }
+
     if (m_pMultiFilter) {
         delete m_pMultiFilter;
         m_pMultiFilter = nullptr;

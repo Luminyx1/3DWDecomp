@@ -29,5 +29,6 @@ public:
     u16 setStringWithPage(const char16_t* pText, u16 length, bool* pHasNext, u32 page, bool flag, void* pUserData);
     LetterAnimControl* mLetterAnimControl;
 };
+
 static_assert(sizeof(TextBoxEx) == 0x160, "TextBoxEx size");
 }

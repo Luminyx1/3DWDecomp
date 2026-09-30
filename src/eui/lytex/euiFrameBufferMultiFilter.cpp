@@ -36,12 +36,14 @@ void FrameBufferMultiFilter::initialize(sead::Heap* pHeap, const nn::ui2d::Pane&
         const u32 count = rPane.GetMaterial(i)->mResourceCounts & 3;
         if (textureCount < count) textureCount = count;
     }
+
     if (textureIndex >= 0 && textureIndex < s32(textureCount)) {
         mTextureIndex = textureIndex;
         mCaptureWidth = valueCount > 1 ? values[1] * 2 : 0;
         mCaptureHeight = valueCount > 2 ? values[2] * 2 : 0;
         m_pMultiFilter = InitializeMultiFilter(pHeap, rPane, pLayout);
     }
+
     m_RenderBuffer.setRenderTargetColor(&m_RenderTarget);
     resource = rPane.FindExtUserDataByName("FrameBufferAlpha");
     if (resource) {

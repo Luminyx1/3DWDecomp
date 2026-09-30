@@ -60,6 +60,7 @@ void MultiFilterWindowEx::DrawSelf(nn::ui2d::DrawInfo& rDrawInfo, nn::gfx::Comma
     if (rDrawInfoEx._1A8) {
         return;
     }
+
     const auto* pTexture = m_pFilter->captureAndFilter(*this, rDrawInfoEx);
     if (pTexture) {
         m_pFilter->applyTextureDataToWindowMaterial(this, &m_TextureInfo, pTexture, rDrawInfoEx);

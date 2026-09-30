@@ -16,6 +16,7 @@ BoxCursorControl::~BoxCursorControl() {
     auto* manager = screen->mScreenMgr->mBoxCursorMgr;
     manager->registerControl(screen->getDrawTarget(), nullptr);
 }
+
 // rSource names the four cursor panes; pLayout supplies their root and owning screen.
 void BoxCursorControl::initialize(const nn::ui2d::ControlSrc& rSource, LayoutEx* pLayout) {
     _20 = pLayout;
@@ -32,12 +33,14 @@ void BoxCursorControl::initialize(const nn::ui2d::ControlSrc& rSource, LayoutEx*
     manager->registerControl(screen->getDrawTarget(), this);
     static_cast<LayoutEx*>(_20)->mScreen->mFlags |= 4;
 }
+
 // NON_MATCHING: the tail-call relocation awaits selectActiveNode_ reconstruction.
 // target selects the display on which the active node must remain movable.
 void BoxCursorControl::updateActiveNode(DrawTarget target) {
     if (mActiveNode && mActiveNode->isMovable(target)) return;
     selectActiveNode_();
 }
+
 // pNode becomes active; null clears the selection, and unchanged nodes keep their activation state.
 void BoxCursorControl::setActiveNode_(const BoxCursorNode* pNode) {
     const auto* previous = mActiveNode;
@@ -49,14 +52,17 @@ void BoxCursorControl::setActiveNode_(const BoxCursorNode* pNode) {
         if (previous != pNode) pNode->mButton->ActivateByBoxCursor();
     }
 }
+
 // pNode is detached from either cursor selection that currently refers to it.
 void BoxCursorControl::clearActiveAndReservedActiveNode(const BoxCursorNode* pNode) {
     if (mActiveNode == pNode) {
         mActiveNode = nullptr;
         if (pNode) pNode->mButton->InactivateByBoxCursor();
     }
+
     if (mReservedActiveNode == pNode) mReservedActiveNode = nullptr;
 }
+
 Screen* BoxCursorControl::getActiveNodeScreen() {
     return mActiveNode ? mActiveNode->mScreen : nullptr;
 }

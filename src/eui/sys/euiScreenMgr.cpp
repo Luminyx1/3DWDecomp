@@ -13,11 +13,13 @@ void ScreenMgr::draw(s8 layer, const DrawInfoEx::RenderBufferInfo* pInfo) {
         if (layers[i] == layer) mScreens.getBufferPtr()[i < u32(mScreens.size()) ? i : 0]->draw(pInfo);
     }
 }
+
 // index selects the screen entry to clear without destroying its initialization heap.
 void ScreenMgr::resetScreenId(int index) {
     mScreenLayers[index] = -1;
     mScreens[index] = nullptr;
 }
+
 // index selects a screen to detach; its initialization heap is destroyed only when owned.
 void ScreenMgr::unloadScreen(int index) {
     Screen* screen = mScreens[index];
@@ -26,10 +28,12 @@ void ScreenMgr::unloadScreen(int index) {
         if (screen->mFlags & 1) screen->mInitializeHeap->destroy();
     }
 }
+
 // pNode is removed from navigation routes in every loaded screen.
 void ScreenMgr::eraseBoxCursorNodeFromRouteNodes(const BoxCursorNode* pNode) {
     for (auto* screen : mScreens) if (screen) screen->eraseBoxCursorNodeFromRouteNodes(pNode);
 }
+
 // NON_MATCHING: creation still inherits the constructor mismatch; disposer calls await its destructor.
 SEAD_SINGLETON_DISPOSER_IMPL(ScreenMgr);
 // NON_MATCHING: final field store order and unresolved vtable relocations differ.

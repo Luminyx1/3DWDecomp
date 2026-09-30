@@ -41,5 +41,6 @@ public:
     sead::BitFlag8 mEnabledTargets;
     sead::SafeArray<BoxCursorControl*, 2> mControls;
 };
+
 static_assert(sizeof(BoxCursorMgr) == 0x28, "BoxCursorMgr size");
 }

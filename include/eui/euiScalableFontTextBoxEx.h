@@ -17,5 +17,6 @@ public:
     u32 _16c;
     void* _170;
 };
+
 static_assert(sizeof(ScalableFontTextBoxEx) == 0x178, "ScalableFontTextBoxEx size");
 }

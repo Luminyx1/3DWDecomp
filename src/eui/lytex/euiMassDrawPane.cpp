@@ -77,6 +77,7 @@ void MassDrawPane::DrawSelf(nn::ui2d::DrawInfo& rDrawInfo, nn::gfx::CommandBuffe
         initializeTextureData_();
         mTextureInitialized = true;
     }
+
     info->pGraphicsContext->apply(info->pDrawContext);
     const float width = mSizeX;
     const float height = mSizeY;
@@ -115,6 +116,7 @@ void MassDrawPane::DrawSelf(nn::ui2d::DrawInfo& rDrawInfo, nn::gfx::CommandBuffe
             static_cast<agl::DrawContext*>(info->pDrawContext), sampler, matrix,
             projection.getDeviceProjectionMatrix(), uvScale, 0, uvOffset, color);
     }
+
     rDrawInfo.ResetDrawState();
 }
 

@@ -12,5 +12,6 @@ public:
     const MessageSet* mMessages;
     TagProcessor* mProcessor;
 };
+
 static_assert(sizeof(TextSearcher) == 0x18, "TextSearcher size");
 }

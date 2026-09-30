@@ -64,6 +64,7 @@ protected:
     ActionQueue mActions;
     u32 _44;
 };
+
 static_assert(sizeof(ButtonBase) == 0x48, "ButtonBase size");
 
 }  // namespace eui

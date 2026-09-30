@@ -39,6 +39,7 @@ public:
     LayoutEx* mParentLayout;
     u16 mFlags;
 };
+
 static_assert(sizeof(nn::ui2d::Layout) == 0x60, "Layout size");
 static_assert(sizeof(LayoutEx) == 0x98, "LayoutEx size");
 }

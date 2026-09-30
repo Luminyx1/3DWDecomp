@@ -16,6 +16,7 @@ const char* HoverButton::getClassName() const { return "HoverButton"; }
 void HoverButton::Down() {
     if (mFlags & 0x40) Off();
 }
+
 // pHeap stores the animator set; pPane supplies hit geometry; pAnimator supplies the
 // interaction animation, and pLayout provides ownership and the input mode.
 void HoverButton::Initialize(sead::Heap* pHeap, nn::ui2d::Pane* pPane, Animator* pAnimator, LayoutEx* pLayout) {
@@ -31,6 +32,7 @@ void HoverButton::Initialize(sead::Heap* pHeap, nn::ui2d::Pane* pPane, Animator*
     _18 = pPane->mPanelName;
     mFlags |= 0x100;
 }
+
 // pPane supplies the interaction metadata; pLayout owns animations and pGroup receives the button.
 void HoverButton::CreateHoverButton(nn::ui2d::Pane* pPane, LayoutEx* pLayout, ButtonGroup* pGroup) {
     const auto* boundingType = BoundingEx::GetRuntimeTypeInfoStatic();
@@ -39,6 +41,7 @@ void HoverButton::CreateHoverButton(nn::ui2d::Pane* pPane, LayoutEx* pLayout, Bu
     for (auto* type = pPane->GetRuntimeTypeInfo(); type; type = type->m_ParentTypeInfo) {
         if (type == boundingType) { isBounding = true; break; }
     }
+
     if (!isBounding) return;
     const auto* data = pPane->FindExtUserDataByName("HoverButtonAnim");
     if (!data) return;

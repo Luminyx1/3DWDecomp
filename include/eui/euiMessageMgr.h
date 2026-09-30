@@ -21,5 +21,6 @@ public:
     sead::Buffer<GradationColor> mGradationColors;
     bool mTextBoxWidthSizeOverColorEnabled;
 };
+
 static_assert(sizeof(MessageMgr) == 0x58, "MessageMgr size");
 }

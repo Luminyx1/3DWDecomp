@@ -23,6 +23,7 @@ public:
     private:
         int mValue;
     };
+
     class CloseOption {
     public:
         // value contains the closing options passed to the screen.
@@ -30,6 +31,7 @@ public:
     private:
         int mValue;
     };
+
     enum AnimatorOperationType { cPlay, cPlayFromCurrent, cStop, cStopCurrent, cStopAtMin, cStopAtMax };
     Screen();
     ~Screen() override;
@@ -141,5 +143,6 @@ public:
     u8 mNoOperationButtonOnSE;
     u8 mFlags;
 };
+
 static_assert(sizeof(Screen) == 0xf0, "Screen size");
 }

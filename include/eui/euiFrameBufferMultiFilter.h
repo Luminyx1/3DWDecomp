@@ -35,6 +35,7 @@ private:
     u8 _1F5;
     s8 mTextureIndex;
 };
+
 static_assert(sizeof(FrameBufferMultiFilter) == 0x1f8, "FrameBufferMultiFilter size");
 
 }  // namespace eui

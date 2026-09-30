@@ -16,5 +16,6 @@ public:
     bool mCheckEnabled;
     Animator* mCheckAnimator;
 };
+
 static_assert(sizeof(CheckButton) == 0x78, "CheckButton size");
 }

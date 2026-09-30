@@ -36,5 +36,6 @@ public:
     LayoutEx* mLayout;
     const char* mName;
 };
+
 static_assert(sizeof(Animator) == 0x68, "Animator size");
 }

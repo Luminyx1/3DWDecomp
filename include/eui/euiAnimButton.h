@@ -57,6 +57,7 @@ protected:
     nn::ui2d::Pane* mHitPane;
     nn::ui2d::Pane* mCursorPane;
 };
+
 static_assert(sizeof(AnimButton) == 0x68, "AnimButton size");
 
 }  // namespace eui

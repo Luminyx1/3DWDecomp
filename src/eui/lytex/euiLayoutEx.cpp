@@ -18,6 +18,7 @@ inline Animator* CreateAnimator(LayoutEx* pLayout, const nn::ui2d::ResAnimationB
     return animator;
 }
 }
+
 // pScreen is the screen that owns this layout.
 LayoutEx::LayoutEx(Screen* pScreen) : _60(nullptr), _68(nullptr), _70(nullptr), _78(nullptr),
     mScreen(pScreen), mParentLayout(nullptr), mFlags(0x200) {}
@@ -25,6 +26,7 @@ LayoutEx::LayoutEx(Screen* pScreen) : _60(nullptr), _68(nullptr), _70(nullptr), 
 Animator* LayoutEx::createAnimatorAuto(const char* pName, bool enabled) {
     return tryCreateAnimatorAuto(pName, enabled);
 }
+
 // pName identifies the animation; enabled selects its initial enabled state.
 Animator* LayoutEx::tryCreateAnimatorAutoWithWarning(const char* pName, bool enabled) {
     return tryCreateAnimatorAuto(pName, enabled);
@@ -41,6 +43,7 @@ const void* LayoutEx::GetAnimResourceData(const char* pName) {
                     static_cast<const char*>(_30), pName, nullptr);
         }
     }
+
     return nn::ui2d::Layout::GetAnimResourceData(pName);
 }
 
@@ -66,6 +69,7 @@ AnimatorSet* LayoutEx::createAnimatorSet(const char* const* pNames, u32 count, b
         if (pNames[i] && *pNames[i])
             set->setAnimator(i, tryCreateAnimatorAuto(pNames[i], enabled && i == 0));
     }
+
     return set;
 }
 
@@ -112,6 +116,7 @@ Animator* LayoutEx::createUnbindedAnimator(const char* pName, bool enabled) {
     animator->SetupBasic(resource, this, enabled);
     return animator;
 }
+
 // pPane and rArgs identify the newly built pane and its build context; the base hook does nothing.
 void LayoutEx::afterBuildPane_(nn::ui2d::Pane* pPane, const nn::ui2d::BuildArgSet& rArgs) {}
 }

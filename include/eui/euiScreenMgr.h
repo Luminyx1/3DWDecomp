@@ -41,6 +41,7 @@ public:
     bool _440, _441, _442;
     void* _448;
 };
+
 static_assert(sizeof(nn::ui2d::GraphicsResource) == 0x3b8, "GraphicsResource size");
 static_assert(sizeof(ScreenMgr) == 0x450, "ScreenMgr size");
 }

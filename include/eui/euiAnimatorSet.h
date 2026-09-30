@@ -23,5 +23,6 @@ public:
     sead::Buffer<Animator*> mAnimators;
     Animator* mSelected;
 };
+
 static_assert(sizeof(AnimatorSet) == 0x20, "AnimatorSet size");
 }

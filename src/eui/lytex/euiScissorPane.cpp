@@ -29,6 +29,7 @@ void ScissorPane::Draw(nn::ui2d::DrawInfo& rDrawInfo,
         Pane::Draw(rDrawInfo, rCommandBuffer);
         return;
     }
+
     const auto* original = drawInfo.m_pRenderBufferInfo;
     auto info = *original;
     const auto* frameBuffer = info.pFrameBuffer;

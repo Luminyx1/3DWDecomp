@@ -57,6 +57,7 @@ void ConstantBuffer::initialize(sead::Heap* pHeap, const InitConfig& rConfig) {
         offset = rConfig.paneBufferSize * 2;
         mIsPaneBufferInitialized = true;
     }
+
     if (rConfig.fontBufferSize) {
         nn::font::GpuBuffer::InitializeArg arg;
         arg.gpuAccessFlag = nn::gfx::GpuAccess_ConstantBuffer;
@@ -88,6 +89,7 @@ void ConstantBuffer::map() {
         m_PaneBuffer.m_GpuAccessBufferIndex = mBufferIndex;
         m_PaneBuffer.Map(mBufferIndex);
     }
+
     if (mIsFontBufferInitialized) {
         m_FontBuffer.Unmap();
         m_FontBuffer.m_GpuAccessBufferIndex = mBufferIndex;

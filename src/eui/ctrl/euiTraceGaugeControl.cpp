@@ -9,6 +9,7 @@ namespace {
 inline void ResetFlags(u8* pFlags, u8 mask) { *pFlags &= ~mask; }
 
 }
+
 const char* TraceGaugeControl::getClassName() const { return "TraceGaugeControl"; }
 TraceGaugeControl::TraceGaugeControl()
     : mGaugeAnimator(nullptr), mTracingAnimator(nullptr), mTraceColorAnimator(nullptr),
@@ -32,11 +33,13 @@ TraceGaugeControl::TraceGaugeControl(const TraceGaugeControl& rOther, LayoutEx* 
         mTraceColorAnimator = pLayout->createAnimatorAuto(rOther.mTraceColorAnimator->mName, true);
         ResetFlags(&mTraceColorAnimator->mFlags, 0x20);
     }
+
     if (rOther.mShortageAnimator) {
         mShortageAnimator = pLayout->createAnimatorAuto(rOther.mShortageAnimator->mName, true);
         ResetFlags(&mShortageAnimator->mFlags, 0x20);
     }
 }
+
 // rSource supplies animation names and fallback settings; pLayout supplies pane metadata and ownership.
 void TraceGaugeControl::initialize(const nn::ui2d::ControlSrc& rSource, LayoutEx* pLayout) {
     _20 = pLayout;
@@ -50,11 +53,13 @@ void TraceGaugeControl::initialize(const nn::ui2d::ControlSrc& rSource, LayoutEx
         mTraceColorAnimator = pLayout->tryCreateAnimatorAutoWithWarning(name, true);
         if (mTraceColorAnimator) ResetFlags(&mTraceColorAnimator->mFlags, 0x20);
     }
+
     name = rSource.FindFunctionalAnimName("Shortage");
     if (name && *name) {
         mShortageAnimator = pLayout->tryCreateAnimatorAutoWithWarning(name, true);
         if (mShortageAnimator) ResetFlags(&mShortageAnimator->mFlags, 0x20);
     }
+
     auto* data = pLayout->mRootPane->FindExtUserDataByName("TracingSpeed");
     if (!data) data = rSource.FindExtUserDataByName("TracingSpeed");
     if (data && data->count) mTracingSpeed = *static_cast<const float*>(data->GetData());
@@ -65,6 +70,7 @@ void TraceGaugeControl::initialize(const nn::ui2d::ControlSrc& rSource, LayoutEx
     if (!data) data = rSource.FindExtUserDataByName("TracingWait");
     if (data && data->count) mTracingWait = *static_cast<const float*>(data->GetData());
 }
+
 // NON_MATCHING: conditional selection and chase branches differ from the original.
 // step scales the delay countdown and the speed at which the trailing gauge approaches its target.
 void TraceGaugeControl::Update(float step) {
@@ -79,11 +85,13 @@ void TraceGaugeControl::Update(float step) {
             else frame = 0;
             if (frame != mShortageAnimator->mFrame) mShortageAnimator->Stop(frame);
         }
+
         if (mTracingValue == mPreviousValue) mWaitRemaining = mTracingWait;
         mPreviousValue = mGaugeValue;
         if (gauge < previous) { applyAnimation_(); return; }
         changed = true;
     }
+
     if (mPreviousValue != mTracingValue && mFlags) {
         if (mWaitRemaining > 0) sead::Mathf::chase(&mWaitRemaining, 0.0f, step);
         else {
@@ -93,24 +101,30 @@ void TraceGaugeControl::Update(float step) {
             changed = true;
         }
     }
+
     if (changed) applyAnimation_();
 }
+
 // value is the target gauge percentage; values outside [0, 100] are ignored.
 void TraceGaugeControl::setGaugeValue(float value) {
     if (value >= 0 && value <= 100) mGaugeValue = value;
 }
+
 // speed is the tracing percentage increment, constrained to [0, 100].
 void TraceGaugeControl::setTracingSpeed(float speed) {
     if (speed >= 0 && speed <= 100) mTracingSpeed = speed;
 }
+
 // fraction is the proportion of the remaining difference traced each update, in [0, 1].
 void TraceGaugeControl::setTracingFraction(float fraction) {
     if (fraction >= 0 && fraction <= 1) mTracingFraction = fraction;
 }
+
 // wait is a nonnegative delay before the tracing gauge starts moving.
 void TraceGaugeControl::setTracingWait(float wait) {
     if (wait >= 0) mTracingWait = wait;
 }
+
 // upper and lower bound the shortage range, with 0 <= lower <= upper <= 100.
 void TraceGaugeControl::setShortageThreshold(float upper, float lower) {
     if (!(lower >= 0)) return;
@@ -119,11 +133,13 @@ void TraceGaugeControl::setShortageThreshold(float upper, float lower) {
         mShortageLower = lower;
     }
 }
+
 // value immediately positions the tracing gauge and reapplies its animations.
 void TraceGaugeControl::setTracingValue(float value) {
     mTracingValue = value;
     applyAnimation_();
 }
+
 void TraceGaugeControl::applyAnimation_() {
     const float gauge = 1.0f - mPreviousValue / 100.0f;
     const float tracing = 1.0f - mTracingValue / 100.0f;

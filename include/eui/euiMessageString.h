@@ -35,10 +35,12 @@ private:
             return reinterpret_cast<const char16_t*>(
                 reinterpret_cast<const char*>(pCurrent) + pCurrent[3] + 8);
         }
+
         if (*pCurrent == 0xf) {
             *ppTag = pCurrent;
             return pCurrent + 3;
         }
+
         *ppTag = nullptr;
         return pCurrent;
     }

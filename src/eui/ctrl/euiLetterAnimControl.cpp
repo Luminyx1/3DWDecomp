@@ -10,10 +10,12 @@ LetterAnimControl::LetterAnimControl()
 void LetterAnimControl::setAppTagCallback(sead::IDelegate1<const sead::MessageSet<char16_t>::TagInfo*>* pCallback) {
     mAppTagCallback = pCallback;
 }
+
 // pCallback decides whether a text choice should be excluded.
 void LetterAnimControl::setChoiceExcludeCallback(sead::IDelegate2R<const char16_t*, u16, bool>* pCallback) {
     mChoiceExcludeCallback = pCallback;
 }
+
 void LetterAnimControl::start() { mPlaying = 1; }
 void LetterAnimControl::stop() { mPlaying = 0; }
 // speed sets both the current and default letter playback rate.

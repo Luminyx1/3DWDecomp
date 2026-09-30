@@ -51,6 +51,7 @@ void DynamicCaptureUseWindowEx::Calculate(nn::ui2d::DrawInfo& rDrawInfo, Calcula
         m_pCapture->applyTextureInfoToMaterialForCalculate(this,
             rContext.pLayoutInformation->size, mTextureIndex);
     }
+
     WindowEx::Calculate(rDrawInfo, rContext, force);
 }
 

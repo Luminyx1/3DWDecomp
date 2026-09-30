@@ -28,6 +28,7 @@ private:
     sead::Buffer<sead::Vector2f> mPositions;
     bool mTextureInitialized = false;
 };
+
 static_assert(sizeof(MassDrawPane) == 0x260, "MassDrawPane size");
 
 }  // namespace eui

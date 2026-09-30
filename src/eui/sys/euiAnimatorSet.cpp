@@ -54,6 +54,7 @@ Animator* AnimatorSet::select(u32 index) {
         pPrevious->mStep = 0;
         mSelected = pNext;
     }
+
     return pNext;
 }
 
@@ -85,6 +86,7 @@ void AnimatorSet::SetSoundLinkAll(bool enabled) {
         }
     }
 }
+
 // rName identifies an animator by its resource name; an unknown name returns null.
 Animator* AnimatorSet::select(const sead::SafeString& rName) {
     auto** pAnimators = mAnimators.getBufferPtr();
@@ -96,9 +98,11 @@ Animator* AnimatorSet::select(const sead::SafeString& rName) {
                 pPrevious->mStep = 0;
                 mSelected = pAnimators[i];
             }
+
             return mSelected;
         }
     }
+
     return nullptr;
 }
 }

@@ -18,5 +18,6 @@ public:
     ControlList* mControls;
     ControlList* mStaticControls;
 };
+
 static_assert(sizeof(ControlCreator) == 0x20, "ControlCreator size");
 }

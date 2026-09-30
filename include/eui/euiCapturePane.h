@@ -30,5 +30,6 @@ public:
     agl::RenderTargetColor mRenderTarget;
     agl::GPUMemVoidAddr mTextureMemory;
 };
+
 static_assert(sizeof(CapturePane) == 0x300, "CapturePane size");
 }

@@ -20,8 +20,10 @@ const nn::ui2d::ResExtUserData* FindExtUserDataFromList(const nn::ui2d::ResExtUs
         const char* name = entry->nameOffset ? reinterpret_cast<const char*>(entry) + entry->nameOffset : nullptr;
         if (std::strcmp(pName, name) == 0) return entry;
     }
+
     return nullptr;
 }
+
 // NON_MATCHING: call relocations await the pane setup helpers.
 // pPane is configured after construction; pLayout supplies its layout resources.
 void SetupPaneAfterBuild(nn::ui2d::Pane* pPane, LayoutEx* pLayout) {
@@ -30,6 +32,7 @@ void SetupPaneAfterBuild(nn::ui2d::Pane* pPane, LayoutEx* pLayout) {
     ApplyCaptureUse(pPane, pLayout);
     ApplyDynamicCaptureUse(pPane, pLayout);
 }
+
 // NON_MATCHING: runtime type information is inlined instead of called.
 // pPane starts the traversal; pLayout is replaced by a parts layout inside each parts pane.
 void IteratePaneForSetupPaneAfterBuild(nn::ui2d::Pane* pPane, LayoutEx* pLayout) {
@@ -42,12 +45,14 @@ void IteratePaneForSetupPaneAfterBuild(nn::ui2d::Pane* pPane, LayoutEx* pLayout)
             }
         }
     }
+
     SetupPaneAfterBuild(pPane, pLayout);
     for (auto* link = pPane->m_Children.GetNext(); link != &pPane->m_Children; link = link->GetNext()) {
         auto* child = static_cast<nn::ui2d::Pane*>(&nn::util::IntrusiveListMemberNodeTraits<nn::ui2d::detail::PaneBase, &nn::ui2d::detail::PaneBase::m_Link>::GetItem(*link));
         IteratePaneForSetupPaneAfterBuild(child, pLayout);
     }
 }
+
 // NON_MATCHING: the tail-call relocation awaits recursive hit testing.
 // rPosition is the hit-test point; pLayout supplies the root pane and initial layout.
 LayoutEx* FindHitLayout(const sead::Vector2f& rPosition, LayoutEx* pLayout) {

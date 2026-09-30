@@ -16,8 +16,10 @@ void SelectButton::BuildStateAnim(const nn::ui2d::ControlSrc& rSource, LayoutEx*
         rSource.FindFunctionalAnimName("TouchDecide"),
         rSource.FindFunctionalAnimName("Cancel")
     };
+
     mStateAnimators = pLayout->createAnimatorSet(names, 7, true);
 }
+
 const char* SelectButton::getClassName() const { return "SelectButton"; }
 
 // rOther supplies button properties; pLayout owns the clone; pHeap holds its animations.
@@ -47,6 +49,7 @@ bool SelectButton::ProcessOn() {
         processed = false;
         break;
     }
+
     return processed;
 }
 
@@ -58,6 +61,7 @@ bool SelectButton::ProcessOff() {
         StartOff();
         ChangeState(cState_OffStart);
     }
+
     return true;
 }
 
@@ -73,6 +77,7 @@ void SelectButton::FinishCancel() {
     SelectStateAnim(0)->StopAtMin();
     ChangeState(cState_Off);
 }
+
 bool SelectButton::ProcessCancel() {
     bool processed = true;
     switch (mState) {
@@ -84,6 +89,7 @@ bool SelectButton::ProcessCancel() {
         ChangeState(cState_CancelStart);
         break;
     }
+
     return processed;
 }
 

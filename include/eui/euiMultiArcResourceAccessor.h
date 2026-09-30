@@ -28,5 +28,6 @@ public:
     nn::util::IntrusiveListNode mShaderList;
     nn::util::IntrusiveListNode mTextureList;
 };
+
 static_assert(sizeof(MultiArcResourceAccessor) == 0x48, "MultiArcResourceAccessor size");
 }

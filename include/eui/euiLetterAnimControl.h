@@ -49,5 +49,6 @@ public:
     sead::IDelegate1<const sead::MessageSet<char16_t>::TagInfo*>* mAppTagCallback;
     sead::IDelegate2R<const char16_t*, u16, bool>* mChoiceExcludeCallback;
 };
+
 static_assert(sizeof(LetterAnimControl) == 0x80, "LetterAnimControl size");
 }

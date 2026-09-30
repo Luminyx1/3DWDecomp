@@ -12,6 +12,7 @@ void DragButton::StartDrag(const sead::Vector2f& rPosition) {
     mDragStart = rPosition;
     mPaneStart.set(mDragPane->mPositionX, mDragPane->mPositionY);
 }
+
 // pPosition is the current pointer location, or null when no position is available.
 void DragButton::UpdateDrag(const sead::Vector2f* pPosition) {
     if (!pPosition) return;
@@ -23,11 +24,13 @@ void DragButton::UpdateDrag(const sead::Vector2f* pPosition) {
     mDragPane->mPositionY = y;
     mDragPane->mFlags |= 0x10;
 }
+
 // pPosition is unused; input mode decides whether the completed drag turns off or cancels.
 void DragButton::FinishDrag(const sead::Vector2f* pPosition) {
     if (mFlags & 0x40) Off();
     else Cancel();
 }
+
 void DragButton::StartCancel() { SelectStateAnim(6)->Play(Animator::cPlayType_OneTime, 1); }
 void DragButton::FinishCancel() {
     bool touch = (mFlags & 0x40) != 0;
@@ -35,6 +38,7 @@ void DragButton::FinishCancel() {
     if (touch) { pAnimator->StopAtMin(); ChangeState(cState_Off); }
     else { pAnimator->StopAtMax(); ChangeState(cState_On); }
 }
+
 // rOther supplies drag settings; pLayout and pHeap own the cloned button animations.
 DragButton::DragButton(const DragButton& rOther, LayoutEx* pLayout, sead::Heap* pHeap)
     : SelectButton(rOther, pLayout, pHeap), mDragPane(pLayout->mRootPane),
@@ -46,6 +50,7 @@ void DragButton::Build(const nn::ui2d::ControlSrc& rSource, LayoutEx* pLayout) {
     mFlags &= ~0x2000;
     mDragPane = pLayout->mRootPane;
 }
+
 // rSource names state animations; pLayout creates their animator set.
 void DragButton::BuildStateAnim(const nn::ui2d::ControlSrc& rSource, LayoutEx* pLayout) {
     const char* names[] = {
@@ -58,6 +63,7 @@ void DragButton::BuildStateAnim(const nn::ui2d::ControlSrc& rSource, LayoutEx* p
         rSource.FindFunctionalAnimName("Cancel"),
         rSource.FindFunctionalAnimName("TouchCancel"),
     };
+
     mStateAnimators = pLayout->createAnimatorSet(names, 8, true);
 }
 }

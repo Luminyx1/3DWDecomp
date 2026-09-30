@@ -67,6 +67,7 @@ bool SharcArchive::FileReader::readNext() {
         ++mIndex;
         return true;
     }
+
     return false;
 }
 

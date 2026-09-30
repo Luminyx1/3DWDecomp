@@ -28,6 +28,7 @@ void DrawInfoEx::applyRenderBufferInfo(const RenderBufferInfo* pInfo) {
     } else {
         pInfo->pViewport->apply(pInfo->pDrawContext, *pInfo->pFrameBuffer);
     }
+
     pInfo->pGraphicsContext->apply(pInfo->pDrawContext);
 }
 

@@ -10,5 +10,6 @@ public:
     void UpdateDrag(const sead::Vector2f* pPosition) override;
     void FinishDrag(const sead::Vector2f* pPosition) override;
 };
+
 static_assert(sizeof(DragScrollButton) == 0x68, "DragScrollButton size");
 }

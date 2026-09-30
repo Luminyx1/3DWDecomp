@@ -66,5 +66,6 @@ public:
     FontMgr* mFontMgr;
     u8 mFlags, mAlpha, mStartAlpha, mEndAlpha;
 };
+
 static_assert(sizeof(TagProcessor) == 0x50, "TagProcessor size");
 }

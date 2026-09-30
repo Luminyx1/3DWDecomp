@@ -26,6 +26,7 @@ public:
     const nn::ui2d::TextureInfo& getTextureInfo() const {
         return m_TextureInfo;
     }
+
     const agl::TextureData* getDynamicTexture() const { return m_pDynamicTexture; }
 
     nn::util::IntrusiveListNode m_CaptureLink;
@@ -37,6 +38,7 @@ public:
     agl::RenderBuffer m_RenderBuffer;
     agl::RenderTargetColor m_RenderTarget;
 };
+
 static_assert(sizeof(DynamicCapturePane) == 0x300, "DynamicCapturePane size");
 
 }  // namespace eui

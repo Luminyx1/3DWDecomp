@@ -32,6 +32,7 @@ void AnimButton::Build(const nn::ui2d::ControlSrc& rSource, LayoutEx* pLayout) {
         mDisableAnimator = pLayout->tryCreateAnimatorAutoWithWarning(disableName, true);
         if (mDisableAnimator) mDisableAnimator->mFlags &= ~0x20;
     }
+
     const char* hitName = rSource.FindFunctionalPaneName("Hit");
     mHitPane = pLayout->mRootPane->FindPaneByName(hitName, true);
     const char* cursorName = rSource.FindFunctionalPaneName("Cursor");
@@ -40,6 +41,7 @@ void AnimButton::Build(const nn::ui2d::ControlSrc& rSource, LayoutEx* pLayout) {
         sead::Heap* heap = GetNwAllocatorHeap();
         pLayout->mScreen->createBoxCursorNode(heap)->initialize(this, pLayout->mScreen);
     }
+
     nn::ui2d::Pane* root = pLayout->mRootPane;
     const auto* rootType = RootPane::GetRuntimeTypeInfoStatic();
     bool isRoot = false;
@@ -48,6 +50,7 @@ void AnimButton::Build(const nn::ui2d::ControlSrc& rSource, LayoutEx* pLayout) {
             if (type == rootType) { isRoot = true; break; }
         }
     }
+
     _18 = isRoot ? pLayout->_30 : pLayout->mRootPane->mPanelName;
     if (rSource.FindExtUserDataByName("RepeatOn")) mFlags |= 0x80;
     if (rSource.FindExtUserDataByName("NoTrigTouchOn")) mFlags |= 0x100;
@@ -61,6 +64,7 @@ void AnimButton::BuildStateAnim(const nn::ui2d::ControlSrc& rSource, LayoutEx* p
         rSource.FindFunctionalAnimName("Off"), rSource.FindFunctionalAnimName("TouchOff"),
         rSource.FindFunctionalAnimName("Decide"), rSource.FindFunctionalAnimName("TouchDecide")
     };
+
     mStateAnimators = pLayout->createAnimatorSet(names, 6, true);
 }
 
@@ -73,6 +77,7 @@ bool AnimButton::DownOff(bool force) {
         mFlags &= ~0x40;
         mFlags |= 0x800;
     }
+
     Down();
     if (!(mFlags & 0x1000) && (!screen || !mCursorPane || !screen->moveBoxCursorByButton(this)))
         Off();
@@ -92,6 +97,7 @@ void AnimButton::ChangeState(State state) {
         mFlags &= ~0x800;
         mFlags |= 0x40;
     }
+
     Screen* screen = static_cast<LayoutEx*>(_20)->mScreen;
     if (screen) screen->buttonStateChangeCallback(this, static_cast<State>(mState), state);
     mState = state;
@@ -108,12 +114,14 @@ void AnimButton::CloneImpl_(const AnimButton& rOther, LayoutEx* pLayout, sead::H
         mDisableAnimator = pLayout->tryCreateAnimatorAutoWithWarning(rOther.mDisableAnimator->mName, true);
         if (mDisableAnimator) mDisableAnimator->mFlags &= ~0x20;
     }
+
     if (rOther.mHitPane)
         mHitPane = pLayout->mRootPane->FindPaneByName(rOther.mHitPane->mPanelName, true);
     if (rOther.mCursorPane) {
         mCursorPane = pLayout->mRootPane->FindPaneByName(rOther.mCursorPane->mPanelName, true);
         pLayout->mScreen->createBoxCursorNode(pHeap)->initialize(this, pLayout->mScreen);
     }
+
     _18 = pLayout->mRootPane->mParent ? pLayout->mRootPane->mPanelName : pLayout->_30;
 }
 
@@ -180,26 +188,31 @@ void AnimButton::ForceOff() {
     ButtonBase::ForceOff();
     SelectStateAnim(0)->StopAtMin();
 }
+
 void AnimButton::ForceOn() {
     ButtonBase::ForceOn();
     SelectStateAnim(0)->StopAtMax();
 }
+
 void AnimButton::ForceDown() {
     ButtonBase::ForceDown();
     SelectStateAnim(4)->StopAtMax();
 }
+
 void AnimButton::StartOn() {
     Animator* pOff = mStateAnimators->mAnimators[2];
     Animator* pOn = SelectStateAnim(0);
     if (pOff) pOn->Play(Animator::cPlayType_OneTime, 1);
     else pOn->PlayFromCurrent(Animator::cPlayType_OneTime, 1);
 }
+
 void AnimButton::StartOff() {
     if (mStateAnimators->mAnimators[2])
         SelectStateAnim(2)->Play(Animator::cPlayType_OneTime, 1);
     else
         SelectStateAnim(0)->PlayFromCurrent(Animator::cPlayType_OneTime, -1);
 }
+
 void AnimButton::StartDown() { SelectStateAnim(4)->Play(Animator::cPlayType_OneTime, 1); }
 bool AnimButton::UpdateOn() { return (mStateAnimators->mSelected->mFlags & 1) != 0; }
 bool AnimButton::UpdateOff() { return (mStateAnimators->mSelected->mFlags & 1) != 0; }
@@ -214,6 +227,7 @@ bool AnimButton::ProcessOn() {
     case cState_Down: if (mFlags & 0x40) { StartOn(); ChangeState(cState_OnStart); } break;
     case cState_OnStart: case cState_On: break;
     }
+
     return processed;
 }
 
@@ -226,8 +240,10 @@ bool AnimButton::ProcessOff() {
     case cState_DownStart:
         return (mFlags & 0x40) != 0;
     }
+
     return true;
 }
+
 void AnimButton::FinishDown() {
     if (mFlags & 0x40) {
         mStateAnimators->select(mStateAnimators->mAnimators[1] ? 1 : 0)->StopAtMin();
@@ -238,6 +254,7 @@ void AnimButton::FinishDown() {
         ChangeState(cState_On);
     }
 }
+
 // state is applied immediately, restoring touch input after leaving cursor mode.
 void AnimButton::ForceChangeState(State state) {
     if (mState == state) return;
@@ -245,6 +262,7 @@ void AnimButton::ForceChangeState(State state) {
         mFlags &= ~0x800;
         mFlags |= 0x40;
     }
+
     mState = state;
 }
 }  // namespace eui

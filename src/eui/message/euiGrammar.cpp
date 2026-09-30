@@ -26,6 +26,7 @@ Grammar::WordAttrCount Grammar::getWordAttrCount(int count) {
             return 2;
         return 1;
     }
+
     if (count == -1)
         return WordAttrCount::Singular;
     if (count == 1)
@@ -58,6 +59,7 @@ bool Grammar::isPatchim(char16_t character, bool excludeRieul) {
         const int consonant = (character - 0xac00) % 28;
         return (consonant != 0) ^ (excludeRieul && consonant == 8);
     }
+
     if (static_cast<char16_t>(character - u'0') < 10 ||
         static_cast<char16_t>(character - u'０') < 10) {
         const int digit = character < u':' ? character - u'0' : character - u'０';
@@ -67,11 +69,13 @@ bool Grammar::isPatchim(char16_t character, bool excludeRieul) {
             default: return false;
             }
         }
+
         switch (digit) {
         case 2: case 4: case 5: case 9: return false;
         default: return true;
         }
     }
+
     return true;
 }
 
@@ -102,11 +106,13 @@ bool Grammar::isStringEndWithPatchim(const char16_t* pText, u32 length, bool exc
                 ++pText;
                 continue;
             }
+
             if (character != u'　')
                 last = character;
             ++pText;
         }
     }
+
     return last != 0 && isPatchim(last, excludeRieul);
 }
 

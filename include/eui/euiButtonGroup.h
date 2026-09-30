@@ -23,5 +23,6 @@ public:
     AnimButton* mDragButton;
     u32 mFlags;
 };
+
 static_assert(sizeof(ButtonGroup) == 0x48, "ButtonGroup size");
 }

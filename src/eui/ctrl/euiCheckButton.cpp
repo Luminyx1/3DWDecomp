@@ -16,6 +16,7 @@ CheckButton::CheckButton(const CheckButton& rOther, LayoutEx* pLayout, sead::Hea
     SetAnimatorFlags(&mCheckAnimator->mFlags, 0x10);
     ResetAnimatorFlags(&mCheckAnimator->mFlags, 0x20);
 }
+
 // rSource names the check animation; pLayout owns the resulting animator.
 void CheckButton::Build(const nn::ui2d::ControlSrc& rSource, LayoutEx* pLayout) {
     AnimButton::Build(rSource, pLayout);
@@ -24,6 +25,7 @@ void CheckButton::Build(const nn::ui2d::ControlSrc& rSource, LayoutEx* pLayout) 
     SetAnimatorFlags(&mCheckAnimator->mFlags, 0x10);
     ResetAnimatorFlags(&mCheckAnimator->mFlags, 0x20);
 }
+
 const char* CheckButton::getClassName() const { return "CheckButton"; }
 // checked selects the check animation endpoint and updates the logical value.
 void CheckButton::ForceSetChecked(bool checked) {
@@ -33,6 +35,7 @@ void CheckButton::ForceSetChecked(bool checked) {
         else mCheckAnimator->StopAtMin();
     }
 }
+
 void CheckButton::StartDown() {
     AnimButton::StartDown();
     if (mCheckEnabled && !IsPlayDisableAnim()) {
@@ -41,6 +44,7 @@ void CheckButton::StartDown() {
         mChecked = !mChecked;
     }
 }
+
 bool CheckButton::UpdateDown() {
     bool finished = AnimButton::UpdateDown();
     if (mCheckEnabled && mCheckAnimator && !IsPlayDisableAnim()) {
@@ -49,6 +53,7 @@ bool CheckButton::UpdateDown() {
         else
             finished = finished && mCheckAnimator->mFrame == 0;
     }
+
     return finished;
 }
 }

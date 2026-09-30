@@ -22,6 +22,7 @@ void TextSearcher::SearchText(TextInfo* pInfo, const char* pId, nn::ui2d::Layout
         const char* item = data && data->type == 0 ? static_cast<const char*>(data->GetData()) : pTextBox->mPanelName;
         CreateLayoutItemUniqueName(&name, item, static_cast<LayoutEx*>(pLayout));
     }
+
     if (name.getLength()) {
         const auto message = mMessages->tryFindMessage(name.cstr());
         if (message.getText()) {
@@ -29,8 +30,10 @@ void TextSearcher::SearchText(TextInfo* pInfo, const char* pId, nn::ui2d::Layout
             pInfo->length = message.getLength();
         }
     }
+
     if (pInfo->bufferLengthOverride != -1) pInfo->bufferLength = pInfo->bufferLengthOverride;
 }
+
 TextSearcher::~TextSearcher() = default;
 // pMessages supplies localized strings; pProcessor handles embedded formatting tags.
 TextSearcher::TextSearcher(const MessageSet* pMessages, TagProcessor* pProcessor)

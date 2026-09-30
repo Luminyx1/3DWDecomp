@@ -9,5 +9,6 @@ void MessageMgr::setGradationColor(u32 index, sead::Color4u8 top, sead::Color4u8
     color.top = top;
     color.bottom = bottom;
 }
+
 void MessageMgr::dumpLastGotMessageSetInfo() {}
 }

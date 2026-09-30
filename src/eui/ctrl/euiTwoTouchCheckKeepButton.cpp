@@ -20,15 +20,18 @@ TwoTouchCheckKeepButton::TwoTouchCheckKeepButton(const TwoTouchCheckKeepButton& 
     pSelected->mStep = 0;
     mFirstTouchAnimators = mStateAnimators;
 }
+
 bool TwoTouchCheckKeepButton::IsTouchOnce() const {
     if (!(mFlags & 0x40)) return true;
     return mTouched != 0;
 }
+
 // rPosition is the pointer position; cancellation temporarily rejects hit tests.
 bool TwoTouchCheckKeepButton::HitTest(const sead::Vector2f& rPosition) const {
     if (mState == cState_CancelStart) return false;
     return AnimButton::HitTest(rPosition);
 }
+
 // touched chooses the first- or second-touch animations and resets the button state.
 // NON_MATCHING: the boolean conversion uses an additional saved register.
 void TwoTouchCheckKeepButton::ForceSetTouchOnce(bool touched) {
@@ -41,35 +44,44 @@ void TwoTouchCheckKeepButton::ForceSetTouchOnce(bool touched) {
     mTouched = touched;
     ForceOff();
 }
+
 void TwoTouchCheckKeepButton::ActivateByBoxCursor() {
     if (mFlags & 0x40) {
         mStateAnimators = mFirstTouchAnimators;
         mTouched = 0;
     }
+
     AnimButton::ActivateByBoxCursor();
 }
+
 void TwoTouchCheckKeepButton::InactivateByBoxCursor() {
     AnimButton::InactivateByBoxCursor();
     if ((mFlags & 0x40) && mChecked && mState == cState_DownStart) ForceOff();
 }
+
 void TwoTouchCheckKeepButton::StartDown() {
     if (IsTouchOnce()) CheckKeepButton::StartDown();
     else AnimButton::StartDown();
 }
+
 bool TwoTouchCheckKeepButton::UpdateDown() {
     if (IsTouchOnce()) return CheckButton::UpdateDown();
     return AnimButton::UpdateDown();
 }
+
 void TwoTouchCheckKeepButton::FinishDown() {
     if (!IsTouchOnce()) {
         mStateAnimators = mSecondTouchAnimators;
         mTouched = 1;
     }
+
     AnimButton::FinishDown();
 }
+
 void TwoTouchCheckKeepButton::StartCancel() {
     mStateAnimators->select(6)->Play(Animator::cPlayType_OneTime, 1);
 }
+
 bool TwoTouchCheckKeepButton::UpdateCancel() { return (mStateAnimators->mSelected->mFlags & 1) != 0; }
 void TwoTouchCheckKeepButton::FinishCancel() {
     mStateAnimators = mFirstTouchAnimators;
@@ -77,6 +89,7 @@ void TwoTouchCheckKeepButton::FinishCancel() {
     SelectStateAnim(0)->StopAtMin();
     ChangeState(cState_Off);
 }
+
 // rSource names both touch-state animation sets; pLayout creates the corresponding animators.
 void TwoTouchCheckKeepButton::BuildStateAnim(const nn::ui2d::ControlSrc& rSource, LayoutEx* pLayout) {
     AnimButton::BuildStateAnim(rSource, pLayout);
@@ -90,6 +103,7 @@ void TwoTouchCheckKeepButton::BuildStateAnim(const nn::ui2d::ControlSrc& rSource
         rSource.FindFunctionalAnimName("TouchCancel"),
         rSource.FindFunctionalAnimName(""),
     };
+
     mSecondTouchAnimators = pLayout->createAnimatorSet(names, 8, true);
     mSecondTouchAnimators->SetSkipFirstFrameAll(true);
     mSecondTouchAnimators->SetSoundLinkAll(false);
@@ -98,6 +112,7 @@ void TwoTouchCheckKeepButton::BuildStateAnim(const nn::ui2d::ControlSrc& rSource
     selected->mStep = 0;
     mFirstTouchAnimators = mStateAnimators;
 }
+
 bool TwoTouchCheckKeepButton::ProcessCancel() {
     if (!(mFlags & 0x40) || !mTouched) return AnimButton::ProcessCancel();
     switch (mState) {
@@ -112,6 +127,7 @@ bool TwoTouchCheckKeepButton::ProcessCancel() {
         break;
     case cState_CancelStart: break;
     }
+
     return true;
 }
 }
