@@ -1,29 +1,24 @@
 #!/usr/bin/env python3
-"""Generate the progress website (a single static page) from build/report.json.
+"""Generate the static progress website, which refreshes from decomp.dev every minute.
 
-    python tools/website.py            # -> site/index.html
+    python tools/website.py                       # -> site/index.html
     python tools/website.py -o out.html
+    python tools/website.py --report report.json  # optional offline fallback
 
-Run tools/progress.py (or the pre-commit hook) first so build/report.json is
-current; the post-commit hook runs this too.  The page is self-contained
-(inline CSS and a few lines of script for the night-mode toggle) apart from the web font, so it can be copied to any
-web server as-is.
+Upload the page once; browsers fetch the latest published report on opening it
+and every 60 seconds afterward. No local report or game build is required.
+Regenerate and upload only when changing the website itself. If a refresh fails,
+the page keeps its last loaded report and retries on the next interval.
 
-Layout (docs/WEBSITE.md): overall % (XX.XX%) and a progress bar, then each
-library, then every file (best first, in a scrollable list) of every sub-library of Game, al/Library and
-al/Project with the sub-library's total.  The look borrows Super Mario 3D
-World's bright sky, clouds, glossy HUD bars and checkered floors - drawn in
-CSS, no game assets.
+The page contains its own CSS and JavaScript, apart from the web font and live
+report. It can be copied to any static web server. The look borrows Super Mario
+3D World's sky, clouds, glossy HUD bars and checkered floors, drawn in CSS.
 """
 
 from __future__ import annotations
 
 import argparse
-import datetime
-import html
 import json
-import subprocess
-from collections import defaultdict
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -45,81 +40,171 @@ SECTIONS = [  # (unit name prefix, title)
 ]
 
 
-def num(v) -> int:
-    return int(v or 0)
+def build(report: dict | None = None) -> str:
+    """Render the page; report optionally supplies a snapshot until live data loads."""
+    # Only embed the measures used by the page, not the full per-function report.
+    fallback = None if report is None else {
+        "measures": report["measures"],
+        "categories": report.get("categories", []),
+        "units": [{"name": u["name"], "measures": u.get("measures", {})}
+                  for u in report.get("units", [])],
+    }
+    # Escape '<' so report names cannot end the JSON script element.
+    config = json.dumps({"libraries": LIBRARIES, "sections": SECTIONS, "fallback": fallback},
+                        separators=(",", ":")).replace("<", "\\u003c")
+    return TEMPLATE.format(night_rules=NIGHT_RULES, config=config, live_script=LIVE_SCRIPT)
 
 
-def pct(m: int, t: int) -> float:
-    return 100.0 * m / t if t else 0.0
+LIVE_SCRIPT = r"""
+(() => {
+  const {libraries, sections, fallback} = JSON.parse(document.getElementById('progress-config').textContent);
+  const reportUrl = 'https://decomp.dev/shibbo/3DWDecomp.json?mode=report';
+  const status = document.getElementById('status');
+  const format = new Intl.NumberFormat('en-US');
+  let lastPresentation = '', lastSuccess = '', hasReport = false, loading = false;
 
+  // value is a report name or label, escaped before insertion into HTML.
+  const escape = value => String(value).replace(/[&<>"']/g, ch =>
+    ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[ch]));
+  // matched and total are byte counts; empty units have zero progress.
+  const percent = (matched, total) => total ? 100 * matched / total : 0;
+  // progress is a percentage; cls selects the bar style; colour optionally overrides its fill.
+  const bar = (progress, cls, colour = '') => `<div class="bar ${cls}" style="--p:${progress.toFixed(3)}%;--min:${progress > 0 ? 10 : 0}px${colour ? ';--c:' + colour : ''}"><div class="fill"></div></div>`;
 
-def git_rev() -> str:
-    try:
-        return subprocess.run(["git", "rev-parse", "--short", "HEAD"], cwd=ROOT, capture_output=True,
-                              text=True).stdout.strip()
-    except OSError:
-        return ""
+  // measures contains report counters; fields lists the counters required by this view.
+  function validateMeasures(measures, fields) {
+    if (!measures || typeof measures !== 'object' || Array.isArray(measures)) throw new Error('Invalid report measures');
+    const normalized = {};
+    for (const field of fields) {
+      // Objdiff omits counters whose value is zero.
+      const value = measures[field] === undefined ? 0 : measures[field];
+      if (!((typeof value === 'number' || (typeof value === 'string' && /^\d+$/.test(value))) &&
+            Number.isSafeInteger(Number(value)) && Number(value) >= 0)) {
+        throw new Error('Invalid report counter');
+      }
+      normalized[field] = Number(value);
+    }
+    if (normalized.matched_code > normalized.total_code ||
+        normalized.matched_functions > normalized.total_functions) {
+      throw new Error('Invalid report totals');
+    }
+    return normalized;
+  }
 
+  // report is the downloaded objdiff report or the optional embedded snapshot.
+  function render(report) {
+    const counters = ['matched_code', 'total_code', 'matched_functions', 'total_functions'];
+    if (!Array.isArray(report.categories) || !Array.isArray(report.units)) throw new Error('Invalid report');
+    report = {
+      measures: validateMeasures(report.measures, counters),
+      categories: report.categories.map(category => {
+        if (typeof category.id !== 'string') throw new Error('Invalid report category');
+        return {id: category.id, measures: validateMeasures(category.measures, counters)};
+      }),
+      units: report.units.map(unit => {
+        if (typeof unit.name !== 'string') throw new Error('Invalid report unit');
+        return {name: unit.name, measures: validateMeasures(unit.measures, ['matched_code', 'total_code'])};
+      })
+    };
+    // Ignore function-level differences and leave the DOM alone when displayed data is unchanged.
+    const presentation = JSON.stringify([
+      counters.map(key => report.measures[key]),
+      report.categories.map(c => [c.id, ...counters.map(key => c.measures[key])]),
+      report.units.map(u => [u.name, u.measures.matched_code, u.measures.total_code])
+    ]);
+    if (presentation === lastPresentation) return;
 
-def bar(p: float, colour: str = "", cls: str = "bar") -> str:
-    style = f"--p:{max(p, 0.0):.3f}%" + (";--min:10px" if p > 0 else "") + (f";--c:{colour}" if colour else "")
-    return f'<div class="{cls}" style="{style}"><div class="fill"></div></div>'
+    const categories = new Map(report.categories.map(c => [c.id, c.measures]));
+    const libHtml = libraries.map(([id, label, colour]) => {
+      const m = categories.get(id);
+      if (!m) return '';
+      const p = percent(Number(m.matched_code), Number(m.total_code));
+      return `<div class="card lib" style="--c:${colour}"><div class="band"></div>
+        <h3>${escape(label)}</h3><div class="pct">${p.toFixed(2)}%</div>${bar(p, 'small', colour)}
+        <div class="sub">${format.format(m.matched_functions)} / ${format.format(m.total_functions)} functions</div></div>`;
+    }).join('');
+    const sectionHtml = sections.map(([prefix, title]) => {
+      const groups = new Map();
+      for (const unit of report.units) {
+        if (!unit.name.startsWith(prefix)) continue;
+        const rest = unit.name.slice(prefix.length);
+        const sub = rest.includes('/') ? rest.split('/')[0] : '(root)';
+        if (!groups.has(sub)) groups.set(sub, []);
+        groups.get(sub).push({name: rest.split('/').pop(), matched: Number(unit.measures.matched_code),
+                              total: Number(unit.measures.total_code)});
+      }
+      const cards = [...groups].sort(([a], [b]) => a.toUpperCase().localeCompare(b.toUpperCase())).map(([sub, files]) => {
+        const matched = files.reduce((sum, f) => sum + f.matched, 0);
+        const total = files.reduce((sum, f) => sum + f.total, 0);
+        const p = percent(matched, total);
+        files.sort((a, b) => percent(b.matched, b.total) - percent(a.matched, a.total) ||
+          b.matched - a.matched || a.name.toUpperCase().localeCompare(b.name.toUpperCase()));
+        const rows = files.map(f => `<li><span class="fname" title="${escape(f.name)}">${escape(f.name)}</span>
+          ${bar(percent(f.matched, f.total), 'tiny')}<span class="fp">${percent(f.matched, f.total).toFixed(2)}%</span></li>`).join('');
+        return `<details class="card folder" data-key="${escape(prefix + sub)}"><summary>
+          <span class="fold">${escape(sub)}</span><span class="count">${files.length} file${files.length === 1 ? '' : 's'}</span>
+          <span class="fp big">${p.toFixed(2)}%</span>${bar(p, 'small')}</summary><ol>${rows}</ol></details>`;
+      }).join('');
+      return `<section><h2>${escape(title)}</h2><div class="folders">${cards}</div></section>`;
+    }).join('');
 
+    const folders = document.getElementById('sections');
+    const previous = new Map([...folders.querySelectorAll('details')].map(el =>
+      [el.dataset.key, {open: el.open, scroll: el.querySelector('ol').scrollTop}]));
+    const focused = document.activeElement?.closest('details')?.dataset.key;
+    const scrollX = window.scrollX, scrollY = window.scrollY;
+    const m = report.measures;
+    const p = percent(Number(m.matched_code), Number(m.total_code));
+    document.getElementById('total').textContent = `${p.toFixed(2)}%`;
+    document.getElementById('total-bar').style.setProperty('--p', `${p.toFixed(3)}%`);
+    document.getElementById('total-bar').style.setProperty('--min', p > 0 ? '10px' : '0px');
+    document.getElementById('totals').textContent = `${format.format(m.matched_code)} / ${format.format(m.total_code)} bytes of code · ${format.format(m.matched_functions)} / ${format.format(m.total_functions)} functions`;
+    document.getElementById('libraries').innerHTML = libHtml;
+    folders.innerHTML = sectionHtml;
+    for (const el of folders.querySelectorAll('details')) {
+      const saved = previous.get(el.dataset.key);
+      if (saved) {
+        el.open = saved.open;
+        el.querySelector('ol').scrollTop = saved.scroll;
+      }
+      if (el.dataset.key === focused) el.querySelector('summary').focus({preventScroll: true});
+    }
+    window.scrollTo(scrollX, scrollY);
+    lastPresentation = presentation;
+    hasReport = true;
+  }
 
-def build(report: dict) -> str:
-    m = report["measures"]
-    total = pct(num(m.get("matched_code")), num(m.get("total_code")))
-    cats = {c["id"]: c["measures"] for c in report.get("categories", [])}
+  async function refresh() {
+    if (loading) return;
+    loading = true;
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 20000);
+    try {
+      const response = await fetch(reportUrl, {cache: 'no-store', signal: controller.signal});
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      render(await response.json());
+      lastSuccess = new Date().toLocaleString();
+      status.textContent = `Live progress · Last checked ${lastSuccess}`;
+    } catch (error) {
+      status.textContent = hasReport
+        ? `Refresh unavailable · Showing ${lastSuccess ? 'data last checked ' + lastSuccess : 'saved snapshot'} · Retrying every minute`
+        : 'Progress unavailable · Retrying every minute';
+    } finally {
+      clearTimeout(timeout);
+      loading = false;
+    }
+  }
 
-    lib_cards = []
-    for cid, label, colour in LIBRARIES:
-        c = cats.get(cid, {})
-        tc, mc = num(c.get("total_code")), num(c.get("matched_code"))
-        tf, mf = num(c.get("total_functions")), num(c.get("matched_functions"))
-        p = pct(mc, tc)
-        lib_cards.append(
-            f'<div class="card lib" style="--c:{colour}"><div class="band"></div>'
-            f'<h3>{html.escape(label)}</h3><div class="pct">{p:.2f}%</div>{bar(p, colour, "bar small")}'
-            f'<div class="sub">{mf:,} / {tf:,} functions</div></div>')
-
-    # sub-libraries
-    groups: dict[str, dict[str, list]] = {t: defaultdict(list) for _, t in SECTIONS}
-    for u in report.get("units", []):
-        name = u["name"]
-        for prefix, title in SECTIONS:
-            if name.startswith(prefix):
-                rest = name[len(prefix):]
-                sub = rest.split("/", 1)[0] if "/" in rest else "(root)"
-                um = u.get("measures", {})
-                groups[title][sub].append((rest.rsplit("/", 1)[-1], num(um.get("matched_code")),
-                                           num(um.get("total_code"))))
-                break
-
-    sections = []
-    for _, title in SECTIONS:
-        cards = []
-        for sub in sorted(groups[title], key=str.upper):
-            files = groups[title][sub]
-            tm, tt = sum(f[1] for f in files), sum(f[2] for f in files)
-            sp = pct(tm, tt)
-            best = sorted(files, key=lambda f: (-pct(f[1], f[2]), -f[1], f[0].upper()))
-            rows = "".join(
-                f'<li><span class="fname" title="{html.escape(f)}">{html.escape(f)}</span>{bar(pct(fm, ft), "", "bar tiny")}'
-                f'<span class="fp">{pct(fm, ft):.2f}%</span></li>' for f, fm, ft in best)
-            cards.append(
-                f'<details class="card folder"><summary><span class="fold">{html.escape(sub)}</span>'
-                f'<span class="count">{len(files)} file{"s" if len(files) != 1 else ""}</span><span class="fp big">{sp:.2f}%</span>'
-                f'{bar(sp, "", "bar small")}</summary><ol>{rows}</ol></details>')
-        sections.append(f'<section><h2>{html.escape(title)}</h2><div class="folders">{"".join(cards)}</div></section>')
-
-    stamp = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
-    rev = git_rev()
-    return TEMPLATE.format(
-        total=f"{total:.2f}", bar=bar(total, "", "bar main"),
-        matched=f"{num(m.get('matched_code')):,}", code=f"{num(m.get('total_code')):,}",
-        fmatched=f"{num(m.get('matched_functions')):,}", ftotal=f"{num(m.get('total_functions')):,}",
-        libs="".join(lib_cards), sections="".join(sections), night_rules=NIGHT_RULES,
-        stamp=stamp, rev=f" &middot; {html.escape(rev)}" if rev else "")
+  if (fallback) {
+    try {
+      render(fallback);
+      status.textContent = 'Showing saved snapshot · Checking live progress…';
+    } catch (error) { /* A failed fallback must not prevent live updates. */ }
+  }
+  refresh();
+  setInterval(refresh, 60000);
+})();
+"""
 
 
 # 3D World's night courses: deep blue-violet sky, a moon where the sun was,
@@ -326,6 +411,7 @@ h2 {{
 .folder li {{ display: flex; align-items: center; gap: 10px; padding: 5px 0; font-size: 14px; }}
 .folder li .fname {{ flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }}
 .folder li .fp {{ flex: 0 0 64px; text-align: right; font-weight: 600; }}
+footer a {{ color: inherit; }}
 footer {{ text-align: center; margin-top: 48px; color: #fff; font-weight: 600; text-shadow: 0 2px 0 rgba(20,70,140,.5); }}
 @media (max-width: 600px) {{ .folders {{ grid-template-columns: 1fr; }} .hero {{ padding: 20px 14px; }} }}
 </style>
@@ -357,14 +443,22 @@ function toggleNight() {{
     <p class="tag">Super Mario 3D World + Bowser's Fury &mdash; matching decompilation</p>
   </header>
   <div class="card hero">
-    <div class="big">{total}%</div>
-    {bar}
-    <div class="what">{matched} / {code} bytes of code &middot; {fmatched} / {ftotal} functions</div>
+    <div class="big" id="total">&mdash;</div>
+    <div class="bar main" id="total-bar" style="--p:0%"><div class="fill"></div></div>
+    <div class="what" id="totals">Loading progress&hellip;</div>
   </div>
-  <div class="libs">{libs}</div>
-  {sections}
-  <footer>Updated {stamp}{rev}</footer>
+  <div class="libs" id="libraries"></div>
+  <div id="sections"></div>
+  <footer>
+    <div id="status" role="status">Loading progress from decomp.dev&hellip;</div>
+    <div><a href="https://decomp.dev/shibbo/3DWDecomp">decomp.dev</a> &middot; Refreshes every minute</div>
+    <noscript>Enable JavaScript to load the current progress report.</noscript>
+  </footer>
 </main>
+<script type="application/json" id="progress-config">{config}</script>
+<script>
+{live_script}
+</script>
 </body>
 </html>
 """
@@ -372,10 +466,10 @@ function toggleNight() {{
 
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--report", default=str(ROOT / "build" / "report.json"))
+    ap.add_argument("--report", help="optional report snapshot to display before live data loads")
     ap.add_argument("-o", "--out", default=str(ROOT / "site" / "index.html"))
     a = ap.parse_args(argv)
-    report = json.loads(Path(a.report).read_text())
+    report = json.loads(Path(a.report).read_text(encoding="utf-8")) if a.report else None
     out = Path(a.out)
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(build(report), encoding="utf-8")

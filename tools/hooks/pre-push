@@ -4,7 +4,8 @@
 # Enable with: git config core.hooksPath tools/hooks
 cd "$(git rev-parse --show-toplevel)" || exit 0
 PY=$(command -v python || command -v python3)
-[ -n "$PY" ] && [ -f build/report.json ] || exit 0
+[ -n "$PY" ] || exit 0
+mkdir -p build
 "$PY" tools/website.py > build/website.log 2>&1 || exit 0
 "$PY" tools/deploy_site.py 2>&1 | tee build/deploy.log | tail -n 1
 exit 0
