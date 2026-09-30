@@ -3521,7 +3521,7 @@ src/nw/atk/detail/voice/atk_Voice.cpp:
     .text   start:0x00570E30 end:0x005716A4
 src/nw/atk/detail/voice/atk_VoiceCommand.cpp:
     .text   start:0x005716B0 end:0x00571C20
-src/nw/atk/detail/wsd/atk_WaveSoundFileReader.cpp:
+src/nw/atk/detail/wsd/atk_WaveSoundFileReader.cpp: done
     .text   start:0x00571C20 end:0x00571EDC
 src/nw/atk/detail/wsd/atk_WaveSoundFile.cpp:
     .text   start:0x00571EE0 end:0x005725C4
