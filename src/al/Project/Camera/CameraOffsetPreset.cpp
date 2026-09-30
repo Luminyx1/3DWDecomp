@@ -1,4 +1,4 @@
-#include "Project/Camera/Area/CameraOffsetPreset.hpp"
+#include "Project/Camera/CameraOffsetPreset.hpp"
 
 #include "Library/Yaml/ByamlUtil.hpp"
 #include "Project/Base/StringUtil.hpp"
@@ -29,35 +29,38 @@ const CameraOffsetPresetData sDefaultPresets[20] = {
 };
 }  // namespace
 
-/** @brief Creates a preset selector over the built-in offset presets, starting at the default one. */
-CameraOffsetPreset::CameraOffsetPreset()
-    : mPresetData(sDefaultPresets), mPresetCount(sizeof(sDefaultPresets) / sizeof(CameraOffsetPresetData)) {}
-
 /**
- * @brief Creates a preset selector over a custom list of presets.
- * @param pPresetData The list of presets.
- * @param presetCount The number of presets in the list.
+ * Creates a preset selector over the built-in offset presets.
  */
-CameraOffsetPreset::CameraOffsetPreset(const CameraOffsetPresetData* pPresetData, s32 presetCount)
-    : mPresetData(pPresetData), mPresetCount(presetCount) {}
+CameraOffsetPreset::CameraOffsetPreset()
+    : mPresetData(sDefaultPresets),
+      mPresetNum(sizeof(sDefaultPresets) / sizeof(CameraOffsetPresetData)) {}
 
 /**
- * @brief Selects the preset named by the camera parameters, if they name one.
- * @param rIter The camera parameters, read from the "OffsetName" key.
+ * Creates a preset selector over a custom preset list.
+ * @param pPresetData Preset list.
+ * @param presetNum Number of presets in the list.
+ */
+CameraOffsetPreset::CameraOffsetPreset(const CameraOffsetPresetData* pPresetData, s32 presetNum)
+    : mPresetData(pPresetData), mPresetNum(presetNum) {}
+
+/**
+ * Selects the preset named by the "OffsetName" parameter, if present.
+ * @param rIter Camera parameter iterator.
  */
 void CameraOffsetPreset::loadParam(const ByamlIter& rIter) {
     const char* offsetName = tryGetByamlKeyStringOrNULL(rIter, "OffsetName");
-    if (offsetName == nullptr) {
+    if (!offsetName) {
         return;
     }
 
     mCurrentPresetIndex = -1;
-
-    for (s32 i = 0; i < mPresetCount; i++) {
-        if (isEqualString(mPresetData[i].mName, offsetName)) {
+    for (s32 i = 0; i < mPresetNum; i++) {
+        if (isEqualString(mPresetData[i].name, offsetName)) {
             mCurrentPresetIndex = i;
-            break;
+            return;
         }
     }
 }
+
 }  // namespace al
