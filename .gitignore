@@ -27,4 +27,5 @@ tools/bin/
 /deploy.ini
 
 # project tooling (kept local for now)
-/tools/
+/tools/*
+!/tools/report_snapshot.py
