@@ -1,10 +1,8 @@
-#include "Library/Collision/CollisionPartsConnector.hpp"
+#include "Library/Collision/PartsConnector.hpp"
 
 namespace al {
-
 /**
- * @brief Constructs a connector that is not attached to any collision parts.
+ * Constructs an unconnected collision parts connector.
  */
 CollisionPartsConnector::CollisionPartsConnector() = default;
-
 }  // namespace al
