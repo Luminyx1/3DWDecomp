@@ -3441,7 +3441,7 @@ src/nw/atk/detail/strm/atk_StreamSoundPrefetchFileReader.cpp:
     .text   start:0x00558B80 end:0x005591B4
 src/nw/atk/detail/strm/atk_StreamTrack.cpp:
     .text   start:0x005591C0 end:0x005591E0
-src/nw/atk/detail/strm/atk_StreamBufferPool.cpp:
+src/nw/atk/detail/strm/atk_StreamBufferPool.cpp: done
     .text   start:0x005591E0 end:0x0055938C
 src/nw/atk/detail/atk_AdvancedWaveSoundPlayer.cpp:
     .text   start:0x00559390 end:0x0055A37C
@@ -3551,7 +3551,7 @@ src/nw/atk/fnd/os/atk_ChannelMixVolume.cpp:
     .text   start:0x00577830 end:0x005779D8
 src/nw/atk/fnd/os/atk_FinalMix.cpp:
     .text   start:0x005779E0 end:0x00577BB8
-src/nw/atk/fnd/os/atkfnd_WorkBufferAllocator.cpp:
+src/nw/atk/fnd/os/atkfnd_WorkBufferAllocator.cpp: done
     .text   start:0x00577BC0 end:0x00577D04
 src/nw/atk/fnd/os/atk_OutputMixer.cpp:
     .text   start:0x00577D10 end:0x00578A3C
