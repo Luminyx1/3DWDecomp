@@ -1,11 +1,29 @@
 #pragma once
 #include <nn/atk/atk_BinaryFileFormat.h>
+#include <nn/atk/atk_DspAdpcmParam.h>
 
 namespace nn::atk::detail {
 struct StreamSoundFile {
-    struct StreamSoundInfo;
-    struct TrackInfo;
-    struct DspAdpcmChannelInfo;
+    struct StreamSoundInfo {
+        u8 sampleFormat, loop, channelCount, regionCount;
+        u32 sampleRate, loopStart, loopEnd;
+        u32 blockCount, blockSize, blockSampleCount;
+        u32 lastBlockSize, lastBlockSampleCount, lastBlockPaddedSize;
+        u32 seekInfoSize, seekIntervalSamples;
+        Reference sampleData;
+        u16 regionInfoSize, reserved;
+        Reference regionData;
+        u32 originalLoopStart, originalLoopEnd, crc32;
+    };
+    struct ChannelIndexTable { u32 count; u8 indices[1]; };
+    struct TrackInfo {
+        u8 volume, pan, surroundPan, _03;
+        Reference channelIndices;
+        const ChannelIndexTable* GetChannelIndices() const {
+            return reinterpret_cast<const ChannelIndexTable*>(reinterpret_cast<const u8*>(this) + channelIndices.offset);
+        }
+    };
+    struct DspAdpcmChannelInfo { DspAdpcmParam param; DspAdpcmLoopParam loop; };
     struct ChannelInfo {
         Reference adpcm;
         const DspAdpcmChannelInfo* GetDspAdpcmChannelInfo() const;
@@ -44,4 +62,6 @@ struct StreamSoundFile {
         u32 GetMarkerBlockOffset() const;
     };
 };
+static_assert(sizeof(StreamSoundFile::StreamSoundInfo) == 0x50, "StreamSoundInfo size");
+static_assert(sizeof(StreamSoundFile::DspAdpcmChannelInfo) == 0x2c, "DspAdpcmChannelInfo size");
 }
