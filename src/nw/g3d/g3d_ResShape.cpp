@@ -124,7 +124,7 @@ void ResShape::Setup(nn::gfx::Device* device, nn::gfx::MemoryPool* pool, ptrdiff
 void ResMesh::Setup(nn::gfx::Device* device, nn::gfx::MemoryPool* pool, ptrdiff_t offset) {
     nn::gfx::Buffer* object = buffer;
     nn::gfx::BufferInfo* info = bufferInfo;
-    
+
     new (object) nn::gfx::Buffer;
     info->SetGpuAccessFlags(8);
     object->Initialize(device, *info, pool, memoryPoolOffset+ offset, info->GetSize());
@@ -186,4 +186,3 @@ void ResMesh::DrawSubMesh(nn::gfx::CommandBuffer* command, int first, int count,
     command->DrawIndexed(topology, indexFormat, address, indices, baseVertex, instances, baseInstance);
 }
 }
-
