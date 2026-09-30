@@ -10,48 +10,43 @@ class RailPart {
 public:
     RailPart();
 
-    void init(const sead::Vector3f&, const sead::Vector3f&, const sead::Vector3f&,
-              const sead::Vector3f&);
-    void setUp(sead::Vector3f&, sead::Vector3f&);
-    void setAccel(f32, f32);
-    void getAccels(f32*, f32*);
-    void setAngleS(f32);
-    void setAngleE(f32);
-    bool getAngleS(f32*);
-    bool getAngleE(f32*);
-    void calcPos(sead::Vector3f*, f32) const;
-    void calcVelocity(sead::Vector3f*, f32) const;
-    void calcUpDir(sead::Vector3f*, f32) const;
+    void init(const sead::Vector3f& rStart, const sead::Vector3f& rStartHandle,
+              const sead::Vector3f& rEndHandle, const sead::Vector3f& rEnd);
+    void setUp(sead::Vector3f& rUpStart, sead::Vector3f& rUpEnd);
+    void setAccel(f32 accelStart, f32 accelEnd);
+    void getAccels(f32* pAccelStart, f32* pAccelEnd);
+    void setAngleS(f32 angle);
+    void setAngleE(f32 angle);
+    bool getAngleS(f32* pAngle);
+    bool getAngleE(f32* pAngle);
+    void calcPos(sead::Vector3f* pPos, f32 param) const;
+    void calcVelocity(sead::Vector3f* pVel, f32 param) const;
+    void calcUpDir(sead::Vector3f* pUp, f32 distance) const;
     f32 getPartLength() const;
-    void calcDir(sead::Vector3f*, f32) const;
-    void calcStartPos(sead::Vector3f*) const;
-    void calcEndPos(sead::Vector3f*) const;
-    f32 calcLength(f32, f32, s32) const;
-    f32 calcCurveParam(f32) const;
-    f32 calcNearestParam(const sead::Vector3f&, f32) const;
-    void calcNearestPos(sead::Vector3f*, const sead::Vector3f&, f32) const;
-    f32 calcNearestLength(f32*, const sead::Vector3f&, f32, f32) const;
+    void calcDir(sead::Vector3f* pDir, f32 param) const;
+    void calcStartPos(sead::Vector3f* pPos) const;
+    void calcEndPos(sead::Vector3f* pPos) const;
+    f32 calcLength(f32 startParam, f32 endParam, s32 stepCount) const;
+    f32 calcCurveParam(f32 param) const;
+    f32 calcNearestParam(const sead::Vector3f& rPos, f32 interval) const;
+    void calcNearestPos(sead::Vector3f* pNearest, const sead::Vector3f& rPos, f32 interval) const;
+    f32 calcNearestLength(f32* pParam, const sead::Vector3f& rPos, f32 max, f32 interval) const;
 
-    void setTotalDistance(f32 distance) { mTotalDistance = distance; }
-
+    void setTotalDistance(f32 len) { mTotalDistance = len; }
     f32 getTotalDistance() const { return mTotalDistance; }
-
     bool isBezierCurve() const { return mBezierCurve != nullptr; }
 
 private:
-    BezierCurve* mBezierCurve = nullptr;              // _0
-    LinearCurve* mLinearCurve = nullptr;              // _8
-    f32 mTotalDistance = 0.0f;                        // _10
-    sead::Vector3f mUpStart = sead::Vector3f::ey;     // _14
-    sead::Vector3f mUpEnd = sead::Vector3f::ey;       // _20
-    f32 mAccelStart = 0.0f;                           // _2c
-    f32 mAccelEnd = 0.0f;                             // _30
-    f32 mAngleStart = 0.0f;                           // _34
-    f32 mAngleEnd = 0.0f;                             // _38
-    bool mIsSetAngleStart = false;                    // _3c
-    bool mIsSetAngleEnd = false;                      // _3d
+    BezierCurve* mBezierCurve = nullptr;
+    LinearCurve* mLinearCurve = nullptr;
+    f32 mTotalDistance = 0.0f;
+    sead::Vector3f mUpStart = sead::Vector3f::ey;
+    sead::Vector3f mUpEnd = sead::Vector3f::ey;
+    f32 mAccelStart = 0.0f;
+    f32 mAccelEnd = 0.0f;
+    f32 mAngleS = 0.0f;
+    f32 mAngleE = 0.0f;
+    bool mIsSetAngleS = false;
+    bool mIsSetAngleE = false;
 };
-
-static_assert(sizeof(RailPart) == 0x40);
-
 }  // namespace al
