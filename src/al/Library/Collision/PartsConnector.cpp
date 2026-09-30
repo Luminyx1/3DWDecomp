@@ -1,39 +1,41 @@
-#include "Library/Collision/CollisionPartsConnector.hpp"
+#include "Library/Collision/PartsConnector.hpp"
 
 #include "Project/Collision/CollisionParts.hpp"
 
 namespace al {
+/**
+ * Constructs an unconnected collision parts connector.
+ */
+CollisionPartsConnector::CollisionPartsConnector() = default;
 
 /**
- * @brief Connects to a parent matrix and remembers the collision parts that own it.
- * @param pParentMtx The matrix to follow.
- * @param rMtx The offset matrix relative to the parent.
- * @param pCollisionParts The collision parts the parent matrix belongs to.
+ * Connects to a parent matrix owned by collision parts.
+ * @param pParentMtx parent matrix
+ * @param rMtx matrix relative to the parent
+ * @param pParts collision parts owning the parent matrix
  */
 void CollisionPartsConnector::init(const sead::Matrix34f* pParentMtx, const sead::Matrix34f& rMtx,
-                                   const CollisionParts* pCollisionParts) {
+                                   const CollisionParts* pParts) {
     MtxConnector::init(pParentMtx, rMtx);
-    mCollisionParts = pCollisionParts;
+    mCollisionParts = pParts;
 }
 
 /**
- * @brief Checks whether the connector follows a matrix whose collision is still valid.
- * @return True if connected and the collision parts are valid.
+ * Checks whether the connector is connected to valid collision parts.
+ * @return true if connected
  */
 bool CollisionPartsConnector::isConnecting() const {
     if (mCollisionParts && !(mCollisionParts->_160 && mCollisionParts->_161)) {
         return false;
     }
-
     return MtxConnector::isConnecting();
 }
 
 /**
- * @brief Disconnects from the parent matrix and forgets the collision parts.
+ * Disconnects from the collision parts.
  */
 void CollisionPartsConnector::clear() {
     MtxConnector::clear();
     mCollisionParts = nullptr;
 }
-
 }  // namespace al
