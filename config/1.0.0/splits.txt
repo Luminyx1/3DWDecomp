@@ -3549,7 +3549,7 @@ src/nw/atk/fnd/os/atkfnd_Time.win32.cpp: done
     .text   start:0x00577720 end:0x00577828
 src/nw/atk/fnd/os/atk_ChannelMixVolume.cpp:
     .text   start:0x00577830 end:0x005779D8
-src/nw/atk/fnd/os/atk_FinalMix.cpp:
+src/nw/atk/fnd/os/atk_FinalMix.cpp: done
     .text   start:0x005779E0 end:0x00577BB8
 src/nw/atk/fnd/os/atkfnd_WorkBufferAllocator.cpp: done
     .text   start:0x00577BC0 end:0x00577D04
