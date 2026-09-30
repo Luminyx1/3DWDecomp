@@ -19,10 +19,12 @@ void deleteReporters(sead::PtrArray<Reporter>& rReporters)
     if (!rReporters.data()) {
         return;
     }
+
     Reporter** end = rReporters.dataEnd();
     for (Reporter** it = rReporters.dataBegin(); it != end; ++it) {
         delete *it;
     }
+
     rReporters.freeBuffer();
 }
 
@@ -83,6 +85,7 @@ bool Manager::initialize(const InitializeArg& rArg)
             mReporterLists[1].reporters.pushBack(reporter);
         }
     }
+
     {
         auto* reporter = new (rArg.heap) Reporter(new (rArg.heap) PlayStyleObserver());
         if (reporter) {
@@ -91,6 +94,7 @@ bool Manager::initialize(const InitializeArg& rArg)
             mReporterLists[1].reporters.pushBack(reporter);
         }
     }
+
     mNetworkStatusObserver = new (rArg.heap) NetworkStatusObserver();
     {
         auto* reporter = new (rArg.heap) Reporter(mNetworkStatusObserver);
@@ -105,6 +109,7 @@ bool Manager::initialize(const InitializeArg& rArg)
     for (auto& reporter : mReporterLists[0].reporters) {
         reporter.initialize(rArg.heap);
     }
+
     for (auto& reporter : mReporterLists[1].reporters) {
         reporter.initialize(rArg.heap);
     }
@@ -114,6 +119,7 @@ bool Manager::initialize(const InitializeArg& rArg)
     } else {
         mFlags.setOff(EFlag::cSystemReportTag);
     }
+
     mFlags.setOn(EFlag::cInitialized);
     return true;
 }
@@ -131,6 +137,7 @@ bool Manager::startUp(const StartupArg& rArg)
     } else {
         mFlags.setOff(EFlag::cEnableSaveLoad);
     }
+
     if (rArg.isLogEnabled) {
         mFlags.setOn(EFlag::cEnableLog);
     } else {
@@ -181,6 +188,7 @@ bool Manager::requestLoadData()
     if (mSaveLoadState != cSaveLoadState_None) {
         return false;
     }
+
     mSaveLoadState = cSaveLoadState_Load;
     mSaveLoadType = 0;
     return true;
@@ -203,6 +211,7 @@ void Manager::loadData(u32 value0, u32 value1, u32 value2, u32 value3, u32* pTim
     if (mSaveLoadState != cSaveLoadState_Load) {
         return;
     }
+
     mSaveDataInfo.mValues[0].set(value0);
     mSaveDataInfo.mValues[1].set(value1);
     mSaveDataInfo.mValues[2].set(value2);
@@ -212,6 +221,7 @@ void Manager::loadData(u32 value0, u32 value1, u32 value2, u32 value3, u32* pTim
         mSaveDataInfo.mValues[9 + i].set(pTimes1[i]);
         mSaveDataInfo.mValues[14 + i].set(pTimes2[i]);
     }
+
     for (s32 i = 0; i < 4; i++) {
         mSaveDataInfo.mFloats[i].set(pFloats[i]);
     }
@@ -225,12 +235,14 @@ void Manager::setLoadFinish()
     if (mSaveLoadState != cSaveLoadState_Load) {
         return;
     }
+
     for (mSaveLoadType = 0; static_cast<s32>(mSaveLoadType) != ReporterType::size();
          mSaveLoadType = mSaveLoadType + 1) {
         for (auto& reporter : mReporterLists[mSaveLoadType].reporters) {
             reporter.load();
         }
     }
+
     mSaveLoadState = cSaveLoadState_Finish;
 }
 
@@ -251,26 +263,33 @@ void Manager::saveData(u32* pValue0, u32* pValue1, u32* pValue2, u32* pValue3, u
     if (mSaveDataInfo.mValues[0].isValid()) {
         *pValue0 = mSaveDataInfo.mValues[0].get();
     }
+
     if (mSaveDataInfo.mValues[1].isValid()) {
         *pValue1 = mSaveDataInfo.mValues[1].get();
     }
+
     if (mSaveDataInfo.mValues[2].isValid()) {
         *pValue2 = mSaveDataInfo.mValues[2].get();
     }
+
     if (mSaveDataInfo.mValues[3].isValid()) {
         *pValue3 = mSaveDataInfo.mValues[3].get();
     }
+
     for (s32 i = 0; i < 5; i++) {
         if (mSaveDataInfo.mValues[4 + i].isValid()) {
             pTimes0[i] = mSaveDataInfo.mValues[4 + i].get();
         }
+
         if (mSaveDataInfo.mValues[9 + i].isValid()) {
             pTimes1[i] = mSaveDataInfo.mValues[9 + i].get();
         }
+
         if (mSaveDataInfo.mValues[14 + i].isValid()) {
             pTimes2[i] = mSaveDataInfo.mValues[14 + i].get();
         }
     }
+
     for (s32 i = 0; i < 4; i++) {
         if (mSaveDataInfo.mFloats[i].isValid()) {
             pFloats[i] = mSaveDataInfo.mFloats[i].get();
@@ -307,12 +326,14 @@ bool Manager::requestSaveData()
     if (mSaveLoadState != cSaveLoadState_None) {
         return false;
     }
+
     for (mSaveLoadType = 0; static_cast<s32>(mSaveLoadType) != ReporterType::size();
          mSaveLoadType = mSaveLoadType + 1) {
         for (auto& reporter : mReporterLists[mSaveLoadType].reporters) {
             reporter.save(nullptr);
         }
     }
+
     mSaveLoadState = cSaveLoadState_Save;
     mSaveLoadType = 0;
     return true;
@@ -328,6 +349,7 @@ void Manager::update(const UpdateArg& rArg)
         if (mFlags.isOn(EFlag::cStartupRequested)) {
             updateBeginStartup_();
         }
+
         return;
     }
 
@@ -344,6 +366,7 @@ void Manager::update(const UpdateArg& rArg)
                                  sead::MessageQueue::BlockType::NonBlocking);
         mFlags.setOff(EFlag::cRequestImmediateTransmission);
     }
+
     mSendThread->sendMessage(SendThread::cMsgSave, sead::MessageQueue::BlockType::NonBlocking);
 }
 
@@ -371,6 +394,7 @@ void Manager::updateBeginStartup_()
                 (1u << EFlag::cStartupFinished),
             std::memory_order_relaxed)) {
         }
+
         break;
     }
     }
@@ -388,6 +412,7 @@ bool Manager::waitFinishSendingAsync_(s32 timeoutMs)
         mFlags.setOff(EFlag::cWaitFinishSendingAsync);
         return false;
     }
+
     return true;
 }
 
@@ -399,21 +424,26 @@ void Manager::updateFinishStartup_(const UpdateArg& rArg)
         for (auto& reporter : mReporterLists[0].reporters) {
             reporter.update(rArg);
         }
+
         sendDailyReport_(mReporterLists[0].type);
         if (mReporterLists[0].requestFlag.testAndClear(ReporterType::cSystem)) {
             for (auto& reporter : mReporterLists[0].reporters) {
                 reporter.report(mReporterLists[0].requestId);
             }
+
             requestSaveData();
         }
+
         for (auto& reporter : mReporterLists[1].reporters) {
             reporter.update(rArg);
         }
+
         sendDailyReport_(mReporterLists[1].type);
         if (mReporterLists[1].requestFlag.testAndClear(ReporterType::cSystem)) {
             for (auto& reporter : mReporterLists[1].reporters) {
                 reporter.report(mReporterLists[1].requestId);
             }
+
             requestSaveData();
         }
 
@@ -423,19 +453,24 @@ void Manager::updateFinishStartup_(const UpdateArg& rArg)
         for (auto& reporter : mReporterLists[0].reporters) {
             reporter.update(rArg);
         }
+
         if (mReporterLists[0].requestFlag.testAndClear(ReporterType::cSystem)) {
             for (auto& reporter : mReporterLists[0].reporters) {
                 reporter.report(mReporterLists[0].requestId);
             }
+
             requestSaveData();
         }
+
         for (auto& reporter : mReporterLists[1].reporters) {
             reporter.update(rArg);
         }
+
         if (mReporterLists[1].requestFlag.testAndClear(ReporterType::cSystem)) {
             for (auto& reporter : mReporterLists[1].reporters) {
                 reporter.report(mReporterLists[1].requestId);
             }
+
             requestSaveData();
         }
     }
@@ -453,6 +488,7 @@ void Manager::updateSaveLoad_()
         if (mFlags.isOn(EFlag::cEnableSaveLoad)) {
             mSaveLoadState = cSaveLoadState_Finish;
         }
+
         break;
     case cSaveLoadState_Save:
         updateSaveData_();
@@ -473,6 +509,7 @@ bool Manager::sendStartupReport_(ReporterType type)
     for (auto& reporter : mReporterLists[type].reporters) {
         reporter.report(StringId(Reporter::cStartupReportId));
     }
+
     return true;
 }
 
@@ -485,11 +522,13 @@ bool Manager::checkSendDailyReport_()
     if (!mSaveDataInfo.mValues[1].isValid()) {
         return false;
     }
+
     u32 lastTime = mSaveDataInfo.mValues[1].get();
     u32 nowTime = getCurrentDateTime();
     if (lastTime > nowTime) {
         return false;
     }
+
     return sead::DateSpan(nowTime - lastTime).getSpan() >= 24 * 60 * 60;
 }
 
@@ -610,6 +649,7 @@ bool Manager::requestWaitFinishSendingAsync(s32 timeoutMs)
     if (mFlags.isOn(EFlag::cWaitFinishSendingAsync)) {
         return false;
     }
+
     mFlags.setOn(EFlag::cWaitFinishSendingAsync);
     mWaitStartTime.setNow();
     return true;
@@ -624,6 +664,7 @@ bool Manager::isSending() const
     if (!mSendThread) {
         return false;
     }
+
     return mSendThread->isSending();
 }
 
@@ -636,6 +677,7 @@ bool Manager::isSendThread() const
     if (!mSendThread) {
         return false;
     }
+
     sead::Thread* thread = sead::ThreadMgr::instance()->getCurrentThread();
     return thread && thread->getId() == mSendThread->getId();
 }
@@ -653,17 +695,21 @@ bool Manager::waitFinishSending(s32 timeoutMs)
         if (!mSendThread->isSending()) {
             return true;
         }
+
         s64 elapsed = mWaitStartTime.diffToNow().toMilliSeconds();
         if (timeoutMs >= 0 && elapsed > timeoutMs) {
             mFlags.setOff(EFlag::cWaitFinishSending);
             return false;
         }
+
         if (mSendThread->getQueuedNum() <= 0) {
             mSendThread->sendMessage(SendThread::cMsgSave,
                                      sead::MessageQueue::BlockType::NonBlocking);
         }
+
         sead::Thread::sleep(sead::TickSpan(sead::TickSpan::getFrequency() / 2));
     }
+
     return true;
 }
 

@@ -102,6 +102,7 @@ protected:
     {
         return true;
     }
+
     virtual ESendResult saveInnerData_() { return ESendResult::cSuccess; }
 
     bool addSendDataNum_(s32 num);
@@ -120,6 +121,7 @@ protected:
                 return &rBuffer(i);
             }
         }
+
         return nullptr;
     }
 

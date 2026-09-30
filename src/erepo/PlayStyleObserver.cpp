@@ -30,6 +30,7 @@ void PlayStyleObserver::clearAllUseInfo_()
             mUseInfo[i][j].nonActiveTime = 0.0f;
         }
     }
+
     for (s32 i = 0; i < 3; i++) {
         for (s32 j = 0; j < 5; j++) {
             mSavedUseInfo[i][j].time = 0.0f;
@@ -79,6 +80,7 @@ void PlayStyleObserver::checkCurrentStyle_(const Manager::UpdateArg& rArg, bool 
                 mControllerStyle = EControllerStyle::Unknown;
                 break;
             }
+
             break;
         }
     }
@@ -111,6 +113,7 @@ void PlayStyleObserver::load()
     if (!manager) {
         return;
     }
+
     const SaveDataInfo& info = manager->getSaveDataInfo();
     for (s32 i = 0; i < 3; i++) {
         for (s32 j = 0; j < 5; j++) {
@@ -131,6 +134,7 @@ void PlayStyleObserver::save(SaveData* pData) const
     if (!manager) {
         return;
     }
+
     SaveDataInfo& info = manager->getSaveDataInfo();
     for (s32 i = 0; i < 3; i++) {
         for (s32 j = 0; j < 5; j++) {
@@ -201,6 +205,7 @@ bool PlayStyleObserver::report(const StringId& rId)
             }
         }
     }
+
     return data->requestSave();
 }
 

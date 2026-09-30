@@ -28,6 +28,7 @@ SendData* ObserverBase::createSendData_(const sead::FixedSafeString<31>& rEventI
     if (data && Manager::instance() && Manager::instance()->isFlagOn(Manager::EFlag::cEnableLog)) {
         data->addLog(sSendLogName, true);
     }
+
     return data;
 }
 
@@ -43,6 +44,7 @@ SendData* ObserverBase::createSendData_(const SendDataBase::CreateArg& rArg)
     if (data && Manager::instance() && Manager::instance()->isFlagOn(Manager::EFlag::cEnableLog)) {
         data->addLog(sSendLogName, true);
     }
+
     return data;
 }
 

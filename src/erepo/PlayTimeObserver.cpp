@@ -40,16 +40,20 @@ void PlayTimeObserver::load()
     if (!manager) {
         return;
     }
+
     SaveDataInfo info = manager->getSaveDataInfo();
     if (info.mValues[3].isValid()) {
         mSavedPlayTime = info.mValues[3].get();
     }
+
     if (info.mValues[0].isValid()) {
         mSavedActiveTime = info.mValues[0].get();
     }
+
     if (info.mValues[2].isValid()) {
         mSavedSleepTime = info.mValues[2].get();
     }
+
     for (s32 i = 0; i < cPlayerNumMax; i++) {
         mSavedPlayerNumTimes[i] = info.mFloats[i].isValid() ? info.mFloats[i].get() : 0.0f;
     }
@@ -65,6 +69,7 @@ void PlayTimeObserver::save(SaveData* pData) const
     if (!manager) {
         return;
     }
+
     SaveDataInfo& info = manager->getSaveDataInfo();
     info.mValues[3].set(static_cast<u32>(static_cast<f32>(mSavedPlayTime) + mPlayTime));
     info.mValues[0].set(mSavedActiveTime + mActiveTime);
@@ -93,10 +98,12 @@ void PlayTimeObserver::update(const Manager::UpdateArg& rArg)
                 mControllerActiveTimes[i] = 0;
                 continue;
             }
+
             if (controller->getTrigMask() != 0 || controller->getHoldMask() != 0) {
                 mControllerActiveTimes[i] = 30;
                 continue;
             }
+
             if (controller->getLeftStick().x != 0.0f || controller->getLeftStick().y != 0.0f ||
                 controller->getRightStick().x != 0.0f || controller->getRightStick().y != 0.0f) {
                 mControllerActiveTimes[i] = 30;
@@ -111,10 +118,12 @@ void PlayTimeObserver::update(const Manager::UpdateArg& rArg)
             activeNum++;
         }
     }
+
     const s32 index = activeNum - 1;
     if (static_cast<u32>(index) >= 4) {
         return;
     }
+
     mPlayerNumTimes[index] += rArg.deltaTime;
 }
 
@@ -129,6 +138,7 @@ bool PlayTimeObserver::sendActiveBeacon_()
     if (!data) {
         return false;
     }
+
     data->addData(sead::FixedSafeString<63>(sead::SafeString("IntervalTime")),
                   cBeaconIntervals[mBeaconIndex]);
     data->addData(sead::FixedSafeString<63>(sead::SafeString("UpdatedTime")),
@@ -157,10 +167,12 @@ bool PlayTimeObserver::report(const StringId& rId)
             data->addData(sead::FixedSafeString<63>(sead::SafeString("ActiveTotalTime")),
                           mActiveTime + mSavedActiveTime);
         }
+
         if (info.mValues[3].isValid()) {
             data->addData(sead::FixedSafeString<63>(sead::SafeString("UpdatedTotalTime")),
                           static_cast<u32>(mPlayTime + static_cast<f32>(mSavedPlayTime)));
         }
+
         if (info.mValues[2].isValid()) {
             data->addData(sead::FixedSafeString<63>(sead::SafeString("SleepTotalTime")),
                           static_cast<u32>(mSleepTime + mSavedSleepTime));
@@ -172,6 +184,7 @@ bool PlayTimeObserver::report(const StringId& rId)
                 key.appendWithSeadFormat("MultiPlayTime_%@", i + 1);
                 data->addData(key, static_cast<u32>(mPlayerNumTimes[i]));
             }
+
             if (mSavedPlayerNumTimes[i] > 0.0f) {
                 sead::FixedSafeString<63> key;
                 key.appendWithSeadFormat("MultiPlayTimeTotal_%@", i + 1);
@@ -179,6 +192,7 @@ bool PlayTimeObserver::report(const StringId& rId)
             }
         }
     }
+
     return data->requestSave();
 }
 

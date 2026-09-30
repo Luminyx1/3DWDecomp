@@ -39,6 +39,7 @@ private:
         if (!mBuffer.tryAllocBuffer(size, pHeap)) {
             return false;
         }
+
         mArray.SetBuffer(mBuffer.getBufferPtr(), size);
         return true;
     }

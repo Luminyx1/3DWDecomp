@@ -21,6 +21,7 @@ Array::~Array()
         for (auto* pStruct : mStructs) {
             delete pStruct;
         }
+
         mStructs.freeBuffer();
     }
 }
@@ -219,9 +220,11 @@ bool Array::constructStructBuffer(s32 num, s32 memberNum, sead::Heap* pHeap)
     if (!constructBuffer_(Struct::calcBufferSize(memberNum) * num, pHeap)) {
         return false;
     }
+
     if (!mStructs.tryAllocBuffer(num, pHeap)) {
         return false;
     }
+
     mStructs.fill(nullptr);
     return true;
 }
@@ -238,9 +241,11 @@ bool Array::constructStructBufferWithBufferSize(s32 num, s32 bufferSize, sead::H
     if (!constructBuffer_(bufferSize * num, pHeap)) {
         return false;
     }
+
     if (!mStructs.tryAllocBuffer(num, pHeap)) {
         return false;
     }
+
     mStructs.fill(nullptr);
     return true;
 }
@@ -256,12 +261,14 @@ Struct* Array::CreateStruct(s32 memberNum)
     if (!pStruct) {
         return nullptr;
     }
+
     for (s32 i = 0; i < mStructs.size(); i++) {
         if (!mStructs(i)) {
             mStructs(i) = pStruct;
             return pStruct;
         }
     }
+
     return nullptr;
 }
 
@@ -276,12 +283,14 @@ Struct* Array::CreateStructWithBufferSize(s32 bufferSize)
     if (!pStruct) {
         return nullptr;
     }
+
     for (s32 i = 0; i < mStructs.size(); i++) {
         if (!mStructs(i)) {
             mStructs(i) = pStruct;
             return pStruct;
         }
     }
+
     return nullptr;
 }
 

@@ -20,12 +20,14 @@ public:
         const u32 mask = 1u << bit;
         return (getRaw().fetch_or(mask, std::memory_order_relaxed) & mask) == 0;
     }
+
     /// Returns true if the bit was on before.
     bool setOff(Enum bit)
     {
         const u32 mask = 1u << bit;
         return (getRaw().fetch_and(~mask, std::memory_order_relaxed) & mask) != 0;
     }
+
     bool testAndClear(Enum bit) { return setOff(bit); }
 
     u32 getDirect() const { return mBits.load(); }

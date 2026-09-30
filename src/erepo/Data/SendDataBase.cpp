@@ -20,6 +20,7 @@ bool SendDataBase::addSendDataNum_(s32 num)
     if (Manager::instance()->isFlagOn(Manager::EFlag::cSystemReportTag)) {
         max++;
     }
+
     return mSendDataNum <= max;
 }
 
@@ -224,14 +225,17 @@ Struct* SendDataBase::CreateStruct(s32 memberNum)
     if (!pStruct) {
         return nullptr;
     }
+
     if (!pStruct->isBufferReady()) {
         delete pStruct;
         return nullptr;
     }
+
     if (Struct** pSlot = findEmptySlot_(mStructs)) {
         *pSlot = pStruct;
         return pStruct;
     }
+
     return nullptr;
 }
 
@@ -248,10 +252,12 @@ Struct* SendDataBase::CreateStructWithBufferSize(s32 bufferSize)
         sead::FormatFixedSafeString<128> message("構造体データが作成できませんでした");
         return nullptr;
     }
+
     if (Struct** pSlot = findEmptySlot_(mStructs)) {
         *pSlot = pStruct;
         return pStruct;
     }
+
     return nullptr;
 }
 
@@ -270,6 +276,7 @@ Array* SendDataBase::CreateStructArray(s32 num, s32 memberNum)
     } else {
         pArray = new (pHeap) Array();
     }
+
     if (!pArray) {
         sead::FormatFixedSafeString<128> message(
             "メモリ不足で構造体配列データが作成できませんでした[allocatable size : %u]",
@@ -281,6 +288,7 @@ Array* SendDataBase::CreateStructArray(s32 num, s32 memberNum)
             return pArray;
         }
     }
+
     return nullptr;
 }
 
@@ -299,6 +307,7 @@ Array* SendDataBase::CreateStructArrayWithBufferSize(s32 num, s32 bufferSize)
     } else {
         pArray = new (pHeap) Array();
     }
+
     if (!pArray) {
         sead::FormatFixedSafeString<128> message(
             "メモリ不足で構造体配列データが作成できませんでした[allocatable size : %u]",
@@ -310,6 +319,7 @@ Array* SendDataBase::CreateStructArrayWithBufferSize(s32 num, s32 bufferSize)
             return pArray;
         }
     }
+
     return nullptr;
 }
 
@@ -324,6 +334,7 @@ bool SendDataBase::save(ESendResult* pResult)
     if (pResult) {
         *pResult = result;
     }
+
     return result == ESendResult::cSuccess;
 }
 
@@ -343,6 +354,7 @@ SendDataBase::ESendResult SendDataBase::saveImpl_()
         addData(sead::FixedSafeString<63>(sead::SafeString("system_report_tag")),
                 mReporterId.getId());
     }
+
     result = saveInnerData_();
 
     const u32 savingMask = 1u << EFlag::cSaving;
@@ -351,6 +363,7 @@ SendDataBase::ESendResult SendDataBase::saveImpl_()
     while (!mFlags.getRaw().compare_exchange_weak(bits, (bits & ~(savingMask | savedMask)) | savedMask,
                                                   std::memory_order_relaxed)) {
     }
+
     return result;
 }
 
@@ -363,6 +376,7 @@ bool SendDataBase::requestSave()
     if (mFlags.setOn(EFlag::cRequestSave) && Manager::instance()->requestSend_(this)) {
         return true;
     }
+
     delete this;
     return false;
 }
@@ -403,22 +417,28 @@ void SendDataBase::initialize_(s32 dataNum, s32 arrayNum, s32 structNum, sead::H
     if (!pHeap) {
         pHeap = Manager::instance()->getHeap();
     }
+
     mUid = Manager::instance()->getUid();
     if (!initializeInnerData_(pHeap)) {
         return;
     }
+
     if (arrayNum > 0) {
         if (!mArrays.tryAllocBuffer(arrayNum, pHeap)) {
             return;
         }
+
         mArrays.fill(nullptr);
     }
+
     if (structNum > 0) {
         if (!mStructs.tryAllocBuffer(structNum, pHeap)) {
             return;
         }
+
         mStructs.fill(nullptr);
     }
+
     mFlags.setOn(EFlag::cInitialized);
 }
 
@@ -430,19 +450,24 @@ void SendDataBase::finalize_()
     if (!isInitialized()) {
         return;
     }
+
     finalizeInnerData_();
     if (mArrays.isBufferReady()) {
         for (auto* pArray : mArrays) {
             delete pArray;
         }
+
         mArrays.freeBuffer();
     }
+
     if (mStructs.isBufferReady()) {
         for (auto* pStruct : mStructs) {
             delete pStruct;
         }
+
         mStructs.freeBuffer();
     }
+
     mFlags.setOff(EFlag::cInitialized);
 }
 
@@ -455,6 +480,7 @@ void SendDataBase::setEventId_(const sead::FixedSafeString<31>& rEventId)
     if (!isInitialized()) {
         return;
     }
+
     sead::FixedSafeString<31> eventId(rEventId);
     eventId.replaceCharList("ABCDEFGHIJKLMNOPQRSTUVWXYZ", "abcdefghijklmnopqrstuvwxyz");
     if (trySetInnerDataEventId_(eventId)) {
@@ -473,12 +499,15 @@ SendDataBase::ESendResult SendDataBase::checkCanSave_() const
     if (!isInitialized()) {
         return ESendResult::cNotInitialized;
     }
+
     if (mFlags.isOn(EFlag::cSaved)) {
         return ESendResult::cBusy;
     }
+
     if (mFlags.isOn(EFlag::cSaving)) {
         return ESendResult::cBusy;
     }
+
     return ESendResult::cNone;
 }
 

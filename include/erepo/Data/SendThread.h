@@ -28,6 +28,7 @@ public:
     {
         initialize_(pHeap, queueSize);
     }
+
     ~SendThread() override { finalize_(); }
 
     bool initialize_(sead::Heap* pHeap, s32 queueSize);
@@ -64,11 +65,13 @@ private:
             if (static_cast<s32>(mWriteIndex.load() - index) < 1) {
                 return nullptr;
             }
+
             SendDataBase** pSlot = &mQueue.getBufferPtr()[(mQueue.size() - 1) & index];
             SendDataBase* pSendData = *pSlot;
             if (!pSendData) {
                 return nullptr;
             }
+
             *pSlot = nullptr;
             asm volatile("dmb ish" ::: "memory");
             mReadIndex = index + 1;

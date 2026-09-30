@@ -64,6 +64,7 @@ bool Reporter::report(const StringId& rId)
             return false;
         }
     }
+
     return mObserver->report(rId);
 }
 

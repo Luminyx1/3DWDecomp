@@ -53,6 +53,7 @@ SendData* SendData::CreateSendData(const sead::FixedSafeString<31>& rEventId, s3
     if (!pManager) {
         return nullptr;
     }
+
     sead::Heap* pHeap = pManager->getHeap();
     if (!pHeap) {
         return nullptr;
@@ -66,13 +67,16 @@ SendData* SendData::CreateSendData(const sead::FixedSafeString<31>& rEventId, s3
         pSendData = new (pHeap)
             SendData(pHeap, rEventId, dataNum, arrayNum, structNum, rReporterId, isNothrow);
     }
+
     if (!pSendData) {
         return nullptr;
     }
+
     if (!pSendData->isValid_()) {
         delete pSendData;
         return nullptr;
     }
+
     return pSendData;
 }
 
@@ -98,9 +102,11 @@ bool SendData::addData(const sead::FixedSafeString<63>& rKey, bool value)
     if (!isInitialized()) {
         return false;
     }
+
     if (!addSendDataNum_(1)) {
         return false;
     }
+
     addLog(rKey, value);
     return mReport->Add(rKey.cstr(), value).IsSuccess();
 }
@@ -116,9 +122,11 @@ bool SendData::addData(const sead::FixedSafeString<63>& rKey, u64 value)
     if (!isInitialized()) {
         return false;
     }
+
     if (!addSendDataNum_(1)) {
         return false;
     }
+
     addLog(rKey, value);
     nn::prepo::Any64BitId id = {value};
     return mReport->Add(rKey.cstr(), id).IsSuccess();
@@ -135,9 +143,11 @@ bool SendData::addData(const sead::FixedSafeString<63>& rKey, s64 value)
     if (!isInitialized()) {
         return false;
     }
+
     if (!addSendDataNum_(1)) {
         return false;
     }
+
     addLog(rKey, value);
     return mReport->Add(rKey.cstr(), value).IsSuccess();
 }
@@ -153,9 +163,11 @@ bool SendData::addData(const sead::FixedSafeString<63>& rKey, u32 value)
     if (!isInitialized()) {
         return false;
     }
+
     if (!addSendDataNum_(1)) {
         return false;
     }
+
     addLog(rKey, value);
     return mReport->Add(rKey.cstr(), static_cast<s64>(value)).IsSuccess();
 }
@@ -171,9 +183,11 @@ bool SendData::addData(const sead::FixedSafeString<63>& rKey, s32 value)
     if (!isInitialized()) {
         return false;
     }
+
     if (!addSendDataNum_(1)) {
         return false;
     }
+
     addLog(rKey, value);
     return mReport->Add(rKey.cstr(), static_cast<s64>(value)).IsSuccess();
 }
@@ -189,9 +203,11 @@ bool SendData::addData(const sead::FixedSafeString<63>& rKey, f32 value)
     if (!isInitialized()) {
         return false;
     }
+
     if (!addSendDataNum_(1)) {
         return false;
     }
+
     addLog(rKey, value);
     return mReport->Add(rKey.cstr(), value).IsSuccess();
 }
@@ -207,9 +223,11 @@ bool SendData::addData(const sead::FixedSafeString<63>& rKey, const char* value)
     if (!isInitialized()) {
         return false;
     }
+
     if (!addSendDataNum_(1)) {
         return false;
     }
+
     addLog(rKey, value);
     return mReport->Add(rKey.cstr(), value).IsSuccess();
 }
@@ -225,9 +243,11 @@ bool SendData::addData(const sead::FixedSafeString<63>& rKey, const sead::SafeSt
     if (!isInitialized()) {
         return false;
     }
+
     if (!addSendDataNum_(1)) {
         return false;
     }
+
     addLog(rKey, rValue);
     return mReport->Add(rKey.cstr(), rValue.cstr()).IsSuccess();
 }
@@ -244,9 +264,11 @@ bool SendData::addData(const sead::FixedSafeString<63>& rKey, const void* pValue
     if (!isInitialized()) {
         return false;
     }
+
     if (!addSendDataNum_(1)) {
         return false;
     }
+
     addLog(rKey, pValue, size);
     return mReport->Add(rKey.cstr(), pValue, size).IsSuccess();
 }
@@ -262,9 +284,11 @@ bool SendData::addData(const sead::FixedSafeString<63>& rKey, const Array& rValu
     if (!isInitialized()) {
         return false;
     }
+
     if (!addSendDataNum_(1)) {
         return false;
     }
+
     addLog(rKey, rValue);
     return mReport->Add(rKey.cstr(), rValue.getArray()).IsSuccess();
 }
@@ -280,9 +304,11 @@ bool SendData::addData(const sead::FixedSafeString<63>& rKey, const Struct& rVal
     if (!isInitialized()) {
         return false;
     }
+
     if (!addSendDataNum_(1)) {
         return false;
     }
+
     addLog(rKey, rValue);
     return mReport->Add(rKey.cstr(), rValue.getStruct()).IsSuccess();
 }
@@ -296,9 +322,11 @@ bool SendData::addInternetConnectionStatus()
     if (!isInitialized()) {
         return false;
     }
+
     if (!addSendDataNum_(3)) {
         return false;
     }
+
     return nn::prepo::AddInternetConnectionStatus(mReport, "NetworkInterface", "LinkLevel",
                                                   "FrequencyBand")
         .IsSuccess();
@@ -313,6 +341,7 @@ size_t SendData::GetSize() const
     if (!mReport) {
         return 0;
     }
+
     return mReport->GetSize();
 }
 
@@ -325,6 +354,7 @@ s32 SendData::GetCount() const
     if (!mReport) {
         return -1;
     }
+
     return mReport->GetCount();
 }
 
@@ -337,6 +367,7 @@ bool SendData::clear()
     if (!isInitialized()) {
         return false;
     }
+
     clearLog_();
     mReport->Clear();
     return true;
@@ -360,15 +391,19 @@ bool SendData::isValid_() const
     if (!isInitialized()) {
         return false;
     }
+
     if (!mReport) {
         return false;
     }
+
     if (!mReportBuffer.isBufferReady()) {
         return false;
     }
+
     if (mReportBuffer.size() < 1) {
         return false;
     }
+
     return mReport->GetSize() != 0;
 }
 
@@ -384,6 +419,7 @@ bool SendData::initializeInnerData_(sead::Heap* pHeap)
     } else {
         mReport = new (pHeap) nn::prepo::PlayReport();
     }
+
     if (!mReport) {
         sead::FormatFixedSafeString<128> message(
             "メモリ不足で内部送信データが作成できませんでした[allocatable size : %u]",
@@ -395,9 +431,11 @@ bool SendData::initializeInnerData_(sead::Heap* pHeap)
     if (size > 0x4000) {
         return false;
     }
+
     if (!mReportBuffer.tryAllocBuffer(size, pHeap)) {
         return false;
     }
+
     mReport->SetBuffer(mReportBuffer.getBufferPtr(), size);
     return true;
 }
@@ -411,6 +449,7 @@ void SendData::finalizeInnerData_()
         delete mReport;
         mReport = nullptr;
     }
+
     mReportBuffer.freeBuffer();
 }
 
@@ -436,6 +475,7 @@ SendDataBase::ESendResult SendData::saveInnerData_()
     } else {
         result = mReport->Save();
     }
+
     return result.IsSuccess() ? ESendResult::cSuccess : ESendResult::cFailure;
 }
 
@@ -454,18 +494,21 @@ Array* SendDataBase::CreateArray(s32 num)
     } else {
         pArray = new (pHeap) Array();
     }
+
     if (!pArray) {
         sead::FormatFixedSafeString<128> message(
             "メモリ不足で配列データが作成できませんでした[allocatable size : %u]",
             pHeap->getMaxAllocatableSize(sizeof(void*)));
         return nullptr;
     }
+
     if (pArray->constructBuffer<T>(num, pHeap)) {
         if (Array** pSlot = findEmptySlot_(mArrays)) {
             *pSlot = pArray;
             return pArray;
         }
     }
+
     delete pArray;
     return nullptr;
 }
@@ -486,18 +529,21 @@ Array* SendDataBase::CreateArray(s32 num, s32 length)
     } else {
         pArray = new (pHeap) Array();
     }
+
     if (!pArray) {
         sead::FormatFixedSafeString<128> message(
             "メモリ不足で配列データが作成できませんでした[allocatable size : %u]",
             pHeap->getMaxAllocatableSize(sizeof(void*)));
         return nullptr;
     }
+
     if (pArray->constructBuffer<T>(num, length, pHeap)) {
         if (Array** pSlot = findEmptySlot_(mArrays)) {
             *pSlot = pArray;
             return pArray;
         }
     }
+
     delete pArray;
     return nullptr;
 }

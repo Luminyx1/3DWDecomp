@@ -28,6 +28,7 @@ bool Struct::constructBuffer_(s32 size, sead::Heap* pHeap)
     if (!mBuffer.tryAllocBuffer(size, pHeap)) {
         return false;
     }
+
     mStruct.SetBuffer(mBuffer.getBufferPtr(), size);
     return true;
 }
@@ -57,13 +58,16 @@ Struct* Struct::createWithMemberNum(s32 memberNum, sead::Heap* pHeap, bool isNot
     } else {
         pStruct = new (pHeap) Struct();
     }
+
     if (!pStruct) {
         return nullptr;
     }
+
     if (!pStruct->constructBuffer_(calcBufferSize(memberNum), pHeap)) {
         delete pStruct;
         return nullptr;
     }
+
     return pStruct;
 }
 
@@ -82,13 +86,16 @@ Struct* Struct::createWithBufferSize(s32 bufferSize, sead::Heap* pHeap, bool isN
     } else {
         pStruct = new (pHeap) Struct();
     }
+
     if (!pStruct) {
         return nullptr;
     }
+
     if (!pStruct->constructBuffer_(bufferSize, pHeap)) {
         delete pStruct;
         return nullptr;
     }
+
     return pStruct;
 }
 

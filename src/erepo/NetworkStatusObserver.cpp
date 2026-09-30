@@ -36,6 +36,7 @@ bool NetworkStatusObserver::report(const StringId& rId)
             return true;
         }
     }
+
     return false;
 }
 

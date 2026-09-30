@@ -15,6 +15,7 @@ public:
             set(rOther.mValue);
         }
     }
+
     ~OptionalValue() { reset(); }
 
     bool isValid() const { return mIsValid; }
@@ -27,6 +28,7 @@ public:
             mIsValid = true;
         }
     }
+
     void reset()
     {
         if (mIsValid) {
@@ -55,6 +57,7 @@ public:
     {
         return (*reinterpret_cast<const u32*>(&mValue) & 0x7fffffff) <= 0x7f800000;
     }
+
     f32 get() const { return mValue; }
     void set(f32 value) { mValue = value; }
     void reset() { mValue = std::numeric_limits<f32>::quiet_NaN(); }
