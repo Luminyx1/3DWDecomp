@@ -6,14 +6,29 @@
 #pragma once
 
 #include <nn/types.h>
+#include <nn/font/font_Util.h>
+#include <nn/gfx/gfx_Types.h>
+#include <nn/util/util_IntrusiveList.h>
+namespace nn::font { template<class T> class TagProcessorBase; }
 
 namespace nn {
 namespace ui2d {
 class AnimTransform;
 class Pane;
+class DrawInfo;
+class AnimResource;
+class ResourceAccessor;
+class GroupAnimator;
+class GroupArrayAnimator;
+struct BuildResultInformation;
+struct BuildArgSet;
+struct BuildResSet;
+struct ResVectorGraphicsTextureList;
 
 class Layout {
 public:
+    struct PartsBuildDataSet;
+    NN_RUNTIME_TYPEINFO_BASE();
     Layout();
 
     virtual ~Layout();
@@ -24,9 +39,23 @@ public:
     virtual void UnbindAnimation(nn::ui2d::Pane*);
     virtual void UnbindAllAnimation();
 
+    virtual AnimTransform* BindAnimationAuto(nn::gfx::Device*, const AnimResource&);
     virtual void Animate();
     virtual void UpdateAnimFrame(f32 frame);
     virtual void AnimateAndUpdateAnimFrame(f32 frame);
+
+    virtual void Draw(DrawInfo&, nn::gfx::CommandBuffer&);
+    virtual void SetTagProcessor(nn::font::TagProcessorBase<u16>*);
+    virtual bool BuildImpl(BuildResultInformation*, nn::gfx::Device*, const void*, ResourceAccessor*, const BuildArgSet&, const PartsBuildDataSet*);
+    virtual bool BuildPartsImpl(BuildResultInformation*, nn::gfx::Device*, const void*, const PartsBuildDataSet*, BuildArgSet&, BuildResSet&, u32);
+    virtual Layout* DoCreatePartsLayout_(const char*, const PartsBuildDataSet&, const BuildArgSet&);
+    virtual GroupAnimator* DoCreateAndSetupGroupAnimator_(nn::gfx::Device*, const char*, const AnimResource&, bool);
+    virtual GroupArrayAnimator* DoCreateAndSetupGroupArrayAnimator_(nn::gfx::Device*, const char*, const AnimResource&, bool);
+    virtual Pane* BuildPaneObj(BuildResultInformation*, nn::gfx::Device*, u32, const void*, const void*, const BuildArgSet&);
+    virtual Layout* BuildPartsLayout(BuildResultInformation*, nn::gfx::Device*, const char*, const PartsBuildDataSet&, const BuildArgSet&);
+    virtual void CalculateImpl(DrawInfo&, bool);
+    virtual void BuildVectorGraphicsTextureList(BuildResultInformation*, nn::gfx::Device*, const ResVectorGraphicsTextureList*, const char*);
+    virtual void CalculateVectorGraphicsTexture(DrawInfo&);
 
     static void SetAllocator(void* (*)(size_t, size_t, void*), void (*)(void*, void*), void*);
     static void* AllocateMemory(size_t, size_t);
@@ -59,17 +88,15 @@ public:
         }
     }
 
-    u64 _10;
-    u64 _18;
-    u64 _20;
-    u64 _28;
-    u64 _30;
-
-    u64 _40;
-    u64 _48;
-    u64 _50;
-    u64 _58;
-    u64 _60;
+    nn::util::IntrusiveListNode mAnimTransformList;
+    Pane* mRootPane;
+    void* _20;
+    void* _28;
+    void* _30;
+    ResourceAccessor* mResourceAccessor;
+    void* _40;
+    nn::util::IntrusiveListNode _48;
+    void* _58;
 
     static void* g_pAllocateFunction;
     static void* g_pFreeFunction;

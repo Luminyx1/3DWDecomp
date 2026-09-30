@@ -30,6 +30,7 @@ protected:
 template <typename T>
 class MessageSet : public MessageSetBase {
 public:
+    struct TagInfo;
     MessageSet() = default;
     ~MessageSet() override = default;
 };

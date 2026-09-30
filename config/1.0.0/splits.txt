@@ -3613,7 +3613,7 @@ src/nw/gfx/detail/gfx_NvnHelper-os.horizon.cpp:
     .text   start:0x0058A370 end:0x0058A52C
 src/nw/gfx/detail/gfx_CommandBuffer-api.nvn.8.cpp:
     .text   start:0x0058A530 end:0x0058CAFC
-src/nw/gfx/detail/gfx_TextureInfo.cpp:
+src/nw/gfx/detail/gfx_TextureInfo.cpp: done
     .text   start:0x0058CB00 end:0x0058CC34
 src/nw/gfx/detail/gfx_State-api.nvn.8.cpp:
     .text   start:0x0058CC40 end:0x0058D928
@@ -3621,9 +3621,9 @@ src/nw/gfx/detail/gfx_StateInfo.cpp:
     .text   start:0x0058D930 end:0x0058DB20
 src/nw/gfx/detail/gfx_Buffer-api.nvn.8.cpp:
     .text   start:0x0058DB20 end:0x0058E308
-src/nw/gfx/detail/gfx_SamplerInfo.cpp:
+src/nw/gfx/detail/gfx_SamplerInfo.cpp: done
     .text   start:0x0058E310 end:0x0058E334
-src/nw/gfx/detail/gfx_MemoryPoolInfo.cpp:
+src/nw/gfx/detail/gfx_MemoryPoolInfo.cpp: done
     .text   start:0x0058E340 end:0x0058E34C
 src/nw/gfx/detail/gfx_Sampler-api.nvn.8.cpp:
     .text   start:0x0058E350 end:0x0058E568
@@ -3661,7 +3661,7 @@ src/nw/ui2d/ui2d_TouchOffCheckButton.cpp:
     .text   start:0x00592A50 end:0x00592C98
 src/nw/ui2d/ui2d_Animation.cpp:
     .text   start:0x00592CA0 end:0x0059653C
-src/nw/ui2d/ui2d_ControlCreator.cpp:
+src/nw/ui2d/ui2d_ControlCreator.cpp: done
     .text   start:0x00596540 end:0x005967D0
 src/nw/ui2d/ui2d_Layout.cpp:
     .text   start:0x005967D0 end:0x0059F830
@@ -3719,7 +3719,7 @@ src/nw/ui2d/ui2d_TraceGaugeControl.cpp:
     .text   start:0x005E0C10 end:0x005E1444
 src/nw/ui2d/ui2d_MultiArcResourceAccessorEx.cpp:
     .text   start:0x005E1450 end:0x005E22F4
-src/nw/ui2d/ui2d_ResourceAccessor.cpp:
+src/nw/ui2d/ui2d_ResourceAccessor.cpp: done
     .text   start:0x005E2300 end:0x005E2368
 src/nw/ui2d/ui2d_TextureContainer.cpp:
     .text   start:0x005E2370 end:0x005E253C

@@ -55,6 +55,7 @@ public:
     bool IsDowning() const;
 
 protected:
+    friend class ButtonGroup;
     nn::util::IntrusiveListNode mUpdateLink;
     u8 mState;
     u8 _39;

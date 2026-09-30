@@ -55,7 +55,7 @@ public:
     IntrusiveListNode* m_Next;
 };
 
-template <class T, IntrusiveListNode T::*Member>
+template <class T, IntrusiveListNode T::*Member, class Container = T, size_t ContainerSize = sizeof(Container)>
 class IntrusiveListMemberNodeTraits {
 public:
     static IntrusiveListNode& GetNode(T& rRef) { return rRef.*Member; }

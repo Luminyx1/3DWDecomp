@@ -12,10 +12,10 @@ public:
     SEAD_RTTI_BASE(BoxCursorNode);
     BoxCursorNode();
     virtual ~BoxCursorNode();
-    void initialize(AnimButton* pButton, Screen* pScreen);
+    virtual void initialize(AnimButton* pButton, Screen* pScreen);
     void eraseNodeFromRouteNodes(const BoxCursorNode* pNode);
-    bool isMovable(DrawTarget target) const;
-    bool isDecidable(DrawTarget target, bool requireDecidable) const;
+    virtual bool isMovable(DrawTarget target) const;
+    virtual bool isDecidable(DrawTarget target, bool requireDecidable) const;
     void getPosition(sead::Vector2f* pPosition) const;
     void setRouteNodeEach(Direction direction, BoxCursorNode* pNode);
     void clearRouteAll();
