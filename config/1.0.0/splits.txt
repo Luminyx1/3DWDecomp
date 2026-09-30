@@ -3397,7 +3397,7 @@ src/nw/atk/detail/atk_GroupFileReader.cpp:
     .text   start:0x00546980 end:0x00546C54
 src/nw/atk/detail/atk_WaveArchiveFileReader.cpp:
     .text   start:0x00546C60 end:0x00546FEC
-src/nw/atk/detail/atk_WaveArchiveFile.cpp:
+src/nw/atk/detail/atk_WaveArchiveFile.cpp: done
     .text   start:0x00546FF0 end:0x00547128
 src/nw/atk/atk_SoundArchive.cpp:
     .text   start:0x00547130 end:0x005482E8
@@ -3419,7 +3419,7 @@ src/nw/atk/detail/atk_Bank.cpp:
     .text   start:0x0054B2F0 end:0x0054B4E8
 src/nw/atk/detail/atk_WaveFileReader.cpp:
     .text   start:0x0054B4F0 end:0x0054B8C0
-src/nw/atk/detail/atk_WaveFile.cpp:
+src/nw/atk/detail/atk_WaveFile.cpp: done
     .text   start:0x0054B8C0 end:0x0054B9BC
 src/nw/atk/detail/strm/atk_StreamSoundPlayer.cpp:
     .text   start:0x0054B9C0 end:0x00551FDC
@@ -3447,11 +3447,11 @@ src/nw/atk/detail/atk_AdvancedWaveSoundPlayer.cpp:
     .text   start:0x00559390 end:0x0055A37C
 src/nw/atk/detail/atk_AdvancedWaveSoundFileReader.cpp:
     .text   start:0x0055A380 end:0x0055A5CC
-src/nw/atk/detail/atk_AdvancedWaveSoundFile.cpp:
+src/nw/atk/detail/atk_AdvancedWaveSoundFile.cpp: done
     .text   start:0x0055A5D0 end:0x0055A63C
 src/nw/atk/detail/thread/atk_SoundThread.cpp:
     .text   start:0x0055A640 end:0x0055BB84
-src/nw/atk/detail/thread/atk_Task.cpp:
+src/nw/atk/detail/thread/atk_Task.cpp: done
     .text   start:0x0055BB90 end:0x0055BBF4
 src/nw/atk/detail/thread/atk_TaskManager.cpp:
     .text   start:0x0055BC10 end:0x0055C464
@@ -3463,7 +3463,7 @@ src/nw/atk/detail/util/atk_CurveLfo.cpp:
     .text   start:0x0055CCC0 end:0x0055CE7C
 src/nw/atk/detail/util/atk_InstancePool.cpp:
     .text   start:0x0055CE80 end:0x0055D0A0
-src/nw/atk/detail/util/atk_MemoryFileStream.cpp:
+src/nw/atk/detail/util/atk_MemoryFileStream.cpp: done
     .text   start:0x0055D0A0 end:0x0055D2B8
 src/nw/atk/detail/util/atk_Util.cpp:
     .text   start:0x0055D2C0 end:0x0055DCF4

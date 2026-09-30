@@ -4621,3 +4621,6 @@
 0x710211F728 1 object _ZN4nerd12_GLOBAL__N_113sUseFastsqrteE
 0x71016E2A28 64 object _ZN4nerd12_GLOBAL__N_113cEstimateBaseE
 0x71016E2A68 64 object _ZN4nerd12_GLOBAL__N_114cEstimateSlopeE
+
+# ATK oscillator callbacks: five built-in curves and user slots 64-127.
+0x7102118348 1024 object _ZN2nn3atk6detail15g_CurveLfoTableE
