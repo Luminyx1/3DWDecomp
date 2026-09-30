@@ -7,18 +7,20 @@ class HitSensor;
 
 class SensorHitGroup {
 public:
-    SensorHitGroup(s32, const char*);
+    SensorHitGroup(s32 maxSensors, const char* pName);
 
-    void add(HitSensor*);
-    void remove(HitSensor*);
-    HitSensor* getSensor(s32) const;
+    void add(HitSensor* pSensor);
+    void remove(HitSensor* pSensor);
+    HitSensor* getSensor(s32 idx) const;
     void clear() const;
-    void executeHitCheckGroup(SensorHitGroup*);
-    void executeHitCheck(HitSensor*, HitSensor*);
+    void executeHitCheckGroup(SensorHitGroup* pOther);
+    void executeHitCheck(HitSensor* pA, HitSensor* pB);
     void executeHitCheckInSameGroup();
 
-    s32 mMaxSize;
-    s32 mCurSize;
+    s32 getSensorCount() const { return mSensorCount; }
+
+    s32 mMaxSensors;
+    s32 mSensorCount = 0;
     HitSensor** mSensors;
 };
 }  // namespace al
