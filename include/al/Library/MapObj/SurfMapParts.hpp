@@ -9,17 +9,17 @@ class CollisionPartsFilterActor;
 
 class SurfMapParts : public LiveActor {
 public:
-    SurfMapParts(const char*);
+    SurfMapParts(const char* pName);
 
-    void init(const ActorInitInfo&) override;
+    void init(const ActorInitInfo& rInfo) override;
 
     void exeWait();
 
-    CollisionPartsFilterActor* mCollisionPartsFilter = nullptr;  // _148
-    f32 mCheckOffset = 1000.0f;                                  // _150
-    sead::Quatf mStartQuat = sead::Quatf::unit;                  // _154
-    sead::Vector3f mStartTrans = sead::Vector3f::zero;           // _164
-    sead::Vector3f mUpDir = sead::Vector3f::ey;                  // _170
-    bool mIsEnableSlope = true;                                  // _17c
+    CollisionPartsFilterActor* mCollisionPartsFilter = nullptr;
+    f32 mCheckOffset = 1000.0f;
+    sead::Quatf mStartQuat = sead::Quatf::unit;
+    sead::Vector3f mStartTrans = sead::Vector3f::zero;
+    sead::Vector3f mUpDir = sead::Vector3f::ey;
+    bool mIsEnableSlope = true;
 };
 }  // namespace al
