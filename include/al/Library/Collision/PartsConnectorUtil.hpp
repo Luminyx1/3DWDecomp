@@ -1,6 +1,5 @@
 #pragma once
 
-#include <basis/seadTypes.h>
 #include <math/seadMatrix.h>
 #include <math/seadQuat.h>
 #include <math/seadVector.h>
@@ -14,35 +13,50 @@ class LiveActor;
 class MtxConnector;
 class Triangle;
 
-MtxConnector* createMtxConnector(const LiveActor*);
-MtxConnector* createMtxConnector(const LiveActor*, const sead::Quatf&);
-MtxConnector* tryCreateMtxConnector(const LiveActor*, const ActorInitInfo&);
-MtxConnector* tryCreateMtxConnector(const LiveActor*, const ActorInitInfo&, const sead::Quatf&);
-bool isMtxConnectorConnecting(const MtxConnector*);
-void attachMtxConnectorToCollision(MtxConnector*, const LiveActor*, const sead::Vector3f&,
-                                   const sead::Vector3f&);
-void attachMtxConnectorToCollision(MtxConnector*, const LiveActor*, bool);
-void attachMtxConnectorToCollision(MtxConnector*, const LiveActor*, f32, f32);
-void attachMtxConnectorToCollisionParts(MtxConnector*, const CollisionParts*);
-void connectPoseQT(LiveActor*, const MtxConnector*);
-void connectPoseQT(LiveActor*, const MtxConnector*, const sead::Quatf&, const sead::Vector3f&);
-void connectPoseTrans(LiveActor*, const MtxConnector*, const sead::Vector3f&);
-void connectPoseMtx(LiveActor*, const MtxConnector*, const sead::Matrix34f&);
-void calcConnectQT(sead::Quatf*, sead::Vector3f*, const MtxConnector*, const sead::Quatf&,
-                   const sead::Vector3f&);
-void calcConnectMtx(sead::Matrix34f*, const MtxConnector*, const sead::Matrix34f&);
-void calcConnectMtx(sead::Matrix34f*, const MtxConnector*, const sead::Quatf&, const sead::Vector3f&);
-void attachMtxConnectorToCollisionRT(MtxConnector*, const LiveActor*, bool, bool);
-void attachMtxConnectorToCollisionQT(MtxConnector*, const LiveActor*, bool, bool);
-void attachMtxConnectorToJoint(MtxConnector*, const LiveActor*, const char*);
-void attachMtxConnectorToActor(MtxConnector*, const LiveActor*, const sead::Matrix34f*);
-void attachMtxConnectorToMtxPtr(MtxConnector*, const sead::Matrix34f*);
-void attachToHitTriangle(CollisionPartsConnector*, const Triangle&, const sead::Matrix34f&);
-void attachToHitInfo(CollisionPartsConnector*, const HitInfo&, const sead::Matrix34f&);
-void attachToHitInfoNrmToMinusZ(CollisionPartsConnector*, const HitInfo&);
-void calcConnectInfo(const MtxConnector*, sead::Vector3f*, sead::Quatf*, sead::Vector3f*,
-                     const sead::Vector3f&, const sead::Vector3f&);
-void connectPoseQTUsingConnectInfo(LiveActor*, const MtxConnector*);
-const sead::Quatf& getConnectBaseQuat(const MtxConnector*);
-const sead::Vector3f& getConnectBaseTrans(const MtxConnector*);
+MtxConnector* createMtxConnector(const LiveActor* pActor);
+MtxConnector* createMtxConnector(const LiveActor* pActor, const sead::Quatf& rQuat);
+MtxConnector* tryCreateMtxConnector(const LiveActor* pActor, const ActorInitInfo& rInfo);
+MtxConnector* tryCreateMtxConnector(const LiveActor* pActor, const ActorInitInfo& rInfo,
+                                    const sead::Quatf& rQuat);
+bool isMtxConnectorConnecting(const MtxConnector* pConnector);
+void attachMtxConnectorToCollision(MtxConnector* pConnector, const LiveActor* pActor,
+                                   const sead::Vector3f& rPos, const sead::Vector3f& rDir);
+void attachMtxConnectorToCollision(MtxConnector* pConnector, const LiveActor* pActor,
+                                   bool isAttachToGround);
+void attachMtxConnectorToCollision(MtxConnector* pConnector, const LiveActor* pActor,
+                                   f32 checkOffsetUp, f32 checkDistance);
+void attachMtxConnectorToCollisionParts(MtxConnector* pConnector, const CollisionParts* pParts);
+void connectPoseQT(LiveActor* pActor, const MtxConnector* pConnector);
+void connectPoseQT(LiveActor* pActor, const MtxConnector* pConnector, const sead::Quatf& rQuat,
+                   const sead::Vector3f& rTrans);
+void connectPoseTrans(LiveActor* pActor, const MtxConnector* pConnector,
+                      const sead::Vector3f& rTrans);
+void connectPoseMtx(LiveActor* pActor, const MtxConnector* pConnector,
+                    const sead::Matrix34f& rMtx);
+void calcConnectQT(sead::Quatf* pQuat, sead::Vector3f* pTrans, const MtxConnector* pConnector,
+                   const sead::Quatf& rQuat, const sead::Vector3f& rTrans);
+void calcConnectMtx(sead::Matrix34f* pMtx, const MtxConnector* pConnector,
+                    const sead::Matrix34f& rMtx);
+void calcConnectMtx(sead::Matrix34f* pMtx, const MtxConnector* pConnector,
+                    const sead::Quatf& rQuat, const sead::Vector3f& rTrans);
+void attachMtxConnectorToCollisionRT(MtxConnector* pConnector, const LiveActor* pActor,
+                                     bool isFacingUp, bool isUseHitPos);
+void attachMtxConnectorToCollisionQT(MtxConnector* pConnector, const LiveActor* pActor,
+                                     bool isFacingUp, bool isUseHitPos);
+void attachMtxConnectorToJoint(MtxConnector* pConnector, const LiveActor* pActor,
+                               const char* pJointName);
+void attachMtxConnectorToActor(MtxConnector* pConnector, const LiveActor* pActor,
+                               const sead::Matrix34f* pMtx);
+void attachMtxConnectorToMtxPtr(MtxConnector* pConnector, const sead::Matrix34f* pMtx);
+void attachToHitTriangle(CollisionPartsConnector* pConnector, const Triangle& rTriangle,
+                         const sead::Matrix34f& rMtx);
+void attachToHitInfo(CollisionPartsConnector* pConnector, const HitInfo& rHitInfo,
+                     const sead::Matrix34f& rMtx);
+void attachToHitInfoNrmToMinusZ(CollisionPartsConnector* pConnector, const HitInfo& rHitInfo);
+void calcConnectInfo(const MtxConnector* pConnector, sead::Vector3f* pTrans, sead::Quatf* pQuat,
+                     sead::Vector3f* pScale, const sead::Vector3f& rOffsetTrans,
+                     const sead::Vector3f& rOffsetRotate);
+void connectPoseQTUsingConnectInfo(LiveActor* pActor, const MtxConnector* pConnector);
+const sead::Quatf& getConnectBaseQuat(const MtxConnector* pConnector);
+const sead::Vector3f& getConnectBaseTrans(const MtxConnector* pConnector);
 }  // namespace al
