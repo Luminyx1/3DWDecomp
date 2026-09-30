@@ -1,31 +1,35 @@
 #pragma once
 
 #include <basis/seadTypes.h>
+#include <gfx/seadCamera.h>
+#include <math/seadMatrix.h>
 
 namespace al {
 class CameraViewInfo;
+class Projection;
 
-/// Holds the camera views of a scene.
 class SceneCameraInfo {
 public:
-    SceneCameraInfo(s32 viewNumMax);
+    SceneCameraInfo(s32 viewNum);
 
     void initViewInfo(CameraViewInfo* pViewInfo);
     const char* getViewName(s32 index) const;
 
     s32 getViewNumMax() const { return mViewNumMax; }
+
     CameraViewInfo* getViewAt(s32 index) const { return mViewArray[index]; }
 
-    void* _0 = nullptr;                   // _0
-    void* _8 = nullptr;                   // _8
-    void* _10 = nullptr;                  // _10
-    void* _18 = nullptr;                  // _18
-    void* _20 = nullptr;                  // _20
-    void* _28 = nullptr;                  // _28
-    void* _30 = nullptr;                  // _30
-    void* _38 = nullptr;                  // _38
-    void* _40 = nullptr;                  // _40
-    s32 mViewNumMax;                      // _48
-    CameraViewInfo** mViewArray;          // _50
+    const sead::Matrix34f* mViewMtx = nullptr;
+    void* _8 = nullptr;
+    void* _10 = nullptr;
+    void* _18 = nullptr;
+    sead::LookAtCamera* mLookAtCamera = nullptr;
+    void* _28 = nullptr;
+    sead::Projection* mProjection = nullptr;
+    void* _38 = nullptr;
+    void* _40 = nullptr;
+    s32 mViewNumMax;
+    CameraViewInfo** mViewArray;
 };
+
 }  // namespace al
