@@ -3541,9 +3541,9 @@ src/nw/atk/fnd/io/atkfnd_FileStreamImpl.win32.cpp: done
     .text   start:0x00575EA0 end:0x005765F0
 src/nw/atk/fnd/io/atkfnd_StreamCache.cpp:
     .text   start:0x005765F0 end:0x00577304
-src/nw/atk/fnd/os/atkfnd_Thread.cpp:
+src/nw/atk/fnd/os/atkfnd_Thread.cpp: done
     .text   start:0x00577310 end:0x005775B4
-src/nw/atk/fnd/os/atkfnd_Thread.win32.cpp:
+src/nw/atk/fnd/os/atkfnd_Thread.win32.cpp: done
     .text   start:0x005775C0 end:0x00577718
 src/nw/atk/fnd/os/atkfnd_Time.win32.cpp: done
     .text   start:0x00577720 end:0x00577828
