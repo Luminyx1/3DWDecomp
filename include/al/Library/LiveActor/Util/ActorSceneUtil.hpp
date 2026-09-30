@@ -1,18 +1,20 @@
 #pragma once
 
+#include <basis/seadTypes.h>
+
 namespace al {
 class LiveActor;
 
-void stopScene(const LiveActor* pActor, int stopFrames, int delayFrames, bool flag8, bool flag9);
-bool isStopScene(const LiveActor* pActor);
-void requestCaptureScreenCover(const LiveActor* pActor, int coverFrames);
-void requestCaptureScreenSceneCover(const LiveActor* pActor);
-void resetRequestCaptureScreenSceneCover(const LiveActor* pActor);
-bool requestStartDemo(const LiveActor* pActor, const char* pDemoName);
-void requestEndDemo(const LiveActor* pActor, const char* pDemoName);
-void addDemoActor(LiveActor* pActor);
-void setDisasterMode(LiveActor* pActor, bool isDisaster);
-bool isDisasterMode(LiveActor* pActor);
-void stopAllPadRumble(LiveActor* pActor);
+void stopScene(const LiveActor*, s32, s32, bool, bool);
+bool isStopScene(const LiveActor*);
+void requestCaptureScreenCover(const LiveActor*, s32);
+void requestCaptureScreenSceneCover(const LiveActor*);
+void resetRequestCaptureScreenSceneCover(const LiveActor*);
+bool requestStartDemo(const LiveActor*, const char*);
+void requestEndDemo(const LiveActor*, const char*);
+void addDemoActor(LiveActor*);
+void setDisasterMode(LiveActor*, bool);
+bool isDisasterMode(LiveActor*);
+void stopAllPadRumble(LiveActor*);
 bool isSingleMode(const LiveActor*);
 }  // namespace al
