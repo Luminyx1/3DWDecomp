@@ -1,10 +1,8 @@
 #include "Library/Connector/MtxConnector.hpp"
 
 namespace al {
-
 /**
- * @brief Constructs an unconnected connector with an identity base pose.
+ * Constructs an unconnected connector.
  */
 MtxConnector::MtxConnector() = default;
-
 }  // namespace al

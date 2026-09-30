@@ -10,33 +10,35 @@ class LiveActor;
 class MtxConnector {
 public:
     MtxConnector();
-    MtxConnector(const sead::Quatf&, const sead::Vector3f&);
+    MtxConnector(const sead::Quatf& rQuat, const sead::Vector3f& rTrans);
 
     virtual ~MtxConnector() {}
     virtual bool isConnecting() const;
     virtual void clear();
 
-    void init(const sead::Matrix34f*, const sead::Matrix34f&);
-    void init(const sead::Matrix34f*);
-
-    void multVec(sead::Vector3f*, const sead::Vector3f&) const;
-    void multTrans(sead::Vector3f*, const sead::Vector3f&) const;
-    void multMtx(sead::Matrix34f*, const sead::Matrix34f&) const;
-    void multQT(sead::Quatf*, sead::Vector3f*) const;
-    void multQT(sead::Quatf*, sead::Vector3f*, const sead::Quatf&, const sead::Vector3f&) const;
+    void init(const sead::Matrix34f* pParentMtx, const sead::Matrix34f& rMtx);
+    void init(const sead::Matrix34f* pParentMtx);
+    void multVec(sead::Vector3f* pOut, const sead::Vector3f& rVec) const;
+    void multTrans(sead::Vector3f* pOut, const sead::Vector3f& rTrans) const;
+    void multMtx(sead::Matrix34f* pOut, const sead::Matrix34f& rMtx) const;
+    void multQT(sead::Quatf* pQuat, sead::Vector3f* pTrans) const;
+    void multQT(sead::Quatf* pQuat, sead::Vector3f* pTrans, const sead::Quatf& rQuat,
+                const sead::Vector3f& rTrans) const;
     const sead::Quatf& getBaseQuat() const;
     const sead::Vector3f& getBaseTrans() const;
-    void setBaseQuatTrans(const sead::Quatf&, const sead::Vector3f&);
-    void calcConnectInfo(sead::Vector3f*, sead::Quatf*, sead::Vector3f*, const sead::Vector3f&,
-                         const sead::Vector3f&) const;
-    void calcMtxWithOffset(sead::Matrix34f*, const sead::Vector3f&, const sead::Vector3f&) const;
-    bool tryGetParentTrans(sead::Vector3f*) const;
+    void setBaseQuatTrans(const sead::Quatf& rQuat, const sead::Vector3f& rTrans);
+    void calcConnectInfo(sead::Vector3f* pTrans, sead::Quatf* pQuat, sead::Vector3f* pScale,
+                         const sead::Vector3f& rOffsetTrans,
+                         const sead::Vector3f& rOffsetRotate) const;
+    void calcMtxWithOffset(sead::Matrix34f* pOut, const sead::Vector3f& rOffsetTrans,
+                           const sead::Vector3f& rOffsetRotate) const;
+    bool tryGetParentTrans(sead::Vector3f* pTrans) const;
 
 private:
-    sead::Matrix34f mMtx = sead::Matrix34f::ident;       // _8
-    const sead::Matrix34f* mParentMtx = nullptr;         // _38
-    sead::Quatf mBaseQuat = sead::Quatf::unit;           // _40
-    sead::Vector3f mBaseTrans = sead::Vector3f::zero;    // _50
+    sead::Matrix34f mMtx = sead::Matrix34f::ident;
+    const sead::Matrix34f* mParentMtx = nullptr;
+    sead::Quatf mBaseQuat = sead::Quatf::unit;
+    sead::Vector3f mBaseTrans = sead::Vector3f::zero;
 };
 
 static_assert(sizeof(MtxConnector) == 0x60);
