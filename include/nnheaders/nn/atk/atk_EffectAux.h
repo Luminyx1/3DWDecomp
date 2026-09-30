@@ -2,6 +2,7 @@
 
 #include <nn/atk/atk_Global.h>
 #include <nn/audio.h>
+#include <atomic>
 #include <nn/util/util_IntrusiveList.h>
 
 namespace nn::atk {
@@ -26,6 +27,13 @@ public:
     virtual void Finalize();
     virtual void OnChangeOutputMode();
 
+    struct BufferSet { void* send; void* receive; s32* read; };
+    void ResetChannelIndex();
+    size_t GetRequiredMemSize(const audio::AudioRendererParameter& parameter) const;
+    void SplitEffectBuffer(BufferSet* output, void* buffer, size_t size);
+    bool SetChannelIndex(const ChannelIndex* indices, int count);
+    void GetChannelIndex(ChannelIndex* output, int count) const;
+    bool IsClearable();
     bool SetChannelCount(int channelCount);
     int GetChannelCount() const;
     bool SetAudioFrameCount(int audioFrameCount);
@@ -46,8 +54,8 @@ public:
     util::IntrusiveListNode m_AuxLinkNode;
 
 private:
-    void* m_AuxType;
-    u64 m_AudioRendererUpdateCountWhenAddedAux;
+    audio::AuxType m_AuxType;
+    std::atomic<u64> m_AudioRendererUpdateCountWhenAddedAux;
     int m_AudioFrameCount;
     int m_ChannelCount;
     bool m_IsActive;

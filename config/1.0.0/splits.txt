@@ -3533,7 +3533,7 @@ src/nw/atk/detail/wsd/atk_WaveSoundRuntime.cpp:
     .text   start:0x00573A20 end:0x00574D20
 src/nw/atk/detail/wsd/atk_WaveSound.cpp:
     .text   start:0x00574D20 end:0x00575484
-src/nw/atk/effect/atk_EffectAux.cpp:
+src/nw/atk/effect/atk_EffectAux.cpp: done
     .text   start:0x00575490 end:0x00575C08
 src/nw/atk/fnd/io/atkfnd_FileStreamImpl.cpp: done
     .text   start:0x00575C10 end:0x00575EA0

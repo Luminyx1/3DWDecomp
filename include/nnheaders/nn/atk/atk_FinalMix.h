@@ -10,7 +10,7 @@ class EffectBase;
 class EffectAux;
 class OutputReceiver {
 public:
-    enum ReceiverType { ReceiverType_FinalMix = 1 };
+    enum ReceiverType { ReceiverType_SubMix = 0, ReceiverType_FinalMix = 1 };
     virtual ReceiverType GetReceiverType() const = 0;
     virtual int GetChannelCount() const = 0;
     virtual int GetBusCount() const = 0;
@@ -46,6 +46,7 @@ protected:
 };
 class FinalMix : public OutputMixer {
 public:
+    audio::FinalMixType* GetFinalMix() { return &mFinalMix; }
     static size_t GetRequiredMemorySize(bool effectsEnabled);
     bool Initialize(audio::AudioRendererConfig* config, int channelCount, bool effectsEnabled,
                     void* buffer, size_t bufferSize);

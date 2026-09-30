@@ -199,7 +199,7 @@ void RemoveAux(nn::audio::AudioRendererConfig* config, nn::audio::AuxType* aux,
                nn::audio::SubMixType* mix);
 void SetAuxEnabled(nn::audio::AuxType* aux, bool enable);
 void SetAuxInputOutput(nn::audio::AuxType* aux, s8 const* input, s8 const* output, s32 count);
-bool IsAuxRemovable(nn::audio::AuxType* aux);
+bool IsAuxRemovable(nn::audio::AuxType const* aux);
 s32 GetAuxSampleCount(nn::audio::AuxType const* aux);
 s32 GetAuxSampleRate(nn::audio::AuxType const* aux);
 s32 ReadAuxSendBuffer(nn::audio::AuxType* aux, s32* buffer, s32 count);
