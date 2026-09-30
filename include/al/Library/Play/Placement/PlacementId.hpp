@@ -8,13 +8,12 @@ struct PlacementInfo;
 class PlacementId {
 public:
     PlacementId();
-    PlacementId(const char*, const char*, const char*, const char*);
+    PlacementId(const char* pId, const char* pLayerConfigName, const char* pUnitConfigName,
+                const char* pZoneId);
 
-    bool init(const PlacementInfo&);
-    bool isEqual(const PlacementId&) const;
-    static bool isEqual(const PlacementId&, const PlacementId&);
-
-    bool isValid() const { return mPlacementID != nullptr; }
+    bool init(const PlacementInfo& rInfo);
+    bool isEqual(const PlacementId& rOther) const;
+    static bool isEqual(const PlacementId& rId, const PlacementId& rOther);
 
     const char* mPlacementID = nullptr;
     const char* mLayerConfigName = nullptr;
