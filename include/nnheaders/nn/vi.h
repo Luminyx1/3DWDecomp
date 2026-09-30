@@ -35,7 +35,6 @@ struct DisplayInfo {
     s64 maxHeight;
 };
 
-// Needs to be >128 bits, nnsdk uses X8 (indirect result register)
 struct IDisplayService {
     uintptr_t servicePtr;
     uintptr_t _x8[5];

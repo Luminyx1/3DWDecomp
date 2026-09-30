@@ -35,7 +35,7 @@ struct BsdBufferConfig {
 };
 
 struct Config {
-    int unkInt1 = 2;  // 0x0 (value is 2 in SMO sdk, 8 in sv. could be BsdBufferConfig's version)
+    int unkInt1 = 2;
     bool unkBool1 = false;         // 0x4
     bool isUseBsdS = false;        // 0x5
     void* pool;                    // 0x8

@@ -10,12 +10,10 @@
 __pycache__/
 *.pyc
 
-# toolchain / SDK drops (large, machine-specific, proprietary)
 /toolchain/
 tools/nnsdk/
 tools/bin/
 
-# Local Nintendo SDK documentation: compiler settings reference only; never commit
 /docs/
 /tools/nnsdk
 

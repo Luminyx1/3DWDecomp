@@ -318,7 +318,6 @@ typedef struct GLSLCincludeInfo_rec {
 } GLSLCincludeInfo;
 
 typedef struct GLSLCspecializationBatch_rec {
-    // todo: reverse from nnSdk, type never used
 } GLSLCspecializationBatch;
 
 typedef struct GLSLCoptionFlags_rec {
@@ -365,7 +364,6 @@ typedef struct GLSLCcompilationStatus_rec {
 } GLSLCcompilationStatus;
 
 typedef struct GLSLCspirvSpecializationInfo_rec {
-    // todo: reverse from nnSdk, type never used
 } GLSLCspirvSpecializationInfo;
 
 typedef struct GLSLCinput_rec {

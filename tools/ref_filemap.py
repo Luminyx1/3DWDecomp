@@ -39,7 +39,7 @@ SRC = re.compile(rb"^[^\0]{0,300}?\.(?:cpp|c|cc)\0")
 
 def normalize(path: str) -> str | None:
     """Library-relative path: .../Lib/sead/engine/library/modules/src/container/seadPtrArray.cpp
-    -> sead/container/seadPtrArray.cpp; NintendoSDK paths -> NintendoSDK/...; game code ->
+    -> sead/container/seadPtrArray.cpp; game code ->
     None (a different game's files are no use)."""
     p = path.replace("\\", "/")
     if "/" not in p:

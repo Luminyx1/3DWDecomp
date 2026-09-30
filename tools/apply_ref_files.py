@@ -9,7 +9,6 @@ function whose mangled name appears in a debug build gets that build's file:
 
   sead/packages/agl/src/utility/aglX.cpp   -> folder agl/utility, object aglX.o
   sead/container/seadPtrArray.cpp          -> folder sead/container, object seadPtrArray.o
-  NintendoSDK/Sources/Libraries/atk/detail/atk_X.cpp -> NintendoWare/atk/detail, atk_X.o
 
 Functions that no debug build has stay in the current object.  A new object
 starts only when at least two of the next few known functions agree, so a

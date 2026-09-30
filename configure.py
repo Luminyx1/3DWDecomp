@@ -16,7 +16,7 @@ objdiff diffs the two objects.  A unit whose source file does not exist yet is
 still carved (so it counts toward progress as 0%) but has no compile step.  A
 unit marked `done` in splits.txt is one whose compiled object matches.
 
-The compiler is the SDK's Clang for NX (Windows).  On Windows it runs directly;
+The compiler is Clang for NX (Windows).  On Windows it runs directly;
 anywhere else it runs under wine through tools/nxcc.py (set $WINE to override
 the wine binary).
 """
@@ -147,7 +147,7 @@ def ninja_escape(p: str) -> str:
 
 
 def compiler_cmd(path: str) -> str:
-    # tools/nxcc.py runs the SDK compiler (under wine when not on Windows) and
+    # tools/nxcc.py runs the compiler (under wine when not on Windows) and
     # post-processes the object; see its docstring
     exe = (ROOT / path).resolve().as_posix()
     return f"{PY} tools/nxcc.py {ninja_escape(exe)}"

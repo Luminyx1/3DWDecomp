@@ -40,7 +40,7 @@ public:
 #else
     static_assert(sizeof(CreateArg) == 0x40);
 #endif
-#endif  // NNSDK
+#endif
 
     struct LoadArg
     {
@@ -65,7 +65,7 @@ public:
 #else
     static_assert(sizeof(LoadArg) == 0x58);
 #endif
-#endif  // NNSDK
+#endif
 
 public:
     ResourceMgr();

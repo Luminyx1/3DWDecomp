@@ -8,17 +8,8 @@
   },
 
   "$flags_note": [
-    "From the NintendoSDK manual, docs/nnsdk/.../Page_170694349.html:",
-    "'Build Procedure: Creating the Object File'.",
-    "Required: -std=gnu++14 -fno-common -fno-short-enums -ffunction-sections",
-    "-fdata-sections -fPIC.  64-bit adds -mcpu=cortex-a57+fp+simd+crypto+crc.",
-    "Retail builds: -O3 -fno-omit-frame-pointer, -DNN_SDK_BUILD_RELEASE.",
-    "Prohibited: -fshort-wchar, -fpack-struct.  The SDK default is gnu++14; we use gnu++17",
-    "because the sead/al/nn community headers need it (no codegen difference seen so far).",
     "-mno-implicit-float: no SIMD registers for integer/pointer data. Matches LMSi_MemCopy (no",
     "loop vectorization) and BgmStopObj's ctor/Functor copies (GPR ldp/stp, no SLP q-regs).",
-    "(The SDK project settings also say <Vectorization>false</Vectorization>; -fno-vectorize",
-    "alone is not enough, and in clang 8 it must come after -O3 to take effect.)",
     "-fno-strict-aliasing (C, LMS): the game reloads through pointers after every store.",
     "-fno-rtti: only NintendoWare has typeinfo in the binary; game/al/sead do not.",
     "No -ffunction-sections/-fdata-sections: objects get one .text/.data/... section, like the",
@@ -50,7 +41,7 @@
     "include/al     ActionLibrary (\"Library/...\", \"Project/...\")",
     "include/sead   sead (<heap/seadHeap.h>, \"lms/lms.h\")",
     "include/agl, include/eui",
-    "include/nnheaders  community NintendoSDK headers (open-ead/3DWCommunity nnheaders)",
+    "include/nnheaders  community headers (open-ead/3DWCommunity nnheaders)",
     "Headers under al/sead/agl/eui/nnheaders/Game started from the 3dcomp project."
   ],
   "include_dirs": ["include", "include/Game", "include/al", "include/sead", "include/agl", "include/eui"],

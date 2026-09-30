@@ -14,7 +14,6 @@ struct ResBoneData {
     nn::util::BinTPtr<nn::gfx::ResUserData> pUserDataArray;
     nn::util::BinTPtr<nn::util::ResDic> pUserDataDic;
 #ifndef UKING_NX_V150
-    // This array is present in Pokémon Sword and Shield's version of nnSdk but not in BotW 1.5.0.
     uint8_t reserved[16];
 #endif
     uint16_t index;

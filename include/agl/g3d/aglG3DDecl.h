@@ -1,6 +1,5 @@
 #pragma once
 
-// Declarations of the parts of nn::g3d used by agl's g3d glue (NintendoSDK g3d for gfx/NVN).
 // Include this instead of <nn/g3d/g3d_ResFile.h> & co.
 
 #include <nn/gfx/gfx_Buffer.h>

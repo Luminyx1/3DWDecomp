@@ -281,7 +281,7 @@ bool Atomic<T>::setBitOff(unsigned int bit)
 #endif
     return (old & (1 << bit)) != 0;
 }
-#else  // NNSDK
+#else
 #error "Unknown platform"
 #endif
 }  // namespace sead

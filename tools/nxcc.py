@@ -3,7 +3,7 @@
 
     python tools/nxcc.py <path/to/clang.exe> <clang args...>
 
-* On Windows the SDK's Clang for NX runs directly; anywhere else it runs under
+* On Windows Clang for NX runs directly; anywhere else it runs under
   wine ($WINE, default `wine`; keep `wineserver -p` running to avoid its ~1s
   startup per compile).  Under wine the -MF depfile comes out with Windows
   paths (`Z:\\home\\...`, `include\\foo.h`); they are rewritten to POSIX so
