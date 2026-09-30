@@ -2,55 +2,54 @@
 
 namespace al {
 /**
- * @brief Constructs an empty sound item entry.
+ * Constructs an empty sound item entry.
  */
 SoundItemEntry::SoundItemEntry() = default;
 
 /**
- * @brief Loads the requested sound item through its resource loader and signals completion.
+ * Loads the sound item and signals completion.
  */
 void SoundItemEntry::load() {
-    mIsLoadSuccess = mResourceLoader->tryLoad(mItemId, _BC);
+    mIsLoadSuccess = mResourceLoader->tryLoad(mItemId, _bc);
     sendMessageDone();
 }
 
 /**
- * @brief Sets up the entry for a load request and marks it as requested.
- * @param itemId The id of the sound item to load.
- * @param param The secondary parameter passed to the resource loader.
- * @param pResourceLoader The loader used to load the sound item.
+ * Sets up the sound item load request.
+ * @param itemId Sound item id.
+ * @param unk Unknown.
+ * @param pLoader Audio resource loader.
  */
-void SoundItemEntry::setLoadRequestInfo(u32 itemId, u32 param,
-                                        IAudioResourceLoader* pResourceLoader) {
+void SoundItemEntry::setLoadRequestInfo(u32 itemId, u32 unk, IAudioResourceLoader* pLoader) {
     mItemId = itemId;
-    _BC = param;
-    mResourceLoader = pResourceLoader;
+    _bc = unk;
+    mResourceLoader = pLoader;
     setLoadStateRequested();
 }
 
 /**
- * @brief Checks whether the last load succeeded.
- * @return True if the sound item was loaded successfully.
+ * Checks whether the load succeeded.
+ * @return True on success.
  */
 bool SoundItemEntry::isLoadSuccess() const {
     return mIsLoadSuccess;
 }
 
 /**
- * @brief Gets the id of the sound item held by this entry.
- * @return The sound item id.
+ * Gets the sound item id.
+ * @return The id.
  */
 u32 SoundItemEntry::getSoundItemId() const {
     return mItemId;
 }
 
 /**
- * @brief Resets the entry to its empty state.
+ * Clears the entry.
  */
 void SoundItemEntry::clear() {
     FileEntryBase::clear();
     mItemId = AudioConst::SOUND_ID_INVALID;
-    _BC = -1;
+    _bc = -1;
     mResourceLoader = nullptr;
     mIsLoadSuccess = false;
 }
