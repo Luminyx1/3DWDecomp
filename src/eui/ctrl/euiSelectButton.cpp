@@ -35,6 +35,7 @@ bool SelectButton::HitTest(const sead::Vector2f& rPosition) const {
 
 bool SelectButton::ProcessOn() {
     bool processed = true;
+
     switch (mState) {
     case cState_Off:
         StartOn();
@@ -80,6 +81,7 @@ void SelectButton::FinishCancel() {
 
 bool SelectButton::ProcessCancel() {
     bool processed = true;
+
     switch (mState) {
     case cState_DownStart:
         processed = false;

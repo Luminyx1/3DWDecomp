@@ -47,8 +47,10 @@ BoxCursorNode* BoxCursorMgr::findNodeByTag(const char* pScreenName, int tag) {
 // pNode becomes the reserved cursor selection on its screen's draw target.
 void BoxCursorMgr::moveBoxCursor(const BoxCursorNode* pNode) {
     auto* screen = pNode->mScreen;
+
     if (!screen) return;
     auto* control = mControls[int(screen->getDrawTarget())];
+
     if (!control) return;
     control->mReservedActiveNode = pNode;
     screen->mLastActiveCursor = pNode;
@@ -63,13 +65,16 @@ void BoxCursorMgr::update() {
 void BoxCursorMgr::updateDrawTarget(DrawTarget target) {
     const int index = target;
     auto* control = mControls[index];
+
     if (!control) return;
     auto* screen = static_cast<LayoutEx*>(control->_20)->mScreen;
     const bool enabled = isEnable(DrawTarget(index));
     const bool closed = screen->isClosed();
+
     if (enabled) {
         if (closed) {
             control->updateActiveNode(DrawTarget(index));
+
             if (!control->mActiveNode) return;
             screen->open(Screen::OpenOption(1));
         }
@@ -108,6 +113,7 @@ void BoxCursorMgr::setEnable(DrawTarget target, bool enabled) {
 // pController supplies trigger and repeat inputs; decisions take precedence over directions.
 void BoxCursorMgr::setActionWithController(const sead::ControllerBase* pController) {
     Action action = Action::cAction_None;
+
     if (pController->isTrig(1)) action = Action::cAction_Decide;
     else if (pController->isRepeat(1)) action = Action::cAction_DecideRepeat;
     else if (pController->isTrigWithRepeat(0x110000)) action = Action::cAction_Up;
@@ -120,6 +126,7 @@ void BoxCursorMgr::setActionWithController(const sead::ControllerBase* pControll
 // pNode is removed from screen routes and both displays' active or reserved selections.
 void BoxCursorMgr::eraseNodeLinks(const BoxCursorNode* pNode) {
     mScreenMgr->eraseBoxCursorNodeFromRouteNodes(pNode);
+
     for (int i = 0; i < 2; ++i) {
         if (mControls[i]) mControls[i]->clearActiveAndReservedActiveNode(pNode);
     }

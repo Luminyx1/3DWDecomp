@@ -46,10 +46,13 @@ void CapturePane::initialize_(LayoutEx* pLayout) {
     sead::Heap* heap = GetNwAllocatorHeap();
     Pane::mFlags |= 1;
     mClearColor = setupClearColor_(heap, this, pLayout, &mFlags);
+
     if (FindExtUserDataByName("CaptureWorkFormat")) mFlags.set(4);
     setupCaptureOutputAlpha255_(this, &mFlags);
+
     if (!mClearColor) mFlags.set(0x20);
     mMultiFilter = InitializeMultiFilter(heap, *this, pLayout);
+
     if (mMultiFilter) mMultiFilter->setUseTextureAlpha(true);
     const char* name = pLayout->mScreen ? pLayout->mScreen->mName.cstr() : static_cast<const char*>(pLayout->_30);
     initializeCaptureTextureData_(heap, name);
@@ -60,6 +63,7 @@ void CapturePane::initialize_(LayoutEx* pLayout) {
     dest._m.val[1] = source._m.val[1];
     dest._m.val[2] = source._m.val[2];
     Pane::mFlags |= 0x40;
+
     if (pLayout->mScreen) pLayout->mScreen->mFlags |= 0x10;
 }
 
@@ -69,6 +73,7 @@ sead::Color4f* CapturePane::setupClearColor_(sead::Heap* pHeap, nn::ui2d::Pane* 
                                           LayoutEx* pLayout, sead::BitFlag8* pFlags) {
     const auto* colorData = pPane->FindExtUserDataByName("CaptureBGColor");
     const auto* alphaData = pPane->FindExtUserDataByName("CaptureBGAlpha");
+
     if (colorData && colorData->count == 3) {
         const auto* rgb = static_cast<const s32*>(colorData->GetData());
         auto* color = new (pHeap, 8) sead::Color4f(u32(u8(rgb[0])) / 255.0f, u32(u8(rgb[1])) / 255.0f,
@@ -89,6 +94,7 @@ void CapturePane::initializeCaptureTextureData_(sead::Heap* pHeap, const char* p
     bool alphaOnly = false;
     {
         const sead::SafeString formatName(static_cast<const char*>(FindExtUserDataByName("CaptureOn")->GetData()));
+
         if (formatName == "RGBA8") format = Format::cTextureFormat_R8_G8_B8_A8_uNorm;
         else if (formatName == "BC3") format = Format::cTextureFormat_BC3_uNorm;
         else if (formatName == "BC1") format = Format::cTextureFormat_BC1_uNorm;
@@ -104,8 +110,10 @@ void CapturePane::initializeCaptureTextureData_(sead::Heap* pHeap, const char* p
 
     float width = mSizeX, height = mSizeY;
     const auto* scaleData = FindExtUserDataByName("CaptureScale");
+
     if (scaleData) {
         const float scale = *static_cast<const float*>(scaleData->GetData());
+
         if (scale > 0) { width *= scale; height *= scale; }
     }
 
@@ -125,6 +133,7 @@ void CapturePane::initializeCaptureTextureData_(sead::Heap* pHeap, const char* p
     auto green = agl::TextureCompSel(components.mG);
     auto blue = agl::TextureCompSel(components.mB);
     auto alpha = agl::TextureCompSel(components.mA);
+
     switch (format) {
     case Format::cTextureFormat_R8_uNorm:
     case Format::cTextureFormat_BC4_uNorm:
@@ -179,14 +188,17 @@ void CapturePane::Calculate(nn::ui2d::DrawInfo& rDrawInfo, CalculateContext& rCo
 void CapturePane::Draw(nn::ui2d::DrawInfo& rDrawInfo, nn::gfx::CommandBuffer& rCommands) {
     if (!mCalculated || static_cast<DrawInfoEx&>(rDrawInfo)._1A8) return;
     const auto* info = static_cast<DrawInfoEx&>(rDrawInfo).m_pRenderBufferInfo;
+
     if (!info) return;
     const auto* captured = drawCapture_(this, rDrawInfo, &mFlags, mMultiFilter, &mRenderBuffer,
                                         &mRenderTarget, mClearColor, rCommands);
     using Format = agl::TextureFormat;
     const auto format = Format(mTexture->getTextureFormat());
     const auto alpha = agl::TextureCompSel(mTexture->getSurface().mCompSel.mA);
+
     if (agl::TextureFormatInfo::isCompressed(format)) {
         bool rearrange = false;
+
         switch (format) {
         case Format::cTextureFormat_R8_uNorm:
         case Format::cTextureFormat_BC4_uNorm:
@@ -201,6 +213,7 @@ void CapturePane::Draw(nn::ui2d::DrawInfo& rDrawInfo, nn::gfx::CommandBuffer& rC
 
         if (rearrange) {
             agl::TextureData converted(*captured);
+
             if (alpha == agl::cTextureCompSel_R)
                 converted.setCompSel(agl::cTextureCompSel_A, agl::cTextureCompSel_1, agl::cTextureCompSel_1, agl::cTextureCompSel_1);
             else
@@ -221,6 +234,7 @@ void CapturePane::Draw(nn::ui2d::DrawInfo& rDrawInfo, nn::gfx::CommandBuffer& rC
         context.setDepthTestEnable(false);
         context.apply(info->pDrawContext);
         agl::TextureSampler sampler(*captured);
+
         switch (format) {
         case Format::cTextureFormat_R8_uNorm:
         case Format::cTextureFormat_BC4_uNorm:
@@ -262,6 +276,7 @@ const agl::TextureData* CapturePane::drawCapture_(nn::ui2d::Pane* pPane, nn::ui2
     agl::RenderTargetColor* pTarget, sead::Color4f* pClearColor, nn::gfx::CommandBuffer& rCommands) {
     const auto* info = static_cast<DrawInfoEx&>(rDrawInfo).m_pRenderBufferInfo;
     u32 width, height;
+
     if (pFlags->isOn(0x10)) {
         width = info->pFrameBuffer->getPhysicalArea().getSizeX() * pPane->mSizeX / rDrawInfo.m_pLayoutInformation->size.width;
         height = info->pFrameBuffer->getPhysicalArea().getSizeY() * pPane->mSizeY / rDrawInfo.m_pLayoutInformation->size.height;
@@ -285,6 +300,7 @@ const agl::TextureData* CapturePane::drawCapture_(nn::ui2d::Pane* pPane, nn::ui2
     pBuffer->setVirtualSize(sead::Vector2f(pPane->mSizeX, pPane->mSizeY));
     pBuffer->bind(info->pDrawContext);
     sead::Viewport viewport(*pBuffer);
+
     if (pClearColor) {
         pBuffer->fastClear(static_cast<agl::DrawContext*>(info->pDrawContext), 0, 1, *pClearColor, 0, 0, viewport, true);
     } else {
@@ -292,6 +308,7 @@ const agl::TextureData* CapturePane::drawCapture_(nn::ui2d::Pane* pPane, nn::ui2
         const auto* source = static_cast<const agl::RenderBuffer*>(info->pFrameBuffer)->getRenderTargetColor();
         source->invalidateGPUCache(static_cast<agl::DrawContext*>(info->pDrawContext));
         agl::TextureSampler sampler(*source);
+
         if (pFlags->isOn(2))
             sampler.setCompSel(agl::cTextureCompSel_R, agl::cTextureCompSel_G, agl::cTextureCompSel_B, agl::cTextureCompSel_1);
         else
@@ -332,8 +349,10 @@ const agl::TextureData* CapturePane::drawCapture_(nn::ui2d::Pane* pPane, nn::ui2
     }
 
     pTarget->invalidateGPUCache(static_cast<agl::DrawContext*>(info->pDrawContext));
+
     if (pFilter) {
         pFilter->draw(static_cast<agl::DrawContext*>(info->pDrawContext), *texture);
+
         if (pFilter->getResultTexture()) {
             agl::utl::DynamicTextureAllocator::instance()->free(texture);
             return pFilter->getResultTexture();
@@ -354,6 +373,7 @@ CapturePane::~CapturePane() {
 // pPane supplies the capture alpha setting; pFlags receives bit 3 when the output is opaque.
 void CapturePane::setupCaptureOutputAlpha255_(nn::ui2d::Pane* pPane, sead::BitFlag<u8>* pFlags) {
     const auto* data = pPane->FindExtUserDataByName("CaptureOutputAlpha");
+
     if (data && *static_cast<const s32*>(data->GetData()) == 255) pFlags->set(8);
 }
 }

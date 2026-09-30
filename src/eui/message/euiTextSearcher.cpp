@@ -12,6 +12,7 @@ void TextSearcher::SearchText(TextInfo* pInfo, const char* pId, nn::ui2d::Layout
     nn::ui2d::TextBox* pTextBox, nn::ui2d::Layout* pRootLayout) {
     if (!mMessages) return;
     sead::FixedStringBuilder<256> name;
+
     if (pId) {
         if (*pId != '-' && *pId != '@') {
             if (*pId == '=') CreateLayoutItemUniqueNameByPath(&name, pId + 1, static_cast<LayoutEx*>(pLayout));
@@ -25,6 +26,7 @@ void TextSearcher::SearchText(TextInfo* pInfo, const char* pId, nn::ui2d::Layout
 
     if (name.getLength()) {
         const auto message = mMessages->tryFindMessage(name.cstr());
+
         if (message.getText()) {
             pInfo->pText = message.getText();
             pInfo->length = message.getLength();

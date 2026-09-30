@@ -93,11 +93,13 @@ bool Screen::isDisallowHitLowerScreenOnButtonHit_() const { return true; }
 float Screen::getAnimationStep_() const { return mScreenMgr->mAnimationStep; }
 void Screen::updateControl_() {
     const float step = getAnimationStep_();
+
     for (auto& control : mControls) control.Update(step);
 }
 
 void Screen::updateStaticControl_() {
     const float step = getAnimationStep_();
+
     for (auto& control : mStaticControls) control.Update(step);
 }
 

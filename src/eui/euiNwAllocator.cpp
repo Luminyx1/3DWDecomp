@@ -50,6 +50,7 @@ void NwAllocator::finalize() {
  */
 void NwAllocator::ui2dDeallocateFunctionWithFindContainHeap(void* pMemory, void* pUnused) {
     auto* pHeap = sead::HeapMgr::instance()->findContainHeap(pMemory);
+
     if (pHeap) {
         pHeap->free(pMemory);
     }

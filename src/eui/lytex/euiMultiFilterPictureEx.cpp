@@ -56,11 +56,13 @@ MultiFilterPictureEx::~MultiFilterPictureEx() {
  */
 void MultiFilterPictureEx::DrawSelf(nn::ui2d::DrawInfo& rDrawInfo, nn::gfx::CommandBuffer& rCommands) {
     auto& rDrawInfoEx = static_cast<DrawInfoEx&>(rDrawInfo);
+
     if (rDrawInfoEx._1A8) {
         return;
     }
 
     const auto* pTexture = m_pFilter->captureAndFilter(*this, rDrawInfoEx);
+
     if (pTexture) {
         m_pFilter->applyTextureDataToPictureMaterial(this, &m_TextureInfo, pTexture, rDrawInfoEx);
         PictureEx::DrawSelf(rDrawInfo, rCommands);

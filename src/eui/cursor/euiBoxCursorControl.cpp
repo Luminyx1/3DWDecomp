@@ -45,10 +45,13 @@ void BoxCursorControl::updateActiveNode(DrawTarget target) {
 void BoxCursorControl::setActiveNode_(const BoxCursorNode* pNode) {
     const auto* previous = mActiveNode;
     mActiveNode = pNode;
+
     if (previous && previous != pNode) previous->mButton->InactivateByBoxCursor();
+
     if (pNode) {
         pNode->getPosition(&mPosition);
         pNode->mScreen->mLastActiveCursor = pNode;
+
         if (previous != pNode) pNode->mButton->ActivateByBoxCursor();
     }
 }
@@ -57,6 +60,7 @@ void BoxCursorControl::setActiveNode_(const BoxCursorNode* pNode) {
 void BoxCursorControl::clearActiveAndReservedActiveNode(const BoxCursorNode* pNode) {
     if (mActiveNode == pNode) {
         mActiveNode = nullptr;
+
         if (pNode) pNode->mButton->InactivateByBoxCursor();
     }
 

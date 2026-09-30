@@ -56,6 +56,7 @@ void TwoTouchCheckKeepButton::ActivateByBoxCursor() {
 
 void TwoTouchCheckKeepButton::InactivateByBoxCursor() {
     AnimButton::InactivateByBoxCursor();
+
     if ((mFlags & 0x40) && mChecked && mState == cState_DownStart) ForceOff();
 }
 
@@ -115,6 +116,7 @@ void TwoTouchCheckKeepButton::BuildStateAnim(const nn::ui2d::ControlSrc& rSource
 
 bool TwoTouchCheckKeepButton::ProcessCancel() {
     if (!(mFlags & 0x40) || !mTouched) return AnimButton::ProcessCancel();
+
     switch (mState) {
     case cState_OnStart:
     case cState_On:

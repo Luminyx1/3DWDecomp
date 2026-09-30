@@ -35,6 +35,7 @@ void ConstantBuffer::initialize(sead::Heap* pHeap, const InitConfig& rConfig) {
     const auto granularity = nn::gfx::MemoryPool::GetPoolMemorySizeGranularity(pDevice, info);
     const auto poolSize = (size + granularity - 1) & -granularity;
     const auto alignment = nn::gfx::MemoryPool::GetPoolMemoryAlignment(pDevice, info);
+
     if (poolSize) {
         m_pPoolMemory = pHeap->alloc(poolSize * 2, alignment);
         info.SetPoolMemory(m_pPoolMemory, poolSize * 2);
@@ -42,6 +43,7 @@ void ConstantBuffer::initialize(sead::Heap* pHeap, const InitConfig& rConfig) {
     }
 
     size_t offset = 0;
+
     if (rConfig.paneBufferSize) {
         nn::font::GpuBuffer::InitializeArg arg;
         arg.gpuAccessFlag = nn::gfx::GpuAccess_ConstantBuffer;

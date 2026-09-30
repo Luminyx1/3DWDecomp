@@ -13,6 +13,7 @@ DecisionButton::DecisionButton(const DecisionButton& rOther, LayoutEx* pLayout,
 
 bool DecisionButton::ProcessOn() {
     bool processed = true;
+
     switch (mState) {
     case cState_Off:
         StartOn();

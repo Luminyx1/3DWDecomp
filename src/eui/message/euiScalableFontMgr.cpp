@@ -30,6 +30,7 @@ void ScalableFontMgr::update() {
 
     if (_5e) {
         mTextureCache->ResetTextureCache();
+
         for (const auto& entry : mFonts) entry.font.RegisterAlternateCharGlyph();
         ++_58;
         _5e = false;
@@ -37,6 +38,7 @@ void ScalableFontMgr::update() {
 
     if (mReservedTextBox) {
         auto* textBox = mReservedTextBox;
+
         while (textBox) textBox = textBox->registerGlyphsAndGetNext(this);
         mReservedTextBox = nullptr;
     }
@@ -75,6 +77,7 @@ ScalableFontTextBoxEx* ScalableFontMgr::reserveRegisterGlyphs(ScalableFontTextBo
 const nn::font::ScalableFont* ScalableFontMgr::getFont(const sead::SafeString& rName) const {
     const FontEntry* fonts = mFonts.getBufferPtr();
     const u32 count = mFonts.size();
+
     for (size_t i = 0; i != count; ++i) if (rName == fonts[i].name) return &fonts[u32(i)].font;
     return nullptr;
 }
@@ -98,8 +101,10 @@ void ScalableFontMgr::clearLockAllGlyphs(int lockGroup) { mTextureCache->ClearLo
 // code, size, and face identify a glyph; requesting it preserves its existing plotted state.
 bool ScalableFontMgr::isNeedPlot_(char16_t code, u32 size, u16 face) {
     auto* node = mTextureCache->FindGlyphNode(code, size, face);
+
     if (node) {
         node->SetFlag(nn::font::GlyphNode::FlagBit_Requested);
+
         if (!node->IsFlagOn(nn::font::GlyphNode::FlagBit_NotPlotted)) return false;
     }
 

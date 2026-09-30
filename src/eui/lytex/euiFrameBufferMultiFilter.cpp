@@ -32,8 +32,10 @@ void FrameBufferMultiFilter::initialize(sead::Heap* pHeap, const nn::ui2d::Pane&
     const s32 textureIndex = values[0];
     u32 textureCount = 0;
     const u8 materialCount = rPane.GetMaterialCount();
+
     for (int i = 0; i < materialCount; ++i) {
         const u32 count = rPane.GetMaterial(i)->mResourceCounts & 3;
+
         if (textureCount < count) textureCount = count;
     }
 
@@ -46,8 +48,10 @@ void FrameBufferMultiFilter::initialize(sead::Heap* pHeap, const nn::ui2d::Pane&
 
     m_RenderBuffer.setRenderTargetColor(&m_RenderTarget);
     resource = rPane.FindExtUserDataByName("FrameBufferAlpha");
+
     if (resource) {
         const s32 alpha = *static_cast<const s32*>(resource->GetData());
+
         switch (alpha) {
         case 0: mFlags = 0; _1F5 = 0; break;
         case 255: mFlags = 1; _1F5 = 0; break;
@@ -71,9 +75,11 @@ void FrameBufferMultiFilter::applyTextureDataToWindowMaterial(WindowEx* pWindow,
     const DrawInfoEx& rDrawInfo) {
     SetupTextureInfoByAglTextureData(pInfo, *pTexture, nullptr);
     const u8 count = pWindow->GetMaterialCount();
+
     for (int i = 0; i < count; ++i) {
         auto* material = pWindow->GetMaterial(i);
         const int index = mTextureIndex;
+
         if (int(material->mResourceCounts & 3) > index)
             material->SetTextureInfo(index, pInfo);
     }

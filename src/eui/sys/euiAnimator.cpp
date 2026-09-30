@@ -15,6 +15,7 @@ void Animator::Play(PlayType type, float step) {
     mPlayType = type;
     mStep = step;
     mFlags &= ~0xf;
+
     if (step >= 0) {
         if ((mFlags & 0x10) && GetFrameSize()) mFrame = step;
         else mFrame = 0;
@@ -37,11 +38,13 @@ void Animator::PlayFromCurrent(PlayType type, float step) {
     mPlayType = type;
     mStep = step;
     mFlags &= ~0xf;
+
     if ((mFlags & 0x10) && GetFrameSize()) {
         if (step >= 0) {
             if (mFrame < step) mFrame = step;
         } else {
             const float lastFrame = GetFrameSize() + step;
+
             if (mFrame > lastFrame) mFrame = lastFrame;
         }
     }
@@ -93,6 +96,7 @@ void Animator::SetupWithGroupIndex(const nn::ui2d::AnimResource& rResource, Layo
 void Animator::SetupWithGroupAll(const nn::ui2d::AnimResource& rResource, LayoutEx* pLayout,
     nn::ui2d::GroupContainer* pGroups, bool enabled) {
     const int count = rResource.GetGroupCount();
+
     for (int i = 0; i < count; ++i) BindGroup(pGroups->FindGroupByName(rResource.GetGroupArray()[i].name));
     SetupBasic(rResource, pLayout, enabled);
 }
@@ -134,6 +138,7 @@ void Animator::StopAtMax() {
 // enabled controls evaluation; enabling registers the animator with its screen exactly once.
 void Animator::SetEnabled(bool enabled) {
     nn::ui2d::AnimTransform::SetEnabled(enabled);
+
     if (enabled) {
         if (!mActiveLink.IsLinked()) mLayout->mScreen->setAnimatorActive(this);
     } else mStep = 0;
@@ -142,15 +147,18 @@ void Animator::SetEnabled(bool enabled) {
 void Animator::DisableAndEraseFromActiveList() {
     nn::ui2d::AnimTransform::SetEnabled(false);
     mStep = 0;
+
     if (mActiveLink.IsLinked()) mLayout->mScreen->eraseAnimatorFromActiveList(this);
 }
 
 // step scales this update's playback increment; endpoints stop, wrap, or reflect according to the mode.
 void Animator::UpdateFrame(float step) {
     mFlags &= ~0xf;
+
     if (mStep == 0) return;
     const float previousFrame = mFrame;
     float frame = mStep * step + previousFrame;
+
     if (mStep > 0) {
         if (frame >= GetFrameSize()) {
             switch (mPlayType) {

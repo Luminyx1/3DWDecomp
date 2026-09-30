@@ -9,6 +9,7 @@ namespace eui {
 /** @brief Releases temporary capture textures and unlinks their panes. */
 void DrawInfoEx::freeDynamicTexture() {
     auto it = m_DynamicCapturePanes.begin();
+
     while (it != m_DynamicCapturePanes.end()) {
         auto current = it++;
         current->freeDynamicTexture();
@@ -22,6 +23,7 @@ void DrawInfoEx::freeDynamicTexture() {
  */
 void DrawInfoEx::applyRenderBufferInfo(const RenderBufferInfo* pInfo) {
     pInfo->pFrameBuffer->bind(pInfo->pDrawContext);
+
     if (pInfo->pScissor) {
         pInfo->pViewport->applyViewport(pInfo->pDrawContext, *pInfo->pFrameBuffer);
         pInfo->pScissor->applyScissor(pInfo->pDrawContext, *pInfo->pFrameBuffer);

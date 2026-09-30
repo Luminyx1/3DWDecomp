@@ -21,12 +21,14 @@ MessageString MessageSet::findMessage(const char* pLabel) const {
  */
 MessageString MessageSet::tryFindMessage(const char* pLabel) const {
     const int index = LMS_GetTextIndexByLabel(mMsgFile, pLabel);
+
     if (index < 0) {
         return MessageString();
     }
 
     const int length = calcTextSizeByIndex(index) >> 1;
     const char16_t* pText = nullptr;
+
     if (static_cast<u32>(mTextNum) > static_cast<u32>(index)) {
         pText = static_cast<const char16_t*>(LMS_GetText(mMsgFile, index));
     }
@@ -55,6 +57,7 @@ MessageString MessageSet::tryFindMessageByIndex(int index) const {
 
     const int length = calcTextSizeByIndex(index) >> 1;
     const char16_t* pText = nullptr;
+
     if (static_cast<u32>(mTextNum) > static_cast<u32>(index)) {
         pText = static_cast<const char16_t*>(LMS_GetText(mMsgFile, index));
     }

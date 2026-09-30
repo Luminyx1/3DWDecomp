@@ -26,16 +26,19 @@ void AnimButton::Build(const nn::ui2d::ControlSrc& rSource, LayoutEx* pLayout) {
     mStateAnimators->SetSkipFirstFrameAll(true);
     mStateAnimators->SetSoundLinkAll(false);
     const char* disableName = rSource.FindFunctionalAnimName("Disable");
+
     if (!disableName || !*disableName)
         disableName = rSource.FindFunctionalAnimName("Invalid");
     if (disableName && *disableName) {
         mDisableAnimator = pLayout->tryCreateAnimatorAutoWithWarning(disableName, true);
+
         if (mDisableAnimator) mDisableAnimator->mFlags &= ~0x20;
     }
 
     const char* hitName = rSource.FindFunctionalPaneName("Hit");
     mHitPane = pLayout->mRootPane->FindPaneByName(hitName, true);
     const char* cursorName = rSource.FindFunctionalPaneName("Cursor");
+
     if (cursorName && *cursorName && !pLayout->mRootPane->FindExtUserDataByName("BoxCursorOff")) {
         mCursorPane = pLayout->mRootPane->FindPaneByName(cursorName, true);
         sead::Heap* heap = GetNwAllocatorHeap();
@@ -45,6 +48,7 @@ void AnimButton::Build(const nn::ui2d::ControlSrc& rSource, LayoutEx* pLayout) {
     nn::ui2d::Pane* root = pLayout->mRootPane;
     const auto* rootType = RootPane::GetRuntimeTypeInfoStatic();
     bool isRoot = false;
+
     if (root) {
         for (auto* type = root->GetRuntimeTypeInfo(); type; type = type->m_ParentTypeInfo) {
             if (type == rootType) { isRoot = true; break; }
@@ -52,8 +56,11 @@ void AnimButton::Build(const nn::ui2d::ControlSrc& rSource, LayoutEx* pLayout) {
     }
 
     _18 = isRoot ? pLayout->_30 : pLayout->mRootPane->mPanelName;
+
     if (rSource.FindExtUserDataByName("RepeatOn")) mFlags |= 0x80;
+
     if (rSource.FindExtUserDataByName("NoTrigTouchOn")) mFlags |= 0x100;
+
     if (rSource.FindExtUserDataByName("DownWithTouchOn")) mFlags |= 0x200;
 }
 
@@ -72,13 +79,16 @@ void AnimButton::BuildStateAnim(const nn::ui2d::ControlSrc& rSource, LayoutEx* p
 bool AnimButton::DownOff(bool force) {
     if ((mFlags & 0x14) != 0x14) return false;
     Screen* screen = static_cast<LayoutEx*>(_20)->mScreen;
+
     if (screen && screen->mButtonGroup->IsExistExcludingDown()) return false;
+
     if (force && (mFlags & 0x40)) {
         mFlags &= ~0x40;
         mFlags |= 0x800;
     }
 
     Down();
+
     if (!(mFlags & 0x1000) && (!screen || !mCursorPane || !screen->moveBoxCursorByButton(this)))
         Off();
     return true;
@@ -87,18 +97,21 @@ bool AnimButton::DownOff(bool force) {
 void AnimButton::InactivateByBoxCursor() {
     mFlags &= ~0x1000;
     Off();
+
     if (static_cast<LayoutEx*>(_20)->mScreen->_eb) mFlags |= 0x800;
 }
 
 // state is the next button state, reported to the owning screen before it is stored.
 void AnimButton::ChangeState(State state) {
     if (mState == state) return;
+
     if ((state == cState_Off || state == cState_OffStart) && (mFlags & 0x800)) {
         mFlags &= ~0x800;
         mFlags |= 0x40;
     }
 
     Screen* screen = static_cast<LayoutEx*>(_20)->mScreen;
+
     if (screen) screen->buttonStateChangeCallback(this, static_cast<State>(mState), state);
     mState = state;
 }
@@ -110,8 +123,10 @@ void AnimButton::CloneImpl_(const AnimButton& rOther, LayoutEx* pLayout, sead::H
     mStateAnimators = new (pHeap, 8) AnimatorSet(*rOther.mStateAnimators, pLayout, pHeap);
     mStateAnimators->SetSkipFirstFrameAll(true);
     mStateAnimators->SetSoundLinkAll(false);
+
     if (rOther.mDisableAnimator) {
         mDisableAnimator = pLayout->tryCreateAnimatorAutoWithWarning(rOther.mDisableAnimator->mName, true);
+
         if (mDisableAnimator) mDisableAnimator->mFlags &= ~0x20;
     }
 
@@ -173,6 +188,7 @@ void AnimButton::SetDisableAnimDirect(bool disabled) {
 
 bool AnimButton::IsPlayDisableAnim() const {
     if (!mDisableAnimator) return false;
+
     if (mDisableAnimator->mStep > 0) return true;
     return mDisableAnimator->mFrame == mDisableAnimator->GetFrameSize();
 }
@@ -202,6 +218,7 @@ void AnimButton::ForceDown() {
 void AnimButton::StartOn() {
     Animator* pOff = mStateAnimators->mAnimators[2];
     Animator* pOn = SelectStateAnim(0);
+
     if (pOff) pOn->Play(Animator::cPlayType_OneTime, 1);
     else pOn->PlayFromCurrent(Animator::cPlayType_OneTime, 1);
 }
@@ -221,6 +238,7 @@ bool AnimButton::UpdateDown() { return (mStateAnimators->mSelected->mFlags & 1) 
 // NON_MATCHING: the state jump table matches, but transition blocks are ordered differently.
 bool AnimButton::ProcessOn() {
     bool processed = true;
+
     switch (mState) {
     case cState_Off: case cState_OffStart: StartOn(); ChangeState(cState_OnStart); break;
     case cState_DownStart: case cState_CancelStart: processed = false; break;
@@ -258,6 +276,7 @@ void AnimButton::FinishDown() {
 // state is applied immediately, restoring touch input after leaving cursor mode.
 void AnimButton::ForceChangeState(State state) {
     if (mState == state) return;
+
     if ((state == cState_Off || state == cState_OffStart) && (mFlags & 0x800)) {
         mFlags &= ~0x800;
         mFlags |= 0x40;

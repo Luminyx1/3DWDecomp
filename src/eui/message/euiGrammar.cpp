@@ -11,11 +11,13 @@ namespace eui {
  */
 Grammar::WordAttrCount Grammar::getWordAttrCount(int count) {
     const auto language = sead::EnvUtil::getLanguage();
+
     if (language == sead::LanguageID::fr)
         return count < -1 || count > 1;
     if (language == sead::LanguageID::ru) {
         const int units = count % 10;
         const int lastTwoDigits = count % 100;
+
         if (units == 1 && lastTwoDigits != 11)
             return 0;
         if (units == 2 && lastTwoDigits != 12)
@@ -41,6 +43,7 @@ Grammar::WordAttrCount Grammar::getWordAttrCount(int count) {
  */
 Grammar::WordAttrCount Grammar::getWordAttrCount(float count) {
     const auto language = sead::EnvUtil::getLanguage();
+
     if (language == sead::LanguageID::ru)
         return 2;
     if (language == sead::LanguageID::fr)
@@ -63,6 +66,7 @@ bool Grammar::isPatchim(char16_t character, bool excludeRieul) {
     if (static_cast<char16_t>(character - u'0') < 10 ||
         static_cast<char16_t>(character - u'０') < 10) {
         const int digit = character < u':' ? character - u'0' : character - u'０';
+
         if (excludeRieul) {
             switch (digit) {
             case 0: case 3: case 6: return true;
@@ -91,6 +95,7 @@ bool Grammar::isStringEndWithPatchim(const char16_t* pText, u32 length, bool exc
         return false;
     const char16_t* pEnd = pText + length;
     char16_t last = 0;
+
     while (pText < pEnd) {
         const char16_t character = *pText;
         // Both the start tag (0x0e) and end tag (0x0f) satisfy this test.

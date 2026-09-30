@@ -57,11 +57,13 @@ MultiFilterWindowEx::~MultiFilterWindowEx() {
  */
 void MultiFilterWindowEx::DrawSelf(nn::ui2d::DrawInfo& rDrawInfo, nn::gfx::CommandBuffer& rCommands) {
     auto& rDrawInfoEx = static_cast<DrawInfoEx&>(rDrawInfo);
+
     if (rDrawInfoEx._1A8) {
         return;
     }
 
     const auto* pTexture = m_pFilter->captureAndFilter(*this, rDrawInfoEx);
+
     if (pTexture) {
         m_pFilter->applyTextureDataToWindowMaterial(this, &m_TextureInfo, pTexture, rDrawInfoEx);
         WindowEx::DrawSelf(rDrawInfo, rCommands);

@@ -63,6 +63,7 @@ SharcArchive::FileReader::~FileReader() {
 bool SharcArchive::FileReader::readNext() {
     u32 count = 0;
     m_FileDevice.tryReadDirectory(&count, &m_Handle, &m_Entry, 1);
+
     if (count == 1) {
         ++mIndex;
         return true;

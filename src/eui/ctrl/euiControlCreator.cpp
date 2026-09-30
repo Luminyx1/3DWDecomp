@@ -29,6 +29,7 @@ ControlBase* ControlCreator::CreateControlImpl_(const nn::ui2d::ControlSrc& rSou
     auto* layout = static_cast<LayoutEx*>(pLayout);
     AnimButton* button = nullptr;
     ControlBase* control = nullptr;
+
     if (std::strcmp("NormalButton", name) == 0) button = AllocateControl<NormalButton>();
     else if (std::strcmp("DecisionButton", name) == 0) button = AllocateControl<DecisionButton>();
     else if (std::strcmp("SelectButton", name) == 0) button = AllocateControl<SelectButton>();
@@ -50,6 +51,7 @@ ControlBase* ControlCreator::CreateControlImpl_(const nn::ui2d::ControlSrc& rSou
     } else if (std::strcmp("DragScrollButton", name) == 0) button = AllocateControl<DragScrollButton>();
     else return nullptr;
     button->Build(rSource, layout);
+
     if (button) InsertButtonToButtonGroup_(button);
     return button;
 registerControl:
@@ -62,9 +64,11 @@ registerControl:
 void ControlCreator::InsertButtonToButtonGroup_(AnimButton* pButton) {
     auto& buttons = mButtons->mButtons;
     ControlBase* insertBefore = nullptr;
+
     if (!buttons.empty()) {
         auto* current = &buttons.back();
         auto* layout = pButton->_20;
+
         if (static_cast<LayoutEx*>(current->_20)->mParentLayout == layout) {
             do {
                 if (current == &*buttons.begin()) {

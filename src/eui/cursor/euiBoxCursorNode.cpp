@@ -9,14 +9,18 @@ BoxCursorNode::~BoxCursorNode() = default;
 void BoxCursorNode::initialize(AnimButton* pButton, Screen* pScreen) {
     mButton = pButton;
     mScreen = pScreen;
+
     if (pScreen) pScreen->mCursorNodes.pushBack(this);
 }
 
 // target selects the display whose cursor may navigate to this node.
 bool BoxCursorNode::isMovable(DrawTarget target) const {
     Screen* screen = mScreen;
+
     if (!screen->isOpened()) return false;
+
     if (!(screen->mButtonGroup->mFlags & 2)) return false;
+
     if (!(mButton->mFlags & 0x10)) return false;
     return int(screen->getDrawTarget()) == int(target);
 }
@@ -24,9 +28,11 @@ bool BoxCursorNode::isMovable(DrawTarget target) const {
 // target selects the display; requireDecidable additionally requires the button's repeat-on flag.
 bool BoxCursorNode::isDecidable(DrawTarget target, bool requireDecidable) const {
     Screen* screen = mScreen;
+
     if (!screen->isOpened() || !(screen->mButtonGroup->mFlags & 2) || !(mButton->mFlags & 0x10))
         return false;
     if (int(screen->getDrawTarget()) != int(target)) return false;
+
     if (requireDecidable && !(mButton->mFlags & 0x80)) return false;
     return !screen->mButtonGroup->IsExistExcludingDown();
 }

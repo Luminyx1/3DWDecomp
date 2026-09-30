@@ -9,6 +9,7 @@ namespace eui {
 void ScreenMgr::draw(s8 layer, const DrawInfoEx::RenderBufferInfo* pInfo) {
     const u32 count = mScreenLayers.size();
     const auto* layers = mScreenLayers.getBufferPtr();
+
     for (size_t i = 0; i != count; ++i) {
         if (layers[i] == layer) mScreens.getBufferPtr()[i < u32(mScreens.size()) ? i : 0]->draw(pInfo);
     }
@@ -23,8 +24,10 @@ void ScreenMgr::resetScreenId(int index) {
 // index selects a screen to detach; its initialization heap is destroyed only when owned.
 void ScreenMgr::unloadScreen(int index) {
     Screen* screen = mScreens[index];
+
     if (screen) {
         resetScreenId(index);
+
         if (screen->mFlags & 1) screen->mInitializeHeap->destroy();
     }
 }
@@ -48,6 +51,7 @@ void ScreenMgr::activateScreen(int index) { mScreenLayers[index] = mScreens[inde
 void ScreenMgr::updateSystem() {
     _440 = true;
     _441 = true;
+
     if (mFontMgr->mScalableFontMgr) mFontMgr->mScalableFontMgr->update();
 }
 }

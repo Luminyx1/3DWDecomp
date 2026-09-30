@@ -96,6 +96,7 @@ bool MessageString::tryMakeTagStrippedString(sead::BufferedSafeStringBase<char16
     const auto* pCurrent = m_pText;
     const auto* pEnd = m_pText + static_cast<int>(mLength);
     bool overflow = capacity < 1;
+
     if (static_cast<int>(mLength) > 0) {
         do {
             if (overflow) {
@@ -104,6 +105,7 @@ bool MessageString::tryMakeTagStrippedString(sead::BufferedSafeStringBase<char16
             }
 
             const auto ch = *pCurrent;
+
             if ((ch | 1) == 0xf) {
                 if (ch == 0xe) {
                     pCurrent = reinterpret_cast<const char16_t*>(
@@ -132,12 +134,15 @@ int MessageString::countPrintableStringLength() const {
     int length = 0;
     const auto* pCurrent = m_pText;
     const auto* pEnd = m_pText + static_cast<int>(mLength);
+
     if (static_cast<int>(mLength) > 0) {
         do {
             const auto ch = *pCurrent;
+
             if ((ch | 1) == 0xf) {
                 const char16_t* pTag;
                 pCurrent = readTag_(pCurrent, &pTag);
+
                 if (pTag[1] == 0 && pTag[2] == 0) {
                     length += pTag[5] / 2;
                 }

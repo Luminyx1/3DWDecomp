@@ -19,6 +19,7 @@ void copyBuffer(const sead::Buffer<T>& rSource, sead::Buffer<T>& rDestination) {
     const int count = rSource.size() < rDestination.size() ? rSource.size() : rDestination.size();
     const T* source = rSource.getBufferPtr();
     T* destination = rDestination.getBufferPtr();
+
     for (int i = 0; i < count; ++i) destination[i] = source[i];
 }
 }
@@ -72,7 +73,9 @@ void MassDrawPane::initializeTextureData_() {
 // rDrawInfo supplies the render target and context; rCommands is unused by the agl drawing path.
 void MassDrawPane::DrawSelf(nn::ui2d::DrawInfo& rDrawInfo, nn::gfx::CommandBuffer& rCommands) {
     const auto* info = static_cast<DrawInfoEx&>(rDrawInfo).m_pRenderBufferInfo;
+
     if (!info || !mAlphas.getBufferPtr()) return;
+
     if (!mTextureInitialized) {
         initializeTextureData_();
         mTextureInitialized = true;
@@ -104,8 +107,10 @@ void MassDrawPane::DrawSelf(nn::ui2d::DrawInfo& rDrawInfo, nn::gfx::CommandBuffe
     const auto* indices = mIndices.getBufferPtr();
     const auto* alphas = mAlphas.getBufferPtr();
     const u32 count = mAlphas.size();
+
     for (u32 i = 0; i < count; ++i) {
         const u8 alpha = alphas[i];
+
         if (!alpha) continue;
         sead::Matrix34f matrix = baseMatrix;
         matrix.setTranslation(scaleX * positions[i].x + matrix(0, 3),

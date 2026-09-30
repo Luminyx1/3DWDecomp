@@ -67,6 +67,7 @@ void ButtonBase::ForceChangeState(State state) { mState = state; }
 
 bool ButtonBase::ProcessCancel() {
     bool processed = true;
+
     switch (mState) {
     case cState_DownStart:
         processed = false;
@@ -82,6 +83,7 @@ bool ButtonBase::ProcessCancel() {
 
 bool ButtonBase::ProcessOn() {
     bool processed = true;
+
     switch (mState) {
     case cState_Off:
         StartOn();
@@ -102,6 +104,7 @@ bool ButtonBase::ProcessOn() {
 
 bool ButtonBase::ProcessOff() {
     bool processed = true;
+
     switch (mState) {
     case cState_OnStart:
     case cState_On:
@@ -140,6 +143,7 @@ bool ButtonBase::ProcessDown() {
 void ButtonBase::ProcessActionFromQueue() {
     if (mActions.count == 0) return;
     bool processed = false;
+
     switch (mActions.actions[0]) {
     case cAction_On: processed = ProcessOn(); break;
     case cAction_Off: processed = ProcessOff(); break;

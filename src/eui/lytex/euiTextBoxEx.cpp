@@ -26,6 +26,7 @@ u16 TextBoxEx::setMessageStringWithPage(const MessageString& rText, bool* pHasNe
 // pText is null-terminated text; offset is forwarded to the explicit-length overload.
 u16 TextBoxEx::SetString(const u16* pText, u16 offset) {
     size_t length = 0;
+
     if (*pText) {
         do { ++length; } while (pText[length]);
     }
@@ -52,7 +53,9 @@ u16 TextBoxEx::setStringNoPreproces(const char16_t* pText, u16 length) {
 // pScale optionally receives the minimum text scale when the pane defines TextScaleOn.
 bool TextBoxEx::getTextAdjustMinScale_(float* pScale) {
     const auto* data = FindExtUserDataByName("TextScaleOn");
+
     if (!data) return false;
+
     if (pScale) *pScale = *static_cast<const float*>(data->GetData());
     return true;
 }
@@ -65,7 +68,9 @@ bool TextBoxEx::isWordwrapOn_() {
 // pSpeed optionally receives the configured letter animation speed.
 bool TextBoxEx::getLetterAnimSpeed_(float* pSpeed) {
     const auto* data = FindExtUserDataByName("LetterAnimOn");
+
     if (!data) return false;
+
     if (pSpeed) *pSpeed = *static_cast<const float*>(data->GetData());
     return true;
 }

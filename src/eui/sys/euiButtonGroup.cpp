@@ -7,12 +7,14 @@ ButtonGroup::~ButtonGroup() = default;
 void ButtonGroup::SetTouchDevice(bool touch) {
     if (touch) mFlags |= 4;
     else mFlags &= ~4;
+
     for (auto& rControl : mButtons) static_cast<AnimButton&>(rControl).SetTouch(touch);
 }
 
 AnimButton* ButtonGroup::FindDownButton() {
     for (auto& rControl : mButtons) {
         auto& rButton = static_cast<AnimButton&>(rControl);
+
         if (rButton.IsDowning()) return &rButton;
     }
 
@@ -39,6 +41,7 @@ void ButtonGroup::CancelAll() {
 void ButtonGroup::SetAllowNoTrigTouchAll(bool allow) {
     for (auto& rControl : mButtons) {
         auto& rButton = static_cast<AnimButton&>(rControl);
+
         if (allow) rButton.mFlags |= 0x100;
         else rButton.mFlags &= ~0x100;
     }
@@ -48,6 +51,7 @@ void ButtonGroup::SetAllowNoTrigTouchAll(bool allow) {
 void ButtonGroup::SetDownWithTouchOnAll(bool enabled) {
     for (auto& rControl : mButtons) {
         auto& rButton = static_cast<AnimButton&>(rControl);
+
         if (enabled) rButton.mFlags |= 0x200;
         else rButton.mFlags &= ~0x200;
     }

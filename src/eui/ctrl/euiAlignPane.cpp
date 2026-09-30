@@ -35,8 +35,10 @@ void AlignPane::updateScrollVertical_() {
 void AlignPane::updateAlign_(bool adjustSize) {
     if (mDirty && (nn::ui2d::Pane::mFlags & 1) && mAlpha) {
         bool dirty;
+
         if (!(mFlags & 1)) dirty = !doAlign_();
         else dirty = !doAlignVertical_();
+
         if (adjustSize && !dirty && (nn::ui2d::Pane::mFlags & 4)) adjustPaneSize_();
         mDirty = dirty;
     }
@@ -46,6 +48,7 @@ void AlignPane::updateAlign_(bool adjustSize) {
 // rDrawInfo and rContext supply layout state; force requests recalculation of the base pane.
 void AlignPane::Calculate(nn::ui2d::DrawInfo& rDrawInfo, CalculateContext& rContext, bool force) {
     updateAlign_(true);
+
     if (_d4 != _d8) {
         if (mFlags & 1) updateScrollVertical_();
         else updateScroll_();

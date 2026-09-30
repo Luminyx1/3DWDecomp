@@ -16,8 +16,10 @@ const nn::ui2d::ResExtUserData* FindExtUserDataFromList(const nn::ui2d::ResExtUs
     if (!pList) return nullptr;
     const u32 count = pList->count;
     const auto* entry = pList->entries;
+
     for (size_t i = 0; i < count; ++i, ++entry) {
         const char* name = entry->nameOffset ? reinterpret_cast<const char*>(entry) + entry->nameOffset : nullptr;
+
         if (std::strcmp(pName, name) == 0) return entry;
     }
 
@@ -37,6 +39,7 @@ void SetupPaneAfterBuild(nn::ui2d::Pane* pPane, LayoutEx* pLayout) {
 // pPane starts the traversal; pLayout is replaced by a parts layout inside each parts pane.
 void IteratePaneForSetupPaneAfterBuild(nn::ui2d::Pane* pPane, LayoutEx* pLayout) {
     const auto* partsType = PartsEx::GetRuntimeTypeInfoStatic();
+
     if (pPane) {
         for (auto* type = pPane->GetRuntimeTypeInfo(); type; type = type->m_ParentTypeInfo) {
             if (type == partsType) {
@@ -47,6 +50,7 @@ void IteratePaneForSetupPaneAfterBuild(nn::ui2d::Pane* pPane, LayoutEx* pLayout)
     }
 
     SetupPaneAfterBuild(pPane, pLayout);
+
     for (auto* link = pPane->m_Children.GetNext(); link != &pPane->m_Children; link = link->GetNext()) {
         auto* child = static_cast<nn::ui2d::Pane*>(&nn::util::IntrusiveListMemberNodeTraits<nn::ui2d::detail::PaneBase, &nn::ui2d::detail::PaneBase::m_Link>::GetItem(*link));
         IteratePaneForSetupPaneAfterBuild(child, pLayout);

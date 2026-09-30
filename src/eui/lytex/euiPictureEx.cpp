@@ -32,6 +32,7 @@ void PictureEx::setupForSingleTexture_() {
 /** @brief Initializes all four vertices to opaque white. */
 void PictureEx::initializeVertexColor_() {
     const nn::util::Unorm8x4 color = {{255, 255, 255, 255}};
+
     for (int i = 0; i < 4; ++i) {
         SetVertexColor(i, color);
     }

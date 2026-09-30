@@ -11,6 +11,7 @@ inline Animator* CreateAnimator(LayoutEx* pLayout, const nn::ui2d::ResAnimationB
     if (!pResource) return nullptr;
     auto* device = reinterpret_cast<nn::gfx::Device*>(sead::GraphicsNvn::instance()->getGfxDevice());
     void* memory = nn::ui2d::Layout::AllocateMemory(sizeof(Animator));
+
     if (!memory) return nullptr;
     auto* animator = new (memory) Animator;
     pLayout->mAnimTransformList.LinkPrev(&animator->m_Link);
@@ -36,6 +37,7 @@ Animator* LayoutEx::tryCreateAnimatorAutoWithWarning(const char* pName, bool ena
 const void* LayoutEx::GetAnimResourceData(const char* pName) {
     auto* accessor = mResourceAccessor;
     const auto* multiType = MultiArcResourceAccessor::GetRuntimeTypeInfoStatic();
+
     if (accessor) {
         for (auto* type = accessor->GetRuntimeTypeInfo(); type; type = type->m_ParentTypeInfo) {
             if (type == multiType)
@@ -50,9 +52,11 @@ const void* LayoutEx::GetAnimResourceData(const char* pName) {
 // pName identifies an animation with groups; enabled selects its initial enabled state.
 Animator* LayoutEx::tryCreateAnimatorAuto(const char* pName, bool enabled) {
     const void* data = GetAnimResourceData(pName);
+
     if (!data) return nullptr;
     nn::ui2d::AnimResource resource;
     resource.Set(data);
+
     if (!resource.GetGroupCount()) return nullptr;
     Animator* animator = CreateAnimator(this, resource.mAnimation);
     animator->SetupWithGroupAll(resource, this, static_cast<nn::ui2d::GroupContainer*>(_20), enabled);
@@ -62,9 +66,11 @@ Animator* LayoutEx::tryCreateAnimatorAuto(const char* pName, bool enabled) {
 // pNames supplies count animation names; enabled enables only the first slot initially.
 AnimatorSet* LayoutEx::createAnimatorSet(const char* const* pNames, u32 count, bool enabled) {
     void* memory = AllocateMemory(sizeof(AnimatorSet) + sizeof(Animator*) * size_t(count));
+
     if (!memory) return nullptr;
     auto* set = new (memory) AnimatorSet;
     set->setBuffer(count, reinterpret_cast<Animator**>(set + 1));
+
     for (size_t i = 0; i != count; ++i) {
         if (pNames[i] && *pNames[i])
             set->setAnimator(i, tryCreateAnimatorAuto(pNames[i], enabled && i == 0));
@@ -99,9 +105,11 @@ Animator* LayoutEx::createAnimatorWithGroupIndex(const char* pName, u32 index, b
 // pName identifies an animation, index selects a valid group, and enabled sets its initial state.
 Animator* LayoutEx::tryCreateAnimatorWithGroupIndex(const char* pName, u32 index, bool enabled) {
     const void* data = GetAnimResourceData(pName);
+
     if (!data) return nullptr;
     nn::ui2d::AnimResource resource;
     resource.Set(data);
+
     if (index >= resource.GetGroupCount()) return nullptr;
     Animator* animator = CreateAnimator(this, resource.mAnimation);
     animator->SetupWithGroupIndex(resource, this, static_cast<nn::ui2d::GroupContainer*>(_20), index, enabled);

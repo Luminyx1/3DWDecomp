@@ -14,6 +14,7 @@ void CheckKeepButton::Uncheck() {
 
 void CheckKeepButton::StartDown() {
     AnimButton::StartDown();
+
     if (mCheckEnabled && !mChecked && !IsPlayDisableAnim()) {
         if (mCheckAnimator) mCheckAnimator->Play(Animator::cPlayType_OneTime, 1);
         mChecked = true;

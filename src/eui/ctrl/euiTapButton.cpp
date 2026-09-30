@@ -16,6 +16,7 @@ void TapButton::Off() {}
 // NON_MATCHING: equivalent state dispatch currently produces a different jump table.
 bool TapButton::ProcessDown() {
     bool processed = true;
+
     switch (mState) {
     case cState_Off:
         StartDown();
@@ -62,16 +63,20 @@ void TapButton::Initialize(sead::Heap* pHeap, nn::ui2d::Pane* pPane, Animator* p
 // pPane supplies the interaction metadata; pLayout owns animations and pGroup receives the button.
 void TapButton::CreateTapButton(nn::ui2d::Pane* pPane, LayoutEx* pLayout, ButtonGroup* pGroup) {
     const auto* boundingType = BoundingEx::GetRuntimeTypeInfoStatic();
+
     if (!pPane) return;
     bool isBounding = false;
+
     for (auto* type = pPane->GetRuntimeTypeInfo(); type; type = type->m_ParentTypeInfo) {
         if (type == boundingType) { isBounding = true; break; }
     }
 
     if (!isBounding) return;
     const auto* data = pPane->FindExtUserDataByName("TapButtonAnim");
+
     if (!data) return;
     Animator* animator = pLayout->tryCreateAnimatorAuto(static_cast<const char*>(data->GetData()), true);
+
     if (!animator) return;
     sead::Heap* heap = GetNwAllocatorHeap();
     auto* button = new (heap, 8) TapButton;

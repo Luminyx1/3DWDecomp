@@ -65,6 +65,7 @@ float TagProcessor::calcAdjustTextScale(TextBoxEx* pTextBox, float width, float 
 // pContext supplies the current font and the outermost horizontal/vertical text scales.
 void TagProcessor::BeginCalculateRect(Context* pContext) {
     _10 = _18 = const_cast<nn::font::Font*>(pContext->writer->GetFont());
+
     if (!mPrintDepth) {
         _2c = pContext->hScale;
         _30 = pContext->vScale;

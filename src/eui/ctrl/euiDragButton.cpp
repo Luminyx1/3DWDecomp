@@ -17,8 +17,10 @@ void DragButton::StartDrag(const sead::Vector2f& rPosition) {
 void DragButton::UpdateDrag(const sead::Vector2f* pPosition) {
     if (!pPosition) return;
     float x = mPaneStart.x;
+
     if (mDragX) x += pPosition->x - mDragStart.x;
     float y = mPaneStart.y;
+
     if (mDragY) y += pPosition->y - mDragStart.y;
     mDragPane->mPositionX = x;
     mDragPane->mPositionY = y;
@@ -35,6 +37,7 @@ void DragButton::StartCancel() { SelectStateAnim(6)->Play(Animator::cPlayType_On
 void DragButton::FinishCancel() {
     bool touch = (mFlags & 0x40) != 0;
     Animator* pAnimator = SelectStateAnim(0);
+
     if (touch) { pAnimator->StopAtMin(); ChangeState(cState_Off); }
     else { pAnimator->StopAtMax(); ChangeState(cState_On); }
 }
