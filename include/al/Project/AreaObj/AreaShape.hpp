@@ -24,7 +24,7 @@ public:
     bool calcWorldDir(sead::Vector3f*, const sead::Vector3f&) const;
     void calcTrans(sead::Vector3f*) const;
 
-    const sead::Matrix34f* mBaseMtx;  // _8
-    sead::Vector3f mScale;            // _10
+    const sead::Matrix34f* mBaseMtx = nullptr;
+    sead::Vector3f mScale = {1.0f, 1.0f, 1.0f};
 };
 }  // namespace al
