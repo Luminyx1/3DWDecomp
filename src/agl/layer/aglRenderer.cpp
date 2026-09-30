@@ -99,6 +99,7 @@ void Renderer::initialize(const CreateArg& rArg, sead::Heap* pHeap, sead::Heap* 
         {
             pDisplay->mDLBuffer = &mDLBuffer;
         }
+
         rpDisplay = pDisplay;
         i++;
     }
@@ -127,6 +128,7 @@ void Renderer::initialize(const CreateArg& rArg, sead::Heap* pHeap, sead::Heap* 
             mJobQueue[i].initialize(mLayer.size(), pHeap);
             break;
         }
+
         mJobQueue[i].clear();
     }
 
@@ -174,6 +176,7 @@ Renderer::~Renderer()
             delete pDisplay;
         }
     }
+
     mDisplay.freeBuffer();
 }
 
@@ -196,6 +199,7 @@ void Renderer::calc(bool swapBuffer)
                 pLayer->mFlag.reset(1 << 4);
                 isChanged = true;
             }
+
             pLayer->mFlag.reset(Layer::cFlag_ListDirty);
         }
     }
@@ -212,6 +216,7 @@ void Renderer::calc(bool swapBuffer)
                 }
             }
         }
+
         mFlag.reset(1);
     }
 
@@ -243,6 +248,7 @@ void Renderer::calc(bool swapBuffer)
             {
                 pShare = mDisplay[0];
             }
+
             mDisplay(i)->allocFrameBuffer(
                 MultiSampleType(mMultiSampleType), pShare, TextureFormat(mColorFormat),
                 mColorTextureNum, TextureFormat(mDepthFormat),
@@ -310,6 +316,7 @@ void Renderer::calc(bool swapBuffer)
                     {
                         layerDisplayType = pLayer->mDisplayType;
                     }
+
                     if (displayType == layerDisplayType)
                     {
                         pDisplay->pushBack(pLayer);
@@ -318,6 +325,7 @@ void Renderer::calc(bool swapBuffer)
                 }
             }
         }
+
         pDisplay->mFlag.change(RenderDisplay::cFlag_DrawDebugInfo, !mFlag.isOn(1 << 1));
     }
 
@@ -351,6 +359,7 @@ void Renderer::calcCommand(bool useJobQueue, u32 displayMask)
     {
         return;
     }
+
     if (!isDisplayList_())
     {
         return;
@@ -384,6 +393,7 @@ void Renderer::calcCommand(bool useJobQueue, u32 displayMask)
                 {
                     queue = rJob.mPriority <= _50c ? 1 : 0;
                 }
+
                 jobs(queue).pushBack(&rJob);
             }
         }
@@ -459,10 +469,12 @@ void Renderer::calcGPU(bool useJobQueue) const
     {
         return;
     }
+
     if (!isDisplayList_())
     {
         return;
     }
+
     if (useJobQueue)
     {
         return;
@@ -494,6 +506,7 @@ bool Renderer::draw(DrawContext* pDrawContext, s32 displayIndex) const
             mFlag.reset(1 << 6);
             mDisplay[displayIndex]->destroyDisplayList();
         }
+
         mDisplay[displayIndex]->callDisplayList(pDrawContext, mFlag.isOn(1 << 8));
         pDrawContext->invalidateShaderMode();
     }
@@ -548,6 +561,7 @@ void Renderer::removeDrawMethodByObject(const void* pObject)
             pLayer->removeDrawMethodByObject(pObject);
         }
     }
+
     mLayerListCS.unlock();
 }
 
@@ -565,6 +579,7 @@ void Renderer::removeDrawMethod(const DrawMethod* pMethod)
             pLayer->removeDrawMethod(pMethod);
         }
     }
+
     mLayerListCS.unlock();
 }
 
@@ -584,6 +599,7 @@ bool Renderer::removeLayer(Layer* pLayer)
         {
             pDisplay->erase(pLayer);
         }
+
         mLayer[index] = nullptr;
         pLayer->mJobDraw->finalize();
         pLayer->mJobSubDraw->finalize();
@@ -591,6 +607,7 @@ bool Renderer::removeLayer(Layer* pLayer)
         mFlag.set(1);
         result = true;
     }
+
     mLayerListCS.unlock();
     return result;
 }
@@ -617,6 +634,7 @@ s32 Renderer::searchLayerIndex(const Layer* pLayer) const
             break;
         }
     }
+
     mLayerListCS.unlock();
     return result;
 }
@@ -637,6 +655,7 @@ s32 Renderer::searchEmptyLayerIndexFromFront() const
             break;
         }
     }
+
     mLayerListCS.unlock();
     return result;
 }
@@ -657,6 +676,7 @@ s32 Renderer::searchEmptyLayerIndexFromBack() const
             break;
         }
     }
+
     mLayerListCS.unlock();
     return result;
 }
@@ -700,15 +720,18 @@ void Renderer::changeDebugCameraState(DebugCameraState state)
                 pLayer->copyCurrentCameraToDebugCamera_();
                 pLayer->copyCurrentProjectionToDebugProjection_();
             }
+
             pLayer->mDebugFlag.change(1, state != cDebugCameraState_None);
         }
     }
+
     mDebugCameraState = state;
     mDebugCameraMessageTimer = 60;
     if (state == cDebugCameraState_None)
     {
         mDebugCameraControllerIndex = 0;
     }
+
     mLayerListCS.unlock();
 }
 
@@ -831,9 +854,11 @@ void Renderer::genMessage(sead::hostio::Context* pContext)
     {
         sead::FormatFixedSafeString<1024> name("cJobQueueType_CalcDL%d", i);
     }
+
     {
         sead::FormatFixedSafeString<1024> usage("1DL max usage:%d[byte]", mDLBuffer.mMaxUsedSize);
     }
+
     {
         sead::FormatFixedSafeString<1024> usage("1DL max usage (ControlMemory):%d[byte]",
                                                 mDLBuffer.mMaxControlMemoryUsed);

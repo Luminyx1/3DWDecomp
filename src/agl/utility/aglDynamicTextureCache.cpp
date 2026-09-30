@@ -39,6 +39,7 @@ bool DynamicTextureCache::begin()
         mFlags.reset(1);
         mCache.clear();
     }
+
     return true;
 }
 
@@ -61,6 +62,7 @@ void DynamicTextureCache::pushBack_(TextureData* pTexture)
     {
         return;
     }
+
     mBuffer[mCache.size()] = *pTexture;
     mCache.pushBack(&mBuffer[mCache.size()]);
 }
@@ -97,6 +99,7 @@ TextureData* DynamicTextureCache::alloc(DrawContext* pDrawContext, const sead::S
     {
         return popFront_(pDrawContext);
     }
+
     TextureData* pTexture = DynamicTextureAllocator::instance()->alloc(
         pDrawContext, rName, format, width, height, mipLevelNum, pAddr,
         DynamicTextureAllocator::AllocateType(type), b, false);
@@ -127,6 +130,7 @@ TextureData* DynamicTextureCache::allocArray(DrawContext* pDrawContext,
     {
         return popFront_(pDrawContext);
     }
+
     TextureData* pTexture = DynamicTextureAllocator::instance()->allocArray(
         pDrawContext, rName, format, width, height, arrayNum, mipLevelNum, pAddr,
         DynamicTextureAllocator::AllocateType(type), b, false);
@@ -157,6 +161,7 @@ TextureData* DynamicTextureCache::alloc3D(DrawContext* pDrawContext, const sead:
     {
         return popFront_(pDrawContext);
     }
+
     TextureData* pTexture = DynamicTextureAllocator::instance()->alloc3D(
         pDrawContext, rName, format, width, height, depth, mipLevelNum, pAddr,
         DynamicTextureAllocator::AllocateType(type), b, false);
@@ -185,6 +190,7 @@ TextureData* DynamicTextureCache::allocCube(DrawContext* pDrawContext,
     {
         return popFront_(pDrawContext);
     }
+
     TextureData* pTexture = DynamicTextureAllocator::instance()->allocCube(
         pDrawContext, rName, format, width, mipLevelNum, pAddr,
         DynamicTextureAllocator::AllocateType(type), b, false);
@@ -215,6 +221,7 @@ TextureData* DynamicTextureCache::allocCubeArray(DrawContext* pDrawContext,
     {
         return popFront_(pDrawContext);
     }
+
     TextureData* pTexture = DynamicTextureAllocator::instance()->allocCubeArray(
         pDrawContext, rName, format, width, arrayNum, mipLevelNum, pAddr,
         DynamicTextureAllocator::AllocateType(type), b, false);
@@ -246,6 +253,7 @@ TextureData* DynamicTextureCache::allocMultiSample(DrawContext* pDrawContext,
     {
         return popFront_(pDrawContext);
     }
+
     TextureData* pTexture = DynamicTextureAllocator::instance()->allocMultiSample(
         pDrawContext, rName, format, width, height, multiSample, pAddr,
         DynamicTextureAllocator::AllocateType(type), b, false);
@@ -263,6 +271,7 @@ void DynamicTextureCache::free(TextureData* pTexture)
     {
         return;
     }
+
     DynamicTextureAllocator::instance()->free(pTexture);
 }
 

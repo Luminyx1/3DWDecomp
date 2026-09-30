@@ -91,6 +91,7 @@ void IParameterObj::writeToXML(sead::XmlElement* pElement, sead::Heap* pHeap) co
     {
         param->writeToXML(element, pHeap);
     }
+
     postWrite_();
 }
 
@@ -120,6 +121,7 @@ s32 IParameterObj::readFromXML(const sead::XmlElement& rElement, bool x)
             return -1;
         }
     }
+
     postRead_();
     return count;
 }
@@ -266,6 +268,7 @@ bool IParameterObj::isComplete(ResParameterObj obj, bool checkValues) const
             }
         }
     }
+
     return true;
 }
 
@@ -280,6 +283,7 @@ bool IParameterObj::verify() const
     {
         ret &= verify(param, param->mNext);
     }
+
     return ret;
 }
 
@@ -299,6 +303,7 @@ bool IParameterObj::verify(ParameterBase* pCheck, ParameterBase* pOther) const
             ok = false;
         }
     }
+
     return ok;
 }
 
@@ -316,6 +321,7 @@ ParameterBase* IParameterObj::searchParameter_(u32 hash)
             return param;
         }
     }
+
     return nullptr;
 }
 
@@ -333,6 +339,7 @@ ParameterBase* IParameterObj::searchParameter_(u32 hash) const
             return param;
         }
     }
+
     return nullptr;
 }
 
@@ -406,6 +413,7 @@ void IParameterObj::copy(const IParameterObj& rObj)
         {
             break;
         }
+
         src = src->mNext;
     }
 
@@ -481,11 +489,13 @@ void IParameterObj::copyLerp(const IParameterObj& rObj1, const IParameterObj& rO
         {
             break;
         }
+
         head = head->mNext;
         if (!head)
         {
             break;
         }
+
         it1 = it1->mNext;
     }
 
@@ -545,11 +555,13 @@ void IParameterObj::sortByHash()
         {
             mParamListHead = &*it;
         }
+
         it->mNext = nullptr;
         if (mParamListTail)
         {
             mParamListTail->mNext = &*it;
         }
+
         mParamListTail = &*it;
     }
 

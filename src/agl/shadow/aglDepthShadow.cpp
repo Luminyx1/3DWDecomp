@@ -21,22 +21,27 @@ inline void mergeBox(sead::BoundBox3f* pDst, const sead::BoundBox3f& rSrc)
     {
         min.x = rSrc.getMin().x;
     }
+
     if (min.y > rSrc.getMin().y)
     {
         min.y = rSrc.getMin().y;
     }
+
     if (min.z > rSrc.getMin().z)
     {
         min.z = rSrc.getMin().z;
     }
+
     if (max.x < rSrc.getMax().x)
     {
         max.x = rSrc.getMax().x;
     }
+
     if (max.y < rSrc.getMax().y)
     {
         max.y = rSrc.getMax().y;
     }
+
     if (max.z < rSrc.getMax().z)
     {
         max.z = rSrc.getMax().z;
@@ -88,19 +93,23 @@ sead::BitFlag32 DepthShadow::checkAndUpdateLightSpaceDirectional_(const T& rBoun
         {
             continue;
         }
+
         DepthShadowUnit& unit = mUnits[i];
         if (unit.isCulled(rBounding))
         {
             continue;
         }
+
         if (!converted)
         {
             unit.convBoundingToLightSpace(&box, rBounding);
         }
+
         mergeBox(&mUnits[i].mLightBox[type], box);
         result.setBit(i);
         converted = true;
     }
+
     return result;
 }
 
@@ -147,6 +156,7 @@ void DepthShadow::initialize(const CreateArg& rArg, sead::Heap* pHeap)
         mUnits[i].initialize(pHeap);
         mNearFarMargin.ref()[i] = 0.0f;
     }
+
     mCascadeNear.ref()[rArg.mCascadeNum] =
         sead::Mathf::clampMin(mCascadeNear.ref()[rArg.mCascadeNum - 1] + 500.0f, 20000.0f);
 
@@ -159,6 +169,7 @@ void DepthShadow::initialize(const CreateArg& rArg, sead::Heap* pHeap)
     {
         addObj(&mUnits[i], sead::FormatFixedSafeString<32>("shadow_unit_%d", i));
     }
+
     addObj(&mShadowMap, "shadow_map");
 }
 
@@ -193,15 +204,18 @@ void DepthShadow::drawShadowMap(DrawContext* pDrawContext) const
         {
             driver::GraphicsDriverMgr::instance()->setDepthClamp(pDrawContext, true);
         }
+
         arg.mIndex = i;
         if (mDrawCallback)
         {
             mDrawCallback->invoke(arg);
         }
+
         if (*mDepthClamp)
         {
             driver::GraphicsDriverMgr::instance()->setDepthClamp(pDrawContext, false);
         }
+
         shadowMap.endDepthBuffer(pDrawContext, i);
     }
 
@@ -267,6 +281,7 @@ void DepthShadow::updateSceneMatrix(const sead::Matrix34f& rViewMtx,
             mCheckBox = &DepthShadow::checkAndUpdateLightSpace_<sead::BoundBox3f>;
             mCheckSphere = &DepthShadow::checkAndUpdateLightSpace_<sead::Sphere<sead::Vector3f>>;
         }
+
         break;
     case 2:
         mCheckBox = &DepthShadow::checkOnly_<sead::BoundBox3f>;
@@ -299,19 +314,23 @@ sead::BitFlag32 DepthShadow::checkAndUpdateLightSpace_(const T& rBounding, s32 t
         {
             continue;
         }
+
         DepthShadowUnit& unit = mUnits[i];
         if (unit.isCulled(rBounding))
         {
             continue;
         }
+
         if (!converted)
         {
             unit.convBoundingToLightSpace(&box, rBounding);
         }
+
         mergeBox(&mUnits[i].mLightBox[type], box);
         result.setBit(i);
         converted = true;
     }
+
     return result;
 }
 
@@ -332,14 +351,17 @@ sead::BitFlag32 DepthShadow::checkAndUpdateWorld_(const sead::BoundBox3f& rBox, 
         {
             continue;
         }
+
         DepthShadowUnit& unit = mUnits[i];
         if (unit.isCulled(rBox))
         {
             continue;
         }
+
         mergeBox(&unit.mWorldBox[type], rBox);
         result.setBit(i);
     }
+
     return result;
 }
 
@@ -362,19 +384,23 @@ sead::BitFlag32 DepthShadow::checkAndUpdateWorld_(const sead::Sphere<sead::Vecto
         {
             continue;
         }
+
         DepthShadowUnit& unit = mUnits[i];
         if (unit.isCulled(rSphere))
         {
             continue;
         }
+
         if (!converted)
         {
             unit.convBoundingSphereToBox(&box, rSphere);
         }
+
         mergeBox(&mUnits[i].mWorldBox[type], box);
         result.setBit(i);
         converted = true;
     }
+
     return result;
 }
 
@@ -395,12 +421,15 @@ sead::BitFlag32 DepthShadow::checkOnly_(const T& rBounding, s32 type, sead::BitF
         {
             continue;
         }
+
         if (mUnits[i].isCulled(rBounding))
         {
             continue;
         }
+
         result.setBit(i);
     }
+
     return result;
 }
 
@@ -422,6 +451,7 @@ sead::BitFlag32 DepthShadow::noCheck_(const T& rBounding, s32 type, sead::BitFla
             result.setBit(i);
         }
     }
+
     return result;
 }
 
@@ -474,6 +504,7 @@ void DepthShadow::drawDebug(DrawContext* pDrawContext, const sead::Matrix34f& rV
         {
             mUnits[i].drawDebug(pDrawContext, mLightMatrix, rViewMtx, rProjMtx);
         }
+
         if (mDebugDrawFlag & (1 << (i + mUnits.size())))
         {
             const_cast<ShadowMap&>(mShadowMap)
@@ -495,6 +526,7 @@ void DepthShadow::genMessage(sead::hostio::Context* pContext)
     {
         mUnits[i].genMessageParameter(pContext, this);
     }
+
     genMessageDebugParameter(pContext, this);
 }
 
@@ -524,18 +556,21 @@ void DepthShadow::genMessageDebugParameter(sead::hostio::Context* pContext,
     {
         sead::FormatFixedSafeString<32> meta("Min=1, Max=%d", mUnits.size());
     }
+
     const s32 num = *mCascadeNum;
     for (s32 i = 0; i < num; i++)
     {
         sead::FormatFixedSafeString<32> frustum("Cascade %d Frustum", i);
         sead::FormatFixedSafeString<32> depth("Cascade %d Depth", i);
     }
+
     const s32 cascadeNum = *mCascadeNum;
     for (s32 i = 0; i < cascadeNum; i++)
     {
         sead::FormatFixedSafeString<32> near("Frustum Near %d", i);
         mUnits[i].genMessageDebugParameter(pContext, this);
     }
+
     mOptimizeOffsetNear.genMessageParameter(pContext, mOptimizeOffsetNear.getMeta());
     mOptimizeOffsetFar.genMessageParameter(pContext, mOptimizeOffsetFar.getMeta());
     mStableTexelWidth.genMessageParameter(pContext, mStableTexelWidth.getMeta());

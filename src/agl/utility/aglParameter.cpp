@@ -381,6 +381,7 @@ void ParameterBase::applyResource(ResParameter res, f32 t)
         {
             applyResourceSimple_(*this, res);
         }
+
         break;
     case ParameterType::Quat:
     {
@@ -425,9 +426,11 @@ s32 ParameterBase::readFromXML(const sead::XmlElement& rElement, bool x)
             {
                 return 1;
             }
+
             return 0;
         }
     }
+
     return 2;
 }
 
@@ -447,6 +450,7 @@ static void parseFloats_(const sead::SafeString& rString, f32* pOut, s32 num)
         {
             value = 0;
         }
+
         pOut[i] = value;
 
         if (++i == num)
@@ -477,6 +481,7 @@ bool ParameterBase::applyString(const sead::SafeString& rString, bool x)
         {
             *value = 0;
         }
+
         return true;
     }
     case ParameterType::Int:
@@ -488,6 +493,7 @@ bool ParameterBase::applyString(const sead::SafeString& rString, bool x)
         {
             *value = 0;
         }
+
         return true;
     }
     case ParameterType::Vec2:
@@ -541,6 +547,7 @@ bool ParameterBase::applyString(const sead::SafeString& rString, bool x)
             {
                 size = getParameterType() == ParameterType::String64 ? 64 : 256;
             }
+
             sead::BufferedSafeString string(ptrT<char>(), size);
             string.copy(src, srcLength < size - 1 ? srcLength : size - 1);
             result = size > srcLength;
@@ -612,6 +619,7 @@ bool ParameterBase::makeZero()
     case ParameterType::Special:
         return false;
     }
+
     return false;
 }
 
@@ -833,6 +841,7 @@ size_t ParameterBase::binarize(void* pBinary) const
         binary_size = sizeof(u32);
         *static_cast<u32*>(pBinary) = *ptrT<bool>();
     }
+
     return binary_size;
 }
 
@@ -863,70 +872,87 @@ ParameterBase* ParameterBase::createByTypeName(const sead::SafeString& name,
     {
         return new Parameter<bool>;
     }
+
     if (name.isEqual("f32"))
     {
         return new Parameter<f32>;
     }
+
     if (name.isEqual("int"))
     {
         return new Parameter<s32>;
     }
+
     if (name.isEqual("u32"))
     {
         return new Parameter<u32>;
     }
+
     if (name.isEqual("vec2"))
     {
         return new Parameter<sead::Vector2f>;
     }
+
     if (name.isEqual("vec3"))
     {
         return new Parameter<sead::Vector3f>;
     }
+
     if (name.isEqual("vec4"))
     {
         return new Parameter<sead::Vector4f>;
     }
+
     if (name.isEqual("color"))
     {
         return new Parameter<sead::Color4f>;
     }
+
     if (name.isEqual("quat"))
     {
         return new Parameter<sead::Quatf>;
     }
+
     if (name.isEqual("string32"))
     {
         return new Parameter<sead::FixedSafeString<32>>;
     }
+
     if (name.isEqual("string64"))
     {
         return new Parameter<sead::FixedSafeString<64>>;
     }
+
     if (name.isEqual("string256"))
     {
         return new Parameter<sead::FixedSafeString<256>>;
     }
+
     if (name.isEqual("stringRef"))
     {
         return new Parameter<sead::SafeString>;
     }
+
     if (name.isEqual("curve1"))
     {
         return new ParameterCurve<1>;
     }
+
     if (name.isEqual("curve2"))
     {
         return new ParameterCurve<2>;
     }
+
     if (name.isEqual("curve3"))
     {
         return new ParameterCurve<3>;
     }
+
     if (name.isEqual("curve4"))
     {
         return new ParameterCurve<4>;
     }
+
     if (name.isEqual("buffer_int"))
     {
         ParameterBuffer<s32>* buffer = new ParameterBuffer<s32>;
@@ -935,6 +961,7 @@ ParameterBase* ParameterBase::createByTypeName(const sead::SafeString& name,
         buffer->allocateBuffer(nullptr, size);
         return buffer;
     }
+
     if (name.isEqual("buffer_f32"))
     {
         ParameterBuffer<f32>* buffer = new ParameterBuffer<f32>;
@@ -943,6 +970,7 @@ ParameterBase* ParameterBase::createByTypeName(const sead::SafeString& name,
         buffer->allocateBuffer(nullptr, size);
         return buffer;
     }
+
     if (name.isEqual("buffer_u32"))
     {
         ParameterBuffer<u32>* buffer = new ParameterBuffer<u32>;
@@ -951,6 +979,7 @@ ParameterBase* ParameterBase::createByTypeName(const sead::SafeString& name,
         buffer->allocateBuffer(nullptr, size);
         return buffer;
     }
+
     if (name.isEqual("buffer_binary"))
     {
         ParameterBuffer<u8>* buffer = new ParameterBuffer<u8>;
@@ -959,6 +988,7 @@ ParameterBase* ParameterBase::createByTypeName(const sead::SafeString& name,
         buffer->allocateBuffer(nullptr, (u32)sead::Mathf::ceil(size * 0.25f) * 4);
         return buffer;
     }
+
     return nullptr;
 }
 
@@ -999,10 +1029,12 @@ void ParameterCurve<N>::writeToXML(sead::XmlElement* pElement, sead::Heap* pHeap
             sead::BufferedSafeString line(buffer + length, bufferSize - length);
             length += line.format("\n");
         }
+
         {
             sead::BufferedSafeString line(buffer + length, bufferSize - length);
             length += line.format("%d %d\n", mCurves[i].mInfo.numUse, mCurves[i].mInfo.curveType);
         }
+
         const s32 numUse = mCurves[i].mInfo.numUse;
         const f32* values = mCurveData[0].f + i * 32;
         for (s32 j = 0; j < numUse; j += 3)
@@ -1052,6 +1084,7 @@ s32 ParameterCurve<N>::readFromXML(const sead::XmlElement& rElement, bool x)
                 {
                     return 1;
                 }
+
                 while (end != it)
                 {
                     it.getAndForward(&token);
@@ -1060,6 +1093,7 @@ s32 ParameterCurve<N>::readFromXML(const sead::XmlElement& rElement, bool x)
                         break;
                     }
                 }
+
                 const u32 parsedNum = sead::StringUtil::parseNumber<u32>(
                     token, sead::StringUtil::CardinalNumber::BaseAuto);
                 const s32 numUse =
@@ -1069,6 +1103,7 @@ s32 ParameterCurve<N>::readFromXML(const sead::XmlElement& rElement, bool x)
                 {
                     return 1;
                 }
+
                 while (end != it)
                 {
                     it.getAndForward(&token);
@@ -1077,6 +1112,7 @@ s32 ParameterCurve<N>::readFromXML(const sead::XmlElement& rElement, bool x)
                         break;
                     }
                 }
+
                 const u32 curveType = sead::StringUtil::parseNumber<u32>(
                     token, sead::StringUtil::CardinalNumber::BaseAuto);
 
@@ -1087,6 +1123,7 @@ s32 ParameterCurve<N>::readFromXML(const sead::XmlElement& rElement, bool x)
                     {
                         return 1;
                     }
+
                     while (end != it)
                     {
                         it.getAndForward(&token);
@@ -1095,6 +1132,7 @@ s32 ParameterCurve<N>::readFromXML(const sead::XmlElement& rElement, bool x)
                             break;
                         }
                     }
+
                     values[j] = sead::StringUtil::parseNumber<f32>(
                         token, sead::StringUtil::CardinalNumber::BaseAuto);
                 }
@@ -1109,9 +1147,11 @@ s32 ParameterCurve<N>::readFromXML(const sead::XmlElement& rElement, bool x)
                     reinterpret_cast<f32*>(data)[i * 32 + 2 + j] = values[j];
                 }
             }
+
             return 0;
         }
     }
+
     return 2;
 }
 

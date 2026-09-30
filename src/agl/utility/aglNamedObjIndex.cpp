@@ -53,10 +53,12 @@ void INamedObjIndex::bind(INamedObjMgr* pMgr)
     {
         return;
     }
+
     if (mMgr)
     {
         mMgr->mIndexList.erase(this);
     }
+
     mMgr = pMgr;
     if (pMgr)
     {
@@ -143,10 +145,12 @@ void INamedObjIndex::genComboBoxSelect(sead::hostio::Context* pContext, bool isE
     {
         sead::SafeString label = getLabel();
     }
+
     if (mIndex == cIndexNotFound)
     {
         sead::FormatFixedSafeString<1024> str("%s <not found>", mValue.cstr());
     }
+
     s32 num = getNamedObjNum();
     for (s32 i = 0; i < num; i++)
     {
@@ -167,6 +171,7 @@ bool INamedObjIndex::listenPropertyEvent(const sead::hostio::PropertyEvent* pEve
         syncIndexToName();
         return true;
     }
+
     return false;
 }
 

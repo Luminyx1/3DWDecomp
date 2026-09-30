@@ -15,10 +15,12 @@ s32 compareNamedObj(const INamedObj* pLhs, const INamedObj* pRhs)
     {
         return -1;
     }
+
     if (pRhs->getObjType() < pLhs->getObjType())
     {
         return 1;
     }
+
     return pLhs->getObjName().compare(pRhs->getObjName()) < 0 ? -1 : 1;
 }
 
@@ -95,6 +97,7 @@ void INamedObjMgr::eraseNamedObj(INamedObj* pObj)
         {
             mNamedObj.erase(index);
         }
+
         index++;
     }
 }
@@ -114,6 +117,7 @@ void INamedObjMgr::updateList()
     {
         rIndex.syncNameToIndex();
     }
+
     mFlag.reset(1);
 }
 
@@ -147,6 +151,7 @@ void INamedObjMgr::constructList()
                 break;
             }
         }
+
         if (isFound)
         {
             continue;
@@ -215,6 +220,7 @@ void INamedObjMgr::constructListByGroup(bool isAll)
         {
             continue;
         }
+
         for (auto it = mNamedObj.begin(), itEnd = mNamedObj.end(); it != itEnd; ++it)
         {
             if (isAll)
@@ -282,9 +288,11 @@ void INamedObjMgr::Group::genMessage(sead::hostio::Context* pContext)
     {
         sead::FormatFixedSafeString<1024> str("セーブ（グループ\"%s\"）", mName.cstr());
     }
+
     {
         sead::FormatFixedSafeString<1024> str("ロード（グループ名が\"%s\"のデータ）", mName.cstr());
     }
+
     if (mMgr->getSaveFilePath() != "")
     {
         sead::FormatFixedSafeString<1024> str("%s", mMgr->getSaveFilePath().cstr());

@@ -16,6 +16,7 @@ struct MacroArgument {
     Clause* mName;
     u32 mHash;
 };
+
 static_assert(sizeof(MacroArgument) == 0x20);
 
 /**
@@ -34,6 +35,7 @@ Clause* skipSpace(Clause* pClause) {
     while (pClause->isSpace()) {
         pClause = pClause->mNext;
     }
+
     return pClause;
 }
 
@@ -50,10 +52,12 @@ Clause* findPreprocessEnd(Clause* pBegin, Clause* pEnd, bool isEndifOnly) {
         if (c->mType != Clause::cType_Sharp) {
             continue;
         }
+
         Clause* directive = skipSpace(c->mNext);
         if (directive->mType != Clause::cType_Word) {
             continue;
         }
+
         if (directive->compare("if", 2) == 0 || directive->compare("ifdef", 5) == 0 ||
             directive->compare("ifndef", 6) == 0) {
             depth++;
@@ -61,6 +65,7 @@ Clause* findPreprocessEnd(Clause* pBegin, Clause* pEnd, bool isEndifOnly) {
             if (depth == 0) {
                 return c;
             }
+
             depth--;
         } else if (!isEndifOnly) {
             if (directive->compare("elif", 4) == 0) {
@@ -72,6 +77,7 @@ Clause* findPreprocessEnd(Clause* pBegin, Clause* pEnd, bool isEndifOnly) {
             }
         }
     }
+
     return nullptr;
 }
 
@@ -105,6 +111,7 @@ Clause* skipElseBlock(Clause* pBegin, Clause* pEnd) {
                         } while (word->isSpace());
                     }
                 }
+
                 do {
                     word = word->mNext;
                 } while (word->isSpace());
@@ -121,10 +128,12 @@ Clause* skipElseBlock(Clause* pBegin, Clause* pEnd) {
                         } while (word->isSpace());
                     }
                 }
+
                 c = word->mNext;
                 isElseFollowing = false;
                 continue;
             }
+
             c = word;
         }
 
@@ -139,6 +148,7 @@ Clause* skipElseBlock(Clause* pBegin, Clause* pEnd) {
         if (next->mType != Clause::cType_Word || next->compare("else", 4) != 0) {
             return c;
         }
+
         isElseFollowing = true;
     }
 }
@@ -149,23 +159,29 @@ Clause* findDefineEnd(Clause* pBegin, Clause* pEnd) {
         if (type == Clause::cType_End) {
             return c;
         }
+
         if (type != Clause::cType_BlockCommentLF && type != Clause::cType_LineFeed) {
             continue;
         }
+
         Clause* prev = c->mPrev;
         while (prev->mType == Clause::cType_Space || prev->mType == Clause::cType_LineFeed) {
             prev = prev->mPrev;
         }
+
         if (prev->mType != Clause::cType_BackSlash) {
             return c;
         }
+
         if (type == Clause::cType_LineFeed && c->calcLineFeedCount() == 1) {
             continue;
         }
+
         if (c->mType != Clause::cType_BlockCommentLF) {
             return c;
         }
     }
+
     return nullptr;
 }
 
@@ -184,6 +200,7 @@ Clause* findTernaryBegin(Clause* pQuestion) {
                     c = c->mPrev;
                 } while (c->isSpace());
             }
+
             continue;
         }
 
@@ -192,11 +209,14 @@ Clause* findTernaryBegin(Clause* pQuestion) {
             c->getInfo().mIsAssignOperator) {
             break;
         }
+
         if (type == Clause::cType_Dot || c->isOperator() || c->isWord()) {
             continue;
         }
+
         break;
     }
+
     return c;
 }
 
@@ -232,6 +252,7 @@ void Resolver::removeClause(Clause* pBegin, Clause* pEnd, bool includeEnd) const
         removeClause(c);
         c = next;
     }
+
     if (includeEnd) {
         removeClause(pEnd);
     }
@@ -256,6 +277,7 @@ void Resolver::restructDefineStack(DefineStackInfo* pInfo) {
             bucket = linker;
             at = pInfo->mRoot->mPrev;
         }
+
         at->insertAfter(linker);
         linker = next;
     }
@@ -272,9 +294,11 @@ void Resolver::removeDefineStack(DefineStackInfo* pInfo, u32 depth) {
                     break;
                 }
             }
+
             linker->erase();
             delete linker;
         }
+
         linker = next;
     }
 }
@@ -327,6 +351,7 @@ DefineLinker* Resolver::createDefineLinker(Clause* pBegin, Clause* pEnd, bool* p
             if ((other->mHash & 0xff) != index) {
                 break;
             }
+
             if (other->mHash == hash && *name->mBegin == *other->mName->mBegin &&
                 name->compare(*other->mName, 0) == 0) {
                 if (other->mIsEnabled) {
@@ -335,10 +360,12 @@ DefineLinker* Resolver::createDefineLinker(Clause* pBegin, Clause* pEnd, bool* p
                         c->appendTo(&name);
                     }
                 }
+
                 if (bucket == other) {
                     bucket = linker;
                     at = other->mPrev;
                 }
+
                 other->erase();
                 delete other;
                 break;
@@ -348,6 +375,7 @@ DefineLinker* Resolver::createDefineLinker(Clause* pBegin, Clause* pEnd, bool* p
         at = mDefineStack.mRoot->mPrev;
         bucket = linker;
     }
+
     at->insertAfter(linker);
 
     if (mDeployInfoNum != 0) {
@@ -361,6 +389,7 @@ DefineLinker* Resolver::createDefineLinker(Clause* pBegin, Clause* pEnd, bool* p
             }
         }
     }
+
     return linker;
 }
 
@@ -376,15 +405,18 @@ const DefineLinker* Resolver::compareMacro(const Clause* pClause, u32 hash) cons
     if (!linker) {
         return nullptr;
     }
+
     for (DefineLinker* root = mDefineStack.mRoot; root != linker; linker = linker->mNext) {
         if ((linker->mHash & 0xff) != index) {
             break;
         }
+
         if (linker->mHash == hash && *pClause->mBegin == *linker->mName->mBegin &&
             pClause->compare(*linker->mName, 0) == 0) {
             return linker;
         }
     }
+
     return nullptr;
 }
 
@@ -398,6 +430,7 @@ u32 Resolver::calcMacroNum() const {
          linker = linker->mNext) {
         num++;
     }
+
     return num;
 }
 
@@ -411,6 +444,7 @@ const DefineLinker* Resolver::compareMacro(const Clause* pClause) const {
     for (const Clause* c = pClause; c->isWord(); c = c->mNext) {
         hash = c->calcHash(hash);
     }
+
     return compareMacro(pClause, hash);
 }
 
@@ -445,6 +479,7 @@ Clause* Resolver::replaceMacro(Clause* pClause, const DefineLinker* pLinker, boo
             while (end->mType == Clause::cType_Space || end->mType == Clause::cType_LineFeed) {
                 end = end->mNext;
             }
+
             do {
                 end = end->mNext;
             } while (end->mType == Clause::cType_BackSlash || end->isSpace());
@@ -464,16 +499,20 @@ Clause* Resolver::replaceMacro(Clause* pClause, const DefineLinker* pLinker, boo
                         } else {
                             depth -= type == Clause::cType_RParen;
                         }
+
                         continue;
                     }
+
                     if (type == Clause::cType_LParen) {
                         depth = 1;
                         continue;
                     }
+
                     if (type == Clause::cType_Comma) {
                         isContinue = true;
                         break;
                     }
+
                     if (type == Clause::cType_RParen) {
                         isContinue = false;
                         break;
@@ -489,6 +528,7 @@ Clause* Resolver::replaceMacro(Clause* pClause, const DefineLinker* pLinker, boo
                 while (argEnd->isSpace()) {
                     argEnd = argEnd->mPrev;
                 }
+
                 info.mEnd = argEnd;
                 end = arg->mNext;
                 argNum++;
@@ -500,18 +540,22 @@ Clause* Resolver::replaceMacro(Clause* pClause, const DefineLinker* pLinker, boo
                     c = c->mNext;
                     continue;
                 }
+
                 args[index].mName = c;
                 u32 hash = 0;
                 for (Clause* word = c; word->isWord(); word = word->mNext) {
                     hash = word->calcHash(hash);
                 }
+
                 args[index].mHash = hash;
                 while (c->isWord()) {
                     c = c->mNext;
                 }
+
                 if (index == argNum - 1) {
                     break;
                 }
+
                 index++;
             }
 
@@ -520,10 +564,12 @@ Clause* Resolver::replaceMacro(Clause* pClause, const DefineLinker* pLinker, boo
                     c = c->mNext;
                     continue;
                 }
+
                 u32 hash = 0;
                 for (Clause* word = c; word->isWord(); word = word->mNext) {
                     hash = word->calcHash(hash);
                 }
+
                 u32 i;
                 for (i = 0; i < argNum; i++) {
                     if (hash == args[i].mHash && c->compare(*args[i].mName, 0) == 0) {
@@ -537,6 +583,7 @@ Clause* Resolver::replaceMacro(Clause* pClause, const DefineLinker* pLinker, boo
                         break;
                     }
                 }
+
                 if (i == argNum) {
                     while (c->isWord()) {
                         c = c->mNext;
@@ -551,6 +598,7 @@ Clause* Resolver::replaceMacro(Clause* pClause, const DefineLinker* pLinker, boo
             if (c->mType != Clause::cType_DoubleSharp || c->mPrev == root) {
                 continue;
             }
+
             Clause* left = c;
             do {
                 left = left->mPrev;
@@ -589,6 +637,7 @@ Clause* Resolver::replaceMacro(Clause* pClause, const DefineLinker* pLinker, boo
     while (lineHead->mType != Clause::cType_LineFeed && lineHead->mType != Clause::cType_End) {
         lineHead = lineHead->mPrev;
     }
+
     Clause* directive = lineHead->mNext;
     if (directive->mType == Clause::cType_Sharp) {
         do {
@@ -600,10 +649,12 @@ Clause* Resolver::replaceMacro(Clause* pClause, const DefineLinker* pLinker, boo
                 if (c->mType == Clause::cType_BlockCommentLF || c->mType == Clause::cType_LineFeed) {
                     removeClause(c);
                 }
+
                 c = cNext;
             }
         }
     }
+
     return result;
 }
 
@@ -619,6 +670,7 @@ Clause* Resolver::resolveMacro(Clause* pClause, bool isExpandDefined, bool isCon
             if (c->mType != Clause::cType_Word) {
                 continue;
             }
+
             if (c->compare("defined", 7) != 0) {
                 const DefineLinker* linker = compareMacro(c);
                 if (linker && linker->mIsEnabled) {
@@ -626,10 +678,12 @@ Clause* Resolver::resolveMacro(Clause* pClause, bool isExpandDefined, bool isCon
                         u32 num = calcMacroNum();
                         macroLimit = num * num;
                     }
+
                     end = replaceMacro(c, linker, isConcat);
                     count++;
                     break;
                 }
+
                 continue;
             }
 
@@ -655,6 +709,7 @@ Clause* Resolver::resolveMacro(Clause* pClause, bool isExpandDefined, bool isCon
                         }
                     }
                 }
+
                 close = close->mNext;
             }
 
@@ -664,6 +719,7 @@ Clause* Resolver::resolveMacro(Clause* pClause, bool isExpandDefined, bool isCon
                     break;
                 }
             }
+
             if (end == close) {
                 end = close->mNext;
             }
@@ -693,6 +749,7 @@ SyntaxTree* Resolver::resolveExpression(Clause* pBegin, Clause* pEnd, bool isSta
             if (c->mType != Clause::cType_Word) {
                 continue;
             }
+
             Clause* zero = new (mUnitHeap) Clause(Clause::cType_Int, "0", "0" + 1);
             zero->mFlag |= 1;
             c->mPrev->insertAfter(zero);
@@ -701,6 +758,7 @@ SyntaxTree* Resolver::resolveExpression(Clause* pBegin, Clause* pEnd, bool isSta
                 c->erase();
                 c = next;
             }
+
             c = zero;
         }
     }
@@ -711,6 +769,7 @@ SyntaxTree* Resolver::resolveExpression(Clause* pBegin, Clause* pEnd, bool isSta
     } else {
         head->insertListAfter(backup);
     }
+
     return tree;
 }
 
@@ -770,6 +829,7 @@ Clause* Resolver::resolvePreprocessExpression(bool* pIsStatic, bool* pResult, Cl
                     hasDefined = true;
                 }
             }
+
             if (hasDefined) {
                 SyntaxTree* definedTree = resolveExpression(retry, retryLast, true);
                 removeClause(retryLast, retryLast->mPrev, true);
@@ -790,6 +850,7 @@ Clause* Resolver::resolvePreprocessExpression(bool* pIsStatic, bool* pResult, Cl
     if (!mFlags.isOn(0x10)) {
         return nullptr;
     }
+
     if (directive->compare("ifdef", 5) != 0 && directive->compare("ifndef", 6) != 0) {
         return nullptr;
     }
@@ -809,6 +870,7 @@ Clause* Resolver::resolvePreprocessExpression(bool* pIsStatic, bool* pResult, Cl
             *pIsStatic = linker->mIsResolvable;
             return lineEnd;
         }
+
         *pResult = false;
     } else if (directive->compare("ifndef", 6) == 0) {
         const DefineLinker* linker = compareMacro(name);
@@ -817,6 +879,7 @@ Clause* Resolver::resolvePreprocessExpression(bool* pIsStatic, bool* pResult, Cl
             *pIsStatic = linker->mIsResolvable;
             return lineEnd;
         }
+
         *pResult = true;
     }
 
@@ -827,6 +890,7 @@ Clause* Resolver::resolvePreprocessExpression(bool* pIsStatic, bool* pResult, Cl
             break;
         }
     }
+
     return lineEnd;
 }
 
@@ -837,6 +901,7 @@ bool Resolver::resolvePreprocessBlock(Clause* pSharp, bool isStatic) {
     if (!lineEnd) {
         return false;
     }
+
     if (isResolved) {
         Clause* next = findPreprocessEnd(lineEnd, mRoot, false);
         if (result) {
@@ -848,8 +913,10 @@ bool Resolver::resolvePreprocessBlock(Clause* pSharp, bool isStatic) {
         } else {
             removeClause(lineEnd->mNext, next, false);
         }
+
         removeClause(pSharp, lineEnd, true);
     }
+
     return isResolved;
 }
 
@@ -884,6 +951,7 @@ bool Resolver::markPreprocessBlock(Clause** ppBlockBegin, Clause** ppBlockEnd, C
         blockEnd = next;
         partEnd = endif;
     }
+
     *ppBlockBegin = blockBegin;
     *ppBlockEnd = blockEnd;
     *ppPartEnd = partEnd;
@@ -910,6 +978,7 @@ bool Resolver::resolveProgramBlock(Clause* pIf, bool* pResult) {
             }
         }
     }
+
     if (!close) {
         return false;
     }
@@ -932,9 +1001,11 @@ bool Resolver::resolveProgramBlock(Clause* pIf, bool* pResult) {
                 c = begin;
             }
         }
+
         if (c->mType != Clause::cType_Word) {
             continue;
         }
+
         if (c->compare("false", 5) == 0) {
             c->set(Clause::cType_Int, "0", "0" + 1);
             c->mFlag |= 1;
@@ -945,6 +1016,7 @@ bool Resolver::resolveProgramBlock(Clause* pIf, bool* pResult) {
             if (!mFlags.isOn(8)) {
                 return false;
             }
+
             hasUnresolved = true;
         }
     }
@@ -959,6 +1031,7 @@ bool Resolver::resolveProgramBlock(Clause* pIf, bool* pResult) {
         if (!tree) {
             return false;
         }
+
         removeClause(open, exprEnd, false);
     } else {
         tree = resolveExpression(open, exprEnd, false);
@@ -973,6 +1046,7 @@ bool Resolver::resolveProgramBlock(Clause* pIf, bool* pResult) {
     if (!isStatic) {
         pIf->insertListAfter(tree->construct(mUnitHeap, mFrameHeap));
     }
+
     tree->removeClauseRecursive(mRemoveDelegate);
     delete tree;
 
@@ -988,6 +1062,7 @@ bool Resolver::resolveProgramBlock(Clause* pIf, bool* pResult) {
                 } while (statementEnd->isSpace());
             }
         }
+
         if (statementEnd->mType != Clause::cType_Semicolon && !statementEnd->isCloseBracket()) {
             do {
                 statementEnd = statementEnd->mNext;
@@ -1006,11 +1081,13 @@ bool Resolver::resolveProgramBlock(Clause* pIf, bool* pResult) {
                 Clause* elseEnd = skipElseBlock(after, pIf->mPrev);
                 removeClause(after, elseEnd, false);
             }
+
             result = true;
         } else {
             if (next->mType == Clause::cType_Word && next->compare("else", 4) == 0) {
                 after = next->mNext;
             }
+
             removeClause(bodyBegin, after, false);
             result = false;
         }
@@ -1019,6 +1096,7 @@ bool Resolver::resolveProgramBlock(Clause* pIf, bool* pResult) {
     if (pResult) {
         *pResult = result;
     }
+
     return isStatic;
 }
 
@@ -1031,6 +1109,7 @@ bool Resolver::resolveTernaryBlock(Clause* pClause) {
             question = question->mNext;
             continue;
         }
+
         if (question->isOpenBracket()) {
             s32 depth = 0;
             while (depth != 1 || !question->isCloseBracket()) {
@@ -1039,23 +1118,29 @@ bool Resolver::resolveTernaryBlock(Clause* pClause) {
                     question = question->mNext;
                 } while (question->isSpace());
             }
+
             question = question->mNext;
             continue;
         }
+
         u32 type = question->mType;
         if (type == Clause::cType_Dot) {
             question = question->mNext;
             continue;
         }
+
         if (type == Clause::cType_Colon || type == Clause::cType_Question) {
             break;
         }
+
         if (question->isOperator() || question->isWord()) {
             question = question->mNext;
             continue;
         }
+
         break;
     }
+
     if (!question) {
         return false;
     }
@@ -1073,6 +1158,7 @@ bool Resolver::resolveTernaryBlock(Clause* pClause) {
                 nest--;
                 continue;
             }
+
             Clause* begin = findTernaryBegin(c);
             Clause* start = begin;
             do {
@@ -1082,9 +1168,11 @@ bool Resolver::resolveTernaryBlock(Clause* pClause) {
                 c = begin;
             }
         }
+
         if (c->mType != Clause::cType_Word) {
             continue;
         }
+
         if (c->compare("false", 5) == 0) {
             c->set(Clause::cType_Int, "0", "0" + 1);
             c->mFlag |= 1;
@@ -1095,6 +1183,7 @@ bool Resolver::resolveTernaryBlock(Clause* pClause) {
             if (!mFlags.isOn(8)) {
                 return false;
             }
+
             hasUnresolved = true;
         }
     }
@@ -1109,6 +1198,7 @@ bool Resolver::resolveTernaryBlock(Clause* pClause) {
         if (!tree) {
             return false;
         }
+
         removeClause(pClause, question, false);
     } else {
         tree = resolveExpression(pClause, question, false);
@@ -1122,6 +1212,7 @@ bool Resolver::resolveTernaryBlock(Clause* pClause) {
     if (!isStatic) {
         prev->insertListAfter(tree->construct(mUnitHeap, mFrameHeap));
     }
+
     tree->removeClauseRecursive(mRemoveDelegate);
     delete tree;
     if (!isStatic) {
@@ -1141,13 +1232,16 @@ bool Resolver::resolveTernaryBlock(Clause* pClause) {
                     colon = colon->mNext;
                 } while (colon->isSpace());
             }
+
             continue;
         }
+
         u32 type = colon->mType;
         if (type == Clause::cType_Colon) {
             if (depth == 0) {
                 break;
             }
+
             depth--;
         } else if (type == Clause::cType_Question) {
             depth++;
@@ -1171,13 +1265,16 @@ bool Resolver::resolveTernaryBlock(Clause* pClause) {
                         falseEnd = falseEnd->mNext;
                     } while (falseEnd->isSpace());
                 }
+
                 continue;
             }
+
             u32 type = falseEnd->mType;
             if (type == Clause::cType_Colon) {
                 if (falseDepth == 0) {
                     break;
                 }
+
                 falseDepth--;
             } else if (type == Clause::cType_Question) {
                 falseDepth++;
@@ -1186,10 +1283,12 @@ bool Resolver::resolveTernaryBlock(Clause* pClause) {
                 break;
             }
         }
+
         removeClause(colon, falseEnd, false);
     } else {
         removeClause(trueBegin, falseBegin, false);
     }
+
     removeClause(prev->mNext, question, true);
     return true;
 }
@@ -1261,6 +1360,7 @@ void Resolver::resolveStaticBranch(Clause* pBegin, Clause* pEnd) {
                             } while (body->isSpace());
                         }
                     }
+
                     do {
                         body = body->mNext;
                     } while (body->isSpace());
@@ -1274,6 +1374,7 @@ void Resolver::resolveStaticBranch(Clause* pBegin, Clause* pEnd) {
                                 bodyEnd = it;
                                 break;
                             }
+
                             depth += it->isOpenBracket() ? 1 : -it->isCloseBracket();
                             do {
                                 it = it->mNext;
@@ -1283,15 +1384,18 @@ void Resolver::resolveStaticBranch(Clause* pBegin, Clause* pEnd) {
                                 break;
                             }
                         }
+
                         if (isBlock) {
                             body = body->mNext;
                         }
                     }
+
                     if (bodyEnd->mType != Clause::cType_Semicolon && !bodyEnd->isCloseBracket()) {
                         do {
                             bodyEnd = bodyEnd->mNext;
                         } while (bodyEnd->mType != Clause::cType_Semicolon);
                     }
+
                     bodyEnd = skipSpace(bodyEnd);
                     resolveStaticBranch(body, bodyEnd);
 
@@ -1320,6 +1424,7 @@ void Resolver::resolveStaticBranch(Clause* pBegin, Clause* pEnd) {
                                 removeClause(elseClause);
                                 last = elsePrev->mNext;
                             }
+
                             break;
                         }
 
@@ -1339,6 +1444,7 @@ void Resolver::resolveStaticBranch(Clause* pBegin, Clause* pEnd) {
                                 if (elseBodyEnd->mType == Clause::cType_Semicolon) {
                                     break;
                                 }
+
                                 if (elseBodyEnd->mType == Clause::cType_LBrace) {
                                     break;
                                 }
@@ -1352,6 +1458,7 @@ void Resolver::resolveStaticBranch(Clause* pBegin, Clause* pEnd) {
                         last = elseBodyEnd;
                         break;
                     }
+
                     c = last->mPrev;
                 }
             } else {
@@ -1389,6 +1496,7 @@ void Resolver::executePart(Clause* pSharp, Clause* pEnd, Clause* pSkip) {
     if (pSharp == pEnd) {
         return;
     }
+
     for (Clause* c = pSharp;;) {
         Clause* directive = skipSpace(c->mNext);
         if (directive->compare("if", 2) == 0 || directive->compare("elif", 4) == 0 ||
@@ -1398,11 +1506,13 @@ void Resolver::executePart(Clause* pSharp, Clause* pEnd, Clause* pSkip) {
             if (!next) {
                 next = pEnd;
             }
+
             if (c != pSkip) {
                 pushDefineStack();
                 executeImpl(directive, next, false);
                 popDefineStack();
             }
+
             c = next->mPrev;
         } else if (directive->compare("endif", 5) == 0) {
             return;
@@ -1424,8 +1534,10 @@ void Resolver::executeImpl(Clause* pBegin, Clause* pEnd, bool isInner) {
             if (mFlags.isOn(2)) {
                 c = resolveMacro(c, mFlags.isOn(0x10), true)->mPrev;
             }
+
             continue;
         }
+
         if (c->mType != Clause::cType_Sharp) {
             continue;
         }
@@ -1446,9 +1558,11 @@ void Resolver::executeImpl(Clause* pBegin, Clause* pEnd, bool isInner) {
                     if (end == pEnd) {
                         return;
                     }
+
                     c = end;
                     continue;
                 }
+
                 if (isReplaced) {
                     removeClause(c, end, false);
                     Clause* root = linker->mRoot;
@@ -1459,6 +1573,7 @@ void Resolver::executeImpl(Clause* pBegin, Clause* pEnd, bool isInner) {
                     if (end == pEnd) {
                         return;
                     }
+
                     c = end;
                     continue;
                 }
@@ -1472,12 +1587,14 @@ void Resolver::executeImpl(Clause* pBegin, Clause* pEnd, bool isInner) {
                 while (body->mType == Clause::cType_Word) {
                     body = body->mNext;
                 }
+
                 if (body->mType == Clause::cType_LParen) {
                     do {
                         body = body->mNext;
                     } while (body->mType != Clause::cType_RParen);
                     body = body->mNext;
                 }
+
                 if (body != end) {
                     for (Clause* it = body->mNext; it != end;) {
                         if (it->mType == Clause::cType_Word && it->compare(*linker->mName, 0) == 0) {
@@ -1489,14 +1606,17 @@ void Resolver::executeImpl(Clause* pBegin, Clause* pEnd, bool isInner) {
                             it = resolveMacro(it, mFlags.isOn(0x10), false);
                         }
                     }
+
                     for (Clause* it = body->mNext; it != end; it = it->mNext) {
                         if (it->mType != Clause::cType_LineFeed) {
                             continue;
                         }
+
                         Clause* prev = it->mPrev;
                         if (prev->mType == Clause::cType_BackSlash) {
                             continue;
                         }
+
                         Clause* backSlash =
                             new (mUnitHeap) Clause(Clause::cType_BackSlash, "\\", "\\" + 1);
                         backSlash->mFlag |= 1;
@@ -1504,9 +1624,11 @@ void Resolver::executeImpl(Clause* pBegin, Clause* pEnd, bool isInner) {
                     }
                 }
             }
+
             if (end == pEnd) {
                 return;
             }
+
             c = end;
             continue;
         }
@@ -1525,10 +1647,12 @@ void Resolver::executeImpl(Clause* pBegin, Clause* pEnd, bool isInner) {
                         skip = skip->mPrev;
                     }
                 }
+
                 executePart(c, partEnd, skip);
                 if (blockBegin && blockEnd) {
                     executeImpl(blockBegin, blockEnd, false);
                 }
+
                 c = partEnd->mPrev;
             } else if (directive->compare("else", 4) == 0 ||
                        directive->compare("endif", 5) == 0 ||
@@ -1539,6 +1663,7 @@ void Resolver::executeImpl(Clause* pBegin, Clause* pEnd, bool isInner) {
                 while (p->isSpace()) {
                     p = p->mPrev;
                 }
+
                 Clause* name = directive;
                 do {
                     name = name->mNext;
@@ -1546,6 +1671,7 @@ void Resolver::executeImpl(Clause* pBegin, Clause* pEnd, bool isInner) {
                 const_cast<DefineLinker*>(compareMacro(name))->mIsEnabled = false;
                 c = name->mPrev;
             }
+
             continue;
         }
 
@@ -1556,9 +1682,11 @@ void Resolver::executeImpl(Clause* pBegin, Clause* pEnd, bool isInner) {
                 c = prev;
                 continue;
             }
+
             if (directive->compare("elif", 4) == 0) {
                 directive->set(Clause::cType_Word, directive->mBegin + 2, directive->mEnd);
             }
+
             Clause* partEnd = findPreprocessEnd(directive, pEnd, true);
             do {
                 partEnd = partEnd->mNext;
@@ -1589,6 +1717,7 @@ void Resolver::executeImpl(Clause* pBegin, Clause* pEnd, bool isInner) {
             while (p->isSpace()) {
                 p = p->mPrev;
             }
+
             Clause* first = p->mPrev;
             Clause* name = directive;
             do {
@@ -1625,6 +1754,7 @@ bool Resolver::execute(bool isResolvePreprocess, bool isResolveMacro, bool isInn
     if (mFlags.isOn(2) && isResolveStaticBranch) {
         resolveStaticBranch(mRoot->mNext, mRoot);
     }
+
     return true;
 }
 

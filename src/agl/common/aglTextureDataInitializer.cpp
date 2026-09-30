@@ -71,9 +71,11 @@ u32 TextureDataInitializerTGA::checkTGAHeader(const void* pData, s32 pixelByteSi
     if ((header->mBitsPerPixel >> 3) != pixelByteSize) {
         result |= 1;
     }
+
     if (header->mWidth != width) {
         result |= 2;
     }
+
     if (header->mHeight != height) {
         result |= 4;
     }

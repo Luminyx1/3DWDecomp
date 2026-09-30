@@ -67,6 +67,7 @@ s32 ResParameterObj::searchIndex(u32 param_hash) const
             return i;
         }
     }
+
     return -1;
 }
 
@@ -79,6 +80,7 @@ s32 ResParameterList::searchListIndex(u32 list_hash) const
             return i;
         }
     }
+
     return -1;
 }
 
@@ -91,6 +93,7 @@ s32 ResParameterList::searchObjIndex(u32 obj_hash) const
             return i;
         }
     }
+
     return -1;
 }
 
@@ -105,6 +108,7 @@ static void getName_(sead::BufferedSafeString* pName, u32 hash,
             return;
         }
     }
+
     pName->format("0x%08x", hash);
 }
 
@@ -234,6 +238,7 @@ ResParameterArchive::ResParameterArchive(const void* pData)
         {
             return;
         }
+
         is_utf8 = false;
     }
     else
@@ -305,6 +310,7 @@ ResParameterArchive::ResParameterArchive(const void* pData)
                 heap->free(utf16);
                 heap->free(utf8);
             }
+
             strings += (length + 4) & ~3;
         } while (strings < reinterpret_cast<char*>(unk));
     }

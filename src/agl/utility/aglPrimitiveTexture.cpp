@@ -222,6 +222,7 @@ void PrimitiveTexture::initialize(sead::Heap* pHeap)
             mSamplers[i]->setDepthCompareEnable(true);
             mSamplers[i]->setDepthCompareFunc(8);
         }
+
         mSamplers[i]->updateRegs();
     }
 }

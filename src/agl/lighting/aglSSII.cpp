@@ -35,6 +35,7 @@ const TextureData* allocTexture(utl::DynamicTextureAllocator* pAllocator,
                                                utl::DynamicTextureAllocator::cAllocateType_0,
                                                true, false);
     }
+
     return pAllocator->alloc(pDrawContext, pName, format, width, height, 1, nullptr,
                              utl::DynamicTextureAllocator::cAllocateType_0, true, false);
 }
@@ -74,6 +75,7 @@ void SSII::TexBuf::init(DrawContext* pDrawContext, BufType type, u32 width, u32 
     default:
         break;
     }
+
     mIsAllocated = true;
     mIsWithoutContext = withoutContext;
 }
@@ -108,6 +110,7 @@ void SSII::TexBuf::free() const
     {
         utl::DynamicTextureAllocator::instance()->free(mTextureData);
     }
+
     mTextureData = nullptr;
     mIsAllocated = false;
     mIsWithoutContext = false;
@@ -141,6 +144,7 @@ SSII::ReduceBuffer::~ReduceBuffer()
     {
         rBuf.free();
     }
+
     mBuffers.freeBuffer();
 }
 
@@ -168,6 +172,7 @@ SSII::~SSII()
         rContext.mRefBuffers.freeBuffer();
         rContext.mDifBuffers.freeBuffer();
     }
+
     mContexts.freeBuffer();
 }
 
@@ -200,15 +205,18 @@ void SSII::initialize(s32 viewNum, sead::Heap* pHeap)
         {
             rBuffer.mBuffers.tryAllocBuffer(cBufType_Num, pHeap);
         }
+
         rContext.mRefBuffers.tryAllocBuffer(10, pHeap);
         for (ReduceBuffer& rBuffer : rContext.mRefBuffers)
         {
             rBuffer.mBuffers.tryAllocBuffer(cBufType_Num, pHeap);
         }
+
         rContext.mSrcBuffer.mBuffers.tryAllocBuffer(cBufType_Num, pHeap);
         rContext.mDifExpandBuffer.mBuffers.tryAllocBuffer(cBufType_Num, pHeap);
         rContext.mRefExpandBuffer.mBuffers.tryAllocBuffer(cBufType_Num, pHeap);
     }
+
     mRedBufSettings.tryAllocBuffer(10, pHeap);
     applyQualitySetting_();
 
@@ -250,12 +258,14 @@ void SSII::applyQualitySetting_()
         mRedBufSettings[i].mWidth = cSampleNumTable[mSampleQuality][i];
         mRedBufSettings[i].mHeight = cSampleNumTable[mSampleQuality][i];
     }
+
     for (s32 i = 0; i < 10; i++)
     {
         mRedBufSettings[i].mSampleNum = 2;
         mRedBufSettings[i].mMode = 0;
         mRedBufSettings[i].mIntensity = 1.0f;
     }
+
     for (s32 i = 0; i < 10; i++)
     {
         s32 diff = i - mRedBufLevel;
@@ -270,10 +280,12 @@ void SSII::applyQualitySetting_()
     {
         mDifLevelNum = 1;
     }
+
     if (mRefLevelNum <= 0)
     {
         mRefLevelNum = 1;
     }
+
     s32 start = mDifLevelNum - mRefStartOffset;
     mRefStartLevel = start < 0 ? 0 : start;
 }
@@ -343,6 +355,7 @@ void SSII::draw_(DrawContext* pDrawContext, s32 view, const RenderBuffer* pRende
     {
         return;
     }
+
     if (!isDifEnable && !isRefEnable)
     {
         return;
@@ -359,6 +372,7 @@ void SSII::draw_(DrawContext* pDrawContext, s32 view, const RenderBuffer* pRende
     {
         resolutionLevel++;
     }
+
     mCurrentResolutionLevel = resolutionLevel;
 
     {
@@ -374,6 +388,7 @@ void SSII::draw_(DrawContext* pDrawContext, s32 view, const RenderBuffer* pRende
                 difNum = i;
                 break;
             }
+
             rContext.mDifBuffers[i].mWidth = w;
             rContext.mDifBuffers[i].mHeight = h;
             if (i < refNum)
@@ -397,6 +412,7 @@ void SSII::draw_(DrawContext* pDrawContext, s32 view, const RenderBuffer* pRende
             rContext.mReprojectionBuffer.mRenderBuffer.clear(pDrawContext, 0, 1,
                                                              sead::Color4f::cBlack, 1.0f, 0);
         }
+
         if (pLightAlbedo != nullptr)
         {
             rSrc.mBuffers[cBufType_Light].init(pDrawContext, pLightAlbedo, width, height);
@@ -405,6 +421,7 @@ void SSII::draw_(DrawContext* pDrawContext, s32 view, const RenderBuffer* pRende
         {
             rSrc.mBuffers[cBufType_Light].init(pDrawContext, pLight, width, height);
         }
+
         rSrc.mBuffers[cBufType_Albedo].init(pDrawContext, pAlbedo, width, height);
     }
     else
@@ -418,6 +435,7 @@ void SSII::draw_(DrawContext* pDrawContext, s32 view, const RenderBuffer* pRende
                                             rContext.mReprojectionWidth,
                                             rContext.mReprojectionHeight);
     }
+
     rSrc.mBuffers[cBufType_Normal].init(pDrawContext, pNormal, width, height);
     rSrc.mBuffers[cBufType_Depth].init(pDrawContext, pDepth, width, height);
 
@@ -485,6 +503,7 @@ void SSII::draw_(DrawContext* pDrawContext, s32 view, const RenderBuffer* pRende
                                     rRef.mBuffers[cBufType_Normal].mRenderBuffer,
                                     rPrevRef.mBuffers[cBufType_Normal].mSampler, false);
                     }
+
                     if (mReduceLevel[2] == mRefReduceLevel[2])
                     {
                         rRef.mBuffers[cBufType_Depth].init(
@@ -506,6 +525,7 @@ void SSII::draw_(DrawContext* pDrawContext, s32 view, const RenderBuffer* pRende
                     rRef.mBuffers[cBufType_Depth].init(
                         pDrawContext, rDif.mBuffers[cBufType_Depth].mTextureData, w, h);
                 }
+
                 rRef.mBuffers[cBufType_Albedo].init(
                     pDrawContext, rDif.mBuffers[cBufType_Albedo].mTextureData, w, h);
             }
@@ -570,6 +590,7 @@ void SSII::draw_(DrawContext* pDrawContext, s32 view, const RenderBuffer* pRende
         rExpand.mBuffers[cBufType_Light].mRenderBuffer.clear(pDrawContext, 0, 1,
                                                              sead::Color4f::cBlack, 1.0f, 0);
     }
+
     if (isRefEnable)
     {
         ReduceBuffer& rExpand = rContext.mRefExpandBuffer;
@@ -615,6 +636,7 @@ void SSII::draw_(DrawContext* pDrawContext, s32 view, const RenderBuffer* pRende
             }
         }
     }
+
     if (isRefEnable)
     {
         const ReduceBuffer& rLastRef = rContext.mRefBuffers[expandLevel];
@@ -657,10 +679,12 @@ void SSII::draw_(DrawContext* pDrawContext, s32 view, const RenderBuffer* pRende
                 pSrc = pDst;
                 pDst = pTmp;
             }
+
             drawAntiHowling_(pDrawContext, view, rDifExpand.mRenderBuffer, rDifExpand.mSampler,
                              pSrc->mSampler);
             pSrc->free();
         }
+
         if (isRefEnable)
         {
             u32 w = rRefExpand.mWidth >> 1;
@@ -685,6 +709,7 @@ void SSII::draw_(DrawContext* pDrawContext, s32 view, const RenderBuffer* pRende
                 pSrc = pDst;
                 pDst = pTmp;
             }
+
             drawAntiHowling_(pDrawContext, view, rRefExpand.mRenderBuffer, rRefExpand.mSampler,
                              pSrc->mSampler);
             pSrc->free();
@@ -801,6 +826,7 @@ void SSII::draw_(DrawContext* pDrawContext, s32 view, const RenderBuffer* pRende
                 }
             }
         }
+
         if (isRefEnable)
         {
             for (s32 i = expandLevel; i >= 0; i--)
@@ -839,11 +865,13 @@ void SSII::draw_(DrawContext* pDrawContext, s32 view, const RenderBuffer* pRende
         {
             sead::FormatFixedSafeString<256> name("dif_expand_%d", i);
         }
+
         for (s32 i = expandLevel; i < difNum; i++)
         {
             sead::FormatFixedSafeString<256> name("dif_light_%d", i);
         }
     }
+
     if (isRefEnable)
     {
         for (s32 i = 0; i < expandLevel; i++)
@@ -858,6 +886,7 @@ void SSII::draw_(DrawContext* pDrawContext, s32 view, const RenderBuffer* pRende
         rContext.mDifBuffers[i].free();
         rContext.mRefBuffers[i].free();
     }
+
     rContext.mDifExpandBuffer.free();
     rContext.mRefExpandBuffer.free();
 }
@@ -971,6 +1000,7 @@ bool SSII::allocReprojectionBuffer_(DrawContext* pDrawContext, s32 view) const
             return false;
         }
     }
+
     rBuffer.free();
     rBuffer.init(pDrawContext, cBufType_Albedo, rContext.mReprojectionWidth,
                  rContext.mReprojectionHeight, "PrevFrameBuffer", true);
@@ -1015,6 +1045,7 @@ void SSII::drawReduce_(DrawContext* pDrawContext, s32 view, s32 level,
             sead::Vector2f step(1.0f / width, 1.0f / height);
             pProgram->getUniformLocation(0).setUniform(pDrawContext, 2, &step);
         }
+
         rSampler.activate(pDrawContext, pProgram->getSamplerLocation(0), -1, false);
         pfx::detail::drawQuadTriangle(pDrawContext);
         rRenderBuffer.getRenderTargetColor()->invalidateGPUCache(pDrawContext);
@@ -1026,11 +1057,13 @@ void SSII::drawReduce_(DrawContext* pDrawContext, s32 view, s32 level,
             sead::Vector2f step(1.0f / width, 1.0f / height);
             pProgram->getUniformLocation(0).setUniform(pDrawContext, 2, &step);
         }
+
         {
             TextureSampler sampler(
                 *reinterpret_cast<const TextureData*>(rRenderBuffer.getRenderTargetColor()));
             sampler.activate(pDrawContext, pProgram->getSamplerLocation(0), -1, false);
         }
+
         pfx::detail::drawQuadTriangle(pDrawContext);
         rRenderBuffer.getRenderTargetColor()->invalidateGPUCache(pDrawContext);
     }
@@ -1046,6 +1079,7 @@ void SSII::drawReduce_(DrawContext* pDrawContext, s32 view, s32 level,
             sead::Vector2f step(1.0f / width, 1.0f / height);
             pProgram->getUniformLocation(0).setUniform(pDrawContext, 2, &step);
         }
+
         rSampler.activate(pDrawContext, pProgram->getSamplerLocation(0), -1, false);
         pfx::detail::drawQuadTriangle(pDrawContext);
         rRenderBuffer.getRenderTargetColor()->invalidateGPUCache(pDrawContext);
@@ -1291,10 +1325,12 @@ void SSII::drawExpand_(DrawContext* pDrawContext, s32 view, const RenderBuffer& 
     {
         pSrcLight1->activate(pDrawContext, pProgram->getSamplerLocation(1), -1, false);
     }
+
     if (pDstAlbedo != nullptr)
     {
         pDstAlbedo->activate(pDrawContext, pProgram->getSamplerLocation(4), -1, false);
     }
+
     pfx::detail::drawQuadTriangle(pDrawContext);
     rRenderBuffer.getRenderTargetColor()->invalidateGPUCache(pDrawContext);
     if (isMRT)
@@ -1354,39 +1390,51 @@ void SSII::genMessage(sead::hostio::Context* pContext)
     {
         sead::FormatFixedSafeString<64> meta("Min = %d, Max = %d", 0, 10);
     }
+
     {
         sead::FormatFixedSafeString<64> meta("Min = %d, Max = %d", 0, 10);
     }
+
     {
         sead::FormatFixedSafeString<64> meta("Min = %d, Max = %d", 0, 10);
     }
+
     {
         sead::FormatFixedSafeString<64> meta("Min = %d, Max = %d", 0, 1);
     }
+
     {
         sead::FormatFixedSafeString<64> meta("Min = %d, Max = %d, Mode = MinMaxLock", 0, 4);
     }
+
     {
         sead::FormatFixedSafeString<64> meta("Min = %d, Max = %d, Mode = MinMaxLock", 0, 4);
     }
+
     {
         sead::FormatFixedSafeString<64> meta("Min = %d, Max = %d, Mode = MinMaxLock", 0, 4);
     }
+
     {
         sead::FormatFixedSafeString<64> meta("Min = %d, Max = %d, Mode = MinMaxLock", 0, 4);
     }
+
     {
         sead::FormatFixedSafeString<64> meta("Min = %d, Max = %d, Mode = MinMaxLock", 0, 4);
     }
+
     {
         sead::FormatFixedSafeString<64> meta("Min = %d, Max = %d, Mode = MinMaxLock", 1, 10);
     }
+
     {
         sead::FormatFixedSafeString<64> meta("Min = %d, Max = %d, Mode = MinMaxLock", 1, 10);
     }
+
     {
         sead::FormatFixedSafeString<64> meta("Min = %d, Max = %d, Mode = MinMaxLock", 0, 10);
     }
+
     {
         sead::FormatFixedSafeString<64> meta("Min = %d, Max = %d, Mode = MinMaxLock", 0, 10);
     }
@@ -1397,39 +1445,49 @@ void SSII::genMessage(sead::hostio::Context* pContext)
     {
         sead::FormatFixedSafeString<64> meta("Min = %d, Max = %d", 0, 10);
     }
+
     {
         sead::FormatFixedSafeString<64> meta("Min = %d, Max = %d", 0, 10);
     }
+
     {
         sead::FormatFixedSafeString<64> meta("Min = %d, Max = %d", 0, 2);
     }
+
     {
         sead::FormatFixedSafeString<64> meta("Min = %d, Max = %d", -1, 1);
     }
+
     {
         sead::FormatFixedSafeString<64> meta("Min = %d, Max = %d, Mode = MinMaxLock", 0, 4);
     }
+
     {
         sead::FormatFixedSafeString<64> meta("Min = %d, Max = %d, Mode = MinMaxLock", 0, 4);
     }
+
     {
         sead::FormatFixedSafeString<64> meta("Min = %d, Max = %d, Mode = MinMaxLock", 0, 4);
     }
+
     for (s32 i = 0; i < 10; i++)
     {
         sead::FormatFixedSafeString<256> label("Start %d", i);
         sead::FormatFixedSafeString<64> meta("Min = %d, Max = %d, Mode = MinMaxLock", 0, 4);
     }
+
     for (s32 i = 0; i < 10; i++)
     {
         sead::FormatFixedSafeString<256> label("Num %d", i);
         sead::FormatFixedSafeString<64> meta("Min = %d, Max = %d, Mode = MinMaxLock", 0, 4);
     }
+
     for (s32 i = 0; i < 10; i++)
     {
         sead::FormatFixedSafeString<256> label("Intensity %d", i);
         sead::FormatFixedSafeString<64> meta("Min = %d, Max = %d", 0, 1);
     }
+
     for (s32 i = 0; i < 10; i++)
     {
         sead::FormatFixedSafeString<256> label("%d", i);
@@ -1439,39 +1497,49 @@ void SSII::genMessage(sead::hostio::Context* pContext)
     {
         sead::FormatFixedSafeString<64> meta("Min = %d, Max = %d", 0, 10);
     }
+
     {
         sead::FormatFixedSafeString<64> meta("Min = %d, Max = %d", -1, 1);
     }
+
     {
         sead::FormatFixedSafeString<64> meta("Min = %d, Max = %d", 0, 100);
     }
+
     {
         sead::FormatFixedSafeString<64> meta("Min = %d, Max = %d", 0, 2);
     }
+
     {
         sead::FormatFixedSafeString<64> meta("Min = %d, Max = %d, Mode = MinMaxLock", 0, 4);
     }
+
     {
         sead::FormatFixedSafeString<64> meta("Min = %d, Max = %d, Mode = MinMaxLock", 0, 4);
     }
+
     {
         sead::FormatFixedSafeString<64> meta("Min = %d, Max = %d, Mode = MinMaxLock", 0, 4);
     }
+
     for (s32 i = 0; i < 10; i++)
     {
         sead::FormatFixedSafeString<256> label("Start %d", i);
         sead::FormatFixedSafeString<64> meta("Min = %d, Max = %d, Mode = MinMaxLock", 0, 4);
     }
+
     for (s32 i = 0; i < 10; i++)
     {
         sead::FormatFixedSafeString<256> label("Num %d", i);
         sead::FormatFixedSafeString<64> meta("Min = %d, Max = %d, Mode = MinMaxLock", 0, 4);
     }
+
     for (s32 i = 0; i < 10; i++)
     {
         sead::FormatFixedSafeString<256> label("Intensity %d", i);
         sead::FormatFixedSafeString<64> meta("Min = %d, Max = %d", 0, 1);
     }
+
     for (s32 i = 0; i < 10; i++)
     {
         sead::FormatFixedSafeString<256> label("%d", i);
@@ -1489,6 +1557,7 @@ void SSII::listenPropertyEvent(const sead::hostio::PropertyEvent* pEvent)
     {
         return;
     }
+
     const void* pId = pEvent->getId();
     if ((pId < &mRedBufQuality + 1 && pId >= &mRedBufQuality) ||
         (pId < &mSampleQuality + 1 && pId >= &mSampleQuality) ||

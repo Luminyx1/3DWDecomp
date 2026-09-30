@@ -122,6 +122,7 @@ void ResShaderBinary::modifyBinaryEndian()
 
         data = vertex_shader + 1;
     }
+
     break;
     case cShaderType_Fragment:
     {
@@ -135,6 +136,7 @@ void ResShaderBinary::modifyBinaryEndian()
 
         data = pixel_shader + 1;
     }
+
     break;
     case cShaderType_Geometry:
     {
@@ -148,6 +150,7 @@ void ResShaderBinary::modifyBinaryEndian()
 
         data = geometry_shader + 1;
     }
+
     break;
     }
 #endif  // cafe
@@ -177,6 +180,7 @@ void ResShaderBinary::setUp()
         vertex_shader->_loopVars = modifyBinaryPtr(vertex_shader, vertex_shader->_loopVars);
         vertex_shader->shaderPtr = modifyBinaryPtr(vertex_shader, vertex_shader->shaderPtr);
     }
+
     break;
     case cShaderType_Fragment:
     {
@@ -192,6 +196,7 @@ void ResShaderBinary::setUp()
         pixel_shader->_loopVars = modifyBinaryPtr(pixel_shader, pixel_shader->_loopVars);
         pixel_shader->shaderPtr = modifyBinaryPtr(pixel_shader, pixel_shader->shaderPtr);
     }
+
     break;
     case cShaderType_Geometry:
     {
@@ -209,6 +214,7 @@ void ResShaderBinary::setUp()
         geometry_shader->copyShaderPtr =
             modifyBinaryPtr(geometry_shader, geometry_shader->copyShaderPtr);
     }
+
     break;
     }
 #endif  // cafe

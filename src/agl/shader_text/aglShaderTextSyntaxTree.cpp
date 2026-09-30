@@ -42,16 +42,20 @@ void SyntaxTree::removeClauseRecursive(const sead::AnyDelegate1Const<Clause*>* p
     if (mLeft) {
         mLeft->removeClauseRecursive(pRemoveDelegate);
     }
+
     if (mCenter) {
         mCenter->removeClauseRecursive(pRemoveDelegate);
     }
+
     if (mRight) {
         mRight->removeClauseRecursive(pRemoveDelegate);
     }
+
     if (mOperator) {
         (*pRemoveDelegate)(mOperator);
         mOperator = nullptr;
     }
+
     if (mValue) {
         (*pRemoveDelegate)(mValue);
         mValue = nullptr;
@@ -66,6 +70,7 @@ f64 SyntaxTree::checkAndGetValue() const {
     if (mValue->mType == Clause::cType_Word) {
         mIsValid = false;
     }
+
     return mValue->forceNumber();
 }
 
@@ -80,8 +85,10 @@ f64 SyntaxTree::checkAndEvaluate(const SyntaxTree* pTree) const {
         if (!pTree->mIsValid) {
             mIsValid = false;
         }
+
         return value;
     }
+
     return checkAndGetValue();
 }
 
@@ -102,6 +109,7 @@ f64 SyntaxTree::evaluate() const {
         mResult = 1.0;
         return 1.0;
     }
+
     if (type == Clause::cType_Dot) {
         mIsValid = false;
         mResult = 0.0;
@@ -170,11 +178,13 @@ f64 SyntaxTree::evaluate() const {
             mResult = left != 0.0 && right != 0.0;
             return mResult;
         }
+
         if (left == 0.0 && mLeft->mIsValid) {
             mResult = 0.0;
             mIsValid = true;
             return 0.0;
         }
+
         {
             bool isRightValid = mRight->mIsValid;
             mResult = 0.0;
@@ -183,6 +193,7 @@ f64 SyntaxTree::evaluate() const {
                 return 0.0;
             }
         }
+
         mIsValid = false;
         return 0.0;
     case Clause::cType_LogicalOr:
@@ -190,16 +201,19 @@ f64 SyntaxTree::evaluate() const {
             mResult = left != 0.0 || right != 0.0;
             return mResult;
         }
+
         if (left == 1.0 && mLeft->mIsValid) {
             mResult = 1.0;
             mIsValid = true;
             return 1.0;
         }
+
         if (right == 1.0 && mRight->mIsValid) {
             mResult = 1.0;
             mIsValid = true;
             return 1.0;
         }
+
         mResult = 0.0;
         mIsValid = false;
         return 0.0;
@@ -239,10 +253,12 @@ Clause* SyntaxTree::constructRecursive(sead::Heap* pHeap, sead::Heap* pStringHea
             if (mResult == 1.0) {
                 return new (pHeap) Clause(Clause::cType_Int, "true", "true" + 4);
             }
+
             if (mResult == 0.0) {
                 return new (pHeap) Clause(Clause::cType_Int, "false", "false" + 5);
             }
         }
+
         return cloneClause(pHeap, value);
     }
 
@@ -295,9 +311,11 @@ Clause* SyntaxTree::constructRecursive(sead::Heap* pHeap, sead::Heap* pStringHea
             if (mResult == 1.0) {
                 return new (pHeap) Clause(Clause::cType_Int, "true", "true" + 4);
             }
+
             if (mResult == 0.0) {
                 return new (pHeap) Clause(Clause::cType_Int, "false", "false" + 5);
             }
+
             break;
         default:
             break;
@@ -313,6 +331,7 @@ Clause* SyntaxTree::constructRecursive(sead::Heap* pHeap, sead::Heap* pStringHea
         list->mPrev->insertListAfter(new (pHeap) Clause(Clause::cType_RParen, ")", ")" + 1));
         return list;
     }
+
     if (type - Clause::cType_SingleQuote < 2) {
         Clause* list = new (pHeap) Clause(Clause::cType_LParen, "(", "(" + 1);
         list->mPrev->insertListAfter(cloneClause(pHeap, mOperator));
@@ -321,6 +340,7 @@ Clause* SyntaxTree::constructRecursive(sead::Heap* pHeap, sead::Heap* pStringHea
         list->mPrev->insertListAfter(new (pHeap) Clause(Clause::cType_RParen, ")", ")" + 1));
         return list;
     }
+
     if (info.mIsBinaryOperator) {
         if ((type & ~1u) == Clause::cType_LogicalAnd) {
             Clause* list = nullptr;
@@ -329,6 +349,7 @@ Clause* SyntaxTree::constructRecursive(sead::Heap* pHeap, sead::Heap* pStringHea
             } else if (mRight->mIsValid) {
                 list = mLeft->constructRecursive(pHeap, pStringHeap);
             }
+
             if (list) {
                 return list;
             }
@@ -337,6 +358,7 @@ Clause* SyntaxTree::constructRecursive(sead::Heap* pHeap, sead::Heap* pStringHea
         if (type != Clause::cType_Question) {
             return nullptr;
         }
+
         Clause* list = new (pHeap) Clause(Clause::cType_LParen, "(", "(" + 1);
         list->mPrev->insertListAfter(mLeft->constructRecursive(pHeap, pStringHeap));
         list->mPrev->insertListAfter(cloneClause(pHeap, mOperator));

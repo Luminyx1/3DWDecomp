@@ -97,6 +97,7 @@ TextureMemoryAllocator::alloc(const AllocateArg& rArg, GPUMemVoidAddr* pAddr, bo
             }
         }
     }
+
     return nullptr;
 }
 
@@ -138,6 +139,7 @@ bool TextureMemoryAllocator::alloc_(MemoryBlock* pBlock, const AllocateArg& rArg
             mFreeList.insertBefore(pBlock, rest);
         }
     }
+
     pBlock->mSize = size;
 
     GPUMemVoidAddr baseAddr;
@@ -159,9 +161,11 @@ bool TextureMemoryAllocator::alloc_(MemoryBlock* pBlock, const AllocateArg& rArg
                         baseAddr = GPUMemVoidAddr(GPUMemVoidAddr(storage.mBlock, 0),
                                                   baseAddr.getByteOffset());
                     }
+
                     break;
                 }
             }
+
             pBlock->mStorageClass = storageClass;
         }
     }
@@ -215,6 +219,7 @@ u64 TextureMemoryAllocator::getMaxAllocatableSize() const
             maxSize = block->mSize;
         }
     }
+
     return maxSize;
 }
 
@@ -232,8 +237,10 @@ void TextureMemoryAllocator::free(MemoryBlock* pBlock, bool deleteMemBlock)
         {
             pBlock->mMemBlockAddr.deleteGPUMemBlock();
         }
+
         pBlock->mMemBlockAddr.invalidate();
     }
+
     mUsedList.erase(pBlock);
 
     if (!mFreeList.front())
@@ -253,6 +260,7 @@ void TextureMemoryAllocator::free(MemoryBlock* pBlock, bool deleteMemBlock)
                 mFreeList.erase(&block);
                 mUnusedList.pushBack(&block);
             }
+
             MemoryBlock* prev = mFreeList.prev(pBlock);
             if (prev && prev->getEndOffset() == pBlock->mAddr.getByteOffset())
             {
@@ -261,6 +269,7 @@ void TextureMemoryAllocator::free(MemoryBlock* pBlock, bool deleteMemBlock)
                 mFreeList.erase(prev);
                 mUnusedList.pushBack(prev);
             }
+
             break;
         }
     }
@@ -307,6 +316,7 @@ void TextureMemoryAllocator::dumpDetail() const
             dump("", "", block);
         }
     }
+
     if (mUsedList.front())
     {
         for (const auto& block : mUsedList)
@@ -346,11 +356,13 @@ bool TextureMemoryAllocator::isOverwrapperd(const TextureMemoryAllocator& rOther
     {
         start = last->mAddr.getByteOffset();
     }
+
     u64 end = 0;
     if (const MemoryBlock* first = rOther.mFreeList.front())
     {
         end = first->getEndOffset();
     }
+
     return end < start;
 }
 
@@ -381,6 +393,7 @@ void TextureMemoryAllocator::setupStorage(sead::Buffer<Storage>* pStorage, GPUMe
                 return;
             }
         }
+
         infos[num++].mStorageClass = storageClass;
     };
 
@@ -394,6 +407,7 @@ void TextureMemoryAllocator::setupStorage(sead::Buffer<Storage>* pStorage, GPUMe
             surface.calcSizeAndAlignment();
             add(surface.mStorageClass);
         }
+
         {
             detail::Surface surface;
             surface.initialize(TextureType(1), TextureFormat(format), 1, TextureAttribute(2),
@@ -402,6 +416,7 @@ void TextureMemoryAllocator::setupStorage(sead::Buffer<Storage>* pStorage, GPUMe
             surface.calcSizeAndAlignment();
             add(surface.mStorageClass);
         }
+
         if (!TextureFormatInfo::isCompressed(TextureFormat(format)))
         {
             detail::Surface surface;

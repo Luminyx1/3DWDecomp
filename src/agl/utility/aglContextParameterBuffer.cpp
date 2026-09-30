@@ -27,6 +27,7 @@ void ContextParameterBufferImpl::initialize(s32 contextNum, bool isSingle, sead:
         mBufferNum = contextNum;
         mIndexMask = -1;
     }
+
     mParameterObjs.tryAllocBuffer(mBufferNum, pHeap);
 }
 
@@ -36,12 +37,14 @@ void ContextParameterBufferImpl::copyParameterToAllContext(s32 srcIndex)
     {
         return;
     }
+
     for (s32 i = 0; i < mBufferNum; i++)
     {
         if (i == srcIndex)
         {
             continue;
         }
+
         if (preCopyParameter(i, &mParameterObjs[srcIndex], nullptr, 0.0f))
         {
             mParameterObjs[i].copy(mParameterObjs[srcIndex]);

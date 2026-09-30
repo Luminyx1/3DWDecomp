@@ -94,6 +94,7 @@ void RadialBlur::initialize(s32 contextNum, s32 blurNum, sead::Heap* pHeap)
     {
         mShared.mViewMask[i].setDirect(-1);
     }
+
     mShared.mDefaultViewMask.makeAllZero();
 
     mShared.mDebugTexturePage.setUp(contextNum, "RadialBlur", pHeap);
@@ -294,6 +295,7 @@ void RadialBlur::Context::draw(DrawContext* pDrawContext, s32 view, const Shared
         {
             continue;
         }
+
         f32 z = mScreen[idx].mPos.z;
         if (z < -1.0f || z > 1.0f)
         {
@@ -306,6 +308,7 @@ void RadialBlur::Context::draw(DrawContext* pDrawContext, s32 view, const Shared
             context.setBlendEnable(false);
             context.apply(pDrawContext);
         }
+
         drawToReduceTexture_(pDrawContext, view, rShared.mParam[idx], rShared, mScreen[idx],
                              rTexture);
 
@@ -320,6 +323,7 @@ void RadialBlur::Context::draw(DrawContext* pDrawContext, s32 view, const Shared
             context.setDepthEnable(rParam.mDepthTestEnable, false);
             context.apply(pDrawContext);
         }
+
         drawToRenderBuffer_(pDrawContext, view, rShared.mParam[idx], rShared, mScreen[idx]);
     }
 }
@@ -369,10 +373,12 @@ void RadialBlur::Context::updateHalfBuffer(DrawContext* pDrawContext, s32 view,
                                   TextureAttribute(mHalfBuffer->getTextureAttribute()),
                                   MultiSampleType(0), true);
     }
+
     {
         GPUMemVoidAddr addr = mHalfBufferAddr;
         mReduceTarget.setImagePtr(addr, 0);
     }
+
     mRenderTarget.applyTextureData(mReduceTarget);
     mRenderBuffer.setVirtualSize(sead::Vector2f(width, height));
     mRenderBuffer.setPhysicalArea(sead::BoundBox2f(0.0f, 0.0f, width, height));
@@ -392,6 +398,7 @@ void RadialBlur::Context::updateHalfBuffer(DrawContext* pDrawContext, s32 view,
         context.setBlendEnable(false);
         context.apply(pDrawContext);
     }
+
     utl::ImageFilter2D::drawReduce(pDrawContext, mSampler, viewport,
                                    utl::ImageFilter2D::cReduceScale_2, 1.0f,
                                    sead::Vector2f::zero);
@@ -423,6 +430,7 @@ void RadialBlur::Context::draw2D(DrawContext* pDrawContext, s32 view, const Shar
         context.setBlendEnable(false);
         context.apply(pDrawContext);
     }
+
     drawToReduceTexture_(pDrawContext, view, rParam, rShared, mDefaultScreen, rTexture);
 
     viewport.apply(pDrawContext, rRenderBuffer);
@@ -436,6 +444,7 @@ void RadialBlur::Context::draw2D(DrawContext* pDrawContext, s32 view, const Shar
         context.setDepthEnable(rParam.mDepthTestEnable, false);
         context.apply(pDrawContext);
     }
+
     drawToRenderBuffer_(pDrawContext, view, rParam, rShared, mDefaultScreen);
 }
 
@@ -513,12 +522,14 @@ void RadialBlur::genMessage(sead::hostio::Context* pContext)
     {
         sead::FormatFixedSafeString<32> meta("Min=0, Max=%d", mShared.mParam.size() - 1);
     }
+
     for (s32 i = 0; i < mShared.mParam.size(); i++)
     {
         {
             sead::FormatFixedSafeString<32> header("GroupHeader=RadialBlur[%d]", i);
             header.cstr();
         }
+
         for (s32 j = 0; j < 4; j++)
         {
             sead::FormatFixedSafeString<32> color("Color [%d]", j);
@@ -564,6 +575,7 @@ void RadialBlur::Context::drawToReduceTexture_(DrawContext* pDrawContext, s32 vi
                                   TextureAttribute(mReduceTexture->getTextureAttribute()),
                                   MultiSampleType(0), true);
     }
+
     {
         GPUMemVoidAddr addr = mReduceAddr;
         mReduceTarget.setImagePtr(addr, 0);
@@ -577,10 +589,12 @@ void RadialBlur::Context::drawToReduceTexture_(DrawContext* pDrawContext, s32 vi
     {
         variation = num;
     }
+
     if (rParam.mSampleNum < 2)
     {
         variation = 0;
     }
+
     pProgram = pProgram->getVariation(variation);
 
     mRenderTarget.applyTextureData(mReduceTarget);
@@ -606,10 +620,12 @@ void RadialBlur::Context::drawToReduceTexture_(DrawContext* pDrawContext, s32 vi
         } data = {rScreen.mPos, rParam.mPower};
         pProgram->getUniformLocation(1).setUniform(pDrawContext, 4, &data);
     }
+
     {
         sead::Vector2f scale(radius, radius * f32(width) / f32(height));
         pProgram->getUniformLocation(0).setUniform(pDrawContext, 2, &scale);
     }
+
     utl::VertexAttributeHolder::instance()
         ->getVertexAttribute(utl::VertexAttributeHolder::cAttribute_CircleTexCoord)
         .activate(pDrawContext);
@@ -640,10 +656,12 @@ void RadialBlur::Context::drawToRenderBuffer_(DrawContext* pDrawContext, s32 vie
         } data = {rScreen.mPos, rParam.mPower};
         pProgram->getUniformLocation(1).setUniform(pDrawContext, 4, &data);
     }
+
     {
         sead::Vector2f scale(rScreen.mRadius, rScreen.mRadius * width / height);
         pProgram->getUniformLocation(0).setUniform(pDrawContext, 2, &scale);
     }
+
     pProgram->getUniformLocation(2).setUniform(pDrawContext, 16, &rParam.mColor0);
     rShared.mVertexAttribute.activate(pDrawContext);
     mSampler.activate(pDrawContext, pProgram->getSamplerLocation(0), -1, false);

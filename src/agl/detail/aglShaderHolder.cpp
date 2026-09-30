@@ -1323,9 +1323,11 @@ void ShaderHolder::initialize(sead::ArchiveRes* pArchive, sead::Heap* pHeap) {
     if (mArchives[cArchive_TechniquePfx].isValid()) {
         pfx::Sky::setUpShader(&mArchives[cArchive_TechniquePfx], heap);
     }
+
     if (mArchives[cArchive_Technique].isValid()) {
         eft::Star::setUpShader(&mArchives[cArchive_Technique], heap);
     }
+
     for (auto& rArchive : mArchives) {
         if (rArchive.isValid()) {
             rArchive.setUp();
@@ -1346,6 +1348,7 @@ void ShaderHolder::genMessage(sead::hostio::Context* pContext) {
         programNum += rArchive.getShaderProgramNum();
         variationNum += rArchive.getVariationNum();
     }
+
     sead::FormatFixedSafeString<1024> message("プログラム数     :%d\nバリエーション数 :%d",
                                               programNum, variationNum);
 }

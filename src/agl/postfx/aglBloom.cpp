@@ -77,6 +77,7 @@ void BloomParameter::initialize(utl::IParameterObj* pObj, sead::Heap* pHeap)
         mColors[i].init(sead::Color4f::cWhite, sead::FormatFixedSafeString<128>("color%d", i + 1),
                         "Color", pObj);
     }
+
     mColors[cColorNum - 1]->a = 0.0f;
     {
         Depth& rDepth = mDepths[cDepth_Gain];
@@ -90,6 +91,7 @@ void BloomParameter::initialize(utl::IParameterObj* pObj, sead::Heap* pHeap)
         rDepth.mValueStart.init(1.0f, sead::FormatFixedSafeString<128>("%s_value_start", "depth_gain"),
                                 "Start Scale", pObj);
     }
+
     {
         Depth& rDepth = mDepths[cDepth_Offset];
         rDepth.mEnable.init(false, sead::FormatFixedSafeString<128>("enable_%s", "depth_offset"), "Enable",
@@ -102,6 +104,7 @@ void BloomParameter::initialize(utl::IParameterObj* pObj, sead::Heap* pHeap)
         rDepth.mValueStart.init(1.0f, sead::FormatFixedSafeString<128>("%s_value_start", "depth_offset"),
                                 "Start Offset", pObj);
     }
+
     {
         Depth& rDepth = mDepths[cDepth_Shaft];
         rDepth.mEnable.init(false, sead::FormatFixedSafeString<128>("enable_%s", "shaft_d"), "Enable",
@@ -114,6 +117,7 @@ void BloomParameter::initialize(utl::IParameterObj* pObj, sead::Heap* pHeap)
         rDepth.mValueStart.init(1.0f, sead::FormatFixedSafeString<128>("%s_value_start", "shaft_d"),
                                 "Start Scale", pObj);
     }
+
     updateBalance_();
 }
 
@@ -129,6 +133,7 @@ void BloomParameter::updateBalance_()
     {
         mBalance.set(0.298912f, 0.586611f, 0.114478f);
     }
+
     f32 sum = mBalance.x + mBalance.y + mBalance.z;
     if (sum > 0.0f)
     {
@@ -142,6 +147,7 @@ void BloomParameter::genMessageBloomParameter(sead::hostio::Context* pContext)
     {
         sead::SafeString label = mFinalBlend.getLabel();
     }
+
     s32 editType = *mEditType;
     mMain.genMessage(pContext, editType == 1);
     if (*mEditType == 0)
@@ -187,6 +193,7 @@ void BloomParameter::genMessageBloomParameter(sead::hostio::Context* pContext)
             rShaft.mValueStart.genMessageParameter(pContext, "Min=0,Max=8");
             rShaft.mValue.genMessageParameter(pContext, "Min=0,Max=8");
         }
+
         mShaft.mFinalGather.genMessageParameter(pContext, mShaft.mFinalGather.getMeta());
         mExIteration.genMessageParameter(pContext, "Min=0, Max=10");
     }
@@ -434,6 +441,7 @@ void Bloom::draw_(DrawContext* pDrawContext, s32 context, const DrawArg& rArg,
             rMRT.mTarget.setMipLevel(0);
             rMRT.mSampler.setLod(0.0f, 0.0f, 0.0f);
         }
+
         rMRT.mTarget.applyTextureData(*rMRT.mTextures[0]);
         rMRT.mSampler.applyTextureData(rMRT.mTarget);
         rContext.mRenderBuffer.setRenderTargetColor(&rMRT.mTarget, i);
@@ -480,6 +488,7 @@ void Bloom::draw_(DrawContext* pDrawContext, s32 context, const DrawArg& rArg,
                 weight1 = 1.0f;
                 weight2 = expand * 3.0f - 1.0f;
             }
+
             f32 inv = 1.0f / (weight1 + 1.0f + weight2);
             weight1 *= inv;
             weight2 *= inv;
@@ -510,6 +519,7 @@ void Bloom::draw_(DrawContext* pDrawContext, s32 context, const DrawArg& rArg,
                 f32 lod = f32(i) + 1.0f;
                 rMRT.mSampler.setLod(lod, lod, 0.0f);
             }
+
             rContext.mRenderBuffer.setVirtualSize(sead::Vector2f(w, h));
             rContext.mRenderBuffer.setPhysicalArea(sead::BoundBox2f(0.0f, 0.0f, w, h));
             rContext.mRenderBuffer.bind(pDrawContext);
@@ -524,6 +534,7 @@ void Bloom::draw_(DrawContext* pDrawContext, s32 context, const DrawArg& rArg,
                 drawGather_(pDrawContext, rMRT.mSampler, *rParam.mMain.mFinalGather,
                             *rParam.mMain.mFinalGather * colors[i - 1]);
             }
+
             rMRT.mTarget.invalidateGPUCache(pDrawContext);
         }
     }
@@ -622,6 +633,7 @@ void Bloom::draw_(DrawContext* pDrawContext, s32 context, const DrawArg& rArg,
                 break;
             }
         }
+
         graphicsContext.apply(pDrawContext);
         pProgram->activate(pDrawContext, true);
         rContext.mResultSampler.activate(pDrawContext, pProgram->getSamplerLocation(0), -1,
@@ -634,10 +646,12 @@ void Bloom::draw_(DrawContext* pDrawContext, s32 context, const DrawArg& rArg,
     {
         drawDepthDepth_(pDrawContext, context, cDepth_Gain, *rArg.mpRenderBuffer);
     }
+
     if (mDebugFlags & 0x20)
     {
         drawDepthDepth_(pDrawContext, context, cDepth_Offset, *rArg.mpRenderBuffer);
     }
+
     if (mDebugFlags & 0x40)
     {
         drawDepthDepth_(pDrawContext, context, cDepth_Shaft, *rArg.mpRenderBuffer);
@@ -648,6 +662,7 @@ void Bloom::draw_(DrawContext* pDrawContext, s32 context, const DrawArg& rArg,
     {
         releaseBloomBuffer(context);
     }
+
     rCache.end();
 }
 
@@ -814,6 +829,7 @@ void Bloom::drawGaussian_(DrawContext* pDrawContext, s32 context, s32 level, f32
         rSampler.setLod(nextLevel, nextLevel, 0.0f);
         rTarget.setMipLevel(0);
     }
+
     rMRT.mTarget.applyTextureData(*pTemp);
     rContext.mRenderBuffer.bind(pDrawContext);
 
@@ -823,6 +839,7 @@ void Bloom::drawGaussian_(DrawContext* pDrawContext, s32 context, s32 level, f32
         sead::Vector4f offset(texel.x * scale, 0.0f, 0.0f, 0.0f);
         pBlurH->getUniformLocation(6).setUniform(pDrawContext, 4, &offset);
     }
+
     rMRT.mSampler.activate(pDrawContext, pBlurH->getSamplerLocation(0), -1, false);
     detail::drawIndexStream(pDrawContext,
                             utl::PrimitiveShape::instance()->getQuadTriangleIndexStream());
@@ -837,6 +854,7 @@ void Bloom::drawGaussian_(DrawContext* pDrawContext, s32 context, s32 level, f32
         rTarget.applyTextureData(rSampler.getTextureData(), nextLevel, 0);
         rMRT.mSampler.setLod(0.0f, 0.0f, 0.0f);
     }
+
     rMRT.mSampler.applyTextureData(*pTemp);
     rContext.mRenderBuffer.bind(pDrawContext);
 
@@ -846,6 +864,7 @@ void Bloom::drawGaussian_(DrawContext* pDrawContext, s32 context, s32 level, f32
         sead::Vector4f offset(0.0f, texel.y * scale, 0.0f, 0.0f);
         pBlurV->getUniformLocation(6).setUniform(pDrawContext, 4, &offset);
     }
+
     rMRT.mSampler.activate(pDrawContext, pBlurV->getSamplerLocation(0), -1, false);
     detail::drawIndexStream(pDrawContext,
                             utl::PrimitiveShape::instance()->getQuadTriangleIndexStream());
@@ -930,6 +949,7 @@ void Bloom::drawShaft_(DrawContext* pDrawContext, s32 context) const
             offsetX = 0.0f;
             break;
         }
+
         if (h < 1.0f || w < 1.0f)
         {
             continue;
@@ -955,6 +975,7 @@ void Bloom::drawShaft_(DrawContext* pDrawContext, s32 context) const
             sead::Vector4f zero(0.0f, 0.0f, 0.0f, 0.0f);
             pCopy->getUniformLocation(5).setUniform(pDrawContext, 4, &zero);
         }
+
         rContext.mRenderBuffer.setRenderTargetColor(&rMRT.mTarget);
         rContext.mRenderBuffer.bind(pDrawContext);
         rShaftMRT.mSampler.activate(pDrawContext, pCopy->getSamplerLocation(0), -1, false);
@@ -966,6 +987,7 @@ void Bloom::drawShaft_(DrawContext* pDrawContext, s32 context) const
         {
             rContext.mTextureCache.free(pPrev);
         }
+
         pPrev = rContext.mTextureCache.alloc(pDrawContext, "bloom_ex",
                                              TextureFormat::cTextureFormat_R11_G11_B10_float, w,
                                              h, 1, nullptr,
@@ -982,6 +1004,7 @@ void Bloom::drawShaft_(DrawContext* pDrawContext, s32 context) const
             sead::Vector4f offset(offsetX, offsetY, 0.0f, 0.0f);
             pBlur->getUniformLocation(6).setUniform(pDrawContext, 4, &offset);
         }
+
         rContext.mRenderBuffer.setRenderTargetColor(&rShaftMRT.mTarget);
         rContext.mRenderBuffer.bind(pDrawContext);
         rMRT.mSampler.activate(pDrawContext, pBlur->getSamplerLocation(0), -1, false);
@@ -1034,6 +1057,7 @@ void Bloom::drawDepthDepth_(DrawContext* pDrawContext, s32 context, s32 index,
     {
         return;
     }
+
     f32 depth[2] = {*rDepth.mStart, *rDepth.mEnd};
     sead::Color4f colors[2] = {sead::Color4f::cBlack, sead::Color4f::cWhite};
     utl::DevTools::drawDepthGradation(pDrawContext, rRenderBuffer, 2, depth, colors,
@@ -1080,11 +1104,13 @@ void Bloom::callbackNotAppliable_(utl::IParameterObj* pObj, utl::ParameterBase* 
         {
             return;
         }
+
         utl::ResParameter res = obj.getResParameter(index);
         if (!res.ptr())
         {
             return;
         }
+
         pParam->applyResource(res);
     }
     else if (pParam == &mDepths[cDepth_Gain].mValue)
@@ -1094,11 +1120,13 @@ void Bloom::callbackNotAppliable_(utl::IParameterObj* pObj, utl::ParameterBase* 
         {
             return;
         }
+
         utl::ResParameter res = obj.getResParameter(index);
         if (!res.ptr())
         {
             return;
         }
+
         pParam->applyResource(res);
         *mDepths[cDepth_Gain].mValue += 1.0f;
     }
@@ -1109,11 +1137,13 @@ void Bloom::callbackNotAppliable_(utl::IParameterObj* pObj, utl::ParameterBase* 
         {
             return;
         }
+
         utl::ResParameter res = obj.getResParameter(index);
         if (!res.ptr())
         {
             return;
         }
+
         pParam->applyResource(res);
     }
 }
@@ -1129,6 +1159,7 @@ void Bloom::genMessage(sead::hostio::Context* pContext)
     {
         mThresholdBalance.genMessageParameter(pContext, mThresholdBalance.getMeta());
     }
+
     genMessageBloomParameter(pContext);
     u32 contextNum = getContextBuffer_().size();
     for (u32 i = 0; i < contextNum; i++)
@@ -1136,9 +1167,11 @@ void Bloom::genMessage(sead::hostio::Context* pContext)
         {
             sead::FormatFixedSafeString<1024> header("GroupHeader= viewpoint: %d", i);
         }
+
         {
             sead::FixedSafeString<256> nearMeta = utl::DevTools::getStringMinMax(0.0f, 10000.0f);
         }
+
         {
             sead::FixedSafeString<256> farMeta = utl::DevTools::getStringMinMax(0.0f, 10000.0f);
         }

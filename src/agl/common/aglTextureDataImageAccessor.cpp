@@ -70,6 +70,7 @@ inline f32 convertF10ToF32(u32 value)
         } while ((mantissa & 0x20) == 0);
         mantissa &= 0x1f;
     }
+
     return bitCastFloat((exponent & 0xff) << 23 | mantissa << 18);
 }
 
@@ -91,6 +92,7 @@ inline f32 convertF11ToF32(u32 value)
         } while ((mantissa & 0x40) == 0);
         mantissa &= 0x3f;
     }
+
     return bitCastFloat((exponent & 0xff) << 23 | mantissa << 17);
 }
 
@@ -113,6 +115,7 @@ inline f32 convertF16ToF32(u32 value)
         } while ((mantissa & 0x400) == 0);
         mantissa &= 0x3ff;
     }
+
     return bitCastFloat(sign | mantissa << 13 | (exponent & 0xff) << 23);
 }
 
@@ -140,6 +143,7 @@ void TextureDataImageAccessor::finalizeImageBuffer()
     {
         mImageAddr.deleteGPUMemBlock();
     }
+
     mIsLinearTextureSet = false;
     mImageAddr.invalidate();
 }

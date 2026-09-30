@@ -74,6 +74,7 @@ Layer::~Layer()
     {
         mDebugInfo->mInfoText.freeBuffer();
     }
+
     delete mDebugInfo;
 }
 
@@ -88,6 +89,7 @@ void Layer::initialize_(sead::Heap* pHeap)
     {
         getRenderStepName(it.getIndex());
     }
+
     initializeImpl(pHeap);
 
     sead::Heap* pDebugHeap = detail::PrivateResource::instance()->getDebugHeap();
@@ -128,6 +130,7 @@ void Layer::updateDebugInfo_(u32 flag)
             pCamera->getLookVectorByMatrix(&at);
             at = pos - at * getDebugCameraAtDist();
         }
+
         mDebugInfo->mInfoText(0).format(
             "Position  ( %f, %f, %f )\nAttention ( %f, %f, %f )\nUp Vector ( %f, %f, %f )", pos.x,
             pos.y, pos.z, at.x, at.y, at.z, up.x, up.y, up.z);
@@ -156,6 +159,7 @@ void Layer::updateDebugInfo_(u32 flag)
         {
             mDebugInfo->mInfoText[1].format("Unknown\n");
         }
+
         mDebugInfo->mInfoText[1].append("\n");
 
         f32 near;
@@ -203,12 +207,14 @@ void Layer::copyCurrentCameraToDebugCamera_()
     {
         return;
     }
+
     setBoundDebugCameraAt(at);
 
     if (!mDebugInfo)
     {
         return;
     }
+
     mDebugInfo->mDebugCamera.setPos(pos);
     mDebugInfo->mDebugCamera.setAt(at);
     mDebugInfo->mDebugCamera.setUp(up);
@@ -227,6 +233,7 @@ f32 Layer::getDebugCameraAtDist() const
     {
         return mDebugInfo->mAtDist;
     }
+
     return 0.0f;
 }
 
@@ -303,6 +310,7 @@ DrawMethod* Layer::pushBackDrawMethod(DrawMethod* pMethod)
     {
         isPushed |= pushBackDrawMethod(it.getIndex(), pMethod) != nullptr;
     }
+
     return isPushed ? pMethod : nullptr;
 }
 
@@ -318,6 +326,7 @@ s32 Layer::removeDrawMethodByObject(const void* pObject)
     {
         count += rStep.removeByObject(pObject);
     }
+
     return count;
 }
 
@@ -333,6 +342,7 @@ s32 Layer::removeDrawMethod(const DrawMethod* pMethod)
     {
         count += rStep.remove(pMethod);
     }
+
     return count;
 }
 
@@ -368,6 +378,7 @@ const sead::Camera* Layer::getRenderCamera() const
     {
         return &mDebugInfo->mCamera;
     }
+
     return mCamera ? mCamera : &sCameraIdentity;
 }
 
@@ -381,6 +392,7 @@ const sead::Projection* Layer::getRenderProjection() const
     {
         return mDebugInfo->mProjection;
     }
+
     return mProjection ? mProjection : &sProjectionIdentity;
 }
 
@@ -416,6 +428,7 @@ void Layer::setEnable(bool enable)
     {
         return;
     }
+
     mRenderer->lockLayerList_();
     mFlag.change(cFlag_Enable, enable);
     mFlag.set(cFlag_ListDirty);
@@ -432,6 +445,7 @@ void Layer::setVisible(bool visible)
     {
         return;
     }
+
     mRenderer->lockLayerList_();
     mFlag.change(cFlag_Visible, visible);
     mRenderer->unlockLayerList_();
@@ -447,6 +461,7 @@ void Layer::setDisplayType(s32 displayType)
     {
         return;
     }
+
     mRenderer->lockLayerList_();
     mDisplayType = displayType;
     mFlag.set(cFlag_ListDirty);
@@ -646,6 +661,7 @@ void Layer::calc_(const sead::Controller* pController, s32 controllerIndex,
                         pPerspective->setFovy(mDebugInfo->mPerspectiveProjection.getFovy());
                         pPerspective->setOffset(mDebugInfo->mPerspectiveProjection.getOffsetDirect());
                     }
+
                     mDebugInfo->mProjection = &mDebugInfo->mPerspectiveProjection;
                 }
                 else
@@ -669,11 +685,13 @@ void Layer::calc_(const sead::Controller* pController, s32 controllerIndex,
             {
                 updateDebugInfo_(1);
             }
+
             if ((mDebugDrawFlag & 1) && (mDebugInfo->mFrame & 3) == 2)
             {
                 updateDebugInfo_(2);
             }
         }
+
         mDebugInfo->mFrame++;
 
         if (mFlag.isOn(1 << 9))
@@ -706,6 +724,7 @@ void Layer::calc_(const sead::Controller* pController, s32 controllerIndex,
     {
         rStep.calc();
     }
+
     calcImpl();
 }
 
@@ -727,10 +746,12 @@ bool Layer::isRenderingEnabled() const
     {
         return false;
     }
+
     if (isForceInvisible())
     {
         return false;
     }
+
     return !mFlag.isOn(1 << 4);
 }
 
@@ -744,15 +765,18 @@ void Layer::clearColor_(const RenderInfo& rInfo) const
     {
         return;
     }
+
     if (mClearFlag == 0)
     {
         return;
     }
+
     const RenderBuffer* pFrameBuffer = rInfo.mFrameBuffer;
     if (!pFrameBuffer)
     {
         return;
     }
+
     pFrameBuffer->fastClear(rInfo.getDrawContext(), 0,
                             (mClearFlag & 1) | ((mClearFlag >> 1) & 2), mClearColor, mClearDepth,
                             0, *rInfo.getViewport(), true);
@@ -778,6 +802,7 @@ void Layer::drawRenderStep_(const RenderInfo& rInfo) const
         it->invoke(rInfo);
         postDrawRenderStepMethodImpl(rInfo, *it);
     }
+
     postDrawRenderStepImpl(rInfo);
 }
 
@@ -813,6 +838,7 @@ void Layer::drawDebugCamera(DrawContext* pDrawContext) const
                                                 getRenderProjection()->getProjectionMatrix(), true,
                                                 color, color, mDebugInfo->_380);
         }
+
         if (mDebugFlag.isOn(1 << 7))
         {
             utl::DevTools::beginDrawImm(pDrawContext, getRenderCamera()->getMatrix(),
@@ -863,6 +889,7 @@ f32 Layer::getDebugCameraTwist()
     {
         return mDebugInfo->mTwist;
     }
+
     return 0.0f;
 }
 
@@ -921,18 +948,23 @@ void Layer::genMessage(sead::hostio::Context* pContext)
         sead::FormatFixedSafeString<1024> str("規定：(%s)",
                                               Renderer::getDisplayName(mDisplayType).cstr());
     }
+
     {
         sead::SafeString name = Renderer::getDisplayName(0);
     }
+
     {
         sead::SafeString name = Renderer::getDisplayName(1);
     }
+
     {
         sead::FormatFixedSafeString<1024> str("ID:%d", mLayerIndex);
     }
+
     {
         sead::FormatFixedSafeString<1024> str("GroupHeader=Save/load debug camera, Dir=X");
     }
+
     genMessageCamera(pContext);
 
     f32 min;
@@ -945,23 +977,29 @@ void Layer::genMessage(sead::hostio::Context* pContext)
     {
         min = -1000.0f;
     }
+
     {
         auto str = utl::DevTools::getStringMinMax(min, 1000.0f);
     }
+
     {
         auto str = utl::DevTools::getStringMinMax(min, 1000.0f);
     }
+
     {
         auto str = utl::DevTools::getStringMinMax(0.0f, 200.0f);
     }
+
     {
         auto str = utl::DevTools::getStringMinMax(0.0f, 200.0f);
     }
+
     {
         sead::FormatFixedSafeString<1024> str(
             "pos  ( %.1f, %.1f )\nsize ( %.1f  %.1f )", mDisplayViewport.getMin().x,
             mDisplayViewport.getMin().y, mDisplayViewport.getSizeX(), mDisplayViewport.getSizeY());
     }
+
     {
         sead::FormatFixedSafeString<1024> str("Max download size used:%d[byte]",
                                               mLastDisplayListSize);
@@ -977,34 +1015,43 @@ void Layer::genMessageCamera(sead::hostio::Context* pContext)
     {
         auto str = utl::DevTools::getStringMinMax(0.01f, 1.0f);
     }
+
     {
         sead::FormatFixedSafeString<1024> str("GroupHeader=デバッグ, IsEnable=%s",
                                               mCamera ? "true" : "false");
     }
+
     {
         auto str = utl::DevTools::getStringMinMax(0.01f, 10.0f);
     }
+
     const char* pIsEnable = mDebugFlag.isOn(1 << 5) ? "true" : "false";
     {
         sead::FormatFixedSafeString<1024> str("GroupHeader=observation point,IsEnable=%s",
                                               pIsEnable);
     }
+
     {
         auto str = utl::DevTools::getStringMinMax(-100.0f, 100.0f);
     }
+
     {
         auto str = utl::DevTools::getStringMinMax(-100.0f, 100.0f);
     }
+
     {
         auto str = utl::DevTools::getStringMinMax(-100.0f, 100.0f);
     }
+
     {
         sead::FormatFixedSafeString<1024> str("GroupHeader= position and angle, IsEnable=%s",
                                               pIsEnable);
     }
+
     {
         auto str = utl::DevTools::getStringMinMax(0.0f, 100.0f);
     }
+
     {
         auto str = utl::DevTools::getStringMinMax(0.0f, 100.0f);
     }
@@ -1026,9 +1073,11 @@ void Layer::genMessageProjection(sead::hostio::Context* pContext)
     {
         min = -1000.0f;
     }
+
     {
         auto str = utl::DevTools::getStringMinMax(min, 1000.0f);
     }
+
     {
         auto str = utl::DevTools::getStringMinMax(min, 1000.0f);
     }
@@ -1149,6 +1198,7 @@ Layer::DebugInfo::DebugInfo()
     {
         rByte = 0;
     }
+
     mCamera.setPos(sead::Vector3f::zero);
     mCamera.setAt(-sead::Vector3f::ez);
     mCamera.updateViewMatrix();

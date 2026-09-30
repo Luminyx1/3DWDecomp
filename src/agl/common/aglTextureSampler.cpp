@@ -91,6 +91,7 @@ bool TextureSampler::activate(DrawContext* pDrawContext, const ShaderLocation& r
             initRegs_(flags);
         }
     }
+
     sead::detail::atomicReadModifyWrite(pFlags, [](u32) { return 0u; });
 
     driver::NVNMgr::instance()->nvnCommandBufferBindTexture(pDrawContext, mSampler.getHandle(),

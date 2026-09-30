@@ -153,6 +153,7 @@ nn::gfx::ResTextureFile* ResFile::getResTextureFile(nn::g3d::ResFile* pResFile)
     {
         return nullptr;
     }
+
     return nn::gfx::ResTextureFile::ResCast(const_cast<void*>(pFile->pData.Get()));
 }
 
@@ -223,6 +224,7 @@ void ResFile::Cleanup(nn::g3d::ResFile* pResFile)
         {
             static_cast<MemoryPoolImpl*>(rContainer.pTextureMemoryPool.Get())->Finalize(getDevice());
         }
+
         rContainer.pCurrentMemoryPool.Set(nullptr);
     }
 
@@ -259,6 +261,7 @@ void ResTexture::Finalize(nn::gfx::ResTexture* pResTexture)
         static_cast<TextureImpl*>(rData.pTexture.Get())->Finalize(pDevice);
         getTextureView(rData)->Finalize(pDevice);
     }
+
     rData.userDescriptorSlot.value = 0;
 }
 
@@ -275,6 +278,7 @@ const char* ResFile::GetTextureName(const nn::g3d::ResFile* pResFile, s32 index)
     {
         return nullptr;
     }
+
     return getTexture(getContainer(pTextureFile), index)->ToData().pName.Get()->GetData();
 }
 
@@ -290,6 +294,7 @@ const nn::gfx::ResTextureFile* ResFile::getResTextureFile(const nn::g3d::ResFile
     {
         return nullptr;
     }
+
     return nn::gfx::ResTextureFile::ResCast(const_cast<void*>(pFile->pData.Get()));
 }
 
@@ -305,6 +310,7 @@ s32 ResFile::GetTextureCount(const nn::g3d::ResFile* pResFile)
     {
         return 0;
     }
+
     return getContainer(pTextureFile).pTextureDic.Get()->GetCount();
 }
 
@@ -321,6 +327,7 @@ s32 ResFile::GetTextureIndex(const nn::g3d::ResFile* pResFile, const char* pName
     {
         return -1;
     }
+
     return getContainer(pTextureFile).pTextureDic.Get()->FindIndex(pName);
 }
 
@@ -337,12 +344,14 @@ nn::gfx::ResTexture* ResFile::GetTexture(nn::g3d::ResFile* pResFile, const char*
     {
         return nullptr;
     }
+
     const nn::gfx::ResTextureContainerData& rContainer = getContainer(pTextureFile);
     s32 index = rContainer.pTextureDic.Get()->FindIndex(pName);
     if (index == -1)
     {
         return nullptr;
     }
+
     return getTexture(rContainer, index);
 }
 
@@ -359,12 +368,14 @@ const nn::gfx::ResTexture* ResFile::GetTexture(const nn::g3d::ResFile* pResFile,
     {
         return nullptr;
     }
+
     const nn::gfx::ResTextureContainerData& rContainer = getContainer(pTextureFile);
     s32 index = rContainer.pTextureDic.Get()->FindIndex(pName);
     if (index == -1)
     {
         return nullptr;
     }
+
     return getTexture(rContainer, index);
 }
 
@@ -381,6 +392,7 @@ nn::gfx::ResTexture* ResFile::GetTexture(nn::g3d::ResFile* pResFile, s32 index)
     {
         return nullptr;
     }
+
     return getTexture(getContainer(pTextureFile), index);
 }
 
@@ -397,6 +409,7 @@ const nn::gfx::ResTexture* ResFile::GetTexture(const nn::g3d::ResFile* pResFile,
     {
         return nullptr;
     }
+
     return getTexture(getContainer(pTextureFile), index);
 }
 
@@ -413,6 +426,7 @@ bool ResFile::BindTexture(nn::g3d::ResFile* pResFile, const nn::g3d::ResFile* pT
     {
         return false;
     }
+
     return pResFile
         ->BindTexture(TextureBindCallback, const_cast<nn::gfx::ResTextureFile*>(pTextureFile))
         .IsComplete();
@@ -433,6 +447,7 @@ nn::g3d::TextureRef ResFile::TextureBindCallback(const char* pName, void* pUserD
     {
         return nn::g3d::TextureRef();
     }
+
     return makeTextureRef(getTexture(rContainer, index));
 }
 
@@ -452,6 +467,7 @@ bool ResFile::BindSharedTexture(nn::g3d::ResFile* pResFile,
     {
         return false;
     }
+
     return pResFile->BindTexture(SharedTextureBindCallback, &files).IsComplete();
 }
 
@@ -473,6 +489,7 @@ nn::g3d::TextureRef ResFile::SharedTextureBindCallback(const char* pName, void* 
             return makeTextureRef(getTexture(rContainer, index));
         }
     }
+
     if (pFiles->mpSharedFile)
     {
         const nn::gfx::ResTextureContainerData& rContainer = getContainer(pFiles->mpSharedFile);
@@ -482,6 +499,7 @@ nn::g3d::TextureRef ResFile::SharedTextureBindCallback(const char* pName, void* 
             return makeTextureRef(getTexture(rContainer, index));
         }
     }
+
     return nn::g3d::TextureRef();
 }
 

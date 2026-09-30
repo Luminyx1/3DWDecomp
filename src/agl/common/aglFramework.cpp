@@ -31,6 +31,7 @@ sead::Heap* getHeap(sead::Heap* pHeap)
     {
         pHeap = sead::HeapMgr::instance()->getCurrentHeap();
     }
+
     pHeap->getFreeSize();
     return pHeap;
 }
@@ -55,27 +56,32 @@ void Initialize(const InitArg& rArg)
         detail::GPUMemBlockMgr::instance()->initialize(pHeap, rArg.mDebugHeap);
         detail::GPUMemBlockMgr::instance()->setMinBlockSize(rArg.mMinGPUMemBlockSize);
     }
+
     {
         sead::Heap* pHeap = getHeap(pArgHeap);
         driver::NVNMgr::createInstance(pHeap);
         driver::NVNMgr::instance()->initialize(pHeap, rArg.mDebugHeap);
     }
+
     {
         sead::Heap* pHeap = getHeap(pArgHeap);
         detail::PrivateResource::createInstance(pHeap);
         detail::PrivateResource::instance()->initialize(pHeap, rArg.mDebugHeap, rArg.mWorkHeapSize,
                                                         rArg._18);
     }
+
     {
         sead::Heap* pHeap = getHeap(pArgHeap);
         detail::RootNode::createInstance(pHeap);
         detail::RootNode::instance()->initialize(pHeap, rArg.mRootNodeMetaSuffix);
     }
+
     {
         sead::Heap* pHeap = getHeap(pArgHeap);
         detail::ShaderHolder::createInstance(pHeap);
         detail::ShaderHolder::instance()->setNoOption(rArg.mShaderNoOption);
     }
+
     {
         sead::Heap* pHeap = getHeap(pArgHeap);
         utl::DynamicTextureAllocator::createInstance(pHeap);
@@ -83,36 +89,43 @@ void Initialize(const InitArg& rArg)
             rArg.mDynamicTextureNum, rArg.mDynamicTextureSize, rArg.mDynamicTextureDebugSize, pHeap,
             rArg.mDebugHeap);
     }
+
     {
         sead::Heap* pHeap = getHeap(pArgHeap);
         detail::DynamicUniformBlock::createInstance(pHeap);
         detail::DynamicUniformBlock::instance()->initialize(rArg.mDynamicUniformBlockSize, pHeap);
     }
+
     if (rArg.mDebugHeap)
     {
         utl::DebugTextureDrawer::createInstance(rArg.mDebugHeap);
         utl::DebugTextureDrawer::instance()->initialize(rArg.mDebugHeap);
     }
+
     {
         sead::Heap* pHeap = getHeap(pArgHeap);
         utl::PrimitiveTexture::createInstance(pHeap);
         utl::PrimitiveTexture::instance()->initialize(pHeap);
     }
+
     {
         sead::Heap* pHeap = getHeap(pArgHeap);
         utl::PrimitiveShape::createInstance(pHeap);
         utl::PrimitiveShape::instance()->initialize(pHeap);
     }
+
     {
         sead::Heap* pHeap = getHeap(pArgHeap);
         utl::VertexAttributeHolder::createInstance(pHeap);
         utl::VertexAttributeHolder::instance()->initialize(pHeap);
     }
+
     {
         sead::Heap* pHeap = getHeap(pArgHeap);
         utl::PrimitiveVertex::createInstance(pHeap);
         utl::PrimitiveVertex::instance()->initialize(pHeap);
     }
+
     {
         detail::FileIOMgr::CreateArg createArg;
         createArg.mUseCheckout = rArg.mUseCheckout;

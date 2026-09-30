@@ -73,6 +73,7 @@ void IParameterList::clearList()
         i->mNext = nullptr;
         i = next;
     }
+
     mpChildListHead = nullptr;
     mpChildListTail = nullptr;
 }
@@ -88,6 +89,7 @@ void IParameterList::clearObj()
         i->mNext = nullptr;
         i = next;
     }
+
     mpChildObjHead = nullptr;
     mpChildObjTail = nullptr;
 }
@@ -108,9 +110,11 @@ void IParameterList::removeList(IParameterList* pChild)
             {
                 mpChildListTail = prev;
             }
+
             pChild->mNext = nullptr;
             return;
         }
+
         prev = it;
     }
 }
@@ -131,9 +135,11 @@ void IParameterList::removeObj(IParameterObj* pChild)
             {
                 mpChildObjTail = prev;
             }
+
             pChild->mNext = nullptr;
             return;
         }
+
         prev = it;
     }
 }
@@ -159,10 +165,12 @@ void IParameterList::applyResParameterList(ResParameterList list1, ResParameterL
     {
         return applyResParameterList_(false, list1, {}, 0.0);
     }
+
     if (list2.ptr() && t >= 1.0)
     {
         return applyResParameterList_(false, list2, {}, 0.0);
     }
+
     return applyResParameterList_(true, list1, list2, t);
 }
 
@@ -186,6 +194,7 @@ bool IParameterList::isComplete(ResParameterList res, bool checkValues) const
         {
             return false;
         }
+
         ++obj_count;
     }
 
@@ -196,6 +205,7 @@ bool IParameterList::isComplete(ResParameterList res, bool checkValues) const
         {
             return false;
         }
+
         ++list_count;
     }
 
@@ -203,6 +213,7 @@ bool IParameterList::isComplete(ResParameterList res, bool checkValues) const
     {
         return false;
     }
+
     return true;
 }
 
@@ -262,10 +273,12 @@ void IParameterList::writeToXML(sead::XmlElement* pElement, sead::Heap* pHeap) c
     {
         obj->writeToXML(element, pHeap);
     }
+
     for (auto* list = mpChildListHead; list; list = list->mNext)
     {
         list->writeToXML(element, pHeap);
     }
+
     postWrite_();
 }
 
@@ -295,6 +308,7 @@ s32 IParameterList::readFromXML(const sead::XmlElement& rElement, bool x)
             {
                 continue;
             }
+
             if (name != obj->getParameterObjName())
             {
                 continue;
@@ -305,6 +319,7 @@ s32 IParameterList::readFromXML(const sead::XmlElement& rElement, bool x)
             {
                 return -1;
             }
+
             count += result;
             break;
         }
@@ -315,6 +330,7 @@ s32 IParameterList::readFromXML(const sead::XmlElement& rElement, bool x)
             {
                 continue;
             }
+
             if (name != list->getParameterListName())
             {
                 continue;
@@ -325,6 +341,7 @@ s32 IParameterList::readFromXML(const sead::XmlElement& rElement, bool x)
             {
                 return -1;
             }
+
             count += result;
             break;
         }
@@ -345,10 +362,12 @@ bool IParameterList::verify() const
     {
         ok &= i->verify();
     }
+
     for (auto* i = mpChildObjHead; i; i = i->mNext)
     {
         ok &= i->verify();
     }
+
     return ok;
 }
 
@@ -363,6 +382,7 @@ bool IParameterList::verifyList() const
     {
         ret &= verifyList(i, i->mNext);
     }
+
     return ret;
 }
 
@@ -377,6 +397,7 @@ bool IParameterList::verifyObj() const
     {
         ret &= verifyObj(i, i->mNext);
     }
+
     return ret;
 }
 
@@ -396,6 +417,7 @@ bool IParameterList::verifyList(IParameterList* pCheck, IParameterList* pOther) 
             ok = false;
         }
     }
+
     return ok;
 }
 
@@ -415,6 +437,7 @@ bool IParameterList::verifyObj(IParameterObj* pCheck, IParameterObj* pOther) con
             ok = false;
         }
     }
+
     return ok;
 }
 
@@ -431,6 +454,7 @@ ResParameterObj IParameterList::searchResParameterObj_(ResParameterList res,
     {
         return {};
     }
+
     for (auto it = res.objBegin(), end = res.objEnd(); it != end; ++it)
     {
         if (rObj.isApply_(*it))
@@ -438,6 +462,7 @@ ResParameterObj IParameterList::searchResParameterObj_(ResParameterList res,
             return *it;
         }
     }
+
     return {};
 }
 
@@ -470,6 +495,7 @@ IParameterObj* IParameterList::searchChildParameterObj_(ResParameterObj res,
             return nullptr;
         }
     }
+
     return child;
 }
 
@@ -486,6 +512,7 @@ ResParameterList IParameterList::searchResParameterList_(ResParameterList res,
     {
         return {};
     }
+
     for (auto it = res.listBegin(), end = res.listEnd(); it != end; ++it)
     {
         if (rList.isApply_(it.getList()))
@@ -493,6 +520,7 @@ ResParameterList IParameterList::searchResParameterList_(ResParameterList res,
             return it.getList();
         }
     }
+
     return {};
 }
 
@@ -515,6 +543,7 @@ IParameterList* IParameterList::searchChildParameterList_(ResParameterList res) 
             return child;
         }
     }
+
     return nullptr;
 }
 
@@ -530,6 +559,7 @@ void IParameterList::applyResParameterObjB_(bool interpolate, ResParameterList r
     {
         return;
     }
+
     IParameterObj* obj = nullptr;
     for (auto it = res.objBegin(), end = res.objEnd(); it != end; ++it)
     {
@@ -554,6 +584,7 @@ void IParameterList::applyResParameterListB_(bool interpolate, ResParameterList 
     {
         return;
     }
+
     for (auto it = res.listBegin(), end = res.listEnd(); it != end; ++it)
     {
         auto* list = searchChildParameterList_(*it);
@@ -676,11 +707,13 @@ void IParameterList::sortByHash()
             {
                 mpChildListHead = &*it;
             }
+
             it->mNext = nullptr;
             if (mpChildListTail)
             {
                 mpChildListTail->mNext = &*it;
             }
+
             mpChildListTail = &*it;
         }
 
@@ -707,11 +740,13 @@ void IParameterList::sortByHash()
             {
                 mpChildObjHead = &*it;
             }
+
             it->mNext = nullptr;
             if (mpChildObjTail)
             {
                 mpChildObjTail->mNext = &*it;
             }
+
             mpChildObjTail = &*it;
         }
 

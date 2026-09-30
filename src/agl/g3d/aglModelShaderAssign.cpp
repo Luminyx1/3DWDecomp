@@ -143,22 +143,26 @@ void ModelShaderAttribute::bind(const nn::g3d::ResMaterial* pMaterial,
         {
             continue;
         }
+
         s32 assignIndex = pAssignDic->FindIndex(pName);
         if (assignIndex == -1)
         {
             continue;
         }
+
         const nn::util::BinPtrToString* pAssignArray = pShaderAssign->pAttribAssignArray.Get();
         if (!pAssignArray)
         {
             continue;
         }
+
         const nn::util::BinString* pVertexAttribName = pAssignArray[assignIndex].Get();
         const nn::g3d::ResAttribVarData* pAttrib = pShadingModel->GetAttrib(i);
         if (pAttrib->location == -1)
         {
             continue;
         }
+
         if (pProgram && !pProgram->IsAttribActive(i))
         {
             continue;
@@ -200,6 +204,7 @@ void ModelShaderAttribute::bind_(const nn::g3d::ResVertex* pVertex,
         {
             continue;
         }
+
         validAttributes[validNum++] = rAttribute;
     }
 
@@ -257,6 +262,7 @@ void ModelShaderAttribute::bind_(const nn::g3d::ResVertex* pVertex,
     {
         mVertexState.Finalize(getDevice());
     }
+
     if (mAttributeNum != 0)
     {
         mVertexState.Initialize(getDevice(), info, nullptr);
@@ -274,6 +280,7 @@ bool ModelShaderAttribute::isSameVertexAttribute(const ModelShaderAttribute& rOt
     {
         return false;
     }
+
     for (s32 i = 0; i < mAttributeNum; i++)
     {
         if (rOther.mAttributes[i].mLocation != mAttributes[i].mLocation ||
@@ -284,6 +291,7 @@ bool ModelShaderAttribute::isSameVertexAttribute(const ModelShaderAttribute& rOt
             return false;
         }
     }
+
     return true;
 }
 
@@ -347,6 +355,7 @@ bool ModelShaderAttribute::isSameVertexBuffer(const ModelShaderAttribute& rOther
     {
         return false;
     }
+
     for (s32 i = 0; i < mVertexBufferNum; i++)
     {
         if (rOther.mVertexBuffers[i].mpBuffer != mVertexBuffers[i].mpBuffer)
@@ -354,6 +363,7 @@ bool ModelShaderAttribute::isSameVertexBuffer(const ModelShaderAttribute& rOther
             return false;
         }
     }
+
     return true;
 }
 
@@ -396,6 +406,7 @@ void ModelShaderAttribute::activateVertexBuffer(DrawContext* pDrawContext) const
     {
         return;
     }
+
     for (s32 i = 0; i < mVertexBufferNum; i++)
     {
         nn::gfx::GpuAddress address;
@@ -421,6 +432,7 @@ s32 ModelShaderAttribute::searchAttributeIndex(s32 location) const
             return i;
         }
     }
+
     return -1;
 }
 
@@ -483,6 +495,7 @@ void ModelShaderAttribute::flushVertexBuffer()
         bufferInfos[i].SetDefault();
         bufferInfos[i].SetStride(mVertexBuffers[i].mStride);
     }
+
     for (s32 i = 0; i < mAttributeNum; i++)
     {
         const AttributeInfo& rAttributeInfo = mAttributes[i];
@@ -504,6 +517,7 @@ void ModelShaderAttribute::flushVertexBuffer()
         {
             mVertexState.Finalize(getDevice());
         }
+
         mVertexState.Initialize(getDevice(), info, nullptr);
     }
 }
@@ -541,6 +555,7 @@ void ModelShaderSampler::bind(const nn::g3d::ResMaterial* pMaterial,
     {
         return;
     }
+
     mpResMaterial = pMaterial;
 
     for (s32 i = 0; i < pShadingModel->GetSamplerCount(); i++)
@@ -551,6 +566,7 @@ void ModelShaderSampler::bind(const nn::g3d::ResMaterial* pMaterial,
         {
             continue;
         }
+
         s32 assignIndex = pAssignDic->FindIndex(pName);
         if (assignIndex == -1)
         {
@@ -586,6 +602,7 @@ void ModelShaderSampler::pushBackSampler(s32 samplerIndex, const SamplerLocation
     {
         return;
     }
+
     for (s32 i = 0; i < mSamplerNum; i++)
     {
         if (mSamplers[i].mSamplerIndex == samplerIndex && mSamplers[i].mLocation == rLocation)
@@ -593,6 +610,7 @@ void ModelShaderSampler::pushBackSampler(s32 samplerIndex, const SamplerLocation
             return;
         }
     }
+
     mSamplers[mSamplerNum].mLocation = rLocation;
     mSamplers[mSamplerNum++].mSamplerIndex = samplerIndex;
 }
@@ -609,6 +627,7 @@ const char* ModelShaderSampler::getResSamplerName(s32 index) const
     {
         return nullptr;
     }
+
     return pSamplerDic->GetKey(mSamplers[index].mSamplerIndex).data();
 }
 
@@ -658,6 +677,7 @@ void ModelShaderSampler::activate(DrawContext* pDrawContext, const nn::g3d::Mate
         {
             pTexture = pOverride;
         }
+
         if (pTexture)
         {
             u32 samplerId =
@@ -713,6 +733,7 @@ bool ModelShaderSampler::isEqual(const ModelShaderSampler& rOther) const
     {
         return false;
     }
+
     for (s32 i = 0; i < mSamplerNum; i++)
     {
         if (&mpResMaterial->ToData().pSamplerArray.Get()[mSamplers[i].mSamplerIndex] !=
@@ -720,11 +741,13 @@ bool ModelShaderSampler::isEqual(const ModelShaderSampler& rOther) const
         {
             return false;
         }
+
         if (!(mSamplers[i].mLocation == rOther.mSamplers[i].mLocation))
         {
             return false;
         }
     }
+
     return true;
 }
 

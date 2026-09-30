@@ -177,6 +177,7 @@ inline void drawQuadTriangle_(DrawContext* pDrawContext)
         {
             layer /= f32(getSlice(rTexture));
         }
+
         face = 0;
     }
 
@@ -573,6 +574,7 @@ ShaderProgram* ImageFilter2D::getReduceProgram_(ReduceScale scale)
         type = detail::ShaderHolder::cTexture;
         break;
     }
+
     return getProgram(type);
 }
 
@@ -724,6 +726,7 @@ void ImageFilter2D::drawNV12Decord(DrawContext* pDrawContext, const TextureSampl
         sead::Vector4f coefficient(1.402f, -0.714f, -0.344f, 1.722f);
         setUniform(pDrawContext, pProgram->getUniformLocation(22), coefficient);
     }
+
     pProgram->validate_();
     rSamplerUV.activate(pDrawContext, pProgram->getSamplerLocation(1), -1, false);
     draw(pDrawContext, *pProgram, rSamplerY, rViewport, rScale, rTranslate);
@@ -754,6 +757,7 @@ void ImageFilter2D::drawNV12DecordQuadTriangle(DrawContext* pDrawContext,
         sead::Vector4f coefficient(1.402f, -0.714f, -0.344f, 1.722f);
         setUniform(pDrawContext, pProgram->getUniformLocation(22), coefficient);
     }
+
     pProgram->validate_();
     rSamplerUV.activate(pDrawContext, pProgram->getSamplerLocation(1), -1, false);
     drawQuadTriangle(pDrawContext, *pProgram, rSamplerY);
@@ -911,6 +915,7 @@ void ImageFilter2D::drawCubemapSH(DrawContext* pDrawContext, const TextureSample
         setUniform(pDrawContext, pProgram->getUniformLocation(2), rD);
         setUniform(pDrawContext, pProgram->getUniformLocation(3), rE);
     }
+
     drawQuadTriangleQuadIndex(pDrawContext);
 }
 
@@ -951,6 +956,7 @@ void ImageFilter2D::drawCubemapSHPoint(DrawContext* pDrawContext, const TextureS
         setUniform(pDrawContext, pProgram->getUniformLocation(2), rD);
         setUniform(pDrawContext, pProgram->getUniformLocation(3), rE);
     }
+
     drawQuadTriangleQuadIndex(pDrawContext);
 }
 

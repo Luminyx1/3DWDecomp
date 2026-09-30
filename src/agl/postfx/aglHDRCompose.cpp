@@ -38,6 +38,7 @@ void HDRCompose::initialize(s32 contextNum, sead::Heap* pHeap)
         rContext.mTexCoordOffset = sead::Vector2f::zero;
         rContext.mTexCoordRotate = 0.0f;
     }
+
     mDebugTexturePage.setUp(contextNum, "HDRCompose", pHeap);
 }
 
@@ -70,6 +71,7 @@ void HDRCompose::draw(DrawContext* pDrawContext, s32 context, const RenderBuffer
     {
         variation += pProgram->getVariationMacroStride(1);
     }
+
     variation += mVariation2 * pProgram->getVariationMacroStride(2);
     if (mFlags & cFlag_Mode2)
     {
@@ -79,6 +81,7 @@ void HDRCompose::draw(DrawContext* pDrawContext, s32 context, const RenderBuffer
     {
         variation += pProgram->getVariationMacroStride(3);
     }
+
     pProgram = pProgram->getVariation(variation);
 
     f32 exposure = mFlags & cFlag_EnableExposure ? std::exp2f(mContexts[context].mExposure) : 1.0f;
@@ -122,6 +125,7 @@ void HDRCompose::draw(DrawContext* pDrawContext, s32 context, const RenderBuffer
         pProgram->getUniformLocation(4).setUniform(pDrawContext, 2, &rContext.mSampler1Param);
         rContext.mpSampler1->activate(pDrawContext, pProgram->getSamplerLocation(3), -1, false);
     }
+
     if (isEnable2)
     {
         rContext.mpSampler2->activate(pDrawContext, pProgram->getSamplerLocation(2), -1, false);
@@ -148,6 +152,7 @@ void HDRCompose::genMessage(sead::hostio::Context* pContext)
         sead::FormatFixedSafeString<1024> header("GroupHeader= viewpoint: %d", i);
         i++;
     }
+
     i = 0;
     for (auto& rContext : mContexts)
     {

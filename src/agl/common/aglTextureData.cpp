@@ -409,6 +409,7 @@ void TextureData::setCompSelDefault()
         reinterpret_cast<detail::CompSel&>(comp_sel).setDefault(TextureFormat(mTextureFormat));
         mSurface.mCompSel = comp_sel;
     }
+
     updateNVNtexture();
 }
 

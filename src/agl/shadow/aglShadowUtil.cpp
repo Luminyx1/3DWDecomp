@@ -69,6 +69,7 @@ void ShadowUtil::calcNearFar(f32* pNear, f32* pFar, const sead::Matrix44f& rProj
     {
         *pNear = -(inv(2, 3) - inv(2, 2)) / (inv(3, 3) - inv(3, 2));
     }
+
     if (pFar)
     {
         *pFar = -(inv(2, 2) + inv(2, 3)) / (inv(3, 2) + inv(3, 3));
@@ -99,6 +100,7 @@ void ShadowUtil::drawFrustum(DrawContext* pDrawContext, const sead::Matrix34f& r
         {-1.0f, 1.0f, -1.0f}, {-1.0f, -1.0f, -1.0f}, {1.0f, -1.0f, -1.0f}, {1.0f, 1.0f, -1.0f},
         {-1.0f, 1.0f, 0.99f}, {-1.0f, -1.0f, 0.99f}, {1.0f, -1.0f, 0.99f}, {1.0f, 1.0f, 0.99f},
     };
+
     sead::Matrix44f inv;
     sead::Matrix44CalcCommon<f32>::inverse(inv, viewProj);
 

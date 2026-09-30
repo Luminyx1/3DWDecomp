@@ -85,6 +85,7 @@ const TextureCompSel cDefaultCompSel[][4] = {
     {cTextureCompSel_R, cTextureCompSel_R, cTextureCompSel_R, cTextureCompSel_1},  // Depth_24_uNorm_Stencil_8
     {cTextureCompSel_R, cTextureCompSel_R, cTextureCompSel_R, cTextureCompSel_1},  // Depth_32_float_Stencil_8
 };
+
 const FormatInfo cFormatInfo[] = {
     {{0, 0, 0, 0}, {-1, -1, -1, -1}, 0, 0, false, false, false, false, false, false, false},  // Invalid
     {{8, 0, 0, 0}, {0, -1, -1, -1}, 1, 1, false, true, false, true, true, false, false},  // R8_uNorm

@@ -86,6 +86,7 @@ s32 findLocation(const sead::INamable& rLoc, const ShaderProgram& rProgram, Shad
             {
                 return list.mEntries[i].mLocation;
             }
+
             break;
         }
     }
@@ -130,9 +131,11 @@ s32 searchRegisterUniform(const sead::INamable& rLoc, const ShaderProgram& rProg
                 {
                     return uniform->mLocation;
                 }
+
                 uniform = nextUniform(uniform);
             }
         }
+
         block = nextUniform(block);
     }
 
@@ -197,6 +200,7 @@ void UniformLocation::search(const ShaderProgram& rProgram)
                     mUniformLocation = list.mEntries[j].mLocation;
                     return;
                 }
+
                 break;
             }
         }

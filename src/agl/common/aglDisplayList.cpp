@@ -40,6 +40,7 @@ void DisplayList::setControlMemory(void* pMemory, u64 size)
         pMemory = getDefaultControlMemory_();
         size = cDefaultControlMemorySize;
     }
+
     mControlMemory = pMemory;
     mControlMemorySize = size;
     mControlMemoryUsed = 0;
@@ -180,6 +181,7 @@ bool DisplayList::beginDisplayListBuffer(GPUMemAddr<u8> buffer, u64 size,
     {
         buffer.invalidateCPUCache(size);
     }
+
     setBuffer(buffer, size);
     return beginDisplayList();
 }

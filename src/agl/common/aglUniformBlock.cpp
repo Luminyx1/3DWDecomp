@@ -66,6 +66,7 @@ void UniformBlock::destroy()
         delete mHeader;
         mFlags.reset(cFlag_OwnHeader);
     }
+
     mHeader = nullptr;
 
     if (mFlags.isOn(cFlag_OwnBuffer))
@@ -75,6 +76,7 @@ void UniformBlock::destroy()
             mBuffer.deleteGPUMemBlock();
             mBuffer.invalidate();
         }
+
         mFlags.reset(cFlag_OwnBuffer);
     }
 }
@@ -331,6 +333,7 @@ void UniformBlock::writeMemory(u32* pDst, const u32* pSrc, s32 count, s32 dstStr
         {
             pDst[j] = *pSrc++;
         }
+
         pDst += dstStride;
     }
 }

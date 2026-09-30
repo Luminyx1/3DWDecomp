@@ -458,8 +458,10 @@ s32 ShaderProgramArchive::searchShaderProgramIndex(const sead::SafeString& rName
         if (program.mVariation->mName == rName) {
             return index;
         }
+
         index++;
     }
+
     return -1;
 }
 
@@ -475,10 +477,12 @@ void ShaderProgramArchive::genMessage(sead::hostio::Context* pContext)
             mResShaderArchive.isValid() ? mResShaderArchive.ref().mFileSize : 0,
             mResBinaryShaderArchive.isValid() ? mResBinaryShaderArchive.ref().mFileSize : 0);
     }
+
     if (mDisplayListBuffer.getMemoryBlock()) {
         sead::FormatFixedSafeString<1024> str("DisplayList : %d[byte]",
                                               mDisplayListBuffer.getMemoryBlock()->getSize());
     }
+
     {
         sead::FormatFixedSafeString<1024> str(
             "program num   : %d\nvariation num : %d\nsource num    : %d",
@@ -501,17 +505,20 @@ void ShaderProgramArchive::listenPropertyEvent(const sead::hostio::PropertyEvent
                 source.mFlags |= ShaderSource::cFlag_Dirty;
             }
         }
+
         setUpFromObjectReflector(false, !(mFlags & cFlag_SetUpNoCompile));
         break;
     case 100004:
         for (auto& program : mShaderPrograms) {
             program.dump();
         }
+
         break;
     case 100010:
         for (auto& source : mShaderSources) {
             source.resize(*source.mEditText, 1);
         }
+
         break;
     }
 }
@@ -614,6 +621,7 @@ void ShaderProgramEdit::listenPropertyEvent(const sead::hostio::PropertyEvent* p
             index += mMacroValueIndex(i) * macro.mStride;
             i++;
         }
+
         mVariationIndex = index;
     }
 }
@@ -651,10 +659,12 @@ ShaderSource::~ShaderSource()
         delete mRawText;
         mRawText = nullptr;
     }
+
     if (mEditText) {
         delete mEditText;
         mEditText = nullptr;
     }
+
     mIncludeFlags.freeBuffer();
 }
 
@@ -688,6 +698,7 @@ void ShaderSource::listenPropertyEvent(const sead::hostio::PropertyEvent* pEvent
         if (reinterpret_cast<uintptr_t>(pEvent->getId()) == 100012) {
             resize(sead::SafeString(mResShaderSource.getText()), 2);
         }
+
         return;
     }
 
@@ -711,6 +722,7 @@ void ShaderSource::listenPropertyEvent(const sead::hostio::PropertyEvent* pEvent
         if (mEditText) {
             delete mEditText;
         }
+
         mEditText = nullptr;
         mArchive->mSourceTexts[mIndex] = mResShaderSource.getText();
         mFlags |= cFlag_Dirty;
@@ -725,11 +737,14 @@ void ShaderSource::listenPropertyEvent(const sead::hostio::PropertyEvent* pEvent
                 if (mIncludeFlags[index]) {
                     source.mFlags |= cFlag_Dirty;
                 }
+
                 index++;
             }
+
             mArchive->setUpFromObjectReflector(
                 false, reinterpret_cast<uintptr_t>(pEvent->getId()) == 100006);
         }
+
         break;
     case 100011:
         resize(*mEditText, 2);

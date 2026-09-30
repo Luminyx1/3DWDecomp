@@ -62,10 +62,12 @@ inline f32 calcEdgeRate(f32 pos, f32 edge)
     {
         return 0.0f;
     }
+
     if (edge < 1.0f)
     {
         return sead::Mathf::clamp((pos - edge) / (1.0f - edge), 0.0f, 1.0f);
     }
+
     return sead::Mathf::clamp((pos - 1.0f) / (edge - 1.0f), 0.0f, 1.0f);
 }
 
@@ -216,6 +218,7 @@ void OfxBase::PresetBase::copy(const PresetBase& rOther)
             }
         }
     }
+
     static_cast<sead::BaseVec3<f32>&>(*mPosition) = pos;
 }
 
@@ -238,6 +241,7 @@ void OfxBase::PresetBase::genMessage(sead::hostio::Context* pContext)
         {
             continue;
         }
+
         sead::FormatFixedSafeString<256> label("%s / %s",
                                                env::EnvObj::getTypeData(pPreset->getTypeID()).mName,
                                                pPreset->mPresetName->cstr());
@@ -359,11 +363,13 @@ void OfxBase::calc()
         mFlag.reset(0x20);
         loadPresetByName(mPresetName, false);
     }
+
     if (mFlag.isOn(0x40))
     {
         mFlag.reset(0x40);
         loadPresetByIndex(mPresetIndex, false);
     }
+
     if (!isEnable())
     {
         return;
@@ -391,6 +397,7 @@ bool OfxBase::loadPresetByName(const sead::SafeString& rName, bool force)
     {
         mPresetName.copy(rName);
     }
+
     const PresetBase* pPreset = mMgr->searchPresetByName(getOfxTypeID(), rName);
     mPreset = pPreset;
     if (pPreset == nullptr)
@@ -398,6 +405,7 @@ bool OfxBase::loadPresetByName(const sead::SafeString& rName, bool force)
         mPresetIndex = -1;
         return false;
     }
+
     OccludedEffectMgr* pMgr = mMgr;
     s32 type = getOfxTypeID();
     mPresetIndex = pMgr->getCreateArg().searchPresetTypeIndex(pPreset, type);
@@ -420,6 +428,7 @@ bool OfxBase::loadPresetByIndex(s32 index, bool force)
         mPresetName = sead::SafeString::cEmptyString;
         return false;
     }
+
     mPresetName = *mPreset->mPresetName;
     mOwnPreset->copy(*mPreset);
     return true;
@@ -502,6 +511,7 @@ void OfxBase::updateGPU()
     {
         return;
     }
+
     mOcclusionRenderer.updateGPU();
     updateGPUImpl_();
 }
@@ -517,6 +527,7 @@ void OfxBase::updateViewGPU(s32 viewIndex, const RenderBuffer& rRenderBuffer)
     {
         return;
     }
+
     mOcclusionRenderer.updateViewGPU(viewIndex, rRenderBuffer);
     updateViewGPUImpl_(viewIndex, mContext[viewIndex], mContext[viewIndex]);
 }
@@ -536,6 +547,7 @@ void OfxBase::draw(DrawContext* pDrawContext, s32 viewIndex, const RenderBuffer&
     {
         return;
     }
+
     mOcclusionRenderer.draw(pDrawContext, viewIndex, rDepth);
     drawImpl_(pDrawContext, viewIndex, rRenderBuffer, rViewport, mContext[viewIndex],
               mOcclusionRenderer);
@@ -553,10 +565,12 @@ void OfxBase::drawDebugOfx(DrawContext* pDrawContext, s32 viewIndex) const
     {
         return;
     }
+
     if (!mFlag.isOn(0x88))
     {
         return;
     }
+
     mFlag.reset(0x80);
 
     mOcclusionRenderer.drawDebug(pDrawContext, viewIndex, mDebugColor0, mDebugColor1, mDebugColor2);
@@ -613,6 +627,7 @@ void OfxBase::setEnable(bool enable)
     {
         mMgr->setDirty();
     }
+
     EnvObj::setEnable(enable);
 }
 
@@ -631,10 +646,12 @@ void OfxBase::listenPropertyEvent(const sead::hostio::PropertyEvent* pEvent)
             mMgr->setDirty();
         }
     }
+
     if (pEvent->getId() == reinterpret_cast<const void*>(1000))
     {
         pFlag->set(0x20);
     }
+
     listenPropertyEventImpl_(pEvent);
     mOcclusionRenderer.listenPropertyEvent(pEvent);
 }
@@ -809,11 +826,13 @@ OfxLensFlare::Preset::~Preset()
     {
         delete mPresetContext[i];
     }
+
     mPresetContext.freeBuffer();
     for (s32 i = 0; i < mElement.size(); i++)
     {
         delete mElement[i];
     }
+
     mElement.freeBuffer();
 }
 
@@ -830,6 +849,7 @@ void OfxLensFlare::Preset::initializeOfxImpl_(const CreateArg& rArg, sead::Heap*
     {
         mElement.pushBack(new (pHeap) PresetElement(i, this));
     }
+
     mPresetContext.allocBuffer(rArg.mViewNum, pHeap);
     for (s32 i = 0; i < rArg.mViewNum; i++)
     {
@@ -847,11 +867,13 @@ void OfxLensFlare::Preset::listenPropertyEventImpl_(const sead::hostio::Property
         {
             return;
         }
+
         PresetElement* pSrc = searchElement_(pDst->mOrder);
         if (pSrc == nullptr)
         {
             return;
         }
+
         pDst->copy(*pSrc);
     }
 }
@@ -881,13 +903,16 @@ void OfxLensFlare::Preset::genMessageImpl_(sead::hostio::Context* pContext)
                 {
                     continue;
                 }
+
                 if (it->mOrder == it->mIndex)
                 {
                     it->mOrder = it2->mIndex;
                 }
+
                 genMessageDummy(pContext, sead::FormatFixedSafeString<16>("%d", it2->mIndex));
             }
         }
+
         genMessageDummy(pContext, utl::DevTools::getStringMinMax(-0.2f, 2.0f));
         mMgr->genMessageTextureSelect(pContext, &*it->mTextureIdx, "Texture");
         mMgr->genMessageTextureSelect(
@@ -922,11 +947,13 @@ OfxLensFlare::~OfxLensFlare()
         it->mUniformBlock.freeBuffer();
         delete &*it;
     }
+
     mContextLensFlare.freeBuffer();
     for (s32 i = 0; i < mElement.capacity(); i++)
     {
         delete mElement[i];
     }
+
     mElement.freeBuffer();
     mVertexAttrQuad.destroy();
     mVertexAttrQuadDouble.destroy();
@@ -952,6 +979,7 @@ f32 OfxLensFlare::getOcclusionRate(s32 viewIndex) const
         rate = coreRate <= 0.0f ? 0.0f : rate;
         break;
     }
+
     return rate;
 }
 
@@ -1005,6 +1033,7 @@ void OfxLensFlare::initializeImpl_(const CreateArg& rArg, sead::Heap* pHeap)
             {
                 rBlock.declare(*rBlocks.getBufferPtr());
             }
+
             rBlock.create(pHeap, 2, 1);
         }
     }
@@ -1050,6 +1079,7 @@ void OfxLensFlare::calcContextImpl_(s32 viewIndex, const Context& rContext,
         {
             axis.set(1.0f, 0.0f, 0.0f);
         }
+
         const sead::Matrix34f& rViewMtx = rContext.mViewFrustumCulling.getViewMtx();
         sead::Vector3f viewAxis(
             rViewMtx.m[0][0] * axis.x + rViewMtx.m[0][1] * axis.y + rViewMtx.m[0][2] * axis.z,
@@ -1081,6 +1111,7 @@ void OfxLensFlare::calcContextImpl_(s32 viewIndex, const Context& rContext,
         {
             continue;
         }
+
         const Element* pElementCtx = mElement[index];
         ContextLensFlare::Instance& rInstance = *it;
 
@@ -1170,11 +1201,13 @@ void OfxLensFlare::calcContextImpl_(s32 viewIndex, const Context& rContext,
             rInstance.mDir.set(dir.x, dir.y);
             rInstance.mDir.y = dir.y / rContext.mViewFrustumCulling.mAspect;
         }
+
         rotate = *pElement->mRotate;
         if (!*pElement->mIsEnableRotate)
         {
             rotate += angle;
         }
+
         rotateVec(&rInstance.mDir, rotate);
 
         if (*pElement->mIsEnableRotatePos)
@@ -1185,6 +1218,7 @@ void OfxLensFlare::calcContextImpl_(s32 viewIndex, const Context& rContext,
             {
                 mulMtx22(&pos, invRotMtx, pos);
             }
+
             rotateVec(&rInstance.mDir, (pos.x - pos.y) * *pElement->mRotatePosRate);
         }
 
@@ -1202,6 +1236,7 @@ void OfxLensFlare::calcContextImpl_(s32 viewIndex, const Context& rContext,
                 rInstance.mDir.x = -rInstance.mDir.x;
             }
         }
+
         rInstance.mDir.normalize();
 
         if (pElementCtx->mSampler == nullptr &&
@@ -1217,6 +1252,7 @@ void OfxLensFlare::calcContextImpl_(s32 viewIndex, const Context& rContext,
         {
             mulMtx22(&pos, invRotMtx, pos);
         }
+
         f32 texRotate = (pos.y - pos.x) * *pElement->mRotatePosRate * 2.0f;
         f32 texSin = std::sin(texRotate);
         f32 texCos = std::cos(texRotate);
@@ -1231,6 +1267,7 @@ void OfxLensFlare::calcContextImpl_(s32 viewIndex, const Context& rContext,
         {
             texMtx.setMul(texMtx, sead::Matrix22f(2.0f, 0.0f, 0.0f, 2.0f));
         }
+
         rInstance.mTexMtx[0].set(texMtx.m[0][0], texMtx.m[0][1]);
         rInstance.mTexMtx[1].set(texMtx.m[1][0], texMtx.m[1][1]);
         rInstance.mTexScale.set(isQuarterTexture(mMgr, *pElement->mTextureIdx) ? 1.0f : 0.5f,
@@ -1276,8 +1313,10 @@ void OfxLensFlare::drawImpl_(DrawContext* pDrawContext, s32 viewIndex,
             {
                 continue;
             }
+
             pSampler = &mMgr->mTextureInfo[textureIdx]->mSampler;
         }
+
         const TextureSampler* pSampler2 = it->mSampler2;
         if (pSampler2 == nullptr)
         {
@@ -1307,6 +1346,7 @@ void OfxLensFlare::drawImpl_(DrawContext* pDrawContext, s32 viewIndex,
             {
                 graphicsContext.setBlendFactor(0, 5, 6);
             }
+
             graphicsContext.apply(pDrawContext);
             currentBlendMode = blendMode;
         }
@@ -1372,6 +1412,7 @@ void OfxLensFlare::updateViewGPUImpl_(s32 viewIndex, const Context& rContext,
         {
             continue;
         }
+
         const UniformBlock& rBlock = *it;
         const ContextLensFlare::Instance& rInstance = pContext->mInstance[index];
         rBlock.dcbz(0);
@@ -1434,6 +1475,7 @@ void OfxLensFlareDynamic::setParam(s32 presetIndex, f32 scale, const sead::Vecto
         mParentIndex = presetIndex;
         loadPresetByParentIndex(presetIndex);
     }
+
     *pPreset->mPosition = rPos;
     *getPreset_<OfxLensFlare::Preset>()->mSizeBaseScale = rSize.x;
 }
@@ -1451,6 +1493,7 @@ bool OfxLensFlareDynamic::loadPresetByParentIndex(s32 index)
     {
         return false;
     }
+
     pPreset->copy(*pSrc);
     return true;
 }

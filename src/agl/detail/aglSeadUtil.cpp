@@ -25,22 +25,27 @@ bool SeadUtil::getNearFarAspectFovy(const sead::Projection& rProjection, f32* pN
         {
             *pNear = pPerspective->getNear();
         }
+
         if (pFar)
         {
             *pFar = pPerspective->getFar();
         }
+
         if (pAspect)
         {
             *pAspect = pPerspective->getAspect();
         }
+
         if (pFovy)
         {
             *pFovy = pPerspective->getFovy();
         }
+
         if (pOffset)
         {
             *pOffset = pPerspective->getOffsetDirect();
         }
+
         return true;
     }
 
@@ -51,22 +56,27 @@ bool SeadUtil::getNearFarAspectFovy(const sead::Projection& rProjection, f32* pN
         {
             *pNear = pFrustum->getNear();
         }
+
         if (pFar)
         {
             *pFar = pFrustum->getFar();
         }
+
         if (pAspect)
         {
             *pAspect = pFrustum->getAspect();
         }
+
         if (pFovy)
         {
             *pFovy = pFrustum->getFovy();
         }
+
         if (pOffset)
         {
             pFrustum->getOffset(pOffset);
         }
+
         return true;
     }
 
@@ -77,10 +87,12 @@ bool SeadUtil::getNearFarAspectFovy(const sead::Projection& rProjection, f32* pN
         {
             *pNear = pOrtho->getNear();
         }
+
         if (pFar)
         {
             *pFar = pOrtho->getFar();
         }
+
         if (pAspect)
         {
             f32 height = sead::Mathf::abs(pOrtho->getTop() - pOrtho->getBottom());
@@ -94,14 +106,17 @@ bool SeadUtil::getNearFarAspectFovy(const sead::Projection& rProjection, f32* pN
                 *pAspect = 1.0f;
             }
         }
+
         if (pFovy)
         {
             *pFovy = 0.0f;
         }
+
         if (pOffset)
         {
             *pOffset = sead::Vector2f::zero;
         }
+
         return false;
     }
 
@@ -109,22 +124,27 @@ bool SeadUtil::getNearFarAspectFovy(const sead::Projection& rProjection, f32* pN
     {
         *pNear = 0.0f;
     }
+
     if (pFar)
     {
         *pFar = 0.0f;
     }
+
     if (pAspect)
     {
         *pAspect = 1.0f;
     }
+
     if (pFovy)
     {
         *pFovy = 0.0f;
     }
+
     if (pOffset)
     {
         *pOffset = sead::Vector2f::zero;
     }
+
     return false;
 }
 
@@ -172,6 +192,7 @@ bool SeadUtil::setNearFarAspectFovy(sead::Projection* pProjection, f32 near, f32
             pFrustum->setLeft(pFrustum->getLeft() * scale);
             pFrustum->setRight(pFrustum->getRight() * scale);
         }
+
         return true;
     }
 
@@ -195,6 +216,7 @@ bool SeadUtil::setNearFarAspectFovy(sead::Projection* pProjection, f32 near, f32
             pOrtho->setRight(pOrtho->getRight() * scale);
         }
     }
+
     return false;
 }
 

@@ -127,6 +127,7 @@ sead::SafeString MultiFilterUnit::getFilterName(FilterType type)
     const sead::SafeString cNames[cFilterType_Num] = {
         "reduce", "expand", "blur", "color_correction", "change_format", "color_drift", "trimming",
     };
+
     return cNames[type];
 }
 
@@ -142,6 +143,7 @@ sead::SafeString MultiFilterUnit::getFilterLabel(FilterType type)
         "カラーコレクション", "フォーマット変更", "版ずれフィルター",
         "切り抜き",
     };
+
     return cLabels[type];
 }
 
@@ -259,10 +261,12 @@ void MultiFilterUnit::genMessage(sead::hostio::Context* pContext)
             "check ",
             getFilterLabel(mType).cstr());
     }
+
     {
         sead::FormatFixedSafeString<128> comment("Comment=Reverts to %s initial value ",
                                                  getFilterLabel(mType).cstr());
     }
+
     doGenMessage_(pContext);
 }
 
@@ -388,6 +392,7 @@ void ReduceFilter::drawReduce_(DrawContext* pDrawContext, MultiFilterDrawContext
     {
         pContext->mTextureCache.free(pPrevResult);
     }
+
     restoreCompSel(pContext);
 }
 
@@ -500,6 +505,7 @@ void ExpandFilter::drawExpand_(DrawContext* pDrawContext, MultiFilterDrawContext
     {
         pContext->mTextureCache.free(pPrevResult);
     }
+
     restoreCompSel(pContext);
 }
 
@@ -629,6 +635,7 @@ void BlurFilter::drawBlur_(DrawContext* pDrawContext, MultiFilterDrawContext* pC
         default:
             break;
         }
+
         pContext->mRenderTarget.invalidateGPUCache(pDrawContext);
     }
 
@@ -636,6 +643,7 @@ void BlurFilter::drawBlur_(DrawContext* pDrawContext, MultiFilterDrawContext* pC
     {
         pContext->mTextureCache.free(pPrevResult);
     }
+
     restoreCompSel(pContext);
 
     if (blurType == 4)
@@ -745,6 +753,7 @@ void ColorCorrectionFilter::doDraw_(DrawContext* pDrawContext,
     {
         pContext->mTextureCache.free(pPrevResult);
     }
+
     restoreCompSel(pContext);
 }
 
@@ -887,6 +896,7 @@ void ColorDrift::doDraw_(DrawContext* pDrawContext, MultiFilterDrawContext* pCon
     {
         pContext->mTextureCache.free(pPrevResult);
     }
+
     restoreCompSel(pContext);
 }
 
@@ -962,6 +972,7 @@ void Trimming::doDraw_(DrawContext* pDrawContext, MultiFilterDrawContext* pConte
     {
         pContext->mTextureCache.free(pPrevResult);
     }
+
     restoreCompSel(pContext);
 }
 

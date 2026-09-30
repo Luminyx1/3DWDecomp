@@ -102,6 +102,7 @@ AutoExposure::~AutoExposure()
             context.mResults[j].mImage.deleteGPUMemBlock();
         }
     }
+
     mContexts.freeBuffer();
 }
 
@@ -122,6 +123,7 @@ void AutoExposure::initialize(s32 contextNum, sead::Heap* pHeap)
         context.mPrev = 1;
         context.mIsUpdated = false;
     }
+
     mDebugTexturePage.setUp(contextNum, "AutoExposure", pHeap);
     mVtxStream.initialize(pHeap);
 }
@@ -183,6 +185,7 @@ void AutoExposure::draw(DrawContext* pDrawContext, s32 context, const RenderBuff
     {
         return;
     }
+
     Context& ctx = getContext_(context);
     drawHistogram(pDrawContext, context, rRenderBuffer, pTexture);
     drawHistogramCalc(pDrawContext, context, rRenderBuffer,
@@ -257,6 +260,7 @@ void AutoExposure::drawHistogramCalc(DrawContext* pDrawContext, s32 context,
         ctx.mResults[ctx.mCurrent].Bind(pDrawContext);
         ctx.mResults[ctx.mCurrent].mRenderBuffer.clear(pDrawContext, 1, color, 1.0f, 0);
     }
+
     ctx.mResults[ctx.mPrev].Bind(pDrawContext);
 
     sead::GraphicsContext graphicsContext;
@@ -301,6 +305,7 @@ void AutoExposure::drawSimple(DrawContext* pDrawContext, s32 context,
         ctx.mResults[ctx.mCurrent].Bind(pDrawContext);
         ctx.mResults[ctx.mCurrent].mRenderBuffer.clear(pDrawContext, 1, color, 1.0f, 0);
     }
+
     ctx.mResults[ctx.mPrev].Bind(pDrawContext);
 
     sead::GraphicsContext graphicsContext;
@@ -330,6 +335,7 @@ void AutoExposure::drawDebug(DrawContext* pDrawContext, s32 context,
     {
         return;
     }
+
     drawHistogramDebugVertex(pDrawContext, context, rRenderBuffer, pTexture);
     drawHistogramDebug(pDrawContext, context);
 }

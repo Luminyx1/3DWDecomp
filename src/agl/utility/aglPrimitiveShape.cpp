@@ -31,6 +31,7 @@ void setupIdxStreamGrid_(IndexStream* pIndexStream, GPUMemAddr<T> addr, s32 num)
     {
         indices[i] = i;
     }
+
     pIndexStream->setUpStream(addr, num);
     pIndexStream->setPrimitiveType(NVN_DRAW_PRIMITIVE_LINES);
 }
@@ -108,6 +109,7 @@ void PrimitiveShape::setUpStreamQuad_(sead::Heap* pHeap)
             {{-0.5f, -0.5f, 0.0f}, {0.0f, 0.0f, 1.0f}, {0.0f, 1.0f}},
             {{0.5f, -0.5f, 0.0f}, {0.0f, 0.0f, 1.0f}, {1.0f, 1.0f}},
         };
+
         for (s32 i = 0; i < 4; i++)
         {
             getBufferPtr_(mQuadVertexBlock)[i].mPos = vertices[i].mPos;
@@ -115,6 +117,7 @@ void PrimitiveShape::setUpStreamQuad_(sead::Heap* pHeap)
             getBufferPtr_(mQuadVertexBlock)[i].mTexCoord = vertices[i].mTexCoord;
         }
     }
+
     mQuadVertexBuffer.setUpBuffer(ConstGPUMemVoidAddr(mQuadVertexBlock, 0), sizeof(Vertex),
                                   sizeof(Vertex) * 4);
     setUpStreams_(&mQuadVertexBuffer);
@@ -147,6 +150,7 @@ void PrimitiveShape::setUpStreamQuadTriangle_(sead::Heap* pHeap)
             {{1.5f, 0.5f, 0.0f}, {0.0f, 0.0f, 1.0f}, {2.0f, 0.0f}},
             {{-0.5f, -1.5f, 0.0f}, {0.0f, 0.0f, 1.0f}, {0.0f, 2.0f}},
         };
+
         for (s32 i = 0; i < 3; i++)
         {
             getBufferPtr_(mQuadTriangleVertexBlock)[i].mPos = vertices[i].mPos;
@@ -154,6 +158,7 @@ void PrimitiveShape::setUpStreamQuadTriangle_(sead::Heap* pHeap)
             getBufferPtr_(mQuadTriangleVertexBlock)[i].mTexCoord = vertices[i].mTexCoord;
         }
     }
+
     mQuadTriangleVertexBuffer.setUpBuffer(ConstGPUMemVoidAddr(mQuadTriangleVertexBlock, 0),
                                             sizeof(Vertex), sizeof(Vertex) * 3);
     setUpStreams_(&mQuadTriangleVertexBuffer);
@@ -211,6 +216,7 @@ void PrimitiveShape::setUpStreamCube_(sead::Heap* pHeap)
             {{0.5f, -0.5f, 0.5f}, {0.0f, 0.0f, 1.0f}, {0.0f, 1.0f}},
             {{-0.5f, -0.5f, 0.5f}, {0.0f, 0.0f, 1.0f}, {1.0f, 1.0f}},
         };
+
         for (s32 i = 0; i < 24; i++)
         {
             getBufferPtr_(mCubeVertexBlock)[i].mPos = vertices[i].mPos;
@@ -218,6 +224,7 @@ void PrimitiveShape::setUpStreamCube_(sead::Heap* pHeap)
             getBufferPtr_(mCubeVertexBlock)[i].mTexCoord = vertices[i].mTexCoord;
         }
     }
+
     mCubeVertexBuffer.setUpBuffer(ConstGPUMemVoidAddr(mCubeVertexBlock, 0), sizeof(Vertex),
                                   sizeof(Vertex) * 24);
     setUpStreams_(&mCubeVertexBuffer);
@@ -263,6 +270,7 @@ void PrimitiveShape::setUpStreamPyramid_(sead::Heap* pHeap)
             {{0.0f, -0.0f, -0.5f}, {0.5773503f, 0.5773503f, -0.5773503f}, {1.0f, 1.0f}},
             {{0.0f, 0.5f, 0.0f}, {0.5773503f, 0.5773503f, -0.5773503f}, {0.5f, 0.0f}},
         };
+
         for (s32 i = 0; i < 16; i++)
         {
             getBufferPtr_(mPyramidVertexBlock)[i].mPos = vertices[i].mPos;
@@ -270,6 +278,7 @@ void PrimitiveShape::setUpStreamPyramid_(sead::Heap* pHeap)
             getBufferPtr_(mPyramidVertexBlock)[i].mTexCoord = vertices[i].mTexCoord;
         }
     }
+
     mPyramidVertexBuffer.setUpBuffer(ConstGPUMemVoidAddr(mPyramidVertexBlock, 0), sizeof(Vertex),
                                   sizeof(Vertex) * 16);
     setUpStreams_(&mPyramidVertexBuffer);
@@ -399,6 +408,7 @@ void PrimitiveShape::setUpStreamCylinder_(u32 divNumU, u32 divNumV, sead::Heap* 
         setupIdxStreamCylinder_(&mCylinderTriangleIndexStreams[quality], GPUMemAddr<u16>(rBlock, 0),
                                 divNumU, divNumV, cDrawType_Triangle, Quality(quality));
     }
+
     for (s32 quality = 0; quality < cQuality_Num; quality++)
     {
         GPUMemBlock<u16>& rBlock = mCylinderLineIndexBlocks[quality];
@@ -436,6 +446,7 @@ void PrimitiveShape::setUpStreamCapsule_(u32 divNumU, u32 divNumV, u32 divNumH, 
         setupIdxStreamCapsule_(&mCapsuleTriangleIndexStreams[quality], GPUMemAddr<u16>(rBlock, 0),
                                divNumU, divNumV, divNumH, cDrawType_Triangle, Quality(quality));
     }
+
     for (s32 quality = 0; quality < cQuality_Num; quality++)
     {
         GPUMemBlock<u16>& rBlock = mCapsuleLineIndexBlocks[quality];
@@ -472,6 +483,7 @@ void PrimitiveShape::setUpStreamCone_(u32 divNumU, u32 divNumV, sead::Heap* pHea
         setupIdxStreamCone_(&mConeTriangleIndexStreams[quality], GPUMemAddr<u16>(rBlock, 0),
                             divNumU, divNumV, cDrawType_Triangle, Quality(quality));
     }
+
     for (s32 quality = 0; quality < cQuality_Num; quality++)
     {
         GPUMemBlock<u16>& rBlock = mConeLineIndexBlocks[quality];
@@ -512,6 +524,7 @@ void PrimitiveShape::setUpStreamTorus_(u32 divNumU, u32 divNumV, sead::Heap* pHe
         setupIdxStreamTorus_(&mTorusTriangleIndexStreams[quality], GPUMemAddr<u16>(rBlock, 0),
                              divNumU, divNumV, cDrawType_Triangle, Quality(quality));
     }
+
     for (s32 quality = 0; quality < cQuality_Num; quality++)
     {
         GPUMemBlock<u16>& rBlock = mTorusLineIndexBlocks[quality];
@@ -599,6 +612,7 @@ void PrimitiveShape::setupVtxBufferCircle(VertexBuffer* pVertexBuffer, GPUMemAdd
         vertices[i].mTexCoord.set(x + 0.5f, 0.5f - y);
         vertices[i].mNormal.set(0.0f, 0.0f, 1.0f);
     }
+
     vertices[divNum].mPos.set(0.0f, 0.0f, 0.0f);
     vertices[divNum].mTexCoord.set(0.5f, 0.5f);
     vertices[divNum].mNormal.set(0.0f, 0.0f, 1.0f);
@@ -644,6 +658,7 @@ void PrimitiveShape::setupIdxStreamCircle_(IndexStream* pIndexStream, GPUMemAddr
             indices[num + 2] = (i + (1 << quality)) % divNum;
             num += 3;
         }
+
         pIndexStream->setUpStream(addr, num);
         pIndexStream->setPrimitiveType(NVN_DRAW_PRIMITIVE_TRIANGLES);
         break;
@@ -656,6 +671,7 @@ void PrimitiveShape::setupIdxStreamCircle_(IndexStream* pIndexStream, GPUMemAddr
             indices[num + 3] = (i + (1 << quality)) % divNum;
             num += 4;
         }
+
         pIndexStream->setUpStream(addr, num);
         pIndexStream->setPrimitiveType(NVN_DRAW_PRIMITIVE_LINES);
         break;
@@ -665,6 +681,7 @@ void PrimitiveShape::setupIdxStreamCircle_(IndexStream* pIndexStream, GPUMemAddr
             indices[num] = i;
             num++;
         }
+
         pIndexStream->setUpStream(addr, num);
         pIndexStream->setPrimitiveType(NVN_DRAW_PRIMITIVE_POINTS);
         break;
@@ -728,6 +745,7 @@ u32 PrimitiveShape::calcIdxArrayNumSphere_(u32 divNumU, u32 divNumV, DrawType dr
         {
             num += 6;
         }
+
         for (u32 j = 0; j < divNumV - 1; j += 1 << quality)
         {
             for (u32 i = 0; i < divNumU; i += 1 << quality)
@@ -735,12 +753,14 @@ u32 PrimitiveShape::calcIdxArrayNumSphere_(u32 divNumU, u32 divNumV, DrawType dr
                 num += 6;
             }
         }
+
         return num;
     case cDrawType_Line:
         for (u32 i = 0; i < divNumU; i += 1 << quality)
         {
             num += 6;
         }
+
         for (u32 j = 0; j < divNumV - 1; j += 1 << quality)
         {
             for (u32 i = 0; i < divNumU; i += 1 << quality)
@@ -748,6 +768,7 @@ u32 PrimitiveShape::calcIdxArrayNumSphere_(u32 divNumU, u32 divNumV, DrawType dr
                 num += 4;
             }
         }
+
         return num;
     case cDrawType_Point:
         for (u32 j = 0; j < divNumV; j += 1 << quality)
@@ -757,6 +778,7 @@ u32 PrimitiveShape::calcIdxArrayNumSphere_(u32 divNumU, u32 divNumV, DrawType dr
                 num += 2;
             }
         }
+
         return num + 2;
     default:
         return 0;
@@ -844,6 +866,7 @@ void PrimitiveShape::setupIdxStreamSphere_(IndexStream* pIndexStream, GPUMemAddr
             indices[num++] = i;
             indices[num++] = (i + (1 << quality)) % divNumU;
         }
+
         for (u32 j = 0; j < divNumV - 1; j += 1 << quality)
         {
             const u32 row1 = sead::Mathi::min(s32(divNumV - 1), s32(j + (1 << quality))) * divNumU;
@@ -857,12 +880,14 @@ void PrimitiveShape::setupIdxStreamSphere_(IndexStream* pIndexStream, GPUMemAddr
                 indices[num++] = j * divNumU + (i + (1 << quality)) % divNumU;
             }
         }
+
         for (u32 i = 0; i < divNumU; i += 1 << quality)
         {
             indices[num++] = divNumU * divNumV + 1;
             indices[num++] = (divNumV - 1) * divNumU + (i + (1 << quality)) % divNumU;
             indices[num++] = (divNumV - 1) * divNumU + i;
         }
+
         pIndexStream->setUpStream(addr, num);
         pIndexStream->setPrimitiveType(NVN_DRAW_PRIMITIVE_TRIANGLES);
         break;
@@ -876,6 +901,7 @@ void PrimitiveShape::setupIdxStreamSphere_(IndexStream* pIndexStream, GPUMemAddr
             indices[num++] = (divNumV - 1) * divNumU + (i + (1 << quality)) % divNumU;
             indices[num++] = (divNumV - 1) * divNumU + i;
         }
+
         for (u32 j = 0; j < divNumV - 1; j += 1 << quality)
         {
             const u32 row1 = sead::Mathi::min(s32(j + (1 << quality)), s32(divNumV - 1)) * divNumU;
@@ -887,6 +913,7 @@ void PrimitiveShape::setupIdxStreamSphere_(IndexStream* pIndexStream, GPUMemAddr
                 indices[num++] = row1 + i;
             }
         }
+
         pIndexStream->setUpStream(addr, num);
         pIndexStream->setPrimitiveType(NVN_DRAW_PRIMITIVE_LINES);
         break;
@@ -900,6 +927,7 @@ void PrimitiveShape::setupIdxStreamSphere_(IndexStream* pIndexStream, GPUMemAddr
                 indices[num++] = row1 + i;
             }
         }
+
         indices[num++] = divNumU * divNumV;
         indices[num++] = divNumU * divNumV + 1;
         pIndexStream->setUpStream(addr, num);
@@ -967,6 +995,7 @@ u32 PrimitiveShape::calcIdxArrayNumHemisphere_(u32 divNumU, u32 divNumV, DrawTyp
         {
             num += 3;
         }
+
         for (u32 j = 0; j < halfNumV; j += 1 << quality)
         {
             for (u32 i = 0; i < divNumU; i += 1 << quality)
@@ -974,12 +1003,14 @@ u32 PrimitiveShape::calcIdxArrayNumHemisphere_(u32 divNumU, u32 divNumV, DrawTyp
                 num += 6;
             }
         }
+
         return num;
     case cDrawType_Line:
         for (u32 i = 0; i < divNumU; i += 1 << quality)
         {
             num += 4;
         }
+
         for (u32 j = 0; j < halfNumV; j += 1 << quality)
         {
             for (u32 i = 0; i < divNumU; i += 1 << quality)
@@ -987,6 +1018,7 @@ u32 PrimitiveShape::calcIdxArrayNumHemisphere_(u32 divNumU, u32 divNumV, DrawTyp
                 num += 4;
             }
         }
+
         return num;
     case cDrawType_Point:
         for (u32 j = 0; j <= halfNumV; j += 1 << quality)
@@ -996,6 +1028,7 @@ u32 PrimitiveShape::calcIdxArrayNumHemisphere_(u32 divNumU, u32 divNumV, DrawTyp
                 num += 2;
             }
         }
+
         return num + 1;
     default:
         return 0;
@@ -1085,6 +1118,7 @@ void PrimitiveShape::setupIdxStreamHemisphere_(IndexStream* pIndexStream, GPUMem
             indices[num++] = (i + (1 << quality)) % divNumU;
             indices[num++] = i;
         }
+
         for (u32 j = 0; j < halfNumV; j += 1 << quality)
         {
             const u32 row1 = sead::Mathi::min(s32(halfNumV), s32(j + (1 << quality))) * divNumU;
@@ -1098,6 +1132,7 @@ void PrimitiveShape::setupIdxStreamHemisphere_(IndexStream* pIndexStream, GPUMem
                 indices[num++] = row1 + (i + (1 << quality)) % divNumU;
             }
         }
+
         pIndexStream->setUpStream(addr, num);
         pIndexStream->setPrimitiveType(NVN_DRAW_PRIMITIVE_TRIANGLES);
         break;
@@ -1109,6 +1144,7 @@ void PrimitiveShape::setupIdxStreamHemisphere_(IndexStream* pIndexStream, GPUMem
             indices[num++] = halfNumV * divNumU + (i + (1 << quality)) % divNumU;
             indices[num++] = halfNumV * divNumU + i;
         }
+
         for (u32 j = 0; j < halfNumV; j += 1 << quality)
         {
             const u32 row1 = sead::Mathi::min(s32(j + (1 << quality)), s32(halfNumV)) * divNumU;
@@ -1120,6 +1156,7 @@ void PrimitiveShape::setupIdxStreamHemisphere_(IndexStream* pIndexStream, GPUMem
                 indices[num++] = row1 + i;
             }
         }
+
         pIndexStream->setUpStream(addr, num);
         pIndexStream->setPrimitiveType(NVN_DRAW_PRIMITIVE_LINES);
         break;
@@ -1133,6 +1170,7 @@ void PrimitiveShape::setupIdxStreamHemisphere_(IndexStream* pIndexStream, GPUMem
                 indices[num++] = row1 + i;
             }
         }
+
         indices[num++] = ringNum * divNumU;
         pIndexStream->setUpStream(addr, num);
         pIndexStream->setPrimitiveType(NVN_DRAW_PRIMITIVE_POINTS);
@@ -1198,14 +1236,17 @@ u32 PrimitiveShape::calcIdxArrayNumCylinder_(u32 divNumU, u32 divNumV, DrawType 
         {
             num += 3;
         }
+
         for (u32 i = 0; i < divNumU; i += 1 << quality)
         {
             num += 6;
         }
+
         for (u32 i = 0; i < divNumU; i += 1 << quality)
         {
             num += 3;
         }
+
         return num;
     case cDrawType_Line:
         for (u32 j = 1; j <= divNumV + 1; j += 1 << quality)
@@ -1215,10 +1256,12 @@ u32 PrimitiveShape::calcIdxArrayNumCylinder_(u32 divNumU, u32 divNumV, DrawType 
                 num += 2;
             }
         }
+
         for (u32 i = 0; i < divNumU; i += 1 << quality)
         {
             num += 6;
         }
+
         return num;
     default:
         return 0;
@@ -1329,6 +1372,7 @@ void PrimitiveShape::setupIdxStreamCylinder_(IndexStream* pIndexStream, GPUMemAd
             indices[num++] = 0;
             indices[num++] = (i + (1 << quality)) % divNumU + 1;
         }
+
         for (u32 i = 0; i < divNumU; i += 1 << quality)
         {
             indices[num++] = divNumU + i + 1;
@@ -1338,12 +1382,14 @@ void PrimitiveShape::setupIdxStreamCylinder_(IndexStream* pIndexStream, GPUMemAd
             indices[num++] = divNumU + 1 + (i + (1 << quality)) % divNumU;
             indices[num++] = (divNumV + 1) * divNumU + 1 + (i + (1 << quality)) % divNumU;
         }
+
         for (u32 i = 0; i < divNumU; i += 1 << quality)
         {
             indices[num++] = (bottomRingEnd + 1) - (1 << quality) - i;
             indices[num++] = (bottomRingEnd + 1);
             indices[num++] = (bottomRingEnd + 1) - (1 << quality) - (i + (1 << quality)) % divNumU;
         }
+
         pIndexStream->setUpStream(addr, num);
         pIndexStream->setPrimitiveType(NVN_DRAW_PRIMITIVE_TRIANGLES);
         break;
@@ -1356,6 +1402,7 @@ void PrimitiveShape::setupIdxStreamCylinder_(IndexStream* pIndexStream, GPUMemAd
                 indices[num++] = j * divNumU + 1 + (i + (1 << quality)) % divNumU;
             }
         }
+
         for (u32 i = 0; i < divNumU; i += 1 << quality)
         {
             indices[num++] = 0;
@@ -1365,6 +1412,7 @@ void PrimitiveShape::setupIdxStreamCylinder_(IndexStream* pIndexStream, GPUMemAd
             indices[num++] = (divNumV + 2) * divNumU + 1 + i;
             indices[num++] = (bottomRingEnd + 1);
         }
+
         pIndexStream->setUpStream(addr, num);
         pIndexStream->setPrimitiveType(NVN_DRAW_PRIMITIVE_LINES);
         break;
@@ -1434,6 +1482,7 @@ u32 PrimitiveShape::calcIdxArrayNumCapsule_(u32 divNumU, u32 divNumV, u32 divNum
         {
             num += 3;
         }
+
         for (u32 j = step; j < divNumH; j += step)
         {
             for (u32 i = 0; i < divNumU; i += step)
@@ -1441,6 +1490,7 @@ u32 PrimitiveShape::calcIdxArrayNumCapsule_(u32 divNumU, u32 divNumV, u32 divNum
                 num += 6;
             }
         }
+
         for (u32 i = 0; i < divNumU; i += step)
         {
             for (u32 j = 0; j <= divNumV; j += step)
@@ -1448,6 +1498,7 @@ u32 PrimitiveShape::calcIdxArrayNumCapsule_(u32 divNumU, u32 divNumV, u32 divNum
                 num += 6;
             }
         }
+
         for (u32 j = step; j < divNumH - step; j += step)
         {
             for (u32 i = 0; i < divNumU; i += step)
@@ -1455,16 +1506,19 @@ u32 PrimitiveShape::calcIdxArrayNumCapsule_(u32 divNumU, u32 divNumV, u32 divNum
                 num += 6;
             }
         }
+
         for (u32 i = 0; i < divNumU; i += step)
         {
             num += 3;
         }
+
         return num;
     case cDrawType_Line:
         for (u32 i = 0; i < divNumU; i += step)
         {
             num += 2;
         }
+
         for (u32 j = step; j < divNumH; j += step)
         {
             for (u32 i = 0; i < divNumU; i += step)
@@ -1472,6 +1526,7 @@ u32 PrimitiveShape::calcIdxArrayNumCapsule_(u32 divNumU, u32 divNumV, u32 divNum
                 num += 4;
             }
         }
+
         for (u32 i = 0; i < divNumU; i += step)
         {
             for (u32 j = 0; j <= divNumV; j += step)
@@ -1479,6 +1534,7 @@ u32 PrimitiveShape::calcIdxArrayNumCapsule_(u32 divNumU, u32 divNumV, u32 divNum
                 num += 4;
             }
         }
+
         for (u32 j = step; j < divNumH; j += step)
         {
             for (u32 i = 0; i < divNumU; i += step)
@@ -1486,6 +1542,7 @@ u32 PrimitiveShape::calcIdxArrayNumCapsule_(u32 divNumU, u32 divNumV, u32 divNum
                 num += 4;
             }
         }
+
         return num;
     default:
         return 0;
@@ -1618,6 +1675,7 @@ void PrimitiveShape::setupIdxStreamCapsule_(IndexStream* pIndexStream, GPUMemAdd
             indices[num++] = 0;
             indices[num++] = topRing + (i + step) % divNumU;
         }
+
         for (u32 j = step; j < divNumH; j += step)
         {
             const u32 row0 = (j - step) * divNumU + topRing;
@@ -1632,6 +1690,7 @@ void PrimitiveShape::setupIdxStreamCapsule_(IndexStream* pIndexStream, GPUMemAdd
                 indices[num++] = row0 + (i + step) % divNumU;
             }
         }
+
         const u32 sideRing = topRing + hemisphereSize;
         for (u32 j = 0; j <= divNumV; j += step)
         {
@@ -1647,6 +1706,7 @@ void PrimitiveShape::setupIdxStreamCapsule_(IndexStream* pIndexStream, GPUMemAdd
                 indices[num++] = row0 + (i + step) % divNumU;
             }
         }
+
         const u32 bottomRing = sideRing + cylinderSize;
         for (u32 j = step; j < divNumH - step; j += step)
         {
@@ -1662,6 +1722,7 @@ void PrimitiveShape::setupIdxStreamCapsule_(IndexStream* pIndexStream, GPUMemAdd
                 indices[num++] = row0 + (i + step) % divNumU;
             }
         }
+
         const u32 bottomPole = cylinderSize + topRing + hemisphereSize * 2;
         for (u32 i = 0; i < divNumU; i += step)
         {
@@ -1669,6 +1730,7 @@ void PrimitiveShape::setupIdxStreamCapsule_(IndexStream* pIndexStream, GPUMemAdd
             indices[num++] = bottomPole - divNumU * step + i;
             indices[num++] = bottomPole - divNumU * step + (i + step) % divNumU;
         }
+
         pIndexStream->setUpStream(addr, num);
         pIndexStream->setPrimitiveType(NVN_DRAW_PRIMITIVE_TRIANGLES);
         break;
@@ -1680,6 +1742,7 @@ void PrimitiveShape::setupIdxStreamCapsule_(IndexStream* pIndexStream, GPUMemAdd
             indices[num++] = topRing + i;
             indices[num++] = 0;
         }
+
         for (u32 j = step; j < divNumH; j += step)
         {
             const u32 row0 = (j - step) * divNumU + topRing;
@@ -1692,6 +1755,7 @@ void PrimitiveShape::setupIdxStreamCapsule_(IndexStream* pIndexStream, GPUMemAdd
                 indices[num++] = row0 + (i + step) % divNumU;
             }
         }
+
         const u32 sideRing = topRing + hemisphereSize;
         for (u32 j = 0; j <= divNumV; j += step)
         {
@@ -1705,6 +1769,7 @@ void PrimitiveShape::setupIdxStreamCapsule_(IndexStream* pIndexStream, GPUMemAdd
                 indices[num++] = row0 + (i + step) % divNumU;
             }
         }
+
         const u32 bottomRing = sideRing + cylinderSize;
         for (u32 j = step; j < divNumH - step; j += step)
         {
@@ -1718,6 +1783,7 @@ void PrimitiveShape::setupIdxStreamCapsule_(IndexStream* pIndexStream, GPUMemAdd
                 indices[num++] = row0 + (i + step) % divNumU;
             }
         }
+
         const u32 bottomPole = cylinderSize + topRing + hemisphereSize * 2;
         for (u32 i = 0; i < divNumU; i += step)
         {
@@ -1726,6 +1792,7 @@ void PrimitiveShape::setupIdxStreamCapsule_(IndexStream* pIndexStream, GPUMemAdd
             indices[num++] = bottomPole - divNumU * step + i;
             indices[num++] = bottomPole - divNumU * step + (i + step) % divNumU;
         }
+
         pIndexStream->setUpStream(addr, num);
         pIndexStream->setPrimitiveType(NVN_DRAW_PRIMITIVE_LINES);
         break;
@@ -1794,6 +1861,7 @@ u32 PrimitiveShape::calcIdxArrayNumCone_(u32 divNumU, u32 divNumV, DrawType draw
         {
             num += 3;
         }
+
         for (u32 j = 1; j < divNumV; j += 1 << quality)
         {
             for (u32 i = 0; i < divNumU; i += 1 << quality)
@@ -1801,10 +1869,12 @@ u32 PrimitiveShape::calcIdxArrayNumCone_(u32 divNumU, u32 divNumV, DrawType draw
                 num += 6;
             }
         }
+
         for (u32 i = 0; i < divNumU; i += 1 << quality)
         {
             num += 3;
         }
+
         return num;
     case cDrawType_Line:
         for (u32 j = 1; j <= divNumV; j += 1 << quality)
@@ -1814,10 +1884,12 @@ u32 PrimitiveShape::calcIdxArrayNumCone_(u32 divNumU, u32 divNumV, DrawType draw
                 num += 2;
             }
         }
+
         for (u32 i = 0; i < divNumU; i += 1 << quality)
         {
             num += 4;
         }
+
         return num;
     default:
         return 0;
@@ -1853,6 +1925,7 @@ void PrimitiveShape::setupVtxBufferCone(VertexBuffer* pVertexBuffer, GPUMemAddr<
             {
                 angle = f32(i) * sead::Mathf::pi2() / f32(divNumU);
             }
+
             const f32 x = radius * sead::Mathf::cos(angle);
             const f32 z = radius * sead::Mathf::sin(angle);
             vertices[index].mPos.set(x, y, z);
@@ -1922,6 +1995,7 @@ void PrimitiveShape::setupIdxStreamCone_(IndexStream* pIndexStream, GPUMemAddr<T
             indices[num++] = i;
             indices[num++] = divNumU + (i + (1 << quality)) % divNumU;
         }
+
         for (u32 j = 1; j < divNumV; j += 1 << quality)
         {
             const u32 row1 = sead::Mathi::clampMax(s32(j + (1 << quality)), s32(divNumV)) * divNumU;
@@ -1935,12 +2009,14 @@ void PrimitiveShape::setupIdxStreamCone_(IndexStream* pIndexStream, GPUMemAddr<T
                 indices[num++] = row1 + (i + (1 << quality)) % divNumU;
             }
         }
+
         for (u32 i = 0; i < divNumU; i += 1 << quality)
         {
             indices[num++] = bottomCenter - (1 << quality) - i;
             indices[num++] = bottomCenter;
             indices[num++] = bottomCenter - (1 << quality) - (i + (1 << quality)) % divNumU;
         }
+
         pIndexStream->setUpStream(addr, num);
         pIndexStream->setPrimitiveType(NVN_DRAW_PRIMITIVE_TRIANGLES);
         break;
@@ -1953,6 +2029,7 @@ void PrimitiveShape::setupIdxStreamCone_(IndexStream* pIndexStream, GPUMemAddr<T
                 indices[num++] = j * divNumU + (i + (1 << quality)) % divNumU;
             }
         }
+
         for (u32 i = 0; i < divNumU; i += 1 << quality)
         {
             indices[num++] = i;
@@ -1960,6 +2037,7 @@ void PrimitiveShape::setupIdxStreamCone_(IndexStream* pIndexStream, GPUMemAddr<T
             indices[num++] = (divNumV + 1) * divNumU + i;
             indices[num++] = bottomCenter;
         }
+
         pIndexStream->setUpStream(addr, num);
         pIndexStream->setPrimitiveType(NVN_DRAW_PRIMITIVE_LINES);
         break;
@@ -2149,6 +2227,7 @@ void PrimitiveShape::setupIdxStreamTorus_(IndexStream* pIndexStream, GPUMemAddr<
                 indices[num++] = (j + (1 << quality)) * divNumU + (i + (1 << quality)) % divNumU;
             }
         }
+
         pIndexStream->setUpStream(addr, num);
         pIndexStream->setPrimitiveType(NVN_DRAW_PRIMITIVE_TRIANGLES);
         break;
@@ -2163,6 +2242,7 @@ void PrimitiveShape::setupIdxStreamTorus_(IndexStream* pIndexStream, GPUMemAddr<
                 indices[num++] = (j + (1 << quality)) * divNumU + i;
             }
         }
+
         pIndexStream->setUpStream(addr, num);
         pIndexStream->setPrimitiveType(NVN_DRAW_PRIMITIVE_LINES);
         break;

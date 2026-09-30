@@ -69,6 +69,7 @@ void GPUMemBlockBase::freeBuffer()
             delete static_cast<u8*>(mMemoryBuffer);
         }
     }
+
     clear();
 }
 
@@ -207,6 +208,7 @@ s32 GPUMemBlockBase::addList(GPUMemBlockBase* pBlock)
         pLast = pLast->mpTail;
         count++;
     }
+
     pLast->mpTail = pBlock;
     return count + 1;
 }

@@ -42,6 +42,7 @@ inline void calcOccluderMtx(sead::Matrix34f* pMtx, const sead::Matrix34f& rCamIn
         (*pMtx)(i, 1) = radius * rot(i, 1);
         (*pMtx)(i, 2) = radius * rot(i, 2);
     }
+
     (*pMtx)(0, 3) = rPos.x + rot(0, 3);
     (*pMtx)(1, 3) = rPos.y + rot(1, 3);
     (*pMtx)(2, 3) = rPos.z + rot(2, 3);
@@ -87,8 +88,10 @@ OcclusionRenderer::~OcclusionRenderer()
             rSub.mTexture = nullptr;
             rSub.mAddr.deleteGPUMemBlock();
         }
+
         rContext.mSub.freeBuffer();
     }
+
     mContext.freeBuffer();
     mDebugTexturePage.cleanUp();
 }
@@ -143,6 +146,7 @@ void OcclusionRenderer::initialize(s32 contextNum, sead::Heap* pHeap)
         {
             rContext.mUniformBlock.declare(mContext.front().mUniformBlock);
         }
+
         rContext.mUniformBlock.create(pHeap, 2, 1);
 
         rContext.mSampler.setBorderColor(sead::Color4f(1.0f, 1.0f, 1.0f, 1.0f));
@@ -173,6 +177,7 @@ void OcclusionRenderer::initialize(s32 contextNum, sead::Heap* pHeap)
             rSub.mRenderTarget.applyTextureData(*rSub.mTexture);
             rContext.mRenderBuffer.setRenderTargetColor(&rSub.mRenderTarget, itSub.getIndex());
         }
+
         rContext.mRenderBuffer.adjustPhysicalAreaAndVirtualSizeFromColorTarget(0);
         rContext.mViewport.setByFrameBuffer(rContext.mRenderBuffer);
     }
@@ -237,9 +242,11 @@ void OcclusionRenderer::OcclVtxStream::create(s32 num, s32 divNum, f32 angle)
         {
             mScale += invTotal * nx * f32(i);
         }
+
         x = nx;
         y = ny;
     }
+
     mScale = 1.0f / mScale;
 
     mVertexBuffer.setUpBuffer(ConstGPUMemVoidAddr(mVertexBlock, 0), sizeof(OcclVtx),
@@ -340,6 +347,7 @@ void OcclusionRenderer::calcContext(s32 index, const sead::Matrix34f& rView,
         pResult->mScreenPos = center;
         pResult->mDepth = length;
     }
+
     rContext.mPos = pos;
 
     if (mAutoDirection)
@@ -363,6 +371,7 @@ void OcclusionRenderer::calcContext(s32 index, const sead::Matrix34f& rView,
             {
                 scale = halfH / absY;
             }
+
             f32 absX = viewPos.x > 0.0f ? viewPos.x : -viewPos.x;
             if (halfW - marginW < absX)
             {
@@ -397,6 +406,7 @@ void OcclusionRenderer::calcContext(s32 index, const sead::Matrix34f& rView,
                 x *= s;
                 y *= s;
             }
+
             f32 absX2 = x > 0.0f ? x : -x;
             f32 limitW = halfW2 - marginW2;
             if (limitW < absX2)
@@ -412,6 +422,7 @@ void OcclusionRenderer::calcContext(s32 index, const sead::Matrix34f& rView,
             {
                 m *= 1.0f / len2;
             }
+
             sead::Vector3f viewTarget = m * dist;
             const sead::Matrix34f& rInv = rCulling.getViewInvMtx();
             rContext.mPos.x = rInv(0, 3) + (rInv(0, 0) * viewTarget.x + rInv(0, 1) * viewTarget.y +
@@ -456,50 +467,62 @@ void OcclusionRenderer::updateViewGPU(s32 index, const RenderBuffer& rRenderBuff
         f32 value = rCulling.mNear;
         rBlock.setData(4, &value, 0, 1);
     }
+
     {
         f32 value = rCulling.mFar - rCulling.mNear;
         rBlock.setData(5, &value, 0, 1);
     }
+
     {
         f32 value = rCulling.mAspect;
         rBlock.setData(6, &value, 0, 1);
     }
+
     {
         f32 value = mPower;
         rBlock.setData(7, &value, 0, 1);
     }
+
     {
         f32 value = -mThreshold;
         rBlock.setData(8, &value, 0, 1);
     }
+
     {
         f32 value = rContext.mSin;
         rBlock.setData(9, &value, 0, 1);
     }
+
     {
         f32 value = rContext.mCos;
         rBlock.setData(10, &value, 0, 1);
     }
+
     {
         f32 value = rContext.mScreenRadius;
         rBlock.setData(11, &value, 0, 1);
     }
+
     {
         f32 value = rContext.mAspect;
         rBlock.setData(12, &value, 0, 1);
     }
+
     {
         f32 value = rContext.mRadiusScale;
         rBlock.setData(15, &value, 0, 1);
     }
+
     {
         f32 value = rContext.mSampleRate;
         rBlock.setData(13, &value, 0, 1);
     }
+
     {
         f32 value = rContext.mSampleScale;
         rBlock.setData(14, &value, 0, 1);
     }
+
     rBlock.flushCurrentBuffer();
 }
 
@@ -531,6 +554,7 @@ void OcclusionRenderer::draw(DrawContext* pDrawContext, s32 index,
         rContext.mRenderBuffer.fastClear(pDrawContext, 1, 1, sead::Color4f::cBlack, 0.0f, 0,
                                          sead::Viewport(rContext.mRenderBuffer), true);
     }
+
     for (const auto& rSub : rContext.mSub)
     {
         rSub.mRenderTarget.invalidateGPUCache(pDrawContext);
@@ -547,6 +571,7 @@ void OcclusionRenderer::draw(DrawContext* pDrawContext, s32 index,
     {
         rSampler.setBorderColor(sead::Color4f(1.0f, 1.0f, 1.0f, 1.0f));
     }
+
     rContext.mRenderBuffer.bind(pDrawContext);
     rContext.mViewport.apply(pDrawContext, rContext.mRenderBuffer);
 
@@ -561,6 +586,7 @@ void OcclusionRenderer::draw(DrawContext* pDrawContext, s32 index,
     {
         rSub.mRenderTarget.invalidateGPUCache(pDrawContext);
     }
+
     GPUCache::invalidateAll(pDrawContext);
 }
 
@@ -587,6 +613,7 @@ void OcclusionRenderer::drawDebug(DrawContext* pDrawContext, s32 index,
                                       rContext.mViewFrustumCulling.getViewMtx(),
                                       rContext.mViewFrustumCulling.getProjMtx());
     }
+
     {
         sead::Vector3f pos(mOffset.x + rContext.mOffset.x, mOffset.y + rContext.mOffset.y,
                            mOffset.z + rContext.mOffset.z);
@@ -594,6 +621,7 @@ void OcclusionRenderer::drawDebug(DrawContext* pDrawContext, s32 index,
                                       mContext[index].mViewFrustumCulling.getViewMtx(),
                                       mContext[index].mViewFrustumCulling.getProjMtx());
     }
+
     sead::Vector3f pos(mOffset.x + rContext.mOffset.x, mOffset.y + rContext.mOffset.y,
                        mOffset.z + rContext.mOffset.z);
     utl::DevTools::drawPointLight(pDrawContext, pos, mSampleSize * 0.5f, rColor1,
@@ -663,6 +691,7 @@ void OcclusionRenderer::listenPropertyEvent(const sead::hostio::PropertyEvent* p
     {
         return;
     }
+
     const void* id = pEvent->getId();
     if ((id < &mRingNum + 1 && id >= &mRingNum) || (id < &mDivNum + 1 && id >= &mDivNum) ||
         (id < &mAngle + 1 && id >= &mAngle))

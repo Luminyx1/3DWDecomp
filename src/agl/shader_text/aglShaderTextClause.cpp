@@ -99,12 +99,14 @@ Clause::TableChecker::TableChecker() {
     if (cTableChecked) {
         return;
     }
+
     cTableChecked = true;
     for (u32 i = 0; i < 256; i++) {
         u32 value = i;
         for (s32 bit = 0; bit < 8; bit++) {
             value = (value & 1) ? (value >> 1) ^ 0xedb88320 : value >> 1;
         }
+
         cHashTable[i] = value;
     }
 }
@@ -142,6 +144,7 @@ Clause* Clause::clone(sead::Heap* pHeap, const constIterator& rBegin, const cons
         if (!includeEnd) {
             return nullptr;
         }
+
         return cloneOne(pHeap, *rBegin);
     }
 
@@ -153,9 +156,11 @@ Clause* Clause::clone(sead::Heap* pHeap, const constIterator& rBegin, const cons
         last->insertAfter(clause);
         last = clause;
     }
+
     if (includeEnd) {
         last->insertAfter(cloneOne(pHeap, *it));
     }
+
     return head;
 }
 
@@ -194,15 +199,18 @@ const char* Clause::findNumberBlock(Type* pType, const char* pText) {
                 if (isReal || !detail::IsNumberDelimiter(p[1])) {
                     return pText;
                 }
+
                 break;
             case 'E':
             case 'e':
                 if (hasExponent) {
                     return pText;
                 }
+
                 if (p[1] == '-' || p[1] == '+') {
                     p++;
                 }
+
                 hasExponent = true;
                 isReal = true;
                 break;
@@ -211,17 +219,20 @@ const char* Clause::findNumberBlock(Type* pType, const char* pText) {
                 if (!isReal || !detail::IsNumberDelimiter(p[1])) {
                     return pText;
                 }
+
                 break;
             case '.':
                 if (isReal) {
                     return pText;
                 }
+
                 isReal = true;
                 break;
             default:
                 return pText;
             }
         }
+
         *pType = isReal ? cType_Real : cType_Int;
         return p;
     }
@@ -230,6 +241,7 @@ const char* Clause::findNumberBlock(Type* pType, const char* pText) {
         if (!('0' <= p[1] && p[1] <= '9')) {
             return pText;
         }
+
         isReal = true;
         goto decimal;
     }
@@ -254,14 +266,17 @@ const char* Clause::findNumberBlock(Type* pType, const char* pText) {
                     if (!detail::IsNumberDelimiter(p[1])) {
                         return pText;
                     }
+
                     break;
                 default:
                     return pText;
                 }
             }
+
             *pType = cType_Oct;
             return p;
         }
+
         if ((p[1] | 0x20) == 'x') {
             for (p += 2; !detail::IsNumberDelimiter(*p); p++) {
                 switch (*p) {
@@ -295,14 +310,17 @@ const char* Clause::findNumberBlock(Type* pType, const char* pText) {
                     if (!detail::IsNumberDelimiter(p[1])) {
                         return pText;
                     }
+
                     break;
                 default:
                     return pText;
                 }
             }
+
             *pType = cType_Hex;
             return p;
         }
+
         goto decimal;
     }
 
@@ -461,12 +479,14 @@ const char* TextToReal(f64* pValue, const char* pText, bool* pIsReal) {
         } else {
             goto end;
         }
+
         break;
     case '.':
         p++;
         if (!('0' <= *p && *p <= '9')) {
             goto end;
         }
+
         isReal = true;
         hasDot = true;
         break;
@@ -490,6 +510,7 @@ const char* TextToReal(f64* pValue, const char* pText, bool* pIsReal) {
                 value = value * 8 + (*result - '0');
                 result++;
             }
+
             break;
         case 'X':
         case 'x':
@@ -505,8 +526,10 @@ const char* TextToReal(f64* pValue, const char* pText, bool* pIsReal) {
                 } else {
                     break;
                 }
+
                 value = value * 16 + digit;
             }
+
             break;
         case 'B':
         case 'b':
@@ -515,12 +538,14 @@ const char* TextToReal(f64* pValue, const char* pText, bool* pIsReal) {
                 value = value * 2 + (*result - '0');
                 result++;
             }
+
             break;
         case '.':
             goto decimal;
         default:
             break;
         }
+
         *pValue = value;
         goto end;
     }
@@ -555,6 +580,7 @@ decimal: {
             value = value * 10 + (*next - '0');
             next++;
         }
+
         *pValue = value;
         isFloat = false;
     }
@@ -565,6 +591,7 @@ decimal: {
     if (std::fabs(value) > __DBL_MAX__ || std::isnan(value)) {
         goto end;
     }
+
     result = next;
     if (hasDot && (*next | 0x20) == 'f') {
         result = next + 1;
@@ -575,9 +602,11 @@ end:
     if (pIsReal) {
         *pIsReal = isReal;
     }
+
     if (isNegative) {
         *pValue = -*pValue;
     }
+
     return result;
 }
 
@@ -596,6 +625,7 @@ s32 Clause::calcLineFeedCount() const {
             count++;
         }
     }
+
     return count;
 }
 
@@ -626,10 +656,12 @@ s32 Clause::compareImpl(const Clause& rOther, u32 offset, const Clause* pEnd,
         if (result != 0) {
             return result;
         }
+
         const Clause* next = mNext;
         if (next == pEnd || !next->isWord()) {
             return -1;
         }
+
         return next->compareImpl(rOther, offset + length, pEnd, pOtherEnd);
     }
 
@@ -639,10 +671,12 @@ s32 Clause::compareImpl(const Clause& rOther, u32 offset, const Clause* pEnd,
         if (result != 0) {
             return result;
         }
+
         const Clause* otherNext = rOther.mNext;
         if (otherNext == pOtherEnd || !otherNext->isWord()) {
             return 1;
         }
+
         return -otherNext->compareImpl(*this, rest, pEnd, pOtherEnd);
     }
 
@@ -657,8 +691,10 @@ s32 Clause::compareImpl(const Clause& rOther, u32 offset, const Clause* pEnd,
         if (next == pEnd) {
             return 0;
         }
+
         return next->isWord();
     }
+
     if (next == pEnd) {
         return -static_cast<s32>(otherNext->isWord());
     }
@@ -667,9 +703,11 @@ s32 Clause::compareImpl(const Clause& rOther, u32 offset, const Clause* pEnd,
     if (next->isWord()) {
         state |= 1;
     }
+
     if (otherNext->isWord()) {
         state |= 2;
     }
+
     switch (state) {
     case 3:
         return next->compareImpl(*otherNext, 0, pEnd, pOtherEnd);
@@ -706,12 +744,14 @@ s32 Clause::compareImpl(const sead::SafeString& rStr, u32 length, const Clause* 
         if (next == pEnd) {
             return -1;
         }
+
         return next->compareImpl(sead::SafeString(rStr.cstr() + (mEnd - mBegin)), rest, next->mPrev);
     }
 
     if (rest == 0) {
         return 0;
     }
+
     char c = rStr.cstr()[mEnd - mBegin];
     return ('A' <= (c & 0xdf) && (c & 0xdf) <= 'Z') || c == '_' || ('0' <= c && c <= '9');
 }
@@ -749,6 +789,7 @@ u32 Clause::calcHash(const void* pData, u32 size, u32 seed) {
     while (size-- != 0) {
         hash = cHashTable[(hash ^ *p++) & 0xff] ^ (hash >> 8);
     }
+
     return ~hash;
 }
 

@@ -62,6 +62,7 @@ MultiFilter::~MultiFilter()
             mUnits[type][i] = nullptr;
         }
     }
+
     freeResultTexture();
     if (mDebugTexturePage)
     {
@@ -81,6 +82,7 @@ void MultiFilter::freeResultTexture() const
         mDrawContext.mTextureCache.free(mDrawContext.mResultTexture);
         mDrawContext.mResultTexture = nullptr;
     }
+
     mDrawContext.mTextureCache.end();
 }
 
@@ -105,6 +107,7 @@ void MultiFilter::initialize(sead::Heap* pHeap, sead::Heap* pDebugHeap)
             mUnits[type][i] = pUnit;
         }
     }
+
     mDrawContext.mTextureCache.initialize(128, pHeap);
     addObj(&mParamObj, "mf_root_param");
 }
@@ -139,6 +142,7 @@ const MultiFilterResultInfo& MultiFilter::calcResultInfo(s32 width, s32 height) 
         {
             rTrimming.doCalcResultInfo_(pInfo);
         }
+
         for (const MultiFilterUnit* pUnit : mActiveUnits)
         {
             if (pUnit->isEnable())
@@ -147,6 +151,7 @@ const MultiFilterResultInfo& MultiFilter::calcResultInfo(s32 width, s32 height) 
             }
         }
     }
+
     return *pInfo;
 }
 
@@ -161,6 +166,7 @@ void MultiFilter::draw(DrawContext* pDrawContext, const TextureData& rTexture) c
     {
         return;
     }
+
     if (!mDrawContext.mTextureCache.begin())
     {
         return;
@@ -185,6 +191,7 @@ void MultiFilter::draw(DrawContext* pDrawContext, const TextureData& rTexture) c
         drawFilter_(pDrawContext, mTrimming, index);
         index++;
     }
+
     for (auto it = mActiveUnits.begin(); it != mActiveUnits.end(); ++it)
     {
         drawFilter_(pDrawContext, **it, index++);
@@ -211,6 +218,7 @@ void MultiFilter::drawFilter_(DrawContext* pDrawContext, const MultiFilterUnit& 
     {
         rUnit.doDraw_(pDrawContext, &mDrawContext);
     }
+
     if (mDrawContext.mResultTexture)
     {
         sead::FormatFixedSafeString<32> name(
@@ -280,6 +288,7 @@ void MultiFilter::genMessage(sead::hostio::Context* pContext)
             sead::FormatFixedSafeString<64> layout("Layout=Grid, NumRow=%d, NumCol=6",
                                                    mActiveUnits.size());
         }
+
         s32 index = 1;
         for (auto it = mActiveUnits.begin(); it != mActiveUnits.end(); ++it)
         {
@@ -291,10 +300,12 @@ void MultiFilter::genMessage(sead::hostio::Context* pContext)
                         static_cast<MultiFilterUnit::FilterType>(type));
                 }
             }
+
             {
                 sead::SafeString filterLabel = MultiFilterUnit::getFilterLabel((*it)->getType());
                 sead::FormatFixedSafeString<128> meta("Comment= Deletes %s", filterLabel.cstr());
             }
+
             if (auto* pNext = mActiveUnits.next(*it))
             {
                 const s32 swapIndex = index + 1;
@@ -303,6 +314,7 @@ void MultiFilter::genMessage(sead::hostio::Context* pContext)
                 sead::FormatFixedSafeString<128> meta("Comment=Filter%d : %sと順序を入れ替えます",
                                                       swapIndex, filterLabel.cstr());
             }
+
             if (auto* pPrev = mActiveUnits.prev(*it))
             {
                 const s32 swapIndex = index - 1;
@@ -311,8 +323,10 @@ void MultiFilter::genMessage(sead::hostio::Context* pContext)
                 sead::FormatFixedSafeString<128> meta("Comment=Filter%d : %sと順序を入れ替えます",
                                                       swapIndex, filterLabel.cstr());
             }
+
             index++;
         }
+
         mResultSamplerLinear.genMessageParameter(pContext, mResultSamplerLinear.getMeta());
     }
 
@@ -321,6 +335,7 @@ void MultiFilter::genMessage(sead::hostio::Context* pContext)
         sead::SafeString item =
             MultiFilterUnit::getFilterLabel(static_cast<MultiFilterUnit::FilterType>(type));
     }
+
     s32 index = 1;
     for (auto it = mActiveUnits.begin(); it != mActiveUnits.end(); ++it)
     {
@@ -348,8 +363,10 @@ void MultiFilter::listenPropertyEvent(const sead::hostio::PropertyEvent* pEvent)
             pNode->mList = nullptr;
             pNode->mData->activate();
         }
+
         return;
     }
+
     if (getEventId(pEvent) == 90000)
     {
         inactivateAll();
@@ -364,6 +381,7 @@ void MultiFilter::listenPropertyEvent(const sead::hostio::PropertyEvent* pEvent)
             (*it)->inactivate();
             return;
         }
+
         if (getEventId(pEvent) == static_cast<u32>(base + 40000))
         {
             sead::TListNode<MultiFilterUnit*>* pNode = nullptr;
@@ -375,6 +393,7 @@ void MultiFilter::listenPropertyEvent(const sead::hostio::PropertyEvent* pEvent)
                     break;
                 }
             }
+
             if (pNode)
             {
                 pNode->mList = nullptr;
@@ -390,6 +409,7 @@ void MultiFilter::listenPropertyEvent(const sead::hostio::PropertyEvent* pEvent)
                 mActiveUnits.moveBefore(pPrev, *it);
                 mSelectId = base;
             }
+
             return;
         }
         else if (getEventId(pEvent) == static_cast<u32>(base + 70000))
@@ -399,6 +419,7 @@ void MultiFilter::listenPropertyEvent(const sead::hostio::PropertyEvent* pEvent)
                 mActiveUnits.moveAfter(pNext, *it);
                 mSelectId = base;
             }
+
             return;
         }
         else if (getEventId(pEvent) == static_cast<u32>(base + 80000))
@@ -410,6 +431,7 @@ void MultiFilter::listenPropertyEvent(const sead::hostio::PropertyEvent* pEvent)
             {
                 return;
             }
+
             pNode->mList = nullptr;
             pNode->mData->activate();
             mActiveUnits.moveBefore(*it, pNode);
@@ -437,6 +459,7 @@ sead::TListNode<MultiFilterUnit*>* MultiFilter::addFilter_(MultiFilterUnit::Filt
         pNode->mList = nullptr;
         pNode->mData->activate();
     }
+
     return pNode;
 }
 
@@ -463,6 +486,7 @@ bool MultiFilter::preWrite_() const
         (*it)->setSaveIndex(index);
         index++;
     }
+
     return true;
 }
 
@@ -478,6 +502,7 @@ void MultiFilter::postRead_()
             rNode.mData->inactivate();
         }
     }
+
     for (s32 type = 0; type < MultiFilterUnit::cFilterType_Num; type++)
     {
         for (auto& rNode : mFreeUnits[type].robustRange())
@@ -488,6 +513,7 @@ void MultiFilter::postRead_()
             }
         }
     }
+
     mActiveUnits.sort(0, compareSaveIndex);
 }
 

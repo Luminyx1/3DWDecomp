@@ -245,6 +245,7 @@ void EnvObj::genMessage(sead::hostio::Context* pContext)
             (*it)->getEnvObjName();
         }
     }
+
     sead::FormatFixedSafeString<1024> str("GroupHeader = %s settings, IsEnable = %s",
                                           sTypeInfoTable[getTypeID()].mLabel,
                                           *mEnable ? "true" : "false");
@@ -280,6 +281,7 @@ void EnvObj::listenPropertyEvent(const sead::hostio::PropertyEvent* pEvent)
                 rpObj->mFlag.change(1 << 1, rpObj != this);
             }
         }
+
         break;
     }
     case 1005:
@@ -293,6 +295,7 @@ void EnvObj::listenPropertyEvent(const sead::hostio::PropertyEvent* pEvent)
                 rpObj->mFlag.reset(1 << 1);
             }
         }
+
         break;
     }
     case 1007:
@@ -309,6 +312,7 @@ void EnvObj::listenPropertyEvent(const sead::hostio::PropertyEvent* pEvent)
                 }
             }
         }
+
         break;
     default:
         break;
@@ -319,6 +323,7 @@ void EnvObj::listenPropertyEvent(const sead::hostio::PropertyEvent* pEvent)
     {
         mMgr->setDirty();
     }
+
     listenPropertyEventParameter(this, pEvent);
 }
 
@@ -363,6 +368,7 @@ const TypeInfo* EnvObj::registClass(const sead::SafeString& rName, const sead::S
             {
                 break;
             }
+
             if (sead::SafeString(rCur.mName).compare(sead::SafeString(rPrev.mName)) >= 0)
             {
                 break;
@@ -375,6 +381,7 @@ const TypeInfo* EnvObj::registClass(const sead::SafeString& rName, const sead::S
         rPrev = rCur;
         rCur = tmp;
     }
+
     return pInfo;
 }
 
@@ -392,6 +399,7 @@ s32 EnvObj::searchTypeIndex(const sead::SafeString& rName)
             return i;
         }
     }
+
     return -1;
 }
 

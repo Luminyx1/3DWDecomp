@@ -70,6 +70,7 @@ const NVNformat cFormatTable[] = {
     NVN_FORMAT_DEPTH24_STENCIL8,  // Depth_24_uNorm_Stencil_8
     NVN_FORMAT_DEPTH32F_STENCIL8,  // Depth_32_float_Stencil_8
 };
+
 // clang-format on
 
 }  // namespace

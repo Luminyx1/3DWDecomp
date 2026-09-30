@@ -10,10 +10,12 @@ s32 compareEnvObj(EnvObj* const* ppLhs, EnvObj* const* ppRhs)
     {
         return 1;
     }
+
     if (!*ppRhs)
     {
         return -1;
     }
+
     return (*ppLhs)->getEnvObjName().compare((*ppRhs)->getEnvObjName()) < 0 ? -1 : 1;
 }
 
@@ -73,6 +75,7 @@ void EnvObjBuffer::allocBuffer(const AllocateArg& rArg, sead::Heap* pHeap)
         it->mNum = rArg.getCount(it.getIndex());
         start += it->mNum;
     }
+
     for (auto& rObj : mObj)
     {
         rObj = nullptr;
@@ -101,6 +104,7 @@ s32 EnvObjBuffer::searchTypeIndex(s32 type, const sead::SafeString& rName) const
     {
         return -1;
     }
+
     return index - mTypeRange[type].mStart;
 }
 
@@ -119,6 +123,7 @@ s32 EnvObjBuffer::searchBufferIndex(s32 type, const sead::SafeString& rName) con
             return it.getIndex();
         }
     }
+
     return -1;
 }
 
@@ -142,6 +147,7 @@ s32 EnvObjBuffer::searchTypeIndex(const EnvObj* pObj) const
             return it.getIndex() - mTypeRange[type].mStart;
         }
     }
+
     return -1;
 }
 
@@ -160,6 +166,7 @@ s32 EnvObjBuffer::searchType(s32 bufferIndex) const
             return i;
         }
     }
+
     return -1;
 }
 

@@ -68,6 +68,7 @@ ShaderProgram::~ShaderProgram()
         if (mVariation != nullptr) {
             delete mVariation;
         }
+
         mVariation = nullptr;
     }
 
@@ -192,6 +193,7 @@ void ShaderProgram::VariationBuffer::create(sead::Heap* pHeap)
         for (s32 i = it.getIndex() + 1; i < mMacros.size(); i++) {
             it->mStride *= mMacros[i].mValues.size();
         }
+
         program_num *= it->mValues.size();
     }
 
@@ -507,6 +509,7 @@ void ShaderProgram::setUpForVariation_() const
                 info->pushBackVariation(macros[i], values[i]);
             }
         }
+
         const_cast<ShaderProgram*>(this)->getShader(ShaderType(type))->setCompileInfo(info);
     }
 }
@@ -626,6 +629,7 @@ s32 ShaderProgram::forceValidate_(bool) const
         mFlags |= cFlag_Initialized;
         mStageFlags = stages;
     }
+
     mFlags &= ~cFlag_ReserveSetUp;
 
     if (mFlags & cFlag_Initialized) {
@@ -986,12 +990,15 @@ bool ShaderProgram::calcCompileSourceNoVariation(ShaderType type,
     if (ShaderCompileInfo* info = base->mVertexShader.getCompileInfo()) {
         info->clearVariation();
     }
+
     if (ShaderCompileInfo* info = base->mFragmentShader.getCompileInfo()) {
         info->clearVariation();
     }
+
     if (ShaderCompileInfo* info = base->mGeometryShader.getCompileInfo()) {
         info->clearVariation();
     }
+
     if (ShaderCompileInfo* info = base->mComputeShader.getCompileInfo()) {
         info->clearVariation();
     }
@@ -1036,6 +1043,7 @@ ShaderProgram::VariationBuffer::~VariationBuffer()
     for (auto& macro : mMacros) {
         macro.mValues.freeBuffer();
     }
+
     mMacros.freeBuffer();
 }
 
@@ -1082,6 +1090,7 @@ s32 ShaderProgram::VariationBuffer::searchShaderProgramIndex(s32 macroNum,
                     break;
                 }
             }
+
             break;
         }
     }

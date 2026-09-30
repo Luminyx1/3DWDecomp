@@ -185,6 +185,7 @@ void DepthOfFieldParameter::assignShaderProgram_()
             {
                 farColorMode += 2;
             }
+
             if (mFarMulColor->r != 1.0f || mFarMulColor->g != 1.0f || mFarMulColor->b != 1.0f)
             {
                 farColorMode += 4;
@@ -282,6 +283,7 @@ void DepthOfField::initVertex_(sead::Heap* pHeap)
                     detail::getBufferPtr<Vertex>(rShape.mVertex)[index].mParam = sead::Vector2f(cRingScale[ring], ring);
                     index++;
                 }
+
                 break;
             case 1:
                 detail::getBufferPtr<Vertex>(rShape.mVertex)[index].mPos = sead::Vector2f(-1.0f, 1.0f);
@@ -296,6 +298,7 @@ void DepthOfField::initVertex_(sead::Heap* pHeap)
                 break;
             }
         }
+
         rShape.mVertexBuffer.setUpBuffer(ConstGPUMemVoidAddr(rShape.mVertex, 0), sizeof(Vertex),
                                          u32(rShape.mVertex.getSize()));
         rShape.mVertexBuffer.setUpStream(0, VertexStreamFormat(22), 0, false);
@@ -333,6 +336,7 @@ void DepthOfField::initIndex_(sead::Heap* pHeap)
                 index += 6;
             }
         }
+
         rShape.mIndexStream.setUpStream(GPUMemAddr<u16>(rShape.mIndex, 0),
                                         rShape.mIndex.getSize() / sizeof(u16));
         rShape.mIndexStream.setPrimitiveType(NVN_DRAW_PRIMITIVE_TRIANGLES);
@@ -434,6 +438,7 @@ void DepthOfField::freeBuffer(s32 context) const
         pAllocator->free(rContext.mpBlurTexture);
         rContext.mpBlurTexture = nullptr;
     }
+
     if (rContext.mpDepthBlurTexture)
     {
         pAllocator->free(rContext.mpDepthBlurTexture);
@@ -482,6 +487,7 @@ void DepthOfField::draw(DrawContext* pDrawContext, s32 context, const RenderBuff
             arg.mPass = 1;
             drawDepthMipMap_(pDrawContext, arg);
         }
+
         if (mDebugMode == 2)
         {
             drawDebugBlur_(pDrawContext, arg);
@@ -491,8 +497,10 @@ void DepthOfField::draw(DrawContext* pDrawContext, s32 context, const RenderBuff
             arg.mPass = 2;
             drawCompose_(pDrawContext, arg);
         }
+
         freeBuffer(context);
     }
+
     if (rParam.enableSeparateVignettingPass_())
     {
         arg.mPass = 3;
@@ -553,6 +561,7 @@ void DepthOfField::drawColorMipMap_(DrawContext* pDrawContext, const DrawArg& rA
                                                    -1, false);
             width = rTexture.getWidth(0);
         }
+
         f32 invWidth = 0.5f / width;
         f32 invHeight = 0.5f / u32(getMipHeight(rTexture, i));
         sead::Vector4f param(invWidth * mMipBlurScale, mMipBlurScale * invHeight,
@@ -562,6 +571,7 @@ void DepthOfField::drawColorMipMap_(DrawContext* pDrawContext, const DrawArg& rA
         drawKick_(pDrawContext, rArg);
         rArg.mpContext->mRenderBuffer.getRenderTargetColor()->invalidateGPUCache(pDrawContext);
     }
+
     rContext.mBlurSampler.setFilter(1, 1, 2);
     rContext.mBlurSampler.setLod(0.0f, rTexture.getMipLevelNum() - 1.0f, 0.0f);
 }
@@ -606,10 +616,12 @@ void DepthOfField::drawDepthMipMap_(DrawContext* pDrawContext, const DrawArg& rA
             offset = end;
             scale = 1.0f / (start - end);
         }
+
         sead::Vector4f param(1.0f / rArg.mNear, (1.0f - rArg.mNear / rArg.mFar) / rArg.mNear,
                              scale, -(offset * scale));
         pProgram->getUniformLocation(6).setUniform(pDrawContext, 4, &param);
     }
+
     rArg.mpContext->mDepthSampler.activate(pDrawContext, pProgram->getSamplerLocation(1), -1,
                                            false);
     {
@@ -619,6 +631,7 @@ void DepthOfField::drawDepthMipMap_(DrawContext* pDrawContext, const DrawArg& rA
                              mMipBlurScale * 0.0f, mMipBlurScale * 0.0f);
         pProgram->getUniformLocation(7).setUniform(pDrawContext, 4, &param);
     }
+
     bindRenderBuffer_(pDrawContext, rRenderBuffer, 0, 0);
     drawKick_(pDrawContext, rArg);
     rArg.mpContext->mRenderBuffer.getRenderTargetColor()->invalidateGPUCache(pDrawContext);
@@ -640,6 +653,7 @@ void DepthOfField::drawDepthMipMap_(DrawContext* pDrawContext, const DrawArg& rA
         drawKick_(pDrawContext, rArg);
         rArg.mpContext->mRenderBuffer.getRenderTargetColor()->invalidateGPUCache(pDrawContext);
     }
+
     rContext.mDepthBlurSampler.setLod(*rArg.mpParam->mDepthBlurAdd, *rArg.mpParam->mDepthBlurAdd,
                                       0.0f);
     rContext.mDepthBlurSampler.setFilter(1, 1, 1);
@@ -683,6 +697,7 @@ void DepthOfField::drawCompose_(DrawContext* pDrawContext, const DrawArg& rArg) 
     {
         graphicsContext.setDepthEnable(false, false);
     }
+
     graphicsContext.setColorMask(true, true, true, false);
 
     if (*mEnableReduceDraw)
@@ -722,6 +737,7 @@ void DepthOfField::drawCompose_(DrawContext* pDrawContext, const DrawArg& rArg) 
     {
         uniformVignettingParam_(pDrawContext, rArg, pProgram);
     }
+
     drawKick_(pDrawContext, rArg);
 
     if (*mEnableReduceDraw)
@@ -753,6 +769,7 @@ bool DepthOfFieldParameter::enableSeparateVignettingPass_() const
             return true;
         }
     }
+
     return false;
 }
 
@@ -780,6 +797,7 @@ void DepthOfField::drawVignetting_(DrawContext* pDrawContext, const DrawArg& rAr
         graphicsContext.setBlendEquation(0, 1);
         break;
     }
+
     graphicsContext.apply(pDrawContext);
 
     sead::Viewport viewport(*rArg.mpRenderBuffer);
@@ -801,6 +819,7 @@ void DepthOfField::bindRenderBuffer_(DrawContext* pDrawContext, RenderBuffer& rR
         width = rRenderBuffer.getRenderTargetColor()->getMipWidth(mipLevel);
         height = getMipHeight(*rRenderBuffer.getRenderTargetColor(), mipLevel);
     }
+
     if (rRenderBuffer.getRenderTargetDepth())
     {
         s32 depthMipLevel = mipLevel + depthMipOffset;
@@ -808,6 +827,7 @@ void DepthOfField::bindRenderBuffer_(DrawContext* pDrawContext, RenderBuffer& rR
         width = rRenderBuffer.getRenderTargetDepth()->getMipWidth(depthMipLevel);
         height = getMipHeight(*rRenderBuffer.getRenderTargetDepth(), depthMipLevel);
     }
+
     rRenderBuffer.setPhysicalArea(sead::BoundBox2f(0.0f, 0.0f, width, height));
     rRenderBuffer.setVirtualSize(sead::Vector2f(width, height));
     sead::Viewport viewport(rRenderBuffer);
@@ -838,8 +858,10 @@ void DepthOfField::drawKick_(DrawContext* pDrawContext, const DrawArg& rArg) con
                                     mShapes[*rArg.mpParam->mVignettingShape0.mType].mIndexStream);
             return;
         }
+
         break;
     }
+
     detail::drawQuadTriangle(pDrawContext);
 }
 
@@ -860,12 +882,14 @@ void DepthOfField::uniformComposeParam_(DrawContext* pDrawContext, const DrawArg
     {
         farMax = (farMax - rArg.mNear) / (rArg.mFar - rArg.mNear);
     }
+
     f32 invWidth = 1.0f / width;
     f32 invHeight = 1.0f / height;
     {
         sead::Vector4f param(*rParam.mLevel, *rParam.mLevel, farMax, 1.0f - *rParam.mSaturateMin);
         pProgram->getUniformLocation(0).setUniform(pDrawContext, 4, &param);
     }
+
     {
         sead::Vector4f param(invWidth * mComposeBlurScale, invHeight * mComposeBlurScale,
                              invWidth, invHeight);
@@ -884,6 +908,7 @@ void DepthOfField::uniformComposeParam_(DrawContext* pDrawContext, const DrawArg
         farOffset = start;
         farScale = 1.0f / (end - start);
     }
+
     depthScale.x = farScale;
     depthOffset.x = -(farOffset * farScale);
     f32 near = rArg.mNear;
@@ -903,11 +928,13 @@ void DepthOfField::uniformComposeParam_(DrawContext* pDrawContext, const DrawArg
             nearOffset = (nearEnd - near) / (far - near);
             nearLength = far - near;
         }
+
         f32 nearScale = nearLength / (nearStart - nearEnd);
         depthScale.y = nearScale;
         depthOffset.y = -(nearOffset * nearScale);
         nearDepth = calcProjDepth(nearEnd, near, far);
     }
+
     {
         sead::Vector4f param(1.0f / near, (1.0f - near / far) / near, farDepth, nearDepth);
         pProgram->getUniformLocation(6).setUniform(pDrawContext, 4, &param);
@@ -925,6 +952,7 @@ void DepthOfField::uniformComposeParam_(DrawContext* pDrawContext, const DrawArg
         {
             reverseEnd += 0.1f;
         }
+
         f32 colorRange;
         f32 reverseRange;
         if (isLinearDepth)
@@ -942,6 +970,7 @@ void DepthOfField::uniformComposeParam_(DrawContext* pDrawContext, const DrawArg
             colorRange = colorEnd - colorStart;
             reverseRange = reverseEnd - reverseStart;
         }
+
         depthScale.z = 1.0f / colorRange;
         depthOffset.z = -(colorStart * depthScale.z);
         depthScale.w = 1.0f / reverseRange;
@@ -952,6 +981,7 @@ void DepthOfField::uniformComposeParam_(DrawContext* pDrawContext, const DrawArg
             depthOffset.w = 1.0f;
         }
     }
+
     pProgram->getUniformLocation(4).setUniform(pDrawContext, 4, &depthScale);
     pProgram->getUniformLocation(5).setUniform(pDrawContext, 4, &depthOffset);
     pProgram->getUniformLocation(12).setUniform(pDrawContext, 4, &*rArg.mpParam->mFarMulColor);
@@ -963,6 +993,7 @@ void DepthOfField::uniformComposeParam_(DrawContext* pDrawContext, const DrawArg
         rArg.mpContext->mDepthBlurSampler.activate(pDrawContext, pProgram->getSamplerLocation(3),
                                                    -1, false);
     }
+
     rArg.mpContext->mDepthSampler.activate(pDrawContext, pProgram->getSamplerLocation(1), -1,
                                            false);
     if (rArg.mpParam->enableIndirect_())
@@ -1027,12 +1058,14 @@ void DepthOfField::uniformVignettingParam_(DrawContext* pDrawContext, const Draw
         aspectX = diagonal / rArg.mWidth;
         aspectY = diagonal / rArg.mHeight;
     }
+
     {
         sead::Vector4f param(scaleX * aspectX, scaleY * aspectY,
                              sead::Mathf::clamp(*rArg.mpParam->mVignettingBlur, 0.0f, 1.0f),
                              0.0f);
         pProgram->getUniformLocation(9).setUniform(pDrawContext, 4, &param);
     }
+
     pProgram->getUniformLocation(11).setUniform(pDrawContext, 4,
                                                 &*rArg.mpParam->mVignettingColor);
     {
@@ -1054,6 +1087,7 @@ void DepthOfField::uniformExpandReduceParam_(DrawContext* pDrawContext, const Dr
         nearDepth =
             calcProjDepth(sead::Mathf::max(*rParam.mFarStart, *rParam.mFarEnd), near, far);
     }
+
     sead::Vector4f param(0.0f, 0.0f, farDepth, nearDepth);
     pProgram->getUniformLocation(6).setUniform(pDrawContext, 4, &param);
     rArg.mpContext->mComposeSampler.activate(pDrawContext, pProgram->getSamplerLocation(0), -1,
@@ -1189,10 +1223,12 @@ void DepthOfField::setIndirectTextureData(const TextureData* pTexture)
         mIndirectSampler.applyTextureData(*pTexture);
         mIndirectSampler.setWrapDirect(1, 1, 1);
     }
+
     for (s32 i = 0; i < getBufferNum(); i++)
     {
         getParameter(i).mpIndirectTexture = pTexture;
     }
+
     assignShaderProgram_();
 }
 
@@ -1332,6 +1368,7 @@ void DepthOfFieldParameter::genMessageDepthOfFieldParameter(sead::hostio::Contex
             mFarMulColor.genMessageParameter(pContext, "Mode=RGBOnly, Max=2");
             mEnableColorReverse.genMessageParameter(pContext, mEnableColorReverse.getMeta());
         }
+
         mIndirectEnable.genMessageParameter(pContext, mIndirectEnable.getMeta());
         if (*mIndirectEnable)
         {
@@ -1339,6 +1376,7 @@ void DepthOfFieldParameter::genMessageDepthOfFieldParameter(sead::hostio::Contex
             {
                 sead::SafeString label = mIndirectTexRotate.getLabel();
             }
+
             mIndirectTexScale.genMessageParameter(pContext, "Min=0.1,Max=10");
             mIndirectTexTrans.genMessageParameter(pContext, "Min=0,Max=1");
             mIndirectDepthCancelEnable.genMessageParameter(pContext,
@@ -1346,12 +1384,14 @@ void DepthOfFieldParameter::genMessageDepthOfFieldParameter(sead::hostio::Contex
             mEnableIndirectFromFull.genMessageParameter(pContext,
                                                         mEnableIndirectFromFull.getMeta());
         }
+
         mEnableDofFarMax.genMessageParameter(pContext, mEnableDofFarMax.getMeta());
         if (*mEnableDofFarMax)
         {
             mDofFarMax.genMessageParameter(pContext, mDofFarMax.getMeta());
         }
     }
+
     mNearEnable.genMessageParameter(pContext, mNearEnable.getMeta());
     if (*mNearEnable)
     {
@@ -1363,12 +1403,14 @@ void DepthOfFieldParameter::genMessageDepthOfFieldParameter(sead::hostio::Contex
             mDepthBlurAdd.genMessageParameter(pContext, "Min=0.0, Max=10");
         }
     }
+
     mEnableVignettingBlur.genMessageParameter(pContext, mEnableVignettingBlur.getMeta());
     mEnableVignettingColor.genMessageParameter(pContext, mEnableVignettingColor.getMeta());
     if (*mEnableVignettingColor && *mEnableVignettingBlur)
     {
         mEnableVignetting2Shape.genMessageParameter(pContext, mEnableVignetting2Shape.getMeta());
     }
+
     if (*mEnableVignettingColor || *mEnableVignettingBlur)
     {
         mVignettingShape0.genMessage(pContext);
@@ -1376,10 +1418,12 @@ void DepthOfFieldParameter::genMessageDepthOfFieldParameter(sead::hostio::Contex
         {
             mVignettingBlur.genMessageParameter(pContext, "Min=0, Max=1");
         }
+
         if (enableDifferntShape_())
         {
             mVignettingShape1.genMessage(pContext);
         }
+
         if (*mEnableVignettingColor)
         {
             mVignettingColor.genMessageParameter(pContext, mVignettingColor.getMeta());
@@ -1388,6 +1432,7 @@ void DepthOfFieldParameter::genMessageDepthOfFieldParameter(sead::hostio::Contex
             }
         }
     }
+
     mEnableReduceDraw.genMessageParameter(pContext, mEnableReduceDraw.getMeta());
 }
 
@@ -1396,6 +1441,7 @@ void DepthOfFieldParameter::VignettingShapeParam::genMessage(sead::hostio::Conte
     {
         sead::SafeString label = mType.getLabel();
     }
+
     mScale.genMessageParameter(pContext, "Min=0.001, Max=2");
     mTrans.genMessageParameter(pContext, "Min=-1, Max=1");
 }
@@ -1442,6 +1488,7 @@ void DepthOfField::tempVignettingPostRead_(s32 index, const TempVignetting& rVig
         *getParameter(0).mVignettingShape0.mTrans = *rVignetting.mTrans;
         *getParameter(0).mVignettingShape0.mRange = *rVignetting.mRange;
     }
+
     assignShaderProgram_();
 }
 

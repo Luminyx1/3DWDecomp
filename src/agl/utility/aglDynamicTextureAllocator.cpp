@@ -23,6 +23,7 @@ void shakerSort(sead::PtrArray<T>* pArray, Compare cmp)
     {
         return;
     }
+
     s32 lo = 0;
     while (lo < hi)
     {
@@ -37,6 +38,7 @@ void shakerSort(sead::PtrArray<T>* pArray, Compare cmp)
                 last = i;
             }
         }
+
         hi = last;
         if (hi <= lo)
         {
@@ -54,10 +56,12 @@ void shakerSort(sead::PtrArray<T>* pArray, Compare cmp)
                 last = i;
             }
         }
+
         if (last == hi)
         {
             break;
         }
+
         lo = last;
     }
 }
@@ -87,6 +91,7 @@ DynamicTextureAllocator::~DynamicTextureAllocator()
         rContext.mSuspendSize = 0;
         rContext.mIndex = i;
     }
+
     mTextures.freeBuffer();
     mFreeAddrs.freeBuffer();
 }
@@ -135,11 +140,13 @@ void DynamicTextureAllocator::initialize(s32 textureNum, u64 size, u64 debugSize
             rStorage.mIsUseStorage = false;
             break;
         }
+
         if (rStorage.mIsUseStorage && rStorage.mAddr.isValid())
         {
             TextureMemoryAllocator::setupStorage(&rStorage.mStorage, rStorage.mAddr,
                                                  rStorage.mSize, pHeap);
         }
+
         storageIndex++;
     }
 
@@ -157,8 +164,10 @@ void DynamicTextureAllocator::initialize(s32 textureNum, u64 size, u64 debugSize
                                       rStorage.mIsUseStorage ? &rStorage.mStorage : nullptr,
                                       rStorage.mSize, mTextures.size(), pHeap);
             }
+
             allocatorIndex++;
         }
+
         if (i != cContextNum - 1)
         {
             auto* pDisplayListBlock = new (pHeap) GPUMemBlock<u8>;
@@ -204,6 +213,7 @@ void DynamicTextureAllocator::calc()
     {
         pAddr[i].deleteGPUMemBlock();
     }
+
     mFreeAddrNum = 0;
 }
 
@@ -276,6 +286,7 @@ TextureDataEx* DynamicTextureAllocator::alloc_(DrawContext* pDrawContext, Contex
                 {
                     continue;
                 }
+
                 const s32 age = sead::Mathi::abs(mFrame - rTexture.mFrame);
                 if (rTexture.mState.isOn(2) && mTextures.size() < age)
                 {
@@ -283,12 +294,14 @@ TextureDataEx* DynamicTextureAllocator::alloc_(DrawContext* pDrawContext, Contex
                     rTexture.mState.reset(2);
                     rTexture.release();
                 }
+
                 if (maxAge < age)
                 {
                     maxAge = age;
                     pTexture = &rTexture;
                 }
             }
+
             pTexture->mState.set(3);
         }
     }
@@ -303,6 +316,7 @@ TextureDataEx* DynamicTextureAllocator::alloc_(DrawContext* pDrawContext, Contex
                 break;
             }
         }
+
         if (!pTexture)
         {
             u32 i = 0;
@@ -310,12 +324,15 @@ TextureDataEx* DynamicTextureAllocator::alloc_(DrawContext* pDrawContext, Contex
             {
                 i++;
             }
+
             mSearchIndex = i;
             pTexture = &mTextures.getBufferPtr()[i];
         }
+
         pTexture->mState.reset(2);
         pTexture->mState.set(1);
     }
+
     mTextureCS.unlock();
 
     if (isNeedInitialize)
@@ -323,6 +340,7 @@ TextureDataEx* DynamicTextureAllocator::alloc_(DrawContext* pDrawContext, Contex
         pTexture->initialize(format, textureType, width, height, mipLevelNum, multiSample, slice,
                              pAddr, attributeFlags);
     }
+
     pTexture->mContext = pContext;
     pTexture->mAllocateType = allocatorIndex;
 
@@ -335,10 +353,12 @@ TextureDataEx* DynamicTextureAllocator::alloc_(DrawContext* pDrawContext, Contex
         rAllocator.free(pTexture->mMemoryBlock, true);
         pTexture->mMemoryBlock = nullptr;
     }
+
     if (!pTexture->mMemoryBlock)
     {
         dumpAll();
     }
+
     mAllocatorCS.unlock();
 
     pTexture->reset(pDrawContext, rName, true, mFrame);
@@ -660,6 +680,7 @@ bool DynamicTextureAllocator::free_(const TextureData* pTexture)
         {
             mFreeAddrs[mFreeAddrNum++] = pTextureEx->mMemoryBlock->mMemBlockAddr;
         }
+
         pTextureEx->mContext->mAllocators[pTextureEx->mAllocatorIndex].free(
             pTextureEx->mMemoryBlock, false);
     }
@@ -668,12 +689,14 @@ bool DynamicTextureAllocator::free_(const TextureData* pTexture)
         pTextureEx->mContext->mAllocators[pTextureEx->mAllocatorIndex].free(
             pTextureEx->mMemoryBlock, true);
     }
+
     pTextureEx->mMemoryBlock = nullptr;
 
     {
         sead::ScopedLock<sead::CriticalSection> textureLock(&mTextureCS);
         pTextureEx->mState.reset(1);
     }
+
     return true;
 }
 
@@ -688,6 +711,7 @@ void DynamicTextureAllocator::beginCache()
     {
         rContext.mFlags.set(cContextFlag_DisplayList);
     }
+
     rContext.mFlags.set(cContextFlag_Cache);
 }
 
@@ -701,6 +725,7 @@ void DynamicTextureAllocator::endCache()
     {
         rContext.mDisplayList.endDisplayList();
     }
+
     DisplayList::resume(rContext.mSuspendMemory, rContext.mSuspendSize);
     rContext.mFlags.reset(cContextFlag_Cache);
 }
@@ -725,13 +750,16 @@ bool DynamicTextureAllocator::queryTextureMemoryInfo(
             {
                 *ppName = rTexture.mName.cstr();
             }
+
             if (pContextIndex)
             {
                 *pContextIndex = rTexture.mAllocateType;
             }
+
             return true;
         }
     }
+
     return false;
 }
 
@@ -817,6 +845,7 @@ void TextureDataEx::initialize(TextureFormat format, TextureType type, u32 width
             initialize_(TextureType(1), format, width, height, 1, 1, textureAttribute,
                         MultiSampleType(0), true);
         }
+
         break;
     case 8:
         if (slice == 1)
@@ -828,6 +857,7 @@ void TextureDataEx::initialize(TextureFormat format, TextureType type, u32 width
         {
             initializeCubeMapArray(format, width, height, slice, mipLevelNum, textureAttribute);
         }
+
         break;
     default:
         break;
@@ -844,6 +874,7 @@ void TextureDataEx::initialize(TextureFormat format, TextureType type, u32 width
     {
         mAllocateArg.mMipSize = 0;
     }
+
     mAllocateArg.mExtraSize = 0;
     mAllocateArg.mExtraAlignment = 4;
     mAllocateArg.mStorageClass = rSurface.mStorageClass;
@@ -853,6 +884,7 @@ void TextureDataEx::initialize(TextureFormat format, TextureType type, u32 width
     {
         size = sead::Mathu::roundUpPow2(size, mAllocateArg.mAlignment) + mAllocateArg.mMipSize;
     }
+
     mAllocateArg.mSize = size + mAllocateArg.mAlignment;
 }
 
@@ -875,6 +907,7 @@ bool DynamicTextureAllocator::isValid_(const Context* pContext) const
             return false;
         }
     }
+
     return true;
 }
 
@@ -908,8 +941,10 @@ void TextureDataEx::reset(DrawContext* pDrawContext, const sead::SafeString& rNa
         {
             setMipPtr(mMemoryBlock->mMipAddr);
         }
+
         mInfo.change(2, textureID != getTextureID());
     }
+
     mUseSize = mContext->mAllocators[mAllocatorIndex].getUsedSize();
     mName = rName;
     setCompSelDefault();
@@ -931,6 +966,7 @@ bool DynamicTextureAllocator::isContextValid_(const Context* pContext) const
         isOverlapped |=
             pAllocators[i].isOverwrapperd(mContexts[cContextNum - 1].mAllocators[i]);
     }
+
     return !isOverlapped;
 }
 
@@ -942,6 +978,7 @@ void DynamicTextureAllocator::dump_(s32 index) const
     {
         rAllocator.dumpDetail();
     }
+
     for (const auto& rTexture : mTextures)
     {
         if (rTexture.mMemoryBlock && rTexture.mContext == &rContext)
@@ -962,6 +999,7 @@ u64 DynamicTextureAllocator::getUseSize() const
     {
         return 0;
     }
+
     return rContext.mAllocators(0).getUsedSize();
 }
 
@@ -976,6 +1014,7 @@ u64 DynamicTextureAllocator::getUseSizeWithoutContext() const
     {
         return 0;
     }
+
     return rContext.mAllocators(0).getUsedSize();
 }
 
@@ -1011,6 +1050,7 @@ void DynamicTextureAllocator::genMessage(sead::hostio::Context* pContext)
             textures.pushBack(&rTexture);
         }
     }
+
     shakerSort(&textures, [](const TextureDataEx* pA, const TextureDataEx* pB) {
         return pA->mName.compare(pB->mName);
     });
@@ -1046,6 +1086,7 @@ void DynamicTextureAllocator::listenPropertyEvent(const sead::hostio::PropertyEv
         {
             rTexture.mState.reset(2);
         }
+
         break;
     }
     case 1001:

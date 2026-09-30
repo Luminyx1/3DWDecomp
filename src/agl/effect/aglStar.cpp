@@ -115,6 +115,7 @@ void Star::finalize()
     {
         mContext[i].mUniformBlock.destroy();
     }
+
     mContext.freeBuffer();
 
     removeUnit();
@@ -168,6 +169,7 @@ void Star::initialize(const InitializeArg& rArg)
             rBlock.declare(UniformBlock::cType_Float, 1);
             rBlock.declare(UniformBlock::cType_Vec4, 1);
         }
+
         rBlock.create(rArg.mHeap, 2, 1);
     }
 
@@ -211,6 +213,7 @@ void Star::allocateUnit(sead::Heap* pHeap, u32 unitNum)
     {
         blockNum++;
     }
+
     mUnitBlock.tryAllocBuffer(blockNum, pHeap);
 
     u32 rest = mUnit.size();
@@ -228,6 +231,7 @@ void Star::allocateUnit(sead::Heap* pHeap, u32 unitNum)
             rBlock.startDeclare(1, pHeap);
             rBlock.declareStruct(count, sizeof(Unit), 0x10);
         }
+
         rBlock.create(pHeap, 1, 1);
         rest -= mUnitNumPerBlock;
     }
@@ -285,6 +289,7 @@ void Star::removeUnit()
     {
         mUnitBlock[i].destroy();
     }
+
     mUnitBlock.freeBuffer();
 }
 
@@ -378,6 +383,7 @@ void Star::draw(DrawContext* pDrawContext, u32 index) const
             nvnCommandBufferDrawArrays(pDrawContext->getNvnCommandBuffer(),
                                        NVN_DRAW_PRIMITIVE_POINTS, 0, count);
         }
+
         rest -= mUnitNumPerBlock;
     }
 }
@@ -402,11 +408,13 @@ void Star::listenPropertyEvent(const sead::hostio::PropertyEvent* pEvent)
             mDir.set(sy * -cp, -sp, cy * -cp);
             return;
         }
+
         if (id < &mDir + 1 && id >= &mDir)
         {
             calcDirAngle(mDir);
             return;
         }
+
         if ((id < &sEditParam.mAttenuationInnerDeg + 1 && id >= &sEditParam.mAttenuationInnerDeg) ||
             (id < &sEditParam2.mAttenuationOuterDeg + 1 && id >= &sEditParam2.mAttenuationOuterDeg) ||
             (id < &mAttenuationScale + 1 && id >= &mAttenuationScale))
@@ -425,6 +433,7 @@ void Star::listenPropertyEvent(const sead::hostio::PropertyEvent* pEvent)
             removeUnit();
             allocateUnit(detail::PrivateResource::instance()->getDebugHeap(), sEditParam.mUnitNum);
         }
+
         updateUnit(sEditParam.mSizeMin, sEditParam.mSizeMax);
     }
 }

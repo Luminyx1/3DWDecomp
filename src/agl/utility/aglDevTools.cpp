@@ -84,6 +84,7 @@ inline void setUniform(DrawContext* pDrawContext, const UniformLocation& rLocati
         {
             values[i].set(pValues[i].x, pValues[i].y, pValues[i].z, 0.0f);
         }
+
         rLocation.setUniformNVN(pDrawContext, num * 4, values);
     }
 }
@@ -441,6 +442,7 @@ void DevTools::drawFrameBuffer(DrawContext* pDrawContext, const RenderBuffer& rR
         {
             return;
         }
+
         sampler.applyTextureData(*pColor);
     }
     else
@@ -450,6 +452,7 @@ void DevTools::drawFrameBuffer(DrawContext* pDrawContext, const RenderBuffer& rR
         {
             return;
         }
+
         sampler.applyTextureData(*pDepth);
     }
 
@@ -1373,6 +1376,7 @@ void DevTools::controlCameraPointer(sead::LookAtCamera* pCamera, PoiningControlB
         {
             return;
         }
+
         pBuffer->mIsActive = 1;
         isFirst = true;
     }
@@ -1383,6 +1387,7 @@ void DevTools::controlCameraPointer(sead::LookAtCamera* pCamera, PoiningControlB
             pBuffer->mIsActive = 0;
             return;
         }
+
         isFirst = false;
     }
 
@@ -1411,6 +1416,7 @@ void DevTools::controlCameraPointer(sead::LookAtCamera* pCamera, PoiningControlB
     {
         delta = sead::Vector2f::zero;
     }
+
     controlCameraPointer(pCamera, delta, rotate, move, zoom);
     pBuffer->mPrevPos = pos;
 }
@@ -1433,15 +1439,18 @@ void DevTools::controlCameraPointer(sead::LookAtCamera* pCamera, const sead::Vec
         rotateStick.x = rDelta.x * -0.1f * rotate;
         rotateStick.y = rDelta.y * -0.1f * rotate;
     }
+
     if (move > 0.0f)
     {
         moveStick.set(rDelta.x * -0.08f * move, rDelta.y * -0.08f * move);
     }
+
     f32 zoomValue = 0.0f;
     if (zoom > 0.0f)
     {
         zoomValue = (rDelta.y - rDelta.x) * 0.5f * zoom;
     }
+
     controlCamera(pCamera, moveStick, rotateStick, zoomValue, 0.0f, 0.0f, 0.0f, false,
                   cCameraControlType_0);
 }
@@ -1520,6 +1529,7 @@ void DevTools::drawFan_(DrawContext* pDrawContext, u32* pNum, const sead::Matrix
     {
         num = 1;
     }
+
     *pNum = num;
 
     param.x = start * sead::Mathf::pi2() + offset;
@@ -1846,6 +1856,7 @@ void DevTools::drawVisualizedDepth(DrawContext* pDrawContext, const TextureData&
                                  1.0f / (height - 1));
         setUniform(pDrawContext, pProgram->getUniformLocation(2), texelSize);
     }
+
     sampler.activate(pDrawContext, pProgram->getSamplerLocation(0), -1, false);
     setUniform(pDrawContext, pProgram->getUniformLocation(3), index);
 
@@ -1907,6 +1918,7 @@ void DevTools::drawDepthGradation(DrawContext* pDrawContext, const RenderBuffer&
                 rank++;
             }
         }
+
         depths[rank].x = pDepth[i];
         colors[rank] = pColor[i];
     }
@@ -1920,10 +1932,12 @@ void DevTools::drawDepthGradation(DrawContext* pDrawContext, const RenderBuffer&
     {
         pProgram->getUniformLocation(2).setUniformNVN(pDrawContext, num * 4, depths);
     }
+
     if (pProgram->getUniformLocation(3).isValid())
     {
         pProgram->getUniformLocation(3).setUniformNVN(pDrawContext, num * 4, colors);
     }
+
     sampler.activate(pDrawContext, pProgram->getSamplerLocation(0), -1, false);
 
     VertexAttributeHolder::instance()

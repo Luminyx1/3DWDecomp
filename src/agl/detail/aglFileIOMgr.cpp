@@ -51,9 +51,11 @@ void FileIOMgr::initialize(const CreateArg& rArg, sead::Heap* pHeap) {
             file.mUserData = 0;
             file._10 = nullptr;
         }
+
         mDevice = new (pHeap) sead::NinHostIOFileDevice();
         sead::FileDeviceMgr::instance()->mount(mDevice, "agl_hostpc");
     }
+
     mFlags.change(1, rArg.mUseCheckout);
 }
 
@@ -201,6 +203,7 @@ bool FileIOMgr::save(const void* pData, u32 size, const DialogArg& rArg) {
     if (rArg.mOutPath) {
         rArg.mOutPath->copy(info.mPath);
     }
+
     return true;
 }
 
@@ -240,11 +243,13 @@ s32 FileIOMgr::load(const DialogArg& rArg) {
     if (!file->mData) {
         return -1;
     }
+
     file->mSize = loadArg.read_size;
 
     if (rArg.mOutPath) {
         rArg.mOutPath->copy(info.mPath);
     }
+
     file->mUserData = rArg.mUserData;
     return handle;
 }

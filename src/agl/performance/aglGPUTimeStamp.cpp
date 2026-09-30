@@ -55,6 +55,7 @@ GPUTimeStampArray::~GPUTimeStampArray()
     {
         rEntry.mBuffer.freeBuffer();
     }
+
     nvnBufferFinalize(&mNvnBuffer);
 }
 

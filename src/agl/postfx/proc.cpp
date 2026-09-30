@@ -32,6 +32,7 @@ void LUT::generate(f32* pDst, s32 stride, const GenerateArg& rArg) const
             {
                 pDst[j] = interpolate_(0, t);
             }
+
             pDst += stride;
         }
     }
@@ -44,6 +45,7 @@ void LUT::generate(f32* pDst, s32 stride, const GenerateArg& rArg) const
             {
                 pDst[j] = interpolate_(j, t);
             }
+
             pDst += stride;
         }
     }
@@ -61,6 +63,7 @@ void LUT::transform(f32* pDst, s32 stride, const TransformArg& rArg) const
             {
                 pDst[x] = interpolate_(0, rArg.mpSrc[base + x]);
             }
+
             pDst += stride;
         }
     }
@@ -73,6 +76,7 @@ void LUT::transform(f32* pDst, s32 stride, const TransformArg& rArg) const
             {
                 pDst[x] = interpolate_(x, rArg.mpSrc[base + x]);
             }
+
             pDst += stride;
         }
     }

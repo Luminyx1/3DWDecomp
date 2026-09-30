@@ -35,6 +35,7 @@ void NVNtexture_::releaseTexture()
         nvnTextureFinalize(&mTexture);
         _c4 &= ~1;
     }
+
     mTextureID = -1;
 }
 
@@ -79,6 +80,7 @@ NVNtexture_& NVNtexture_::operator=(const NVNtexture_& other)
         _c4 |= 1;
         mTextureID = NVNMgr::instance()->registerTexture(&mTexture, nullptr, "copy");
     }
+
     return *this;
 }
 
@@ -99,6 +101,7 @@ bool NVNtexture_::registerTexture(const NVNtexture* pTexture, const NVNtextureVi
         {
             return false;
         }
+
         releaseTexture();
         if (isOwner)
         {
@@ -108,6 +111,7 @@ bool NVNtexture_::registerTexture(const NVNtexture* pTexture, const NVNtextureVi
         {
             _c4 &= ~1;
         }
+
         mTextureID = NVNMgr::instance()->registerTexture(pTexture, pView, pName);
         std::memcpy(&mTexture, pTexture, sizeof(NVNtexture));
         return true;
@@ -214,6 +218,7 @@ NVNsampler_& NVNsampler_::operator=(const NVNsampler_& other)
     {
         NVNMgr::instance()->countupSampler(_8);
     }
+
     return *this;
 }
 
@@ -229,6 +234,7 @@ bool NVNsampler_::registerSampler(const NVNsampler& rSampler, const char* pName)
     {
         return false;
     }
+
     s32 oldId = _8;
     releaseSampler();
     u32 newId = NVNMgr::instance()->registerSampler(&rSampler, pName);

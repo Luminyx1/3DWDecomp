@@ -34,6 +34,7 @@ void VertexBuffer::cleanUp_()
     {
         mStreams[i].mEnable = false;
     }
+
     mBuffer.invalidate();
     mStride = 0;
     mVertexNum = 0;
@@ -61,6 +62,7 @@ void VertexBuffer::setUpBuffer(ConstGPUMemVoidAddr buffer, u64 stride, u64 size)
     {
         mVertexNum = 1;
     }
+
     mBufferSize = size;
 
     NVNbufferBuilder builder;

@@ -58,6 +58,7 @@ void DebugTextureDrawer::inactivateAll()
         {
             break;
         }
+
         pPage->setActive(false);
     }
 }
@@ -97,6 +98,7 @@ void DebugTextureDrawer::eraseActivePage_(DebugTexturePage* pPage)
         mActivePages.erase(index);
         pPage->invalidateHostIoNode();
     }
+
     mActivePageCS.unlock();
 }
 
@@ -126,12 +128,14 @@ DebugTexture* DebugTextureDrawer::popBack_()
         {
             pNode->mList = nullptr;
         }
+
         pTexture = pNode->mData;
     }
     else
     {
         pTexture = nullptr;
     }
+
     mTextureCS.unlock();
     return pTexture;
 }
@@ -174,6 +178,7 @@ DebugTexturePage* DebugTextureDrawer::searchPage(const sead::SafeString& rName)
             break;
         }
     }
+
     mPageCS.unlock();
     return pResult;
 }
@@ -218,6 +223,7 @@ void DebugTextureDrawer::invalidateHostIoNode_(DebugTexturePage* pPage)
     {
         pPage->invalidateHostIoNode();
     }
+
     mActivePageCS.lock();
     if (mActivePages.size() >= 2)
     {
@@ -227,6 +233,7 @@ void DebugTextureDrawer::invalidateHostIoNode_(DebugTexturePage* pPage)
             pPrevPage->invalidateHostIoNode();
         }
     }
+
     mActivePageCS.unlock();
 }
 
@@ -242,6 +249,7 @@ bool DebugTextureDrawer::copyTextureLabel_(s32 index, const sead::SafeString& rL
     {
         return false;
     }
+
     mTextureLabels[index].copy(rLabel);
     return true;
 }

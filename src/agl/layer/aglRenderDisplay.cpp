@@ -69,6 +69,7 @@ RenderDisplay::~RenderDisplay()
         {
             rDisplayList.getBuffer().deleteGPUMemBlock();
         }
+
         if (rDisplayList.isUserControlMemory() && rDisplayList.getControlMemory())
         {
             delete static_cast<u8*>(rDisplayList.getControlMemory());
@@ -89,18 +90,22 @@ void RenderDisplay::freeFrameBuffer()
             pAllocator->free(mColorTexture);
             mColorTexture = nullptr;
         }
+
         if (mDepthTexture)
         {
             pAllocator->free(mDepthTexture);
             mDepthTexture = nullptr;
         }
+
         if (mResolveTexture)
         {
             pAllocator->free(mResolveTexture);
             mResolveTexture = nullptr;
         }
+
         mFlag.reset(cFlag_FrameBufferAllocated);
     }
+
     mColorTexture = nullptr;
     mDepthTexture = nullptr;
 }
@@ -252,6 +257,7 @@ void RenderDisplay::allocFrameBuffer(MultiSampleType multiSample, RenderDisplay*
             mDepthTextureData.initialize_(TextureType::cTextureType_2D, depthFormat, width, height,
                                           1, 1, TextureAttribute(0), MultiSampleType(0), true);
         }
+
         mResolveTextureData.initialize_(TextureType::cTextureType_2D, colorFormat, width, height,
                                         1, s32(multiSample), TextureAttribute(0),
                                         MultiSampleType(0), true);
@@ -269,6 +275,7 @@ void RenderDisplay::allocFrameBuffer(MultiSampleType multiSample, RenderDisplay*
                 utl::DynamicTextureAllocator::AllocateType(0), false, b2);
             mColorTarget.setZCullBufferDirect(addr);
         }
+
         if (depthNum != -1)
         {
             GPUMemVoidAddr addr;
@@ -279,6 +286,7 @@ void RenderDisplay::allocFrameBuffer(MultiSampleType multiSample, RenderDisplay*
                 b2);
             mDepthTarget.setZCullBuffer(addr);
         }
+
         mFlag.set(cFlag_FrameBufferAllocated);
     }
     else
@@ -289,6 +297,7 @@ void RenderDisplay::allocFrameBuffer(MultiSampleType multiSample, RenderDisplay*
             mColorTextureData.setImagePtr(pShare->mColorTexture->getImagePtr(), 0);
             mColorTarget.setZCullBufferDirect(pShare->mColorTarget.getZCullBuffer());
         }
+
         if (pShare->mResolveTexture)
         {
             mResolveTexture = &mResolveTextureData;
@@ -298,12 +307,14 @@ void RenderDisplay::allocFrameBuffer(MultiSampleType multiSample, RenderDisplay*
         {
             mResolveTexture = nullptr;
         }
+
         if (depthNum != -1)
         {
             mDepthTexture = &mDepthTextureData;
             mDepthTextureData.setImagePtr(pShare->mDepthTexture->getImagePtr(), 0);
             mDepthTarget.setZCullBuffer(pShare->mDepthTarget.getZCullBuffer());
         }
+
         mFlag.reset(cFlag_FrameBufferAllocated);
     }
 
@@ -373,9 +384,11 @@ void RenderDisplay::erase(Layer* pLayer)
                     rDL.invalidate();
                 }
             }
+
             mLayer.erase(index);
             return;
         }
+
         index++;
     }
 }
@@ -449,6 +462,7 @@ void RenderDisplay::bindAndClearRenderBuffer(DrawContext* pDrawContext) const
         {
             clearFlag &= ~2u;
         }
+
         mFrameBuffer->bind(pDrawContext);
         mFrameBuffer->fastClear(pDrawContext, 0, clearFlag, mClearColor, mClearDepth,
                                 mClearStencil, mViewportOrigin, true);
@@ -479,6 +493,7 @@ void RenderDisplay::preDrawLayer_(DrawContext* pDrawContext, const Layer* pLayer
     {
         pLayer->getViewport().apply(pDrawContext, *mFrameBuffer);
     }
+
     pLayer->preDrawImpl(info);
     pLayer->clearColor_(info);
 }
@@ -549,6 +564,7 @@ void RenderDisplay::drawRenderStep_(DrawContext* pDrawContext, const Layer* pLay
         {
             continue;
         }
+
         if ((isSkipDependency || isNoDependency) != (isNoDependency && (flag & 4) != 0))
         {
             continue;
@@ -623,6 +639,7 @@ void RenderDisplay::calcLayerDL_(DrawContext* pDrawContext, const Layer* pLayer,
     {
         pushBackDL_(pDrawContext, mDLBuffer->end(pDrawContext, postIndex), pLayer);
     }
+
     if (index != -1)
     {
         pushBackDL_(pDrawContext, mDLBuffer->end(pDrawContext, index), pLayer);
@@ -694,6 +711,7 @@ void RenderDisplay::draw(DrawContext* pDrawContext) const
     {
         drawLayerDirect_(pDrawContext, &rLayer, FrameworkType(0));
     }
+
     endDraw_(pDrawContext);
 
     if (mResolveTexture && mFrameBuffer)
@@ -737,6 +755,7 @@ void RenderDisplay::calcDL(sead::PtrArray<LayerJob>* pJobs)
         it->mJobSubDraw->pushBackTo(this, weight - 1, pJobs);
         minWeight = sead::Mathi::min(weight, minWeight);
     }
+
     mJob(0).pushBackTo(this, 0x7fffffff, pJobs);
     mJob[1].pushBackTo(this, minWeight - 1, pJobs);
 }
@@ -793,6 +812,7 @@ void RenderDisplay::callDisplayList(DrawContext* pDrawContext, bool copyDisplayL
                 driver::GraphicsDriverMgr::instance()->waitDrawDone(pDrawContext);
             }
         }
+
         break;
     case 1:
         for (auto& rDL : mRenderDLSorted)
@@ -804,6 +824,7 @@ void RenderDisplay::callDisplayList(DrawContext* pDrawContext, bool copyDisplayL
                 driver::GraphicsDriverMgr::instance()->waitDrawDone(pDrawContext);
             }
         }
+
         break;
     case 2:
     {
@@ -816,12 +837,14 @@ void RenderDisplay::callDisplayList(DrawContext* pDrawContext, bool copyDisplayL
             {
                 nvnCommandBufferCallCommands(context.getNvnCommandBuffer(), 1, rDL.getHandlePtr());
             }
+
             const_cast<DisplayList&>(rDisplayList).endDisplayList();
             if (rDisplayList.isValid())
             {
                 rDisplayList.callDirect(pDrawContext);
             }
         }
+
         break;
     }
     }
@@ -836,6 +859,7 @@ void RenderDisplay::callDisplayList(DrawContext* pDrawContext, bool copyDisplayL
     {
         mDLTotalSize += rDL.getValidSize();
     }
+
     if (mDLMaxSize < mDLTotalSize)
     {
         mDLMaxSize = mDLTotalSize;
@@ -889,6 +913,7 @@ void RenderDisplay::genMessage(sead::hostio::Context* pContext)
         sead::FormatFixedSafeString<1024> header("GroupHeader = %s screen, Dir = Y",
                                                  sead::SafeString::cEmptyString.getStringTop());
     }
+
     {
         sead::FormatFixedSafeString<1024> info(
             "仮想キャンバス   : (%.1f, %.1f)\nフレームバッファ : (%.1f, %.1f) - ( %.1f, %.1f )",
@@ -897,18 +922,22 @@ void RenderDisplay::genMessage(sead::hostio::Context* pContext)
             pFrameBuffer->getPhysicalArea().getMax().x,
             pFrameBuffer->getPhysicalArea().getMax().y);
     }
+
     {
         sead::FormatFixedSafeString<1024> info("DisplayList x %3d = %12d[byte] Max:%12d[byte]",
                                                mRenderDLPtr.size(), mDLTotalSize, mDLMaxSize);
     }
+
     for (auto it = mRenderDLPtr.begin(), end = mRenderDLPtr.end(); it != end; ++it)
     {
         {
             sead::FormatFixedSafeString<1024> priority("%6d", it->mPriority);
         }
+
         {
             sead::FormatFixedSafeString<1024> core("%2d", it->mCoreId);
         }
+
         {
             sead::FormatFixedSafeString<1024> size("%12d (%12d)", it->getValidSize(),
                                                    it->getControlMemoryUsed());

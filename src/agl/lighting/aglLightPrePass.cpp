@@ -29,6 +29,7 @@ u16 convertF32ToF16(f32 value)
         {
             return sign | 0x7c00;
         }
+
         return mantissa < 0x400000 ? (sign | 0x7dff) : (upper | 0x7fff);
     }
 
@@ -88,6 +89,7 @@ LightPrePass::~LightPrePass()
     {
         rContext.mViewUbo.destroy();
     }
+
     mContext.freeBuffer();
 
     mPointLightMgr->destroy();
@@ -130,6 +132,7 @@ void LightPrePass::initialize(const CreateArg& rArg, sead::Heap* pHeap)
         {
             rContext.mViewUbo.declare(mContext.front().mViewUbo);
         }
+
         rContext.mViewUbo.create(pHeap, 2, 1);
         rContext.mGraphicsContext.setDepthEnable(false, false);
         rContext.mGraphicsContext.setBlendEnable(0, false);
@@ -246,6 +249,7 @@ void LightPrePass::calc()
             pMgr->calc();
         }
     }
+
     if ((mDirtyFlags & 3) == 3)
     {
         mDirtyFlags &= ~3u;
@@ -356,16 +360,19 @@ void LightPrePass::updateViewGPU(s32 view) const
                              rContext.mFarNearDiffInv, rContext.mDepthScale);
         rUbo.setData(3, &param, 0, 1);
     }
+
     {
         sead::Vector4f param(rContext.mProjScale,
                              rContext.mProjSign * rContext.mCulling.mTanHalfFovy,
                              rContext.mScreenScaleX, rContext.mScreenScaleY);
         rUbo.setData(3, &param, 1, 1);
     }
+
     {
         sead::Vector4f param(mFogScale > 0.0f ? 1.0f / mFogScale : 0.0f, 0.0f, 0.0f, 0.0f);
         rUbo.setData(3, &param, 2, 1);
     }
+
     rUbo.flushCurrentBuffer();
 
     mPointLightMgr->updateViewGPU(view, rContext);
@@ -420,12 +427,14 @@ TextureData* LightPrePass::createLightBuffer_(DrawContext* pDrawContext, s32 vie
         rContext.mRenderBuffer.setRenderTargetColor(&rContext.mColorTarget[0], 0);
         rContext.mRenderBuffer.setRenderTargetColor(&rContext.mColorTarget[1], 1);
     }
+
     setDirty_();
 
     if (clear)
     {
         clearLightBuffer(pDrawContext, view);
     }
+
     return rContext.mpLightBufferTexture;
 }
 
@@ -453,6 +462,7 @@ void LightPrePass::clearLightBuffer(DrawContext* pDrawContext, s32 view) const
         rContext.mRenderBuffer.clear(static_cast<sead::DrawContext*>(pDrawContext), 1,
                                      sead::Color4f(0.0f, 0.0f, 0.0f, 0.0f), 1.0f, 0);
     }
+
     setDirty_();
 }
 
@@ -527,10 +537,12 @@ void LightPrePass::draw(DrawContext* pDrawContext, s32 view, const TextureData& 
     {
         applyGraphicsContext(pDrawContext, arg, true, true);
     }
+
     if (mPreDrawCallback)
     {
         mPreDrawCallback->invoke(arg);
     }
+
     if (!mFlags.isOn(1 << 20))
     {
         applyGraphicsContext(pDrawContext, arg, true, true);
@@ -540,14 +552,17 @@ void LightPrePass::draw(DrawContext* pDrawContext, s32 view, const TextureData& 
     {
         mPointLightMgr->draw(pDrawContext, view, rContext, arg);
     }
+
     if (isLightTypeEnabled_(mSpotLightMgr->getLightType()))
     {
         mSpotLightMgr->draw(pDrawContext, view, rContext, arg);
     }
+
     if (isLightTypeEnabled_(mProjLightMgr->getLightType()))
     {
         mProjLightMgr->draw(pDrawContext, view, rContext, arg);
     }
+
     for (const LightMgrBase* pMgr : mUserLightMgr)
     {
         if (pMgr)
@@ -647,14 +662,17 @@ void LightPrePass::drawDebug(DrawContext* pDrawContext, s32 view) const
         {
             mPointLightMgr->drawDebug(pDrawContext, view, rContext);
         }
+
         if (isLightTypeEnabled_(mSpotLightMgr->getLightType()))
         {
             mSpotLightMgr->drawDebug(pDrawContext, view, rContext);
         }
+
         if (isLightTypeEnabled_(mProjLightMgr->getLightType()))
         {
             mProjLightMgr->drawDebug(pDrawContext, view, rContext);
         }
+
         for (const LightMgrBase* pMgr : mUserLightMgr)
         {
             if (pMgr)
@@ -670,14 +688,17 @@ void LightPrePass::drawDebug(DrawContext* pDrawContext, s32 view) const
         {
             mPointLightMgr->drawDebugTest(pDrawContext, view, rContext);
         }
+
         if (isLightTypeEnabled_(mSpotLightMgr->getLightType()))
         {
             mSpotLightMgr->drawDebugTest(pDrawContext, view, rContext);
         }
+
         if (isLightTypeEnabled_(mProjLightMgr->getLightType()))
         {
             mProjLightMgr->drawDebugTest(pDrawContext, view, rContext);
         }
+
         for (const LightMgrBase* pMgr : mUserLightMgr)
         {
             if (pMgr)
@@ -801,6 +822,7 @@ void LightPrePass::setSpotLight(s32 index, const sead::Vector3f& rPos, const sea
     {
         rView.mShadowMap = nullptr;
     }
+
     rLight.mDir.normalize();
 }
 
@@ -917,6 +939,7 @@ void LightPrePass::setProjLight(s32 index, const sead::Vector3f& rPos, const sea
     {
         rLight.mHasTexture = false;
     }
+
     rLight.setNormVec();
     rLight.mShadowType = cShadowType_Normal;
     rLight.mShadowParam = 0.5f;
@@ -924,6 +947,7 @@ void LightPrePass::setProjLight(s32 index, const sead::Vector3f& rPos, const sea
     {
         rView.mShadowMap = nullptr;
     }
+
     pMgr->updateParameters_(rLight);
 }
 
@@ -995,6 +1019,7 @@ void LightPrePass::setProjLight_Ortho(s32 index, const sead::Vector3f& rPos,
     {
         rLight.mHasTexture = false;
     }
+
     rLight.setNormVec();
     rLight.mShadowType = cShadowType_Normal;
     rLight.mShadowParam = 0.5f;
@@ -1002,6 +1027,7 @@ void LightPrePass::setProjLight_Ortho(s32 index, const sead::Vector3f& rPos,
     {
         rView.mShadowMap = nullptr;
     }
+
     pMgr->updateParameters_(rLight);
 }
 
@@ -1135,10 +1161,12 @@ void LightPrePass::listenPropertyEvent(const sead::hostio::PropertyEvent* pEvent
     {
         changeTextureFilter_();
     }
+
     if (reinterpret_cast<uintptr_t>(pEvent->getId()) == 10001)
     {
         mDirtyFlags |= 1;
     }
+
     mPointLightMgr->listenPropertyEvent(pEvent);
     mSpotLightMgr->listenPropertyEvent(pEvent);
     mProjLightMgr->listenPropertyEvent(pEvent);

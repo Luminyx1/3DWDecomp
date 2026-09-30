@@ -48,6 +48,7 @@ SyntaxLeash* ExpressionEvaluator::findSyntaxLeash(sead::ObjArray<SyntaxLeash>* p
             return &leash;
         }
     }
+
     return nullptr;
 }
 
@@ -170,6 +171,7 @@ void ExpressionEvaluator::resolveOperatorTokenConnect(sead::ObjArray<SyntaxLeash
             }
         }
     }
+
     resolveOperatorUnary(pLeashes, pBegin, pEnd);
 }
 
@@ -207,6 +209,7 @@ void ExpressionEvaluator::resolveOperatorUnary(sead::ObjArray<SyntaxLeash>* pLea
         c->erase();
         c = value;
     }
+
     resolveOperatorMathHigh(pLeashes, pBegin, pEnd);
 }
 
@@ -223,6 +226,7 @@ void ExpressionEvaluator::resolveOperatorMathHigh(sead::ObjArray<SyntaxLeash>* p
             c = createBinaryOperatorSyntaxTree(pLeashes, c);
         }
     }
+
     resolveOperatorMathLow(pLeashes, pBegin, pEnd);
 }
 
@@ -233,6 +237,7 @@ void ExpressionEvaluator::resolveOperatorMathLow(sead::ObjArray<SyntaxLeash>* pL
             c = createBinaryOperatorSyntaxTree(pLeashes, c);
         }
     }
+
     resolveOperatorShift(pLeashes, pBegin, pEnd);
 }
 
@@ -243,6 +248,7 @@ void ExpressionEvaluator::resolveOperatorShift(sead::ObjArray<SyntaxLeash>* pLea
             c = createBinaryOperatorSyntaxTree(pLeashes, c);
         }
     }
+
     resolveOperatorCompareHigh(pLeashes, pBegin, pEnd);
 }
 
@@ -260,6 +266,7 @@ void ExpressionEvaluator::resolveOperatorCompareHigh(sead::ObjArray<SyntaxLeash>
             c = createBinaryOperatorSyntaxTree(pLeashes, c);
         }
     }
+
     resolveOperatorCompareLow(pLeashes, pBegin, pEnd);
 }
 
@@ -270,6 +277,7 @@ void ExpressionEvaluator::resolveOperatorCompareLow(sead::ObjArray<SyntaxLeash>*
             c = createBinaryOperatorSyntaxTree(pLeashes, c);
         }
     }
+
     resolveOperatorBitOpAnd(pLeashes, pBegin, pEnd);
 }
 
@@ -280,6 +288,7 @@ void ExpressionEvaluator::resolveOperatorBitOpAnd(sead::ObjArray<SyntaxLeash>* p
             c = createBinaryOperatorSyntaxTree(pLeashes, c);
         }
     }
+
     resolveOperatorBitOpXor(pLeashes, pBegin, pEnd);
 }
 
@@ -296,6 +305,7 @@ void ExpressionEvaluator::resolveOperatorBitOpXor(sead::ObjArray<SyntaxLeash>* p
             c = createBinaryOperatorSyntaxTree(pLeashes, c);
         }
     }
+
     resolveOperatorBitOpOr(pLeashes, pBegin, pEnd);
 }
 
@@ -306,6 +316,7 @@ void ExpressionEvaluator::resolveOperatorBitOpOr(sead::ObjArray<SyntaxLeash>* pL
             c = createBinaryOperatorSyntaxTree(pLeashes, c);
         }
     }
+
     resolveOperatorLogicalAnd(pLeashes, pBegin, pEnd);
 }
 
@@ -316,6 +327,7 @@ void ExpressionEvaluator::resolveOperatorLogicalAnd(sead::ObjArray<SyntaxLeash>*
             c = createBinaryOperatorSyntaxTree(pLeashes, c);
         }
     }
+
     resolveOperatorLogicalOr(pLeashes, pBegin, pEnd);
 }
 
@@ -326,6 +338,7 @@ void ExpressionEvaluator::resolveOperatorLogicalOr(sead::ObjArray<SyntaxLeash>* 
             c = createBinaryOperatorSyntaxTree(pLeashes, c);
         }
     }
+
     resolveOperatorTernary(pLeashes, pBegin, pEnd);
 }
 
@@ -342,6 +355,7 @@ void ExpressionEvaluator::resolveOperatorTernary(sead::ObjArray<SyntaxLeash>* pL
             c = createTernaryOperatorSyntaxTree(pLeashes, c);
         }
     }
+
     resolveOperatorAssignment(pLeashes, pBegin, pEnd);
 }
 
@@ -371,6 +385,7 @@ Clause* ExpressionEvaluator::resolveParenthesis(sead::ObjArray<SyntaxLeash>* pLe
     while (open->mType != Clause::cType_LParen) {
         open = open->mPrev;
     }
+
     Clause* prev = open->mPrev;
     resolveOperator(pLeashes, prev, pClose);
     (*mRemoveDelegate)(open);
@@ -398,6 +413,7 @@ SyntaxTree* ExpressionEvaluator::resolve(Clause* pBegin, Clause* pEnd, bool) {
                               (c->isSeparator() && !(c->isCloseBracket() || c->isOpenBracket()));
             valueNum += !isNotValue;
         }
+
         c = next;
     }
 
@@ -411,11 +427,13 @@ SyntaxTree* ExpressionEvaluator::resolve(Clause* pBegin, Clause* pEnd, bool) {
         if (c->mType == Clause::cType_LParen || c->mType == Clause::cType_RParen) {
             continue;
         }
+
         const Clause::CharacterInfo& info = c->getInfo();
         if (info.mIsOperator ||
             (info.mIsSeparator && !(info.mIsCloseBracket || info.mIsOpenBracket))) {
             continue;
         }
+
         SyntaxLeash* leash = leashes.emplaceBack();
         leash->mTree = new (mHeap) SyntaxTree(c);
         leash->mClause = c;
@@ -441,6 +459,7 @@ SyntaxTree* ExpressionEvaluator::resolve(Clause* pBegin, Clause* pEnd, bool) {
         leashes(i)->mTree->removeClauseRecursive(mRemoveDelegate);
         delete leashes(i)->mTree;
     }
+
     leashes.freeBuffer();
     return nullptr;
 }

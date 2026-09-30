@@ -113,6 +113,7 @@ void ShadowFrustum::clipByBoundBox(const sead::BoundBox3f& rBox, const sead::Mat
     {
         transformProj(&points[i], rMtx);
     }
+
     clipByBoundBox_(points, planeMask);
 }
 
@@ -131,6 +132,7 @@ void ShadowFrustum::clipByBoundBox(const sead::BoundBox3f& rBox, const sead::Mat
     {
         transform(&points[i], rMtx);
     }
+
     clipByBoundBox_(points, planeMask);
 }
 
@@ -166,6 +168,7 @@ void ShadowFrustum::clipByBoundBox_(const sead::Vector3f* pPoints, sead::BitFlag
         {
             continue;
         }
+
         const f32 diff = sqLen - 1.0f;
         if (diff < -1.1920929e-06f || diff > 1.1920929e-06f)
         {
@@ -178,6 +181,7 @@ void ShadowFrustum::clipByBoundBox_(const sead::Vector3f* pPoints, sead::BitFlag
         {
             plane = sead::Plane3<f32>(-n, -d);
         }
+
         clipByPlane(plane);
     }
 }
@@ -197,6 +201,7 @@ void ShadowFrustum::clipByPlane(const sead::Plane3<f32>& rPlane)
         {
             break;
         }
+
         clipPointByPlane_(pDst, pInter, *getCurrentPolytope().mPolygons[i], rPlane);
         if (pDst->mNum == 0)
         {
@@ -209,6 +214,7 @@ void ShadowFrustum::clipByPlane(const sead::Plane3<f32>& rPlane)
     {
         swapPolytope();
     }
+
     getNextPolytope().mNum = 0;
 }
 
@@ -245,6 +251,7 @@ sead::Vector3f ShadowFrustum::findCameraNearPoint(sead::Matrix34f viewMtx)
             }
         }
     }
+
     return result;
 }
 
@@ -258,6 +265,7 @@ ShadowFrustum::Polygon* ShadowFrustum::Polytope::birthBack()
     {
         return nullptr;
     }
+
     Polygon* pPolygon = mPolygons[mNum];
     pPolygon->clear();
     mNum++;
@@ -304,6 +312,7 @@ void ShadowFrustum::clipPointByPlane_(Polygon* pDst, Polygon* pInter, const Poly
                 pDst->pushBack(p);
                 pInter->pushBack(p);
             }
+
             pDst->pushBack(p1);
         }
         else if (d0 <= 0.0f && d1 > 0.0f)
@@ -317,6 +326,7 @@ void ShadowFrustum::clipPointByPlane_(Polygon* pDst, Polygon* pInter, const Poly
                 pInter->pushBack(p);
             }
         }
+
         d0 = d1;
     }
 }
@@ -341,6 +351,7 @@ bool ShadowFrustum::appendIntersectionPoint(Polytope* pDst)
             break;
         }
     }
+
     mInter.mNum = i + 1;
 
     if (mInter.mNum < 3)
@@ -366,8 +377,10 @@ bool ShadowFrustum::appendIntersectionPoint(Polytope* pDst)
         {
             pPolygon->pushBack(mInter.mPolygons[mInter.mNum - 1]->mPoints[(index + 1) % 2]);
         }
+
         mInter.mNum--;
     }
+
     pPolygon->mNum--;
     return true;
 }
@@ -394,6 +407,7 @@ s32 ShadowFrustum::findSamePointAndSwapFromInter(const sead::Vector3f& rPoint)
             return found;
         }
     }
+
     return -1;
 }
 
@@ -412,6 +426,7 @@ s32 ShadowFrustum::findSamePointFromPolygon(const Polygon& rPolygon, const sead:
             return i;
         }
     }
+
     return -1;
 }
 
@@ -514,6 +529,7 @@ void ShadowFrustum::updateByViewFrustum(const sead::Matrix34f& rViewMtx,
             }
         }
     }
+
     if (mRadius > 0.0f)
     {
         mRadius = sead::Mathf::sqrt(mRadius);
@@ -647,6 +663,7 @@ void ShadowFrustum::drawFrustum(DrawContext* pDrawContext, const sead::Matrix34f
     {
         utl::DevTools::drawLineImm(pDrawContext, mPoints[i], mPoints[(i + 1) % 4], rColor, 1.0f);
     }
+
     for (s32 i = 0; i < 4; i++)
     {
         utl::DevTools::drawLineImm(pDrawContext, mPoints[i + 4], mPoints[(i + 1) % 4 + 4], rColor,
@@ -661,6 +678,7 @@ void ShadowFrustum::drawFrustum(DrawContext* pDrawContext, const sead::Matrix34f
         {
             continue;
         }
+
         sead::Vector3f prev = polygon.mPoints[num - 1];
         for (s32 j = 0; j < num; j++)
         {
@@ -688,6 +706,7 @@ ShadowFrustum::Polytope::~Polytope()
             delete mPolygons[i];
         }
     }
+
     mPolygons.freeBuffer();
 }
 

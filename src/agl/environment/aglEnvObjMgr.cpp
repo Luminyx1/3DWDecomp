@@ -32,6 +32,7 @@ EnvObjMgr::~EnvObjMgr()
             delete pObj;
         }
     }
+
     mUpdateObj.freeBuffer();
     mTypeNode.freeBuffer();
     mView.freeBuffer();
@@ -92,6 +93,7 @@ void EnvObjMgr::initialize(const InitArg& rArg, sead::Heap* pHeap)
     {
         pushBackNamedObj(pObj);
     }
+
     detail::RootNode::setNodeMeta(static_cast<INamedObjMgr*>(this), "Icon = LIGHT");
     reconstruct();
 }
@@ -131,6 +133,7 @@ void EnvObjMgr::clear(s32 group)
             rpObj->clear_();
         }
     }
+
     reconstruct();
 }
 
@@ -159,6 +162,7 @@ void EnvObjMgr::update()
                 mUpdateObj.pushBack(rpObj);
             }
         }
+
         mFlag.reset(1);
     }
     else
@@ -168,6 +172,7 @@ void EnvObjMgr::update()
             rObj.update_();
         }
     }
+
     updateList();
 }
 
@@ -190,6 +195,7 @@ void EnvObjMgr::constructList()
             {
                 continue;
             }
+
             mEnvObjSet.sort(type);
             for (auto it = mEnvObjSet.begin(type), itEnd = mEnvObjSet.end(type); it != itEnd;
                  ++it)
@@ -203,6 +209,7 @@ void EnvObjMgr::constructList()
                 }
             }
         }
+
         break;
     }
     default:
@@ -399,14 +406,17 @@ bool EnvObjMgr::saveImpl_(const sead::SafeString& rPath, u32 flag, s32 group) co
             {
                 continue;
             }
+
             if ((flag & 1) && !pObj->mFlag.isOn(1))
             {
                 continue;
             }
+
             if ((flag & 2) && !pObj->isEnable())
             {
                 continue;
             }
+
             pObj->writeToXML(pTypeElement, pHeap);
         }
     }
@@ -447,6 +457,7 @@ void EnvObjMgr::applyResource_(utl::ResParameterArchive arc0, utl::ResParameterA
                 break;
             }
         }
+
         if (!pChild)
         {
             continue;
@@ -464,6 +475,7 @@ void EnvObjMgr::applyResource_(utl::ResParameterArchive arc0, utl::ResParameterA
             {
                 continue;
             }
+
             utl::ResParameter nameParam = obj.getResParameter(nameIndex);
             if (!nameParam.ptr())
             {
@@ -485,18 +497,21 @@ void EnvObjMgr::applyResource_(utl::ResParameterArchive arc0, utl::ResParameterA
                 {
                     continue;
                 }
+
                 if (!pFound && it.getIndex() > lastIndex &&
                     pObj->getGroupName() == utl::INamedObj::getDefaultGroupName())
                 {
                     pFound = pObj;
                     lastIndex = it.getIndex();
                 }
+
                 if (pObj->getEnvObjName() == name)
                 {
                     pFound = pObj;
                     break;
                 }
             }
+
             if (!pFound)
             {
                 continue;
@@ -523,12 +538,14 @@ void EnvObjMgr::applyResource_(utl::ResParameterArchive arc0, utl::ResParameterA
                             break;
                         }
                     }
+
                     if (applied)
                     {
                         continue;
                     }
                 }
             }
+
             pFound->applyResParameterObj(obj);
         }
     }
@@ -547,6 +564,7 @@ bool EnvObjMgr::saveToGroupFilePath(const sead::SafeString& rPath) const
             saveImpl_(rPath, 1, i);
         }
     }
+
     return true;
 }
 
@@ -577,9 +595,11 @@ void EnvObjMgr::genMessage(sead::hostio::Context* pContext)
                                               rData.mLabel, size, num, size * num);
         total += size * num;
     }
+
     {
         sead::FormatFixedSafeString<1024> str("Total:%8d[byte]", total);
     }
+
     INamedObjMgr::genMessage(pContext);
 }
 
@@ -610,24 +630,28 @@ void EnvObjMgr::listenPropertyEvent(const sead::hostio::PropertyEvent* pEvent)
         {
             pObj->mFlag.set(8);
         }
+
         break;
     case 101005:
         for (auto* pObj : mObj)
         {
             pObj->mFlag.reset(8);
         }
+
         break;
     case 101006:
         for (auto it = begin(mSelectedType), itEnd = end(mSelectedType); it != itEnd; ++it)
         {
             (*it)->mFlag.set(8);
         }
+
         break;
     case 101007:
         for (auto it = begin(mSelectedType), itEnd = end(mSelectedType); it != itEnd; ++it)
         {
             (*it)->mFlag.reset(8);
         }
+
         break;
     case 101008:
         mFlag.toggle(0x100);
@@ -638,6 +662,7 @@ void EnvObjMgr::listenPropertyEvent(const sead::hostio::PropertyEvent* pEvent)
     default:
         return;
     }
+
     setListDirty();
 }
 

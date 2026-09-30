@@ -61,6 +61,7 @@ inline f32 calcMipWidthSum(const TextureData& rTexture, u32 startMip, u32 endMip
     {
         width += getMipWidth(rTexture, i) * faceNum;
     }
+
     return width;
 }
 
@@ -71,6 +72,7 @@ inline f32 calcMipHeightSum(const TextureData& rTexture, u32 startMip, u32 endMi
     {
         height += getMipHeight(rTexture, i);
     }
+
     return height;
 }
 
@@ -178,6 +180,7 @@ bool DebugTexturePage::entryTexture_(DrawContext* pDrawContext, s32 index,
     {
         return false;
     }
+
     s32 contextIndex = mCurrentContext;
     if (index != -1 && contextIndex != index)
     {
@@ -189,6 +192,7 @@ bool DebugTexturePage::entryTexture_(DrawContext* pDrawContext, s32 index,
     {
         return false;
     }
+
     DebugTexture* pTexture = pDrawer->popBack_();
     if (!pTexture)
     {
@@ -207,6 +211,7 @@ bool DebugTexturePage::entryTexture_(DrawContext* pDrawContext, s32 index,
         pTexture->setReference(rTexture, type, min, max, isLineBreakBefore, isLineBreakAfter,
                                isSpecial);
     }
+
     return true;
 }
 
@@ -307,6 +312,7 @@ bool DebugTexturePage::entryRenderTargetDepth_(DrawContext* pDrawContext, s32 in
     {
         return false;
     }
+
     s32 contextIndex = mCurrentContext;
     if (index != -1 && contextIndex != index)
     {
@@ -318,6 +324,7 @@ bool DebugTexturePage::entryRenderTargetDepth_(DrawContext* pDrawContext, s32 in
     {
         return false;
     }
+
     DebugTexture* pTexture = pDrawer->popBack_();
     if (!pTexture)
     {
@@ -368,6 +375,7 @@ bool DebugTexture::expand(DrawContext* pDrawContext, const RenderTargetDepth& rD
     default:
         break;
     }
+
     mIsLineBreakBefore = isLineBreakBefore;
     mIsLineBreakAfter = isLineBreakAfter;
     mIsSpecial = isSpecial;
@@ -404,6 +412,7 @@ bool DebugTexture::copyCurrentRenderTargetColor(DrawContext* pDrawContext, s32 i
     {
         return false;
     }
+
     allocTexture(pDrawContext, texture, cType_Color, 0.0f, 0.0f, true, true, true);
     RenderBuffer::copyTextureDataFromBoundColor(pDrawContext, mTexture, index);
     return true;
@@ -421,6 +430,7 @@ bool DebugTexture::copyCurrentRenderTargetDepth(DrawContext* pDrawContext)
     {
         return false;
     }
+
     allocTexture(pDrawContext, texture, cType_Color, 0.0f, 0.0f, true, true, true);
     RenderBuffer::copyTextureDataFromBoundDepth(pDrawContext, mTexture);
     return true;
@@ -449,6 +459,7 @@ void DebugTexturePage::setActive(bool active)
         {
             pDrawer->mActivePages.popFront();
         }
+
         pDrawer->mActivePages.pushBack(this);
     }
     else
@@ -456,6 +467,7 @@ void DebugTexturePage::setActive(bool active)
         pDrawer->eraseActivePage_(this);
         clearEntryTextures_();
     }
+
     mIsActive = active;
 }
 
@@ -548,8 +560,10 @@ void DebugTexturePage::genMessagePage_(sead::hostio::Context* pContext,
         {
             sead::FormatFixedSafeString<32> name("Context_%d", i);
         }
+
         getCurrentContext_().genMessageContextComboBox(pContext, true, pListener);
     }
+
     if (mIsActive)
     {
         getCurrentContext_().genMessageContextParameter(pContext, true, pListener);
@@ -584,6 +598,7 @@ bool DebugTexturePage::updateNodeMeta_()
         mNodeMeta.copy(sead::SafeString(sead::SafeString::cEmptyString));
         return true;
     }
+
     return false;
 }
 
@@ -676,6 +691,7 @@ const DebugTexture* DebugTexturePage::Context::searchFullScreenTexture() const
         {
             return nullptr;
         }
+
         const sead::SafeString& rLabel = pDrawer->mTextureLabels[mSelectIndex];
         for (auto it = mTextures.begin(); it != mTextures.end(); ++it)
         {
@@ -685,6 +701,7 @@ const DebugTexture* DebugTexturePage::Context::searchFullScreenTexture() const
             }
         }
     }
+
     mSelectIndex = -1;
     return nullptr;
 }
@@ -700,6 +717,7 @@ void DebugTexture::freeTexture()
         {
             DynamicTextureAllocator::instance()->free(mTexture);
         }
+
         mIsAllocated = false;
         mTexture = nullptr;
     }
@@ -715,6 +733,7 @@ void DebugTexturePage::Context::copyTextureLabel() const
     {
         return;
     }
+
     s32 num = 0;
     for (auto it = mTextures.begin(); it != mTextures.end(); ++it)
     {
@@ -722,8 +741,10 @@ void DebugTexturePage::Context::copyTextureLabel() const
         {
             break;
         }
+
         num++;
     }
+
     mLabelNum = num;
 }
 
@@ -802,11 +823,13 @@ void DebugTexture::allocTexture(DrawContext* pDrawContext, const TextureData& rT
                 rTexture.getWidth(0), rTexture.getMipSlice(0) / 6, rTexture.getMipLevelNum(),
                 nullptr, DynamicTextureAllocator::cAllocateType_2, true, false);
         }
+
         break;
     }
     default:
         break;
     }
+
     mIsLineBreakBefore = isLineBreakBefore;
     mIsLineBreakAfter = isLineBreakAfter;
     mIsSpecial = isSpecial;
@@ -855,6 +878,7 @@ sead::Vector2f DebugTexturePage::Context::calcTextureDrawSize_(const TextureData
         size = sead::Vector2f::zero;
         break;
     }
+
     return size;
 }
 
@@ -899,6 +923,7 @@ void DebugTexturePage::Context::drawTexture_(DrawContext* pDrawContext,
         graphicsContext.setBlendEnable(false);
         break;
     }
+
     graphicsContext.apply(pDrawContext);
 
     const TextureData& rTex = *rTexture.getTexture();
@@ -939,8 +964,10 @@ void DebugTexturePage::Context::drawTexture_(DrawContext* pDrawContext,
                                                    pos);
                 pos.y += f32(getMipHeight(rTex, mip)) * rScale.y;
             }
+
             break;
         }
+
         break;
     }
     case NVN_TEXTURE_TARGET_3D:
@@ -957,6 +984,7 @@ void DebugTexturePage::Context::drawTexture_(DrawContext* pDrawContext,
             {
                 slice = mSliceIndex;
             }
+
             for (u32 mip = startMip; mip < endMip; mip++)
             {
                 sead::Vector2f scale = rScale;
@@ -982,10 +1010,12 @@ void DebugTexturePage::Context::drawTexture_(DrawContext* pDrawContext,
                                                  pos, mip);
                     pos.y += f32(getMipHeight(rTex, mip)) * rScale.y;
                 }
+
                 pos.y = rPos.y;
                 pos.x += f32(getMipWidth(rTex, mip)) * rScale.x;
             }
         }
+
         break;
     }
     case NVN_TEXTURE_TARGET_2D_ARRAY:
@@ -1002,6 +1032,7 @@ void DebugTexturePage::Context::drawTexture_(DrawContext* pDrawContext,
             {
                 slice = mSliceIndex;
             }
+
             if (rTexture.getType() == DebugTexture::cType_2)
             {
                 ImageFilter2D::drawUintArray(pDrawContext, sampler, rViewport, slice,
@@ -1058,11 +1089,14 @@ void DebugTexturePage::Context::drawTexture_(DrawContext* pDrawContext,
                                                           scale, pos, mip);
                         pos.x += f32(getMipWidth(rTex, mip)) * rScale.x;
                     }
+
                     break;
                 }
+
                 pos.y += f32(getMipHeight(rTex, startMip)) * rScale.y;
             }
         }
+
         break;
     }
     case NVN_TEXTURE_TARGET_CUBEMAP:
@@ -1079,6 +1113,7 @@ void DebugTexturePage::Context::drawTexture_(DrawContext* pDrawContext,
             {
                 cube = mSliceIndex;
             }
+
             for (u32 mip = startMip; mip < endMip; mip++)
             {
                 sead::Vector2f scale = rScale;
@@ -1155,9 +1190,11 @@ void DebugTexturePage::Context::drawTexture_(DrawContext* pDrawContext,
                         mip);
                     pos.x += f32(getMipWidth(rTex, mip)) * rScale.x * 4.0f;
                 }
+
                 pos.y += f32(getMipHeight(rTex, startMip) * 3) * rScale.y;
             }
         }
+
         break;
     }
     default:
@@ -1203,6 +1240,7 @@ void DebugTexturePage::Context::drawLabel_(DrawContext* pDrawContext,
     {
         writer.printf("%s ", rLabel.cstr());
     }
+
     if (isDrawInfo)
     {
         writer.printf("%s (%d %d %d) <%d byte>", rTexture.getTextureFormatName().cstr(),
@@ -1216,6 +1254,7 @@ void DebugTexturePage::Context::drawLabel_(DrawContext* pDrawContext,
     {
         writer.printf("%s ", rLabel.cstr());
     }
+
     if (isDrawInfo)
     {
         writer.printf("%s (%d %d %d) <%d byte>", rTexture.getTextureFormatName().cstr(),

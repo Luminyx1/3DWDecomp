@@ -36,6 +36,7 @@ FilterAA::~FilterAA()
             buffer.freeBuffer();
         }
     }
+
     mContexts.freeBuffer();
     mDebugTexturePage.cleanUp();
 }
@@ -53,6 +54,7 @@ void FilterAA::initialize(const InitializeArg& rArg, sead::Heap* pHeap)
                                 MemoryAttribute::Default);
             GPUMemAddr<u8> addr(buffer, 0);
         }
+
         mContexts[i].mProjMtx = sead::Matrix44f(1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
                                                 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f);
         mContexts[i].mViewMtx = sead::Matrix34f(1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
@@ -200,6 +202,7 @@ void FilterAA::draw(DrawContext* pDrawContext, u32 context, const RenderBuffer& 
             return;
         }
     }
+
     utl::ImageFilter2D::drawTexture(pDrawContext, *pSource, rViewport, sead::Vector2f::ones,
                                     sead::Vector2f::zero);
 }
@@ -254,11 +257,13 @@ void FilterAA::FXAA(DrawContext* pDrawContext, u32 context, const RenderBuffer& 
             edgeThresholdMin = 0.1f;
             break;
         }
+
         if (*mFetchQuality > 4)
         {
             edgeThreshold *= 1.5f;
             edgeThresholdMin *= 1.5f;
         }
+
         f32 scale = *mEdgeThresholdScale;
         threshold.x = edgeThreshold / scale;
         threshold.y = edgeThresholdMin / scale;
@@ -273,6 +278,7 @@ void FilterAA::FXAA(DrawContext* pDrawContext, u32 context, const RenderBuffer& 
         {
             lumaSum = 1.0f;
         }
+
         lumaCoeff.x = mLumaCoeff->r / lumaSum;
         lumaCoeff.y = mLumaCoeff->g / lumaSum;
         lumaCoeff.z = mLumaCoeff->b / lumaSum;
@@ -316,6 +322,7 @@ void FilterAA::FXAA(DrawContext* pDrawContext, u32 context, const RenderBuffer& 
         {
             rRenderBuffer.bind(pDrawContext);
         }
+
         rViewport.apply(pDrawContext, rRenderBuffer);
 
         if (useReprojection)
@@ -379,6 +386,7 @@ void FilterAA::FXAA(DrawContext* pDrawContext, u32 context, const RenderBuffer& 
             ctx.mSourceSampler.activate(pDrawContext, program->getSamplerLocation(0), -1, false);
             ctx.mLumaSampler.activate(pDrawContext, program->getSamplerLocation(1), -1, false);
         }
+
         detail::drawQuadTriangle(pDrawContext);
         ctx.mRenderTarget.invalidateGPUCache(pDrawContext);
         utl::DynamicTextureAllocator::instance()->free(pLuma);
@@ -424,10 +432,12 @@ void FilterAA::ReduceAA(DrawContext* pDrawContext, u32 context, const RenderBuff
     {
         rRenderBuffer.bind(pDrawContext);
     }
+
     {
         sead::Viewport viewport(ctx.mRenderBuffer);
         viewport.applyViewport(pDrawContext, rRenderBuffer);
     }
+
     rViewport.applyScissor(pDrawContext, rRenderBuffer);
 
     sead::Vector2f texel(1.0f / pSource->getTextureData().getWidth(0),
@@ -481,6 +491,7 @@ void FilterAA::reprojection(DrawContext* pDrawContext, u32 context,
     {
         rRenderBuffer.bind(pDrawContext);
     }
+
     rViewport.apply(pDrawContext, ctx.mRenderBuffer);
 
     const ShaderProgram* program =

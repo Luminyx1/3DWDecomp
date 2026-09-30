@@ -259,6 +259,7 @@ void ShadowMap::beginDepthBuffer(DrawContext* pDrawContext, s32 index,
         sead::Viewport viewport(mRenderBuffer);
         viewport.apply(pDrawContext, mRenderBuffer);
     }
+
     {
         sead::Viewport viewport(mRenderBuffer);
         mRenderBuffer.fastClear(pDrawContext, 0, 2, sead::Color4f::cWhite, 1.0f, 0, viewport, true);
@@ -381,6 +382,7 @@ void ShadowMap::drawReduce(DrawContext* pDrawContext) const
         mRenderBuffer.setRenderTargetColor(&mRenderTargetColor);
         pDepthTarget = nullptr;
     }
+
     mRenderBuffer.setRenderTargetDepth(pDepthTarget);
 
     mReduceSampler.applyTextureData(depthTexture);
@@ -437,6 +439,7 @@ void ShadowMap::drawReduce(DrawContext* pDrawContext) const
                 {
                     mRenderTargetColor.applyTextureData(*pTexture, 0, slice);
                 }
+
                 mRenderBuffer.bind(pDrawContext);
 
                 switch (*mReduceType)
@@ -461,6 +464,7 @@ void ShadowMap::drawReduce(DrawContext* pDrawContext) const
                         utl::ImageFilter2D::draw2DArrayColorQuadTriangle(pDrawContext,
                                                                          mReduceSampler, slice);
                     }
+
                     break;
                 default:
                     break;
@@ -489,6 +493,7 @@ void ShadowMap::drawReduce(DrawContext* pDrawContext) const
             {
                 mRenderTargetColor.applyTextureData(*pTexture, 0, 0);
             }
+
             mRenderBuffer.bind(pDrawContext);
 
             switch (*mReduceType)
@@ -511,6 +516,7 @@ void ShadowMap::drawReduce(DrawContext* pDrawContext) const
                 {
                     utl::ImageFilter2D::drawTextureQuadTriangle(pDrawContext, mReduceSampler);
                 }
+
                 break;
             default:
                 break;
@@ -527,6 +533,7 @@ void ShadowMap::drawReduce(DrawContext* pDrawContext) const
             mHalfTexture = pTexture;
             mHalfSampler.applyTextureData(*pTexture);
         }
+
         mReduceSampler.applyTextureData(*pTexture);
 
         if (!*mCreateQuarter)
@@ -622,6 +629,7 @@ void ShadowMap::listenPropertyEvent(const sead::hostio::PropertyEvent* pEvent)
     {
         mIsDirty = true;
     }
+
     listenPropertyEventDebugParameter(pEvent);
 }
 
@@ -641,6 +649,7 @@ void ShadowMap::listenPropertyEventDebugParameter(const sead::hostio::PropertyEv
     {
         return;
     }
+
     const void* id = pEvent->getId();
     if ((id < &*mSizeW + 1 && id >= &*mSizeW) || (id < &*mSizeH + 1 && id >= &*mSizeH))
     {

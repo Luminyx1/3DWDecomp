@@ -185,6 +185,7 @@ void IParameterIO::genMessageIO(sead::hostio::Context* pContext, u32 flags)
     {
         sead::FormatFixedSafeString<1024> meta("Mode = Small, IsEnable=%s", is_enable);
     }
+
     {
         sead::FormatFixedSafeString<1024> meta("Size of last binary loaded:%d[byte]", mResFileSize);
     }
@@ -219,6 +220,7 @@ s32 IParameterIO::listenPropertyEventIO(sead::hostio::Reflexible* pReflexible,
             return 1;
         }
     }
+
     if (id == self + 1)
     {
         if (save(mPath, 0x2000000))
@@ -226,11 +228,13 @@ s32 IParameterIO::listenPropertyEventIO(sead::hostio::Reflexible* pReflexible,
             return 1;
         }
     }
+
     if (id == self + 2)
     {
         load(sead::SafeString::cEmptyString, (_21c >> 1) & 1);
         return 2;
     }
+
     return 0;
 }
 

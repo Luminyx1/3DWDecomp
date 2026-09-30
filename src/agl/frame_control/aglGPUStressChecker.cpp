@@ -71,6 +71,7 @@ void GPUStressChecker::calc()
             mInfo[i].mTime = 0.0f;
             mInfo[i].mLoad = 0.0f;
         }
+
         return;
     }
 
@@ -116,6 +117,7 @@ void GPUStressChecker::calc()
             average3 = sum3 / 3.0f;
             average5 = sum5 / 5.0f;
         }
+
         const History& rPrev = rHistory(0);
         f32 speed = average3 - rPrev.mAverage3;
         f32 accel = speed - rPrev.mSpeed;
@@ -202,12 +204,14 @@ void GPUStressChecker::drawDebug(DrawContext* pDrawContext, const sead::FrameBuf
         graphicsContext.setColorMask(true, true, true, true);
         graphicsContext.apply(pDrawContext);
     }
+
     {
         sead::Matrix34f mtx;
         mtx.makeS(2.0f, 2.0f, 2.0f);
         utl::DevTools::drawColorQuad(pDrawContext, sead::Color4f::cBlack, mtx,
                                      sead::Matrix44f::ident);
     }
+
     pDrawContext->changeShaderMode(ShaderMode(0), ShaderOptimizeType(0));
 
     writer.setViewport(&viewport);

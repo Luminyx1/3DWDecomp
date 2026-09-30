@@ -52,6 +52,7 @@ void EnvObjSet::allocBuffer(const AllocateArg& rArg, sead::Heap* pHeap)
             rRef.mIndex.setType(type);
             rRef.mIndex.setCallback(this);
         }
+
         index += i;
     }
 
@@ -96,6 +97,7 @@ bool EnvObjSet::pushBack(EnvObj* pObj)
             return true;
         }
     }
+
     return false;
 }
 
@@ -123,6 +125,7 @@ bool EnvObjSet::erase(EnvObj* pObj)
             return true;
         }
     }
+
     return false;
 }
 
@@ -136,6 +139,7 @@ bool EnvObjSet::preRead_()
         rRef.mIndex.setIndex(utl::INamedObjIndex::cIndexNone);
         rRef.mIndex->copy(sead::SafeString::cEmptyString);
     }
+
     return true;
 }
 
@@ -166,6 +170,7 @@ void EnvObjSet::syncIndex_(utl::INamedObjIndex* pIndex)
                 mObj[it.getIndex()] =
                     mMgr->tryGetObj(static_cast<EnvObj::Index*>(pIndex)->getType(), index);
             }
+
             return;
         }
     }
@@ -204,6 +209,7 @@ void EnvObjSet::genMessage(sead::hostio::Context* pContext)
             {
                 genMessageEachObj(pContext, index, mObj[index]);
             }
+
             isEnable &= rRef.isUsed();
         }
     }

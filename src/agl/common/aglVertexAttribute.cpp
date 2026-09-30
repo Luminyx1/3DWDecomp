@@ -31,11 +31,13 @@ void VertexAttribute::cleanUp()
     {
         mAttributes[i].mVertexBuffer = nullptr;
     }
+
     u32 bufferNum = mVertexBuffers.size();
     if (bufferNum != 0)
     {
         std::memset(mVertexBuffers.getBufferPtr(), 0, bufferNum * sizeof(const VertexBuffer*));
     }
+
     mFlags.reset(cFlag_SetUp);
 }
 
@@ -86,6 +88,7 @@ void VertexAttribute::setVertexStream(s32 location, const VertexBuffer* pVertexB
     {
         rAttribute.mBufferIndex = disableVertexBuffer_(&rAttribute);
     }
+
     if (pVertexBuffer)
     {
         rAttribute.mBufferIndex = enableVertexBuffer_(&rAttribute, pVertexBuffer, streamIndex);
@@ -135,6 +138,7 @@ s32 VertexAttribute::enableVertexBuffer_(Attribute_* pAttribute,
         {
             return i;
         }
+
         if (!mVertexBuffers[i])
         {
             index = i;
@@ -162,6 +166,7 @@ const VertexBuffer* VertexAttribute::getVertexStream(s32 location, u32* pStreamI
     {
         *pStreamIndex = mAttributes[location].mStreamIndex;
     }
+
     return mAttributes[location].mVertexBuffer;
 }
 

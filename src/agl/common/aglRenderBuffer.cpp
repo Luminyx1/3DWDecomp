@@ -36,6 +36,7 @@ void clearTargets(const RenderBuffer* pRenderBuffer, DrawContext* pDrawContext, 
         nvnCommandBufferClearColor(pDrawContext->getNvnCommandBuffer(), target, &rColor.r,
                                    NVN_CLEAR_COLOR_MASK_RGBA);
     }
+
     if ((flags & (sead::FrameBuffer::cDepth | sead::FrameBuffer::cStencil)) &&
         pRenderBuffer->getRenderTargetDepth())
     {
@@ -135,6 +136,7 @@ void RenderBuffer::invalidateGPUCache(DrawContext* pDrawContext) const
             mRenderTargetColor[i]->invalidateGPUCache(pDrawContext);
         }
     }
+
     if (mRenderTargetDepth)
     {
         mRenderTargetDepth->invalidateGPUCache(pDrawContext);
@@ -175,8 +177,10 @@ void RenderBuffer::bind_(DrawContext* pDrawContext, u16 srgbBitmap) const
             {
                 nvnTextureViewSetFormat(&srgbViews[i], NVN_FORMAT_RGBA8_SRGB);
             }
+
             views[i] = &srgbViews[i];
         }
+
         colorNum = i + 1;
     }
 
@@ -220,6 +224,7 @@ void RenderBuffer::clear(sead::DrawContext* pSeadDrawContext, u32 clearFlag,
     {
         return;
     }
+
     clearTargets(this, pDrawContext, 0, clearFlag, rColor, depth, stencil);
 }
 
@@ -239,6 +244,7 @@ void RenderBuffer::clear(DrawContext* pDrawContext, u32 target, u32 clearFlag,
     {
         return;
     }
+
     clearTargets(this, pDrawContext, target, clearFlag, rColor, depth, stencil);
 }
 
@@ -261,10 +267,12 @@ void RenderBuffer::fastClear(DrawContext* pDrawContext, u32 target, u32 clearFla
     {
         clearFlag &= ~cColor;
     }
+
     if (!mRenderTargetDepth)
     {
         clearFlag &= ~(cDepth | cStencil);
     }
+
     if (clearFlag == 0)
     {
         return;
@@ -278,6 +286,7 @@ void RenderBuffer::fastClear(DrawContext* pDrawContext, u32 target, u32 clearFla
             pTarget->updateRegs_();
         }
     }
+
     if (mRenderTargetDepth)
     {
         mRenderTargetDepth->updateRegs_();
@@ -319,6 +328,7 @@ bool RenderBuffer::initTextureDataFromBoundColor(DrawContext* pDrawContext,
     {
         return false;
     }
+
     return pRenderBuffer->initTextureDataFromColor(pDrawContext, pTextureData, colorIndex);
 }
 
@@ -337,6 +347,7 @@ bool RenderBuffer::initTextureDataFromColor(DrawContext* pDrawContext, TextureDa
     {
         return false;
     }
+
     return initTextureDataFrom(pTarget, pTextureData);
 }
 
@@ -354,6 +365,7 @@ bool RenderBuffer::initTextureDataFromBoundDepth(DrawContext* pDrawContext,
     {
         return false;
     }
+
     return pRenderBuffer->initTextureDataFromDepth(pDrawContext, pTextureData);
 }
 
@@ -371,6 +383,7 @@ bool RenderBuffer::initTextureDataFromDepth(DrawContext* pDrawContext,
     {
         return false;
     }
+
     return initTextureDataFrom(pTarget, pTextureData);
 }
 
@@ -390,6 +403,7 @@ bool RenderBuffer::copyTextureDataFromBoundColor(DrawContext* pDrawContext,
     {
         return false;
     }
+
     pRenderBuffer->mRenderTargetColor[colorIndex]->invalidateGPUCache(pDrawContext);
     return pRenderBuffer->copyTextureDataFromColor(pDrawContext, pTextureData, colorIndex);
 }
@@ -410,6 +424,7 @@ bool RenderBuffer::copyTextureDataFromColor(DrawContext* pDrawContext,
     {
         return false;
     }
+
     pTarget->copyToAll(pDrawContext, pTextureData);
     return true;
 }
@@ -428,6 +443,7 @@ bool RenderBuffer::copyTextureDataFromBoundDepth(DrawContext* pDrawContext,
     {
         return false;
     }
+
     pRenderBuffer->mRenderTargetDepth->invalidateGPUCache(pDrawContext);
     return pRenderBuffer->copyTextureDataFromDepth(pDrawContext, pTextureData);
 }
@@ -446,6 +462,7 @@ bool RenderBuffer::copyTextureDataFromDepth(DrawContext* pDrawContext,
     {
         return false;
     }
+
     pTarget->expandHiZBufferTo(pDrawContext, pTextureData, pTarget->getSlice(),
                                pTarget->getMipLevel());
     return true;

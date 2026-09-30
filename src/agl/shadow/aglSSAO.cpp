@@ -84,6 +84,7 @@ void SSAO::Context::allocTexture(DrawContext* pDrawContext, TextureFormat format
     {
         allocator->free(mAOBuffer);
     }
+
     mAOBuffer =
         allocator->alloc(pDrawContext, "ao_buffer", format, width, height, mipLevelNum, nullptr,
                          utl::DynamicTextureAllocator::cAllocateType_0, true, false);
@@ -141,6 +142,7 @@ SSAO::~SSAO()
     {
         mRotateTextureBuffer.deleteGPUMemBlock();
     }
+
     mDebugTexturePage.cleanUp();
 }
 
@@ -185,6 +187,7 @@ void SSAO::initRotateTexture_(bool force)
             {
                 index = 0;
             }
+
             f32 sin;
             f32 cos;
             sead::Mathf::sinCosIdx(&sin, &cos, cRotateTable[index] << 27);
@@ -276,6 +279,7 @@ void SSAO::initSphereVolume_(s32 resolution, bool force)
     {
         weights[k] /= total;
     }
+
     mCenterWeight = weights[0];
 
     for (s32 i = 0; i < pairNum; i++)
@@ -306,6 +310,7 @@ void SSAO::drawToAOBuffer(DrawContext* pDrawContext, s32 index, s32 width, s32 h
     {
         return;
     }
+
     f32 near;
     f32 far;
     ShadowUtil::calcNearFar(&near, &far, rProjMtx);
@@ -333,6 +338,7 @@ void SSAO::drawToAOBuffer(DrawContext* pDrawContext, s32 index, s32 width, s32 h
     {
         return;
     }
+
     drawToAOBuffer_(pDrawContext, index, width, height, rDepth, near, far, fovy * 0.5f, aspect);
 }
 

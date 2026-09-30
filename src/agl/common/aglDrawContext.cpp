@@ -64,6 +64,7 @@ void DrawContext::flushCommandBuffer()
     {
         driver::NVNMgr::instance()->mCS4.unlock();
     }
+
     mFlags.resetBit(0);
 }
 
@@ -92,14 +93,17 @@ void DrawContext::barrierTexture(u32 flags)
     {
         barrier |= NVN_BARRIER_ORDER_PRIMITIVES_BIT;
     }
+
     if (flags & 2)
     {
         barrier |= NVN_BARRIER_ORDER_FRAGMENTS_BIT;
     }
+
     if (flags & 4)
     {
         barrier |= NVN_BARRIER_ORDER_INDIRECT_DATA_BIT;
     }
+
     nvnCommandBufferBarrier(getNvnCommandBuffer(), barrier);
     mTextureDirty = 0;
 }

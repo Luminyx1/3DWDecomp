@@ -28,6 +28,7 @@ RenderDLBuffer::~RenderDLBuffer()
     {
         rCore.mAddress.freeBuffer();
     }
+
     mRenderDL.freeBuffer();
     if (mControlMemory)
     {
@@ -113,13 +114,16 @@ void RenderDLBuffer::clear(bool swapBuffer)
         {
             mMaxUsedSize = rCore.mUsedSize;
         }
+
         rCore.mUsedSize = 0;
         if (rCore.mControlMemoryUsed > mMaxControlMemoryUsed)
         {
             mMaxControlMemoryUsed = rCore.mControlMemoryUsed;
         }
+
         rCore.mControlMemoryUsed = 0;
     }
+
     mRenderDLNum = 0;
 
     if (swapBuffer)
@@ -171,6 +175,7 @@ s32 RenderDLBuffer::begin(DrawContext* pDrawContext, const sead::SafeString& rNa
     {
         return -1;
     }
+
     return index;
 }
 

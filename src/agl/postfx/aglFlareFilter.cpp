@@ -38,6 +38,7 @@ void FlareFilterParameter::initialize(utl::IParameterObj* pObj, sead::Heap* pHea
         rColor.init(sead::Color4f::cWhite, *pName, *pName, pObj);
         pName++;
     }
+
     mIsEnableHalo.init(true, "is_enable_halo", "ハロ有効", pObj);
     mHaloWidth.init(0.56f, "halo_width", "ハロ位置", pObj);
     mHaloColor.init(sead::Color4f::cWhite, "halo_color", "ハロ色", pObj);
@@ -92,6 +93,7 @@ void FlareFilter::Tex::alloc(DrawContext* pDrawContext, TextureFormat format, u3
             pAllocator->alloc(pDrawContext, pName, format, width, height, 1, nullptr,
                               utl::DynamicTextureAllocator::cAllocateType_0, true, false);
     }
+
     refer(pDrawContext, pTextureData);
     mIsAllocated = true;
     mIsWithoutContext = withoutContext;
@@ -103,6 +105,7 @@ void FlareFilter::Tex::release() const
     {
         utl::DynamicTextureAllocator::instance()->free(mpTextureData);
     }
+
     mpTextureData = nullptr;
     mIsAllocated = false;
     mIsWithoutContext = false;
@@ -146,6 +149,7 @@ void FlareFilter::calcView(s32 context, const cull::ViewFrustumCulling& rCulling
     {
         return;
     }
+
     getContext_(context).mCulling = rCulling;
 }
 
@@ -161,6 +165,7 @@ void FlareFilter::draw(DrawContext* pDrawContext, s32 context, const RenderBuffe
     {
         return;
     }
+
     Context& rContext = getContext_(context);
     rContext.mTarget.refer(pDrawContext,
                            reinterpret_cast<const TextureData*>(
@@ -202,6 +207,7 @@ void FlareFilter::drawToFlareBuffer(DrawContext* pDrawContext, s32 context,
         {
             rIn.release();
         }
+
         pCurrent = &rOut;
     }
 
@@ -227,6 +233,7 @@ void FlareFilter::drawToFlareBuffer(DrawContext* pDrawContext, s32 context,
                 pTemp = isWork0 ? &rContext.mWork1 : &rContext.mWork0;
                 pCurrent = pIn;
             }
+
             pTemp->alloc(pDrawContext, TextureFormat::cTextureFormat_R11_G11_B10_float, pIn->mWidth,
                          pIn->mHeight, "blur_temp", false);
             drawBlur_(pDrawContext, *pTemp, *pIn, 2, false, false, 1.0f, sead::Color4f::cWhite);
@@ -320,6 +327,7 @@ void FlareFilter::drawCopy_(DrawContext* pDrawContext, const Tex& rDst, const Te
         sead::Vector2f texelSize(1.0f / rSrc.mWidth, 1.0f / rSrc.mHeight);
         pProgram->getUniformLocation(0).setUniform(pDrawContext, 2, &texelSize);
     }
+
     pProgram->getUniformLocation(1).setUniform(pDrawContext, scale);
     pProgram->getUniformLocation(2).setUniform(pDrawContext, threshold);
     pProgram->getUniformLocation(3).setUniform(pDrawContext, 4, &rColor);

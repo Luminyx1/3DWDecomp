@@ -92,6 +92,7 @@ void LightPrePass::GetShader_(const ShaderProgram** ppProgram, LightType type, b
     default:
         break;
     }
+
     *ppProgram = pProgram->getVariation(variation);
 }
 
@@ -231,22 +232,26 @@ void LightPrePass::PointLightMgr::updateUBO_(const PointLight& rLight, s32 view,
                             radiusScale * rLight.mRadius);
         rUbo.setData(0, &data, 0, 1);
     }
+
     {
         sead::Vector4f data(rLight.mColor.r, rLight.mColor.g, rLight.mColor.b,
                             1.0f / rLight.mRadius);
         rUbo.setData(1, &data, 0, 1);
     }
+
     {
         sead::Vector4f data(viewPos.x, viewPos.y, viewPos.z,
                             rLight.mAttnPow > 0.0f ? rLight.mAttnPow : 0.001f);
         rUbo.setData(3, &data, 0, 1);
     }
+
     if (rLight.mFlags.isOn(2))
     {
         {
             sead::Vector4f data(specColor.x, specColor.y, specColor.z, rLight.mAttnStart);
             rUbo.setData(2, &data, 0, 1);
         }
+
         {
             sead::Vector4f data(screenX, screenY, scale, 0.0f);
             rUbo.setData(4, &data, 0, 1);
@@ -264,6 +269,7 @@ void LightPrePass::PointLightMgr::drawImpl_(DrawContext* pDrawContext, const Poi
         {
             return;
         }
+
         mVertexAttribute.activate(pDrawContext);
     }
     else
@@ -282,6 +288,7 @@ void LightPrePass::PointLightMgr::drawImpl_(DrawContext* pDrawContext, const Poi
             {
                 return;
             }
+
             useSpec = false;
         }
 
@@ -408,6 +415,7 @@ void LightPrePass::SpotLightMgr::drawImpl_(DrawContext* pDrawContext, const Spot
         {
             return;
         }
+
         mVertexAttribute.activate(pDrawContext);
     }
     else
@@ -438,6 +446,7 @@ void LightPrePass::SpotLightMgr::drawImpl_(DrawContext* pDrawContext, const Spot
             rLight.mView[view].mShadowSampler->activate(pDrawContext,
                                                         pProgram->getSamplerLocation(4), -1, false);
         }
+
         rLight.mView[view].mUbo.activate(pDrawContext, pProgram->getUniformBlockLocation(2));
     }
 
@@ -455,6 +464,7 @@ void LightPrePass::SpotLightMgr::drawDebugImpl_(DrawContext* pDrawContext,
     {
         dir.set(0.01f, 0.99f, -0.01f);
     }
+
     dir.normalize();
     utl::DevTools::drawSpotLight(pDrawContext, rLight.mPos, dir, rLight.mColor, rLight.mAngle,
                                  rLight.mLength, rContext.mCulling.mViewMtx,
@@ -551,6 +561,7 @@ void LightPrePass::ProjLightMgr::drawImpl_(DrawContext* pDrawContext, const Proj
         {
             return;
         }
+
         mVertexAttribute.activate(pDrawContext);
     }
     else
@@ -585,6 +596,7 @@ void LightPrePass::ProjLightMgr::drawImpl_(DrawContext* pDrawContext, const Proj
         {
             rLight.mTexture.activate(pDrawContext, pProgram->getSamplerLocation(3), -1, false);
         }
+
         if (rLight.mView[view].mShadowMap != nullptr)
         {
             rLight.mView[view].mShadowSampler->applyTextureData(
@@ -592,6 +604,7 @@ void LightPrePass::ProjLightMgr::drawImpl_(DrawContext* pDrawContext, const Proj
             rLight.mView[view].mShadowSampler->activate(pDrawContext,
                                                         pProgram->getSamplerLocation(4), -1, false);
         }
+
         rLight.mView[view].mUbo.activate(pDrawContext, pProgram->getUniformBlockLocation(3));
     }
 

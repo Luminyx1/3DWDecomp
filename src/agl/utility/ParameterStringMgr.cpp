@@ -77,6 +77,7 @@ const char* ParameterStringMgr::appendString(const sead::SafeString& rString)
         {
             return mStrings.unsafeAt(m)->cstr();
         }
+
         if (c < 0)
         {
             a = m + 1;
@@ -104,6 +105,7 @@ const char* ParameterStringMgr::appendString(const sead::SafeString& rString)
     {
         mStrings.insert(a, string);
     }
+
     return string->cstr();
 }
 

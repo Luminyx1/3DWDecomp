@@ -63,11 +63,13 @@ void CubeMap::destroyBuffer()
         {
             mImageAddr.deleteGPUMemBlock();
         }
+
         if (mMipAddr.isValid())
         {
             mMipAddr.deleteGPUMemBlock();
         }
     }
+
     mImageAddr.invalidate();
     mMipAddr.invalidate();
     mFlag.reset(0x87);
@@ -94,6 +96,7 @@ void CubeMap::initialize(sead::Heap* pHeap, TextureFormat format, u32 width, u32
         pBlock->allocBuffer_(size, pHeap, alignment, MemoryAttribute(0));
         mImageAddr = GPUMemVoidAddr(*pBlock, 0);
     }
+
     size = mTextureData.getSurface()._14;
     if (size != 0)
     {
@@ -102,6 +105,7 @@ void CubeMap::initialize(sead::Heap* pHeap, TextureFormat format, u32 width, u32
         pBlock->allocBuffer_(size, pHeap, alignment, MemoryAttribute(0));
         mMipAddr = GPUMemVoidAddr(*pBlock, 0);
     }
+
     initialize_();
     mFlag.set(1 << 1);
 }
@@ -115,6 +119,7 @@ void CubeMap::initialize_()
         mTextureData.setMipPtr(mMipAddr);
         mMipAddr.flushCPUCache(mTextureData.getSurface()._14);
     }
+
     applyTextureData(mTextureData);
     mFlag.set(1 << 0);
 }
@@ -141,12 +146,14 @@ void CubeMap::initialize(GPUMemVoidAddr addr, u32 size, TextureFormat format, u3
         mImageAddr = cur;
         cur = GPUMemVoidAddr(cur, mTextureData.getSurface().mStorageSize);
     }
+
     if (mTextureData.getSurface()._14 != 0)
     {
         cur.roundUp(mTextureData.getSurface().mAlignment);
         mMipAddr = cur;
         cur = GPUMemVoidAddr(cur, mTextureData.getSurface()._14);
     }
+
     initialize_();
     mFlag.set(1 << 2);
 }
@@ -174,6 +181,7 @@ void CubeMap::initialize(sead::Heap* pHeap, TextureFormat format, u32 width, u32
         pBlock->allocBuffer_(size, pHeap, alignment, MemoryAttribute(0));
         mImageAddr = GPUMemVoidAddr(*pBlock, 0);
     }
+
     size = mTextureData.getSurface()._14;
     if (size != 0)
     {
@@ -182,6 +190,7 @@ void CubeMap::initialize(sead::Heap* pHeap, TextureFormat format, u32 width, u32
         pBlock->allocBuffer_(size, pHeap, alignment, MemoryAttribute(0));
         mMipAddr = GPUMemVoidAddr(*pBlock, 0);
     }
+
     initialize_();
     mFlag.set(1 << 1 | 1 << 7);
 }
@@ -209,12 +218,14 @@ void CubeMap::initialize(GPUMemVoidAddr addr, u32 size, TextureFormat format, u3
         mImageAddr = cur;
         cur = GPUMemVoidAddr(cur, mTextureData.getSurface().mStorageSize);
     }
+
     if (mTextureData.getSurface()._14 != 0)
     {
         cur.roundUp(mTextureData.getSurface().mAlignment);
         mMipAddr = cur;
         cur = GPUMemVoidAddr(cur, mTextureData.getSurface()._14);
     }
+
     initialize_();
     mFlag.set(1 << 2 | 1 << 7);
 }
@@ -261,6 +272,7 @@ bool CubeMap::begin(DrawContext* pDrawContext, bool useColorBuffer, bool useDept
     {
         mFlag.set(1 << 5);
     }
+
     mCurrentSize = -1;
     return mFlag.isOn(1 << 5);
 }
@@ -294,6 +306,7 @@ bool CubeMap::preDraw(DrawContext* pDrawContext, u32 slice, u32 face, u32 mipLev
                                       TextureAttribute(0), MultiSampleType(0), true);
             mDepthTexture.setImagePtr(mDepthBuffer->getImagePtr(), 0);
         }
+
         if (mColorBuffer)
         {
             mColorTexture.initialize_(TextureType(1),
@@ -334,6 +347,7 @@ bool CubeMap::preDraw(DrawContext* pDrawContext, u32 slice, u32 face, u32 mipLev
                              nullAddr(), true);
         }
     }
+
     mFlag.set(1 << 4);
     return true;
 }
@@ -406,6 +420,7 @@ void CubeMap::postDraw(DrawContext* pDrawContext, bool flip)
                                    sead::Matrix44f::ident, sead::Color4f::cWhite);
         mRenderTargetColor.invalidateGPUCache(pDrawContext);
     }
+
     mCurrentSlice = -1;
     mCurrentFace = -1;
     mCurrentMipLevel = -1;
@@ -424,10 +439,12 @@ void CubeMap::clear(DrawContext* pDrawContext, u32 slice, const sead::Color4f& r
             {
                 sead::Viewport(mRenderBuffer).apply(pDrawContext, mRenderBuffer);
             }
+
             mRenderBuffer.fastClear(pDrawContext, 0, 1, rColor, 1.0f, 0,
                                     sead::Viewport(mRenderBuffer), true);
         }
     }
+
     mRenderTargetColor.invalidateGPUCache(pDrawContext);
 }
 
@@ -447,10 +464,12 @@ void CubeMap::end(DrawContext* pDrawContext)
     {
         utl::DynamicTextureAllocator::instance()->free(mColorBuffer);
     }
+
     if (mDepthBuffer)
     {
         utl::DynamicTextureAllocator::instance()->free(mDepthBuffer);
     }
+
     mColorBuffer = nullptr;
     mDepthBuffer = nullptr;
     mZCullBuffer.invalidate();
@@ -480,9 +499,11 @@ void CubeMap::renderToMipMapUnit(DrawContext* pDrawContext, const TextureSampler
         {
             sead::Viewport(mRenderBuffer).apply(pDrawContext, mRenderBuffer);
         }
+
         utl::ImageFilter2D::drawCubemapGaussian(pDrawContext, rSrc, srcSlice, srcMipLevel, face,
                                                 utl::ImageFilter2D::BlurType(2), sigma);
     }
+
     mRenderTargetColor.invalidateGPUCache(pDrawContext);
 
     for (u32 face = 0; face < 6; face++)
@@ -493,9 +514,11 @@ void CubeMap::renderToMipMapUnit(DrawContext* pDrawContext, const TextureSampler
         {
             sead::Viewport(mRenderBuffer).apply(pDrawContext, mRenderBuffer);
         }
+
         utl::ImageFilter2D::drawCubemapGaussian(pDrawContext, rWork, 0, face,
                                                 utl::ImageFilter2D::BlurType(3), sigma);
     }
+
     mRenderTargetColor.invalidateGPUCache(pDrawContext);
 }
 
@@ -530,6 +553,7 @@ void CubeMap::renderToMipMapImpl(DrawContext* pDrawContext, const TextureSampler
             renderToMipMapUnit(pDrawContext, *this, work, dstSlice, dstMipLevel, dstSlice,
                                dstMipLevel, sigma);
         }
+
         utl::DynamicTextureAllocator::instance()->free(pTexture);
     }
 }

@@ -33,6 +33,7 @@ inline bool isPropertyOf_(const sead::hostio::PropertyEvent* pEvent, const T* pV
     {
         return false;
     }
+
     const void* id = pEvent->getId();
     return id < pValue + 1 && id >= pValue;
 }
@@ -107,6 +108,7 @@ inline const char* getCompSelName(s8 compSel)
     {
         return cCompSelName[compSel];
     }
+
     return "0";
 }
 
@@ -132,6 +134,7 @@ OccludedEffectMgr::~OccludedEffectMgr()
     {
         delete mTextureInfo[i];
     }
+
     mTextureInfo.freeBuffer();
     mMenuNodePresetRoot.freeBuffer();
     mMenuInstance.freeBuffer();
@@ -156,6 +159,7 @@ void OccludedEffectMgr::Resource::release()
     {
         g3d::ResFile::Cleanup(nn::g3d::ResFile::ResCast(mResFile));
     }
+
     mResFile = nullptr;
     mIsValid = false;
 }
@@ -171,10 +175,12 @@ void OccludedEffectMgr::initialize(const CreateArg& rArg, sead::Heap* pHeap)
     {
         mPresetList.allocBufferAssert(mCreateArg.mTypeNum, pHeap);
     }
+
     if (mCreateArg.mInstanceMenuNum > 0)
     {
         mMenuInstance.allocBuffer(mCreateArg.mInstanceMenuNum, pHeap);
     }
+
     if (mCreateArg.mTypeNum > 0)
     {
         mMenuNodePresetRoot.allocBufferAssert(mCreateArg.mTypeNum, pHeap);
@@ -219,12 +225,14 @@ void OccludedEffectMgr::initialize(const CreateArg& rArg, sead::Heap* pHeap)
                 {
                     continue;
                 }
+
                 pPreset->getMgr()->removeObj(pPreset);
                 OfxBase* pOfx = sead::DynamicCast<OfxBase>(mCreateArg.getObjRef_(rOfxTypeId, 0));
                 if (pOfx == nullptr)
                 {
                     continue;
                 }
+
                 pOfx->initializePreset(pPreset, presetArg, i, pHeap);
                 pPreset->setEditable(false);
                 mPresetList[type].addObj(pPreset, sead::FormatFixedSafeString<32>("%d", i));
@@ -290,6 +298,7 @@ void OccludedEffectMgr::createVtxStream_(sead::Heap* pHeap)
         getBufferPtr<Vtx>(mVtxQuadDouble.mVertexBlock)[i].mTexCoord =
             getBufferPtr<Vtx>(mVtxQuad.mVertexBlock)[i].mTexCoord * 2.0f;
     }
+
     mVtxQuadDouble.mVertexBuffer.setUpBuffer(ConstGPUMemVoidAddr(mVtxQuadDouble.mVertexBlock, 0),
                                              sizeof(Vtx), sizeof(Vtx) * 4);
     mVtxQuadDouble.mVertexBuffer.setUpStream(0, VertexStreamFormat(22), 0, false);
@@ -302,6 +311,7 @@ void OccludedEffectMgr::createVtxStream_(sead::Heap* pHeap)
         getBufferPtr<u16>(mVtxQuadDouble.mIndexBlock)[i] =
             getBufferPtr<u16>(mVtxQuad.mIndexBlock)[i];
     }
+
     mVtxQuadDouble.mIndexStream.setUpStream(GPUMemAddr<u16>(mVtxQuadDouble.mIndexBlock, 0), 4);
     mVtxQuadDouble.mIndexStream.setPrimitiveType(NVN_DRAW_PRIMITIVE_TRIANGLE_STRIP);
 
@@ -350,6 +360,7 @@ void OccludedEffectMgr::createVtxStream_(sead::Heap* pHeap)
         getBufferPtr<Vtx>(mVtxOctagonDouble.mVertexBlock)[i].mTexCoord =
             getBufferPtr<Vtx>(mVtxOctagon.mVertexBlock)[i].mTexCoord * 2.0f;
     }
+
     mVtxOctagonDouble.mVertexBuffer.setUpBuffer(
         ConstGPUMemVoidAddr(mVtxOctagonDouble.mVertexBlock, 0), sizeof(Vtx), sizeof(Vtx) * 8);
     mVtxOctagonDouble.mVertexBuffer.setUpStream(0, VertexStreamFormat(22), 0, false);
@@ -362,6 +373,7 @@ void OccludedEffectMgr::createVtxStream_(sead::Heap* pHeap)
         getBufferPtr<u16>(mVtxOctagonDouble.mIndexBlock)[i] =
             getBufferPtr<u16>(mVtxOctagon.mIndexBlock)[i];
     }
+
     mVtxOctagonDouble.mIndexStream.setUpStream(GPUMemAddr<u16>(mVtxOctagonDouble.mIndexBlock, 0),
                                                8);
     mVtxOctagonDouble.mIndexStream.setPrimitiveType(NVN_DRAW_PRIMITIVE_TRIANGLE_STRIP);
@@ -396,6 +408,7 @@ bool OccludedEffectMgr::loadBinary(void* pBinary, u32 size, const sead::SafeStri
     {
         mFlag.set(0x10000);
     }
+
     loadOriginalResource_();
     return true;
 }
@@ -418,6 +431,7 @@ bool OccludedEffectMgr::Resource::setupWithBinary(void* pBinary, const sead::Saf
     {
         g3d::ResFile::Setup(pResFile);
     }
+
     mPath = rName;
 
     s32 texNum = g3d::ResFile::GetTextureCount(pResFile);
@@ -443,6 +457,7 @@ bool OccludedEffectMgr::Resource::setupWithBinary(void* pBinary, const sead::Saf
             mName.append("aglofx");
         }
     }
+
     return true;
 }
 
@@ -485,10 +500,12 @@ bool OccludedEffectMgr::loadFile(const sead::SafeString& rPath, sead::Heap* pHea
     {
         return false;
     }
+
     if (mResource[0].mIsValid)
     {
         mFlag.set(0x10000);
     }
+
     loadOriginalResource_();
     return true;
 }
@@ -512,6 +529,7 @@ bool OccludedEffectMgr::Resource::setupWithFile(sead::FileDevice* pDevice,
     {
         return false;
     }
+
     setupWithBinary(pData, rPath, false);
     return true;
 }
@@ -546,6 +564,7 @@ void OccludedEffectMgr::calc()
                 }
             }
         }
+
         mFlag.reset(1);
     }
 
@@ -576,6 +595,7 @@ void OccludedEffectMgr::constructHostIO_()
             mCreateArg.getInstance(type, i);
         }
     }
+
     for (s32 type = 0; type < mCreateArg.mTypeNum; type++)
     {
         for (s32 i = 0; i < mCreateArg.mOfxNum[type]; i++)
@@ -583,6 +603,7 @@ void OccludedEffectMgr::constructHostIO_()
             mCreateArg.getInstance(type, i);
         }
     }
+
     for (s32 type = 0; type < mCreateArg.mTypeNum; type++)
     {
         for (s32 i = 0; i < mCreateArg.mPresetNum[type]; i++)
@@ -590,6 +611,7 @@ void OccludedEffectMgr::constructHostIO_()
             mCreateArg.getPreset(type, i);
         }
     }
+
     for (s32 type = 0; type < mCreateArg.mTypeNum; type++)
     {
         for (s32 i = 0; i < mCreateArg.mPresetNum[type]; i++)
@@ -618,6 +640,7 @@ void OccludedEffectMgr::calcView(s32 viewIndex, const sead::Matrix34f& rViewMtx,
     {
         return;
     }
+
     for (OfxBase& rOfx : mMenuInstance)
     {
         rOfx.calcContext(viewIndex, rViewMtx, rProjMtx, near, far, fovy, aspect, rOffset);
@@ -633,6 +656,7 @@ void OccludedEffectMgr::updateGPU()
     {
         return;
     }
+
     for (OfxBase& rOfx : mMenuInstance)
     {
         rOfx.updateGPU();
@@ -650,6 +674,7 @@ void OccludedEffectMgr::updateViewGPU(s32 viewIndex, const RenderBuffer& rRender
     {
         return;
     }
+
     for (OfxBase& rOfx : mMenuInstance)
     {
         rOfx.updateViewGPU(viewIndex, rRenderBuffer);
@@ -672,6 +697,7 @@ void OccludedEffectMgr::draw(DrawContext* pDrawContext, s32 viewIndex,
     {
         return;
     }
+
     for (OfxBase& rOfx : mMenuInstance)
     {
         rOfx.draw(pDrawContext, viewIndex, rRenderBuffer, rViewport, rDepth);
@@ -689,6 +715,7 @@ void OccludedEffectMgr::drawDebug(DrawContext* pDrawContext, s32 viewIndex) cons
     {
         return;
     }
+
     for (OfxBase& rOfx : mMenuInstance)
     {
         rOfx.drawDebugOfx(pDrawContext, viewIndex);
@@ -725,6 +752,7 @@ bool OccludedEffectMgr::saveSetting(s32 type, const sead::SafeString& rName,
     {
         return save(rName, 0x2000000);
     }
+
     return save(sead::SafeString::cEmptyString, 0x2000000);
 }
 
@@ -756,6 +784,7 @@ void OccludedEffectMgr::loadSetting(const void* pData, u32 size, const sead::Saf
             mCreateArg.getInstance(type, i)->mFlag.set(0x20);
         }
     }
+
     mFlag.set(3);
     updateTexturePlacement_();
 }
@@ -813,12 +842,14 @@ void OccludedEffectMgr::updateTexturePlacement_()
                     {
                         it->mSampler.setWrap(7, 7, 7);
                     }
+
                     it->mName.copy(itRes->mName);
                     it->mIsValid = true;
                     rPlacement.mResIndex = itRes.getIndex();
                     break;
                 }
             }
+
             continue;
         }
 
@@ -833,6 +864,7 @@ void OccludedEffectMgr::updateTexturePlacement_()
         {
             it->mSampler.setWrap(7, 7, 7);
         }
+
         it->mIsValid = true;
         rPlacement.mRefTexName->copy(rRes.mResTexInfo[rPlacement.mResIndex].mName);
     }
@@ -855,6 +887,7 @@ OfxBase::PresetBase* OccludedEffectMgr::searchPresetByName(s32 type,
             return pPreset;
         }
     }
+
     return nullptr;
 }
 
@@ -984,6 +1017,7 @@ bool OccludedEffectMgr::mountRawDir_(bool isSkip, bool isLoadSetting, bool unuse
         {
             return false;
         }
+
         mResource[1].setupWithBinary(pData, path, false);
         mResState = 2;
         mRawDir.copy(dir);
@@ -998,6 +1032,7 @@ bool OccludedEffectMgr::mountRawDir_(bool isSkip, bool isLoadSetting, bool unuse
             loadSetting(mResource[1].mSettingFile->pData.Get(), size, nullptr, false);
         }
     }
+
     updateTexturePlacement_();
     return true;
 }
@@ -1020,11 +1055,13 @@ bool OccludedEffectMgr::setInstanceParameterAll(s32 type, const sead::SafeString
         {
             continue;
         }
+
         OfxBase::PresetBase* pPreset = pOfx->getPreset_<OfxBase::PresetBase>();
         if (!pPreset->mPresetName->isEqual(rPresetName))
         {
             continue;
         }
+
         for (utl::ParameterBase* p = pPreset->getParamListHead(); p != nullptr; p = p->getNext())
         {
             if (p->copy(rParam))
@@ -1034,6 +1071,7 @@ bool OccludedEffectMgr::setInstanceParameterAll(s32 type, const sead::SafeString
             }
         }
     }
+
     return result;
 }
 
@@ -1154,6 +1192,7 @@ void OccludedEffectMgr::genMessage(sead::hostio::Context* pContext)
     {
         return;
     }
+
     switch (mResState)
     {
     case 1:
@@ -1207,10 +1246,12 @@ const OccludedEffectMgr::Resource& OccludedEffectMgr::getCurrRes_() const
     {
         return mResource[0];
     }
+
     if (mResState == 2)
     {
         return mResource[1];
     }
+
     return mResource[0];
 }
 
@@ -1231,6 +1272,7 @@ void OccludedEffectMgr::listenPropertyEvent(const sead::hostio::PropertyEvent* p
             updateTexturePlacement_();
             break;
         }
+
         if (isPropertyOf_(pEvent, &*rInfo.mPlacement.mIsQuarter))
         {
             updateTexturePlacement_();
@@ -1273,6 +1315,7 @@ void OccludedEffectMgr::listenPropertyEvent(const sead::hostio::PropertyEvent* p
                 mountRawDir_(false, true, false);
             }
         }
+
         break;
     case 101009:
         loadSettingFromFile();
@@ -1299,11 +1342,13 @@ void OccludedEffectMgr::genMessageMenuInstance(sead::hostio::Context* pContext)
             {
                 continue;
             }
+
             genMessageDummy(pContext, pOfx->getOfxLabel());
             for (s32 j = 0; j < mCreateArg.mPresetNum[type]; j++)
             {
                 mCreateArg.getPreset(type, j);
             }
+
             pOfx->genMessageSimple(pContext);
         }
     }
@@ -1324,6 +1369,7 @@ void OccludedEffectMgr::listenPropertyEventMenuInstance(const sead::hostio::Prop
             {
                 continue;
             }
+
             if ((pEvent->getType() & 2) == 0)
             {
                 const void* id = pEvent->getId();
@@ -1333,6 +1379,7 @@ void OccludedEffectMgr::listenPropertyEventMenuInstance(const sead::hostio::Prop
                     break;
                 }
             }
+
             pOfx->listenPropertyEventSimple(pEvent);
         }
     }

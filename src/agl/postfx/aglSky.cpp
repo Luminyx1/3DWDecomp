@@ -93,6 +93,7 @@ inline void drawIndexStream(DrawContext* pDrawContext, const IndexStream& rStrea
     {
         return;
     }
+
     NVNcommandBuffer* pCommandBuffer = pDrawContext->getNvnCommandBuffer();
     NVNdrawPrimitive primitive = rStream.getPrimitiveType();
     NVNbufferAddress address = nvnBufferGetAddress(rStream.getNvnBuffer());
@@ -124,6 +125,7 @@ struct BasisDrawer {
         detail::drawIndexStream(mDrawContext,
                                 utl::PrimitiveShape::instance()->getQuadTriangleIndexStream());
     }
+
     void drawLayerQuad() const
     {
         utl::VertexAttributeHolder::instance()
@@ -249,6 +251,7 @@ sead::Color4f calcColorTemperature(const sead::Color4f& rBase, f32 temperature, 
     {
         return sead::Color4f::cWhite;
     }
+
     return sead::Color4f(cr / max, cg / max, cb / max, 1.0f);
 }
 
@@ -359,6 +362,7 @@ void Sky::finalize()
         delete mDebugTexturePage;
         mDebugTexturePage = nullptr;
     }
+
     mFlags.reset(cFlag_Initialized);
 }
 
@@ -565,6 +569,7 @@ void Sky::allocateTexture(sead::Heap* pHeap)
                         mTextureSize.mBakedRangeTransmittanceHeight);
         pHeap->getFreeSize();
     }
+
     mFlags.set(cFlag_TextureAllocated);
 }
 
@@ -605,6 +610,7 @@ void Sky::freeTexture()
         mContexts[i].mBakedIrradiance.getTextureData().getImagePtr().deleteGPUMemBlock();
         mContexts[i].mBakedRangeTransmittance.getTextureData().getImagePtr().deleteGPUMemBlock();
     }
+
     mFlags.reset(cFlag_TextureAllocated);
 }
 
@@ -673,6 +679,7 @@ void Sky::drawBasis(DrawContext* pDrawContext, u32 context)
             mFlags.set(cFlag_InfLoopCheckDisabled);
             checker->setEnabled(false);
         }
+
         drawBasisImpl(pDrawContext, context);
         mFlags.reset(cFlag_UpdateBasis);
     }
@@ -771,6 +778,7 @@ void Sky::drawBasisImpl(DrawContext* pDrawContext, u32 context)
         setUpRenderBuffer(pDrawContext, context, pDeltaSM, 0, layer, 1, 2);
         drawer.drawLayer(f32(layer) / f32(mTextureSize.mAltitudeNum - 1));
     }
+
     invalidateRenderBufferCache(pDrawContext, context);
 
     {
@@ -798,6 +806,7 @@ void Sky::drawBasisImpl(DrawContext* pDrawContext, u32 context)
                               layer, 0, flags);
             bakeDrawer.drawLayer(true, f32(layer) / f32(mTextureSize.mAltitudeNum - 1));
         }
+
         invalidateRenderBufferCache(pDrawContext, context);
     }
 
@@ -824,6 +833,7 @@ void Sky::drawBasisImpl(DrawContext* pDrawContext, u32 context)
             setUpRenderBuffer(pDrawContext, context, pDeltaJ, 0, layer, 0, flags);
             drawer.drawLayer(f32(layer) / f32(mTextureSize.mAltitudeNum - 1));
         }
+
         invalidateRenderBufferCache(pDrawContext, context);
 
         drawer.setProgram(mPrograms[1]->getVariation(order == 0 ? 1 : 2), sizes);
@@ -851,6 +861,7 @@ void Sky::drawBasisImpl(DrawContext* pDrawContext, u32 context)
             setUpRenderBuffer(pDrawContext, context, pDeltaSR, 0, layer, 0, flags);
             drawer.drawLayer(f32(layer) / f32(mTextureSize.mAltitudeNum - 1));
         }
+
         invalidateRenderBufferCache(pDrawContext, context);
 
         graphicsContext.setBlendEnableMask(1);
@@ -878,6 +889,7 @@ void Sky::drawBasisImpl(DrawContext* pDrawContext, u32 context)
                                   layer, 0, flags);
                 bakeDrawer.drawLayer(true, f32(layer) / f32(mTextureSize.mAltitudeNum - 1));
             }
+
             invalidateRenderBufferCache(pDrawContext, context);
         }
 
@@ -1003,6 +1015,7 @@ void Sky::drawContext(DrawContext* pDrawContext, u32 context, const sead::Matrix
     {
         sunZenithCos = rSunDir.y * (-1.0f / length);
     }
+
     const sead::Color4f& rColor = *mParam.mDynamicColor;
     sead::Vector3f sunColor(rColor.a * rColor.r, rColor.a * rColor.g, rColor.a * rColor.b);
     program->getUniformLocation(9).setUniform(pDrawContext, *mParam.mDynamicRayleighAmplifier);
@@ -1100,6 +1113,7 @@ void Sky::setUpRenderBuffer(DrawContext* pDrawContext, u32 context, const Textur
     {
         rContext.mRenderBuffer.bind(pDrawContext);
     }
+
     rContext.mDirtyTargets |= 1 << target;
 }
 
@@ -1118,6 +1132,7 @@ void Sky::invalidateRenderBufferCache(DrawContext* pDrawContext, u32 context)
             rContext.mRenderTargets[i].invalidateGPUCache(pDrawContext);
         }
     }
+
     rContext.mDirtyTargets = 0;
 }
 
@@ -1319,6 +1334,7 @@ void Sky::drawBoth(DrawContext* pDrawContext, u32 context, const sead::Matrix44f
                                              false);
             program->getUniformLocation(25).setUniform(pDrawContext, rContext.mCloudParam);
         }
+
         drawer.draw(pDrawContext, program, sizes);
     }
 
@@ -1415,6 +1431,7 @@ void Sky::drawSky(DrawContext* pDrawContext, u32 context, const sead::Matrix44f&
                                              false);
             program->getUniformLocation(25).setUniform(pDrawContext, rContext.mCloudParam);
         }
+
         drawer.draw(pDrawContext, program, sizes);
     }
 }
@@ -1526,9 +1543,11 @@ void Sky::postRead_()
             *mParam.mDynamicMieAmplifier = *rOldParam.mMieAmplifierRendering;
             *mParam.mDynamicColor = *rOldParam.mSunColor;
         }
+
         mParam.mGroundColor->a = 0.0f;
         *mParam.mVersion = 2;
     }
+
     *mParam.mVersion = 2;
     mFlags.setDirect((mFlags.getDirect() & ~(cFlag_Enable | cFlag_Sky | cFlag_Ground |
                                              cFlag_UpdateBasis)) |
@@ -1587,10 +1606,12 @@ void Sky::genMessage(sead::hostio::Context* pContext)
         {
             sead::FormatFixedSafeString<256> str("GroupHeader = context %d, Layout = Wrap", i);
         }
+
         {
             sead::FormatFixedSafeString<256> str("Sky: %s",
                                                  getContext_(i).mIsSkyEnable ? "○" : "×");
         }
+
         {
             sead::FormatFixedSafeString<256> str("Ground: %s",
                                                  getContext_(i).mIsGroundEnable ? "○" : "×");
@@ -1626,6 +1647,7 @@ void Sky::updateDirectionToLatLong()
         {
             mParam.mSunLongitude = std::atan2(-horizontal.x, -horizontal.y);
         }
+
         mParam.mSunLatitude = std::asin(sead::Mathf::clamp(-dir.y, -1.0f, 1.0f));
     }
 }
@@ -1697,6 +1719,7 @@ void Sky::listenPropertyEvent(const sead::hostio::PropertyEvent* pEvent)
             allocateTexture(agl::detail::PrivateResource::instance()->getDebugHeap());
             mFlags.set(cFlag_UpdateBasis);
         }
+
         if (id == 0x65)
         {
             mFlags.set(cFlag_UpdateBasis);
@@ -1778,6 +1801,7 @@ void PostFxDrawer::draw(DrawContext* pDrawContext, const ShaderProgram* pProgram
     {
         activateSampler(mSky, mContext, 0, *mColor, pDrawContext, pProgram, 0);
     }
+
     if (mDepth)
     {
         activateSampler(mSky, mContext, 1, *mDepth, pDrawContext, pProgram, 1);
@@ -1838,6 +1862,7 @@ void PostFxDrawer::draw(DrawContext* pDrawContext, const ShaderProgram* pProgram
         normalFogCoeff.y = 0.0f;
         normalFogCoeff.z = 1.0f;
     }
+
     normalFogCoeff.w = mSky->mParam.mAdhocFogColor->a;
     normalFogColor.x = mSky->mParam.mAdhocFogColor->r;
     normalFogColor.y = mSky->mParam.mAdhocFogColor->g;
@@ -1864,6 +1889,7 @@ void PostFxDrawer::draw(DrawContext* pDrawContext, const ShaderProgram* pProgram
                               -mSky->mParam.mSunDir.z);
         pProgram->getUniformLocation(15).setUniform(pDrawContext, 3, &sunDir);
     }
+
     pProgram->getUniformLocation(16).setUniform(pDrawContext, 3, &sunColor);
     pProgram->getUniformLocation(17).setUniform(pDrawContext, 4, &groundColor);
     pProgram->getUniformLocation(18).setUniform(pDrawContext, 4, &nearFar);

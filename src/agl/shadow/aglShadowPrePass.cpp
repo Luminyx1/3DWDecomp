@@ -111,6 +111,7 @@ void ShadowPrePass::initialize(s32 contextNum, sead::Heap* pHeap)
         {
             context.mUniformBlock.declare(mContexts.front().mUniformBlock);
         }
+
         context.mUniformBlock.create(pHeap, 2, 1);
 
         context.mDepthSampler.setFilter(0, 0, 0);
@@ -215,6 +216,7 @@ void ShadowPrePass::release(s32 index) const
         context.mLightBuffer = nullptr;
         context.mIsReleased = true;
     }
+
     context.mIsCreated = false;
 }
 
@@ -267,10 +269,12 @@ const TextureSampler* ShadowPrePass::getPrevSampler(DrawContext* pDrawContext, s
             break;
         }
     }
+
     if (pass == 0)
     {
         context.mRenderTarget.invalidateGPUCache(pDrawContext);
     }
+
     return &context.mLightBufferSampler;
 }
 
@@ -298,10 +302,12 @@ RenderBuffer* ShadowPrePass::getRenderTarget(DrawContext* pDrawContext, s32 inde
             break;
         }
     }
+
     if (pass == 0)
     {
         context.mRenderTarget.invalidateGPUCache(pDrawContext);
     }
+
     return &context.mRenderBuffer;
 }
 
@@ -333,18 +339,22 @@ u32 ShadowPrePass::getBufferState(s32 index) const
     {
         state |= 2;
     }
+
     if (mFlags.isOnBit(0) && mContexts[index].mStaticDepth != nullptr)
     {
         state |= 8;
     }
+
     if (*mScreenSpaceBlurType != 0)
     {
         state |= 0x10;
     }
+
     if (*mUseMipLevelBlur)
     {
         state |= 0x20;
     }
+
     return state;
 }
 
@@ -387,6 +397,7 @@ RenderBuffer* ShadowPrePass::createShadowBuffer(DrawContext* pDrawContext, s32 i
     {
         createShadowBuffer_core_(pDrawContext, index, bufferWidth, bufferHeight, false);
     }
+
     createTempBuffer_(pDrawContext, index, bufferWidth, bufferHeight);
 
     Context& result = mContexts[index];
@@ -414,6 +425,7 @@ s32 ShadowPrePass::getPcfShaderNo() const
             break;
         }
     }
+
     return 0;
 }
 
@@ -450,19 +462,23 @@ void ShadowPrePass::genMessage(sead::hostio::Context* pContext)
     {
         const sead::SafeString label = mResolutionMode.getLabel();
     }
+
     mUseStaticDepthShadow.genMessageParameter(pContext, mUseStaticDepthShadow.getMeta());
     mUseDecalAo.genMessageParameter(pContext, mUseDecalAo.getMeta());
     mUseDecalTrailSigned.genMessageParameter(pContext, mUseDecalTrailSigned.getMeta());
     {
         const sead::SafeString label = mPcfShaderType.getLabel();
     }
+
     {
         const sead::SafeString label = mPcfSampleNum.getLabel();
     }
+
     mPcfWidth.genMessageParameter(pContext, "Min = 0,Max = 10.0");
     {
         const sead::SafeString label = mScreenSpaceBlurType.getLabel();
     }
+
     mScreenSpaceBlurWidth.genMessageParameter(pContext, "Min = 0,Max = 5");
     mScreenSpaceBlurRepNum.genMessageParameter(pContext, "Min = 1,Max = 20");
     mUseMipLevelBlur.genMessageParameter(pContext, mUseMipLevelBlur.getMeta());

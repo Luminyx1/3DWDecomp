@@ -16,8 +16,10 @@ inline const char* findChar(const char* p, char c) {
         if (*p == c) {
             return p;
         }
+
         p++;
     }
+
     return nullptr;
 }
 
@@ -25,6 +27,7 @@ inline const char* skipSpace(const char* p) {
     while (isSpace(*p)) {
         p++;
     }
+
     return *p == '\0' ? nullptr : p;
 }
 
@@ -86,6 +89,7 @@ void ShaderTextUtil::replaceMacro(sead::BufferedSafeString* pText, const char* c
                             break;
                         }
                     }
+
                     if (i < macroNum) {
                         break;
                     }
@@ -119,6 +123,7 @@ end:
     while (*src != '\0') {
         *dst++ = *src++;
     }
+
     *dst = '\0';
 
     pText->copy(sead::SafeString(pWork));
@@ -141,11 +146,14 @@ s32 ShaderTextUtil::findLineFeedCode(const char* pText, s32* pLength) {
         } else {
             continue;
         }
+
         if (pLength) {
             *pLength = length;
         }
+
         return i;
     }
+
     return -1;
 }
 
@@ -165,15 +173,18 @@ void ShaderTextUtil::replace(char* pText, const char* pInsert, s32 begin, s32 en
     for (const char* src = pText + end; *src != '\0'; src++) {
         *dst++ = *src;
     }
+
     *dst = '\0';
 
     dst = pText + begin;
     for (const char* src = pInsert; *src != '\0'; src++) {
         *dst++ = *src;
     }
+
     for (const char* src = work; *src != '\0'; src++) {
         *dst++ = *src;
     }
+
     *dst = '\0';
 }
 
@@ -232,6 +243,7 @@ sead::HeapSafeString* ShaderTextUtil::createRawText(const sead::SafeString& rTex
                     break;
                 }
             }
+
             if (i >= sourceNum) {
                 break;
             }
@@ -240,9 +252,11 @@ sead::HeapSafeString* ShaderTextUtil::createRawText(const sead::SafeString& rTex
             if (pUsedFlags) {
                 pUsedFlags[i] = true;
             }
+
             if (!source) {
                 break;
             }
+
             if (isUTF8(source)) {
                 source += 3;
             }
@@ -350,6 +364,7 @@ void ShaderTextUtil::analyzeShaderDumpText(const sead::SafeString& rText,
                 while (*p != '\n') {
                     p++;
                 }
+
                 result.mDisassemblySize = p - result.mDisassembly;
                 break;
             }
@@ -385,6 +400,7 @@ void ShaderTextUtil::analyzeShaderDumpText(const sead::SafeString& rText,
                     } else {
                         counter = nullptr;
                     }
+
                     clauseNum++;
                     break;
                 }
@@ -395,6 +411,7 @@ void ShaderTextUtil::analyzeShaderDumpText(const sead::SafeString& rText,
                 while ('0' <= *p && *p <= '9') {
                     p++;
                 }
+
                 if (counter) {
                     (*counter)++;
                 }
@@ -448,6 +465,7 @@ void ShaderTextUtil::analyzeShaderDumpText(const sead::SafeString& rText,
             skipString(varyingOut, &p);
             varyingOutNum++;
         }
+
         skipChar(' ', &p);
     }
 
@@ -485,20 +503,25 @@ bool ShaderTextUtil::skipFirstMatchedString(const sead::SafeString& rStr, const 
     if (c == '\0') {
         return false;
     }
+
     do {
         for (s32 i = 0; i < length; i++) {
             if (c == '\0') {
                 return false;
             }
+
             if (rStr.at(i) != c) {
                 break;
             }
+
             (*ppText)++;
             if (i == length - 1) {
                 return true;
             }
+
             c = **ppText;
         }
+
         c = *++(*ppText);
     } while (c != '\0');
     return false;
@@ -516,10 +539,12 @@ bool ShaderTextUtil::matchString(const sead::SafeString& rStr, const char* pText
         if (*pText == '\0' || *pText != rStr.at(i)) {
             return false;
         }
+
         if (i == length - 1) {
             return true;
         }
     }
+
     return false;
 }
 
@@ -535,11 +560,14 @@ bool ShaderTextUtil::skipString(const sead::SafeString& rStr, const char** ppTex
         if (**ppText == '\0' || **ppText != rStr.at(i)) {
             return false;
         }
+
         if (i == length - 1) {
             return true;
         }
+
         (*ppText)++;
     }
+
     return false;
 }
 

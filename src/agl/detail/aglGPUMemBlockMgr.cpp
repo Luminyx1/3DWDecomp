@@ -52,6 +52,7 @@ void cocktailSort(sead::PtrArray<T>& rArray, Compare compare)
                 last = i;
             }
         }
+
         hi = last;
         if (hi <= lo)
         {
@@ -69,6 +70,7 @@ void cocktailSort(sead::PtrArray<T>& rArray, Compare compare)
                 last = i;
             }
         }
+
         lo = last;
     } while (lo != hi);
 }
@@ -89,25 +91,30 @@ MemoryPoolType MemoryPoolType::convert(MemoryAttribute attribute)
     {
         flags = (flags & 0x30) | NVN_MEMORY_POOL_FLAGS_CPU_UNCACHED;
     }
+
     MemoryPoolType type(flags);
 
     if (attr & static_cast<u32>(MemoryAttribute::CompressibleMemory))
     {
         driver::NVNMgr::instance()->setMemoryPoolSettingTexture(&type);
     }
+
     if (attr & static_cast<u32>(MemoryAttribute::CpuCached))
     {
         type.setDirect((type.getDirect() & ~7u) | NVN_MEMORY_POOL_FLAGS_CPU_CACHED);
     }
+
     if (attr & static_cast<u32>(MemoryAttribute::MemoryReserved))
     {
         type.setDirect(NVN_MEMORY_POOL_FLAGS_CPU_NO_ACCESS | NVN_MEMORY_POOL_FLAGS_GPU_NO_ACCESS |
                        NVN_MEMORY_POOL_FLAGS_PHYSICAL);
     }
+
     if (attr & static_cast<u32>(MemoryAttribute::CompressibleMemory))
     {
         type.setDirect(type.getDirect() | NVN_MEMORY_POOL_FLAGS_COMPRESSIBLE);
     }
+
     return type;
 }
 
@@ -219,6 +226,7 @@ MemoryPoolHeap::~MemoryPoolHeap()
         block->clear();
         block = next;
     }
+
     mBlockList = nullptr;
 
     mMemoryPool.finalize();
@@ -243,6 +251,7 @@ void MemoryPoolHeap::pushBack(GPUMemBlockBase* pBlock)
         mBlockList = pBlock;
         return;
     }
+
     mBlockList->addList(pBlock);
 }
 
@@ -275,6 +284,7 @@ void MemoryPoolHeap::freeToHeap(GPUMemBlockBase* pBlock)
             {
                 mBlockList = mBlockList->getNext();
             }
+
             break;
         }
     }
@@ -314,6 +324,7 @@ void GPUMemBlockMgrHeapEx::freeMemoryPoolHeap(MemoryPoolHeap* pPoolHeap)
             {
                 mTail = prev ? prev : mHead;
             }
+
             cur = pPoolHeap;
             break;
         }
@@ -370,6 +381,7 @@ void GPUMemBlockMgr::removeHeap(GPUMemBlockMgrHeapEx* pHeapEx)
     {
         mMngrHeaps.erase(index);
     }
+
     mCS.unlock();
 }
 
@@ -413,6 +425,7 @@ bool GPUMemBlockMgrHeapEx::tryAlloc(GPUMemBlockBase* pBlock, u64 size, s32 align
             {
                 cs->unlock();
             }
+
             return true;
         }
 
@@ -457,6 +470,7 @@ bool GPUMemBlockMgrHeapEx::tryAlloc(GPUMemBlockBase* pBlock, u64 size, s32 align
     {
         cs->unlock();
     }
+
     return true;
 }
 
@@ -467,6 +481,7 @@ s32 GPUMemBlockMgrHeapEx::countMemoryPoolNum() const
     {
         num++;
     }
+
     return num;
 }
 
@@ -477,6 +492,7 @@ u64 GPUMemBlockMgrHeapEx::countMemoryPoolSize() const
     {
         size += pool->getHeap()->getSize();
     }
+
     return size;
 }
 
@@ -528,18 +544,22 @@ void GPUMemBlockMgrHeapEx::genMessage(sead::hostio::Context* pContext)
         {
             sead::FormatFixedSafeString<1024> msg("%4d", index);
         }
+
         {
             sead::FormatFixedSafeString<1024> msg(
                 "0x%08x", pool->mMemoryPool.getMemoryType().getDirect());
         }
+
         {
             sead::FormatFixedSafeString<1024> msg(
                 "%12d/%12d", heap->getSize() - heap->getFreeSize(), heap->getSize());
         }
+
         {
             sead::FormatFixedSafeString<1024> msg("%4d/%4d", heap->getNodeNumMax(),
                                                   heap->getUsedNodeNum());
         }
+
         index++;
     }
 }
@@ -602,13 +622,16 @@ bool GPUMemBlockMgr::tryAllocMemory(GPUMemBlockBase* pBlock, sead::Heap* pHeap, 
                          {
                              return -1;
                          }
+
                          if (heapB < heapA)
                          {
                              return 1;
                          }
+
                          return 0;
                      });
     }
+
     mCS.unlock();
 
     return heapEx->tryAlloc(pBlock, gpuSize, gpuAlignment, size, alignment,
@@ -650,6 +673,7 @@ GPUMemBlockMgrHeapEx* GPUMemBlockMgr::findGPUMemBlockMgrHeapEx_(sead::Heap* pHea
             result = mMngrHeaps.at(mid);
             break;
         }
+
         if (diff < 0)
         {
             lo = mid + 1;
@@ -664,6 +688,7 @@ GPUMemBlockMgrHeapEx* GPUMemBlockMgr::findGPUMemBlockMgrHeapEx_(sead::Heap* pHea
     {
         *pOutIndex = mid;
     }
+
     return result;
 }
 
@@ -684,12 +709,14 @@ bool GPUMemBlockMgr::removeGPUMemBlockMgrHeapExIfNoMemoryPool(sead::Heap* pHeap)
         {
             return false;
         }
+
         removeHeap(heapEx);
         sead::Heap* heap = heapEx->getHeap();
         heapEx->~GPUMemBlockMgrHeapEx();
         heap->free(heapEx);
         removed = true;
     }
+
     return removed;
 }
 
@@ -701,6 +728,7 @@ void GPUMemBlockMgr::enableSharedMemoryPool(sead::Heap* pHeap, bool enabled)
     {
         heapEx->setAllowSharing(enabled);
     }
+
     mCS.unlock();
 }
 

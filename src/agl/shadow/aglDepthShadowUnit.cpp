@@ -33,22 +33,27 @@ inline void mergeBox(sead::BoundBox3f* pDst, const sead::BoundBox3f& rSrc)
     {
         min.x = rSrc.getMin().x;
     }
+
     if (min.y > rSrc.getMin().y)
     {
         min.y = rSrc.getMin().y;
     }
+
     if (min.z > rSrc.getMin().z)
     {
         min.z = rSrc.getMin().z;
     }
+
     if (max.x < rSrc.getMax().x)
     {
         max.x = rSrc.getMax().x;
     }
+
     if (max.y < rSrc.getMax().y)
     {
         max.y = rSrc.getMax().y;
     }
+
     if (max.z < rSrc.getMax().z)
     {
         max.z = rSrc.getMax().z;
@@ -151,6 +156,7 @@ void DepthShadowUnit::updateSceneMatrix(const LightMatrix& rLight, const sead::M
     {
         rLight.calcLightSpace(&mLightViewMtx, &mLightProjMtx, rViewMtx);
     }
+
     mFrustum.setEpsilon(epsilon);
     mFrustum.updateByViewFrustum(rViewMtx, rProjMtx, near, far);
     mCameraViewMtx = rViewMtx;
@@ -313,6 +319,7 @@ void DepthShadowUnit::addCasterClipPlanes_(const sead::Matrix34f& rViewMtx,
         {-1.0f, -1.0f, zFar}, {1.0f, -1.0f, zFar}, {1.0f, -1.0f, zNear}, {-1.0f, -1.0f, zNear},
         {-1.0f, 1.0f, zFar},  {1.0f, 1.0f, zFar},  {1.0f, 1.0f, zNear},  {-1.0f, 1.0f, zNear},
     };
+
     for (s32 i = 0; i < 8; i++)
     {
         transformProj(&points[i], invProj);
@@ -339,6 +346,7 @@ void DepthShadowUnit::addCasterClipPlanes_(const sead::Matrix34f& rViewMtx,
         {
             continue;
         }
+
         const f32 diff = sqLen - 1.0f;
         if (diff < -1.1920929e-06f || diff > 1.1920929e-06f)
         {
@@ -388,22 +396,27 @@ void DepthShadowUnit::updateDirectionalBoundingIndex_()
         {
             mMinIndex[0] = i;
         }
+
         if (points[i].y == box.getMin().y)
         {
             mMinIndex[1] = i;
         }
+
         if (points[i].z == box.getMin().z)
         {
             mMinIndex[2] = i;
         }
+
         if (points[i].x == box.getMax().x)
         {
             mMaxIndex[0] = i;
         }
+
         if (points[i].y == box.getMax().y)
         {
             mMaxIndex[1] = i;
         }
+
         if (points[i].z == box.getMax().z)
         {
             mMaxIndex[2] = i;
@@ -480,6 +493,7 @@ void DepthShadowUnit::updatePlaneClipInfo()
     {
         return;
     }
+
     updateShadowViewProjection_(mCameraViewMtx, cMatrixCalcType_Uniform, 0.0f, 0.0f,
                                 sead::Vector2i::ones);
     const sead::Vector3f lightDir = getViewDir(mLightViewMtx);
@@ -507,6 +521,7 @@ void DepthShadowUnit::updateShadowMatrix(s32 width, s32 height, f32 param0, f32 
             convBoundingToLightSpace(&box, mWorldBox[i]);
             mergeBox(&mLightBox[i], box);
         }
+
         mergeBox(&mTotalBox, mLightBox[i]);
     }
 
@@ -531,6 +546,7 @@ void DepthShadowUnit::updateShadowMatrix(s32 width, s32 height, f32 param0, f32 
     {
         mFrustum.resetPolytope();
     }
+
     if (!mIsDirectional)
     {
         mFrustum.clipByFrustum(lightViewProj);
@@ -570,6 +586,7 @@ bool DepthShadowUnit::addCasterClipPlane_(const sead::Plane3<f32>& rPlane)
         pSame->setD(sead::Mathf::max(rPlane.getD(), pSame->getD()));
         return false;
     }
+
     mClipPlanes[mClipPlaneNum] = rPlane;
     mClipPlaneNum++;
     return true;
@@ -597,6 +614,7 @@ void DepthShadowUnit::addCasterClipPlanesSweepDir_(const sead::Vector3f& rDir,
     {
         return;
     }
+
     const f32 diff = sqLen - 1.0f;
     if (diff < -1.1920929e-06f || diff > 1.1920929e-06f)
     {
@@ -656,6 +674,7 @@ void DepthShadowUnit::drawDebug(DrawContext* pDrawContext, const LightMatrix& rL
         ShadowUtil::drawFrustum(pDrawContext, mLightViewMtx, mLightProjMtx, rViewMtx, rProjMtx,
                                 sead::Color4f::cRed);
     }
+
     ShadowUtil::drawFrustum(pDrawContext, mShadowViewMtx, mShadowProjMtx, rViewMtx, rProjMtx,
                             sead::Color4f::cBlack);
 

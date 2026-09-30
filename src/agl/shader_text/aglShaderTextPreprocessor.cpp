@@ -54,10 +54,12 @@ void Preprocessor::finalize() {
         mLexicalHeap->destroy();
         mLexicalHeap = nullptr;
     }
+
     if (mSyntacticHeap) {
         mSyntacticHeap->destroy();
         mSyntacticHeap = nullptr;
     }
+
     if (mFormatHeap) {
         mFormatHeap->destroy();
         mFormatHeap = nullptr;
@@ -67,6 +69,7 @@ void Preprocessor::finalize() {
         for (u32 i = 0; i < mReplaceInfoNum; i++) {
             mReplaceInfos[i].mLinker.clear();
         }
+
         delete[] mReplaceInfos;
         mReplaceInfos = nullptr;
         mReplaceInfoNum = 0;
@@ -86,6 +89,7 @@ void Preprocessor::finalize() {
             delete linker;
             linker = next;
         }
+
         mAppendedMacros = nullptr;
     }
 }
@@ -122,6 +126,7 @@ void Preprocessor::removeClause(Clause* pBegin, Clause* pEnd, bool includeEnd) c
         removeClause(clause);
         clause = next;
     }
+
     if (includeEnd) {
         removeClause(pEnd);
     }
@@ -136,12 +141,14 @@ void Preprocessor::removeClauseAll() {
     if (clause == root) {
         return;
     }
+
     Clause* next = clause->mNext;
     while (true) {
         removeClause(clause);
         if (next == root) {
             break;
         }
+
         clause = next;
         next = clause->mNext;
     }
@@ -227,6 +234,7 @@ void Preprocessor::appendMacro(const DefineLinker* pLinker) {
     if (!mAppendedMacros) {
         mAppendedMacros = new (heap) DefineLinker();
     }
+
     if (DefineLinker* list = pLinker->cloneAll(heap, heap)) {
         mAppendedMacros->insertListAfter(list);
     }
@@ -249,6 +257,7 @@ bool Preprocessor::preprocess(u32 flags, u64 clauseNum, u64 appendHeapSize) {
         isSucceeded = lexer.execute(false);
         mErrorMessage = lexer.getErrorMessage();
     }
+
     mLexicalHeap->adjust();
     if (!isSucceeded) {
         return false;
@@ -259,6 +268,7 @@ bool Preprocessor::preprocess(u32 flags, u64 clauseNum, u64 appendHeapSize) {
     if (appendHeapSize == 0) {
         appendHeapSize = 0x40000;
     }
+
     sead::UnitHeap* clauseHeap = sead::UnitHeap::create(
         clauseNum == 0 ? 0xa00000 : clauseNum * sizeof(Clause), "clause", sizeof(Clause), 4,
         mSyntacticHeap, false);
@@ -273,6 +283,7 @@ bool Preprocessor::preprocess(u32 flags, u64 clauseNum, u64 appendHeapSize) {
             DefineLinker* root = mDefineRoot;
             root->insertListAfter(mAppendedMacros->cloneAll(appendHeap, clauseHeap));
         }
+
         resolver.initialize(mSyntacticHeap, clauseHeap, appendHeap, mText, mRoot, mDefineRoot,
                             &removeDelegate);
         resolver.setMacroReplaceInfo(mReplaceInfos, mReplaceInfoNum);
@@ -282,6 +293,7 @@ bool Preprocessor::preprocess(u32 flags, u64 clauseNum, u64 appendHeapSize) {
                                        flags & cFlag_ResolveDefine, flags & cFlag_ResolveBranch,
                                        flags & cFlag_ResolveTernary);
     }
+
     mSyntacticHeap->adjust();
     if (!isSucceeded) {
         return false;
@@ -294,20 +306,26 @@ bool Preprocessor::preprocess(u32 flags, u64 clauseNum, u64 appendHeapSize) {
         if (flags & cFlag_RemoveComment) {
             removeComment();
         }
+
         if (flags & cFlag_ForceLF) {
             forceLF();
         }
+
         if (flags & cFlag_ReduceSpace) {
             reduceSpace();
         }
+
         if (flags & cFlag_ReduceLF) {
             reduceLF();
         }
+
         if (flags & cFlag_Format) {
             format(flags & cFlag_FormatWithTab);
         }
+
         mFormatHeap->adjust();
     }
+
     return true;
 }
 
@@ -321,6 +339,7 @@ void Preprocessor::removeComment() {
         if (clause->isComment()) {
             removeClause(clause);
         }
+
         clause = next;
     }
 }
@@ -331,6 +350,7 @@ Clause* skipSpace(Clause* pClause) {
     while (pClause->mType == Clause::cType_Space) {
         pClause = pClause->mNext;
     }
+
     return pClause;
 }
 
@@ -360,6 +380,7 @@ void Preprocessor::forceLF() {
             } else {
                 clause = next;
             }
+
             break;
         }
         case Clause::cType_RBrace: {
@@ -372,10 +393,12 @@ void Preprocessor::forceLF() {
                     clause->insertAfter(new (mFormatHeap) Clause(
                         Clause::cType_LineFeed, cLineFeedText, cLineFeedText + 2));
                 }
+
                 clause = after;
             } else {
                 clause = next;
             }
+
             break;
         }
         case Clause::cType_Semicolon: {
@@ -388,6 +411,7 @@ void Preprocessor::forceLF() {
             } else {
                 clause = next;
             }
+
             break;
         }
         case Clause::cType_Sharp:
@@ -395,9 +419,11 @@ void Preprocessor::forceLF() {
                 while (clause->mType != Clause::cType_LineFeed) {
                     clause = clause->mNext;
                 }
+
                 if (clause->mPrev->mType != Clause::cType_BackSlash) {
                     break;
                 }
+
                 clause = clause->mNext;
             } while (clause->mType != Clause::cType_End);
             break;
@@ -418,12 +444,14 @@ void Preprocessor::reduceSpace() {
             clause = clause->mNext;
             continue;
         }
+
         if (clause->mEnd - clause->mBegin >= 5) {
             clause->mPrev->insertAfter(new (mFormatHeap) Clause(Clause::cType_Space, cSpaceText,
                                                                 cSpaceText + 1));
         } else {
             clause = clause->mNext;
         }
+
         if (clause->mType == Clause::cType_Space) {
             Clause* end = clause;
             do {
@@ -432,6 +460,7 @@ void Preprocessor::reduceSpace() {
             if (end != clause) {
                 removeClause(clause, end, false);
             }
+
             clause = end;
         }
     }
@@ -447,12 +476,14 @@ void Preprocessor::reduceLF() {
             clause = clause->mNext;
             continue;
         }
+
         if (clause->mEnd - clause->mBegin >= 5) {
             clause->mPrev->insertAfter(new (mFormatHeap) Clause(
                 Clause::cType_LineFeed, cLineFeedText, cLineFeedText + 2));
         } else {
             clause = clause->mNext;
         }
+
         if (clause->mType == Clause::cType_Space || clause->mType == Clause::cType_LineFeed) {
             Clause* end = clause;
             do {
@@ -461,6 +492,7 @@ void Preprocessor::reduceLF() {
             if (end != clause) {
                 removeClause(clause, end, false);
             }
+
             clause = end;
         }
     }
@@ -474,6 +506,7 @@ s32 calcColumn(const Clause* pBegin, const Clause* pEnd, s32 column) {
             column += *p == '\t' ? 4 - (column & 3) : 1;
         }
     }
+
     return column;
 }
 
@@ -497,22 +530,26 @@ void Preprocessor::format(bool useTab) {
             indent = -1;
             continue;
         }
+
         if (clause->getInfo().mIsCloseBracket) {
             stack.popBack();
             bracket = stack.size() > 0 ? stack.back() : nullptr;
             indent = -1;
             continue;
         }
+
         if (clause->mType == Clause::cType_Sharp) {
             Clause* prev = clause->mPrev;
             while (prev->mType == Clause::cType_Space) {
                 prev = prev->mPrev;
             }
+
             removeClause(prev->mNext, clause, false);
             while (clause->mType != Clause::cType_LineFeed) {
                 clause = clause->mNext;
             }
         }
+
         if (clause->mType != Clause::cType_LineFeed) {
             continue;
         }
@@ -521,6 +558,7 @@ void Preprocessor::format(bool useTab) {
         while (prev->mType == Clause::cType_Space) {
             prev = prev->mPrev;
         }
+
         removeClause(prev->mNext, clause, false);
         Clause* next = clause->mNext;
         if (next->mType == Clause::cType_Space) {
@@ -528,28 +566,33 @@ void Preprocessor::format(bool useTab) {
             while (end->mType == Clause::cType_Space) {
                 end = end->mNext;
             }
+
             removeClause(next, end, false);
         }
 
         if (!bracket) {
             continue;
         }
+
         if (indent < 0) {
             Clause* lineHead = bracket;
             while ((lineHead->mType | 2) != 2) {
                 lineHead = lineHead->mPrev;
             }
+
             s32 column = calcColumn(lineHead->mNext, bracket, 0);
             Clause* after = bracket->mNext;
             while (after->mType == Clause::cType_Space || after->isComment()) {
                 after = after->mNext;
             }
+
             if (after->mType == Clause::cType_LineFeed || after->mType == Clause::cType_BackSlash) {
                 indent = column + 4 - (column & 3);
             } else {
                 indent = calcColumn(after, after->mNext, column + 1);
             }
         }
+
         s32 tabNum = indent / 4;
         s32 spaceNum = useTab ? indent % 4 : indent;
         if (useTab && tabNum != 0) {
@@ -557,12 +600,14 @@ void Preprocessor::format(bool useTab) {
                                                          cTabText + tabNum));
             clause = clause->mNext;
         }
+
         if (spaceNum != 0) {
             clause->insertAfter(new (mFormatHeap) Clause(Clause::cType_Space, cSpaceText,
                                                          cSpaceText + spaceNum));
             clause = clause->mNext;
         }
     }
+
     stack.freeBuffer();
 
     u32 lineFeedNum = 0;
@@ -578,9 +623,11 @@ void Preprocessor::format(bool useTab) {
                     clause->set(Clause::cType_LineFeed, cLineFeedText,
                                 cLineFeedText + (2 - lineFeedNum) * 2);
                 }
+
                 num = 2;
             }
         }
+
         lineFeedNum = num;
         clause = next;
     }
@@ -598,6 +645,7 @@ s32 Preprocessor::construct(sead::BufferedSafeString* pDst) const {
     for (Clause* clause = root->mNext; clause != root; clause = clause->mNext) {
         length += clause->appendTo(pDst, length);
     }
+
     return length + 1;
 }
 
@@ -610,6 +658,7 @@ u64 Preprocessor::calcConstructLength() const {
     for (Clause* clause = mRoot->mNext; clause != mRoot; clause = clause->mNext) {
         length += clause->mEnd - clause->mBegin;
     }
+
     return length;
 }
 

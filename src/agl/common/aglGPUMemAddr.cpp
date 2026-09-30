@@ -34,6 +34,7 @@ u32 GPUMemAddrBase::verify_() const
             {
                 return 1;
             }
+
             if (mMemoryBlock->mpMemoryPool != mMemoryPool)
             {
                 return 2;

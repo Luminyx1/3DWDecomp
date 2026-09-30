@@ -50,6 +50,7 @@ Clause::Type Lexer::findNumberBlock() const {
         mBegin = mCurrent;
         mEnd = end;
     }
+
     return type;
 }
 
@@ -80,6 +81,7 @@ bool Lexer::execute(bool skipSpace) {
             while (*p == ' ' || *p == '\t' || *p == '\n' || *p == '\r') {
                 p++;
             }
+
             mCurrent = p;
         }
 
@@ -93,6 +95,7 @@ bool Lexer::execute(bool skipSpace) {
             while (*p == ' ' || *p == '\t') {
                 p++;
             }
+
             mEnd = p;
             mCurrent = p;
             type = Clause::cType_Space;
@@ -105,6 +108,7 @@ bool Lexer::execute(bool skipSpace) {
             while (*p == '\r' || *p == '\n') {
                 p++;
             }
+
             mEnd = p;
             mCurrent = p;
             type = Clause::cType_LineFeed;
@@ -118,6 +122,7 @@ bool Lexer::execute(bool skipSpace) {
                 mCurrent = setupCurrentRange(1);
                 type = Clause::cType_Not;
             }
+
             break;
         case '"':
             mCurrent = setupCurrentRange(1);
@@ -125,6 +130,7 @@ bool Lexer::execute(bool skipSpace) {
             mBegin = mCurrent;
             for (mEnd = mCurrent; *mEnd != '"'; mEnd++) {
             }
+
             mCurrent = mEnd;
             createClause(Clause::cType_Word);
             mCurrent = setupCurrentRange(1);
@@ -138,6 +144,7 @@ bool Lexer::execute(bool skipSpace) {
                 mCurrent = setupCurrentRange(1);
                 type = Clause::cType_Sharp;
             }
+
             break;
         case '$':
             mCurrent = setupCurrentRange(1);
@@ -151,6 +158,7 @@ bool Lexer::execute(bool skipSpace) {
                 mCurrent = setupCurrentRange(1);
                 type = Clause::cType_Mod;
             }
+
             break;
         case '&':
             if (mCurrent[1] == '&') {
@@ -163,6 +171,7 @@ bool Lexer::execute(bool skipSpace) {
                 mCurrent = setupCurrentRange(1);
                 type = Clause::cType_And;
             }
+
             break;
         case '\'':
             mCurrent = setupCurrentRange(1);
@@ -170,6 +179,7 @@ bool Lexer::execute(bool skipSpace) {
             mBegin = mCurrent;
             for (mEnd = mCurrent; *mEnd != '\''; mEnd++) {
             }
+
             mCurrent = mEnd;
             createClause(Clause::cType_Word);
             mCurrent = setupCurrentRange(1);
@@ -191,6 +201,7 @@ bool Lexer::execute(bool skipSpace) {
                 mCurrent = setupCurrentRange(1);
                 type = Clause::cType_Mul;
             }
+
             break;
         case '+':
             if (mCurrent[1] == '+') {
@@ -203,6 +214,7 @@ bool Lexer::execute(bool skipSpace) {
                 mCurrent = setupCurrentRange(1);
                 type = Clause::cType_Plus;
             }
+
             break;
         case ',':
             mCurrent = setupCurrentRange(1);
@@ -222,6 +234,7 @@ bool Lexer::execute(bool skipSpace) {
                 mCurrent = setupCurrentRange(1);
                 type = Clause::cType_Minus;
             }
+
             break;
         case '.':
             type = findNumberBlock();
@@ -231,6 +244,7 @@ bool Lexer::execute(bool skipSpace) {
                 mCurrent = setupCurrentRange(1);
                 type = Clause::cType_Dot;
             }
+
             break;
         case '/':
             if (mCurrent[1] == '*') {
@@ -242,21 +256,25 @@ bool Lexer::execute(bool skipSpace) {
                         break;
                     }
                 }
+
                 if (*mEnd != '\0') {
                     mEnd += 2;
                     mCurrent = mEnd;
                     type = hasLineFeed ? Clause::cType_BlockCommentLF : Clause::cType_BlockComment;
                     break;
                 }
+
                 mErrorMessage = "invalid";
                 isContinue = false;
                 goto word;
             }
+
             if (mCurrent[1] == '/') {
                 mBegin = mCurrent;
                 for (mEnd = mCurrent; !(*mEnd == '\0' || *mEnd == '\n' || *mEnd == '\r');
                      mEnd++) {
                 }
+
                 mCurrent = mEnd;
                 type = Clause::cType_LineComment;
             } else if (mCurrent[1] == '=') {
@@ -266,6 +284,7 @@ bool Lexer::execute(bool skipSpace) {
                 mCurrent = setupCurrentRange(1);
                 type = Clause::cType_Div;
             }
+
             break;
         case ':':
             mCurrent = setupCurrentRange(1);
@@ -291,6 +310,7 @@ bool Lexer::execute(bool skipSpace) {
                 mCurrent = setupCurrentRange(1);
                 type = Clause::cType_Less;
             }
+
             break;
         case '=':
             if (mCurrent[1] == '=') {
@@ -300,6 +320,7 @@ bool Lexer::execute(bool skipSpace) {
                 mCurrent = setupCurrentRange(1);
                 type = Clause::cType_Assign;
             }
+
             break;
         case '>':
             if (mCurrent[1] == '>') {
@@ -317,6 +338,7 @@ bool Lexer::execute(bool skipSpace) {
                 mCurrent = setupCurrentRange(1);
                 type = Clause::cType_Greater;
             }
+
             break;
         case '?':
             mCurrent = setupCurrentRange(1);
@@ -346,6 +368,7 @@ bool Lexer::execute(bool skipSpace) {
                 mCurrent = setupCurrentRange(1);
                 type = Clause::cType_Xor;
             }
+
             break;
         case '`':
             mCurrent = setupCurrentRange(1);
@@ -366,6 +389,7 @@ bool Lexer::execute(bool skipSpace) {
                 mCurrent = setupCurrentRange(1);
                 type = Clause::cType_Or;
             }
+
             break;
         case '}':
             mCurrent = setupCurrentRange(1);
@@ -388,11 +412,14 @@ bool Lexer::execute(bool skipSpace) {
                 mBegin = mCurrent;
                 for (mEnd = mCurrent; !detail::IsDelimiter(*mEnd); mEnd++) {
                 }
+
                 mCurrent = mEnd;
                 type = Clause::cType_Word;
             }
+
             break;
         }
+
         createClause(type);
     } while (isContinue);
 

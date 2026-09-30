@@ -264,6 +264,7 @@ void ShaderCompileInfo::calcCompileSource(ShaderType type, sead::BufferedSafeStr
             values[num] = mMacroValue.unsafeAt(i);
             num++;
         }
+
         for (s32 i = 0; i < mVariationName.size(); i++, num++) {
             names[num] = mVariationName.unsafeAt(i);
             values[num] = mVariationValue.unsafeAt(i);
@@ -284,6 +285,7 @@ void ShaderCompileInfo::calcCompileSource(ShaderType type, sead::BufferedSafeStr
                 pDst, MacroArray::getData(mMacroName), MacroArray::getData(mMacroValue), mMacroName.size(),
                 resource->getWorkBuffer(), resource->getWorkBufferSize());
         }
+
         if (mVariationName.size() > 0) {
             detail::PrivateResource* resource = detail::PrivateResource::instance();
             detail::ShaderTextUtil::replaceMacro(

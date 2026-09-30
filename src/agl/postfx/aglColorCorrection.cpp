@@ -45,6 +45,7 @@ void ColorCorrection::resetAll()
         f32 value = f32(i) / 7.0f;
         mLevelTable[i].set(value, value, value, value);
     }
+
     mLevelTable[cLevelTableNum - 1] = mLevelTable[cLevelTableNum - 2];
     *mToyCameraOffset1 = sead::Color4f::cBlack;
     *mToyCameraOffset2 = sead::Color4f::cBlack;
@@ -100,6 +101,7 @@ void ColorCorrection::initialize(s32 contextNum, sead::Heap* pHeap, bool unused)
         mRenderTarget[i].setMipLevel(0);
         mRenderBuffer.setRenderTargetColor(&mRenderTarget[i], i);
     }
+
     mMapSampler.applyTextureData(mMapTexture);
     mMapScaleOffset.set(0.875f, 0.0625f);
 }
@@ -110,6 +112,7 @@ void ColorCorrection::drawMap(DrawContext* pDrawContext) const
     {
         return;
     }
+
     if (detail::isDynamicTextureCaching())
     {
         return;
@@ -130,10 +133,12 @@ void ColorCorrection::drawMap(DrawContext* pDrawContext) const
         sead::Vector4f param(0.571428597f, 0.500199974f, 0.500100017f, 0.500100017f);
         program->getUniformLocation(0).setUniform(pDrawContext, 4, &param);
     }
+
     {
         sead::Vector4f param(*mHue / 60.0f, *mSaturation, *mBrightness, 1.0f / *mGamma);
         program->getUniformLocation(1).setUniform(pDrawContext, 4, &param);
     }
+
     program->getUniformLocation(2).setUniform(pDrawContext, 0x20, &mLevelTable[0]);
     program->getUniformLocation(3).setUniform(pDrawContext, 0x20, &mLevelTable[1]);
 
@@ -187,22 +192,27 @@ void ColorCorrection::updateProgram_() const
     {
         mVariationIndex = program->getVariationMacroStride(0);
     }
+
     if (mFlags.isOn(cFlag_Level))
     {
         mVariationIndex += program->getVariationMacroStride(1);
     }
+
     if (mFlags.isOn(cFlag_Gamma))
     {
         mVariationIndex += program->getVariationMacroStride(2);
     }
+
     if (mFlags.isOn(cFlag_ToyCamera))
     {
         mVariationIndex += program->getVariationMacroStride(3);
     }
+
     if (mFlags.isOn(cFlag_ToyCameraFirst))
     {
         mVariationIndex += program->getVariationMacroStride(4);
     }
+
     mFlags.reset(cFlag_UpdateProgram);
 }
 
@@ -213,6 +223,7 @@ void ColorCorrection::draw(DrawContext* pDrawContext, s32 context,
     {
         return;
     }
+
     TextureSampler& sampler = const_cast<TextureSampler&>(mSamplers[context]);
     sampler.applyTextureData(*reinterpret_cast<const TextureData*>(
         rRenderBuffer.getRenderTargetColor()));
@@ -226,6 +237,7 @@ void ColorCorrection::draw(DrawContext* pDrawContext, s32 context,
     {
         return;
     }
+
     TextureSampler& sampler = const_cast<TextureSampler&>(mSamplers[context]);
     sampler.applyTextureData(rTexture);
     draw(pDrawContext, context, rRenderBuffer, mSamplers[context]);
@@ -262,6 +274,7 @@ void ColorCorrection::genMessage(sead::hostio::Context* pContext)
     {
         mDebugTexturePage->genMessagePage(pContext, this);
     }
+
     mEnable.genMessageParameter(pContext, mEnable.getMeta());
     mToyCameraFirst.genMessageParameter(pContext, mToyCameraFirst.getMeta());
     genMessageParameters(pContext);
@@ -279,6 +292,7 @@ void ColorCorrection::genMessageParameters(sead::hostio::Context* pContext)
         genMessageHsbParameters(pContext);
         genMessageToyCameraParameters(pContext);
     }
+
     mLevelCurve.genMessageParameters(pContext);
     mGamma.genMessageParameter(pContext, mGamma.getMeta());
 }
@@ -290,6 +304,7 @@ void ColorCorrection::genMessageToyCameraParameters(sead::hostio::Context* pCont
     {
         return;
     }
+
     mToyCameraOffset1.genMessageParameter(pContext, mToyCameraOffset1.getMeta());
     mToyCameraLevel1.genMessageParameter(pContext, mToyCameraLevel1.getMeta());
     mToyCameraSaturation1.genMessageParameter(pContext, mToyCameraSaturation1.getMeta());
@@ -319,6 +334,7 @@ void ColorCorrection::listenPropertyEvent(const sead::hostio::PropertyEvent* pEv
     {
         resetAll();
     }
+
     uintptr_t id = pEvent->getIdValue();
     if (id >= reinterpret_cast<uintptr_t>(&mLevelCurve) &&
         id < reinterpret_cast<uintptr_t>(&mDebugTexturePage))
@@ -326,6 +342,7 @@ void ColorCorrection::listenPropertyEvent(const sead::hostio::PropertyEvent* pEv
         mLevelCurve.listenPropertyEventParameters(this, pEvent);
         updateCurves_();
     }
+
     updateFlags_();
 }
 
@@ -341,6 +358,7 @@ void ColorCorrection::updateCurves_()
             auto& curve = mLevelCurve.getCurve().getCurve(j);
             (&level.x)[j] = curve.sead::hostio::Curve<f32>::interpolateToF32(t);
         }
+
         if (!sead::MathCalcCommon<f32>::equalsEpsilon(t, level.x) ||
             !sead::MathCalcCommon<f32>::equalsEpsilon(t, level.y) ||
             !sead::MathCalcCommon<f32>::equalsEpsilon(t, level.z))
@@ -348,6 +366,7 @@ void ColorCorrection::updateCurves_()
             isLevel = true;
         }
     }
+
     mLevelTable[cLevelTableNum - 1] = mLevelTable[cLevelTableNum - 2];
 
     if (mFlags.isOn(cFlag_Level) != isLevel)
@@ -355,6 +374,7 @@ void ColorCorrection::updateCurves_()
         mFlags.change(cFlag_Level, isLevel);
         mFlags.set(cFlag_UpdateProgram);
     }
+
     mFlags.set(cFlag_UpdateMap);
 }
 
@@ -416,6 +436,7 @@ void ColorCorrection::setHue(f32 hue)
             mFlags.change(cFlag_Hue, enablePassHue_());
             mFlags.set(cFlag_UpdateProgram);
         }
+
         mFlags.set(cFlag_UpdateMap);
     }
 }
@@ -432,6 +453,7 @@ void ColorCorrection::setSaturation(f32 saturation)
             mFlags.change(cFlag_Saturation, enablePassSaturation_());
             mFlags.set(cFlag_UpdateProgram);
         }
+
         mFlags.set(cFlag_UpdateMap);
     }
 }
@@ -448,6 +470,7 @@ void ColorCorrection::setBrightness(f32 brightness)
             mFlags.change(cFlag_Brightness, enablePassBrightness_());
             mFlags.set(cFlag_UpdateProgram);
         }
+
         mFlags.set(cFlag_UpdateMap);
     }
 }
@@ -464,6 +487,7 @@ void ColorCorrection::setGamma(f32 gamma)
             mFlags.change(cFlag_Gamma, enablePassGamma_());
             mFlags.set(cFlag_UpdateProgram);
         }
+
         mFlags.set(cFlag_UpdateMap);
     }
 }
@@ -482,6 +506,7 @@ void ColorCorrection::setLevelCurve_(u32 index, sead::hostio::CurveType type, co
     {
         pDst[i] = pData[i];
     }
+
     updateCurves_();
 }
 
@@ -594,6 +619,7 @@ f32 ColorCorrection::calcHue_(f32 r, f32 g, f32 b) const
     {
         hue += 1.0f;
     }
+
     return hue;
 }
 
@@ -604,10 +630,12 @@ void ColorCorrection::calcRGB_(u32* pDst, f32 h, f32 s, f32 v) const
     {
         h -= 1.0f;
     }
+
     if (h < 0.0f)
     {
         h += 1.0f;
     }
+
     h *= 6.0f;
     s32 i = sead::MathCalcCommon<f32>::floor(h);
     s *= *mSaturation;

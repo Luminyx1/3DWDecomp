@@ -39,6 +39,7 @@ void RenderStep::calc()
                 last = i;
             }
         }
+
         bottom = last;
         if (top >= bottom)
         {
@@ -56,6 +57,7 @@ void RenderStep::calc()
                 last = i;
             }
         }
+
         top = last;
     }
 }
@@ -74,6 +76,7 @@ bool RenderStep::pushBack(DrawMethod* pMethod)
             return false;
         }
     }
+
     mDrawMethod.pushBack(pMethod);
     return true;
 }
@@ -100,6 +103,7 @@ s32 RenderStep::removeByObject(const void* pObject)
             ++it;
         }
     }
+
     return count;
 }
 
@@ -125,6 +129,7 @@ s32 RenderStep::remove(const DrawMethod* pMethod)
             ++it;
         }
     }
+
     return count;
 }
 

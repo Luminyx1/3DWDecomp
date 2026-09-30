@@ -138,10 +138,12 @@ void AtomicPtrArrayImpl::sort(CompareCallbackImpl cmp)
                 last = i;
             }
         }
+
         if (last <= lo)
         {
             break;
         }
+
         hi = last;
 
         for (s32 i = hi; i > lo; --i)
@@ -155,6 +157,7 @@ void AtomicPtrArrayImpl::sort(CompareCallbackImpl cmp)
                 last = i;
             }
         }
+
         lo = last;
     } while (lo != hi);
 }
@@ -179,14 +182,17 @@ void AtomicPtrArrayImpl::heapSort(CompareCallbackImpl cmp)
             {
                 child++;
             }
+
             if (cmp(value, ptrs[child - 1]) >= 0)
             {
                 break;
             }
+
             ptrs[parent - 1] = ptrs[child - 1];
             parent = child;
             child = parent * 2;
         }
+
         ptrs[parent - 1] = value;
     }
 
@@ -203,14 +209,17 @@ void AtomicPtrArrayImpl::heapSort(CompareCallbackImpl cmp)
             {
                 child++;
             }
+
             if (cmp(value, ptrs[child - 1]) >= 0)
             {
                 break;
             }
+
             ptrs[parent - 1] = ptrs[child - 1];
             parent = child;
             child = parent * 2;
         }
+
         ptrs[parent - 1] = value;
     }
 }

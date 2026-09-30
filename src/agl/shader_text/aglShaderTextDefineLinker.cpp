@@ -23,6 +23,7 @@ void DefineLinker::clear() {
     if (!mRoot) {
         return;
     }
+
     Clause* root = mRoot;
     Clause* clause = root->mNext;
     if (clause != root) {
@@ -33,10 +34,12 @@ void DefineLinker::clear() {
             if (next == root) {
                 break;
             }
+
             clause = next;
             next = clause->mNext;
         }
     }
+
     delete mRoot;
     mRoot = nullptr;
     mName = nullptr;
@@ -76,8 +79,10 @@ bool DefineLinker::setImpl(sead::Heap* pHeap, const Clause* pBegin, const Clause
             delete clause;
             next = next->mNext;
         }
+
         clause = next;
     }
+
     return setDirect(root, 2, calcHash);
 }
 
@@ -101,9 +106,11 @@ bool DefineLinker::setDirect(Clause* pRoot, u32 index, bool calcHash) {
             break;
         }
     }
+
     if (clause == pRoot) {
         return false;
     }
+
     mName = clause;
 
     s32 depth = 0;
@@ -118,6 +125,7 @@ bool DefineLinker::setDirect(Clause* pRoot, u32 index, bool calcHash) {
                     break;
                 }
             }
+
             depth++;
             hasArgs = true;
         } else if (depth == 0) {
@@ -130,6 +138,7 @@ bool DefineLinker::setDirect(Clause* pRoot, u32 index, bool calcHash) {
         while (clause->mType == Clause::cType_Space || clause->mType == Clause::cType_LineFeed) {
             clause = clause->mNext;
         }
+
         mValueBegin = clause;
         if (clause->mType != Clause::cType_None) {
             Clause* last = pRoot->mPrev;
@@ -137,6 +146,7 @@ bool DefineLinker::setDirect(Clause* pRoot, u32 index, bool calcHash) {
             while (last->mType == Clause::cType_Space) {
                 last = last->mPrev;
             }
+
             mValueEnd = last;
             mValueEnd = last->mNext;
             if (mValueEnd) {
@@ -144,6 +154,7 @@ bool DefineLinker::setDirect(Clause* pRoot, u32 index, bool calcHash) {
             }
         }
     }
+
     mValueBegin = nullptr;
     mValueEnd = nullptr;
 
@@ -151,6 +162,7 @@ end:
     if (calcHash) {
         mHash = mName->calcHash(0);
     }
+
     return true;
 }
 
@@ -180,6 +192,7 @@ void DefineLinker::replace(sead::Heap* pHeap, const Clause* pBegin, const Clause
             delete clause;
             clause = next;
         }
+
         if (mValueEnd != mRoot) {
             mValueEnd->erase();
             delete mValueEnd;
@@ -227,8 +240,10 @@ DefineLinker* DefineLinker::cloneAll(sead::Heap* pHeap, sead::Heap* pClauseHeap)
         } else {
             head = copy;
         }
+
         last = copy;
     }
+
     return head;
 }
 

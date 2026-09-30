@@ -86,6 +86,7 @@ void BlurFilter::draw(DrawContext* pDrawContext, const RenderBuffer& rRenderBuff
     {
         return;
     }
+
     if (mReduceScale == utl::ImageFilter2D::cReduceScale_1 && (mIteration == 0 || mBlurType == 0))
     {
         return;
@@ -113,6 +114,7 @@ void BlurFilter::draw(DrawContext* pDrawContext, const RenderBuffer& rRenderBuff
             utl::ImageFilter2D::drawTexture(pDrawContext, sampler, viewport, sead::Vector2f::ones,
                                             sead::Vector2f::zero);
         }
+
         sampler.applyTextureData(mTexture[0]);
     }
 

@@ -41,6 +41,7 @@ void LightMatrix::update(const sead::Vector3f& rDir)
     {
         up.setCross(dir, sead::Vector3f::ez);
     }
+
     ShadowUtil::calcViewMatrix(&mViewMtx, sead::Vector3f::zero, rDir, up);
 
     mProjMtx.makeIdentity();
@@ -75,6 +76,7 @@ void LightMatrix::update(const sead::Vector3f& rPos, const sead::Vector3f& rDir,
                                                sead::Mathf::clamp(absFovy, 0.001f, 3.1405928f), a);
         mProjMtx = projection.getProjectionMatrix();
     }
+
     mIsDirectional = false;
 }
 
@@ -113,6 +115,7 @@ void LightMatrix::calcLightSpace(sead::Matrix34f* pViewMtx, sead::Matrix44f* pPr
             *pViewMtx = mViewMtx;
         }
     }
+
     if (pProjMtx)
     {
         *pProjMtx = mProjMtx;
@@ -141,6 +144,7 @@ void LightMatrix::calcLightSpace(sead::Matrix34f* pViewMtx, sead::Matrix44f* pPr
             *pViewMtx = mViewMtx;
         }
     }
+
     if (pProjMtx)
     {
         *pProjMtx = mProjMtx;

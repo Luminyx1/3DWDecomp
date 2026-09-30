@@ -55,6 +55,7 @@ void sortPtrArray(sead::PtrArray<T>& rArray, Compare compare)
                 last = i;
             }
         }
+
         hi = last;
         if (hi <= lo)
         {
@@ -72,6 +73,7 @@ void sortPtrArray(sead::PtrArray<T>& rArray, Compare compare)
                 last = i;
             }
         }
+
         lo = last;
     } while (lo != hi);
 }
@@ -186,6 +188,7 @@ s32 binarySearch(const sead::PtrArray<T>& rArray, const Key* pKey,
         {
             return m;
         }
+
         if (c < 0)
         {
             a = m + 1;
@@ -200,6 +203,7 @@ s32 binarySearch(const sead::PtrArray<T>& rArray, const Key* pKey,
     {
         return a;
     }
+
     return -1;
 }
 
@@ -220,6 +224,7 @@ NVNMgr* NVNMgr::createInstance(sead::Heap* pHeap)
         SingletonDisposer_::sStaticDisposer = new (disposerBuffer) SingletonDisposer_(pHeap);
         sInstance = new (buffer) NVNMgr();
     }
+
     return static_cast<NVNMgr*>(sInstance);
 }
 
@@ -240,6 +245,7 @@ NVNMgr::NVNMgr()
     {
         counter.storeNonAtomic(0);
     }
+
     mName.append("Default");
 }
 
@@ -378,6 +384,7 @@ u32 NVNMgr::registerSampler(const NVNsampler* pSampler, const char* pName)
                     {
                         mRegisteredSamplerNum++;
                     }
+
                     return id;
                 }
             }
@@ -400,8 +407,10 @@ u32 NVNMgr::registerSampler(const NVNsampler* pSampler, const char* pName)
                         {
                             mRegisteredSamplerNum++;
                         }
+
                         return id;
                     }
+
                     if (i + 1 >= num || mSamplerList.unsafeAt(i + 1)->mKey != key16)
                     {
                         break;
@@ -467,6 +476,7 @@ s32 NVNMgr::registerSampler_(s32 index, const NVNsampler* pSampler, u32 key)
     {
         u8 mData[0x60];
     };
+
     *reinterpret_cast<SamplerData*>(sampler.mSampler) =
         *reinterpret_cast<const SamplerData*>(pSampler);
     sampler.mKey = key;
@@ -486,6 +496,7 @@ s32 NVNMgr::registerSampler_(s32 index, const NVNsampler* pSampler, u32 key)
         sampler.mFlags |= 1;
         sortPtrArray(mSamplerList, compareSamplerKey_);
     }
+
     cs->unlock();
     return id;
 }
@@ -526,6 +537,7 @@ bool NVNMgr::releaseSampler(u32 id)
         mRegisteredSamplerNum--;
         return true;
     }
+
     return false;
 }
 
@@ -575,6 +587,7 @@ s32 NVNMgr::registerTexture(const NVNtexture* pTexture, const NVNtextureView* pV
         {
             return id;
         }
+
         index = mTextureCursor++ & (mTextures.size() - 1);
     } while (index != start);
 
@@ -615,8 +628,10 @@ s32 NVNMgr::registerTexture_(s32 index, const NVNtexture* pTexture, const NVNtex
                 texture.mFlags.fetchAnd(~1u);
             }
         }
+
         mRegisteredTextureNum++;
     }
+
     return id;
 }
 
@@ -642,6 +657,7 @@ bool NVNMgr::releaseTexture(u32 id)
         mRegisteredTextureNum--;
         return true;
     }
+
     return false;
 }
 
@@ -706,6 +722,7 @@ u32 NVNMgr::getTextureFlags(bool compressible, bool minimalLayout, NVNformat for
             flags |= NVN_TEXTURE_FLAGS_ADAPTIVE_ZCULL;
         }
     }
+
     return flags;
 }
 
@@ -738,6 +755,7 @@ void NVNMgr::enableTiledCaching(DrawContext* pDrawContext, u32 tileWidth, u32 ti
         tileWidth = mTileWidth;
         tileHeight = mTileHeight;
     }
+
     nvnCommandBufferSetTiledCacheAction(getNvnCommandBuffer(pDrawContext),
                                         NVN_TILED_CACHE_ACTION_ENABLE);
     nvnCommandBufferSetTiledCacheTileSize(getNvnCommandBuffer(pDrawContext), tileWidth,
@@ -754,6 +772,7 @@ void NVNMgr::disableTiledCaching(DrawContext* pDrawContext) const
     {
         return;
     }
+
     nvnCommandBufferSetTiledCacheAction(getNvnCommandBuffer(pDrawContext),
                                         NVN_TILED_CACHE_ACTION_DISABLE);
 }
@@ -768,6 +787,7 @@ void NVNMgr::beginTiledCachingDebug(DrawContext* pDrawContext) const
     {
         return;
     }
+
     nvnCommandBufferSetTiledCacheAction(getNvnCommandBuffer(pDrawContext),
                                         NVN_TILED_CACHE_ACTION_ENABLE);
     nvnCommandBufferSetTiledCacheTileSize(getNvnCommandBuffer(pDrawContext), mTileWidth,
@@ -784,6 +804,7 @@ void NVNMgr::endTiledCachingDebug(DrawContext* pDrawContext) const
     {
         return;
     }
+
     nvnCommandBufferSetTiledCacheAction(getNvnCommandBuffer(pDrawContext),
                                         NVN_TILED_CACHE_ACTION_DISABLE);
 }
@@ -977,31 +998,38 @@ void NVNMgr::genMessage(sead::hostio::Context* pContext)
             "Texture: %d/%d", mRegisteredTextureNum.load(),
             graphicsMember<s32>(sead::GraphicsNvn::instance(), 0x110));
     }
+
     {
         sead::FormatFixedSafeString<1024> msg("Num:%d Total:%d[byte] %d[ns]", mCopyNum.load(),
                                               mCopySize.load(), mCopyTime.load());
     }
+
     {
         sead::FormatFixedSafeString<1024> msg(
             "Time:%f[MB/s]",
             static_cast<f32>(mCopySize.load() >> 20) / static_cast<f32>(mCopyTime.load() / 1000000));
     }
+
     {
         sead::FormatFixedSafeString<1024> msg("%s:%d", "nvnCommandBufferInitialize/Finalize",
                                               mCounters[0].load());
     }
+
     {
         sead::FormatFixedSafeString<1024> msg("%s:%d", "nvnTextureInitialize/Finalize",
                                               mCounters[1].load());
     }
+
     {
         sead::FormatFixedSafeString<1024> msg("%s:%d", "nvnSamplerInitialize/Finalize",
                                               mCounters[2].load());
     }
+
     {
         sead::FormatFixedSafeString<1024> msg("%s:%d", "nvnBufferInitialize/Finalize(Vertex)",
                                               mCounters[3].load());
     }
+
     {
         sead::FormatFixedSafeString<1024> msg(
             "%s:%d", "nvnBufferInitialize/Finalize(UniformBlock)", mCounters[4].load());
@@ -1022,6 +1050,7 @@ void NVNMgr::genMessage(sead::hostio::Context* pContext)
         sead::FormatFixedSafeString<1024> msg("??:%d/%d", mRegisteredSamplerNum,
                                               mSamplers.size());
     }
+
     {
         sead::ScopedLock<sead::CriticalSection> lock(&mSamplerCS);
         for (auto it = mSamplers.begin(), end = mSamplers.end(); it != end; ++it)
@@ -1039,6 +1068,7 @@ void NVNMgr::genMessage(sead::hostio::Context* pContext)
         sead::FormatFixedSafeString<1024> msg("??:%d/%d", mRegisteredTextureNum.load(),
                                               mTextures.size());
     }
+
     for (auto it = mTextures.begin(), end = mTextures.end(); it != end; ++it)
     {
         const TextureInfo& texture = *it;
