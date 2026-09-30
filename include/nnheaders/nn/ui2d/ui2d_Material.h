@@ -13,11 +13,14 @@ namespace ui2d {
 class AnimTransform;
 class BuildResultInformation;
 struct UserShaderInformation;
+class TextureInfo;
 
 class TexMap {
 public:
     void SetWrapMode(TexWrap, TexWrap);
     void SetFilter(TexFilter, TexFilter);
+    unsigned char _00[8];
+    const TextureInfo* m_pTextureInfo;
 };
 
 class Material {
@@ -34,8 +37,13 @@ public:
 
     void SetTextureNum(u8 count) { mTextureCount = (mTextureCount & 0xf) | (count << 4); }
     TexMap* GetFirstTexMap() { return m_pTexMaps; }
+    // index selects the material slot; pInfo supplies its texture description.
+    void SetTextureInfo(int index, const TextureInfo* pInfo) {
+        m_pTexMaps[index].m_pTextureInfo = pInfo;
+    }
 
-    unsigned char _08[0x10];
+    unsigned char _08[0xc];
+    u32 mResourceCounts;
     TexMap* m_pTexMaps;
     unsigned char _20[0x28];
     u8 mTextureCount;

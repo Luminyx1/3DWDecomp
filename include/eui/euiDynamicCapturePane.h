@@ -21,6 +21,7 @@ public:
     void Draw(nn::ui2d::DrawInfo&, nn::gfx::CommandBuffer&) override;
     void freeDynamicTexture();
     void applyTextureInfoToMaterialForCalculate(nn::ui2d::Pane*, const nn::ui2d::Size&, int);
+    void initialize_(LayoutEx* pLayout);
 
     const nn::ui2d::TextureInfo& getTextureInfo() const {
         return m_TextureInfo;

@@ -59247,9 +59247,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71009828F0			FALSE	_ZN2al19WaveVibrationHolder24stopVibrationDirectValueEi	al::WaveVibrationHolder::stopVibrationDirectValue(int)	
 0x7100982940			FALSE	_ZN4sead8PtrArrayIN2al17WaveVibrationDataEE4sortEv	sead::PtrArray<al::WaveVibrationData>::sort()	
 0x7100982A70			FALSE	_ZN2al19WaveVibrationHolder18audioFrameProcess_Ev	al::WaveVibrationHolder::audioFrameProcess_()	
-0x7100982A80	aal	GamePadWaveVibrationData.o	FALSE	_ZN3aal18IAudioFrameProcessD2Ev	aal::IAudioFrameProcess::~IAudioFrameProcess()	folder (aal namespace); object (smo)
+0x7100982A80			FALSE	_ZN3aal18IAudioFrameProcessD2Ev	aal::IAudioFrameProcess::~IAudioFrameProcess()	folder (aal namespace); object (smo)
 0x7100982A90			FALSE	_ZN2al19WaveVibrationHolderD0Ev	al::WaveVibrationHolder::~WaveVibrationHolder()	
-0x7100982AA0			FALSE	_ZNK2al17WaveVibrationDataltERKS0_	al::WaveVibrationData::operator<(al::WaveVibrationData const&) const	
+0x7100982AA0	Project/Controller	WaveVibrationPlayer.o	FALSE	_ZNK2al17WaveVibrationDataltERKS0_	al::WaveVibrationData::operator<(al::WaveVibrationData const&) const
 0x7100982AD0			FALSE	_ZN2al19WaveVibrationPlayerC1EPN2nn3hid14VibrationMixerES4_	al::WaveVibrationPlayer::WaveVibrationPlayer(nn::hid::VibrationMixer*, nn::hid::VibrationMixer*)	
 0x7100982B80			FALSE	_ZN2al19WaveVibrationPlayer6updateEv	al::WaveVibrationPlayer::update()	
 0x7100982C40			FALSE	_ZN2al19WaveVibrationPlayer12startOneTimeEPKNS_17WaveVibrationDataEffffiib	al::WaveVibrationPlayer::startOneTime(al::WaveVibrationData const*, float, float, float, float, int, int, bool)	

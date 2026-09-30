@@ -22,6 +22,7 @@ struct Size {
     float height;
 };
 struct ResPane;
+struct ResExtUserData;
 struct BuildArgSet;
 namespace detail {
 class BuildPaneTreeContext;
@@ -81,6 +82,7 @@ public:
 
     void CopyImpl(const Pane&, nn::gfx::Device*, const Layout*, detail::BuildPaneTreeContext*);
     Material* GetMaterial() const;
+    const ResExtUserData* FindExtUserDataByName(const char* pName) const;
     void SetName(const char*);
     void SetUserData(const char*);
     void AppendChild(Pane*);

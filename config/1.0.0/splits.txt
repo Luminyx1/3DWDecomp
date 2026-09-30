@@ -5486,9 +5486,9 @@ src/al/Project/Controller/PadRumbleDirector.cpp:
 src/al/Project/Controller/PadRumbleFunction.cpp:
     .text   start:0x0097F070 end:0x009800F0
 src/al/Project/Controller/ReplayController.cpp:
-    .text   start:0x009800F0 end:0x00982A74
-src/aal/GamePadWaveVibrationData.cpp:
-    .text   start:0x00982A80 end:0x00983070
+    .text   start:0x009800F0 end:0x00982A94
+src/al/Project/Controller/WaveVibrationPlayer.cpp:
+    .text   start:0x00982AA0 end:0x00983070
 src/al/Project/Draw/dpr.cpp:
     .text   start:0x00983070 end:0x009853F8
 src/al/Project/Draw/GpuMemAllocator.cpp:

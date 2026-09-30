@@ -29,10 +29,11 @@ private:
     agl::utl::MultiFilter* m_pMultiFilter;
     agl::RenderBuffer m_RenderBuffer;
     agl::RenderTargetColor m_RenderTarget;
-    u32 _1F0;
+    u16 mCaptureWidth;
+    u16 mCaptureHeight;
     u8 mFlags;
     u8 _1F5;
-    u8 mAlpha;
+    s8 mTextureIndex;
 };
 static_assert(sizeof(FrameBufferMultiFilter) == 0x1f8, "FrameBufferMultiFilter size");
 
