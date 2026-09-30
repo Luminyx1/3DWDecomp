@@ -1,0 +1,61 @@
+#pragma once
+
+#include <basis/seadTypes.h>
+#include <container/seadPtrArray.h>
+
+namespace al {
+class AudioSystemInfo;
+class BgmLine;
+struct BgmPlayingRequest;
+
+class BgmLineKeeper {
+public:
+    BgmLineKeeper(f32 frameRate);
+
+    void init(AudioSystemInfo* pInfo, const char* pStageName, const char* pScenarioName);
+    void update(bool isDisableStart);
+    void startBgm(const BgmPlayingRequest& rRequest);
+    s32 checkIfIslandBgm(const BgmPlayingRequest& rRequest);
+    s32 checkPhaseBgm(const BgmPlayingRequest& rRequest);
+    void startIslandBgm(const BgmPlayingRequest& rRequest, BgmLine* pLine, s32 index);
+    void prepareBgm(const BgmPlayingRequest& rRequest);
+    void startPreparedBgm(const char* pName);
+    void stopBgm(const char* pName, s32 fadeFrames, s32 unk);
+    void pauseBgm(const char* pName, s32 fadeFrames);
+    void resumeBgm(const char* pName, s32 fadeFrames);
+    void pauseActiveBgmLine(s32 fadeFrames);
+    void resumeActiveBgmLine(s32 fadeFrames);
+    void pauseIslandBgm(s32 fadeFrames);
+    BgmLine* getBgmLineByLineName(const char* pName) const;
+    void resumeIslandBgm(s32 fadeFrames);
+    void pauseOceanBgm(s32 fadeFrames);
+    void resumeOceanBgm(s32 fadeFrames);
+    bool isPauseActiveBgmLine();
+    void stopAllBgmLine(s32 fadeFrames);
+    bool tryStopAllBgmLine(s32 fadeFrames);
+    bool tryPauseBgmIfNotPlaying(const char* pName, s32 fadeFrames);
+    void changeSituation(const char* pName);
+    BgmLine* getActiveBgmLine() const;
+    void changeLineAutoStopMode(const char* pName, bool isAutoStop);
+    void setActiveBgmPitch(f32 pitch);
+    void clearIslandList(u32 unk);
+    void changeActiveBgmVolume(f32 volume, s32 fadeFrames);
+    s32 getBgmSamplePos(const char* pName);
+
+    void setIslandMapBgmVolume(f32 volume1, f32 volume2, bool isEnable) {
+        mIsIslandMapBgmVolume = isEnable;
+        mIslandMapBgmVolume[1] = volume1;
+        mIslandMapBgmVolume[0] = volume2;
+    }
+
+    void setIsDisableLineChange(bool isDisable) { mIsDisableLineChange = isDisable; }
+
+private:
+    u8 _0[0x90];
+    s32 mIslandMapBgmVolume[2];
+    bool mIsIslandMapBgmVolume;
+    bool mIsDisableLineChange;
+    u8 _9a[0x6];
+};
+static_assert(sizeof(BgmLineKeeper) == 0xa0);
+}  // namespace al
