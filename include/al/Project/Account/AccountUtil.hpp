@@ -5,5 +5,5 @@
 namespace al {
 bool tryInitAccount();
 nn::account::Uid getUid();
-const nn::account::UserHandle& getUserHandle();
+nn::account::UserHandle* getUserHandle();
 }  // namespace al
