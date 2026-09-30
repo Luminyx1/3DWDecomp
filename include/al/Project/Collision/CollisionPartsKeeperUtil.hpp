@@ -9,7 +9,6 @@ bool isCollidedGround(const LiveActor*);
 bool isCollidedWall(const LiveActor*);
 bool isCollidedCeiling(const LiveActor*);
 
-bool isExistCollisionParts(const LiveActor*);
 void validateCollisionParts(LiveActor*);
 void invalidateCollisionParts(LiveActor*);
 
