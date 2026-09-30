@@ -19,7 +19,9 @@ bool PlayerActionConditionAnimEnd::check() {
         if (!mAnimator->isAnim(mAnimName)) {
             return true;
         }
+
         return isEnd();
     }
+
     return isEnd();
 }

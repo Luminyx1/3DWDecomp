@@ -149,6 +149,7 @@ bool BlockPow::receiveMsgScreenPoint(const al::SensorMsg* pMsg, al::ScreenPointe
 
     return true;
 }
+
 void BlockPow::onConnectRailBlock() {
     _170 = 1;
     al::setShadowFixed(this, false);
@@ -168,6 +169,7 @@ bool BlockPow::updateSensor() {
     if (!_171) {
         newRadius = 15.0f;
     }
+
     al::setSensorRadius(this, "Explosion", sensorRadius + newRadius);
     return true;
 }

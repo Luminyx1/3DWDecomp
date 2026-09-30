@@ -18,9 +18,11 @@ private:
         if (mAnimator->isAnimEnd()) {
             return true;
         }
+
         if (mEndFrame >= 0 && mAnimator->getAnimFrame() >= mEndFrame) {
             return true;
         }
+
         return false;
     }
 

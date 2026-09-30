@@ -27,6 +27,7 @@ bool PlayerActionConditionDashInput::check() {
     } else {
         mFrame++;
     }
+
     return mFrame <= static_cast<u32>(mConstParam->getDashInputSuccessFrame());
 }
 

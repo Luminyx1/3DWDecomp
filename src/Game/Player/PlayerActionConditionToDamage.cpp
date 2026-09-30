@@ -18,8 +18,10 @@ bool PlayerActionConditionToDamage::check() {
     if (mDamageInvalidCheck->isInvalid()) {
         return false;
     }
+
     if (mTrigger->isOn(PlayerTrigger::cDamage)) {
         return true;
     }
+
     return mTrigger->isOn(PlayerTrigger::cCollisionDamage);
 }

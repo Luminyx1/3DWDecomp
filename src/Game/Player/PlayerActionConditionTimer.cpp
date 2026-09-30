@@ -20,6 +20,7 @@ bool PlayerActionConditionTimer::check() {
     } else {
         mCounter = 0;
     }
+
     return mCounter == mFrame;
 }
 
@@ -30,5 +31,6 @@ void PlayerActionConditionTimer::setup() {
     if (mCondition != nullptr) {
         mCondition->setup();
     }
+
     mCounter = 0;
 }

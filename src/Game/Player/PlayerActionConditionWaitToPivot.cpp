@@ -25,6 +25,7 @@ bool PlayerActionConditionWaitToPivot::check() {
     if (al::normalizeOrZero(&moveDir)) {
         return false;
     }
+
     f32 dot = moveDir.dot(mProperty->mFront);
     return dot <= std::cos(mConstParam->getPivotDegree() * 0.017453292f);
 }

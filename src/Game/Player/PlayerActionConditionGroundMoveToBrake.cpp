@@ -32,13 +32,16 @@ bool PlayerActionConditionGroundMoveToBrake::check() {
     if (stickLength > 0.9f && !isOpposite) {
         checkStickOn(moveDir);
     }
+
     checkCancel();
     if (stickLength < 0.3f || isOpposite) {
         return mBrakeCommandFrame != 0;
     }
+
     if (mBrakeCommandFrame != 0) {
         mBrakeCommandFrame--;
     }
+
     return false;
 }
 
@@ -50,6 +53,7 @@ void PlayerActionConditionGroundMoveToBrake::checkStickOn(const sead::Vector3f& 
     if (al::isNearZero(rStick, 0.001f)) {
         return;
     }
+
     sead::Vector3f hVel;
     al::verticalizeVec(&hVel, mProperty->mGroundUp, mProperty->mVelocity);
     sead::Vector3f hDir = hVel;
@@ -60,6 +64,7 @@ void PlayerActionConditionGroundMoveToBrake::checkStickOn(const sead::Vector3f& 
         mBrakeCommandFrame = 0;
         return;
     }
+
     mBrakeCommandFrame = mConstParam->getDashBrakeCommandFrame();
 }
 

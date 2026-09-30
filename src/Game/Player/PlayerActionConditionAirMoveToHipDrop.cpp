@@ -24,6 +24,7 @@ bool PlayerActionConditionAirMoveToHipDrop::check() {
     if (!mInput->isHipDropTrigOn()) {
         return false;
     }
+
     const PlayerProperty* pProperty = mProperty;
     IUsePlayerCollisionCheckArrow* pCheckArrow = mCheckArrow;
     sead::Vector3f start = pProperty->mTrans + pProperty->mUpDir * 75.0f;

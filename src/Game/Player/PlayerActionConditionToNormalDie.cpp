@@ -17,5 +17,6 @@ bool PlayerActionConditionToNormalDie::check() {
     if (mDamageEnd != nullptr && !mDamageEnd->isDamageEnd()) {
         return false;
     }
+
     return mLifeControl->isDying();
 }

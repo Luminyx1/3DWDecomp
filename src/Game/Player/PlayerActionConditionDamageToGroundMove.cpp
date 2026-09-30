@@ -24,9 +24,11 @@ bool PlayerActionConditionDamageToGroundMove::check() {
     if (!mCollision->isOnFloor()) {
         return false;
     }
+
     if (mFrame <= static_cast<u32>(mConstParam->getDamageCancelFrame())) {
         return false;
     }
+
     return !(mInput->getMoveVec().length() < 0.1f);
 }
 

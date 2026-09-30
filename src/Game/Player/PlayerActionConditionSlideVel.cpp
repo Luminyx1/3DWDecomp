@@ -19,6 +19,7 @@ bool PlayerActionConditionSlideVel::check() {
     if (!mCollision->isOnFloor()) {
         return false;
     }
+
     IUsePlayerCollision::Info info = {};
     mCollision->getFloorInfo(&info);
     sead::Vector3f downward;

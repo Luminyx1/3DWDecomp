@@ -18,5 +18,6 @@ bool PlayerActionConditionAirMoveToGroundMove::check() {
     if (PlayerActionFunc::isUpperVelocity(mProperty)) {
         return false;
     }
+
     return mCollision->isOnFloor();
 }

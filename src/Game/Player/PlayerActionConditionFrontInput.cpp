@@ -20,6 +20,7 @@ bool PlayerActionConditionFrontInput::check() {
     if (!mInput->isStickOn()) {
         return false;
     }
+
     sead::Vector3f moveDir = mInput->getMoveVec();
     al::normalize(&moveDir);
     f32 dot = moveDir.dot(mProperty->mFront);

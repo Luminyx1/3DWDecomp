@@ -24,6 +24,7 @@ bool PlayerActionConditionWallToFall::check() {
         mNoWallFrame++;
         return mNoWallFrame > 3;
     }
+
     mNoWallFrame = 0;
     if (mInput->getMoveVec().length() > 0.7f) {
         sead::Vector3f moveDir = mInput->getMoveVec();
@@ -36,8 +37,10 @@ bool PlayerActionConditionWallToFall::check() {
                 return true;
             }
         }
+
         return false;
     }
+
     mApartFrame = 0;
     return false;
 }

@@ -27,5 +27,6 @@ bool PlayerActionConditionTrigger::check() {
     if (mIsSensor) {
         return mTrigger->isOn(mSensorTrigger);
     }
+
     return mTrigger->isOn(mCollisionTrigger);
 }

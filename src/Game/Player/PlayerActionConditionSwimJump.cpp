@@ -22,15 +22,19 @@ bool PlayerActionConditionSwimJump::check() {
     if (upSpeed >= 0.0f) {
         mIsRising = true;
     }
+
     if (mIsAcceptStill && !mIsRising) {
         mIsRising = al::isNearZero(upSpeed, 0.04f);
     }
+
     if (!mWaterSurfaceInfo->isWaterSurfaceExist()) {
         return false;
     }
+
     if (mWaterSurfaceInfo->getWaterSurfaceHeight() <= 200.0f) {
         return mIsRising;
     }
+
     return false;
 }
 

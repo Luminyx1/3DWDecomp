@@ -19,5 +19,6 @@ bool PlayerActionConditionGroundMoveToNormalRolling::check() {
     if (!mInput->isSquatTrigOn()) {
         return false;
     }
+
     return mProperty->mVelocity.length() > mConstParam->getSquatShiftSpeedRate() * mConstParam->getNormalMaxSpeed();
 }

@@ -20,6 +20,7 @@ bool PlayerActionConditionOutInWater::check() {
     if (isOutOfWater) {
         return isInWater;
     }
+
     mIsOutOfWater = !isInWater;
     return false;
 }

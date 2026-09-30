@@ -16,6 +16,7 @@ bool PlayerActionConditionFrontWallNoAction::check() {
     if (!mCollision->isOnFrontWall()) {
         return false;
     }
+
     IUsePlayerCollision::Info info = {};
     mCollision->getFrontWallInfo(&info);
     return al::isEqualString(info.mWallCode, "NoAction");

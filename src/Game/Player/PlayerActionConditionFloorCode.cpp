@@ -22,8 +22,10 @@ bool PlayerActionConditionFloorCode::check() {
     if (mDamageInvalidCheck != nullptr && mDamageInvalidCheck->isInvalid()) {
         return false;
     }
+
     if (mIsOnFloorOnly && !mCollision->isOnFloor()) {
         return false;
     }
+
     return PlayerActionFunc::checkMapCode(mCollision, mCode);
 }
