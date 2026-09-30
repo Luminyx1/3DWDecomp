@@ -4,7 +4,12 @@
 namespace nn::atk::detail::fnd {
 struct FndResult { u32 value; };
 static_assert(sizeof(FndResult) == 4, "FndResult size");
-class FsAccessLog;
+class FsAccessLog {
+public:
+    // owner identifies the stream whose underlying read is beginning or ending.
+    virtual void OnReadBegin(void* owner) = 0;
+    virtual void OnReadEnd(void* owner) = 0;
+};
 class Stream {
 public:
     enum SeekOrigin { SeekOrigin_Begin, SeekOrigin_End, SeekOrigin_Current };
