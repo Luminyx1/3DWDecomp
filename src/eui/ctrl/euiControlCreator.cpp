@@ -17,7 +17,8 @@
 #include <cstring>
 #include <new>
 namespace eui {
-template <class T> static T* AllocateControl() {
+template <class T>
+static T* AllocateControl() {
     void* memory = nn::ui2d::Layout::AllocateMemory(sizeof(T));
     return memory ? new (memory) T : nullptr;
 }
