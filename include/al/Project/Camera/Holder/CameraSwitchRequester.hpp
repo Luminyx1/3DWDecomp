@@ -7,17 +7,19 @@ class CameraSwitchRequestInfo;
 class CameraTicket;
 struct CameraPoseInfo;
 
-/// Turns camera start and end calls into switch requests per priority.
 class CameraSwitchRequester {
 public:
     CameraSwitchRequester();
 
     void init(CameraSwitchRequestInfo* pStartInfos, CameraSwitchRequestInfo* pEndInfos);
-    void requestStart(CameraTicket* pTicket, s32 interpoleFrame);
-    void requestEnd(CameraTicket* pTicket, s32 interpoleFrame, bool isInterpoleByCameraDistance);
-    void requestEndWithNextCameraPose(CameraTicket* pTicket, const CameraPoseInfo* pNextPose, s32 interpoleFrame);
+    void requestStart(CameraTicket* pTicket, s32 interpoleStep);
+    void requestEnd(CameraTicket* pTicket, s32 interpoleStep, bool isKeepPose);
+    void requestEndWithNextCameraPose(CameraTicket* pTicket, const CameraPoseInfo* pPoseInfo,
+                                      s32 interpoleStep);
 
-    CameraSwitchRequestInfo* mStartInfos = nullptr;  // _0
-    CameraSwitchRequestInfo* mEndInfos = nullptr;    // _8
+private:
+    CameraSwitchRequestInfo* mStartInfos = nullptr;
+    CameraSwitchRequestInfo* mEndInfos = nullptr;
 };
+
 }  // namespace al
