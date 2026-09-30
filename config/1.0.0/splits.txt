@@ -3395,7 +3395,7 @@ src/nw/atk/detail/atk_SoundArchiveLoader.cpp:
     .text   start:0x00544670 end:0x00546980
 src/nw/atk/detail/atk_GroupFileReader.cpp:
     .text   start:0x00546980 end:0x00546C54
-src/nw/atk/detail/atk_WaveArchiveFileReader.cpp:
+src/nw/atk/detail/atk_WaveArchiveFileReader.cpp: done
     .text   start:0x00546C60 end:0x00546FEC
 src/nw/atk/detail/atk_WaveArchiveFile.cpp: done
     .text   start:0x00546FF0 end:0x00547128

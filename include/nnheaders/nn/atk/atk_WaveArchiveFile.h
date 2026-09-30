@@ -3,8 +3,9 @@
 
 namespace nn::atk::detail {
 struct WaveArchiveFile {
-    struct InfoBlock;
-    struct FileBlock;
+    struct InfoBlockBody { u32 count; ReferenceWithSize waves[1]; };
+    struct InfoBlock { u32 signature, size; InfoBlockBody body; };
+    struct FileBlock { u32 signature, size; u8 data[1]; };
     struct FileHeader : BinaryFileHeader {
         ReferenceWithSize blocks[2];
         const ReferenceWithSize* GetReferenceBy(u16 type) const;
