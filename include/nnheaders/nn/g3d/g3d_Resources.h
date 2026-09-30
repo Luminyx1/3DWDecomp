@@ -11,6 +11,7 @@
 #include <nn/gfx/gfx_Texture.h>
 #include <nn/gfx/gfx_Types.h>
 #include <nn/types.h>
+#include <nn/g3d/g3d_Flag.h>
 #include <nn/util/util_BinTypes.h>
 #include <nn/util/util_BinaryFormat.h>
 #include <nn/util/util_ResDic.h>
@@ -92,12 +93,26 @@ public:
         return dictionary ? dictionary->GetKey(index).data() : nullptr;
     }
 };
+class ResShaderParam;
 struct ResShaderParamData {
-    void* callback;
+    size_t (*callback)(void*, const void*, const ResShaderParam*, void*);
     nn::util::BinPtrToString name;
-    u8 _10[4];
+    u8 type;
+    u8 _11;
+    u16 sourceOffset;
     s32 offset;
-    u8 _18[8];
+    u16 _18;
+    u16 dependencyIndex;
+    u8 _1c[4];
+};
+
+class ResShaderParam : public nn::util::AccessorBase<ResShaderParamData> {
+public:
+    enum Type { Type_Bool };
+    // type selects the source parameter representation whose byte size is returned.
+    static size_t GetSrcSize(Type type);
+    // destination receives the GPU representation of source; swap enables byte swapping.
+    template <bool swap> void Convert(void* destination, const void* source) const;
 };
 
 struct ResMaterialData {
@@ -109,14 +124,19 @@ struct ResMaterialData {
     u8 _40[0x48 - 0x40];
     nn::util::BinTPtr<nn::util::ResDic> pSamplerDic;
     nn::util::BinTPtr<ResShaderParamData> pShaderParamArray;
-    u8 _58[0x88 - 0x58];
+    u8 _58[8];
+    nn::util::BinPtr pSourceParamData;
+    u8 _68[0x10];
+    nn::util::BinTPtr<u32> pVolatileParamFlags;
+    u8 _80[8];
     nn::util::BinTPtr<u64> pSamplerSlotArray;
     nn::util::BinTPtr<u64> pTextureSlotArray;
     u8 _98[0x9c - 0x98];
     u8 samplerCount;
     u8 textureCount;
     u16 shaderParamCount;
-    u8 _a0[4];
+    u16 volatileParamCount;
+    u16 sourceParamSize;
     u16 materialBlockSize;
     u8 _a6[2];
 };
@@ -410,8 +430,38 @@ public:
     }
 };
 
+namespace detail {
+struct WorkMemoryBlock {
+    size_t size;
+    size_t alignment;
+    void* pointer;
+    ptrdiff_t offset;
+    // bytes is the requested size; each block starts at an eight-byte boundary.
+    void Initialize(size_t bytes) { size = bytes; alignment = 8; pointer = nullptr; offset = -1; }
+    // buffer is the base of the allocated work area; empty blocks return null.
+    void* GetPointer(void* buffer) const { return buffer && size ? static_cast<u8*>(buffer) + offset : nullptr; }
+};
+}
 class MaterialObj {
 public:
+    struct InitializeArgument {
+        const ResMaterial* resource;
+        int bufferCount;
+        size_t memorySize;
+        size_t memoryAlignment;
+        detail::WorkMemoryBlock blocks[5];
+        void CalculateMemorySize();
+    };
+    bool Initialize(const InitializeArgument& argument, void* memory, size_t size);
+    void InitializeDependPointer();
+    size_t GetBlockBufferAlignment(nn::gfx::Device* device) const;
+    size_t CalculateBlockBufferSize(nn::gfx::Device* device) const;
+    bool SetupBlockBuffer(nn::gfx::Device* device, nn::gfx::MemoryPool* pool, ptrdiff_t offset, size_t size);
+    void SetupBlockBufferImpl(nn::gfx::Device* device, nn::gfx::MemoryPool* pool, ptrdiff_t offset, size_t size);
+    void CleanupBlockBuffer(nn::gfx::Device* device);
+    void ResetDirtyFlags();
+    void CalculateMaterial(int bufferIndex);
+    template <bool swap> __attribute__((noinline)) void ConvertDirtyParams(void* destination, u32* dirtyFlags);
     typedef void (*TextureChangeCallback)(MaterialObj* pMaterial, int index);
 
     const ResMaterial* GetResource() const { return m_pRes; }
@@ -448,16 +498,19 @@ private:
     enum Flag { Flag_BlockBufferValid = 1 << 0 };
 
     const ResMaterial* m_pRes;
-    u8 m_Flag;
-    u8 _9;
+    u16 m_Flag;
     u8 m_BufferingCount;
-    u8 _b[0x40 - 0xb];
+    u8 _b[5];
+    detail::FlagSet m_DirtyFlags;
+    nn::gfx::MemoryPool* m_pMemoryPool;
+    ptrdiff_t m_MemoryPoolOffset;
     BufferImpl* m_pMaterialBlockArray;
-    u8 _48[0x50 - 0x48];
+    void* m_pParamSource;
     const nn::gfx::TextureView** m_ppTextureArray;
     u64* m_pTextureSlotArray;
     size_t m_MaterialBlockSize;
-    u8 _68[0x78 - 0x68];
+    void* m_pCallbackUserData;
+    void* m_pWorkMemory;
     TextureChangeCallback m_pTextureChangeCallback;
 };
 
