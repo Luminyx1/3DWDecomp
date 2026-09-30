@@ -13,5 +13,6 @@ public:
     ~Bounding() override;
     NN_RUNTIME_TYPEINFO(Pane);
     void DrawSelf(DrawInfo&, nn::gfx::CommandBuffer&) override;
+    bool CompareCopiedInstanceTest(const Bounding&) const;
 };
 }  // namespace nn::ui2d

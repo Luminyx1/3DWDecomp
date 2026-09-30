@@ -3673,7 +3673,7 @@ src/nw/ui2d/ui2d_Capture.cpp:
     .text   start:0x005A06C0 end:0x005A19B0
 src/nw/ui2d/ui2d_Common.cpp:
     .text   start:0x005A19B0 end:0x005A2354
-src/nw/ui2d/ui2d_DrawInfo.cpp:
+src/nw/ui2d/ui2d_DrawInfo.cpp: done
     .text   start:0x005A2360 end:0x005A27A0
 src/nw/ui2d/ui2d_GraphicsResource.cpp:
     .text   start:0x005A27A0 end:0x005A473C
@@ -3689,7 +3689,7 @@ src/nw/ui2d/ui2d_Pane.cpp:
     .text   start:0x005AEF60 end:0x005B371C
 src/nw/ui2d/ui2d_PaneEffect.cpp:
     .text   start:0x005B3720 end:0x005B7884
-src/nw/ui2d/ui2d_TexMap.cpp:
+src/nw/ui2d/ui2d_TexMap.cpp: done
     .text   start:0x005B7890 end:0x005B79D8
 src/nw/ui2d/ui2d_TextBox.cpp:
     .text   start:0x005B79E0 end:0x005BC9E8
@@ -3697,11 +3697,11 @@ src/nw/ui2d/ui2d_Types.cpp:
     .text   start:0x005BC9F0 end:0x005BCF88
 src/nw/ui2d/ui2d_Util.cpp:
     .text   start:0x005BCF90 end:0x005C2004
-src/nw/ui2d/ui2d_Parts.cpp:
+src/nw/ui2d/ui2d_Parts.cpp: done
     .text   start:0x005C2010 end:0x005C2304
 src/nw/ui2d/ui2d_Picture.cpp:
     .text   start:0x005C2310 end:0x005C52A4
-src/nw/ui2d/ui2d_Bounding.cpp:
+src/nw/ui2d/ui2d_Bounding.cpp: done
     .text   start:0x005C52B0 end:0x005C5464
 src/nw/ui2d/ui2d_Window.cpp:
     .text   start:0x005C5470 end:0x005C9D34
@@ -3721,7 +3721,7 @@ src/nw/ui2d/ui2d_MultiArcResourceAccessorEx.cpp:
     .text   start:0x005E1450 end:0x005E22F4
 src/nw/ui2d/ui2d_ResourceAccessor.cpp: done
     .text   start:0x005E2300 end:0x005E2368
-src/nw/ui2d/ui2d_TextureContainer.cpp:
+src/nw/ui2d/ui2d_TextureContainer.cpp: done
     .text   start:0x005E2370 end:0x005E253C
 src/nw/ui2d/ui2d_ArcExtractor.cpp:
     .text   start:0x005E2540 end:0x005E2EEC

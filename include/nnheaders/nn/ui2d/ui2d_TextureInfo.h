@@ -9,6 +9,8 @@ namespace nn::ui2d {
 struct TextureSize {
     u16 width;
     u16 height;
+    // width and height specify the texture dimensions in pixels.
+    TextureSize(u16 width, u16 height) : width(width), height(height) {}
     TextureSize(const TextureSize&);
 };
 

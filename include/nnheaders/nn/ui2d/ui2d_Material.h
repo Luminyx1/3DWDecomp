@@ -7,6 +7,7 @@
 
 #include <nn/types.h>
 #include <nn/ui2d/ui2d_Types.h>
+#include <nn/ui2d/ui2d_TexMap.h>
 
 namespace nn {
 namespace ui2d {
@@ -14,14 +15,6 @@ class AnimTransform;
 class BuildResultInformation;
 struct UserShaderInformation;
 class TextureInfo;
-
-class TexMap {
-public:
-    void SetWrapMode(TexWrap, TexWrap);
-    void SetFilter(TexFilter, TexFilter);
-    unsigned char _00[8];
-    const TextureInfo* m_pTextureInfo;
-};
 
 class Material {
 public:
@@ -46,7 +39,9 @@ public:
     unsigned char _08[0xc];
     u32 mResourceCounts;
     TexMap* m_pTexMaps;
-    unsigned char _20[0x28];
+    unsigned char _20[8];
+    const char* mName;
+    unsigned char _30[0x18];
     u8 mTextureCount;
 };
 }  // namespace ui2d

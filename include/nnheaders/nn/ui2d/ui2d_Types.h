@@ -1,6 +1,7 @@
 #pragma once
 
 #include "nn/gfx/gfx_Sampler.h"
+#include <nn/gfx/gfx_Types.h>
 
 namespace nn::gfx {
 class DescriptorSlot;

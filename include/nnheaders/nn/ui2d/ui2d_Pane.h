@@ -17,6 +17,7 @@ class AnimTransform;
 class Layout;
 class Material;
 class DrawInfo;
+class BuildResultInformation;
 struct Size {
     float width;
     float height;
@@ -50,6 +51,7 @@ public:
     Pane();
     Pane(const Pane& rOther) { CopyImpl(rOther, nullptr, nullptr, nullptr); }
     Pane(const ResPane*, const BuildArgSet&);
+    Pane(BuildResultInformation*, nn::gfx::Device*, const ResPane*, const BuildArgSet&);
     ~Pane() override = default;
 
     NN_RUNTIME_TYPEINFO_BASE();

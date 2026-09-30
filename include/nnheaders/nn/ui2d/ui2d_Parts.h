@@ -26,6 +26,7 @@ public:
     const Pane* FindPaneByNameRecursive(const char*) const override;
     Material* FindMaterialByNameRecursive(const char*) override;
     const Material* FindMaterialByNameRecursive(const char*) const override;
+    bool CompareCopiedInstanceTest(const Parts&) const;
 
     nn::util::IntrusiveListNode m_PartsList;
     Layout* m_pLayout;
