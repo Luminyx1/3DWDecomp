@@ -10,15 +10,16 @@ struct ScreenPointTargetHitInfo;
 
 class ScreenPointDirector {
 public:
-    ScreenPointDirector(s32);
+    ScreenPointDirector(s32 maxTargets);
 
-    void registerTarget(ScreenPointTarget*);
-    void setCheckGroup(ScreenPointTarget*);
-    bool hitCheckSegment(sead::ObjArray<ScreenPointTargetHitInfo>*, s32, const sead::Vector3f&,
-                         const sead::Vector3f&);
-    bool hitCheckScreenCircle(sead::ObjArray<ScreenPointTargetHitInfo>*, s32,
-                              const sead::Vector2f&, f32);
+    void registerTarget(ScreenPointTarget* pTarget);
+    void setCheckGroup(ScreenPointTarget* pTarget);
+    bool hitCheckSegment(sead::ObjArray<ScreenPointTargetHitInfo>* pHitInfos, s32 maxHits,
+                         const sead::Vector3f& rStart, const sead::Vector3f& rEnd);
+    bool hitCheckScreenCircle(sead::ObjArray<ScreenPointTargetHitInfo>* pHitInfos, s32 maxHits,
+                              const sead::Vector2f& rPos, f32 radius);
 
-    ScreenPointCheckGroup* mCheckGroup = nullptr;  // _0
+private:
+    ScreenPointCheckGroup* mCheckGroup;
 };
 }  // namespace al
