@@ -3433,7 +3433,7 @@ src/nw/atk/detail/strm/atk_StreamSoundFileLoader.cpp:
     .text   start:0x00558390 end:0x005583B8
 src/nw/atk/detail/strm/atk_StreamSoundFileReader.cpp:
     .text   start:0x005583C0 end:0x00558798
-src/nw/atk/detail/strm/atk_StreamSoundFile.cpp:
+src/nw/atk/detail/strm/atk_StreamSoundFile.cpp: done
     .text   start:0x005587A0 end:0x00558B40
 src/nw/atk/detail/strm/_ZN2nn3atk6detail29StreamSoundPrefetchFileReaderC2Ev.cpp:
     .text   start:0x00558B40 end:0x00558B7C
