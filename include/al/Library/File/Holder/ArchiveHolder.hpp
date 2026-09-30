@@ -1,6 +1,5 @@
 #pragma once
 
-#include <basis/seadTypes.h>
 #include <container/seadBuffer.h>
 #include <prim/seadSafeString.h>
 
@@ -15,13 +14,13 @@ class ArchiveEntry;
 class ArchiveHolder {
 public:
     ArchiveHolder();
-
-    ArchiveEntry* addNewLoadRequestEntry(const sead::SafeString&, sead::Heap*, sead::FileDevice*);
-    ArchiveEntry* tryFindEntry(const sead::SafeString&);
+    ArchiveEntry* addNewLoadRequestEntry(const sead::SafeString& rFileName, sead::Heap* pHeap,
+                                         sead::FileDevice* pDevice);
+    ArchiveEntry* tryFindEntry(const sead::SafeString& rFileName);
     void waitLoadDoneAll();
     void clearEntry();
 
-    sead::Buffer<ArchiveEntry> mEntries;  // _0
-    s32 mNumEntries = 0;                  // _10
+    sead::Buffer<ArchiveEntry> mArchiveEntries;
+    s32 mSize = 0;
 };
 }  // namespace al

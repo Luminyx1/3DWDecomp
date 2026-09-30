@@ -1,68 +1,67 @@
 #include "Library/File/Holder/ArchiveHolder.hpp"
 
-#include "Library/File/Holder/ArchiveEntry.hpp"
+#include <basis/seadNew.h>
+
 #include "Project/Base/StringUtil.hpp"
+#include "Project/File/ArchiveEntry.hpp"
 
 namespace al {
 /**
- * @brief Constructs a holder with room for 1024 archive entries.
+ * Allocates the archive entries.
  */
 ArchiveHolder::ArchiveHolder() {
-    mEntries.allocBufferAssert(1024, nullptr);
+    mArchiveEntries.allocBufferAssert(0x400, nullptr);
 }
 
 /**
- * @brief Takes the next free entry and sets it up for a load request.
- * @param rFileName The path of the archive to load.
- * @param pHeap The heap the archive is loaded into.
- * @param pFileDevice The file device the archive is read from.
- * @return The entry that was set up.
+ * Takes the next free entry and sets up its load request.
+ * @param rFileName Archive path.
+ * @param pHeap Heap to load into.
+ * @param pDevice File device.
+ * @return The entry.
  */
 ArchiveEntry* ArchiveHolder::addNewLoadRequestEntry(const sead::SafeString& rFileName,
-                                                    sead::Heap* pHeap,
-                                                    sead::FileDevice* pFileDevice) {
-    ArchiveEntry* pEntry = mEntries.get(mNumEntries);
-    pEntry->setLoadRequestInfo(rFileName, pHeap, pFileDevice);
-    mNumEntries++;
-    return pEntry;
+                                                    sead::Heap* pHeap, sead::FileDevice* pDevice) {
+    ArchiveEntry* entry = mArchiveEntries.get(mSize);
+    entry->setLoadRequestInfo(rFileName, pHeap, pDevice);
+    mSize++;
+    return entry;
 }
 
 /**
- * @brief Finds the entry for an archive by its path.
- * @param rFileName The path of the archive.
- * @return The matching entry, or nullptr if there is none.
+ * Finds the entry of an archive.
+ * @param rFileName Archive path.
+ * @return The entry or nullptr.
  */
 ArchiveEntry* ArchiveHolder::tryFindEntry(const sead::SafeString& rFileName) {
-    for (s32 i = 0; i < mNumEntries; i++) {
-        ArchiveEntry* pEntry = mEntries.get(i);
-        if (isEqualString(pEntry->getFileName(), rFileName)) {
-            return pEntry;
+    for (s32 i = 0; i < mSize; i++) {
+        ArchiveEntry* entry = mArchiveEntries.get(i);
+        if (isEqualString(entry->getFileName(), rFileName)) {
+            return entry;
         }
     }
-
     return nullptr;
 }
 
 /**
- * @brief Blocks until every requested entry has finished loading.
+ * Waits until every entry finished loading.
  */
 void ArchiveHolder::waitLoadDoneAll() {
-    for (s32 i = 0; i < mNumEntries; i++) {
-        ArchiveEntry* pEntry = mEntries.get(i);
-        if (pEntry->mFileState != 3) {
-            pEntry->waitLoadDone();
+    for (s32 i = 0; i < mSize; i++) {
+        ArchiveEntry* entry = mArchiveEntries.get(i);
+        if (entry->mFileState != FileState::IsLoadDone) {
+            entry->waitLoadDone();
         }
     }
 }
 
 /**
- * @brief Clears every entry and empties the holder.
+ * Clears every entry.
  */
 void ArchiveHolder::clearEntry() {
-    for (s32 i = 0; i < mNumEntries; i++) {
-        mEntries.get(i)->clear();
+    for (s32 i = 0; i < mSize; i++) {
+        mArchiveEntries.get(i)->clear();
     }
-
-    mNumEntries = 0;
+    mSize = 0;
 }
 }  // namespace al
