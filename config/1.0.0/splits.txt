@@ -3369,9 +3369,9 @@ src/nw/atk/detail/thread/atk_DriverCommand.cpp:
     .text   start:0x0053A640 end:0x0053A7B4
 src/nw/atk/detail/thread/atk_OutputAdditionalParam.cpp:
     .text   start:0x0053A7C0 end:0x0053AE90
-src/nw/atk/detail/thread/atk_BusMixVolumePacket.cpp:
+src/nw/atk/detail/thread/atk_BusMixVolumePacket.cpp: done
     .text   start:0x0053AE90 end:0x0053AFC4
-src/nw/atk/detail/thread/atk_VolumeThroughModePacket.cpp:
+src/nw/atk/detail/thread/atk_VolumeThroughModePacket.cpp: done
     .text   start:0x0053AFD0 end:0x0053B150
 src/nw/atk/detail/seq/atk_SequenceTrack.cpp:
     .text   start:0x0053B150 end:0x0053C350
