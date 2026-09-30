@@ -343,7 +343,7 @@ src/Game/CourseSelect/BgmBeatAnimeController.cpp:
     .text   start:0x0008B130 end:0x0008C308
 src/Game/CourseSelect/BlockBrickBreakableCourseSelect.cpp:
     .text   start:0x0008C310 end:0x0008C85C
-src/Game/CourseSelect/BlockEmptyCourseSelect.cpp:
+src/Game/CourseSelect/BlockEmptyCourseSelect.cpp: done
     .text   start:0x0008C860 end:0x0008CA90
 src/Game/CourseSelect/BlockQuestionCourseSelect.cpp:
     .text   start:0x0008CA90 end:0x0008D020
@@ -4546,51 +4546,55 @@ src/al/Library/Collision/MtxConnector.cpp: done
 src/al/Library/Collision/PartsMtxConnector.cpp:
     .text   start:0x007DBB80 end:0x007DC5A4
 src/al/Library/Debug/Host.cpp:
-    .text   start:0x007DCF70 end:0x007DEEE0
-src/al/Library/Debug/StressParam.cpp:
-    .text   start:0x007DEEE0 end:0x007E6BCC
+    .text   start:0x007DCF70 end:0x007DE094
+src/al/Project/Draw/GraphicsAreaDirector.cpp:
+    .text   start:0x007DE0A0 end:0x007DEEE0
+src/al/Project/Draw/StressParam.cpp:
+    .text   start:0x007DEEE0 end:0x007E056C
+src/al/Project/Draw/GraphicsQualityController.cpp:
+    .text   start:0x007E0570 end:0x007E1028
+src/al/Project/Draw/GraphicsParamKeeper.cpp:
+    .text   start:0x007E1030 end:0x007E1AFC
+src/al/Library/Draw/GraphicsSystemInfo.cpp:
+    .text   start:0x007E1B00 end:0x007E4694
+src/al/Library/Draw/GraphicsFunction.cpp:
+    .text   start:0x007E46A0 end:0x007E6BCC
 src/al/Library/Debug/Render/RenderBufferAttacher.cpp:
     .text   start:0x007E6BD0 end:0x007E7BCC
 src/al/Library/Debug/Render/RenderBufferDepthAttacher.cpp:
     .text   start:0x007E7BD0 end:0x007E82A0
 src/al/Library/Execute/ExecuteDirector.cpp:
     .text   start:0x007E82A0 end:0x007E8E18
-src/al/Library/Execute/ExecuteInfo.cpp:
+src/al/Library/Execute/ExecuteInfo.cpp: done
     .text   start:0x007E8E20 end:0x007E9018
 src/al/Library/Execute/ExecuteRequestKeeper.cpp:
     .text   start:0x007E9020 end:0x007E96B0
 src/al/Library/Execute/ExecuteTableHolderDraw.cpp:
-    .text   start:0x007E96B0 end:0x007EA838
+    .text   start:0x007E96B0 end:0x007EA7CC
+src/al/Project/Execute/ExecuteFunction.cpp: done
+    .text   start:0x007EA7D0 end:0x007EA838
 src/al/Library/Execute/ExecuteTableHolderUpdate.cpp:
     .text   start:0x007EA840 end:0x007EB234
 src/al/Library/Execute/ExecuteUtil.cpp:
     .text   start:0x007EB240 end:0x007EB924
-src/al/Library/Execute/ExecutorActorExecuteBase.cpp:
+src/al/Library/Execute/ExecutorActorExecuteBase.cpp: done
     .text   start:0x007EB930 end:0x007EBA94
 src/al/Library/Execute/ExecutorListActorDraw.cpp:
     .text   start:0x007EBAA0 end:0x007EBBF0
 src/al/Library/Execute/ExecutorListActorExecuteBase.cpp:
-    .text   start:0x007EBBF0 end:0x007EBE50
+    .text   start:0x007EBBF0 end:0x007EBC78
+src/al/Library/Execute/ExecutorListActorExecute.cpp: done
+    .text   start:0x007EBC80 end:0x007EBE50
 src/al/Library/Execute/ExecutorListActorModelDrawBase.cpp:
-    .text   start:0x007EBE60 end:0x007EC190
-src/al/Library/Execute/ExecutorListActorModelDrawForward.cpp:
-    .text   start:0x007EC190 end:0x007EC274
-src/al/Library/Execute/ExecutorListActorModelDrawForwardCharacter.cpp:
-    .text   start:0x007EC280 end:0x007EC364
-src/al/Library/Execute/ExecutorListActorModelDrawForwardCharacterOpt.cpp:
-    .text   start:0x007EC370 end:0x007EC454
-src/al/Library/Execute/ExecutorListActorModelDrawForwardCharacterXlu.cpp:
-    .text   start:0x007EC460 end:0x007EC544
-src/al/Library/Execute/ExecutorListActorModelDrawForwardXlu.cpp:
-    .text   start:0x007EC550 end:0x007ECB8C
-src/al/Library/Execute/ExecutorListActorModelDrawHeightMap.cpp:
-    .text   start:0x007ECB90 end:0x007ED44C
-src/al/Library/Execute/ExecutorListActorModelDrawInvincible.cpp:
-    .text   start:0x007ED450 end:0x007EE1F8
-src/al/Library/Execute/ExecutorListActorMovement.cpp:
-    .text   start:0x007EE200 end:0x007EE2D4
-src/al/Library/Execute/ExecutorListActorMovementCalcAnim.cpp:
-    .text   start:0x007EE2E0 end:0x007EE7B4
+    .text   start:0x007EBE60 end:0x007EBEE8
+src/al/Library/Execute/ExecutorListActorModelDraw.cpp: done
+    .text   start:0x007EBF00 end:0x007EE1F8
+src/al/Library/Execute/ExecutorListActorMovement.cpp: done
+    .text   start:0x007EE200 end:0x007EE230
+src/al/Library/Execute/ExecutorListActorExecute_dup2.cpp:
+    .text   start:0x007EE230 end:0x007EE450
+src/al/Project/Execute/ExecutorActorMovement.cpp: done
+    .text   start:0x007EE450 end:0x007EE7B4
 src/al/Library/Execute/ExecutorListBase.cpp: done
     .text   start:0x007EE7C0 end:0x007EE7E4
 src/al/Library/Execute/ExecutorListFunctor.cpp: done
@@ -4598,15 +4602,21 @@ src/al/Library/Execute/ExecutorListFunctor.cpp: done
 src/al/Library/Execute/ExecutorListIUseExecutorBase.cpp:
     .text   start:0x007EE890 end:0x007EE918
 src/al/Library/Execute/ExecutorListUser.cpp:
-    .text   start:0x007EE920 end:0x007EEFE0
-src/al/Library/Execute/MultiCoreExecutorThreadBase.cpp:
+    .text   start:0x007EE920 end:0x007EEC38
+src/al/Library/Execute/ExecutorListLayoutDraw.cpp:
+    .text   start:0x007EEC40 end:0x007EEF18
+src/al/Library/Execute/ExecutorListLayoutUpdate.cpp: done
+    .text   start:0x007EEF20 end:0x007EEFE0
+src/al/Library/Execute/MultiCoreExecutorThreadBase.cpp: done
     .text   start:0x007EEFE0 end:0x007EF1AC
 src/al/Library/Execute/MultiCoreExecutorThreadExecutorList.cpp:
     .text   start:0x007EF1B0 end:0x007EF294
 src/al/Library/Factory/ActorFactory.cpp:
     .text   start:0x007EF2B0 end:0x007EF400
 src/al/Library/File/FileUtil.cpp:
-    .text   start:0x007EF400 end:0x007F066C
+    .text   start:0x007EF400 end:0x007EFB2C
+src/al/Project/File/FileLoader.cpp:
+    .text   start:0x007EFB30 end:0x007F066C
 src/al/Library/File/Holder/ArchiveHolder.cpp: done
     .text   start:0x007F0670 end:0x007F08F0
 src/al/Library/File/Holder/FileLoaderThread.cpp: done
@@ -4618,10 +4628,16 @@ src/al/Library/File/Holder/SoundItemHolder.cpp: done
 src/al/Library/Fog/FogParam.cpp:
     .text   start:0x007F0E30 end:0x007F11A4
 src/al/Library/Fog/YFogParam.cpp:
-    .text   start:0x007F11B0 end:0x007F44F4
-src/al/Library/HitSensor/HitSensorKeeper.cpp:
-    .text   start:0x007F4500 end:0x007F5ADC
-src/al/Library/HitSensor/SensorHitGroup.cpp:
+    .text   start:0x007F11B0 end:0x007F14AC
+src/al/Library/Fog/FogDirector.cpp:
+    .text   start:0x007F14B0 end:0x007F38B4
+src/al/Library/Fog/FogRequester.cpp:
+    .text   start:0x007F38C0 end:0x007F44F4
+src/al/Library/HitSensor/HitSensorKeeper.cpp: done
+    .text   start:0x007F4500 end:0x007F495C
+src/al/Project/HitSensor/HitSensor.cpp:
+    .text   start:0x007F4960 end:0x007F5ADC
+src/al/Project/HitSensor/SensorHitGroup.cpp: done
     .text   start:0x007F5AE0 end:0x007F5F34
 src/al/Library/Item/ActorItemFunction.cpp: done
     .text   start:0x007F5F40 end:0x007F5F4C
@@ -4630,49 +4646,49 @@ src/al/Library/Item/ItemUtil.cpp: done
 src/al/Library/Joint/JointAimInfo.cpp:
     .text   start:0x007F6990 end:0x007F6FE8
 src/al/Library/Joint/JointControllerKeeper.cpp:
-    .text   start:0x007F6FF0 end:0x007F8664
-src/al/Library/Joint/JointDirectionInfo.cpp:
+    .text   start:0x007F6FF0 end:0x007F8054
+src/al/Library/Joint/JointControllerBase.cpp:
+    .text   start:0x007F8060 end:0x007F843C
+src/al/Library/Joint/JointControllerKeeper_dup2.cpp: done
+    .text   start:0x007F8440 end:0x007F8664
+src/al/Library/Joint/JointDirectionInfo.cpp: done
     .text   start:0x007F8670 end:0x007F87D4
 src/al/Library/Joint/JointLocalAxisRotator.cpp:
     .text   start:0x007F87E0 end:0x007F8A34
-src/al/Library/Joint/JointLocalDirController.cpp:
+src/al/Library/Joint/JointLocalDirController.cpp: done
     .text   start:0x007F8A40 end:0x007F8DC8
-src/al/Library/Joint/JointLocalQuatRotator.cpp:
+src/al/Library/Joint/JointLocalQuatRotator.cpp: done
     .text   start:0x007F8DD0 end:0x007F8F54
-src/al/Library/Joint/JointLocalTransController.cpp:
+src/al/Library/Joint/JointLocalTransController.cpp: done
     .text   start:0x007F8F60 end:0x007F9058
 src/al/Library/Joint/JointLookAtController.cpp:
     .text   start:0x007F9060 end:0x007FA284
 src/al/Library/Joint/JointMasher.cpp:
     .text   start:0x007FA290 end:0x007FA4EC
-src/al/Library/Joint/JointMtxController.cpp:
+src/al/Library/Joint/JointMtxController.cpp: done
     .text   start:0x007FA4F0 end:0x007FA5D8
-src/al/Library/Joint/JointQuatController.cpp:
+src/al/Library/Joint/JointQuatController.cpp: done
     .text   start:0x007FA5E0 end:0x007FA73C
-src/al/Library/Joint/JointRumbler.cpp:
+src/al/Library/Joint/JointRumbler.cpp: done
     .text   start:0x007FA740 end:0x007FABB4
 src/al/Library/Joint/JointSpringController.cpp:
     .text   start:0x007FABC0 end:0x007FB254
-src/al/Library/Joint/JointSpringControllerHolder.cpp:
+src/al/Library/Joint/JointSpringControllerHolder.cpp: done
     .text   start:0x007FB260 end:0x007FB7E8
 src/al/Library/Joint/JointTranslateShaker.cpp:
     .text   start:0x007FB7F0 end:0x007FBC14
 src/al/Library/KeyPose/KeyPoseKeeper.cpp:
     .text   start:0x007FBC20 end:0x007FCA84
-src/al/Library/KeyPose/RollingCubePoseKeeper.cpp:
+src/al/Project/Joint/RollingCubePoseKeeper.cpp:
     .text   start:0x007FCA90 end:0x007FE044
-src/al/Library/KeyPose/RollingCubePoseKeeperUtil.cpp:
+src/al/Project/Joint/RollingCubePoseKeeperUtil.cpp:
     .text   start:0x007FE050 end:0x007FEAB0
 src/al/Library/Layout/LayoutSystem.cpp:
     .text   start:0x007FEAB0 end:0x007FED54
-src/al/Library/Layout/LayoutUtil.cpp:
+src/al/Library/Layout/LayoutUtil.cpp: done
     .text   start:0x007FED60 end:0x007FEE3C
-src/al/Library/Light/DirLightParam.cpp:
-    .text   start:0x007FEE40 end:0x007FF018
-src/al/Library/Light/NamedDirLightParam.cpp:
-    .text   start:0x007FF020 end:0x007FF4C4
 src/al/Library/Light/DirectionalLightKeeper.cpp:
-    .text   start:0x007FF4D0 end:0x00800620
+    .text   start:0x007FEE40 end:0x00800620
 src/al/Library/Light/DirectionalLightRequester.cpp:
     .text   start:0x00800620 end:0x00800C60
 src/al/Library/Light/DirectionParam.cpp:
@@ -4683,71 +4699,87 @@ src/al/Library/Light/LIghtIntensityDirector.cpp:
     .text   start:0x008019F0 end:0x00802704
 src/al/Library/Light/LightIntensityFunction.cpp:
     .text   start:0x00802710 end:0x00802798
-src/al/Library/Light/LightUtil.cpp:
+src/al/Library/Light/LightKeeper.cpp:
     .text   start:0x008027A0 end:0x008034CC
-src/al/Library/Light/ShadowMaskCtrl.cpp:
-    .text   start:0x008034D0 end:0x0080C3D8
-src/al/Library/Light/Keeper/PrePassLightKeeper.cpp:
-    .text   start:0x0080C3E0 end:0x00813974
-src/al/Library/Light/Keeper/SSIIKeeper.cpp:
+src/al/Library/Shadow/ShadowMaskCtrl.cpp:
+    .text   start:0x008034D0 end:0x00804C00
+src/al/Project/Light/ActorPrePassLightKeeper.cpp:
+    .text   start:0x00804C00 end:0x00804F54
+src/al/Library/Shadow/ShadowMaskCtrl_dup2.cpp:
+    .text   start:0x00804F60 end:0x00806250
+src/al/Library/Light/PrePassLightKeeper.cpp:
+    .text   start:0x00806250 end:0x00813974
+src/al/Library/Light/SSIIKeeper.cpp:
     .text   start:0x00813980 end:0x00814DF8
 src/al/Library/LiveActor/LiveActorGroup.cpp: done
     .text   start:0x00814E00 end:0x008151C0
-src/al/Library/LiveActor/LiveActorKit.cpp:
+src/al/Library/LiveActor/LiveActorKit.cpp: done
     .text   start:0x008151C0 end:0x00815988
-src/al/Library/LiveActor/HitSensorDirector.cpp:
-    .text   start:0x00815990 end:0x008163B0
-src/al/Library/LiveActor/ActorActionUtil.cpp:
+src/al/Project/HitSensor/HitSensorDirector.cpp:
+    .text   start:0x00815990 end:0x00816358
+src/al/Project/LiveActor/ActorExecuteFunction.cpp: done
+    .text   start:0x00816360 end:0x008163B0
+src/al/Library/LiveActor/ActorActionFunction.cpp: done
     .text   start:0x008163B0 end:0x00817474
-src/al/Library/LiveActor/ActorAnimUtil.cpp:
+src/al/Library/LiveActor/ActorAnimFunction.cpp:
     .text   start:0x00817480 end:0x00819248
-src/al/Library/LiveActor/ActorClippingUtil.cpp:
+src/al/Library/LiveActor/ActorClippingFunction.cpp:
     .text   start:0x00819250 end:0x00819D7C
-src/al/Library/LiveActor/SensorFunction.cpp: done
+src/al/Project/HitSensor/SensorFunction.cpp: done
     .text   start:0x00819D80 end:0x0081A158
-src/al/Library/LiveActor/ActorFlagUtil.cpp: done
+src/al/Library/LiveActor/ActorFlagFunction.cpp: done
     .text   start:0x0081A160 end:0x0081A2AC
+src/al/Library/LiveActor/ActorInitFunction.cpp:
+    .text   start:0x0081A2B0 end:0x0081BAE4
+src/al/Library/LiveActor/ActorInitInfo.cpp: done
+    .text   start:0x0081BAF0 end:0x0081BE64
 src/al/Library/LiveActor/ActorInitUtil.cpp:
-    .text   start:0x0081A2B0 end:0x0081DE94
-src/al/Library/LiveActor/ActorMapUtil.cpp:
-    .text   start:0x0081DEA0 end:0x0081EF98
-src/al/Library/LiveActor/ActorModelUtil.cpp:
-    .text   start:0x0081EFA0 end:0x00821938
-src/al/Library/LiveActor/ActorMovementUtil.cpp:
-    .text   start:0x00821940 end:0x00825E7C
+    .text   start:0x0081BE70 end:0x0081EF98
+src/al/Library/LiveActor/ActorModelFunction.cpp:
+    .text   start:0x0081EFA0 end:0x00821BDC
+src/al/Library/LiveActor/ActorMovementFunction.cpp:
+    .text   start:0x00821BE0 end:0x00825E7C
 src/al/Library/LiveActor/ActorParamHolderUtil.cpp: done
     .text   start:0x00825E80 end:0x00825F54
 src/al/Library/LiveActor/ActorPoseKeeper.cpp:
     .text   start:0x00825F60 end:0x00826FD8
 src/al/Library/LiveActor/ActorPoseUtil.cpp:
     .text   start:0x00826FE0 end:0x0082850C
-src/al/Library/LiveActor/ActorResourceUtil.cpp:
+src/al/Library/LiveActor/ActorResourceFunction.cpp:
     .text   start:0x00828510 end:0x00828DE8
 src/al/Library/LiveActor/ActorSceneInfo.cpp: done
     .text   start:0x00828DF0 end:0x00828E18
 src/al/Library/LiveActor/ActorSceneUtil.cpp: done
-    .text   start:0x00828E20 end:0x00829098
+    .text   start:0x00828E20 end:0x00828E68
+src/al/Library/LiveActor/ActorSceneFunction.cpp: done
+    .text   start:0x00828E70 end:0x00829098
 src/al/Library/LiveActor/ActorSensorController.cpp: done
-    .text   start:0x008290A0 end:0x0082933C
+    .text   start:0x008290A0 end:0x008290F4
+src/al/Project/LiveActor/ActorController.cpp: done
+    .text   start:0x00829100 end:0x0082933C
 src/al/Library/LiveActor/ActorSensorUtil.cpp:
     .text   start:0x00829340 end:0x008473D4
-src/al/Library/LiveActor/HitReactionKeeper.cpp:
+src/al/Library/LiveActor/HitReactionKeeper.cpp: done
     .text   start:0x008473E0 end:0x008480FC
 src/al/Library/LiveActor/LiveActor.cpp:
     .text   start:0x00848100 end:0x0084A15C
 src/al/Library/LiveActor/LiveActorFunction.cpp: done
     .text   start:0x0084A160 end:0x0084A4EC
 src/al/Library/LiveActor/SubActorKeeper.cpp:
-    .text   start:0x0084A4F0 end:0x0084B14C
+    .text   start:0x0084A4F0 end:0x0084ADF0
+src/al/Library/LiveActor/LiveActorFunction_dup2.cpp: done
+    .text   start:0x0084ADF0 end:0x0084B14C
 src/al/Library/MapObj/ClockMapParts.cpp:
-    .text   start:0x0084B150 end:0x0084C57C
-src/al/Library/MapObj/ConveyerKeyKeeper.cpp:
+    .text   start:0x0084B150 end:0x0084C09C
+src/al/Library/MapObj/ChildStep.cpp:
+    .text   start:0x0084C0A0 end:0x0084C57C
+src/al/Project/LiveActor/ConveyerKeyKeeper.cpp:
     .text   start:0x0084C580 end:0x0084CDB0
 src/al/Library/MapObj/ConveyerMapParts.cpp:
     .text   start:0x0084CDB0 end:0x0084D714
 src/al/Library/MapObj/ConveyerStep.cpp: done
     .text   start:0x0084D720 end:0x0084DB04
-src/al/Library/MapObj/EffectMtxSetter.cpp:
+src/al/Library/MapObj/EffectMtxSetter.cpp: done
     .text   start:0x0084DB10 end:0x0084E080
 src/al/Library/MapObj/FallMapParts.cpp:
     .text   start:0x0084E080 end:0x0084E8E0
@@ -4784,88 +4816,92 @@ src/al/Library/MapObj/WheelMapParts.cpp:
 src/al/Library/MapObj/WobbleMapParts.cpp:
     .text   start:0x00857DD0 end:0x00858888
 src/al/Library/Math/MathUtil.cpp:
-    .text   start:0x00858890 end:0x008660C4
+    .text   start:0x00858890 end:0x00865924
+src/al/Project/Math/FractalGenerator.cpp:
+    .text   start:0x00865930 end:0x008660C4
 src/al/Library/Math/ParabolicPath.cpp:
     .text   start:0x008660D0 end:0x00866BF8
 src/al/Library/Memory/HeapUtil.cpp:
     .text   start:0x00866C00 end:0x0086738C
-src/al/Library/Memory/MemorySystem.cpp:
+src/al/Project/Memory/MemorySystem.cpp:
     .text   start:0x00867390 end:0x008683C0
-src/al/Library/Memory/ResourceHolder.cpp:
+src/al/Library/Resource/ResourceHolder.cpp:
     .text   start:0x008683C0 end:0x00868B00
 src/al/Library/Memory/Util.cpp:
     .text   start:0x00868B00 end:0x00868DF0
 src/al/Library/Model/alModelCafe.cpp:
     .text   start:0x00868DF0 end:0x00869800
-src/al/Library/Model/ModelDrawerBase.cpp:
+src/al/Library/Model/ModelDrawerBase.cpp: done
     .text   start:0x00869800 end:0x00869878
 src/al/Library/Model/ModelDrawerCubeMap.cpp:
     .text   start:0x00869880 end:0x00869BB4
-src/al/Library/Model/Drawer/MeshDrawer.cpp:
+src/al/Project/Model/MeshDrawer.cpp:
     .text   start:0x00869BC0 end:0x0086B700
-src/al/Library/Model/Drawer/ModelDrawer.cpp:
+src/al/Project/Model/ModelDrawer.cpp: done
     .text   start:0x0086B700 end:0x0086B990
-src/al/Library/Model/Drawer/ModelDrawerDeferred.cpp:
-    .text   start:0x0086B9A0 end:0x0086C018
-src/al/Library/Model/Drawer/ModelDrawerDeferredPlayer.cpp:
-    .text   start:0x0086C020 end:0x0086C234
-src/al/Library/Model/Drawer/ModelDrawerDeferredSilhouette.cpp:
+src/al/Library/Model/ModelDrawerDeferred.cpp:
+    .text   start:0x0086B9A0 end:0x0086C130
+src/al/Library/Model/ModelDrawerDeferredFootPrint.cpp: done
+    .text   start:0x0086C130 end:0x0086C234
+src/al/Library/Model/ModelDrawerDeferredSilhouette.cpp:
     .text   start:0x0086C240 end:0x0086C544
-src/al/Library/Model/Drawer/ModelDrawerDeferredSky.cpp:
+src/al/Library/Model/ModelDrawerDeferredSky.cpp: done
     .text   start:0x0086C550 end:0x0086C6C4
-src/al/Library/Model/Drawer/ModelDrawerDepthOnly.cpp:
+src/al/Library/Model/ModelDrawerDepthOnly.cpp:
     .text   start:0x0086C6D0 end:0x0086CD88
-src/al/Library/Model/Drawer/ModelDrawerDepthShadow.cpp:
+src/al/Library/Model/ModelDrawerDepthShadow.cpp:
     .text   start:0x0086CD90 end:0x0086D1C8
-src/al/Library/Model/Drawer/ModelDrawerForward.cpp:
+src/al/Library/Model/ModelDrawerForward.cpp:
     .text   start:0x0086D1D0 end:0x0086D718
-src/al/Library/Model/Drawer/ModelDrawerInvincible.cpp:
+src/al/Library/Model/ModelDrawerInvincible.cpp:
     .text   start:0x0086D720 end:0x0086DA04
 src/al/Library/Model/Function/alModelFunction.cpp:
     .text   start:0x0086DA10 end:0x0086DBBC
 src/al/Library/Model/Function/ModelFunction.cpp:
     .text   start:0x0086DBC0 end:0x0086FA38
-src/al/Library/Model/Function/PeripheryRendering.cpp:
+src/al/Library/Shader/DeferredRendering/PeripheryRendering.cpp:
     .text   start:0x0086FA40 end:0x008704AC
-src/al/Library/Model/Function/ModelKeeper.cpp:
+src/al/Library/Model/ModelKeeper.cpp: done
     .text   start:0x008704B0 end:0x008707C4
-src/al/Library/Model/Function/ModelUtil.cpp:
+src/al/Library/Model/ModelShapeUtil.cpp:
     .text   start:0x008707D0 end:0x00870E1C
-src/al/Library/Model/Function/SimpleModel.cpp:
+src/al/Library/Model/SimpleModel.cpp: done
     .text   start:0x00870E20 end:0x00870E2C
-src/al/Library/Model/Function/SimpleModelEnv.cpp:
+src/al/Library/Model/SimpleModelEnv.cpp:
     .text   start:0x00870E30 end:0x008727F4
-src/al/Library/Movement/ModelAdditionalInfo.cpp:
+src/al/Project/Model/ModelAdditionalInfo.cpp:
     .text   start:0x00872800 end:0x00872870
-src/al/Library/Movement/ModelAdditionalInfoRenderCubeMap.cpp:
+src/al/Project/Model/ModelAdditionalInfoRenderCubeMap.cpp:
     .text   start:0x00872870 end:0x00872A2C
-src/al/Library/Movement/SimpleModelG3D.cpp:
+src/al/Project/Model/SimpleModelG3D.cpp:
     .text   start:0x00872A30 end:0x00873E5C
 src/al/Library/Movement/AnimScaleController.cpp:
     .text   start:0x00873E60 end:0x008747E8
-src/al/Library/Movement/FlashingCtrl.cpp:
+src/al/Library/Movement/FlashingCtrl.cpp: done
     .text   start:0x008747F0 end:0x00874B54
 src/al/Library/Movement/FlashingTimer.cpp: done
     .text   start:0x00874B60 end:0x00874BFC
 src/al/Library/Movement/KeyMoveMovement.cpp:
     .text   start:0x00874C00 end:0x00874ED8
-src/al/Library/Movement/ParabolicPath.cpp:
+src/al/Library/Math/ParabolicPath_dup2.cpp:
     .text   start:0x00874EE0 end:0x008750FC
 src/al/Library/Movement/ParabolicPathMovement.cpp:
     .text   start:0x00875100 end:0x008752A8
 src/al/Library/Movement/PoseHistoryPath.cpp:
     .text   start:0x008752B0 end:0x00875868
-src/al/Library/Movement/RailMoveMovement.cpp:
-    .text   start:0x00875870 end:0x00875CA8
-src/al/Library/Movement/RumbleCalculator.cpp:
+src/al/Library/Movement/RailMoveMovement.cpp: done
+    .text   start:0x00875870 end:0x00875930
+src/al/Library/Movement/RailMovement.cpp:
+    .text   start:0x00875930 end:0x00875CA8
+src/al/Library/Movement/RumbleCalculator.cpp: done
     .text   start:0x00875CB0 end:0x00875F04
 src/al/Library/Movement/SpringDynamics.cpp:
     .text   start:0x00875F10 end:0x00878114
 src/al/Library/Movement/SwingMovement.cpp:
     .text   start:0x00878120 end:0x008785C4
-src/al/Library/Nerve/NerveAction.cpp:
+src/al/Library/Nerve/NerveAction.cpp: done
     .text   start:0x008785D0 end:0x00878618
-src/al/Library/Nerve/NerveActionCollector.cpp:
+src/al/Library/Nerve/NerveActionCollector.cpp: done
     .text   start:0x00878620 end:0x00878668
 src/al/Library/Nerve/NerveActionCtrl.cpp: done
     .text   start:0x00878670 end:0x00878774
@@ -4881,37 +4917,39 @@ src/al/Library/Nerve/NerveUtil.cpp: done
     .text   start:0x00878D80 end:0x00879F30
 src/al/Library/Nfp/NfpDirector.cpp:
     .text   start:0x00879F30 end:0x0087BAFC
-src/al/Library/Nfp/NfpUtil.cpp:
+src/al/Library/Nfp/NfpFunction.cpp:
     .text   start:0x0087BB00 end:0x0087C14C
 src/al/Library/Obj/BreakModel.cpp: done
     .text   start:0x0087C150 end:0x0087C4A0
-src/al/Library/Obj/DepthShadowModel.cpp:
+src/al/Library/Obj/DepthShadowModel.cpp: done
     .text   start:0x0087C4A0 end:0x0087C720
-src/al/Library/Obj/EffectObj.cpp:
+src/al/Library/Obj/EffectObj.cpp: done
     .text   start:0x0087C720 end:0x0087CB64
 src/al/Library/Obj/EffectObjFollowCamera.cpp:
     .text   start:0x0087CB70 end:0x0087D144
 src/al/Library/Obj/EffectObjFunction.cpp: done
     .text   start:0x0087D150 end:0x0087D294
-src/al/Library/Obj/FootPrint.cpp:
+src/al/Project/Obj/FootPrint.cpp:
     .text   start:0x0087D2A0 end:0x0087D92C
 src/al/Library/Obj/FootPrintHolder.cpp:
     .text   start:0x0087D930 end:0x0087E740
-src/al/Library/Obj/FootPrintServer.cpp:
+src/al/Library/Obj/FootPrintServer.cpp: done
     .text   start:0x0087E740 end:0x0087E8CC
 src/al/Library/Obj/MessageSyncParts.cpp: done
     .text   start:0x0087E8D0 end:0x0087EAB0
-src/al/Library/Obj/ModelDrawParts.cpp:
+src/al/Library/Obj/ModelDrawParts.cpp: done
     .text   start:0x0087EAB0 end:0x0087ED40
-src/al/Library/Obj/PartsFunction.cpp:
-    .text   start:0x0087ED40 end:0x0087F790
+src/al/Library/Obj/PartsFunction.cpp: done
+    .text   start:0x0087ED40 end:0x0087F524
+src/al/Library/Obj/CollisionObj.cpp: done
+    .text   start:0x0087F530 end:0x0087F790
 src/al/Library/Obj/PartsModel.cpp:
     .text   start:0x0087F790 end:0x008800D4
 src/al/Library/Obj/PlacementClippingExpander.cpp: done
     .text   start:0x008800E0 end:0x008801D4
 src/al/Library/Obj/SePlayRail.cpp: done
     .text   start:0x008801E0 end:0x008804F0
-src/al/Library/Obj/SilhouetteModel.cpp:
+src/al/Library/Obj/SilhouetteModel.cpp: done
     .text   start:0x008804F0 end:0x008807A0
 src/al/Library/Obj/Sky.cpp:
     .text   start:0x00880F40 end:0x008821B4
@@ -4919,7 +4957,7 @@ src/al/Library/Obj/WarpedMtxPartsModel.cpp:
     .text   start:0x008821C0 end:0x00882C90
 src/al/Library/Play/Area/SePlayArea.cpp: done
     .text   start:0x00882C90 end:0x00882D90
-src/al/Library/Play/Layout/SimpleLayoutAppear.cpp:
+src/al/Library/Play/Layout/SimpleLayoutAppear.cpp: done
     .text   start:0x00882D90 end:0x00882F04
 src/al/Library/Play/Layout/SimpleLayoutAppearWait.cpp:
     .text   start:0x00882F10 end:0x00883234
@@ -4931,31 +4969,35 @@ src/al/Library/Placement/PlacementId.cpp: done
     .text   start:0x00883E60 end:0x00883FF4
 src/al/Library/Placement/PlacementInfo.cpp: done
     .text   start:0x00884000 end:0x0088405C
-src/al/Library/Placement/PlacementUtil.cpp:
-    .text   start:0x00884060 end:0x008889C8
-src/al/Library/Placement/Function/PlacementFunction.cpp:
-    .text   start:0x008889D0 end:0x0088925C
+src/al/Library/Placement/PlacementFunction.cpp:
+    .text   start:0x00884060 end:0x0088925C
 src/al/Library/Player/PlayerHolder.cpp: done
     .text   start:0x00889260 end:0x008895DC
 src/al/Library/Player/PlayerUtil.cpp:
-    .text   start:0x008895E0 end:0x0088D518
+    .text   start:0x008895E0 end:0x0088ABF8
+src/al/Library/PostProcessing/DepthOfFieldDrawer.cpp:
+    .text   start:0x0088AC00 end:0x0088BE5C
+src/al/Library/PostProcessing/DepthOfFieldProgramableParam.cpp:
+    .text   start:0x0088BE60 end:0x0088C888
 src/al/Library/PostProcessing/GodRayDirector.cpp:
-    .text   start:0x0088D520 end:0x0088EE58
+    .text   start:0x0088C890 end:0x0088EE58
 src/al/Library/PostProcessing/GodRayRequester.cpp:
     .text   start:0x0088EE60 end:0x0088F180
 src/al/Library/PostProcessing/HdrCompose.cpp:
-    .text   start:0x0088F180 end:0x0088F188
-src/al/Library/PostProcessing/HdrParam.cpp:
-    .text   start:0x0088F190 end:0x00893F04
-src/al/Library/PostProcessing/LightStreakParam.cpp:
-    .text   start:0x00893F10 end:0x00896C70
-src/al/Library/PostProcessing/OccludedEffectRequestInfo.cpp:
-    .text   start:0x00896C70 end:0x0089788C
-src/al/Library/PostProcessing/Occluded/OccludedEffectRequester.cpp:
+    .text   start:0x0088F180 end:0x00893F04
+src/al/Library/PostProcessing/LightStreakParam.cpp: done
+    .text   start:0x00893F10 end:0x008941E4
+src/al/Library/PostProcessing/LightStreakDirector.cpp:
+    .text   start:0x008941F0 end:0x00896C70
+src/al/Library/PostProcessing/OccludedEffectRequestInfo.cpp: done
+    .text   start:0x00896C70 end:0x00896C78
+src/al/Library/PostProcessing/OccludedEffectDirector.cpp:
+    .text   start:0x00896C80 end:0x0089788C
+src/al/Library/PostProcessing/OccludedEffectRequester.cpp:
     .text   start:0x00897890 end:0x00897DC4
-src/al/Library/PostProcessing/Occluded/RadialBlurDirector.cpp:
+src/al/Library/PostProcessing/RadialBlurDirector.cpp:
     .text   start:0x00897DD0 end:0x00898554
-src/al/Library/Rail/LinearCurve.cpp:
+src/al/Project/Rail/LinearCurve.cpp:
     .text   start:0x00898560 end:0x00898A04
 src/al/Library/Rail/Rail.cpp:
     .text   start:0x00898A10 end:0x00899A54
@@ -4963,7 +5005,7 @@ src/al/Library/Rail/RailKeeper.cpp:
     .text   start:0x00899A60 end:0x00899CBC
 src/al/Library/Rail/RailPart.cpp: done
     .text   start:0x00899CC0 end:0x0089A1E8
-src/al/Library/Rail/BezierCurve.cpp:
+src/al/Project/Rail/BezierCurve.cpp:
     .text   start:0x0089A1F0 end:0x0089B12C
 src/al/Library/Rail/RailRider.cpp: done
     .text   start:0x0089B130 end:0x0089B61C
@@ -4971,27 +5013,33 @@ src/al/Library/Rail/RailUtil.cpp:
     .text   start:0x0089B620 end:0x0089CDF4
 src/al/Library/Resource/Resource.cpp:
     .text   start:0x0089CE00 end:0x0089E404
-src/al/Library/Resource/ResourceFunction.cpp:
+src/al/Library/Resource/ResourceFunction.cpp: done
     .text   start:0x0089E410 end:0x0089ED0C
-src/al/Library/Resource/ResourceSystem.cpp:
+src/al/Project/Resource/ResourceSystem.cpp:
     .text   start:0x0089ED10 end:0x008A1180
-src/al/Library/SaveData/ActorInitResourceData.cpp:
-    .text   start:0x008A1180 end:0x008A157C
+src/al/Library/SaveData/ActorInitResourceData.cpp: done
+    .text   start:0x008A1180 end:0x008A11CC
+src/al/Library/SaveData/SaveDataFunction.cpp: done
+    .text   start:0x008A11D0 end:0x008A157C
 src/al/Library/SaveData/SavaDataDirector.cpp:
     .text   start:0x008A1580 end:0x008A1708
-src/al/Library/SaveData/SaveDataDirector.cpp:
+src/al/Project/SaveData/SaveDataDirector.cpp: done
     .text   start:0x008A1710 end:0x008A2024
-src/al/Library/SaveData/SaveDataFunction.cpp: done
+src/al/Project/SaveData/SaveDataFunction.cpp: done
     .text   start:0x008A2030 end:0x008A2078
-src/al/Library/SaveData/SaveDataSequence.cpp: done
+src/al/Project/SaveData/SaveDataSequence.cpp: done
     .text   start:0x008A2080 end:0x008A20C0
-src/al/Library/SaveData/SaveDataSequenceRead.cpp: done
+src/al/Project/SaveData/SaveDataSequenceRead.cpp: done
     .text   start:0x008A20C0 end:0x008A2144
-src/al/Library/SaveData/SaveDataSequenceWrite.cpp: done
-    .text   start:0x008A2150 end:0x008A2390
+src/al/Project/SaveData/SaveDataSequenceWrite.cpp: done
+    .text   start:0x008A2150 end:0x008A22A0
+src/al/Project/SaveData/SaveDataSequenceFormat.cpp: done
+    .text   start:0x008A22A0 end:0x008A22FC
+src/al/Project/SaveData/SaveDataSequenceInitDir.cpp: done
+    .text   start:0x008A2300 end:0x008A2390
 src/al/Library/Scene/DemoDirector.cpp:
     .text   start:0x008A2390 end:0x008A2EB4
-src/al/Library/Scene/Scene.cpp:
+src/al/Library/Scene/Scene.cpp: done
     .text   start:0x008A2EC0 end:0x008A3854
 src/al/Library/Scene/SceneFactory.cpp: done
     .text   start:0x008A3860 end:0x008A3888
@@ -5004,9 +5052,9 @@ src/al/Library/Scene/SceneUtil.cpp:
 src/al/Library/Stage/StageResourceKeeper.cpp: done
     .text   start:0x008A55B0 end:0x008A576C
 src/al/Library/Stage/StageInfo.cpp: done
-    .text   start:0x008A5770 end:0x008A590C
+    .text   start:0x008A5770 end:0x008A58CC
 src/al/Library/Stage/StageResourceList.cpp:
-    .text   start:0x008A5910 end:0x008A6480
+    .text   start:0x008A58D0 end:0x008A6480
 src/al/Library/Screen/ScreenPointDirector.cpp:
     .text   start:0x008A6480 end:0x008A6D2C
 src/al/Library/Screen/ScreenPointerCheckGroup.cpp: done
@@ -5018,86 +5066,108 @@ src/al/Library/Screen/ScreenPointerUtil.cpp: done
 src/al/Library/Screen/ScreenPointKeeper.cpp: done
     .text   start:0x008A7170 end:0x008A74CC
 src/al/Library/Screen/ScreenPointTarget.cpp:
-    .text   start:0x008A74D0 end:0x008A841C
-src/al/Library/Screen/ScreenUtil.cpp:
+    .text   start:0x008A74D0 end:0x008A7A88
+src/al/Library/Screen/ScreenFunction.cpp:
+    .text   start:0x008A7A90 end:0x008A812C
+src/al/Project/Screen/ScreenCapture.cpp: done
+    .text   start:0x008A8130 end:0x008A841C
+src/al/Library/Screen/ScreenFunction_dup2.cpp:
     .text   start:0x008A8420 end:0x008AA454
 src/al/Library/Sequence/Sequence.cpp:
     .text   start:0x008AA460 end:0x008AAD5C
-src/al/Library/Sequence/Scene/SceneCreator.cpp:
+src/al/Project/Scene/SceneCreator.cpp:
     .text   start:0x008AAD60 end:0x008AB064
-src/al/Library/Sequence/Scene/SceneInitInfo.cpp: done
+src/al/Project/Scene/SceneInitInfo.cpp: done
     .text   start:0x008AB070 end:0x008AB180
-src/al/Library/Shader/AtmosScatter.cpp:
+src/al/Library/Shader/DeferredRendering/AtmosScatter.cpp:
     .text   start:0x008AB180 end:0x008AE254
-src/al/Library/Shader/AtmosScatterDrawer.cpp:
+src/al/Library/Shader/DeferredRendering/AtmosScatterDrawer.cpp: done
     .text   start:0x008AE260 end:0x008AE364
-src/al/Library/Shader/CubeMapDirector.cpp:
-    .text   start:0x008AE370 end:0x008AEE48
-src/al/Library/Shader/CubeMapDrawInfo.cpp:
-    .text   start:0x008AEE50 end:0x008AF618
-src/al/Library/Shader/DeferredRenderingShader.cpp:
+src/al/Library/Shader/DeferredRendering/CubeMapDirector.cpp:
+    .text   start:0x008AE370 end:0x008AE73C
+src/al/Library/Shader/DeferredRendering/AtmosScatterCubeMap.cpp:
+    .text   start:0x008AE740 end:0x008AEE48
+src/al/Library/Shader/DeferredRendering/CubeMapDrawInfo.cpp:
+    .text   start:0x008AEE50 end:0x008AF208
+src/al/Library/Shader/DeferredRendering/CubeMapDrawer.cpp:
+    .text   start:0x008AF210 end:0x008AF618
+src/al/Library/Shader/DeferredRendering/DeferredRenderingShader.cpp:
     .text   start:0x008AF620 end:0x008B0F88
-src/al/Library/Shader/DeferredRenderingShpUbo.cpp:
+src/al/Library/Shader/DeferredRendering/DeferredRenderingShpUbo.cpp:
     .text   start:0x008B0F90 end:0x008B1428
-src/al/Library/Shader/FullScreenQuadModel.cpp:
+src/al/Library/Shader/DeferredRendering/FullScreenQuadModel.cpp: done
     .text   start:0x008B1430 end:0x008B177C
-src/al/Library/Shader/FullScreenTriangle.cpp:
+src/al/Library/Shader/DeferredRendering/FullScreenTriangle.cpp:
     .text   start:0x008B1780 end:0x008B18D4
-src/al/Library/Shader/GBufferArray.cpp:
+src/al/Library/Shader/DeferredRendering/GBufferArray.cpp:
     .text   start:0x008B18E0 end:0x008B2CE8
-src/al/Library/Shader/ModelLightParam.cpp:
+src/al/Library/Shader/DeferredRendering/ModelLightParam.cpp:
     .text   start:0x008B2CF0 end:0x008B4440
-src/al/Library/Shader/PeripheryRendering.cpp:
+src/al/Library/Shader/DeferredRendering/PeripheryRendering_dup2.cpp:
     .text   start:0x008B4440 end:0x008B4E90
-src/al/Library/Shader/SamplerLocation.cpp:
-    .text   start:0x008B4E90 end:0x008B82A0
-src/al/Library/Shader/ShaderEnvTextureKeeper.cpp:
+src/al/Library/Shader/DeferredRendering/SamplerLocation.cpp:
+    .text   start:0x008B4E90 end:0x008B6444
+src/al/Library/Shader/ForwardRendering/CubeMapKeeper.cpp:
+    .text   start:0x008B6450 end:0x008B78D4
+src/al/Library/Shader/ForwardRendering/EnvTextureKeeper.cpp: done
+    .text   start:0x008B78E0 end:0x008B82A0
+src/al/Library/Shader/ForwardRendering/ShaderEnvTextureKeeper.cpp:
     .text   start:0x008B82A0 end:0x008B9364
-src/al/Library/Shader/ShaderFresnelTextureKeeper.cpp:
+src/al/Library/Shader/ForwardRendering/ShaderFresnelTextureKeeper.cpp:
     .text   start:0x008B9370 end:0x008BAEBC
-src/al/Library/Shader/ShaderMirrorDirector.cpp:
+src/al/Library/Shader/ForwardRendering/ShaderMirrorDirector.cpp:
     .text   start:0x008BAEC0 end:0x008BDBA4
-src/al/Library/Shader/ShaderSamplerSetter.cpp:
+src/al/Library/Shader/ForwardRendering/ShaderSamplerSetter.cpp:
     .text   start:0x008BDBB0 end:0x008BEFD0
-src/al/Library/Shader/UniformBlock.cpp:
+src/al/Library/Shader/Block/UniformBlock.cpp:
     .text   start:0x008BEFD0 end:0x008BF1C4
-src/al/Library/Shader/UniformBlockUtil.cpp:
+src/al/Library/Shader/Block/UniformBlockUtil.cpp:
     .text   start:0x008BF1D0 end:0x008BF2D8
-src/al/Library/Shadow/ThunderRenderKeeper.cpp:
+src/al/Library/Shader/ForwardRendering/ThunderRenderKeeper.cpp:
     .text   start:0x008BF2E0 end:0x008C23C8
-src/al/Library/Shadow/ShadowUtil.cpp:
-    .text   start:0x008C23D0 end:0x008C71BC
+src/al/Library/Shadow/ActorShadowFunction.cpp:
+    .text   start:0x008C23D0 end:0x008C5D00
+src/al/Library/Shadow/ShadowDirector.cpp:
+    .text   start:0x008C5D00 end:0x008C71BC
 src/al/Library/Shadow/Depth/DepthShadowDrawer.cpp:
     .text   start:0x008C71C0 end:0x008C8488
-src/al/Library/Shadow/Depth/ShadowKeeper.cpp:
+src/al/Library/Shadow/Depth/ShadowKeeper.cpp: done
     .text   start:0x008C8490 end:0x008C87B8
 src/al/Library/Shadow/Depth/ShadowMaskCtrl.cpp:
-    .text   start:0x008C87C0 end:0x008C9D54
-src/al/Library/Shadow/Mask/ShadowDirector.cpp:
+    .text   start:0x008C87C0 end:0x008C927C
+src/al/Library/Shadow/Depth/ShadowKeeper_dup2.cpp: done
+    .text   start:0x008C9280 end:0x008C94AC
+src/al/Library/Shadow/Depth/ShadowMaskCtrl_dup2.cpp:
+    .text   start:0x008C94B0 end:0x008C9D54
+src/al/Library/Shadow/ShadowDirector_dup2.cpp: done
     .text   start:0x008C9D60 end:0x008CA73C
-src/al/Library/Shadow/Mask/ShadowMaskCastInterpolateCube.cpp:
-    .text   start:0x008CA740 end:0x008CB6E8
-src/al/Library/Shadow/Mask/ShadowMaskCube.cpp:
+src/al/Project/Stage/ShadowMaskCastInterpolateCube.cpp:
+    .text   start:0x008CA740 end:0x008CB020
+src/al/Library/Shadow/ShadowDirector_dup3.cpp:
+    .text   start:0x008CB020 end:0x008CB6E8
+src/al/Library/Shadow/ShadowMaskCube.cpp:
     .text   start:0x008CB6F0 end:0x008CC2F8
-src/al/Library/Shadow/Mask/ShadowMaskCylinder.cpp:
+src/al/Library/Shadow/ShadowMaskCylinder.cpp:
     .text   start:0x008CC300 end:0x008CC988
-src/al/Library/Shadow/Mask/ShadowMaskDrawer.cpp:
+src/al/Library/Shadow/ShadowMaskDrawer.cpp:
     .text   start:0x008CC990 end:0x008D2FF8
-src/al/Library/Shadow/Mask/ShadowMaskSphere.cpp:
+src/al/Library/Shadow/ShadowMaskSphere.cpp: done
     .text   start:0x008D3000 end:0x008D3258
-src/al/Library/Shadow/Mask/StageSwitchDirector.cpp:
-    .text   start:0x008D3260 end:0x008D33E0
-src/al/Library/Switch/StageSwitchDirector.cpp:
-    .text   start:0x008D33E0 end:0x008D3628
-src/al/Library/Switch/StageSwitchKeeper.cpp:
-    .text   start:0x008D3630 end:0x008D3B48
-src/al/Library/Switch/StageSwitchUtil.cpp:
-    .text   start:0x008D3B50 end:0x008D4968
+src/al/Library/Stage/StageSwitchDirector.cpp:
+    .text   start:0x008D3260 end:0x008D3628
+src/al/Library/Stage/StageSwitchKeeper.cpp:
+    .text   start:0x008D3630 end:0x008D39C8
+src/al/Project/Stage/StageSwitchAccesser.cpp:
+    .text   start:0x008D39D0 end:0x008D3B48
+src/al/Library/Stage/StageSwitchUtil.cpp:
+    .text   start:0x008D3B50 end:0x008D48C8
+src/al/Project/Stage/StageSwitchFunctorListener.cpp: done
+    .text   start:0x008D48D0 end:0x008D4968
 src/al/Library/System/SystemKit.cpp:
     .text   start:0x008D4AB0 end:0x008D4F0C
 src/al/Library/Thread/AsyncFunctorThread.cpp: done
     .text   start:0x008D4F10 end:0x008D5244
-src/al/Library/Thread/InitializeThread.cpp: done
+src/al/Project/Thread/InitializeThread.cpp: done
     .text   start:0x008D5250 end:0x008D54E4
 src/al/Library/Yaml/ByamlIter.cpp:
     .text   start:0x008D5500 end:0x008D87CC
@@ -5115,153 +5185,183 @@ src/al/Project/Action/ActionPadAndCameraData.cpp:
     .text   start:0x008DA300 end:0x008DAF08
 src/al/Project/Action/ActionSeCtrl.cpp:
     .text   start:0x008DAF10 end:0x008DB9C8
-src/al/Project/Action/ActorActionKeeper.cpp: done
+src/al/Library/Action/ActorActionKeeper.cpp: done
     .text   start:0x008DB9D0 end:0x008DBF50
-src/al/Project/Action/Ctrl/ActionBgmCtrl.cpp:
+src/al/Project/Action/ActionBgmCtrl.cpp:
     .text   start:0x008DBF50 end:0x008DC8FC
-src/al/Project/Action/Ctrl/ActionFlagCtrl.cpp:
+src/al/Project/Action/ActionFlagCtrl.cpp:
     .text   start:0x008DC900 end:0x008DD458
-src/al/Project/Action/Ctrl/ActionOceanWaveCtrl.cpp:
+src/al/Project/Action/ActionOceanWaveCtrl.cpp:
     .text   start:0x008DD460 end:0x008DD7AC
-src/al/Project/Action/Ctrl/ActionPadAndCameraCtrl.cpp:
+src/al/Project/Action/ActionPadAndCameraCtrl.cpp:
     .text   start:0x008DD7B0 end:0x008DDB20
-src/al/Project/Action/Ctrl/ActionScreenEffectCtrl.cpp:
+src/al/Project/Action/ActionScreenEffectCtrl.cpp: done
     .text   start:0x008DDB20 end:0x008DE024
-src/al/Project/Action/Ctrl/YamlFormatter.cpp:
+src/al/Project/Yaml/YamlFormatter.cpp:
     .text   start:0x008DE030 end:0x008DEFB8
-src/al/Project/Action/Ctrl/YamlWriter.cpp: done
+src/al/Project/Yaml/YamlWriter.cpp: done
     .text   start:0x008DEFC0 end:0x008DF074
-src/al/Project/Actor/ActorParam.cpp:
+src/al/Project/Actor/ActorParam.cpp: done
     .text   start:0x008DF080 end:0x008DF10C
-src/al/Project/Actor/ActorParamHolder.cpp: done
+src/al/Library/LiveActor/ActorParamHolder.cpp: done
     .text   start:0x008DF110 end:0x008DF8C0
-src/al/Project/Actor/InitResourceDataAction.cpp: done
+src/al/Project/Action/InitResourceDataAction.cpp: done
     .text   start:0x008DF8C0 end:0x008DF8F8
-src/al/Project/Actor/InitResourceDataActionAnim.cpp:
-    .text   start:0x008DF900 end:0x008E0648
+src/al/Project/Action/InitResourceDataActionAnim.cpp: done
+    .text   start:0x008DF900 end:0x008DFE30
+src/al/Project/Anim/AnimPlayerSimple.cpp:
+    .text   start:0x008DFE30 end:0x008E062C
 src/al/Project/Anim/AnimInfo.cpp:
-    .text   start:0x008E0650 end:0x008E0AF8
-src/al/Project/Anim/AnimPlayerSkl.cpp:
+    .text   start:0x008E0630 end:0x008E0AF8
+src/al/Library/Anim/AnimPlayerSkl.cpp:
     .text   start:0x008E0B00 end:0x008E2BE0
-src/al/Project/Anim/Player/AnimPlayerSimple.cpp:
+src/al/Project/Anim/AnimPlayerSimple_dup2.cpp:
     .text   start:0x008E2BE0 end:0x008E2E7C
-src/al/Project/Anim/Player/InitResourceDataAnim.cpp:
+src/al/Project/Anim/InitResourceDataAnim.cpp:
     .text   start:0x008E2E80 end:0x008E3808
-src/al/Project/Anim/Player/ModelAnimInterp.cpp:
+src/al/Library/Anim/ModelAnimInterp.cpp:
     .text   start:0x008E3810 end:0x008E4750
-src/al/Project/Anim/Player/SklAnimRetargettingInfo.cpp:
+src/al/Library/Anim/SklAnimRetargettingInfo.cpp:
     .text   start:0x008E4750 end:0x008E4EF0
-src/al/Project/Area/AreaInitInfo.cpp: done
+src/al/Library/Area/AreaInitInfo.cpp: done
     .text   start:0x008E4EF0 end:0x008E4FF8
-src/al/Project/AreaObj/AreaObj.cpp:
+src/al/Library/Area/AreaObj.cpp: done
     .text   start:0x008E5000 end:0x008E5664
-src/al/Project/AreaObj/AreaObjDirector.cpp:
+src/al/Library/Area/AreaObjDirector.cpp:
     .text   start:0x008E5670 end:0x008E6394
-src/al/Project/AreaObj/AreaObjFactory.cpp: done
+src/al/Library/Area/AreaObjFactory.cpp: done
     .text   start:0x008E63A0 end:0x008E63C0
-src/al/Project/AreaObj/AreaObjGroup.cpp:
+src/al/Library/Area/AreaObjGroup.cpp: done
     .text   start:0x008E63C0 end:0x008E6928
-src/al/Project/AreaObj/AreaObjMtxConnecter.cpp: done
+src/al/Library/Area/AreaObjMtxConnecter.cpp: done
     .text   start:0x008E6930 end:0x008E6DA8
-src/al/Project/AreaObj/AreaObjUtil.cpp:
-    .text   start:0x008E6DB0 end:0x008E8F88
-src/al/Project/AreaObj/AreaShape.cpp: done
+src/al/Library/Area/AreaObjUtil.cpp: done
+    .text   start:0x008E6DB0 end:0x008E762C
+src/al/Library/LiveActor/ActorAreaFunction.cpp: done
+    .text   start:0x008E7630 end:0x008E7BEC
+src/al/Library/Area/AreaObjUtil_dup2.cpp: done
+    .text   start:0x008E7BF0 end:0x008E7F10
+src/al/Library/LiveActor/ActorAreaFunction_dup2.cpp: done
+    .text   start:0x008E7F10 end:0x008E7F84
+src/al/Library/Area/AreaObjUtil_dup3.cpp: done
+    .text   start:0x008E7F90 end:0x008E8070
+src/al/Library/LiveActor/ActorAreaFunction_dup3.cpp: done
+    .text   start:0x008E8070 end:0x008E8310
+src/al/Library/Area/AreaObjUtil_dup4.cpp: done
+    .text   start:0x008E8310 end:0x008E8350
+src/al/Library/LiveActor/ActorAreaFunction_dup4.cpp: done
+    .text   start:0x008E8350 end:0x008E83C4
+src/al/Library/Area/AreaObjUtil_dup5.cpp:
+    .text   start:0x008E83D0 end:0x008E8948
+src/al/Library/LiveActor/ActorAreaFunction_dup5.cpp: done
+    .text   start:0x008E8950 end:0x008E8C20
+src/al/Library/Area/AreaObjUtil_dup6.cpp: done
+    .text   start:0x008E8C20 end:0x008E8F88
+src/al/Library/Area/AreaShape.cpp: done
     .text   start:0x008E8F90 end:0x008E9340
-src/al/Project/AreaObj/AreaShapes.cpp:
+src/al/Library/Area/AreaShapes.cpp:
     .text   start:0x008E9340 end:0x008EA398
-src/al/Project/AreaObj/SwitchAreaDirector.cpp: done
+src/al/Library/Area/SwitchAreaDirector.cpp: done
     .text   start:0x008EA3A0 end:0x008EA73C
-src/al/Project/AreaObj/SwitchKeepOnAreaGroup.cpp:
-    .text   start:0x008EA740 end:0x008EAAAC
-src/al/Project/AreaObj/SwitchOnAreaGroup.cpp: done
+src/al/Library/Area/SwitchKeepOnAreaGroup.cpp:
+    .text   start:0x008EA740 end:0x008EAA18
+src/al/Library/LiveActor/ActorAreaFunction_dup6.cpp: done
+    .text   start:0x008EAA20 end:0x008EAAAC
+src/al/Library/Area/SwitchOnAreaGroup.cpp: done
     .text   start:0x008EAAB0 end:0x008EADE8
-src/al/Project/Audio/AudioDirector.cpp:
+src/al/Library/Audio/AudioDirector.cpp: done
     .text   start:0x008EADF0 end:0x008EB228
-src/al/Project/Audio/AudioEventController.cpp:
+src/al/Library/Audio/AudioEventController.cpp:
     .text   start:0x008EB230 end:0x008EBD28
-src/al/Project/Audio/AudioGeneralPurposeAreaChecker.cpp:
-    .text   start:0x008EBD30 end:0x008EC2E4
-src/al/Project/Audio/AudioKeeper.cpp:
-    .text   start:0x008EC2F0 end:0x008EC63C
-src/al/Project/Audio/AudioRequestKeeperSyncedBgm.cpp:
+src/al/Library/Audio/AudioGeneralPurposeAreaChecker.cpp: done
+    .text   start:0x008EBD30 end:0x008EBD54
+src/al/Library/Audio/System/AudioKeeper.cpp:
+    .text   start:0x008EBD60 end:0x008EC63C
+src/al/Library/Audio/System/AudioRequestKeeperSyncedBgm.cpp:
     .text   start:0x008EC640 end:0x008ECBC8
-src/al/Project/Audio/AudioResourceDirector.cpp:
+src/al/Library/Audio/System/AudioResourceDirector.cpp: done
     .text   start:0x008ECBD0 end:0x008ED274
-src/al/Project/Audio/AudioResourceLoader.cpp:
+src/al/Library/Audio/System/AudioResourceLoader.cpp: done
     .text   start:0x008ED280 end:0x008ED474
-src/al/Project/Audio/AudioSituation.cpp: done
+src/al/Library/Audio/System/AudioSituation.cpp: done
     .text   start:0x008ED480 end:0x008ED518
-src/al/Project/Audio/AudioSituationDirector.cpp:
+src/al/Library/Audio/System/AudioSituationDirector.cpp:
     .text   start:0x008ED520 end:0x008EDB94
-src/al/Project/Audio/AudioSystem.cpp:
-    .text   start:0x008EDBA0 end:0x008F06C4
-src/al/Project/Audio/Keeper/AudioKeeperFunction.cpp:
+src/al/Library/Audio/System/AudioSystem.cpp:
+    .text   start:0x008EDBA0 end:0x008EDCCC
+src/al/Library/Audio/System/AudioKeeperFunction.cpp:
+    .text   start:0x008EDCD0 end:0x008F0684
+src/al/Project/Audio/System/System.cpp:
+    .text   start:0x008F0690 end:0x008F06C4
+src/al/Library/Audio/System/AudioKeeperFunction_dup2.cpp:
     .text   start:0x008F06D0 end:0x008F122C
-src/al/Project/Audio/Keeper/AudioVolumeCtrl.cpp:
+src/al/Library/Audio/System/AudioVolumeCtrl.cpp: done
     .text   start:0x008F1230 end:0x008F1734
-src/al/Project/Audio/Keeper/NWSound3DEngineCustomCAFE.cpp:
+src/al/Library/Audio/System/NWSound3DEngineCustomCAFE.cpp:
     .text   start:0x008F1740 end:0x008F1A44
-src/al/Project/Audio/Keeper/SeadAudioPlayer.cpp:
-    .text   start:0x008F1A50 end:0x008F262C
-src/al/Project/Audio/Keeper/SeadAudioResourceLoader.cpp: done
+src/al/Library/Audio/System/SeadAudioPlayer.cpp:
+    .text   start:0x008F1A50 end:0x008F1A94
+src/al/Project/Audio/System/AudioPlayer.cpp: done
+    .text   start:0x008F1AA0 end:0x008F262C
+src/al/Project/Audio/System/SeadAudioResourceLoader.cpp: done
     .text   start:0x008F2630 end:0x008F2634
-src/al/Project/Audio/Keeper/SoundHeapPtrWrapper.cpp:
+src/al/Project/Audio/System/SoundHeapPtrWrapper.cpp:
     .text   start:0x008F2640 end:0x008F2A4C
-src/al/Project/Audio/Keeper/SoundSubArchiveKeeper.cpp:
+src/al/Project/Audio/System/SoundSubArchiveKeeper.cpp:
     .text   start:0x008F2A50 end:0x008F3080
 src/al/Project/Audio/Sound/SoundHandle.cpp: done
     .text   start:0x008F3080 end:0x008F31A8
-src/al/Project/Base/HashUtil.cpp: done
+src/al/Library/Base/HashCodeUtil.cpp: done
     .text   start:0x008F31B0 end:0x008F33D4
-src/al/Project/Base/RequestInterp.cpp: done
+src/al/Library/Base/RequestInterp.cpp: done
     .text   start:0x008F33E0 end:0x008F33EC
 src/al/Project/Base/StringMatcher.cpp: done
     .text   start:0x008F33F0 end:0x008F3780
-src/al/Project/Base/StringOpUtil.cpp:
-    .text   start:0x008F3780 end:0x008F5344
-src/al/Project/Base/StringUtil.cpp: done
-    .text   start:0x008F5350 end:0x008F5484
-src/al/Project/Bgm/BgmLineInfo.cpp: done
+src/al/Project/Base/StringOpUtil.cpp: done
+    .text   start:0x008F3780 end:0x008F37AC
+src/al/Library/Base/StringUtil.cpp:
+    .text   start:0x008F37B0 end:0x008F5484
+src/al/Library/Bgm/BgmLineInfo.cpp: done
     .text   start:0x008F5490 end:0x008F56CC
-src/al/Project/Bgm/BgmPlayInfo.cpp: done
+src/al/Library/Bgm/BgmPlayInfo.cpp: done
     .text   start:0x008F56D0 end:0x008F578C
-src/al/Project/Bgm/BgmResourceCategoryInfo.cpp: done
+src/al/Library/Bgm/BgmResourceCategoryInfo.cpp: done
     .text   start:0x008F5790 end:0x008F5EEC
-src/al/Project/Bgm/BgmStageScenarioInfo.cpp: done
-    .text   start:0x008F5EF0 end:0x008F612C
-src/al/Project/Bgm/BgmSuffixProcInfo.cpp:
-    .text   start:0x008F6130 end:0x008F9EBC
-src/al/Project/Bgm/BgmDirector.cpp:
+src/al/Library/Bgm/BgmStageScenarioInfo.cpp:
+    .text   start:0x008F5EF0 end:0x008F9EBC
+src/al/Library/Bgm/BgmDirector.cpp: done
     .text   start:0x008F9EC0 end:0x008FA318
-src/al/Project/Bgm/BgmFunction.cpp:
+src/al/Library/Bgm/BgmFunction.cpp:
     .text   start:0x008FA320 end:0x008FAA98
-src/al/Project/Bgm/BgmKeeper.cpp: done
+src/al/Library/Bgm/BgmKeeper.cpp: done
     .text   start:0x008FAAA0 end:0x008FAB98
-src/al/Project/Bgm/BgmLine.cpp:
+src/al/Library/Bgm/BgmLine.cpp:
     .text   start:0x008FABA0 end:0x008FCB88
-src/al/Project/Bgm/LinearValueController.cpp:
-    .text   start:0x008FCB90 end:0x008FE6BC
-src/al/Project/Bgm/BgmLineKeeper.cpp:
+src/al/Library/Bgm/LinearValueController.cpp:
+    .text   start:0x008FCB90 end:0x008FD37C
+src/al/Project/Bgm/Bgm.cpp:
+    .text   start:0x008FD380 end:0x008FE6BC
+src/al/Library/Bgm/BgmLineKeeper.cpp:
     .text   start:0x008FE6C0 end:0x009003D8
-src/al/Project/Bgm/BgmRhythmCtrl.cpp:
+src/al/Library/Bgm/BgmRhythmCtrl.cpp: done
     .text   start:0x009003E0 end:0x00900828
-src/al/Project/Bgm/BgmRhythmDetector.cpp:
-    .text   start:0x00900830 end:0x00901DB8
-src/al/Project/Bgm/BgmUserInfo.cpp:
-    .text   start:0x00901DC0 end:0x009024C4
-src/al/Project/Bgm/BgmUtil.cpp:
+src/al/Library/Bgm/BgmRhythmDetector.cpp:
+    .text   start:0x00900830 end:0x0090159C
+src/al/Project/Bgm/BgmInfo.cpp:
+    .text   start:0x009015A0 end:0x009024C4
+src/al/Library/Bgm/BgmLineFunction.cpp:
     .text   start:0x009024D0 end:0x00904154
-src/al/Project/Bgm/ChikaChikaBgmSequencer.cpp:
+src/al/Library/Bgm/ChikaChikaBgmSequencer.cpp:
     .text   start:0x00904160 end:0x00905444
-src/al/Project/Block/BlockRail.cpp:
+src/al/Project/Block/BlockRail.cpp: done
     .text   start:0x00905450 end:0x009059A0
-src/al/Project/Block/BlockRailDirector.cpp:
+src/al/Project/Block/BlockRailDirector.cpp: done
     .text   start:0x009059A0 end:0x00905BE0
-src/al/Project/Block/BlockRailLink.cpp:
+src/al/Project/Block/BlockRailLink.cpp: done
     .text   start:0x00905BE0 end:0x009063C0
-src/al/Project/Block/BlockRailParts.cpp:
+src/al/Project/Block/BlockRailParts.cpp: done
     .text   start:0x009063C0 end:0x00906B70
-src/al/Project/Block/BlockRailPartsGroup.cpp:
+src/al/Project/Block/BlockRailPartsGroup.cpp: done
     .text   start:0x00906B70 end:0x00906EF4
 src/al/Project/Block/BlockRailRider.cpp:
     .text   start:0x00906F00 end:0x009079B8
@@ -5271,39 +5371,41 @@ src/al/Project/Block/BlockRailShapeStraight.cpp:
     .text   start:0x00907C30 end:0x00908AA8
 src/al/Project/Block/BlockRailShapeTerminater.cpp:
     .text   start:0x00908AB0 end:0x009091B4
-src/al/Project/Camera/ActorCameraTarget.cpp:
+src/al/Library/Play/Camera/ActorCameraTarget.cpp: done
     .text   start:0x009091C0 end:0x0090968C
-src/al/Project/Camera/CameraArrowCollider.cpp:
+src/al/Library/Play/Camera/CameraArrowCollider.cpp:
     .text   start:0x00909690 end:0x0090B024
-src/al/Project/Camera/CameraPoserAnim_RS.cpp:
+src/al/Library/Play/Camera/CameraPoserAnim_RS.cpp:
     .text   start:0x0090B030 end:0x0090B9F4
-src/al/Project/Camera/CameraPoserBossBattle.cpp:
+src/al/Library/Play/Camera/CameraPoserBossBattle.cpp:
     .text   start:0x0090BA00 end:0x0090CD08
-src/al/Project/Camera/CameraPoserCart.cpp:
+src/al/Library/Play/Camera/CameraPoserCart.cpp:
     .text   start:0x0090CD10 end:0x0090D174
-src/al/Project/Camera/CameraPoserEntrance_RS.cpp:
+src/al/Library/Play/Camera/CameraPoserEntrance_RS.cpp:
     .text   start:0x0090D180 end:0x0090DC58
-src/al/Project/Camera/CameraPoserFixActor.cpp:
+src/al/Library/Play/Camera/CameraPoserFixActor.cpp:
     .text   start:0x0090DC60 end:0x0090F4C8
-src/al/Project/Camera/CameraPoserFixPoint.cpp:
-    .text   start:0x0090F4D0 end:0x009101DC
-src/al/Project/Camera/CameraPoserFollowSimple.cpp:
+src/al/Library/Play/Camera/CameraPoserFixPoint.cpp:
+    .text   start:0x0090F4D0 end:0x0090F980
+src/al/Library/Play/Camera/CameraPoserFix.cpp:
+    .text   start:0x0090F980 end:0x009101DC
+src/al/Library/Play/Camera/CameraPoserFollowSimple.cpp: done
     .text   start:0x009101E0 end:0x009105B8
-src/al/Project/Camera/CameraPoserKinopioBrigade_RS.cpp:
+src/al/Library/Play/Camera/CameraPoserKinopioBrigade_RS.cpp:
     .text   start:0x009105C0 end:0x00911908
-src/al/Project/Camera/CameraPoserLookDown.cpp:
+src/al/Library/Play/Camera/CameraPoserLookDown.cpp:
     .text   start:0x00911910 end:0x00911E74
-src/al/Project/Camera/CameraPoserParallelSimple.cpp:
+src/al/Library/Play/Camera/CameraPoserParallelSimple.cpp:
     .text   start:0x00911E80 end:0x009120F4
-src/al/Project/Camera/CameraPoserRace.cpp:
+src/al/Library/Play/Camera/CameraPoserRace.cpp:
     .text   start:0x00912100 end:0x0091252C
-src/al/Project/Camera/CameraPoserSubjective_RS.cpp:
+src/al/Library/Play/Camera/CameraPoserSubjective_RS.cpp:
     .text   start:0x00912530 end:0x00912E18
-src/al/Project/Camera/CameraPoserTower_RS.cpp:
+src/al/Library/Play/Camera/CameraPoserTower_RS.cpp:
     .text   start:0x00912E20 end:0x009151A8
-src/al/Project/Camera/CameraRailHolder_RS.cpp:
+src/al/Library/Play/Camera/CameraRailHolder_RS.cpp:
     .text   start:0x009151B0 end:0x00915450
-src/al/Project/Camera/CameraVerticalAbsorber2DGalaxy.cpp:
+src/al/Library/Play/Camera/CameraVerticalAbsorber2DGalaxy.cpp:
     .text   start:0x00915450 end:0x00918C88
 src/al/Project/Camera/Param/CameraFunction.cpp:
     .text   start:0x00918C90 end:0x00919538
@@ -5311,49 +5413,49 @@ src/al/Project/Camera/Param/CameraHolder.cpp: done
     .text   start:0x00919540 end:0x009197AC
 src/al/Project/Camera/Param/CameraInfo.cpp: done
     .text   start:0x009197B0 end:0x009197FC
-src/al/Project/Camera/Param/CameraInterpole.cpp:
+src/al/Project/Camera/CameraInterpole.cpp:
     .text   start:0x00919800 end:0x0091A96C
-src/al/Project/Camera/Param/ControlAngleParam.cpp: done
+src/al/Project/Camera/ControlAngleParam.cpp: done
     .text   start:0x0091A970 end:0x0091A99C
-src/al/Project/Camera/Param/SettingParam.cpp: done
+src/al/Project/Camera/SettingParam.cpp: done
     .text   start:0x0091A9A0 end:0x0091AE38
-src/al/Project/Camera/Poser/CameraPoserAnim.cpp:
+src/al/Library/Play/Camera/CameraPoserAnim.cpp:
     .text   start:0x0091AE40 end:0x0091B4F0
-src/al/Project/Camera/Poser/CameraPoserEntrance.cpp:
+src/al/Library/Play/Camera/CameraPoserEntrance.cpp:
     .text   start:0x0091B4F0 end:0x0091BD68
-src/al/Project/Camera/Poser/CameraPoserFixedAll.cpp:
+src/al/Library/Play/Camera/CameraPoserFixedAll.cpp:
     .text   start:0x0091BD70 end:0x0091C2B8
-src/al/Project/Camera/Poser/CameraPoserFixedPoint.cpp: done
+src/al/Library/Play/Camera/CameraPoserFixedPoint.cpp: done
     .text   start:0x0091C2C0 end:0x0091C578
-src/al/Project/Camera/Poser/CameraPoserKinopioBrigade.cpp:
+src/al/Library/Play/Camera/CameraPoserKinopioBrigade.cpp:
     .text   start:0x0091C580 end:0x0091D140
-src/al/Project/Camera/Poser/CameraPoserParallel.cpp:
+src/al/Library/Play/Camera/CameraPoserParallel.cpp:
     .text   start:0x0091D140 end:0x00922BA4
-src/al/Project/Camera/Poser/CameraPoserParallelOnRail.cpp:
+src/al/Library/Play/Camera/CameraPoserParallelOnRail.cpp:
     .text   start:0x00922BB0 end:0x00924548
-src/al/Project/Camera/Poser/CameraPoserProgramable.cpp: done
+src/al/Library/Play/Camera/CameraPoserProgramable.cpp: done
     .text   start:0x00924550 end:0x009246F4
-src/al/Project/Camera/Poser/CameraPoserRail.cpp:
+src/al/Library/Play/Camera/CameraPoserRail.cpp:
     .text   start:0x00924700 end:0x009250E8
-src/al/Project/Camera/Poser/CameraPoserRailTower.cpp:
+src/al/Library/Play/Camera/CameraPoserRailTower.cpp:
     .text   start:0x009250F0 end:0x009256A8
-src/al/Project/Camera/Poser/CameraPoserTower.cpp:
+src/al/Library/Play/Camera/CameraPoserTower.cpp:
     .text   start:0x009256B0 end:0x00927D98
-src/al/Project/Camera/Poser/CameraPoserZoomParam.cpp:
+src/al/Library/Play/Camera/CameraPoserZoomParam.cpp:
     .text   start:0x00927DA0 end:0x00928CD4
-src/al/Project/Camera/Poser/CameraRail.cpp:
+src/al/Library/Play/Camera/CameraRail.cpp:
     .text   start:0x00928CE0 end:0x00928FC0
-src/al/Project/Camera/Poser/CameraRailHolder.cpp: done
+src/al/Library/Obj/CameraRailHolder.cpp: done
     .text   start:0x00928FC0 end:0x00929190
-src/al/Project/Camera/Poser/CameraShaker.cpp:
+src/al/Library/Obj/CameraShaker.cpp:
     .text   start:0x00929190 end:0x009293BC
-src/al/Project/Camera/Poser/CameraSwitcher.cpp:
+src/al/Library/Obj/CameraSwitcher.cpp:
     .text   start:0x009293C0 end:0x00929F50
-src/al/Project/Camera/Poser/CameraUtil.cpp:
+src/al/Library/Obj/CameraUtil.cpp:
     .text   start:0x00929F50 end:0x0092C028
-src/al/Project/Camera/Poser/GyroCameraController.cpp:
+src/al/Library/Obj/GyroCameraController.cpp:
     .text   start:0x0092C030 end:0x0092C998
-src/al/Project/Camera/Poser/PlayerWatcher.cpp:
+src/al/Library/Obj/PlayerWatcher.cpp:
     .text   start:0x0092C9A0 end:0x0092DBC8
 src/al/Project/Camera/Info/CameraViewInfo.cpp: done
     .text   start:0x0092DBD0 end:0x0092DC58
@@ -5366,40 +5468,52 @@ src/al/Project/Camera/Info/SceneCameraInfo.cpp: done
 src/al/Project/Camera/Info/UserCameraController.cpp:
     .text   start:0x0092DD80 end:0x0092F948
 src/al/Project/Camera/Info/UserCameraControllerParam.cpp:
-    .text   start:0x0092F950 end:0x00932408
+    .text   start:0x0092F950 end:0x0092FA60
+src/al/Project/Camera/CameraAngleCtrlInfo.cpp:
+    .text   start:0x0092FA60 end:0x00930214
+src/al/Project/Camera/CameraCollisionPartsFilter.cpp:
+    .text   start:0x00930220 end:0x00932408
 src/al/Project/Camera/Area/AreaCameraSwitcher_RS.cpp:
     .text   start:0x00932410 end:0x00932DA8
 src/al/Project/Camera/Area/AreaCameraSwitchInfo.cpp: done
     .text   start:0x00932DB0 end:0x00932E28
 src/al/Project/Camera/Area/CameraAngleVerticalRequester.cpp: done
     .text   start:0x00932E30 end:0x00932F08
-src/al/Project/Camera/Area/CameraDistanceCurve.cpp:
+src/al/Library/Camera/CameraDistanceCurve.cpp:
     .text   start:0x00932F10 end:0x0093343C
-src/al/Project/Camera/Area/CameraInputHolder.cpp: done
+src/al/Library/Camera/CameraInputHolder.cpp: done
     .text   start:0x00933440 end:0x0093358C
-src/al/Project/Camera/Area/CameraInSwitchOnAreaDirector.cpp: done
+src/al/Library/Camera/CameraInSwitchOnAreaDirector.cpp: done
     .text   start:0x00933590 end:0x009336D8
-src/al/Project/Camera/Area/CameraLimitRailKeeper.cpp:
+src/al/Library/Camera/CameraLimitRailKeeper.cpp:
     .text   start:0x009336E0 end:0x00933D8C
-src/al/Project/Camera/Area/CameraOffsetPreset.cpp: done
+src/al/Project/Camera/CameraOffsetPreset.cpp: done
     .text   start:0x00933D90 end:0x00933E58
-src/al/Project/Camera/Area/CameraParamTransfer.cpp: done
+src/al/Library/Camera/CameraParamTransfer.cpp: done
     .text   start:0x00933E60 end:0x00934038
-src/al/Project/Camera/Area/CameraPoserFactory_RS.cpp: done
+src/al/Library/Camera/CameraPoserFactory_RS.cpp: done
     .text   start:0x00934040 end:0x0093418C
-src/al/Project/Camera/Area/CameraPoserFunction.cpp:
-    .text   start:0x00934190 end:0x00938718
-src/al/Project/Camera/Area/CameraVerticalAbsorber.cpp:
-    .text   start:0x00938720 end:0x0093C788
+src/al/Library/Camera/CameraPoserFunction.cpp:
+    .text   start:0x00934190 end:0x00937A2C
+src/al/Project/Camera/CameraAngleSwingInfo.cpp:
+    .text   start:0x00937A30 end:0x00938688
+src/al/Project/Camera/CameraOffsetCtrlPreset.cpp: done
+    .text   start:0x00938690 end:0x00938718
+src/al/Library/Play/Camera/CameraVerticalAbsorber.cpp:
+    .text   start:0x00938720 end:0x0093B368
+src/al/Library/Camera/CameraPoserFlag.cpp:
+    .text   start:0x0093B370 end:0x0093B5F8
+src/al/Library/Camera/CameraPoseUpdater.cpp:
+    .text   start:0x0093B600 end:0x0093C788
 src/al/Project/Camera/Holder/CameraInterpole_RS.cpp:
     .text   start:0x0093C790 end:0x0093E5E8
-src/al/Project/Camera/Holder/CameraRequestParamHolder.cpp:
+src/al/Project/Camera/Holder/CameraRequestParamHolder.cpp: done
     .text   start:0x0093E5F0 end:0x0093E750
 src/al/Project/Camera/Holder/CameraResourceHolder.cpp:
     .text   start:0x0093E750 end:0x0093FAA0
 src/al/Project/Camera/Holder/CameraShaker_RS.cpp:
     .text   start:0x0093FAA0 end:0x00940358
-src/al/Project/Camera/Holder/CameraStartParamCtrl.cpp:
+src/al/Project/Camera/Holder/CameraStartParamCtrl.cpp: done
     .text   start:0x00940360 end:0x00940558
 src/al/Project/Camera/Holder/CameraStopJudge.cpp: done
     .text   start:0x00940560 end:0x009405F8
@@ -5412,24 +5526,46 @@ src/al/Project/Camera/Holder/CameraSwitchRequester.cpp: done
 src/al/Project/Camera/Holder/CameraSwitchRequestInfo.cpp: done
     .text   start:0x00941380 end:0x00941538
 src/al/Project/Camera/Holder/CameraTargetAreaLimitter.cpp:
-    .text   start:0x00941540 end:0x0094186C
-src/al/Project/Camera/Holder/CameraTargetCollideInfoHolder.cpp:
+    .text   start:0x00941540 end:0x0094175C
+src/al/Library/Area/AreaShapeFactory.cpp: done
+    .text   start:0x00941760 end:0x0094186C
+src/al/Library/Camera/CameraTargetCollideInfoHolder.cpp:
     .text   start:0x00941870 end:0x00941C48
-src/al/Project/Camera/Holder/CameraTargetHolder.cpp:
-    .text   start:0x00941C50 end:0x009425C8
-src/al/Project/Camera/Holder/CameraTicketHolder.cpp: done
+src/al/Library/Camera/CameraTargetHolder.cpp: done
+    .text   start:0x00941C50 end:0x00942524
+src/al/Library/Camera/CameraTarget.cpp: done
+    .text   start:0x00942530 end:0x009425C8
+src/al/Library/Camera/CameraTicketHolder.cpp: done
     .text   start:0x009425D0 end:0x009427B0
-src/al/Project/Camera/Holder/CameraTicketId.cpp: done
+src/al/Library/Camera/CameraTicketId.cpp: done
     .text   start:0x009427B0 end:0x00942A98
-src/al/Project/Camera/Holder/CameraTriangleFilter.cpp:
-    .text   start:0x00942AA0 end:0x009493DC
-src/al/Project/Camera/Holder/SimpleCameraInput.cpp: done
+src/al/Library/Camera/CameraTriangleFilter.cpp:
+    .text   start:0x00942AA0 end:0x00942D4C
+src/al/Library/Camera/CameraUtil.cpp:
+    .text   start:0x00942D50 end:0x00947190
+src/al/Library/Play/Camera/CameraPoserFixLock.cpp:
+    .text   start:0x00947190 end:0x009472D8
+src/al/Library/Play/Camera/ActorCameraSubTarget.cpp:
+    .text   start:0x009472E0 end:0x00947684
+src/al/Library/Play/Camera/CameraPoserQuickTurn.cpp:
+    .text   start:0x00947690 end:0x00947EDC
+src/al/Library/Play/Camera/CameraPoserInnerTower.cpp:
+    .text   start:0x00947EE0 end:0x00948564
+src/al/Library/Play/Camera/CameraPoserShooterSingle.cpp:
+    .text   start:0x00948570 end:0x00948A48
+src/al/Library/Play/Camera/CameraPoserActorRailParallel.cpp:
+    .text   start:0x00948A50 end:0x00948D5C
+src/al/Library/Play/Camera/CameraPoserProgramableKeepColliderPreCamera.cpp:
+    .text   start:0x00948D60 end:0x00948E68
+src/al/Library/Camera/CameraGyroCtrl.cpp:
+    .text   start:0x00948E70 end:0x009493DC
+src/al/Library/Camera/SimpleCameraInput.cpp: done
     .text   start:0x009493E0 end:0x009496CC
-src/al/Project/Camera/Holder/SimpleCameraShooter.cpp:
+src/al/Project/Camera/SimpleCameraShooter.cpp:
     .text   start:0x009496D0 end:0x00949E1C
-src/al/Project/Camera/Holder/SnapShotCameraCtrl.cpp:
+src/al/Library/Camera/SnapShotCameraCtrl.cpp:
     .text   start:0x00949E20 end:0x0094ACE8
-src/al/Project/Camera/Holder/SpecialCameraHolder.cpp:
+src/al/Library/Camera/SpecialCameraHolder.cpp:
     .text   start:0x0094ACF0 end:0x0094B0AC
 src/al/Project/Clipping/ClippingAreaActorInfo.cpp:
     .text   start:0x0094B0B0 end:0x0094B918
@@ -5439,178 +5575,306 @@ src/al/Project/Clipping/ClippingAreaActorViewArea.cpp:
     .text   start:0x0094DE70 end:0x0094E944
 src/al/Project/Clipping/ClippingAreaActorViewHolder.cpp:
     .text   start:0x0094E950 end:0x0094FE18
-src/al/Project/Clipping/ClippingAreaDirector.cpp:
+src/al/Project/Clipping/ClippingAreaDirector.cpp: done
     .text   start:0x0094FE20 end:0x009501D0
 src/al/Project/Clipping/ClippingDirector.cpp:
-    .text   start:0x009501D0 end:0x00951008
-src/al/Project/Clipping/ClippingDirectorBase.cpp: done
+    .text   start:0x009501D0 end:0x009505F0
+src/al/Library/Clipping/ClippingActorHolder.cpp:
+    .text   start:0x009505F0 end:0x00950CDC
+src/al/Library/Clipping/ClippingActorInfo.cpp:
+    .text   start:0x00950CE0 end:0x00950E90
+src/al/Library/Clipping/ClippingActorInfoList.cpp: done
+    .text   start:0x00950E90 end:0x00951008
+src/al/Library/Clipping/ClippingDirectorBase.cpp: done
     .text   start:0x00951010 end:0x00951120
 src/al/Project/Clipping/ClippingFarAreaObserver.cpp: done
     .text   start:0x00951130 end:0x00951298
 src/al/Project/Clipping/ClippingFunction.cpp: done
     .text   start:0x009512A0 end:0x00951300
 src/al/Project/Clipping/ClippingInfoGroup.cpp:
-    .text   start:0x00951300 end:0x00951AAC
-src/al/Project/Clipping/ClippingJudge.cpp: done
+    .text   start:0x00951300 end:0x00951388
+src/al/Library/Clipping/ClippingGroupHolder.cpp: done
+    .text   start:0x00951390 end:0x00951AAC
+src/al/Library/Clipping/ClippingJudge.cpp: done
     .text   start:0x00951AB0 end:0x00951DD8
-src/al/Project/Clipping/ClippingViewFadeInAreas.cpp:
+src/al/Library/Clipping/ClippingViewFadeInAreas.cpp:
     .text   start:0x00951DE0 end:0x009524D4
-src/al/Project/Clipping/FrustumRadar.cpp:
+src/al/Library/Clipping/FrustumRadar.cpp:
     .text   start:0x009524E0 end:0x0095335C
-src/al/Project/Clipping/ViewFrustum.cpp:
+src/al/Library/Clipping/ViewFrustum.cpp:
     .text   start:0x00953360 end:0x0095431C
 src/al/Project/Clipping/ViewInfoCtrl.cpp: done
     .text   start:0x00954320 end:0x009546C0
-src/al/Project/Collision/Collider.cpp:
+src/al/Library/Collision/Collider.cpp:
     .text   start:0x009546C0 end:0x00956248
-src/al/Project/Collision/CollisionDirector.cpp:
+src/al/Library/Collision/CollisionDirector.cpp:
     .text   start:0x00956250 end:0x00956D5C
-src/al/Project/Collision/CollisionDiscBase.cpp:
+src/al/Library/Collision/CollisionDiscBase.cpp:
     .text   start:0x00956D60 end:0x00957444
-src/al/Project/Collision/CollisionMultiSphereBase.cpp:
+src/al/Library/Collision/CollisionMultiSphereBase.cpp:
     .text   start:0x00957450 end:0x00957DF4
-src/al/Project/Collision/CollisionParts.cpp:
+src/al/Library/Collision/CollisionParts.cpp:
     .text   start:0x00957E10 end:0x0095A4E8
-src/al/Project/Collision/PartsInterpolator.cpp:
-    .text   start:0x0095A4F0 end:0x0096948C
-src/al/Project/Controller/GamePadSystem.cpp:
-    .text   start:0x00969490 end:0x0096A6C8
-src/al/Project/Controller/InputFunction.cpp:
+src/al/Library/Collision/PartsInterpolator.cpp: done
+    .text   start:0x0095A4F0 end:0x0095A7A0
+src/al/Library/Collision/CollisionParts_dup2.cpp:
+    .text   start:0x0095A7A0 end:0x0095BFBC
+src/al/Library/Collision/CollisionPartsKeeperOctree.cpp:
+    .text   start:0x0095BFC0 end:0x0095D6F4
+src/al/Library/Collision/CollisionPartsKeeperPtrArray.cpp: done
+    .text   start:0x0095D700 end:0x0095DC24
+src/al/Library/LiveActor/ActorCollisionFunction.cpp: done
+    .text   start:0x0095DC30 end:0x0095E7C4
+src/al/Library/Collision/CollisionPartsKeeperUtil.cpp: done
+    .text   start:0x0095E7D0 end:0x0095E9D8
+src/al/Library/LiveActor/ActorCollisionFunction_dup2.cpp:
+    .text   start:0x0095E9E0 end:0x0095EF80
+src/al/Library/Collision/CollisionPartsKeeperUtil_dup2.cpp:
+    .text   start:0x0095EF80 end:0x00962DDC
+src/al/Project/Collision/ActorCollisionController.cpp:
+    .text   start:0x00962DE0 end:0x00963368
+src/al/Library/Collision/CollisionPartsTriangle.cpp:
+    .text   start:0x00963370 end:0x00963DC8
+src/al/Library/Collision/KCollisionFunc.cpp:
+    .text   start:0x00963DD0 end:0x00964650
+src/al/Library/Collision/KCollisionServer.cpp:
+    .text   start:0x00964650 end:0x00968CC8
+src/al/Library/Collision/Collider_dup2.cpp:
+    .text   start:0x00968CD0 end:0x00969020
+src/al/Library/Collision/PartsInterpolator_dup2.cpp: done
+    .text   start:0x00969020 end:0x0096925C
+src/al/Library/Controller/GamePadSystem.cpp:
+    .text   start:0x00969260 end:0x0096A6C8
+src/al/Library/Controller/InputFunction.cpp:
     .text   start:0x0096A6D0 end:0x00977ECC
-src/al/Project/Controller/NpadController.cpp:
+src/al/Library/Controller/NpadController.cpp:
     .text   start:0x00977ED0 end:0x009792E0
-src/al/Project/Controller/PadGyroAddon.cpp:
+src/al/Library/Controller/PadGyroAddon.cpp:
     .text   start:0x009792E0 end:0x009798A4
-src/al/Project/Controller/PadReplayFunction.cpp:
-    .text   start:0x009798B0 end:0x0097AC44
-src/al/Project/Controller/PadRumbleDirector.cpp:
+src/al/Library/Controller/PadReplayFunction.cpp:
+    .text   start:0x009798B0 end:0x0097A9D4
+src/al/Project/Controller/PadDataArcReader.cpp: done
+    .text   start:0x0097A9E0 end:0x0097AC44
+src/al/Library/Controller/PadRumbleDirector.cpp:
     .text   start:0x0097AC50 end:0x0097F068
-src/al/Project/Controller/PadRumbleFunction.cpp:
+src/al/Library/Controller/PadRumbleFunction.cpp: done
     .text   start:0x0097F070 end:0x009800F0
-src/al/Project/Controller/ReplayController.cpp:
-    .text   start:0x009800F0 end:0x00982A94
+src/al/Library/Controller/ReplayController.cpp:
+    .text   start:0x009800F0 end:0x00980DBC
+src/al/Library/Controller/GamePadWaveVibrationData.cpp:
+    .text   start:0x00980DC0 end:0x00982A94
 src/al/Project/Controller/WaveVibrationPlayer.cpp:
     .text   start:0x00982AA0 end:0x00983070
 src/al/Project/Draw/dpr.cpp:
     .text   start:0x00983070 end:0x009853F8
-src/al/Project/Draw/GpuMemAllocator.cpp:
-    .text   start:0x00985400 end:0x00985DB0
-src/al/Project/Draw/RenderState.cpp:
+src/al/Project/Draw/GpuMemAllocator.cpp: done
+    .text   start:0x00985400 end:0x0098571C
+src/al/Project/Draw/GpuMemAllocator_dup2.cpp: done
+    .text   start:0x00985720 end:0x00985DB0
+src/al/Project/Draw/RenderState.cpp: done
     .text   start:0x00985DB0 end:0x00985F94
-src/al/Project/Draw/ViewRenderer.cpp:
-    .text   start:0x00985FA0 end:0x0098C7FC
-src/al/Project/Draw/ViewRendererCreator.cpp:
+src/al/Library/Draw/ViewRenderer.cpp:
+    .text   start:0x00985FA0 end:0x00989504
+src/al/Library/Screen/ScreenFader.cpp:
+    .text   start:0x00989510 end:0x0098B164
+src/al/Library/Draw/ReducedBufferRenderer.cpp:
+    .text   start:0x0098B170 end:0x0098C7FC
+src/al/Library/Draw/ViewRendererCreator.cpp: done
     .text   start:0x0098C800 end:0x0098C858
-src/al/Project/Draw/Render/RenderVariables.cpp:
+src/al/Library/Play/Draw/RenderVariables.cpp:
     .text   start:0x0098C860 end:0x0098CF30
 src/al/Project/Effect/Effect.cpp:
-    .text   start:0x0098CF30 end:0x0098FA0C
+    .text   start:0x0098CF30 end:0x0098F844
 src/al/Project/Effect/EffectCameraHolder.cpp:
-    .text   start:0x0098FA10 end:0x0098FE68
+    .text   start:0x0098F850 end:0x0098FE68
 src/al/Project/Effect/EffectEmitter.cpp:
     .text   start:0x0098FE70 end:0x00990598
-src/al/Project/Effect/EffectFunction.cpp:
-    .text   start:0x009905A0 end:0x009919E8
-src/al/Project/Effect/EffectKeeper.cpp:
-    .text   start:0x009919F0 end:0x00992BC0
-src/al/Project/Effect/EffectShaderHolder.cpp:
+src/al/Library/Effect/EffectKeeper.cpp:
+    .text   start:0x009905A0 end:0x00992BC0
+src/al/Library/Effect/EffectShaderHolder.cpp:
     .text   start:0x00992BC0 end:0x009952BC
-src/al/Project/Effect/EffectSystem.cpp:
-    .text   start:0x009952C0 end:0x0099A7B4
+src/al/Library/Effect/EffectSystem.cpp:
+    .text   start:0x009952C0 end:0x009966B4
+src/al/Project/Effect/EffectHeap.cpp:
+    .text   start:0x009966C0 end:0x00997D48
+src/al/Project/Effect/EffectInfo.cpp:
+    .text   start:0x00997D50 end:0x00997EF4
+src/al/Project/Effect/EffectGroupDrawer.cpp:
+    .text   start:0x00997F00 end:0x009993A4
+src/al/Project/Effect/EffectLightDirector.cpp:
+    .text   start:0x009993B0 end:0x0099A7B4
 src/al/Project/Effect/EffectUtil.cpp:
-    .text   start:0x0099A7C0 end:0x0099B310
-src/al/Project/Effect/EmitterSetResourceInfoHolder.cpp:
+    .text   start:0x0099A7C0 end:0x0099A950
+src/al/Library/Effect/EffectSystemInfo.cpp:
+    .text   start:0x0099A950 end:0x0099B310
+src/al/Library/Effect/EmitterSetResourceInfoHolder.cpp:
     .text   start:0x0099B310 end:0x0099B9EC
-src/al/Project/Effect/PtclSystem.cpp:
+src/al/Library/Effect/PtclSystem.cpp:
     .text   start:0x0099B9F0 end:0x0099CBC4
-src/al/Project/Framework/MultiCoreQueueThread.cpp:
-    .text   start:0x0099CBD0 end:0x0099CF44
-src/al/Project/Framework/GameFrameworkNx.cpp:
-    .text   start:0x0099CF50 end:0x0099E6EC
-src/al/Project/Framework/PadTouchDevice.cpp:
+src/al/Project/Framework/MultiCoreQueueThread.cpp: done
+    .text   start:0x0099CBD0 end:0x0099CF24
+src/al/Library/Framework/GameFrameworkNx.cpp:
+    .text   start:0x0099CF40 end:0x0099E6EC
+src/al/Project/Controller/PadTouchDevice.cpp: done
     .text   start:0x0099E6F0 end:0x0099E9DC
-src/al/Project/Framework/PadUiKeyInputAddon.cpp:
-    .text   start:0x0099E9E0 end:0x0099F0F4
-src/al/Project/Framework/Application/ApplicationMessageReceiver.cpp: done
+src/al/Project/Controller/PadUiKeyInputAddon.cpp:
+    .text   start:0x0099E9E0 end:0x0099ED18
+src/al/Project/Controller/JoyPadAccelerometerAddon.cpp:
+    .text   start:0x0099ED20 end:0x0099F0F4
+src/al/Library/Application/ApplicationMessageReceiver.cpp: done
     .text   start:0x0099F100 end:0x0099F2D8
-src/al/Project/Framework/Application/GpuPerf.cpp: done
+src/al/Project/Draw/GpuPerf.cpp: done
     .text   start:0x0099F2E0 end:0x0099F3B0
-src/al/Project/Layout/LayoutActionFunction.cpp:
+src/al/Library/Layout/LayoutActionFunction.cpp:
     .text   start:0x0099F3B0 end:0x009A0204
 src/al/Project/Layout/LayoutActionKeeper.cpp:
     .text   start:0x009A0210 end:0x009A0890
-src/al/Project/Layout/LayoutActor.cpp:
+src/al/Library/Layout/LayoutActor.cpp: done
     .text   start:0x009A0890 end:0x009A101C
-src/al/Project/Layout/LayoutUtil.cpp:
-    .text   start:0x009A1020 end:0x009A6864
-src/al/Project/Layout/LayoutKeeper.cpp:
+src/al/Library/Layout/LayoutUtil_dup2.cpp: done
+    .text   start:0x009A1020 end:0x009A109C
+src/al/Library/Layout/LayoutActorUtil.cpp:
+    .text   start:0x009A10A0 end:0x009A4870
+src/al/Project/Layout/LayoutActionKeeper_dup2.cpp:
+    .text   start:0x009A4870 end:0x009A5B2C
+src/al/Library/Layout/LayoutInitInfo.cpp:
+    .text   start:0x009A5B30 end:0x009A6864
+src/al/Library/Layout/LayoutKeeper.cpp: done
     .text   start:0x009A6870 end:0x009A698C
-src/al/Project/Layout/LayoutPane.cpp:
+src/al/Library/Layout/LayoutPane.cpp:
     .text   start:0x009A6990 end:0x009A6DB4
-src/al/Project/Layout/LayoutPaneGroup.cpp:
+src/al/Library/Layout/LayoutPaneGroup.cpp:
     .text   start:0x009A6DC0 end:0x009A8B04
-src/al/Project/Layout/LayoutPartsActorKeeper.cpp:
+src/al/Library/Layout/LayoutPartsActorKeeper.cpp: done
     .text   start:0x009A8B10 end:0x009A8D6C
-src/al/Project/Layout/LayoutResource.cpp:
+src/al/Library/Layout/LayoutResource.cpp:
     .text   start:0x009A8D70 end:0x009A93F4
-src/al/Project/Layout/LayoutSceneInfo.cpp: done
+src/al/Library/Layout/LayoutSceneInfo.cpp: done
     .text   start:0x009A9400 end:0x009A9414
-src/al/Project/Layout/LayoutSystem.cpp:
+src/al/Library/Layout/LayoutSystem_dup2.cpp:
     .text   start:0x009A9420 end:0x009AC5FC
-src/al/Project/Layout/LayoutTextPaneAnimator.cpp:
+src/al/Library/Layout/LayoutTextPaneAnimator.cpp:
     .text   start:0x009AC600 end:0x009ADB6C
-src/al/Project/Math/IntervalTrigger.cpp: done
+src/al/Library/Math/IntervalTrigger.cpp: done
     .text   start:0x009ADB70 end:0x009ADC0C
-src/al/Project/Math/MatrixPtrHolder.cpp: done
+src/al/Library/Math/MatrixPtrHolder.cpp: done
     .text   start:0x009ADC10 end:0x009ADF84
-src/al/Project/Math/MatrixUtil.cpp:
+src/al/Library/Math/MatrixUtil.cpp:
     .text   start:0x009ADF90 end:0x009B1D64
-src/al/Project/Message/CustomTagProcessor.cpp:
+src/al/Library/Message/CustomTagProcessor.cpp:
     .text   start:0x009B1D70 end:0x009B2D84
-src/al/Project/Message/LanguageUtil.cpp:
+src/al/Library/Message/LanguageUtil.cpp:
     .text   start:0x009B2D90 end:0x009B31AC
-src/al/Project/Message/MessageHolder.cpp:
+src/al/Library/Message/MessageHolder.cpp:
     .text   start:0x009B31B0 end:0x009B3544
-src/al/Project/Message/MessageSystem.cpp:
-    .text   start:0x009B3550 end:0x009B5284
-src/al/Project/Message/MessageTag.cpp:
-    .text   start:0x009B5290 end:0x009B88D4
-src/al/Project/Message/MessageTagDataHolder.cpp:
-    .text   start:0x009B88E0 end:0x009B8ABC
-src/al/Project/Message/ReplaceTagProcessorBase.cpp:
+src/al/Library/Message/MessageSystem.cpp:
+    .text   start:0x009B3550 end:0x009B5170
+src/al/Project/Message/MessageProjectEx.cpp: done
+    .text   start:0x009B5170 end:0x009B5284
+src/al/Library/Message/MessageTag.cpp:
+    .text   start:0x009B5290 end:0x009B5350
+src/al/Library/Message/MessageHolder_dup2.cpp:
+    .text   start:0x009B5350 end:0x009B88D4
+src/al/Library/Message/MessageTagDataHolder.cpp: done
+    .text   start:0x009B88E0 end:0x009B8A1C
+src/al/Library/Message/MessageTagData.cpp: done
+    .text   start:0x009B8A20 end:0x009B8ABC
+src/al/Library/Message/ReplaceTagProcessorBase.cpp:
     .text   start:0x009B8AC0 end:0x009BA188
-src/al/Project/Model/JointMtxPtr.cpp:
+src/al/Library/Model/JointMtxPtr.cpp:
     .text   start:0x009BA190 end:0x009BA2D0
-src/al/Project/Model/ModelDrawerDeferredEcho.cpp:
+src/al/Library/Model/ModelDrawerDeferredEcho.cpp:
     .text   start:0x009BA2D0 end:0x009BA674
-src/al/Project/Model/ModelDrawerDeferredExt.cpp:
+src/al/Library/Model/ModelDrawerDeferredExt.cpp:
     .text   start:0x009BA680 end:0x009BAC54
-src/al/Project/Model/ModelDrawerHeightMap.cpp:
+src/al/Library/Model/ModelDrawerHeightMap.cpp:
     .text   start:0x009BAC60 end:0x009BAEF4
-src/al/Project/Model/ModelShaderAssign.cpp:
+src/al/Library/Model/ModelShaderAssign.cpp:
     .text   start:0x009BAF00 end:0x009BB2A8
-src/al/Project/Model/NfpDirector.cpp:
+src/al/Library/Nfp/NfpDirector_dup2.cpp:
     .text   start:0x009BB2B0 end:0x009BC9D4
-src/al/Project/Model/OceanWaveDirector.cpp:
+src/al/Library/Nfp/OceanWaveDirector.cpp:
     .text   start:0x009BC9F0 end:0x009BCA98
-src/al/Project/Model/OceanWaveKeeper.cpp:
+src/al/Library/Nfp/OceanWaveKeeper.cpp:
     .text   start:0x009BCAA0 end:0x009BCAF8
-src/al/Project/Model/OceanWaveUserInfo.cpp:
+src/al/Library/Nfp/OceanWaveUserInfo.cpp:
     .text   start:0x009BCB00 end:0x009BE8F8
-src/al/Project/Model/SwitchTriggerArea.cpp:
-    .text   start:0x009BE900 end:0x009DCC78
-src/al/Project/Model/ViewDepthDrawer.cpp:
+src/al/Library/Nfp/SwitchTriggerArea.cpp:
+    .text   start:0x009BE900 end:0x009BFD60
+src/al/Library/Play/Graphics/NoiseTextureKeeper.cpp:
+    .text   start:0x009BFD60 end:0x009C3970
+src/al/Library/Fluid/Graphics.cpp:
+    .text   start:0x009C3970 end:0x009C4E14
+src/al/Project/PostProcessing/EdgeDrawer.cpp:
+    .text   start:0x009C4E20 end:0x009C6188
+src/al/Library/Fluid/RippleCtrl.cpp:
+    .text   start:0x009C6190 end:0x009C6288
+src/al/Library/Yaml/ParameterBase.cpp: done
+    .text   start:0x009C6290 end:0x009C821C
+src/al/Project/Base/ParamRequestInterp.cpp:
+    .text   start:0x009C8220 end:0x009C900C
+src/al/Library/PostProcessing/PostProcessingFilter.cpp:
+    .text   start:0x009C9010 end:0x009CA300
+src/al/Library/Fluid/RippleCtrl_dup2.cpp:
+    .text   start:0x009CA300 end:0x009CF10C
+src/al/Project/PostProcessing/CartoonDrawer.cpp:
+    .text   start:0x009CF110 end:0x009D0338
+src/al/Library/Fluid/RippleCtrl_dup3.cpp:
+    .text   start:0x009D0340 end:0x009D0388
+src/al/Library/Fluid/RippleTextureController.cpp:
+    .text   start:0x009D0390 end:0x009D03D8
+src/al/Project/PostProcessing/CartoonDrawer_dup2.cpp:
+    .text   start:0x009D03E0 end:0x009D1D98
+src/al/Project/PostProcessing/ColorClampDrawer.cpp:
+    .text   start:0x009D1DA0 end:0x009D52FC
+src/al/Library/PostProcessing/PencilSketchDrawer.cpp:
+    .text   start:0x009D5300 end:0x009D92B8
+src/al/Project/Draw/GraphicsParamKeeper_dup2.cpp:
+    .text   start:0x009D92C0 end:0x009DA7E8
+src/al/Library/PostProcessing/RetroColorDrawer.cpp:
+    .text   start:0x009DA7F0 end:0x009DC840
+src/al/Library/PostProcessing/ScreenBlurDrawer.cpp:
+    .text   start:0x009DC840 end:0x009DCC78
+src/al/Library/PostProcessing/ViewDepthDrawer.cpp:
     .text   start:0x009DCC80 end:0x009DD528
-src/al/Project/Model/VignettingDrawer.cpp:
-    .text   start:0x009DD530 end:0x009F19EC
+src/al/Library/PostProcessing/VignettingDrawer.cpp:
+    .text   start:0x009DD530 end:0x009E16B0
+src/al/Library/Projection/Projection.cpp:
+    .text   start:0x009E16B0 end:0x009E3910
+src/al/Library/Screen/ScreenFunction_dup3.cpp:
+    .text   start:0x009E3910 end:0x009E3A04
+src/al/Library/Se/Function/SeFunction.cpp:
+    .text   start:0x009E3A10 end:0x009E4530
+src/al/Project/Audio/System/AudioPlayer_dup2.cpp:
+    .text   start:0x009E4530 end:0x009E4A84
+src/al/Library/Se/DataBase/SeDataBase.cpp:
+    .text   start:0x009E4A90 end:0x009E6200
+src/al/Library/Se/Function/SeDbFunction.cpp:
+    .text   start:0x009E6200 end:0x009E6684
+src/al/Library/Math/InOutParam.cpp:
+    .text   start:0x009E6690 end:0x009E6AA8
+src/al/Library/Se/Function/SeDirector.cpp:
+    .text   start:0x009E6AB0 end:0x009EBCDC
+src/al/Project/Audio/System/System_dup2.cpp:
+    .text   start:0x009EBCE0 end:0x009EBE80
+src/al/Library/Bgm/DspValueController.cpp:
+    .text   start:0x009EBE80 end:0x009ED5D4
+src/al/Project/Audio/AudioBusInfo.cpp:
+    .text   start:0x009ED5E0 end:0x009EEC38
+src/al/Library/Se/Function/SeFunction_dup2.cpp:
+    .text   start:0x009EEC40 end:0x009EF310
+src/al/Project/Se/SeEmitter.cpp:
+    .text   start:0x009EF310 end:0x009EFF44
+src/al/Library/Se/Project/SeKeeper.cpp:
+    .text   start:0x009EFF50 end:0x009F19EC
 src/al/Project/Se/SeListener.cpp: done
     .text   start:0x009F19F0 end:0x009F1B24
 src/al/Project/Se/SeListenerParamTargetViewPos.cpp: done
     .text   start:0x009F1B30 end:0x009F1B88
 src/al/Project/Se/SeListenerPoserAdjustMiddlePos.cpp:
-    .text   start:0x009F1B90 end:0x009F1CF8
-src/al/Project/Se/SeListenerPoserMiddlePos.cpp: done
-    .text   start:0x009F1D00 end:0x009F1FD4
+    .text   start:0x009F1B90 end:0x009F1CD0
+src/al/Project/Se/SeEmitter_dup2.cpp:
+    .text   start:0x009F1CD0 end:0x009F1FD4
 src/al/Project/Se/SeListenerPoserUtil.cpp: done
     .text   start:0x009F1FE0 end:0x009F2248
 src/al/Project/Se/SeListenerPoserViewPos.cpp: done
@@ -5619,55 +5883,65 @@ src/al/Project/Se/SeListenerPoserViewPosOffset.cpp:
     .text   start:0x009F2310 end:0x009F2524
 src/al/Project/Se/SeListenerPoserViewPosOffsetFovy.cpp: done
     .text   start:0x009F2530 end:0x009F2624
-src/al/Project/Se/SePlayParamList.cpp:
+src/al/Library/Se/Project/SePlayParamList.cpp:
     .text   start:0x009F2630 end:0x009F3434
-src/al/Project/Se/SeRequestKeeper.cpp:
-    .text   start:0x009F3440 end:0x009F711C
-src/al/Project/Se/SeSource3DCircle.cpp:
+src/al/Library/Se/Project/SeRequestKeeper.cpp:
+    .text   start:0x009F3440 end:0x009F6A5C
+src/al/Library/Se/Info/SeAudioInfo.cpp: done
+    .text   start:0x009F6A60 end:0x009F711C
+src/al/Library/Se/Info/SeSource3DCircle.cpp:
     .text   start:0x009F7120 end:0x009F7D68
-src/al/Project/Se/SeSource3DLine.cpp:
+src/al/Library/Se/Info/SeSource3DLine.cpp: done
     .text   start:0x009F7D70 end:0x009F8044
-src/al/Project/Se/SeSource3DPlaneRect.cpp:
+src/al/Library/Se/Info/SeSource3DPlaneRect.cpp: done
     .text   start:0x009F8050 end:0x009F8294
-src/al/Project/Se/SeSource3DPoint.cpp: done
+src/al/Library/Se/Info/SeSource3DPoint.cpp: done
     .text   start:0x009F82A0 end:0x009F8334
-src/al/Project/Se/SeSource3DRing.cpp: done
+src/al/Library/Se/Info/SeSource3DRing.cpp: done
     .text   start:0x009F8340 end:0x009F8594
-src/al/Project/Se/SeSource3DSphere.cpp: done
+src/al/Library/Se/Info/SeSource3DSphere.cpp: done
     .text   start:0x009F85A0 end:0x009F8714
-src/al/Project/Se/SeSourceAmbient.cpp:
+src/al/Library/Se/Info/SeSourceAmbient.cpp:
     .text   start:0x009F8720 end:0x009F8AA8
-src/al/Project/Se/SeSourcePose3DMtxOffsetPtr.cpp:
+src/al/Library/Se/Info/SeSourcePose3DMtxOffsetPtr.cpp:
     .text   start:0x009F8AB0 end:0x009F8F8C
-src/al/Project/Se/SeSourcePose3DMtxBase.cpp: done
+src/al/Library/Se/Info/SeSourcePose3DMtxBase.cpp: done
     .text   start:0x009F8F90 end:0x009F91DC
-src/al/Project/Se/SeSourcePose3D.cpp: done
+src/al/Library/Se/Info/SeSourcePose3D.cpp: done
     .text   start:0x009F91E0 end:0x009F937C
-src/al/Project/Se/SeSourcePose.cpp: done
+src/al/Library/Se/Info/SeSourcePose.cpp: done
     .text   start:0x009F9390 end:0x009F949C
-src/al/Project/Se/SeSourcePose3DMtxPtr.cpp: done
+src/al/Library/Se/Info/SeSourcePose3DMtxPtr.cpp: done
     .text   start:0x009F94B0 end:0x009F981C
-src/al/Project/Se/SeSourcePose3DPosPtr.cpp: done
+src/al/Library/Se/Info/SeSourcePose3DPosPtr.cpp: done
     .text   start:0x009F9820 end:0x009F9A98
-src/al/Project/Se/SeSourcePoseNull.cpp:
-    .text   start:0x009F9AA0 end:0x009FEAD8
-src/al/Project/Se/SeVolumeCtrl.cpp:
+src/al/Library/Se/Info/SeSourcePoseNull.cpp: done
+    .text   start:0x009F9AA0 end:0x009F9C84
+src/al/Library/Se/Info/SeAudioInfo_dup2.cpp:
+    .text   start:0x009F9C90 end:0x009FD648
+src/al/Library/Se/Function/SeFunction_dup3.cpp: done
+    .text   start:0x009FD650 end:0x009FEAD8
+src/al/Library/Se/Function/SeVolumeCtrl.cpp:
     .text   start:0x009FEAE0 end:0x009FF390
-src/al/Project/Se/SeWaitingListKeeper.cpp:
-    .text   start:0x009FF390 end:0x009FFC54
-src/al/Project/Se/ShaderHolder.cpp:
+src/al/Library/Se/Function/SeWaitingListKeeper.cpp:
+    .text   start:0x009FF390 end:0x009FFB0C
+src/al/Library/Shader/DeferredRendering/FullScreenTriangle_dup2.cpp:
+    .text   start:0x009FFB10 end:0x009FFC54
+src/al/Library/Shader/ForwardRendering/ShaderHolder.cpp:
     .text   start:0x009FFC60 end:0x00A01434
-src/al/Project/Se/SkyboxDirector.cpp:
+src/al/Library/Shader/ForwardRendering/SkyboxDirector.cpp:
     .text   start:0x00A01440 end:0x00A018E8
-src/al/Project/Se/SkyboxFunction.cpp: done
+src/al/Library/Shader/ForwardRendering/SkyboxFunction.cpp: done
     .text   start:0x00A018F0 end:0x00A0190C
-src/al/Project/Se/SSR.cpp:
+src/al/Library/Shader/ForwardRendering/SSR.cpp:
     .text   start:0x00A01910 end:0x00A02964
-src/al/Project/Se/StageSwitchListenerHolder.cpp:
+src/al/Library/Shader/ForwardRendering/StageSwitchListenerHolder.cpp:
     .text   start:0x00A02970 end:0x00A03044
-src/al/Project/Se/StageSwitchListenerList.cpp:
-    .text   start:0x00A03050 end:0x00A0386C
-src/al/Project/Se/TextureUtil.cpp:
+src/al/Library/Shader/ForwardRendering/StageSwitchListenerList.cpp:
+    .text   start:0x00A03050 end:0x00A0316C
+src/al/Library/System/GameSystemInfo.cpp:
+    .text   start:0x00A03170 end:0x00A0386C
+src/al/Library/Texture/TextureUtil.cpp:
     .text   start:0x00A03870 end:0x00A04E8C
 src/aal/components/aalAudioFrameProcessMgr.cpp: done
     .text   start:0x00A04E90 end:0x00A05244
