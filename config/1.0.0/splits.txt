@@ -3567,7 +3567,7 @@ src/nw/atk/detail/util/atk_WavOutFileStream.cpp:
     .text   start:0x0057C180 end:0x0057C9E8
 src/nw/atk/detail/util/atk_ProfileReader.cpp:
     .text   start:0x0057C9F0 end:0x0057DD18
-src/nw/atk/detail/util/atk_TaskProfileReader.cpp:
+src/nw/atk/detail/util/atk_TaskProfileReader.cpp: done
     .text   start:0x0057DD20 end:0x0057E180
 src/nw/atk/detail/util/atk_Sound3DManager.cpp:
     .text   start:0x0057E180 end:0x0057E5FC
