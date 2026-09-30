@@ -46,13 +46,11 @@ namespace al {
     f32 calcNerveSquareOutValue(const IUseNerve*, s32, f32, f32);
     f32 calcNerveSquareOutValue(const IUseNerve*, s32, s32, f32, f32);
     f32 calcNerveJumpValue(const IUseNerve*, s32, s32, s32, f32);
-
-    void initNerveState(al::IUseNerve*, al::NerveStateBase*, const al::Nerve*, const char*);
-    void addNerveState(al::IUseNerve*, al::NerveStateBase*, const al::Nerve*, const char*);
-    bool updateNerveState(al::IUseNerve*);
-    bool updateNerveStateAndNextNerve(al::IUseNerve*, const al::Nerve*);
-    bool isStateEnd(const al::IUseNerve*);
-
+    void initNerveState(IUseNerve*, NerveStateBase*, const Nerve*, const char*);
+    void addNerveState(IUseNerve*, NerveStateBase*, const Nerve*, const char*);
+    bool updateNerveState(IUseNerve*);
+    bool updateNerveStateAndNextNerve(IUseNerve*, const Nerve*);
+    bool isStateEnd(const IUseNerve*);
 }  // namespace al
 
 namespace alNerveFunction {
