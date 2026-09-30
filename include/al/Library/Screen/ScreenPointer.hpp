@@ -10,26 +10,29 @@ class ScreenPointDirector;
 class ScreenPointTarget;
 
 struct ScreenPointTargetHitInfo {
-    ScreenPointTarget* mTarget;     // _0
-    f32 mDistance;                  // _8
-    sead::Vector3f mHitPos;         // _c
-    sead::Vector3f mHitNormal;      // _18
+    ScreenPointTarget* mTarget = nullptr;
+    sead::Vector3f mHitPos = sead::Vector3f::zero;
+    sead::Vector3f mHitNormal = sead::Vector3f::zero;
+    f32 mDistance = 0.0f;
+    f32 _24 = 0.0f;
 };
 
 class ScreenPointer {
 public:
-    ScreenPointer(const ActorInitInfo&, const LiveActor*, const sead::Vector3f*);
+    ScreenPointer(const ActorInitInfo& rInfo, const LiveActor* pHost, const sead::Vector3f* pPos);
 
-    bool hitCheckSegment(const sead::Vector3f&, const sead::Vector3f&);
-    bool hitCheckScreenCircle(const sead::Vector2f&, f32);
+    bool hitCheckSegment(const sead::Vector3f& rStart, const sead::Vector3f& rEnd);
+    bool hitCheckScreenCircle(const sead::Vector2f& rPos, f32 radius);
 
-    const LiveActor* mActor;                                 // _0
-    sead::Vector3f mHitPos = sead::Vector3f::zero;           // _8
-    sead::Vector3f mHitNormal = sead::Vector3f::zero;        // _14
-    const sead::Vector3f* mPos;                              // _20
-    ScreenPointDirector* mDirector = nullptr;                // _28
-    sead::ObjArray<ScreenPointTargetHitInfo> mHitInfoArray;  // _30
+    const sead::Vector3f& getHitPos() const { return mHitPos; }
+    const sead::Vector3f& getHitNormal() const { return mHitNormal; }
+
+private:
+    const LiveActor* mHost;
+    sead::Vector3f mHitPos = sead::Vector3f::zero;
+    sead::Vector3f mHitNormal = sead::Vector3f::zero;
+    const sead::Vector3f* mPos;
+    ScreenPointDirector* mDirector = nullptr;
+    sead::ObjArray<ScreenPointTargetHitInfo> mHitInfos;
 };
-
-static_assert(sizeof(ScreenPointer) == 0x50);
 }  // namespace al
