@@ -3,33 +3,38 @@
 #include "Library/LiveActor/LiveActor.hpp"
 
 namespace al {
+class ActorInitInfo;
+
 class SimpleCircleShadowXZ : public LiveActor {
 public:
-    SimpleCircleShadowXZ(const char*);
+    SimpleCircleShadowXZ(const char* pName);
 
     void makeActorAppeared() override;
     void control() override;
 
-    void initSimpleCircleShadow(LiveActor*, const ActorInitInfo&, const char*, const char*);
+    void initSimpleCircleShadow(LiveActor* pHost, const ActorInitInfo& rInfo,
+                                const char* pArchiveName, const char* pSuffix);
     void updatePose();
     void syncHostVisible();
-    void setOffsetWithInterpole(const sead::Vector3f&);
-    void setScaleWithInterpole(const sead::Vector3f&);
-    void setRotateWithInterpole(const sead::Vector3f&);
-    void setInterpoleFrame(s32);
+    void setOffsetWithInterpole(const sead::Vector3f& rOffset);
+    void setScaleWithInterpole(const sead::Vector3f& rScale);
+    void setRotateWithInterpole(const sead::Vector3f& rRotate);
+    void setInterpoleFrame(s32 frame);
 
-    LiveActor* mHostActor = nullptr;                          // _148
-    sead::Vector3f mOffset = sead::Vector3f::zero;            // _150
-    bool mIsHostHidden = false;                               // _15c
-    bool mIsSyncHostHide = false;                             // _15d
-    sead::Vector3f mScaleStart = {1.0f, 1.0f, 1.0f};          // _160
-    sead::Vector3f mScaleEnd = {1.0f, 1.0f, 1.0f};            // _16c
-    sead::Vector3f mOffsetStart = sead::Vector3f::zero;       // _178
-    sead::Vector3f mOffsetEnd = sead::Vector3f::zero;         // _184
-    sead::Vector3f mRotateStart = sead::Vector3f::zero;       // _190
-    sead::Vector3f mRotate = sead::Vector3f::zero;            // _19c
-    sead::Vector3f mRotateEnd = sead::Vector3f::zero;         // _1a8
-    s32 mInterpoleStep = 0;                                   // _1b4
-    s32 mInterpoleFrame = 0;                                  // _1b8
+    LiveActor* mHost = nullptr;
+    sead::Vector3f mOffset = sead::Vector3f::zero;
+    bool mIsHostHidden = false;
+    bool mIsForceHide = false;
+    sead::Vector3f mStartScale = {1.0f, 1.0f, 1.0f};
+    sead::Vector3f mEndScale = {1.0f, 1.0f, 1.0f};
+    sead::Vector3f mStartOffset = sead::Vector3f::zero;
+    sead::Vector3f mEndOffset = sead::Vector3f::zero;
+    sead::Vector3f mStartRotate = sead::Vector3f::zero;
+    sead::Vector3f mRotate = sead::Vector3f::zero;
+    sead::Vector3f mEndRotate = sead::Vector3f::zero;
+    s32 mInterpoleStep = 0;
+    s32 mInterpoleFrame = 0;
 };
+
+static_assert(sizeof(SimpleCircleShadowXZ) == 0x1c0);
 }  // namespace al
