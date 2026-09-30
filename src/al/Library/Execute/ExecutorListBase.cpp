@@ -1,15 +1,16 @@
 #include "Library/Execute/ExecutorListBase.hpp"
 
 namespace al {
-    /**
-     * @brief Creates a named executor list.
-     * @param pName The name of the list.
-     * @param pPauseName The name used while the list is paused, or nullptr to use pName.
-     */
-    ExecutorListBase::ExecutorListBase(const char* pName, const char* pPauseName)
-        : mName(pName), mPauseName(pPauseName) {
-        if (pPauseName == nullptr) {
-            mPauseName = mName;
-        }
+/**
+ * Constructs an executor list.
+ * @param pListName List name.
+ * @param pGroupName Group name, or nullptr to use the list name.
+ */
+ExecutorListBase::ExecutorListBase(const char* pListName, const char* pGroupName) {
+    mListName = pListName;
+    mGroupName = pGroupName;
+    if (pGroupName == nullptr) {
+        mGroupName = mListName;
     }
-};
+}
+}  // namespace al

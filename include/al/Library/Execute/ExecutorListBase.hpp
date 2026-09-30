@@ -1,22 +1,18 @@
 #pragma once
 
-#include "Library/HostIO/IUseHioNode.hpp"
+#include <basis/seadTypes.h>
 
 namespace al {
-    /// A named list of executors that a table runs in order.
-    class ExecutorListBase : public HioNode {
-    public:
-        ExecutorListBase(const char* pName, const char* pPauseName);
+class ExecutorListBase {
+public:
+    ExecutorListBase(const char* pListName, const char* pGroupName);
+    virtual ~ExecutorListBase() { ; }
 
-        virtual ~ExecutorListBase() {}
+    virtual void executeList() const = 0;
+    virtual void executeListPaused() const {}
+    virtual bool isActive() const = 0;
 
-        virtual void executeList() const = 0;
-        virtual void executeListPaused() const {}
-        virtual bool isActive() const = 0;
-
-        const char* mName;          // _8
-        const char* mPauseName;     // _10
-    };
-
-    static_assert(sizeof(ExecutorListBase) == 0x18, "ExecutorListBase size");
+    const char* mListName;
+    const char* mGroupName;
 };
+}  // namespace al
