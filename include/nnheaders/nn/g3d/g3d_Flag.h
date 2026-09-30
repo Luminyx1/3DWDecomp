@@ -1,7 +1,7 @@
 #pragma once
 #include <nn/types.h>
 
-namespace nn::g3d { class MaterialObj; }
+namespace nn::g3d { class MaterialObj; class ShadingModelObj; }
 namespace nn::g3d::detail {
 class FlagSet {
 public:
@@ -9,6 +9,7 @@ public:
     void Caclulate();
 private:
     friend class nn::g3d::MaterialObj;
+    friend class nn::g3d::ShadingModelObj;
     u32* mPending;
     u32* mBufferFlags;
     int mBufferCount;
