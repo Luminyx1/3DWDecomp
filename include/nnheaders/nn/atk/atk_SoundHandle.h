@@ -15,6 +15,52 @@ public:
     void detail_AttachSoundAsTempHandle(detail::BasicSound* sound);
     void detail_AttachSound(detail::BasicSound* sound);
     bool CalculateSoundParamCalculationValues(SoundParamCalculationValues* values) const;
+    detail::BasicSound* detail_GetAttachedSound() { return m_pSound; }
+    const detail::BasicSound* detail_GetAttachedSound() const { return m_pSound; }
+
+    bool IsPause() const {
+        if (IsAttachedSound() && m_pSound->IsPause()) {
+            return true;
+        }
+        return false;
+    }
+
+    f32 GetVolume() const {
+        if (IsAttachedSound()) {
+            return m_pSound->GetVolume();
+        }
+        return 0.0f;
+    }
+
+    void SetSurroundPan(f32 pan) {
+        if (IsAttachedSound()) {
+            m_pSound->SetSurroundPan(pan);
+        }
+    }
+
+    void SetMainSend(f32 send) {
+        if (IsAttachedSound()) {
+            m_pSound->SetMainSend(send);
+        }
+    }
+
+    void SetFxSend(AuxBus bus, f32 send) {
+        if (IsAttachedSound()) {
+            m_pSound->SetFxSend(bus, send);
+        }
+    }
+
+    void SetLpfFreq(f32 freq) {
+        if (IsAttachedSound()) {
+            m_pSound->SetLpfFreq(freq);
+        }
+    }
+
+    void SetBiquadFilter(int type, f32 value) {
+        if (IsAttachedSound()) {
+            m_pSound->SetBiquadFilter(type, value);
+        }
+    }
 
     void Stop(int fadeFrames) {
         if (IsAttachedSound()) {

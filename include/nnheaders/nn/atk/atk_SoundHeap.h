@@ -25,6 +25,9 @@ class FrameHeap {
 public:
     bool IsValid() const { return m_pHeap != nullptr; }
     void Dump(const SoundDataManager& rMgr, const SoundArchive& rArchive) const;
+    s32 GetCurrentLevel() const;
+    size_t GetSize() const;
+    size_t GetFreeSize() const;
 
 private:
     void* m_pHeap;
@@ -45,6 +48,30 @@ public:
     size_t GetAllocateSize(size_t size, bool needMemoryPool) override;
 
     bool IsValid() const { return m_FrameHeap.IsValid(); }
+
+    s32 SaveState();
+    void LoadState(s32 level);
+
+    s32 GetCurrentLevel() const {
+        os::LockMutex(&m_CriticalSection);
+        s32 level = m_FrameHeap.GetCurrentLevel();
+        os::UnlockMutex(&m_CriticalSection);
+        return level;
+    }
+
+    size_t GetSize() const {
+        os::LockMutex(&m_CriticalSection);
+        size_t size = m_FrameHeap.GetSize();
+        os::UnlockMutex(&m_CriticalSection);
+        return size;
+    }
+
+    size_t GetFreeSize() const {
+        os::LockMutex(&m_CriticalSection);
+        size_t size = m_FrameHeap.GetFreeSize();
+        os::UnlockMutex(&m_CriticalSection);
+        return size;
+    }
 
     void Dump(const SoundDataManager& rMgr, const SoundArchive& rArchive) const {
         os::LockMutex(&m_CriticalSection);

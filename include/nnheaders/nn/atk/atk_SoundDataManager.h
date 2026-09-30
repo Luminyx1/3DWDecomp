@@ -22,6 +22,8 @@ public:
     virtual ~SoundArchiveLoader();
 
     bool IsAvailable() const;
+    bool IsDataLoaded(SoundArchive::ItemId id, u32 loadFlag) const;
+    bool IsDataLoaded(const char* pItemName, u32 loadFlag) const;
     bool LoadData(SoundArchive::ItemId id, SoundMemoryAllocatable* pAllocator, u32 loadFlag,
                   size_t loadBlockSize);
     bool LoadData(const char* pItemName, SoundMemoryAllocatable* pAllocator, u32 loadFlag,
@@ -44,6 +46,8 @@ public:
 
     size_t GetRequiredMemSize(const SoundArchive* pArchive) const;
     bool Initialize(const SoundArchive* pArchive, void* pBuffer, size_t size);
+    const void* detail_GetFileAddress(SoundArchive::FileId fileId) const;
+    void SetFileAddressInGroupFile(const void* pGroupFile, size_t size);
     void Finalize();
 
     void InvalidateData(const void* pStart, const void* pEnd) override;

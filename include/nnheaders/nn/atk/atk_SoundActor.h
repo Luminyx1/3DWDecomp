@@ -11,8 +11,10 @@ public:
     SoundActor();
     ~SoundActor() override;
 
+    void Initialize(SoundArchivePlayer* pSoundArchivePlayer);
     void StopAllSound(int fadeFrames);
     void PauseAllSound(bool flag, int fadeFrames);
+    int GetPlayingSoundCount(int actorPlayerId) const;
 
     virtual StartResult SetupSound(SoundHandle* pHandle, u32 soundId, const StartInfo* pStartInfo,
                                    void* pSetupArg);

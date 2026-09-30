@@ -31,6 +31,50 @@ public:
     typedef u32 ItemId;
     typedef ItemId FileId;
 
+    enum SoundType {
+        SoundType_Invalid,
+        SoundType_Sequence,
+        SoundType_Stream,
+        SoundType_Wave,
+        SoundType_AdvancedWave,
+    };
+
+    struct FileInfo {
+        FileInfo() : fileSize(0xffffffff), offsetFromFileBlockHead(0xffffffff), externalFilePath(nullptr) {}
+
+        u32 fileSize;
+        u32 offsetFromFileBlockHead;
+        const char* externalFilePath;
+    };
+
+    struct SequenceSoundInfo {
+        SequenceSoundInfo() : startOffset(0), allocateTrackFlags(0), channelPriority(0), isReleasePriorityFix(false) {
+            for (s32 i = 0; i < 4; i++) {
+                bankIds[i] = 0xffffffff;
+            }
+        }
+
+        u32 startOffset;
+        u32 bankIds[4];
+        u32 allocateTrackFlags;
+        u8 channelPriority;
+        bool isReleasePriorityFix;
+    };
+
+    struct SoundInfo {
+        FileId fileId;
+        ItemId playerId;
+        u8 actorPlayerId;
+        u8 playerPriority;
+        u8 volume;
+        u8 remoteFilter;
+        s32 panMode;
+        s32 panCurve;
+        s32 singlePlayType;
+        u16 singlePlayEffectiveDuration;
+        bool isFrontBypass;
+    };
+
     SoundArchive();
     virtual ~SoundArchive();
 
@@ -38,6 +82,12 @@ public:
     u32 GetSoundCount() const;
     const char* GetItemLabel(ItemId id) const;
     ItemId GetItemId(const char* pLabel) const;
+    FileId GetItemFileId(ItemId id) const;
+    SoundType GetSoundType(ItemId id) const;
+    bool ReadSoundInfo(SoundInfo* pInfo, ItemId id) const;
+    bool ReadSequenceSoundInfo(SequenceSoundInfo* pInfo, ItemId id) const;
+    bool detail_ReadFileInfo(FileId id, FileInfo* pInfo) const;
+    ItemId GetSoundIdFromIndex(u32 index) const { return index | 0x1000000; }
 
     virtual const void* detail_GetFileAddress(FileId fileId) const = 0;
     virtual size_t detail_GetRequiredStreamBufferSize() const = 0;

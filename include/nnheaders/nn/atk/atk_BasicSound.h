@@ -1,8 +1,19 @@
 #pragma once
 
+#include <nn/atk/atk_Global.h>
 #include <nn/types.h>
 
 namespace nn::atk { class SoundHandle; struct SoundParamCalculationValues; }
+namespace nn::atk {
+enum MixMode {
+    MixMode_Pan,
+    MixMode_MixParameter,
+};
+
+struct MixParameter {
+    f32 ch[ChannelIndex_Count];
+};
+}  // namespace nn::atk
 namespace nn::atk::detail {
 struct RuntimeTypeInfo {
     // parent identifies the immediate base type, or null for the root type.
@@ -37,6 +48,15 @@ public:
     bool IsAttachedTempGeneralHandle();
     void DetachTempGeneralHandle();
     void CalculateSoundParamCalculationValues(SoundParamCalculationValues* values) const;
+    bool IsPause() const;
+    f32 GetVolume() const;
+    void SetSurroundPan(f32 pan);
+    void SetMainSend(f32 send);
+    void SetFxSend(AuxBus bus, f32 send);
+    void SetLpfFreq(f32 freq);
+    void SetBiquadFilter(int type, f32 value);
+    void SetMixMode(MixMode mode);
+    void SetOutputChannelMixParameter(OutputDevice device, u32 channel, MixParameter param);
 
     u32 GetId() const { return m_Id; }
 
