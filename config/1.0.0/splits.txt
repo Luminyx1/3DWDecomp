@@ -3445,7 +3445,7 @@ src/nw/atk/detail/strm/atk_StreamBufferPool.cpp: done
     .text   start:0x005591E0 end:0x0055938C
 src/nw/atk/detail/atk_AdvancedWaveSoundPlayer.cpp:
     .text   start:0x00559390 end:0x0055A37C
-src/nw/atk/detail/atk_AdvancedWaveSoundFileReader.cpp:
+src/nw/atk/detail/atk_AdvancedWaveSoundFileReader.cpp: done
     .text   start:0x0055A380 end:0x0055A5CC
 src/nw/atk/detail/atk_AdvancedWaveSoundFile.cpp: done
     .text   start:0x0055A5D0 end:0x0055A63C
