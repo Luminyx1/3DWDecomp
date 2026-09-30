@@ -3,11 +3,13 @@
 #include "Project/AreaObj/AreaObjUtil.hpp"
 
 namespace al {
-/** @brief Creates an info that is not bound to any area yet. */
+/**
+ * Creates an info that is not bound to any area yet.
+ */
 AreaCameraSwitchInfo::AreaCameraSwitchInfo() = default;
 
 /**
- * @brief Binds the info to an area and reads the switch flags from its arguments.
+ * Binds the info to an area and reads the switch flags from its arguments.
  * @param pArea The camera area.
  * @param priority The priority of the area's camera.
  * @param isInterpoleIn Whether switching to the camera interpolates.

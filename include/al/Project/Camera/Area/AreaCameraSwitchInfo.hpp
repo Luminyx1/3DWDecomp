@@ -5,21 +5,21 @@
 namespace al {
 class AreaObj;
 
-/// The camera switch settings of a camera area.
 class AreaCameraSwitchInfo {
 public:
     AreaCameraSwitchInfo();
 
     void initArea(const AreaObj* pArea, s32 priority, bool isInterpoleIn, bool isInterpoleOut);
 
-    void* _0 = nullptr;                    // _0
-    const AreaObj* mArea = nullptr;        // _8
-    s32 mPriority = 0;                     // _10
-    bool mIsInterpoleIn = false;           // _14
-    bool mIsInterpoleOut = false;          // _15
-    bool _16 = false;                      // _16
-    bool mIsEndNoInterpole = false;        // _17
-    bool mIsStartWhenCollideGround = false;  // _18
-    bool mIsStartWhenInWater = false;      // _19
+    void* _0 = nullptr;
+    const AreaObj* mArea = nullptr;
+    s32 mPriority = 0;
+    bool mIsInterpoleIn = false;
+    bool mIsInterpoleOut = false;
+    bool _16 = false;
+    bool mIsEndNoInterpole = false;
+    bool mIsStartWhenCollideGround = false;
+    bool mIsStartWhenInWater = false;
 };
+static_assert(sizeof(AreaCameraSwitchInfo) == 0x20);
 }  // namespace al
