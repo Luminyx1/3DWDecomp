@@ -4,12 +4,15 @@
  */
 
 #pragma once
+#include <nn/types.h>
 
 namespace nn {
 namespace g3d {
 class ResSkeletalAnim {
 public:
     void Reset();
+private:
+    u8 _0[0x50];
 };
 }  // namespace g3d
 }  // namespace nn

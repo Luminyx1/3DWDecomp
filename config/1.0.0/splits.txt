@@ -3783,7 +3783,7 @@ src/nw/g3d/g3d_MaterialObj.cpp:
     .text   start:0x005FCC60 end:0x005FD7B0
 src/nw/g3d/g3d_Flag.cpp: done
     .text   start:0x005FD7B0 end:0x005FD8D4
-src/nw/g3d/g3d_ResFile.cpp:
+src/nw/g3d/g3d_ResFile.cpp: done
     .text   start:0x005FD8E0 end:0x005FDDD4
 src/nw/g3d/g3d_ResMaterial.cpp:
     .text   start:0x005FDDE0 end:0x005FF5B4
@@ -3791,7 +3791,7 @@ src/nw/g3d/g3d_ResMaterialAnim.cpp:
     .text   start:0x005FF5C0 end:0x00600908
 src/nw/g3d/g3d_ResAnimCurve.cpp:
     .text   start:0x00600910 end:0x006028F0
-src/nw/g3d/g3d_ResModel.cpp:
+src/nw/g3d/g3d_ResModel.cpp: done
     .text   start:0x006028F0 end:0x00602DCC
 src/nw/g3d/g3d_ResSceneAnim.cpp:
     .text   start:0x00602DD0 end:0x00603C64
