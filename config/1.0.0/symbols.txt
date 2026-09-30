@@ -4637,3 +4637,8 @@
 0x7102111CD0 8 object _ZGVZN2nn3atk6detail13DriverCommand24GetInstanceForTaskThreadEvE8instance
 0x7102111CD8 280 object _ZZN2nn3atk6detail13DriverCommand11GetInstanceEvE8instance
 0x7102111DF0 280 object _ZZN2nn3atk6detail13DriverCommand24GetInstanceForTaskThreadEvE8instance
+
+# ATK debug warning masks, mutable flags, and sound-type diagnostic names.
+0x71016BDC5C 24 object _ZN2nn3atk12_GLOBAL__N_112warningMasksE
+0x7101AA1EA0 4 object _ZN2nn3atk12_GLOBAL__N_112warningFlagsE
+0x7101AA1EA8 24 object _ZN2nn3atk12_GLOBAL__N_114soundTypeNamesE

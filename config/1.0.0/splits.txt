@@ -3481,8 +3481,10 @@ src/nw/atk/detail/strm/atk_StreamSound.cpp:
     .text   start:0x00563140 end:0x005643B8
 src/nw/atk/detail/strm/atk_StreamSoundHandle.cpp:
     .text   start:0x005643C0 end:0x00564518
-src/nw/atk/detail/debug/atk_Debug.cpp:
+src/nw/atk/detail/debug/atk_Debug.cpp: done
     .text   start:0x00564520 end:0x005645E4
+    .rodata start:0x016BDC5C end:0x016BDC74
+    .data   start:0x01AA1EA0 end:0x01AA1EC0
 src/nw/atk/atk_SoundDataManager.cpp:
     .text   start:0x005645F0 end:0x00564E00
 src/nw/atk/detail/atk_SoundArchiveManager.cpp:
