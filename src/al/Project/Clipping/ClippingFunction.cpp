@@ -1,22 +1,23 @@
 #include "Project/Clipping/ClippingFunction.hpp"
+
+#include "Library/Clipping/ClippingDirectorBase.hpp"
 #include "Library/LiveActor/LiveActor.hpp"
 #include "Library/LiveActor/Util/ActorSceneInfo.hpp"
-#include "Project/Clipping/ClippingDirectorBase.hpp"
 
 namespace alClippingFunction {
-    /**
-     * @brief Adds an actor to the scene's clipping targets.
-     * @param pActor The actor to start clipping.
-     */
-    void addToClippingTarget(al::LiveActor* pActor) {
-        pActor->getSceneInfo()->clippingDirectorBase->addToClipping(pActor);
-    }
+/**
+ * Makes an actor a clipping target.
+ * @param pActor actor to add
+ */
+void addToClippingTarget(al::LiveActor* pActor) {
+    pActor->getSceneInfo()->clippingDirectorBase->addToClipping(pActor);
+}
 
-    /**
-     * @brief Removes an actor from the scene's clipping targets.
-     * @param pActor The actor to stop clipping.
-     */
-    void removeFromClippingTarget(al::LiveActor* pActor) {
-        pActor->getSceneInfo()->clippingDirectorBase->removeFromClipping(pActor);
-    }
-};
+/**
+ * Stops an actor from being a clipping target.
+ * @param pActor actor to remove
+ */
+void removeFromClippingTarget(al::LiveActor* pActor) {
+    pActor->getSceneInfo()->clippingDirectorBase->removeFromClipping(pActor);
+}
+}  // namespace alClippingFunction
