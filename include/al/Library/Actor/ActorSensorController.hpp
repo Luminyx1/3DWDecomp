@@ -9,11 +9,11 @@ class HitSensor;
 
 class ActorSensorController {
 public:
-    ActorSensorController(LiveActor*, const char*);
+    ActorSensorController(LiveActor* pActor, const char* pSensorName);
 
-    void setSensorScale(f32);
-    void setSensorRadius(f32);
-    void setSensorFollowPosOffset(const sead::Vector3f&);
+    void setSensorScale(f32 scale);
+    void setSensorRadius(f32 radius);
+    void setSensorFollowPosOffset(const sead::Vector3f& rOffset);
     void resetActorSensorController();
 
     HitSensor* mSensor = nullptr;
@@ -23,10 +23,10 @@ public:
 
 class ActorSensorControllerList {
 public:
-    ActorSensorControllerList(s32);
+    ActorSensorControllerList(s32 maxControllers);
 
-    void addSensor(LiveActor*, const char*);
-    void setAllSensorScale(f32);
+    void addSensor(LiveActor* pActor, const char* pSensorName);
+    void setAllSensorScale(f32 scale);
     void resetAllActorSensorController();
 
     ActorSensorController** mSensorControllers;
