@@ -35,11 +35,7 @@ class FunctorV1M : public FunctorBase {
 public:
     inline FunctorV1M() = default;
 
-    inline FunctorV1M(T obj, F func, Arg arg) {
-        mObjPtr = obj;
-        mFunc = func;
-        mArg = arg;
-    }
+    inline FunctorV1M(T obj, F func, Arg arg) : mObjPtr(obj), mFunc(func), mArg(arg) {}
 
     inline FunctorV1M(const FunctorV1M<T, F, Arg>&) = default;
 
@@ -47,9 +43,9 @@ public:
 
     FunctorV1M<T, F, Arg>* clone() const override { return new FunctorV1M<T, F, Arg>(*this); }
 
-    T mObjPtr = nullptr;
-    F mFunc = nullptr;
-    Arg mArg = nullptr;
+    T mObjPtr;
+    F mFunc;
+    Arg mArg;
 };
 
 template <class T>
