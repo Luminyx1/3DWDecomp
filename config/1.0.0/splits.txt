@@ -3413,7 +3413,7 @@ src/nw/atk/detail/seq/atk_SequenceSoundFile.cpp:
     .text   start:0x0054AE00 end:0x0054B020
 src/nw/atk/detail/atk_BasicSoundPlayer.cpp:
     .text   start:0x0054B020 end:0x0054B164
-src/nw/atk/detail/atk_DisposeCallbackManager.cpp:
+src/nw/atk/detail/atk_DisposeCallbackManager.cpp: done
     .text   start:0x0054B180 end:0x0054B2EC
 src/nw/atk/detail/atk_Bank.cpp:
     .text   start:0x0054B2F0 end:0x0054B4E8
