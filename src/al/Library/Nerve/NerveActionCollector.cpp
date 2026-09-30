@@ -2,22 +2,23 @@
 
 namespace alNerveFunction {
 /**
- * @brief Appends a nerve action to the end of the collected action list.
- * @param pAction The action to append.
+ * Adds a nerve action to the collector.
+ * @param pAction The action to add.
  */
 void NerveActionCollector::addNerve(al::NerveAction* pAction) {
-    if (mStartAction != nullptr) {
-        mEndAction->mNextNode = pAction;
-    } else {
+    if (mStartAction == nullptr) {
         mStartAction = pAction;
+        mEndAction = pAction;
+        mNumActions++;
+        return;
     }
-
+    mEndAction->mNextNode = pAction;
     mEndAction = pAction;
     mNumActions++;
 }
 
 /**
- * @brief Constructs an empty collector and makes it the currently active collector.
+ * Constructs a collector and makes it the current one.
  */
 NerveActionCollector::NerveActionCollector() {
     sCurrentCollector = this;
