@@ -210,9 +210,11 @@ struct ResShapeData {
     nn::util::BinTPtr<ResMesh> pMeshArray;
     nn::util::BinPtr pSkinBoneIndexArray;
     nn::util::BinTPtr<ResKeyShape> pKeyShapeArray;
-    u8 _30[0x48 - 0x30];
+    nn::util::BinTPtr<nn::util::ResDic> pKeyShapeDic;
+    u8 _38[0x48 - 0x38];
     nn::util::BinPtr pUserPtr;
-    u8 _50[0xb];
+    u16 index;
+    u8 _52[9];
     u8 meshCount;
     u8 keyShapeCount;
     u8 _5d[3];
@@ -220,6 +222,14 @@ struct ResShapeData {
 
 class ResShape : public nn::util::AccessorBase<ResShapeData> {
 public:
+    // name identifies a key shape in the resource dictionary.
+    int FindKeyShapeIndex(const char* name) const {
+        const nn::util::ResDic* dictionary = pKeyShapeDic.Get();
+        if (!dictionary) return nn::util::ResDic::Npos;
+        return dictionary->FindIndex(name);
+    }
+    int GetIndex() const { return index; }
+
     void ActivateDynamicVertexAttrForShapeAnim();
     void Setup(nn::gfx::Device* device);
     void Setup(nn::gfx::Device* device, nn::gfx::MemoryPool* pool, ptrdiff_t offset);
@@ -233,7 +243,7 @@ struct ResModelData {
     nn::util::BinTPtr<ResSkeleton> pSkeleton;
     nn::util::BinTPtr<ResVertex> pVertexArray;
     nn::util::BinTPtr<ResShape> pShapeArray;
-    nn::util::BinPtr pShapeDic;
+    nn::util::BinTPtr<nn::util::ResDic> pShapeDic;
     nn::util::BinTPtr<ResMaterial> pMaterialArray;
     u8 _40[0x60 - 0x40];
     nn::util::BinPtr pUserPtr;
@@ -245,6 +255,14 @@ struct ResModelData {
 
 class ResModel : public nn::util::AccessorBase<ResModelData> {
 public:
+    // name identifies a shape in this model; return null if its dictionary has no entry.
+    __attribute__((noinline)) const ResShape* FindShape(const char* name) const {
+        const nn::util::ResDic* dictionary = pShapeDic.Get();
+        int index = dictionary ? dictionary->FindIndex(name) : nn::util::ResDic::Npos;
+        if (index == nn::util::ResDic::Npos) return nullptr;
+        return &pShapeArray.Get()[index];
+    }
+
     BindResult BindTexture(TextureBindCallback callback, void* user);
     bool ForceBindTexture(const TextureRef& texture, const char* name);
     void ReleaseTexture();

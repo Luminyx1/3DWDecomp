@@ -3797,7 +3797,7 @@ src/nw/g3d/g3d_ResSceneAnim.cpp:
     .text   start:0x00602DD0 end:0x00603C64
 src/nw/g3d/g3d_ResShape.cpp:
     .text   start:0x00603C70 end:0x00604AC8
-src/nw/g3d/g3d_ResShapeAnim.cpp:
+src/nw/g3d/g3d_ResShapeAnim.cpp: done
     .text   start:0x00604AD0 end:0x006055EC
 src/nw/g3d/g3d_ResSkeletalAnim.cpp:
     .text   start:0x006055F0 end:0x00605E08
