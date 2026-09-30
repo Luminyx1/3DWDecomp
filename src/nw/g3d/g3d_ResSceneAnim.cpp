@@ -64,12 +64,7 @@ void* ResCameraAnim::ResetCurve() {
     flags ^= 1;
     return buffer;
 }
-void ResCameraAnim::Reset() {
-    if (!(flags & 1)) return;
-    int count = curveCount;
-    for (int i = 0; i < count; ++i) curves[i].Reset();
-    flags ^= 1;
-}
+void ResCameraAnim::Reset() { ResetCurves(); }
 // result receives the constant values stored by this light animation.
 void ResLightAnim::Initialize(LightAnimResult* result) const {
     const u8* data = static_cast<const u8*>(baseValues);
@@ -186,12 +181,7 @@ void* ResLightAnim::ResetCurve() {
     flags ^= 1;
     return buffer;
 }
-void ResLightAnim::Reset() {
-    if (!(flags & 1)) return;
-    int count = curveCount;
-    for (int i = 0; i < count; ++i) curves[i].Reset();
-    flags ^= 1;
-}
+void ResLightAnim::Reset() { ResetCurves(); }
 // result receives the constant values stored by this fog animation.
 void ResFogAnim::Initialize(FogAnimResult* result) const {
     *result = *static_cast<const FogAnimResult*>(baseValues);
@@ -263,12 +253,7 @@ void* ResFogAnim::ResetCurve() {
     flags ^= 1;
     return buffer;
 }
-void ResFogAnim::Reset() {
-    if (!(flags & 1)) return;
-    int count = curveCount;
-    for (int i = 0; i < count; ++i) curves[i].Reset();
-    flags ^= 1;
-}
+void ResFogAnim::Reset() { ResetCurves(); }
 // table resolves the light and fog function names in this scene's child resources.
 BindResult ResSceneAnim::Bind(const BindFuncTable& table) {
     BindResult result;

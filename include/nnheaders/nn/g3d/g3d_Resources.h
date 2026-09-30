@@ -3,6 +3,8 @@
 // Shared G3D resource and object declarations used by NintendoWare and AGL.
 
 #include <nn/gfx/gfx_Buffer.h>
+#include <nn/gfx/gfx_BufferInfo.h>
+#include <nn/util/util_BitFlagSet.h>
 #include <nn/gfx/gfx_DescriptorSlot.h>
 #include <nn/gfx/gfx_MemoryPoolInfo.h>
 #include <nn/gfx/gfx_ResTexture.h>
@@ -138,7 +140,7 @@ struct ResVertexAttribData {
     u32 format;
     u16 offset;
     u8 bufferIndex;
-    u8 _f;
+    u8 flags;
 };
 
 struct ResVertexBufferInfoData {
@@ -155,11 +157,16 @@ struct ResVertexData {
     u8 _0[0x8];
     nn::util::BinTPtr<ResVertexAttribData> pAttribArray;
     nn::util::BinTPtr<nn::util::ResDic> pAttribDic;
-    u8 _18[0x28 - 0x18];
+    nn::util::BinTPtr<nn::gfx::MemoryPool> pMemoryPool;
+    nn::util::BinTPtr<nn::gfx::Buffer> pBufferObjects;
     nn::util::BinTPtr<nn::gfx::Buffer*> pVertexBufferArray;
     nn::util::BinTPtr<ResVertexBufferInfoData> pVertexBufferInfoArray;
     nn::util::BinTPtr<ResVertexBufferStrideData> pVertexBufferStrideArray;
-    u8 _40[0x58 - 0x40];
+    nn::util::BinPtr pUserPtr;
+    u32 memoryPoolOffset;
+    u8 attribCount;
+    u8 bufferCount;
+    u8 _4e[0xa];
 };
 
 class ResVertex : public nn::util::AccessorBase<ResVertexData> {
@@ -167,13 +174,48 @@ public:
     void Setup(nn::gfx::Device* device);
     void Setup(nn::gfx::Device* device, nn::gfx::MemoryPool* pool, ptrdiff_t offset);
     void Cleanup(nn::gfx::Device* device);
+    void Reset();
     void Reset(u32 guard);
+    void CalculateDynamicVertexBufferIndex(nn::util::BitFlagSet<255, void>* indices) const;
 };
 
+struct ResSubMesh { u32 offset; u32 count; };
+class ResMesh {
+public:
+    void Setup(nn::gfx::Device* device);
+    void Setup(nn::gfx::Device* device, nn::gfx::MemoryPool* pool, ptrdiff_t offset);
+    void Cleanup(nn::gfx::Device* device);
+    void DrawSubMesh(nn::gfx::CommandBuffer* command, int first, int count, int instances) const;
+    void DrawSubMesh(nn::gfx::CommandBuffer* command, int first, int count, int instances, int baseInstance) const;
+
+    ResSubMesh* subMeshes;
+    nn::gfx::MemoryPool* memoryPool;
+    nn::gfx::Buffer* buffer;
+    nn::gfx::BufferInfo* bufferInfo;
+    u32 memoryPoolOffset;
+    nn::gfx::PrimitiveTopology topology;
+    nn::gfx::IndexFormat indexFormat;
+    u32 indexCount;
+    u32 baseVertex;
+    u16 subMeshCount;
+    u16 _36;
+};
+
+struct ResKeyShape { u8 attribIndices[18]; u8 _12[2]; };
 struct ResShapeData {
-    u8 _0[0x10];
+    u32 signature;
+    u32 flags;
+    nn::util::BinPtr pName;
     nn::util::BinTPtr<ResVertex> pVertex;
-    u8 _18[0x60 - 0x18];
+    nn::util::BinTPtr<ResMesh> pMeshArray;
+    nn::util::BinPtr pSkinBoneIndexArray;
+    nn::util::BinTPtr<ResKeyShape> pKeyShapeArray;
+    u8 _30[0x48 - 0x30];
+    nn::util::BinPtr pUserPtr;
+    u8 _50[0xb];
+    u8 meshCount;
+    u8 keyShapeCount;
+    u8 _5d[3];
 };
 
 class ResShape : public nn::util::AccessorBase<ResShapeData> {
@@ -182,6 +224,7 @@ public:
     void Setup(nn::gfx::Device* device);
     void Setup(nn::gfx::Device* device, nn::gfx::MemoryPool* pool, ptrdiff_t offset);
     void Cleanup(nn::gfx::Device* device);
+    void Reset();
     void Reset(u32 guard);
 };
 

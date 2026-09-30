@@ -16,6 +16,12 @@ public:
     bool BakeCurve(void* buffer, size_t size);
     void* ResetCurve();
     void Reset();
+    void ResetCurves() {
+        if (!(flags & 1)) return;
+        int count = curveCount;
+        for (int i = 0; i < count; ++i) curves[i].Reset();
+        flags ^= 1;
+    }
 
     u32 signature;
     u16 flags;
