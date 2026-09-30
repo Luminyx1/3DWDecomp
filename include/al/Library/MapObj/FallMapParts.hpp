@@ -5,15 +5,14 @@
 namespace al {
 class FallMapParts : public LiveActor {
 public:
-    FallMapParts(const char*);
+    FallMapParts(const char* pName);
 
-    virtual ~FallMapParts();
-    virtual void init(const ActorInitInfo&);
-    virtual bool receiveMsg(const SensorMsg* msg, HitSensor* self, HitSensor* other);
+    void init(const ActorInitInfo& rInfo) override;
+    bool receiveMsg(const SensorMsg* pMsg, HitSensor* pOther, HitSensor* pSelf) override;
     virtual void switchAppear();
     virtual void switchKill();
 
-    void init(const ActorInitInfo&, const char*);
+    void init(const ActorInitInfo& rInfo, const char* pSuffix);
     void exeAppear();
     void exeWait();
     void exeFallSign();
@@ -21,8 +20,8 @@ public:
     void exeFall();
     void exeEnd();
 
-    sead::Vector3f _144 = sead::Vector3f::zero;
+    sead::Vector3f mStartTrans = sead::Vector3f::zero;
     s32 mFallTime = 75;
-    u8 _154 = 0;
+    bool mIsStartFallSignAction = false;
 };
 }  // namespace al
