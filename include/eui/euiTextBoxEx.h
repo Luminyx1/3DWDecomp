@@ -4,6 +4,7 @@
 #include <prim/seadSafeString.h>
 namespace eui {
 class LayoutEx;
+class MessageString;
 class LetterAnimControl;
 class TextBoxEx : public nn::ui2d::TextBox {
 public:
@@ -23,6 +24,9 @@ public:
     virtual bool isTextChangeOn_() const;
     virtual bool getLetterAnimSpeed_(float*);
     virtual void createLetterAnimControl_(ControlList*, LayoutEx*);
+    u16 setMessageString(const MessageString& rText, void* pUserData);
+    u16 setMessageStringWithPage(const MessageString& rText, bool* pHasNext, u32 page, bool flag, void* pUserData);
+    u16 setStringWithPage(const char16_t* pText, u16 length, bool* pHasNext, u32 page, bool flag, void* pUserData);
     LetterAnimControl* mLetterAnimControl;
 };
 static_assert(sizeof(TextBoxEx) == 0x160, "TextBoxEx size");

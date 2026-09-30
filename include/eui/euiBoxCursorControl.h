@@ -1,10 +1,13 @@
 #pragma once
 #include <eui/euiControlBase.h>
 #include <math/seadVector.h>
+namespace nn::ui2d { class Pane; class ControlSrc; }
 namespace eui {
 class Animator;
 class BoxCursorNode;
 class Screen;
+class DrawTarget;
+class LayoutEx;
 class BoxCursorControl : public ControlBase {
 public:
     BoxCursorControl();
@@ -14,10 +17,14 @@ public:
     void Update(float step) override;
     void clearActiveAndReservedActiveNode(const BoxCursorNode* pNode);
     Screen* getActiveNodeScreen();
-    Animator* _28;
-    Animator* _30;
-    Animator* _38;
-    Animator* _40;
+    void initialize(const nn::ui2d::ControlSrc& rSource, LayoutEx* pLayout);
+    void updateActiveNode(DrawTarget target);
+    void selectActiveNode_();
+    void setActiveNode_(const BoxCursorNode* pNode);
+    nn::ui2d::Pane* mTopLeft;
+    nn::ui2d::Pane* mTopRight;
+    nn::ui2d::Pane* mBottomLeft;
+    nn::ui2d::Pane* mBottomRight;
     const BoxCursorNode* mActiveNode;
     const BoxCursorNode* mReservedActiveNode;
     sead::Vector2f mPosition;

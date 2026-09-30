@@ -24,6 +24,9 @@ public:
     bool tryMakeTagStrippedString(sead::BufferedSafeStringBase<char16_t>* pOutput) const;
     int countPrintableStringLength() const;
 
+    const char16_t* getText() const { return m_pText; }
+    u32 getLength() const { return mLength; }
+
 private:
     /** @brief Reads a control tag and returns the character following it. */
     static const char16_t* readTag_(const char16_t* pCurrent, const char16_t** ppTag) {

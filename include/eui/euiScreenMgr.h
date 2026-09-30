@@ -5,11 +5,13 @@
 #include <nn/ui2d/ui2d_GraphicsResource.h>
 #include <nn/ui2d/ui2d_ControlCreator.h>
 #include <eui/euiSharcArchive.h>
+#include <eui/euiDrawInfoEx.h>
 namespace eui {
 class Screen;
 class ArcResourceMgr;
 class BoxCursorMgr;
 class FontMgr;
+class BoxCursorNode;
 class ScreenMgr : public sead::hostio::Node {
     SEAD_SINGLETON_DISPOSER(ScreenMgr);
 public:
@@ -17,6 +19,12 @@ public:
     virtual ~ScreenMgr();
     void updateViewer_();
     void inactivateScreen(int index);
+    void activateScreen(int index);
+    void updateSystem();
+    void draw(s8 layer, const DrawInfoEx::RenderBufferInfo* pInfo);
+    void unloadScreen(int index);
+    void resetScreenId(int index);
+    void eraseBoxCursorNodeFromRouteNodes(const BoxCursorNode* pNode);
     sead::Buffer<Screen*> mScreens;
     sead::Buffer<s8> mScreenLayers;
     void* _48;

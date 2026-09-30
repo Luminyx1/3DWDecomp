@@ -12,7 +12,7 @@ public:
     ~ControlCreator() override = default;
     void CreateControl(nn::gfx::Device* pDevice, nn::ui2d::Layout* pLayout,
                        const nn::ui2d::ControlSrc& rSource) override;
-    virtual void CreateControlImpl_(const nn::ui2d::ControlSrc& rSource, nn::ui2d::Layout* pLayout);
+    virtual ControlBase* CreateControlImpl_(const nn::ui2d::ControlSrc& rSource, nn::ui2d::Layout* pLayout);
     virtual void InsertButtonToButtonGroup_(AnimButton* pButton);
     ButtonGroup* mButtons;
     ControlList* mControls;

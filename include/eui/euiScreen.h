@@ -11,6 +11,7 @@ namespace nn::ui2d { class ResourceAccessor; }
 namespace eui {
 class ScreenMgr; class LayoutEx; class BoxCursorNode; class PartsEx; class Animator;
 class UIController; class MultiArcResourceAccessor; class TagProcessor;
+class DrawTarget;
 class Screen : public sead::IDisposer, public sead::hostio::Node {
 public:
     class OpenOption; class CloseOption; class AnimatorOperationType;
@@ -88,6 +89,9 @@ public:
     bool isClosing() const;
     void setOwnInitializeHeap(bool own);
     void muteNextNoOperationButtonOnSE_();
+    void updateStaticControl_();
+    DrawTarget getDrawTarget() const;
+    void eraseBoxCursorNodeFromRouteNodes(const BoxCursorNode* pNode);
     ScreenMgr* mScreenMgr;
     LayoutEx* mLayout;
     DrawInfoEx* mDrawInfo;
@@ -102,7 +106,7 @@ public:
     int mScreenId;
     sead::SafeString mName;
     void* _c0;
-    void* _c8;
+    const BoxCursorNode* mLastActiveCursor;
     void* _d0;
     void* _d8;
     float _e0;

@@ -183,6 +183,10 @@ public:
     u32 GetTextureCacheHeight() const { return m_TextureCacheHeight; }
     const TextureObject* GetTextureObject() const { return &m_TextureObject; }
 
+    const GlyphTreeMap& GetGlyphTreeMap() const { return m_GlyphTreeMap; }
+    u32 GetNoSpaceError() const { return m_NoSpaceError; }
+    void ClearNoSpaceError() { m_NoSpaceError = 0; }
+
 private:
     u32 GetCoreCount() const { return m_IsMultiCoreEnabled ? m_CoreCount : 1; }
     char* GetFontName(u32 index) const { return &m_pFontNameBuffer[index * FontNameLength]; }

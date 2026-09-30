@@ -6,13 +6,24 @@
 #include <math/seadVector.h>
 
 namespace nn::gfx { class DescriptorSlot; }
-namespace nn::ui2d { class TextureInfo; }
+namespace nn::ui2d { class TextureInfo; struct ResExtUserData; struct ResExtUserDataList; }
 namespace sead { class Heap; }
 namespace agl { class TextureData; }
 namespace agl::utl { class MultiFilter; }
 
 namespace eui {
 class LayoutEx;
+// Draw targets are passed by value as a four-byte index.
+class DrawTarget { int mIndex; };
+const nn::ui2d::ResExtUserData* FindExtUserDataFromList(const nn::ui2d::ResExtUserDataList* pList, const char* pName);
+void AdjustPaneSizeToTextSize(nn::ui2d::Pane* pPane, LayoutEx* pLayout);
+void CenteringPanePair(nn::ui2d::Pane* pPane);
+void ApplyCaptureUse(nn::ui2d::Pane* pPane, LayoutEx* pLayout);
+void ApplyDynamicCaptureUse(nn::ui2d::Pane* pPane, LayoutEx* pLayout);
+void SetupPaneAfterBuild(nn::ui2d::Pane* pPane, LayoutEx* pLayout);
+void IteratePaneForSetupPaneAfterBuild(nn::ui2d::Pane* pPane, LayoutEx* pLayout);
+LayoutEx* FindHitLayout(const sead::Vector2f& rPosition, LayoutEx* pLayout);
+LayoutEx* FindHitLayoutRecursive_(const sead::Vector2f& rPosition, LayoutEx* pHit, LayoutEx* pLayout, const nn::ui2d::Pane* pPane);
 bool IsHitPane(const sead::Vector2f& rPosition, const nn::ui2d::Pane* pPane);
 agl::utl::MultiFilter* InitializeMultiFilter(sead::Heap* pHeap,
     const nn::ui2d::Pane& rPane, LayoutEx* pLayout);

@@ -12,6 +12,12 @@ public:
     void setAlignKind(AlignKind kind);
     void setExtendEdge(bool extend);
     void setDefaultMargin(float margin);
+    void updateScroll_();
+    void updateScrollVertical_();
+    void updateAlign_(bool adjustSize);
+    bool doAlign_();
+    bool doAlignVertical_();
+    void adjustPaneSize_();
     float _d4;
     float _d8;
     u8 mAlignKind;

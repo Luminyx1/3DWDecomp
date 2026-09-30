@@ -17,6 +17,7 @@ public:
     virtual void moveBoxCursor(const BoxCursorNode* pNode);
     virtual void updateDrawTarget(DrawTarget target);
     virtual void update();
+    void registerControl(DrawTarget target, BoxCursorControl* pControl);
     ScreenMgr* mScreenMgr;
     Action mAction;
     u8 mEnabledTargets;

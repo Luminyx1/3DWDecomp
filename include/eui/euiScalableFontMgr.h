@@ -3,11 +3,19 @@
 #include <container/seadBuffer.h>
 #include <prim/seadSafeString.h>
 #include <nn/font/font_ScalableFont.h>
+#include <thread/seadThread.h>
 namespace eui {
 class ScalableFontTextBoxEx;
 class ScalableFontMgr {
     SEAD_SINGLETON_DISPOSER(ScalableFontMgr);
 public:
+    class UpdateTextureCacheThread : public sead::Thread {
+    public:
+        bool requestUpdate();
+        void calc_(sead::MessageQueue::Element message) override;
+        nn::font::TextureCache* mTextureCache;
+        volatile bool mUpdatePending;
+    };
     struct FontParameter {
         FontParameter();
         FontParameter(const char* pName, int size, u16 face, int value);
@@ -23,11 +31,20 @@ public:
     bool registerGlyphs(const char16_t* pText, u32 length, const nn::font::ScalableFont* pFont, int lockGroup);
     bool registerGlyphs_(const char16_t* pText, u32 length, const nn::font::ScalableFont* pFont, int lockGroup, bool checkOnly);
     ScalableFontTextBoxEx* reserveRegisterGlyphs(ScalableFontTextBoxEx* pTextBox);
+    void update();
+    nn::font::ScalableFont* getFont(const sead::SafeString& rName);
+    const nn::font::ScalableFont* getFont(const sead::SafeString& rName) const;
+    const char* findFontName(const nn::font::ScalableFont* pFont) const;
+    void dumpTextureCacheGlyphTreeMap() const;
+    u32 getTextureCacheNoSpaceError() const;
+    void clearNoSpaceError();
+    void clearLockAllGlyphs(int lockGroup);
+    bool isNeedPlot_(char16_t code, u32 size, u16 face);
     void* _28;
     nn::font::TextureCache* mTextureCache;
     sead::Buffer<FontEntry> mFonts;
-    void* mUpdateThread;
-    ScalableFontTextBoxEx* mReservedTextBox;
+    UpdateTextureCacheThread* mUpdateThread;
+    ScalableFontTextBoxEx* volatile mReservedTextBox;
     u32 _58;
     u8 _5c, _5d, _5e;
 };

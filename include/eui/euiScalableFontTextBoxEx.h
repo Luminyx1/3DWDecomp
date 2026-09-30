@@ -5,6 +5,7 @@ class ScalableFontMgr;
 class ScalableFontTextBoxEx : public TextBoxEx {
 public:
     explicit ScalableFontTextBoxEx(ScalableFontMgr* pMgr);
+    ScalableFontTextBoxEx* registerGlyphsAndGetNext(ScalableFontMgr* pMgr);
     ~ScalableFontTextBoxEx() override = default;
     NN_RUNTIME_TYPEINFO(TextBoxEx);
     void Calculate(nn::ui2d::DrawInfo&, CalculateContext&, bool) override;
