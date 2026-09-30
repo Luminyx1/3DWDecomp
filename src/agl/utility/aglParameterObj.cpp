@@ -21,6 +21,7 @@ void IParameterObj::pushBackListNode(ParameterBase* pNode)
     SEAD_ASSERT(pNode != nullptr);
 
     ParameterBase** ptr;
+
     if (mParamListTail)
     {
         ptr = &mParamListTail->mNext;
@@ -87,6 +88,7 @@ void IParameterObj::writeToXML(sead::XmlElement* pElement, sead::Heap* pHeap) co
     }
 
     sead::XmlElement* element = createAttribute(pElement, pHeap);
+
     for (auto* param = mParamListHead; param; param = param->mNext)
     {
         param->writeToXML(element, pHeap);
@@ -109,9 +111,11 @@ s32 IParameterObj::readFromXML(const sead::XmlElement& rElement, bool x)
     }
 
     s32 count = 0;
+
     for (auto* param = mParamListHead; param; param = param->mNext)
     {
         const s32 result = param->readFromXML(rElement, x);
+
         if (result == 0)
         {
             ++count;
@@ -172,9 +176,11 @@ void IParameterObj::applyResParameterObj_(bool interpolate, ResParameterObj obj1
         const u32 hash = param->getNameHash();
 
         ResParameter res1{};
+
         if (obj1.ptr())
         {
             const s32 idx = obj1.searchIndex(hash);
+
             if (idx != -1)
             {
                 res1 = obj1.getResParameter(idx);
@@ -184,9 +190,11 @@ void IParameterObj::applyResParameterObj_(bool interpolate, ResParameterObj obj1
         if (interpolate && param->isInterpolatable())
         {
             ResParameter res2{};
+
             if (obj2.ptr())
             {
                 const s32 idx = obj2.searchIndex(hash);
+
                 if (idx != -1)
                 {
                     res2 = obj2.getResParameter(idx);
@@ -202,6 +210,7 @@ void IParameterObj::applyResParameterObj_(bool interpolate, ResParameterObj obj1
             else if (pList)
             {
                 pList->callbackNotInterpolatable_(this, param, obj1, obj2, res1, res2, t);
+
                 if (pList->mParent)
                 {
                     pList->mParent->callbackNotInterpolatable_(this, param, obj1, obj2, res1, res2,
@@ -216,6 +225,7 @@ void IParameterObj::applyResParameterObj_(bool interpolate, ResParameterObj obj1
         else if (pList)
         {
             pList->callbackNotAppliable_(this, param, obj1);
+
             if (pList->mParent)
             {
                 pList->mParent->callbackNotAppliable_(this, param, obj1);
@@ -242,6 +252,7 @@ bool IParameterObj::isComplete(ResParameterObj obj, bool checkValues) const
     for (auto* param = mParamListHead; param; param = param->mNext)
     {
         const auto idx = obj.searchIndex(param->getNameHash());
+
         if (idx == -1)
         {
             return false;
@@ -254,6 +265,7 @@ bool IParameterObj::isComplete(ResParameterObj obj, bool checkValues) const
             if (ParameterType(res.ptr()->getType()) == ParameterType::Bool)
             {
                 const bool value = *res.getData<u32>() != 0;
+
                 if (value != *param->ptrT<bool>())
                 {
                     return false;
@@ -279,6 +291,7 @@ bool IParameterObj::isComplete(ResParameterObj obj, bool checkValues) const
 bool IParameterObj::verify() const
 {
     bool ret = true;
+
     for (auto* param = mParamListHead; param; param = param->mNext)
     {
         ret &= verify(param, param->mNext);
@@ -296,6 +309,7 @@ bool IParameterObj::verify() const
 bool IParameterObj::verify(ParameterBase* pCheck, ParameterBase* pOther) const
 {
     bool ok = true;
+
     for (auto* param = pOther; param; param = param->mNext)
     {
         if (pCheck->getNameHash() == param->getNameHash())
@@ -375,6 +389,7 @@ void IParameterObj::copy_(ParameterBase* pFirst, ParameterBase* pLast,
 {
     auto target = pFirst;
     auto source = pSrcFirst;
+
     while (target != pLast && source != pSrcLast)
     {
         const bool result = target->copy(*source);
@@ -399,6 +414,7 @@ void IParameterObj::copy(const IParameterObj& rObj)
     SEAD_ASSERT(head != nullptr);
 
     auto* src = rObj.mParamListHead;
+
     while (src && src->getNameHash() != head->getNameHash())
     {
         src = src->mNext;
@@ -409,6 +425,7 @@ void IParameterObj::copy(const IParameterObj& rObj)
         const bool result = head->copy(*src);
         SEAD_ASSERT(result);
         head = head->mNext;
+
         if (!head)
         {
             break;
@@ -469,12 +486,14 @@ void IParameterObj::copyLerp(const IParameterObj& rObj1, const IParameterObj& rO
     const u32 hash = head->getNameHash();
 
     auto* it1 = rObj1.mParamListHead;
+
     while (it1 && it1->getNameHash() != hash)
     {
         it1 = it1->mNext;
     }
 
     auto* it2 = rObj2.mParamListHead;
+
     while (it2 && it2->getNameHash() != hash)
     {
         it2 = it2->mNext;
@@ -485,12 +504,14 @@ void IParameterObj::copyLerp(const IParameterObj& rObj1, const IParameterObj& rO
         const bool result = head->copyLerp(*it1, *it2, t);
         SEAD_ASSERT(result);
         it2 = it2->mNext;
+
         if (!it2)
         {
             break;
         }
 
         head = head->mNext;
+
         if (!head)
         {
             break;
@@ -520,6 +541,7 @@ void IParameterObj::copyLerp_(ParameterBase* pFirst, ParameterBase* pLast,
     auto* it = pFirst;
     auto* src1 = pSrc1First;
     auto* src2 = pSrc2First;
+
     while (it != pLast && src1 != pSrc1Last && src2 != pSrc2Last)
     {
         const bool result = it->copyLerp(*src1, *src2, t);
@@ -549,6 +571,7 @@ void IParameterObj::sortByHash()
 
     mParamListHead = nullptr;
     mParamListTail = nullptr;
+
     for (auto it = array.begin(); it != array.end(); ++it)
     {
         if (!mParamListHead)
@@ -557,6 +580,7 @@ void IParameterObj::sortByHash()
         }
 
         it->mNext = nullptr;
+
         if (mParamListTail)
         {
             mParamListTail->mNext = &*it;

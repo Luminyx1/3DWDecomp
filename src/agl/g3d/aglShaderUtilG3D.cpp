@@ -82,6 +82,7 @@ void ShaderUtilG3D::load(DrawContext* pDrawContext, const ShaderLocation& rLocat
     NVNbufferAddress address =
         nvnBufferGetAddress(static_cast<NVNbuffer*>(rBuffer.ToData()->pNvnBuffer.ptr));
     NVNcommandBuffer* pCommandBuffer = pDrawContext->getNvnCommandBuffer();
+
     for (s32 i = 0; i < cShaderType_Num; i++)
     {
         if (rLocation.getLocation(ShaderType(i)) != -1)
@@ -139,6 +140,7 @@ void ShaderUtilG3D::searchUniformBlock(ShaderLocation* pLocation,
                                        const sead::SafeString& rName)
 {
     s32 index = pModel->FindUniformBlockIndex(rName.cstr());
+
     if (index == -1)
     {
         *pLocation = ShaderLocation();
@@ -182,6 +184,7 @@ void ShaderUtilG3D::searchSampler(ShaderLocation* pLocation,
                                   const sead::SafeString& rName)
 {
     s32 index = pModel->FindSamplerIndex(rName.cstr());
+
     if (index == -1)
     {
         *pLocation = ShaderLocation();
@@ -205,6 +208,7 @@ void ShaderUtilG3D::print(const nn::g3d::ShadingModelObj& rModel,
                           const nn::g3d::ShaderSelector& rSelector)
 {
     sead::Heap* pHeap = detail::PrivateResource::instance()->getDebugHeap();
+
     if (!pHeap)
     {
         return;

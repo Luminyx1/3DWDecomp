@@ -69,6 +69,7 @@ void ColorCorrection::destroy_()
 {
     mSamplers.freeBuffer();
     mMapImage.deleteGPUMemBlock();
+
     if (mDebugTexturePage)
     {
         mDebugTexturePage->cleanUp();
@@ -94,6 +95,7 @@ void ColorCorrection::initialize(s32 contextNum, sead::Heap* pHeap, bool unused)
 
     mRenderBuffer.setPhysicalArea(0.0f, 0.0f, f32(cMapSize), f32(cMapSize));
     mRenderBuffer.setVirtualSize(sead::Vector2f(f32(cMapSize), f32(cMapSize)));
+
     for (s32 i = 0; i < cMapSize; i++)
     {
         mRenderTarget[i].applyTextureData(mMapTexture);
@@ -184,6 +186,7 @@ void ColorCorrection::updateProgram_() const
         agl::detail::ShaderHolder::cColorCorrectionMap);
 
     mVariationIndex = 0;
+
     if (mFlags.isOn(cFlag_Hue))
     {
         mVariationIndex = program->getVariationMacroStride(0) * 2;
@@ -270,6 +273,7 @@ void ColorCorrection::draw(DrawContext* pDrawContext, s32 context,
 void ColorCorrection::genMessage(sead::hostio::Context* pContext)
 {
     genMessageIO(pContext, 0xf);
+
     if (mDebugTexturePage)
     {
         mDebugTexturePage->genMessagePage(pContext, this);
@@ -300,6 +304,7 @@ void ColorCorrection::genMessageParameters(sead::hostio::Context* pContext)
 void ColorCorrection::genMessageToyCameraParameters(sead::hostio::Context* pContext)
 {
     mToyCameraEnable.genMessageParameter(pContext, mToyCameraEnable.getMeta());
+
     if (!mFlags.isOn(cFlag_ToyCamera))
     {
         return;
@@ -330,12 +335,14 @@ void ColorCorrection::genMessageHsbParameters(sead::hostio::Context* pContext)
 void ColorCorrection::listenPropertyEvent(const sead::hostio::PropertyEvent* pEvent)
 {
     listenPropertyEventIO(this, pEvent);
+
     if (pEvent->getIdValue() == 100001)
     {
         resetAll();
     }
 
     uintptr_t id = pEvent->getIdValue();
+
     if (id >= reinterpret_cast<uintptr_t>(&mLevelCurve) &&
         id < reinterpret_cast<uintptr_t>(&mDebugTexturePage))
     {
@@ -349,10 +356,12 @@ void ColorCorrection::listenPropertyEvent(const sead::hostio::PropertyEvent* pEv
 void ColorCorrection::updateCurves_()
 {
     bool isLevel = false;
+
     for (s32 i = 0; i < cLevelTableNum - 1; i++)
     {
         f32 t = f32(i) / 7.0f;
         sead::Vector4f& level = mLevelTable[i];
+
         for (s32 j = 0; j < 4; j++)
         {
             auto& curve = mLevelCurve.getCurve().getCurve(j);
@@ -502,6 +511,7 @@ void ColorCorrection::setLevelCurve_(u32 index, sead::hostio::CurveType type, co
     data[index * 32 + 1] = u32(type);
     data[index * 32] = num;
     f32* pDst = reinterpret_cast<f32*>(&data[index * 32 + 2]);
+
     for (u32 i = 0; i < num; i++)
     {
         pDst[i] = pData[i];
@@ -513,12 +523,15 @@ void ColorCorrection::setLevelCurve_(u32 index, sead::hostio::CurveType type, co
 void ColorCorrection::updateMapCPU_()
 {
     s32 index = 0;
+
     for (s32 b = 0; b < cMapSize; b++)
     {
         f32 fb = f32(b) / 7.0f;
+
         for (s32 g = 0; g < cMapSize; g++)
         {
             f32 fg = f32(g) / 7.0f;
+
             for (s32 r = 0; r < cMapSize; r++)
             {
                 convRGB_(&static_cast<u32*>(mMapImage.getPtr())[index++], f32(r) / 7.0f, fg,
@@ -583,6 +596,7 @@ f32 ColorCorrection::calcHue_(f32 r, f32 g, f32 b) const
     f32 min = r < g ? (r < b ? r : b) : (g < b ? g : b);
 
     f32 cr, cg, cb;
+
     if (max != min)
     {
         cr = (max - r) / (max - min);
@@ -597,6 +611,7 @@ f32 ColorCorrection::calcHue_(f32 r, f32 g, f32 b) const
     }
 
     f32 hue;
+
     if (max == r)
     {
         hue = cb - cg;
@@ -615,6 +630,7 @@ f32 ColorCorrection::calcHue_(f32 r, f32 g, f32 b) const
     }
 
     hue /= 6.0f;
+
     if (hue < 0.0f)
     {
         hue += 1.0f;
@@ -626,6 +642,7 @@ f32 ColorCorrection::calcHue_(f32 r, f32 g, f32 b) const
 void ColorCorrection::calcRGB_(u32* pDst, f32 h, f32 s, f32 v) const
 {
     h += *mHue / 360.0f;
+
     if (h >= 1.0f)
     {
         h -= 1.0f;
@@ -646,6 +663,7 @@ void ColorCorrection::calcRGB_(u32* pDst, f32 h, f32 s, f32 v) const
     f32 t = v * (1.0f - s * (1.0f - f));
 
     f32 r, g, b;
+
     switch (i)
     {
     case 0:

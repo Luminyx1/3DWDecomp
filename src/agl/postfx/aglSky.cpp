@@ -89,6 +89,7 @@ inline void setUniform(DrawContext* pDrawContext, const ShaderProgram* pProgram,
 inline void drawIndexStream(DrawContext* pDrawContext, const IndexStream& rStream)
 {
     u32 count = rStream.getCount();
+
     if (count == 0)
     {
         return;
@@ -247,6 +248,7 @@ sead::Color4f calcColorTemperature(const sead::Color4f& rBase, f32 temperature, 
     cg /= rBase.g;
     cb /= rBase.b;
     f64 max = cr > cg ? (cr > cb ? cr : cb) : (cg > cb ? cg : cb);
+
     if (max == 0.0)
     {
         return sead::Color4f::cWhite;
@@ -356,6 +358,7 @@ void Sky::finalize()
     freeTexture();
     mContexts.freeBuffer();
     mPrograms.freeBuffer();
+
     if (mDebugTexturePage)
     {
         mDebugTexturePage->cleanUp();
@@ -489,6 +492,7 @@ void Sky::initialize(const InitializeArg& rArg)
 {
     mPrograms.tryAllocBuffer(11, rArg.mHeap);
     mPrograms.fill(nullptr);
+
     for (s32 i = 0; i < 11; i++)
     {
         mPrograms[i] =
@@ -497,6 +501,7 @@ void Sky::initialize(const InitializeArg& rArg)
 
     mContexts.tryAllocBuffer(rArg.mContextNum, rArg.mHeap);
     u32 contextNum = mContexts.size();
+
     for (u32 i = 0; i < contextNum; i++)
     {
         mContexts[i].mIsEnable = true;
@@ -525,6 +530,7 @@ void Sky::initialize(const InitializeArg& rArg)
         rArg.mTextureSize.mBakedRangeTransmittanceHeight;
     mTextureSizeEdit = mTextureSize;
     allocateTexture(rArg.mHeap);
+
     if (rArg.mBasisImage)
     {
         setBasisTextureImage(rArg.mBasisImage, rArg.mBasisImageSize);
@@ -584,6 +590,7 @@ bool Sky::setBasisTextureImage(const void* pImage, u32 size)
     u32 transmittanceSize = mTransmittanceSampler.getTextureData().getImageByteSize();
     u32 inscatterSize = mInscatterSampler.getTextureData().getImageByteSize();
     u32 irradianceSize = mIrradianceSampler.getTextureData().getImageByteSize();
+
     if (transmittanceSize + inscatterSize + irradianceSize != size)
     {
         return false;
@@ -604,6 +611,7 @@ void Sky::freeTexture()
     mTransmittanceSampler.getTextureData().getImagePtr().deleteGPUMemBlock();
     mInscatterSampler.getTextureData().getImagePtr().deleteGPUMemBlock();
     mIrradianceSampler.getTextureData().getImagePtr().deleteGPUMemBlock();
+
     for (s32 i = 0; i < mContexts.size(); i++)
     {
         mContexts[i].mBakedInscatter.getTextureData().getImagePtr().deleteGPUMemBlock();
@@ -674,6 +682,7 @@ void Sky::drawBasis(DrawContext* pDrawContext, u32 context)
     if (mFlags.isOn(cFlag_UpdateBasis | cFlag_UpdateBasisAlways))
     {
         sead::InfLoopChecker* checker = sead::InfLoopChecker::instance();
+
         if (checker && checker->isEnabled())
         {
             mFlags.set(cFlag_InfLoopCheckDisabled);
@@ -938,6 +947,7 @@ void Sky::drawContext(DrawContext* pDrawContext, u32 context, const sead::Matrix
     }
 
     Context& rContext = getContext_(context);
+
     if (!rContext.mIsEnable || mFlags.isOn(cFlag_UpdateBasis) ||
         !mFlags.isOn(cFlag_Sky | cFlag_Ground))
     {
@@ -1086,6 +1096,7 @@ void Sky::setUpRenderBuffer(DrawContext* pDrawContext, u32 context, const Textur
                             u32 mipLevel, u32 slice, u32 target, u32 flags)
 {
     Context& rContext = getContext_(context);
+
     if (flags & 1)
     {
         rContext.mRenderBuffer.setRenderTargetColorNullAll();
@@ -1109,6 +1120,7 @@ void Sky::setUpRenderBuffer(DrawContext* pDrawContext, u32 context, const Textur
     rTarget.setSlice(slice);
     rTarget.setMipLevel(mipLevel);
     rContext.mRenderBuffer.setRenderTargetColor(&rTarget, target);
+
     if (flags & 2)
     {
         rContext.mRenderBuffer.bind(pDrawContext);
@@ -1125,6 +1137,7 @@ void Sky::setUpRenderBuffer(DrawContext* pDrawContext, u32 context, const Textur
 void Sky::invalidateRenderBufferCache(DrawContext* pDrawContext, u32 context)
 {
     Context& rContext = getContext_(context);
+
     for (s32 i = 0; i < 2; i++)
     {
         if (rContext.mDirtyTargets & (1 << i))
@@ -1277,6 +1290,7 @@ void Sky::drawBoth(DrawContext* pDrawContext, u32 context, const sead::Matrix44f
     }
 
     Context& rContext = getContext_(context);
+
     if (!rContext.mIsEnable)
     {
         return;
@@ -1328,6 +1342,7 @@ void Sky::drawBoth(DrawContext* pDrawContext, u32 context, const sead::Matrix44f
             base->getVariationMacroStride(4) * mFlags.isOn(cFlag_GroundFog);
         const ShaderProgram* program = base->getVariation(variation);
         program->activate(pDrawContext, true);
+
         if (rContext.mCloudSampler)
         {
             rContext.mCloudSampler->activate(pDrawContext, program->getSamplerLocation(8), -1,
@@ -1374,6 +1389,7 @@ void Sky::drawSky(DrawContext* pDrawContext, u32 context, const sead::Matrix44f&
     }
 
     Context& rContext = getContext_(context);
+
     if (!rContext.mIsEnable)
     {
         return;
@@ -1425,6 +1441,7 @@ void Sky::drawSky(DrawContext* pDrawContext, u32 context, const sead::Matrix44f&
             base->getVariationMacroStride(4) * mFlags.isOn(cFlag_GroundFog);
         const ShaderProgram* program = base->getVariation(variation);
         program->activate(pDrawContext, true);
+
         if (rContext.mCloudSampler)
         {
             rContext.mCloudSampler->activate(pDrawContext, program->getSamplerLocation(8), -1,
@@ -1461,6 +1478,7 @@ void Sky::drawGround(DrawContext* pDrawContext, u32 context, const sead::Matrix4
     }
 
     Context& rContext = getContext_(context);
+
     if (!rContext.mIsEnable)
     {
         return;
@@ -1601,6 +1619,7 @@ void Sky::genMessage(sead::hostio::Context* pContext)
     mParam.mRenderSunLerp.genMessageParameter(pContext, mParam.mRenderSunLerp.getMeta());
 
     u32 contextNum = mContexts.size();
+
     for (u32 i = 0; i < contextNum; i++)
     {
         {
@@ -1637,12 +1656,14 @@ void Sky::updateDirectionFromLatLong()
 void Sky::updateDirectionToLatLong()
 {
     f32 length = mParam.mSunDir.length();
+
     if (length > 0.0f)
     {
         f32 inv = 1.0f / length;
         sead::Vector3f dir(inv * mParam.mSunDir.x, inv * mParam.mSunDir.y,
                            inv * mParam.mSunDir.z);
         sead::Vector2f horizontal(dir.x, dir.z);
+
         if (horizontal.normalize() > 0.0f)
         {
             mParam.mSunLongitude = std::atan2(-horizontal.x, -horizontal.y);
@@ -1663,6 +1684,7 @@ void Sky::listenPropertyEvent(const sead::hostio::PropertyEvent* pEvent)
 
     bool isHandled = true;
     uintptr_t id = pEvent->getIdValue();
+
     if (id == uintptr_t(&*mParam.mStaticRayleighBaseHeight) || id == uintptr_t(&*mParam.mStaticMieBaseHeight) ||
         id == uintptr_t(&*mParam.mStaticMieScatteringCoeff) || id == uintptr_t(&*mParam.mStaticMieSymmetricalProp) ||
         id == uintptr_t(&mScatteringOrder))
@@ -1686,6 +1708,7 @@ void Sky::listenPropertyEvent(const sead::hostio::PropertyEvent* pEvent)
     }
 
     id = pEvent->getIdValue();
+
     if (id == uintptr_t(&mParam.mSunLatitude) || id == uintptr_t(&mParam.mSunLongitude))
     {
         updateDirectionFromLatLong();

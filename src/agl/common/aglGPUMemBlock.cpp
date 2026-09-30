@@ -64,6 +64,7 @@ void GPUMemBlockBase::freeBuffer()
     else
     {
         mpMemoryPool->finalize();
+
         if (!(mFlags & 3))
         {
             delete static_cast<u8*>(mMemoryBuffer);
@@ -203,6 +204,7 @@ s32 GPUMemBlockBase::addList(GPUMemBlockBase* pBlock)
 {
     s32 count = 1;
     GPUMemBlockBase* pLast = this;
+
     while (pLast->mpTail)
     {
         pLast = pLast->mpTail;

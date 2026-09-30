@@ -25,6 +25,7 @@ GPUMemAddrBase::GPUMemAddrBase(const GPUMemBlockBase& rMemBlock, u64 offset)
 u32 GPUMemAddrBase::verify_() const
 {
     const GPUMemBlockBase* pBlock = mMemoryBlock;
+
     if (pBlock)
     {
         if (pBlock->mMemoryBufferSize != 0)

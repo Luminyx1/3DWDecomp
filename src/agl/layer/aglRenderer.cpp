@@ -89,6 +89,7 @@ void Renderer::initialize(const CreateArg& rArg, sead::Heap* pHeap, sead::Heap* 
     mFlag.change(1 << 4, (rArg.mFlag & 1) == 0);
 
     s32 i = 0;
+
     for (auto& rpDisplay : mDisplay)
     {
         RenderDisplay* pDisplay = new (pHeap) RenderDisplay();
@@ -105,6 +106,7 @@ void Renderer::initialize(const CreateArg& rArg, sead::Heap* pHeap, sead::Heap* 
     }
 
     s32 layerNum = mLayer.size();
+
     for (s32 j = 0; j < layerNum; j++)
     {
         mLayer(j) = nullptr;
@@ -189,11 +191,13 @@ void Renderer::calc(bool swapBuffer)
     mLayerListCS.lock();
 
     bool isChanged = false;
+
     for (auto* pLayer : mLayer)
     {
         if (pLayer && pLayer->mFlag.isOn(Layer::cFlag_ListDirty))
         {
             mFlag.set(1);
+
             if (pLayer->mFlag.isOn(1 << 11))
             {
                 pLayer->mFlag.reset(1 << 4);
@@ -224,6 +228,7 @@ void Renderer::calc(bool swapBuffer)
     {
         pDisplay->mFlag.change(1 << 6, mFlag.isOn(1 << 2));
         pDisplay->calc();
+
         if (pDisplay->mFlag.isOn(RenderDisplay::cFlag_FrameBufferSizeChanged))
         {
             pDisplay->mFlag.reset(RenderDisplay::cFlag_FrameBufferSizeChanged);
@@ -244,6 +249,7 @@ void Renderer::calc(bool swapBuffer)
         for (s32 i = 0; i < mDisplay.size(); i++)
         {
             RenderDisplay* pShare = nullptr;
+
             if (i != 0 && mFlag.isOn(1 << 3))
             {
                 pShare = mDisplay[0];
@@ -258,9 +264,11 @@ void Renderer::calc(bool swapBuffer)
     }
 
     const sead::Controller* pController = nullptr;
+
     if (mDebugCameraState == cDebugCameraState_1)
     {
         pController = mDebugCameraController;
+
         if (pController)
         {
             if (mDebugFlag & 1)
@@ -284,6 +292,7 @@ void Renderer::calc(bool swapBuffer)
         if (pLayer)
         {
             pLayer->_9a = 0;
+
             if (pLayer->isEnable())
             {
                 pLayer->calc_(pController, mDebugCameraControllerIndex, (mDebugFlag >> 1) & 1);
@@ -305,6 +314,7 @@ void Renderer::calc(bool swapBuffer)
 
         u8 index = pDisplay->mDisplayIndex;
         s32 displayType = mDisplayControl == cDisplayControl_1 ? index == 0 : index;
+
         if (!pDisplay->mFlag.isOn(1))
         {
             for (auto* pLayer : mLayer)
@@ -312,6 +322,7 @@ void Renderer::calc(bool swapBuffer)
                 if (pLayer && pLayer->isRenderingEnabled())
                 {
                     s8 layerDisplayType = pLayer->mDisplayTypeOverride;
+
                     if (layerDisplayType == -1)
                     {
                         layerDisplayType = pLayer->mDisplayType;
@@ -339,6 +350,7 @@ void Renderer::calc(bool swapBuffer)
     for (auto& rJobQueue : mJobQueue)
     {
         rJobQueue.clear();
+
         for (u32 core = 0; core < sead::CoreInfo::getNumCores(); core++)
         {
             rJobQueue.setGranularity(core, mJobGranularity);
@@ -366,6 +378,7 @@ void Renderer::calcCommand(bool useJobQueue, u32 displayMask)
     }
 
     sead::SafeArray<sead::FixedPtrArray<LayerJob, 256>, cJobQueueNum> jobs;
+
     for (auto& rJobs : jobs)
     {
         rJobs.clear();
@@ -382,9 +395,11 @@ void Renderer::calcCommand(bool useJobQueue, u32 displayMask)
 
             sead::FixedPtrArray<LayerJob, 256> layerJobs;
             mDisplay(i)->calcDL(&layerJobs);
+
             for (auto& rJob : layerJobs)
             {
                 s32 queue;
+
                 if (rJob.mPriority <= _510)
                 {
                     queue = 2;
@@ -421,6 +436,7 @@ void Renderer::calcCommand(bool useJobQueue, u32 displayMask)
     {
         auto& rJobs = jobs[i];
         rJobs.heapSort_<LayerJob>(LayerJob::compare);
+
         for (auto& rJob : rJobs)
         {
             mJobQueue[i].enque(&rJob);
@@ -554,6 +570,7 @@ void Renderer::setCallback(CallbackType type, DrawMethod* pMethod)
 void Renderer::removeDrawMethodByObject(const void* pObject)
 {
     mLayerListCS.lock();
+
     for (auto* pLayer : mLayer)
     {
         if (pLayer)
@@ -572,6 +589,7 @@ void Renderer::removeDrawMethodByObject(const void* pObject)
 void Renderer::removeDrawMethod(const DrawMethod* pMethod)
 {
     mLayerListCS.lock();
+
     for (auto* pLayer : mLayer)
     {
         if (pLayer)
@@ -593,6 +611,7 @@ bool Renderer::removeLayer(Layer* pLayer)
     mLayerListCS.lock();
     bool result = false;
     s32 index = searchLayerIndex(pLayer);
+
     if (index != -1)
     {
         for (auto* pDisplay : mDisplay)
@@ -626,6 +645,7 @@ s32 Renderer::searchLayerIndex(const Layer* pLayer) const
 
     mLayerListCS.lock();
     s32 result = -1;
+
     for (auto it = mLayer.begin(); it != mLayer.end(); ++it)
     {
         if (*it == pLayer)
@@ -647,6 +667,7 @@ s32 Renderer::searchEmptyLayerIndexFromFront() const
 {
     mLayerListCS.lock();
     s32 result = -1;
+
     for (auto it = mLayer.begin(); it != mLayer.end(); ++it)
     {
         if (!*it)
@@ -668,6 +689,7 @@ s32 Renderer::searchEmptyLayerIndexFromBack() const
 {
     mLayerListCS.lock();
     s32 result = -1;
+
     for (s32 i = mLayer.size() - 1; i >= 0; i--)
     {
         if (!mLayer[i])
@@ -711,6 +733,7 @@ void Renderer::changeDebugCameraState(DebugCameraState state)
     }
 
     mLayerListCS.lock();
+
     for (auto* pLayer : mLayer)
     {
         if (pLayer)
@@ -727,6 +750,7 @@ void Renderer::changeDebugCameraState(DebugCameraState state)
 
     mDebugCameraState = state;
     mDebugCameraMessageTimer = 60;
+
     if (state == cDebugCameraState_None)
     {
         mDebugCameraControllerIndex = 0;

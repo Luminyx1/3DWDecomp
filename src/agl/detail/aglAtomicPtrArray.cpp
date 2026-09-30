@@ -107,6 +107,7 @@ void AtomicPtrArrayImpl::erase(s32 pos, s32 count)
 void AtomicPtrArrayImpl::shuffle(sead::Random* pRandom)
 {
     SEAD_ASSERT(pRandom);
+
     for (s32 i = mPtrNum; i > 1; --i)
     {
         swap(i - 1, pRandom->getS32Range(0, i));
@@ -117,6 +118,7 @@ void AtomicPtrArrayImpl::shuffle(sead::Random* pRandom)
 void AtomicPtrArrayImpl::sort(CompareCallbackImpl cmp)
 {
     void** ptrs = mPtrs;
+
     if (mPtrNum < 2)
     {
         return;
@@ -127,9 +129,11 @@ void AtomicPtrArrayImpl::sort(CompareCallbackImpl cmp)
     do
     {
         s32 last = lo;
+
         for (s32 i = lo; i < hi; ++i)
         {
             void** p = &ptrs[i];
+
             if (cmp(p[0], p[1]) > 0)
             {
                 void* tmp = p[1];
@@ -149,6 +153,7 @@ void AtomicPtrArrayImpl::sort(CompareCallbackImpl cmp)
         for (s32 i = hi; i > lo; --i)
         {
             void** p = &ptrs[i];
+
             if (cmp(p[0], p[-1]) < 0)
             {
                 void* tmp = p[-1];
@@ -165,17 +170,20 @@ void AtomicPtrArrayImpl::sort(CompareCallbackImpl cmp)
 void AtomicPtrArrayImpl::heapSort(CompareCallbackImpl cmp)
 {
     const s32 num = mPtrNum;
+
     if (num < 2)
     {
         return;
     }
 
     void** ptrs = mPtrs;
+
     for (s32 root = num / 2; root > 0; --root)
     {
         void* value = ptrs[root - 1];
         s32 parent = root;
         s32 child = parent * 2;
+
         while (child <= num)
         {
             if (child < num && cmp(ptrs[child - 1], ptrs[child]) < 0)
@@ -203,6 +211,7 @@ void AtomicPtrArrayImpl::heapSort(CompareCallbackImpl cmp)
         ptrs[last] = ptrs[0];
         s32 parent = 1;
         s32 child = 2;
+
         while (child <= last)
         {
             if (child < last && cmp(ptrs[child - 1], ptrs[child]) < 0)

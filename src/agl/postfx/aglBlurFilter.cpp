@@ -51,6 +51,7 @@ void BlurFilter::setupRenderTarget(const sead::LogicalFrameBuffer& rFrameBuffer,
 
     sead::Vector2f size;
     rViewport.getOnFrameBufferSize(&size, rFrameBuffer);
+
     for (s32 i = 0; i < 2; i++)
     {
         s32 width = s32(size.x) >> mReduceScale;
@@ -104,6 +105,7 @@ void BlurFilter::draw(DrawContext* pDrawContext, const RenderBuffer& rRenderBuff
         graphicsContext.setDepthEnable(false, false);
         graphicsContext.setBlendEnable(false);
         graphicsContext.apply(pDrawContext);
+
         if (mReduceScale != utl::ImageFilter2D::cReduceScale_2 && mIsUseReduce)
         {
             utl::ImageFilter2D::drawReduce(pDrawContext, sampler, viewport, mReduceScale, 1.0f,

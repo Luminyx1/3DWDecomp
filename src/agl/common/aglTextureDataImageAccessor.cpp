@@ -56,6 +56,7 @@ inline f32 convertF10ToF32(u32 value)
 {
     u32 exponent = (value >> 5) & 0x1f;
     u32 mantissa = value & 0x1f;
+
     if (exponent != 0)
     {
         exponent += 0x70;
@@ -78,6 +79,7 @@ inline f32 convertF11ToF32(u32 value)
 {
     u32 exponent = (value >> 6) & 0x1f;
     u32 mantissa = value & 0x3f;
+
     if (exponent != 0)
     {
         exponent += 0x70;
@@ -101,6 +103,7 @@ inline f32 convertF16ToF32(u32 value)
     u32 sign = (value << 16) & 0x80000000;
     u32 exponent = (value >> 10) & 0x1f;
     u32 mantissa = value & 0x3ff;
+
     if (exponent != 0)
     {
         exponent += 0x70;
@@ -160,6 +163,7 @@ void TextureDataImageAccessor::initializeImageBuffer(const TextureData& rTexture
 
     TextureData texture;
     mFormat = TextureFormat(rTexture.getTextureFormat());
+
     switch (mFormat)
     {
     case TextureFormat::cTextureFormat_BC1_uNorm:
@@ -337,10 +341,12 @@ void TextureDataImageAccessor::peek(sead::Vector4f* pColor, s32 x, s32 y) const
                 bool isNormalized = TextureFormatInfo::isNormalized(mFormat);
                 bool isUnsigned = TextureFormatInfo::isUnsigned(mFormat);
                 u32 value = getElement(&raw, i);
+
                 if (isNormalized)
                 {
                     f32 valueF = value;
                     u8 bitSize = TextureFormatInfo::getComponentBitSize(mFormat, i);
+
                     if (isUnsigned)
                     {
                         getElement(pColor, i) = valueF / (f32(1 << bitSize) + -1.0f);
@@ -383,6 +389,7 @@ void TextureDataImageAccessor::peek(sead::Vector4<u32>* pColor, s32 x, s32 y) co
         GPUMemVoidAddr(mImageAddr, pixelByteSize * x + mStride * y).getPtr());
 
     u32 data = 0;
+
     switch (pixelByteSize)
     {
     case 1:
@@ -401,6 +408,7 @@ void TextureDataImageAccessor::peek(sead::Vector4<u32>* pColor, s32 x, s32 y) co
     }
 
     u32 shift = 0;
+
     for (s32 i = 0; i < 4; i++)
     {
         if (i < TextureFormatInfo::getComponentNum(mFormat))
@@ -409,6 +417,7 @@ void TextureDataImageAccessor::peek(sead::Vector4<u32>* pColor, s32 x, s32 y) co
             u8 bitSize = TextureFormatInfo::getComponentBitSize(mFormat, order);
             getElement(pColor, order) = (*pData << shift) >> (32 - bitSize);
             shift += bitSize;
+
             if (shift == 32)
             {
                 shift = 0;

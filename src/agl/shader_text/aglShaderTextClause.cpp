@@ -101,8 +101,10 @@ Clause::TableChecker::TableChecker() {
     }
 
     cTableChecked = true;
+
     for (u32 i = 0; i < 256; i++) {
         u32 value = i;
+
         for (s32 bit = 0; bit < 8; bit++) {
             value = (value & 1) ? (value >> 1) ^ 0xedb88320 : value >> 1;
         }
@@ -151,6 +153,7 @@ Clause* Clause::clone(sead::Heap* pHeap, const constIterator& rBegin, const cons
     Clause* head = cloneOne(pHeap, *rBegin);
     Clause* last = head;
     constIterator it = rBegin;
+
     for (++it; it != rEnd; ++it) {
         Clause* clause = cloneOne(pHeap, *it);
         last->insertAfter(clause);
@@ -179,6 +182,7 @@ const char* Clause::findNumberBlock(Type* pType, const char* pText) {
     if ('1' <= *p && *p <= '9') {
     decimal:
         hasExponent = false;
+
         while (!detail::IsNumberDelimiter(*++p)) {
             switch (*p) {
             case '0':
@@ -472,6 +476,7 @@ const char* TextToReal(f64* pValue, const char* pText, bool* pIsReal) {
     case '+':
     case '-':
         isNegative = *p == '-';
+
         if ('0' <= p[1] && p[1] <= '9') {
             p++;
         } else if (p[1] == '.' && '0' <= p[2] && p[2] <= '9') {
@@ -483,6 +488,7 @@ const char* TextToReal(f64* pValue, const char* pText, bool* pIsReal) {
         break;
     case '.':
         p++;
+
         if (!('0' <= *p && *p <= '9')) {
             goto end;
         }
@@ -497,6 +503,7 @@ const char* TextToReal(f64* pValue, const char* pText, bool* pIsReal) {
     if (*p == '0') {
         u32 value = 0;
         result = p + 1;
+
         switch (p[1]) {
         case '0':
         case '1':
@@ -517,6 +524,7 @@ const char* TextToReal(f64* pValue, const char* pText, bool* pIsReal) {
             for (result = p + 2;; result++) {
                 s32 digit;
                 char c = *result;
+
                 if ('0' <= c && c <= '9') {
                     digit = c - '0';
                 } else if ('A' <= c && c <= 'F') {
@@ -534,6 +542,7 @@ const char* TextToReal(f64* pValue, const char* pText, bool* pIsReal) {
         case 'B':
         case 'b':
             result = p + 2;
+
             while ((*result & 0xfe) == '0') {
                 value = value * 2 + (*result - '0');
                 result++;
@@ -552,11 +561,13 @@ const char* TextToReal(f64* pValue, const char* pText, bool* pIsReal) {
 
 decimal: {
     const char* q = p;
+
     while ('0' <= *q && *q <= '9') {
         q++;
     }
 
     bool useStrtod;
+
     if (*q == '.') {
         hasDot = true;
         useStrtod = true;
@@ -568,6 +579,7 @@ decimal: {
 
     const char* next;
     bool isFloat;
+
     if (useStrtod) {
         char* strEnd;
         *pValue = std::strtod(p, &strEnd);
@@ -576,6 +588,7 @@ decimal: {
     } else {
         u32 value = 0;
         next = p;
+
         while ('0' <= *next && *next <= '9') {
             value = value * 10 + (*next - '0');
             next++;
@@ -588,11 +601,13 @@ decimal: {
     f64 value = *pValue;
     isReal = isFloat;
     result = p;
+
     if (std::fabs(value) > __DBL_MAX__ || std::isnan(value)) {
         goto end;
     }
 
     result = next;
+
     if (hasDot && (*next | 0x20) == 'f') {
         result = next + 1;
     }
@@ -620,6 +635,7 @@ namespace shtxt {
  */
 s32 Clause::calcLineFeedCount() const {
     s32 count = 0;
+
     for (const char* p = mBegin; p != mEnd; p++) {
         if (*p == '\n') {
             count++;
@@ -658,6 +674,7 @@ s32 Clause::compareImpl(const Clause& rOther, u32 offset, const Clause* pEnd,
         }
 
         const Clause* next = mNext;
+
         if (next == pEnd || !next->isWord()) {
             return -1;
         }
@@ -673,6 +690,7 @@ s32 Clause::compareImpl(const Clause& rOther, u32 offset, const Clause* pEnd,
         }
 
         const Clause* otherNext = rOther.mNext;
+
         if (otherNext == pOtherEnd || !otherNext->isWord()) {
             return 1;
         }
@@ -681,12 +699,14 @@ s32 Clause::compareImpl(const Clause& rOther, u32 offset, const Clause* pEnd,
     }
 
     s32 result = sead::SafeString(mBegin).comparen(sead::SafeString(rOther.mBegin + offset), rest);
+
     if (result != 0) {
         return result;
     }
 
     const Clause* next = mNext;
     const Clause* otherNext = rOther.mNext;
+
     if (otherNext == pOtherEnd) {
         if (next == pEnd) {
             return 0;
@@ -700,6 +720,7 @@ s32 Clause::compareImpl(const Clause& rOther, u32 offset, const Clause* pEnd,
     }
 
     s32 state = 0;
+
     if (next->isWord()) {
         state |= 1;
     }
@@ -729,17 +750,20 @@ s32 Clause::compareImpl(const Clause& rOther, u32 offset, const Clause* pEnd,
  */
 s32 Clause::compareImpl(const sead::SafeString& rStr, u32 length, const Clause* pEnd) const {
     s32 clauseLength = mEnd - mBegin;
+
     if (static_cast<u32>(clauseLength) > length) {
         return -1;
     }
 
     s32 result = sead::SafeString(mBegin).comparen(rStr, clauseLength);
+
     if (result != 0) {
         return result;
     }
 
     u32 rest = length - clauseLength;
     Clause* next = mNext;
+
     if (next != this && next->isWord()) {
         if (next == pEnd) {
             return -1;
@@ -786,6 +810,7 @@ s32 Clause::compare(const Clause& rOther, u32 offset) const {
 u32 Clause::calcHash(const void* pData, u32 size, u32 seed) {
     u32 hash = ~seed;
     const u8* p = static_cast<const u8*>(pData);
+
     while (size-- != 0) {
         hash = cHashTable[(hash ^ *p++) & 0xff] ^ (hash >> 8);
     }

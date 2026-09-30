@@ -77,9 +77,11 @@ void GPUTimeStampArray::allocBuffer(s32 num, sead::Heap* pHeap)
     nvnBufferInitialize(&mNvnBuffer, &builder);
 
     s32 index = 0;
+
     for (auto& rEntry : mEntries)
     {
         rEntry.mBuffer.tryAllocBuffer(num, pHeap);
+
         for (auto& rStamp : rEntry.mBuffer)
         {
             u64 offset = index * sizeof(NVNcounterData);

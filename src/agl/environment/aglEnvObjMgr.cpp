@@ -59,6 +59,7 @@ void EnvObjMgr::initialize(const InitArg& rArg, sead::Heap* pHeap)
         it->initialize(type, this, pHeap);
         addList(&*it, EnvObj::getTypeData(type).mName);
         s32 num = mTypeRange[type].mNum;
+
         for (s32 i = 0; i < num; i++)
         {
             EnvObj* pObj = EnvObj::getTypeData(type).mCreateFunc(pHeap);
@@ -89,6 +90,7 @@ void EnvObjMgr::initialize(const InitArg& rArg, sead::Heap* pHeap)
     }
 
     INamedObjMgr::initialize(mObj.size(), rArg.getGroupNum(), pHeap);
+
     for (auto* pObj : mObj)
     {
         pushBackNamedObj(pObj);
@@ -154,6 +156,7 @@ void EnvObjMgr::update()
     if (mFlag.isOn(1))
     {
         mUpdateObj.clear();
+
         for (auto& rpObj : mObj)
         {
             if (rpObj->isEnable())
@@ -179,6 +182,7 @@ void EnvObjMgr::update()
 void EnvObjMgr::constructList()
 {
     INamedObjMgr::constructList();
+
     switch (mListMode)
     {
     case 0:
@@ -197,6 +201,7 @@ void EnvObjMgr::constructList()
             }
 
             mEnvObjSet.sort(type);
+
             for (auto it = mEnvObjSet.begin(type), itEnd = mEnvObjSet.end(type); it != itEnd;
                  ++it)
             {
@@ -238,6 +243,7 @@ void EnvObjMgr::updateView(const sead::Matrix34f& rViewMtx, const sead::Matrix44
     rView.mNear = -(b * (a + 1.0f)) / a;
 
     EnvObj::ViewData data(rViewMtx, rView.mInvViewMtx, rProjMtx);
+
     for (auto& rObj : mUpdateObj)
     {
         rObj.updateView(data, viewIndex);
@@ -257,6 +263,7 @@ void EnvObjMgr::drawDebug(DrawContext* pDrawContext, s32 viewIndex,
     View& rView = mView[viewIndex];
     rView.mRenderBuffer = pRenderBuffer;
     rView.mDebugScale = scale;
+
     for (auto& rObj : mUpdateObj)
     {
         rObj.drawDebug_(pDrawContext, rView.mViewMtx, rView.mProjMtx, viewIndex);
@@ -346,6 +353,7 @@ void EnvObjMgr::drawFog_(DrawContext* pDrawContext, s32 viewIndex, const EnvObj&
                          const sead::Color4f& rColor) const
 {
     const View& rView = mView[viewIndex];
+
     if (!rView.mRenderBuffer)
     {
         return;
@@ -399,9 +407,11 @@ bool EnvObjMgr::saveImpl_(const sead::SafeString& rPath, u32 flag, s32 group) co
         }
 
         sead::XmlElement* pTypeElement = mTypeNode[type].createAttribute(pParamRoot, pHeap);
+
         for (auto it = begin(type), itEnd = end(type); it != itEnd; ++it)
         {
             EnvObj* pObj = *it;
+
             if (group != -1 && !(mGroup[group].getName() == static_cast<utl::INamedObj&>(*pObj).getGroupName()))
             {
                 continue;
@@ -433,6 +443,7 @@ void EnvObjMgr::applyResource_(utl::ResParameterArchive arc0, utl::ResParameterA
 
     utl::ResParameterArchive arc = arc0;
     utl::ResParameterArchive arcB = arc0;
+
     if (t > 0.0f)
     {
         arc = t < 1.0f ? arc0 : arc1;
@@ -443,6 +454,7 @@ void EnvObjMgr::applyResource_(utl::ResParameterArchive arc0, utl::ResParameterA
     static const u32 cGroupHash = utl::ParameterBase::calcHash("group");
 
     utl::ResParameterList root = arc.getRootList();
+
     for (auto itList = root.listBegin(), itListEnd = root.listEnd(); itList != itListEnd;
          ++itList)
     {
@@ -450,6 +462,7 @@ void EnvObjMgr::applyResource_(utl::ResParameterArchive arc0, utl::ResParameterA
 
         s32 type = 0;
         IParameterList* pChild = getChildListHead();
+
         for (; pChild; pChild = pChild->getNext(), type++)
         {
             if (list.getParameterListNameHash() == pChild->getNameHash())
@@ -464,6 +477,7 @@ void EnvObjMgr::applyResource_(utl::ResParameterArchive arc0, utl::ResParameterA
         }
 
         s32 lastIndex = -1;
+
         for (auto itObj = list.objBegin(), itObjEnd = list.objEnd(); itObj != itObjEnd; ++itObj)
         {
             utl::ResParameterObj obj = *itObj;
@@ -471,12 +485,14 @@ void EnvObjMgr::applyResource_(utl::ResParameterArchive arc0, utl::ResParameterA
             utl::ResParameter groupParam =
                 groupIndex != -1 ? obj.getResParameter(groupIndex) : utl::ResParameter{};
             s32 nameIndex = obj.searchIndex(cNameHash);
+
             if (nameIndex == -1 || !groupParam.ptr())
             {
                 continue;
             }
 
             utl::ResParameter nameParam = obj.getResParameter(nameIndex);
+
             if (!nameParam.ptr())
             {
                 continue;
@@ -490,9 +506,11 @@ void EnvObjMgr::applyResource_(utl::ResParameterArchive arc0, utl::ResParameterA
 
             sead::SafeString name(nameParam.getData<char>());
             EnvObj* pFound = nullptr;
+
             for (auto it = begin(type), itEnd = end(type); it != itEnd; ++it)
             {
                 EnvObj* pObj = *it;
+
                 if (!pObj->mFlag.isOn(1))
                 {
                     continue;
@@ -521,10 +539,12 @@ void EnvObjMgr::applyResource_(utl::ResParameterArchive arc0, utl::ResParameterA
             {
                 utl::ResParameterList rootB = arcB.getRootList();
                 s32 listIndex = rootB.searchListIndex(list.getParameterListNameHash());
+
                 if (listIndex != -1)
                 {
                     utl::ResParameterList listB = rootB.getResParameterList(listIndex);
                     bool applied = false;
+
                     for (auto itObjB = listB.objBegin(), itObjBEnd = listB.objEnd();
                          itObjB != itObjBEnd; ++itObjB)
                     {
@@ -557,6 +577,7 @@ void EnvObjMgr::applyResource_(utl::ResParameterArchive arc0, utl::ResParameterA
 bool EnvObjMgr::saveToGroupFilePath(const sead::SafeString& rPath) const
 {
     s32 i = 0;
+
     for (auto it = mGroupPtr.begin(), itEnd = mGroupPtr.end(); it != itEnd; ++it, ++i)
     {
         if (mGroup[i].getComment() == rPath)
@@ -576,6 +597,7 @@ void EnvObjMgr::genMessage(sead::hostio::Context* pContext)
 {
     genMessageIO(pContext, 6);
     genGroupComboBox(pContext);
+
     for (auto* pObj : mObj)
     {
         if (pObj && pObj->isEnable() && pObj->mFlag.isOn(0x20))
@@ -586,6 +608,7 @@ void EnvObjMgr::genMessage(sead::hostio::Context* pContext)
 
     s32 total = 0;
     u32 n = mTypeNode.size();
+
     for (s32 type = 0; type < n; type++)
     {
         const EnvObj::TypeData& rData = EnvObj::getTypeData(type);
@@ -610,6 +633,7 @@ void EnvObjMgr::genMessage(sead::hostio::Context* pContext)
 void EnvObjMgr::listenPropertyEvent(const sead::hostio::PropertyEvent* pEvent)
 {
     INamedObjMgr::listenPropertyEvent(pEvent);
+
     if (listenPropertyEventIO(this, pEvent) == 2)
     {
         setListDirty();

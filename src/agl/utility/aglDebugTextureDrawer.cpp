@@ -28,9 +28,11 @@ DebugTextureDrawer::~DebugTextureDrawer()
 void DebugTextureDrawer::initialize(sead::Heap* pHeap)
 {
     destroy();
+
     if (pHeap)
     {
         mTextures.tryAllocBuffer(cTextureNum, pHeap);
+
         for (s32 i = 0; i < cTextureNum; i++)
         {
             mFreeTextures.pushBack(&mTextures[i]);
@@ -54,6 +56,7 @@ void DebugTextureDrawer::inactivateAll()
     while (mActivePages.size() > 0)
     {
         DebugTexturePage* pPage = mActivePages.popBack();
+
         if (!pPage)
         {
             break;
@@ -93,6 +96,7 @@ void DebugTextureDrawer::eraseActivePage_(DebugTexturePage* pPage)
 {
     mActivePageCS.lock();
     s32 index = mActivePages.indexOf(pPage);
+
     if (index >= 0)
     {
         mActivePages.erase(index);
@@ -121,9 +125,11 @@ DebugTexture* DebugTextureDrawer::popBack_()
 {
     mTextureCS.lock();
     DebugTexture* pTexture;
+
     if (mFreeTextures.size() > 0)
     {
         sead::TListNode<DebugTexture*>* pNode = mFreeTextures.popBack();
+
         if (pNode)
         {
             pNode->mList = nullptr;
@@ -170,6 +176,7 @@ DebugTexturePage* DebugTextureDrawer::searchPage(const sead::SafeString& rName)
 {
     mPageCS.lock();
     DebugTexturePage* pResult = nullptr;
+
     for (auto it = mPages.begin(); it != mPages.end(); ++it)
     {
         if ((*it)->mName == rName)
@@ -225,9 +232,11 @@ void DebugTextureDrawer::invalidateHostIoNode_(DebugTexturePage* pPage)
     }
 
     mActivePageCS.lock();
+
     if (mActivePages.size() >= 2)
     {
         DebugTexturePage* pPrevPage = mActivePages[mActivePages.size() - 2];
+
         if (pPrevPage != pPage)
         {
             pPrevPage->invalidateHostIoNode();

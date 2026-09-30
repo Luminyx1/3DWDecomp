@@ -30,6 +30,7 @@ RenderDLBuffer::~RenderDLBuffer()
     }
 
     mRenderDL.freeBuffer();
+
     if (mControlMemory)
     {
         delete static_cast<u8*>(mControlMemory);
@@ -65,6 +66,7 @@ void RenderDLBuffer::initialize(u64 bufferSize, u64 controlMemorySize, s32 rende
             static_cast<u8*>(nvnMemoryPoolMap(mGPUBuffer.getMemoryPool()->getDriverPool())) +
             mGPUBuffer.getByteOffset());
         s32 num = mGPUBuffer.getSize() / sizeof(u32);
+
         for (s32 i = 0; i < num; i++)
         {
             pBuffer[i] = 0xbeef2929;
@@ -72,6 +74,7 @@ void RenderDLBuffer::initialize(u64 bufferSize, u64 controlMemorySize, s32 rende
 
         u64 offset[2] = {0, 0};
         s32 blockIdx = 0;
+
         for (s32 core = 0; core < cCoreNum; core++)
         {
             CoreBuffer& rCore = mCoreBuffer[core];
@@ -81,12 +84,14 @@ void RenderDLBuffer::initialize(u64 bufferSize, u64 controlMemorySize, s32 rende
             rCore.mControlMemory = static_cast<u8*>(mControlMemory) + controlMemorySize * core;
             rCore.mControlMemoryUsed = 0;
             rCore.mControlMemorySize = controlMemorySize;
+
             for (auto& rAddress : rCore.mAddress)
             {
                 u64 blockOffset = offset[blockIdx];
                 rAddress = GPUMemAddr<u8>(blockIdx == 0 ? mGPUBuffer : mGPUBufferSub,
                                           sizeof(u32) * s32(blockOffset / sizeof(u32)));
                 offset[blockIdx] = blockOffset + alignedSize;
+
                 if (blockIdx == 1)
                 {
                     blockIdx = 0;
@@ -116,6 +121,7 @@ void RenderDLBuffer::clear(bool swapBuffer)
         }
 
         rCore.mUsedSize = 0;
+
         if (rCore.mControlMemoryUsed > mMaxControlMemoryUsed)
         {
             mMaxControlMemoryUsed = rCore.mControlMemoryUsed;
@@ -171,6 +177,7 @@ s32 RenderDLBuffer::begin(DrawContext* pDrawContext, const sead::SafeString& rNa
     rDL.mBeginTime.setNow();
 
     pDrawContext->setCommandBuffer(&rDL);
+
     if (!rDL.beginDisplayList())
     {
         return -1;

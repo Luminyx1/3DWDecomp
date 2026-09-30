@@ -154,12 +154,14 @@ void DepthOfFieldParameter::assignShaderProgram_()
 
     bool isDepthBlur = enableDepthBlur_();
     s32 nearMode = 0;
+
     if (*mNearEnable && *mLevel > 0.0f)
     {
         nearMode = isDepthBlur ? 2 : 1;
     }
 
     s32 vignettingMode = 0;
+
     if (*mEnableVignettingBlur && *mLevel > 0.0f)
     {
         if (!*mEnableVignettingColor || enableSeparateVignettingPass_())
@@ -176,9 +178,11 @@ void DepthOfFieldParameter::assignShaderProgram_()
     }
 
     s32 farColorMode = 0;
+
     if (*mFarEnable && (*mLevel > 0.0f || enableMipFromZeroLevel_()))
     {
         farColorMode = *mEnableDofFarMax ? 2 : 1;
+
         if (*mEnableColorControl)
         {
             if (*mSaturateMin != 1.0f)
@@ -194,6 +198,7 @@ void DepthOfFieldParameter::assignShaderProgram_()
     }
 
     s32 indirectMode = 0;
+
     if (enableIndirect_())
     {
         indirectMode = *mIndirectDepthCancelEnable ? 2 : 1;
@@ -264,6 +269,7 @@ void DepthOfField::initVertex_(sead::Heap* pHeap)
 {
     const s32 cDivNum[] = {32, 4};
     const f32 cRingScale[] = {1.0f, 1.0f, 0.0f, 0.0f};
+
     for (s32 i = 0; i < 2; i++)
     {
         s32 divNum = cDivNum[i];
@@ -271,6 +277,7 @@ void DepthOfField::initVertex_(sead::Heap* pHeap)
         rShape.mVertex.allocBuffer(divNum * 4, pHeap, 8, MemoryAttribute(0));
         GPUMemAddr<Vertex> addr(rShape.mVertex, 0);
         s32 index = 0;
+
         for (s32 ring = 0; ring < 4; ring++)
         {
             switch (i)
@@ -313,6 +320,7 @@ void DepthOfField::initVertex_(sead::Heap* pHeap)
 void DepthOfField::initIndex_(sead::Heap* pHeap)
 {
     const s32 cDivNum[] = {32, 4};
+
     for (s32 i = 0; i < 2; i++)
     {
         s32 divNum = cDivNum[i];
@@ -320,10 +328,12 @@ void DepthOfField::initIndex_(sead::Heap* pHeap)
         rShape.mIndex.allocBuffer(divNum * 18, pHeap, 4, MemoryAttribute(0));
         GPUMemAddr<u16> addr(rShape.mIndex, 0);
         s32 index = 0;
+
         for (s32 ring = 0; ring < 3; ring++)
         {
             s32 inner = ring * divNum;
             s32 outer = inner + divNum;
+
             for (s32 j = 0; j < divNum; j++)
             {
                 detail::getBufferPtr<u16>(rShape.mIndex)[index] = inner + j;
@@ -382,6 +392,7 @@ void DepthOfField::allocBuffer(DrawContext* pDrawContext, s32 context, TextureFo
     u32 blurWidth;
     u32 blurHeight;
     u32 mipLevelNum;
+
     if (isFromZero)
     {
         blurWidth = width;
@@ -433,6 +444,7 @@ void DepthOfField::freeBuffer(s32 context) const
 {
     Context& rContext = getContext_(context);
     auto* pAllocator = utl::DynamicTextureAllocator::instance();
+
     if (rContext.mpBlurTexture)
     {
         pAllocator->free(rContext.mpBlurTexture);
@@ -477,11 +489,13 @@ void DepthOfField::draw(DrawContext* pDrawContext, s32 context, const RenderBuff
     DrawArg arg(context, getContext_(context), getParameter(context), rRenderBuffer, rDepth,
                 isLinearDepth, near, far);
     const DepthOfFieldParameter& rParam = getParameter(context);
+
     if (rParam.enableBlurMipMapPass_())
     {
         allocBuffer(pDrawContext, context, rRenderBuffer);
         arg.mPass = 0;
         drawColorMipMap_(pDrawContext, arg);
+
         if (rParam.enableDepthBlur_())
         {
             arg.mPass = 1;
@@ -535,9 +549,11 @@ void DepthOfField::drawColorMipMap_(DrawContext* pDrawContext, const DrawArg& rA
     pProgram->activate(pDrawContext, true);
     rContext.mBlurSampler.setFilter(1, 1, 1);
     u32 mipLevelNum = rTexture.getMipLevelNum();
+
     for (u32 i = 0; i < mipLevelNum; i++)
     {
         u32 width;
+
         if (i != 0)
         {
             rContext.mBlurSampler.setLod(i - 1, i - 1, 0.0f);
@@ -606,6 +622,7 @@ void DepthOfField::drawDepthMipMap_(DrawContext* pDrawContext, const DrawArg& rA
         calcNearRange(&start, &end, *rParam.mFarStart, *rParam.mFarEnd);
         f32 offset;
         f32 scale;
+
         if (rArg.mIsLinearDepth)
         {
             offset = (end - rArg.mNear) / (rArg.mFar - rArg.mNear);
@@ -639,6 +656,7 @@ void DepthOfField::drawDepthMipMap_(DrawContext* pDrawContext, const DrawArg& rA
     pProgram = rArg.mpParam->mpDepthMipMapProgram;
     pProgram->activate(pDrawContext, true);
     u32 mipLevelNum = rTexture.getMipLevelNum();
+
     for (u32 i = 1; i < mipLevelNum; i++)
     {
         rContext.mDepthBlurSampler.setLod(i - 1, i - 1, 0.0f);
@@ -683,6 +701,7 @@ void DepthOfField::drawCompose_(DrawContext* pDrawContext, const DrawArg& rArg) 
                       !*rParam.mEnableVignettingBlur;
 
     sead::GraphicsContext graphicsContext;
+
     if (isFarOnly)
     {
         graphicsContext.setDepthEnable(true, false);
@@ -733,6 +752,7 @@ void DepthOfField::drawCompose_(DrawContext* pDrawContext, const DrawArg& rArg) 
                                         rArg.mpParam->mpFinalPrograms[variation];
     pProgram->activate(pDrawContext, true);
     uniformComposeParam_(pDrawContext, rArg, pProgram);
+
     if (*rArg.mpParam->mEnableVignettingBlur)
     {
         uniformVignettingParam_(pDrawContext, rArg, pProgram);
@@ -778,6 +798,7 @@ void DepthOfField::drawVignetting_(DrawContext* pDrawContext, const DrawArg& rAr
     sead::GraphicsContext graphicsContext;
     graphicsContext.setDepthEnable(false, false);
     graphicsContext.setColorMask(true, true, true, false);
+
     switch (*rArg.mpParam->mVignettingBlend)
     {
     case DepthOfFieldParameter::cVignettingBlendType_Normal:
@@ -813,6 +834,7 @@ void DepthOfField::bindRenderBuffer_(DrawContext* pDrawContext, RenderBuffer& rR
 {
     s32 width = -1;
     s32 height = -1;
+
     if (rRenderBuffer.getRenderTargetColor())
     {
         rRenderBuffer.getRenderTargetColor()->setMipLevel(mipLevel);
@@ -878,6 +900,7 @@ void DepthOfField::uniformComposeParam_(DrawContext* pDrawContext, const DrawArg
     calcRange(&start, &end, *rParam.mStart, *rParam.mEnd);
     bool isLinearDepth = rArg.mIsLinearDepth;
     f32 farMax = *rParam.mDofFarMax;
+
     if (isLinearDepth)
     {
         farMax = (farMax - rArg.mNear) / (rArg.mFar - rArg.mNear);
@@ -898,6 +921,7 @@ void DepthOfField::uniformComposeParam_(DrawContext* pDrawContext, const DrawArg
 
     f32 farOffset;
     f32 farScale;
+
     if (isLinearDepth)
     {
         farOffset = (start - rArg.mNear) / (rArg.mFar - rArg.mNear);
@@ -915,6 +939,7 @@ void DepthOfField::uniformComposeParam_(DrawContext* pDrawContext, const DrawArg
     f32 far = rArg.mFar;
     f32 farDepth = calcProjDepth(start, near, far);
     f32 nearDepth = 0.0f;
+
     if (*rArg.mpParam->mNearEnable)
     {
         f32 nearStart;
@@ -923,6 +948,7 @@ void DepthOfField::uniformComposeParam_(DrawContext* pDrawContext, const DrawArg
                       *rArg.mpParam->mFarEnd);
         f32 nearOffset = nearEnd;
         f32 nearLength = 1.0f;
+
         if (isLinearDepth)
         {
             nearOffset = (nearEnd - near) / (far - near);
@@ -948,6 +974,7 @@ void DepthOfField::uniformComposeParam_(DrawContext* pDrawContext, const DrawArg
         calcRange(&colorStart, &colorEnd, rDepth.x, rDepth.y);
         f32 reverseStart = rDepth.z > rDepth.w ? rDepth.z : rDepth.w;
         f32 reverseEnd = rDepth.z < rDepth.w ? rDepth.z : rDepth.w;
+
         if (reverseEnd - reverseStart < 0.1f)
         {
             reverseEnd += 0.1f;
@@ -955,6 +982,7 @@ void DepthOfField::uniformComposeParam_(DrawContext* pDrawContext, const DrawArg
 
         f32 colorRange;
         f32 reverseRange;
+
         if (isLinearDepth)
         {
             f32 length = rArg.mFar - rArg.mNear;
@@ -975,6 +1003,7 @@ void DepthOfField::uniformComposeParam_(DrawContext* pDrawContext, const DrawArg
         depthOffset.z = -(colorStart * depthScale.z);
         depthScale.w = 1.0f / reverseRange;
         depthOffset.w = -(reverseStart * depthScale.w);
+
         if (!*rArg.mpParam->mEnableColorReverse)
         {
             depthScale.w = 1.0f;
@@ -1017,6 +1046,7 @@ void DepthOfField::uniformVignettingParam_(DrawContext* pDrawContext, const Draw
 {
     bool isDepthOfField = false;
     const DepthOfFieldParameter::VignettingShapeParam* pShape;
+
     if (rArg.mPass == 2)
     {
         isDepthOfField = rArg.mpParam->enableDepthOfField_();
@@ -1047,6 +1077,7 @@ void DepthOfField::uniformVignettingParam_(DrawContext* pDrawContext, const Draw
 
     f32 aspectX;
     f32 aspectY;
+
     if (*pShape->mType != 0)
     {
         aspectX = 1.0f;
@@ -1082,6 +1113,7 @@ void DepthOfField::uniformExpandReduceParam_(DrawContext* pDrawContext, const Dr
     const DepthOfFieldParameter& rParam = *rArg.mpParam;
     f32 farDepth = calcProjDepth(sead::Mathf::min(*rParam.mStart, *rParam.mEnd), near, far);
     f32 nearDepth = 0.0f;
+
     if (*rParam.mNearEnable)
     {
         nearDepth =
@@ -1142,6 +1174,7 @@ void DepthOfFieldParameter::setEnableDofFar(bool enable)
 void DepthOfFieldParameter::setBlurParam(f32 level)
 {
     level = sead::Mathf::clamp(level, 0.0f, 14.0f);
+
     if (*mLevel != level)
     {
         *mLevel = level;
@@ -1153,6 +1186,7 @@ void DepthOfFieldParameter::setDepthBlurParam(bool enable, f32 add)
 {
     add = sead::Mathf::clamp(add, 0.0f, 14.0f);
     bool isEnable = enable || add == 0.0f;
+
     if (*mDepthBlur != isEnable || *mDepthBlurAdd != add)
     {
         *mDepthBlur = isEnable;
@@ -1218,6 +1252,7 @@ void DepthOfFieldParameter::setIndirectEnable(bool enable)
 void DepthOfField::setIndirectTextureData(const TextureData* pTexture)
 {
     mpIndirectTexture = pTexture;
+
     if (pTexture)
     {
         mIndirectSampler.applyTextureData(*pTexture);
@@ -1357,11 +1392,13 @@ void DepthOfFieldParameter::genMessageDepthOfFieldParameter(sead::hostio::Contex
 {
     mLevel.genMessageParameter(pContext, mLevel.getMeta());
     mFarEnable.genMessageParameter(pContext, mFarEnable.getMeta());
+
     if (*mFarEnable)
     {
         mStart.genMessageParameter(pContext, "Min=-10000, Max=10000");
         mEnd.genMessageParameter(pContext, "Min=-10000, Max=10000");
         mEnableColorControl.genMessageParameter(pContext, mEnableColorControl.getMeta());
+
         if (*mEnableColorControl)
         {
             mSaturateMin.genMessageParameter(pContext, "Min=0, Max=1");
@@ -1370,6 +1407,7 @@ void DepthOfFieldParameter::genMessageDepthOfFieldParameter(sead::hostio::Contex
         }
 
         mIndirectEnable.genMessageParameter(pContext, mIndirectEnable.getMeta());
+
         if (*mIndirectEnable)
         {
             mIndirectScale.genMessageParameter(pContext, mIndirectScale.getMeta());
@@ -1386,6 +1424,7 @@ void DepthOfFieldParameter::genMessageDepthOfFieldParameter(sead::hostio::Contex
         }
 
         mEnableDofFarMax.genMessageParameter(pContext, mEnableDofFarMax.getMeta());
+
         if (*mEnableDofFarMax)
         {
             mDofFarMax.genMessageParameter(pContext, mDofFarMax.getMeta());
@@ -1393,11 +1432,13 @@ void DepthOfFieldParameter::genMessageDepthOfFieldParameter(sead::hostio::Contex
     }
 
     mNearEnable.genMessageParameter(pContext, mNearEnable.getMeta());
+
     if (*mNearEnable)
     {
         mFarStart.genMessageParameter(pContext, "Min=-1000, Max=1000");
         mFarEnd.genMessageParameter(pContext, "Min=-1000, Max=1000");
         mDepthBlur.genMessageParameter(pContext, mDepthBlur.getMeta());
+
         if (*mDepthBlur)
         {
             mDepthBlurAdd.genMessageParameter(pContext, "Min=0.0, Max=10");
@@ -1406,6 +1447,7 @@ void DepthOfFieldParameter::genMessageDepthOfFieldParameter(sead::hostio::Contex
 
     mEnableVignettingBlur.genMessageParameter(pContext, mEnableVignettingBlur.getMeta());
     mEnableVignettingColor.genMessageParameter(pContext, mEnableVignettingColor.getMeta());
+
     if (*mEnableVignettingColor && *mEnableVignettingBlur)
     {
         mEnableVignetting2Shape.genMessageParameter(pContext, mEnableVignetting2Shape.getMeta());
@@ -1414,6 +1456,7 @@ void DepthOfFieldParameter::genMessageDepthOfFieldParameter(sead::hostio::Contex
     if (*mEnableVignettingColor || *mEnableVignettingBlur)
     {
         mVignettingShape0.genMessage(pContext);
+
         if (*mEnableVignettingBlur)
         {
             mVignettingBlur.genMessageParameter(pContext, "Min=0, Max=1");
@@ -1464,6 +1507,7 @@ void DepthOfFieldParameter::listenPropertyEventDepthOfFieldParameter(
 {
     *mLevel = sead::Mathf::clamp(*mLevel, 0.0f, 14.0f);
     uintptr_t id = pEvent->getIdValue();
+
     if (id == reinterpret_cast<uintptr_t>(&*mIndirectTexScale) ||
         id == reinterpret_cast<uintptr_t>(&*mIndirectTexRotate) ||
         id == reinterpret_cast<uintptr_t>(&*mIndirectTexTrans))

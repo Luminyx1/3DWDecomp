@@ -27,6 +27,7 @@ DrawContext::DrawContext()
 void DrawContext::setCommandBuffer(DisplayList* pDisplayList)
 {
     mCommandBuffer = pDisplayList;
+
     if (pDisplayList)
     {
         setNvnCommandBuffer_(&mNvnCommandBuffer);
@@ -55,6 +56,7 @@ DrawContext::~DrawContext()
 void DrawContext::flushCommandBuffer()
 {
     mCommandBuffer->endDisplayList();
+
     if (mCommandBuffer->isValid())
     {
         mCommandBuffer->callDirect(this);
@@ -89,6 +91,7 @@ void DrawContext::barrierTexture(u32 flags)
     }
 
     int barrier = NVN_BARRIER_INVALIDATE_TEXTURE_BIT;
+
     if (flags & 1)
     {
         barrier |= NVN_BARRIER_ORDER_PRIMITIVES_BIT;

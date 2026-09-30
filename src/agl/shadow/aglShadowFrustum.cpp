@@ -79,6 +79,7 @@ void ShadowFrustum::initialize(sead::Heap* pHeap)
 void ShadowFrustum::Polytope::initialize(sead::Heap* pHeap)
 {
     mPolygons.tryAllocBuffer(cPolygonMax, pHeap);
+
     for (s32 i = 0; i < cPolygonMax; i++)
     {
         mPolygons[i] = new (pHeap) Polygon();
@@ -109,6 +110,7 @@ void ShadowFrustum::clipByBoundBox(const sead::BoundBox3f& rBox, const sead::Mat
 {
     sead::Vector3f points[8];
     setBoxCorners(points, rBox);
+
     for (s32 i = 0; i < 8; i++)
     {
         transformProj(&points[i], rMtx);
@@ -128,6 +130,7 @@ void ShadowFrustum::clipByBoundBox(const sead::BoundBox3f& rBox, const sead::Mat
 {
     sead::Vector3f points[8];
     setBoxCorners(points, rBox);
+
     for (s32 i = 0; i < 8; i++)
     {
         transform(&points[i], rMtx);
@@ -145,6 +148,7 @@ void ShadowFrustum::clipByBoundBox_(const sead::Vector3f* pPoints, sead::BitFlag
 {
     const sead::Vector3f center = (pPoints[0] + pPoints[6]) * 0.5f;
     sead::Plane3<f32> plane(sead::Vector3f::ex, 0.0f);
+
     for (s32 i = 0; i < 6; i++)
     {
         if (!planeMask.isOnBit(i))
@@ -164,12 +168,14 @@ void ShadowFrustum::clipByBoundBox_(const sead::Vector3f* pPoints, sead::BitFlag
         n.setCross(a, b);
         const f32 len = n.normalize();
         const f32 sqLen = n.squaredLength();
+
         if (!(len > 0.0f) || sead::MathCalcCommon<f32>::isNan(len))
         {
             continue;
         }
 
         const f32 diff = sqLen - 1.0f;
+
         if (diff < -1.1920929e-06f || diff > 1.1920929e-06f)
         {
             continue;
@@ -177,6 +183,7 @@ void ShadowFrustum::clipByBoundBox_(const sead::Vector3f* pPoints, sead::BitFlag
 
         const f32 d = n.dot(p0);
         plane = sead::Plane3<f32>(n, d);
+
         if (center.dot(n) - d > 0.0f)
         {
             plane = sead::Plane3<f32>(-n, -d);
@@ -193,16 +200,19 @@ void ShadowFrustum::clipByBoundBox_(const sead::Vector3f* pPoints, sead::BitFlag
 void ShadowFrustum::clipByPlane(const sead::Plane3<f32>& rPlane)
 {
     mInter.mNum = 0;
+
     for (s32 i = 0; i < getCurrentPolytope().mNum; i++)
     {
         Polygon* pDst = getNextPolytope().birthBack();
         Polygon* pInter = mInter.birthBack();
+
         if (!pDst || !pInter)
         {
             break;
         }
 
         clipPointByPlane_(pDst, pInter, *getCurrentPolytope().mPolygons[i], rPlane);
+
         if (pDst->mNum == 0)
         {
             getNextPolytope().mNum--;
@@ -229,14 +239,17 @@ sead::Vector3f ShadowFrustum::findCameraNearPoint(sead::Matrix34f viewMtx)
                           -sead::Mathf::maxNumber());
     f32 num = 0.0f;
     const Polytope& polytope = getCurrentPolytope();
+
     for (s32 i = 0; i < polytope.mNum; i++)
     {
         const Polygon& polygon = *polytope.mPolygons[i];
+
         for (s32 j = 0; j < polygon.mNum; j++)
         {
             sead::Vector3f p = polygon.mPoints[j];
             transform(&p, viewMtx);
             const f32 diff = result.z - p.z;
+
             if (diff <= mEpsilon && diff >= -mEpsilon)
             {
                 result *= num;
@@ -288,6 +301,7 @@ void ShadowFrustum::clipPointByPlane_(Polygon* pDst, Polygon* pInter, const Poly
     }
 
     f32 d0 = rPlane.getNormal().dot(rSrc.mPoints[0]) - rPlane.getD();
+
     for (s32 i = 0; i < rSrc.mNum; i++)
     {
         const s32 next = (i + 1) % rSrc.mNum;
@@ -306,6 +320,7 @@ void ShadowFrustum::clipPointByPlane_(Polygon* pDst, Polygon* pInter, const Poly
         {
             sead::Segment<sead::Vector3f> segment(p0, p1);
             f32 t;
+
             if (sead::Geometry::calcIntersectionSegmentToPlane(segment, rPlane, &t) == 1)
             {
                 const sead::Vector3f p = p0 + (p1 - p0) * t;
@@ -319,6 +334,7 @@ void ShadowFrustum::clipPointByPlane_(Polygon* pDst, Polygon* pInter, const Poly
         {
             sead::Segment<sead::Vector3f> segment(p0, p1);
             f32 t;
+
             if (sead::Geometry::calcIntersectionSegmentToPlane(segment, rPlane, &t) == 1)
             {
                 const sead::Vector3f p = p0 + (p1 - p0) * t;
@@ -344,6 +360,7 @@ bool ShadowFrustum::appendIntersectionPoint(Polytope* pDst)
     }
 
     s32 i;
+
     for (i = mInter.mNum - 1; i > 0; i--)
     {
         if (mInter.mPolygons[i]->mNum == 2)
@@ -360,6 +377,7 @@ bool ShadowFrustum::appendIntersectionPoint(Polytope* pDst)
     }
 
     Polygon* pPolygon = pDst->birthBack();
+
     if (!pPolygon)
     {
         return false;
@@ -373,6 +391,7 @@ bool ShadowFrustum::appendIntersectionPoint(Polytope* pDst)
     while (mInter.mNum > 0)
     {
         const s32 index = findSamePointAndSwapFromInter(pPolygon->mPoints[pPolygon->mNum - 1]);
+
         if (index >= 0)
         {
             pPolygon->pushBack(mInter.mPolygons[mInter.mNum - 1]->mPoints[(index + 1) % 2]);
@@ -395,12 +414,14 @@ s32 ShadowFrustum::findSamePointAndSwapFromInter(const sead::Vector3f& rPoint)
     for (s32 i = mInter.mNum - 1; i >= 0; i--)
     {
         const Polygon& polygon = *mInter.mPolygons[i];
+
         if (polygon.mNum != 2)
         {
             continue;
         }
 
         const s32 found = findSamePointFromPolygon(polygon, rPoint);
+
         if (found >= 0)
         {
             mInter.swap(i, mInter.mNum - 1);
@@ -518,11 +539,13 @@ void ShadowFrustum::updateByViewFrustum(const sead::Matrix34f& rViewMtx,
     }
 
     mRadius = 0.0f;
+
     for (s32 i = 0; i < 8; i++)
     {
         for (s32 j = i + 1; j < 8; j++)
         {
             const f32 dist = (mPoints[i] - mPoints[j]).squaredLength();
+
             if (mRadius < dist)
             {
                 mRadius = dist;
@@ -554,6 +577,7 @@ void ShadowFrustum::expandBoundBox(sead::BoundBox3f* pBox, const sead::Matrix44f
     for (s32 i = 0; i < getCurrentPolytope().mNum; i++)
     {
         const Polygon& polygon = *getCurrentPolytope().mPolygons[i];
+
         for (s32 j = 0; j < polygon.mNum; j++)
         {
             sead::Vector3f p = polygon.mPoints[j];
@@ -575,6 +599,7 @@ void ShadowFrustum::expandBoundBox(sead::BoundBox3f* pBox, const sead::Matrix44f
     for (s32 i = 0; i < getCurrentPolytope().mNum; i++)
     {
         const Polygon& polygon = *getCurrentPolytope().mPolygons[i];
+
         for (s32 j = 0; j < polygon.mNum; j++)
         {
             sead::Vector3f p = polygon.mPoints[j];
@@ -597,6 +622,7 @@ void ShadowFrustum::expandBoundBox(sead::BoundBox3f* pBox, const sead::Matrix44f
     for (s32 i = 0; i < getCurrentPolytope().mNum; i++)
     {
         const Polygon& polygon = *getCurrentPolytope().mPolygons[i];
+
         for (s32 j = 0; j < polygon.mNum; j++)
         {
             sead::Vector3f p = polygon.mPoints[j];
@@ -619,6 +645,7 @@ void ShadowFrustum::expandBoundBox(sead::BoundBox3f* pBox, const sead::Matrix34f
     for (s32 i = 0; i < getCurrentPolytope().mNum; i++)
     {
         const Polygon& polygon = *getCurrentPolytope().mPolygons[i];
+
         for (s32 j = 0; j < polygon.mNum; j++)
         {
             sead::Vector3f p = polygon.mPoints[j];
@@ -639,6 +666,7 @@ void ShadowFrustum::expandBoundBox(sead::BoundBox3f* pBox, const sead::Matrix34f
     for (s32 i = 0; i < getCurrentPolytope().mNum; i++)
     {
         const Polygon& polygon = *getCurrentPolytope().mPolygons[i];
+
         for (s32 j = 0; j < polygon.mNum; j++)
         {
             sead::Vector3f p = polygon.mPoints[j];
@@ -659,6 +687,7 @@ void ShadowFrustum::drawFrustum(DrawContext* pDrawContext, const sead::Matrix34f
                                 const sead::Matrix44f& rProjMtx, const sead::Color4f& rColor) const
 {
     utl::DevTools::beginDrawImm(pDrawContext, rViewMtx, rProjMtx);
+
     for (s32 i = 0; i < 4; i++)
     {
         utl::DevTools::drawLineImm(pDrawContext, mPoints[i], mPoints[(i + 1) % 4], rColor, 1.0f);
@@ -674,12 +703,14 @@ void ShadowFrustum::drawFrustum(DrawContext* pDrawContext, const sead::Matrix34f
     {
         const Polygon& polygon = *getCurrentPolytope().mPolygons[i];
         const s32 num = polygon.mNum;
+
         if (num == 0)
         {
             continue;
         }
 
         sead::Vector3f prev = polygon.mPoints[num - 1];
+
         for (s32 j = 0; j < num; j++)
         {
             const sead::Vector3f& p = polygon.mPoints[j];

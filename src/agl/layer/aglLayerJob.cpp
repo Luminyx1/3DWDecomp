@@ -29,6 +29,7 @@ void LayerJob::initialize(Type type, const Layer* pLayer, sead::Heap* pHeap)
 {
     mType = type;
     mLayer = pLayer;
+
     switch (type)
     {
     case cType_Draw:
@@ -68,6 +69,7 @@ void LayerJob::pushBackTo(const RenderDisplay* pDisplay, s32 priority,
 {
     mRenderDisplay = pDisplay;
     mPriority = priority;
+
     if (pArray)
     {
         pArray->pushBack(this);
@@ -90,6 +92,7 @@ void LayerJob::invoke()
 
     RenderDLBuffer* pBuffer = mRenderDisplay->mDLBuffer;
     DrawContext context;
+
     switch (mType)
     {
     case cType_Draw:

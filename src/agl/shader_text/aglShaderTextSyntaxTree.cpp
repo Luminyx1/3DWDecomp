@@ -82,6 +82,7 @@ f64 SyntaxTree::checkAndGetValue() const {
 f64 SyntaxTree::checkAndEvaluate(const SyntaxTree* pTree) const {
     if (pTree) {
         f64 value = pTree->evaluate();
+
         if (!pTree->mIsValid) {
             mIsValid = false;
         }
@@ -98,12 +99,14 @@ f64 SyntaxTree::checkAndEvaluate(const SyntaxTree* pTree) const {
  */
 f64 SyntaxTree::evaluate() const {
     mIsValid = true;
+
     if (!mOperator) {
         mResult = checkAndGetValue();
         return mResult;
     }
 
     u8 type = mOperator->mType;
+
     if (type == Clause::cType_SingleQuote || type == Clause::cType_DoubleQuote) {
         mIsValid = true;
         mResult = 1.0;
@@ -188,6 +191,7 @@ f64 SyntaxTree::evaluate() const {
         {
             bool isRightValid = mRight->mIsValid;
             mResult = 0.0;
+
             if (right == 0.0 && isRightValid) {
                 mIsValid = true;
                 return 0.0;
@@ -249,6 +253,7 @@ f64 SyntaxTree::evaluate() const {
 Clause* SyntaxTree::constructRecursive(sead::Heap* pHeap, sead::Heap* pStringHeap) const {
     if (!mOperator) {
         const Clause* value = mValue;
+
         if (value->mFlag & 1) {
             if (mResult == 1.0) {
                 return new (pHeap) Clause(Clause::cType_Int, "true", "true" + 4);
@@ -324,6 +329,7 @@ Clause* SyntaxTree::constructRecursive(sead::Heap* pHeap, sead::Heap* pStringHea
 
     u32 type = mOperator->mType;
     const Clause::CharacterInfo& info = Clause::cCharacterTable[type];
+
     if (info.mIsUnaryOperator) {
         Clause* list = new (pHeap) Clause(Clause::cType_LParen, "(", "(" + 1);
         list->mPrev->insertListAfter(cloneClause(pHeap, mOperator));
@@ -344,6 +350,7 @@ Clause* SyntaxTree::constructRecursive(sead::Heap* pHeap, sead::Heap* pStringHea
     if (info.mIsBinaryOperator) {
         if ((type & ~1u) == Clause::cType_LogicalAnd) {
             Clause* list = nullptr;
+
             if (mLeft->mIsValid) {
                 list = mRight->constructRecursive(pHeap, pStringHeap);
             } else if (mRight->mIsValid) {

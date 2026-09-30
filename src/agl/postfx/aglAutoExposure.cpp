@@ -27,6 +27,7 @@ void AutoExposureVtxStream::initialize(sead::Heap* pHeap)
 void AutoExposureVtxStream::create(s32 num)
 {
     f32 scale = 0.5f / f32(num);
+
     for (s32 i = 0; i < num; i++)
     {
         f32 fi = f32(i);
@@ -109,6 +110,7 @@ AutoExposure::~AutoExposure()
 void AutoExposure::initialize(s32 contextNum, sead::Heap* pHeap)
 {
     mContexts.tryAllocBuffer(contextNum, pHeap);
+
     for (auto& context : mContexts)
     {
         context.mResults[cResult_Prev0].Create(

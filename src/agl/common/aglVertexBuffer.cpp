@@ -30,6 +30,7 @@ void VertexBuffer::cleanUp_()
     }
 
     nvnBufferFinalize(&mNvnBuffer);
+
     for (s32 i = 0; i < cVertexStreamMax; i++)
     {
         mStreams[i].mEnable = false;
@@ -53,6 +54,7 @@ void VertexBuffer::setUpBuffer(ConstGPUMemVoidAddr buffer, u64 stride, u64 size)
 
     mBuffer = buffer;
     mStride = stride;
+
     if (mStride != 0)
     {
         mVertexNum = size / stride;

@@ -31,6 +31,7 @@ EnvObjSet::~EnvObjSet()
 void EnvObjSet::bind(EnvObjMgr* pMgr)
 {
     mMgr = pMgr;
+
     for (auto& rRef : mRef)
     {
         rRef.mIndex.bind(pMgr);
@@ -43,9 +44,11 @@ void EnvObjSet::allocBuffer(const AllocateArg& rArg, sead::Heap* pHeap)
     mRef.allocBufferAssert(rArg.getTotal(), pHeap);
 
     s32 index = 0;
+
     for (s32 type = 0; type < EnvObj::sTypeNum; type++)
     {
         s32 i = 0;
+
         for (; i < mTypeRange[type].mNum; i++)
         {
             Ref& rRef = mRef[index + i];
@@ -89,6 +92,7 @@ bool EnvObjSet::pushBack(EnvObj* pObj)
     {
         s32 index = mTypeRange[pObj->getTypeID()].mStart + i;
         EnvObj::Index& rIndex = mRef[index].mIndex;
+
         if (!(rIndex.getIndex() >= 0 || rIndex.getIndex() == utl::INamedObjIndex::cIndexNotFound))
         {
             mObj[index] = pObj;
@@ -161,6 +165,7 @@ void EnvObjSet::syncIndex_(utl::INamedObjIndex* pIndex)
         if (&it->mIndex == pIndex)
         {
             s32 index = pIndex->getIndex();
+
             if (index < 0)
             {
                 mObj[it.getIndex()] = nullptr;
@@ -191,6 +196,7 @@ void EnvObjSet::genMessage(sead::hostio::Context* pContext)
     sead::FixedSafeString<1024> str;
     bool isEnable = true;
     s32 typeNum = EnvObj::getTypeNum();
+
     for (s32 type = 0; type < typeNum; type++)
     {
         if (mTypeRange[type].mNum == 0)
@@ -205,6 +211,7 @@ void EnvObjSet::genMessage(sead::hostio::Context* pContext)
             s32 index = mTypeRange[type].mStart + i;
             Ref& rRef = mRef[index];
             rRef.mIndex.genComboBoxSelect(pContext, isEnable);
+
             if (isEnable)
             {
                 genMessageEachObj(pContext, index, mObj[index]);

@@ -157,9 +157,11 @@ void RenderBuffer::bind_(DrawContext* pDrawContext, u16 srgbBitmap) const
     NVNtextureView srgbViews[cRenderTargetColorMax];
 
     s32 colorNum = 0;
+
     for (u32 i = 0; i < cRenderTargetColorMax; i++)
     {
         const RenderTargetColor* pTarget = getRenderTargetColor(i);
+
         if (!pTarget)
         {
             continue;
@@ -169,9 +171,11 @@ void RenderBuffer::bind_(DrawContext* pDrawContext, u16 srgbBitmap) const
         textures[i] = pTarget->getTexture().getTexture();
         pTarget->updateRegs_();
         views[i] = pTarget->getTextureView();
+
         if ((1 << i) & srgbBitmap)
         {
             srgbViews[i] = *pTarget->getTextureView();
+
             if (pTarget->getTextureFormat() ==
                 u16(TextureFormat::cTextureFormat_R8_G8_B8_A8_uNorm))
             {
@@ -185,6 +189,7 @@ void RenderBuffer::bind_(DrawContext* pDrawContext, u16 srgbBitmap) const
     }
 
     const RenderTargetDepth* pDepth = mRenderTargetDepth;
+
     if (pDepth)
     {
         textures[cRenderTargetColorMax] = pDepth->getTexture().getTexture();
@@ -220,6 +225,7 @@ void RenderBuffer::clear(sead::DrawContext* pSeadDrawContext, u32 clearFlag,
                          const sead::Color4f& rColor, f32 depth, u32 stencil) const
 {
     DrawContext* pDrawContext = sead::DynamicCast<DrawContext>(pSeadDrawContext);
+
     if (clearFlag == 0)
     {
         return;
@@ -281,6 +287,7 @@ void RenderBuffer::fastClear(DrawContext* pDrawContext, u32 target, u32 clearFla
     for (u32 i = 0; i < cRenderTargetColorMax; i++)
     {
         const RenderTargetColor* pTarget = getRenderTargetColor(i);
+
         if (pTarget)
         {
             pTarget->updateRegs_();
@@ -324,6 +331,7 @@ bool RenderBuffer::initTextureDataFromBoundColor(DrawContext* pDrawContext,
                                                  TextureData* pTextureData, s32 colorIndex)
 {
     const RenderBuffer* pRenderBuffer = pDrawContext->getBoundRenderBuffer();
+
     if (!pRenderBuffer)
     {
         return false;
@@ -343,6 +351,7 @@ bool RenderBuffer::initTextureDataFromColor(DrawContext* pDrawContext, TextureDa
                                             s32 colorIndex) const
 {
     const RenderTargetColor* pTarget = mRenderTargetColor[colorIndex];
+
     if (!pTarget)
     {
         return false;
@@ -361,6 +370,7 @@ bool RenderBuffer::initTextureDataFromBoundDepth(DrawContext* pDrawContext,
                                                  TextureData* pTextureData)
 {
     const RenderBuffer* pRenderBuffer = pDrawContext->getBoundRenderBuffer();
+
     if (!pRenderBuffer)
     {
         return false;
@@ -379,6 +389,7 @@ bool RenderBuffer::initTextureDataFromDepth(DrawContext* pDrawContext,
                                             TextureData* pTextureData) const
 {
     const RenderTargetDepth* pTarget = mRenderTargetDepth;
+
     if (!pTarget)
     {
         return false;
@@ -399,6 +410,7 @@ bool RenderBuffer::copyTextureDataFromBoundColor(DrawContext* pDrawContext,
                                                  s32 colorIndex)
 {
     const RenderBuffer* pRenderBuffer = pDrawContext->getBoundRenderBuffer();
+
     if (!pRenderBuffer)
     {
         return false;
@@ -420,6 +432,7 @@ bool RenderBuffer::copyTextureDataFromColor(DrawContext* pDrawContext,
                                             s32 colorIndex) const
 {
     const RenderTargetColor* pTarget = mRenderTargetColor[colorIndex];
+
     if (!pTarget)
     {
         return false;
@@ -439,6 +452,7 @@ bool RenderBuffer::copyTextureDataFromBoundDepth(DrawContext* pDrawContext,
                                                  const TextureData* pTextureData)
 {
     const RenderBuffer* pRenderBuffer = pDrawContext->getBoundRenderBuffer();
+
     if (!pRenderBuffer)
     {
         return false;
@@ -458,6 +472,7 @@ bool RenderBuffer::copyTextureDataFromDepth(DrawContext* pDrawContext,
                                             const TextureData* pTextureData) const
 {
     const RenderTargetDepth* pTarget = mRenderTargetDepth;
+
     if (!pTarget)
     {
         return false;

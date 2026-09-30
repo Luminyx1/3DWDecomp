@@ -272,6 +272,7 @@ void ShaderHolder::initialize(sead::ArchiveRes* pArchive, sead::Heap* pHeap) {
 
     for (s32 i = 0; i < cProgram_Num; i++) {
         ShaderProgramArchive& rArchive = mArchives[cProgramInfo[i].mArchive];
+
         if (!rArchive.isValid()) {
             mShaderPrograms.pushBack(nullptr);
             continue;
@@ -1344,6 +1345,7 @@ void ShaderHolder::initialize(sead::ArchiveRes* pArchive, sead::Heap* pHeap) {
 void ShaderHolder::genMessage(sead::hostio::Context* pContext) {
     s32 programNum = 0;
     s32 variationNum = 0;
+
     for (const auto& rArchive : mArchives) {
         programNum += rArchive.getShaderProgramNum();
         variationNum += rArchive.getVariationNum();

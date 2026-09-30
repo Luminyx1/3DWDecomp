@@ -393,6 +393,7 @@ bool ResShaderArchive::setUp()
 
             ResShaderUniformBlockArray blockArray = getResShaderUniformBlockArray(prog);
             blockArray.modifyEndianArray(modifyEndian());
+
             for (ResShaderUniformBlockArray::iterator block = blockArray.begin(),
                                                       blockEnd = blockArray.end();
                  block != blockEnd; ++block)

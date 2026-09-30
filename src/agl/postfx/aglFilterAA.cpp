@@ -31,6 +31,7 @@ FilterAA::~FilterAA()
     for (s32 i = 0; i < mContexts.size(); i++)
     {
         GPUMemBlock<u8>& buffer = mContexts[i].mHistoryBuffer;
+
         if (buffer.isAllocated())
         {
             buffer.freeBuffer();
@@ -44,9 +45,11 @@ FilterAA::~FilterAA()
 void FilterAA::initialize(const InitializeArg& rArg, sead::Heap* pHeap)
 {
     mContexts.tryAllocBuffer(rArg.mContextNum, pHeap);
+
     for (s32 i = 0; i < mContexts.size(); i++)
     {
         mContexts[i].mIsValid = true;
+
         if (rArg.mReprojectionBufferSize != 0)
         {
             GPUMemBlock<u8>& buffer = mContexts[i].mHistoryBuffer;
@@ -149,6 +152,7 @@ void FilterAA::draw(DrawContext* pDrawContext, u32 context, const RenderBuffer& 
     Context& ctx = getContext_(context);
     sead::Vector2f size;
     rViewport.getOnFrameBufferSize(&size, rRenderBuffer);
+
     if (ctx.mHistoryTexture.getWidth(0) != size.x || ctx.mHistoryTexture.getHeight(0) != size.y)
     {
         ctx.mHistoryTexture.initialize_(
@@ -187,6 +191,7 @@ void FilterAA::draw(DrawContext* pDrawContext, u32 context, const RenderBuffer& 
                     const TextureSampler* pHistory) const
 {
     mGraphicsContext.apply(pDrawContext);
+
     if (*mEnable && getContext_(context).mIsValid && *mAlphaOut > 0.0f)
     {
         switch (*mType)
@@ -242,6 +247,7 @@ void FilterAA::FXAA(DrawContext* pDrawContext, u32 context, const RenderBuffer& 
 
         f32 edgeThreshold;
         f32 edgeThresholdMin;
+
         switch (*mDetectEdgeQuality)
         {
         case 2:
@@ -274,6 +280,7 @@ void FilterAA::FXAA(DrawContext* pDrawContext, u32 context, const RenderBuffer& 
         span.z = 1.0f / (*mSpanMultiply * 8.0f);
         span.w = *mSpanMinimum * 0.1f;
         f32 lumaSum = mLumaCoeff->r + mLumaCoeff->g;
+
         if (lumaSum == 0.0f)
         {
             lumaSum = 1.0f;
@@ -534,6 +541,7 @@ void FilterAA::listenPropertyEvent(const sead::hostio::PropertyEvent* pEvent)
     if (listenPropertyEventIO(this, pEvent) == 0)
     {
         uintptr_t id = pEvent->getIdValue();
+
         if (id == 100)
         {
             *mLumaCoeff = cDefaultLumaCoeff;

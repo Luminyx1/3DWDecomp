@@ -189,6 +189,7 @@ void ShaderProgram::createVariation(sead::Heap* pHeap)
 void ShaderProgram::VariationBuffer::create(sead::Heap* pHeap)
 {
     s32 program_num = 1;
+
     for (auto it = mMacros.begin(), it_end = mMacros.end(); it != it_end; ++it) {
         for (s32 i = it.getIndex() + 1; i < mMacros.size(); i++) {
             it->mStride *= mMacros[i].mValues.size();
@@ -198,6 +199,7 @@ void ShaderProgram::VariationBuffer::create(sead::Heap* pHeap)
     }
 
     mPrograms.tryAllocBuffer(program_num - 1, pHeap);
+
     for (auto it = mPrograms.begin(), it_end = mPrograms.end(); it != it_end; ++it) {
         Variation* variation = mProgram->mVariation;
         it->mVariationIndex = it.getIndex() + 1;
@@ -251,6 +253,7 @@ void ShaderProgram::initialize(ResShaderProgram program, sead::Heap* pHeap)
         for (auto it = block_array.begin(), it_end = block_array.end(); it != it_end; ++it) {
             ResShaderUniformBlock block(&(*it));
             const char* name = block.getName();
+
             if (ShaderCompileInfo::getRegitserUniformBlockName().isEqual(name)) {
                 mVariation->mRegisterUniformBlockLocation = block.getLocation();
             }
@@ -276,6 +279,7 @@ void ShaderProgram::initialize(ResBinaryShaderProgram program, sead::Heap* pHeap
 void ShaderProgram::createAttribute(s32 num, sead::Heap* pHeap)
 {
     mAttributeLocation.tryAllocBuffer(num, pHeap);
+
     for (auto& program : mVariation->mVariationBuffer.mPrograms) {
         program.mAttributeLocation.tryAllocBuffer(num, pHeap);
     }
@@ -289,6 +293,7 @@ void ShaderProgram::createAttribute(s32 num, sead::Heap* pHeap)
 void ShaderProgram::setAttributeName(s32 index, const sead::SafeString& rName)
 {
     mAttributeLocation[index].setName(rName);
+
     for (auto& program : mVariation->mVariationBuffer.mPrograms) {
         program.mAttributeLocation[index].setName(rName);
     }
@@ -300,6 +305,7 @@ void ShaderProgram::setAttributeName(s32 index, const sead::SafeString& rName)
 void ShaderProgram::destroyAttribute()
 {
     mAttributeLocation.freeBuffer();
+
     for (auto& program : mVariation->mVariationBuffer.mPrograms) {
         program.mAttributeLocation.freeBuffer();
     }
@@ -313,6 +319,7 @@ void ShaderProgram::destroyAttribute()
 void ShaderProgram::createUniform(s32 num, sead::Heap* pHeap)
 {
     mUniformLocation.tryAllocBuffer(num, pHeap);
+
     for (auto& program : mVariation->mVariationBuffer.mPrograms) {
         program.mUniformLocation.tryAllocBuffer(num, pHeap);
     }
@@ -326,6 +333,7 @@ void ShaderProgram::createUniform(s32 num, sead::Heap* pHeap)
 void ShaderProgram::setUniformName(s32 index, const sead::SafeString& rName)
 {
     mUniformLocation[index].setName(rName);
+
     for (auto& program : mVariation->mVariationBuffer.mPrograms) {
         program.mUniformLocation[index].setName(rName);
     }
@@ -337,6 +345,7 @@ void ShaderProgram::setUniformName(s32 index, const sead::SafeString& rName)
 void ShaderProgram::destroyUniform()
 {
     mUniformLocation.freeBuffer();
+
     for (auto& program : mVariation->mVariationBuffer.mPrograms) {
         program.mUniformLocation.freeBuffer();
     }
@@ -350,6 +359,7 @@ void ShaderProgram::destroyUniform()
 void ShaderProgram::createSamplerLocation(s32 num, sead::Heap* pHeap)
 {
     mSamplerLocation.tryAllocBuffer(num, pHeap);
+
     for (auto& program : mVariation->mVariationBuffer.mPrograms) {
         program.mSamplerLocation.tryAllocBuffer(num, pHeap);
     }
@@ -363,6 +373,7 @@ void ShaderProgram::createSamplerLocation(s32 num, sead::Heap* pHeap)
 void ShaderProgram::setSamplerLocationName(s32 index, const sead::SafeString& rName)
 {
     mSamplerLocation[index].setName(rName);
+
     for (auto& program : mVariation->mVariationBuffer.mPrograms) {
         program.mSamplerLocation[index].setName(rName);
     }
@@ -374,6 +385,7 @@ void ShaderProgram::setSamplerLocationName(s32 index, const sead::SafeString& rN
 void ShaderProgram::destroySamplerLocation()
 {
     mSamplerLocation.freeBuffer();
+
     for (auto& program : mVariation->mVariationBuffer.mPrograms) {
         program.mSamplerLocation.freeBuffer();
     }
@@ -387,6 +399,7 @@ void ShaderProgram::destroySamplerLocation()
 void ShaderProgram::createImageLocation(s32 num, sead::Heap* pHeap)
 {
     mImageLocation.tryAllocBuffer(num, pHeap);
+
     for (auto& program : mVariation->mVariationBuffer.mPrograms) {
         program.mImageLocation.tryAllocBuffer(num, pHeap);
     }
@@ -400,6 +413,7 @@ void ShaderProgram::createImageLocation(s32 num, sead::Heap* pHeap)
 void ShaderProgram::setImageLocationName(s32 index, const sead::SafeString& rName)
 {
     mImageLocation[index].setName(rName);
+
     for (auto& program : mVariation->mVariationBuffer.mPrograms) {
         program.mImageLocation[index].setName(rName);
     }
@@ -411,6 +425,7 @@ void ShaderProgram::setImageLocationName(s32 index, const sead::SafeString& rNam
 void ShaderProgram::destroyImageLocation()
 {
     mImageLocation.freeBuffer();
+
     for (auto& program : mVariation->mVariationBuffer.mPrograms) {
         program.mImageLocation.freeBuffer();
     }
@@ -424,6 +439,7 @@ void ShaderProgram::destroyImageLocation()
 void ShaderProgram::createUniformBlock(s32 num, sead::Heap* pHeap)
 {
     mUniformBlockLocation.tryAllocBuffer(num, pHeap);
+
     for (auto& program : mVariation->mVariationBuffer.mPrograms) {
         program.mUniformBlockLocation.tryAllocBuffer(num, pHeap);
     }
@@ -437,6 +453,7 @@ void ShaderProgram::createUniformBlock(s32 num, sead::Heap* pHeap)
 void ShaderProgram::setUniformBlockName(s32 index, const sead::SafeString& rName)
 {
     mUniformBlockLocation[index].setName(rName);
+
     for (auto& program : mVariation->mVariationBuffer.mPrograms) {
         program.mUniformBlockLocation[index].setName(rName);
     }
@@ -448,6 +465,7 @@ void ShaderProgram::setUniformBlockName(s32 index, const sead::SafeString& rName
 void ShaderProgram::destroyUniformBlock()
 {
     mUniformBlockLocation.freeBuffer();
+
     for (auto& program : mVariation->mVariationBuffer.mPrograms) {
         program.mUniformBlockLocation.freeBuffer();
     }
@@ -461,6 +479,7 @@ void ShaderProgram::destroyUniformBlock()
 void ShaderProgram::createShaderStorageBlock(s32 num, sead::Heap* pHeap)
 {
     mShaderStorageBlockLocation.tryAllocBuffer(num, pHeap);
+
     for (auto& program : mVariation->mVariationBuffer.mPrograms) {
         program.mShaderStorageBlockLocation.tryAllocBuffer(num, pHeap);
     }
@@ -474,6 +493,7 @@ void ShaderProgram::createShaderStorageBlock(s32 num, sead::Heap* pHeap)
 void ShaderProgram::setShaderStorageBlockName(s32 index, const sead::SafeString& rName)
 {
     mShaderStorageBlockLocation[index].setName(rName);
+
     for (auto& program : mVariation->mVariationBuffer.mPrograms) {
         program.mShaderStorageBlockLocation[index].setName(rName);
     }
@@ -485,6 +505,7 @@ void ShaderProgram::setShaderStorageBlockName(s32 index, const sead::SafeString&
 void ShaderProgram::destroyShaderStorageBlock()
 {
     mShaderStorageBlockLocation.freeBuffer();
+
     for (auto& program : mVariation->mVariationBuffer.mPrograms) {
         program.mShaderStorageBlockLocation.freeBuffer();
     }
@@ -503,8 +524,10 @@ void ShaderProgram::setUpForVariation_() const
 
     for (s32 type = 0; type < cShaderType_Num; type++) {
         ShaderCompileInfo* info = base->getShader(ShaderType(type)).getCompileInfo();
+
         if (info != nullptr) {
             info->clearVariation();
+
             for (s32 i = 0; i < macro_num; i++) {
                 info->pushBackVariation(macros[i], values[i]);
             }
@@ -591,6 +614,7 @@ s32 ShaderProgram::forceValidate_(bool) const
                                               &mComputeShader};
     for (s32 type = 0; type < cShaderType_Num; type++) {
         const auto* info = static_cast<const ResShaderBinaryInfo*>(shaders[type]->getShaderBinary());
+
         if (info == nullptr) {
             continue;
         }
@@ -612,8 +636,10 @@ s32 ShaderProgram::forceValidate_(bool) const
     NVNshaderData data[cShaderType_Num];
     u16 stages = 0;
     s32 count = 0;
+
     for (s32 type = 0; type < cShaderType_Num; type++) {
         const auto* info = static_cast<const ResShaderBinaryInfo*>(shaders[type]->getShaderBinary());
+
         if (info == nullptr) {
             continue;
         }
@@ -757,6 +783,7 @@ void ShaderProgram::activate(DrawContext* pDrawContext, bool) const
 s32 ShaderProgram::setUpAllVariation(bool force)
 {
     ShaderProgram* base = mVariation->mVariationBuffer.mProgram;
+
     if (force) {
         base->forceValidate_(false);
     } else {
@@ -780,6 +807,7 @@ s32 ShaderProgram::setUpAllVariation(bool force)
 void ShaderProgram::reserveSetUpAllVariation()
 {
     mVariation->mVariationBuffer.mProgram->mFlags |= cFlag_ReserveSetUp;
+
     for (auto& program : mVariation->mVariationBuffer.mPrograms) {
         program.mFlags |= cFlag_ReserveSetUp;
     }
@@ -896,6 +924,7 @@ s32 ShaderProgram::getSamplerSymbol(SamplerSymbol* pSymbol, s32 maxNum) const
     }
 
     s32 num = 0;
+
     for (s32 type = 0; type < cShaderType_Num; type++) {
         const auto* info =
             static_cast<const ResShaderBinaryInfo*>(getShader(ShaderType(type)).getShaderBinary());
@@ -908,6 +937,7 @@ s32 ShaderProgram::getSamplerSymbol(SamplerSymbol* pSymbol, s32 maxNum) const
             const s32 location = info->mVar4[i]._8;
 
             s32 j = 0;
+
             for (; j < num; j++) {
                 if (pSymbol[j].mName.isEqual(name)) {
                     break;
@@ -966,6 +996,7 @@ bool ShaderProgram::calcCompileSource(ShaderType type, sead::BufferedSafeString*
     setUpForVariation_();
 
     const ShaderCompileInfo* info = getShader(type).getCompileInfo();
+
     if (info != nullptr) {
         info->calcCompileSource(type, pSource, target, true);
         return true;
@@ -987,6 +1018,7 @@ bool ShaderProgram::calcCompileSourceNoVariation(ShaderType type,
                                                  ShaderCompileInfo::Target target) const
 {
     const ShaderProgram* base = mVariation->mVariationBuffer.mProgram;
+
     if (ShaderCompileInfo* info = base->mVertexShader.getCompileInfo()) {
         info->clearVariation();
     }
@@ -1004,6 +1036,7 @@ bool ShaderProgram::calcCompileSourceNoVariation(ShaderType type,
     }
 
     const ShaderCompileInfo* info = getShader(type).getCompileInfo();
+
     if (info != nullptr) {
         info->calcCompileSource(type, pSource, target, false);
         return true;
@@ -1040,6 +1073,7 @@ ShaderProgram::VariationBuffer::VariationBuffer() : mProgram(nullptr) {}
 ShaderProgram::VariationBuffer::~VariationBuffer()
 {
     mPrograms.freeBuffer();
+
     for (auto& macro : mMacros) {
         macro.mValues.freeBuffer();
     }
@@ -1066,6 +1100,7 @@ s32 ShaderProgram::VariationBuffer::searchShaderProgramIndex(s32 macroNum,
         std::memset(value_index, 0, mMacros.size() * sizeof(s32));
     } else {
         s32* value = value_index;
+
         for (const auto& macro : mMacros) {
             *value = baseIndex / macro.mStride;
             baseIndex -= *value * macro.mStride;
@@ -1096,6 +1131,7 @@ s32 ShaderProgram::VariationBuffer::searchShaderProgramIndex(s32 macroNum,
     }
 
     s32 index = 0;
+
     for (s32 i = 0; i < mMacros.size(); i++) {
         index += value_index[i] * mMacros(i).mStride;
     }
@@ -1115,6 +1151,7 @@ const char* ShaderProgram::VariationBuffer::searchMacroValue(s32 programIndex,
     for (const auto& macro : mMacros) {
         const s32 value = programIndex / macro.mStride;
         programIndex -= value * macro.mStride;
+
         if (macro.mName.isEqual(pName)) {
             return macro.mValues[value].cstr();
         }

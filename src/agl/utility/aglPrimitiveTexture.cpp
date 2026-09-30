@@ -77,6 +77,7 @@ void PrimitiveTexture::initialize(sead::Heap* pHeap)
     TextureData texture;
     TextureFormat format = TextureFormat::cTextureFormat_R8_G8_B8_A8_uNorm;
     u32 color;
+
     for (s32 i = 0; i < cType_Num; i++)
     {
         texture.setDebugLabel(cTextureName[i]);
@@ -195,6 +196,7 @@ void PrimitiveTexture::initialize(sead::Heap* pHeap)
         if (i == cType_MipLevel)
         {
             u32* image = static_cast<u32*>(addr.getPtr());
+
             for (u32 y = 0; y < u32(texture.getMipHeight(0)); y++)
             {
                 for (u32 x = 0; x < u32(texture.getMipWidth(0)); x++)
@@ -206,6 +208,7 @@ void PrimitiveTexture::initialize(sead::Heap* pHeap)
         else
         {
             u32* image = static_cast<u32*>(addr.getPtr());
+
             for (u32 j = 0; j < texture.getSurface().mStorageSize / 4; j++)
             {
                 image[j] = color;
@@ -216,6 +219,7 @@ void PrimitiveTexture::initialize(sead::Heap* pHeap)
         driver::NVNMgr::instance()->toTile(&texture);
 
         mSamplers[i] = new (pHeap, 8) TextureSampler(texture);
+
         if (i == cType_DepthShadow || i == cType_DepthShadowArray)
         {
             mSamplers[i]->setWrap(7, 7, 7);

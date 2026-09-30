@@ -126,6 +126,7 @@ SSAO::SSAO()
 {
     addObj(&mParameter, "ssao");
     const sead::Vector4f zero = sead::Vector4f::zero;
+
     for (s32 i = 0; i < 9; i++)
     {
         mSphereVolume[i] = zero;
@@ -138,6 +139,7 @@ SSAO::SSAO()
 SSAO::~SSAO()
 {
     mContexts.freeBuffer();
+
     if (mRotateTextureBuffer.isValid())
     {
         mRotateTextureBuffer.deleteGPUMemBlock();
@@ -178,11 +180,13 @@ void SSAO::initialize(s32 contextNum, sead::Heap* pHeap)
 void SSAO::initRotateTexture_(bool force)
 {
     u16* pImage = static_cast<u16*>(mRotateTextureBuffer.getPtr());
+
     for (s32 y = 0; y < 4; y++)
     {
         for (s32 x = 0; x < 4; x++)
         {
             s32 index = y * 4 + x + 1;
+
             if (index >= 16)
             {
                 index = 0;
@@ -225,6 +229,7 @@ void SSAO::initSphereVolume_(s32 resolution, bool force)
     f32 weights[cSampleMax];
     samples[0].set(0.0f, 0.0f);
     weights[0] = 0.0f;
+
     for (s32 i = 0; i < pairNum; i++)
     {
         const f32 radius = (1.0f / (pairNum + 1.0f)) * (i + 1.2f);
@@ -241,14 +246,17 @@ void SSAO::initSphereVolume_(s32 resolution, bool force)
 
     const s32 sampleNum = pairNum * 2 + 1;
     f32 total = 0.0f;
+
     for (s32 y = 0; y < resolution; y++)
     {
         const s32 half = resolution / 2;
         const f32 fy = static_cast<f32>(y - half) / half;
+
         for (s32 x = 0; x < resolution; x++)
         {
             const f32 fx = static_cast<f32>(x - half) / half;
             const f32 dist = fy * fy + fx * fx;
+
             if (dist > 1.0f)
             {
                 continue;
@@ -256,11 +264,13 @@ void SSAO::initSphereVolume_(s32 resolution, bool force)
 
             f32 minDist = dist;
             s32 nearest = 0;
+
             for (s32 k = 1; k < sampleNum; k++)
             {
                 const f32 dx = fx - samples[k].x;
                 const f32 dy = fy - samples[k].y;
                 const f32 d = dx * dx + dy * dy;
+
                 if (minDist > d)
                 {
                     minDist = d;
@@ -349,6 +359,7 @@ void SSAO::drawToAOBuffer(DrawContext* pDrawContext, s32 index, s32 width, s32 h
 void SSAO::release(s32 index)
 {
     Context& context = mContexts[index];
+
     if (context.mAOBuffer)
     {
         utl::DynamicTextureAllocator::instance()->free(context.mAOBuffer);

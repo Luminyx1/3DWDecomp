@@ -17,6 +17,7 @@ inline void mergeBox(sead::BoundBox3f* pDst, const sead::BoundBox3f& rSrc)
 {
     sead::Vector3f& min = const_cast<sead::Vector3f&>(pDst->getMin());
     sead::Vector3f& max = const_cast<sead::Vector3f&>(pDst->getMax());
+
     if (min.x > rSrc.getMin().x)
     {
         min.x = rSrc.getMin().x;
@@ -87,6 +88,7 @@ sead::BitFlag32 DepthShadow::checkAndUpdateLightSpaceDirectional_(const T& rBoun
     sead::BoundBox3f box;
     sead::BitFlag32 result = 0;
     bool converted = false;
+
     for (s32 i = 0; i < *mCascadeNum; i++)
     {
         if (skip.isOnBit(i))
@@ -95,6 +97,7 @@ sead::BitFlag32 DepthShadow::checkAndUpdateLightSpaceDirectional_(const T& rBoun
         }
 
         DepthShadowUnit& unit = mUnits[i];
+
         if (unit.isCulled(rBounding))
         {
             continue;
@@ -165,6 +168,7 @@ void DepthShadow::initialize(const CreateArg& rArg, sead::Heap* pHeap)
     mShadowMap.initialize(arg, pHeap);
 
     addObj(&mParamObj, "depth_shadow");
+
     for (s32 i = 0; i < rArg.mCascadeNum; i++)
     {
         addObj(&mUnits[i], sead::FormatFixedSafeString<32>("shadow_unit_%d", i));
@@ -196,16 +200,19 @@ void DepthShadow::drawShadowMap(DrawContext* pDrawContext) const
     arg.mDrawContext = pDrawContext;
 
     ShadowMap& shadowMap = const_cast<ShadowMap&>(mShadowMap);
+
     for (s32 i = 0; i < num; i++)
     {
         const DepthShadowUnit& unit = mUnits[i];
         shadowMap.beginDepthBuffer(pDrawContext, i, unit.getTexOffset(), unit.getTexScale());
+
         if (*mDepthClamp)
         {
             driver::GraphicsDriverMgr::instance()->setDepthClamp(pDrawContext, true);
         }
 
         arg.mIndex = i;
+
         if (mDrawCallback)
         {
             mDrawCallback->invoke(arg);
@@ -308,6 +315,7 @@ sead::BitFlag32 DepthShadow::checkAndUpdateLightSpace_(const T& rBounding, s32 t
     sead::BoundBox3f box;
     sead::BitFlag32 result = 0;
     bool converted = false;
+
     for (s32 i = 0; i < *mCascadeNum; i++)
     {
         if (skip.isOnBit(i))
@@ -316,6 +324,7 @@ sead::BitFlag32 DepthShadow::checkAndUpdateLightSpace_(const T& rBounding, s32 t
         }
 
         DepthShadowUnit& unit = mUnits[i];
+
         if (unit.isCulled(rBounding))
         {
             continue;
@@ -345,6 +354,7 @@ sead::BitFlag32 DepthShadow::checkAndUpdateWorld_(const sead::BoundBox3f& rBox, 
                                                   sead::BitFlag32 skip)
 {
     sead::BitFlag32 result = 0;
+
     for (s32 i = 0; i < *mCascadeNum; i++)
     {
         if (skip.isOnBit(i))
@@ -353,6 +363,7 @@ sead::BitFlag32 DepthShadow::checkAndUpdateWorld_(const sead::BoundBox3f& rBox, 
         }
 
         DepthShadowUnit& unit = mUnits[i];
+
         if (unit.isCulled(rBox))
         {
             continue;
@@ -378,6 +389,7 @@ sead::BitFlag32 DepthShadow::checkAndUpdateWorld_(const sead::Sphere<sead::Vecto
     sead::BoundBox3f box;
     sead::BitFlag32 result = 0;
     bool converted = false;
+
     for (s32 i = 0; i < *mCascadeNum; i++)
     {
         if (skip.isOnBit(i))
@@ -386,6 +398,7 @@ sead::BitFlag32 DepthShadow::checkAndUpdateWorld_(const sead::Sphere<sead::Vecto
         }
 
         DepthShadowUnit& unit = mUnits[i];
+
         if (unit.isCulled(rSphere))
         {
             continue;
@@ -415,6 +428,7 @@ template <typename T>
 sead::BitFlag32 DepthShadow::checkOnly_(const T& rBounding, s32 type, sead::BitFlag32 skip)
 {
     sead::BitFlag32 result = 0;
+
     for (s32 i = 0; i < *mCascadeNum; i++)
     {
         if (skip.isOnBit(i))
@@ -444,6 +458,7 @@ template <typename T>
 sead::BitFlag32 DepthShadow::noCheck_(const T& rBounding, s32 type, sead::BitFlag32 skip)
 {
     sead::BitFlag32 result = 0;
+
     for (s32 i = 0; i < *mCascadeNum; i++)
     {
         if (!skip.isOnBit(i))
@@ -497,9 +512,11 @@ void DepthShadow::drawDebug(DrawContext* pDrawContext, const sead::Matrix34f& rV
     }
 
     const s32 num = *mCascadeNum;
+
     for (s32 i = 0; i < num; i++)
     {
         const_cast<DepthShadowUnit&>(mUnits[i]).setDrawDebug((mDebugDrawFlag & (1 << i)) != 0);
+
         if (mDebugDrawFlag & (1 << i))
         {
             mUnits[i].drawDebug(pDrawContext, mLightMatrix, rViewMtx, rProjMtx);
@@ -522,6 +539,7 @@ void DepthShadow::genMessage(sead::hostio::Context* pContext)
     genMessageIO(pContext, 0xf);
     mShadowMap.genMessageParameter(pContext, this);
     const s32 num = *mCascadeNum;
+
     for (s32 i = 0; i < num; i++)
     {
         mUnits[i].genMessageParameter(pContext, this);
@@ -539,6 +557,7 @@ void DepthShadow::genMessageParameter(sead::hostio::Context* pContext, sead::hos
 {
     mShadowMap.genMessageParameter(pContext, pNode);
     const s32 num = *mCascadeNum;
+
     for (s32 i = 0; i < num; i++)
     {
         mUnits[i].genMessageParameter(pContext, pNode);
@@ -558,6 +577,7 @@ void DepthShadow::genMessageDebugParameter(sead::hostio::Context* pContext,
     }
 
     const s32 num = *mCascadeNum;
+
     for (s32 i = 0; i < num; i++)
     {
         sead::FormatFixedSafeString<32> frustum("Cascade %d Frustum", i);
@@ -565,6 +585,7 @@ void DepthShadow::genMessageDebugParameter(sead::hostio::Context* pContext,
     }
 
     const s32 cascadeNum = *mCascadeNum;
+
     for (s32 i = 0; i < cascadeNum; i++)
     {
         sead::FormatFixedSafeString<32> near("Frustum Near %d", i);

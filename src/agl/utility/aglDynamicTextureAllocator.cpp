@@ -19,15 +19,18 @@ void shakerSort(sead::PtrArray<T>* pArray, Compare cmp)
 {
     T** ptrs = pArray->data();
     s32 hi = pArray->size() - 1u;
+
     if (hi <= 0)
     {
         return;
     }
 
     s32 lo = 0;
+
     while (lo < hi)
     {
         s32 last = lo;
+
         for (s32 i = lo; i < hi; i++)
         {
             if (cmp(ptrs[i], ptrs[i + 1]) > 0)
@@ -40,12 +43,14 @@ void shakerSort(sead::PtrArray<T>* pArray, Compare cmp)
         }
 
         hi = last;
+
         if (hi <= lo)
         {
             break;
         }
 
         last = hi;
+
         for (s32 i = hi; i > lo; i--)
         {
             if (cmp(ptrs[i], ptrs[i - 1]) <= 0)
@@ -112,6 +117,7 @@ void DynamicTextureAllocator::initialize(s32 textureNum, u64 size, u64 debugSize
 
     GPUMemVoidAddr debugAddr;
     u64 debugHeapSize = 0;
+
     if (debugSize != 0 && pDebugHeap)
     {
         auto* pDebugBlock = new (pDebugHeap) GPUMemBlock<u8>;
@@ -121,9 +127,11 @@ void DynamicTextureAllocator::initialize(s32 textureNum, u64 size, u64 debugSize
     }
 
     s32 storageIndex = 0;
+
     for (auto& rStorage : mStorages)
     {
         rStorage.mIsUseStorage = (attribute & 0x80) != 0;
+
         switch (storageIndex)
         {
         case 0:
@@ -155,9 +163,11 @@ void DynamicTextureAllocator::initialize(s32 textureNum, u64 size, u64 debugSize
         Context& rContext = mContexts[i];
         rContext.mAllocators.tryAllocBuffer(cStorageNum, pHeap);
         s32 allocatorIndex = 0;
+
         for (auto& rAllocator : rContext.mAllocators)
         {
             Storage& rStorage = mStorages[allocatorIndex];
+
             if (rStorage.mAddr.isValid())
             {
                 rAllocator.initialize(rStorage.mAddr,
@@ -189,6 +199,7 @@ void DynamicTextureAllocator::initialize(s32 textureNum, u64 size, u64 debugSize
 void DynamicTextureAllocator::setDebugHeap(sead::Heap* pHeap)
 {
     mDebugHeap = pHeap;
+
     for (s32 i = 0; i < cContextNum; i++)
     {
         mContexts[i].mAllocators[2].setHeap(pHeap);
@@ -201,6 +212,7 @@ void DynamicTextureAllocator::setDebugHeap(sead::Heap* pHeap)
 void DynamicTextureAllocator::calc()
 {
     mFlags.set(0x4000);
+
     if (mFreeAddrNum == 0)
     {
         return;
@@ -209,6 +221,7 @@ void DynamicTextureAllocator::calc()
     driver::GraphicsDriverMgr::instance()->waitDrawDone();
     const u32 num = sead::Mathu::clampMax(mFreeAddrNum, mFreeAddrs.size());
     FreeAddr* pAddr = mFreeAddrs.getBufferPtr();
+
     for (u32 i = 0; i != num; i++)
     {
         pAddr[i].deleteGPUMemBlock();
@@ -259,6 +272,7 @@ TextureDataEx* DynamicTextureAllocator::alloc_(DrawContext* pDrawContext, Contex
 
     mTextureCS.lock();
     mFrame++;
+
     if (mFlags.isOn(0x40))
     {
         for (auto& rTexture : mTextures)
@@ -280,6 +294,7 @@ TextureDataEx* DynamicTextureAllocator::alloc_(DrawContext* pDrawContext, Contex
         else
         {
             s32 maxAge = 0;
+
             for (auto& rTexture : mTextures)
             {
                 if (rTexture.mState.isOn(1))
@@ -288,6 +303,7 @@ TextureDataEx* DynamicTextureAllocator::alloc_(DrawContext* pDrawContext, Contex
                 }
 
                 const s32 age = sead::Mathi::abs(mFrame - rTexture.mFrame);
+
                 if (rTexture.mState.isOn(2) && mTextures.size() < age)
                 {
                     rTexture.mFrame = 0;
@@ -320,6 +336,7 @@ TextureDataEx* DynamicTextureAllocator::alloc_(DrawContext* pDrawContext, Contex
         if (!pTexture)
         {
             u32 i = 0;
+
             while (mTextures.getBufferPtr()[i].mState.isOn(1))
             {
                 i++;
@@ -348,6 +365,7 @@ TextureDataEx* DynamicTextureAllocator::alloc_(DrawContext* pDrawContext, Contex
     TextureMemoryAllocator& rAllocator = pContext->mAllocators[allocatorIndex];
     pTexture->mAllocatorIndex = allocatorIndex;
     pTexture->mMemoryBlock = rAllocator.alloc(pTexture->mAllocateArg, pAddr, withContext);
+
     if (pTexture->mMemoryBlock && !isValid_(withContext ? pContext : nullptr))
     {
         rAllocator.free(pTexture->mMemoryBlock, true);
@@ -674,6 +692,7 @@ bool DynamicTextureAllocator::free_(const TextureData* pTexture)
     auto* pTextureEx = const_cast<TextureDataEx*>(static_cast<const TextureDataEx*>(pTexture));
 
     sead::ScopedLock<sead::CriticalSection> allocatorLock(&mAllocatorCS);
+
     if (mFlags.isOn(0x4000))
     {
         if (pTextureEx->mMemoryBlock->mMemBlockAddr.isValid())
@@ -707,6 +726,7 @@ void DynamicTextureAllocator::beginCache()
 {
     Context& rContext = getCurrentContext();
     rContext.mSuspendSize = DisplayList::suspend(&rContext.mSuspendMemory);
+
     if (rContext.mDisplayList.beginDisplayList())
     {
         rContext.mFlags.set(cContextFlag_DisplayList);
@@ -721,6 +741,7 @@ void DynamicTextureAllocator::beginCache()
 void DynamicTextureAllocator::endCache()
 {
     Context& rContext = getCurrentContext();
+
     if (rContext.mFlags.isOn(cContextFlag_DisplayList))
     {
         rContext.mDisplayList.endDisplayList();
@@ -744,6 +765,7 @@ bool DynamicTextureAllocator::queryTextureMemoryInfo(
     for (s32 i = 0; i < mTextures.size(); i++)
     {
         const TextureDataEx& rTexture = mTextures[i];
+
         if (rTexture.mMemoryBlock == pBlock)
         {
             if (ppName)
@@ -805,6 +827,7 @@ void TextureDataEx::initialize(TextureFormat format, TextureType type, u32 width
     mInfo.set(1);
 
     u32 attribute = flags & 1;
+
     if ((flags & 4) && TextureFormatInfo::isRenderTargetCompressAvailable(format) &&
         !mOption.isOn(0x20))
     {
@@ -812,6 +835,7 @@ void TextureDataEx::initialize(TextureFormat format, TextureType type, u32 width
     }
 
     const auto textureAttribute = TextureAttribute(attribute | ((mAttributeFlags & 8) >> 1));
+
     switch (s32(type))
     {
     case 0:
@@ -866,6 +890,7 @@ void TextureDataEx::initialize(TextureFormat format, TextureType type, u32 width
     const detail::Surface& rSurface = getSurface();
     mAllocateArg.mAlignment = rSurface.mAlignment;
     mAllocateArg.mImageOffset = rSurface.mStorageSize;
+
     if (getMipLevelNum() >= 2)
     {
         mAllocateArg.mMipSize = rSurface._14;
@@ -880,6 +905,7 @@ void TextureDataEx::initialize(TextureFormat format, TextureType type, u32 width
     mAllocateArg.mStorageClass = rSurface.mStorageClass;
 
     u32 size = mAllocateArg.mImageOffset;
+
     if (mAllocateArg.mMipSize != 0)
     {
         size = sead::Mathu::roundUpPow2(size, mAllocateArg.mAlignment) + mAllocateArg.mMipSize;
@@ -937,6 +963,7 @@ void TextureDataEx::reset(DrawContext* pDrawContext, const sead::SafeString& rNa
         const GPUMemVoidAddr imageAddr = mMemoryBlock->mImageAddr;
         const s32 textureID = getTextureID();
         setImagePtr(imageAddr, 0);
+
         if (mMemoryBlock->mMipAddr.isValid())
         {
             setMipPtr(mMemoryBlock->mMipAddr);
@@ -961,6 +988,7 @@ bool DynamicTextureAllocator::isContextValid_(const Context* pContext) const
     bool isOverlapped = false;
     const u32 num = sead::Mathu::min(pContext->mAllocators.size(), 2);
     const TextureMemoryAllocator* pAllocators = pContext->mAllocators.getBufferPtr();
+
     for (u32 i = 0; i != num; i++)
     {
         isOverlapped |=
@@ -974,6 +1002,7 @@ void DynamicTextureAllocator::dump_(s32 index) const
 {
     const Context& rContext = mContexts[index];
     sead::FixedSafeString<1024> str;
+
     for (const auto& rAllocator : rContext.mAllocators)
     {
         rAllocator.dumpDetail();
@@ -995,6 +1024,7 @@ void DynamicTextureAllocator::dump_(s32 index) const
 u64 DynamicTextureAllocator::getUseSize() const
 {
     const Context& rContext = mContexts[sead::CoreInfo::getCurrentCoreId()];
+
     if (rContext.mAllocators.size() == 0)
     {
         return 0;
@@ -1010,6 +1040,7 @@ u64 DynamicTextureAllocator::getUseSize() const
 u64 DynamicTextureAllocator::getUseSizeWithoutContext() const
 {
     const Context& rContext = mContexts[cContextNum - 1];
+
     if (rContext.mAllocators.size() == 0)
     {
         return 0;
@@ -1036,6 +1067,7 @@ void DynamicTextureAllocator::genMessage(sead::hostio::Context* pContext)
     }
 
     s32 allocatorIndex = 0;
+
     for (const auto& rAllocator : rContext.mAllocators)
     {
         rAllocator.genMessageInfo(cAllocatorName[allocatorIndex], pContext);
@@ -1043,6 +1075,7 @@ void DynamicTextureAllocator::genMessage(sead::hostio::Context* pContext)
     }
 
     sead::FixedPtrArray<TextureDataEx, 512> textures;
+
     for (auto& rTexture : mTextures)
     {
         if (rTexture.mState.isOn(2) && rTexture.mContext == &rContext)
@@ -1082,6 +1115,7 @@ void DynamicTextureAllocator::listenPropertyEvent(const sead::hostio::PropertyEv
     case 1000:
     {
         sead::ScopedLock<sead::CriticalSection> lock(&mTextureCS);
+
         for (auto& rTexture : mTextures)
         {
             rTexture.mState.reset(2);

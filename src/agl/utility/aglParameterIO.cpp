@@ -93,6 +93,7 @@ s32 IParameterIO::loadText(const void* pData, u32 size, bool x)
     {
         const sead::SafeString version = header->findAttributeValue("version");
         const sead::FormatFixedSafeString<1024> expected("%d", mVersion);
+
         if (version != expected)
         {
             callbackInvalidVersion_(ResParameterArchive(nullptr));
@@ -100,6 +101,7 @@ s32 IParameterIO::loadText(const void* pData, u32 size, bool x)
     }
 
     s32 result;
+
     if (sead::XmlElement* list = data->findElement(getTagName()))
     {
         result = readFromXML(*list, x);
@@ -107,6 +109,7 @@ s32 IParameterIO::loadText(const void* pData, u32 size, bool x)
     else
     {
         sead::XmlElement* obj = data->findElement(IParameterObj::getTagName());
+
         if (obj)
         {
             result = mpChildObjHead ? mpChildObjHead->readFromXML(*obj, x) : 0;
@@ -176,6 +179,7 @@ void IParameterIO::genMessageIO(sead::hostio::Context* pContext, u32 flags)
     }
 
     const char* is_enable = "false";
+
     if (mPath != sead::SafeString::cEmptyString)
     {
         sead::FormatFixedSafeString<1024> meta("%s", mPath.cstr());
@@ -213,6 +217,7 @@ s32 IParameterIO::listenPropertyEventIO(sead::hostio::Reflexible* pReflexible,
 {
     const uintptr_t id = reinterpret_cast<uintptr_t>(pEvent->getId());
     const uintptr_t self = reinterpret_cast<uintptr_t>(this);
+
     if (id == self)
     {
         if (save(sead::SafeString::cEmptyString, 0x2000000))

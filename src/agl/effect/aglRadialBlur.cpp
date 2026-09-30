@@ -79,6 +79,7 @@ RadialBlur::~RadialBlur()
 void RadialBlur::initialize(s32 contextNum, s32 blurNum, sead::Heap* pHeap)
 {
     mContext.tryAllocBuffer(contextNum, pHeap);
+
     for (s32 i = 0; i < contextNum; i++)
     {
         mContext[i].initialize(blurNum, pHeap);
@@ -90,6 +91,7 @@ void RadialBlur::initialize(s32 contextNum, s32 blurNum, sead::Heap* pHeap)
     mShared.mNum = 0;
     mShared.mParam.tryAllocBuffer(blurNum, pHeap);
     mShared.mViewMask.tryAllocBuffer(blurNum, pHeap);
+
     for (s32 i = 0; i < blurNum; i++)
     {
         mShared.mViewMask[i].setDirect(-1);
@@ -127,9 +129,11 @@ void RadialBlur::initVertex_(s32 divNum, s32 ringNum, sead::Heap* pHeap)
     getBlockPtr<Vertex>(mVertexBlock)[0].mPos = sead::Vector2f::zero;
 
     s32 vtx = 1;
+
     for (s32 ring = 1; ring < ringNum; ring++)
     {
         f32 radius = (f32(ring) / (f32(ringNum) - 1.0f)) * 0.5f;
+
         for (s32 div = 0; div < divNum; div++)
         {
             f32 angle = (f32(div) * sead::Mathf::pi2()) / f32(divNum);
@@ -155,6 +159,7 @@ void RadialBlur::initIndex_(s32 divNum, s32 ringNum, sead::Heap* pHeap)
     GPUMemAddr<u16> addr(mIndexBlock, 0);
 
     s32 idx = 0;
+
     for (s32 div = 0; div < divNum; div++)
     {
         getBlockPtr<u16>(mIndexBlock)[idx] = 0;
@@ -167,6 +172,7 @@ void RadialBlur::initIndex_(s32 divNum, s32 ringNum, sead::Heap* pHeap)
     {
         s32 base0 = (ring - 1) * divNum + 1;
         s32 base1 = base0 + divNum;
+
         for (s32 div = 0; div < divNum; div++)
         {
             getBlockPtr<u16>(mIndexBlock)[idx] = base0 + div;
@@ -228,10 +234,12 @@ void RadialBlur::Context::calc(const SharedData& rShared, const sead::Matrix34f&
     do
     {
         swapped = false;
+
         for (s32 i = 0; i < rShared.mNum - 1; i++)
         {
             s32 a = mOrder[i];
             s32 b = mOrder[i + 1];
+
             if (a < b && mScreen[a].mPos.z < mScreen[b].mPos.z)
             {
                 mOrder[i] = b;
@@ -246,6 +254,7 @@ void RadialBlur::Context::calc(const SharedData& rShared, const sead::Matrix34f&
         const BlurParameter& rParam = rShared.mDefaultParam;
         mDefaultScreen.mPos = rParam.mCenter + dirZ * rParam.mDepthOffset;
         mDefaultScreen.mRadius = rParam.mRadius;
+
         if (!rParam.mDepthTestEnable)
         {
             mDefaultScreen.mPos.z = -1.0f;
@@ -287,16 +296,19 @@ void RadialBlur::Context::draw(DrawContext* pDrawContext, s32 view, const Shared
                                const TextureData& rTexture) const
 {
     sead::Viewport viewport(rRenderBuffer);
+
     for (s32 i = 0; i < rShared.mNum; i++)
     {
         s32 idx = mOrder[i];
         const BlurParameter& rParam = rShared.mParam[idx];
+
         if (!rShared.mViewMask[idx].isOnBit(view))
         {
             continue;
         }
 
         f32 z = mScreen[idx].mPos.z;
+
         if (z < -1.0f || z > 1.0f)
         {
             continue;
@@ -364,6 +376,7 @@ void RadialBlur::Context::updateHalfBuffer(DrawContext* pDrawContext, s32 view,
 {
     u32 width = rTexture.getWidth() / 2;
     u32 height = rTexture.getHeight(0) / 2;
+
     if (mReduceTarget.getWidth(0) != width || mReduceTarget.getHeight(0) != height ||
         mReduceTarget.getTextureFormat() != rTexture.getTextureFormat() ||
         mReduceTarget.getTextureAttribute() != mHalfBuffer->getTextureAttribute())
@@ -418,6 +431,7 @@ void RadialBlur::Context::draw2D(DrawContext* pDrawContext, s32 view, const Shar
                                  const TextureData& rTexture) const
 {
     sead::Viewport viewport(rRenderBuffer);
+
     if (!rShared.mDefaultViewMask.isOnBit(view))
     {
         return;
@@ -585,6 +599,7 @@ void RadialBlur::Context::drawToReduceTexture_(DrawContext* pDrawContext, s32 vi
     const ShaderProgram* pProgram =
         detail::ShaderHolder::instance()->getShaderProgramUnsafe(detail::ShaderHolder::cRadialBlur);
     s32 num = pProgram->getVariationProgramNum();
+
     if (variation > num)
     {
         variation = num;

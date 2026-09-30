@@ -38,6 +38,7 @@ void ShaderTextUtil::replaceMacro(sead::BufferedSafeString* pText, const char* c
                                   const char* const* pValues, s32 macroNum, char* pWork,
                                   s32 workSize) {
     bool isReplaced[1024];
+
     for (s32 i = 0; i < macroNum; i++) {
         isReplaced[i] = false;
     }
@@ -46,19 +47,23 @@ void ShaderTextUtil::replaceMacro(sead::BufferedSafeString* pText, const char* c
     char* dst = pWork;
 
     s32 replacedNum = 0;
+
     for (;;) {
         s32 lineFeedLength;
         s32 lineFeedPos;
         s32 i;
         const char* macro;
+
         for (;;) {
             lineFeedPos = findLineFeedCode(src, &lineFeedLength);
+
             if (lineFeedPos == -1) {
                 goto end;
             }
 
             if (*src == '#') {
                 const char* p = src + 1;
+
                 while (isSpace(*p)) {
                     p++;
                 }
@@ -66,6 +71,7 @@ void ShaderTextUtil::replaceMacro(sead::BufferedSafeString* pText, const char* c
                 if (p[0] == 'd' && p[1] == 'e' && p[2] == 'f' && p[3] == 'i' && p[4] == 'n' &&
                     p[5] == 'e' && (p[6] == ' ' || p[6] == '\t')) {
                     const char* name = p + 7;
+
                     while (isSpace(*name)) {
                         name++;
                     }
@@ -78,6 +84,7 @@ void ShaderTextUtil::replaceMacro(sead::BufferedSafeString* pText, const char* c
                         macro = pMacros[i];
                         bool match = true;
                         s32 j = 0;
+
                         for (; macro[j] != '\0'; j++) {
                             if (name[j] != macro[j]) {
                                 match = false;
@@ -114,6 +121,7 @@ void ShaderTextUtil::replaceMacro(sead::BufferedSafeString* pText, const char* c
         src += lineFeedPos + lineFeedLength;
 
         replacedNum++;
+
         if (replacedNum == macroNum) {
             break;
         }
@@ -139,6 +147,7 @@ s32 ShaderTextUtil::findLineFeedCode(const char* pText, s32* pLength) {
     for (s32 i = 0; pText[i] != '\0'; i++) {
         const char* p = pText + i;
         s32 length;
+
         if (*p == '\n') {
             length = 1;
         } else if (*p == '\r') {
@@ -170,6 +179,7 @@ void ShaderTextUtil::replace(char* pText, const char* pInsert, s32 begin, s32 en
                              s32 workSize) {
     char* work = static_cast<char*>(pWork);
     char* dst = work;
+
     for (const char* src = pText + end; *src != '\0'; src++) {
         *dst++ = *src;
     }
@@ -177,6 +187,7 @@ void ShaderTextUtil::replace(char* pText, const char* pInsert, s32 begin, s32 en
     *dst = '\0';
 
     dst = pText + begin;
+
     for (const char* src = pInsert; *src != '\0'; src++) {
         *dst++ = *src;
     }
@@ -216,20 +227,24 @@ sead::HeapSafeString* ShaderTextUtil::createRawText(const sead::SafeString& rTex
 
     while (*src != '\0') {
         const char* const directiveBegin = findChar(src, '#') + 1;
+
         if (directiveBegin - 1 == nullptr) {
             break;
         }
 
         const char* directive = skipSpace(directiveBegin);
+
         if (directive[0] == 'i' && directive[1] == 'n' && directive[2] == 'c' &&
             directive[3] == 'l' && directive[4] == 'u' && directive[5] == 'd' &&
             directive[6] == 'e') {
             const char* const nameBegin = findChar(directive + 7, '"') + 1;
+
             if (nameBegin - 1 == nullptr) {
                 continue;
             }
 
             const char* const includeEnd = findChar(nameBegin, '"') + 1;
+
             if (includeEnd - 1 == nullptr) {
                 continue;
             }
@@ -238,6 +253,7 @@ sead::HeapSafeString* ShaderTextUtil::createRawText(const sead::SafeString& rTex
             name.copy(nameBegin, s32(includeEnd - nameBegin) - 1);
 
             s32 i = 0;
+
             for (; i < sourceNum; i++) {
                 if (name.isEqual(pSourceNames[i])) {
                     break;
@@ -249,6 +265,7 @@ sead::HeapSafeString* ShaderTextUtil::createRawText(const sead::SafeString& rTex
             }
 
             const char* source = pSourceTexts[i];
+
             if (pUsedFlags) {
                 pUsedFlags[i] = true;
             }
@@ -348,6 +365,7 @@ void ShaderTextUtil::analyzeShaderDumpText(const sead::SafeString& rText,
     ShaderDumpTextAnalyzeResult result;
 
     const char* p = "";
+
     for (const char* text = rText.cstr(); *text != '\0'; text++) {
         if (text[0] == ';' && text[1] == ' ' && text[2] == '-' && text[3] == '-') {
             p = text;
@@ -358,6 +376,7 @@ void ShaderTextUtil::analyzeShaderDumpText(const sead::SafeString& rText,
     s32 exportNum = 0;
     s32 clauseNum = 0;
     s32* counter = nullptr;
+
     while (*p != '\0') {
         if (p[0] == 'E' && clauseNum > 0) {
             if (p[1] == 'N' && p[2] == 'D' && p[3] == '_' && p[4] == 'O' && p[5] == 'F') {
@@ -371,6 +390,7 @@ void ShaderTextUtil::analyzeShaderDumpText(const sead::SafeString& rText,
         } else if ('0' <= *p && *p <= '9') {
             s32 digit[256];
             s32 digitNum;
+
             if (clauseNum < 100) {
                 digit[0] = clauseNum / 10;
                 digit[1] = clauseNum - digit[0] * 10;
@@ -391,6 +411,7 @@ void ShaderTextUtil::analyzeShaderDumpText(const sead::SafeString& rText,
             for (s32 i = 0; digit[i] == *p - '0'; p++) {
                 if (++i >= digitNum) {
                     const char* type = p + 2;
+
                     if (type[0] == 'A' && type[1] == 'L' && type[2] == 'U') {
                         counter = &result.mAluClauseInstNum;
                     } else if (type[0] == 'E' && type[1] == 'X' && type[2] == 'P') {
@@ -407,6 +428,7 @@ void ShaderTextUtil::analyzeShaderDumpText(const sead::SafeString& rText,
             }
         } else if (*p == ' ') {
             skipChar(' ', &p);
+
             if ('0' <= *p && *p <= '9') {
                 while ('0' <= *p && *p <= '9') {
                     p++;
@@ -419,9 +441,11 @@ void ShaderTextUtil::analyzeShaderDumpText(const sead::SafeString& rText,
         }
 
         char c;
+
         do {
             c = *p++;
         } while (c != '\0' && c != '\n');
+
         if (c != '\n') {
             p--;
         }
@@ -444,10 +468,12 @@ void ShaderTextUtil::analyzeShaderDumpText(const sead::SafeString& rText,
 
     s32 varyingInNum = 0;
     s32 varyingOutNum = 0;
+
     while (*p != '\0') {
         skipChar(' ', &p);
         skipFirstMatchedString(name, &p);
         skipFirstMatchedString(symbolType, &p);
+
         if (matchString(attrib, p)) {
             skipString(attrib, &p);
         } else if (matchString(uniformBlock, p)) {
@@ -455,6 +481,7 @@ void ShaderTextUtil::analyzeShaderDumpText(const sead::SafeString& rText,
         } else if (matchString(uniform, p)) {
             skipString(uniform, &p);
             skipFirstMatchedString(dataType, &p);
+
             if (matchString(samplerImage, p)) {
                 skipString(samplerImage, &p);
             }
@@ -500,6 +527,7 @@ void ShaderTextUtil::skipChar(char c, const char** ppText) {
 bool ShaderTextUtil::skipFirstMatchedString(const sead::SafeString& rStr, const char** ppText) {
     s32 length = rStr.calcLength();
     char c = **ppText;
+
     if (c == '\0') {
         return false;
     }
@@ -515,6 +543,7 @@ bool ShaderTextUtil::skipFirstMatchedString(const sead::SafeString& rStr, const 
             }
 
             (*ppText)++;
+
             if (i == length - 1) {
                 return true;
             }
@@ -535,6 +564,7 @@ bool ShaderTextUtil::skipFirstMatchedString(const sead::SafeString& rStr, const 
  */
 bool ShaderTextUtil::matchString(const sead::SafeString& rStr, const char* pText) {
     s32 length = rStr.calcLength();
+
     for (s32 i = 0; i < length; i++, pText++) {
         if (*pText == '\0' || *pText != rStr.at(i)) {
             return false;
@@ -556,6 +586,7 @@ bool ShaderTextUtil::matchString(const sead::SafeString& rStr, const char* pText
  */
 bool ShaderTextUtil::skipString(const sead::SafeString& rStr, const char** ppText) {
     s32 length = rStr.calcLength();
+
     for (s32 i = 0; i < length; i++) {
         if (**ppText == '\0' || **ppText != rStr.at(i)) {
             return false;

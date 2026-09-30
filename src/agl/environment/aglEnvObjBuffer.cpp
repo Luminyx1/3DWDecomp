@@ -69,6 +69,7 @@ void EnvObjBuffer::allocBuffer(const AllocateArg& rArg, sead::Heap* pHeap)
     mTypeRange.tryAllocBuffer(EnvObj::sTypeNum, pHeap);
 
     s32 start = 0;
+
     for (auto it = mTypeRange.begin(), itEnd = mTypeRange.end(); it != itEnd; ++it)
     {
         it->mStart = start;
@@ -100,6 +101,7 @@ void EnvObjBuffer::freeBuffer()
 s32 EnvObjBuffer::searchTypeIndex(s32 type, const sead::SafeString& rName) const
 {
     s32 index = searchBufferIndex(type, rName);
+
     if (index < 0)
     {
         return -1;
@@ -140,6 +142,7 @@ s32 EnvObjBuffer::searchTypeIndex(const EnvObj* pObj) const
     }
 
     s32 type = pObj->getTypeID();
+
     for (auto it = begin(type), itEnd = end(type); it != itEnd; ++it)
     {
         if (*it == pObj)
@@ -161,6 +164,7 @@ s32 EnvObjBuffer::searchType(s32 bufferIndex) const
     for (s32 i = 0; i < EnvObj::sTypeNum; i++)
     {
         const TypeRange& rRange = mTypeRange[i];
+
         if (rRange.mStart <= bufferIndex && bufferIndex < rRange.mStart + rRange.mNum)
         {
             return i;
@@ -193,6 +197,7 @@ void EnvObjBuffer::setEnable(s32 type, bool enable)
 void EnvObjBuffer::sort(s32 type)
 {
     const TypeRange& rRange = mTypeRange[type];
+
     if (rRange.mNum != 0)
     {
         mObj.heapSort(compareEnvObj, rRange.mStart, rRange.mStart + rRange.mNum - 1);

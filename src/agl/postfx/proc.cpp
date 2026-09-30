@@ -28,6 +28,7 @@ void LUT::generate(f32* pDst, s32 stride, const GenerateArg& rArg) const
         for (s32 i = 0; i < rArg.mNum; i++)
         {
             f32 t = f32(i) / f32(rArg.mNum - 1);
+
             for (s32 j = 0; j < stride; j++)
             {
                 pDst[j] = interpolate_(0, t);
@@ -41,6 +42,7 @@ void LUT::generate(f32* pDst, s32 stride, const GenerateArg& rArg) const
         for (s32 i = 0; i < rArg.mNum; i++)
         {
             f32 t = f32(i) / f32(rArg.mNum - 1);
+
             for (s32 j = 0; j < stride; j++)
             {
                 pDst[j] = interpolate_(j, t);
@@ -54,11 +56,13 @@ void LUT::generate(f32* pDst, s32 stride, const GenerateArg& rArg) const
 void LUT::transform(f32* pDst, s32 stride, const TransformArg& rArg) const
 {
     s32 num = rArg.mWidth < stride ? rArg.mWidth : stride;
+
     if (mIsSingleCurve)
     {
         for (s32 y = 0; y < rArg.mHeight; y++)
         {
             u32 base = rArg.mWidth * y;
+
             for (s32 x = 0; x < num; x++)
             {
                 pDst[x] = interpolate_(0, rArg.mpSrc[base + x]);
@@ -72,6 +76,7 @@ void LUT::transform(f32* pDst, s32 stride, const TransformArg& rArg) const
         for (s32 y = 0; y < rArg.mHeight; y++)
         {
             u32 base = rArg.mWidth * y;
+
             for (s32 x = 0; x < num; x++)
             {
                 pDst[x] = interpolate_(x, rArg.mpSrc[base + x]);
@@ -105,6 +110,7 @@ void LUT::listenPropertyEventParameters(sead::hostio::Reflexible* pReflexible,
                                         const sead::hostio::PropertyEvent* pEvent)
 {
     const void* id = pEvent->getId();
+
     if (!(pEvent->getType() & 2) && id < &mIsSingleCurve + 1 && id >= &mIsSingleCurve)
     {
         return;
@@ -126,18 +132,21 @@ void LUT::listenPropertyEventParameters(sead::hostio::Reflexible* pReflexible,
     auto& data = reinterpret_cast<sead::SafeArray<f32, 128>&>(mCurve.getCurveData(0));
     f32 buf[30];
     u8 num = mCurve.getCurve(0).mInfo.numUse;
+
     for (s32 i = 0; i < num; i++)
     {
         buf[i] = data[i + 2];
     }
 
     u8 type = mCurve.getCurve(0).mInfo.curveType;
+
     for (s32 c = 1; c < 4; c++)
     {
         mCurve.getCurve(c).mInfo.numUse = num;
         mCurve.getCurve(c).mInfo.curveType = type;
         mCurve.getCurveData(c).curveType = type;
         mCurve.getCurveData(c).numUse = num;
+
         for (s32 i = 0; i < num; i++)
         {
             mCurve.getCurveData(c).f[i] = buf[i];

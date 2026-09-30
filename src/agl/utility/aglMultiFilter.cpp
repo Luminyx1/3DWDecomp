@@ -64,6 +64,7 @@ MultiFilter::~MultiFilter()
     }
 
     freeResultTexture();
+
     if (mDebugTexturePage)
     {
         mDebugTexturePage->cleanUp();
@@ -97,6 +98,7 @@ void MultiFilter::initialize(sead::Heap* pHeap, sead::Heap* pDebugHeap)
     {
         const auto filterType = static_cast<MultiFilterUnit::FilterType>(type);
         addList(&mTypeParamLists[type], MultiFilterUnit::getFilterName(filterType).cstr());
+
         for (s32 i = 0; i < cUnitNum; i++)
         {
             MultiFilterUnit* pUnit = MultiFilterUnit::create(filterType, i, pHeap);
@@ -130,6 +132,7 @@ void MultiFilter::setUseTextureAlpha(bool useAlpha)
 const MultiFilterResultInfo& MultiFilter::calcResultInfo(s32 width, s32 height) const
 {
     MultiFilterResultInfo* pInfo = &mResultInfo;
+
     if (isDrawable_())
     {
         pInfo->mFormat = TextureFormat::cTextureFormat_R8_G8_B8_A8_uNorm;
@@ -138,6 +141,7 @@ const MultiFilterResultInfo& MultiFilter::calcResultInfo(s32 width, s32 height) 
         pInfo->mMaxWidth = width;
         pInfo->mMaxHeight = height;
         const MultiFilterUnit& rTrimming = mTrimming;
+
         if (rTrimming.isEnable())
         {
             rTrimming.doCalcResultInfo_(pInfo);
@@ -186,6 +190,7 @@ void MultiFilter::draw(DrawContext* pDrawContext, const TextureData& rTexture) c
     mDrawContext.mSampler.setWrap(7, 7, 7);
 
     s32 index = 0;
+
     if (mTrimming.isEnable())
     {
         drawFilter_(pDrawContext, mTrimming, index);
@@ -277,6 +282,7 @@ void MultiFilter::drawDebug(DrawContext* pDrawContext, const sead::LogicalFrameB
 void MultiFilter::genMessage(sead::hostio::Context* pContext)
 {
     genMessageIO(pContext, 0xf);
+
     if (mDebugTexturePage)
     {
         mDebugTexturePage->genMessagePage(pContext, this);
@@ -290,10 +296,12 @@ void MultiFilter::genMessage(sead::hostio::Context* pContext)
         }
 
         s32 index = 1;
+
         for (auto it = mActiveUnits.begin(); it != mActiveUnits.end(); ++it)
         {
             {
                 sead::FormatFixedSafeString<8> label("%d : ", index);
+
                 for (s32 type = 0; type < MultiFilterUnit::cFilterType_Num; type++)
                 {
                     sead::SafeString item = MultiFilterUnit::getFilterLabel(
@@ -337,6 +345,7 @@ void MultiFilter::genMessage(sead::hostio::Context* pContext)
     }
 
     s32 index = 1;
+
     for (auto it = mActiveUnits.begin(); it != mActiveUnits.end(); ++it)
     {
         sead::SafeString filterLabel = MultiFilterUnit::getFilterLabel((*it)->getType());
@@ -355,9 +364,11 @@ void MultiFilter::listenPropertyEvent(const sead::hostio::PropertyEvent* pEvent)
     listenPropertyEventIO(this, pEvent);
 
     const uintptr_t addType = getEventId(pEvent) - 30000;
+
     if (addType < MultiFilterUnit::cFilterType_Num)
     {
         auto* pNode = mFreeUnits.mBuffer[addType].popFront();
+
         if (pNode)
         {
             pNode->mList = nullptr;
@@ -376,6 +387,7 @@ void MultiFilter::listenPropertyEvent(const sead::hostio::PropertyEvent* pEvent)
     for (auto it = mActiveUnits.begin(); it != mActiveUnits.end(); ++it)
     {
         const u32 base = (*it)->getId() << 16;
+
         if (getEventId(pEvent) == static_cast<u32>(base + 50000))
         {
             (*it)->inactivate();
@@ -385,9 +397,11 @@ void MultiFilter::listenPropertyEvent(const sead::hostio::PropertyEvent* pEvent)
         if (getEventId(pEvent) == static_cast<u32>(base + 40000))
         {
             sead::TListNode<MultiFilterUnit*>* pNode = nullptr;
+
             for (s32 type = 0; type < MultiFilterUnit::cFilterType_Num; type++)
             {
                 pNode = mFreeUnits[type].popFront();
+
                 if (pNode)
                 {
                     break;
@@ -427,6 +441,7 @@ void MultiFilter::listenPropertyEvent(const sead::hostio::PropertyEvent* pEvent)
             const s32 type = **reinterpret_cast<const s32* const*>(
                 reinterpret_cast<uintptr_t>(pEvent) + 0x30);
             auto* pNode = mFreeUnits[type].popFront();
+
             if (!pNode)
             {
                 return;
@@ -454,6 +469,7 @@ void MultiFilter::listenPropertyEvent(const sead::hostio::PropertyEvent* pEvent)
 sead::TListNode<MultiFilterUnit*>* MultiFilter::addFilter_(MultiFilterUnit::FilterType type)
 {
     auto* pNode = mFreeUnits[type].popFront();
+
     if (pNode)
     {
         pNode->mList = nullptr;
@@ -481,6 +497,7 @@ void MultiFilter::inactivateAll()
 bool MultiFilter::preWrite_() const
 {
     s32 index = 0;
+
     for (auto it = mActiveUnits.begin(); it != mActiveUnits.end(); ++it)
     {
         (*it)->setSaveIndex(index);

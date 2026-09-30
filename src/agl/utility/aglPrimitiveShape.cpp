@@ -27,6 +27,7 @@ template <typename T>
 void setupIdxStreamGrid_(IndexStream* pIndexStream, GPUMemAddr<T> addr, s32 num)
 {
     T* indices = static_cast<T*>(addr.getPtr());
+
     for (s32 i = 0; i < num; i++)
     {
         indices[i] = i;
@@ -648,6 +649,7 @@ void PrimitiveShape::setupIdxStreamCircle_(IndexStream* pIndexStream, GPUMemAddr
 {
     T* indices = static_cast<T*>(addr.getPtr());
     s32 num = 0;
+
     switch (drawType)
     {
     case cDrawType_Triangle:
@@ -738,6 +740,7 @@ u32 PrimitiveShape::calcIdxArrayNumSphere_(u32 divNumU, u32 divNumV, DrawType dr
                                            Quality quality)
 {
     s32 num = 0;
+
     switch (drawType)
     {
     case cDrawType_Triangle:
@@ -803,6 +806,7 @@ void PrimitiveShape::setupVtxBufferSphere(VertexBuffer* pVertexBuffer, GPUMemAdd
         const f32 latitude = (f32(j + 1) / (f32(divNumV) + 1.0f) - 0.5f) * sead::Mathf::pi();
         const f32 y = sead::Mathf::sin(latitude) * 0.5f;
         const f32 radius = sead::Mathf::cos(latitude) * 0.5f;
+
         for (u32 i = 0; i < divNumU; i++)
         {
             const s32 index = j * divNumU + i;
@@ -857,6 +861,7 @@ void PrimitiveShape::setupIdxStreamSphere_(IndexStream* pIndexStream, GPUMemAddr
 {
     T* indices = static_cast<T*>(addr.getPtr());
     s32 num = 0;
+
     switch (drawType)
     {
     case cDrawType_Triangle:
@@ -870,6 +875,7 @@ void PrimitiveShape::setupIdxStreamSphere_(IndexStream* pIndexStream, GPUMemAddr
         for (u32 j = 0; j < divNumV - 1; j += 1 << quality)
         {
             const u32 row1 = sead::Mathi::min(s32(divNumV - 1), s32(j + (1 << quality))) * divNumU;
+
             for (u32 i = 0; i < divNumU; i += 1 << quality)
             {
                 indices[num++] = j * divNumU + i;
@@ -905,6 +911,7 @@ void PrimitiveShape::setupIdxStreamSphere_(IndexStream* pIndexStream, GPUMemAddr
         for (u32 j = 0; j < divNumV - 1; j += 1 << quality)
         {
             const u32 row1 = sead::Mathi::min(s32(j + (1 << quality)), s32(divNumV - 1)) * divNumU;
+
             for (u32 i = 0; i < divNumU; i += 1 << quality)
             {
                 indices[num++] = j * divNumU + i;
@@ -921,6 +928,7 @@ void PrimitiveShape::setupIdxStreamSphere_(IndexStream* pIndexStream, GPUMemAddr
         for (u32 j = 0; j < divNumV; j += 1 << quality)
         {
             const u32 row1 = sead::Mathi::min(s32(j + (1 << quality)), s32(divNumV - 1)) * divNumU;
+
             for (u32 i = 0; i < divNumU; i += 1 << quality)
             {
                 indices[num++] = j * divNumU + (i + (1 << quality)) % divNumU;
@@ -988,6 +996,7 @@ u32 PrimitiveShape::calcIdxArrayNumHemisphere_(u32 divNumU, u32 divNumV, DrawTyp
 {
     const u32 halfNumV = divNumV / 2;
     s32 num = 0;
+
     switch (drawType)
     {
     case cDrawType_Triangle:
@@ -1056,6 +1065,7 @@ void PrimitiveShape::setupVtxBufferHemisphere(VertexBuffer* pVertexBuffer,
         const f32 latitude = std::fmax(sead::Mathf::piHalf() - step * f32(j + 1), 0.0f);
         const f32 y = sead::Mathf::sin(latitude) * 0.5f;
         const f32 radius = sead::Mathf::cos(latitude) * 0.5f;
+
         for (u32 i = 0; i < divNumU; i++)
         {
             const s32 index = j * divNumU + i;
@@ -1109,6 +1119,7 @@ void PrimitiveShape::setupIdxStreamHemisphere_(IndexStream* pIndexStream, GPUMem
     const u32 halfNumV = divNumV / 2;
     const u32 ringNum = halfNumV + 1;
     s32 num = 0;
+
     switch (drawType)
     {
     case cDrawType_Triangle:
@@ -1122,6 +1133,7 @@ void PrimitiveShape::setupIdxStreamHemisphere_(IndexStream* pIndexStream, GPUMem
         for (u32 j = 0; j < halfNumV; j += 1 << quality)
         {
             const u32 row1 = sead::Mathi::min(s32(halfNumV), s32(j + (1 << quality))) * divNumU;
+
             for (u32 i = 0; i < divNumU; i += 1 << quality)
             {
                 indices[num++] = j * divNumU + i;
@@ -1148,6 +1160,7 @@ void PrimitiveShape::setupIdxStreamHemisphere_(IndexStream* pIndexStream, GPUMem
         for (u32 j = 0; j < halfNumV; j += 1 << quality)
         {
             const u32 row1 = sead::Mathi::min(s32(j + (1 << quality)), s32(halfNumV)) * divNumU;
+
             for (u32 i = 0; i < divNumU; i += 1 << quality)
             {
                 indices[num++] = j * divNumU + i;
@@ -1164,6 +1177,7 @@ void PrimitiveShape::setupIdxStreamHemisphere_(IndexStream* pIndexStream, GPUMem
         for (u32 j = 0; j <= halfNumV; j += 1 << quality)
         {
             const u32 row1 = sead::Mathi::min(s32(j + (1 << quality)), s32(halfNumV)) * divNumU;
+
             for (u32 i = 0; i < divNumU; i += 1 << quality)
             {
                 indices[num++] = j * divNumU + (i + (1 << quality)) % divNumU;
@@ -1229,6 +1243,7 @@ u32 PrimitiveShape::calcIdxArrayNumCylinder_(u32 divNumU, u32 divNumV, DrawType 
                                              Quality quality)
 {
     s32 num = 0;
+
     switch (drawType)
     {
     case cDrawType_Triangle:
@@ -1301,6 +1316,7 @@ void PrimitiveShape::setupVtxBufferCylinder(VertexBuffer* pVertexBuffer, GPUMemA
     for (u32 j = 0; j <= divNumV; j++)
     {
         const f32 y = 0.5f - f32(j) / f32(divNumV);
+
         for (u32 i = 0; i < divNumU; i++)
         {
             const f32 angle = f32(i) * sead::Mathf::pi2() / f32(divNumU);
@@ -1363,6 +1379,7 @@ void PrimitiveShape::setupIdxStreamCylinder_(IndexStream* pIndexStream, GPUMemAd
     T* indices = static_cast<T*>(addr.getPtr());
     const u32 bottomRingEnd = (divNumV + 3) * divNumU;
     s32 num = 0;
+
     switch (drawType)
     {
     case cDrawType_Triangle:
@@ -1475,6 +1492,7 @@ u32 PrimitiveShape::calcIdxArrayNumCapsule_(u32 divNumU, u32 divNumV, u32 divNum
 {
     const u32 step = 1 << quality;
     s32 num = 0;
+
     switch (drawType)
     {
     case cDrawType_Triangle:
@@ -1575,6 +1593,7 @@ void PrimitiveShape::setupVtxBufferCapsule(VertexBuffer* pVertexBuffer, GPUMemAd
         const f32 latitude = (f32(j) / (f32(divNumH) + f32(divNumH)) - 0.5f) * sead::Mathf::pi();
         const f32 y = sead::Mathf::sin(latitude) * -0.5f;
         const f32 radius = sead::Mathf::cos(latitude) * 0.5f;
+
         for (u32 i = 0; i < divNumU; i++)
         {
             const f32 longitude = f32(i) * sead::Mathf::pi2() / f32(divNumU);
@@ -1590,6 +1609,7 @@ void PrimitiveShape::setupVtxBufferCapsule(VertexBuffer* pVertexBuffer, GPUMemAd
     for (u32 j = 0; j <= divNumV; j++)
     {
         const f32 y = 0.5f - f32(j) / f32(divNumV);
+
         for (u32 i = 0; i < divNumU; i++)
         {
             const f32 angle = f32(i) * sead::Mathf::pi2() / f32(divNumU);
@@ -1607,6 +1627,7 @@ void PrimitiveShape::setupVtxBufferCapsule(VertexBuffer* pVertexBuffer, GPUMemAd
         const f32 latitude = (f32(j) / (f32(divNumH) + f32(divNumH)) - 0.5f) * sead::Mathf::pi();
         const f32 y = sead::Mathf::sin(latitude) * -0.5f;
         const f32 radius = sead::Mathf::cos(latitude) * 0.5f;
+
         for (u32 i = 0; i < divNumU; i++)
         {
             const f32 longitude = f32(i) * sead::Mathf::pi2() / f32(divNumU);
@@ -1665,6 +1686,7 @@ void PrimitiveShape::setupIdxStreamCapsule_(IndexStream* pIndexStream, GPUMemAdd
     const u32 hemisphereSize = (divNumH - step) * divNumU;
     const u32 cylinderSize = (divNumV + step) * divNumU;
     s32 num = 0;
+
     switch (drawType)
     {
     case cDrawType_Triangle:
@@ -1680,6 +1702,7 @@ void PrimitiveShape::setupIdxStreamCapsule_(IndexStream* pIndexStream, GPUMemAdd
         {
             const u32 row0 = (j - step) * divNumU + topRing;
             const u32 row1 = j * divNumU + topRing;
+
             for (u32 i = 0; i < divNumU; i += step)
             {
                 indices[num++] = row1 + i;
@@ -1692,10 +1715,12 @@ void PrimitiveShape::setupIdxStreamCapsule_(IndexStream* pIndexStream, GPUMemAdd
         }
 
         const u32 sideRing = topRing + hemisphereSize;
+
         for (u32 j = 0; j <= divNumV; j += step)
         {
             const u32 row0 = j * divNumU + sideRing;
             const u32 row1 = (j + step) * divNumU + sideRing;
+
             for (u32 i = 0; i < divNumU; i += step)
             {
                 indices[num++] = row1 + i;
@@ -1708,10 +1733,12 @@ void PrimitiveShape::setupIdxStreamCapsule_(IndexStream* pIndexStream, GPUMemAdd
         }
 
         const u32 bottomRing = sideRing + cylinderSize;
+
         for (u32 j = step; j < divNumH - step; j += step)
         {
             const u32 row0 = (j - step) * divNumU + bottomRing;
             const u32 row1 = j * divNumU + bottomRing;
+
             for (u32 i = 0; i < divNumU; i += step)
             {
                 indices[num++] = row1 + i;
@@ -1724,6 +1751,7 @@ void PrimitiveShape::setupIdxStreamCapsule_(IndexStream* pIndexStream, GPUMemAdd
         }
 
         const u32 bottomPole = cylinderSize + topRing + hemisphereSize * 2;
+
         for (u32 i = 0; i < divNumU; i += step)
         {
             indices[num++] = bottomPole;
@@ -1747,6 +1775,7 @@ void PrimitiveShape::setupIdxStreamCapsule_(IndexStream* pIndexStream, GPUMemAdd
         {
             const u32 row0 = (j - step) * divNumU + topRing;
             const u32 row1 = j * divNumU + topRing;
+
             for (u32 i = 0; i < divNumU; i += step)
             {
                 indices[num++] = row1 + i;
@@ -1757,10 +1786,12 @@ void PrimitiveShape::setupIdxStreamCapsule_(IndexStream* pIndexStream, GPUMemAdd
         }
 
         const u32 sideRing = topRing + hemisphereSize;
+
         for (u32 j = 0; j <= divNumV; j += step)
         {
             const u32 row0 = j * divNumU + sideRing;
             const u32 row1 = (j + step) * divNumU + sideRing;
+
             for (u32 i = 0; i < divNumU; i += step)
             {
                 indices[num++] = row1 + i;
@@ -1771,10 +1802,12 @@ void PrimitiveShape::setupIdxStreamCapsule_(IndexStream* pIndexStream, GPUMemAdd
         }
 
         const u32 bottomRing = sideRing + cylinderSize;
+
         for (u32 j = step; j < divNumH - step; j += step)
         {
             const u32 row0 = (j - step) * divNumU + bottomRing;
             const u32 row1 = j * divNumU + bottomRing;
+
             for (u32 i = 0; i < divNumU; i += step)
             {
                 indices[num++] = row1 + i;
@@ -1785,6 +1818,7 @@ void PrimitiveShape::setupIdxStreamCapsule_(IndexStream* pIndexStream, GPUMemAdd
         }
 
         const u32 bottomPole = cylinderSize + topRing + hemisphereSize * 2;
+
         for (u32 i = 0; i < divNumU; i += step)
         {
             indices[num++] = bottomPole;
@@ -1854,6 +1888,7 @@ u32 PrimitiveShape::calcIdxArrayNumCone_(u32 divNumU, u32 divNumV, DrawType draw
                                          Quality quality)
 {
     s32 num = 0;
+
     switch (drawType)
     {
     case cDrawType_Triangle:
@@ -1914,9 +1949,11 @@ void PrimitiveShape::setupVtxBufferCone(VertexBuffer* pVertexBuffer, GPUMemAddr<
     {
         const f32 y = 0.5f - f32(j) / f32(divNumV);
         const f32 radius = (0.5f - y) * 0.5f;
+
         for (u32 i = 0; i < divNumU; i++)
         {
             f32 angle;
+
             if (j == 0)
             {
                 angle = (f32(i) + 0.5f) * sead::Mathf::pi2() / f32(divNumU);
@@ -1986,6 +2023,7 @@ void PrimitiveShape::setupIdxStreamCone_(IndexStream* pIndexStream, GPUMemAddr<T
     T* indices = static_cast<T*>(addr.getPtr());
     const u32 bottomCenter = (divNumV + 2) * divNumU;
     s32 num = 0;
+
     switch (drawType)
     {
     case cDrawType_Triangle:
@@ -1999,6 +2037,7 @@ void PrimitiveShape::setupIdxStreamCone_(IndexStream* pIndexStream, GPUMemAddr<T
         for (u32 j = 1; j < divNumV; j += 1 << quality)
         {
             const u32 row1 = sead::Mathi::clampMax(s32(j + (1 << quality)), s32(divNumV)) * divNumU;
+
             for (u32 i = 0; i < divNumU; i += 1 << quality)
             {
                 indices[num++] = row1 + i;
@@ -2107,6 +2146,7 @@ void PrimitiveShape::setupVtxBufferTorus(VertexBuffer* pVertexBuffer, GPUMemAddr
     sead::Vector3f max = -sead::Vector3f::ones * radius;
     sead::Vector3f min = sead::Vector3f::ones * radius;
     const f32 step = 1.0f / f32(divNumV);
+
     for (u32 i = 0; i < divNumV; i++)
     {
         const sead::Vector3f center = calcTorusCircleCenter_(windP, windQ, step * f32(i), radius);
@@ -2212,6 +2252,7 @@ void PrimitiveShape::setupIdxStreamTorus_(IndexStream* pIndexStream, GPUMemAddr<
 {
     T* indices = static_cast<T*>(addr.getPtr());
     s32 num = 0;
+
     switch (drawType)
     {
     case cDrawType_Triangle:
@@ -2329,6 +2370,7 @@ void PrimitiveShape::setupVtxBufferGridQuad(VertexBuffer* pVertexBuffer, GPUMemA
 
     const f32 stepX = 1.0f / f32(divNumX);
     const f32 stepY = 1.0f / f32(divNumY);
+
     for (u32 i = 0; i <= divNumX; i++)
     {
         const f32 t = stepX * f32(i);
@@ -2429,6 +2471,7 @@ void PrimitiveShape::setupVtxBufferGridCube(VertexBuffer* pVertexBuffer, GPUMemA
     for (u32 i = 0; i <= divNumX; i++)
     {
         const f32 x = stepX * f32(i);
+
         for (u32 j = 0; j <= divNumY; j++)
         {
             const f32 y = stepY * f32(j);
@@ -2447,6 +2490,7 @@ void PrimitiveShape::setupVtxBufferGridCube(VertexBuffer* pVertexBuffer, GPUMemA
     for (u32 i = 0; i <= divNumY; i++)
     {
         const f32 y = stepY * f32(i);
+
         for (u32 j = 0; j <= divNumZ; j++)
         {
             const f32 z = stepZ * f32(j);
@@ -2465,6 +2509,7 @@ void PrimitiveShape::setupVtxBufferGridCube(VertexBuffer* pVertexBuffer, GPUMemA
     for (u32 i = 0; i <= divNumZ; i++)
     {
         const f32 z = stepZ * f32(i);
+
         for (u32 j = 0; j <= divNumX; j++)
         {
             const f32 x = stepX * f32(j);

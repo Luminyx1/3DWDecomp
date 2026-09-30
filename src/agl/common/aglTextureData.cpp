@@ -53,6 +53,7 @@ void TextureData::initializeSize_(u32 width, u32 height, u32 slice)
     }
 
     s32 level = 1;
+
     while (getMipWidth(level) != getMipWidth(level - 1) ||
            getMipHeight(level) != getMipHeight(level - 1) ||
            getMipSlice(level) != getMipSlice(level - 1)) {
@@ -225,6 +226,7 @@ void TextureData::copyToAll(DrawContext* pDrawContext, const TextureData* pDst) 
         const u32 src_slice_num = getMipSlice(mip);
         const u32 dst_slice_num = pDst->getMipSlice(mip);
         const u32 slice_num = src_slice_num < dst_slice_num ? src_slice_num : dst_slice_num;
+
         for (u32 slice = 0; slice < slice_num; slice++) {
             copyTo_(pDrawContext, pDst, slice, mip, slice, mip, false);
         }

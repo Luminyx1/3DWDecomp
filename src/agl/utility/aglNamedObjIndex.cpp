@@ -60,6 +60,7 @@ void INamedObjIndex::bind(INamedObjMgr* pMgr)
     }
 
     mMgr = pMgr;
+
     if (pMgr)
     {
         pMgr->mIndexList.pushBack(this);
@@ -111,6 +112,7 @@ void INamedObjIndex::syncNameToIndex()
     {
         mIndex = cIndexNotFound;
         s32 num = getNamedObjNum();
+
         for (s32 i = 0; i < num; i++)
         {
             if (mValue == getNamedObjName(i))
@@ -152,6 +154,7 @@ void INamedObjIndex::genComboBoxSelect(sead::hostio::Context* pContext, bool isE
     }
 
     s32 num = getNamedObjNum();
+
     for (s32 i = 0; i < num; i++)
     {
         getNamedObjName(i);
@@ -166,6 +169,7 @@ void INamedObjIndex::genComboBoxSelect(sead::hostio::Context* pContext, bool isE
 bool INamedObjIndex::listenPropertyEvent(const sead::hostio::PropertyEvent* pEvent)
 {
     const void* id = pEvent->getId();
+
     if ((pEvent->getType() & 2) == 0 && id < &mIndex + 1 && id >= &mIndex)
     {
         syncIndexToName();

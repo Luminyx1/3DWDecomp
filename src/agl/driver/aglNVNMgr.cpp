@@ -34,6 +34,7 @@ template <typename T, typename Compare>
 void sortPtrArray(sead::PtrArray<T>& rArray, Compare compare)
 {
     const s32 num = rArray.size();
+
     if (num < 2)
     {
         return;
@@ -45,6 +46,7 @@ void sortPtrArray(sead::PtrArray<T>& rArray, Compare compare)
     do
     {
         s32 last = lo;
+
         for (s32 i = lo; i < hi; ++i)
         {
             if (compare(pArray[i], pArray[i + 1]) > 0)
@@ -57,12 +59,14 @@ void sortPtrArray(sead::PtrArray<T>& rArray, Compare compare)
         }
 
         hi = last;
+
         if (hi <= lo)
         {
             break;
         }
 
         last = hi;
+
         for (s32 i = hi; i > lo; --i)
         {
             if (compare(pArray[i], pArray[i - 1]) < 0)
@@ -180,10 +184,12 @@ s32 binarySearch(const sead::PtrArray<T>& rArray, const Key* pKey,
 
     s32 a = 0;
     s32 b = rArray.size() - 1;
+
     while (a < b)
     {
         const s32 m = (a + b) / 2;
         const s32 c = compare(rArray.unsafeAt(m), pKey);
+
         if (c == 0)
         {
             return m;
@@ -241,6 +247,7 @@ NVNMgr::NVNMgr()
 {
     _30 = graphicsMember<void*>(sead::GraphicsNvn::instance(), 0x48);
     graphicsMember<void*>(sead::GraphicsNvn::instance(), 0x1f8) = &mDebugCallback;
+
     for (auto& counter : mCounters)
     {
         counter.storeNonAtomic(0);
@@ -285,6 +292,7 @@ void NVNMgr::initialize(sead::Heap* pHeap, sead::Heap* pDebugHeap)
     mSamplerIdBase = graphics->getNewSamplerId();
     mSamplers.tryAllocBuffer(graphicsMember<s32>(graphics, 0x114) - mSamplerIdBase, pHeap);
     mSamplerList.allocBuffer(mSamplers.size(), pHeap);
+
     for (auto it = mSamplers.begin(), end = mSamplers.end(); it != end; ++it)
     {
         memset(it->mSampler, 0, sizeof(it->mSampler));
@@ -306,6 +314,7 @@ void NVNMgr::initialize(sead::Heap* pHeap, sead::Heap* pDebugHeap)
     textureNum |= textureNum >> 16;
     textureNum = (textureNum + 1) >> 1;
     mTextures.tryAllocBuffer(textureNum, pHeap);
+
     for (auto& texture : mTextures)
     {
         texture.mRefCount.storeNonAtomic(-1);
@@ -380,6 +389,7 @@ u32 NVNMgr::registerSampler(const NVNsampler* pSampler, const char* pName)
                 if (isEqual(*reinterpret_cast<const NVNsampler*>((*it).mSampler), *pSampler))
                 {
                     u32 id = (&(*it) - mSamplers.getBufferPtr()) + mSamplerIdBase;
+
                     if ((*it).mRefCount++ == 0)
                     {
                         mRegisteredSamplerNum++;
@@ -393,9 +403,11 @@ u32 NVNMgr::registerSampler(const NVNsampler* pSampler, const char* pName)
         {
             const u16 key16 = key;
             s32 index = binarySearch(mSamplerList, &key16, compareSamplerKeyU16_);
+
             if (index >= 0)
             {
                 const s32 num = mSamplerList.size();
+
                 for (s32 i = index;; i++)
                 {
                     if (isEqual(*reinterpret_cast<const NVNsampler*>(mSamplerList.at(i)),
@@ -421,9 +433,11 @@ u32 NVNMgr::registerSampler(const NVNsampler* pSampler, const char* pName)
     }
 
     const u16 start = mSamplerCursor;
+
     for (mSamplerCursor++; mSamplerCursor < mSamplers.size(); mSamplerCursor++)
     {
         s32 id = registerSampler_(mSamplerCursor, pSampler, key & 0xffff);
+
         if (id != -1)
         {
             return id;
@@ -433,6 +447,7 @@ u32 NVNMgr::registerSampler(const NVNsampler* pSampler, const char* pName)
     for (mSamplerCursor = 0; mSamplerCursor < start; mSamplerCursor++)
     {
         s32 id = registerSampler_(mSamplerCursor, pSampler, key & 0xffff);
+
         if (id != -1)
         {
             return id;
@@ -467,6 +482,7 @@ bool NVNMgr::isEqual(const NVNsampler& rA, const NVNsampler& rB)
 s32 NVNMgr::registerSampler_(s32 index, const NVNsampler* pSampler, u32 key)
 {
     SamplerKey& sampler = mSamplers[index];
+
     if (sampler.mRefCount != 0)
     {
         return -1;
@@ -490,6 +506,7 @@ s32 NVNMgr::registerSampler_(s32 index, const NVNsampler* pSampler, u32 key)
         reinterpret_cast<const NVNsampler*>(sampler.mSampler));
     mRegisteredSamplerNum++;
     sampler.mRefCount++;
+
     if (!(sampler.mFlags & 1))
     {
         mSamplerList.pushBack(&sampler);
@@ -532,6 +549,7 @@ bool NVNMgr::countupSampler(u32 id)
 bool NVNMgr::releaseSampler(u32 id)
 {
     sead::ScopedLock<sead::CriticalSection> lock(&mSamplerCS);
+
     if (--mSamplers[id - mSamplerIdBase].mRefCount == 0)
     {
         mRegisteredSamplerNum--;
@@ -583,6 +601,7 @@ s32 NVNMgr::registerTexture(const NVNtexture* pTexture, const NVNtextureView* pV
         mTextures[(index + mTextures.size() / 2) & (mTextures.size() - 1)]
             .mRefCount.compareExchange(0, -1);
         s32 id = registerTexture_(index, pTexture, pView, pName);
+
         if (id != -1)
         {
             return id;
@@ -607,6 +626,7 @@ s32 NVNMgr::registerTexture_(s32 index, const NVNtexture* pTexture, const NVNtex
 {
     TextureInfo& texture = mTextures[index];
     s32 id = -1;
+
     if (texture.mRefCount.compareExchange(-1, 1))
     {
         id = mTextureIdBase + index;
@@ -714,9 +734,11 @@ u32 NVNMgr::getTextureFlags(bool compressible, bool minimalLayout, NVNformat for
 {
     const bool isDepth = u32(format - NVN_FORMAT_DEPTH16) < 5;
     u32 flags = minimalLayout ? NVN_TEXTURE_FLAGS_MINIMAL_LAYOUT : 0;
+
     if (compressible || isDepth)
     {
         flags |= NVN_TEXTURE_FLAGS_COMPRESSIBLE;
+
         if (isDepth && mFlags.isOnBit(10))
         {
             flags |= NVN_TEXTURE_FLAGS_ADAPTIVE_ZCULL;
@@ -856,9 +878,11 @@ void NVNMgr::nvnCommandBufferBindTexture(DrawContext* pDrawContext, u64 handle,
 {
     NVNcommandBuffer* commandBuffer = getNvnCommandBuffer(pDrawContext);
     u32 mask = 0;
+
     for (s32 i = 0; i < cShaderType_Num; i++)
     {
         const s32 location = rLocation.getLocation(ShaderType(i));
+
         if (location != -1)
         {
             ::nvnCommandBufferBindTexture(commandBuffer, getNVNshaderStage(ShaderType(i)),
@@ -885,9 +909,11 @@ void NVNMgr::nvnCommandBufferBindImage(DrawContext* pDrawContext, u64 handle,
 {
     NVNcommandBuffer* commandBuffer = getNvnCommandBuffer(pDrawContext);
     u32 mask = 0;
+
     for (s32 i = 0; i < cShaderType_Num; i++)
     {
         const s32 location = rLocation.getLocation(ShaderType(i));
+
         if (location != -1)
         {
             ::nvnCommandBufferBindImage(commandBuffer, getNVNshaderStage(ShaderType(i)), location,
@@ -1053,6 +1079,7 @@ void NVNMgr::genMessage(sead::hostio::Context* pContext)
 
     {
         sead::ScopedLock<sead::CriticalSection> lock(&mSamplerCS);
+
         for (auto it = mSamplers.begin(), end = mSamplers.end(); it != end; ++it)
         {
             if (it->mRefCount != 0)
@@ -1072,6 +1099,7 @@ void NVNMgr::genMessage(sead::hostio::Context* pContext)
     for (auto it = mTextures.begin(), end = mTextures.end(); it != end; ++it)
     {
         const TextureInfo& texture = *it;
+
         if (texture.mRefCount > 0)
         {
             sead::FormatFixedSafeString<1024> msg(

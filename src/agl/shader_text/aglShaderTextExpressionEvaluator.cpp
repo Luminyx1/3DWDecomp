@@ -164,6 +164,7 @@ void ExpressionEvaluator::resolveOperatorTokenConnect(sead::ObjArray<SyntaxLeash
             c = createTokenOperatorSyntaxTree(pLeashes, c);
         } else if (c->mType == Clause::cType_Dot) {
             const Clause* prev = c->mPrev;
+
             if ((prev->isWord() || prev->mType == Clause::cType_RParen ||
                  prev->mType == Clause::cType_RBracket) &&
                 c->mNext->isWord()) {
@@ -180,6 +181,7 @@ void ExpressionEvaluator::resolveOperatorUnary(sead::ObjArray<SyntaxLeash>* pLea
     for (Clause* c = pBegin->mNext; c != pEnd; c = c->mNext) {
         if (c->mType == Clause::cType_Plus || c->mType == Clause::cType_Minus) {
             const Clause* prev = c->mPrev;
+
             if (prev->mType == Clause::cType_RBracket || prev->isWord()) {
                 continue;
             }
@@ -382,6 +384,7 @@ void ExpressionEvaluator::resolveOperator(sead::ObjArray<SyntaxLeash>* pLeashes,
 Clause* ExpressionEvaluator::resolveParenthesis(sead::ObjArray<SyntaxLeash>* pLeashes,
                                                 Clause* pClose, Clause* pEnd) {
     Clause* open = pClose;
+
     while (open->mType != Clause::cType_LParen) {
         open = open->mPrev;
     }
@@ -399,9 +402,11 @@ SyntaxTree* ExpressionEvaluator::resolve(Clause* pBegin, Clause* pEnd, bool) {
 
     s32 depth = 0;
     u32 valueNum = 0;
+
     for (Clause* c = head->mNext; c != pEnd;) {
         Clause* next = c->mNext;
         const Clause::CharacterInfo& info = c->getInfo();
+
         if (info.mIsSpace) {
             (*mRemoveDelegate)(c);
         } else if (c->mType == Clause::cType_LParen) {
@@ -429,6 +434,7 @@ SyntaxTree* ExpressionEvaluator::resolve(Clause* pBegin, Clause* pEnd, bool) {
         }
 
         const Clause::CharacterInfo& info = c->getInfo();
+
         if (info.mIsOperator ||
             (info.mIsSeparator && !(info.mIsCloseBracket || info.mIsOpenBracket))) {
             continue;

@@ -114,6 +114,7 @@ void Surface::setupNVNtextureBuilder(NVNtextureBuilder* pBuilder) const
     nvnTextureBuilderSetDefaults(pBuilder);
 
     NVNtextureTarget target = NVNtextureTarget(mTarget);
+
     if (target == NVN_TEXTURE_TARGET_CUBEMAP) {
         target = mDepth > 6 ? NVN_TEXTURE_TARGET_CUBEMAP_ARRAY : NVN_TEXTURE_TARGET_CUBEMAP;
     }
@@ -133,6 +134,7 @@ void Surface::setupNVNtextureBuilder(NVNtextureBuilder* pBuilder) const
     nvnTextureBuilderSetDepthStencilMode(pBuilder, NVN_TEXTURE_DEPTH_STENCIL_MODE_DEPTH);
 
     u32 flags = 0;
+
     if (mAttribute & cAttribute_Linear) {
         nvnTextureBuilderSetStride(pBuilder, mStride);
         flags = NVN_TEXTURE_FLAGS_LINEAR_RENDER_TARGET;

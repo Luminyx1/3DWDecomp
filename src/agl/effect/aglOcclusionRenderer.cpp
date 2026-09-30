@@ -36,6 +36,7 @@ inline void calcOccluderMtx(sead::Matrix34f* pMtx, const sead::Matrix34f& rCamIn
 {
     sead::Matrix34f rot;
     rot.setMul(sead::Matrix34f::ident, rCamInv);
+
     for (s32 i = 0; i < 3; i++)
     {
         (*pMtx)(i, 0) = radius * rot(i, 0);
@@ -125,11 +126,13 @@ f32 OcclusionRenderer::getCoreOcclusionRate(s32 index) const
 void OcclusionRenderer::initialize(s32 contextNum, sead::Heap* pHeap)
 {
     mContext.tryAllocBuffer(contextNum, pHeap);
+
     for (auto it = mContext.begin(); it != mContext.end(); ++it)
     {
         Context& rContext = *it;
         rContext.mOffset.set(0.0f, 0.0f, 0.0f);
         rContext.mPos.set(0.0f, 0.0f, 0.0f);
+
         if (it.getIndex() == 0)
         {
             rContext.mUniformBlock.startDeclare(16, pHeap);
@@ -137,6 +140,7 @@ void OcclusionRenderer::initialize(s32 contextNum, sead::Heap* pHeap)
             rContext.mUniformBlock.declare(UniformBlock::cType_Vec4, 3);
             rContext.mUniformBlock.declare(UniformBlock::cType_Vec4, 3);
             rContext.mUniformBlock.declare(UniformBlock::cType_Vec4, 4);
+
             for (s32 i = 0; i < 12; i++)
             {
                 rContext.mUniformBlock.declare(UniformBlock::cType_Float, 1);
@@ -156,6 +160,7 @@ void OcclusionRenderer::initialize(s32 contextNum, sead::Heap* pHeap)
         rContext.mRenderBuffer.setRenderTargetDepth(nullptr);
 
         rContext.mSub.tryAllocBuffer(2, pHeap);
+
         for (auto itSub = rContext.mSub.begin(); itSub != rContext.mSub.end(); ++itSub)
         {
             SubContext& rSub = *itSub;
@@ -217,6 +222,7 @@ void OcclusionRenderer::OcclVtxStream::create(s32 num, s32 divNum, f32 angle)
     {
         f32 angleStep = f32(divNum) * angle;
         f32 rateStep = invTotal * f32(divNum);
+
         for (s32 i = 0; i < num; i++)
         {
             f32 fi = f32(i);
@@ -234,10 +240,12 @@ void OcclusionRenderer::OcclVtxStream::create(s32 num, s32 divNum, f32 angle)
     f32 c = sead::Mathf::cos(angle);
     f32 x = 1.0f;
     f32 y = 0.0f;
+
     for (s32 i = 0; i < total; i++)
     {
         f32 nx = c * x - s * y;
         f32 ny = c * y + s * x;
+
         if (nx > 0.0f)
         {
             mScale += invTotal * nx * f32(i);
@@ -313,6 +321,7 @@ void OcclusionRenderer::calcContext(s32 index, const sead::Matrix34f& rView,
     invView.invert();
     sead::Vector3f dir;
     dir.setRotated(invView, -sead::Vector3f::ez);
+
     if (isNearZero(dir))
     {
         return;
@@ -342,6 +351,7 @@ void OcclusionRenderer::calcContext(s32 index, const sead::Matrix34f& rView,
     rContext.mScreenRadius = length * 0.5f;
     rContext.mAspect = mSampleSize / mSize;
     rContext.mRadiusScale = mOcclVtxStream.mScale / rContext.mScreenRadius;
+
     if (pResult)
     {
         pResult->mScreenPos = center;
@@ -354,6 +364,7 @@ void OcclusionRenderer::calcContext(s32 index, const sead::Matrix34f& rView,
     {
         sead::Vector3f viewPos(viewOccluder(0, 3), viewOccluder(1, 3), viewOccluder(2, 3));
         f32 dist = viewPos.length();
+
         if (viewPos.z < 0.0f)
         {
             f32 tanHalf = rCulling.mTanHalfFovy;
@@ -367,15 +378,18 @@ void OcclusionRenderer::calcContext(s32 index, const sead::Matrix34f& rView,
 
             f32 scale = 1.0f;
             f32 absY = viewPos.y > 0.0f ? viewPos.y : -viewPos.y;
+
             if (halfH - marginH < absY)
             {
                 scale = halfH / absY;
             }
 
             f32 absX = viewPos.x > 0.0f ? viewPos.x : -viewPos.x;
+
             if (halfW - marginW < absX)
             {
                 f32 s = halfW / absX;
+
                 if (scale > s)
                 {
                     scale = s;
@@ -384,6 +398,7 @@ void OcclusionRenderer::calcContext(s32 index, const sead::Matrix34f& rView,
 
             sead::Vector3f n(viewPos.x * scale, viewPos.y * scale, viewPos.z);
             f32 len = n.length();
+
             if (len > 0.0f)
             {
                 n *= 1.0f / len;
@@ -400,6 +415,7 @@ void OcclusionRenderer::calcContext(s32 index, const sead::Matrix34f& rView,
 
             f32 absY2 = y > 0.0f ? y : -y;
             f32 limitH = halfH2 + marginH2;
+
             if (limitH < absY2)
             {
                 f32 s = (absY2 - (absY2 - limitH)) / absY2;
@@ -409,6 +425,7 @@ void OcclusionRenderer::calcContext(s32 index, const sead::Matrix34f& rView,
 
             f32 absX2 = x > 0.0f ? x : -x;
             f32 limitW = halfW2 - marginW2;
+
             if (limitW < absX2)
             {
                 f32 s = (absX2 - (absX2 - limitW)) / absX2;
@@ -418,6 +435,7 @@ void OcclusionRenderer::calcContext(s32 index, const sead::Matrix34f& rView,
 
             sead::Vector3f m(x, y, z);
             f32 len2 = m.length();
+
             if (len2 > 0.0f)
             {
                 m *= 1.0f / len2;
@@ -563,6 +581,7 @@ void OcclusionRenderer::draw(DrawContext* pDrawContext, s32 index,
     mDrawGraphicsContext.apply(pDrawContext);
     TextureSampler& rSampler = const_cast<TextureSampler&>(rContext.mSampler);
     rSampler.applyTextureData(rDepth);
+
     if (mBorderBlack)
     {
         rSampler.setBorderColor(sead::Color4f(0.0f, 0.0f, 0.0f, 1.0f));
@@ -607,6 +626,7 @@ void OcclusionRenderer::drawDebug(DrawContext* pDrawContext, s32 index,
     }
 
     const Context& rContext = mContext[index];
+
     if (mAutoDirection)
     {
         utl::DevTools::drawPointLight(pDrawContext, rContext.mPos, mSize * 0.5f, rColor0,
@@ -634,6 +654,7 @@ void OcclusionRenderer::drawDebug(DrawContext* pDrawContext, s32 index,
     invView.invert();
     sead::Vector3f dir;
     dir.setRotated(invView, -sead::Vector3f::ez);
+
     if (isNearZero(dir))
     {
         return;
@@ -650,6 +671,7 @@ void OcclusionRenderer::drawDebug(DrawContext* pDrawContext, s32 index,
     calcOccluderMtx(&mtx, camInv, center, mSize * 0.5f);
 
     f32 invTotal = 1.0f / f32(mRingNum * mDivNum);
+
     for (s32 ring = 0; ring < mRingNum; ring++)
     {
         f32 step = mAngle * sead::Mathf::pi();
@@ -661,6 +683,7 @@ void OcclusionRenderer::drawDebug(DrawContext* pDrawContext, s32 index,
         f32 base = invTotal * f32(mDivNum) * f32(ring);
         f32 x = c0;
         f32 y = s0;
+
         for (s32 i = 0; i < mDivNum; i++)
         {
             f32 nx = c * x - s * y;
@@ -693,6 +716,7 @@ void OcclusionRenderer::listenPropertyEvent(const sead::hostio::PropertyEvent* p
     }
 
     const void* id = pEvent->getId();
+
     if ((id < &mRingNum + 1 && id >= &mRingNum) || (id < &mDivNum + 1 && id >= &mDivNum) ||
         (id < &mAngle + 1 && id >= &mAngle))
     {

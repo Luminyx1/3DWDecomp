@@ -85,6 +85,7 @@ void RenderDisplay::freeFrameBuffer()
     if (mFlag.isOn(cFlag_FrameBufferAllocated))
     {
         utl::DynamicTextureAllocator* pAllocator = utl::DynamicTextureAllocator::instance();
+
         if (mColorTexture)
         {
             pAllocator->free(mColorTexture);
@@ -266,6 +267,7 @@ void RenderDisplay::allocFrameBuffer(MultiSampleType multiSample, RenderDisplay*
     if (!pShare)
     {
         utl::DynamicTextureAllocator* pAllocator = utl::DynamicTextureAllocator::instance();
+
         if (colorNum != -1)
         {
             GPUMemVoidAddr addr;
@@ -360,6 +362,7 @@ void RenderDisplay::clear()
 void RenderDisplay::pushBack(Layer* pLayer)
 {
     mLayer.pushBack(pLayer);
+
     if (mFlag.isOn(1 << 1))
     {
         mLayer.heapSort_<Layer>(compareRandom);
@@ -373,6 +376,7 @@ void RenderDisplay::pushBack(Layer* pLayer)
 void RenderDisplay::erase(Layer* pLayer)
 {
     s32 index = 0;
+
     for (auto& rLayer : mLayer)
     {
         if (&rLayer == pLayer)
@@ -458,6 +462,7 @@ void RenderDisplay::bindAndClearRenderBuffer(DrawContext* pDrawContext) const
     if (mFlag.isOn(1 << 7))
     {
         u32 clearFlag = mClearFlag;
+
         if (!mFrameBuffer->getRenderTargetDepth())
         {
             clearFlag &= ~2u;
@@ -528,6 +533,7 @@ void RenderDisplay::drawLayerDirect_(DrawContext* pDrawContext, const Layer* pLa
         RenderInfo info(pDrawContext, mDisplayIndex, frameworkType, mFrameBuffer,
                         mFlag.isOn(cFlag_DrawDebugInfo), pLayer);
         s32 num = pLayer->getRenderStepNum();
+
         for (info.setRenderStep(0); info.getRenderStep() < num;
              info.setRenderStep(info.getRenderStep() + 1))
         {
@@ -554,12 +560,14 @@ void RenderDisplay::drawRenderStep_(DrawContext* pDrawContext, const Layer* pLay
     RenderInfo info(pDrawContext, mDisplayIndex, frameworkType, mFrameBuffer,
                     mFlag.isOn(cFlag_DrawDebugInfo), pLayer);
     s32 num = pLayer->getRenderStepNum();
+
     for (info.setRenderStep(0); info.getRenderStep() < num;
          info.setRenderStep(info.getRenderStep() + 1))
     {
         bool isSkipDependency = (flag & 2) == 0;
         bool isGPUCalc = (flag & 1) ? false : pLayer->isRenderStepGPUCalc(info.getRenderStep());
         bool isNoDependency = pLayer->isRenderStepNoDependency(info.getRenderStep());
+
         if (isGPUCalc)
         {
             continue;
@@ -575,6 +583,7 @@ void RenderDisplay::drawRenderStep_(DrawContext* pDrawContext, const Layer* pLay
             s32 index = mDLBuffer->begin(pDrawContext, sead::SafeString(sead::SafeString::cEmptyString),
                                          priority + info.getRenderStep());
             pLayer->drawRenderStep_(info);
+
             if (index != -1)
             {
                 pushBackDL_(pDrawContext, mDLBuffer->end(pDrawContext, index), pLayer);
@@ -600,6 +609,7 @@ void RenderDisplay::calcLayerDL_(DrawContext* pDrawContext, const Layer* pLayer,
     s32 preIndex;
     s32 index;
     u32 stepFlag;
+
     if (flag & cFlag_11)
     {
         stepFlag = (flag & (1 << 6)) ? 2 : 6;
@@ -614,6 +624,7 @@ void RenderDisplay::calcLayerDL_(DrawContext* pDrawContext, const Layer* pLayer,
     }
 
     preDrawLayer_(pDrawContext, pLayer, FrameworkType(0));
+
     if (preIndex != -1)
     {
         pushBackDL_(pDrawContext, mDLBuffer->end(pDrawContext, preIndex), pLayer);
@@ -624,6 +635,7 @@ void RenderDisplay::calcLayerDL_(DrawContext* pDrawContext, const Layer* pLayer,
                     priority);
 
     s32 postIndex;
+
     if (flag & cFlag_11)
     {
         postIndex = mDLBuffer->begin(pDrawContext, sead::SafeString(sead::SafeString::cEmptyString),
@@ -635,6 +647,7 @@ void RenderDisplay::calcLayerDL_(DrawContext* pDrawContext, const Layer* pLayer,
     }
 
     postDrawLayer_(pDrawContext, pLayer, FrameworkType(0));
+
     if (postIndex != -1)
     {
         pushBackDL_(pDrawContext, mDLBuffer->end(pDrawContext, postIndex), pLayer);
@@ -688,6 +701,7 @@ void RenderDisplay::calcGPU_(DrawContext* pDrawContext, const Layer* pLayer, s32
     RenderInfo info(pDrawContext, mDisplayIndex, FrameworkType(0), mFrameBuffer,
                     mFlag.isOn(cFlag_DrawDebugInfo), pLayer);
     s32 num = pLayer->getRenderStepNum();
+
     for (info.setRenderStep(0); info.getRenderStep() < num;
          info.setRenderStep(info.getRenderStep() + 1))
     {
@@ -707,6 +721,7 @@ void RenderDisplay::calcGPU_(DrawContext* pDrawContext, const Layer* pLayer, s32
 void RenderDisplay::draw(DrawContext* pDrawContext) const
 {
     beginDraw_(pDrawContext);
+
     for (auto& rLayer : mLayer)
     {
         drawLayerDirect_(pDrawContext, &rLayer, FrameworkType(0));
@@ -747,6 +762,7 @@ void RenderDisplay::draw(DrawContext* pDrawContext) const
 void RenderDisplay::calcDL(sead::PtrArray<LayerJob>* pJobs)
 {
     s32 minWeight = 0x7fffffff;
+
     for (auto it = mLayer.begin(), end = mLayer.end(); it != end; ++it)
     {
         it->calcJobWeight();
@@ -790,6 +806,7 @@ void RenderDisplay::callDisplayList(DrawContext* pDrawContext, bool copyDisplayL
     if (copyDisplayList)
     {
         mRenderDLSorted.clear();
+
         for (auto& rDL : mRenderDLPtr)
         {
             if (rDL.isValid())
@@ -807,6 +824,7 @@ void RenderDisplay::callDisplayList(DrawContext* pDrawContext, bool copyDisplayL
         for (auto& rDL : mRenderDLSorted)
         {
             rDL.callDirect(pDrawContext);
+
             if (mFlag.isOn(1 << 12))
             {
                 driver::GraphicsDriverMgr::instance()->waitDrawDone(pDrawContext);
@@ -831,6 +849,7 @@ void RenderDisplay::callDisplayList(DrawContext* pDrawContext, bool copyDisplayL
         const DisplayList& rDisplayList = mDisplayList[mDLBuffer->mCurrentBuffer];
         DrawContext context;
         context.setCommandBuffer(const_cast<DisplayList*>(&rDisplayList));
+
         if (const_cast<DisplayList&>(rDisplayList).beginDisplayList())
         {
             for (auto& rDL : mRenderDLSorted)
@@ -839,6 +858,7 @@ void RenderDisplay::callDisplayList(DrawContext* pDrawContext, bool copyDisplayL
             }
 
             const_cast<DisplayList&>(rDisplayList).endDisplayList();
+
             if (rDisplayList.isValid())
             {
                 rDisplayList.callDirect(pDrawContext);
@@ -855,6 +875,7 @@ void RenderDisplay::callDisplayList(DrawContext* pDrawContext, bool copyDisplayL
     }
 
     mDLTotalSize = 0;
+
     for (auto& rDL : mRenderDLSorted)
     {
         mDLTotalSize += rDL.getValidSize();

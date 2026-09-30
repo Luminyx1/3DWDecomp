@@ -135,6 +135,7 @@ void RenderTargetDepth::invalidateGPUCache(DrawContext* pDrawContext) const
 void RenderTargetDepth::invalidateCPUCache() const
 {
     TextureData::invalidateCPUCache();
+
     if (mZCullBuffer.isValid())
     {
         mZCullBuffer.invalidateCPUCache(mZCullSize);
@@ -184,6 +185,7 @@ void RenderTargetDepth::expandHiZBufferToAllSlice(DrawContext* pDrawContext,
                                                   const TextureData* pDst) const
 {
     s32 sliceNum = sead::Mathi::max(pDst->getMinSlice_(), pDst->getDepth());
+
     for (s32 i = 0; i < sliceNum; i++)
     {
         copyTo(pDrawContext, pDst, i, mMipLevel, i, mMipLevel);

@@ -240,6 +240,7 @@ bool ParameterBase::isSafeType(ParameterType type) const
     for (const auto pair : pairs)
     {
         const auto current = getParameterType();
+
         if (type == pair.first && current == pair.second)
         {
             return true;
@@ -439,12 +440,14 @@ static void parseFloats_(const sead::SafeString& rString, f32* pOut, s32 num)
     auto it = rString.tokenBegin(" ");
     const auto end = rString.tokenEnd(" ");
     u32 i = 0;
+
     while (end != it)
     {
         sead::FixedSafeString<256> token;
         it.getAndForward(&token);
 
         f32 value;
+
         if (!sead::StringUtil::tryParseNumber(&value, token,
                                               sead::StringUtil::CardinalNumber::BaseAuto))
         {
@@ -476,6 +479,7 @@ bool ParameterBase::applyString(const sead::SafeString& rString, bool x)
     case ParameterType::F32:
     {
         auto* value = ptrT<f32>();
+
         if (!sead::StringUtil::tryParseNumber(value, rString,
                                               sead::StringUtil::CardinalNumber::BaseAuto))
         {
@@ -488,6 +492,7 @@ bool ParameterBase::applyString(const sead::SafeString& rString, bool x)
     case ParameterType::U32:
     {
         auto* value = ptrT<s32>();
+
         if (!sead::StringUtil::tryParseNumber(value, rString,
                                               sead::StringUtil::CardinalNumber::BaseAuto))
         {
@@ -513,6 +518,7 @@ bool ParameterBase::applyString(const sead::SafeString& rString, bool x)
     case ParameterType::StringRef:
     {
         sead::Heap* heap = ParameterStringMgr::instance()->getHeap();
+
         if (!heap)
         {
             return true;
@@ -528,6 +534,7 @@ bool ParameterBase::applyString(const sead::SafeString& rString, bool x)
         const s32 srcLength = sead::SafeString(src).calcLength();
 
         bool result;
+
         if (getParameterType() == ParameterType::StringRef)
         {
             char* buffer = new (heap, 8) char[bufferSize];
@@ -539,6 +546,7 @@ bool ParameterBase::applyString(const sead::SafeString& rString, bool x)
         else
         {
             s32 size;
+
             if (getParameterType() == ParameterType::String32)
             {
                 size = 32;
@@ -656,6 +664,7 @@ void ParameterBase::copyUnsafe(const ParameterBase& rOther)
     auto* dest = ptrT<u8>();
     auto* src = rOther.ptrT<u8>();
     const s32 n = size();
+
     for (s32 i = 0; i < n; ++i)
     {
         *dest = *src;
@@ -831,6 +840,7 @@ size_t ParameterBase::binarize(void* pBinary) const
     SEAD_ASSERT(pBinary != nullptr);
 
     size_t binary_size;
+
     if (getParameterType() != ParameterType::Bool)
     {
         binary_size = calcBinarizeSize();
@@ -1011,6 +1021,7 @@ void ParameterCurve<N>::writeToXML(sead::XmlElement* pElement, sead::Heap* pHeap
         cTypeName[s32(getParameterType()) - s32(ParameterType::Curve1)], pHeap);
 
     const auto type = getParameterType();
+
     if (type != ParameterType::Curve1 && type != ParameterType::Curve2 &&
         type != ParameterType::Curve3 && type != ParameterType::Curve4)
     {
@@ -1023,6 +1034,7 @@ void ParameterCurve<N>::writeToXML(sead::XmlElement* pElement, sead::Heap* pHeap
     char* buffer = new (pHeap, 8) char[bufferSize];
 
     u32 length = 0;
+
     for (u32 i = 0; i < curveNum; ++i)
     {
         {
@@ -1037,6 +1049,7 @@ void ParameterCurve<N>::writeToXML(sead::XmlElement* pElement, sead::Heap* pHeap
 
         const s32 numUse = mCurves[i].mInfo.numUse;
         const f32* values = mCurveData[0].f + i * 32;
+
         for (s32 j = 0; j < numUse; j += 3)
         {
             sead::BufferedSafeString line(buffer + length, bufferSize - length);
@@ -1067,6 +1080,7 @@ s32 ParameterCurve<N>::readFromXML(const sead::XmlElement& rElement, bool x)
                 cTypeName[s32(getParameterType()) - s32(ParameterType::Curve1)])
         {
             const auto type = getParameterType();
+
             if (type != ParameterType::Curve1 && type != ParameterType::Curve2 &&
                 type != ParameterType::Curve3 && type != ParameterType::Curve4)
             {
@@ -1088,6 +1102,7 @@ s32 ParameterCurve<N>::readFromXML(const sead::XmlElement& rElement, bool x)
                 while (end != it)
                 {
                     it.getAndForward(&token);
+
                     if (!token.isEmpty())
                     {
                         break;
@@ -1107,6 +1122,7 @@ s32 ParameterCurve<N>::readFromXML(const sead::XmlElement& rElement, bool x)
                 while (end != it)
                 {
                     it.getAndForward(&token);
+
                     if (!token.isEmpty())
                     {
                         break;
@@ -1117,6 +1133,7 @@ s32 ParameterCurve<N>::readFromXML(const sead::XmlElement& rElement, bool x)
                     token, sead::StringUtil::CardinalNumber::BaseAuto);
 
                 f32 values[cUnitCurveParamNum];
+
                 for (u32 j = 0; j < numUse; ++j)
                 {
                     if (it == end)
@@ -1127,6 +1144,7 @@ s32 ParameterCurve<N>::readFromXML(const sead::XmlElement& rElement, bool x)
                     while (end != it)
                     {
                         it.getAndForward(&token);
+
                         if (!token.isEmpty())
                         {
                             break;
@@ -1142,6 +1160,7 @@ s32 ParameterCurve<N>::readFromXML(const sead::XmlElement& rElement, bool x)
                 u32* data = reinterpret_cast<u32*>(mCurveData.data());
                 data[i * 32 + 1] = curveType;
                 data[i * 32] = numUse;
+
                 for (u32 j = 0; j < numUse; ++j)
                 {
                     reinterpret_cast<f32*>(data)[i * 32 + 2 + j] = values[j];

@@ -33,6 +33,7 @@ void VertexAttribute::cleanUp()
     }
 
     u32 bufferNum = mVertexBuffers.size();
+
     if (bufferNum != 0)
     {
         std::memset(mVertexBuffers.getBufferPtr(), 0, bufferNum * sizeof(const VertexBuffer*));
@@ -84,6 +85,7 @@ void VertexAttribute::setVertexStream(s32 location, const VertexBuffer* pVertexB
     }
 
     Attribute_& rAttribute = mAttributes[location];
+
     if (rAttribute.mVertexBuffer)
     {
         rAttribute.mBufferIndex = disableVertexBuffer_(&rAttribute);
@@ -132,6 +134,7 @@ s32 VertexAttribute::enableVertexBuffer_(Attribute_* pAttribute,
     pAttribute->mStreamIndex = streamIndex;
 
     s32 index = -1;
+
     for (s32 i = mVertexBuffers.size() - 1; i >= 0; i--)
     {
         if (mVertexBuffers[i] == pVertexBuffer)
@@ -184,6 +187,7 @@ void VertexAttribute::setUp()
     for (s32 i = 0; i < cVertexAttributeMax; i++)
     {
         const VertexBuffer* pVertexBuffer = mAttributes[i].mVertexBuffer;
+
         if (!pVertexBuffer)
         {
             continue;
@@ -194,6 +198,7 @@ void VertexAttribute::setUp()
         nvnVertexAttribStateSetFormat(&mAttribStates[i], NVNformat(rStream.mFormat),
                                       rStream.mOffset);
         nvnVertexAttribStateSetStreamIndex(&mAttribStates[i], mAttributes[i].mBufferIndex);
+
         if (pVertexBuffer->getStream(mAttributes[i].mStreamIndex).mDivisor)
         {
             nvnVertexStreamStateSetDivisor(&mStreamStates[mAttributes[i].mBufferIndex], 1);
@@ -202,6 +207,7 @@ void VertexAttribute::setUp()
 
     u32 bufferNum = mVertexBuffers.size();
     const VertexBuffer* const* ppVertexBuffer = mVertexBuffers.getBufferPtr();
+
     for (u32 i = 0; i < bufferNum; i++)
     {
         if (ppVertexBuffer[i])
@@ -225,9 +231,11 @@ void VertexAttribute::activate(DrawContext* pDrawContext) const
 
     u32 bufferNum = mVertexBuffers.size();
     const VertexBuffer* const* ppVertexBuffer = mVertexBuffers.getBufferPtr();
+
     for (u32 i = 0; i < bufferNum; i++)
     {
         const VertexBuffer* pVertexBuffer = ppVertexBuffer[i];
+
         if (pVertexBuffer)
         {
             nvnCommandBufferBindVertexBuffer(pCommandBuffer, i,

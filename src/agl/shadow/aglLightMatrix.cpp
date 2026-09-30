@@ -37,6 +37,7 @@ void LightMatrix::update(const sead::Vector3f& rDir)
     dir.normalize();
     sead::Vector3f up;
     up.setCross(dir, sead::Vector3f::ex);
+
     if (up.normalize() < sead::Mathf::epsilon() || sead::Mathf::abs(dir.dot(up)) > 0.9999999f)
     {
         up.setCross(dir, sead::Vector3f::ez);

@@ -116,6 +116,7 @@ bool ResBinaryShaderArchive::setUp(bool le_resolve_pointers)
 
             ResShaderUniformBlockArray block_arr = getResShaderUniformBlockArray(binary_prog);
             block_arr.modifyEndianArray(modifyEndian());
+
             for (auto block = block_arr.begin(), block_end = block_arr.end(); block != block_end;
                  ++block) {
                 ResShaderUniformBlock(&(*block)).getResShaderUniformArray().modifyEndianArray(

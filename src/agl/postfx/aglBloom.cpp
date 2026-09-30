@@ -72,6 +72,7 @@ void BloomParameter::initialize(utl::IParameterObj* pObj, sead::Heap* pHeap)
                             sead::FormatFixedSafeString<128>("%sfinalgather", "shaft_"),
                             "Final Gather", pObj);
     mShaft.mExpand.init(1.0f, sead::FormatFixedSafeString<128>("%sexpand", "shaft_"), "Expand", pObj);
+
     for (s32 i = 0; i < cColorNum; i++)
     {
         mColors[i].init(sead::Color4f::cWhite, sead::FormatFixedSafeString<128>("color%d", i + 1),
@@ -135,6 +136,7 @@ void BloomParameter::updateBalance_()
     }
 
     f32 sum = mBalance.x + mBalance.y + mBalance.z;
+
     if (sum > 0.0f)
     {
         f32 inv = 1.0f / sum;
@@ -150,6 +152,7 @@ void BloomParameter::genMessageBloomParameter(sead::hostio::Context* pContext)
 
     s32 editType = *mEditType;
     mMain.genMessage(pContext, editType == 1);
+
     if (*mEditType == 0)
     {
         for (auto& rColor : mColors)
@@ -160,6 +163,7 @@ void BloomParameter::genMessageBloomParameter(sead::hostio::Context* pContext)
 
     Depth& rGain = mDepths[cDepth_Gain];
     rGain.mEnable.genMessageParameter(pContext, rGain.mEnable.getMeta());
+
     if (*rGain.mEnable)
     {
         rGain.mStart.genMessageParameter(pContext, utl::DevTools::getStringMinMax(0.0f, 1000.0f));
@@ -170,6 +174,7 @@ void BloomParameter::genMessageBloomParameter(sead::hostio::Context* pContext)
 
     Depth& rOffset = mDepths[cDepth_Offset];
     rOffset.mEnable.genMessageParameter(pContext, rOffset.mEnable.getMeta());
+
     if (*rOffset.mEnable)
     {
         rOffset.mStart.genMessageParameter(pContext,
@@ -186,6 +191,7 @@ void BloomParameter::genMessageBloomParameter(sead::hostio::Context* pContext)
         mShaft.genMessage(pContext, false);
         Depth& rShaft = mDepths[cDepth_Shaft];
         rShaft.mEnable.genMessageParameter(pContext, rShaft.mEnable.getMeta());
+
         if (*rShaft.mEnable)
         {
             rShaft.mStart.genMessageParameter(pContext, "Min=0,Max=10000");
@@ -204,6 +210,7 @@ void BloomParameter::Unit::genMessage(sead::hostio::Context* pContext, bool isEd
     mThreshold.genMessageParameter(pContext, "Min=0, Max=2");
     mThresholdRange.genMessageParameter(pContext, "Min=0.001, Max=0.5");
     mIntensity.genMessageParameter(pContext, "Min=0, Max=8");
+
     if (isEditExpand)
     {
         mExpand.genMessageParameter(pContext, "Min=0, Max=2");
@@ -314,6 +321,7 @@ void Bloom::draw_(DrawContext* pDrawContext, s32 context, const DrawArg& rArg,
                   bool isBuffer) const
 {
     const BloomParameter& rParam = getParameter(context);
+
     if (!*mEnable || !isEnableContext(context))
     {
         return;
@@ -321,6 +329,7 @@ void Bloom::draw_(DrawContext* pDrawContext, s32 context, const DrawArg& rArg,
 
     Context& rContext = getContext_(context);
     utl::DynamicTextureCache& rCache = rContext.mTextureCache;
+
     if (!rCache.begin())
     {
         return;
@@ -328,6 +337,7 @@ void Bloom::draw_(DrawContext* pDrawContext, s32 context, const DrawArg& rArg,
 
     sead::Vector2f size;
     rArg.mpViewport->getOnFrameBufferSize(&size, *rArg.mpRenderBuffer);
+
     if (size.x < 64.0f || size.y < 64.0f)
     {
         rContext.mResultSampler.applyTextureData(
@@ -345,6 +355,7 @@ void Bloom::draw_(DrawContext* pDrawContext, s32 context, const DrawArg& rArg,
                            rArg.mpRenderBuffer->getRenderTargetColor()));
 
     bool isLinearDepth = rArg.mIsLinearDepth;
+
     if (rArg.mpDepth && !mFlags.isOn(cFlag_IgnoreDepth))
     {
         rContext.mDepthSampler.applyTextureData(*rArg.mpDepth);
@@ -356,6 +367,7 @@ void Bloom::draw_(DrawContext* pDrawContext, s32 context, const DrawArg& rArg,
     }
 
     resolution *= scale;
+
     if (rArg.mpMask)
     {
         rContext.mMaskSampler.applyTextureData(*rArg.mpMask);
@@ -369,6 +381,7 @@ void Bloom::draw_(DrawContext* pDrawContext, s32 context, const DrawArg& rArg,
         .activate(pDrawContext);
 
     TextureData* pReduce = nullptr;
+
     if (mFlags.isOn(cFlag_Reduce) && !rArg.mpColor)
     {
         f32 reduceWidth = f32(width) + f32(width);
@@ -405,10 +418,12 @@ void Bloom::draw_(DrawContext* pDrawContext, s32 context, const DrawArg& rArg,
 
     u32 detectWidth = (width + 3) & ~3u;
     u32 detectHeight = (height + 3) & ~3u;
+
     for (s32 i = 0; i < 2; i++)
     {
         MRT& rMRT = rContext.mMRTs[i];
         const char* pName = i == 0 ? "detect0" : "detect1";
+
         if (!mFlags.isOn(cFlag_UseMipLevel))
         {
             rMRT.mTextures[0] = rCache.alloc(pDrawContext, pName,
@@ -449,6 +464,7 @@ void Bloom::draw_(DrawContext* pDrawContext, s32 context, const DrawArg& rArg,
 
     drawDetect_(pDrawContext, context, isLinearDepth);
     rContext.mRenderBuffer.setRenderTargetColor(nullptr, 1);
+
     if (pReduce)
     {
         rCache.free(pReduce);
@@ -465,6 +481,7 @@ void Bloom::draw_(DrawContext* pDrawContext, s32 context, const DrawArg& rArg,
     if (!mFlags.isOn(cFlag_NoGather))
     {
         sead::Color4f colors[4];
+
         switch (*mEditType)
         {
         case 0:
@@ -478,6 +495,7 @@ void Bloom::draw_(DrawContext* pDrawContext, s32 context, const DrawArg& rArg,
             f32 expand = *rParam.mMain.mExpand;
             f32 weight1;
             f32 weight2;
+
             if (expand < 1.0f / 3.0f)
             {
                 weight1 = expand * 3.0f;
@@ -503,11 +521,13 @@ void Bloom::draw_(DrawContext* pDrawContext, s32 context, const DrawArg& rArg,
         }
 
         MRT& rMRT = rContext.mMRTs[0];
+
         for (s32 i = 3; i > 0; i--)
         {
             const TextureData* pTexture = rMRT.mTextures[0];
             f32 w = pTexture->getWidth(0) >> i;
             f32 h = pTexture->getHeight(0) >> i;
+
             if (!mFlags.isOn(cFlag_UseMipLevel))
             {
                 rMRT.mTarget.applyTextureData(*rMRT.mTextures[i]);
@@ -525,6 +545,7 @@ void Bloom::draw_(DrawContext* pDrawContext, s32 context, const DrawArg& rArg,
             rContext.mRenderBuffer.bind(pDrawContext);
             sead::Viewport viewport(rContext.mRenderBuffer);
             viewport.apply(pDrawContext, rContext.mRenderBuffer);
+
             if (i != 1)
             {
                 drawGather_(pDrawContext, rMRT.mSampler, colors[i], colors[i - 1]);
@@ -610,6 +631,7 @@ void Bloom::draw_(DrawContext* pDrawContext, s32 context, const DrawArg& rArg,
         sead::GraphicsContext graphicsContext;
         graphicsContext.setDepthEnable(false, false);
         graphicsContext.setColorMask(true, true, true, false);
+
         if (mFlags.isOn(cFlag_NoBlend))
         {
             graphicsContext.setBlendEnable(false);
@@ -658,6 +680,7 @@ void Bloom::draw_(DrawContext* pDrawContext, s32 context, const DrawArg& rArg,
     }
 
     rContext.mMRTs[0].entry(pDrawContext, context, mDebugTexturePage);
+
     if (!isBuffer)
     {
         releaseBloomBuffer(context);
@@ -787,6 +810,7 @@ void Bloom::drawGaussian_(DrawContext* pDrawContext, s32 context, s32 level, f32
     graphicsContext.apply(pDrawContext);
 
     s32 nextLevel = level + 1;
+
     if (!mFlags.isOn(cFlag_UseMipLevel))
     {
         rSampler.applyTextureData(*rMRT.mTextures[level]);
@@ -824,6 +848,7 @@ void Bloom::drawGaussian_(DrawContext* pDrawContext, s32 context, s32 level, f32
                                      TextureFormat::cTextureFormat_R11_G11_B10_float, w, h, 1,
                                      nullptr, utl::DynamicTextureCache::cAllocateType_0, true);
     rMRT.mSampler.applyTextureData(rMRT.mTarget);
+
     if (mFlags.isOn(cFlag_UseMipLevel))
     {
         rSampler.setLod(nextLevel, nextLevel, 0.0f);
@@ -908,6 +933,7 @@ void Bloom::drawGather_(DrawContext* pDrawContext, const TextureSampler& rSample
 void Bloom::drawShaft_(DrawContext* pDrawContext, s32 context) const
 {
     const BloomParameter& rParam = getParameter(context);
+
     if (*rParam.mExType == 0)
     {
         return;
@@ -928,10 +954,12 @@ void Bloom::drawShaft_(DrawContext* pDrawContext, s32 context) const
     TextureData* pPrev = nullptr;
     f32 w = width;
     f32 h = height;
+
     for (s32 i = 0; i < iteration; i++)
     {
         f32 offsetX;
         f32 offsetY;
+
         switch (*rParam.mExType)
         {
         case 1:
@@ -1053,6 +1081,7 @@ void Bloom::drawDepthDepth_(DrawContext* pDrawContext, s32 context, s32 index,
 {
     Context& rContext = getContext_(context);
     const BloomParameter::Depth& rDepth = getParameter(context).mDepths[index];
+
     if (!*rDepth.mEnable)
     {
         return;
@@ -1100,12 +1129,14 @@ void Bloom::callbackNotAppliable_(utl::IParameterObj* pObj, utl::ParameterBase* 
     if (pParam == &mMain.mIntensity)
     {
         s32 index = obj.searchIndex(utl::ParameterBase::calcHash("gain"));
+
         if (index == -1)
         {
             return;
         }
 
         utl::ResParameter res = obj.getResParameter(index);
+
         if (!res.ptr())
         {
             return;
@@ -1116,12 +1147,14 @@ void Bloom::callbackNotAppliable_(utl::IParameterObj* pObj, utl::ParameterBase* 
     else if (pParam == &mDepths[cDepth_Gain].mValue)
     {
         s32 index = obj.searchIndex(utl::ParameterBase::calcHash("depth_gain"));
+
         if (index == -1)
         {
             return;
         }
 
         utl::ResParameter res = obj.getResParameter(index);
+
         if (!res.ptr())
         {
             return;
@@ -1133,12 +1166,14 @@ void Bloom::callbackNotAppliable_(utl::IParameterObj* pObj, utl::ParameterBase* 
     else if (pParam == &mDepths[cDepth_Offset].mValue)
     {
         s32 index = obj.searchIndex(utl::ParameterBase::calcHash("depth_offset"));
+
         if (index == -1)
         {
             return;
         }
 
         utl::ResParameter res = obj.getResParameter(index);
+
         if (!res.ptr())
         {
             return;
@@ -1155,6 +1190,7 @@ void Bloom::genMessage(sead::hostio::Context* pContext)
     genMessageIO(pContext, 0xf);
     mDebugTexturePage.genMessagePage(pContext, this);
     mEnable.genMessageParameter(pContext, mEnable.getMeta());
+
     if (mBalanceType == 1)
     {
         mThresholdBalance.genMessageParameter(pContext, mThresholdBalance.getMeta());
@@ -1162,6 +1198,7 @@ void Bloom::genMessage(sead::hostio::Context* pContext)
 
     genMessageBloomParameter(pContext);
     u32 contextNum = getContextBuffer_().size();
+
     for (u32 i = 0; i < contextNum; i++)
     {
         {

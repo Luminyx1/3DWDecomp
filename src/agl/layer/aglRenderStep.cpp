@@ -26,9 +26,11 @@ void RenderStep::calc()
     DrawMethod** ppMethods = mDrawMethod.data();
     s32 top = 0;
     s32 bottom = mDrawMethod.size() - 1;
+
     while (top < bottom)
     {
         s32 last = top;
+
         for (s32 i = top; i < bottom; i++)
         {
             if (DrawMethod::compare(ppMethods[i], ppMethods[i + 1]) > 0)
@@ -41,12 +43,14 @@ void RenderStep::calc()
         }
 
         bottom = last;
+
         if (top >= bottom)
         {
             break;
         }
 
         last = bottom;
+
         for (s32 i = bottom; i > top; i--)
         {
             if (DrawMethod::compare(ppMethods[i], ppMethods[i - 1]) < 0)
@@ -90,6 +94,7 @@ s32 RenderStep::removeByObject(const void* pObject)
 {
     s32 count = 0;
     s32 index = 0;
+
     for (auto it = mDrawMethod.begin(); it != mDrawMethod.end();)
     {
         if (it->getObject() == pObject)
@@ -116,6 +121,7 @@ s32 RenderStep::remove(const DrawMethod* pMethod)
 {
     s32 count = 0;
     s32 index = 0;
+
     for (auto it = mDrawMethod.begin(); it != mDrawMethod.end();)
     {
         if (&*it == pMethod)

@@ -46,6 +46,7 @@ void TextureMemoryAllocator::initialize(GPUMemVoidAddr addr, sead::Buffer<Storag
 
     mStorage = pStorage;
     mBlocks.tryAllocBuffer(blockNum, pHeap);
+
     for (auto& block : mBlocks)
     {
         block.mSize = 0;
@@ -113,6 +114,7 @@ bool TextureMemoryAllocator::alloc_(MemoryBlock* pBlock, const AllocateArg& rArg
                                     GPUMemVoidAddr* pAddr, bool fromFront)
 {
     u64 size = rArg.mSize;
+
     if (mFlags & 1)
     {
         size = (size + 0xffff) & ~u64(0xffff);
@@ -127,6 +129,7 @@ bool TextureMemoryAllocator::alloc_(MemoryBlock* pBlock, const AllocateArg& rArg
     {
         MemoryBlock* rest = mUnusedList.popBack();
         rest->mSize = pBlock->mSize - size;
+
         if (fromFront)
         {
             rest->mAddr = GPUMemVoidAddr(pBlock->mAddr, size);
@@ -144,18 +147,22 @@ bool TextureMemoryAllocator::alloc_(MemoryBlock* pBlock, const AllocateArg& rArg
 
     GPUMemVoidAddr baseAddr;
     sead::Heap* heap = mHeap;
+
     if (!heap)
     {
         pBlock->mMemBlockAddr.invalidate();
         baseAddr = pBlock->mAddr;
+
         if (sead::Buffer<Storage>* storages = mStorage)
         {
             s32 storageClass = -1;
+
             for (auto& storage : *storages)
             {
                 if (storage.mStorageClass == rArg.mStorageClass)
                 {
                     storageClass = rArg.mStorageClass;
+
                     if (storage.mBlock.getSize() != 0)
                     {
                         baseAddr = GPUMemVoidAddr(GPUMemVoidAddr(storage.mBlock, 0),
@@ -182,6 +189,7 @@ bool TextureMemoryAllocator::alloc_(MemoryBlock* pBlock, const AllocateArg& rArg
     addr.roundUp(rArg.mAlignment);
     pBlock->mImageAddr = addr;
     addr = GPUMemVoidAddr(addr, rArg.mImageOffset);
+
     if (rArg.mMipSize != 0)
     {
         addr.roundUp(rArg.mAlignment);
@@ -212,6 +220,7 @@ bool TextureMemoryAllocator::alloc_(MemoryBlock* pBlock, const AllocateArg& rArg
 u64 TextureMemoryAllocator::getMaxAllocatableSize() const
 {
     u64 maxSize = 0;
+
     for (const MemoryBlock* block = mFreeList.front(); block; block = mFreeList.next(block))
     {
         if (maxSize < block->mSize)
@@ -231,6 +240,7 @@ u64 TextureMemoryAllocator::getMaxAllocatableSize() const
 void TextureMemoryAllocator::free(MemoryBlock* pBlock, bool deleteMemBlock)
 {
     mUsedSize -= pBlock->mSize;
+
     if (pBlock->mMemBlockAddr.isValid())
     {
         if (deleteMemBlock)
@@ -254,6 +264,7 @@ void TextureMemoryAllocator::free(MemoryBlock* pBlock, bool deleteMemBlock)
         if (pBlock->getEndOffset() <= block.mAddr.getByteOffset())
         {
             mFreeList.insertBefore(&block, pBlock);
+
             if (pBlock->getEndOffset() == block.mAddr.getByteOffset())
             {
                 pBlock->mSize += block.mSize;
@@ -262,6 +273,7 @@ void TextureMemoryAllocator::free(MemoryBlock* pBlock, bool deleteMemBlock)
             }
 
             MemoryBlock* prev = mFreeList.prev(pBlock);
+
             if (prev && prev->getEndOffset() == pBlock->mAddr.getByteOffset())
             {
                 pBlock->mAddr = prev->mAddr;
@@ -278,6 +290,7 @@ void TextureMemoryAllocator::free(MemoryBlock* pBlock, bool deleteMemBlock)
     {
         mFreeList.pushBack(pBlock);
         MemoryBlock* prev = mFreeList.prev(pBlock);
+
         if (prev && prev->getEndOffset() == pBlock->mAddr.getByteOffset())
         {
             pBlock->mAddr = prev->mAddr;
@@ -352,12 +365,14 @@ void TextureMemoryAllocator::genMessageInfo(const sead::SafeString& rName,
 bool TextureMemoryAllocator::isOverwrapperd(const TextureMemoryAllocator& rOther) const
 {
     u64 start = 0;
+
     if (const MemoryBlock* last = mFreeList.back())
     {
         start = last->mAddr.getByteOffset();
     }
 
     u64 end = 0;
+
     if (const MemoryBlock* first = rOther.mFreeList.front())
     {
         end = first->getEndOffset();
@@ -435,6 +450,7 @@ void TextureMemoryAllocator::setupStorage(sead::Buffer<Storage>* pStorage, GPUMe
 
     pStorage->tryAllocBuffer(num, pHeap);
     s32 i = 0;
+
     for (auto& storage : *pStorage)
     {
         const StorageInfo& info = infos[i];

@@ -56,6 +56,7 @@ void INamedObjMgr::initialize(u32 objNum, u32 groupNum, sead::Heap* pHeap)
     mNamedObj.allocBuffer(objNum, pHeap);
     mGroup.tryAllocBuffer(groupNum, pHeap);
     mGroupPtr.allocBuffer(groupNum, pHeap);
+
     for (auto it = mGroup.begin(), itEnd = mGroup.end(); it != itEnd; ++it)
     {
         it->initialize(it.getIndex(), this, pHeap);
@@ -91,6 +92,7 @@ void INamedObjMgr::pushBackNamedObj(INamedObj* pObj)
 void INamedObjMgr::eraseNamedObj(INamedObj* pObj)
 {
     s32 index = 0;
+
     for (auto& rObj : mNamedObj)
     {
         if (&rObj == pObj)
@@ -113,6 +115,7 @@ void INamedObjMgr::updateList()
     }
 
     constructList();
+
     for (auto& rIndex : mIndexList)
     {
         rIndex.syncNameToIndex();
@@ -143,6 +146,7 @@ void INamedObjMgr::constructList()
     for (auto it = mNamedObj.begin(), itEnd = mNamedObj.end(); it != itEnd; ++it)
     {
         bool isFound = false;
+
         for (auto itGroup = mGroupPtr.begin(); itGroup != mGroupPtr.end(); ++itGroup)
         {
             if (itGroup->mName == it->getGroupName())
@@ -171,6 +175,7 @@ void INamedObjMgr::constructList()
 void INamedObjMgr::Group::reset(const sead::SafeString& rName)
 {
     mName = rName;
+
     if (rName == INamedObj::getDefaultGroupName())
     {
         detail::RootNode::setNodeMeta(this, "Icon=FOLDER_RED");
@@ -214,6 +219,7 @@ void INamedObjMgr::constructListByName(bool isAll)
 void INamedObjMgr::constructListByGroup(bool isAll)
 {
     s32 groupIndex = 0;
+
     for (auto itGroup = mGroupPtr.begin(); itGroup != mGroupPtr.end(); ++itGroup, ++groupIndex)
     {
         if (mCurrentGroup != -1 && groupIndex != mCurrentGroup)
@@ -260,6 +266,7 @@ void INamedObjMgr::genMessage(sead::hostio::Context* pContext) {}
 void INamedObjMgr::listenPropertyEvent(const sead::hostio::PropertyEvent* pEvent)
 {
     const void* id = pEvent->getId();
+
     if ((pEvent->getType() & 2) == 0 && id < &mCurrentGroup + 1 && id >= &mCurrentGroup)
     {
         mFlag.set(1);

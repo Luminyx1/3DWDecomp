@@ -87,6 +87,7 @@ inline u32 getSlice(const TextureData& rTexture)
 inline void drawIndexStream(DrawContext* pDrawContext, const IndexStream& rStream)
 {
     u32 count = rStream.getCount();
+
     if (count != 0)
     {
         NVNdrawPrimitive primitive = rStream.getPrimitiveType();
@@ -144,6 +145,7 @@ inline void drawQuadTriangle_(DrawContext* pDrawContext)
     f32 height = getMipHeight(rTexture, mipLevel);
 
     s32 textureType = -1;
+
     switch (rTexture.getSurface().mTarget)
     {
     case NVN_TEXTURE_TARGET_2D:
@@ -165,6 +167,7 @@ inline void drawQuadTriangle_(DrawContext* pDrawContext)
     sead::Vector4f invSize(1.0f / width, 1.0f / height, 0.0f, 0.0f);
     f32 layer;
     u32 face;
+
     if (textureType == 3 || textureType == 4)
     {
         layer = slice / 6;
@@ -173,6 +176,7 @@ inline void drawQuadTriangle_(DrawContext* pDrawContext)
     else
     {
         layer = slice;
+
         if (textureType == 2)
         {
             layer /= f32(getSlice(rTexture));
@@ -317,6 +321,7 @@ void ImageFilter2D::drawTextureChannel(DrawContext* pDrawContext, const TextureS
                                        const sead::Vector2f& rTranslate)
 {
     s32 type;
+
     switch (channel)
     {
     case cChannel_Red:
@@ -449,6 +454,7 @@ void ImageFilter2D::drawTextureCubeArray(DrawContext* pDrawContext,
 {
     s32 type = detail::ShaderHolder::cTextureCubeMap;
     const TextureData& rTexture = rSampler.getTextureData();
+
     if (rTexture.getSurface().mTarget == NVN_TEXTURE_TARGET_CUBEMAP)
     {
         type = getSlice(rTexture) > 6 ? detail::ShaderHolder::cTextureCubeMapArray :
@@ -503,6 +509,7 @@ void ImageFilter2D::drawTextureMSAA(DrawContext* pDrawContext, const TextureSamp
                                     const sead::Vector2f& rTranslate)
 {
     s32 type;
+
     switch (s8(rSampler.getTextureData().getSurface().mSamples))
     {
     case 0:
@@ -556,6 +563,7 @@ void ImageFilter2D::drawReduce(DrawContext* pDrawContext, const TextureSampler& 
 ShaderProgram* ImageFilter2D::getReduceProgram_(ReduceScale scale)
 {
     s32 type;
+
     switch (scale)
     {
     case cReduceScale_2:
@@ -716,6 +724,7 @@ void ImageFilter2D::drawNV12Decord(DrawContext* pDrawContext, const TextureSampl
     const ShaderProgram* pProgram =
         getProgramUnsafe(detail::ShaderHolder::cNv12decode)->getVariation(isBT601 ? 2 : 0);
     pProgram->activate(pDrawContext, true);
+
     if (isBT601)
     {
         sead::Vector4f coefficient(1.596f, -0.813f, -0.391f, 2.018f);
@@ -747,6 +756,7 @@ void ImageFilter2D::drawNV12DecordQuadTriangle(DrawContext* pDrawContext,
     const ShaderProgram* pProgram =
         getProgramUnsafe(detail::ShaderHolder::cNv12decode)->getVariation(variation);
     pProgram->activate(pDrawContext, true);
+
     if (isBT601)
     {
         sead::Vector4f coefficient(1.596f, -0.813f, -0.391f, 2.018f);
@@ -898,6 +908,7 @@ void ImageFilter2D::drawCubemapSH(DrawContext* pDrawContext, const TextureSample
     pProgram->activate(pDrawContext, true);
     pProgram->validate_();
     rSampler.activate(pDrawContext, pProgram->getSamplerLocation(0), -1, false);
+
     if (pSampler != nullptr)
     {
         pProgram->validate_();
@@ -910,6 +921,7 @@ void ImageFilter2D::drawCubemapSH(DrawContext* pDrawContext, const TextureSample
     sead::Vector2f param(a, 0.0f);
     setUniform(pDrawContext, pProgram->getUniformLocation(0), step);
     setUniform(pDrawContext, pProgram->getUniformLocation(1), param);
+
     if (pSampler != nullptr)
     {
         setUniform(pDrawContext, pProgram->getUniformLocation(2), rD);
@@ -941,6 +953,7 @@ void ImageFilter2D::drawCubemapSHPoint(DrawContext* pDrawContext, const TextureS
     pProgram->activate(pDrawContext, true);
     pProgram->validate_();
     rSampler.activate(pDrawContext, pProgram->getSamplerLocation(0), -1, false);
+
     if (pSampler != nullptr)
     {
         pProgram->validate_();
@@ -951,6 +964,7 @@ void ImageFilter2D::drawCubemapSHPoint(DrawContext* pDrawContext, const TextureS
     setUniform(pDrawContext, pProgram->getUniformLocation(0), param);
     setUniform(pDrawContext, pProgram->getUniformLocation(1), a);
     setUniform(pDrawContext, pProgram->getUniformLocation(4), rPos);
+
     if (pSampler != nullptr)
     {
         setUniform(pDrawContext, pProgram->getUniformLocation(2), rD);

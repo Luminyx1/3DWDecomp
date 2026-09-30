@@ -125,6 +125,7 @@ void OfxBase::PresetBase::listenPropertyEvent(const sead::hostio::PropertyEvent*
     if ((pEvent->getType() & 2) == 0)
     {
         const void* id = pEvent->getId();
+
         if (id < &mIsFixPosX && id >= &mPresetName)
         {
         }
@@ -198,6 +199,7 @@ void OfxBase::PresetBase::copy(const PresetBase& rOther)
     utl::ParameterBase* pDst = getParamListHead();
     mPresetName->copy(*rOther.mPresetName);
     sead::BaseVec3<f32> pos = *mPosition;
+
     if (getTypeID() == rOther.getTypeID())
     {
         for (; pSrc != nullptr; pSrc = pSrc->getNext(), pDst = pDst->getNext())
@@ -234,9 +236,11 @@ void OfxBase::PresetBase::genMessage(sead::hostio::Context* pContext)
     }
 
     s32 num = mMgr->getCreateArg().mTotalPresetNum;
+
     for (s32 i = 0; i < num; i++)
     {
         PresetBase* pPreset = mMgr->getCreateArg().getPreset(i);
+
         if (pPreset == this || pPreset == nullptr)
         {
             continue;
@@ -304,6 +308,7 @@ void OfxBase::initializeOfx(const CreateArg& rArg, s32 ofxType, const PresetBase
     mMgr = pMgr;
     detail::RootNode::setNodeMeta(this, "Icon=EFFECT");
     mPreset = pPreset;
+
     if (pPreset != nullptr)
     {
         mPresetName = *pPreset->mPresetName;
@@ -338,6 +343,7 @@ void OfxBase::initializePreset(PresetBase* pPreset, const PresetBase::CreateArg&
                                sead::Heap* pHeap)
 {
     s32 type = getOfxTypeID();
+
     if (pPreset->getTypeID() == mMgr->getCreateArg().mPresetTypeId[type])
     {
         pPreset->initializeOfx(rArg, mMgr, index, 0, pHeap);
@@ -400,6 +406,7 @@ bool OfxBase::loadPresetByName(const sead::SafeString& rName, bool force)
 
     const PresetBase* pPreset = mMgr->searchPresetByName(getOfxTypeID(), rName);
     mPreset = pPreset;
+
     if (pPreset == nullptr)
     {
         mPresetIndex = -1;
@@ -423,6 +430,7 @@ bool OfxBase::loadPresetByIndex(s32 index, bool force)
 {
     mPresetIndex = index;
     mPreset = mMgr->getPresetByIndex(getOfxTypeID(), index);
+
     if (mPreset == nullptr)
     {
         mPresetName = sead::SafeString::cEmptyString;
@@ -471,6 +479,7 @@ void OfxBase::calcContext(s32 viewIndex, const sead::Matrix34f& rViewMtx,
     f32 edgeY = getPreset_<PresetBase>()->mScrEdgeSize->y;
     f32 absX = sead::Mathf::abs(result.mScreenPos.x);
     f32 absY = sead::Mathf::abs(result.mScreenPos.y);
+
     if (result.mScreenPos.z < 0.0f || result.mScreenPos.z > 1.0f || absX > edgeX + result.mDepth ||
         absY > edgeY + result.mDepth)
     {
@@ -638,9 +647,11 @@ void OfxBase::setEnable(bool enable)
 void OfxBase::listenPropertyEvent(const sead::hostio::PropertyEvent* pEvent)
 {
     sead::BitFlag16* pFlag = &mFlag;
+
     if ((pEvent->getType() & 2) == 0)
     {
         const void* id = pEvent->getId();
+
         if (id < pFlag + 1 && id >= pFlag)
         {
             mMgr->setDirty();
@@ -680,6 +691,7 @@ void OfxBase::listenPropertyEventSimple(const sead::hostio::PropertyEvent* pEven
     if ((pEvent->getType() & 2) == 0)
     {
         const void* id = pEvent->getId();
+
         if (id < &mFlag + 1 && id >= &mFlag)
         {
             mMgr->setDirty();
@@ -828,6 +840,7 @@ OfxLensFlare::Preset::~Preset()
     }
 
     mPresetContext.freeBuffer();
+
     for (s32 i = 0; i < mElement.size(); i++)
     {
         delete mElement[i];
@@ -845,12 +858,14 @@ void OfxLensFlare::Preset::initializeOfxImpl_(const CreateArg& rArg, sead::Heap*
 {
     s32 elementNum = getMaxElementNum();
     mElement.allocBuffer(elementNum, pHeap);
+
     for (s32 i = 0; i < elementNum; i++)
     {
         mElement.pushBack(new (pHeap) PresetElement(i, this));
     }
 
     mPresetContext.allocBuffer(rArg.mViewNum, pHeap);
+
     for (s32 i = 0; i < rArg.mViewNum; i++)
     {
         mPresetContext.pushBack(new (pHeap) PresetContext(i, this));
@@ -860,15 +875,18 @@ void OfxLensFlare::Preset::initializeOfxImpl_(const CreateArg& rArg, sead::Heap*
 void OfxLensFlare::Preset::listenPropertyEventImpl_(const sead::hostio::PropertyEvent* pEvent)
 {
     uintptr_t id = reinterpret_cast<uintptr_t>(pEvent->getId());
+
     if (id - 1100 < 100)
     {
         PresetElement* pDst = searchElement_(static_cast<s32>(id) - 1100);
+
         if (pDst == nullptr)
         {
             return;
         }
 
         PresetElement* pSrc = searchElement_(pDst->mOrder);
+
         if (pSrc == nullptr)
         {
             return;
@@ -895,6 +913,7 @@ void OfxLensFlare::Preset::genMessageImpl_(sead::hostio::Context* pContext)
         genMessageDummy(pContext, sead::FormatFixedSafeString<16>("%d", it->mIndex),
                         sead::FormatFixedSafeString<16>("Order=%d", it->mIndex + 1));
         it->mIsEnableDraw.genMessageParameter(pContext, it->mIsEnableDraw.getMeta());
+
         if (mElement.size() > 1)
         {
             for (auto it2 = mElement.begin(), end2 = mElement.end(); it2 != end2; ++it2)
@@ -949,6 +968,7 @@ OfxLensFlare::~OfxLensFlare()
     }
 
     mContextLensFlare.freeBuffer();
+
     for (s32 i = 0; i < mElement.capacity(); i++)
     {
         delete mElement[i];
@@ -970,6 +990,7 @@ f32 OfxLensFlare::getOcclusionRate(s32 viewIndex) const
 {
     f32 rate = mOcclusionRenderer.getOcclusionRate(viewIndex);
     f32 coreRate = mOcclusionRenderer.getCoreOcclusionRate(viewIndex);
+
     switch (*getPreset_<Preset>()->mCoreOcclusionType)
     {
     case 1:
@@ -986,6 +1007,7 @@ f32 OfxLensFlare::getOcclusionRate(s32 viewIndex) const
 void OfxLensFlare::initializeImpl_(const CreateArg& rArg, sead::Heap* pHeap)
 {
     mContextLensFlare.allocBuffer(rArg.mViewNum, pHeap);
+
     for (s32 i = 0; i < mContextLensFlare.capacity(); i++)
     {
         mContextLensFlare.pushBack(new (pHeap) ContextLensFlare(i));
@@ -1000,6 +1022,7 @@ void OfxLensFlare::initializeImpl_(const CreateArg& rArg, sead::Heap* pHeap)
     mOcclusionRenderer.mUseSoft = true;
 
     mElement.allocBuffer(getMaxElementNum(), pHeap);
+
     for (s32 i = 0; i < mElement.capacity(); i++)
     {
         mElement.pushBack(new (pHeap) Element(i));
@@ -1012,9 +1035,11 @@ void OfxLensFlare::initializeImpl_(const CreateArg& rArg, sead::Heap* pHeap)
         rBlocks.tryAllocBuffer(getMaxElementNum(), pHeap);
         UniformBlock* pBlocks = rBlocks.getBufferPtr();
         s32 num = rBlocks.size();
+
         for (s32 i = 0; i != num; i++)
         {
             UniformBlock& rBlock = pBlocks[i];
+
             if (i == 0)
             {
                 rBlock.startDeclare(10, pHeap);
@@ -1060,6 +1085,7 @@ void OfxLensFlare::calcContextImpl_(s32 viewIndex, const Context& rContext,
 
     f32 angle;
     s32 baseAxis = *getPreset_<Preset>()->mPresetContext.unsafeAt(viewIndex)->mBaseAxis;
+
     if (baseAxis < 1)
     {
         angle = 0.0f;
@@ -1067,6 +1093,7 @@ void OfxLensFlare::calcContextImpl_(s32 viewIndex, const Context& rContext,
     else
     {
         sead::Vector3f axis;
+
         if (baseAxis == 3)
         {
             axis.set(0.0f, 0.0f, 1.0f);
@@ -1090,6 +1117,7 @@ void OfxLensFlare::calcContextImpl_(s32 viewIndex, const Context& rContext,
         sead::Vector3f cross;
         cross.setCross(viewAxis, sead::Vector3f::ey);
         angle = sead::Mathf::atan2(cross.length(), dot);
+
         if (viewAxis.x > 0.0f)
         {
             angle = -angle;
@@ -1107,6 +1135,7 @@ void OfxLensFlare::calcContextImpl_(s32 viewIndex, const Context& rContext,
     {
         s32 index = it.getIndex();
         const Preset::PresetElement* pElement = getPreset_<Preset>()->mElement[index];
+
         if (!*pElement->mIsEnableDraw)
         {
             continue;
@@ -1116,6 +1145,7 @@ void OfxLensFlare::calcContextImpl_(s32 viewIndex, const Context& rContext,
         ContextLensFlare::Instance& rInstance = *it;
 
         rInstance.mIntensity = 1.0f;
+
         if (*pElement->mIsEnableAngleOcclusion)
         {
             f32 diff = sead::Mathf::abs(rArg.mAngle / -sead::Mathf::pi() * 180.0f +
@@ -1129,6 +1159,7 @@ void OfxLensFlare::calcContextImpl_(s32 viewIndex, const Context& rContext,
         edgeRate = std::pow(edgeRate, *getPreset_<Preset>()->mScrEdgePow);
         f32 edgeFlash = *getPreset_<Preset>()->mScrEdgeFlash;
         f32 edgeInv = 1.0f - edgeRate;
+
         if (*getPreset_<Preset>()->mScrEdgeType == 1)
         {
             rInstance.mIntensity *= edgeInv;
@@ -1136,6 +1167,7 @@ void OfxLensFlare::calcContextImpl_(s32 viewIndex, const Context& rContext,
 
         rInstance.mScale.set(1.0f, 1.0f);
         rInstance.mOffset.set(0.0f, 0.0f);
+
         if (*pElement->mIsEnableEdgeScaling)
         {
             f32 scale = edgeRate * edgeInv * edgeFlash;
@@ -1155,6 +1187,7 @@ void OfxLensFlare::calcContextImpl_(s32 viewIndex, const Context& rContext,
         }
 
         f32 alpha = 1.0f;
+
         if (*pElement->mCenterPosAlphaRate != 0.0f)
         {
             sead::Vector2f diff =
@@ -1162,6 +1195,7 @@ void OfxLensFlare::calcContextImpl_(s32 viewIndex, const Context& rContext,
                 *getPreset_<Preset>()->mPresetContext.unsafeAt(viewIndex)->mCenterPos;
             diff.y /= rContext.mViewFrustumCulling.mAspect;
             f32 rate = std::pow(diff.length(), *pElement->mCenterPosAlphaPow);
+
             if (*pElement->mCenterPosAlphaRate > 0.0f)
             {
                 alpha =
@@ -1175,6 +1209,7 @@ void OfxLensFlare::calcContextImpl_(s32 viewIndex, const Context& rContext,
         }
 
         sead::Vector2f size(pElement->mSize->x, pElement->mSize->y);
+
         if (*pElement->mIsSizeZoom)
         {
             sead::Vector3f viewPos;
@@ -1196,6 +1231,7 @@ void OfxLensFlare::calcContextImpl_(s32 viewIndex, const Context& rContext,
 
         rInstance.mDir.set(0.0f, 1.0f);
         f32 rotate;
+
         if (*pElement->mIsEnableRotate)
         {
             rInstance.mDir.set(dir.x, dir.y);
@@ -1203,6 +1239,7 @@ void OfxLensFlare::calcContextImpl_(s32 viewIndex, const Context& rContext,
         }
 
         rotate = *pElement->mRotate;
+
         if (!*pElement->mIsEnableRotate)
         {
             rotate += angle;
@@ -1214,6 +1251,7 @@ void OfxLensFlare::calcContextImpl_(s32 viewIndex, const Context& rContext,
         {
             sead::Vector2f pos = rArg.mScreenPos;
             pos.y /= rContext.mViewFrustumCulling.mAspect;
+
             if (angle != 0.0f)
             {
                 mulMtx22(&pos, invRotMtx, pos);
@@ -1248,6 +1286,7 @@ void OfxLensFlare::calcContextImpl_(s32 viewIndex, const Context& rContext,
 
         sead::Vector2f pos = rArg.mScreenPos;
         pos.y /= rContext.mViewFrustumCulling.mAspect;
+
         if (angle != 0.0f)
         {
             mulMtx22(&pos, invRotMtx, pos);
@@ -1257,6 +1296,7 @@ void OfxLensFlare::calcContextImpl_(s32 viewIndex, const Context& rContext,
         f32 texSin = std::sin(texRotate);
         f32 texCos = std::cos(texRotate);
         sead::Matrix22f texMtx(texCos, -texSin, texSin, texCos);
+
         if (isQuarterTexture(mMgr, *pElement->mTextureIdx) &&
             !isQuarterTexture(mMgr, *pElement->mTexture2Idx))
         {
@@ -1297,18 +1337,22 @@ void OfxLensFlare::drawImpl_(DrawContext* pDrawContext, s32 viewIndex,
         detail::ShaderHolder::cOccludedEffectLensflare);
 
     s32 currentBlendMode = 2;
+
     for (auto it = mElement.begin(), end = mElement.end(); it != end; ++it)
     {
         const Preset::PresetElement* pPresetElement = getPreset_<Preset>()->mElement[it->mIndex];
+
         if (!*pPresetElement->mIsEnableDraw)
         {
             continue;
         }
 
         const TextureSampler* pSampler = it->mSampler;
+
         if (pSampler == nullptr)
         {
             s32 textureIdx = *pPresetElement->mTextureIdx;
+
             if (textureIdx < 0 || !mMgr->mTextureInfo.unsafeAt(textureIdx)->mIsValid)
             {
                 continue;
@@ -1318,9 +1362,11 @@ void OfxLensFlare::drawImpl_(DrawContext* pDrawContext, s32 viewIndex,
         }
 
         const TextureSampler* pSampler2 = it->mSampler2;
+
         if (pSampler2 == nullptr)
         {
             s32 textureIdx = *pPresetElement->mTexture2Idx;
+
             if (textureIdx >= 0 && mMgr->mTextureInfo.unsafeAt(textureIdx)->mIsValid)
             {
                 pSampler2 = &mMgr->mTextureInfo[textureIdx]->mSampler;
@@ -1332,12 +1378,14 @@ void OfxLensFlare::drawImpl_(DrawContext* pDrawContext, s32 viewIndex,
         }
 
         s32 blendMode = *pPresetElement->mBlendMode;
+
         if (currentBlendMode != blendMode)
         {
             sead::GraphicsContext graphicsContext;
             graphicsContext.setBlendEnable(true);
             graphicsContext.setDepthEnable(false, false);
             graphicsContext.setBlendEquation(0, 1);
+
             if (blendMode == 0)
             {
                 graphicsContext.setBlendFactor(0, 5, 2);
@@ -1367,6 +1415,7 @@ void OfxLensFlare::drawImpl_(DrawContext* pDrawContext, s32 viewIndex,
         rOcclusionRenderer.mContext[viewIndex].mSub[0].mSampler.activate(
             pDrawContext, pVariation->getSamplerLocation(0), -1, false);
         pSampler->activate(pDrawContext, pVariation->getSamplerLocation(1), -1, false);
+
         if (pSampler2 != nullptr)
         {
             pSampler2->activate(pDrawContext, pVariation->getSamplerLocation(2), -1, false);
@@ -1374,6 +1423,7 @@ void OfxLensFlare::drawImpl_(DrawContext* pDrawContext, s32 viewIndex,
 
         bool isOctagon = *pPresetElement->mIsEnableOctagon;
         bool isQuarter = isQuarterTexture(mMgr, *pPresetElement->mTextureIdx);
+
         if (isOctagon)
         {
             if (isQuarter)
@@ -1404,10 +1454,12 @@ void OfxLensFlare::updateViewGPUImpl_(s32 viewIndex, const Context& rContext,
                                       const UpdateViewGPUArg& rArg)
 {
     ContextLensFlare* pContext = mContextLensFlare[viewIndex];
+
     for (auto it = pContext->mUniformBlock.begin(), end = pContext->mUniformBlock.end(); it != end;
          ++it)
     {
         s32 index = it.getIndex();
+
         if (!*getPreset_<Preset>()->mElement.unsafeAt(index)->mIsEnableDraw)
         {
             continue;
@@ -1470,6 +1522,7 @@ void OfxLensFlareDynamic::setParam(s32 presetIndex, f32 scale, const sead::Vecto
                                    bool enable)
 {
     Preset* pPreset = getPreset_<Preset>();
+
     if (mParentIndex != presetIndex)
     {
         mParentIndex = presetIndex;
@@ -1489,6 +1542,7 @@ bool OfxLensFlareDynamic::loadPresetByParentIndex(s32 index)
 {
     Preset* pPreset = getPreset_<Preset>();
     OfxBase::PresetBase* pSrc = mMgr->getPresetByIndex(getOfxTypeID(), index);
+
     if (pPreset == nullptr || pSrc == nullptr)
     {
         return false;

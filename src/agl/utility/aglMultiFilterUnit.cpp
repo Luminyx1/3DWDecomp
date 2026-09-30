@@ -79,6 +79,7 @@ inline u32 getHeight(const TextureData& rTexture)
 inline void drawIndexStream(DrawContext* pDrawContext, const IndexStream& rStream)
 {
     u32 count = rStream.getCount();
+
     if (count != 0)
     {
         NVNdrawPrimitive primitive = rStream.getPrimitiveType();
@@ -277,6 +278,7 @@ void MultiFilterUnit::genMessage(sead::hostio::Context* pContext)
 void MultiFilterUnit::listenPropertyEvent(const sead::hostio::PropertyEvent* pEvent)
 {
     doListenPropertyEvent_(pEvent);
+
     if (pEvent->getId() == reinterpret_cast<const void*>(50000))
     {
         doResetParameters_();
@@ -558,6 +560,7 @@ BlurFilter::~BlurFilter() = default;
 void BlurFilter::doDraw_(DrawContext* pDrawContext, MultiFilterDrawContext* pContext) const
 {
     ImageFilter2D::GaussianKernel kernel;
+
     switch (*mGaussianKernel)
     {
     case 3:

@@ -29,6 +29,7 @@ inline void mergeBox(sead::BoundBox3f* pDst, const sead::BoundBox3f& rSrc)
 {
     sead::Vector3f& min = const_cast<sead::Vector3f&>(pDst->getMin());
     sead::Vector3f& max = const_cast<sead::Vector3f&>(pDst->getMax());
+
     if (min.x > rSrc.getMin().x)
     {
         min.x = rSrc.getMin().x;
@@ -148,6 +149,7 @@ void DepthShadowUnit::updateSceneMatrix(const LightMatrix& rLight, const sead::M
 {
     mNear = near;
     mFar = far;
+
     if (mMatrixCalcType.ref() == cMatrixCalcType_TexelStable)
     {
         rLight.calcLightSpace(&mLightViewMtx, &mLightProjMtx, sead::Vector3f::ez);
@@ -207,9 +209,11 @@ void DepthShadowUnit::updateShadowViewProjection_(const sead::Matrix34f& rViewMt
                                                   const sead::Vector2i& rSize)
 {
     sead::Matrix44f projMtx = mLightProjMtx;
+
     if (type == cMatrixCalcType_LiSPSM)
     {
         sead::Matrix44f lispsm;
+
         if (calcLightSpacePerspectiveMatrix_(&lispsm, projMtx, mLightViewMtx, rViewMtx, param0,
                                              param1))
         {
@@ -219,6 +223,7 @@ void DepthShadowUnit::updateShadowViewProjection_(const sead::Matrix34f& rViewMt
 
     sead::BoundBox3f box;
     mFrustum.expandBoundBox(&box, projMtx, mLightViewMtx);
+
     if (box.isUndef())
     {
         return;
@@ -232,6 +237,7 @@ void DepthShadowUnit::updateShadowViewProjection_(const sead::Matrix34f& rViewMt
     f32 maxY = box.getMax().y;
     f32 width;
     f32 height;
+
     if (type == cMatrixCalcType_TexelStable && mIsDirectional)
     {
         const f32 sizeX = maxX - minX;
@@ -328,6 +334,7 @@ void DepthShadowUnit::addCasterClipPlanes_(const sead::Matrix34f& rViewMtx,
 
     const sead::Vector3f center = (points[0] + points[6]) * 0.5f;
     const bool doSweep = pSweepDir != nullptr && sweep;
+
     for (s32 i = 0; i < 6; i++)
     {
         const s32* pIndices = cFaceIndices[i];
@@ -342,12 +349,14 @@ void DepthShadowUnit::addCasterClipPlanes_(const sead::Matrix34f& rViewMtx,
         n.setCross(a, b);
         const f32 len = n.normalize();
         const f32 sqLen = n.squaredLength();
+
         if (!(len > 0.0f) || sead::MathCalcCommon<f32>::isNan(len))
         {
             continue;
         }
 
         const f32 diff = sqLen - 1.0f;
+
         if (diff < -1.1920929e-06f || diff > 1.1920929e-06f)
         {
             continue;
@@ -356,6 +365,7 @@ void DepthShadowUnit::addCasterClipPlanes_(const sead::Matrix34f& rViewMtx,
         sead::Plane3<f32>& plane = mClipPlanes[mClipPlaneNum];
         const f32 d = p0.dot(n);
         plane = sead::Plane3<f32>(n, d);
+
         if (center.dot(n) - d > 0.0f)
         {
             plane = sead::Plane3<f32>(-n, -d);
@@ -388,10 +398,12 @@ void DepthShadowUnit::updateDirectionalBoundingIndex_()
     setBoxCorners(points, sead::BoundBox3f(-sead::Vector3f::ones, sead::Vector3f::ones));
 
     sead::BoundBox3f box;
+
     for (s32 i = 0; i < 8; i++)
     {
         transform(&points[i], mLightViewMtx);
         box.addPoint(points[i]);
+
         if (points[i].x == box.getMin().x)
         {
             mMinIndex[0] = i;
@@ -437,6 +449,7 @@ void DepthShadowUnit::convBoundingToLightSpaceNotDirectional_(sead::BoundBox3f* 
     sead::Vector3f points[8];
     setBoxCorners(points, rBox);
     pOut->setUndef();
+
     for (s32 i = 0; i < 8; i++)
     {
         transformProj(&points[i], viewProj);
@@ -513,6 +526,7 @@ void DepthShadowUnit::updateShadowMatrix(s32 width, s32 height, f32 param0, f32 
     sead::Matrix44CalcCommon<f32>::multiply(lightViewProj, mLightProjMtx, mLightViewMtx);
 
     mTotalBox.setUndef();
+
     for (s32 i = 0; i < 3; i++)
     {
         if (!mWorldBox[i].isUndef())
@@ -581,6 +595,7 @@ f32 DepthShadowUnit::adjustTexelStable(f32 value, f32 size) const
 bool DepthShadowUnit::addCasterClipPlane_(const sead::Plane3<f32>& rPlane)
 {
     sead::Plane3<f32>* pSame = findSameClipPlane_(rPlane.getNormal());
+
     if (pSame)
     {
         pSame->setD(sead::Mathf::max(rPlane.getD(), pSame->getD()));
@@ -610,12 +625,14 @@ void DepthShadowUnit::addCasterClipPlanesSweepDir_(const sead::Vector3f& rDir,
     n.setCross(a, rDir);
     const f32 len = n.normalize();
     const f32 sqLen = n.squaredLength();
+
     if (!(len > 0.0f) || sead::MathCalcCommon<f32>::isNan(len))
     {
         return;
     }
 
     const f32 diff = sqLen - 1.0f;
+
     if (diff < -1.1920929e-06f || diff > 1.1920929e-06f)
     {
         return;
@@ -625,9 +642,11 @@ void DepthShadowUnit::addCasterClipPlanesSweepDir_(const sead::Vector3f& rDir,
     const s32* pIndices = cFaceIndices[face];
     f32 d = n.dot(pPoints[pIndices[0]]);
     plane = sead::Plane3<f32>(n, d);
+
     for (s32 i = 1; i < 4; i++)
     {
         const f32 dist = n.dot(pPoints[pIndices[i]]);
+
         if (dist - d > 0.0f)
         {
             d = dist;
@@ -682,10 +701,12 @@ void DepthShadowUnit::drawDebug(DrawContext* pDrawContext, const LightMatrix& rL
     {
         sead::Vector3f points[8];
         setBoxCorners(points, mTotalBox);
+
         if (mIsDirectional)
         {
             sead::Matrix34f inv;
             sead::Matrix34CalcCommon<f32>::inverse(inv, mLightViewMtx);
+
             for (s32 i = 0; i < 8; i++)
             {
                 transform(&points[i], inv);
@@ -696,6 +717,7 @@ void DepthShadowUnit::drawDebug(DrawContext* pDrawContext, const LightMatrix& rL
             sead::Matrix44f inv;
             sead::Matrix44CalcCommon<f32>::multiply(inv, mLightProjMtx, mLightViewMtx);
             sead::Matrix44CalcCommon<f32>::inverse(inv, inv);
+
             for (s32 i = 0; i < 8; i++)
             {
                 transformProj(&points[i], inv);

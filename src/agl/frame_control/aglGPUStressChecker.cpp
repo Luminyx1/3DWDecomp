@@ -79,6 +79,7 @@ void GPUStressChecker::calc()
 
     StampObj* pStampObj = mStampObj[0];
     Info& rInfo = mInfo[mInfoIndex];
+
     if (pStampObj->mFlags.isOnAll(StampObj::cFlag_Started | StampObj::cFlag_Ended))
     {
         u64 end = pStampObj->getStamp(perf::GPUTimeStampArray::cType_End).get();
@@ -99,6 +100,7 @@ void GPUStressChecker::calc()
     mStampObj[2] = pStampObj;
 
     sead::RingBuffer<History>& rHistory = rInfo.mHistory;
+
     if (rHistory.size() < 3)
     {
         f32 load = rInfo.mLoad;
@@ -110,6 +112,7 @@ void GPUStressChecker::calc()
         f32 load = rInfo.mLoad;
         f32 average3 = load;
         f32 average5 = load;
+
         if (rHistory.size() >= 5)
         {
             f32 sum3 = load + rHistory(0).mLoad + rHistory(1).mLoad;
@@ -175,6 +178,7 @@ void GPUStressChecker::drawDebug(DrawContext* pDrawContext, const sead::FrameBuf
     }
 
     const Info& rInfo = mInfo[mInfoIndex];
+
     if (rInfo.mLoad < mDrawThreshold)
     {
         return;

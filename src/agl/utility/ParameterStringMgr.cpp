@@ -34,6 +34,7 @@ ParameterStringMgr::~ParameterStringMgr()
 void ParameterStringMgr::initialize(sead::Heap* pHeap)
 {
     mHeap = pHeap;
+
     if (pHeap)
     {
         mStrings.allocBuffer(0x20000, pHeap);
@@ -69,10 +70,12 @@ const char* ParameterStringMgr::appendString(const sead::SafeString& rString)
 
     s32 a = 0;
     s32 b = mStrings.size() - 1;
+
     while (a < b)
     {
         const s32 m = (a + b) / 2;
         const s32 c = mStrings.unsafeAt(m)->compare(rString);
+
         if (c == 0)
         {
             return mStrings.unsafeAt(m)->cstr();
@@ -89,6 +92,7 @@ const char* ParameterStringMgr::appendString(const sead::SafeString& rString)
     }
 
     const s32 c = mStrings.unsafeAt(a)->compare(rString);
+
     if (c == 0)
     {
         return mStrings.unsafeAt(a)->cstr();
@@ -97,6 +101,7 @@ const char* ParameterStringMgr::appendString(const sead::SafeString& rString)
     const s32 length = rString.calcLength();
     SEAD_ASSERT(length > 0);
     auto* string = new (mHeap) sead::HeapSafeString(mHeap, rString);
+
     if (c < 0)
     {
         mStrings.insert(a + 1, string);

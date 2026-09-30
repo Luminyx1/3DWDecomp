@@ -193,6 +193,7 @@ void OccludedEffectMgr::initialize(const CreateArg& rArg, sead::Heap* pHeap)
 
     mTextureInfo.allocBuffer(rArg.mTextureNum, pHeap);
     addList(&mTextureList, "TextureList");
+
     for (s32 i = 0; i < mTextureInfo.capacity(); i++)
     {
         TextureInfo* pInfo = new (pHeap) TextureInfo(i);
@@ -203,9 +204,11 @@ void OccludedEffectMgr::initialize(const CreateArg& rArg, sead::Heap* pHeap)
     for (s32 type = 0; type < mCreateArg.mTypeNum; type++)
     {
         const s32& rOfxTypeId = mCreateArg.mOfxTypeId[type];
+
         for (s32 i = 0; i < mCreateArg.mOfxNum[type]; i++)
         {
             OfxBase* pOfx = sead::DynamicCast<OfxBase>(mCreateArg.getObjRef_(rOfxTypeId, i));
+
             if (pOfx != nullptr)
             {
                 pOfx->getMgr()->removeObj(pOfx);
@@ -218,9 +221,11 @@ void OccludedEffectMgr::initialize(const CreateArg& rArg, sead::Heap* pHeap)
         {
             addList(&mPresetList[type], env::EnvObj::getTypeData(rOfxTypeId).mName);
             s32 num = mCreateArg.mPresetNum[type];
+
             for (s32 i = 0; i < num; i++)
             {
                 OfxBase::PresetBase* pPreset = mCreateArg.getPreset(type, i);
+
                 if (pPreset == nullptr)
                 {
                     continue;
@@ -228,6 +233,7 @@ void OccludedEffectMgr::initialize(const CreateArg& rArg, sead::Heap* pHeap)
 
                 pPreset->getMgr()->removeObj(pPreset);
                 OfxBase* pOfx = sead::DynamicCast<OfxBase>(mCreateArg.getObjRef_(rOfxTypeId, 0));
+
                 if (pOfx == nullptr)
                 {
                     continue;
@@ -291,6 +297,7 @@ void OccludedEffectMgr::createVtxStream_(sead::Heap* pHeap)
 
     mVtxQuadDouble.mVertexBlock.allocBuffer(64, pHeap, 8, MemoryAttribute(0));
     GPUMemAddr<Vtx> quadDoubleAddr(mVtxQuadDouble.mVertexBlock, 0);
+
     for (s32 i = 0; i < 4; i++)
     {
         getBufferPtr<Vtx>(mVtxQuadDouble.mVertexBlock)[i].mPos =
@@ -306,6 +313,7 @@ void OccludedEffectMgr::createVtxStream_(sead::Heap* pHeap)
 
     mVtxQuadDouble.mIndexBlock.allocBuffer(8, pHeap, 8, MemoryAttribute(0));
     GPUMemAddr<u16> quadDoubleIndexAddr(mVtxQuadDouble.mIndexBlock, 0);
+
     for (s32 i = 0; i < 4; i++)
     {
         getBufferPtr<u16>(mVtxQuadDouble.mIndexBlock)[i] =
@@ -353,6 +361,7 @@ void OccludedEffectMgr::createVtxStream_(sead::Heap* pHeap)
 
     mVtxOctagonDouble.mVertexBlock.allocBuffer(128, pHeap, 8, MemoryAttribute(0));
     GPUMemAddr<Vtx> octagonDoubleAddr(mVtxOctagonDouble.mVertexBlock, 0);
+
     for (s32 i = 0; i < 8; i++)
     {
         getBufferPtr<Vtx>(mVtxOctagonDouble.mVertexBlock)[i].mPos =
@@ -368,6 +377,7 @@ void OccludedEffectMgr::createVtxStream_(sead::Heap* pHeap)
 
     mVtxOctagonDouble.mIndexBlock.allocBuffer(16, pHeap, 8, MemoryAttribute(0));
     GPUMemAddr<u16> octagonDoubleIndexAddr(mVtxOctagonDouble.mIndexBlock, 0);
+
     for (s32 i = 0; i < 8; i++)
     {
         getBufferPtr<u16>(mVtxOctagonDouble.mIndexBlock)[i] =
@@ -404,6 +414,7 @@ bool OccludedEffectMgr::loadBinary(void* pBinary, u32 size, const sead::SafeStri
     mResState = 1;
     mStatus = 0;
     mResource[0].setupWithBinary(pBinary, rName, isOwned);
+
     if (mResource[0].mIsValid)
     {
         mFlag.set(0x10000);
@@ -427,6 +438,7 @@ bool OccludedEffectMgr::Resource::setupWithBinary(void* pBinary, const sead::Saf
     mIsExternal = isExternal;
     mResFile = pBinary;
     nn::g3d::ResFile* pResFile = nn::g3d::ResFile::ResCast(pBinary);
+
     if (!mIsExternal)
     {
         g3d::ResFile::Setup(pResFile);
@@ -436,6 +448,7 @@ bool OccludedEffectMgr::Resource::setupWithBinary(void* pBinary, const sead::Saf
 
     s32 texNum = g3d::ResFile::GetTextureCount(pResFile);
     mTexNum = texNum > mResTexInfo.size() ? mResTexInfo.size() : texNum;
+
     for (s32 i = 0; i < mTexNum; i++)
     {
         nn::gfx::ResTexture* pTexture = g3d::ResFile::GetTexture(pResFile, i);
@@ -445,9 +458,11 @@ bool OccludedEffectMgr::Resource::setupWithBinary(void* pBinary, const sead::Saf
     }
 
     s32 fileNum = pResFile->GetExternalFileCount();
+
     for (s32 i = 0; i < fileNum; i++)
     {
         sead::FixedSafeString<256> fileName(pResFile->GetExternalFileName(i));
+
         if (fileName.findIndex(".baglofx") >= 0)
         {
             mIsValid = true;
@@ -468,9 +483,11 @@ void OccludedEffectMgr::loadOriginalResource_()
 {
     mResState = 0;
     mStatus = 0;
+
     if (mFlag.isOn(0x20000))
     {
         mResState = 1;
+
         if (mFlag.isOn(0x10000))
         {
             mStatus = 2;
@@ -496,6 +513,7 @@ bool OccludedEffectMgr::loadFile(const sead::SafeString& rPath, sead::Heap* pHea
     mResState = 1;
     mStatus = 0;
     sead::FileDevice* pDevice = sead::FileDeviceMgr::instance()->findDeviceFromPath(rPath, nullptr);
+
     if (!mResource[0].setupWithFile(pDevice, rPath, pHeap))
     {
         return false;
@@ -525,6 +543,7 @@ bool OccludedEffectMgr::Resource::setupWithFile(sead::FileDevice* pDevice,
     arg.path = rPath;
     arg.heap = pHeap;
     u8* pData = pDevice->tryLoad(arg);
+
     if (pData == nullptr)
     {
         return false;
@@ -553,11 +572,13 @@ void OccludedEffectMgr::calc()
     if (mFlag.isOn(1))
     {
         mMenuInstance.clear();
+
         for (s32 type = 0; type < mCreateArg.mTypeNum; type++)
         {
             for (s32 i = 0; i < mCreateArg.mOfxNum[type]; i++)
             {
                 OfxBase* pOfx = mCreateArg.getInstance(type, i);
+
                 if (pOfx->isEnable())
                 {
                     mMenuInstance.pushBack(pOfx);
@@ -729,6 +750,7 @@ void OccludedEffectMgr::drawDebug(DrawContext* pDrawContext, s32 viewIndex) cons
 void OccludedEffectMgr::setEnableAll(bool enable)
 {
     s32 typeNum = mCreateArg.mTypeNum;
+
     for (s32 type = 0; type < typeNum; type++)
     {
         for (s32 i = 0; i < mCreateArg.mOfxNum[type]; i++)
@@ -767,6 +789,7 @@ void OccludedEffectMgr::loadSetting(const void* pData, u32 size, const sead::Saf
                                     bool isFile)
 {
     initTexturePlacement_();
+
     if (isFile)
     {
         load(*pName, false);
@@ -807,10 +830,12 @@ void OccludedEffectMgr::initTexturePlacement_()
 void OccludedEffectMgr::updateTexturePlacement_()
 {
     const Resource& rRes = getCurrRes_();
+
     for (auto it = mTextureInfo.begin(), end = mTextureInfo.end(); it != end; ++it)
     {
         TextureInfo::Placement& rPlacement = it->mPlacement;
         it->mIsValid = false;
+
         if (rPlacement.mResIndex >= rRes.mTexNum)
         {
             rPlacement.mResIndex = -1;
@@ -834,6 +859,7 @@ void OccludedEffectMgr::updateTexturePlacement_()
                 if (rPlacement.mRefTexName->isEqual(itRes->mName))
                 {
                     it->mSampler.applyTextureData(itRes->mSampler.getTextureData());
+
                     if (*it->mPlacement.mIsQuarter)
                     {
                         it->mSampler.setWrap(6, 6, 6);
@@ -882,6 +908,7 @@ OfxBase::PresetBase* OccludedEffectMgr::searchPresetByName(s32 type,
     for (s32 i = 0; i < mCreateArg.mPresetNum[type]; i++)
     {
         OfxBase::PresetBase* pPreset = mCreateArg.getPreset(type, i);
+
         if (pPreset != nullptr && pPreset->mPresetName->isEqual(rName))
         {
             return pPreset;
@@ -906,6 +933,7 @@ void OccludedEffectMgr::loadSettingFromFile()
     arg.mId = "aglofx";
     arg.mOutPath = &mSettingPath;
     s32 handle = detail::FileIOMgr::instance()->load(arg);
+
     if (handle >= 0)
     {
         detail::FileIOMgr::instance()->close(handle);
@@ -971,6 +999,7 @@ bool OccludedEffectMgr::mountRawDir_(bool isSkip, bool isLoadSetting, bool unuse
     sead::FileDevice* pDevice = detail::FileIOMgr::instance()->getDevice();
     sead::Heap* pHeap = detail::PrivateResource::instance()->getDebugHeap();
     sead::HeapSafeString dir(pHeap, 0x200);
+
     if (isSkip)
     {
         return false;
@@ -997,6 +1026,7 @@ bool OccludedEffectMgr::mountRawDir_(bool isSkip, bool isLoadSetting, bool unuse
             sead::FormatFixedSafeString<256>("%s/%s", cRawDirPath[0].cstr(), cRawDirPath[2].cstr());
         arg.heap = pHeap;
         u8* pText = pDevice->tryLoad(arg);
+
         if (pText != nullptr)
         {
             mRawText = new (pHeap) sead::BufferedSafeString(new (pHeap) char[0x4000](), 0x4000);
@@ -1013,6 +1043,7 @@ bool OccludedEffectMgr::mountRawDir_(bool isSkip, bool isLoadSetting, bool unuse
         arg.path = path;
         arg.heap = pHeap;
         u8* pData = pDevice->tryLoad(arg);
+
         if (pData == nullptr)
         {
             return false;
@@ -1026,6 +1057,7 @@ bool OccludedEffectMgr::mountRawDir_(bool isSkip, bool isLoadSetting, bool unuse
     if (isLoadSetting)
     {
         mStatus = mResource[1].mIsValid ? 4 : 3;
+
         if (mResource[1].mIsValid)
         {
             u32 size = mResource[1].mSettingFile->size;
@@ -1048,15 +1080,18 @@ bool OccludedEffectMgr::setInstanceParameterAll(s32 type, const sead::SafeString
                                                 const utl::ParameterBase& rParam)
 {
     bool result = false;
+
     for (s32 i = 0; i < mCreateArg.mOfxNum[type]; i++)
     {
         OfxBase* pOfx = mCreateArg.getInstance(type, i);
+
         if (pOfx == nullptr)
         {
             continue;
         }
 
         OfxBase::PresetBase* pPreset = pOfx->getPreset_<OfxBase::PresetBase>();
+
         if (!pPreset->mPresetName->isEqual(rPresetName))
         {
             continue;
@@ -1085,6 +1120,7 @@ void OccludedEffectMgr::updateInstancePresetAll(s32 type, const sead::SafeString
     for (s32 i = 0; i < mCreateArg.mOfxNum[type]; i++)
     {
         OfxBase* pOfx = mCreateArg.getInstance(type, i);
+
         if (pOfx != nullptr &&
             pOfx->getPreset_<OfxBase::PresetBase>()->mPresetName->isEqual(rPresetName))
         {
@@ -1105,6 +1141,7 @@ void OccludedEffectMgr::setInstanceDebugDrawAll(s32 type, const sead::SafeString
     for (s32 i = 0; i < mCreateArg.mOfxNum[type]; i++)
     {
         OfxBase* pOfx = mCreateArg.getInstance(type, i);
+
         if (pOfx != nullptr &&
             pOfx->getPreset_<OfxBase::PresetBase>()->mPresetName->isEqual(rPresetName))
         {
@@ -1129,6 +1166,7 @@ void OccludedEffectMgr::setInstanceDebugDrawColorAll(s32 type, const sead::SafeS
     for (s32 i = 0; i < mCreateArg.mOfxNum[type]; i++)
     {
         OfxBase* pOfx = mCreateArg.getInstance(type, i);
+
         if (pOfx != nullptr &&
             pOfx->getPreset_<OfxBase::PresetBase>()->mPresetName->isEqual(rPresetName))
         {
@@ -1149,6 +1187,7 @@ void OccludedEffectMgr::genMessageTextureSelect(sead::hostio::Context* pContext,
                                                 const char* pLabel)
 {
     s32 num = mTextureInfo.capacity();
+
     for (s32 i = 0; i < num; i++)
     {
         sead::FormatFixedSafeString<256> item("%d: %s", i,
@@ -1203,10 +1242,12 @@ void OccludedEffectMgr::genMessage(sead::hostio::Context* pContext)
     }
 
     const Resource& rRes = getCurrRes_();
+
     for (auto it = mTextureInfo.begin(), end = mTextureInfo.end(); it != end; ++it)
     {
         genMessageDummy(pContext, sead::FormatFixedSafeString<32>("ID: %d", it->mIndex).cstr());
         genMessageDummy(pContext, sead::FormatFixedSafeString<256>("ID: %d", it->mIndex).cstr());
+
         for (s32 i = 0; i < rRes.mTexNum; i++)
         {
             genMessageDummy(pContext, rRes.mResTexInfo[i].mName.cstr());
@@ -1302,6 +1343,7 @@ void OccludedEffectMgr::listenPropertyEvent(const sead::hostio::PropertyEvent* p
         break;
     case 101008:
         constructHostIO_();
+
         if (mStatus == 5)
         {
             save(mSettingPath, 0x2000000);
@@ -1338,12 +1380,14 @@ void OccludedEffectMgr::genMessageMenuInstance(sead::hostio::Context* pContext)
         for (s32 i = 0; i < mCreateArg.mOfxNum[type]; i++)
         {
             OfxBase* pOfx = mCreateArg.getInstance(type, i);
+
             if (pOfx == nullptr)
             {
                 continue;
             }
 
             genMessageDummy(pContext, pOfx->getOfxLabel());
+
             for (s32 j = 0; j < mCreateArg.mPresetNum[type]; j++)
             {
                 mCreateArg.getPreset(type, j);
@@ -1365,6 +1409,7 @@ void OccludedEffectMgr::listenPropertyEventMenuInstance(const sead::hostio::Prop
         for (s32 i = 0; i < mCreateArg.mOfxNum[type]; i++)
         {
             OfxBase* pOfx = mCreateArg.getInstance(type, i);
+
             if (pOfx == nullptr)
             {
                 continue;
@@ -1373,6 +1418,7 @@ void OccludedEffectMgr::listenPropertyEventMenuInstance(const sead::hostio::Prop
             if ((pEvent->getType() & 2) == 0)
             {
                 const void* id = pEvent->getId();
+
                 if (id < &pOfx->mPresetIndex + 1 && id >= &pOfx->mPresetIndex)
                 {
                     pOfx->mFlag.set(0x40);

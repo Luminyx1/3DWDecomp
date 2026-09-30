@@ -31,6 +31,7 @@ template <typename T, typename Compare>
 void cocktailSort(sead::PtrArray<T>& rArray, Compare compare)
 {
     const s32 num = rArray.size();
+
     if (num < 2)
     {
         return;
@@ -42,6 +43,7 @@ void cocktailSort(sead::PtrArray<T>& rArray, Compare compare)
     do
     {
         s32 last = lo;
+
         for (s32 i = lo; i < hi; ++i)
         {
             if (compare(pArray[i], pArray[i + 1]) > 0)
@@ -54,12 +56,14 @@ void cocktailSort(sead::PtrArray<T>& rArray, Compare compare)
         }
 
         hi = last;
+
         if (hi <= lo)
         {
             break;
         }
 
         last = hi;
+
         for (s32 i = hi; i > lo; --i)
         {
             if (compare(pArray[i], pArray[i - 1]) < 0)
@@ -192,6 +196,7 @@ MemoryPoolHeap* MemoryPoolHeap::create(u64 size, s32 alignment, u64 userSize, s3
     }
 
     void* buffer = pHeapEx->getHeap()->tryAlloc(poolSize, alignment);
+
     if (!buffer)
     {
         return nullptr;
@@ -265,6 +270,7 @@ void* MemoryPoolHeap::allocFromMemoryPool(u64 size, s32 alignment)
 void MemoryPoolHeap::freeToHeap(GPUMemBlockBase* pBlock)
 {
     sead::CriticalSection* cs = nullptr;
+
     if (mHeapEx->getHeap()->isLockEnabled())
     {
         cs = mHeapEx->getCriticalSection();
@@ -272,6 +278,7 @@ void MemoryPoolHeap::freeToHeap(GPUMemBlockBase* pBlock)
     }
 
     GPUMemBlockBase* prev = nullptr;
+
     for (GPUMemBlockBase* cur = mBlockList; cur; prev = cur, cur = cur->getNext())
     {
         if (cur == pBlock)
@@ -291,6 +298,7 @@ void MemoryPoolHeap::freeToHeap(GPUMemBlockBase* pBlock)
 
     const uintptr_t offset = pBlock->getByteOffset() + cSeparateHeapStart;
     mHeap->free(reinterpret_cast<void*>(offset));
+
     if (mHeap->isEmpty())
     {
         mHeapEx->freeMemoryPoolHeap(this);
@@ -305,6 +313,7 @@ void MemoryPoolHeap::freeToHeap(GPUMemBlockBase* pBlock)
 void GPUMemBlockMgrHeapEx::freeMemoryPoolHeap(MemoryPoolHeap* pPoolHeap)
 {
     sead::CriticalSection* cs = nullptr;
+
     if (getHeap()->isLockEnabled())
     {
         cs = &mCS;
@@ -313,6 +322,7 @@ void GPUMemBlockMgrHeapEx::freeMemoryPoolHeap(MemoryPoolHeap* pPoolHeap)
 
     MemoryPoolHeap* prev = nullptr;
     MemoryPoolHeap* cur = nullptr;
+
     for (MemoryPoolHeap* it = mHead; it; prev = it, it = it->mNext)
     {
         if (it == pPoolHeap)
@@ -364,6 +374,7 @@ GPUMemBlockMgrHeapEx::~GPUMemBlockMgrHeapEx()
 {
     {
         sead::ConditionalScopedLock<sead::CriticalSection> lock(&mCS, getHeap()->isLockEnabled());
+
         for (MemoryPoolHeap* pool = mHead; pool; pool = pool->mNext)
         {
             pool->~MemoryPoolHeap();
@@ -377,6 +388,7 @@ void GPUMemBlockMgr::removeHeap(GPUMemBlockMgrHeapEx* pHeapEx)
 {
     mCS.lock();
     s32 index;
+
     if (findGPUMemBlockMgrHeapEx_(pHeapEx->getHeap(), &index))
     {
         mMngrHeaps.erase(index);
@@ -395,6 +407,7 @@ bool GPUMemBlockMgrHeapEx::tryAlloc(GPUMemBlockBase* pBlock, u64 size, s32 align
     if (allowSharing && mAllowSharing.isOnBit(0))
     {
         sead::CriticalSection* cs = nullptr;
+
         if (getHeap()->isLockEnabled())
         {
             cs = &mCS;
@@ -403,6 +416,7 @@ bool GPUMemBlockMgrHeapEx::tryAlloc(GPUMemBlockBase* pBlock, u64 size, s32 align
 
         MemoryPoolHeap* best = nullptr;
         f32 bestRatio = 0.0f;
+
         for (MemoryPoolHeap* pool = mHead; pool; pool = pool->mNext)
         {
             if (pool->isAllocatable(rType, userSize, absAlignment))
@@ -421,6 +435,7 @@ bool GPUMemBlockMgrHeapEx::tryAlloc(GPUMemBlockBase* pBlock, u64 size, s32 align
         {
             void* ptr = best->allocFromMemoryPool(userSize, absAlignment);
             pBlock->setMemoryPoolHeap(ptr, userSize, best);
+
             if (cs)
             {
                 cs->unlock();
@@ -446,6 +461,7 @@ bool GPUMemBlockMgrHeapEx::tryAlloc(GPUMemBlockBase* pBlock, u64 size, s32 align
     }
 
     sead::CriticalSection* cs = nullptr;
+
     if (getHeap()->isLockEnabled())
     {
         cs = &mCS;
@@ -477,6 +493,7 @@ bool GPUMemBlockMgrHeapEx::tryAlloc(GPUMemBlockBase* pBlock, u64 size, s32 align
 s32 GPUMemBlockMgrHeapEx::countMemoryPoolNum() const
 {
     s32 num = 0;
+
     for (MemoryPoolHeap* pool = mHead; pool; pool = pool->mNext)
     {
         num++;
@@ -488,6 +505,7 @@ s32 GPUMemBlockMgrHeapEx::countMemoryPoolNum() const
 u64 GPUMemBlockMgrHeapEx::countMemoryPoolSize() const
 {
     u64 size = 0;
+
     for (MemoryPoolHeap* pool = mHead; pool; pool = pool->mNext)
     {
         size += pool->getHeap()->getSize();
@@ -507,6 +525,7 @@ void GPUMemBlockMgrHeapEx::genMessage(sead::hostio::Context* pContext)
     s64 usedNodeNum = 0;
     u64 managementMaxSize = 0;
     s32 nodeNum = 0;
+
     for (MemoryPoolHeap* pool = mHead; pool; pool = pool->mNext)
     {
         sead::SeparateHeap* heap = pool->getHeap();
@@ -538,6 +557,7 @@ void GPUMemBlockMgrHeapEx::genMessage(sead::hostio::Context* pContext)
     }
 
     s32 index = 0;
+
     for (MemoryPoolHeap* pool = mHead; pool; pool = pool->mNext)
     {
         sead::SeparateHeap* heap = pool->getHeap();
@@ -610,6 +630,7 @@ bool GPUMemBlockMgr::tryAllocMemory(GPUMemBlockBase* pBlock, sead::Heap* pHeap, 
 
     mCS.lock();
     GPUMemBlockMgrHeapEx* heapEx = findGPUMemBlockMgrHeapEx_(pHeap, nullptr);
+
     if (!heapEx)
     {
         heapEx = new (pHeap, 8) GPUMemBlockMgrHeapEx(pHeap);
@@ -618,6 +639,7 @@ bool GPUMemBlockMgr::tryAllocMemory(GPUMemBlockBase* pBlock, sead::Heap* pHeap, 
                      [](const GPUMemBlockMgrHeapEx* a, const GPUMemBlockMgrHeapEx* b) -> s32 {
                          const intptr_t heapA = reinterpret_cast<intptr_t>(a->getHeap());
                          const intptr_t heapB = reinterpret_cast<intptr_t>(b->getHeap());
+
                          if (heapA < heapB)
                          {
                              return -1;
@@ -663,6 +685,7 @@ GPUMemBlockMgrHeapEx* GPUMemBlockMgr::findGPUMemBlockMgrHeapEx_(sead::Heap* pHea
     s32 hi = mMngrHeaps.size() - 1;
     s32 mid;
     GPUMemBlockMgrHeapEx* result = nullptr;
+
     while (lo <= hi)
     {
         mid = (lo + hi) / 2;
@@ -703,6 +726,7 @@ bool GPUMemBlockMgr::removeGPUMemBlockMgrHeapExIfNoMemoryPool(sead::Heap* pHeap)
     sead::ScopedLock<sead::CriticalSection> lock(&mCS);
     bool removed;
     GPUMemBlockMgrHeapEx* heapEx = findGPUMemBlockMgrHeapEx_(pHeap, nullptr);
+
     if (heapEx)
     {
         if (heapEx->mHead != nullptr)
@@ -724,6 +748,7 @@ void GPUMemBlockMgr::enableSharedMemoryPool(sead::Heap* pHeap, bool enabled)
 {
     mCS.lock();
     GPUMemBlockMgrHeapEx* heapEx = findGPUMemBlockMgrHeapEx_(pHeap, nullptr);
+
     if (heapEx)
     {
         heapEx->setAllowSharing(enabled);
@@ -741,6 +766,7 @@ void GPUMemBlockMgr::genMessage(sead::hostio::Context* pContext)
 
     u64 size = 0;
     s32 num = 0;
+
     for (GPUMemBlockMgrHeapEx& heapEx : mMngrHeaps)
     {
         num += heapEx.countMemoryPoolNum();

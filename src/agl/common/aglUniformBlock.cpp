@@ -121,6 +121,7 @@ void UniformBlock::declare_(Type type, s32 num, u64 size, u64 alignment)
     rMember.mNum = num;
 
     u32 align;
+
     if (type == cType_Struct)
     {
         rMember.mStride = size / 4;
@@ -143,6 +144,7 @@ void UniformBlock::declare_(Type type, s32 num, u64 size, u64 alignment)
 
     mHeader->mDeclaredNum++;
     u32 blockSize = mBlockSize;
+
     if (mHeader->mDeclaredNum == mHeader->mMemberNum)
     {
         mBlockSize = (blockSize + 0x1f) & ~0x1f;

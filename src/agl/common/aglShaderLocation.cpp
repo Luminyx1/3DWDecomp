@@ -116,15 +116,18 @@ s32 searchRegisterUniform(const sead::INamable& rLoc, const ShaderProgram& rProg
 
     u32 num = array->mNum;
     const auto* block = reinterpret_cast<const ResShaderUniformBlockData*>(array + 1);
+
     for (u32 i = 0; i != num; ++i)
     {
         const char* blockName = reinterpret_cast<const char*>(block + 1);
+
         if (ShaderCompileInfo::getRegitserUniformBlockName().isEqual(sead::SafeString(blockName)))
         {
             const auto* uniforms = reinterpret_cast<const ResShaderUniformArray::DataType*>(
                 blockName + block->mNameLen);
             u32 uniformNum = uniforms->mNum;
             const auto* uniform = reinterpret_cast<const ResShaderUniformData*>(uniforms + 1);
+
             for (u32 j = 0; j != uniformNum; ++j)
             {
                 if (rLoc.getName().isEqual(sead::SafeString(getUniformName(uniform))))
@@ -181,6 +184,7 @@ void UniformLocation::search(const ShaderProgram& rProgram)
     for (s32 i = 0; i < cShaderType_Num; ++i)
     {
         auto type = static_cast<ShaderType>(i);
+
         if (!rProgram.hasStage(type))
         {
             continue;

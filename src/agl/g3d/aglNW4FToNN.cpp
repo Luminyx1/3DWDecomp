@@ -95,9 +95,11 @@ void ResFile::Setup(nn::g3d::ResFile* pResFile)
     pResFile->Setup(reinterpret_cast<nn::gfx::Device*>(getDevice()));
 
     nn::gfx::ResTextureFile* pTextureFile = getResTextureFile(pResFile);
+
     if (pTextureFile)
     {
         nn::gfx::ResTextureContainerData& rContainer = getContainer(pTextureFile);
+
         if (static_cast<MemoryPoolImpl*>(rContainer.pTextureMemoryPool.Get())->ToData()->state ==
             nn::gfx::MemoryPoolImplData<nn::gfx::ApiVariationNvn8>::State_Initialized)
         {
@@ -118,6 +120,7 @@ void ResFile::Setup(nn::g3d::ResFile* pResFile)
 
         rContainer.pCurrentMemoryPool.Set(rContainer.pTextureMemoryPool.Get());
         rContainer.memoryPoolOffsetBase = 0;
+
         for (s32 i = 0, n = rContainer.pTextureDic.Get()->GetCount(); i < n; i++)
         {
             ResTexture::Initialize(getTexture(rContainer, i));
@@ -127,9 +130,11 @@ void ResFile::Setup(nn::g3d::ResFile* pResFile)
     for (s32 i = 0; i < pResFile->GetModelCount(); i++)
     {
         nn::g3d::ResModel* pModel = pResFile->GetModel(i);
+
         for (s32 j = 0; j < pModel->GetMaterialCount(); j++)
         {
             nn::g3d::ResMaterialData& rMaterial = pModel->GetMaterial(j)->ToData();
+
             for (s32 k = 0; k < rMaterial.samplerCount; k++)
             {
                 const auto* pSampler =
@@ -149,6 +154,7 @@ void ResFile::Setup(nn::g3d::ResFile* pResFile)
 nn::gfx::ResTextureFile* ResFile::getResTextureFile(nn::g3d::ResFile* pResFile)
 {
     const nn::g3d::ResExternalFileData* pFile = pResFile->FindExternalFile("textures.bntx");
+
     if (!pFile)
     {
         return nullptr;
@@ -205,10 +211,12 @@ void ResFile::Cleanup(nn::g3d::ResFile* pResFile)
     pResFile->Cleanup(reinterpret_cast<nn::gfx::Device*>(getDevice()));
 
     nn::gfx::ResTextureFile* pTextureFile = getResTextureFile(pResFile);
+
     if (pTextureFile)
     {
         nn::gfx::ResTextureContainerData& rContainer = getContainer(pTextureFile);
         auto* pMemoryPool = static_cast<MemoryPoolImpl*>(rContainer.pTextureMemoryPool.Get());
+
         if (pMemoryPool->ToData()->state == nn::gfx::MemoryPoolImplData<
                                                 nn::gfx::ApiVariationNvn8>::State_NotInitialized)
         {
@@ -231,12 +239,15 @@ void ResFile::Cleanup(nn::g3d::ResFile* pResFile)
     for (s32 i = 0; i < pResFile->GetModelCount(); i++)
     {
         nn::g3d::ResModel* pModel = pResFile->GetModel(i);
+
         for (s32 j = 0; j < pModel->GetMaterialCount(); j++)
         {
             nn::g3d::ResMaterialData& rMaterial = pModel->GetMaterial(j)->ToData();
+
             for (s32 k = 0; k < rMaterial.samplerCount; k++)
             {
                 u64 slot = rMaterial.pSamplerSlotArray.Get()[k];
+
                 if (slot != nn::g3d::TextureRef::InvalidDescriptorSlot)
                 {
                     driver::NVNMgr::instance()->releaseSampler(slot);
@@ -254,6 +265,7 @@ void ResTexture::Finalize(nn::gfx::ResTexture* pResTexture)
 {
     nn::gfx::ResTextureData& rData = pResTexture->ToData();
     getTextureView(rData)->ToData()->userPtr = nullptr;
+
     if (static_cast<s32>(rData.userDescriptorSlot.value) != -1)
     {
         driver::NVNMgr::instance()->releaseTexture(rData.userDescriptorSlot.value);
@@ -274,6 +286,7 @@ void ResTexture::Finalize(nn::gfx::ResTexture* pResTexture)
 const char* ResFile::GetTextureName(const nn::g3d::ResFile* pResFile, s32 index)
 {
     const nn::gfx::ResTextureFile* pTextureFile = getResTextureFile(pResFile);
+
     if (!pTextureFile)
     {
         return nullptr;
@@ -290,6 +303,7 @@ const char* ResFile::GetTextureName(const nn::g3d::ResFile* pResFile, s32 index)
 const nn::gfx::ResTextureFile* ResFile::getResTextureFile(const nn::g3d::ResFile* pResFile)
 {
     const nn::g3d::ResExternalFileData* pFile = pResFile->FindExternalFile("textures.bntx");
+
     if (!pFile)
     {
         return nullptr;
@@ -306,6 +320,7 @@ const nn::gfx::ResTextureFile* ResFile::getResTextureFile(const nn::g3d::ResFile
 s32 ResFile::GetTextureCount(const nn::g3d::ResFile* pResFile)
 {
     const nn::gfx::ResTextureFile* pTextureFile = getResTextureFile(pResFile);
+
     if (!pTextureFile)
     {
         return 0;
@@ -323,6 +338,7 @@ s32 ResFile::GetTextureCount(const nn::g3d::ResFile* pResFile)
 s32 ResFile::GetTextureIndex(const nn::g3d::ResFile* pResFile, const char* pName)
 {
     const nn::gfx::ResTextureFile* pTextureFile = getResTextureFile(pResFile);
+
     if (!pTextureFile)
     {
         return -1;
@@ -340,6 +356,7 @@ s32 ResFile::GetTextureIndex(const nn::g3d::ResFile* pResFile, const char* pName
 nn::gfx::ResTexture* ResFile::GetTexture(nn::g3d::ResFile* pResFile, const char* pName)
 {
     nn::gfx::ResTextureFile* pTextureFile = getResTextureFile(pResFile);
+
     if (!pTextureFile)
     {
         return nullptr;
@@ -347,6 +364,7 @@ nn::gfx::ResTexture* ResFile::GetTexture(nn::g3d::ResFile* pResFile, const char*
 
     const nn::gfx::ResTextureContainerData& rContainer = getContainer(pTextureFile);
     s32 index = rContainer.pTextureDic.Get()->FindIndex(pName);
+
     if (index == -1)
     {
         return nullptr;
@@ -364,6 +382,7 @@ nn::gfx::ResTexture* ResFile::GetTexture(nn::g3d::ResFile* pResFile, const char*
 const nn::gfx::ResTexture* ResFile::GetTexture(const nn::g3d::ResFile* pResFile, const char* pName)
 {
     const nn::gfx::ResTextureFile* pTextureFile = getResTextureFile(pResFile);
+
     if (!pTextureFile)
     {
         return nullptr;
@@ -371,6 +390,7 @@ const nn::gfx::ResTexture* ResFile::GetTexture(const nn::g3d::ResFile* pResFile,
 
     const nn::gfx::ResTextureContainerData& rContainer = getContainer(pTextureFile);
     s32 index = rContainer.pTextureDic.Get()->FindIndex(pName);
+
     if (index == -1)
     {
         return nullptr;
@@ -388,6 +408,7 @@ const nn::gfx::ResTexture* ResFile::GetTexture(const nn::g3d::ResFile* pResFile,
 nn::gfx::ResTexture* ResFile::GetTexture(nn::g3d::ResFile* pResFile, s32 index)
 {
     nn::gfx::ResTextureFile* pTextureFile = getResTextureFile(pResFile);
+
     if (!pTextureFile)
     {
         return nullptr;
@@ -405,6 +426,7 @@ nn::gfx::ResTexture* ResFile::GetTexture(nn::g3d::ResFile* pResFile, s32 index)
 const nn::gfx::ResTexture* ResFile::GetTexture(const nn::g3d::ResFile* pResFile, s32 index)
 {
     const nn::gfx::ResTextureFile* pTextureFile = getResTextureFile(pResFile);
+
     if (!pTextureFile)
     {
         return nullptr;
@@ -422,6 +444,7 @@ const nn::gfx::ResTexture* ResFile::GetTexture(const nn::g3d::ResFile* pResFile,
 bool ResFile::BindTexture(nn::g3d::ResFile* pResFile, const nn::g3d::ResFile* pTextureResFile)
 {
     const nn::gfx::ResTextureFile* pTextureFile = getResTextureFile(pTextureResFile);
+
     if (!pTextureFile)
     {
         return false;
@@ -443,6 +466,7 @@ nn::g3d::TextureRef ResFile::TextureBindCallback(const char* pName, void* pUserD
     const nn::gfx::ResTextureContainerData& rContainer =
         getContainer(static_cast<const nn::gfx::ResTextureFile*>(pUserData));
     s32 index = rContainer.pTextureDic.Get()->FindIndex(pName);
+
     if (index == -1)
     {
         return nn::g3d::TextureRef();
@@ -463,6 +487,7 @@ bool ResFile::BindSharedTexture(nn::g3d::ResFile* pResFile,
     SharedTextureFiles files;
     files.mpFile = getResTextureFile(pResFile);
     files.mpSharedFile = getResTextureFile(pSharedResFile);
+
     if (!files.mpFile && !files.mpSharedFile)
     {
         return false;
@@ -480,10 +505,12 @@ bool ResFile::BindSharedTexture(nn::g3d::ResFile* pResFile,
 nn::g3d::TextureRef ResFile::SharedTextureBindCallback(const char* pName, void* pUserData)
 {
     const auto* pFiles = static_cast<const SharedTextureFiles*>(pUserData);
+
     if (pFiles->mpFile)
     {
         const nn::gfx::ResTextureContainerData& rContainer = getContainer(pFiles->mpFile);
         s32 index = rContainer.pTextureDic.Get()->FindIndex(pName);
+
         if (index != -1)
         {
             return makeTextureRef(getTexture(rContainer, index));
@@ -494,6 +521,7 @@ nn::g3d::TextureRef ResFile::SharedTextureBindCallback(const char* pName, void* 
     {
         const nn::gfx::ResTextureContainerData& rContainer = getContainer(pFiles->mpSharedFile);
         s32 index = rContainer.pTextureDic.Get()->FindIndex(pName);
+
         if (index != -1)
         {
             return makeTextureRef(getTexture(rContainer, index));
@@ -740,6 +768,7 @@ void MaterialObj::SetResTexture(nn::g3d::MaterialObj* pMaterial, s32 index,
 void MaterialObj::ClearTexture(nn::g3d::MaterialObj* pMaterial)
 {
     const nn::g3d::ResMaterial* pRes = pMaterial->GetResource();
+
     for (s32 i = 0; i < pRes->GetTextureCount(); i++)
     {
         pMaterial->SetTexture(

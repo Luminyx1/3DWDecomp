@@ -45,6 +45,7 @@ FileIOMgr::~FileIOMgr() {
 void FileIOMgr::initialize(const CreateArg& rArg, sead::Heap* pHeap) {
     if (pHeap) {
         mFiles.tryAllocBuffer(0x1000, pHeap);
+
         for (auto& file : mFiles) {
             file.mData = nullptr;
             file.mSize = 0;
@@ -78,8 +79,10 @@ bool FileIOMgr::save(const sead::XmlDocument& rDocument, const DialogArg& rArg, 
     sead::ScopedLock<sead::CriticalSection> lock(&mCS);
 
     sead::hostio::FileInfo info;
+
     if (rArg.mPath == sead::SafeString::cEmptyString) {
         const char* mode = mFlags.isOn(1) ? "SaveAcceptReadOnlyFile" : "Save";
+
         if (!showDialog(&info, mode, rArg.mId, rArg.mFilter, rArg.mFileName)) {
             return false;
         }
@@ -173,8 +176,10 @@ bool FileIOMgr::save(const void* pData, u32 size, const DialogArg& rArg) {
     sead::ScopedLock<sead::CriticalSection> lock(&mCS);
 
     sead::hostio::FileInfo info;
+
     if (rArg.mPath == sead::SafeString::cEmptyString) {
         const char* mode = mFlags.isOn(1) ? "SaveAcceptReadOnlyFile" : "Save";
+
         if (!showDialog(&info, mode, rArg.mId, rArg.mFilter, rArg.mFileName)) {
             return false;
         }
@@ -217,6 +222,7 @@ s32 FileIOMgr::load(const DialogArg& rArg) {
 
     s32 handle = -1;
     File* file = nullptr;
+
     for (auto it = mFiles.begin(); it != mFiles.end(); ++it) {
         if (!it->mData) {
             file = &*it;
@@ -226,6 +232,7 @@ s32 FileIOMgr::load(const DialogArg& rArg) {
     }
 
     sead::hostio::FileInfo info;
+
     if (rArg.mPath == sead::SafeString::cEmptyString) {
         if (!showDialog(&info, "Open", rArg.mId, rArg.mFilter, rArg.mFileName)) {
             return -1;
@@ -240,6 +247,7 @@ s32 FileIOMgr::load(const DialogArg& rArg) {
     loadArg.heap = heap;
     loadArg.alignment = rArg.mAlignment;
     file->mData = mDevice->tryLoad(loadArg);
+
     if (!file->mData) {
         return -1;
     }
@@ -261,6 +269,7 @@ s32 FileIOMgr::load(const DialogArg& rArg) {
 void FileIOMgr::close(s32 handle) {
     sead::ScopedLock<sead::CriticalSection> lock(&mCS);
     File& file = mFiles[handle];
+
     if (file.mData) {
         delete[] file.mData;
         file.mData = nullptr;

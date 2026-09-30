@@ -48,6 +48,7 @@ NVNtexture_::NVNtexture_(const NVNtexture_& other) : _c4(0)
     std::memcpy(&mTexture, &other.mTexture, sizeof(NVNtexture));
     mTextureID = other.mTextureID;
     _c4 = other._c4;
+
     if (mTextureID != -1 && !NVNMgr::instance()->countupTexture(mTextureID))
     {
         _c4 |= 1;
@@ -75,6 +76,7 @@ NVNtexture_& NVNtexture_::operator=(const NVNtexture_& other)
     std::memcpy(&mTexture, &other.mTexture, sizeof(NVNtexture));
     mTextureID = other.mTextureID;
     _c4 = other._c4;
+
     if (mTextureID != -1 && !NVNMgr::instance()->countupTexture(mTextureID))
     {
         _c4 |= 1;
@@ -103,6 +105,7 @@ bool NVNtexture_::registerTexture(const NVNtexture* pTexture, const NVNtextureVi
         }
 
         releaseTexture();
+
         if (isOwner)
         {
             _c4 |= 1;
@@ -138,6 +141,7 @@ void NVNtexture_::setDirect(const NVNtexture& rTexture, s32 textureId)
     std::memcpy(&mTexture, &rTexture, sizeof(NVNtexture));
     _c4 &= ~1;
     mTextureID = textureId;
+
     if (mTextureID != -1 && !NVNMgr::instance()->countupTexture(mTextureID))
     {
         _c4 |= 1;
@@ -214,6 +218,7 @@ NVNsampler_& NVNsampler_::operator=(const NVNsampler_& other)
     releaseSampler();
     _0 = other._0;
     _8 = other._8;
+
     if (_8 != -1)
     {
         NVNMgr::instance()->countupSampler(_8);

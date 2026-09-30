@@ -57,6 +57,7 @@ inline u32 getSlice(const TextureData& rTexture)
 inline f32 calcMipWidthSum(const TextureData& rTexture, u32 startMip, u32 endMip, u32 faceNum)
 {
     f32 width = 0.0f;
+
     for (u32 i = startMip; i < endMip; i++)
     {
         width += getMipWidth(rTexture, i) * faceNum;
@@ -68,6 +69,7 @@ inline f32 calcMipWidthSum(const TextureData& rTexture, u32 startMip, u32 endMip
 inline f32 calcMipHeightSum(const TextureData& rTexture, u32 startMip, u32 endMip)
 {
     f32 height = 0.0f;
+
     for (u32 i = startMip; i < endMip; i++)
     {
         height += getMipHeight(rTexture, i);
@@ -182,18 +184,21 @@ bool DebugTexturePage::entryTexture_(DrawContext* pDrawContext, s32 index,
     }
 
     s32 contextIndex = mCurrentContext;
+
     if (index != -1 && contextIndex != index)
     {
         return false;
     }
 
     DebugTextureDrawer* pDrawer = DebugTextureDrawer::instance();
+
     if (!pDrawer)
     {
         return false;
     }
 
     DebugTexture* pTexture = pDrawer->popBack_();
+
     if (!pTexture)
     {
         return false;
@@ -201,6 +206,7 @@ bool DebugTexturePage::entryTexture_(DrawContext* pDrawContext, s32 index,
 
     pTexture->initialize(rName);
     mContexts[contextIndex].pushBack(pTexture, mSelectTextureName);
+
     if (isCopy)
     {
         pTexture->copyTexture(pDrawContext, rTexture, type, min, max, isLineBreakBefore,
@@ -234,6 +240,7 @@ void DebugTexturePage::Context::pushBack(DebugTexture* pTexture,
 {
     mTextures.pushBack(pTexture);
     copyTextureLabel();
+
     if (!rSelectName.isEmpty() && pTexture->getName() == rSelectName)
     {
         mSelectIndex = mTextures.indexOf(pTexture);
@@ -314,18 +321,21 @@ bool DebugTexturePage::entryRenderTargetDepth_(DrawContext* pDrawContext, s32 in
     }
 
     s32 contextIndex = mCurrentContext;
+
     if (index != -1 && contextIndex != index)
     {
         return false;
     }
 
     DebugTextureDrawer* pDrawer = DebugTextureDrawer::instance();
+
     if (!pDrawer)
     {
         return false;
     }
 
     DebugTexture* pTexture = pDrawer->popBack_();
+
     if (!pTexture)
     {
         return false;
@@ -358,6 +368,7 @@ bool DebugTexture::expand(DrawContext* pDrawContext, const RenderTargetDepth& rD
     freeTexture();
     TextureFormat format = TextureFormat(rDepth.getTextureFormat());
     DynamicTextureAllocator* pAllocator = DynamicTextureAllocator::instance();
+
     switch (rDepth.getTextureType())
     {
     case NVN_TEXTURE_TARGET_2D:
@@ -408,6 +419,7 @@ void DebugTexturePage::entryBoundRenderBuffer(DrawContext* pDrawContext, s32 ind
 bool DebugTexture::copyCurrentRenderTargetColor(DrawContext* pDrawContext, s32 index)
 {
     TextureData texture;
+
     if (!RenderBuffer::initTextureDataFromBoundColor(pDrawContext, &texture, index))
     {
         return false;
@@ -426,6 +438,7 @@ bool DebugTexture::copyCurrentRenderTargetColor(DrawContext* pDrawContext, s32 i
 bool DebugTexture::copyCurrentRenderTargetDepth(DrawContext* pDrawContext)
 {
     TextureData texture;
+
     if (!RenderBuffer::initTextureDataFromBoundDepth(pDrawContext, &texture))
     {
         return false;
@@ -448,6 +461,7 @@ void DebugTexturePage::setActive(bool active)
     }
 
     DebugTextureDrawer* pDrawer = DebugTextureDrawer::instance();
+
     if (!pDrawer)
     {
         return;
@@ -506,6 +520,7 @@ void DebugTexturePage::Context::clearEntryTextures() const
     {
         pNode->mList = nullptr;
         pNode->mData->freeTexture();
+
         if (DebugTextureDrawer::instance())
         {
             DebugTextureDrawer::instance()->pushBack_(pNode->mData);
@@ -539,6 +554,7 @@ void DebugTexturePage::genMessagePage_(sead::hostio::Context* pContext,
                                        sead::hostio::PropertyEventListener* pListener)
 {
     const char* pHeader;
+
     if (pReflexible)
     {
         mOwner = pReflexible;
@@ -593,6 +609,7 @@ bool DebugTexturePage::updateNodeMeta_()
     sead::FormatFixedSafeString<64> meta("Icon=%s, BgColor=%s", mIsActive ? "TEXTURE" : "NOTE",
                                          "Transparent");
     setNodeMeta(pNode, meta.cstr());
+
     if (mNodeMeta != sead::SafeString(sead::SafeString::cEmptyString))
     {
         mNodeMeta.copy(sead::SafeString(sead::SafeString::cEmptyString));
@@ -612,9 +629,11 @@ void DebugTexturePage::Context::genMessageContextComboBox(
     sead::hostio::Context* pContext, bool isActive, sead::hostio::PropertyEventListener* pListener)
 {
     DebugTextureDrawer* pDrawer = DebugTextureDrawer::instance();
+
     if (pDrawer && mLabelNum > 0)
     {
         pDrawer->mTextureLabels[0].cstr();
+
         for (s32 i = 1; i < mLabelNum; i++)
         {
             DebugTextureDrawer::instance()->mTextureLabels[i].cstr();
@@ -687,12 +706,14 @@ const DebugTexture* DebugTexturePage::Context::searchFullScreenTexture() const
     if (mSelectIndex >= 0 && mLabelNum > mSelectIndex)
     {
         DebugTextureDrawer* pDrawer = DebugTextureDrawer::instance();
+
         if (!pDrawer)
         {
             return nullptr;
         }
 
         const sead::SafeString& rLabel = pDrawer->mTextureLabels[mSelectIndex];
+
         for (auto it = mTextures.begin(); it != mTextures.end(); ++it)
         {
             if (rLabel == (*it)->getName())
@@ -729,12 +750,14 @@ void DebugTexture::freeTexture()
 void DebugTexturePage::Context::copyTextureLabel() const
 {
     DebugTextureDrawer* pDrawer = DebugTextureDrawer::instance();
+
     if (!pDrawer)
     {
         return;
     }
 
     s32 num = 0;
+
     for (auto it = mTextures.begin(); it != mTextures.end(); ++it)
     {
         if (!DebugTextureDrawer::instance()->copyTextureLabel_(num, (*it)->getName()))
@@ -786,6 +809,7 @@ void DebugTexture::allocTexture(DrawContext* pDrawContext, const TextureData& rT
 {
     freeTexture();
     DynamicTextureAllocator* pAllocator = DynamicTextureAllocator::instance();
+
     switch (rTexture.getTextureType())
     {
     case NVN_TEXTURE_TARGET_2D:
@@ -809,6 +833,7 @@ void DebugTexture::allocTexture(DrawContext* pDrawContext, const TextureData& rT
     case NVN_TEXTURE_TARGET_CUBEMAP:
     {
         u32 arrayNum = rTexture.getMipSlice(0) / 6;
+
         if (arrayNum == 1)
         {
             mTexture = pAllocator->allocCubeWithoutContext(
@@ -851,6 +876,7 @@ sead::Vector2f DebugTexturePage::Context::calcTextureDrawSize_(const TextureData
     u32 startMip = mMipLevel < 0 ? 0 : mMipLevel;
 
     sead::Vector2f size;
+
     switch (rTexture.getTextureType())
     {
     case NVN_TEXTURE_TARGET_2D:
@@ -901,6 +927,7 @@ void DebugTexturePage::Context::drawTexture_(DrawContext* pDrawContext,
 {
     sead::GraphicsContext graphicsContext;
     graphicsContext.setDepthEnable(false, false);
+
     switch (rOption.mBlendType)
     {
     case 1:
@@ -941,6 +968,7 @@ void DebugTexturePage::Context::drawTexture_(DrawContext* pDrawContext,
     case NVN_TEXTURE_TARGET_2D:
     {
         sead::Vector2f pos = rPos;
+
         switch (rTexture.getType())
         {
         case DebugTexture::cType_1:
@@ -973,9 +1001,11 @@ void DebugTexturePage::Context::drawTexture_(DrawContext* pDrawContext,
     case NVN_TEXTURE_TARGET_3D:
     {
         sead::Vector2f pos = rPos;
+
         if (mSliceIndex >= 0)
         {
             u32 slice;
+
             if (mSliceIndex >= s32(getSlice(rTex)))
             {
                 slice = getSlice(rTex) - 1;
@@ -1003,6 +1033,7 @@ void DebugTexturePage::Context::drawTexture_(DrawContext* pDrawContext,
                 sead::Vector2f scale = rScale;
                 scale.x = f32(getMipWidth(rTex, mip)) / f32(getWidth(rTex)) * scale.x;
                 scale.y *= f32(getMipHeight(rTex, mip)) / f32(getHeight(rTex));
+
                 for (u32 slice = 0; slice < getMipSlice(rTex, mip); slice++)
                 {
                     ImageFilter2D::drawTexture3D(pDrawContext, sampler, rViewport,
@@ -1021,9 +1052,11 @@ void DebugTexturePage::Context::drawTexture_(DrawContext* pDrawContext,
     case NVN_TEXTURE_TARGET_2D_ARRAY:
     {
         sead::Vector2f pos = rPos;
+
         if (mSliceIndex >= 0)
         {
             s32 slice;
+
             if (mSliceIndex >= s32(getSlice(rTex)))
             {
                 slice = getSlice(rTex) - 1;
@@ -1048,6 +1081,7 @@ void DebugTexturePage::Context::drawTexture_(DrawContext* pDrawContext,
             else
             {
                 pos.x = rPos.x;
+
                 for (u32 mip = startMip; mip < endMip; mip++)
                 {
                     sead::Vector2f scale = rScale;
@@ -1064,6 +1098,7 @@ void DebugTexturePage::Context::drawTexture_(DrawContext* pDrawContext,
             for (u32 slice = 0; slice < getSlice(rTex); slice++)
             {
                 pos.x = rPos.x;
+
                 switch (rTexture.getType())
                 {
                 case DebugTexture::cType_2:
@@ -1102,9 +1137,11 @@ void DebugTexturePage::Context::drawTexture_(DrawContext* pDrawContext,
     case NVN_TEXTURE_TARGET_CUBEMAP:
     {
         sead::Vector2f pos = rPos;
+
         if (mSliceIndex >= 0)
         {
             u32 cube;
+
             if (mSliceIndex >= s32(getSlice(rTex)))
             {
                 cube = getSlice(rTex) - 1;
@@ -1155,6 +1192,7 @@ void DebugTexturePage::Context::drawTexture_(DrawContext* pDrawContext,
             for (u32 cube = 0; cube < getSlice(rTex) / 6; cube++)
             {
                 pos.x = rPos.x;
+
                 for (u32 mip = startMip; mip < endMip; mip++)
                 {
                     sead::Vector2f scale = rScale;
@@ -1236,6 +1274,7 @@ void DebugTexturePage::Context::drawLabel_(DrawContext* pDrawContext,
 
     writer.setColor(sead::Color4f::cBlack);
     writer.setCursorFromTopLeft(rPos + sead::Vector2f::ones);
+
     if (isDrawName)
     {
         writer.printf("%s ", rLabel.cstr());
@@ -1250,6 +1289,7 @@ void DebugTexturePage::Context::drawLabel_(DrawContext* pDrawContext,
 
     writer.setColor(sead::Color4f::cWhite);
     writer.setCursorFromTopLeft(rPos);
+
     if (isDrawName)
     {
         writer.printf("%s ", rLabel.cstr());
@@ -1283,9 +1323,11 @@ void DebugTexturePage::Context::draw(DrawContext* pDrawContext,
     sead::Vector2f scale;
 
     f32 rowHeight;
+
     if (mSelectIndex >= 0 && mSelectIndex < mLabelNum)
     {
         const DebugTexture* pTexture = searchFullScreenTexture();
+
         if (!pTexture)
         {
             return;
@@ -1310,9 +1352,11 @@ void DebugTexturePage::Context::draw(DrawContext* pDrawContext,
                   mScale * (rFrameBuffer.getVirtualSize().y / rArea.getSizeY()));
 
         rowHeight = 0.0f;
+
         for (auto it = mTextures.begin(); it != mTextures.end(); ++it)
         {
             const DebugTexture* pTexture = *it;
+
             if (pTexture->mIsLineBreakBefore)
             {
                 pos.set(mScroll.x, pos.y + rowHeight);
@@ -1320,6 +1364,7 @@ void DebugTexturePage::Context::draw(DrawContext* pDrawContext,
             }
 
             sead::Vector2f size = calcTextureDrawSize_(*pTexture->getTexture());
+
             if (pos.x != mScroll.x && pos.x + size.x * scale.x > frameBufferSize.x)
             {
                 pos.set(mScroll.x, pos.y + rowHeight);

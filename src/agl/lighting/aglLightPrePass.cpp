@@ -22,9 +22,11 @@ u16 convertF32ToF16(f32 value)
     u32 upper = bits >> 16;
     u32 sign = upper & 0x8000;
     u32 exponent = bits & 0x7f800000;
+
     if (exponent == 0x7f800000)
     {
         u32 mantissa = bits & 0x7fffff;
+
         if (mantissa == 0)
         {
             return sign | 0x7c00;
@@ -112,6 +114,7 @@ LightPrePass::~LightPrePass()
 void LightPrePass::initialize(const CreateArg& rArg, sead::Heap* pHeap)
 {
     mContext.tryAllocBuffer(rArg.mViewNum, pHeap);
+
     for (auto it = mContext.begin(), end = mContext.end(); it != end; ++it)
     {
         Context& rContext = *it;
@@ -120,6 +123,7 @@ void LightPrePass::initialize(const CreateArg& rArg, sead::Heap* pHeap)
         rContext.mCurrentStencil = 0;
         rContext.mLightState = 0;
         rContext.mBufferState = 0;
+
         if (it.getIndex() == 0)
         {
             rContext.mViewUbo.startDeclare(4, pHeap);
@@ -149,6 +153,7 @@ void LightPrePass::initialize(const CreateArg& rArg, sead::Heap* pHeap)
     mProjLightMgr->initialize(this, rArg.mProjLightNum, rArg.mViewNum, pHeap);
 
     mUserLightMgr.tryAllocBuffer(rArg.mUserLightMgrNum, pHeap);
+
     for (auto& rpMgr : mUserLightMgr)
     {
         rpMgr = nullptr;
@@ -164,6 +169,7 @@ void LightPrePass::initialize(const CreateArg& rArg, sead::Heap* pHeap)
     mSpecIntensityScale = 1.0f;
     mSpecIntensityOffset = 0.0f;
     _8d0 = true;
+
     for (s32 i = 0; i < 2; i++)
     {
         sead::hostio::CurveData& rData = mSpecularCurve.getCurveData(i);
@@ -195,6 +201,7 @@ void LightPrePass::changeTextureFilter_()
     u8 flags = mFlags.getDirect();
     u8 normalFilter = (flags >> 3) & 1;
     u8 depthFilter = (flags >> 4) & 1;
+
     for (auto& rContext : mContext)
     {
         rContext.mNormalSampler.setFilter(normalFilter, normalFilter, 0);
@@ -205,6 +212,7 @@ void LightPrePass::changeTextureFilter_()
 void LightPrePass::updateSpecPowTex_()
 {
     u16* pTexel = static_cast<u16*>(mSpecPowTexBuffer.getPtr());
+
     for (u32 i = 0; i < mSpecPowTexWidth; i++)
     {
         f32 t = f32(i) / f32(mSpecPowTexWidth);
@@ -242,6 +250,7 @@ void LightPrePass::setUserLightMgr(s32 index, LightMgrBase* pMgr)
 void LightPrePass::calc()
 {
     mBufferIndex = mBufferIndex == 0;
+
     for (LightMgrBase* pMgr : mUserLightMgr)
     {
         if (pMgr)
@@ -333,6 +342,7 @@ void LightPrePass::updateGPU() const
     mPointLightMgr->updateGPU();
     mSpotLightMgr->updateGPU();
     mProjLightMgr->updateGPU();
+
     for (const LightMgrBase* pMgr : mUserLightMgr)
     {
         if (pMgr)
@@ -378,6 +388,7 @@ void LightPrePass::updateViewGPU(s32 view) const
     mPointLightMgr->updateViewGPU(view, rContext);
     mSpotLightMgr->updateViewGPU(view, rContext);
     mProjLightMgr->updateViewGPU(view, rContext);
+
     for (const LightMgrBase* pMgr : mUserLightMgr)
     {
         if (pMgr)
@@ -396,6 +407,7 @@ TextureData* LightPrePass::createLightBuffer_(DrawContext* pDrawContext, s32 vie
     rContext.mRenderBuffer.setPhysicalArea(0.0f, 0.0f, width, height);
 
     auto type = utl::DynamicTextureAllocator::AllocateType(!temporary);
+
     if (!mFlags.isOn(1 << 8))
     {
         rContext.mpLightBufferTexture = utl::DynamicTextureAllocator::instance()->allocArray(
@@ -584,6 +596,7 @@ void LightPrePass::draw(DrawContext* pDrawContext, s32 view, const TextureData& 
     if (!mFlags.isOn(1 << 20))
     {
         rContext.mColorTarget[0].invalidateGPUCache(pDrawContext);
+
         if (mFlags.isOn(1 << 8))
         {
             rContext.mColorTarget[1].invalidateGPUCache(pDrawContext);
@@ -592,6 +605,7 @@ void LightPrePass::draw(DrawContext* pDrawContext, s32 view, const TextureData& 
 
     rContext.mRenderBuffer.setRenderTargetDepth(nullptr);
     setDirty_();
+
     if (rContext.mBufferState & 2)
     {
         rContext.mBufferState &= ~7u;
@@ -611,6 +625,7 @@ void LightPrePass::applyGraphicsContext(DrawContext* pDrawContext, const Callbac
     Context& rContext = const_cast<Context&>(mContext[rArg.mView]);
     bool hasDepth = rArg.mRenderBuffer->getRenderTargetDepth() != nullptr;
     bool useStencil = stencil & mFlags.isOn(1 << 9);
+
     if (!force && rContext.mCurrentDepthTest == hasDepth && rContext.mCurrentStencil == useStencil)
     {
         return;
@@ -618,6 +633,7 @@ void LightPrePass::applyGraphicsContext(DrawContext* pDrawContext, const Callbac
 
     rContext.mCurrentDepthTest = hasDepth;
     rContext.mCurrentStencil = useStencil;
+
     if (mFlags.isOn(1 << 8) && useStencil)
     {
         if (hasDepth)
@@ -716,6 +732,7 @@ void LightPrePass::drawDebug(DrawContext* pDrawContext, s32 view) const
 void LightPrePass::release(s32 view) const
 {
     Context& rContext = const_cast<Context&>(mContext[view]);
+
     if (rContext.mpLightBufferTexture)
     {
         utl::DynamicTextureAllocator::instance()->free(rContext.mpLightBufferTexture);
@@ -754,6 +771,7 @@ void LightPrePass::setPointLight(s32 index, const sead::Vector3f& rPos, f32 radi
     rLight.mColor = rColor;
     rLight.mAttnPow = attnPow;
     rLight.mAttnStart = attnStart;
+
     if (useSpecColor)
     {
         rLight.mFlags.set(2);
@@ -818,6 +836,7 @@ void LightPrePass::setSpotLight(s32 index, const sead::Vector3f& rPos, const sea
     rLight.mShadowParam = 0.5f;
     rLight.mFlags.change(2, useSpecColor);
     rLight.mSpecColor = rSpecColor;
+
     for (auto& rView : rLight.mView)
     {
         rView.mShadowMap = nullptr;
@@ -920,10 +939,12 @@ void LightPrePass::setProjLight(s32 index, const sead::Vector3f& rPos, const sea
     rLight.mFlags.change(2, useSpecColor);
     rLight.mFlags.reset(4);
     rLight.mVisibleMask = 0xffffffff;
+
     if (pTexture)
     {
         rLight.mHasTexture = true;
         rLight.mTexture = *pTexture;
+
         if (texWrap)
         {
             rLight.mFlags.set(0x10);
@@ -943,6 +964,7 @@ void LightPrePass::setProjLight(s32 index, const sead::Vector3f& rPos, const sea
     rLight.setNormVec();
     rLight.mShadowType = cShadowType_Normal;
     rLight.mShadowParam = 0.5f;
+
     for (auto& rView : rLight.mView)
     {
         rView.mShadowMap = nullptr;
@@ -1000,10 +1022,12 @@ void LightPrePass::setProjLight_Ortho(s32 index, const sead::Vector3f& rPos,
     rLight.mFlags.change(2, useSpecColor);
     rLight.mFlags.set(4);
     rLight.mVisibleMask = 0xffffffff;
+
     if (pTexture)
     {
         rLight.mHasTexture = true;
         rLight.mTexture = *pTexture;
+
         if (texWrap)
         {
             rLight.mFlags.set(0x10);
@@ -1023,6 +1047,7 @@ void LightPrePass::setProjLight_Ortho(s32 index, const sead::Vector3f& rPos,
     rLight.setNormVec();
     rLight.mShadowType = cShadowType_Normal;
     rLight.mShadowParam = 0.5f;
+
     for (auto& rView : rLight.mView)
     {
         rView.mShadowMap = nullptr;
@@ -1114,6 +1139,7 @@ void LightPrePass::getProjLightInfo(s32 index, LightInfo* pInfo) const
     pInfo->mPos = rLight.mPos;
     pInfo->mDir = rLight.mDir;
     pInfo->mUp = rLight.mUp;
+
     for (s32 i = 0; i < 8; i++)
     {
         pInfo->mParam[i] = rLight.mParam[i];

@@ -68,6 +68,7 @@ u32 TextureDataInitializerTGA::checkTGAHeader(const void* pData, s32 pixelByteSi
     const Header* header = static_cast<const Header*>(pData);
 
     u32 result = checkTGAHeader(pData);
+
     if ((header->mBitsPerPixel >> 3) != pixelByteSize) {
         result |= 1;
     }

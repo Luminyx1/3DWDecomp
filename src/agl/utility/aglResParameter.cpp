@@ -224,6 +224,7 @@ u32 ResParameterArchiveData::getSignature()
 ResParameterArchive::ResParameterArchive(const void* pData)
 {
     mpData = static_cast<const ResParameterArchiveData*>(pData);
+
     if (!pData)
     {
         return;
@@ -232,6 +233,7 @@ ResParameterArchive::ResParameterArchive(const void* pData)
     auto* data = const_cast<ResParameterArchiveData*>(mpData);
     const bool is_little_endian = data->flags.isOn(ResParameterArchiveFlag::LittleEndian);
     bool is_utf8;
+
     if (is_little_endian)
     {
         if (data->flags.isOn(ResParameterArchiveFlag::Utf8))
@@ -263,12 +265,14 @@ ResParameterArchive::ResParameterArchive(const void* pData)
     if (!is_little_endian)
     {
         const size_t size = lists_size + objs_size + params_size + data_size;
+
         if (size != 0)
         {
             ModifyEndianU32(false, lists, size);
         }
 
         const u32 unk_size = mpData->unk_section_size;
+
         if (unk_size != 0)
         {
             u32 offset = 0;
@@ -294,6 +298,7 @@ ResParameterArchive::ResParameterArchive(const void* pData)
         do
         {
             const s32 length = sead::SafeString(strings).calcLength();
+
             if (length > 0)
             {
                 const s32 utf16_length = length + 1;

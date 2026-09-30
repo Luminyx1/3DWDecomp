@@ -21,6 +21,7 @@ bool SeadUtil::getNearFarAspectFovy(const sead::Projection& rProjection, f32* pN
     if (sead::IsDerivedFrom<sead::PerspectiveProjection>(&rProjection))
     {
         const auto* pPerspective = sead::DynamicCast<const sead::PerspectiveProjection>(&rProjection);
+
         if (pNear)
         {
             *pNear = pPerspective->getNear();
@@ -52,6 +53,7 @@ bool SeadUtil::getNearFarAspectFovy(const sead::Projection& rProjection, f32* pN
     if (sead::IsDerivedFrom<sead::FrustumProjection>(&rProjection))
     {
         const auto* pFrustum = sead::DynamicCast<const sead::FrustumProjection>(&rProjection);
+
         if (pNear)
         {
             *pNear = pFrustum->getNear();
@@ -83,6 +85,7 @@ bool SeadUtil::getNearFarAspectFovy(const sead::Projection& rProjection, f32* pN
     if (sead::IsDerivedFrom<sead::OrthoProjection>(&rProjection))
     {
         const auto* pOrtho = sead::DynamicCast<const sead::OrthoProjection>(&rProjection);
+
         if (pNear)
         {
             *pNear = pOrtho->getNear();
@@ -96,6 +99,7 @@ bool SeadUtil::getNearFarAspectFovy(const sead::Projection& rProjection, f32* pN
         if (pAspect)
         {
             f32 height = sead::Mathf::abs(pOrtho->getTop() - pOrtho->getBottom());
+
             if (height > 0.0f)
             {
                 f32 width = sead::Mathf::abs(pOrtho->getLeft() - pOrtho->getRight());
@@ -180,6 +184,7 @@ bool SeadUtil::setNearFarAspectFovy(sead::Projection* pProjection, f32 near, f32
         f32 height = sead::Mathf::abs(pFrustum->getTop() - pFrustum->getBottom());
         pFrustum->setNear(near);
         pFrustum->setFar(far);
+
         if (keepWidth)
         {
             f32 scale = width / aspect / height;
@@ -203,6 +208,7 @@ bool SeadUtil::setNearFarAspectFovy(sead::Projection* pProjection, f32 near, f32
         f32 height = sead::Mathf::abs(pOrtho->getTop() - pOrtho->getBottom());
         pOrtho->setNear(near);
         pOrtho->setFar(far);
+
         if (keepWidth)
         {
             f32 scale = width / aspect / height;

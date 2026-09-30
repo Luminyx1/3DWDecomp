@@ -77,6 +77,7 @@ void LightPrePass::GetShader_(const ShaderProgram** ppProgram, LightType type, b
     *ppProgram = pProgram;
 
     s32 variation = 0;
+
     switch (type)
     {
     case cLightType_Point:
@@ -101,6 +102,7 @@ void LightPrePass::InitializeShaderVariationTable_()
     for (const auto& rInfo : cShaderInfo)
     {
         s32 stride = 1;
+
         for (s32 i = rInfo.mMacroNum - 1; i >= 0; i--)
         {
             rInfo.mStrides[i] = stride;
@@ -196,6 +198,7 @@ void LightPrePass::PointLightMgr::updateUBO_(const PointLight& rLight, s32 view,
     f32 screenX;
     f32 screenY;
     f32 scale;
+
     if (rLight.mFlags.isOn(2))
     {
         const sead::Matrix44f& rViewProjMtx = rContext.mViewProjMtx;
@@ -214,6 +217,7 @@ void LightPrePass::PointLightMgr::updateUBO_(const PointLight& rLight, s32 view,
     }
 
     sead::Vector3f specColor(rLight.mSpecColor.r, rLight.mSpecColor.g, rLight.mSpecColor.b);
+
     if (rLight.mFlags.isOn(2) && !mLightPrePass->getFlags().isOn(1 << 8))
     {
         specColor.x = rLight.mSpecColor.a * (rLight.mSpecColor.r * 0.298912f +
@@ -275,6 +279,7 @@ void LightPrePass::PointLightMgr::drawImpl_(DrawContext* pDrawContext, const Poi
     else
     {
         bool useSpec;
+
         if (rLight.mFlags.isOn(2) &&
             (rLight.mSpecColor.r != 0.0f || rLight.mSpecColor.g != 0.0f ||
              rLight.mSpecColor.b != 0.0f) &&
@@ -359,6 +364,7 @@ void LightPrePass::SpotLightMgr::initImpl_(SpotLight& rLight, sead::Heap* pHeap)
     rLight.mLength = 5.0f;
     rLight.mAttnPow = 1.0f;
     rLight.mAngleAttnPow = 0.5f;
+
     for (auto& rView : rLight.mView)
     {
         rView.mShadowMap = nullptr;
@@ -399,6 +405,7 @@ void LightPrePass::SpotLightMgr::drawImpl_(DrawContext* pDrawContext, const Spot
                                            CallbackArg& rArg) const
 {
     bool useSpec;
+
     if (rLight.mFlags.isOff(2) || (rLight.mSpecColor.r == 0.0f && rLight.mSpecColor.g == 0.0f &&
                                    rLight.mSpecColor.b == 0.0f))
     {
@@ -439,6 +446,7 @@ void LightPrePass::SpotLightMgr::drawImpl_(DrawContext* pDrawContext, const Spot
         rArg.mNormalSampler->activate(pDrawContext, pProgram->getSamplerLocation(0), -1, false);
         rArg.mSpecPowSampler->activate(pDrawContext, pProgram->getSamplerLocation(2), -1, false);
         rArg.mViewUbo->activate(pDrawContext, pProgram->getUniformBlockLocation(0));
+
         if (rLight.mView[view].mShadowMap != nullptr)
         {
             rLight.mView[view].mShadowSampler->applyTextureData(
@@ -460,6 +468,7 @@ void LightPrePass::SpotLightMgr::drawDebugImpl_(DrawContext* pDrawContext,
                                                 const Context& rContext) const
 {
     sead::Vector3f dir = rLight.mDir;
+
     if (dir.equals(sead::Vector3f::ey, 0.01f))
     {
         dir.set(0.01f, 0.99f, -0.01f);
@@ -505,6 +514,7 @@ void LightPrePass::ProjLightMgr::initImpl_(ProjLight& rLight, sead::Heap* pHeap)
     rLight.mHasTexture = false;
     rLight._268 = 0;
     rLight._260 = false;
+
     for (auto& rView : rLight.mView)
     {
         rView.mShadowMap = nullptr;
@@ -545,6 +555,7 @@ void LightPrePass::ProjLightMgr::drawImpl_(DrawContext* pDrawContext, const Proj
                                            CallbackArg& rArg) const
 {
     bool useSpec;
+
     if (rLight.mFlags.isOff(2) || (rLight.mSpecColor.r == 0.0f && rLight.mSpecColor.g == 0.0f &&
                                    rLight.mSpecColor.b == 0.0f))
     {
@@ -587,6 +598,7 @@ void LightPrePass::ProjLightMgr::drawImpl_(DrawContext* pDrawContext, const Proj
         rArg.mNormalSampler->activate(pDrawContext, pProgram->getSamplerLocation(0), -1, false);
         rArg.mSpecPowSampler->activate(pDrawContext, pProgram->getSamplerLocation(2), -1, false);
         rArg.mViewUbo->activate(pDrawContext, pProgram->getUniformBlockLocation(0));
+
         if (rLight._260 && rLight.mFlags.isOn(1 << 3))
         {
             rLight.mTempTextureSampler.activate(pDrawContext, pProgram->getSamplerLocation(3), -1,

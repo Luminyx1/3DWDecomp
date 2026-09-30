@@ -81,6 +81,7 @@ void ShadowPrePass::initialize(s32 contextNum, sead::Heap* pHeap)
     for (auto it = mContexts.begin(), end = mContexts.end(); it != end; ++it)
     {
         Context& context = *it;
+
         if (it.getIndex() == 0)
         {
             UniformBlock& block = context.mUniformBlock;
@@ -142,6 +143,7 @@ void ShadowPrePass::initialize(s32 contextNum, sead::Heap* pHeap)
 void ShadowPrePass::calc()
 {
     mBufferIndex = 1 - mBufferIndex;
+
     for (auto& context : mContexts)
     {
         context.mUniformBlock.setCurrentBufferIndex(mBufferIndex);
@@ -184,6 +186,7 @@ void ShadowPrePass::getTextureFormat_(s32 index, TextureFormat& rFormat,
     const bool hasStaticDepth = mFlags.isOnBit(0) && mContexts[index].mStaticDepth != nullptr;
     rFormat = TextureFormat::cTextureFormat_R8_G8_uNorm;
     rTempFormat = TextureFormat::cTextureFormat_R8_G8_uNorm;
+
     if (hasStaticDepth)
     {
         if (*mUseStaticDepthShadow || *mUseDecalAo || *mUseDepth2Normal || *mUsePreCombSsao)
@@ -210,6 +213,7 @@ void ShadowPrePass::getTextureFormat_(s32 index, TextureFormat& rFormat,
 void ShadowPrePass::release(s32 index) const
 {
     Context& context = mContexts[index];
+
     if (context.mLightBuffer)
     {
         utl::DynamicTextureAllocator::instance()->free(context.mLightBuffer);
@@ -255,6 +259,7 @@ const TextureSampler* ShadowPrePass::getPrevSampler(DrawContext* pDrawContext, s
                                                     s32 pass) const
 {
     const Context& context = mContexts[index];
+
     if (getPassType() != 0)
     {
         switch (pass)
@@ -288,6 +293,7 @@ const TextureSampler* ShadowPrePass::getPrevSampler(DrawContext* pDrawContext, s
 RenderBuffer* ShadowPrePass::getRenderTarget(DrawContext* pDrawContext, s32 index, s32 pass) const
 {
     Context& context = mContexts[index];
+
     if (getPassType() != 0)
     {
         switch (pass)
@@ -335,6 +341,7 @@ RenderBuffer* ShadowPrePass::bindBuffer(DrawContext* pDrawContext, s32 index, s3
 u32 ShadowPrePass::getBufferState(s32 index) const
 {
     u32 state = *mResolutionMode == 0 ? 1 : 0;
+
     if (*mResolutionMode == 1)
     {
         state |= 2;
@@ -377,6 +384,7 @@ RenderBuffer* ShadowPrePass::createShadowBuffer(DrawContext* pDrawContext, s32 i
     Context& context = mContexts[index];
     const u32 state = getBufferState(index);
     bool needCreate = true;
+
     if (context.mBufferState == state)
     {
         needCreate = !context.mIsCreated;

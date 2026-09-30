@@ -36,6 +36,7 @@ EditParam2 sEditParam2;
 void calcDirAngle(const sead::Vector3f& rDir)
 {
     f32 len = rDir.length();
+
     if (len > 0.0f)
     {
         f32 inv = 1.0f / len;
@@ -44,6 +45,7 @@ void calcDirAngle(const sead::Vector3f& rDir)
         f32 z = inv * rDir.z;
         sEditParam2.mDirPitch = sead::Mathf::asin(-sead::Mathf::clamp(y, -1.0f, 1.0f));
         f32 lenXZ = sead::Mathf::sqrt(x * x + z * z);
+
         if (lenXZ > 0.0f)
         {
             f32 invXZ = 1.0f / lenXZ;
@@ -111,6 +113,7 @@ void Star::finalize()
     mProgram.freeBuffer();
 
     u32 num = mContext.size();
+
     for (u32 i = 0; i < num; i++)
     {
         mContext[i].mUniformBlock.destroy();
@@ -146,6 +149,7 @@ void Star::initialize(const InitializeArg& rArg)
              sead::Mathf::cos(yaw) * -sead::Mathf::cos(pitch));
 
     mContext.tryAllocBuffer(rArg.mContextNum, rArg.mHeap);
+
     for (u32 i = 0, n = mContext.size(); i < n; i++)
     {
         mContext[i].mEnable = true;
@@ -154,6 +158,7 @@ void Star::initialize(const InitializeArg& rArg)
     for (u32 i = 0, n = mContext.size(); i < n; i++)
     {
         UniformBlock& rBlock = mContext[i].mUniformBlock;
+
         if (i != 0)
         {
             rBlock.declare(mContext(0).mUniformBlock);
@@ -209,6 +214,7 @@ void Star::allocateUnit(sead::Heap* pHeap, u32 unitNum)
     mUnit.tryAllocBuffer(unitNum, pHeap);
     f32 num = f32(mUnit.size()) / f32(mUnitNumPerBlock);
     s32 blockNum = s32(num);
+
     if (num != f32(blockNum) && num >= 0.0f)
     {
         blockNum++;
@@ -218,9 +224,11 @@ void Star::allocateUnit(sead::Heap* pHeap, u32 unitNum)
 
     u32 rest = mUnit.size();
     u32 blockSize = mUnitBlock.size();
+
     for (u32 i = 0; i < blockSize; i++)
     {
         UniformBlock& rBlock = mUnitBlock[i];
+
         if (i != 0 && mUnitNumPerBlock <= rest)
         {
             rBlock.declare(*mUnitBlock.unsafeGet(0));
@@ -241,6 +249,7 @@ void Star::updateUnit(f32 sizeMin, f32 sizeMax)
 {
     sead::Random random(0xa120612a);
     u32 num = mUnit.size();
+
     for (u32 i = 0; i < num; i++)
     {
         Unit& rUnit = mUnit[i];
@@ -265,6 +274,7 @@ void Star::updateUnit(f32 sizeMin, f32 sizeMax)
     u32 rest = mUnit.size();
     s32 offset = 0;
     u32 blockNum = mUnitBlock.size();
+
     for (u32 i = 0; i < blockNum; i++)
     {
         u32 count = rest < mUnitNumPerBlock ? rest : mUnitNumPerBlock;
@@ -285,6 +295,7 @@ void Star::removeUnit()
     mUnit.freeBuffer();
 
     u32 num = mUnitBlock.size();
+
     for (u32 i = 0; i < num; i++)
     {
         mUnitBlock[i].destroy();
@@ -354,6 +365,7 @@ void Star::draw(DrawContext* pDrawContext, u32 index) const
     }
 
     const Context& rContext = mContext[index];
+
     if (!rContext.mEnable)
     {
         return;
@@ -373,11 +385,13 @@ void Star::draw(DrawContext* pDrawContext, u32 index) const
 
     u32 rest = mUnit.size();
     u32 blockNum = mUnitBlock.size();
+
     for (u32 i = 0; i < blockNum; i++)
     {
         u32 count = rest < mUnitNumPerBlock ? rest : mUnitNumPerBlock;
         mUnitBlock[i].activate(pDrawContext, pProgram->getUniformBlockLocation(1));
         driver::GraphicsDriverMgr::instance()->setPointLimits(pDrawContext, 0.0f, 8191.875f);
+
         if (count != 0)
         {
             nvnCommandBufferDrawArrays(pDrawContext->getNvnCommandBuffer(),
@@ -397,6 +411,7 @@ void Star::genMessage(sead::hostio::Context* pContext) {}
 void Star::listenPropertyEvent(const sead::hostio::PropertyEvent* pEvent)
 {
     const void* id = pEvent->getId();
+
     if ((pEvent->getType() & 2) == 0)
     {
         if ((id < &sEditParam2.mDirYaw && id >= &sEditParam2.mDirPitch) || (id < &sEditParam2.mDirYaw + 1 && id >= &sEditParam2.mDirYaw))

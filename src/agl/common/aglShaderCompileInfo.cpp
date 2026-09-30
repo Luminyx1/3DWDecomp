@@ -226,16 +226,19 @@ void ShaderCompileInfo::calcCompileSource(ShaderType type, sead::BufferedSafeStr
     }
 
     sead::SafeString text = *mSource;
+
     if (detail::ShaderTextUtil::isUTF8(mSource->cstr())) {
         text = text.cstr() + 3;
     }
 
     s32 targetIndex = target;
+
     if (target == cTarget_NVNBinary) {
         targetIndex = cTarget_NVN;
     }
 
     s32 versionIndex = text.findIndex("#version");
+
     if (versionIndex != -1) {
         s32 lineFeedLength;
         s32 lineLength =
@@ -259,6 +262,7 @@ void ShaderCompileInfo::calcCompileSource(ShaderType type, sead::BufferedSafeStr
         const char* names[256];
         const char* values[256];
         s32 num = 0;
+
         for (s32 i = 0; i < mMacroName.size(); i++) {
             names[num] = mMacroName.unsafeAt(i);
             values[num] = mMacroValue.unsafeAt(i);

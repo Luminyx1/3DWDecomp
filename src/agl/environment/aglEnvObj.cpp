@@ -147,6 +147,7 @@ void EnvObj::copyFrom(const EnvObj& rOther)
 void EnvObj::copyFromImpl_(const EnvObj& rOther)
 {
     utl::ParameterBase* pFirst = mGroupName.getNext();
+
     if (pFirst)
     {
         copy(pFirst, mParamListTail, rOther.mGroupName.getNext(), rOther.mParamListTail);
@@ -237,6 +238,7 @@ void EnvObj::genMessage(sead::hostio::Context* pContext)
     mEnvObjName.genMessageParameter(pContext, mEnvObjName.getMeta());
     mGroupName.genMessageParameter(pContext, mGroupName.getMeta());
     getTypeID();
+
     for (auto it = mMgr->begin(getObjType()), itEnd = mMgr->end(getObjType()); it != itEnd;
          ++it)
     {
@@ -273,6 +275,7 @@ void EnvObj::listenPropertyEvent(const sead::hostio::PropertyEvent* pEvent)
     case 1004:
     {
         mMgr->getEnvObjSet().setSelectedObj(sTypeInfoTable[getTypeID()].mMetaInfo, this);
+
         for (auto& rpObj : mMgr->mObj)
         {
             if (sTypeInfoTable[rpObj->getTypeID()].mMetaInfo ==
@@ -287,6 +290,7 @@ void EnvObj::listenPropertyEvent(const sead::hostio::PropertyEvent* pEvent)
     case 1005:
     {
         mMgr->getEnvObjSet().setSelectedObj(sTypeInfoTable[getTypeID()].mMetaInfo, nullptr);
+
         for (auto& rpObj : mMgr->mObj)
         {
             if (sTypeInfoTable[rpObj->getTypeID()].mMetaInfo ==
@@ -303,9 +307,11 @@ void EnvObj::listenPropertyEvent(const sead::hostio::PropertyEvent* pEvent)
         {
             EnvObjMgr* pMgr = mMgr;
             s32 type = getObjType();
+
             if (mCopySrcIndex >= 0 && mCopySrcIndex < pMgr->getObjNum(type))
             {
                 const EnvObj* pSrc = pMgr->getObj(type, mCopySrcIndex);
+
                 if (pSrc)
                 {
                     copyFrom(*pSrc);
@@ -319,6 +325,7 @@ void EnvObj::listenPropertyEvent(const sead::hostio::PropertyEvent* pEvent)
     }
 
     const void* id = pEvent->getId();
+
     if ((pEvent->getType() & 2) == 0 && id < &*mEnable + 1 && id >= &*mEnable)
     {
         mMgr->setDirty();
@@ -362,6 +369,7 @@ const TypeInfo* EnvObj::registClass(const sead::SafeString& rName, const sead::S
     {
         TypeData& rCur = sTypeInfoTable[i];
         TypeData& rPrev = sTypeInfoTable[i - 1];
+
         if (rCur.mMetaInfo >= rPrev.mMetaInfo)
         {
             if (rCur.mMetaInfo != rPrev.mMetaInfo)

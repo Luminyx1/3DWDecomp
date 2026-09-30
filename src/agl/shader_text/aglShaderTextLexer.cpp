@@ -46,6 +46,7 @@ const char* Lexer::setupCurrentRange(u64 length) {
 Clause::Type Lexer::findNumberBlock() const {
     Clause::Type type = Clause::cType_None;
     const char* end = Clause::findNumberBlock(&type, mCurrent);
+
     if (type != Clause::cType_None) {
         mBegin = mCurrent;
         mEnd = end;
@@ -75,9 +76,11 @@ bool Lexer::execute(bool skipSpace) {
     mErrorMessage = "";
 
     bool isContinue;
+
     do {
         if (skipSpace) {
             const char* p = mCurrent;
+
             while (*p == ' ' || *p == '\t' || *p == '\n' || *p == '\r') {
                 p++;
             }
@@ -87,11 +90,13 @@ bool Lexer::execute(bool skipSpace) {
 
         isContinue = true;
         u32 type = Clause::cType_End;
+
         switch (*mCurrent) {
         case '\t':
         case ' ': {
             const char* p = mCurrent;
             mBegin = p;
+
             while (*p == ' ' || *p == '\t') {
                 p++;
             }
@@ -105,6 +110,7 @@ bool Lexer::execute(bool skipSpace) {
         case '\r': {
             const char* p = mCurrent;
             mBegin = p;
+
             while (*p == '\r' || *p == '\n') {
                 p++;
             }
@@ -128,6 +134,7 @@ bool Lexer::execute(bool skipSpace) {
             mCurrent = setupCurrentRange(1);
             createClause(Clause::cType_DoubleQuote);
             mBegin = mCurrent;
+
             for (mEnd = mCurrent; *mEnd != '"'; mEnd++) {
             }
 
@@ -177,6 +184,7 @@ bool Lexer::execute(bool skipSpace) {
             mCurrent = setupCurrentRange(1);
             createClause(Clause::cType_SingleQuote);
             mBegin = mCurrent;
+
             for (mEnd = mCurrent; *mEnd != '\''; mEnd++) {
             }
 
@@ -238,6 +246,7 @@ bool Lexer::execute(bool skipSpace) {
             break;
         case '.':
             type = findNumberBlock();
+
             if (type != Clause::cType_None) {
                 mCurrent = mEnd;
             } else {
@@ -250,8 +259,10 @@ bool Lexer::execute(bool skipSpace) {
             if (mCurrent[1] == '*') {
                 mBegin = mCurrent;
                 bool hasLineFeed = false;
+
                 for (mEnd = mCurrent + 2; *mEnd != '\0'; mEnd++) {
                     hasLineFeed |= *mEnd == '\r' || *mEnd == '\n';
+
                     if (*mEnd == '*' && mEnd[1] == '/') {
                         break;
                     }
@@ -271,6 +282,7 @@ bool Lexer::execute(bool skipSpace) {
 
             if (mCurrent[1] == '/') {
                 mBegin = mCurrent;
+
                 for (mEnd = mCurrent; !(*mEnd == '\0' || *mEnd == '\n' || *mEnd == '\r');
                      mEnd++) {
                 }
@@ -406,10 +418,12 @@ bool Lexer::execute(bool skipSpace) {
         default:
         word:
             type = findNumberBlock();
+
             if (type != Clause::cType_None) {
                 mCurrent = mEnd;
             } else {
                 mBegin = mCurrent;
+
                 for (mEnd = mCurrent; !detail::IsDelimiter(*mEnd); mEnd++) {
                 }
 

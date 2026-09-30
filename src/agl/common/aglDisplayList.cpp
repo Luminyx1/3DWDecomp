@@ -195,6 +195,7 @@ void DisplayList::endDisplayListBuffer(sead::Heap* pHeap)
     GPUMemAddr<u8> addr;
     u32 size = endDisplayList();
     setValidSize_(size);
+
     if (size != 0)
     {
         auto* pBlock = new (pHeap, 8) GPUMemBlock<u8>;
@@ -257,6 +258,7 @@ void DisplayList::dump() const
     }
 
     mBuffer.getPtr();
+
     for (u32 i = 0; mValidSize / 4 + 4 > i; i++)
     {
         sead::Thread::sleep(sead::TickSpan::makeFromMilliSeconds(2));

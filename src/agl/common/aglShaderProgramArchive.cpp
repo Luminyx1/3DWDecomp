@@ -76,6 +76,7 @@ void ShaderProgramArchive::createWithOption(ResBinaryShaderArchive binaryArchive
                                             sead::Heap* pHeap)
 {
     mResBinaryShaderArchive = binaryArchive;
+
     if (option & 4) {
         mFlags |= cFlag_SetUpNoCompile;
     } else {
@@ -96,6 +97,7 @@ void ShaderProgramArchive::createWithOption(ResBinaryShaderArchive binaryArchive
             program.initialize(res_program, pHeap);
 
             const u64 address = nvnBufferGetAddress(&mResBinaryShaderArchive.ptr()->mBuffer);
+
             for (s32 i = 0; i <= program.mVariation->mVariationBuffer.mPrograms.size(); i++) {
                 ShaderProgram* variation = program.getVariationProgram_(i);
                 variation->mBufferAddress = address;
@@ -143,6 +145,7 @@ void ShaderProgramArchive::createWithOption(ResBinaryShaderArchive binaryArchive
 void ShaderProgramArchive::setResShaderArchive_(ResShaderArchive archive, sead::Heap* pHeap)
 {
     destroyResFile_();
+
     if (!archive.isValid()) {
         return;
     }
@@ -164,10 +167,13 @@ void ShaderProgramArchive::setResShaderArchive_(ResShaderArchive archive, sead::
 
     bool used[1024];
     const u32 source_num = sources.getNum();
+
     for (u64 i = 0; i < source_num; i++) {
         used[i] = false;
+
         for (auto it = programs.constBegin(), end = programs.constEnd(); it != end; ++it) {
             ResShaderProgram program(&(*it));
+
             if (static_cast<u32>(program.getSourceIndex(cShaderType_Vertex)) == i ||
                 static_cast<u32>(program.getSourceIndex(cShaderType_Fragment)) == i ||
                 static_cast<u32>(program.getSourceIndex(cShaderType_Geometry)) == i ||
@@ -224,6 +230,7 @@ void ShaderSource::initialize(ShaderProgramArchive* pArchive, s32 index, ResShad
     mArchive = pArchive;
     mIndex = static_cast<u16>(index);
     mResShaderSource = source;
+
     if (isUsed) {
         mFlags |= cFlag_Used;
     } else {
@@ -234,6 +241,7 @@ void ShaderSource::initialize(ShaderProgramArchive* pArchive, s32 index, ResShad
     mArchive->mSourceTexts[mIndex] = source.getText();
 
     mIncludeFlags.tryAllocBuffer(mArchive->mShaderSources.size(), pHeap);
+
     for (auto& flag : mIncludeFlags) {
         flag = false;
     }
@@ -258,6 +266,7 @@ void ShaderProgramEdit::initialize(ShaderProgramArchive* pArchive, s32 index,
 
     for (s32 i = 0; i < cShaderType_Num; i++) {
         const ShaderType type = static_cast<ShaderType>(i);
+
         if (*reinterpret_cast<const u16*>(&program.ref().mSourceIndex[type]) == 0xffff) {
             mStage[i].mSource = nullptr;
             continue;
@@ -279,8 +288,10 @@ void ShaderProgramEdit::initialize(ShaderProgramArchive* pArchive, s32 index,
     }
 
     const s32 macro_num = shader_program.mVariation->mVariationBuffer.mMacros.size();
+
     if (macro_num > 0) {
         mMacroValueIndex.tryAllocBuffer(macro_num, pHeap);
+
         for (auto& value : mMacroValueIndex) {
             value = 0;
         }
@@ -337,6 +348,7 @@ bool ShaderProgramArchive::setUp_(bool noCompile)
 
     for (auto& program : mShaderPrograms) {
         program.mVariation->mListener = mUpdateListener;
+
         if (!noCompile && program.setUpAllVariation(false) != 0) {
             return false;
         }
@@ -384,6 +396,7 @@ void ShaderSource::expand()
         detail::PrivateResource::instance()->getShaderTextHeap());
 
     s32 index = 0;
+
     for (auto& source : mArchive->mShaderSources) {
         source.mIncludeFlags[mIndex] = used[index];
         index++;
@@ -411,6 +424,7 @@ void ShaderSource::resize(const sead::SafeString& rText, s32 scale)
     mEditText = new (detail::PrivateResource::instance()->getDebugHeap())
         sead::HeapSafeString(detail::PrivateResource::instance()->getDebugHeap(), size);
     mEditText->copy(rText);
+
     if (old_text) {
         delete old_text;
     }
@@ -425,6 +439,7 @@ void ShaderProgramEdit::updateRawText()
 {
     for (s32 type = 0; type < cShaderType_Num; type++) {
         Stage& stage = mStage[type];
+
         if (stage.mSource && (stage.mSource->mFlags & ShaderSource::cFlag_Dirty)) {
             stage.mCompileInfo.setSource(stage.mSource->mRawText);
             mArchive->mShaderPrograms[mProgramIndex].reserveSetUpAllVariation();
@@ -454,6 +469,7 @@ void ShaderProgramEdit::updateAnalyze()
 s32 ShaderProgramArchive::searchShaderProgramIndex(const sead::SafeString& rName) const
 {
     s32 index = 0;
+
     for (const auto& program : mShaderPrograms) {
         if (program.mVariation->mName == rName) {
             return index;
@@ -497,6 +513,7 @@ void ShaderProgramArchive::genMessage(sead::hostio::Context* pContext)
 void ShaderProgramArchive::listenPropertyEvent(const sead::hostio::PropertyEvent* pEvent)
 {
     const uintptr_t id = reinterpret_cast<uintptr_t>(pEvent->getId());
+
     switch (id) {
     case 100000:
     case 100002:
@@ -617,6 +634,7 @@ void ShaderProgramEdit::listenPropertyEvent(const sead::hostio::PropertyEvent* p
         const ShaderProgram* program = mArchive->mShaderPrograms[mProgramIndex].getVariation(0);
         s32 index = 0;
         s32 i = 0;
+
         for (const auto& macro : program->mVariation->mVariationBuffer.mMacros) {
             index += mMacroValueIndex(i) * macro.mStride;
             i++;
@@ -733,6 +751,7 @@ void ShaderSource::listenPropertyEvent(const sead::hostio::PropertyEvent* pEvent
         if (mFlags & cFlag_Dirty) {
             ShaderProgramArchive* archive = mArchive;
             s32 index = 0;
+
             for (auto& source : archive->mShaderSources) {
                 if (mIncludeFlags[index]) {
                     source.mFlags |= cFlag_Dirty;

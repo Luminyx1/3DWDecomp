@@ -27,6 +27,7 @@ HDRCompose::~HDRCompose()
 void HDRCompose::initialize(s32 contextNum, sead::Heap* pHeap)
 {
     mContexts.tryAllocBuffer(contextNum, pHeap);
+
     for (auto& rContext : mContexts)
     {
         rContext.mpSampler0 = nullptr;
@@ -67,12 +68,14 @@ void HDRCompose::draw(DrawContext* pDrawContext, s32 context, const RenderBuffer
     bool isEnable1 = rContext.mpSampler1 != nullptr && (mFlags >> 1 & 1);
     bool isEnable2 = rContext.mpSampler2 != nullptr && (mFlags & 1);
     s32 variation = (isEnable2 ? (mSampler2Variation + 1) * pProgram->getVariationMacroStride(0) : 0);
+
     if (isEnable1)
     {
         variation += pProgram->getVariationMacroStride(1);
     }
 
     variation += mVariation2 * pProgram->getVariationMacroStride(2);
+
     if (mFlags & cFlag_Mode2)
     {
         variation += pProgram->getVariationMacroStride(3) * 2;
@@ -147,6 +150,7 @@ void HDRCompose::genMessage(sead::hostio::Context* pContext)
 {
     mDebugTexturePage.genMessagePage(pContext, this);
     s32 i = 0;
+
     for (auto& rContext : mContexts)
     {
         sead::FormatFixedSafeString<1024> header("GroupHeader= viewpoint: %d", i);
@@ -154,6 +158,7 @@ void HDRCompose::genMessage(sead::hostio::Context* pContext)
     }
 
     i = 0;
+
     for (auto& rContext : mContexts)
     {
         sead::FormatFixedSafeString<1024> header("GroupHeader= viewpoint: %d", i);

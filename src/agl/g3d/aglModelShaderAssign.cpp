@@ -58,6 +58,7 @@ void ModelShaderAttribute::calcFetchShaderBufferSize(s32 attributeNum)
 {
     nn::gfx::VertexAttributeStateInfo attributes[cAttributeMax];
     nn::gfx::VertexBufferStateInfo buffers[cVertexBufferMax];
+
     for (s32 i = 0; i < attributeNum; i++)
     {
         attributes[i].SetDefault();
@@ -98,6 +99,7 @@ ModelShaderAttribute::~ModelShaderAttribute()
 {
     mLocationNum = 0;
     mAttributeNum = 0;
+
     if (mVertexState.ToData()->state)
     {
         mVertexState.Finalize(getDevice());
@@ -128,6 +130,7 @@ void ModelShaderAttribute::bind(const nn::g3d::ResMaterial* pMaterial,
                                 const nn::g3d::ResShaderProgram* pProgram)
 {
     const nn::g3d::ResShaderAssignData* pShaderAssign = pMaterial->ToData().pShaderAssign.Get();
+
     if (!pShaderAssign)
     {
         return;
@@ -135,22 +138,26 @@ void ModelShaderAttribute::bind(const nn::g3d::ResMaterial* pMaterial,
 
     sead::UnsafeArray<Attribute, cAttributeMax> attributes;
     s32 attributeNum = 0;
+
     for (s32 i = 0; i < pShadingModel->GetAttribCount(); i++)
     {
         const char* pName = pShadingModel->GetAttribName(i);
         const nn::util::ResDic* pAssignDic = pShaderAssign->pAttribAssignDic.Get();
+
         if (!pAssignDic)
         {
             continue;
         }
 
         s32 assignIndex = pAssignDic->FindIndex(pName);
+
         if (assignIndex == -1)
         {
             continue;
         }
 
         const nn::util::BinPtrToString* pAssignArray = pShaderAssign->pAttribAssignArray.Get();
+
         if (!pAssignArray)
         {
             continue;
@@ -158,6 +165,7 @@ void ModelShaderAttribute::bind(const nn::g3d::ResMaterial* pMaterial,
 
         const nn::util::BinString* pVertexAttribName = pAssignArray[assignIndex].Get();
         const nn::g3d::ResAttribVarData* pAttrib = pShadingModel->GetAttrib(i);
+
         if (pAttrib->location == -1)
         {
             continue;
@@ -197,9 +205,11 @@ void ModelShaderAttribute::bind_(const nn::g3d::ResVertex* pVertex,
     bufferSlots.fill(-1);
 
     s32 validNum = 0;
+
     for (s32 i = 0; i < attributeNum; i++)
     {
         const Attribute& rAttribute = rAttributes[i];
+
         if (!rAttribute.mLocation.isValid() || rAttribute.mIndex == -1)
         {
             continue;
@@ -214,12 +224,14 @@ void ModelShaderAttribute::bind_(const nn::g3d::ResVertex* pVertex,
     nn::gfx::VertexAttributeStateInfo attributeInfos[cAttributeMax];
     nn::gfx::VertexBufferStateInfo bufferInfos[cVertexBufferMax];
     const nn::g3d::ResVertexData& rVertex = pVertex->ToData();
+
     for (s32 i = 0; i < validNum; i++)
     {
         const Attribute& rAttribute = validAttributes[i];
         s32 attribIndex = rAttribute.mIndex;
         const nn::g3d::ResVertexAttribData& rResAttrib = rVertex.pAttribArray.Get()[attribIndex];
         s32 bufferIndex = rResAttrib.bufferIndex;
+
         if (bufferSlots[bufferIndex] == -1)
         {
             const nn::gfx::Buffer* pBuffer = rVertex.pVertexBufferArray.Get()[bufferIndex];
@@ -490,6 +502,7 @@ void ModelShaderAttribute::flushVertexBuffer()
 {
     nn::gfx::VertexAttributeStateInfo attributeInfos[cAttributeMax];
     nn::gfx::VertexBufferStateInfo bufferInfos[cVertexBufferMax];
+
     for (s32 i = 0; i < mVertexBufferNum; i++)
     {
         bufferInfos[i].SetDefault();
@@ -511,6 +524,7 @@ void ModelShaderAttribute::flushVertexBuffer()
     nn::gfx::VertexStateInfo info;
     info.SetVertexBufferStateInfoArray(bufferInfos, mVertexBufferNum);
     info.SetVertexAttributeStateInfoArray(attributeInfos, mAttributeNum);
+
     if (mAttributeNum != 0)
     {
         if (mVertexState.ToData()->state)
@@ -533,6 +547,7 @@ ModelShaderSampler::ModelShaderSampler() = default;
 void ModelShaderSampler::clear()
 {
     mSamplerNum = 0;
+
     for (auto& rSampler : mSamplers)
     {
         rSampler.mSamplerIndex = 0;
@@ -551,6 +566,7 @@ void ModelShaderSampler::bind(const nn::g3d::ResMaterial* pMaterial,
                               const nn::g3d::ResShaderProgram* pProgram)
 {
     const nn::g3d::ResShaderAssignData* pShaderAssign = pMaterial->ToData().pShaderAssign.Get();
+
     if (!pShaderAssign)
     {
         return;
@@ -562,12 +578,14 @@ void ModelShaderSampler::bind(const nn::g3d::ResMaterial* pMaterial,
     {
         const char* pName = pShadingModel->GetSamplerName(i);
         const nn::util::ResDic* pAssignDic = pShaderAssign->pSamplerAssignDic.Get();
+
         if (!pAssignDic)
         {
             continue;
         }
 
         s32 assignIndex = pAssignDic->FindIndex(pName);
+
         if (assignIndex == -1)
         {
             continue;
@@ -575,6 +593,7 @@ void ModelShaderSampler::bind(const nn::g3d::ResMaterial* pMaterial,
 
         s32 samplerIndex;
         const nn::util::ResDic* pSamplerDic = mpResMaterial->ToData().pSamplerDic.Get();
+
         if (pSamplerDic)
         {
             samplerIndex = pSamplerDic->FindIndex(
@@ -623,6 +642,7 @@ void ModelShaderSampler::pushBackSampler(s32 samplerIndex, const SamplerLocation
 const char* ModelShaderSampler::getResSamplerName(s32 index) const
 {
     const nn::util::ResDic* pSamplerDic = mpResMaterial->ToData().pSamplerDic.Get();
+
     if (!pSamplerDic)
     {
         return nullptr;
@@ -673,6 +693,7 @@ void ModelShaderSampler::activate(DrawContext* pDrawContext, const nn::g3d::Mate
         const nn::gfx::ResTexture* pTexture =
             MaterialObj::GetResTexture(pMaterial, mSamplers[i].mSamplerIndex);
         const nn::gfx::ResTexture* pOverride = ppTextures[mSamplers[i].mSamplerIndex];
+
         if (pOverride)
         {
             pTexture = pOverride;

@@ -55,6 +55,7 @@ void SSII::TexBuf::init(DrawContext* pDrawContext, BufType type, u32 width, u32 
                         const char* pName, bool withoutContext) const
 {
     utl::DynamicTextureAllocator* pAllocator = utl::DynamicTextureAllocator::instance();
+
     switch (type)
     {
     case cBufType_Albedo:
@@ -167,6 +168,7 @@ SSII::~SSII()
 {
     free();
     mRedBufSettings.freeBuffer();
+
     for (Context& rContext : mContexts)
     {
         rContext.mRefBuffers.freeBuffer();
@@ -196,17 +198,20 @@ void SSII::initialize(s32 viewNum, sead::Heap* pHeap)
 {
     mFlags.set(0x3c);
     mContexts.tryAllocBuffer(viewNum, pHeap);
+
     for (auto it = mContexts.begin(), end = mContexts.end(); it != end; ++it)
     {
         Context& rContext = *it;
         rContext.mIndex = it.getIndex();
         rContext.mDifBuffers.tryAllocBuffer(10, pHeap);
+
         for (ReduceBuffer& rBuffer : rContext.mDifBuffers)
         {
             rBuffer.mBuffers.tryAllocBuffer(cBufType_Num, pHeap);
         }
 
         rContext.mRefBuffers.tryAllocBuffer(10, pHeap);
+
         for (ReduceBuffer& rBuffer : rContext.mRefBuffers)
         {
             rBuffer.mBuffers.tryAllocBuffer(cBufType_Num, pHeap);
@@ -253,6 +258,7 @@ void SSII::applyQualitySetting_()
     };
 
     mRedBufLevel = cRedBufLevelTable[mRedBufQuality];
+
     for (s32 i = 0; i < 10; i++)
     {
         mRedBufSettings[i].mWidth = cSampleNumTable[mSampleQuality][i];
@@ -276,6 +282,7 @@ void SSII::applyQualitySetting_()
 
     mDifLevelNum = mResolutionLevel - cRedBufLevelTable[mDifQuality];
     mRefLevelNum = mResolutionLevel - cRedBufLevelTable[mRefQuality];
+
     if (mDifLevelNum <= 0)
     {
         mDifLevelNum = 1;
@@ -351,6 +358,7 @@ void SSII::draw_(DrawContext* pDrawContext, s32 view, const RenderBuffer* pRende
 {
     bool isDifEnable = (pRenderBuffer != nullptr) & mFlags.isOn(1 << 4);
     bool isRefEnable = (pRefRenderBuffer != nullptr) & mFlags.isOn(1 << 3);
+
     if (mFlags.isOff(1))
     {
         return;
@@ -368,6 +376,7 @@ void SSII::draw_(DrawContext* pDrawContext, s32 view, const RenderBuffer* pRende
     s32 refNum = mRefLevelNum > mDifLevelNum ? mDifLevelNum : mRefLevelNum;
 
     s32 resolutionLevel = 0;
+
     for (u32 w = width, h = height; h >= 2 && w >= 2; w >>= 1, h >>= 1)
     {
         resolutionLevel++;
@@ -378,10 +387,12 @@ void SSII::draw_(DrawContext* pDrawContext, s32 view, const RenderBuffer* pRende
     {
         u32 w = width;
         u32 h = height;
+
         for (s32 i = 0; i < difNum; i++)
         {
             h >>= 1;
             w >>= 1;
+
             if (h == 0 || w == 0)
             {
                 refNum = refNum > i ? i : refNum;
@@ -391,6 +402,7 @@ void SSII::draw_(DrawContext* pDrawContext, s32 view, const RenderBuffer* pRende
 
             rContext.mDifBuffers[i].mWidth = w;
             rContext.mDifBuffers[i].mHeight = h;
+
             if (i < refNum)
             {
                 rContext.mRefBuffers[i].mWidth = w;
@@ -405,6 +417,7 @@ void SSII::draw_(DrawContext* pDrawContext, s32 view, const RenderBuffer* pRende
     allocReprojectionBuffer_(pDrawContext, view);
 
     ReduceBuffer& rSrc = rContext.mSrcBuffer;
+
     if (mFlags.isOff(1 << 6))
     {
         if (rContext.mReprojectionBuffer.mIsAllocated)
@@ -446,10 +459,12 @@ void SSII::draw_(DrawContext* pDrawContext, s32 view, const RenderBuffer* pRende
     {
         u32 w = width;
         u32 h = height;
+
         for (s32 i = 0; i < difNum; i++)
         {
             h >>= 1;
             w >>= 1;
+
             if (h == 0 || w == 0)
             {
                 refNum = refNum > i ? i : refNum;
@@ -487,9 +502,11 @@ void SSII::draw_(DrawContext* pDrawContext, s32 view, const RenderBuffer* pRende
             if (i < refNum)
             {
                 ReduceBuffer& rRef = rContext.mRefBuffers[i];
+
                 if (i != 0)
                 {
                     const ReduceBuffer& rPrevRef = rContext.mRefBuffers[i - 1];
+
                     if (mReduceLevel[1] == mRefReduceLevel[1])
                     {
                         rRef.mBuffers[cBufType_Normal].init(
@@ -533,6 +550,7 @@ void SSII::draw_(DrawContext* pDrawContext, s32 view, const RenderBuffer* pRende
     }
 
     s32 expandLevel = lastLevel > difNum ? difNum : lastLevel;
+
     for (s32 i = 0; i < expandLevel; i++)
     {
         ReduceBuffer& rRef = rContext.mRefBuffers[i];
@@ -544,6 +562,7 @@ void SSII::draw_(DrawContext* pDrawContext, s32 view, const RenderBuffer* pRende
     for (s32 i = expandLevel; i < difNum; i++)
     {
         ReduceBuffer& rDif = rContext.mDifBuffers[i];
+
         if (i != expandLevel)
         {
             mGraphicsContext[0].apply(pDrawContext);
@@ -554,6 +573,7 @@ void SSII::draw_(DrawContext* pDrawContext, s32 view, const RenderBuffer* pRende
         else
         {
             const TexBuf& rLight = rDif.mBuffers[cBufType_Light];
+
             if (mFlags.isOff(1 << 6))
             {
                 drawReduceWithPreRender_(pDrawContext, view, 0, rLight.mRenderBuffer,
@@ -570,6 +590,7 @@ void SSII::draw_(DrawContext* pDrawContext, s32 view, const RenderBuffer* pRende
     }
 
     const TexBuf& rLastLight = rContext.mDifBuffers[expandLevel].mBuffers[cBufType_Light];
+
     if (isDifEnable)
     {
         ReduceBuffer& rExpand = rContext.mDifExpandBuffer;
@@ -613,10 +634,12 @@ void SSII::draw_(DrawContext* pDrawContext, s32 view, const RenderBuffer* pRende
     }
 
     mGraphicsContext[1].apply(pDrawContext);
+
     if (isDifEnable)
     {
         const ReduceBuffer& rLastDif = rContext.mDifBuffers[expandLevel];
         f32 weight = 1.0f;
+
         for (s32 i = difNum - 1; i >= expandLevel; i--)
         {
             const ReduceBuffer& rDif = rContext.mDifBuffers[i];
@@ -641,6 +664,7 @@ void SSII::draw_(DrawContext* pDrawContext, s32 view, const RenderBuffer* pRende
     {
         const ReduceBuffer& rLastRef = rContext.mRefBuffers[expandLevel];
         f32 weight = 1.0f;
+
         for (s32 i = refNum - 1; i >= expandLevel; i--)
         {
             const ReduceBuffer& rRef = rContext.mRefBuffers[i];
@@ -668,6 +692,7 @@ void SSII::draw_(DrawContext* pDrawContext, s32 view, const RenderBuffer* pRende
             drawReduce_(pDrawContext, view, 0, buffer0.mRenderBuffer, rDifExpand.mSampler, false);
             TexBuf* pSrc = &buffer0;
             TexBuf* pDst = &buffer1;
+
             while (w != 1 || h != 1)
             {
                 w = w != 1 ? w >> 1 : 1;
@@ -698,6 +723,7 @@ void SSII::draw_(DrawContext* pDrawContext, s32 view, const RenderBuffer* pRende
             drawReduce_(pDrawContext, view, 0, buffer0.mRenderBuffer, rRefExpand.mSampler, false);
             TexBuf* pSrc = &buffer0;
             TexBuf* pDst = &buffer1;
+
             while (w != 1 || h != 1)
             {
                 w = w != 1 ? w >> 1 : 1;
@@ -723,6 +749,7 @@ void SSII::draw_(DrawContext* pDrawContext, s32 view, const RenderBuffer* pRende
             const ReduceBuffer& rDif = rContext.mDifBuffers[i];
             const TexBuf* pDifLight;
             const TexBuf* pRefLight;
+
             if (i == expandLevel)
             {
                 pDifLight = &rDifExpand;
@@ -881,6 +908,7 @@ void SSII::draw_(DrawContext* pDrawContext, s32 view, const RenderBuffer* pRende
     }
 
     rSrc.free();
+
     for (s32 i = 0; i < 10; i++)
     {
         rContext.mDifBuffers[i].free();
@@ -986,6 +1014,7 @@ bool SSII::allocReprojectionBuffer_(DrawContext* pDrawContext, s32 view) const
 {
     const Context& rContext = mContexts[view];
     const TexBuf& rBuffer = rContext.mReprojectionBuffer;
+
     if (mFlags.isOff(1 << 6))
     {
         rBuffer.free();
@@ -1034,6 +1063,7 @@ void SSII::drawReduce_(DrawContext* pDrawContext, s32 view, s32 level,
     f32 height = rTextureData.getHeight(0);
 
     const detail::ShaderHolder* pHolder = detail::ShaderHolder::instance();
+
     if (level >= 1 && useGather)
     {
         const ShaderProgram* pBase =
@@ -1321,6 +1351,7 @@ void SSII::drawExpand_(DrawContext* pDrawContext, s32 view, const RenderBuffer& 
     rSrcDepth.activate(pDrawContext, pProgram->getSamplerLocation(3), -1, false);
     rDstNormal.activate(pDrawContext, pProgram->getSamplerLocation(5), -1, false);
     rDstDepth.activate(pDrawContext, pProgram->getSamplerLocation(6), -1, false);
+
     if (pSrcLight1 != nullptr)
     {
         pSrcLight1->activate(pDrawContext, pProgram->getSamplerLocation(1), -1, false);
@@ -1333,6 +1364,7 @@ void SSII::drawExpand_(DrawContext* pDrawContext, s32 view, const RenderBuffer& 
 
     pfx::detail::drawQuadTriangle(pDrawContext);
     rRenderBuffer.getRenderTargetColor()->invalidateGPUCache(pDrawContext);
+
     if (isMRT)
     {
         rRenderBuffer.getRenderTargetColor(1)->invalidateGPUCache(pDrawContext);
@@ -1559,6 +1591,7 @@ void SSII::listenPropertyEvent(const sead::hostio::PropertyEvent* pEvent)
     }
 
     const void* pId = pEvent->getId();
+
     if ((pId < &mRedBufQuality + 1 && pId >= &mRedBufQuality) ||
         (pId < &mSampleQuality + 1 && pId >= &mSampleQuality) ||
         (pId < &mDifQuality + 1 && pId >= &mDifQuality) ||

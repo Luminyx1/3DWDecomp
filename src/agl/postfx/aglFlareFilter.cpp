@@ -33,6 +33,7 @@ void FlareFilterParameter::initialize(utl::IParameterObj* pObj, sead::Heap* pHea
     mGhostDispersal.init(0.33f, "ghost_dispersal", "ゴースト分離幅", pObj);
     mGhostColors.tryAllocBuffer(cGhostColorNum, pHeap);
     const char** pName = sGhostColorName;
+
     for (auto& rColor : mGhostColors)
     {
         rColor.init(sead::Color4f::cWhite, *pName, *pName, pObj);
@@ -64,6 +65,7 @@ void FlareFilterParameter::genMessageFlareFilterParameter(sead::hostio::Context*
     mIsEnableChromaDistortion.genMessageParameter(pContext, mIsEnableChromaDistortion.getMeta());
     mChromaDistortion.genMessageParameter(pContext, "Min = -0.05, Max = 0.05");
     mChromaDistortionScale.genMessageParameter(pContext, "Min = -2, Max = 2");
+
     for (auto& rColor : mGhostColors)
     {
         rColor.genMessageParameter(pContext, rColor.getMeta());
@@ -80,6 +82,7 @@ void FlareFilter::Tex::alloc(DrawContext* pDrawContext, TextureFormat format, u3
 {
     auto* pAllocator = utl::DynamicTextureAllocator::instance();
     const TextureData* pTextureData;
+
     if (withoutContext)
     {
         pTextureData = pAllocator->allocWithoutContext(pDrawContext, pName, format, width, height,
@@ -194,6 +197,7 @@ void FlareFilter::drawToFlareBuffer(DrawContext* pDrawContext, s32 context,
     mGraphicsContext.apply(pDrawContext);
 
     const Tex* pCurrent = &rSource;
+
     for (s32 i = 0; i < reduceNum; i++)
     {
         const Tex& rIn = i == 0 ? rSource : (i & 1) == 0 ? rContext.mWork0 : rContext.mWork1;
@@ -214,10 +218,12 @@ void FlareFilter::drawToFlareBuffer(DrawContext* pDrawContext, s32 context,
     if (!*rParam.mIsBlurAfterFlare)
     {
         mGraphicsContext.apply(pDrawContext);
+
         for (s32 i = 0; i < blurNum; i++)
         {
             const Tex* pIn;
             const Tex* pTemp;
+
             if (!rContext.mWork0.mIsAllocated && !rContext.mWork1.mIsAllocated)
             {
                 rContext.mWork1.alloc(pDrawContext, TextureFormat::cTextureFormat_R11_G11_B10_float,
@@ -277,6 +283,7 @@ void FlareFilter::drawToFlareBuffer(DrawContext* pDrawContext, s32 context,
         pCurrent->mSampler.activate(pDrawContext, pProgram->getSamplerLocation(0), -1, false);
 
         u32 index = 0;
+
         for (const auto& rGhostColor : rParam.mGhostColors)
         {
             sead::Color4f ghostColor = *rGhostColor;
@@ -292,6 +299,7 @@ void FlareFilter::drawToFlareBuffer(DrawContext* pDrawContext, s32 context,
     if (*rParam.mIsBlurAfterFlare)
     {
         mGraphicsContext.apply(pDrawContext);
+
         for (s32 i = 0; i < blurNum; i++)
         {
             const Tex& rTemp = rContext.mWork0.mIsAllocated ? rContext.mWork1 : rContext.mWork0;

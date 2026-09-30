@@ -173,6 +173,7 @@ void ShadowMap::allocDepthBuffer(DrawContext* pDrawContext, s32 sliceNum, s32 mi
     mIsAllocWithoutContext = *mAllocWithoutContext;
     mRenderTargetDepth.applyTextureData(*mDepthTexture, 0, 0);
     mRenderTargetDepth.setZCullBuffer(*mEnableHiZ ? hiZAddr : GPUMemVoidAddr(GPUMemAddrBase()));
+
     if (*mExpandToMem2 && *mEnableHiZ)
     {
         mDepthTextureSampler.applyTextureData(*mExpandTexture);
@@ -238,6 +239,7 @@ void ShadowMap::beginDepthBuffer(DrawContext* pDrawContext, s32 index,
                                  const sead::Vector2f& rOffset, const sead::Vector2f& rScale)
 {
     const s32 sliceNum = mRenderTargetDepth.getMipSlice(0);
+
     if (mIsDirty)
     {
         const s32 mipLevelNum = mRenderTargetDepth.getMipLevelNum();
@@ -343,6 +345,7 @@ void ShadowMap::drawReduce(DrawContext* pDrawContext) const
     const TextureData& depthTexture = mDepthTextureSampler.getTextureData();
     auto format = static_cast<TextureFormat>(depthTexture.getTextureFormat());
     const auto type = static_cast<utl::DynamicTextureAllocator::AllocateType>(!*mReduceMem1);
+
     switch (format)
     {
     case TextureFormat::cTextureFormat_Depth_16:
@@ -361,6 +364,7 @@ void ShadowMap::drawReduce(DrawContext* pDrawContext) const
     const u16 textureType = depthTexture.getTextureType();
 
     RenderTargetDepth* pDepthTarget;
+
     if (isDepth)
     {
         sead::GraphicsContext context;
@@ -386,6 +390,7 @@ void ShadowMap::drawReduce(DrawContext* pDrawContext) const
     mRenderBuffer.setRenderTargetDepth(pDepthTarget);
 
     mReduceSampler.applyTextureData(depthTexture);
+
     if (*mReduceType == 3)
     {
         mReduceSampler.setFilter(0, 0, 0);
@@ -414,6 +419,7 @@ void ShadowMap::drawReduce(DrawContext* pDrawContext) const
 
         utl::DynamicTextureAllocator* allocator = utl::DynamicTextureAllocator::instance();
         const TextureData* pTexture;
+
         if (textureType == NVN_TEXTURE_TARGET_2D_ARRAY)
         {
             if (*mAllocWithoutContext)
@@ -651,6 +657,7 @@ void ShadowMap::listenPropertyEventDebugParameter(const sead::hostio::PropertyEv
     }
 
     const void* id = pEvent->getId();
+
     if ((id < &*mSizeW + 1 && id >= &*mSizeW) || (id < &*mSizeH + 1 && id >= &*mSizeH))
     {
         mIsDirty = true;

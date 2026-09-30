@@ -17,6 +17,7 @@ void ContextParameterBufferImpl::initialize(s32 contextNum, bool isSingle, sead:
     mEnableContext = -1;
     mContextNum = contextNum;
     mIsSingle = isSingle;
+
     if (isSingle)
     {
         mBufferNum = 1;

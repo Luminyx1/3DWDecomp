@@ -80,6 +80,7 @@ inline void setUniform(DrawContext* pDrawContext, const UniformLocation& rLocati
     else if (rLocation.isValid())
     {
         sead::Vector4f values[256];
+
         for (s32 i = 0; i < num; i++)
         {
             values[i].set(pValues[i].x, pValues[i].y, pValues[i].z, 0.0f);
@@ -99,6 +100,7 @@ inline u32 getSlice(const TextureData& rTexture)
 inline void drawIndexStream(DrawContext* pDrawContext, const IndexStream& rStream)
 {
     u32 count = rStream.getCount();
+
     if (count != 0)
     {
         NVNdrawPrimitive primitive = rStream.getPrimitiveType();
@@ -122,11 +124,13 @@ inline void drawIndexStreamInstanced(DrawContext* pDrawContext, const IndexStrea
                                      s32 instanceNum)
 {
     u32 count = rStream.getCount();
+
     if (count != 0)
     {
         NVNdrawPrimitive primitive = rStream.getPrimitiveType();
         NVNcommandBuffer* pCommandBuffer = pDrawContext->getNvnCommandBuffer();
         NVNbufferAddress address = nvnBufferGetAddress(rStream.getNvnBuffer());
+
         if (instanceNum > 1)
         {
             nvnCommandBufferDrawElementsInstanced(pCommandBuffer, primitive,
@@ -435,9 +439,11 @@ void DevTools::drawFrameBuffer(DrawContext* pDrawContext, const RenderBuffer& rR
     rRenderBuffer.getRenderTargetDepth()->expandHiZBuffer(pDrawContext);
 
     TextureSampler sampler;
+
     if (channel < ImageFilter2D::cChannel_Depth)
     {
         const RenderTargetColor* pColor = rRenderBuffer.getRenderTargetColor();
+
         if (pColor == nullptr)
         {
             return;
@@ -448,6 +454,7 @@ void DevTools::drawFrameBuffer(DrawContext* pDrawContext, const RenderBuffer& rR
     else
     {
         const RenderTargetDepth* pDepth = rRenderBuffer.getRenderTargetDepth();
+
         if (pDepth == nullptr)
         {
             return;
@@ -540,6 +547,7 @@ void DevTools::drawTextureChannel(DrawContext* pDrawContext, const TextureSample
                                   const sead::Matrix44f& rProjMtx, ImageFilter2D::Channel channel)
 {
     s32 type;
+
     switch (channel)
     {
     case ImageFilter2D::cChannel_Green:
@@ -686,6 +694,7 @@ void DevTools::drawTextureCubeArray(DrawContext* pDrawContext, const TextureSamp
 {
     s32 type = detail::ShaderHolder::cTextureCubeMap;
     const TextureData& rTexture = rSampler.getTextureData();
+
     if (rTexture.getSurface().mTarget == NVN_TEXTURE_TARGET_CUBEMAP)
     {
         type = getSlice(rTexture) > 6 ? detail::ShaderHolder::cTextureCubeMapArray :
@@ -763,6 +772,7 @@ void DevTools::drawTextureMSAA(DrawContext* pDrawContext, const TextureSampler& 
                                const sead::Matrix34f& rModelMtx, const sead::Matrix44f& rProjMtx)
 {
     s32 type;
+
     switch (s8(rSampler.getTextureData().getSurface().mSamples))
     {
     case 0:
@@ -952,6 +962,7 @@ void DevTools::drawCamera(DrawContext* pDrawContext, const sead::Camera& rCamera
     driver::GraphicsDriverMgr::instance()->setLineWidth(pDrawContext, 1.0f);
 
     sead::Vector3f target;
+
     if (sead::IsDerivedFrom<sead::LookAtCamera>(&rCamera))
     {
         target = sead::DynamicCast<const sead::LookAtCamera>(&rCamera)->getAt();
@@ -1160,6 +1171,7 @@ void DevTools::drawCameraAndFrustum(DrawContext* pDrawContext, const sead::Camer
     cameraMtx.setInverse(rCamera.getMatrix());
 
     sead::Vector3f target;
+
     if (sead::IsDerivedFrom<sead::LookAtCamera>(&rCamera))
     {
         target = sead::DynamicCast<const sead::LookAtCamera>(&rCamera)->getAt();
@@ -1258,6 +1270,7 @@ void DevTools::controlCamera(sead::LookAtCamera* pCamera, const sead::Vector2f& 
 
     const f32 moveX = moveStick.x + moveLR;
     const f32 moveY = moveStick.y + 0.0f;
+
     if (isEnable)
     {
         const sead::Vector3f move = third * moveSpeed * moveX + front * moveSpeed * moveUD -
@@ -1274,6 +1287,7 @@ void DevTools::controlCamera(sead::LookAtCamera* pCamera, const sead::Vector2f& 
     else
     {
         const sead::Vector3f move = right * moveSpeed * moveX + up * moveSpeed * moveY;
+
         if (type == cCameraControlType_0)
         {
             at += move;
@@ -1370,6 +1384,7 @@ void DevTools::controlCameraPointer(sead::LookAtCamera* pCamera, PoiningControlB
     bool isAny = isMove || isRotate || isZoom;
 
     bool isFirst;
+
     if (pBuffer->mIsActive == 0)
     {
         if (!(isAny && isInside))
@@ -1398,6 +1413,7 @@ void DevTools::controlCameraPointer(sead::LookAtCamera* pCamera, PoiningControlB
     f32 rotate = 0.0f;
     f32 move = 0.0f;
     f32 zoom = 0.0f;
+
     if (isZoom)
     {
         zoom = 1.0f;
@@ -1412,6 +1428,7 @@ void DevTools::controlCameraPointer(sead::LookAtCamera* pCamera, PoiningControlB
     }
 
     sead::Vector2f delta = pos - pBuffer->mPrevPos;
+
     if (isFirst)
     {
         delta = sead::Vector2f::zero;
@@ -1434,6 +1451,7 @@ void DevTools::controlCameraPointer(sead::LookAtCamera* pCamera, const sead::Vec
 {
     sead::Vector2f rotateStick(0.0f, 0.0f);
     sead::Vector2f moveStick(0.0f, 0.0f);
+
     if (rotate > 0.0f)
     {
         rotateStick.x = rDelta.x * -0.1f * rotate;
@@ -1446,6 +1464,7 @@ void DevTools::controlCameraPointer(sead::LookAtCamera* pCamera, const sead::Vec
     }
 
     f32 zoomValue = 0.0f;
+
     if (zoom > 0.0f)
     {
         zoomValue = (rDelta.y - rDelta.x) * 0.5f * zoom;
@@ -1525,6 +1544,7 @@ void DevTools::drawFan_(DrawContext* pDrawContext, u32* pNum, const sead::Matrix
 
     f32 div = divNum;
     u32 num = (end - start) * div + (div + -1.0f) / (div * div);
+
     if (num == 0)
     {
         num = 1;
@@ -1891,6 +1911,7 @@ void DevTools::drawDepthGradation(DrawContext* pDrawContext, const RenderBuffer&
                                   f32 near, f32 far)
 {
     const RenderTargetDepth* pDepthTarget = rRenderBuffer.getRenderTargetDepth();
+
     if (pDepthTarget == nullptr)
     {
         return;
@@ -1908,9 +1929,11 @@ void DevTools::drawDepthGradation(DrawContext* pDrawContext, const RenderBuffer&
 
     sead::Vector4f depths[32];
     sead::Color4f colors[32];
+
     for (u32 i = 0; i < num; i++)
     {
         s32 rank = 0;
+
         for (u32 j = 0; j < num; j++)
         {
             if (j != i && pDepth[j] < pDepth[i])
@@ -1928,6 +1951,7 @@ void DevTools::drawDepthGradation(DrawContext* pDrawContext, const RenderBuffer&
     setUniform(pDrawContext, pProgram->getUniformLocation(0), near);
     setUniform(pDrawContext, pProgram->getUniformLocation(1), far);
     setUniform(pDrawContext, pProgram->getUniformLocation(4), num);
+
     if (pProgram->getUniformLocation(2).isValid())
     {
         pProgram->getUniformLocation(2).setUniformNVN(pDrawContext, num * 4, depths);
@@ -2017,6 +2041,7 @@ void DevTools::drawArrow(DrawContext* pDrawContext, const sead::Vector3f& rStart
 
     sead::Quatf rotation;
     sead::Matrix34f rotationMtx;
+
     if (rotation.makeVectorRotation(sead::Vector3f::ey, dir))
     {
         rotationMtx.fromQuat(rotation);

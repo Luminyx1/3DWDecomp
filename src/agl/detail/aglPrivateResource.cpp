@@ -87,6 +87,7 @@ void PrivateResource::createArchive(sead::ArchiveRes* pArchive)
     mArchiveFileDevice = new (mWorkHeap, 8) sead::ArchiveFileDevice(mArchive);
 
     const void* pFile = getFileFromArc("arrow.raw");
+
     if (!pFile)
     {
         return;
