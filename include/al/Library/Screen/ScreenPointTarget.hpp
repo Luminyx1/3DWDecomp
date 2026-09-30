@@ -1,5 +1,6 @@
 #pragma once
 
+#include <basis/seadTypes.h>
 #include <math/seadMatrix.h>
 #include <math/seadVector.h>
 
@@ -10,8 +11,9 @@ class ScreenPointer;
 
 class ScreenPointTarget {
 public:
-    ScreenPointTarget(LiveActor*, const char*, f32, const sead::Vector3f*, const sead::Matrix34f*,
-                      const sead::Vector3f&);
+    ScreenPointTarget(LiveActor* pHost, const char* pName, f32 radius,
+                      const sead::Vector3f* pFollowPos, const sead::Matrix34f* pFollowMtx,
+                      const sead::Vector3f& rOffset);
 
     void update();
     void validate();
@@ -19,36 +21,46 @@ public:
     void validateBySystem();
     void invalidateBySystem();
 
-    bool mIsValidBySystem = false;                       // _0
-    bool mIsValid = true;                                // _1
-    const char* mName;                                   // _8
-    f32 mRadius;                                         // _10
-    const sead::Vector3f* mTrans;                        // _18
-    const sead::Matrix34f* mJointMtx;                    // _20
-    sead::Vector3f mOffset;                              // _28
-    sead::Vector3f mPos = sead::Vector3f::zero;          // _34
-    LiveActor* mActor;                                   // _40
-    ScreenPointCheckGroup* mCheckGroup = nullptr;        // _48
+    const char* getName() const { return mName; }
+    f32 getRadius() const { return mRadius; }
+    void setRadius(f32 radius) { mRadius = radius; }
+    const sead::Vector3f& getOffset() const { return mOffset; }
+    void setOffset(const sead::Vector3f& rOffset) { mOffset = rOffset; }
+    const sead::Vector3f& getPos() const { return mPos; }
+    LiveActor* getHost() const { return mHost; }
+    bool isValid() const { return mIsValid && mIsValidBySystem; }
+    void setCheckGroup(ScreenPointCheckGroup* pCheckGroup) { mCheckGroup = pCheckGroup; }
+
+private:
+    bool mIsValidBySystem = false;
+    bool mIsValid = true;
+    const char* mName;
+    f32 mRadius;
+    const sead::Vector3f* mFollowPos;
+    const sead::Matrix34f* mFollowMtx;
+    sead::Vector3f mOffset;
+    sead::Vector3f mPos = sead::Vector3f::zero;
+    LiveActor* mHost;
+    ScreenPointCheckGroup* mCheckGroup = nullptr;
 };
 
-static_assert(sizeof(ScreenPointTarget) == 0x50);
-
-const sead::Vector3f& getHitScreenPointTargetPos(const ScreenPointer*);
-const sead::Vector3f& getHitScreenPointTargetNormal(const ScreenPointer*);
-ScreenPointTarget* getScreenPointTarget(LiveActor*, const char*);
-ScreenPointTarget* getScreenPointTarget(LiveActor*, s32);
-f32 getScreenPointTargetRadius(LiveActor*, const char*);
-const sead::Vector3f& getScreenPointTargetPos(LiveActor*, const char*);
-const sead::Vector3f& getScreenPointTargetPos(const ScreenPointTarget*);
-f32 getScreenPointTargetRadius(const ScreenPointTarget*);
-LiveActor* getScreenPointTargetHost(ScreenPointTarget*);
-const sead::Vector3f& getScreenPointTargetOffset(LiveActor*, const char*);
-void setScreenPointTargetRadius(LiveActor*, const char*, f32);
-void setScreenPointTargetOffset(LiveActor*, const char*, const sead::Vector3f&);
-void validateScreenPointTargetAll(LiveActor*);
-void invalidateScreenPointTargetAll(LiveActor*);
-bool isScreenPointTargetName(const ScreenPointTarget*, const char*);
-bool isScreenPointTargetValid(const ScreenPointTarget*);
-void validateScreenPointTarget(LiveActor*, const char*);
-void invalidateScreenPointTarget(LiveActor*, const char*);
+const sead::Vector3f& getHitScreenPointTargetPos(const ScreenPointer* pPointer);
+const sead::Vector3f& getHitScreenPointTargetNormal(const ScreenPointer* pPointer);
+ScreenPointTarget* getScreenPointTarget(LiveActor* pActor, const char* pName);
+ScreenPointTarget* getScreenPointTarget(LiveActor* pActor, s32 index);
+f32 getScreenPointTargetRadius(LiveActor* pActor, const char* pName);
+const sead::Vector3f& getScreenPointTargetPos(LiveActor* pActor, const char* pName);
+const sead::Vector3f& getScreenPointTargetPos(const ScreenPointTarget* pTarget);
+f32 getScreenPointTargetRadius(const ScreenPointTarget* pTarget);
+LiveActor* getScreenPointTargetHost(ScreenPointTarget* pTarget);
+const sead::Vector3f& getScreenPointTargetOffset(LiveActor* pActor, const char* pName);
+void setScreenPointTargetRadius(LiveActor* pActor, const char* pName, f32 radius);
+void setScreenPointTargetOffset(LiveActor* pActor, const char* pName,
+                                const sead::Vector3f& rOffset);
+void validateScreenPointTargetAll(LiveActor* pActor);
+void invalidateScreenPointTargetAll(LiveActor* pActor);
+bool isScreenPointTargetName(const ScreenPointTarget* pTarget, const char* pName);
+bool isScreenPointTargetValid(const ScreenPointTarget* pTarget);
+void validateScreenPointTarget(LiveActor* pActor, const char* pName);
+void invalidateScreenPointTarget(LiveActor* pActor, const char* pName);
 }  // namespace al

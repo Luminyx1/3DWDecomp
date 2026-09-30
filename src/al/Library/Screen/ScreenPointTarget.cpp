@@ -7,47 +7,49 @@
 #include "Project/Base/StringUtil.hpp"
 
 namespace al {
-
 /**
- * @brief Constructs a target that pointers can hit.
- * @param pActor The owning actor.
- * @param pName The target name.
- * @param radius The target radius.
- * @param pTrans The position followed when no joint is given.
- * @param pJointMtx The joint matrix to follow, may be null.
- * @param rOffset The offset from the followed position.
+ * Creates a screen point target.
+ * @param pHost actor owning the target
+ * @param pName target name
+ * @param radius target radius
+ * @param pFollowPos position to follow, or nullptr
+ * @param pFollowMtx matrix to follow, or nullptr
+ * @param rOffset offset from the followed position or matrix
  */
-ScreenPointTarget::ScreenPointTarget(LiveActor* pActor, const char* pName, f32 radius,
-                                     const sead::Vector3f* pTrans, const sead::Matrix34f* pJointMtx,
+ScreenPointTarget::ScreenPointTarget(LiveActor* pHost, const char* pName, f32 radius,
+                                     const sead::Vector3f* pFollowPos,
+                                     const sead::Matrix34f* pFollowMtx,
                                      const sead::Vector3f& rOffset)
-    : mName(pName), mRadius(radius), mTrans(pTrans), mJointMtx(pJointMtx), mOffset(rOffset),
-      mActor(pActor) {}
+    : mName(pName), mRadius(radius), mFollowPos(pFollowPos), mFollowMtx(pFollowMtx),
+      mOffset(rOffset), mHost(pHost) {}
 
 /**
- * @brief Updates the world position of the target.
+ * Updates the target position from the followed position or matrix.
  */
 void ScreenPointTarget::update() {
-    if (mJointMtx) {
-        mPos.setMul(*mJointMtx, mOffset);
-    } else if (mTrans) {
-        const sead::Matrix34f* baseMtx = mActor->getBaseMtx();
-        if (baseMtx) {
-            mPos.setRotated(*baseMtx, mOffset);
-            mPos += *mTrans;
-        } else {
-            mPos.setAdd(*mTrans, mOffset);
-        }
+    if (mFollowMtx) {
+        mPos.setMul(*mFollowMtx, mOffset);
+        return;
+    }
+    if (!mFollowPos) {
+        return;
+    }
+    const sead::Matrix34f* baseMtx = mHost->getBaseMtx();
+    if (baseMtx) {
+        mPos.setRotated(*baseMtx, mOffset);
+        mPos.add(*mFollowPos);
+    } else {
+        mPos.setAdd(*mFollowPos, mOffset);
     }
 }
 
 /**
- * @brief Validates the target.
+ * Validates the target.
  */
 void ScreenPointTarget::validate() {
     if (mIsValid) {
         return;
     }
-
     mIsValid = true;
     if (mIsValidBySystem) {
         mCheckGroup->setValid(this);
@@ -55,13 +57,12 @@ void ScreenPointTarget::validate() {
 }
 
 /**
- * @brief Invalidates the target.
+ * Invalidates the target.
  */
 void ScreenPointTarget::invalidate() {
     if (!mIsValid) {
         return;
     }
-
     mIsValid = false;
     if (mIsValidBySystem) {
         mCheckGroup->setInvalid(this);
@@ -69,13 +70,12 @@ void ScreenPointTarget::invalidate() {
 }
 
 /**
- * @brief Validates the target on behalf of the system.
+ * Validates the target on behalf of the system.
  */
 void ScreenPointTarget::validateBySystem() {
     if (mIsValidBySystem) {
         return;
     }
-
     if (mIsValid) {
         mCheckGroup->setValid(this);
     }
@@ -83,13 +83,12 @@ void ScreenPointTarget::validateBySystem() {
 }
 
 /**
- * @brief Invalidates the target on behalf of the system.
+ * Invalidates the target on behalf of the system.
  */
 void ScreenPointTarget::invalidateBySystem() {
     if (!mIsValidBySystem) {
         return;
     }
-
     if (mIsValid) {
         mCheckGroup->setInvalid(this);
     }
@@ -97,123 +96,124 @@ void ScreenPointTarget::invalidateBySystem() {
 }
 
 /**
- * @brief Gets the position the pointer hit.
- * @param pPointer The pointer.
- * @return The hit position.
+ * Returns the hit position of the last target hit by a pointer.
+ * @param pPointer screen pointer
+ * @return hit position
  */
 const sead::Vector3f& getHitScreenPointTargetPos(const ScreenPointer* pPointer) {
-    return pPointer->mHitPos;
+    return pPointer->getHitPos();
 }
 
 /**
- * @brief Gets the normal at the position the pointer hit.
- * @param pPointer The pointer.
- * @return The hit normal.
+ * Returns the hit normal of the last target hit by a pointer.
+ * @param pPointer screen pointer
+ * @return hit normal
  */
 const sead::Vector3f& getHitScreenPointTargetNormal(const ScreenPointer* pPointer) {
-    return pPointer->mHitNormal;
+    return pPointer->getHitNormal();
 }
 
 /**
- * @brief Gets a target of an actor by name.
- * @param pActor The actor.
- * @param pName The target name.
- * @return The target.
+ * Returns a screen point target of an actor by name.
+ * @param pActor actor
+ * @param pName target name
+ * @return the target
  */
 ScreenPointTarget* getScreenPointTarget(LiveActor* pActor, const char* pName) {
     return pActor->mScreenPointKeeper->getTarget(pName);
 }
 
 /**
- * @brief Gets a target of an actor by index.
- * @param pActor The actor.
- * @param index The index.
- * @return The target.
+ * Returns a screen point target of an actor by index.
+ * @param pActor actor
+ * @param index target index
+ * @return the target
  */
 ScreenPointTarget* getScreenPointTarget(LiveActor* pActor, s32 index) {
     return pActor->mScreenPointKeeper->getTarget(index);
 }
 
 /**
- * @brief Gets the radius of a target of an actor.
- * @param pActor The actor.
- * @param pName The target name.
- * @return The radius.
+ * Returns the radius of a screen point target of an actor.
+ * @param pActor actor
+ * @param pName target name
+ * @return target radius
  */
 f32 getScreenPointTargetRadius(LiveActor* pActor, const char* pName) {
-    return getScreenPointTarget(pActor, pName)->mRadius;
+    return getScreenPointTarget(pActor, pName)->getRadius();
 }
 
 /**
- * @brief Gets the world position of a target of an actor.
- * @param pActor The actor.
- * @param pName The target name.
- * @return The position.
+ * Returns the position of a screen point target of an actor.
+ * @param pActor actor
+ * @param pName target name
+ * @return target position
  */
 const sead::Vector3f& getScreenPointTargetPos(LiveActor* pActor, const char* pName) {
-    return getScreenPointTarget(pActor, pName)->mPos;
+    return getScreenPointTarget(pActor, pName)->getPos();
 }
 
 /**
- * @brief Gets the world position of a target.
- * @param pTarget The target.
- * @return The position.
+ * Returns the position of a screen point target.
+ * @param pTarget target
+ * @return target position
  */
 const sead::Vector3f& getScreenPointTargetPos(const ScreenPointTarget* pTarget) {
-    return pTarget->mPos;
+    return pTarget->getPos();
 }
 
 /**
- * @brief Gets the radius of a target.
- * @param pTarget The target.
- * @return The radius.
+ * Returns the radius of a screen point target.
+ * @param pTarget target
+ * @return target radius
  */
 f32 getScreenPointTargetRadius(const ScreenPointTarget* pTarget) {
-    return pTarget->mRadius;
+    return pTarget->getRadius();
 }
 
 /**
- * @brief Gets the actor that owns a target.
- * @param pTarget The target.
- * @return The owning actor.
+ * Returns the actor owning a screen point target.
+ * @param pTarget target
+ * @return owning actor
  */
 LiveActor* getScreenPointTargetHost(ScreenPointTarget* pTarget) {
-    return pTarget->mActor;
+    return pTarget->getHost();
 }
 
 /**
- * @brief Gets the offset of a target of an actor.
- * @param pActor The actor.
- * @param pName The target name.
- * @return The offset.
+ * Returns the offset of a screen point target of an actor.
+ * @param pActor actor
+ * @param pName target name
+ * @return target offset
  */
 const sead::Vector3f& getScreenPointTargetOffset(LiveActor* pActor, const char* pName) {
-    return getScreenPointTarget(pActor, pName)->mOffset;
+    return getScreenPointTarget(pActor, pName)->getOffset();
 }
 
 /**
- * @brief Sets the radius of a target of an actor.
- * @param pActor The actor.
- * @param pName The target name.
- * @param radius The new radius.
+ * Sets the radius of a screen point target of an actor.
+ * @param pActor actor
+ * @param pName target name
+ * @param radius new radius
  */
 void setScreenPointTargetRadius(LiveActor* pActor, const char* pName, f32 radius) {
-    getScreenPointTarget(pActor, pName)->mRadius = radius;
+    getScreenPointTarget(pActor, pName)->setRadius(radius);
 }
 
 /**
- * @brief Sets the offset of a target of an actor.
- * @param pActor The actor.
- * @param pName The target name.
- * @param rOffset The new offset.
+ * Sets the offset of a screen point target of an actor.
+ * @param pActor actor
+ * @param pName target name
+ * @param rOffset new offset
  */
-void setScreenPointTargetOffset(LiveActor* pActor, const char* pName, const sead::Vector3f& rOffset) {
-    getScreenPointTarget(pActor, pName)->mOffset = rOffset;
+void setScreenPointTargetOffset(LiveActor* pActor, const char* pName,
+                                const sead::Vector3f& rOffset) {
+    getScreenPointTarget(pActor, pName)->setOffset(rOffset);
 }
 
 /**
- * @brief Validates all targets of an actor, if it has any.
- * @param pActor The actor.
+ * Validates every screen point target of an actor.
+ * @param pActor actor
  */
 void validateScreenPointTargetAll(LiveActor* pActor) {
     if (pActor->mScreenPointKeeper) {
@@ -222,8 +222,8 @@ void validateScreenPointTargetAll(LiveActor* pActor) {
 }
 
 /**
- * @brief Invalidates all targets of an actor, if it has any.
- * @param pActor The actor.
+ * Invalidates every screen point target of an actor.
+ * @param pActor actor
  */
 void invalidateScreenPointTargetAll(LiveActor* pActor) {
     if (pActor->mScreenPointKeeper) {
@@ -232,40 +232,39 @@ void invalidateScreenPointTargetAll(LiveActor* pActor) {
 }
 
 /**
- * @brief Checks the name of a target.
- * @param pTarget The target.
- * @param pName The name to compare with.
- * @return True if the names are equal.
+ * Checks the name of a screen point target.
+ * @param pTarget target
+ * @param pName name to compare with
+ * @return whether the names are equal
  */
 bool isScreenPointTargetName(const ScreenPointTarget* pTarget, const char* pName) {
-    return isEqualString(pTarget->mName, pName);
+    return isEqualString(pTarget->getName(), pName);
 }
 
 /**
- * @brief Checks whether a target is valid both by itself and by the system.
- * @param pTarget The target.
- * @return True if the target is valid.
+ * Checks whether a screen point target is valid.
+ * @param pTarget target
+ * @return whether the target is valid
  */
 bool isScreenPointTargetValid(const ScreenPointTarget* pTarget) {
-    return pTarget->mIsValid && pTarget->mIsValidBySystem;
+    return pTarget->isValid();
 }
 
 /**
- * @brief Validates a target of an actor.
- * @param pActor The actor.
- * @param pName The target name.
+ * Validates a screen point target of an actor.
+ * @param pActor actor
+ * @param pName target name
  */
 void validateScreenPointTarget(LiveActor* pActor, const char* pName) {
     getScreenPointTarget(pActor, pName)->validate();
 }
 
 /**
- * @brief Invalidates a target of an actor.
- * @param pActor The actor.
- * @param pName The target name.
+ * Invalidates a screen point target of an actor.
+ * @param pActor actor
+ * @param pName target name
  */
 void invalidateScreenPointTarget(LiveActor* pActor, const char* pName) {
     getScreenPointTarget(pActor, pName)->invalidate();
 }
-
 }  // namespace al
