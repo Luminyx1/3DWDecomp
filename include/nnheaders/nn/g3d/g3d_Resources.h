@@ -79,6 +79,25 @@ struct ResShaderAssignData {
     nn::util::BinTPtr<nn::util::ResDic> pAttribAssignDic;
     nn::util::BinTPtr<nn::util::BinPtrToString> pSamplerAssignArray;
     nn::util::BinTPtr<nn::util::ResDic> pSamplerAssignDic;
+    nn::util::BinTPtr<nn::util::BinPtrToString> pOptionArray;
+    nn::util::BinTPtr<nn::util::ResDic> pOptionDic;
+    u8 _40[6];
+    u16 optionCount;
+};
+class ResShaderAssign : public nn::util::AccessorBase<ResShaderAssignData> {
+public:
+    // index selects a shader option name in the assignment dictionary.
+    const char* GetOptionName(int index) const {
+        const nn::util::ResDic* dictionary = pOptionDic.Get();
+        return dictionary ? dictionary->GetKey(index).data() : nullptr;
+    }
+};
+struct ResShaderParamData {
+    void* callback;
+    nn::util::BinPtrToString name;
+    u8 _10[4];
+    s32 offset;
+    u8 _18[8];
 };
 
 struct ResMaterialData {
@@ -89,13 +108,17 @@ struct ResMaterialData {
     nn::util::BinTPtr<ResSamplerData> pSamplerArray;
     u8 _40[0x48 - 0x40];
     nn::util::BinTPtr<nn::util::ResDic> pSamplerDic;
-    u8 _50[0x88 - 0x50];
+    nn::util::BinTPtr<ResShaderParamData> pShaderParamArray;
+    u8 _58[0x88 - 0x58];
     nn::util::BinTPtr<u64> pSamplerSlotArray;
     nn::util::BinTPtr<u64> pTextureSlotArray;
     u8 _98[0x9c - 0x98];
     u8 samplerCount;
     u8 textureCount;
-    u8 _9e[0xa8 - 0x9e];
+    u16 shaderParamCount;
+    u8 _a0[4];
+    u16 materialBlockSize;
+    u8 _a6[2];
 };
 
 class ResMaterial : public nn::util::AccessorBase<ResMaterialData> {
@@ -404,6 +427,7 @@ public:
     }
 
     size_t GetMaterialBlockSize() const { return m_MaterialBlockSize; }
+    int GetBufferingCount() const { return m_BufferingCount; }
 
     const nn::gfx::TextureView* GetTextureView(int index) const { return m_ppTextureArray[index]; }
 
@@ -425,7 +449,9 @@ private:
 
     const ResMaterial* m_pRes;
     u8 m_Flag;
-    u8 _9[0x40 - 0x9];
+    u8 _9;
+    u8 m_BufferingCount;
+    u8 _b[0x40 - 0xb];
     BufferImpl* m_pMaterialBlockArray;
     u8 _48[0x50 - 0x48];
     const nn::gfx::TextureView** m_ppTextureArray;
