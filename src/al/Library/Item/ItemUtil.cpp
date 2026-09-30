@@ -1,4 +1,4 @@
-#include "Library/Item/AcquireItemFunc.hpp"
+#include "Library/Item/ItemUtil.hpp"
 
 #include "Library/Item/ActorItemKeeper.hpp"
 #include "Library/Item/ItemDirectorBase.hpp"
