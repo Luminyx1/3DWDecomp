@@ -1,7 +1,8 @@
-#include <al/Project/Controller/WaveVibrationPlayer.hpp>
+#include "Project/Controller/WaveVibrationPlayer.hpp"
+
+#include "Project/Base/StringOpUtil.hpp"
 
 namespace al {
-int compareStringIgnoreCase(const char*, const char*);
 
 namespace {
 /**
