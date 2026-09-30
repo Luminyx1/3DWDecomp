@@ -296,7 +296,12 @@ public:
         return item;
     }
 
-    void forcePushBackwards(const T& item, u32 offset = 1)
+    /**
+     * Moves the head backward and inserts an item without checking capacity.
+     * @param item Value to insert at the new head.
+     * @param offset Signed number of positions to move backward (normally one).
+     */
+    void forcePushBackwards(const T& item, s32 offset = 1)
     {
         mHead = (mHead < 1 ? mCapacity : mHead) - offset;
         ++mSize;

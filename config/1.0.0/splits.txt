@@ -4073,9 +4073,9 @@ src/sead/mc/seadCoreInfo.cpp: done
     .text   start:0x006A3CF0 end:0x006A3F14
 src/sead/heap/seadSeparateHeap.cpp:
     .text   start:0x006A3F20 end:0x006A5328
-src/sead/codec/seadHashCRC16.cpp:
+src/sead/codec/seadHashCRC16.cpp: done
     .text   start:0x006A5330 end:0x006A5654
-src/sead/codec/seadHashCRC32.cpp:
+src/sead/codec/seadHashCRC32.cpp: done
     .text   start:0x006A5660 end:0x006A5988
 src/sead/basis/seadMemUtil.cpp:
     .text   start:0x006A5990 end:0x006A5A74
@@ -4117,7 +4117,7 @@ src/sead/filedevice/nin/seadNinSaveFileDevice.cpp:
     .text   start:0x006B4650 end:0x006B490C
 src/sead/mc/seadWorkerMgr.cpp: done
     .text   start:0x006B4910 end:0x006B5548
-src/sead/mc/seadWorker.cpp:
+src/sead/mc/seadWorker.cpp: done
     .text   start:0x006B5550 end:0x006B5C68
 src/sead/resource/seadSZSDecompressor.cpp:
     .text   start:0x006B5C70 end:0x006B69B4
