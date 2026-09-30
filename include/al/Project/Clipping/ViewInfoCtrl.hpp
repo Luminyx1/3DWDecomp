@@ -3,36 +3,34 @@
 #include <basis/seadTypes.h>
 
 namespace al {
-    class AreaObjDirector;
-    class AreaObjGroup;
-    class ClippingActorInfo;
-    class PlacementId;
-    class PlayerHolder;
+class AreaObjDirector;
+class AreaObjGroup;
+class ClippingActorInfo;
+class PlacementId;
+class PlayerHolder;
 
-    /// Tracks which clipping view groups contain a player, using the scene's ViewCtrlAreas.
-    class ViewInfoCtrl {
-    public:
-        struct ViewInfo {
-            ViewInfo() : mPlacementId(nullptr), mIsInViewCtrlArea(false), _9(false) {}
-
-            PlacementId* mPlacementId;  // _0
-            bool mIsInViewCtrlArea;     // _8
-            bool _9;
-        };
-
-        ViewInfoCtrl(const AreaObjDirector* pAreaObjDirector, const PlayerHolder* pPlayerHolder);
-
-        void initActorInfo(ClippingActorInfo* pActorInfo, PlacementId* pViewId);
-        void endInit();
-        void update();
-        ViewInfo* tryFindViewInfo(PlacementId* pViewId) const;
-
-        const AreaObjDirector* mAreaObjDirector;    // _0
-        AreaObjGroup* mViewCtrlAreaGroup;           // _8
-        ViewInfo* mDefaultViewInfo;                 // _10
-        s32 mViewInfoNum;                           // _18
-        ViewInfo** mViewInfos;                      // _20
-        bool mIsInvalid;                            // _28
-        const PlayerHolder* mPlayerHolder;          // _30
+class ViewInfoCtrl {
+public:
+    struct ClippingPlacementId {
+        const PlacementId* mParentId = nullptr;
+        bool mIsInViewCtrlArea = false;
+        bool _9 = false;
     };
+
+    ViewInfoCtrl(const AreaObjDirector* pAreaObjDirector, const PlayerHolder* pPlayerHolder);
+
+    void initActorInfo(ClippingActorInfo* pInfo, PlacementId* pPlacementId);
+    void endInit();
+    void update();
+    ClippingPlacementId* tryFindViewInfo(PlacementId* pPlacementId) const;
+
+private:
+    const AreaObjDirector* mAreaObjDirector = nullptr;
+    AreaObjGroup* mViewCtrlAreaGroup = nullptr;
+    ClippingPlacementId* mDefaultPlacementId = nullptr;
+    s32 mClippingPlacementIdsSize = 0;
+    ClippingPlacementId** mClippingPlacementIds = nullptr;
+    bool mIsInvalid = false;
+    const PlayerHolder* mPlayerHolder = nullptr;
 };
+}  // namespace al

@@ -1,122 +1,112 @@
 #include "Project/Clipping/ViewInfoCtrl.hpp"
+
+#include "Library/Clipping/ClippingActorInfo.hpp"
+#include "Library/LiveActor/ActorAreaFunction.hpp"
 #include "Library/Play/Placement/PlacementFunction.hpp"
 #include "Library/Play/Placement/PlacementId.hpp"
+#include "Library/Player/PlayerUtil.hpp"
 #include "Project/AreaObj/AreaObj.hpp"
 #include "Project/AreaObj/AreaObjDirector.hpp"
 #include "Project/AreaObj/AreaObjGroup.hpp"
-#include "Project/AreaObj/AreaObjUtil.hpp"
-#include "Project/Clipping/ClippingActorInfo.hpp"
 
 namespace al {
-    s32 getPlayerNumMax(const PlayerHolder* pHolder);
-    bool isPlayerDead(const PlayerHolder* pHolder, s32 index);
-    const sead::Vector3f& getPlayerPos(const PlayerHolder* pHolder, s32 index);
-
-    /**
-     * @brief Constructs the controller with the default view info.
-     * @param pAreaObjDirector The scene's area director.
-     * @param pPlayerHolder The scene's player holder.
-     */
-    ViewInfoCtrl::ViewInfoCtrl(const AreaObjDirector* pAreaObjDirector, const PlayerHolder* pPlayerHolder)
-        : mAreaObjDirector(pAreaObjDirector), mViewCtrlAreaGroup(nullptr), mDefaultViewInfo(nullptr), mViewInfoNum(0),
-          mViewInfos(nullptr), mIsInvalid(false), mPlayerHolder(pPlayerHolder) {
-        mViewInfos = new ViewInfo*[128];
-        for (s32 i = 0; i < 128; i++) {
-            mViewInfos[i] = nullptr;
-        }
-
-        mDefaultViewInfo = new ViewInfo();
-        mViewInfos[0] = new ViewInfo();
-        mViewInfoNum = 1;
-        mViewInfos[0]->mPlacementId = nullptr;
-        mViewInfos[0]->mIsInViewCtrlArea = true;
+/**
+ * Creates the view info controller.
+ * @param pAreaObjDirector area director
+ * @param pPlayerHolder player holder
+ */
+ViewInfoCtrl::ViewInfoCtrl(const AreaObjDirector* pAreaObjDirector,
+                           const PlayerHolder* pPlayerHolder)
+    : mAreaObjDirector(pAreaObjDirector), mPlayerHolder(pPlayerHolder) {
+    mClippingPlacementIds = new ClippingPlacementId*[0x80];
+    for (s32 i = 0; i < 0x80; i++) {
+        mClippingPlacementIds[i] = nullptr;
     }
+    mDefaultPlacementId = new ClippingPlacementId;
+    mClippingPlacementIds[0] = new ClippingPlacementId;
+    mClippingPlacementIdsSize = 1;
+    mClippingPlacementIds[0]->mParentId = nullptr;
+    mClippingPlacementIds[0]->mIsInViewCtrlArea = true;
+}
 
-    /**
-     * @brief Links an actor's clipping info to the view info of its view group.
-     * @param pActorInfo The actor's clipping info.
-     * @param pViewId The actor's view group id, or nullptr.
-     */
-    void ViewInfoCtrl::initActorInfo(ClippingActorInfo* pActorInfo, PlacementId* pViewId) {
-        if (pViewId == nullptr || pViewId->mPlacementID == nullptr) {
-            pActorInfo->mViewGroupFarClipFlag = &mDefaultViewInfo->mIsInViewCtrlArea;
+/**
+ * Links the view group far clip flag of an actor to its view group.
+ * @param pInfo clipping info of the actor
+ * @param pPlacementId view id of the actor, or nullptr
+ */
+void ViewInfoCtrl::initActorInfo(ClippingActorInfo* pInfo, PlacementId* pPlacementId) {
+    if (!pPlacementId || !pPlacementId->mPlacementID) {
+        pInfo->mViewGroupFarClipFlag = &mDefaultPlacementId->mIsInViewCtrlArea;
+        return;
+    }
+    for (s32 i = 0; i < mClippingPlacementIdsSize; i++) {
+        ClippingPlacementId* clippingId = mClippingPlacementIds[i];
+        if (clippingId->mParentId && clippingId->mParentId->isEqual(*pPlacementId)) {
+            pInfo->mViewGroupFarClipFlag = &clippingId->mIsInViewCtrlArea;
             return;
         }
+    }
+    ClippingPlacementId* newId = new ClippingPlacementId;
+    newId->mParentId = pPlacementId;
+    pInfo->mViewGroupFarClipFlag = &newId->mIsInViewCtrlArea;
+    mClippingPlacementIds[mClippingPlacementIdsSize] = newId;
+    mClippingPlacementIdsSize++;
+}
 
-        for (s32 i = 0; i < mViewInfoNum; i++) {
-            ViewInfo* viewInfo = mViewInfos[i];
-            if (viewInfo->mPlacementId != nullptr && viewInfo->mPlacementId->isEqual(*pViewId)) {
-                pActorInfo->mViewGroupFarClipFlag = &viewInfo->mIsInViewCtrlArea;
-                return;
+/**
+ * Finishes initialization.
+ */
+void ViewInfoCtrl::endInit() {
+    mViewCtrlAreaGroup = mAreaObjDirector->getAreaObjGroup("ViewCtrlArea");
+}
+
+/**
+ * Updates which view groups contain a player.
+ */
+void ViewInfoCtrl::update() {
+    if (mIsInvalid || !mViewCtrlAreaGroup) {
+        return;
+    }
+    for (s32 i = 0; i < mClippingPlacementIdsSize; i++) {
+        ClippingPlacementId* clippingId = mClippingPlacementIds[i];
+        clippingId->mIsInViewCtrlArea = false;
+        clippingId->_9 = false;
+    }
+    for (s32 i = 0; i < mViewCtrlAreaGroup->mNumAreas; i++) {
+        AreaObj* areaObj = mViewCtrlAreaGroup->getAreaObj(i);
+        s32 playerNum = getPlayerNumMax(mPlayerHolder);
+        for (s32 j = 0; j < playerNum; j++) {
+            if (isPlayerDead(mPlayerHolder, j)) {
+                continue;
             }
-        }
-
-        ViewInfo* newViewInfo = new ViewInfo();
-        newViewInfo->mPlacementId = pViewId;
-        pActorInfo->mViewGroupFarClipFlag = &newViewInfo->mIsInViewCtrlArea;
-        mViewInfos[mViewInfoNum] = newViewInfo;
-        mViewInfoNum++;
-    }
-
-    /** @brief Looks up the ViewCtrlArea group once all areas are registered. */
-    void ViewInfoCtrl::endInit() {
-        mViewCtrlAreaGroup = mAreaObjDirector->getAreaObjGroup("ViewCtrlArea");
-    }
-
-    /** @brief Marks the view groups of the ViewCtrlAreas that contain a player. */
-    void ViewInfoCtrl::update() {
-        if (mIsInvalid) {
-            return;
-        }
-
-        if (mViewCtrlAreaGroup == nullptr) {
-            return;
-        }
-
-        for (s32 i = 0; i < mViewInfoNum; i++) {
-            ViewInfo* viewInfo = mViewInfos[i];
-            viewInfo->mIsInViewCtrlArea = false;
-            viewInfo->_9 = false;
-        }
-
-        for (s32 i = 0; i < mViewCtrlAreaGroup->getAreaObjCount(); i++) {
-            AreaObj* areaObj = mViewCtrlAreaGroup->getAreaObj(i);
-            s32 playerNumMax = getPlayerNumMax(mPlayerHolder);
-            for (s32 j = 0; j < playerNumMax; j++) {
-                if (isPlayerDead(mPlayerHolder, j)) {
-                    continue;
+            if (tryIsInAreaPos(areaObj, getPlayerPos(mPlayerHolder, j))) {
+                PlacementId viewId;
+                alPlacementFunction::getClippingViewId(&viewId, *areaObj->mPlacementInfo);
+                ClippingPlacementId* clippingId = tryFindViewInfo(&viewId);
+                if (clippingId) {
+                    clippingId->mIsInViewCtrlArea = true;
                 }
-
-                if (tryIsInAreaPos(areaObj, getPlayerPos(mPlayerHolder, j))) {
-                    PlacementId viewId;
-                    alPlacementFunction::getClippingViewId(&viewId, *areaObj->mPlacementInfo);
-                    ViewInfo* viewInfo = tryFindViewInfo(&viewId);
-                    if (viewInfo != nullptr) {
-                        viewInfo->mIsInViewCtrlArea = true;
-                    }
-                    break;
-                }
+                break;
             }
         }
     }
+}
 
-    /**
-     * @brief Searches for the view info of a view group.
-     * @param pViewId The view group id.
-     * @return The view info, or nullptr if there is none.
-     */
-    ViewInfoCtrl::ViewInfo* ViewInfoCtrl::tryFindViewInfo(PlacementId* pViewId) const {
-        if (pViewId == nullptr) {
-            return nullptr;
-        }
-
-        for (s32 i = 0; i < mViewInfoNum; i++) {
-            ViewInfo* viewInfo = mViewInfos[i];
-            if (viewInfo->mPlacementId != nullptr && viewInfo->mPlacementId->isEqual(*pViewId)) {
-                return viewInfo;
-            }
-        }
-
+/**
+ * Finds the view group of a view id.
+ * @param pPlacementId view id
+ * @return the view group, or nullptr if it doesn't exist
+ */
+ViewInfoCtrl::ClippingPlacementId* ViewInfoCtrl::tryFindViewInfo(PlacementId* pPlacementId) const {
+    if (!pPlacementId) {
         return nullptr;
     }
-};
+    for (s32 i = 0; i < mClippingPlacementIdsSize; i++) {
+        ClippingPlacementId* clippingId = mClippingPlacementIds[i];
+        if (clippingId->mParentId && clippingId->mParentId->isEqual(*pPlacementId)) {
+            return clippingId;
+        }
+    }
+    return nullptr;
+}
+}  // namespace al
