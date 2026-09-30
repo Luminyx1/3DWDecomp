@@ -7,38 +7,51 @@ class AreaShapeSphere : public AreaShape {
 public:
     AreaShapeSphere();
 
-    virtual bool isInVolume(const sead::Vector3f&) const;
-    virtual void calcNearPoint(sead::Vector3f*, const sead::Vector3f&) const;
-    virtual bool calcNearestEdgePoint(sead::Vector3f*, const sead::Vector3f&) const;
-    virtual bool checkArrowCollision(sead::Vector3f*, sead::Vector3f*, const sead::Vector3f&,
-                                     const sead::Vector3f&) const;
-    virtual bool calcLocalBoundingBox(sead::BoundBox3f*) const { return false; }
-    virtual bool calcWorldBoundingBox(sead::BoundBox3f*) const;
+    bool isInVolume(const sead::Vector3f& rPos) const override;
+    void calcNearPoint(sead::Vector3f* pOut, const sead::Vector3f& rPos) const override;
+    bool calcNearestEdgePoint(sead::Vector3f* pOut, const sead::Vector3f& rPos) const override;
+    bool checkArrowCollision(sead::Vector3f* pHitPos, sead::Vector3f* pNormal,
+                             const sead::Vector3f& rStart,
+                             const sead::Vector3f& rEnd) const override;
+    bool calcLocalBoundingBox(sead::BoundBox3f* pBox) const override;
+    bool calcWorldBoundingBox(sead::BoundBox3f* pBox) const override;
 };
 
 class AreaShapeCylinder : public AreaShape {
 public:
     AreaShapeCylinder();
 
-    virtual bool isInVolume(const sead::Vector3f&) const;
-    virtual void calcNearPoint(sead::Vector3f*, const sead::Vector3f&) const;
-    virtual bool calcNearestEdgePoint(sead::Vector3f*, const sead::Vector3f&) const;
-    virtual bool checkArrowCollision(sead::Vector3f*, sead::Vector3f*, const sead::Vector3f&,
-                                     const sead::Vector3f&) const;
-    virtual bool calcLocalBoundingBox(sead::BoundBox3f*) const { return false; }
-    virtual bool calcWorldBoundingBox(sead::BoundBox3f*) const;
+    bool isInVolume(const sead::Vector3f& rPos) const override;
+    void calcNearPoint(sead::Vector3f* pOut, const sead::Vector3f& rPos) const override;
+    bool calcNearestEdgePoint(sead::Vector3f* pOut, const sead::Vector3f& rPos) const override;
+    bool checkArrowCollision(sead::Vector3f* pHitPos, sead::Vector3f* pNormal,
+                             const sead::Vector3f& rStart,
+                             const sead::Vector3f& rEnd) const override;
+    bool calcLocalBoundingBox(sead::BoundBox3f* pBox) const override;
+    bool calcWorldBoundingBox(sead::BoundBox3f* pBox) const override;
 };
 
 class AreaShapeOval : public AreaShape {
 public:
     AreaShapeOval();
 
-    virtual bool isInVolume(const sead::Vector3f&) const;
-    virtual void calcNearPoint(sead::Vector3f*, const sead::Vector3f&) const;
-    virtual bool calcNearestEdgePoint(sead::Vector3f*, const sead::Vector3f&) const;
-    virtual bool checkArrowCollision(sead::Vector3f*, sead::Vector3f*, const sead::Vector3f&,
-                                     const sead::Vector3f&) const;
-    virtual bool calcLocalBoundingBox(sead::BoundBox3f*) const { return false; }
-    virtual bool calcWorldBoundingBox(sead::BoundBox3f*) const;
+    bool isInVolume(const sead::Vector3f& rPos) const override;
+    void calcNearPoint(sead::Vector3f* pOut, const sead::Vector3f& rPos) const override;
+    bool calcNearestEdgePoint(sead::Vector3f* pOut, const sead::Vector3f& rPos) const override;
+    bool checkArrowCollision(sead::Vector3f* pHitPos, sead::Vector3f* pNormal,
+                             const sead::Vector3f& rStart,
+                             const sead::Vector3f& rEnd) const override;
+    bool calcLocalBoundingBox(sead::BoundBox3f* pBox) const override;
+    bool calcWorldBoundingBox(sead::BoundBox3f* pBox) const override;
+};
+
+class AreaShapeOvalBase : public AreaShapeOval {
+public:
+    AreaShapeOvalBase() {}
+};
+
+class AreaShapeCylinderBase : public AreaShapeCylinder {
+public:
+    AreaShapeCylinderBase() {}
 };
 }  // namespace al
