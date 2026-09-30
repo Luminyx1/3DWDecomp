@@ -6,32 +6,32 @@
 #include "Project/Camera/Main/CameraDirector_RS.hpp"
 
 namespace al {
-    /**
-     * @brief Constructs a watcher that notifies a listener when a switch changes state.
-     * @param pListener The listener to notify.
-     * @param pAccesser The accesser of the watched switch.
-     */
-    StageSwitchWatcher::StageSwitchWatcher(StageSwitchListener* pListener, StageSwitchAccesser* pAccesser)
-        : mListener(pListener), mAccesser(pAccesser) {
-        mCameraDirector = pAccesser->mStageSwitchDirector->mCameraDirector;
-    }
+/**
+ * Constructs a watcher for the switch of an accesser.
+ * @param pListener listener to notify
+ * @param pAccesser switch accesser
+ */
+StageSwitchWatcher::StageSwitchWatcher(StageSwitchListener* pListener,
+                                       StageSwitchAccesser* pAccesser)
+    : mListener(pListener), mAccesser(pAccesser) {
+    mCameraDirector = pAccesser->mStageSwitchDirector->mCameraDirector;
+}
 
-    /**
-     * @brief Checks the switch state and notifies the listener on changes.
-     */
-    void StageSwitchWatcher::update() {
-        if (mAccesser->mIsDisasterMode && !mCameraDirector->mIsDisasterMode) {
-            return;
-        }
-
-        bool isOn = mAccesser->isOnSwitch();
-        if (isOn != _18) {
-            if (isOn) {
-                mListener->listenOn();
-            } else {
-                mListener->listenOff();
-            }
-        }
-        _18 = isOn;
+/**
+ * Notifies the listener when the switch state changed.
+ */
+void StageSwitchWatcher::update() {
+    if (mAccesser->isDisasterMode() && !mCameraDirector->_102) {
+        return;
     }
+    bool isOn = mAccesser->isOnSwitch();
+    if (isOn != _18) {
+        if (isOn) {
+            mListener->listenOn();
+        } else {
+            mListener->listenOff();
+        }
+    }
+    _18 = isOn;
+}
 }  // namespace al

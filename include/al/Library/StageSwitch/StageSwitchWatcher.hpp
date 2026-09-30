@@ -9,7 +9,7 @@ class CameraDirector_RS;
 
 class StageSwitchWatcher {
 public:
-    StageSwitchWatcher(StageSwitchListener*, StageSwitchAccesser*);
+    StageSwitchWatcher(StageSwitchListener* pListener, StageSwitchAccesser* pAccesser);
 
     void update();
 
