@@ -3497,9 +3497,9 @@ src/nw/atk/detail/seq/atk_SequenceSound.cpp:
     .text   start:0x00567710 end:0x00568824
 src/nw/atk/detail/seq/atk_SequenceSoundHandle.cpp:
     .text   start:0x00568830 end:0x00568988
-src/nw/atk/detail/seq/atk_MmlSequenceTrackAllocator.cpp:
+src/nw/atk/detail/seq/atk_MmlSequenceTrackAllocator.cpp: done
     .text   start:0x00568990 end:0x00568A78
-src/nw/atk/detail/seq/atk_MmlSequenceTrack.cpp:
+src/nw/atk/detail/seq/atk_MmlSequenceTrack.cpp: done
     .text   start:0x00568A80 end:0x00568AF4
 src/nw/atk/detail/seq/atk_MmlParser.cpp:
     .text   start:0x00568B00 end:0x00569C54
