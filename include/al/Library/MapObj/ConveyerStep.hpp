@@ -7,24 +7,23 @@ class ConveyerKeyKeeper;
 
 class ConveyerStep : public LiveActor {
 public:
-    ConveyerStep(const char*);
+    ConveyerStep(const char* pName);
 
-    void init(const ActorInitInfo&) override;
-    bool receiveMsg(const SensorMsg* pMsg, HitSensor* pSelf, HitSensor* pOther) override;
+    void init(const ActorInitInfo& rInfo) override;
+    bool receiveMsg(const SensorMsg* pMsg, HitSensor* pOther, HitSensor* pSelf) override;
 
-    void setHost(LiveActor*);
-    void setConveyerKeyKeeper(const ConveyerKeyKeeper*, f32);
-    void setTransByCoord(f32, bool);
-    void setTransByCoord(f32, bool, bool);
-    void setTransAndResetByCoord(f32);
-
+    void setHost(LiveActor* pHost);
+    void setConveyerKeyKeeper(const ConveyerKeyKeeper* pConveyerKeyKeeper, f32 coord);
+    void setTransByCoord(f32 coord, bool isForwards);
+    void setTransByCoord(f32 coord, bool isForwards, bool isForceReset);
+    void setTransAndResetByCoord(f32 coord);
     void exeWait();
 
-    LiveActor* mHost = nullptr;                            // _148
-    const ConveyerKeyKeeper* mConveyerKeyKeeper = nullptr;  // _150
-    const char* mKeyHitReactionName = nullptr;             // _158
-    const char* mActionName = nullptr;                     // _160
-    f32 mCurrentCoord = 0.0f;                              // _168
-    f32 mMaxCoord = 0.0f;                                  // _16c
+    LiveActor* mHost = nullptr;
+    const ConveyerKeyKeeper* mConveyerKeyKeeper = nullptr;
+    const char* mKeyHitReactionName = nullptr;
+    const char* mActionName = nullptr;
+    f32 mCurrentCoord = 0.0f;
+    f32 mMaxCoord = 0.0f;
 };
 }  // namespace al

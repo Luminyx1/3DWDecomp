@@ -1,149 +1,145 @@
 #include "Library/MapObj/ConveyerStep.hpp"
 
+#include "Library/LiveActor/ActorCollisionFunction.hpp"
 #include "Library/LiveActor/Util/ActorActionUtil.hpp"
 #include "Library/LiveActor/Util/ActorClippingUtil.hpp"
 #include "Library/LiveActor/Util/ActorInitUtil.hpp"
 #include "Library/LiveActor/Util/ActorModelUtil.hpp"
 #include "Library/LiveActor/Util/ActorMovementUtil.hpp"
 #include "Library/LiveActor/Util/ActorPoseUtil.hpp"
-#include "Library/MapObj/ConveyerKeyKeeper.hpp"
 #include "Library/Math/MathUtil.hpp"
 #include "Library/Nerve/NerveSetup.hpp"
-#include "Library/Play/Placement/PlacementInfo.hpp"
-#include "Library/Play/Placement/PlacementUtil.hpp"
+#include "Library/Nerve/NerveUtil.hpp"
+#include "Library/Play/Placement/PlacementFunction.hpp"
 #include "Project/Base/StringUtil.hpp"
-#include "Project/Collision/CollisionPartsKeeperUtil.hpp"
+#include "Project/LiveActor/ConveyerKeyKeeper.hpp"
 
 namespace {
-    using namespace al;
+using namespace al;
 
-    NERVE_DECL(ConveyerStep, Wait)
-    NERVES_MAKE_NOSTRUCT(ConveyerStep, Wait)
+NERVE_DECL(ConveyerStep, Wait)
+
+NERVES_MAKE_NOSTRUCT(ConveyerStep, Wait)
 }  // namespace
 
 namespace al {
-    /**
-     * @brief Constructs a step moved along a conveyer.
-     * @param pName The actor name.
-     */
-    ConveyerStep::ConveyerStep(const char* pName) : LiveActor(pName) {}
+/**
+ * Constructs a conveyer step.
+ * @param pName actor name
+ */
+ConveyerStep::ConveyerStep(const char* pName) : LiveActor(pName) {}
 
-    /**
-     * @brief Initializes the step model and collision.
-     * @param rInfo The actor init info.
-     */
-    void ConveyerStep::init(const ActorInitInfo& rInfo) {
-        initActorPoseTQSV(this);
-        initMapPartsActor(this, rInfo, nullptr, 0);
-        initNerve(this, &NrvConveyerStepWait, 0);
-        onDrawClipping(this);
-        makeActorAppeared();
+/**
+ * Initializes the step as a map part.
+ * @param rInfo actor init info
+ */
+void ConveyerStep::init(const ActorInitInfo& rInfo) {
+    initActorPoseTQSV(this);
+    initMapPartsActor(this, rInfo, nullptr, 0);
+    initNerve(this, &NrvConveyerStepWait, 0);
+    onDrawClipping(this);
+    makeActorAppeared();
+}
+
+/**
+ * Forwards messages to the host.
+ * @param pMsg message
+ * @param pOther sender sensor
+ * @param pSelf receiver sensor
+ * @return whether the host handled the message
+ */
+bool ConveyerStep::receiveMsg(const SensorMsg* pMsg, HitSensor* pOther, HitSensor* pSelf) {
+    if (mHost) {
+        return mHost->receiveMsg(pMsg, pOther, pSelf);
     }
+    return false;
+}
 
-    /**
-     * @brief Forwards received messages to the host conveyer.
-     * @param pMsg The received message.
-     * @param pSelf The receiving sensor.
-     * @param pOther The sending sensor.
-     * @return Whether the host handled the message.
-     */
-    bool ConveyerStep::receiveMsg(const SensorMsg* pMsg, HitSensor* pSelf, HitSensor* pOther) {
-        if (mHost != nullptr) {
-            return mHost->receiveMsg(pMsg, pSelf, pOther);
+/**
+ * Sets the host actor.
+ * @param pHost host actor
+ */
+void ConveyerStep::setHost(LiveActor* pHost) {
+    mHost = pHost;
+}
+
+/**
+ * Sets the conveyer keys and the loop length.
+ * @param pConveyerKeyKeeper conveyer keys
+ * @param coord loop length
+ */
+void ConveyerStep::setConveyerKeyKeeper(const ConveyerKeyKeeper* pConveyerKeyKeeper, f32 coord) {
+    mConveyerKeyKeeper = pConveyerKeyKeeper;
+    mMaxCoord = coord;
+}
+
+/**
+ * Moves the step to a conveyer coordinate.
+ * @param coord coordinate
+ * @param isForwards whether the conveyer moves forwards
+ */
+void ConveyerStep::setTransByCoord(f32 coord, bool isForwards) {
+    setTransByCoord(coord, isForwards, false);
+}
+
+/**
+ * Moves the step to a conveyer coordinate.
+ * @param coord coordinate
+ * @param isForwards whether the conveyer moves forwards
+ * @param isForceReset whether the position is always reset
+ */
+void ConveyerStep::setTransByCoord(f32 coord, bool isForwards, bool isForceReset) {
+    f32 newCoord = wrapValue(coord, mMaxCoord);
+    s32 index = -1;
+    mConveyerKeyKeeper->calcPosAndQuat(getTransPtr(this), getQuatPtr(this), &index, newCoord);
+    const char* keyHitReactionName = nullptr;
+    const char* actionName = nullptr;
+    if (index > -1) {
+        const ConveyerKey& conveyerKey = mConveyerKeyKeeper->getConveyerKey(index);
+        if (tryGetStringArg(&keyHitReactionName, *conveyerKey.mPlacementInfo,
+                            "KeyHitReactionName") &&
+            (!mKeyHitReactionName || !isEqualString(mKeyHitReactionName, keyHitReactionName))) {
+            startHitReaction(this, keyHitReactionName);
         }
-        return false;
-    }
-
-    /**
-     * @brief Sets the host conveyer.
-     * @param pHost The host actor.
-     */
-    void ConveyerStep::setHost(LiveActor* pHost) {
-        mHost = pHost;
-    }
-
-    /**
-     * @brief Sets the keys the step moves along.
-     * @param pKeyKeeper The conveyer key keeper.
-     * @param maxCoord The length after which the coordinate wraps around.
-     */
-    void ConveyerStep::setConveyerKeyKeeper(const ConveyerKeyKeeper* pKeyKeeper, f32 maxCoord) {
-        mConveyerKeyKeeper = pKeyKeeper;
-        mMaxCoord = maxCoord;
-    }
-
-    /**
-     * @brief Moves the step to a coordinate along the conveyer.
-     * @param coord The coordinate.
-     * @param isForwards Whether the conveyer moves forwards.
-     */
-    void ConveyerStep::setTransByCoord(f32 coord, bool isForwards) {
-        setTransByCoord(coord, isForwards, false);
-    }
-
-    /**
-     * @brief Moves the step to a coordinate, playing key reactions and hiding it past the last key.
-     * @param coord The coordinate.
-     * @param isForwards Whether the conveyer moves forwards.
-     * @param isForceReset Whether to always reset the position interpolation.
-     */
-    void ConveyerStep::setTransByCoord(f32 coord, bool isForwards, bool isForceReset) {
-        f32 newCoord = modf(coord + mMaxCoord, mMaxCoord) + 0.0f;
-        s32 keyIndex = -1;
-        mConveyerKeyKeeper->calcPosAndQuat(getTransPtr(this), getQuatPtr(this), &keyIndex, newCoord);
-
-        const char* keyHitReactionName = nullptr;
-        const char* actionName = nullptr;
-        if (keyIndex >= 0) {
-            const ConveyerKey& key = mConveyerKeyKeeper->getConveyerKey(keyIndex);
-
-            if (tryGetStringArg(&keyHitReactionName, *key.mPlacementInfo, "KeyHitReactionName") &&
-                (mKeyHitReactionName == nullptr || !isEqualString(mKeyHitReactionName, keyHitReactionName))) {
-                startHitReaction(this, keyHitReactionName);
-            }
-
-            if (tryGetStringArg(&actionName, *key.mPlacementInfo, "ActionName") &&
-                (mActionName == nullptr || !isEqualString(mActionName, actionName))) {
-                startAction(this, actionName);
-            }
+        if (tryGetStringArg(&actionName, *conveyerKey.mPlacementInfo, "ActionName") &&
+            (!mActionName || !isEqualString(mActionName, actionName))) {
+            startAction(this, actionName);
         }
-
-        mKeyHitReactionName = keyHitReactionName;
-        mActionName = actionName;
-
-        if ((isForwards && newCoord < mCurrentCoord) || (!isForwards && newCoord > mCurrentCoord) || isForceReset) {
-            resetPosition(this, false);
-        }
-
-        f32 totalMoveDistance = mConveyerKeyKeeper->getTotalMoveDistance();
-        bool isHidden = isHideModel(this);
-        if (newCoord > totalMoveDistance) {
-            if (!isHidden) {
-                if (isExistCollisionParts(this)) {
-                    invalidateCollisionParts(this);
-                }
-                hideModel(this);
-            }
-        } else if (isHidden) {
+    }
+    mKeyHitReactionName = keyHitReactionName;
+    mActionName = actionName;
+    if ((isForwards && newCoord < mCurrentCoord) || (!isForwards && newCoord > mCurrentCoord) ||
+        isForceReset) {
+        resetPosition(this, false);
+    }
+    f32 totalMoveDistance = mConveyerKeyKeeper->getTotalMoveDistance();
+    bool isHide = isHideModel(this);
+    if (newCoord > totalMoveDistance) {
+        if (!isHide) {
             if (isExistCollisionParts(this)) {
-                validateCollisionParts(this);
+                invalidateCollisionParts(this);
             }
-            showModel(this);
+            hideModel(this);
         }
-
-        mCurrentCoord = newCoord;
+    } else if (isHide) {
+        if (isExistCollisionParts(this)) {
+            validateCollisionParts(this);
+        }
+        showModel(this);
     }
+    mCurrentCoord = newCoord;
+}
 
-    /**
-     * @brief Moves the step to a coordinate and resets its position interpolation.
-     * @param coord The coordinate.
-     */
-    void ConveyerStep::setTransAndResetByCoord(f32 coord) {
-        setTransByCoord(coord, true, true);
-    }
+/**
+ * Moves the step to a conveyer coordinate and resets its position.
+ * @param coord coordinate
+ */
+void ConveyerStep::setTransAndResetByCoord(f32 coord) {
+    setTransByCoord(coord, true, true);
+}
 
-    /**
-     * @brief Waits.
-     */
-    void ConveyerStep::exeWait() {}
+/**
+ * Does nothing.
+ */
+void ConveyerStep::exeWait() {}
 }  // namespace al
