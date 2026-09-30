@@ -33,14 +33,18 @@ public:
 
     virtual void initStageSwitchKeeper();
     virtual void init(const AreaInitInfo&);
-    virtual void init(const AreaInitInfo&, const SceneObjHolder*);
+    virtual void init(const AreaInitInfo&, const SceneObjHolder*) {}
     virtual bool isInVolume(const sead::Vector3f&) const;
     virtual bool isInVolumeCheck(const sead::Vector3f&) const;
 
-    void invalidate();
-    void validate();
-    void enable();
-    void disable();
+    void invalidate() { mIsValid = false; }
+
+    void validate() { mIsValid = true; }
+
+    void enable() { mIsDisabled = false; }
+
+    void disable() { mIsDisabled = true; }
+
     bool isInVolume(const sead::Vector3f&, const sead::Vector3f&, sead::Vector3f*, sead::Vector3f*);
     void setStartPos(sead::Vector3f&);
     bool getStartPos(sead::Vector3f*);
@@ -70,7 +74,7 @@ public:
     bool mIsOneWayGroundOnly = false;
     bool mIsPlessieTunnel = false;
     bool mIsPlessieChaseV2SpecialCamera = false;
-    bool _75 = false;
+    bool mIsStartPosSet = false;
     bool mIsPlessieRideOnly = false;
     u8 _77 = 0;
     sead::Vector3f mStartPos = sead::Vector3f::zero;
