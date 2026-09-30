@@ -7,6 +7,12 @@ class AreaObjDirector;
 class CameraDirector;
 class CameraDirector_RS;
 class ClippingAreaDirector;
+class ClippingDirectorBase;
+class DemoDirector;
+class IScenarioCompleteChecker;
+class ItemDirectorBase;
+class ShadowDirector;
+struct GraphicsInitArg;
 class CollisionDirector;
 class EffectSystem;
 class ExecuteDirector;
@@ -23,6 +29,21 @@ class SwitchAreaDirector;
 class LiveActorKit {
 public:
     LiveActorKit(s32, s32, bool, bool);
+    ~LiveActorKit();
+
+    void init(s32, s32, bool);
+    void initGraphics(const GraphicsInitArg& rArg, const char* pStageName);
+    void initHitSensorDirector(s32, bool);
+    void initShadowDirector();
+    void initEffectSystem();
+    void endInit(IScenarioCompleteChecker* pChecker);
+    void updateReducedBufferEffect();
+    void setupCameraAreaObjDirector();
+    void update();
+    void clearGraphicsRequest();
+    void updateGraphics(bool isPaused);
+    bool preDrawGraphics();
+    void updatePadRumble();
 
     s32 _0;
     s32 _4;
@@ -32,17 +53,17 @@ public:
     GraphicsSystemInfo* mGraphicsSystemInfo;
     CameraDirector* mCameraDirector;
     CameraDirector_RS* mCameraDirectorRS;
-    ClippingAreaDirector* mClippingAreaDirector;
+    ClippingDirectorBase* mClippingDirector;
     CollisionDirector* mCollisionDirector;
-    u64 _48;
+    ItemDirectorBase* mItemDirector;
     PlayerHolder* mPlayerHolder;
     HitSensorDirector* mSensorDirector;
     ScreenPointDirector* mScreenPointDirector;
-    u64 _68;
+    ShadowDirector* mShadowDirector;
     StageSwitchDirector* mStageSwitchDirector;
     SwitchAreaDirector* mSwitchAreaDirector;
     LiveActorGroup* mActorGroup;
-    u64 _88;
+    DemoDirector* mDemoDirector;
     PadRumbleDirector* mRumbleDirector;
     MultiCoreQueueThread* mQueueThread;
 
