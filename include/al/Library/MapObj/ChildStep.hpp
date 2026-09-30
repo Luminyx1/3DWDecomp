@@ -5,16 +5,18 @@
 namespace al {
 class ChildStep : public LiveActor {
 public:
-    ChildStep(const char*, LiveActor*);
+    ChildStep(const char* pName, LiveActor* pParent);
 
-    virtual void init(const ActorInitInfo&);
+    void init(const ActorInitInfo& rInfo) override;
+    bool receiveMsg(const SensorMsg* pMsg, HitSensor* pOther, HitSensor* pSelf) override;
 
     void exeWait();
 
-    LiveActor* _148;
-    sead::Vector3f _150 = sead::Vector3f::zero;
+    LiveActor* mParent;
+    sead::Vector3f mLocalTrans = sead::Vector3f::zero;
 };
 
-void createChildStep(const ActorInitInfo&, LiveActor*, bool);
-s32 calcChildStepCount(const ActorInitInfo&);
+s32 calcChildStepCount(const ActorInitInfo& rInfo);
+void tryInitSubActorKeeperChildStep(LiveActor* pActor, const ActorInitInfo& rInfo);
+void createChildStep(const ActorInitInfo& rInfo, LiveActor* pParent, bool isSyncClipping);
 }  // namespace al
