@@ -7,12 +7,12 @@
 namespace al {
 class RotateMapParts : public LiveActor {
 public:
-    RotateMapParts(const char*);
+    RotateMapParts(const char* pName);
 
-    void init(const ActorInitInfo&) override;
+    void init(const ActorInitInfo& rInfo) override;
     void appear() override;
     void kill() override;
-    bool receiveMsg(const SensorMsg* pMsg, HitSensor* pSelf, HitSensor* pOther) override;
+    bool receiveMsg(const SensorMsg* pMsg, HitSensor* pOther, HitSensor* pSelf) override;
 
     void start();
     void exeStandBy();
@@ -20,15 +20,15 @@ public:
     void exeAssistStop();
     void exeAssistStopSync();
 
-    s32 mRotateAxis = 1;                           // _144
-    f32 mRotateSpeed = 100.0f;                     // _148
-    s32 mAssistTimer = 0;                          // _14c
-    bool mIsSupportFreezeSync = false;             // _150
-    sead::Vector3f mStartTrans = sead::Vector3f::zero;  // _154
-    sead::Quatf mStartQuat;                        // _160
-    bool mIsResetOnAppear = false;                 // _170
-    bool mIsTriggerEffectOnAngle = false;          // _171
-    f32 mAngle = 0.0f;                             // _174
-    f32 mEffectTriggerAngle = 0.0f;                // _178
+    s32 mRotateAxis = 1;
+    f32 mRotateSpeed = 100.0f;
+    s32 mAssistTimer = 0;
+    bool mIsSupportFreezeSync = false;
+    sead::Vector3f mStartTrans = sead::Vector3f::zero;
+    sead::Quatf mStartQuat;
+    bool mIsSingleMode = false;
+    bool mIsTriggerEffectOnAngle = false;
+    f32 mEffectAngle = 0.0f;
+    f32 mEffectTriggerAngle = 0.0f;
 };
 }  // namespace al
