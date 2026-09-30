@@ -1,83 +1,65 @@
 #include "Project/Camera/Holder/CameraSwitchRequestInfo.hpp"
 
-#include "Project/Camera/Holder/CameraPoseInfo.hpp"
+#include "Library/Camera/CameraPoseInfo.hpp"
 
 namespace al {
-/** @brief Creates an empty request list with room for four requests. */
+
 CameraSwitchRequestInfo::CameraSwitchRequestInfo() {
     mRequests = new CameraTicket*[4];
     for (s32 i = 0; i < 4; i++) {
         mRequests[i] = nullptr;
     }
-    mNextCameraPose = new CameraPoseInfo();
+    mNextPoseInfo = new CameraPoseInfo();
 }
 
-/**
- * @brief Adds a request for a ticket.
- * @param pTicket The ticket of the camera.
- * @param interpoleFrame The number of frames to interpolate the switch over.
- * @param isInterpoleByCameraDistance Whether the interpolation length depends on the camera distance.
- */
-void CameraSwitchRequestInfo::addRequest(CameraTicket* pTicket, s32 interpoleFrame, bool isInterpoleByCameraDistance) {
-    mRequests[mNumRequests] = pTicket;
-    mIsInterpoleByCameraDistance = isInterpoleByCameraDistance;
-    mHasNextCameraPose = false;
-    mNumRequests++;
-    mInterpoleFrame = interpoleFrame;
+void CameraSwitchRequestInfo::addRequest(CameraTicket* pTicket, s32 interpoleStep,
+                                         bool isKeepPose) {
+    mRequests[mRequestNum] = pTicket;
+    mIsKeepPose = isKeepPose;
+    mIsSetNextPoseInfo = false;
+    mRequestNum++;
+    mInterpoleStep = interpoleStep;
 }
 
-/**
- * @brief Adds a request for a ticket along with the pose the camera should continue from.
- * @param pTicket The ticket of the camera.
- * @param pNextPose The pose of the next camera.
- * @param interpoleFrame The number of frames to interpolate the switch over.
- */
-void CameraSwitchRequestInfo::addRequestWithNextCameraPose(CameraTicket* pTicket, const CameraPoseInfo* pNextPose,
-                                                           s32 interpoleFrame) {
-    mRequests[mNumRequests] = pTicket;
-    mInterpoleFrame = interpoleFrame;
-    mIsInterpoleByCameraDistance = false;
-    mHasNextCameraPose = true;
-    CameraPoseInfo* nextPose = mNextCameraPose;
-    nextPose->mPos.set(pNextPose->mPos);
-    nextPose->mAt.set(pNextPose->mAt);
-    nextPose->mUp.set(pNextPose->mUp);
-    mNumRequests++;
+void CameraSwitchRequestInfo::addRequestWithNextCameraPose(CameraTicket* pTicket,
+                                                           const CameraPoseInfo* pPoseInfo,
+                                                           s32 interpoleStep) {
+    mRequests[mRequestNum] = pTicket;
+    mInterpoleStep = interpoleStep;
+    mIsKeepPose = false;
+    mIsSetNextPoseInfo = true;
+    CameraPoseInfo* poseInfo = mNextPoseInfo;
+    poseInfo->pos.set(pPoseInfo->pos);
+    poseInfo->at.set(pPoseInfo->at);
+    poseInfo->up.set(pPoseInfo->up);
+    mRequestNum++;
 }
 
-/**
- * @brief Removes the request of a ticket if there is one, keeping the order of the others.
- * @param pTicket The ticket to remove.
- * @return True if a request was removed.
- */
 bool CameraSwitchRequestInfo::tryRemoveRequestIfExist(CameraTicket* pTicket) {
     bool isFound = false;
-    for (s32 i = 0; i < mNumRequests; i++) {
+    for (s32 i = 0; i < mRequestNum; i++) {
         if (isFound) {
             mRequests[i - 1] = mRequests[i];
-        }
-        else {
+        } else {
             isFound = mRequests[i] == pTicket;
         }
     }
-
     if (!isFound) {
         return false;
     }
-
-    mRequests[mNumRequests - 1] = nullptr;
-    mNumRequests--;
+    mRequests[mRequestNum - 1] = nullptr;
+    mRequestNum--;
     return true;
 }
 
-/** @brief Clears all requests. */
 void CameraSwitchRequestInfo::reset() {
-    for (s32 i = 0; i < mNumRequests; i++) {
+    for (s32 i = 0; i < mRequestNum; i++) {
         mRequests[i] = nullptr;
     }
-    mNumRequests = 0;
-    mInterpoleFrame = -1;
-    mIsInterpoleByCameraDistance = false;
-    mHasNextCameraPose = false;
+    mRequestNum = 0;
+    mInterpoleStep = -1;
+    mIsKeepPose = false;
+    mIsSetNextPoseInfo = false;
 }
+
 }  // namespace al
