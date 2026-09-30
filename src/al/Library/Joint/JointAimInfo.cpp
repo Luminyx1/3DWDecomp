@@ -48,6 +48,7 @@ void JointAimInfo::makeTurnQuatOval(sead::Quatf* pQuat, const sead::Vector3f& rD
     f32 up = rDir.dot(mBaseUpLocalDir);
     f32 upSq = up * up;
     f32 lengthSq = sideSq + upSq;
+
     if (isNearZero(lengthSq)) {
         pQuat->set(sead::Quatf::unit);
         return;
@@ -59,6 +60,7 @@ void JointAimInfo::makeTurnQuatOval(sead::Quatf* pQuat, const sead::Vector3f& rD
     f32 upLimitSq = upLimit * upLimit;
 
     f32 limit;
+
     if (isNearZero(sideLimitSq) && isNearZero(upLimitSq)) {
         limit = 0.0f;
     } else {

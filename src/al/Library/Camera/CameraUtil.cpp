@@ -235,6 +235,7 @@ f32 calcFovxDegree(const IUseCamera_RS* pUser, s32 viewIdx) {
 f32 calcCurrentFovyRate(const IUseCamera_RS* pUser, s32 viewIdx) {
     f32 fovy = getFovyDegree_RS(pUser, viewIdx);
     f32 sceneFovy = getCameraDirector(pUser)->getSceneFovyDegree();
+
     if (isNearZero(fovy, 0.001f) || isNearZero(sceneFovy, 0.001f)) {
         return 0.0f;
     }
@@ -294,6 +295,7 @@ bool tryCalcCameraLookDirH(sead::Vector3f* pDir, const SceneCameraInfo* pInfo,
     const sead::Matrix34f& mtx = getLookAtCamera(pInfo, viewIdx).getMatrix();
     sead::Vector3f dir(mtx(2, 0), mtx(2, 1), mtx(2, 2));
     verticalizeVec(pDir, rUp, dir);
+
     if (!tryNormalizeOrZero(pDir)) {
         return false;
     }
@@ -469,6 +471,7 @@ CameraTicket* initFixActorCamera(const LiveActor* pActor, const ActorInitInfo& r
     poser->mDistance = distance;
     poser->mAngleH = angleH;
     poser->mAngleV = angleV;
+
     if (isCalcNearestAtFromPreAt) {
         poser->mIsCalcNearestAtFromPreAt = true;
     }
@@ -507,6 +510,7 @@ CameraTicket* initFixTalkCamera(const LiveActor* pActor, const ActorInitInfo& rI
     poser->mDistance = distance;
     poser->mTalkAngleH = angleH;
     poser->mAngleV = angleV;
+
     if (isFlag) {
         poser->_170 = true;
     }
@@ -523,6 +527,7 @@ CameraTicket* initFixFishingCamera(const LiveActor* pActor, const ActorInitInfo&
     poser->mDistance = distance;
     poser->mAngleV = angleV;
     poser->initParam(angleH, rOffset, rTarget);
+
     if (isFlag) {
         poser->_170 = true;
     }
@@ -534,6 +539,7 @@ CameraTicket* initFixFishingCamera(const LiveActor* pActor, const ActorInitInfo&
 CameraTicket* initFixPointCamera(const IUseCamera_RS* pUser, const ActorInitInfo& rInfo,
                                  const char* pSuffix, bool isUsePreCameraPos) {
     CameraPoserFixPoint* poser = new CameraPoserFixPoint("定点");
+
     if (isUsePreCameraPos) {
         poser->validateUsePreCameraPos();
     }
@@ -776,6 +782,7 @@ void loadActorCameraParam(CameraTicket* pTicket, const LiveActor* pActor, const 
 void loadActorCameraParamInitFile(CameraTicket* pTicket, const LiveActor* pActor,
                                   const char* pSuffix) {
     ByamlIter iter;
+
     if (tryGetActorInitFileIter(&iter, pActor, "InitCamera", pSuffix)) {
         pTicket->getPoser()->load(iter);
     }
@@ -783,6 +790,7 @@ void loadActorCameraParamInitFile(CameraTicket* pTicket, const LiveActor* pActor
 
 void setFixedActor(const CameraTicket* pTicket, const LiveActor* pActor, f32 distance) {
     CameraPoserFixActor* poser = static_cast<CameraPoserFixActor*>(pTicket->getPoser());
+
     if (isEqualString(poser->getName(), "FixedActor")) {
         poser->mTargetActor = pActor;
         poser->mDistance = distance;
@@ -792,6 +800,7 @@ void setFixedActor(const CameraTicket* pTicket, const LiveActor* pActor, f32 dis
 void setFixedActor(const CameraTicket* pTicket, const LiveActor* pActor, f32 distance,
                    f32 angleH) {
     CameraPoserFixActor* poser = static_cast<CameraPoserFixActor*>(pTicket->getPoser());
+
     if (isEqualString(poser->getName(), "FixedActor")) {
         poser->mTargetActor = pActor;
         poser->mDistance = distance;
@@ -802,11 +811,13 @@ void setFixedActor(const CameraTicket* pTicket, const LiveActor* pActor, f32 dis
 void setFixedActor(const CameraTicket* pTicket, const LiveActor* pActor, f32 distance,
                    f32 angleH, f32 angleV, const sead::Vector3f* pOffset) {
     CameraPoserFixActor* poser = static_cast<CameraPoserFixActor*>(pTicket->getPoser());
+
     if (isEqualString(poser->getName(), "FixedActor")) {
         poser->mTargetActor = pActor;
         poser->mDistance = distance;
         poser->mAngleH = angleH;
         poser->mAngleV = angleV;
+
         if (pOffset) {
             poser->mOffset = *pOffset;
         }
@@ -1172,6 +1183,7 @@ void resetCameraTarget(IUseCamera_RS* pUser, CameraTargetBase* pTarget) {
 ActorCameraSubTarget* createActorCameraSubTarget(const LiveActor* pActor,
                                                  const sead::Vector3f* pOffset) {
     ActorCameraSubTarget* target = new ActorCameraSubTarget(pActor);
+
     if (pOffset) {
         target->setOffset(pOffset);
     }
@@ -1182,6 +1194,7 @@ ActorCameraSubTarget* createActorCameraSubTarget(const LiveActor* pActor,
 ActorBackAroundCameraSubTarget* createActorBackAroundCameraSubTarget(
     const LiveActor* pActor, const sead::Vector3f* pOffset) {
     ActorBackAroundCameraSubTarget* target = new ActorBackAroundCameraSubTarget(pActor);
+
     if (pOffset) {
         target->setOffset(pOffset);
     }
@@ -1231,6 +1244,7 @@ void startCameraShakeByAction(const LiveActor* pActor, const char* pShakeName,
                               const char* pActionName, s32 steps, s32 viewIdx) {
     const IUseCamera_RS* user = pActor;
     CameraDirector_RS* director = getCameraDirector(user);
+
     if (viewIdx >= 0) {
         director->getPoseUpdater(viewIdx)->getShaker()->startShakeByAction(
             pShakeName, pActor->getName(), pActionName, steps);
@@ -1238,6 +1252,7 @@ void startCameraShakeByAction(const LiveActor* pActor, const char* pShakeName,
     }
 
     s32 viewNum = director->getSceneCameraInfo()->getViewNumMax();
+
     for (s32 i = 0; i < viewNum; i++) {
         getCameraDirector(user)->getPoseUpdater(i)->getShaker()->startShakeByAction(
             pShakeName, pActor->getName(), pActionName, steps);
@@ -1248,6 +1263,7 @@ void startCameraShakeByHitReaction(const IUseCamera_RS* pUser, const char* pShak
                                    const char* pReactionName, const char* pActorName, s32 steps,
                                    s32 viewIdx) {
     CameraDirector_RS* director = getCameraDirector(pUser);
+
     if (viewIdx >= 0) {
         director->getPoseUpdater(viewIdx)->getShaker()->startShakeByHitReaction(
             pShakeName, pReactionName, pActorName, steps);
@@ -1255,6 +1271,7 @@ void startCameraShakeByHitReaction(const IUseCamera_RS* pUser, const char* pShak
     }
 
     s32 viewNum = director->getSceneCameraInfo()->getViewNumMax();
+
     for (s32 i = 0; i < viewNum; i++) {
         getCameraDirector(pUser)->getPoseUpdater(i)->getShaker()->startShakeByHitReaction(
             pShakeName, pReactionName, pActorName, steps);
@@ -1279,6 +1296,7 @@ namespace al {
 
 void cancelCameraShake(const IUseCamera_RS* pUser) {
     s32 viewNum = getCameraDirector(pUser)->getSceneCameraInfo()->getViewNumMax();
+
     for (s32 i = 0; i < viewNum; i++) {
         getCameraDirector(pUser)->getPoseUpdater(i)->getShaker()->cancelShake();
     }
@@ -1308,6 +1326,7 @@ bool tryCalcCameraPoseWithoutInterpole(sead::LookAtCamera* pCamera, const IUseCa
 
 void invalidateCameraPoserVerticalAbsorber(CameraTicket* pTicket) {
     CameraVerticalAbsorber* absorber = pTicket->getPoser()->getCameraVerticalAbsorber();
+
     if (absorber) {
         absorber->invalidate();
     }
@@ -1402,8 +1421,10 @@ bool isInInk(const IUseCollision* pCollision, sead::Vector3f& rPos, sead::Vector
              f32* pOutDistance) {
     CollisionPartsFilterOnlySpecialPurpose filter("InkLimit");
     s32 hitNum = alCollisionUtil::checkStrikeArrow(pCollision, rPos, rDir, &filter, nullptr);
+
     if (hitNum != 0) {
         const HitInfo* hitInfo = alCollisionUtil::getStrikeArrowInfo(pCollision, 0);
+
         if (pOutDistance) {
             *pOutDistance = hitInfo->_70;
         }
@@ -1431,6 +1452,7 @@ al::CameraTicket* initCamera(al::CameraPoser_RS* pPoser, const al::IUseCamera_RS
     al::tryGetZoneMatrixTR(&zoneMtx, rInfo);
     al::PlacementId* placementId;
     al::PlacementId id;
+
     if (al::tryGetPlacementID(&id, rInfo)) {
         placementId = new al::PlacementId();
         placementId->init(rInfo);
@@ -1453,6 +1475,7 @@ al::CameraTicket* initCamera(al::CameraPoser_RS* pPoser, const al::IUseCamera_RS
 al::CameraTicket* initAreaCamera(const al::IUseCamera_RS* pUser, const al::PlacementInfo& rInfo,
                                  bool isDisaster, const char* pSuffix) {
     al::CameraPoser_RS* poser = nullptr;
+
     if (al::isExistLinkChild(rInfo, "TowerCameraAxis", 0)) {
         poser = new al::CameraPoserTower_RS("塔", nullptr);
     } else if (al::isExistLinkChild(rInfo, "InnerTowerCameraAxis", 0)) {
@@ -1460,6 +1483,7 @@ al::CameraTicket* initAreaCamera(const al::IUseCamera_RS* pUser, const al::Place
     }
 
     al::CameraTicket* ticket;
+
     if (poser) {
         sead::Matrix34f zoneMtx = sead::Matrix34f::ident;
         al::tryGetZoneMatrixTR(&zoneMtx, rInfo);

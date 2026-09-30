@@ -19,6 +19,7 @@ SeEmitterHolder::SeEmitterHolder(AudioSystemInfo* pInfo, const sead::SafeString&
                                  const AudioInfoList<SeEmitterInfo>* pEmitterInfoList,
                                  const ModelKeeper* pModelKeeper, SeSourcePose* pPose, bool isUseModel) {
     mEmitters.allocBuffer(pEmitterInfoList != nullptr ? pEmitterInfoList->getInfoNum() : 0, nullptr);
+
     for (s32 i = 0; i < (pEmitterInfoList != nullptr ? pEmitterInfoList->getInfoNum() : 0); i++) {
         const SeEmitterInfo* emitterInfo = pEmitterInfoList->getInfo(i);
         mEmitters.pushBack(new SeEmitter(pInfo, emitterInfo, pModelKeeper, pPose, isUseModel));
@@ -30,6 +31,7 @@ SeEmitterHolder::SeEmitterHolder(AudioSystemInfo* pInfo, const sead::SafeString&
  */
 void SeEmitterHolder::update() {
     bool isAllEnd = true;
+
     for (s32 i = 0; i < mEmitters.size(); i++) {
         isAllEnd &= mEmitters.unsafeAt(i)->update();
     }
@@ -51,6 +53,7 @@ SeEmitter* SeEmitterHolder::findEmitter(const char* pName) const {
 
     for (s32 i = 0; i < mEmitters.size(); i++) {
         SeEmitter* emitter = mEmitters.unsafeAt(i);
+
         if (isEqualString(emitter->getName(), pName)) {
             return emitter;
         }

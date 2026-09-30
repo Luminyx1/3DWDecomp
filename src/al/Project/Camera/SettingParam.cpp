@@ -36,11 +36,13 @@ void CameraPoser::loadParam(const ByamlIter* pIter) {
     pIter->tryGetIntByKey(&mInterpolationFrame, "InterpolationFrame");
 
     ByamlIter angleIter;
+
     if (!pIter->tryGetIterByKey(&angleIter, "ControlAngleParam")) {
         return;
     }
 
     angleIter.tryGetBoolByKey(&mControlAngleParam->mIsInvalidControl, "IsInvalidControl");
+
     if (mControlAngleParam->mIsInvalidControl) {
         return;
     }

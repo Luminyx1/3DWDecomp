@@ -36,6 +36,7 @@ void attachSoundMemoryPool(sead::SoundMemoryPoolHandler* pHandler, al::SeadAudio
         pHandler->getMemoryPool(), pHandler->getData(), pHandler->getBufferSize());
     nn::audio::RequestAttachMemoryPool(pHandler->getMemoryPool());
     pHandler->setMemoryPoolAttached(true);
+
     while (!nn::audio::IsMemoryPoolAttached(pHandler->getMemoryPool())) {
     }
 }
@@ -66,6 +67,7 @@ u32 loadResourceFromUserManagementFile(const char* pFileName, al::SeadAudioPlaye
     sead::ScopedCurrentHeapSetter heapSetter(al::tryFindNamedHeap("AudioStationedResourceHeap"));
     sead::SoundMemoryPoolHandler* handler = new sead::SoundMemoryPoolHandler(pFileName);
     handler->setMemoryPoolAttached(false);
+
     if (!pPlayer->trySetSoundMemoryPoolHandler(handler)) {
         return 0;
     }
@@ -74,6 +76,7 @@ u32 loadResourceFromUserManagementFile(const char* pFileName, al::SeadAudioPlaye
     void* data = resource->getOtherFile(groupFileName.cstr(), nullptr);
     u32 size = resource->getFileSize(groupFileName.cstr());
     handler->setData(data, size);
+
     if (isAttachMemoryPool) {
         attachSoundMemoryPool(handler, pPlayer);
     }
@@ -89,6 +92,7 @@ u32 loadResourceFromUserManagementFile(const char* pFileName, al::SeadAudioPlaye
  */
 bool tryAttachMemoryPool(const char* pFileName, al::SeadAudioPlayer* pPlayer) {
     sead::SoundMemoryPoolHandler* handler = pPlayer->tryGetSoundMemoryPoolHandler(pFileName);
+
     if (handler == nullptr) {
         return false;
     }
@@ -112,10 +116,12 @@ bool pauseBySystemError(const al::AudioDirector* pDirector, const al::AudioDirec
                         u32 fadeFrames) {
     bool result;
     bool isActiveSubBgm = false;
+
     if (pSubDirector != nullptr) {
         pSubDirector->getSeDirector()->pauseSystemExceptSub(isPause, "システムポーズ", fadeFrames);
         al::BgmDirector* bgmDirector = pSubDirector->getBgmDirector();
         isActiveSubBgm = bgmDirector->getActiveBgmLine() != nullptr;
+
         if (isPause) {
             result = bgmDirector->pauseActiveBgmById(1, fadeFrames);
         } else {
@@ -125,6 +131,7 @@ bool pauseBySystemError(const al::AudioDirector* pDirector, const al::AudioDirec
 
     if (pDirector != nullptr) {
         pDirector->getSeDirector()->pauseSystemExceptSub(isPause, "システムポーズ", fadeFrames);
+
         if (!isActiveSubBgm) {
             if (isPause) {
                 return pDirector->getBgmDirector()->pauseActiveBgmById(1, fadeFrames);
@@ -159,6 +166,7 @@ void pauseSystem(const al::AudioDirector* pDirector, const al::IUseAudioKeeper* 
     }
 
     al::BgmDirector* bgmDirector = al::getActiveBgmDirector(pUser);
+
     if (bgmDirector == nullptr) {
         return;
     }
@@ -188,6 +196,7 @@ void pauseSystemForDebug(const al::AudioDirector* pDirector, const al::IUseAudio
     }
 
     al::BgmDirector* bgmDirector = al::tryGetActiveBgmDirector(pUser);
+
     if (bgmDirector == nullptr) {
         return;
     }
@@ -452,6 +461,7 @@ namespace al {
  */
 void changeAudioEffect(const IUseAudioKeeper* pUser, const char* pName) {
     SeEffectController* controller = pUser->getAudioKeeper()->getSeEffectController();
+
     if (controller != nullptr) {
         controller->changeEffect(pName);
     }
@@ -463,11 +473,13 @@ void changeAudioEffect(const IUseAudioKeeper* pUser, const char* pName) {
  */
 void changeSequenceAudioEffectWithAreaCheck(const IUseAudioKeeper* pUser) {
     AudioKeeper* keeper = pUser->getAudioKeeper();
+
     if (keeper == nullptr) {
         return;
     }
 
     IUseAudioKeeper* upperUser = keeper->getUpperLayerAudioUser();
+
     if (upperUser == nullptr) {
         return;
     }
@@ -481,6 +493,7 @@ void changeSequenceAudioEffectWithAreaCheck(const IUseAudioKeeper* pUser) {
  */
 void changeAudioEffectWithAreaCheck(const IUseAudioKeeper* pUser) {
     const char* name = pUser->getAudioKeeper()->getAudioEventController()->getAudioEffectNameByAreaChecker();
+
     if (name == nullptr) {
         return;
     }
@@ -495,6 +508,7 @@ void changeAudioEffectWithAreaCheck(const IUseAudioKeeper* pUser) {
  */
 const char* getCurAudioEffectName(const IUseAudioKeeper* pUser) {
     SeEffectController* controller = pUser->getAudioKeeper()->getSeEffectController();
+
     if (controller == nullptr) {
         return nullptr;
     }

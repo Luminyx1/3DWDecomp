@@ -130,6 +130,7 @@ u32 SeadAudioPlayer::getBankInfoSize(u32 id) const {
 u32 SeadAudioPlayer::getBankWaveArcSize(u32 id) const {
     nn::atk::SoundArchive::FileId fileId = getSoundArchive()->GetItemFileId(id);
     const void* file = getSoundDataMgr()->detail_GetFileAddress(fileId);
+
     if (file == nullptr) {
         return 0;
     }
@@ -138,6 +139,7 @@ u32 SeadAudioPlayer::getBankWaveArcSize(u32 id) const {
     const nn::atk::detail::WaveIdTable* table = reader.GetWaveIdTable();
     u32 size = 0;
     u32 prevId = AudioConst::SOUND_ITEM_ID_INVALID;
+
     for (u32 i = 0; i < table->count; i++) {
         if (prevId != table->items[i].waveArchiveId) {
             size += getWaveArcSize(table->items[i].waveArchiveId);
@@ -164,6 +166,7 @@ u32 SeadAudioPlayer::getWaveArcSize(u32 id) const {
  */
 u32 SeadAudioPlayer::getSoundItemSize(u32 id) const {
     u32 type = getSoundType(id);
+
     if (type == nn::atk::SoundArchive::SoundType_Wave) {
         return getBankTotalSize(id);
     }
@@ -197,8 +200,10 @@ u32 SeadAudioPlayer::getSequenceSoundSize(u32 id) const {
     u32 size = fileInfo.fileSize;
     nn::atk::SoundArchive::SequenceSoundInfo info;
     archive->ReadSequenceSoundInfo(&info, id);
+
     for (s32 i = 0; i < 4; i++) {
         u32 bankId = info.bankIds[i];
+
         if (bankId != AudioConst::BANK_ID_INVALID) {
             size += getBankTotalSize(bankId);
         }
@@ -251,6 +256,7 @@ sead::SoundMemoryPoolHandler* SeadAudioPlayer::tryGetSoundMemoryPoolHandlerByFil
     for (s32 i = 0; i < getMemoryPoolHandlers()->size(); i++) {
         sead::SoundMemoryPoolHandler* handler = getMemoryPoolHandlers()->unsafeAt(i);
         StringTmp<128> handlerPath("SoundData/%s", handler->getName());
+
         if (isEqualString(handlerPath.cstr(), pPath)) {
             return handler;
         }

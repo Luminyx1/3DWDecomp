@@ -25,9 +25,11 @@ void CameraInSwitchOnAreaDirector::update() {
     }
 
     s32 areaNum = mAreaObjGroup->mNumAreas;
+
     for (s32 i = 0; i < areaNum; i++) {
         AreaObj* area = mAreaObjGroup->getAreaObj(i);
         s32 viewNum = getViewNumMax(mSceneCameraInfo);
+
         for (s32 j = 0; j < viewNum; j++) {
             if (!isValidView(mSceneCameraInfo, j)) {
                 continue;

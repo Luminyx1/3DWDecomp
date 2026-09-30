@@ -36,6 +36,7 @@ void BlockRail::init(const ActorInitInfo& rInfo) {
     tryGetArg(&mRailColor, rInfo, "RailColor");
     registerBlockRail(this);
     trySyncStageSwitchAppearAndKill(this);
+
     if (isExistModel(this) && tryStartMclAnimIfExist(this, "RailColor")) {
         setMclAnimFrameAndStop(this, mRailColor);
     }
@@ -47,6 +48,7 @@ void BlockRail::init(const ActorInitInfo& rInfo) {
 void BlockRail::makeActorAppeared() {
     LiveActor::makeActorAppeared();
     mRailLink->validateRide();
+
     if (mStartRailEnd) {
         mStartRailEnd->makeActorAppeared();
     }
@@ -62,6 +64,7 @@ void BlockRail::makeActorAppeared() {
 void BlockRail::makeActorDead() {
     LiveActor::makeActorDead();
     mRailLink->invalidateRide();
+
     if (mStartRailEnd) {
         mStartRailEnd->makeActorDead();
     }
@@ -120,6 +123,7 @@ void BlockRail::createRailEnd(const ActorInitInfo& rInfo, const sead::Vector3f& 
     ActorInitInfo info;
     info.initViewIdHostActor(rInfo, this);
     LiveActor* railEnd = new LiveActor("ブロックレール終端");
+
     if (rInfo.mActorSceneInfo.isSingleMode) {
         addToHostActorClipping(railEnd, this);
     }
@@ -130,6 +134,7 @@ void BlockRail::createRailEnd(const ActorInitInfo& rInfo, const sead::Vector3f& 
     sead::Matrix34f mtx;
     makeMtxUpFrontPos(&mtx, up, rDir, rPos);
     updatePoseMtx(railEnd, &mtx);
+
     if (isExistModel(this) && tryStartMclAnimIfExist(railEnd, "RailColor")) {
         setMclAnimFrameAndStop(railEnd, mRailColor);
     }

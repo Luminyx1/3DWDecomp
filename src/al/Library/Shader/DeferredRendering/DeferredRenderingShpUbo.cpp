@@ -42,6 +42,7 @@ DeferredRenderingShpUbo::DeferredRenderingShpUbo(const nn::g3d::ResShadingModel*
       mWeightNumUpdateCount(uboNum) {
     mMtx.makeIdentity();
     agl::g3d::ShaderUtilG3D::search(&mLocation, pShadingModel, pShaderProgram, "shape");
+
     for (u32 i = 0; i < mUboNum; i++) {
         mUbos[i] = createUniformBlock(cShpUboLayout, 2, nullptr, 2);
     }
@@ -69,6 +70,7 @@ void DeferredRenderingShpUbo::setWeightNum(s32 weightNum) {
 void DeferredRenderingShpUbo::swap() {
     if (mMtxUpdateCount > 0) {
         mMtxUpdateCount--;
+
         for (s32 i = 0; i < 3; i++) {
             sead::Vector4f row;
             mMtx.getRow(row, i);

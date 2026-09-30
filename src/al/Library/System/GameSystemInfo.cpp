@@ -192,6 +192,7 @@ u64 getGpuPerformance(const LiveActor* pActor) {
  */
 u64 getMemoryPerformance(nn::oe::PerformanceMode mode) {
     nn::oe::PerformanceConfiguration config = getPerformanceConfiguration(mode);
+
     if (config == 0x20003 || config == 0x20004) {
         return MemoryPerformance_1331MHz;
     }
@@ -285,6 +286,7 @@ bool isCpuBoostOn() {
  */
 void setCpuBoost(bool isBoost, bool isUnused) {
     sCpuBoostOffDelay = isBoost ? 0 : 4;
+
     if (sIsCpuBoostOn == isBoost) {
         return;
     }
@@ -301,6 +303,7 @@ void setCpuBoost(bool isBoost, bool isUnused) {
 void updateCpuBoost() {
     if (sCpuBoostOffDelay > 0) {
         sCpuBoostOffDelay--;
+
         if (sCpuBoostOffDelay == 0) {
             nn::oe::SetCpuBoostMode(nn::oe::CpuBoostMode_Disabled);
             sIsCpuBoostOn = false;

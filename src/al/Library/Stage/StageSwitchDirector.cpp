@@ -18,6 +18,7 @@ StageSwitchDirector::StageSwitchDirector(ExecuteDirector* pExecuteDirector,
     : mSwitchInfos(nullptr), mMaxSwitchNum(330), mSwitchNum(0), mWatcherHolder(nullptr),
       mListenerHolder(nullptr), mCameraDirector(nullptr) {
     mSwitchInfos = new StageSwitchInfo[mMaxSwitchNum];
+
     if (isUseListenerHolder) {
         mListenerHolder = new StageSwitchListenerHolder(mMaxSwitchNum);
     } else {
@@ -35,6 +36,7 @@ StageSwitchDirector::StageSwitchDirector(ExecuteDirector* pExecuteDirector,
 s32 StageSwitchDirector::useSwitch(const StageSwitchAccesser* pAccesser) {
     PlacementId* placementId = pAccesser->mPlacementId;
     s32 switchNo = findSwitchNoFromObjId(placementId);
+
     if (switchNo < 0) {
         if (mSwitchNum < mMaxSwitchNum) {
             mSwitchInfos[mSwitchNum].mPlacementId = placementId;
@@ -73,11 +75,13 @@ s32 StageSwitchDirector::findSwitchNoFromObjId(const PlacementId* pId) {
  */
 void StageSwitchDirector::onSwitch(const StageSwitchAccesser* pAccesser) {
     s32 switchNo = pAccesser->mSwitchNo;
+
     if (switchNo < 0 || mSwitchNum <= switchNo) {
         return;
     }
 
     mSwitchInfos[switchNo].mIsOn = true;
+
     if (mListenerHolder) {
         mListenerHolder->requestChange(switchNo, true);
     }
@@ -89,6 +93,7 @@ void StageSwitchDirector::onSwitch(const StageSwitchAccesser* pAccesser) {
  */
 void StageSwitchDirector::offSwitch(const StageSwitchAccesser* pAccesser) {
     s32 switchNo = pAccesser->mSwitchNo;
+
     if (switchNo < 0 || mSwitchNum <= switchNo) {
         return;
     }
@@ -107,6 +112,7 @@ void StageSwitchDirector::offSwitch(const StageSwitchAccesser* pAccesser) {
  */
 bool StageSwitchDirector::isOnSwitch(const StageSwitchAccesser* pAccesser) {
     s32 switchNo = pAccesser->mSwitchNo;
+
     if (switchNo < 0 || mSwitchNum <= switchNo) {
         return false;
     }
@@ -120,6 +126,7 @@ bool StageSwitchDirector::isOnSwitch(const StageSwitchAccesser* pAccesser) {
  */
 void StageSwitchDirector::instantUpdate(StageSwitchAccesser* pAccesser) {
     s32 switchNo = pAccesser->mSwitchNo;
+
     if (switchNo < 0 || mSwitchNum <= switchNo) {
         return;
     }
@@ -139,6 +146,7 @@ void StageSwitchDirector::instantUpdate(StageSwitchAccesser* pAccesser) {
 void StageSwitchDirector::addListener(StageSwitchListener* pListener,
                                       StageSwitchAccesser* pAccesser) {
     StageSwitchWatcher* watcher = new StageSwitchWatcher(pListener, pAccesser);
+
     if (mWatcherHolder) {
         mWatcherHolder->add(watcher);
         return;

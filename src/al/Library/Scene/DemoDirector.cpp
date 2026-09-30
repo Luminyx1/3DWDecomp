@@ -11,11 +11,13 @@ namespace al {
  */
 DemoDirector::DemoDirector(s32 maxActors) : mDemoActorMax(maxActors) {
     mDemoActors = new LiveActor*[maxActors];
+
     for (s32 i = 0; i < mDemoActorMax; i++) {
         mDemoActors[i] = nullptr;
     }
 
     mAddDemoActors = new LiveActor*[mDemoActorMax];
+
     for (s32 i = 0; i < mDemoActorMax; i++) {
         mAddDemoActors[i] = nullptr;
     }
@@ -192,11 +194,13 @@ bool DemoDirector::tryRequestStartDemo(const LiveActor* pActor, const char* pNam
 void DemoDirector::requestEndDemo(const LiveActor* pActor, const char* pName) {
     endDemo(pActor, pName);
     mActiveDemoName = nullptr;
+
     for (s32 i = 0; i < mDemoActorNum; i++) {
         mDemoActors[i] = nullptr;
     }
 
     mDemoActorNum = 0;
+
     for (s32 i = 0; i < mAddDemoActorNum; i++) {
         mAddDemoActors[i] = nullptr;
     }
@@ -226,6 +230,7 @@ void DemoDirector::removeDemoActor(LiveActor* pActor) {
     for (s32 i = 0; i < mDemoActorNum; i++) {
         if (mDemoActors[i] == pActor) {
             mDemoActorNum--;
+
             if (mDemoActorNum >= 1) {
                 mDemoActors[i] = mDemoActors[mDemoActorNum];
                 mDemoActors[mDemoActorNum] = nullptr;
@@ -258,9 +263,11 @@ s32 DemoDirector::getDemoActorNum() const {
  */
 void DemoDirector::updateDemoActor(EffectSystem* pEffectSystem) {
     mIsUpdatingDemoActor = true;
+
     for (s32 i = 0; i < mDemoActorNum; i++) {
         LiveActor* actor = mDemoActors[i];
         actor->movement();
+
         if (actor->mModelKeeper) {
             actor->calcAnim();
         }
@@ -271,6 +278,7 @@ void DemoDirector::updateDemoActor(EffectSystem* pEffectSystem) {
     }
 
     mIsUpdatingDemoActor = false;
+
     for (s32 i = 0; i < mAddDemoActorNum; i++) {
         LiveActor* actor = mAddDemoActors[i];
         mAddDemoActors[i] = nullptr;

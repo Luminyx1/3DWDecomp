@@ -12,6 +12,7 @@ template <typename T>
 T* dynamicCastResourceAccessor(nn::ui2d::ResourceAccessor* pAccessor) {
     const nn::font::detail::RuntimeTypeInfo* targetTypeInfo = T::GetRuntimeTypeInfoStatic();
     const nn::font::detail::RuntimeTypeInfo* typeInfo = pAccessor->GetRuntimeTypeInfo();
+
     while (typeInfo) {
         if (typeInfo == targetTypeInfo) {
             return static_cast<T*>(pAccessor);
@@ -43,16 +44,19 @@ void LayoutKeeper::reinitializeShader() {
     }
 
     nn::ui2d::Layout* layout = mScreen->mLayout;
+
     if (!layout) {
         return;
     }
 
     nn::ui2d::ResourceAccessor* accessor = getResourceAccessor(layout);
+
     if (!accessor) {
         return;
     }
 
     auto* resource = dynamicCastResourceAccessor<eui::MultiArcResourceAccessor>(accessor);
+
     if (!resource) {
         return;
     }

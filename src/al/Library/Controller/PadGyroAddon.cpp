@@ -39,6 +39,7 @@ bool PadGyroAddon::tryUpdateGyroStatus() {
     }
 
     s64 index = mIndex;
+
     if (index >= npad->getSixAxisSensorNum()) {
         return false;
     }
@@ -65,12 +66,14 @@ bool PadGyroAddon::tryUpdateGyroStatus() {
 
     if (device->getNpadJoyHoldType() == nn::hid::NpadJoyHoldType::Horizontal) {
         sead::NinJoyNpadDevice::Style style = npad->getStyle();
+
         if (style == sead::NinJoyNpadDevice::cStyle_JoyLeft ||
             style == sead::NinJoyNpadDevice::cStyle_JoyRight) {
             bool isRight = style == sead::NinJoyNpadDevice::cStyle_JoyRight;
 
             f32 velocityX = -mAngularVelocity.x;
             f32 angleX = -mAngle.x;
+
             if (isRight) {
                 mAngularVelocity.x = -mAngularVelocity.z;
                 mAngularVelocity.z = -velocityX;
@@ -86,6 +89,7 @@ bool PadGyroAddon::tryUpdateGyroStatus() {
             sead::Vector3f side = mSide;
             sead::Vector3f up = mUp;
             sead::Vector3f front = mFront;
+
             if (isRight) {
                 mSide.set(front.z, -front.y, -front.x);
                 mUp.set(-up.z, up.y, up.x);

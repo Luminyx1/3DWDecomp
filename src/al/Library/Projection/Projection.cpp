@@ -257,6 +257,7 @@ void calcFrustumPointsAtViewSpace(ViewFrustumPoints* pPoints, const sead::Matrix
     pPoints->points[5].set(1.0f, -1.0f, 1.0f);
     pPoints->points[6].set(1.0f, 1.0f, 1.0f);
     pPoints->points[7].set(-1.0f, 1.0f, 1.0f);
+
     for (s32 i = 0; i < 8; i++) {
         sead::Vector3f& point = pPoints->points[i];
         f32 x = point.x;
@@ -295,6 +296,7 @@ f32 calcFrustumNearWidth(const sead::Matrix44f& rProjInvMtx) {
 void calcFrustumPointsAtWorldSpace(ViewFrustumPoints* pPoints, const sead::Matrix34f& rViewInvMtx,
                                    const sead::Matrix44f& rProjInvMtx) {
     calcFrustumPointsAtViewSpace(pPoints, rProjInvMtx);
+
     for (s32 i = 0; i < 8; i++) {
         pPoints->points[i].setMul(rViewInvMtx, pPoints->points[i]);
     }

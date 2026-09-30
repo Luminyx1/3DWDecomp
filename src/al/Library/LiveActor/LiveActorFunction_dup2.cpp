@@ -10,6 +10,7 @@ namespace {
 inline LiveActor* findSubActorInline(const SubActorKeeper* pKeeper, const char* pName) {
     for (s32 i = 0; i < pKeeper->mCount; i++) {
         const SubActorInfo* info = pKeeper->mInfos[i];
+
         if (isEqualString(info->mSubActor->getName(), pName)) {
             return info->mSubActor;
         }
@@ -20,8 +21,10 @@ inline LiveActor* findSubActorInline(const SubActorKeeper* pKeeper, const char* 
 
 inline SubActorInfo* getSubActorInfo(const LiveActor* pActor, const LiveActor* pSubActor) {
     SubActorKeeper* keeper = pActor->mSubActorKeeper;
+
     for (s32 i = 0; i < keeper->mCount; i++) {
         SubActorInfo* info = keeper->mInfos[i];
+
         if (info->mSubActor == pSubActor) {
             return info;
         }
@@ -46,6 +49,7 @@ bool isExistSubActorKeeper(const LiveActor* pActor) {
  */
 void setSubActorAlpha(LiveActor* pActor) {
     SubActorKeeper* keeper = pActor->mSubActorKeeper;
+
     if (!keeper) {
         return;
     }
@@ -63,12 +67,14 @@ void setSubActorAlpha(LiveActor* pActor) {
  */
 void setSubActorAlphaPtr(LiveActor* pActor, f32* pAlpha) {
     SubActorKeeper* keeper = pActor->mSubActorKeeper;
+
     if (!keeper) {
         return;
     }
 
     for (s32 i = 0; i < keeper->mCount; i++) {
         LiveActor* subActor = keeper->mInfos[i]->mSubActor;
+
         if (subActor && subActor->mModelKeeper) {
             subActor->mModelKeeper->setGlobalAlpha(pAlpha);
         }
@@ -125,6 +131,7 @@ s32 getSubActorNum(const LiveActor* pActor) {
  */
 void offSyncClippingSubActor(LiveActor* pActor, const LiveActor* pSubActor) {
     SubActorInfo* info = getSubActorInfo(pActor, pSubActor);
+
     if (info->mSyncType & 2) {
         info->mSyncType &= ~2;
     }
@@ -136,8 +143,10 @@ void offSyncClippingSubActor(LiveActor* pActor, const LiveActor* pSubActor) {
  */
 void offSyncClippingSubActorAll(LiveActor* pActor) {
     SubActorKeeper* keeper = pActor->mSubActorKeeper;
+
     for (s32 i = 0; i < keeper->mCount; i++) {
         SubActorInfo* info = keeper->mInfos[i];
+
         if (info->mSyncType & 2) {
             info->mSyncType &= ~2;
         }
@@ -152,6 +161,7 @@ void offSyncClippingSubActorAll(LiveActor* pActor) {
 void onSyncClippingSubActor(LiveActor* pActor, const LiveActor* pSubActor) {
     SubActorInfo** infos = pActor->mSubActorKeeper->mInfos;
     SubActorInfo* info;
+
     do {
         info = *infos++;
     } while (info->mSubActor != pSubActor);
@@ -164,6 +174,7 @@ void onSyncClippingSubActor(LiveActor* pActor, const LiveActor* pSubActor) {
  */
 void onSyncClippingSubActorAll(LiveActor* pActor) {
     SubActorKeeper* keeper = pActor->mSubActorKeeper;
+
     for (s32 i = 0; i < keeper->mCount; i++) {
         keeper->mInfos[i]->mSyncType |= 2;
     }

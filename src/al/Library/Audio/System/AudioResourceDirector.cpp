@@ -16,6 +16,7 @@ AudioResourceDirector::AudioResourceDirector(s32 layerNum, s32 itemNumPerLayer, 
                                              const SeadAudioPlayer* pPlayer)
     : mHeapController(pHeapController) {
     mLayers.allocBuffer(layerNum, nullptr);
+
     for (s32 i = 0; i < layerNum; i++) {
         mLayers.pushBack(new AudioResourceLayer(pLoader, itemNumPerLayer));
     }
@@ -59,6 +60,7 @@ bool AudioResourceDirector::isExistAudioResourceLayer(const sead::SafeString& rN
 void AudioResourceDirector::createAudioResourceLayer(const sead::SafeString& rName) {
     mCurLayerIndex++;
     s32 level = mHeapController->getCurrentHeapStateLevel();
+
     if (mCurLayerIndex > level) {
         level = mHeapController->saveHeapState();
     }
@@ -120,6 +122,7 @@ AudioResourceLayer* AudioResourceDirector::getCurrentAudioResourceLayer() const 
 AudioResourceLayer* AudioResourceDirector::findAudioResourceLayer(const sead::SafeString& rName) const {
     for (s32 i = 0; i <= mCurLayerIndex; i++) {
         AudioResourceLayer* layer = mLayers.unsafeAt(i);
+
         if (isEqualString(layer->getName().cstr(), rName)) {
             return layer;
         }

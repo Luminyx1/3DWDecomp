@@ -37,6 +37,7 @@ void CameraTargetCollideInfoHolder::update(bool isValid, const sead::Vector3f& r
     mInvalidCount = isValid ? 0 : mInvalidCount + 1;
 
     Triangle triangle;
+
     if (!alCollisionUtil::getFirstPolyOnArrow(this, &mTargetCollisionPos, &triangle,
                                               rTrans - mGravity * 50.0f, mGravity * 2000.0f,
                                               mIs2D ? &sPartsFilter2D : nullptr,
@@ -63,6 +64,7 @@ void CameraTargetCollideInfoHolder::update(bool isValid, const sead::Vector3f& r
     parallelizeVec(&velocity, mSlopeDownDir, velocity);
     f32 dot = mSlopeDownDir.dot(velocity);
     f32 speed = velocity.length();
+
     if (dot > 0.0f) {
         mSlopeCollisionDownSpeed = speed;
     } else {

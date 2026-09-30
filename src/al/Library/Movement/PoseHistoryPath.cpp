@@ -58,6 +58,7 @@ void PoseHistoryPath::addHistory(const sead::Quatf& rQuat, const sead::Vector3f&
         }
 
         f32 distance = (mHistory.back().trans - info.trans).length();
+
         if (distance < minDistance) {
             info.isKeep = false;
         }
@@ -83,6 +84,7 @@ void PoseHistoryPath::calcPoseAndTrans(sead::Quatf* pQuat, sead::Vector3f* pTran
 void PoseHistoryPath::calcPoseAndTrans(sead::Quatf* pQuat, sead::Vector3f* pTrans,
                                        const char** pName, f32 distance) const {
     s32 size = mHistory.size();
+
     if (size < 1) {
         return;
     }
@@ -99,10 +101,13 @@ void PoseHistoryPath::calcPoseAndTrans(sead::Quatf* pQuat, sead::Vector3f* pTran
     const PoseInfo* nextInfo = nullptr;
     f32 rate = 0.0f;
     f32 sum = 0.0f;
+
     for (s32 i = 0; i < size; i++) {
         const PoseInfo& current = mHistory(size - 1 - i);
+
         if (sum + current.distance > distance) {
             info = &current;
+
             if (i < size - 1) {
                 nextInfo = mHistory.get(size - 2 - i);
                 rate = (distance - sum) / current.distance;

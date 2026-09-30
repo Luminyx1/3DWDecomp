@@ -12,6 +12,7 @@ BgmLineInfo* BgmLineInfo::createInfo(const ByamlIter& rIter) {
     BgmLineInfo* info = new BgmLineInfo();
     rIter.tryGetStringByKey(&info->mName, "Name");
     rIter.tryGetIntByKey(&info->mPriority, "Priority");
+
     if (!rIter.tryGetBoolByKey(&info->mIsDontChangeLowPriorityLineByAreaChange,
                                "DontChangeLowPriorityLineByAreaChange")) {
         info->mIsDontChangeLowPriorityLineByAreaChange = false;

@@ -15,12 +15,15 @@ SeListenerPoserAdjustMiddlePos::SeListenerPoserAdjustMiddlePos(const sead::SafeS
 void SeListenerPoserAdjustMiddlePos::calcListenerPose(sead::Matrix34f* pMtx, sead::Vector3f* pPos,
                                                       const ISeListenerParam& rParam) {
     f32 fovy = rParam.getFovyDegree();
+
     if (mPrevFovyDegree != fovy) {
         f32 ratio;
+
         if (fovy <= cFovyRatioTable[0].x) {
             ratio = cFovyRatioTable[0].y;
         } else {
             s32 i = 1;
+
             for (; i < 3; i++) {
                 if (fovy <= cFovyRatioTable[i].x) {
                     break;

@@ -184,6 +184,7 @@ void AcLSoundHandlePlatform::setAllOutputDeviceSpeakerVolume(f32 frontLeft, f32 
     nn::atk::WaveSoundHandle handle(this);
     handle.SetMixMode(nn::atk::MixMode_MixParameter);
     nn::atk::MixParameter param = {{frontLeft, frontRight, rearLeft, rearRight, frontCenter, lfe}};
+
     for (s32 i = 0; i < nn::atk::OutputDevice_Count; i++) {
         handle.SetOutputChannelMixParameter(static_cast<nn::atk::OutputDevice>(i), 0, param);
     }

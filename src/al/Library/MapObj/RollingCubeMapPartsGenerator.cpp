@@ -69,6 +69,7 @@ void RollingCubeMapPartsGenerator::init(const ActorInitInfo& rInfo) {
     setClippingInfo(this, clippingRadius, &mClippingTrans);
     initGroupClipping(this, rInfo, 64);
     initNerve(this, &NrvRollingCubeMapPartsGeneratorGenerate, 0);
+
     if (mDelayTime > 0) {
         setNerve(this, &NrvRollingCubeMapPartsGeneratorDelay);
     }
@@ -102,6 +103,7 @@ void RollingCubeMapPartsGenerator::exeDelay() {
 void RollingCubeMapPartsGenerator::exeGenerate() {
     if (isIntervalStep(this, mGenerateInterval, 0)) {
         RollingCubeMapParts* rollingCube = mRollingCubeMapPartsGroup->tryFindDeadDeriveActor();
+
         if (rollingCube) {
             rollingCube->appearAndSetStart();
         }

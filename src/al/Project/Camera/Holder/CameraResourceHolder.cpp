@@ -16,6 +16,7 @@ namespace al {
 CameraResourceHolder::CameraResourceHolder(const char* pStageName, s32 maxEntries)
     : mStageName(pStageName), mMaxEntries(maxEntries) {
     mEntries = new Entry*[maxEntries];
+
     for (s32 i = 0; i < mMaxEntries; i++) {
         mEntries[i] = nullptr;
     }
@@ -81,6 +82,7 @@ bool CameraResourceHolder::tryFindParamResource(ByamlIter* pTicket,
     ByamlIter paramList;
     const PlacementId* placementId = pTicketId->getPlacementId();
     const char* paramName;
+
     if (paramType == 2) {
         paramName = "StartTickets";
     } else if (paramType == 0) {
@@ -97,6 +99,7 @@ bool CameraResourceHolder::tryFindParamResource(ByamlIter* pTicket,
         if (paramList.tryGetIterByIndex(pTicket, i)) {
             ByamlIter id;
             pTicket->tryGetIterByKey(&id, "Id");
+
             if (pTicketId->isEqual(id)) {
                 return true;
             }
@@ -137,6 +140,7 @@ bool CameraResourceHolder::tryFindParamResource(ByamlIter* pTicket,
     ByamlIter paramList;
     const PlacementId* placementId = pTicketId->getPlacementId();
     const char* paramName;
+
     if (paramType == 2) {
         paramName = "StartTickets";
     } else if (paramType == 0) {
@@ -153,6 +157,7 @@ bool CameraResourceHolder::tryFindParamResource(ByamlIter* pTicket,
         if (paramList.tryGetIterByIndex(pTicket, i)) {
             ByamlIter id;
             pTicket->tryGetIterByKey(&id, "Id");
+
             if (pTicketId->isEqual(id)) {
                 return true;
             }
@@ -166,6 +171,7 @@ bool CameraResourceHolder::tryFindCameraParamList(ByamlIter* pParamList,
                                                   const PlacementId* pPlacementId, s32 zoneId,
                                                   const char* pParamName) const {
     const char* stageName = pPlacementId ? pPlacementId->mUnitConfigName : nullptr;
+
     if (!stageName || !*stageName) {
         for (s32 i = 0; i < mNumEntries; i++) {
             if (mEntries[i]->zoneId == zoneId) {
@@ -187,6 +193,7 @@ bool CameraResourceHolder::tryFindCameraParamList(ByamlIter* pParamList,
 bool CameraResourceHolder::tryFindParamResource(ByamlIter* pTicket,
                                                 const PlacementId* pPlacementId) const {
     ByamlIter paramList;
+
     if (!tryFindCameraParamList(&paramList, pPlacementId, "Tickets")) {
         return false;
     }
@@ -194,6 +201,7 @@ bool CameraResourceHolder::tryFindParamResource(ByamlIter* pTicket,
     for (s32 i = 0; i < paramList.getSize(); i++) {
         if (paramList.tryGetIterByIndex(pTicket, i)) {
             ByamlIter id;
+
             if (pTicket->tryGetIterByKey(&id, "Id") && CameraTicketId::isEqual(id, pPlacementId)) {
                 return true;
             }
@@ -209,6 +217,7 @@ bool CameraResourceHolder::tryFindParamResource(ByamlIter* pTicket,
  */
 s32 CameraResourceHolder::calcEntranceCameraParamNum() const {
     ByamlIter startTickets;
+
     if (!tryFindCameraParamList(&startTickets, mStageName, "StartTickets")) {
         return 0;
     }
@@ -226,6 +235,7 @@ s32 CameraResourceHolder::calcEntranceCameraParamNum() const {
 bool CameraResourceHolder::tryFindCameraParamList(ByamlIter* pParamList, const char* pStageName,
                                                   const char* pParamName) const {
     Entry* entry = findCameraResource(pStageName);
+
     if (!entry || !entry->cameraParam) {
         return false;
     }
@@ -244,8 +254,10 @@ s32 CameraResourceHolder::calcEntranceCameraParamNum(s32 zoneId) const {
     }
 
     ByamlIter startTickets;
+
     for (s32 i = 0; i < mNumEntries; i++) {
         Entry* entry = mEntries[i];
+
         if (entry->zoneId == zoneId &&
             tryFindCameraParamList(&startTickets, entry->stageName.cstr(), "StartTickets")) {
             return 1;
@@ -280,8 +292,10 @@ void CameraResourceHolder::getEntranceCameraParamResource(ByamlIter* pTicket, s3
     }
 
     ByamlIter startTickets;
+
     for (s32 i = 0; i < mNumEntries; i++) {
         Entry* entry = mEntries[i];
+
         if (entry->zoneId == zoneId) {
             tryFindCameraParamList(&startTickets, entry->stageName.cstr(), "StartTickets");
             startTickets.tryGetIterByIndex(pTicket, index);
@@ -323,6 +337,7 @@ CameraResourceHolder::Entry*
 CameraResourceHolder::tryFindCameraResource(const PlacementId* pPlacementId) const {
     if (pPlacementId) {
         const char* stageName = pPlacementId->mUnitConfigName;
+
         if (!stageName) {
             stageName = mStageName;
         }

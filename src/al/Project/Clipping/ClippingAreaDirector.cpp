@@ -273,6 +273,7 @@ void ClippingAreaDirector::executeRequestAsyncUpdate() {
  */
 void ClippingAreaDirector::waitPendingClippingRequest() {
     mViewHolder->waitIfPendingAsyncClipping();
+
     if (_18 && *_18 == 1) {
         mViewHolder->resetClippingDistanceStates();
     }
@@ -285,11 +286,13 @@ void ClippingAreaDirector::waitPendingClippingRequest() {
  */
 void ClippingAreaDirector::setLODDisabled(LiveActor* pActor, bool isDisabled) {
     ClippingAreaActorInfoNode* node = pActor->mClippingInfoNode;
+
     if (!node) {
         return;
     }
 
     ClippingAreaActorInfo* info = node->mInfo;
+
     if (!info) {
         info->mIsLODDisabled = isDisabled;
     }

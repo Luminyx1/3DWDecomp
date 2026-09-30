@@ -16,6 +16,7 @@ BgmStagePlayInfo* BgmStagePlayInfo::createInfo(const ByamlIter& rIter) {
     BgmStagePlayInfo* info = new BgmStagePlayInfo();
     rIter.tryGetStringByKey(&info->mPlayInfoName, "PlayInfoName");
     rIter.tryGetStringByKey(&info->mResourceName, "ResourceName");
+
     if (!rIter.tryGetStringByKey(&info->mRegionInfoListName, "RegionInfoListName")) {
         info->mRegionInfoListName = nullptr;
     }
@@ -74,6 +75,7 @@ s32 BgmStageInfo::compareInfo(const BgmStageInfo* pA, const BgmStageInfo* pB) {
 BgmSuffixProcInfo* BgmSuffixProcInfo::createInfo(const ByamlIter& rIter, const char* pProcInfoName) {
     BgmSuffixProcInfo* info = new BgmSuffixProcInfo();
     info->mProcInfoName = pProcInfoName;
+
     if (isEqualString(pProcInfoName, "AttachSuffix")) {
         rIter.tryGetStringByKey(&info->mSuffixName, "SuffixName");
     } else {
@@ -96,6 +98,7 @@ BgmSuffixProcInfo* BgmSuffixProcInfo::createInfo(const ByamlIter& rIter, const c
 BgmVolumeProcInfo* BgmVolumeProcInfo::createInfo(const ByamlIter& rIter, const char* pProcInfoName) {
     BgmVolumeProcInfo* info = new BgmVolumeProcInfo();
     info->mProcInfoName = pProcInfoName;
+
     if (!rIter.tryGetFloatByKey(&info->mTargetVolume, "TargetVolume")) {
         info->mTargetVolume = 1.0f;
     }
@@ -117,18 +120,21 @@ BgmTrackProcInfo* BgmTrackProcInfo::createInfo(const ByamlIter& rIter, const cha
     BgmTrackProcInfo* info = new BgmTrackProcInfo();
     info->mProcInfoName = pProcInfoName;
     ByamlIter listIter;
+
     if (rIter.tryGetIterByKey(&listIter, "ChangeTrackInfoList")) {
         s32 size = listIter.getSize();
         AudioInfoList<BgmTrackChangeInfo>* list = new AudioInfoList<BgmTrackChangeInfo>;
         list->mNext = nullptr;
         list->mInfos = new sead::PtrArray<BgmTrackChangeInfo>;
         list->mInfos->allocBuffer(size + 1, nullptr);
+
         for (s32 i = 0; i < size; i++) {
             BgmTrackChangeInfo* changeInfo = new BgmTrackChangeInfo();
             ByamlIter iter;
             listIter.tryGetIterByIndex(&iter, i);
             iter.tryGetIntByKey(&changeInfo->mTrackNo, "TrackNo");
             iter.tryGetFloatByKey(&changeInfo->mVolume, "Volume");
+
             if (!iter.tryGetIntByKey(&changeInfo->mFadeFrameNum, "FadeFrameNum")) {
                 changeInfo->mFadeFrameNum = -1;
             }
@@ -151,6 +157,7 @@ BgmTrackProcInfo* BgmTrackProcInfo::createInfo(const ByamlIter& rIter, const cha
 BgmRegionProcInfo* BgmRegionProcInfo::createInfo(const ByamlIter& rIter, const char* pProcInfoName) {
     BgmRegionProcInfo* info = new BgmRegionProcInfo();
     info->mProcInfoName = pProcInfoName;
+
     if (!rIter.tryGetIntByKey(&info->mHeadNo, "HeadNo")) {
         info->mHeadNo = 0;
     }
@@ -187,6 +194,7 @@ BgmRegionProcInfo* BgmRegionProcInfo::createInfo(const ByamlIter& rIter, const c
 BgmPitchProcInfo* BgmPitchProcInfo::createInfo(const ByamlIter& rIter, const char* pProcInfoName) {
     BgmPitchProcInfo* info = new BgmPitchProcInfo();
     info->mProcInfoName = pProcInfoName;
+
     if (!rIter.tryGetFloatByKey(&info->mTargetPitch, "TargetPitch")) {
         info->mTargetPitch = 1.0f;
     }
@@ -208,6 +216,7 @@ BgmPitchModulationProcInfo* BgmPitchModulationProcInfo::createInfo(const ByamlIt
                                                                    const char* pProcInfoName) {
     BgmPitchModulationProcInfo* info = new BgmPitchModulationProcInfo();
     info->mProcInfoName = pProcInfoName;
+
     if (!rIter.tryGetBoolByKey(&info->mIsEnable, "IsEnable")) {
         info->mIsEnable = false;
     }
@@ -236,6 +245,7 @@ BgmPitchModulationProcInfo* BgmPitchModulationProcInfo::createInfo(const ByamlIt
 BgmLpfProcInfo* BgmLpfProcInfo::createInfo(const ByamlIter& rIter, const char* pProcInfoName) {
     BgmLpfProcInfo* info = new BgmLpfProcInfo();
     info->mProcInfoName = pProcInfoName;
+
     if (!rIter.tryGetFloatByKey(&info->mCutOffFreq, "CutOffFreq")) {
         info->mCutOffFreq = 0.0f;
     }
@@ -267,6 +277,7 @@ BgmMoveLoopStartProcInfo* BgmMoveLoopStartProcInfo::createInfo(const ByamlIter& 
 BgmProcInfo* BgmProcInfo::createInfo(const ByamlIter& rIter) {
     const char* procInfoName;
     rIter.tryGetStringByKey(&procInfoName, "ProcInfoName");
+
     if (isEqualString(procInfoName, "AttachSuffix") || isEqualString(procInfoName, "DetachSuffix")) {
         return BgmSuffixProcInfo::createInfo(rIter, procInfoName);
     }
@@ -390,6 +401,7 @@ BgmDataBase::BgmDataBase() {
     {
         ByamlIter rootIter(resource->getByml("BgmPlayInfoList"));
         ByamlIter iter;
+
         if (rootIter.tryGetIterByKey(&iter, "PlayInfoList")) {
             mPlayInfoList = createInfoList<BgmPlayInfo>(iter);
         } else {
@@ -400,6 +412,7 @@ BgmDataBase::BgmDataBase() {
     {
         ByamlIter rootIter(resource->getByml("BgmResourceInfoList"));
         ByamlIter iter;
+
         if (rootIter.tryGetIterByKey(&iter, "ResourceInfoList")) {
             mResourceInfoList = createInfoList<BgmResourceInfo>(iter);
         } else {
@@ -410,6 +423,7 @@ BgmDataBase::BgmDataBase() {
     {
         ByamlIter rootIter(resource->getByml("BgmStageInfoList"));
         ByamlIter iter;
+
         if (rootIter.tryGetIterByKey(&iter, "StageInfoList")) {
             mStageInfoList = createInfoList<BgmStageInfo>(iter);
         } else {
@@ -420,6 +434,7 @@ BgmDataBase::BgmDataBase() {
     {
         ByamlIter rootIter(resource->getByml("BgmSituationInfoList"));
         ByamlIter iter;
+
         if (rootIter.tryGetIterByKey(&iter, "SituationInfoList")) {
             mSituationInfoList = createInfoList<BgmSituationInfo>(iter);
         } else {
@@ -429,12 +444,15 @@ BgmDataBase::BgmDataBase() {
 
     sead::PtrArray<BgmUserInfo>* userInfoList = new sead::PtrArray<BgmUserInfo>;
     s32 entryNum = resource->getEntryNum("/");
+
     if (entryNum >= 1) {
         userInfoList->allocBuffer(entryNum, nullptr);
+
         for (s32 i = 0; i < entryNum; i++) {
             StringTmp<128> fileName;
             resource->getEntryName(&fileName, "/", i);
             const char* name = fileName.cstr();
+
             if (isEqualString(name, "BgmLineInfoList.byml") || isEqualString(name, "BgmPlayInfoList.byml") ||
                 isEqualString(name, "BgmResourceInfoList.byml") || isEqualString(name, "BgmSituationInfoList.byml") ||
                 isEqualString(name, "BgmStageInfoList.byml")) {
@@ -444,6 +462,7 @@ BgmDataBase::BgmDataBase() {
             ByamlIter userIter(static_cast<const u8*>(resource->getOtherFile(fileName, nullptr)));
             fileName.removeSuffix(".byml");
             ByamlIter listIter;
+
             if (userIter.tryGetIterByKey(&listIter, "UserInfoList")) {
                 mUserInfoList = BgmUserInfo::create(listIter);
                 return;

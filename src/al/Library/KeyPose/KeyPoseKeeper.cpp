@@ -17,6 +17,7 @@ void KeyPoseKeeper::init(const ActorInitInfo& rInfo) {
 
     PlacementInfo currentInfo = *rInfo.mPlacementInfo;
     PlacementInfo nextInfo;
+
     for (s32 i = 0; i < mKeyPoseCount - 1; i++) {
         getLinksInfo(&nextInfo, currentInfo, "KeyMoveNext");
         mKeyPoses[i + 1].init(nextInfo);

@@ -43,8 +43,10 @@ void ModelDrawerDeferredSky::draw() const {
     }
 
     mGraphicsContext.apply(GameFrameworkNx::sInstance->mDrawContext);
+
     for (s32 i = 0; i < mMeshDrawerTable->size(); i++) {
         MeshDrawer* meshDrawer = (*mMeshDrawerTable)[i];
+
         if (meshDrawer->isExistDrawMesh()) {
             meshDrawer->draw(&mGraphicsSystemInfo->mViewVolume, 0, nullptr);
         }

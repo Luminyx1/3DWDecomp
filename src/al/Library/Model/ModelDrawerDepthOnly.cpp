@@ -29,6 +29,7 @@ ModelDrawerDepthOnly::ModelDrawerDepthOnly(const char* pName, bool isForceFarDep
     mGraphicsContext.setColorMask(0, false, false, false, false);
     mGraphicsContext.setBlendEnable(false);
     mGraphicsContext.setAlphaTestEnable(false);
+
     if (isForceFarDepth) {
         mGraphicsContext.setDepthEnable(true, true);
         mGraphicsContext.setDepthFunc(8);
@@ -52,6 +53,7 @@ void ModelDrawerDepthOnly::createTable() {
 
     auto* table = new MeshDrawerTable;
     table->allocBuffer(modelObj->GetNumShapes(), nullptr);
+
     for (s32 i = 0; i < modelObj->GetNumShapes(); i++) {
         const nn::g3d::ShapeObj* shape = modelObj->GetShape(i);
         const nn::g3d::MaterialObj* material =
@@ -67,12 +69,14 @@ void ModelDrawerDepthOnly::createTable() {
 
         bool isAlphaTest = false;
         const char* depthAlphaMask = shaderAssign->FindShaderOption("enable_depthalphamask");
+
         if (depthAlphaMask && isEqualString(depthAlphaMask, "1")) {
             optionValues[0] = "1";
             isAlphaTest = true;
         }
 
         bool isAlphaMaskModel = isEqualString(shadingModelName, "RenderMaterialAlphaMask");
+
         if (!isAlphaTest && isAlphaMaskModel) {
             continue;
         }
@@ -90,6 +94,7 @@ void ModelDrawerDepthOnly::createTable() {
                                                   shadingModel, 3, optionNames, optionValues, false);
 
         const char* ditherAlpha = shaderAssign->FindShaderOption("cIsEnableDitherAlbedoAlpha");
+
         if (ditherAlpha && isEqualString(ditherAlpha, "1")) {
             continue;
         }
@@ -104,6 +109,7 @@ void ModelDrawerDepthOnly::createTable() {
     }
 
     mMeshDrawerTable = table;
+
     for (s32 i = 0; i < mMeshDrawerTable->size(); i++) {
         (*mMeshDrawerTable)[i]->createDisplayList(
             mModel->getModelG3D()->mGpuMemAllocator, MeshDrawer::RENDER_STATE_ACTIVATE_TYPE(3),
@@ -126,8 +132,10 @@ void ModelDrawerDepthOnly::draw() const {
     for (s32 i = 0; i < mModelNum; i++) {
         SimpleModelG3D* model = mModels[i]->getModelG3D();
         model->setModelGlobalAlpha();
+
         if (!model->mIsLodDisabled) {
             s32 updateCount = mGraphicsSystemInfo->mDrawEnvUpdateCount;
+
             if (model->mLodUpdateCount != updateCount) {
                 model->updateLod(mGraphicsSystemInfo->mDrawCameraPos, updateCount);
             }

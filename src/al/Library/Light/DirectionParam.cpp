@@ -80,6 +80,7 @@ void DirectionParam::syncFromDirection() {
     sead::Vector3f dir = mDirection;
     rotateVectorDegreeY(&dir, mRotateDegreeY);
     f32 length = dir.length();
+
     if (!(length > 0.0f)) {
         return;
     }
@@ -89,6 +90,7 @@ void DirectionParam::syncFromDirection() {
     f32 y = invLength * dir.y;
     f32 z = invLength * dir.z;
     f32 lengthXZ = sead::Mathf::sqrt(z * z + x * x);
+
     if (lengthXZ > 0.0f) {
         f32 inv = 1.0f / lengthXZ;
         f32 cosLongitude = -z * inv;
@@ -120,6 +122,7 @@ void DirectionParam::syncFromRPYDegree(const sead::Vector3f& rDegreeRPY) {
  */
 void DirectionParam::lerp(const DirectionParam& rStart, const DirectionParam& rEnd, f32 rate) {
     lerpVec(&mDirection, rStart.mDirection, rEnd.mDirection, rate);
+
     if (normalizeOrZero(&mDirection)) {
         mDirection = rEnd.mDirection;
     }

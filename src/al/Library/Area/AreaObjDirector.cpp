@@ -36,6 +36,7 @@ void AreaObjDirector::init(const AreaObjFactory* pFactory) {
     mMtxConnecterHolder = new AreaObjMtxConnecterHolder(0x100);
     s32 num = mFactory->getNumFactoryEntries();
     mAreaGroups = new AreaObjGroup*[num];
+
     for (s32 i = 0; i < num; i++) {
         mAreaGroups[i] = nullptr;
     }
@@ -77,6 +78,7 @@ void AreaObjDirector::placement(const AreaInitInfo* pInfos, s32 num, const Scene
     }
 
     createAreaObjGroupBuffer();
+
     for (s32 i = 0; i < num; i++) {
         placementAreaObj(pInfos[i], pHolder, pScene);
     }
@@ -89,6 +91,7 @@ void AreaObjDirector::placement(const AreaInitInfo* pInfos, s32 num, const Scene
 void AreaObjDirector::createAreaObjGroup(const AreaInitInfo& rInfo) {
     PlacementInfo placementInfo(rInfo.mPlacementInfo);
     s32 num = getCountPlacementInfo(placementInfo);
+
     for (s32 i = 0; i < num; i++) {
         PlacementInfo objInfo;
         tryGetPlacementInfoByIndex(&objInfo, placementInfo, i);
@@ -97,6 +100,7 @@ void AreaObjDirector::createAreaObjGroup(const AreaInitInfo& rInfo) {
 
         AreaCreatorFunction creator = nullptr;
         s32 index = mFactory->getEntryIndex(&creator, objName);
+
         if (!creator) {
             continue;
         }
@@ -115,6 +119,7 @@ void AreaObjDirector::createAreaObjGroup(const AreaInitInfo& rInfo) {
 void AreaObjDirector::createAreaObjGroupBuffer() {
     s32 count = 0;
     s32 num = mFactory->getNumFactoryEntries();
+
     for (s32 i = 0; i < num; i++) {
         if (!mAreaGroups[i]) {
             continue;
@@ -122,8 +127,10 @@ void AreaObjDirector::createAreaObjGroupBuffer() {
 
         mAreaGroups[i]->createBuffer();
         count++;
+
         for (s32 j = i; j > 0; j--) {
             AreaObjGroup* prev = mAreaGroups[j - 1];
+
             if (prev && strcmp(mAreaGroups[j]->mGroupName, prev->mGroupName) >= 0) {
                 break;
             }
@@ -146,6 +153,7 @@ void AreaObjDirector::placementAreaObj(const AreaInitInfo& rInfo, const SceneObj
                                        Scene* pScene) {
     PlacementInfo placementInfo(rInfo.mPlacementInfo);
     s32 num = getCountPlacementInfo(placementInfo);
+
     for (s32 i = 0; i < num; i++) {
         PlacementInfo objInfo;
         tryGetPlacementInfoByIndex(&objInfo, placementInfo, i);
@@ -154,6 +162,7 @@ void AreaObjDirector::placementAreaObj(const AreaInitInfo& rInfo, const SceneObj
 
         AreaCreatorFunction creator = nullptr;
         mFactory->getEntryIndex(&creator, objName);
+
         if (!creator) {
             continue;
         }
@@ -166,6 +175,7 @@ void AreaObjDirector::placementAreaObj(const AreaInitInfo& rInfo, const SceneObj
         getDisplayName(&displayName, objInfo);
         AreaObj* areaObj = creator(displayName);
         AreaInitInfo initInfo(objInfo, rInfo);
+
         if (isEqualString(displayName, "IslandArea") ||
             isEqualString(displayName, "DisasterModeArea")) {
             areaObj->init(initInfo, pHolder);
@@ -184,6 +194,7 @@ void AreaObjDirector::placementAreaObj(const AreaInitInfo& rInfo, const SceneObj
  */
 s32 AreaObjDirector::getTotalAreaObjs() const {
     s32 total = 0;
+
     for (s32 i = 0; i < mAreaGroupCount; i++) {
         total += mAreaGroups[i]->mNumAreas;
     }
@@ -198,6 +209,7 @@ s32 AreaObjDirector::getTotalAreaObjs() const {
  */
 AreaObjGroup* AreaObjDirector::getAreaObjGroup(const char* pName) const {
     s32 index = getAreaObjGroupIndex(pName);
+
     if (index > -1) {
         return mAreaGroups[index];
     }
@@ -250,6 +262,7 @@ AreaObj* AreaObjDirector::tryFindInExtraAreaObjGroup(const sead::Vector3f& rPos)
 void AreaObjDirector::setEnableAll(bool isEnable) {
     for (s32 i = 0; i < mAreaGroupCount; i++) {
         AreaObjGroup* group = mAreaGroups[i];
+
         if (!group) {
             continue;
         }
@@ -268,6 +281,7 @@ void AreaObjDirector::setEnableAll(bool isEnable) {
  */
 AreaObj* AreaObjDirector::getInVolumeAreaObj(const char* pName, const sead::Vector3f& rPos) {
     AreaObjGroup* group = getAreaObjGroup(pName);
+
     if (!group) {
         return nullptr;
     }
@@ -288,6 +302,7 @@ AreaObj* AreaObjDirector::getInVolumeAreaObj(const char* pName, const sead::Vect
                                              const sead::Vector3f& rEnd, sead::Vector3f* pHitPos,
                                              sead::Vector3f* pNormal) {
     AreaObjGroup* group = getAreaObjGroup(pName);
+
     if (!group) {
         return nullptr;
     }
@@ -311,9 +326,11 @@ AreaObjMtxConnecterHolder* AreaObjDirector::getMtxConnecterHolder() const {
 s32 AreaObjDirector::getAreaObjGroupIndex(const char* pName) const {
     s32 lower = 0;
     s32 upper = mAreaGroupCount;
+
     while (lower < upper) {
         s32 mid = (lower + upper) / 2;
         s32 cmp = strcmp(pName, mAreaGroups[mid]->mGroupName);
+
         if (cmp == 0) {
             return mid;
         }

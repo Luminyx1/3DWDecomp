@@ -13,6 +13,7 @@ ExecutorListLayoutUpdate::ExecutorListLayoutUpdate(const char* pListName, s32 ca
                                                    const char* pGroupName)
     : ExecutorListBase(pListName, pGroupName), mLayoutNumMax(capacity) {
     mLayouts = new LayoutActor*[capacity];
+
     for (s32 i = 0; i < mLayoutNumMax; i++) {
         mLayouts[i] = nullptr;
     }
@@ -33,6 +34,7 @@ void ExecutorListLayoutUpdate::registerLayout(LayoutActor* pLayout) {
 void ExecutorListLayoutUpdate::executeList() const {
     for (s32 i = 0; i < mLayoutNum; i++) {
         LayoutActor* layout = mLayouts[i];
+
         if (layout->isAlive()) {
             layout->movement();
             layout->calcAnim(true);

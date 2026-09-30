@@ -35,6 +35,7 @@ void ModelDrawerDepthShadow::createTable() {
 
     auto* table = new MeshDrawerTable;
     table->allocBuffer(modelObj->GetNumShapes(), nullptr);
+
     for (s32 i = 0; i < modelObj->GetNumShapes(); i++) {
         const nn::g3d::ShapeObj* shape = modelObj->GetShape(i);
         const nn::g3d::MaterialObj* material =
@@ -48,6 +49,7 @@ void ModelDrawerDepthShadow::createTable() {
 
         bool isDepthAlphaMask = false;
         const char* depthAlphaMask = shaderAssign->FindShaderOption("enable_depthalphamask");
+
         if (depthAlphaMask) {
             const char* shadingModelName =
                 material->GetResource()->GetShaderAssign()->GetShadingModelName();
@@ -63,6 +65,7 @@ void ModelDrawerDepthShadow::createTable() {
         }
 
         const char* ditherAlpha = shaderAssign->FindShaderOption("cIsEnableDitherAlbedoAlpha");
+
         if (ditherAlpha && isEqualString(ditherAlpha, "1")) {
             continue;
         }
@@ -78,6 +81,7 @@ void ModelDrawerDepthShadow::createTable() {
         auto* meshDrawer =
             new MeshDrawer(shape->GetResource()->GetName(), modelObj, shape, selector, modelNum);
         meshDrawer->initForDepthShadow();
+
         if (!isDepthAlphaMask && isOpaque) {
             meshDrawer->createDisplayList(model->mGpuMemAllocator,
                                           MeshDrawer::RENDER_STATE_ACTIVATE_TYPE(2),
@@ -105,6 +109,7 @@ void ModelDrawerDepthShadow::draw() const {
     }
 
     DepthShadowDrawer* depthShadowDrawer = mGraphicsSystemInfo->mShadowDirector->mDepthShadowDrawer;
+
     if (depthShadowDrawer->isPreDraw()) {
         for (s32 i = 0; i < mMeshDrawerTable->size(); i++) {
             (*mMeshDrawerTable)[i]->preDrawToDepthShadow(depthShadowDrawer);
@@ -118,8 +123,10 @@ void ModelDrawerDepthShadow::draw() const {
     }
 
     s32 shadowIndex = depthShadowDrawer->getDrawShadowIndex();
+
     for (s32 i = 0; i < mMeshDrawerTable->size(); i++) {
         MeshDrawer* meshDrawer = (*mMeshDrawerTable)[i];
+
         if (meshDrawer->isExistDrawMesh()) {
             meshDrawer->drawDepthShadow(nullptr, 0, shadowIndex);
         }

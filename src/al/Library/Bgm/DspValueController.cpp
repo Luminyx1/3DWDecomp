@@ -25,6 +25,7 @@ void DspLinearValueController::update() {
     if (mStep > 0.0f) {
         if (mTarget > mValue) {
             mValue += mStep;
+
             if (mTarget < mValue) {
                 mValue = mTarget;
             }
@@ -34,6 +35,7 @@ void DspLinearValueController::update() {
     if (mStep < 0.0f) {
         if (mTarget < mValue) {
             mValue += mStep;
+
             if (mTarget > mValue) {
                 mValue = mTarget;
             }
@@ -49,6 +51,7 @@ void DspLinearValueController::update() {
 void DspLinearValueController::changeTarget(f32 target, s32 frames) {
     f32 diff = target - mValue;
     mTarget = target;
+
     if (frames <= 0) {
         mValue = target;
         mStep = diff;
@@ -90,6 +93,7 @@ void DspSinValueController::update() {
     mAmplitude->update();
     mValue = sinf(mPhase) * mAmplitude->getValue();
     mPhase += mPhaseStep;
+
     while (mPhase >= 6.2831855f) {
         mPhase -= 6.2831855f;
     }

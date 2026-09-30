@@ -41,6 +41,7 @@ GamePadSystem::GamePadSystem(bool isSinglePlay) {
     mPadNames[1] = sead::WSafeString::cEmptyString;
     mPadNames[2] = sead::WSafeString::cEmptyString;
     mPadNames[3] = sead::WSafeString::cEmptyString;
+
     for (s32 i = 0; i < 9; i++) {
         mPadStyles[i] = 5;
         mPadConnectStates[i] = 0;
@@ -61,6 +62,7 @@ void GamePadSystem::changeSinglePlayMode(bool isAnyController) {
     mMaxPlayerNum = 1;
     mMinPlayerNum = 1;
     sead::NinJoyNpadDevice* device = getNpadDevice();
+
     if (!isAnyController) {
         return;
     }
@@ -81,8 +83,10 @@ void GamePadSystem::changeMultiPlayMode(s32 maxPlayerNum, s32 minPlayerNum) {
     sead::NinJoyNpadDevice* device = getNpadDevice();
     device->setNpadIdUpdateNum(maxPlayerNum);
     device->setNpadJoyHoldType(nn::hid::NpadJoyHoldType(1));
+
     if (!mIsAllowHandheld) {
         device->setSupportedNpadStyleSet(makeStyleSet(true, false, true, true, true));
+
         for (s32 i = 0; i < maxPlayerNum; i++) {
             getNpadController(getPlayerControllerPort(i))->setIndexControllerMode(i);
         }
@@ -98,6 +102,7 @@ void GamePadSystem::changeMultiPlayMode(s32 maxPlayerNum, s32 minPlayerNum) {
 
     for (s32 i = 0; i < maxPlayerNum; i++) {
         NpadController* controller = getNpadController(getPlayerControllerPort(i));
+
         if (i == 0) {
             controller->setAnyControllerMode();
         } else {
@@ -146,6 +151,7 @@ void GamePadSystem::setIsAllowHandheld(bool isAllow) {
 void GamePadSystem::setMaxNpadNum(s32 num) {
     num = sead::Mathi::clamp(num, 1, 9);
     u32 npadIds[9];
+
     for (s32 i = 0; i < num; i++) {
         npadIds[i] = i;
     }
@@ -159,8 +165,10 @@ void GamePadSystem::setMaxNpadNum(s32 num) {
 void GamePadSystem::initSingleJoycon() {
     sead::NinJoyNpadDevice* device = getNpadDevice();
     s32 num = device->getNpadIdUpdateNum();
+
     for (s32 i = 0; i <= num; i++) {
         s32 index = i == num ? 8 : i;
+
         if (device->getNpadStyleTag(index) != nn::hid::NpadStyleTag::NpadStyleJoyDual) {
             continue;
         }
@@ -221,15 +229,18 @@ void GamePadSystem::update() {
     s32 num = device->getNpadIdUpdateNum();
     mIsChangedPadState = false;
     bool isAllowHandheld = true;
+
     for (s32 i = 0; i <= num; i++) {
         s32 index = i == num ? 8 : i;
         s32 style = static_cast<s32>(device->getNpadStyleTag(index));
+
         if (style != mPadStyles[i]) {
             mIsChangedPadState = true;
         }
 
         mPadStyles[i] = style;
         s32 connectState = isPadConnected(i) ? 2 : isPadWaitingConnect(i);
+
         if (mPadConnectStates[i] != connectState) {
             mIsChangedPadState = true;
         }
@@ -259,6 +270,7 @@ void GamePadSystem::update() {
 
     if (mIsEnableAutoHandheld && isAllowHandheld != mIsAllowHandheld) {
         sead::NinJoyNpadDevice* npadDevice = getNpadDevice();
+
         if (isAllowHandheld) {
             npadDevice->setSupportedNpadStyleSet(makeStyleSet(true, true, true, true, true));
         } else {
@@ -270,6 +282,7 @@ void GamePadSystem::update() {
     }
 
     mInvalidateDisconnectFrame = converge(mInvalidateDisconnectFrame, 0, 1);
+
     if (isDisconnectPlayableImpl()) {
         mDisconnectFrame = converge(mDisconnectFrame, 3600, 1);
     } else {
@@ -283,6 +296,7 @@ void GamePadSystem::update() {
  */
 bool GamePadSystem::isDisconnectPlayableImpl() const {
     s32 connectedNum = 0;
+
     for (s32 i = 0; i < mMaxPlayerNum; i++) {
         if (isPadConnected(getPlayerControllerPort(i))) {
             connectedNum++;
@@ -365,11 +379,13 @@ void GamePadSystem::changeTopMenuPlayMode() {
 void GamePadSystem::setAssistMode(bool isAssist, bool isForceDisconnect) {
     sead::NinJoyNpadDevice* device = getNpadDevice();
     device->setNpadJoyHoldType(nn::hid::NpadJoyHoldType(1));
+
     if (isAssist) {
         mMaxPlayerNum = 2;
         mMinPlayerNum = 2;
         device->setNpadIdUpdateNum(2);
         device->setSupportedNpadStyleSet(makeStyleSet(true, true, true, true, true));
+
         for (s32 i = 0; i < mMaxPlayerNum; i++) {
             getNpadController(getPlayerControllerPort(i))->setIndexControllerMode(i);
         }

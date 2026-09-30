@@ -212,6 +212,7 @@ void AnimScaleController::exeCrush() {
     f32 rate = calcNerveRate(this, mParam->_1c);
     mAnimScale.y = calcConvergeVibrationValue(rate, 1.0f, mParam->_20, 0.3f, 4.0f);
     updateScaleXZ();
+
     if (isGreaterStep(this, mParam->_1c)) {
         setNerve(this, &NrvAnimScaleControllerStop);
     }

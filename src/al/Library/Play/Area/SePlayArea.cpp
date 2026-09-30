@@ -17,6 +17,7 @@ void SePlayArea::init(const AreaInitInfo& rInfo) {
     AreaObj::init(rInfo);
     tryGetAreaObjStringArg(&mPlayName, this, "SePlayName");
     bool isStartEnabled = false;
+
     if (tryGetAreaObjArg(&isStartEnabled, this, "IsStartEnabled") && isStartEnabled) {
         validate();
     }

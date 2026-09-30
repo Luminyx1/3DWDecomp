@@ -43,6 +43,7 @@ Scene::Scene(const char* pName) : NerveExecutor(pName), mName(pName) {
  */
 Scene::~Scene() {
     stopPadRumble(this);
+
     if (mAudioDirector) {
         mAudioDirector->finalize();
     }
@@ -85,6 +86,7 @@ void Scene::movement() {
 
     updateNerve();
     control();
+
     if (mAudioKeeper) {
         mAudioKeeper->update();
     }
@@ -213,10 +215,13 @@ void Scene::initLiveActorKitWithGraphics(const GraphicsInitArg& rArg, const Scen
     mLiveActorKit->init(maxCameras, maxViews, isUseCameraRS);
     initPadRumble(this, rInfo);
     mLiveActorKit->initGraphics(rArg, rInfo.mStageName);
+
     if (rArg._e) {
         GraphicsSystemInfo* graphicsInfo = mLiveActorKit->mGraphicsSystemInfo;
+
         if (graphicsInfo) {
             u8* unk = *reinterpret_cast<u8**>(&graphicsInfo->_130[0x240 - 0x130]);
+
             if (unk && isUseCameraRS) {
                 unk[0xe72] = true;
             }
@@ -266,6 +271,7 @@ void Scene::initSceneAudio(const SceneInitInfo& rInfo, const char* pStageName, s
     SeadAudioPlayer* player = audioSystemInfo->getSeadAudioPlayerForSe();
     s32 playerNum = player->getSoundPlayerCount();
     const char* playerNames[20];
+
     for (s32 i = 0; i < playerNum; i++) {
         playerNames[i] = player->getSoundName(SeadAudioPlayer::getSoundPlayerIdFromIndex(i));
     }

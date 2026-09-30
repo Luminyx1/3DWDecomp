@@ -80,10 +80,12 @@ void makeMtxRT(sead::Matrix34f* pMtx, const LiveActor* pActor) {
  */
 void calcAnimFrontGravityPos(LiveActor* pActor, const sead::Vector3f& rFront) {
     sead::Vector3f up = -getGravity(pActor);
+
     if (pActor->getBaseMtx() != nullptr) {
         const sead::Matrix34f* baseMtx = pActor->getBaseMtx();
         sead::Vector3f side;
         side.setCross(rFront, up);
+
         if (isNearZero(side, 0.001f)) {
             up.setCross(rFront, baseMtx->getBase(0));
         }
@@ -588,6 +590,7 @@ f32 calcAngleOnPlaneDegreeToTarget(LiveActor* pActor, const sead::Vector3f& rTar
 f32 calcAngleOnPlaneDegreeToDirectionFixed(LiveActor* pActor, const sead::Vector3f& rDir,
                                            f32 maxDegree) {
     f32 angle = calcAngleOnPlaneDegreeToDirection(pActor, rDir);
+
     if (angle > 0.0f && angle > maxDegree) {
         angle = maxDegree;
     } else if (angle < 0.0f && angle < -maxDegree) {
@@ -656,12 +659,14 @@ bool faceToTarget(LiveActor* pActor, const sead::Vector3f& rTarget, f32 maxDegre
 bool isActorObscured(const LiveActor* pActor, f32 radius, const sead::Vector3f* pOffset) {
     sead::Vector3f cameraPos = pActor->getSceneCameraInfo()->mLookAtCamera->getPos();
     sead::Vector3f pos = pActor->mActorPoseKeeper->mTranslation;
+
     if (pOffset) {
         pos.add(*pOffset);
     }
 
     sead::Vector3f dir = pos - cameraPos;
     CollisionPartsFilterActor filter(pActor);
+
     if (!(radius < 0.0f) && !(dir.squaredLength() < radius * radius)) {
         return false;
     }

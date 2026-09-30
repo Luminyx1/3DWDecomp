@@ -28,6 +28,7 @@ void CameraParamTransfer::setFuncTable(const NameToCameraParamTransferFunc* pTab
  */
 bool CameraParamTransfer::tryTransferParam(CameraPoser_RS* pPrev, CameraPoser_RS* pNext) const {
     CameraParamTransferFunc func = tryFindTransferFunc(pPrev->getName(), pNext->getName());
+
     if (!func) {
         return false;
     }

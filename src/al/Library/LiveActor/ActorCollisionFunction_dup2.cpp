@@ -11,6 +11,7 @@ namespace al {
 namespace {
 inline bool isOnGroundInline(const LiveActor* pActor, u32 checkFrame, f32 margin) {
     Collider* collider = pActor->mCollider;
+
     if (collider) {
         if (!(collider->_110 >= 0.0f) && collider->_264 > checkFrame) {
             return false;
@@ -124,6 +125,7 @@ bool isCollidedCeiling(const LiveActor* pActor) {
  */
 bool isCollidedWallFace(const LiveActor* pActor) {
     Collider* collider = pActor->mCollider;
+
     if (!(collider->_1b8 >= 0.0f)) {
         return false;
     }

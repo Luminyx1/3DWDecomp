@@ -36,6 +36,7 @@ ArchiveEntry* ArchiveHolder::addNewLoadRequestEntry(const sead::SafeString& rFil
 ArchiveEntry* ArchiveHolder::tryFindEntry(const sead::SafeString& rFileName) {
     for (s32 i = 0; i < mSize; i++) {
         ArchiveEntry* entry = mArchiveEntries.get(i);
+
         if (isEqualString(entry->getFileName(), rFileName)) {
             return entry;
         }
@@ -50,6 +51,7 @@ ArchiveEntry* ArchiveHolder::tryFindEntry(const sead::SafeString& rFileName) {
 void ArchiveHolder::waitLoadDoneAll() {
     for (s32 i = 0; i < mSize; i++) {
         ArchiveEntry* entry = mArchiveEntries.get(i);
+
         if (entry->mFileState != FileState::IsLoadDone) {
             entry->waitLoadDone();
         }

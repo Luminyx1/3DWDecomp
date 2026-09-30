@@ -43,6 +43,7 @@ ActionFlagCtrl* ActionFlagCtrl::tryCreate(LiveActor* actor, const char* name) {
         return nullptr;
 
     StringTmp<128> initFileName;
+
     if (!tryGetActorInitFileName(&initFileName, actor, "ActionFlagCtrl", name))
         createFileNameBySuffix(&initFileName, "ActionFlagCtrl", name);
 
@@ -54,6 +55,7 @@ ActionFlagCtrl* ActionFlagCtrl::tryCreate(LiveActor* actor, const char* name) {
 
 inline CtrlFlag getCtrlFlagByKey(ByamlIter iter, const char* name) {
     bool isValid = false;
+
     if (!iter.tryGetBoolByKey(&isValid, name))
         return CtrlFlag::NotFound;
 
@@ -71,6 +73,7 @@ void ActionFlagCtrl::initPost() {
 
     mInfoCount = fileIter.getSize();
     mCtrlInfoArray = new ActionFlagCtrlInfo*[mInfoCount];
+
     for (s32 i = 0; i < mInfoCount; i++) {
         ByamlIter iter;
         fileIter.tryGetIterByIndex(&iter, i);
@@ -87,6 +90,7 @@ void ActionFlagCtrl::initPost() {
         flagCtrlInfo->ctrlFlags[4] = getCtrlFlagByKey(iter, "FaceCtrl");
 
         ByamlIter sensorListIter;
+
         if (iter.tryGetIterByKey(&sensorListIter, "SensorList") && mHitSensorKeeper) {
             flagCtrlInfo->sensorCtrlInfoArray =
                 new ActionSensorCtrlInfo[mHitSensorKeeper->mSensorCount];
@@ -96,6 +100,7 @@ void ActionFlagCtrl::initPost() {
                 sensorInfoArray[j].name = mHitSensorKeeper->getSensor(j)->getName();
 
                 ByamlIter sensorIter;
+
                 if (sensorListIter.tryGetIterByKey(&sensorIter, sensorInfoArray[j].name)) {
                     sensorInfoArray[j].state = getCtrlFlagByKey(sensorIter, "State");
                     tryGetByamlS16(&sensorInfoArray[j].startFrame, sensorIter, "StartFrame");
@@ -109,6 +114,7 @@ void ActionFlagCtrl::initPost() {
 void ActionFlagCtrl::start(const char* name) {
     mCurrentCtrlInfo = findFlagInfo(name);
     mIsUpdateNeeded = false;
+
     if (!mCurrentCtrlInfo)
         return;
 
@@ -119,6 +125,7 @@ void ActionFlagCtrl::start(const char* name) {
 ActionFlagCtrlInfo* ActionFlagCtrl::findFlagInfo(const char* name) const {
     for (s32 i = 0; i < mInfoCount; i++) {
         ActionFlagCtrlInfo* flagInfo = mCtrlInfoArray[i];
+
         if (isEqualStringCase(flagInfo->actionName, name))
             return flagInfo;
     }
@@ -158,6 +165,7 @@ void ActionFlagCtrl::startCtrlSensor() {
 
     for (s32 i = 0; i < mHitSensorKeeper->mSensorCount; i++) {
         ActionSensorCtrlInfo* sensor = mCurrentCtrlInfo->sensorCtrlInfoArray;
+
         if (sensor[i].startFrame > 0) {
             mIsUpdateNeeded = true;
             continue;
@@ -193,11 +201,13 @@ void ActionFlagCtrl::updateCtrlSensor(f32 frame, f32 frameRate) {
         ActionSensorCtrlInfo* ctrlInfo = mCurrentCtrlInfo->sensorCtrlInfoArray;
 
         f32 startFrame = ctrlInfo[i].startFrame;
+
         if (startFrame > 0 &&
             alAnimFunction::checkPass(startFrame, frame, frameRate))
             validateHitSensor(mParentActor, ctrlInfo[i].name);
 
         f32 endFrame = ctrlInfo[i].endFrame;
+
         if (endFrame > 0 &&
             alAnimFunction::checkPass(endFrame, frame, frameRate))
             invalidateHitSensor(mParentActor, ctrlInfo[i].name);

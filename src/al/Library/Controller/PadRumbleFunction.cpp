@@ -67,6 +67,7 @@ void startPadRumble(const al::LiveActor* pActor, const char* pName, s32 port, bo
  */
 void startPadRumbleNo3D(const al::LiveActor* pActor, const char* pName, s32 port, bool isFlag) {
     al::PadRumbleDirector* director = getPadRumbleDirector(pActor);
+
     if (!director) {
         return;
     }
@@ -77,6 +78,7 @@ void startPadRumbleNo3D(const al::LiveActor* pActor, const char* pName, s32 port
     }
 
     s32 playerNum = al::getPlayerNumMaxComplete(pActor);
+
     for (s32 i = 0; i < playerNum; i++) {
         if (al::isPlayerDead(pActor, i)) {
             continue;
@@ -141,6 +143,7 @@ void startPadRumbleWithParam(al::PadRumbleDirector* pDirector, const sead::Vecto
 void startPadRumble(const al::LiveActor* pActor, const char* pName, f32 near, f32 far, s32 port,
                     bool isFlag) {
     al::PadRumbleParam param(near, far);
+
     if (al::PadRumbleDirector* director = getPadRumbleDirector(pActor)) {
         director->startRumbleNo3D(pName, param, port, isFlag);
     }
@@ -191,6 +194,7 @@ void startPadRumbleWithParam(const al::LiveActor* pActor, const sead::Vector3f& 
 void startPadRumblePos(const al::LiveActor* pActor, const sead::Vector3f& rPos, const char* pName,
                        f32 near, f32 far, s32 port, bool isFlag) {
     al::PadRumbleDirector* director = getPadRumbleDirector(pActor);
+
     if (!director) {
         return;
     }
@@ -201,6 +205,7 @@ void startPadRumblePos(const al::LiveActor* pActor, const sead::Vector3f& rPos, 
     }
 
     s32 playerNum = al::getPlayerNumMaxComplete(pActor);
+
     for (s32 i = 0; i < playerNum; i++) {
         if (al::isPlayerDead(pActor, i)) {
             continue;
@@ -347,6 +352,7 @@ void startPadRumbleLoopWithParam(al::PadRumbleDirector* pDirector, const char* p
 void startPadRumbleLoop(const al::LiveActor* pActor, const char* pName, const sead::Vector3f* pPos,
                         f32 near, f32 far, s32 port, bool isFlag) {
     al::PadRumbleDirector* director = getPadRumbleDirector(pActor);
+
     if (!director) {
         return;
     }
@@ -357,6 +363,7 @@ void startPadRumbleLoop(const al::LiveActor* pActor, const char* pName, const se
     }
 
     s32 playerNum = al::getPlayerNumMaxComplete(pActor);
+
     for (s32 i = 0; i < playerNum; i++) {
         if (al::isPlayerDead(pActor, i)) {
             continue;
@@ -423,12 +430,14 @@ void startPadRumbleLoopNo3DWithParam(al::PadRumbleDirector* pDirector, const cha
 void startPadRumbleLoopNo3D(const al::LiveActor* pActor, const char* pName,
                             const sead::Vector3f* pPos, s32 port, bool isFlag) {
     al::PadRumbleDirector* director = getPadRumbleDirector(pActor);
+
     if (port >= 0) {
         director->startRumbleLoopNo3D(pName, pPos, al::PadRumbleParam(), port, isFlag);
         return;
     }
 
     s32 playerNum = al::getPlayerNumMaxComplete(pActor);
+
     for (s32 i = 0; i < playerNum; i++) {
         if (al::isPlayerDead(pActor, i)) {
             continue;
@@ -476,12 +485,14 @@ void stopPadRumbleLoop(al::PadRumbleDirector* pDirector, const char* pName,
 void stopPadRumbleLoop(const al::LiveActor* pActor, const char* pName, const sead::Vector3f* pPos,
                        s32 port) {
     al::PadRumbleDirector* director = getPadRumbleDirector(pActor);
+
     if (port >= 0) {
         director->stopRumbleLoop(pName, pPos, port);
         return;
     }
 
     s32 playerNum = al::getPlayerNumMaxComplete(pActor);
+
     for (s32 i = 0; i < playerNum; i++) {
         if (al::isPlayerDead(pActor, i)) {
             continue;
@@ -542,12 +553,14 @@ void changePadRumbleLoopVolmue(const al::LiveActor* pActor, const char* pName,
                                const sead::Vector3f* pPos, f32 volumeLeft, f32 volumeRight,
                                s32 port) {
     al::PadRumbleDirector* director = getPadRumbleDirector(pActor);
+
     if (port >= 0) {
         director->changeRumbleLoopVolume(pName, pPos, volumeLeft, volumeRight, port);
         return;
     }
 
     s32 playerNum = al::getPlayerNumMaxComplete(pActor);
+
     for (s32 i = 0; i < playerNum; i++) {
         if (al::isPlayerDead(pActor, i)) {
             continue;
@@ -590,12 +603,14 @@ void changePadRumbleLoopPitch(const al::LiveActor* pActor, const char* pName,
                               const sead::Vector3f* pPos, f32 pitchLeft, f32 pitchRight,
                               s32 port) {
     al::PadRumbleDirector* director = getPadRumbleDirector(pActor);
+
     if (port >= 0) {
         director->changeRumbleLoopPitch(pName, pPos, pitchLeft, pitchRight, port);
         return;
     }
 
     s32 playerNum = al::getPlayerNumMaxComplete(pActor);
+
     for (s32 i = 0; i < playerNum; i++) {
         if (al::isPlayerDead(pActor, i)) {
             continue;
@@ -621,6 +636,7 @@ void startPadRumbleDirectValue(const al::LiveActor* pActor, f32 volumeLeft, f32 
                                f32 frequencyLeft, f32 volumeRight, f32 pitchRight,
                                f32 frequencyRight, s32 port) {
     al::PadRumbleDirector* director = getPadRumbleDirector(pActor);
+
     if (port >= 0) {
         director->startRumbleDirectValue(volumeLeft, pitchLeft, frequencyLeft, volumeRight,
                                          pitchRight, frequencyRight, port);
@@ -628,6 +644,7 @@ void startPadRumbleDirectValue(const al::LiveActor* pActor, f32 volumeLeft, f32 
     }
 
     s32 playerNum = al::getPlayerNumMaxComplete(pActor);
+
     for (s32 i = 0; i < playerNum; i++) {
         if (al::isPlayerDead(pActor, i)) {
             continue;
@@ -645,12 +662,14 @@ void startPadRumbleDirectValue(const al::LiveActor* pActor, f32 volumeLeft, f32 
  */
 void stopPadRumbleDirectValue(const al::LiveActor* pActor, s32 port) {
     al::PadRumbleDirector* director = getPadRumbleDirector(pActor);
+
     if (port >= 0) {
         director->stopRumbleDirectValue(port);
         return;
     }
 
     s32 playerNum = al::getPlayerNumMaxComplete(pActor);
+
     for (s32 i = 0; i < playerNum; i++) {
         if (al::isPlayerDead(pActor, i)) {
             continue;
@@ -671,12 +690,14 @@ void stopPadRumbleDirectValue(const al::LiveActor* pActor, s32 port) {
 void startPadRumbleWithVolume(const al::LiveActor* pActor, const char* pName, f32 volumeLeft,
                               f32 volumeRight, s32 port) {
     al::PadRumbleDirector* director = getPadRumbleDirector(pActor);
+
     if (port >= 0) {
         director->startRumbleWithVolume(pName, volumeLeft, volumeRight, port);
         return;
     }
 
     s32 playerNum = al::getPlayerNumMaxComplete(pActor);
+
     for (s32 i = 0; i < playerNum; i++) {
         if (al::isPlayerDead(pActor, i)) {
             continue;

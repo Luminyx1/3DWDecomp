@@ -63,6 +63,7 @@ f32 ShadowMaskBase::getShadowIntensity() const {
     }
 
     u8 intensity;
+
     if (mIsApplyShadowIntensityUser) {
         intensity = mShadowIntensityUser;
     } else {
@@ -75,6 +76,7 @@ f32 ShadowMaskBase::getShadowIntensity() const {
     }
 
     f32 rate = intensity * (1.0f / 255.0f);
+
     if (mHost && !mIsIgnoreHostAlpha) {
         rate *= mHost->mGlobalAlphaLastFrame;
     }
@@ -105,6 +107,7 @@ void ShadowMaskBase::readParam(const ByamlIter& rIter) {
 
     if (const char* categoryName = tryGetByamlKeyStringOrNULL(rIter, "DrawCategory")) {
         s32 category = -1;
+
         for (s32 i = 0; i < ShadowMaskDrawCategory::size(); i++) {
             if (isEqualString(categoryName, ShadowMaskDrawCategory::text(i))) {
                 category = i;

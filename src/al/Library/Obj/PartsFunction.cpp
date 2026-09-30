@@ -64,6 +64,7 @@ CollisionObj* createCollisionObjMtx(const LiveActor* pParent, const ActorInitInf
 PartsModel* createPartsModel(LiveActor* pParent, const ActorInitInfo& rInfo, const char* pName,
                              const char* pArchiveName, const sead::Matrix34f* pJointMtx) {
     PartsModel* partsModel = new PartsModel(pName);
+
     if (!pJointMtx) {
         pJointMtx = pParent->getBaseMtx();
     }
@@ -152,6 +153,7 @@ PartsModel* createPartsModelSuffix(LiveActor* pParent, const ActorInitInfo& rInf
                                    const char* pName, const char* pArchiveName,
                                    const char* pSuffix, const sead::Matrix34f* pJointMtx) {
     PartsModel* partsModel = new PartsModel(pName);
+
     if (!pJointMtx) {
         pJointMtx = pParent->getBaseMtx();
     }

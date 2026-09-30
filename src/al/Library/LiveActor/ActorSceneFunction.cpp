@@ -16,6 +16,7 @@ namespace al {
  */
 bool isStopScene(const LiveActor* pActor) {
     SceneStopCtrl* ctrl = pActor->getSceneInfo()->sceneStopCtrl;
+
     if (ctrl->_4 != 0) {
         return false;
     }
@@ -109,6 +110,7 @@ bool isDisasterMode(LiveActor* pActor) {
  */
 void stopAllPadRumble(LiveActor* pActor) {
     PadRumbleDirector* director = pActor->getSceneInfo()->padRumbleDirector;
+
     if (director != nullptr) {
         director->stopAllRumble();
     }

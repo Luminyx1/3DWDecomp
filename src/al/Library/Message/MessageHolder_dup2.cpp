@@ -24,11 +24,13 @@ namespace {
 inline bool isMessageTagNamed(const MessageProjectEx* pProject, const MessageTag& rTag,
                               const char* pGroupName, const char* pTagName) {
     const char* groupName = pProject->getTagGroupNameByIndex(rTag.getGroup());
+
     if (!groupName || !isEqualString(pGroupName, groupName)) {
         return false;
     }
 
     const char* tagName = pProject->getTagNameByIndex(rTag.getGroup(), rTag.getType());
+
     if (!tagName) {
         return false;
     }
@@ -164,6 +166,7 @@ const char* getMessageTagName(const IUseMessageSystem* pMsgSystem, s32 groupInde
  */
 bool isExistMessageTag(const char16_t* pMessage) {
     s32 size = calcMessageSizeWithoutNullCharacter(pMessage, nullptr);
+
     for (s32 i = 0; i < size; i++) {
         if (isMessageTagMark(pMessage[i])) {
             return true;
@@ -181,8 +184,10 @@ bool isExistMessageTag(const char16_t* pMessage) {
  */
 s32 calcMessageSizeWithoutNullCharacter(const char16_t* pStart, const char16_t* pEnd) {
     const char16_t* ptr = pStart;
+
     while (true) {
         u32 step;
+
         if (*ptr == 0xe) {
             step = static_cast<u16>(ptr[3] + 8);
         } else if (*ptr == 0xf) {
@@ -194,6 +199,7 @@ s32 calcMessageSizeWithoutNullCharacter(const char16_t* pStart, const char16_t* 
         }
 
         ptr = reinterpret_cast<const char16_t*>(reinterpret_cast<const u8*>(ptr) + step);
+
         if (pEnd && ptr == pEnd) {
             break;
         }
@@ -210,9 +216,11 @@ s32 calcMessageSizeWithoutNullCharacter(const char16_t* pStart, const char16_t* 
  */
 bool isExistMessageTagTextPaneAnim(const IUseMessageSystem* pMsgSystem, const char16_t* pMessage) {
     s32 size = calcMessageSizeWithoutNullCharacter(pMessage, nullptr);
+
     for (s32 i = 0; i < size;) {
         if (isMessageTagMark(pMessage[i])) {
             MessageTag tag(&pMessage[i]);
+
             if (isMessageTagNamed(pMsgSystem, tag, "Eui", "Speed") ||
                 isMessageTagNamed(pMsgSystem, tag, "Eui", "Wait") ||
                 isMessageTagNamed(pMsgSystem, tag, "Eui", "Flush")) {
@@ -238,14 +246,17 @@ bool isExistMessageTagTextPaneAnim(const IUseMessageSystem* pMsgSystem, const ch
 bool tryGetMessageTagTextAnim(sead::BufferedSafeString* pOut, const IUseMessageSystem* pMsgSystem,
                               const char16_t* pMessage) {
     s32 size = calcMessageSizeWithoutNullCharacter(pMessage, nullptr);
+
     for (s32 i = 0; i < size;) {
         if (isMessageTagMark(pMessage[i])) {
             MessageTag tag(&pMessage[i]);
+
             if (isMessageTagNamed(pMsgSystem, tag, "System", "PageBreak")) {
                 return false;
             }
 
             const char* name;
+
             if (isMessageTagNamed(pMsgSystem, tag, "TextAnim", "Cold")) {
                 name = "Cold";
             } else if (isMessageTagNamed(pMsgSystem, tag, "TextAnim", "Run")) {
@@ -316,9 +327,11 @@ bool tryGetMessageTagVoiceNameInPage(sead::BufferedSafeString* pOut,
                                      const IUseMessageSystem* pMsgSystem,
                                      const char16_t* pMessage) {
     s32 size = calcMessageSizeWithoutNullCharacter(pMessage, nullptr);
+
     for (s32 i = 0; i < size;) {
         if (isMessageTagMark(pMessage[i])) {
             MessageTag tag(&pMessage[i]);
+
             if (isMessageTagNamed(pMsgSystem, tag, "System", "PageBreak")) {
                 return false;
             }
@@ -345,6 +358,7 @@ bool tryGetMessageTagVoiceNameInPage(sead::BufferedSafeString* pOut,
  */
 bool isMessageTagPictFont(const IUseMessageSystem* pMsgSystem, s32 groupIndex) {
     const char* groupName = getMessageTagGroupName(pMsgSystem, groupIndex);
+
     if (!groupName) {
         return false;
     }
@@ -360,6 +374,7 @@ bool isMessageTagPictFont(const IUseMessageSystem* pMsgSystem, s32 groupIndex) {
  */
 bool isMessageTagDeviceFont(const IUseMessageSystem* pMsgSystem, s32 groupIndex) {
     const char* groupName = getMessageTagGroupName(pMsgSystem, groupIndex);
+
     if (!groupName) {
         return false;
     }
@@ -375,9 +390,11 @@ bool isMessageTagDeviceFont(const IUseMessageSystem* pMsgSystem, s32 groupIndex)
  */
 bool isExistMessageTagPadSwitch(const IUseMessageSystem* pMsgSystem, const char16_t* pMessage) {
     s32 size = calcMessageSizeWithoutNullCharacter(pMessage, nullptr);
+
     for (s32 i = 0; i < size;) {
         if (isMessageTagMark(pMessage[i])) {
             MessageTag tag(&pMessage[i]);
+
             if (isMessageTagPadStyle(pMsgSystem, tag.getGroup(), tag.getType()) ||
                 isMessageTagPadPair(pMsgSystem, tag.getGroup(), tag.getType())) {
                 return true;
@@ -398,6 +415,7 @@ inline bool isMessageTagGroupAndName(const IUseMessageSystem* pMsgSystem, s32 gr
                                      bool isStartWith) {
     const char* tagName = getMessageTagName(pMsgSystem, groupIndex, tagIndex);
     const char* groupName = getMessageTagGroupName(pMsgSystem, groupIndex);
+
     if (!tagName || !groupName) {
         return false;
     }
@@ -771,6 +789,7 @@ void replaceMessageTagData(sead::BufferedSafeStringBase<char16_t>* pOut,
 s32 calcMessageSizeWithoutTag(const char16_t* pStart, const char16_t* pEnd) {
     s32 tagSize = 0;
     const char16_t* ptr = pStart;
+
     while (true) {
         if (*ptr == 0xe) {
             u16 size = ptr[3] + 8;
@@ -835,6 +854,7 @@ bool isExistStageMessage(const IUseMessageSystem* pMsgSystem, const char* pFileN
 bool isExistLabelInLayoutMessage(const IUseMessageSystem* pMsgSystem, const char* pFileName,
                                  const char* pLabel) {
     MessageHolder* holder = pMsgSystem->getMessageSystem()->getLayoutMessageHolder(pFileName);
+
     if (!holder) {
         return false;
     }
@@ -870,6 +890,7 @@ bool isExistLabelInSystemMessage(const IUseMessageSystem* pMsgSystem, const char
 bool isExistLabelInStageMessage(const IUseMessageSystem* pMsgSystem, const char* pFileName,
                                 const char* pLabel) {
     MessageHolder* holder = pMsgSystem->getMessageSystem()->getStageMessageHolder(pFileName);
+
     if (!holder) {
         return false;
     }
@@ -914,6 +935,7 @@ s32 calcSystemMessageCharacterNumWithoutTag(const IUseMessageSystem* pMsgSystem,
 const char16_t* getLayoutMessageString(const IUseMessageSystem* pMsgSystem, const char* pFileName,
                                        const char* pLabel) {
     MessageHolder* holder = pMsgSystem->getMessageSystem()->getLayoutMessageHolder(pFileName);
+
     if (!holder) {
         return u"NULL";
     }
@@ -950,6 +972,7 @@ const char16_t* getStageMessageString(const IUseMessageSystem* pMsgSystem, const
                                       const char* pLabel) {
     MessageHolder* holder = pMsgSystem->getMessageSystem()->getStageMessageHolder(pFileName);
     const char16_t* text = nullptr;
+
     if (holder) {
         text = holder->tryGetText(pLabel);
     }
@@ -968,6 +991,7 @@ const char16_t* getStageMessageString(const IUseMessageSystem* pMsgSystem, const
 bool tryGetStageMessageString(const char16_t** pOut, const IUseMessageSystem* pMsgSystem,
                               const char* pFileName, const char* pLabel) {
     MessageHolder* holder = pMsgSystem->getMessageSystem()->getStageMessageHolder(pFileName);
+
     if (!holder) {
         return false;
     }
@@ -986,6 +1010,7 @@ bool tryGetStageMessageString(const char16_t** pOut, const IUseMessageSystem* pM
 const char16_t* getLayoutMessageString(const IUseMessageSystem* pMsgSystem, const char* pFileName,
                                        s32 index) {
     MessageHolder* holder = pMsgSystem->getMessageSystem()->getLayoutMessageHolder(pFileName);
+
     if (!holder) {
         return u"NULL";
     }
@@ -1003,6 +1028,7 @@ const char16_t* getLayoutMessageString(const IUseMessageSystem* pMsgSystem, cons
 const char16_t* getSystemMessageString(const IUseMessageSystem* pMsgSystem, const char* pFileName,
                                        s32 index) {
     MessageHolder* holder = pMsgSystem->getMessageSystem()->getSystemMessageHolder(pFileName);
+
     if (!holder) {
         return u"NULL";
     }
@@ -1018,6 +1044,7 @@ const char16_t* getSystemMessageString(const IUseMessageSystem* pMsgSystem, cons
  */
 s32 getSystemMessageLabelNum(const IUseMessageSystem* pMsgSystem, const char* pFileName) {
     MessageHolder* holder = pMsgSystem->getMessageSystem()->getSystemMessageHolder(pFileName);
+
     if (!holder) {
         return 0;
     }
@@ -1033,6 +1060,7 @@ s32 getSystemMessageLabelNum(const IUseMessageSystem* pMsgSystem, const char* pF
  */
 s32 getLayoutMessageLabelNum(const IUseMessageSystem* pMsgSystem, const char* pFileName) {
     MessageHolder* holder = pMsgSystem->getMessageSystem()->getLayoutMessageHolder(pFileName);
+
     if (!holder) {
         return 0;
     }
@@ -1076,6 +1104,7 @@ void getMessageTagParamString(sead::BufferedSafeStringBase<char16_t>* pOut,
                               s32 paramIndex) {
     const u8* param = rTag.getParamPtr(0);
     u16 size = *reinterpret_cast<const u16*>(param);
+
     for (s32 i = 0; i < paramIndex; i++) {
         param += size + 2;
         size = *reinterpret_cast<const u16*>(param);
@@ -1121,6 +1150,7 @@ void getLayoutMessageLabelString(sead::BufferedSafeString* pOut, const IUseMessa
  */
 char16_t* getMessageLine(char16_t* pDst, u32 dstLength, const char16_t* pSrc, u32 lineIndex) {
     u32 line = 0;
+
     if (lineIndex != 0) {
         while (*pSrc) {
             if (isMessageTagMark(*pSrc)) {
@@ -1144,6 +1174,7 @@ char16_t* getMessageLine(char16_t* pDst, u32 dstLength, const char16_t* pSrc, u3
         while (isMessageTagMark(*pSrc)) {
             *pDst++ = *pSrc;
             MessageTag tag(pSrc);
+
             for (s32 j = 0; j < tag.getSkipLength(); j++) {
                 *pDst++ = *pSrc++;
             }
@@ -1171,6 +1202,7 @@ char16_t* getMessageLine(char16_t* pDst, u32 dstLength, const char16_t* pSrc, u3
  */
 s32 countMessageLine(const char16_t* pMessage) {
     s32 count = 1;
+
     while (*pMessage) {
         if (isMessageTagMark(*pMessage)) {
             MessageTag tag(pMessage);
@@ -1225,6 +1257,7 @@ bool copyMessageWithoutTag(char16_t* pDst, s32 dstSize, const char16_t* pSrc, s3
  */
 s32 copyMessageWithTag(char16_t* pDst, s32 dstSize, const char16_t* pSrc) {
     s32 size = calcMessageSizeWithoutNullCharacter(pSrc, nullptr);
+
     for (s32 i = 0; i < size; i++) {
         *pDst++ = *pSrc++;
     }
@@ -1246,6 +1279,7 @@ s32 copyMessageWithTagOnlyCurrentPage(const IUseMessageSystem* pMsgSystem, char1
                                       s32 dstSize, const char16_t* pSrc, s32 page) {
     const char16_t* start = getMessageWithPage(pMsgSystem, pSrc, page);
     const char16_t* ptr = start;
+
     while (*ptr) {
         if (isMessageTagPageBreak(pMsgSystem, ptr)) {
             *pDst = 0;
@@ -1280,16 +1314,19 @@ const char16_t* getMessageWithPage(const IUseMessageSystem* pMsgSystem, const ch
     }
 
     s32 pageCount = 0;
+
     while (*pMessage) {
         if (isMessageTagMark(*pMessage)) {
             MessageTag tag(pMessage);
             pMessage += tag.getSkipLength();
+
             if (isMessageTagNamed(pMsgSystem, tag, "System", "PageBreak")) {
                 if (*pMessage == '\n') {
                     pMessage++;
                 }
 
                 pageCount++;
+
                 if (pageCount == page) {
                     return pMessage;
                 }
@@ -1312,12 +1349,15 @@ const char16_t* getMessageWithPage(const IUseMessageSystem* pMsgSystem, const ch
 s32 countMessagePage(const IUseMessageSystem* pMsgSystem, const char16_t* pMessage, s32 length) {
     s32 pageCount = 1;
     s32 i = 0;
+
     while ((length < 1 || i < length) && *pMessage) {
         s32 step;
+
         if (isMessageTagMark(*pMessage)) {
             MessageTag tag(pMessage);
             pMessage += tag.getSkipLength();
             step = tag.getSkipLength();
+
             if (isMessageTagNamed(pMsgSystem, tag, "System", "PageBreak")) {
                 pageCount++;
             }
@@ -1347,6 +1387,7 @@ const char16_t* getNextMessagePage(const IUseMessageSystem* pMsgSystem, const ch
 
         MessageTag tag(pMessage);
         pMessage += tag.getSkipLength();
+
         if (isMessageTagNamed(pMsgSystem, tag, "System", "PageBreak")) {
             if (*pMessage == '\n') {
                 return pMessage + 1;

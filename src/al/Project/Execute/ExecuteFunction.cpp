@@ -13,6 +13,7 @@ namespace alExecutorFunction {
  */
 s32 calcExecutorListNumMax(const al::ExecuteOrder* pOrders, s32 orderNum, const char* pListName) {
     s32 count = 0;
+
     for (s32 i = 0; i < orderNum; i++) {
         if (isListName(pOrders[i], pListName)) {
             count++;

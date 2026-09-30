@@ -68,6 +68,7 @@ ActionPadAndCameraCtrl* ActionPadAndCameraCtrl::tryCreate(const LiveActor* pActo
     }
 
     StringTmp<256> fileName;
+
     if (!tryGetActorInitFileName(&fileName, pActor, "PadAndCameraCtrl", pSuffix) &&
         !tryGetActorAnimInitFileName(&fileName, pActor, "PadAndCameraCtrl", pSuffix)) {
         createFileNameBySuffix(&fileName, "PadAndCameraCtrl", pSuffix);
@@ -91,6 +92,7 @@ ActionPadAndCameraCtrl* ActionPadAndCameraCtrl::tryCreate(const LiveActor* pActo
                                                           const sead::Vector3f* pPos,
                                                           Resource* pResource) {
     StringTmp<256> fileName;
+
     if (!tryGetActorInitFileIterAndName(nullptr, &fileName, pResource, "PadAndCameraCtrl",
                                         nullptr)) {
         createFileNameBySuffix(&fileName, "PadAndCameraCtrl", nullptr);
@@ -109,6 +111,7 @@ ActionPadAndCameraCtrl* ActionPadAndCameraCtrl::tryCreate(const LiveActor* pActo
  */
 void ActionPadAndCameraCtrl::startAction(const char* pActionName) {
     mActionName = pActionName;
+
     for (s32 i = 0; i < mInfoCount; i++) {
         ActionPadAndCameraCtrlInfo* info = &mInfos[i];
         info->mIsActive = false;
@@ -117,11 +120,13 @@ void ActionPadAndCameraCtrl::startAction(const char* pActionName) {
 
     for (s32 i = 0; i < mInfoCount; i++) {
         ActionPadAndCameraCtrlInfo* info = &mInfos[i];
+
         if (!isEqualString(mActionName, info->mActionName)) {
             continue;
         }
 
         info->mIsActive = true;
+
         if (info->mStartFrame <= 0) {
             updatePadAndCamera(info);
             info->mLastUpdateFrame = 0.0f;
@@ -132,6 +137,7 @@ void ActionPadAndCameraCtrl::startAction(const char* pActionName) {
 void ActionPadAndCameraCtrl::updatePadAndCamera(const ActionPadAndCameraCtrlInfo* pInfo) {
     if (pInfo->mIsUseDemo) {
         startCameraShakeImpl(mParentActor, pInfo->mCameraShakeName, pInfo->mActionName);
+
         if (pInfo->mIsUsePadRumbleKeeper) {
             if (pInfo->mPadRumbleName) {
                 alPadRumbleFunction::startPadRumble(mParentActor, pInfo->mPadRumbleName,
@@ -142,8 +148,10 @@ void ActionPadAndCameraCtrl::updatePadAndCamera(const ActionPadAndCameraCtrlInfo
         }
 
         s32 playerNum = getPlayerNumMaxComplete(mParentActor);
+
         for (s32 i = 0; i < playerNum; i++) {
             s32 port = getPlayerPort(mParentActor, i);
+
             if (port < 1) {
                 continue;
             }
@@ -162,6 +170,7 @@ void ActionPadAndCameraCtrl::updatePadAndCamera(const ActionPadAndCameraCtrlInfo
     }
 
     f32 distance;
+
     if (tryFindNearestPlayerDisatanceFromTarget(&distance, mParentActor, *mPos) &&
         !isOverDistance(distance, pInfo->mDistanceInvalid)) {
         if (isOverDistance(distance, pInfo->mDistanceFar)) {
@@ -174,6 +183,7 @@ void ActionPadAndCameraCtrl::updatePadAndCamera(const ActionPadAndCameraCtrlInfo
     }
 
     s32 playerNum = getPlayerNumMaxComplete(mParentActor);
+
     for (s32 i = 0; i < playerNum; i++) {
         if (isPlayerDead(mParentActor, i) &&
             (getPlayerPort(mParentActor, i) < 1 || !pInfo->mIsUseDeadPlayer)) {
@@ -181,11 +191,13 @@ void ActionPadAndCameraCtrl::updatePadAndCamera(const ActionPadAndCameraCtrlInfo
         }
 
         s32 port = getPlayerPort(mParentActor, i);
+
         if (pInfo->mIsUsePadRumbleKeeper && port != mPadRumbleKeeper->getPort()) {
             continue;
         }
 
         f32 playerDistance = (getPlayerPos(mParentActor, i) - *mPos).length();
+
         if (isOverDistance(playerDistance, pInfo->mDistanceInvalid)) {
             continue;
         }
@@ -208,6 +220,7 @@ void ActionPadAndCameraCtrl::updatePadAndCamera(const ActionPadAndCameraCtrlInfo
 void ActionPadAndCameraCtrl::update(f32 frame, f32 frameRate) {
     for (s32 i = 0; i < mInfoCount; i++) {
         ActionPadAndCameraCtrlInfo* info = &mInfos[i];
+
         if (!info->mIsActive) {
             continue;
         }
@@ -239,6 +252,7 @@ ActionPadAndCameraCtrl::ActionPadAndCameraCtrl(const LiveActor* pActor, const se
                                                const char* pSuffix)
     : mParentActor(pActor), mPos(pPos) {
     StringTmp<128> fileName;
+
     if (!tryGetActorInitFileName(&fileName, pActor, "PadAndCameraCtrl", pSuffix) &&
         !tryGetActorAnimInitFileName(&fileName, pActor, "PadAndCameraCtrl", pSuffix)) {
         createFileNameBySuffix(&fileName, "PadAndCameraCtrl", pSuffix);
@@ -256,6 +270,7 @@ void ActionPadAndCameraCtrl::init(const u8* pYaml, bool isUnused) {
     ByamlIter iter(pYaml);
     mInfoCount = iter.getSize();
     mInfos = new ActionPadAndCameraCtrlInfo[mInfoCount];
+
     for (s32 i = 0; i < mInfoCount; i++) {
         ActionPadAndCameraCtrlInfo* info = &mInfos[i];
         ByamlIter infoIter;

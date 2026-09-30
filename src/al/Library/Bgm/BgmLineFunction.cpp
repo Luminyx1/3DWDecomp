@@ -17,6 +17,7 @@
 namespace {
 al::BgmDirector* getUpperLayerBgmDirector(const al::IUseAudioKeeper* pUser) {
     al::IUseAudioKeeper* upperUser = al::getUpperLayerAudioUser(pUser);
+
     if (upperUser == nullptr) {
         return nullptr;
     }
@@ -26,6 +27,7 @@ al::BgmDirector* getUpperLayerBgmDirector(const al::IUseAudioKeeper* pUser) {
 
 al::AudioEventController* getAudioEventController(const al::IUseAudioKeeper* pUser) {
     al::AudioKeeper* audioKeeper = pUser->getAudioKeeper();
+
     if (audioKeeper == nullptr) {
         return nullptr;
     }
@@ -35,6 +37,7 @@ al::AudioEventController* getAudioEventController(const al::IUseAudioKeeper* pUs
 
 al::AudioRequestKeeperSyncedBgm* getAudioRequestKeeperSyncedBgm(const al::IUseAudioKeeper* pUser) {
     al::AudioKeeper* audioKeeper = pUser->getAudioKeeper();
+
     if (audioKeeper == nullptr) {
         return nullptr;
     }
@@ -44,6 +47,7 @@ al::AudioRequestKeeperSyncedBgm* getAudioRequestKeeperSyncedBgm(const al::IUseAu
 
 al::BgmRhythmCtrl* getActiveBgmRhythmCtrl(const al::IUseAudioKeeper* pUser) {
     al::BgmDirector* director = al::getActiveBgmDirector(pUser);
+
     if (director == nullptr) {
         return nullptr;
     }
@@ -60,6 +64,7 @@ namespace al {
  */
 BgmDirector* getBgmDirector(const IUseAudioKeeper* pUser) {
     AudioKeeper* audioKeeper = pUser->getAudioKeeper();
+
     if (audioKeeper == nullptr || audioKeeper->getBgmKeeper() == nullptr) {
         return nullptr;
     }
@@ -74,6 +79,7 @@ BgmDirector* getBgmDirector(const IUseAudioKeeper* pUser) {
  */
 BgmDirector* tryGetBgmDirector(const IUseAudioKeeper* pUser) {
     AudioKeeper* audioKeeper = pUser->getAudioKeeper();
+
     if (audioKeeper == nullptr || audioKeeper->getBgmKeeper() == nullptr) {
         return nullptr;
     }
@@ -88,6 +94,7 @@ BgmDirector* tryGetBgmDirector(const IUseAudioKeeper* pUser) {
  */
 IUseAudioKeeper* getUpperLayerAudioUser(const IUseAudioKeeper* pUser) {
     AudioKeeper* audioKeeper = pUser->getAudioKeeper();
+
     if (audioKeeper == nullptr) {
         return nullptr;
     }
@@ -102,6 +109,7 @@ IUseAudioKeeper* getUpperLayerAudioUser(const IUseAudioKeeper* pUser) {
  */
 IUseAudioKeeper* tryGetUpperLayerAudioUser(const IUseAudioKeeper* pUser) {
     AudioKeeper* audioKeeper = pUser->getAudioKeeper();
+
     if (audioKeeper == nullptr) {
         return nullptr;
     }
@@ -120,11 +128,13 @@ BgmDirector* getActiveBgmDirector(const IUseAudioKeeper* pUser) {
     }
 
     IUseAudioKeeper* upperUser = getUpperLayerAudioUser(pUser);
+
     if (upperUser == nullptr) {
         return getBgmDirector(pUser);
     }
 
     BgmDirector* upperDirector = getBgmDirector(upperUser);
+
     if (upperDirector == nullptr) {
         return getBgmDirector(pUser);
     }
@@ -147,8 +157,10 @@ BgmDirector* tryGetActiveBgmDirector(const IUseAudioKeeper* pUser) {
     }
 
     IUseAudioKeeper* upperUser = tryGetUpperLayerAudioUser(pUser);
+
     if (upperUser != nullptr) {
         BgmDirector* upperDirector = tryGetBgmDirector(upperUser);
+
         if (upperDirector != nullptr && upperDirector->getActiveBgmLine() != nullptr) {
             return upperDirector;
         }
@@ -164,11 +176,13 @@ BgmDirector* tryGetActiveBgmDirector(const IUseAudioKeeper* pUser) {
  */
 const char* getCurPlayingBgmPlayName(const IUseAudioKeeper* pUser) {
     BgmDirector* director = getActiveBgmDirector(pUser);
+
     if (director == nullptr) {
         return nullptr;
     }
 
     BgmLine* line = director->getActiveBgmLine();
+
     if (line == nullptr) {
         return nullptr;
     }
@@ -185,6 +199,7 @@ const char* getCurPlayingBgmPlayName(const IUseAudioKeeper* pUser) {
  */
 void startSequenceBgm(const IUseAudioKeeper* pUser, const char* pName, s32 fadeInFrames, s32 startDelayFrames) {
     BgmDirector* director = getUpperLayerBgmDirector(pUser);
+
     if (director == nullptr) {
         return;
     }
@@ -205,6 +220,7 @@ void startSequenceBgm(const IUseAudioKeeper* pUser, const char* pName, s32 fadeI
 void startBgm(const IUseAudioKeeper* pUser, const char* pName, s32 fadeInFrames, s32 startDelayFrames,
               s32 fadeOutFrames, s32 unk) {
     BgmDirector* director = getBgmDirector(pUser);
+
     if (director == nullptr) {
         return;
     }
@@ -220,6 +236,7 @@ void startBgm(const IUseAudioKeeper* pUser, const char* pName, s32 fadeInFrames,
  */
 void startSequenceBgm(const IUseAudioKeeper* pUser, const BgmPlayingRequest& rRequest) {
     BgmDirector* director = getUpperLayerBgmDirector(pUser);
+
     if (director == nullptr) {
         return;
     }
@@ -234,6 +251,7 @@ void startSequenceBgm(const IUseAudioKeeper* pUser, const BgmPlayingRequest& rRe
  */
 void startBgm(const IUseAudioKeeper* pUser, const BgmPlayingRequest& rRequest) {
     BgmDirector* director = getBgmDirector(pUser);
+
     if (director == nullptr) {
         return;
     }
@@ -249,6 +267,7 @@ void startBgm(const IUseAudioKeeper* pUser, const BgmPlayingRequest& rRequest) {
  */
 void stopSequenceBgm(const IUseAudioKeeper* pUser, const char* pName, s32 fadeOutFrames) {
     BgmDirector* director = getUpperLayerBgmDirector(pUser);
+
     if (director == nullptr) {
         return;
     }
@@ -265,6 +284,7 @@ void stopSequenceBgm(const IUseAudioKeeper* pUser, const char* pName, s32 fadeOu
  */
 void stopBgm(const IUseAudioKeeper* pUser, const char* pName, s32 fadeOutFrames, s32 unk) {
     BgmDirector* director = getBgmDirector(pUser);
+
     if (director == nullptr) {
         return;
     }
@@ -279,6 +299,7 @@ void stopBgm(const IUseAudioKeeper* pUser, const char* pName, s32 fadeOutFrames,
  */
 void stopSequenceBgm(const IUseAudioKeeper* pUser, const BgmPlayingRequest& rRequest) {
     BgmDirector* director = getUpperLayerBgmDirector(pUser);
+
     if (director == nullptr) {
         return;
     }
@@ -293,6 +314,7 @@ void stopSequenceBgm(const IUseAudioKeeper* pUser, const BgmPlayingRequest& rReq
  */
 void stopBgm(const IUseAudioKeeper* pUser, const BgmPlayingRequest& rRequest) {
     BgmDirector* director = getBgmDirector(pUser);
+
     if (director == nullptr) {
         return;
     }
@@ -307,11 +329,13 @@ void stopBgm(const IUseAudioKeeper* pUser, const BgmPlayingRequest& rRequest) {
  */
 void stopActiveSequenceBgm(const IUseAudioKeeper* pUser, s32 fadeOutFrames) {
     const char* name = getCurPlayingBgmPlayName(pUser);
+
     if (name == nullptr) {
         return;
     }
 
     BgmDirector* director = getUpperLayerBgmDirector(pUser);
+
     if (director == nullptr) {
         return;
     }
@@ -326,6 +350,7 @@ void stopActiveSequenceBgm(const IUseAudioKeeper* pUser, s32 fadeOutFrames) {
  */
 void prepareSequenceBgm(const IUseAudioKeeper* pUser, const BgmPlayingRequest& rRequest) {
     BgmDirector* director = getUpperLayerBgmDirector(pUser);
+
     if (director == nullptr) {
         return;
     }
@@ -340,6 +365,7 @@ void prepareSequenceBgm(const IUseAudioKeeper* pUser, const BgmPlayingRequest& r
  */
 void prepareBgm(const IUseAudioKeeper* pUser, const BgmPlayingRequest& rRequest) {
     BgmDirector* director = getBgmDirector(pUser);
+
     if (director == nullptr) {
         return;
     }
@@ -354,6 +380,7 @@ void prepareBgm(const IUseAudioKeeper* pUser, const BgmPlayingRequest& rRequest)
  */
 void startSequencePreparedBgm(const IUseAudioKeeper* pUser, const char* pName) {
     BgmDirector* director = getUpperLayerBgmDirector(pUser);
+
     if (director == nullptr) {
         return;
     }
@@ -368,6 +395,7 @@ void startSequencePreparedBgm(const IUseAudioKeeper* pUser, const char* pName) {
  */
 void startPreparedBgm(const IUseAudioKeeper* pUser, const char* pName) {
     BgmDirector* director = getBgmDirector(pUser);
+
     if (director == nullptr) {
         return;
     }
@@ -386,22 +414,26 @@ void startPreparedBgm(const IUseAudioKeeper* pUser, const char* pName) {
 void startSequenceBgmWithAreaCheck(const IUseAudioKeeper* pUser, bool isRestart, s32 fadeInFrames,
                                    s32 startDelayFrames, s32 fadeOutFrames) {
     IUseAudioKeeper* upperUser = getUpperLayerAudioUser(pUser);
+
     if (upperUser == nullptr) {
         return;
     }
 
     AudioEventController* controller = getAudioEventController(pUser);
+
     if (controller == nullptr || controller->isInBgmStopArea()) {
         return;
     }
 
     const char* name = controller->getBgmPlayNameByAreaChecker(true);
+
     if (name != nullptr) {
         BgmPlayingRequest request(name, fadeInFrames, startDelayFrames, fadeOutFrames, isRestart);
         startBgm(upperUser, request);
     }
 
     const char* situationName = controller->getBgmSituationNameByAreaChecker();
+
     if (situationName != nullptr) {
         changeBgmSituation(upperUser, situationName);
     }
@@ -414,11 +446,13 @@ void startSequenceBgmWithAreaCheck(const IUseAudioKeeper* pUser, bool isRestart,
  */
 void changeBgmSituation(const IUseAudioKeeper* pUser, const char* pName) {
     BgmDirector* director = getBgmDirector(pUser);
+
     if (director != nullptr) {
         director->changeSituation(pName);
     }
 
     BgmDirector* upperDirector = getUpperLayerBgmDirector(pUser);
+
     if (upperDirector != nullptr) {
         upperDirector->changeSituation(pName);
     }
@@ -432,6 +466,7 @@ void changeBgmSituation(const IUseAudioKeeper* pUser, const char* pName) {
  */
 void pauseSequenceBgm(const IUseAudioKeeper* pUser, const char* pName, s32 fadeFrames) {
     BgmDirector* director = getUpperLayerBgmDirector(pUser);
+
     if (director == nullptr) {
         return;
     }
@@ -447,6 +482,7 @@ void pauseSequenceBgm(const IUseAudioKeeper* pUser, const char* pName, s32 fadeF
  */
 void pauseBgm(const IUseAudioKeeper* pUser, const char* pName, s32 fadeFrames) {
     BgmDirector* director = getBgmDirector(pUser);
+
     if (director == nullptr) {
         return;
     }
@@ -462,6 +498,7 @@ void pauseBgm(const IUseAudioKeeper* pUser, const char* pName, s32 fadeFrames) {
  */
 void resumeSequenceBgm(const IUseAudioKeeper* pUser, const char* pName, s32 fadeFrames) {
     BgmDirector* director = getUpperLayerBgmDirector(pUser);
+
     if (director == nullptr) {
         return;
     }
@@ -477,6 +514,7 @@ void resumeSequenceBgm(const IUseAudioKeeper* pUser, const char* pName, s32 fade
  */
 void resumeBgm(const IUseAudioKeeper* pUser, const char* pName, s32 fadeFrames) {
     BgmDirector* director = getBgmDirector(pUser);
+
     if (director == nullptr) {
         return;
     }
@@ -490,6 +528,7 @@ void resumeBgm(const IUseAudioKeeper* pUser, const char* pName, s32 fadeFrames) 
  */
 void prepareBgmWithAreaCheck(const IUseAudioKeeper* pUser) {
     AudioEventController* controller = getAudioEventController(pUser);
+
     if (controller == nullptr || controller->isInBgmStopArea()) {
         return;
     }
@@ -509,6 +548,7 @@ void prepareBgmWithAreaCheck(const IUseAudioKeeper* pUser) {
 void startBgmWithAreaCheck(const IUseAudioKeeper* pUser, bool isRestart, s32 fadeInFrames, s32 startDelayFrames,
                            s32 fadeOutFrames) {
     AudioEventController* controller = getAudioEventController(pUser);
+
     if (controller == nullptr || controller->isInBgmStopArea()) {
         return;
     }
@@ -517,6 +557,7 @@ void startBgmWithAreaCheck(const IUseAudioKeeper* pUser, bool isRestart, s32 fad
                               fadeOutFrames, isRestart);
     startBgm(pUser, request);
     const char* situationName = controller->getBgmSituationNameByAreaChecker();
+
     if (situationName != nullptr) {
         changeBgmSituation(pUser, situationName);
     }
@@ -529,6 +570,7 @@ void startBgmWithAreaCheck(const IUseAudioKeeper* pUser, bool isRestart, s32 fad
  */
 void pauseActiveBgm(const IUseAudioKeeper* pUser, s32 fadeFrames) {
     BgmDirector* director = getActiveBgmDirector(pUser);
+
     if (director == nullptr) {
         return;
     }
@@ -543,6 +585,7 @@ void pauseActiveBgm(const IUseAudioKeeper* pUser, s32 fadeFrames) {
  */
 void resumeActiveBgm(const IUseAudioKeeper* pUser, s32 fadeFrames) {
     BgmDirector* director = getActiveBgmDirector(pUser);
+
     if (director == nullptr) {
         return;
     }
@@ -557,6 +600,7 @@ void resumeActiveBgm(const IUseAudioKeeper* pUser, s32 fadeFrames) {
  */
 void pauseIslandBgm(const IUseAudioKeeper* pUser, s32 fadeFrames) {
     BgmDirector* director = getActiveBgmDirector(pUser);
+
     if (director == nullptr) {
         return;
     }
@@ -571,6 +615,7 @@ void pauseIslandBgm(const IUseAudioKeeper* pUser, s32 fadeFrames) {
  */
 void resumeIslandBgm(const IUseAudioKeeper* pUser, s32 fadeFrames) {
     BgmDirector* director = getActiveBgmDirector(pUser);
+
     if (director == nullptr) {
         return;
     }
@@ -585,6 +630,7 @@ void resumeIslandBgm(const IUseAudioKeeper* pUser, s32 fadeFrames) {
  */
 void pauseOceanBgm(const IUseAudioKeeper* pUser, s32 fadeFrames) {
     BgmDirector* director = getActiveBgmDirector(pUser);
+
     if (director == nullptr) {
         return;
     }
@@ -599,6 +645,7 @@ void pauseOceanBgm(const IUseAudioKeeper* pUser, s32 fadeFrames) {
  */
 void resumeOceanBgm(const IUseAudioKeeper* pUser, s32 fadeFrames) {
     BgmDirector* director = getActiveBgmDirector(pUser);
+
     if (director == nullptr) {
         return;
     }
@@ -613,6 +660,7 @@ void resumeOceanBgm(const IUseAudioKeeper* pUser, s32 fadeFrames) {
  */
 bool isPauseActiveBgm(const IUseAudioKeeper* pUser) {
     BgmDirector* director = getActiveBgmDirector(pUser);
+
     if (director == nullptr) {
         return false;
     }
@@ -628,6 +676,7 @@ bool isPauseActiveBgm(const IUseAudioKeeper* pUser) {
  */
 bool isPauseBgm(const IUseAudioKeeper* pUser, const char* pName) {
     BgmDirector* director = getActiveBgmDirector(pUser);
+
     if (director == nullptr) {
         return false;
     }
@@ -642,6 +691,7 @@ bool isPauseBgm(const IUseAudioKeeper* pUser, const char* pName) {
  */
 void stopAllBgm(const IUseAudioKeeper* pUser, s32 fadeOutFrames) {
     BgmDirector* director = getBgmDirector(pUser);
+
     if (director == nullptr) {
         return;
     }
@@ -657,6 +707,7 @@ void stopAllBgm(const IUseAudioKeeper* pUser, s32 fadeOutFrames) {
 void stopAllSequenceBgm(const IUseAudioKeeper* pUser, s32 fadeOutFrames) {
     IUseAudioKeeper* upperUser = pUser->getAudioKeeper()->getUpperLayerAudioUser();
     BgmDirector* director = getBgmDirector(upperUser);
+
     if (upperUser == nullptr || director == nullptr) {
         return;
     }
@@ -671,6 +722,7 @@ void stopAllSequenceBgm(const IUseAudioKeeper* pUser, s32 fadeOutFrames) {
  */
 void tryStopAllBgm(const IUseAudioKeeper* pUser, s32 fadeOutFrames) {
     BgmDirector* director = getBgmDirector(pUser);
+
     if (director == nullptr) {
         return;
     }
@@ -678,6 +730,7 @@ void tryStopAllBgm(const IUseAudioKeeper* pUser, s32 fadeOutFrames) {
     director->tryStopAllBgm(fadeOutFrames);
     IUseAudioKeeper* upperUser = pUser->getAudioKeeper()->getUpperLayerAudioUser();
     BgmDirector* upperDirector = getBgmDirector(upperUser);
+
     if (upperUser == nullptr || upperDirector == nullptr) {
         return;
     }
@@ -697,6 +750,7 @@ bool isBgmCurrentlyPlaying(const IUseAudioKeeper* pUser, const char* pName) {
     }
 
     BgmDirector* director = getBgmDirector(pUser);
+
     if (director == nullptr) {
         return false;
     }
@@ -714,6 +768,7 @@ void tryPauseBgmIfDifferBgmArea(const LiveActor* pActor, const sead::Vector3f& r
     AudioEventController* controller = getAudioEventController(pActor);
     const char* curName = controller->getBgmPlayNameInThisPosition(getTrans(pActor));
     const char* nextName = controller->getBgmPlayNameInThisPosition(rPos);
+
     if (curName == nullptr) {
         return;
     }
@@ -734,11 +789,13 @@ void tryPauseBgmIfDifferBgmArea(const LiveActor* pActor, const sead::Vector3f& r
  */
 void disableChangeSituation(const IUseAudioKeeper* pUser) {
     BgmDirector* director = getBgmDirector(pUser);
+
     if (director != nullptr) {
         director->setIsDisableChangeSituation(true);
     }
 
     BgmDirector* upperDirector = getUpperLayerBgmDirector(pUser);
+
     if (upperDirector != nullptr) {
         upperDirector->setIsDisableChangeSituation(true);
     }
@@ -750,11 +807,13 @@ void disableChangeSituation(const IUseAudioKeeper* pUser) {
  */
 void enableChangeSituation(const IUseAudioKeeper* pUser) {
     BgmDirector* director = getBgmDirector(pUser);
+
     if (director != nullptr) {
         director->setIsDisableChangeSituation(false);
     }
 
     BgmDirector* upperDirector = getUpperLayerBgmDirector(pUser);
+
     if (upperDirector != nullptr) {
         upperDirector->setIsDisableChangeSituation(false);
     }
@@ -779,6 +838,7 @@ const char* getBgmLineSituationName(const IUseAudioKeeper* pUser, const char* pL
  */
 bool isEqualBgmLineSituationName(const IUseAudioKeeper* pUser, const char* pLineName, const char* pName) {
     const char* situationName = getBgmLineSituationName(pUser, pLineName);
+
     if (situationName == nullptr) {
         return false;
     }
@@ -794,11 +854,13 @@ bool isEqualBgmLineSituationName(const IUseAudioKeeper* pUser, const char* pLine
  */
 bool isEqualBgmActiveLineSituationName(const IUseAudioKeeper* pUser, const char* pName) {
     BgmDirector* director = getBgmDirector(pUser);
+
     if (director == nullptr) {
         return false;
     }
 
     BgmLine* line = director->getActiveBgmLine();
+
     if (line == nullptr || line->getSituationName() == nullptr) {
         return false;
     }
@@ -850,6 +912,7 @@ void stopBgmSyncedCurBgmBeat(const IUseAudioKeeper* pUser, const BgmPlayingReque
  */
 void changeLineAutoStopMode(const IUseAudioKeeper* pUser, const char* pLineName, bool isAutoStop) {
     BgmDirector* director = getActiveBgmDirector(pUser);
+
     if (director == nullptr) {
         return;
     }
@@ -864,6 +927,7 @@ void changeLineAutoStopMode(const IUseAudioKeeper* pUser, const char* pLineName,
  */
 void disableLineChange(const IUseAudioKeeper* pUser, bool isDisable) {
     BgmDirector* director = getActiveBgmDirector(pUser);
+
     if (director == nullptr) {
         return;
     }
@@ -877,6 +941,7 @@ void disableLineChange(const IUseAudioKeeper* pUser, bool isDisable) {
  */
 void disableBgmStart(const IUseAudioKeeper* pUser) {
     BgmDirector* director = getBgmDirector(pUser);
+
     if (director == nullptr) {
         return;
     }
@@ -890,6 +955,7 @@ void disableBgmStart(const IUseAudioKeeper* pUser) {
  */
 void enableBgmStart(const IUseAudioKeeper* pUser) {
     BgmDirector* director = getBgmDirector(pUser);
+
     if (director == nullptr) {
         return;
     }
@@ -905,6 +971,7 @@ void enableBgmStart(const IUseAudioKeeper* pUser) {
  */
 void changeBgmVolume(const IUseAudioKeeper* pUser, f32 volume, s32 frames) {
     BgmDirector* director = getBgmDirector(pUser);
+
     if (director == nullptr) {
         return;
     }
@@ -918,6 +985,7 @@ void changeBgmVolume(const IUseAudioKeeper* pUser, f32 volume, s32 frames) {
  */
 void disableVolumeChange(const IUseAudioKeeper* pUser) {
     BgmDirector* director = getBgmDirector(pUser);
+
     if (director == nullptr) {
         return;
     }
@@ -931,6 +999,7 @@ void disableVolumeChange(const IUseAudioKeeper* pUser) {
  */
 void enableVolumeChange(const IUseAudioKeeper* pUser) {
     BgmDirector* director = getBgmDirector(pUser);
+
     if (director == nullptr) {
         return;
     }
@@ -947,6 +1016,7 @@ void enableVolumeChange(const IUseAudioKeeper* pUser) {
  */
 void changeIslandMapBgmVolume(const IUseAudioKeeper* pUser, s32 unk1, s32 unk2, bool unk3) {
     BgmDirector* director = getBgmDirector(pUser);
+
     if (director == nullptr) {
         return;
     }
@@ -962,6 +1032,7 @@ void changeIslandMapBgmVolume(const IUseAudioKeeper* pUser, s32 unk1, s32 unk2, 
  */
 s32 getBgmSamplePos(const IUseAudioKeeper* pUser, const char* pName) {
     BgmDirector* director = getBgmDirector(pUser);
+
     if (director == nullptr) {
         return -1;
     }
@@ -985,6 +1056,7 @@ void tryPrepareActionFirstBgm(const LiveActor* pActor, const char* pActionName) 
  */
 void setActiveBgmPitch(const IUseAudioKeeper* pUser, f32 pitch) {
     BgmDirector* director = getActiveBgmDirector(pUser);
+
     if (director == nullptr) {
         return;
     }
@@ -1001,8 +1073,10 @@ void setActiveBgmPitch(const IUseAudioKeeper* pUser, f32 pitch) {
 bool isEnableRhythmAnim(const IUseAudioKeeper* pUser, const char* pName) {
     if (pName != nullptr) {
         const char* curName = getCurPlayingBgmPlayName(pUser);
+
         if (curName != nullptr && isEqualString(pName, curName)) {
             BgmRhythmCtrl* rhythmCtrl = getActiveBgmRhythmCtrl(pUser);
+
             if (rhythmCtrl == nullptr) {
                 return false;
             }
@@ -1021,6 +1095,7 @@ bool isEnableRhythmAnim(const IUseAudioKeeper* pUser, const char* pName) {
  */
 bool isTriggerRestartBgm(const IUseAudioKeeper* pUser) {
     BgmRhythmCtrl* rhythmCtrl = getActiveBgmRhythmCtrl(pUser);
+
     if (rhythmCtrl == nullptr) {
         return false;
     }
@@ -1036,6 +1111,7 @@ bool isTriggerRestartBgm(const IUseAudioKeeper* pUser) {
  */
 bool isTriggerBeat(const IUseAudioKeeper* pUser, s32 beat) {
     BgmRhythmCtrl* rhythmCtrl = getActiveBgmRhythmCtrl(pUser);
+
     if (rhythmCtrl == nullptr) {
         return false;
     }
@@ -1051,6 +1127,7 @@ bool isTriggerBeat(const IUseAudioKeeper* pUser, s32 beat) {
  */
 bool isTriggerBeatForAnime(const IUseAudioKeeper* pUser, s32 beat) {
     BgmRhythmCtrl* rhythmCtrl = getActiveBgmRhythmCtrl(pUser);
+
     if (rhythmCtrl == nullptr) {
         return false;
     }
@@ -1065,6 +1142,7 @@ bool isTriggerBeatForAnime(const IUseAudioKeeper* pUser, s32 beat) {
  */
 bool isTriggerRhythm(const IUseAudioKeeper* pUser) {
     BgmRhythmCtrl* rhythmCtrl = getActiveBgmRhythmCtrl(pUser);
+
     if (rhythmCtrl == nullptr) {
         return false;
     }
@@ -1079,6 +1157,7 @@ bool isTriggerRhythm(const IUseAudioKeeper* pUser) {
  */
 bool isTriggerRhythmAnimChange(const IUseAudioKeeper* pUser) {
     BgmRhythmCtrl* rhythmCtrl = getActiveBgmRhythmCtrl(pUser);
+
     if (rhythmCtrl == nullptr) {
         return false;
     }
@@ -1093,6 +1172,7 @@ bool isTriggerRhythmAnimChange(const IUseAudioKeeper* pUser) {
  */
 s32 getRhythmAnimType(const IUseAudioKeeper* pUser) {
     BgmRhythmCtrl* rhythmCtrl = getActiveBgmRhythmCtrl(pUser);
+
     if (rhythmCtrl == nullptr) {
         return -1;
     }
@@ -1107,6 +1187,7 @@ s32 getRhythmAnimType(const IUseAudioKeeper* pUser) {
  */
 f32 getRhythmAnimFrame(const IUseAudioKeeper* pUser) {
     BgmRhythmCtrl* rhythmCtrl = getActiveBgmRhythmCtrl(pUser);
+
     if (rhythmCtrl == nullptr) {
         return -1.0f;
     }
@@ -1121,6 +1202,7 @@ f32 getRhythmAnimFrame(const IUseAudioKeeper* pUser) {
  */
 f32 getBeatRate(const IUseAudioKeeper* pUser) {
     BgmRhythmCtrl* rhythmCtrl = getActiveBgmRhythmCtrl(pUser);
+
     if (rhythmCtrl == nullptr) {
         return -1.0f;
     }
@@ -1135,6 +1217,7 @@ f32 getBeatRate(const IUseAudioKeeper* pUser) {
  */
 f32 getBeatRateForAnime(const IUseAudioKeeper* pUser) {
     BgmRhythmCtrl* rhythmCtrl = getActiveBgmRhythmCtrl(pUser);
+
     if (rhythmCtrl == nullptr) {
         return -1.0f;
     }
@@ -1149,6 +1232,7 @@ f32 getBeatRateForAnime(const IUseAudioKeeper* pUser) {
  */
 f32 getCurBeat(const IUseAudioKeeper* pUser) {
     BgmRhythmCtrl* rhythmCtrl = getActiveBgmRhythmCtrl(pUser);
+
     if (rhythmCtrl == nullptr) {
         return -1.0f;
     }
@@ -1163,6 +1247,7 @@ f32 getCurBeat(const IUseAudioKeeper* pUser) {
  */
 f32 getBeatPerFrame(const IUseAudioKeeper* pUser) {
     BgmRhythmCtrl* rhythmCtrl = getActiveBgmRhythmCtrl(pUser);
+
     if (rhythmCtrl == nullptr) {
         return -1.0f;
     }
@@ -1177,6 +1262,7 @@ f32 getBeatPerFrame(const IUseAudioKeeper* pUser) {
  */
 f32 getFrameRate(const IUseAudioKeeper* pUser) {
     BgmRhythmCtrl* rhythmCtrl = getActiveBgmRhythmCtrl(pUser);
+
     if (rhythmCtrl == nullptr) {
         return -1.0f;
     }

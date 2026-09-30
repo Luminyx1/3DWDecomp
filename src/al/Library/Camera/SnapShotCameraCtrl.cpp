@@ -56,6 +56,7 @@ void SnapShotCameraCtrl::start(f32 fovyDegree) {
 void SnapShotCameraCtrl::load(const ByamlIter& rIter) {
     SnapShotCameraParam* param = mParam;
     ByamlIter paramIter;
+
     if (!tryGetByamlIterByKey(&paramIter, rIter, "SnapShotParam")) {
         return;
     }
@@ -84,6 +85,7 @@ void SnapShotCameraCtrl::update(const sead::LookAtCamera& rCamera,
     sead::Vector3f cameraPos = rCamera.getPos();
     mIsInInk = isInInk(pCollision, cameraPos, mIsLongRange ? 3000.0f : 400.0f);
     mCollision = pCollision;
+
     if (!isNerve(this, &NrvSnapShotCameraCtrlWait)) {
         return;
     }
@@ -92,6 +94,7 @@ void SnapShotCameraCtrl::update(const sead::LookAtCamera& rCamera,
         f32 fovyTarget = mFovyDegreeTarget;
         f32 prevFovy = mFovyDegree;
         f32 nextFovy;
+
         if (pInput->isHoldSnapShotZoomIn()) {
             nextFovy = fovyTarget - 2.0f;
         } else {
@@ -100,6 +103,7 @@ void SnapShotCameraCtrl::update(const sead::LookAtCamera& rCamera,
 
         f32 minFovy = mParam->hasMinFovyDegree ? mParam->minFovyDegree : 8.0f;
         f32 maxFovy;
+
         if (mParam->hasMaxFovyDegree) {
             maxFovy = mParam->maxFovyDegree;
         } else {
@@ -109,6 +113,7 @@ void SnapShotCameraCtrl::update(const sead::LookAtCamera& rCamera,
         mFovyDegreeTarget =
             lerpValue(0.3f, mFovyDegreeTarget, sead::Mathf::clamp(nextFovy, minFovy, maxFovy));
         mFovyDegree = lerpValue(0.3f, mFovyDegree, mFovyDegreeTarget);
+
         if (getAudioKeeper() && sead::Mathf::abs(mFovyDegree - prevFovy) > 0.2f) {
             tryHoldSeWithParam(this, "PgZoom",
                                1.0f - (mFovyDegree - minFovy) / (maxFovy - minFovy), nullptr);
@@ -119,6 +124,7 @@ void SnapShotCameraCtrl::update(const sead::LookAtCamera& rCamera,
         f32 prevRoll = mRollDegree;
         f32 rollTarget = mRollTarget;
         f32 nextRoll;
+
         if (pInput->isHoldSnapShotRollLeft()) {
             nextRoll = rollTarget - 3.0f;
         } else {
@@ -127,6 +133,7 @@ void SnapShotCameraCtrl::update(const sead::LookAtCamera& rCamera,
 
         mRollTarget = lerpValue(0.2f, mRollTarget, sead::Mathf::clamp(nextRoll, -90.0f, 90.0f));
         mRollDegree = lerpValue(0.15f, mRollDegree, mRollTarget);
+
         if (getAudioKeeper() && sead::Mathf::abs(mRollDegree - prevRoll) > 0.2f) {
             tryHoldSeWithParam(this, "PgRoll", sead::Mathf::abs(mRollDegree), nullptr);
         }
@@ -135,6 +142,7 @@ void SnapShotCameraCtrl::update(const sead::LookAtCamera& rCamera,
     if (mIsValidLookAtOffset) {
         f32 speed = mIsValidMove ? 400.0f : 50.0f;
         f32 limit = mIsValidMove ? 3500.0f : 500.0f;
+
         if (!isNearZero(mSafeLookAtOffsetTarget - mLookAtOffsetTarget, 0.5f)) {
             mSafeLookAtOffsetTarget.set(mLookAtOffsetTarget);
         }
@@ -145,6 +153,7 @@ void SnapShotCameraCtrl::update(const sead::LookAtCamera& rCamera,
 
         sead::Vector3f move = {0.0f, 0.0f, 0.0f};
         sead::Vector2f stick = {0.0f, 0.0f};
+
         if (pInput->tryCalcSnapShotMoveStick(&stick)) {
             sead::Vector3f front = rCamera.getAt() - rCamera.getPos();
             sead::Vector3f prevOffsetTarget = mLookAtOffsetTarget;
@@ -153,6 +162,7 @@ void SnapShotCameraCtrl::update(const sead::LookAtCamera& rCamera,
             rotateVectorDegree(&up, up, front, mRollDegree);
             normalize(&up);
             f32 moveSpeed = speed * getRotationScaler();
+
             if (!isNearZero(stick.x, 0.001f)) {
                 sead::Vector3f side;
                 side.setCross(front, up);
@@ -170,6 +180,7 @@ void SnapShotCameraCtrl::update(const sead::LookAtCamera& rCamera,
                 sead::Vector3f prevTarget = mLookAtOffsetTarget;
                 lerpVec(&mLookAtOffsetTarget, mLookAtOffsetTarget, target, 0.3f);
                 sead::Vector3f checkPos = cameraPos + mLookAtOffsetTarget;
+
                 if (isInInk(pCollision, checkPos, mIsLongRange ? 3000.0f : 400.0f)) {
                     mLookAtOffsetTarget.set(prevTarget);
                     mIsInInk = true;
@@ -179,6 +190,7 @@ void SnapShotCameraCtrl::update(const sead::LookAtCamera& rCamera,
             if (mSceneInfo->isValidLimitAtY && mLookAtOffsetTarget.y < 0.0f) {
                 f32 atY = rCamera.getAt().y;
                 f32 limitY = mSceneInfo->limitAtY;
+
                 if (mLookAtOffsetTarget.y + atY < limitY) {
                     mLookAtOffsetTarget.y = sead::Mathf::min(limitY, atY) - atY;
                 }
@@ -242,6 +254,7 @@ void SnapShotCameraCtrl::makeLookAtCameraPost(sead::LookAtCamera* pCamera) {
             pCamera->getAt() + mLookAtOffset - sead::Vector3f(0.0f, 101.0f, 0.0f);
         sead::Vector3f atHitPos;
         sead::Vector3f atHitNormal;
+
         if (isInWaterArea(mAreaObj, at, lowerAt, &atHitPos, &atHitNormal)) {
             mLookAtOffsetTarget.y = atHitPos.y - pCamera->getAt().y + 101.0f;
             mLookAtOffset.y = atHitPos.y - pCamera->getAt().y + 101.0f;
@@ -296,6 +309,7 @@ void SnapShotCameraCtrl::exeReset() {
     mSafeLookAtOffsetTarget.set(mLookAtOffsetTarget);
     mLookAtOffset = rate * mSafeLookAtOffsetTarget;
     mSafeLookAtOffset.set(mLookAtOffset);
+
     if (isGreaterEqualStep(this, mResetStep)) {
         mRollDegree = 0.0f;
         mRollTarget = 0.0f;

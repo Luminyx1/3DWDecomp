@@ -32,11 +32,13 @@ void CameraParamMoveLimit::load(const ByamlIter& rIter) {
     mWaterHeight = 0.0f;
     mPauseOffset.set(sead::Vector3f::zero);
     mPauseOffsetTarget.set(sead::Vector3f::zero);
+
     if (!rIter.tryGetIterByKey(&moveLimitIter, "MoveLimit")) {
         return;
     }
 
     tryGetByamlF32(&mRotYDegree, moveLimitIter, "BaseAngleH");
+
     if (tryGetByamlF32(&mPlus.x, moveLimitIter, "PlusX")) {
         mHasPlusX = true;
     }
@@ -103,6 +105,7 @@ void CameraParamMoveLimit::pauseInterpolate(sead::LookAtCamera* pCamera, sead::V
 
     mPauseOffsetTarget = at - pCamera->getAt();
     lerpVec(&mPauseOffset, mPauseOffset, mPauseOffsetTarget, 0.02f);
+
     if (isNearZero(mPauseOffset - mPauseOffsetTarget, 0.001f)) {
         mIsPauseInterpolate = false;
         mPauseOffset.set(mPauseOffsetTarget);
@@ -119,6 +122,7 @@ void CameraParamMoveLimit::apply(sead::LookAtCamera* pCamera) {
         sead::Matrix34f mtxRotateY = sead::Matrix34f::ident;
         rotateMtxYDirDegree(&mtxRotateY, mtxRotateY, -mRotYDegree);
         viewAt.setMul(mtxRotateY, viewAt);
+
         if (mIsPauseInterpolate) {
             pauseInterpolate(pCamera, viewAt);
             return;
@@ -139,8 +143,10 @@ void CameraParamMoveLimit::apply(sead::LookAtCamera* pCamera) {
         sead::Matrix34f mtxRotateY = sead::Matrix34f::ident;
         rotateMtxYDirDegree(&mtxRotateY, mtxRotateY, -mRotYDegree);
         viewAt.setMul(mtxRotateY, viewAt);
+
         if (mHasWaterHeight) {
             bool isLimitY = false;
+
             if (mHasPlusX) {
                 viewAt.x = viewAt.x > mPlus.x ? mPlus.x : viewAt.x;
             }

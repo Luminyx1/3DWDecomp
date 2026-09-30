@@ -41,6 +41,7 @@ ByamlIter::ByamlIter(const u8* pData) : mData(pData) {
     }
 
     u32 offset = getHeader()->getDataOffset();
+
     if (!offset) {
         return;
     }
@@ -104,6 +105,7 @@ bool ByamlIter::isExistKey(const char* pKey) const {
     }
 
     s32 index = getKeyIndex(pKey);
+
     if (index < 0) {
         return false;
     }
@@ -132,6 +134,7 @@ s32 ByamlIter::getSize() const {
     }
 
     ByamlDataType type = getContainerType(mRootNode);
+
     if (type == ByamlDataType::Array || type == ByamlDataType::Hash) {
         return *reinterpret_cast<const u32*>(mRootNode) >> 8;
     }
@@ -146,6 +149,7 @@ s32 ByamlIter::getSize() const {
  */
 ByamlIter ByamlIter::getIterByIndex(s32 index) const {
     ByamlData data;
+
     if (!getByamlDataByIndex(&data, index)) {
         return ByamlIter();
     }
@@ -192,6 +196,7 @@ bool ByamlIter::getByamlDataByIndex(ByamlData* pData, s32 index) const {
  */
 ByamlIter ByamlIter::getIterByKey(const char* pKey) const {
     ByamlData data;
+
     if (!getByamlDataByKey(&data, pKey)) {
         return ByamlIter();
     }
@@ -219,6 +224,7 @@ bool ByamlIter::getByamlDataByKey(ByamlData* pData, const char* pKey) const {
     }
 
     s32 index = getKeyIndex(pKey);
+
     if (index < 0) {
         return false;
     }
@@ -256,6 +262,7 @@ bool ByamlIter::getByamlDataAndKeyName(ByamlData* pData, const char** pKey, s32 
 
     ByamlHashIter iter(mRootNode);
     const ByamlHashPair* pair = iter.getPairByIndex(index);
+
     if (!pair) {
         return false;
     }
@@ -299,6 +306,7 @@ bool ByamlIter::tryGetIterByIndex(ByamlIter* pIter, s32 index) const {
  */
 bool ByamlIter::tryGetIterAndKeyNameByIndex(ByamlIter* pIter, const char** pKey, s32 index) const {
     ByamlData data;
+
     if (getByamlDataAndKeyName(&data, pKey, index)) {
         if (isContainerType(data.getType())) {
             *pIter = ByamlIter(mData, &mData[data.getValue()]);
@@ -332,6 +340,7 @@ bool ByamlIter::tryGetIterByKey(ByamlIter* pIter, const char* pKey) const {
  */
 bool ByamlIter::tryGetStringByKey(const char** pValue, const char* pKey) const {
     ByamlData data;
+
     if (!getByamlDataByKey(&data, pKey)) {
         return false;
     }
@@ -364,6 +373,7 @@ bool ByamlIter::tryConvertString(const char** pValue, const ByamlData* pData) co
  */
 bool ByamlIter::tryGetBinaryByKey(const u8** pValue, s32* pSize, const char* pKey) const {
     ByamlData data;
+
     if (!getByamlDataByKey(&data, pKey)) {
         return false;
     }
@@ -397,6 +407,7 @@ bool ByamlIter::tryConvertBinary(const u8** pValue, s32* pSize, const ByamlData*
  */
 bool ByamlIter::tryGetIntByKey(s32* pValue, const char* pKey) const {
     ByamlData data;
+
     if (!getByamlDataByKey(&data, pKey)) {
         return false;
     }
@@ -427,6 +438,7 @@ bool ByamlIter::tryConvertInt(s32* pValue, const ByamlData* pData) const {
  */
 bool ByamlIter::tryGetUIntByKey(u32* pValue, const char* pKey) const {
     ByamlData data;
+
     if (!getByamlDataByKey(&data, pKey)) {
         return false;
     }
@@ -447,6 +459,7 @@ bool ByamlIter::tryGetUIntByKey(u32* pValue, const char* pKey) const {
 bool ByamlIter::tryConvertUInt(u32* pValue, const ByamlData* pData) const {
     if (pData->getType() == ByamlDataType::Int) {
         s32 value = pData->getValue<s32>();
+
         if (value < 0) {
             *pValue = 0;
             return false;
@@ -472,6 +485,7 @@ bool ByamlIter::tryConvertUInt(u32* pValue, const ByamlData* pData) const {
  */
 bool ByamlIter::tryGetFloatByKey(f32* pValue, const char* pKey) const {
     ByamlData data;
+
     if (!getByamlDataByKey(&data, pKey)) {
         return false;
     }
@@ -502,6 +516,7 @@ bool ByamlIter::tryConvertFloat(f32* pValue, const ByamlData* pData) const {
  */
 bool ByamlIter::tryGetBoolByKey(bool* pValue, const char* pKey) const {
     ByamlData data;
+
     if (!getByamlDataByKey(&data, pKey)) {
         return false;
     }
@@ -532,6 +547,7 @@ bool ByamlIter::tryConvertBool(bool* pValue, const ByamlData* pData) const {
  */
 bool ByamlIter::tryGetStringByIndex(const char** pValue, s32 index) const {
     ByamlData data;
+
     if (!getByamlDataByIndex(&data, index)) {
         return false;
     }
@@ -548,6 +564,7 @@ bool ByamlIter::tryGetStringByIndex(const char** pValue, s32 index) const {
  */
 bool ByamlIter::tryGetBinaryByIndex(const u8** pValue, s32* pSize, s32 index) const {
     ByamlData data;
+
     if (!getByamlDataByIndex(&data, index)) {
         return false;
     }
@@ -563,6 +580,7 @@ bool ByamlIter::tryGetBinaryByIndex(const u8** pValue, s32* pSize, s32 index) co
  */
 bool ByamlIter::tryGetIntByIndex(s32* pValue, s32 index) const {
     ByamlData data;
+
     if (!getByamlDataByIndex(&data, index)) {
         return false;
     }
@@ -578,6 +596,7 @@ bool ByamlIter::tryGetIntByIndex(s32* pValue, s32 index) const {
  */
 bool ByamlIter::tryGetUIntByIndex(u32* pValue, s32 index) const {
     ByamlData data;
+
     if (!getByamlDataByIndex(&data, index)) {
         return false;
     }
@@ -597,6 +616,7 @@ bool ByamlIter::tryGetUIntByIndex(u32* pValue, s32 index) const {
  */
 bool ByamlIter::tryGetFloatByIndex(f32* pValue, s32 index) const {
     ByamlData data;
+
     if (!getByamlDataByIndex(&data, index)) {
         return false;
     }
@@ -612,6 +632,7 @@ bool ByamlIter::tryGetFloatByIndex(f32* pValue, s32 index) const {
  */
 bool ByamlIter::tryGetBoolByIndex(bool* pValue, s32 index) const {
     ByamlData data;
+
     if (!getByamlDataByIndex(&data, index)) {
         return false;
     }

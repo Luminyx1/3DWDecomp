@@ -185,6 +185,7 @@ StageInfo* findStageInfo(const Scene* pScene, s32 listIndex, const char* pName) 
  */
 sead::FrameBuffer* getSceneFrameBufferMain(const Scene* pScene) {
     DrawSystemInfo* info = pScene->getDrawSystemInfo();
+
     if (info->mIsDocked) {
         return info->mDockedFrameBuffer;
     }
@@ -235,6 +236,7 @@ void initActorInitInfo(ActorInitInfo* pInfo, const Scene* pScene,
 void initLayoutInitInfo(LayoutInitInfo* pInfo, const Scene* pScene, const SceneInitInfo& rInfo) {
     LiveActorKit* kit = pScene->getLiveActorKit();
     LayoutKit* layoutKit = pScene->getLayoutKit();
+
     if (kit) {
         pInfo->init(kit->mExecDirector, kit->mEffectSystem->getEffectSystemInfo(),
                     pScene->getSceneObjHolder(), pScene->getAudioDirector(),
@@ -263,6 +265,7 @@ inline bool tryInitAreaInitInfo(AreaInitInfo* pOut, const Scene* pScene,
     }
 
     PlacementInfo placementInfo;
+
     if (!tryGetPlacementInfo(&placementInfo, pStageInfo, "AreaList")) {
         return false;
     }
@@ -282,6 +285,7 @@ void initPlacementAreaObj(Scene* pScene, const ActorInitInfo& rInfo,
                           const StageResourceList* pExtraList) {
     AreaInitInfo infos[512];
     s32 num = 0;
+
     for (s32 i = 0; i < getStageInfoMapNum(pScene); i++) {
         if (tryInitAreaInitInfo(&infos[num], pScene, rInfo, getStageInfoMap(pScene, i))) {
             num++;
@@ -302,6 +306,7 @@ void initPlacementAreaObj(Scene* pScene, const ActorInitInfo& rInfo,
 
     if (pExtraList) {
         s32 extraNum = pExtraList->getStageResourceNum();
+
         for (s32 i = 0; i < extraNum; i++) {
             if (tryInitAreaInitInfo(&infos[num], pScene, rInfo, pExtraList->getStageInfo(i))) {
                 num++;
@@ -323,6 +328,7 @@ void initPlacementAreaObj(Scene* pScene, const ActorInitInfo& rInfo,
 void initPlacementObjectMap(Scene* pScene, const ActorInitInfo& rInfo,
                             const ActorFactory& rFactory, const char* pName) {
     s32 num = getStageInfoMapNum(pScene);
+
     for (s32 i = 0; i < num; i++) {
         initPlacementByStageInfo(getStageInfoMap(pScene, i), pName, rFactory, rInfo);
     }
@@ -339,6 +345,7 @@ void initPlacementByStageInfo(const StageInfo* pStageInfo, const char* pName,
                               const ActorFactory& rFactory, const ActorInitInfo& rInfo) {
     PlacementInfo placementInfo;
     s32 count = 0;
+
     if (!tryGetPlacementInfoAndCount(&placementInfo, &count, pStageInfo, pName)) {
         return;
     }
@@ -360,6 +367,7 @@ void initPlacementByStageInfo(const StageInfo* pStageInfo, const char* pName,
 void initPlacementObjectDesign(Scene* pScene, const ActorInitInfo& rInfo,
                                const ActorFactory& rFactory, const char* pName) {
     s32 num = getStageInfoDesignNum(pScene);
+
     for (s32 i = 0; i < num; i++) {
         initPlacementByStageInfo(getStageInfoDesign(pScene, i), pName, rFactory, rInfo);
     }
@@ -375,6 +383,7 @@ void initPlacementObjectDesign(Scene* pScene, const ActorInitInfo& rInfo,
 void initPlacementObjectSound(Scene* pScene, const ActorInitInfo& rInfo,
                               const ActorFactory& rFactory, const char* pName) {
     s32 num = getStageInfoSoundNum(pScene);
+
     for (s32 i = 0; i < num; i++) {
         initPlacementByStageInfo(getStageInfoSound(pScene, i), pName, rFactory, rInfo);
     }
@@ -394,6 +403,7 @@ LiveActor* tryInitPlacementSingleObject(Scene* pScene, const ActorInitInfo& rInf
     StageResourceKeeper* keeper = pScene->getStageResourceKeeper();
     s32 num = keeper->getStageResourceList(listIndex)->getStageResourceNum();
     LiveActor* actor = nullptr;
+
     for (s32 i = 0; i < num; i++) {
         PlacementInfo placementInfo;
         s32 count = 0;
@@ -405,6 +415,7 @@ LiveActor* tryInitPlacementSingleObject(Scene* pScene, const ActorInitInfo& rInf
             PlacementInfo info;
             getPlacementInfoByIndex(&info, placementInfo, j);
             LiveActor* created = createPlacementActorFromFactory(rFactory, rInfo, &info);
+
             if (created) {
                 actor = created;
             }
@@ -425,6 +436,7 @@ LiveActor* tryInitPlacementSingleObject(Scene* pScene, const ActorInitInfo& rInf
 bool tryGetPlacementInfoAndCount(PlacementInfo* pOut, s32* pCount, const StageInfo* pStageInfo,
                                  const char* pName) {
     ByamlIter iter;
+
     if (!pStageInfo->getPlacementIter().tryGetIterByKey(&iter, pName)) {
         *pCount = 0;
         return false;
@@ -451,6 +463,7 @@ void tryInitPlacementCategory(Scene* pScene, const ActorInitInfo& rInfo, s32 lis
     s32 num = pScene->getStageResourceKeeper()->getStageResourceList(listIndex)
                   ->getStageResourceNum();
     s32 actorNum = 0;
+
     for (s32 i = 0; i < num; i++) {
         StageInfo* stageInfo =
             pScene->getStageResourceKeeper()->getStageResourceList(listIndex)->getStageInfo(i);
@@ -467,17 +480,20 @@ void tryInitPlacementCategory(Scene* pScene, const ActorInitInfo& rInfo, s32 lis
         for (s32 j = 0; j < count; j++) {
             PlacementInfo info;
             getPlacementInfoByIndex(&info, placementInfo, j);
+
             if (!pScene->isValidPlacement(info)) {
                 continue;
             }
 
             LiveActor* actor = createPlacementActorFromFactory(rFactory, rInfo, &info);
+
             if (!actor) {
                 continue;
             }
 
             pActors[actorNum] = actor;
             actorNum++;
+
             if (actorNum >= maxActors) {
                 return;
             }
@@ -527,6 +543,7 @@ bool tryGetPlacementInfo(PlacementInfo* pOut, const Resource* pResource, const c
  */
 bool tryGetPlacementInfo(PlacementInfo* pOut, const StageInfo* pStageInfo, const char* pName) {
     ByamlIter iter;
+
     if (!pStageInfo->getPlacementIter().tryGetIterByKey(&iter, pName)) {
         return false;
     }
@@ -614,8 +631,10 @@ void initCameraDirector_RS(const Scene* pScene, const char* pName,
                                                        pSceneCameraInfo);
     CameraDirector_RS* director = pScene->getLiveActorKit()->mCameraDirectorRS;
     CameraResourceHolder* holder = new CameraResourceHolder(pName, getStageInfoMapNum(pScene));
+
     for (s32 i = 0; i < getStageInfoMapNum(pScene); i++) {
         StageInfo* stageInfo = getStageInfoMap(pScene, i);
+
         if (pScene->isValidPlacementParent(stageInfo->getPlacementInfo())) {
             holder->tryInitCameraResource(stageInfo->getResource(), isStageOneResource(pScene));
         }
@@ -779,6 +798,7 @@ void updatePadRumbleDirector(Scene* pScene) {
  */
 void updateHitSensorDirector(Scene* pScene) {
     HitSensorDirector* director = pScene->getLiveActorKit()->mSensorDirector;
+
     if (director) {
         director->trueExecute();
     }
@@ -832,6 +852,7 @@ void drawEffectDeferred(const Scene* pScene, s32 index) {
  */
 bool isStopScene(const Scene* pScene) {
     SceneStopCtrl* ctrl = pScene->getSceneStopCtrl();
+
     if (ctrl->_4 != 0) {
         return false;
     }
@@ -985,6 +1006,7 @@ void offClippingPosAsPlayerPos(const Scene* pScene) {
  */
 void initPadRumble(const Scene* pScene, const SceneInitInfo& rInfo) {
     WaveVibrationHolder* holder = rInfo.mGameSystemInfo->getWaveVibrationHolder();
+
     if (!holder) {
         return;
     }
@@ -1000,6 +1022,7 @@ void initPadRumble(const Scene* pScene, const SceneInitInfo& rInfo) {
  */
 void stopPadRumble(const Scene* pScene) {
     LiveActorKit* kit = pScene->getLiveActorKit();
+
     if (kit && kit->mRumbleDirector) {
         kit->mRumbleDirector->stopAllRumble();
     }
@@ -1011,6 +1034,7 @@ void stopPadRumble(const Scene* pScene) {
  */
 void pausePadRumble(const Scene* pScene) {
     LiveActorKit* kit = pScene->getLiveActorKit();
+
     if (kit && kit->mRumbleDirector) {
         kit->mRumbleDirector->pause();
     }
@@ -1022,6 +1046,7 @@ void pausePadRumble(const Scene* pScene) {
  */
 void endPausePadRumble(const Scene* pScene) {
     LiveActorKit* kit = pScene->getLiveActorKit();
+
     if (kit && kit->mRumbleDirector) {
         kit->mRumbleDirector->endPause();
     }
@@ -1033,6 +1058,7 @@ void endPausePadRumble(const Scene* pScene) {
  */
 void pauseDemoPadRumble(const Scene* pScene) {
     LiveActorKit* kit = pScene->getLiveActorKit();
+
     if (kit && kit->mRumbleDirector) {
         kit->mRumbleDirector->pauseActiveRumbles();
     }
@@ -1044,6 +1070,7 @@ void pauseDemoPadRumble(const Scene* pScene) {
  */
 void endPauseDemoPadRumble(const Scene* pScene) {
     LiveActorKit* kit = pScene->getLiveActorKit();
+
     if (kit && kit->mRumbleDirector) {
         kit->mRumbleDirector->resumeActiveRumbles();
     }

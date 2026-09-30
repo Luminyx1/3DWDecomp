@@ -81,6 +81,7 @@ bool AreaShapeCube::calcNearestEdgePoint(sead::Vector3f* pOut, const sead::Vecto
         f32 absZ = sead::Mathf::abs(rateZ);
 
         s32 axis;
+
         if (absX > absY) {
             axis = absX > absZ ? 0 : 2;
         } else {
@@ -126,6 +127,7 @@ bool AreaShapeCube::calcNearestEdgePoint(sead::Vector3f* pOut, const sead::Vecto
 bool AreaShapeCube::isInLocalVolume(const sead::Vector3f& rPos) const {
     sead::Vector3f min = {-500.0f, calcBottom(), -500.0f};
     sead::Vector3f max = {500.0f, calcTop(), 500.0f};
+
     if (rPos.y < min.y || max.y < rPos.y) {
         return false;
     }
@@ -165,10 +167,13 @@ bool AreaShapeCube::checkArrowCollision(sead::Vector3f* pHitPos, sead::Vector3f*
     if (isInLocalVolume(localStart)) {
         if (dir.y > 0.0f) {
             f32 t = (top - localStart.y) / dir.y;
+
             if (0.0f <= t && t <= 1.0f) {
                 hitPos = localStart + dir * t;
+
                 if (-500.0f <= hitPos.x && hitPos.x <= 500.0f && -500.0f <= hitPos.z && hitPos.z <= 500.0f) {
                     calcWorldPos(pHitPos, hitPos);
+
                     if (pHitNormal != nullptr) {
                         calcWorldDir(pHitNormal, sead::Vector3f::ey);
                     }
@@ -178,10 +183,13 @@ bool AreaShapeCube::checkArrowCollision(sead::Vector3f* pHitPos, sead::Vector3f*
             }
         } else if (dir.y < 0.0f) {
             f32 t = (bottom - localStart.y) / dir.y;
+
             if (0.0f <= t && t <= 1.0f) {
                 hitPos = localStart + dir * t;
+
                 if (-500.0f <= hitPos.x && hitPos.x <= 500.0f && -500.0f <= hitPos.z && hitPos.z <= 500.0f) {
                     calcWorldPos(pHitPos, hitPos);
+
                     if (pHitNormal != nullptr) {
                         calcWorldDir(pHitNormal, -sead::Vector3f::ey);
                     }
@@ -193,10 +201,13 @@ bool AreaShapeCube::checkArrowCollision(sead::Vector3f* pHitPos, sead::Vector3f*
 
         if (dir.z > 0.0f) {
             f32 t = (500.0f - localStart.z) / dir.z;
+
             if (0.0f <= t && t <= 1.0f) {
                 hitPos = localStart + dir * t;
+
                 if (-500.0f <= hitPos.x && hitPos.x <= 500.0f && hitPos.y >= bottom && hitPos.y <= top) {
                     calcWorldPos(pHitPos, hitPos);
+
                     if (pHitNormal != nullptr) {
                         calcWorldDir(pHitNormal, sead::Vector3f::ez);
                     }
@@ -206,10 +217,13 @@ bool AreaShapeCube::checkArrowCollision(sead::Vector3f* pHitPos, sead::Vector3f*
             }
         } else if (dir.z < 0.0f) {
             f32 t = (-500.0f - localStart.z) / dir.z;
+
             if (0.0f <= t && t <= 1.0f) {
                 hitPos = localStart + dir * t;
+
                 if (-500.0f <= hitPos.x && hitPos.x <= 500.0f && hitPos.y >= bottom && hitPos.y <= top) {
                     calcWorldPos(pHitPos, hitPos);
+
                     if (pHitNormal != nullptr) {
                         calcWorldDir(pHitNormal, -sead::Vector3f::ez);
                     }
@@ -221,10 +235,13 @@ bool AreaShapeCube::checkArrowCollision(sead::Vector3f* pHitPos, sead::Vector3f*
 
         if (dir.x > 0.0f) {
             f32 t = (500.0f - localStart.x) / dir.x;
+
             if (0.0f <= t && t <= 1.0f) {
                 hitPos = localStart + dir * t;
+
                 if (-500.0f <= hitPos.z && hitPos.z <= 500.0f && hitPos.y >= bottom && hitPos.y <= top) {
                     calcWorldPos(pHitPos, hitPos);
+
                     if (pHitNormal != nullptr) {
                         calcWorldDir(pHitNormal, sead::Vector3f::ex);
                     }
@@ -234,10 +251,13 @@ bool AreaShapeCube::checkArrowCollision(sead::Vector3f* pHitPos, sead::Vector3f*
             }
         } else if (dir.x < 0.0f) {
             f32 t = (-500.0f - localStart.x) / dir.x;
+
             if (0.0f <= t && t <= 1.0f) {
                 hitPos = localStart + dir * t;
+
                 if (-500.0f <= hitPos.z && hitPos.z <= 500.0f && hitPos.y >= bottom && hitPos.y <= top) {
                     calcWorldPos(pHitPos, hitPos);
+
                     if (pHitNormal != nullptr) {
                         calcWorldDir(pHitNormal, sead::Vector3f::ey);
                     }
@@ -252,10 +272,13 @@ bool AreaShapeCube::checkArrowCollision(sead::Vector3f* pHitPos, sead::Vector3f*
 
     if (dir.y > 0.0f) {
         f32 t = (bottom - localStart.y) / dir.y;
+
         if (0.0f <= t && t <= 1.0f) {
             hitPos = localStart + dir * t;
+
             if (-500.0f <= hitPos.x && hitPos.x <= 500.0f && -500.0f <= hitPos.z && hitPos.z <= 500.0f) {
                 calcWorldPos(pHitPos, hitPos);
+
                 if (pHitNormal != nullptr) {
                     calcWorldDir(pHitNormal, -sead::Vector3f::ey);
                 }
@@ -265,10 +288,13 @@ bool AreaShapeCube::checkArrowCollision(sead::Vector3f* pHitPos, sead::Vector3f*
         }
     } else if (dir.y < 0.0f) {
         f32 t = (top - localStart.y) / dir.y;
+
         if (0.0f <= t && t <= 1.0f) {
             hitPos = localStart + dir * t;
+
             if (-500.0f <= hitPos.x && hitPos.x <= 500.0f && -500.0f <= hitPos.z && hitPos.z <= 500.0f) {
                 calcWorldPos(pHitPos, hitPos);
+
                 if (pHitNormal != nullptr) {
                     calcWorldDir(pHitNormal, sead::Vector3f::ey);
                 }
@@ -280,10 +306,13 @@ bool AreaShapeCube::checkArrowCollision(sead::Vector3f* pHitPos, sead::Vector3f*
 
     if (dir.z > 0.0f) {
         f32 t = (-500.0f - localStart.z) / dir.z;
+
         if (0.0f <= t && t <= 1.0f) {
             hitPos = localStart + dir * t;
+
             if (-500.0f <= hitPos.x && hitPos.x <= 500.0f && hitPos.y >= bottom && hitPos.y <= top) {
                 calcWorldPos(pHitPos, hitPos);
+
                 if (pHitNormal != nullptr) {
                     calcWorldDir(pHitNormal, -sead::Vector3f::ez);
                 }
@@ -293,10 +322,13 @@ bool AreaShapeCube::checkArrowCollision(sead::Vector3f* pHitPos, sead::Vector3f*
         }
     } else if (dir.z < 0.0f) {
         f32 t = (500.0f - localStart.z) / dir.z;
+
         if (0.0f <= t && t <= 1.0f) {
             hitPos = localStart + dir * t;
+
             if (-500.0f <= hitPos.x && hitPos.x <= 500.0f && hitPos.y >= bottom && hitPos.y <= top) {
                 calcWorldPos(pHitPos, hitPos);
+
                 if (pHitNormal != nullptr) {
                     calcWorldDir(pHitNormal, sead::Vector3f::ez);
                 }
@@ -308,10 +340,13 @@ bool AreaShapeCube::checkArrowCollision(sead::Vector3f* pHitPos, sead::Vector3f*
 
     if (dir.x > 0.0f) {
         f32 t = (-500.0f - localStart.x) / dir.x;
+
         if (0.0f <= t && t <= 1.0f) {
             hitPos = localStart + dir * t;
+
             if (-500.0f <= hitPos.z && hitPos.z <= 500.0f && hitPos.y >= bottom && hitPos.y <= top) {
                 calcWorldPos(pHitPos, hitPos);
+
                 if (pHitNormal != nullptr) {
                     calcWorldDir(pHitNormal, -sead::Vector3f::ex);
                 }
@@ -321,10 +356,13 @@ bool AreaShapeCube::checkArrowCollision(sead::Vector3f* pHitPos, sead::Vector3f*
         }
     } else if (dir.x < 0.0f) {
         f32 t = (500.0f - localStart.x) / dir.x;
+
         if (0.0f <= t && t <= 1.0f) {
             hitPos = localStart + dir * t;
+
             if (-500.0f <= hitPos.z && hitPos.z <= 500.0f && hitPos.y >= bottom && hitPos.y <= top) {
                 calcWorldPos(pHitPos, hitPos);
+
                 if (pHitNormal != nullptr) {
                     calcWorldDir(pHitNormal, -sead::Vector3f::ex);
                 }
@@ -373,6 +411,7 @@ bool AreaShapeSphere::calcNearestEdgePoint(sead::Vector3f* pOut,
     sead::Vector3f localPos = sead::Vector3f::zero;
     calcLocalPos(&localPos, rPos);
     f32 length = localPos.length();
+
     if (length > 0.0f) {
         localPos *= 500.0f / length;
     }
@@ -437,6 +476,7 @@ bool AreaShapeOval::calcNearestEdgePoint(sead::Vector3f* pOut, const sead::Vecto
     sead::Vector3f localPos = sead::Vector3f::zero;
     calcLocalPos(&localPos, rPos);
     f32 length = localPos.length();
+
     if (length > 0.0f) {
         localPos *= 500.0f / length;
     }
@@ -481,6 +521,7 @@ AreaShapeCylinder::AreaShapeCylinder() = default;
 bool AreaShapeCylinder::isInVolume(const sead::Vector3f& rPos) const {
     sead::Vector3f localPos = sead::Vector3f::zero;
     calcLocalPos(&localPos, rPos);
+
     if (localPos.y < 0.0f || localPos.y > 500.0f) {
         return false;
     }
@@ -500,6 +541,7 @@ void AreaShapeCylinder::calcNearPoint(sead::Vector3f* pOut, const sead::Vector3f
     sead::Vector3f nearPos = sead::Vector3f::zero;
     nearPos.y = sead::Mathf::clamp(localPos.y, 0.0f, 500.0f);
     f32 lengthSq = localPos.x * localPos.x + localPos.z * localPos.z;
+
     if (lengthSq <= 500.0f * 500.0f) {
         nearPos.x = localPos.x;
         nearPos.z = localPos.z;
@@ -526,6 +568,7 @@ bool AreaShapeCylinder::calcNearestEdgePoint(sead::Vector3f* pOut,
     sead::Vector3f nearPos = sead::Vector3f::zero;
     nearPos.y = sead::Mathf::clamp(localPos.y, 0.0f, 500.0f);
     f32 lengthSq = localPos.x * localPos.x + localPos.z * localPos.z;
+
     if (lengthSq <= 500.0f * 500.0f) {
         nearPos.x = localPos.x;
         nearPos.z = localPos.z;

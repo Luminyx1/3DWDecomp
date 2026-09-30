@@ -19,6 +19,7 @@ CollisionPartsKeeperPtrArray::CollisionPartsKeeperPtrArray() = default;
 s32 CollisionPartsKeeperPtrArray::checkStrikePoint(HitInfo* pHitInfo,
                                                    const CollisionCheckInfoBase& rCheckInfo) const {
     s32 num = mPartsArray->size();
+
     for (s32 i = 0; i < num; i++) {
         if (mPartsArray->at(i)->checkStrikePoint(pHitInfo, rCheckInfo.getPos(),
                                                  rCheckInfo.getTriangleFilter())) {
@@ -43,6 +44,7 @@ s32 CollisionPartsKeeperPtrArray::checkStrikeSphere(SphereHitResultBuffer* pBuff
                                                     const sead::Vector3f& rMoveDir) const {
     s32 num = mPartsArray->size();
     s32 hitNum = 0;
+
     for (s32 i = 0; i < num; i++) {
         hitNum += mPartsArray->at(i)->checkStrikeSphere(pBuffer, rCheckInfo.getPos(),
                                                         rCheckInfo.mRadius, isCheckNear, rMoveDir,
@@ -65,6 +67,7 @@ s32 CollisionPartsKeeperPtrArray::checkStrikeArrow(ArrowHitResultBuffer* pBuffer
                                                    const ArrowCheckInfo& rCheckInfo) const {
     s32 num = mPartsArray->size();
     s32 hitNum = 0;
+
     for (s32 i = 0; i < num; i++) {
         hitNum += mPartsArray->at(i)->checkStrikeArrow(pBuffer, rCheckInfo.getPos(),
                                                        rCheckInfo.getDir(),
@@ -87,6 +90,7 @@ s32 CollisionPartsKeeperPtrArray::checkStrikeSphereForPlayer(
     SphereHitResultBuffer* pBuffer, const SphereCheckInfo& rCheckInfo) const {
     s32 num = mPartsArray->size();
     s32 hitNum = 0;
+
     for (s32 i = 0; i < num; i++) {
         hitNum += mPartsArray->at(i)->checkStrikeSphere(pBuffer, rCheckInfo.getPos(),
                                                         rCheckInfo.mRadius, false,
@@ -120,6 +124,7 @@ s32 CollisionPartsKeeperPtrArray::checkStrikeDisk(DiskHitResultBuffer* pBuffer,
 void CollisionPartsKeeperPtrArray::searchWithSphere(
     const sead::Vector3f& rPos, f32 radius, sead::IDelegate1<CollisionParts*>& rDelegate) const {
     s32 num = mPartsArray->size();
+
     for (s32 i = 0; i < num; i++) {
         if (alCollisionUtil::isFarAway(*mPartsArray->at(i), rPos, radius)) {
             continue;
@@ -137,6 +142,7 @@ void CollisionPartsKeeperPtrArray::searchWithSphere(
 void CollisionPartsKeeperPtrArray::searchWithSphere(
     const SphereCheckInfo& rCheckInfo, sead::IDelegate1<CollisionParts*>& rDelegate) const {
     s32 num = mPartsArray->size();
+
     for (s32 i = 0; i < num; i++) {
         if (alCollisionUtil::isFarAway(*mPartsArray->at(i), rCheckInfo.getPos(),
                                        rCheckInfo.mRadius)) {

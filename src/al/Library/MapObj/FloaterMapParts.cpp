@@ -82,6 +82,7 @@ void FloaterMapParts::control() {
     f32 rate = isNearZero(mMaxCoord) ? 0.0f : mCoord / mMaxCoord;
     calcLerpKeyTrans(getTransPtr(this), mKeyPoseKeeper, rate);
     calcSlerpKeyQuat(getQuatPtr(this), mKeyPoseKeeper, rate);
+
     if (mSinkFrame > 0) {
         mSinkFrame--;
     }
@@ -111,6 +112,7 @@ void FloaterMapParts::exeSink() {
 
     if (mSinkFrame != 0) {
         mCoord += mSinkSpeed * mAccelCount / mMaxAccelCount;
+
         if (mAccelCount < mMaxAccelCount) {
             mAccelCount++;
         }
@@ -122,6 +124,7 @@ void FloaterMapParts::exeSink() {
         mSinkTime = 0;
     } else {
         mSinkTime++;
+
         if (mAccelCount > 0) {
             mAccelCount--;
         }
@@ -141,11 +144,13 @@ void FloaterMapParts::exeBack() {
     }
 
     mCoord -= mBackSpeed * mAccelCount / mMaxAccelCount;
+
     if (mAccelCount < mMaxAccelCount) {
         mAccelCount++;
     }
 
     bool isReachedStart;
+
     if (mCoord < 0.0f) {
         isReachedStart = true;
         mCoord = 0.0f;

@@ -105,8 +105,10 @@ PrePassLightBase* ActorPrePassLightKeeper::getLightBase(const char* pName) const
     }
 
     s32 num = mLightBaseArray.size();
+
     for (s32 i = 0; i < num; i++) {
         PrePassLightBase* light = mLightBaseArray[i];
+
         if (isEqualString(light->mName, pName)) {
             return light;
         }
@@ -135,8 +137,10 @@ PrePassLightBase* ActorPrePassLightKeeper::getLightBase(s32 index) const {
  */
 const sead::Color4f& ActorPrePassLightKeeper::findUserColor(const char* pName) const {
     s32 num = mUserColorArray.size();
+
     for (s32 i = 0; i < num; i++) {
         UserColor* color = mUserColorArray[i];
+
         if (isEqualString(pName, color->mName)) {
             return color->mColor;
         }

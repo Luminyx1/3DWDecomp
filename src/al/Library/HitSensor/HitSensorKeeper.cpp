@@ -12,6 +12,7 @@ namespace al {
  */
 HitSensorKeeper::HitSensorKeeper(s32 maxSensors) : mMaxSensorCount(maxSensors), mSensorCount(0) {
     mSensors = new HitSensor*[maxSensors];
+
     for (s32 i = 0; i < mMaxSensorCount; i++) {
         mSensors[i] = nullptr;
     }
@@ -57,8 +58,10 @@ void HitSensorKeeper::attackSensor() {
     for (s32 i = 0; i < mSensorCount; i++) {
         HitSensor* sensor = mSensors[i];
         sensor->trySensorSort();
+
         for (u32 j = 0; j < sensor->mNumSensors; j++) {
             HitSensor* other = sensor->mSensors[j];
+
             if (!isDead(other->mHostActor)) {
                 sensor->mHostActor->attackSensor(sensor, other);
             }

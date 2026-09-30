@@ -33,9 +33,11 @@ void SeSource3DCircle::calcPositionDynamic() {
 const sead::Vector3f* SeSource3DCircle::calcPosition(const sead::Vector3f& rListenerPos) {
     sead::Vector3f localPos;
     localPos.setMul(mInvMtx, rListenerPos);
+
     if (mIsVertical) {
         sead::Vector2f planePos(localPos.x, localPos.y);
         f32 length = planePos.length();
+
         if (isNearZero(length, 0.001f)) {
             planePos.set(0.0f, -*mRadius);
         } else if (length >= *mRadius) {
@@ -46,6 +48,7 @@ const sead::Vector3f* SeSource3DCircle::calcPosition(const sead::Vector3f& rList
     } else {
         sead::Vector2f planePos(localPos.x, localPos.z);
         f32 length = planePos.length();
+
         if (isNearZero(length, 0.001f)) {
             planePos.set(0.0f, -*mRadius);
         } else if (length >= *mRadius) {

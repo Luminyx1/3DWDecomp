@@ -46,6 +46,7 @@ void CameraPoserParallelSimple::update() {
     rotateVectorDegree(&dir, dir, side, mAngleV);
     f32 distance = mDistance;
     f32 length = dir.length();
+
     if (length > 0.0f) {
         dir *= distance / length;
     }

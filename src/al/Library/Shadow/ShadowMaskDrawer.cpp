@@ -70,6 +70,7 @@ void ShadowMaskParam::interp(const ShadowMaskParam& rParamA, const ShadowMaskPar
  */
 u8 ShadowMaskKeeper::getShadowIntensity(s32 category) const {
     s32 intensity = 0;
+
     switch (category) {
     case ShadowMaskDrawCategory::Block:
         intensity = mCurrentParam.getBlockIntensity();

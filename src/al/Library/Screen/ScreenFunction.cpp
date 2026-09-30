@@ -9,6 +9,7 @@ namespace al {
  */
 ScreenCaptureExecutor::ScreenCaptureExecutor(s32 captureNum) {
     mCaptureInfos.allocBuffer(captureNum, nullptr);
+
     for (s32 i = 0; i < mCaptureInfos.capacity(); i++) {
         mCaptureInfos.pushBack(new CaptureInfo());
     }
@@ -20,6 +21,7 @@ ScreenCaptureExecutor::ScreenCaptureExecutor(s32 captureNum) {
 ScreenCaptureExecutor::~ScreenCaptureExecutor() {
     for (s32 i = 0; i < mCaptureInfos.size(); i++) {
         CaptureInfo* info = mCaptureInfos.at(i);
+
         if (info->screenCapture) {
             delete info->screenCapture;
             info->screenCapture = nullptr;
@@ -85,6 +87,7 @@ void ScreenCaptureExecutor::draw(agl::DrawContext* pDrawContext,
 bool ScreenCaptureExecutor::tryCapture(agl::DrawContext* pDrawContext,
                                        const agl::RenderBuffer* pRenderBuffer, s32 index) {
     CaptureInfo* info = mCaptureInfos.at(index);
+
     if (!info->isActiveRequest) {
         return false;
     }
@@ -105,6 +108,7 @@ bool ScreenCaptureExecutor::tryCapture(agl::DrawContext* pDrawContext,
 void ScreenCaptureExecutor::requestCapture(bool isDraw, s32 index, bool isBlur) {
     mCaptureInfos.unsafeAt(index)->isActiveRequest = true;
     mCaptureInfos.unsafeAt(index)->screenCapture->enableBlur(isBlur);
+
     if (isDraw) {
         mCaptureInfos.unsafeAt(index)->isDraw = false;
     }

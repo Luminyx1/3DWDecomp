@@ -10,6 +10,7 @@ namespace al {
  */
 OceanWavePlayInfo* OceanWavePlayInfo::createInfo(const ByamlIter& rIter) {
     OceanWavePlayInfo* info = new OceanWavePlayInfo;
+
     if (!rIter.tryGetStringByKey(&info->mName, "Name")) {
         return nullptr;
     }
@@ -19,6 +20,7 @@ OceanWavePlayInfo* OceanWavePlayInfo::createInfo(const ByamlIter& rIter) {
     }
 
     ByamlIter iter;
+
     if (!rIter.tryGetIterByKey(&iter, "OceanWaveInfoList")) {
         return nullptr;
     }

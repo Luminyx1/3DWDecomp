@@ -80,6 +80,7 @@ bool ParabolicPathMovement::isOverTheTop() const {
  */
 void ParabolicPathMovement::exeMove() {
     f32 rate = static_cast<f32>(getNerveStep(this)) / mMoveTime;
+
     if (rate < 0.0f) {
         rate = 0.0f;
     } else if (rate > 1.0f) {
@@ -88,6 +89,7 @@ void ParabolicPathMovement::exeMove() {
 
     sead::Vector3f pos;
     mPath->calcPosition(&pos, rate);
+
     if (mIsUseVelocity) {
         setVelocity(getHost(), pos - getTrans(getHost()));
     } else {

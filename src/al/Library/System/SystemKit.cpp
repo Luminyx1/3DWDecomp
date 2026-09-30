@@ -56,6 +56,7 @@ void SystemKit::createResourceSystem(const char* pArchivePath, s32 threadPriorit
     u8* decompressDestination = new (0x20) u8[decompressDestinationSize];
 
     sead::ResourceMgr* instance = sead::ResourceMgr::instance();
+
     if (threadPriority == -1) {
         instance->registerDecompressor(
             new sead::SZSDecompressor(decompressDestinationSize / 2, decompressDestination), "szs");

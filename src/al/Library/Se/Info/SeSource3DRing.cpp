@@ -38,6 +38,7 @@ const sead::Vector3f* SeSource3DRing::calcPosition(const sead::Vector3f& rListen
     localPos.setMul(mInvMtx, rListenerPos);
     sead::Vector2f planePos(localPos.x, localPos.z);
     f32 length = planePos.length();
+
     if (isNearZero(length, 0.001f)) {
         planePos.set(0.0f, -*mRadius);
     } else {

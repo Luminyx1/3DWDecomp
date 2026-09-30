@@ -25,8 +25,10 @@ void JointControllerKeeper::Exec(CallbackArg& rArg, nn::g3d::WorldMtxManip& rMan
     }
 
     s32 nextBoneIndex = 0x7fffffff;
+
     for (s32 i = 0; i < mControllers.size(); i++) {
         JointControllerBase* controller = *mControllers.unsafeAt(i);
+
         if (controller->isExistId(rArg.GetBoneIndex())) {
             sead::Matrix34f mtx = sead::Matrix34f::ident;
             nn::util::MatrixStore(reinterpret_cast<nn::util::FloatColumnMajor4x3*>(&mtx),
@@ -37,6 +39,7 @@ void JointControllerKeeper::Exec(CallbackArg& rArg, nn::g3d::WorldMtxManip& rMan
         }
 
         s32 nextId = 0xffff;
+
         if (controller->findNextId(&nextId, rArg.GetBoneIndex()) && nextBoneIndex > nextId) {
             nextBoneIndex = nextId;
         }

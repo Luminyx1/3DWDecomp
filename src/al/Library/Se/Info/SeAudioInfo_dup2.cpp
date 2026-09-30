@@ -21,6 +21,7 @@ SeUserInfo* SeUserInfo::createInfo(const ByamlIter& rIter, const sead::SafeStrin
 
     {
         ByamlIter actionIter;
+
         if (rIter.tryGetIterByKey(&actionIter, "ActionInfoList")) {
             info->mActionInfoList = createInfoList<SeActionInfo>(actionIter);
         } else {
@@ -30,6 +31,7 @@ SeUserInfo* SeUserInfo::createInfo(const ByamlIter& rIter, const sead::SafeStrin
 
     {
         ByamlIter playIter;
+
         if (rIter.tryGetIterByKey(&playIter, "PlayInfoList")) {
             info->mPlayInfoList = createInfoList<SePlayInfo>(playIter);
         } else {
@@ -39,6 +41,7 @@ SeUserInfo* SeUserInfo::createInfo(const ByamlIter& rIter, const sead::SafeStrin
 
     {
         ByamlIter emitterIter;
+
         if (rIter.tryGetIterByKey(&emitterIter, "EmitterInfoList")) {
             info->mEmitterInfoList = createInfoList<SeEmitterInfo>(emitterIter);
         } else {

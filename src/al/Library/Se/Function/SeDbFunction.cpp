@@ -23,15 +23,18 @@ s32 calcIsOneTimeInUserInfo(const al::SeUserInfo* pUserInfo) {
 
     s32 actionNum = pUserInfo->mActionInfoList->getInfoNum();
     s32 count = 0;
+
     for (s32 i = 0; i < actionNum; i++) {
         const al::SeActionInfo* actionInfo =
             pUserInfo->mActionInfoList != nullptr ? pUserInfo->mActionInfoList->getInfo(i) : nullptr;
         const al::AudioInfoList<al::SePlayInfoInAction>* playInfoList = actionInfo->mPlayInfoList;
+
         if (playInfoList == nullptr) {
             continue;
         }
 
         s32 playNum = playInfoList->getInfoNum();
+
         for (s32 j = 0; j < playNum; j++) {
             count += actionInfo->mPlayInfoList->getInfo(j)->mIsOneTime;
         }

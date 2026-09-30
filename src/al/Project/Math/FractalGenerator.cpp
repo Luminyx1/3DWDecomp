@@ -21,6 +21,7 @@ f32 FractalGenerator::calcFractal(f32 x, f32 y, bool useSmoothPerlingNoise) {
 
     f32 amplitude = mAmplitude;
     f32 scale = mScale;
+
     for (s32 i = 0; i < (s32)(mPermutations - 1); i++) {
         if (useSmoothPerlingNoise)
             value += makeSmoothPerlinNoise(scale * x, scale * y) * amplitude;
@@ -74,6 +75,7 @@ f32 FractalGenerator::calcMultiFractal(f32 x, f32 y, f32 baseAmplitude,
 
     f32 amplitude = mAmplitude;
     f32 scale = mScale;
+
     for (s32 i = 0; i < (s32)(mPermutations - 1); i++) {
         if (useSmoothPerlingNoise)
             value *= baseAmplitude * makeSmoothPerlinNoise(scale * x, scale * y) * amplitude;

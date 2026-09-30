@@ -18,6 +18,7 @@ void makeMtxFromTwoAxis(sead::Matrix34f* outMtx, const sead::Vector3f& vectorA,
     sead::Vector3f dir[3];
 
     s32 axisC;
+
     if (axisA == 0)
         axisC = axisB == 1 ? 2 : 1;
     else if (axisA == 1)
@@ -152,6 +153,7 @@ void makeMtxSideNoSupport(sead::Matrix34f* outMtx, const sead::Vector3f& side) {
     bool isYAxis = getMaxAbsElementIndex(side) == 1;
 
     sead::Vector3f up;
+
     if (isYAxis) {
         up = sead::Vector3f::ez;
     } else {
@@ -611,6 +613,7 @@ f32 calcMtxLocalDirAngleOnPlaneToDir(const sead::Matrix34f* pMtx, const sead::Ve
     sead::Vector3f planeNormal;
     pMtx->getBase(planeNormal, planeAxis);
     sead::Vector3f normal;
+
     if (!tryNormalizeOrZero(&normal, planeNormal)) {
         return 0.0f;
     }

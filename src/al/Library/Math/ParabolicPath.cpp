@@ -78,6 +78,7 @@ void ParabolicPath::calcPositionEaseOutH(sead::Vector3f* pos, f32 prog) const {
 
 void ParabolicPath::calcDirection(sead::Vector3f* dir, f32 prog, f32 stepSize) const {
     f32 prog1, prog2;
+
     if (prog < stepSize) {
         prog1 = 0.0f;
         prog2 = stepSize;

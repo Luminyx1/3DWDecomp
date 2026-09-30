@@ -67,6 +67,7 @@ void JointSpringController::setControlRate(f32 rate) {
  */
 void JointSpringController::addControlRate(f32 rate) {
     f32 newRate = mControlRate + rate;
+
     if (newRate < 0.0f) {
         newRate = 0.0f;
     } else if (newRate > 1.0f) {
@@ -82,6 +83,7 @@ void JointSpringController::addControlRate(f32 rate) {
  */
 void JointSpringController::subControlRate(f32 rate) {
     f32 newRate = mControlRate - rate;
+
     if (newRate < 0.0f) {
         newRate = 0.0f;
     } else if (newRate > 1.0f) {
@@ -106,6 +108,7 @@ void JointSpringController::reset() {
  */
 void JointSpringController::calcChildPos(sead::Vector3f* pPos, const sead::Matrix34f* pMtx) const {
     sead::Vector3f localPos;
+
     if (mChildLocalMtxPtr) {
         mChildLocalMtxPtr->getTranslation(localPos);
     } else {
@@ -126,6 +129,7 @@ void JointSpringController::calcJointCallback(s32 jointIndex, sead::Matrix34f* p
 
     if (isNearZero(mControlRate)) {
         pMtx->getTranslation(mChildPos);
+
         if (!isPaused) {
             mVelocity *= mFriction;
         }
@@ -135,6 +139,7 @@ void JointSpringController::calcJointCallback(s32 jointIndex, sead::Matrix34f* p
 
     sead::Vector3f scale = {1.0f, 1.0f, 1.0f};
     calcMtxScale(&scale, *pMtx);
+
     if (isNearZero(scale.x) || isNearZero(scale.y) || isNearZero(scale.z)) {
         return;
     }
@@ -145,6 +150,7 @@ void JointSpringController::calcJointCallback(s32 jointIndex, sead::Matrix34f* p
     pMtx->getTranslation(trans);
 
     sead::Vector3f velocity;
+
     if (isPaused) {
         velocity = mVelocity;
     } else {
@@ -153,11 +159,13 @@ void JointSpringController::calcJointCallback(s32 jointIndex, sead::Matrix34f* p
     }
 
     sead::Vector3f nextDir = mChildPos + velocity - trans;
+
     if (normalizeOrZero(&nextDir)) {
         return;
     }
 
     sead::Vector3f currentDir = childPos - trans;
+
     if (normalizeOrZero(&currentDir)) {
         return;
     }

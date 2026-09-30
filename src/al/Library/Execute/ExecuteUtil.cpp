@@ -139,6 +139,7 @@ void addToExecutorDrawImmediate(al::LiveActor* pActor) {
  */
 al::ModelDrawerBase* tryCompletelyRemoveFromExecutorDraw(al::LiveActor* pActor) {
     al::ModelDrawerBase* drawer = pActor->mActorExecuteInfo->removeOptDrawer();
+
     if (drawer) {
         drawer->removeModel(pActor->mModelKeeper->mModelCafe);
     }
@@ -154,8 +155,10 @@ al::ModelDrawerBase* tryCompletelyRemoveFromExecutorDraw(al::LiveActor* pActor) 
 void tryCompletelyRemoveFromExecutorDraw(al::LiveActor* pActor,
                                          sead::PtrArray<al::ModelDrawerBase>* pDrawers) {
     pDrawers->allocBuffer(4, nullptr);
+
     while (true) {
         al::ModelDrawerBase* drawer = tryCompletelyRemoveFromExecutorDraw(pActor);
+
         if (!drawer) {
             break;
         }

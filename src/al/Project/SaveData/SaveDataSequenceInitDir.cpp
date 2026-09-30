@@ -33,14 +33,17 @@ void SaveDataSequenceInitDir::start(u8* pBuffer, u32 bufferSize, u32 version) {
 s32 SaveDataSequenceInitDir::threadFunc(const char* pFileName) {
     tryInitAccount();
     nn::account::Uid uid = getUid();
+
     if (uid.IsValid()) {
         return 0;
     }
 
     nn::account::UserHandle handle;
+
     if (nn::account::TryOpenPreselectedUser(&handle)) {
         nn::Result result = nn::account::GetUserId(&uid, handle);
         nn::account::CloseUser(handle);
+
         if (result.IsSuccess()) {
             return 0;
         }

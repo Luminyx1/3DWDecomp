@@ -86,6 +86,7 @@ void MemorySystem::freeAllSequenceHeap() {
  */
 bool MemorySystem::createSceneHeap(const char* pStageName) {
     sead::Heap* resourceHeap = mSceneResourceHeap;
+
     if (!resourceHeap) {
         createSceneResourceHeap(pStageName);
     }
@@ -109,6 +110,7 @@ inline u64 findSceneResourceHeapSize(const char* pStageName, u64 defaultSize) {
         heapSizeIter.tryGetIterByIndex(&entryIter, i);
         const char* stageName = nullptr;
         entryIter.tryGetStringByKey(&stageName, "Stage");
+
         if (isEqualString(stageName, pStageName)) {
             f32 sizeMB = 0.0f;
             entryIter.tryGetFloatByKey(&sizeMB, "SceneResource");
@@ -127,8 +129,10 @@ inline u64 findSceneResourceHeapSize(const char* pStageName, u64 defaultSize) {
 void MemorySystem::createSceneResourceHeap(const char* pStageName) {
     u64 size = 0x4600000;
     bool isDefaultSize = true;
+
     if (pStageName && mIsExistFileResource) {
         size = findSceneResourceHeapSize(pStageName, size);
+
         if (mStageSizeAdjuster) {
             s64 adjustedSize = mStageSizeAdjuster->adjustSceneResourceSize(pStageName, size,
                                                                            mCustomAlloc);
@@ -224,6 +228,7 @@ void MemorySystem::freeAllPlayerHeap() {
  */
 sead::Heap* MemorySystem::tryFindNamedHeap(const char* pHeapName) const {
     auto* node = mHeapList.find(pHeapName);
+
     if (!node) {
         return nullptr;
     }
@@ -238,6 +243,7 @@ sead::Heap* MemorySystem::tryFindNamedHeap(const char* pHeapName) const {
  */
 sead::Heap* MemorySystem::findNamedHeap(const char* pHeapName) const {
     auto* node = mHeapList.find(pHeapName);
+
     if (!node) {
         return nullptr;
     }
@@ -260,6 +266,7 @@ void MemorySystem::addNamedHeap(sead::Heap* pHeap, const char* pHeapName) {
  */
 void MemorySystem::removeNamedHeap(const char* pHeapName) {
     sead::SafeString name = pHeapName;
+
     if (mHeapList.find(name)) {
         mHeapList.erase(name);
     }

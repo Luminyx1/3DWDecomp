@@ -53,6 +53,7 @@ void YamlFormatter::writeIndent() {
  */
 void YamlFormatter::endHash() {
     mIndent--;
+
     if (mIndent < 0) {
         mIndent = 0;
     }
@@ -72,6 +73,7 @@ void YamlFormatter::startArray() {
  */
 void YamlFormatter::endArray() {
     mIndent--;
+
     if (mIndent < 0) {
         mIndent = 0;
     }
@@ -154,6 +156,7 @@ void YamlFormatter::writeHashString(const char* pKey, const char* pValue) {
  */
 void YamlFormatter::writeBlockString(const char* pPrefix, const char* pValue) {
     StringMatcher matcher("*\n*");
+
     if (!matcher.tryMatch(pValue)) {
         writeString("%s'%s'\n", pPrefix, pValue);
         return;
@@ -161,6 +164,7 @@ void YamlFormatter::writeBlockString(const char* pPrefix, const char* pValue) {
 
     writeString("%s|\n", pPrefix);
     mIndent++;
+
     while (pValue) {
         if (!matcher.tryMatch(pValue)) {
             writeIndent();

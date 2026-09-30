@@ -27,8 +27,10 @@ bool tryCallControllerApplet(const GamePadSystem* pSystem, s32 minPlayerNum, s32
     arg.mPermitJoyconDual = true;
     arg.mSingleMode = maxPlayerNum == 1;
     arg.mUseColors = false;
+
     if (maxPlayerNum >= 2) {
         arg.mUsingControllerNames = true;
+
         for (s32 i = 0; i < maxPlayerNum; i++) {
             sead::StringUtil::convertUtf16ToUtf8(arg.mControllerNames[i], 0x81,
                                                  pSystem->getPadName(i).cstr(), -1);
@@ -37,6 +39,7 @@ bool tryCallControllerApplet(const GamePadSystem* pSystem, s32 minPlayerNum, s32
 
     nn::hid::ControllerSupportResultInfo resultInfo;
     nn::Result result = nn::hid::ShowControllerSupport(&resultInfo, arg);
+
     if (pSystem->getAudioSystem() != nullptr) {
         pSystem->getAudioSystem()->pauseSystemImmediately(false, "コントローラサポートアプレット",
                                                           true);
@@ -63,6 +66,7 @@ bool tryCallControllerApplet(const GamePadSystem* pSystem, nn::hid::ControllerSu
 
     if (isUseControllerNames && pArg->mMaxPlayerCount >= 2) {
         pArg->mUsingControllerNames = true;
+
         for (s32 i = 0; i < pArg->mMaxPlayerCount; i++) {
             sead::StringUtil::convertUtf16ToUtf8(pArg->mControllerNames[i], 0x81,
                                                  pSystem->getPadName(i).cstr(), -1);
@@ -70,6 +74,7 @@ bool tryCallControllerApplet(const GamePadSystem* pSystem, nn::hid::ControllerSu
     }
 
     nn::Result result = nn::hid::ShowControllerSupport(pResultInfo, *pArg);
+
     if (pSystem->getAudioSystem() != nullptr) {
         pSystem->getAudioSystem()->pauseSystemImmediately(false, "コントローラサポートアプレット",
                                                           true);

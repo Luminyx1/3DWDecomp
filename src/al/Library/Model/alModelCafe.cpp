@@ -134,6 +134,7 @@ void alModelCafe::initResource(const char* pModelArcName, const char* pAnimArcNa
 
     nn::g3d::ResFile* texResFile = nullptr;
     al::Resource* modelRes;
+
     if (pTexArcName) {
         al::Resource* texRes = al::findOrCreateResource(pTexArcName, nullptr);
         al::StringTmp<256> texFileName("%s.bfres", al::getBaseName(pTexArcName));
@@ -150,10 +151,12 @@ void alModelCafe::initResource(const char* pModelArcName, const char* pAnimArcNa
     }
 
     al::Resource* texRes;
+
     if (mModelRes && (texRes = getTextureResource(mModelRes)) && getResFile(texRes) &&
         getResFileCount(getResFile(texRes), 0xdc) != 0) {
         mTextureRes = texRes;
         al::StringTmp<256> texFileName("%s.bfres", al::getBaseName(pModelArcName));
+
         if (!texResFile) {
             texResFile = getResFile(mModelRes);
         }
@@ -186,6 +189,7 @@ void alModelCafe::initModel(s32 bufferNum, al::GpuMemAllocator* pAllocator) {
 
     al::Resource* texRes = getTextureResource(mModelRes);
     nn::g3d::ResFile* texResFile;
+
     if (texRes && (texResFile = getResFile(texRes)) &&
         (getResFileCount(texResFile, 0xe2) != 0 || getResFileCount(texResFile, 0xe4) != 0 ||
          getResFileCount(texResFile, 0xe6) != 0)) {
@@ -220,9 +224,11 @@ void alModelCafe::initModel(s32 bufferNum, al::GpuMemAllocator* pAllocator) {
     }
 
     const nn::g3d::SkeletonObj* skeleton = mModelG3D->getModelObj()->GetSkeleton();
+
     if (skeleton && skeleton->GetBoneCount() != 0) {
         mWorldMtxArray = new sead::Matrix34f[skeleton->GetBoneCount()];
         u32 boneNum = skeleton->GetBoneCount();
+
         for (u32 i = 0; i < boneNum; i++) {
             storeWorldMtx(&mWorldMtxArray[i], skeleton->GetWorldMtxArray()[i]);
         }
@@ -242,6 +248,7 @@ const al::Resource* alModelCafe::getAnimResource() const {
  */
 void alModelCafe::show() {
     mModelG3D->mIsVisible = true;
+
     if (mAnimPlayerSkl) {
         mAnimPlayerSkl->reset();
     }
@@ -267,6 +274,7 @@ void alModelCafe::hide() {
  */
 void alModelCafe::update() {
     mModelG3D->swapGPUBuffer();
+
     if (mAnimPlayerSkl) {
         mAnimPlayerSkl->update();
     }
@@ -359,11 +367,13 @@ void alModelCafe::calc(const sead::Matrix34f& rMtx, const sead::Vector3f& rScale
     }
 
     const nn::g3d::SkeletonObj* skeleton = mModelG3D->getModelObj()->GetSkeleton();
+
     if (!skeleton) {
         return;
     }
 
     u32 boneNum = skeleton->GetBoneCount();
+
     for (u32 i = 0; i < boneNum; i++) {
         storeWorldMtx(&mWorldMtxArray[i], skeleton->GetWorldMtxArray()[i]);
     }
@@ -413,9 +423,11 @@ void alModelCafe::initUpdateBounding() {
     const nn::g3d::ModelObj* modelObj = mModelG3D->getModelObj();
     s32 shapeNum = modelObj->GetNumShapes();
     bool isExist = false;
+
     for (s32 i = 0; i < shapeNum; i++) {
         bool isExistNode = alModelFunction::isExistBoundingNode(getShapeObj(modelObj, i)->GetResource());
         isExist |= isExistNode;
+
         if (isExistNode) {
             break;
         }

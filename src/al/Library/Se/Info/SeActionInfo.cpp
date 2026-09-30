@@ -11,6 +11,7 @@ namespace al {
 SePlayInfoInAction* SePlayInfoInAction::createInfo(const ByamlIter& rIter) {
     SePlayInfoInAction* info = new SePlayInfoInAction;
     rIter.tryGetStringByKey(&info->mName, "Name");
+
     if (!rIter.tryGetFloatByKey(&info->mStartFrame, "StartFrame")) {
         info->mStartFrame = 0.0f;
     }
@@ -34,6 +35,7 @@ SePlayInfoInAction* SePlayInfoInAction::createInfo(const ByamlIter& rIter) {
 SeActionInfo* SeActionInfo::createInfo(const ByamlIter& rIter) {
     SeActionInfo* info = new SeActionInfo;
     rIter.tryGetStringByKey(&info->mName, "Name");
+
     if (!rIter.tryGetBoolByKey(&info->mIsStopPlayingSe, "IsStopPlayingSe")) {
         info->mIsStopPlayingSe = false;
     }
@@ -116,8 +118,10 @@ SeActionInfo::SeActionInfo(const SeActionInfo& rOther)
     list->mInfos = new sead::PtrArray<SePlayInfoInAction>;
     list->mInfos->allocBuffer(num + 1, nullptr);
     mPlayInfoList = list;
+
     for (s32 i = 0; i < num; i++) {
         SePlayInfoInAction* info = rOther.mPlayInfoList != nullptr ? rOther.mPlayInfoList->getInfo(i) : nullptr;
+
         if (info == nullptr) {
             break;
         }
@@ -135,6 +139,7 @@ SeActionInfo::SeActionInfo(const SeActionInfo& rOther)
 SeActionInfo& SeActionInfo::operator=(const SeActionInfo& rOther) {
     mName = rOther.mName;
     mIsStopPlayingSe = rOther.mIsStopPlayingSe;
+
     if (rOther.mPlayInfoList != nullptr && mPlayInfoList != nullptr) {
         *mPlayInfoList = *rOther.mPlayInfoList;
     }

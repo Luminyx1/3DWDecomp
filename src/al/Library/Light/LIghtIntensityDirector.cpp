@@ -101,6 +101,7 @@ void LightIntensityDirector::initGraphicsAreaParam(GraphicsAreaDirector* pGraphi
 
     mExposureParamIO = new agl::utl::IParameterIO();
     mExposureParams = new ExposureParam*[mParamNum];
+
     for (s32 i = 0; i < mParamNum; i++) {
         mExposureParams[i] = new ExposureParam(i == 0);
         mExposureParamIO->addObj(mExposureParams[i],
@@ -125,6 +126,7 @@ void LightIntensityDirector::initGraphicsAreaParam(GraphicsAreaDirector* pGraphi
 
     mBloomParamIO = new agl::utl::IParameterIO();
     mBloomParams = new BloomNamedParam*[mParamNum];
+
     for (s32 i = 0; i < mParamNum; i++) {
         mBloomParams[i] = new BloomNamedParam(i == 0);
         mBloomParamIO->addObj(mBloomParams[i],
@@ -133,6 +135,7 @@ void LightIntensityDirector::initGraphicsAreaParam(GraphicsAreaDirector* pGraphi
     }
 
     const void* bloomFile = tryFindStageParameterFileDesign(pStageName, "DefaultParam.baglblm", 1);
+
     if (bloomFile) {
         agl::utl::ResParameterArchive archive(bloomFile);
         mBloomParamIO->applyResParameterArchive(archive);
@@ -141,6 +144,7 @@ void LightIntensityDirector::initGraphicsAreaParam(GraphicsAreaDirector* pGraphi
 
     mLerpBloomParam->copy(*mBloomParams[0]);
     mPrevLerpBloomParam->copy(*mBloomParams[0]);
+
     for (s32 i = 0; i < mParamNum; i++) {
         if (isEqualString("※ブルーム名を入力してください", mBloomParams[i]->getName())) {
             mBloomParamIO->removeObj(mBloomParams[i]);
@@ -182,6 +186,7 @@ void LightIntensityDirector::updateExposure() {
 
     ExposureParam* param = findExposureParam(mExposureAreaParam->mParamName);
     ExposureParam* prevParam = findExposureParam(mExposureAreaParam->mPrevParamName);
+
     if (param != mCurrentExposureParam || prevParam != mPrevExposureParam) {
         mPrevExposureParam = mCurrentExposureParam;
         mCurrentExposureParam = param;
@@ -201,6 +206,7 @@ void LightIntensityDirector::updateBloom() {
 
     const char* currentName = mCurrentBloomParam->getName() ? mCurrentBloomParam->getName() : "";
     bool isChanged = false;
+
     if (!mBloomAreaParam->mIsNoParam) {
         const char* name = mBloomAreaParam->mParamName ? mBloomAreaParam->mParamName : "";
         isChanged = !isEqualString(currentName, name);
@@ -215,6 +221,7 @@ void LightIntensityDirector::updateBloom() {
 
         mPrevBloomParam = mCurrentBloomParam;
         mCurrentBloomParam = findBloomParam(mBloomAreaParam->mParamName);
+
         if (isChanged) {
             mLerpBloomParam->copy(*mCurrentBloomParam);
         } else {
@@ -229,6 +236,7 @@ void LightIntensityDirector::updateBloom() {
         f32 prevIntensity = *prevParam->getBloomParameter()->mMain.mIntensity;
         f32 currentIntensity = *currentParam->getBloomParameter()->mMain.mIntensity;
         f32 rate = mBloomAreaParam->mRate;
+
         if (!(prevIntensity <= currentIntensity)) {
             rate = 1.0 - std::pow(1.0f - rate, 10);
         } else {
@@ -237,6 +245,7 @@ void LightIntensityDirector::updateBloom() {
 
         lerpParam->copyLerp(*prevParam, *currentParam, rate);
         f32 reduceScale = mLerpBloomParam->getReduceScale();
+
         if (reduceScale != reduceScale) {
             mLerpBloomParam->setReduceScale(1.0f);
         }
@@ -318,6 +327,7 @@ const BloomNamedParam* LightIntensityDirector::getCurrentParam() const {
  */
 void LightIntensityDirector::applyBloomParameter(agl::pfx::Bloom* pBloom, s32 context) const {
     const BloomNamedParam* param = getCurrentParam();
+
     if (param) {
         pBloom->copyParameter(context, *param);
     }
@@ -329,6 +339,7 @@ void LightIntensityDirector::applyBloomParameter(agl::pfx::Bloom* pBloom, s32 co
  */
 f32 LightIntensityDirector::getCurrentReduceScale() const {
     const BloomNamedParam* param = getCurrentParam();
+
     if (param) {
         return param->getReduceScale();
     }

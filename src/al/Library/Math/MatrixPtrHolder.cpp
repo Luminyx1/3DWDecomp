@@ -75,6 +75,7 @@ const sead::Matrix34f* MtxPtrHolder::findMtxPtr(const char* pName) const {
  */
 const sead::Matrix34f* MtxPtrHolder::tryFindMtxPtr(const char* pName) const {
     s32 index = tryFindIndex(pName);
+
     if (index < 0) {
         return nullptr;
     }

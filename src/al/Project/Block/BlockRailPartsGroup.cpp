@@ -17,11 +17,13 @@ BlockRailPartsGroup::BlockRailPartsGroup() = default;
  */
 void BlockRailPartsGroup::init(const ActorInitInfo& rInfo) {
     mPartsNum = calcLinkChildNum(rInfo, "Parts");
+
     if (mPartsNum == 0) {
         return;
     }
 
     mParts = new BlockRailParts*[mPartsNum];
+
     for (s32 i = 0; i < mPartsNum; i++) {
         const char* name = getLinksActorDisplayName(rInfo, "Parts", i);
         mParts[i] = new BlockRailParts(name);
@@ -96,11 +98,14 @@ BlockRailParts* BlockRailPartsGroup::getParts(s32 index) const {
  */
 s32 BlockRailPartsGroup::calcEmptyLinkCount() const {
     s32 count = 0;
+
     for (s32 i = 0; i < mPartsNum; i++) {
         BlockRailParts* parts = mParts[i];
         s32 linkNum = parts->getLinkNum();
+
         for (s32 j = 0; j < linkNum; j++) {
             BlockRailLink* link = parts->getLink(j);
+
             if (link->isTerminate()) {
                 continue;
             }

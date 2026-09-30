@@ -7,6 +7,7 @@ namespace al {
  */
 ScreenPointCheckGroup::ScreenPointCheckGroup(s32 maxTargets) : mMaxTargets(maxTargets) {
     mTargets = new ScreenPointTarget*[maxTargets];
+
     for (s32 i = 0; i < mMaxTargets; i++) {
         mTargets[i] = nullptr;
     }

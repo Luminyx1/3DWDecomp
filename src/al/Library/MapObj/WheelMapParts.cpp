@@ -56,10 +56,12 @@ void WheelMapParts::init(const ActorInitInfo& rInfo) {
     mMoveDir.setCross(rotateAxis, sead::Vector3f::ey);
     isNearZero(mMoveDir);
     createChildStep(rInfo, this, true);
+
     if (isExistRail(this)) {
         setSyncRailToNearestPos(this);
         mIsRailPlusDir = isRailPlusPoseFront(this);
         f32 railProgress = getRailCoord(this) / getRailTotalLength(this);
+
         if (mIsRailPlusDir) {
             mWheelAngle = railProgress * mMoveEndDegree;
         } else {
@@ -98,6 +100,7 @@ void WheelMapParts::appear() {
  */
 void WheelMapParts::kill() {
     LiveActor::kill();
+
     if (mIsResetOnKill) {
         mWheelAngle = 0.0f;
     }
@@ -113,6 +116,7 @@ void WheelMapParts::kill() {
 bool WheelMapParts::receiveMsg(const SensorMsg* pMsg, HitSensor* pOther, HitSensor* pSelf) {
     if (isMsgTouchAssist(pMsg)) {
         mAssistStopTimer = 45;
+
         if (!isNerve(this, NrvWheelMapParts.AssistStop.data())) {
             startNerveAction(this, "AssistStop");
         }
@@ -122,6 +126,7 @@ bool WheelMapParts::receiveMsg(const SensorMsg* pMsg, HitSensor* pOther, HitSens
 
     if (isMsgFloorTouch(pMsg)) {
         sead::Vector3f pos;
+
         if (isMySensor(pSelf, this)) {
             pos = getSensorPos(pOther);
         } else {
@@ -154,12 +159,15 @@ void WheelMapParts::exeWait() {
     mRotateWidth = sead::Mathf::clamp(mRotateWidth, -1.25f, 1.25f);
     mDeltaAngle = (mRotateWidth * mRotateAccel * 0.001f + mDeltaAngle) * 0.97f;
     mWheelAngle = mWheelAngle + mDeltaAngle;
+
     if (isExistRail(this)) {
         bool isInvertDirection = false;
         f32 railProgress;
+
         if (mIsRailPlusDir) {
             if (mWheelAngle < 0.0f) {
                 mWheelAngle = 0.0f;
+
                 if (mDeltaAngle < 0.0f) {
                     if (mDeltaAngle < mRotateAccel * -0.001f) {
                         isInvertDirection = true;
@@ -171,6 +179,7 @@ void WheelMapParts::exeWait() {
 
             if (mWheelAngle > mMoveEndDegree) {
                 mWheelAngle = mMoveEndDegree;
+
                 if (mDeltaAngle > 0.0f) {
                     if (mDeltaAngle > mRotateAccel * 0.001f) {
                         isInvertDirection = true;
@@ -184,6 +193,7 @@ void WheelMapParts::exeWait() {
         } else {
             if (mWheelAngle < -mMoveEndDegree) {
                 mWheelAngle = -mMoveEndDegree;
+
                 if (mDeltaAngle < 0.0f) {
                     if (mDeltaAngle < mRotateAccel * -0.001f) {
                         isInvertDirection = true;
@@ -195,6 +205,7 @@ void WheelMapParts::exeWait() {
 
             if (mWheelAngle > 0.0f) {
                 mWheelAngle = 0.0f;
+
                 if (mDeltaAngle > 0.0f) {
                     if (mDeltaAngle > mRotateAccel * 0.001f) {
                         isInvertDirection = true;
@@ -233,6 +244,7 @@ void WheelMapParts::exeWait() {
  */
 void WheelMapParts::exeAssistStop() {
     mAssistStopTimer--;
+
     if (mAssistStopTimer <= 0) {
         mAssistStopTimer = 0;
         startNerveAction(this, "Wait");

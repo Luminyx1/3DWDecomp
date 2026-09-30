@@ -80,6 +80,7 @@ void AudioDirector::initAfterInitPlacement(const AudioSystemInfo* pInfo) {
     mAudioEventController->initAfterInitPlacement(this);
     mSeEffectController->createEffectUnit("OuterSpaceAmbLittle");
     AreaObjGroup* group = tryFindAreaObjGroup(this, "AudioEffectChangeArea");
+
     if (group == nullptr) {
         return;
     }
@@ -88,6 +89,7 @@ void AudioDirector::initAfterInitPlacement(const AudioSystemInfo* pInfo) {
         AreaObj* areaObj = group->getAreaObj(i);
         const char* effectName = nullptr;
         bool isFound = tryGetAreaObjStringArg(&effectName, areaObj, "AudioEffectName");
+
         if (effectName != nullptr && isFound) {
             mSeEffectController->createEffectUnit(effectName);
         }
@@ -128,6 +130,7 @@ void AudioDirector::update() {
     mSeDirector->update();
     mBgmDirector->update();
     mAudioVolumeCtrl->update();
+
     if (mAudioEventController != nullptr) {
         mAudioEventController->update();
     }
@@ -145,6 +148,7 @@ void AudioDirector::finalize() {
 
     mSeDirector->finalize();
     mBgmDirector->stopAllBgm(0);
+
     if (mAudioEventController != nullptr) {
         mAudioEventController->finalize();
     }

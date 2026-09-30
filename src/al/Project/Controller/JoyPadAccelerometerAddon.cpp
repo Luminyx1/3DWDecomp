@@ -31,6 +31,7 @@ bool JoyPadAccelerometerAddon::calc() {
     }
 
     s64 index = mIndex;
+
     if (index >= npad->getSixAxisSensorNum()) {
         return false;
     }
@@ -59,9 +60,11 @@ bool JoyPadAccelerometerAddon::calc() {
 
     if (device->getNpadJoyHoldType() == nn::hid::NpadJoyHoldType::Horizontal) {
         sead::NinJoyNpadDevice::Style style = npad->getStyle();
+
         if (style == sead::NinJoyNpadDevice::cStyle_JoyLeft ||
             style == sead::NinJoyNpadDevice::cStyle_JoyRight) {
             f32 temp = -mAcceleration.x;
+
             if (style == sead::NinJoyNpadDevice::cStyle_JoyRight) {
                 mAcceleration.x = -mAcceleration.z;
                 mAcceleration.z = -temp;

@@ -11,6 +11,7 @@ inline void checkHit(HitSensor* pA, HitSensor* pB) {
 
     sead::Vector3f diff = pA->mPos - pB->mPos;
     f32 radius = pA->mRadius + pB->mRadius;
+
     if (diff.squaredLength() >= radius * radius) {
         return;
     }
@@ -42,6 +43,7 @@ inline void checkHit(HitSensor* pA, HitSensor* pB) {
  */
 SensorHitGroup::SensorHitGroup(s32 maxSensors, const char* pName) : mMaxSensors(maxSensors) {
     mSensors = new HitSensor*[maxSensors];
+
     for (s32 i = 0; i < mMaxSensors; i++) {
         mSensors[i] = nullptr;
     }
@@ -94,9 +96,11 @@ void SensorHitGroup::clear() const {
  */
 void SensorHitGroup::executeHitCheckGroup(SensorHitGroup* pOther) {
     s32 count = mSensorCount;
+
     for (s32 i = 0; i < count; i++) {
         HitSensor* sensor = mSensors[i];
         s32 otherCount = pOther->mSensorCount;
+
         for (s32 j = 0; j < otherCount; j++) {
             checkHit(sensor, pOther->mSensors[j]);
         }
@@ -117,8 +121,10 @@ void SensorHitGroup::executeHitCheck(HitSensor* pA, HitSensor* pB) {
  */
 void SensorHitGroup::executeHitCheckInSameGroup() {
     s32 count = mSensorCount;
+
     for (s32 i = 0; i < count; i++) {
         HitSensor* sensor = mSensors[i];
+
         for (s32 j = i; j != count; j++) {
             checkHit(sensor, mSensors[j]);
         }

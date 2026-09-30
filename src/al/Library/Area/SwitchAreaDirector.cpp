@@ -43,6 +43,7 @@ void SwitchAreaDirector::internalUpdate() {
     sead::Vector3f positions[64];
     s32 numPositions = 0;
     s32 numPlayers = getPlayerNumMax(mPlayerHolder);
+
     for (s32 i = 0; i < numPlayers; i++) {
         if (isPlayerDead(mPlayerHolder, i) || !isPlayerAreaTarget(mPlayerHolder, i)) {
             continue;
@@ -54,6 +55,7 @@ void SwitchAreaDirector::internalUpdate() {
 
     LiveActor* player = getPlayerActor(mPlayerHolder, 0);
     bool isDisaster = player ? isDisasterMode(player) : false;
+
     if (mSwitchOnAreaGroup) {
         mSwitchOnAreaGroup->update(positions, numPositions, isDisaster);
     }
@@ -103,11 +105,13 @@ SwitchAreaDirector::SwitchAreaDirector(AreaObjDirector* pAreaObjDirector,
                                        MultiCoreQueueThread* pThread)
     : mPlayerHolder(pPlayerHolder), mAreaObjDirector(pAreaObjDirector), mThread(pThread) {
     AreaObjGroup* switchOnGroup = pAreaObjDirector->getAreaObjGroup("SwitchOnArea");
+
     if (switchOnGroup) {
         mSwitchOnAreaGroup = new SwitchOnAreaGroup(switchOnGroup);
     }
 
     AreaObjGroup* keepOnGroup = pAreaObjDirector->getAreaObjGroup("SwitchKeepOnArea");
+
     if (keepOnGroup) {
         mSwitchKeepOnAreaGroup = new SwitchKeepOnAreaGroup(keepOnGroup);
     }

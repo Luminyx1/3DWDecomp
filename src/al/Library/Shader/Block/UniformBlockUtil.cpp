@@ -15,6 +15,7 @@ UniformBlock* createUniformBlock(const UniformBlockLayout* pLayout, s32 layoutNu
                                  s32 bufferNum) {
     UniformBlock* block = new UniformBlock();
     block->startDeclare(layoutNum, pHeap);
+
     for (s32 i = 0; i < layoutNum; i++) {
         block->declare(pLayout[i].mType, pLayout[i].mNum);
     }
@@ -33,6 +34,7 @@ UniformBlock* createUniformBlock(const UniformBlockLayout* pLayout, s32 layoutNu
 void declareUniformBlock(agl::UniformBlock* pBlock, const UniformBlockLayout* pLayout, s32 layoutNum,
                          sead::Heap* pHeap) {
     pBlock->startDeclare(layoutNum, pHeap);
+
     for (s32 i = 0; i < layoutNum; i++) {
         pBlock->declare(pLayout[i].mType, pLayout[i].mNum);
     }

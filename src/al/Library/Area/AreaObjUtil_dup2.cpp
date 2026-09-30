@@ -68,8 +68,10 @@ bool isInAreaObj(const LiveActor* pActor, const char* pName) {
 bool isInAreaObjPlayerOne(const IUseAreaObj* pAreaUser, const char* pName,
                           const PlayerHolder* pPlayerHolder) {
     s32 num = getPlayerNumMax(pPlayerHolder);
+
     for (s32 i = 0; i < num; i++) {
         LiveActor* player = getPlayerActor(pPlayerHolder, i);
+
         if (isDead(player) || !isAreaTarget(player)) {
             continue;
         }
@@ -92,8 +94,10 @@ bool isInAreaObjPlayerOne(const IUseAreaObj* pAreaUser, const char* pName,
 bool isInAreaObjPlayerAll(const IUseAreaObj* pAreaUser, const char* pName,
                           const PlayerHolder* pPlayerHolder) {
     s32 num = getPlayerNumMax(pPlayerHolder);
+
     for (s32 i = 0; i < num; i++) {
         LiveActor* player = getPlayerActor(pPlayerHolder, i);
+
         if (isDead(player) || !isAreaTarget(player)) {
             continue;
         }

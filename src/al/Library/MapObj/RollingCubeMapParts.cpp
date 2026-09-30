@@ -65,6 +65,7 @@ void RollingCubeMapParts::init(const ActorInitInfo& rInfo) {
     mInitialPoseTrans = getTrans(this);
     bool isUseMoveLimit = false;
     tryGetArg(&isUseMoveLimit, rInfo, "IsUseMoveLimit");
+
     if (isUseMoveLimit) {
         mMoveLimitMtx = new sead::Matrix34f();
         mMoveLimitMtx->makeQT(mInitialPoseQuat, mInitialPoseTrans);
@@ -77,6 +78,7 @@ void RollingCubeMapParts::init(const ActorInitInfo& rInfo) {
     }
 
     sead::BoundBox3f boundBox;
+
     if (isExistModelResourceYaml(this, "BoxInfo", nullptr) &&
         tryGetByamlBox3f(&boundBox, ByamlIter(getModelResourceYaml(this, "BoxInfo", nullptr)))) {
         mRollingCubePoseKeeper = createRollingCubePoseKeeper(boundBox, rInfo);
@@ -86,11 +88,13 @@ void RollingCubeMapParts::init(const ActorInitInfo& rInfo) {
 
     bool isFloorTouchStart = true;
     tryGetArg(&isFloorTouchStart, rInfo, "IsFloorTouchStart");
+
     if (!isFloorTouchStart) {
         startNerveAction(this, "Start");
     }
 
     mEffectMtxSetter = tryCreateEffectMtxSetter(this, "EffectMtxSetter");
+
     if (mEffectMtxSetter) {
         mEffectMtxSetter->setMtxPtr(&mLandEffectMtx, "LandEffectMtx");
     }

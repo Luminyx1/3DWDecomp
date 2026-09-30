@@ -34,6 +34,7 @@ namespace al {
             const char* name = convertName(pEntryName);
             s32 num = mNumEntries;
             const NameToCreator<T>* entries = mFuncs;
+
             for (s32 i = 0; i < num; i++) {
                 if (isEqualString(name, entries[i].name)) {
                     *pCreator = entries[i].func;

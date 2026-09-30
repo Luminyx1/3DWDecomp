@@ -12,6 +12,7 @@ void RailPart::init(const sead::Vector3f& start, const sead::Vector3f& startHand
                     const sead::Vector3f& endHandle, const sead::Vector3f& end) {
     sead::Vector3f startDiff = start - startHandle;
     sead::Vector3f endDiff = end - endHandle;
+
     if (startDiff.equals({0, 0, 0}, 0.1) && endDiff.equals({0, 0, 0}, 0.1)) {
         mLinearCurve = new LinearCurve();
         mLinearCurve->set(start, end);
@@ -84,6 +85,7 @@ f32 RailPart::getPartLength() const {
 
 void RailPart::calcDir(sead::Vector3f* dir, f32 param) const {
     calcVelocity(dir, param);
+
     if (!isNearZero(*dir, 0.001)) {
         normalize(dir);
         return;
@@ -97,6 +99,7 @@ void RailPart::calcDir(sead::Vector3f* dir, f32 param) const {
     dir->x = endPos.x - startPos.x;
     dir->y = endPos.y - startPos.y;
     dir->z = endPos.z - startPos.z;
+
     if (isNearZero(*dir, 0.001))
         *dir = {0, 0, 1};
     else

@@ -160,8 +160,10 @@ void CameraPoseUpdater::update(bool isPaused) {
     if (mAreaObjDirector) {
         sead::Vector3f pos = mLookAtCamera.getPos();
         pos.y += -50.0f;
+
         if (isInWaterArea(this, pos)) {
             f32 distance;
+
             if (calcWaterDistanceCheck(this, pos, 1000.0f, &distance)) {
                 pos.y = distance + 50.0f;
                 mLookAtCamera.setPos(pos);
@@ -172,6 +174,7 @@ void CameraPoseUpdater::update(bool isPaused) {
     mLookAtCamera.updateViewMatrix();
 
     f32 fovy = mFovyDegree;
+
     if (mPauseCameraCtrl && mPauseCameraCtrl->isCameraPause()) {
         fovy = mPauseCameraCtrl->getFovyDegree();
     }
@@ -195,12 +198,14 @@ bool CameraPoseUpdater::trySwitchCamera() {
     }
 
     mSwitcher->update();
+
     if (!mSwitcher->isChanged()) {
         return false;
     }
 
     if (!mSwitcher->isExistNextCamera()) {
         mTicket = nullptr;
+
         if (!isNerve(this, &NrvCameraPoseUpdaterDeactive)) {
             setNerve(this, &NrvCameraPoseUpdaterDeactive);
             return true;
@@ -210,6 +215,7 @@ bool CameraPoseUpdater::trySwitchCamera() {
     }
 
     bool isChangedNerve = false;
+
     if (!isNerve(this, &NrvCameraPoseUpdaterActive)) {
         setNerve(this, &NrvCameraPoseUpdaterActive);
         isChangedNerve = true;
@@ -219,6 +225,7 @@ bool CameraPoseUpdater::trySwitchCamera() {
     mTicket = mSwitcher->getNextCamera();
 
     CameraStartInfo startInfo;
+
     if (prevTicket) {
         startInfo.prePriorityType = static_cast<CameraTicket::Priority>(prevTicket->getPriority());
         startInfo.preCameraName = prevTicket->getPoser()->getName();
@@ -237,6 +244,7 @@ bool CameraPoseUpdater::trySwitchCamera() {
         }
 
         CameraVerticalAbsorber* absorber = prevTicket->getPoser()->getCameraVerticalAbsorber();
+
         if (absorber && absorber->isAbsorbing()) {
             startInfo._25 = true;
         }
@@ -340,8 +348,10 @@ void CameraPoseUpdater::startSnapShotMode(bool isLock) {
     sead::Vector3f trans = {0.0f, 0.0f, 0.0f};
     alCameraPoserFunction::calcTargetTrans(&trans, mTicket->getPoser());
     AreaObj* areaObj = tryFindAreaObj(mTicket->getPoser(), "SnapShotInvalidCtrlArea", trans);
+
     if (areaObj) {
         bool isValidCtrl = false;
+
         if (!tryGetAreaObjArg(&isValidCtrl, areaObj, "IsValidCtrl") || !isValidCtrl) {
             setNerve(this, &NrvCameraPoseUpdaterSnapShotNoUpdate);
             return;
@@ -427,6 +437,7 @@ void CameraPoseUpdater::exeActive() {
     }
 
     mInterpole->makeLookAtCamera(&camera);
+
     if (mInterpole->isActive()) {
         mFovyDegree = mInterpole->getFovyDegree();
         mViewInfo->setActiveInterpole(true);

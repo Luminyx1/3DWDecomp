@@ -24,20 +24,24 @@ const char* getMaterialCodeName(const Triangle& rTriangle) {
 const char* getCollisionCodeName(const Triangle& rTriangle, const char* pCategory) {
     ByamlIter attributes;
     rTriangle.getAttributes(&attributes);
+
     if (!attributes.isValid()) {
         return nullptr;
     }
 
     if (isTypeStringByKey(attributes, pCategory)) {
         const char* code = nullptr;
+
         if (attributes.tryGetStringByKey(&code, pCategory)) {
             return code;
         }
     }
 
     ByamlIter codeIter;
+
     if (attributes.tryGetIterByKey(&codeIter, pCategory)) {
         const char* code = nullptr;
+
         if (codeIter.tryGetStringByIndex(&code, 0)) {
             return code;
         }

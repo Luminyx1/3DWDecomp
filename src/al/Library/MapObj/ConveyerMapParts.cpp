@@ -58,11 +58,13 @@ void ConveyerMapParts::init(const ActorInitInfo& rInfo) {
     tryGetArg(&mMoveSpeed, rInfo, "MoveSpeed");
     tryGetArg(&mPartsInterval, rInfo, "PartsInterval");
     tryGetArg(&mIsRideOnlyMove, rInfo, "IsRideOnlyMove");
+
     if (mPartsInterval < 10.0f) {
         mPartsInterval = 10.0f;
     }
 
     f32 totalMoveDistance = mConveyerKeyKeeper->getTotalMoveDistance();
+
     if (mConveyerKeyKeeper->getConveyerKeyCount() > 1) {
         isNearZero(totalMoveDistance);
     }
@@ -74,6 +76,7 @@ void ConveyerMapParts::init(const ActorInitInfo& rInfo) {
     mOffsetCoord = wrapValue(mPartsInterval * startRate, mPartsInterval);
     mConveyerStepGroup = new DeriveActorGroup<ConveyerStep>("コンベア足場リスト", groupCount);
     registerConveyerSteps(mConveyerStepGroup, rInfo);
+
     for (s32 i = 0; i < groupCount; i++) {
         ConveyerStep* conveyerStep = mConveyerStepGroup->getDeriveActor(i);
         conveyerStep->setHost(this);
@@ -85,6 +88,7 @@ void ConveyerMapParts::init(const ActorInitInfo& rInfo) {
     mConveyerKeyKeeper->calcClippingSphere(&mClippingTrans, &clippingRadius,
                                            getClippingRadius(mConveyerStepGroup->getActor(0)));
     setClippingInfo(this, clippingRadius, &mClippingTrans);
+
     if (listenStageSwitchOnOffStart(this, ConveyerMapPartsFunctor(this, &ConveyerMapParts::start),
                                     ConveyerMapPartsFunctor(this, &ConveyerMapParts::stop))) {
         setNerve(this, &NrvConveyerMapPartsStandBy);
@@ -156,6 +160,7 @@ void ConveyerMapParts::control() {
  */
 void ConveyerMapParts::startClipped() {
     LiveActor::startClipped();
+
     for (s32 i = 0; i < mConveyerStepGroup->mNumActors; i++) {
         offDrawClipping(mConveyerStepGroup->getActor(i));
     }
@@ -166,6 +171,7 @@ void ConveyerMapParts::startClipped() {
  */
 void ConveyerMapParts::endClipped() {
     LiveActor::endClipped();
+
     for (s32 i = 0; i < mConveyerStepGroup->mNumActors; i++) {
         onDrawClipping(mConveyerStepGroup->getActor(i));
     }
@@ -187,6 +193,7 @@ void ConveyerMapParts::exeMove() {
         mOffsetCoord = wrapValue(mOffsetCoord + speedFactor * mMoveSpeed, mMaxCoord);
         bool isForwards = mMoveSpeed >= 0.0f;
         s32 actorCount = mConveyerStepGroup->mNumActors;
+
         for (s32 i = 0; i < actorCount; i++) {
             mConveyerStepGroup->getDeriveActor(i)->setTransByCoord(
                 mPartsInterval * i + mOffsetCoord, isForwards);

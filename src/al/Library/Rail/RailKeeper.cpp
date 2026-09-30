@@ -25,6 +25,7 @@ bool RailKeeper::isValid() const {
 
 RailKeeper* tryCreateRailKeeper(const PlacementInfo& rInfo, const char* pLinkName) {
     PlacementInfo railInfo;
+
     if (!tryGetLinksInfo(&railInfo, rInfo, pLinkName)) {
         return nullptr;
     }
@@ -36,11 +37,13 @@ RailKeeperGroup::RailKeeperGroup() = default;
 
 void RailKeeperGroup::init(const PlacementInfo& rInfo, const char* pLinkName) {
     mRailKeeperNum = calcLinkChildNum(rInfo, pLinkName);
+
     if (mRailKeeperNum <= 0) {
         return;
     }
 
     mRailKeepers = new RailKeeper*[mRailKeeperNum];
+
     for (s32 i = 0; i < mRailKeeperNum; i++) {
         PlacementInfo railInfo;
         getLinksInfoByIndex(&railInfo, rInfo, pLinkName, i);

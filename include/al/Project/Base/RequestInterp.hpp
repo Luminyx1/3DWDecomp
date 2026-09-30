@@ -27,6 +27,7 @@ public:
 
     void requestParam(s32 priority, s32 step, const T& rParam) {
         s32 interpStep = RequestInterpMathImpl::max(1, step);
+
         if (mIsDirect) {
             requestParamDirect_(priority, rParam);
             return;
@@ -61,6 +62,7 @@ public:
         }
 
         bool isSamePriorityRequested = false;
+
         if (mPriority == priority) {
             if (mIsSamePriorityRequested)
                 isSamePriorityRequested = true;
@@ -84,14 +86,17 @@ public:
 
         mStep--;
         mStep = RequestInterpMathImpl::max(-1, mStep);
+
         if (mStep < 0) {
             mPriority = -2;
+
             if (mStep == -1)
                 return;
         }
 
         f32 rate = mStep == 0 ? 1.0f : (f32)(mStepMax - mStep) / (f32)mStepMax;
         mCurrentParam.interp(mFromParam, mToParam, rate);
+
         if (mIsEndInit && mIsDirect)
             mIsDirect = false;
     }

@@ -14,6 +14,7 @@ inline ActorParamInfo::ActorParamInfo() = default;
  */
 const ActorParamS32* ActorParamHolder::findParamS32(const char* pName) const {
     ActorParamInfo* info = tryFindParamInfoByName(pName);
+
     if (info == nullptr) {
         return reinterpret_cast<const ActorParamS32*>("");
     }
@@ -29,6 +30,7 @@ const ActorParamS32* ActorParamHolder::findParamS32(const char* pName) const {
 ActorParamInfo* ActorParamHolder::tryFindParamInfoByName(const char* pName) const {
     for (s32 i = 0; i < mSize; i++) {
         ActorParamInfo* info = &mInfoArray[i];
+
         if (isEqualString(info->mName, pName)) {
             return info;
         }
@@ -44,6 +46,7 @@ ActorParamInfo* ActorParamHolder::tryFindParamInfoByName(const char* pName) cons
  */
 const ActorParamF32* ActorParamHolder::findParamF32(const char* pName) const {
     ActorParamInfo* info = tryFindParamInfoByName(pName);
+
     if (info == nullptr) {
         return reinterpret_cast<const ActorParamF32*>("");
     }
@@ -58,6 +61,7 @@ const ActorParamF32* ActorParamHolder::findParamF32(const char* pName) const {
  */
 const ActorParamMove* ActorParamHolder::findParamMove(const char* pName) const {
     ActorParamInfo* info = tryFindParamInfoByName(pName);
+
     if (info == nullptr) {
         return reinterpret_cast<const ActorParamMove*>("");
     }
@@ -72,6 +76,7 @@ const ActorParamMove* ActorParamHolder::findParamMove(const char* pName) const {
  */
 const ActorParamJump* ActorParamHolder::findParamJump(const char* pName) const {
     ActorParamInfo* info = tryFindParamInfoByName(pName);
+
     if (info == nullptr) {
         return reinterpret_cast<const ActorParamJump*>("");
     }
@@ -86,6 +91,7 @@ const ActorParamJump* ActorParamHolder::findParamJump(const char* pName) const {
  */
 const ActorParamSight* ActorParamHolder::findParamSight(const char* pName) const {
     ActorParamInfo* info = tryFindParamInfoByName(pName);
+
     if (info == nullptr) {
         return reinterpret_cast<const ActorParamSight*>("");
     }
@@ -100,6 +106,7 @@ const ActorParamSight* ActorParamHolder::findParamSight(const char* pName) const
  */
 const ActorParamRebound* ActorParamHolder::findParamRebound(const char* pName) const {
     ActorParamInfo* info = tryFindParamInfoByName(pName);
+
     if (info == nullptr) {
         return reinterpret_cast<const ActorParamRebound*>("");
     }
@@ -116,6 +123,7 @@ ActorParamHolder::ActorParamHolder(LiveActor* pActor) {
     ByamlIter paramIter(getModelResourceYaml(pActor, "ActorParam", nullptr));
     mSize = paramIter.getSize();
     mInfoArray = new ActorParamInfo[mSize];
+
     for (s32 i = 0; i < mSize; i++) {
         ActorParamInfo* info = &mInfoArray[i];
         ByamlIter iter;
@@ -123,6 +131,7 @@ ActorParamHolder::ActorParamHolder(LiveActor* pActor) {
         iter.tryGetStringByKey(&info->mName, "ParamName");
 
         ByamlIter valueIter;
+
         if (iter.tryGetIterByKey(&valueIter, "S32")) {
             info->mType = ActorParamType::S32;
             valueIter.tryGetIntByKey(&info->mParamS32.value, "ParamS32");

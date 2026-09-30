@@ -185,6 +185,7 @@ bool tryGetSoundId(u32* pId, const char* pName, bool isBgm) {
     }
 
     u32 id = getNameUtil(isBgm).getAccessor()->getSoundId(pName);
+
     if (id == al::AudioConst::SOUND_ID_INVALID) {
         return false;
     }

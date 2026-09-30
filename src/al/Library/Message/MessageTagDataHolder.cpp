@@ -10,6 +10,7 @@ namespace al {
  */
 MessageTagDataHolder::MessageTagDataHolder(s32 maxNum) : mNum(0), mMaxNum(maxNum) {
     mData = new MessageTagDataBase*[maxNum];
+
     for (s32 i = 0; i < mMaxNum; i++) {
         mData[i] = nullptr;
     }
@@ -35,6 +36,7 @@ void MessageTagDataHolder::replaceMessage(sead::BufferedSafeStringBase<char16_t>
                                           const char16_t* pMessage) const {
     char16_t buffer[0x400];
     copyMessageWithTag(buffer, 0x400, pMessage);
+
     for (s32 i = 0; i < mNum; i++) {
         mData[i]->replaceMessage(pString, pMsgSystem, buffer);
         copyMessageWithTag(buffer, 0x400, pString->cstr());

@@ -26,6 +26,7 @@ ExecutorListLayoutDrawBase::ExecutorListLayoutDrawBase(const char* pListName, s3
                                                        const ExecuteSystemInitInfo& rInfo)
     : ExecutorListBase(pListName, pGroupName), mLayoutNumMax(capacity) {
     mLayouts = new LayoutActor*[capacity];
+
     for (s32 i = 0; i < mLayoutNumMax; i++) {
         mLayouts[i] = nullptr;
     }
@@ -45,6 +46,7 @@ void ExecutorListLayoutDrawBase::registerLayout(LayoutActor* pLayout) {
  */
 void ExecutorListLayoutDrawBase::executeList() const {
     bool isAnyAlive = false;
+
     for (s32 i = 0; i < mLayoutNum; i++) {
         isAnyAlive |= mLayouts[i]->isAlive();
     }
@@ -54,8 +56,10 @@ void ExecutorListLayoutDrawBase::executeList() const {
     }
 
     startDraw();
+
     for (s32 i = 0; i < mLayoutNum; i++) {
         LayoutActor* layout = mLayouts[i];
+
         if (layout->isAlive()) {
             layout->getLayoutKeeper()->draw();
         }

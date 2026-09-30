@@ -22,6 +22,7 @@ JointRumbler::JointRumbler(const LiveActor* pActor, const char* pJointName, f32 
       mStep(duration + startStep) {
     mJointIndex = getJointIndex(pActor->mModelKeeper, pJointName);
     appendJointId(mJointIndex);
+
     for (s32 i = 0; i < 3; i++) {
         mDetails[i].delay = 0;
         mDetails[i].rate = 1.0f;
@@ -37,6 +38,7 @@ JointRumbler::JointRumbler(const LiveActor* pActor, const char* pJointName, f32 
 void JointRumbler::initDetails(EAxis axis, s32 delay, f32 rate) {
     mDetails[axis].delay = delay;
     mDetails[axis].rate = rate;
+
     if (mMaxDelay < delay) {
         mMaxDelay = delay;
     }
@@ -73,6 +75,7 @@ void JointRumbler::update() {
 void JointRumbler::updateEach(f32* pOut, EAxis axis) {
     s32 step = mStep - mDetails[axis].delay;
     f32 value = 1.0f;
+
     if (step >= mStartStep && step < mDuration + mStartStep) {
         f32 rate = static_cast<f32>(step - mStartStep) / mDuration;
         value = (1.0f - rate) *

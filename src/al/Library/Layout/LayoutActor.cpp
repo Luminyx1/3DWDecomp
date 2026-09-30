@@ -26,6 +26,7 @@ LayoutActor::LayoutActor(const char* pName)
  */
 void LayoutActor::appear() {
     mIsAlive = true;
+
     if (mAudioKeeper) {
         mAudioKeeper->appear();
     }
@@ -67,12 +68,14 @@ void LayoutActor::movement() {
 
     if (mNerveKeeper) {
         mNerveKeeper->update();
+
         if (!mIsAlive) {
             return;
         }
     }
 
     control();
+
     if (mLayoutPartsActorKeeper) {
         mLayoutPartsActorKeeper->update();
     }
@@ -129,6 +132,7 @@ void LayoutActor::calcAnim(bool isRecursive) {
     }
 
     mLayoutKeeper->calcAnim(isRecursive);
+
     if (mLayoutPartsActorKeeper) {
         mLayoutPartsActorKeeper->calcAnim(isRecursive);
     }
@@ -164,6 +168,7 @@ void LayoutActor::initTextPaneAnimator(LayoutTextPaneAnimator* pAnimator) {
  */
 void LayoutActor::initHitReactionKeeper(HitReactionKeeper* pKeeper) {
     mHitReactionKeeper = pKeeper;
+
     if (getLayoutActionKeeper()) {
         getLayoutActionKeeper()->setHitReactionKeeper(mHitReactionKeeper);
     }
@@ -191,6 +196,7 @@ void LayoutActor::initLayoutPartsActorKeeper(s32 capacity) {
  */
 void LayoutActor::initEffectKeeper(EffectKeeper* pEffectKeeper) {
     mEffectKeeper = pEffectKeeper;
+
     if (mLayoutKeeper) {
         alEffectKeeperInitFunction::setupLayoutToEffectKeeper(pEffectKeeper, this);
     }

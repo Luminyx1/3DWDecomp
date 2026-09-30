@@ -38,6 +38,7 @@ void VisibleSwitchMapParts::init(const al::ActorInitInfo& rInfo) {
     al::initMapPartsActor(this, rInfo, nullptr, 0);
     al::initNerve(this, &NrvVisibleSwitchMapPartsShow, 0);
     makeActorAppeared();
+
     if (al::isValidStageSwitch(this, "SwitchAppear") &&
         al::isValidStageSwitch(this, "SwitchDisappear")) {
         return;
@@ -133,6 +134,7 @@ void VisibleSwitchMapParts::exeHide() {
 void VisibleSwitchMapParts::exeAppear() {
     if (al::isFirstStep(this)) {
         al::showModelIfHide(this);
+
         if (!al::tryStartAction(this, "Appear")) {
             al::setNerve(this, &NrvVisibleSwitchMapPartsShow);
             return;

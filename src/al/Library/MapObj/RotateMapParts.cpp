@@ -47,6 +47,7 @@ void RotateMapParts::init(const ActorInitInfo& rInfo) {
     initActorPoseTQSV(this);
     initMapPartsActor(this, rInfo, nullptr, calcChildStepCount(rInfo));
     registerAreaHostMtx(this, rInfo);
+
     if (mHitSensorKeeper) {
         mIsSupportFreezeSync = registSupportFreezeSyncGroup(this, rInfo);
     }
@@ -54,6 +55,7 @@ void RotateMapParts::init(const ActorInitInfo& rInfo) {
     tryGetArg(&mRotateAxis, rInfo, "RotateAxis");
     tryGetArg(&mRotateSpeed, rInfo, "RotateSpeed");
     createChildStep(rInfo, this, true);
+
     if (listenStageSwitchOnStart(this, FunctorV0M<RotateMapParts*, void (RotateMapParts::*)()>(
                                            this, &RotateMapParts::start))) {
         startNerveAction(this, "StandBy");
@@ -64,6 +66,7 @@ void RotateMapParts::init(const ActorInitInfo& rInfo) {
     mStartTrans = getTrans(this);
     mStartQuat = getQuat(this);
     tryGetArg(&mIsTriggerEffectOnAngle, rInfo, "IsTriggerEffectOnAngle");
+
     if (mIsTriggerEffectOnAngle) {
         tryGetArg(&mEffectTriggerAngle, rInfo, "EffectTriggerAngle");
         mEffectAngle = 0.0f;
@@ -90,6 +93,7 @@ void RotateMapParts::appear() {
         setQuat(this, mStartQuat);
         setTrans(this, mStartTrans);
         mEffectAngle = 0.0f;
+
         if (isNerve(this, NrvRotateMapParts.StandBy.data())) {
             startNerveAction(this, "Rotate");
         }
@@ -177,6 +181,7 @@ void RotateMapParts::exeStandBy() {}
  */
 void RotateMapParts::exeRotate() {
     rotateQuatLocalDirDegree(this, mRotateAxis, mRotateSpeed / 100.0f);
+
     if (mAssistTimer > 0) {
         startNerveAction(this, "AssistStop");
     }
@@ -188,11 +193,13 @@ void RotateMapParts::exeRotate() {
     if (mIsTriggerEffectOnAngle) {
         f32 speed = mRotateSpeed / 100.0f;
         f32 angle = mEffectAngle + speed;
+
         if (angle >= 360.0f) {
             angle += -360.0f;
         }
 
         mEffectAngle = angle;
+
         if (!_140 && mEffectAngle < mEffectTriggerAngle &&
             mEffectAngle + speed >= mEffectTriggerAngle) {
             tryStartEffectAction(this, "EffectOnAngle");

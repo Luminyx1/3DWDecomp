@@ -229,6 +229,7 @@ void attachMtxConnectorToCollisionRT(MtxConnector* pConnector, const LiveActor* 
                                      bool isFacingUp, bool isUseHitPos) {
     sead::Vector3f facing;
     calcUpDir(&facing, pActor);
+
     if (!isFacingUp) {
         facing = -facing;
     }
@@ -263,6 +264,7 @@ void attachMtxConnectorToCollisionQT(MtxConnector* pConnector, const LiveActor* 
                                      bool isFacingUp, bool isUseHitPos) {
     sead::Vector3f facing;
     calcUpDir(&facing, pActor);
+
     if (!isFacingUp) {
         facing = -facing;
     }

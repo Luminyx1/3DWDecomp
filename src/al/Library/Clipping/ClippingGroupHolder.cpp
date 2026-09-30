@@ -16,6 +16,7 @@ namespace al {
 ClippingInfoGroup::ClippingInfoGroup(s32 maxInfos)
     : mMaxInfos(maxInfos), mGroupId(new PlacementId()) {
     mInfos = new ClippingActorInfo*[mMaxInfos];
+
     for (s32 i = 0; i < mMaxInfos; i++) {
         mInfos[i] = nullptr;
     }
@@ -49,6 +50,7 @@ bool ClippingInfoGroup::isEqualGroupId(const ActorInitInfo& rInfo) const {
     }
 
     PlacementId groupId;
+
     if (!alPlacementFunction::getClippingGroupId(&groupId, rInfo)) {
         return false;
     }
@@ -84,6 +86,7 @@ bool ClippingInfoGroup::judgeClippingAll(const ClippingJudge* pJudge) const {
  */
 void ClippingInfoGroup::startClippedAll() {
     mIsClipped = true;
+
     for (s32 i = 0; i < mNumInfos; i++) {
         if (!isDead(mInfos[i]->getLiveActor()) && !isClipped(mInfos[i]->getLiveActor())) {
             mInfos[i]->getLiveActor()->startClipped();
@@ -96,6 +99,7 @@ void ClippingInfoGroup::startClippedAll() {
  */
 void ClippingInfoGroup::endClippedAll() {
     mIsClipped = false;
+
     for (s32 i = 0; i < mNumInfos; i++) {
         if (!isDead(mInfos[i]->getLiveActor()) && isClipped(mInfos[i]->getLiveActor())) {
             mInfos[i]->getLiveActor()->endClipped();
@@ -108,6 +112,7 @@ void ClippingInfoGroup::endClippedAll() {
  */
 ClippingGroupHolder::ClippingGroupHolder() {
     mGroups = new ClippingInfoGroup*[64];
+
     for (s32 i = 0; i < 64; i++) {
         mGroups[i] = nullptr;
     }
@@ -120,6 +125,7 @@ ClippingGroupHolder::ClippingGroupHolder() {
 void ClippingGroupHolder::update(const ClippingJudge* pJudge) {
     for (s32 i = 0; i < mNumGroups; i++) {
         ClippingInfoGroup* group = mGroups[i];
+
         if (group->judgeClippingAll(pJudge)) {
             if (!group->mIsClipped) {
                 group->startClippedAll();
@@ -139,6 +145,7 @@ void ClippingGroupHolder::update(const ClippingJudge* pJudge) {
 void ClippingGroupHolder::createAndAdd(ClippingActorInfo* pInfo, const ActorInitInfo& rInfo,
                                        s32 maxInfos) {
     ClippingInfoGroup* group = tryFindGroup(rInfo);
+
     if (!group) {
         group = new ClippingInfoGroup(maxInfos);
         group->setGroupId(rInfo);

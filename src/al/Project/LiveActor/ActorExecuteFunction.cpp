@@ -28,6 +28,7 @@ void executeUpdate(LiveActorKit* pKit) {
  */
 void setLODForceLevel0(LiveActorKit* pKit) {
     LiveActorGroup* group = pKit->mActorGroup;
+
     for (s32 i = 0; i < group->mNumActors; i++) {
         setLODForceLevel0(group->mActors[i]);
     }
@@ -44,8 +45,10 @@ void forceUpdateLOD(LiveActorKit* pKit, bool isForceLevel0) {
                                             pKit->mCameraDirectorRS->getSceneCameraInfo() :
                                             pKit->mCameraDirector->mSceneCameraInfo;
     const sead::Vector3f& cameraPos = getCameraPos(cameraInfo);
+
     for (s32 i = 0; i < group->mNumActors; i++) {
         LiveActor* actor = group->mActors[i];
+
         if (isForceLevel0) {
             setLODForceLevel0(actor);
         }

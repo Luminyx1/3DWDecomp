@@ -37,6 +37,7 @@ void SeSource3DLine::calcPositionDynamic() {
  */
 const sead::Vector3f* SeSource3DLine::calcPosition(const sead::Vector3f& rListenerPos) {
     f32 dist = (rListenerPos - mMtxPose->get3DPos()).dot(mDir);
+
     if (dist <= 0.0f) {
         mPos = mMtxPose->get3DPos();
     } else if (dist >= mLength) {

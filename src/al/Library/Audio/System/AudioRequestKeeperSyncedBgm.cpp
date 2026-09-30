@@ -10,6 +10,7 @@ namespace al {
 AudioRequestKeeperSyncedBgm::AudioRequestKeeperSyncedBgm() {
     mRequests = new sead::PtrArray<SyncedBgmRequest>();
     mRequests->allocBuffer(10, nullptr);
+
     for (s32 i = 0; i < 10; i++) {
         mRequests->pushBack(new SyncedBgmRequest);
     }
@@ -32,8 +33,10 @@ void AudioRequestKeeperSyncedBgm::update() {
     }
 
     bool isTrigger[10] = {};
+
     for (s32 i = 0; i < mRequests->size(); i++) {
         SyncedBgmRequest* request = mRequests->unsafeAt(i);
+
         if (request->isDone) {
             continue;
         }
@@ -43,6 +46,7 @@ void AudioRequestKeeperSyncedBgm::update() {
 
     for (s32 i = 0; i < mRequests->size(); i++) {
         SyncedBgmRequest* request = mRequests->unsafeAt(i);
+
         if (request->isDone || !isTrigger[i]) {
             continue;
         }
@@ -76,6 +80,7 @@ void AudioRequestKeeperSyncedBgm::update() {
  */
 void AudioRequestKeeperSyncedBgm::requestBgm(BgmPlayingType type, const BgmPlayingRequest& rRequest, s32 beat) {
     SyncedBgmRequest* freeRequest = nullptr;
+
     for (s32 i = 0; i < mRequests->size(); i++) {
         if (mRequests->unsafeAt(i)->isDone) {
             freeRequest = mRequests->unsafeAt(i);

@@ -60,6 +60,7 @@ void ModelShaderAssign::bind(const nn::g3d::ResMaterial* pMaterial, const nn::g3
                              const nn::g3d::ResShadingModel* pShadingModel,
                              const nn::g3d::ResShaderProgram* pProgram) {
     clear_();
+
     if (!pProgram) {
         return;
     }
@@ -85,6 +86,7 @@ void ModelShaderAssign::updateLocation_(const nn::g3d::ResMaterial* pMaterial,
         mMaterialBlockLocation.search(*mShaderProgram);
     } else if (mResShaderProgram) {
         s32 blockIndex = pShadingModel->GetMaterialBlockIndex();
+
         if (blockIndex != -1) {
             agl::g3d::ShaderUtilG3D::search(&mMaterialBlockLocation, pShadingModel,
                                             mResShaderProgram,
@@ -107,6 +109,7 @@ void ModelShaderAssign::activateMaterialUniformBlock(agl::DrawContext* pContext,
     }
 
     size_t blockSize = pMaterial->GetMaterialBlockSize();
+
     if (blockSize == 0) {
         return;
     }

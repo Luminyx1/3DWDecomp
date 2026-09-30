@@ -30,6 +30,7 @@ void JointLocalDirController::calcJointCallback(s32 jointIndex, sead::Matrix34f*
     localTarget.setRotated(invMtx, mInfo->mWorldTargetDir);
     sead::Vector3f axis = mInfo->mLocalRotateAxis;
     verticalizeVec(&localTarget, axis, localTarget);
+
     if (normalizeOrZero(&localTarget)) {
         return;
     }

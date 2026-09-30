@@ -18,9 +18,11 @@ s32 searchUserInfoIndex(const sead::PtrArray<al::BgmUserInfo>* pList, const char
 
     s32 lo = 0;
     s32 hi = pList->size() - 1;
+
     while (lo < hi) {
         s32 mid = (lo + hi) / 2;
         s32 result = al::BgmUserInfo::compareInfoByKey(pList->unsafeAt(mid), pKey);
+
         if (result == 0) {
             return mid;
         }

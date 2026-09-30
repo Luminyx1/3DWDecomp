@@ -169,6 +169,7 @@ void MtxConnector::calcConnectInfo(sead::Vector3f* pTrans, sead::Quatf* pQuat,
                                    const sead::Vector3f& rOffsetRotate) const {
     sead::Matrix34f mtx;
     calcMtxWithOffset(&mtx, rOffsetTrans, rOffsetRotate);
+
     if (pTrans) {
         mtx.getTranslation(*pTrans);
     }

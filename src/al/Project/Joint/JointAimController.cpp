@@ -20,6 +20,7 @@ void JointAimController::calcJointCallback(s32 jointIndex, sead::Matrix34f* pMtx
     }
 
     sead::Matrix34f invMtx;
+
     if (mInfo->mBaseMtxPtr) {
         invMtx.setInverse(*mInfo->mBaseMtxPtr);
     } else {
@@ -31,9 +32,11 @@ void JointAimController::calcJointCallback(s32 jointIndex, sead::Matrix34f* pMtx
 
     sead::Quatf quat;
     quat.set(sead::Quatf::unit);
+
     if (!normalizeOrZero(&dir)) {
         if (mInfo->mIsEnableBackAim) {
             f32 dot = mInfo->mBaseAimLocalDir.dot(dir);
+
             if (dot < 0.0f) {
                 dir -= mInfo->mBaseAimLocalDir * dot * 2.0f;
                 normalizeOrZero(&dir);

@@ -39,6 +39,7 @@ void trySyncDead(al::SubActorKeeper* pKeeper) {
 void trySyncClippingStart(al::SubActorKeeper* pKeeper) {
     for (s32 i = 0; i < pKeeper->mCount; i++) {
         const al::SubActorInfo* info = pKeeper->mInfos[i];
+
         if ((info->mSyncType & 2) && al::isAlive(info->mSubActor) &&
             !al::isClipped(info->mSubActor)) {
             info->mSubActor->startClipped();
@@ -53,6 +54,7 @@ void trySyncClippingStart(al::SubActorKeeper* pKeeper) {
 void trySyncClippingEnd(al::SubActorKeeper* pKeeper) {
     for (s32 i = 0; i < pKeeper->mCount; i++) {
         const al::SubActorInfo* info = pKeeper->mInfos[i];
+
         if ((info->mSyncType & 2) && al::isAlive(info->mSubActor) &&
             al::isClipped(info->mSubActor)) {
             info->mSubActor->endClipped();
@@ -93,6 +95,7 @@ void trySyncHideModel(al::SubActorKeeper* pKeeper) {
 al::LiveActor* findSubActor(const al::SubActorKeeper* pKeeper, const char* pName) {
     for (s32 i = 0; i < pKeeper->mCount; i++) {
         const al::SubActorInfo* info = pKeeper->mInfos[i];
+
         if (al::isEqualString(info->mSubActor->getName(), pName)) {
             return info->mSubActor;
         }

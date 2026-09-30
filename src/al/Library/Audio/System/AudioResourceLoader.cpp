@@ -38,6 +38,7 @@ void AudioResourceLayer::addLoadedSoundItemId(u32 id) {
  */
 bool AudioResourceLayer::loadSoundItem(u32 id, u32 loadFlag) {
     bool isLoaded = al::loadSoundItem(id, loadFlag, mLoader);
+
     if (isLoaded) {
         mLoadedItemIds.pushBack(id);
     }

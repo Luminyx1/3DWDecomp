@@ -16,6 +16,7 @@ CameraAngleSwingInfo::CameraAngleSwingInfo() {}
  */
 void CameraAngleSwingInfo::load(const ByamlIter& rIter) {
     tryGetByamlBool(&isInvalidSwing, rIter, "IsInvalidSwing");
+
     if (isInvalidSwing) {
         return;
     }
@@ -50,6 +51,7 @@ void CameraAngleSwingInfo::makeLookAtCamera(sead::LookAtCamera* pCamera) const {
     normalize(&front);
     sead::Vector3f up = sead::Vector3f::ey;
     verticalizeVec(&up, front, up);
+
     if (!tryNormalizeOrZero(&up)) {
         return;
     }

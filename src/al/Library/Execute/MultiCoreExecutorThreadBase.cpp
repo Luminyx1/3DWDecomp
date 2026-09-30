@@ -67,6 +67,7 @@ void MultiCoreExecutorThreadExecutorList::executeOnThread(s64 message) {
 void MultiCoreExecutorThreadActorCalcAnim::executeOnThread(s64 message) {
     LiveActor** actors = reinterpret_cast<LiveActor**>(message);
     LiveActor* actor = *actors;
+
     while (actor) {
         actor->calcAnim();
         actor = *actors++;

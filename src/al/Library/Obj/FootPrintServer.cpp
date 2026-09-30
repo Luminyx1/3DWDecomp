@@ -13,6 +13,7 @@ namespace al {
 FootPrintServer::FootPrintServer(const ActorInitInfo& rInfo, const char* pArchiveName, s32 num) {
     mFootPrints = new sead::PtrArray<FootPrint>();
     mFootPrints->allocBuffer(num, nullptr);
+
     for (s32 i = 0; i < mFootPrints->capacity(); i++) {
         mFootPrints->pushBack(new FootPrint(rInfo, pArchiveName));
     }

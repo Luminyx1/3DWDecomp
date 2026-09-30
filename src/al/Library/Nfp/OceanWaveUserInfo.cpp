@@ -28,6 +28,7 @@ OceanWaveUserInfo* OceanWaveUserInfo::createInfo(const ByamlIter& rIter,
     rIter.tryGetStringByKey(&info->mParentName, "ParentName");
     {
         ByamlIter iter;
+
         if (rIter.tryGetIterByKey(&iter, "ActionInfoList")) {
             info->mActionInfoList = createInfoList<OceanWaveActionInfo>(iter);
         } else if (info->mParentName != nullptr) {
@@ -39,6 +40,7 @@ OceanWaveUserInfo* OceanWaveUserInfo::createInfo(const ByamlIter& rIter,
 
     {
         ByamlIter iter;
+
         if (rIter.tryGetIterByKey(&iter, "PlayInfoList")) {
             info->mPlayInfoList = createInfoList<OceanWavePlayInfo>(iter);
         } else if (info->mParentName != nullptr) {

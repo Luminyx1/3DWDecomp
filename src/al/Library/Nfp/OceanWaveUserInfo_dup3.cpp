@@ -22,6 +22,7 @@ namespace al {
  */
 OceanWaveInfo* OceanWaveInfo::createInfo(const ByamlIter& rIter) {
     OceanWaveInfo* info = new OceanWaveInfo;
+
     if (!rIter.tryGetStringByKey(&info->mName, "Name")) {
         return nullptr;
     }
@@ -54,6 +55,7 @@ s32 OceanWaveInfo::compareInfo(const OceanWaveInfo* pA, const OceanWaveInfo* pB)
 OceanWavePlayInfoInAction* OceanWavePlayInfoInAction::createInfo(const ByamlIter& rIter) {
     OceanWavePlayInfoInAction* info = new OceanWavePlayInfoInAction;
     rIter.tryGetStringByKey(&info->mName, "Name");
+
     if (!rIter.tryGetFloatByKey(&info->mStartFrame, "StartFrame")) {
         info->mStartFrame = 0.0f;
     }
@@ -151,6 +153,7 @@ OceanWaveActionInfo::OceanWaveActionInfo(const OceanWaveActionInfo& rOther)
     list->mInfos = new sead::PtrArray<OceanWavePlayInfoInAction>;
     list->mInfos->allocBuffer(num + 1, nullptr);
     mPlayInfoList = list;
+
     for (s32 i = 0; i < num; i++) {
         OceanWavePlayInfoInAction* info =
             rOther.mPlayInfoList != nullptr ? rOther.mPlayInfoList->getInfo(i) : nullptr;
@@ -168,6 +171,7 @@ OceanWaveActionInfo::OceanWaveActionInfo(const OceanWaveActionInfo& rOther)
  */
 OceanWaveActionInfo& OceanWaveActionInfo::operator=(const OceanWaveActionInfo& rOther) {
     mName = rOther.mName;
+
     if (rOther.mPlayInfoList != nullptr && mPlayInfoList != nullptr) {
         *mPlayInfoList = *rOther.mPlayInfoList;
     }
@@ -182,17 +186,20 @@ OceanWaveActionInfo& OceanWaveActionInfo::operator=(const OceanWaveActionInfo& r
  */
 void startOceanWave(LiveActor* pActor, const char* pName) {
     OceanWaveKeeper* keeper = pActor->mOceanWaveKeeper;
+
     if (keeper == nullptr || keeper->getUserInfo() == nullptr) {
         return;
     }
 
     OceanWaveUserInfo* userInfo = keeper->getUserInfo();
     OceanWaveDirector* director = keeper->getDirector();
+
     if (director == nullptr) {
         return;
     }
 
     OceanWavePlayInfo* playInfo = nullptr;
+
     if (pName != nullptr && userInfo->mPlayInfoList != nullptr) {
         playInfo = userInfo->mPlayInfoList->tryFindInfo(pName);
     }
@@ -202,6 +209,7 @@ void startOceanWave(LiveActor* pActor, const char* pName) {
     }
 
     s32 num = playInfo->mOceanWaveInfoList->getInfoNum();
+
     for (s32 i = 0; i < num; i++) {
         OceanWaveInfo* info = playInfo->mOceanWaveInfoList != nullptr
                                   ? playInfo->mOceanWaveInfoList->getInfo(i)
@@ -224,6 +232,7 @@ void ActorAlphaCtrl::SphereInfo::init(const ByamlIter& rIter, LiveActor* pActor)
     const char* jointName = nullptr;
     tryGetByamlF32(&mNearDist, rIter, "NearDist");
     tryGetByamlF32(&mFarDist, rIter, "FarDist");
+
     if (tryGetByamlString(&jointName, rIter, "JointName") && jointName != nullptr) {
         if (isEqualString(jointName, "FORCE_ROOT")) {
             mJointMtx = pActor->getBaseMtx();
@@ -243,6 +252,7 @@ void ActorAlphaCtrl::SphereInfo::init(const ByamlIter& rIter, LiveActor* pActor)
  */
 f32 ActorAlphaCtrl::SphereInfo::update(LiveActor* pActor, const ClippingJudge* pJudge) {
     sead::Vector3f pos;
+
     if (mJointMtx != nullptr) {
         pos.setMul(*mJointMtx, mPosOffset);
     } else {
@@ -250,6 +260,7 @@ f32 ActorAlphaCtrl::SphereInfo::update(LiveActor* pActor, const ClippingJudge* p
     }
 
     f32 distanceSq = (pos - pJudge->mCameraPos).squaredLength();
+
     if (distanceSq > mFarDist * mFarDist) {
         return 1.0f;
     }
@@ -275,6 +286,7 @@ f32 ActorAlphaCtrl::SphereInfo::update(LiveActor* pActor, const ClippingJudge* p
 ActorAlphaCtrl* ActorAlphaCtrl::tryCreate(LiveActor* pActor, const Resource* pResource,
                                           const char* pFileName) {
     ByamlIter iter;
+
     if (tryGetActorInitFileIter(&iter, pResource, "InitAlphaCtrl", pFileName)) {
         return new ActorAlphaCtrl(iter, pActor);
     }
@@ -292,6 +304,7 @@ ActorAlphaCtrl::ActorAlphaCtrl(const ByamlIter& rIter, LiveActor* pActor) : mAct
     mSphereInfos = nullptr;
     mSphereInfoNum = 0;
     ByamlIter arrayIter;
+
     if (!tryGetByamlIterByKey(&arrayIter, rIter, "AlphaCtrlInfoArray") ||
         !arrayIter.isTypeArray()) {
         return;
@@ -299,6 +312,7 @@ ActorAlphaCtrl::ActorAlphaCtrl(const ByamlIter& rIter, LiveActor* pActor) : mAct
 
     mSphereInfoNum = arrayIter.getSize();
     mSphereInfos = new SphereInfo[mSphereInfoNum];
+
     for (s32 i = 0; i < mSphereInfoNum; i++) {
         ByamlIter iter;
         arrayIter.tryGetIterByIndex(&iter, i);
@@ -316,6 +330,7 @@ f32 ActorAlphaCtrl::update(const ClippingJudge* pJudge) {
         mAlpha = mSphereInfo.update(mActor, pJudge);
     } else {
         sead::Vector3f pos;
+
         if (mSphereInfo.mJointMtx != nullptr) {
             pos.setMul(*mSphereInfo.mJointMtx, mSphereInfo.mPosOffset);
         } else {
@@ -324,9 +339,11 @@ f32 ActorAlphaCtrl::update(const ClippingJudge* pJudge) {
 
         f32 distanceSq = (pos - pJudge->mCameraPos).squaredLength();
         mAlpha = 1.0f;
+
         if (distanceSq < mSphereInfo.mFarDist * mSphereInfo.mFarDist) {
             for (s32 i = 0; i < mSphereInfoNum; i++) {
                 f32 alpha = mSphereInfos[i].update(mActor, pJudge);
+
                 if (alpha < mAlpha) {
                     mAlpha = alpha;
                 }

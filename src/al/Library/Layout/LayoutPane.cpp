@@ -77,6 +77,7 @@ void LayoutKeeper::calcAnim(bool isRecursive) {
     }
 
     s32 groupNum = mGroupNum;
+
     for (s32 i = 0; i < groupNum; i++) {
         mGroups[i]->animate(false);
     }

@@ -121,15 +121,18 @@ void calcNearBlockRailLinkAndCoord(BlockRailLink** pLink, f32* pRate,
     f32 nearRate = 0.0f;
     f32 minDistance = sead::Mathf::maxNumber();
     s32 partsNum = pGroup->getPartsNum();
+
     for (s32 i = 0; i < partsNum; i++) {
         BlockRailParts* parts = pGroup->getParts(i);
         s32 linkNum = parts->getLinkNum();
+
         for (s32 j = 0; j < linkNum; j++) {
             BlockRailLink* link = parts->getLink(j);
             sead::Vector3f nearPos = sead::Vector3f::zero;
             f32 rate = 0.0f;
             link->calcNearestParam(&nearPos, &rate, rPos);
             f32 distance = (nearPos - rPos).length();
+
             if (distance < minDistance) {
                 minDistance = distance;
                 nearLink = link;
@@ -225,6 +228,7 @@ void calcBlockRailClippingSphere(sead::Vector3f* pCenter, f32* pRadius,
     *pCenter = rBaseCenter;
     *pRadius = baseRadius;
     s32 partsNum = pGroup->getPartsNum();
+
     for (s32 i = 0; i < partsNum; i++) {
         BlockRailParts* parts = pGroup->getParts(i);
         calcSphereMargeSpheres(pCenter, pRadius, *pCenter, *pRadius, getTrans(parts),

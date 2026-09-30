@@ -27,6 +27,7 @@ void ModelDrawer::registerModel(alModelCafe* pModel) {
  */
 void ModelDrawer::createTable() {
     mModels = new alModelCafe*[mModelNumMax];
+
     for (s32 i = 0; i < mModelNumMax; i++) {
         mModels[i] = nullptr;
     }

@@ -64,6 +64,7 @@ void AreaObjMtxConnecter::update() {
 AreaObjMtxConnecterHolder::AreaObjMtxConnecterHolder(s32 maxConnecters)
     : mNumConnecters(0), mMaxNumConnecters(maxConnecters) {
     mConnecters = new AreaObjMtxConnecter*[maxConnecters];
+
     for (s32 i = 0; i < mMaxNumConnecters; i++) {
         mConnecters[i] = nullptr;
     }

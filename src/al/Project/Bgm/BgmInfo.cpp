@@ -11,6 +11,7 @@ namespace al {
  */
 BgmPlayInfoInAction* BgmPlayInfoInAction::createInfo(const ByamlIter& rIter) {
     BgmPlayInfoInAction* info = new BgmPlayInfoInAction();
+
     if (!rIter.tryGetStringByKey(&info->mName, "Name")) {
         return nullptr;
     }
@@ -152,11 +153,13 @@ BgmActionInfo::BgmActionInfo(const BgmActionInfo& rOther) : mName(rOther.mName),
     }
 
     s32 num = rOther.mPlayInfoList->getInfoNum();
+
     if (num < 1) {
         return;
     }
 
     allockBuffer(num);
+
     for (s32 i = 0; i != num; i++) {
         BgmPlayInfoInAction* info =
             rOther.mPlayInfoList != nullptr ? rOther.mPlayInfoList->getInfo(i) : nullptr;
@@ -176,6 +179,7 @@ BgmActionInfo::BgmActionInfo(const BgmActionInfo& rOther) : mName(rOther.mName),
  */
 BgmActionInfo& BgmActionInfo::operator=(const BgmActionInfo& rOther) {
     mName = rOther.mName;
+
     if (rOther.mPlayInfoList != nullptr && mPlayInfoList != nullptr) {
         *mPlayInfoList = *rOther.mPlayInfoList;
     }
@@ -211,8 +215,10 @@ s32 BgmActionInfo::compareInfoByKey(const BgmActionInfo* pInfo, const char* pKey
 sead::PtrArray<BgmActionInfo>* BgmActionInfoList::create(const ByamlIter& rIter) {
     s32 size = rIter.getSize();
     sead::PtrArray<BgmActionInfo>* list = new sead::PtrArray<BgmActionInfo>;
+
     if (size >= 1) {
         list->allocBuffer(size, nullptr);
+
         for (s32 i = 0; i < size; i++) {
             ByamlIter iter;
             rIter.tryGetIterByIndex(&iter, i);
@@ -239,8 +245,10 @@ sead::PtrArray<BgmUserInfo>* BgmUserInfo::create(const ByamlIter& rIter) {
     s32 size = rIter.getSize();
     sead::PtrArray<BgmUserInfo>* list = new sead::PtrArray<BgmUserInfo>;
     list->allocBuffer(size, nullptr);
+
     for (s32 i = 0; i < size; i++) {
         ByamlIter iter;
+
         if (!rIter.tryGetIterByIndex(&iter, i)) {
             continue;
         }
@@ -259,6 +267,7 @@ sead::PtrArray<BgmUserInfo>* BgmUserInfo::create(const ByamlIter& rIter) {
  */
 BgmUserInfo* BgmUserInfo::createInfo(const ByamlIter& rIter) {
     BgmUserInfo* info = new BgmUserInfo();
+
     if (!rIter.tryGetStringByKey(&info->mName, "Name")) {
         return info;
     }
@@ -289,6 +298,7 @@ BgmUserInfo* BgmUserInfo::createInfo(const ByamlIter& rIter, const sead::SafeStr
     BgmUserInfo* info = new BgmUserInfo();
     info->mName = createStringIfInStack(rName.cstr());
     ByamlIter actionIter;
+
     if (rIter.tryGetIterByKey(&actionIter, "ActionInfoList")) {
         info->mActionInfoList = BgmActionInfoList::create(actionIter);
     }

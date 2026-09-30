@@ -39,6 +39,7 @@ void ModelDrawerDeferredEcho::createTable() {
 
     auto* table = new MeshDrawerTable;
     table->allocBuffer(modelObj->GetNumShapes(), nullptr);
+
     for (s32 i = 0; i < modelObj->GetNumShapes(); i++) {
         const nn::g3d::ShapeObj* shape = modelObj->GetShape(i);
         const nn::g3d::MaterialObj* material =
@@ -72,8 +73,10 @@ void ModelDrawerDeferredEcho::draw() const {
     for (s32 i = 0; i < mModelNum; i++) {
         SimpleModelG3D* model = mModels[i]->getModelG3D();
         model->setModelAdditionalInfo(additionalInfo);
+
         if (!model->mIsLodDisabled) {
             s32 updateCount = mGraphicsSystemInfo->mDrawEnvUpdateCount;
+
             if (model->mLodUpdateCount != updateCount) {
                 model->updateLod(mGraphicsSystemInfo->mDrawCameraPos, updateCount);
             }
@@ -88,6 +91,7 @@ void ModelDrawerDeferredEcho::draw() const {
 
     for (s32 i = 0; i < mMeshDrawerTable->size(); i++) {
         MeshDrawer* meshDrawer = (*mMeshDrawerTable)[i];
+
         if (meshDrawer->isExistDrawMesh()) {
             additionalInfo.activateModelLightTexture(meshDrawer->getMaterialObj()->GetResource());
             alModelFunction::prepareModelShapeDrawDeferredGraphicsContextByRenderState(

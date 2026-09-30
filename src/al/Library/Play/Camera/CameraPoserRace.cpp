@@ -49,6 +49,7 @@ void CameraPoserRace::calcTargetFrontLocal(sead::Vector3f* pFront, bool isUnused
         sead::Vector3f velocity = {0.0f, 0.0f, 0.0f};
         alCameraPoserFunction::calcTargetVelocityH(&velocity, this);
         velocity.y = 0.0f;
+
         if (tryNormalizeOrZero(&velocity)) {
             *pFront = velocity;
             return;
@@ -80,6 +81,7 @@ void CameraPoserRace::update() {
     rotateVectorDegree(&dir, dir, side, mAngleDegreeV);
     f32 distance = mDistance;
     f32 length = dir.length();
+
     if (length > 0.0f) {
         dir *= distance / length;
     }

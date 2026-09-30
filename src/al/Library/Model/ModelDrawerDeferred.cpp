@@ -38,6 +38,7 @@ void ModelDrawerDeferred::createTable() {
     const nn::g3d::ModelObj* modelObj = mModel->getModelG3D()->getModelObj();
 
     s32 meshNum = 0;
+
     for (s32 i = 0; i < modelObj->GetNumShapes(); i++) {
         meshNum += alModelFunction::isShaderAssignDeferred(modelObj, i);
     }
@@ -92,6 +93,7 @@ void ModelDrawerDeferred::createTable() {
             displayList->beginDisplayListBuffer(buffer, 0x400, true);
 
             const SimpleModelG3D* model = mModel->getModelG3D();
+
             if (isXlu) {
                 if (isApplyRenderState) {
                     alModelFunction::prepareModelShapeDrawDeferredGraphicsContextByCustom(
@@ -137,8 +139,10 @@ void ModelDrawerDeferred::draw() const {
     for (s32 i = 0; i < mModelNum; i++) {
         SimpleModelG3D* model = mModels[i]->getModelG3D();
         model->setModelAdditionalInfo(additionalInfo);
+
         if (!model->mIsLodDisabled) {
             s32 updateCount = mGraphicsSystemInfo->mDrawEnvUpdateCount;
+
             if (model->mLodUpdateCount != updateCount) {
                 model->updateLod(mGraphicsSystemInfo->mDrawCameraPos, updateCount);
             }
@@ -147,6 +151,7 @@ void ModelDrawerDeferred::draw() const {
 
     for (s32 i = 0; i < mMeshDrawerTable->size(); i++) {
         MeshDrawer* meshDrawer = (*mMeshDrawerTable)[i];
+
         if (meshDrawer->isExistDrawMesh()) {
             const agl::DisplayList* displayList = mDisplayLists[i];
             nvnCommandBufferCallCommands(

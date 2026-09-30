@@ -14,6 +14,7 @@ inline void checkHit(HitSensor* pA, HitSensor* pB) {
 
     sead::Vector3f diff = pA->mPos - pB->mPos;
     f32 radius = pA->mRadius + pB->mRadius;
+
     if (diff.squaredLength() >= radius * radius) {
         return;
     }
@@ -87,6 +88,7 @@ HitSensorDirector::HitSensorDirector(ExecuteDirector* pExecuteDirector, s32 scal
     mSimpleGroup = new SensorHitGroup(size * 2048, "Simple");
     mMapObjGroup = new SensorHitGroup(size * 1024 + 512, "MapObj");
     mCharacterGroup = new SensorHitGroup(size * 1024, "Character");
+
     if (mQueueThread != nullptr) {
         mThreadUpdate = new MultiThreadUpdate(pExecuteDirector, this);
     }
@@ -176,9 +178,11 @@ void HitSensorDirector::executeOnThread() {
 void HitSensorDirector::executeHitCheckGroup(SensorHitGroup* pGroupA,
                                              SensorHitGroup* pGroupB) const {
     s32 count = pGroupA->getSensorCount();
+
     for (s32 i = 0; i < count; i++) {
         HitSensor* sensor = pGroupA->getSensor(i);
         s32 otherCount = pGroupB->getSensorCount();
+
         for (s32 j = 0; j < otherCount; j++) {
             executeHitCheck(sensor, pGroupB->getSensor(j));
         }
@@ -200,8 +204,10 @@ void HitSensorDirector::executeHitCheck(HitSensor* pA, HitSensor* pB) const {
  */
 void HitSensorDirector::executeHitCheckInSameGroup(SensorHitGroup* pGroup) const {
     s32 count = pGroup->getSensorCount();
+
     for (s32 i = 0; i < count; i++) {
         HitSensor* sensor = pGroup->getSensor(i);
+
         for (s32 j = i; j != count; j++) {
             executeHitCheck(sensor, pGroup->getSensor(j));
         }

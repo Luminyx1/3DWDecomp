@@ -37,6 +37,7 @@ void SeListenerPoserMiddlePos::calcListenerPose(sead::Matrix34f* pMtx, sead::Vec
 
     const sead::Vector3f& targetPos = rParam.getTargetPos();
     f32 dist = (targetPos - rParam.getViewPos()).dot(lookAtDir);
+
     if (isNearZero(dist, 0.001f)) {
         *pMtx = rParam.getViewMatrix();
         *pPos = rParam.getViewPos();

@@ -38,6 +38,7 @@ void startAction(IUseLayoutAction* pLayout, const char* pActionName, const char*
  */
 bool isPausedAction(IUseLayoutAction* pLayout, const char* pActionName, const char* pPaneName) {
     LayoutPaneGroup* paneGroup = getLayoutPaneGroup(pLayout, pPaneName);
+
     if (!paneGroup || !paneGroup->isAnimPlaying()) {
         return false;
     }
@@ -56,6 +57,7 @@ bool isPausedAction(IUseLayoutAction* pLayout, const char* pActionName, const ch
  */
 void pauseAction(IUseLayoutAction* pLayout, const char* pPaneName) {
     LayoutPaneGroup* paneGroup = getLayoutPaneGroup(pLayout, pPaneName);
+
     if (paneGroup) {
         paneGroup->setAnimFrameRate(0.0f);
     }
@@ -68,6 +70,7 @@ void pauseAction(IUseLayoutAction* pLayout, const char* pPaneName) {
  */
 void unpauseAction(IUseLayoutAction* pLayout, const char* pPaneName) {
     LayoutPaneGroup* paneGroup = getLayoutPaneGroup(pLayout, pPaneName);
+
     if (paneGroup) {
         paneGroup->setAnimFrameRate(1.0f);
     }
@@ -182,6 +185,7 @@ bool isExistAction(const IUseLayoutAction* pLayout, const char* pActionName,
  */
 bool isActionEnd(const IUseLayoutAction* pLayout, const char* pPaneName) {
     LayoutPaneGroup* paneGroup = getLayoutPaneGroup(pLayout, pPaneName);
+
     if (paneGroup && paneGroup->isAnimPlaying() && paneGroup->isAnimOneTime()) {
         return paneGroup->isAnimEnd();
     }
@@ -409,6 +413,7 @@ void changeNextPage(LayoutActor* pActor, const MessageTagDataHolder* pTagDataHol
 bool tryChangeNextPage(LayoutActor* pActor, const MessageTagDataHolder* pTagDataHolder,
                        const ReplaceTagProcessorBase* pReplaceTagProcessor) {
     LayoutTextPaneAnimator* animator = pActor->getTextPaneAnimator();
+
     if (!animator->isExistNextPage()) {
         return false;
     }
@@ -476,6 +481,7 @@ bool tryStartTextAnim(LayoutActor* pActor, const char16_t* pMessage) {
     StringTmp<64> animName;
     animName.clear();
     tryGetMessageTagTextAnim(&animName, pActor, pMessage);
+
     if (animName.isEmpty()) {
         startAction(pActor, "Normal", "Font");
         return false;

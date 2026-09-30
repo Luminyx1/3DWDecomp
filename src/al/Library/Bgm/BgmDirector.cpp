@@ -171,6 +171,7 @@ bool BgmDirector::isPauseActiveBgm() {
  */
 bool BgmDirector::isPauseBgm(const char* pName) {
     BgmLine* line = mBgmLineKeeper->getBgmLineByLineName(pName);
+
     if (line == nullptr) {
         return false;
     }
@@ -187,6 +188,7 @@ bool BgmDirector::isPauseBgm(const char* pName) {
 bool BgmDirector::pauseActiveBgmById(u32 id, s32 fadeFrames) {
     u32 prevFlags = mPauseIdFlags;
     mPauseIdFlags = prevFlags | id;
+
     if (prevFlags != 0 || mPauseIdFlags == 0) {
         return false;
     }
@@ -204,6 +206,7 @@ bool BgmDirector::pauseActiveBgmById(u32 id, s32 fadeFrames) {
 bool BgmDirector::resumeActiveBgmById(u32 id, s32 fadeFrames) {
     u32 prevFlags = mPauseIdFlags;
     mPauseIdFlags = prevFlags & ~id;
+
     if (prevFlags == 0 || mPauseIdFlags != 0) {
         return false;
     }
@@ -259,6 +262,7 @@ void BgmDirector::changeSituation(const char* pName) {
  */
 const char* BgmDirector::getBgmLineSituationName(const char* pLineName) const {
     BgmLine* line = mBgmLineKeeper->getBgmLineByLineName(pLineName);
+
     if (line == nullptr) {
         return nullptr;
     }
@@ -326,6 +330,7 @@ bool BgmDirector::isBgmCurrentlyPlaying(const char* pName) {
     }
 
     const char* playName = mBgmLineKeeper->getActiveBgmLine()->getCurPlayName();
+
     if (playName == nullptr) {
         return false;
     }

@@ -6,6 +6,7 @@ namespace al {
 
 CameraSwitchRequestInfo::CameraSwitchRequestInfo() {
     mRequests = new CameraTicket*[4];
+
     for (s32 i = 0; i < 4; i++) {
         mRequests[i] = nullptr;
     }
@@ -38,6 +39,7 @@ void CameraSwitchRequestInfo::addRequestWithNextCameraPose(CameraTicket* pTicket
 
 bool CameraSwitchRequestInfo::tryRemoveRequestIfExist(CameraTicket* pTicket) {
     bool isFound = false;
+
     for (s32 i = 0; i < mRequestNum; i++) {
         if (isFound) {
             mRequests[i - 1] = mRequests[i];

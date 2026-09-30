@@ -54,6 +54,7 @@ void copyMemory(void* pDst, const void* pSrc, u32 size) {
 
     u32* dst32 = reinterpret_cast<u32*>(dst);
     const u32* src32 = reinterpret_cast<const u32*>(src);
+
     for (u32 rest = size; rest >= 4; rest -= 4) {
         *dst32++ = *src32++;
     }

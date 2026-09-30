@@ -37,11 +37,13 @@ s32 ReplaceTagProcessorBase::replaceNumberGroup(char16_t* pDst, const MessageTag
     va_copy(argsCopy, args);
     s32 argIndex = rTag.getParam32(0);
     s32 value = 0;
+
     for (s32 i = 0; i <= argIndex; i++) {
         value = va_arg(argsCopy, s32);
     }
 
     const char16_t* format;
+
     if (static_cast<u16>(rTag.getType() - 1) < 8) {
         format = sNumberFormats[static_cast<s16>(rTag.getType() - 1)];
     } else {
@@ -64,6 +66,7 @@ s32 ReplaceTagProcessorBase::replaceStringGroup(char16_t* pDst, const MessageTag
     va_copy(argsCopy, args);
     s32 argIndex = rTag.getParam32(0);
     const char16_t* string = nullptr;
+
     for (s32 i = 0; i <= argIndex; i++) {
         string = va_arg(argsCopy, const char16_t*);
     }
@@ -91,6 +94,7 @@ s32 ReplaceTagProcessorBase::replaceTagLabel(char16_t* pDst, const MessageTag& r
 s32 ReplaceTagProcessorBase::replace(char16_t* pDst, const IUseMessageSystem* pMsgSystem,
                                      const char16_t* pSrc) const {
     char16_t* out = pDst;
+
     while (*pSrc) {
         if (isMessageTagPageBreak(pMsgSystem, pSrc)) {
             *out = 0;
@@ -105,6 +109,7 @@ s32 ReplaceTagProcessorBase::replace(char16_t* pDst, const IUseMessageSystem* pM
         MessageTag tag(pSrc);
         const char* groupName = getMessageTagGroupName(pMsgSystem, tag.getGroup());
         const char* tagName = getMessageTagName(pMsgSystem, tag.getGroup(), tag.getType());
+
         if (isEqualString(groupName, "Replace")) {
             if (isEqualString(tagName, "PlayerIcon")) {
                 out += replacePictureGroup(out, tag);
@@ -140,6 +145,7 @@ s32 ReplaceTagProcessorBase::replaceArgs(char16_t* pDst, s32 dstSize,
     std::va_list args;
     va_start(args, pSrc);
     s32 length = replaceArgsVaList(buffer, pMsgSystem, pSrc, args);
+
     if (length >= dstSize) {
         buffer[dstSize - 1] = 0;
     }
@@ -160,6 +166,7 @@ s32 ReplaceTagProcessorBase::replaceArgs(char16_t* pDst, s32 dstSize,
 s32 ReplaceTagProcessorBase::replaceArgsVaList(char16_t* pDst, const IUseMessageSystem* pMsgSystem,
                                                const char16_t* pSrc, std::va_list args) const {
     char16_t* out = pDst;
+
     while (*pSrc) {
         if (!isMessageTagMark(*pSrc)) {
             *out++ = *pSrc++;
@@ -167,17 +174,20 @@ s32 ReplaceTagProcessorBase::replaceArgsVaList(char16_t* pDst, const IUseMessage
         }
 
         MessageTag tag(pSrc);
+
         if (!tag.getTag()) {
             pSrc++;
             continue;
         }
 
         const char* groupName = getMessageTagGroupName(pMsgSystem, tag.getGroup());
+
         if (!groupName) {
             memcpy(out, pSrc, tag.getSkipLength() * sizeof(char16_t));
             out += tag.getSkipLength();
         } else if (isEqualString(groupName, "Number")) {
             const char* tagName = getMessageTagName(pMsgSystem, tag.getGroup(), tag.getType());
+
             if (isEqualString(tagName, "FigLeft") || isEqualString(tagName, "Fig02") ||
                 isEqualString(tagName, "Fig03") || isEqualString(tagName, "Fig04") ||
                 isEqualString(tagName, "Fig05") || isEqualString(tagName, "Fig_2") ||
@@ -215,6 +225,7 @@ s32 ReplaceTagProcessorBase::replaceNamedString(sead::BufferedSafeStringBase<cha
     char16_t* out = pDst->getBuffer();
     char16_t* start = out;
     s32 size = calcMessageSizeWithoutNullCharacter(pSrc, nullptr);
+
     for (s32 i = 0; i <= size;) {
         if (!isMessageTagMark(*pSrc)) {
             *out++ = *pSrc++;
@@ -226,12 +237,14 @@ s32 ReplaceTagProcessorBase::replaceNamedString(sead::BufferedSafeStringBase<cha
         const char* groupName = getMessageTagGroupName(pMsgSystem, tag.getGroup());
         const char* tagName = getMessageTagName(pMsgSystem, tag.getGroup(), tag.getType());
         s32 length;
+
         if (isEqualString(groupName, "String") && isStartWithString(tagName, "ReplaceString")) {
             char16_t paramName16[0x40] = {};
             char paramName[0x40] = {};
             u16 paramSize = tag.getParam16(0);
             memcpy(paramName16, tag.getParamPtr(2), paramSize);
             sead::StringUtil::convertUtf16ToUtf8(paramName, 0x40, paramName16, paramSize / 2);
+
             if (isEqualString(paramName, pName)) {
                 length = calcMessageSizeWithoutNullCharacter(pString, nullptr);
                 memcpy(out, pString, length * sizeof(char16_t));

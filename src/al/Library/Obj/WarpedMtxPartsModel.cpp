@@ -80,10 +80,12 @@ void WarpedMtxPartsModel::initPartsFixFile(LiveActor* pParent, const ActorInitIn
     invalidateClipping(this);
     StringTmp<128> initFileName;
     createFileNameBySuffix(&initFileName, "InitPartsFixInfo", pSuffix);
+
     if (isExistModelResourceYaml(mParentModel, initFileName.cstr(), nullptr)) {
         ByamlIter iter(getModelResourceYaml(mParentModel, initFileName.cstr(), nullptr));
         const char* jointName = nullptr;
         iter.tryGetStringByKey(&jointName, "JointName");
+
         if (jointName) {
             mJointMtx = getJointMtxPtr(mParentModel, jointName);
         }
@@ -91,6 +93,7 @@ void WarpedMtxPartsModel::initPartsFixFile(LiveActor* pParent, const ActorInitIn
         tryGetByamlV3f(&mLocalTrans, iter, "LocalTrans");
         tryGetByamlV3f(&mLocalRotate, iter, "LocalRotate");
         tryGetByamlV3f(&mLocalScale, iter, "LocalScale");
+
         if (!isNearZero(mLocalTrans) || !isNearZero(mLocalRotate)) {
             mIsUseLocalPos = true;
         }
@@ -117,6 +120,7 @@ void WarpedMtxPartsModel::makeActorAppeared() {
 void WarpedMtxPartsModel::updatePose() {
     if (!mIsUseLocalPos) {
         sead::Matrix34f baseMtx = *mJointMtx;
+
         if (mIsUseFollowMtxScale) {
             sead::Vector3f mtxScale;
             calcMtxScale(&mtxScale, baseMtx);
@@ -142,6 +146,7 @@ void WarpedMtxPartsModel::updatePose() {
     transMtx.makeRT({0.0f, 0.0f, 0.0f}, mLocalTrans);
     sead::Matrix34f poseMtx = rotateMtx * transMtx;
     sead::Matrix34f baseMtx = *mJointMtx;
+
     if (mIsUseFollowMtxScale) {
         const sead::Vector3f& scale = mIsUseLocalScale ? mLocalScale : sead::Vector3f::ones;
         sead::Vector3f mtxScale;
@@ -165,8 +170,10 @@ void WarpedMtxPartsModel::updatePose() {
  */
 void WarpedMtxPartsModel::calcAnim() {
     bool isUpdate = false;
+
     if (mModelKeeper) {
         isUpdate = mModelKeeper->_1a;
+
         if (isUpdate) {
             setBaseMtxAndCalcAnim(this, mWarpedMtx, sead::Vector3f::ones);
         }
@@ -175,6 +182,7 @@ void WarpedMtxPartsModel::calcAnim() {
     }
 
     LiveActor::calcAnim();
+
     if (mModelKeeper) {
         mModelKeeper->_1a = isUpdate;
     }

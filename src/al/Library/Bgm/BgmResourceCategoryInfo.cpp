@@ -11,6 +11,7 @@ namespace al {
 BgmResourceSuffixInfo* BgmResourceSuffixInfo::createInfo(const ByamlIter& rIter) {
     BgmResourceSuffixInfo* info = new BgmResourceSuffixInfo();
     rIter.tryGetStringByKey(&info->mSuffixName, "SuffixName");
+
     if (!rIter.tryGetIntByKey(&info->mStartSample, "StartSample")) {
         info->mStartSample = 0;
     }
@@ -34,6 +35,7 @@ BgmResourceSuffixInfo* BgmResourceSuffixInfo::createInfo(const ByamlIter& rIter)
 BgmEnableSituationInfo* BgmEnableSituationInfo::createInfo(const ByamlIter& rIter) {
     BgmEnableSituationInfo* info = new BgmEnableSituationInfo();
     rIter.tryGetStringByKey(&info->mName, "Name");
+
     if (!rIter.tryGetStringByKey(&info->mSubSituationName, "SubSituationName")) {
         info->mSubSituationName = "Default";
     }
@@ -60,6 +62,7 @@ BgmStartTriggerSituationInfo* BgmStartTriggerSituationInfo::createInfo(const Bya
 BgmResourceInfo* BgmResourceInfo::createInfo(const ByamlIter& rIter) {
     BgmResourceInfo* info = new BgmResourceInfo();
     rIter.tryGetStringByKey(&info->mName, "Name");
+
     if (!rIter.tryGetIntByKey(&info->mStartSample, "StartSample")) {
         info->mStartSample = 0;
     }
@@ -74,18 +77,21 @@ BgmResourceInfo* BgmResourceInfo::createInfo(const ByamlIter& rIter) {
 
     ByamlIter suffixIter;
     info->mResourceSuffixInfoList = nullptr;
+
     if (rIter.tryGetIterByKey(&suffixIter, "ResourceSuffixInfoList")) {
         info->mResourceSuffixInfoList = createInfoList<BgmResourceSuffixInfo>(suffixIter);
     }
 
     ByamlIter enableIter;
     info->mEnableSituationInfoList = nullptr;
+
     if (rIter.tryGetIterByKey(&enableIter, "EnableSituationInfoList")) {
         info->mEnableSituationInfoList = createInfoList<BgmEnableSituationInfo>(enableIter);
     }
 
     ByamlIter startTriggerIter;
     info->mStartTriggerSituationInfoList = nullptr;
+
     if (rIter.tryGetIterByKey(&startTriggerIter, "StartTriggerSituationInfoList")) {
         info->mStartTriggerSituationInfoList = createInfoList<BgmStartTriggerSituationInfo>(startTriggerIter);
     }

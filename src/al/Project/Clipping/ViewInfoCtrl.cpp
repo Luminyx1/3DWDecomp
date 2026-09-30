@@ -19,6 +19,7 @@ ViewInfoCtrl::ViewInfoCtrl(const AreaObjDirector* pAreaObjDirector,
                            const PlayerHolder* pPlayerHolder)
     : mAreaObjDirector(pAreaObjDirector), mPlayerHolder(pPlayerHolder) {
     mClippingPlacementIds = new ClippingPlacementId*[0x80];
+
     for (s32 i = 0; i < 0x80; i++) {
         mClippingPlacementIds[i] = nullptr;
     }
@@ -43,6 +44,7 @@ void ViewInfoCtrl::initActorInfo(ClippingActorInfo* pInfo, PlacementId* pPlaceme
 
     for (s32 i = 0; i < mClippingPlacementIdsSize; i++) {
         ClippingPlacementId* clippingId = mClippingPlacementIds[i];
+
         if (clippingId->mParentId && clippingId->mParentId->isEqual(*pPlacementId)) {
             pInfo->mViewGroupFarClipFlag = &clippingId->mIsInViewCtrlArea;
             return;
@@ -80,6 +82,7 @@ void ViewInfoCtrl::update() {
     for (s32 i = 0; i < mViewCtrlAreaGroup->mNumAreas; i++) {
         AreaObj* areaObj = mViewCtrlAreaGroup->getAreaObj(i);
         s32 playerNum = getPlayerNumMax(mPlayerHolder);
+
         for (s32 j = 0; j < playerNum; j++) {
             if (isPlayerDead(mPlayerHolder, j)) {
                 continue;
@@ -89,6 +92,7 @@ void ViewInfoCtrl::update() {
                 PlacementId viewId;
                 alPlacementFunction::getClippingViewId(&viewId, *areaObj->mPlacementInfo);
                 ClippingPlacementId* clippingId = tryFindViewInfo(&viewId);
+
                 if (clippingId) {
                     clippingId->mIsInViewCtrlArea = true;
                 }
@@ -111,6 +115,7 @@ ViewInfoCtrl::ClippingPlacementId* ViewInfoCtrl::tryFindViewInfo(PlacementId* pP
 
     for (s32 i = 0; i < mClippingPlacementIdsSize; i++) {
         ClippingPlacementId* clippingId = mClippingPlacementIds[i];
+
         if (clippingId->mParentId && clippingId->mParentId->isEqual(*pPlacementId)) {
             return clippingId;
         }

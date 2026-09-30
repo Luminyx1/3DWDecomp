@@ -82,11 +82,13 @@ void setExpandedClippingMode(LiveActor* pActor, bool isExpanded) {
  */
 bool isExpandedClippingMode(const LiveActor* pActor) {
     ClippingAreaActorInfoNode* node = pActor->mClippingInfoNode;
+
     if (!node) {
         return false;
     }
 
     ClippingAreaActorInfo* info = node->mInfo;
+
     if (!info) {
         return false;
     }
@@ -248,6 +250,7 @@ void forceLodDisabled(LiveActor* pActor, bool isDisabled) {
 void expandClippingRadiusByShadowLength(LiveActor* pActor, sead::Vector3f* pOffset, f32 shadowLength) {
     sead::Vector3f trans = getTrans(pActor);
     f32 radius = getClippingRadius(pActor);
+
     if (radius >= shadowLength) {
         return;
     }
@@ -273,11 +276,13 @@ bool tryExpandClippingToGround(LiveActor* pActor, sead::Vector3f* pOffset, f32 l
     sead::Vector3f hitPos = sead::Vector3f::zero;
     sead::Vector3f trans = getTrans(pActor);
     sead::Vector3f dir = getGravity(pActor) * length;
+
     if (!alCollisionUtil::getFirstPolyOnArrow(pActor, &hitPos, nullptr, trans, dir, nullptr, nullptr)) {
         return false;
     }
 
     f32 distance = (hitPos - trans).length();
+
     if (distance < radius) {
         return false;
     }
@@ -318,6 +323,7 @@ bool tryExpandClippingByShadowLength(LiveActor* pActor, sead::Vector3f* pOffset)
  */
 bool tryExpandClippingByExpandObject(LiveActor* pActor, const ActorInitInfo& rInfo) {
     PlacementInfo linkInfo;
+
     if (!tryGetLinksInfo(&linkInfo, rInfo, "ClippingExpandObject")) {
         return false;
     }
@@ -378,11 +384,13 @@ void validateClipping(LiveActor* pActor) {
  */
 void onDrawClipping(LiveActor* pActor) {
     pActor->mActorFlags->isDrawClipping = true;
+
     if (!pActor->mActorFlags->isClipped) {
         return;
     }
 
     alActorSystemFunction::addToExecutorMovement(pActor);
+
     if (pActor->mHitSensorKeeper) {
         pActor->mHitSensorKeeper->validateBySystem();
         alSensorFunction::updateHitSensorsAll(pActor);
@@ -403,11 +411,13 @@ void onDrawClipping(LiveActor* pActor) {
  */
 void offDrawClipping(LiveActor* pActor) {
     pActor->mActorFlags->isDrawClipping = false;
+
     if (!pActor->mActorFlags->isClipped) {
         return;
     }
 
     alActorSystemFunction::removeFromExecutorMovement(pActor);
+
     if (pActor->mHitSensorKeeper) {
         pActor->mHitSensorKeeper->invalidateBySystem();
     }

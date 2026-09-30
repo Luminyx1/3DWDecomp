@@ -43,10 +43,12 @@ void CameraPoserLookDown::start(const CameraStartInfo& rInfo) {
 
 void CameraPoserLookDown::update() {
     sead::Vector3f prevAt = mAt;
+
     if (mIsPosYLocked) {
         f32 offsetY = mOffsetY;
         sead::Vector3f trans;
         alCameraPoserFunction::calcTargetTrans(&trans, this);
+
         if (trans.y < mStartAt.y) {
             trans.y = mStartAt.y;
         }
@@ -58,17 +60,20 @@ void CameraPoserLookDown::update() {
     }
 
     sead::Vector3f dir = mEye - prevAt;
+
     if (mIsForceFollow) {
         dir = mEye - mAt;
     }
 
     dir.y = 0.0f;
+
     if (isNearZero(dir, 0.001f)) {
         dir = sead::Vector3f::ez;
     }
 
     f32 distance = mDistance;
     f32 length = dir.length();
+
     if (length > 0.0f) {
         dir *= distance / length;
     }
@@ -100,6 +105,7 @@ void CameraPoserLookDown::makeLookAtCamera(sead::LookAtCamera* pCamera) const {
     rotateVectorDegree(&dir, dir, side, mAngle);
     f32 distance = mDistance;
     f32 length = dir.length();
+
     if (length > 0.0f) {
         dir *= distance / length;
     }

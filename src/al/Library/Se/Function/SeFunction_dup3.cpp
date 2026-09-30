@@ -652,6 +652,7 @@ void setSeSourceVolume(const IUseAudioKeeper* pUser, f32 volume) {
  */
 SePlayParamList* startSeSetPitch(const IUseAudioKeeper* pUser, const sead::SafeString& rName, f32 pitch) {
     SePlayParamList* paramList = startSeOld(pUser, rName, nullptr);
+
     if (paramList == nullptr) {
         return nullptr;
     }
@@ -674,6 +675,7 @@ SePlayParamList* startSeSetPitch(const IUseAudioKeeper* pUser, const sead::SafeS
  */
 SePlayParamList* startSeSetPitchVolumeTempo(const IUseAudioKeeper* pUser, const sead::SafeString& rName, f32 pitch, f32 volume, f32 tempo) {
     SePlayParamList* paramList = startSeOld(pUser, rName, nullptr);
+
     if (paramList != nullptr) {
         if (volume >= 0.0f) {
             paramList->setVolume(volume);
@@ -700,6 +702,7 @@ SePlayParamList* startSeSetPitchVolumeTempo(const IUseAudioKeeper* pUser, const 
  */
 SePlayParamList* startSeSetVolume(const IUseAudioKeeper* pUser, const sead::SafeString& rName, f32 volume) {
     SePlayParamList* paramList = startSeOld(pUser, rName, nullptr);
+
     if (paramList == nullptr) {
         return nullptr;
     }
@@ -734,6 +737,7 @@ SePlayParamList* startSeSetPitchVolume(const IUseAudioKeeper* pUser, const sead:
  */
 SePlayParamList* startSeSetSeqLoacalVariable(const IUseAudioKeeper* pUser, const sead::SafeString& rName, s32 value, s16 index) {
     SePlayParamList* paramList = startSeOld(pUser, rName, nullptr);
+
     if (paramList != nullptr) {
         paramList->setLocalVariable(index, value);
     }
@@ -764,6 +768,7 @@ SePlayParamList* startSeSetVolumeTempo(const IUseAudioKeeper* pUser, const sead:
  */
 SePlayParamList* holdSeSetPitchVolume(const IUseAudioKeeper* pUser, const sead::SafeString& rName, f32 pitch, f32 volume) {
     SePlayParamList* paramList = holdSeOld(pUser, rName, nullptr);
+
     if (paramList != nullptr) {
         paramList->setVolume(volume);
         paramList->setPitch(pitch);
@@ -781,6 +786,7 @@ SePlayParamList* holdSeSetPitchVolume(const IUseAudioKeeper* pUser, const sead::
  */
 SePlayParamList* holdSeSetPitch(const IUseAudioKeeper* pUser, const sead::SafeString& rName, f32 pitch) {
     SePlayParamList* paramList = holdSeOld(pUser, rName, nullptr);
+
     if (paramList != nullptr) {
         paramList->setPitch(pitch);
     }
@@ -798,6 +804,7 @@ SePlayParamList* holdSeSetPitch(const IUseAudioKeeper* pUser, const sead::SafeSt
  */
 SePlayParamList* holdSeSetVolumeTempo(const IUseAudioKeeper* pUser, const sead::SafeString& rName, f32 volume, f32 tempo) {
     SePlayParamList* paramList = holdSeOld(pUser, rName, nullptr);
+
     if (paramList != nullptr) {
         paramList->setVolume(volume);
         paramList->setTempo(tempo);
@@ -816,6 +823,7 @@ SePlayParamList* holdSeSetVolumeTempo(const IUseAudioKeeper* pUser, const sead::
  */
 SePlayParamList* holdSeSetSeqLoacalVariable(const IUseAudioKeeper* pUser, const sead::SafeString& rName, s32 value, s16 index) {
     SePlayParamList* paramList = holdSeOld(pUser, rName, nullptr);
+
     if (paramList != nullptr) {
         paramList->setLocalVariable(index, value);
     }
@@ -1021,17 +1029,20 @@ bool isExistSeActionNameInUserInfo(const IUseAudioKeeper* pUser, const char* pAc
     }
 
     const SeUserInfo* userInfo = pUser->getAudioKeeper()->getSeKeeper()->getUserInfo();
+
     if (userInfo == nullptr) {
         return false;
     }
 
     const AudioInfoList<SeActionInfo>* actionInfoList = userInfo->mActionInfoList;
+
     if (actionInfoList == nullptr) {
         return false;
     }
 
     for (s32 i = 0; i < actionInfoList->getInfoNum(); i++) {
         const SeActionInfo* actionInfo = actionInfoList->getInfo(i);
+
         if (actionInfo != nullptr && isEqualString(actionInfo->mName, pActionName)) {
             return true;
         }
@@ -1052,28 +1063,33 @@ bool isExistSeResourceNameInUserInfo(const IUseAudioKeeper* pUser, const char* p
     }
 
     const SeUserInfo* userInfo = pUser->getAudioKeeper()->getSeKeeper()->getUserInfo();
+
     if (userInfo == nullptr) {
         return false;
     }
 
     const AudioInfoList<SePlayInfo>* playInfoList = userInfo->mPlayInfoList;
+
     if (playInfoList == nullptr) {
         return false;
     }
 
     for (s32 i = 0; i < playInfoList->getInfoNum(); i++) {
         const SePlayInfo* playInfo = playInfoList->getInfo(i);
+
         if (playInfo == nullptr) {
             continue;
         }
 
         const AudioInfoList<SeResourceInfo>* resourceInfoList = playInfo->mResourceInfoList;
+
         if (resourceInfoList == nullptr) {
             continue;
         }
 
         for (s32 j = 0; j < resourceInfoList->getInfoNum(); j++) {
             const SeResourceInfo* resourceInfo = resourceInfoList->getInfo(j);
+
             if (resourceInfo != nullptr && isEqualString(resourceInfo->mName, pResourceName)) {
                 return true;
             }
@@ -1107,17 +1123,20 @@ bool isExistSePlayNameInUserInfo(const IUseAudioKeeper* pUser, const char* pPlay
     }
 
     const SeUserInfo* userInfo = pUser->getAudioKeeper()->getSeKeeper()->getUserInfo();
+
     if (userInfo == nullptr) {
         return false;
     }
 
     const AudioInfoList<SePlayInfo>* playInfoList = userInfo->mPlayInfoList;
+
     if (playInfoList == nullptr) {
         return false;
     }
 
     for (s32 i = 0; i < playInfoList->getInfoNum(); i++) {
         const SePlayInfo* playInfo = playInfoList->getInfo(i);
+
         if (playInfo != nullptr && isEqualString(playInfo->mName, pPlayName)) {
             return true;
         }
@@ -1178,6 +1197,7 @@ SePlayParamList* startSeFromController(const IUseAudioKeeper* pUser, const sead:
 SePlayParamList* startSeFromControllerOrTvDrc(const IUseAudioKeeper* pUser, const sead::SafeString& rName,
                                               s32 port) {
     SePlayParamList* paramList = startSeOld(pUser, rName, nullptr);
+
     if (paramList != nullptr) {
         if (isPadExistDeviceSpeaker(port)) {
             setSeOutputFromController(paramList, port, false);

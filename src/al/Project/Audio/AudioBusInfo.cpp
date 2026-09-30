@@ -149,6 +149,7 @@ SeStageEffectInfo::SeStageEffectInfo() = default;
  */
 SeEffectBusUserInfo* SeEffectBusUserInfo::createInfo(const ByamlIter& rIter) {
     SeEffectBusUserInfo* info = new SeEffectBusUserInfo;
+
     if (!rIter.tryGetStringByKey(&info->mName, "Name")) {
         return nullptr;
     }
@@ -175,11 +176,13 @@ SeEffectBusUserInfo* SeEffectBusUserInfo::createInfo(const ByamlIter& rIter) {
  */
 SeEffectBusInfo* SeEffectBusInfo::createInfo(const ByamlIter& rIter) {
     SeEffectBusInfo* info = new SeEffectBusInfo;
+
     if (!rIter.tryGetStringByKey(&info->mName, "Name")) {
         return nullptr;
     }
 
     ByamlIter userIter;
+
     if (rIter.tryGetIterByKey(&userIter, "EffectBusUserInfoList")) {
         info->mEffectBusUserInfoList = createInfoList<SeEffectBusUserInfo>(userIter);
     } else {
@@ -196,11 +199,13 @@ SeEffectBusInfo* SeEffectBusInfo::createInfo(const ByamlIter& rIter) {
  */
 SeEffectBusSettingInfo* SeEffectBusSettingInfo::createInfo(const ByamlIter& rIter) {
     SeEffectBusSettingInfo* info = new SeEffectBusSettingInfo;
+
     if (!rIter.tryGetStringByKey(&info->mName, "Name")) {
         return nullptr;
     }
 
     ByamlIter busIter;
+
     if (rIter.tryGetIterByKey(&busIter, "EffectBusInfoList")) {
         info->mEffectBusInfoList = createInfoList<SeEffectBusInfo>(busIter);
     } else {
@@ -217,6 +222,7 @@ SeEffectBusSettingInfo* SeEffectBusSettingInfo::createInfo(const ByamlIter& rIte
  */
 SeEffectProcInfo* SeEffectProcInfo::createInfo(const ByamlIter& rIter) {
     const char* name = nullptr;
+
     if (!rIter.tryGetStringByKey(&name, "Name")) {
         return nullptr;
     }
@@ -257,6 +263,7 @@ SeEffectProcInfo* SeEffectProcInfo::createInfo(const ByamlIter& rIter) {
 SeDelayEffectProcInfo* SeDelayEffectProcInfo::createInfo(const ByamlIter& rIter, const char* pName) {
     SeDelayEffectProcInfo* info = new SeDelayEffectProcInfo;
     info->mName = pName;
+
     if (!rIter.tryGetFloatByKey(&info->mDelayTime, "DelayTime")) {
         info->mDelayTime = 160.0f;
     }
@@ -304,6 +311,7 @@ SeDelayEffectProcInfo* SeDelayEffectProcInfo::createInfo(const ByamlIter& rIter,
 SeReverbStdEffectProcInfo* SeReverbStdEffectProcInfo::createInfo(const ByamlIter& rIter, const char* pName) {
     SeReverbStdEffectProcInfo* info = new SeReverbStdEffectProcInfo;
     info->mName = pName;
+
     if (!rIter.tryGetFloatByKey(&info->mPreDelayTime, "PreDelayTime")) {
         info->mPreDelayTime = 0.2f;
     }
@@ -328,6 +336,7 @@ SeReverbStdEffectProcInfo* SeReverbStdEffectProcInfo::createInfo(const ByamlIter
     info->mEarlyMode = rIter.tryGetStringByKey(&earlyModeName, "EarlyMode") ? convertEarlyMode(earlyModeName) : 5;
     const char* fusedModeName = nullptr;
     info->mFusedMode = rIter.tryGetStringByKey(&fusedModeName, "FusedMode") ? convertFusedMode(fusedModeName) : 0;
+
     if (!rIter.tryGetFloatByKey(&info->mEarlyGain, "EarlyGain")) {
         info->mEarlyGain = 0.0f;
     }
@@ -367,6 +376,7 @@ SeReverbStdEffectProcInfo* SeReverbStdEffectProcInfo::createInfo(const ByamlIter
 SeReverbHiEffectProcInfo* SeReverbHiEffectProcInfo::createInfo(const ByamlIter& rIter, const char* pName) {
     SeReverbHiEffectProcInfo* info = new SeReverbHiEffectProcInfo;
     info->mName = pName;
+
     if (!rIter.tryGetFloatByKey(&info->mPreDelayTime, "PreDelayTime")) {
         info->mPreDelayTime = 0.02f;
     }
@@ -395,6 +405,7 @@ SeReverbHiEffectProcInfo* SeReverbHiEffectProcInfo::createInfo(const ByamlIter& 
     info->mEarlyMode = rIter.tryGetStringByKey(&earlyModeName, "EarlyMode") ? convertEarlyMode(earlyModeName) : 5;
     const char* fusedModeName = nullptr;
     info->mFusedMode = rIter.tryGetStringByKey(&fusedModeName, "FusedMode") ? convertFusedMode(fusedModeName) : 0;
+
     if (!rIter.tryGetFloatByKey(&info->mEarlyGain, "EarlyGain")) {
         info->mEarlyGain = 0.0f;
     }
@@ -434,6 +445,7 @@ SeReverbHiEffectProcInfo* SeReverbHiEffectProcInfo::createInfo(const ByamlIter& 
 SeReverbI3Dl2EffectProcInfo* SeReverbI3Dl2EffectProcInfo::createInfo(const ByamlIter& rIter, const char* pName) {
     SeReverbI3Dl2EffectProcInfo* info = new SeReverbI3Dl2EffectProcInfo;
     info->mName = pName;
+
     if (!rIter.tryGetIntByKey(&info->mRoom, "Room")) {
         info->mRoom = -1000;
     }
@@ -482,6 +494,7 @@ SeReverbI3Dl2EffectProcInfo* SeReverbI3Dl2EffectProcInfo::createInfo(const Byaml
     info->mEarlyMode = rIter.tryGetStringByKey(&earlyModeName, "EarlyMode") ? convertEarlyMode(earlyModeName) : 5;
     const char* fusedModeName = nullptr;
     info->mFusedMode = rIter.tryGetStringByKey(&fusedModeName, "FusedMode") ? convertFusedMode(fusedModeName) : 0;
+
     if (!rIter.tryGetIntByKey(&info->mMaxChannels, "MaxChannels")) {
         info->mMaxChannels = 2;
     }
@@ -513,6 +526,7 @@ SeReverbI3Dl2EffectProcInfo* SeReverbI3Dl2EffectProcInfo::createInfo(const Byaml
 SeChorusEffectProcInfo* SeChorusEffectProcInfo::createInfo(const ByamlIter& rIter, const char* pName) {
     SeChorusEffectProcInfo* info = new SeChorusEffectProcInfo;
     info->mName = pName;
+
     if (!rIter.tryGetFloatByKey(&info->mDelayTime, "DelayTime")) {
         info->mDelayTime = 10.0f;
     }
@@ -553,6 +567,7 @@ AudioEachBusEffectInfo* AudioEachBusEffectInfo::createInfo(const ByamlIter& rIte
     AudioEachBusEffectInfo* info = new AudioEachBusEffectInfo;
     rIter.tryGetStringByKey(&info->mName, "Name");
     ByamlIter procIter;
+
     if (!rIter.tryGetIterByKey(&procIter, "EffectProcInfoList")) {
         info->mEffectProcInfoList = nullptr;
         return nullptr;
@@ -566,6 +581,7 @@ SeEffectInfo* SeEffectInfo::createInfo(const ByamlIter& rIter) {
     SeEffectInfo* info = new SeEffectInfo;
     rIter.tryGetStringByKey(&info->mName, "Name");
     ByamlIter busIter;
+
     if (!rIter.tryGetIterByKey(&busIter, "EachBusEffectInfoList")) {
         info->mEachBusEffectInfoList = nullptr;
         return nullptr;
@@ -594,6 +610,7 @@ SeStageEffectInfo* SeStageEffectInfo::createInfo(const ByamlIter& rIter) {
     SeStageEffectInfo* info = new SeStageEffectInfo;
     rIter.tryGetStringByKey(&info->mName, "Name");
     ByamlIter useIter;
+
     if (!rIter.tryGetStringByKey(&info->mEffectBusSettingName, "EffectBusSettingName")) {
         info->mEffectBusSettingName = "Default";
     }

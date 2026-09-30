@@ -49,6 +49,7 @@ void AreaObj::init(const AreaInitInfo& rInfo) {
 
     const char* modelName = nullptr;
     alPlacementFunction::tryGetModelName(&modelName, *mPlacementInfo);
+
     if (isEqualString(modelName, "AreaCubeBase")) {
         mShape = new AreaShapeCube(AreaShapeCube::Base);
     } else if (isEqualString(modelName, "AreaCubeCenter")) {
@@ -75,6 +76,7 @@ void AreaObj::init(const AreaInitInfo& rInfo) {
     tryGetArg(&mIsPlessieTunnel, *mPlacementInfo, "IsPlessieTunnel");
     tryGetArg(&mIsPlessieChaseV2SpecialCamera, *mPlacementInfo, "IsPlessieChaseV2SpecialCamera");
     tryGetArg(&mIsPlessieRideOnly, *mPlacementInfo, "IsPlessieRideOnly");
+
     if (mIsPlessieCameraOn || mIsUIMapTriggered) {
         mIsValid = false;
     }

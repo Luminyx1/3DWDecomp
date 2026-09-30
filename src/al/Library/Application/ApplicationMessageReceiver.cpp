@@ -59,6 +59,7 @@ void ApplicationMessageReceiver::update() {
     mIsUpdatedPerformanceMode = false;
     mIsResumed = false;
     u32 message;
+
     if (nn::oe::TryPopNotificationMessage(&message)) {
         procMessage(message);
     }

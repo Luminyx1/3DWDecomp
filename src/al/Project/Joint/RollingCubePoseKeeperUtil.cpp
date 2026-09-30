@@ -54,6 +54,7 @@ void calcCurrentKeyQT(sead::Quatf* outQuat, sead::Vector3f* outTrans,
 void getCurrentKeyQT(sead::Quatf* outQuat, sead::Vector3f* outTrans,
                      const RollingCubePoseKeeper* keeper) {
     const RollingCubePose& rollingCubePose = keeper->getCurrentPose();
+
     if (outQuat)
         outQuat->set(rollingCubePose.getQuat());
     if (outTrans)
@@ -107,6 +108,7 @@ void calcMtxLandEffect(sead::Matrix34f* pEffectMtx, const RollingCubePoseKeeper*
     sead::Vector3f landUp = up;
     sead::Vector3f landFront = front;
     sead::Vector3f offset;
+
     if (sead::Mathf::abs(side.y) > sead::Mathf::abs(up.y)) {
         if (sead::Mathf::abs(side.y) > sead::Mathf::abs(front.y)) {
             landUp = side.y > 0.0f ? side : -side;

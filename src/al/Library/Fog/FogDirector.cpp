@@ -211,6 +211,7 @@ void FogDirector::requestYFog(s32 priority, s32 step, const YFogParam& rParam) {
  */
 bool FogDirector::isUsingMulFog() const {
     const FogParam& param = mFogKeeper.getCurrentParam();
+
     if (*param.mIntensityMax > 0.0f) {
         const sead::Color4f& mulColor = *param.mMulColor;
         return mulColor.r != 1.0f || mulColor.g != 1.0f || mulColor.b != 1.0f;
@@ -224,6 +225,7 @@ bool FogDirector::isUsingMulFog() const {
  */
 bool FogDirector::isUsingMulYFog() const {
     const YFogParam& param = mYFogKeeper.getCurrentParam();
+
     if (*param.mIntensityMax > 0.0f) {
         const sead::Color4f& mulColor = *param.mMulColor;
         return mulColor.r != 1.0f || mulColor.g != 1.0f || mulColor.b != 1.0f;

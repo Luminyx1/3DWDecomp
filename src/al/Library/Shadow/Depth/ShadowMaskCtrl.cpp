@@ -97,6 +97,7 @@ bool ShadowKeeper::init(LiveActor* pActor, const ActorInitInfo& rInfo, const Bya
 
     ByamlIter arrayIter;
     rIter.tryGetIterByKey(&arrayIter, "ShadowMaskArray");
+
     if (!arrayIter.isValid() || !arrayIter.isTypeArray()) {
         goto fail;
     }
@@ -120,12 +121,14 @@ bool ShadowKeeper::init(LiveActor* pActor, const ActorInitInfo& rInfo, const Bya
         }
 
         const char* typeName = info.mShadowMaskType;
+
         if (!typeName || isEqualString(typeName, ShadowMaskType::text(ShadowMaskType::None))) {
             continue;
         }
 
         ShadowMaskBase* mask;
         s32 type;
+
         if (isEqualString(typeName, ShadowMaskType::text(ShadowMaskType::Sphere))) {
             auto* sphere = new ShadowMaskSphere(info.mName);
             pushMask(mMaskArray, sphere);
@@ -210,12 +213,14 @@ bool ShadowKeeper::init(LiveActor* pActor, const ActorInitInfo& rInfo, const Bya
 
     for (s32 i = 0; i < mMaskArray.size(); i++) {
         ShadowMaskBase* mask = mMaskArray.at(i);
+
         if (isEqualString(mask->mSetHeightEvenTargetName.cstr(), "")) {
             continue;
         }
 
         const char* targetName = mask->mSetHeightEvenTargetName.cstr();
         ShadowMaskBase* target = nullptr;
+
         for (auto it = mMaskArray.begin(); it != mMaskArray.end(); ++it) {
             if (isEqualString(it->mName, targetName)) {
                 target = &*it;
@@ -224,6 +229,7 @@ bool ShadowKeeper::init(LiveActor* pActor, const ActorInitInfo& rInfo, const Bya
         }
 
         mask->mHeightEvenTarget = target;
+
         if (target) {
             target->_e8 = true;
         }

@@ -10,6 +10,7 @@ namespace al {
         mCurrentState = nullptr;
 
         mStates = new State[mMaxStates];
+
         for (s32 i = 0; i < mMaxStates; i++) {
             State* state = &mStates[i];
             state->mState = nullptr;

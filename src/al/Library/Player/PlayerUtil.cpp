@@ -23,14 +23,17 @@ static s32 findNearestPlayerIdFromPos(const LiveActor* actor, const sead::Vector
 
     f32 minDistance = sead::Mathf::maxNumber();
     s32 nearestPlayerId = -1;
+
     for (s32 i = 0; i < playerNum; i++) {
         LiveActor* player = holder->getPlayer(i);
+
         if (!player || isDead(player)) {
             continue;
         }
 
         const sead::Vector3f& playerPos = getTrans(player);
         f32 distance = (playerPos - pos).squaredLength();
+
         if (distance < minDistance) {
             minDistance = distance;
             nearestPlayerId = i;
@@ -76,6 +79,7 @@ s32 getAlivePlayerNum(const PlayerHolder* holder) {
 
     for (s32 i = 0; i < playerNum; i++) {
         LiveActor* player = getPlayerActor(holder, i);
+
         if (isAlive(player))
             alivePlayers++;
     }
@@ -140,6 +144,7 @@ LiveActor* tryFindAlivePlayerActorFirst(const PlayerHolder* holder) {
 
     for (u32 i = 0; i < playerNum; i++) {
         LiveActor* player = holder->tryGetPlayer(i);
+
         if (!isDead(player))
             return player;
     }
@@ -176,6 +181,7 @@ LiveActor* tryFindAlivePlayerActorFromPort(const PlayerHolder* holder, s32 port)
 
     for (s32 i = 0; i < playerNum; i++) {
         LiveActor* player = tryGetPlayerActor(holder, i);
+
         if (getPlayerPort(player, i) == port && !isPlayerDead(player, i))
             return player;
     }
@@ -201,6 +207,7 @@ LiveActor* findNearestPlayerActor(const LiveActor* actor) {
 
 LiveActor* tryFindNearestPlayerActor(const LiveActor* actor) {
     s32 nearestPlayerId = findNearestPlayerId(actor, -1.0f);
+
     if (nearestPlayerId < 0)
         return nullptr;
     return getPlayerActor(actor, nearestPlayerId);
@@ -212,9 +219,11 @@ const sead::Vector3f& findNearestPlayerPos(const LiveActor* actor) {
 
 bool tryFindNearestPlayerPos(sead::Vector3f* pos, const LiveActor* actor) {
     s32 nearestPlayerId = findNearestPlayerId(actor, -1.0f);
+
     if (nearestPlayerId < 0)
         return false;
     LiveActor* player = getPlayerActor(actor, nearestPlayerId);
+
     if (!player)
         return false;
 
@@ -225,10 +234,12 @@ bool tryFindNearestPlayerPos(sead::Vector3f* pos, const LiveActor* actor) {
 bool tryFindNearestPlayerDisatanceFromTarget(f32* distance, const LiveActor* actor,
                                              const sead::Vector3f& target) {
     s32 nearestPlayerId = findNearestPlayerIdFromPos(actor, target, -1.0f);
+
     if (nearestPlayerId < 0)
         return false;
 
     LiveActor* player = getPlayerActor(actor, nearestPlayerId);
+
     if (!player)
         return false;
 
@@ -251,8 +262,10 @@ const sead::Vector3f& getFarPlayerPosMaxX(const LiveActor* actor) {
 
     const LiveActor* farPlayer = nullptr;
     f32 maxX = -1.0f;
+
     for (s32 i = 0; i < getPlayerNumMax(holder); i++) {
         LiveActor* player = holder->getPlayer(i);
+
         if (!farPlayer || maxX < getTrans(player).x) {
             maxX = getTrans(player).x;
             farPlayer = player;
@@ -268,8 +281,10 @@ const sead::Vector3f& getFarPlayerPosMinX(const LiveActor* actor) {
 
     const LiveActor* farPlayer = nullptr;
     f32 minX = -1.0f;
+
     for (s32 i = 0; i < getPlayerNumMax(holder); i++) {
         LiveActor* player = holder->getPlayer(i);
+
         if (!farPlayer || getTrans(player).x < minX) {
             minX = getTrans(player).x;
             farPlayer = player;
@@ -284,9 +299,11 @@ u32 calcPlayerListOrderByDistance(const LiveActor* actor, const LiveActor** acto
     const sead::Vector3f& pos = getTrans(actor);
 
     f32 distances[64];
+
     for (s32 i = 0; i != (s32)playerNum; i++) {
         LiveActor* player = getPlayerActor(actor, i);
         f32 distance = sead::Mathf::maxNumber();
+
         if (!isDead(player)) {
             sead::Vector3f playerPos = getTrans(player);
             distance = (playerPos - pos).squaredLength();
@@ -325,9 +342,11 @@ u32 calcAlivePlayerActor(const LiveActor* actor, const LiveActor** actorList, u3
     if (playerNum != 0) {
         for (u32 i = 0; i < playerNum; i++) {
             LiveActor* player = getPlayerActor(actor, i);
+
             if (!isDead(player)) {
                 actorList[resultNum] = player;
                 resultNum++;
+
                 if (resultNum >= size) {
                     result = size;
                     flag = 1;
@@ -381,6 +400,7 @@ bool isFullPlayerHolder(al::LiveActor* actor) {
 s32 findPlayerHolderIndex(const al::LiveActor* actor) {
     al::PlayerHolder* playerHolder = actor->getSceneInfo()->playerHolder;
     s32 playerNum = playerHolder->getPlayerNum();
+
     for (s32 i = 0; i < playerNum; i++)
         if (playerHolder->getPlayer(i) == actor)
             return i;
@@ -394,6 +414,7 @@ s32 findPlayerHolderIndex(const al::HitSensor* sensor) {
 bool isPlayerActor(const al::LiveActor* actor) {
     al::PlayerHolder* playerHolder = actor->getSceneInfo()->playerHolder;
     s32 playerNum = playerHolder->getPlayerNum();
+
     for (s32 i = 0; i < playerNum; i++)
         if (playerHolder->getPlayer(i) == actor)
             return true;

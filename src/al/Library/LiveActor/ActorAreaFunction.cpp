@@ -29,8 +29,10 @@ AreaObj* tryGetAreaObjPlayerAll(const LiveActor* pActor, const AreaObjGroup* pGr
 
     AreaObj* result = nullptr;
     s32 num = pGroup->mNumAreas;
+
     for (s32 i = 0; i < num; i++) {
         AreaObj* area = pGroup->getAreaObj(i);
+
         if (!isInAreaObjPlayerAll(pActor, area)) {
             continue;
         }
@@ -54,8 +56,10 @@ AreaObj* tryGetAreaObjPlayerAll(const LiveActor* pActor, const AreaObjGroup* pGr
 bool isInAreaObjPlayerAll(const LiveActor* pActor, const AreaObj* pArea) {
     s32 playerNum = getPlayerNumMax(pActor);
     bool isIn = false;
+
     for (s32 i = 0; i < playerNum; i++) {
         LiveActor* player = getPlayerActor(pActor, i);
+
         if (!isPlayerAreaTarget(player)) {
             continue;
         }
@@ -78,6 +82,7 @@ bool isInAreaObjPlayerAll(const LiveActor* pActor, const AreaObj* pArea) {
  */
 bool isInAreaObjPlayerAll(const LiveActor* pActor, const AreaObjGroup* pGroup) {
     s32 num = pGroup->mNumAreas;
+
     for (s32 i = 0; i < num; i++) {
         if (isInAreaObjPlayerAll(pActor, pGroup->getAreaObj(i))) {
             return true;
@@ -95,8 +100,10 @@ bool isInAreaObjPlayerAll(const LiveActor* pActor, const AreaObjGroup* pGroup) {
  */
 bool isInAreaObjPlayerAnyOne(const LiveActor* pActor, const AreaObj* pArea) {
     s32 playerNum = getPlayerNumMax(pActor);
+
     for (s32 i = 0; i < playerNum; i++) {
         LiveActor* player = getPlayerActor(pActor, i);
+
         if (!isPlayerAreaTarget(player)) {
             continue;
         }
@@ -117,6 +124,7 @@ bool isInAreaObjPlayerAnyOne(const LiveActor* pActor, const AreaObj* pArea) {
  */
 bool isInAreaObjPlayerAnyOne(const LiveActor* pActor, const AreaObjGroup* pGroup) {
     s32 num = pGroup->mNumAreas;
+
     for (s32 i = 0; i < num; i++) {
         if (isInAreaObjPlayerAnyOne(pActor, pGroup->getAreaObj(i))) {
             return true;
@@ -162,6 +170,7 @@ AreaObjGroup* createLinkAreaGroup(LiveActor* pActor, const ActorInitInfo& rInfo,
                                   const char* pLinkName, const char* pGroupName,
                                   const char* pAreaName) {
     s32 num = calcLinkChildNum(rInfo, pLinkName);
+
     if (num <= 0) {
         return nullptr;
     }
@@ -169,6 +178,7 @@ AreaObjGroup* createLinkAreaGroup(LiveActor* pActor, const ActorInitInfo& rInfo,
     AreaObjGroup* group = new AreaObjGroup(pGroupName);
     group->createBuffer(num);
     const PlacementInfo& placementInfo = *rInfo.mPlacementInfo;
+
     for (s32 i = 0; i < num; i++) {
         PlacementInfo linkInfo;
         getLinksInfoByIndex(&linkInfo, placementInfo, pLinkName, i);

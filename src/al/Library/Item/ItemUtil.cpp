@@ -100,6 +100,7 @@ namespace al {
     void appearItemTiming(const LiveActor* pActor, const char* pTiming, const sead::Vector3f& rPos,
                           const sead::Vector3f& rFront, const HitSensor* pSensor, bool isUnk) {
         ActorItemInfo* info = pActor->mItemKeeper->getAppearItemInfo(pTiming);
+
         if (info == nullptr) {
             return;
         }

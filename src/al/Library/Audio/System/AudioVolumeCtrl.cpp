@@ -115,6 +115,7 @@ void startMicSampling(const IUseAudioKeeper* pUser) {
     }
 
     AudioMic* mic = pUser->getAudioKeeper()->getAudioMic();
+
     if (mic != nullptr) {
         mic->startSampling();
     }
@@ -130,6 +131,7 @@ void startMicSamplingForce(const IUseAudioKeeper* pUser) {
     }
 
     AudioMic* mic = pUser->getAudioKeeper()->getAudioMic();
+
     if (mic != nullptr) {
         mic->startSamplingForce();
     }
@@ -145,6 +147,7 @@ void stopMicSamplingForce(const IUseAudioKeeper* pUser) {
     }
 
     AudioMic* mic = pUser->getAudioKeeper()->getAudioMic();
+
     if (mic != nullptr) {
         mic->stopSamplingForce();
     }
@@ -160,6 +163,7 @@ void invalidateMicInput(const IUseAudioKeeper* pUser) {
     }
 
     AudioMic* mic = pUser->getAudioKeeper()->getAudioMic();
+
     if (mic != nullptr) {
         mic->invalidateInput();
     }
@@ -175,6 +179,7 @@ void validateMicInput(const IUseAudioKeeper* pUser) {
     }
 
     AudioMic* mic = pUser->getAudioKeeper()->getAudioMic();
+
     if (mic != nullptr) {
         mic->validateInput();
     }

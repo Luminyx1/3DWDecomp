@@ -52,6 +52,7 @@ void ClockMapParts::init(const ActorInitInfo& rInfo) {
     registerAreaHostMtx(this, rInfo);
     registSupportFreezeSyncGroup(this, rInfo);
     mQuat.set(getQuat(this));
+
     if (isSingleMode(rInfo)) {
         tryGetArg(&mIsNoIntroUpdate, rInfo, "NoIntroUpdate");
     }
@@ -62,6 +63,7 @@ void ClockMapParts::init(const ActorInitInfo& rInfo) {
     tryGetArg(&mDelayTime, rInfo, "DelayTime");
     tryGetArg(&mWaitTime, rInfo, "WaitTime");
     tryGetArg(&mRotateTime, rInfo, "RotateTime");
+
     if (isExistAction(this, "MiddleSign")) {
         mRotateSignTime = getActionFrameMax(this, "MiddleSign");
     } else {
@@ -70,6 +72,7 @@ void ClockMapParts::init(const ActorInitInfo& rInfo) {
 
     mRotateTimer = mRotateSignTime + mRotateTime + 1;
     mActiveTimer = mRotateTimer + mWaitTime + 1;
+
     if (mDelayTime >= 1) {
         startNerveAction(this, "Delay");
     }
@@ -129,6 +132,7 @@ void ClockMapParts::endDemoActor(s32 demoType) {
 bool ClockMapParts::receiveMsg(const SensorMsg* pMsg, HitSensor* pOther, HitSensor* pSelf) {
     if (isMsgTouchAssist(pMsg)) {
         mAssistStopTimer = 45;
+
         if (isNerve(this, NrvClockMapParts.AssistStop.data())) {
             return true;
         }
@@ -231,6 +235,7 @@ void ClockMapParts::exeRotateSign() {
     }
 
     mTimer++;
+
     if (mTimer >= mRotateSignTime) {
         startNerveAction(this, "Rotate");
     }
@@ -245,6 +250,7 @@ void ClockMapParts::exeRotate() {
     f32 angle = wrapAngle((time + mCurrentStep) * mClockAngle);
     rotateQuatLocalDirDegree(this, mQuat, mRotateAxis, angle);
     mTimer++;
+
     if (mTimer >= mRotateTimer) {
         mCurrentStep++;
         startNerveAction(this, "Wait");
@@ -257,6 +263,7 @@ void ClockMapParts::exeRotate() {
  */
 void ClockMapParts::exeWait() {
     mTimer++;
+
     if (mTimer >= mActiveTimer) {
         mTimer -= mActiveTimer;
         setRotateStartNerve();
@@ -268,6 +275,7 @@ void ClockMapParts::exeWait() {
  */
 void ClockMapParts::exeAssistStop() {
     mAssistStopTimer--;
+
     if (mAssistStopTimer <= 0) {
         mAssistStopTimer = 0;
         setRestartNerve();

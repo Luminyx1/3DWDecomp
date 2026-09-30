@@ -120,6 +120,7 @@ void WaveVibrationPlayer::start(const WaveVibrationData* pData, f32 leftVolume,
     setModulation(mRight, mPlayer, rightVolume, rightPitch);
     mFrame = 0;
     mElapsed = 0;
+
     if (pData) {
         mPlayer->Load(pData->data, pData->size);
         mPlayer->Play();

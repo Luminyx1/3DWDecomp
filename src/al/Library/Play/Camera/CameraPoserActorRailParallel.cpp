@@ -35,6 +35,7 @@ static void calcCameraPos(sead::Vector3f* pPos, const sead::Vector3f& rAt, f32 d
     f32 angleV = sead::Mathf::deg2rad(angleDegreeV);
     f32 lengthH = sead::Mathf::cos(angleV);
     f32 length = dir.length();
+
     if (length > 0.0f) {
         f32 scale = lengthH / length;
         dir.x *= scale;

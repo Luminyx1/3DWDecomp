@@ -24,6 +24,7 @@ inline void addVelocityInline(LiveActor* pActor, const sead::Vector3f& rVel, f32
 
 inline bool calcVelocityClockwiseToDirection(LiveActor* pActor, sead::Vector3f* pDirVelocity, const sead::Vector3f& rDir) {
     sead::Vector3f normDir;
+
     if (!pDirVelocity || normalizeOrZero(&normDir, rDir))
         return false;
 
@@ -61,6 +62,7 @@ inline bool turnToDirectionAxis(LiveActor* pActor, const sead::Vector3f& rHorizo
 
 inline bool walkAndTurnToDirectionFittedGroundGravity(LiveActor* pActor, sead::Vector3f* pFront, const sead::Vector3f& rDir, f32 forceFront, f32 forceGravity, f32 decay, f32 deg, bool turnAlongGround) {
     turnDirection(pActor, pFront, rDir, sead::Mathf::cos(sead::Mathf::deg2rad(deg)));
+
     if (turnAlongGround)
         turnDirectionAlongGround(pActor, pFront);
 
@@ -69,6 +71,7 @@ inline bool walkAndTurnToDirectionFittedGroundGravity(LiveActor* pActor, sead::V
     addVelocityInline(pActor, velFront, forceFront);
 
     bool isOnGround = isOnGroundNoVelocity(pActor, 3);
+
     if (isOnGround)
         addVelocityToGravityFittedGround(pActor, forceGravity, 3);
     else
@@ -536,12 +539,14 @@ bool reboundVelocityFromEachCollision(LiveActor* pActor, f32 ground, f32 wall, f
 
     sead::Vector3f normalSum;
     calcCollidedNormalSum(pActor, &normalSum);
+
     if (isNearZero(normalSum, 0.001f))
         return false;
 
     normalize(&normalSum);
     const sead::Vector3f& gravity = getGravity(pActor);
     f32 rebound;
+
     if (isFloorPolygon(normalSum, gravity))
         rebound = ground;
     else if (isWallPolygon(normalSum, gravity))
@@ -552,6 +557,7 @@ bool reboundVelocityFromEachCollision(LiveActor* pActor, f32 ground, f32 wall, f
         rebound = 0.0f;
 
     f32 dot = normalSum.dot(getVelocity(pActor));
+
     if (dot < -threshold) {
         sead::Vector3f* velocity = getVelocityPtr(pActor);
         f32 mul = (rebound + 1.0f) * dot;
@@ -579,11 +585,13 @@ bool reboundVelocityFromCollision(LiveActor* pActor, f32 reboundStrength, f32 re
 
     sead::Vector3f normalSum;
     calcCollidedNormalSum(pActor, &normalSum);
+
     if (isNearZero(normalSum, 0.001f))
         return false;
 
     normalize(&normalSum);
     f32 dot = normalSum.dot(getVelocity(pActor));
+
     if (dot < -reboundMin) {
         *getVelocityPtr(pActor) -= normalSum * dot;
         scaleVelocity(pActor, friction);
@@ -680,6 +688,7 @@ void setVelocityBlowAttackAndTurnToTarget(LiveActor* pActor, const sead::Vector3
     sead::Vector3f dir = getTrans(pActor) - rTarget;
     bool isValidDir = !normalizeOrZero(&dir);
     setVelocitySeparateHV(pActor, dir, speedH, speedV);
+
     if (!isValidDir)
         return;
     sead::Quatf quat;
@@ -1243,6 +1252,7 @@ bool turnDirectionFromTargetDegree(const LiveActor* pActor, sead::Vector3f* pVec
  */
 void turnDirectionAlongGround(const LiveActor* pActor, sead::Vector3f* pDir) {
     sead::Vector3f down;
+
     if (isCollidedGround(pActor))
         down = -getOnGroundNormal(pActor, 0);
     else
@@ -1262,12 +1272,14 @@ void turnDirectionAlongGround(LiveActor* pActor) {
         calcFrontDir(&ground, pActor);
 
         sead::Vector3f down;
+
         if (isCollidedGround(pActor))
             down = -getOnGroundNormal(pActor, 0);
         else
             down.set(getGravity(pActor));
 
         verticalizeVec(&ground, down, ground);
+
         if (normalizeOrZero(&ground))
             return;
 
@@ -1304,6 +1316,7 @@ bool turnToDirection(LiveActor* pActor, const sead::Vector3f& rDir, f32 deg) {
  */
 bool turnToTarget(LiveActor* pActor, const sead::Vector3f& rTarget, f32 deg) {
     sead::Vector3f dir = rTarget - getTrans(pActor);
+
     if (normalizeOrZero(&dir))
         return false;
     return turnToDirection(pActor, dir, deg);
@@ -1341,6 +1354,7 @@ void faceToDirection(LiveActor* pActor, const sead::Vector3f& rDir) {
  */
 void faceToTarget(LiveActor* pActor, const sead::Vector3f& rTarget) {
     sead::Vector3f direction = rTarget - getTrans(pActor);
+
     if (normalizeOrZero(&direction))
         return;
     faceToDirection(pActor, direction);
@@ -1361,6 +1375,7 @@ void faceToTarget(LiveActor* pActor, const LiveActor* pTarget) {
  */
 void faceToVelocity(LiveActor* pActor) {
     sead::Vector3f direction = getVelocity(pActor);
+
     if (normalizeOrZero(&direction))
         return;
     faceToDirection(pActor, direction);
@@ -1374,6 +1389,7 @@ void faceToVelocity(LiveActor* pActor) {
  */
 void addVelocityClockwiseToDirection(LiveActor* pActor, const sead::Vector3f& rDir, f32 force) {
     sead::Vector3f dirVelocity;
+
     if (!calcVelocityClockwiseToDirection(pActor, &dirVelocity, rDir))
         return;
     sead::Vector3f normDir;
@@ -1437,6 +1453,7 @@ f32 calcAngleToTargetH(const LiveActor* pActor, const sead::Vector3f& rTarget) {
     calcFrontDir(&front, pActor);
     calcUpDir(&up, pActor);
     dir.setSub(rTarget, getTrans(pActor));
+
     if (normalizeOrZero(&dir))
         return 0.0f;
     return calcAngleOnPlaneDegree(front, dir, up);
@@ -1455,6 +1472,7 @@ f32 calcAngleToTargetV(const LiveActor* pActor, const sead::Vector3f& rTarget) {
     calcFrontDir(&front, pActor);
     calcSideDir(&side, pActor);
     dir.setSub(rTarget, getTrans(pActor));
+
     if (normalizeOrZero(&dir))
         return 0.0f;
     return calcAngleOnPlaneDegree(front, dir, side);
@@ -1488,6 +1506,7 @@ void walkAndTurnToDirection(LiveActor* pActor, const sead::Vector3f& rDir, f32 f
  */
 void walkAndTurnToDirection(LiveActor* pActor, sead::Vector3f* pFront, const sead::Vector3f& rDir, f32 forceFront, f32 forceGravity, f32 decay, f32 deg, bool turnAlongGround) {
     turnDirection(pActor, pFront, rDir, sead::Mathf::cos(sead::Mathf::deg2rad(deg)));
+
     if (turnAlongGround)
         turnDirectionAlongGround(pActor);
 

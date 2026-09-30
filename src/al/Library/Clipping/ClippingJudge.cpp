@@ -30,6 +30,7 @@ void ClippingJudge::update() {
     CameraDirector_RS* cameraDirector = mCameraDirector;
     FrustumRadar* frustumRadar = mFrustumRadar;
     const sead::LookAtCamera* camera;
+
     if (cameraDirector) {
         const sead::Matrix34f& viewMtx = getViewMtx_RS(this, 0);
         const sead::Matrix44f& projMtx = getProjectionMtx_RS(this, 0);
@@ -56,6 +57,7 @@ void ClippingJudge::setPlayerPos(const PlayerHolder* pPlayerHolder) {
     }
 
     LiveActor* player = tryFindAlivePlayerActorFirst(pPlayerHolder);
+
     if (pPlayerHolder) {
         mPlayerPos = getTrans(player);
     }

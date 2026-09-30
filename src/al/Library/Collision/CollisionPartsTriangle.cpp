@@ -151,6 +151,7 @@ const sead::Vector3f* Triangle::getPos(s32 index) const {
 sead::Vector3f* Triangle::calcAndGetNormal(s32 index) {
     const CollisionParts* parts = mCollisionParts;
     KCollisionServer* server = parts->mKColServer;
+
     switch (index) {
     case 0:
         return calcAndGetFaceNormal();
@@ -194,6 +195,7 @@ sead::Vector3f* Triangle::calcAndGetFaceNormal() {
 sead::Vector3f* Triangle::calcAndGetEdgeNormal(s32 index) {
     const CollisionParts* parts = mCollisionParts;
     KCollisionServer* server = parts->mKColServer;
+
     switch (index) {
     case 0:
         mNormals[1] = server->getEdgeNormal1(mPrismData, mPrismHeader);
@@ -394,6 +396,7 @@ void SphereHitInfo::calcFixVectorNormal(sead::Vector3f* pFix, sead::Vector3f* pF
     pFix->x = mTriangle.getFaceNormal()->x * length;
     pFix->y = mTriangle.getFaceNormal()->y * length;
     pFix->z = mTriangle.getFaceNormal()->z * length;
+
     if (pFixNormal) {
         pFixNormal->set(*mTriangle.getFaceNormal());
     }
@@ -433,6 +436,7 @@ void DiskHitInfo::calcFixVectorNormal(sead::Vector3f* pFix, sead::Vector3f* pFix
     pFix->x = mTriangle.getFaceNormal()->x * length;
     pFix->y = mTriangle.getFaceNormal()->y * length;
     pFix->z = mTriangle.getFaceNormal()->z * length;
+
     if (pFixNormal) {
         pFixNormal->set(*mTriangle.getFaceNormal());
     }

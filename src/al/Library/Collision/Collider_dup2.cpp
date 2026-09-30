@@ -47,6 +47,7 @@ bool isFloorPolygonCos(const sead::Vector3f& rNormal, const sead::Vector3f& rGra
     }
 
     f32 dot = rNormal.dot(rGravity);
+
     if (-dot < cos) {
         return false;
     }
@@ -66,6 +67,7 @@ bool isCeilingPolygon(const sead::Vector3f& rNormal, const sead::Vector3f& rGrav
     }
 
     f32 dot = rNormal.dot(rGravity);
+
     if (sead::Mathf::abs(dot) < 0.34202f) {
         return false;
     }
@@ -81,6 +83,7 @@ bool isCeilingPolygon(const sead::Vector3f& rNormal, const sead::Vector3f& rGrav
  */
 void calcTriangleColorByAngle(sead::Color4f* pColor, f32* pAngle, const sead::Vector3f& rNormal) {
     f32 angle = calcAngleDegree(rNormal, sead::Vector3f::ey);
+
     if (angle >= 60.0f && angle < 79.5f) {
         *pColor = sead::Color4f::cCyan;
     } else if (angle >= 79.5f && angle <= 110.0f) {

@@ -18,6 +18,7 @@ namespace al {
 
     void NerveKeeper::update() {
         const Nerve* nrv = mNerve;
+
         if (nrv != nullptr) {
             if (mStateCtrl != nullptr) {
                 mStateCtrl->tryEndCurrentState();

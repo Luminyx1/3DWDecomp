@@ -24,11 +24,13 @@ AtmosScatterDrawer::AtmosScatterDrawer(ExecuteDirector* pExecuteDirector,
  */
 void AtmosScatterDrawer::draw() const {
     GraphicsSystemInfo* info = mGraphicsSystemInfo;
+
     if (info->_40 != 1) {
         return;
     }
 
     AtmosScatter* atmosScatter = info->mAtmosScatter;
+
     if (!atmosScatter) {
         return;
     }

@@ -51,6 +51,7 @@ const AnimResInfo* AnimInfoTable::findAnimInfo(const char* pName) const {
     if (!mIsSorted) {
         for (s32 i = 0; i < mInfoCount; i++) {
             const AnimResInfo* info = &mResInfos[i];
+
             if (isEqualString(info->name, pName)) {
                 return info;
             }
@@ -61,11 +62,13 @@ const AnimResInfo* AnimInfoTable::findAnimInfo(const char* pName) const {
 
     s32 lo = 0;
     s32 hi = mInfoCount;
+
     while (lo < hi) {
         s32 last = hi - 1;
         s32 mid = (lo + last) >> 1;
         const AnimResInfo* info = &mResInfos[mid];
         s32 result = strcmp(info->name, pName);
+
         if (result > 0) {
             hi = mid;
         } else if (result < 0) {
@@ -82,6 +85,7 @@ const AnimResInfo* AnimInfoTable::tryFindAnimInfo(const char* pName) const {
     if (!mIsSorted) {
         for (s32 i = 0; i < mInfoCount; i++) {
             const AnimResInfo* info = &mResInfos[i];
+
             if (isEqualString(info->name, pName)) {
                 return info;
             }
@@ -92,11 +96,13 @@ const AnimResInfo* AnimInfoTable::tryFindAnimInfo(const char* pName) const {
 
     s32 lo = 0;
     s32 hi = mInfoCount;
+
     while (lo < hi) {
         s32 last = hi - 1;
         s32 mid = (lo + last) >> 1;
         const AnimResInfo* info = &mResInfos[mid];
         s32 result = strcmp(info->name, pName);
+
         if (result > 0) {
             hi = mid;
         } else if (result < 0) {
@@ -112,12 +118,15 @@ const AnimResInfo* AnimInfoTable::tryFindAnimInfo(const char* pName) const {
 void AnimInfoTable::sort() {
     s32 num = mInfoCount;
     AnimResInfo* infos = mResInfos;
+
     if (num >= 2 && infos) {
         AnimResInfo value;
+
         for (s32 i = num / 2; i > 0; i--) {
             value = infos[i - 1];
             s32 parent = i;
             s32 child = parent * 2;
+
             while (child <= num) {
                 if (child < num && strcmp(infos[child - 1].name, infos[child].name) < 0) {
                     child++;
@@ -141,6 +150,7 @@ void AnimInfoTable::sort() {
             infos[last] = infos[0];
             s32 parent = 1;
             s32 child = 2;
+
             while (child <= last) {
                 if (child < last && strcmp(infos[child - 1].name, infos[child].name) < 0) {
                     child++;

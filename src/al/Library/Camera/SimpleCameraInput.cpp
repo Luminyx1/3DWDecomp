@@ -83,6 +83,7 @@ bool SimpleCameraInput::isHoldSnapShotRollRight() const {
 
 bool SimpleCameraInput::tryCalcSnapShotMoveStick(sead::Vector2f* pStick) const {
     sead::Vector2f stick = getLeftStick(getMainControllerPort());
+
     if (stick.squaredLength() < 0.001) {
         return false;
     }

@@ -23,6 +23,7 @@ bool isSameSePlayArea(const al::AreaObj* pAreaObj, const al::AreaObj* pOther) {
 const al::AreaObj* findSameSePlayArea(const sead::PtrArray<al::AreaObj>* pList, const al::AreaObj* pAreaObj) {
     for (s32 i = 0; i < pList->size(); i++) {
         const al::AreaObj* areaObj = pList->unsafeAt(i);
+
         if (areaObj == pAreaObj || isSameSePlayArea(areaObj, pAreaObj)) {
             return pList->unsafeAt(i);
         }
@@ -55,9 +56,11 @@ SeAreaTriggeredPlayer::SeAreaTriggeredPlayer(const AudioDirector* pDirector, Are
  */
 void SeAreaTriggeredPlayer::reset() {
     sead::PtrArray<AreaObj>* prevList = mAreaLists[mCurListIndex > 0 ? mCurListIndex - 1 : 1];
+
     for (s32 i = 0; i < prevList->size(); i++) {
         const char* seName = nullptr;
         tryGetAreaObjStringArg(&seName, prevList->unsafeAt(i), "SePlayName");
+
         if (seName != nullptr) {
             stopSeByName(this, seName);
         }
@@ -77,23 +80,27 @@ void SeAreaTriggeredPlayer::update() {
     }
 
     AreaObjGroup* group = tryFindAreaObjGroup(this, "SePlayArea");
+
     if (group == nullptr) {
         return;
     }
 
     sead::PtrArray<AreaObj>* curList = mAreaLists[mCurListIndex];
     curList->clear();
+
     for (s32 i = 0; i < group->mNumAreas; i++) {
         AreaObj* areaObj = group->getAreaObj(i);
         const PlayerHolder* playerHolder = mPlayerHolder;
         s32 playerNum = getPlayerNumMax(playerHolder);
         bool isInArea = false;
+
         for (s32 j = 0; j < playerNum; j++) {
             if (isPlayerDead(playerHolder, j) || !isPlayerAreaTarget(playerHolder, j)) {
                 continue;
             }
 
             isInArea |= areaObj->isInVolume(getPlayerPos(playerHolder, j));
+
             if (isInArea) {
                 break;
             }
@@ -105,19 +112,23 @@ void SeAreaTriggeredPlayer::update() {
     }
 
     sead::PtrArray<AreaObj>* prevList = mAreaLists[mCurListIndex > 0 ? mCurListIndex - 1 : 1];
+
     for (s32 i = 0; i < prevList->size(); i++) {
         AreaObj* areaObj = prevList->unsafeAt(i);
+
         if (findSameSePlayArea(curList, areaObj) != nullptr) {
             continue;
         }
 
         const char* seName = nullptr;
+
         if (!tryGetAreaObjStringArg(&seName, areaObj, "SePlayName")) {
             continue;
         }
 
         bool isDisableSeStop = false;
         tryGetAreaObjArg(&isDisableSeStop, areaObj, "IsDisableSeStop");
+
         if (!isDisableSeStop) {
             stopSeByName(this, seName);
         }
@@ -125,11 +136,13 @@ void SeAreaTriggeredPlayer::update() {
 
     for (s32 i = 0; i < curList->size(); i++) {
         AreaObj* areaObj = curList->unsafeAt(i);
+
         if (findSameSePlayArea(prevList, areaObj) != nullptr) {
             continue;
         }
 
         const char* seName = nullptr;
+
         if (tryGetAreaObjStringArg(&seName, areaObj, "SePlayName")) {
             startSeByName(this, seName, nullptr);
         }
@@ -149,6 +162,7 @@ void SeAreaTriggeredPlayer::update() {
  */
 SeCategoryNameList::SeCategoryNameList(const char** pNames, s32 num) {
     mNames.allocBuffer(num, nullptr);
+
     for (s32 i = 0; i < num; i++) {
         mNames.pushBack(pNames[i]);
     }
@@ -184,6 +198,7 @@ s32 SeCategoryNameList::findCategoryNoFromName(const char* pName) const {
  */
 SeCategoryInfoList::SeCategoryInfoList(const SeCategoryNameList* pNameList) : mNameList(pNameList) {
     mVolumes.allocBuffer(pNameList->getNum(), nullptr);
+
     for (s32 i = 0; i < mVolumes.capacity(); i++) {
         mVolumes.pushBack(new f32(0.0f));
     }
@@ -196,18 +211,22 @@ SeCategoryInfoList::SeCategoryInfoList(const SeCategoryNameList* pNameList) : mN
  */
 bool SeCategoryInfoList::importYaml(ByamlIter& rIter) {
     ByamlIter volumeIter;
+
     if (!rIter.tryGetIterByKey(&volumeIter, "CategoryVolume")) {
         return false;
     }
 
     s32 size = volumeIter.getSize();
+
     for (s32 i = 0; i < size; i++) {
         f32 volume = 0.0f;
+
         if (!volumeIter.tryGetFloatByIndex(&volume, i)) {
             continue;
         }
 
         const char* name = nullptr;
+
         if (!volumeIter.getKeyName(&name, i)) {
             continue;
         }
@@ -231,6 +250,7 @@ bool SeCategoryInfoList::importYaml(ByamlIter& rIter) {
  */
 void SeCategoryInfoList::setCategoryVolume(const char* pName, f32 volume) {
     s32 index = mNameList->findCategoryNoFromName(pName);
+
     if (index >= 0) {
         *mVolumes.unsafeAt(index) = volume;
     }
@@ -242,6 +262,7 @@ void SeCategoryInfoList::setCategoryVolume(const char* pName, f32 volume) {
  */
 SeCategoryParamsController::SeCategoryParamsController(const SeCategoryNameList* pNameList) : mNameList(pNameList) {
     mMixVolumes.allocBuffer(pNameList->getNum(), nullptr);
+
     for (s32 i = 0; i < mMixVolumes.capacity(); i++) {
         mMixVolumes.pushBack(new AudioMixVolume());
     }

@@ -29,6 +29,7 @@ constexpr s32 cLanguageInfoNum = sizeof(cLanguageInfos) / sizeof(cLanguageInfos[
 
 alLanguage getLanguageFromString(const char* pName) {
     s32 index = -1;
+
     for (s32 i = 0; i < cLanguageInfoNum; i++) {
         if (isEqualString(pName, cLanguageInfos[i].name)) {
             index = i;
@@ -45,6 +46,7 @@ alLanguage getLanguageFromString(const char* pName) {
 
 inline const char* findLanguageDirectoryName(alLanguage language) {
     s32 index = -1;
+
     for (s32 i = 0; i < cLanguageInfoNum; i++) {
         if (cLanguageInfos[i].language == language) {
             index = i;

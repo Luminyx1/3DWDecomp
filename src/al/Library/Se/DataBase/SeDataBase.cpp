@@ -35,6 +35,7 @@ void SeDataBase::createUserInfoList(const Resource* pResource) {
     list->mInfos = new sead::PtrArray<SeUserInfo>;
     list->mInfos->allocBuffer(entryNum + 1, nullptr);
     mUserInfoList = list;
+
     for (s32 i = 0; i < entryNum; i++) {
         StringTmp<128> fileName;
         pResource->getEntryName(&fileName, "/", i);
@@ -60,10 +61,12 @@ void SeDataBase::createResourceSespecificInfoList(const Resource* pResource, Sea
     list->mInfos = new sead::PtrArray<SeResourceSpecificInfo>;
     list->mInfos->allocBuffer(size + 1, nullptr);
     mResourceSpecificInfoList = list;
+
     for (s32 i = 0; i < size; i++) {
         ByamlIter iter;
         rootIter.tryGetIterByIndex(&iter, i);
         SeResourceSpecificInfo* info = SeResourceSpecificInfo::createInfo(iter);
+
         if (info == nullptr) {
             continue;
         }
@@ -92,8 +95,10 @@ void SeDataBase::createStationedArchiveInfoList(const Resource* pResource) {
 void SeDataBase::setResourceSpecInfoToResourceInfo() {
     for (s32 i = 0; i < (mUserInfoList != nullptr ? mUserInfoList->getInfoNum() : 0); i++) {
         const AudioInfoList<SePlayInfo>* playInfoList = mUserInfoList->getInfo(i)->mPlayInfoList;
+
         for (s32 j = 0; j < (playInfoList != nullptr ? playInfoList->getInfoNum() : 0); j++) {
             const AudioInfoList<SeResourceInfo>* resourceInfoList = playInfoList->getInfo(j)->mResourceInfoList;
+
             for (s32 k = 0; k < (resourceInfoList != nullptr ? resourceInfoList->getInfoNum() : 0); k++) {
                 SeResourceInfo* resourceInfo = resourceInfoList->getInfo(k);
                 resourceInfo->mSpecificInfo = tryFindResourceSpecificInfo(resourceInfo->mName);
@@ -169,6 +174,7 @@ SeArchiveLoadingInfo* SeArchiveLoadingInfo::createInfo(const ByamlIter& rIter) {
     info->mBankLoadingInfoList =
         rIter.tryGetIterByKey(&bankIter, "BankLoadingInfoList") ? createInfoList<SeBankLoadingInfo>(bankIter) : nullptr;
     ByamlIter userIter;
+
     if (rIter.tryGetIterByKey(&userIter, "UserLoadingInfoList")) {
         info->mUserLoadingInfoList = createInfoList<SeUserLoadingInfo>(userIter);
     } else {

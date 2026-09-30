@@ -47,6 +47,7 @@ void setupModelKeeper(LiveActor* pActor, ModelKeeper* pModelKeeper, const ActorI
         static_cast<const sead::Matrix44f*>(cameraInfo->_18));
     const char* cubeMapName = nullptr;
     tryGetStringArg(&cubeMapName, rInfo, "CubeMapUnitName");
+
     if (cubeMapName) {
         forceApplyCubeMap(pModelKeeper,
                           static_cast<const GraphicsSystemInfo*>(pActor->getSceneInfo()->_78),
@@ -420,6 +421,7 @@ void initActorModelKeeperShadowVolumeFillStencil(LiveActor* pActor, const ActorI
 void initActorModelForceCubeMap(LiveActor* pActor, const ActorInitInfo& rInfo) {
     const char* cubeMapName = nullptr;
     tryGetStringArg(&cubeMapName, rInfo, "CubeMapUnitName");
+
     if (cubeMapName && pActor->mModelKeeper) {
         forceApplyCubeMap(pActor, cubeMapName);
     }
@@ -447,6 +449,7 @@ void initActorEffectKeeper(LiveActor* pActor, const ActorInitInfo& rInfo, const 
 void initActorAudioKeeper(LiveActor* pActor, const ActorInitInfo& rInfo, const char* pSeName, const char* pBgmName) {
     AudioKeeper* audioKeeper = new AudioKeeper();
     const AudioDirector* audioDirector = rInfo.mAudioDirector;
+
     if (audioDirector->isForceInvalidSe()) {
         audioKeeper->init(audioDirector, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr);
         audioKeeper->setIsForceInvalidSe(true);
@@ -468,6 +471,7 @@ void initActorAudioKeeper(LiveActor* pActor, const ActorInitInfo& rInfo, const c
  */
 void initActorAudioKeeper(LiveActor* pActor, const ActorInitInfo& rInfo, const char* pSeName, const char* pBgmName, const sead::Vector3f* pPos, const sead::Matrix34f* pMtx) {
     AudioKeeper* audioKeeper = new AudioKeeper();
+
     if (rInfo.mAudioDirector->isForceInvalidSe()) {
         audioKeeper->init(rInfo.mAudioDirector, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr);
         audioKeeper->setIsForceInvalidSe(true);
@@ -487,6 +491,7 @@ void initActorAudioKeeper(LiveActor* pActor, const ActorInitInfo& rInfo, const c
  */
 void initActorAudioKeeperWithout3D(LiveActor* pActor, const ActorInitInfo& rInfo, const char* pSeName, const char* pBgmName) {
     AudioKeeper* audioKeeper = new AudioKeeper();
+
     if (rInfo.mAudioDirector->isForceInvalidSe()) {
         audioKeeper->init(rInfo.mAudioDirector, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr);
         audioKeeper->setIsForceInvalidSe(true);
@@ -518,6 +523,7 @@ void initActorOceanWaveKeeper(LiveActor* pActor, const ActorInitInfo& rInfo, Bya
  */
 void initActorOceanWaveKeeper(LiveActor* pActor, const ActorInitInfo& rInfo, const char* pArchiveName, const char* pFileName) {
     const u8* byml = tryGetBymlFromObjectResource(pArchiveName, pFileName);
+
     if (!byml) {
         return;
     }
@@ -535,6 +541,7 @@ void initActorOceanWaveKeeper(LiveActor* pActor, const ActorInitInfo& rInfo, con
  */
 void initHitReactionKeeper(LiveActor* pActor, const char* pName) {
     HitReactionKeeper* keeper = HitReactionKeeper::tryCreate(pActor, getModelResource(pActor), pName);
+
     if (keeper) {
         pActor->mHitReactionKeeper = keeper;
     }
@@ -548,6 +555,7 @@ void initHitReactionKeeper(LiveActor* pActor, const char* pName) {
  */
 void initHitReactionKeeper(LiveActor* pActor, const Resource* pResource, const char* pName) {
     HitReactionKeeper* keeper = HitReactionKeeper::tryCreate(pActor, pResource, pName);
+
     if (keeper) {
         pActor->mHitReactionKeeper = keeper;
     }
@@ -593,6 +601,7 @@ void initActorCollision(LiveActor* pActor, const sead::SafeString& rName, HitSen
 void initActorCollisionWithResource(LiveActor* pActor, Resource* pResource, const sead::SafeString& rName, HitSensor* pSensor, const sead::Matrix34f* pMtx, const char* pSuffix) {
     StringTmp<256> kclName("%s.kcl", rName.cstr());
     StringTmp<256> attributeName("%sAttribute.byml", rName.cstr());
+
     if (!pResource->isExistFile(kclName)) {
         return;
     }
@@ -602,11 +611,13 @@ void initActorCollisionWithResource(LiveActor* pActor, Resource* pResource, cons
     const char* specialPurpose = nullptr;
     s32 priority = -1;
     StringTmp<64> initName("InitCollision");
+
     if (pSuffix) {
         initName.format("InitCollision%s", pSuffix);
     }
 
     StringTmp<64> initFileName("%s.byml", initName.cstr());
+
     if (pResource->isExistFile(initFileName.cstr())) {
         ByamlIter iter(pResource->getByml(initName.cstr()));
         iter.tryGetStringByKey(&specialPurpose, "SpecialPurpose");
@@ -662,6 +673,7 @@ void initActorCollisionWithFilePtr(LiveActor* pActor, void* pKcl, const void* pA
  */
 void initActorItemKeeper(LiveActor* pActor, const ActorInitInfo& rInfo, const char* pArchiveName, const char* pFileName) {
     Resource* resource = findOrCreateResource(pArchiveName, nullptr);
+
     if (!resource) {
         return;
     }
@@ -669,8 +681,10 @@ void initActorItemKeeper(LiveActor* pActor, const ActorInitInfo& rInfo, const ch
     ByamlIter rootIter(resource->getByml(pFileName));
     ByamlIter initInfoIter;
     s32 addItemNum = 0;
+
     if (rootIter.tryGetIterByKey(&initInfoIter, "InitInfo")) {
         s32 num = 0;
+
         if (initInfoIter.tryGetIntByKey(&num, "AddItemNum")) {
             addItemNum = num;
         }
@@ -679,18 +693,22 @@ void initActorItemKeeper(LiveActor* pActor, const ActorInitInfo& rInfo, const ch
     ByamlIter itemListIter;
     ByamlIter listIter(rootIter.tryGetIterByKey(&itemListIter, "ItemList") ? itemListIter : rootIter);
     s32 itemNum = listIter.getSize() + addItemNum;
+
     if (itemNum <= 0) {
         return;
     }
 
     pActor->initItemKeeper(itemNum);
+
     for (s32 i = 0; i < itemNum; i++) {
         ByamlIter itemIter;
+
         if (!listIter.tryGetIterByIndex(&itemIter, i)) {
             continue;
         }
 
         const char* itemName = nullptr;
+
         if (!itemIter.tryGetStringByKey(&itemName, "Item")) {
             continue;
         }
@@ -713,12 +731,14 @@ void initActorItemKeeper(LiveActor* pActor, const ActorInitInfo& rInfo, const ch
  */
 void initActorAlphaCtrl(LiveActor* pActor, const ActorInitInfo& rInfo, const char* pArchiveName, const char* pFileName) {
     Resource* resource = findOrCreateResource(pArchiveName, nullptr);
+
     if (!resource) {
         return;
     }
 
     const char* fileName = pFileName ? pFileName : "InitAlphaCtrl";
     ByamlIter iter;
+
     if (!tryGetActorInitFileIter(&iter, resource, fileName, nullptr)) {
         return;
     }
@@ -768,6 +788,7 @@ void registerSubActorSyncClipping(LiveActor* pActor, LiveActor* pSubActor, bool 
  */
 void setSubActorOffSyncClipping(LiveActor* pActor) {
     SubActorKeeper* keeper = pActor->mSubActorKeeper;
+
     for (s32 i = 0; i < keeper->mCount; i++) {
         keeper->mInfos[i]->mSyncType &= ~2;
     }
@@ -779,6 +800,7 @@ void setSubActorOffSyncClipping(LiveActor* pActor) {
  */
 void setSubActorOnSyncAppear(LiveActor* pActor) {
     SubActorKeeper* keeper = pActor->mSubActorKeeper;
+
     for (s32 i = 0; i < keeper->mCount; i++) {
         keeper->mInfos[i]->mSyncType |= 1;
     }

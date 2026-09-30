@@ -49,11 +49,13 @@ void BlockRailShapeStraight::init(const sead::Quatf& rQuat, const sead::Vector3f
 bool BlockRailShapeStraight::isRide(f32* pRate, const sead::Vector3f& rPrevPos,
                                     const sead::Vector3f& rPos) const {
     f32 prevHeight = (rPrevPos - mStartPos).dot(mUpDir);
+
     if (prevHeight < 0.0f) {
         return false;
     }
 
     f32 height = (rPos - mStartPos).dot(mUpDir);
+
     if (height > 0.0f) {
         return false;
     }
@@ -62,6 +64,7 @@ bool BlockRailShapeStraight::isRide(f32* pRate, const sead::Vector3f& rPrevPos,
     f32 rate = isNearZero(diff, 0.001f) ? 0.0f : prevHeight / diff;
     sead::Vector3f crossPos = rPrevPos + (rPos - rPrevPos) * rate;
     f32 coord = (crossPos - mStartPos).dot(mDir);
+
     if (coord < 0.0f || coord > mLength) {
         return false;
     }
@@ -164,11 +167,13 @@ void BlockRailShapeCurve::init(const sead::Quatf& rQuat, const sead::Vector3f& r
 bool BlockRailShapeCurve::isRide(f32* pRate, const sead::Vector3f& rPrevPos,
                                  const sead::Vector3f& rPos) const {
     f32 prevHeight = (rPrevPos - mCenter).dot(mUpAxis);
+
     if (!(prevHeight > 0.0f)) {
         return false;
     }
 
     f32 height = (rPos - mCenter).dot(mUpAxis);
+
     if (height >= 0.0f) {
         return false;
     }
@@ -178,11 +183,13 @@ bool BlockRailShapeCurve::isRide(f32* pRate, const sead::Vector3f& rPrevPos,
     sead::Vector3f crossPos = rPrevPos + (rPos - rPrevPos) * rate;
     sead::Vector3f localPos = crossPos - mCenter;
     f32 side = localPos.dot(mSideAxis);
+
     if (side < 0.0f) {
         return false;
     }
 
     f32 front = localPos.dot(mFrontAxis);
+
     if (front < 0.0f) {
         return false;
     }
@@ -240,6 +247,7 @@ void BlockRailShapeCurve::calcNearestParam(sead::Vector3f* pPos, f32* pRate,
                                            const sead::Vector3f& rPos) const {
     sead::Vector3f dir = rPos - mCenter;
     verticalizeVec(&dir, mUpAxis, dir);
+
     if (normalizeOrZero(&dir)) {
         *pPos = mRadius * mSideAxis + mCenter;
         *pRate = 0.0f;
@@ -248,6 +256,7 @@ void BlockRailShapeCurve::calcNearestParam(sead::Vector3f* pPos, f32* pRate,
 
     f32 side = dir.dot(mSideAxis);
     f32 front = dir.dot(mFrontAxis);
+
     if (side > 0.0f && front > 0.0f) {
         *pPos = mCenter + dir * mRadius;
         *pRate = atan2f(front, side) / (sead::Mathf::pi() / 2);

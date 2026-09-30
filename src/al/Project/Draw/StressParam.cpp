@@ -159,6 +159,7 @@ GraphicsStressDirector::GraphicsStressDirector(GraphicsSystemInfo* pInfo)
  */
 s32 GraphicsStressDirector::getBufferSizeX() const {
     s32 scale;
+
     if (mIsIgnoreQualityControl) {
         scale = getCurrentParam().getScreenWidthScale();
     } else {
@@ -167,6 +168,7 @@ s32 GraphicsStressDirector::getBufferSizeX() const {
                         mQualityController->getRate(5)};
 
         s32 limit = 160;
+
         for (s32 i = mStressInfo->levelNum - 1; i >= 0; i--) {
             if (rates[i] == 0.0f) {
                 limit = mStressInfo->widthScales[i];
@@ -188,6 +190,7 @@ s32 GraphicsStressDirector::getBufferSizeX() const {
  */
 s32 GraphicsStressDirector::getBufferSizeY() const {
     s32 scale;
+
     if (mIsIgnoreQualityControl) {
         scale = getCurrentParam().getScreenHeightScale();
     } else {
@@ -196,6 +199,7 @@ s32 GraphicsStressDirector::getBufferSizeY() const {
                         mQualityController->getRate(5)};
 
         s32 limit = 90;
+
         for (s32 i = mStressInfo->levelNum - 1; i >= 0; i--) {
             if (rates[i] == 0.0f) {
                 limit = mStressInfo->heightScales[i];
@@ -236,6 +240,7 @@ void GraphicsStressDirector::setForceDisable(bool isForceDisable) {
         return;
 
     mIsForceDisable = isForceDisable;
+
     if (isForceDisable) {
         mIsQualityControlEnableBeforeDisable = mQualityController->isEnable();
         setQualityControlEnable(false);
@@ -252,6 +257,7 @@ void GraphicsStressDirector::setForceDisable(bool isForceDisable) {
 void GraphicsStressDirector::setStressInfoMode(bool isSingleMode, s32 mode) {
     mIsSingleMode = isSingleMode;
     s32 index = (u32)mode > 5 ? 0 : mode;
+
     if (mode < 0)
         index = 5;
     mStressInfo = &sStressInfos[index];
@@ -290,6 +296,7 @@ void GraphicsStressDirector::setSingleMode(bool isSingleMode) {
  */
 void GraphicsStressDirector::setForceStressOff(bool isForceStressOff) {
     mIsForceStressOff = isForceStressOff;
+
     if (isForceStressOff) {
         mStressInfoModeBeforeForceOff = getStressInfoMode();
         mStressInfo = &sStressInfos[5];
@@ -298,6 +305,7 @@ void GraphicsStressDirector::setForceStressOff(bool isForceStressOff) {
     }
 
     s32 mode = mStressInfoModeBeforeForceOff;
+
     if (mode >= 0)
         mStressInfo = &sStressInfos[(u32)mode > 5 ? 0 : mode];
     else
@@ -313,6 +321,7 @@ void GraphicsStressDirector::movement() {
         mQualityController->setEnable(false);
 
     mPseudoAAFrame = modi(mPseudoAAFrame + 3, 2);
+
     if (mPseudoAAFrame == 0)
         mPseudoAAOffset.set(0.0f, 0.0f);
     else if (mPseudoAAFrame == 1)
@@ -375,6 +384,7 @@ void GraphicsQualityController::exeWait() {
         return;
 
     f32 average = info.mHistory.empty() ? load : info.mHistory(0).mAverage5;
+
     if (scale * average < mReduceQualityPercentage - mRecoverPercents[mLevel])
         al::setNerve(this, &NrvGraphicsQualityControllerRecover);
 }
@@ -388,6 +398,7 @@ void GraphicsQualityController::exeReduce() {
 
     QualityLevel& level = mQualityLevels[mLevel];
     level.rate = 0.0f;
+
     if (al::isGreaterStep(this, 10)) {
         level.rate = 0.0f;
         al::setNerve(this, &NrvGraphicsQualityControllerWait);
@@ -402,6 +413,7 @@ void GraphicsQualityController::exeRecover() {
 
     QualityLevel& level = mQualityLevels[mLevel];
     level.rate = 1.0f;
+
     if (al::isGreaterStep(this, 10)) {
         level.rate = 1.0f;
         mLevel--;

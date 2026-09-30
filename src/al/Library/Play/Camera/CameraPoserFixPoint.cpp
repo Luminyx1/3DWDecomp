@@ -23,6 +23,7 @@ CameraPoserFixPoint::CameraPoserFixPoint(const char* pName) : CameraPoser_RS(pNa
 void CameraPoserFixPoint::init() {
     alCameraPoserFunction::initAngleSwing(this);
     alCameraPoserFunction::initSnapShotCameraCtrlZoomAutoReset(this);
+
     if (isEqualString(getName(), "完全追従定点")) {
         return;
     }
@@ -41,6 +42,7 @@ void CameraPoserFixPoint::loadParam(const ByamlIter& rIter) {
 
     tryGetByamlF32(&mOffsetY, rIter, "OffsetY");
     tryGetByamlBool(&mIsKeepDistanceFromLookAt, rIter, "IsKeepDistanceFromLookAt");
+
     if (mIsKeepDistanceFromLookAt) {
         tryGetByamlF32(&mKeepDistance, rIter, "KeepDistance");
     }
@@ -81,6 +83,7 @@ void CameraPoserFixPoint::makeLookAtCamera(sead::LookAtCamera* pCamera) const {
     sead::Vector3f dir = pCamera->getPos() - pCamera->getAt();
     f32 distance = mKeepDistance;
     f32 length = dir.length();
+
     if (length > 0.0f) {
         dir *= distance / length;
     }

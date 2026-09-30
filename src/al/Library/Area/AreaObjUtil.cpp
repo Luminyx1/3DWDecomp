@@ -48,14 +48,17 @@ AreaObj* tryFindAreaObj(const IUseAreaObj* pAreaUser, const char* pName,
 AreaObj* tryFindAreaObjWithFilter(const IUseAreaObj* pAreaUser, const char* pName,
                                   const sead::Vector3f& rPos, AreaObjFilterBase* pFilter) {
     AreaObjGroup* group = tryFindAreaObjGroup(pAreaUser, pName);
+
     if (!group) {
         return nullptr;
     }
 
     AreaObj* result = nullptr;
     s32 num = group->mNumAreas;
+
     for (s32 i = 0; i < num; i++) {
         AreaObj* areaObj = group->getAreaObj(i);
+
         if ((!result || result->mPriority <= areaObj->mPriority) && areaObj->isInVolume(rPos) &&
             pFilter->isValidArea(areaObj)) {
             result = areaObj;
@@ -83,13 +86,16 @@ AreaObjGroup* tryFindAreaObjGroup(const IUseAreaObj* pAreaUser, const char* pNam
  */
 AreaObj* tryFindAreaObj(const IUseAreaObj* pAreaUser, const char* pName) {
     AreaObjGroup* group = tryFindAreaObjGroup(pAreaUser, pName);
+
     if (!group) {
         return nullptr;
     }
 
     s32 num = group->mNumAreas;
+
     for (s32 i = 0; i < num; i++) {
         AreaObj* areaObj = group->getAreaObj(i);
+
         if (areaObj && areaObj->mIsCodeLink && !areaObj->mIsPlessieCameraOn) {
             return areaObj;
         }
@@ -106,13 +112,16 @@ AreaObj* tryFindAreaObj(const IUseAreaObj* pAreaUser, const char* pName) {
  */
 AreaObj* tryFindPlessieAreaObj(const IUseAreaObj* pAreaUser, const char* pName) {
     AreaObjGroup* group = tryFindAreaObjGroup(pAreaUser, pName);
+
     if (!group) {
         return nullptr;
     }
 
     s32 num = group->mNumAreas;
+
     for (s32 i = 0; i < num; i++) {
         AreaObj* areaObj = group->getAreaObj(i);
+
         if (areaObj && areaObj->mIsCodeLink && areaObj->mIsPlessieCameraOn) {
             return areaObj;
         }
@@ -129,13 +138,16 @@ AreaObj* tryFindPlessieAreaObj(const IUseAreaObj* pAreaUser, const char* pName) 
  */
 AreaObj* tryFindPlessieTunnelAreaObj(const IUseAreaObj* pAreaUser, const char* pName) {
     AreaObjGroup* group = tryFindAreaObjGroup(pAreaUser, pName);
+
     if (!group) {
         return nullptr;
     }
 
     s32 num = group->mNumAreas;
+
     for (s32 i = 0; i < num; i++) {
         AreaObj* areaObj = group->getAreaObj(i);
+
         if (areaObj->mIsPlessieTunnel) {
             return areaObj;
         }
@@ -154,6 +166,7 @@ AreaObj* tryFindPlessieTunnelAreaObj(const IUseAreaObj* pAreaUser, const char* p
 bool isInAreaObjInGroup(const IUseAreaObj* pAreaUser, const char* pName,
                         const sead::Vector3f& rPos) {
     AreaObjGroup* group = tryFindAreaObjGroup(pAreaUser, pName);
+
     if (!group) {
         return false;
     }
@@ -169,13 +182,16 @@ bool isInAreaObjInGroup(const IUseAreaObj* pAreaUser, const char* pName,
  */
 bool isInDisasterCameraArea(const IUseAreaObj* pAreaUser, const sead::Vector3f& rPos) {
     AreaObjGroup* group = tryFindAreaObjGroup(pAreaUser, "CameraArea");
+
     if (!group) {
         return false;
     }
 
     s32 num = group->mNumAreas;
+
     for (s32 i = 0; i < num; i++) {
         AreaObj* areaObj = group->getAreaObj(i);
+
         if (areaObj && areaObj->mIsCodeLink && areaObj->mIsDisasterCameraOn &&
             areaObj->isInVolumeCheck(rPos)) {
             return true;
@@ -193,13 +209,16 @@ bool isInDisasterCameraArea(const IUseAreaObj* pAreaUser, const sead::Vector3f& 
  */
 bool isInPlessieCameraArea(const IUseAreaObj* pAreaUser, const sead::Vector3f& rPos) {
     AreaObjGroup* group = tryFindAreaObjGroup(pAreaUser, "CameraArea");
+
     if (!group) {
         return false;
     }
 
     s32 num = group->mNumAreas;
+
     for (s32 i = 0; i < num; i++) {
         AreaObj* areaObj = group->getAreaObj(i);
+
         if (areaObj && areaObj->mIsCodeLink && areaObj->mIsPlessieCameraOn &&
             areaObj->isInVolumeCheck(rPos)) {
             return true;
@@ -219,13 +238,16 @@ bool isInPlessieCameraArea(const IUseAreaObj* pAreaUser, const sead::Vector3f& r
 AreaObj* getStartCameraArea(const IUseAreaObj* pAreaUser, const sead::Vector3f& rPos,
                             CameraDirector_RS* pCameraDirector) {
     AreaObjGroup* group = tryFindAreaObjGroup(pAreaUser, "CameraArea");
+
     if (!group) {
         return nullptr;
     }
 
     s32 num = group->mNumAreas;
+
     for (s32 i = 0; i < num; i++) {
         AreaObj* areaObj = group->getAreaObj(i);
+
         if (areaObj && areaObj->mIsSpawnEntranceCamera && areaObj->isInVolumeCheck(rPos)) {
             return areaObj;
         }
@@ -265,6 +287,7 @@ AreaObj* tryFindAreaObjPlayerOne(const IUseAreaObj* pAreaUser, const char* pName
                                  const PlayerHolder* pPlayerHolder) {
     AreaObj* result = nullptr;
     s32 num = getPlayerNumMax(pPlayerHolder);
+
     for (s32 i = 0; i < num; i++) {
         if (isPlayerDead(pPlayerHolder, i)) {
             continue;
@@ -275,6 +298,7 @@ AreaObj* tryFindAreaObjPlayerOne(const IUseAreaObj* pAreaUser, const char* pName
         }
 
         AreaObj* areaObj = tryFindAreaObj(pAreaUser, pName, getPlayerPos(pPlayerHolder, i));
+
         if (!areaObj) {
             continue;
         }
@@ -297,6 +321,7 @@ AreaObj* tryFindAreaObjPlayerOne(const IUseAreaObj* pAreaUser, const char* pName
 AreaObj* tryFindAreaObjPlayerAll(const IUseAreaObj* pAreaUser, const char* pName,
                                  const PlayerHolder* pPlayerHolder) {
     AreaObjGroup* group = tryFindAreaObjGroup(pAreaUser, pName);
+
     if (!group) {
         return nullptr;
     }
@@ -304,9 +329,11 @@ AreaObj* tryFindAreaObjPlayerAll(const IUseAreaObj* pAreaUser, const char* pName
     s32 areaNum = group->mNumAreas;
     s32 playerNum = getPlayerNumMax(pPlayerHolder);
     AreaObj* result = nullptr;
+
     for (s32 i = 0; i < areaNum; i++) {
         AreaObj* areaObj = group->getAreaObj(i);
         AreaObj* found = nullptr;
+
         for (s32 j = 0; j < playerNum; j++) {
             if (isPlayerDead(pPlayerHolder, j)) {
                 continue;
@@ -314,6 +341,7 @@ AreaObj* tryFindAreaObjPlayerAll(const IUseAreaObj* pAreaUser, const char* pName
 
             bool isIn = areaObj->isInVolume(getPlayerPos(pPlayerHolder, j));
             found = areaObj;
+
             if (!isIn) {
                 found = nullptr;
                 break;

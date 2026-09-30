@@ -13,6 +13,7 @@ const char* ActorCameraSubTarget::getTargetName() const {
 
 void ActorCameraSubTarget::calcTrans(sead::Vector3f* pTrans) const {
     pTrans->set(getTrans(mActor));
+
     if (mOffset) {
         sead::Vector3f side;
         sead::Vector3f up;

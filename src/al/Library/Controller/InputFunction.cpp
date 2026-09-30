@@ -36,6 +36,7 @@ inline sead::ControllerBase* getController(s32 port) {
 
 inline NpadController* tryGetNpadController(s32 port) {
     sead::ControllerBase* controller = getControllerDirect(port);
+
     if (isValidReplayController(port)) {
         controller = sead::DynamicCast<ReplayController>(controller)->getController();
     }
@@ -242,16 +243,19 @@ const sead::Vector2f& getRightStick(s32 port) {
  */
 bool isSameNpadId(u32 npadId, s32 playerIndex) {
     s32 port = getPlayerControllerPort(playerIndex);
+
     if (port < 0) {
         return false;
     }
 
     NpadController* npad = tryGetNpadController(port);
+
     if (!npad) {
         return false;
     }
 
     s32 id = npad->getNpadId();
+
     if (npadId == 0x20 && id == 8) {
         return true;
     }
@@ -1465,6 +1469,7 @@ bool isPadHoldAnyABXY(s32 port) {
 void getPadCrossDir(sead::Vector2f* pDir, s32 port) {
     pDir->x = 0.0f;
     pDir->y = 0.0f;
+
     if (isPadHoldUp(port)) {
         pDir->y = 1.0f;
     }
@@ -1490,6 +1495,7 @@ void getPadCrossDir(sead::Vector2f* pDir, s32 port) {
 void getPadCrossDirSideways(sead::Vector2f* pDir, s32 port) {
     pDir->x = 0.0f;
     pDir->y = 0.0f;
+
     if (isPadHoldUp(port)) {
         pDir->x = -1.0f;
     }
@@ -1763,6 +1769,7 @@ s32 getPadAccelerationDeviceNum(s32 port) {
  */
 bool tryGetPadAcceleration(sead::Vector3f* pAcceleration, s32 port, s32 index) {
     sead::Controller* controller = sead::ControllerMgr::instance()->getController(port);
+
     if (!controller || !controller->isConnected()) {
         pAcceleration->set(0.0f, 0.0f, 0.0f);
         return false;
@@ -1770,6 +1777,7 @@ bool tryGetPadAcceleration(sead::Vector3f* pAcceleration, s32 port, s32 index) {
 
     controller = sead::ControllerMgr::instance()->getController(port);
     auto* addon = controller->getAddonByOrderAs<sead::AccelerometerAddon*>(index);
+
     if (!addon) {
         return false;
     }
@@ -1789,6 +1797,7 @@ bool tryGetPadAcceleration(sead::Vector3f* pAcceleration, s32 port, s32 index) {
 bool tryGetPadAccerationAndTimeDelta(sead::Vector3f* pAcceleration, nn::TimeSpanType* pDeltaTime,
                                      s32 port, s32 index) {
     sead::Controller* controller = sead::ControllerMgr::instance()->getController(port);
+
     if (!controller || !controller->isConnected()) {
         pAcceleration->set(0.0f, 0.0f, 0.0f);
         return false;
@@ -1796,6 +1805,7 @@ bool tryGetPadAccerationAndTimeDelta(sead::Vector3f* pAcceleration, nn::TimeSpan
 
     controller = sead::ControllerMgr::instance()->getController(port);
     auto* addon = controller->getAddonByOrderAs<JoyPadAccelerometerAddon*>(index);
+
     if (!addon) {
         return false;
     }
@@ -1814,6 +1824,7 @@ bool tryGetPadAccerationAndTimeDelta(sead::Vector3f* pAcceleration, nn::TimeSpan
  */
 bool isShakePadAcceleration(f32 threshold, s32 port, s32 index) {
     sead::Vector3f acceleration = {0.0f, 0.0f, 0.0f};
+
     if (!tryGetPadAcceleration(&acceleration, port, index)) {
         return false;
     }
@@ -1887,6 +1898,7 @@ bool isPadWaitingConnect(s32 port) {
 bool isSingleJoyConOnly() {
     for (u32 i = 0; i < 4; i++) {
         sead::Controller* controller = sead::ControllerMgr::instance()->getController(i);
+
         if (!controller || !controller->isConnected()) {
             continue;
         }
@@ -1911,6 +1923,7 @@ bool isSingleJoyConOnly() {
  */
 bool isPadConnected(s32 port) {
     sead::Controller* controller = sead::ControllerMgr::instance()->getController(port);
+
     if (!controller) {
         return false;
     }
@@ -2004,9 +2017,11 @@ bool tryGetPadPose(sead::Vector3f* pSide, sead::Vector3f* pUp, sead::Vector3f* p
 bool getPadPose(sead::Vector3f* pSide, sead::Vector3f* pUp, sead::Vector3f* pFront, s32 port,
                 s32 index) {
     PadGyroAddon* addon = tryGetGyroAddon(port, index);
+
     if (addon && addon->isStatusOk()) {
         addon->getPose(pSide, pUp, pFront);
         bool isValid = true;
+
         if (pSide && isNearZero(*pSide)) {
             pSide->set(sead::Vector3f::ex);
             isValid = false;
@@ -2052,9 +2067,11 @@ bool getPadPose(sead::Vector3f* pSide, sead::Vector3f* pUp, sead::Vector3f* pFro
 bool getPadSDKPose(sead::Vector3f* pSide, sead::Vector3f* pUp, sead::Vector3f* pFront, s32 port,
                    s32 index) {
     PadGyroAddon* addon = tryGetGyroAddon(port, index);
+
     if (addon && addon->isStatusOk()) {
         addon->getSDKPose(pSide, pUp, pFront);
         bool isValid = true;
+
         if (pSide && isNearZero(*pSide)) {
             pSide->set(sead::Vector3f::ex);
             isValid = false;
@@ -2132,6 +2149,7 @@ bool tryGetPadPoseMtx(sead::Matrix33f* pMtx, s32 port, s32 index) {
     sead::Vector3f side = sead::Vector3f::ex;
     sead::Vector3f up = sead::Vector3f::ey;
     sead::Vector3f front = sead::Vector3f::ez;
+
     if (!getPadPose(&side, &up, &front, port, index)) {
         return false;
     }
@@ -2154,6 +2172,7 @@ bool tryGetPadPoseMtx(sead::Matrix34f* pMtx, s32 port, s32 index) {
     sead::Vector3f side = sead::Vector3f::ex;
     sead::Vector3f up = sead::Vector3f::ey;
     sead::Vector3f front = sead::Vector3f::ez;
+
     if (!getPadPose(&side, &up, &front, port, index)) {
         return false;
     }
@@ -2172,6 +2191,7 @@ bool tryGetPadPoseMtx(sead::Matrix34f* pMtx, s32 port, s32 index) {
  */
 void getPadPoseRadian(sead::Vector3f* pAngle, s32 port, s32 index) {
     PadGyroAddon* addon = tryGetGyroAddon(port, index);
+
     if (addon && addon->isStatusOk()) {
         pAngle->set(addon->getAngle());
         *pAngle *= sead::Mathf::pi2();
@@ -2203,6 +2223,7 @@ void getPadSDKPoseMtx(sead::Matrix34f* pMtx, s32 port, s32 index) {
  */
 void getPadAngularVelocity(sead::Vector3f* pVelocity, s32 port, s32 index) {
     PadGyroAddon* addon = tryGetGyroAddon(port, index);
+
     if (addon && addon->isStatusOk()) {
         pVelocity->set(addon->getAngularVelocity());
     }
@@ -2331,6 +2352,7 @@ bool tryGetPadColor(sead::Color4f* pMainLeft, sead::Color4f* pSubLeft, sead::Col
     }
 
     NpadController* npad = tryGetNpadController(port);
+
     if (!npad || !npad->isValidNpadId()) {
         return false;
     }
@@ -2338,6 +2360,7 @@ bool tryGetPadColor(sead::Color4f* pMainLeft, sead::Color4f* pSubLeft, sead::Col
     nn::hid::NpadControllerColor colorLeft;
     nn::hid::NpadControllerColor colorRight;
     u32 npadId = npad->getNpadId();
+
     if (nn::hid::GetNpadControllerColor(&colorLeft, &colorRight, npadId).IsFailure()) {
         return false;
     }
@@ -2365,6 +2388,7 @@ void setPadDisconnect(s32 port) {}
  */
 bool isEitherPadHoldA() {
     sead::ControllerMgr* mgr = sead::ControllerMgr::instance();
+
     if (mgr->getControllerUnsafe(0)->isHold(1 << 0) ||
         mgr->getControllerUnsafe(1)->isHold(1 << 0) ||
         mgr->getControllerUnsafe(2)->isHold(1 << 0)) {
@@ -2380,6 +2404,7 @@ bool isEitherPadHoldA() {
  */
 bool isEitherPadHoldB() {
     sead::ControllerMgr* mgr = sead::ControllerMgr::instance();
+
     if (mgr->getControllerUnsafe(0)->isHold(1 << 1) ||
         mgr->getControllerUnsafe(1)->isHold(1 << 1) ||
         mgr->getControllerUnsafe(2)->isHold(1 << 1)) {
@@ -2396,6 +2421,7 @@ bool isEitherPadHoldB() {
  */
 bool isEitherPadTrigger(sead::Controller::PadMask mask) {
     sead::ControllerMgr* mgr = sead::ControllerMgr::instance();
+
     if (mgr->getControllerUnsafe(0)->isTrig(mask) ||
         mgr->getControllerUnsafe(1)->isTrig(mask) ||
         mgr->getControllerUnsafe(2)->isTrig(mask)) {

@@ -15,6 +15,7 @@ ExecutorListActorExecuteBase::ExecutorListActorExecuteBase(const char* pListName
                                                            const char* pGroupName)
     : ExecutorListBase(pListName, pGroupName), mExecutorNumMax(capacity) {
     mExecutors = new ExecutorActorExecuteBase*[capacity];
+
     for (s32 i = 0; i < mExecutorNumMax; i++) {
         mExecutors[i] = nullptr;
     }
@@ -27,6 +28,7 @@ ExecutorListActorExecuteBase::ExecutorListActorExecuteBase(const char* pListName
 void ExecutorListActorExecuteBase::registerActor(LiveActor* pActor) {
     for (s32 i = 0; i < mExecutorNum; i++) {
         ExecutorActorExecuteBase* executor = mExecutors[i];
+
         if (isEqualString(executor->mName, pActor->getName())) {
             executor->registerActor(pActor);
             return;

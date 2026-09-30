@@ -113,6 +113,7 @@ void ScreenCapture::drawCaptureImage(agl::DrawContext* pDrawContext,
     sead::Vector2f scale(pRenderBuffer->getVirtualSize().x / texture->getWidth(0),
                          pRenderBuffer->getVirtualSize().y / texture->getHeight(0));
     sampler.applyTextureData(*mTextureData);
+
     if (mBlurFilter && mBlurFilter->isEnable()) {
         mBlurFilter->draw(pDrawContext, *pRenderBuffer, sampler);
     } else {

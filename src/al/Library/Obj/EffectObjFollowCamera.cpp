@@ -41,6 +41,7 @@ void EffectObjFollowCamera::init(const ActorInitInfo& rInfo) {
     invalidateClipping(this);
     setEffectFollowMtxPtr(this, "Wait", &mBaseMtx);
     initNerve(this, &NrvEffectObjFollowCameraWait, 0);
+
     if (listenStageSwitchOnOffAppear(
             this, EffectObjFollowCameraFunctor(this, &EffectObjFollowCamera::startAppear),
             EffectObjFollowCameraFunctor(this, &EffectObjFollowCamera::startDisappear))) {

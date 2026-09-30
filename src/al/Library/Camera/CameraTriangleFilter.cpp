@@ -10,6 +10,7 @@ namespace al {
 
 static bool isHiddenHostTriangle(const Triangle& rTriangle) {
     const CollisionParts* parts = rTriangle.mCollisionParts;
+
     if (!parts->mSensor) {
         return false;
     }

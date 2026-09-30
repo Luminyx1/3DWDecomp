@@ -81,9 +81,11 @@ s32 ByamlStringTableIter::findStringIndex(const char* pStr) const {
     const u32* table = getAddressTable();
     s32 lower = 0;
     s32 upper = getSize();
+
     while (lower < upper) {
         s32 mid = (lower + upper) / 2;
         s32 result = std::strcmp(pStr, reinterpret_cast<const char*>(&mData[table[mid]]));
+
         if (result == 0) {
             return mid;
         }
@@ -210,8 +212,10 @@ bool verifiByaml(const u8* pData) {
 
     u32 hashKeyEnd = 0;
     u32 hashKeyOffset = header[1];
+
     if (hashKeyOffset) {
         const u8* table = &pData[hashKeyOffset];
+
         if (!verifiByamlStringTable(table)) {
             return false;
         }
@@ -222,8 +226,10 @@ bool verifiByaml(const u8* pData) {
 
     u32 stringEnd = 0;
     u32 stringOffset = header[2];
+
     if (stringOffset) {
         const u8* table = &pData[stringOffset];
+
         if (!verifiByamlStringTable(table)) {
             return false;
         }
@@ -233,6 +239,7 @@ bool verifiByaml(const u8* pData) {
     }
 
     u32 dataOffset = header[3];
+
     if ((hashKeyOffset || stringOffset) && !dataOffset) {
         return false;
     }
@@ -269,11 +276,13 @@ bool verifiByamlStringTable(const u8* pData) {
     const u32* addressTable = reinterpret_cast<const u32*>(pData + 4);
 
     u32 typeAndSize = *reinterpret_cast<const u32*>(pData);
+
     if ((typeAndSize & 0xff) != 0xc2) {
         return false;
     }
 
     s32 size = typeAndSize >> 8;
+
     if (size < 1) {
         return false;
     }
@@ -291,6 +300,7 @@ bool verifiByamlStringTable(const u8* pData) {
     }
 
     u32 firstString = size * 4 + 8;
+
     if (addressTable[0] != firstString) {
         return false;
     }
@@ -298,6 +308,7 @@ bool verifiByamlStringTable(const u8* pData) {
     for (s32 i = 0; i < size - 1; i++) {
         const char* str = reinterpret_cast<const char*>(&pData[addressTable[i]]);
         const char* next = reinterpret_cast<const char*>(&pData[addressTable[i + 1]]);
+
         if (std::strcmp(str, next) > 0) {
             return false;
         }
@@ -378,6 +389,7 @@ bool ByamlHashIter::getDataByKey(ByamlData* pData, s32 key) const {
     }
 
     const ByamlHashPair* pair = findPair(key);
+
     if (!pair) {
         return false;
     }
@@ -393,16 +405,19 @@ bool ByamlHashIter::getDataByKey(ByamlData* pData, s32 key) const {
  */
 const ByamlHashPair* ByamlHashIter::findPair(s32 key) const {
     const ByamlHashPair* table = getPairTable();
+
     if (!mData) {
         return nullptr;
     }
 
     s32 lower = 0;
     s32 upper = getSize();
+
     while (lower < upper) {
         s32 mid = (lower + upper) / 2;
         const ByamlHashPair* pair = &table[mid];
         s32 result = key - pair->getKey();
+
         if (result == 0) {
             return pair;
         }

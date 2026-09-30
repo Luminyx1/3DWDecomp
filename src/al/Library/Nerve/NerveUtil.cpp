@@ -362,11 +362,13 @@ namespace al {
     f32 calcNerveJumpValue(const IUseNerve* pUser, s32 riseSteps, s32 holdSteps, s32 fallSteps,
                            f32 height) {
         s32 step = getNerveStep(pUser);
+
         if (step <= riseSteps) {
             return calcNerveEaseOutRate(pUser, riseSteps) * height;
         }
 
         s32 fallStart = holdSteps + riseSteps;
+
         if (step <= fallStart) {
             return height;
         }

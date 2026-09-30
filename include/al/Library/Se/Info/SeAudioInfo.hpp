@@ -16,12 +16,14 @@ public:
     static SeMaterialSettingInfo* createInfo(const ByamlIter& rIter) {
         SeMaterialSettingInfo* info = new SeMaterialSettingInfo;
         rIter.tryGetStringByKey(&info->mName, "Name");
+
         if (!rIter.tryGetStringByKey(&info->mResourceName, "ResourceName")) {
             return nullptr;
         }
 
         u32 soundId = alSoundNameUtil::getSoundId(info->mResourceName, false);
         info->mSoundId = soundId;
+
         if (AudioConst::SOUND_ID_INVALID == soundId) {
             return nullptr;
         }

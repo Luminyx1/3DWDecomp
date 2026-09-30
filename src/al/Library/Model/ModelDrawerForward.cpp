@@ -40,6 +40,7 @@ void ModelDrawerForward::createTable() {
 
     if (mIsAssignShader) {
         s32 meshNum = 0;
+
         for (s32 i = 0; i < modelObj->GetNumShapes(); i++) {
             if (alModelFunction::isShaderAssignForward(modelObj, i) ||
                 alModelFunction::isShaderIndirect(
@@ -54,6 +55,7 @@ void ModelDrawerForward::createTable() {
 
         mMeshDrawerTable = new MeshDrawerTable;
         mMeshDrawerTable->allocBuffer(meshNum, nullptr);
+
         for (s32 i = 0; i < modelObj->GetNumShapes(); i++) {
             if (alModelFunction::isShaderAssignForward(modelObj, i) ||
                 alModelFunction::isShaderIndirect(
@@ -72,6 +74,7 @@ void ModelDrawerForward::createTable() {
         s32 modelNum = mModelNumMax;
         auto* table = new MeshDrawerTable;
         table->allocBuffer(modelObj->GetNumShapes(), nullptr);
+
         for (s32 i = 0; i < modelObj->GetNumShapes(); i++) {
             const nn::g3d::ShapeObj* shape = modelObj->GetShape(i);
             const nn::g3d::MaterialObj* material =
@@ -81,6 +84,7 @@ void ModelDrawerForward::createTable() {
             nn::g3d::ResShadingModel* shadingModel =
                 ShaderHolder::sInstance->getShadingModel(shaderAssign->GetShadingModelName());
             nn::g3d::ShaderSelector* selector;
+
             if (alModelFunction::isShaderAssignForward(modelObj, i)) {
                 const char* optionNames[] = {"cSkyColor0Type", "cExposureConnect"};
                 const char* optionValues[] = {"1", "0"};
@@ -134,8 +138,10 @@ void ModelDrawerForward::draw() const {
     for (s32 i = 0; i < mModelNum; i++) {
         SimpleModelG3D* model = mModels[i]->getModelG3D();
         model->setModelAdditionalInfo(additionalInfo);
+
         if (!model->mIsLodDisabled) {
             s32 updateCount = mGraphicsSystemInfo->mDrawEnvUpdateCount;
+
             if (model->mLodUpdateCount != updateCount) {
                 model->updateLod(mGraphicsSystemInfo->mDrawCameraPos, updateCount);
             }
@@ -144,6 +150,7 @@ void ModelDrawerForward::draw() const {
 
     for (s32 i = 0; i < mMeshDrawerTable->size(); i++) {
         MeshDrawer* meshDrawer = (*mMeshDrawerTable)[i];
+
         if (meshDrawer->isExistDrawMesh()) {
             additionalInfo.activateModelLightTexture(meshDrawer->getMaterialObj()->GetResource());
             meshDrawer->draw(&mGraphicsSystemInfo->mViewVolume, 0, &additionalInfo);

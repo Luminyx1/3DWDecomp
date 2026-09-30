@@ -93,6 +93,7 @@ bool ParamRequestInterp::isRequested() const {
  */
 bool ParamRequestInterp::requestParam(s32 priority, s32 step, const IUseRequestParam& rParam) {
     s32 requestStep = step > 1 ? step : 1;
+
     if (mIsFirstRequest) {
         return requestParamDirect_(priority, rParam);
     }
@@ -108,6 +109,7 @@ bool ParamRequestInterp::requestParam(s32 priority, s32 step, const IUseRequestP
 
     if (mPriority == priority) {
         bool isSamePriorityRequested = true;
+
         if (!mIsSamePriorityRequested) {
             isSamePriorityRequested = false;
             mIsRequested = true;
@@ -142,6 +144,7 @@ bool ParamRequestInterp::requestParamDirect_(s32 priority, const IUseRequestPara
 
     if (mPriority == priority) {
         bool isSamePriorityRequested = true;
+
         if (!mIsSamePriorityRequested) {
             isSamePriorityRequested = false;
             mIsRequested = true;
@@ -168,6 +171,7 @@ void ParamRequestInterp::updateInterp() {
 
     s32 step = mStep - 1;
     mStep = step >= 0 ? step : -1;
+
     if (mStep < 0) {
         mPriority = -2;
         return;
@@ -175,6 +179,7 @@ void ParamRequestInterp::updateInterp() {
 
     f32 rate = calcRate();
     mCurrentParam->copyInterp(*mStartParam, *mEndParam, rate);
+
     if (mIsEndInit && mIsFirstRequest) {
         mIsFirstRequest = false;
     }

@@ -26,6 +26,7 @@ void FlashingCtrl::movement() {
     }
 
     mTimer--;
+
     if (mTimer <= 0 || isClipped(mActor) || isDead(mActor)) {
         end();
         return;
@@ -42,6 +43,7 @@ void FlashingCtrl::movement() {
 void FlashingCtrl::end() {
     mIsEnded = true;
     mTimer = 0;
+
     if (mIsHideModel && !isDead(mActor) && !isClipped(mActor) && isHideModel(mActor) &&
         isHideModel(mActor)) {
         showModel(mActor);
@@ -70,6 +72,7 @@ void FlashingCtrl::updateFlashing() {
 
     bool isOn = isNowOn();
     bool isHidden = isHideModel(mActor);
+
     if (isOn) {
         if (!isHidden) {
             hideModel(mActor);

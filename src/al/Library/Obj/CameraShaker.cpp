@@ -39,6 +39,7 @@ void CameraShaker::update() {
 
     const ShakeParam& param = sShakeParams[mIndex];
     s32 steps = param.steps;
+
     if (steps <= mStep) {
         mStep = -1;
         mOffset = {0.0f, 0.0f};
@@ -74,6 +75,7 @@ void CameraShaker::startShake(s32 index) {
  */
 void CameraShaker::startShakeByString(const char* pName) {
     s32 index;
+
     if (isEqualString("微弱", pName)) {
         index = 0;
     } else if (isEqualString("弱", pName)) {

@@ -37,6 +37,7 @@ void PadDataArcReader::readResource(const char* pResourceName) {
     mDataFrames = static_cast<PadDataPack*>(resource->getOtherFile(fileName, nullptr));
     checkEnd();
     PadDataPack* frame = mDataFrames;
+
     while (frame->trig != 0xffffffff) {
         frame++;
     }
@@ -64,6 +65,7 @@ void PadDataArcReader::read(PadDataPack* pFrameData) {
 
     const u32* src = reinterpret_cast<const u32*>(&mDataFrames[mCursorFrame++]);
     u32* dst = reinterpret_cast<u32*>(pFrameData);
+
     for (s32 i = 0; i < 6; i++) {
         dst[i] = sead::Endian::swapU32(src[i]);
     }

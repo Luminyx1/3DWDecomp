@@ -47,6 +47,7 @@ bool tryInitAccount() {
     }
 
     nn::account::GetUserId(&sAccountInfo.mUid, sAccountInfo.mUserHandle);
+
     if (!sAccountInfo.mUid.IsValid()) {
         s32 count = 0;
         nn::account::Uid uids[8];

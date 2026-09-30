@@ -112,6 +112,7 @@ void createSequenceHeap() {
     addResourceCategory("Sequence", 0x10, getMemorySystem()->getSequenceHeap());
     setCurrentCategoryName("Sequence");
     clearFileLoaderEntry();
+
     if (AudioResourceDirector* director = getMemorySystem()->getAudioResourceDirector()) {
         alAudioHeapFunction::createAudioResourceHeapLayer(director, "Sequence");
     }
@@ -122,6 +123,7 @@ void createSequenceHeap() {
  */
 void freeAllSequenceHeap() {
     removeResourceCategory("Sequence");
+
     if (AudioResourceDirector* director = getMemorySystem()->getAudioResourceDirector()) {
         alAudioHeapFunction::destroyAudioResourceHeapLayer(director, "Sequence");
     }
@@ -130,6 +132,7 @@ void freeAllSequenceHeap() {
     addResourceCategory("Sequence", 0x10, getMemorySystem()->getSequenceHeap());
     setCurrentCategoryName("Sequence");
     clearFileLoaderEntry();
+
     if (AudioResourceDirector* director = getMemorySystem()->getAudioResourceDirector()) {
         alAudioHeapFunction::createAudioResourceHeapLayer(director, "Sequence");
     }
@@ -168,6 +171,7 @@ void createSceneHeap(const char* pStageName) {
     }
 
     sead::ScopedCurrentHeapSetter setter(getSequenceHeap());
+
     if (getMemorySystem()->createSceneHeap(pStageName)) {
         addResourceCategory("Scene", 0x400, getMemorySystem()->getSceneResourceHeap());
         setCurrentCategoryName("Scene");
@@ -189,6 +193,7 @@ void createSceneResourceHeap(const char* pStageName) {
     addResourceCategory("Scene", 0x400, getMemorySystem()->getSceneResourceHeap());
     setCurrentCategoryName("Scene");
     clearFileLoaderEntry();
+
     if (AudioResourceDirector* director = getMemorySystem()->getAudioResourceDirector()) {
         alAudioHeapFunction::createAudioResourceHeapLayer(director, "Scene");
     }
@@ -209,6 +214,7 @@ bool isCreatedSceneResourceHeap() {
 void destroySceneHeap(bool removeCategory) {
     if (getMemorySystem()->isReallyFreeSceneResource(removeCategory)) {
         removeResourceCategory("Scene");
+
         if (AudioResourceDirector* director = getMemorySystem()->getAudioResourceDirector()) {
             alAudioHeapFunction::destroyAudioResourceHeapLayer(director, "Scene");
         }

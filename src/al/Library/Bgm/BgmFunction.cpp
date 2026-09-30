@@ -15,8 +15,10 @@ namespace alBgmFunction {
  */
 void printBgmLineInfoList(const al::BgmDataBase* pDataBase) {
     const al::AudioInfoList<al::BgmCombinedLineInfo>* combinedList = pDataBase->mCombinedLineInfoList;
+
     for (u32 i = 0; i < static_cast<u32>(combinedList->getInfoNum()); i++) {
         const al::AudioInfoList<al::BgmLineInfo>* lineList = combinedList->getInfo(i)->mLineInfoList;
+
         for (u32 j = 0; j < static_cast<u32>(lineList->getInfoNum()); j++) {
             lineList->tryGetInfo(j);
         }
@@ -29,6 +31,7 @@ void printBgmLineInfoList(const al::BgmDataBase* pDataBase) {
  */
 void printBgmPlayInfoList(const al::BgmDataBase* pDataBase) {
     const al::AudioInfoList<al::BgmPlayInfo>* playList = pDataBase->mPlayInfoList;
+
     for (u32 i = 0; i < static_cast<u32>(playList->getInfoNum()); i++) {
         playList->tryGetInfo(i);
     }
@@ -40,9 +43,11 @@ void printBgmPlayInfoList(const al::BgmDataBase* pDataBase) {
  */
 void printBgmResourceInfoList(const al::BgmDataBase* pDataBase) {
     const al::AudioInfoList<al::BgmResourceInfo>* resourceList = pDataBase->mResourceInfoList;
+
     for (u32 i = 0; i < static_cast<u32>(resourceList->getInfoNum()); i++) {
         const al::BgmResourceInfo* info = resourceList->tryGetInfo(i);
         const al::AudioInfoList<al::BgmResourceSuffixInfo>* suffixList = info->mResourceSuffixInfoList;
+
         if (suffixList != nullptr) {
             for (u32 j = 0; j < static_cast<u32>(suffixList->getInfoNum()); j++) {
                 suffixList->tryGetInfo(j);
@@ -50,6 +55,7 @@ void printBgmResourceInfoList(const al::BgmDataBase* pDataBase) {
         }
 
         const al::AudioInfoList<al::BgmEnableSituationInfo>* enableList = info->mEnableSituationInfoList;
+
         if (enableList != nullptr) {
             for (u32 j = 0; j < static_cast<u32>(enableList->getInfoNum()); j++) {
                 enableList->tryGetInfo(j);
@@ -57,6 +63,7 @@ void printBgmResourceInfoList(const al::BgmDataBase* pDataBase) {
         }
 
         const al::AudioInfoList<al::BgmStartTriggerSituationInfo>* triggerList = info->mStartTriggerSituationInfoList;
+
         if (triggerList != nullptr) {
             for (u32 j = 0; j < static_cast<u32>(triggerList->getInfoNum()); j++) {
                 triggerList->tryGetInfo(j);
@@ -71,8 +78,10 @@ void printBgmResourceInfoList(const al::BgmDataBase* pDataBase) {
  */
 void printBgmStageInfoList(const al::BgmDataBase* pDataBase) {
     const al::AudioInfoList<al::BgmStageInfo>* stageList = pDataBase->mStageInfoList;
+
     for (u32 i = 0; i < static_cast<u32>(stageList->getInfoNum()); i++) {
         const al::AudioInfoList<al::BgmStagePlayInfo>* playList = stageList->getInfo(i)->mStagePlayInfoList;
+
         for (u32 j = 0; j < static_cast<u32>(playList->getInfoNum()); j++) {
             playList->tryGetInfo(j);
         }
@@ -91,10 +100,13 @@ void printBgmSituationInfoList(const al::BgmDataBase* pDataBase) {}
  */
 void printBgmUserInfoList(const al::BgmDataBase* pDataBase) {
     const sead::PtrArray<al::BgmUserInfo>* userList = pDataBase->mUserInfoList;
+
     for (s32 i = 0; i < userList->size(); i++) {
         const sead::PtrArray<al::BgmActionInfo>* actionList = userList->unsafeAt(i)->mActionInfoList;
+
         for (s32 j = 0; j < actionList->size(); j++) {
             const al::AudioInfoList<al::BgmPlayInfoInAction>* playList = actionList->unsafeAt(j)->mPlayInfoList;
+
             if (playList == nullptr) {
                 continue;
             }
@@ -174,6 +186,7 @@ bool checkLoadIfWaveSound(const char* pName, al::SeadAudioPlayer* pPlayer) {
  */
 bool isPlayingBgmByUpperLayerAudioUser(const al::BgmDataBase* pDataBase, const char* pName) {
     const al::BgmPlayInfo* info = nullptr;
+
     if (pName != nullptr && pDataBase->mPlayInfoList != nullptr) {
         info = pDataBase->mPlayInfoList->tryFindInfo(pName);
     }

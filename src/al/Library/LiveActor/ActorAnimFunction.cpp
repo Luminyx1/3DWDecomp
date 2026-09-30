@@ -174,6 +174,7 @@ void copySklAnim(LiveActor* pActor, const LiveActor* pSrcActor) {
 
     if (getSkl(pActor)->getSklAnimBlendNum() > 1 && getSkl(pSrcActor)->getSklAnimBlendNum() > 1) {
         const AnimPlayerSkl* srcSkl = getSkl(pSrcActor);
+
         for (s32 i = 0; i < srcSkl->getSklAnimBlendNum(); i++) {
             if (getSkl(pActor)->isSklAnimPlaying(i) && getSkl(pSrcActor)->isSklAnimPlaying(i)) {
                 f32 weight = getSkl(pSrcActor)->getSklAnimBlendWeight(i);
@@ -466,8 +467,10 @@ void setSklAnimBlendWeightSixfold(LiveActor* pActor, f32 weight0, f32 weight1, f
 void setSklAnimBlendFrameAll(LiveActor* pActor, f32 frame, bool isSync) {
     AnimPlayerSkl* skl = getSkl(pActor);
     skl->setSklAnimFrame(0, frame, true);
+
     if (isSync) {
         f32 frameMax = skl->getSklAnimFrameMax(0);
+
         for (s32 i = 1; i < skl->getSklAnimBlendNum(); i++) {
             if (getSkl(pActor)->isSklAnimPlaying(i)) {
                 f32 value = frame / frameMax * skl->getSklAnimFrameMax(i);
@@ -492,8 +495,10 @@ void setSklAnimBlendFrameAll(LiveActor* pActor, f32 frame, bool isSync) {
 void setSklAnimBlendFrameRateAll(LiveActor* pActor, f32 frameRate, bool isSync) {
     AnimPlayerSkl* skl = getSkl(pActor);
     skl->setSklAnimFrameRate(0, frameRate);
+
     if (isSync) {
         f32 frameMax = skl->getSklAnimFrameMax(0);
+
         for (s32 i = 1; i < skl->getSklAnimBlendNum(); i++) {
             if (getSkl(pActor)->isSklAnimPlaying(i)) {
                 f32 value = frameRate / frameMax * skl->getSklAnimFrameMax(i);

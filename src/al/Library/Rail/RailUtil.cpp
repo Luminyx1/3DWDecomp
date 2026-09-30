@@ -96,6 +96,7 @@ bool isRailReachedGoal(const LiveActor* pActor) {
 bool moveRailLoop(const LiveActor* pActor, f32 speed) {
     f32 coord = getRailCoord(pActor);
     moveRail(pActor, speed);
+
     if (isRailReachedGoal(pActor)) {
         if (isRailGoingToEnd(pActor)) {
             setRailPosToCoord(pActor, (coord + speed) - getRailTotalLength(pActor));
@@ -152,6 +153,7 @@ bool isRailReachedNearGoal(const LiveActor* pActor, f32 goalCoord) {
 bool moveRailPause(const LiveActor* pActor, f32 speed) {
     bool isPaused = false;
     s32 index = getRailPartIndex(pActor);
+
     if ((index == 1 || index == 11 || index == 22) &&
         isRailReachedNearEndRailPoint(pActor, speed)) {
         if (isRailReachedNearGoal(pActor, speed)) {
@@ -215,6 +217,7 @@ bool moveSyncRailOffset(LiveActor* pActor, f32 speed, const sead::Vector3f& rOff
 bool moveSyncRailLoop(LiveActor* pActor, f32 speed) {
     bool isReachedGoal = moveRailLoop(pActor, speed);
     syncRailTrans(pActor);
+
     if (isReachedGoal) {
         resetPosition(pActor, false);
     }
@@ -263,11 +266,13 @@ void calcRailPointPos(sead::Vector3f* pPos, const LiveActor* pActor, s32 index) 
 f32 calcRailToGoalLength(const LiveActor* pActor) {
     const Rail* rail = getRail(pActor);
     f32 length = rail->getTotalLength();
+
     if (rail->isClosed()) {
         return length;
     }
 
     f32 coord = getRailCoord(pActor);
+
     if (isRailGoingToEnd(pActor)) {
         return length - coord;
     }
@@ -280,6 +285,7 @@ f32 calcRailPartRate(const LiveActor* pActor) {
     f32 partDistance;
     f32 length;
     f32 sectionLength = rail->getIncludedSectionLength(&partDistance, &length, getRailCoord(pActor));
+
     if (isRailGoingToEnd(pActor)) {
         return partDistance / sectionLength;
     }
@@ -292,6 +298,7 @@ f32 calcRailToNextRailPointLength(const LiveActor* pActor) {
     f32 length;
     f32 partDistance;
     rail->getIncludedSectionLength(&partDistance, &length, getRailCoord(pActor));
+
     if (isRailGoingToEnd(pActor)) {
         return length;
     }
@@ -304,6 +311,7 @@ f32 calcRailToPreviousRailPointLength(const LiveActor* pActor) {
     f32 length;
     f32 partDistance;
     rail->getIncludedSectionLength(&partDistance, &length, getRailCoord(pActor));
+
     if (isRailGoingToEnd(pActor)) {
         return partDistance;
     }
@@ -374,6 +382,7 @@ bool getRailPartAngleE(const LiveActor* pActor, s32 index, f32* pAngle) {
 f32 getRailPartRate(const LiveActor* pActor, s32 index, f32 coord) {
     f32 partLength = getRail(pActor)->getPartLength(index);
     s32 length = 0;
+
     for (s32 i = 0; i < index; i++) {
         length += getRail(pActor)->getPartLength(i);
     }

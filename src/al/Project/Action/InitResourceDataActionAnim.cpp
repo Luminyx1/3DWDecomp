@@ -26,10 +26,12 @@ static inline void loadActionAnimDataInfo(ActionAnimDataInfo* pData, const Byaml
                                           ActionAnimCtrlInfo* pCtrlInfo, const char* pAnimType,
                                           ActionAnimType actionAnimType) {
     ByamlIter iter;
+
     if (rParentIter.tryGetIterByKey(&iter, pAnimType)) {
         iter.tryGetStringByKey(&pData->actionName, "Name");
         iter.tryGetBoolByKey(&pData->isKeepAnim, "KeepAnim");
         iter.tryGetBoolByKey(&pData->isActionAnim, "ActionAnim");
+
         if (pData->isActionAnim) {
             pCtrlInfo->actionAnimType = actionAnimType;
         }
@@ -54,6 +56,7 @@ InitResourceDataActionAnim::InitResourceDataActionAnim(Resource* pResource,
 
         ByamlIter sklIter;
         s32 sklNum = 1;
+
         if (iterIndex.tryGetIterByKey(&sklIter, "SklAnim") && sklIter.isTypeArray()) {
             sklNum = sklIter.getSize();
         }
@@ -79,6 +82,7 @@ InitResourceDataActionAnim::InitResourceDataActionAnim(Resource* pResource,
                 sklIter.tryGetStringByKey(&sklData->actionName, "Name");
                 sklIter.tryGetBoolByKey(&sklData->isKeepAnim, "KeepAnim");
                 sklIter.tryGetBoolByKey(&sklData->isActionAnim, "ActionAnim");
+
                 if (sklData->isActionAnim) {
                     ctrlInfo->actionAnimType = ActionAnimType::Skl;
                 }

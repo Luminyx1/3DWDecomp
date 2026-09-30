@@ -95,8 +95,10 @@ void ConveyerStep::setTransByCoord(f32 coord, bool isForwards, bool isForceReset
     mConveyerKeyKeeper->calcPosAndQuat(getTransPtr(this), getQuatPtr(this), &index, newCoord);
     const char* keyHitReactionName = nullptr;
     const char* actionName = nullptr;
+
     if (index > -1) {
         const ConveyerKey& conveyerKey = mConveyerKeyKeeper->getConveyerKey(index);
+
         if (tryGetStringArg(&keyHitReactionName, *conveyerKey.mPlacementInfo,
                             "KeyHitReactionName") &&
             (!mKeyHitReactionName || !isEqualString(mKeyHitReactionName, keyHitReactionName))) {
@@ -111,6 +113,7 @@ void ConveyerStep::setTransByCoord(f32 coord, bool isForwards, bool isForceReset
 
     mKeyHitReactionName = keyHitReactionName;
     mActionName = actionName;
+
     if ((isForwards && newCoord < mCurrentCoord) || (!isForwards && newCoord > mCurrentCoord) ||
         isForceReset) {
         resetPosition(this, false);
@@ -118,6 +121,7 @@ void ConveyerStep::setTransByCoord(f32 coord, bool isForwards, bool isForceReset
 
     f32 totalMoveDistance = mConveyerKeyKeeper->getTotalMoveDistance();
     bool isHide = isHideModel(this);
+
     if (newCoord > totalMoveDistance) {
         if (!isHide) {
             if (isExistCollisionParts(this)) {

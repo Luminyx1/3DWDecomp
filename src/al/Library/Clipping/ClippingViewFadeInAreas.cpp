@@ -24,6 +24,7 @@ ClippingViewFadeInAreas::ClippingViewFadeInAreas(const char* pLinkName,
     AreaInitInfo areaInitInfo;
     s32 fadeTime = 30;
     tryGetArg(&fadeTime, rPlacementInfo, "FadeTime");
+
     if (fadeTime < 0) {
         fadeTime = 30;
     } else if (fadeTime == 0) {
@@ -40,6 +41,7 @@ ClippingViewFadeInAreas::ClippingViewFadeInAreas(const char* pLinkName,
     sead::Vector3f min = {FLT_MAX, FLT_MAX, FLT_MAX};
     sead::Vector3f max = {-FLT_MAX, -FLT_MAX, -FLT_MAX};
     bool isValidBox = true;
+
     for (s32 i = 0; i < num; i++) {
         PlacementInfo placementInfo;
         getLinksInfoByIndex(&placementInfo, rPlacementInfo, pLinkName, i);
@@ -63,12 +65,14 @@ ClippingViewFadeInAreas::ClippingViewFadeInAreas(const char* pLinkName,
         };
 
         const sead::Vector3f& scale = areaObj->mShape->mScale;
+
         for (s32 j = 0; j < 8; j++) {
             sead::Vector3f& corner = corners[j];
             corner.x *= scale.x;
             corner.y *= scale.y;
             corner.z *= scale.z;
             corner.setMul(areaObj->_28, corner);
+
             if (corner.x < min.x) {
                 min.x = corner.x;
             }
@@ -120,6 +124,7 @@ f32 ClippingViewFadeInAreas::updateClipping(const sead::Vector3f& rPos, bool isF
         }
 
         mFadeRate += mFadeStep;
+
         if (mFadeRate > 1.0f) {
             mFadeRate = 1.0f;
             return 1.0f;
@@ -134,6 +139,7 @@ f32 ClippingViewFadeInAreas::updateClipping(const sead::Vector3f& rPos, bool isF
     }
 
     mFadeRate -= mFadeStep;
+
     if (mFadeRate < 0.0f) {
         mFadeRate = 0.0f;
         return 0.0f;
@@ -154,6 +160,7 @@ ClipForceViewArea::ClipForceViewArea(const char* pLinkName, const PlacementInfo&
     AreaInitInfo areaInitInfo;
     s32 num = calcLinkChildNum(rPlacementInfo, pLinkName);
     createBuffer(num);
+
     for (s32 i = 0; i < num; i++) {
         PlacementInfo placementInfo;
         getLinksInfoByIndex(&placementInfo, rPlacementInfo, pLinkName, i);

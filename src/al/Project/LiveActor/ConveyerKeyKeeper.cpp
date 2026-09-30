@@ -54,6 +54,7 @@ void ConveyerKeyKeeper::init(const ActorInitInfo& rInfo) {
 
     PlacementInfo linkPlacementSource = *rInfo.mPlacementInfo;
     PlacementInfo linkPlacement;
+
     for (s32 i = 0; i < mConveyerKeyCount - 1; i++) {
         getLinksInfo(&linkPlacement, linkPlacementSource, "KeyMoveNext");
         initConveyerKey(&mConveyerKeys[i + 1], linkPlacement, mTrans, mMoveDirection);
@@ -61,6 +62,7 @@ void ConveyerKeyKeeper::init(const ActorInitInfo& rInfo) {
     }
 
     mTotalMoveDistance = 0.0f;
+
     for (s32 i = 1; i < mConveyerKeyCount; i++) {
         ConveyerKey* key = &mConveyerKeys[i - 1];
         ConveyerKey* nextKey = &mConveyerKeys[i];
@@ -112,6 +114,7 @@ void ConveyerKeyKeeper::calcPosAndQuat(sead::Vector3f* pPos, sead::Quatf* pQuat,
     }
 
     s32 keyIndex = 0;
+
     for (s32 i = 0; i < mConveyerKeyCount; i++) {
         if (getConveyerKey(i).mTotalMoveDistance > coord) {
             keyIndex = i;
@@ -122,6 +125,7 @@ void ConveyerKeyKeeper::calcPosAndQuat(sead::Vector3f* pPos, sead::Quatf* pQuat,
     sead::Vector3f moveDistanceVertical = sead::Vector3f::zero;
     sead::Quatf quat = sead::Quatf::unit;
     f32 moveDistance;
+
     if (keyIndex < 1) {
         const ConveyerKey& key = getConveyerKey(0);
         moveDistanceVertical.set(key.mMoveDistanceVertical);
@@ -134,6 +138,7 @@ void ConveyerKeyKeeper::calcPosAndQuat(sead::Vector3f* pPos, sead::Quatf* pQuat,
         sead::Vector3f keyVec = key.mMoveDistanceVertical;
         f32 totalMoveDistance = key.mTotalMoveDistance - prevKey.mTotalMoveDistance;
         f32 rate;
+
         if (isNearZero(totalMoveDistance)) {
             rate = 0.0f;
         } else {
@@ -171,6 +176,7 @@ void ConveyerKeyKeeper::calcPosAndQuat(sead::Vector3f* pPos, sead::Quatf* pQuat,
 void ConveyerKeyKeeper::calcPosAndQuatByKeyIndex(sead::Vector3f* pPos, sead::Quatf* pQuat,
                                                  s32 index) const {
     const ConveyerKey& key = getConveyerKey(index);
+
     if (pPos) {
         pPos->set(key.mMoveDistance * mMoveDirection + mTrans + key.mMoveDistanceVertical);
     }

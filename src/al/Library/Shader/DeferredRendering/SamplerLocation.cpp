@@ -292,6 +292,7 @@ void calcTanFovyHalf(sead::Vector2f* pTanFovyHalf, sead::Vector2f* pOffset, f32 
                      const sead::Vector2f& rProjOffset) {
     f32 tanY = sead::Mathf::tan(fovy * 0.5f);
     f32 tanX = tanY * aspect;
+
     if (pOffset) {
         pOffset->set(tanX * (rProjOffset.x + rProjOffset.x), tanY * (rProjOffset.y + rProjOffset.y));
     }

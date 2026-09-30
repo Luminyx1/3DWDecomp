@@ -28,6 +28,7 @@ ActionAnimCtrl* ActionAnimCtrl::tryCreate(LiveActor* pActor, const char* pArchiv
     }
 
     StringTmp<128> fileName;
+
     if (!tryGetActorInitFileName(&fileName, pActor, "ActionAnimCtrl", pSuffix) &&
         !tryGetActorAnimInitFileName(&fileName, pActor, "ActionAnimCtrl", pSuffix)) {
         createFileNameBySuffix(&fileName, "ActionAnimCtrl", pSuffix);
@@ -61,6 +62,7 @@ void ActionAnimCtrl::init(const char* pArchiveName, const char* pSuffix) {
     const ActionAnimCtrlInfo* srcInfo = dataActionAnim->getAnimInfos()[0];
     ActionAnimCtrlInfo* info = new ActionAnimCtrlInfo(srcInfo->sklDataCount);
     info->actionName = createStringIfInStack(archiveName);
+
     for (s32 i = 0; i < srcInfo->sklDataCount; i++) {
         info->sklDatas[i] = srcInfo->sklDatas[i];
     }
@@ -81,6 +83,7 @@ bool ActionAnimCtrl::start(const char* pActionName) {
     mAnimType = -1;
     ActionAnimCtrlInfo* info = findAnimInfo(pActionName);
     mPlayingInfo = info;
+
     if (!info) {
         return false;
     }
@@ -89,12 +92,14 @@ bool ActionAnimCtrl::start(const char* pActionName) {
 
     ActionAnimDataInfo* sklData = info->sklDatas;
     const char* sklAnimName = alActionFunction::getAnimName(info, sklData);
+
     if (isSklAnimExist(mParentActor, sklAnimName) &&
         !(sklData->isKeepAnim && isSklAnimPlaying(mParentActor, sklAnimName, 0))) {
         if (info->sklDataCount == 1) {
             bool isSameName = isEqualString(sklAnimName, info->actionName);
             LiveActor* actor = mParentActor;
             const char* animName = alActionFunction::getAnimName(info, info->sklDatas);
+
             if (isSameName) {
                 startSklAnim(actor, animName);
             } else {
@@ -102,6 +107,7 @@ bool ActionAnimCtrl::start(const char* pActionName) {
             }
         } else {
             const char* animNames[6] = {};
+
             for (s32 i = 0; i < info->sklDataCount; i++) {
                 animNames[i] = alActionFunction::getAnimName(info, &info->sklDatas[i]);
             }
@@ -129,6 +135,7 @@ bool ActionAnimCtrl::start(const char* pActionName) {
     if (isMtpAnimExist(mParentActor, mtpAnimName) &&
         !(info->mtpData.isKeepAnim && isMtpAnimPlaying(mParentActor, mtpAnimName))) {
         startMtpAnim(mParentActor, mtpAnimName);
+
         if (mAnimType == -1 && isEqualString(mtpAnimName, pActionName)) {
             mAnimType = static_cast<s32>(ActionAnimType::Mtp);
         }
@@ -137,6 +144,7 @@ bool ActionAnimCtrl::start(const char* pActionName) {
     if (isMclAnimExist(mParentActor, mclAnimName) &&
         !(info->mclData.isKeepAnim && isMclAnimPlaying(mParentActor, mclAnimName))) {
         startMclAnim(mParentActor, mclAnimName);
+
         if (mAnimType == -1 && isEqualString(mclAnimName, pActionName)) {
             mAnimType = static_cast<s32>(ActionAnimType::Mcl);
         }
@@ -145,6 +153,7 @@ bool ActionAnimCtrl::start(const char* pActionName) {
     if (isMtsAnimExist(mParentActor, mtsAnimName) &&
         !(info->mtsData.isKeepAnim && isMtsAnimPlaying(mParentActor, mtsAnimName))) {
         startMtsAnim(mParentActor, mtsAnimName);
+
         if (mAnimType == -1 && isEqualString(mtsAnimName, pActionName)) {
             mAnimType = static_cast<s32>(ActionAnimType::Mts);
         }
@@ -153,6 +162,7 @@ bool ActionAnimCtrl::start(const char* pActionName) {
     if (isVisAnimExist(mParentActor, visAnimName) &&
         !(info->visData.isKeepAnim && isVisAnimPlaying(mParentActor, visAnimName))) {
         startVisAnim(mParentActor, visAnimName);
+
         if (mAnimType == -1 && isEqualString(visAnimName, pActionName)) {
             mAnimType = static_cast<s32>(ActionAnimType::Vis);
         }
@@ -163,21 +173,25 @@ bool ActionAnimCtrl::start(const char* pActionName) {
 
 ActionAnimCtrlInfo* ActionAnimCtrl::findAnimInfo(const char* pActionName) const {
     s32 count = mInfoCount;
+
     if (count < 1) {
         return nullptr;
     }
 
     ActionAnimCtrlInfo* info = mInfos[0];
+
     if (strcmp(info->actionName, pActionName) == 0) {
         return info;
     }
 
     s32 lo = 1;
     s32 hi = count - 1;
+
     while (lo <= hi) {
         s32 mid = (lo + hi) >> 1;
         info = mInfos[mid];
         s32 result = strcmp(info->actionName, pActionName);
+
         if (result > 0) {
             hi = mid - 1;
         } else if (result < 0) {
@@ -200,6 +214,7 @@ f32 ActionAnimCtrl::getFrame() const {
 
 f32 ActionAnimCtrl::getActionFrameMax(const char* pActionName) const {
     ActionAnimCtrlInfo* info = findAnimInfo(pActionName);
+
     if (!info) {
         return alAnimFunction::getAllAnimFrameMax(mParentActor, pActionName, -1);
     }
@@ -208,27 +223,32 @@ f32 ActionAnimCtrl::getActionFrameMax(const char* pActionName) const {
     case ActionAnimType::None: {
         for (s32 i = 0; i < info->sklDataCount; i++) {
             const char* animName = alActionFunction::getAnimName(info, &info->sklDatas[i]);
+
             if (isSklAnimExist(mParentActor, animName)) {
                 return getSklAnimFrameMax(mParentActor, animName);
             }
         }
 
         const char* mclAnimName = alActionFunction::getAnimName(info, &info->mclData);
+
         if (isMclAnimExist(mParentActor, mclAnimName)) {
             return getMclAnimFrameMax(mParentActor, mclAnimName);
         }
 
         const char* mtpAnimName = alActionFunction::getAnimName(info, &info->mtpData);
+
         if (isMtpAnimExist(mParentActor, mtpAnimName)) {
             return getMtpAnimFrameMax(mParentActor, mtpAnimName);
         }
 
         const char* mtsAnimName = alActionFunction::getAnimName(info, &info->mtsData);
+
         if (isMtsAnimExist(mParentActor, mtsAnimName)) {
             return getMtsAnimFrameMax(mParentActor, mtsAnimName);
         }
 
         const char* visAnimName = alActionFunction::getAnimName(info, &info->visData);
+
         if (isVisAnimExist(mParentActor, visAnimName)) {
             return getVisAnimFrameMax(mParentActor, visAnimName);
         }
@@ -238,6 +258,7 @@ f32 ActionAnimCtrl::getActionFrameMax(const char* pActionName) const {
     case ActionAnimType::Skl:
         for (s32 i = 0; i < info->sklDataCount; i++) {
             const char* animName = alActionFunction::getAnimName(info, &info->sklDatas[i]);
+
             if (isSklAnimExist(mParentActor, animName)) {
                 return getSklAnimFrameMax(mParentActor, animName);
             }
@@ -284,6 +305,7 @@ bool ActionAnimCtrl::isExistAction(const char* pActionName) const {
 
 bool ActionAnimCtrl::isActionOneTime(const char* pActionName) const {
     ActionAnimCtrlInfo* info = findAnimInfo(pActionName);
+
     if (!info) {
         if (isSklAnimExist(mParentActor, pActionName)) {
             return isSklAnimOneTime(mParentActor, pActionName);
@@ -312,27 +334,32 @@ bool ActionAnimCtrl::isActionOneTime(const char* pActionName) const {
     case ActionAnimType::None: {
         if (info->sklDataCount != 0) {
             const char* sklAnimName = alActionFunction::getAnimName(info, info->sklDatas);
+
             if (isSklAnimExist(mParentActor, sklAnimName)) {
                 return isSklAnimOneTime(mParentActor, sklAnimName);
             }
         }
 
         const char* mtpAnimName = alActionFunction::getAnimName(info, &info->mtpData);
+
         if (isMtpAnimExist(mParentActor, mtpAnimName)) {
             return isMtpAnimOneTime(mParentActor, mtpAnimName);
         }
 
         const char* mclAnimName = alActionFunction::getAnimName(info, &info->mclData);
+
         if (isMclAnimExist(mParentActor, mclAnimName)) {
             return isMclAnimOneTime(mParentActor, mclAnimName);
         }
 
         const char* mtsAnimName = alActionFunction::getAnimName(info, &info->mtsData);
+
         if (isMtsAnimExist(mParentActor, mtsAnimName)) {
             return isMtsAnimOneTime(mParentActor, mtsAnimName);
         }
 
         const char* visAnimName = alActionFunction::getAnimName(info, &info->visData);
+
         if (isVisAnimExist(mParentActor, visAnimName)) {
             return isVisAnimOneTime(mParentActor, visAnimName);
         }

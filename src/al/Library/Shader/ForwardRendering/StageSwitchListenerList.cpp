@@ -15,6 +15,7 @@ StageSwitchListenerList::StageSwitchListenerList()
  */
 void StageSwitchListenerList::addListener(StageSwitchListener* pListener) {
     Node* node = new Node{pListener, nullptr};
+
     if (!mHead) {
         mHead = node;
         mTail = node;

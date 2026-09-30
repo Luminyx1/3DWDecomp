@@ -40,6 +40,7 @@ SwingMapParts::SwingMapParts(const char* pName) : LiveActor(pName) {}
  */
 void SwingMapParts::init(const ActorInitInfo& rInfo) {
     mSwingMovement = new SwingMovement(rInfo);
+
     if (mSwingMovement->isLeft()) {
         initNerveAction(this, "MoveLeft", &NrvSwingMapParts.collector, 0);
     } else {
@@ -53,6 +54,7 @@ void SwingMapParts::init(const ActorInitInfo& rInfo) {
     createChildStep(rInfo, this, true);
     tryGetArg(&mRotateAxis, rInfo, "RotateAxis");
     tryGetArg(&mIsFloorTouchStart, rInfo, "IsFloorTouchStart");
+
     if (mIsFloorTouchStart ||
         listenStageSwitchOnStart(this, FunctorV0M<SwingMapParts*, void (SwingMapParts::*)()>(
                                            this, &SwingMapParts::start))) {
@@ -126,6 +128,7 @@ void SwingMapParts::exeStandBy() {}
  */
 void SwingMapParts::exeMoveRight() {
     mSwingMovement->updateNerve();
+
     if (mSwingMovement->isStop()) {
         startNerveAction(this, "Stop");
     }
@@ -136,6 +139,7 @@ void SwingMapParts::exeMoveRight() {
  */
 void SwingMapParts::exeMoveLeft() {
     mSwingMovement->updateNerve();
+
     if (mSwingMovement->isStop()) {
         startNerveAction(this, "Stop");
     }
@@ -146,6 +150,7 @@ void SwingMapParts::exeMoveLeft() {
  */
 void SwingMapParts::exeStop() {
     mSwingMovement->updateNerve();
+
     if (mSwingMovement->isStop()) {
         return;
     }

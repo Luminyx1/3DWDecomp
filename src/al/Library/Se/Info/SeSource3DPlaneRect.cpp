@@ -38,6 +38,7 @@ const sead::Vector3f* SeSource3DPlaneRect::calcPosition(const sead::Vector3f& rL
     localPos.setMul(mInvMtx, rListenerPos);
     mPos.set(localPos.x, 0.0f, localPos.z);
     const sead::BoundBox2f* rect = mRect;
+
     if (mPos.x < rect->getMin().x) {
         mPos.x = rect->getMin().x;
     } else if (mPos.x > rect->getMax().x) {

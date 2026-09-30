@@ -19,18 +19,21 @@ SeEmitter::SeEmitter(AudioSystemInfo* pInfo, const SeEmitterInfo* pEmitterInfo, 
                      SeSourcePose* pPose, bool isUseModel)
     : mEmitterInfo(pEmitterInfo) {
     const sead::Matrix34f* mtx = nullptr;
+
     if (pEmitterInfo->mJointName != nullptr) {
         if (pModelKeeper != nullptr) {
             mtx = getJointMtxPtr(pModelKeeper, pEmitterInfo->mJointName);
         }
     } else {
         SeSourcePose3DMtxBase* mtxPose = sead::DynamicCast<SeSourcePose3DMtxBase>(pPose);
+
         if (mtxPose != nullptr) {
             mtx = mtxPose->get3DMtxPtr();
         }
     }
 
     const sead::Vector3f* offset = mEmitterInfo->mOffset;
+
     if (offset != nullptr) {
         if (mtx != nullptr) {
             pPose = new SeSourcePose3DMtxOffsetPtr(mtx, offset);
@@ -41,11 +44,13 @@ SeEmitter::SeEmitter(AudioSystemInfo* pInfo, const SeEmitterInfo* pEmitterInfo, 
 
     const SeSoundSourceInfo* sourceInfo = mEmitterInfo->mSoundSourceInfo;
     const char* sourceName = isUseModel ? "３Ｄ点音源" : "環境音源";
+
     if (sourceInfo != nullptr) {
         sourceName = sourceInfo->mName;
     }
 
     SeSource* source = nullptr;
+
     if (alSeFunction::isSoundSourceAmbient(sourceName)) {
         source = new SeSourceAmbient(pInfo);
     } else if (alSeFunction::isSoundSource3DPoint(sourceName)) {
@@ -55,12 +60,14 @@ SeEmitter::SeEmitter(AudioSystemInfo* pInfo, const SeEmitterInfo* pEmitterInfo, 
                                       &static_cast<const SeSoundSourceInfo3DSphere*>(sourceInfo)->mRadius, pInfo);
     } else if (alSeFunction::isSoundSource3DVector(sourceName)) {
         SeSourcePose3DMtxBase* mtxPose = sead::DynamicCast<SeSourcePose3DMtxBase>(pPose);
+
         if (sourceInfo != nullptr && mtxPose != nullptr) {
             source = new SeSource3DLine(
                 mtxPose, &static_cast<const SeSoundSourceInfo3DVector*>(sourceInfo)->mVector, pInfo);
         }
     } else if (alSeFunction::isSoundSource3DBox(sourceName)) {
         SeSourcePose3DMtxBase* mtxPose = sead::DynamicCast<SeSourcePose3DMtxBase>(pPose);
+
         if (sourceInfo != nullptr && mtxPose != nullptr) {
             source = new SeSource3DPlaneRect(mtxPose,
                                              reinterpret_cast<const sead::BoundBox2f*>(
@@ -69,12 +76,14 @@ SeEmitter::SeEmitter(AudioSystemInfo* pInfo, const SeEmitterInfo* pEmitterInfo, 
         }
     } else if (alSeFunction::isSoundSource3DRing(sourceName)) {
         SeSourcePose3DMtxBase* mtxPose = sead::DynamicCast<SeSourcePose3DMtxBase>(pPose);
+
         if (sourceInfo != nullptr && mtxPose != nullptr) {
             source =
                 new SeSource3DRing(mtxPose, &static_cast<const SeSoundSourceInfo3DRing*>(sourceInfo)->mRadius, pInfo);
         }
     } else if (alSeFunction::isSoundSource3DCircle(sourceName)) {
         SeSourcePose3DMtxBase* mtxPose = sead::DynamicCast<SeSourcePose3DMtxBase>(pPose);
+
         if (sourceInfo != nullptr && mtxPose != nullptr) {
             const SeSoundSourceInfo3DCircle* circleInfo = static_cast<const SeSoundSourceInfo3DCircle*>(sourceInfo);
             source = new SeSource3DCircle(mtxPose, &circleInfo->mRadius, pInfo, circleInfo->mIsCircleRotated);

@@ -63,8 +63,10 @@ void KeyMoveMovement::exeMove() {
 
     f32 rate = calcNerveRate(this, mTime);
     calcLerpKeyTrans(&mTrans, mKeyPoseKeeper, rate);
+
     if (isGreaterEqualStep(this, mTime)) {
         nextKeyPose(mKeyPoseKeeper);
+
         if (isStop(mKeyPoseKeeper)) {
             setNerve(this, &NrvKeyMoveMovementStop);
         } else {

@@ -13,6 +13,7 @@ SeResourceSpecificInfo* SeResourceSpecificInfo::createInfo(const ByamlIter& rIte
     rIter.tryGetStringByKey(&info->mName, "Name");
     u32 soundId = alSoundNameUtil::getSoundId(info->mName, false);
     info->mSoundId = soundId;
+
     if (AudioConst::SOUND_ID_INVALID == soundId) {
         return nullptr;
     }
@@ -62,6 +63,7 @@ SeResourceSpecificInfo* SeResourceSpecificInfo::createInfo(const ByamlIter& rIte
     }
 
     ByamlIter materialIter;
+
     if (rIter.tryGetIterByKey(&materialIter, "MaterialInfoList")) {
         info->mMaterialInfoList = createInfoList<SeMaterialSettingInfo>(materialIter);
     } else {

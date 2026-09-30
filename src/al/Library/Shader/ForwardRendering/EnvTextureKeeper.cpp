@@ -264,6 +264,7 @@ namespace alEnvTexFunction {
  */
 s32 calcRoughnessType(const nn::g3d::ResMaterial& rMaterial) {
     const nn::g3d::ResRenderInfo* renderInfo = rMaterial.FindRenderInfo("roughness_preset");
+
     if (renderInfo == nullptr) {
         return 4;
     }
@@ -295,6 +296,7 @@ s32 calcRefractType(const nn::g3d::ResMaterial& rMaterial,
  */
 s32 calcFresnelType(const nn::g3d::ResMaterial& rMaterial) {
     const nn::g3d::ResRenderInfo* renderInfo = rMaterial.FindRenderInfo("fresnel_curve");
+
     if (renderInfo == nullptr) {
         return 0;
     }
@@ -318,6 +320,7 @@ s32 calcThicknessType(const nn::g3d::ResMaterial& rMaterial,
     }
 
     const nn::g3d::ResRenderInfo* renderInfo = rMaterial.FindRenderInfo("thickness_curve");
+
     if (renderInfo == nullptr) {
         return 0;
     }
@@ -336,6 +339,7 @@ s32 calcThicknessType(const nn::g3d::ResMaterial& rMaterial,
  */
 s32 calcLightCategory(const nn::g3d::ResMaterial& rMaterial) {
     const nn::g3d::ResRenderInfo* renderInfo = rMaterial.FindRenderInfo("light_category");
+
     if (renderInfo == nullptr) {
         return -1;
     }
@@ -345,6 +349,7 @@ s32 calcLightCategory(const nn::g3d::ResMaterial& rMaterial) {
     }
 
     const char* category = renderInfo->GetString(0);
+
     if (al::isEqualString(category, "1")) {
         return 0;
     }

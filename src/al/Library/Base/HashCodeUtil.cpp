@@ -15,6 +15,7 @@ u32 calcHashCode(const char* pStr) {
     }
 
     u32 hashCode = 0;
+
     for (s32 i = 0; pStr[i] != '\0'; i++) {
         hashCode = (hashCode * 0x1f) + pStr[i];
     }
@@ -29,6 +30,7 @@ u32 calcHashCode(const char* pStr) {
  */
 u32 calcHashCodeLower(const char* pStr) {
     u32 hashCode = 0;
+
     for (s32 i = 0; pStr[i] != '\0'; i++) {
         hashCode = (hashCode * 0x1f) + tolower(pStr[i]);
     }

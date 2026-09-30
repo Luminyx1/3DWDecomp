@@ -93,6 +93,7 @@ bool Resource::loadPatchData() {
 bool Resource::isExistFile(const sead::SafeString& rFilePath) const {
     bool isExist = false;
     mDevice->tryIsExistFile(&isExist, rFilePath);
+
     if (isExist) {
         return true;
     }
@@ -131,6 +132,7 @@ u32 Resource::getSize() const {
  */
 u32 Resource::getEntryNum(const sead::SafeString& rDirectoryPath) const {
     sead::DirectoryHandle handle;
+
     if (!mDevice->tryOpenDirectory(&handle, rDirectoryPath)) {
         return 0;
     }
@@ -183,6 +185,7 @@ const u8* Resource::getByml(const sead::SafeString& rFilePath) const {
  */
 const void* Resource::getFile(const sead::SafeString& rFilePath) const {
     const Resource* resource = this;
+
     while (resource->mPatchRes && resource->mPatchRes->isExistFile(rFilePath)) {
         resource = resource->mPatchRes;
     }
@@ -199,6 +202,7 @@ const u8* Resource::tryGetByml(const sead::SafeString& rFilePath) const {
     StringTmp<0x80> filePathExt;
     filePathExt.copy(rFilePath);
     filePathExt.append(".byml");
+
     if (!isExistFile(filePathExt.cstr())) {
         return nullptr;
     }
@@ -227,6 +231,7 @@ const void* Resource::tryGetKcl(const sead::SafeString& rFilePath) const {
     StringTmp<0x80> filePathExt;
     filePathExt.copy(rFilePath);
     filePathExt.append(".kcl");
+
     if (!isExistFile(filePathExt.cstr())) {
         return nullptr;
     }
@@ -279,6 +284,7 @@ bool Resource::tryCreateResGraphicsFile(const sead::SafeString& rFilePath,
     }
 
     mResFile = nn::g3d::ResFile::ResCast(const_cast<void*>(getFile(rFilePath)));
+
     if (pTextureFile) {
         agl::g3d::ResFile::BindTexture(mResFile, pTextureFile);
     }

@@ -15,11 +15,13 @@ SeResourceInfo* SeResourceInfo::createInfo(const ByamlIter& rIter) {
     rIter.tryGetStringByKey(&info->mName, "Name");
     u32 soundId = alSoundNameUtil::getSoundId(info->mName, false);
     info->mSoundId = soundId;
+
     if (AudioConst::SOUND_ID_INVALID == soundId) {
         return nullptr;
     }
 
     const char* inputFunctionName = nullptr;
+
     if (rIter.tryGetStringByKey(&inputFunctionName, "InputFunctionName")) {
         info->mInputFunctionId = alSeDbFunction::convertInputFunctionNameToId(inputFunctionName);
     } else {
@@ -29,6 +31,7 @@ SeResourceInfo* SeResourceInfo::createInfo(const ByamlIter& rIter) {
     {
         ByamlIter pitchIter;
         InOutParam* pitch;
+
         if (rIter.tryGetIterByKey(&pitchIter, "Pitch")) {
             pitch = new InOutParam(0.0f, 0.0f, 1.0f, 1.0f);
             pitch->init(pitchIter);
@@ -42,6 +45,7 @@ SeResourceInfo* SeResourceInfo::createInfo(const ByamlIter& rIter) {
     {
         ByamlIter volumeIter;
         InOutParam* volume;
+
         if (rIter.tryGetIterByKey(&volumeIter, "Volume")) {
             volume = new InOutParam(0.0f, 0.0f, 1.0f, 1.0f);
             volume->init(volumeIter);
@@ -55,6 +59,7 @@ SeResourceInfo* SeResourceInfo::createInfo(const ByamlIter& rIter) {
     {
         ByamlIter tempoIter;
         InOutParam* tempo;
+
         if (rIter.tryGetIterByKey(&tempoIter, "Tempo")) {
             tempo = new InOutParam(0.0f, 0.0f, 1.0f, 1.0f);
             tempo->init(tempoIter);
@@ -92,6 +97,7 @@ SeResourceInfo* SeResourceInfo::createInfo(const ByamlIter& rIter) {
 SePlayInfo* SePlayInfo::createInfo(const ByamlIter& rIter) {
     SePlayInfo* info = new SePlayInfo;
     rIter.tryGetStringByKey(&info->mName, "Name");
+
     if (!rIter.tryGetBoolByKey(&info->mIsLoop, "IsLevel") && !rIter.tryGetBoolByKey(&info->mIsLoop, "IsLoop")) {
         info->mIsLoop = false;
     }
@@ -105,6 +111,7 @@ SePlayInfo* SePlayInfo::createInfo(const ByamlIter& rIter) {
     }
 
     ByamlIter resourceIter;
+
     if (!rIter.tryGetIterByKey(&resourceIter, "ResourceInfoList")) {
         return nullptr;
     }

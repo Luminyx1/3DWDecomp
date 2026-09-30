@@ -37,6 +37,7 @@ void calcNearestAreaObjEdgePos(sead::Vector3f* pOut, const AreaObj* pAreaObj,
     f32 sideDot = diff.dot(side);
     side *= sideDot;
     f32 sideDist = sead::Mathf::abs(sideDot);
+
     if (sideDist > scale.x * 500.0f) {
         setLength(&side, scale.x * 500.0f);
         isOutside = true;
@@ -45,6 +46,7 @@ void calcNearestAreaObjEdgePos(sead::Vector3f* pOut, const AreaObj* pAreaObj,
     f32 upDot = diff.dot(up);
     up *= upDot;
     f32 upDist = sead::Mathf::abs(upDot);
+
     if (upDist > scale.y * 500.0f) {
         setLength(&up, scale.y * 500.0f);
         isOutside = true;
@@ -53,10 +55,12 @@ void calcNearestAreaObjEdgePos(sead::Vector3f* pOut, const AreaObj* pAreaObj,
     f32 frontDot = diff.dot(front);
     front *= frontDot;
     f32 frontDist = sead::Mathf::abs(frontDot);
+
     if (frontDist > scale.z * 500.0f) {
         setLength(&front, scale.z * 500.0f);
     } else if (!isOutside) {
         s32 axis = sideDist > upDist ? (sideDist > frontDist ? 0 : 2) : (upDist > frontDist ? 1 : 2);
+
         switch (axis) {
         case 0:
             setLength(&side, scale.x * 500.0f);
@@ -99,12 +103,14 @@ AreaObj* tryFindAreaObjByName(const IUseAreaObj* pAreaUser, const char* pGroupNa
                               const char* pName) {
     AreaObjGroup* group = pAreaUser->getAreaObjDirector()->getAreaObjGroup(pGroupName);
     PlacementId placementId;
+
     if (!group) {
         return nullptr;
     }
 
     for (u32 i = 0; i < group->mNumAreas; i++) {
         AreaObj* areaObj = group->getAreaObj(i);
+
         if (tryGetPlacementID(&placementId, *areaObj->mPlacementInfo) &&
             strcmp(placementId.mPlacementID, pName) == 0) {
             return areaObj;

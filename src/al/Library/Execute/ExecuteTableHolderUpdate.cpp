@@ -45,6 +45,7 @@ void ExecuteTableHolderUpdate::init(const ExecuteSystemInitInfo& rInfo, const Ex
     mLists = new ExecutorListBase*[orderNum];
 
     s32 actorNum = 0;
+
     for (s32 i = 0; i < orderNum; i++) {
         if (isUpdateListActor(pOrders[i])) {
             actorNum++;
@@ -161,6 +162,7 @@ void ExecuteTableHolderUpdate::registerExecutorListAll(ExecutorListBase* pList) 
 void ExecuteTableHolderUpdate::registerActor(LiveActor* pActor, const char* pListName) {
     for (s32 i = 0; i < mActorListNum; i++) {
         ExecutorListActorExecuteBase* list = mActorLists[i];
+
         if (isEqualString(list->mListName, pListName)) {
             list->registerActor(pActor);
         }
@@ -175,6 +177,7 @@ void ExecuteTableHolderUpdate::registerActor(LiveActor* pActor, const char* pLis
 void ExecuteTableHolderUpdate::registerLayout(LayoutActor* pLayout, const char* pListName) {
     for (s32 i = 0; i < mLayoutListNum; i++) {
         ExecutorListLayoutUpdate* list = mLayoutLists[i];
+
         if (isEqualString(list->mListName, pListName)) {
             list->registerLayout(pLayout);
         }
@@ -189,8 +192,10 @@ void ExecuteTableHolderUpdate::registerLayout(LayoutActor* pLayout, const char* 
  */
 bool ExecuteTableHolderUpdate::tryRegisterUser(IUseExecutor* pUser, const char* pListName) {
     bool isRegistered = false;
+
     for (s32 i = 0; i < mUserListNum; i++) {
         ExecutorListIUseExecutorUpdate* list = mUserLists[i];
+
         if (isEqualString(list->mListName, pListName)) {
             list->registerUser(pUser);
             isRegistered = true;
@@ -209,8 +214,10 @@ bool ExecuteTableHolderUpdate::tryRegisterUser(IUseExecutor* pUser, const char* 
 bool ExecuteTableHolderUpdate::tryRegisterFunctor(const FunctorBase& rFunctor,
                                                   const char* pListName) {
     bool isRegistered = false;
+
     for (s32 i = 0; i < mFunctorListNum; i++) {
         ExecutorListFunctor* list = mFunctorLists[i];
+
         if (isEqualString(list->mListName, pListName)) {
             list->registerFunctor(rFunctor);
             isRegistered = true;
@@ -229,6 +236,7 @@ void ExecuteTableHolderUpdate::createExecutorListTable() {
     }
 
     mActiveListNum = 0;
+
     for (s32 i = 0; i < mListNum; i++) {
         if (mLists[i]->isActive()) {
             mActiveListNum++;
@@ -237,8 +245,10 @@ void ExecuteTableHolderUpdate::createExecutorListTable() {
 
     mActiveLists = new ExecutorListBase*[mActiveListNum];
     s32 index = 0;
+
     for (s32 i = 0; i < mListNum; i++) {
         ExecutorListBase* list = mLists[i];
+
         if (list->isActive()) {
             mActiveLists[index++] = list;
         }

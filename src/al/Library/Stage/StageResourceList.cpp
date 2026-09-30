@@ -49,6 +49,7 @@ static bool tryGetZoneListPlacementInfo(PlacementInfo* pOut, const char* pStageN
     StringTmp<128> archivePath;
     makeStageDataArchivePath(&archivePath, pStageName, scenarioNo, "Map", isOneResource);
     Resource* resource = findOrCreateResource(archivePath, nullptr);
+
     if (!resource) {
         return false;
     }
@@ -60,6 +61,7 @@ static bool tryGetZoneListPlacementInfo(PlacementInfo* pOut, const char* pStageN
 static s32 calcZoneNumRecursive(const char* pStageName, const char* pListName, s32 scenarioNo,
                                 bool isOneResource) {
     PlacementInfo listInfo;
+
     if (!tryGetZoneListPlacementInfo(&listInfo, pStageName, pListName, scenarioNo,
                                      isOneResource)) {
         return 0;
@@ -67,13 +69,16 @@ static s32 calcZoneNumRecursive(const char* pStageName, const char* pListName, s
 
     s32 num = getCountPlacementInfo(listInfo);
     s32 zoneNum = 0;
+
     for (s32 i = 0; i < num; i++) {
         PlacementInfo zoneInfo;
+
         if (!tryGetPlacementInfoByIndex(&zoneInfo, listInfo, i)) {
             continue;
         }
 
         const char* zoneName = nullptr;
+
         if (!tryGetObjectName(&zoneName, zoneInfo)) {
             continue;
         }
@@ -98,6 +103,7 @@ StageResourceList::StageResourceList(const char* pStageName, s32 scenarioNo,
     makeStageDataArchivePath(&archivePath, pStageName, scenarioNo, pResourceType,
                              mIsOneResource);
     bool isExist = isExistArchive(archivePath);
+
     if (!isExist && isEqualString(pResourceType, "Map")) {
         return;
     }
@@ -108,6 +114,7 @@ StageResourceList::StageResourceList(const char* pStageName, s32 scenarioNo,
     PlacementInfo zoneListInfo;
     StringTmp<256> mapFileName("%s%s", pStageName, "Map");
     s32 zoneNum = 0;
+
     if (tryGetPlacementInfo(&zoneListInfo, mapResource, mapFileName.cstr(), "ZoneList")) {
         zoneNum = getCountPlacementInfo(zoneListInfo);
     }
@@ -132,6 +139,7 @@ StageResourceList::StageResourceList(const char* pStageName, s32 scenarioNo,
         PlacementInfo zoneInfo;
         tryGetPlacementInfoByIndex(&zoneInfo, zoneListInfo, i);
         StageInfo* stageInfo = initZoneInfo(zoneInfo, scenarioNo, pResourceType, nullptr);
+
         if (stageInfo) {
             mStageInfos.pushBack(stageInfo);
         }
@@ -159,12 +167,14 @@ StageInfo* StageResourceList::initZoneInfo(PlacementInfo& rZoneInfo, s32 scenari
     getObjectName(&zoneName, rZoneInfo);
     makeStageDataArchivePath(&archivePath, zoneName, scenarioNo, pResourceType, mIsOneResource);
     StageInfo* stageInfo = nullptr;
+
     if (!isExistArchive(archivePath)) {
         return stageInfo;
     }
 
     Resource* resource = findOrCreateResource(archivePath, nullptr);
     const u8* byml = resource->tryGetByml(StringTmp<256>("%s%s", zoneName, pResourceType));
+
     if (!byml) {
         return nullptr;
     }
@@ -193,19 +203,23 @@ void StageResourceList::initZoneInfoRecursive(const char* pStageName, const char
                                               const char* pChildListName,
                                               PlacementInfo* pParentInfo) {
     PlacementInfo listInfo;
+
     if (!tryGetZoneListPlacementInfo(&listInfo, pStageName, pListName, scenarioNo,
                                      mIsOneResource)) {
         return;
     }
 
     s32 num = getCountPlacementInfo(listInfo);
+
     for (s32 i = 0; i < num; i++) {
         PlacementInfo zoneInfo;
+
         if (!tryGetPlacementInfoByIndex(&zoneInfo, listInfo, i)) {
             continue;
         }
 
         StageInfo* stageInfo = initZoneInfo(zoneInfo, scenarioNo, pResourceType, pParentInfo);
+
         if (!stageInfo) {
             continue;
         }
@@ -240,8 +254,10 @@ StageInfo* StageResourceList::getStageInfo(s32 index) const {
  */
 StageInfo* StageResourceList::findStageInfo(const char* pName) const {
     s32 num = mStageInfos.size();
+
     for (s32 i = 0; i < num; i++) {
         StageInfo* stageInfo = mStageInfos.at(i);
+
         if (isEqualString(stageInfo->mName, sead::SafeString(pName))) {
             return stageInfo;
         }

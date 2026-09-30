@@ -28,6 +28,7 @@ void ExecutorActorExecuteBase::createExecutorTable() {
     }
 
     mActors = new LiveActor*[mActorNumMax + 1];
+
     for (s32 i = 0; i <= mActorNumMax; i++) {
         mActors[i] = nullptr;
     }

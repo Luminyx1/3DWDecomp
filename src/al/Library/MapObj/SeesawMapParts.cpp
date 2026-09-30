@@ -63,6 +63,7 @@ void SeesawMapParts::init(const ActorInitInfo& rInfo) {
 bool SeesawMapParts::receiveMsg(const SensorMsg* pMsg, HitSensor* pOther, HitSensor* pSelf) {
     if (isMsgFloorTouch(pMsg)) {
         sead::Vector3f pos;
+
         if (isMySensor(pSelf, this)) {
             pos.set(getSensorPos(pOther));
         } else {
@@ -70,6 +71,7 @@ bool SeesawMapParts::receiveMsg(const SensorMsg* pMsg, HitSensor* pOther, HitSen
         }
 
         f32 weight = isMsgEnemyFloorTouch(pMsg) ? 0.9f : 1.0f;
+
         if (!isGreaterThanOrEqualToZero((pos - getTrans(this)).dot(mFront))) {
             weight = -weight;
         }
@@ -121,12 +123,14 @@ void SeesawMapParts::exeWait() {
     mRotateSpeed *= 0.95f;
     mRotateDegree += mRotateSpeed;
     f32 rotateSpeed = sead::Mathf::abs(mRotateSpeed);
+
     if (sead::Mathf::abs(mRotateDegree) > mMaxDegree) {
         if (isSameSign(mRotateSpeed, mRotateDegree)) {
             mRotateSpeed *= -0.5f;
         }
 
         mRotateDegree = sead::Mathf::clamp(mRotateDegree, -mMaxDegree, mMaxDegree);
+
         if (rotateSpeed > 0.2f) {
             tryStartSeWithParam(this, "Stop", rotateSpeed, nullptr);
         }

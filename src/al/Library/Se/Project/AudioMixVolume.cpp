@@ -15,6 +15,7 @@ void AudioMixVolume::moveTo(f32 volumeDb, s32 frames) {
     mTargetRatio = calcDecibelToRatio(volumeDb);
     mCurRatio = calcDecibelToRatio(mVolumeDb);
     mRemainFrames = frames;
+
     if (frames > 0) {
         mStep = (mTargetRatio - mCurRatio) / mRemainFrames;
     } else {
@@ -31,6 +32,7 @@ void AudioMixVolume::update() {
     }
 
     mRemainFrames += -1.0f;
+
     if (mRemainFrames <= 0.0f) {
         mVolumeDb = calcRatioToDecibel(mTargetRatio);
         mStep = 0.0f;

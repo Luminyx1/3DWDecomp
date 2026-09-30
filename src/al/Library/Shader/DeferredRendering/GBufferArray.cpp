@@ -89,11 +89,13 @@ void GBufferArray::allocGBuffer(s32 subIndex) {
     agl::utl::DynamicTextureAllocator* allocator = agl::utl::DynamicTextureAllocator::instance();
     u32 width = mDepthTarget->getWidth(0);
     u32 height = mDepthTarget->getHeight(0);
+
     for (s32 i = 0; i < cIndex_Num; i++) {
         GBuffer& gbuffer = mGBuffers[i];
         gbuffer.mIsClear = false;
         const char* name;
         agl::utl::DynamicTextureAllocator::AllocateType type;
+
         switch (i) {
         case cIndex_Albedo:
             name = subIndex == 0 ? "gbuf_albedo" : "gbuf_albedo_sub";
@@ -136,6 +138,7 @@ void GBufferArray::clearGBuffer() {
     for (s32 i = 0; i < cIndex_Num; i++) {
         s32 width = mDepthTarget->getMipWidth(0);
         s32 height = mDepthTarget->getMipHeight(0);
+
         if (i == cIndex_LightBuffer) {
             break;
         }
@@ -317,6 +320,7 @@ void GBufferArray::bindRenderBuffer(s32 num) {
     agl::RenderBuffer renderBuffer;
     setRenderBufferSize(&renderBuffer, width, height);
     renderBuffer.setRenderTargetColorNullAll();
+
     for (s32 i = 0; i < cIndex_Num; i++) {
         if (i <= num) {
             renderBuffer.setRenderTargetColor(&mGBuffers[i].mRenderTarget, i);
@@ -395,6 +399,7 @@ void GBufferArray::setContextMRTCustom(sead::GraphicsContextMRT* pContext,
                                        const nn::g3d::MaterialObj* pMaterial, bool isNoNrm) {
     pContext->setBlendEnableMask(0);
     pContext->setColorMask(0);
+
     if (!isUseBlend(pMaterial)) {
         setContextMRT(pContext);
         return;
@@ -402,12 +407,14 @@ void GBufferArray::setContextMRTCustom(sead::GraphicsContextMRT* pContext,
 
     const char* blendMode = getBlendMode(pMaterial);
     bool isCustom = isEqualString(blendMode, "Custom");
+
     if (getAlphaTestEnable(pMaterial)) {
         setContextMRTAlphaMask(pContext);
         return;
     }
 
     bool isXlu = isXluBlend(pMaterial);
+
     if (!isCustom && isXlu) {
         setContextMRTXlu(pContext);
         return;
@@ -503,6 +510,7 @@ void GBufferArray::bindRenderBufferAndContextMRT() {
         agl::RenderBuffer renderBuffer;
         setRenderBufferSize(&renderBuffer, width, height);
         renderBuffer.setRenderTargetColorNullAll();
+
         for (s32 i = 0; i < cIndex_Num; i++) {
             renderBuffer.setRenderTargetColor(&mGBuffers[i].mRenderTarget, i);
         }

@@ -11,11 +11,13 @@ namespace al {
 namespace {
 StageSwitchAccesser* getStageSwitchAccesser(const IUseStageSwitch* pUser, const char* pLinkName) {
     StageSwitchKeeper* keeper = pUser->getStageSwitchKeeper();
+
     if (!keeper) {
         return nullptr;
     }
 
     StageSwitchAccesser* accesser = keeper->tryGetStageSwitchAccesser(pLinkName);
+
     if (!accesser) {
         return nullptr;
     }
@@ -103,6 +105,7 @@ bool isOnStageSwitch(const IUseStageSwitch* pUser, const char* pLinkName) {
  */
 void onStageSwitch(IUseStageSwitch* pUser, const char* pLinkName) {
     StageSwitchAccesser* accesser = getStageSwitchAccesser(pUser, pLinkName);
+
     if (accesser) {
         accesser->onSwitch();
     }
@@ -115,6 +118,7 @@ void onStageSwitch(IUseStageSwitch* pUser, const char* pLinkName) {
  */
 void offStageSwitch(IUseStageSwitch* pUser, const char* pLinkName) {
     StageSwitchAccesser* accesser = getStageSwitchAccesser(pUser, pLinkName);
+
     if (accesser) {
         accesser->offSwitch();
     }
@@ -128,6 +132,7 @@ void offStageSwitch(IUseStageSwitch* pUser, const char* pLinkName) {
  */
 bool tryOnStageSwitch(IUseStageSwitch* pUser, const char* pLinkName) {
     StageSwitchAccesser* accesser = getStageSwitchAccesser(pUser, pLinkName);
+
     if (!accesser || !accesser->isValid() || accesser->isOnSwitch()) {
         return false;
     }
@@ -144,6 +149,7 @@ bool tryOnStageSwitch(IUseStageSwitch* pUser, const char* pLinkName) {
  */
 bool tryOffStageSwitch(IUseStageSwitch* pUser, const char* pLinkName) {
     StageSwitchAccesser* accesser = getStageSwitchAccesser(pUser, pLinkName);
+
     if (!accesser || !accesser->isValid() || !accesser->isOnSwitch()) {
         return false;
     }
@@ -192,11 +198,13 @@ bool tryOffStageSwitchInstant(IUseStageSwitch* pUser, const char* pLinkName) {
 bool isSameStageSwitch(const IUseStageSwitch* pUser, const IUseStageSwitch* pOther,
                        const char* pLinkName) {
     StageSwitchAccesser* accesser = getStageSwitchAccesser(pUser, pLinkName);
+
     if (!accesser) {
         return false;
     }
 
     StageSwitchAccesser* otherAccesser = getStageSwitchAccesser(pOther, pLinkName);
+
     if (!otherAccesser) {
         return false;
     }
@@ -212,6 +220,7 @@ bool isSameStageSwitch(const IUseStageSwitch* pUser, const IUseStageSwitch* pOth
  */
 s32 findSwitchNo(const IUseStageSwitch* pUser, const char* pLinkName) {
     StageSwitchAccesser* accesser = getStageSwitchAccesser(pUser, pLinkName);
+
     if (!accesser) {
         return -1;
     }
@@ -327,6 +336,7 @@ bool isOnSwitchStart(const IUseStageSwitch* pUser) {
 bool listenStageSwitchOn(IUseStageSwitch* pUser, const char* pLinkName,
                          const FunctorBase& rFunctor) {
     StageSwitchAccesser* accesser = getStageSwitchAccesser(pUser, pLinkName);
+
     if (!accesser || !accesser->isValid()) {
         return false;
     }
@@ -347,6 +357,7 @@ bool listenStageSwitchOn(IUseStageSwitch* pUser, const char* pLinkName,
 bool listenStageSwitchOff(IUseStageSwitch* pUser, const char* pLinkName,
                           const FunctorBase& rFunctor) {
     StageSwitchAccesser* accesser = getStageSwitchAccesser(pUser, pLinkName);
+
     if (!accesser || !accesser->isValid()) {
         return false;
     }
@@ -368,6 +379,7 @@ bool listenStageSwitchOff(IUseStageSwitch* pUser, const char* pLinkName,
 bool listenStageSwitchOnOff(IUseStageSwitch* pUser, const char* pLinkName,
                             const FunctorBase& rOnFunctor, const FunctorBase& rOffFunctor) {
     StageSwitchAccesser* accesser = getStageSwitchAccesser(pUser, pLinkName);
+
     if (!accesser || !accesser->isValid()) {
         return false;
     }

@@ -212,6 +212,7 @@ al::SeKeeper* getSeKeeper(al::IUseAudioKeeper* pUser) {
 void loadSoundArchive(al::IAudioResourceLoader* pLoader, const al::SeArchiveLoadingInfo* pArchiveInfo,
                       const al::AudioInfoList<al::SeUserInfo>* pUserInfoList, bool isUnused) {
     const al::AudioInfoList<al::SeBankLoadingInfo>* bankList = pArchiveInfo->mBankLoadingInfoList;
+
     if (bankList != nullptr) {
         for (s32 i = 0; i < bankList->getInfoNum(); i++) {
             pLoader->loadSoundItem(bankList->getInfo(i)->mSoundId, -1);
@@ -219,16 +220,20 @@ void loadSoundArchive(al::IAudioResourceLoader* pLoader, const al::SeArchiveLoad
     }
 
     const al::AudioInfoList<al::SeUserLoadingInfo>* userList = pArchiveInfo->mUserLoadingInfoList;
+
     for (s32 i = 0; i < (userList != nullptr ? userList->getInfoNum() : 0); i++) {
         const char* name = userList->getInfo(i)->mName;
         const al::SeUserInfo* userInfo = nullptr;
+
         if (pUserInfoList != nullptr && name != nullptr) {
             userInfo = pUserInfoList->tryFindInfo(name);
         }
 
         const al::AudioInfoList<al::SePlayInfo>* playList = userInfo != nullptr ? userInfo->mPlayInfoList : nullptr;
+
         for (s32 j = 0; j < (playList != nullptr ? playList->getInfoNum() : 0); j++) {
             const al::AudioInfoList<al::SeResourceInfo>* resourceList = playList->getInfo(j)->mResourceInfoList;
+
             for (s32 k = 0; k < (resourceList != nullptr ? resourceList->getInfoNum() : 0); k++) {
                 pLoader->loadSoundItem(resourceList->getInfo(k)->mSoundId, -1);
             }

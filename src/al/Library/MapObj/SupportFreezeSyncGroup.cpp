@@ -17,6 +17,7 @@ SupportFreezeSyncGroup::SupportFreezeSyncGroup() : mPlacementId(new PlacementId(
 void SupportFreezeSyncGroup::init(const ActorInitInfo& rInfo) {
     alPlacementFunction::getLinkGroupId(mPlacementId, rInfo, "SupportFreezeSyncGroup");
     mActors = new LiveActor*[mActorMax];
+
     for (s32 i = 0; i < mActorMax; i++) {
         mActors[i] = nullptr;
     }
@@ -52,6 +53,7 @@ bool SupportFreezeSyncGroup::isEqualGroupId(const ActorInitInfo& rInfo) const {
     }
 
     PlacementId id;
+
     if (!alPlacementFunction::getLinkGroupId(&id, rInfo, "SupportFreezeSyncGroup")) {
         return false;
     }
@@ -64,6 +66,7 @@ bool SupportFreezeSyncGroup::isEqualGroupId(const ActorInitInfo& rInfo) const {
  */
 void SupportFreezeSyncGroup::movement() {
     bool isFreeze = false;
+
     for (s32 i = 0; i < mActorNum; i++) {
         isFreeze |= sendMsgIsNerveSupportFreeze(getHitSensor(mActors[i], 0), mHostSensor);
     }

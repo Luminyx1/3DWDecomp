@@ -54,6 +54,7 @@ Scene* SceneCreator::createScene(const char* pClassName, const char* pStageName,
     const char* name = factory->convertName(pClassName);
     const NameToCreator<alSceneFunction::SceneFunction>* entries = factory->mFuncs;
     s32 index = 0;
+
     while (!isEqualString(name, entries[index].name)) {
         index++;
     }
@@ -63,6 +64,7 @@ Scene* SceneCreator::createScene(const char* pClassName, const char* pStageName,
                                             mScreenCaptureExecutor, pStageName, scenarioNo,
                                             pSceneName);
     setCpuBoost(true, false);
+
     if (isThreadInit) {
         mInitThread = createAndStartInitializeThread(setter.mSceneHeap, priority,
                                                      SceneInitFunctor(scene, &Scene::init, *info));
@@ -87,6 +89,7 @@ void SceneCreator::setSceneAndThreadInit(Scene* pScene, const char* pStageName, 
                                          const char* pSceneName, s32 priority,
                                          sead::Heap* pHeap) {
     setCpuBoost(true, false);
+
     if (pHeap) {
         sead::ScopedCurrentHeapSetter setter(pHeap);
         SceneInitInfo* info =

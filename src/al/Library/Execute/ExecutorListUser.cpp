@@ -21,6 +21,7 @@ ExecutorListIUseExecutorBase::ExecutorListIUseExecutorBase(const char* pListName
                                                            const char* pGroupName)
     : ExecutorListBase(pListName, pGroupName), mUserNumMax(capacity) {
     mUsers = new IUseExecutor*[capacity];
+
     for (s32 i = 0; i < mUserNumMax; i++) {
         mUsers[i] = nullptr;
     }
@@ -70,6 +71,7 @@ ExecutorListIUseExecutorDraw::ExecutorListIUseExecutorDraw(const char* pListName
  */
 void ExecutorListIUseExecutorDraw::executeList() const {
     pushDebugGroup(GameFrameworkNx::sInstance->mDrawContext->getNvnCommandBuffer(), mGroupName);
+
     for (s32 i = 0; i < mUserNum; i++) {
         mUsers[i]->draw();
     }

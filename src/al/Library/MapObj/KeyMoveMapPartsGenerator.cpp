@@ -64,6 +64,7 @@ void KeyMoveMapPartsGenerator::init(const ActorInitInfo& rInfo) {
     setClippingInfo(this, clippingRadius, &mClippingTrans);
     initGroupClipping(this, rInfo, 64);
     initNerve(this, &NrvKeyMoveMapPartsGeneratorGenerate, 0);
+
     if (mDelayTime > 0) {
         setNerve(this, &NrvKeyMoveMapPartsGeneratorDelay);
     }
@@ -88,6 +89,7 @@ void KeyMoveMapPartsGenerator::exeDelay() {
 void KeyMoveMapPartsGenerator::exeGenerate() {
     if (isIntervalStep(this, mGenerateInterval, 0)) {
         KeyMoveMapParts* keyMoveMapParts = mKeyMoveMapPartsGroup->tryFindDeadDeriveActor();
+
         if (keyMoveMapParts) {
             keyMoveMapParts->appearAndSetStart();
         }

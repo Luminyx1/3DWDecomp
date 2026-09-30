@@ -8,6 +8,7 @@ namespace al {
 
 CameraTicketHolder::CameraTicketHolder(s32 maxTickets) : mMaxTickets(maxTickets) {
     mTickets = new CameraTicket*[maxTickets];
+
     for (s32 i = 0; i < mMaxTickets; i++) {
         mTickets[i] = nullptr;
     }
@@ -40,6 +41,7 @@ void CameraTicketHolder::registerDefaultTicket(CameraTicket* pTicket) {
 CameraTicket* CameraTicketHolder::tryFindEntranceTicket(const PlacementId* pPlacementId,
                                                         const char* pSuffix) const {
     CameraTicketId ticketId(pPlacementId, pSuffix);
+
     for (s32 i = 0; i < mTicketNum; i++) {
         if (mTickets[i]->getPriority() == CameraTicket::Priority_Entrance &&
             mTickets[i]->getTicketId()->isEqual(ticketId)) {

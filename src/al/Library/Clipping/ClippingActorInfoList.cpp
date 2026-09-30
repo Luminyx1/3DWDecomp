@@ -7,6 +7,7 @@ namespace al {
  */
 ClippingActorInfoList::ClippingActorInfoList(s32 maxInfos) : mMaxInfos(maxInfos) {
     mInfos = new ClippingActorInfo*[maxInfos];
+
     for (s32 i = 0; i < mMaxInfos; i++) {
         mInfos[i] = nullptr;
     }

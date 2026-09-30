@@ -93,6 +93,7 @@ void invalidateShadow(LiveActor* pActor) {
  */
 void onCollide(LiveActor* pActor) {
     pActor->mActorFlags->isNoCollide = false;
+
     if (pActor->mCollider != nullptr) {
         pActor->mCollider->onInvalidate();
     }

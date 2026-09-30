@@ -53,6 +53,7 @@ ActorActionKeeper* ActorActionKeeper::tryCreate(LiveActor* pActor, const char* p
  */
 bool ActorActionKeeper::startAction(const char* pActionName) {
     mIsActionStarted = true;
+
     if (!mNerveActionCtrl) {
         tryStartActionNoAnim(pActionName);
     }
@@ -126,6 +127,7 @@ void ActorActionKeeper::updatePost() {
             f32 frame = mNerveActionCtrl ? static_cast<s32>(mActor->getNerveKeeper()->mNerveStep) - 1 :
                                            getActionFrame(mActor);
             f32 frameRate = mNerveActionCtrl ? 1.0f : getActionFrameRate(mActor);
+
             if (mFlagCtrl) {
                 mFlagCtrl->update(frame, frameRate);
             }
@@ -183,11 +185,13 @@ void ActorActionKeeper::tryUpdateSeEffect(f32 frameFrom, f32 frameTo) {
     }
 
     const char* actionName = getActionName(mActor);
+
     if (!actionName) {
         return;
     }
 
     f32 frameRate;
+
     if (frameFrom > frameTo) {
         frameRate = getActionFrameMax(mActor, actionName) - frameFrom + frameTo;
     } else {

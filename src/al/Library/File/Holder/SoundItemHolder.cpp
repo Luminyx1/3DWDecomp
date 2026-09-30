@@ -34,6 +34,7 @@ SoundItemEntry* SoundItemHolder::addNewLoadRequestEntry(u32 itemId, u32 unk,
 SoundItemEntry* SoundItemHolder::tryFindEntry(u32 itemId, IAudioResourceLoader* pLoader) {
     for (s32 i = 0; i < mSize; i++) {
         SoundItemEntry* entry = mSoundItemEntries.get(i);
+
         if (entry->getSoundItemId() == itemId && entry->getAudioResourceLoader() == pLoader) {
             return entry;
         }
@@ -48,6 +49,7 @@ SoundItemEntry* SoundItemHolder::tryFindEntry(u32 itemId, IAudioResourceLoader* 
 void SoundItemHolder::waitLoadDoneAll() {
     for (s32 i = 0; i < mSize; i++) {
         SoundItemEntry* entry = mSoundItemEntries.get(i);
+
         if (entry->mFileState != FileState::IsLoadDone) {
             entry->waitLoadDone();
         }

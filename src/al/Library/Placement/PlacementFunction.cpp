@@ -77,6 +77,7 @@ bool tryGetObjectName(const char** pName, const ActorInitInfo& rInfo) {
  */
 bool tryGetStringArg(const char** pArg, const PlacementInfo& rInfo, const char* pKey) {
     const char* str = "";
+
     if (!rInfo.getPlacementIter().tryGetStringByKey(&str, pKey) || isEqualString("", str)) {
         return false;
     }
@@ -145,6 +146,7 @@ bool tryGetClassName(const char** pName, const ActorInitInfo& rInfo) {
  */
 bool tryGetClassName(const char** pName, const PlacementInfo& rInfo) {
     PlacementInfo unitConfig;
+
     if (!tryGetPlacementInfoByKey(&unitConfig, rInfo, "UnitConfig")) {
         return false;
     }
@@ -161,6 +163,7 @@ bool tryGetClassName(const char** pName, const PlacementInfo& rInfo) {
  */
 bool tryGetPlacementInfoByKey(PlacementInfo* pOut, const PlacementInfo& rInfo, const char* pKey) {
     ByamlIter iter;
+
     if (!rInfo.getPlacementIter().tryGetIterByKey(&iter, pKey)) {
         return false;
     }
@@ -244,6 +247,7 @@ void getDisplayName(const char** pName, const PlacementInfo& rInfo) {
  */
 bool tryGetDisplayName(const char** pName, const PlacementInfo& rInfo) {
     PlacementInfo unitConfig;
+
     if (!tryGetPlacementInfoByKey(&unitConfig, rInfo, "UnitConfig")) {
         return false;
     }
@@ -294,6 +298,7 @@ bool tryGetTrans(sead::Vector3f* pTrans, const PlacementInfo& rInfo) {
  */
 void multZoneMtx(sead::Vector3f* pTrans, const PlacementInfo& rInfo) {
     sead::Matrix34f mtx;
+
     if (tryGetZoneMatrixTR(&mtx, rInfo)) {
         pTrans->mul(mtx);
     }
@@ -330,6 +335,7 @@ bool tryGetRotate(sead::Vector3f* pRotate, const PlacementInfo& rInfo) {
     }
 
     sead::Matrix34f zoneMtx;
+
     if (tryGetZoneMatrixTR(&zoneMtx, rInfo)) {
         sead::Matrix34f rotateMtx;
         sead::Vector3f rotate = {sead::Mathf::deg2rad(pRotate->x), sead::Mathf::deg2rad(pRotate->y),
@@ -339,6 +345,7 @@ bool tryGetRotate(sead::Vector3f* pRotate, const PlacementInfo& rInfo) {
         mtx.setMul(zoneMtx, rotateMtx);
 
         f32 absSin = sead::Mathf::abs(mtx.m[2][0]);
+
         if (1.0f - absSin < sead::Mathf::epsilon() * 10) {
             pRotate->x = 0.0f;
             pRotate->y = (mtx.m[2][0] / absSin) * (-sead::Mathf::pi() / 2);
@@ -364,16 +371,19 @@ bool tryGetRotate(sead::Vector3f* pRotate, const PlacementInfo& rInfo) {
  */
 bool tryGetZoneMatrixTR(sead::Matrix34f* pMtx, const PlacementInfo& rInfo) {
     ByamlIter zone = rInfo.getZoneIter();
+
     if (!zone.isValid()) {
         return false;
     }
 
     sead::Vector3f trans = sead::Vector3f::zero;
+
     if (!tryGetByamlV3f(&trans, zone, "Translate")) {
         return false;
     }
 
     sead::Vector3f rotate = sead::Vector3f::zero;
+
     if (!tryGetByamlV3f(&rotate, zone, "Rotate")) {
         return false;
     }
@@ -384,6 +394,7 @@ bool tryGetZoneMatrixTR(sead::Matrix34f* pMtx, const PlacementInfo& rInfo) {
 
     if (rInfo._20) {
         sead::Matrix34f parentMtx;
+
         if (tryGetZoneMatrixTR(&parentMtx, *rInfo._20)) {
             pMtx->setMul(parentMtx, *pMtx);
         }
@@ -414,8 +425,10 @@ bool tryGetRotate_ParentY(sead::Vector3f* pRotate, const PlacementInfo& rInfo) {
     }
 
     sead::Matrix34f zoneMtx;
+
     if (tryGetZoneMatrixTR(&zoneMtx, rInfo)) {
         sead::Vector3f zoneRotate;
+
         if (tryGetZoneR(&zoneRotate, rInfo)) {
             pRotate->y += zoneRotate.y;
         }
@@ -432,11 +445,13 @@ bool tryGetRotate_ParentY(sead::Vector3f* pRotate, const PlacementInfo& rInfo) {
  */
 bool tryGetZoneR(sead::Vector3f* pRotate, const PlacementInfo& rInfo) {
     ByamlIter zone = rInfo.getZoneIter();
+
     if (!zone.isValid()) {
         return false;
     }
 
     sead::Vector3f rotate = sead::Vector3f::zero;
+
     if (!tryGetByamlV3f(&rotate, zone, "Rotate")) {
         return false;
     }
@@ -474,6 +489,7 @@ bool tryGetQuat(sead::Quatf* pQuat, const ActorInitInfo& rInfo) {
  */
 bool tryGetQuat(sead::Quatf* pQuat, const PlacementInfo& rInfo) {
     sead::Vector3f rotate = sead::Vector3f::zero;
+
     if (!tryGetRotate(&rotate, rInfo)) {
         *pQuat = sead::Quatf::unit;
         return false;
@@ -531,6 +547,7 @@ bool tryGetSide(sead::Vector3f* pSide, const ActorInitInfo& rInfo) {
  */
 bool tryGetSide(sead::Vector3f* pSide, const PlacementInfo& rInfo) {
     sead::Quatf quat = sead::Quatf::unit;
+
     if (!tryGetQuat(&quat, rInfo)) {
         return false;
     }
@@ -557,6 +574,7 @@ bool tryGetUp(sead::Vector3f* pUp, const ActorInitInfo& rInfo) {
  */
 bool tryGetUp(sead::Vector3f* pUp, const PlacementInfo& rInfo) {
     sead::Quatf quat = sead::Quatf::unit;
+
     if (!tryGetQuat(&quat, rInfo)) {
         return false;
     }
@@ -583,6 +601,7 @@ bool tryGetFront(sead::Vector3f* pFront, const ActorInitInfo& rInfo) {
  */
 bool tryGetFront(sead::Vector3f* pFront, const PlacementInfo& rInfo) {
     sead::Quatf quat = sead::Quatf::unit;
+
     if (!tryGetQuat(&quat, rInfo)) {
         return false;
     }
@@ -681,6 +700,7 @@ bool tryGetMatrixTR(sead::Matrix34f* pMtx, const ActorInitInfo& rInfo) {
 bool tryGetMatrixTR(sead::Matrix34f* pMtx, const PlacementInfo& rInfo) {
     sead::Vector3f trans = sead::Vector3f::zero;
     sead::Vector3f rotate = sead::Vector3f::zero;
+
     if (!tryGetTrans(&trans, rInfo)) {
         return false;
     }
@@ -715,6 +735,7 @@ bool tryGetMatrixTRS(sead::Matrix34f* pMtx, const PlacementInfo& rInfo) {
     sead::Vector3f trans = sead::Vector3f::zero;
     sead::Vector3f rotate = sead::Vector3f::zero;
     sead::Vector3f scale = sead::Vector3f::ones;
+
     if (!tryGetTrans(&trans, rInfo)) {
         return false;
     }
@@ -752,6 +773,7 @@ bool tryGetInvertMatrixTR(sead::Matrix34f* pMtx, const ActorInitInfo& rInfo) {
  */
 bool tryGetInvertMatrixTR(sead::Matrix34f* pMtx, const PlacementInfo& rInfo) {
     sead::Matrix34f mtx;
+
     if (!tryGetMatrixTR(&mtx, rInfo)) {
         return false;
     }
@@ -1070,6 +1092,7 @@ void getPlacementInfoByIndex(PlacementInfo* pOut, const PlacementInfo& rInfo, s3
  */
 bool tryGetPlacementInfoByIndex(PlacementInfo* pOut, const PlacementInfo& rInfo, s32 index) {
     ByamlIter iter;
+
     if (!rInfo.getPlacementIter().tryGetIterByIndex(&iter, index)) {
         return false;
     }
@@ -1101,6 +1124,7 @@ void getPlacementInfoAndKeyNameByIndex(PlacementInfo* pOut, const char** pKey,
 bool tryGetPlacementInfoAndKeyNameByIndex(PlacementInfo* pOut, const char** pKey,
                                           const PlacementInfo& rInfo, s32 index) {
     ByamlIter iter;
+
     if (!rInfo.getPlacementIter().tryGetIterAndKeyNameByIndex(&iter, pKey, index)) {
         return false;
     }
@@ -1134,13 +1158,16 @@ s32 tryGetLayerID(const PlacementInfo& rInfo) {
  */
 s32 tryGetLayerID(const ByamlIter& rIter) {
     const char* name;
+
     if (!rIter.tryGetStringByKey(&name, "LayerConfigName")) {
         return -1;
     }
 
     LayerId layer;
+
     for (s32 i = 0; i < LayerId::size(); i++) {
         layer = i;
+
         if (isEqualString(name, LayerId::text(i))) {
             return layer;
         }
@@ -1156,6 +1183,7 @@ s32 tryGetLayerID(const ByamlIter& rIter) {
  */
 s32 tryGetLayerIDbyParents(const PlacementInfo& rInfo) {
     const PlacementInfo* info = &rInfo;
+
     while (info->_20) {
         info = info->_20;
     }
@@ -1219,11 +1247,13 @@ bool isEqualPlacementID(const PlacementId& rId, const PlacementId& rOther) {
  */
 bool isEqualPlacementID(const PlacementInfo& rInfo, const PlacementInfo& rOther) {
     PlacementId id;
+
     if (!tryGetPlacementID(&id, rInfo)) {
         return false;
     }
 
     PlacementId otherId;
+
     if (!tryGetPlacementID(&otherId, rOther)) {
         return false;
     }
@@ -1264,11 +1294,13 @@ bool tryGetRailIter(PlacementInfo* pRailInfo, const PlacementInfo& rInfo) {
  */
 bool tryGetLinksInfo(PlacementInfo* pOut, const PlacementInfo& rInfo, const char* pLinkName) {
     PlacementInfo links;
+
     if (!tryGetPlacementInfoByKey(&links, rInfo, "Links")) {
         return false;
     }
 
     PlacementInfo link;
+
     if (!tryGetPlacementInfoByKey(&link, links, pLinkName)) {
         return false;
     }
@@ -1321,11 +1353,13 @@ void getRailPointHandlePrev(sead::Vector3f* pPos, const PlacementInfo& rInfo) {
  */
 bool tryGetRailPointHandlePrev(sead::Vector3f* pPos, const PlacementInfo& rInfo) {
     PlacementInfo controlPoints;
+
     if (!tryGetPlacementInfoByKey(&controlPoints, rInfo, "ControlPoints")) {
         return false;
     }
 
     PlacementInfo controlPoint;
+
     if (!tryGetPlacementInfoByIndex(&controlPoint, controlPoints, 0)) {
         return false;
     }
@@ -1355,11 +1389,13 @@ void getRailPointHandleNext(sead::Vector3f* pPos, const PlacementInfo& rInfo) {
  */
 bool tryGetRailPointHandleNext(sead::Vector3f* pPos, const PlacementInfo& rInfo) {
     PlacementInfo controlPoints;
+
     if (!tryGetPlacementInfoByKey(&controlPoints, rInfo, "ControlPoints")) {
         return false;
     }
 
     PlacementInfo controlPoint;
+
     if (!tryGetPlacementInfoByIndex(&controlPoint, controlPoints, 1)) {
         return false;
     }
@@ -1391,6 +1427,7 @@ s32 calcLinkChildNum(const ActorInitInfo& rInfo, const char* pLinkName) {
 s32 calcLinkChildNum(const PlacementInfo& rInfo, const char* pLinkName) {
     PlacementInfo links;
     PlacementInfo link;
+
     if (!tryGetPlacementInfoByKey(&links, rInfo, "Links")) {
         return 0;
     }
@@ -1420,12 +1457,14 @@ s32 calcLinkNestNum(const ActorInitInfo& rInfo, const char* pLinkName) {
  */
 s32 calcLinkNestNum(const PlacementInfo& rInfo, const char* pLinkName) {
     PlacementInfo links;
+
     if (!tryGetPlacementInfoByKey(&links, rInfo, "Links")) {
         return 0;
     }
 
     PlacementInfo link = links;
     s32 depth = 0;
+
     while (tryGetPlacementInfoByKey(&link, links, pLinkName) &&
            link.getPlacementIter().getSize() != 0) {
         PlacementInfo item;
@@ -1457,11 +1496,13 @@ void getLinksInfo(PlacementInfo* pOut, const PlacementInfo& rInfo, const char* p
 void getLinksInfoByIndex(PlacementInfo* pOut, const PlacementInfo& rInfo, const char* pLinkName,
                          s32 index) {
     PlacementInfo links;
+
     if (!tryGetPlacementInfoByKey(&links, rInfo, "Links")) {
         return;
     }
 
     PlacementInfo link;
+
     if (!tryGetPlacementInfoByKey(&link, links, pLinkName)) {
         return;
     }
@@ -1566,11 +1607,13 @@ void getLinkTR(sead::Vector3f* pTrans, sead::Vector3f* pRotate, const AreaInitIn
 bool tryGetLinksQT(sead::Quatf* pQuat, sead::Vector3f* pTrans, const ActorInitInfo& rInfo,
                    const char* pLinkName) {
     PlacementInfo info;
+
     if (!tryGetLinksInfo(&info, rInfo, pLinkName)) {
         return false;
     }
 
     bool result = true;
+
     if (pQuat) {
         result &= tryGetQuat(pQuat, info);
     }
@@ -1594,11 +1637,13 @@ bool tryGetLinksQT(sead::Quatf* pQuat, sead::Vector3f* pTrans, const ActorInitIn
 bool tryGetLinksQTS(sead::Quatf* pQuat, sead::Vector3f* pTrans, sead::Vector3f* pScale,
                     const ActorInitInfo& rInfo, const char* pLinkName) {
     PlacementInfo info;
+
     if (!tryGetLinksInfo(&info, rInfo, pLinkName)) {
         return false;
     }
 
     bool result = true;
+
     if (pQuat) {
         result &= tryGetQuat(pQuat, info);
     }
@@ -1624,6 +1669,7 @@ bool tryGetLinksQTS(sead::Quatf* pQuat, sead::Vector3f* pTrans, sead::Vector3f* 
 bool tryGetLinksMatrixTRS(sead::Matrix34f* pMtx, const ActorInitInfo& rInfo,
                           const char* pLinkName) {
     PlacementInfo info;
+
     if (!tryGetLinksInfo(&info, *rInfo.mPlacementInfo, pLinkName)) {
         return false;
     }
@@ -1696,6 +1742,7 @@ void getChildLinkTF(sead::Vector3f* pTrans, sead::Vector3f* pFront, const ActorI
     PlacementInfo info;
     getLinksInfoByIndex(&info, rInfo, pLinkName, index);
     getTrans(pTrans, info);
+
     if (!tryGetFront(pFront, info)) {
         *pFront = sead::Vector3f::ez;
     }
@@ -1725,16 +1772,19 @@ void getChildLinkTQ(sead::Vector3f* pTrans, sead::Quatf* pQuat, const ActorInitI
  */
 s32 calcMatchNameLinkCount(const PlacementInfo& rInfo, const char* pMatch) {
     PlacementInfo links;
+
     if (!tryGetPlacementInfoByKey(&links, rInfo, "Links")) {
         return 0;
     }
 
     s32 size = links.getPlacementIter().getSize();
     s32 count = 0;
+
     for (s32 i = 0; i < size; i++) {
         PlacementInfo item;
         const char* key = nullptr;
         getPlacementInfoAndKeyNameByIndex(&item, &key, links, i);
+
         if (isMatchString(key, MatchStr(pMatch))) {
             count++;
         }
@@ -1751,12 +1801,14 @@ s32 calcMatchNameLinkCount(const PlacementInfo& rInfo, const char* pMatch) {
  */
 s32 calcLinkCountClassName(const PlacementInfo& rInfo, const char* pClassName) {
     PlacementInfo links;
+
     if (!tryGetPlacementInfoByKey(&links, rInfo, "Links")) {
         return 0;
     }
 
     s32 size = links.getPlacementIter().getSize();
     s32 count = 0;
+
     for (s32 i = 0; i < size; i++) {
         PlacementInfo item;
         getPlacementInfoByIndex(&item, links, i);
@@ -1764,6 +1816,7 @@ s32 calcLinkCountClassName(const PlacementInfo& rInfo, const char* pClassName) {
         getPlacementInfoByIndex(&first, item, 0);
 
         const char* className = nullptr;
+
         if (tryGetClassName(&className, first) && isEqualString(className, pClassName)) {
             count++;
         }
@@ -1790,6 +1843,7 @@ bool tryGetZoneMatrixTR(sead::Matrix34f* pMtx, const ActorInitInfo& rInfo) {
  */
 bool tryGetZoneID(s32* pId, const PlacementInfo& rInfo) {
     ByamlIter zone = rInfo.getZoneIter();
+
     if (!zone.isValid()) {
         return false;
     }
@@ -1805,6 +1859,7 @@ bool tryGetZoneID(s32* pId, const PlacementInfo& rInfo) {
  */
 bool tryGetDisplayOffset(sead::Vector3f* pOffset, const ActorInitInfo& rInfo) {
     PlacementInfo unitConfig;
+
     if (!tryGetPlacementInfoByKey(&unitConfig, *rInfo.mPlacementInfo, "UnitConfig")) {
         return false;
     }
@@ -1814,6 +1869,7 @@ bool tryGetDisplayOffset(sead::Vector3f* pOffset, const ActorInitInfo& rInfo) {
     }
 
     sead::Matrix34f mtx = sead::Matrix34f::ident;
+
     if (!tryGetMatrixTR(&mtx, *rInfo.mPlacementInfo)) {
         return false;
     }
@@ -1822,6 +1878,7 @@ bool tryGetDisplayOffset(sead::Vector3f* pOffset, const ActorInitInfo& rInfo) {
 
     if (!isSingleMode(rInfo)) {
         sead::Matrix34f zoneMtx = sead::Matrix34f::ident;
+
         if (tryGetZoneMatrixTR(&zoneMtx, *rInfo.mPlacementInfo)) {
             pOffset->rotate(zoneMtx);
         }
@@ -1871,6 +1928,7 @@ namespace alPlacementFunction {
  */
 s32 getCameraId(const al::ActorInitInfo& rInfo) {
     s32 id = -1;
+
     if (!al::tryGetArg(&id, rInfo, "CameraId")) {
         return -1;
     }
@@ -1887,6 +1945,7 @@ s32 getCameraId(const al::ActorInitInfo& rInfo) {
  */
 bool getLinkGroupId(al::PlacementId* pId, const al::ActorInitInfo& rInfo, const char* pLinkName) {
     al::PlacementInfo info;
+
     if (al::tryGetLinksInfo(&info, rInfo, pLinkName) && al::tryGetPlacementID(pId, info)) {
         return true;
     }
@@ -1932,6 +1991,7 @@ bool getClippingGroupId(al::PlacementId* pId, const al::ActorInitInfo& rInfo) {
  */
 bool getClippingViewId(al::PlacementId* pId, const al::PlacementInfo& rInfo) {
     al::PlacementInfo info;
+
     if (al::tryGetLinksInfo(&info, rInfo, "ViewGroup") && al::tryGetPlacementID(pId, info)) {
         return true;
     }

@@ -48,6 +48,7 @@ void ModelDrawerDeferredSilhouette::createTable() {
 
     auto* table = new MeshDrawerTable;
     table->allocBuffer(modelObj->GetNumShapes(), nullptr);
+
     for (s32 i = 0; i < modelObj->GetNumShapes(); i++) {
         const nn::g3d::ShapeObj* shape = modelObj->GetShape(i);
         const nn::g3d::MaterialObj* material =
@@ -80,6 +81,7 @@ void ModelDrawerDeferredSilhouette::draw() const {
         mGraphicsSystemInfo->mShaderEnvTextureKeeper->getFresnelTextureKeeper();
     for (s32 i = 0; i < mMeshDrawerTable->size(); i++) {
         MeshDrawer* meshDrawer = (*mMeshDrawerTable)[i];
+
         if (meshDrawer->isExistDrawMesh()) {
             fresnelTextureKeeper->activateSilhouetteCurveTexture(
                 mCategory, getSamplerLocationSilhouetteCurve(), true);

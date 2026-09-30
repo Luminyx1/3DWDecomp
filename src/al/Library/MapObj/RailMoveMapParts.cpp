@@ -49,6 +49,7 @@ void RailMoveMapParts::init(const ActorInitInfo& rInfo) {
     initActorPoseTQSV(this);
     initMapPartsActor(this, rInfo, nullptr, 0);
     registerAreaHostMtx(this, rInfo);
+
     if (isExistRail(this)) {
         f32 radius = getClippingRadius(this);
         setSyncRailToNearestPos(this);
@@ -57,6 +58,7 @@ void RailMoveMapParts::init(const ActorInitInfo& rInfo) {
 
     mRailMoveMovement = new RailMoveMovement(this, rInfo);
     initNerveState(this, mRailMoveMovement, NrvRailMoveMapParts.Move.data(), "レール移動");
+
     if (!listenStageSwitchOnStart(this, RailMoveMapPartsFunctor(this, &RailMoveMapParts::start))) {
         start();
     }
@@ -68,6 +70,7 @@ void RailMoveMapParts::init(const ActorInitInfo& rInfo) {
     if (isExistShadow(this)) {
         bool isShadow = false;
         tryGetArg(&isShadow, rInfo, "IsShadow");
+
         if (!isShadow) {
             invalidateShadow(this);
         }

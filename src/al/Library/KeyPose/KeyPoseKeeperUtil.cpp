@@ -167,6 +167,7 @@ s32 calcKeyMoveWaitTime(const KeyPoseKeeper* keyPoseKeeper) {
 
 s32 calcKeyMoveMoveTime(const KeyPoseKeeper* keyPoseKeeper) {
     s32 t = (s32)calcKeyMoveSpeedByTime(keyPoseKeeper);
+
     if (t >= 1)
         return t;
 
@@ -182,6 +183,7 @@ void calcKeyMoveClippingInfo(sead::Vector3f* pPos, f32* pRadius, const KeyPoseKe
     s32 count = pKeeper->getKeyPoseCount();
     sead::BoundBox3f box;
     box.setUndef();
+
     for (s32 i = 0; i < count; i++) {
         box.addPoint(pKeeper->getKeyPose(i).getTrans());
     }
@@ -196,6 +198,7 @@ void setKeyMoveClippingInfo(LiveActor* pActor, sead::Vector3f* pPos,
     s32 count = pKeeper->getKeyPoseCount();
     sead::BoundBox3f box;
     box.setUndef();
+
     for (s32 i = 0; i < count; i++) {
         box.addPoint(pKeeper->getKeyPose(i).getTrans());
     }

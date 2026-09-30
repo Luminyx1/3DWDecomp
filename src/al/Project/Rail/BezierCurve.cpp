@@ -29,6 +29,7 @@ f32 BezierCurve::calcLength(f32 startParam, f32 endParam, s32 stepCount) const {
 
     f32 sumVelHalfStep = 0.0f;
     f32 sumVelFullStep = 0.0f;
+
     for (s32 i = 1; i <= stepCount; i++) {
         f32 doubleI = i * 2.0f;
 
@@ -83,6 +84,7 @@ f32 BezierCurve::calcDeltaLength(f32 param) const {
 f32 BezierCurve::calcCurveParam(f32 distance) const {
     f32 percent = distance / mDistance;
     f32 partLength = calcLength(0, percent, 10);
+
     if (sead::Mathf::abs(distance - partLength) <= 0.01f)
         return percent;
 
@@ -92,6 +94,7 @@ f32 BezierCurve::calcCurveParam(f32 distance) const {
 
         percent = sead::Mathf::clamp(newPercent, 0.0f, 1.0f);
         partLength = calcLength(0.0f, percent, 10);
+
         if (sead::Mathf::abs(distance - partLength) <= 0.01f)
             return percent;
     }
@@ -105,6 +108,7 @@ f32 BezierCurve::calcNearestParam(const sead::Vector3f& pos, f32 interval) const
     f32 currentParam = 0.0;
     f32 bestParam = -1.0;
     f32 bestDist = 3.4028e38;
+
     do {
         sead::Vector3f nearest;
         calcPos(&nearest, currentParam);
@@ -125,6 +129,7 @@ f32 BezierCurve::calcNearestLength(f32* param, const sead::Vector3f& pos, f32 ma
     f32 bestParam = -1.0;
     f32 currentParam = 0.0;
     f32 bestDist = 3.4028e38;
+
     while (currentParam < max) {
         sead::Vector3f nearest;
         calcPos(&nearest, calcCurveParam(currentParam));

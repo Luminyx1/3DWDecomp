@@ -48,6 +48,7 @@ void WobbleMapParts::init(const ActorInitInfo& rInfo) {
     mTargetUp.set(mInitialUp);
     tryGetArg(&mMaxRotate, rInfo, "MaxRotate");
     f32 soundScale = -1.0f;
+
     if (tryGetArg(&soundScale, rInfo, "RotateSoundScale") && soundScale > 0.0f) {
         mRotateSoundScale = soundScale;
     }
@@ -66,6 +67,7 @@ void WobbleMapParts::init(const ActorInitInfo& rInfo) {
 bool WobbleMapParts::receiveMsg(const SensorMsg* pMsg, HitSensor* pOther, HitSensor* pSelf) {
     if (isMsgTouchAssist(pMsg)) {
         mAssistStopTimer = 45;
+
         if (!isNerve(this, NrvWobbleMapParts.AssistStop.data())) {
             startNerveAction(this, "AssistStop");
         }
@@ -75,6 +77,7 @@ bool WobbleMapParts::receiveMsg(const SensorMsg* pMsg, HitSensor* pOther, HitSen
 
     if (isMsgFloorTouch(pMsg)) {
         sead::Vector3f pos;
+
         if (isMySensor(pSelf, this)) {
             pos.set(getSensorPos(pOther));
         } else {
@@ -87,6 +90,7 @@ bool WobbleMapParts::receiveMsg(const SensorMsg* pMsg, HitSensor* pOther, HitSen
         verticalizeVec(&horizontal, up, pos - getTrans(this));
         f32 distance = horizontal.length();
         f32 rate = normalize(distance, 0.0f, 100.0f);
+
         if (isNearZero(distance)) {
             horizontal = sead::Vector3f::zero;
         } else {
@@ -116,6 +120,7 @@ bool WobbleMapParts::receiveMsg(const SensorMsg* pMsg, HitSensor* pOther, HitSen
  */
 void WobbleMapParts::exeWait() {
     updateMove();
+
     if (mTiltSpeed * mRotateSoundScale > 0.1f) {
         startNerveAction(this, "Move");
     }
@@ -138,12 +143,14 @@ void WobbleMapParts::updateMove() {
     sead::Vector3f newUp;
     bool isStop = turnVecToVecDegree(&newUp, mInitialUp, currentUp, mMaxRotate);
     turnQuatYDirRate(getQuatPtr(this), mInitialQuat, newUp, 1.0f);
+
     if (isStop) {
         mCurrentQuat = getQuat(this);
     }
 
     mTargetUp.set(mInitialUp);
     mTiltSpeed = mMoment.length();
+
     if (mIsStop != isStop) {
         tryStartSeWithParam(this, "Stop", mTiltSpeed * mRotateSoundScale, nullptr);
     }
@@ -157,6 +164,7 @@ void WobbleMapParts::updateMove() {
 void WobbleMapParts::exeMove() {
     updateMove();
     tryHoldSeWithParam(this, "Rotate", mTiltSpeed * mRotateSoundScale, nullptr);
+
     if (mTiltSpeed * mRotateSoundScale < 0.1f) {
         startNerveAction(this, "Wait");
     }
@@ -168,6 +176,7 @@ void WobbleMapParts::exeMove() {
 void WobbleMapParts::exeAssistStop() {
     if (--mAssistStopTimer <= 0) {
         mAssistStopTimer = 0;
+
         if (mTiltSpeed * mRotateSoundScale > 0.1f) {
             startNerveAction(this, "Move");
         } else {

@@ -30,6 +30,7 @@ GpuMemAllocator::GpuMemAllocator(s32 memoryPoolNum, s32 modelObjNum, s32 shading
 GpuMemAllocator::~GpuMemAllocator() {
     for (s32 i = 0; i < mBlocks.size(); i++) {
         Block* block = mBlocks[i];
+
         if (block->addr.isValid()) {
             block->addr.deleteGPUMemBlock();
             block->addr.invalidate();
@@ -43,6 +44,7 @@ GpuMemAllocator::~GpuMemAllocator() {
 
     for (s32 i = 0; i < mModelObjs.size(); i++) {
         nn::g3d::ModelObj* modelObj = mModelObjs[i];
+
         if (modelObj->IsBlockBufferValid()) {
             modelObj->CleanupBlockBuffer(static_cast<nn::gfx::Device*>(
                 agl::driver::GraphicsDriverMgr::instance()->getGfxDevice()));
@@ -51,6 +53,7 @@ GpuMemAllocator::~GpuMemAllocator() {
 
     for (s32 i = 0; i < mShadingModelObjs.size(); i++) {
         nn::g3d::ShadingModelObj* shadingModelObj = mShadingModelObjs[i];
+
         if (shadingModelObj->IsBlockBufferValid()) {
             shadingModelObj->CleanupBlockBuffer(static_cast<nn::gfx::Device*>(
                 agl::driver::GraphicsDriverMgr::instance()->getGfxDevice()));

@@ -10,6 +10,7 @@ namespace al {
 CameraTargetHolder::CameraTargetHolder(s32 maxTargets) : mViewTargetSize(maxTargets) {
     mViewTargetArray = new CameraTargetBase*[maxTargets];
     mViewTargetInfo = new ViewTargetInfo[maxTargets];
+
     for (s32 i = 0; i < mViewTargetSize; i++) {
         mViewTargetArray[i] = nullptr;
     }
@@ -22,6 +23,7 @@ CameraTargetHolder::CameraTargetHolder(s32 maxTargets) : mViewTargetSize(maxTarg
 void CameraTargetHolder::initAfterPlacement(const PlayerHolder* pPlayerHolder) {
     mPlayerHolder = pPlayerHolder;
     _60 = false;
+
     if (mTargetArray.isEmpty()) {
         for (s32 i = 0; i < getPlayerNumMax(pPlayerHolder); i++) {
             if (mTargetArray.isFull()) {
@@ -41,6 +43,7 @@ void CameraTargetHolder::initAfterPlacement(const PlayerHolder* pPlayerHolder) {
 
 CameraTargetBase* CameraTargetHolder::tryGetViewTarget(s32 index) const {
     CameraTargetBase* target = mViewTargetArray[index];
+
     if (target) {
         return target;
     }
@@ -58,12 +61,14 @@ void CameraTargetHolder::update() {
         CameraTargetBase* target = getViewTarget(i);
         info->hasTargetChanged = info->target != target;
         info->target = target;
+
         if (target) {
             target->update();
         }
     }
 
     CameraSubTargetBase* topSubTarget = nullptr;
+
     if (!mSubTargetArray.isEmpty()) {
         topSubTarget = mSubTargetArray.front();
     } else if (!mPlacementSubTargetArray.isEmpty()) {
@@ -72,6 +77,7 @@ void CameraTargetHolder::update() {
 
     mTopSubTargetInfo.hasTargetChanged = mTopSubTargetInfo.target != topSubTarget;
     mTopSubTargetInfo.target = topSubTarget;
+
     if (topSubTarget) {
         topSubTarget->update();
     }
@@ -80,6 +86,7 @@ void CameraTargetHolder::update() {
 s32 CameraTargetHolder::tryFindIndex(const CameraTargetBase* pTarget,
                                      const sead::PtrArray<CameraTargetBase>& rArray) {
     s32 index = 0;
+
     for (auto& target : rArray) {
         if (&target == pTarget) {
             return index;
@@ -94,6 +101,7 @@ s32 CameraTargetHolder::tryFindIndex(const CameraTargetBase* pTarget,
 s32 CameraTargetHolder::tryFindIndex(const CameraSubTargetBase* pTarget,
                                      const sead::PtrArray<CameraSubTargetBase>& rArray) {
     s32 index = 0;
+
     for (auto& target : rArray) {
         if (&target == pTarget) {
             return index;
@@ -108,6 +116,7 @@ s32 CameraTargetHolder::tryFindIndex(const CameraSubTargetBase* pTarget,
 bool CameraTargetHolder::tryRemovePtr(const CameraTargetBase* pTarget,
                                       sead::PtrArray<CameraTargetBase>& rArray) {
     s32 index = tryFindIndex(pTarget, rArray);
+
     if (index < 0) {
         return false;
     }
@@ -119,6 +128,7 @@ bool CameraTargetHolder::tryRemovePtr(const CameraTargetBase* pTarget,
 bool CameraTargetHolder::tryRemovePtr(const CameraSubTargetBase* pTarget,
                                       sead::PtrArray<CameraSubTargetBase>& rArray) {
     s32 index = tryFindIndex(pTarget, rArray);
+
     if (index < 0) {
         return false;
     }
@@ -135,6 +145,7 @@ void CameraTargetHolder::addTarget(CameraTargetBase* pTarget) {
 
 void CameraTargetHolder::removeTarget(CameraTargetBase* pTarget) {
     s32 index = tryFindIndex(pTarget, mTargetArray);
+
     if (index >= 0) {
         pTarget->disableTarget();
         mTargetArray.erase(index);

@@ -24,6 +24,7 @@ bool SeListenerPoser::tryCalcViewMatrix(sead::Matrix34f* pMtx, const sead::Vecto
                                         const sead::Vector3f& rAt, const sead::Vector3f& rUp) {
     sead::Vector3f dir = rPos;
     dir -= rAt;
+
     if (isNearZero(dir, 0.001f)) {
         return false;
     }
@@ -32,6 +33,7 @@ bool SeListenerPoser::tryCalcViewMatrix(sead::Matrix34f* pMtx, const sead::Vecto
 
     sead::Vector3f side;
     side.setCross(rUp, dir);
+
     if (isNearZero(side, 0.001f)) {
         return false;
     }

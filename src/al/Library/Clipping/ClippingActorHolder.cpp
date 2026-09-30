@@ -51,6 +51,7 @@ ClippingActorInfo* ClippingActorHolder::registerActor(LiveActor* pActor) {
 ClippingActorInfo* ClippingActorHolder::initGroupClipping(LiveActor* pActor,
                                                           const ActorInitInfo& rInfo) {
     ClippingActorInfo* info;
+
     if (mClippingTargets->isInList(pActor)) {
         info = mClippingTargets->remove(pActor);
         mGroupClippings->add(info);
@@ -59,6 +60,7 @@ ClippingActorInfo* ClippingActorHolder::initGroupClipping(LiveActor* pActor,
     } else if (mInvalidClippings->isInList(pActor)) {
         info = mInvalidClippings->remove(pActor);
         mGroupClippings->add(info);
+
         if (isClipped(pActor)) {
             pActor->endClipped();
         }
@@ -79,6 +81,7 @@ void ClippingActorHolder::validateClipping(LiveActor* pActor) {
     flags->isInvalidClipping = false;
     flags->_1c = false;
     ClippingActorInfo* info = mInvalidClippings->remove(pActor);
+
     if (isDead(pActor)) {
         mNonClippingTargets->add(info);
     } else if (info->isGroupClipping()) {
@@ -97,6 +100,7 @@ void ClippingActorHolder::invalidateClipping(LiveActor* pActor) {
     flags->isInvalidClipping = true;
     flags->_1c = false;
     ClippingActorInfoList* list;
+
     if (isDead(pActor)) {
         list = mNonClippingTargets;
     } else {
@@ -105,6 +109,7 @@ void ClippingActorHolder::invalidateClipping(LiveActor* pActor) {
 
     ClippingActorInfo* info = list->remove(pActor);
     mInvalidClippings->add(info);
+
     if (isClipped(pActor)) {
         pActor->endClipped();
     }
@@ -121,6 +126,7 @@ void ClippingActorHolder::addToClippingTarget(LiveActor* pActor) {
     }
 
     ClippingActorInfo* info = mNonClippingTargets->remove(pActor);
+
     if (info->isGroupClipping()) {
         mGroupClippings->add(info);
     } else {
@@ -159,16 +165,19 @@ f32 ClippingActorHolder::getClippingRadius(const LiveActor* pActor) {
  */
 ClippingActorInfo* ClippingActorHolder::find(const LiveActor* pActor) const {
     ClippingActorInfo* info = mClippingTargets->tryFind(pActor);
+
     if (info) {
         return info;
     }
 
     info = mNonClippingTargets->tryFind(pActor);
+
     if (info) {
         return info;
     }
 
     info = mGroupClippings->tryFind(pActor);
+
     if (info) {
         return info;
     }

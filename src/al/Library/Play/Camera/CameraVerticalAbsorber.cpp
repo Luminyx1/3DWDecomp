@@ -108,6 +108,7 @@ CameraVerticalAbsorber::CameraVerticalAbsorber(const CameraPoser_RS* pPoser,
  */
 void CameraVerticalAbsorber::load(const ByamlIter& rIter) {
     ByamlIter iter;
+
     if (!rIter.tryGetIterByKey(&iter, "VerticalAbsorb")) {
         return;
     }
@@ -117,6 +118,7 @@ void CameraVerticalAbsorber::load(const ByamlIter& rIter) {
     tryGetByamlF32(&mHighJumpJudgeSpeedV, iter, "HighJumpJudgeSpeedV");
 
     ByamlIter advanceIter;
+
     if (iter.tryGetIterByKey(&advanceIter, "AdvanceAbsorbUp")) {
         mIsAdvanceAbsorbUp = true;
         mAdvanceAbsorbScreenPosUp = getByamlKeyFloat(advanceIter, "AdvanceAbsorbScreenPosUp");
@@ -201,6 +203,7 @@ void CameraVerticalAbsorber::update() {
     updateNerve();
 
     sead::Vector3f offset = {0.0f, 0.0f, 0.0f};
+
     if (mIsKeepInFrame) {
         sead::Vector3f targetTrans = {0.0f, 0.0f, 0.0f};
         alCameraPoserFunction::calcTargetTransWithOffset(&targetTrans, mCameraPoser);
@@ -225,6 +228,7 @@ void CameraVerticalAbsorber::makeLookAtCamera(sead::LookAtCamera* pCamera) const
     }
 
     pCamera->setAt(pCamera->getAt() - mAbsorbVec);
+
     if (!mIsNoCameraPosAbsorb) {
         pCamera->setPos(pCamera->getPos() - mAbsorbVec);
     }
@@ -257,6 +261,7 @@ void CameraVerticalAbsorber::exeAbsorb() {
 
     if (!alCameraPoserFunction::isTargetCollideGround(mCameraPoser)) {
         f32 speedV = alCameraPoserFunction::calcTargetSpeedV(mCameraPoser);
+
         if (mHighJumpJudgeSpeedV < speedV) {
             setNerve(this, &NrvCameraVerticalAbsorberFollow);
             return;
@@ -285,6 +290,7 @@ void CameraVerticalAbsorber::exeAbsorb() {
 
     screenPos.x += static_cast<u32>(getDisplayWidth()) * 0.5f;
     screenPos.y = static_cast<u32>(getDisplayHeight()) * 0.5f - screenPos.y;
+
     if (mAbsorbScreenPosDown < screenPos.y || screenPos.y < mAbsorbScreenPosUp) {
         setNerve(this, &NrvCameraVerticalAbsorberFollow);
         return;
@@ -294,6 +300,7 @@ void CameraVerticalAbsorber::exeAbsorb() {
     sead::Vector3f dir = mLookAtCamera.getAt() - mLookAtCamera.getPos();
     normalize(&dir);
     parallelizeVec(&absorbV, dir, mAbsorbVec);
+
     if (absorbV.length() > 1000.0f ||
         alCameraPoserFunction::isExistWallCollisionUnderTarget(mCameraPoser)) {
         setNerve(this, &NrvCameraVerticalAbsorberFollow);
@@ -314,6 +321,7 @@ void CameraVerticalAbsorber::exeAbsorb() {
                 alCameraPoserFunction::getUnderTargetCollisionPos(mCameraPoser) -
                 mUnderTargetCollisionPos;
             parallelizeVec(&diff, gravity, diff);
+
             if (isNearZero(diff, 0.001f) || !(diff.dot(gravity) < 0.0f)) {
                 mIsExistCollisionUnderTarget = false;
             } else {
@@ -332,6 +340,7 @@ void CameraVerticalAbsorber::exeAbsorb() {
                 parallelizeVec(&diffPrev, mUnderTargetCollisionNormal, diffPrev);
                 f32 lengthNew = diffNew.length();
                 f32 lengthPrev = diffPrev.length();
+
                 if (!((lengthNew < lengthPrev ? lengthNew : lengthPrev) < 5.0f)) {
                     setNerve(this, &NrvCameraVerticalAbsorberFollowSlow);
                     return;
@@ -349,6 +358,7 @@ void CameraVerticalAbsorber::exeAbsorb() {
     mLerp2 = lerpValue(0.9f, prevAbsorbLength, mLerp2);
     f32 rate = normalize(prevAbsorbLength - mLerp2, 0.0f, mAbsorbVec.length());
     f32 curLength = mAbsorbVec.length();
+
     if (curLength > 0.0f) {
         mAbsorbVec *= length * (1.0f - rate) / curLength;
     }
@@ -384,6 +394,7 @@ void CameraVerticalAbsorber::exeFollow() {
     mLerp2 = lerpValue(0.9f, prevAbsorbLength, mLerp2);
     f32 rate = normalize(prevAbsorbLength - mLerp2, 0.0f, mAbsorbVec.length());
     f32 curLength = mAbsorbVec.length();
+
     if (curLength > 0.0f) {
         mAbsorbVec *= length * (1.0f - rate) / curLength;
     }
@@ -402,6 +413,7 @@ void CameraVerticalAbsorber::exeFollowGround() {
     mLerp2 = lerpValue(0.9f, prevAbsorbLength, mLerp2);
     f32 rate = normalize(prevAbsorbLength - mLerp2, 0.0f, mAbsorbVec.length());
     f32 curLength = mAbsorbVec.length();
+
     if (curLength > 0.0f) {
         mAbsorbVec *= length * (1.0f - rate) / curLength;
     }
@@ -411,10 +423,12 @@ void CameraVerticalAbsorber::exeFollowGround() {
     if (isGreaterEqualStep(this, 3) &&
         !alCameraPoserFunction::isTargetCollideGround(mCameraPoser)) {
         const CameraPoser_RS* poser = mCameraPoser;
+
         if (alCameraPoserFunction::isExistSlopeCollisionUnderTarget(poser) &&
             !(alCameraPoserFunction::calcTargetSpeedH(poser) < 10.0f) &&
             !(alCameraPoserFunction::getUnderTargetCollisionNormal(poser).y < 0.342f)) {
             sead::Vector3f dir = mLookAtCamera.getPos() - mLookAtCamera.getAt();
+
             if (tryNormalizeOrZero(&dir) && dir.y < 0.2588f) {
                 setNerve(this, &NrvCameraVerticalAbsorberFollow);
                 return;
@@ -436,6 +450,7 @@ void CameraVerticalAbsorber::exeFollowClimbPole() {
     mLerp2 = lerpValue(0.9f, prevAbsorbLength, mLerp2);
     f32 rate = normalize(prevAbsorbLength - mLerp2, 0.0f, mAbsorbVec.length());
     f32 curLength = mAbsorbVec.length();
+
     if (curLength > 0.0f) {
         mAbsorbVec *= length * (1.0f - rate) / curLength;
     }
@@ -465,6 +480,7 @@ void CameraVerticalAbsorber::exeFollowWater() {
     mLerp2 = lerpValue(0.9f, prevAbsorbLength, mLerp2);
     f32 rate = normalize(prevAbsorbLength - mLerp2, 0.0f, mAbsorbVec.length());
     f32 curLength = mAbsorbVec.length();
+
     if (curLength > 0.0f) {
         mAbsorbVec *= length * (1.0f - rate) / curLength;
     }
@@ -489,6 +505,7 @@ bool CameraVerticalAbsorber::isAbsorbing() const {
  */
 void CameraVerticalAbsorber::invalidate() {
     mIsInvalidated = true;
+
     if (!isNerve(this, &NrvCameraVerticalAbsorberFollowAbsolute)) {
         setNerve(this, &NrvCameraVerticalAbsorberFollowAbsolute);
     }
@@ -505,6 +522,7 @@ void CameraVerticalAbsorber::tryResetAbsorbVecIfInCollision(const sead::Vector3f
     }
 
     mAbsorbVec = {0.0f, 0.0f, 0.0f};
+
     if (alCameraPoserFunction::isTargetCollideGround(mCameraPoser)) {
         setNerve(this, &NrvCameraVerticalAbsorberFollowGround);
     } else {

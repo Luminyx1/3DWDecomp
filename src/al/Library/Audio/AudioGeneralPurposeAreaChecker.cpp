@@ -63,6 +63,7 @@ void AudioGeneralPurposeAreaChecker::update(s32 islandId) {
     mIsExitedArea = false;
     mIsAreaChanged = false;
     const PlayerHolder* playerHolder = mPlayerHolder;
+
     if (playerHolder == nullptr) {
         return;
     }
@@ -72,13 +73,16 @@ void AudioGeneralPurposeAreaChecker::update(s32 islandId) {
     s32 playerNum = getPlayerNumMax(playerHolder);
     AreaObj* curArea = nullptr;
     bool isOutOfArea = false;
+
     for (s32 i = 0; i < playerNum; i++) {
         LiveActor* player = getPlayerActor(playerHolder, i);
+
         if (!isAreaTarget(player) || isDead(player)) {
             continue;
         }
 
         AreaObj* areaObj = tryFindAreaObj(this, areaName, getTrans(player));
+
         if (areaObj == nullptr) {
             isOutOfArea = true;
             continue;
@@ -86,6 +90,7 @@ void AudioGeneralPurposeAreaChecker::update(s32 islandId) {
 
         bool isRequireInIsland = false;
         tryGetAreaObjArg(&isRequireInIsland, areaObj, "RequireInIsland");
+
         if (islandId < 0 && isRequireInIsland) {
             continue;
         }
@@ -98,6 +103,7 @@ void AudioGeneralPurposeAreaChecker::update(s32 islandId) {
     }
 
     mCurArea = curArea;
+
     if (!isOutOfArea && curArea == nullptr) {
         return;
     }
@@ -111,12 +117,14 @@ void AudioGeneralPurposeAreaChecker::update(s32 islandId) {
     }
 
     mIsAreaChanged = getActiveAreaObj(curArea) != getActiveAreaObj(mPrevArea);
+
     if (curArea == nullptr) {
         return;
     }
 
     bool isOneTime = false;
     tryGetAreaObjArg(&isOneTime, curArea, "IsOneTime");
+
     if (isOneTime) {
         mCurArea->mIsValid = false;
     }
@@ -213,6 +221,7 @@ const char* AudioGeneralPurposeAreaChecker::getStringArgInCurAreaWithAreaCheck(c
     }
 
     AreaObj* areaObj = tryFindAreaObjPlayerOne(this, mAreaName, mPlayerHolder);
+
     if (areaObj == nullptr) {
         return nullptr;
     }

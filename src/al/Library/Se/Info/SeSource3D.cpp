@@ -43,6 +43,7 @@ void SeSource3D::syncPosition() {
     const sead::Vector3f* pos = calcPosition(listenerPos);
     mActor->setPosition(*pos);
     f32 distanceSq = (*pos - listenerPos).squaredLength();
+
     if (cFarDistanceSq < distanceSq) {
         mPriority = -1;
     } else {

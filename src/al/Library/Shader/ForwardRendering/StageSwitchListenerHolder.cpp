@@ -11,6 +11,7 @@ namespace al {
 void StageSwitchListenerHolder::RequestList::init(s32 num) {
     mArray = new StageSwitchListenerList*[num];
     mCount = 0;
+
     for (s32 i = 0; i < num; i++) {
         mArray[i] = nullptr;
     }
@@ -96,11 +97,13 @@ void StageSwitchListenerHolder::add(StageSwitchListener* pListener, StageSwitchA
  */
 void StageSwitchListenerHolder::requestChange(s32 switchNo, bool isOn) {
     StageSwitchListenerList* list = &mListenerLists[switchNo];
+
     if (list->isEmpty()) {
         return;
     }
 
     list->request(isOn);
+
     if (list->getRequestIndex() < 0) {
         mNextRequestList->addRequest(list);
     }
@@ -112,6 +115,7 @@ void StageSwitchListenerHolder::requestChange(s32 switchNo, bool isOn) {
  */
 void StageSwitchListenerHolder::instantUpdate(s32 switchNo) {
     StageSwitchListenerList* list = &mListenerLists[switchNo];
+
     if (list->isEmpty() || list->getRequestIndex() < 0) {
         return;
     }

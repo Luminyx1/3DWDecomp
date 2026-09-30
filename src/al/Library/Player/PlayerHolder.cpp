@@ -21,8 +21,10 @@ void PlayerHolder::clear() {
 void PlayerHolder::registerPlayer(LiveActor* pActor, PadRumbleKeeper* pPadRumbleKeeper,
                                   bool isPlayerActorClass) {
     s32 index = mPlayerNumComplete;
+
     if (mNotPlayerActorClassNum > 0 && isPlayerActorClass) {
         index = mPlayerNumComplete - mNotPlayerActorClassNum;
+
         for (s32 i = mPlayerNumComplete; i > index; i--) {
             mPlayers[i] = mPlayers[i - 1];
         }
@@ -33,6 +35,7 @@ void PlayerHolder::registerPlayer(LiveActor* pActor, PadRumbleKeeper* pPadRumble
     mPlayers[index].mPadRumbleKeeper = pPadRumbleKeeper;
     mPlayers[index].mIsPlayerActorClass = isPlayerActorClass;
     mPlayerNumComplete++;
+
     if (!isPlayerActorClass) {
         mNotPlayerActorClassNum++;
     }

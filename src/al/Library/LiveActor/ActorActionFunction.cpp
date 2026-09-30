@@ -59,6 +59,7 @@ bool tryStartAction(LiveActor* pActor, const char* pActionName) {
     bool isMclStarted = tryStartMclAnimIfExist(pActor, pActionName);
     bool isMtsStarted = tryStartMtsAnimIfExist(pActor, pActionName);
     bool isVisStarted = tryStartVisAnimIfExist(pActor, pActionName);
+
     if (!isSklStarted && !isMtpStarted && !isMclStarted && !isMtsStarted && !isVisStarted) {
         return false;
     }
@@ -94,6 +95,7 @@ bool tryStartActionIfNotPlaying(LiveActor* pActor, const char* pActionName) {
 bool isActionPlaying(const LiveActor* pActor, const char* pActionName) {
     const char* playingName = nullptr;
     ActorActionKeeper* keeper = pActor->mActionKeeper;
+
     if (keeper && keeper->getAnimCtrl()) {
         playingName = keeper->getAnimCtrl()->getPlayingActionName();
     }
@@ -174,6 +176,7 @@ bool isExistAction(const LiveActor* pActor) {
  */
 bool isExistAction(const LiveActor* pActor, const char* pActionName) {
     ActorActionKeeper* keeper = pActor->mActionKeeper;
+
     if (keeper && keeper->getAnimCtrl() && keeper->getAnimCtrl()->isExistAction(pActionName)) {
         return true;
     }
@@ -225,6 +228,7 @@ bool isActionOneTime(const LiveActor* pActor, const char* pActionName) {
  */
 f32 getActionFrame(const LiveActor* pActor) {
     ActorActionKeeper* keeper = pActor->mActionKeeper;
+
     if (keeper && keeper->getAnimCtrl()) {
         return keeper->getAnimCtrl()->getFrame();
     }
@@ -240,6 +244,7 @@ f32 getActionFrame(const LiveActor* pActor) {
  */
 f32 getActionFrameMax(const LiveActor* pActor, const char* pActionName) {
     ActorActionKeeper* keeper = pActor->mActionKeeper;
+
     if (keeper && keeper->getAnimCtrl()) {
         return keeper->getAnimCtrl()->getActionFrameMax(pActionName);
     }
@@ -254,6 +259,7 @@ f32 getActionFrameMax(const LiveActor* pActor, const char* pActionName) {
  */
 f32 getActionFrameRate(const LiveActor* pActor) {
     ActorActionKeeper* keeper = pActor->mActionKeeper;
+
     if (keeper && keeper->getAnimCtrl()) {
         return keeper->getAnimCtrl()->getFrameRate();
     }
@@ -268,8 +274,10 @@ f32 getActionFrameRate(const LiveActor* pActor) {
  */
 const char* getActionName(const LiveActor* pActor) {
     ActorActionKeeper* keeper = pActor->mActionKeeper;
+
     if (keeper && keeper->getAnimCtrl()) {
         const char* actionName = keeper->getAnimCtrl()->getPlayingActionName();
+
         if (actionName) {
             return actionName;
         }
@@ -429,6 +437,7 @@ void copyAction(LiveActor* pActor, const LiveActor* pSrcActor) {
     }
 
     startAction(pActor, getActionName(pSrcActor));
+
     if (isSklAnimExist(pSrcActor) && isSklAnimExist(pActor)) {
         copySklAnim(pActor, pSrcActor);
     }
@@ -465,6 +474,7 @@ void setNerveAtActionEnd(LiveActor* pActor, const Nerve* pNerve) {
 void resetNerveActionForInit(LiveActor* pActor) {
     NerveActionCtrl* actionCtrl = pActor->getNerveKeeper()->mActionCtrl;
     const Nerve* currentNerve = pActor->getNerveKeeper()->getCurrentNerve();
+
     for (s32 i = 0; i < actionCtrl->mNumActions; i++) {
         if (actionCtrl->mActions[i] == currentNerve) {
             startNerveAction(pActor, actionCtrl->mActions[i]->getActionName());

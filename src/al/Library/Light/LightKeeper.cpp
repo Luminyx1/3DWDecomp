@@ -17,6 +17,7 @@ template <typename T>
 al::PrePassLight<T>* tryGetPrePassLight(const al::LiveActor* pActor, const char* pName) {
     volatile s32 lightType = T::cLightType;
     al::PrePassLightBase* light = pActor->mLightKeeper->getLightBase(pName);
+
     if (light && light->getLightType() == lightType) {
         return static_cast<al::PrePassLight<T>*>(light);
     }
@@ -52,6 +53,7 @@ namespace al {
  */
 bool isActivePrePassLight(const LiveActor* pActor, const char* pName) {
     PrePassLightBase* light = pActor->mLightKeeper->getLightBase(pName);
+
     if (!light) {
         return false;
     }
@@ -67,6 +69,7 @@ bool isActivePrePassLight(const LiveActor* pActor, const char* pName) {
  */
 bool isExistPrePassLight(const LiveActor* pActor, const char* pName) {
     ActorPrePassLightKeeper* keeper = pActor->mLightKeeper;
+
     if (!keeper) {
         return false;
     }
@@ -82,6 +85,7 @@ bool isExistPrePassLight(const LiveActor* pActor, const char* pName) {
  */
 PrePassLightBase* getPrePassLineLight(const LiveActor* pActor, const char* pName) {
     ActorPrePassLightKeeper* keeper = pActor->mLightKeeper;
+
     if (!keeper) {
         return nullptr;
     }
@@ -97,6 +101,7 @@ PrePassLightBase* getPrePassLineLight(const LiveActor* pActor, const char* pName
  */
 void appearPrePassLight(const LiveActor* pActor, const char* pName, s32 step) {
     PrePassLightBase* light = pActor->mLightKeeper->getLightBase(pName);
+
     if (light) {
         light->requestAppearByUser(step);
     }
@@ -110,6 +115,7 @@ void appearPrePassLight(const LiveActor* pActor, const char* pName, s32 step) {
  */
 void killPrePassLight(const LiveActor* pActor, const char* pName, s32 step) {
     PrePassLightBase* light = pActor->mLightKeeper->getLightBase(pName);
+
     if (light) {
         light->requestKillByUser(step);
     }
@@ -122,11 +128,13 @@ void killPrePassLight(const LiveActor* pActor, const char* pName, s32 step) {
  */
 void appearPrePassLightAll(const LiveActor* pActor, s32 step) {
     ActorPrePassLightKeeper* keeper = pActor->mLightKeeper;
+
     if (!keeper) {
         return;
     }
 
     s32 num = keeper->getLightNum();
+
     for (s32 i = 0; i < num; i++) {
         keeper->getLightBase(i)->requestAppearByUser(step);
     }
@@ -139,11 +147,13 @@ void appearPrePassLightAll(const LiveActor* pActor, s32 step) {
  */
 void killPrePassLightAll(const LiveActor* pActor, s32 step) {
     ActorPrePassLightKeeper* keeper = pActor->mLightKeeper;
+
     if (!keeper) {
         return;
     }
 
     s32 num = keeper->getLightNum();
+
     for (s32 i = 0; i < num; i++) {
         keeper->getLightBase(i)->requestKillByUser(step);
     }
@@ -157,6 +167,7 @@ void killPrePassLightAll(const LiveActor* pActor, s32 step) {
  */
 void setPrePassLightOffset(const LiveActor* pActor, const char* pName, const sead::Vector3f& rOffset) {
     PrePassLightBase* light = pActor->mLightKeeper->getLightBase(pName);
+
     if (light) {
         light->mOffset = rOffset;
     }
@@ -170,6 +181,7 @@ void setPrePassLightOffset(const LiveActor* pActor, const char* pName, const sea
  */
 void requestPrePassLightColor(const LiveActor* pActor, const char* pName, const sead::Color4f& rColor) {
     PrePassLightBase* light = pActor->mLightKeeper->getLightBase(pName);
+
     if (light) {
         light->requestUserColor(rColor);
     }
@@ -183,6 +195,7 @@ void requestPrePassLightColor(const LiveActor* pActor, const char* pName, const 
  */
 void requestPrePassLightColor(const LiveActor* pActor, const char* pName, f32 rate) {
     PrePassLightBase* light = pActor->mLightKeeper->getLightBase(pName);
+
     if (light) {
         light->requestUserColor(light->mColor * rate);
     }
@@ -199,6 +212,7 @@ void requestPrePassLightColor(const LiveActor* pActor, const char* pName, const 
                               f32 rate) {
     sead::Color4f color = pActor->mLightKeeper->findUserColor(pColorName) * rate;
     PrePassLightBase* light = pActor->mLightKeeper->getLightBase(pName);
+
     if (light) {
         light->requestUserColor(color);
     }
@@ -222,6 +236,7 @@ const sead::Color4f& getPrePassUserColor(const LiveActor* pActor, const char* pN
  */
 void setEnablePrePassLightSpecular(const LiveActor* pActor, const char* pName, bool isEnable) {
     PrePassLightBase* light = pActor->mLightKeeper->getLightBase(pName);
+
     if (light) {
         light->mIsEnableSpecular = isEnable;
     }
@@ -235,6 +250,7 @@ void setEnablePrePassLightSpecular(const LiveActor* pActor, const char* pName, b
  */
 f32 getPrePassPointLightRadius(const LiveActor* pActor, const char* pName) {
     PrePassLight<LppPointParam>* light = tryGetPrePassLight<LppPointParam>(pActor, pName);
+
     if (!light) {
         return -1.0f;
     }
@@ -250,6 +266,7 @@ f32 getPrePassPointLightRadius(const LiveActor* pActor, const char* pName) {
  */
 void setPrePassPointLightRadius(const LiveActor* pActor, const char* pName, f32 radius) {
     PrePassLight<LppPointParam>* light = tryGetPrePassLight<LppPointParam>(pActor, pName);
+
     if (light) {
         light->mParam.mRadius = radius;
     }
@@ -267,6 +284,7 @@ void setPrePassPointLightRadius(const LiveActor* pActor, const char* pName, f32 
 void getPrePassSpotLightInfo(const LiveActor* pActor, const char* pName, f32* pDegree, f32* pLength,
                              sead::Vector3f* pPos, sead::Vector3f* pDir) {
     PrePassLight<LppSpotParam>* light = tryGetPrePassLight<LppSpotParam>(pActor, pName);
+
     if (pDegree) {
         *pDegree = light->mParam.mDegree;
     }
@@ -330,6 +348,7 @@ bool isPrePassSpotLightStrikeCollision(const LiveActor* pActor, const char* pNam
 void getPrePassProjLightInfo(const LiveActor* pActor, const char* pName, f32* pFovyDegree,
                              f32* pLength, sead::Vector3f* pPos, sead::Vector3f* pDir) {
     PrePassLight<LppProjParam>* light = tryGetPrePassLight<LppProjParam>(pActor, pName);
+
     if (pFovyDegree) {
         *pFovyDegree = light->mParam.mFovyDegree;
     }
@@ -354,6 +373,7 @@ void getPrePassProjOrthoLightInfo(const LiveActor* pActor, const char* pName, f3
                                   sead::Vector3f* pSize, sead::Vector3f* pPos,
                                   sead::Vector3f* pDir) {
     PrePassLight<LppProjOrthoParam>* light = tryGetPrePassLight<LppProjOrthoParam>(pActor, pName);
+
     if (pSize) {
         light->mParam.calcSizeXZ(&pSize->x, &pSize->z);
         pSize->y = light->mParam.mFarRate * 100.0f - light->mParam.mNear;
@@ -397,6 +417,7 @@ void setPrePassProjLightFovyDegree(const LiveActor* pActor, const char* pName, f
 void setPrePassProjLightShadow(const LiveActor* pActor, const char* pName, bool isEnable,
                                bool isSoft, f32 param) {
     PrePassLight<LppProjParam>* light = tryGetPrePassLight<LppProjParam>(pActor, pName);
+
     if (isEnable) {
         light->mParam.mShadowType = (param != 0.0f && isSoft) ? 2 : 1;
         light->mParam.mShadowParam = param;
@@ -416,6 +437,7 @@ void setPrePassProjLightShadow(const LiveActor* pActor, const char* pName, bool 
 void setPrePassProjOrthoLightShadow(const LiveActor* pActor, const char* pName, bool isEnable,
                                     bool isSoft, f32 param) {
     PrePassLight<LppProjOrthoParam>* light = tryGetPrePassLight<LppProjOrthoParam>(pActor, pName);
+
     if (isEnable) {
         light->mParam.mShadowType = (param != 0.0f && isSoft) ? 2 : 1;
         light->mParam.mShadowParam = param;
@@ -435,6 +457,7 @@ void setPrePassProjOrthoLightShadow(const LiveActor* pActor, const char* pName, 
 void setPrePassSpotLightShadow(const LiveActor* pActor, const char* pName, bool isEnable,
                                bool isSoft, f32 param) {
     PrePassLight<LppSpotParam>* light = tryGetPrePassLight<LppSpotParam>(pActor, pName);
+
     if (isEnable) {
         light->mParam.mShadowType = (param != 0.0f && isSoft) ? 2 : 1;
         light->mParam.mShadowParam = param;
@@ -452,6 +475,7 @@ void setPrePassSpotLightShadow(const LiveActor* pActor, const char* pName, bool 
 void initPrePassLightMtxConnector(const LiveActor* pActor, const char* pName,
                                   const sead::Matrix34f* pMtx) {
     PrePassLightBase* light = pActor->mLightKeeper->getLightBase(pName);
+
     if (light) {
         attachMtxConnectorToMtxPtr(light->mMtxConnector, pMtx);
     }

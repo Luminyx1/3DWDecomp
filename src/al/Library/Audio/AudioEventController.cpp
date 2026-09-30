@@ -33,6 +33,7 @@ bool isPlayerInWater(const al::IUseAreaObj* pUser, const al::PlayerHolder* pPlay
     bool isAnyInWater = false;
     s32 targetNum = 0;
     s32 inWaterNum = 0;
+
     for (s32 i = 0; i < playerNum; i++) {
         if (al::isPlayerDead(pPlayerHolder, i) || !al::isPlayerAreaTarget(pPlayerHolder, i)) {
             continue;
@@ -40,8 +41,10 @@ bool isPlayerInWater(const al::IUseAreaObj* pUser, const al::PlayerHolder* pPlay
 
         targetNum++;
         sead::Vector3f pos = al::getPlayerPos(pPlayerHolder, i);
+
         if (al::isInWaterAreaNoSink(pUser, pos)) {
             sead::Vector3f upperPos = pos + sead::Vector3f(0.0f, 80.0f, 0.0f);
+
             if (!al::isInWaterAreaNoSink(pUser, upperPos)) {
                 *pInWaterFrames = 0;
                 continue;
@@ -119,6 +122,7 @@ void AudioEventController::init3D(AreaObjDirector* pAreaObjDirector, AudioSituat
  */
 void AudioEventController::initAfterInitPlacement(const AudioDirector* pDirector) {
     mBgmChangeWatcher = -1;
+
     if (tryFindAreaObjGroup(this, "SePlayArea") != nullptr) {
         mSeAreaTriggeredPlayer = new SeAreaTriggeredPlayer(pDirector, mAreaObjDirector, mPlayerHolder);
     }
@@ -134,15 +138,19 @@ void AudioEventController::update() {
 
     if ((mEnableEventFlags & 1) && mBgmChangeAreaChecker != nullptr) {
         mBgmChangeAreaChecker->update(-1);
+
         if (mBgmChangeAreaChecker->isAreaChanged()) {
             const char* name = mBgmChangeAreaChecker->getStringArgInCurArea("Kind");
+
             if (name == nullptr) {
                 name = mDefaultBgmPlayName;
             }
 
             const char* curName = mCurBgmPlayName;
+
             if (!mIsDisableBgmChangeArea && (name != nullptr || curName != nullptr)) {
                 bool isDiffer = true;
+
                 if (name != nullptr && curName != nullptr) {
                     isDiffer = !isEqualString(curName, name);
                 }
@@ -163,11 +171,13 @@ void AudioEventController::update() {
 
     if ((mEnableEventFlags & 0x80) && mBgmStartAreaChecker != nullptr) {
         mBgmStartAreaChecker->update(mBgmChangeWatcher);
+
         if (mBgmStartAreaChecker->isEnteredArea() || mBgmStartAreaChecker->isAreaChanged()) {
             s32 fadeInFrames = mBgmStartAreaChecker->getIntArgInCurArea("FadeInNewBgmFrame");
             s32 fadeOutFrames = mBgmStartAreaChecker->getIntArgInCurArea("FadeOutCurrentBgmFrame");
             s32 delayFrames = mBgmStartAreaChecker->getIntArgInCurArea("StartDelayFrame");
             s32 startFadeInFrames = fadeInFrames;
+
             if (mBgmStartAreaChecker->isCurrAreaCheckForSceneRestart() && mIsOverrideFadeInFrames) {
                 startFadeInFrames = mOverrideFadeInFrames;
                 mIsOverrideFadeInFrames = false;
@@ -175,6 +185,7 @@ void AudioEventController::update() {
 
             const char* name = nullptr;
             mBgmStartAreaChecker->tryGetStringArgInCurArea(&name, "Kind");
+
             if (name != nullptr) {
                 startBgm(this, name, startFadeInFrames, delayFrames, fadeOutFrames, fadeInFrames);
             }
@@ -183,10 +194,12 @@ void AudioEventController::update() {
 
     if ((mEnableEventFlags & 2) && mBgmStopAreaChecker != nullptr) {
         mBgmStopAreaChecker->update(-1);
+
         if (mBgmStopAreaChecker->isEnteredArea()) {
             s32 fadeOutFrames = mBgmStopAreaChecker->getIntArgInCurArea("FadeOutFrameNum");
             const char* name = nullptr;
             mBgmStopAreaChecker->tryGetStringArgInCurArea(&name, "StopBgmName");
+
             if (name == nullptr) {
                 tryStopAllBgm(this, fadeOutFrames);
             } else {
@@ -197,8 +210,10 @@ void AudioEventController::update() {
 
     if ((mEnableEventFlags & 4) && mBgmRegionChangeAreaChecker != nullptr) {
         mBgmRegionChangeAreaChecker->update(-1);
+
         if (mBgmRegionChangeAreaChecker->isAreaChanged()) {
             const char* name = mBgmRegionChangeAreaChecker->getStringArgInCurArea("BgmSituationName");
+
             if (name != nullptr) {
                 changeBgmSituation(this, name);
             }
@@ -207,8 +222,10 @@ void AudioEventController::update() {
 
     if ((mEnableEventFlags & 8) && mAudioEffectChangeAreaChecker != nullptr) {
         mAudioEffectChangeAreaChecker->update(-1);
+
         if (mAudioEffectChangeAreaChecker->isAreaChanged()) {
             const char* name = mAudioEffectChangeAreaChecker->getStringArgInCurArea("AudioEffectName");
+
             if (name == nullptr) {
                 name = mDefaultAudioEffectName;
             }
@@ -222,8 +239,10 @@ void AudioEventController::update() {
     }
 
     const PlayerHolder* playerHolder = mPlayerHolder;
+
     if (playerHolder != nullptr) {
         bool isInWater = isPlayerInWater(this, playerHolder, &mInWaterFrames);
+
         if (isInWater) {
             if (!mIsInWater) {
                 changeBgmSituation(this, "InWater");
@@ -237,6 +256,7 @@ void AudioEventController::update() {
 
     if ((mEnableEventFlags & 0x10) && mAudioListenerParamAreaChecker != nullptr) {
         mAudioListenerParamAreaChecker->update(-1);
+
         if (mAudioListenerParamAreaChecker->isExitedArea()) {
             mSeDirector->resetListenerParam();
             mSeDirector->changeListenerPoser(nullptr);
@@ -251,6 +271,7 @@ void AudioEventController::update() {
             param.mMaxBiquadFilterValue = -1.0f;
             mSeDirector->changeListenerParam(param);
             const char* poserName = mAudioListenerParamAreaChecker->getStringArgInCurArea("PoserName");
+
             if (poserName != nullptr && !isEqualString(poserName, "変更なし")) {
                 mSeDirector->changeListenerPoser(poserName);
             }
@@ -260,12 +281,14 @@ void AudioEventController::update() {
     if ((mEnableEventFlags & 0x40) && mAudioSituationAreaChecker != nullptr) {
         AudioGeneralPurposeAreaChecker* checker = mAudioSituationAreaChecker;
         checker->update(-1);
+
         if (checker->isExitedArea()) {
             s32 type = checker->getIntArgInCurArea("SituationType");
             mAudioSituationDirector->endSituation(type);
         } else if (checker->isAreaChanged()) {
             s32 type = checker->getIntArgInCurArea("SituationType");
             const char* name = checker->getStringArgInCurArea("SituationName");
+
             if (name != nullptr && !isEqualString(name, mAudioSituationDirector->getCurrentSituationName(type))) {
                 mAudioSituationDirector->startSituation(type, name);
             }
@@ -320,6 +343,7 @@ void AudioEventController::deactivate() {
     mBgmRegionChangeAreaChecker->reset();
     mAudioEffectChangeAreaChecker->reset();
     mAudioListenerParamAreaChecker->reset();
+
     if (mSeAreaTriggeredPlayer != nullptr) {
         mSeAreaTriggeredPlayer->reset();
     }
@@ -362,6 +386,7 @@ bool AudioEventController::isInBgmStopArea() {
  */
 const char* AudioEventController::getBgmPlayNameByAreaChecker(bool isIgnoreDefault) {
     const char* name = mBgmChangeAreaChecker->getStringArgInCurAreaWithAreaCheck("Kind");
+
     if (name == nullptr && !isIgnoreDefault) {
         return mDefaultBgmPlayName;
     }
@@ -383,6 +408,7 @@ const char* AudioEventController::getBgmSituationNameByAreaChecker() {
  */
 const char* AudioEventController::getAudioEffectNameByAreaChecker() {
     const char* name = mAudioEffectChangeAreaChecker->getStringArgInCurAreaWithAreaCheck("AudioEffectName");
+
     if (name != nullptr) {
         return name;
     }
@@ -397,8 +423,10 @@ const char* AudioEventController::getAudioEffectNameByAreaChecker() {
  */
 const char* AudioEventController::getBgmPlayNameInThisPosition(const sead::Vector3f& rPos) {
     AreaObj* areaObj = tryFindAreaObj(this, "BgmChangeArea", rPos);
+
     if (areaObj == nullptr) {
         areaObj = tryFindAreaObj(this, "BgmStartArea", rPos);
+
         if (areaObj == nullptr) {
             return mDefaultBgmPlayName;
         }
@@ -406,6 +434,7 @@ const char* AudioEventController::getBgmPlayNameInThisPosition(const sead::Vecto
 
     const char* name = nullptr;
     bool isFound = tryGetAreaObjStringArg(&name, areaObj, "Kind");
+
     if (name != nullptr && isFound) {
         return name;
     }

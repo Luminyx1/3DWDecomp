@@ -201,6 +201,7 @@ ExecutorListActorModelDrawBase::ExecutorListActorModelDrawBase(const char* pList
                                                                const ExecuteSystemInitInfo& rInfo)
     : ExecutorListBase(pListName, pGroupName), mDrawerNumMax(capacity) {
     mDrawers = new ModelDrawerBase*[capacity];
+
     for (s32 i = 0; i < mDrawerNumMax; i++) {
         mDrawers[i] = nullptr;
     }
@@ -216,6 +217,7 @@ void ExecutorListActorModelDrawBase::registerActorModel(LiveActor* pActor) {
 
     for (s32 i = 0; i < mDrawerNum; i++) {
         ModelDrawerBase* drawer = mDrawers[i];
+
         if (isEqualString(drawer->getName(), modelName)) {
             drawer->registerModel(model);
             pActor->mActorExecuteInfo->addDrawer(drawer);

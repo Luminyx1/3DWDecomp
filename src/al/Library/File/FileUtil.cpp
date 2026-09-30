@@ -165,6 +165,7 @@ bool tryRequestPreLoadFile(const Resource* pResource, const sead::SafeString& rF
 
     ByamlIter byml(pResource->getByml(rFileName));
     FileLoader* fileLoader = getFileLoader();
+
     if (!pHeap) {
         pHeap = getSceneResourceHeap();
     }

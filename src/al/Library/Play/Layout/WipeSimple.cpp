@@ -80,6 +80,7 @@ void WipeSimple::startOpen(s32 frames) {
 void WipeSimple::startOpenDelay(s32 delay, s32 frames) {
     mDelay = delay;
     mFrames = frames;
+
     if (delay >= 0) {
         setNerve(this, &NrvWipeSimpleDelayOpen);
         return;

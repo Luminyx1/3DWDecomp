@@ -26,6 +26,7 @@ public:
 
     f32 getRate(s32 level) const {
         volatile s32 index = level;
+
         if (!mIsEnable)
             return 1.0f;
         return mQualityLevels[index].rate;

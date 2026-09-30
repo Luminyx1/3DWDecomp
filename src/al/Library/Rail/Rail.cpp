@@ -15,10 +15,12 @@ inline f32 Rail::calcNearestRailPosCoord(const sead::Vector3f& pos, f32 interval
 
     s32 curr_index = 0LL;
     s32 bestIndex = 0;
+
     for (s64 i = 0; i < mRailPartCount; i++) {
         RailPart* part = &mRailPart[curr_index];
         f32 param;
         f32 length = part->calcNearestLength(&param, pos, part->getPartLength(), interval);
+
         if (length < *distance) {
             *distance = length;
             bestParam = param;
@@ -39,11 +41,13 @@ void Rail::init(const PlacementInfo& rInfo) {
     PlacementInfo railPointsInfo;
     tryGetPlacementInfoByKey(&railPointsInfo, rInfo, "RailPoints");
     mRailPointsCount = getCountPlacementInfo(railPointsInfo);
+
     if (mRailPointsCount <= 0) {
         return;
     }
 
     mRailPoints = new PlacementInfo*[mRailPointsCount];
+
     for (s32 i = 0; i < mRailPointsCount; i++) {
         mRailPoints[i] = new PlacementInfo();
         tryGetPlacementInfoByIndex(mRailPoints[i], railPointsInfo, i);
@@ -64,6 +68,7 @@ void Rail::init(const PlacementInfo& rInfo) {
     mRailPart = new RailPart[mRailPartCount];
 
     f32 totalLength = 0.0f;
+
     for (s32 i = 0; i < mRailPartCount; i++) {
         PlacementInfo startInfo, endInfo;
         tryGetPlacementInfoByIndex(&startInfo, railPointsInfo, i);
@@ -93,6 +98,7 @@ void Rail::init(const PlacementInfo& rInfo) {
         bool isUseSetAngleS = false;
         bool isUseSetAngleE;
         tryGetArg(&isUseSetAngleS, startInfo, "isUseSetAngle");
+
         if (isUseSetAngleS) {
             f32 angle = 0.0f;
             tryGetArg(&angle, startInfo, "angle");
@@ -100,6 +106,7 @@ void Rail::init(const PlacementInfo& rInfo) {
         }
 
         tryGetArg(&isUseSetAngleE, endInfo, "isUseSetAngle");
+
         if (isUseSetAngleE) {
             f32 angle = 0.0f;
             tryGetArg(&angle, endInfo, "angle");
@@ -123,6 +130,7 @@ s32 Rail::getIncludedSection(const RailPart** part, f32* partDistance, f32 dista
     f32 startDistanceOnRail = 0.0;
     s32 maxRailPart = -1;
     s64 longI = -0x100000000;
+
     for (s32 i = 0; i < mRailPartCount; i++) {
         if (distanceOnRail <= mRailPart[i].getTotalDistance()) {
             if (i <= 0)
@@ -148,6 +156,7 @@ void Rail::calcUpDir(sead::Vector3f* pUp, f32 distance) const {
     f32 railDistance = normalizeLength(distance);
     f32 partDistance = railDistance;
     s32 index = -1;
+
     for (s32 i = 0; i < mRailPartCount; i++) {
         if (railDistance <= mRailPart[i].getTotalDistance()) {
             index = i;
@@ -165,6 +174,7 @@ void Rail::calcUpDir(sead::Vector3f* pUp, f32 distance) const {
 f32 Rail::normalizeLength(f32 distance) const {
     if (mIsClosed) {
         f32 distanceOnRail = modf(distance, getTotalLength());
+
         if (distanceOnRail < 0.0)
             distanceOnRail += getTotalLength();
         return distanceOnRail;
@@ -219,8 +229,10 @@ void Rail::calcNearestRailPointPos(sead::Vector3f* rail_pos, const sead::Vector3
     f32 best_distance = (pos - tmp).squaredLength();
 
     s32 curr_index = 1;
+
     for (s64 i = 1; i < mRailPointsCount; i++) {
         calcRailPointPos(&tmp, curr_index);
+
         if ((pos - tmp).squaredLength() < best_distance) {
             best_distance = (pos - tmp).squaredLength();
             *rail_pos = tmp;
@@ -286,6 +298,7 @@ f32 Rail::getIncludedSectionLength(f32* partDistance, f32* length, f32 distance)
     const RailPart* part = nullptr;
     getIncludedSection(&part, partDistance, distance);
     f32 partLength = part->getPartLength();
+
     if (partDistance && length)
         *length = partLength - *partDistance;
     return partLength;

@@ -23,6 +23,7 @@ PadUiKeyInputAddon::PadUiKeyInputAddon(sead::Controller* pController)
 bool PadUiKeyInputAddon::calc() {
     s32 port = mController->getMgr()->findControllerPort(mController);
     sead::ControllerBase* controller;
+
     if (isValidReplayController(port)) {
         controller = getReplayController(port);
     } else {

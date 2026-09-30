@@ -31,6 +31,7 @@ void ModelDrawerCubeMap::createTable() {
 
     auto* table = new MeshDrawerTable;
     table->allocBuffer(modelObj->GetNumShapes(), nullptr);
+
     for (s32 i = 0; i < modelObj->GetNumShapes(); i++) {
         const nn::g3d::ShapeObj* shape = modelObj->GetShape(i);
         const nn::g3d::MaterialObj* material =
@@ -48,6 +49,7 @@ void ModelDrawerCubeMap::createTable() {
     }
 
     mMeshDrawerTable = table;
+
     for (s32 i = 0; i < mMeshDrawerTable->size(); i++) {
         mMeshDrawerTable->unsafeAt(i)->setForceDraw();
     }
@@ -70,6 +72,7 @@ void ModelDrawerCubeMap::draw() const {
     }
 
     ModelAdditionalInfoRenderCubeMap additionalInfo(mGraphicsSystemInfo);
+
     for (s32 i = 0; i < mModelNum; i++) {
         mModels[i]->getModelG3D()->setModelAdditionalInfo(additionalInfo);
         SimpleModelG3D* model = mModels[i]->getModelG3D();

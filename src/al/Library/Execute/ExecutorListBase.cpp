@@ -9,6 +9,7 @@ namespace al {
 ExecutorListBase::ExecutorListBase(const char* pListName, const char* pGroupName) {
     mListName = pListName;
     mGroupName = pGroupName;
+
     if (pGroupName == nullptr) {
         mGroupName = mListName;
     }

@@ -101,6 +101,7 @@ u8* FileLoader::loadFile(const sead::SafeString& rPath, s32 alignment, sead::Fil
 sead::ArchiveRes* FileLoader::loadArchive(const sead::SafeString& rPath,
                                           sead::FileDevice* pDevice) {
     ArchiveEntry* entry = mArchiveHolder->tryFindEntry(rPath);
+
     if (entry) {
         if (entry->mFileState != FileState::IsLoadDone) {
             entry->waitLoadDone();
@@ -163,6 +164,7 @@ bool FileLoader::tryRequestLoadArchive(const sead::SafeString& rPath, sead::Heap
  */
 bool FileLoader::loadSoundItem(u32 itemId, u32 unk, IAudioResourceLoader* pLoader) {
     SoundItemEntry* entry = mSoundItemHolder->tryFindEntry(itemId, pLoader);
+
     if (!entry) {
         entry = requestLoadSoundItem(itemId, unk, pLoader);
         entry->waitLoadDone();
@@ -224,6 +226,7 @@ void FileLoader::requestPreLoadFile(const ByamlIter& rPreLoadList, sead::Heap* p
         if (!isEqualString(type, "SoundItem") && isEqualString(type, "Archive")) {
             const char* path;
             iter.tryGetStringByKey(&path, "Path");
+
             if (isExistArchive(path, nullptr)) {
                 tryRequestLoadArchive(path, pHeap, nullptr);
             }

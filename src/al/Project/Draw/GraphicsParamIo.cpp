@@ -30,6 +30,7 @@ void GraphicsParamIo::initStageResource(const Resource* pResource, const char* p
 
     StringTmp<256> path;
     mFilePath->makeBinaryPath(&path);
+
     if (pResource->isExistFile(path)) {
         mParamIo.applyResParameterArchive(
             agl::utl::ResParameterArchive(pResource->getOtherFile(path, nullptr)));

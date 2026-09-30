@@ -39,6 +39,7 @@ void ExecuteDirector::init(const ExecuteSystemInitInfo& rInfo) {
 
     mDrawTableNum = 28;
     mDrawTables = new ExecuteTableHolderDraw*[mDrawTableNum];
+
     for (s32 i = 0; i < mDrawTableNum; i++) {
         mDrawTables[i] = new ExecuteTableHolderDraw();
     }
@@ -143,6 +144,7 @@ void ExecuteDirector::registerLayoutDraw(LayoutActor* pLayout, const char* pList
  */
 void ExecuteDirector::registerUser(IUseExecutor* pUser, const char* pListName) {
     mUpdateTable->tryRegisterUser(pUser, pListName);
+
     for (s32 i = 0; i < mDrawTableNum; i++) {
         mDrawTables[i]->tryRegisterUser(pUser, pListName);
     }
@@ -155,6 +157,7 @@ void ExecuteDirector::registerUser(IUseExecutor* pUser, const char* pListName) {
  */
 void ExecuteDirector::registerFunctor(const FunctorBase& rFunctor, const char* pListName) {
     mUpdateTable->tryRegisterFunctor(rFunctor, pListName);
+
     for (s32 i = 0; i < mDrawTableNum; i++) {
         mDrawTables[i]->tryRegisterFunctor(rFunctor, pListName);
     }
@@ -176,6 +179,7 @@ void ExecuteDirector::registerFunctorDraw(const FunctorBase& rFunctor, const cha
  */
 void ExecuteDirector::createExecutorListTable() {
     mUpdateTable->createExecutorListTable();
+
     for (s32 i = 0; i < mDrawTableNum; i++) {
         mDrawTables[i]->createExecutorListTable();
     }

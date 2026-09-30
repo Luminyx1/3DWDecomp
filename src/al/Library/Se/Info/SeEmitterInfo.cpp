@@ -8,6 +8,7 @@ namespace {
 al::SeSoundSourceInfo* createSoundSourceInfo(const al::ByamlIter& rIter) {
     const char* name = nullptr;
     al::SeSoundSourceInfo* sourceInfo = nullptr;
+
     if (rIter.tryGetStringByKey(&name, "Name")) {
         if (alSeFunction::isSoundSourceAmbient(name)) {
             sourceInfo = new al::SeSoundSourceInfoAmbient(name);
@@ -21,6 +22,7 @@ al::SeSoundSourceInfo* createSoundSourceInfo(const al::ByamlIter& rIter) {
             al::SeSoundSourceInfo3DVector* vector = new al::SeSoundSourceInfo3DVector(name);
             al::ByamlIter vectorIter;
             rIter.tryGetIterByKey(&vectorIter, "Vector3f");
+
             if (!vectorIter.tryGetFloatByKey(&vector->mVector.x, "x")) {
                 vectorIter.tryGetFloatByKey(&vector->mVector.x, "X");
             }
@@ -50,6 +52,7 @@ al::SeSoundSourceInfo* createSoundSourceInfo(const al::ByamlIter& rIter) {
         } else if (alSeFunction::isSoundSource3DCircle(name)) {
             al::SeSoundSourceInfo3DCircle* circle = new al::SeSoundSourceInfo3DCircle(name);
             rIter.tryGetFloatByKey(&circle->mRadius, "Radius");
+
             if (!rIter.tryGetBoolByKey(&circle->mIsCircleRotated, "IsCircleRotated")) {
                 circle->mIsCircleRotated = false;
             }
@@ -73,13 +76,16 @@ namespace al {
 SeEmitterInfo* SeEmitterInfo::createInfo(const ByamlIter& rIter) {
     SeEmitterInfo* info = new SeEmitterInfo;
     rIter.tryGetStringByKey(&info->mName, "Name");
+
     if (!rIter.tryGetStringByKey(&info->mJointName, "JointName")) {
         info->mJointName = nullptr;
     }
 
     ByamlIter offsetIter;
+
     if (rIter.tryGetIterByKey(&offsetIter, "Offset")) {
         sead::Vector3f* offset = new sead::Vector3f;
+
         if (!offsetIter.tryGetFloatByKey(&offset->x, "x") && !offsetIter.tryGetFloatByKey(&offset->x, "X")) {
             offset->x = 0.0f;
         }
@@ -98,6 +104,7 @@ SeEmitterInfo* SeEmitterInfo::createInfo(const ByamlIter& rIter) {
     }
 
     ByamlIter sourceIter;
+
     if (rIter.tryGetIterByKey(&sourceIter, "SoundSource")) {
         info->mSoundSourceInfo = createSoundSourceInfo(sourceIter);
     } else {
@@ -116,14 +123,17 @@ SeEmitterInfo* SeEmitterInfo::duplicateInfo(const SeEmitterInfo* pInfo) {
     SeEmitterInfo* info = new SeEmitterInfo;
     info->mName = alSeDbFunction::createNameAreaAndCopy(pInfo->mName);
     info->mJointName = alSeDbFunction::createNameAreaAndCopy(pInfo->mJointName);
+
     if (pInfo->mOffset != nullptr) {
         __builtin_trap();
     }
 
     const SeSoundSourceInfo* srcInfo = pInfo->mSoundSourceInfo;
     SeSoundSourceInfo* sourceInfo = nullptr;
+
     if (srcInfo != nullptr && srcInfo->mName != nullptr) {
         const char* name = alSeDbFunction::createNameAreaAndCopy(srcInfo->mName);
+
         if (name != nullptr) {
             if (alSeFunction::isSoundSourceAmbient(name)) {
                 sourceInfo = new SeSoundSourceInfoAmbient(name);

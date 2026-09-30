@@ -40,6 +40,7 @@ void HitSensor::setFollowMtxPtr(const sead::Matrix34f* pFollowMtx) {
 void HitSensor::validate() {
     if (!mIsValid) {
         mIsValid = true;
+
         if (mMaxSensors != 0 && mIsValidBySystem) {
             mHitGroup->add(this);
         }
@@ -54,6 +55,7 @@ void HitSensor::validate() {
 void HitSensor::invalidate() {
     if (mIsValid) {
         mIsValid = false;
+
         if (mMaxSensors != 0 && mIsValidBySystem) {
             mHitGroup->remove(this);
         }
@@ -112,6 +114,7 @@ HitSensor::HitSensor(LiveActor* pHost, const char* pName, u32 type, f32 radius, 
       mFollowPos(pFollowPos), mFollowMtx(pFollowMtx), mFollowPosOffset(rOffset) {
     if (maxSensors != 0) {
         mSensors = new HitSensor*[maxSensors];
+
         for (s32 i = 0; i < mMaxSensors; i++) {
             mSensors[i] = nullptr;
         }
@@ -124,6 +127,7 @@ HitSensor::HitSensor(LiveActor* pHost, const char* pName, u32 type, f32 radius, 
 void HitSensor::update() {
     if (mFollowPos != nullptr) {
         const sead::Matrix34f* baseMtx = mHostActor->getBaseMtx();
+
         if (baseMtx != nullptr) {
             mPos.setRotated(*baseMtx, mFollowPosOffset);
             mPos += *mFollowPos;

@@ -35,9 +35,11 @@ AudioSituationDirector::AudioSituationDirector(const char** pCategoryNames, s32 
     mCurrentSituations[1] = nullptr;
     mCategoryNameList = new SeCategoryNameList(pCategoryNames, categoryNum);
     SeCategoryParamsController* prevController = nullptr;
+
     for (s32 i = 0; i < mParamsControllers.capacity(); i++) {
         SeCategoryParamsController* controller = new SeCategoryParamsController(mCategoryNameList);
         mParamsControllers.pushBack(controller);
+
         if (prevController != nullptr) {
             prevController->linkTo(controller);
         }
@@ -54,14 +56,17 @@ AudioSituationDirector::AudioSituationDirector(const char** pCategoryNames, s32 
 bool AudioSituationDirector::tryLoadSituationData(const char* pArchiveName) {
     Resource* resource = findOrCreateResource(pArchiveName, nullptr);
     bool isLoaded;
+
     if (resource->isExistFile("Situation.byml")) {
         ByamlIter iter(resource->getByml("Situation"));
         s32 size = iter.getSize();
+
         if (size < 1) {
             return false;
         }
 
         mSituations.allocBuffer(size, nullptr);
+
         for (s32 i = 0; i < size; i++) {
             ByamlIter situationIter;
             iter.tryGetIterByIndex(&situationIter, i);
@@ -92,6 +97,7 @@ bool AudioSituationDirector::tryLoadSituationData(const char* pArchiveName) {
  */
 void AudioSituationDirector::startSituation(s32 line, const char* pName) {
     AudioSituation* situation = findSituation(pName);
+
     if (situation == nullptr) {
         return;
     }
@@ -117,6 +123,7 @@ void AudioSituationDirector::update() {
 AudioSituation* AudioSituationDirector::findSituation(const char* pName) const {
     for (s32 i = 0; i < mSituations.size(); i++) {
         AudioSituation* situation = mSituations.unsafeAt(i);
+
         if (isEqualString(situation->getName(), pName)) {
             return situation;
         }
@@ -131,6 +138,7 @@ AudioSituation* AudioSituationDirector::findSituation(const char* pName) const {
  */
 void AudioSituationDirector::endSituation(s32 line) {
     AudioSituation* situation = findSituation("通常");
+
     if (situation == nullptr) {
         return;
     }

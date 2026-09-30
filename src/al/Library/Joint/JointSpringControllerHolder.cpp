@@ -42,6 +42,7 @@ void JointSpringControllerHolder::init(LiveActor* pActor, const char* pFileName)
  */
 void JointSpringControllerHolder::init(LiveActor* pActor, const ByamlIter& rIter) {
     s32 size = rIter.getSize();
+
     if (size < 1) {
         return;
     }
@@ -55,6 +56,7 @@ void JointSpringControllerHolder::init(LiveActor* pActor, const ByamlIter& rIter
 
         const char* jointName = nullptr;
         iter.tryGetStringByKey(&jointName, "JointName");
+
         if (!jointName) {
             continue;
         }
@@ -62,21 +64,25 @@ void JointSpringControllerHolder::init(LiveActor* pActor, const ByamlIter& rIter
         JointSpringController* controller = initJointSpringController(pActor, jointName);
 
         sead::Vector3f childLocalPos;
+
         if (tryGetByamlV3f(&childLocalPos, iter, "ChildLocalPos")) {
             controller->setChildLocalPos(childLocalPos);
         }
 
         f32 stability = 0.0f;
+
         if (tryGetByamlF32(&stability, iter, "Stability")) {
             controller->setStability(stability);
         }
 
         f32 friction = 0.98f;
+
         if (tryGetByamlF32(&friction, iter, "Friction")) {
             controller->setFriction(friction);
         }
 
         f32 limitDegree = 0.0f;
+
         if (tryGetByamlF32(&limitDegree, iter, "LimitDegree")) {
             controller->setLimitDegree(limitDegree);
         }

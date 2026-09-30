@@ -27,6 +27,7 @@ void SkyProjection::init(const ActorInitInfo& rInfo) {
     using SkyProjectionFunctor = FunctorV0M<SkyProjection*, void (SkyProjection::*)()>;
 
     Sky::init(rInfo);
+
     if (isSingleMode(rInfo)) {
         listenStageSwitchOnAppear(this, SkyProjectionFunctor(this, &SkyProjection::appear));
         listenStageSwitchOn(this, "SwitchDeadOn", SkyProjectionFunctor(this, &SkyProjection::kill));

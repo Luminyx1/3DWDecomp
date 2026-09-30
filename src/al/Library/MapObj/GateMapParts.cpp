@@ -79,15 +79,18 @@ void GateMapParts::exeWait() {
  */
 void GateMapParts::exeOpen() {
     updatePose(calcNerveSquareInRate(this, mOpenTime - 1));
+
     if (isGreaterEqualStep(this, mOpenTime - 1)) {
         mCurrentBoundRate = mBoundRate;
         mCurrentBoundSteps = mOpenTime * mBoundRate * 2;
+
         if (mMaxHitReactions > 0 && mCurrentBoundSteps > 1) {
             startNerveAction(this, "Bound");
             return;
         }
 
         startNerveAction(this, "End");
+
         if (mHitReactionCount < 2) {
             startHitReaction(this, "バウンド1回目");
         }
@@ -121,9 +124,11 @@ void GateMapParts::exeBound() {
     rate = sead::Mathf::square(mCurrentBoundRate * (rate * 2 - 1.0f));
     rate += 1.0f - sead::Mathf::square(mCurrentBoundRate);
     updatePose(rate);
+
     if (isGreaterEqualStep(this, mCurrentBoundSteps - 1)) {
         mCurrentBoundRate *= mBoundRate;
         mCurrentBoundSteps = mBoundRate * mCurrentBoundSteps;
+
         if (mMaxHitReactions > mHitReactionCurrent && mCurrentBoundSteps > 1) {
             startNerveAction(this, "Bound");
             return;

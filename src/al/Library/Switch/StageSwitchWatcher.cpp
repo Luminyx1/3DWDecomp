@@ -26,6 +26,7 @@ void StageSwitchWatcher::update() {
     }
 
     bool isOn = mAccesser->isOnSwitch();
+
     if (isOn != _18) {
         if (isOn) {
             mListener->listenOn();

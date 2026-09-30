@@ -32,6 +32,7 @@ void SeSource3DSphere::calcPositionDynamic() {
 const sead::Vector3f* SeSource3DSphere::calcPosition(const sead::Vector3f& rListenerPos) {
     sead::Vector3f dir = rListenerPos - mPose->get3DPos();
     f32 length = dir.length();
+
     if (length <= *mRadius) {
         mPos = rListenerPos;
     } else {

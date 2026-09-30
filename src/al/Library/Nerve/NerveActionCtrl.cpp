@@ -12,6 +12,7 @@ NerveActionCtrl::NerveActionCtrl(alNerveFunction::NerveActionCollector* pCollect
     mNumActions = pCollector->mNumActions;
     mActions = new NerveAction*[mNumActions];
     NerveAction* action = pCollector->mStartAction;
+
     for (s32 i = 0; i < mNumActions; i++) {
         mActions[i] = action;
         action = action->mNextNode;
@@ -26,6 +27,7 @@ NerveActionCtrl::NerveActionCtrl(alNerveFunction::NerveActionCollector* pCollect
 NerveAction* NerveActionCtrl::findNerve(const char* pName) const {
     for (s32 i = 0; i < mNumActions; i++) {
         NerveAction* action = mActions[i];
+
         if (isEqualString(action->getActionName(), pName)) {
             return action;
         }

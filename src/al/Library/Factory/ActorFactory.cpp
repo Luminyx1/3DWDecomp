@@ -36,11 +36,13 @@ const char* ActorFactory::convertName(const char* pName) const {
     }
 
     s32 size = mIter.getSize();
+
     for (s32 i = 0; i < size; i++) {
         ByamlIter iter;
         mIter.tryGetIterByIndex(&iter, i);
 
         const char* objectName = nullptr;
+
         if (!iter.tryGetStringByKey(&objectName, "ObjectName")) {
             continue;
         }
@@ -50,6 +52,7 @@ const char* ActorFactory::convertName(const char* pName) const {
         }
 
         const char* className = nullptr;
+
         if (iter.tryGetStringByKey(&className, "ClassName")) {
             return className;
         }

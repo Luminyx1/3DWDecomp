@@ -73,6 +73,7 @@ LiveActorKit::~LiveActorKit() {
     delete mSwitchAreaDirector;
     delete mClippingDirector;
     delete mQueueThread;
+
     if (mEffectSystem) {
         mEffectSystem->endScene();
         mEffectSystem->setCameraDirector(nullptr);
@@ -98,6 +99,7 @@ void LiveActorKit::init(s32 unused, s32 maxScreenPointTargets, bool isUseMultiCo
     s32 collisionThreadNum = _a0 ? -1 : 0;
     mCollisionDirector = new CollisionDirector(mExecDirector, collisionThreadNum);
     mCameraDirector = new CameraDirector(_4, mAreaObjDirector, mCollisionDirector);
+
     if (_a0) {
         mCameraDirectorRS = new CameraDirector_RS(2);
     }
@@ -170,6 +172,7 @@ void LiveActorKit::endInit(IScenarioCompleteChecker* pChecker) {
     mCollisionDirector->endInit();
     mClippingDirector->endInit();
     mAreaObjDirector->endInit();
+
     if (mEffectSystem) {
         mEffectSystem->startScene(mExecDirector);
     }
@@ -187,6 +190,7 @@ void LiveActorKit::endInit(IScenarioCompleteChecker* pChecker) {
     }
 
     mGraphicsSystemInfo->endInit();
+
     if (mEffectSystem) {
         mEffectSystem->endInit();
     }
@@ -194,6 +198,7 @@ void LiveActorKit::endInit(IScenarioCompleteChecker* pChecker) {
     for (s32 i = 0; i < mActorGroup->mNumActors; i++) {
         LiveActor* actor = mActorGroup->mActors[i];
         actor->initAfterPlacement();
+
         if (actor->mShadowKeeper) {
             actor->mShadowKeeper->initAfterPlacement();
         }
@@ -212,6 +217,7 @@ void LiveActorKit::endInit(IScenarioCompleteChecker* pChecker) {
  */
 void LiveActorKit::updateReducedBufferEffect() {
     ViewRenderer* viewRenderer = mGraphicsSystemInfo->mViewRenderer;
+
     if (viewRenderer) {
         viewRenderer->setReducedEffectRender(mEffectSystem->isHasRenderingEmitter(0x100), false);
         viewRenderer->setReducedEffectRender(mEffectSystem->isHasRenderingEmitter(0x200), true);
@@ -293,6 +299,7 @@ void LiveActorKit::updateGraphics(bool isPaused) {
  */
 bool LiveActorKit::preDrawGraphics() {
     GameFrameworkNx* framework = GameFrameworkNx::sInstance;
+
     if (!framework->_27c && framework->_27b) {
         return false;
     }

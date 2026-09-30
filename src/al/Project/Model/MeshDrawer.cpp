@@ -60,6 +60,7 @@ MeshDrawer::MeshDrawer(const char* pName, const nn::g3d::ModelObj* pModelObj,
     mIsUsingModelLight = alModelFunction::isMaterialUsingModelLight(mMaterialObj->GetResource());
     mMeshNumMax = meshNum;
     mMeshes = new Mesh*[meshNum];
+
     for (s32 i = 0; i < mMeshNumMax; i++) {
         mMeshes[i] = new Mesh;
     }
@@ -72,8 +73,10 @@ MeshDrawer::MeshDrawer(const char* pName, const nn::g3d::ModelObj* pModelObj,
 
     mUniformRegisterBuffer = nullptr;
     mUniformRegisterSize2 = 0;
+
     if (mUniformRegisterSize != 0) {
         mUniformRegisterBuffer = new (0x100) u8[mUniformRegisterSize];
+
         if (mUniformRegisterSize2 != 0) {
             mUniformRegisterBuffer2 = new (0x100) u8[mUniformRegisterSize2];
         }
@@ -89,6 +92,7 @@ MeshDrawer::MeshDrawer(const char* pName, const nn::g3d::ModelObj* pModelObj,
 
 inline bool MeshDrawer::isDrawMesh(const SimpleModelG3D* pModel) const {
     s32 shapeIndex = mShapeIndex;
+
     if (!mIsForceDraw && !pModel->mIsVisible) {
         return false;
     }
@@ -101,6 +105,7 @@ inline bool MeshDrawer::isDrawMesh(const SimpleModelG3D* pModel) const {
  */
 void MeshDrawer::initForDepthShadow() {
     mDepthShadowFlags.tryAllocBuffer(mMeshNumMax, nullptr);
+
     for (s32 i = 0; i < mMeshNumMax; i++) {
         mDepthShadowFlags[i].makeAllOne();
     }
@@ -121,20 +126,24 @@ void MeshDrawer::clearDepthShadowFlag() {
  */
 void MeshDrawer::preDrawToDepthShadow(DepthShadowDrawer* pDrawer) {
     agl::sdw::DepthShadow* depthShadow = pDrawer->getDepthShadow();
+
     for (s32 i = 0; i < mMeshNum; i++) {
         Mesh* mesh = mMeshes[i];
         sead::BitFlag32& flag = mDepthShadowFlags[i];
         const SimpleModelG3D* model = mesh->model;
+
         if (model->isDisableDepthShadow() || !isDrawMesh(model)) {
             continue;
         }
 
         const_cast<SimpleModelG3D*>(model)->calcBoundingForDepth();
         const nn::g3d::ShapeObj* shape = mesh->shapeObj;
+
         if (alModelFunction::isExistBoundingNode(shape->GetResource())) {
             flag.makeAllZero();
             s32 subMeshNum = shape->GetResource()->GetMesh()->GetSubMeshCount();
             const nn::g3d::Aabb* aabb = shape->GetSubMeshBoundingArray();
+
             for (s32 j = 0; j < subMeshNum; j++) {
                 sead::BoundBox3f box;
                 box.set({nn::util::VectorGetX(aabb[j].minimum), nn::util::VectorGetY(aabb[j].minimum),
@@ -148,6 +157,7 @@ void MeshDrawer::preDrawToDepthShadow(DepthShadowDrawer* pDrawer) {
         }
 
         const nn::g3d::Sphere* bounding = shape->GetBounding();
+
         if (!bounding) {
             bounding = mesh->modelObj->GetBounding();
         }
@@ -214,6 +224,7 @@ static void activateRenderState(agl::DrawContext* pContext, const nn::g3d::Mater
 static void activateOptionBlock(agl::DrawContext* pContext,
                                 const nn::g3d::ShaderSelector* pSelector) {
     const nn::g3d::ShadingModelObj* shadingModel = pSelector->GetShadingModel();
+
     if (!shadingModel->IsBlockBufferValid()) {
         return;
     }
@@ -266,6 +277,7 @@ void MeshDrawer::createDisplayList(GpuMemAllocator* pAllocator,
         mShaderAssign->getResShaderProgram()->Load(getCommandBuffer(&context));
         mShaderAssign->getAttribute().activateVertexAttribute(&context);
         mShaderAssign->getAttribute().activateVertexBuffer(&context);
+
         if (mTextureType == 1) {
             mShaderAssign->getSampler().activate(&context, mMaterialObj);
         }
@@ -306,6 +318,7 @@ void MeshDrawer::draw(const nn::g3d::ViewVolume* pViewVolume, s32 viewIndex,
         mShaderAssign->getResShaderProgram()->Load(getCommandBuffer(context));
         mShaderAssign->getAttribute().activateVertexAttribute(context);
         mShaderAssign->getAttribute().activateVertexBuffer(context);
+
         if (mTextureType == 1) {
             mShaderAssign->getSampler().activate(getDrawContext(), mMaterialObj);
         }
@@ -316,14 +329,17 @@ void MeshDrawer::draw(const nn::g3d::ViewVolume* pViewVolume, s32 viewIndex,
     }
 
     const EnvTexInfo* prevEnvTexInfo = nullptr;
+
     for (s32 i = 0; i < mMeshNum; i++) {
         Mesh* mesh = mMeshes[i];
         const SimpleModelG3D* model = mesh->model;
+
         if (model->isDisableDraw()) {
             continue;
         }
 
         s32 lodIndex = model->mLodIndex;
+
         if (lodIndex >= mesh->shapeObj->GetResource()->GetMeshCount()) {
             continue;
         }
@@ -335,11 +351,13 @@ void MeshDrawer::draw(const nn::g3d::ViewVolume* pViewVolume, s32 viewIndex,
         nn::g3d::MaterialObj* material = const_cast<nn::g3d::MaterialObj*>(mesh->materialObj);
         const nn::g3d::SkeletonObj* skeleton = mesh->modelObj->GetSkeleton();
         s32 bufferIndex = *model->mCurrentBufferIndex;
+
         if (*reinterpret_cast<const u8*>(model->getResRenderState(mShapeIndex))) {
             model->useCustomRenderState(getDrawContext(), material, mShapeIndex);
         }
 
         agl::DrawContext* context = getDrawContext();
+
         if (mTextureType == 0 || model->mIsForceActivateTexture) {
             mShaderAssign->getSampler().activate(context, material);
         }
@@ -367,6 +385,7 @@ void MeshDrawer::draw(const nn::g3d::ViewVolume* pViewVolume, s32 viewIndex,
 
         if (pAdditionalInfo) {
             pAdditionalInfo->activateEnvTexture(mShapeIndex, model);
+
             if (mIsUsingModelLight) {
                 if (!prevEnvTexInfo ||
                     EnvTexId::isEnableTexId(prevEnvTexInfo->getCubeMapId()) !=
@@ -381,8 +400,10 @@ void MeshDrawer::draw(const nn::g3d::ViewVolume* pViewVolume, s32 viewIndex,
         activateUniformBlockAssignArray(*model->mUniformBlockAssignArray);
         const nn::g3d::ShapeObj* shape = mesh->shapeObj;
         bool isExistBounding = alModelFunction::isExistBoundingNode(shape->GetResource());
+
         if (pViewVolume && isExistBounding) {
             nn::g3d::CullingContext cullingContext;
+
             while (shape->TestSubMeshIntersection(&cullingContext, *pViewVolume, lodIndex)) {
                 shape->GetResource()->GetMesh(lodIndex)->DrawSubMesh(
                     getCommandBuffer(getDrawContext()), cullingContext.submeshIndex,
@@ -429,6 +450,7 @@ void MeshDrawer::drawTest(const nn::g3d::ViewVolume* pViewVolume, s32 viewIndex)
         const SimpleModelG3D* model = mesh->model;
         const nn::g3d::ResRenderState* renderState = model->getResRenderState(mShapeIndex);
         s32 lodIndex = model->mLodIndex;
+
         if (lodIndex >= mesh->shapeObj->GetResource()->GetMeshCount()) {
             continue;
         }
@@ -441,6 +463,7 @@ void MeshDrawer::drawTest(const nn::g3d::ViewVolume* pViewVolume, s32 viewIndex)
         const nn::g3d::SkeletonObj* skeleton = mesh->modelObj->GetSkeleton();
         s32 bufferIndex = *model->mCurrentBufferIndex;
         agl::DrawContext* context = getDrawContext();
+
         if (mTextureType == 0) {
             mShaderAssign->getSampler().activate(context, material);
         }
@@ -468,8 +491,10 @@ void MeshDrawer::drawTest(const nn::g3d::ViewVolume* pViewVolume, s32 viewIndex)
 
         const nn::g3d::ShapeObj* shape = mesh->shapeObj;
         bool isExistBounding = alModelFunction::isExistBoundingNode(shape->GetResource());
+
         if (pViewVolume && isExistBounding) {
             nn::g3d::CullingContext cullingContext;
+
             while (shape->TestSubMeshIntersection(&cullingContext, *pViewVolume, lodIndex)) {
                 shape->GetResource()->GetMesh(lodIndex)->DrawSubMesh(
                     getCommandBuffer(getDrawContext()), cullingContext.submeshIndex,
@@ -497,9 +522,11 @@ void MeshDrawer::drawSimple(const nn::g3d::ViewVolume* pViewVolume) const {
     }
 
     mShaderAssign->getResShaderProgram()->Load(getCommandBuffer(getDrawContext()));
+
     for (s32 i = 0; i < mMeshNum; i++) {
         Mesh* mesh = mMeshes[i];
         const SimpleModelG3D* model = mesh->model;
+
         if (model->isDisableDraw() || !isDrawMesh(model)) {
             continue;
         }
@@ -530,11 +557,13 @@ void MeshDrawer::drawDepthOnly(const nn::g3d::ViewVolume* pViewVolume, s32 viewI
     for (s32 i = 0; i < mMeshNum; i++) {
         Mesh* mesh = mMeshes[i];
         const SimpleModelG3D* model = mesh->model;
+
         if (model->isDisableDraw()) {
             continue;
         }
 
         s32 lodIndex = model->mLodIndex;
+
         if (lodIndex >= mesh->shapeObj->GetResource()->GetMeshCount()) {
             continue;
         }
@@ -547,12 +576,14 @@ void MeshDrawer::drawDepthOnly(const nn::g3d::ViewVolume* pViewVolume, s32 viewI
         const nn::g3d::SkeletonObj* skeleton = mesh->modelObj->GetSkeleton();
         s32 bufferIndex = *model->mCurrentBufferIndex;
         agl::DrawContext* context = getDrawContext();
+
         if (mIsAlphaTest) {
             mShaderAssign->getSampler().activate(context, material);
         }
 
         mShaderAssign->activateMaterialUniformBlock(context, material, bufferIndex);
         activateUniformBlockAssignArray(*mesh->model->mUniformBlockAssignArray);
+
         if (mShapeBlockLocation >= 0) {
             agl::ShaderLocation location;
             location.setLocation(mShapeBlockLocation);
@@ -572,8 +603,10 @@ void MeshDrawer::drawDepthOnly(const nn::g3d::ViewVolume* pViewVolume, s32 viewI
 
         const nn::g3d::ShapeObj* shape = mesh->shapeObj;
         bool isExistBounding = alModelFunction::isExistBoundingNode(shape->GetResource());
+
         if (pViewVolume && isExistBounding) {
             nn::g3d::CullingContext cullingContext;
+
             while (shape->TestSubMeshIntersection(&cullingContext, *pViewVolume, lodIndex)) {
                 shape->GetResource()->GetMesh(lodIndex)->DrawSubMesh(
                     getCommandBuffer(getDrawContext()), cullingContext.submeshIndex,
@@ -600,6 +633,7 @@ void MeshDrawer::drawDepthShadow(const nn::g3d::ViewVolume* pViewVolume, s32 vie
     }
 
     agl::DrawContext* drawContext = getDrawContext();
+
     if (mDisplayList) {
         nvnCommandBufferCallCommands(agl::driver::getNvnCommandBuffer(drawContext), 1,
                                      mDisplayList->getHandlePtr());
@@ -610,10 +644,12 @@ void MeshDrawer::drawDepthShadow(const nn::g3d::ViewVolume* pViewVolume, s32 vie
     }
 
     u32 shadowBit = 1 << shadowIndex;
+
     for (s32 i = 0; i < mMeshNum; i++) {
         Mesh* mesh = mMeshes[i];
         const SimpleModelG3D* model = mesh->model;
         s32 lodIndex = model->mLodIndex;
+
         if (lodIndex < model->getModelObj()->GetLodCount() - 1) {
             lodIndex++;
         }
@@ -637,11 +673,13 @@ void MeshDrawer::drawDepthShadow(const nn::g3d::ViewVolume* pViewVolume, s32 vie
         const nn::g3d::MaterialObj* material = mesh->materialObj;
         const nn::g3d::SkeletonObj* skeleton = mesh->modelObj->GetSkeleton();
         s32 bufferIndex = *model->mCurrentBufferIndex;
+
         if (mRenderStateType == 0) {
             sead::GraphicsContext context;
         }
 
         agl::DrawContext* context = getDrawContext();
+
         if (mTextureType == 0 || model->mIsForceActivateTexture) {
             mShaderAssign->getSampler().activate(context, material);
         }
@@ -651,6 +689,7 @@ void MeshDrawer::drawDepthShadow(const nn::g3d::ViewVolume* pViewVolume, s32 vie
         }
 
         activateUniformBlockAssignArray(*mesh->model->mUniformBlockAssignArray);
+
         if (mShapeBlockLocation >= 0) {
             agl::ShaderLocation location;
             location.setLocation(mShapeBlockLocation);
@@ -670,8 +709,10 @@ void MeshDrawer::drawDepthShadow(const nn::g3d::ViewVolume* pViewVolume, s32 vie
 
         const nn::g3d::ShapeObj* shape = mesh->shapeObj;
         bool isExistBounding = alModelFunction::isExistBoundingNode(shape->GetResource());
+
         if (pViewVolume && isExistBounding) {
             nn::g3d::CullingContext cullingContext;
+
             while (shape->TestSubMeshIntersection(&cullingContext, *pViewVolume, lodIndex)) {
                 shape->GetResource()->GetMesh(lodIndex)->DrawSubMesh(
                     getCommandBuffer(getDrawContext()), cullingContext.submeshIndex,
@@ -731,6 +772,7 @@ void MeshDrawer::removeMesh(const nn::g3d::ModelObj* pModelObj,
                             const nn::g3d::ShapeObj* pShapeObj) {
     for (s32 i = 0; i < mMeshNum; i++) {
         Mesh* mesh = mMeshes[i];
+
         if (mesh->modelObj == pModelObj && mesh->shapeObj == pShapeObj) {
             for (; i < mMeshNum - 1; i++) {
                 mMeshes[i] = mMeshes[i + 1];

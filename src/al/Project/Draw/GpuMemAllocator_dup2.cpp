@@ -39,6 +39,7 @@ void GpuMemAllocator::createMemory(const char* pName, s32 size, sead::Heap* pHea
 GpuMemAllocator::Block* GpuMemAllocator::findGpuMemInfo(const char* pName) const {
     for (s32 i = 0; i < mBlocks.size(); i++) {
         Block* block = mBlocks[i];
+
         if (isEqualString(pName, block->name.cstr())) {
             return block;
         }
@@ -77,6 +78,7 @@ void GpuMemAllocator::createMemoryWithTmp(const char* pName, s32 size, s32 tmpSi
  */
 agl::GPUMemAddrBase GpuMemAllocator::allocMemory(const char* pName, s32 size, s32 alignment) {
     Block* block = findGpuMemInfo(pName);
+
     if (!block) {
         return {};
     }
@@ -86,6 +88,7 @@ agl::GPUMemAddrBase GpuMemAllocator::allocMemory(const char* pName, s32 size, s3
     }
 
     s32 alignedSize;
+
     if (block->usedSize < 0) {
         alignedSize = (block->usedSize - alignment + 1) / alignment * alignment;
     } else {
@@ -103,6 +106,7 @@ agl::GPUMemAddrBase GpuMemAllocator::allocMemory(const char* pName, s32 size, s3
  */
 agl::GPUMemAddrBase GpuMemAllocator::getTmpMemoryAddr(const char* pName) const {
     Block* block = findGpuMemInfo(pName);
+
     if (!block) {
         return {};
     }
@@ -118,6 +122,7 @@ agl::GPUMemAddrBase GpuMemAllocator::getTmpMemoryAddr(const char* pName) const {
  */
 u32 GpuMemAllocator::getTmpMemorySize(const char* pName) const {
     Block* block = findGpuMemInfo(pName);
+
     if (!block) {
         return 0;
     }

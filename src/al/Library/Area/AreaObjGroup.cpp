@@ -23,11 +23,13 @@ AreaObjGroup::AreaObjGroup(const char* pGroupName, const char* pLinkName,
     AreaInitInfo areaInitInfo;
     s32 num = calcLinkChildNum(rInfo, pLinkName);
     mMaxAreas = num;
+
     if (num < 1) {
         return;
     }
 
     createBuffer();
+
     for (s32 i = 0; i < num; i++) {
         PlacementInfo placementInfo;
         getLinksInfoByIndex(&placementInfo, rInfo, pLinkName, i);
@@ -107,8 +109,10 @@ AreaObj* AreaObjGroup::getAreaObj(s32 index) const {
  */
 AreaObj* AreaObjGroup::getInVolumeAreaObj(const sead::Vector3f& rPos) {
     AreaObj* result = nullptr;
+
     for (s32 i = 0; i < mNumAreas; i++) {
         AreaObj* areaObj = mAreaObjs[i];
+
         if (!result || result->mPriority <= areaObj->mPriority) {
             if (areaObj->isInVolume(rPos)) {
                 result = areaObj;
@@ -128,11 +132,14 @@ AreaObj* AreaObjGroup::getInVolumeAreaObj(const sead::Vector3f& rPos) {
 s32 AreaObjGroup::getInVolumeAreaObj(const sead::Vector3f& rPos, AreaObj** pAreaObj) {
     s32 count = 0;
     AreaObj* result = nullptr;
+
     for (s32 i = 0; i < mNumAreas; i++) {
         AreaObj* areaObj = mAreaObjs[i];
+
         if (!result || result->mPriority <= areaObj->mPriority) {
             if (areaObj->mIsValid && !areaObj->mIsDisabled && areaObj->_66) {
                 count++;
+
                 if (areaObj->isInVolume(rPos)) {
                     result = areaObj;
                 }
@@ -155,8 +162,10 @@ s32 AreaObjGroup::getInVolumeAreaObj(const sead::Vector3f& rPos, AreaObj** pArea
 AreaObj* AreaObjGroup::getInVolumeAreaObj(const sead::Vector3f& rStart, const sead::Vector3f& rEnd,
                                           sead::Vector3f* pHitPos, sead::Vector3f* pNormal) {
     AreaObj* result = nullptr;
+
     for (s32 i = 0; i < mNumAreas; i++) {
         AreaObj* areaObj = mAreaObjs[i];
+
         if (!result || result->mPriority <= areaObj->mPriority) {
             if (areaObj->isInVolume(rStart, rEnd, pHitPos, pNormal)) {
                 result = areaObj;
@@ -174,8 +183,10 @@ AreaObj* AreaObjGroup::getInVolumeAreaObj(const sead::Vector3f& rStart, const se
  */
 AreaObj* AreaObjGroup::getInFirstAreaObj(const sead::Vector3f& rPos) {
     s32 num = mNumAreas;
+
     for (s32 i = 0; i < num; i++) {
         AreaObj* areaObj = mAreaObjs[i];
+
         if (areaObj && areaObj->isInVolume(rPos)) {
             return areaObj;
         }

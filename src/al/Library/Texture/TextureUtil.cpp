@@ -51,10 +51,12 @@ f32 convertF16ToF32(u16 value) {
     u32 sign = (value << 16) & 0x80000000;
     u32 exponent = (value >> 10) & 0x1f;
     u32 mantissa = value & 0x3ff;
+
     if (exponent != 0) {
         exponent += 112;
     } else if (mantissa != 0) {
         exponent = 113;
+
         do {
             mantissa <<= 1;
             exponent--;
@@ -257,6 +259,7 @@ bool TextureUnit::tryCreateTexture(const TextureInitArg& rArg) {
     mInitArg = rArg;
     mSampler = new agl::TextureSampler();
     mTexture = new agl::TextureData();
+
     if (rArg.mIsCubemap) {
         mTexture->initialize_(agl::TextureType(8), rArg.mFormat, rArg.mWidth, rArg.mHeight, 6,
                               rArg.mMipLevelNum, agl::TextureAttribute(0),
@@ -420,6 +423,7 @@ void makeTextureDataFromArchive(agl::TextureData* pTextureData, const char* pArc
                                 const char* pFileName, const char* pTextureName) {
     Resource* resource = findOrCreateResource(pArchiveName, nullptr);
     void* file = resource->getOtherFile(StringTmp<256>("%s.bfres", pFileName).cstr(), nullptr);
+
     if (file != nullptr) {
         agl::g3d::TextureDataInitializerG3D::initialize(
             pTextureData,
@@ -434,6 +438,7 @@ bool tryMakeTextureDataFromArchive(agl::TextureData* pTextureData, const char* p
                                    const char* pFileName, const char* pTextureName) {
     Resource* resource = findOrCreateResource(pArchiveName, nullptr);
     void* file = resource->getOtherFile(StringTmp<256>("%s.bfres", pFileName).cstr(), nullptr);
+
     if (file == nullptr) {
         return false;
     }

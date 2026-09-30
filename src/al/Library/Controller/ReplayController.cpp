@@ -89,6 +89,7 @@ void ReplayController::calc(u32 prevHold, bool prevPointerOn) {
         mPadHold.setDirect(frameData.hold);
         mLeftStick = frameData.leftStick;
         mPointer = frameData.pointer;
+
         if (mPadDataReader->isEnd()) {
             endReplay();
         }

@@ -14,6 +14,7 @@ struct PrintParams {
 template <ByamlDataType Type>
 inline bool isTypeByIndex(const ByamlIter& rIter, s32 index) {
     ByamlData data;
+
     if (rIter.getByamlDataByIndex(&data, index)) {
         return data.getType() == Type;
     }
@@ -24,6 +25,7 @@ inline bool isTypeByIndex(const ByamlIter& rIter, s32 index) {
 template <ByamlDataType Type>
 inline bool isTypeByKey(const ByamlIter& rIter, const char* pKey) {
     ByamlData data;
+
     if (rIter.getByamlDataByKey(&data, pKey)) {
         return data.getType() == Type;
     }
@@ -43,6 +45,7 @@ void printByamlIter_(const ByamlIter& rIter, const PrintParams* pParams);
  */
 bool tryGetByamlU8(u8* pValue, const ByamlIter& rIter, const char* pKey) {
     s32 value = 0;
+
     if (rIter.tryGetIntByKey(&value, pKey)) {
         *pValue = value;
         return true;
@@ -60,6 +63,7 @@ bool tryGetByamlU8(u8* pValue, const ByamlIter& rIter, const char* pKey) {
  */
 bool tryGetByamlU16(u16* pValue, const ByamlIter& rIter, const char* pKey) {
     s32 value = 0;
+
     if (rIter.tryGetIntByKey(&value, pKey)) {
         *pValue = value;
         return true;
@@ -77,6 +81,7 @@ bool tryGetByamlU16(u16* pValue, const ByamlIter& rIter, const char* pKey) {
  */
 bool tryGetByamlS16(s16* pValue, const ByamlIter& rIter, const char* pKey) {
     s32 value = 0;
+
     if (rIter.tryGetIntByKey(&value, pKey)) {
         *pValue = value;
         return true;
@@ -106,6 +111,7 @@ bool tryGetByamlS32(s32* pValue, const ByamlIter& rIter, const char* pKey) {
 bool tryGetByamlU32(u32* pValue, const ByamlIter& rIter, const char* pKey) {
     s32 value = 0;
     bool result = rIter.tryGetIntByKey(&value, pKey);
+
     if (result) {
         *pValue = value;
     }
@@ -122,6 +128,7 @@ bool tryGetByamlU32(u32* pValue, const ByamlIter& rIter, const char* pKey) {
  */
 bool tryGetByamlF32(f32* pValue, const ByamlIter& rIter, const char* pKey) {
     f32 value = 0;
+
     if (rIter.tryGetFloatByKey(&value, pKey)) {
         *pValue = value;
         return true;
@@ -239,6 +246,7 @@ bool tryGetByamlV3s32(sead::Vector3i* pValue, const ByamlIter& rIter) {
 bool tryGetByamlBox3f(sead::BoundBox3f* pValue, const ByamlIter& rIter) {
     sead::Vector3f min;
     sead::Vector3f max;
+
     if (!tryGetByamlV3f(&min, rIter, "Min")) {
         return false;
     }
@@ -260,6 +268,7 @@ bool tryGetByamlBox3f(sead::BoundBox3f* pValue, const ByamlIter& rIter) {
  */
 bool tryGetByamlV3f(sead::Vector3f* pValue, const ByamlIter& rIter, const char* pKey) {
     ByamlIter iter;
+
     if (!rIter.tryGetIterByKey(&iter, pKey)) {
         return false;
     }
@@ -276,6 +285,7 @@ bool tryGetByamlV3f(sead::Vector3f* pValue, const ByamlIter& rIter, const char* 
  */
 bool tryGetByamlV2f(sead::Vector2f* pValue, const ByamlIter& rIter, const char* pKey) {
     ByamlIter iter;
+
     if (!rIter.tryGetIterByKey(&iter, pKey)) {
         return false;
     }
@@ -292,6 +302,7 @@ bool tryGetByamlV2f(sead::Vector2f* pValue, const ByamlIter& rIter, const char* 
  */
 bool tryGetByamlV4f(sead::Vector4f* pValue, const ByamlIter& rIter, const char* pKey) {
     ByamlIter iter;
+
     if (!rIter.tryGetIterByKey(&iter, pKey)) {
         return false;
     }
@@ -308,6 +319,7 @@ bool tryGetByamlV4f(sead::Vector4f* pValue, const ByamlIter& rIter, const char* 
  */
 bool tryGetByamlMinMax(sead::Vector2f* pValue, const ByamlIter& rIter, const char* pKey) {
     ByamlIter iter;
+
     if (!rIter.tryGetIterByKey(&iter, pKey)) {
         return false;
     }
@@ -324,6 +336,7 @@ bool tryGetByamlMinMax(sead::Vector2f* pValue, const ByamlIter& rIter, const cha
  */
 bool tryGetByamlScale(sead::Vector3f* pValue, const ByamlIter& rIter, const char* pKey) {
     ByamlIter iter;
+
     if (!rIter.tryGetIterByKey(&iter, pKey)) {
         return false;
     }
@@ -340,6 +353,7 @@ bool tryGetByamlScale(sead::Vector3f* pValue, const ByamlIter& rIter, const char
  */
 bool tryGetByamlV3s32(sead::Vector3i* pValue, const ByamlIter& rIter, const char* pKey) {
     ByamlIter iter;
+
     if (!rIter.tryGetIterByKey(&iter, pKey)) {
         return false;
     }
@@ -356,6 +370,7 @@ bool tryGetByamlV3s32(sead::Vector3i* pValue, const ByamlIter& rIter, const char
  */
 bool tryGetByamlBox3f(sead::BoundBox3f* pValue, const ByamlIter& rIter, const char* pKey) {
     ByamlIter iter;
+
     if (!rIter.tryGetIterByKey(&iter, pKey)) {
         return false;
     }
@@ -402,6 +417,7 @@ bool tryGetByamlColor(sead::Color4f* pValue, const ByamlIter& rIter) {
  */
 bool tryGetByamlColor(sead::Color4f* pValue, const ByamlIter& rIter, const char* pKey) {
     ByamlIter iter;
+
     if (!rIter.tryGetIterByKey(&iter, pKey)) {
         return false;
     }
@@ -468,6 +484,7 @@ bool getByamlKeyBool(const ByamlIter& rIter, const char* pKey) {
  */
 const char* tryGetByamlKeyStringOrNULL(const ByamlIter& rIter, const char* pKey) {
     const char* value = nullptr;
+
     if (rIter.tryGetStringByKey(&value, pKey)) {
         return value;
     }
@@ -483,6 +500,7 @@ const char* tryGetByamlKeyStringOrNULL(const ByamlIter& rIter, const char* pKey)
  */
 s32 tryGetByamlKeyIntOrZero(const ByamlIter& rIter, const char* pKey) {
     s32 value = 0;
+
     if (rIter.tryGetIntByKey(&value, pKey)) {
         return value;
     }
@@ -498,6 +516,7 @@ s32 tryGetByamlKeyIntOrZero(const ByamlIter& rIter, const char* pKey) {
  */
 f32 tryGetByamlKeyFloatOrZero(const ByamlIter& rIter, const char* pKey) {
     f32 value = 0;
+
     if (rIter.tryGetFloatByKey(&value, pKey)) {
         return value;
     }
@@ -513,6 +532,7 @@ f32 tryGetByamlKeyFloatOrZero(const ByamlIter& rIter, const char* pKey) {
  */
 bool tryGetByamlKeyBoolOrFalse(const ByamlIter& rIter, const char* pKey) {
     bool value = false;
+
     if (rIter.tryGetBoolByKey(&value, pKey)) {
         return value;
     }
@@ -681,6 +701,7 @@ bool isTypeHashByKey(const ByamlIter& rIter, const char* pKey) {
  */
 bool tryGetByamlKeyAndIntByIndex(const char** pKey, s32* pValue, const ByamlIter& rIter, s32 index) {
     ByamlData data;
+
     if (!rIter.getByamlDataAndKeyName(&data, pKey, index)) {
         return false;
     }
@@ -722,8 +743,10 @@ void printByamlIter(const ByamlIter& rIter) {
 namespace {
 void printByamlIter_(const ByamlIter& rIter, const PrintParams* pParams) {
     s32 size = rIter.getSize();
+
     for (s32 i = 0; i < size; i++) {
         ByamlData data;
+
         if (rIter.isTypeArray()) {
             rIter.getByamlDataByIndex(&data, i);
         } else if (rIter.isTypeHash()) {
@@ -733,6 +756,7 @@ void printByamlIter_(const ByamlIter& rIter, const PrintParams* pParams) {
 
         if (isContainerType(data.getType())) {
             const PrintParams* params = pParams;
+
             do {
                 if (params->offset == data.getValue()) {
                     goto next;
@@ -743,6 +767,7 @@ void printByamlIter_(const ByamlIter& rIter, const PrintParams* pParams) {
 
             {
                 ByamlIter child;
+
                 if (rIter.tryGetIterByIndex(&child, i)) {
                     PrintParams childParams = {pParams->depth + 1, data.getValue(), pParams};
                     printByamlIter_(child, &childParams);
@@ -750,6 +775,7 @@ void printByamlIter_(const ByamlIter& rIter, const PrintParams* pParams) {
             }
         } else {
             ByamlDataType type = data.getType();
+
             if (type == ByamlDataType::Float) {
                 f32 value;
                 rIter.tryConvertFloat(&value, &data);

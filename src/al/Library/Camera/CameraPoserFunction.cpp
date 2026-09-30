@@ -334,6 +334,7 @@ bool isTargetFollowExact(const al::CameraPoser_RS* pPoser) {
 void calcTargetTransWithOffset(sead::Vector3f* pTrans, const al::CameraPoser_RS* pPoser) {
     calcTargetTrans(pTrans, pPoser);
     al::CameraOffsetCtrlPreset* cameraOffsetCtrlPreset = pPoser->getOffsetCtrlPreset();
+
     if (cameraOffsetCtrlPreset)
         pTrans->add(cameraOffsetCtrlPreset->getOffset());
 }
@@ -406,6 +407,7 @@ f32 calcTargetJumpSpeed(const al::CameraPoser_RS* pPoser) {
     calcTargetVelocity(&targetVelocity, pPoser);
 
     al::parallelizeVec(&targetVelocity, targetGravity, targetVelocity);
+
     if (al::isNearZero(targetVelocity) || targetGravity.dot(targetVelocity) > 0.0f)
         return 0.0f;
 
@@ -419,6 +421,7 @@ f32 calcTargetFallSpeed(const al::CameraPoser_RS* pPoser) {
     calcTargetVelocity(&targetVelocity, pPoser);
 
     al::parallelizeVec(&targetVelocity, targetGravity, targetVelocity);
+
     if (al::isNearZero(targetVelocity) || targetGravity.dot(targetVelocity) < 0.0f)
         return 0.0f;
 
@@ -495,18 +498,21 @@ bool checkValidTurnToSubTarget(const al::CameraPoser_RS* pPoser) {
         return false;
 
     const al::CameraSubTargetTurnParam* subTargetTurnParam = getSubTargetTurnParam(pPoser);
+
     if (subTargetTurnParam->validTurnDegreeRangeH < 0.0f &&
         subTargetTurnParam->validFaceDegreeRangeH != 0.0f) {
         return true;
     }
 
     sead::Vector3f lookDirH = {0.0f, 0.0f, 0.0f};
+
     if (!calcLookDirH(&lookDirH, pPoser))
         return false;
 
     if (subTargetTurnParam->validFaceDegreeRangeH >= 0.0f) {
         sead::Vector3f targetBack = {0.0f, 0.0f, 0.0f};
         calcSubTargetBack(&targetBack, pPoser);
+
         if (subTargetTurnParam->validFaceDegreeRangeH < al::calcAngleDegree(targetBack, lookDirH))
             return false;
     }
@@ -517,6 +523,7 @@ bool checkValidTurnToSubTarget(const al::CameraPoser_RS* pPoser) {
         calcSubTargetTrans(&targetTrans, pPoser);
         lookDir = targetTrans - pPoser->getEye();
         al::verticalizeVec(&lookDir, pPoser->getUp(), lookDir);
+
         if (!al::tryNormalizeOrZero(&lookDir))
             return false;
         if (subTargetTurnParam->validTurnDegreeRangeH / 2.0f <
@@ -827,6 +834,7 @@ void initSnapShotCameraCtrlZoomRollMove(al::CameraPoser_RS* pPoser, bool isValid
     snapShotCtrl->setIsValidZoomFovy(true);
     snapShotCtrl->setIsValidRoll(true);
     snapShotCtrl->setIsValidLookAtOffset(true);
+
     if (isValidMove) {
         snapShotCtrl->setIsValidMove(true);
     }
@@ -981,6 +989,7 @@ bool checkFirstCameraCollisionArrow(sead::Vector3f* pHitPos, sead::Vector3f* pNo
                                     const al::IUseCollision* collision, const sead::Vector3f& pos,
                                     const sead::Vector3f& dir) {
     CameraCollisionHitResult result;
+
     if (!checkFirstCameraCollisionArrow(&result, collision, pos, dir))
         return false;
 
@@ -1006,6 +1015,7 @@ bool checkFirstCameraCollisionArrow(CameraCollisionHitResult* pResult,
     pResult->normal.set(*hitInfo->mTriangle.getNormal(0));
 
     CameraCollisionLocation location = CameraCollisionLocation::Default;
+
     if (hitInfo->isCollisionAtFace()) {
         location = CameraCollisionLocation::Face;
     } else if (hitInfo->isCollisionAtEdge()) {
@@ -1023,6 +1033,7 @@ bool checkFirstCameraCollisionArrowOnlyCeiling(sead::Vector3f* pHitPos, sead::Ve
                                                const sead::Vector3f& dir) {
     al::Triangle triangle;
     sead::Vector3f hitPos = {0.0f, 0.0f, 0.0f};
+
     if (!alCollisionUtil::getFirstPolyOnArrow(collision, &hitPos, &triangle, pos, dir, nullptr,
                                               &sCeilFilter)) {
         return false;
@@ -1082,6 +1093,7 @@ void rotateVecZone(sead::Vector3f* pOut, const sead::Vector3f& vec,
 bool makeCameraKeepInFrameV(sead::LookAtCamera* camera, const sead::Vector3f& vec,
                             const al::CameraPoser_RS* pPoser, f32 a, f32 b) {
     sead::Vector3f offset = {0.0f, 0.0f, 0.0f};
+
     if (!calcOffsetCameraKeepInFrameV(&offset, camera, vec, pPoser, a, b))
         return false;
 
@@ -1099,6 +1111,7 @@ void initCameraRail(al::CameraPoser_RS* pPoser, const al::PlacementInfo& info, c
 bool tryGetCameraRailArg(f32* pArg, const al::PlacementInfo& info, const char* argName,
                          const char* name) {
     al::PlacementInfo placementInfo;
+
     if (!al::tryGetLinksInfo(&placementInfo, info, name))
         return false;
 
@@ -1120,6 +1133,7 @@ al::CameraLimitRailKeeper* tryFindNearestLimitRailKeeper(const al::CameraPoser_R
 
     for (s32 i = 0; i < pPoser->getSceneInfo()->railHolderNum; i++) {
         al::CameraRailHolder_RS* railHolder = pPoser->getSceneInfo()->railHolders[i];
+
         if (!railHolder->isActive()) {
             continue;
         }
@@ -1146,6 +1160,7 @@ al::CameraLimitRailKeeper* tryFindNearestLimitRailKeeper(const al::CameraPoser_R
 
 void calcCameraRotateStick(sead::Vector2f* pStick, const al::CameraPoser_RS* pPoser) {
     sead::Vector2f stick = sead::Vector2f::zero;
+
     for (s32 i = 0; i < pPoser->getInputHolder()->getInputNum(); i++) {
         sead::Vector2f inputStick;
         pPoser->getInputHolder()->getInput(i)->calcInputStick(&inputStick);
@@ -1168,11 +1183,13 @@ void disableInput(const al::CameraPoser_RS* pPoser, bool isDisable) {
 
 void calcCameraRolledRotateStick(sead::Vector2f* pStick, const al::CameraPoser_RS* pPoser) {
     calcCameraRotateStick(pStick, pPoser);
+
     if (!isSnapShotMode(pPoser) || !pPoser->getSnapShotCtrl()) {
         return;
     }
 
     sead::Vector2f dir = *pStick;
+
     if (!al::tryNormalizeOrZero(&dir)) {
         return;
     }

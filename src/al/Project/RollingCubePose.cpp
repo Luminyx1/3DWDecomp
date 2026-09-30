@@ -88,9 +88,11 @@ void RollingCubePose::setNextCubePose(const RollingCubePose* nextPose) {
     }
 
     mMovementType = MovementType::None;
+
     if (pointCount == 2) {
         mRotateAxis = secondPoint - firstPoint;
         mRotateCenter = firstPoint;
+
         if (tryNormalizeOrZero(&mRotateAxis)) {
             sead::Vector3f currentCenter;
             calcBoundingBoxCenter(&currentCenter);

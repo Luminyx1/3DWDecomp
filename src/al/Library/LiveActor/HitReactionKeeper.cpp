@@ -35,6 +35,7 @@ HitReactionKeeper* HitReactionKeeper::tryCreate(LiveActor* pActor, const Resourc
                                                 const char* pName) {
     StringTmp<128> fileName;
     tryGetActorInitFileName(&fileName, pResource, "ActorHitReactionCtrl", pName);
+
     if (!isExistResourceYaml(pResource, fileName.cstr(), nullptr)) {
         return nullptr;
     }
@@ -53,6 +54,7 @@ HitReactionKeeper* HitReactionKeeper::tryCreate(LayoutActor* pActor, const Resou
                                                 const char* pName) {
     StringTmp<128> fileName;
     tryGetLayoutActorInitFileName(&fileName, pResource, "ActorHitReactionCtrl", pName);
+
     if (!isExistResourceYaml(pResource, fileName.cstr(), nullptr)) {
         return nullptr;
     }
@@ -71,6 +73,7 @@ void HitReactionKeeper::start(const char* pName, const sead::Vector3f* pPos,
                               const HitSensor* pSensor1, const HitSensor* pSensor2) {
     for (s32 i = 0; i < mReactionNum; i++) {
         const HitReactionInfo& info = mReactionInfos[i];
+
         if (!isEqualString(info.mReactionName, pName)) {
             continue;
         }
@@ -100,10 +103,12 @@ void HitReactionKeeper::start(const char* pName, const sead::Vector3f* pPos,
             if (mActor) {
                 LiveActor* actor = mActor;
                 const s32* port = mPadRumblePort;
+
                 if (isEqualString("自分で振動", info.mPadRumbleType)) {
                     alPadRumbleFunction::startPadRumble(actor, info.mPadRumbleName, *port, false);
                 } else if (isEqualString("全員", info.mPadRumbleType)) {
                     s32 playerNum = getPlayerNumMax(actor);
+
                     for (s32 p = 0; p < playerNum; p++) {
                         if (isPlayerDead(actor, p)) {
                             continue;
@@ -114,6 +119,7 @@ void HitReactionKeeper::start(const char* pName, const sead::Vector3f* pPos,
                     }
                 } else if (isEqualString("距離制限", info.mPadRumbleType)) {
                     s32 playerNum = getPlayerNumMax(actor);
+
                     for (s32 p = 0; p < playerNum; p++) {
                         if (isPlayerDead(actor, p)) {
                             continue;
@@ -131,6 +137,7 @@ void HitReactionKeeper::start(const char* pName, const sead::Vector3f* pPos,
             } else if (mLayoutActor) {
                 const s32* port = mPadRumblePort;
                 PadRumbleDirector* director = alPadRumbleFunction::getPadRumbleDirector(mLayoutActor);
+
                 if (isEqualString("自分で振動", info.mPadRumbleType)) {
                     alPadRumbleFunction::startPadRumbleNo3D(director, info.mPadRumbleName, *port,
                                                             false);
@@ -138,6 +145,7 @@ void HitReactionKeeper::start(const char* pName, const sead::Vector3f* pPos,
                            isEqualString("距離制限", info.mPadRumbleType)) {
                     for (s32 p = 0; p < 4; p++) {
                         s32 controllerPort = getPlayerControllerPort(p);
+
                         if (controllerPort == -1) {
                             break;
                         }
@@ -152,8 +160,10 @@ void HitReactionKeeper::start(const char* pName, const sead::Vector3f* pPos,
         if (info.mCameraShakeName) {
             LiveActor* actor = mActor;
             bool isShake = true;
+
             if (isEqualString("距離で振動", info.mCameraShakeType)) {
                 s32 playerNum = getPlayerNumMax(actor);
+
                 for (s32 p = 0; p < playerNum; p++) {
                     if (isPlayerDead(actor, p)) {
                         continue;
@@ -204,6 +214,7 @@ HitReactionKeeper::HitReactionKeeper(LiveActor* pActor, const Resource* pResourc
     tryGetActorInitFileIter(&iter, pResource, "ActorHitReactionCtrl", pName);
     mReactionNum = iter.getSize();
     mReactionInfos = new HitReactionInfo[mReactionNum];
+
     for (s32 i = 0; i < mReactionNum; i++) {
         ByamlIter reactionIter;
         iter.tryGetIterByIndex(&reactionIter, i);
@@ -243,6 +254,7 @@ HitReactionKeeper::HitReactionKeeper(LayoutActor* pActor, const Resource* pResou
     tryGetLayoutActorInitFileIter(&iter, pResource, "ActorHitReactionCtrl", pName);
     mReactionNum = iter.getSize();
     mReactionInfos = new HitReactionInfo[mReactionNum];
+
     for (s32 i = 0; i < mReactionNum; i++) {
         ByamlIter reactionIter;
         iter.tryGetIterByIndex(&reactionIter, i);

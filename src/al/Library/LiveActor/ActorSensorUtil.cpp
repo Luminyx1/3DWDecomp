@@ -689,6 +689,7 @@ void calcPosBetweenSensors(sead::Vector3f* pOut, const HitSensor* pA, const HitS
                            f32 offset) {
     sead::Vector3f dir = pB->mPos;
     dir -= pA->mPos;
+
     if (isNearZero(dir, 0.001f)) {
         pOut->e = pA->mPos.e;
         return;
@@ -711,6 +712,7 @@ void calcPosBetweenSensors(sead::Vector3f* pOut, const HitSensor* pA, const HitS
 f32 calcDistanceV(const sead::Vector3f& rDir, const HitSensor* pA, const HitSensor* pB) {
     sead::Vector3f diff = pB->mPos;
     diff -= pA->mPos;
+
     if (isNearZero(diff, 0.001f)) {
         return diff.length();
     }
@@ -857,6 +859,7 @@ bool isHitCylinderSensor(sead::Vector3f* pHitPos, sead::Vector3f* pHitNormal,
     sead::Vector3f diff = pSensor->mPos - rPos;
     verticalizeVec(&vertical, rAxis, diff);
     f32 dist = vertical.length();
+
     if (dist > pSensor->mRadius + radius) {
         return false;
     }
@@ -872,6 +875,7 @@ bool isHitCylinderSensor(sead::Vector3f* pHitPos, sead::Vector3f* pHitNormal,
             }
         } else {
             sead::Vector3f dir = vertical * (1.0f / dist);
+
             if (pHitNormal != nullptr) {
                 *pHitNormal = dir;
             }
@@ -918,6 +922,7 @@ bool isHitCircleSensor(sead::Vector3f* pHitPos, sead::Vector3f* pHitNormal,
     sead::Vector3f vertical;
     sead::Vector3f diff = pSensor->mPos - rCenter;
     verticalizeVec(&vertical, rNormal, diff);
+
     if (normalizeOrZero(&vertical)) {
         calcDirVerticalAny(&vertical, rNormal);
     }
@@ -925,6 +930,7 @@ bool isHitCircleSensor(sead::Vector3f* pHitPos, sead::Vector3f* pHitNormal,
     sead::Vector3f edge = vertical * circleRadius + rCenter;
     diff = pSensor->mPos - edge;
     f32 dist = diff.length();
+
     if (dist > pSensor->mRadius + width) {
         return false;
     }
@@ -984,6 +990,7 @@ bool isHitCircleSensor(const HitSensor* pSensor, const sead::Vector3f& rCenter,
     sead::Vector3f vertical;
     sead::Vector3f diff = pSensor->mPos - rCenter;
     verticalizeVec(&vertical, rNormal, diff);
+
     if (normalizeOrZero(&vertical)) {
         f32 height = (pSensor->mPos - rCenter).dot(rNormal);
         return sead::Mathf::sqrt(circleRadius * circleRadius + height * height) <=
@@ -4735,12 +4742,14 @@ bool isMsgPlayerTrampleForCrossoverSensor(const SensorMsg* pMsg, const HitSensor
 static bool isCrossoverSensor(const HitSensor* pSelf, const HitSensor* pOther) {
     sead::Vector3f dir = pSelf->mPos - pOther->mPos;
     sead::Vector3f gravity = getGravity(pOther->mHostActor);
+
     if (normalizeOrZero(&dir)) {
         return false;
     }
 
     sead::Vector3f up = -gravity;
     f32 dot = dir.dot(up);
+
     if (dot < 0.34202015f) {
         return false;
     }
@@ -4751,11 +4760,13 @@ static bool isCrossoverSensor(const HitSensor* pSelf, const HitSensor* pOther) {
 
     sead::Vector3f velDir;
     normalizeOrZero(&velDir, getVelocity(pSelf->mHostActor));
+
     if (dir.y < 0.0f) {
         return false;
     }
 
     f32 velDot = velDir.dot(up);
+
     if (isNearZero(sead::Mathf::abs(velDot), 0.001f)) {
         return false;
     }
@@ -4780,6 +4791,7 @@ bool isMsgPlayerUpperPunchForCrossoverSensor(const SensorMsg* pMsg, const HitSen
     sead::Vector3f dir = pSelf->mPos - pOther->mPos;
     sead::Vector3f gravity = getGravity(pOther->mHostActor);
     normalize(&dir);
+
     if (gravity.dot(dir) < 0.34202015f) {
         return false;
     }
@@ -4819,12 +4831,15 @@ bool sendMsgEnemyAttackForCrossoverCylinderSensor(HitSensor* pReceiver, HitSenso
         sead::Vector3f gravity = getGravity(pSender->mHostActor);
         verticalizeVec(&dir, rAxis, dir);
         dir.length();
+
         if (!(dir.squaredLength() < innerRadius * innerRadius)) {
             normalize(&dir);
             sead::Vector3f velDir;
             normalizeOrZero(&velDir, getVelocity(pSender->mHostActor));
+
             if (!(dir.y < 0.0f)) {
                 f32 velDot = velDir.dot(-gravity);
+
                 if (!isNearZero(sead::Mathf::abs(velDot), 0.001f) &&
                     !isNearZero(velDot - 1.0f, 0.001f)) {
                     return false;
@@ -5288,6 +5303,7 @@ void sendMsgPushAndKillVelocityToTarget(LiveActor* pActor, HitSensor* pSelf, Hit
     }
 
     sead::Vector3f dir = pTarget->mPos - pSelf->mPos;
+
     if (normalizeOrZero(&dir)) {
         dir.e = sead::Vector3f::ez.e;
     }
@@ -5309,6 +5325,7 @@ void pushAndAddVelocity(LiveActor* pActor, const HitSensor* pOther, const HitSen
     sead::Vector3f dir = pSelf->mPos - pOther->mPos;
     normalizeOrDirZ(&dir);
     f32 addSpeed = speed - getVelocity(pActor).dot(dir);
+
     if (addSpeed > 0.0f) {
         sead::Vector3f* velocity = getVelocityPtr(pActor);
         *velocity += addSpeed * dir;
@@ -5328,6 +5345,7 @@ void pushAndAddVelocityH(LiveActor* pActor, const HitSensor* pOther, const HitSe
     dir.y = 0.0f;
     normalizeOrDirZ(&dir);
     f32 addSpeed = speed - getVelocity(pActor).dot(dir);
+
     if (addSpeed > 0.0f) {
         sead::Vector3f* velocity = getVelocityPtr(pActor);
         *velocity += addSpeed * dir;
@@ -5439,9 +5457,11 @@ al::HitSensor* findNearestAttackSensor(const al::HitSensor* pSensor) {
     al::HitSensor* nearest = nullptr;
     f32 nearestDist = 0.0f;
     u32 num = pSensor->mNumSensors;
+
     for (u32 i = 0; i != num; i++) {
         al::HitSensor* other = pSensor->mSensors[i];
         f32 dist = (other->mPos - pSensor->mPos).length();
+
         if (dist < nearestDist || nearest == nullptr) {
             nearestDist = dist;
             nearest = other;

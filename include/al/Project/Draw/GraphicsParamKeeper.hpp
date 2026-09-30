@@ -138,6 +138,7 @@ public:
                              StringTmp<128>("Default%s", getParamTypeName()).cstr());
 
         mNamedParamNames.tryAllocBuffer(mNamedParams.capacity(), nullptr);
+
         for (s32 i = 0; i < mNamedParams.capacity(); i++) {
             NamedParam* namedParam = new NamedParam();
             namedParam->mName->format("%s%02d", getParamTypeName(), i);
@@ -151,6 +152,7 @@ public:
         for (s32 i = 0; i < mNamedParams.size(); i++) {
             NamedParam* namedParam = mNamedParams[i];
             const char* name = namedParam->mName->cstr();
+
             if (!GraphicsParamKeeperFuncImpl::isMatchString(
                     name, StringTmp<64>("%s*", getParamTypeName()).cstr()) &&
                 !namedParam->mName->isEmpty()) {
@@ -164,8 +166,10 @@ public:
 
     NamedParam* tryFindNamedParam(const char* pName) {
         s32 namedParamNum = mNamedParams.size();
+
         for (s32 i = 0; i < namedParamNum; i++) {
             NamedParam* namedParam = mNamedParams[i];
+
             if (isEqualString(pName, namedParam->mName->cstr()))
                 return namedParam;
         }
@@ -178,6 +182,7 @@ public:
             return;
 
         GraphicsAreaDirector* areaDirector = getGraphicsAreaDirector();
+
         if (!areaDirector) {
             mRequestInterp.requestParam(-1, 1, mDefaultParam);
         } else {
@@ -186,6 +191,7 @@ public:
                 &areaParam, static_cast<GraphicsAreaParamType>(mParamType));
             const char* paramName = areaParam.mParamName;
             NamedParam* namedParam = nullptr;
+
             if (paramName && !GraphicsParamKeeperFuncImpl::isEmptyString(paramName))
                 namedParam = tryFindNamedParam(paramName);
             if (namedParam)

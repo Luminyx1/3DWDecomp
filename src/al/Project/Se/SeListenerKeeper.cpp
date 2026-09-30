@@ -120,6 +120,7 @@ void SeListenerKeeper::resetListenerParam() {
  */
 void SeListenerKeeper::changeListenerPoser(const char* pName) {
     mLastPoserName = mListeners.unsafeAt(0)->getCurrentPoser()->getName().cstr();
+
     if (pName != nullptr) {
         mListeners.unsafeAt(0)->setCurrentPoser(pName);
     } else {
@@ -133,6 +134,7 @@ void SeListenerKeeper::changeListenerPoser(const char* pName) {
 void SeListenerKeeper::changeListenerPoserToLast() {
     const char* lastName = mLastPoserName;
     mLastPoserName = mListeners.unsafeAt(0)->getCurrentPoser()->getName().cstr();
+
     if (lastName != nullptr) {
         mListeners.unsafeAt(0)->setCurrentPoser(lastName);
     } else {

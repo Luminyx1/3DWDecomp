@@ -169,8 +169,10 @@ const agl::TextureData& getBlackCubeTexture() {
  */
 TextureInfo* TextureInfoArray::findTexture(const char* pName) const {
     s32 num = size();
+
     for (s32 i = 0; i < num; i++) {
         TextureInfo* info = at(i);
+
         if (isEqualString(pName, info->mName.cstr())) {
             return info;
         }
@@ -184,6 +186,7 @@ TextureInfo* TextureInfoArray::findTexture(const char* pName) const {
  */
 s32 TextureInfoArray::findTextureIndex(const char* pName) const {
     s32 num = size();
+
     for (s32 i = 0; i < num; i++) {
         if (isEqualString(pName, at(i)->mName.cstr())) {
             return i;
@@ -222,12 +225,14 @@ void loadTextureInfoArray(TextureInfoArray* pArray, const char* pArchiveName,
     const nn::g3d::ResFile* resFile = resource->getResFile();
     s32 textureNum = agl::g3d::ResFile::GetTextureCount(resFile);
     pArray->allocBuffer(textureNum, nullptr);
+
     for (s32 i = 0; i < textureNum; i++) {
         TextureInfo* info = new TextureInfo();
         info->mTextureData = new agl::TextureData();
         info->mName.format("%s", agl::g3d::ResFile::GetTextureName(resFile, i));
         InitializeAGLTextureNoResSetup(info->mTextureData, file, info->mName.cstr());
         info->mTextureData->flushCPUCache();
+
         if (isCreateSampler) {
             info->mSampler = new agl::TextureSampler(*info->mTextureData);
         } else {
@@ -362,6 +367,7 @@ void LutTexture::reinit() {
  */
 void LutCurve::updateTexData() {
     agl::GPUMemAddr<f32> addr(agl::GPUMemAddrBase(mMemBlock, 0));
+
     for (u32 i = 0; i < mWidth; i++) {
         getAddrPtr<f32>(addr)[i] = mCurve.interpolateToF32(0, 1.0f - (f32)i / (f32)mWidth);
     }
@@ -384,12 +390,14 @@ CurveIo::CurveIo(const char* pName, const char* pObjName, const char* pParamName
  */
 void CurveIo::loadResource() {
     StringTmp<256> archivePath("ObjectData/%s", mArchiveName);
+
     if (!isExistArchive(archivePath.cstr())) {
         return;
     }
 
     Resource* resource = findOrCreateResource(archivePath.cstr(), nullptr);
     StringTmp<256> filePath("%s.b%s", mFileName, mParamIO.getType().cstr());
+
     if (resource != nullptr && resource->isExistFile(filePath)) {
         mParamIO.applyResParameterArchive(
             agl::utl::ResParameterArchive(resource->getOtherFile(filePath, nullptr)));

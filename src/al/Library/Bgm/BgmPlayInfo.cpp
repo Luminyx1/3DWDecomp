@@ -13,6 +13,7 @@ BgmPlayInfo* BgmPlayInfo::createInfo(const ByamlIter& rIter) {
     rIter.tryGetStringByKey(&info->mName, "Name");
     rIter.tryGetStringByKey(&info->mLineName, "LineName");
     rIter.tryGetStringByKey(&info->mDefaultResourceName, "DefaultResourceName");
+
     if (!rIter.tryGetBoolByKey(&info->mIsPlayingByUpperLayerAudioUser, "IsPlayingByUpperLayerAudioUser")) {
         info->mIsPlayingByUpperLayerAudioUser = false;
     }

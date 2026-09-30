@@ -43,12 +43,14 @@ void StageSwitchKeeper::init(StageSwitchDirector* pDirector, const PlacementInfo
     tryGetPlacementInfoByKey(&links, rInfo, "Links");
 
     s32 linkNum = getCountPlacementInfo(links);
+
     for (s32 index = 0, i = 0; i < linkNum; i++) {
         PlacementInfo link;
         const char* linkName = nullptr;
         tryGetPlacementInfoAndKeyNameByIndex(&link, &linkName, links, i);
         PlacementInfo linkData;
         tryGetPlacementInfoByIndex(&linkData, link, 0);
+
         if (isClassName(linkData, "StageSwitch")) {
             PlacementId placementId;
             tryGetPlacementID(&placementId, linkData);

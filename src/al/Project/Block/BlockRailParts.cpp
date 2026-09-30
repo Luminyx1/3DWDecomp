@@ -80,6 +80,7 @@ void BlockRailParts::endFarLod() {
  */
 void BlockRailParts::calcOffset(const sead::Vector3f& rBaseTrans) {
     mOffset = getTrans(this) - rBaseTrans;
+
     for (s32 i = 0; i < mLinkNum; i++) {
         mLinks[i]->calcOffset(rBaseTrans);
     }
@@ -91,6 +92,7 @@ void BlockRailParts::calcOffset(const sead::Vector3f& rBaseTrans) {
  */
 void BlockRailParts::updateLinkedTrans(const sead::Vector3f& rBaseTrans) {
     alLiveActorFunction::forceUpdateTrans(this, rBaseTrans + mOffset, true);
+
     for (s32 i = 0; i < mLinkNum; i++) {
         mLinks[i]->updateLinkedTrans(rBaseTrans);
     }
@@ -118,12 +120,14 @@ void BlockRailParts::initRailLink() {
  */
 void BlockRailParts::initRailLink(const ByamlIter& rIter) {
     ByamlIter shapeListIter;
+
     if (!rIter.tryGetIterByKey(&shapeListIter, "ShapeList")) {
         return;
     }
 
     mLinkNum = shapeListIter.isTypeArray() ? shapeListIter.getSize() : 1;
     mLinks = new BlockRailLink*[mLinkNum];
+
     if (shapeListIter.isTypeArray()) {
         for (s32 i = 0; i < mLinkNum; i++) {
             ByamlIter shapeIter;
@@ -137,13 +141,16 @@ void BlockRailParts::initRailLink(const ByamlIter& rIter) {
     }
 
     ByamlIter linkListIter;
+
     if (!rIter.tryGetIterByKey(&linkListIter, "LinkList")) {
         return;
     }
 
     s32 linkListNum = linkListIter.getSize();
+
     for (s32 i = 0; i < linkListNum; i++) {
         ByamlIter pairIter;
+
         if (!linkListIter.tryGetIterByIndex(&pairIter, i)) {
             continue;
         }
@@ -153,6 +160,7 @@ void BlockRailParts::initRailLink(const ByamlIter& rIter) {
         }
 
         s32 indexA;
+
         if (!pairIter.tryGetIntByIndex(&indexA, 0)) {
             continue;
         }
@@ -162,6 +170,7 @@ void BlockRailParts::initRailLink(const ByamlIter& rIter) {
         }
 
         s32 indexB;
+
         if (!pairIter.tryGetIntByIndex(&indexB, 1)) {
             continue;
         }
@@ -195,6 +204,7 @@ BlockRailLink* BlockRailParts::getLink(s32 index) const {
 void BlockRailParts::tryConnect(BlockRailParts* pPartsA, BlockRailParts* pPartsB) {
     s32 linkNumA = pPartsA->mLinkNum;
     s32 linkNumB = pPartsB->mLinkNum;
+
     for (s32 i = 0; i < linkNumA; i++) {
         for (s32 j = 0; j < linkNumB; j++) {
             BlockRailLink::tryConnect(pPartsA->mLinks[i], pPartsB->mLinks[j], 10.0f);
@@ -208,11 +218,13 @@ void BlockRailParts::tryConnect(BlockRailParts* pPartsA, BlockRailParts* pPartsB
  */
 void BlockRailParts::setIsHideModel(bool isHide) {
     mIsHideModel = isHide;
+
     if (!isHide) {
         return;
     }
 
     SubActorKeeper* keeper = mSubActorKeeper;
+
     if (keeper) {
         for (s32 i = 0; i < keeper->mCount; i++) {
             keeper->mInfos[i]->mSyncType |= 4;

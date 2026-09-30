@@ -13,6 +13,7 @@ namespace al {
 BlockRailLink::BlockRailLink(s32 maxLinks) : mMaxLinks(maxLinks) {
     mPrevLinks = new BlockRailLink*[maxLinks];
     mNextLinks = new BlockRailLink*[maxLinks];
+
     for (s32 i = 0; i < mMaxLinks; i++) {
         mPrevLinks[i] = nullptr;
         mNextLinks[i] = nullptr;
@@ -45,6 +46,7 @@ void BlockRailLink::init(const sead::Quatf& rQuat, const sead::Vector3f& rTrans,
     BlockRailShapeFactory factory;
     BlockRailShapeCreatorFunction creator = nullptr;
     factory.getEntryIndex(&creator, shapeName);
+
     if (creator) {
         mShape = creator(shapeName);
         mShape->init(rQuat, rTrans, rIter);

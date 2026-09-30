@@ -62,9 +62,11 @@ void GraphicsParamKeeperImpl::initStageResource(const Resource* pResource, const
 
     StringTmp<32> suffix(".b%s", mFilePath->getExtension());
     s32 entryNum = pResource->getEntryNum("/");
+
     for (s32 i = 0; i < entryNum; i++) {
         StringTmp<256> entryName;
         pResource->getEntryName(&entryName, "/", i);
+
         if (!isEqualSubString(entryName.cstr(), suffix.cstr())) {
             continue;
         }
@@ -77,6 +79,7 @@ void GraphicsParamKeeperImpl::initStageResource(const Resource* pResource, const
     }
 
     const ParamBinary* binary = tryFindParamBinary("Default");
+
     if (binary) {
         mParamIo->applyResParameterArchive(agl::utl::ResParameterArchive(binary->data));
         mIsLoaded = true;
@@ -97,8 +100,10 @@ GraphicsParamKeeperImpl::tryFindParamBinary(const char* pName) const {
     }
 
     s32 binaryNum = mParamBinaries.size();
+
     for (s32 i = 0; i < binaryNum; i++) {
         ParamBinary* binary = mParamBinaries.unsafeAt(i);
+
         if (isEqualString(pName, binary->name.cstr())) {
             return binary;
         }
@@ -116,6 +121,7 @@ void GraphicsParamKeeperImpl::updateRequest() {
     }
 
     GraphicsAreaDirector* areaDirector = mGraphicsSystemInfo->mGraphicsAreaDirector;
+
     if (!areaDirector) {
         return;
     }
@@ -125,6 +131,7 @@ void GraphicsParamKeeperImpl::updateRequest() {
                                               static_cast<GraphicsAreaParamType>(mParamType));
     const ParamBinary* binary = tryFindParamOrDefaultBinary(areaParam.mParamName);
     const ParamBinary* prevBinary = tryFindParamOrDefaultBinary(areaParam.mPrevParamName);
+
     if (!binary) {
         return;
     }
@@ -134,6 +141,7 @@ void GraphicsParamKeeperImpl::updateRequest() {
     }
 
     agl::utl::IParameterIO* paramIo = mParamIo;
+
     if (!prevBinary) {
         paramIo->applyResParameterArchive(agl::utl::ResParameterArchive(binary->data));
     } else {
@@ -153,6 +161,7 @@ void GraphicsParamKeeperImpl::updateRequest() {
 const GraphicsParamKeeperImpl::ParamBinary*
 GraphicsParamKeeperImpl::tryFindParamOrDefaultBinary(const char* pName) const {
     const ParamBinary* binary = tryFindParamBinary(pName);
+
     if (binary) {
         return binary;
     }

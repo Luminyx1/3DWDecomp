@@ -96,6 +96,7 @@ const CameraDistanceCurve* CameraDistanceCurve::getDefaultCurve() {
 
 const CameraDistanceCurve* CameraDistanceCurve::findOrDefaultCurve(const ByamlIter& rIter) {
     const char* name = tryGetByamlKeyStringOrNULL(rIter, "DistanceCurveName");
+
     if (!name) {
         return &sExtraCurves[0];
     }

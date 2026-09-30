@@ -16,11 +16,13 @@ LinearValueController::LinearValueController(f32 value) : mValue(value) {}
 void LinearValueController::update() {
     if (mStep > 0.0f && mTarget > mValue) {
         mValue += mStep;
+
         if (mTarget < mValue) {
             mValue = mTarget;
         }
     } else if (mStep < 0.0f && mTarget < mValue) {
         mValue += mStep;
+
         if (mTarget > mValue) {
             mValue = mTarget;
         }
@@ -50,11 +52,13 @@ BgmLpfController::BgmLpfController(sead::SoundHandle* pHandle) : mHandle(pHandle
  */
 void BgmLpfController::update() {
     mFreqController->update();
+
     if (mIsReached) {
         return;
     }
 
     mHandle->SetLpfFreq(mFreqController->getValue());
+
     if (mFreqController->isReachedTarget()) {
         mIsReached = true;
     }
@@ -85,6 +89,7 @@ inline void BgmPitchController::applyPitch() {
     f32 pitch = mPitchController->getValue();
     mHandle->SetPitch(pitch * exp2f(modulation));
     mModulationPhase += mModulationSpeed * (sead::Mathf::pi2() / 60.0f);
+
     while (mModulationPhase >= sead::Mathf::pi2()) {
         mModulationPhase -= sead::Mathf::pi2();
     }
@@ -134,11 +139,13 @@ BgmVolumeController::BgmVolumeController(sead::SoundHandle* pHandle) : mHandle(p
  */
 void BgmVolumeController::update() {
     mVolumeController->update();
+
     if (mIsReached) {
         return;
     }
 
     mHandle->SetVolume(mVolumeController->getValue(), 0);
+
     if (mVolumeController->isReachedTarget()) {
         mIsReached = true;
     }
@@ -161,6 +168,7 @@ void BgmVolumeController::changeVolume(f32 volume, f32 speed) {
  */
 bool BgmVolumeController::isFadeOutNow() const {
     f32 value = mVolumeController->getValue();
+
     if (value <= 0.0f) {
         return false;
     }
@@ -174,6 +182,7 @@ bool BgmVolumeController::isFadeOutNow() const {
  */
 bool BgmVolumeController::isFadeInNow() const {
     f32 value = mVolumeController->getValue();
+
     if (value >= 1.0f) {
         return false;
     }

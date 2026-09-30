@@ -75,6 +75,7 @@ void ScreenFader::end(s32 fadeFrame) {
     mDelayFrame = 0;
     mFadeFrame = fadeFrame;
     mState = State::FadeOut;
+
     if (fadeFrame == -1) {
         mState = State::End;
         mFrame = -1;
@@ -90,6 +91,7 @@ void ScreenFader::update() {
     }
 
     mFrame++;
+
     if (mState == State::FadeOut && mFrame >= mFadeFrame) {
         mState = State::End;
     }
@@ -111,6 +113,7 @@ bool ScreenFader::tryDraw(agl::DrawContext* pDrawContext, const sead::Viewport& 
     f32 rate = sead::Mathi::max(mFrame - mDelayFrame, 0) / static_cast<f32>(mFadeFrame);
     rate = rate > 1.0f ? 1.0f : rate;
     f32 maxAlpha = mMaxAlpha;
+
     if (mState == State::FadeIn) {
         drawFadeQuad(pDrawContext, mColor, rate, maxAlpha, rViewport, rRenderBuffer);
     } else {

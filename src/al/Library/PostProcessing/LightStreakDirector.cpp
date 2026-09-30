@@ -119,6 +119,7 @@ LightStreakDirector::LightStreakDirector(GraphicsSystemInfo* pInfo)
     mBlurShader = ShaderHolder::sInstance->getShaderProgram("MakeLightStreakBlur");
     mComposeShader = ShaderHolder::sInstance->getShaderProgram("ComposeLightStreak");
     mFullScreenQuadModel = new FullScreenQuadModel();
+
     for (s32 i = 0; i < mUniformBlocks.capacity(); i++)
         mUniformBlocks.pushBack(createUniformBlock(cLightStreakUboLayout, 5, nullptr, 2));
 }
@@ -134,6 +135,7 @@ LightStreakDirector::~LightStreakDirector() {
 
     while (!mUniformBlocks.isEmpty()) {
         UniformBlock* uniformBlock = mUniformBlocks.popBack();
+
         if (uniformBlock)
             delete uniformBlock;
     }
@@ -172,6 +174,7 @@ void LightStreakDirector::setIntensity(f32 intensity) {
 void LightStreakDirector::updateUbo(s32 width, s32 height) const {
     const LightStreakParam& param = getCurrentParam();
     f32 angleStep;
+
     switch (param.getStreakType()) {
     case 1:
         angleStep = 72.0f;
@@ -187,6 +190,7 @@ void LightStreakDirector::updateUbo(s32 width, s32 height) const {
     f32 invWidth = 1.0f / width;
     f32 invHeight = 1.0f / height;
     f32 attn = param.getAttn();
+
     for (s32 i = 0; i < mUniformBlocks.size(); i++) {
         f32 passScale = exp2f(2.0f * i);
         f32 passAttn = powf(attn, passScale);
@@ -196,6 +200,7 @@ void LightStreakDirector::updateUbo(s32 width, s32 height) const {
         setUniformData(mUniformBlocks(i), 2, param.getThreshold(), 0);
 
         f32 angle = param.getRotateDegree();
+
         for (s32 j = 0; j < 6; j++) {
             f32 radian = angle * (sead::Mathf::pi() / 180.0f);
             f32 cos = cosf(radian);

@@ -29,6 +29,7 @@ BlockRailRider::BlockRailRider() : mRouteSelecter(&sDefaultRouteSelecter) {}
  */
 void BlockRailRider::move(f32 speed, sead::Vector3f* pPos, sead::Vector3f* pDir) {
     mIsReachEnd = false;
+
     if (!mRailLink) {
         return;
     }
@@ -44,6 +45,7 @@ void BlockRailRider::move(f32 speed, sead::Vector3f* pPos, sead::Vector3f* pDir)
         mCoord += mIsForward ? speed : -speed;
         BlockRailLink* nextLink;
         bool isFromEnd;
+
         if (mCoord < 0.0f) {
             speed = speed > 0.0f ? -mCoord : mCoord;
             nextLink = trySelectPrevLink();
@@ -66,6 +68,7 @@ void BlockRailRider::move(f32 speed, sead::Vector3f* pPos, sead::Vector3f* pDir)
 
         if (!nextLink) {
             calcPosAndDir(pPos, pDir);
+
             if (mIsLeaveAtEnd) {
                 *pPos += speed * *pDir;
                 mRailLink = nullptr;
@@ -84,6 +87,7 @@ void BlockRailRider::move(f32 speed, sead::Vector3f* pPos, sead::Vector3f* pDir)
 
         if (nextLink->isPrevLink(mRailLink)) {
             mRailLink = nextLink;
+
             if (!isFromEnd) {
                 mIsForward = !mIsForward;
             }
@@ -91,6 +95,7 @@ void BlockRailRider::move(f32 speed, sead::Vector3f* pPos, sead::Vector3f* pDir)
             mCoord = 0.0f;
         } else if (nextLink->isNextLink(mRailLink)) {
             mRailLink = nextLink;
+
             if (isFromEnd) {
                 mIsForward = !mIsForward;
             }
@@ -119,6 +124,7 @@ bool BlockRailRider::calcPosAndDir(sead::Vector3f* pPos, sead::Vector3f* pDir) c
     f32 rate = isNearZero(length, 0.001f) ? 0.0f : mCoord / length;
     mRailLink->calcPos(pPos, rate);
     mRailLink->calcDir(pDir, rate);
+
     if (!mIsForward) {
         pDir->negate();
     }
@@ -133,6 +139,7 @@ bool BlockRailRider::calcPosAndDir(sead::Vector3f* pPos, sead::Vector3f* pDir) c
 BlockRailLink* BlockRailRider::trySelectPrevLink() const {
     BlockRailLink* selectedLink = nullptr;
     s32 linkNum = mRailLink->getPrevLinkNum();
+
     for (s32 i = 0; i < linkNum; i++) {
         selectedLink = selectRoute(selectedLink, mRailLink->getPrevLink(i));
     }
@@ -147,6 +154,7 @@ BlockRailLink* BlockRailRider::trySelectPrevLink() const {
 BlockRailLink* BlockRailRider::trySelectNextLink() const {
     BlockRailLink* selectedLink = nullptr;
     s32 linkNum = mRailLink->getNextLinkNum();
+
     for (s32 i = 0; i < linkNum; i++) {
         selectedLink = selectRoute(selectedLink, mRailLink->getNextLink(i));
     }
@@ -194,6 +202,7 @@ bool BlockRailRider::calcDir(sead::Vector3f* pDir) const {
     f32 length = mRailLink->getTotalLength();
     f32 rate = isNearZero(length, 0.001f) ? 0.0f : mCoord / length;
     mRailLink->calcDir(pDir, rate);
+
     if (!mIsForward) {
         pDir->negate();
     }
@@ -249,6 +258,7 @@ bool DefaultBlockRailRouteSelecter::compareBlockRailRoute(const BlockRailRider* 
                                                           const BlockRailLink* pLinkB) const {
     const BlockRailLink* currentLink = pRider->getRailLink();
     sead::Vector3f dirA = sead::Vector3f::ez;
+
     if (pLinkA->isPrevLink(currentLink)) {
         pLinkA->calcDir(&dirA, 1.0f);
     } else if (pLinkA->isNextLink(currentLink)) {
@@ -257,6 +267,7 @@ bool DefaultBlockRailRouteSelecter::compareBlockRailRoute(const BlockRailRider* 
     }
 
     sead::Vector3f dirB = sead::Vector3f::ez;
+
     if (pLinkB->isPrevLink(currentLink)) {
         pLinkB->calcDir(&dirB, 1.0f);
     } else if (pLinkB->isNextLink(currentLink)) {

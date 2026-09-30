@@ -57,6 +57,7 @@ void FallMapParts::init(const ActorInitInfo& rInfo, const char* pSuffix) {
     registerAreaHostMtx(this, rInfo);
     mStartTrans = getTrans(this);
     tryGetArg(&mFallTime, rInfo, "FallTime");
+
     if (listenStageSwitchOnOffAppear(this, FunctorV0M<FallMapParts*, void (FallMapParts::*)()>(
                                                this, &FallMapParts::switchAppear),
                                      FunctorV0M<FallMapParts*, void (FallMapParts::*)()>(
@@ -111,6 +112,7 @@ void FallMapParts::exeAppear() {
     if (isFirstStep(this)) {
         validateCollisionParts(this);
         tryStartMclAnimIfExist(this, "Wait");
+
         if (!tryStartAction(this, "Appear")) {
             startNerveAction(this, "Wait");
             return;
@@ -170,6 +172,7 @@ void FallMapParts::exeFall() {
 
     addVelocityToGravity(this, 0.3f);
     scaleVelocity(this, 0.9f);
+
     if (isGreaterStep(this, mFallTime)) {
         startNerveAction(this, "End");
     }

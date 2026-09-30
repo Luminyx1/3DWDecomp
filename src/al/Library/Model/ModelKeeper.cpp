@@ -135,6 +135,7 @@ void ModelKeeper::setLodParams(const f32* pLodDistances, s32 lodNum, const sead:
  */
 void ModelKeeper::updateLod(const sead::Vector3f& rPos, bool isFlag) {
     SimpleModelG3D* model = mModelCafe->getModelG3D();
+
     if (ClippingDirectorBase::sLODDisabled || mIsLodDisabled || (isFlag && _1c)) {
         model->mIsLodDisabled = true;
         model->mLodIndex = 0;
@@ -165,6 +166,7 @@ bool ModelKeeper::setDisableDraw(bool isDisable) {
     }
 
     SimpleModelG3D* model = mModelCafe->getModelG3D();
+
     if (!model) {
         return false;
     }
@@ -188,6 +190,7 @@ bool ModelKeeper::setDisableDepthShadow(bool isDisable) {
     }
 
     SimpleModelG3D* model = mModelCafe->getModelG3D();
+
     if (!model) {
         return false;
     }

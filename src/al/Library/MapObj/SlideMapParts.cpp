@@ -51,6 +51,7 @@ void SlideMapParts::init(const ActorInitInfo& rInfo) {
     tryGetArg(&mMoveDistance, rInfo, "MoveDistance");
     tryGetArg(&mMoveSpeed, rInfo, "MoveSpeed");
     tryGetArg(&mWaitTime, rInfo, "WaitTime");
+
     if (mWaitTime < 0) {
         mWaitTime = 0;
     }
@@ -67,6 +68,7 @@ void SlideMapParts::init(const ActorInitInfo& rInfo) {
     surfaceTrans.z = surfaceHeight * axis.z + mTrans.z;
     mSurfaceEffectMtx.makeQT(getQuat(this), surfaceTrans);
     mEffectMtxSetter = tryCreateEffectMtxSetter(this, "EffectMtxSetter");
+
     if (mEffectMtxSetter) {
         mEffectMtxSetter->setMtxPtr(&mSurfaceEffectMtx, "SurfaceEffectMtx");
     }
@@ -154,11 +156,13 @@ void SlideMapParts::exeMove() {
     }
 
     f32 rate = calcNerveRate(this, calcMoveTime());
+
     if (!mIsMoveForwards) {
         rate = 1.0f - rate;
     }
 
     setTransOffsetLocalDir(this, getQuat(this), mTrans, mMoveDistance * rate, mMoveAxis);
+
     if (isGreaterEqualStep(this, calcMoveTime())) {
         if (mIsMoveForwards) {
             tryStartSe(this, "MoveEnd1");

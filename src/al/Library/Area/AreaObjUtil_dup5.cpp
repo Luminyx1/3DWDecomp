@@ -30,6 +30,7 @@ f32 calcWaterSinkDepth(const IUseAreaObj* pAreaUser, const sead::Vector3f& rPos)
     }
 
     AreaObj* areaObj = findAreaObj(pAreaUser, "WaterArea", rPos);
+
     if (!areaObj) {
         return -1.0f;
     }
@@ -37,6 +38,7 @@ f32 calcWaterSinkDepth(const IUseAreaObj* pAreaUser, const sead::Vector3f& rPos)
     sead::Vector3f hitPos;
     sead::Vector3f normal;
     sead::Vector3f above = {rPos.x, rPos.y + 100000.0f, rPos.z};
+
     if (!checkArrow(&hitPos, &normal, areaObj, rPos, above)) {
         return -1.0f;
     }
@@ -55,12 +57,15 @@ f32 calcWaterSinkDepth(const IUseAreaObj* pAreaUser, const sead::Vector3f& rPos)
 bool calcWaterDistanceCheck(const IUseAreaObj* pAreaUser, const sead::Vector3f& rPos,
                             f32 distance, f32* pHeight) {
     AreaObj* areaObj = findAreaObj(pAreaUser, "WaterArea", rPos);
+
     if (areaObj) {
         sead::Vector3f hitPos;
         sead::Vector3f normal;
         sead::Vector3f end = {rPos.x, rPos.y + distance, rPos.z};
+
         if (!checkArrow(&hitPos, &normal, areaObj, rPos, end)) {
             end = rPos + sead::Vector3f(0.0f, -distance, 0.0f);
+
             if (!checkArrow(&hitPos, &normal, areaObj, rPos, end)) {
                 return false;
             }
@@ -73,11 +78,14 @@ bool calcWaterDistanceCheck(const IUseAreaObj* pAreaUser, const sead::Vector3f& 
     sead::Vector3f start = {rPos.x, rPos.y + distance, rPos.z};
     sead::Vector3f end = start + sead::Vector3f(0.0f, distance, 0.0f);
     AreaObj* startAreaObj = findAreaObj(pAreaUser, "WaterArea", start);
+
     if (startAreaObj) {
         sead::Vector3f hitPos;
         sead::Vector3f normal;
+
         if (!checkArrow(&hitPos, &normal, startAreaObj, rPos, end)) {
             end = rPos + sead::Vector3f(0.0f, -distance, 0.0f);
+
             if (!checkArrow(&hitPos, &normal, startAreaObj, start, end)) {
                 return false;
             }
@@ -107,13 +115,16 @@ f32 calcWaterSinkDepth(const LiveActor* pActor) {
  */
 bool isInPlessieTunnel(const IUseAreaObj* pAreaUser, const sead::Vector3f& rPos) {
     AreaObjGroup* group = pAreaUser->getAreaObjDirector()->getAreaObjGroup("GraphicsArea");
+
     if (!group) {
         return false;
     }
 
     s32 num = group->mNumAreas;
+
     for (s32 i = 0; i < num; i++) {
         AreaObj* areaObj = group->getAreaObj(i);
+
         if (areaObj->mIsPlessieTunnel && areaObj->isInVolume(rPos)) {
             return true;
         }
@@ -189,6 +200,7 @@ bool tryGetAreaObjStringArg(const char** pArg, const AreaObj* pAreaObj, const ch
  */
 bool tryIsInAreaObjPlayer(AreaObjGroup* pGroup) {
     const sead::Vector3f& playerPos = alProjectInterface::getPlayerPos();
+
     if (!pGroup) {
         return false;
     }
@@ -203,6 +215,7 @@ bool tryIsInAreaObjPlayer(AreaObjGroup* pGroup) {
  */
 AreaObj* tryGetAreaObjPlayer(AreaObjGroup* pGroup) {
     const sead::Vector3f& playerPos = alProjectInterface::getPlayerPos();
+
     if (!pGroup) {
         return nullptr;
     }

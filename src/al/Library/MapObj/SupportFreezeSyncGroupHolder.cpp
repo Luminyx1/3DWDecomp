@@ -9,6 +9,7 @@ namespace al {
  */
 SupportFreezeSyncGroupHolder::SupportFreezeSyncGroupHolder() : LiveActor("DRC拘束グループ監視") {
     mGroups = new SupportFreezeSyncGroup*[mGroupMax];
+
     for (s32 i = 0; i < mGroupMax; i++) {
         mGroups[i] = nullptr;
     }
@@ -24,6 +25,7 @@ void SupportFreezeSyncGroupHolder::initAfterPlacementSceneObj(const ActorInitInf
     initActorPoseTRSV(this);
     initHitSensor(1);
     HitSensor* sensor = addHitSensorMapObj(this, rInfo, "Body", 0.0f, 0, {0.0f, 0.0f, 0.0f});
+
     for (s32 i = 0; i < mGroupNum; i++) {
         mGroups[i]->setHostSensor(sensor);
     }
@@ -47,6 +49,7 @@ void SupportFreezeSyncGroupHolder::movement() {
  */
 void SupportFreezeSyncGroupHolder::regist(LiveActor* pActor, const ActorInitInfo& rInfo) {
     SupportFreezeSyncGroup* group = tryFindGroup(rInfo);
+
     if (!group) {
         group = new SupportFreezeSyncGroup();
         group->init(rInfo);

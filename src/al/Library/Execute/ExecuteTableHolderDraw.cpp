@@ -74,6 +74,7 @@ void ExecuteTableHolderDraw::init(const char* pName, const ExecuteSystemInitInfo
     mLists = new ExecutorListBase*[orderNum];
 
     s32 actorNum = 0;
+
     for (s32 i = 0; i < orderNum; i++) {
         actorNum += isEqualGroup(pOrders[i], "ActorDraw");
     }
@@ -82,6 +83,7 @@ void ExecuteTableHolderDraw::init(const char* pName, const ExecuteSystemInitInfo
     mActorLists = new ExecutorListActorDraw*[actorNum];
 
     s32 actorModelNum = 0;
+
     for (s32 i = 0; i < orderNum; i++) {
         if (isDrawListActorModel(pOrders[i])) {
             actorModelNum++;
@@ -92,6 +94,7 @@ void ExecuteTableHolderDraw::init(const char* pName, const ExecuteSystemInitInfo
     mActorModelLists = new ExecutorListActorModelDrawBase*[actorModelNum];
 
     s32 layoutNum = 0;
+
     for (s32 i = 0; i < orderNum; i++) {
         if (isDrawListLayout(pOrders[i])) {
             layoutNum++;
@@ -275,8 +278,10 @@ void ExecuteTableHolderDraw::registerExecutorListAll(ExecutorListBase* pList) {
  */
 bool ExecuteTableHolderDraw::tryRegisterActor(LiveActor* pActor, const char* pListName) {
     bool isRegistered = false;
+
     for (s32 i = 0; i < mActorListNum; i++) {
         ExecutorListActorDraw* list = mActorLists[i];
+
         if (isEqualString(list->mListName, pListName)) {
             list->registerActor(pActor);
             isRegistered = true;
@@ -294,8 +299,10 @@ bool ExecuteTableHolderDraw::tryRegisterActor(LiveActor* pActor, const char* pLi
  */
 bool ExecuteTableHolderDraw::tryRegisterActorModel(LiveActor* pActor, const char* pListName) {
     bool isRegistered = false;
+
     for (s32 i = 0; i < mActorModelListNum; i++) {
         ExecutorListActorModelDrawBase* list = mActorModelLists[i];
+
         if (isEqualString(list->mListName, pListName)) {
             list->registerActorModel(pActor);
             isRegistered = true;
@@ -313,8 +320,10 @@ bool ExecuteTableHolderDraw::tryRegisterActorModel(LiveActor* pActor, const char
  */
 bool ExecuteTableHolderDraw::tryRegisterLayout(LayoutActor* pLayout, const char* pListName) {
     bool isRegistered = false;
+
     for (s32 i = 0; i < mLayoutListNum; i++) {
         ExecutorListLayoutDrawBase* list = mLayoutLists[i];
+
         if (isEqualString(list->mListName, pListName)) {
             list->registerLayout(pLayout);
             isRegistered = true;
@@ -332,8 +341,10 @@ bool ExecuteTableHolderDraw::tryRegisterLayout(LayoutActor* pLayout, const char*
  */
 bool ExecuteTableHolderDraw::tryRegisterUser(IUseExecutor* pUser, const char* pListName) {
     bool isRegistered = false;
+
     for (s32 i = 0; i < mUserListNum; i++) {
         ExecutorListIUseExecutorDraw* list = mUserLists[i];
+
         if (isEqualString(list->mListName, pListName)) {
             list->registerUser(pUser);
             isRegistered = true;
@@ -351,8 +362,10 @@ bool ExecuteTableHolderDraw::tryRegisterUser(IUseExecutor* pUser, const char* pL
  */
 bool ExecuteTableHolderDraw::tryRegisterFunctor(const FunctorBase& rFunctor, const char* pListName) {
     bool isRegistered = false;
+
     for (s32 i = 0; i < mFunctorListNum; i++) {
         ExecutorListFunctor* list = mFunctorLists[i];
+
         if (isEqualString(list->mListName, pListName)) {
             list->registerFunctor(rFunctor);
             isRegistered = true;
@@ -375,6 +388,7 @@ void ExecuteTableHolderDraw::createExecutorListTable() {
     }
 
     mActiveListNum = 0;
+
     for (s32 i = 0; i < mListNum; i++) {
         if (mLists[i]->isActive()) {
             mActiveListNum++;
@@ -383,8 +397,10 @@ void ExecuteTableHolderDraw::createExecutorListTable() {
 
     mActiveLists = new ExecutorListBase*[mActiveListNum];
     s32 index = 0;
+
     for (s32 i = 0; i < mListNum; i++) {
         ExecutorListBase* list = mLists[i];
+
         if (list->isActive()) {
             mActiveLists[index++] = list;
         }

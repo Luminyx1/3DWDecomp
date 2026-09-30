@@ -37,6 +37,7 @@ bool SwingMovement::updateRotate() {
     f32 degree = (f32)mFrameInCycle * 360.0f / (f32)mSwingCycle;
 
     f32 swingAngle = sead::Mathf::abs(mSwingAngle);
+
     if (swingAngle < 180.0f) {
         mCurrentAngle =
             sead::Mathf::sin(sead::Mathf::deg2rad(degree)) * mSwingAngle + mOffsetRotate;
@@ -46,6 +47,7 @@ bool SwingMovement::updateRotate() {
     }
 
     f32 swingAngleSign = sign(mSwingAngle);
+
     if (swingAngle < 360.0f) {
         f32 rad = sead::Mathf::deg2rad(modf(degree + 90.0f + 180.0f, 180.0f) - 90.0f);
         mCurrentAngle = swingAngleSign * sead::Mathf::sin(rad) * 180.0f + mOffsetRotate;

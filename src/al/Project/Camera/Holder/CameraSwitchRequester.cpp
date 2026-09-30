@@ -21,6 +21,7 @@ void CameraSwitchRequester::requestStart(CameraTicket* pTicket, s32 interpoleSte
 void CameraSwitchRequester::requestEnd(CameraTicket* pTicket, s32 interpoleStep,
                                        bool isKeepPose) {
     pTicket->setActiveCamera(false);
+
     if (!mStartInfos[pTicket->getPriority()].tryRemoveRequestIfExist(pTicket)) {
         mEndInfos[pTicket->getPriority()].addRequest(pTicket, interpoleStep, isKeepPose);
     }
@@ -30,6 +31,7 @@ void CameraSwitchRequester::requestEndWithNextCameraPose(CameraTicket* pTicket,
                                                          const CameraPoseInfo* pPoseInfo,
                                                          s32 interpoleStep) {
     pTicket->setActiveCamera(false);
+
     if (!mStartInfos[pTicket->getPriority()].tryRemoveRequestIfExist(pTicket)) {
         mEndInfos[pTicket->getPriority()].addRequestWithNextCameraPose(pTicket, pPoseInfo,
                                                                        interpoleStep);

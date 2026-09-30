@@ -6,6 +6,7 @@ namespace al {
 
 SceneCameraInfo::SceneCameraInfo(s32 viewNum) : mViewNumMax(viewNum) {
     mViewArray = new CameraViewInfo*[viewNum];
+
     for (s32 i = 0; i < mViewNumMax; i++) {
         mViewArray[i] = nullptr;
     }

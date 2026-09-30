@@ -50,6 +50,7 @@ f32 BgmRhythmCtrl::getCurrentBpm() const {
  */
 bool BgmRhythmCtrl::isEnableRhythmAnim() const {
     const BgmLine* line = mActiveBgmLine->getActiveBgmLine();
+
     if (line == nullptr) {
         return false;
     }

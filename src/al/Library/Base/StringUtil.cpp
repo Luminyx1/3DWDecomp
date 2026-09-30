@@ -30,6 +30,7 @@ char* createConcatString(const char* start, const char* end) {
 
 void createFileNameBySuffix(sead::BufferedSafeString* out, const char* name, const char* suffix) {
     out->clear();
+
     if (!suffix) {
         out->append(name);
         return;
@@ -87,6 +88,7 @@ const char* searchSubString(const char* str, const char* substr) {
 const char* searchSubString(const char* str, const char* substr, s32 substrLen) {
     while (str[0] != '\0') {
         s32 size = 0;
+
         for (s32 index = 0; index < substrLen; index++) {
             if (str[index] == '\0' || str[index] != substr[index])
                 break;
@@ -106,6 +108,7 @@ const char* getSubStringUnmatched(const char** pOutRest, const char* pStr, const
                                   void (*pCallback)(const char*, const char*, void*),
                                   void* pUser) {
     const char* pattern = rMatch.mStr;
+
     while (*pStr != '\0') {
         if (*pattern == *pStr) {
             pStr++;
@@ -120,6 +123,7 @@ const char* getSubStringUnmatched(const char** pOutRest, const char* pStr, const
         } else if (*pattern == '*') {
             const char* next = pattern + 1;
             const char* end = next;
+
             while (*end != '\0' && *end != '*' && *end != '?') {
                 end++;
             }
@@ -127,13 +131,16 @@ const char* getSubStringUnmatched(const char** pOutRest, const char* pStr, const
             s32 len = end - next;
 
             const char* found;
+
             if (len == 0) {
                 found = pStr;
+
                 while (*found != '\0') {
                     found++;
                 }
             } else {
                 found = searchSubString(pStr, next, len);
+
                 if (!found) {
                     break;
                 }
@@ -354,6 +361,7 @@ void makeUrlDecodeString(char* out, u32 outLen, const char* str) {
     std::memset(out, 0, outLen);
 
     s32 bytesRead = 1;
+
     for (; str[0] != '\0'; str += bytesRead) {
         char newSymbols[2] = {'\0', '\0'};
 
@@ -409,6 +417,7 @@ __attribute__((noinline)) bool isEqualString(const char* str1, const char* str2)
 bool isEqualString(const sead::SafeString& safestr1, const sead::SafeString& safestr2) {
     const char* str1 = safestr1.cstr();
     const char* str2 = safestr2.cstr();
+
     while (*str1 == *str2) {
         char val = *str1;
 

@@ -10,6 +10,7 @@ namespace al {
  */
 BlockRailDirector::BlockRailDirector() {
     mRails = new BlockRail*[0x100];
+
     for (s32 i = 0; i < mMaxRails; i++) {
         mRails[i] = nullptr;
     }
@@ -54,6 +55,7 @@ bool BlockRailDirector::tryRideBlockRail(BlockRailRider* pRider, const sead::Vec
                                          const sead::Vector3f& rPos) {
     for (s32 i = 0; i < mRailNum; i++) {
         f32 rate = 0.0f;
+
         if (mRails[i]->getRailLink()->isRide(&rate, rPrevPos, rPos)) {
             BlockRailLink* link = mRails[i]->getRailLink();
             pRider->setRailPart(link, rate * link->getTotalLength());

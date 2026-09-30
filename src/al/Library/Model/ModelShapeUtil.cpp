@@ -30,6 +30,7 @@ namespace al {
  */
 s32 getJointNum(const ModelKeeper* pKeeper) {
     const nn::g3d::SkeletonObj* skeleton = getSkeletonObj(pKeeper);
+
     if (!skeleton) {
         return 0;
     }
@@ -45,6 +46,7 @@ s32 getJointNum(const ModelKeeper* pKeeper) {
  */
 s32 getJointIndex(const ModelKeeper* pKeeper, const char* pName) {
     const nn::g3d::SkeletonObj* skeleton = getSkeletonObj(pKeeper);
+
     if (!skeleton) {
         return -1;
     }
@@ -60,6 +62,7 @@ s32 getJointIndex(const ModelKeeper* pKeeper, const char* pName) {
  */
 bool isExistJoint(const ModelKeeper* pKeeper, const char* pName) {
     const nn::g3d::SkeletonObj* skeleton = getSkeletonObj(pKeeper);
+
     if (!skeleton) {
         return false;
     }
@@ -79,6 +82,7 @@ bool isExistJoint(const ModelKeeper* pKeeper, const char* pName) {
  */
 const char* getJointName(const ModelKeeper* pKeeper, s32 index) {
     const nn::g3d::SkeletonObj* skeleton = getSkeletonObj(pKeeper);
+
     if (!skeleton) {
         return nullptr;
     }
@@ -94,6 +98,7 @@ const char* getJointName(const ModelKeeper* pKeeper, s32 index) {
  */
 const sead::Matrix34f* getJointMtxPtr(const ModelKeeper* pKeeper, const char* pName) {
     const nn::g3d::SkeletonObj* skeleton = getSkeletonObj(pKeeper);
+
     if (!skeleton) {
         return nullptr;
     }
@@ -110,6 +115,7 @@ const sead::Matrix34f* getJointMtxPtr(const ModelKeeper* pKeeper, const char* pN
  */
 const sead::Matrix34f* getJointMtxPtrByIndex(const ModelKeeper* pKeeper, s32 index) {
     const nn::g3d::SkeletonObj* skeleton = getSkeletonObj(pKeeper);
+
     if (!skeleton) {
         return nullptr;
     }
@@ -125,6 +131,7 @@ const sead::Matrix34f* getJointMtxPtrByIndex(const ModelKeeper* pKeeper, s32 ind
  */
 const sead::Matrix34f* getJointLocalMtxPtr(const ModelKeeper* pKeeper, const char* pName) {
     const nn::g3d::SkeletonObj* skeleton = getSkeletonObj(pKeeper);
+
     if (!skeleton) {
         return nullptr;
     }
@@ -141,6 +148,7 @@ const sead::Matrix34f* getJointLocalMtxPtr(const ModelKeeper* pKeeper, const cha
  */
 const void* getJointLocalMtxPtrByIndex(const ModelKeeper* pKeeper, s32 index) {
     const nn::g3d::SkeletonObj* skeleton = getSkeletonObj(pKeeper);
+
     if (!skeleton) {
         return nullptr;
     }
@@ -194,6 +202,7 @@ s32 getParentJointIndex(const ModelKeeper* pKeeper, s32 index) {
 void setJointVisibility(const ModelKeeper* pKeeper, const char* pName, bool isVisible) {
     nn::g3d::ModelObj* modelObj = getModelObj(pKeeper);
     s32 index = getJointIndex(pKeeper, pName);
+
     if (index < 0) {
         return;
     }
@@ -203,6 +212,7 @@ void setJointVisibility(const ModelKeeper* pKeeper, const char* pName, bool isVi
     u32& word = modelObj->GetBoneVisibilityArray()[static_cast<u32>(index) >> 5];
     word = (word & ~bit) | (static_cast<u32>(isVisible) << index);
     auto callback = modelObj->GetBoneVisibilityCallback();
+
     if (callback && isPrevVisible != isVisible) {
         callback(modelObj, index);
     }
@@ -216,6 +226,7 @@ void setJointVisibility(const ModelKeeper* pKeeper, const char* pName, bool isVi
  */
 bool getJointVisibility(const ModelKeeper* pKeeper, const char* pName) {
     s32 index = getJointIndex(pKeeper, pName);
+
     if (index < 0) {
         return false;
     }

@@ -158,6 +158,7 @@ const u8* tryGetMapPartsResourceYaml(const ActorInitInfo& rInfo, const char* pNa
     makeMapPartsModelName(&modelName, &path, *rInfo.mPlacementInfo);
     Resource* resource = findOrCreateResource(path, nullptr);
     StringTmp<256> fileName("%s.byml", pName);
+
     if (!resource->isExistFile(StringTmp<256>("%s.byml", pName))) {
         return nullptr;
     }
@@ -181,6 +182,7 @@ bool tryGetInitFileIterAndName(ByamlIter* pIter, sead::BufferedSafeString* pFile
                                const char* pInitName, const Resource* pSubResource) {
     const char* suffixName = nullptr;
     ByamlIter suffixIter;
+
     if (tryGetSuffixIter(&suffixIter, pResource, pInitName, pSuffix)) {
         if (!suffixIter.isExistKey(pKey)) {
             return false;
@@ -228,6 +230,7 @@ bool tryGetSuffixIter(ByamlIter* pIter, const Resource* pResource, const char* p
 
     StringTmp<256> fileName;
     createFileNameBySuffix(&fileName, pName, pSuffix);
+
     if (!pResource->isExistFile(StringTmp<64>("%s.byml", fileName.cstr()))) {
         return false;
     }
@@ -409,6 +412,7 @@ bool tryGetActorInitFileName(sead::BufferedSafeString* pFileName, const LiveActo
 bool tryGetActorAnimInitFileName(sead::BufferedSafeString* pFileName, const LiveActor* pActor,
                                  const char* pKey, const char* pSuffix) {
     const Resource* animResource = tryGetAnimResource(pActor);
+
     if (!animResource) {
         return false;
     }

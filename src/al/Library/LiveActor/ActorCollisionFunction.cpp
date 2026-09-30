@@ -104,12 +104,14 @@ void validateAllCollisionParts(LiveActor* pActor) {
     }
 
     SubActorKeeper* keeper = pActor->mSubActorKeeper;
+
     if (!keeper) {
         return;
     }
 
     for (s32 i = 0; i < keeper->mCount; i++) {
         LiveActor* subActor = keeper->mInfos[i]->mSubActor;
+
         if (subActor) {
             validateAllCollisionParts(subActor);
         }
@@ -126,12 +128,14 @@ void invalidateAllCollisionParts(LiveActor* pActor) {
     }
 
     SubActorKeeper* keeper = pActor->mSubActorKeeper;
+
     if (!keeper) {
         return;
     }
 
     for (s32 i = 0; i < keeper->mCount; i++) {
         LiveActor* subActor = keeper->mInfos[i]->mSubActor;
+
         if (subActor) {
             invalidateAllCollisionParts(subActor);
         }
@@ -148,12 +152,14 @@ void disableAllCollisionParts(LiveActor* pActor) {
     }
 
     SubActorKeeper* keeper = pActor->mSubActorKeeper;
+
     if (!keeper) {
         return;
     }
 
     for (s32 i = 0; i < keeper->mCount; i++) {
         LiveActor* subActor = keeper->mInfos[i]->mSubActor;
+
         if (subActor) {
             disableAllCollisionParts(subActor);
         }
@@ -170,12 +176,14 @@ void enableAllCollisionParts(LiveActor* pActor) {
     }
 
     SubActorKeeper* keeper = pActor->mSubActorKeeper;
+
     if (!keeper) {
         return;
     }
 
     for (s32 i = 0; i < keeper->mCount; i++) {
         LiveActor* subActor = keeper->mInfos[i]->mSubActor;
+
         if (subActor) {
             enableAllCollisionParts(subActor);
         }
@@ -259,6 +267,7 @@ void setSyncCollisionMtxPtr(LiveActor* pActor, const sead::Matrix34f* pMtx) {
  */
 bool isOnGround(const LiveActor* pActor, u32 checkFrame, f32 margin) {
     Collider* collider = pActor->mCollider;
+
     if (collider) {
         if (!(collider->_110 >= 0.0f) && collider->_264 > checkFrame) {
             return false;
@@ -301,6 +310,7 @@ bool isCollidedGroundEdgeOrCorner(const LiveActor* pActor) {
  */
 bool isOnGroundNoVelocity(const LiveActor* pActor, u32 checkFrame) {
     Collider* collider = pActor->mCollider;
+
     if (!collider) {
         return getTrans(pActor).y <= 0.0f;
     }
@@ -393,6 +403,7 @@ void calcColliderFloorRotatePower(LiveActor* pActor, sead::Quatf* pQuat) {
 void calcCollidedNormalSum(const LiveActor* pActor, sead::Vector3f* pOutNormal) {
     pOutNormal->set(0.0f, 0.0f, 0.0f);
     Collider* collider = pActor->mCollider;
+
     if (collider->_110 >= 0.0f) {
         *pOutNormal += *collider->mFloor.mTriangle.getFaceNormal();
     }

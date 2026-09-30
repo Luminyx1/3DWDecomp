@@ -15,6 +15,7 @@ inline ResourceSystem* getResourceSystem() {
 
 inline const u8* tryGetBymlImpl(const Resource* pResource, const sead::SafeString& rBymlName) {
     StringTmp<128> unused("%s.byml", rBymlName.cstr());
+
     if (!pResource->isExistFile(StringTmp<128>("%s.byml", rBymlName.cstr()))) {
         return nullptr;
     }
@@ -172,14 +173,17 @@ const u8* findResourceYaml(const Resource* pResource, const char* pName, const c
 const void* tryFindStageParameterFileDesign(const sead::SafeString& rStageName,
                                             const sead::SafeString& rFileName, s32 scenarioNo) {
     StringTmp<128> path("StageData/%sDesign", rStageName.cstr());
+
     if (!isExistArchive(path)) {
         path.appendWithFormat("%d", scenarioNo);
+
         if (!isExistArchive(path)) {
             return nullptr;
         }
     }
 
     Resource* resource = findOrCreateResource(path, nullptr);
+
     if (!resource->isExistFile(rFileName)) {
         return nullptr;
     }
@@ -228,6 +232,7 @@ const u8* tryGetBymlFromObjectResource(const sead::SafeString& rObjectName,
     StringTmp<256> path("ObjectData/%s", rObjectName.cstr());
     Resource* resource = findOrCreateResource(path, nullptr);
     StringTmp<128> unused("%s.byml", rBymlName.cstr());
+
     if (!resource->isExistFile(StringTmp<128>("%s.byml", rBymlName.cstr()))) {
         return nullptr;
     }
@@ -258,6 +263,7 @@ const u8* tryGetBymlFromLayoutResource(const sead::SafeString& rLayoutName,
     StringTmp<256> path("LayoutData/%s", rLayoutName.cstr());
     Resource* resource = findOrCreateResource(path, nullptr);
     StringTmp<128> unused("%s.byml", rBymlName.cstr());
+
     if (!resource->isExistFile(StringTmp<128>("%s.byml", rBymlName.cstr()))) {
         return nullptr;
     }

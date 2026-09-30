@@ -51,6 +51,7 @@ void CameraPoserFixedPoint::loadParam(const ByamlIter* pIter) {
     CameraPoser::loadParam(pIter);
 
     ByamlIter posIter;
+
     if (pIter->tryGetIterByKey(&posIter, "CameraPos")) {
         posIter.tryGetFloatByKey(&mLocalCameraPos.x, "X");
         posIter.tryGetFloatByKey(&mLocalCameraPos.y, "Y");

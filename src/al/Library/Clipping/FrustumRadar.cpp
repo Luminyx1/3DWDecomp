@@ -144,11 +144,13 @@ bool FrustumRadar::judgeInArea(const sead::Vector3f& rPos, f32 radius, f32 near,
     }
 
     f32 dotUpAbs = sead::Mathf::abs(mOrthoUp.dot(rPos - mOrthoTrans));
+
     if (dotFront * mVerticalSlope + mVerticalNormFactor * radius < dotUpAbs) {
         return false;
     }
 
     f32 dotSide = mOrthoSide.dot(rPos - mOrthoTrans);
+
     if (isNearZero(mStereoEyeOffset)) {
         if (dotFront * mHorizontalSlope + mHorizontalNormFactor * radius <
             sead::Mathf::abs(dotSide)) {
@@ -180,6 +182,7 @@ bool FrustumRadar::judgeInArea(const sead::Vector3f* pPoints, s32 numPoints, f32
     }
 
     bool isIn = false;
+
     for (s32 i = 0; i < numPoints; i++) {
         if (judgeInLeft(pPoints[i], 0.0f)) {
             isIn = true;
@@ -192,6 +195,7 @@ bool FrustumRadar::judgeInArea(const sead::Vector3f* pPoints, s32 numPoints, f32
     }
 
     isIn = false;
+
     for (s32 i = 0; i < numPoints; i++) {
         if (judgeInRight(pPoints[i], 0.0f)) {
             isIn = true;
@@ -204,6 +208,7 @@ bool FrustumRadar::judgeInArea(const sead::Vector3f* pPoints, s32 numPoints, f32
     }
 
     isIn = false;
+
     for (s32 i = 0; i < numPoints; i++) {
         if (judgeInTop(pPoints[i], 0.0f)) {
             isIn = true;
@@ -216,6 +221,7 @@ bool FrustumRadar::judgeInArea(const sead::Vector3f* pPoints, s32 numPoints, f32
     }
 
     isIn = false;
+
     for (s32 i = 0; i < numPoints; i++) {
         if (judgeInBottom(pPoints[i], 0.0f)) {
             isIn = true;
@@ -228,6 +234,7 @@ bool FrustumRadar::judgeInArea(const sead::Vector3f* pPoints, s32 numPoints, f32
     }
 
     isIn = false;
+
     for (s32 i = 0; i < numPoints; i++) {
         if (judgeInNear(pPoints[i], 0.0f, near)) {
             isIn = true;
@@ -240,6 +247,7 @@ bool FrustumRadar::judgeInArea(const sead::Vector3f* pPoints, s32 numPoints, f32
     }
 
     isIn = false;
+
     for (s32 i = 0; i < numPoints; i++) {
         if (judgeInFar(pPoints[i], 0.0f, far)) {
             isIn = true;

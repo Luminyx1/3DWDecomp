@@ -35,6 +35,7 @@ void ActorExecuteInfo::removeDrawer(ModelDrawerBase* pDrawer) {
     for (s32 i = 0; i < mDrawerCount; i++) {
         if (mDrawers[i] == pDrawer) {
             mDrawerCount--;
+
             for (s32 j = i; j < mDrawerCount; j++) {
                 mDrawers[j] = mDrawers[j + 1];
             }
@@ -54,6 +55,7 @@ ModelDrawerBase* ActorExecuteInfo::removeOptDrawer() {
         if (mDrawers[i]->isRemoveable()) {
             ModelDrawerBase* drawer = mDrawers[i];
             mDrawerCount--;
+
             for (s32 j = i; j < mDrawerCount; j++) {
                 mDrawers[j] = mDrawers[j + 1];
             }

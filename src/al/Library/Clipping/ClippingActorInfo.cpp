@@ -24,6 +24,7 @@ ClippingActorInfo::ClippingActorInfo(LiveActor* pActor)
  */
 void ClippingActorInfo::setTypeToSphere(f32 radius, const sead::Vector3f* pPos) {
     mClippingRadius = radius;
+
     if (!pPos) {
         pPos = getTransPtr(mActor);
     }
@@ -38,6 +39,7 @@ void ClippingActorInfo::setTypeToSphere(f32 radius, const sead::Vector3f* pPos) 
 void ClippingActorInfo::updateClipping(const ClippingJudge* pJudge) {
     bool isJudgedClipped = judgeClipping(pJudge);
     bool isActorClipped = isClipped(mActor);
+
     if (isJudgedClipped) {
         if (!isActorClipped) {
             mActor->startClipped();
@@ -54,6 +56,7 @@ void ClippingActorInfo::updateClipping(const ClippingJudge* pJudge) {
  */
 bool ClippingActorInfo::judgeClipping(const ClippingJudge* pJudge) const {
     s32 farClipLevel = mFarClipLevel;
+
     if (mViewGroupFarClipFlag && *mViewGroupFarClipFlag) {
         farClipLevel = 0;
     }

@@ -23,6 +23,7 @@ FixMapParts::FixMapParts(const char* pName) : LiveActor(pName) {}
  */
 void FixMapParts::initWithSuffix(const ActorInitInfo& rInfo, const char* pSuffix) {
     initMapPartsActor(this, rInfo, pSuffix, 0);
+
     if (!mActorPoseKeeper) {
         initActorPoseTQSV(this);
     }
@@ -32,6 +33,7 @@ void FixMapParts::initWithSuffix(const ActorInitInfo& rInfo, const char* pSuffix
     }
 
     bool isConnectCollision = false;
+
     if (tryGetArg(&isConnectCollision, rInfo, "IsConnectCollision") && isConnectCollision) {
         mConnector = createMtxConnector(this);
     }
@@ -50,6 +52,7 @@ void FixMapParts::init(const ActorInitInfo& rInfo) {
  */
 void FixMapParts::initAfterPlacement() {
     LiveActor::initAfterPlacement();
+
     if (mConnector) {
         attachMtxConnectorToCollision(mConnector, this, false);
     }
@@ -60,6 +63,7 @@ void FixMapParts::initAfterPlacement() {
  */
 void FixMapParts::appear() {
     LiveActor::appear();
+
     if (mModelKeeper) {
         tryStartAction(this, "Appear");
     }

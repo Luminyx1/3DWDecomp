@@ -57,6 +57,7 @@ void ActorSensorController::resetActorSensorController() {
 ActorSensorControllerList::ActorSensorControllerList(s32 maxControllers)
     : mMaxControllers(maxControllers) {
     mSensorControllers = new ActorSensorController*[maxControllers];
+
     for (s32 i = 0; i < mMaxControllers; i++) {
         mSensorControllers[i] = nullptr;
     }

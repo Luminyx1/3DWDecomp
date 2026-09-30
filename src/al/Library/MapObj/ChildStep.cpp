@@ -68,6 +68,7 @@ s32 calcChildStepCount(const ActorInitInfo& rInfo) {
  */
 void tryInitSubActorKeeperChildStep(LiveActor* pActor, const ActorInitInfo& rInfo) {
     s32 count = calcChildStepCount(rInfo);
+
     if (count <= 0) {
         return;
     }
@@ -83,10 +84,12 @@ void tryInitSubActorKeeperChildStep(LiveActor* pActor, const ActorInitInfo& rInf
  */
 void createChildStep(const ActorInitInfo& rInfo, LiveActor* pParent, bool isSyncClipping) {
     s32 count = calcChildStepCount(rInfo);
+
     for (s32 i = 0; i < count; i++) {
         ChildStep* childStep = new ChildStep("子供足場", pParent);
         initLinksActor(childStep, rInfo, "ChildStep", i);
         childStep->_142 = true;
+
         if (isSyncClipping) {
             invalidateClipping(childStep);
             registerSubActorSyncClipping(pParent, childStep, false);

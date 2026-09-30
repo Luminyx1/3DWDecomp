@@ -47,6 +47,7 @@ bool CameraTicketId::isEqual(const CameraTicketId& rOther) const {
     }
 
     bool isNoneSuffix = !mSuffix && !rOther.mSuffix;
+
     if (mSuffix && rOther.mSuffix) {
         return isEqualString(mSuffix, rOther.mSuffix);
     }

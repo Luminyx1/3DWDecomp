@@ -35,6 +35,7 @@ static void updateCurrentArea(CameraStartParamArea** pCurrentArea, AreaObjGroup*
                               const sead::Vector3f& rPos) {
     for (s32 i = 0; i < pGroup->mNumAreas; i++) {
         CameraStartParamArea* area = static_cast<CameraStartParamArea*>(pGroup->getAreaObj(i));
+
         if (*pCurrentArea && area->mPriority < (*pCurrentArea)->mPriority) {
             continue;
         }
@@ -51,6 +52,7 @@ static void updateCurrentArea(CameraStartParamArea** pCurrentArea, AreaObjGroup*
  */
 void CameraStartParamCtrl::update(const sead::Vector3f& rPos) {
     mCurrentArea = nullptr;
+
     if (mAreaGroup) {
         updateCurrentArea(&mCurrentArea, mAreaGroup, rPos);
     }

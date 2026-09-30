@@ -53,6 +53,7 @@ void RollingCubePoseKeeper::init(const ActorInitInfo& initInfo) {
 
     PlacementInfo currentPlacementInfo = *initInfo.mPlacementInfo;
     PlacementInfo nextPlacementInfo;
+
     for (s32 i = 0; i < linkNextNum; i++) {
         getLinksInfo(&nextPlacementInfo, currentPlacementInfo, "KeyMoveNext");
         mRollingCubePoses[i + 1].setCubeSize(mCubeSize);
@@ -60,6 +61,7 @@ void RollingCubePoseKeeper::init(const ActorInitInfo& initInfo) {
 
         // When move type is turn all steps are repeated but backwards
         s32 mirrorIndexOffset = mMoveType == MoveType::Turn ? 2 : 1;
+
         if (i < linkNextNum - 1 && isMoveTypeTurn()) {
             s32 mirrorIndex = mPoseCount - i - mirrorIndexOffset;
             mRollingCubePoses[mirrorIndex].setCubeSize(mCubeSize);

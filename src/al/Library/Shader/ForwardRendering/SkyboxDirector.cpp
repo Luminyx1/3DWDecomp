@@ -19,6 +19,7 @@ SkyboxDirector::SkyboxDirector(GraphicsSystemInfo* pGraphicsSystemInfo)
     mIsEnableDefaultParam.init(false, "IsEnableDefaultParam", "Enable Edit", "",
                                &mDefaultParam.mParamObj);
     mParamIO.addObj(&mDefaultParam.mParamObj, "DefaultDirLit");
+
     for (s32 i = 0; i < mNamedParams.capacity(); i++) {
         NamedSkyboxParam* param = new NamedSkyboxParam();
         param->mName->format("", i);
@@ -44,6 +45,7 @@ void SkyboxDirector::clearRequest() {}
  */
 void SkyboxDirector::execute() {
     GraphicsAreaDirector* areaDirector = mGraphicsSystemInfo->mGraphicsAreaDirector;
+
     if (!areaDirector) {
         return;
     }
@@ -51,11 +53,13 @@ void SkyboxDirector::execute() {
     CurrentGraphicsAreaParam areaParam;
     areaDirector->getCurrentGraphicsAreaParam(&areaParam, static_cast<GraphicsAreaParamType>(1));
     const char* name = areaParam.mParamName;
+
     if (!name || isEqualString(name, "")) {
         return;
     }
 
     s32 num = mNamedParams.size();
+
     for (s32 i = 0; i < num; i++) {
         if (isEqualString(name, mNamedParams[i]->getName())) {
             break;
@@ -74,8 +78,10 @@ NamedSkyboxParam* SkyboxDirector::findSkyboxParamByName(const char* pName) const
     }
 
     s32 num = mNamedParams.size();
+
     for (s32 i = 0; i < num; i++) {
         NamedSkyboxParam* param = mNamedParams[i];
+
         if (isEqualString(pName, param->getName())) {
             return param;
         }
@@ -101,6 +107,7 @@ void SkyboxDirector::initStageResource(const Resource* pResource, const char* pS
     StringTmp<256> path;
     mParamFilePath->makeBinaryPath(&path);
     bool isLoaded = false;
+
     if (pResource && pResource->isExistFile(path)) {
         const void* file = pResource->getOtherFile(path, nullptr);
         mParamIO.applyResParameterArchive(agl::utl::ResParameterArchive(file));

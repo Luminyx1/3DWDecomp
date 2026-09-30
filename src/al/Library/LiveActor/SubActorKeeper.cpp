@@ -28,8 +28,10 @@ namespace al {
 SubActorKeeper* SubActorKeeper::tryCreate(LiveActor* pRootActor, const ActorInitInfo& rInfo,
                                           const char* pSuffix, s32 maxSubActors) {
     StringTmp<128> fileName;
+
     if (isExistModelResource(pRootActor)) {
         bool isExistFile = tryGetActorInitFileName(&fileName, pRootActor, "InitSubActor", pSuffix);
+
         if (!isExistFile && maxSubActors <= 0) {
             return nullptr;
         }
@@ -78,6 +80,7 @@ SubActorKeeper::SubActorKeeper(LiveActor* pRootActor, const ActorInitInfo& rInfo
                                const char* pSuffix, s32 maxSubActors)
     : mRootActor(pRootActor) {
     StringTmp<128> fileName;
+
     if (isExistModelResource(pRootActor) &&
         !tryGetActorInitFileName(&fileName, pRootActor, "InitSubActor", pSuffix)) {
         createFileNameBySuffix(&fileName, "InitSubActor", pSuffix);
@@ -85,11 +88,13 @@ SubActorKeeper::SubActorKeeper(LiveActor* pRootActor, const ActorInitInfo& rInfo
 
     const u8* byml = nullptr;
     s32 creatorNum = 0;
+
     if (isExistModelResource(pRootActor) &&
         isExistModelResourceYaml(pRootActor, fileName.cstr(), nullptr)) {
         byml = getModelResourceYaml(mRootActor, fileName.cstr(), nullptr);
         ByamlIter iter(byml);
         ByamlIter initInfoIter;
+
         if (iter.tryGetIterByKey(&initInfoIter, "InitInfo")) {
             s32 addActorNum = 0;
             maxSubActors += initInfoIter.tryGetIntByKey(&addActorNum, "AddActorNum") ? addActorNum : 0;
@@ -103,6 +108,7 @@ SubActorKeeper::SubActorKeeper(LiveActor* pRootActor, const ActorInitInfo& rInfo
     maxSubActors += creatorNum;
     mMaxCount = maxSubActors;
     mInfos = new SubActorInfo*[maxSubActors];
+
     for (s32 i = 0; i < mMaxCount; i++) {
         mInfos[i] = nullptr;
     }
@@ -114,6 +120,7 @@ SubActorKeeper::SubActorKeeper(LiveActor* pRootActor, const ActorInitInfo& rInfo
     ByamlIter iter(byml);
     ByamlIter creatorListIter;
     iter.tryGetIterByKey(&creatorListIter, "CreatorList");
+
     for (s32 i = 0; i < creatorNum; i++) {
         ByamlIter creatorIter;
         creatorListIter.tryGetIterByIndex(&creatorIter, i);
@@ -129,6 +136,7 @@ SubActorKeeper::SubActorKeeper(LiveActor* pRootActor, const ActorInitInfo& rInfo
         bool isExistAlive = creatorIter.tryGetBoolByKey(&isAlive, "IsAlive");
         bool isUseHostPlacementInfo = true;
         creatorIter.tryGetBoolByKey(&isUseHostPlacementInfo, "IsUseHostPlacementInfo");
+
         if (tryGetByamlKeyBoolOrFalse(creatorIter, "IsSyncAppear")) {
             info->mSyncType |= 1;
         }
@@ -144,6 +152,7 @@ SubActorKeeper::SubActorKeeper(LiveActor* pRootActor, const ActorInitInfo& rInfo
         if (!className) {
             LiveActor* actor = new LiveActor(objectName);
             info->mSubActor = actor;
+
             if (isUseHostPlacementInfo) {
                 initActorWithArchiveName(actor, rInfo, modelName, suffix);
             } else {

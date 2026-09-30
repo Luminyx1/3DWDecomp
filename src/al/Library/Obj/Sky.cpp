@@ -26,6 +26,7 @@ void Sky::init(const ActorInitInfo& rInfo) {
     invalidateClipping(this);
     bool isOnlyCubeMap = false;
     tryGetArg(&isOnlyCubeMap, rInfo, "IsOnlyCubeMap");
+
     if (isOnlyCubeMap) {
         makeActorDead();
         return;

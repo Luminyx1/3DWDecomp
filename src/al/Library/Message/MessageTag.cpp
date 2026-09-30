@@ -10,6 +10,7 @@ namespace al {
 MessageTag::MessageTag(const nn::font::PrintContext<u16>* pContext) {
     mTag = nullptr;
     const char16_t* tag = reinterpret_cast<const char16_t*>(pContext->str) - 1;
+
     if (*tag == 0xf) {
         mTag = tag;
         return;
@@ -29,6 +30,7 @@ MessageTag::MessageTag(const nn::font::PrintContext<u16>* pContext) {
  */
 MessageTag::MessageTag(const char16_t* pTag) {
     mTag = nullptr;
+
     if (*pTag == 0xf) {
         mTag = pTag;
         return;

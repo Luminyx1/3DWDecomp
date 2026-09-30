@@ -26,6 +26,7 @@ void EffectMtxSetter::init(const ByamlIter& rIter) {
     s32 size = rIter.getSize();
     mInfoNum = size;
     mInfos = new EffectMtxInfo[size];
+
     for (s32 i = 0; i < mInfoNum; i++) {
         ByamlIter infoIter;
         rIter.tryGetIterByIndex(&infoIter, i);
@@ -62,8 +63,10 @@ void EffectMtxInfo::init(const ByamlIter& rIter) {
     s32 size = nameIter.getSize();
     mEffectNum = size;
     mEffectNames = new const char*[size];
+
     for (s32 i = 0; i < mEffectNum; i++) {
         mEffectNames[i] = nullptr;
+
         if (isTypeStringByIndex(nameIter, i)) {
             nameIter.tryGetStringByIndex(&mEffectNames[i], i);
         }
@@ -77,6 +80,7 @@ void EffectMtxInfo::init(const ByamlIter& rIter) {
  */
 void EffectMtxSetter::setMtxPtr(const sead::Matrix34f* pMtx, const char* pMtxName) {
     EffectMtxInfo* info = tryFindEffectMtxInfo(pMtxName);
+
     if (info) {
         info->setMtxPtr(mActor, pMtx);
     }
@@ -104,6 +108,7 @@ EffectMtxInfo* EffectMtxSetter::tryFindEffectMtxInfo(const char* pMtxName) {
  */
 void EffectMtxInfo::setMtxPtr(LiveActor* pActor, const sead::Matrix34f* pMtx) {
     mMtx = pMtx;
+
     for (s32 i = 0; i < mEffectNum; i++) {
         if (mEffectNames[i]) {
             setEffectFollowMtxPtr(pActor, mEffectNames[i], pMtx);

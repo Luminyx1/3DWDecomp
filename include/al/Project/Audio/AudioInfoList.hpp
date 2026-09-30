@@ -13,10 +13,12 @@ template <typename T, typename Compare>
 void heapSortInfoArray(sead::PtrArray<T>* pArray, Compare&& cmp) {
     const s32 num = pArray->size();
     T** infos = pArray->data();
+
     for (s32 i = num / 2; i > 0; i--) {
         T* value = infos[i - 1];
         s32 parent = i;
         s32 child = parent * 2;
+
         while (child <= num) {
             if (child < num && cmp(infos[child - 1], infos[child]) < 0) {
                 child++;
@@ -40,6 +42,7 @@ void heapSortInfoArray(sead::PtrArray<T>* pArray, Compare&& cmp) {
         infos[last] = infos[0];
         s32 parent = 1;
         s32 child = 2;
+
         while (child <= last) {
             if (child < last && cmp(infos[child - 1], infos[child]) < 0) {
                 child++;
@@ -61,14 +64,17 @@ void heapSortInfoArray(sead::PtrArray<T>* pArray, Compare&& cmp) {
 template <typename T, typename Compare>
 void shakerSortInfoArray(sead::PtrArray<T>* pArray, Compare&& cmp) {
     T** infos = pArray->data();
+
     if (pArray->size() < 2) {
         return;
     }
 
     s32 lo = 0;
     s32 hi = pArray->size() - 1;
+
     while (lo < hi) {
         s32 last = lo;
+
         for (s32 i = lo; i < hi; i++) {
             if (cmp(infos[i], infos[i + 1]) > 0) {
                 T* tmp = infos[i + 1];
@@ -79,11 +85,13 @@ void shakerSortInfoArray(sead::PtrArray<T>* pArray, Compare&& cmp) {
         }
 
         hi = last;
+
         if (hi <= lo) {
             break;
         }
 
         last = hi;
+
         for (s32 i = hi; i > lo; i--) {
             if (cmp(infos[i], infos[i - 1]) < 0) {
                 T* tmp = infos[i - 1];
@@ -94,6 +102,7 @@ void shakerSortInfoArray(sead::PtrArray<T>* pArray, Compare&& cmp) {
         }
 
         lo = last;
+
         if (lo == hi) {
             break;
         }
@@ -114,18 +123,22 @@ public:
 
     T* getInfo(s32 index) const {
         const AudioInfoList<T>* list = this;
+
         while (true) {
             s32 num = list->mInfos->size();
+
             if (index < num) {
                 return list->mInfos->unsafeAt(index);
             }
 
             list = list->mNext;
+
             if (list == nullptr) {
                 return nullptr;
             }
 
             index -= num;
+
             if (index < 0) {
                 return nullptr;
             }
@@ -134,8 +147,10 @@ public:
 
     T* getInfoDirect(s32 index) const {
         const AudioInfoList<T>* list = this;
+
         while (true) {
             const sead::PtrArray<T>* infos = list->mInfos;
+
             if (infos->size() > index) {
                 return infos->unsafeAt(index);
             }
@@ -155,6 +170,7 @@ public:
 
     s32 searchInfoIndex(const char* pKey) const {
         s32 num = mInfos->size();
+
         if (num == 0) {
             return -1;
         }
@@ -162,9 +178,11 @@ public:
         T** infos = mInfos->data();
         s32 lo = 0;
         s32 hi = num - 1;
+
         while (lo < hi) {
             s32 mid = (lo + hi) / 2;
             s32 result = strcmp(infos[mid]->mName, pKey);
+
             if (result == 0) {
                 return mid;
             }
@@ -185,6 +203,7 @@ public:
 
     void sortInfo() {
         AudioInfoList<T>* list = this;
+
         do {
             if (list->getInfoNum() >= 10) {
                 heapSortInfoArray<T>(list->mInfos, T::compareInfo);
@@ -198,8 +217,10 @@ public:
 
     T* tryFindInfo(const char* pKey) const {
         const AudioInfoList<T>* list = this;
+
         do {
             T* info = list->tryGetInfo(list->searchInfoIndex(pKey));
+
             if (info != nullptr) {
                 return info;
             }
@@ -220,10 +241,12 @@ AudioInfoList<T>* createInfoList(const ByamlIter& rIter) {
     list->mNext = nullptr;
     list->mInfos = new sead::PtrArray<T>;
     list->mInfos->allocBuffer(size + 1, nullptr);
+
     for (s32 i = 0; i < size; i++) {
         ByamlIter iter;
         rIter.tryGetIterByIndex(&iter, i);
         T* info = T::createInfo(iter);
+
         if (info != nullptr) {
             list->mInfos->pushBack(info);
         }

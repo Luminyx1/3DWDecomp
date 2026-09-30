@@ -32,6 +32,7 @@ CameraAngleCtrlInfo* CameraAngleCtrlInfo::createWithRelativeH() {
 void CameraAngleCtrlInfo::load(const ByamlIter& rIter) {
     ByamlIter angleIter;
     ByamlIter iter(rIter.tryGetIterByKey(&angleIter, "Angle") ? angleIter : rIter);
+
     if (tryGetByamlBool(&mIsValidRotateH, iter, "IsValidRotateH") && mIsValidRotateH) {
         tryGetByamlF32(&mMinAngleH, iter, "MinAngleH");
         tryGetByamlF32(&mMaxAngleH, iter, "MaxAngleH");
@@ -41,6 +42,7 @@ void CameraAngleCtrlInfo::load(const ByamlIter& rIter) {
     tryGetByamlF32(&mDefaultMinAngleV, iter, "MinAngleV");
     tryGetByamlF32(&mDefaultMaxAngleV, iter, "MaxAngleV");
     mIsKeepPreAngleV = tryGetByamlKeyBoolOrFalse(iter, "IsKeepPreAngleV");
+
     if (tryGetByamlF32(&mResetAngleV, iter, "ResetAngleV")) {
         mIsSetResetAngleV = true;
     }
@@ -73,6 +75,7 @@ void CameraAngleCtrlInfo::update(const sead::Vector2f& rStick, f32 sensitivitySc
     if (mResetInfo->step >= 0) {
         bool isNoInput = isNearZero(rStick, 0.001f);
         ResetInfo* info = mResetInfo;
+
         if (isNoInput) {
             if (info->step >= 0) {
                 info->step = info->maxStep <= info->step + 1 ? -1 : info->step + 1;
@@ -90,6 +93,7 @@ void CameraAngleCtrlInfo::update(const sead::Vector2f& rStick, f32 sensitivitySc
         f32 diff = sead::Mathf::square(angleH) < sead::Mathf::square(diffV) ? diffV : angleH;
         ResetInfo* info = mResetInfo;
         f32 absDiff = sign(diff) * diff;
+
         if (!(absDiff < 5.0f)) {
             info->startAngleH = angleH;
             info->startAngleV = angleV;
@@ -107,6 +111,7 @@ void CameraAngleCtrlInfo::update(const sead::Vector2f& rStick, f32 sensitivitySc
         bool isNoInput = isNearZero(rStick.y, 0.001f);
         RequestInfo* info = mRequestInfo;
         s32 step = -1;
+
         if (isNoInput) {
             step = info->maxStep <= info->step + 1 ? -1 : info->step + 1;
         }
@@ -155,6 +160,7 @@ void CameraAngleCtrlInfo::update(const sead::Vector2f& rStick, f32 sensitivitySc
         f32 targetLerpRate = mTargetLerpRateV;
         f32 targetAngleV = mTargetAngleV;
         f32 moveV = 0.0f;
+
         if (!isNearZero(rStick.y, threshold)) {
             moveV = -(speedV * normalize(sead::Mathf::abs(rStick.y), threshold, 1.0f)) *
                     sign(rStick.y);
@@ -188,6 +194,7 @@ bool CameraAngleCtrlInfo::receiveRequestFromObject(const CameraObjectRequestInfo
     f32 requestAngleV = alCameraPoserFunction::getRequestAngleV(rInfo);
     f32 diff = sead::Mathf::abs(diffNearAngleDegree(mAngleV, requestAngleV));
     f32 speed = mSensitivityScale * 0.5f;
+
     if (speed <= 0.0f || diff < speed) {
         return false;
     }
@@ -206,6 +213,7 @@ bool CameraAngleCtrlInfo::receiveRequestFromObject(const CameraObjectRequestInfo
  */
 void CameraAngleCtrlInfo::setAngleV(f32 angleV) {
     f32 clampedAngleV = angleV;
+
     if (mDefaultMinAngleV > angleV) {
         clampedAngleV = mDefaultMinAngleV;
     } else if (mDefaultMaxAngleV < angleV) {

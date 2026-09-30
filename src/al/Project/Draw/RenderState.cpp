@@ -22,6 +22,7 @@ RenderState::RenderState() {
  */
 void RenderState::Use(agl::DrawContext* pDrawContext, nn::g3d::MaterialObj* pMaterialObj) const {
     s32 index = pMaterialObj->GetResource()->FindShaderParamIndex("cBlendColor");
+
     if (index == nn::util::ResDic::Npos)
         return;
 

@@ -103,6 +103,7 @@ void CameraShaker_RS::update(const char* pLoopShakeName, bool isPaused) {
         }
     } else {
         mLoopParam = nullptr;
+
         if (isNerve(this, &NrvCameraShaker_RSShakeLoop)) {
             setNerve(this, &NrvCameraShaker_RSWait);
         }
@@ -118,6 +119,7 @@ void CameraShaker_RS::startShakeByAction(const char* pShakeName, const char* pAc
 
 void CameraShaker_RS::startShakeByName(const char* pShakeName, s32 steps) {
     s32 index;
+
     if (isEqualString(pShakeName, "GigaStomp")) {
         index = 0;
     } else if (isEqualString(pShakeName, "微弱")) {
@@ -198,6 +200,7 @@ void CameraShaker_RS::exeShake() {
     f32 value = wave * power;
     mOffset.x = value;
     mOffset.y = value;
+
     if (mShakeParam->direction == 1) {
         mOffset.x = 0.0f;
     }
@@ -228,6 +231,7 @@ void CameraShaker_RS::exeShakeMultiple() {
     mOffset.y = valueCos;
     mOffset.y = valueCos + valueSin * mShakeParam->multipleRate;
     mRoll = waveSin * mShakeParam->power * 100.0f;
+
     if (mShakeParam->direction == 1) {
         mOffset.x = 0.0f;
     }
@@ -239,6 +243,7 @@ void CameraShaker_RS::exeShakeLoop() {
     f32 value = mLoopParam->power * cosf(angle);
     mOffset.x = value;
     mOffset.y = value;
+
     if (mLoopParam->direction == 1) {
         mOffset.x = 0.0f;
     }
@@ -246,6 +251,7 @@ void CameraShaker_RS::exeShakeLoop() {
 
 void CameraShaker_RS::startShakeByIndex(s32 index, s32 steps) {
     const CameraShakeParam* param = &sShakeParams[index];
+
     if (mShakeParam) {
         if (isWeakerShake(param, mShakeParam)) {
             return;
@@ -257,6 +263,7 @@ void CameraShaker_RS::startShakeByIndex(s32 index, s32 steps) {
     }
 
     mShakeParam = param;
+
     if (steps >= 1) {
         f32 rate = (f32)steps / param->steps;
         mCustomParam.name = param->name;

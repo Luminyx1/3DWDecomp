@@ -43,6 +43,7 @@ CameraPoser_RS::CameraPoser_RS(const char* pName) : mPoserName(pName) {
  */
 bool CameraPoser_RS::tryCalcOrthoProjectionInfo(OrthoProjectionInfo* pInfo) const {
     OrthoProjectionParam* param = mOrthoProjectionParam;
+
     if (!param) {
         return false;
     }
@@ -52,11 +53,13 @@ bool CameraPoser_RS::tryCalcOrthoProjectionInfo(OrthoProjectionInfo* pInfo) cons
     }
 
     f32 width = param->info.nearClipWidth;
+
     if (!(width > 0.1f)) {
         return false;
     }
 
     f32 height = param->info.nearClipHeight;
+
     if (!(height > 0.1f)) {
         return false;
     }
@@ -294,12 +297,14 @@ static void loadInterpoleParam(CameraPoser_RS::CameraInterpoleParam* pParam,
                                const ByamlIter& rIter) {
     tryGetByamlS32(reinterpret_cast<s32*>(&pParam->stepType), rIter, "InterpoleStepType");
     const char* curveType = nullptr;
+
     if (tryGetByamlString(&curveType, rIter, "InterpoleCurveType") && curveType &&
         isEqualString(curveType, "EaseOut")) {
         pParam->isEaseOut = true;
     }
 
     pParam->isInterpolateByStep = tryGetByamlS32(&pParam->stepNum, rIter, "InterpoleStep");
+
     if (pParam->isInterpolateByStep) {
         pParam->stepType = CameraPoser_RS::CameraInterpoleStepType::ByStep;
     }
@@ -308,6 +313,7 @@ static void loadInterpoleParam(CameraPoser_RS::CameraInterpoleParam* pParam,
 static void loadEndInterpoleParam(CameraPoser_RS::CameraInterpoleStep* pParam,
                                   const ByamlIter& rIter) {
     ByamlIter iter;
+
     if (tryGetByamlIterByKey(&iter, rIter, "EndInterpoleParam")) {
         if (isEqualString(getByamlKeyString(iter, "Type"), "Step")) {
             pParam->stepType = CameraPoser_RS::CameraInterpoleStepType::ByStep;
@@ -386,6 +392,7 @@ bool CameraPoser_RS::isFirstCalc() const {
  */
 void CameraPoser_RS::appear(const CameraStartInfo& rInfo) {
     mActiveState = ActiveState::Active;
+
     if (mAngleCtrlInfo) {
         sead::Vector3f dir = {0.0f, 0.0f, 0.0f};
         alCameraPoserFunction::calcPreCameraDir(&dir, this);
@@ -452,12 +459,14 @@ void CameraPoser_RS::movement() {
     if (mAngleCtrlInfo || mAngleSwingInfo) {
         sead::Vector2f stick = {0.0f, 0.0f};
         alCameraPoserFunction::calcCameraRolledRotateStick(&stick, this);
+
         if (mAngleCtrlInfo) {
             bool isTriggerReset = alCameraPoserFunction::isTriggerCameraResetRotate(this);
             mAngleCtrlInfo->update(stick, alCameraPoserFunction::getStickSensitivityScale(this),
                                    isTriggerReset);
             if (alCameraPoserFunction::isSnapShotMode(this) && isTriggerReset) {
                 s32 step = -1;
+
                 if (mAngleCtrlInfo->isResetStartTiming()) {
                     step = mAngleCtrlInfo->getMaxResetStep();
                 }
@@ -503,6 +512,7 @@ void CameraPoser_RS::movement() {
 
     if (mLocalInterpole) {
         updateLocalInterpole(mLocalInterpole, this);
+
         if (mLocalInterpole->step >= 0) {
             s32 nextStep = mLocalInterpole->step + 1;
             mLocalInterpole->step = mLocalInterpole->end > nextStep ? nextStep : -1;
@@ -513,6 +523,7 @@ void CameraPoser_RS::movement() {
         sead::LookAtCamera camera;
         makeLookAtCameraPrev(&camera);
         makeLookAtCamera(&camera);
+
         if (alCameraPoserFunction::isSnapShotMode(this) && mSnapShotCtrl) {
             mSnapShotCtrl->makeLookAtCameraPost(&camera);
         }
@@ -572,6 +583,7 @@ void CameraPoser_RS::makeLookAtCameraPrev(sead::LookAtCamera* pCamera) const {
 
     if (mTargetAreaLimitter) {
         sead::Vector3f at = pCamera->getAt();
+
         if (mTargetAreaLimitter->applyAreaLimit(&at, at)) {
             sead::Vector3f offset = at - pCamera->getAt();
             pCamera->setPos(offset + pCamera->getPos());

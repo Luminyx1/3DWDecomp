@@ -28,11 +28,13 @@ void ShadowMaskSphere::declare(ShadowMaskDrawCategory category) {
  */
 void ShadowMaskSphere::calcShadowMatrix(sead::Matrix34f* pMtx) {
     sead::Vector3f trans;
+
     if (mMtxConnector) {
         mMtxConnector->calcConnectInfo(&trans, nullptr, nullptr, mOffset, sead::Vector3f::zero);
     }
 
     f32 scale = mScale;
+
     if (mHost && mIsFollowHostScale) {
         scale *= getScale(mHost).x;
     }

@@ -55,6 +55,7 @@ void CameraPoserFollowSimple::update() {
     mAt.y += mOffsetY;
     sead::Vector3f dir = {mEye.x - mAt.x, 0.0f, mEye.z - mAt.z};
     tryNormalizeOrDirZ(&dir);
+
     if (mIsRotateH) {
         f32 stickH = alCameraPoserFunction::calcCameraRotateStickH(this);
         rotateVectorDegreeY(&dir, sead::Mathf::abs(stickH) < 0.3f ? 0.0f : stickH * -2.0f);
@@ -66,6 +67,7 @@ void CameraPoserFollowSimple::update() {
     rotateVectorDegree(&eyeDir, eyeDir, side, mAngle);
     f32 distance = mDistance;
     f32 length = eyeDir.length();
+
     if (length > 0.0f) {
         eyeDir *= distance / length;
     }

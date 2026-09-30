@@ -83,6 +83,7 @@ void AtmosScatterCubeMap::exeDrawFace() {
  */
 void AtmosScatterCubeMap::exeDrawRoughness() {
     mFaceIndex = -1;
+
     if (isGreaterStep(this, 2)) {
         setNerve(this, &NrvAtmosScatterCubeMapFlipCubeMap);
     }
@@ -127,6 +128,7 @@ agl::ShaderMode AtmosScatterCubeMap::renderToCubeMap(agl::ShaderMode shaderMode)
             reinterpret_cast<agl::DrawContext*>(GameFrameworkNx::sInstance->mDrawContext);
         cubeMap->begin(drawContext, false, true);
         u32 mipLevelNum = mCubeMaps[0]->getTextureData().getMipLevelNum();
+
         if (isFirstStep(this)) {
             cubeMap->generateMipMap(
                 reinterpret_cast<agl::DrawContext*>(GameFrameworkNx::sInstance->mDrawContext), 1, 2,
@@ -179,6 +181,7 @@ const agl::TextureSampler* AtmosScatterCubeMap::getCubeMapMirrorSampler(s32 inde
 bool AtmosScatterCubeMap::activateCubeMapTexture(s32 type, bool isRefract) const {
     const agl::SamplerLocation* location = &getSamplerLocationCubeMapRoughness();
     const agl::TextureSampler* sampler;
+
     if (type == 5) {
         location = &getSamplerLocationCubeMapIrradiance();
         sampler = &mIrradianceSampler;

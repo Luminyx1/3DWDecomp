@@ -60,6 +60,7 @@ void JointTranslateShaker::calcJointCallback(s32 jointIndex, sead::Matrix34f* pM
 
     if (mShakeInfos(0).jointIndex == jointIndex) {
         mStep++;
+
         if (mDuration <= mStep) {
             mStep = -1;
             return;
@@ -67,6 +68,7 @@ void JointTranslateShaker::calcJointCallback(s32 jointIndex, sead::Matrix34f* pM
     }
 
     JointTranslateAxis axis = JointTranslateAxis_None;
+
     for (s32 i = 0; i < mShakeInfos.size(); i++) {
         if (mShakeInfos(i).jointIndex == jointIndex) {
             axis = mShakeInfos(i).axis;
@@ -81,6 +83,7 @@ void JointTranslateShaker::calcJointCallback(s32 jointIndex, sead::Matrix34f* pM
     f32 value = calcConvergeVibrationValue(static_cast<f32>(mStep) / mDuration, mAmplitude, 0.0f,
                                            mCycle, mAttenuation);
     sead::Vector3f trans;
+
     if (axis == JointTranslateAxis_X) {
         trans.set(value, 0.0f, 0.0f);
     } else if (axis == JointTranslateAxis_Y) {

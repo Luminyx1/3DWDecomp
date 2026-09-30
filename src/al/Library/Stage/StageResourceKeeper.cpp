@@ -30,6 +30,7 @@ void StageResourceKeeper::initAndLoadResource(const char* pStageName, s32 scenar
     if (mStageResourceLists[1]->getStageResourceNum() > 0) {
         StringTmp<256> fileName("%sDesign%d.bfres", pStageName, scenarioNo);
         Resource* resource = mStageResourceLists[1]->getStageInfo(0)->getResource();
+
         if (resource->isExistFile(fileName)) {
             resource->tryCreateResGraphicsFile(fileName, nullptr);
         }
