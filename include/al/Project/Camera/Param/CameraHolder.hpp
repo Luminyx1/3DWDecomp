@@ -7,7 +7,6 @@ class CameraInfo;
 class CameraPoser;
 class PlacementId;
 
-/// Holds the placed cameras of a scene.
 class CameraHolder {
 public:
     CameraHolder();
@@ -18,7 +17,8 @@ public:
     CameraInfo* getCameraInfoById(const PlacementId* pPlacementId) const;
     bool isExistCameraId(const PlacementId* pPlacementId) const;
 
-    s32 mNumCameras = 0;       // _0
-    CameraInfo** mCameraInfos;  // _8
+    s32 mNumCameras = 0;
+    CameraInfo** mCameraInfos;
 };
+static_assert(sizeof(CameraHolder) == 0x10);
 }  // namespace al

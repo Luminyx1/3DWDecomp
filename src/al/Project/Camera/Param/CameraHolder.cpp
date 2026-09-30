@@ -4,13 +4,15 @@
 #include "Project/Camera/Param/CameraInfo.hpp"
 
 namespace al {
-/** @brief Creates an empty holder with room for 128 cameras. */
+/**
+ * Creates an empty holder with room for 128 cameras.
+ */
 CameraHolder::CameraHolder() {
     mCameraInfos = new CameraInfo*[128];
 }
 
 /**
- * @brief Registers a placed camera.
+ * Registers a placed camera.
  * @param pPlacementId The placement id of the camera.
  * @param pPoser The poser of the camera.
  * @param priority The priority of the camera.
@@ -21,7 +23,7 @@ void CameraHolder::setCameraInfos(const PlacementId* pPlacementId, CameraPoser* 
 }
 
 /**
- * @brief Gets a camera by its index.
+ * Gets a camera by its index.
  * @param index The index of the camera.
  * @return The poser of the camera.
  */
@@ -30,7 +32,7 @@ CameraPoser* CameraHolder::getCameraByIndex(s32 index) const {
 }
 
 /**
- * @brief Looks for a camera by its placement id.
+ * Looks for a camera by its placement id.
  * @param pPlacementId The placement id of the camera.
  * @return The poser of the camera, or null if there is none.
  */
@@ -44,7 +46,7 @@ CameraPoser* CameraHolder::getCameraById(const PlacementId* pPlacementId) const 
 }
 
 /**
- * @brief Looks for the info of a camera by its placement id.
+ * Looks for the info of a camera by its placement id.
  * @param pPlacementId The placement id of the camera.
  * @return The info of the camera, or null if there is none.
  */
@@ -58,7 +60,7 @@ CameraInfo* CameraHolder::getCameraInfoById(const PlacementId* pPlacementId) con
 }
 
 /**
- * @brief Checks whether a camera with the placement id exists.
+ * Checks whether a camera with the placement id exists.
  * @param pPlacementId The placement id of the camera.
  * @return True if there is such a camera.
  */
