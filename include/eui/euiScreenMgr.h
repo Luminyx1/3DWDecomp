@@ -21,6 +21,7 @@ public:
     void inactivateScreen(int index);
     void activateScreen(int index);
     void updateSystem();
+    void updateScreen(s8 drawUnitId);
     void draw(s8 layer, const DrawInfoEx::RenderBufferInfo* pInfo);
     void unloadScreen(int index);
     void resetScreenId(int index);
