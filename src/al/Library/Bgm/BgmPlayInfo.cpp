@@ -1,14 +1,12 @@
-#include "Project/Bgm/BgmPlayInfo.hpp"
-
-#include <cstring>
+#include "Library/Bgm/BgmDataBase.hpp"
 
 #include "Library/Yaml/ByamlIter.hpp"
 
 namespace al {
 /**
- * @brief Creates the info describing how a BGM is played.
- * @param rIter The yaml iterator of the play info entry.
- * @return The new play info.
+ * Creates BGM play information from BYAML data.
+ * @param rIter BYAML data.
+ * @return Created information.
  */
 BgmPlayInfo* BgmPlayInfo::createInfo(const ByamlIter& rIter) {
     BgmPlayInfo* info = new BgmPlayInfo();
@@ -20,14 +18,13 @@ BgmPlayInfo* BgmPlayInfo::createInfo(const ByamlIter& rIter) {
     }
     return info;
 }
-
 /**
- * @brief Orders two play infos by name.
- * @param pInfoA The first info.
- * @param pInfoB The second info.
- * @return Negative, zero or positive as the first name sorts before, equal to or after the second.
+ * Compares two BGM play information by name.
+ * @param pA First information.
+ * @param pB Second information.
+ * @return Comparison result.
  */
-s32 BgmPlayInfo::compareInfo(const BgmPlayInfo* pInfoA, const BgmPlayInfo* pInfoB) {
-    return strcmp(pInfoA->mName, pInfoB->mName);
+s32 BgmPlayInfo::compareInfo(const BgmPlayInfo* pA, const BgmPlayInfo* pB) {
+    return strcmp(pA->mName, pB->mName);
 }
 }  // namespace al
