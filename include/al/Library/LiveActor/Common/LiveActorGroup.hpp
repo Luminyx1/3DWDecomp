@@ -27,4 +27,14 @@ public:
     s32 mNumActors = 0;
     LiveActor** mActors;
 };
+
+template <class T>
+class DeriveActorGroup : public LiveActorGroup {
+public:
+    DeriveActorGroup(const char* pName, s32 max) : LiveActorGroup(pName, max) {}
+
+    T* getDeriveActor(s32 idx) const { return static_cast<T*>(getActor(idx)); }
+
+    T* tryFindDeadDeriveActor() const { return static_cast<T*>(tryFindDeadActor()); }
+};
 }  // namespace al

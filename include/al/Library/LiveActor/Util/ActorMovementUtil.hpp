@@ -1,27 +1,145 @@
 #pragma once
 
+#include <basis/seadTypes.h>
 #include <math/seadQuat.h>
 #include <math/seadVector.h>
 
 namespace al {
-    class LiveActor;
+class LiveActor;
+struct ActorParamMove;
 
-    void setVelocityZero(LiveActor*);
-
-    void resetPosition(LiveActor*, bool);
-
-    void resetPosition(LiveActor*, const sead::Vector3f&, const sead::Vector3f&);
-
-    void rotateQuatYDirDegree(LiveActor*, f32);
-    void rotateQuatLocalDirDegree(LiveActor*, s32, f32);
-    void rotateQuatLocalDirDegree(LiveActor*, const sead::Quatf&, s32, f32);
-
-    void addVelocityToDirection(LiveActor*, const sead::Vector3f&, f32);
-
-    void scaleVelocity(LiveActor*, f32);
-
-    void faceToTarget(LiveActor*, const sead::Vector3f&);
-
-    bool turnQuatFrontToDirDegreeH(LiveActor*, const sead::Vector3f&, f32);
-    bool turnDirectionDegree(const LiveActor*, sead::Vector3f*, const sead::Vector3f&, f32);
-};  // namespace al
+void resetPosition(LiveActor* pActor, bool isResetCollision);
+void resetPosition(LiveActor* pActor, const sead::Vector3f& rTrans, const sead::Vector3f& rRotate);
+bool trySetPosOnGround(LiveActor* pActor);
+const sead::Vector3f& getVelocity(const LiveActor* pActor);
+sead::Vector3f* getVelocityPtr(LiveActor* pActor);
+void setVelocity(LiveActor* pActor, const sead::Vector3f& rVel);
+void setVelocity(LiveActor* pActor, f32 x, f32 y, f32 z);
+void setVelocityX(LiveActor* pActor, f32 x);
+void setVelocityY(LiveActor* pActor, f32 y);
+void setVelocityZ(LiveActor* pActor, f32 z);
+void setVelocityZero(LiveActor* pActor);
+void setVelocityZeroX(LiveActor* pActor);
+void setVelocityZeroY(LiveActor* pActor);
+void setVelocityZeroZ(LiveActor* pActor);
+void setVelocityZeroH(LiveActor* pActor);
+void setVelocityZeroH(LiveActor* pActor, const sead::Vector3f& rGravity);
+void setVelocityZeroV(LiveActor* pActor);
+void setVelocityZeroV(LiveActor* pActor, const sead::Vector3f& rGravity);
+void setVelocityJump(LiveActor* pActor, f32 speed);
+void setVelocityToDirection(LiveActor* pActor, const sead::Vector3f& rDir, f32 speed);
+void setVelocityToGravity(LiveActor* pActor, f32 speed);
+void addVelocity(LiveActor* pActor, const sead::Vector3f& rVel);
+void addVelocity(LiveActor* pActor, f32 x, f32 y, f32 z);
+void addVelocityX(LiveActor* pActor, f32 x);
+void addVelocityY(LiveActor* pActor, f32 y);
+void addVelocityZ(LiveActor* pActor, f32 z);
+void addVelocityToDirection(LiveActor* pActor, const sead::Vector3f& rDir, f32 force);
+void addVelocityToGravity(LiveActor* pActor, f32 force);
+void addVelocityToGravityFittedGround(LiveActor* pActor, f32 force, u32 maxAirTime);
+void addVelocityToTarget(LiveActor* pActor, const sead::Vector3f& rTarget, f32 force);
+void addVelocityToTarget(LiveActor* pActor, const sead::Vector3f& rTarget, f32 minForce, f32 maxForce, f32 minDistance, f32 maxDistance);
+void addVelocityJump(LiveActor* pActor, f32 force);
+void tryAddVelocityLimit(LiveActor* pActor, const sead::Vector3f& rVelocity, f32 limit);
+void scaleVelocity(LiveActor* pActor, f32 factor);
+void scaleVelocityX(LiveActor* pActor, f32 factorX);
+void scaleVelocityY(LiveActor* pActor, f32 factorY);
+void scaleVelocityZ(LiveActor* pActor, f32 factorZ);
+void scaleVelocityHV(LiveActor* pActor, f32 factorH, f32 factorV);
+void scaleVelocityExceptDirection(LiveActor* pActor, const sead::Vector3f& rDirection, f32 factor);
+void limitVelocity(LiveActor* pActor, f32 limit);
+f32 calcSpeed(const LiveActor* pActor);
+void limitVelocityX(LiveActor* pActor, f32 limitX);
+void limitVelocityY(LiveActor* pActor, f32 limitY);
+void limitVelocityZ(LiveActor* pActor, f32 limitZ);
+bool reboundVelocityFromEachCollision(LiveActor* pActor, f32 ground, f32 wall, f32 ceiling, f32 threshold);
+bool reboundVelocityFromCollision(LiveActor* pActor, f32 reboundStrength, f32 reboundMin, f32 friction);
+void calcVelocitySeparateHV(sead::Vector3f* pVelocity, const LiveActor* pActor, const sead::Vector3f& rH, f32 speedH, f32 speedV);
+void setVelocitySeparateHV(LiveActor* pActor, const sead::Vector3f& rH, f32 speedH, f32 speedV);
+void limitVelocitySeparateHV(LiveActor* pActor, const sead::Vector3f& rDir, f32 horizontal, f32 vertical);
+void calcVelocityBlowAttack(sead::Vector3f* pVelocity, const LiveActor* pActor, const sead::Vector3f& rTrans, f32 speedH, f32 speedV);
+void addVelocityBlowAttack(LiveActor* pActor, const sead::Vector3f& rTrans, f32 speedH, f32 speedV);
+void setVelocityBlowAttack(LiveActor* pActor, const sead::Vector3f& rTrans, f32 speedH, f32 speedV);
+void setVelocityBlowAttackAndTurnToTarget(LiveActor* pActor, const sead::Vector3f& rTarget, f32 speedH, f32 speedV);
+bool isVelocityFast(const LiveActor* pActor, f32 threshold);
+bool isVelocitySlow(const LiveActor* pActor, f32 threshold);
+f32 calcSpeedH(const LiveActor* pActor);
+f32 calcSpeedV(const LiveActor* pActor);
+bool isNear(const LiveActor* pActor, const LiveActor* pTarget, f32 threshold);
+bool isNear(const LiveActor* pActor, const sead::Vector3f& rTrans, f32 threshold);
+bool isFar(const LiveActor* pActor, const LiveActor* pTarget, f32 threshold);
+bool isFar(const LiveActor* pActor, const sead::Vector3f& rTrans, f32 threshold);
+f32 calcDistance(const LiveActor* pActor, const LiveActor* pTarget);
+f32 calcDistance(const LiveActor* pActor, const sead::Vector3f& rTrans);
+f32 calcDistanceV(const LiveActor* pActor, const LiveActor* pTarget);
+f32 calcDistanceV(const LiveActor* pActor, const sead::Vector3f& rTrans);
+f32 calcDistanceH(const LiveActor* pActor, const LiveActor* pTarget);
+f32 calcDistanceH(const LiveActor* pActor, const sead::Vector3f& rTrans);
+f32 calcDistanceH(const LiveActor* pActor, const sead::Vector3f& rTrans1, const sead::Vector3f& rTrans2);
+f32 calcHeight(const LiveActor* pActor, const sead::Vector3f& rTrans);
+f32 calcHeight(const LiveActor* pActor, const LiveActor* pTarget);
+void addRotateAndRepeatY(LiveActor* pActor, f32 deg);
+void calcQuatSide(sead::Vector3f* pSide, const LiveActor* pActor);
+void calcQuatUp(sead::Vector3f* pUp, const LiveActor* pActor);
+void calcQuatFront(sead::Vector3f* pFront, const LiveActor* pActor);
+void calcQuatLocalAxis(sead::Vector3f* pLocal, const LiveActor* pActor, s32 axis);
+void calcTransOffsetFront(sead::Vector3f* pOffset, const LiveActor* pActor, f32 len);
+void calcTransOffsetUp(sead::Vector3f* pOffset, const LiveActor* pActor, f32 len);
+void calcTransOffsetSide(sead::Vector3f* pOffset, const LiveActor* pActor, f32 len);
+void setTransOffsetLocalDir(LiveActor* pActor, const sead::Quatf& rQuat, const sead::Vector3f& rGlobalOffset, f32 localOffset, s32 axis);
+void addTransOffsetLocalDir(LiveActor* pActor, f32 localOffset, s32 axis);
+void rotateQuatXDirDegree(LiveActor* pActor, f32 deg);
+void rotateQuatXDirDegree(LiveActor* pActor, const sead::Quatf& rQuat, f32 deg);
+void rotateQuatYDirDegree(LiveActor* pActor, f32 deg);
+void rotateQuatYDirDegree(LiveActor* pActor, const sead::Quatf& rQuat, f32 deg);
+void rotateQuatZDirDegree(LiveActor* pActor, f32 deg);
+void rotateQuatZDirDegree(LiveActor* pActor, const sead::Quatf& rQuat, f32 deg);
+void rotateQuatLocalDirDegree(LiveActor* pActor, s32 axis, f32 deg);
+void rotateQuatLocalDirDegree(LiveActor* pActor, const sead::Quatf& rQuat, s32 axis, f32 deg);
+void rotateQuatYDirRandomDegree(LiveActor* pActor);
+void rotateQuatYDirRandomDegree(LiveActor* pActor, const sead::Quatf& rQuat);
+bool turnQuatFrontToDirDegreeH(LiveActor* pActor, const sead::Vector3f& rDir, f32 deg);
+bool turnQuatFrontToPosDegreeH(LiveActor* pActor, const sead::Vector3f& rPos, f32 deg);
+bool isFaceToTargetDegree(const LiveActor* pActor, const sead::Vector3f& rTarget, const sead::Vector3f& rFace, f32 threshDeg);
+bool isFaceToTargetDegree(const LiveActor* pActor, const sead::Vector3f& rTarget, f32 threshDeg);
+bool isFaceToTargetDegreeHV(const LiveActor* pActor, const sead::Vector3f& rTarget, const sead::Vector3f& rFace, f32 degH, f32 degV);
+bool isFaceToTargetDegreeH(const LiveActor* pActor, const sead::Vector3f& rTarget, const sead::Vector3f& rFace, f32 degH);
+bool isInSightCone(const LiveActor* pActor, const sead::Vector3f& rTarget, const sead::Vector3f& rFace, f32 maxDist, f32 threshDeg);
+bool isInSightFan(const LiveActor* pActor, const sead::Vector3f& rTarget, const sead::Vector3f& rFace, f32 maxDist, f32 angleH, f32 angleV);
+bool turnDirection(const LiveActor* pActor, sead::Vector3f* pVec, const sead::Vector3f& rDir, f32 cos);
+bool turnDirectionDegree(const LiveActor* pActor, sead::Vector3f* pVec, const sead::Vector3f& rDir, f32 deg);
+bool turnDirectionToTarget(const LiveActor* pActor, sead::Vector3f* pVec, const sead::Vector3f& rTarget, f32 cos);
+bool turnDirectionToTargetDegree(const LiveActor* pActor, sead::Vector3f* pVec, const sead::Vector3f& rTarget, f32 deg);
+bool turnDirectionFromTargetDegree(const LiveActor* pActor, sead::Vector3f* pVec, const sead::Vector3f& rTarget, f32 deg);
+void turnDirectionAlongGround(const LiveActor* pActor, sead::Vector3f* pDir);
+void turnDirectionAlongGround(LiveActor* pActor);
+bool turnToDirection(LiveActor* pActor, const sead::Vector3f& rDir, f32 deg);
+bool turnToTarget(LiveActor* pActor, const sead::Vector3f& rTarget, f32 deg);
+bool turnToTarget(LiveActor* pActor, const LiveActor* pTarget, f32 deg);
+void faceToDirection(LiveActor* pActor, const sead::Vector3f& rDir);
+void faceToTarget(LiveActor* pActor, const sead::Vector3f& rTarget);
+void faceToTarget(LiveActor* pActor, const LiveActor* pTarget);
+void faceToVelocity(LiveActor* pActor);
+void addVelocityClockwiseToDirection(LiveActor* pActor, const sead::Vector3f& rDir, f32 force);
+void addVelocityClockwiseToTarget(LiveActor* pActor, const sead::Vector3f& rTarget, f32 force);
+void calcDirClockwiseToDir(sead::Vector3f* pOut, const LiveActor* pActor, const sead::Vector3f& rDir);
+void calcDirClockwiseToPos(sead::Vector3f* pOut, const LiveActor* pActor, const sead::Vector3f& rTarget);
+void calcDirToActor(sead::Vector3f* pDir, const LiveActor* pActor, const LiveActor* pTarget);
+f32 calcAngleToTargetH(const LiveActor* pActor, const sead::Vector3f& rTarget);
+f32 calcAngleToTargetV(const LiveActor* pActor, const sead::Vector3f& rTarget);
+void walkAndTurnToDirection(LiveActor* pActor, const sead::Vector3f& rDir, f32 forceFront, f32 forceGravity, f32 decay, f32 deg, bool turnAlongGround);
+void walkAndTurnToDirection(LiveActor* pActor, sead::Vector3f* pFront, const sead::Vector3f& rDir, f32 forceFront, f32 forceGravity, f32 decay, f32 deg, bool turnAlongGround);
+void walkAndTurnToTarget(LiveActor* pActor, const sead::Vector3f& rTarget, f32 forceFront, f32 forceGravity, f32 decay, f32 deg, bool turnAlongGround);
+void flyAndTurnToDirection(LiveActor* pActor, sead::Vector3f* pFront, const sead::Vector3f& rDir, f32 forceFront, f32 forceGravity, f32 decay, f32 deg);
+void flyAndTurnToDirection(LiveActor* pActor, const sead::Vector3f& rDir, f32 forceFront, f32 forceGravity, f32 decay, f32 deg);
+void flyAndTurnToTarget(LiveActor* pActor, const sead::Vector3f& rTarget, f32 forceFront, f32 forceGravity, f32 decay, f32 deg);
+bool tryKillByDeathArea(LiveActor* pActor);
+void calcSpringMovement(LiveActor* pActor, const sead::Vector3f& rPos, f32 springPos, f32 sinStrength, const sead::Vector3f& rOffset, f32 constStrength, f32 sinAmpl);
+void addVelocityClockwiseToPlayer(LiveActor* pActor, f32 force);
+void calcDirClockwiseToPlayer(sead::Vector3f* pDir, const LiveActor* pActor);
+void walkAndTurnToPlayer(LiveActor* pActor, f32 forceFront, f32 forceGravity, f32 decay, f32 deg, bool turnAlongGround);
+void flyAndTurnToPlayer(LiveActor* pActor, const ActorParamMove& rParam);
+void escapeFromPlayer(LiveActor* pActor, f32 forceFront, f32 forceGravity, f32 decay, f32 deg);
+void escapeFromPlayer(LiveActor* pActor, sead::Vector3f* pFront, f32 forceFront, f32 forceGravity, f32 decay, f32 deg);
+bool isInSightConePlayer(const LiveActor* pActor, f32 maxDist, f32 threshDeg);
+}  // namespace al
