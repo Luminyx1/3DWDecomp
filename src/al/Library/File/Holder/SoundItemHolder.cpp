@@ -4,64 +4,62 @@
 
 namespace al {
 /**
- * @brief Constructs a holder with room for 640 sound item entries.
+ * Allocates the sound item entries.
  */
 SoundItemHolder::SoundItemHolder() {
-    mEntries.allocBufferAssert(640, nullptr);
+    mSoundItemEntries.allocBufferAssert(640, nullptr);
 }
 
 /**
- * @brief Takes the next free entry and sets it up for a load request.
- * @param itemId The id of the sound item to load.
- * @param param The secondary parameter passed to the resource loader.
- * @param pResourceLoader The loader used to load the sound item.
- * @return The entry that was set up.
+ * Takes the next free entry and sets up its load request.
+ * @param itemId Sound item id.
+ * @param unk Unknown.
+ * @param pLoader Audio resource loader.
+ * @return The entry.
  */
-SoundItemEntry* SoundItemHolder::addNewLoadRequestEntry(u32 itemId, u32 param,
-                                                        IAudioResourceLoader* pResourceLoader) {
-    SoundItemEntry* pEntry = mEntries.get(mNumEntries);
-    pEntry->setLoadRequestInfo(itemId, param, pResourceLoader);
-    mNumEntries++;
-    return pEntry;
+SoundItemEntry* SoundItemHolder::addNewLoadRequestEntry(u32 itemId, u32 unk,
+                                                        IAudioResourceLoader* pLoader) {
+    SoundItemEntry* entry = mSoundItemEntries.get(mSize);
+    entry->setLoadRequestInfo(itemId, unk, pLoader);
+    mSize++;
+    return entry;
 }
 
 /**
- * @brief Finds the entry for a sound item loaded by a given loader.
- * @param itemId The id of the sound item.
- * @param pResourceLoader The loader the item was requested with.
- * @return The matching entry, or nullptr if there is none.
+ * Finds the entry of a sound item.
+ * @param itemId Sound item id.
+ * @param pLoader Audio resource loader.
+ * @return The entry or nullptr.
  */
-SoundItemEntry* SoundItemHolder::tryFindEntry(u32 itemId, IAudioResourceLoader* pResourceLoader) {
-    for (s32 i = 0; i < mNumEntries; i++) {
-        SoundItemEntry* pEntry = mEntries.get(i);
-        if (pEntry->getSoundItemId() == itemId && pEntry->mResourceLoader == pResourceLoader) {
-            return pEntry;
+SoundItemEntry* SoundItemHolder::tryFindEntry(u32 itemId, IAudioResourceLoader* pLoader) {
+    for (s32 i = 0; i < mSize; i++) {
+        SoundItemEntry* entry = mSoundItemEntries.get(i);
+        if (entry->getSoundItemId() == itemId && entry->getAudioResourceLoader() == pLoader) {
+            return entry;
         }
     }
-
     return nullptr;
 }
 
 /**
- * @brief Blocks until every requested entry has finished loading.
+ * Waits until every entry finished loading.
  */
 void SoundItemHolder::waitLoadDoneAll() {
-    for (s32 i = 0; i < mNumEntries; i++) {
-        SoundItemEntry* pEntry = mEntries.get(i);
-        if (pEntry->mFileState != 3) {
-            pEntry->waitLoadDone();
+    for (s32 i = 0; i < mSize; i++) {
+        SoundItemEntry* entry = mSoundItemEntries.get(i);
+        if (entry->mFileState != FileState::IsLoadDone) {
+            entry->waitLoadDone();
         }
     }
 }
 
 /**
- * @brief Clears every entry and empties the holder.
+ * Clears every entry.
  */
 void SoundItemHolder::clearEntry() {
-    for (s32 i = 0; i < mNumEntries; i++) {
-        mEntries.get(i)->clear();
+    for (s32 i = 0; i < mSize; i++) {
+        mSoundItemEntries.get(i)->clear();
     }
-
-    mNumEntries = 0;
+    mSize = 0;
 }
 }  // namespace al

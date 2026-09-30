@@ -1,6 +1,5 @@
 #pragma once
 
-#include <basis/seadTypes.h>
 #include <container/seadBuffer.h>
 
 namespace al {
@@ -10,13 +9,12 @@ class SoundItemEntry;
 class SoundItemHolder {
 public:
     SoundItemHolder();
-
-    SoundItemEntry* addNewLoadRequestEntry(u32, u32, IAudioResourceLoader*);
-    SoundItemEntry* tryFindEntry(u32, IAudioResourceLoader*);
+    SoundItemEntry* addNewLoadRequestEntry(u32 itemId, u32 unk, IAudioResourceLoader* pLoader);
+    SoundItemEntry* tryFindEntry(u32 itemId, IAudioResourceLoader* pLoader);
     void waitLoadDoneAll();
     void clearEntry();
 
-    sead::Buffer<SoundItemEntry> mEntries;  // _0
-    s32 mNumEntries = 0;                    // _10
+    sead::Buffer<SoundItemEntry> mSoundItemEntries;
+    s32 mSize = 0;
 };
 }  // namespace al
