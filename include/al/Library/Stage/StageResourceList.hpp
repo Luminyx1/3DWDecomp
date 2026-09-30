@@ -1,7 +1,8 @@
 #pragma once
 
+#include <basis/seadTypes.h>
 #include <container/seadPtrArray.h>
-#include <prim/seadSafeString.hpp>
+#include <prim/seadSafeString.h>
 
 namespace al {
 class StageInfo;
@@ -9,19 +10,26 @@ struct PlacementInfo;
 
 class StageResourceList {
 public:
-    StageResourceList(const char*, s32, const char*, bool);
+    StageResourceList(const char* pStageName, s32 scenarioNo, const char* pResourceType,
+                      bool isOneResource);
 
-    void initZoneInfo(PlacementInfo&, s32, const char*, PlacementInfo*);
-    void initZoneInfoRecursive(const char*, const char*, s32, const char*, const char*,
-                               PlacementInfo*);
+    StageInfo* initZoneInfo(PlacementInfo& rZoneInfo, s32 scenarioNo, const char* pResourceType,
+                            PlacementInfo* pParentInfo);
+    void initZoneInfoRecursive(const char* pStageName, const char* pListName, s32 scenarioNo,
+                               const char* pResourceType, const char* pChildListName,
+                               PlacementInfo* pParentInfo);
     s32 getStageResourceNum() const;
-    StageInfo* getStageInfo(s32) const;
-    StageInfo* findStageInfo(const char*) const;
+    StageInfo* getStageInfo(s32 index) const;
+    StageInfo* findStageInfo(const char* pName) const;
 
-    sead::PtrArray<StageInfo> mStageInfos;  // _0
-    bool mIsExistArchive;                   // _10
-    s32 _14;                                // _14
+    bool isOneResource() const { return mIsOneResource; }
+
+    sead::PtrArray<StageInfo> mStageInfos;
+    bool mIsOneResource;
+    s32 mLastZoneId = -1;
 };
 
-void makeStageDataArchivePath(sead::BufferedSafeString*, const char*, s32, const char*, bool);
+void makeStageDataArchivePath(sead::BufferedSafeString* pOut, const char* pStageName,
+                              s32 scenarioNo, const char* pResourceType, bool isOneResource);
+bool isOneStageDataArchiveExists(const char* pStageName);
 }  // namespace al
