@@ -17,6 +17,7 @@
 #include "Project/OceanWave/IUseOceanWave.hpp"
 
 namespace al {
+    struct ClippingAreaActorInfoNode;
     class ActorActionKeeper;
     class ActorAlphaCtrl;
     class ActorExecuteInfo;
@@ -44,7 +45,6 @@ namespace al {
     class ShadowKeeper;
     class StageSwitchKeeper;
     class SubActorKeeper;
-    class ClippingAreaActorInfoNode;
     struct ActorSceneInfo;
     struct LiveActorFlag;
 
@@ -200,7 +200,7 @@ namespace al {
         SubActorKeeper* mSubActorKeeper = nullptr;
         ActorParamHolder* mActorParamHolder = nullptr;
         ActorSceneInfo* mActorSceneInfo = nullptr;
-        ClippingAreaActorInfoNode* mClippingAreaActorInfoNode = nullptr;
+        ClippingAreaActorInfoNode* mClippingInfoNode = nullptr;
         LiveActorFlag* mActorFlags = nullptr;
         ActorAlphaCtrl* mAlphaCtrl = nullptr;
         PlacementHolder* mPlacementHolder = nullptr;
@@ -209,7 +209,7 @@ namespace al {
         f32* mGlobalYOffsetRef = nullptr;
         f32 mGlobalYOffset = 0;
         f32 _134;
-        LiveActor* mFarLodActor;
+        LiveActor* mFarLodActor = nullptr;
         u8 _140 = 0;
         u8 mIsFarLodModel = 0;
         u8 _142 = 0;
