@@ -3781,7 +3781,7 @@ src/nw/font/font_WordWrapping.cpp:
     .text   start:0x005FB890 end:0x005FCC60
 src/nw/g3d/g3d_MaterialObj.cpp:
     .text   start:0x005FCC60 end:0x005FD7B0
-src/nw/g3d/g3d_Flag.cpp:
+src/nw/g3d/g3d_Flag.cpp: done
     .text   start:0x005FD7B0 end:0x005FD8D4
 src/nw/g3d/g3d_ResFile.cpp:
     .text   start:0x005FD8E0 end:0x005FDDD4
@@ -3801,7 +3801,7 @@ src/nw/g3d/g3d_ResShapeAnim.cpp:
     .text   start:0x00604AD0 end:0x006055EC
 src/nw/g3d/g3d_ResSkeletalAnim.cpp:
     .text   start:0x006055F0 end:0x00605E08
-src/nw/g3d/g3d_ResSkeleton.cpp:
+src/nw/g3d/g3d_ResSkeleton.cpp: done
     .text   start:0x00605E10 end:0x00605F54
 src/nw/g3d/g3d_ShaderObj.cpp:
     .text   start:0x00605F60 end:0x00607234
@@ -3819,7 +3819,7 @@ src/nw/g3d/g3d_Billboard.cpp:
     .text   start:0x00611260 end:0x00611E24
 src/nw/g3d/g3d_ModelObj.cpp:
     .text   start:0x00611E30 end:0x00613408
-src/nw/g3d/g3d_AnimObj.cpp:
+src/nw/g3d/g3d_AnimObj.cpp: done
     .text   start:0x00613410 end:0x006136FC
 src/nw/g3d/g3d_MaterialAnimObj.cpp:
     .text   start:0x00613700 end:0x00614FC4

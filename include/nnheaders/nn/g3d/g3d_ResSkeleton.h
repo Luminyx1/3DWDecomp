@@ -5,7 +5,7 @@
 #include <nn/util/util_BinaryFormat.h>
 #include <nn/util/util_ResDic.h>
 #include "nn/gfx/gfx_ResUserData.h"
-#include "nn/util/MathTypes.h"
+#include "nn/util/util_MathTypes.h"
 
 namespace nn::g3d {
 
@@ -32,6 +32,7 @@ struct ResBoneData {
 };
 
 class ResBone : public nn::util::AccessorBase<ResBoneData> {
+    friend class ResSkeleton;
 public:
     enum Shift {
         Shift_Hierarchy = 4,
@@ -139,19 +140,18 @@ public:
 };
 
 struct ResSkeletonData {
-    nn::util::BinaryBlockHeader blockHeader;
+    nn::util::BinBlockSignature signature;
+    nn::Bit32 flag;
     nn::util::BinTPtr<nn::util::ResDic> pBoneDic;
     nn::util::BinTPtr<nn::g3d::ResBone> pBoneArray;
     nn::util::BinTPtr<short> pMtxToBoneTable;
     nn::util::BinTPtr<nn::util::FloatColumnMajor4x3> pInvModelMatrixArray;
     nn::util::BinPtr pUserPtr;
     nn::util::BinTPtr<short> pMirroringBoneTable;
-    uint8_t reserved1[8];
-    nn::Bit32 flag;
     uint16_t boneCount;
     uint16_t smoothMtxCount;
     uint16_t rigidMtxCount;
-    uint8_t reserved2[6];
+    uint8_t reserved2[2];
 };
 
 class ResSkeleton : public nn::util::AccessorBase<nn::g3d::ResSkeletonData> {
