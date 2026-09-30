@@ -122,6 +122,7 @@ ActionFlagCtrlInfo* ActionFlagCtrl::findFlagInfo(const char* name) const {
         if (isEqualStringCase(flagInfo->actionName, name))
             return flagInfo;
     }
+
     return nullptr;
 }
 

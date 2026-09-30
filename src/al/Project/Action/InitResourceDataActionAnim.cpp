@@ -18,6 +18,7 @@ InitResourceDataActionAnim::tryCreate(Resource* pResource, const InitResourceDat
     if (!isExistResourceYaml(pResource, "ActionAnimCtrl", nullptr)) {
         return nullptr;
     }
+
     return new InitResourceDataActionAnim(pResource, pDataAnim);
 }
 

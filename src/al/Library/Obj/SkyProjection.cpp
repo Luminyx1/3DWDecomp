@@ -31,6 +31,7 @@ void SkyProjection::init(const ActorInitInfo& rInfo) {
         listenStageSwitchOnAppear(this, SkyProjectionFunctor(this, &SkyProjection::appear));
         listenStageSwitchOn(this, "SwitchDeadOn", SkyProjectionFunctor(this, &SkyProjection::kill));
     }
+
     tryGetArg(&mIsEnableTexMtxSet, rInfo, "IsEnableTexMtxSet");
     tryGetArg(&mIsEnableTexMtxSetUnder, rInfo, "IsEnableTexMtxSetUnder");
     tryGetArg(&mSkyTexMtxV, rInfo, "SkyTexMtxV");

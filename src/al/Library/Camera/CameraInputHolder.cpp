@@ -26,6 +26,7 @@ void CameraInputHolder::updateInput() {
             mInputs[i]->updateInput();
         }
     }
+
     if (mDefaultInput) {
         mDefaultInput->updateInput();
     }

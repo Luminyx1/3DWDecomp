@@ -72,5 +72,6 @@ private:
     SeEffectController* mSeEffectController = nullptr;
     IUseAudioKeeper* mUpperLayerAudioUser = nullptr;
 };
+
 static_assert(sizeof(AudioDirector) == 0x68);
 }  // namespace al

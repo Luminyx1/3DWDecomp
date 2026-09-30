@@ -66,6 +66,7 @@ void WheelMapParts::init(const ActorInitInfo& rInfo) {
             mWheelAngle = -(railProgress * mMoveEndDegree);
         }
     }
+
     mSwitchKeepOnAreaGroup = tryCreateSwitchKeepOnAreaGroup(this, rInfo);
     mSwitchOnAreaGroup = tryCreateSwitchOnAreaGroup(this, rInfo);
     trySyncStageSwitchAppear(this);
@@ -79,6 +80,7 @@ void WheelMapParts::control() {
     if (mSwitchKeepOnAreaGroup) {
         mSwitchKeepOnAreaGroup->update(getTrans(this));
     }
+
     if (mSwitchOnAreaGroup) {
         mSwitchOnAreaGroup->update(getTrans(this));
     }
@@ -114,8 +116,10 @@ bool WheelMapParts::receiveMsg(const SensorMsg* pMsg, HitSensor* pOther, HitSens
         if (!isNerve(this, NrvWheelMapParts.AssistStop.data())) {
             startNerveAction(this, "AssistStop");
         }
+
         return true;
     }
+
     if (isMsgFloorTouch(pMsg)) {
         sead::Vector3f pos;
         if (isMySensor(pSelf, this)) {
@@ -123,19 +127,23 @@ bool WheelMapParts::receiveMsg(const SensorMsg* pMsg, HitSensor* pOther, HitSens
         } else {
             pos = getActorTrans(pSelf);
         }
+
         f32 width = normalizeAbs(mMoveDir.dot(pos - getTrans(this)), mNoRotateWidth,
                                  mNoRotateWidth + 50.0f);
         mRotateWidth += isMsgEnemyFloorTouch(pMsg) ? width * 0.9f : width;
         return true;
     }
+
     if (isMsgShowModel(pMsg)) {
         showModelIfHide(this);
         return true;
     }
+
     if (isMsgHideModel(pMsg)) {
         hideModelIfShow(this);
         return true;
     }
+
     return false;
 }
 
@@ -160,6 +168,7 @@ void WheelMapParts::exeWait() {
                     }
                 }
             }
+
             if (mWheelAngle > mMoveEndDegree) {
                 mWheelAngle = mMoveEndDegree;
                 if (mDeltaAngle > 0.0f) {
@@ -170,6 +179,7 @@ void WheelMapParts::exeWait() {
                     }
                 }
             }
+
             railProgress = mWheelAngle / mMoveEndDegree;
         } else {
             if (mWheelAngle < -mMoveEndDegree) {
@@ -182,6 +192,7 @@ void WheelMapParts::exeWait() {
                     }
                 }
             }
+
             if (mWheelAngle > 0.0f) {
                 mWheelAngle = 0.0f;
                 if (mDeltaAngle > 0.0f) {
@@ -192,21 +203,27 @@ void WheelMapParts::exeWait() {
                     }
                 }
             }
+
             railProgress = -mWheelAngle / mMoveEndDegree;
         }
+
         if (isInvertDirection) {
             if (!isNearZero(mDeltaAngle, 0.1f)) {
                 tryStartSeWithParam(this, "PgStop", mDeltaAngle);
             }
+
             mDeltaAngle *= -0.2f;
         }
+
         setSyncRailToCoord(this, railProgress * getRailTotalLength(this));
     } else {
         mWheelAngle = wrapAngle(mWheelAngle);
     }
+
     if (!isNearZero(mDeltaAngle, 0.001f)) {
         tryHoldSeWithParam(this, "Rotate", mDeltaAngle);
     }
+
     rotateQuatLocalDirDegree(getQuatPtr(this), mInitialQuat, mRotateAxis, wrapAngle(mWheelAngle));
     mRotateWidth = 0.0f;
 }

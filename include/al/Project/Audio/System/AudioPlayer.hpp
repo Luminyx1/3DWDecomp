@@ -72,5 +72,6 @@ private:
         return info.fileSize;
     }
 };
+
 static_assert(sizeof(SeadAudioPlayer) == 0x3d0);
 }  // namespace al

@@ -41,6 +41,7 @@ static void calcCameraPos(sead::Vector3f* pPos, const sead::Vector3f& rAt, f32 d
         dir.y *= scale;
         dir.z *= scale;
     }
+
     dir.y = sead::Mathf::sin(angleV);
     *pPos = rAt + dir * distance;
 }

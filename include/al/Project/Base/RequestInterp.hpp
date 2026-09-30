@@ -31,6 +31,7 @@ public:
             requestParamDirect_(priority, rParam);
             return;
         }
+
         if (mPriority < priority) {
             mIsRequested = true;
             mPriority = priority;
@@ -69,6 +70,7 @@ public:
         } else {
             mIsRequested = true;
         }
+
         return isSamePriorityRequested;
     }
 
@@ -79,6 +81,7 @@ public:
             mFromParam = mCurrentParam;
             mStepMax = mRequestStep;
         }
+
         mStep--;
         mStep = RequestInterpMathImpl::max(-1, mStep);
         if (mStep < 0) {
@@ -86,6 +89,7 @@ public:
             if (mStep == -1)
                 return;
         }
+
         f32 rate = mStep == 0 ? 1.0f : (f32)(mStepMax - mStep) / (f32)mStepMax;
         mCurrentParam.interp(mFromParam, mToParam, rate);
         if (mIsEndInit && mIsDirect)

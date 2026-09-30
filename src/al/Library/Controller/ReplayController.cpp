@@ -41,6 +41,7 @@ void ReplayController::endReplay() {
     if (mIsReplaying && mPadDataReader) {
         mPadDataReader->close();
     }
+
     mIsReplaying = false;
 }
 
@@ -68,6 +69,7 @@ s32 ReplayController::getReplayRemainFrame() const {
     if (mIsReplaying && mPadDataReader) {
         return mPadDataReader->getRemainFrame();
     }
+
     return 0;
 }
 
@@ -90,6 +92,7 @@ void ReplayController::calc(u32 prevHold, bool prevPointerOn) {
         if (mPadDataReader->isEnd()) {
             endReplay();
         }
+
         mIsReadPadReplayData = true;
     }
 
@@ -110,6 +113,7 @@ void ReplayController::startRecord() {
     if (!mIsRecording && mPadDataWriter) {
         mPadDataWriter->open();
     }
+
     mIsRecording = true;
 }
 
@@ -120,6 +124,7 @@ void ReplayController::endRecord() {
     if (mIsRecording && mPadDataWriter) {
         mPadDataWriter->close();
     }
+
     mIsRecording = false;
 }
 }  // namespace al

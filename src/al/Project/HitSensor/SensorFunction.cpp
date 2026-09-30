@@ -74,6 +74,7 @@ al::HitSensorType findSensorTypeByName(const char* pName) {
             return cSensorTypeTable[i].mType;
         }
     }
+
     return al::HitSensorType::MapObj;
 }
 }  // namespace alSensorFunction

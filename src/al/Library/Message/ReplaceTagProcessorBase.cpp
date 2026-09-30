@@ -40,12 +40,14 @@ s32 ReplaceTagProcessorBase::replaceNumberGroup(char16_t* pDst, const MessageTag
     for (s32 i = 0; i <= argIndex; i++) {
         value = va_arg(argsCopy, s32);
     }
+
     const char16_t* format;
     if (static_cast<u16>(rTag.getType() - 1) < 8) {
         format = sNumberFormats[static_cast<s16>(rTag.getType() - 1)];
     } else {
         format = u"%d";
     }
+
     return sead::StringUtil::sw16printf(pDst, 0x100, format, value);
 }
 
@@ -65,6 +67,7 @@ s32 ReplaceTagProcessorBase::replaceStringGroup(char16_t* pDst, const MessageTag
     for (s32 i = 0; i <= argIndex; i++) {
         string = va_arg(argsCopy, const char16_t*);
     }
+
     return copyMessageWithTag(pDst, 0x100, string);
 }
 
@@ -93,10 +96,12 @@ s32 ReplaceTagProcessorBase::replace(char16_t* pDst, const IUseMessageSystem* pM
             *out = 0;
             return out - pDst;
         }
+
         if (!isMessageTagMark(*pSrc)) {
             *out++ = *pSrc++;
             continue;
         }
+
         MessageTag tag(pSrc);
         const char* groupName = getMessageTagGroupName(pMsgSystem, tag.getGroup());
         const char* tagName = getMessageTagName(pMsgSystem, tag.getGroup(), tag.getType());
@@ -112,8 +117,10 @@ s32 ReplaceTagProcessorBase::replace(char16_t* pDst, const IUseMessageSystem* pM
             memcpy(out, pSrc, tag.getSkipLength() * sizeof(char16_t));
             out += tag.getSkipLength();
         }
+
         pSrc += tag.getSkipLength();
     }
+
     *out = 0;
     return out - pDst;
 }
@@ -136,6 +143,7 @@ s32 ReplaceTagProcessorBase::replaceArgs(char16_t* pDst, s32 dstSize,
     if (length >= dstSize) {
         buffer[dstSize - 1] = 0;
     }
+
     memcpy(pDst, buffer, static_cast<u32>(length + 1) * sizeof(char16_t));
     va_end(args);
     return length;
@@ -157,11 +165,13 @@ s32 ReplaceTagProcessorBase::replaceArgsVaList(char16_t* pDst, const IUseMessage
             *out++ = *pSrc++;
             continue;
         }
+
         MessageTag tag(pSrc);
         if (!tag.getTag()) {
             pSrc++;
             continue;
         }
+
         const char* groupName = getMessageTagGroupName(pMsgSystem, tag.getGroup());
         if (!groupName) {
             memcpy(out, pSrc, tag.getSkipLength() * sizeof(char16_t));
@@ -181,11 +191,14 @@ s32 ReplaceTagProcessorBase::replaceArgsVaList(char16_t* pDst, const IUseMessage
             memcpy(out, pSrc, tag.getSkipLength() * sizeof(char16_t));
             out += tag.getSkipLength();
         }
+
         pSrc += tag.getSkipLength();
     }
+
     *out = 0;
     return out - pDst;
 }
+
 /**
  * Replaces the named string tags of a message whose name matches.
  * @param pDst output string
@@ -208,6 +221,7 @@ s32 ReplaceTagProcessorBase::replaceNamedString(sead::BufferedSafeStringBase<cha
             i++;
             continue;
         }
+
         MessageTag tag(pSrc);
         const char* groupName = getMessageTagGroupName(pMsgSystem, tag.getGroup());
         const char* tagName = getMessageTagName(pMsgSystem, tag.getGroup(), tag.getType());
@@ -227,12 +241,14 @@ s32 ReplaceTagProcessorBase::replaceNamedString(sead::BufferedSafeStringBase<cha
                 continue;
             }
         }
+
         memcpy(out, pSrc, tag.getSkipLength() * sizeof(char16_t));
         length = tag.getSkipLength();
         out += length;
         pSrc += tag.getSkipLength();
         i += tag.getSkipLength();
     }
+
     return out - start;
 }
 }  // namespace al

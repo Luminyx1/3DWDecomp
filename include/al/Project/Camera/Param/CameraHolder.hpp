@@ -20,5 +20,6 @@ public:
     s32 mNumCameras = 0;
     CameraInfo** mCameraInfos;
 };
+
 static_assert(sizeof(CameraHolder) == 0x10);
 }  // namespace al

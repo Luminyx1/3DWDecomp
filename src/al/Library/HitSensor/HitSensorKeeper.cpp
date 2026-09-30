@@ -129,11 +129,13 @@ HitSensor* HitSensorKeeper::getSensor(const char* pName) const {
     if (mSensorCount == 1) {
         return mSensors[0];
     }
+
     for (s32 i = 0; i < mSensorCount; i++) {
         if (isEqualString(mSensors[i]->mName, pName)) {
             return mSensors[i];
         }
     }
+
     return nullptr;
 }
 }  // namespace al

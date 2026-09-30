@@ -38,6 +38,7 @@ void ActorPrePassLightKeeper::initAfterPlacement() {
     if (!isDead(mParentActor)) {
         return;
     }
+
     for (PrePassLightBase& light : mLightBaseArray) {
         light.requestKillDirect();
     }
@@ -51,9 +52,11 @@ void ActorPrePassLightKeeper::appear(bool isHideModel) {
     if (mIsIgnorePrePassYaml) {
         return;
     }
+
     if (!mIsIgnoreHideModel && isHideModel) {
         return;
     }
+
     for (PrePassLightBase& light : mLightBaseArray) {
         light.appear();
     }
@@ -66,6 +69,7 @@ void ActorPrePassLightKeeper::requestKill() {
     if (mIsIgnorePrePassYaml) {
         return;
     }
+
     for (PrePassLightBase& light : mLightBaseArray) {
         light.requestKill();
     }
@@ -78,6 +82,7 @@ void ActorPrePassLightKeeper::hideModel() {
     if (mIsIgnorePrePassYaml || mIsIgnoreHideModel) {
         return;
     }
+
     for (PrePassLightBase& light : mLightBaseArray) {
         light.requestKill();
     }
@@ -98,6 +103,7 @@ PrePassLightBase* ActorPrePassLightKeeper::getLightBase(const char* pName) const
     if (mIsIgnorePrePassYaml) {
         return nullptr;
     }
+
     s32 num = mLightBaseArray.size();
     for (s32 i = 0; i < num; i++) {
         PrePassLightBase* light = mLightBaseArray[i];
@@ -105,6 +111,7 @@ PrePassLightBase* ActorPrePassLightKeeper::getLightBase(const char* pName) const
             return light;
         }
     }
+
     return nullptr;
 }
 
@@ -117,6 +124,7 @@ PrePassLightBase* ActorPrePassLightKeeper::getLightBase(s32 index) const {
     if (mIsIgnorePrePassYaml) {
         return nullptr;
     }
+
     return mLightBaseArray[index];
 }
 
@@ -133,6 +141,7 @@ const sead::Color4f& ActorPrePassLightKeeper::findUserColor(const char* pName) c
             return color->mColor;
         }
     }
+
     return sead::Color4f::cBlack;
 }
 }  // namespace al

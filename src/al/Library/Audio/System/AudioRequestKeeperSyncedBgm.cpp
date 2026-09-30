@@ -30,19 +30,23 @@ void AudioRequestKeeperSyncedBgm::update() {
     if (!isEnableRhythmAnim(this, nullptr)) {
         return;
     }
+
     bool isTrigger[10] = {};
     for (s32 i = 0; i < mRequests->size(); i++) {
         SyncedBgmRequest* request = mRequests->unsafeAt(i);
         if (request->isDone) {
             continue;
         }
+
         isTrigger[i] = isTriggerBeat(this, request->beat);
     }
+
     for (s32 i = 0; i < mRequests->size(); i++) {
         SyncedBgmRequest* request = mRequests->unsafeAt(i);
         if (request->isDone || !isTrigger[i]) {
             continue;
         }
+
         switch (request->type) {
         case BgmPlayingType_Start:
             startBgm(this, request->request);
@@ -59,6 +63,7 @@ void AudioRequestKeeperSyncedBgm::update() {
         default:
             break;
         }
+
         request->isDone = true;
     }
 }
@@ -77,9 +82,11 @@ void AudioRequestKeeperSyncedBgm::requestBgm(BgmPlayingType type, const BgmPlayi
             break;
         }
     }
+
     if (freeRequest == nullptr) {
         return;
     }
+
     freeRequest->type = type;
     freeRequest->request.name = rRequest.name;
     freeRequest->request.fadeInFrames = rRequest.fadeInFrames;

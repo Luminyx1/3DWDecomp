@@ -46,6 +46,7 @@ void FlashingCtrl::end() {
         isHideModel(mActor)) {
         showModel(mActor);
     }
+
     if (mIsPlaySe) {
         startSe(mAudioKeeper, "TimerEnd");
     }
@@ -73,16 +74,19 @@ void FlashingCtrl::updateFlashing() {
         if (!isHidden) {
             hideModel(mActor);
         }
+
         if (mIsHidden) {
             if (mIsPlaySe) {
                 startSe(mAudioKeeper, "Blink");
             }
+
             mIsHidden = false;
         }
     } else {
         if (isHidden) {
             showModel(mActor);
         }
+
         mIsHidden = true;
     }
 }
@@ -106,6 +110,7 @@ s32 FlashingCtrl::getCurrentInterval() const {
     if (mIsSlowInterval) {
         return 8;
     }
+
     return isFastFlashing() ? 6 : 10;
 }
 
@@ -125,6 +130,7 @@ bool FlashingCtrl::isNowJustFlashed() const {
     if (isNowFlashing() && mTimer % getCurrentInterval() == 0) {
         return true;
     }
+
     return false;
 }
 

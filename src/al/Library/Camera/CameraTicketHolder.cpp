@@ -17,6 +17,7 @@ void CameraTicketHolder::endInit() {
     for (s32 i = 0; i < mTicketNum; i++) {
         mTickets[i]->getPoser()->endInit();
     }
+
     if (mDefaultTicket) {
         mDefaultTicket->getPoser()->endInit();
     }
@@ -27,6 +28,7 @@ void CameraTicketHolder::registerTicket(CameraTicket* pTicket) {
         registerDefaultTicket(pTicket);
         return;
     }
+
     mTickets[mTicketNum] = pTicket;
     mTicketNum++;
 }
@@ -44,6 +46,7 @@ CameraTicket* CameraTicketHolder::tryFindEntranceTicket(const PlacementId* pPlac
             return mTickets[i];
         }
     }
+
     return nullptr;
 }
 

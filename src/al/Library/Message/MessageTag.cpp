@@ -14,10 +14,12 @@ MessageTag::MessageTag(const nn::font::PrintContext<u16>* pContext) {
         mTag = tag;
         return;
     }
+
     if (*tag == 0xe) {
         mTag = tag;
         return;
     }
+
     mTag = nullptr;
 }
 
@@ -31,10 +33,12 @@ MessageTag::MessageTag(const char16_t* pTag) {
         mTag = pTag;
         return;
     }
+
     if (*pTag == 0xe) {
         mTag = pTag;
         return;
     }
+
     mTag = nullptr;
 }
 

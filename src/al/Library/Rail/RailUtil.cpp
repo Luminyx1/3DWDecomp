@@ -102,8 +102,10 @@ bool moveRailLoop(const LiveActor* pActor, f32 speed) {
         } else {
             setRailPosToCoord(pActor, getRailTotalLength(pActor) - (speed - coord));
         }
+
         return true;
     }
+
     return false;
 }
 
@@ -131,9 +133,11 @@ bool moveRailTurn(const LiveActor* pActor, f32 speed, f32 goalCoord) {
     if (isReversed) {
         reverseRail(pActor);
     }
+
     if (speed < 0.0f) {
         reverseRail(pActor);
     }
+
     return isReversed;
 }
 
@@ -153,8 +157,10 @@ bool moveRailPause(const LiveActor* pActor, f32 speed) {
         if (isRailReachedNearGoal(pActor, speed)) {
             reverseRail(pActor);
         }
+
         isPaused = true;
     }
+
     moveRail(pActor, sead::Mathf::abs(speed));
     return isPaused;
 }
@@ -173,6 +179,7 @@ bool turnToRailDir(LiveActor* pActor, f32 degree) {
     if (tryGetQuatPtr(pActor)) {
         return turnQuatFrontToDirDegreeH(pActor, moveDir, degree);
     }
+
     return turnDirectionDegree(pActor, getFrontPtr(pActor), moveDir, degree);
 }
 
@@ -211,6 +218,7 @@ bool moveSyncRailLoop(LiveActor* pActor, f32 speed) {
     if (isReachedGoal) {
         resetPosition(pActor, false);
     }
+
     return isReachedGoal;
 }
 
@@ -263,6 +271,7 @@ f32 calcRailToGoalLength(const LiveActor* pActor) {
     if (isRailGoingToEnd(pActor)) {
         return length - coord;
     }
+
     return coord;
 }
 
@@ -274,6 +283,7 @@ f32 calcRailPartRate(const LiveActor* pActor) {
     if (isRailGoingToEnd(pActor)) {
         return partDistance / sectionLength;
     }
+
     return length / sectionLength;
 }
 
@@ -285,6 +295,7 @@ f32 calcRailToNextRailPointLength(const LiveActor* pActor) {
     if (isRailGoingToEnd(pActor)) {
         return length;
     }
+
     return partDistance;
 }
 
@@ -296,6 +307,7 @@ f32 calcRailToPreviousRailPointLength(const LiveActor* pActor) {
     if (isRailGoingToEnd(pActor)) {
         return partDistance;
     }
+
     return length;
 }
 
@@ -315,6 +327,7 @@ const sead::Vector3f& getRailPos(const RailKeeper* pRailKeeper) {
     if (pRailKeeper && pRailKeeper->getRailRider()) {
         return pRailKeeper->getRailRider()->getPosition();
     }
+
     return sead::Vector3f::zero;
 }
 
@@ -330,9 +343,11 @@ s32 getRailPointNo(const LiveActor* pActor) {
     if (isLoopRail(pActor)) {
         return getRailPartIndex(pActor);
     }
+
     if (isRailReachedEnd(pActor)) {
         return getRailPointNum(pActor) - 1;
     }
+
     return getRailPartIndex(pActor);
 }
 
@@ -362,6 +377,7 @@ f32 getRailPartRate(const LiveActor* pActor, s32 index, f32 coord) {
     for (s32 i = 0; i < index; i++) {
         length += getRail(pActor)->getPartLength(i);
     }
+
     return std::min((coord - length) / partLength, 1.0f);
 }
 
@@ -377,6 +393,7 @@ bool isRailReachedNearGoal(const LiveActor* pActor, f32 goalMarginEnd, f32 goalM
     if (isLoopRail(pActor)) {
         return false;
     }
+
     if (isRailGoingToEnd(pActor)) {
         if (getRailTotalLength(pActor) - goalMarginStart <= getRailCoord(pActor)) {
             return true;
@@ -384,6 +401,7 @@ bool isRailReachedNearGoal(const LiveActor* pActor, f32 goalMarginEnd, f32 goalM
     } else if (getRailCoord(pActor) <= goalMarginEnd) {
         return true;
     }
+
     return false;
 }
 
@@ -490,6 +508,7 @@ void calcRailClippingInfo(sead::Vector3f* pPos, f32* pRadius, const LiveActor* p
         getRail(pActor)->calcPos(&pos, i * step);
         *pRadius = sead::Mathf::max((pos - *pPos).length(), *pRadius);
     }
+
     *pRadius = sead::Mathf::max((lastRailPos - *pPos).length(), *pRadius);
     *pRadius += offset;
 }
@@ -524,6 +543,7 @@ void calcRailClippingInfo(sead::Vector3f* pPos, f32* pRadius, const RailKeeper* 
         pKeeper->getRail()->calcPos(&pos, i * step);
         *pRadius = sead::Mathf::max((pos - *pPos).length(), *pRadius);
     }
+
     *pRadius = sead::Mathf::max((lastRailPos - *pPos).length(), *pRadius);
     *pRadius += offset;
 }

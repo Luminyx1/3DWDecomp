@@ -16,45 +16,58 @@ SeResourceSpecificInfo* SeResourceSpecificInfo::createInfo(const ByamlIter& rIte
     if (AudioConst::SOUND_ID_INVALID == soundId) {
         return nullptr;
     }
+
     if (!rIter.tryGetIntByKey(&info->mLimitPlayingNum, "LimitPlayingNum")) {
         info->mLimitPlayingNum = 0;
     }
+
     if (!rIter.tryGetIntByKey(&info->mLimitTriggerFrame, "LimitTriggerFrame")) {
         info->mLimitTriggerFrame = 0;
     }
+
     if (!rIter.tryGetIntByKey(&info->mLimitTriggerNum, "LimitTriggerNum")) {
         info->mLimitTriggerNum = 0;
     }
+
     if (!rIter.tryGetIntByKey(&info->mDelayFrame, "DelayFrame")) {
         info->mDelayFrame = 0;
     }
+
     if (!rIter.tryGetIntByKey(&info->mDelayMaxNum, "DelayMaxNum")) {
         info->mDelayMaxNum = 0;
     }
+
     if (!rIter.tryGetFloatByKey(&info->mDelayVolume, "DelayVolume")) {
         info->mDelayVolume = -1.0f;
     }
+
     if (!rIter.tryGetFloatByKey(&info->mVolumeAfterGoal, "VolumeAfterGoal")) {
         info->mVolumeAfterGoal = -1.0f;
     }
+
     if (!rIter.tryGetBoolByKey(&info->mIsValidMatCodeLpf, "IsValidMatCodeLpf")) {
         info->mIsValidMatCodeLpf = false;
     }
+
     if (!rIter.tryGetBoolByKey(&info->mIsCmNg, "IsCmNg")) {
         info->mIsCmNg = false;
     }
+
     if (!rIter.tryGetBoolByKey(&info->mIsIgnoreDistPause, "IsIgnoreDistPause")) {
         info->mIsIgnoreDistPause = false;
     }
+
     if (!rIter.tryGetBoolByKey(&info->mIsIgnoreInTitleScene, "IsIgnoreInTitleScene")) {
         info->mIsIgnoreInTitleScene = false;
     }
+
     ByamlIter materialIter;
     if (rIter.tryGetIterByKey(&materialIter, "MaterialInfoList")) {
         info->mMaterialInfoList = createInfoList<SeMaterialSettingInfo>(materialIter);
     } else {
         info->mMaterialInfoList = nullptr;
     }
+
     return info;
 }
 

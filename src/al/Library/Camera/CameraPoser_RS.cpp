@@ -46,17 +46,21 @@ bool CameraPoser_RS::tryCalcOrthoProjectionInfo(OrthoProjectionInfo* pInfo) cons
     if (!param) {
         return false;
     }
+
     if (!param->isSetInfo) {
         return false;
     }
+
     f32 width = param->info.nearClipWidth;
     if (!(width > 0.1f)) {
         return false;
     }
+
     f32 height = param->info.nearClipHeight;
     if (!(height > 0.1f)) {
         return false;
     }
+
     *pInfo = {width, height};
     return true;
 }
@@ -69,9 +73,11 @@ bool CameraPoser_RS::isEnableRotateByPad() const {
     if (mAngleCtrlInfo) {
         return !mAngleCtrlInfo->isFixByRangeHV();
     }
+
     if (mAngleSwingInfo) {
         return !mAngleSwingInfo->isInvalidSwing;
     }
+
     return false;
 }
 
@@ -83,6 +89,7 @@ f32 CameraPoser_RS::getFovyDegree() const {
     if (alCameraPoserFunction::isSnapShotMode(this) && mSnapShotCtrl) {
         return mSnapShotCtrl->getFovyDegree();
     }
+
     return mFovyDegree;
 }
 
@@ -291,6 +298,7 @@ static void loadInterpoleParam(CameraPoser_RS::CameraInterpoleParam* pParam,
         isEqualString(curveType, "EaseOut")) {
         pParam->isEaseOut = true;
     }
+
     pParam->isInterpolateByStep = tryGetByamlS32(&pParam->stepNum, rIter, "InterpoleStep");
     if (pParam->isInterpolateByStep) {
         pParam->stepType = CameraPoser_RS::CameraInterpoleStepType::ByStep;
@@ -304,6 +312,7 @@ static void loadEndInterpoleParam(CameraPoser_RS::CameraInterpoleStep* pParam,
         if (isEqualString(getByamlKeyString(iter, "Type"), "Step")) {
             pParam->stepType = CameraPoser_RS::CameraInterpoleStepType::ByStep;
         }
+
         if (pParam->stepType == CameraPoser_RS::CameraInterpoleStepType::ByStep) {
             pParam->stepNum = getByamlKeyInt(iter, "Step");
         }
@@ -335,24 +344,31 @@ void CameraPoser_RS::load(const ByamlIter& rIter) {
     if (mVerticalAbsorber) {
         mVerticalAbsorber->load(rIter);
     }
+
     if (mAngleCtrlInfo) {
         mAngleCtrlInfo->load(rIter);
     }
+
     if (mAngleSwingInfo) {
         mAngleSwingInfo->load(rIter);
     }
+
     if (mOffsetCtrlPreset) {
         mOffsetCtrlPreset->load(rIter);
     }
+
     if (mParamMoveLimit) {
         mParamMoveLimit->load(rIter);
     }
+
     if (mSnapShotCtrl) {
         mSnapShotCtrl->load(rIter);
     }
+
     if (mOrthoProjectionParam) {
         loadOrthoProjectionParam(mOrthoProjectionParam, rIter);
     }
+
     _141 = false;
 }
 
@@ -375,6 +391,7 @@ void CameraPoser_RS::appear(const CameraStartInfo& rInfo) {
         alCameraPoserFunction::calcPreCameraDir(&dir, this);
         mAngleCtrlInfo->start(sead::Mathf::rad2deg(sead::Mathf::asin(dir.y)));
     }
+
     if (mAngleSwingInfo) {
         mAngleSwingInfo->currentAngle = {0.0f, 0.0f};
     }
@@ -384,9 +401,11 @@ void CameraPoser_RS::appear(const CameraStartInfo& rInfo) {
     if (mArrowCollider && !mPoserFlag->isInvalidCollider) {
         mArrowCollider->start();
     }
+
     if (mVerticalAbsorber && !mPoserFlag->isOffVerticalAbsorb) {
         mVerticalAbsorber->start(mAt, rInfo);
     }
+
     if (mLookAtInterpole) {
         mLookAtInterpole->target = mAt;
     }
@@ -442,9 +461,11 @@ void CameraPoser_RS::movement() {
                 if (mAngleCtrlInfo->isResetStartTiming()) {
                     step = mAngleCtrlInfo->getMaxResetStep();
                 }
+
                 alCameraPoserFunction::startResetSnapShotCameraCtrl(this, step);
             }
         }
+
         if (mAngleSwingInfo) {
             mAngleSwingInfo->update(stick, alCameraPoserFunction::getStickSensitivityScale(this));
         }
@@ -495,12 +516,15 @@ void CameraPoser_RS::movement() {
         if (alCameraPoserFunction::isSnapShotMode(this) && mSnapShotCtrl) {
             mSnapShotCtrl->makeLookAtCameraPost(&camera);
         }
+
         if (mParamMoveLimit) {
             mParamMoveLimit->apply(&camera);
         }
+
         if (alCameraPoserFunction::isSnapShotMode(this) && mSnapShotCtrl) {
             mSnapShotCtrl->makeLookAtCameraLast(&camera);
         }
+
         mArrowCollider->update(camera.getPos(), camera.getAt(), camera.getUp());
     }
 
@@ -512,6 +536,7 @@ static void interpolateLocal(const CameraPoser_RS::LocalInterpole* pInterpole,
     if (pInterpole->step < 0) {
         return;
     }
+
     f32 rate = hermiteRate(normalize(static_cast<f32>(pInterpole->step), 0.0f,
                                      static_cast<f32>(pInterpole->end)),
                            1.5f, 0.0f);
@@ -563,6 +588,7 @@ void CameraPoser_RS::makeLookAtCameraPost(sead::LookAtCamera* pCamera) const {
     if (alCameraPoserFunction::isSnapShotMode(this) && mSnapShotCtrl) {
         mSnapShotCtrl->makeLookAtCameraPost(pCamera);
     }
+
     if (mParamMoveLimit) {
         mParamMoveLimit->apply(pCamera);
     }
@@ -640,13 +666,16 @@ bool CameraPoser_RS::receiveRequestFromObjectCore(const CameraObjectRequestInfo&
     if (receiveRequestFromObject(rInfo)) {
         return true;
     }
+
     if (mVerticalAbsorber && rInfo.isStopVerticalAbsorb) {
         mVerticalAbsorber->liberateAbsorb();
         return true;
     }
+
     if (mAngleCtrlInfo && mAngleCtrlInfo->receiveRequestFromObject(rInfo)) {
         return true;
     }
+
     return false;
 }
 
@@ -657,6 +686,7 @@ void CameraPoser_RS::startSnapShotModeCore() {
     if (mSnapShotCtrl) {
         mSnapShotCtrl->start(mFovyDegree);
     }
+
     startSnapShotMode();
 }
 

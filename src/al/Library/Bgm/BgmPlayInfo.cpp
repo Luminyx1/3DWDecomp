@@ -16,8 +16,10 @@ BgmPlayInfo* BgmPlayInfo::createInfo(const ByamlIter& rIter) {
     if (!rIter.tryGetBoolByKey(&info->mIsPlayingByUpperLayerAudioUser, "IsPlayingByUpperLayerAudioUser")) {
         info->mIsPlayingByUpperLayerAudioUser = false;
     }
+
     return info;
 }
+
 /**
  * Compares two BGM play information by name.
  * @param pA First information.

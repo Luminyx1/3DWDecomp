@@ -56,10 +56,12 @@ void PoseHistoryPath::addHistory(const sead::Quatf& rQuat, const sead::Vector3f&
         if (!mHistory.back().isKeep) {
             mHistory.popBack();
         }
+
         f32 distance = (mHistory.back().trans - info.trans).length();
         if (distance < minDistance) {
             info.isKeep = false;
         }
+
         mHistory.back().distance = distance;
     }
 
@@ -105,8 +107,10 @@ void PoseHistoryPath::calcPoseAndTrans(sead::Quatf* pQuat, sead::Vector3f* pTran
                 nextInfo = mHistory.get(size - 2 - i);
                 rate = (distance - sum) / current.distance;
             }
+
             break;
         }
+
         sum += current.distance;
     }
 
@@ -125,6 +129,7 @@ void PoseHistoryPath::calcPoseAndTrans(sead::Quatf* pQuat, sead::Vector3f* pTran
         pQuat->set(info->quat);
         pTrans->set(info->trans);
     }
+
     *pName = info->name;
 }
 

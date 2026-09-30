@@ -41,28 +41,36 @@ const CameraShakeParam sLoopShakeParams[] = {
     {"弱", -1, 7.5f, 0.0007f, 0, 1.0f, false, false, false, false},
     {"強", -1, 2.0f, 0.001f, 0, 1.0f, false, false, false, false},
 };
+
 inline bool isWeakerShake(const CameraShakeParam* pParam, const CameraShakeParam* pCurrent) {
     if (pCurrent->power < pParam->power) {
         return false;
     }
+
     if (pParam->power < pCurrent->power) {
         return true;
     }
+
     if (pCurrent->steps < 0) {
         return false;
     }
+
     if (pCurrent->steps < pParam->steps) {
         return false;
     }
+
     if (pParam->steps < pCurrent->steps) {
         return true;
     }
+
     if (pParam->direction < pCurrent->direction) {
         return false;
     }
+
     if (pCurrent->direction < pParam->direction) {
         return true;
     }
+
     return pCurrent->speed < pParam->speed;
 }
 }  // namespace
@@ -82,12 +90,14 @@ void CameraShaker_RS::update(const char* pLoopShakeName, bool isPaused) {
     if (isPaused) {
         return;
     }
+
     if (pLoopShakeName) {
         if (isEqualString(pLoopShakeName, "弱")) {
             mLoopParam = &sLoopShakeParams[1];
         } else {
             mLoopParam = isEqualString(pLoopShakeName, "強") ? &sLoopShakeParams[2] : nullptr;
         }
+
         if (isNerve(this, &NrvCameraShaker_RSWait)) {
             setNerve(this, &NrvCameraShaker_RSShakeLoop);
         }
@@ -97,6 +107,7 @@ void CameraShaker_RS::update(const char* pLoopShakeName, bool isPaused) {
             setNerve(this, &NrvCameraShaker_RSWait);
         }
     }
+
     updateNerve();
 }
 
@@ -144,6 +155,7 @@ void CameraShaker_RS::startShakeByName(const char* pShakeName, s32 steps) {
     } else {
         index = -1;
     }
+
     startShakeByIndex(index, steps);
 }
 
@@ -162,6 +174,7 @@ void CameraShaker_RS::exeWait() {
         mShakeParam = nullptr;
         mLoopParam = nullptr;
     }
+
     mOffset = {0.0f, 0.0f};
 }
 
@@ -171,11 +184,13 @@ void CameraShaker_RS::exeShake() {
             setNerve(this, &NrvCameraShaker_RSShakeLoop);
             return;
         }
+
         mOffset = {0.0f, 0.0f};
         mShakeParam = nullptr;
         setNerve(this, &NrvCameraShaker_RSWait);
         return;
     }
+
     f32 speed = mShakeParam->speed * 360.0f / mShakeParam->steps;
     f32 wave = cosf(sead::Mathf::deg2rad(speed * getNerveStep(this)));
     f32 power =
@@ -194,11 +209,13 @@ void CameraShaker_RS::exeShakeMultiple() {
             setNerve(this, &NrvCameraShaker_RSShakeLoop);
             return;
         }
+
         mOffset = {0.0f, 0.0f};
         mShakeParam = nullptr;
         setNerve(this, &NrvCameraShaker_RSWait);
         return;
     }
+
     f32 speed = mShakeParam->speed * 360.0f / mShakeParam->steps;
     f32 angle = sead::Mathf::deg2rad(speed * getNerveStep(this));
     f32 waveCos = cosf(angle);
@@ -233,10 +250,12 @@ void CameraShaker_RS::startShakeByIndex(s32 index, s32 steps) {
         if (isWeakerShake(param, mShakeParam)) {
             return;
         }
+
         if (mShakeParam->isKeepMultiple && isNerve(this, &NrvCameraShaker_RSShakeMultiple)) {
             return;
         }
     }
+
     mShakeParam = param;
     if (steps >= 1) {
         f32 rate = (f32)steps / param->steps;
@@ -247,6 +266,7 @@ void CameraShaker_RS::startShakeByIndex(s32 index, s32 steps) {
         mCustomParam.steps = steps;
         mShakeParam = &mCustomParam;
     }
+
     if (sShakeParams[index].isMultiple) {
         setNerve(this, &NrvCameraShaker_RSShakeMultiple);
     } else {

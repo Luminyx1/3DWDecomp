@@ -27,6 +27,7 @@ bool NpadController::isConnected() const {
     if (mNpadId == -1) {
         return false;
     }
+
     return mIsConnected;
 }
 
@@ -117,6 +118,7 @@ bool NpadController::isSixAxisSensorAtRest(s32 index) const {
     if (mNpadId == -1) {
         return true;
     }
+
     return nn::hid::IsSixAxisSensorAtRest(getSixAxisSensorHandle(index));
 }
 

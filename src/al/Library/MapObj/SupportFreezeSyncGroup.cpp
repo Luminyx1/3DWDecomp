@@ -50,10 +50,12 @@ bool SupportFreezeSyncGroup::isEqualGroupId(const ActorInitInfo& rInfo) const {
     if (!mPlacementId->mPlacementID) {
         return false;
     }
+
     PlacementId id;
     if (!alPlacementFunction::getLinkGroupId(&id, rInfo, "SupportFreezeSyncGroup")) {
         return false;
     }
+
     return mPlacementId->isEqual(id);
 }
 
@@ -65,9 +67,11 @@ void SupportFreezeSyncGroup::movement() {
     for (s32 i = 0; i < mActorNum; i++) {
         isFreeze |= sendMsgIsNerveSupportFreeze(getHitSensor(mActors[i], 0), mHostSensor);
     }
+
     if (mActorNum <= 0) {
         return;
     }
+
     if (isFreeze) {
         for (s32 i = 0; i < mActorNum; i++) {
             sendMsgOnSyncSupportFreeze(getHitSensor(mActors[i], 0), mHostSensor);

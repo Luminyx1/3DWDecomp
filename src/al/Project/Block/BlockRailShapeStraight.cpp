@@ -52,10 +52,12 @@ bool BlockRailShapeStraight::isRide(f32* pRate, const sead::Vector3f& rPrevPos,
     if (prevHeight < 0.0f) {
         return false;
     }
+
     f32 height = (rPos - mStartPos).dot(mUpDir);
     if (height > 0.0f) {
         return false;
     }
+
     f32 diff = prevHeight - height;
     f32 rate = isNearZero(diff, 0.001f) ? 0.0f : prevHeight / diff;
     sead::Vector3f crossPos = rPrevPos + (rPos - rPrevPos) * rate;
@@ -63,9 +65,11 @@ bool BlockRailShapeStraight::isRide(f32* pRate, const sead::Vector3f& rPrevPos,
     if (coord < 0.0f || coord > mLength) {
         return false;
     }
+
     if ((mStartPos + mDir * coord - crossPos).length() > 10.0f) {
         return false;
     }
+
     *pRate = coord / mLength;
     return true;
 }
@@ -163,10 +167,12 @@ bool BlockRailShapeCurve::isRide(f32* pRate, const sead::Vector3f& rPrevPos,
     if (!(prevHeight > 0.0f)) {
         return false;
     }
+
     f32 height = (rPos - mCenter).dot(mUpAxis);
     if (height >= 0.0f) {
         return false;
     }
+
     f32 diff = prevHeight - height;
     f32 rate = isNearZero(diff, 0.001f) ? 0.0f : prevHeight / diff;
     sead::Vector3f crossPos = rPrevPos + (rPos - rPrevPos) * rate;
@@ -175,13 +181,16 @@ bool BlockRailShapeCurve::isRide(f32* pRate, const sead::Vector3f& rPrevPos,
     if (side < 0.0f) {
         return false;
     }
+
     f32 front = localPos.dot(mFrontAxis);
     if (front < 0.0f) {
         return false;
     }
+
     if (sead::Mathf::abs(localPos.length() - mRadius) > 10.0f) {
         return false;
     }
+
     *pRate = atan2f(front, side) * (2 / sead::Mathf::pi());
     return true;
 }
@@ -236,6 +245,7 @@ void BlockRailShapeCurve::calcNearestParam(sead::Vector3f* pPos, f32* pRate,
         *pRate = 0.0f;
         return;
     }
+
     f32 side = dir.dot(mSideAxis);
     f32 front = dir.dot(mFrontAxis);
     if (side > 0.0f && front > 0.0f) {

@@ -43,6 +43,7 @@ const sead::Vector3f* SeSource3DRing::calcPosition(const sead::Vector3f& rListen
     } else {
         planePos *= *mRadius / length;
     }
+
     mPos.set(planePos.x, 0.0f, planePos.y);
     mPos.setMul(mMtxPose->get3DMtx(), mPos);
     return &mPos;

@@ -27,10 +27,12 @@ void AtmosScatterDrawer::draw() const {
     if (info->_40 != 1) {
         return;
     }
+
     AtmosScatter* atmosScatter = info->mAtmosScatter;
     if (!atmosScatter) {
         return;
     }
+
     sead::PerspectiveProjection* projection = info->mDrawProjection;
     atmosScatter->drawFarDeferred(info->mDrawViewIndex, info->mDrawGBufferArray,
                                   info->mDrawCamera->getMatrix(), projection->getProjectionMatrix(),

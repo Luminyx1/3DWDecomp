@@ -99,11 +99,13 @@ ScreenPointTarget* ScreenPointKeeper::getTarget(const char* pName) const {
     if (mTargetNum == 1) {
         return mTargets[0];
     }
+
     for (s32 i = 0; i < mTargetNum; i++) {
         if (isEqualString(mTargets[i]->getName(), pName)) {
             return mTargets[i];
         }
     }
+
     return nullptr;
 }
 }  // namespace al

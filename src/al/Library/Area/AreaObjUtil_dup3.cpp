@@ -13,6 +13,7 @@ bool isInWaterArea(const IUseAreaObj* pAreaUser, const sead::Vector3f& rPos) {
     if (pAreaUser->getAreaObjDirector()->getInVolumeAreaObj("NoWaterArea", rPos)) {
         return false;
     }
+
     return pAreaUser->getAreaObjDirector()->getInVolumeAreaObj("WaterArea", rPos) != nullptr;
 }
 

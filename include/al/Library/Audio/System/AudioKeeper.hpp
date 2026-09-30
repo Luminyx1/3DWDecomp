@@ -58,6 +58,7 @@ private:
     bool mIsExitedArea = false;
     bool mIsAreaChanged = false;
 };
+
 static_assert(sizeof(AudioGeneralPurposeAreaChecker) == 0x40);
 
 class AudioKeeper {
@@ -102,6 +103,7 @@ private:
     bool mIsForceInvalidSe = false;
 
 };
+
 static_assert(sizeof(AudioKeeper) == 0x50);
 }  // namespace al
 

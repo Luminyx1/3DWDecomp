@@ -36,6 +36,7 @@ OceanWaveUserInfo* OceanWaveUserInfo::createInfo(const ByamlIter& rIter,
             info->mActionInfoList = nullptr;
         }
     }
+
     {
         ByamlIter iter;
         if (rIter.tryGetIterByKey(&iter, "PlayInfoList")) {
@@ -46,6 +47,7 @@ OceanWaveUserInfo* OceanWaveUserInfo::createInfo(const ByamlIter& rIter,
             info->mPlayInfoList = nullptr;
         }
     }
+
     return info;
 }
 

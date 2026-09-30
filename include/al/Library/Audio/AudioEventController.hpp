@@ -45,6 +45,7 @@ public:
         mDefaultBgmPlayName = pName;
         mCurBgmPlayName = pName;
     }
+
     void setBgmChangeWatcher(s32 watcher) { mBgmChangeWatcher = watcher; }
     void setIsOverrideFadeInFrames(bool isOverride) { mIsOverrideFadeInFrames = isOverride; }
 
@@ -73,5 +74,6 @@ private:
     bool mIsOverrideFadeInFrames = false;
     s32 mOverrideFadeInFrames = -1;
 };
+
 static_assert(sizeof(AudioEventController) == 0xb0);
 }  // namespace al

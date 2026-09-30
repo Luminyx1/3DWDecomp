@@ -31,5 +31,6 @@ private:
     IUseActiveBgmLine* mActiveBgmLine = nullptr;
     f32 mFrameRate;
 };
+
 static_assert(sizeof(BgmRhythmCtrl) == 0x10);
 }  // namespace al

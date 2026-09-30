@@ -51,6 +51,7 @@ void WobbleMapParts::init(const ActorInitInfo& rInfo) {
     if (tryGetArg(&soundScale, rInfo, "RotateSoundScale") && soundScale > 0.0f) {
         mRotateSoundScale = soundScale;
     }
+
     createChildStep(rInfo, this, true);
     trySyncStageSwitchAppear(this);
 }
@@ -68,8 +69,10 @@ bool WobbleMapParts::receiveMsg(const SensorMsg* pMsg, HitSensor* pOther, HitSen
         if (!isNerve(this, NrvWobbleMapParts.AssistStop.data())) {
             startNerveAction(this, "AssistStop");
         }
+
         return true;
     }
+
     if (isMsgFloorTouch(pMsg)) {
         sead::Vector3f pos;
         if (isMySensor(pSelf, this)) {
@@ -77,6 +80,7 @@ bool WobbleMapParts::receiveMsg(const SensorMsg* pMsg, HitSensor* pOther, HitSen
         } else {
             pos.set(getActorTrans(pSelf));
         }
+
         sead::Vector3f horizontal;
         sead::Vector3f up;
         calcQuatUp(&up, mCurrentQuat);
@@ -88,18 +92,22 @@ bool WobbleMapParts::receiveMsg(const SensorMsg* pMsg, HitSensor* pOther, HitSen
         } else {
             horizontal *= sead::Mathf::sin(sead::Mathf::deg2rad(rate * mMaxRotate)) / distance;
         }
+
         f32 cos = sead::Mathf::cos(sead::Mathf::deg2rad(rate * mMaxRotate));
         mTargetUp.set(cos * mInitialUp + horizontal);
         return true;
     }
+
     if (isMsgShowModel(pMsg)) {
         showModelIfHide(this);
         return true;
     }
+
     if (isMsgHideModel(pMsg)) {
         hideModelIfShow(this);
         return true;
     }
+
     return false;
 }
 
@@ -133,11 +141,13 @@ void WobbleMapParts::updateMove() {
     if (isStop) {
         mCurrentQuat = getQuat(this);
     }
+
     mTargetUp.set(mInitialUp);
     mTiltSpeed = mMoment.length();
     if (mIsStop != isStop) {
         tryStartSeWithParam(this, "Stop", mTiltSpeed * mRotateSoundScale, nullptr);
     }
+
     mIsStop = isStop;
 }
 

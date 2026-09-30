@@ -13,6 +13,7 @@ CameraTargetHolder::CameraTargetHolder(s32 maxTargets) : mViewTargetSize(maxTarg
     for (s32 i = 0; i < mViewTargetSize; i++) {
         mViewTargetArray[i] = nullptr;
     }
+
     mTargetArray.allocBuffer(32, nullptr);
     mSubTargetArray.allocBuffer(32, nullptr);
     mPlacementSubTargetArray.allocBuffer(32, nullptr);
@@ -26,10 +27,12 @@ void CameraTargetHolder::initAfterPlacement(const PlayerHolder* pPlayerHolder) {
             if (mTargetArray.isFull()) {
                 break;
             }
+
             mTargetArray.pushBack(
                 new ActorCameraTarget(getPlayerActor(pPlayerHolder, i), 0.0f, nullptr));
         }
     }
+
     for (s32 i = 0; i < mViewTargetSize; i++) {
         ViewTargetInfo* info = &mViewTargetInfo[i];
         info->target = getViewTarget(i);
@@ -41,9 +44,11 @@ CameraTargetBase* CameraTargetHolder::tryGetViewTarget(s32 index) const {
     if (target) {
         return target;
     }
+
     if (mTargetArray.size() > 0) {
         return mTargetArray.front();
     }
+
     return nullptr;
 }
 
@@ -64,6 +69,7 @@ void CameraTargetHolder::update() {
     } else if (!mPlacementSubTargetArray.isEmpty()) {
         topSubTarget = mPlacementSubTargetArray.front();
     }
+
     mTopSubTargetInfo.hasTargetChanged = mTopSubTargetInfo.target != topSubTarget;
     mTopSubTargetInfo.target = topSubTarget;
     if (topSubTarget) {
@@ -78,8 +84,10 @@ s32 CameraTargetHolder::tryFindIndex(const CameraTargetBase* pTarget,
         if (&target == pTarget) {
             return index;
         }
+
         index++;
     }
+
     return -1;
 }
 
@@ -90,8 +98,10 @@ s32 CameraTargetHolder::tryFindIndex(const CameraSubTargetBase* pTarget,
         if (&target == pTarget) {
             return index;
         }
+
         index++;
     }
+
     return -1;
 }
 
@@ -101,6 +111,7 @@ bool CameraTargetHolder::tryRemovePtr(const CameraTargetBase* pTarget,
     if (index < 0) {
         return false;
     }
+
     rArray.erase(index);
     return true;
 }
@@ -111,6 +122,7 @@ bool CameraTargetHolder::tryRemovePtr(const CameraSubTargetBase* pTarget,
     if (index < 0) {
         return false;
     }
+
     rArray.erase(index);
     return true;
 }
@@ -127,6 +139,7 @@ void CameraTargetHolder::removeTarget(CameraTargetBase* pTarget) {
         pTarget->disableTarget();
         mTargetArray.erase(index);
     }
+
     for (s32 i = 0; i < mViewTargetSize; i++) {
         if (mViewTargetArray[i] == pTarget) {
             pTarget->disableTarget();

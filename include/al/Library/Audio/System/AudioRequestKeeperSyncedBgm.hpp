@@ -22,6 +22,7 @@ struct SyncedBgmRequest {
     s32 beat = 1;
     bool isDone = true;
 };
+
 static_assert(sizeof(SyncedBgmRequest) == 0x30);
 
 class AudioRequestKeeperSyncedBgm : public IUseAudioKeeper {
@@ -38,5 +39,6 @@ private:
     sead::PtrArray<SyncedBgmRequest>* mRequests;
     AudioKeeper* mAudioKeeper = nullptr;
 };
+
 static_assert(sizeof(AudioRequestKeeperSyncedBgm) == 0x18);
 }  // namespace al

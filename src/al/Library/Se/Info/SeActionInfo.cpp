@@ -14,12 +14,15 @@ SePlayInfoInAction* SePlayInfoInAction::createInfo(const ByamlIter& rIter) {
     if (!rIter.tryGetFloatByKey(&info->mStartFrame, "StartFrame")) {
         info->mStartFrame = 0.0f;
     }
+
     if (!rIter.tryGetFloatByKey(&info->mEndFrame, "EndFrame")) {
         info->mEndFrame = 0.0f;
     }
+
     if (!rIter.tryGetBoolByKey(&info->mIsOneTime, "IsOneTime")) {
         info->mIsOneTime = false;
     }
+
     return info;
 }
 
@@ -34,6 +37,7 @@ SeActionInfo* SeActionInfo::createInfo(const ByamlIter& rIter) {
     if (!rIter.tryGetBoolByKey(&info->mIsStopPlayingSe, "IsStopPlayingSe")) {
         info->mIsStopPlayingSe = false;
     }
+
     ByamlIter playIter;
     rIter.tryGetIterByKey(&playIter, "PlayInfoInActionList");
     info->mPlayInfoList = createInfoList<SePlayInfoInAction>(playIter);
@@ -50,6 +54,7 @@ s32 SePlayInfoInAction::compareInfo(const SePlayInfoInAction* pA, const SePlayIn
     if (pA->mStartFrame < pB->mStartFrame) {
         return -1;
     }
+
     return pA->mStartFrame > pB->mStartFrame;
 }
 
@@ -104,6 +109,7 @@ SeActionInfo::SeActionInfo(const SeActionInfo& rOther)
         mPlayInfoList = nullptr;
         return;
     }
+
     s32 num = rOther.mPlayInfoList->getInfoNum();
     AudioInfoList<SePlayInfoInAction>* list = new AudioInfoList<SePlayInfoInAction>;
     list->mNext = nullptr;
@@ -115,6 +121,7 @@ SeActionInfo::SeActionInfo(const SeActionInfo& rOther)
         if (info == nullptr) {
             break;
         }
+
         SePlayInfoInAction* copy = new SePlayInfoInAction(*info);
         mPlayInfoList->mInfos->pushBack(copy);
     }
@@ -131,6 +138,7 @@ SeActionInfo& SeActionInfo::operator=(const SeActionInfo& rOther) {
     if (rOther.mPlayInfoList != nullptr && mPlayInfoList != nullptr) {
         *mPlayInfoList = *rOther.mPlayInfoList;
     }
+
     return *this;
 }
 

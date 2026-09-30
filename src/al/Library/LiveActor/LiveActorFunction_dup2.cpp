@@ -14,6 +14,7 @@ inline LiveActor* findSubActorInline(const SubActorKeeper* pKeeper, const char* 
             return info->mSubActor;
         }
     }
+
     return nullptr;
 }
 
@@ -25,6 +26,7 @@ inline SubActorInfo* getSubActorInfo(const LiveActor* pActor, const LiveActor* p
             return info;
         }
     }
+
     return nullptr;
 }
 }  // namespace
@@ -47,6 +49,7 @@ void setSubActorAlpha(LiveActor* pActor) {
     if (!keeper) {
         return;
     }
+
     for (s32 i = 0; i < keeper->mCount; i++) {
         LiveActor* subActor = keeper->mInfos[i]->mSubActor;
         subActor->mGlobalAlphaLastFrame = pActor->mGlobalAlphaLastFrame;
@@ -63,6 +66,7 @@ void setSubActorAlphaPtr(LiveActor* pActor, f32* pAlpha) {
     if (!keeper) {
         return;
     }
+
     for (s32 i = 0; i < keeper->mCount; i++) {
         LiveActor* subActor = keeper->mInfos[i]->mSubActor;
         if (subActor && subActor->mModelKeeper) {
@@ -81,6 +85,7 @@ LiveActor* getSubActor(const LiveActor* pActor, const char* pName) {
     if (!isExistSubActorKeeper(pActor)) {
         return nullptr;
     }
+
     return findSubActorInline(pActor->mSubActorKeeper, pName);
 }
 

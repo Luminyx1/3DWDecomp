@@ -53,6 +53,7 @@ AnimScaleController::AnimScaleController(const AnimScaleParam* pParam)
     if (!pParam) {
         mParam = &sDefaultParam;
     }
+
     initNerve(&NrvAnimScaleControllerStop, 0);
 }
 
@@ -184,6 +185,7 @@ bool AnimScaleController::tryStop() {
         setNerve(this, &NrvAnimScaleControllerStop);
         return true;
     }
+
     return false;
 }
 
@@ -200,6 +202,7 @@ void AnimScaleController::exeHitReaction() {
         resetScale();
         mScaleVelocityY = mParam->_10;
     }
+
     updateScale(mParam->_14, mParam->_18);
     tryStop();
 }
@@ -223,9 +226,11 @@ bool AnimScaleController::isHitReaction(s32 step) const {
     if (!isNerve(this, &NrvAnimScaleControllerHitReaction)) {
         return false;
     }
+
     if (step < 1) {
         return true;
     }
+
     return isLessStep(this, step);
 }
 

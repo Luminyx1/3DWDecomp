@@ -23,6 +23,7 @@ CubeMapDirector::~CubeMapDirector() {
         delete mAtmosScatterCubeMap;
         mAtmosScatterCubeMap = nullptr;
     }
+
     if (mShaderCubeMapKeeper) {
         delete mShaderCubeMapKeeper;
         mShaderCubeMapKeeper = nullptr;
@@ -75,6 +76,7 @@ void CubeMapDirector::initByAtmosScatter() {
     if (mAtmosScatterCubeMap) {
         return;
     }
+
     mAtmosScatterCubeMap = new AtmosScatterCubeMap(mGraphicsSystemInfo);
 }
 
@@ -86,9 +88,11 @@ bool CubeMapDirector::activateCubeMapTexture(s32 a, s32 b, s32 c, bool d) const 
     if (mAtmosScatterCubeMap) {
         return mAtmosScatterCubeMap->activateCubeMapTexture(b, d);
     }
+
     if (mShaderCubeMapKeeper) {
         return mShaderCubeMapKeeper->activateCubeMapTexture(a, b, c, d);
     }
+
     return false;
 }
 
@@ -100,6 +104,7 @@ bool CubeMapDirector::isDrawCapturePointCubeMap() const {
     if (mShaderCubeMapKeeper) {
         return mShaderCubeMapKeeper->isDrawCubeMap();
     }
+
     return false;
 }
 
@@ -113,6 +118,7 @@ agl::ShaderMode CubeMapDirector::renderToCubeMap(agl::ShaderMode shaderMode) con
         (mGraphicsSystemInfo->_40 == 1 || mGraphicsSystemInfo->_40 == 2)) {
         return mAtmosScatterCubeMap->renderToCubeMap(shaderMode);
     }
+
     return shaderMode;
 }
 
@@ -125,9 +131,11 @@ const agl::TextureSampler* CubeMapDirector::getIrradianceSampler(s32 index) cons
     if (mAtmosScatterCubeMap) {
         return mAtmosScatterCubeMap->getIrradianceSampler(index);
     }
+
     if (mShaderCubeMapKeeper) {
         return mShaderCubeMapKeeper->getIrradiance(index, sead::Vector3f::zero);
     }
+
     return getBlackCubeSampler();
 }
 
@@ -140,9 +148,11 @@ const agl::TextureSampler* CubeMapDirector::getCubeMapMirrorSampler(s32 index) c
     if (mAtmosScatterCubeMap) {
         return mAtmosScatterCubeMap->getCubeMapMirrorSampler(index);
     }
+
     if (mShaderCubeMapKeeper) {
         return mShaderCubeMapKeeper->getRoughnessCubeMap(0, index);
     }
+
     return getBlackCubeSampler();
 }
 }  // namespace al

@@ -18,6 +18,7 @@ inline const u8* tryGetBymlImpl(const Resource* pResource, const sead::SafeStrin
     if (!pResource->isExistFile(StringTmp<128>("%s.byml", rBymlName.cstr()))) {
         return nullptr;
     }
+
     return pResource->getByml(rBymlName);
 }
 }  // namespace
@@ -140,6 +141,7 @@ bool isExistResourceYaml(const Resource* pResource, const char* pName, const cha
         createFileNameBySuffix(&fileName, pName, pSuffix);
         return pResource->isExistFile(StringTmp<64>("%s.byml", fileName.cstr()));
     }
+
     return pResource->isExistFile(StringTmp<64>("%s.byml", pName));
 }
 
@@ -156,6 +158,7 @@ const u8* findResourceYaml(const Resource* pResource, const char* pName, const c
         createFileNameBySuffix(&fileName, pName, pSuffix);
         pName = fileName.cstr();
     }
+
     return pResource->getByml(pName);
 }
 
@@ -175,10 +178,12 @@ const void* tryFindStageParameterFileDesign(const sead::SafeString& rStageName,
             return nullptr;
         }
     }
+
     Resource* resource = findOrCreateResource(path, nullptr);
     if (!resource->isExistFile(rFileName)) {
         return nullptr;
     }
+
     return resource->getOtherFile(rFileName, nullptr);
 }
 
@@ -226,6 +231,7 @@ const u8* tryGetBymlFromObjectResource(const sead::SafeString& rObjectName,
     if (!resource->isExistFile(StringTmp<128>("%s.byml", rBymlName.cstr()))) {
         return nullptr;
     }
+
     return resource->getByml(rBymlName);
 }
 
@@ -255,6 +261,7 @@ const u8* tryGetBymlFromLayoutResource(const sead::SafeString& rLayoutName,
     if (!resource->isExistFile(StringTmp<128>("%s.byml", rBymlName.cstr()))) {
         return nullptr;
     }
+
     return resource->getByml(rBymlName);
 }
 

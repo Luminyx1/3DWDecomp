@@ -24,6 +24,7 @@ SwitchKeepOnAreaGroup* tryCreateSwitchKeepOnAreaGroup(LiveActor* pActor,
     if (!group) {
         return nullptr;
     }
+
     return new SwitchKeepOnAreaGroup(group);
 }
 }  // namespace al

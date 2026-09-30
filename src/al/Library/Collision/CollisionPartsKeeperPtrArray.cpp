@@ -25,6 +25,7 @@ s32 CollisionPartsKeeperPtrArray::checkStrikePoint(HitInfo* pHitInfo,
             return true;
         }
     }
+
     return false;
 }
 
@@ -50,6 +51,7 @@ s32 CollisionPartsKeeperPtrArray::checkStrikeSphere(SphereHitResultBuffer* pBuff
             break;
         }
     }
+
     return hitNum;
 }
 
@@ -71,6 +73,7 @@ s32 CollisionPartsKeeperPtrArray::checkStrikeArrow(ArrowHitResultBuffer* pBuffer
             break;
         }
     }
+
     return hitNum;
 }
 
@@ -93,6 +96,7 @@ s32 CollisionPartsKeeperPtrArray::checkStrikeSphereForPlayer(
             break;
         }
     }
+
     return hitNum;
 }
 
@@ -120,6 +124,7 @@ void CollisionPartsKeeperPtrArray::searchWithSphere(
         if (alCollisionUtil::isFarAway(*mPartsArray->at(i), rPos, radius)) {
             continue;
         }
+
         rDelegate.invoke(mPartsArray->at(i));
     }
 }
@@ -137,6 +142,7 @@ void CollisionPartsKeeperPtrArray::searchWithSphere(
                                        rCheckInfo.mRadius)) {
             continue;
         }
+
         rDelegate.invoke(mPartsArray->at(i));
     }
 }

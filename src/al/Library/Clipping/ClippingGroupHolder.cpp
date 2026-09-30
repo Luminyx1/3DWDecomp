@@ -47,10 +47,12 @@ bool ClippingInfoGroup::isEqualGroupId(const ActorInitInfo& rInfo) const {
     if (!mGroupId->mPlacementID) {
         return false;
     }
+
     PlacementId groupId;
     if (!alPlacementFunction::getClippingGroupId(&groupId, rInfo)) {
         return false;
     }
+
     return mGroupId->isEqual(groupId);
 }
 
@@ -64,13 +66,16 @@ bool ClippingInfoGroup::judgeClippingAll(const ClippingJudge* pJudge) const {
         if (isDead(mInfos[i]->getLiveActor())) {
             continue;
         }
+
         if (isInvalidClipping(mInfos[i]->getLiveActor())) {
             return false;
         }
+
         if (!mInfos[i]->judgeClipping(pJudge)) {
             return false;
         }
     }
+
     return true;
 }
 
@@ -140,6 +145,7 @@ void ClippingGroupHolder::createAndAdd(ClippingActorInfo* pInfo, const ActorInit
         mGroups[mNumGroups] = group;
         mNumGroups++;
     }
+
     group->registerInfo(pInfo);
 }
 
@@ -154,6 +160,7 @@ ClippingInfoGroup* ClippingGroupHolder::tryFindGroup(const ActorInitInfo& rInfo)
             return mGroups[i];
         }
     }
+
     return nullptr;
 }
 }  // namespace al

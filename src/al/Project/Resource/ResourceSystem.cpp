@@ -29,6 +29,7 @@ public:
         if (pNode->key().comparen(info->mFilePath, info->mFilePath.calcLength()) != 0) {
             return;
         }
+
         SeadAudioPlayer* player = alAudioSystemFunction::tryFindAudioPlayerRegistedSoundMemoryPoolHandler(
             pNode->key().cstr(), info->mAudioPlayerA, info->mAudioPlayerB);
         if (player) {
@@ -53,6 +54,7 @@ ResourceSystem::ResourceSystem(const char* pArchivePath) {
     if (pArchivePath) {
         archivePath = pArchivePath;
     }
+
     if (isExistArchive(archivePath)) {
         Resource* resource = findOrCreateResourceCategory(archivePath, "リソースシステム", nullptr);
         if (resource) {
@@ -74,6 +76,7 @@ ResourceSystem::ResourceCategory* ResourceSystem::addCategory(const sead::SafeSt
     if (iter != mCategories.end()) {
         return *iter;
     }
+
     sead::ScopedCurrentHeapSetter setter(pHeap);
     ResourceCategory* category = new ResourceCategory(rName, pHeap);
     category->mResources.allocBuffer(size, nullptr);
@@ -95,10 +98,12 @@ Resource* ResourceSystem::findOrCreateResourceCategory(const sead::SafeString& r
     if (resource) {
         return resource;
     }
+
     auto iter = findResourceCategoryIter(rCategory);
     if (iter == mCategories.end()) {
         return nullptr;
     }
+
     return createResource(rPath, *iter, pExt);
 }
 
@@ -114,6 +119,7 @@ ResourceSystem::findResourceCategoryIter(const sead::SafeString& rName) {
             return iter;
         }
     }
+
     return mCategories.end();
 }
 
@@ -136,6 +142,7 @@ bool ResourceSystem::isEmptyCategoryResource(const sead::SafeString& rName) {
     if (iter == mCategories.end()) {
         return true;
     }
+
     return (*iter)->mResources.isEmpty();
 }
 
@@ -150,26 +157,32 @@ bool ResourceSystem::createCategoryResourceAll(const sead::SafeString& rName,
     if (!mResourceCategoryTable) {
         return false;
     }
+
     auto iter = findResourceCategoryIter(rName);
     if (iter == mCategories.end()) {
         return false;
     }
+
     for (s32 i = 0; i < mResourceCategoryTable->getSize(); i++) {
         ByamlIter categoryIter;
         if (!mResourceCategoryTable->tryGetIterByIndex(&categoryIter, i)) {
             continue;
         }
+
         const char* categoryName = nullptr;
         if (!categoryIter.tryGetStringByKey(&categoryName, "Category")) {
             continue;
         }
+
         if (!isEqualString(categoryName, rName.cstr())) {
             continue;
         }
+
         ByamlIter arcsIter;
         if (!categoryIter.tryGetIterByKey(&arcsIter, "Arcs")) {
             continue;
         }
+
         bool isLocalized = false;
         categoryIter.tryGetBoolByKey(&isLocalized, "Localized");
         for (s32 j = 0; j < arcsIter.getSize(); j++) {
@@ -177,17 +190,20 @@ bool ResourceSystem::createCategoryResourceAll(const sead::SafeString& rName,
             if (!arcsIter.tryGetStringByIndex(&arcName, j)) {
                 continue;
             }
+
             StringTmp<128> localizedName;
             if (isLocalized) {
                 makeLocalizedArchivePath(&localizedName, arcName);
                 arcName = localizedName.cstr();
             }
+
             createResource(arcName, *iter, nullptr);
             if (pEvent && pEvent->wait(sead::TickSpan(0))) {
                 return false;
             }
         }
     }
+
     return true;
 }
 
@@ -201,6 +217,7 @@ void ResourceSystem::removeCategory(const sead::SafeString& rName) {
     if (iter == mCategories.end()) {
         return;
     }
+
     (*iter)->mResources.forEach(&cleanupResGraphicsFile);
     ResourceCategory* category = *iter;
     {
@@ -210,6 +227,7 @@ void ResourceSystem::removeCategory(const sead::SafeString& rName) {
             &audio, &ResourceAudio::disableSoundMemoryPoolHandler);
         category->mResources.MapImpl::forEach(delegate);
     }
+
     (*iter)->mResources.clear();
     mCategories.remove(iter.getIndex());
 }
@@ -226,6 +244,7 @@ Resource* ResourceSystem::findResource(const sead::SafeString& rPath) {
             return node->value();
         }
     }
+
     return nullptr;
 }
 
@@ -242,11 +261,14 @@ Resource* ResourceSystem::findResourceCore(
         if (!node) {
             continue;
         }
+
         if (pOutIter) {
             *pOutIter = iter;
         }
+
         return node->value();
     }
+
     return nullptr;
 }
 
@@ -261,6 +283,7 @@ Resource* ResourceSystem::findOrCreateResource(const sead::SafeString& rPath, co
     if (resource) {
         return resource;
     }
+
     return createResource(rPath, findResourceCategory(rPath), pExt);
 }
 
@@ -291,15 +314,18 @@ const char* ResourceSystem::findCategoryNameFromTable(const sead::SafeString& rP
     if (!mResourceCategoryTable) {
         return nullptr;
     }
+
     for (s32 i = 0; i < mResourceCategoryTable->getSize(); i++) {
         ByamlIter categoryIter;
         if (!mResourceCategoryTable->tryGetIterByIndex(&categoryIter, i)) {
             continue;
         }
+
         const char* categoryName = nullptr;
         if (!categoryIter.tryGetStringByKey(&categoryName, "Category")) {
             continue;
         }
+
         ByamlIter arcsIter;
         categoryIter.tryGetIterByKey(&arcsIter, "Arcs");
         bool isLocalized = false;
@@ -309,6 +335,7 @@ const char* ResourceSystem::findCategoryNameFromTable(const sead::SafeString& rP
             if (!arcsIter.tryGetStringByIndex(&arcName, j)) {
                 continue;
             }
+
             StringTmp<128> localizedName;
             if (isLocalized) {
                 if (isEqualString(rPath, "TrialRating")) {
@@ -316,13 +343,16 @@ const char* ResourceSystem::findCategoryNameFromTable(const sead::SafeString& rP
                 } else {
                     makeLocalizedArchivePath(&localizedName, arcName);
                 }
+
                 arcName = localizedName.cstr();
             }
+
             if (isEqualString(arcName, rPath.cstr())) {
                 return categoryName;
             }
         }
     }
+
     return nullptr;
 }
 
@@ -337,20 +367,24 @@ bool ResourceSystem::tryGetTableCategoryIter(ByamlIter* pIter,
     if (!mResourceCategoryTable) {
         return false;
     }
+
     for (s32 i = 0; i < mResourceCategoryTable->getSize(); i++) {
         ByamlIter categoryIter;
         if (!mResourceCategoryTable->tryGetIterByIndex(&categoryIter, i)) {
             continue;
         }
+
         const char* categoryName = nullptr;
         if (!categoryIter.tryGetStringByKey(&categoryName, "Category")) {
             continue;
         }
+
         if (isEqualString(categoryName, rName.cstr()) &&
             mResourceCategoryTable->tryGetIterByIndex(pIter, i)) {
             return true;
         }
     }
+
     return false;
 }
 
@@ -383,6 +417,7 @@ void createResourceCore(ResourceSystem* pSystem, Resource* pResource, const char
     if (!pParent) {
         pResource->loadPatchData();
     }
+
     StringTmp<256> fileName(pParent ? "%s_p.bfres" : "%s.bfres", pArchiveName);
     if (pResource->isExistFile(fileName)) {
         ByamlIter iter;
@@ -397,12 +432,15 @@ void createResourceCore(ResourceSystem* pSystem, Resource* pResource, const char
                               ->getResFile();
             }
         }
+
         if (pParent && !resFile) {
             resFile = pParent->getResFile();
         }
+
         pResource->tryCreateResGraphicsFile(fileName, resFile);
         pResource->_B0 = reinterpret_cast<u64>(new ActorInitResourceData(pResource));
     }
+
     if (pResource->mPatchRes) {
         createResourceCore(pSystem, pResource->mPatchRes, pArchiveName, pResource);
     }
@@ -419,15 +457,18 @@ bool ResourceSystem::tryGetGraphicsInfoIter(ByamlIter* pIter,
     if (!mResourceCategoryTable) {
         return false;
     }
+
     for (s32 i = 0; i < mResourceCategoryTable->getSize(); i++) {
         ByamlIter categoryIter;
         if (!mResourceCategoryTable->tryGetIterByIndex(&categoryIter, i)) {
             continue;
         }
+
         ByamlIter graphicsInfoIter;
         if (!categoryIter.tryGetIterByKey(&graphicsInfoIter, "GraphicsInfo")) {
             continue;
         }
+
         for (s32 j = 0; j < graphicsInfoIter.getSize(); j++) {
             graphicsInfoIter.tryGetIterByIndex(pIter, j);
             const char* arcName = nullptr;
@@ -437,6 +478,7 @@ bool ResourceSystem::tryGetGraphicsInfoIter(ByamlIter* pIter,
             }
         }
     }
+
     return false;
 }
 
@@ -453,19 +495,23 @@ bool ResourceSystem::tryGetCategoryFileListIter(ByamlIter* pIter,
         if (!mResourceCategoryTable->tryGetIterByIndex(&categoryIter, i)) {
             continue;
         }
+
         const char* categoryName = nullptr;
         if (!categoryIter.tryGetStringByKey(&categoryName, "Category")) {
             continue;
         }
+
         if (!isEqualString(categoryName, rCategory.cstr())) {
             continue;
         }
+
         ByamlIter arcsIter;
         if (categoryIter.tryGetIterByKey(&arcsIter, "Arcs")) {
             *pIter = arcsIter;
             return true;
         }
     }
+
     return false;
 }
 }  // namespace al

@@ -48,20 +48,24 @@ void ClippingFarAreaObserver::update() {
     if (!mAreaObjGroup) {
         return;
     }
+
     mCurrentArea = nullptr;
     s32 num = getPlayerNumMax(mPlayerHolder);
     for (s32 i = 0; i < num; i++) {
         if (isPlayerDead(mPlayerHolder, i)) {
             continue;
         }
+
         AreaObj* areaObj = mAreaObjGroup->getInVolumeAreaObj(getPlayerPos(mPlayerHolder, i));
         if (!areaObj) {
             continue;
         }
+
         if (!mCurrentArea || areaObj->mPriority > mCurrentArea->mPriority) {
             mCurrentArea = areaObj;
         }
     }
+
     mFarClipDistance = mDefaultFarClipDistance;
     mFarClipDistanceSub = mDefaultFarClipDistanceSub;
     if (mCurrentArea) {

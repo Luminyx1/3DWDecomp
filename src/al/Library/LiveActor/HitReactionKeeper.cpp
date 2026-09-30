@@ -38,6 +38,7 @@ HitReactionKeeper* HitReactionKeeper::tryCreate(LiveActor* pActor, const Resourc
     if (!isExistResourceYaml(pResource, fileName.cstr(), nullptr)) {
         return nullptr;
     }
+
     return new HitReactionKeeper(pActor, pResource, pName);
 }
 
@@ -55,6 +56,7 @@ HitReactionKeeper* HitReactionKeeper::tryCreate(LayoutActor* pActor, const Resou
     if (!isExistResourceYaml(pResource, fileName.cstr(), nullptr)) {
         return nullptr;
     }
+
     return new HitReactionKeeper(pActor, pResource, pName);
 }
 
@@ -106,6 +108,7 @@ void HitReactionKeeper::start(const char* pName, const sead::Vector3f* pPos,
                         if (isPlayerDead(actor, p)) {
                             continue;
                         }
+
                         alPadRumbleFunction::startPadRumble(actor, info.mPadRumbleName,
                                                             getPlayerPort(actor, p), false);
                     }
@@ -115,10 +118,12 @@ void HitReactionKeeper::start(const char* pName, const sead::Vector3f* pPos,
                         if (isPlayerDead(actor, p)) {
                             continue;
                         }
+
                         if ((getPlayerPos(actor, p) - getTrans(actor)).length() >
                             info.mPadRumbleDistance) {
                             continue;
                         }
+
                         alPadRumbleFunction::startPadRumble(actor, info.mPadRumbleName,
                                                             getPlayerPort(actor, p), false);
                     }
@@ -136,6 +141,7 @@ void HitReactionKeeper::start(const char* pName, const sead::Vector3f* pPos,
                         if (controllerPort == -1) {
                             break;
                         }
+
                         alPadRumbleFunction::startPadRumbleNo3D(director, info.mPadRumbleName,
                                                                 controllerPort, false);
                     }
@@ -152,6 +158,7 @@ void HitReactionKeeper::start(const char* pName, const sead::Vector3f* pPos,
                     if (isPlayerDead(actor, p)) {
                         continue;
                     }
+
                     if ((getPlayerPos(actor, p) - getTrans(actor)).length() >
                         info.mCameraShakeDistance) {
                         isShake = false;
@@ -159,6 +166,7 @@ void HitReactionKeeper::start(const char* pName, const sead::Vector3f* pPos,
                     }
                 }
             }
+
             if (isShake) {
                 if (actor->mActorSceneInfo && actor->mActorSceneInfo->cameraDirector) {
                     startCameraShakeByHitReaction(actor, info.mCameraShakeName, actor->getName(),
@@ -178,6 +186,7 @@ void HitReactionKeeper::start(const char* pName, const sead::Vector3f* pPos,
             emitRadialBlur(mActor, getTrans(mActor), info.mRadialBlurRadiusBegin,
                            info.mRadialBlurRadiusEnd, info.mRadialBlurFrame, -1);
         }
+
         return;
     }
 }

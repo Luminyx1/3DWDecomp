@@ -40,18 +40,23 @@ void CameraParamMoveLimit::load(const ByamlIter& rIter) {
     if (tryGetByamlF32(&mPlus.x, moveLimitIter, "PlusX")) {
         mHasPlusX = true;
     }
+
     if (tryGetByamlF32(&mMinus.x, moveLimitIter, "MinusX")) {
         mHasMinusX = true;
     }
+
     if (tryGetByamlF32(&mPlus.y, moveLimitIter, "PlusY")) {
         mHasPlusY = true;
     }
+
     if (tryGetByamlF32(&mMinus.y, moveLimitIter, "MinusY")) {
         mHasMinusY = true;
     }
+
     if (tryGetByamlF32(&mPlus.z, moveLimitIter, "PlusZ")) {
         mHasPlusZ = true;
     }
+
     if (tryGetByamlF32(&mMinus.z, moveLimitIter, "MinusZ")) {
         mHasMinusZ = true;
     }
@@ -66,6 +71,7 @@ void CameraParamMoveLimit::setPauseApply(bool isPause) {
         mIsPauseInterpolate = true;
         mPauseOffset.set(sead::Vector3f::zero);
     }
+
     mIsPauseApply = isPause;
 }
 
@@ -94,12 +100,14 @@ void CameraParamMoveLimit::pauseInterpolate(sead::LookAtCamera* pCamera, sead::V
         localAt.setMul(mtxRotateY, pos);
         at.setMul(mViewMtx, localAt);
     }
+
     mPauseOffsetTarget = at - pCamera->getAt();
     lerpVec(&mPauseOffset, mPauseOffset, mPauseOffsetTarget, 0.02f);
     if (isNearZero(mPauseOffset - mPauseOffsetTarget, 0.001f)) {
         mIsPauseInterpolate = false;
         mPauseOffset.set(mPauseOffsetTarget);
     }
+
     pCamera->setAt(pCamera->getAt() + mPauseOffset);
     pCamera->setPos(pCamera->getPos() + mPauseOffset);
 }
@@ -115,6 +123,7 @@ void CameraParamMoveLimit::apply(sead::LookAtCamera* pCamera) {
             pauseInterpolate(pCamera, viewAt);
             return;
         }
+
         sead::Matrix34f mtxRotateYInv = sead::Matrix34f::ident;
         rotateMtxYDirDegree(&mtxRotateYInv, mtxRotateYInv, mRotYDegree);
         sead::Vector3f rotatedAt;
@@ -135,23 +144,29 @@ void CameraParamMoveLimit::apply(sead::LookAtCamera* pCamera) {
             if (mHasPlusX) {
                 viewAt.x = viewAt.x > mPlus.x ? mPlus.x : viewAt.x;
             }
+
             if (mHasPlusY) {
                 viewAt.y = viewAt.y > mPlus.y ? mPlus.y : viewAt.y;
                 isLimitY = true;
             }
+
             if (mHasPlusZ) {
                 viewAt.z = viewAt.z > mPlus.z ? mPlus.z : viewAt.z;
             }
+
             if (mHasMinusX) {
                 viewAt.x = viewAt.x < mMinus.x ? mMinus.x : viewAt.x;
             }
+
             if (mHasMinusY) {
                 viewAt.y = viewAt.y < mMinus.y ? mMinus.y : viewAt.y;
                 isLimitY = true;
             }
+
             if (mHasMinusZ) {
                 viewAt.z = viewAt.z < mMinus.z ? mMinus.z : viewAt.z;
             }
+
             if (isLimitY) {
                 viewAt.y += mWaterHeight;
             }
@@ -159,26 +174,33 @@ void CameraParamMoveLimit::apply(sead::LookAtCamera* pCamera) {
         if (mHasPlusX) {
             viewAt.x = viewAt.x > mPlus.x ? mPlus.x : viewAt.x;
         }
+
         if (mHasPlusY) {
             viewAt.y = viewAt.y > mPlus.y ? mPlus.y : viewAt.y;
         }
+
         if (mHasPlusZ) {
             viewAt.z = viewAt.z > mPlus.z ? mPlus.z : viewAt.z;
         }
+
         if (mHasMinusX) {
             viewAt.x = viewAt.x < mMinus.x ? mMinus.x : viewAt.x;
         }
+
         if (mHasMinusY) {
             viewAt.y = viewAt.y < mMinus.y ? mMinus.y : viewAt.y;
         }
+
         if (mHasMinusZ) {
             viewAt.z = viewAt.z < mMinus.z ? mMinus.z : viewAt.z;
         }
         }
+
         if (mIsPauseInterpolate) {
             pauseInterpolate(pCamera, viewAt);
             return;
         }
+
         sead::Matrix34f mtxRotateYInv = sead::Matrix34f::ident;
         rotateMtxYDirDegree(&mtxRotateYInv, mtxRotateYInv, mRotYDegree);
         sead::Vector3f rotatedAt;

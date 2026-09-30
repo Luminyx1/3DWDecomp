@@ -75,18 +75,22 @@ FullScreenTriangle::~FullScreenTriangle() {
         delete mVertexAttribute;
         mVertexAttribute = nullptr;
     }
+
     if (mVertexBuffer) {
         delete mVertexBuffer;
         mVertexBuffer = nullptr;
     }
+
     if (mVertexAttributeReverse) {
         delete mVertexAttributeReverse;
         mVertexAttributeReverse = nullptr;
     }
+
     if (mVertexBufferReverse) {
         delete mVertexBufferReverse;
         mVertexBufferReverse = nullptr;
     }
+
     mVertexMemBlock.free();
     mVertexMemBlockReverse.free();
 }

@@ -87,12 +87,14 @@ s32 ByamlStringTableIter::findStringIndex(const char* pStr) const {
         if (result == 0) {
             return mid;
         }
+
         if (result > 0) {
             lower = mid + 1;
         } else {
             upper = mid;
         }
     }
+
     return -1;
 }
 
@@ -141,6 +143,7 @@ bool ByamlArrayIter::getDataByIndex(ByamlData* pData, s32 index) const {
     if (index < 0) {
         return false;
     }
+
     if (index >= static_cast<s32>(getSize())) {
         return false;
     }
@@ -212,6 +215,7 @@ bool verifiByaml(const u8* pData) {
         if (!verifiByamlStringTable(table)) {
             return false;
         }
+
         u32 size = *reinterpret_cast<const u32*>(table) >> 8;
         hashKeyEnd = reinterpret_cast<const u32*>(table + 4)[size];
     }
@@ -223,6 +227,7 @@ bool verifiByaml(const u8* pData) {
         if (!verifiByamlStringTable(table)) {
             return false;
         }
+
         u32 size = *reinterpret_cast<const u32*>(table) >> 8;
         stringEnd = reinterpret_cast<const u32*>(table + 4)[size];
     }
@@ -231,14 +236,17 @@ bool verifiByaml(const u8* pData) {
     if ((hashKeyOffset || stringOffset) && !dataOffset) {
         return false;
     }
+
     if (hashKeyOffset) {
         if (stringOffset && hashKeyEnd > stringOffset) {
             return false;
         }
+
         if (dataOffset && hashKeyEnd > dataOffset) {
             return false;
         }
     }
+
     return !stringOffset || !dataOffset || stringEnd <= dataOffset;
 }
 
@@ -264,6 +272,7 @@ bool verifiByamlStringTable(const u8* pData) {
     if ((typeAndSize & 0xff) != 0xc2) {
         return false;
     }
+
     s32 size = typeAndSize >> 8;
     if (size < 1) {
         return false;
@@ -274,15 +283,18 @@ bool verifiByamlStringTable(const u8* pData) {
             return false;
         }
     }
+
     for (s32 i = 0; i < size; i++) {
         if (addressTable[i] >= addressTable[i + 1]) {
             return false;
         }
     }
+
     u32 firstString = size * 4 + 8;
     if (addressTable[0] != firstString) {
         return false;
     }
+
     for (s32 i = 0; i < size - 1; i++) {
         const char* str = reinterpret_cast<const char*>(&pData[addressTable[i]]);
         const char* next = reinterpret_cast<const char*>(&pData[addressTable[i + 1]]);
@@ -290,6 +302,7 @@ bool verifiByamlStringTable(const u8* pData) {
             return false;
         }
     }
+
     return true;
 }
 }  // namespace alByamlLocalUtil
@@ -314,6 +327,7 @@ u32 ByamlHashIter::getSize() const {
     if (!mData) {
         return 0;
     }
+
     return *reinterpret_cast<const u32*>(mData) >> 8;
 }
 
@@ -325,6 +339,7 @@ const ByamlHashPair* ByamlHashIter::getPairTable() const {
     if (!mData) {
         return nullptr;
     }
+
     return reinterpret_cast<const ByamlHashPair*>(mData + 4);
 }
 
@@ -338,6 +353,7 @@ bool ByamlHashIter::getDataByIndex(ByamlData* pData, s32 index) const {
     if (!mData) {
         return false;
     }
+
     if (static_cast<s32>(getSize()) < 1) {
         return false;
     }
@@ -356,6 +372,7 @@ bool ByamlHashIter::getDataByKey(ByamlData* pData, s32 key) const {
     if (!mData) {
         return false;
     }
+
     if (static_cast<s32>(getSize()) < 1) {
         return false;
     }
@@ -364,6 +381,7 @@ bool ByamlHashIter::getDataByKey(ByamlData* pData, s32 key) const {
     if (!pair) {
         return false;
     }
+
     pData->set(pair);
     return true;
 }
@@ -388,12 +406,14 @@ const ByamlHashPair* ByamlHashIter::findPair(s32 key) const {
         if (result == 0) {
             return pair;
         }
+
         if (result > 0) {
             lower = mid + 1;
         } else {
             upper = mid;
         }
     }
+
     return nullptr;
 }
 
@@ -406,9 +426,11 @@ const ByamlHashPair* ByamlHashIter::getPairByIndex(s32 index) const {
     if (index < 0) {
         return nullptr;
     }
+
     if (static_cast<s32>(getSize()) <= index) {
         return nullptr;
     }
+
     return &getPairTable()[index];
 }
 

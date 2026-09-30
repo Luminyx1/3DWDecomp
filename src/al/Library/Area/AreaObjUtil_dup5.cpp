@@ -28,16 +28,19 @@ f32 calcWaterSinkDepth(const IUseAreaObj* pAreaUser, const sead::Vector3f& rPos)
     if (findAreaObj(pAreaUser, "NoWaterArea", rPos)) {
         return -1.0f;
     }
+
     AreaObj* areaObj = findAreaObj(pAreaUser, "WaterArea", rPos);
     if (!areaObj) {
         return -1.0f;
     }
+
     sead::Vector3f hitPos;
     sead::Vector3f normal;
     sead::Vector3f above = {rPos.x, rPos.y + 100000.0f, rPos.z};
     if (!checkArrow(&hitPos, &normal, areaObj, rPos, above)) {
         return -1.0f;
     }
+
     return hitPos.y - rPos.y;
 }
 
@@ -62,6 +65,7 @@ bool calcWaterDistanceCheck(const IUseAreaObj* pAreaUser, const sead::Vector3f& 
                 return false;
             }
         }
+
         *pHeight = hitPos.y;
         return true;
     }
@@ -78,9 +82,11 @@ bool calcWaterDistanceCheck(const IUseAreaObj* pAreaUser, const sead::Vector3f& 
                 return false;
             }
         }
+
         *pHeight = hitPos.y;
         return true;
     }
+
     return false;
 }
 
@@ -104,6 +110,7 @@ bool isInPlessieTunnel(const IUseAreaObj* pAreaUser, const sead::Vector3f& rPos)
     if (!group) {
         return false;
     }
+
     s32 num = group->mNumAreas;
     for (s32 i = 0; i < num; i++) {
         AreaObj* areaObj = group->getAreaObj(i);
@@ -111,6 +118,7 @@ bool isInPlessieTunnel(const IUseAreaObj* pAreaUser, const sead::Vector3f& rPos)
             return true;
         }
     }
+
     return false;
 }
 
@@ -125,6 +133,7 @@ bool tryGetAreaObjArg(s32* pArg, const AreaObj* pAreaObj, const char* pKey) {
     if (!pAreaObj->mPlacementInfo) {
         return false;
     }
+
     return tryGetArg(pArg, *pAreaObj->mPlacementInfo, pKey);
 }
 
@@ -139,6 +148,7 @@ bool tryGetAreaObjArg(f32* pArg, const AreaObj* pAreaObj, const char* pKey) {
     if (!pAreaObj->mPlacementInfo) {
         return false;
     }
+
     return tryGetArg(pArg, *pAreaObj->mPlacementInfo, pKey);
 }
 
@@ -153,6 +163,7 @@ bool tryGetAreaObjArg(bool* pArg, const AreaObj* pAreaObj, const char* pKey) {
     if (!pAreaObj->mPlacementInfo) {
         return false;
     }
+
     return tryGetArg(pArg, *pAreaObj->mPlacementInfo, pKey);
 }
 
@@ -167,6 +178,7 @@ bool tryGetAreaObjStringArg(const char** pArg, const AreaObj* pAreaObj, const ch
     if (!pAreaObj->mPlacementInfo) {
         return false;
     }
+
     return tryGetStringArg(pArg, *pAreaObj->mPlacementInfo, pKey);
 }
 
@@ -180,6 +192,7 @@ bool tryIsInAreaObjPlayer(AreaObjGroup* pGroup) {
     if (!pGroup) {
         return false;
     }
+
     return pGroup->getInVolumeAreaObj(playerPos) != nullptr;
 }
 
@@ -193,6 +206,7 @@ AreaObj* tryGetAreaObjPlayer(AreaObjGroup* pGroup) {
     if (!pGroup) {
         return nullptr;
     }
+
     return pGroup->getInVolumeAreaObj(playerPos);
 }
 

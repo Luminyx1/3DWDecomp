@@ -38,6 +38,7 @@ const sead::Vector3f* SeSource3DSphere::calcPosition(const sead::Vector3f& rList
         dir *= *mRadius / length;
         mPos = dir + mPose->get3DPos();
     }
+
     return &mPos;
 }
 }  // namespace al

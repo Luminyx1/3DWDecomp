@@ -34,6 +34,7 @@ void createFileNameBySuffix(sead::BufferedSafeString* out, const char* name, con
         out->append(name);
         return;
     }
+
     out->append(name);
     out->append(suffix);
 }
@@ -44,27 +45,33 @@ u32 outputValueWithComma(char* out, u32 size, u64 value, bool usePadding, bool p
                         (u32)(value / 1000000 % 1000), (u32)(value / 1000 % 1000),
                         (u32)(value % 1000));
     }
+
     if (value > 999999) {
         if (usePadding) {
             return snprintf(out, size, "%3d,%03d,%03d", (u32)(value / 1000000),
                             (u32)(value / 1000 % 1000), (u32)(value % 1000));
         }
+
         return snprintf(out, size, "%d,%03d,%03d", (u32)(value / 1000000),
                         (u32)(value / 1000 % 1000), (u32)(value % 1000));
     }
+
     if (value > 999) {
         if (usePadding) {
             if (padToThousands)
                 return snprintf(out, size, "%3d,%03d", (u32)(value / 1000), (u32)(value % 1000));
             return snprintf(out, size, "    %3d,%03d", (u32)(value / 1000), (u32)(value % 1000));
         }
+
         return snprintf(out, size, "%d,%03d", (u32)(value / 1000), (u32)(value % 1000));
     }
+
     if (usePadding) {
         if (padToThousands)
             return snprintf(out, size, "    %3d", (u32)value);
         return snprintf(out, size, "        %3d", (u32)value);
     }
+
     return snprintf(out, size, "%d", (u32)value);
 }
 
@@ -107,6 +114,7 @@ const char* getSubStringUnmatched(const char** pOutRest, const char* pStr, const
             if (pCallback) {
                 pCallback(pStr, pStr + 1, pUser);
             }
+
             pStr++;
             pattern++;
         } else if (*pattern == '*') {
@@ -115,6 +123,7 @@ const char* getSubStringUnmatched(const char** pOutRest, const char* pStr, const
             while (*end != '\0' && *end != '*' && *end != '?') {
                 end++;
             }
+
             s32 len = end - next;
 
             const char* found;
@@ -133,6 +142,7 @@ const char* getSubStringUnmatched(const char** pOutRest, const char* pStr, const
             if (pCallback) {
                 pCallback(pStr, found, pUser);
             }
+
             pStr = found;
             pattern = next;
         } else {
@@ -147,6 +157,7 @@ const char* getSubStringUnmatched(const char** pOutRest, const char* pStr, const
     if (pOutRest) {
         *pOutRest = pattern;
     }
+
     return pStr;
 }
 

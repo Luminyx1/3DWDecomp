@@ -149,6 +149,7 @@ Resource* tryGetStageResourceDesign(const Scene* pScene, s32 index) {
     if (getStageInfoDesignNum(pScene) == 0) {
         return nullptr;
     }
+
     return getStageInfoDesign(pScene, index)->getResource();
 }
 
@@ -162,6 +163,7 @@ Resource* tryGetStageResourceSound(const Scene* pScene, s32 index) {
     if (getStageInfoSoundNum(pScene) == 0) {
         return nullptr;
     }
+
     return getStageInfoSound(pScene, index)->getResource();
 }
 
@@ -186,6 +188,7 @@ sead::FrameBuffer* getSceneFrameBufferMain(const Scene* pScene) {
     if (info->mIsDocked) {
         return info->mDockedFrameBuffer;
     }
+
     return info->mHandheldFrameBuffer;
 }
 
@@ -258,10 +261,12 @@ inline bool tryInitAreaInitInfo(AreaInitInfo* pOut, const Scene* pScene,
     if (!pScene->isValidPlacementParent(pStageInfo->getPlacementInfo())) {
         return false;
     }
+
     PlacementInfo placementInfo;
     if (!tryGetPlacementInfo(&placementInfo, pStageInfo, "AreaList")) {
         return false;
     }
+
     pOut->set(placementInfo, rInfo.mStageSwitchDirector);
     return true;
 }
@@ -282,16 +287,19 @@ void initPlacementAreaObj(Scene* pScene, const ActorInitInfo& rInfo,
             num++;
         }
     }
+
     for (s32 i = 0; i < getStageInfoDesignNum(pScene); i++) {
         if (tryInitAreaInitInfo(&infos[num], pScene, rInfo, getStageInfoDesign(pScene, i))) {
             num++;
         }
     }
+
     for (s32 i = 0; i < getStageInfoSoundNum(pScene); i++) {
         if (tryInitAreaInitInfo(&infos[num], pScene, rInfo, getStageInfoSound(pScene, i))) {
             num++;
         }
     }
+
     if (pExtraList) {
         s32 extraNum = pExtraList->getStageResourceNum();
         for (s32 i = 0; i < extraNum; i++) {
@@ -300,6 +308,7 @@ void initPlacementAreaObj(Scene* pScene, const ActorInitInfo& rInfo,
             }
         }
     }
+
     pScene->getLiveActorKit()->mAreaObjDirector->placement(infos, num,
                                                            pScene->getSceneObjHolder(), pScene);
 }
@@ -333,6 +342,7 @@ void initPlacementByStageInfo(const StageInfo* pStageInfo, const char* pName,
     if (!tryGetPlacementInfoAndCount(&placementInfo, &count, pStageInfo, pName)) {
         return;
     }
+
     for (s32 i = 0; i < count; i++) {
         PlacementInfo info;
         getPlacementInfoByIndex(&info, placementInfo, i);
@@ -400,6 +410,7 @@ LiveActor* tryInitPlacementSingleObject(Scene* pScene, const ActorInitInfo& rInf
             }
         }
     }
+
     return actor;
 }
 
@@ -418,6 +429,7 @@ bool tryGetPlacementInfoAndCount(PlacementInfo* pOut, s32* pCount, const StageIn
         *pCount = 0;
         return false;
     }
+
     pOut->set(iter, pStageInfo->getZoneIter(), pStageInfo->getParentInfo(), pStageInfo->getID());
     *pCount = getCountPlacementInfo(*pOut);
     return true;
@@ -445,6 +457,7 @@ void tryInitPlacementCategory(Scene* pScene, const ActorInitInfo& rInfo, s32 lis
         if (!pScene->isValidPlacementParent(stageInfo->getPlacementInfo())) {
             continue;
         }
+
         PlacementInfo placementInfo;
         s32 count = 0;
         tryGetPlacementInfoAndCount(
@@ -457,10 +470,12 @@ void tryInitPlacementCategory(Scene* pScene, const ActorInitInfo& rInfo, s32 lis
             if (!pScene->isValidPlacement(info)) {
                 continue;
             }
+
             LiveActor* actor = createPlacementActorFromFactory(rFactory, rInfo, &info);
             if (!actor) {
                 continue;
             }
+
             pActors[actorNum] = actor;
             actorNum++;
             if (actorNum >= maxActors) {
@@ -495,6 +510,7 @@ bool tryGetPlacementInfo(PlacementInfo* pOut, const Resource* pResource, const c
     if (!pResource) {
         return false;
     }
+
     ByamlIter rootIter(pResource->getByml(pFileName));
     ByamlIter iter;
     bool isExist = rootIter.tryGetIterByKey(&iter, pName);
@@ -514,6 +530,7 @@ bool tryGetPlacementInfo(PlacementInfo* pOut, const StageInfo* pStageInfo, const
     if (!pStageInfo->getPlacementIter().tryGetIterByKey(&iter, pName)) {
         return false;
     }
+
     pOut->set(iter, pStageInfo->getZoneIter(), pStageInfo->getParentInfo(), pStageInfo->getID());
     return true;
 }
@@ -603,6 +620,7 @@ void initCameraDirector_RS(const Scene* pScene, const char* pName,
             holder->tryInitCameraResource(stageInfo->getResource(), isStageOneResource(pScene));
         }
     }
+
     director->initResourceHolder(holder);
     director->initAreaCameraSwitcherSingle();
 }
@@ -817,6 +835,7 @@ bool isStopScene(const Scene* pScene) {
     if (ctrl->_4 != 0) {
         return false;
     }
+
     return ctrl->_0 > 0;
 }
 
@@ -969,6 +988,7 @@ void initPadRumble(const Scene* pScene, const SceneInitInfo& rInfo) {
     if (!holder) {
         return;
     }
+
     pScene->getLiveActorKit()->mRumbleDirector->setWaveVibrationHolder(holder);
     alAudioSystemFunction::setPadRumbleDirectorForSe(pScene->getAudioDirector(),
                                                      pScene->getLiveActorKit()->mRumbleDirector);

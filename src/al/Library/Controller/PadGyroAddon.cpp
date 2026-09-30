@@ -37,6 +37,7 @@ bool PadGyroAddon::tryUpdateGyroStatus() {
     if (!npad->isConnected()) {
         return false;
     }
+
     s64 index = mIndex;
     if (index >= npad->getSixAxisSensorNum()) {
         return false;
@@ -96,6 +97,7 @@ bool PadGyroAddon::tryUpdateGyroStatus() {
             }
         }
     }
+
     return true;
 }
 
@@ -110,9 +112,11 @@ void PadGyroAddon::getPose(sead::Vector3f* pSide, sead::Vector3f* pUp,
     if (pSide) {
         pSide->set(mSide);
     }
+
     if (pUp) {
         pUp->set(mUp);
     }
+
     if (pFront) {
         pFront->set(mFront);
     }
@@ -129,9 +133,11 @@ void PadGyroAddon::getSDKPose(sead::Vector3f* pSide, sead::Vector3f* pUp,
     if (pSide) {
         pSide->set(mSDKSide);
     }
+
     if (pUp) {
         pUp->set(mSDKUp);
     }
+
     if (pFront) {
         pFront->set(mSDKFront);
     }

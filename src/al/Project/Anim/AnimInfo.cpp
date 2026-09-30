@@ -55,6 +55,7 @@ const AnimResInfo* AnimInfoTable::findAnimInfo(const char* pName) const {
                 return info;
             }
         }
+
         return nullptr;
     }
 
@@ -73,6 +74,7 @@ const AnimResInfo* AnimInfoTable::findAnimInfo(const char* pName) const {
             return info;
         }
     }
+
     return nullptr;
 }
 
@@ -84,6 +86,7 @@ const AnimResInfo* AnimInfoTable::tryFindAnimInfo(const char* pName) const {
                 return info;
             }
         }
+
         return nullptr;
     }
 
@@ -102,6 +105,7 @@ const AnimResInfo* AnimInfoTable::tryFindAnimInfo(const char* pName) const {
             return info;
         }
     }
+
     return nullptr;
 }
 
@@ -118,13 +122,16 @@ void AnimInfoTable::sort() {
                 if (child < num && strcmp(infos[child - 1].name, infos[child].name) < 0) {
                     child++;
                 }
+
                 if (strcmp(value.name, infos[child - 1].name) >= 0) {
                     break;
                 }
+
                 infos[parent - 1] = infos[child - 1];
                 parent = child;
                 child = parent * 2;
             }
+
             infos[parent - 1] = value;
         }
 
@@ -138,16 +145,20 @@ void AnimInfoTable::sort() {
                 if (child < last && strcmp(infos[child - 1].name, infos[child].name) < 0) {
                     child++;
                 }
+
                 if (strcmp(value.name, infos[child - 1].name) >= 0) {
                     break;
                 }
+
                 infos[parent - 1] = infos[child - 1];
                 parent = child;
                 child = parent * 2;
             }
+
             infos[parent - 1] = value;
         }
     }
+
     mIsSorted = true;
 }
 

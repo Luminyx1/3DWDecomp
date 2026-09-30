@@ -27,6 +27,7 @@ bool SeListenerPoser::tryCalcViewMatrix(sead::Matrix34f* pMtx, const sead::Vecto
     if (isNearZero(dir, 0.001f)) {
         return false;
     }
+
     normalize(&dir);
 
     sead::Vector3f side;
@@ -34,6 +35,7 @@ bool SeListenerPoser::tryCalcViewMatrix(sead::Matrix34f* pMtx, const sead::Vecto
     if (isNearZero(side, 0.001f)) {
         return false;
     }
+
     normalize(&side);
 
     sead::Vector3f up;

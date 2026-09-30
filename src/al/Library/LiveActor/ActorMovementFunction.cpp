@@ -21,6 +21,7 @@ inline void addVelocityInline(LiveActor* pActor, const sead::Vector3f& rVel, f32
     sead::Vector3f* velocity = getVelocityPtr(pActor);
     velocity->setScaleAdd(force, rVel, *velocity);
 }
+
 inline bool calcVelocityClockwiseToDirection(LiveActor* pActor, sead::Vector3f* pDirVelocity, const sead::Vector3f& rDir) {
     sead::Vector3f normDir;
     if (!pDirVelocity || normalizeOrZero(&normDir, rDir))
@@ -29,6 +30,7 @@ inline bool calcVelocityClockwiseToDirection(LiveActor* pActor, sead::Vector3f* 
     pDirVelocity->setCross(getGravity(pActor), normDir);
     return true;
 }
+
 inline void scaleVelocityParallelVertical(LiveActor* pActor, const sead::Vector3f& rDirection, f32 parallel, f32 vertical) {
     const sead::Vector3f& velocity = getVelocity(pActor);
 
@@ -44,6 +46,7 @@ inline void scaleVelocityParallelVertical(LiveActor* pActor, const sead::Vector3
     *newVelocity = parallelVec;
     newVelocity->setScaleAdd(vertical, verticalVec, parallelVec);
 }
+
 inline bool turnToDirectionAxis(LiveActor* pActor, const sead::Vector3f& rHorizontal, const sead::Vector3f& rVertical, f32 deg) {
     sead::Vector3f front = {0.0f, 0.0f, 0.0f};
     calcFrontDir(&front, pActor);
@@ -55,6 +58,7 @@ inline bool turnToDirectionAxis(LiveActor* pActor, const sead::Vector3f& rHorizo
     updatePoseQuat(pActor, quat);
     return result;
 }
+
 inline bool walkAndTurnToDirectionFittedGroundGravity(LiveActor* pActor, sead::Vector3f* pFront, const sead::Vector3f& rDir, f32 forceFront, f32 forceGravity, f32 decay, f32 deg, bool turnAlongGround) {
     turnDirection(pActor, pFront, rDir, sead::Mathf::cos(sead::Mathf::deg2rad(deg)));
     if (turnAlongGround)
@@ -73,12 +77,14 @@ inline bool walkAndTurnToDirectionFittedGroundGravity(LiveActor* pActor, sead::V
     scaleVelocity(pActor, decay);
     return isOnGround;
 }
+
 inline bool walkAndTurnToDirectionFittedGroundGravity(LiveActor* pActor, const sead::Vector3f& rDir,
                                                f32 forceFront, f32 forceGravity, f32 decay, f32 deg,
                                                bool turnAlongGround) {
     return walkAndTurnToDirectionFittedGroundGravity(pActor, getFrontPtr(pActor), rDir, forceFront,
                                                      forceGravity, decay, deg, turnAlongGround);
 }
+
 inline bool walkAndTurnToTargetFittedGroundGravity(LiveActor* pActor, const sead::Vector3f& rTarget, f32 forceFront, f32 forceGravity, f32 decay, f32 deg, bool turnAlongGround) {
     return walkAndTurnToDirectionFittedGroundGravity(pActor, rTarget - getTrans(pActor), forceFront,
                                                      forceGravity, decay, deg, turnAlongGround);
@@ -96,6 +102,7 @@ bool trySetPosOnGround(LiveActor* pActor) {
     return alCollisionUtil::getFirstPolyOnArrow(pActor, getTransPtr(pActor), nullptr, pos, dir,
                                                 nullptr, nullptr);
 }
+
 /**
  * Gets velocity.
  * @param pActor The actor.
@@ -104,6 +111,7 @@ bool trySetPosOnGround(LiveActor* pActor) {
 const sead::Vector3f& getVelocity(const LiveActor* pActor) {
     return pActor->mActorPoseKeeper->getVelocity();
 }
+
 /**
  * Gets velocity ptr.
  * @param pActor The actor.
@@ -112,6 +120,7 @@ const sead::Vector3f& getVelocity(const LiveActor* pActor) {
 sead::Vector3f* getVelocityPtr(LiveActor* pActor) {
     return pActor->mActorPoseKeeper->getVelocityPtr();
 }
+
 /**
  * Sets velocity.
  * @param pActor The actor.
@@ -120,6 +129,7 @@ sead::Vector3f* getVelocityPtr(LiveActor* pActor) {
 void setVelocity(LiveActor* pActor, const sead::Vector3f& rVel) {
     getVelocityPtr(pActor)->set(rVel);
 }
+
 /**
  * Sets velocity.
  * @param pActor The actor.
@@ -130,6 +140,7 @@ void setVelocity(LiveActor* pActor, const sead::Vector3f& rVel) {
 void setVelocity(LiveActor* pActor, f32 x, f32 y, f32 z) {
     getVelocityPtr(pActor)->set(x, y, z);
 }
+
 /**
  * Sets velocity X.
  * @param pActor The actor.
@@ -138,6 +149,7 @@ void setVelocity(LiveActor* pActor, f32 x, f32 y, f32 z) {
 void setVelocityX(LiveActor* pActor, f32 x) {
     getVelocityPtr(pActor)->x = x;
 }
+
 /**
  * Sets velocity Y.
  * @param pActor The actor.
@@ -146,6 +158,7 @@ void setVelocityX(LiveActor* pActor, f32 x) {
 void setVelocityY(LiveActor* pActor, f32 y) {
     getVelocityPtr(pActor)->y = y;
 }
+
 /**
  * Sets velocity Z.
  * @param pActor The actor.
@@ -154,6 +167,7 @@ void setVelocityY(LiveActor* pActor, f32 y) {
 void setVelocityZ(LiveActor* pActor, f32 z) {
     getVelocityPtr(pActor)->z = z;
 }
+
 /**
  * Sets velocity zero.
  * @param pActor The actor.
@@ -161,6 +175,7 @@ void setVelocityZ(LiveActor* pActor, f32 z) {
 void setVelocityZero(LiveActor* pActor) {
     setVelocity(pActor, 0.0f, 0.0f, 0.0f);
 }
+
 /**
  * Sets velocity zero X.
  * @param pActor The actor.
@@ -168,6 +183,7 @@ void setVelocityZero(LiveActor* pActor) {
 void setVelocityZeroX(LiveActor* pActor) {
     setVelocityX(pActor, 0.0f);
 }
+
 /**
  * Sets velocity zero Y.
  * @param pActor The actor.
@@ -175,6 +191,7 @@ void setVelocityZeroX(LiveActor* pActor) {
 void setVelocityZeroY(LiveActor* pActor) {
     setVelocityY(pActor, 0.0f);
 }
+
 /**
  * Sets velocity zero Z.
  * @param pActor The actor.
@@ -182,6 +199,7 @@ void setVelocityZeroY(LiveActor* pActor) {
 void setVelocityZeroZ(LiveActor* pActor) {
     setVelocityZ(pActor, 0.0f);
 }
+
 /**
  * Sets velocity zero H.
  * @param pActor The actor.
@@ -189,6 +207,7 @@ void setVelocityZeroZ(LiveActor* pActor) {
 void setVelocityZeroH(LiveActor* pActor) {
     setVelocityZeroH(pActor, getGravity(pActor));
 }
+
 /**
  * Sets velocity zero H.
  * @param pActor The actor.
@@ -198,6 +217,7 @@ void setVelocityZeroH(LiveActor* pActor, const sead::Vector3f& rGravity) {
     sead::Vector3f* velocity = getVelocityPtr(pActor);
     parallelizeVec(velocity, rGravity, *velocity);
 }
+
 /**
  * Sets velocity zero V.
  * @param pActor The actor.
@@ -205,6 +225,7 @@ void setVelocityZeroH(LiveActor* pActor, const sead::Vector3f& rGravity) {
 void setVelocityZeroV(LiveActor* pActor) {
     setVelocityZeroV(pActor, getGravity(pActor));
 }
+
 /**
  * Sets velocity zero V.
  * @param pActor The actor.
@@ -214,6 +235,7 @@ void setVelocityZeroV(LiveActor* pActor, const sead::Vector3f& rGravity) {
     sead::Vector3f* velocity = getVelocityPtr(pActor);
     verticalizeVec(velocity, rGravity, *velocity);
 }
+
 /**
  * Sets velocity jump.
  * @param pActor The actor.
@@ -222,6 +244,7 @@ void setVelocityZeroV(LiveActor* pActor, const sead::Vector3f& rGravity) {
 void setVelocityJump(LiveActor* pActor, f32 speed) {
     getVelocityPtr(pActor)->setScale(getGravity(pActor), -speed);
 }
+
 /**
  * Sets velocity to direction.
  * @param pActor The actor.
@@ -233,6 +256,7 @@ void setVelocityToDirection(LiveActor* pActor, const sead::Vector3f& rDir, f32 s
     normalizeOrZero(&normDir, rDir);
     getVelocityPtr(pActor)->setScale(normDir, speed);
 }
+
 /**
  * Sets velocity to gravity.
  * @param pActor The actor.
@@ -241,6 +265,7 @@ void setVelocityToDirection(LiveActor* pActor, const sead::Vector3f& rDir, f32 s
 void setVelocityToGravity(LiveActor* pActor, f32 speed) {
     getVelocityPtr(pActor)->setScale(getGravity(pActor), speed);
 }
+
 /**
  * Adds velocity.
  * @param pActor The actor.
@@ -249,6 +274,7 @@ void setVelocityToGravity(LiveActor* pActor, f32 speed) {
 void addVelocity(LiveActor* pActor, const sead::Vector3f& rVel) {
     getVelocityPtr(pActor)->add(rVel);
 }
+
 /**
  * Adds velocity.
  * @param pActor The actor.
@@ -259,6 +285,7 @@ void addVelocity(LiveActor* pActor, const sead::Vector3f& rVel) {
 void addVelocity(LiveActor* pActor, f32 x, f32 y, f32 z) {
     addVelocity(pActor, {x, y, z});
 }
+
 /**
  * Adds velocity X.
  * @param pActor The actor.
@@ -267,6 +294,7 @@ void addVelocity(LiveActor* pActor, f32 x, f32 y, f32 z) {
 void addVelocityX(LiveActor* pActor, f32 x) {
     getVelocityPtr(pActor)->x += x;
 }
+
 /**
  * Adds velocity Y.
  * @param pActor The actor.
@@ -275,6 +303,7 @@ void addVelocityX(LiveActor* pActor, f32 x) {
 void addVelocityY(LiveActor* pActor, f32 y) {
     getVelocityPtr(pActor)->y += y;
 }
+
 /**
  * Adds velocity Z.
  * @param pActor The actor.
@@ -283,6 +312,7 @@ void addVelocityY(LiveActor* pActor, f32 y) {
 void addVelocityZ(LiveActor* pActor, f32 z) {
     getVelocityPtr(pActor)->z += z;
 }
+
 /**
  * Adds velocity to direction.
  * @param pActor The actor.
@@ -294,6 +324,7 @@ void addVelocityToDirection(LiveActor* pActor, const sead::Vector3f& rDir, f32 f
     normalizeOrZero(&normDir, rDir);
     addVelocityInline(pActor, normDir, force);
 }
+
 /**
  * Adds velocity to gravity.
  * @param pActor The actor.
@@ -303,6 +334,7 @@ void addVelocityToGravity(LiveActor* pActor, f32 force) {
     sead::Vector3f* velocity = getVelocityPtr(pActor);
     velocity->setScaleAdd(force, getGravity(pActor), *velocity);
 }
+
 /**
  * Adds velocity to gravity fitted ground.
  * @param pActor The actor.
@@ -317,6 +349,7 @@ void addVelocityToGravityFittedGround(LiveActor* pActor, f32 force, u32 maxAirTi
     velocity->y -= normal.y * force;
     velocity->z -= normal.z * force;
 }
+
 /**
  * Adds velocity to target.
  * @param pActor The actor.
@@ -329,6 +362,7 @@ void addVelocityToTarget(LiveActor* pActor, const sead::Vector3f& rTarget, f32 f
     normalizeOrZero(&diff);
     addVelocityInline(pActor, diff, force);
 }
+
 /**
  * Adds velocity to target.
  * @param pActor The actor.
@@ -348,6 +382,7 @@ void addVelocityToTarget(LiveActor* pActor, const sead::Vector3f& rTarget, f32 m
     f32 force = lerpValue(minForce, maxForce, normDistance);
     velocity->setScaleAdd(force, diff, *velocity);
 }
+
 /**
  * Adds velocity jump.
  * @param pActor The actor.
@@ -356,6 +391,7 @@ void addVelocityToTarget(LiveActor* pActor, const sead::Vector3f& rTarget, f32 m
 void addVelocityJump(LiveActor* pActor, f32 force) {
     addVelocity(pActor, getGravity(pActor) * -force);
 }
+
 /**
  * Tries to add velocity limit.
  * @param pActor The actor.
@@ -367,6 +403,7 @@ void tryAddVelocityLimit(LiveActor* pActor, const sead::Vector3f& rVelocity, f32
     addVectorLimit(&newVelocity, rVelocity, limit);
     setVelocity(pActor, newVelocity);
 }
+
 /**
  * Scales velocity.
  * @param pActor The actor.
@@ -375,6 +412,7 @@ void tryAddVelocityLimit(LiveActor* pActor, const sead::Vector3f& rVelocity, f32
 void scaleVelocity(LiveActor* pActor, f32 factor) {
     *getVelocityPtr(pActor) *= factor;
 }
+
 /**
  * Scales velocity X.
  * @param pActor The actor.
@@ -383,6 +421,7 @@ void scaleVelocity(LiveActor* pActor, f32 factor) {
 void scaleVelocityX(LiveActor* pActor, f32 factorX) {
     getVelocityPtr(pActor)->x *= factorX;
 }
+
 /**
  * Scales velocity Y.
  * @param pActor The actor.
@@ -391,6 +430,7 @@ void scaleVelocityX(LiveActor* pActor, f32 factorX) {
 void scaleVelocityY(LiveActor* pActor, f32 factorY) {
     getVelocityPtr(pActor)->y *= factorY;
 }
+
 /**
  * Scales velocity Z.
  * @param pActor The actor.
@@ -399,6 +439,7 @@ void scaleVelocityY(LiveActor* pActor, f32 factorY) {
 void scaleVelocityZ(LiveActor* pActor, f32 factorZ) {
     getVelocityPtr(pActor)->z *= factorZ;
 }
+
 /**
  * Scales velocity HV.
  * @param pActor The actor.
@@ -411,6 +452,7 @@ void scaleVelocityHV(LiveActor* pActor, f32 factorH, f32 factorV) {
     velocity->y *= factorV;
     velocity->z *= factorH;
 }
+
 /**
  * Scales velocity except direction.
  * @param pActor The actor.
@@ -421,6 +463,7 @@ void scaleVelocityExceptDirection(LiveActor* pActor, const sead::Vector3f& rDire
     sead::Vector3f* velocity = getVelocityPtr(pActor);
     scaleVectorExceptDirection(velocity, rDirection, *velocity, factor);
 }
+
 /**
  * Limits velocity.
  * @param pActor The actor.
@@ -432,6 +475,7 @@ void limitVelocity(LiveActor* pActor, f32 limit) {
         scaleVelocity(pActor, limit);
     }
 }
+
 /**
  * Calculates speed.
  * @param pActor The actor.
@@ -440,6 +484,7 @@ void limitVelocity(LiveActor* pActor, f32 limit) {
 f32 calcSpeed(const LiveActor* pActor) {
     return getVelocity(pActor).length();
 }
+
 /**
  * Limits velocity X.
  * @param pActor The actor.
@@ -451,6 +496,7 @@ void limitVelocityX(LiveActor* pActor, f32 limitX) {
     else if (getVelocity(pActor).x < -limitX)
         getVelocityPtr(pActor)->x = -limitX;
 }
+
 /**
  * Limits velocity Y.
  * @param pActor The actor.
@@ -462,6 +508,7 @@ void limitVelocityY(LiveActor* pActor, f32 limitY) {
     else if (getVelocity(pActor).y < -limitY)
         getVelocityPtr(pActor)->y = -limitY;
 }
+
 /**
  * Limits velocity Z.
  * @param pActor The actor.
@@ -473,6 +520,7 @@ void limitVelocityZ(LiveActor* pActor, f32 limitZ) {
     else if (getVelocity(pActor).z < -limitZ)
         getVelocityPtr(pActor)->z = -limitZ;
 }
+
 /**
  * Rebounds velocity from each collision.
  * @param pActor The actor.
@@ -513,8 +561,10 @@ bool reboundVelocityFromEachCollision(LiveActor* pActor, f32 ground, f32 wall, f
         sead::Vector3f* velocity = getVelocityPtr(pActor);
         velocity->setScaleAdd(-dot, normalSum, *velocity);
     }
+
     return false;
 }
+
 /**
  * Rebounds velocity from collision.
  * @param pActor The actor.
@@ -542,8 +592,10 @@ bool reboundVelocityFromCollision(LiveActor* pActor, f32 reboundStrength, f32 re
     } else if (dot < 0.0f) {
         *getVelocityPtr(pActor) -= normalSum * dot;
     }
+
     return false;
 }
+
 /**
  * Calculates velocity separate HV.
  * @param pVelocity The velocity.
@@ -558,6 +610,7 @@ void calcVelocitySeparateHV(sead::Vector3f* pVelocity, const LiveActor* pActor, 
     normalizeOrZero(&dir);
     pVelocity->set(dir * speedH - getGravity(pActor) * speedV);
 }
+
 /**
  * Sets velocity separate HV.
  * @param pActor The actor.
@@ -568,6 +621,7 @@ void calcVelocitySeparateHV(sead::Vector3f* pVelocity, const LiveActor* pActor, 
 void setVelocitySeparateHV(LiveActor* pActor, const sead::Vector3f& rH, f32 speedH, f32 speedV) {
     calcVelocitySeparateHV(getVelocityPtr(pActor), pActor, rH, speedH, speedV);
 }
+
 /**
  * Limits velocity separate HV.
  * @param pActor The actor.
@@ -578,6 +632,7 @@ void setVelocitySeparateHV(LiveActor* pActor, const sead::Vector3f& rH, f32 spee
 void limitVelocitySeparateHV(LiveActor* pActor, const sead::Vector3f& rDir, f32 horizontal, f32 vertical) {
     limitVectorSeparateHV(getVelocityPtr(pActor), rDir, horizontal, vertical);
 }
+
 /**
  * Calculates velocity blow attack.
  * @param pVelocity The velocity.
@@ -589,6 +644,7 @@ void limitVelocitySeparateHV(LiveActor* pActor, const sead::Vector3f& rDir, f32 
 void calcVelocityBlowAttack(sead::Vector3f* pVelocity, const LiveActor* pActor, const sead::Vector3f& rTrans, f32 speedH, f32 speedV) {
     calcVelocitySeparateHV(pVelocity, pActor, getTrans(pActor) - rTrans, speedH, speedV);
 }
+
 /**
  * Adds velocity blow attack.
  * @param pActor The actor.
@@ -601,6 +657,7 @@ void addVelocityBlowAttack(LiveActor* pActor, const sead::Vector3f& rTrans, f32 
     calcVelocityBlowAttack(&velocity, pActor, rTrans, speedH, speedV);
     addVelocity(pActor, velocity);
 }
+
 /**
  * Sets velocity blow attack.
  * @param pActor The actor.
@@ -611,6 +668,7 @@ void addVelocityBlowAttack(LiveActor* pActor, const sead::Vector3f& rTrans, f32 
 void setVelocityBlowAttack(LiveActor* pActor, const sead::Vector3f& rTrans, f32 speedH, f32 speedV) {
     setVelocitySeparateHV(pActor, getTrans(pActor) - rTrans, speedH, speedV);
 }
+
 /**
  * Sets velocity blow attack and turn to target.
  * @param pActor The actor.
@@ -628,6 +686,7 @@ void setVelocityBlowAttackAndTurnToTarget(LiveActor* pActor, const sead::Vector3
     makeQuatUpFront(&quat, -getGravity(pActor), -dir);
     updatePoseQuat(pActor, quat);
 }
+
 /**
  * Checks whether velocity fast.
  * @param pActor The actor.
@@ -637,6 +696,7 @@ void setVelocityBlowAttackAndTurnToTarget(LiveActor* pActor, const sead::Vector3
 bool isVelocityFast(const LiveActor* pActor, f32 threshold) {
     return getVelocity(pActor).squaredLength() > sead::Mathf::square(threshold);
 }
+
 /**
  * Checks whether velocity slow.
  * @param pActor The actor.
@@ -646,6 +706,7 @@ bool isVelocityFast(const LiveActor* pActor, f32 threshold) {
 bool isVelocitySlow(const LiveActor* pActor, f32 threshold) {
     return getVelocity(pActor).squaredLength() < sead::Mathf::square(threshold);
 }
+
 /**
  * Calculates speed H.
  * @param pActor The actor.
@@ -656,6 +717,7 @@ f32 calcSpeedH(const LiveActor* pActor) {
     verticalizeVec(&velocityH, getGravity(pActor), getVelocity(pActor));
     return velocityH.length();
 }
+
 /**
  * Calculates speed V.
  * @param pActor The actor.
@@ -664,6 +726,7 @@ f32 calcSpeedH(const LiveActor* pActor) {
 f32 calcSpeedV(const LiveActor* pActor) {
     return -getVelocity(pActor).dot(getGravity(pActor));
 }
+
 /**
  * Checks whether near.
  * @param pActor The actor.
@@ -674,6 +737,7 @@ f32 calcSpeedV(const LiveActor* pActor) {
 bool isNear(const LiveActor* pActor, const LiveActor* pTarget, f32 threshold) {
     return isNear(pActor, getTrans(pTarget), threshold);
 }
+
 /**
  * Checks whether near.
  * @param pActor The actor.
@@ -684,6 +748,7 @@ bool isNear(const LiveActor* pActor, const LiveActor* pTarget, f32 threshold) {
 bool isNear(const LiveActor* pActor, const sead::Vector3f& rTrans, f32 threshold) {
     return (getTrans(pActor) - rTrans).squaredLength() < sead::Mathf::square(threshold);
 }
+
 /**
  * Checks whether far.
  * @param pActor The actor.
@@ -694,6 +759,7 @@ bool isNear(const LiveActor* pActor, const sead::Vector3f& rTrans, f32 threshold
 bool isFar(const LiveActor* pActor, const LiveActor* pTarget, f32 threshold) {
     return isFar(pActor, getTrans(pTarget), threshold);
 }
+
 /**
  * Checks whether far.
  * @param pActor The actor.
@@ -704,6 +770,7 @@ bool isFar(const LiveActor* pActor, const LiveActor* pTarget, f32 threshold) {
 bool isFar(const LiveActor* pActor, const sead::Vector3f& rTrans, f32 threshold) {
     return (getTrans(pActor) - rTrans).squaredLength() > sead::Mathf::square(threshold);
 }
+
 /**
  * Calculates distance.
  * @param pActor The actor.
@@ -713,6 +780,7 @@ bool isFar(const LiveActor* pActor, const sead::Vector3f& rTrans, f32 threshold)
 f32 calcDistance(const LiveActor* pActor, const LiveActor* pTarget) {
     return calcDistance(pActor, getTrans(pTarget));
 }
+
 /**
  * Calculates distance.
  * @param pActor The actor.
@@ -722,6 +790,7 @@ f32 calcDistance(const LiveActor* pActor, const LiveActor* pTarget) {
 f32 calcDistance(const LiveActor* pActor, const sead::Vector3f& rTrans) {
     return (getTrans(pActor) - rTrans).length();
 }
+
 /**
  * Calculates distance V.
  * @param pActor The actor.
@@ -731,6 +800,7 @@ f32 calcDistance(const LiveActor* pActor, const sead::Vector3f& rTrans) {
 f32 calcDistanceV(const LiveActor* pActor, const LiveActor* pTarget) {
     return calcDistanceV(pActor, getTrans(pTarget));
 }
+
 /**
  * Calculates distance V.
  * @param pActor The actor.
@@ -741,6 +811,7 @@ f32 calcDistanceV(const LiveActor* pActor, const sead::Vector3f& rTrans) {
     const sead::Vector3f& gravity = getGravity(pActor);
     return sead::Mathf::abs((rTrans - getTrans(pActor)).dot(gravity));
 }
+
 /**
  * Calculates distance H.
  * @param pActor The actor.
@@ -750,6 +821,7 @@ f32 calcDistanceV(const LiveActor* pActor, const sead::Vector3f& rTrans) {
 f32 calcDistanceH(const LiveActor* pActor, const LiveActor* pTarget) {
     return calcDistanceH(pActor, getTrans(pTarget));
 }
+
 /**
  * Calculates distance H.
  * @param pActor The actor.
@@ -761,6 +833,7 @@ f32 calcDistanceH(const LiveActor* pActor, const sead::Vector3f& rTrans) {
     verticalizeVec(&dist, getGravity(pActor), rTrans - getTrans(pActor));
     return dist.length();
 }
+
 /**
  * Calculates distance H.
  * @param pActor The actor.
@@ -773,6 +846,7 @@ f32 calcDistanceH(const LiveActor* pActor, const sead::Vector3f& rTrans1, const 
     verticalizeVec(&dist, getGravity(pActor), rTrans2 - rTrans1);
     return dist.length();
 }
+
 /**
  * Calculates height.
  * @param pActor The actor.
@@ -783,6 +857,7 @@ f32 calcHeight(const LiveActor* pActor, const sead::Vector3f& rTrans) {
     const sead::Vector3f& gravity = getGravity(pActor);
     return -(rTrans - getTrans(pActor)).dot(gravity);
 }
+
 /**
  * Calculates height.
  * @param pActor The actor.
@@ -792,6 +867,7 @@ f32 calcHeight(const LiveActor* pActor, const sead::Vector3f& rTrans) {
 f32 calcHeight(const LiveActor* pActor, const LiveActor* pTarget) {
     return calcHeight(pActor, getTrans(pTarget));
 }
+
 /**
  * Adds rotate and repeat Y.
  * @param pActor The actor.
@@ -800,6 +876,7 @@ f32 calcHeight(const LiveActor* pActor, const LiveActor* pTarget) {
 void addRotateAndRepeatY(LiveActor* pActor, f32 deg) {
     setRotateY(pActor, wrapAngle(getRotate(pActor).y + deg));
 }
+
 /**
  * Calculates quat side.
  * @param pSide The side.
@@ -808,6 +885,7 @@ void addRotateAndRepeatY(LiveActor* pActor, f32 deg) {
 void calcQuatSide(sead::Vector3f* pSide, const LiveActor* pActor) {
     calcQuatSide(pSide, getQuat(pActor));
 }
+
 /**
  * Calculates quat up.
  * @param pUp The up direction.
@@ -816,6 +894,7 @@ void calcQuatSide(sead::Vector3f* pSide, const LiveActor* pActor) {
 void calcQuatUp(sead::Vector3f* pUp, const LiveActor* pActor) {
     calcQuatUp(pUp, getQuat(pActor));
 }
+
 /**
  * Calculates quat front.
  * @param pFront The front direction.
@@ -824,6 +903,7 @@ void calcQuatUp(sead::Vector3f* pUp, const LiveActor* pActor) {
 void calcQuatFront(sead::Vector3f* pFront, const LiveActor* pActor) {
     calcQuatFront(pFront, getQuat(pActor));
 }
+
 /**
  * Calculates quat local axis.
  * @param pLocal The local.
@@ -833,6 +913,7 @@ void calcQuatFront(sead::Vector3f* pFront, const LiveActor* pActor) {
 void calcQuatLocalAxis(sead::Vector3f* pLocal, const LiveActor* pActor, s32 axis) {
     calcQuatLocalAxis(pLocal, getQuat(pActor), axis);
 }
+
 /**
  * Calculates trans offset front.
  * @param pOffset The offset.
@@ -842,6 +923,7 @@ void calcQuatLocalAxis(sead::Vector3f* pLocal, const LiveActor* pActor, s32 axis
 void calcTransOffsetFront(sead::Vector3f* pOffset, const LiveActor* pActor, f32 len) {
     multVecPose(pOffset, pActor, {0.0f, 0.0f, len});
 }
+
 /**
  * Calculates trans offset up.
  * @param pOffset The offset.
@@ -851,6 +933,7 @@ void calcTransOffsetFront(sead::Vector3f* pOffset, const LiveActor* pActor, f32 
 void calcTransOffsetUp(sead::Vector3f* pOffset, const LiveActor* pActor, f32 len) {
     multVecPose(pOffset, pActor, {0.0f, len, 0.0f});
 }
+
 /**
  * Calculates trans offset side.
  * @param pOffset The offset.
@@ -860,6 +943,7 @@ void calcTransOffsetUp(sead::Vector3f* pOffset, const LiveActor* pActor, f32 len
 void calcTransOffsetSide(sead::Vector3f* pOffset, const LiveActor* pActor, f32 len) {
     multVecPose(pOffset, pActor, {len, 0.0f, 0.0f});
 }
+
 /**
  * Sets trans offset local dir.
  * @param pActor The actor.
@@ -873,6 +957,7 @@ void setTransOffsetLocalDir(LiveActor* pActor, const sead::Quatf& rQuat, const s
     calcQuatLocalAxis(&offset, rQuat, axis);
     getTransPtr(pActor)->setScaleAdd(localOffset, offset, rGlobalOffset);
 }
+
 /**
  * Adds trans offset local dir.
  * @param pActor The actor.
@@ -882,6 +967,7 @@ void setTransOffsetLocalDir(LiveActor* pActor, const sead::Quatf& rQuat, const s
 void addTransOffsetLocalDir(LiveActor* pActor, f32 localOffset, s32 axis) {
     setTransOffsetLocalDir(pActor, getQuat(pActor), getTrans(pActor), localOffset, axis);
 }
+
 /**
  * Rotates quat X dir degree.
  * @param pActor The actor.
@@ -891,6 +977,7 @@ void rotateQuatXDirDegree(LiveActor* pActor, f32 deg) {
     sead::Quatf* quat = getQuatPtr(pActor);
     rotateQuatXDirDegree(quat, *quat, deg);
 }
+
 /**
  * Rotates quat X dir degree.
  * @param pActor The actor.
@@ -900,6 +987,7 @@ void rotateQuatXDirDegree(LiveActor* pActor, f32 deg) {
 void rotateQuatXDirDegree(LiveActor* pActor, const sead::Quatf& rQuat, f32 deg) {
     rotateQuatXDirDegree(getQuatPtr(pActor), rQuat, deg);
 }
+
 /**
  * Rotates quat Y dir degree.
  * @param pActor The actor.
@@ -909,6 +997,7 @@ void rotateQuatYDirDegree(LiveActor* pActor, f32 deg) {
     sead::Quatf* quat = getQuatPtr(pActor);
     rotateQuatYDirDegree(quat, *quat, deg);
 }
+
 /**
  * Rotates quat Y dir degree.
  * @param pActor The actor.
@@ -918,6 +1007,7 @@ void rotateQuatYDirDegree(LiveActor* pActor, f32 deg) {
 void rotateQuatYDirDegree(LiveActor* pActor, const sead::Quatf& rQuat, f32 deg) {
     rotateQuatYDirDegree(getQuatPtr(pActor), rQuat, deg);
 }
+
 /**
  * Rotates quat Z dir degree.
  * @param pActor The actor.
@@ -927,6 +1017,7 @@ void rotateQuatZDirDegree(LiveActor* pActor, f32 deg) {
     sead::Quatf* quat = getQuatPtr(pActor);
     rotateQuatZDirDegree(quat, *quat, deg);
 }
+
 /**
  * Rotates quat Z dir degree.
  * @param pActor The actor.
@@ -936,6 +1027,7 @@ void rotateQuatZDirDegree(LiveActor* pActor, f32 deg) {
 void rotateQuatZDirDegree(LiveActor* pActor, const sead::Quatf& rQuat, f32 deg) {
     rotateQuatZDirDegree(getQuatPtr(pActor), rQuat, deg);
 }
+
 /**
  * Rotates quat local dir degree.
  * @param pActor The actor.
@@ -946,6 +1038,7 @@ void rotateQuatLocalDirDegree(LiveActor* pActor, s32 axis, f32 deg) {
     sead::Quatf* quat = getQuatPtr(pActor);
     rotateQuatLocalDirDegree(quat, *quat, axis, deg);
 }
+
 /**
  * Rotates quat local dir degree.
  * @param pActor The actor.
@@ -956,6 +1049,7 @@ void rotateQuatLocalDirDegree(LiveActor* pActor, s32 axis, f32 deg) {
 void rotateQuatLocalDirDegree(LiveActor* pActor, const sead::Quatf& rQuat, s32 axis, f32 deg) {
     rotateQuatLocalDirDegree(getQuatPtr(pActor), rQuat, axis, deg);
 }
+
 /**
  * Rotates quat Y dir random degree.
  * @param pActor The actor.
@@ -964,6 +1058,7 @@ void rotateQuatYDirRandomDegree(LiveActor* pActor) {
     sead::Quatf* quat = getQuatPtr(pActor);
     rotateQuatYDirDegree(quat, *quat, getRandomDegree());
 }
+
 /**
  * Rotates quat Y dir random degree.
  * @param pActor The actor.
@@ -972,6 +1067,7 @@ void rotateQuatYDirRandomDegree(LiveActor* pActor) {
 void rotateQuatYDirRandomDegree(LiveActor* pActor, const sead::Quatf& rQuat) {
     rotateQuatYDirDegree(getQuatPtr(pActor), rQuat, getRandomDegree());
 }
+
 /**
  * Turns quat front to dir degree H.
  * @param pActor The actor.
@@ -982,6 +1078,7 @@ void rotateQuatYDirRandomDegree(LiveActor* pActor, const sead::Quatf& rQuat) {
 bool turnQuatFrontToDirDegreeH(LiveActor* pActor, const sead::Vector3f& rDir, f32 deg) {
     return turnQuatFrontToDirDegreeH(getQuatPtr(pActor), rDir, deg);
 }
+
 /**
  * Turns quat front to pos degree H.
  * @param pActor The actor.
@@ -994,6 +1091,7 @@ bool turnQuatFrontToPosDegreeH(LiveActor* pActor, const sead::Vector3f& rPos, f3
     dir.setSub(rPos, getTrans(pActor));
     return turnQuatFrontToDirDegreeH(pActor, dir, deg);
 }
+
 /**
  * Checks whether face to target degree.
  * @param pActor The actor.
@@ -1005,6 +1103,7 @@ bool turnQuatFrontToPosDegreeH(LiveActor* pActor, const sead::Vector3f& rPos, f3
 bool isFaceToTargetDegree(const LiveActor* pActor, const sead::Vector3f& rTarget, const sead::Vector3f& rFace, f32 threshDeg) {
     return isNearAngleDegree(rTarget - getTrans(pActor), rFace, threshDeg);
 }
+
 /**
  * Checks whether face to target degree.
  * @param pActor The actor.
@@ -1016,6 +1115,7 @@ bool isFaceToTargetDegree(const LiveActor* pActor, const sead::Vector3f& rTarget
     sead::Vector3f front = getFront(pActor);
     return isNearAngleDegree(rTarget - getTrans(pActor), front, threshDeg);
 }
+
 /**
  * Checks whether face to target degree HV.
  * @param pActor The actor.
@@ -1028,6 +1128,7 @@ bool isFaceToTargetDegree(const LiveActor* pActor, const sead::Vector3f& rTarget
 bool isFaceToTargetDegreeHV(const LiveActor* pActor, const sead::Vector3f& rTarget, const sead::Vector3f& rFace, f32 degH, f32 degV) {
     return isNearAngleDegreeHV(rTarget - getTrans(pActor), rFace, getGravity(pActor), degH, degV);
 }
+
 /**
  * Checks whether face to target degree H.
  * @param pActor The actor.
@@ -1044,6 +1145,7 @@ bool isFaceToTargetDegreeH(const LiveActor* pActor, const sead::Vector3f& rTarge
     verticalizeVec(&alignedFace, getGravity(pActor), rFace);
     return isNearAngleDegree(diff, alignedFace, degH);
 }
+
 /**
  * Checks whether in sight cone.
  * @param pActor The actor.
@@ -1057,6 +1159,7 @@ bool isInSightCone(const LiveActor* pActor, const sead::Vector3f& rTarget, const
     return (getTrans(pActor) - rTarget).squaredLength() < sead::Mathf::square(maxDist) &&
            isFaceToTargetDegree(pActor, rTarget, rFace, threshDeg);
 }
+
 /**
  * Checks whether in sight fan.
  * @param pActor The actor.
@@ -1071,6 +1174,7 @@ bool isInSightFan(const LiveActor* pActor, const sead::Vector3f& rTarget, const 
     return (getTrans(pActor) - rTarget).squaredLength() < sead::Mathf::square(maxDist) &&
            isFaceToTargetDegreeHV(pActor, rTarget, rFace, angleH, angleV);
 }
+
 /**
  * Turns direction.
  * @param pActor The actor.
@@ -1082,6 +1186,7 @@ bool isInSightFan(const LiveActor* pActor, const sead::Vector3f& rTarget, const 
 bool turnDirection(const LiveActor* pActor, sead::Vector3f* pVec, const sead::Vector3f& rDir, f32 cos) {
     return turnVecToVecCosOnPlane(pVec, rDir, getGravity(pActor), cos);
 }
+
 /**
  * Turns direction degree.
  * @param pActor The actor.
@@ -1094,6 +1199,7 @@ bool turnDirectionDegree(const LiveActor* pActor, sead::Vector3f* pVec, const se
     f32 cos = sead::Mathf::cos(sead::Mathf::deg2rad(deg));
     return turnDirection(pActor, pVec, rDir, cos);
 }
+
 /**
  * Turns direction to target.
  * @param pActor The actor.
@@ -1105,6 +1211,7 @@ bool turnDirectionDegree(const LiveActor* pActor, sead::Vector3f* pVec, const se
 bool turnDirectionToTarget(const LiveActor* pActor, sead::Vector3f* pVec, const sead::Vector3f& rTarget, f32 cos) {
     return turnDirection(pActor, pVec, rTarget - getTrans(pActor), cos);
 }
+
 /**
  * Turns direction to target degree.
  * @param pActor The actor.
@@ -1116,6 +1223,7 @@ bool turnDirectionToTarget(const LiveActor* pActor, sead::Vector3f* pVec, const 
 bool turnDirectionToTargetDegree(const LiveActor* pActor, sead::Vector3f* pVec, const sead::Vector3f& rTarget, f32 deg) {
     return turnDirectionDegree(pActor, pVec, rTarget - getTrans(pActor), deg);
 }
+
 /**
  * Turns direction from target degree.
  * @param pActor The actor.
@@ -1127,6 +1235,7 @@ bool turnDirectionToTargetDegree(const LiveActor* pActor, sead::Vector3f* pVec, 
 bool turnDirectionFromTargetDegree(const LiveActor* pActor, sead::Vector3f* pVec, const sead::Vector3f& rTarget, f32 deg) {
     return turnDirectionDegree(pActor, pVec, getTrans(pActor) - rTarget, deg);
 }
+
 /**
  * Turns direction along ground.
  * @param pActor The actor.
@@ -1142,6 +1251,7 @@ void turnDirectionAlongGround(const LiveActor* pActor, sead::Vector3f* pDir) {
     verticalizeVec(pDir, down, *pDir);
     normalize(pDir);
 }
+
 /**
  * Turns direction along ground.
  * @param pActor The actor.
@@ -1166,6 +1276,7 @@ void turnDirectionAlongGround(LiveActor* pActor) {
         turnDirectionAlongGround(pActor, getFrontPtr(pActor));
     }
 }
+
 /**
  * Turns to direction.
  * @param pActor The actor.
@@ -1183,6 +1294,7 @@ bool turnToDirection(LiveActor* pActor, const sead::Vector3f& rDir, f32 deg) {
     updatePoseQuat(pActor, quat);
     return result;
 }
+
 /**
  * Turns to target.
  * @param pActor The actor.
@@ -1196,6 +1308,7 @@ bool turnToTarget(LiveActor* pActor, const sead::Vector3f& rTarget, f32 deg) {
         return false;
     return turnToDirection(pActor, dir, deg);
 }
+
 /**
  * Turns to target.
  * @param pActor The actor.
@@ -1206,6 +1319,7 @@ bool turnToTarget(LiveActor* pActor, const sead::Vector3f& rTarget, f32 deg) {
 bool turnToTarget(LiveActor* pActor, const LiveActor* pTarget, f32 deg) {
     return turnToTarget(pActor, getTrans(pTarget), deg);
 }
+
 /**
  * Faces to direction.
  * @param pActor The actor.
@@ -1219,6 +1333,7 @@ void faceToDirection(LiveActor* pActor, const sead::Vector3f& rDir) {
     makeQuatUpFront(&quat, -getGravity(pActor), rDir);
     updatePoseQuat(pActor, quat);
 }
+
 /**
  * Faces to target.
  * @param pActor The actor.
@@ -1230,6 +1345,7 @@ void faceToTarget(LiveActor* pActor, const sead::Vector3f& rTarget) {
         return;
     faceToDirection(pActor, direction);
 }
+
 /**
  * Faces to target.
  * @param pActor The actor.
@@ -1238,6 +1354,7 @@ void faceToTarget(LiveActor* pActor, const sead::Vector3f& rTarget) {
 void faceToTarget(LiveActor* pActor, const LiveActor* pTarget) {
     faceToTarget(pActor, getTrans(pTarget));
 }
+
 /**
  * Faces to velocity.
  * @param pActor The actor.
@@ -1248,6 +1365,7 @@ void faceToVelocity(LiveActor* pActor) {
         return;
     faceToDirection(pActor, direction);
 }
+
 /**
  * Adds velocity clockwise to direction.
  * @param pActor The actor.
@@ -1262,6 +1380,7 @@ void addVelocityClockwiseToDirection(LiveActor* pActor, const sead::Vector3f& rD
     normalizeOrZero(&normDir, dirVelocity);
     addVelocityInline(pActor, normDir, force);
 }
+
 /**
  * Adds velocity clockwise to target.
  * @param pActor The actor.
@@ -1271,6 +1390,7 @@ void addVelocityClockwiseToDirection(LiveActor* pActor, const sead::Vector3f& rD
 void addVelocityClockwiseToTarget(LiveActor* pActor, const sead::Vector3f& rTarget, f32 force) {
     addVelocityClockwiseToDirection(pActor, rTarget - getTrans(pActor), force);
 }
+
 /**
  * Calculates dir clockwise to dir.
  * @param pOut The out.
@@ -1282,6 +1402,7 @@ void calcDirClockwiseToDir(sead::Vector3f* pOut, const LiveActor* pActor, const 
     result.setCross(getGravity(pActor), rDir);
     normalizeOrZero(pOut, result);
 }
+
 /**
  * Calculates dir clockwise to pos.
  * @param pOut The out.
@@ -1291,6 +1412,7 @@ void calcDirClockwiseToDir(sead::Vector3f* pOut, const LiveActor* pActor, const 
 void calcDirClockwiseToPos(sead::Vector3f* pOut, const LiveActor* pActor, const sead::Vector3f& rTarget) {
     calcDirClockwiseToDir(pOut, pActor, rTarget - getTrans(pActor));
 }
+
 /**
  * Calculates dir to actor.
  * @param pDir The direction.
@@ -1301,6 +1423,7 @@ void calcDirToActor(sead::Vector3f* pDir, const LiveActor* pActor, const LiveAct
     pDir->setSub(getTrans(pTarget), getTrans(pActor));
     normalizeOrZero(pDir);
 }
+
 /**
  * Calculates angle to target H.
  * @param pActor The actor.
@@ -1318,6 +1441,7 @@ f32 calcAngleToTargetH(const LiveActor* pActor, const sead::Vector3f& rTarget) {
         return 0.0f;
     return calcAngleOnPlaneDegree(front, dir, up);
 }
+
 /**
  * Calculates angle to target V.
  * @param pActor The actor.
@@ -1335,6 +1459,7 @@ f32 calcAngleToTargetV(const LiveActor* pActor, const sead::Vector3f& rTarget) {
         return 0.0f;
     return calcAngleOnPlaneDegree(front, dir, side);
 }
+
 /**
  * Walks and turn to direction.
  * @param pActor The actor.
@@ -1349,6 +1474,7 @@ void walkAndTurnToDirection(LiveActor* pActor, const sead::Vector3f& rDir, f32 f
     walkAndTurnToDirection(pActor, getFrontPtr(pActor), rDir, forceFront, forceGravity, decay, deg,
                            turnAlongGround);
 }
+
 /**
  * Walks and turn to direction.
  * @param pActor The actor.
@@ -1374,6 +1500,7 @@ void walkAndTurnToDirection(LiveActor* pActor, sead::Vector3f* pFront, const sea
 
     scaleVelocity(pActor, decay);
 }
+
 /**
  * Walks and turn to target.
  * @param pActor The actor.
@@ -1388,6 +1515,7 @@ void walkAndTurnToTarget(LiveActor* pActor, const sead::Vector3f& rTarget, f32 f
     sead::Vector3f dir = rTarget - getTrans(pActor);
     walkAndTurnToDirection(pActor, dir, forceFront, forceGravity, decay, deg, turnAlongGround);
 }
+
 /**
  * Flies and turn to direction.
  * @param pActor The actor.
@@ -1414,6 +1542,7 @@ void flyAndTurnToDirection(LiveActor* pActor, sead::Vector3f* pFront, const sead
     addVelocityToGravity(pActor, forceGravity);
     scaleVelocity(pActor, decay);
 }
+
 /**
  * Flies and turn to direction.
  * @param pActor The actor.
@@ -1426,6 +1555,7 @@ void flyAndTurnToDirection(LiveActor* pActor, sead::Vector3f* pFront, const sead
 void flyAndTurnToDirection(LiveActor* pActor, const sead::Vector3f& rDir, f32 forceFront, f32 forceGravity, f32 decay, f32 deg) {
     flyAndTurnToDirection(pActor, getFrontPtr(pActor), rDir, forceFront, forceGravity, decay, deg);
 }
+
 /**
  * Flies and turn to target.
  * @param pActor The actor.
@@ -1438,6 +1568,7 @@ void flyAndTurnToDirection(LiveActor* pActor, const sead::Vector3f& rDir, f32 fo
 void flyAndTurnToTarget(LiveActor* pActor, const sead::Vector3f& rTarget, f32 forceFront, f32 forceGravity, f32 decay, f32 deg) {
     flyAndTurnToDirection(pActor, rTarget - getTrans(pActor), forceFront, forceGravity, decay, deg);
 }
+
 /**
  * Tries to kill by death area.
  * @param pActor The actor.
@@ -1449,6 +1580,7 @@ bool tryKillByDeathArea(LiveActor* pActor) {
     pActor->kill();
     return true;
 }
+
 /**
  * Calculates spring movement.
  * @param pActor The actor.
@@ -1466,6 +1598,7 @@ void calcSpringMovement(LiveActor* pActor, const sead::Vector3f& rPos, f32 sprin
     f32 constPart = (1.0f - springPos) * constStrength;
     getTransPtr(pActor)->setScaleAdd(sinPart + constPart, rOffset, rPos);
 }
+
 /**
  * Adds velocity clockwise to player.
  * @param pActor The actor.
@@ -1475,6 +1608,7 @@ void addVelocityClockwiseToPlayer(LiveActor* pActor, f32 force) {
     addVelocityClockwiseToDirection(pActor, alProjectInterface::getPlayerPos() - getTrans(pActor),
                                     force);
 }
+
 /**
  * Calculates dir clockwise to player.
  * @param pDir The direction.
@@ -1483,6 +1617,7 @@ void addVelocityClockwiseToPlayer(LiveActor* pActor, f32 force) {
 void calcDirClockwiseToPlayer(sead::Vector3f* pDir, const LiveActor* pActor) {
     calcDirClockwiseToDir(pDir, pActor, alProjectInterface::getPlayerPos());
 }
+
 /**
  * Walks and turn to player.
  * @param pActor The actor.
@@ -1497,6 +1632,7 @@ void walkAndTurnToPlayer(LiveActor* pActor, f32 forceFront, f32 forceGravity, f3
     walkAndTurnToDirection(pActor, getFrontPtr(pActor), dir, forceFront, forceGravity, decay, deg,
                            turnAlongGround);
 }
+
 /**
  * Flies and turn to player.
  * @param pActor The actor.
@@ -1507,6 +1643,7 @@ void flyAndTurnToPlayer(LiveActor* pActor, const ActorParamMove& rParam) {
     flyAndTurnToDirection(pActor, getFrontPtr(pActor), dir, rParam.moveAccel, rParam.gravity,
                           rParam.moveFriction, rParam.turnSpeedDegree);
 }
+
 /**
  * Escapes from player.
  * @param pActor The actor.
@@ -1520,6 +1657,7 @@ void escapeFromPlayer(LiveActor* pActor, f32 forceFront, f32 forceGravity, f32 d
     walkAndTurnToDirection(pActor, getFrontPtr(pActor), dir, forceFront, forceGravity, decay, deg,
                            true);
 }
+
 /**
  * Escapes from player.
  * @param pActor The actor.
@@ -1533,6 +1671,7 @@ void escapeFromPlayer(LiveActor* pActor, sead::Vector3f* pFront, f32 forceFront,
     walkAndTurnToDirection(pActor, pFront, getTrans(pActor) - alProjectInterface::getPlayerPos(),
                            forceFront, forceGravity, decay, deg, true);
 }
+
 /**
  * Checks whether in sight cone player.
  * @param pActor The actor.

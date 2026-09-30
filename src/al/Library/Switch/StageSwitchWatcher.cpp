@@ -24,6 +24,7 @@ void StageSwitchWatcher::update() {
     if (mAccesser->isDisasterMode() && !mCameraDirector->_102) {
         return;
     }
+
     bool isOn = mAccesser->isOnSwitch();
     if (isOn != _18) {
         if (isOn) {
@@ -32,6 +33,7 @@ void StageSwitchWatcher::update() {
             mListener->listenOff();
         }
     }
+
     _18 = isOn;
 }
 }  // namespace al

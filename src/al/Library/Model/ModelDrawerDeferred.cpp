@@ -110,8 +110,10 @@ void ModelDrawerDeferred::createTable() {
                 alModelFunction::prepareModelShapeDrawDeferredGraphicsContext(
                     &context, model, shapeIndex, isAlphaMask, false);
             }
+
             displayList->endDisplayList();
         }
+
         sead::Graphics::instance()->unlockDrawContext();
         mDisplayLists.pushBack(displayList);
     }

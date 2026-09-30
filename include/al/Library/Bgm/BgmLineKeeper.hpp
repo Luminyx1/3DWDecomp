@@ -57,5 +57,6 @@ private:
     bool mIsDisableLineChange;
     u8 _9a[0x6];
 };
+
 static_assert(sizeof(BgmLineKeeper) == 0xa0);
 }  // namespace al

@@ -100,6 +100,7 @@ bool FallMapParts::receiveMsg(const SensorMsg* pMsg, HitSensor* pOther, HitSenso
         invalidateClipping(this);
         return true;
     }
+
     return false;
 }
 
@@ -115,6 +116,7 @@ void FallMapParts::exeAppear() {
             return;
         }
     }
+
     if (!isExistAction(this) || isActionEnd(this)) {
         startNerveAction(this, "Wait");
     }
@@ -138,10 +140,12 @@ void FallMapParts::exeFallSign() {
     if (isFirstStep(this)) {
         mIsStartFallSignAction = tryStartAction(this, "FallSign");
     }
+
     if (!mIsStartFallSignAction) {
         f32 offset = sead::Mathf::sin(calcNerveValue(this, 20, 0.0f, sead::Mathf::pi() * 3)) * 3;
         setTrans(this, offset * sead::Vector3f::ey + mStartTrans);
     }
+
     if (isEndFallSign()) {
         startNerveAction(this, "Fall");
     }
@@ -163,6 +167,7 @@ void FallMapParts::exeFall() {
         tryStartAction(this, "Fall");
         setTrans(this, mStartTrans);
     }
+
     addVelocityToGravity(this, 0.3f);
     scaleVelocity(this, 0.9f);
     if (isGreaterStep(this, mFallTime)) {
@@ -180,6 +185,7 @@ void FallMapParts::exeEnd() {
         invalidateCollisionParts(this);
         setVelocityZero(this);
     }
+
     if (isGreaterStep(this, 120)) {
         setTrans(this, mStartTrans);
         resetPosition(this, false);

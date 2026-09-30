@@ -14,5 +14,6 @@ public:
     f32 _10;
     f32 _14;
 };
+
 static_assert(sizeof(GyroCameraControllerParam) == 0x18);
 }  // namespace al

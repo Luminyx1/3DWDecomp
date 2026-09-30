@@ -32,6 +32,7 @@ void CameraInSwitchOnAreaDirector::update() {
             if (!isValidView(mSceneCameraInfo, j)) {
                 continue;
             }
+
             if (isInAreaPos(area, getCameraAt_RS(mSceneCameraInfo, j))) {
                 tryOnStageSwitch(area, "SwitchCameraInOn");
                 break;

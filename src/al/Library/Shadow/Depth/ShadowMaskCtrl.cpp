@@ -32,6 +32,7 @@ void attachMtxConnector(al::MtxConnector* pConnector, al::LiveActor* pActor,
         al::attachMtxConnectorToJoint(pConnector, pActor, pJointName);
         return;
     }
+
     al::attachMtxConnectorToActor(pConnector, pActor, nullptr);
 }
 
@@ -68,6 +69,7 @@ ShadowKeeper::~ShadowKeeper() {
     while (!mMaskArray.isEmpty()) {
         delete mMaskArray.popBack();
     }
+
     mMaskArray.freeBuffer();
 }
 
@@ -90,6 +92,7 @@ bool ShadowKeeper::init(LiveActor* pActor, const ActorInitInfo& rInfo, const Bya
     if (mIsIgnoreShadowMaskYaml) {
         return false;
     }
+
     mHostActor = pActor;
 
     ByamlIter arrayIter;
@@ -97,6 +100,7 @@ bool ShadowKeeper::init(LiveActor* pActor, const ActorInitInfo& rInfo, const Bya
     if (!arrayIter.isValid() || !arrayIter.isTypeArray()) {
         goto fail;
     }
+
     {
 
     bool isSingle = isSingleMode(rInfo);
@@ -114,6 +118,7 @@ bool ShadowKeeper::init(LiveActor* pActor, const ActorInitInfo& rInfo, const Bya
         if (!info.mName) {
             continue;
         }
+
         const char* typeName = info.mShadowMaskType;
         if (!typeName || isEqualString(typeName, ShadowMaskType::text(ShadowMaskType::None))) {
             continue;
@@ -208,6 +213,7 @@ bool ShadowKeeper::init(LiveActor* pActor, const ActorInitInfo& rInfo, const Bya
         if (isEqualString(mask->mSetHeightEvenTargetName.cstr(), "")) {
             continue;
         }
+
         const char* targetName = mask->mSetHeightEvenTargetName.cstr();
         ShadowMaskBase* target = nullptr;
         for (auto it = mMaskArray.begin(); it != mMaskArray.end(); ++it) {
@@ -216,6 +222,7 @@ bool ShadowKeeper::init(LiveActor* pActor, const ActorInitInfo& rInfo, const Bya
                 break;
             }
         }
+
         mask->mHeightEvenTarget = target;
         if (target) {
             target->_e8 = true;
@@ -225,6 +232,7 @@ bool ShadowKeeper::init(LiveActor* pActor, const ActorInitInfo& rInfo, const Bya
     if (!mIsIgnoreShadowMaskYaml) {
         show();
     }
+
     return true;
     }
 
@@ -244,6 +252,7 @@ ShadowMaskBase* ShadowKeeper::findShadowMask(const char* pName) const {
             return &*it;
         }
     }
+
     return nullptr;
 }
 

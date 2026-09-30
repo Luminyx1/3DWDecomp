@@ -30,6 +30,7 @@ void DspLinearValueController::update() {
             }
         }
     }
+
     if (mStep < 0.0f) {
         if (mTarget < mValue) {
             mValue += mStep;
@@ -85,6 +86,7 @@ void DspSinValueController::update() {
     if (mFreq <= 0.0f) {
         return;
     }
+
     mAmplitude->update();
     mValue = sinf(mPhase) * mAmplitude->getValue();
     mPhase += mPhaseStep;

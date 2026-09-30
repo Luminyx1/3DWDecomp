@@ -47,6 +47,7 @@ void KeyMoveMovement::exeWait() {
     if (isFirstStep(this)) {
         mTime = calcKeyMoveWaitTime(mKeyPoseKeeper);
     }
+
     if (isGreaterEqualStep(this, mTime)) {
         setNerve(this, &NrvKeyMoveMovementMove);
     }
@@ -59,6 +60,7 @@ void KeyMoveMovement::exeMove() {
     if (isFirstStep(this)) {
         mTime = calcKeyMoveMoveTime(mKeyPoseKeeper);
     }
+
     f32 rate = calcNerveRate(this, mTime);
     calcLerpKeyTrans(&mTrans, mKeyPoseKeeper, rate);
     if (isGreaterEqualStep(this, mTime)) {

@@ -24,6 +24,7 @@ public:
     f32 mAmp = 0.0f;
     f32 mLen = 0.0f;
 };
+
 static_assert(sizeof(OceanWaveInfo) == 0x30);
 
 class OceanWavePlayInfo {
@@ -35,6 +36,7 @@ public:
     AudioInfoList<OceanWaveInfo>* mOceanWaveInfoList = nullptr;
     const char* mRequestKeeperName = nullptr;
 };
+
 static_assert(sizeof(OceanWavePlayInfo) == 0x18);
 
 class OceanWavePlayInfoInAction {
@@ -51,6 +53,7 @@ public:
     f32 mStartFrame = 0.0f;
     f32 mEndFrame = 0.0f;
 };
+
 static_assert(sizeof(OceanWavePlayInfoInAction) == 0x10);
 
 class OceanWaveActionInfo {
@@ -65,6 +68,7 @@ public:
     const char* mName;
     AudioInfoList<OceanWavePlayInfoInAction>* mPlayInfoList;
 };
+
 static_assert(sizeof(OceanWaveActionInfo) == 0x10);
 
 class OceanWaveUserInfo {
@@ -77,6 +81,7 @@ public:
     AudioInfoList<OceanWaveActionInfo>* mActionInfoList = nullptr;
     AudioInfoList<OceanWavePlayInfo>* mPlayInfoList = nullptr;
 };
+
 static_assert(sizeof(OceanWaveUserInfo) == 0x20);
 
 void startOceanWave(LiveActor* pActor, const char* pName);

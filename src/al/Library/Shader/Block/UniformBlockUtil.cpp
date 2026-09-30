@@ -18,6 +18,7 @@ UniformBlock* createUniformBlock(const UniformBlockLayout* pLayout, s32 layoutNu
     for (s32 i = 0; i < layoutNum; i++) {
         block->declare(pLayout[i].mType, pLayout[i].mNum);
     }
+
     block->create(pHeap, bufferNum, 1);
     return block;
 }

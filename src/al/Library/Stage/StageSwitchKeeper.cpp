@@ -72,6 +72,7 @@ StageSwitchAccesser* StageSwitchKeeper::tryGetStageSwitchAccesser(const char* pL
             return &mAccessors[i];
         }
     }
+
     return nullptr;
 }
 
@@ -86,6 +87,7 @@ bool StageSwitchKeeper::isUsingSwitchNo(s32 switchNo) {
             return true;
         }
     }
+
     return false;
 }
 }  // namespace al

@@ -20,6 +20,7 @@ void StageSwitchListenerList::addListener(StageSwitchListener* pListener) {
         mTail = node;
         return;
     }
+
     mTail->mNext = node;
     mTail = node;
 }
@@ -39,6 +40,7 @@ void StageSwitchListenerList::update() {
             }
         }
     }
+
     mIsOn = mIsRequestOn;
 }
 

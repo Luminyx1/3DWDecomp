@@ -18,6 +18,7 @@ private:
     f32 mTarget;
     f32 mStep;
 };
+
 static_assert(sizeof(DspLinearValueController) == 0xc);
 
 class DspSinValueController {
@@ -37,5 +38,6 @@ private:
     f32 mValue;
     DspLinearValueController* mAmplitude;
 };
+
 static_assert(sizeof(DspSinValueController) == 0x20);
 }  // namespace al

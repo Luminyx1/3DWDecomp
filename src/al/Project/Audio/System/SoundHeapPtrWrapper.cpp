@@ -75,6 +75,7 @@ size_t SeadAudioSoundHeapPtrWrapper::getHeapFreeSize() const {
 void SeadAudioSoundHeapPtrWrapper::dumpHeap(nn::atk::SoundDataManager* pMgr, nn::atk::SoundArchive* pArchive) {
     mHeap->Dump(*pMgr, *pArchive);
 }
+
 /**
  * Destroys the name lookup helper.
  */
@@ -167,6 +168,7 @@ u32 getSoundId(const char* pName, bool isBgm) {
     if (pName == nullptr) {
         return al::AudioConst::SOUND_ID_INVALID;
     }
+
     return getNameUtil(isBgm).getAccessor()->getSoundId(pName);
 }
 
@@ -181,10 +183,12 @@ bool tryGetSoundId(u32* pId, const char* pName, bool isBgm) {
     if (pName == nullptr) {
         return false;
     }
+
     u32 id = getNameUtil(isBgm).getAccessor()->getSoundId(pName);
     if (id == al::AudioConst::SOUND_ID_INVALID) {
         return false;
     }
+
     *pId = id;
     return true;
 }

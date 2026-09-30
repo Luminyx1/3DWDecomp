@@ -13,6 +13,7 @@ ScreenPointDirector::ScreenPointDirector(s32 maxTargets) : mCheckGroup(nullptr) 
     if (maxTargets < 1) {
         maxTargets = 0x500;
     }
+
     mCheckGroup = new ScreenPointCheckGroup(maxTargets);
 }
 

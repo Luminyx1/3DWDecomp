@@ -129,12 +129,15 @@ bool AreaShapeCube::isInLocalVolume(const sead::Vector3f& rPos) const {
     if (rPos.y < min.y || max.y < rPos.y) {
         return false;
     }
+
     if (rPos.x < min.x || max.x < rPos.x) {
         return false;
     }
+
     if (rPos.z < min.z || max.z < rPos.z) {
         return false;
     }
+
     return true;
 }
 
@@ -169,6 +172,7 @@ bool AreaShapeCube::checkArrowCollision(sead::Vector3f* pHitPos, sead::Vector3f*
                     if (pHitNormal != nullptr) {
                         calcWorldDir(pHitNormal, sead::Vector3f::ey);
                     }
+
                     return true;
                 }
             }
@@ -181,6 +185,7 @@ bool AreaShapeCube::checkArrowCollision(sead::Vector3f* pHitPos, sead::Vector3f*
                     if (pHitNormal != nullptr) {
                         calcWorldDir(pHitNormal, -sead::Vector3f::ey);
                     }
+
                     return true;
                 }
             }
@@ -195,6 +200,7 @@ bool AreaShapeCube::checkArrowCollision(sead::Vector3f* pHitPos, sead::Vector3f*
                     if (pHitNormal != nullptr) {
                         calcWorldDir(pHitNormal, sead::Vector3f::ez);
                     }
+
                     return true;
                 }
             }
@@ -207,6 +213,7 @@ bool AreaShapeCube::checkArrowCollision(sead::Vector3f* pHitPos, sead::Vector3f*
                     if (pHitNormal != nullptr) {
                         calcWorldDir(pHitNormal, -sead::Vector3f::ez);
                     }
+
                     return true;
                 }
             }
@@ -221,6 +228,7 @@ bool AreaShapeCube::checkArrowCollision(sead::Vector3f* pHitPos, sead::Vector3f*
                     if (pHitNormal != nullptr) {
                         calcWorldDir(pHitNormal, sead::Vector3f::ex);
                     }
+
                     return true;
                 }
             }
@@ -233,6 +241,7 @@ bool AreaShapeCube::checkArrowCollision(sead::Vector3f* pHitPos, sead::Vector3f*
                     if (pHitNormal != nullptr) {
                         calcWorldDir(pHitNormal, sead::Vector3f::ey);
                     }
+
                     return true;
                 }
             }
@@ -250,6 +259,7 @@ bool AreaShapeCube::checkArrowCollision(sead::Vector3f* pHitPos, sead::Vector3f*
                 if (pHitNormal != nullptr) {
                     calcWorldDir(pHitNormal, -sead::Vector3f::ey);
                 }
+
                 return true;
             }
         }
@@ -262,6 +272,7 @@ bool AreaShapeCube::checkArrowCollision(sead::Vector3f* pHitPos, sead::Vector3f*
                 if (pHitNormal != nullptr) {
                     calcWorldDir(pHitNormal, sead::Vector3f::ey);
                 }
+
                 return true;
             }
         }
@@ -276,6 +287,7 @@ bool AreaShapeCube::checkArrowCollision(sead::Vector3f* pHitPos, sead::Vector3f*
                 if (pHitNormal != nullptr) {
                     calcWorldDir(pHitNormal, -sead::Vector3f::ez);
                 }
+
                 return true;
             }
         }
@@ -288,6 +300,7 @@ bool AreaShapeCube::checkArrowCollision(sead::Vector3f* pHitPos, sead::Vector3f*
                 if (pHitNormal != nullptr) {
                     calcWorldDir(pHitNormal, sead::Vector3f::ez);
                 }
+
                 return true;
             }
         }
@@ -302,6 +315,7 @@ bool AreaShapeCube::checkArrowCollision(sead::Vector3f* pHitPos, sead::Vector3f*
                 if (pHitNormal != nullptr) {
                     calcWorldDir(pHitNormal, -sead::Vector3f::ex);
                 }
+
                 return true;
             }
         }
@@ -314,6 +328,7 @@ bool AreaShapeCube::checkArrowCollision(sead::Vector3f* pHitPos, sead::Vector3f*
                 if (pHitNormal != nullptr) {
                     calcWorldDir(pHitNormal, -sead::Vector3f::ex);
                 }
+
                 return true;
             }
         }
@@ -361,6 +376,7 @@ bool AreaShapeSphere::calcNearestEdgePoint(sead::Vector3f* pOut,
     if (length > 0.0f) {
         localPos *= 500.0f / length;
     }
+
     calcWorldPos(pOut, localPos);
     return true;
 }
@@ -424,6 +440,7 @@ bool AreaShapeOval::calcNearestEdgePoint(sead::Vector3f* pOut, const sead::Vecto
     if (length > 0.0f) {
         localPos *= 500.0f / length;
     }
+
     calcWorldPos(pOut, localPos);
     return true;
 }
@@ -467,6 +484,7 @@ bool AreaShapeCylinder::isInVolume(const sead::Vector3f& rPos) const {
     if (localPos.y < 0.0f || localPos.y > 500.0f) {
         return false;
     }
+
     return localPos.x * localPos.x + localPos.z * localPos.z <= 500.0f * 500.0f;
 }
 
@@ -490,6 +508,7 @@ void AreaShapeCylinder::calcNearPoint(sead::Vector3f* pOut, const sead::Vector3f
         nearPos.x = localPos.x * rate;
         nearPos.z = rate * localPos.z;
     }
+
     calcWorldPos(pOut, nearPos);
 }
 
@@ -515,6 +534,7 @@ bool AreaShapeCylinder::calcNearestEdgePoint(sead::Vector3f* pOut,
         nearPos.x = localPos.x * rate;
         nearPos.z = rate * localPos.z;
     }
+
     calcWorldPos(pOut, nearPos);
     return true;
 }

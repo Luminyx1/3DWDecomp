@@ -41,6 +41,7 @@ AudioSituationDirector::AudioSituationDirector(const char** pCategoryNames, s32 
         if (prevController != nullptr) {
             prevController->linkTo(controller);
         }
+
         prevController = controller;
     }
 }
@@ -59,6 +60,7 @@ bool AudioSituationDirector::tryLoadSituationData(const char* pArchiveName) {
         if (size < 1) {
             return false;
         }
+
         mSituations.allocBuffer(size, nullptr);
         for (s32 i = 0; i < size; i++) {
             ByamlIter situationIter;
@@ -67,6 +69,7 @@ bool AudioSituationDirector::tryLoadSituationData(const char* pArchiveName) {
             situation->importYaml(situationIter, mCategoryNameList);
             mSituations.pushBack(situation);
         }
+
         isLoaded = true;
     } else {
         mSituations.allocBuffer(1, nullptr);
@@ -76,6 +79,7 @@ bool AudioSituationDirector::tryLoadSituationData(const char* pArchiveName) {
         situation->mInfoList = new SeCategoryInfoList(mCategoryNameList);
         isLoaded = false;
     }
+
     startSituation(0, "通常");
     startSituation(1, "通常");
     return isLoaded;
@@ -91,6 +95,7 @@ void AudioSituationDirector::startSituation(s32 line, const char* pName) {
     if (situation == nullptr) {
         return;
     }
+
     mCurrentSituations[line] = situation;
     mParamsControllers.at(line)->moveTo(situation->getInfoList(), situation->getFadeInFrame());
 }
@@ -116,6 +121,7 @@ AudioSituation* AudioSituationDirector::findSituation(const char* pName) const {
             return situation;
         }
     }
+
     return nullptr;
 }
 
@@ -128,6 +134,7 @@ void AudioSituationDirector::endSituation(s32 line) {
     if (situation == nullptr) {
         return;
     }
+
     AudioSituation* prevSituation = mCurrentSituations[line];
     mCurrentSituations[line] = situation;
     mParamsControllers.at(line)->moveTo(situation->getInfoList(), prevSituation->getFadeOutFrame());

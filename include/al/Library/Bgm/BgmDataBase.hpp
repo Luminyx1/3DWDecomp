@@ -21,6 +21,7 @@ public:
     bool mIsDontStopByBgmStopArea;
     bool mIsDontStopByChangeBgmArea;
 };
+
 static_assert(sizeof(BgmLineInfo) == 0x10);
 
 class BgmCombinedLineInfo {
@@ -31,6 +32,7 @@ public:
     const char* mName;
     AudioInfoList<BgmLineInfo>* mLineInfoList;
 };
+
 static_assert(sizeof(BgmCombinedLineInfo) == 0x10);
 
 class BgmPlayInfo {
@@ -43,6 +45,7 @@ public:
     const char* mDefaultResourceName;
     bool mIsPlayingByUpperLayerAudioUser;
 };
+
 static_assert(sizeof(BgmPlayInfo) == 0x20);
 
 class BgmResourceSuffixInfo {
@@ -55,6 +58,7 @@ public:
     f32 mBpm;
     s32 mSampleRate;
 };
+
 static_assert(sizeof(BgmResourceSuffixInfo) == 0x18);
 
 class BgmEnableSituationInfo {
@@ -65,6 +69,7 @@ public:
     const char* mName;
     const char* mSubSituationName;
 };
+
 static_assert(sizeof(BgmEnableSituationInfo) == 0x10);
 
 class BgmStartTriggerSituationInfo {
@@ -74,6 +79,7 @@ public:
 
     const char* mName;
 };
+
 static_assert(sizeof(BgmStartTriggerSituationInfo) == 0x8);
 
 class BgmResourceInfo {
@@ -92,6 +98,7 @@ public:
     bool mIsDisableAudioEffect;
     bool mIsEnableNwRender;
 };
+
 static_assert(sizeof(BgmResourceInfo) == 0x38);
 
 class BgmStagePlayInfo {
@@ -105,6 +112,7 @@ public:
     s32 mStartDelayFrameNum;
     s32 mFadeInFrameNum;
 };
+
 static_assert(sizeof(BgmStagePlayInfo) == 0x20);
 
 class BgmStageInfo {
@@ -115,6 +123,7 @@ public:
     const char* mName;
     AudioInfoList<BgmStagePlayInfo>* mStagePlayInfoList;
 };
+
 static_assert(sizeof(BgmStageInfo) == 0x10);
 
 class BgmProcInfo {
@@ -135,6 +144,7 @@ public:
     const char* mSuffixName;
     bool mIsStartCurPosition;
 };
+
 static_assert(sizeof(BgmSuffixProcInfo) == 0x20);
 
 class BgmVolumeProcInfo : public BgmProcInfo {
@@ -145,6 +155,7 @@ public:
     f32 mTargetVolume;
     f32 mVolumeDiff;
 };
+
 static_assert(sizeof(BgmVolumeProcInfo) == 0x18);
 
 class BgmTrackChangeInfo {
@@ -155,6 +166,7 @@ public:
     f32 mVolume;
     s32 mFadeFrameNum;
 };
+
 static_assert(sizeof(BgmTrackChangeInfo) == 0xc);
 
 class BgmTrackProcInfo : public BgmProcInfo {
@@ -164,6 +176,7 @@ public:
 
     AudioInfoList<BgmTrackChangeInfo>* mChangeTrackInfoList;
 };
+
 static_assert(sizeof(BgmTrackProcInfo) == 0x18);
 
 class BgmRegionProcInfo : public BgmProcInfo {
@@ -178,6 +191,7 @@ public:
     bool mIsPlayHeadOneTime;
     const char* mNextSituationName;
 };
+
 static_assert(sizeof(BgmRegionProcInfo) == 0x28);
 
 class BgmPitchProcInfo : public BgmProcInfo {
@@ -188,6 +202,7 @@ public:
     f32 mTargetPitch;
     f32 mPitchDiff;
 };
+
 static_assert(sizeof(BgmPitchProcInfo) == 0x18);
 
 class BgmPitchModulationProcInfo : public BgmProcInfo {
@@ -200,6 +215,7 @@ public:
     f32 mModDepthDiff;
     f32 mModFreq;
 };
+
 static_assert(sizeof(BgmPitchModulationProcInfo) == 0x20);
 
 class BgmLpfProcInfo : public BgmProcInfo {
@@ -210,6 +226,7 @@ public:
     f32 mCutOffFreq;
     f32 mCutOffFreqDiff;
 };
+
 static_assert(sizeof(BgmLpfProcInfo) == 0x18);
 
 class BgmMoveLoopStartProcInfo : public BgmProcInfo {
@@ -217,6 +234,7 @@ public:
 
     static BgmMoveLoopStartProcInfo* createInfo(const ByamlIter& rIter, const char* pProcInfoName);
 };
+
 static_assert(sizeof(BgmMoveLoopStartProcInfo) == 0x10);
 
 class BgmSubSituationInfo {
@@ -227,6 +245,7 @@ public:
     const char* mName;
     AudioInfoList<BgmProcInfo>* mProcInfoList;
 };
+
 static_assert(sizeof(BgmSubSituationInfo) == 0x10);
 
 class BgmSituationInfo {
@@ -237,6 +256,7 @@ public:
     const char* mName;
     AudioInfoList<BgmSubSituationInfo>* mSubSituationInfoList;
 };
+
 static_assert(sizeof(BgmSituationInfo) == 0x10);
 
 class BgmDataBase {
@@ -250,5 +270,6 @@ public:
     AudioInfoList<BgmSituationInfo>* mSituationInfoList = nullptr;
     sead::PtrArray<BgmUserInfo>* mUserInfoList;
 };
+
 static_assert(sizeof(BgmDataBase) == 0x30);
 }  // namespace al

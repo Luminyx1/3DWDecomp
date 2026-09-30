@@ -13,13 +13,16 @@ OceanWavePlayInfo* OceanWavePlayInfo::createInfo(const ByamlIter& rIter) {
     if (!rIter.tryGetStringByKey(&info->mName, "Name")) {
         return nullptr;
     }
+
     if (!rIter.tryGetStringByKey(&info->mRequestKeeperName, "RequestKeeperName")) {
         info->mRequestKeeperName = nullptr;
     }
+
     ByamlIter iter;
     if (!rIter.tryGetIterByKey(&iter, "OceanWaveInfoList")) {
         return nullptr;
     }
+
     info->mOceanWaveInfoList = createInfoList<OceanWaveInfo>(iter);
     return info;
 }

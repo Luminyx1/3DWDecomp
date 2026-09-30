@@ -16,14 +16,18 @@ BgmLineInfo* BgmLineInfo::createInfo(const ByamlIter& rIter) {
                                "DontChangeLowPriorityLineByAreaChange")) {
         info->mIsDontChangeLowPriorityLineByAreaChange = false;
     }
+
     if (!rIter.tryGetBoolByKey(&info->mIsDontStopByBgmStopArea, "DontStopByBgmStopArea")) {
         info->mIsDontStopByBgmStopArea = false;
     }
+
     if (!rIter.tryGetBoolByKey(&info->mIsDontStopByChangeBgmArea, "DontStopByChangeBgmArea")) {
         info->mIsDontStopByChangeBgmArea = false;
     }
+
     return info;
 }
+
 /**
  * Creates combined BGM line information from BYAML data.
  * @param rIter BYAML data.
@@ -37,6 +41,7 @@ BgmCombinedLineInfo* BgmCombinedLineInfo::createInfo(const ByamlIter& rIter) {
     info->mLineInfoList = createInfoList<BgmLineInfo>(lineIter);
     return info;
 }
+
 /**
  * Compares two BGM line information by name.
  * @param pA First information.
@@ -46,6 +51,7 @@ BgmCombinedLineInfo* BgmCombinedLineInfo::createInfo(const ByamlIter& rIter) {
 s32 BgmLineInfo::compareInfo(const BgmLineInfo* pA, const BgmLineInfo* pB) {
     return strcmp(pA->mName, pB->mName);
 }
+
 /**
  * Compares two combined BGM line information by name.
  * @param pA First information.

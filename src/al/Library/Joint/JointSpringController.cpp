@@ -72,6 +72,7 @@ void JointSpringController::addControlRate(f32 rate) {
     } else if (newRate > 1.0f) {
         newRate = 1.0f;
     }
+
     mControlRate = newRate;
 }
 
@@ -86,6 +87,7 @@ void JointSpringController::subControlRate(f32 rate) {
     } else if (newRate > 1.0f) {
         newRate = 1.0f;
     }
+
     mControlRate = newRate;
 }
 
@@ -109,6 +111,7 @@ void JointSpringController::calcChildPos(sead::Vector3f* pPos, const sead::Matri
     } else {
         localPos = mChildLocalPos;
     }
+
     pPos->setMul(*pMtx, localPos);
 }
 
@@ -126,6 +129,7 @@ void JointSpringController::calcJointCallback(s32 jointIndex, sead::Matrix34f* p
         if (!isPaused) {
             mVelocity *= mFriction;
         }
+
         return;
     }
 
@@ -152,6 +156,7 @@ void JointSpringController::calcJointCallback(s32 jointIndex, sead::Matrix34f* p
     if (normalizeOrZero(&nextDir)) {
         return;
     }
+
     sead::Vector3f currentDir = childPos - trans;
     if (normalizeOrZero(&currentDir)) {
         return;

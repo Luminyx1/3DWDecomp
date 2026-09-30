@@ -77,6 +77,7 @@ void ExecuteTableHolderDraw::init(const char* pName, const ExecuteSystemInitInfo
     for (s32 i = 0; i < orderNum; i++) {
         actorNum += isEqualGroup(pOrders[i], "ActorDraw");
     }
+
     mActorListNumMax = actorNum;
     mActorLists = new ExecutorListActorDraw*[actorNum];
 
@@ -86,6 +87,7 @@ void ExecuteTableHolderDraw::init(const char* pName, const ExecuteSystemInitInfo
             actorModelNum++;
         }
     }
+
     mActorModelListNumMax = actorModelNum;
     mActorModelLists = new ExecutorListActorModelDrawBase*[actorModelNum];
 
@@ -95,6 +97,7 @@ void ExecuteTableHolderDraw::init(const char* pName, const ExecuteSystemInitInfo
             layoutNum++;
         }
     }
+
     mLayoutListNumMax = layoutNum;
     mLayoutLists = new ExecutorListLayoutDrawBase*[layoutNum];
 
@@ -279,6 +282,7 @@ bool ExecuteTableHolderDraw::tryRegisterActor(LiveActor* pActor, const char* pLi
             isRegistered = true;
         }
     }
+
     return isRegistered;
 }
 
@@ -297,6 +301,7 @@ bool ExecuteTableHolderDraw::tryRegisterActorModel(LiveActor* pActor, const char
             isRegistered = true;
         }
     }
+
     return isRegistered;
 }
 
@@ -315,6 +320,7 @@ bool ExecuteTableHolderDraw::tryRegisterLayout(LayoutActor* pLayout, const char*
             isRegistered = true;
         }
     }
+
     return isRegistered;
 }
 
@@ -333,6 +339,7 @@ bool ExecuteTableHolderDraw::tryRegisterUser(IUseExecutor* pUser, const char* pL
             isRegistered = true;
         }
     }
+
     return isRegistered;
 }
 
@@ -351,6 +358,7 @@ bool ExecuteTableHolderDraw::tryRegisterFunctor(const FunctorBase& rFunctor, con
             isRegistered = true;
         }
     }
+
     return isRegistered;
 }
 
@@ -361,6 +369,7 @@ void ExecuteTableHolderDraw::createExecutorListTable() {
     for (s32 i = 0; i < mActorListNum; i++) {
         mActorLists[i]->createList();
     }
+
     for (s32 i = 0; i < mActorModelListNum; i++) {
         mActorModelLists[i]->createList();
     }
@@ -413,6 +422,7 @@ bool ExecuteTableHolderDraw::isActive() const {
             return false;
         }
     }
+
     return mActiveListNum > 0;
 }
 }  // namespace al

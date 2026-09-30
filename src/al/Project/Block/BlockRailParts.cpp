@@ -59,6 +59,7 @@ void BlockRailParts::startFarLod() {
     if (mIsHideModel) {
         return;
     }
+
     LiveActor::startFarLod();
 }
 
@@ -69,6 +70,7 @@ void BlockRailParts::endFarLod() {
     if (mIsHideModel) {
         return;
     }
+
     LiveActor::endFarLod();
 }
 
@@ -119,6 +121,7 @@ void BlockRailParts::initRailLink(const ByamlIter& rIter) {
     if (!rIter.tryGetIterByKey(&shapeListIter, "ShapeList")) {
         return;
     }
+
     mLinkNum = shapeListIter.isTypeArray() ? shapeListIter.getSize() : 1;
     mLinks = new BlockRailLink*[mLinkNum];
     if (shapeListIter.isTypeArray()) {
@@ -137,32 +140,40 @@ void BlockRailParts::initRailLink(const ByamlIter& rIter) {
     if (!rIter.tryGetIterByKey(&linkListIter, "LinkList")) {
         return;
     }
+
     s32 linkListNum = linkListIter.getSize();
     for (s32 i = 0; i < linkListNum; i++) {
         ByamlIter pairIter;
         if (!linkListIter.tryGetIterByIndex(&pairIter, i)) {
             continue;
         }
+
         if (pairIter.getSize() != 2) {
             continue;
         }
+
         s32 indexA;
         if (!pairIter.tryGetIntByIndex(&indexA, 0)) {
             continue;
         }
+
         if (indexA < 0 || indexA >= mLinkNum) {
             continue;
         }
+
         s32 indexB;
         if (!pairIter.tryGetIntByIndex(&indexB, 1)) {
             continue;
         }
+
         if (indexB < 0 || indexB >= mLinkNum) {
             continue;
         }
+
         if (indexA == indexB) {
             continue;
         }
+
         BlockRailLink::tryConnect(mLinks[indexA], mLinks[indexB], 10.0f);
     }
 }
@@ -200,12 +211,14 @@ void BlockRailParts::setIsHideModel(bool isHide) {
     if (!isHide) {
         return;
     }
+
     SubActorKeeper* keeper = mSubActorKeeper;
     if (keeper) {
         for (s32 i = 0; i < keeper->mCount; i++) {
             keeper->mInfos[i]->mSyncType |= 4;
         }
     }
+
     hideModelIfShow(this);
 }
 }  // namespace al

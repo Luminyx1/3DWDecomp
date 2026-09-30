@@ -54,14 +54,17 @@ void RailMoveMapParts::init(const ActorInitInfo& rInfo) {
         setSyncRailToNearestPos(this);
         setRailClippingInfo(&mRailPos, this, 100.0f, radius);
     }
+
     mRailMoveMovement = new RailMoveMovement(this, rInfo);
     initNerveState(this, mRailMoveMovement, NrvRailMoveMapParts.Move.data(), "レール移動");
     if (!listenStageSwitchOnStart(this, RailMoveMapPartsFunctor(this, &RailMoveMapParts::start))) {
         start();
     }
+
     if (listenStageSwitchOnStop(this, RailMoveMapPartsFunctor(this, &RailMoveMapParts::stop))) {
         stop();
     }
+
     if (isExistShadow(this)) {
         bool isShadow = false;
         tryGetArg(&isShadow, rInfo, "IsShadow");
@@ -69,6 +72,7 @@ void RailMoveMapParts::init(const ActorInitInfo& rInfo) {
             invalidateShadow(this);
         }
     }
+
     mSwitchKeepOnAreaGroup = tryCreateSwitchKeepOnAreaGroup(this, rInfo);
     mSwitchOnAreaGroup = tryCreateSwitchOnAreaGroup(this, rInfo);
     trySyncStageSwitchAppear(this);
@@ -106,10 +110,12 @@ bool RailMoveMapParts::receiveMsg(const SensorMsg* pMsg, HitSensor* pOther, HitS
         showModelIfHide(this);
         return true;
     }
+
     if (isMsgHideModel(pMsg)) {
         hideModelIfShow(this);
         return true;
     }
+
     return false;
 }
 
@@ -120,9 +126,11 @@ void RailMoveMapParts::control() {
     if (mSwitchKeepOnAreaGroup) {
         mSwitchKeepOnAreaGroup->update(getTrans(this));
     }
+
     if (mSwitchOnAreaGroup) {
         mSwitchOnAreaGroup->update(getTrans(this));
     }
+
     if (mIsAlwaysUpdateCollMtx && (!mCollisionParts->_160 || !mCollisionParts->_161)) {
         sead::Matrix34f mtx;
         makeMtxSRT(&mtx, this);

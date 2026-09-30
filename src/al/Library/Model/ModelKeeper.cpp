@@ -140,6 +140,7 @@ void ModelKeeper::updateLod(const sead::Vector3f& rPos, bool isFlag) {
         model->mLodIndex = 0;
         return;
     }
+
     model->mLodPos = &rPos;
     model->mIsLodDisabled = model->getModelObj()->GetLodCount() < 2;
     model->mLodIndex = model->mIsLodDisabled ? 0 : model->mLodIndex;
@@ -162,13 +163,16 @@ bool ModelKeeper::setDisableDraw(bool isDisable) {
     if (!mModelCafe) {
         return false;
     }
+
     SimpleModelG3D* model = mModelCafe->getModelG3D();
     if (!model) {
         return false;
     }
+
     if (model->isDisableDraw() == isDisable) {
         return false;
     }
+
     model->setDisableDraw(isDisable);
     return true;
 }
@@ -182,13 +186,16 @@ bool ModelKeeper::setDisableDepthShadow(bool isDisable) {
     if (!mModelCafe) {
         return false;
     }
+
     SimpleModelG3D* model = mModelCafe->getModelG3D();
     if (!model) {
         return false;
     }
+
     if (model->isDisableDepthShadow() == isDisable) {
         return false;
     }
+
     model->setDisableDepthShadow(isDisable);
     return true;
 }
@@ -202,6 +209,7 @@ const sead::Matrix34f* ModelKeeper::getWorldMtxPtrByIndex(s32 index) const {
     if (!mModelCafe) {
         return nullptr;
     }
+
     return mModelCafe->getWorldMtxPtrByIndex(index);
 }
 

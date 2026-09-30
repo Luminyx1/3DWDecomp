@@ -33,6 +33,7 @@ public:
     s32 mNumOfWaveBuffer = 0;
     s32 mNumOfPreloadWaveBuffer = 0;
 };
+
 static_assert(sizeof(SeDelayEffectProcInfo) == 0x38);
 
 class SeReverbStdEffectProcInfo : public SeEffectProcInfo {
@@ -56,6 +57,7 @@ public:
     s32 mNumOfWaveBuffer = 0;
     s32 mNumOfPreloadWaveBuffer = 0;
 };
+
 static_assert(sizeof(SeReverbStdEffectProcInfo) == 0x48);
 
 class SeReverbHiEffectProcInfo : public SeEffectProcInfo {
@@ -80,6 +82,7 @@ public:
     s32 mNumOfWaveBuffer = 0;
     s32 mNumOfPreloadWaveBuffer = 0;
 };
+
 static_assert(sizeof(SeReverbHiEffectProcInfo) == 0x50);
 
 class SeReverbI3Dl2EffectProcInfo : public SeEffectProcInfo {
@@ -107,6 +110,7 @@ public:
     s32 mNumOfWaveBuffer = 0;
     s32 mNumOfPreloadWaveBuffer = 0;
 };
+
 static_assert(sizeof(SeReverbI3Dl2EffectProcInfo) == 0x58);
 
 class SeChorusEffectProcInfo : public SeEffectProcInfo {
@@ -121,6 +125,7 @@ public:
     f32 mFeedback = 0.0f;
     f32 mOutGain = 0.0f;
 };
+
 static_assert(sizeof(SeChorusEffectProcInfo) == 0x28);
 
 class SeLpfEffectProcInfo : public SeEffectProcInfo {
@@ -131,6 +136,7 @@ public:
 
     f32 mLpfFreq = 0.0f;
 };
+
 static_assert(sizeof(SeLpfEffectProcInfo) == 0x18);
 
 class SeUseEffectInfo {
@@ -157,6 +163,7 @@ public:
     f32 mMainOutputSend = 0.0f;
     f32 mSubOutputSend = 0.0f;
 };
+
 static_assert(sizeof(SeEffectBusUserInfo) == 0x18);
 
 class SeEffectBusInfo {
@@ -214,5 +221,6 @@ public:
     const char* mEffectBusSettingName = nullptr;
     AudioInfoList<SeUseEffectInfo>* mUseEffectInfoList = nullptr;
 };
+
 static_assert(sizeof(SeStageEffectInfo) == 0x18);
 }  // namespace al

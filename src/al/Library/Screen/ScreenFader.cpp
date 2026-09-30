@@ -88,6 +88,7 @@ void ScreenFader::update() {
     if (mFrame < 0) {
         return;
     }
+
     mFrame++;
     if (mState == State::FadeOut && mFrame >= mFadeFrame) {
         mState = State::End;
@@ -106,6 +107,7 @@ bool ScreenFader::tryDraw(agl::DrawContext* pDrawContext, const sead::Viewport& 
     if (mFrame < 0) {
         return false;
     }
+
     f32 rate = sead::Mathi::max(mFrame - mDelayFrame, 0) / static_cast<f32>(mFadeFrame);
     rate = rate > 1.0f ? 1.0f : rate;
     f32 maxAlpha = mMaxAlpha;
@@ -115,6 +117,7 @@ bool ScreenFader::tryDraw(agl::DrawContext* pDrawContext, const sead::Viewport& 
         f32 alpha = lerpValueNew(maxAlpha, 0.0f, rate);
         drawFadeQuad(pDrawContext, mColor, alpha, alpha, rViewport, rRenderBuffer);
     }
+
     return true;
 }
 }  // namespace al

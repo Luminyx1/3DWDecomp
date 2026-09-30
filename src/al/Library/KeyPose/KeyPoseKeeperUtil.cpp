@@ -185,6 +185,7 @@ void calcKeyMoveClippingInfo(sead::Vector3f* pPos, f32* pRadius, const KeyPoseKe
     for (s32 i = 0; i < count; i++) {
         box.addPoint(pKeeper->getKeyPose(i).getTrans());
     }
+
     box.getCenter(pPos);
     *pRadius = (box.getMax() - box.getMin()).length() * 0.5f + offset;
 }
@@ -198,6 +199,7 @@ void setKeyMoveClippingInfo(LiveActor* pActor, sead::Vector3f* pPos,
     for (s32 i = 0; i < count; i++) {
         box.addPoint(pKeeper->getKeyPose(i).getTrans());
     }
+
     *pPos = box.getCenter();
     setClippingInfo(pActor, radius + (box.getMax() - box.getMin()).length() * 0.5f, pPos);
 }

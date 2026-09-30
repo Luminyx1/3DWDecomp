@@ -15,6 +15,7 @@ InitResourceDataAction* InitResourceDataAction::tryCreate(Resource* pResource,
     if (!dataActionAnim) {
         return nullptr;
     }
+
     return new InitResourceDataAction(dataActionAnim);
 }
 

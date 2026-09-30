@@ -158,6 +158,7 @@ public:
                 return;
             }
         }
+
         mIsExistNamedParam = false;
     }
 
@@ -168,6 +169,7 @@ public:
             if (isEqualString(pName, namedParam->mName->cstr()))
                 return namedParam;
         }
+
         return nullptr;
     }
 
@@ -191,6 +193,7 @@ public:
             else
                 mRequestInterp.requestParam(-1, 1, mDefaultParam);
         }
+
         mRequestInterp.updateInterp();
     }
 

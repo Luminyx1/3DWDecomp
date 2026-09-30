@@ -69,6 +69,7 @@ u32 loadResourceFromUserManagementFile(const char* pFileName, al::SeadAudioPlaye
     if (!pPlayer->trySetSoundMemoryPoolHandler(handler)) {
         return 0;
     }
+
     al::StringTmp<128> groupFileName("%s.bfgrp", pFileName);
     void* data = resource->getOtherFile(groupFileName.cstr(), nullptr);
     u32 size = resource->getFileSize(groupFileName.cstr());
@@ -76,6 +77,7 @@ u32 loadResourceFromUserManagementFile(const char* pFileName, al::SeadAudioPlaye
     if (isAttachMemoryPool) {
         attachSoundMemoryPool(handler, pPlayer);
     }
+
     return size;
 }
 
@@ -90,9 +92,11 @@ bool tryAttachMemoryPool(const char* pFileName, al::SeadAudioPlayer* pPlayer) {
     if (handler == nullptr) {
         return false;
     }
+
     if (!handler->isMemoryPoolAttached()) {
         attachSoundMemoryPool(handler, pPlayer);
     }
+
     return true;
 }
 
@@ -118,15 +122,18 @@ bool pauseBySystemError(const al::AudioDirector* pDirector, const al::AudioDirec
             result = bgmDirector->resumeActiveBgmById(1, fadeFrames);
         }
     }
+
     if (pDirector != nullptr) {
         pDirector->getSeDirector()->pauseSystemExceptSub(isPause, "システムポーズ", fadeFrames);
         if (!isActiveSubBgm) {
             if (isPause) {
                 return pDirector->getBgmDirector()->pauseActiveBgmById(1, fadeFrames);
             }
+
             return pDirector->getBgmDirector()->resumeActiveBgmById(1, fadeFrames);
         }
     }
+
     return result;
 }
 
@@ -142,16 +149,20 @@ void pauseSystem(const al::AudioDirector* pDirector, const al::IUseAudioKeeper* 
     if (pDirector == nullptr) {
         return;
     }
+
     if (pDirector->getSeDirector() != nullptr) {
         pDirector->getSeDirector()->pauseSystemExceptSub(isPause, "システムポーズ", fadeFrames);
     }
+
     if (pUser == nullptr) {
         return;
     }
+
     al::BgmDirector* bgmDirector = al::getActiveBgmDirector(pUser);
     if (bgmDirector == nullptr) {
         return;
     }
+
     if (isPause) {
         bgmDirector->pauseActiveBgmById(1, fadeFrames);
     } else {
@@ -171,13 +182,16 @@ void pauseSystemForDebug(const al::AudioDirector* pDirector, const al::IUseAudio
     if (pDirector != nullptr && pDirector->getSeDirector() != nullptr) {
         pDirector->getSeDirector()->pauseSystemExceptSub(isPause, "システムポーズ", fadeFrames);
     }
+
     if (pUser == nullptr) {
         return;
     }
+
     al::BgmDirector* bgmDirector = al::tryGetActiveBgmDirector(pUser);
     if (bgmDirector == nullptr) {
         return;
     }
+
     if (isPause) {
         bgmDirector->pauseActiveBgmById(4, fadeFrames);
     } else {
@@ -248,14 +262,17 @@ void softReset(const al::AudioDirector* pDirector, const al::AudioDirector* pSub
         if (pDirector->getSeDirector() != nullptr) {
             pDirector->getSeDirector()->stopAll(30, nullptr, nullptr);
         }
+
         if (pDirector->getBgmDirector() != nullptr) {
             pDirector->getBgmDirector()->stopAllBgm(30);
         }
     }
+
     if (pSubDirector != nullptr) {
         if (pSubDirector->getSeDirector() != nullptr) {
             pSubDirector->getSeDirector()->stopAll(30, nullptr, nullptr);
         }
+
         if (pSubDirector->getBgmDirector() != nullptr) {
             pSubDirector->getBgmDirector()->stopAllBgm(30);
         }
@@ -449,10 +466,12 @@ void changeSequenceAudioEffectWithAreaCheck(const IUseAudioKeeper* pUser) {
     if (keeper == nullptr) {
         return;
     }
+
     IUseAudioKeeper* upperUser = keeper->getUpperLayerAudioUser();
     if (upperUser == nullptr) {
         return;
     }
+
     changeAudioEffectWithAreaCheck(upperUser);
 }
 
@@ -465,6 +484,7 @@ void changeAudioEffectWithAreaCheck(const IUseAudioKeeper* pUser) {
     if (name == nullptr) {
         return;
     }
+
     changeAudioEffect(pUser, name);
 }
 
@@ -478,6 +498,7 @@ const char* getCurAudioEffectName(const IUseAudioKeeper* pUser) {
     if (controller == nullptr) {
         return nullptr;
     }
+
     return controller->getCurEffectName();
 }
 

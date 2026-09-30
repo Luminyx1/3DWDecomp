@@ -17,6 +17,7 @@ inline bool isInWaterAreaInline(const IUseAreaObj* pAreaUser, const sead::Vector
     if (findAreaObj(pAreaUser, "NoWaterArea", rPos)) {
         return false;
     }
+
     return findAreaObj(pAreaUser, "WaterArea", rPos) != nullptr;
 }
 }  // namespace
@@ -30,6 +31,7 @@ bool isInWaterArea(const LiveActor* pActor) {
     if (!isAreaTarget(pActor)) {
         return false;
     }
+
     const IUseAreaObj* areaUser = pActor;
     return isInWaterAreaInline(areaUser, getTrans(pActor));
 }
@@ -44,6 +46,7 @@ bool isInWaterArea(const LiveActor* pActor, f32 offsetY) {
     if (!isAreaTarget(pActor)) {
         return false;
     }
+
     sead::Vector3f pos = getTrans(pActor) + sead::Vector3f(0.0f, offsetY, 0.0f);
     return isInWaterAreaInline(pActor, pos);
 }
@@ -58,6 +61,7 @@ bool isInWaterAreaNoSink(const IUseAreaObj* pAreaUser, const sead::Vector3f& rPo
     if (findAreaObj(pAreaUser, "NoWaterArea", rPos)) {
         return false;
     }
+
     AreaObj* area = findAreaObj(pAreaUser, "WaterArea", rPos);
     return area && area->mIsNoSinkOcean;
 }
@@ -71,6 +75,7 @@ bool isInWaterAreaNoSink(const LiveActor* pActor) {
     if (!isAreaTarget(pActor)) {
         return false;
     }
+
     const IUseAreaObj* areaUser = pActor;
     return isInWaterAreaNoSink(areaUser, getTrans(pActor));
 }

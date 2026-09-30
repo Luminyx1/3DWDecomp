@@ -40,6 +40,7 @@ bool isEqualUniqueNfcId(const NfpInfo& rInfoA, const NfpInfo& rInfoB) {
     if (!rInfoA.isAmiibo || !rInfoB.isAmiibo) {
         return false;
     }
+
     return isEqualUniqueNfcId(rInfoA.tagInfo, rInfoB.tagInfo);
 }
 
@@ -63,6 +64,7 @@ bool isEqualCharacterId(const NfpInfo& rInfo, NfpCharacterId characterId) {
     if (!rInfo.isAmiibo) {
         return false;
     }
+
     return isEqualCharacterId(rInfo.modelInfo, characterId);
 }
 
@@ -87,6 +89,7 @@ bool isEqualCharacterIdBase(const NfpInfo& rInfo, NfpCharacterId characterId) {
     if (!rInfo.isAmiibo) {
         return false;
     }
+
     return isEqualCharacterIdBase(rInfo.modelInfo, characterId);
 }
 
@@ -101,6 +104,7 @@ bool isEqualCharacterIdBase(const nn::nfp::ModelInfo& rModelInfo,
     if (rCharacterId.gameId != rModelInfo.gameId) {
         return false;
     }
+
     return rCharacterId.characterId == rModelInfo.characterId;
 }
 
@@ -114,6 +118,7 @@ bool isEqualNumberingId(const NfpInfo& rInfo, s32 numberingId) {
     if (!rInfo.isAmiibo) {
         return false;
     }
+
     return isEqualNumberingId(rInfo.modelInfo, numberingId);
 }
 
@@ -137,6 +142,7 @@ bool tryGetCharacterId(NfpCharacterId* pCharacterId, const NfpInfo& rInfo) {
     if (!rInfo.isAmiibo) {
         return false;
     }
+
     pCharacterId->gameId = rInfo.modelInfo.gameId;
     pCharacterId->characterId = rInfo.modelInfo.characterId;
     pCharacterId->characterVariant = rInfo.modelInfo.characterVariant;
@@ -153,6 +159,7 @@ bool tryGetNumberingId(s32* pNumberingId, const NfpInfo& rInfo) {
     if (!rInfo.isAmiibo) {
         return false;
     }
+
     *pNumberingId = rInfo.modelInfo.modelNumber;
     return true;
 }
@@ -187,6 +194,7 @@ bool tryGetSeriesID(s32* pSeriesId, const NfpInfo& rInfo) {
     if (!rInfo.isAmiibo) {
         return false;
     }
+
     *pSeriesId = rInfo.modelInfo.amiiboType;
     return true;
 }
@@ -201,6 +209,7 @@ bool tryGetNfpType(s32* pNfpType, const NfpInfo& rInfo) {
     if (!rInfo.isAmiibo) {
         return false;
     }
+
     *pNfpType = rInfo.modelInfo.series;
     return true;
 }
@@ -338,9 +347,11 @@ bool isInvalidFormatVersion(const NfpInfo& rInfo) {
     if (!rInfo.isFormatVersionSet) {
         return false;
     }
+
     if (rInfo.formatVersion.minor != 0x73) {
         return false;
     }
+
     return rInfo.formatVersion.major == 0xb8;
 }
 
@@ -354,6 +365,7 @@ bool isEqualUniqueNfcId(const nn::nfp::TagInfo& rTagInfo, const NfpInfo& rInfo) 
     if (!rInfo.isAmiibo) {
         return false;
     }
+
     return isEqualUniqueNfcId(rTagInfo, rInfo.tagInfo);
 }
 
@@ -367,11 +379,13 @@ bool isEqualUniqueNfcId(const nn::nfp::TagId& rTagIdA, const nn::nfp::TagId& rTa
     if (rTagIdA.uuidLength != rTagIdB.uuidLength) {
         return false;
     }
+
     for (s32 i = 0; i < rTagIdA.uuidLength; i++) {
         if (rTagIdA.uuid[i] != rTagIdB.uuid[i]) {
             return false;
         }
     }
+
     return true;
 }
 }  // namespace al

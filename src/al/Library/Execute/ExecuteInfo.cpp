@@ -38,6 +38,7 @@ void ActorExecuteInfo::removeDrawer(ModelDrawerBase* pDrawer) {
             for (s32 j = i; j < mDrawerCount; j++) {
                 mDrawers[j] = mDrawers[j + 1];
             }
+
             mDrawers[mDrawerCount] = nullptr;
             return;
         }
@@ -56,10 +57,12 @@ ModelDrawerBase* ActorExecuteInfo::removeOptDrawer() {
             for (s32 j = i; j < mDrawerCount; j++) {
                 mDrawers[j] = mDrawers[j + 1];
             }
+
             mDrawers[mDrawerCount] = nullptr;
             return drawer;
         }
     }
+
     return nullptr;
 }
 

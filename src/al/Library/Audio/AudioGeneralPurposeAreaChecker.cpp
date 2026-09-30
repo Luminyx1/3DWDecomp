@@ -20,6 +20,7 @@ const al::AreaObj* getActiveAreaObj(const al::AreaObj* pAreaObj) {
     if (pAreaObj != nullptr && pAreaObj->mIsValid && !pAreaObj->mIsDisabled) {
         return pAreaObj->_66 ? pAreaObj : nullptr;
     }
+
     return nullptr;
 }
 }  // namespace
@@ -65,6 +66,7 @@ void AudioGeneralPurposeAreaChecker::update(s32 islandId) {
     if (playerHolder == nullptr) {
         return;
     }
+
     mPrevArea = mCurArea;
     const char* areaName = mAreaName;
     s32 playerNum = getPlayerNumMax(playerHolder);
@@ -75,25 +77,31 @@ void AudioGeneralPurposeAreaChecker::update(s32 islandId) {
         if (!isAreaTarget(player) || isDead(player)) {
             continue;
         }
+
         AreaObj* areaObj = tryFindAreaObj(this, areaName, getTrans(player));
         if (areaObj == nullptr) {
             isOutOfArea = true;
             continue;
         }
+
         bool isRequireInIsland = false;
         tryGetAreaObjArg(&isRequireInIsland, areaObj, "RequireInIsland");
         if (islandId < 0 && isRequireInIsland) {
             continue;
         }
+
         if (curArea != nullptr && curArea->mPriority >= areaObj->mPriority) {
             continue;
         }
+
         curArea = areaObj;
     }
+
     mCurArea = curArea;
     if (!isOutOfArea && curArea == nullptr) {
         return;
     }
+
     if (mPrevArea != nullptr) {
         mIsEnteredArea = false;
         mIsExitedArea = curArea == nullptr;
@@ -101,10 +109,12 @@ void AudioGeneralPurposeAreaChecker::update(s32 islandId) {
         mIsEnteredArea = curArea != nullptr;
         mIsExitedArea = false;
     }
+
     mIsAreaChanged = getActiveAreaObj(curArea) != getActiveAreaObj(mPrevArea);
     if (curArea == nullptr) {
         return;
     }
+
     bool isOneTime = false;
     tryGetAreaObjArg(&isOneTime, curArea, "IsOneTime");
     if (isOneTime) {
@@ -120,6 +130,7 @@ bool AudioGeneralPurposeAreaChecker::isInArea() const {
     if (mAreaName == nullptr || mPlayerHolder == nullptr || mAreaObjDirector == nullptr) {
         return false;
     }
+
     return tryFindAreaObjPlayerOne(this, mAreaName, mPlayerHolder) != nullptr;
 }
 
@@ -140,6 +151,7 @@ s32 AudioGeneralPurposeAreaChecker::getIntArgInCurArea(const char* pArgName) con
     if (mCurArea == nullptr) {
         return 0;
     }
+
     s32 arg = 0;
     tryGetAreaObjArg(&arg, mCurArea, pArgName);
     return arg;
@@ -154,6 +166,7 @@ f32 AudioGeneralPurposeAreaChecker::getFloatArgInCurArea(const char* pArgName) c
     if (mCurArea == nullptr) {
         return 0.0f;
     }
+
     f32 arg = 0.0f;
     tryGetAreaObjArg(&arg, mCurArea, pArgName);
     return arg;
@@ -168,6 +181,7 @@ bool AudioGeneralPurposeAreaChecker::getBoolArgInCurArea(const char* pArgName) c
     if (mCurArea == nullptr) {
         return false;
     }
+
     bool arg = false;
     bool isFound = tryGetAreaObjArg(&arg, mCurArea, pArgName);
     return arg && isFound;
@@ -182,6 +196,7 @@ const char* AudioGeneralPurposeAreaChecker::getStringArgInCurArea(const char* pA
     if (mCurArea == nullptr) {
         return nullptr;
     }
+
     const char* arg = nullptr;
     tryGetAreaObjStringArg(&arg, mCurArea, pArgName);
     return arg;
@@ -196,10 +211,12 @@ const char* AudioGeneralPurposeAreaChecker::getStringArgInCurAreaWithAreaCheck(c
     if (pArgName == nullptr) {
         return nullptr;
     }
+
     AreaObj* areaObj = tryFindAreaObjPlayerOne(this, mAreaName, mPlayerHolder);
     if (areaObj == nullptr) {
         return nullptr;
     }
+
     const char* arg = nullptr;
     tryGetAreaObjStringArg(&arg, areaObj, pArgName);
     return arg;
@@ -215,6 +232,7 @@ bool AudioGeneralPurposeAreaChecker::tryGetStringArgInCurArea(const char** pArg,
     if (mCurArea == nullptr) {
         return false;
     }
+
     return tryGetAreaObjStringArg(pArg, mCurArea, pArgName);
 }
 
@@ -226,6 +244,7 @@ bool AudioGeneralPurposeAreaChecker::isCurrAreaCheckForSceneRestart() const {
     if (mCurArea == nullptr) {
         return false;
     }
+
     bool arg = false;
     tryGetAreaObjArg(&arg, mCurArea, "CheckForSceneRestart");
     return arg;

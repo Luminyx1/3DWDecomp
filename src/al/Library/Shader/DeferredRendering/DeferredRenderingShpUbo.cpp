@@ -75,12 +75,14 @@ void DeferredRenderingShpUbo::swap() {
             mUbos[mCurrentIndex]->setData(0, &row, i, 1);
         }
     }
+
     if (mWeightNumUpdateCount > 0) {
         mWeightNumUpdateCount--;
         UniformBlock* ubo = mUbos[mCurrentIndex];
         s32 weightNum = mWeightNum;
         ubo->setData(1, &weightNum, 0, 1);
     }
+
     const UniformBlock* ubo = mUbos[mCurrentIndex];
     u32 offset = ubo->getCurrentBlockOffset(0);
     agl::GPUMemVoidAddr addr = ubo->getBuffer();

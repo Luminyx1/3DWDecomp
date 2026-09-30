@@ -24,12 +24,15 @@ al::SeSoundSourceInfo* createSoundSourceInfo(const al::ByamlIter& rIter) {
             if (!vectorIter.tryGetFloatByKey(&vector->mVector.x, "x")) {
                 vectorIter.tryGetFloatByKey(&vector->mVector.x, "X");
             }
+
             if (!vectorIter.tryGetFloatByKey(&vector->mVector.y, "y")) {
                 vectorIter.tryGetFloatByKey(&vector->mVector.y, "Y");
             }
+
             if (!vectorIter.tryGetFloatByKey(&vector->mVector.z, "z")) {
                 vectorIter.tryGetFloatByKey(&vector->mVector.z, "Z");
             }
+
             sourceInfo = vector;
         } else if (alSeFunction::isSoundSource3DBox(name)) {
             al::SeSoundSourceInfo3DBox* box = new al::SeSoundSourceInfo3DBox(name);
@@ -50,11 +53,13 @@ al::SeSoundSourceInfo* createSoundSourceInfo(const al::ByamlIter& rIter) {
             if (!rIter.tryGetBoolByKey(&circle->mIsCircleRotated, "IsCircleRotated")) {
                 circle->mIsCircleRotated = false;
             }
+
             sourceInfo = circle;
         } else {
             sourceInfo = nullptr;
         }
     }
+
     return sourceInfo;
 }
 }  // namespace
@@ -78,12 +83,15 @@ SeEmitterInfo* SeEmitterInfo::createInfo(const ByamlIter& rIter) {
         if (!offsetIter.tryGetFloatByKey(&offset->x, "x") && !offsetIter.tryGetFloatByKey(&offset->x, "X")) {
             offset->x = 0.0f;
         }
+
         if (!offsetIter.tryGetFloatByKey(&offset->y, "y") && !offsetIter.tryGetFloatByKey(&offset->y, "Y")) {
             offset->y = 0.0f;
         }
+
         if (!offsetIter.tryGetFloatByKey(&offset->z, "z") && !offsetIter.tryGetFloatByKey(&offset->z, "Z")) {
             offset->z = 0.0f;
         }
+
         info->mOffset = offset;
     } else {
         info->mOffset = nullptr;
@@ -95,6 +103,7 @@ SeEmitterInfo* SeEmitterInfo::createInfo(const ByamlIter& rIter) {
     } else {
         info->mSoundSourceInfo = alSeDbFunction::createDefaultSoundSourceInfo();
     }
+
     return info;
 }
 
@@ -131,6 +140,7 @@ SeEmitterInfo* SeEmitterInfo::duplicateInfo(const SeEmitterInfo* pInfo) {
             }
         }
     }
+
     info->mSoundSourceInfo = sourceInfo;
     return info;
 }

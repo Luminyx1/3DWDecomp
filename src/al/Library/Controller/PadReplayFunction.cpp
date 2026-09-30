@@ -138,6 +138,7 @@ bool isPadRecording(u32 port) {
     if (!controller) {
         return false;
     }
+
     return controller->isRecording();
 }
 
@@ -167,6 +168,7 @@ bool isValidReplayController(u32 port) {
     if (!controller) {
         return false;
     }
+
     return controller->isValidPadReplay();
 }
 
@@ -180,6 +182,7 @@ bool isReadPadReplayData(u32 port) {
     if (!controller) {
         return false;
     }
+
     return controller->isReadPadReplayData();
 }
 }  // namespace al

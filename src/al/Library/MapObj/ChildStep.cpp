@@ -71,6 +71,7 @@ void tryInitSubActorKeeperChildStep(LiveActor* pActor, const ActorInitInfo& rInf
     if (count <= 0) {
         return;
     }
+
     initSubActorKeeperNoFile(pActor, rInfo, count);
 }
 

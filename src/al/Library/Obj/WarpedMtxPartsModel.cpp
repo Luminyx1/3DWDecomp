@@ -87,15 +87,18 @@ void WarpedMtxPartsModel::initPartsFixFile(LiveActor* pParent, const ActorInitIn
         if (jointName) {
             mJointMtx = getJointMtxPtr(mParentModel, jointName);
         }
+
         tryGetByamlV3f(&mLocalTrans, iter, "LocalTrans");
         tryGetByamlV3f(&mLocalRotate, iter, "LocalRotate");
         tryGetByamlV3f(&mLocalScale, iter, "LocalScale");
         if (!isNearZero(mLocalTrans) || !isNearZero(mLocalRotate)) {
             mIsUseLocalPos = true;
         }
+
         mIsUseFollowMtxScale = tryGetByamlKeyBoolOrFalse(iter, "UseFollowMtxScale");
         mIsUseLocalScale = tryGetByamlKeyBoolOrFalse(iter, "UseLocalScale");
     }
+
     makeActorAppeared();
 }
 
@@ -123,11 +126,13 @@ void WarpedMtxPartsModel::updatePose() {
             mtxScale.z = scale.z * mtxScale.z;
             setScale(this, mtxScale);
         }
+
         mWarpedMtx = baseMtx;
         normalize(&baseMtx);
         updatePoseMtx(this, &baseMtx);
         return;
     }
+
     sead::Matrix34f rotateMtx;
     sead::Vector3f rotate(sead::Mathf::deg2rad(mLocalRotate.x),
                           sead::Mathf::deg2rad(mLocalRotate.y),
@@ -148,6 +153,7 @@ void WarpedMtxPartsModel::updatePose() {
     } else if (mIsUseLocalScale) {
         setScale(this, mLocalScale);
     }
+
     mWarpedMtx = baseMtx * poseMtx;
     normalize(&baseMtx);
     baseMtx = baseMtx * poseMtx;
@@ -164,8 +170,10 @@ void WarpedMtxPartsModel::calcAnim() {
         if (isUpdate) {
             setBaseMtxAndCalcAnim(this, mWarpedMtx, sead::Vector3f::ones);
         }
+
         mModelKeeper->_1a = false;
     }
+
     LiveActor::calcAnim();
     if (mModelKeeper) {
         mModelKeeper->_1a = isUpdate;
@@ -197,6 +205,7 @@ void WarpedMtxPartsModel::attackSensor(HitSensor* pSelf, HitSensor* pOther) {
     if (mIsHostHidden) {
         return;
     }
+
     mParentModel->attackSensor(pSelf, pOther);
 }
 
@@ -211,6 +220,7 @@ bool WarpedMtxPartsModel::receiveMsg(const SensorMsg* pMsg, HitSensor* pOther, H
     if (mIsHostHidden) {
         return false;
     }
+
     return mParentModel->receiveMsg(pMsg, pOther, pSelf);
 }
 

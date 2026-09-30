@@ -43,6 +43,7 @@ public:
         mType = static_cast<u8>(pPair->getType());
         mValue = pPair->getValue();
     }
+
     void setType(u8 type) { mType = type; }
     void setValue(u32 value) { mValue = value; }
 

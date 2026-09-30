@@ -16,9 +16,11 @@ s32 getBusId(const char* pName) {
     if (al::isEqualString(pName, "AUX_BUS_A")) {
         return 0;
     }
+
     if (al::isEqualString(pName, "AUX_BUS_B")) {
         return 1;
     }
+
     return al::isEqualString(pName, "AUX_BUS_C") ? 2 : 0;
 }
 
@@ -31,9 +33,11 @@ s32 getBusIndex(const char* pName) {
     if (al::isEqualString(pName, "AUX_BUS_A")) {
         return 0;
     }
+
     if (al::isEqualString(pName, "AUX_BUS_B")) {
         return 1;
     }
+
     return al::isEqualString(pName, "AUX_BUS_C") ? 2 : -1;
 }
 
@@ -46,6 +50,7 @@ const char* getBusNameFromIndex(s32 index) {
     if (static_cast<u32>(index) <= 2) {
         return cBusNames[index];
     }
+
     return nullptr;
 }
 
@@ -58,6 +63,7 @@ s32 getOutDeviceId(const char* pName) {
     if (al::isEqualString(pName, "OUTPUT_DEVICE_MAIN")) {
         return 0;
     }
+
     al::isEqualString(pName, "OUTPUT_DEVICE_DRC");
     return 0;
 }
@@ -71,6 +77,7 @@ const char* getOutDeviceNameFromIndex(s32 index) {
     if (index == 0) {
         return "OUTPUT_DEVICE_MAIN";
     }
+
     return index == 1 ? "OUTPUT_DEVICE_DRC" : nullptr;
 }
 }  // namespace alAudioEffectFunction

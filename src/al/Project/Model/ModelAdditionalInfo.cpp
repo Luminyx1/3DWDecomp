@@ -12,6 +12,7 @@ ModelAdditionalInfo::ModelAdditionalInfo(const GraphicsSystemInfo* pInfo, bool i
     if (isSecondCategory) {
         mCategory = 1;
     }
+
     updateLightInfo();
 }
 

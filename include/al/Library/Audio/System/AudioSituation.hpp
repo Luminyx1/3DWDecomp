@@ -26,5 +26,6 @@ private:
 
     friend class AudioSituationDirector;
 };
+
 static_assert(sizeof(AudioSituation) == 0x18);
 }  // namespace al

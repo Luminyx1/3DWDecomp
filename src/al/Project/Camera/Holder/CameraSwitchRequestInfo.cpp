@@ -9,6 +9,7 @@ CameraSwitchRequestInfo::CameraSwitchRequestInfo() {
     for (s32 i = 0; i < 4; i++) {
         mRequests[i] = nullptr;
     }
+
     mNextPoseInfo = new CameraPoseInfo();
 }
 
@@ -44,9 +45,11 @@ bool CameraSwitchRequestInfo::tryRemoveRequestIfExist(CameraTicket* pTicket) {
             isFound = mRequests[i] == pTicket;
         }
     }
+
     if (!isFound) {
         return false;
     }
+
     mRequests[mRequestNum - 1] = nullptr;
     mRequestNum--;
     return true;
@@ -56,6 +59,7 @@ void CameraSwitchRequestInfo::reset() {
     for (s32 i = 0; i < mRequestNum; i++) {
         mRequests[i] = nullptr;
     }
+
     mRequestNum = 0;
     mInterpoleStep = -1;
     mIsKeepPose = false;

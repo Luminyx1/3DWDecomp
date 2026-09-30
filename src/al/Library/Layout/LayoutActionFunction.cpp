@@ -41,9 +41,11 @@ bool isPausedAction(IUseLayoutAction* pLayout, const char* pActionName, const ch
     if (!paneGroup || !paneGroup->isAnimPlaying()) {
         return false;
     }
+
     if (strcmp(paneGroup->getPlayingAnimName(), pActionName) != 0) {
         return false;
     }
+
     return paneGroup->getAnimFrameRate() == 0.0f;
 }
 
@@ -154,6 +156,7 @@ bool tryStartAction(IUseLayoutAction* pLayout, const char* pActionName, const ch
     if (!isExistAction(pLayout, pActionName, pPaneName)) {
         return false;
     }
+
     startAction(pLayout, pActionName, pPaneName);
     return true;
 }
@@ -182,6 +185,7 @@ bool isActionEnd(const IUseLayoutAction* pLayout, const char* pPaneName) {
     if (paneGroup && paneGroup->isAnimPlaying() && paneGroup->isAnimOneTime()) {
         return paneGroup->isAnimEnd();
     }
+
     return true;
 }
 
@@ -408,6 +412,7 @@ bool tryChangeNextPage(LayoutActor* pActor, const MessageTagDataHolder* pTagData
     if (!animator->isExistNextPage()) {
         return false;
     }
+
     animator->changeNextPage(pTagDataHolder, pReplaceTagProcessor);
     return true;
 }
@@ -475,6 +480,7 @@ bool tryStartTextAnim(LayoutActor* pActor, const char16_t* pMessage) {
         startAction(pActor, "Normal", "Font");
         return false;
     }
+
     startAction(pActor, animName.cstr(), "Font");
     return true;
 }

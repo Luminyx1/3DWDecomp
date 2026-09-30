@@ -36,6 +36,7 @@ void CameraAngleCtrlInfo::load(const ByamlIter& rIter) {
         tryGetByamlF32(&mMinAngleH, iter, "MinAngleH");
         tryGetByamlF32(&mMaxAngleH, iter, "MaxAngleH");
     }
+
     tryGetByamlF32(&mStartAngleV, iter, "AngleV");
     tryGetByamlF32(&mDefaultMinAngleV, iter, "MinAngleV");
     tryGetByamlF32(&mDefaultMaxAngleV, iter, "MaxAngleV");
@@ -43,6 +44,7 @@ void CameraAngleCtrlInfo::load(const ByamlIter& rIter) {
     if (tryGetByamlF32(&mResetAngleV, iter, "ResetAngleV")) {
         mIsSetResetAngleV = true;
     }
+
     tryGetByamlBool(&mIsInvalidReceiveRequest, iter, "IsInvalidReceiveRequest");
 }
 
@@ -55,6 +57,7 @@ void CameraAngleCtrlInfo::start(f32 angleV) {
         mAngleH = 0.0f;
         mTargetAngleH = 0.0f;
     }
+
     f32 startAngleV = mIsKeepPreAngleV ? angleV : mStartAngleV;
     f32 clampedAngleV = sead::Mathf::clamp(startAngleV, mDefaultMinAngleV, mDefaultMaxAngleV);
     mAngleV = clampedAngleV;
@@ -94,6 +97,7 @@ void CameraAngleCtrlInfo::update(const sead::Vector2f& rStick, f32 sensitivitySc
             info->maxStep = sead::Mathi::max((s32)(absDiff / 5.0f), 15);
             info->targetAngleV = resetAngleV;
         }
+
         if (mRequestInfo->step >= 0) {
             mRequestInfo->step = -1;
         }
@@ -106,6 +110,7 @@ void CameraAngleCtrlInfo::update(const sead::Vector2f& rStick, f32 sensitivitySc
         if (isNoInput) {
             step = info->maxStep <= info->step + 1 ? -1 : info->step + 1;
         }
+
         info->step = step;
     }
 
@@ -154,6 +159,7 @@ void CameraAngleCtrlInfo::update(const sead::Vector2f& rStick, f32 sensitivitySc
             moveV = -(speedV * normalize(sead::Mathf::abs(rStick.y), threshold, 1.0f)) *
                     sign(rStick.y);
         }
+
         f32 nextAngleV =
             lerpValue(targetLerpRate, targetAngleV, targetAngleV + moveV * sensitivityScale);
         mTargetAngleV = sead::Mathf::clamp(nextAngleV, mDefaultMinAngleV, mDefaultMaxAngleV);
@@ -170,18 +176,22 @@ bool CameraAngleCtrlInfo::receiveRequestFromObject(const CameraObjectRequestInfo
     if (mIsInvalidReceiveRequest) {
         return false;
     }
+
     if (!alCameraPoserFunction::isRequestSetAngleV(rInfo)) {
         return false;
     }
+
     if (mResetInfo->step >= 0) {
         return false;
     }
+
     f32 requestAngleV = alCameraPoserFunction::getRequestAngleV(rInfo);
     f32 diff = sead::Mathf::abs(diffNearAngleDegree(mAngleV, requestAngleV));
     f32 speed = mSensitivityScale * 0.5f;
     if (speed <= 0.0f || diff < speed) {
         return false;
     }
+
     RequestInfo* info = mRequestInfo;
     info->startAngleV = mAngleV;
     info->targetAngleV = requestAngleV;
@@ -201,6 +211,7 @@ void CameraAngleCtrlInfo::setAngleV(f32 angleV) {
     } else if (mDefaultMaxAngleV < angleV) {
         clampedAngleV = mDefaultMaxAngleV;
     }
+
     mAngleV = clampedAngleV;
     mTargetAngleV = clampedAngleV;
 }
@@ -213,6 +224,7 @@ bool CameraAngleCtrlInfo::isFixByRangeHV() const {
     if (mIsValidRotateH && !isNear(mMinAngleH, mMaxAngleH, 0.001f)) {
         return false;
     }
+
     return isNear(mDefaultMinAngleV, mDefaultMaxAngleV, 0.001f);
 }
 

@@ -27,6 +27,7 @@ void SupportFreezeSyncGroupHolder::initAfterPlacementSceneObj(const ActorInitInf
     for (s32 i = 0; i < mGroupNum; i++) {
         mGroups[i]->setHostSensor(sensor);
     }
+
     makeActorAppeared();
 }
 
@@ -52,6 +53,7 @@ void SupportFreezeSyncGroupHolder::regist(LiveActor* pActor, const ActorInitInfo
         mGroups[mGroupNum] = group;
         mGroupNum++;
     }
+
     group->regist(pActor);
 }
 
@@ -66,6 +68,7 @@ SupportFreezeSyncGroup* SupportFreezeSyncGroupHolder::tryFindGroup(const ActorIn
             return mGroups[i];
         }
     }
+
     return nullptr;
 }
 }  // namespace al

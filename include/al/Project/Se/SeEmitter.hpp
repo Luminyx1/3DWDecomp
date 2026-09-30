@@ -25,5 +25,6 @@ private:
     const SeEmitterInfo* mEmitterInfo;
     s32 mSilentFrames = 15;
 };
+
 static_assert(sizeof(SeEmitter) == 0x18);
 }  // namespace al

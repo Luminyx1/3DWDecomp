@@ -80,6 +80,7 @@ bool tryGetStringArg(const char** pArg, const PlacementInfo& rInfo, const char* 
     if (!rInfo.getPlacementIter().tryGetStringByKey(&str, pKey) || isEqualString("", str)) {
         return false;
     }
+
     *pArg = str;
     return true;
 }
@@ -147,6 +148,7 @@ bool tryGetClassName(const char** pName, const PlacementInfo& rInfo) {
     if (!tryGetPlacementInfoByKey(&unitConfig, rInfo, "UnitConfig")) {
         return false;
     }
+
     return tryGetStringArg(pName, unitConfig, "ParameterConfigName");
 }
 
@@ -162,6 +164,7 @@ bool tryGetPlacementInfoByKey(PlacementInfo* pOut, const PlacementInfo& rInfo, c
     if (!rInfo.getPlacementIter().tryGetIterByKey(&iter, pKey)) {
         return false;
     }
+
     pOut->set(iter, rInfo.getZoneIter(), rInfo._20, rInfo._28);
     return true;
 }
@@ -244,6 +247,7 @@ bool tryGetDisplayName(const char** pName, const PlacementInfo& rInfo) {
     if (!tryGetPlacementInfoByKey(&unitConfig, rInfo, "UnitConfig")) {
         return false;
     }
+
     return tryGetStringArg(pName, unitConfig, "DisplayName");
 }
 
@@ -278,6 +282,7 @@ bool tryGetTrans(sead::Vector3f* pTrans, const PlacementInfo& rInfo) {
     if (!tryGetArgV3f(pTrans, rInfo, "Translate")) {
         return false;
     }
+
     multZoneMtx(pTrans, rInfo);
     return true;
 }
@@ -343,9 +348,11 @@ bool tryGetRotate(sead::Vector3f* pRotate, const PlacementInfo& rInfo) {
             pRotate->y = std::asin(-mtx.m[2][0]);
             pRotate->z = std::atan2(mtx.m[1][0], mtx.m[0][0]);
         }
+
         pRotate->set(sead::Mathf::rad2deg(pRotate->x), sead::Mathf::rad2deg(pRotate->y),
                      sead::Mathf::rad2deg(pRotate->z));
     }
+
     return true;
 }
 
@@ -381,6 +388,7 @@ bool tryGetZoneMatrixTR(sead::Matrix34f* pMtx, const PlacementInfo& rInfo) {
             pMtx->setMul(parentMtx, *pMtx);
         }
     }
+
     return true;
 }
 
@@ -412,6 +420,7 @@ bool tryGetRotate_ParentY(sead::Vector3f* pRotate, const PlacementInfo& rInfo) {
             pRotate->y += zoneRotate.y;
         }
     }
+
     return true;
 }
 
@@ -431,6 +440,7 @@ bool tryGetZoneR(sead::Vector3f* pRotate, const PlacementInfo& rInfo) {
     if (!tryGetByamlV3f(&rotate, zone, "Rotate")) {
         return false;
     }
+
     pRotate->x = rotate.x;
     pRotate->y = rotate.y;
     pRotate->z = rotate.z;
@@ -468,6 +478,7 @@ bool tryGetQuat(sead::Quatf* pQuat, const PlacementInfo& rInfo) {
         *pQuat = sead::Quatf::unit;
         return false;
     }
+
     pQuat->setRPY(sead::Mathf::deg2rad(rotate.x), sead::Mathf::deg2rad(rotate.y),
                   sead::Mathf::deg2rad(rotate.z));
     return true;
@@ -523,6 +534,7 @@ bool tryGetSide(sead::Vector3f* pSide, const PlacementInfo& rInfo) {
     if (!tryGetQuat(&quat, rInfo)) {
         return false;
     }
+
     calcQuatSide(pSide, quat);
     return true;
 }
@@ -548,6 +560,7 @@ bool tryGetUp(sead::Vector3f* pUp, const PlacementInfo& rInfo) {
     if (!tryGetQuat(&quat, rInfo)) {
         return false;
     }
+
     calcQuatUp(pUp, quat);
     return true;
 }
@@ -573,6 +586,7 @@ bool tryGetFront(sead::Vector3f* pFront, const PlacementInfo& rInfo) {
     if (!tryGetQuat(&quat, rInfo)) {
         return false;
     }
+
     calcQuatFront(pFront, quat);
     return true;
 }
@@ -640,9 +654,11 @@ bool tryGetLocalSignAxis(sead::Vector3f* pDir, const PlacementInfo& rInfo, s32 a
     default:
         return false;
     }
+
     if (axis < 0) {
         *pDir *= -1;
     }
+
     return true;
 }
 
@@ -668,9 +684,11 @@ bool tryGetMatrixTR(sead::Matrix34f* pMtx, const PlacementInfo& rInfo) {
     if (!tryGetTrans(&trans, rInfo)) {
         return false;
     }
+
     if (!tryGetRotate(&rotate, rInfo)) {
         return false;
     }
+
     pMtx->makeRT({sead::Mathf::deg2rad(rotate.x), sead::Mathf::deg2rad(rotate.y),
                   sead::Mathf::deg2rad(rotate.z)},
                  trans);
@@ -700,12 +718,15 @@ bool tryGetMatrixTRS(sead::Matrix34f* pMtx, const PlacementInfo& rInfo) {
     if (!tryGetTrans(&trans, rInfo)) {
         return false;
     }
+
     if (!tryGetRotate(&rotate, rInfo)) {
         return false;
     }
+
     if (!tryGetScale(&scale, rInfo)) {
         return false;
     }
+
     pMtx->makeSRT(scale,
                   {sead::Mathf::deg2rad(rotate.x), sead::Mathf::deg2rad(rotate.y),
                    sead::Mathf::deg2rad(rotate.z)},
@@ -734,6 +755,7 @@ bool tryGetInvertMatrixTR(sead::Matrix34f* pMtx, const PlacementInfo& rInfo) {
     if (!tryGetMatrixTR(&mtx, rInfo)) {
         return false;
     }
+
     pMtx->setInverse(mtx);
     return true;
 }
@@ -1051,6 +1073,7 @@ bool tryGetPlacementInfoByIndex(PlacementInfo* pOut, const PlacementInfo& rInfo,
     if (!rInfo.getPlacementIter().tryGetIterByIndex(&iter, index)) {
         return false;
     }
+
     pOut->set(iter, rInfo.getZoneIter(), rInfo._20, rInfo._28);
     return true;
 }
@@ -1081,6 +1104,7 @@ bool tryGetPlacementInfoAndKeyNameByIndex(PlacementInfo* pOut, const char** pKey
     if (!rInfo.getPlacementIter().tryGetIterAndKeyNameByIndex(&iter, pKey, index)) {
         return false;
     }
+
     pOut->set(iter, rInfo.getZoneIter(), rInfo._20, rInfo._28);
     return true;
 }
@@ -1121,6 +1145,7 @@ s32 tryGetLayerID(const ByamlIter& rIter) {
             return layer;
         }
     }
+
     return -1;
 }
 
@@ -1134,6 +1159,7 @@ s32 tryGetLayerIDbyParents(const PlacementInfo& rInfo) {
     while (info->_20) {
         info = info->_20;
     }
+
     return tryGetLayerID(info->getZoneIter());
 }
 
@@ -1196,10 +1222,12 @@ bool isEqualPlacementID(const PlacementInfo& rInfo, const PlacementInfo& rOther)
     if (!tryGetPlacementID(&id, rInfo)) {
         return false;
     }
+
     PlacementId otherId;
     if (!tryGetPlacementID(&otherId, rOther)) {
         return false;
     }
+
     return isEqualPlacementID(id, otherId);
 }
 
@@ -1223,6 +1251,7 @@ bool tryGetRailIter(PlacementInfo* pRailInfo, const PlacementInfo& rInfo) {
     if (!tryGetLinksInfo(pRailInfo, rInfo, "Rail")) {
         return false;
     }
+
     return pRailInfo->getPlacementIter().isTypeContainer();
 }
 
@@ -1238,13 +1267,16 @@ bool tryGetLinksInfo(PlacementInfo* pOut, const PlacementInfo& rInfo, const char
     if (!tryGetPlacementInfoByKey(&links, rInfo, "Links")) {
         return false;
     }
+
     PlacementInfo link;
     if (!tryGetPlacementInfoByKey(&link, links, pLinkName)) {
         return false;
     }
+
     if (!tryGetPlacementInfoByIndex(pOut, link, 0)) {
         return false;
     }
+
     return true;
 }
 
@@ -1258,6 +1290,7 @@ bool tryGetMoveParameterRailIter(PlacementInfo* pRailInfo, const PlacementInfo& 
     if (!tryGetLinksInfo(pRailInfo, rInfo, "RailWithMoveParameter")) {
         return false;
     }
+
     return pRailInfo->getPlacementIter().isTypeContainer();
 }
 
@@ -1291,13 +1324,16 @@ bool tryGetRailPointHandlePrev(sead::Vector3f* pPos, const PlacementInfo& rInfo)
     if (!tryGetPlacementInfoByKey(&controlPoints, rInfo, "ControlPoints")) {
         return false;
     }
+
     PlacementInfo controlPoint;
     if (!tryGetPlacementInfoByIndex(&controlPoint, controlPoints, 0)) {
         return false;
     }
+
     if (!tryGetByamlV3f(pPos, controlPoint.getPlacementIter())) {
         return false;
     }
+
     multZoneMtx(pPos, rInfo);
     return true;
 }
@@ -1322,13 +1358,16 @@ bool tryGetRailPointHandleNext(sead::Vector3f* pPos, const PlacementInfo& rInfo)
     if (!tryGetPlacementInfoByKey(&controlPoints, rInfo, "ControlPoints")) {
         return false;
     }
+
     PlacementInfo controlPoint;
     if (!tryGetPlacementInfoByIndex(&controlPoint, controlPoints, 1)) {
         return false;
     }
+
     if (!tryGetByamlV3f(pPos, controlPoint.getPlacementIter())) {
         return false;
     }
+
     multZoneMtx(pPos, rInfo);
     return true;
 }
@@ -1355,9 +1394,11 @@ s32 calcLinkChildNum(const PlacementInfo& rInfo, const char* pLinkName) {
     if (!tryGetPlacementInfoByKey(&links, rInfo, "Links")) {
         return 0;
     }
+
     if (!tryGetPlacementInfoByKey(&link, links, pLinkName)) {
         return 0;
     }
+
     return link.getPlacementIter().getSize();
 }
 
@@ -1382,6 +1423,7 @@ s32 calcLinkNestNum(const PlacementInfo& rInfo, const char* pLinkName) {
     if (!tryGetPlacementInfoByKey(&links, rInfo, "Links")) {
         return 0;
     }
+
     PlacementInfo link = links;
     s32 depth = 0;
     while (tryGetPlacementInfoByKey(&link, links, pLinkName) &&
@@ -1391,6 +1433,7 @@ s32 calcLinkNestNum(const PlacementInfo& rInfo, const char* pLinkName) {
         getPlacementInfoByKey(&links, item, "Links");
         depth++;
     }
+
     return depth;
 }
 
@@ -1417,10 +1460,12 @@ void getLinksInfoByIndex(PlacementInfo* pOut, const PlacementInfo& rInfo, const 
     if (!tryGetPlacementInfoByKey(&links, rInfo, "Links")) {
         return;
     }
+
     PlacementInfo link;
     if (!tryGetPlacementInfoByKey(&link, links, pLinkName)) {
         return;
     }
+
     getPlacementInfoByIndex(pOut, link, index);
 }
 
@@ -1524,13 +1569,16 @@ bool tryGetLinksQT(sead::Quatf* pQuat, sead::Vector3f* pTrans, const ActorInitIn
     if (!tryGetLinksInfo(&info, rInfo, pLinkName)) {
         return false;
     }
+
     bool result = true;
     if (pQuat) {
         result &= tryGetQuat(pQuat, info);
     }
+
     if (pTrans) {
         result &= tryGetTrans(pTrans, info);
     }
+
     return result;
 }
 
@@ -1549,16 +1597,20 @@ bool tryGetLinksQTS(sead::Quatf* pQuat, sead::Vector3f* pTrans, sead::Vector3f* 
     if (!tryGetLinksInfo(&info, rInfo, pLinkName)) {
         return false;
     }
+
     bool result = true;
     if (pQuat) {
         result &= tryGetQuat(pQuat, info);
     }
+
     if (pTrans) {
         result &= tryGetTrans(pTrans, info);
     }
+
     if (pScale) {
         result &= tryGetScale(pScale, info);
     }
+
     return result;
 }
 
@@ -1575,6 +1627,7 @@ bool tryGetLinksMatrixTRS(sead::Matrix34f* pMtx, const ActorInitInfo& rInfo,
     if (!tryGetLinksInfo(&info, *rInfo.mPlacementInfo, pLinkName)) {
         return false;
     }
+
     return tryGetMatrixTRS(pMtx, info);
 }
 
@@ -1675,6 +1728,7 @@ s32 calcMatchNameLinkCount(const PlacementInfo& rInfo, const char* pMatch) {
     if (!tryGetPlacementInfoByKey(&links, rInfo, "Links")) {
         return 0;
     }
+
     s32 size = links.getPlacementIter().getSize();
     s32 count = 0;
     for (s32 i = 0; i < size; i++) {
@@ -1685,6 +1739,7 @@ s32 calcMatchNameLinkCount(const PlacementInfo& rInfo, const char* pMatch) {
             count++;
         }
     }
+
     return count;
 }
 
@@ -1699,6 +1754,7 @@ s32 calcLinkCountClassName(const PlacementInfo& rInfo, const char* pClassName) {
     if (!tryGetPlacementInfoByKey(&links, rInfo, "Links")) {
         return 0;
     }
+
     s32 size = links.getPlacementIter().getSize();
     s32 count = 0;
     for (s32 i = 0; i < size; i++) {
@@ -1712,6 +1768,7 @@ s32 calcLinkCountClassName(const PlacementInfo& rInfo, const char* pClassName) {
             count++;
         }
     }
+
     return count;
 }
 
@@ -1736,6 +1793,7 @@ bool tryGetZoneID(s32* pId, const PlacementInfo& rInfo) {
     if (!zone.isValid()) {
         return false;
     }
+
     return tryGetByamlS32(pId, rInfo.getZoneIter(), "ZoneId");
 }
 
@@ -1750,6 +1808,7 @@ bool tryGetDisplayOffset(sead::Vector3f* pOffset, const ActorInitInfo& rInfo) {
     if (!tryGetPlacementInfoByKey(&unitConfig, *rInfo.mPlacementInfo, "UnitConfig")) {
         return false;
     }
+
     if (!tryGetArgV3f(pOffset, unitConfig, "DisplayTranslate")) {
         return false;
     }
@@ -1758,6 +1817,7 @@ bool tryGetDisplayOffset(sead::Vector3f* pOffset, const ActorInitInfo& rInfo) {
     if (!tryGetMatrixTR(&mtx, *rInfo.mPlacementInfo)) {
         return false;
     }
+
     pOffset->rotate(mtx);
 
     if (!isSingleMode(rInfo)) {
@@ -1766,6 +1826,7 @@ bool tryGetDisplayOffset(sead::Vector3f* pOffset, const ActorInitInfo& rInfo) {
             pOffset->rotate(zoneMtx);
         }
     }
+
     return true;
 }
 
@@ -1813,6 +1874,7 @@ s32 getCameraId(const al::ActorInitInfo& rInfo) {
     if (!al::tryGetArg(&id, rInfo, "CameraId")) {
         return -1;
     }
+
     return id;
 }
 
@@ -1828,6 +1890,7 @@ bool getLinkGroupId(al::PlacementId* pId, const al::ActorInitInfo& rInfo, const 
     if (al::tryGetLinksInfo(&info, rInfo, pLinkName) && al::tryGetPlacementID(pId, info)) {
         return true;
     }
+
     return false;
 }
 
@@ -1872,6 +1935,7 @@ bool getClippingViewId(al::PlacementId* pId, const al::PlacementInfo& rInfo) {
     if (al::tryGetLinksInfo(&info, rInfo, "ViewGroup") && al::tryGetPlacementID(pId, info)) {
         return true;
     }
+
     return false;
 }
 

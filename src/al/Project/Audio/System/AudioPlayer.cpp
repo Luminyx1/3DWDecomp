@@ -133,6 +133,7 @@ u32 SeadAudioPlayer::getBankWaveArcSize(u32 id) const {
     if (file == nullptr) {
         return 0;
     }
+
     nn::atk::detail::BankFileReader reader(file);
     const nn::atk::detail::WaveIdTable* table = reader.GetWaveIdTable();
     u32 size = 0;
@@ -143,6 +144,7 @@ u32 SeadAudioPlayer::getBankWaveArcSize(u32 id) const {
             prevId = table->items[i].waveArchiveId;
         }
     }
+
     return size;
 }
 
@@ -165,9 +167,11 @@ u32 SeadAudioPlayer::getSoundItemSize(u32 id) const {
     if (type == nn::atk::SoundArchive::SoundType_Wave) {
         return getBankTotalSize(id);
     }
+
     if (type == nn::atk::SoundArchive::SoundType_Sequence) {
         return getSequenceSoundSize(id);
     }
+
     return 0;
 }
 
@@ -199,6 +203,7 @@ u32 SeadAudioPlayer::getSequenceSoundSize(u32 id) const {
             size += getBankTotalSize(bankId);
         }
     }
+
     return size;
 }
 
@@ -250,6 +255,7 @@ sead::SoundMemoryPoolHandler* SeadAudioPlayer::tryGetSoundMemoryPoolHandlerByFil
             return handler;
         }
     }
+
     return nullptr;
 }
 }  // namespace al

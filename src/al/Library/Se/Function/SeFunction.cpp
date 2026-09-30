@@ -27,6 +27,7 @@ const al::AreaObj* findSameSePlayArea(const sead::PtrArray<al::AreaObj>* pList, 
             return pList->unsafeAt(i);
         }
     }
+
     return nullptr;
 }
 }  // namespace
@@ -61,6 +62,7 @@ void SeAreaTriggeredPlayer::reset() {
             stopSeByName(this, seName);
         }
     }
+
     mAreaLists[0]->clear();
     mAreaLists[1]->clear();
     mCurListIndex = 0;
@@ -73,10 +75,12 @@ void SeAreaTriggeredPlayer::update() {
     if (mPlayerHolder == nullptr || mAreaObjDirector == nullptr) {
         return;
     }
+
     AreaObjGroup* group = tryFindAreaObjGroup(this, "SePlayArea");
     if (group == nullptr) {
         return;
     }
+
     sead::PtrArray<AreaObj>* curList = mAreaLists[mCurListIndex];
     curList->clear();
     for (s32 i = 0; i < group->mNumAreas; i++) {
@@ -88,11 +92,13 @@ void SeAreaTriggeredPlayer::update() {
             if (isPlayerDead(playerHolder, j) || !isPlayerAreaTarget(playerHolder, j)) {
                 continue;
             }
+
             isInArea |= areaObj->isInVolume(getPlayerPos(playerHolder, j));
             if (isInArea) {
                 break;
             }
         }
+
         if (isInArea) {
             curList->pushBack(areaObj);
         }
@@ -104,21 +110,25 @@ void SeAreaTriggeredPlayer::update() {
         if (findSameSePlayArea(curList, areaObj) != nullptr) {
             continue;
         }
+
         const char* seName = nullptr;
         if (!tryGetAreaObjStringArg(&seName, areaObj, "SePlayName")) {
             continue;
         }
+
         bool isDisableSeStop = false;
         tryGetAreaObjArg(&isDisableSeStop, areaObj, "IsDisableSeStop");
         if (!isDisableSeStop) {
             stopSeByName(this, seName);
         }
     }
+
     for (s32 i = 0; i < curList->size(); i++) {
         AreaObj* areaObj = curList->unsafeAt(i);
         if (findSameSePlayArea(prevList, areaObj) != nullptr) {
             continue;
         }
+
         const char* seName = nullptr;
         if (tryGetAreaObjStringArg(&seName, areaObj, "SePlayName")) {
             startSeByName(this, seName, nullptr);
@@ -128,6 +138,7 @@ void SeAreaTriggeredPlayer::update() {
     if (mAudioKeeper != nullptr) {
         mAudioKeeper->update();
     }
+
     mCurListIndex = (mCurListIndex + 1) % 2;
 }
 
@@ -163,6 +174,7 @@ s32 SeCategoryNameList::findCategoryNoFromName(const char* pName) const {
             return i;
         }
     }
+
     return -1;
 }
 
@@ -187,16 +199,19 @@ bool SeCategoryInfoList::importYaml(ByamlIter& rIter) {
     if (!rIter.tryGetIterByKey(&volumeIter, "CategoryVolume")) {
         return false;
     }
+
     s32 size = volumeIter.getSize();
     for (s32 i = 0; i < size; i++) {
         f32 volume = 0.0f;
         if (!volumeIter.tryGetFloatByIndex(&volume, i)) {
             continue;
         }
+
         const char* name = nullptr;
         if (!volumeIter.getKeyName(&name, i)) {
             continue;
         }
+
         for (s32 j = 0; j < mVolumes.size(); j++) {
             if (isEqualString(mNameList->getCategoryName(j), name)) {
                 f32* dst = mVolumes.unsafeAt(j);
@@ -205,6 +220,7 @@ bool SeCategoryInfoList::importYaml(ByamlIter& rIter) {
             }
         }
     }
+
     return true;
 }
 

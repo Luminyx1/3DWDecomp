@@ -27,6 +27,7 @@ void ClippingActorInfo::setTypeToSphere(f32 radius, const sead::Vector3f* pPos) 
     if (!pPos) {
         pPos = getTransPtr(mActor);
     }
+
     mTransPtr = pPos;
 }
 
@@ -56,6 +57,7 @@ bool ClippingActorInfo::judgeClipping(const ClippingJudge* pJudge) const {
     if (mViewGroupFarClipFlag && *mViewGroupFarClipFlag) {
         farClipLevel = 0;
     }
+
     return pJudge->isJudgedToClipFrustum(*mTransPtr, mClippingRadius, mNearClipDistance,
                                          farClipLevel);
 }

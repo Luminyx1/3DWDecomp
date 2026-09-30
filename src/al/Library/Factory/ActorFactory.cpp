@@ -44,6 +44,7 @@ const char* ActorFactory::convertName(const char* pName) const {
         if (!iter.tryGetStringByKey(&objectName, "ObjectName")) {
             continue;
         }
+
         if (!isEqualString(objectName, pName)) {
             continue;
         }
@@ -53,6 +54,7 @@ const char* ActorFactory::convertName(const char* pName) const {
             return className;
         }
     }
+
     return nullptr;
 }
 }  // namespace al

@@ -12,6 +12,7 @@ f32 calcDecibelToRatio(f32 decibel) {
     if (decibel <= -96.3f) {
         return 0.0f;
     }
+
     return powf(10.0f, decibel * 0.05f);
 }
 
@@ -24,6 +25,7 @@ f32 calcRatioToDecibel(f32 ratio) {
     if (ratio <= 0.0f) {
         return -96.3f;
     }
+
     return log10f(ratio) * 20.0f;
 }
 }  // namespace al

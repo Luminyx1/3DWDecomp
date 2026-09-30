@@ -31,5 +31,6 @@ private:
     AudioSituation* mCurrentSituations[2];
     sead::FixedPtrArray<SeCategoryParamsController, 2> mParamsControllers;
 };
+
 static_assert(sizeof(AudioSituationDirector) == 0x48);
 }  // namespace al

@@ -34,5 +34,6 @@ private:
     const char* mLastPoserName = nullptr;
     sead::PtrArray<SeListener> mListeners;
 };
+
 static_assert(sizeof(SeListenerKeeper) == 0x30);
 }  // namespace al

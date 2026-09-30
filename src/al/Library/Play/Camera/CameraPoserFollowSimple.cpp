@@ -35,6 +35,7 @@ void CameraPoserFollowSimple::start(const CameraStartInfo& rInfo) {
         reset();
         return;
     }
+
     const sead::LookAtCamera& camera = alCameraPoserFunction::getLookAtCamera(this);
     sead::Vector3f dir = {camera.getPos().x - camera.getAt().x, 0.0f,
                           camera.getPos().z - camera.getAt().z};
@@ -49,6 +50,7 @@ void CameraPoserFollowSimple::update() {
     if (alCameraPoserFunction::isChangeTarget(this) && mIsResetAngleIfSwitchTarget) {
         reset();
     }
+
     alCameraPoserFunction::calcTargetTrans(&mAt, this);
     mAt.y += mOffsetY;
     sead::Vector3f dir = {mEye.x - mAt.x, 0.0f, mEye.z - mAt.z};
@@ -57,6 +59,7 @@ void CameraPoserFollowSimple::update() {
         f32 stickH = alCameraPoserFunction::calcCameraRotateStickH(this);
         rotateVectorDegreeY(&dir, sead::Mathf::abs(stickH) < 0.3f ? 0.0f : stickH * -2.0f);
     }
+
     sead::Vector3f eyeDir = dir;
     sead::Vector3f side;
     side.setCross(dir, mUp);
@@ -66,6 +69,7 @@ void CameraPoserFollowSimple::update() {
     if (length > 0.0f) {
         eyeDir *= distance / length;
     }
+
     mEye.set(mAt + eyeDir);
 }
 

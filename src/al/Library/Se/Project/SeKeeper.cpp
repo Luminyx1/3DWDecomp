@@ -33,9 +33,11 @@ const al::SeResourceSpecificInfo* findSpecificInfo(const al::SeDataBase* pDataBa
                     goto found;
                 }
             }
+
             list = list->mNext;
         } while (list != nullptr);
     }
+
 found:
     return info != nullptr ? info : &sDefaultSpecificInfo;
 }
@@ -50,6 +52,7 @@ SeKeeper::SeKeeper(AudioSystemInfo* pInfo, SeDirector* pDirector, const char* pU
     for (s32 i = 0; i < 4; i++) {
         mSeqLocalVariables[i] = new SeqLocalVariableDefault;
     }
+
     mBiquadFilter = new BiquadFilterDefault;
 
     bool isUseModel;
@@ -94,24 +97,29 @@ SePlayParamList* SeKeeper::requestPlaySe(u32 id, const char* pEmitterName, bool 
             return nullptr;
         }
     }
+
     if (pSpecificInfo == nullptr) {
         pSpecificInfo = findSpecificInfo(mSeDataBase, id);
     }
+
     if (pPlayName == nullptr) {
         pPlayName = mPlayName;
     }
+
     SePlayParamList* paramList = mSeDirector->addRequest(soundId, emitter->getSeSource(), isHold, pSpecificInfo,
                                                          pMeInfo, mMaterialName, getWaterState(), mIsBeyondWall,
                                                          pPlayName);
     if (paramList == nullptr) {
         return paramList;
     }
+
     if (alSoundNameUtil::getSoundType(soundId, false) == 1) {
         applyKeeperParamsToParamList(paramList, soundId, false);
         if (mModifier != nullptr) {
             mModifier->modifyStartParam(soundId, paramList);
         }
     }
+
     return paramList;
 }
 
@@ -120,9 +128,11 @@ s32 SeKeeper::getWaterState() {
     if (mIsMaterialWetSingleMode) {
         state = 3;
     }
+
     if (mIsInWater) {
         state = 2;
     }
+
     return state;
 }
 
@@ -133,6 +143,7 @@ void SeKeeper::applyKeeperParamsToParamList(SePlayParamList* pParamList, u32 id,
             pParamList->setLocalVariable(variable->value, variable->index);
         }
     }
+
     if (mBiquadFilter->type != 0) {
         pParamList->setBiquadFilter(mBiquadFilter->value, mBiquadFilter->type);
     }
@@ -148,12 +159,15 @@ SePlayParamList* SeKeeper::requestHoldSe(u32 id, const char* pEmitterName, MeInf
             return nullptr;
         }
     }
+
     if (pSpecificInfo == nullptr) {
         pSpecificInfo = findSpecificInfo(mSeDataBase, id);
     }
+
     if (pPlayName == nullptr) {
         pPlayName = mPlayName;
     }
+
     SePlayParamList* paramList = mSeDirector->addHoldRequest(soundId, emitter->getSeSource(), pSpecificInfo,
                                                              pMeInfo, mMaterialName, getWaterState(), mIsBeyondWall,
                                                              pPlayName);
@@ -162,12 +176,14 @@ SePlayParamList* SeKeeper::requestHoldSe(u32 id, const char* pEmitterName, MeInf
     if (paramList == nullptr) {
         return paramList;
     }
+
     if (alSoundNameUtil::getSoundType(soundId, false) == 1) {
         applyKeeperParamsToParamList(paramList, soundId, true);
         if (mModifier != nullptr) {
             mModifier->modifyHoldParam(soundId, paramList);
         }
     }
+
     return paramList;
 }
 
@@ -180,14 +196,17 @@ s32 SeKeeper::requestPlaySeFromName(const char* pName, MeInfo* pMeInfo, bool isH
     if (pName == nullptr || mUserInfo == nullptr || mUserInfo->mPlayInfoList == nullptr) {
         return playNum;
     }
+
     const SePlayInfo* playInfo = mUserInfo->mPlayInfoList->tryFindInfo(pName);
     if (playInfo == nullptr || playInfo->mResourceInfoList == nullptr) {
         return playNum;
     }
+
     s32 resourceNum = playInfo->mResourceInfoList->getInfoNum();
     if (resourceNum < 1) {
         return playNum;
     }
+
     if (isHold) {
         for (s32 i = 0; i < resourceNum; i++) {
             const SeResourceInfo* resourceInfo =
@@ -195,6 +214,7 @@ s32 SeKeeper::requestPlaySeFromName(const char* pName, MeInfo* pMeInfo, bool isH
             if (resourceInfo == nullptr) {
                 continue;
             }
+
             const SeResourceSpecificInfo* specificInfo =
                 resourceInfo->mSpecificInfo != nullptr ? resourceInfo->mSpecificInfo : &sDefaultSpecificInfo;
             SePlayParamList* paramList = requestHoldSe(resourceInfo->mSoundId, resourceInfo->mEmitterName, pMeInfo,
@@ -202,6 +222,7 @@ s32 SeKeeper::requestPlaySeFromName(const char* pName, MeInfo* pMeInfo, bool isH
             if (resourceInfo->mLfeSend > 0.0f) {
                 paramList->setSpeakerVolumeLfeCenter(resourceInfo->mLfeSend, 0.0f);
             }
+
             playNum++;
         }
     } else {
@@ -211,6 +232,7 @@ s32 SeKeeper::requestPlaySeFromName(const char* pName, MeInfo* pMeInfo, bool isH
             if (resourceInfo == nullptr) {
                 continue;
             }
+
             const SeResourceSpecificInfo* specificInfo =
                 resourceInfo->mSpecificInfo != nullptr ? resourceInfo->mSpecificInfo : &sDefaultSpecificInfo;
             SePlayParamList* paramList =
@@ -219,9 +241,11 @@ s32 SeKeeper::requestPlaySeFromName(const char* pName, MeInfo* pMeInfo, bool isH
             if (resourceInfo->mLfeSend > 0.0f) {
                 paramList->setSpeakerVolumeLfeCenter(resourceInfo->mLfeSend, 0.0f);
             }
+
             playNum++;
         }
     }
+
     return playNum;
 }
 
@@ -230,10 +254,12 @@ SePlayParamList* SeKeeper::requestPlaySeFromNameWithParam(const char* pName, f32
     if (pName == nullptr || mUserInfo == nullptr || mUserInfo->mPlayInfoList == nullptr) {
         return nullptr;
     }
+
     const SePlayInfo* playInfo = mUserInfo->mPlayInfoList->tryFindInfo(pName);
     if (playInfo == nullptr) {
         return nullptr;
     }
+
     SePlayParamList* firstParamList = nullptr;
     s32 playNum = 0;
     s32 resourceNum = playInfo->mResourceInfoList != nullptr ? playInfo->mResourceInfoList->getInfoNum() : 0;
@@ -243,6 +269,7 @@ SePlayParamList* SeKeeper::requestPlaySeFromNameWithParam(const char* pName, f32
         if (resourceInfo == nullptr) {
             continue;
         }
+
         u32 soundId = resourceInfo->mSoundId;
         const SeResourceSpecificInfo* specificInfo =
             resourceInfo->mSpecificInfo != nullptr ? resourceInfo->mSpecificInfo : &sDefaultSpecificInfo;
@@ -252,6 +279,7 @@ SePlayParamList* SeKeeper::requestPlaySeFromNameWithParam(const char* pName, f32
             playNum++;
             continue;
         }
+
         SePlayParamList* paramList;
         if (isHold) {
             paramList = requestHoldSe(soundId, resourceInfo->mEmitterName, pMeInfo, specificInfo,
@@ -260,36 +288,47 @@ SePlayParamList* SeKeeper::requestPlaySeFromNameWithParam(const char* pName, f32
             paramList = requestPlaySe(soundId, resourceInfo->mEmitterName, playInfo->mIsLoop, pMeInfo,
                                       specificInfo, playInfo->mRequestKeeperName);
         }
+
         if (paramList == nullptr) {
             continue;
         }
+
         if (firstParamList == nullptr) {
             firstParamList = paramList;
         }
+
         if (resourceInfo->mIsSetParamMin && resourceInfo->mParamMin > input) {
             playNum++;
             continue;
         }
+
         if (resourceInfo->mVolume != nullptr) {
             paramList->setVolume(alSeDbFunction::calcLeapValue(resourceInfo->mVolume, input));
         }
+
         if (resourceInfo->mPitch != nullptr) {
             paramList->setPitch(alSeDbFunction::calcLeapValue(resourceInfo->mPitch, input));
         }
+
         if (resourceInfo->mTempo != nullptr) {
             paramList->setTempo(alSeDbFunction::calcLeapValue(resourceInfo->mTempo, input));
         }
+
         if (resourceInfo->mLocalVarNo >= 0) {
             paramList->setLocalVariable(static_cast<s32>(input), resourceInfo->mLocalVarNo);
         }
+
         if (resourceInfo->mLfeSend > 0.0f) {
             paramList->setSpeakerVolumeLfeCenter(resourceInfo->mLfeSend, 0.0f);
         }
+
         playNum++;
     }
+
     if (playNum < 1 && !isTry) {
         return nullptr;
     }
+
     return firstParamList;
 }
 
@@ -298,14 +337,17 @@ SePlayParamList* SeKeeper::requestPlaySeFromNameGetParamList(const char* pName, 
     if (pName == nullptr || mUserInfo == nullptr || mUserInfo->mPlayInfoList == nullptr) {
         return firstParamList;
     }
+
     const SePlayInfo* playInfo = mUserInfo->mPlayInfoList->tryFindInfo(pName);
     if (playInfo == nullptr || playInfo->mResourceInfoList == nullptr) {
         return firstParamList;
     }
+
     s32 resourceNum = playInfo->mResourceInfoList->getInfoNum();
     if (resourceNum < 1) {
         return firstParamList;
     }
+
     if (isHold) {
         for (s32 i = 0; i < resourceNum; i++) {
             const SeResourceInfo* resourceInfo =
@@ -313,6 +355,7 @@ SePlayParamList* SeKeeper::requestPlaySeFromNameGetParamList(const char* pName, 
             if (resourceInfo == nullptr) {
                 continue;
             }
+
             const SeResourceSpecificInfo* specificInfo =
                 resourceInfo->mSpecificInfo != nullptr ? resourceInfo->mSpecificInfo : &sDefaultSpecificInfo;
             SePlayParamList* paramList = requestHoldSe(resourceInfo->mSoundId, resourceInfo->mEmitterName, pMeInfo,
@@ -328,6 +371,7 @@ SePlayParamList* SeKeeper::requestPlaySeFromNameGetParamList(const char* pName, 
             if (resourceInfo == nullptr) {
                 continue;
             }
+
             const SeResourceSpecificInfo* specificInfo =
                 resourceInfo->mSpecificInfo != nullptr ? resourceInfo->mSpecificInfo : &sDefaultSpecificInfo;
             SePlayParamList* paramList =
@@ -338,6 +382,7 @@ SePlayParamList* SeKeeper::requestPlaySeFromNameGetParamList(const char* pName, 
             }
         }
     }
+
     return firstParamList;
 }
 
@@ -345,9 +390,11 @@ void SeKeeper::stopSe(u32 id, s32 fadeFrames, const char* pEmitterName, const ch
     if (mUserInfo == nullptr) {
         return;
     }
+
     if (pPlayName == nullptr) {
         pPlayName = mPlayName;
     }
+
     mSeDirector->stop(id, mEmitterHolder->findEmitter(pEmitterName)->getSeSource(), fadeFrames, pPlayName);
 }
 
@@ -355,22 +402,27 @@ void SeKeeper::stopAllSeFromName(const char* pName, s32 fadeFrames, const char* 
     if (pName == nullptr || mUserInfo == nullptr || mUserInfo->mPlayInfoList == nullptr) {
         return;
     }
+
     const SePlayInfo* playInfo = mUserInfo->mPlayInfoList->tryFindInfo(pName);
     if (playInfo == nullptr) {
         return;
     }
+
     if (fadeFrames <= 0) {
         fadeFrames = SePlayInfo::USE_DEFAULT_FADE_OUT_FRAME_NUM == playInfo->mFadeOutFrameNum ?
                          0 :
                          playInfo->mFadeOutFrameNum;
     }
+
     if (playInfo->mResourceInfoList == nullptr) {
         return;
     }
+
     s32 resourceNum = playInfo->mResourceInfoList->getInfoNum();
     if (resourceNum < 1) {
         return;
     }
+
     if (isAll) {
         for (s32 i = 0; i < resourceNum; i++) {
             const SeResourceInfo* resourceInfo = playInfo->mResourceInfoList->getInfoDirect(i);
@@ -402,15 +454,18 @@ void SeKeeper::stopSeFromName(const char* pName) {
     if (pName == nullptr || mUserInfo == nullptr || mUserInfo->mPlayInfoList == nullptr) {
         return;
     }
+
     const SePlayInfo* playInfo = mUserInfo->mPlayInfoList->tryFindInfo(pName);
     if (playInfo == nullptr) {
         return;
     }
+
     s32 fadeOutFrames = playInfo->mFadeOutFrameNum;
     s32 fadeFrames = SePlayInfo::USE_DEFAULT_FADE_OUT_FRAME_NUM == fadeOutFrames ? 0 : fadeOutFrames;
     if (playInfo->mResourceInfoList == nullptr) {
         return;
     }
+
     s32 resourceNum = playInfo->mResourceInfoList->getInfoNum();
     for (s32 i = 0; i < resourceNum; i++) {
         const SeResourceInfo* resourceInfo = playInfo->mResourceInfoList->getInfoDirect(i);
@@ -421,6 +476,7 @@ void SeKeeper::stopSeFromName(const char* pName) {
             if (playName == nullptr) {
                 playName = mPlayName;
             }
+
             mSeDirector->stop(soundId, mEmitterHolder->findEmitter(emitterName)->getSeSource(), fadeFrames,
                               playName);
         }
@@ -438,6 +494,7 @@ void SeKeeper::activate() {
     if (mUserInfo == nullptr) {
         return;
     }
+
     for (s32 i = 0; i < mEmitterHolder->getEmitterNum(); i++) {
         mSeDirector->reactivateSeFromSource(mEmitterHolder->getEmitter(i)->getSeSource());
     }
@@ -448,6 +505,7 @@ void SeKeeper::deactivate(bool isClipped) {
     if (mUserInfo == nullptr) {
         return;
     }
+
     for (s32 i = 0; i < mEmitterHolder->getEmitterNum(); i++) {
         mSeDirector->deactivateSeFromSource(alSeFunction::getSeSource(mEmitterHolder, i), 0, isClipped);
     }
@@ -463,6 +521,7 @@ void SeKeeper::setIsInWater(bool isInWater) {
     if (mIsInWater == isInWater) {
         return;
     }
+
     mIsInWater = isInWater;
     for (s32 i = 0; i < mEmitterHolder->getEmitterNum(); i++) {
         mSeDirector->notifiedUpdateMaterial(alSeFunction::getSeSource(mEmitterHolder, i), mMaterialName,
@@ -474,6 +533,7 @@ void SeKeeper::setIsMaterialWet(bool isWet) {
     if (mIsMaterialWet == isWet) {
         return;
     }
+
     mIsMaterialWet = isWet;
     for (s32 i = 0; i < mEmitterHolder->getEmitterNum(); i++) {
         mSeDirector->notifiedUpdateMaterial(alSeFunction::getSeSource(mEmitterHolder, i), mMaterialName,
@@ -485,6 +545,7 @@ void SeKeeper::setIsMaterialWetSingleMode(bool isWet) {
     if (mIsMaterialWetSingleMode == isWet) {
         return;
     }
+
     mIsMaterialWetSingleMode = isWet;
     for (s32 i = 0; i < mEmitterHolder->getEmitterNum(); i++) {
         mSeDirector->notifiedUpdateMaterial(alSeFunction::getSeSource(mEmitterHolder, i), mMaterialName,
@@ -500,6 +561,7 @@ void SeKeeper::tryUpdateMaterial(const char* pMaterialName) {
     } else if (mMaterialName == nullptr) {
         return;
     }
+
     mMaterialName = pMaterialName;
     for (s32 i = 0; i < mEmitterHolder->getEmitterNum(); i++) {
         mSeDirector->notifiedUpdateMaterial(alSeFunction::getSeSource(mEmitterHolder, i), mMaterialName,
@@ -528,6 +590,7 @@ void SeKeeper::setSeqLocalVariableDefault(s32 index, s32 value) {
     } else {
         return;
     }
+
     SeqLocalVariableDefault* variable = mSeqLocalVariables[slot];
     variable->value = value;
     mSeqLocalVariables[slot]->index = index;
@@ -548,12 +611,14 @@ void SeKeeper::loadSe(IAudioResourceLoader* pLoader) {
     if (mUserInfo == nullptr) {
         return;
     }
+
     for (s32 i = 0; i < (mUserInfo->mPlayInfoList != nullptr ? mUserInfo->mPlayInfoList->getInfoNum() : 0); i++) {
         const SePlayInfo* playInfo =
             mUserInfo->mPlayInfoList != nullptr ? mUserInfo->mPlayInfoList->tryGetInfo(i) : nullptr;
         if (playInfo == nullptr) {
             continue;
         }
+
         for (s32 j = 0;
              j < (playInfo->mResourceInfoList != nullptr ? playInfo->mResourceInfoList->getInfoNum() : 0); j++) {
             const SeResourceInfo* resourceInfo =
@@ -561,6 +626,7 @@ void SeKeeper::loadSe(IAudioResourceLoader* pLoader) {
             if (resourceInfo == nullptr) {
                 continue;
             }
+
             pLoader->loadSoundItem(resourceInfo->mSoundId, -1);
         }
     }
@@ -570,12 +636,14 @@ void SeKeeper::verifySe(SeadAudioPlayer* pPlayer, const char* pName) {
     if (mUserInfo == nullptr) {
         return;
     }
+
     for (s32 i = 0; i < (mUserInfo->mPlayInfoList != nullptr ? mUserInfo->mPlayInfoList->getInfoNum() : 0); i++) {
         const SePlayInfo* playInfo =
             mUserInfo->mPlayInfoList != nullptr ? mUserInfo->mPlayInfoList->tryGetInfo(i) : nullptr;
         if (playInfo == nullptr) {
             continue;
         }
+
         for (s32 j = 0;
              j < (playInfo->mResourceInfoList != nullptr ? playInfo->mResourceInfoList->getInfoNum() : 0); j++) {
             const SeResourceInfo* resourceInfo =
@@ -583,6 +651,7 @@ void SeKeeper::verifySe(SeadAudioPlayer* pPlayer, const char* pName) {
             if (resourceInfo == nullptr) {
                 continue;
             }
+
             pPlayer->getSoundDataMgr()->IsDataLoaded(resourceInfo->mSoundId, -1);
         }
     }

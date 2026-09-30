@@ -158,6 +158,7 @@ void YamlFormatter::writeBlockString(const char* pPrefix, const char* pValue) {
         writeString("%s'%s'\n", pPrefix, pValue);
         return;
     }
+
     writeString("%s|\n", pPrefix);
     mIndent++;
     while (pValue) {
@@ -166,6 +167,7 @@ void YamlFormatter::writeBlockString(const char* pPrefix, const char* pValue) {
             writeString("%s\n", pValue);
             break;
         }
+
         const StringMatcher::MatchInfo& info = matcher.getMatchInfo(1);
         StringTmp<256> line;
         matcher.getMatchedString(&line, 0);
@@ -173,6 +175,7 @@ void YamlFormatter::writeBlockString(const char* pPrefix, const char* pValue) {
         writeString("%s\n", line.cstr());
         pValue = info.mStart;
     }
+
     mIndent--;
 }
 

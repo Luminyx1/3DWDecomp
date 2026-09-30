@@ -66,22 +66,26 @@ bool tryReviseVelocityInsideAreaObj(sead::Vector3f* pPos, LiveActor* pActor, Are
     if (!pGroup || !pArea) {
         return false;
     }
+
     if (!pGroup->getInVolumeAreaObj(getTrans(pActor))) {
         calcNearestAreaObjEdgePos(pPos, pArea, getTrans(pActor));
         setTrans(pActor, *pPos);
         setVelocityZero(pActor);
         return true;
     }
+
     f32 speed = getVelocity(pActor).length();
     sead::Vector3f nextPos = getTrans(pActor) + getVelocity(pActor);
     if (pGroup->getInVolumeAreaObj(nextPos)) {
         return false;
     }
+
     calcNearestAreaObjEdgePos(pPos, pArea, nextPos);
     sead::Vector3f velocity = *pPos - getTrans(pActor);
     if (velocity.length() > speed) {
         setLength(&velocity, speed);
     }
+
     setVelocity(pActor, velocity);
     return true;
 }

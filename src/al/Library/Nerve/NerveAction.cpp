@@ -13,6 +13,7 @@ NerveAction::NerveAction() {
         collector->mNumActions++;
         return;
     }
+
     collector->mEndAction->mNextNode = this;
     collector->mEndAction = this;
     collector->mNumActions++;

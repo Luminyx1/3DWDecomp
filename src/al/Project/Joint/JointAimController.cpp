@@ -25,6 +25,7 @@ void JointAimController::calcJointCallback(s32 jointIndex, sead::Matrix34f* pMtx
     } else {
         invMtx.setInverse(*pMtx);
     }
+
     sead::Vector3f dir;
     dir.setMul(invMtx, mInfo->mTargetPos);
 
@@ -38,6 +39,7 @@ void JointAimController::calcJointCallback(s32 jointIndex, sead::Matrix34f* pMtx
                 normalizeOrZero(&dir);
             }
         }
+
         mInfo->makeTurnQuat(&quat, dir);
     }
 

@@ -49,6 +49,7 @@ void CameraPoserParallelSimple::update() {
     if (length > 0.0f) {
         dir *= distance / length;
     }
+
     mEye = mAt + dir;
 }
 

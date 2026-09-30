@@ -30,6 +30,7 @@ bool StageSwitchAccesser::init(StageSwitchDirector* pDirector, const char* pLink
     } else {
         mSwitchKind = Read;
     }
+
     mSwitchNo = mStageSwitchDirector->useSwitch(this);
     return isValid();
 }
@@ -101,6 +102,7 @@ bool StageSwitchAccesser::isEqualSwitch(const StageSwitchAccesser* pOther) const
     if (!pOther) {
         return false;
     }
+
     return mSwitchNo == pOther->mSwitchNo;
 }
 

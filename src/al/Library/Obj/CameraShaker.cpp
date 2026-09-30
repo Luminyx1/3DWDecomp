@@ -36,6 +36,7 @@ void CameraShaker::update() {
     if (mStep < 0) {
         return;
     }
+
     const ShakeParam& param = sShakeParams[mIndex];
     s32 steps = param.steps;
     if (steps <= mStep) {
@@ -43,6 +44,7 @@ void CameraShaker::update() {
         mOffset = {0.0f, 0.0f};
         return;
     }
+
     f32 stepsF = steps;
     f32 wave = sead::Mathf::cos(sead::Mathf::deg2rad(param.speed * 360.0f / stepsF * mStep));
     f32 power = param.power * 0.001f * (steps - mStep) / stepsF;
@@ -61,6 +63,7 @@ void CameraShaker::startShake(s32 index) {
     if (mStep != -1) {
         return;
     }
+
     mStep = 0;
     mIndex = index;
 }
@@ -86,6 +89,7 @@ void CameraShaker::startShakeByString(const char* pName) {
     } else {
         return;
     }
+
     startShake(index);
 }
 

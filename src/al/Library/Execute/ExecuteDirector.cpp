@@ -23,6 +23,7 @@ ExecuteDirector::~ExecuteDirector() {
             delete mDrawTables[i];
         }
     }
+
     if (mUpdateTable) {
         delete mUpdateTable;
     }
@@ -80,6 +81,7 @@ void ExecuteDirector::registerActorUpdate(LiveActor* pActor, const char* pListNa
     if (!pActor->mActorExecuteInfo) {
         pActor->initExecuteInfo(new ActorExecuteInfo(mRequestKeeper));
     }
+
     mUpdateTable->registerActor(pActor, pListName);
 }
 
@@ -92,6 +94,7 @@ void ExecuteDirector::registerActorDraw(LiveActor* pActor, const char* pListName
     if (!pActor->mActorExecuteInfo) {
         pActor->initExecuteInfo(new ActorExecuteInfo(mRequestKeeper));
     }
+
     for (s32 i = 0; i < mDrawTableNum; i++) {
         mDrawTables[i]->tryRegisterActor(pActor, pListName);
         mDrawTables[i]->tryRegisterActorModel(pActor, pListName);
@@ -107,6 +110,7 @@ void ExecuteDirector::registerActorModelDraw(LiveActor* pActor, const char* pLis
     if (!pActor->mActorExecuteInfo) {
         pActor->initExecuteInfo(new ActorExecuteInfo(mRequestKeeper));
     }
+
     for (s32 i = 0; i < mDrawTableNum; i++) {
         mDrawTables[i]->tryRegisterActorModel(pActor, pListName);
     }
@@ -239,6 +243,7 @@ void ExecuteDirector::draw(const char* pTableName) const {
         mDrawTables[0]->execute();
         return;
     }
+
     for (s32 i = 0; i < mDrawTableNum; i++) {
         if (isEqualString(pTableName, mDrawTables[i]->getName())) {
             mDrawTables[i]->execute();
@@ -270,11 +275,13 @@ bool ExecuteDirector::isActiveDraw(const char* pTableName) const {
     if (!pTableName) {
         return mDrawTables[0]->isActive();
     }
+
     for (s32 i = 0; i < mDrawTableNum; i++) {
         if (isEqualString(pTableName, mDrawTables[i]->getName())) {
             return mDrawTables[i]->isActive();
         }
     }
+
     return false;
 }
 }  // namespace al

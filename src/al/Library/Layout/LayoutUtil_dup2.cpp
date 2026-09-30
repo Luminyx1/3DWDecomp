@@ -12,10 +12,12 @@ void reinitializeShaders(LayoutActor* pActor) {
     if (LayoutKeeper* keeper = pActor->getLayoutKeeper()) {
         keeper->reinitializeShader();
     }
+
     LayoutPartsActorKeeper* partsKeeper = pActor->getLayoutPartsActorKeeper();
     if (!partsKeeper) {
         return;
     }
+
     s32 partsNum = partsKeeper->getPartsActorNum();
     for (s32 i = 0; i < partsNum; i++) {
         if (LayoutActor* parts = partsKeeper->getPartsActor(i)) {

@@ -71,6 +71,7 @@ void ModelDrawerDepthOnly::createTable() {
             optionValues[0] = "1";
             isAlphaTest = true;
         }
+
         bool isAlphaMaskModel = isEqualString(shadingModelName, "RenderMaterialAlphaMask");
         if (!isAlphaTest && isAlphaMaskModel) {
             continue;
@@ -79,6 +80,7 @@ void ModelDrawerDepthOnly::createTable() {
         if (model->_28) {
             optionValues[1] = "1";
         }
+
         if (isForceFarDepth) {
             optionValues[2] = "1";
         }
@@ -97,6 +99,7 @@ void ModelDrawerDepthOnly::createTable() {
         if (isAlphaTest) {
             meshDrawer->setAlphaTest();
         }
+
         table->insert(meshDrawer);
     }
 

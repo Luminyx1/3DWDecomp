@@ -54,6 +54,7 @@ void RailMoveMovement::exeMove() {
         if (!moveSyncRailTurn(getHost(), mSpeed)) {
             return;
         }
+
         break;
     case MoveType::Stop:
         moveSyncRail(getHost(), mSpeed);
@@ -62,6 +63,7 @@ void RailMoveMovement::exeMove() {
         if (!moveSyncRailPause(getHost(), mSpeed)) {
             return;
         }
+
         break;
     default:
         return;
@@ -80,6 +82,7 @@ void RailMoveMovement::exeStandby() {
         if (mMoveType == MoveType::Restart) {
             startNerveAction(getHost(), "MoveSign");
         }
+
         tryStopSe(getHost(), "Move");
         tryStopSe(getHost(), "MoveLv");
         tryStartSe(getHost(), "MoveEnd");
@@ -88,6 +91,7 @@ void RailMoveMovement::exeStandby() {
             startNerveAction(getHost(), "MoveSign");
             tryStartSe(getHost(), "MoveSign");
         }
+
         setNerve(this, &NrvRailMoveMovementMove);
         tryStartSe(getHost(), "Move");
         tryStartSe(getHost(), "MoveLv");

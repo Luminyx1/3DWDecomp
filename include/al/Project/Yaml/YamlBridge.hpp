@@ -42,6 +42,7 @@ public:
         if (!pData) {
             return;
         }
+
         mFormatter->startHash(pKey);
         YamlReaderBridge bridge(mFormatter);
         pData->serialize(bridge);

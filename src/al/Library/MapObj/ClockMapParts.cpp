@@ -55,6 +55,7 @@ void ClockMapParts::init(const ActorInitInfo& rInfo) {
     if (isSingleMode(rInfo)) {
         tryGetArg(&mIsNoIntroUpdate, rInfo, "NoIntroUpdate");
     }
+
     tryGetArg(&mClockAngle, rInfo, "ClockAngle");
     tryGetArg(&mRotateAxis, rInfo, "RotateAxis");
     createChildStep(rInfo, this, true);
@@ -66,15 +67,18 @@ void ClockMapParts::init(const ActorInitInfo& rInfo) {
     } else {
         mRotateSignTime = 0;
     }
+
     mRotateTimer = mRotateSignTime + mRotateTime + 1;
     mActiveTimer = mRotateTimer + mWaitTime + 1;
     if (mDelayTime >= 1) {
         startNerveAction(this, "Delay");
     }
+
     if (listenStageSwitchOnStart(
             this, FunctorV0M<ClockMapParts*, void (ClockMapParts::*)()>(this, &ClockMapParts::start))) {
         startNerveAction(this, "StandBy");
     }
+
     trySyncStageSwitchAppear(this);
     _142 = true;
 }
@@ -86,10 +90,12 @@ void ClockMapParts::start() {
     if (!isNerve(this, NrvClockMapParts.StandBy.data())) {
         return;
     }
+
     if (mDelayTime >= 1) {
         startNerveAction(this, "Delay");
         return;
     }
+
     setRotateStartNerve();
 }
 
@@ -126,40 +132,51 @@ bool ClockMapParts::receiveMsg(const SensorMsg* pMsg, HitSensor* pOther, HitSens
         if (isNerve(this, NrvClockMapParts.AssistStop.data())) {
             return true;
         }
+
         if (isExistAction(this)) {
             stopAction(this);
         }
+
         startNerveAction(this, "AssistStop");
         return true;
     }
+
     if (isMsgShowModel(pMsg)) {
         showModelIfHide(this);
         return true;
     }
+
     if (isMsgHideModel(pMsg)) {
         hideModelIfShow(this);
         return true;
     }
+
     if (isMsgIsNerveSupportFreeze(pMsg)) {
         return isNerve(this, NrvClockMapParts.AssistStop.data());
     }
+
     if (isMsgOnSyncSupportFreeze(pMsg)) {
         if (isNerve(this, NrvClockMapParts.AssistStop.data())) {
             return true;
         }
+
         if (isExistAction(this)) {
             stopAction(this);
         }
+
         startNerveAction(this, "AssistStopSync");
         return true;
     }
+
     if (isMsgOffSyncSupportFreeze(pMsg)) {
         if (!isNerve(this, NrvClockMapParts.AssistStopSync.data())) {
             return true;
         }
+
         setRestartNerve();
         return true;
     }
+
     return false;
 }
 
@@ -170,6 +187,7 @@ void ClockMapParts::setRestartNerve() {
     if (isExistAction(this)) {
         restartAction(this);
     }
+
     if (mTimer >= mRotateTimer) {
         startNerveAction(this, "AssistStopEndWait");
     } else if (mTimer >= mRotateSignTime) {
@@ -211,6 +229,7 @@ void ClockMapParts::exeRotateSign() {
     if (isFirstStep(this)) {
         startAction(this, "MiddleSign");
     }
+
     mTimer++;
     if (mTimer >= mRotateSignTime) {
         startNerveAction(this, "Rotate");

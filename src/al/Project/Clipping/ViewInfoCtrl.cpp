@@ -22,6 +22,7 @@ ViewInfoCtrl::ViewInfoCtrl(const AreaObjDirector* pAreaObjDirector,
     for (s32 i = 0; i < 0x80; i++) {
         mClippingPlacementIds[i] = nullptr;
     }
+
     mDefaultPlacementId = new ClippingPlacementId;
     mClippingPlacementIds[0] = new ClippingPlacementId;
     mClippingPlacementIdsSize = 1;
@@ -39,6 +40,7 @@ void ViewInfoCtrl::initActorInfo(ClippingActorInfo* pInfo, PlacementId* pPlaceme
         pInfo->mViewGroupFarClipFlag = &mDefaultPlacementId->mIsInViewCtrlArea;
         return;
     }
+
     for (s32 i = 0; i < mClippingPlacementIdsSize; i++) {
         ClippingPlacementId* clippingId = mClippingPlacementIds[i];
         if (clippingId->mParentId && clippingId->mParentId->isEqual(*pPlacementId)) {
@@ -46,6 +48,7 @@ void ViewInfoCtrl::initActorInfo(ClippingActorInfo* pInfo, PlacementId* pPlaceme
             return;
         }
     }
+
     ClippingPlacementId* newId = new ClippingPlacementId;
     newId->mParentId = pPlacementId;
     pInfo->mViewGroupFarClipFlag = &newId->mIsInViewCtrlArea;
@@ -67,11 +70,13 @@ void ViewInfoCtrl::update() {
     if (mIsInvalid || !mViewCtrlAreaGroup) {
         return;
     }
+
     for (s32 i = 0; i < mClippingPlacementIdsSize; i++) {
         ClippingPlacementId* clippingId = mClippingPlacementIds[i];
         clippingId->mIsInViewCtrlArea = false;
         clippingId->_9 = false;
     }
+
     for (s32 i = 0; i < mViewCtrlAreaGroup->mNumAreas; i++) {
         AreaObj* areaObj = mViewCtrlAreaGroup->getAreaObj(i);
         s32 playerNum = getPlayerNumMax(mPlayerHolder);
@@ -79,6 +84,7 @@ void ViewInfoCtrl::update() {
             if (isPlayerDead(mPlayerHolder, j)) {
                 continue;
             }
+
             if (tryIsInAreaPos(areaObj, getPlayerPos(mPlayerHolder, j))) {
                 PlacementId viewId;
                 alPlacementFunction::getClippingViewId(&viewId, *areaObj->mPlacementInfo);
@@ -86,6 +92,7 @@ void ViewInfoCtrl::update() {
                 if (clippingId) {
                     clippingId->mIsInViewCtrlArea = true;
                 }
+
                 break;
             }
         }
@@ -101,12 +108,14 @@ ViewInfoCtrl::ClippingPlacementId* ViewInfoCtrl::tryFindViewInfo(PlacementId* pP
     if (!pPlacementId) {
         return nullptr;
     }
+
     for (s32 i = 0; i < mClippingPlacementIdsSize; i++) {
         ClippingPlacementId* clippingId = mClippingPlacementIds[i];
         if (clippingId->mParentId && clippingId->mParentId->isEqual(*pPlacementId)) {
             return clippingId;
         }
     }
+
     return nullptr;
 }
 }  // namespace al

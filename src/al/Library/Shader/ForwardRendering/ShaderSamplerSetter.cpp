@@ -175,6 +175,7 @@ TextureInfo* TextureInfoArray::findTexture(const char* pName) const {
             return info;
         }
     }
+
     return nullptr;
 }
 
@@ -188,6 +189,7 @@ s32 TextureInfoArray::findTextureIndex(const char* pName) const {
             return i;
         }
     }
+
     return -1;
 }
 
@@ -231,8 +233,10 @@ void loadTextureInfoArray(TextureInfoArray* pArray, const char* pArchiveName,
         } else {
             info->mSampler = nullptr;
         }
+
         pArray->pushBack(info);
     }
+
     pArray->sort();
 }
 
@@ -254,6 +258,7 @@ void freeTextureInfo(TextureInfo* pInfo) {
         delete pInfo->mSampler;
         pInfo->mSampler = nullptr;
     }
+
     delete pInfo->mTextureData;
     delete pInfo;
 }
@@ -285,6 +290,7 @@ LutTexture::~LutTexture() {
         delete mDisplayList;
         mDisplayList = nullptr;
     }
+
     if (agl::GPUMemAddrBase(mMemBlock, 0).isValid()) {
         agl::GPUMemAddrBase(mMemBlock, 0).invalidate();
     }
@@ -359,6 +365,7 @@ void LutCurve::updateTexData() {
     for (u32 i = 0; i < mWidth; i++) {
         getAddrPtr<f32>(addr)[i] = mCurve.interpolateToF32(0, 1.0f - (f32)i / (f32)mWidth);
     }
+
     reinit();
 }
 
@@ -380,6 +387,7 @@ void CurveIo::loadResource() {
     if (!isExistArchive(archivePath.cstr())) {
         return;
     }
+
     Resource* resource = findOrCreateResource(archivePath.cstr(), nullptr);
     StringTmp<256> filePath("%s.b%s", mFileName, mParamIO.getType().cstr());
     if (resource != nullptr && resource->isExistFile(filePath)) {

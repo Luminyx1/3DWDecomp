@@ -14,10 +14,12 @@ DemoDirector::DemoDirector(s32 maxActors) : mDemoActorMax(maxActors) {
     for (s32 i = 0; i < mDemoActorMax; i++) {
         mDemoActors[i] = nullptr;
     }
+
     mAddDemoActors = new LiveActor*[mDemoActorMax];
     for (s32 i = 0; i < mDemoActorMax; i++) {
         mAddDemoActors[i] = nullptr;
     }
+
     for (s32 i = 0; i < 20; i++) {
         mOtherDemoActors[i] = nullptr;
     }
@@ -48,11 +50,13 @@ bool DemoDirector::isAnyActiveDemo() const {
     if (mActiveDemoName) {
         return true;
     }
+
     for (s32 i = 0; i < 20; i++) {
         if (mOtherDemoActors[i]) {
             return true;
         }
     }
+
     return false;
 }
 
@@ -86,6 +90,7 @@ bool DemoDirector::isOtherDemoRunning() {
             return true;
         }
     }
+
     return false;
 }
 
@@ -112,6 +117,7 @@ void DemoDirector::setIsOtherDemoRunning(LiveActor* pActor, bool isRunning) {
                 return;
             }
         }
+
         for (s32 i = 0; i < 20; i++) {
             if (!mOtherDemoActors[i]) {
                 mOtherDemoActors[i] = pActor;
@@ -146,9 +152,11 @@ bool DemoDirector::requestStartDemo(const LiveActor* pActor, const char* pName) 
     if (isOtherDemoRunning()) {
         return false;
     }
+
     if (!startDemo(pActor, pName)) {
         return false;
     }
+
     mActiveDemoName = pName;
     return true;
 }
@@ -163,12 +171,15 @@ bool DemoDirector::tryRequestStartDemo(const LiveActor* pActor, const char* pNam
     if (isOtherDemoRunning()) {
         return false;
     }
+
     if (mActiveDemoName) {
         return false;
     }
+
     if (!startDemo(pActor, pName)) {
         return false;
     }
+
     mActiveDemoName = pName;
     return true;
 }
@@ -184,10 +195,12 @@ void DemoDirector::requestEndDemo(const LiveActor* pActor, const char* pName) {
     for (s32 i = 0; i < mDemoActorNum; i++) {
         mDemoActors[i] = nullptr;
     }
+
     mDemoActorNum = 0;
     for (s32 i = 0; i < mAddDemoActorNum; i++) {
         mAddDemoActors[i] = nullptr;
     }
+
     mAddDemoActorNum = 0;
     mAudioDemoType = 0;
     _d5 = false;
@@ -217,6 +230,7 @@ void DemoDirector::removeDemoActor(LiveActor* pActor) {
                 mDemoActors[i] = mDemoActors[mDemoActorNum];
                 mDemoActors[mDemoActorNum] = nullptr;
             }
+
             return;
         }
     }
@@ -250,16 +264,19 @@ void DemoDirector::updateDemoActor(EffectSystem* pEffectSystem) {
         if (actor->mModelKeeper) {
             actor->calcAnim();
         }
+
         if (pEffectSystem && actor->getEffectKeeper()) {
             pEffectSystem->addCalcEffect(reinterpret_cast<u64>(actor->getEffectKeeper()));
         }
     }
+
     mIsUpdatingDemoActor = false;
     for (s32 i = 0; i < mAddDemoActorNum; i++) {
         LiveActor* actor = mAddDemoActors[i];
         mAddDemoActors[i] = nullptr;
         addDemoActor(actor);
     }
+
     mAddDemoActorNum = 0;
 }
 }  // namespace al

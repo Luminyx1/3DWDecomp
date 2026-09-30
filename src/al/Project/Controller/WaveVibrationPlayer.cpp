@@ -18,6 +18,7 @@ void setModulation(nn::hid::VibrationNodeConnection* pConnection,
     nn::hid::VibrationModulation modulation{volume, pitch, volume, pitch};
     pPlayer->SetModulationTo(pConnection->GetDestination(), modulation);
 }
+
 /**
  * Replaces the amplitude multipliers while preserving the other components.
  * @param pPlayer Source vibration player.
@@ -32,6 +33,7 @@ void setVolume(nn::hid::VibrationNodeConnection* pConnection,
     modulation.amplitudeHigh = value;
     pPlayer->SetModulationTo(pConnection->GetDestination(), modulation);
 }
+
 /**
  * Replaces the frequency multipliers while preserving the other components.
  * @param pPlayer Source vibration player.
@@ -165,6 +167,7 @@ void WaveVibrationPlayer::endPause(bool locked)
     } else if (mPauseLocked) {
         return;
     }
+
     mPaused = false;
     mPauseLocked = false;
     mPlayer->Play();

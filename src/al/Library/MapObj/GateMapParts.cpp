@@ -60,6 +60,7 @@ void GateMapParts::start() {
     if (!isNerve(this, NrvGateMapParts.Wait.data())) {
         return;
     }
+
     invalidateClipping(this);
     startNerveAction(this, "Open");
 }
@@ -85,6 +86,7 @@ void GateMapParts::exeOpen() {
             startNerveAction(this, "Bound");
             return;
         }
+
         startNerveAction(this, "End");
         if (mHitReactionCount < 2) {
             startHitReaction(this, "バウンド1回目");
@@ -110,9 +112,11 @@ void GateMapParts::exeBound() {
         if (mHitReactionCurrent++ < mHitReactionCount) {
             startHitReaction(this, StringTmp<32>("バウンド%d回目", mHitReactionCurrent).cstr());
         }
+
         tryStartSeWithParam(this, "BoundStart",
                             static_cast<f32>(mMaxHitReactions - mHitReactionCurrent));
     }
+
     f32 rate = calcNerveRate(this, mCurrentBoundSteps - 1);
     rate = sead::Mathf::square(mCurrentBoundRate * (rate * 2 - 1.0f));
     rate += 1.0f - sead::Mathf::square(mCurrentBoundRate);
@@ -124,6 +128,7 @@ void GateMapParts::exeBound() {
             startNerveAction(this, "Bound");
             return;
         }
+
         startNerveAction(this, "End");
     }
 }

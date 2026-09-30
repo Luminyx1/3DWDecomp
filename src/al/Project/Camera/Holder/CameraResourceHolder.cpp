@@ -102,6 +102,7 @@ bool CameraResourceHolder::tryFindParamResource(ByamlIter* pTicket,
             }
         }
     }
+
     return false;
 }
 
@@ -118,6 +119,7 @@ bool CameraResourceHolder::tryFindCameraParamList(ByamlIter* pParamList,
     if (pPlacementId && pPlacementId->mUnitConfigName && *pPlacementId->mUnitConfigName) {
         return tryFindCameraParamList(pParamList, pPlacementId->mUnitConfigName, pParamName);
     }
+
     return tryFindCameraParamList(pParamList, mStageName, pParamName);
 }
 
@@ -156,6 +158,7 @@ bool CameraResourceHolder::tryFindParamResource(ByamlIter* pTicket,
             }
         }
     }
+
     return false;
 }
 
@@ -171,6 +174,7 @@ bool CameraResourceHolder::tryFindCameraParamList(ByamlIter* pParamList,
             }
         }
     }
+
     return tryFindCameraParamList(pParamList, stageName, pParamName);
 }
 
@@ -195,6 +199,7 @@ bool CameraResourceHolder::tryFindParamResource(ByamlIter* pTicket,
             }
         }
     }
+
     return false;
 }
 
@@ -207,6 +212,7 @@ s32 CameraResourceHolder::calcEntranceCameraParamNum() const {
     if (!tryFindCameraParamList(&startTickets, mStageName, "StartTickets")) {
         return 0;
     }
+
     return startTickets.getSize();
 }
 
@@ -223,6 +229,7 @@ bool CameraResourceHolder::tryFindCameraParamList(ByamlIter* pParamList, const c
     if (!entry || !entry->cameraParam) {
         return false;
     }
+
     return entry->cameraParam->tryGetIterByKey(pParamList, pParamName);
 }
 
@@ -235,6 +242,7 @@ s32 CameraResourceHolder::calcEntranceCameraParamNum(s32 zoneId) const {
     if (zoneId < 0) {
         return calcEntranceCameraParamNum();
     }
+
     ByamlIter startTickets;
     for (s32 i = 0; i < mNumEntries; i++) {
         Entry* entry = mEntries[i];
@@ -243,6 +251,7 @@ s32 CameraResourceHolder::calcEntranceCameraParamNum(s32 zoneId) const {
             return 1;
         }
     }
+
     return 0;
 }
 
@@ -269,6 +278,7 @@ void CameraResourceHolder::getEntranceCameraParamResource(ByamlIter* pTicket, s3
         getEntranceCameraParamResource(pTicket, index);
         return;
     }
+
     ByamlIter startTickets;
     for (s32 i = 0; i < mNumEntries; i++) {
         Entry* entry = mEntries[i];
@@ -290,6 +300,7 @@ CameraResourceHolder::Entry* CameraResourceHolder::findCameraResource(const char
             return mEntries[i];
         }
     }
+
     return nullptr;
 }
 
@@ -315,8 +326,10 @@ CameraResourceHolder::tryFindCameraResource(const PlacementId* pPlacementId) con
         if (!stageName) {
             stageName = mStageName;
         }
+
         return findCameraResource(stageName);
     }
+
     return findCameraResource(mStageName);
 }
 

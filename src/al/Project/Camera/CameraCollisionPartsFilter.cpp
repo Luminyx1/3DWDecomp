@@ -19,6 +19,7 @@ bool CameraCollisionPartsFilter::isInvalidParts(const CollisionParts& rParts) co
     if (!rParts.mSpecialPurpose) {
         return false;
     }
+
     return !isEqualString("CameraMoveLimit", rParts.mSpecialPurpose);
 }
 

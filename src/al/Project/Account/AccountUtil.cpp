@@ -54,6 +54,7 @@ bool tryInitAccount() {
         sAccountInfo.mUid = uids[0];
         nn::account::GetNickname(&sAccountInfo.mNickname, sAccountInfo.mUid);
     }
+
     return true;
 }
 

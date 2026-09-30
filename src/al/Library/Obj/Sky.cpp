@@ -30,6 +30,7 @@ void Sky::init(const ActorInitInfo& rInfo) {
         makeActorDead();
         return;
     }
+
     trySyncStageSwitchAppear(this);
 }
 

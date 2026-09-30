@@ -29,6 +29,7 @@ void AudioMixVolume::update() {
     if (mRemainFrames <= -1.0f) {
         return;
     }
+
     mRemainFrames += -1.0f;
     if (mRemainFrames <= 0.0f) {
         mVolumeDb = calcRatioToDecibel(mTargetRatio);
@@ -36,6 +37,7 @@ void AudioMixVolume::update() {
         mRemainFrames = -1.0f;
         return;
     }
+
     mCurRatio += mStep;
     mVolumeDb = calcRatioToDecibel(mCurRatio);
 }
@@ -56,6 +58,7 @@ f32 AudioMixVolume::calcLinkedVolumeDecibel() const {
     if (mLinkedVolume == nullptr) {
         return mVolumeDb;
     }
+
     return mVolumeDb + mLinkedVolume->calcLinkedVolumeDecibel();
 }
 }  // namespace al

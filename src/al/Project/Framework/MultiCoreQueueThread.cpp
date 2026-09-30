@@ -45,6 +45,7 @@ void MultiCoreQueueThread::requestExecute(MultiCoreQueueExecutor* pExecutor) {
     if (isQueued(pExecutor)) {
         return;
     }
+
     if (mExecutorNum < mMaxExecutors) {
         mExecutors[mExecutorNum] = pExecutor;
         mExecutorNum++;
@@ -64,6 +65,7 @@ bool MultiCoreQueueThread::isQueued(MultiCoreQueueExecutor* pExecutor) {
             return true;
         }
     }
+
     return false;
 }
 
@@ -74,9 +76,11 @@ void MultiCoreQueueThread::waitDone() {
     if (mExecutorNum <= 0) {
         return;
     }
+
     for (s32 i = 0; i < mExecutorNum; i++) {
         mDoneQueue.pop(sead::MessageQueue::BlockType::Blocking);
     }
+
     mExecutorNum = 0;
 }
 

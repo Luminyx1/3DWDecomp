@@ -75,6 +75,7 @@ void RollingCubeMapParts::init(const ActorInitInfo& rInfo) {
         mMoveLimitPartsModel->initPartsSuffix(this, rInfo, model.cstr(), "MoveLimit",
                                               mMoveLimitMtx, false);
     }
+
     sead::BoundBox3f boundBox;
     if (isExistModelResourceYaml(this, "BoxInfo", nullptr) &&
         tryGetByamlBox3f(&boundBox, ByamlIter(getModelResourceYaml(this, "BoxInfo", nullptr)))) {
@@ -82,15 +83,18 @@ void RollingCubeMapParts::init(const ActorInitInfo& rInfo) {
     } else {
         mRollingCubePoseKeeper = createRollingCubePoseKeeper(this, rInfo);
     }
+
     bool isFloorTouchStart = true;
     tryGetArg(&isFloorTouchStart, rInfo, "IsFloorTouchStart");
     if (!isFloorTouchStart) {
         startNerveAction(this, "Start");
     }
+
     mEffectMtxSetter = tryCreateEffectMtxSetter(this, "EffectMtxSetter");
     if (mEffectMtxSetter) {
         mEffectMtxSetter->setMtxPtr(&mLandEffectMtx, "LandEffectMtx");
     }
+
     f32 clippingRadius = 0.0f;
     calcRollingCubeClippingInfo(&mClippingTrans, &clippingRadius, mRollingCubePoseKeeper, 0.0f);
     setClippingInfo(this, clippingRadius, &mClippingTrans);
@@ -118,6 +122,7 @@ bool RollingCubeMapParts::receiveMsg(const SensorMsg* pMsg, HitSensor* pOther, H
         startNerveAction(this, "Start");
         return true;
     }
+
     return false;
 }
 
@@ -128,6 +133,7 @@ void RollingCubeMapParts::control() {
     if (mMoveLimitMtx) {
         mMoveLimitMtx->makeQT(mInitialPoseQuat, getTrans(this));
     }
+
     calcMtxLandEffect(&mLandEffectMtx, mRollingCubePoseKeeper, getQuat(this), getTrans(this));
 }
 
@@ -152,10 +158,12 @@ void RollingCubeMapParts::setNerveNextMovement(bool isNextFallKey) {
         startNerveAction(this, "Rotate");
         return;
     }
+
     if (isNextFallKey) {
         startNerveAction(this, "Fall");
         return;
     }
+
     s32 axis = sead::Mathi::abs(
         static_cast<s32>(calcNearVecFromAxis3(nullptr, sead::Vector3f::ey, getQuat(this))));
     switch (axis) {
@@ -207,6 +215,7 @@ void RollingCubeMapParts::exeRotate() {
         mCurrentPoseTrans = getTrans(this);
         mMovementTime = getMovementTime() - 1;
     }
+
     calcCurrentKeyQT(getQuatPtr(this), getTransPtr(this), mRollingCubePoseKeeper, mCurrentPoseQuat,
                      mCurrentPoseTrans, calcNerveSquareInRate(this, mMovementTime));
     if (isGreaterEqualStep(this, mMovementTime)) {
@@ -285,6 +294,7 @@ bool RollingCubeMapParts::updateSlide() {
         mCurrentPoseTrans = getTrans(this);
         mMovementTime = getMovementTime() - 1;
     }
+
     calcCurrentKeyQT(getQuatPtr(this), getTransPtr(this), mRollingCubePoseKeeper, mCurrentPoseQuat,
                      mCurrentPoseTrans, calcNerveSquareInRate(this, mMovementTime));
     return isGreaterEqualStep(this, mMovementTime);
@@ -366,6 +376,7 @@ void RollingCubeMapParts::exeStop() {
         if (isFirstStep(this)) {
             startHitReactionDisappear(this);
         }
+
         if (isStep(this, 1)) {
             setQuat(this, mInitialPoseQuat);
             setTrans(this, mInitialPoseTrans);

@@ -198,6 +198,7 @@ al::SeKeeper* getSeKeeper(al::IUseAudioKeeper* pUser) {
     if (pUser->getAudioKeeper() == nullptr) {
         return nullptr;
     }
+
     return pUser->getAudioKeeper()->getSeKeeper();
 }
 
@@ -216,6 +217,7 @@ void loadSoundArchive(al::IAudioResourceLoader* pLoader, const al::SeArchiveLoad
             pLoader->loadSoundItem(bankList->getInfo(i)->mSoundId, -1);
         }
     }
+
     const al::AudioInfoList<al::SeUserLoadingInfo>* userList = pArchiveInfo->mUserLoadingInfoList;
     for (s32 i = 0; i < (userList != nullptr ? userList->getInfoNum() : 0); i++) {
         const char* name = userList->getInfo(i)->mName;
@@ -223,6 +225,7 @@ void loadSoundArchive(al::IAudioResourceLoader* pLoader, const al::SeArchiveLoad
         if (pUserInfoList != nullptr && name != nullptr) {
             userInfo = pUserInfoList->tryFindInfo(name);
         }
+
         const al::AudioInfoList<al::SePlayInfo>* playList = userInfo != nullptr ? userInfo->mPlayInfoList : nullptr;
         for (s32 j = 0; j < (playList != nullptr ? playList->getInfoNum() : 0); j++) {
             const al::AudioInfoList<al::SeResourceInfo>* resourceList = playList->getInfo(j)->mResourceInfoList;

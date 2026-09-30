@@ -80,9 +80,11 @@ SeEmitter::SeEmitter(AudioSystemInfo* pInfo, const SeEmitterInfo* pEmitterInfo, 
             source = new SeSource3DCircle(mtxPose, &circleInfo->mRadius, pInfo, circleInfo->mIsCircleRotated);
         }
     }
+
     if (source != nullptr) {
         source->init();
     }
+
     mSeSource = source;
 }
 
@@ -94,11 +96,13 @@ bool SeEmitter::update() {
     if (mSilentFrames < 1) {
         return true;
     }
+
     if (mSeSource->isPlayingSound()) {
         mSilentFrames = 15;
     } else if (mSilentFrames >= 0) {
         mSilentFrames--;
     }
+
     return false;
 }
 

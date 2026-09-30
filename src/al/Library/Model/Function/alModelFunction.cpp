@@ -49,22 +49,28 @@ void calcBoundingBox(sead::BoundBox3f* pBox, const alModelCafe* pModel) {
         if (box.getMin().x < min.x) {
             min.x = box.getMin().x;
         }
+
         if (box.getMin().y < min.y) {
             min.y = box.getMin().y;
         }
+
         if (box.getMin().z < min.z) {
             min.z = box.getMin().z;
         }
+
         if (box.getMax().x > max.x) {
             max.x = box.getMax().x;
         }
+
         if (box.getMax().y > max.y) {
             max.y = box.getMax().y;
         }
+
         if (box.getMax().z > max.z) {
             max.z = box.getMax().z;
         }
     }
+
     pBox->set(min, max);
 }
 

@@ -23,6 +23,7 @@ private:
     f32 mTarget = 0.0f;
     f32 mStep = 0.0f;
 };
+
 static_assert(sizeof(LinearValueController) == 0xc);
 
 class BgmLpfController {
@@ -37,6 +38,7 @@ private:
     LinearValueController* mFreqController;
     bool mIsReached = true;
 };
+
 static_assert(sizeof(BgmLpfController) == 0x18);
 
 class BgmPitchController {
@@ -56,6 +58,7 @@ private:
     f32 mModulationPhase = 0.0f;
     f32 mModulationSpeed = 0.0f;
 };
+
 static_assert(sizeof(BgmPitchController) == 0x20);
 
 class BgmVolumeController {
@@ -74,5 +77,6 @@ private:
     LinearValueController* mVolumeController;
     bool mIsReached = true;
 };
+
 static_assert(sizeof(BgmVolumeController) == 0x18);
 }  // namespace al

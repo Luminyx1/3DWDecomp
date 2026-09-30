@@ -14,6 +14,7 @@ const char* getAnimName(const al::ActionAnimCtrlInfo* pCtrlInfo,
     if (!animName) {
         animName = pCtrlInfo->actionName;
     }
+
     return animName;
 }
 

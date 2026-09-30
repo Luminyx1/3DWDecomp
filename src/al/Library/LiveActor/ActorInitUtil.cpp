@@ -60,6 +60,7 @@ void initActorModel(LiveActor* pActor, const ActorInitInfo& rInfo, const Resourc
     if (!tryGetActorInitFileIter(&iter, pResource, "InitModel", pSuffix)) {
         return;
     }
+
     const char* animArc = nullptr;
     iter.tryGetStringByKey(&animArc, "AnimArc");
     const char* textureArc = nullptr;
@@ -114,6 +115,7 @@ void initActorLod(LiveActor* pActor, const ActorInitInfo& rInfo, const Resource*
     if (!tryGetActorInitFileIter(&iter, pResource, "InitLod", pSuffix)) {
         return;
     }
+
     f32 switchDistances[4] = {15000.0f, 30000.0f, 3.4028235e38f, 3.4028235e38f};
     s32 lodNum = 0;
     for (s32 i = 0; i < 4; i++) {
@@ -154,6 +156,7 @@ void initActorExecutor(LiveActor* pActor, const ActorInitInfo& rInfo, const Reso
     if (!tryGetActorInitFileIter(&iter, pResource, "InitExecutor", pSuffix)) {
         return;
     }
+
     const char* updateCategoryName = nullptr;
     const char* drawCategoryName = nullptr;
     ByamlIter listIter;
@@ -169,6 +172,7 @@ void initActorExecutor(LiveActor* pActor, const ActorInitInfo& rInfo, const Reso
             initExecutorUpdate(pActor, rInfo, updateCategoryName);
         }
     }
+
     if (iter.tryGetIterByKey(&listIter, "Drawer")) {
         if (listIter.isTypeArray()) {
             ByamlIter entryIter;
@@ -191,9 +195,11 @@ bool initActorPoseKeeper(const char* pPose, LiveActor* pActor) {
             break;
         }
     }
+
     if (poseIndex == -1) {
         return false;
     }
+
     sActorPoseTable[poseIndex].func(pActor);
     return true;
 }
@@ -204,10 +210,12 @@ void initActorPose(LiveActor* pActor, const ActorInitInfo& rInfo, const Resource
     if (!tryGetActorInitFileIter(&iter, pResource, "InitPose", pSuffix)) {
         return;
     }
+
     const char* pose = nullptr;
     if (!iter.tryGetStringByKey(&pose, "Pose") || !pose) {
         return;
     }
+
     initActorPoseKeeper(pose, pActor);
 }
 
@@ -217,10 +225,12 @@ void initActorScale(LiveActor* pActor, const ActorInitInfo& rInfo, const Resourc
     if (!tryGetActorInitFileIter(&iter, pResource, "InitScale", pSuffix)) {
         return;
     }
+
     sead::Vector3f scale = {1.0f, 1.0f, 1.0f};
     if (!tryGetByamlScale(&scale, iter, "Scale")) {
         return;
     }
+
     const sead::Vector3f& actorScale = getScale(pActor);
     scale.x = scale.x * actorScale.x;
     scale.y = scale.y * actorScale.y;
@@ -236,6 +246,7 @@ void initActorPrePassLight(LiveActor* pActor, const ActorInitInfo& rInfo,
                                         pSuffix)) {
         return;
     }
+
     initActorPrePassLightKeeper(pActor, pResource, rInfo, iter, fileName.cstr());
 }
 
@@ -245,24 +256,29 @@ void initActorSensor(LiveActor* pActor, const ActorInitInfo& rInfo, const Resour
     if (!tryGetActorInitFileIter(&iter, pResource, "InitSensor", pSuffix)) {
         return;
     }
+
     s32 sensorNum = iter.getSize();
     if (sensorNum <= 0) {
         return;
     }
+
     pActor->initHitSensor(sensorNum);
     for (s32 i = 0; i < sensorNum; i++) {
         ByamlIter sensorIter;
         if (!iter.tryGetIterByIndex(&sensorIter, i)) {
             continue;
         }
+
         const char* name = nullptr;
         if (!sensorIter.tryGetStringByKey(&name, "Name")) {
             continue;
         }
+
         const char* typeName = nullptr;
         if (!sensorIter.tryGetStringByKey(&typeName, "Type")) {
             continue;
         }
+
         f32 radius = 0.0f;
         sensorIter.tryGetFloatByKey(&radius, "Radius");
         s32 maxCount = 8;
@@ -273,6 +289,7 @@ void initActorSensor(LiveActor* pActor, const ActorInitInfo& rInfo, const Resour
         if (type == HitSensorType::CollisionParts) {
             maxCount = 0;
         }
+
         addHitSensor(pActor, rInfo, name, static_cast<u32>(type), radius, maxCount, offset);
         const char* jointName = nullptr;
         sensorIter.tryGetStringByKey(&jointName, "Joint");
@@ -288,23 +305,27 @@ void initActorCollision(LiveActor* pActor, const ActorInitInfo& rInfo, Resource*
     if (!tryGetActorInitFileIter(&iter, pResource, "InitCollision", pSuffix)) {
         return;
     }
+
     const char* name = nullptr;
     iter.tryGetStringByKey(&name, "Name");
     StringTmp<256> collisionName;
     if (!name) {
         name = getBaseName(pResource->getArchiveName());
     }
+
     const char* sensorName = nullptr;
     HitSensor* sensor = nullptr;
     if (iter.tryGetStringByKey(&sensorName, "Sensor")) {
         sensor = getHitSensor(pActor, sensorName);
     }
+
     const char* jointName = nullptr;
     iter.tryGetStringByKey(&jointName, "Joint");
     const sead::Matrix34f* jointMtx = nullptr;
     if (jointName) {
         jointMtx = getJointMtxPtr(pActor, jointName);
     }
+
     initActorCollisionWithResource(pActor, pResource, name, sensor, jointMtx, pSuffix);
 }
 
@@ -314,6 +335,7 @@ void initActorCollider(LiveActor* pActor, const ActorInitInfo& rInfo, const Reso
     if (!tryGetActorInitFileIter(&iter, pResource, "InitCollider", pSuffix)) {
         return;
     }
+
     f32 radius = 0.0f;
     iter.tryGetFloatByKey(&radius, "Radius");
     sead::Vector3f offset = sead::Vector3f::zero;
@@ -327,10 +349,12 @@ void initActorEffect(LiveActor* pActor, const ActorInitInfo& rInfo, const Resour
     if (!tryGetActorInitFileIter(&iter, pResource, "InitEffect", pSuffix)) {
         return;
     }
+
     const char* name = nullptr;
     if (!iter.tryGetStringByKey(&name, "Name")) {
         return;
     }
+
     initActorEffectKeeper(pActor, rInfo, name, false);
 }
 
@@ -356,6 +380,7 @@ void initActorOceanWave(LiveActor* pActor, const ActorInitInfo& rInfo, const Res
     if (!tryGetActorInitFileIter(&iter, pResource, "InitOceanWave", pSuffix)) {
         return;
     }
+
     initActorOceanWaveKeeper(pActor, rInfo, iter);
 }
 
@@ -370,10 +395,12 @@ void initActorGroupClipping(LiveActor* pActor, const ActorInitInfo& rInfo,
     if (rClippingIter.isExistKey("NoGroupClipping")) {
         return;
     }
+
     ByamlIter groupIter;
     if (!rClippingIter.tryGetIterByKey(&groupIter, "GroupClipping")) {
         return;
     }
+
     s32 maxCount = 16;
     groupIter.tryGetIntByKey(&maxCount, "MaxCount");
     initGroupClipping(pActor, rInfo, maxCount);
@@ -385,16 +412,19 @@ void initActorClippingFile(LiveActor* pActor, const ActorInitInfo& rInfo,
     if (!tryGetActorInitFileIter(&iter, pResource, "InitClipping", pSuffix)) {
         return;
     }
+
     bool isInvalidate = false;
     iter.tryGetBoolByKey(&isInvalidate, "Invalidate");
     if (isInvalidate) {
         invalidateClipping(pActor);
     }
+
     bool isNoCollisionClipping = false;
     iter.tryGetBoolByKey(&isNoCollisionClipping, "NoCollisionClipping");
     if (isNoCollisionClipping) {
         setNoCollisionClip(pActor, true);
     }
+
     f32 radius = 0.0f;
     if (iter.tryGetFloatByKey(&radius, "Radius")) {
         setClippingInfo(pActor, radius, nullptr);
@@ -404,28 +434,34 @@ void initActorClippingFile(LiveActor* pActor, const ActorInitInfo& rInfo,
         f32 maxXYZ = sead::Mathf::max(maxXY, sead::Mathf::abs(scale.z));
         setClippingInfo(pActor, calcModelBoundingSphereRadius(pActor) * maxXYZ, nullptr);
     }
+
     f32 nearDistance = 0.0f;
     f32 farDistance = 0.0f;
     if (iter.tryGetFloatByKey(&nearDistance, "NearClipDistance")) {
         setClippingNearDistance(pActor, nearDistance);
     }
+
     if (iter.tryGetFloatByKey(&farDistance, "FarAreaDistance") &&
         iter.tryGetFloatByKey(&nearDistance, "NearAreaDistance")) {
         setClippingNearFarDistance(pActor, nearDistance, farDistance);
     }
+
     sead::Vector3f offset = sead::Vector3f::zero;
     if (tryGetByamlV3f(&offset, iter, "Offset")) {
         setClippingOffset(pActor, offset);
     }
+
     f32 shadowDisappearDistance = 0.0f;
     if (iter.tryGetFloatByKey(&shadowDisappearDistance, "ShadowDisappearDistance") &&
         shadowDisappearDistance > 0.0f) {
         setShadowClippingDistance(pActor, shadowDisappearDistance);
     }
+
     f32 drawClippingRadius = 0.0f;
     if (iter.tryGetFloatByKey(&drawClippingRadius, "DrawClippingRadius")) {
         setDrawClippingRadius(pActor, drawClippingRadius);
     }
+
     initActorGroupClipping(pActor, rInfo, iter);
 }
 
@@ -439,9 +475,11 @@ void initActorShadowMask(LiveActor* pActor, const ActorInitInfo& rInfo,
     if (!tryGetActorInitFileIterAndName(&iter, &fileName, pResource, "InitShadowMask", pSuffix)) {
         return;
     }
+
     if (iter.isExistKey("IgnoreShadowMaskYaml")) {
         return;
     }
+
     initActorShadowKeeper(pActor, rInfo, iter, fileName.cstr(), rFileName, rArchiveName);
     if (isUsingDepthShadow) {
         invalidateShadowIntensityAll(pActor);
@@ -454,6 +492,7 @@ void initActorFlag(LiveActor* pActor, const ActorInitInfo& rInfo, const Resource
     if (!tryGetActorInitFileIter(&iter, pResource, "InitFlag", pSuffix)) {
         return;
     }
+
     ByamlIter materialCodeIter;
     if (iter.tryGetIterByKey(&materialCodeIter, "MaterialCode")) {
         validateMaterialCode(pActor);
@@ -466,6 +505,7 @@ void initActorItem(LiveActor* pActor, const ActorInitInfo& rInfo, const Resource
     if (!tryGetActorInitFileIterAndName(nullptr, &fileName, pResource, "InitItem", pSuffix)) {
         return;
     }
+
     initActorItemKeeper(pActor, rInfo, rArchiveName.cstr(), fileName.cstr());
 }
 
@@ -475,6 +515,7 @@ void initActorScore(LiveActor* pActor, const ActorInitInfo& rInfo, const Resourc
     if (!tryGetActorInitFileIter(&iter, pResource, "InitScore", pSuffix)) {
         return;
     }
+
     pActor->initScoreKeeper();
     pActor->mScoreKeeper->init(iter);
 }
@@ -485,20 +526,24 @@ void initActorScreenPoint(LiveActor* pActor, const ActorInitInfo& rInfo,
     if (!tryGetActorInitFileIter(&iter, pResource, "InitScreenPoint", pSuffix)) {
         return;
     }
+
     s32 targetNum = iter.getSize();
     if (targetNum <= 0) {
         return;
     }
+
     pActor->initScreenPointKeeper(targetNum);
     for (s32 i = 0; i < targetNum; i++) {
         ByamlIter targetIter;
         if (!iter.tryGetIterByIndex(&targetIter, i)) {
             continue;
         }
+
         const char* name = nullptr;
         if (!targetIter.tryGetStringByKey(&name, "Name")) {
             continue;
         }
+
         f32 radius = 0.0f;
         targetIter.tryGetFloatByKey(&radius, "Radius");
         sead::Vector3f offset = sead::Vector3f::zero;
@@ -514,6 +559,7 @@ void initActorAlphaCtrlFile(LiveActor* pActor, const ActorInitInfo& rInfo,
     if (!rInfo.mActorSceneInfo.isSingleMode) {
         return;
     }
+
     pActor->initActorAlphaCtrl(ActorAlphaCtrl::tryCreate(pActor, pResource, pSuffix), rInfo);
 }
 
@@ -530,6 +576,7 @@ void initActorAction(LiveActor* pActor, const sead::SafeString& rFileName, const
     if (!pActor->mModelKeeper) {
         return;
     }
+
     if (!tryStartAction(pActor, actionName) && pActor->mActionKeeper) {
         pActor->mActionKeeper->startAction(actionName);
     }
@@ -539,6 +586,7 @@ void initFarLodActor(LiveActor* pActor, const ActorInitInfo& rInfo) {
     if (calcLinkChildNum(rInfo, "FarLOD") < 1) {
         return;
     }
+
     ActorInitInfo farLodInfo;
     PlacementInfo farLodPlacementInfo;
     getLinksInfoByIndex(&farLodPlacementInfo, *rInfo.mPlacementInfo, "FarLOD", 0);
@@ -554,6 +602,7 @@ void initFarLodActor(LiveActor* pActor, const ActorInitInfo& rInfo) {
     if (!farLodActor->getSceneInfo()) {
         initActorSceneInfo(farLodActor, rInfo);
     }
+
     farLodActor->initPoseKeeper(pActor->mActorPoseKeeper);
     initActorModel(farLodActor, rInfo, farLodResource, nullptr, farLodArchiveName);
     initActorLod(farLodActor, rInfo, farLodResource, nullptr);
@@ -577,6 +626,7 @@ LiveActor* createActorFromFactory(const ActorFactory& rFactory, const ActorInitI
     if (!creator) {
         return nullptr;
     }
+
     const char* displayName;
     getDisplayName(&displayName, rInfo);
     LiveActor* actor = creator(displayName);
@@ -603,9 +653,11 @@ const char* getChangeModelName(const ActorInitInfo& rInfo) {
     if (alPlacementFunction::tryGetModelName(&name, rInfo)) {
         return name;
     }
+
     if (tryGetObjectName(&name, rInfo)) {
         return name;
     }
+
     return nullptr;
 }
 
@@ -617,6 +669,7 @@ void initActorImpl(LiveActor* pActor, const ActorInitInfo& rInfo,
     if (!pActor->getSceneInfo()) {
         initActorSceneInfo(pActor, rInfo);
     }
+
     initActorPose(pActor, rInfo, resource, pSuffix);
     initActorSRT(pActor, rInfo);
     initActorScale(pActor, rInfo, resource, pSuffix);
@@ -646,6 +699,7 @@ void initActorImpl(LiveActor* pActor, const ActorInitInfo& rInfo,
     if (pActor->getNerveKeeper() && pActor->getNerveKeeper()->mActionCtrl) {
         resetNerveActionForInit(pActor);
     }
+
     if (!pActor->mSubActorKeeper) {
         SubActorKeeper* subActorKeeper =
             SubActorKeeper::tryCreate(pActor, rInfo, pSuffix, maxSubActors);
@@ -653,6 +707,7 @@ void initActorImpl(LiveActor* pActor, const ActorInitInfo& rInfo,
             pActor->initSubActorKeeper(subActorKeeper);
         }
     }
+
     initFarLodActor(pActor, rInfo);
 }
 }  // namespace
@@ -800,6 +855,7 @@ const char* tryGetMapPartsSuffix(const ActorInitInfo& rInfo, const char* pSuffix
     if (!tryGetMapPartsResourceYaml(rInfo, fileName.cstr())) {
         return nullptr;
     }
+
     return pSuffix;
 }
 
@@ -862,6 +918,7 @@ ActorInitInfo* createLinksPlayerActorInfo(LiveActor* pActor, const ActorInitInfo
         getLinksInfoByIndex(placementInfo, *rInfo.mPlacementInfo, "PlayerRestartPos", 0);
         info->initViewIdSelf(placementInfo, rInfo);
     }
+
     return info;
 }
 
@@ -1012,6 +1069,7 @@ bool trySyncStageSwitchAppear(LiveActor* pActor) {
         pActor->makeActorDead();
         return true;
     }
+
     pActor->makeActorAppeared();
     return false;
 }
@@ -1038,6 +1096,7 @@ bool trySyncStageSwitchAppearAndKill(LiveActor* pActor) {
     if (trySyncStageSwitchAppear(pActor)) {
         return true;
     }
+
     return trySyncStageSwitchKill(pActor);
 }
 
@@ -1052,6 +1111,7 @@ bool tryListenStageSwitchAppear(LiveActor* pActor) {
         pActor->makeActorDead();
         return true;
     }
+
     pActor->makeActorAppeared();
     return false;
 }
@@ -1102,6 +1162,7 @@ void setMaterialCode(LiveActor* pActor, const char* pMaterialCode) {
     if (pActor->getEffectKeeper()) {
         tryUpdateEffectMaterialCode(pActor, pMaterialCode);
     }
+
     if (pActor->getAudioKeeper()) {
         tryUpdateSeMaterialCode(pActor, pMaterialCode);
     }
@@ -1118,6 +1179,7 @@ bool tryAddDisplayOffset(LiveActor* pActor, const ActorInitInfo& rInfo) {
     if (!tryGetDisplayOffset(&offset, rInfo)) {
         return false;
     }
+
     *getTransPtr(pActor) += offset;
     return true;
 }
@@ -1133,6 +1195,7 @@ bool tryAddDisplayScale(LiveActor* pActor, const ActorInitInfo& rInfo) {
     if (!tryGetDisplayScale(&scale, rInfo)) {
         return false;
     }
+
     setScaleX(pActor, getScale(pActor).x * scale.x);
     setScaleY(pActor, getScale(pActor).y * scale.y);
     setScaleZ(pActor, getScale(pActor).z * scale.z);

@@ -85,10 +85,12 @@ bool isExpandedClippingMode(const LiveActor* pActor) {
     if (!node) {
         return false;
     }
+
     ClippingAreaActorInfo* info = node->mInfo;
     if (!info) {
         return false;
     }
+
     return info->isExpandedClippingMode();
 }
 
@@ -249,6 +251,7 @@ void expandClippingRadiusByShadowLength(LiveActor* pActor, sead::Vector3f* pOffs
     if (radius >= shadowLength) {
         return;
     }
+
     if (pOffset) {
         f32 newRadius = (radius + shadowLength) * 0.5f;
         pOffset->set(trans + getGravity(pActor) * (newRadius - radius));
@@ -273,13 +276,16 @@ bool tryExpandClippingToGround(LiveActor* pActor, sead::Vector3f* pOffset, f32 l
     if (!alCollisionUtil::getFirstPolyOnArrow(pActor, &hitPos, nullptr, trans, dir, nullptr, nullptr)) {
         return false;
     }
+
     f32 distance = (hitPos - trans).length();
     if (distance < radius) {
         return false;
     }
+
     if (distance > length) {
         return false;
     }
+
     f32 newRadius = (radius + distance) * 0.5f;
     sead::Vector3f offset = trans + (hitPos - trans) * ((distance - newRadius) / distance);
     pOffset->x = offset.x;
@@ -299,6 +305,7 @@ bool tryExpandClippingByShadowLength(LiveActor* pActor, sead::Vector3f* pOffset)
     if (!isExistShadow(pActor)) {
         return false;
     }
+
     expandClippingRadiusByShadowLength(pActor, pOffset, getShadowDropLengthMax(pActor));
     return true;
 }
@@ -314,6 +321,7 @@ bool tryExpandClippingByExpandObject(LiveActor* pActor, const ActorInitInfo& rIn
     if (!tryGetLinksInfo(&linkInfo, rInfo, "ClippingExpandObject")) {
         return false;
     }
+
     PlacementClippingExpander* expander = new PlacementClippingExpander();
     expander->init(pActor, linkInfo);
     return true;
@@ -345,9 +353,11 @@ void invalidateClipping(LiveActor* pActor) {
     if (pActor->mActorFlags->isClipped) {
         pActor->endClipped();
     }
+
     if (pActor->mActorFlags->isInvalidClipping) {
         return;
     }
+
     pActor->mGlobalAlpha = 1.0f;
     pActor->getSceneInfo()->clippingDirectorBase->invalidateActorClipping(pActor);
 }
@@ -371,14 +381,17 @@ void onDrawClipping(LiveActor* pActor) {
     if (!pActor->mActorFlags->isClipped) {
         return;
     }
+
     alActorSystemFunction::addToExecutorMovement(pActor);
     if (pActor->mHitSensorKeeper) {
         pActor->mHitSensorKeeper->validateBySystem();
         alSensorFunction::updateHitSensorsAll(pActor);
     }
+
     if (pActor->getEffectKeeper()) {
         pActor->getEffectKeeper()->onCalcAndDraw();
     }
+
     if (pActor->getAudioKeeper()) {
         pActor->getAudioKeeper()->startClipped();
     }
@@ -393,13 +406,16 @@ void offDrawClipping(LiveActor* pActor) {
     if (!pActor->mActorFlags->isClipped) {
         return;
     }
+
     alActorSystemFunction::removeFromExecutorMovement(pActor);
     if (pActor->mHitSensorKeeper) {
         pActor->mHitSensorKeeper->invalidateBySystem();
     }
+
     if (pActor->getEffectKeeper()) {
         pActor->getEffectKeeper()->offCalcAndDraw();
     }
+
     if (pActor->getAudioKeeper()) {
         pActor->getAudioKeeper()->endClipped();
     }

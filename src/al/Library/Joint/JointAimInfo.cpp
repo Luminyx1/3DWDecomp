@@ -140,6 +140,7 @@ void JointAimInfo::setPowerRate(f32 rate) {
     } else if (rate > 1.0f) {
         rate = 1.0f;
     }
+
     mPowerRate = rate;
 }
 

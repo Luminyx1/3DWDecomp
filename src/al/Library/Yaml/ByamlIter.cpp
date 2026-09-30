@@ -33,6 +33,7 @@ ByamlIter::ByamlIter(const u8* pData) : mData(pData) {
     if (!pData) {
         return;
     }
+
     if (!alByamlLocalUtil::verifiByaml(pData)) {
         mData = nullptr;
         mRootNode = nullptr;
@@ -43,6 +44,7 @@ ByamlIter::ByamlIter(const u8* pData) : mData(pData) {
     if (!offset) {
         return;
     }
+
     mRootNode = &mData[offset];
 }
 
@@ -133,6 +135,7 @@ s32 ByamlIter::getSize() const {
     if (type == ByamlDataType::Array || type == ByamlDataType::Hash) {
         return *reinterpret_cast<const u32*>(mRootNode) >> 8;
     }
+
     return 0;
 }
 
@@ -146,12 +149,15 @@ ByamlIter ByamlIter::getIterByIndex(s32 index) const {
     if (!getByamlDataByIndex(&data, index)) {
         return ByamlIter();
     }
+
     if (data.getType() == ByamlDataType::Array || data.getType() == ByamlDataType::Hash) {
         return ByamlIter(mData, &mData[data.getValue()]);
     }
+
     if (data.getType() == ByamlDataType::Null) {
         return ByamlIter(mData, nullptr);
     }
+
     return ByamlIter();
 }
 
@@ -165,14 +171,17 @@ bool ByamlIter::getByamlDataByIndex(ByamlData* pData, s32 index) const {
     if (!mRootNode) {
         return false;
     }
+
     if (getContainerType(mRootNode) == ByamlDataType::Array) {
         ByamlArrayIter iter(mRootNode);
         return iter.getDataByIndex(pData, index);
     }
+
     if (getContainerType(mRootNode) == ByamlDataType::Hash) {
         ByamlHashIter iter(mRootNode);
         return iter.getDataByIndex(pData, index);
     }
+
     return false;
 }
 
@@ -186,12 +195,15 @@ ByamlIter ByamlIter::getIterByKey(const char* pKey) const {
     if (!getByamlDataByKey(&data, pKey)) {
         return ByamlIter();
     }
+
     if (data.getType() == ByamlDataType::Array || data.getType() == ByamlDataType::Hash) {
         return ByamlIter(mData, &mData[data.getValue()]);
     }
+
     if (data.getType() == ByamlDataType::Null) {
         return ByamlIter(mData, nullptr);
     }
+
     return ByamlIter();
 }
 
@@ -251,6 +263,7 @@ bool ByamlIter::getByamlDataAndKeyName(ByamlData* pData, const char** pKey, s32 
     if (pData) {
         pData->set(pair);
     }
+
     ByamlStringTableIter table(getHashKeyTable(mData));
     *pKey = table.getString(pair->getKey());
     return true;
@@ -292,6 +305,7 @@ bool ByamlIter::tryGetIterAndKeyNameByIndex(ByamlIter* pIter, const char** pKey,
         } else if (data.getType() == ByamlDataType::Null) {
             *pIter = ByamlIter(mData, nullptr);
         }
+
         return true;
     }
 
@@ -321,6 +335,7 @@ bool ByamlIter::tryGetStringByKey(const char** pValue, const char* pKey) const {
     if (!getByamlDataByKey(&data, pKey)) {
         return false;
     }
+
     return tryConvertString(pValue, &data);
 }
 
@@ -352,6 +367,7 @@ bool ByamlIter::tryGetBinaryByKey(const u8** pValue, s32* pSize, const char* pKe
     if (!getByamlDataByKey(&data, pKey)) {
         return false;
     }
+
     return tryConvertBinary(pValue, pSize, &data);
 }
 
@@ -384,6 +400,7 @@ bool ByamlIter::tryGetIntByKey(s32* pValue, const char* pKey) const {
     if (!getByamlDataByKey(&data, pKey)) {
         return false;
     }
+
     return tryConvertInt(pValue, &data);
 }
 
@@ -413,9 +430,11 @@ bool ByamlIter::tryGetUIntByKey(u32* pValue, const char* pKey) const {
     if (!getByamlDataByKey(&data, pKey)) {
         return false;
     }
+
     if (!tryConvertUInt(pValue, &data)) {
         return false;
     }
+
     return true;
 }
 
@@ -432,13 +451,16 @@ bool ByamlIter::tryConvertUInt(u32* pValue, const ByamlData* pData) const {
             *pValue = 0;
             return false;
         }
+
         *pValue = value;
         return true;
     }
+
     if (pData->getType() == ByamlDataType::UInt) {
         *pValue = pData->getValue();
         return true;
     }
+
     return false;
 }
 
@@ -453,6 +475,7 @@ bool ByamlIter::tryGetFloatByKey(f32* pValue, const char* pKey) const {
     if (!getByamlDataByKey(&data, pKey)) {
         return false;
     }
+
     return tryConvertFloat(pValue, &data);
 }
 
@@ -482,6 +505,7 @@ bool ByamlIter::tryGetBoolByKey(bool* pValue, const char* pKey) const {
     if (!getByamlDataByKey(&data, pKey)) {
         return false;
     }
+
     return tryConvertBool(pValue, &data);
 }
 
@@ -511,6 +535,7 @@ bool ByamlIter::tryGetStringByIndex(const char** pValue, s32 index) const {
     if (!getByamlDataByIndex(&data, index)) {
         return false;
     }
+
     return tryConvertString(pValue, &data);
 }
 
@@ -526,6 +551,7 @@ bool ByamlIter::tryGetBinaryByIndex(const u8** pValue, s32* pSize, s32 index) co
     if (!getByamlDataByIndex(&data, index)) {
         return false;
     }
+
     return tryConvertBinary(pValue, pSize, &data);
 }
 
@@ -540,6 +566,7 @@ bool ByamlIter::tryGetIntByIndex(s32* pValue, s32 index) const {
     if (!getByamlDataByIndex(&data, index)) {
         return false;
     }
+
     return tryConvertInt(pValue, &data);
 }
 
@@ -554,9 +581,11 @@ bool ByamlIter::tryGetUIntByIndex(u32* pValue, s32 index) const {
     if (!getByamlDataByIndex(&data, index)) {
         return false;
     }
+
     if (!tryConvertUInt(pValue, &data)) {
         return false;
     }
+
     return true;
 }
 
@@ -571,6 +600,7 @@ bool ByamlIter::tryGetFloatByIndex(f32* pValue, s32 index) const {
     if (!getByamlDataByIndex(&data, index)) {
         return false;
     }
+
     return tryConvertFloat(pValue, &data);
 }
 
@@ -585,6 +615,7 @@ bool ByamlIter::tryGetBoolByIndex(bool* pValue, s32 index) const {
     if (!getByamlDataByIndex(&data, index)) {
         return false;
     }
+
     return tryConvertBool(pValue, &data);
 }
 
@@ -597,6 +628,7 @@ bool ByamlIter::isEqualData(const ByamlIter& rOther) const {
     if (!mData || !rOther.mData) {
         return false;
     }
+
     return mData == rOther.mData && mRootNode == rOther.mRootNode;
 }
 }  // namespace al

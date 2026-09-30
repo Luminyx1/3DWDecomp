@@ -113,6 +113,7 @@ bool BlockRailLink::isRide(f32* pRate, const sead::Vector3f& rPrevPos,
     if (mIsValidRide) {
         return mShape->isRide(pRate, rPrevPos, rPos);
     }
+
     return false;
 }
 
@@ -199,11 +200,13 @@ bool BlockRailLink::isPrevLink(const BlockRailLink* pLink) const {
     if (!pLink) {
         return false;
     }
+
     for (s32 i = 0; i < mPrevLinkNum; i++) {
         if (mPrevLinks[i] == pLink) {
             return true;
         }
     }
+
     return false;
 }
 
@@ -216,11 +219,13 @@ bool BlockRailLink::isNextLink(const BlockRailLink* pLink) const {
     if (!pLink) {
         return false;
     }
+
     for (s32 i = 0; i < mNextLinkNum; i++) {
         if (mNextLinks[i] == pLink) {
             return true;
         }
     }
+
     return false;
 }
 
@@ -244,17 +249,21 @@ void BlockRailLink::tryConnect(BlockRailLink* pLinkA, BlockRailLink* pLinkB, f32
         pLinkA->addPrev(pLinkB);
         pLinkB->addPrev(pLinkA);
     }
+
     if (!pLinkB->isTerminate() && (startA - endB).length() < distance) {
         pLinkA->addPrev(pLinkB);
         pLinkB->addNext(pLinkA);
     }
+
     if (pLinkA->isTerminate()) {
         return;
     }
+
     if ((endA - startB).length() < distance) {
         pLinkA->addNext(pLinkB);
         pLinkB->addPrev(pLinkA);
     }
+
     if (!pLinkB->isTerminate() && (endA - endB).length() < distance) {
         pLinkA->addNext(pLinkB);
         pLinkB->addNext(pLinkA);

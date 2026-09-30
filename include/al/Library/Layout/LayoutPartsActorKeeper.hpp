@@ -23,6 +23,7 @@ public:
         if (!mPartsActors || index >= mMaxActors) {
             return nullptr;
         }
+
         return mPartsActors[index];
     }
 

@@ -36,6 +36,7 @@ private:
     sead::SafeString mName;
     f32 mVolume = 1.0f;
 };
+
 static_assert(sizeof(SeSource) == 0x20);
 
 class SeSource3D : public SeSource {
@@ -64,6 +65,7 @@ protected:
     s32 mPriority = 0;
     AudioSystemInfo* mInfo;
 };
+
 static_assert(sizeof(SeSource3D) == 0x40);
 
 class SeSource3DCircle : public SeSource3D {
@@ -81,6 +83,7 @@ private:
     sead::Matrix34f mInvMtx;
     bool mIsVertical;
 };
+
 static_assert(sizeof(SeSource3DCircle) == 0x90);
 
 class SeSource3DLine : public SeSource3D {
@@ -99,6 +102,7 @@ private:
     sead::Vector3f mDir = {0.0f, 0.0f, 0.0f};
     sead::Vector3f mEndPos = {0.0f, 0.0f, 0.0f};
 };
+
 static_assert(sizeof(SeSource3DLine) == 0x78);
 
 class SeSource3DPlaneRect : public SeSource3D {
@@ -115,6 +119,7 @@ private:
     sead::Vector3f mPos = {0.0f, 0.0f, 0.0f};
     sead::Matrix34f mInvMtx;
 };
+
 static_assert(sizeof(SeSource3DPlaneRect) == 0x90);
 
 class SeSource3DPoint : public SeSource3D {
@@ -125,6 +130,7 @@ public:
     void calcPositionDynamic() override;
     void calcPositionInitialize() override {}
 };
+
 static_assert(sizeof(SeSource3DPoint) == 0x40);
 
 class SeSource3DRing : public SeSource3D {
@@ -141,6 +147,7 @@ private:
     sead::Vector3f mPos = {0.0f, 0.0f, 0.0f};
     sead::Matrix34f mInvMtx;
 };
+
 static_assert(sizeof(SeSource3DRing) == 0x90);
 
 class SeSource3DSphere : public SeSource3D {
@@ -155,6 +162,7 @@ private:
     const f32* mRadius;
     sead::Vector3f mPos = {0.0f, 0.0f, 0.0f};
 };
+
 static_assert(sizeof(SeSource3DSphere) == 0x58);
 
 class SeSourceAmbient : public SeSource {
@@ -173,5 +181,6 @@ private:
     SeadAudioActorWrapper* mActor = nullptr;
     AudioSystemInfo* mInfo;
 };
+
 static_assert(sizeof(SeSourceAmbient) == 0x30);
 }  // namespace al

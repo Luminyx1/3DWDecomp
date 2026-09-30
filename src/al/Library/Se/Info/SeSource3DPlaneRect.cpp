@@ -43,11 +43,13 @@ const sead::Vector3f* SeSource3DPlaneRect::calcPosition(const sead::Vector3f& rL
     } else if (mPos.x > rect->getMax().x) {
         mPos.x = rect->getMax().x;
     }
+
     if (mPos.z < rect->getMin().y) {
         mPos.z = rect->getMin().y;
     } else if (mPos.z > rect->getMax().y) {
         mPos.z = rect->getMax().y;
     }
+
     mPos.setMul(mMtxPose->get3DMtx(), mPos);
     return &mPos;
 }

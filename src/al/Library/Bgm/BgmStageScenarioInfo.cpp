@@ -19,14 +19,18 @@ BgmStagePlayInfo* BgmStagePlayInfo::createInfo(const ByamlIter& rIter) {
     if (!rIter.tryGetStringByKey(&info->mRegionInfoListName, "RegionInfoListName")) {
         info->mRegionInfoListName = nullptr;
     }
+
     if (!rIter.tryGetIntByKey(&info->mStartDelayFrameNum, "StartDelayFrameNum")) {
         info->mStartDelayFrameNum = 0;
     }
+
     if (!rIter.tryGetIntByKey(&info->mFadeInFrameNum, "FadeInFrameNum")) {
         info->mFadeInFrameNum = 0;
     }
+
     return info;
 }
+
 /**
  * Creates BGM stage information from BYAML data.
  * @param rIter BYAML data.
@@ -40,6 +44,7 @@ BgmStageInfo* BgmStageInfo::createInfo(const ByamlIter& rIter) {
     info->mStagePlayInfoList = createInfoList<BgmStagePlayInfo>(playIter);
     return info;
 }
+
 /**
  * Compares two BGM stage play information by play information name.
  * @param pA First information.
@@ -49,6 +54,7 @@ BgmStageInfo* BgmStageInfo::createInfo(const ByamlIter& rIter) {
 s32 BgmStagePlayInfo::compareInfo(const BgmStagePlayInfo* pA, const BgmStagePlayInfo* pB) {
     return strcmp(pA->mPlayInfoName, pB->mPlayInfoName);
 }
+
 /**
  * Compares two BGM stage information by name.
  * @param pA First information.
@@ -58,6 +64,7 @@ s32 BgmStagePlayInfo::compareInfo(const BgmStagePlayInfo* pA, const BgmStagePlay
 s32 BgmStageInfo::compareInfo(const BgmStageInfo* pA, const BgmStageInfo* pB) {
     return strcmp(pA->mName, pB->mName);
 }
+
 /**
  * Creates BGM suffix process information from BYAML data.
  * @param rIter BYAML data.
@@ -72,11 +79,14 @@ BgmSuffixProcInfo* BgmSuffixProcInfo::createInfo(const ByamlIter& rIter, const c
     } else {
         info->mSuffixName = nullptr;
     }
+
     if (!rIter.tryGetBoolByKey(&info->mIsStartCurPosition, "IsStartCurPosition")) {
         info->mIsStartCurPosition = false;
     }
+
     return info;
 }
+
 /**
  * Creates BGM volume process information from BYAML data.
  * @param rIter BYAML data.
@@ -89,11 +99,14 @@ BgmVolumeProcInfo* BgmVolumeProcInfo::createInfo(const ByamlIter& rIter, const c
     if (!rIter.tryGetFloatByKey(&info->mTargetVolume, "TargetVolume")) {
         info->mTargetVolume = 1.0f;
     }
+
     if (!rIter.tryGetFloatByKey(&info->mVolumeDiff, "VolumeDiff")) {
         info->mVolumeDiff = 0.0f;
     }
+
     return info;
 }
+
 /**
  * Creates BGM track process information from BYAML data.
  * @param rIter BYAML data.
@@ -119,12 +132,16 @@ BgmTrackProcInfo* BgmTrackProcInfo::createInfo(const ByamlIter& rIter, const cha
             if (!iter.tryGetIntByKey(&changeInfo->mFadeFrameNum, "FadeFrameNum")) {
                 changeInfo->mFadeFrameNum = -1;
             }
+
             list->mInfos->pushBack(changeInfo);
         }
+
         info->mChangeTrackInfoList = list;
     }
+
     return info;
 }
+
 /**
  * Creates BGM region process information from BYAML data.
  * @param rIter BYAML data.
@@ -137,23 +154,30 @@ BgmRegionProcInfo* BgmRegionProcInfo::createInfo(const ByamlIter& rIter, const c
     if (!rIter.tryGetIntByKey(&info->mHeadNo, "HeadNo")) {
         info->mHeadNo = 0;
     }
+
     if (!rIter.tryGetIntByKey(&info->mLoopStartNo, "LoopStartNo")) {
         info->mLoopStartNo = 0;
     }
+
     if (!rIter.tryGetIntByKey(&info->mLoopEndNo, "LoopEndNo")) {
         info->mLoopEndNo = 0;
     }
+
     if (!rIter.tryGetBoolByKey(&info->mIsLoop, "IsLoop")) {
         info->mIsLoop = true;
     }
+
     if (!rIter.tryGetBoolByKey(&info->mIsPlayHeadOneTime, "IsPlayHeadOneTime")) {
         info->mIsPlayHeadOneTime = false;
     }
+
     if (!rIter.tryGetStringByKey(&info->mNextSituationName, "NextSituationName")) {
         info->mNextSituationName = nullptr;
     }
+
     return info;
 }
+
 /**
  * Creates BGM pitch process information from BYAML data.
  * @param rIter BYAML data.
@@ -166,11 +190,14 @@ BgmPitchProcInfo* BgmPitchProcInfo::createInfo(const ByamlIter& rIter, const cha
     if (!rIter.tryGetFloatByKey(&info->mTargetPitch, "TargetPitch")) {
         info->mTargetPitch = 1.0f;
     }
+
     if (!rIter.tryGetFloatByKey(&info->mPitchDiff, "PitchDiff")) {
         info->mPitchDiff = 0.0f;
     }
+
     return info;
 }
+
 /**
  * Creates BGM pitch modulation process information from BYAML data.
  * @param rIter BYAML data.
@@ -184,17 +211,22 @@ BgmPitchModulationProcInfo* BgmPitchModulationProcInfo::createInfo(const ByamlIt
     if (!rIter.tryGetBoolByKey(&info->mIsEnable, "IsEnable")) {
         info->mIsEnable = false;
     }
+
     if (!rIter.tryGetFloatByKey(&info->mModDepth, "ModDepth")) {
         info->mModDepth = 0.01f;
     }
+
     if (!rIter.tryGetFloatByKey(&info->mModDepthDiff, "ModDepthDiff")) {
         info->mModDepthDiff = 1.0f;
     }
+
     if (!rIter.tryGetFloatByKey(&info->mModFreq, "ModFreq")) {
         info->mModFreq = 1.0f;
     }
+
     return info;
 }
+
 /**
  * Creates BGM low pass filter process information from BYAML data.
  * @param rIter BYAML data.
@@ -207,11 +239,14 @@ BgmLpfProcInfo* BgmLpfProcInfo::createInfo(const ByamlIter& rIter, const char* p
     if (!rIter.tryGetFloatByKey(&info->mCutOffFreq, "CutOffFreq")) {
         info->mCutOffFreq = 0.0f;
     }
+
     if (!rIter.tryGetFloatByKey(&info->mCutOffFreqDiff, "CutOffFreqDiff")) {
         info->mCutOffFreqDiff = 0.0f;
     }
+
     return info;
 }
+
 /**
  * Creates BGM loop start move process information.
  * @param rIter BYAML data.
@@ -223,6 +258,7 @@ BgmMoveLoopStartProcInfo* BgmMoveLoopStartProcInfo::createInfo(const ByamlIter& 
     info->mProcInfoName = pProcInfoName;
     return info;
 }
+
 /**
  * Creates BGM process information of the type given in the BYAML data.
  * @param rIter BYAML data.
@@ -234,29 +270,38 @@ BgmProcInfo* BgmProcInfo::createInfo(const ByamlIter& rIter) {
     if (isEqualString(procInfoName, "AttachSuffix") || isEqualString(procInfoName, "DetachSuffix")) {
         return BgmSuffixProcInfo::createInfo(rIter, procInfoName);
     }
+
     if (isEqualString(procInfoName, "ChangeVolume")) {
         return BgmVolumeProcInfo::createInfo(rIter, procInfoName);
     }
+
     if (isEqualString(procInfoName, "ChangeTrack")) {
         return BgmTrackProcInfo::createInfo(rIter, procInfoName);
     }
+
     if (isEqualString(procInfoName, "ChangeRegion")) {
         return BgmRegionProcInfo::createInfo(rIter, procInfoName);
     }
+
     if (isEqualString(procInfoName, "ChangePitch")) {
         return BgmPitchProcInfo::createInfo(rIter, procInfoName);
     }
+
     if (isEqualString(procInfoName, "ModulatePitch")) {
         return BgmPitchModulationProcInfo::createInfo(rIter, procInfoName);
     }
+
     if (isEqualString(procInfoName, "Lpf")) {
         return BgmLpfProcInfo::createInfo(rIter, procInfoName);
     }
+
     if (isEqualString(procInfoName, "MoveLoopStart")) {
         return BgmMoveLoopStartProcInfo::createInfo(rIter, procInfoName);
     }
+
     return nullptr;
 }
+
 /**
  * Creates BGM sub situation information from BYAML data.
  * @param rIter BYAML data.
@@ -270,6 +315,7 @@ BgmSubSituationInfo* BgmSubSituationInfo::createInfo(const ByamlIter& rIter) {
     info->mProcInfoList = createInfoList<BgmProcInfo>(procIter);
     return info;
 }
+
 /**
  * Creates BGM situation information from BYAML data.
  * @param rIter BYAML data.
@@ -283,6 +329,7 @@ BgmSituationInfo* BgmSituationInfo::createInfo(const ByamlIter& rIter) {
     info->mSubSituationInfoList = createInfoList<BgmSubSituationInfo>(subIter);
     return info;
 }
+
 /**
  * Compares two BGM process information by process name.
  * @param pA First information.
@@ -292,6 +339,7 @@ BgmSituationInfo* BgmSituationInfo::createInfo(const ByamlIter& rIter) {
 s32 BgmProcInfo::compareInfo(const BgmProcInfo* pA, const BgmProcInfo* pB) {
     return strcmp(pA->mProcInfoName, pB->mProcInfoName);
 }
+
 /**
  * Compares two BGM sub situation information by name.
  * @param pA First information.
@@ -301,6 +349,7 @@ s32 BgmProcInfo::compareInfo(const BgmProcInfo* pA, const BgmProcInfo* pB) {
 s32 BgmSubSituationInfo::compareInfo(const BgmSubSituationInfo* pA, const BgmSubSituationInfo* pB) {
     return strcmp(pA->mName, pB->mName);
 }
+
 /**
  * Compares two BGM situation information by name.
  * @param pA First information.
@@ -310,6 +359,7 @@ s32 BgmSubSituationInfo::compareInfo(const BgmSubSituationInfo* pA, const BgmSub
 s32 BgmSituationInfo::compareInfo(const BgmSituationInfo* pA, const BgmSituationInfo* pB) {
     return strcmp(pA->mName, pB->mName);
 }
+
 /**
  * Compares two BGM track change information by track number.
  * @param pA First information.
@@ -320,8 +370,10 @@ s32 BgmTrackChangeInfo::compareInfo(const BgmTrackChangeInfo* pA, const BgmTrack
     if (pA->mTrackNo < pB->mTrackNo) {
         return -1;
     }
+
     return pA->mTrackNo > pB->mTrackNo;
 }
+
 /**
  * Loads all BGM information from the BGM database resource.
  */
@@ -334,6 +386,7 @@ BgmDataBase::BgmDataBase() {
         mCombinedLineInfoList =
             rootIter.tryGetIterByKey(&iter, "CombinedLineInfoList") ? createInfoList<BgmCombinedLineInfo>(iter) : nullptr;
     }
+
     {
         ByamlIter rootIter(resource->getByml("BgmPlayInfoList"));
         ByamlIter iter;
@@ -343,6 +396,7 @@ BgmDataBase::BgmDataBase() {
             mPlayInfoList = nullptr;
         }
     }
+
     {
         ByamlIter rootIter(resource->getByml("BgmResourceInfoList"));
         ByamlIter iter;
@@ -352,6 +406,7 @@ BgmDataBase::BgmDataBase() {
             mResourceInfoList = nullptr;
         }
     }
+
     {
         ByamlIter rootIter(resource->getByml("BgmStageInfoList"));
         ByamlIter iter;
@@ -361,6 +416,7 @@ BgmDataBase::BgmDataBase() {
             mStageInfoList = nullptr;
         }
     }
+
     {
         ByamlIter rootIter(resource->getByml("BgmSituationInfoList"));
         ByamlIter iter;
@@ -384,6 +440,7 @@ BgmDataBase::BgmDataBase() {
                 isEqualString(name, "BgmStageInfoList.byml")) {
                 continue;
             }
+
             ByamlIter userIter(static_cast<const u8*>(resource->getOtherFile(fileName, nullptr)));
             fileName.removeSuffix(".byml");
             ByamlIter listIter;
@@ -391,12 +448,15 @@ BgmDataBase::BgmDataBase() {
                 mUserInfoList = BgmUserInfo::create(listIter);
                 return;
             }
+
             if (!userInfoList->pushBack(BgmUserInfo::createInfo(userIter, fileName))) {
                 break;
             }
         }
+
         shakerSortInfoArray<BgmUserInfo>(userInfoList, BgmUserInfo::compareInfo);
     }
+
     mUserInfoList = userInfoList;
 }
 }  // namespace al

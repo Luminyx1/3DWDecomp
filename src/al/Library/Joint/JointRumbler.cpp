@@ -80,6 +80,7 @@ void JointRumbler::updateEach(f32* pOut, EAxis axis) {
                     mPower * mDetails[axis].rate +
                 1.0f;
     }
+
     *pOut = value;
 }
 

@@ -21,6 +21,7 @@ const ActorParamF32* findActorParamF32(const LiveActor* pActor, const char* pNam
     if (holder == nullptr) {
         return &sDefaultParamF32;
     }
+
     return holder->findParamF32(pName);
 }
 
@@ -35,6 +36,7 @@ const ActorParamS32* findActorParamS32(const LiveActor* pActor, const char* pNam
     if (holder == nullptr) {
         return &sDefaultParamS32;
     }
+
     return holder->findParamS32(pName);
 }
 
@@ -49,6 +51,7 @@ const ActorParamMove* findActorParamMove(const LiveActor* pActor, const char* pN
     if (holder == nullptr) {
         return &sDefaultParamMove;
     }
+
     return holder->findParamMove(pName);
 }
 
@@ -63,6 +66,7 @@ const ActorParamJump* findActorParamJump(const LiveActor* pActor, const char* pN
     if (holder == nullptr) {
         return &sDefaultParamJump;
     }
+
     return holder->findParamJump(pName);
 }
 
@@ -77,6 +81,7 @@ const ActorParamSight* findActorParamSight(const LiveActor* pActor, const char* 
     if (holder == nullptr) {
         return &sDefaultParamSight;
     }
+
     return holder->findParamSight(pName);
 }
 
@@ -91,6 +96,7 @@ const ActorParamRebound* findActorParamRebound(const LiveActor* pActor, const ch
     if (holder == nullptr) {
         return &sDefaultParamRebound;
     }
+
     return holder->findParamRebound(pName);
 }
 

@@ -21,6 +21,7 @@ LayoutKit::~LayoutKit() {
     if (mLayoutSystem) {
         mLayoutSystem->getFontList()->isInvalid = true;
     }
+
     delete mExecuteDirector;
 }
 
@@ -62,6 +63,7 @@ void LayoutKit::update() {
     if (mExecuteDirector) {
         mExecuteDirector->execute();
     }
+
     mLayoutSystem->getScreenMgr()->updateSystem();
     mLayoutSystem->getScreenMgr()->updateScreen(0);
 }

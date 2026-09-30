@@ -15,6 +15,7 @@ s32 searchUserInfoIndex(const sead::PtrArray<al::BgmUserInfo>* pList, const char
     if (pList->size() == 0) {
         return -1;
     }
+
     s32 lo = 0;
     s32 hi = pList->size() - 1;
     while (lo < hi) {
@@ -23,15 +24,18 @@ s32 searchUserInfoIndex(const sead::PtrArray<al::BgmUserInfo>* pList, const char
         if (result == 0) {
             return mid;
         }
+
         if (result < 0) {
             lo = mid + 1;
         } else {
             hi = mid;
         }
     }
+
     if (al::BgmUserInfo::compareInfoByKey(pList->unsafeAt(lo), pKey) == 0) {
         return lo;
     }
+
     return -1;
 }
 }  // namespace
@@ -48,6 +52,7 @@ BgmKeeper::BgmKeeper(AudioSystemInfo* pInfo, BgmDirector* pDirector, const char*
     if (pUserName == nullptr) {
         return;
     }
+
     const sead::PtrArray<BgmUserInfo>* userInfoList = pInfo->mBgmDataBase->mUserInfoList;
     s32 index = searchUserInfoIndex(userInfoList, pUserName);
     mUserInfo = index >= 0 ? userInfoList->unsafeAt(index) : nullptr;
@@ -66,6 +71,7 @@ const char* BgmKeeper::getUserName() const {
     if (mUserInfo == nullptr) {
         return nullptr;
     }
+
     return mUserInfo->mName;
 }
 }  // namespace al

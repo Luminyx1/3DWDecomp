@@ -50,6 +50,7 @@ void CameraPoserLookDown::update() {
         if (trans.y < mStartAt.y) {
             trans.y = mStartAt.y;
         }
+
         mAt = trans;
         mAt.y = offsetY + mAt.y;
     } else {
@@ -60,10 +61,12 @@ void CameraPoserLookDown::update() {
     if (mIsForceFollow) {
         dir = mEye - mAt;
     }
+
     dir.y = 0.0f;
     if (isNearZero(dir, 0.001f)) {
         dir = sead::Vector3f::ez;
     }
+
     f32 distance = mDistance;
     f32 length = dir.length();
     if (length > 0.0f) {
@@ -77,6 +80,7 @@ void CameraPoserLookDown::update() {
         rotateVectorDegreeY(&back, sead::Mathf::abs(stick.x) < 0.3f ? 0.0f : stick.x * -2.0f);
         dir = -back;
     }
+
     mEye.set(mAt + dir);
 
     if (mIsRotateV) {
@@ -99,6 +103,7 @@ void CameraPoserLookDown::makeLookAtCamera(sead::LookAtCamera* pCamera) const {
     if (length > 0.0f) {
         dir *= distance / length;
     }
+
     pCamera->setPos(mAt + dir);
 }
 

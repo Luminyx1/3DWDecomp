@@ -44,6 +44,7 @@ void HitSensor::validate() {
             mHitGroup->add(this);
         }
     }
+
     mNumSensors = 0;
 }
 
@@ -57,6 +58,7 @@ void HitSensor::invalidate() {
             mHitGroup->remove(this);
         }
     }
+
     mNumSensors = 0;
 }
 
@@ -67,9 +69,11 @@ void HitSensor::validateBySystem() {
     if (mIsValidBySystem) {
         return;
     }
+
     if (mMaxSensors != 0 && mIsValid) {
         mHitGroup->add(this);
     }
+
     mIsValidBySystem = true;
     mNumSensors = 0;
 }
@@ -81,9 +85,11 @@ void HitSensor::invalidateBySystem() {
     if (!mIsValidBySystem) {
         return;
     }
+
     if (mMaxSensors != 0 && mIsValid) {
         mHitGroup->remove(this);
     }
+
     mIsValidBySystem = false;
     mNumSensors = 0;
 }

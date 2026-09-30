@@ -19,9 +19,11 @@ const char* SceneCameraInfo::getViewName(s32 index) const {
     if (index == 0) {
         return "メイン";
     }
+
     if (index == 1) {
         return "サブ";
     }
+
     return "TV";
 }
 

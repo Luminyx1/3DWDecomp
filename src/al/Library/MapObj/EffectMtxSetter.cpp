@@ -22,6 +22,7 @@ void EffectMtxSetter::init(const ByamlIter& rIter) {
     if (!rIter.isValid() || !rIter.isTypeArray()) {
         return;
     }
+
     s32 size = rIter.getSize();
     mInfoNum = size;
     mInfos = new EffectMtxInfo[size];
@@ -40,18 +41,22 @@ void EffectMtxInfo::init(const ByamlIter& rIter) {
     if (!rIter.tryGetStringByKey(&mMtxName, "MtxName")) {
         return;
     }
+
     if (!rIter.isExistKey("EffectName")) {
         return;
     }
+
     if (isTypeStringByKey(rIter, "EffectName")) {
         mEffectNum = 1;
         mEffectNames = new const char*[1];
         rIter.tryGetStringByKey(mEffectNames, "EffectName");
         return;
     }
+
     if (!isTypeArrayByKey(rIter, "EffectName")) {
         return;
     }
+
     ByamlIter nameIter;
     rIter.tryGetIterByKey(&nameIter, "EffectName");
     s32 size = nameIter.getSize();
@@ -88,6 +93,7 @@ EffectMtxInfo* EffectMtxSetter::tryFindEffectMtxInfo(const char* pMtxName) {
             return &mInfos[i];
         }
     }
+
     return nullptr;
 }
 
@@ -120,6 +126,7 @@ EffectMtxSetter* tryCreateEffectMtxSetter(LiveActor* pActor, const char* pName) 
     if (!isExistModelResourceYaml(pActor, pName, nullptr)) {
         return nullptr;
     }
+
     EffectMtxSetter* setter = new EffectMtxSetter(pActor);
     setter->init(ByamlIter(getModelResourceYaml(pActor, pName, nullptr)));
     return setter;

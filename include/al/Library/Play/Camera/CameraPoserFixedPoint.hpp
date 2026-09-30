@@ -15,5 +15,6 @@ public:
     const PlayerWatcher* mPlayerWatcher;
     sead::Vector3f mLocalCameraPos = sead::Vector3f::zero;
 };
+
 static_assert(sizeof(CameraPoserFixedPoint) == 0xc0);
 }  // namespace al

@@ -14,5 +14,6 @@ public:
     CameraPoser* mPoser;
     s32 mPriority;
 };
+
 static_assert(sizeof(CameraInfo) == 0x18);
 }  // namespace al

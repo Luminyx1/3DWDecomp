@@ -102,6 +102,7 @@ AreaObj* tryFindAreaObjByName(const IUseAreaObj* pAreaUser, const char* pGroupNa
     if (!group) {
         return nullptr;
     }
+
     for (u32 i = 0; i < group->mNumAreas; i++) {
         AreaObj* areaObj = group->getAreaObj(i);
         if (tryGetPlacementID(&placementId, *areaObj->mPlacementInfo) &&
@@ -109,6 +110,7 @@ AreaObj* tryFindAreaObjByName(const IUseAreaObj* pAreaUser, const char* pGroupNa
             return areaObj;
         }
     }
+
     return nullptr;
 }
 }  // namespace al

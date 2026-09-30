@@ -16,6 +16,7 @@ ExecuteRequestTable::ExecuteRequestTable(s32 maxSize) : mMaxSize(maxSize) {
     for (s64 i = 0; i != mMaxSize; i++) {
         actors[i] = nullptr;
     }
+
     mRequests = actors;
 }
 
@@ -41,6 +42,7 @@ void ExecuteRequestKeeper::executeRequestActorMovementAllOn() {
             info->mUpdaters[j]->addActor(actor);
         }
     }
+
     table->mSize = 0;
 }
 
@@ -56,6 +58,7 @@ void ExecuteRequestKeeper::executeRequestActorMovementAllOff() {
             info->mUpdaters[j]->removeActor(actor);
         }
     }
+
     table->mSize = 0;
 }
 
@@ -71,6 +74,7 @@ void ExecuteRequestKeeper::executeRequestActorDrawAllOn() {
             info->mDrawers[j]->addModel(actor->mModelKeeper->mModelCafe);
         }
     }
+
     table->mSize = 0;
 }
 
@@ -86,6 +90,7 @@ void ExecuteRequestKeeper::executeRequestActorDrawAllOff() {
             info->mDrawers[j]->removeModel(actor->mModelKeeper->mModelCafe);
         }
     }
+
     table->mSize = 0;
 }
 
@@ -101,6 +106,7 @@ void ExecuteRequestKeeper::executeRequestActorDrawAllOnImmediate() {
             info->mDrawers[j]->addModel(actor->mModelKeeper->mModelCafe);
         }
     }
+
     table->mSize = 0;
 }
 
@@ -139,6 +145,7 @@ void ExecuteRequestKeeper::request(LiveActor* pActor, s32 requestType) {
     if (removeTable2) {
         removeTable2->removeRequest(pActor);
     }
+
     addTable->addRequest(pActor);
 }
 }  // namespace al

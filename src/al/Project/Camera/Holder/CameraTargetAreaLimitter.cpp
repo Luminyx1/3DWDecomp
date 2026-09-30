@@ -18,6 +18,7 @@ CameraTargetAreaLimitter* CameraTargetAreaLimitter::tryCreate(const PlacementInf
     if (!isExistLinkChild(rInfo, "TargetLimitArea", 0)) {
         return nullptr;
     }
+
     PlacementInfo linkInfo;
     getLinksInfo(&linkInfo, rInfo, "TargetLimitArea");
     const char* modelName = nullptr;
@@ -54,6 +55,7 @@ bool CameraTargetAreaLimitter::applyAreaLimit(sead::Vector3f* pOut,
     if (mAreaShape->isInVolume(rPos)) {
         return false;
     }
+
     mAreaShape->calcNearestEdgePoint(pOut, rPos);
     return true;
 }

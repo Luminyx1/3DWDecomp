@@ -57,6 +57,7 @@ Scene* SceneCreator::createScene(const char* pClassName, const char* pStageName,
     while (!isEqualString(name, entries[index].name)) {
         index++;
     }
+
     Scene* scene = entries[index].func();
     SceneInitInfo* info = new SceneInitInfo(mGameSystemInfo, mAudioDirector, mGameDataHolder,
                                             mScreenCaptureExecutor, pStageName, scenarioNo,
@@ -69,6 +70,7 @@ Scene* SceneCreator::createScene(const char* pClassName, const char* pStageName,
         scene->init(*info);
         setCpuBoost(false, false);
     }
+
     return scene;
 }
 
@@ -129,9 +131,11 @@ bool SceneCreator::tryEndInitThread() {
         if (!tryWaitDoneAndDestroyInitializeThread(mInitThread)) {
             return false;
         }
+
         setCpuBoost(false, false);
         mInitThread = nullptr;
     }
+
     return true;
 }
 

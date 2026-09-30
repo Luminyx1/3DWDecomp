@@ -84,6 +84,7 @@ void ApplicationMessageReceiver::procMessage(u32 message) {
         default:
             break;
         }
+
         break;
     case nn::am::AppletMessage_Resume:
         mIsResumed = true;

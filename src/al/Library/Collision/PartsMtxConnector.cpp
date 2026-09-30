@@ -21,6 +21,7 @@ void MtxConnector::init(const sead::Matrix34f* pParentMtx, const sead::Matrix34f
         clear();
         return;
     }
+
     mMtx = rMtx;
     mParentMtx = pParentMtx;
 }
@@ -34,6 +35,7 @@ void MtxConnector::init(const sead::Matrix34f* pParentMtx) {
         clear();
         return;
     }
+
     mMtx.setInverse(*pParentMtx);
     mParentMtx = pParentMtx;
 }
@@ -56,6 +58,7 @@ void MtxConnector::multVec(sead::Vector3f* pOut, const sead::Vector3f& rVec) con
         pOut->set(rVec);
         return;
     }
+
     sead::Matrix34f mtx = *mParentMtx * mMtx;
     mtx.setTranslation(sead::Vector3f::zero);
     pOut->setMul(mtx, rVec);
@@ -71,6 +74,7 @@ void MtxConnector::multTrans(sead::Vector3f* pOut, const sead::Vector3f& rTrans)
         pOut->set(rTrans);
         return;
     }
+
     pOut->setMul(*mParentMtx * mMtx, rTrans);
 }
 
@@ -84,6 +88,7 @@ void MtxConnector::multMtx(sead::Matrix34f* pOut, const sead::Matrix34f& rMtx) c
         *pOut = rMtx;
         return;
     }
+
     pOut->setMul(mMtx, rMtx);
     pOut->setMul(*mParentMtx, *pOut);
 }
@@ -167,9 +172,11 @@ void MtxConnector::calcConnectInfo(sead::Vector3f* pTrans, sead::Quatf* pQuat,
     if (pTrans) {
         mtx.getTranslation(*pTrans);
     }
+
     if (pQuat) {
         mtx.toQuat(*pQuat);
     }
+
     if (pScale) {
         calcMtxScale(pScale, mtx);
     }
@@ -199,6 +206,7 @@ bool MtxConnector::tryGetParentTrans(sead::Vector3f* pTrans) const {
     if (!mParentMtx) {
         return false;
     }
+
     mParentMtx->getTranslation(*pTrans);
     return true;
 }

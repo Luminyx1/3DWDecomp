@@ -17,6 +17,7 @@ bool tryCallControllerApplet(const GamePadSystem* pSystem, s32 minPlayerNum, s32
         pSystem->getAudioSystem()->pauseSystemImmediately(true, "コントローラサポートアプレット",
                                                           true);
     }
+
     nn::hid::ControllerSupportArg arg;
     arg.SetDefault();
     arg.mMinPlayerCount = minPlayerNum;
@@ -33,12 +34,14 @@ bool tryCallControllerApplet(const GamePadSystem* pSystem, s32 minPlayerNum, s32
                                                  pSystem->getPadName(i).cstr(), -1);
         }
     }
+
     nn::hid::ControllerSupportResultInfo resultInfo;
     nn::Result result = nn::hid::ShowControllerSupport(&resultInfo, arg);
     if (pSystem->getAudioSystem() != nullptr) {
         pSystem->getAudioSystem()->pauseSystemImmediately(false, "コントローラサポートアプレット",
                                                           true);
     }
+
     return result.IsSuccess();
 }
 
@@ -57,6 +60,7 @@ bool tryCallControllerApplet(const GamePadSystem* pSystem, nn::hid::ControllerSu
         pSystem->getAudioSystem()->pauseSystemImmediately(true, "コントローラサポートアプレット",
                                                           true);
     }
+
     if (isUseControllerNames && pArg->mMaxPlayerCount >= 2) {
         pArg->mUsingControllerNames = true;
         for (s32 i = 0; i < pArg->mMaxPlayerCount; i++) {
@@ -64,11 +68,13 @@ bool tryCallControllerApplet(const GamePadSystem* pSystem, nn::hid::ControllerSu
                                                  pSystem->getPadName(i).cstr(), -1);
         }
     }
+
     nn::Result result = nn::hid::ShowControllerSupport(pResultInfo, *pArg);
     if (pSystem->getAudioSystem() != nullptr) {
         pSystem->getAudioSystem()->pauseSystemImmediately(false, "コントローラサポートアプレット",
                                                           true);
     }
+
     return result.IsSuccess();
 }
 }  // namespace al

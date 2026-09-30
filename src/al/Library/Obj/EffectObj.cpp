@@ -50,6 +50,7 @@ void EffectObj::killBySwitch() {
     if (mIsAppeared) {
         return;
     }
+
     makeActorDead();
 }
 
@@ -79,6 +80,7 @@ void EffectObj::control() {
     if (mMtxConnector) {
         connectPoseQT(this, mMtxConnector);
     }
+
     makeMtxRT(&mBaseMtx, this);
     mBaseMtx.m[1][3] += getGlobalYOffset();
 }

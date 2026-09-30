@@ -23,6 +23,7 @@ SwitchAreaDirector* SwitchAreaDirector::tryCreate(AreaObjDirector* pAreaObjDirec
         !pAreaObjDirector->getAreaObjGroup("SwitchKeepOnArea")) {
         return nullptr;
     }
+
     return new SwitchAreaDirector(pAreaObjDirector, pPlayerHolder, pThread);
 }
 
@@ -46,6 +47,7 @@ void SwitchAreaDirector::internalUpdate() {
         if (isPlayerDead(mPlayerHolder, i) || !isPlayerAreaTarget(mPlayerHolder, i)) {
             continue;
         }
+
         new (&positions[numPositions]) sead::Vector3f(getPlayerPos(mPlayerHolder, i));
         numPositions++;
     }
@@ -55,6 +57,7 @@ void SwitchAreaDirector::internalUpdate() {
     if (mSwitchOnAreaGroup) {
         mSwitchOnAreaGroup->update(positions, numPositions, isDisaster);
     }
+
     if (mSwitchKeepOnAreaGroup) {
         mSwitchKeepOnAreaGroup->update(positions, numPositions, isDisaster);
     }
@@ -68,6 +71,7 @@ void SwitchAreaDirector::update() {
         mThread->requestExecute(this);
         return;
     }
+
     internalUpdate();
 }
 
@@ -102,6 +106,7 @@ SwitchAreaDirector::SwitchAreaDirector(AreaObjDirector* pAreaObjDirector,
     if (switchOnGroup) {
         mSwitchOnAreaGroup = new SwitchOnAreaGroup(switchOnGroup);
     }
+
     AreaObjGroup* keepOnGroup = pAreaObjDirector->getAreaObjGroup("SwitchKeepOnArea");
     if (keepOnGroup) {
         mSwitchKeepOnAreaGroup = new SwitchKeepOnAreaGroup(keepOnGroup);

@@ -20,5 +20,6 @@ private:
     BgmDirector* mBgmDirector;
     const BgmUserInfo* mUserInfo;
 };
+
 static_assert(sizeof(BgmKeeper) == 0x10);
 }  // namespace al

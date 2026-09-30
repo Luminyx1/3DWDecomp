@@ -44,6 +44,7 @@ void CameraPoserRace::calcTargetFrontLocal(sead::Vector3f* pFront, bool isUnused
         normalize(pFront);
         return;
     }
+
     if (mIsTurnToVelocity) {
         sead::Vector3f velocity = {0.0f, 0.0f, 0.0f};
         alCameraPoserFunction::calcTargetVelocityH(&velocity, this);
@@ -53,6 +54,7 @@ void CameraPoserRace::calcTargetFrontLocal(sead::Vector3f* pFront, bool isUnused
             return;
         }
     }
+
     alCameraPoserFunction::calcTargetFront(pFront, this);
     pFront->y = 0.0f;
     normalize(pFront);
@@ -81,6 +83,7 @@ void CameraPoserRace::update() {
     if (length > 0.0f) {
         dir *= distance / length;
     }
+
     mEye.set(mAt + dir);
 }
 

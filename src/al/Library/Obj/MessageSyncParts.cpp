@@ -31,6 +31,7 @@ bool MessageSyncParts::receiveMsg(const SensorMsg* pMsg, HitSensor* pOther, HitS
     if (mIsSyncReceiveMsg) {
         return mHost->receiveMsg(pMsg, pOther, pSelf);
     }
+
     return false;
 }
 
@@ -46,6 +47,7 @@ bool MessageSyncParts::receiveMsgScreenPoint(const SensorMsg* pMsg, ScreenPointe
     if (mIsSyncReceiveMsgScreenPoint) {
         return mHost->receiveMsgScreenPoint(pMsg, pPointer, pTarget);
     }
+
     return false;
 }
 }  // namespace al

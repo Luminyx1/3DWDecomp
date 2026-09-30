@@ -33,6 +33,7 @@ s32 getJointNum(const ModelKeeper* pKeeper) {
     if (!skeleton) {
         return 0;
     }
+
     return skeleton->GetBoneCount();
 }
 
@@ -47,6 +48,7 @@ s32 getJointIndex(const ModelKeeper* pKeeper, const char* pName) {
     if (!skeleton) {
         return -1;
     }
+
     return skeleton->GetRes()->FindBoneIndex(pName);
 }
 
@@ -61,9 +63,11 @@ bool isExistJoint(const ModelKeeper* pKeeper, const char* pName) {
     if (!skeleton) {
         return false;
     }
+
     if (skeleton->GetRes()->FindBoneIndex(pName) < 0) {
         return false;
     }
+
     return true;
 }
 
@@ -78,6 +82,7 @@ const char* getJointName(const ModelKeeper* pKeeper, s32 index) {
     if (!skeleton) {
         return nullptr;
     }
+
     return skeleton->GetRes()->GetBoneName(index);
 }
 
@@ -92,6 +97,7 @@ const sead::Matrix34f* getJointMtxPtr(const ModelKeeper* pKeeper, const char* pN
     if (!skeleton) {
         return nullptr;
     }
+
     s32 index = getJointIndex(pKeeper, pName);
     return pKeeper->getWorldMtxPtrByIndex(skeleton->GetBone(index)->GetIndex());
 }
@@ -107,6 +113,7 @@ const sead::Matrix34f* getJointMtxPtrByIndex(const ModelKeeper* pKeeper, s32 ind
     if (!skeleton) {
         return nullptr;
     }
+
     return pKeeper->getWorldMtxPtrByIndex(skeleton->GetBone(index)->GetIndex());
 }
 
@@ -121,6 +128,7 @@ const sead::Matrix34f* getJointLocalMtxPtr(const ModelKeeper* pKeeper, const cha
     if (!skeleton) {
         return nullptr;
     }
+
     s32 index = getJointIndex(pKeeper, pName);
     return pKeeper->getWorldMtxPtrByIndex(skeleton->GetBone(index)->GetIndex());
 }
@@ -136,6 +144,7 @@ const void* getJointLocalMtxPtrByIndex(const ModelKeeper* pKeeper, s32 index) {
     if (!skeleton) {
         return nullptr;
     }
+
     return skeleton->GetLocalMtx(skeleton->GetBone(index)->GetIndex());
 }
 
@@ -188,6 +197,7 @@ void setJointVisibility(const ModelKeeper* pKeeper, const char* pName, bool isVi
     if (index < 0) {
         return;
     }
+
     bool isPrevVisible = modelObj->IsBoneVisible(index);
     u32 bit = 1 << index;
     u32& word = modelObj->GetBoneVisibilityArray()[static_cast<u32>(index) >> 5];
@@ -209,6 +219,7 @@ bool getJointVisibility(const ModelKeeper* pKeeper, const char* pName) {
     if (index < 0) {
         return false;
     }
+
     return getModelObj(pKeeper)->IsBoneVisible(index);
 }
 

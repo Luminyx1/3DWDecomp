@@ -21,15 +21,19 @@ void heapSortInfoArray(sead::PtrArray<T>* pArray, Compare&& cmp) {
             if (child < num && cmp(infos[child - 1], infos[child]) < 0) {
                 child++;
             }
+
             if (cmp(value, infos[child - 1]) >= 0) {
                 break;
             }
+
             infos[parent - 1] = infos[child - 1];
             parent = child;
             child = parent * 2;
         }
+
         infos[parent - 1] = value;
     }
+
     for (s32 i = num; i >= 2; i--) {
         const s32 last = i - 1;
         T* value = infos[last];
@@ -40,13 +44,16 @@ void heapSortInfoArray(sead::PtrArray<T>* pArray, Compare&& cmp) {
             if (child < last && cmp(infos[child - 1], infos[child]) < 0) {
                 child++;
             }
+
             if (cmp(value, infos[child - 1]) >= 0) {
                 break;
             }
+
             infos[parent - 1] = infos[child - 1];
             parent = child;
             child = parent * 2;
         }
+
         infos[parent - 1] = value;
     }
 }
@@ -57,6 +64,7 @@ void shakerSortInfoArray(sead::PtrArray<T>* pArray, Compare&& cmp) {
     if (pArray->size() < 2) {
         return;
     }
+
     s32 lo = 0;
     s32 hi = pArray->size() - 1;
     while (lo < hi) {
@@ -69,10 +77,12 @@ void shakerSortInfoArray(sead::PtrArray<T>* pArray, Compare&& cmp) {
                 last = i;
             }
         }
+
         hi = last;
         if (hi <= lo) {
             break;
         }
+
         last = hi;
         for (s32 i = hi; i > lo; i--) {
             if (cmp(infos[i], infos[i - 1]) < 0) {
@@ -82,6 +92,7 @@ void shakerSortInfoArray(sead::PtrArray<T>* pArray, Compare&& cmp) {
                 last = i;
             }
         }
+
         lo = last;
         if (lo == hi) {
             break;
@@ -108,10 +119,12 @@ public:
             if (index < num) {
                 return list->mInfos->unsafeAt(index);
             }
+
             list = list->mNext;
             if (list == nullptr) {
                 return nullptr;
             }
+
             index -= num;
             if (index < 0) {
                 return nullptr;
@@ -126,6 +139,7 @@ public:
             if (infos->size() > index) {
                 return infos->unsafeAt(index);
             }
+
             index -= infos->size();
             list = list->mNext;
         }
@@ -135,6 +149,7 @@ public:
         if (index < 0) {
             return nullptr;
         }
+
         return getInfo(index);
     }
 
@@ -143,6 +158,7 @@ public:
         if (num == 0) {
             return -1;
         }
+
         T** infos = mInfos->data();
         s32 lo = 0;
         s32 hi = num - 1;
@@ -152,15 +168,18 @@ public:
             if (result == 0) {
                 return mid;
             }
+
             if (result < 0) {
                 lo = mid + 1;
             } else {
                 hi = mid;
             }
         }
+
         if (strcmp(infos[lo]->mName, pKey) == 0) {
             return lo;
         }
+
         return -1;
     }
 
@@ -172,6 +191,7 @@ public:
             } else {
                 shakerSortInfoArray<T>(list->mInfos, T::compareInfo);
             }
+
             list = list->mNext;
         } while (list != nullptr);
     }
@@ -183,6 +203,7 @@ public:
             if (info != nullptr) {
                 return info;
             }
+
             list = list->mNext;
         } while (list != nullptr);
         return nullptr;
@@ -207,6 +228,7 @@ AudioInfoList<T>* createInfoList(const ByamlIter& rIter) {
             list->mInfos->pushBack(info);
         }
     }
+
     list->sortInfo();
     return list;
 }

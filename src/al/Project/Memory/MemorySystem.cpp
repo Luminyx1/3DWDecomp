@@ -40,6 +40,7 @@ void MemorySystem::allocFailedCallbackFunc(const sead::HeapMgr::AllocFailedCallb
     if (isEqualString(pArg->heap->getName(), "PlayReporter")) {
         return;
     }
+
     sead::system::Halt();
 }
 
@@ -88,9 +89,11 @@ bool MemorySystem::createSceneHeap(const char* pStageName) {
     if (!resourceHeap) {
         createSceneResourceHeap(pStageName);
     }
+
     if (mCustomAlloc) {
         mCustomAlloc->createSceneHeap(resourceHeap == nullptr);
     }
+
     mSceneHeap = sead::FrameHeap::create(0, "SceneHeap", nullptr, 8,
                                          sead::Heap::cHeapDirection_Forward, false);
     mSceneHeap->enableWarning(false);
@@ -112,6 +115,7 @@ inline u64 findSceneResourceHeapSize(const char* pStageName, u64 defaultSize) {
             return sizeMB * 1024.0f * 1024.0f;
         }
     }
+
     return defaultSize;
 }
 }  // namespace
@@ -132,9 +136,11 @@ void MemorySystem::createSceneResourceHeap(const char* pStageName) {
             size = adjustedSize;
         }
     }
+
     if (isDefaultSize && size < 0x7800000) {
         size = 0x7800000;
     }
+
     mSceneResourceHeap = sead::FrameHeap::create(size, "SceneHeapResource", nullptr, 8,
                                                  sead::Heap::cHeapDirection_Forward, true);
     mSceneResourceHeap->enableWarning(false);
@@ -164,9 +170,11 @@ bool MemorySystem::isReallyFreeSceneResource(bool isRemoveCategory) const {
     if (!isRemoveCategory) {
         return false;
     }
+
     if (!mCustomAlloc) {
         return true;
     }
+
     return mCustomAlloc->isReallyFreeSceneResource();
 }
 
@@ -219,6 +227,7 @@ sead::Heap* MemorySystem::tryFindNamedHeap(const char* pHeapName) const {
     if (!node) {
         return nullptr;
     }
+
     return node->value();
 }
 
@@ -232,6 +241,7 @@ sead::Heap* MemorySystem::findNamedHeap(const char* pHeapName) const {
     if (!node) {
         return nullptr;
     }
+
     return node->value();
 }
 

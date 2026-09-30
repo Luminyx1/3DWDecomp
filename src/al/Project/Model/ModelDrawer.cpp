@@ -76,6 +76,7 @@ void ModelDrawer::removeModel(alModelCafe* pModel) {
             if (i < mModelNum - 1) {
                 mModels[i] = mModels[mModelNum - 1];
             }
+
             mModelNum--;
             return;
         }

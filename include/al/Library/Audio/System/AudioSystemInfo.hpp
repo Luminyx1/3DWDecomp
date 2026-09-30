@@ -32,5 +32,6 @@ public:
     SeadAudioPlayer* mBgmAudioPlayer = nullptr;
     IUseAudioKeeper* mUpperLayerAudioUser = nullptr;
 };
+
 static_assert(sizeof(AudioSystemInfo) == 0x50);
 }  // namespace al

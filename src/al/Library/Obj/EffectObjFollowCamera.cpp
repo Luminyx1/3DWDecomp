@@ -48,6 +48,7 @@ void EffectObjFollowCamera::init(const ActorInitInfo& rInfo) {
     } else {
         makeActorAppeared();
     }
+
     listenStageSwitchOnKill(
         this, EffectObjFollowCameraFunctor(this, &EffectObjFollowCamera::startDisappear));
 }
@@ -59,6 +60,7 @@ void EffectObjFollowCamera::startAppear() {
     if (isDead(this)) {
         appear();
     }
+
     setNerve(this, &NrvEffectObjFollowCameraWait);
 }
 
@@ -92,6 +94,7 @@ void EffectObjFollowCamera::movementPaused(bool isPaused) {
     } else {
         mBaseMtx.setInverse(*getCameraViewMtxPtr(this));
     }
+
     LiveActor::movementPaused(isPaused);
     updateEffects(this);
 }
@@ -113,6 +116,7 @@ void EffectObjFollowCamera::exeDisappear() {
     if (isFirstStep(this)) {
         tryDeleteEffect(this, "Wait");
     }
+
     if (isStep(this, 180)) {
         kill();
     }

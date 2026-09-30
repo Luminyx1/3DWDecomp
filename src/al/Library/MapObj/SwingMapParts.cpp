@@ -45,6 +45,7 @@ void SwingMapParts::init(const ActorInitInfo& rInfo) {
     } else {
         initNerveAction(this, "MoveRight", &NrvSwingMapParts.collector, 0);
     }
+
     initActorPoseTQSV(this);
     initMapPartsActor(this, rInfo, nullptr, calcChildStepCount(rInfo));
     registerAreaHostMtx(this, rInfo);
@@ -57,6 +58,7 @@ void SwingMapParts::init(const ActorInitInfo& rInfo) {
                                            this, &SwingMapParts::start))) {
         startNerveAction(this, "StandBy");
     }
+
     trySyncStageSwitchAppear(this);
 }
 
@@ -67,6 +69,7 @@ void SwingMapParts::start() {
     if (!isNerve(this, NrvSwingMapParts.StandBy.data())) {
         return;
     }
+
     if (mSwingMovement->isLeft()) {
         initNerveAction(this, "MoveLeft", &NrvSwingMapParts.collector, 0);
     } else {
@@ -89,16 +92,20 @@ bool SwingMapParts::receiveMsg(const SensorMsg* pMsg, HitSensor* pOther, HitSens
         } else {
             initNerveAction(this, "MoveRight", &NrvSwingMapParts.collector, 0);
         }
+
         return true;
     }
+
     if (isMsgShowModel(pMsg)) {
         showModelIfHide(this);
         return true;
     }
+
     if (isMsgHideModel(pMsg)) {
         hideModelIfShow(this);
         return true;
     }
+
     return false;
 }
 
@@ -142,6 +149,7 @@ void SwingMapParts::exeStop() {
     if (mSwingMovement->isStop()) {
         return;
     }
+
     if (mSwingMovement->isLeft()) {
         startNerveAction(this, "MoveLeft");
     } else {

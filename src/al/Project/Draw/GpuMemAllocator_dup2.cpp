@@ -43,6 +43,7 @@ GpuMemAllocator::Block* GpuMemAllocator::findGpuMemInfo(const char* pName) const
             return block;
         }
     }
+
     return nullptr;
 }
 

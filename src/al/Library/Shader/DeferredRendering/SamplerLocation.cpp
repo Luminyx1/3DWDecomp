@@ -259,6 +259,7 @@ void tryChangeShaderMode(agl::DrawContext* pDrawContext, agl::ShaderMode shaderM
     if (pDrawContext->getShaderMode() == shaderMode) {
         return;
     }
+
     pDrawContext->changeShaderMode(shaderMode, agl::ShaderOptimizeType(0));
 }
 
@@ -294,6 +295,7 @@ void calcTanFovyHalf(sead::Vector2f* pTanFovyHalf, sead::Vector2f* pOffset, f32 
     if (pOffset) {
         pOffset->set(tanX * (rProjOffset.x + rProjOffset.x), tanY * (rProjOffset.y + rProjOffset.y));
     }
+
     if (pTanFovyHalf) {
         pTanFovyHalf->set(tanX, -tanY);
     }

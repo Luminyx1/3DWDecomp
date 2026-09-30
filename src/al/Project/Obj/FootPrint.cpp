@@ -69,12 +69,15 @@ void FootPrint::exeAppear() {
         startMclAnim(this, mMclAnimName);
         setMclAnimFrameAndStop(this, 0.0f);
     }
+
     if (isStep(this, 3)) {
         mModelKeeper->getModelCafe()->getModelG3D()->_45 = false;
     }
+
     if (mConnector->isConnecting()) {
         return;
     }
+
     kill();
 }
 
@@ -85,6 +88,7 @@ void FootPrint::exeDisappear() {
     if (isFirstStep(this)) {
         startMclAnim(this, mMclAnimName);
     }
+
     if (isMclAnimEnd(this)) {
         kill();
     }
@@ -132,6 +136,7 @@ void FootPrint::control() {
     if (mCollisionParts->_154) {
         return;
     }
+
     connectPoseQT(this, mConnector);
 }
 }  // namespace al

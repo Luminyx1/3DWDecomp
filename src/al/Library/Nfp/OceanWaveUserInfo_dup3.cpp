@@ -25,6 +25,7 @@ OceanWaveInfo* OceanWaveInfo::createInfo(const ByamlIter& rIter) {
     if (!rIter.tryGetStringByKey(&info->mName, "Name")) {
         return nullptr;
     }
+
     rIter.tryGetStringByKey(&info->mJointName, "JointName");
     tryGetByamlV3f(&info->mPosOffset, rIter, "PosOffset");
     rIter.tryGetFloatByKey(&info->mSize, "Size");
@@ -56,9 +57,11 @@ OceanWavePlayInfoInAction* OceanWavePlayInfoInAction::createInfo(const ByamlIter
     if (!rIter.tryGetFloatByKey(&info->mStartFrame, "StartFrame")) {
         info->mStartFrame = 0.0f;
     }
+
     if (!rIter.tryGetFloatByKey(&info->mEndFrame, "EndFrame")) {
         info->mEndFrame = 0.0f;
     }
+
     return info;
 }
 
@@ -73,6 +76,7 @@ s32 OceanWavePlayInfoInAction::compareInfo(const OceanWavePlayInfoInAction* pA,
     if (pA->mStartFrame < pB->mStartFrame) {
         return -1;
     }
+
     return pA->mStartFrame > pB->mStartFrame;
 }
 
@@ -140,6 +144,7 @@ OceanWaveActionInfo::OceanWaveActionInfo(const OceanWaveActionInfo& rOther)
         mPlayInfoList = nullptr;
         return;
     }
+
     s32 num = rOther.mPlayInfoList->getInfoNum();
     AudioInfoList<OceanWavePlayInfoInAction>* list = new AudioInfoList<OceanWavePlayInfoInAction>;
     list->mNext = nullptr;
@@ -166,6 +171,7 @@ OceanWaveActionInfo& OceanWaveActionInfo::operator=(const OceanWaveActionInfo& r
     if (rOther.mPlayInfoList != nullptr && mPlayInfoList != nullptr) {
         *mPlayInfoList = *rOther.mPlayInfoList;
     }
+
     return *this;
 }
 
@@ -179,18 +185,22 @@ void startOceanWave(LiveActor* pActor, const char* pName) {
     if (keeper == nullptr || keeper->getUserInfo() == nullptr) {
         return;
     }
+
     OceanWaveUserInfo* userInfo = keeper->getUserInfo();
     OceanWaveDirector* director = keeper->getDirector();
     if (director == nullptr) {
         return;
     }
+
     OceanWavePlayInfo* playInfo = nullptr;
     if (pName != nullptr && userInfo->mPlayInfoList != nullptr) {
         playInfo = userInfo->mPlayInfoList->tryFindInfo(pName);
     }
+
     if (playInfo == nullptr || playInfo->mOceanWaveInfoList == nullptr) {
         return;
     }
+
     s32 num = playInfo->mOceanWaveInfoList->getInfoNum();
     for (s32 i = 0; i < num; i++) {
         OceanWaveInfo* info = playInfo->mOceanWaveInfoList != nullptr
@@ -221,6 +231,7 @@ void ActorAlphaCtrl::SphereInfo::init(const ByamlIter& rIter, LiveActor* pActor)
             mJointMtx = getJointMtxPtr(pActor, jointName);
         }
     }
+
     tryGetByamlV3f(&mPosOffset, rIter);
 }
 
@@ -237,16 +248,20 @@ f32 ActorAlphaCtrl::SphereInfo::update(LiveActor* pActor, const ClippingJudge* p
     } else {
         pos = getTrans(pActor) + mPosOffset;
     }
+
     f32 distanceSq = (pos - pJudge->mCameraPos).squaredLength();
     if (distanceSq > mFarDist * mFarDist) {
         return 1.0f;
     }
+
     if (distanceSq < mNearDist * mNearDist) {
         return 0.0f;
     }
+
     if (mNearDist < mFarDist) {
         return (sead::Mathf::sqrt(distanceSq) - mNearDist) / (mFarDist - mNearDist);
     }
+
     return 1.0f;
 }
 
@@ -263,6 +278,7 @@ ActorAlphaCtrl* ActorAlphaCtrl::tryCreate(LiveActor* pActor, const Resource* pRe
     if (tryGetActorInitFileIter(&iter, pResource, "InitAlphaCtrl", pFileName)) {
         return new ActorAlphaCtrl(iter, pActor);
     }
+
     return nullptr;
 }
 
@@ -280,6 +296,7 @@ ActorAlphaCtrl::ActorAlphaCtrl(const ByamlIter& rIter, LiveActor* pActor) : mAct
         !arrayIter.isTypeArray()) {
         return;
     }
+
     mSphereInfoNum = arrayIter.getSize();
     mSphereInfos = new SphereInfo[mSphereInfoNum];
     for (s32 i = 0; i < mSphereInfoNum; i++) {
@@ -304,6 +321,7 @@ f32 ActorAlphaCtrl::update(const ClippingJudge* pJudge) {
         } else {
             pos = getTrans(mActor) + mSphereInfo.mPosOffset;
         }
+
         f32 distanceSq = (pos - pJudge->mCameraPos).squaredLength();
         mAlpha = 1.0f;
         if (distanceSq < mSphereInfo.mFarDist * mSphereInfo.mFarDist) {
@@ -315,6 +333,7 @@ f32 ActorAlphaCtrl::update(const ClippingJudge* pJudge) {
             }
         }
     }
+
     return mIsOn ? mAlpha : 1.0f;
 }
 }  // namespace al

@@ -99,16 +99,19 @@ const CameraDistanceCurve* CameraDistanceCurve::findOrDefaultCurve(const ByamlIt
     if (!name) {
         return &sExtraCurves[0];
     }
+
     for (s32 i = 0; i < 23; i++) {
         if (isEqualString(sCurves[i].getName(), name)) {
             return &sCurves[i];
         }
     }
+
     for (s32 i = 1; i < 13; i++) {
         if (isEqualString(sExtraCurves[i].getName(), name)) {
             return &sExtraCurves[i];
         }
     }
+
     return &sExtraCurves[0];
 }
 
@@ -132,15 +135,18 @@ f32 CameraDistanceCurve::calcDistance(f32 angleV) const {
     if (angleV < mPoints[0].angleV) {
         return mPoints[0].distance;
     }
+
     for (s32 i = 1; i < mPointNum; i++) {
         if (isNearZero(mPoints[i].angleV - angleV, 0.001f)) {
             return mPoints[i].distance;
         }
+
         if (angleV < mPoints[i].angleV) {
             f32 rate = normalize(angleV, mPoints[i - 1].angleV, mPoints[i].angleV);
             return lerpValue(rate, mPoints[i - 1].distance, mPoints[i].distance);
         }
     }
+
     return mPoints[mPointNum - 1].distance;
 }
 

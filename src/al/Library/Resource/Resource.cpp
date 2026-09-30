@@ -81,6 +81,7 @@ bool Resource::loadPatchData() {
             return true;
         }
     }
+
     return false;
 }
 
@@ -95,9 +96,11 @@ bool Resource::isExistFile(const sead::SafeString& rFilePath) const {
     if (isExist) {
         return true;
     }
+
     if (mPatchRes) {
         isExist = mPatchRes->isExistFile(rFilePath);
     }
+
     return isExist;
 }
 
@@ -131,6 +134,7 @@ u32 Resource::getEntryNum(const sead::SafeString& rDirectoryPath) const {
     if (!mDevice->tryOpenDirectory(&handle, rDirectoryPath)) {
         return 0;
     }
+
     u32 entryNum = mDevice->readDirectory(&handle, sEntries, 0x1000);
     mDevice->tryCloseDirectory(&handle);
     return entryNum;
@@ -182,6 +186,7 @@ const void* Resource::getFile(const sead::SafeString& rFilePath) const {
     while (resource->mPatchRes && resource->mPatchRes->isExistFile(rFilePath)) {
         resource = resource->mPatchRes;
     }
+
     return resource->mArchive->getFile(rFilePath);
 }
 
@@ -197,6 +202,7 @@ const u8* Resource::tryGetByml(const sead::SafeString& rFilePath) const {
     if (!isExistFile(filePathExt.cstr())) {
         return nullptr;
     }
+
     return static_cast<const u8*>(getFile(filePathExt));
 }
 
@@ -224,6 +230,7 @@ const void* Resource::tryGetKcl(const sead::SafeString& rFilePath) const {
     if (!isExistFile(filePathExt.cstr())) {
         return nullptr;
     }
+
     return getFile(filePathExt);
 }
 
@@ -247,6 +254,7 @@ void* Resource::getOtherFile(const sead::SafeString& rFilePath, u32* pSize) cons
     if (pSize) {
         *pSize = getFileSize(rFilePath);
     }
+
     return const_cast<void*>(getFile(rFilePath));
 }
 
@@ -269,10 +277,12 @@ bool Resource::tryCreateResGraphicsFile(const sead::SafeString& rFilePath,
     if (mResFile) {
         return false;
     }
+
     mResFile = nn::g3d::ResFile::ResCast(const_cast<void*>(getFile(rFilePath)));
     if (pTextureFile) {
         agl::g3d::ResFile::BindTexture(mResFile, pTextureFile);
     }
+
     agl::g3d::ResFile::Setup(mResFile);
     agl::g3d::ResFile::BindTexture(mResFile, mResFile);
     return true;
@@ -288,6 +298,7 @@ void Resource::cleanupResGraphicsFile() {
         agl::g3d::ResFile::Cleanup(mResFile);
         mResFile = nullptr;
     }
+
     if (mPatchRes) {
         mPatchRes->cleanupResGraphicsFile();
     }

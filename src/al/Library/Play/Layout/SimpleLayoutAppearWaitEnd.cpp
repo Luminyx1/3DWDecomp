@@ -32,6 +32,7 @@ SimpleLayoutAppearWaitEnd::SimpleLayoutAppearWaitEnd(const char* pName, const ch
     } else {
         initLayoutActor(this, rInfo, pLayoutName, pArchiveName);
     }
+
     initNerve(&NrvSimpleLayoutAppearWaitEndAppear, 0);
 }
 
@@ -42,6 +43,7 @@ void SimpleLayoutAppearWaitEnd::appear() {
     if (!mIsSkipAction) {
         startAction(this, "Appear");
     }
+
     LayoutActor::appear();
     setNerve(this, &NrvSimpleLayoutAppearWaitEndAppear);
 }
@@ -53,6 +55,7 @@ void SimpleLayoutAppearWaitEnd::end() {
     if (isNerve(this, &NrvSimpleLayoutAppearWaitEndEnd)) {
         return;
     }
+
     setNerve(this, &NrvSimpleLayoutAppearWaitEndEnd);
 }
 
@@ -90,6 +93,7 @@ void SimpleLayoutAppearWaitEnd::exeEnd() {
     if (isFirstStep(this) && !mIsSkipAction) {
         startAction(this, "End");
     }
+
     if (isActionEnd(this)) {
         kill();
     }

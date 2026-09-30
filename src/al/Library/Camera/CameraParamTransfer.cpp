@@ -31,6 +31,7 @@ bool CameraParamTransfer::tryTransferParam(CameraPoser_RS* pPrev, CameraPoser_RS
     if (!func) {
         return false;
     }
+
     func(pPrev, pNext);
     return true;
 }
@@ -46,12 +47,14 @@ CameraParamTransferFunc CameraParamTransfer::tryFindTransferFunc(const char* pPr
     if (!mFuncTable) {
         return nullptr;
     }
+
     for (s32 i = 0; i < mFuncTableSize; i++) {
         if (isEqualString(pPrevName, mFuncTable[i].prevName) &&
             isEqualString(pNextName, mFuncTable[i].nextName)) {
             return mFuncTable[i].func;
         }
     }
+
     return nullptr;
 }
 

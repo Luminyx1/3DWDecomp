@@ -42,6 +42,7 @@ void JointMtxPtr::getTranslation(sead::Vector3f* pOut) const {
         *pOut = *reinterpret_cast<const sead::Vector3f*>(static_cast<const f32*>(mMtx) + 12);
         return;
     }
+
     const sead::Matrix34f* mtx = static_cast<const sead::Matrix34f*>(mMtx);
     pOut->x = mtx->m[0][3];
     pOut->y = mtx->m[1][3];
@@ -57,6 +58,7 @@ void JointMtxPtr::calcMtxScale(sead::Vector3f* pOut) const {
         al::calcMtxScale(pOut, *static_cast<const Matrix43f*>(mMtx));
         return;
     }
+
     al::calcMtxScale(pOut, *static_cast<const sead::Matrix34f*>(mMtx));
 }
 
@@ -81,6 +83,7 @@ void JointMtxPtr::copyTo(sead::Matrix34f* pOut) const {
         pOut->m[2][3] = mtx[14];
         return;
     }
+
     *pOut = *static_cast<const sead::Matrix34f*>(mMtx);
 }
 

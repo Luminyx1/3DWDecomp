@@ -26,6 +26,7 @@ AreaObj* tryGetAreaObjPlayerAll(const LiveActor* pActor, const AreaObjGroup* pGr
     if (!pGroup) {
         return nullptr;
     }
+
     AreaObj* result = nullptr;
     s32 num = pGroup->mNumAreas;
     for (s32 i = 0; i < num; i++) {
@@ -33,12 +34,14 @@ AreaObj* tryGetAreaObjPlayerAll(const LiveActor* pActor, const AreaObjGroup* pGr
         if (!isInAreaObjPlayerAll(pActor, area)) {
             continue;
         }
+
         if (!result) {
             result = area;
         } else {
             result = result->mPriority < area->mPriority ? area : result;
         }
     }
+
     return result;
 }
 
@@ -56,11 +59,14 @@ bool isInAreaObjPlayerAll(const LiveActor* pActor, const AreaObj* pArea) {
         if (!isPlayerAreaTarget(player)) {
             continue;
         }
+
         if (!pArea->isInVolume(getTrans(player))) {
             return false;
         }
+
         isIn = true;
     }
+
     return isIn;
 }
 
@@ -77,6 +83,7 @@ bool isInAreaObjPlayerAll(const LiveActor* pActor, const AreaObjGroup* pGroup) {
             return true;
         }
     }
+
     return false;
 }
 
@@ -93,10 +100,12 @@ bool isInAreaObjPlayerAnyOne(const LiveActor* pActor, const AreaObj* pArea) {
         if (!isPlayerAreaTarget(player)) {
             continue;
         }
+
         if (pArea->isInVolume(getTrans(player))) {
             return true;
         }
     }
+
     return false;
 }
 
@@ -113,6 +122,7 @@ bool isInAreaObjPlayerAnyOne(const LiveActor* pActor, const AreaObjGroup* pGroup
             return true;
         }
     }
+
     return false;
 }
 
@@ -155,6 +165,7 @@ AreaObjGroup* createLinkAreaGroup(LiveActor* pActor, const ActorInitInfo& rInfo,
     if (num <= 0) {
         return nullptr;
     }
+
     AreaObjGroup* group = new AreaObjGroup(pGroupName);
     group->createBuffer(num);
     const PlacementInfo& placementInfo = *rInfo.mPlacementInfo;
@@ -166,6 +177,7 @@ AreaObjGroup* createLinkAreaGroup(LiveActor* pActor, const ActorInitInfo& rInfo,
         area->init(areaInitInfo);
         group->resisterAreaObj(area);
     }
+
     return group;
 }
 }  // namespace al

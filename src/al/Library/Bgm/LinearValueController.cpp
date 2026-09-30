@@ -53,6 +53,7 @@ void BgmLpfController::update() {
     if (mIsReached) {
         return;
     }
+
     mHandle->SetLpfFreq(mFreqController->getValue());
     if (mFreqController->isReachedTarget()) {
         mIsReached = true;
@@ -136,6 +137,7 @@ void BgmVolumeController::update() {
     if (mIsReached) {
         return;
     }
+
     mHandle->SetVolume(mVolumeController->getValue(), 0);
     if (mVolumeController->isReachedTarget()) {
         mIsReached = true;
@@ -162,6 +164,7 @@ bool BgmVolumeController::isFadeOutNow() const {
     if (value <= 0.0f) {
         return false;
     }
+
     return value > mVolumeController->getTarget();
 }
 
@@ -174,6 +177,7 @@ bool BgmVolumeController::isFadeInNow() const {
     if (value >= 1.0f) {
         return false;
     }
+
     return value < mVolumeController->getTarget();
 }
 

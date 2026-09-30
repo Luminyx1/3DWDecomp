@@ -67,6 +67,7 @@ PartsModel* createPartsModel(LiveActor* pParent, const ActorInitInfo& rInfo, con
     if (!pJointMtx) {
         pJointMtx = pParent->getBaseMtx();
     }
+
     partsModel->initPartsMtx(pParent, rInfo, pArchiveName, pJointMtx, false);
     return partsModel;
 }
@@ -154,6 +155,7 @@ PartsModel* createPartsModelSuffix(LiveActor* pParent, const ActorInitInfo& rInf
     if (!pJointMtx) {
         pJointMtx = pParent->getBaseMtx();
     }
+
     partsModel->initPartsSuffix(pParent, rInfo, pArchiveName, pSuffix, pJointMtx, false);
     return partsModel;
 }
@@ -219,22 +221,29 @@ bool updateSyncHostVisible(bool* pIsHidden, LiveActor* pActor, const LiveActor* 
             if (isExistModel(pActor)) {
                 alActorSystemFunction::removeFromExecutorDraw(pActor);
             }
+
             if (isExistShadow(pActor)) {
                 hideShadow(pActor);
             }
+
             *pIsHidden = true;
         }
+
         return false;
     }
+
     if (*pIsHidden) {
         if (isExistModel(pActor)) {
             alActorSystemFunction::addToExecutorDraw(pActor);
         }
+
         if (isExistShadow(pActor)) {
             showShadow(pActor);
         }
+
         *pIsHidden = false;
     }
+
     return true;
 }
 
@@ -247,6 +256,7 @@ bool isTraceModelRandomRotate(const LiveActor* pActor) {
     if (!isExistModelResourceYaml(pActor, "InitTraceModel", nullptr)) {
         return false;
     }
+
     return tryGetByamlKeyBoolOrFalse(
         ByamlIter(getModelResourceYaml(pActor, "InitTraceModel", nullptr)), "IsRandomRotate");
 }

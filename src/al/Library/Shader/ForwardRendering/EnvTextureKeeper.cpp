@@ -52,27 +52,35 @@ void EnvTexId::change(const EnvTexId& rOther) {
     if (isEnableTexId(rOther.mCubeMapId)) {
         mCubeMapId = rOther.mCubeMapId;
     }
+
     if (isEnableTexId(rOther.mRefractCubeMapId)) {
         mRefractCubeMapId = rOther.mRefractCubeMapId;
     }
+
     if (isEnableTexId(rOther.mRoughness)) {
         mRoughness = rOther.mRoughness;
     }
+
     if (isEnableTexId(rOther.mRefract)) {
         mRefract = rOther.mRefract;
     }
+
     if (isEnableTexId(rOther.mIrradiance)) {
         mIrradiance = rOther.mIrradiance;
     }
+
     if (isEnableTexId(rOther.mFresnel)) {
         mFresnel = rOther.mFresnel;
     }
+
     if (isEnableTexId(rOther.mThickness)) {
         mThickness = rOther.mThickness;
     }
+
     if (isEnableTexId(rOther.mLightCategory)) {
         mLightCategory = rOther.mLightCategory;
     }
+
     if (isEnableTexId(rOther.mMirrorTexId)) {
         mMirrorTexId = rOther.mMirrorTexId;
     }
@@ -149,9 +157,11 @@ s32 EnvTexInfo::getLightCategory(s32 defaultCategory) const {
     if (mOverride.mLightCategory != -1) {
         return mOverride.mLightCategory;
     }
+
     if (mBase.mLightCategory != -1) {
         return mBase.mLightCategory;
     }
+
     return defaultCategory;
 }
 
@@ -257,6 +267,7 @@ s32 calcRoughnessType(const nn::g3d::ResMaterial& rMaterial) {
     if (renderInfo == nullptr) {
         return 4;
     }
+
     return alModelFunction::getRoughnessPresetIndex(renderInfo);
 }
 
@@ -269,11 +280,13 @@ s32 calcRefractType(const nn::g3d::ResMaterial& rMaterial,
     if (alModelFunction::isShaderIndirect(rShadingModel)) {
         return 6;
     }
+
     const nn::g3d::ResRenderInfo* renderInfo =
         rMaterial.FindRenderInfo("refract_roughness_preset");
     if (renderInfo == nullptr) {
         return 4;
     }
+
     return alModelFunction::getRoughnessPresetIndex(renderInfo);
 }
 
@@ -285,9 +298,11 @@ s32 calcFresnelType(const nn::g3d::ResMaterial& rMaterial) {
     if (renderInfo == nullptr) {
         return 0;
     }
+
     if (renderInfo->GetArrayLength() == 0) {
         return 0;
     }
+
     const char* str = renderInfo->GetString(0);
     char* end = nullptr;
     return strtol(str, &end, 0);
@@ -301,13 +316,16 @@ s32 calcThicknessType(const nn::g3d::ResMaterial& rMaterial,
     if (!alModelFunction::isShaderUsingThickness(rShadingModel)) {
         return -1;
     }
+
     const nn::g3d::ResRenderInfo* renderInfo = rMaterial.FindRenderInfo("thickness_curve");
     if (renderInfo == nullptr) {
         return 0;
     }
+
     if (renderInfo->GetArrayLength() == 0) {
         return 0;
     }
+
     const char* str = renderInfo->GetString(0);
     char* end = nullptr;
     return strtol(str, &end, 0);
@@ -321,13 +339,16 @@ s32 calcLightCategory(const nn::g3d::ResMaterial& rMaterial) {
     if (renderInfo == nullptr) {
         return -1;
     }
+
     if (renderInfo->GetArrayLength() == 0) {
         return -1;
     }
+
     const char* category = renderInfo->GetString(0);
     if (al::isEqualString(category, "1")) {
         return 0;
     }
+
     return al::isEqualString(category, "2") ? 1 : -1;
 }
 

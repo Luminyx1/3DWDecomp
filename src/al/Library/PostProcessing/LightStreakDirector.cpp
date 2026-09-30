@@ -131,6 +131,7 @@ LightStreakDirector::~LightStreakDirector() {
         delete mFullScreenQuadModel;
         mFullScreenQuadModel = nullptr;
     }
+
     while (!mUniformBlocks.isEmpty()) {
         UniformBlock* uniformBlock = mUniformBlocks.popBack();
         if (uniformBlock)
@@ -267,6 +268,7 @@ agl::ShaderMode LightStreakDirector::drawToRenderBuffer(s32 index,
         shaderMode = drawBlurMrt(index, width, height, *tmpTexture, *streakTexture, 3, shaderMode);
         break;
     }
+
     allocator->free(tmpTexture);
     shaderMode = composeBlurToBuffer(index, width, height, rRenderBuffer, rViewport,
                                      *streakTexture, shaderMode);

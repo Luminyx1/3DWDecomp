@@ -46,6 +46,7 @@ void BgmDirector::startBgm(const BgmPlayingRequest& rRequest) {
     if (mIsDisableBgmStart) {
         return;
     }
+
     mBgmLineKeeper->startBgm(rRequest);
 }
 
@@ -57,6 +58,7 @@ void BgmDirector::prepareBgm(const BgmPlayingRequest& rRequest) {
     if (mIsDisableBgmStart) {
         return;
     }
+
     mBgmLineKeeper->prepareBgm(rRequest);
 }
 
@@ -68,6 +70,7 @@ void BgmDirector::startPreparedBgm(const char* pName) {
     if (mIsDisableBgmStart) {
         return;
     }
+
     mBgmLineKeeper->startPreparedBgm(pName);
 }
 
@@ -171,6 +174,7 @@ bool BgmDirector::isPauseBgm(const char* pName) {
     if (line == nullptr) {
         return false;
     }
+
     return line->isPause();
 }
 
@@ -186,6 +190,7 @@ bool BgmDirector::pauseActiveBgmById(u32 id, s32 fadeFrames) {
     if (prevFlags != 0 || mPauseIdFlags == 0) {
         return false;
     }
+
     mBgmLineKeeper->pauseActiveBgmLine(fadeFrames);
     return true;
 }
@@ -202,6 +207,7 @@ bool BgmDirector::resumeActiveBgmById(u32 id, s32 fadeFrames) {
     if (prevFlags == 0 || mPauseIdFlags != 0) {
         return false;
     }
+
     mBgmLineKeeper->resumeActiveBgmLine(fadeFrames);
     return true;
 }
@@ -242,6 +248,7 @@ void BgmDirector::changeSituation(const char* pName) {
     if (mIsDisableChangeSituation) {
         return;
     }
+
     mBgmLineKeeper->changeSituation(pName);
 }
 
@@ -255,6 +262,7 @@ const char* BgmDirector::getBgmLineSituationName(const char* pLineName) const {
     if (line == nullptr) {
         return nullptr;
     }
+
     return line->getSituationName();
 }
 
@@ -284,6 +292,7 @@ void BgmDirector::changeBgmVolume(f32 volume, s32 fadeFrames) {
     if (mIsDisableVolumeChange) {
         return;
     }
+
     mBgmLineKeeper->changeActiveBgmVolume(volume, fadeFrames);
 }
 
@@ -315,10 +324,12 @@ bool BgmDirector::isBgmCurrentlyPlaying(const char* pName) {
     if (mBgmLineKeeper->getActiveBgmLine() == nullptr) {
         return false;
     }
+
     const char* playName = mBgmLineKeeper->getActiveBgmLine()->getCurPlayName();
     if (playName == nullptr) {
         return false;
     }
+
     return isEqualString(pName, playName);
 }
 

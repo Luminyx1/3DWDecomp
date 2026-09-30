@@ -66,6 +66,7 @@ namespace al {
     bool isNewNerve(const IUseNerve* pUser) {
         return getNerveStep(pUser) >> 31;
     }
+
     /**
      * Calculates the nerve step divided by a duration, clamped to [0, 1].
      * @param pUser The nerve user.
@@ -76,6 +77,7 @@ namespace al {
         if (max < 1) {
             return 1.0f;
         }
+
         f32 rate = static_cast<f32>(getNerveStep(pUser)) / max;
         return sead::Mathf::clamp(rate, 0.0f, 1.0f);
     }
@@ -363,10 +365,12 @@ namespace al {
         if (step <= riseSteps) {
             return calcNerveEaseOutRate(pUser, riseSteps) * height;
         }
+
         s32 fallStart = holdSteps + riseSteps;
         if (step <= fallStart) {
             return height;
         }
+
         return lerpValue(calcNerveEaseInRate(pUser, fallStart, fallStart + fallSteps), height, 0.0f);
     }
 
@@ -415,6 +419,7 @@ namespace al {
             pUser->getNerveKeeper()->setNerve(pNerve);
             return true;
         }
+
         return false;
     }
 

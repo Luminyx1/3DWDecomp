@@ -38,6 +38,7 @@ LayoutPaneGroup* LayoutKeeper::getGroup(const char* pGroupName) const {
             return mGroups[i];
         }
     }
+
     return nullptr;
 }
 
@@ -67,11 +68,14 @@ void LayoutKeeper::calcAnim(bool isRecursive) {
         if (mScreen) {
             mScreen->updateAnimator_();
         }
+
         return;
     }
+
     if (mScreen) {
         requestCaptureRecursive(getRootPane(mLayout));
     }
+
     s32 groupNum = mGroupNum;
     for (s32 i = 0; i < groupNum; i++) {
         mGroups[i]->animate(false);

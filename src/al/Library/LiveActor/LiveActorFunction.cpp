@@ -97,6 +97,7 @@ al::LiveActor* findSubActor(const al::SubActorKeeper* pKeeper, const char* pName
             return info->mSubActor;
         }
     }
+
     return nullptr;
 }
 

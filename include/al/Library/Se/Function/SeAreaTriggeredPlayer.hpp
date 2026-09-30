@@ -29,5 +29,6 @@ private:
     sead::PtrArray<AreaObj>** mAreaLists = nullptr;
     s32 mCurListIndex = 0;
 };
+
 static_assert(sizeof(SeAreaTriggeredPlayer) == 0x38);
 }  // namespace al

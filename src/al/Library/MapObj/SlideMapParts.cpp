@@ -54,6 +54,7 @@ void SlideMapParts::init(const ActorInitInfo& rInfo) {
     if (mWaitTime < 0) {
         mWaitTime = 0;
     }
+
     tryGetArg(&mMoveTime, rInfo, "MoveTime");
     tryGetArg(&mDelayTime, rInfo, "DelayTime");
     f32 surfaceHeight = 0.0f;
@@ -69,12 +70,14 @@ void SlideMapParts::init(const ActorInitInfo& rInfo) {
     if (mEffectMtxSetter) {
         mEffectMtxSetter->setMtxPtr(&mSurfaceEffectMtx, "SurfaceEffectMtx");
     }
+
     if (listenStageSwitchOnStart(this, FunctorV0M<SlideMapParts*, void (SlideMapParts::*)()>(
                                            this, &SlideMapParts::start))) {
         startNerveAction(this, "StandBy");
     } else if (mDelayTime >= 1) {
         startNerveAction(this, "Delay");
     }
+
     trySyncStageSwitchAppear(this);
 }
 
@@ -85,10 +88,12 @@ void SlideMapParts::start() {
     if (!isNerve(this, NrvSlideMapParts.StandBy.data())) {
         return;
     }
+
     if (mDelayTime >= 1) {
         startNerveAction(this, "Delay");
         return;
     }
+
     startNerveAction(this, "Move");
 }
 
@@ -104,10 +109,12 @@ bool SlideMapParts::receiveMsg(const SensorMsg* pMsg, HitSensor* pOther, HitSens
         showModelIfHide(this);
         return true;
     }
+
     if (isMsgHideModel(pMsg)) {
         hideModelIfShow(this);
         return true;
     }
+
     return false;
 }
 
@@ -145,10 +152,12 @@ void SlideMapParts::exeMove() {
             tryStartSe(this, "MoveStart2");
         }
     }
+
     f32 rate = calcNerveRate(this, calcMoveTime());
     if (!mIsMoveForwards) {
         rate = 1.0f - rate;
     }
+
     setTransOffsetLocalDir(this, getQuat(this), mTrans, mMoveDistance * rate, mMoveAxis);
     if (isGreaterEqualStep(this, calcMoveTime())) {
         if (mIsMoveForwards) {
@@ -156,6 +165,7 @@ void SlideMapParts::exeMove() {
         } else {
             tryStartSe(this, "MoveEnd2");
         }
+
         mIsMoveForwards = !mIsMoveForwards;
         tryStartSe(this, "MoveEnd");
         startNerveAction(this, "Wait");
@@ -170,9 +180,11 @@ s32 SlideMapParts::calcMoveTime() const {
     if (mMoveTime >= 0) {
         return mMoveTime;
     }
+
     if (mMoveSpeed < 1.0f) {
         return 0;
     }
+
     return sead::Mathf::abs(mMoveDistance / mMoveSpeed);
 }
 }  // namespace al

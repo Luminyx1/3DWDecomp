@@ -34,15 +34,18 @@ void setPerformanceConfiguration(nn::oe::PerformanceMode mode, u64 cpu, u64 gpu,
             if (memory == MemoryPerformance_1331MHz) {
                 nn::oe::SetPerformanceConfiguration(mode, 0x20003);
             }
+
             break;
         case GpuPerformance_307MHz:
             if (memory == MemoryPerformance_1331MHz) {
                 nn::oe::SetPerformanceConfiguration(mode, 0x20004);
             }
+
             break;
         default:
             break;
         }
+
         break;
     case nn::oe::PerformanceMode_Boost:
         switch (gpu) {
@@ -50,20 +53,24 @@ void setPerformanceConfiguration(nn::oe::PerformanceMode mode, u64 cpu, u64 gpu,
             if (memory == MemoryPerformance_1331MHz) {
                 nn::oe::SetPerformanceConfiguration(mode, 0x20003);
             }
+
             break;
         case GpuPerformance_307MHz:
             if (memory == MemoryPerformance_1331MHz) {
                 nn::oe::SetPerformanceConfiguration(mode, 0x20004);
             }
+
             break;
         case GpuPerformance_Boost:
             if (memory == MemoryPerformance_1600MHz) {
                 nn::oe::SetPerformanceConfiguration(mode, 0x10001);
             }
+
             break;
         default:
             break;
         }
+
         break;
     default:
         break;
@@ -188,6 +195,7 @@ u64 getMemoryPerformance(nn::oe::PerformanceMode mode) {
     if (config == 0x20003 || config == 0x20004) {
         return MemoryPerformance_1331MHz;
     }
+
     return config == 0x10001 ? MemoryPerformance_1600MHz : MemoryPerformance_Invalid;
 }
 
@@ -280,6 +288,7 @@ void setCpuBoost(bool isBoost, bool isUnused) {
     if (sIsCpuBoostOn == isBoost) {
         return;
     }
+
     if (isBoost) {
         nn::oe::SetCpuBoostMode(nn::oe::CpuBoostMode_Enabled);
         sIsCpuBoostOn = isBoost;

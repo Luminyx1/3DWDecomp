@@ -18,6 +18,7 @@ void makeStageDataArchivePath(sead::BufferedSafeString* pOut, const char* pStage
         pOut->format("StageData/%s", pStageName);
         return;
     }
+
     pOut->format("StageData/%s%s%d", pStageName, pResourceType, scenarioNo);
 }
 

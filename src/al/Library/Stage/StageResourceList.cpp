@@ -52,6 +52,7 @@ static bool tryGetZoneListPlacementInfo(PlacementInfo* pOut, const char* pStageN
     if (!resource) {
         return false;
     }
+
     StringTmp<256> fileName("%s%s", pStageName, "Map");
     return tryGetPlacementInfo(pOut, resource, fileName.cstr(), pListName);
 }
@@ -63,6 +64,7 @@ static s32 calcZoneNumRecursive(const char* pStageName, const char* pListName, s
                                      isOneResource)) {
         return 0;
     }
+
     s32 num = getCountPlacementInfo(listInfo);
     s32 zoneNum = 0;
     for (s32 i = 0; i < num; i++) {
@@ -70,12 +72,15 @@ static s32 calcZoneNumRecursive(const char* pStageName, const char* pListName, s
         if (!tryGetPlacementInfoByIndex(&zoneInfo, listInfo, i)) {
             continue;
         }
+
         const char* zoneName = nullptr;
         if (!tryGetObjectName(&zoneName, zoneInfo)) {
             continue;
         }
+
         zoneNum += calcZoneNumRecursive(zoneName, "ZoneList", scenarioNo, isOneResource) + 1;
     }
+
     return zoneNum;
 }
 
@@ -106,6 +111,7 @@ StageResourceList::StageResourceList(const char* pStageName, s32 scenarioNo,
     if (tryGetPlacementInfo(&zoneListInfo, mapResource, mapFileName.cstr(), "ZoneList")) {
         zoneNum = getCountPlacementInfo(zoneListInfo);
     }
+
     s32 islandNum = calcZoneNumRecursive(pStageName, "IslandList", scenarioNo, mIsOneResource);
     mStageInfos.allocBuffer(zoneNum + islandNum + 1, nullptr);
 
@@ -156,11 +162,13 @@ StageInfo* StageResourceList::initZoneInfo(PlacementInfo& rZoneInfo, s32 scenari
     if (!isExistArchive(archivePath)) {
         return stageInfo;
     }
+
     Resource* resource = findOrCreateResource(archivePath, nullptr);
     const u8* byml = resource->tryGetByml(StringTmp<256>("%s%s", zoneName, pResourceType));
     if (!byml) {
         return nullptr;
     }
+
     s32 id = mLastZoneId++;
     stageInfo = new StageInfo(resource, ByamlIter(byml), rZoneInfo.getPlacementIter(), zoneName,
                               pParentInfo, id);
@@ -189,16 +197,19 @@ void StageResourceList::initZoneInfoRecursive(const char* pStageName, const char
                                      mIsOneResource)) {
         return;
     }
+
     s32 num = getCountPlacementInfo(listInfo);
     for (s32 i = 0; i < num; i++) {
         PlacementInfo zoneInfo;
         if (!tryGetPlacementInfoByIndex(&zoneInfo, listInfo, i)) {
             continue;
         }
+
         StageInfo* stageInfo = initZoneInfo(zoneInfo, scenarioNo, pResourceType, pParentInfo);
         if (!stageInfo) {
             continue;
         }
+
         mStageInfos.pushBack(stageInfo);
         initZoneInfoRecursive(stageInfo->mName.cstr(), pChildListName, scenarioNo, pResourceType,
                               pChildListName, stageInfo->mPlacementInfo);
@@ -235,6 +246,7 @@ StageInfo* StageResourceList::findStageInfo(const char* pName) const {
             return stageInfo;
         }
     }
+
     return nullptr;
 }
 }  // namespace al

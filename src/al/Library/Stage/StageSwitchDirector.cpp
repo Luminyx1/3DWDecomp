@@ -23,6 +23,7 @@ StageSwitchDirector::StageSwitchDirector(ExecuteDirector* pExecuteDirector,
     } else {
         mWatcherHolder = new StageSwitchWatcherHolder(0x800);
     }
+
     registerExecutorUser(this, pExecuteDirector, "ステージスイッチディレクター");
 }
 
@@ -43,6 +44,7 @@ s32 StageSwitchDirector::useSwitch(const StageSwitchAccesser* pAccesser) {
             switchNo = -1;
         }
     }
+
     return switchNo;
 }
 
@@ -55,11 +57,13 @@ s32 StageSwitchDirector::findSwitchNoFromObjId(const PlacementId* pId) {
     if (!pId) {
         return 0;
     }
+
     for (s32 i = 0; i < mSwitchNum; i++) {
         if (PlacementId::isEqual(*mSwitchInfos[i].mPlacementId, *pId)) {
             return i;
         }
     }
+
     return -1;
 }
 
@@ -72,6 +76,7 @@ void StageSwitchDirector::onSwitch(const StageSwitchAccesser* pAccesser) {
     if (switchNo < 0 || mSwitchNum <= switchNo) {
         return;
     }
+
     mSwitchInfos[switchNo].mIsOn = true;
     if (mListenerHolder) {
         mListenerHolder->requestChange(switchNo, true);
@@ -87,9 +92,11 @@ void StageSwitchDirector::offSwitch(const StageSwitchAccesser* pAccesser) {
     if (switchNo < 0 || mSwitchNum <= switchNo) {
         return;
     }
+
     if (mListenerHolder) {
         mListenerHolder->requestChange(switchNo, false);
     }
+
     mSwitchInfos[switchNo].mIsOn = false;
 }
 
@@ -103,6 +110,7 @@ bool StageSwitchDirector::isOnSwitch(const StageSwitchAccesser* pAccesser) {
     if (switchNo < 0 || mSwitchNum <= switchNo) {
         return false;
     }
+
     return mSwitchInfos[switchNo].mIsOn;
 }
 
@@ -115,9 +123,11 @@ void StageSwitchDirector::instantUpdate(StageSwitchAccesser* pAccesser) {
     if (switchNo < 0 || mSwitchNum <= switchNo) {
         return;
     }
+
     if (mWatcherHolder) {
         return;
     }
+
     mListenerHolder->instantUpdate(switchNo);
 }
 
@@ -133,6 +143,7 @@ void StageSwitchDirector::addListener(StageSwitchListener* pListener,
         mWatcherHolder->add(watcher);
         return;
     }
+
     mListenerHolder->add(pListener, pAccesser);
 }
 
@@ -144,6 +155,7 @@ void StageSwitchDirector::execute() {
         mWatcherHolder->movement();
         return;
     }
+
     mListenerHolder->movement();
 }
 }  // namespace al

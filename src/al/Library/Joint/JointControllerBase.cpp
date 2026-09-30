@@ -26,9 +26,11 @@ void JointControllerBase::appendJointId(s32 jointId) {
         if (*pA < *pB) {
             return -1;
         }
+
         if (*pA > *pB) {
             return 1;
         }
+
         return 0;
     });
 }
@@ -46,6 +48,7 @@ bool JointControllerBase::findNextId(s32* pId, s32 current) const {
             return true;
         }
     }
+
     return false;
 }
 
@@ -60,6 +63,7 @@ bool JointControllerBase::isExistId(s32 jointId) const {
             return true;
         }
     }
+
     return false;
 }
 

@@ -49,6 +49,7 @@ void updateMaterialCodeArea(LiveActor* pActor) {
         resetEnvTexture(pActor);
         return;
     }
+
     const char* materialCodeType;
     if (!tryGetAreaObjStringArg(&materialCodeType, area, "MaterialCodeType")) {
         updateEffectMaterialWet(pActor, false);
@@ -56,10 +57,12 @@ void updateMaterialCodeArea(LiveActor* pActor) {
         resetEnvTexture(pActor);
         return;
     }
+
     if (!isEqualString(materialCodeType, "Wet")) {
         resetEnvTexture(pActor);
         return;
     }
+
     updateEffectMaterialWet(pActor, true);
     updateSeMaterialWet(pActor, true);
     changeEnvTextureWetObj(pActor);
@@ -84,14 +87,17 @@ void updateMaterialCodeWater(LiveActor* pActor, bool isInWater, bool isAshore) {
     if (pActor->getEffectKeeper()) {
         updateEffectMaterialWater(pActor, isInWater);
     }
+
     if (!isExistSeKeeper(pActor)) {
         return;
     }
+
     if (isInWater && isAshore) {
         updateSeMaterialWater(pActor, false);
         tryUpdateSeMaterialCode(pActor, "Ashore");
         return;
     }
+
     updateSeMaterialWater(pActor, isInWater);
 }
 
@@ -103,9 +109,11 @@ void resetMaterialCode(LiveActor* pActor) {
     if (pActor->getEffectKeeper()) {
         resetEffectMaterialCode(pActor);
     }
+
     if (isExistSeKeeper(pActor)) {
         resetSeMaterialName(pActor);
     }
+
     resetEnvTexture(pActor);
 }
 
@@ -129,14 +137,17 @@ void setLODForceLevel0(LiveActor* pActor) {
     if (!modelKeeper) {
         return;
     }
+
     alModelCafe* model = modelKeeper->mModelCafe;
     if (!model) {
         return;
     }
+
     SimpleModelG3D* modelG3D = model->mModelG3D;
     if (!modelG3D) {
         return;
     }
+
     s32 lodCount = modelG3D->mModelObj->GetLodCount();
     modelG3D->mLodIndex = lodCount > 0 ? 0 : lodCount - 1;
 }
@@ -150,14 +161,17 @@ void showModel(LiveActor* pActor) {
         if (pActor->mModelKeeper) {
             pActor->mModelKeeper->show();
         }
+
         alActorSystemFunction::addToExecutorDraw(pActor);
         if (pActor->mLightKeeper) {
             pActor->mLightKeeper->appear(false);
         }
+
         if (pActor->mShadowKeeper) {
             showShadow(pActor);
         }
     }
+
     pActor->mActorFlags->isHideModel = false;
     if (pActor->mSubActorKeeper) {
         alSubActorFunction::trySyncShowModel(pActor->mSubActorKeeper);
@@ -192,14 +206,17 @@ void hideModel(LiveActor* pActor) {
         if (pActor->mModelKeeper) {
             pActor->mModelKeeper->hide();
         }
+
         if (pActor->mShadowKeeper) {
             hideShadow(pActor);
         }
+
         alActorSystemFunction::removeFromExecutorDraw(pActor);
         if (pActor->mLightKeeper) {
             pActor->mLightKeeper->hideModel();
         }
     }
+
     pActor->mActorFlags->isHideModel = true;
     if (pActor->mSubActorKeeper) {
         alSubActorFunction::trySyncHideModel(pActor->mSubActorKeeper);
@@ -318,16 +335,19 @@ LiveActor* getSilhouetteModel(LiveActor* pActor) {
     if (!pActor->mSubActorKeeper) {
         return nullptr;
     }
+
     s32 subActorNum = pActor->mSubActorKeeper->mCount;
     for (s32 i = 0; i < subActorNum; i++) {
         SubActorInfo* info = pActor->mSubActorKeeper->mInfos[i];
         if (isEqualString(info->mSubActor->getName(), "シルエットモデル")) {
             return info->mSubActor;
         }
+
         if (info->mSubActor->mSubActorKeeper) {
             return getSilhouetteModel(pActor);
         }
     }
+
     return nullptr;
 }
 
@@ -340,11 +360,13 @@ void setDisableDraw(LiveActor* pActor, bool isDisable) {
     if (!pActor->mModelKeeper) {
         return;
     }
+
     pActor->mModelKeeper->setDisableDraw(isDisable);
     SubActorKeeper* keeper = pActor->mSubActorKeeper;
     if (!keeper) {
         return;
     }
+
     for (s32 i = 0; i < keeper->mCount; i++) {
         SubActorInfo* info = keeper->mInfos[i];
         if (info && info->mSubActor) {
@@ -363,6 +385,7 @@ void removeFromDepthShadowDrawer(LiveActor* pActor) {
     if (drawerNum <= 0) {
         return;
     }
+
     alModelCafe* model = pActor->mModelKeeper->mModelCafe;
     for (s32 i = 0; i < drawerNum; i++) {
         ModelDrawerBase* drawer = executeInfo->mDrawers[i];
@@ -382,6 +405,7 @@ void addToDepthShadowDrawer(LiveActor* pActor) {
     if (drawerNum <= 0) {
         return;
     }
+
     alModelCafe* model = pActor->mModelKeeper->mModelCafe;
     for (s32 i = 0; i < drawerNum; i++) {
         ModelDrawerBase* drawer = executeInfo->mDrawers[i];
@@ -401,6 +425,7 @@ void setDisableDepthShadow(LiveActor* pActor, bool isDisable, bool isUpdateDrawe
     if (!pActor->mModelKeeper) {
         return;
     }
+
     if (pActor->mModelKeeper->setDisableDepthShadow(isDisable) && isUpdateDrawer) {
         ActorExecuteInfo* executeInfo = pActor->mActorExecuteInfo;
         alModelCafe* model = pActor->mModelKeeper->mModelCafe;
@@ -421,10 +446,12 @@ void setDisableDepthShadow(LiveActor* pActor, bool isDisable, bool isUpdateDrawe
             }
         }
     }
+
     SubActorKeeper* keeper = pActor->mSubActorKeeper;
     if (!keeper) {
         return;
     }
+
     for (s32 i = 0; i < keeper->mCount; i++) {
         SubActorInfo* info = keeper->mInfos[i];
         if (info && info->mSubActor) {
@@ -450,9 +477,11 @@ void tryInitFixedModelGpuBuffer(LiveActor* pActor) {
     if (!modelKeeper || !pActor->mActorExecuteInfo || !modelKeeper->_18) {
         return;
     }
+
     if (pActor->getEffectKeeper() || pActor->getAudioKeeper() || pActor->mHitSensorKeeper) {
         onUpdateMovementEffectAudioCollision(pActor);
     }
+
     modelKeeper->update();
     sead::Matrix34f baseMtx;
     alActorPoseFunction::calcBaseMtx(&baseMtx, pActor);
@@ -592,10 +621,12 @@ void hideMaterial(LiveActor* pActor, s32 index) {
     if (!pActor->mModelKeeper) {
         return;
     }
+
     nn::g3d::ModelObj* modelObj = pActor->mModelKeeper->mModelCafe->mModelG3D->mModelObj;
     if (index >= modelObj->GetNumMaterials()) {
         return;
     }
+
     modelObj->SetMaterialVisible(index, false);
 }
 
@@ -608,10 +639,12 @@ void showMaterial(LiveActor* pActor, s32 index) {
     if (!pActor->mModelKeeper) {
         return;
     }
+
     nn::g3d::ModelObj* modelObj = pActor->mModelKeeper->mModelCafe->mModelG3D->mModelObj;
     if (index >= modelObj->GetNumMaterials()) {
         return;
     }
+
     modelObj->SetMaterialVisible(index, true);
 }
 
@@ -623,6 +656,7 @@ void hideMaterialAll(LiveActor* pActor) {
     if (!pActor->mModelKeeper) {
         return;
     }
+
     nn::g3d::ModelObj* modelObj = pActor->mModelKeeper->mModelCafe->mModelG3D->mModelObj;
     for (s32 i = 0; i < modelObj->GetNumMaterials(); i++) {
         modelObj->SetMaterialVisible(i, false);
@@ -637,6 +671,7 @@ void showMaterialAll(LiveActor* pActor) {
     if (!pActor->mModelKeeper) {
         return;
     }
+
     nn::g3d::ModelObj* modelObj = pActor->mModelKeeper->mModelCafe->mModelG3D->mModelObj;
     for (s32 i = 0; i < modelObj->GetNumMaterials(); i++) {
         modelObj->SetMaterialVisible(i, true);
@@ -968,19 +1003,24 @@ void resetPosition(LiveActor* pActor, bool isSkipCalcAnim) {
     if (pActor->mActorPoseKeeper && !isSkipCalcAnim) {
         alLiveActorFunction::calcAnimDirect(pActor);
     }
+
     if (pActor->mHitSensorKeeper) {
         alSensorFunction::clearHitSensors(pActor);
         alSensorFunction::updateHitSensorsAll(pActor);
     }
+
     if (pActor->mScreenPointKeeper) {
         alScreenPointFunction::updateScreenPointAll(pActor);
     }
+
     if (pActor->mCollider) {
         pActor->mCollider->onInvalidate();
     }
+
     if (pActor->mCollisionParts) {
         resetAllCollisionMtx(pActor);
     }
+
     if (pActor->getAudioKeeper() && pActor->getAudioKeeper()->getSeKeeper()) {
         pActor->getAudioKeeper()->getSeKeeper()->resetVelocity();
     }

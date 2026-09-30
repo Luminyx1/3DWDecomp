@@ -46,9 +46,11 @@ ClippingActorInfo* ClippingActorInfoList::find(const LiveActor* pActor, s32* pIn
             if (pIndex) {
                 *pIndex = i;
             }
+
             return mInfos[i];
         }
     }
+
     return mInfos[0];
 }
 
@@ -63,6 +65,7 @@ ClippingActorInfo* ClippingActorInfoList::tryFind(const LiveActor* pActor) const
             return mInfos[i];
         }
     }
+
     return nullptr;
 }
 
@@ -77,6 +80,7 @@ bool ClippingActorInfoList::isInList(const LiveActor* pActor) const {
             return true;
         }
     }
+
     return false;
 }
 }  // namespace al

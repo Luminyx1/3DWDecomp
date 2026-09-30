@@ -42,6 +42,7 @@ bool AreaShape::calcLocalPos(sead::Vector3f* pLocalPos, const sead::Vector3f& rP
     } else {
         pLocalPos->set(rPos);
     }
+
     pLocalPos->x = pLocalPos->x / mScale.x;
     pLocalPos->y = pLocalPos->y / mScale.y;
     pLocalPos->z = pLocalPos->z / mScale.z;
@@ -66,6 +67,7 @@ bool AreaShape::calcWorldPos(sead::Vector3f* pWorldPos, const sead::Vector3f& rP
     if (mBaseMtx) {
         pWorldPos->setMul(*mBaseMtx, *pWorldPos);
     }
+
     return true;
 }
 
@@ -87,6 +89,7 @@ bool AreaShape::calcWorldDir(sead::Vector3f* pWorldDir, const sead::Vector3f& rD
     if (mBaseMtx) {
         pWorldDir->setRotated(*mBaseMtx, *pWorldDir);
     }
+
     normalizeOrZero(pWorldDir);
     return true;
 }

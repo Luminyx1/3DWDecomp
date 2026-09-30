@@ -238,6 +238,7 @@ f32 calcCurrentFovyRate(const IUseCamera_RS* pUser, s32 viewIdx) {
     if (isNearZero(fovy, 0.001f) || isNearZero(sceneFovy, 0.001f)) {
         return 0.0f;
     }
+
     return fovy / sceneFovy;
 }
 
@@ -296,6 +297,7 @@ bool tryCalcCameraLookDirH(sead::Vector3f* pDir, const SceneCameraInfo* pInfo,
     if (!tryNormalizeOrZero(pDir)) {
         return false;
     }
+
     pDir->negate();
     return true;
 }
@@ -406,6 +408,7 @@ CameraTicket* tryInitObjectCamera_RS(const IUseCamera_RS* pUser, const ActorInit
     if (!getCameraDirector(pUser)->isObjectCameraExist(*rInfo.mPlacementInfo)) {
         return nullptr;
     }
+
     const PlacementInfo& placementInfo = getPlacementInfo(rInfo);
     PlacementId* placementId = new PlacementId();
     placementId->init(placementInfo);
@@ -469,6 +472,7 @@ CameraTicket* initFixActorCamera(const LiveActor* pActor, const ActorInitInfo& r
     if (isCalcNearestAtFromPreAt) {
         poser->mIsCalcNearestAtFromPreAt = true;
     }
+
     return alCameraFunction::initCamera(poser, pActor, rInfo, pSuffix,
                                         CameraTicket::Priority_Object);
 }
@@ -506,6 +510,7 @@ CameraTicket* initFixTalkCamera(const LiveActor* pActor, const ActorInitInfo& rI
     if (isFlag) {
         poser->_170 = true;
     }
+
     return alCameraFunction::initCamera(poser, pActor, rInfo, pSuffix,
                                         CameraTicket::Priority_Object);
 }
@@ -521,6 +526,7 @@ CameraTicket* initFixFishingCamera(const LiveActor* pActor, const ActorInitInfo&
     if (isFlag) {
         poser->_170 = true;
     }
+
     return alCameraFunction::initCamera(poser, pActor, rInfo, pSuffix,
                                         CameraTicket::Priority_Object);
 }
@@ -531,6 +537,7 @@ CameraTicket* initFixPointCamera(const IUseCamera_RS* pUser, const ActorInitInfo
     if (isUsePreCameraPos) {
         poser->validateUsePreCameraPos();
     }
+
     return alCameraFunction::initCamera(poser, pUser, rInfo, pSuffix,
                                         CameraTicket::Priority_Object);
 }
@@ -1080,6 +1087,7 @@ bool isPlayingEntranceCamera(const IUseCamera_RS* pUser, s32 updaterIdx) {
             CameraTicket::Priority_Entrance)) {
         return true;
     }
+
     return getCameraDirector(pUser)->getPoseUpdater(updaterIdx)->isCurrentCameraPriority(
         CameraTicket::Priority_EntranceSub);
 }
@@ -1116,6 +1124,7 @@ bool isExistCameraInputAtDisableTiming(const IUseCamera_RS* pUser, s32 inputIdx)
     if (getCameraDirector(pUser)->getPoseUpdater(0)->isCurrentCameraEnableRotateByPad()) {
         return false;
     }
+
     sead::Vector2f stick = {0.0f, 0.0f};
     getCameraDirector(pUser)->getCameraInput(inputIdx)->calcInputStick(&stick);
     return !isNearZero(stick, 0.001f);
@@ -1166,6 +1175,7 @@ ActorCameraSubTarget* createActorCameraSubTarget(const LiveActor* pActor,
     if (pOffset) {
         target->setOffset(pOffset);
     }
+
     return target;
 }
 
@@ -1175,6 +1185,7 @@ ActorBackAroundCameraSubTarget* createActorBackAroundCameraSubTarget(
     if (pOffset) {
         target->setOffset(pOffset);
     }
+
     return target;
 }
 
@@ -1225,6 +1236,7 @@ void startCameraShakeByAction(const LiveActor* pActor, const char* pShakeName,
             pShakeName, pActor->getName(), pActionName, steps);
         return;
     }
+
     s32 viewNum = director->getSceneCameraInfo()->getViewNumMax();
     for (s32 i = 0; i < viewNum; i++) {
         getCameraDirector(user)->getPoseUpdater(i)->getShaker()->startShakeByAction(
@@ -1241,6 +1253,7 @@ void startCameraShakeByHitReaction(const IUseCamera_RS* pUser, const char* pShak
             pShakeName, pReactionName, pActorName, steps);
         return;
     }
+
     s32 viewNum = director->getSceneCameraInfo()->getViewNumMax();
     for (s32 i = 0; i < viewNum; i++) {
         getCameraDirector(pUser)->getPoseUpdater(i)->getShaker()->startShakeByHitReaction(
@@ -1395,6 +1408,7 @@ bool isInInk(const IUseCollision* pCollision, sead::Vector3f& rPos, sead::Vector
             *pOutDistance = hitInfo->_70;
         }
     }
+
     return hitNum != 0;
 }
 
@@ -1423,6 +1437,7 @@ al::CameraTicket* initCamera(al::CameraPoser_RS* pPoser, const al::IUseCamera_RS
     } else {
         placementId = nullptr;
     }
+
     return pUser->getCameraDirector_RS()->createCamera(pPoser, placementId, pSuffix, priority,
                                                        zoneMtx, true);
 }
@@ -1466,6 +1481,7 @@ al::CameraTicket* initAreaCamera(const al::IUseCamera_RS* pUser, const al::Place
     if (isDisaster) {
         ticket->setDisaster();
     }
+
     ticket->getPoser()->initByPlacementObj(rInfo);
     return ticket;
 }

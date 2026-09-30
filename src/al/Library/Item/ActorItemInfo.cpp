@@ -21,6 +21,7 @@ namespace al {
         if (pTiming == nullptr || mTiming == nullptr) {
             return pTiming == nullptr && mTiming == nullptr;
         }
+
         return isEqualString(pTiming, mTiming);
     }
 
@@ -33,6 +34,7 @@ namespace al {
         if (pFactor == nullptr || mFactor == nullptr) {
             return pFactor == nullptr && mFactor == nullptr;
         }
+
         return isEqualString(pFactor, mFactor);
     }
 }  // namespace al

@@ -24,6 +24,7 @@ bool AreaObjMtxConnecter::trySetParentMtx(const sead::Matrix34f* pParentMtx,
     if (!isEqualPlacementID(_40, rInfo)) {
         return false;
     }
+
     _38 = new MtxConnector();
     _38->init(pParentMtx);
     return true;
@@ -40,6 +41,7 @@ bool AreaObjMtxConnecter::trySyncParentMtx(const sead::Matrix34f* pParentMtx,
     if (!isEqualPlacementID(_40, rInfo)) {
         return false;
     }
+
     _8 = *pParentMtx;
     _38 = new MtxConnector();
     _38->init(pParentMtx);
@@ -77,6 +79,7 @@ bool AreaObjMtxConnecterHolder::tryAddArea(AreaObj* pAreaObj, const PlacementInf
     if (calcLinkChildNum(rInfo, "NoDelete_FollowMtxTarget") == 0) {
         return false;
     }
+
     PlacementInfo linkInfo;
     getLinksInfo(&linkInfo, rInfo, "NoDelete_FollowMtxTarget");
     mConnecters[mNumConnecters] = new AreaObjMtxConnecter(pAreaObj, linkInfo);

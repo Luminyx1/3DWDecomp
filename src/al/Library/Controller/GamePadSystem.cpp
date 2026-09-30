@@ -45,6 +45,7 @@ GamePadSystem::GamePadSystem(bool isSinglePlay) {
         mPadStyles[i] = 5;
         mPadConnectStates[i] = 0;
     }
+
     if (isSinglePlay) {
         changeSinglePlayMode(true);
     } else {
@@ -63,6 +64,7 @@ void GamePadSystem::changeSinglePlayMode(bool isAnyController) {
     if (!isAnyController) {
         return;
     }
+
     device->setNpadJoyHoldType(nn::hid::NpadJoyHoldType(1));
     device->setSupportedNpadStyleSet(makeStyleSet(true, true, true, false, false));
     getNpadController(getPlayerControllerPort(0))->setAnyControllerMode();
@@ -84,13 +86,16 @@ void GamePadSystem::changeMultiPlayMode(s32 maxPlayerNum, s32 minPlayerNum) {
         for (s32 i = 0; i < maxPlayerNum; i++) {
             getNpadController(getPlayerControllerPort(i))->setIndexControllerMode(i);
         }
+
         return;
     }
+
     if (mMaxPlayerNum == 1) {
         device->setSupportedNpadStyleSet(makeStyleSet(true, true, true, false, false));
     } else {
         device->setSupportedNpadStyleSet(makeStyleSet(true, true, true, true, true));
     }
+
     for (s32 i = 0; i < maxPlayerNum; i++) {
         NpadController* controller = getNpadController(getPlayerControllerPort(i));
         if (i == 0) {
@@ -129,6 +134,7 @@ void GamePadSystem::setIsAllowHandheld(bool isAllow) {
     if (!mIsEnableAutoHandheld) {
         return;
     }
+
     mIsAllowHandheld = isAllow;
     changeMultiPlayMode(mMaxPlayerNum, mMinPlayerNum);
 }
@@ -143,6 +149,7 @@ void GamePadSystem::setMaxNpadNum(s32 num) {
     for (s32 i = 0; i < num; i++) {
         npadIds[i] = i;
     }
+
     nn::hid::SetSupportedNpadIdType(npadIds, num);
 }
 
@@ -157,6 +164,7 @@ void GamePadSystem::initSingleJoycon() {
         if (device->getNpadStyleTag(index) != nn::hid::NpadStyleTag::NpadStyleJoyDual) {
             continue;
         }
+
         const nn::hid::NpadAttributeSet& attributes =
             device->getNpadState(index).mStates[0].mAttributes;
         bool isLeftConnected =
@@ -181,6 +189,7 @@ bool GamePadSystem::isDisconnectPlayable() const {
     if (mInvalidateDisconnectFrame > 0) {
         return false;
     }
+
     return mDisconnectFrame > mDisconnectFrameMax;
 }
 
@@ -218,11 +227,13 @@ void GamePadSystem::update() {
         if (style != mPadStyles[i]) {
             mIsChangedPadState = true;
         }
+
         mPadStyles[i] = style;
         s32 connectState = isPadConnected(i) ? 2 : isPadWaitingConnect(i);
         if (mPadConnectStates[i] != connectState) {
             mIsChangedPadState = true;
         }
+
         mPadConnectStates[i] = connectState;
 
         if (style == static_cast<s32>(nn::hid::NpadStyleTag::NpadStyleFullKey) ||
@@ -240,6 +251,7 @@ void GamePadSystem::update() {
                 attributes.Test(static_cast<s32>(nn::hid::NpadAttribute::IsRightConnected));
             isAllowHandheld &= i == 0 || !isConnected;
         }
+
         if (!isAllowHandheld) {
             break;
         }
@@ -252,6 +264,7 @@ void GamePadSystem::update() {
         } else {
             npadDevice->setSupportedNpadStyleSet(makeStyleSet(true, false, true, true, true));
         }
+
         npadDevice->setNpadJoyHoldType(nn::hid::NpadJoyHoldType(1));
         setIsAllowHandheld(isAllowHandheld);
     }
@@ -275,12 +288,15 @@ bool GamePadSystem::isDisconnectPlayableImpl() const {
             connectedNum++;
         }
     }
+
     if (connectedNum < mMinPlayerNum) {
         return true;
     }
+
     if (mDisconnectCallback == nullptr) {
         return false;
     }
+
     return mDisconnectCallback(this, mDisconnectCallbackUserData);
 }
 
@@ -364,6 +380,7 @@ void GamePadSystem::setAssistMode(bool isAssist, bool isForceDisconnect) {
         device->setSupportedNpadStyleSet(makeStyleSet(true, true, true, false, false));
         getNpadController(getPlayerControllerPort(0))->setAnyControllerMode();
     }
+
     if (isForceDisconnect) {
         mIsForceImmediateDisconnect = true;
     }

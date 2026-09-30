@@ -50,6 +50,7 @@ MtxConnector* tryCreateMtxConnector(const LiveActor* pActor, const ActorInitInfo
     if (!isConnectToCollision(rInfo)) {
         return nullptr;
     }
+
     return createMtxConnector(pActor);
 }
 
@@ -65,6 +66,7 @@ MtxConnector* tryCreateMtxConnector(const LiveActor* pActor, const ActorInitInfo
     if (!isConnectToCollision(rInfo)) {
         return nullptr;
     }
+
     return createMtxConnector(pActor, rQuat);
 }
 
@@ -92,6 +94,7 @@ void attachMtxConnectorToCollision(MtxConnector* pConnector, const LiveActor* pA
     if (!parts) {
         return;
     }
+
     attachMtxConnectorToCollisionParts(pConnector, parts);
 }
 
@@ -229,6 +232,7 @@ void attachMtxConnectorToCollisionRT(MtxConnector* pConnector, const LiveActor* 
     if (!isFacingUp) {
         facing = -facing;
     }
+
     sead::Vector3f dir = facing * 150.0f;
     sead::Vector3f pos = getTrans(pActor) - facing * 50.0f;
 
@@ -262,6 +266,7 @@ void attachMtxConnectorToCollisionQT(MtxConnector* pConnector, const LiveActor* 
     if (!isFacingUp) {
         facing = -facing;
     }
+
     sead::Vector3f dir = facing * 150.0f;
     sead::Vector3f pos = getTrans(pActor) - facing * 50.0f;
 
@@ -367,6 +372,7 @@ void connectPoseQTUsingConnectInfo(LiveActor* pActor, const MtxConnector* pConne
     if (!pConnector->isConnecting()) {
         return;
     }
+
     sead::Vector3f trans;
     sead::Quatf quat;
     pConnector->calcConnectInfo(&trans, &quat, nullptr, sead::Vector3f::zero,

@@ -11,5 +11,6 @@ public:
     f32 mFovyDegree;
     f32 _8;
 };
+
 static_assert(sizeof(CameraPoserFixedAllParam) == 0xc);
 }  // namespace al

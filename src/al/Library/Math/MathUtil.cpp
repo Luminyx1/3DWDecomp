@@ -46,11 +46,13 @@ static bool getAxisAngleFromTwoVec(sead::Vector3f* pOutAxis, f32* pOutRadian,
     if (isNearZero(*pOutAxis)) {
         return false;
     }
+
     pOutAxis->normalize();
     *pOutRadian = sead::Mathf::acos(sead::Mathf::clamp(rVecA.dot(rVecB), -1.0f, 1.0f));
     if (isNearZero(*pOutRadian)) {
         return false;
     }
+
     return true;
 }
 
@@ -167,20 +169,24 @@ bool isNearAngleRadianHV(const sead::Vector3f& rVec, const sead::Vector3f& rTarg
     if (!tryNormalizeOrZero(&dir, rVec)) {
         return false;
     }
+
     sead::Vector3f targetDir;
     if (!tryNormalizeOrZero(&targetDir, rTarget)) {
         return false;
     }
+
     sead::Vector3f up;
     if (!tryNormalizeOrZero(&up, rUp)) {
         return false;
     }
+
     sead::Vector3f dirH;
     verticalizeVec(&dirH, rUp, rVec);
     tryNormalizeOrZero(&dirH);
     if (dirH.dot(targetDir) < sead::Mathf::cos(angleH)) {
         return false;
     }
+
     f32 limitV = sead::Mathf::clampMax(angleV, sead::Mathf::piHalf());
     f32 dotV = sead::Mathf::abs(dir.dot(up));
     return !(dotV > sead::Mathf::abs(sead::Mathf::sin(limitV)));
@@ -207,6 +213,7 @@ bool normalizeOrZero(sead::Vector3f* pVec) {
         pVec->set(0.0f, 0.0f, 0.0f);
         return true;
     }
+
     pVec->normalize();
     return false;
 }
@@ -275,6 +282,7 @@ bool isNormalize(const sead::Matrix34f& rMtx) {
         !isNearZero(1.0f - scale.z)) {
         return false;
     }
+
     sead::Vector3f side = rMtx.getBase(0);
     sead::Vector3f up = rMtx.getBase(1);
     sead::Vector3f front = rMtx.getBase(2);
@@ -368,6 +376,7 @@ bool normalizeOrZero(sead::Vector2f* pVec) {
         pVec->set(0.0f, 0.0f);
         return true;
     }
+
     pVec->normalize();
     return false;
 }
@@ -393,6 +402,7 @@ bool normalizeOrDirZ(sead::Vector3f* pVec) {
         pVec->set(sead::Vector3f::ez);
         return true;
     }
+
     return false;
 }
 
@@ -524,9 +534,11 @@ f32 sgn(f32 value) {
     if (value < 0.0f) {
         return -1.0f;
     }
+
     if (value > 0.0f) {
         return 1.0f;
     }
+
     return value;
 }
 
@@ -539,9 +551,11 @@ s32 sgn(s32 value) {
     if (value < 0) {
         return -1;
     }
+
     if (value > 0) {
         return 1;
     }
+
     return value;
 }
 
@@ -736,9 +750,11 @@ f32 diffNearAngleDegree(f32 a, f32 b) {
     if (diff > 180.0f) {
         return diff - 360.0f;
     }
+
     if (diff < -180.0f) {
         return diff + 360.0f;
     }
+
     return diff;
 }
 
@@ -999,6 +1015,7 @@ bool separateScalarAndDirection(f32* pScalar, sead::Vector2f* pDir, const sead::
         pDir->set(0.0f, 0.0f);
         return true;
     }
+
     *pDir = rVec;
     normalize(pDir);
     return false;
@@ -1010,6 +1027,7 @@ bool separateScalarAndDirection(f32* pScalar, sead::Vector3f* pDir, const sead::
         pDir->set(0.0f, 0.0f, 0.0f);
         return true;
     }
+
     normalize(pDir, rVec);
     return false;
 }
@@ -1022,9 +1040,11 @@ void limitVectorSeparateHV(sead::Vector3f* pVec, const sead::Vector3f& rDir, f32
     if (parallel.squaredLength() > limitParallel * limitParallel) {
         setLength(&parallel, limitParallel);
     }
+
     if (vertical.squaredLength() > limitVertical * limitVertical) {
         setLength(&vertical, limitVertical);
     }
+
     pVec->set(parallel + vertical);
 }
 
@@ -1053,10 +1073,12 @@ bool addVectorLimit(sead::Vector3f* pVec, const sead::Vector3f& rAdd, f32 limit)
     if (isNearZero(dir)) {
         return false;
     }
+
     f32 dot = pVec->dot(dir);
     if (dot >= limit) {
         return false;
     }
+
     *pVec += dir * sead::Mathf::min(limit - dot, addLength);
     return true;
 }
@@ -1078,10 +1100,12 @@ f32 calcSquaredDistancePointToSegment(const sead::Vector3f& rPoint, const sead::
     if (dot <= 0.0f) {
         return toPoint.squaredLength();
     }
+
     f32 segmentSqLen = segment.squaredLength();
     if (dot >= segmentSqLen) {
         return (rPoint - rEnd).squaredLength();
     }
+
     return sead::Mathf::clampMin(toPoint.squaredLength() - dot * (dot / segmentSqLen), 0.0f);
 }
 
@@ -1126,6 +1150,7 @@ void snapVecToDirAxisY(sead::Vector3f* pOutVec, const sead::Vector3f& rVec, s32 
     if (isNearZero(vecH)) {
         return;
     }
+
     f32 unitDegree = 360.0f / divNum;
     f32 angle = calcAngleOnPlaneDegree(sead::Vector3f::ex, vecH, sead::Vector3f::ey);
     f32 index = 0.0f;
@@ -1133,6 +1158,7 @@ void snapVecToDirAxisY(sead::Vector3f* pOutVec, const sead::Vector3f& rVec, s32 
         f32 rate = angle / unitDegree;
         index = static_cast<s32>(rate + (rate >= 0.0f ? 0.5f : -0.5f));
     }
+
     f32 length = rVec.length();
     f32 radian = sead::Mathf::deg2rad(unitDegree * index);
     pOutVec->set(sead::Mathf::cos(radian), 0.0f, -sead::Mathf::sin(radian));
@@ -1156,6 +1182,7 @@ f32 getMaxAbsElementValue(const sead::Vector3f& vec) {
     case 2:
         return vec.z;
     }
+
     return vec.z;
 }
 
@@ -1168,6 +1195,7 @@ s32 getMaxAbsElementValue(const sead::Vector3i& vec) {
     case 2:
         return vec.z;
     }
+
     return vec.z;
 }
 
@@ -1196,6 +1224,7 @@ f32 getMinAbsElementValue(const sead::Vector3f& vec) {
     case 2:
         return vec.z;
     }
+
     return vec.z;
 }
 
@@ -1208,6 +1237,7 @@ s32 getMinAbsElementValue(const sead::Vector3i& vec) {
     case 2:
         return vec.z;
     }
+
     return vec.z;
 }
 
@@ -1220,13 +1250,16 @@ Axis calcNearVecFromAxis2(sead::Vector3f* pOutVec, const sead::Vector3f& rVec,
             pOutVec->set(rAxisA);
             return Axis::X;
         }
+
         pOutVec->set(-rAxisA);
         return Axis::InvertX;
     }
+
     if (dotB > 0.0f) {
         pOutVec->set(rAxisB);
         return Axis::Y;
     }
+
     pOutVec->set(-rAxisB);
     return Axis::InvertY;
 }
@@ -1246,22 +1279,28 @@ Axis calcNearVecFromAxis3(sead::Vector3f* pOutVec, const sead::Vector3f& rVec,
                 if (pOutVec) {
                     pOutVec->set(rAxisA);
                 }
+
                 return Axis::X;
             }
+
             if (pOutVec) {
                 pOutVec->set(-rAxisA);
             }
+
             return Axis::InvertX;
         } else {
             if (dotC > 0.0f) {
                 if (pOutVec) {
                     pOutVec->set(rAxisC);
                 }
+
                 return Axis::Z;
             }
+
             if (pOutVec) {
                 pOutVec->set(-rAxisC);
             }
+
             return Axis::InvertZ;
         }
     } else {
@@ -1270,22 +1309,28 @@ Axis calcNearVecFromAxis3(sead::Vector3f* pOutVec, const sead::Vector3f& rVec,
                 if (pOutVec) {
                     pOutVec->set(rAxisB);
                 }
+
                 return Axis::Y;
             }
+
             if (pOutVec) {
                 pOutVec->set(-rAxisB);
             }
+
             return Axis::InvertY;
         } else {
             if (dotC > 0.0f) {
                 if (pOutVec) {
                     pOutVec->set(rAxisC);
                 }
+
                 return Axis::Z;
             }
+
             if (pOutVec) {
                 pOutVec->set(-rAxisC);
             }
+
             return Axis::InvertZ;
         }
     }
@@ -1308,6 +1353,7 @@ void calcDirVerticalAny(sead::Vector3f* pOutVec, const sead::Vector3f& rVec) {
         element = &axis.z;
         break;
     }
+
     *element = 1.0f;
     verticalizeVec(pOutVec, rVec, axis);
     tryNormalizeOrZero(pOutVec);
@@ -1344,6 +1390,7 @@ void turnRandomVector(sead::Vector3f* pOutVec, const sead::Vector3f& rVec, f32 r
         pOutVec->set(rVec);
         return;
     }
+
     setLength(pOutVec, length);
 }
 
@@ -1495,6 +1542,7 @@ void calcQuatLocalSignAxis(sead::Vector3f* pOutVec, const sead::Quatf& rQuat, s3
     default:
         return;
     }
+
     if (axis <= 0) {
         *pOutVec = -*pOutVec;
     }
@@ -1680,6 +1728,7 @@ bool turnQuat(sead::Quatf* pOutQuat, const sead::Quatf& rQuat, const sead::Vecto
     } else {
         turnRandomVector(&from, rAxis, 0.001f);
     }
+
     tryNormalizeOrZero(&from);
     tryNormalizeOrZero(&target);
     sead::Quatf rotate;
@@ -1720,23 +1769,27 @@ bool turnQuatZDirToTargetWithAxis(sead::Quatf* pQuat, const sead::Vector3f& rTar
     if (isNearZero(cross)) {
         return true;
     }
+
     cross.normalize();
     sead::Vector3f targetH;
     verticalizeVec(&targetH, rAxis, rTarget);
     if (isNearZero(targetH)) {
         return false;
     }
+
     sead::Vector3f frontH;
     verticalizeVec(&frontH, rAxis, front);
     targetH.normalize();
     if (isNearZero(frontH)) {
         return false;
     }
+
     frontH.normalize();
     f32 angle = sead::Mathf::acos(sead::Mathf::clamp(targetH.dot(frontH), -1.0f, 1.0f));
     if (cross.dot(rAxis) <= 0.0f) {
         angle = sead::Mathf::pi2() - angle;
     }
+
     f32 turnAngle = angle > maxRadian ? maxRadian : angle;
     rotateQuatRadian(pQuat, *pQuat, rAxis, turnAngle);
     return isNearZero(turnAngle - angle);
@@ -1749,6 +1802,7 @@ void turnQuatXDirRate(sead::Quatf* pOutQuat, const sead::Quatf& rQuat, const sea
     if (!(axis.dot(rDir) >= 0.0f) && isParallelDirection(axis, rDir, 0.01f)) {
         turnRandomVector(&axis, axis, 0.001f);
     }
+
     tryNormalizeOrZero(&axis);
     sead::Vector3f dir;
     tryNormalizeOrZero(&dir, rDir);
@@ -1765,6 +1819,7 @@ void turnQuatYDirRate(sead::Quatf* pOutQuat, const sead::Quatf& rQuat, const sea
     if (!(axis.dot(rDir) >= 0.0f) && isParallelDirection(axis, rDir, 0.01f)) {
         turnRandomVector(&axis, axis, 0.001f);
     }
+
     tryNormalizeOrZero(&axis);
     sead::Vector3f dir;
     tryNormalizeOrZero(&dir, rDir);
@@ -1781,6 +1836,7 @@ void turnQuatZDirRate(sead::Quatf* pOutQuat, const sead::Quatf& rQuat, const sea
     if (!(axis.dot(rDir) >= 0.0f) && isParallelDirection(axis, rDir, 0.01f)) {
         turnRandomVector(&axis, axis, 0.001f);
     }
+
     tryNormalizeOrZero(&axis);
     sead::Vector3f dir;
     tryNormalizeOrZero(&dir, rDir);
@@ -1796,6 +1852,7 @@ bool turnQuatFrontToDirDegreeH(sead::Quatf* pQuat, const sead::Vector3f& rDir, f
     if (!tryNormalizeOrZero(&dirH)) {
         return true;
     }
+
     sead::Vector3f front;
     front.setRotated(*pQuat, sead::Vector3f::ez);
     if (!(front.dot(dirH) >= 0.0f) && isParallelDirection(front, dirH, 0.01f)) {
@@ -1803,6 +1860,7 @@ bool turnQuatFrontToDirDegreeH(sead::Quatf* pQuat, const sead::Vector3f& rDir, f
         side.setRotated(*pQuat, sead::Vector3f::ex);
         dirH += side * 0.01f;
     }
+
     bool result = turnQuat(pQuat, *pQuat, front, dirH, sead::Mathf::deg2rad(degree));
     turnQuatYDirRate(pQuat, *pQuat, sead::Vector3f(0.0f, 1.0f, 0.0f), 0.2f);
     return result;
@@ -1817,10 +1875,12 @@ void rotateQuatAndTransDegree(sead::Quatf* pOutQuat, sead::Vector3f* pOutTrans,
     if (!isNearZero(rAxis)) {
         makeQuatRotateDegree(&rotate, rAxis, degree);
     }
+
     if (pOutQuat) {
         pOutQuat->setMul(rotate, rQuat);
         pOutQuat->normalize();
     }
+
     if (pOutTrans) {
         pOutTrans->setRotated(rotate, diff);
         *pOutTrans += rCenter;
@@ -1841,11 +1901,13 @@ bool turnVecToVecCos(sead::Vector3f* pOutVec, const sead::Vector3f& rFrom, const
     if (isNearZero(rFrom) || isNearZero(rTo)) {
         return false;
     }
+
     if (rFrom.dot(rTo) > cosLimit) {
         pOutVec->set(rTo);
         normalize(pOutVec);
         return true;
     }
+
     f32 sinLimit = sead::Mathf::sqrt(1.0f - cosLimit * cosLimit);
     sead::Vector3f vertical;
     verticalizeVec(&vertical, rFrom, rTo);
@@ -1859,6 +1921,7 @@ bool turnVecToVecCos(sead::Vector3f* pOutVec, const sead::Vector3f& rFrom, const
         pOutVec->setScale(rFrom, cosLimit);
         *pOutVec += vertical * sinLimit;
     }
+
     normalize(pOutVec);
     return false;
 }
@@ -1875,13 +1938,16 @@ bool turnVecToVecCosOnPlane(sead::Vector3f* pOutVec, const sead::Vector3f& rFrom
     if (isNearZero(from)) {
         from.set(-to);
     }
+
     if (isNearZero(to)) {
         return false;
     }
+
     if (cosLimit <= -1.0f) {
         pOutVec->set(to);
         return true;
     }
+
     return turnVecToVecCos(pOutVec, from, to, cosLimit, rPlaneNormal, 0.02f);
 }
 
@@ -1964,8 +2030,10 @@ void calcSphereMargeSpheres(sead::Vector3f* pOutCenter, f32* pOutRadius,
             pOutCenter->set(rCenterB);
             *pOutRadius = radiusB;
         }
+
         return;
     }
+
     f32 distance = diff.length();
     *pOutRadius = (radiusA + radiusB + distance) * 0.5f;
     pOutCenter->set(rCenterA);
@@ -2004,11 +2072,14 @@ f32 calcSquaredDistanceHitSegmentToSegment(const sead::Vector3f& rStartA,
         if (pHitPosA) {
             pHitPosA->set(rStartA);
         }
+
         if (pHitPosB) {
             pHitPosB->set(rStartA);
         }
+
         return diff.dot(diff);
     }
+
     f32 dotB = dirB.dot(diff);
     f32 rateA;
     f32 rateB;
@@ -2027,6 +2098,7 @@ f32 calcSquaredDistanceHitSegmentToSegment(const sead::Vector3f& rStartA,
         } else {
             rateA = 0.0f;
         }
+
         f32 rateNumB = dotB + dotAB * rateA;
         if (rateNumB < 0.0f) {
             rateB = 0.0f;
@@ -2038,14 +2110,17 @@ f32 calcSquaredDistanceHitSegmentToSegment(const sead::Vector3f& rStartA,
             rateB = rateNumB / sqLengthB;
         }
     }
+
     sead::Vector3f hitPosA = rStartA + dirA * rateA;
     sead::Vector3f hitPosB = rStartB + dirB * rateB;
     if (pHitPosA) {
         pHitPosA->set(hitPosA);
     }
+
     if (pHitPosB) {
         pHitPosB->set(hitPosB);
     }
+
     return (hitPosA - hitPosB).squaredLength();
 }
 
@@ -2062,6 +2137,7 @@ bool checkHitSemilinePlane(sead::Vector3f* pHitPos, const sead::Vector3f& rStart
         pHitPos->set(rStart);
         *pHitPos += rDir * rate;
     }
+
     return true;
 }
 
@@ -2072,17 +2148,21 @@ bool checkHitSegmentPlane(sead::Vector3f* pHitPos, const sead::Vector3f& rStart,
     if (dot >= 0.0f && !isCheckBothSide) {
         return false;
     }
+
     if (isNearZero(dot, 0.0001f)) {
         return false;
     }
+
     f32 rate = rPlaneNormal.dot(rPlanePos - rStart) / dot;
     if (rate < 0.0f || rate > 1.0f) {
         return false;
     }
+
     if (pHitPos) {
         pHitPos->set(rStart);
         *pHitPos += rSegment * rate;
     }
+
     return true;
 }
 
@@ -2123,12 +2203,15 @@ bool checkHitSegmentSphere(const sead::Vector3f& rCenter, const sead::Vector3f& 
             }
         }
     }
+
     if (pHitNormal) {
         pHitNormal->set(normal);
     }
+
     if (pHitPos) {
         pHitPos->setScaleAdd(-radius, normal, rCenter);
     }
+
     return true;
 }
 
@@ -2142,16 +2225,19 @@ bool checkHitSegmentSphereNearDepth(const sead::Vector3f& rCenter, const sead::V
     if (dot > 0.0f) {
         return false;
     }
+
     f32 distance = toStart.squaredLength() - radius * radius;
     f32 discriminant = dot * dot - distance;
     if (discriminant < 0.0f) {
         return false;
     }
+
     f32 depth = -dot - sead::Mathf::sqrt(discriminant);
     f32 segmentLength = (rStart - rEnd).length();
     if (sead::Mathf::abs(depth) > segmentLength) {
         return false;
     }
+
     pHitPos->setScaleAdd(depth, dir, rStart);
     pHitNormal->setSub(*pHitPos, rCenter);
     tryNormalizeOrZero(pHitNormal);
@@ -2177,17 +2263,21 @@ static bool tryCalcHitPosX(sead::Vector3f* pHitPos, const sead::Vector3f& rStart
     if (rate < 0.0f || rate > 1.0f) {
         return false;
     }
+
     f32 y = rStart.y + rSegment.y * rate;
     if (!(rBox.getMin().y <= y && y <= rBox.getMax().y)) {
         return false;
     }
+
     f32 z = rStart.z + rSegment.z * rate;
     if (!(rBox.getMin().z <= z && z <= rBox.getMax().z)) {
         return false;
     }
+
     if (pHitPos) {
         pHitPos->set(rStart.x + rSegment.x * rate, y, z);
     }
+
     return true;
 }
 
@@ -2196,17 +2286,21 @@ static bool tryCalcHitPosY(sead::Vector3f* pHitPos, const sead::Vector3f& rStart
     if (rate < 0.0f || rate > 1.0f) {
         return false;
     }
+
     f32 x = rStart.x + rate * rSegment.x;
     if (!(rBox.getMin().x <= x && x <= rBox.getMax().x)) {
         return false;
     }
+
     f32 z = rStart.z + rate * rSegment.z;
     if (!(rBox.getMin().z <= z && z <= rBox.getMax().z)) {
         return false;
     }
+
     if (pHitPos) {
         pHitPos->set(x, rStart.y + rate * rSegment.y, z);
     }
+
     return true;
 }
 
@@ -2215,17 +2309,21 @@ static bool tryCalcHitPosZ(sead::Vector3f* pHitPos, const sead::Vector3f& rStart
     if (rate < 0.0f || rate > 1.0f) {
         return false;
     }
+
     f32 x = rStart.x + rate * rSegment.x;
     if (!(rBox.getMin().x <= x && x <= rBox.getMax().x)) {
         return false;
     }
+
     f32 y = rStart.y + rate * rSegment.y;
     if (!(rBox.getMin().y <= y && y <= rBox.getMax().y)) {
         return false;
     }
+
     if (pHitPos) {
         pHitPos->set(x, y, rStart.z + rate * rSegment.z);
     }
+
     return true;
 }
 
@@ -2250,6 +2348,7 @@ bool checkHitSegmentBox(const sead::Vector3f& rStart, const sead::Vector3f& rSeg
             return true;
         }
     }
+
     if (rSegment.y > 0.0f) {
         rate = (min.y - rStart.y) / rSegment.y;
         if (tryCalcHitPosY(pHitPos, rStart, rSegment, rBox, rate)) {
@@ -2261,6 +2360,7 @@ bool checkHitSegmentBox(const sead::Vector3f& rStart, const sead::Vector3f& rSeg
             return true;
         }
     }
+
     if (rSegment.z > 0.0f) {
         rate = (min.z - rStart.z) / rSegment.z;
         if (tryCalcHitPosZ(pHitPos, rStart, rSegment, rBox, rate)) {
@@ -2272,6 +2372,7 @@ bool checkHitSegmentBox(const sead::Vector3f& rStart, const sead::Vector3f& rSeg
             return true;
         }
     }
+
     return false;
 }
 
@@ -2283,11 +2384,13 @@ bool checkHitPointCone(const sead::Vector3f& rPoint, const sead::Vector3f& rApex
     if (depth < 0.0f || depth > height) {
         return false;
     }
+
     sead::Vector3f projected = rDir * depth;
     f32 radius = depth * sead::Mathf::tan(sead::Mathf::deg2rad(angleDegree));
     if (radius < (toPoint - projected).length()) {
         return false;
     }
+
     return true;
 }
 
@@ -2391,6 +2494,7 @@ void calcFittingBoxPoseEqualAxisAll(sead::Quatf* pOutQuat, const sead::Quatf& rQ
         calcNearVecFromAxis2(&front, front, sideB, upB);
         break;
     }
+
     makeQuatFrontUp(pOutQuat, front, up);
 }
 
@@ -2439,17 +2543,21 @@ void calcFittingBoxPose(sead::Quatf* pOutQuat, const sead::BoundBox3f& rBox,
             calcFittingBoxPoseEqualAxisAll(pOutQuat, rQuatA, rQuatB);
             return;
         }
+
         calcFittingBoxPoseEqualAxisTwo(pOutQuat, rQuatA, rQuatB, 2);
         return;
     }
+
     if (isNearZero(size.y - size.z)) {
         calcFittingBoxPoseEqualAxisTwo(pOutQuat, rQuatA, rQuatB, 0);
         return;
     }
+
     if (isNearZero(size.z - size.x)) {
         calcFittingBoxPoseEqualAxisTwo(pOutQuat, rQuatA, rQuatB, 1);
         return;
     }
+
     calcFittingBoxPoseEqualAxisNone(pOutQuat, rQuatA, rQuatB);
 }
 
@@ -2484,17 +2592,20 @@ void calcParabolicFunctionParam(f32* pGravity, f32* pInitialVelY, f32 maxHeight,
         *pInitialVelY = maxHeight + verticalDistance;
         return;
     }
+
     if (isNearZero(verticalDistance, 0.0001f)) {
         *pGravity = maxHeight * -4.0f;
         *pInitialVelY = maxHeight * 4.0f;
         return;
     }
+
     f32 root = sead::Mathf::sqrt(discriminant);
     f32 time = (root + maxHeight) / verticalDistance;
     if (!(time >= 0.0f && time <= 1.0f)) {
         f32 otherTime = (maxHeight - root) / verticalDistance;
         time = (otherTime >= 0.0f && otherTime <= 1.0f) ? otherTime : 1.0f;
     }
+
     *pGravity = -maxHeight / (time * time);
     *pInitialVelY = time * -2.0f * *pGravity;
 }
@@ -2514,11 +2625,13 @@ bool calcSphericalPolarCoordPY(sead::Vector2f* pOutCoord, const sead::Vector3f& 
     if (isNearZero(rDir)) {
         return false;
     }
+
     if (isParallelDirection(rUp, rDir, 0.01f)) {
         pOutCoord->x = rDir.dot(rUp) > 0.0f ? sead::Mathf::piHalf() : -sead::Mathf::piHalf();
         pOutCoord->y = 0.0f;
         return false;
     }
+
     sead::Vector3f side;
     side.setCross(rUp, rFront);
     sead::Vector3f local(rDir.dot(rUp), rDir.dot(side), rDir.dot(rFront));
@@ -2557,6 +2670,7 @@ void visitCellsOverlapped(const sead::Vector3f& rStart, const sead::Vector3f& rE
         f32 dist = rStart.x > rEnd.x ? rStart.x - cellPos : cellPos + cellSize - rStart.x;
         maxX = dist / lengthX;
     }
+
     f32 cellStartY = rStart.y / cellSize;
     f32 lengthY = sead::Mathf::abs(rEnd.y - rStart.y);
     f32 maxY = sead::Mathf::maxNumber();
@@ -2565,6 +2679,7 @@ void visitCellsOverlapped(const sead::Vector3f& rStart, const sead::Vector3f& rE
         f32 dist = rStart.y > rEnd.y ? rStart.y - cellPos : cellPos + cellSize - rStart.y;
         maxY = dist / lengthY;
     }
+
     f32 cellStartZ = rStart.z / cellSize;
     f32 lengthZ = sead::Mathf::abs(rEnd.z - rStart.z);
     f32 maxZ = sead::Mathf::maxNumber();
@@ -2580,9 +2695,11 @@ void visitCellsOverlapped(const sead::Vector3f& rStart, const sead::Vector3f& rE
     if (!(lengthX < 1e-6f)) {
         deltaX = cellSize / lengthX;
     }
+
     if (!(lengthY < 1e-6f)) {
         deltaY = cellSize / lengthY;
     }
+
     if (!(lengthZ < 1e-6f)) {
         deltaZ = cellSize / lengthZ;
     }
@@ -2600,18 +2717,21 @@ void visitCellsOverlapped(const sead::Vector3f& rStart, const sead::Vector3f& rE
             if (x == endX) {
                 return;
             }
+
             maxX += deltaX;
             x += stepX;
         } else if (maxY <= maxX && maxY <= maxZ) {
             if (y == endY) {
                 return;
             }
+
             maxY += deltaY;
             y += stepY;
         } else {
             if (z == endZ) {
                 return;
             }
+
             maxZ += deltaZ;
             z += stepZ;
         }
@@ -2670,6 +2790,7 @@ void calcVecViewInput(sead::Vector3f* pOutVec, const sead::Vector2f& rInput,
     } else {
         dir = dotUp < 0.0f ? camFront : -camFront;
     }
+
     sead::Vector3f side;
     side.setCross(rUp, dir);
     tryNormalizeOrZero(&side);
@@ -2685,6 +2806,7 @@ bool calcDirViewInput(sead::Vector3f* pOutVec, const sead::Vector2f& rInput,
         pOutVec->set(sead::Vector3f::zero);
         return false;
     }
+
     calcVecViewInput(pOutVec, rInput, rUp, pViewMtx);
     tryNormalizeOrZero(pOutVec);
     return true;
@@ -2765,6 +2887,7 @@ bool calcX(sead::Vector3f* outVec, f32 value, const sead::Vector3f& vectorA,
         outVec->y = y;
         outVec->z = z;
     }
+
     return true;
 }
 
@@ -2787,6 +2910,7 @@ bool calcY(sead::Vector3f* outVec, f32 value, const sead::Vector3f& vectorA,
         outVec->y = y;
         outVec->z = z;
     }
+
     return true;
 }
 
@@ -2809,6 +2933,7 @@ bool calcZ(sead::Vector3f* outVec, f32 value, const sead::Vector3f& vectorA,
         outVec->y = y;
         outVec->z = z;
     }
+
     return true;
 }
 

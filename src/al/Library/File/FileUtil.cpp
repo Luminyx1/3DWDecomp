@@ -168,6 +168,7 @@ bool tryRequestPreLoadFile(const Resource* pResource, const sead::SafeString& rF
     if (!pHeap) {
         pHeap = getSceneResourceHeap();
     }
+
     fileLoader->requestPreLoadFile(byml, pHeap, pLoader);
     return true;
 }

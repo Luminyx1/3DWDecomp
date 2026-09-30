@@ -13,6 +13,7 @@ static bool isHiddenHostTriangle(const Triangle& rTriangle) {
     if (!parts->mSensor) {
         return false;
     }
+
     LiveActor* host = parts->getConnectedHost();
     return isExistModel(host) && isHideModel(host) && !isCameraCode("NoThroughAlways", rTriangle);
 }
@@ -26,9 +27,11 @@ bool CameraTriangleFilter::isInvalidTriangle(const Triangle& rTriangle) const {
     if (isCameraCode("InvalidThrough", rTriangle)) {
         return false;
     }
+
     if (isHiddenHostTriangle(rTriangle)) {
         return true;
     }
+
     return isCameraCode("Through", rTriangle);
 }
 
@@ -41,6 +44,7 @@ bool CameraTriangleFilterOnlyCeiling::isInvalidTriangle(const Triangle& rTriangl
     if (!isCeilingPolygon(*rTriangle.getNormal(0), {0.0f, -1.0f, 0.0f})) {
         return true;
     }
+
     return CameraTriangleFilter::isInvalidTriangle(rTriangle);
 }
 
@@ -53,15 +57,19 @@ bool SubjectiveCameraTriangleFilter::isInvalidTriangle(const Triangle& rTriangle
     if (isCameraCode("InvalidThrough", rTriangle)) {
         return false;
     }
+
     if (isHiddenHostTriangle(rTriangle)) {
         return true;
     }
+
     if (isFloorPolygon(*rTriangle.getNormal(0), -sead::Vector3f::ey)) {
         return true;
     }
+
     if (mIsIgnoreThrough) {
         return false;
     }
+
     return isCameraCode("Through", rTriangle);
 }
 

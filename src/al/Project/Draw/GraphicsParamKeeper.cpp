@@ -103,6 +103,7 @@ GraphicsParamKeeperImpl::tryFindParamBinary(const char* pName) const {
             return binary;
         }
     }
+
     return nullptr;
 }
 
@@ -140,6 +141,7 @@ void GraphicsParamKeeperImpl::updateRequest() {
                                               agl::utl::ResParameterArchive(binary->data),
                                               areaParam.mRate);
     }
+
     mIsApplied = true;
 }
 
@@ -154,6 +156,7 @@ GraphicsParamKeeperImpl::tryFindParamOrDefaultBinary(const char* pName) const {
     if (binary) {
         return binary;
     }
+
     return tryFindParamBinary("Default");
 }
 

@@ -19,6 +19,7 @@ void CameraAngleSwingInfo::load(const ByamlIter& rIter) {
     if (isInvalidSwing) {
         return;
     }
+
     tryGetByamlF32(&maxSwingDegreeH, rIter, "MaxSwingDegreeH");
     tryGetByamlF32(&maxSwingDegreeV, rIter, "MaxSwingDegreeV");
 }
@@ -33,6 +34,7 @@ void CameraAngleSwingInfo::update(const sead::Vector2f& rStick, f32 sensitivityS
         currentAngle = {0.0f, 0.0f};
         return;
     }
+
     sead::Vector2f target = {-rStick.x * maxSwingDegreeH, rStick.y * maxSwingDegreeV};
     lerpVec(&target, currentAngle, target, targetLerpRate * sensitivityScale);
     lerpVec(&currentAngle, currentAngle, target, angleLerpRate);
@@ -51,6 +53,7 @@ void CameraAngleSwingInfo::makeLookAtCamera(sead::LookAtCamera* pCamera) const {
     if (!tryNormalizeOrZero(&up)) {
         return;
     }
+
     rotateVectorDegree(&front, front, up, currentAngle.x);
     normalize(&front);
     sead::Vector3f side;

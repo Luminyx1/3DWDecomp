@@ -32,6 +32,7 @@ bool AudioResourceDirector::tryCreateAudioResourceLayer(const sead::SafeString& 
             return false;
         }
     }
+
     createAudioResourceLayer(rName);
     return true;
 }
@@ -47,6 +48,7 @@ bool AudioResourceDirector::isExistAudioResourceLayer(const sead::SafeString& rN
             return true;
         }
     }
+
     return false;
 }
 
@@ -60,9 +62,11 @@ void AudioResourceDirector::createAudioResourceLayer(const sead::SafeString& rNa
     if (mCurLayerIndex > level) {
         level = mHeapController->saveHeapState();
     }
+
     if (level < 0) {
         return;
     }
+
     mLayers.unsafeAt(mCurLayerIndex)->setData(rName);
 }
 
@@ -78,6 +82,7 @@ bool AudioResourceDirector::tryDestroyAudioResourceLayer(const sead::SafeString&
             return true;
         }
     }
+
     return false;
 }
 
@@ -119,6 +124,7 @@ AudioResourceLayer* AudioResourceDirector::findAudioResourceLayer(const sead::Sa
             return layer;
         }
     }
+
     return nullptr;
 }
 
@@ -133,6 +139,7 @@ bool AudioResourceDirector::isLoadedSoundItemAnyLayer(u32 id) const {
             return true;
         }
     }
+
     return false;
 }
 
@@ -146,6 +153,7 @@ bool AudioResourceDirector::loadSoundItem(u32 id, u32 loadFlag) {
     if (isLoadedSoundItemAnyLayer(id)) {
         return true;
     }
+
     return mLayers.unsafeAt(mCurLayerIndex)->loadSoundItem(id, loadFlag);
 }
 

@@ -61,6 +61,7 @@ s32 StringMatcher::calcMatchNum() const {
             return i;
         }
     }
+
     return 10;
 }
 
@@ -93,6 +94,7 @@ void StringMatcher::addMatchInfo(const char* pStart, const char* pEnd) {
     if (index >= 10) {
         return;
     }
+
     mMatchInfo[index].mStart = pStart;
     mMatchInfo[index].mEnd = pEnd;
 }

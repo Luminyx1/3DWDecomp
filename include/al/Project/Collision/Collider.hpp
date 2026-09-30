@@ -60,6 +60,7 @@ public:
     sead::Vector3f _278;
     f32 _284;
 };
+
 bool isWallPolygon(const sead::Vector3f& rNormal, const sead::Vector3f& rGravity);
 bool isFloorPolygon(const sead::Vector3f& rNormal, const sead::Vector3f& rGravity);
 bool isFloorPolygonCos(const sead::Vector3f& rNormal, const sead::Vector3f& rGravity, f32 cos);

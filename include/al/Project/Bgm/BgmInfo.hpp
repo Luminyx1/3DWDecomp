@@ -29,6 +29,7 @@ public:
     bool mIsPlayBySequenceBgm;
     bool mIsDisableLineAutoStop;
 };
+
 static_assert(sizeof(BgmPlayInfoInAction) == 0x28);
 
 class BgmActionInfo {
@@ -46,6 +47,7 @@ public:
     const char* mName;
     AudioInfoList<BgmPlayInfoInAction>* mPlayInfoList;
 };
+
 static_assert(sizeof(BgmActionInfo) == 0x10);
 
 class BgmActionInfoList {
@@ -66,6 +68,7 @@ public:
     const char* mName;
     sead::PtrArray<BgmActionInfo>* mActionInfoList;
 };
+
 static_assert(sizeof(BgmUserInfo) == 0x10);
 
 class BgmUserInfoList {

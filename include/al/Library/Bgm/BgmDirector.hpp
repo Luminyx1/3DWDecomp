@@ -71,5 +71,6 @@ private:
     bool mIsDisableChangeSituation = false;
     bool mIsDisableVolumeChange = false;
 };
+
 static_assert(sizeof(BgmDirector) == 0x40);
 }  // namespace al

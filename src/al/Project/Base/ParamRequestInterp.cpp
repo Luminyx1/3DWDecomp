@@ -12,6 +12,7 @@ bool IUseRequestParam::isEqual(const IUseRequestParam& rOther) const {
     if (!getParamObj()) {
         return false;
     }
+
     return getParamObj()->isEqual(*rOther.getParamObj());
 }
 
@@ -23,6 +24,7 @@ void IUseRequestParam::copy(const IUseRequestParam& rOther) {
     if (!getParamObj()) {
         return;
     }
+
     getParamObj()->copy(*rOther.getParamObj());
 }
 
@@ -37,6 +39,7 @@ void IUseRequestParam::copyInterp(const IUseRequestParam& rParamA,
     if (!getParamObj()) {
         return;
     }
+
     getParamObj()->copyLerp(*rParamA.getParamObj(), *rParamB.getParamObj(), rate);
 }
 
@@ -53,6 +56,7 @@ f32 ParamRequestInterp::calcRate() const {
     if (mStep == -1 || mStep == 0) {
         return 1.0f;
     }
+
     return static_cast<f32>(mStepMax - mStep) / mStepMax;
 }
 
@@ -92,6 +96,7 @@ bool ParamRequestInterp::requestParam(s32 priority, s32 step, const IUseRequestP
     if (mIsFirstRequest) {
         return requestParamDirect_(priority, rParam);
     }
+
     if (mPriority < priority) {
         mIsRequested = true;
         mPriority = priority;
@@ -100,15 +105,18 @@ bool ParamRequestInterp::requestParam(s32 priority, s32 step, const IUseRequestP
         mIsSamePriorityRequested = false;
         return false;
     }
+
     if (mPriority == priority) {
         bool isSamePriorityRequested = true;
         if (!mIsSamePriorityRequested) {
             isSamePriorityRequested = false;
             mIsRequested = true;
         }
+
         mIsSamePriorityRequested = true;
         return isSamePriorityRequested;
     }
+
     mIsRequested = true;
     return false;
 }
@@ -131,15 +139,18 @@ bool ParamRequestInterp::requestParamDirect_(s32 priority, const IUseRequestPara
         mIsRequested = true;
         return false;
     }
+
     if (mPriority == priority) {
         bool isSamePriorityRequested = true;
         if (!mIsSamePriorityRequested) {
             isSamePriorityRequested = false;
             mIsRequested = true;
         }
+
         mIsSamePriorityRequested = true;
         return isSamePriorityRequested;
     }
+
     mIsRequested = true;
     return false;
 }
@@ -154,12 +165,14 @@ void ParamRequestInterp::updateInterp() {
         mEndParam->copy(*mRequestParam);
         mStartParam->copy(*mCurrentParam);
     }
+
     s32 step = mStep - 1;
     mStep = step >= 0 ? step : -1;
     if (mStep < 0) {
         mPriority = -2;
         return;
     }
+
     f32 rate = calcRate();
     mCurrentParam->copyInterp(*mStartParam, *mEndParam, rate);
     if (mIsEndInit && mIsFirstRequest) {

@@ -88,6 +88,7 @@ void calcAnimFrontGravityPos(LiveActor* pActor, const sead::Vector3f& rFront) {
             up.setCross(rFront, baseMtx->getBase(0));
         }
     }
+
     sead::Matrix34f mtx;
     makeMtxFrontUpPos(&mtx, rFront, up, getTrans(pActor));
     setBaseMtxAndCalcAnim(pActor, mtx, getScale(pActor));
@@ -592,6 +593,7 @@ f32 calcAngleOnPlaneDegreeToDirectionFixed(LiveActor* pActor, const sead::Vector
     } else if (angle < 0.0f && angle < -maxDegree) {
         angle = -maxDegree;
     }
+
     return angle;
 }
 
@@ -643,6 +645,7 @@ bool faceToTarget(LiveActor* pActor, const sead::Vector3f& rTarget, f32 maxDegre
     normalizeOrDirZ(&dir);
     return faceToDirection(pActor, dir, maxDegree, endDegree);
 }
+
 /**
  * Checks whether collision blocks the line of sight from the camera to an actor.
  * @param pActor The actor.
@@ -656,11 +659,13 @@ bool isActorObscured(const LiveActor* pActor, f32 radius, const sead::Vector3f* 
     if (pOffset) {
         pos.add(*pOffset);
     }
+
     sead::Vector3f dir = pos - cameraPos;
     CollisionPartsFilterActor filter(pActor);
     if (!(radius < 0.0f) && !(dir.squaredLength() < radius * radius)) {
         return false;
     }
+
     return alCollisionUtil::getStrikeArrowCollisionParts(pActor, nullptr, cameraPos, dir, &filter,
                                                          nullptr) != nullptr;
 }

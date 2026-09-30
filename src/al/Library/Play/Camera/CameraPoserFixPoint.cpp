@@ -26,6 +26,7 @@ void CameraPoserFixPoint::init() {
     if (isEqualString(getName(), "完全追従定点")) {
         return;
     }
+
     alCameraPoserFunction::initCameraVerticalAbsorberNoCameraPosAbsorb(this);
 }
 
@@ -37,6 +38,7 @@ void CameraPoserFixPoint::loadParam(const ByamlIter& rIter) {
     if (!tryGetByamlBool(&mIsUsePrePoserPos, rIter, "IsUsePrePoserPos") || !mIsUsePrePoserPos) {
         tryGetByamlV3f(&mCameraPos, rIter, "CameraPos");
     }
+
     tryGetByamlF32(&mOffsetY, rIter, "OffsetY");
     tryGetByamlBool(&mIsKeepDistanceFromLookAt, rIter, "IsKeepDistanceFromLookAt");
     if (mIsKeepDistanceFromLookAt) {
@@ -53,6 +55,7 @@ void CameraPoserFixPoint::start(const CameraStartInfo& rInfo) {
         alCameraPoserFunction::multVecInvZone(
             &mCameraPos, alCameraPoserFunction::getLookAtCamera(this).getPos(), this);
     }
+
     update();
 }
 
@@ -74,12 +77,14 @@ void CameraPoserFixPoint::makeLookAtCamera(sead::LookAtCamera* pCamera) const {
     if (!mIsKeepDistanceFromLookAt) {
         return;
     }
+
     sead::Vector3f dir = pCamera->getPos() - pCamera->getAt();
     f32 distance = mKeepDistance;
     f32 length = dir.length();
     if (length > 0.0f) {
         dir *= distance / length;
     }
+
     pCamera->setPos(dir + pCamera->getAt());
 }
 

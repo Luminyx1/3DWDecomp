@@ -19,13 +19,16 @@ public:
         if (!rIter.tryGetStringByKey(&info->mResourceName, "ResourceName")) {
             return nullptr;
         }
+
         u32 soundId = alSoundNameUtil::getSoundId(info->mResourceName, false);
         info->mSoundId = soundId;
         if (AudioConst::SOUND_ID_INVALID == soundId) {
             return nullptr;
         }
+
         return info;
     }
+
     static s32 compareInfo(const SeMaterialSettingInfo* pA, const SeMaterialSettingInfo* pB) {
         return strcmp(pA->mName, pB->mName);
     }
@@ -34,6 +37,7 @@ public:
     const char* mResourceName = nullptr;
     u32 mSoundId = 0;
 };
+
 static_assert(sizeof(SeMaterialSettingInfo) == 0x18);
 
 class SeResourceSpecificInfo {
@@ -58,6 +62,7 @@ public:
     AudioInfoList<SeMaterialSettingInfo>* mMaterialInfoList = nullptr;
     s32 mPlayerId = 0;
 };
+
 static_assert(sizeof(SeResourceSpecificInfo) == 0x40);
 
 class InOutParam;
@@ -80,6 +85,7 @@ public:
     f32 mLfeSend = 0.0f;
     const SeResourceSpecificInfo* mSpecificInfo = nullptr;
 };
+
 static_assert(sizeof(SeResourceInfo) == 0x48);
 
 class SePlayInfo {
@@ -95,6 +101,7 @@ public:
     AudioInfoList<SeResourceInfo>* mResourceInfoList = nullptr;
     const char* mRequestKeeperName = nullptr;
 };
+
 static_assert(sizeof(SePlayInfo) == 0x20);
 
 class SePlayInfoInAction {
@@ -111,6 +118,7 @@ public:
     f32 mEndFrame = 0.0f;
     bool mIsOneTime = false;
 };
+
 static_assert(sizeof(SePlayInfoInAction) == 0x18);
 
 class SeActionInfo {
@@ -126,6 +134,7 @@ public:
     bool mIsStopPlayingSe;
     AudioInfoList<SePlayInfoInAction>* mPlayInfoList;
 };
+
 static_assert(sizeof(SeActionInfo) == 0x18);
 
 class SeSoundSourceInfo {
@@ -209,6 +218,7 @@ public:
     sead::Vector3f* mOffset = nullptr;
     SeSoundSourceInfo* mSoundSourceInfo = nullptr;
 };
+
 static_assert(sizeof(SeEmitterInfo) == 0x20);
 
 class SeUserInfo {
@@ -221,5 +231,6 @@ public:
     AudioInfoList<SeActionInfo>* mActionInfoList = nullptr;
     AudioInfoList<SePlayInfo>* mPlayInfoList = nullptr;
 };
+
 static_assert(sizeof(SeUserInfo) == 0x20);
 }  // namespace al

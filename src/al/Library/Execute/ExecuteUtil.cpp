@@ -142,6 +142,7 @@ al::ModelDrawerBase* tryCompletelyRemoveFromExecutorDraw(al::LiveActor* pActor) 
     if (drawer) {
         drawer->removeModel(pActor->mModelKeeper->mModelCafe);
     }
+
     return drawer;
 }
 
@@ -158,6 +159,7 @@ void tryCompletelyRemoveFromExecutorDraw(al::LiveActor* pActor,
         if (!drawer) {
             break;
         }
+
         pDrawers->pushBack(drawer);
     }
 }

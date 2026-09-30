@@ -68,21 +68,26 @@ bool SeesawMapParts::receiveMsg(const SensorMsg* pMsg, HitSensor* pOther, HitSen
         } else {
             pos.set(getActorTrans(pSelf));
         }
+
         f32 weight = isMsgEnemyFloorTouch(pMsg) ? 0.9f : 1.0f;
         if (!isGreaterThanOrEqualToZero((pos - getTrans(this)).dot(mFront))) {
             weight = -weight;
         }
+
         mWeight += weight;
         return true;
     }
+
     if (isMsgShowModel(pMsg)) {
         showModelIfHide(this);
         return true;
     }
+
     if (isMsgHideModel(pMsg)) {
         hideModelIfShow(this);
         return true;
     }
+
     return false;
 }
 
@@ -100,6 +105,7 @@ void SeesawMapParts::exeWait() {
     } else if (mRemainingAccelOnFrames < 0) {
         mRemainingAccelOnFrames++;
     }
+
     mWeight = 0.0f;
 
     if (mRemainingAccelOnFrames > 0) {
@@ -119,14 +125,17 @@ void SeesawMapParts::exeWait() {
         if (isSameSign(mRotateSpeed, mRotateDegree)) {
             mRotateSpeed *= -0.5f;
         }
+
         mRotateDegree = sead::Mathf::clamp(mRotateDegree, -mMaxDegree, mMaxDegree);
         if (rotateSpeed > 0.2f) {
             tryStartSeWithParam(this, "Stop", rotateSpeed, nullptr);
         }
     }
+
     if (rotateSpeed > 0.1f) {
         tryHoldSeWithParam(this, "Rotate", rotateSpeed, nullptr);
     }
+
     rotateQuatRadian(getQuatPtr(this), mStartQuat, mSide, sead::Mathf::deg2rad(mRotateDegree));
 }
 }  // namespace al

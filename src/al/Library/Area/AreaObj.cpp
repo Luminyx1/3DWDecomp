@@ -13,15 +13,19 @@ static AreaShape* createAreaShape(const char* pName, AreaShape* pDefault) {
     if (isEqualString(pName, "AreaCubeBase")) {
         return new AreaShapeCube(AreaShapeCube::Base);
     }
+
     if (isEqualString(pName, "AreaCubeCenter")) {
         return new AreaShapeCube(AreaShapeCube::Center);
     }
+
     if (isEqualString(pName, "AreaSphere")) {
         return new AreaShapeOval();
     }
+
     if (isEqualString(pName, "AreaCylinder")) {
         return new AreaShapeCylinder();
     }
+
     return pDefault;
 }
 
@@ -54,6 +58,7 @@ void AreaObj::init(const AreaInitInfo& rInfo) {
     } else if (isEqualString(modelName, "AreaCylinder")) {
         mShape = new AreaShapeCylinder();
     }
+
     mShape->setBaseMtxPtr(&_28);
 
     tryGetArg(&mPriority, *mPlacementInfo, "Priority");
@@ -84,10 +89,12 @@ void AreaObj::init(const AreaInitInfo& rInfo) {
     if (isListenAppear) {
         invalidate();
     }
+
     if (listenStageSwitchOnKill(this, AreaObjFunctor(this, &AreaObj::invalidate)) &&
         !isListenAppear) {
         validate();
     }
+
     if (listenStageSwitchOnOff(this, "SwitchEnableOn", AreaObjFunctor(this, &AreaObj::enable),
                                AreaObjFunctor(this, &AreaObj::disable))) {
         disable();
@@ -110,6 +117,7 @@ bool AreaObj::isInVolume(const sead::Vector3f& rPos) const {
     if (!mIsValid || mIsDisabled || !_66) {
         return false;
     }
+
     return mShape->isInVolume(rPos);
 }
 
@@ -135,6 +143,7 @@ bool AreaObj::isInVolume(const sead::Vector3f& rStart, const sead::Vector3f& rEn
     if (!mIsValid || mIsDisabled || !_66) {
         return false;
     }
+
     return mShape->checkArrowCollision(pHitPos, pNormal, rStart, rEnd);
 }
 

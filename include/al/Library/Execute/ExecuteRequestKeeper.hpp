@@ -15,6 +15,7 @@ public:
                 return;
             }
         }
+
         mRequests[mSize++] = pActor;
     }
 

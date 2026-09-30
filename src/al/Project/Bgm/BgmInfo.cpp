@@ -14,33 +14,43 @@ BgmPlayInfoInAction* BgmPlayInfoInAction::createInfo(const ByamlIter& rIter) {
     if (!rIter.tryGetStringByKey(&info->mName, "Name")) {
         return nullptr;
     }
+
     if (!rIter.tryGetStringByKey(&info->mPlayTypeName, "PlayTypeName")) {
         info->mPlayTypeName = "REQ_UNKNOWN";
     }
+
     if (!rIter.tryGetFloatByKey(&info->mTriggerFrame, "TriggerFrame")) {
         info->mTriggerFrame = 0.0f;
     }
+
     if (!rIter.tryGetIntByKey(&info->mFadeFrameNum, "FadeFrameNum")) {
         info->mFadeFrameNum = -1;
     }
+
     if (!rIter.tryGetIntByKey(&info->mStartDelayFrameNum, "StartDelayFrameNum")) {
         info->mStartDelayFrameNum = 0;
     }
+
     if (!rIter.tryGetIntByKey(&info->mFadeOutFrameNumForCurBgm, "FadeOutFrameNumForCurBgm")) {
         info->mFadeOutFrameNumForCurBgm = -1;
     }
+
     if (!rIter.tryGetBoolByKey(&info->mIsTriggerActionEnd, "IsTriggerActionEnd")) {
         info->mIsTriggerActionEnd = false;
     }
+
     if (!rIter.tryGetBoolByKey(&info->mIsStopActionEnd, "IsStopActionEnd")) {
         info->mIsStopActionEnd = false;
     }
+
     if (!rIter.tryGetBoolByKey(&info->mIsPlayBySequenceBgm, "IsPlayBySequenceBgm")) {
         info->mIsPlayBySequenceBgm = false;
     }
+
     if (!rIter.tryGetBoolByKey(&info->mIsDisableLineAutoStop, "DisableLineAutoStop")) {
         info->mIsDisableLineAutoStop = false;
     }
+
     return info;
 }
 
@@ -68,6 +78,7 @@ s32 BgmPlayInfoInAction::compareInfo(const BgmPlayInfoInAction* pA, const BgmPla
     if (pA->mTriggerFrame < pB->mTriggerFrame) {
         return -1;
     }
+
     return pA->mTriggerFrame > pB->mTriggerFrame;
 }
 
@@ -122,6 +133,7 @@ void BgmActionInfo::allockBuffer(s32 size) {
     if (size < 1) {
         return;
     }
+
     AudioInfoList<BgmPlayInfoInAction>* list = new AudioInfoList<BgmPlayInfoInAction>;
     list->mNext = nullptr;
     list->mInfos = new sead::PtrArray<BgmPlayInfoInAction>;
@@ -138,10 +150,12 @@ BgmActionInfo::BgmActionInfo(const BgmActionInfo& rOther) : mName(rOther.mName),
         mPlayInfoList = nullptr;
         return;
     }
+
     s32 num = rOther.mPlayInfoList->getInfoNum();
     if (num < 1) {
         return;
     }
+
     allockBuffer(num);
     for (s32 i = 0; i != num; i++) {
         BgmPlayInfoInAction* info =
@@ -149,6 +163,7 @@ BgmActionInfo::BgmActionInfo(const BgmActionInfo& rOther) : mName(rOther.mName),
         if (info == nullptr) {
             break;
         }
+
         BgmPlayInfoInAction* copy = new BgmPlayInfoInAction(*info);
         mPlayInfoList->mInfos->pushBack(copy);
     }
@@ -164,6 +179,7 @@ BgmActionInfo& BgmActionInfo::operator=(const BgmActionInfo& rOther) {
     if (rOther.mPlayInfoList != nullptr && mPlayInfoList != nullptr) {
         *mPlayInfoList = *rOther.mPlayInfoList;
     }
+
     return *this;
 }
 
@@ -202,8 +218,10 @@ sead::PtrArray<BgmActionInfo>* BgmActionInfoList::create(const ByamlIter& rIter)
             rIter.tryGetIterByIndex(&iter, i);
             list->pushBack(BgmActionInfo::createInfo(iter));
         }
+
         shakerSortInfoArray<BgmActionInfo>(list, BgmActionInfo::compareInfo);
     }
+
     return list;
 }
 
@@ -226,8 +244,10 @@ sead::PtrArray<BgmUserInfo>* BgmUserInfo::create(const ByamlIter& rIter) {
         if (!rIter.tryGetIterByIndex(&iter, i)) {
             continue;
         }
+
         list->pushBack(BgmUserInfo::createInfo(iter));
     }
+
     shakerSortInfoArray<BgmUserInfo>(list, BgmUserInfo::compareInfo);
     return list;
 }
@@ -242,6 +262,7 @@ BgmUserInfo* BgmUserInfo::createInfo(const ByamlIter& rIter) {
     if (!rIter.tryGetStringByKey(&info->mName, "Name")) {
         return info;
     }
+
     ByamlIter actionIter;
     rIter.tryGetIterByKey(&actionIter, "ActionInfoList");
     info->mActionInfoList = BgmActionInfoList::create(actionIter);
@@ -271,6 +292,7 @@ BgmUserInfo* BgmUserInfo::createInfo(const ByamlIter& rIter, const sead::SafeStr
     if (rIter.tryGetIterByKey(&actionIter, "ActionInfoList")) {
         info->mActionInfoList = BgmActionInfoList::create(actionIter);
     }
+
     return info;
 }
 

@@ -49,6 +49,7 @@ bool MessageSystem::tryInitMessageHolder(MessageTreeMap* pTreeMap, const char* p
     if (!isMatchString(pFileName, MatchStr(pExt))) {
         return false;
     }
+
     char name[0x100];
     removeExtensionString(name, 0x100, getBaseName(pFileName));
     MessageHolder* holder = new MessageHolder();
@@ -72,6 +73,7 @@ bool MessageSystem::tryInitMessageHolder(MessageTreeMap* pTreeMap, const char* p
     if (!resource) {
         return false;
     }
+
     s32 entryNum = resource->getEntryNum("/");
     StringTmp<256> entryName;
     for (s32 i = 0; i < entryNum; i++) {
@@ -79,12 +81,14 @@ bool MessageSystem::tryInitMessageHolder(MessageTreeMap* pTreeMap, const char* p
         if (!searchSubString(entryName.cstr(), ".msbt")) {
             continue;
         }
+
         char name[0x100];
         removeExtensionString(name, 0x100, getBaseName(entryName.cstr()));
         MessageHolder* holder = new MessageHolder();
         holder->init(resource, entryName.cstr());
         pTreeMap->insert(name, holder);
     }
+
     return true;
 }
 
@@ -138,6 +142,7 @@ MessageHolder* MessageSystem::getMessageHolderCore(const char* pName, s32 index)
     if (!node) {
         return nullptr;
     }
+
     return node->value();
 }
 
@@ -165,6 +170,7 @@ MessageHolder* MessageSystem::getMessageHolderCore(const char* pName, s32 index,
     if (!node) {
         return nullptr;
     }
+
     return node->value();
 }
 

@@ -17,6 +17,7 @@ inline bool isTypeByIndex(const ByamlIter& rIter, s32 index) {
     if (rIter.getByamlDataByIndex(&data, index)) {
         return data.getType() == Type;
     }
+
     return false;
 }
 
@@ -26,6 +27,7 @@ inline bool isTypeByKey(const ByamlIter& rIter, const char* pKey) {
     if (rIter.getByamlDataByKey(&data, pKey)) {
         return data.getType() == Type;
     }
+
     return false;
 }
 
@@ -45,6 +47,7 @@ bool tryGetByamlU8(u8* pValue, const ByamlIter& rIter, const char* pKey) {
         *pValue = value;
         return true;
     }
+
     return false;
 }
 
@@ -61,6 +64,7 @@ bool tryGetByamlU16(u16* pValue, const ByamlIter& rIter, const char* pKey) {
         *pValue = value;
         return true;
     }
+
     return false;
 }
 
@@ -77,6 +81,7 @@ bool tryGetByamlS16(s16* pValue, const ByamlIter& rIter, const char* pKey) {
         *pValue = value;
         return true;
     }
+
     return false;
 }
 
@@ -104,6 +109,7 @@ bool tryGetByamlU32(u32* pValue, const ByamlIter& rIter, const char* pKey) {
     if (result) {
         *pValue = value;
     }
+
     return result;
 }
 
@@ -120,6 +126,7 @@ bool tryGetByamlF32(f32* pValue, const ByamlIter& rIter, const char* pKey) {
         *pValue = value;
         return true;
     }
+
     return false;
 }
 
@@ -235,9 +242,11 @@ bool tryGetByamlBox3f(sead::BoundBox3f* pValue, const ByamlIter& rIter) {
     if (!tryGetByamlV3f(&min, rIter, "Min")) {
         return false;
     }
+
     if (!tryGetByamlV3f(&max, rIter, "Max")) {
         return false;
     }
+
     pValue->set(min, max);
     return true;
 }
@@ -254,6 +263,7 @@ bool tryGetByamlV3f(sead::Vector3f* pValue, const ByamlIter& rIter, const char* 
     if (!rIter.tryGetIterByKey(&iter, pKey)) {
         return false;
     }
+
     return tryGetByamlV3f(pValue, iter);
 }
 
@@ -269,6 +279,7 @@ bool tryGetByamlV2f(sead::Vector2f* pValue, const ByamlIter& rIter, const char* 
     if (!rIter.tryGetIterByKey(&iter, pKey)) {
         return false;
     }
+
     return tryGetByamlV2f(pValue, iter);
 }
 
@@ -284,6 +295,7 @@ bool tryGetByamlV4f(sead::Vector4f* pValue, const ByamlIter& rIter, const char* 
     if (!rIter.tryGetIterByKey(&iter, pKey)) {
         return false;
     }
+
     return tryGetByamlV4f(pValue, iter);
 }
 
@@ -299,6 +311,7 @@ bool tryGetByamlMinMax(sead::Vector2f* pValue, const ByamlIter& rIter, const cha
     if (!rIter.tryGetIterByKey(&iter, pKey)) {
         return false;
     }
+
     return tryGetByamlMinMax(pValue, iter);
 }
 
@@ -314,6 +327,7 @@ bool tryGetByamlScale(sead::Vector3f* pValue, const ByamlIter& rIter, const char
     if (!rIter.tryGetIterByKey(&iter, pKey)) {
         return false;
     }
+
     return tryGetByamlScale(pValue, iter);
 }
 
@@ -329,6 +343,7 @@ bool tryGetByamlV3s32(sead::Vector3i* pValue, const ByamlIter& rIter, const char
     if (!rIter.tryGetIterByKey(&iter, pKey)) {
         return false;
     }
+
     return tryGetByamlV3s32(pValue, iter);
 }
 
@@ -344,6 +359,7 @@ bool tryGetByamlBox3f(sead::BoundBox3f* pValue, const ByamlIter& rIter, const ch
     if (!rIter.tryGetIterByKey(&iter, pKey)) {
         return false;
     }
+
     return tryGetByamlBox3f(pValue, iter);
 }
 
@@ -389,6 +405,7 @@ bool tryGetByamlColor(sead::Color4f* pValue, const ByamlIter& rIter, const char*
     if (!rIter.tryGetIterByKey(&iter, pKey)) {
         return false;
     }
+
     return tryGetByamlColor(pValue, iter);
 }
 
@@ -454,6 +471,7 @@ const char* tryGetByamlKeyStringOrNULL(const ByamlIter& rIter, const char* pKey)
     if (rIter.tryGetStringByKey(&value, pKey)) {
         return value;
     }
+
     return nullptr;
 }
 
@@ -468,6 +486,7 @@ s32 tryGetByamlKeyIntOrZero(const ByamlIter& rIter, const char* pKey) {
     if (rIter.tryGetIntByKey(&value, pKey)) {
         return value;
     }
+
     return 0;
 }
 
@@ -482,6 +501,7 @@ f32 tryGetByamlKeyFloatOrZero(const ByamlIter& rIter, const char* pKey) {
     if (rIter.tryGetFloatByKey(&value, pKey)) {
         return value;
     }
+
     return 0;
 }
 
@@ -496,6 +516,7 @@ bool tryGetByamlKeyBoolOrFalse(const ByamlIter& rIter, const char* pKey) {
     if (rIter.tryGetBoolByKey(&value, pKey)) {
         return value;
     }
+
     return false;
 }
 
@@ -663,9 +684,11 @@ bool tryGetByamlKeyAndIntByIndex(const char** pKey, s32* pValue, const ByamlIter
     if (!rIter.getByamlDataAndKeyName(&data, pKey, index)) {
         return false;
     }
+
     if (!rIter.tryConvertInt(pValue, &data)) {
         return false;
     }
+
     return true;
 }
 
@@ -714,6 +737,7 @@ void printByamlIter_(const ByamlIter& rIter, const PrintParams* pParams) {
                 if (params->offset == data.getValue()) {
                     goto next;
                 }
+
                 params = params->parent;
             } while (params);
 
@@ -740,6 +764,7 @@ void printByamlIter_(const ByamlIter& rIter, const PrintParams* pParams) {
                 rIter.tryConvertBool(&value, &data);
             }
         }
+
     next:;
     }
 }

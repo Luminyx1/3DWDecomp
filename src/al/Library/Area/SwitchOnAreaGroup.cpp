@@ -26,6 +26,7 @@ void SwitchOnAreaGroup::update(const sead::Vector3f* pPositions, s32 num, bool i
         if (isOnStageSwitch(areaObj, "SwitchAreaOn")) {
             continue;
         }
+
         for (s32 j = 0; j < num; j++) {
             if (areaObj->isInVolume(pPositions[j]) &&
                 (isDisasterMode || !areaObj->mIsDisasterCameraOn)) {
@@ -53,12 +54,14 @@ void SwitchOnAreaGroup::endInit(IScenarioCompleteChecker* pChecker) {
     if (!pChecker) {
         return;
     }
+
     s32 numAreas = mGroup->mNumAreas;
     for (s32 i = 0; i < numAreas; i++) {
         AreaObj* areaObj = mGroup->getAreaObj(i);
         if (areaObj->mScenarioID < 0) {
             continue;
         }
+
         if (pChecker->isScenarioComplete(areaObj->mZoneID, areaObj->mScenarioID)) {
             areaObj->disable();
         }
@@ -78,6 +81,7 @@ SwitchOnAreaGroup* tryCreateSwitchOnAreaGroup(LiveActor* pActor, const ActorInit
     if (!group) {
         return nullptr;
     }
+
     return new SwitchOnAreaGroup(group);
 }
 }  // namespace al

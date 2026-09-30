@@ -92,6 +92,7 @@ inline bool MeshDrawer::isDrawMesh(const SimpleModelG3D* pModel) const {
     if (!mIsForceDraw && !pModel->mIsVisible) {
         return false;
     }
+
     return pModel->isShapeVisible(shapeIndex);
 }
 
@@ -142,6 +143,7 @@ void MeshDrawer::preDrawToDepthShadow(DepthShadowDrawer* pDrawer) {
                          nn::util::VectorGetZ(aabb[j].maximum)});
                 flag.set(depthShadow->checkBox(box, sead::CoreInfo::getCurrentCoreId(), 0));
             }
+
             continue;
         }
 
@@ -149,6 +151,7 @@ void MeshDrawer::preDrawToDepthShadow(DepthShadowDrawer* pDrawer) {
         if (!bounding) {
             bounding = mesh->modelObj->GetBounding();
         }
+
         if (bounding) {
             sead::Sphere<sead::Vector3f> sphere(
                 {nn::util::VectorGetX(bounding->center), nn::util::VectorGetY(bounding->center),
@@ -170,6 +173,7 @@ bool MeshDrawer::operator<(const MeshDrawer& rOther) const {
     if (mDrawPriority == rOther.mDrawPriority) {
         return mShapeIndex < rOther.mShapeIndex;
     }
+
     return mDrawPriority < rOther.mDrawPriority;
 }
 
@@ -182,6 +186,7 @@ bool MeshDrawer::operator>(const MeshDrawer& rOther) const {
     if (mDrawPriority == rOther.mDrawPriority) {
         return mShapeIndex > rOther.mShapeIndex;
     }
+
     return mDrawPriority > rOther.mDrawPriority;
 }
 
@@ -225,6 +230,7 @@ static void activateOptionBlock(agl::DrawContext* pContext,
         agl::g3d::ShaderUtilG3D::load(pContext, location, *shadingModel->GetOptionBlock(), size,
                                       0);
     }
+
     if (pixelLocation >= 0) {
         agl::ShaderLocation location;
         location.setLocation(pixelLocation);
@@ -263,11 +269,14 @@ void MeshDrawer::createDisplayList(GpuMemAllocator* pAllocator,
         if (mTextureType == 1) {
             mShaderAssign->getSampler().activate(&context, mMaterialObj);
         }
+
         if (mMaterialType == 1) {
             mShaderAssign->activateMaterialUniformBlock(&context, mMaterialObj, 0);
         }
+
         mDisplayList->endDisplayList();
     }
+
     sead::Graphics::instance()->unlockDrawContext();
 }
 
@@ -300,6 +309,7 @@ void MeshDrawer::draw(const nn::g3d::ViewVolume* pViewVolume, s32 viewIndex,
         if (mTextureType == 1) {
             mShaderAssign->getSampler().activate(getDrawContext(), mMaterialObj);
         }
+
         if (mMaterialType == 1) {
             mShaderAssign->activateMaterialUniformBlock(getDrawContext(), mMaterialObj, 0);
         }
@@ -312,10 +322,12 @@ void MeshDrawer::draw(const nn::g3d::ViewVolume* pViewVolume, s32 viewIndex,
         if (model->isDisableDraw()) {
             continue;
         }
+
         s32 lodIndex = model->mLodIndex;
         if (lodIndex >= mesh->shapeObj->GetResource()->GetMeshCount()) {
             continue;
         }
+
         if (!isDrawMesh(model)) {
             continue;
         }
@@ -331,9 +343,11 @@ void MeshDrawer::draw(const nn::g3d::ViewVolume* pViewVolume, s32 viewIndex,
         if (mTextureType == 0 || model->mIsForceActivateTexture) {
             mShaderAssign->getSampler().activate(context, material);
         }
+
         if (mMaterialType == 0) {
             mShaderAssign->activateMaterialUniformBlock(context, material, bufferIndex);
         }
+
         if (mShapeBlockLocation >= 0) {
             agl::ShaderLocation location;
             location.setLocation(mShapeBlockLocation);
@@ -342,6 +356,7 @@ void MeshDrawer::draw(const nn::g3d::ViewVolume* pViewVolume, s32 viewIndex,
                                               *mesh->shapeObj->GetShapeBlock(viewIndex, bufferIndex)),
                                           0x100, bufferIndex);
         }
+
         if (mSkeletonBlockLocation >= 0) {
             agl::ShaderLocation location;
             location.setLocation(mSkeletonBlockLocation);
@@ -417,6 +432,7 @@ void MeshDrawer::drawTest(const nn::g3d::ViewVolume* pViewVolume, s32 viewIndex)
         if (lodIndex >= mesh->shapeObj->GetResource()->GetMeshCount()) {
             continue;
         }
+
         if (!renderState || !isDrawMesh(model)) {
             continue;
         }
@@ -428,9 +444,11 @@ void MeshDrawer::drawTest(const nn::g3d::ViewVolume* pViewVolume, s32 viewIndex)
         if (mTextureType == 0) {
             mShaderAssign->getSampler().activate(context, material);
         }
+
         if (mMaterialType == 0) {
             mShaderAssign->activateMaterialUniformBlock(context, material, bufferIndex);
         }
+
         if (mShapeBlockLocation >= 0) {
             agl::ShaderLocation location;
             location.setLocation(mShapeBlockLocation);
@@ -439,6 +457,7 @@ void MeshDrawer::drawTest(const nn::g3d::ViewVolume* pViewVolume, s32 viewIndex)
                                               *mesh->shapeObj->GetShapeBlock(viewIndex, bufferIndex)),
                                           0x100, bufferIndex);
         }
+
         if (mSkeletonBlockLocation >= 0) {
             agl::ShaderLocation location;
             location.setLocation(mSkeletonBlockLocation);
@@ -446,6 +465,7 @@ void MeshDrawer::drawTest(const nn::g3d::ViewVolume* pViewVolume, s32 viewIndex)
                                           *skeleton->GetMtxBlock(bufferIndex),
                                           skeleton->GetMtxBlockSize(), bufferIndex);
         }
+
         const nn::g3d::ShapeObj* shape = mesh->shapeObj;
         bool isExistBounding = alModelFunction::isExistBoundingNode(shape->GetResource());
         if (pViewVolume && isExistBounding) {
@@ -513,10 +533,12 @@ void MeshDrawer::drawDepthOnly(const nn::g3d::ViewVolume* pViewVolume, s32 viewI
         if (model->isDisableDraw()) {
             continue;
         }
+
         s32 lodIndex = model->mLodIndex;
         if (lodIndex >= mesh->shapeObj->GetResource()->GetMeshCount()) {
             continue;
         }
+
         if (!isDrawMesh(model)) {
             continue;
         }
@@ -528,6 +550,7 @@ void MeshDrawer::drawDepthOnly(const nn::g3d::ViewVolume* pViewVolume, s32 viewI
         if (mIsAlphaTest) {
             mShaderAssign->getSampler().activate(context, material);
         }
+
         mShaderAssign->activateMaterialUniformBlock(context, material, bufferIndex);
         activateUniformBlockAssignArray(*mesh->model->mUniformBlockAssignArray);
         if (mShapeBlockLocation >= 0) {
@@ -538,6 +561,7 @@ void MeshDrawer::drawDepthOnly(const nn::g3d::ViewVolume* pViewVolume, s32 viewI
                                               *mesh->shapeObj->GetShapeBlock(viewIndex, bufferIndex)),
                                           0x100, bufferIndex);
         }
+
         if (mSkeletonBlockLocation >= 0) {
             agl::ShaderLocation location;
             location.setLocation(mSkeletonBlockLocation);
@@ -545,6 +569,7 @@ void MeshDrawer::drawDepthOnly(const nn::g3d::ViewVolume* pViewVolume, s32 viewI
                                           *skeleton->GetMtxBlock(bufferIndex),
                                           skeleton->GetMtxBlockSize(), bufferIndex);
         }
+
         const nn::g3d::ShapeObj* shape = mesh->shapeObj;
         bool isExistBounding = alModelFunction::isExistBoundingNode(shape->GetResource());
         if (pViewVolume && isExistBounding) {
@@ -592,15 +617,19 @@ void MeshDrawer::drawDepthShadow(const nn::g3d::ViewVolume* pViewVolume, s32 vie
         if (lodIndex < model->getModelObj()->GetLodCount() - 1) {
             lodIndex++;
         }
+
         if (model->isDisableDepthShadow()) {
             continue;
         }
+
         if (lodIndex >= mesh->shapeObj->GetResource()->GetMeshCount()) {
             continue;
         }
+
         if (!mDepthShadowFlags[i].isOn(shadowBit)) {
             continue;
         }
+
         if (!isDrawMesh(model)) {
             continue;
         }
@@ -611,13 +640,16 @@ void MeshDrawer::drawDepthShadow(const nn::g3d::ViewVolume* pViewVolume, s32 vie
         if (mRenderStateType == 0) {
             sead::GraphicsContext context;
         }
+
         agl::DrawContext* context = getDrawContext();
         if (mTextureType == 0 || model->mIsForceActivateTexture) {
             mShaderAssign->getSampler().activate(context, material);
         }
+
         if (mMaterialType == 0) {
             mShaderAssign->activateMaterialUniformBlock(context, material, bufferIndex);
         }
+
         activateUniformBlockAssignArray(*mesh->model->mUniformBlockAssignArray);
         if (mShapeBlockLocation >= 0) {
             agl::ShaderLocation location;
@@ -627,6 +659,7 @@ void MeshDrawer::drawDepthShadow(const nn::g3d::ViewVolume* pViewVolume, s32 vie
                                               *mesh->shapeObj->GetShapeBlock(viewIndex, bufferIndex)),
                                           0x100, bufferIndex);
         }
+
         if (mSkeletonBlockLocation >= 0) {
             agl::ShaderLocation location;
             location.setLocation(mSkeletonBlockLocation);
@@ -634,6 +667,7 @@ void MeshDrawer::drawDepthShadow(const nn::g3d::ViewVolume* pViewVolume, s32 vie
                                           *skeleton->GetMtxBlock(bufferIndex),
                                           skeleton->GetMtxBlockSize(), bufferIndex);
         }
+
         const nn::g3d::ShapeObj* shape = mesh->shapeObj;
         bool isExistBounding = alModelFunction::isExistBoundingNode(shape->GetResource());
         if (pViewVolume && isExistBounding) {
@@ -661,6 +695,7 @@ bool MeshDrawer::isExistDrawMesh() const {
             return true;
         }
     }
+
     return false;
 }
 
@@ -700,6 +735,7 @@ void MeshDrawer::removeMesh(const nn::g3d::ModelObj* pModelObj,
             for (; i < mMeshNum - 1; i++) {
                 mMeshes[i] = mMeshes[i + 1];
             }
+
             mMeshNum--;
             mMeshes[mMeshNum] = mesh;
             return;
@@ -718,6 +754,7 @@ void MeshDrawerTable::insert(MeshDrawer* pDrawer) {
             return;
         }
     }
+
     pushBack(pDrawer);
 }
 

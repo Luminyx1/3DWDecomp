@@ -24,6 +24,7 @@ inline f32 Rail::calcNearestRailPosCoord(const sead::Vector3f& pos, f32 interval
             bestParam = param;
             bestIndex = i;
         }
+
         ++curr_index;
     }
 
@@ -97,6 +98,7 @@ void Rail::init(const PlacementInfo& rInfo) {
             tryGetArg(&angle, startInfo, "angle");
             mRailPart[i].setAngleS(angle);
         }
+
         tryGetArg(&isUseSetAngleE, endInfo, "isUseSetAngle");
         if (isUseSetAngleE) {
             f32 angle = 0.0f;
@@ -130,6 +132,7 @@ s32 Rail::getIncludedSection(const RailPart** part, f32* partDistance, f32 dista
             maxRailPart = i;
             break;
         }
+
         longI += 0x100000000;
     }
 
@@ -150,8 +153,10 @@ void Rail::calcUpDir(sead::Vector3f* pUp, f32 distance) const {
             index = i;
             break;
         }
+
         partDistance -= mRailPart[i].getPartLength();
     }
+
     mRailPart[index].getPartLength();
     mRailPart[index].calcUpDir(pUp, partDistance);
     pUp->normalize();
@@ -220,6 +225,7 @@ void Rail::calcNearestRailPointPos(sead::Vector3f* rail_pos, const sead::Vector3
             best_distance = (pos - tmp).squaredLength();
             *rail_pos = tmp;
         }
+
         curr_index++;
     }
 }
@@ -299,6 +305,7 @@ bool Rail::getAngleS(s32 index, f32* pAngle) {
     if (index >= 0 && index < mRailPartCount) {
         return mRailPart[index].getAngleS(pAngle);
     }
+
     return false;
 }
 
@@ -306,6 +313,7 @@ bool Rail::getAngleE(s32 index, f32* pAngle) {
     if (index >= 0 && index < mRailPartCount) {
         return mRailPart[index].getAngleE(pAngle);
     }
+
     return false;
 }
 

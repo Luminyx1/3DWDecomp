@@ -27,6 +27,7 @@ void PlayerHolder::registerPlayer(LiveActor* pActor, PadRumbleKeeper* pPadRumble
             mPlayers[i] = mPlayers[i - 1];
         }
     }
+
     mPlayers[index].mActor = pActor;
     mPlayers[index].mRegisteredActor = pActor;
     mPlayers[index].mPadRumbleKeeper = pPadRumbleKeeper;
@@ -55,9 +56,11 @@ LiveActor* PlayerHolder::tryGetPlayer(s32 index) const {
     if (mBufferSize <= index) {
         return nullptr;
     }
+
     if (mPlayerNumComplete <= index) {
         return nullptr;
     }
+
     return mPlayers[index].mActor;
 }
 

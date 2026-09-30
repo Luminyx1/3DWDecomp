@@ -42,6 +42,7 @@ CameraPoser* CameraHolder::getCameraById(const PlacementId* pPlacementId) const 
             return mCameraInfos[i]->mPoser;
         }
     }
+
     return nullptr;
 }
 
@@ -56,6 +57,7 @@ CameraInfo* CameraHolder::getCameraInfoById(const PlacementId* pPlacementId) con
             return mCameraInfos[i];
         }
     }
+
     return nullptr;
 }
 
@@ -70,6 +72,7 @@ bool CameraHolder::isExistCameraId(const PlacementId* pPlacementId) const {
             return true;
         }
     }
+
     return false;
 }
 }  // namespace al

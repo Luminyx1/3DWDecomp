@@ -23,6 +23,7 @@ public:
         const sead::Matrix34f* mJointMtx = nullptr;
         sead::Vector3f mPosOffset = sead::Vector3f::zero;
     };
+
     static_assert(sizeof(SphereInfo) == 0x20);
 
     static ActorAlphaCtrl* tryCreate(LiveActor* pActor, const Resource* pResource,
@@ -39,5 +40,6 @@ public:
     SphereInfo mSphereInfo;
     bool mIsOn = true;
 };
+
 static_assert(sizeof(ActorAlphaCtrl) == 0x40);
 }  // namespace al

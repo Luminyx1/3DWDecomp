@@ -61,6 +61,7 @@ public:
             if (!param->isEqualParamName(pName)) {
                 continue;
             }
+
             switch (param->getClassId()) {
             case YamlClassId::U8:
                 param->setPtr_u8(reinterpret_cast<u8*>(pValue));

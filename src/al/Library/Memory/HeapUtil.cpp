@@ -125,6 +125,7 @@ void freeAllSequenceHeap() {
     if (AudioResourceDirector* director = getMemorySystem()->getAudioResourceDirector()) {
         alAudioHeapFunction::destroyAudioResourceHeapLayer(director, "Sequence");
     }
+
     getMemorySystem()->freeAllSequenceHeap();
     addResourceCategory("Sequence", 0x10, getMemorySystem()->getSequenceHeap());
     setCurrentCategoryName("Sequence");
@@ -165,12 +166,14 @@ void createSceneHeap(const char* pStageName) {
     if (!pStageName) {
         getMemorySystem()->setCustomSceneHeapAlloc(nullptr);
     }
+
     sead::ScopedCurrentHeapSetter setter(getSequenceHeap());
     if (getMemorySystem()->createSceneHeap(pStageName)) {
         addResourceCategory("Scene", 0x400, getMemorySystem()->getSceneResourceHeap());
         setCurrentCategoryName("Scene");
         clearFileLoaderEntry();
     }
+
     if (AudioResourceDirector* director = getMemorySystem()->getAudioResourceDirector()) {
         alAudioHeapFunction::tryCreateAudioResourceHeapLayer(director, "シーン");
     }
@@ -210,6 +213,7 @@ void destroySceneHeap(bool removeCategory) {
             alAudioHeapFunction::destroyAudioResourceHeapLayer(director, "Scene");
         }
     }
+
     getMemorySystem()->destroySceneHeap(removeCategory);
 }
 

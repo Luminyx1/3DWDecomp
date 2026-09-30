@@ -614,6 +614,7 @@ f32 calcMtxLocalDirAngleOnPlaneToDir(const sead::Matrix34f* pMtx, const sead::Ve
     if (!tryNormalizeOrZero(&normal, planeNormal)) {
         return 0.0f;
     }
+
     return calcAngleOnPlaneDegree(rDir, dir, normal);
 }
 

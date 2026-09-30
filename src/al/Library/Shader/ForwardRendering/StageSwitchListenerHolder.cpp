@@ -30,6 +30,7 @@ void StageSwitchListenerHolder::RequestList::addRequest(StageSwitchListenerList*
         mArray[0] = pList;
         mArray[0]->setRequestIndex(0);
     }
+
     mCount++;
 }
 
@@ -43,6 +44,7 @@ void StageSwitchListenerHolder::RequestList::removeRequest(StageSwitchListenerLi
             if (i < mCount - 1) {
                 mArray[i] = mArray[mCount - 1];
             }
+
             mCount--;
             return;
         }
@@ -56,10 +58,12 @@ void StageSwitchListenerHolder::RequestList::update() {
     for (s32 i = 0; i < mCount; i++) {
         mArray[i]->setRequestIndex(-1);
     }
+
     for (s32 i = 0; i < mCount; i++) {
         mArray[i]->update();
         mArray[i] = nullptr;
     }
+
     mCount = 0;
 }
 
@@ -95,6 +99,7 @@ void StageSwitchListenerHolder::requestChange(s32 switchNo, bool isOn) {
     if (list->isEmpty()) {
         return;
     }
+
     list->request(isOn);
     if (list->getRequestIndex() < 0) {
         mNextRequestList->addRequest(list);
@@ -110,6 +115,7 @@ void StageSwitchListenerHolder::instantUpdate(s32 switchNo) {
     if (list->isEmpty() || list->getRequestIndex() < 0) {
         return;
     }
+
     list->update();
     mNextRequestList->removeRequest(list);
     list->setRequestIndex(-1);

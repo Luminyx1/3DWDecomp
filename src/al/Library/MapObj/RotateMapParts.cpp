@@ -50,6 +50,7 @@ void RotateMapParts::init(const ActorInitInfo& rInfo) {
     if (mHitSensorKeeper) {
         mIsSupportFreezeSync = registSupportFreezeSyncGroup(this, rInfo);
     }
+
     tryGetArg(&mRotateAxis, rInfo, "RotateAxis");
     tryGetArg(&mRotateSpeed, rInfo, "RotateSpeed");
     createChildStep(rInfo, this, true);
@@ -57,6 +58,7 @@ void RotateMapParts::init(const ActorInitInfo& rInfo) {
                                            this, &RotateMapParts::start))) {
         startNerveAction(this, "StandBy");
     }
+
     trySyncStageSwitchAppear(this);
     mIsSingleMode = rInfo.mActorSceneInfo.isSingleMode;
     mStartTrans = getTrans(this);
@@ -66,6 +68,7 @@ void RotateMapParts::init(const ActorInitInfo& rInfo) {
         tryGetArg(&mEffectTriggerAngle, rInfo, "EffectTriggerAngle");
         mEffectAngle = 0.0f;
     }
+
     _142 = true;
     _143 = true;
 }
@@ -91,6 +94,7 @@ void RotateMapParts::appear() {
             startNerveAction(this, "Rotate");
         }
     }
+
     LiveActor::appear();
 }
 
@@ -101,6 +105,7 @@ void RotateMapParts::kill() {
     if (mIsSingleMode) {
         startNerveAction(this, "StandBy");
     }
+
     LiveActor::kill();
 }
 
@@ -116,39 +121,49 @@ bool RotateMapParts::receiveMsg(const SensorMsg* pMsg, HitSensor* pOther, HitSen
         mAssistTimer = 45;
         return true;
     }
+
     if (mIsSupportFreezeSync) {
         if (isMsgIsNerveSupportFreeze(pMsg)) {
             return isNerve(this, NrvRotateMapParts.AssistStop.data());
         }
+
         if (isMsgOnSyncSupportFreeze(pMsg)) {
             if (isNerve(this, NrvRotateMapParts.AssistStop.data())) {
                 return true;
             }
+
             if (isExistAction(this)) {
                 stopAction(this);
             }
+
             startNerveAction(this, "AssistStopSync");
             return true;
         }
+
         if (isMsgOffSyncSupportFreeze(pMsg)) {
             if (!isNerve(this, NrvRotateMapParts.AssistStopSync.data())) {
                 return true;
             }
+
             if (isExistAction(this)) {
                 restartAction(this);
             }
+
             startNerveAction(this, "Rotate");
             return true;
         }
     }
+
     if (isMsgShowModel(pMsg)) {
         showModelIfHide(this);
         return true;
     }
+
     if (isMsgHideModel(pMsg)) {
         hideModelIfShow(this);
         return true;
     }
+
     return false;
 }
 
@@ -165,15 +180,18 @@ void RotateMapParts::exeRotate() {
     if (mAssistTimer > 0) {
         startNerveAction(this, "AssistStop");
     }
+
     if (isExistSePlayNameInUserInfo(this, "RotateWithSpeed")) {
         tryHoldSeWithParam(this, "RotateWithSpeed", mRotateSpeed, nullptr);
     }
+
     if (mIsTriggerEffectOnAngle) {
         f32 speed = mRotateSpeed / 100.0f;
         f32 angle = mEffectAngle + speed;
         if (angle >= 360.0f) {
             angle += -360.0f;
         }
+
         mEffectAngle = angle;
         if (!_140 && mEffectAngle < mEffectTriggerAngle &&
             mEffectAngle + speed >= mEffectTriggerAngle) {
@@ -190,6 +208,7 @@ void RotateMapParts::exeAssistStop() {
         mAssistTimer = 0;
         startNerveAction(this, "Rotate");
     }
+
     if (mIsTriggerEffectOnAngle && mEffectAngle < mEffectTriggerAngle &&
         mEffectAngle + mRotateSpeed / 100.0f >= mEffectTriggerAngle) {
         tryStartEffectAction(this, "EffectOnAngle");

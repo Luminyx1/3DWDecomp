@@ -24,5 +24,6 @@ public:
     bool _35;
     bool _36;
 };
+
 static_assert(sizeof(SettingParam) == 0x38);
 }  // namespace al

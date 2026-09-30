@@ -54,11 +54,13 @@ bool InitializeThread::tryWaitDoneAndDestroy() {
     if (mIsDone) {
         return true;
     }
+
     if (mThread->isDone()) {
         mThread->destroy();
         mIsDone = true;
         return true;
     }
+
     return false;
 }
 }  // namespace al

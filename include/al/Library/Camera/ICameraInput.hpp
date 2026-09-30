@@ -25,9 +25,11 @@ public:
         if (pSide) {
             pSide->set(sead::Vector3f::ex);
         }
+
         if (pUp) {
             pUp->set(sead::Vector3f::ey);
         }
+
         if (pFront) {
             pFront->set(sead::Vector3f::ez);
         }

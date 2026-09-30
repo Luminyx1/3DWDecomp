@@ -91,5 +91,6 @@ private:
     ISeModifier* mModifier = nullptr;
     SeDataBase* mSeDataBase = nullptr;
 };
+
 static_assert(sizeof(SeKeeper) == 0x70);
 }  // namespace al

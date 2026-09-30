@@ -269,6 +269,7 @@ bool Triangle::getAttributes(ByamlIter* pIter) const {
     if (!isValid()) {
         return false;
     }
+
     return mCollisionParts->mKColServer->getAttributes(pIter, mPrismData);
 }
 

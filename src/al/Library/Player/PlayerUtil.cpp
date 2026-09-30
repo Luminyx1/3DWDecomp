@@ -28,6 +28,7 @@ static s32 findNearestPlayerIdFromPos(const LiveActor* actor, const sead::Vector
         if (!player || isDead(player)) {
             continue;
         }
+
         const sead::Vector3f& playerPos = getTrans(player);
         f32 distance = (playerPos - pos).squaredLength();
         if (distance < minDistance) {
@@ -290,6 +291,7 @@ u32 calcPlayerListOrderByDistance(const LiveActor* actor, const LiveActor** acto
             sead::Vector3f playerPos = getTrans(player);
             distance = (playerPos - pos).squaredLength();
         }
+
         distances[i] = distance;
     }
 
@@ -339,8 +341,10 @@ u32 calcAlivePlayerActor(const LiveActor* actor, const LiveActor** actorList, u3
             if ((blackBox(flag | 4) & 7) != 4)
                 goto end;
         }
+
         flag = 2;
     }
+
 end:
     if (flag != 2)
         resultNum = result;

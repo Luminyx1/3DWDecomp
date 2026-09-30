@@ -69,6 +69,7 @@ nn::gfx::MemoryPool* GpuMemAllocator::allocMemoryPool() {
     if (mMemoryPoolUsedNum >= mMemoryPoolNum) {
         return nullptr;
     }
+
     return &mMemoryPools[mMemoryPoolUsedNum++];
 }
 

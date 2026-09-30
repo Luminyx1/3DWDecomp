@@ -21,6 +21,7 @@ AreaObjDirector::AreaObjDirector(bool isUseGrid) {
     } else {
         mGrid = nullptr;
     }
+
     for (s32 i = 0; i < 100; i++) {
         mExtraAreaObjs[i] = nullptr;
     }
@@ -74,6 +75,7 @@ void AreaObjDirector::placement(const AreaInitInfo* pInfos, s32 num, const Scene
     for (s32 i = 0; i < num; i++) {
         createAreaObjGroup(pInfos[i]);
     }
+
     createAreaObjGroupBuffer();
     for (s32 i = 0; i < num; i++) {
         placementAreaObj(pInfos[i], pHolder, pScene);
@@ -98,9 +100,11 @@ void AreaObjDirector::createAreaObjGroup(const AreaInitInfo& rInfo) {
         if (!creator) {
             continue;
         }
+
         if (!mAreaGroups[index]) {
             mAreaGroups[index] = new AreaObjGroup(objName);
         }
+
         mAreaGroups[index]->incrementCount();
     }
 }
@@ -115,6 +119,7 @@ void AreaObjDirector::createAreaObjGroupBuffer() {
         if (!mAreaGroups[i]) {
             continue;
         }
+
         mAreaGroups[i]->createBuffer();
         count++;
         for (s32 j = i; j > 0; j--) {
@@ -122,10 +127,12 @@ void AreaObjDirector::createAreaObjGroupBuffer() {
             if (prev && strcmp(mAreaGroups[j]->mGroupName, prev->mGroupName) >= 0) {
                 break;
             }
+
             mAreaGroups[j - 1] = mAreaGroups[j];
             mAreaGroups[j] = prev;
         }
     }
+
     mAreaGroupCount = count;
 }
 
@@ -150,6 +157,7 @@ void AreaObjDirector::placementAreaObj(const AreaInitInfo& rInfo, const SceneObj
         if (!creator) {
             continue;
         }
+
         if (pScene && !pScene->isValidPlacement(objInfo)) {
             continue;
         }
@@ -164,6 +172,7 @@ void AreaObjDirector::placementAreaObj(const AreaInitInfo& rInfo, const SceneObj
         } else {
             areaObj->init(initInfo);
         }
+
         getAreaObjGroup(objName)->resisterAreaObj(areaObj);
         mMtxConnecterHolder->tryAddArea(areaObj, objInfo);
     }
@@ -178,6 +187,7 @@ s32 AreaObjDirector::getTotalAreaObjs() const {
     for (s32 i = 0; i < mAreaGroupCount; i++) {
         total += mAreaGroups[i]->mNumAreas;
     }
+
     return total;
 }
 
@@ -191,6 +201,7 @@ AreaObjGroup* AreaObjDirector::getAreaObjGroup(const char* pName) const {
     if (index > -1) {
         return mAreaGroups[index];
     }
+
     return nullptr;
 }
 
@@ -228,6 +239,7 @@ AreaObj* AreaObjDirector::tryFindInExtraAreaObjGroup(const sead::Vector3f& rPos)
             return mExtraAreaObjs[i];
         }
     }
+
     return nullptr;
 }
 
@@ -241,6 +253,7 @@ void AreaObjDirector::setEnableAll(bool isEnable) {
         if (!group) {
             continue;
         }
+
         for (s32 j = 0; j < group->mNumAreas; j++) {
             group->getAreaObj(j)->_66 = isEnable;
         }
@@ -258,6 +271,7 @@ AreaObj* AreaObjDirector::getInVolumeAreaObj(const char* pName, const sead::Vect
     if (!group) {
         return nullptr;
     }
+
     return group->getInVolumeAreaObj(rPos);
 }
 
@@ -277,6 +291,7 @@ AreaObj* AreaObjDirector::getInVolumeAreaObj(const char* pName, const sead::Vect
     if (!group) {
         return nullptr;
     }
+
     return group->getInVolumeAreaObj(rStart, rEnd, pHitPos, pNormal);
 }
 
@@ -302,12 +317,14 @@ s32 AreaObjDirector::getAreaObjGroupIndex(const char* pName) const {
         if (cmp == 0) {
             return mid;
         }
+
         if (cmp > 0) {
             lower = mid + 1;
         } else {
             upper = mid;
         }
     }
+
     return -1;
 }
 

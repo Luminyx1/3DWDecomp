@@ -35,9 +35,11 @@ alLanguage getLanguageFromString(const char* pName) {
             break;
         }
     }
+
     if (index == -1) {
         return alLanguage_JPja;
     }
+
     return cLanguageInfos[index].language;
 }
 
@@ -49,9 +51,11 @@ inline const char* findLanguageDirectoryName(alLanguage language) {
             break;
         }
     }
+
     if (index == -1) {
         return "JpJa";
     }
+
     return cLanguageInfos[index].directoryName;
 }
 }  // namespace

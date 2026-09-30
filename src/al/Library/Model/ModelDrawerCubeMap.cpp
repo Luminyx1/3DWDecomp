@@ -51,6 +51,7 @@ void ModelDrawerCubeMap::createTable() {
     for (s32 i = 0; i < mMeshDrawerTable->size(); i++) {
         mMeshDrawerTable->unsafeAt(i)->setForceDraw();
     }
+
     alModelFunction::createMeshDrawerTableDisplayList(mMeshDrawerTable, mModel, false);
 }
 

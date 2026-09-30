@@ -102,10 +102,12 @@ void validateAllCollisionParts(LiveActor* pActor) {
     if (pActor->mCollisionParts) {
         pActor->mCollisionParts->validateByUser();
     }
+
     SubActorKeeper* keeper = pActor->mSubActorKeeper;
     if (!keeper) {
         return;
     }
+
     for (s32 i = 0; i < keeper->mCount; i++) {
         LiveActor* subActor = keeper->mInfos[i]->mSubActor;
         if (subActor) {
@@ -122,10 +124,12 @@ void invalidateAllCollisionParts(LiveActor* pActor) {
     if (pActor->mCollisionParts) {
         pActor->mCollisionParts->invalidateByUser();
     }
+
     SubActorKeeper* keeper = pActor->mSubActorKeeper;
     if (!keeper) {
         return;
     }
+
     for (s32 i = 0; i < keeper->mCount; i++) {
         LiveActor* subActor = keeper->mInfos[i]->mSubActor;
         if (subActor) {
@@ -142,10 +146,12 @@ void disableAllCollisionParts(LiveActor* pActor) {
     if (pActor->mCollisionParts) {
         pActor->mCollisionParts->invalidateBySystem();
     }
+
     SubActorKeeper* keeper = pActor->mSubActorKeeper;
     if (!keeper) {
         return;
     }
+
     for (s32 i = 0; i < keeper->mCount; i++) {
         LiveActor* subActor = keeper->mInfos[i]->mSubActor;
         if (subActor) {
@@ -162,10 +168,12 @@ void enableAllCollisionParts(LiveActor* pActor) {
     if (pActor->mCollisionParts) {
         pActor->mCollisionParts->validateBySystem();
     }
+
     SubActorKeeper* keeper = pActor->mSubActorKeeper;
     if (!keeper) {
         return;
     }
+
     for (s32 i = 0; i < keeper->mCount; i++) {
         LiveActor* subActor = keeper->mInfos[i]->mSubActor;
         if (subActor) {
@@ -221,6 +229,7 @@ void syncCollisionMtx(LiveActor* pActor, CollisionParts* pCollisionParts,
     if (!pCollisionParts->_160 || !pCollisionParts->_161) {
         return;
     }
+
     if (pCollisionParts->mSyncCollisionMtx) {
         pCollisionParts->syncMtx();
     } else if (pMtx) {
@@ -254,11 +263,14 @@ bool isOnGround(const LiveActor* pActor, u32 checkFrame, f32 margin) {
         if (!(collider->_110 >= 0.0f) && collider->_264 > checkFrame) {
             return false;
         }
+
         return !(getVelocity(pActor).dot(collider->getRecentOnGroundNormal(checkFrame)) > margin);
     }
+
     if (getTrans(pActor).y <= 0.0f && getVelocity(pActor).y < 0.0f) {
         return true;
     }
+
     return false;
 }
 
@@ -292,9 +304,11 @@ bool isOnGroundNoVelocity(const LiveActor* pActor, u32 checkFrame) {
     if (!collider) {
         return getTrans(pActor).y <= 0.0f;
     }
+
     if (collider->_110 >= 0.0f) {
         return true;
     }
+
     return collider->_264 <= checkFrame;
 }
 
@@ -382,12 +396,15 @@ void calcCollidedNormalSum(const LiveActor* pActor, sead::Vector3f* pOutNormal) 
     if (collider->_110 >= 0.0f) {
         *pOutNormal += *collider->mFloor.mTriangle.getFaceNormal();
     }
+
     if (collider->_1b8 >= 0.0f) {
         *pOutNormal += *collider->mWall.mTriangle.getFaceNormal();
     }
+
     if (collider->_260 >= 0.0f) {
         *pOutNormal += *collider->mCeiling.mTriangle.getFaceNormal();
     }
+
     *pOutNormal *= 1.0f / 3.0f;
 }
 

@@ -12,11 +12,13 @@ void ShadowKeeper::show() {
     if (mIsIgnoreShadowMaskYaml) {
         return;
     }
+
     for (auto it = mMaskArray.begin(); it != mMaskArray.end(); ++it) {
         if (!it->mHeightEvenTarget) {
             showShadow(mHostActor, &*it);
         }
     }
+
     for (auto it = mMaskArray.begin(); it != mMaskArray.end(); ++it) {
         if (it->mHeightEvenTarget) {
             showShadow(mHostActor, &*it);
@@ -40,6 +42,7 @@ void ShadowKeeper::hide() {
     if (mIsIgnoreShadowMaskYaml) {
         return;
     }
+
     for (auto it = mMaskArray.begin(); it != mMaskArray.end(); ++it) {
         hideShadow(mHostActor, &*it);
     }
@@ -52,6 +55,7 @@ void ShadowKeeper::validate() {
     if (mIsIgnoreShadowMaskYaml) {
         return;
     }
+
     for (auto it = mMaskArray.begin(); it != mMaskArray.end(); ++it) {
         validateShadow(mHostActor, &*it);
     }
@@ -64,6 +68,7 @@ void ShadowKeeper::invalidate() {
     if (mIsIgnoreShadowMaskYaml) {
         return;
     }
+
     for (auto it = mMaskArray.begin(); it != mMaskArray.end(); ++it) {
         invalidateShadow(mHostActor, &*it);
     }
@@ -79,6 +84,7 @@ bool ShadowKeeper::isHide() {
             return false;
         }
     }
+
     return true;
 }
 

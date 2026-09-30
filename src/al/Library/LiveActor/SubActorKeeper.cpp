@@ -33,6 +33,7 @@ SubActorKeeper* SubActorKeeper::tryCreate(LiveActor* pRootActor, const ActorInit
         if (!isExistFile && maxSubActors <= 0) {
             return nullptr;
         }
+
         if (maxSubActors <= 0 && !(isExistModelResource(pRootActor) &&
                                    isExistModelResourceYaml(pRootActor, fileName.cstr(), nullptr))) {
             return nullptr;
@@ -40,6 +41,7 @@ SubActorKeeper* SubActorKeeper::tryCreate(LiveActor* pRootActor, const ActorInit
     } else if (maxSubActors <= 0) {
         return nullptr;
     }
+
     return new SubActorKeeper(pRootActor, rInfo, pSuffix, maxSubActors);
 }
 
@@ -92,6 +94,7 @@ SubActorKeeper::SubActorKeeper(LiveActor* pRootActor, const ActorInitInfo& rInfo
             s32 addActorNum = 0;
             maxSubActors += initInfoIter.tryGetIntByKey(&addActorNum, "AddActorNum") ? addActorNum : 0;
         }
+
         ByamlIter creatorListIter;
         creatorNum =
             iter.tryGetIterByKey(&creatorListIter, "CreatorList") ? creatorListIter.getSize() : 0;
@@ -129,9 +132,11 @@ SubActorKeeper::SubActorKeeper(LiveActor* pRootActor, const ActorInitInfo& rInfo
         if (tryGetByamlKeyBoolOrFalse(creatorIter, "IsSyncAppear")) {
             info->mSyncType |= 1;
         }
+
         if (tryGetByamlKeyBoolOrFalse(creatorIter, "IsSyncClipping")) {
             info->mSyncType |= 2;
         }
+
         if (tryGetByamlKeyBoolOrFalse(creatorIter, "IsSyncHide")) {
             info->mSyncType |= 4;
         }
@@ -178,6 +183,7 @@ SubActorKeeper::SubActorKeeper(LiveActor* pRootActor, const ActorInitInfo& rInfo
             shadow->initSimpleCircleShadow(rootActor, rInfo, modelName, suffix);
             info->mSubActor = shadow;
         }
+
         initActorModelForceCubeMap(info->mSubActor, rInfo);
 
         if (isExistAlive) {
@@ -187,6 +193,7 @@ SubActorKeeper::SubActorKeeper(LiveActor* pRootActor, const ActorInitInfo& rInfo
                 info->mSubActor->makeActorDead();
             }
         }
+
         mCount++;
     }
 }

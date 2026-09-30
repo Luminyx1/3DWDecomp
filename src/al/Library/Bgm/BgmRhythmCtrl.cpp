@@ -53,9 +53,11 @@ bool BgmRhythmCtrl::isEnableRhythmAnim() const {
     if (line == nullptr) {
         return false;
     }
+
     if (!line->isEnableRhythmDetection()) {
         return false;
     }
+
     return line->getRhythmDetector() != nullptr;
 }
 

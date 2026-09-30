@@ -25,6 +25,7 @@ void BlockRailDirector::initAfterPlacementSceneObj(const ActorInitInfo& rInfo) {
             BlockRail::tryConnect(mRails[i], mRails[j]);
         }
     }
+
     for (s32 i = 0; i < mRailNum; i++) {
         mRails[i]->tryCreateRailEnd(rInfo);
     }
@@ -59,6 +60,7 @@ bool BlockRailDirector::tryRideBlockRail(BlockRailRider* pRider, const sead::Vec
             return true;
         }
     }
+
     return false;
 }
 }  // namespace al

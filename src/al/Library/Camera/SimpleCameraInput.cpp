@@ -14,17 +14,21 @@ void SimpleCameraInput::updateInput() {
     if (isPadTypeJoySingle(mPort)) {
         return;
     }
+
     if (isPadHoldR(mPort)) {
         mResetFrame = -1;
         return;
     }
+
     if (isPadTriggerL(mPort)) {
         mResetFrame = 0;
         return;
     }
+
     if (mResetFrame < 0) {
         return;
     }
+
     if (isPadHoldL(mPort)) {
         mResetFrame = mResetFrame > 9 ? -1 : mResetFrame + 1;
     } else if (isPadReleaseL(mPort)) {
@@ -39,6 +43,7 @@ void SimpleCameraInput::calcInputStick(sead::Vector2f* pStick) const {
     if (mIsDisableInput) {
         return;
     }
+
     if (isPadTypeJoySingle(mPort)) {
         if (isPadHoldA(mPort)) {
             pStick->set(getLeftStick(mPort));
@@ -52,6 +57,7 @@ bool SimpleCameraInput::isTriggerReset() const {
     if (isPadTypeJoySingle(mPort)) {
         return isPadTriggerPressLeftStick(mPort);
     }
+
     return mResetFrame == 10;
 }
 
@@ -80,6 +86,7 @@ bool SimpleCameraInput::tryCalcSnapShotMoveStick(sead::Vector2f* pStick) const {
     if (stick.squaredLength() < 0.001) {
         return false;
     }
+
     pStick->set(stick);
     return true;
 }

@@ -9,6 +9,7 @@ void ScreenCoverCtrl::requestCaptureScreenCover(s32 coverFrames) {
     if (mCoverFrames <= 0) {
         mIsRequestCapture = true;
     }
+
     if (mCoverFrames < coverFrames) {
         mCoverFrames = coverFrames;
     }
@@ -21,6 +22,7 @@ void ScreenCoverCtrl::update() {
     if (mCoverFrames > 0) {
         mCoverFrames--;
     }
+
     mIsRequestCapture = false;
 }
 }  // namespace al

@@ -59,9 +59,11 @@ void SnapShotCameraCtrl::load(const ByamlIter& rIter) {
     if (!tryGetByamlIterByKey(&paramIter, rIter, "SnapShotParam")) {
         return;
     }
+
     if (tryGetByamlF32(&param->minFovyDegree, paramIter, "MinFovyDegree")) {
         param->hasMinFovyDegree = true;
     }
+
     if (tryGetByamlF32(&param->maxFovyDegree, paramIter, "MaxFovyDegree")) {
         param->hasMaxFovyDegree = true;
     }
@@ -95,6 +97,7 @@ void SnapShotCameraCtrl::update(const sead::LookAtCamera& rCamera,
         } else {
             nextFovy = pInput->isHoldSnapShotZoomOut() ? fovyTarget + 2.0f : fovyTarget;
         }
+
         f32 minFovy = mParam->hasMinFovyDegree ? mParam->minFovyDegree : 8.0f;
         f32 maxFovy;
         if (mParam->hasMaxFovyDegree) {
@@ -102,6 +105,7 @@ void SnapShotCameraCtrl::update(const sead::LookAtCamera& rCamera,
         } else {
             maxFovy = mMaxZoomOutFovyDegree > 0.0f ? mMaxZoomOutFovyDegree : mDefaultFovyDegree;
         }
+
         mFovyDegreeTarget =
             lerpValue(0.3f, mFovyDegreeTarget, sead::Mathf::clamp(nextFovy, minFovy, maxFovy));
         mFovyDegree = lerpValue(0.3f, mFovyDegree, mFovyDegreeTarget);
@@ -120,6 +124,7 @@ void SnapShotCameraCtrl::update(const sead::LookAtCamera& rCamera,
         } else {
             nextRoll = pInput->isHoldSnapShotRollRight() ? rollTarget + 3.0f : rollTarget;
         }
+
         mRollTarget = lerpValue(0.2f, mRollTarget, sead::Mathf::clamp(nextRoll, -90.0f, 90.0f));
         mRollDegree = lerpValue(0.15f, mRollDegree, mRollTarget);
         if (getAudioKeeper() && sead::Mathf::abs(mRollDegree - prevRoll) > 0.2f) {
@@ -133,6 +138,7 @@ void SnapShotCameraCtrl::update(const sead::LookAtCamera& rCamera,
         if (!isNearZero(mSafeLookAtOffsetTarget - mLookAtOffsetTarget, 0.5f)) {
             mSafeLookAtOffsetTarget.set(mLookAtOffsetTarget);
         }
+
         if (!isNearZero(mSafeLookAtOffset - mLookAtOffset, 0.5f)) {
             mSafeLookAtOffset.set(mLookAtOffset);
         }
@@ -153,6 +159,7 @@ void SnapShotCameraCtrl::update(const sead::LookAtCamera& rCamera,
                 tryNormalizeOrZero(&side);
                 move += (stick.x * side) * moveSpeed;
             }
+
             if (!isNearZero(stick.y, 0.001f)) {
                 move += (stick.y * up) * moveSpeed;
             }
@@ -183,6 +190,7 @@ void SnapShotCameraCtrl::update(const sead::LookAtCamera& rCamera,
                                                                   75.0f);
             mLookAtOffsetTarget = to - rCamera.getAt();
         }
+
         lerpVec(&mLookAtOffset, mLookAtOffset, mLookAtOffsetTarget, 0.3f);
     }
 
@@ -196,6 +204,7 @@ void SnapShotCameraCtrl::makeLookAtCameraPost(sead::LookAtCamera* pCamera) {
     if (!mIsValidLookAtOffset) {
         return;
     }
+
     f32 inkDist;
     sead::Vector3f pos = pCamera->getPos();
     sead::Vector3f lowerPos =
@@ -251,6 +260,7 @@ void SnapShotCameraCtrl::makeLookAtCameraLast(sead::LookAtCamera* pCamera) const
     if (!mIsValidRoll) {
         return;
     }
+
     sead::Vector3f front = pCamera->getAt() - pCamera->getPos();
     normalize(&front);
     sead::Vector3f up = pCamera->getUp();
@@ -279,6 +289,7 @@ void SnapShotCameraCtrl::exeReset() {
         mFovyDegreeTarget = mFovyDegree;
         mLookAtOffsetTarget = mLookAtOffset;
     }
+
     mFovyDegree = calcNerveValue(this, mResetStep, mFovyDegreeTarget, mDefaultFovyDegree);
     f32 rate = 1.0f - calcNerveRate(this, mResetStep);
     mRollDegree = mRollTarget * rate;
@@ -305,6 +316,7 @@ AudioKeeper* SnapShotCameraCtrl::getAudioKeeper() const {
     if (mSceneInfo && mSceneInfo->audioKeeper) {
         return mSceneInfo->audioKeeper->getAudioKeeper();
     }
+
     return nullptr;
 }
 

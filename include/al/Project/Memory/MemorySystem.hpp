@@ -56,6 +56,7 @@ public:
     void setAudioResourceDirector(AudioResourceDirector* pDirector) {
         mAudioResourceDirector = pDirector;
     }
+
     void setStageSizeAdjuster(StageSizeAdjuster* pAdjuster) { mStageSizeAdjuster = pAdjuster; }
     void setCustomSceneHeapAlloc(MemorySceneHeapCustomAlloc* pAlloc) { mCustomAlloc = pAlloc; }
 

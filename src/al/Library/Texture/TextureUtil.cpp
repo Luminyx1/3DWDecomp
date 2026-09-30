@@ -63,6 +63,7 @@ f32 convertF16ToF32(u16 value) {
     } else {
         exponent = 0;
     }
+
     u32 bits = sign | (mantissa << 13) | ((exponent & 0xff) << 23);
     return *reinterpret_cast<f32*>(&bits);
 }
@@ -172,10 +173,12 @@ void TextureUnit::finalize() {
         mImage.deleteGPUMemBlock();
         mImage.invalidate();
     }
+
     if (mTexture != nullptr) {
         delete mTexture;
         mTexture = nullptr;
     }
+
     if (mSampler != nullptr) {
         delete mSampler;
         mSampler = nullptr;
@@ -250,6 +253,7 @@ bool TextureUnit::tryCreateTexture(const TextureInitArg& rArg) {
     if (mSampler != nullptr) {
         return false;
     }
+
     mInitArg = rArg;
     mSampler = new agl::TextureSampler();
     mTexture = new agl::TextureData();
@@ -270,6 +274,7 @@ bool TextureUnit::tryCreateTexture(const TextureInitArg& rArg) {
                               rArg.mHeight, rArg.mDepth, rArg.mMipLevelNum,
                               agl::TextureAttribute(0), agl::MultiSampleType(0), true);
     }
+
     u64 size = mTexture->getImageByteSize();
     sead::Heap* heap = getCurrentHeap();
     s32 alignment = mTexture->getAlignment();
@@ -338,9 +343,11 @@ bool isInsideTexture(const sead::Vector2i& rPos, const agl::TextureData* pTextur
     if (rPos.x < 0 || (u32)rPos.x >= pTextureData->getWidth(0)) {
         return false;
     }
+
     if (rPos.y < 0) {
         return false;
     }
+
     return (u32)rPos.y < pTextureData->getHeight(0);
 }
 
@@ -392,14 +399,17 @@ void destroyAglTextureAndImage(agl::TextureData** ppTextureData) {
     if (ppTextureData == nullptr || *ppTextureData == nullptr) {
         return;
     }
+
     if ((*ppTextureData)->getImagePtr().isValid()) {
         (*ppTextureData)->getImagePtr().deleteGPUMemBlock();
         (*ppTextureData)->getImagePtr().invalidate();
     }
+
     if (*ppTextureData != nullptr) {
         delete *ppTextureData;
         *ppTextureData = nullptr;
     }
+
     *ppTextureData = nullptr;
 }
 
@@ -427,11 +437,13 @@ bool tryMakeTextureDataFromArchive(agl::TextureData* pTextureData, const char* p
     if (file == nullptr) {
         return false;
     }
+
     nn::gfx::ResTexture* texture =
         agl::g3d::ResFile::GetTexture(nn::g3d::ResFile::ResCast(file), pTextureName);
     if (texture == nullptr) {
         return false;
     }
+
     agl::g3d::TextureDataInitializerG3D::initialize(pTextureData, *texture);
     return true;
 }

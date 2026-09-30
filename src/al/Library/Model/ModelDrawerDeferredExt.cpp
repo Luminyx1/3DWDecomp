@@ -147,8 +147,10 @@ void ModelDrawerDeferredExt::createTable() {
                 alModelFunction::prepareModelShapeDrawDeferredGraphicsContext(
                     &context, model, shapeIndex, isAlphaMask, false);
             }
+
             displayList->endDisplayList();
         }
+
         sead::Graphics::instance()->unlockDrawContext();
         mDisplayLists.pushBack(displayList);
     }
@@ -196,6 +198,7 @@ void ModelDrawerDeferredExt::draw() const {
             if (mDrawCallback) {
                 mDrawCallback(mDrawCallbackUserData, mModel);
             }
+
             meshDrawer->draw(&mGraphicsSystemInfo->mViewVolume, 0, &additionalInfo);
         }
     }

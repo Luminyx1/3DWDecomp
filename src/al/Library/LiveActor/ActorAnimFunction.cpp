@@ -67,6 +67,7 @@ bool tryStartSklAnimIfExist(LiveActor* pActor, const char* pAnimName) {
     if (!isSklAnimExist(pActor, pAnimName)) {
         return false;
     }
+
     startSklAnim(pActor, pAnimName);
     return true;
 }
@@ -91,6 +92,7 @@ bool tryStartSklAnimIfNotPlaying(LiveActor* pActor, const char* pAnimName) {
     if (isSklAnimPlaying(pActor, pAnimName, 0)) {
         return false;
     }
+
     startSklAnim(pActor, pAnimName);
     return true;
 }
@@ -160,6 +162,7 @@ void copySklAnim(LiveActor* pActor, const LiveActor* pSrcActor) {
             getSkl(pActor)->setSklAnimFrame(i, frame, true);
         }
     }
+
     blendNum = sead::Mathi::min(getSkl(pSrcActor)->getSklAnimBlendNum(),
                                 getSkl(pActor)->getSklAnimBlendNum());
     for (s32 i = 0; i < blendNum; i++) {
@@ -168,6 +171,7 @@ void copySklAnim(LiveActor* pActor, const LiveActor* pSrcActor) {
             getSkl(pActor)->setSklAnimFrameRate(i, frameRate);
         }
     }
+
     if (getSkl(pActor)->getSklAnimBlendNum() > 1 && getSkl(pSrcActor)->getSklAnimBlendNum() > 1) {
         const AnimPlayerSkl* srcSkl = getSkl(pSrcActor);
         for (s32 i = 0; i < srcSkl->getSklAnimBlendNum(); i++) {
@@ -177,6 +181,7 @@ void copySklAnim(LiveActor* pActor, const LiveActor* pSrcActor) {
             }
         }
     }
+
     if (isExistSklAnimRetargetting(pActor) && isExistSklAnimRetargetting(pSrcActor)) {
         if (isSklAnimRetargettingValid(pSrcActor)) {
             validateSklAnimRetargetting(pActor);
@@ -553,6 +558,7 @@ bool tryStartMtpAnimIfExist(LiveActor* pActor, const char* pAnimName) {
     if (!isMtpAnimExist(pActor, pAnimName)) {
         return false;
     }
+
     startMtpAnim(pActor, pAnimName);
     return true;
 }
@@ -577,6 +583,7 @@ bool tryStartMtpAnimIfNotPlaying(LiveActor* pActor, const char* pAnimName) {
     if (isMtpAnimPlaying(pActor, pAnimName)) {
         return false;
     }
+
     startMtpAnim(pActor, pAnimName);
     return true;
 }
@@ -758,6 +765,7 @@ bool tryStartMclAnimIfExist(LiveActor* pActor, const char* pAnimName) {
     if (!isMclAnimExist(pActor, pAnimName)) {
         return false;
     }
+
     startMclAnim(pActor, pAnimName);
     return true;
 }
@@ -782,6 +790,7 @@ bool tryStartMclAnimIfNotPlaying(LiveActor* pActor, const char* pAnimName) {
     if (isMclAnimPlaying(pActor, pAnimName)) {
         return false;
     }
+
     startMclAnim(pActor, pAnimName);
     return true;
 }
@@ -963,6 +972,7 @@ bool tryStartMtsAnimIfExist(LiveActor* pActor, const char* pAnimName) {
     if (!isMtsAnimExist(pActor, pAnimName)) {
         return false;
     }
+
     startMtsAnim(pActor, pAnimName);
     return true;
 }
@@ -987,6 +997,7 @@ bool tryStartMtsAnimIfNotPlaying(LiveActor* pActor, const char* pAnimName) {
     if (isMtsAnimPlaying(pActor, pAnimName)) {
         return false;
     }
+
     startMtsAnim(pActor, pAnimName);
     return true;
 }
@@ -1168,6 +1179,7 @@ bool tryStartVisAnimIfExist(LiveActor* pActor, const char* pAnimName) {
     if (!isVisAnimExist(pActor, pAnimName)) {
         return false;
     }
+
     startVisAnim(pActor, pAnimName);
     return true;
 }
@@ -1192,6 +1204,7 @@ bool tryStartVisAnimIfNotPlaying(LiveActor* pActor, const char* pAnimName) {
     if (isVisAnimPlaying(pActor, pAnimName)) {
         return false;
     }
+
     startVisAnim(pActor, pAnimName);
     return true;
 }
@@ -1505,18 +1518,23 @@ f32 getAllAnimFrame(const al::LiveActor* pActor, s32 type) {
         if (al::isSklAnimExist(pActor)) {
             return al::getSklAnimFrame(pActor, 0);
         }
+
         if (al::isMclAnimExist(pActor)) {
             return al::getMclAnimFrame(pActor);
         }
+
         if (al::isMtpAnimExist(pActor)) {
             return al::getMtpAnimFrame(pActor);
         }
+
         if (al::isMtsAnimExist(pActor)) {
             return al::getMtsAnimFrame(pActor);
         }
+
         if (al::isVisAnimExist(pActor)) {
             return al::getVisAnimFrame(pActor);
         }
+
         return 0.0f;
     case 0:
         return al::getSklAnimFrame(pActor, 0);
@@ -1546,18 +1564,23 @@ f32 getAllAnimFrameMax(const al::LiveActor* pActor, const char* pAnimName, s32 t
         if (al::isSklAnimExist(pActor, pAnimName)) {
             return al::getSklAnimFrameMax(pActor, pAnimName);
         }
+
         if (al::isMclAnimExist(pActor, pAnimName)) {
             return al::getMclAnimFrameMax(pActor, pAnimName);
         }
+
         if (al::isMtpAnimExist(pActor, pAnimName)) {
             return al::getMtpAnimFrameMax(pActor, pAnimName);
         }
+
         if (al::isMtsAnimExist(pActor, pAnimName)) {
             return al::getMtsAnimFrameMax(pActor, pAnimName);
         }
+
         if (al::isVisAnimExist(pActor, pAnimName)) {
             return al::getVisAnimFrameMax(pActor, pAnimName);
         }
+
         return 1.0f;
     case 0:
         return al::getSklAnimFrameMax(pActor, pAnimName);
@@ -1586,18 +1609,23 @@ f32 getAllAnimFrameRate(const al::LiveActor* pActor, s32 type) {
         if (al::isSklAnimExist(pActor)) {
             return al::getSklAnimFrameRate(pActor, 0);
         }
+
         if (al::isMclAnimExist(pActor)) {
             return al::getMclAnimFrameRate(pActor);
         }
+
         if (al::isMtpAnimExist(pActor)) {
             return al::getMtpAnimFrameRate(pActor);
         }
+
         if (al::isMtsAnimExist(pActor)) {
             return al::getMtsAnimFrameRate(pActor);
         }
+
         if (al::isVisAnimExist(pActor)) {
             return al::getVisAnimFrameRate(pActor);
         }
+
         return 1.0f;
     case 0:
         return al::getSklAnimFrameRate(pActor, 0);
@@ -1623,18 +1651,23 @@ const char* getAllAnimName(const al::LiveActor* pActor) {
     if (al::isSklAnimExist(pActor)) {
         return al::getPlayingSklAnimName(pActor, 0);
     }
+
     if (al::isMclAnimExist(pActor)) {
         return al::getPlayingMclAnimName(pActor);
     }
+
     if (al::isMtpAnimExist(pActor)) {
         return al::getPlayingMtpAnimName(pActor);
     }
+
     if (al::isMtsAnimExist(pActor)) {
         return al::getPlayingMtsAnimName(pActor);
     }
+
     if (al::isVisAnimExist(pActor)) {
         return al::getPlayingVisAnimName(pActor);
     }
+
     return nullptr;
 }
 

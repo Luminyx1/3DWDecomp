@@ -64,6 +64,7 @@ void ActionAnimCtrl::init(const char* pArchiveName, const char* pSuffix) {
     for (s32 i = 0; i < srcInfo->sklDataCount; i++) {
         info->sklDatas[i] = srcInfo->sklDatas[i];
     }
+
     info->mclData = srcInfo->mclData;
     info->mtsData = srcInfo->mtsData;
     info->mtpData = srcInfo->mtpData;
@@ -104,6 +105,7 @@ bool ActionAnimCtrl::start(const char* pActionName) {
             for (s32 i = 0; i < info->sklDataCount; i++) {
                 animNames[i] = alActionFunction::getAnimName(info, &info->sklDatas[i]);
             }
+
             if (isEqualString(sklAnimName, info->actionName)) {
                 startSklAnimBlend(mParentActor, animNames[0], animNames[1], animNames[2],
                                   animNames[3], animNames[4], animNames[5]);
@@ -113,6 +115,7 @@ bool ActionAnimCtrl::start(const char* pActionName) {
                                            animNames[4], animNames[5]);
             }
         }
+
         if (mAnimType == -1) {
             mAnimType = static_cast<s32>(ActionAnimType::Skl);
         }
@@ -130,6 +133,7 @@ bool ActionAnimCtrl::start(const char* pActionName) {
             mAnimType = static_cast<s32>(ActionAnimType::Mtp);
         }
     }
+
     if (isMclAnimExist(mParentActor, mclAnimName) &&
         !(info->mclData.isKeepAnim && isMclAnimPlaying(mParentActor, mclAnimName))) {
         startMclAnim(mParentActor, mclAnimName);
@@ -137,6 +141,7 @@ bool ActionAnimCtrl::start(const char* pActionName) {
             mAnimType = static_cast<s32>(ActionAnimType::Mcl);
         }
     }
+
     if (isMtsAnimExist(mParentActor, mtsAnimName) &&
         !(info->mtsData.isKeepAnim && isMtsAnimPlaying(mParentActor, mtsAnimName))) {
         startMtsAnim(mParentActor, mtsAnimName);
@@ -144,6 +149,7 @@ bool ActionAnimCtrl::start(const char* pActionName) {
             mAnimType = static_cast<s32>(ActionAnimType::Mts);
         }
     }
+
     if (isVisAnimExist(mParentActor, visAnimName) &&
         !(info->visData.isKeepAnim && isVisAnimPlaying(mParentActor, visAnimName))) {
         startVisAnim(mParentActor, visAnimName);
@@ -151,6 +157,7 @@ bool ActionAnimCtrl::start(const char* pActionName) {
             mAnimType = static_cast<s32>(ActionAnimType::Vis);
         }
     }
+
     return true;
 }
 
@@ -179,6 +186,7 @@ ActionAnimCtrlInfo* ActionAnimCtrl::findAnimInfo(const char* pActionName) const 
             return info;
         }
     }
+
     return nullptr;
 }
 
@@ -204,22 +212,27 @@ f32 ActionAnimCtrl::getActionFrameMax(const char* pActionName) const {
                 return getSklAnimFrameMax(mParentActor, animName);
             }
         }
+
         const char* mclAnimName = alActionFunction::getAnimName(info, &info->mclData);
         if (isMclAnimExist(mParentActor, mclAnimName)) {
             return getMclAnimFrameMax(mParentActor, mclAnimName);
         }
+
         const char* mtpAnimName = alActionFunction::getAnimName(info, &info->mtpData);
         if (isMtpAnimExist(mParentActor, mtpAnimName)) {
             return getMtpAnimFrameMax(mParentActor, mtpAnimName);
         }
+
         const char* mtsAnimName = alActionFunction::getAnimName(info, &info->mtsData);
         if (isMtsAnimExist(mParentActor, mtsAnimName)) {
             return getMtsAnimFrameMax(mParentActor, mtsAnimName);
         }
+
         const char* visAnimName = alActionFunction::getAnimName(info, &info->visData);
         if (isVisAnimExist(mParentActor, visAnimName)) {
             return getVisAnimFrameMax(mParentActor, visAnimName);
         }
+
         return 1.0f;
     }
     case ActionAnimType::Skl:
@@ -229,6 +242,7 @@ f32 ActionAnimCtrl::getActionFrameMax(const char* pActionName) const {
                 return getSklAnimFrameMax(mParentActor, animName);
             }
         }
+
         return 0.0f;
     case ActionAnimType::Mcl:
         return getMclAnimFrameMax(mParentActor,
@@ -274,18 +288,23 @@ bool ActionAnimCtrl::isActionOneTime(const char* pActionName) const {
         if (isSklAnimExist(mParentActor, pActionName)) {
             return isSklAnimOneTime(mParentActor, pActionName);
         }
+
         if (isMtpAnimExist(mParentActor, pActionName)) {
             return isMtpAnimOneTime(mParentActor, pActionName);
         }
+
         if (isMclAnimExist(mParentActor, pActionName)) {
             return isMclAnimOneTime(mParentActor, pActionName);
         }
+
         if (isMtsAnimExist(mParentActor, pActionName)) {
             return isMtsAnimOneTime(mParentActor, pActionName);
         }
+
         if (isVisAnimExist(mParentActor, pActionName)) {
             return isVisAnimOneTime(mParentActor, pActionName);
         }
+
         return true;
     }
 
@@ -297,22 +316,27 @@ bool ActionAnimCtrl::isActionOneTime(const char* pActionName) const {
                 return isSklAnimOneTime(mParentActor, sklAnimName);
             }
         }
+
         const char* mtpAnimName = alActionFunction::getAnimName(info, &info->mtpData);
         if (isMtpAnimExist(mParentActor, mtpAnimName)) {
             return isMtpAnimOneTime(mParentActor, mtpAnimName);
         }
+
         const char* mclAnimName = alActionFunction::getAnimName(info, &info->mclData);
         if (isMclAnimExist(mParentActor, mclAnimName)) {
             return isMclAnimOneTime(mParentActor, mclAnimName);
         }
+
         const char* mtsAnimName = alActionFunction::getAnimName(info, &info->mtsData);
         if (isMtsAnimExist(mParentActor, mtsAnimName)) {
             return isMtsAnimOneTime(mParentActor, mtsAnimName);
         }
+
         const char* visAnimName = alActionFunction::getAnimName(info, &info->visData);
         if (isVisAnimExist(mParentActor, visAnimName)) {
             return isVisAnimOneTime(mParentActor, visAnimName);
         }
+
         break;
     }
     case ActionAnimType::Skl:
@@ -333,6 +357,7 @@ bool ActionAnimCtrl::isActionOneTime(const char* pActionName) const {
     default:
         break;
     }
+
     return !isEqualString(pActionName, mArchiveName);
 }
 
@@ -344,6 +369,7 @@ const char* ActionAnimCtrl::getPlayingActionName() const {
     if (!mPlayingInfo) {
         return nullptr;
     }
+
     return mPlayingInfo->actionName;
 }
 

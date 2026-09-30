@@ -31,9 +31,11 @@ void ScreenPointTarget::update() {
         mPos.setMul(*mFollowMtx, mOffset);
         return;
     }
+
     if (!mFollowPos) {
         return;
     }
+
     const sead::Matrix34f* baseMtx = mHost->getBaseMtx();
     if (baseMtx) {
         mPos.setRotated(*baseMtx, mOffset);
@@ -50,6 +52,7 @@ void ScreenPointTarget::validate() {
     if (mIsValid) {
         return;
     }
+
     mIsValid = true;
     if (mIsValidBySystem) {
         mCheckGroup->setValid(this);
@@ -63,6 +66,7 @@ void ScreenPointTarget::invalidate() {
     if (!mIsValid) {
         return;
     }
+
     mIsValid = false;
     if (mIsValidBySystem) {
         mCheckGroup->setInvalid(this);
@@ -76,9 +80,11 @@ void ScreenPointTarget::validateBySystem() {
     if (mIsValidBySystem) {
         return;
     }
+
     if (mIsValid) {
         mCheckGroup->setValid(this);
     }
+
     mIsValidBySystem = true;
 }
 
@@ -89,9 +95,11 @@ void ScreenPointTarget::invalidateBySystem() {
     if (!mIsValidBySystem) {
         return;
     }
+
     if (mIsValid) {
         mCheckGroup->setInvalid(this);
     }
+
     mIsValidBySystem = false;
 }
 

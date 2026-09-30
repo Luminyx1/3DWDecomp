@@ -65,6 +65,7 @@ ClippingActorInfo* ClippingActorHolder::initGroupClipping(LiveActor* pActor,
     } else {
         info = nullptr;
     }
+
     info->setGroupClippingId(rInfo);
     return info;
 }
@@ -101,6 +102,7 @@ void ClippingActorHolder::invalidateClipping(LiveActor* pActor) {
     } else {
         list = mClippingTargets->isInList(pActor) ? mClippingTargets : mGroupClippings;
     }
+
     ClippingActorInfo* info = list->remove(pActor);
     mInvalidClippings->add(info);
     if (isClipped(pActor)) {
@@ -117,6 +119,7 @@ void ClippingActorHolder::addToClippingTarget(LiveActor* pActor) {
         mGroupClippings->isInList(pActor)) {
         return;
     }
+
     ClippingActorInfo* info = mNonClippingTargets->remove(pActor);
     if (info->isGroupClipping()) {
         mGroupClippings->add(info);
@@ -133,6 +136,7 @@ void ClippingActorHolder::removeFromClippingTarget(LiveActor* pActor) {
     if (isInvalidClipping(pActor) || mNonClippingTargets->isInList(pActor)) {
         return;
     }
+
     ClippingActorInfoList* list =
         mGroupClippings->isInList(pActor) ? mGroupClippings : mClippingTargets;
     ClippingActorInfo* info = list->remove(pActor);
@@ -158,14 +162,17 @@ ClippingActorInfo* ClippingActorHolder::find(const LiveActor* pActor) const {
     if (info) {
         return info;
     }
+
     info = mNonClippingTargets->tryFind(pActor);
     if (info) {
         return info;
     }
+
     info = mGroupClippings->tryFind(pActor);
     if (info) {
         return info;
     }
+
     return mInvalidClippings->find(pActor, nullptr);
 }
 

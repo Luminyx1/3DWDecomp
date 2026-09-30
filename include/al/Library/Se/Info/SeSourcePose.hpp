@@ -54,6 +54,7 @@ private:
     sead::Matrix34f mMtx;
     sead::Vector3f mPos = {0.0f, 0.0f, 0.0f};
 };
+
 static_assert(sizeof(SeSourcePose3DMtxOffsetPtr) == 0x58);
 
 class SeSourcePose3DMtxPtr : public SeSourcePose3DMtxBase {
@@ -71,6 +72,7 @@ private:
     const sead::Matrix34f* mMtxPtr;
     sead::Vector3f mPos = {0.0f, 0.0f, 0.0f};
 };
+
 static_assert(sizeof(SeSourcePose3DMtxPtr) == 0x20);
 
 class SeSourcePose3DPosPtr : public SeSourcePose3D {
@@ -85,6 +87,7 @@ public:
 private:
     const sead::Vector3f* mPosPtr;
 };
+
 static_assert(sizeof(SeSourcePose3DPosPtr) == 0x10);
 
 class SeSourcePoseNull : public SeSourcePose {
@@ -95,5 +98,6 @@ public:
 
     void update() override;
 };
+
 static_assert(sizeof(SeSourcePoseNull) == 0x8);
 }  // namespace al

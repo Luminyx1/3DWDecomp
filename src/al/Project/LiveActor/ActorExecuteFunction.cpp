@@ -49,6 +49,7 @@ void forceUpdateLOD(LiveActorKit* pKit, bool isForceLevel0) {
         if (isForceLevel0) {
             setLODForceLevel0(actor);
         }
+
         if (actor->mModelKeeper) {
             actor->mModelKeeper->updateLod(cameraPos, false);
         }

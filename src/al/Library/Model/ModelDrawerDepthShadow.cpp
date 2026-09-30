@@ -57,6 +57,7 @@ void ModelDrawerDepthShadow::createTable() {
                 optionValues[0] = "2";
             }
         }
+
         if (renderStateMode == 1) {
             optionValues[0] = "1";
         }
@@ -88,6 +89,7 @@ void ModelDrawerDepthShadow::createTable() {
                 MeshDrawer::TEXTURE_ACTIVATE_TYPE(modelCafe->mAnimPlayerMat1 == nullptr),
                 MeshDrawer::MATERIAL_ACTIVATE_TYPE(modelCafe->mAnimPlayerMat2 == nullptr), false);
         }
+
         table->insert(meshDrawer);
     }
 
@@ -107,6 +109,7 @@ void ModelDrawerDepthShadow::draw() const {
         for (s32 i = 0; i < mMeshDrawerTable->size(); i++) {
             (*mMeshDrawerTable)[i]->preDrawToDepthShadow(depthShadowDrawer);
         }
+
         return;
     }
 
@@ -120,6 +123,7 @@ void ModelDrawerDepthShadow::draw() const {
         if (meshDrawer->isExistDrawMesh()) {
             meshDrawer->drawDepthShadow(nullptr, 0, shadowIndex);
         }
+
         meshDrawer->clearDepthShadowFlag();
     }
 }

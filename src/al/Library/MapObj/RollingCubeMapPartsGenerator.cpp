@@ -50,6 +50,7 @@ void RollingCubeMapPartsGenerator::init(const ActorInitInfo& rInfo) {
         makeActorDead();
         return;
     }
+
     for (s32 i = 0; i < partsCount; i++) {
         RollingCubeMapParts* rollingCube = new RollingCubeMapParts("ローリングキューブマップパーツ");
         initLinksActor(rollingCube, rInfo, "GenerateRollingCube", 0);
@@ -59,6 +60,7 @@ void RollingCubeMapPartsGenerator::init(const ActorInitInfo& rInfo) {
         mRollingCubeMapPartsGroup->registerActor(rollingCube);
         registerSubActorSyncClipping(this, rollingCube, false);
     }
+
     RollingCubeMapParts* rollingCube = mRollingCubeMapPartsGroup->getDeriveActor(0);
     f32 clippingRadius = 0.0f;
     calcRollingCubeClippingInfo(&mClippingTrans, &clippingRadius,
@@ -70,6 +72,7 @@ void RollingCubeMapPartsGenerator::init(const ActorInitInfo& rInfo) {
     if (mDelayTime > 0) {
         setNerve(this, &NrvRollingCubeMapPartsGeneratorDelay);
     }
+
     getNerveKeeper()->update();
     initStageSwitch(this, rInfo);
     makeActorAppeared();

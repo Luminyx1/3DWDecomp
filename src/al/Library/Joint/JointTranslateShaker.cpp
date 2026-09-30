@@ -45,6 +45,7 @@ void JointTranslateShaker::setShake(f32 amplitude, s32 duration, f32 cycle, f32 
     if (duration < 0) {
         return;
     }
+
     mAmplitude = amplitude;
     mStep = 0;
     mDuration = duration;
@@ -72,6 +73,7 @@ void JointTranslateShaker::calcJointCallback(s32 jointIndex, sead::Matrix34f* pM
             break;
         }
     }
+
     if (axis == JointTranslateAxis_None) {
         return;
     }

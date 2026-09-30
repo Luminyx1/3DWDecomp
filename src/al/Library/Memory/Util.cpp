@@ -40,6 +40,7 @@ void copyMemory(void* pDst, const void* pSrc, u32 size) {
         for (; size != 0; size--) {
             *dst++ = *src++;
         }
+
         return;
     }
 
@@ -47,6 +48,7 @@ void copyMemory(void* pDst, const void* pSrc, u32 size) {
         for (u32 i = 4 - srcAlign; i != 0; i--) {
             *dst++ = *src++;
         }
+
         size += srcAlign - 4;
     }
 
@@ -55,6 +57,7 @@ void copyMemory(void* pDst, const void* pSrc, u32 size) {
     for (u32 rest = size; rest >= 4; rest -= 4) {
         *dst32++ = *src32++;
     }
+
     dst = reinterpret_cast<u8*>(dst32);
     src = reinterpret_cast<const u8*>(src32);
 

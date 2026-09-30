@@ -81,15 +81,19 @@ bool isShadowMrt(s32 category);
 namespace np_ShadowMaskCommon {
 extern alYamlMacroUtil::YamlParamGroup ShadowMaskCommon;
 }
+
 namespace np_ShadowMaskSphereParam {
 extern alYamlMacroUtil::YamlParamGroup ShadowMaskSphereParam;
 }
+
 namespace np_ShadowMaskCylinderParam {
 extern alYamlMacroUtil::YamlParamGroup ShadowMaskCylinderParam;
 }
+
 namespace np_ShadowMaskCubeParam {
 extern alYamlMacroUtil::YamlParamGroup ShadowMaskCubeParam;
 }
+
 namespace np_ShadowMaskCastOvalCylinderParam {
 extern alYamlMacroUtil::YamlParamGroup ShadowMaskCastOvalCylinderParam;
 }

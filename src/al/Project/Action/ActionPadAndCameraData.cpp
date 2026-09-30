@@ -20,6 +20,7 @@ bool isOverDistance(f32 distance, f32 limit) {
     if (limit < 0.0f) {
         return false;
     }
+
     return distance > limit;
 }
 
@@ -65,14 +66,17 @@ ActionPadAndCameraCtrl* ActionPadAndCameraCtrl::tryCreate(const LiveActor* pActo
     if (!isExistModelResource(pActor)) {
         return nullptr;
     }
+
     StringTmp<256> fileName;
     if (!tryGetActorInitFileName(&fileName, pActor, "PadAndCameraCtrl", pSuffix) &&
         !tryGetActorAnimInitFileName(&fileName, pActor, "PadAndCameraCtrl", pSuffix)) {
         createFileNameBySuffix(&fileName, "PadAndCameraCtrl", pSuffix);
     }
+
     if (!isExistModelOrAnimResourceYaml(pActor, fileName.cstr(), nullptr)) {
         return nullptr;
     }
+
     return new ActionPadAndCameraCtrl(pActor, pPos, pSuffix);
 }
 
@@ -91,9 +95,11 @@ ActionPadAndCameraCtrl* ActionPadAndCameraCtrl::tryCreate(const LiveActor* pActo
                                         nullptr)) {
         createFileNameBySuffix(&fileName, "PadAndCameraCtrl", nullptr);
     }
+
     if (!isExistResourceYaml(pResource, fileName.cstr(), nullptr)) {
         return nullptr;
     }
+
     return new ActionPadAndCameraCtrl(pActor, pPos, pResource, fileName.cstr());
 }
 
@@ -108,11 +114,13 @@ void ActionPadAndCameraCtrl::startAction(const char* pActionName) {
         info->mIsActive = false;
         info->mLastUpdateFrame = -1.0f;
     }
+
     for (s32 i = 0; i < mInfoCount; i++) {
         ActionPadAndCameraCtrlInfo* info = &mInfos[i];
         if (!isEqualString(mActionName, info->mActionName)) {
             continue;
         }
+
         info->mIsActive = true;
         if (info->mStartFrame <= 0) {
             updatePadAndCamera(info);
@@ -129,22 +137,27 @@ void ActionPadAndCameraCtrl::updatePadAndCamera(const ActionPadAndCameraCtrlInfo
                 alPadRumbleFunction::startPadRumble(mParentActor, pInfo->mPadRumbleName,
                                                     mPadRumbleKeeper->getPort(), false);
             }
+
             return;
         }
+
         s32 playerNum = getPlayerNumMaxComplete(mParentActor);
         for (s32 i = 0; i < playerNum; i++) {
             s32 port = getPlayerPort(mParentActor, i);
             if (port < 1) {
                 continue;
             }
+
             if (isPlayerDead(mParentActor, i) && !pInfo->mIsUseDeadPlayer) {
                 continue;
             }
+
             if (pInfo->mPadRumbleName) {
                 alPadRumbleFunction::startPadRumble(mParentActor, pInfo->mPadRumbleName, port,
                                                     false);
             }
         }
+
         return;
     }
 
@@ -166,14 +179,17 @@ void ActionPadAndCameraCtrl::updatePadAndCamera(const ActionPadAndCameraCtrlInfo
             (getPlayerPort(mParentActor, i) < 1 || !pInfo->mIsUseDeadPlayer)) {
             continue;
         }
+
         s32 port = getPlayerPort(mParentActor, i);
         if (pInfo->mIsUsePadRumbleKeeper && port != mPadRumbleKeeper->getPort()) {
             continue;
         }
+
         f32 playerDistance = (getPlayerPos(mParentActor, i) - *mPos).length();
         if (isOverDistance(playerDistance, pInfo->mDistanceInvalid)) {
             continue;
         }
+
         if (isOverDistance(playerDistance, pInfo->mDistanceFar)) {
             startPadRumbleImpl(mParentActor, pInfo->mPadRumbleNameFar, port);
         } else if (isOverDistance(playerDistance, pInfo->mDistanceNear)) {
@@ -195,14 +211,17 @@ void ActionPadAndCameraCtrl::update(f32 frame, f32 frameRate) {
         if (!info->mIsActive) {
             continue;
         }
+
         if (alAnimFunction::checkPass(frame, frameRate, static_cast<f32>(info->mStartFrame))) {
             info->mIsPlaying = true;
         } else if (!info->mIsPlaying) {
             continue;
         }
+
         if (info->mLastUpdateFrame < frame) {
             updatePadAndCamera(info);
         }
+
         if (frameRate <= 0.0f || info->mEndFrame < 0 ||
             alAnimFunction::checkPass(frame, frameRate, static_cast<f32>(info->mEndFrame))) {
             info->mIsPlaying = false;
@@ -224,6 +243,7 @@ ActionPadAndCameraCtrl::ActionPadAndCameraCtrl(const LiveActor* pActor, const se
         !tryGetActorAnimInitFileName(&fileName, pActor, "PadAndCameraCtrl", pSuffix)) {
         createFileNameBySuffix(&fileName, "PadAndCameraCtrl", pSuffix);
     }
+
     init(getModelOrAnimResourceYaml(pActor, fileName.cstr(), nullptr), false);
 }
 

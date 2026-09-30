@@ -26,6 +26,7 @@ AreaObjGroup::AreaObjGroup(const char* pGroupName, const char* pLinkName,
     if (num < 1) {
         return;
     }
+
     createBuffer();
     for (s32 i = 0; i < num; i++) {
         PlacementInfo placementInfo;
@@ -64,6 +65,7 @@ AreaObjGroup::~AreaObjGroup() {
     for (s32 i = 0; i < mNumAreas; i++) {
         delete mAreaObjs[i];
     }
+
     delete[] mAreaObjs;
 }
 
@@ -81,9 +83,11 @@ void AreaObjGroup::createBuffer() {
     if (mMaxAreas < 1) {
         return;
     }
+
     if (isEqualString(mGroupName, "CameraArea")) {
         mMaxAreas += 130;
     }
+
     mAreaObjs = new AreaObj*[mMaxAreas];
 }
 
@@ -111,6 +115,7 @@ AreaObj* AreaObjGroup::getInVolumeAreaObj(const sead::Vector3f& rPos) {
             }
         }
     }
+
     return result;
 }
 
@@ -134,6 +139,7 @@ s32 AreaObjGroup::getInVolumeAreaObj(const sead::Vector3f& rPos, AreaObj** pArea
             }
         }
     }
+
     *pAreaObj = result;
     return count;
 }
@@ -157,6 +163,7 @@ AreaObj* AreaObjGroup::getInVolumeAreaObj(const sead::Vector3f& rStart, const se
             }
         }
     }
+
     return result;
 }
 
@@ -173,6 +180,7 @@ AreaObj* AreaObjGroup::getInFirstAreaObj(const sead::Vector3f& rPos) {
             return areaObj;
         }
     }
+
     return nullptr;
 }
 }  // namespace al

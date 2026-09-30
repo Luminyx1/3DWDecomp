@@ -41,6 +41,7 @@ void ClippingJudge::update() {
         frustumRadar->calcFrustumArea(viewMtx, projMtx, 300.0f, getFarClipping());
         camera = &getLookAtCamera(mSceneCameraInfo, 0);
     }
+
     mCameraPos = camera->getPos();
 }
 
@@ -53,6 +54,7 @@ void ClippingJudge::setPlayerPos(const PlayerHolder* pPlayerHolder) {
         mPlayerPos = mCameraPos;
         return;
     }
+
     LiveActor* player = tryFindAlivePlayerActorFirst(pPlayerHolder);
     if (pPlayerHolder) {
         mPlayerPos = getTrans(player);
@@ -111,6 +113,7 @@ bool ClippingJudge::isJudgedToClipFrustum(const sead::Vector3f& rPos, f32 radius
     if (farLevel != 0) {
         return !mFrustumRadar->judgeInArea(rPos, radius, near);
     }
+
     return !mFrustumRadar->judgeInArea(rPos, radius, near, -1.0f);
 }
 

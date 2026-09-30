@@ -26,6 +26,7 @@ void SeListenerPoserAdjustMiddlePos::calcListenerPose(sead::Matrix34f* pMtx, sea
                     break;
                 }
             }
+
             if (i < 3) {
                 const sead::Vector2f& prev = cFovyRatioTable[i - 1];
                 const sead::Vector2f& next = cFovyRatioTable[i];
@@ -34,9 +35,11 @@ void SeListenerPoserAdjustMiddlePos::calcListenerPose(sead::Matrix34f* pMtx, sea
                 ratio = cFovyRatioTable[2].y;
             }
         }
+
         setBaseToMiddleRatio(ratio);
         mPrevFovyDegree = fovy;
     }
+
     SeListenerPoserMiddlePos::calcListenerPose(pMtx, pPos, rParam);
 }
 

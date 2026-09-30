@@ -118,6 +118,7 @@ sead::ArchiveRes* FileLoader::loadArchive(const sead::SafeString& rPath,
         entry = requestLoadArchive(rPath, heap, getFileDevice(rPath, pDevice));
         entry->waitLoadDone();
     }
+
     return entry->getArchiveRes();
 }
 
@@ -148,6 +149,7 @@ bool FileLoader::tryRequestLoadArchive(const sead::SafeString& rPath, sead::Heap
     if (mArchiveHolder->tryFindEntry(rPath)) {
         return false;
     }
+
     requestLoadArchive(rPath, pHeap, pDevice);
     return true;
 }
@@ -167,6 +169,7 @@ bool FileLoader::loadSoundItem(u32 itemId, u32 unk, IAudioResourceLoader* pLoade
     } else if (entry->mFileState != FileState::IsLoadDone) {
         entry->waitLoadDone();
     }
+
     return entry->isLoadSuccess();
 }
 
@@ -194,6 +197,7 @@ bool FileLoader::tryRequestLoadSoundItem(u32 itemId, IAudioResourceLoader* pLoad
     if (mSoundItemHolder->tryFindEntry(itemId, pLoader)) {
         return false;
     }
+
     requestLoadSoundItem(itemId, -1, pLoader);
     return true;
 }

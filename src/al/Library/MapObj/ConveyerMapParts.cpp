@@ -61,10 +61,12 @@ void ConveyerMapParts::init(const ActorInitInfo& rInfo) {
     if (mPartsInterval < 10.0f) {
         mPartsInterval = 10.0f;
     }
+
     f32 totalMoveDistance = mConveyerKeyKeeper->getTotalMoveDistance();
     if (mConveyerKeyKeeper->getConveyerKeyCount() > 1) {
         isNearZero(totalMoveDistance);
     }
+
     s32 groupCount = static_cast<s32>(totalMoveDistance / mPartsInterval) + 1;
     mMaxCoord = mPartsInterval * groupCount;
     f32 startRate = 0.0f;
@@ -78,6 +80,7 @@ void ConveyerMapParts::init(const ActorInitInfo& rInfo) {
         conveyerStep->setConveyerKeyKeeper(mConveyerKeyKeeper, mMaxCoord);
         conveyerStep->setTransAndResetByCoord(static_cast<f32>(i) * mPartsInterval + mOffsetCoord);
     }
+
     f32 clippingRadius = 0.0f;
     mConveyerKeyKeeper->calcClippingSphere(&mClippingTrans, &clippingRadius,
                                            getClippingRadius(mConveyerStepGroup->getActor(0)));
@@ -86,6 +89,7 @@ void ConveyerMapParts::init(const ActorInitInfo& rInfo) {
                                     ConveyerMapPartsFunctor(this, &ConveyerMapParts::stop))) {
         setNerve(this, &NrvConveyerMapPartsStandBy);
     }
+
     makeActorAppeared();
 }
 
@@ -96,6 +100,7 @@ void ConveyerMapParts::start() {
     if (!isNerve(this, &NrvConveyerMapPartsStandBy)) {
         return;
     }
+
     setNerve(this, &NrvConveyerMapPartsMove);
 }
 
@@ -106,6 +111,7 @@ void ConveyerMapParts::stop() {
     if (!isNerve(this, &NrvConveyerMapPartsMove)) {
         return;
     }
+
     setNerve(this, &NrvConveyerMapPartsStandBy);
 }
 
@@ -121,6 +127,7 @@ bool ConveyerMapParts::receiveMsg(const SensorMsg* pMsg, HitSensor* pOther, HitS
         mAddRideActiveFrames = 2;
         return true;
     }
+
     return false;
 }
 
@@ -134,9 +141,11 @@ void ConveyerMapParts::control() {
         } else {
             mRideActiveFrames = mMaxRideActiveFrames;
         }
+
         mAddRideActiveFrames--;
         return;
     }
+
     if (mRideActiveFrames != 0) {
         mRideActiveFrames--;
     }

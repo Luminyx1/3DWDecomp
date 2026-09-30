@@ -18,6 +18,7 @@ public:
 private:
     sead::PtrArray<const char> mNames;
 };
+
 static_assert(sizeof(SeCategoryNameList) == 0x10);
 
 class SeCategoryInfoList {
@@ -33,6 +34,7 @@ private:
     sead::PtrArray<f32> mVolumes;
     const SeCategoryNameList* mNameList;
 };
+
 static_assert(sizeof(SeCategoryInfoList) == 0x18);
 
 class AudioMixVolume {
@@ -52,6 +54,7 @@ private:
     f32 mRemainFrames = -1.0f;
     const AudioMixVolume* mLinkedVolume = nullptr;
 };
+
 static_assert(sizeof(AudioMixVolume) == 0x20);
 
 class SeCategoryParamsController {
@@ -67,6 +70,7 @@ private:
     sead::PtrArray<AudioMixVolume> mMixVolumes;
     const SeCategoryNameList* mNameList;
 };
+
 static_assert(sizeof(SeCategoryParamsController) == 0x18);
 
 f32 calcDecibelToRatio(f32 decibel);

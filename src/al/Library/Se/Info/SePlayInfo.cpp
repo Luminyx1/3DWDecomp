@@ -35,6 +35,7 @@ SeResourceInfo* SeResourceInfo::createInfo(const ByamlIter& rIter) {
         } else {
             pitch = nullptr;
         }
+
         info->mPitch = pitch;
     }
 
@@ -47,6 +48,7 @@ SeResourceInfo* SeResourceInfo::createInfo(const ByamlIter& rIter) {
         } else {
             volume = nullptr;
         }
+
         info->mVolume = volume;
     }
 
@@ -59,21 +61,26 @@ SeResourceInfo* SeResourceInfo::createInfo(const ByamlIter& rIter) {
         } else {
             tempo = nullptr;
         }
+
         info->mTempo = tempo;
     }
 
     if (!rIter.tryGetStringByKey(&info->mEmitterName, "EmitterName")) {
         info->mEmitterName = nullptr;
     }
+
     if (rIter.tryGetFloatByKey(&info->mParamMin, "ParamMin")) {
         info->mIsSetParamMin = true;
     }
+
     if (!rIter.tryGetIntByKey(&info->mLocalVarNo, "LocalVarNo")) {
         info->mLocalVarNo = -1;
     }
+
     if (!rIter.tryGetFloatByKey(&info->mLfeSend, "LfeSend")) {
         info->mLfeSend = 0.0f;
     }
+
     return info;
 }
 
@@ -88,16 +95,20 @@ SePlayInfo* SePlayInfo::createInfo(const ByamlIter& rIter) {
     if (!rIter.tryGetBoolByKey(&info->mIsLoop, "IsLevel") && !rIter.tryGetBoolByKey(&info->mIsLoop, "IsLoop")) {
         info->mIsLoop = false;
     }
+
     if (!rIter.tryGetIntByKey(&info->mFadeOutFrameNum, "FadeOutFrameNum")) {
         info->mFadeOutFrameNum = USE_DEFAULT_FADE_OUT_FRAME_NUM;
     }
+
     if (!rIter.tryGetStringByKey(&info->mRequestKeeperName, "RequestKeeperName")) {
         info->mRequestKeeperName = nullptr;
     }
+
     ByamlIter resourceIter;
     if (!rIter.tryGetIterByKey(&resourceIter, "ResourceInfoList")) {
         return nullptr;
     }
+
     info->mResourceInfoList = createInfoList<SeResourceInfo>(resourceIter);
     return info;
 }

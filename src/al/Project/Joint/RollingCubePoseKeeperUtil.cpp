@@ -130,6 +130,7 @@ void calcMtxLandEffect(sead::Matrix34f* pEffectMtx, const RollingCubePoseKeeper*
         const sead::BoundBox3f& box = pKeeper->getCubeSize();
         offset = landUp * ((box.getMax().z - box.getMin().z) * -0.5f);
     }
+
     sead::Vector3f center;
     pKeeper->calcBoundingBoxCenter(&center, rQuat, rTrans);
     sead::Vector3f pos = offset + center;

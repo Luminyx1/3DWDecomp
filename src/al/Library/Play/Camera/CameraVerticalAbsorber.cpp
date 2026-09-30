@@ -63,15 +63,19 @@ inline f32 calcFollowRate(const CameraVerticalAbsorber* pAbsorber,
         isNerve(pAbsorber, &NrvCameraVerticalAbsorberFollowSlow)) {
         return 0.02f;
     }
+
     if (isNerve(pAbsorber, &NrvCameraVerticalAbsorberFollowClimbPoleNoInterp)) {
         return 0.3f;
     }
+
     if (isNerve(pAbsorber, &NrvCameraVerticalAbsorberFollowClimbPole)) {
         return calcNerveValue(pAbsorber, 60, 0.05f, 0.3f);
     }
+
     if (pAbsorber->getFollowRate()) {
         return *pAbsorber->getFollowRate();
     }
+
     return 0.05f;
 }
 
@@ -107,6 +111,7 @@ void CameraVerticalAbsorber::load(const ByamlIter& rIter) {
     if (!rIter.tryGetIterByKey(&iter, "VerticalAbsorb")) {
         return;
     }
+
     tryGetByamlF32(&mAbsorbScreenPosUp, iter, "AbsorbScreenPosUp");
     tryGetByamlF32(&mAbsorbScreenPosDown, iter, "AbsorbScreenPosDown");
     tryGetByamlF32(&mHighJumpJudgeSpeedV, iter, "HighJumpJudgeSpeedV");
@@ -131,12 +136,15 @@ void CameraVerticalAbsorber::start(const sead::Vector3f& rPos, const CameraStart
     if (!isValid() || alCameraPoserFunction::isPlayerTypeNotTouchGround(mCameraPoser)) {
         return setNerve(this, &NrvCameraVerticalAbsorberFollowAbsolute);
     }
+
     if (alCameraPoserFunction::isTargetClimbPole(mCameraPoser)) {
         return setNerve(this, &NrvCameraVerticalAbsorberFollowClimbPoleNoInterp);
     }
+
     if (alCameraPoserFunction::isTargetGrabCeil(mCameraPoser)) {
         return setNerve(this, &NrvCameraVerticalAbsorberFollowSlow);
     }
+
     if (!rInfo._25 || alCameraPoserFunction::isTargetCollideGround(mCameraPoser)) {
         return setNerve(this, &NrvCameraVerticalAbsorberFollowGround);
     }
@@ -184,10 +192,12 @@ void CameraVerticalAbsorber::update() {
         alCameraPoserFunction::isTargetCollideGround(mCameraPoser)) {
         setNerve(this, &NrvCameraVerticalAbsorberFollowGround);
     }
+
     if (!isNerve(this, &NrvCameraVerticalAbsorberFollowAbsolute) &&
         alCameraPoserFunction::isPlayerTypeNotTouchGround(mCameraPoser)) {
         setNerve(this, &NrvCameraVerticalAbsorberFollowAbsolute);
     }
+
     updateNerve();
 
     sead::Vector3f offset = {0.0f, 0.0f, 0.0f};
@@ -200,6 +210,7 @@ void CameraVerticalAbsorber::update() {
                                                                         mKeepInFrameOffsetDown);
         mAbsorbVec -= offset;
     }
+
     mPrevTargetTrans.set(mCameraPoser->getAt() - mAbsorbVec);
     mPrevTargetFront = mTargetFront;
 }
@@ -212,6 +223,7 @@ void CameraVerticalAbsorber::makeLookAtCamera(sead::LookAtCamera* pCamera) const
     if (!isValid()) {
         return;
     }
+
     pCamera->setAt(pCamera->getAt() - mAbsorbVec);
     if (!mIsNoCameraPosAbsorb) {
         pCamera->setPos(pCamera->getPos() - mAbsorbVec);
@@ -242,6 +254,7 @@ void CameraVerticalAbsorber::exeAbsorb() {
         setNerve(this, &NrvCameraVerticalAbsorberFollow);
         return;
     }
+
     if (!alCameraPoserFunction::isTargetCollideGround(mCameraPoser)) {
         f32 speedV = alCameraPoserFunction::calcTargetSpeedV(mCameraPoser);
         if (mHighJumpJudgeSpeedV < speedV) {
@@ -249,11 +262,13 @@ void CameraVerticalAbsorber::exeAbsorb() {
             return;
         }
     }
+
     if (alCameraPoserFunction::isTargetClimbPole(mCameraPoser) &&
         !mCameraPoser->isCalcEndAfterInterpole()) {
         setNerve(this, &NrvCameraVerticalAbsorberFollowClimbPole);
         return;
     }
+
     if (alCameraPoserFunction::isTargetGrabCeil(mCameraPoser) ||
         alCameraPoserFunction::isTargetWallCatch(mCameraPoser)) {
         setNerve(this, &NrvCameraVerticalAbsorberFollowSlow);
@@ -267,6 +282,7 @@ void CameraVerticalAbsorber::exeAbsorb() {
                                 static_cast<u32>(getDisplayHeight()));
         mLookAtCamera.projectByMatrix(&screenPos, at, mProjection, viewport);
     }
+
     screenPos.x += static_cast<u32>(getDisplayWidth()) * 0.5f;
     screenPos.y = static_cast<u32>(getDisplayHeight()) * 0.5f - screenPos.y;
     if (mAbsorbScreenPosDown < screenPos.y || screenPos.y < mAbsorbScreenPosUp) {
@@ -305,6 +321,7 @@ void CameraVerticalAbsorber::exeAbsorb() {
                     setNerve(this, &NrvCameraVerticalAbsorberFollowSlow);
                     return;
                 }
+
                 sead::Vector3f diffNew =
                     alCameraPoserFunction::getUnderTargetCollisionPos(mCameraPoser) -
                     mUnderTargetCollisionPos;
@@ -319,11 +336,13 @@ void CameraVerticalAbsorber::exeAbsorb() {
                     setNerve(this, &NrvCameraVerticalAbsorberFollowSlow);
                     return;
                 }
+
                 mLerp2 = diff.length();
                 mUnderTargetCollisionPos =
                     alCameraPoserFunction::getUnderTargetCollisionPos(mCameraPoser);
             }
         }
+
         f32 length = mAbsorbVec.length();
     f32 prevAbsorbLength = mLerp2;
     mLerp2 = lerpValue(0.9f, prevAbsorbLength, 0.0f);
@@ -346,6 +365,7 @@ void CameraVerticalAbsorber::exeAbsorb() {
         f32 rate = easeIn(normalize(screenPos.y, mAbsorbScreenPosUp, startScreenPosUp));
         mLerp1 = lerpValue(mLerp1, lerpValue(mLerp1, rate, 0.05f), 0.05f);
     }
+
     mAbsorbVec *= 1.0f - mLerp1;
 }
 
@@ -356,6 +376,7 @@ void CameraVerticalAbsorber::exeFollow() {
     if (isFirstStep(this)) {
         mLerp1 = calcFollowRate(this, mCameraPoser);
     }
+
     updateLerpRate(&mLerp1, this, mCameraPoser, 0.05f, 0.05f);
     f32 length = mAbsorbVec.length();
     f32 prevAbsorbLength = mLerp2;
@@ -366,6 +387,7 @@ void CameraVerticalAbsorber::exeFollow() {
     if (curLength > 0.0f) {
         mAbsorbVec *= length * (1.0f - rate) / curLength;
     }
+
     mAbsorbVec *= 1.0f - mLerp1;
 }
 
@@ -383,6 +405,7 @@ void CameraVerticalAbsorber::exeFollowGround() {
     if (curLength > 0.0f) {
         mAbsorbVec *= length * (1.0f - rate) / curLength;
     }
+
     mAbsorbVec *= 1.0f - mLerp1;
 
     if (isGreaterEqualStep(this, 3) &&
@@ -397,6 +420,7 @@ void CameraVerticalAbsorber::exeFollowGround() {
                 return;
             }
         }
+
         setNerve(this, &NrvCameraVerticalAbsorberAbsorb);
     }
 }
@@ -415,6 +439,7 @@ void CameraVerticalAbsorber::exeFollowClimbPole() {
     if (curLength > 0.0f) {
         mAbsorbVec *= length * (1.0f - rate) / curLength;
     }
+
     mAbsorbVec *= 1.0f - mLerp1;
 
     if (!alCameraPoserFunction::isTargetClimbPole(mCameraPoser)) {
@@ -443,6 +468,7 @@ void CameraVerticalAbsorber::exeFollowWater() {
     if (curLength > 0.0f) {
         mAbsorbVec *= length * (1.0f - rate) / curLength;
     }
+
     mAbsorbVec *= 1.0f - mLerp1;
 
     if (isGreaterEqualStep(this, 3) && !alCameraPoserFunction::isTargetInWater(mCameraPoser)) {
@@ -477,6 +503,7 @@ void CameraVerticalAbsorber::tryResetAbsorbVecIfInCollision(const sead::Vector3f
                                                                rPos + mAbsorbVec, -mAbsorbVec)) {
         return;
     }
+
     mAbsorbVec = {0.0f, 0.0f, 0.0f};
     if (alCameraPoserFunction::isTargetCollideGround(mCameraPoser)) {
         setNerve(this, &NrvCameraVerticalAbsorberFollowGround);

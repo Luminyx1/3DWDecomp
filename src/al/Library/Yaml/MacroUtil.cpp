@@ -23,6 +23,7 @@ void YamlParamGroup::addParam(IUseYamlParam* pParam) {
         mTailParam = pParam;
         return;
     }
+
     mTailParam->setNext(pParam);
     mTailParam = pParam;
 }

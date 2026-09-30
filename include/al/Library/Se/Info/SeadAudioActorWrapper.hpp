@@ -22,6 +22,7 @@ public:
     void resetVelocity();
     bool isPlayingSound() const;
 };
+
 static_assert(sizeof(SeadAudio3DActorWrapper) == 0x150);
 
 class SeadAudioActorWrapper : public nn::atk::SoundActor, public sead::IDisposer {
@@ -33,5 +34,6 @@ public:
     bool startSoundWithInfo(sead::SoundHandle* pHandle, u32 soundId, const SoundStartInfo* pStartInfo, bool isHold);
     bool isPlayingSound() const;
 };
+
 static_assert(sizeof(SeadAudioActorWrapper) == 0xf0);
 }  // namespace al

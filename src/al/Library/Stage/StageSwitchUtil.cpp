@@ -14,10 +14,12 @@ StageSwitchAccesser* getStageSwitchAccesser(const IUseStageSwitch* pUser, const 
     if (!keeper) {
         return nullptr;
     }
+
     StageSwitchAccesser* accesser = keeper->tryGetStageSwitchAccesser(pLinkName);
     if (!accesser) {
         return nullptr;
     }
+
     accesser->isEnableRead();
     return accesser;
 }
@@ -43,11 +45,13 @@ void initStageSwitch(IUseStageSwitch* pUser, StageSwitchDirector* pDirector,
     if (pUser->getStageSwitchKeeper()) {
         return;
     }
+
     pUser->initStageSwitchKeeper();
 
     if (calcLinkCountClassName(rInfo, "StageSwitch") == 0) {
         return;
     }
+
     StageSwitchKeeper* keeper = pUser->getStageSwitchKeeper();
     keeper->setUseName(pUser);
     keeper->init(pDirector, rInfo);
@@ -65,6 +69,7 @@ bool tryInitStageSwitch(IUseStageSwitch* pUser, StageSwitchDirector* pDirector,
     if (calcLinkCountClassName(rInfo, "StageSwitch") == 0) {
         return false;
     }
+
     initStageSwitch(pUser, pDirector, rInfo);
     return true;
 }
@@ -126,6 +131,7 @@ bool tryOnStageSwitch(IUseStageSwitch* pUser, const char* pLinkName) {
     if (!accesser || !accesser->isValid() || accesser->isOnSwitch()) {
         return false;
     }
+
     accesser->onSwitch();
     return true;
 }
@@ -141,6 +147,7 @@ bool tryOffStageSwitch(IUseStageSwitch* pUser, const char* pLinkName) {
     if (!accesser || !accesser->isValid() || !accesser->isOnSwitch()) {
         return false;
     }
+
     accesser->offSwitch();
     return true;
 }
@@ -155,6 +162,7 @@ bool tryOnStageSwitchInstant(IUseStageSwitch* pUser, const char* pLinkName) {
     if (!tryOnStageSwitch(pUser, pLinkName)) {
         return false;
     }
+
     getStageSwitchAccesser(pUser, pLinkName)->doInstantResponse();
     return true;
 }
@@ -169,6 +177,7 @@ bool tryOffStageSwitchInstant(IUseStageSwitch* pUser, const char* pLinkName) {
     if (!tryOffStageSwitch(pUser, pLinkName)) {
         return false;
     }
+
     getStageSwitchAccesser(pUser, pLinkName)->doInstantResponse();
     return true;
 }
@@ -186,10 +195,12 @@ bool isSameStageSwitch(const IUseStageSwitch* pUser, const IUseStageSwitch* pOth
     if (!accesser) {
         return false;
     }
+
     StageSwitchAccesser* otherAccesser = getStageSwitchAccesser(pOther, pLinkName);
     if (!otherAccesser) {
         return false;
     }
+
     return accesser->isEqualSwitch(otherAccesser);
 }
 
@@ -204,6 +215,7 @@ s32 findSwitchNo(const IUseStageSwitch* pUser, const char* pLinkName) {
     if (!accesser) {
         return -1;
     }
+
     return accesser->getSwitchNo();
 }
 
@@ -318,6 +330,7 @@ bool listenStageSwitchOn(IUseStageSwitch* pUser, const char* pLinkName,
     if (!accesser || !accesser->isValid()) {
         return false;
     }
+
     StageSwitchFunctorListener* listener = new StageSwitchFunctorListener();
     listener->setOnFunctor(rFunctor);
     accesser->addListener(listener);
@@ -337,6 +350,7 @@ bool listenStageSwitchOff(IUseStageSwitch* pUser, const char* pLinkName,
     if (!accesser || !accesser->isValid()) {
         return false;
     }
+
     StageSwitchFunctorListener* listener = new StageSwitchFunctorListener();
     listener->setOffFunctor(rFunctor);
     accesser->addListener(listener);
@@ -357,6 +371,7 @@ bool listenStageSwitchOnOff(IUseStageSwitch* pUser, const char* pLinkName,
     if (!accesser || !accesser->isValid()) {
         return false;
     }
+
     StageSwitchFunctorListener* listener = new StageSwitchFunctorListener();
     listener->setOnFunctor(rOnFunctor);
     listener->setOffFunctor(rOffFunctor);

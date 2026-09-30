@@ -38,6 +38,7 @@ SoundItemEntry* SoundItemHolder::tryFindEntry(u32 itemId, IAudioResourceLoader* 
             return entry;
         }
     }
+
     return nullptr;
 }
 
@@ -60,6 +61,7 @@ void SoundItemHolder::clearEntry() {
     for (s32 i = 0; i < mSize; i++) {
         mSoundItemEntries.get(i)->clear();
     }
+
     mSize = 0;
 }
 }  // namespace al

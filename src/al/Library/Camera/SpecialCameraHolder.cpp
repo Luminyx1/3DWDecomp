@@ -28,6 +28,7 @@ CameraTicket* SpecialCameraHolder::findEntranceCamera(const char* pSuffix) const
             return ticket;
         }
     }
+
     return nullptr;
 }
 

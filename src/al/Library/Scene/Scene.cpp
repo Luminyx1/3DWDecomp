@@ -46,6 +46,7 @@ Scene::~Scene() {
     if (mAudioDirector) {
         mAudioDirector->finalize();
     }
+
     delete mStageResourceKeeper;
     delete mLiveActorKit;
     delete mLayoutKit;
@@ -73,17 +74,21 @@ void Scene::movement() {
         stall();
         return;
     }
+
     if (mSceneStopCtrl) {
         mSceneStopCtrl->update();
     }
+
     if (mScreenCoverCtrl) {
         mScreenCoverCtrl->update();
     }
+
     updateNerve();
     control();
     if (mAudioKeeper) {
         mAudioKeeper->update();
     }
+
     if (mAudioDirector) {
         mAudioDirector->update();
     }
@@ -111,6 +116,7 @@ SceneCameraInfo* Scene::getSceneCameraInfo() const {
     if (mIsUseCameraRS) {
         return mLiveActorKit->mCameraDirectorRS->getSceneCameraInfo();
     }
+
     return mLiveActorKit->mCameraDirector->getSceneCameraInfo();
 }
 
@@ -263,6 +269,7 @@ void Scene::initSceneAudio(const SceneInitInfo& rInfo, const char* pStageName, s
     for (s32 i = 0; i < playerNum; i++) {
         playerNames[i] = player->getSoundName(SeadAudioPlayer::getSoundPlayerIdFromIndex(i));
     }
+
     mAudioDirector->initSituationDirector(playerNames, playerNum);
 }
 
@@ -318,12 +325,15 @@ void Scene::endInit(const ActorInitInfo& rInfo, IScenarioCompleteChecker* pCheck
     if (mSceneObjHolder) {
         mSceneObjHolder->initAfterPlacementSceneObj(rInfo);
     }
+
     if (mLiveActorKit) {
         if (mLiveActorKit->mDemoDirector) {
             mLiveActorKit->mDemoDirector->endInit(rInfo);
         }
+
         mLiveActorKit->endInit(pChecker);
     }
+
     if (mLayoutKit) {
         mLayoutKit->endInit();
     }

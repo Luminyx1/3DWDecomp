@@ -73,5 +73,6 @@ public:
     bool mIsSnapshotMode = false;
     bool _A2 = false;
 };
+
 static_assert(sizeof(CameraPoser) == 0xa8);
 }  // namespace al

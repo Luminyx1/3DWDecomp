@@ -50,6 +50,7 @@ void ExecuteTableHolderUpdate::init(const ExecuteSystemInitInfo& rInfo, const Ex
             actorNum++;
         }
     }
+
     mActorListNumMax = actorNum;
     mActorLists = new ExecutorListActorExecuteBase*[actorNum];
 
@@ -195,6 +196,7 @@ bool ExecuteTableHolderUpdate::tryRegisterUser(IUseExecutor* pUser, const char* 
             isRegistered = true;
         }
     }
+
     return isRegistered;
 }
 
@@ -214,6 +216,7 @@ bool ExecuteTableHolderUpdate::tryRegisterFunctor(const FunctorBase& rFunctor,
             isRegistered = true;
         }
     }
+
     return isRegistered;
 }
 

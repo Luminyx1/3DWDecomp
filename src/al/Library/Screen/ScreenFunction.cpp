@@ -24,6 +24,7 @@ ScreenCaptureExecutor::~ScreenCaptureExecutor() {
             delete info->screenCapture;
             info->screenCapture = nullptr;
         }
+
         delete info;
     }
 }
@@ -50,6 +51,7 @@ void ScreenCaptureExecutor::tryCaptureAndDraw(agl::DrawContext* pDrawContext,
         mCaptureInfos.unsafeAt(index)->screenCapture->drawCaptureImage(pDrawContext,
                                                                        pRenderBuffer);
     }
+
     tryCapture(pDrawContext, pRenderBuffer, index);
 }
 
@@ -86,6 +88,7 @@ bool ScreenCaptureExecutor::tryCapture(agl::DrawContext* pDrawContext,
     if (!info->isActiveRequest) {
         return false;
     }
+
     info->screenCapture->copyImageFromFrameBuffer(pDrawContext, pRenderBuffer);
     info->isActiveRequest = false;
     info->isDraw = true;
@@ -174,6 +177,7 @@ void ScreenCaptureExecutor::offDrawGlobal() {
     for (s32 i = 0; i < mCaptureInfos.capacity(); i++) {
         mCaptureInfos.unsafeAt(i)->isDraw = false;
     }
+
     mIsCaptured = false;
 }
 
@@ -187,6 +191,7 @@ bool ScreenCaptureExecutor::isAnyActiveRequest() const {
             return true;
         }
     }
+
     return false;
 }
 }  // namespace al

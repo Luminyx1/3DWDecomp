@@ -87,6 +87,7 @@ void ExecutorActorMovementCalcAnim::execute() const {
         for (s32 i = 0; i < mActorNum; i++) {
             mActors[i]->movement();
         }
+
         mThread->mThread->sendMessage(reinterpret_cast<s64>(mActors),
                                       sead::MessageQueue::BlockType::Blocking);
         return;

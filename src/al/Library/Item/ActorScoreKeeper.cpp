@@ -20,6 +20,7 @@ namespace al {
             mScoreInfos->init(rIter);
             return;
         }
+
         mScoreNum = rIter.getSize();
         mScoreInfos = new ActorScoreInfo[mScoreNum];
 

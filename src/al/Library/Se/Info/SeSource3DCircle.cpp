@@ -41,6 +41,7 @@ const sead::Vector3f* SeSource3DCircle::calcPosition(const sead::Vector3f& rList
         } else if (length >= *mRadius) {
             planePos *= *mRadius / length;
         }
+
         mPos.set(planePos.x, planePos.y, 0.0f);
     } else {
         sead::Vector2f planePos(localPos.x, localPos.z);
@@ -50,8 +51,10 @@ const sead::Vector3f* SeSource3DCircle::calcPosition(const sead::Vector3f& rList
         } else if (length >= *mRadius) {
             planePos *= *mRadius / length;
         }
+
         mPos.set(planePos.x, 0.0f, planePos.y);
     }
+
     mPos.setMul(mMtxPose->get3DMtx(), mPos);
     return &mPos;
 }

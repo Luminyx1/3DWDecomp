@@ -20,12 +20,14 @@ void BlockRailPartsGroup::init(const ActorInitInfo& rInfo) {
     if (mPartsNum == 0) {
         return;
     }
+
     mParts = new BlockRailParts*[mPartsNum];
     for (s32 i = 0; i < mPartsNum; i++) {
         const char* name = getLinksActorDisplayName(rInfo, "Parts", i);
         mParts[i] = new BlockRailParts(name);
         initLinksActor(mParts[i], rInfo, "Parts", i);
     }
+
     for (s32 i = 0; i < mPartsNum; i++) {
         for (s32 j = i + 1; j < mPartsNum; j++) {
             BlockRailParts::tryConnect(mParts[i], mParts[j]);
@@ -102,14 +104,17 @@ s32 BlockRailPartsGroup::calcEmptyLinkCount() const {
             if (link->isTerminate()) {
                 continue;
             }
+
             if (link->getPrevLinkNum() == 0) {
                 count++;
             }
+
             if (link->getNextLinkNum() == 0) {
                 count++;
             }
         }
     }
+
     return count;
 }
 }  // namespace al

@@ -15,11 +15,14 @@ inline bool isOnGroundInline(const LiveActor* pActor, u32 checkFrame, f32 margin
         if (!(collider->_110 >= 0.0f) && collider->_264 > checkFrame) {
             return false;
         }
+
         return !(getVelocity(pActor).dot(collider->getRecentOnGroundNormal(checkFrame)) > margin);
     }
+
     if (getTrans(pActor).y <= 0.0f && getVelocity(pActor).y < 0.0f) {
         return true;
     }
+
     return false;
 }
 }  // namespace
@@ -124,6 +127,7 @@ bool isCollidedWallFace(const LiveActor* pActor) {
     if (!(collider->_1b8 >= 0.0f)) {
         return false;
     }
+
     return collider->mIsCollidedWallFace;
 }
 
@@ -146,6 +150,7 @@ bool isCollidedWallVelocity(const LiveActor* pActor) {
     if (!isCollidedWall(pActor)) {
         return false;
     }
+
     return getVelocity(pActor).dot(getCollidedWallNormal(pActor)) < 0.0f;
 }
 
@@ -158,6 +163,7 @@ bool isCollidedCeilingVelocity(const LiveActor* pActor) {
     if (!isCollidedCeiling(pActor)) {
         return false;
     }
+
     return getVelocity(pActor).dot(getCollidedCeilingNormal(pActor)) < 0.0f;
 }
 
@@ -224,6 +230,7 @@ const CollisionParts* tryGetCollidedGroundCollisionParts(const LiveActor* pActor
     if (!isCollidedGround(pActor)) {
         return nullptr;
     }
+
     return pActor->mCollider->mFloor.mTriangle.mCollisionParts;
 }
 
@@ -236,6 +243,7 @@ const CollisionParts* tryGetCollidedWallCollisionParts(const LiveActor* pActor) 
     if (!isCollidedWall(pActor)) {
         return nullptr;
     }
+
     return pActor->mCollider->mWall.mTriangle.mCollisionParts;
 }
 
@@ -248,6 +256,7 @@ const CollisionParts* tryGetCollidedCeilingCollisionParts(const LiveActor* pActo
     if (!isCollidedCeiling(pActor)) {
         return nullptr;
     }
+
     return pActor->mCollider->mCeiling.mTriangle.mCollisionParts;
 }
 
@@ -260,6 +269,7 @@ HitSensor* tryGetCollidedGroundSensor(const LiveActor* pActor) {
     if (!isCollidedGround(pActor)) {
         return nullptr;
     }
+
     return pActor->mCollider->mFloor.mTriangle.mCollisionParts->mSensor;
 }
 
@@ -272,6 +282,7 @@ HitSensor* tryGetCollidedWallSensor(const LiveActor* pActor) {
     if (!isCollidedWall(pActor)) {
         return nullptr;
     }
+
     return pActor->mCollider->mWall.mTriangle.mCollisionParts->mSensor;
 }
 
@@ -284,6 +295,7 @@ HitSensor* tryGetCollidedCeilingSensor(const LiveActor* pActor) {
     if (!isCollidedCeiling(pActor)) {
         return nullptr;
     }
+
     return pActor->mCollider->mCeiling.mTriangle.mCollisionParts->mSensor;
 }
 

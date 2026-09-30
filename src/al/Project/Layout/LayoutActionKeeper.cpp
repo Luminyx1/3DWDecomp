@@ -21,6 +21,7 @@ LayoutActionKeeper::LayoutActionKeeper(LayoutKeeper* pLayoutKeeper, IUseAudioKee
     if (mPaneGroupNum < 1) {
         return;
     }
+
     mPaneGroupInfos = new PaneGroupInfo[mPaneGroupNum];
     for (s32 i = 0; i < mPaneGroupNum; i++) {
         mPaneGroupInfos[i].mPaneGroup = pLayoutKeeper->getGroup(i);
@@ -47,20 +48,25 @@ bool LayoutActionKeeper::startAction(const char* pActionName, const char* pGroup
     if (!info) {
         return false;
     }
+
     mIsActionStarted = true;
     info->mPaneGroup->startAnim(pActionName);
     if (info->mEffectCtrl) {
         info->mEffectCtrl->startAction(pActionName);
     }
+
     if (info->mSeCtrl) {
         info->mSeCtrl->startAction(pActionName);
     }
+
     if (info->mBgmCtrl) {
         info->mBgmCtrl->startAction(pActionName);
     }
+
     if (mHitReactionKeeper) {
         mHitReactionKeeper->start(pActionName, nullptr, nullptr, nullptr);
     }
+
     return true;
 }
 
@@ -74,9 +80,11 @@ LayoutActionKeeper::findPaneGroupInfo(const char* pGroupName) const {
     if (pGroupName) {
         return findPaneGroupInfoByName(pGroupName);
     }
+
     if (mMainGroupName) {
         return findPaneGroupInfoByName(mMainGroupName);
     }
+
     return mPaneGroupInfos;
 }
 
@@ -90,6 +98,7 @@ void LayoutActionKeeper::update() {
         if (!paneGroup->isAnimPlaying()) {
             continue;
         }
+
         f32 frame = paneGroup->getAnimFrame();
         paneGroup->getAnimFrameMax();
         f32 frameRate = paneGroup->getAnimFrameRate();
@@ -97,13 +106,16 @@ void LayoutActionKeeper::update() {
         if (info.mEffectCtrl) {
             info.mEffectCtrl->update(frame, frameRate);
         }
+
         if (info.mSeCtrl) {
             info.mSeCtrl->update(frame, frameRate);
         }
+
         if (info.mBgmCtrl) {
             info.mBgmCtrl->update(frame, frameRate);
         }
     }
+
     mIsActionStarted = false;
 }
 

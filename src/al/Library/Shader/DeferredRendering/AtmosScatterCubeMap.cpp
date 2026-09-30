@@ -117,8 +117,10 @@ agl::ShaderMode AtmosScatterCubeMap::renderToCubeMap(agl::ShaderMode shaderMode)
                     sead::Vector2f::zero, drawer.getFovy(), drawer.getAspect(), shaderMode);
             }
         }
+
         return shaderMode;
     }
+
     if (isNerve(this, &NrvAtmosScatterCubeMapDrawRoughness)) {
         agl::env::CubeMap* cubeMap = mCubeMaps[mCubeMapIndex];
         agl::DrawContext* drawContext =
@@ -143,8 +145,10 @@ agl::ShaderMode AtmosScatterCubeMap::renderToCubeMap(agl::ShaderMode shaderMode)
                     i + 1, cMipMapParam[i - 1].mCount, cMipMapParam[i - 1].mSigma, true);
             }
         }
+
         cubeMap->end(reinterpret_cast<agl::DrawContext*>(GameFrameworkNx::sInstance->mDrawContext));
     }
+
     return shaderMode;
 }
 
@@ -182,8 +186,10 @@ bool AtmosScatterCubeMap::activateCubeMapTexture(s32 type, bool isRefract) const
         if (isRefract) {
             location = &getSamplerLocationCubeMapRoughnessRefract();
         }
+
         sampler = &mMirrorSampler;
     }
+
     sampler->activate(reinterpret_cast<agl::DrawContext*>(GameFrameworkNx::sInstance->mDrawContext),
                       *location, -1, false);
     return true;

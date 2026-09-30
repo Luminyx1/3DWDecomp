@@ -52,6 +52,7 @@ void setupModelKeeper(LiveActor* pActor, ModelKeeper* pModelKeeper, const ActorI
                           static_cast<const GraphicsSystemInfo*>(pActor->getSceneInfo()->_78),
                           cubeMapName);
     }
+
     const char* cubeMap2Name = nullptr;
     tryGetStringArg(&cubeMap2Name, rInfo, "CubeMap2UnitName");
     pActor->initModelKeeper(pModelKeeper);
@@ -311,6 +312,7 @@ void initActorSRT(LiveActor* pActor, const ActorInitInfo& rInfo) {
     if (!pActor->mActorPoseKeeper) {
         initActorPoseTRSV(pActor);
     }
+
     sead::Vector3f trans = {0.0f, 0.0f, 0.0f};
     tryGetTrans(&trans, rInfo);
     setTrans(pActor, trans);
@@ -331,6 +333,7 @@ void initActorSRT_ParentY(LiveActor* pActor, const ActorInitInfo& rInfo) {
     if (!pActor->mActorPoseKeeper) {
         initActorPoseTRSV(pActor);
     }
+
     sead::Vector3f trans = {0.0f, 0.0f, 0.0f};
     tryGetTrans(&trans, rInfo);
     setTrans(pActor, trans);
@@ -450,6 +453,7 @@ void initActorAudioKeeper(LiveActor* pActor, const ActorInitInfo& rInfo, const c
     } else {
         audioKeeper->init(audioDirector, pSeName, pBgmName ? pBgmName : pSeName, getTransPtr(pActor), pActor->getBaseMtx(), pActor->mModelKeeper, nullptr);
     }
+
     pActor->initAudioKeeper(audioKeeper);
 }
 
@@ -470,6 +474,7 @@ void initActorAudioKeeper(LiveActor* pActor, const ActorInitInfo& rInfo, const c
     } else {
         audioKeeper->init(rInfo.mAudioDirector, pSeName, pBgmName ? pBgmName : pSeName, pPos, pMtx, pActor->mModelKeeper, nullptr);
     }
+
     pActor->initAudioKeeper(audioKeeper);
 }
 
@@ -488,6 +493,7 @@ void initActorAudioKeeperWithout3D(LiveActor* pActor, const ActorInitInfo& rInfo
     } else {
         audioKeeper->init(rInfo.mAudioDirector, pSeName, pBgmName ? pBgmName : pSeName, nullptr, nullptr, nullptr, nullptr);
     }
+
     pActor->initAudioKeeper(audioKeeper);
 }
 
@@ -515,6 +521,7 @@ void initActorOceanWaveKeeper(LiveActor* pActor, const ActorInitInfo& rInfo, con
     if (!byml) {
         return;
     }
+
     ByamlIter iter(byml);
     OceanWaveKeeper* keeper = new OceanWaveKeeper(rInfo.mOceanWaveDirector);
     keeper->init(pActor->getName(), iter);
@@ -589,6 +596,7 @@ void initActorCollisionWithResource(LiveActor* pActor, Resource* pResource, cons
     if (!pResource->isExistFile(kclName)) {
         return;
     }
+
     void* kcl = const_cast<void*>(pResource->getKcl(rName));
     const u8* attribute = pResource->isExistFile(attributeName) ? pResource->getByml(StringTmp<256>("%sAttribute", rName.cstr())) : nullptr;
     const char* specialPurpose = nullptr;
@@ -597,12 +605,14 @@ void initActorCollisionWithResource(LiveActor* pActor, Resource* pResource, cons
     if (pSuffix) {
         initName.format("InitCollision%s", pSuffix);
     }
+
     StringTmp<64> initFileName("%s.byml", initName.cstr());
     if (pResource->isExistFile(initFileName.cstr())) {
         ByamlIter iter(pResource->getByml(initName.cstr()));
         iter.tryGetStringByKey(&specialPurpose, "SpecialPurpose");
         iter.tryGetIntByKey(&priority, "Priority");
     }
+
     initActorCollisionWithFilePtr(pActor, kcl, attribute, pSensor, pMtx, specialPurpose, priority);
 }
 
@@ -655,6 +665,7 @@ void initActorItemKeeper(LiveActor* pActor, const ActorInitInfo& rInfo, const ch
     if (!resource) {
         return;
     }
+
     ByamlIter rootIter(resource->getByml(pFileName));
     ByamlIter initInfoIter;
     s32 addItemNum = 0;
@@ -664,22 +675,26 @@ void initActorItemKeeper(LiveActor* pActor, const ActorInitInfo& rInfo, const ch
             addItemNum = num;
         }
     }
+
     ByamlIter itemListIter;
     ByamlIter listIter(rootIter.tryGetIterByKey(&itemListIter, "ItemList") ? itemListIter : rootIter);
     s32 itemNum = listIter.getSize() + addItemNum;
     if (itemNum <= 0) {
         return;
     }
+
     pActor->initItemKeeper(itemNum);
     for (s32 i = 0; i < itemNum; i++) {
         ByamlIter itemIter;
         if (!listIter.tryGetIterByIndex(&itemIter, i)) {
             continue;
         }
+
         const char* itemName = nullptr;
         if (!itemIter.tryGetStringByKey(&itemName, "Item")) {
             continue;
         }
+
         const char* timing = nullptr;
         itemIter.tryGetStringByKey(&timing, "Timing");
         const char* factor = nullptr;
@@ -701,11 +716,13 @@ void initActorAlphaCtrl(LiveActor* pActor, const ActorInitInfo& rInfo, const cha
     if (!resource) {
         return;
     }
+
     const char* fileName = pFileName ? pFileName : "InitAlphaCtrl";
     ByamlIter iter;
     if (!tryGetActorInitFileIter(&iter, resource, fileName, nullptr)) {
         return;
     }
+
     pActor->initActorAlphaCtrl(new ActorAlphaCtrl(iter, pActor), rInfo);
 }
 

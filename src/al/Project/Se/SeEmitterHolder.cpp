@@ -33,6 +33,7 @@ void SeEmitterHolder::update() {
     for (s32 i = 0; i < mEmitters.size(); i++) {
         isAllEnd &= mEmitters.unsafeAt(i)->update();
     }
+
     if (isAllEnd) {
         mIsActive = false;
     }
@@ -47,12 +48,14 @@ SeEmitter* SeEmitterHolder::findEmitter(const char* pName) const {
     if (pName == nullptr) {
         return mEmitters.unsafeAt(0);
     }
+
     for (s32 i = 0; i < mEmitters.size(); i++) {
         SeEmitter* emitter = mEmitters.unsafeAt(i);
         if (isEqualString(emitter->getName(), pName)) {
             return emitter;
         }
     }
+
     return nullptr;
 }
 
@@ -65,6 +68,7 @@ SeEmitter* SeEmitterHolder::getEmitter(s32 index) const {
     if (index < mEmitters.size()) {
         return mEmitters.unsafeAt(index);
     }
+
     return nullptr;
 }
 

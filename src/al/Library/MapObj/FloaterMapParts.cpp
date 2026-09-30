@@ -61,14 +61,17 @@ bool FloaterMapParts::receiveMsg(const SensorMsg* pMsg, HitSensor* pOther, HitSe
         mSinkFrame = 2;
         return true;
     }
+
     if (isMsgShowModel(pMsg)) {
         showModelIfHide(this);
         return true;
     }
+
     if (isMsgHideModel(pMsg)) {
         hideModelIfShow(this);
         return true;
     }
+
     return false;
 }
 
@@ -91,6 +94,7 @@ void FloaterMapParts::exeWait() {
     if (isFirstStep(this)) {
         validateClipping(this);
     }
+
     if (mSinkFrame > 0) {
         invalidateClipping(this);
         startNerveAction(this, "Sink");
@@ -104,14 +108,17 @@ void FloaterMapParts::exeSink() {
     if (isFirstStep(this)) {
         mAccelCount = 0;
     }
+
     if (mSinkFrame != 0) {
         mCoord += mSinkSpeed * mAccelCount / mMaxAccelCount;
         if (mAccelCount < mMaxAccelCount) {
             mAccelCount++;
         }
+
         if (mCoord > mMaxCoord) {
             mCoord = mMaxCoord;
         }
+
         mSinkTime = 0;
     } else {
         mSinkTime++;
@@ -119,6 +126,7 @@ void FloaterMapParts::exeSink() {
             mAccelCount--;
         }
     }
+
     if (mSinkTime >= mSinkKeepTime) {
         startNerveAction(this, "Back");
     }
@@ -131,10 +139,12 @@ void FloaterMapParts::exeBack() {
     if (isFirstStep(this)) {
         mAccelCount = 0;
     }
+
     mCoord -= mBackSpeed * mAccelCount / mMaxAccelCount;
     if (mAccelCount < mMaxAccelCount) {
         mAccelCount++;
     }
+
     bool isReachedStart;
     if (mCoord < 0.0f) {
         isReachedStart = true;
@@ -142,6 +152,7 @@ void FloaterMapParts::exeBack() {
     } else {
         isReachedStart = false;
     }
+
     if (mSinkFrame >= 1) {
         startNerveAction(this, "Sink");
     } else if (isReachedStart) {

@@ -41,6 +41,7 @@ bool AudioResourceLayer::loadSoundItem(u32 id, u32 loadFlag) {
     if (isLoaded) {
         mLoadedItemIds.pushBack(id);
     }
+
     return isLoaded;
 }
 
@@ -55,6 +56,7 @@ bool AudioResourceLayer::isLoadedSoundItem(u32 id) {
             return true;
         }
     }
+
     return false;
 }
 }  // namespace al

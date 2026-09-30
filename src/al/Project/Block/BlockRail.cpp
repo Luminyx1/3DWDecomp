@@ -50,6 +50,7 @@ void BlockRail::makeActorAppeared() {
     if (mStartRailEnd) {
         mStartRailEnd->makeActorAppeared();
     }
+
     if (mEndRailEnd) {
         mEndRailEnd->makeActorAppeared();
     }
@@ -64,6 +65,7 @@ void BlockRail::makeActorDead() {
     if (mStartRailEnd) {
         mStartRailEnd->makeActorDead();
     }
+
     if (mEndRailEnd) {
         mEndRailEnd->makeActorDead();
     }
@@ -86,12 +88,14 @@ void BlockRail::tryCreateRailEnd(const ActorInitInfo& rInfo) {
     if (mRailLink->isTerminate()) {
         return;
     }
+
     if (mRailLink->getPrevLinkNum() == 0) {
         sead::Vector3f pos;
         sead::Vector3f dir;
         mRailLink->calcPosAndDir(&pos, &dir, 0.0f);
         createRailEnd(rInfo, pos, -dir, &mStartRailEnd);
     }
+
     if (mRailLink->getNextLinkNum() == 0) {
         sead::Vector3f pos;
         sead::Vector3f dir;
@@ -112,12 +116,14 @@ void BlockRail::createRailEnd(const ActorInitInfo& rInfo, const sead::Vector3f& 
     if (!mEndModelName) {
         return;
     }
+
     ActorInitInfo info;
     info.initViewIdHostActor(rInfo, this);
     LiveActor* railEnd = new LiveActor("ブロックレール終端");
     if (rInfo.mActorSceneInfo.isSingleMode) {
         addToHostActorClipping(railEnd, this);
     }
+
     initActorWithArchiveName(railEnd, info, mEndModelName, nullptr);
     sead::Vector3f up;
     calcUpDir(&up, this);
@@ -127,11 +133,13 @@ void BlockRail::createRailEnd(const ActorInitInfo& rInfo, const sead::Vector3f& 
     if (isExistModel(this) && tryStartMclAnimIfExist(railEnd, "RailColor")) {
         setMclAnimFrameAndStop(railEnd, mRailColor);
     }
+
     if (isAlive(this)) {
         railEnd->appear();
     } else {
         railEnd->kill();
     }
+
     if (pRailEnd) {
         *pRailEnd = railEnd;
     }

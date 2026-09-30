@@ -17,6 +17,7 @@ const ActorParamS32* ActorParamHolder::findParamS32(const char* pName) const {
     if (info == nullptr) {
         return reinterpret_cast<const ActorParamS32*>("");
     }
+
     return &info->mParamS32;
 }
 
@@ -32,6 +33,7 @@ ActorParamInfo* ActorParamHolder::tryFindParamInfoByName(const char* pName) cons
             return info;
         }
     }
+
     return nullptr;
 }
 
@@ -45,6 +47,7 @@ const ActorParamF32* ActorParamHolder::findParamF32(const char* pName) const {
     if (info == nullptr) {
         return reinterpret_cast<const ActorParamF32*>("");
     }
+
     return &info->mParamF32;
 }
 
@@ -58,6 +61,7 @@ const ActorParamMove* ActorParamHolder::findParamMove(const char* pName) const {
     if (info == nullptr) {
         return reinterpret_cast<const ActorParamMove*>("");
     }
+
     return info->mParamMove;
 }
 
@@ -71,6 +75,7 @@ const ActorParamJump* ActorParamHolder::findParamJump(const char* pName) const {
     if (info == nullptr) {
         return reinterpret_cast<const ActorParamJump*>("");
     }
+
     return info->mParamJump;
 }
 
@@ -84,6 +89,7 @@ const ActorParamSight* ActorParamHolder::findParamSight(const char* pName) const
     if (info == nullptr) {
         return reinterpret_cast<const ActorParamSight*>("");
     }
+
     return info->mParamSight;
 }
 
@@ -97,6 +103,7 @@ const ActorParamRebound* ActorParamHolder::findParamRebound(const char* pName) c
     if (info == nullptr) {
         return reinterpret_cast<const ActorParamRebound*>("");
     }
+
     return info->mParamRebound;
 }
 
@@ -121,11 +128,13 @@ ActorParamHolder::ActorParamHolder(LiveActor* pActor) {
             valueIter.tryGetIntByKey(&info->mParamS32.value, "ParamS32");
             continue;
         }
+
         if (iter.tryGetIterByKey(&valueIter, "F32")) {
             info->mType = ActorParamType::F32;
             valueIter.tryGetFloatByKey(&info->mParamF32.value, "ParamF32");
             continue;
         }
+
         if (iter.tryGetIterByKey(&valueIter, "ActorParamMove")) {
             info->mType = ActorParamType::Move;
             auto* param = new ActorParamMove;
@@ -136,6 +145,7 @@ ActorParamHolder::ActorParamHolder(LiveActor* pActor) {
             info->mParamMove = param;
             continue;
         }
+
         if (iter.tryGetIterByKey(&valueIter, "ActorParamJump")) {
             info->mType = ActorParamType::Jump;
             auto* param = new ActorParamJump;
@@ -144,6 +154,7 @@ ActorParamHolder::ActorParamHolder(LiveActor* pActor) {
             info->mParamJump = param;
             continue;
         }
+
         if (iter.tryGetIterByKey(&valueIter, "ActorParamSight")) {
             info->mType = ActorParamType::Sight;
             auto* param = new ActorParamSight;
@@ -153,6 +164,7 @@ ActorParamHolder::ActorParamHolder(LiveActor* pActor) {
             info->mParamSight = param;
             continue;
         }
+
         if (iter.tryGetIterByKey(&valueIter, "ActorParamRebound")) {
             info->mType = ActorParamType::Rebound;
             auto* param = new ActorParamRebound;

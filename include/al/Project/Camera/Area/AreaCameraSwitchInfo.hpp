@@ -21,5 +21,6 @@ public:
     bool mIsStartWhenCollideGround = false;
     bool mIsStartWhenInWater = false;
 };
+
 static_assert(sizeof(AreaCameraSwitchInfo) == 0x20);
 }  // namespace al

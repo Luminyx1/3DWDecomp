@@ -173,15 +173,19 @@ void LiveActorKit::endInit(IScenarioCompleteChecker* pChecker) {
     if (mEffectSystem) {
         mEffectSystem->startScene(mExecDirector);
     }
+
     if (mItemDirector) {
         mItemDirector->endInit();
     }
+
     if (mShadowDirector) {
         mShadowDirector->endInit();
     }
+
     if (mEffectSystem) {
         mEffectSystem->setGraphicsSystemInfo(mGraphicsSystemInfo);
     }
+
     mGraphicsSystemInfo->endInit();
     if (mEffectSystem) {
         mEffectSystem->endInit();
@@ -230,24 +234,31 @@ void LiveActorKit::update() {
     if (mSwitchAreaDirector) {
         mSwitchAreaDirector->waitDone();
     }
+
     if (mGraphicsSystemInfo) {
         mGraphicsSystemInfo->clearGraphicsRequest();
     }
+
     if (mRumbleDirector) {
         mRumbleDirector->update();
     }
+
     if (mExecDirector) {
         mExecDirector->execute();
     }
+
     if (mGraphicsSystemInfo) {
         mGraphicsSystemInfo->updateGraphics(false);
     }
+
     if (mEffectSystem) {
         getEffectCalcHandler(mEffectSystem)->calc();
     }
+
     if (mAreaObjDirector) {
         mAreaObjDirector->update();
     }
+
     if (mSwitchAreaDirector) {
         mSwitchAreaDirector->update();
     }
@@ -270,6 +281,7 @@ void LiveActorKit::updateGraphics(bool isPaused) {
     if (mGraphicsSystemInfo) {
         mGraphicsSystemInfo->updateGraphics(isPaused);
     }
+
     if (mEffectSystem) {
         getEffectCalcHandler(mEffectSystem)->calc();
     }
@@ -284,9 +296,11 @@ bool LiveActorKit::preDrawGraphics() {
     if (!framework->_27c && framework->_27b) {
         return false;
     }
+
     if (mGraphicsSystemInfo) {
         mGraphicsSystemInfo->preDrawGraphics(mCameraDirector->mSceneCameraInfo);
     }
+
     return true;
 }
 

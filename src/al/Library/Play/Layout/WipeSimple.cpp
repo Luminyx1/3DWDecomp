@@ -50,6 +50,7 @@ void WipeSimple::tryStartClose(s32 frames) {
     if (isAlive() && (isNerve(this, &NrvWipeSimpleClose) || isNerve(this, &NrvWipeSimpleCloseEnd))) {
         return;
     }
+
     startClose(frames);
 }
 
@@ -83,6 +84,7 @@ void WipeSimple::startOpenDelay(s32 delay, s32 frames) {
         setNerve(this, &NrvWipeSimpleDelayOpen);
         return;
     }
+
     startOpen(frames);
 }
 
@@ -129,6 +131,7 @@ void WipeSimple::exeOpen() {
     if (isFirstStep(this)) {
         setActionFrameRate(this, mFrames > 0 ? getActionFrameMax(this, nullptr) / mFrames : 1.0f);
     }
+
     if (isActionEnd(this)) {
         kill();
     }
@@ -141,10 +144,12 @@ void WipeSimple::exeDelayOpen() {
     if (isLessStep(this, mDelay)) {
         return;
     }
+
     if (isStep(this, mDelay)) {
         startAction(this, "End");
         setActionFrameRate(this, mFrames > 0 ? getActionFrameMax(this, nullptr) / mFrames : 1.0f);
     }
+
     if (isActionEnd(this)) {
         kill();
     }
@@ -158,6 +163,7 @@ s32 WipeSimple::getWipeFrameNum() const {
     if (mFrames > 0) {
         return mFrames;
     }
+
     return getActionFrameMax(this, nullptr);
 }
 

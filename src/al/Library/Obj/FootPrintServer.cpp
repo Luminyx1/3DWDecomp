@@ -28,6 +28,7 @@ FootPrint* FootPrintServer::findDeadFootPrint() {
             return mFootPrints->at(i);
         }
     }
+
     return nullptr;
 }
 }  // namespace al

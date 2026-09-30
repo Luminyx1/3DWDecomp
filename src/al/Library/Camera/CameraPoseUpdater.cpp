@@ -72,6 +72,7 @@ CameraPoseUpdater::CameraPoseUpdater(SceneCameraInfo* pSceneCameraInfo, s32 view
     if (!mIsMainView) {
         mViewInfo->setValid(false);
     }
+
     pSceneCameraInfo->initViewInfo(mViewInfo);
     initNerve(&NrvCameraPoseUpdaterDeactive, 0);
 }
@@ -140,6 +141,7 @@ void CameraPoseUpdater::update(bool isPaused) {
         !isNerve(this, &NrvCameraPoseUpdaterSnapShotNoUpdate)) {
         trySwitchCamera();
     }
+
     updateNerve();
     bool isMainView = mIsMainView;
     mViewInfo->setValid(isMainView);
@@ -152,6 +154,7 @@ void CameraPoseUpdater::update(bool isPaused) {
         mLookAtCamera.setUp(up);
         mLookAtCamera.normalizeUp();
     }
+
     mSceneCameraViewCtrl->setShakeName(nullptr);
 
     if (mAreaObjDirector) {
@@ -165,12 +168,14 @@ void CameraPoseUpdater::update(bool isPaused) {
             }
         }
     }
+
     mLookAtCamera.updateViewMatrix();
 
     f32 fovy = mFovyDegree;
     if (mPauseCameraCtrl && mPauseCameraCtrl->isCameraPause()) {
         fovy = mPauseCameraCtrl->getFovyDegree();
     }
+
     mProjection->setProj(getNearClipDistance(), mFarClipDistance, sead::Mathf::deg2rad(fovy),
                          mAspect);
     mProjection->calcMtx();
@@ -188,6 +193,7 @@ bool CameraPoseUpdater::trySwitchCamera() {
     if (!mSwitcher) {
         return false;
     }
+
     mSwitcher->update();
     if (!mSwitcher->isChanged()) {
         return false;
@@ -199,6 +205,7 @@ bool CameraPoseUpdater::trySwitchCamera() {
             setNerve(this, &NrvCameraPoseUpdaterDeactive);
             return true;
         }
+
         return false;
     }
 
@@ -270,6 +277,7 @@ bool CameraPoseUpdater::trySwitchCamera() {
     if (mClippingDirector && mSwitcher->isChanged() && mInterpole->getStep() <= 0) {
         mClippingDirector->resetClippingDistanceStates();
     }
+
     return isChangedNerve;
 }
 
@@ -305,6 +313,7 @@ bool CameraPoseUpdater::calcCameraPoseWithoutInterpole(sead::LookAtCamera* pCame
     if (!mTicket) {
         return false;
     }
+
     mTicket->getPoser()->calcCameraPose(pCamera);
     return true;
 }
@@ -317,10 +326,12 @@ void CameraPoseUpdater::startSnapShotMode(bool isLock) {
     if (!mTicket) {
         return;
     }
+
     if (isNerve(this, &NrvCameraPoseUpdaterSnapShot) ||
         isNerve(this, &NrvCameraPoseUpdaterSnapShotNoUpdate)) {
         return;
     }
+
     if (isLock || mInterpole->isActive() || isNerve(this, &NrvCameraPoseUpdaterStop)) {
         setNerve(this, &NrvCameraPoseUpdaterSnapShotNoUpdate);
         return;
@@ -336,6 +347,7 @@ void CameraPoseUpdater::startSnapShotMode(bool isLock) {
             return;
         }
     }
+
     mTicket->getPoser()->startSnapShotModeCore();
     setNerve(this, &NrvCameraPoseUpdaterSnapShot);
 }
@@ -390,11 +402,13 @@ void CameraPoseUpdater::exeActive() {
     if (isFirstStep(this)) {
         mIsMainView = true;
     }
+
     if (mPauseCameraCtrl && mPauseCameraCtrl->isCameraPause() &&
         !isNerve(this, &NrvCameraPoseUpdaterPause)) {
         setNerve(this, &NrvCameraPoseUpdaterPause);
         return;
     }
+
     if (mStopJudge->isStop()) {
         setNerve(this, &NrvCameraPoseUpdaterStop);
         return;
@@ -411,6 +425,7 @@ void CameraPoseUpdater::exeActive() {
     if (!mTicket->getPoser()->is141()) {
         mInterpole->update(camera);
     }
+
     mInterpole->makeLookAtCamera(&camera);
     if (mInterpole->isActive()) {
         mFovyDegree = mInterpole->getFovyDegree();
@@ -446,6 +461,7 @@ void CameraPoseUpdater::exeDeactive() {
     if (isFirstStep(this)) {
         mIsMainView = false;
     }
+
     if (mPauseCameraCtrl && mPauseCameraCtrl->isCameraPause() &&
         !isNerve(this, &NrvCameraPoseUpdaterPause)) {
         setNerve(this, &NrvCameraPoseUpdaterPause);
@@ -469,9 +485,11 @@ void CameraPoseUpdater::exeStop() {
         setNerve(this, &NrvCameraPoseUpdaterPause);
         return;
     }
+
     if (mStopJudge->isStop()) {
         return;
     }
+
     if (mTicket) {
         startInterpole(60);
         setNerve(this, &NrvCameraPoseUpdaterActive);
@@ -487,6 +505,7 @@ void CameraPoseUpdater::exePause() {
     if (mPauseCameraCtrl->isCameraPause()) {
         return;
     }
+
     if (mStopJudge->isStop()) {
         setNerve(this, &NrvCameraPoseUpdaterStop);
     } else if (mTicket) {

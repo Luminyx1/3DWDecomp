@@ -75,11 +75,13 @@ void RollingCubePose::setNextCubePose(const RollingCubePose* nextPose) {
                     firstPoint.set(nextBottomFacePoints[e]);
                     continue;
                 }
+
                 if (pointCount == 1) {
                     pointCount = 2;
                     secondPoint.set(nextBottomFacePoints[e]);
                     continue;
                 }
+
                 pointCount++;
             }
         }

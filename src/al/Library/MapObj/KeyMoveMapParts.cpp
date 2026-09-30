@@ -89,6 +89,7 @@ void KeyMoveMapParts::init(const ActorInitInfo& rInfo) {
     if (mDelayTime >= 1) {
         startNerveAction(this, "Delay");
     }
+
     tryGetArg(&mIsCancelWithinWaitTime, rInfo, "IsCancelWithinWaitTime");
     tryGetArg(&mIsReverseWhenSwitchOff, rInfo, "IsReverseWhenSwitchOff");
     tryGetArg(&mIsIgnoreFirstWaitTime, rInfo, "IsIgnoreFirstWaitTime");
@@ -104,6 +105,7 @@ void KeyMoveMapParts::init(const ActorInitInfo& rInfo) {
                                         KeyMoveMapPartsFunctor(this, &KeyMoveMapParts::start))) {
         startNerveAction(this, "StandBy");
     }
+
     listenStageSwitchOn(this, "KillPrePassLights",
                         KeyMoveMapPartsFunctor(this, &KeyMoveMapParts::killLights));
     mSwitchKeepOnAreaGroup = tryCreateSwitchKeepOnAreaGroup(this, rInfo);
@@ -118,8 +120,10 @@ void KeyMoveMapParts::init(const ActorInitInfo& rInfo) {
             mEffectMtxSetter->setMtxPtr(&mBaseEffectMtx, "BaseEffectMtx");
             mBaseQuat.set(getQuat(this));
         }
+
         tryGetArg(&mGroundCheckOffset, rInfo, "GroundCheckOffset");
     }
+
     _142 = true;
     _143 = true;
 }
@@ -134,6 +138,7 @@ void KeyMoveMapParts::start() {
             getKeyPoseCount(mKeyPoseKeeper) < 2) {
             return;
         }
+
         if (!mKeyPoseKeeper->isGoingToEnd()) {
             mKeyPoseKeeper->reverse();
         }
@@ -141,9 +146,11 @@ void KeyMoveMapParts::start() {
                getKeyPoseCount(mKeyPoseKeeper) < 2) {
         return;
     }
+
     if (isExistAction(this, "Start")) {
         startAction(this, "Start");
     }
+
     if (mDelayTime >= 1) {
         startNerveAction(this, "Delay");
     } else {
@@ -160,14 +167,17 @@ void KeyMoveMapParts::reverse() {
         getKeyPoseCount(mKeyPoseKeeper) < 2) {
         return;
     }
+
     if (mKeyPoseKeeper->isGoingToEnd()) {
         mKeyPoseKeeper->reverse();
     }
+
     if (isExistAction(this, "StartReverse")) {
         startAction(this, "StartReverse");
     } else {
         tryStartAction(this, "Start");
     }
+
     if (mDelayTime >= 1) {
         startNerveAction(this, "Delay");
     } else {
@@ -183,6 +193,7 @@ void KeyMoveMapParts::killLights() {
     if (!lightKeeper) {
         return;
     }
+
     for (s32 i = 0; i < lightKeeper->getLightNum(); i++) {
         if (strstr(lightKeeper->getLightBase(i)->mName, "Kill")) {
             lightKeeper->getLightBase(i)->requestKill();
@@ -198,15 +209,18 @@ void KeyMoveMapParts::stop() {
         isNerve(this, NrvKeyMoveMapParts.Stop.data())) {
         return;
     }
+
     if (isExistAction(this, "StopSign")) {
         startNerveAction(this, "StopSign");
     } else if (!isNerve(this, NrvKeyMoveMapParts.Stop.data())) {
         startNerveAction(this, "Stop");
     }
+
     if (mSeMoveName) {
         tryStopSe(this, mSeMoveName);
         mSeMoveName = nullptr;
     }
+
     tryStartSe(this, "MoveEnd");
 }
 
@@ -217,6 +231,7 @@ void KeyMoveMapParts::initAfterPlacement() {
     if (!mEffectMtxSetter || !mIsSingleMode) {
         return;
     }
+
     mBaseEffectMtx.makeQT(mBaseQuat, getGroundPos());
 }
 
@@ -233,6 +248,7 @@ sead::Vector3f KeyMoveMapParts::getGroundPos() {
                                              sead::Vector3f::ey * -10000.0f, nullptr, nullptr)) {
         return hitPos;
     }
+
     return startPos;
 }
 
@@ -249,14 +265,17 @@ bool KeyMoveMapParts::receiveMsg(const SensorMsg* pMsg, HitSensor* pOther, HitSe
         start();
         return true;
     }
+
     if (isMsgShowModel(pMsg)) {
         showModelIfHide(this);
         return true;
     }
+
     if (isMsgHideModel(pMsg)) {
         hideModelIfShow(this);
         return true;
     }
+
     return false;
 }
 
@@ -268,6 +287,7 @@ void KeyMoveMapParts::appear() {
     if (!mIsSingleMode) {
         return;
     }
+
     restartKeyPose(mKeyPoseKeeper, getTransPtr(this), getQuatPtr(this));
     resetPosition(this, false);
     if (mDelayTime >= 1) {
@@ -275,6 +295,7 @@ void KeyMoveMapParts::appear() {
     } else {
         startNerveAction(this, "Wait");
     }
+
     if (getKeyPoseCount(mKeyPoseKeeper) < 2 || mIsFloorTouchStart) {
         startNerveAction(this, "StandBy");
     }
@@ -287,15 +308,19 @@ void KeyMoveMapParts::control() {
     if (mSwitchKeepOnAreaGroup) {
         mSwitchKeepOnAreaGroup->update(getTrans(this));
     }
+
     if (mSwitchOnAreaGroup) {
         mSwitchOnAreaGroup->update(getTrans(this));
     }
+
     if (!mIsSingleMode) {
         return;
     }
+
     if (mReverseTimer == 20 && !isNerve(this, NrvKeyMoveMapParts.StandBy.data())) {
         reverse();
     }
+
     if (mReverseTimer != -1) {
         mReverseTimer++;
     }
@@ -314,6 +339,7 @@ void KeyMoveMapParts::appearAndSetStart() {
     } else {
         startNerveAction(this, "Wait");
     }
+
     appear();
 }
 
@@ -348,6 +374,7 @@ void KeyMoveMapParts::exeWaitSign() {
     if (isFirstStep(this)) {
         startAction(this, "WaitSign");
     }
+
     if (isActionEnd(this)) {
         startNerveAction(this, "Wait");
     }
@@ -369,6 +396,7 @@ void KeyMoveMapParts::exeWait() {
                 }
             }
         }
+
         if (isGreaterEqualStep(this, mKeyMoveWaitTime)) {
             if (isRestart(mKeyPoseKeeper)) {
                 restartKeyPose(mKeyPoseKeeper, getTransPtr(this), getQuatPtr(this));
@@ -376,13 +404,16 @@ void KeyMoveMapParts::exeWait() {
                 startNerveAction(this, "Wait");
                 return;
             }
+
             if (isMoveSignKey(mKeyPoseKeeper) && isExistAction(this, "MoveKeySign")) {
                 startNerveAction(this, "MoveSign");
                 return;
             }
+
             startNerveAction(this, "Move");
             return;
         }
+
         if (mIsCancelWithinWaitTime && mReverseTimer != 0 && mKeyPoseKeeper->isGoingToEnd()) {
             restartKeyPose(mKeyPoseKeeper, getTransPtr(this), getQuatPtr(this));
             mIsReversed = false;
@@ -395,11 +426,13 @@ void KeyMoveMapParts::exeWait() {
                 mKeyMoveWaitTime = waitTime;
             }
         }
+
         if (isGreaterEqualStep(this, mKeyMoveWaitTime)) {
             if (isMoveSignKey(mKeyPoseKeeper) && isExistAction(this, "MoveKeySign")) {
                 startNerveAction(this, "MoveSign");
                 return;
             }
+
             startNerveAction(this, "Move");
         }
     }
@@ -412,6 +445,7 @@ void KeyMoveMapParts::exeMoveSign() {
     if (isFirstStep(this)) {
         startAction(this, "MoveKeySign");
     }
+
     if (isActionEnd(this)) {
         startNerveAction(this, "Move");
     }
@@ -426,6 +460,7 @@ void KeyMoveMapParts::exeMove() {
             if (isExistAction(this, "MoveLoop")) {
                 tryStartActionIfNotPlaying(this, "MoveLoop");
             }
+
             mKeyMoveMoveTime = calcKeyMoveMoveTime(mKeyPoseKeeper);
             s32 keyIndex = mKeyPoseKeeper->getKeyPoseCurrentIdx();
             sead::Vector3f dir;
@@ -435,11 +470,13 @@ void KeyMoveMapParts::exeMove() {
             } else if (dir.y > 0.0f) {
                 _startUp();
             }
+
             mSeMoveName = getMoveSeName(keyIndex);
             if (mSeMoveName) {
                 tryStartSe(this, mSeMoveName);
             }
         }
+
         f32 rate = calcNerveRate(this, mKeyMoveMoveTime);
         calcLerpKeyTrans(getTransPtr(this), mKeyPoseKeeper, rate);
         calcSlerpKeyQuat(getQuatPtr(this), mKeyPoseKeeper, rate);
@@ -449,6 +486,7 @@ void KeyMoveMapParts::exeMove() {
                 stop();
                 return;
             }
+
             if (isMoveSignKey(mKeyPoseKeeper)) {
                 if (isExistAction(this, "WaitSign")) {
                     startNerveAction(this, "WaitSign");
@@ -459,10 +497,12 @@ void KeyMoveMapParts::exeMove() {
             } else {
                 startNerveAction(this, "Wait");
             }
+
             if (mSeMoveName) {
                 tryStopSe(this, mSeMoveName);
                 mSeMoveName = nullptr;
             }
+
             tryStartSe(this, "MoveEnd");
         }
     } else {
@@ -470,8 +510,10 @@ void KeyMoveMapParts::exeMove() {
             if (isExistAction(this, "MoveLoop")) {
                 tryStartActionIfNotPlaying(this, "MoveLoop");
             }
+
             mKeyMoveMoveTime = calcKeyMoveMoveTime(mKeyPoseKeeper);
         }
+
         f32 rate = calcNerveRate(this, mKeyMoveMoveTime);
         calcLerpKeyTrans(getTransPtr(this), mKeyPoseKeeper, rate);
         calcSlerpKeyQuat(getQuatPtr(this), mKeyPoseKeeper, rate);
@@ -486,6 +528,7 @@ void KeyMoveMapParts::exeMove() {
             } else {
                 startNerveAction(this, "Wait");
             }
+
             tryStartSe(this, "MoveEnd");
         }
     }
@@ -498,6 +541,7 @@ void KeyMoveMapParts::exeStopSign() {
     if (isFirstStep(this)) {
         startAction(this, "StopSign");
     }
+
     if (isActionEnd(this)) {
         tryStartAction(this, "Stop");
     }
@@ -511,10 +555,12 @@ void KeyMoveMapParts::exeStop() {
         if (isInvalidClipping(this)) {
             validateClipping(this);
         }
+
         if (mIsStopKill) {
             kill();
         }
     }
+
     if (mIsSingleMode && mIsReversed == mKeyPoseKeeper->isGoingToEnd()) {
         startNerveAction(this, "StandBy");
         if (mIsReversed) {

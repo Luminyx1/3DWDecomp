@@ -54,6 +54,7 @@ bool isInAreaObj(const LiveActor* pActor, const char* pName) {
     if (!isAreaTarget(pActor)) {
         return false;
     }
+
     return isInAreaObj(pActor, pName, getTrans(pActor));
 }
 
@@ -72,10 +73,12 @@ bool isInAreaObjPlayerOne(const IUseAreaObj* pAreaUser, const char* pName,
         if (isDead(player) || !isAreaTarget(player)) {
             continue;
         }
+
         if (isInAreaObj(pAreaUser, pName, getTrans(player))) {
             return true;
         }
     }
+
     return false;
 }
 
@@ -94,10 +97,12 @@ bool isInAreaObjPlayerAll(const IUseAreaObj* pAreaUser, const char* pName,
         if (isDead(player) || !isAreaTarget(player)) {
             continue;
         }
+
         if (!isInAreaObj(pAreaUser, pName, getTrans(player))) {
             return false;
         }
     }
+
     return true;
 }
 

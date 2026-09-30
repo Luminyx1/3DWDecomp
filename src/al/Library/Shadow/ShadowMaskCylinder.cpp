@@ -26,6 +26,7 @@ void ShadowMaskCylinder::update() {
     if (!mIsShadowFixed) {
         calcShadowMatrix(&mShadowMtx);
     }
+
     ShadowMaskFunction::getShadowMaskKeeper(mHost)->addCylinder(
         mShadowMtx, mColor, mExpXZ, mExpY, getShadowIntensity(), mDistYBase,
         mDrawCategory.getRelativeIndex());

@@ -72,6 +72,7 @@ void ModelDrawerInvincible::draw() const {
             meshDrawer->draw(&mGraphicsSystemInfo->mViewVolume, 0, nullptr);
         }
     }
+
     agl::driver::GraphicsDriverMgr::instance()->setPolygonOffset(
         reinterpret_cast<agl::DrawContext*>(GameFrameworkNx::sInstance->mDrawContext), 0.0f, 0.0f);
 }

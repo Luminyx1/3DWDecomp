@@ -40,6 +40,7 @@ void PadDataArcReader::readResource(const char* pResourceName) {
     while (frame->trig != 0xffffffff) {
         frame++;
     }
+
     mTotalFrame = frame - mDataFrames;
 }
 
@@ -60,11 +61,13 @@ void PadDataArcReader::read(PadDataPack* pFrameData) {
     if (mIsEnd) {
         return;
     }
+
     const u32* src = reinterpret_cast<const u32*>(&mDataFrames[mCursorFrame++]);
     u32* dst = reinterpret_cast<u32*>(pFrameData);
     for (s32 i = 0; i < 6; i++) {
         dst[i] = sead::Endian::swapU32(src[i]);
     }
+
     checkEnd();
 }
 }  // namespace al

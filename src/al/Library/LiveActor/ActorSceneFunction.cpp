@@ -19,6 +19,7 @@ bool isStopScene(const LiveActor* pActor) {
     if (ctrl->_4 != 0) {
         return false;
     }
+
     return ctrl->_0 > 0;
 }
 
@@ -83,6 +84,7 @@ void setDisasterMode(LiveActor* pActor, bool isDisaster) {
     if (pActor->getSceneInfo()->cameraDirector == nullptr) {
         return;
     }
+
     CameraDirector_RS* director = pActor->getSceneInfo()->cameraDirector;
     director->_102 = isDisaster;
     director->setDisasterAreaCheck(isDisaster);
@@ -97,6 +99,7 @@ bool isDisasterMode(LiveActor* pActor) {
     if (pActor->getSceneInfo()->cameraDirector == nullptr) {
         return false;
     }
+
     return pActor->getSceneInfo()->cameraDirector->_102;
 }
 

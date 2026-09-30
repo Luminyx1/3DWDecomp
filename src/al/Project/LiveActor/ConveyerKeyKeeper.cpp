@@ -82,12 +82,15 @@ void ConveyerKeyKeeper::calcPosAndQuat(sead::Vector3f* pPos, sead::Quatf* pQuat,
         if (pPos) {
             pPos->set(mTrans);
         }
+
         if (pQuat) {
             pQuat->set(mQuat);
         }
+
         if (pIndex) {
             *pIndex = -1;
         }
+
         return;
     }
 
@@ -96,12 +99,15 @@ void ConveyerKeyKeeper::calcPosAndQuat(sead::Vector3f* pPos, sead::Quatf* pQuat,
             const ConveyerKey& key = getConveyerKey(mConveyerKeyCount - 1);
             pPos->set(key.mMoveDistance * mMoveDirection + mTrans + key.mMoveDistanceVertical);
         }
+
         if (pQuat) {
             pQuat->set(getConveyerKey(mConveyerKeyCount - 1).mQuat);
         }
+
         if (pIndex) {
             *pIndex = -1;
         }
+
         return;
     }
 
@@ -133,6 +139,7 @@ void ConveyerKeyKeeper::calcPosAndQuat(sead::Vector3f* pPos, sead::Quatf* pQuat,
         } else {
             rate = (coord - getConveyerKey(keyIndex - 1).mTotalMoveDistance) / totalMoveDistance;
         }
+
         f32 ease = easeByType(rate, getConveyerKey(keyIndex - 1).mInterpolateType);
         lerpVec(&moveDistanceVertical, prevKeyVec, keyVec, ease);
         moveDistance = lerpValue(rate, getConveyerKey(keyIndex - 1).mMoveDistance,
@@ -145,9 +152,11 @@ void ConveyerKeyKeeper::calcPosAndQuat(sead::Vector3f* pPos, sead::Quatf* pQuat,
     if (pPos) {
         pPos->set(moveDistance * mMoveDirection + mTrans + moveDistanceVertical);
     }
+
     if (pQuat) {
         pQuat->set(quat);
     }
+
     if (pIndex) {
         *pIndex = keyIndex - 1;
     }
@@ -165,6 +174,7 @@ void ConveyerKeyKeeper::calcPosAndQuatByKeyIndex(sead::Vector3f* pPos, sead::Qua
     if (pPos) {
         pPos->set(key.mMoveDistance * mMoveDirection + mTrans + key.mMoveDistanceVertical);
     }
+
     if (pQuat) {
         pQuat->set(getConveyerKey(index).mQuat);
     }
@@ -182,6 +192,7 @@ void ConveyerKeyKeeper::calcClippingSphere(sead::Vector3f* pTrans, f32* pRadius,
         const ConveyerKey& key = getConveyerKey(0);
         pTrans->set(key.mMoveDistance * mMoveDirection + mTrans + key.mMoveDistanceVertical);
     }
+
     *pRadius = offset;
     for (s32 i = 1; i < mConveyerKeyCount; i++) {
         const ConveyerKey& key = getConveyerKey(i);

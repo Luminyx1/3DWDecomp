@@ -73,6 +73,7 @@ void ExecutorListIUseExecutorDraw::executeList() const {
     for (s32 i = 0; i < mUserNum; i++) {
         mUsers[i]->draw();
     }
+
     nvnCommandBufferPopDebugGroup(GameFrameworkNx::sInstance->mDrawContext->getNvnCommandBuffer());
 }
 }  // namespace al

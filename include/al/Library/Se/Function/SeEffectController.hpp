@@ -20,6 +20,7 @@ public:
         if (mCurEffectInfo == nullptr) {
             return nullptr;
         }
+
         return *mCurEffectInfo;
     }
 

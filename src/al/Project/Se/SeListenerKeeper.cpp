@@ -79,18 +79,23 @@ void SeListenerKeeper::changeListenerParam(sead::Audio3DListenerParameterNin& rP
     if (rParam.mInteriorSize < 0.0f) {
         rParam.mInteriorSize = 1500.0f;
     }
+
     if (rParam.mMaxVolumeDistance < 0.0f) {
         rParam.mMaxVolumeDistance = 450.0f;
     }
+
     if (rParam.mUnitDistance < 0.0f) {
         rParam.mUnitDistance = 1000.0f;
     }
+
     if (rParam.mUnitBiquadFilterValue < 0.0f) {
         rParam.mUnitBiquadFilterValue = 0.5f;
     }
+
     if (rParam.mMaxBiquadFilterValue < 0.0f) {
         rParam.mMaxBiquadFilterValue = 1.0f;
     }
+
     mAudio3DMgr->setDefaultListenerParameter(rParam);
 }
 

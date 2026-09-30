@@ -72,5 +72,6 @@ private:
     f32 _78 = 0.0f;
     s32 mSampleRate = 32000;
 };
+
 static_assert(sizeof(BgmRhythmDetector) == 0x80);
 }  // namespace al

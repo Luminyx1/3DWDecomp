@@ -42,6 +42,7 @@ void VisibleSwitchMapParts::init(const al::ActorInitInfo& rInfo) {
         al::isValidStageSwitch(this, "SwitchDisappear")) {
         return;
     }
+
     if (al::isValidStageSwitch(this, "SwitchDisappear")) {
         al::listenStageSwitchOnOff(
             this, "SwitchDisappear",
@@ -49,6 +50,7 @@ void VisibleSwitchMapParts::init(const al::ActorInitInfo& rInfo) {
             VisibleSwitchMapPartsFunctor(this, &VisibleSwitchMapParts::startAppear));
         return;
     }
+
     if (al::isValidStageSwitch(this, "SwitchAppear")) {
         al::listenStageSwitchOnOff(
             this, "SwitchAppear",
@@ -65,6 +67,7 @@ void VisibleSwitchMapParts::startDisappear() {
     if (al::isNerve(this, &NrvVisibleSwitchMapPartsDisappear)) {
         return;
     }
+
     al::setNerve(this, &NrvVisibleSwitchMapPartsDisappear);
 }
 
@@ -75,6 +78,7 @@ void VisibleSwitchMapParts::startAppear() {
     if (al::isNerve(this, &NrvVisibleSwitchMapPartsAppear)) {
         return;
     }
+
     al::setNerve(this, &NrvVisibleSwitchMapPartsAppear);
 }
 
@@ -91,6 +95,7 @@ bool VisibleSwitchMapParts::receiveMsg(const al::SensorMsg* pMsg, al::HitSensor*
         al::isNerve(this, &NrvVisibleSwitchMapPartsHide)) {
         return true;
     }
+
     return false;
 }
 
@@ -133,6 +138,7 @@ void VisibleSwitchMapParts::exeAppear() {
             return;
         }
     }
+
     if (al::isActionEnd(this)) {
         al::setNerve(this, &NrvVisibleSwitchMapPartsShow);
     }

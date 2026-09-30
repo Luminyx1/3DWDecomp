@@ -85,15 +85,18 @@ void PartsModel::initPartsFixFile(LiveActor* pParent, const ActorInitInfo& rInfo
         if (jointName) {
             mJointMtx = getJointMtxPtr(mParentModel, jointName);
         }
+
         tryGetByamlV3f(&mLocalTrans, iter, "LocalTrans");
         tryGetByamlV3f(&mLocalRotate, iter, "LocalRotate");
         tryGetByamlV3f(&mLocalScale, iter, "LocalScale");
         if (!isNearZero(mLocalTrans) || !isNearZero(mLocalRotate)) {
             mIsUseLocalPos = true;
         }
+
         mIsUseFollowMtxScale = tryGetByamlKeyBoolOrFalse(iter, "UseFollowMtxScale");
         mIsUseLocalScale = tryGetByamlKeyBoolOrFalse(iter, "UseLocalScale");
     }
+
     makeActorAppeared();
 }
 
@@ -121,10 +124,12 @@ void PartsModel::updatePose() {
             mtxScale.z = scale.z * mtxScale.z;
             setScale(this, mtxScale);
         }
+
         normalize(&baseMtx);
         updatePoseMtx(this, &baseMtx);
         return;
     }
+
     sead::Matrix34f rotateMtx;
     sead::Vector3f rotate(sead::Mathf::deg2rad(mLocalRotate.x),
                           sead::Mathf::deg2rad(mLocalRotate.y),
@@ -145,6 +150,7 @@ void PartsModel::updatePose() {
     } else if (mIsUseLocalScale) {
         setScale(this, mLocalScale);
     }
+
     normalize(&baseMtx);
     baseMtx = baseMtx * poseMtx;
     updatePoseMtx(this, &baseMtx);
@@ -175,6 +181,7 @@ void PartsModel::attackSensor(HitSensor* pSelf, HitSensor* pOther) {
     if (mIsHostHidden) {
         return;
     }
+
     mParentModel->attackSensor(pSelf, pOther);
 }
 
@@ -189,6 +196,7 @@ bool PartsModel::receiveMsg(const SensorMsg* pMsg, HitSensor* pOther, HitSensor*
     if (mIsHostHidden) {
         return false;
     }
+
     return mParentModel->receiveMsg(pMsg, pOther, pSelf);
 }
 

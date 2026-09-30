@@ -83,6 +83,7 @@ void AudioDirector::initAfterInitPlacement(const AudioSystemInfo* pInfo) {
     if (group == nullptr) {
         return;
     }
+
     for (s32 i = 0; i < group->mNumAreas; i++) {
         AreaObj* areaObj = group->getAreaObj(i);
         const char* effectName = nullptr;
@@ -119,15 +120,18 @@ void AudioDirector::update() {
     if (mSeEffectController != nullptr) {
         mSeEffectController->update();
     }
+
     if (mAudioSituationDirector != nullptr) {
         mAudioSituationDirector->update();
     }
+
     mSeDirector->update();
     mBgmDirector->update();
     mAudioVolumeCtrl->update();
     if (mAudioEventController != nullptr) {
         mAudioEventController->update();
     }
+
     mAudioRequestKeeperSyncedBgm->update();
 }
 
@@ -138,6 +142,7 @@ void AudioDirector::finalize() {
     if (mSeEffectController != nullptr) {
         mSeEffectController->finalize();
     }
+
     mSeDirector->finalize();
     mBgmDirector->stopAllBgm(0);
     if (mAudioEventController != nullptr) {

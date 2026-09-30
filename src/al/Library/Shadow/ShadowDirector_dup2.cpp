@@ -69,6 +69,7 @@ f32 ShadowMaskBase::getShadowIntensity() const {
         if (!mHost) {
             return 0.0f;
         }
+
         intensity = ShadowMaskFunction::getShadowMaskKeeper(mHost)->getShadowIntensity(
             mDrawCategory.getRelativeIndex());
     }
@@ -77,6 +78,7 @@ f32 ShadowMaskBase::getShadowIntensity() const {
     if (mHost && !mIsIgnoreHostAlpha) {
         rate *= mHost->mGlobalAlphaLastFrame;
     }
+
     return rate;
 }
 
@@ -109,6 +111,7 @@ void ShadowMaskBase::readParam(const ByamlIter& rIter) {
                 break;
             }
         }
+
         mDrawCategory.setRelativeIndex(category);
     }
 

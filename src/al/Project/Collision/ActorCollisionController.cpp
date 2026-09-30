@@ -37,10 +37,12 @@ void ActorCollisionController::update() {
     if (mDelay <= 0) {
         return;
     }
+
     if (mDelay == 1) {
         resetToOrigin(mDelay);
         return;
     }
+
     f32 radius = getColliderRadius(mActor);
     f32 offsetY = getColliderOffsetY(mActor);
     f32 rate = 1.0f / mDelay;
@@ -60,6 +62,7 @@ void ActorCollisionController::resetToOrigin(s32 delay) {
         mDelay = delay;
         return;
     }
+
     al::setColliderRadius(mActor, mRadius);
     al::setColliderOffsetY(mActor, mOffsetY);
     mDelay = 0;

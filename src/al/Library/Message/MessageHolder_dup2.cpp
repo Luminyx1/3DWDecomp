@@ -27,10 +27,12 @@ inline bool isMessageTagNamed(const MessageProjectEx* pProject, const MessageTag
     if (!groupName || !isEqualString(pGroupName, groupName)) {
         return false;
     }
+
     const char* tagName = pProject->getTagNameByIndex(rTag.getGroup(), rTag.getType());
     if (!tagName) {
         return false;
     }
+
     return isEqualString(pTagName, tagName);
 }
 
@@ -87,6 +89,7 @@ bool isMessageTagPageBreak(const IUseMessageSystem* pMsgSystem, const char16_t* 
     if (!pMessage || !isMessageTagMark(*pMessage)) {
         return false;
     }
+
     MessageTag tag(pMessage);
     return isMessageTagPageBreak(pMsgSystem, tag);
 }
@@ -166,6 +169,7 @@ bool isExistMessageTag(const char16_t* pMessage) {
             return true;
         }
     }
+
     return false;
 }
 
@@ -188,11 +192,13 @@ s32 calcMessageSizeWithoutNullCharacter(const char16_t* pStart, const char16_t* 
         } else {
             step = 2;
         }
+
         ptr = reinterpret_cast<const char16_t*>(reinterpret_cast<const u8*>(ptr) + step);
         if (pEnd && ptr == pEnd) {
             break;
         }
     }
+
     return static_cast<s32>(reinterpret_cast<const u8*>(ptr) - reinterpret_cast<const u8*>(pStart)) >> 1;
 }
 
@@ -212,11 +218,13 @@ bool isExistMessageTagTextPaneAnim(const IUseMessageSystem* pMsgSystem, const ch
                 isMessageTagNamed(pMsgSystem, tag, "Eui", "Flush")) {
                 return true;
             }
+
             i += tag.getSkipLength();
         } else {
             i++;
         }
     }
+
     return false;
 }
 
@@ -236,6 +244,7 @@ bool tryGetMessageTagTextAnim(sead::BufferedSafeString* pOut, const IUseMessageS
             if (isMessageTagNamed(pMsgSystem, tag, "System", "PageBreak")) {
                 return false;
             }
+
             const char* name;
             if (isMessageTagNamed(pMsgSystem, tag, "TextAnim", "Cold")) {
                 name = "Cold";
@@ -259,11 +268,14 @@ bool tryGetMessageTagTextAnim(sead::BufferedSafeString* pOut, const IUseMessageS
                 i += tag.getSkipLength();
                 continue;
             }
+
             pOut->format(name);
             return true;
         }
+
         i++;
     }
+
     return false;
 }
 
@@ -292,6 +304,7 @@ void getMessageTagVoiceName(sead::BufferedSafeString* pOut, const IUseMessageSys
                                          reinterpret_cast<const char16_t*>(tag.getParamPtr(2)),
                                          *size / 2);
 }
+
 /**
  * Finds the first voice tag of the current page and writes its voice name.
  * @param pOut output voice name
@@ -309,15 +322,18 @@ bool tryGetMessageTagVoiceNameInPage(sead::BufferedSafeString* pOut,
             if (isMessageTagNamed(pMsgSystem, tag, "System", "PageBreak")) {
                 return false;
             }
+
             if (isMessageTagVoice(pMsgSystem, &pMessage[i])) {
                 getMessageTagVoiceName(pOut, pMsgSystem, &pMessage[i]);
                 return true;
             }
+
             i += tag.getSkipLength();
         } else {
             i++;
         }
     }
+
     return false;
 }
 
@@ -332,6 +348,7 @@ bool isMessageTagPictFont(const IUseMessageSystem* pMsgSystem, s32 groupIndex) {
     if (!groupName) {
         return false;
     }
+
     return isEqualString(groupName, "PictFont");
 }
 
@@ -346,6 +363,7 @@ bool isMessageTagDeviceFont(const IUseMessageSystem* pMsgSystem, s32 groupIndex)
     if (!groupName) {
         return false;
     }
+
     return isEqualString(groupName, "DeviceFont");
 }
 
@@ -364,11 +382,13 @@ bool isExistMessageTagPadSwitch(const IUseMessageSystem* pMsgSystem, const char1
                 isMessageTagPadPair(pMsgSystem, tag.getGroup(), tag.getType())) {
                 return true;
             }
+
             i += tag.getSkipLength();
         } else {
             i++;
         }
     }
+
     return false;
 }
 
@@ -381,12 +401,15 @@ inline bool isMessageTagGroupAndName(const IUseMessageSystem* pMsgSystem, s32 gr
     if (!tagName || !groupName) {
         return false;
     }
+
     if (!isEqualString(groupName, pGroupName)) {
         return false;
     }
+
     if (isStartWith) {
         return isStartWithString(tagName, pTagName);
     }
+
     return isEqualString(tagName, pTagName);
 }
 }  // namespace
@@ -450,6 +473,7 @@ bool isMessageTagAlignCenter(const IUseMessageSystem* pMsgSystem, s32 groupIndex
     return isMessageTagGroupAndName(pMsgSystem, groupIndex, tagIndex, "TextAlign", "AlignCenter",
                                     false);
 }
+
 /**
  * Replaces the argument tags of a message with a string.
  * @param pOut output string
@@ -493,6 +517,7 @@ const char16_t* getSystemMessageString(const IUseMessageSystem* pMsgSystem, cons
     if (!holder) {
         return u"NULL";
     }
+
     return holder->getText(pLabel);
 }
 
@@ -736,6 +761,7 @@ void replaceMessageTagData(sead::BufferedSafeStringBase<char16_t>* pOut,
                            const char16_t* pMessage) {
     pHolder->replaceMessage(pOut, pMsgSystem, pMessage);
 }
+
 /**
  * Returns the number of characters of a message without its tags.
  * @param pStart message start
@@ -758,10 +784,12 @@ s32 calcMessageSizeWithoutTag(const char16_t* pStart, const char16_t* pEnd) {
         } else {
             ptr++;
         }
+
         if (pEnd && ptr == pEnd) {
             break;
         }
     }
+
     return (static_cast<s32>(reinterpret_cast<const u8*>(ptr) - reinterpret_cast<const u8*>(pStart)) -
             tagSize) >>
            1;
@@ -810,6 +838,7 @@ bool isExistLabelInLayoutMessage(const IUseMessageSystem* pMsgSystem, const char
     if (!holder) {
         return false;
     }
+
     return holder->isExistText(pLabel);
 }
 
@@ -827,6 +856,7 @@ bool isExistLabelInSystemMessage(const IUseMessageSystem* pMsgSystem, const char
     if (!holder) {
         return false;
     }
+
     return holder->isExistText(pLabel);
 }
 
@@ -843,6 +873,7 @@ bool isExistLabelInStageMessage(const IUseMessageSystem* pMsgSystem, const char*
     if (!holder) {
         return false;
     }
+
     return holder->isExistText(pLabel);
 }
 
@@ -886,6 +917,7 @@ const char16_t* getLayoutMessageString(const IUseMessageSystem* pMsgSystem, cons
     if (!holder) {
         return u"NULL";
     }
+
     return holder->getText(pLabel);
 }
 
@@ -903,6 +935,7 @@ const char16_t* tryGetSystemMessageString(const IUseMessageSystem* pMsgSystem,
     if (!holder) {
         return u"NULL";
     }
+
     return holder->tryGetText(pLabel);
 }
 
@@ -920,6 +953,7 @@ const char16_t* getStageMessageString(const IUseMessageSystem* pMsgSystem, const
     if (holder) {
         text = holder->tryGetText(pLabel);
     }
+
     return text ? text : u"NULL";
 }
 
@@ -937,6 +971,7 @@ bool tryGetStageMessageString(const char16_t** pOut, const IUseMessageSystem* pM
     if (!holder) {
         return false;
     }
+
     *pOut = holder->tryGetText(pLabel);
     return *pOut != nullptr;
 }
@@ -954,6 +989,7 @@ const char16_t* getLayoutMessageString(const IUseMessageSystem* pMsgSystem, cons
     if (!holder) {
         return u"NULL";
     }
+
     return holder->getText(index);
 }
 
@@ -970,6 +1006,7 @@ const char16_t* getSystemMessageString(const IUseMessageSystem* pMsgSystem, cons
     if (!holder) {
         return u"NULL";
     }
+
     return holder->getText(index);
 }
 
@@ -984,6 +1021,7 @@ s32 getSystemMessageLabelNum(const IUseMessageSystem* pMsgSystem, const char* pF
     if (!holder) {
         return 0;
     }
+
     return holder->getTextNum();
 }
 
@@ -998,6 +1036,7 @@ s32 getLayoutMessageLabelNum(const IUseMessageSystem* pMsgSystem, const char* pF
     if (!holder) {
         return 0;
     }
+
     return holder->getTextNum();
 }
 
@@ -1041,6 +1080,7 @@ void getMessageTagParamString(sead::BufferedSafeStringBase<char16_t>* pOut,
         param += size + 2;
         size = *reinterpret_cast<const u16*>(param);
     }
+
     pOut->copy(sead::SafeStringBase<char16_t>(reinterpret_cast<const char16_t*>(param + 2)),
                size / 2);
 }
@@ -1070,6 +1110,7 @@ void getLayoutMessageLabelString(sead::BufferedSafeString* pOut, const IUseMessa
     pMsgSystem->getMessageSystem()->getLayoutMessageHolder(pFileName)->searchTextLabelByIndex(pOut,
                                                                                              index);
 }
+
 /**
  * Copies one line of a message, tags included.
  * @param pDst output buffer
@@ -1089,8 +1130,10 @@ char16_t* getMessageLine(char16_t* pDst, u32 dstLength, const char16_t* pSrc, u3
                 if (*pSrc == '\n') {
                     line++;
                 }
+
                 pSrc++;
             }
+
             if (line == lineIndex) {
                 break;
             }
@@ -1105,15 +1148,18 @@ char16_t* getMessageLine(char16_t* pDst, u32 dstLength, const char16_t* pSrc, u3
                 *pDst++ = *pSrc++;
             }
         }
+
         if (*pSrc == 0 || *pSrc == '\n') {
             break;
         }
+
         *pDst = *pSrc;
         if (i < dstLength - 1) {
             pDst++;
             pSrc++;
         }
     }
+
     *pDst = 0;
     return pDst;
 }
@@ -1133,11 +1179,14 @@ s32 countMessageLine(const char16_t* pMessage) {
             if (*pMessage == '\n') {
                 count++;
             }
+
             pMessage++;
         }
     }
+
     return count;
 }
+
 /**
  * Copies a message without its tags.
  * @param pDst output buffer
@@ -1150,6 +1199,7 @@ bool copyMessageWithoutTag(char16_t* pDst, s32 dstSize, const char16_t* pSrc, s3
     if (srcLength < 0) {
         srcLength = 0x7fff;
     }
+
     while (srcLength > 0 && dstSize > 1 && *pSrc) {
         if (isMessageTagMark(*pSrc)) {
             MessageTag tag(pSrc);
@@ -1161,6 +1211,7 @@ bool copyMessageWithoutTag(char16_t* pDst, s32 dstSize, const char16_t* pSrc, s3
             srcLength--;
         }
     }
+
     *pDst = 0;
     return dstSize > 1;
 }
@@ -1177,6 +1228,7 @@ s32 copyMessageWithTag(char16_t* pDst, s32 dstSize, const char16_t* pSrc) {
     for (s32 i = 0; i < size; i++) {
         *pDst++ = *pSrc++;
     }
+
     *pDst = 0;
     return size;
 }
@@ -1199,6 +1251,7 @@ s32 copyMessageWithTagOnlyCurrentPage(const IUseMessageSystem* pMsgSystem, char1
             *pDst = 0;
             return pDst - start;
         }
+
         if (isMessageTagMark(*ptr)) {
             MessageTag tag(ptr);
             memcpy(pDst, ptr, tag.getSkipLength() * sizeof(char16_t));
@@ -1208,6 +1261,7 @@ s32 copyMessageWithTagOnlyCurrentPage(const IUseMessageSystem* pMsgSystem, char1
             *pDst++ = *ptr++;
         }
     }
+
     *pDst = 0;
     return pDst - start;
 }
@@ -1224,6 +1278,7 @@ const char16_t* getMessageWithPage(const IUseMessageSystem* pMsgSystem, const ch
     if (page == 0) {
         return pMessage;
     }
+
     s32 pageCount = 0;
     while (*pMessage) {
         if (isMessageTagMark(*pMessage)) {
@@ -1233,6 +1288,7 @@ const char16_t* getMessageWithPage(const IUseMessageSystem* pMsgSystem, const ch
                 if (*pMessage == '\n') {
                     pMessage++;
                 }
+
                 pageCount++;
                 if (pageCount == page) {
                     return pMessage;
@@ -1242,6 +1298,7 @@ const char16_t* getMessageWithPage(const IUseMessageSystem* pMsgSystem, const ch
             pMessage++;
         }
     }
+
     return nullptr;
 }
 
@@ -1268,8 +1325,10 @@ s32 countMessagePage(const IUseMessageSystem* pMsgSystem, const char16_t* pMessa
             pMessage++;
             step = 1;
         }
+
         i += step;
     }
+
     return pageCount;
 }
 
@@ -1285,15 +1344,18 @@ const char16_t* getNextMessagePage(const IUseMessageSystem* pMsgSystem, const ch
             pMessage++;
             continue;
         }
+
         MessageTag tag(pMessage);
         pMessage += tag.getSkipLength();
         if (isMessageTagNamed(pMsgSystem, tag, "System", "PageBreak")) {
             if (*pMessage == '\n') {
                 return pMessage + 1;
             }
+
             return pMessage;
         }
     }
+
     return nullptr;
 }
 

@@ -137,6 +137,7 @@ void calcNearBlockRailLinkAndCoord(BlockRailLink** pLink, f32* pRate,
             }
         }
     }
+
     *pLink = nearLink;
     *pRate = nearRate;
 }

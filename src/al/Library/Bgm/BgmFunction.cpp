@@ -48,12 +48,14 @@ void printBgmResourceInfoList(const al::BgmDataBase* pDataBase) {
                 suffixList->tryGetInfo(j);
             }
         }
+
         const al::AudioInfoList<al::BgmEnableSituationInfo>* enableList = info->mEnableSituationInfoList;
         if (enableList != nullptr) {
             for (u32 j = 0; j < static_cast<u32>(enableList->getInfoNum()); j++) {
                 enableList->tryGetInfo(j);
             }
         }
+
         const al::AudioInfoList<al::BgmStartTriggerSituationInfo>* triggerList = info->mStartTriggerSituationInfoList;
         if (triggerList != nullptr) {
             for (u32 j = 0; j < static_cast<u32>(triggerList->getInfoNum()); j++) {
@@ -96,6 +98,7 @@ void printBgmUserInfoList(const al::BgmDataBase* pDataBase) {
             if (playList == nullptr) {
                 continue;
             }
+
             for (s32 k = 0; k < playList->getInfoNum(); k++) {
                 playList->tryGetInfo(k);
             }
@@ -141,9 +144,11 @@ bool tryLoadIfWaveSound(const char* pName, al::IAudioResourceLoader* pLoader, al
     if (!isWaveSound(pName)) {
         return true;
     }
+
     if (pPlayer->getSoundDataMgr()->IsDataLoaded(pName, -1)) {
         return true;
     }
+
     return pLoader->loadSoundItem(alSoundNameUtil::getSoundId(pName, true), -1);
 }
 
@@ -157,6 +162,7 @@ bool checkLoadIfWaveSound(const char* pName, al::SeadAudioPlayer* pPlayer) {
     if (!isWaveSound(pName)) {
         return true;
     }
+
     return pPlayer->getSoundDataMgr()->IsDataLoaded(pName, -1);
 }
 
@@ -171,9 +177,11 @@ bool isPlayingBgmByUpperLayerAudioUser(const al::BgmDataBase* pDataBase, const c
     if (pName != nullptr && pDataBase->mPlayInfoList != nullptr) {
         info = pDataBase->mPlayInfoList->tryFindInfo(pName);
     }
+
     if (info == nullptr) {
         return false;
     }
+
     return info->mIsPlayingByUpperLayerAudioUser;
 }
 }  // namespace alBgmFunction

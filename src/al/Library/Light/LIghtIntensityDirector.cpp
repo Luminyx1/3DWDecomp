@@ -106,6 +106,7 @@ void LightIntensityDirector::initGraphicsAreaParam(GraphicsAreaDirector* pGraphi
         mExposureParamIO->addObj(mExposureParams[i],
                                  StringTmp<64>("%s_%d", "exposure_param", i).cstr());
     }
+
     mDefaultExposureParam = mExposureParams[0];
 
     const void* exposureFile =
@@ -115,6 +116,7 @@ void LightIntensityDirector::initGraphicsAreaParam(GraphicsAreaDirector* pGraphi
         mExposureParamIO->applyResParameterArchive(archive);
         mIsLoadedExposureParam = true;
     }
+
     for (s32 i = 0; i < mParamNum; i++) {
         if (isEqualString("※露光パラメータ名を入力してください", mExposureParams[i]->getName())) {
             mExposureParamIO->removeObj(mExposureParams[i]);
@@ -136,6 +138,7 @@ void LightIntensityDirector::initGraphicsAreaParam(GraphicsAreaDirector* pGraphi
         mBloomParamIO->applyResParameterArchive(archive);
         mIsLoadedBloomParam = true;
     }
+
     mLerpBloomParam->copy(*mBloomParams[0]);
     mPrevLerpBloomParam->copy(*mBloomParams[0]);
     for (s32 i = 0; i < mParamNum; i++) {
@@ -159,6 +162,7 @@ void LightIntensityDirector::execute() {
     if (!mGraphicsAreaDirector) {
         return;
     }
+
     updateExposure();
     updateBloom();
 }
@@ -175,6 +179,7 @@ void LightIntensityDirector::updateExposure() {
         mPrevExposureParam = param;
         return;
     }
+
     ExposureParam* param = findExposureParam(mExposureAreaParam->mParamName);
     ExposureParam* prevParam = findExposureParam(mExposureAreaParam->mPrevParamName);
     if (param != mCurrentExposureParam || prevParam != mPrevExposureParam) {
@@ -200,12 +205,14 @@ void LightIntensityDirector::updateBloom() {
         const char* name = mBloomAreaParam->mParamName ? mBloomAreaParam->mParamName : "";
         isChanged = !isEqualString(currentName, name);
     }
+
     if (mBloomAreaParam->mIsNoParam || isChanged) {
         if (mPrevBloomParam) {
             mPrevLerpBloomParam->copy(*mLerpBloomParam);
         } else {
             mPrevLerpBloomParam->copy(*mCurrentBloomParam);
         }
+
         mPrevBloomParam = mCurrentBloomParam;
         mCurrentBloomParam = findBloomParam(mBloomAreaParam->mParamName);
         if (isChanged) {
@@ -227,6 +234,7 @@ void LightIntensityDirector::updateBloom() {
         } else {
             rate = std::pow(rate, 10);
         }
+
         lerpParam->copyLerp(*prevParam, *currentParam, rate);
         f32 reduceScale = mLerpBloomParam->getReduceScale();
         if (reduceScale != reduceScale) {
@@ -246,25 +254,32 @@ f32 LightIntensityDirector::getExposure() const {
     if (mForceExposure > 0.0f) {
         return mForceExposure;
     }
+
     if (!mExposureParamIO) {
         return 1.0f;
     }
+
     if (mExposureAreaParam->mIsLerp) {
         if (mCurrentExposureParam && mPrevExposureParam) {
             return lerpValue(mExposureAreaParam->mRate, mPrevExposureParam->getExposure(),
                              mCurrentExposureParam->getExposure());
         }
+
         if (mCurrentExposureParam) {
             return mCurrentExposureParam->getExposure();
         }
+
         if (mPrevExposureParam) {
             return mPrevExposureParam->getExposure();
         }
+
         return mDefaultExposureParam->getExposure();
     }
+
     if (mCurrentExposureParam) {
         return mCurrentExposureParam->getExposure();
     }
+
     return mDefaultExposureParam->getExposure();
 }
 
@@ -284,12 +299,15 @@ const BloomNamedParam* LightIntensityDirector::getCurrentParam() const {
     if (mForceBloomParam) {
         return mForceBloomParam;
     }
+
     if (!mIsLoadedBloomParam) {
         return nullptr;
     }
+
     if (mBloomAreaParam->mIsLerp) {
         return mLerpBloomParam;
     }
+
     return mCurrentBloomParam;
 }
 
@@ -314,6 +332,7 @@ f32 LightIntensityDirector::getCurrentReduceScale() const {
     if (param) {
         return param->getReduceScale();
     }
+
     return 1.0f;
 }
 
@@ -330,6 +349,7 @@ ExposureParam* LightIntensityDirector::findExposureParam(const char* pName) cons
             }
         }
     }
+
     return mDefaultExposureParam;
 }
 
@@ -342,11 +362,13 @@ BloomNamedParam* LightIntensityDirector::findBloomParam(const char* pName) const
     if (!pName) {
         return mBloomParams[0];
     }
+
     for (s32 i = 1; i < mParamNum; i++) {
         if (isEqualString(pName, mBloomParams[i]->getName())) {
             return mBloomParams[i];
         }
     }
+
     return mBloomParams[0];
 }
 }  // namespace al

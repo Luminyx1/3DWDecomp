@@ -36,6 +36,7 @@ f32 getMicInputPowerOld(const IUseAudioKeeper* pUser) {
     if (!isEnableMic(pUser)) {
         return 0.0f;
     }
+
     return pUser->getAudioKeeper()->getAudioMic()->getMicInputPower();
 }
 
@@ -48,6 +49,7 @@ f32 getMicInputPowerRatio(const IUseAudioKeeper* pUser) {
     if (!isEnableMic(pUser)) {
         return 0.0f;
     }
+
     return pUser->getAudioKeeper()->getAudioMic()->getMicInputPowerRatio();
 }
 
@@ -60,6 +62,7 @@ bool isMicInputOn(const IUseAudioKeeper* pUser) {
     if (!isEnableMic(pUser)) {
         return false;
     }
+
     return pUser->getAudioKeeper()->getAudioMic()->isMicInput();
 }
 
@@ -72,6 +75,7 @@ f32 getMicBreathPowerOld(const IUseAudioKeeper* pUser) {
     if (!isEnableMic(pUser)) {
         return 0.0f;
     }
+
     return pUser->getAudioKeeper()->getAudioMic()->getBreathPower();
 }
 
@@ -84,6 +88,7 @@ f32 getMicBreathPowerRatio(const IUseAudioKeeper* pUser) {
     if (!isEnableMic(pUser)) {
         return 0.0f;
     }
+
     return pUser->getAudioKeeper()->getAudioMic()->getBreathPowerRatio();
 }
 
@@ -96,6 +101,7 @@ bool isMicBreathInputOn(const IUseAudioKeeper* pUser) {
     if (!isEnableMic(pUser)) {
         return false;
     }
+
     return pUser->getAudioKeeper()->getAudioMic()->isBreathInput();
 }
 
@@ -107,6 +113,7 @@ void startMicSampling(const IUseAudioKeeper* pUser) {
     if (pUser->getAudioKeeper()->isForceInvalidSe()) {
         return;
     }
+
     AudioMic* mic = pUser->getAudioKeeper()->getAudioMic();
     if (mic != nullptr) {
         mic->startSampling();
@@ -121,6 +128,7 @@ void startMicSamplingForce(const IUseAudioKeeper* pUser) {
     if (pUser->getAudioKeeper()->isForceInvalidSe()) {
         return;
     }
+
     AudioMic* mic = pUser->getAudioKeeper()->getAudioMic();
     if (mic != nullptr) {
         mic->startSamplingForce();
@@ -135,6 +143,7 @@ void stopMicSamplingForce(const IUseAudioKeeper* pUser) {
     if (pUser->getAudioKeeper()->isForceInvalidSe()) {
         return;
     }
+
     AudioMic* mic = pUser->getAudioKeeper()->getAudioMic();
     if (mic != nullptr) {
         mic->stopSamplingForce();
@@ -149,6 +158,7 @@ void invalidateMicInput(const IUseAudioKeeper* pUser) {
     if (pUser->getAudioKeeper()->isForceInvalidSe()) {
         return;
     }
+
     AudioMic* mic = pUser->getAudioKeeper()->getAudioMic();
     if (mic != nullptr) {
         mic->invalidateInput();
@@ -163,6 +173,7 @@ void validateMicInput(const IUseAudioKeeper* pUser) {
     if (pUser->getAudioKeeper()->isForceInvalidSe()) {
         return;
     }
+
     AudioMic* mic = pUser->getAudioKeeper()->getAudioMic();
     if (mic != nullptr) {
         mic->validateInput();

@@ -31,6 +31,7 @@ void JointSpringControllerHolder::init(LiveActor* pActor, const char* pFileName)
     if (!isExistModelResourceYaml(pActor, pFileName, nullptr)) {
         return;
     }
+
     init(pActor, ByamlIter(getModelResourceYaml(pActor, pFileName, nullptr)));
 }
 
@@ -64,14 +65,17 @@ void JointSpringControllerHolder::init(LiveActor* pActor, const ByamlIter& rIter
         if (tryGetByamlV3f(&childLocalPos, iter, "ChildLocalPos")) {
             controller->setChildLocalPos(childLocalPos);
         }
+
         f32 stability = 0.0f;
         if (tryGetByamlF32(&stability, iter, "Stability")) {
             controller->setStability(stability);
         }
+
         f32 friction = 0.98f;
         if (tryGetByamlF32(&friction, iter, "Friction")) {
             controller->setFriction(friction);
         }
+
         f32 limitDegree = 0.0f;
         if (tryGetByamlF32(&limitDegree, iter, "LimitDegree")) {
             controller->setLimitDegree(limitDegree);
@@ -91,6 +95,7 @@ void JointSpringControllerHolder::addController(JointSpringController* pControll
     if (mNum >= mMaxNum) {
         return;
     }
+
     mEntries[mNum].controller = pController;
     mEntries[mNum].jointName = pJointName;
     mNum++;

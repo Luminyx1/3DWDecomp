@@ -32,5 +32,6 @@ private:
     s32 mCurLayerIndex = -1;
     IAudioHeapController* mHeapController;
 };
+
 static_assert(sizeof(AudioResourceDirector) == 0x28);
 }  // namespace al

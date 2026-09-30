@@ -29,9 +29,11 @@ void ShadowMaskCube::tryInitTexture(const char* pTextureName) {
         mTextureBaseName = "None";
         return;
     }
+
     if (isEqualString(pTextureName, "None")) {
         return;
     }
+
     mTextureBaseName = pTextureName;
     StringTmp<128> archiveName("ObjectData/ProjTex%s", pTextureName);
     StringTmp<128> fileName("ProjTex%s", mTextureBaseName);

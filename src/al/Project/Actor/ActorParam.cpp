@@ -17,9 +17,11 @@ ActorParamHolder* ActorParamHolder::tryCreate(LiveActor* pActor) {
     if (!isExistModelResource(pActor)) {
         return nullptr;
     }
+
     if (!isExistModelResourceYaml(pActor, "ActorParam", nullptr)) {
         return nullptr;
     }
+
     return new ActorParamHolder(pActor);
 }
 }  // namespace al

@@ -28,6 +28,7 @@ bool CollisionPartsConnector::isConnecting() const {
     if (mCollisionParts && !(mCollisionParts->_160 && mCollisionParts->_161)) {
         return false;
     }
+
     return MtxConnector::isConnecting();
 }
 

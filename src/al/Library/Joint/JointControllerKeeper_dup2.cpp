@@ -41,6 +41,7 @@ void JointControllerKeeper::Exec(CallbackArg& rArg, nn::g3d::WorldMtxManip& rMan
             nextBoneIndex = nextId;
         }
     }
+
     rArg.SetCallbackBoneIndex(nextBoneIndex);
 }
 

@@ -16,5 +16,6 @@ public:
     f32 mAngleVStep;
     f32 mAngleHStep;
 };
+
 static_assert(sizeof(ControlAngleParam) == 0x1c);
 }  // namespace al

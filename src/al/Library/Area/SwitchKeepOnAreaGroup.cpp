@@ -11,6 +11,7 @@ static bool isInAreaAny(const AreaObj* pAreaObj, const sead::Vector3f* pPosition
             return true;
         }
     }
+
     return false;
 }
 
@@ -18,11 +19,13 @@ static bool isInAreaAll(const AreaObj* pAreaObj, const sead::Vector3f* pPosition
     if (num <= 0) {
         return false;
     }
+
     for (s32 i = 0; i < num; i++) {
         if (!pAreaObj->isInVolume(pPositions[i])) {
             return false;
         }
     }
+
     return true;
 }
 
@@ -57,6 +60,7 @@ void SwitchKeepOnAreaGroup::update(const sead::Vector3f* pPositions, s32 num,
                 break;
             }
         }
+
         if (isSame) {
             continue;
         }

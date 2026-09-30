@@ -95,6 +95,7 @@ void DirectionParam::syncFromDirection() {
         f32 sinLongitude = -x * inv;
         (*mCoordinate)->x = sead::Mathf::atan2(sinLongitude, cosLongitude);
     }
+
     (*mCoordinate)->y = sead::Mathf::asin(sead::Mathf::clamp(-y, -1.0f, 1.0f));
 }
 
@@ -122,6 +123,7 @@ void DirectionParam::lerp(const DirectionParam& rStart, const DirectionParam& rE
     if (normalizeOrZero(&mDirection)) {
         mDirection = rEnd.mDirection;
     }
+
     syncFromDirection();
 }
 

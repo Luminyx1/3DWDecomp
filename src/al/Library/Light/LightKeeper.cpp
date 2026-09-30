@@ -20,6 +20,7 @@ al::PrePassLight<T>* tryGetPrePassLight(const al::LiveActor* pActor, const char*
     if (light && light->getLightType() == lightType) {
         return static_cast<al::PrePassLight<T>*>(light);
     }
+
     return nullptr;
 }
 
@@ -30,6 +31,7 @@ void calcLightPoseInfo(const al::PrePassLightBase* pLight, sead::Vector3f* pPos,
         sead::Vector3f rotate = pLight->mRotateOffsetDegree * sead::Mathf::deg2rad(1.0f);
         al::calcConnectInfo(pLight->mMtxConnector, pPos, &quat, nullptr, pLight->mOffset, rotate);
     }
+
     if (pDir) {
         sead::Vector3f up;
         al::calcQuatUp(&up, quat);
@@ -53,6 +55,7 @@ bool isActivePrePassLight(const LiveActor* pActor, const char* pName) {
     if (!light) {
         return false;
     }
+
     return light->isActive();
 }
 
@@ -67,6 +70,7 @@ bool isExistPrePassLight(const LiveActor* pActor, const char* pName) {
     if (!keeper) {
         return false;
     }
+
     return keeper->getLightBase(pName) != nullptr;
 }
 
@@ -81,6 +85,7 @@ PrePassLightBase* getPrePassLineLight(const LiveActor* pActor, const char* pName
     if (!keeper) {
         return nullptr;
     }
+
     return keeper->getLightBase(pName);
 }
 
@@ -120,6 +125,7 @@ void appearPrePassLightAll(const LiveActor* pActor, s32 step) {
     if (!keeper) {
         return;
     }
+
     s32 num = keeper->getLightNum();
     for (s32 i = 0; i < num; i++) {
         keeper->getLightBase(i)->requestAppearByUser(step);
@@ -136,6 +142,7 @@ void killPrePassLightAll(const LiveActor* pActor, s32 step) {
     if (!keeper) {
         return;
     }
+
     s32 num = keeper->getLightNum();
     for (s32 i = 0; i < num; i++) {
         keeper->getLightBase(i)->requestKillByUser(step);
@@ -231,6 +238,7 @@ f32 getPrePassPointLightRadius(const LiveActor* pActor, const char* pName) {
     if (!light) {
         return -1.0f;
     }
+
     return light->mParam.mRadius;
 }
 
@@ -262,9 +270,11 @@ void getPrePassSpotLightInfo(const LiveActor* pActor, const char* pName, f32* pD
     if (pDegree) {
         *pDegree = light->mParam.mDegree;
     }
+
     if (pLength) {
         *pLength = light->mParam.mLength;
     }
+
     calcLightPoseInfo(light, pPos, pDir);
 }
 
@@ -323,9 +333,11 @@ void getPrePassProjLightInfo(const LiveActor* pActor, const char* pName, f32* pF
     if (pFovyDegree) {
         *pFovyDegree = light->mParam.mFovyDegree;
     }
+
     if (pLength) {
         *pLength = light->mParam.mFar - light->mParam.mNear;
     }
+
     calcLightPoseInfo(light, pPos, pDir);
 }
 
@@ -346,9 +358,11 @@ void getPrePassProjOrthoLightInfo(const LiveActor* pActor, const char* pName, f3
         light->mParam.calcSizeXZ(&pSize->x, &pSize->z);
         pSize->y = light->mParam.mFarRate * 100.0f - light->mParam.mNear;
     }
+
     if (pLength) {
         *pLength = light->mParam.mFarRate * 100.0f - light->mParam.mNear;
     }
+
     calcLightPoseInfo(light, pPos, pDir);
 }
 

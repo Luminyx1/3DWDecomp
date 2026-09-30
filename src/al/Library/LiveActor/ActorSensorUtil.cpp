@@ -693,6 +693,7 @@ void calcPosBetweenSensors(sead::Vector3f* pOut, const HitSensor* pA, const HitS
         pOut->e = pA->mPos.e;
         return;
     }
+
     normalize(&dir);
     f32 gap = (pA->mPos - pB->mPos).length() - (pA->mRadius + pB->mRadius);
     pOut->e = dir.e;
@@ -713,6 +714,7 @@ f32 calcDistanceV(const sead::Vector3f& rDir, const HitSensor* pA, const HitSens
     if (isNearZero(diff, 0.001f)) {
         return diff.length();
     }
+
     sead::Vector3f dir = diff;
     normalize(&dir);
     return dir.dot(rDir) * diff.length();
@@ -858,11 +860,13 @@ bool isHitCylinderSensor(sead::Vector3f* pHitPos, sead::Vector3f* pHitNormal,
     if (dist > pSensor->mRadius + radius) {
         return false;
     }
+
     if (pHitPos != nullptr || pHitNormal != nullptr) {
         if (isNearZero(dist, 0.001f)) {
             if (pHitNormal != nullptr) {
                 calcDirVerticalAny(pHitNormal, rAxis);
             }
+
             if (pHitPos != nullptr) {
                 pHitPos->e = pSensor->mPos.e;
             }
@@ -871,11 +875,13 @@ bool isHitCylinderSensor(sead::Vector3f* pHitPos, sead::Vector3f* pHitNormal,
             if (pHitNormal != nullptr) {
                 *pHitNormal = dir;
             }
+
             if (pHitPos != nullptr) {
                 *pHitPos = (pSensor->mPos - vertical) + dir * (dist + (radius - pSensor->mRadius));
             }
         }
     }
+
     return true;
 }
 
@@ -915,17 +921,20 @@ bool isHitCircleSensor(sead::Vector3f* pHitPos, sead::Vector3f* pHitNormal,
     if (normalizeOrZero(&vertical)) {
         calcDirVerticalAny(&vertical, rNormal);
     }
+
     sead::Vector3f edge = vertical * circleRadius + rCenter;
     diff = pSensor->mPos - edge;
     f32 dist = diff.length();
     if (dist > pSensor->mRadius + width) {
         return false;
     }
+
     if (pHitPos != nullptr || pHitNormal != nullptr) {
         if (normalizeOrZero(&diff)) {
             if (pHitNormal != nullptr) {
                 pHitNormal->e = vertical.e;
             }
+
             if (pHitPos != nullptr) {
                 *pHitPos = edge;
             }
@@ -933,11 +942,13 @@ bool isHitCircleSensor(sead::Vector3f* pHitPos, sead::Vector3f* pHitNormal,
             if (pHitNormal != nullptr) {
                 pHitNormal->e = diff.e;
             }
+
             if (pHitPos != nullptr) {
                 *pHitPos = edge + diff * (dist + (width - pSensor->mRadius));
             }
         }
     }
+
     return true;
 }
 
@@ -978,6 +989,7 @@ bool isHitCircleSensor(const HitSensor* pSensor, const sead::Vector3f& rCenter,
         return sead::Mathf::sqrt(circleRadius * circleRadius + height * height) <=
                pSensor->mRadius + width;
     }
+
     sead::Vector3f edge = vertical * circleRadius + rCenter;
     return (pSensor->mPos - edge).length() <= pSensor->mRadius + width;
 }
@@ -4716,6 +4728,7 @@ bool isMsgPlayerTrampleForCrossoverSensor(const SensorMsg* pMsg, const HitSensor
     if (!isMsgPlayerTrample(pMsg)) {
         return false;
     }
+
     return isCrossoverSensor(pSelf, pOther);
 }
 
@@ -4725,23 +4738,28 @@ static bool isCrossoverSensor(const HitSensor* pSelf, const HitSensor* pOther) {
     if (normalizeOrZero(&dir)) {
         return false;
     }
+
     sead::Vector3f up = -gravity;
     f32 dot = dir.dot(up);
     if (dot < 0.34202015f) {
         return false;
     }
+
     if (dot < 0.9659258f && pSelf->mSensorType == HitSensorType::KoopaJr) {
         return false;
     }
+
     sead::Vector3f velDir;
     normalizeOrZero(&velDir, getVelocity(pSelf->mHostActor));
     if (dir.y < 0.0f) {
         return false;
     }
+
     f32 velDot = velDir.dot(up);
     if (isNearZero(sead::Mathf::abs(velDot), 0.001f)) {
         return false;
     }
+
     return !isNearZero(velDot - 1.0f, 0.001f);
 }
 
@@ -4758,12 +4776,14 @@ bool isMsgPlayerUpperPunchForCrossoverSensor(const SensorMsg* pMsg, const HitSen
     if (!isMsgPlayerObjUpperPunch(pMsg)) {
         return false;
     }
+
     sead::Vector3f dir = pSelf->mPos - pOther->mPos;
     sead::Vector3f gravity = getGravity(pOther->mHostActor);
     normalize(&dir);
     if (gravity.dot(dir) < 0.34202015f) {
         return false;
     }
+
     return !(gravity.dot(getVelocity(pSelf->mHostActor)) >= -speed);
 }
 
@@ -4777,6 +4797,7 @@ bool sendMsgEnemyAttackForCrossoverSensor(HitSensor* pReceiver, HitSensor* pSend
     if (isCrossoverSensor(pReceiver, pSender)) {
         return false;
     }
+
     return sendMsgEnemyAttack(pReceiver, pSender);
 }
 
@@ -4811,9 +4832,11 @@ bool sendMsgEnemyAttackForCrossoverCylinderSensor(HitSensor* pReceiver, HitSenso
             }
         }
     }
+
     if (!isHitCylinderSensor(pReceiver, rPos, rAxis, radius)) {
         return false;
     }
+
     return sendMsgEnemyAttack(pReceiver, pSender);
 }
 
@@ -5200,6 +5223,7 @@ bool isSensorSimple(const HitSensor* pSensor) {
         pSensor->mSensorType == HitSensorType::MapObjSimple) {
         return true;
     }
+
     return isSensorBindable(pSensor);
 }
 
@@ -5262,10 +5286,12 @@ void sendMsgPushAndKillVelocityToTarget(LiveActor* pActor, HitSensor* pSelf, Hit
     if (!sendMsgPush(pTarget, pSelf)) {
         return;
     }
+
     sead::Vector3f dir = pTarget->mPos - pSelf->mPos;
     if (normalizeOrZero(&dir)) {
         dir.e = sead::Vector3f::ez.e;
     }
+
     if (getVelocity(pActor).dot(dir) > 0.0f) {
         verticalizeVec(getVelocityPtr(pActor), dir, getVelocity(pActor));
     }
@@ -5322,6 +5348,7 @@ bool tryReceiveMsgPushAndAddVelocity(LiveActor* pActor, const SensorMsg* pMsg,
     if (!isMsgPush(pMsg) && !isMsgPushStrong(pMsg) && !isMsgPushVeryStrong(pMsg)) {
         return false;
     }
+
     pushAndAddVelocity(pActor, pOther, pSelf, speed);
     return true;
 }
@@ -5341,6 +5368,7 @@ bool tryReceiveMsgPushAndAddVelocityH(LiveActor* pActor, const SensorMsg* pMsg,
     if (!isMsgPush(pMsg) && !isMsgPushStrong(pMsg) && !isMsgPushVeryStrong(pMsg)) {
         return false;
     }
+
     pushAndAddVelocityH(pActor, pOther, pSelf, speed);
     return true;
 }
@@ -5419,6 +5447,7 @@ al::HitSensor* findNearestAttackSensor(const al::HitSensor* pSensor) {
             nearest = other;
         }
     }
+
     return nearest;
 }
 }  // namespace AttackSensorFunction

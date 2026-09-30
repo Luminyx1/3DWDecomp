@@ -94,9 +94,11 @@ void ModelDrawerForward::createTable() {
                     model->mGpuMemAllocator, shape, material, shadingModel, 3, optionNames,
                     optionValues, false);
             }
+
             table->insert(new MeshDrawer(shape->GetResource()->GetName(), modelObj, shape,
                                          selector, modelNum));
         }
+
         mMeshDrawerTable = table;
     }
 

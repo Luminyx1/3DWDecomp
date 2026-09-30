@@ -41,6 +41,7 @@ private:
                 return &mPaneGroupInfos[i];
             }
         }
+
         return nullptr;
     }
 

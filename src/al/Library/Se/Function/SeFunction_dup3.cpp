@@ -26,6 +26,7 @@ SePlayParamList* startSeOld(const IUseAudioKeeper* pUser, const sead::SafeString
     if (isForceInvalidSe(pUser)) {
         return nullptr;
     }
+
     return pUser->getAudioKeeper()->getSeKeeper()->requestPlaySe(
         alSoundNameUtil::getSoundId(rName.cstr(), false), pUnused, false, nullptr, nullptr, nullptr);
 }
@@ -50,6 +51,7 @@ SePlayParamList* holdSeOld(const IUseAudioKeeper* pUser, const sead::SafeString&
     if (isForceInvalidSe(pUser)) {
         return nullptr;
     }
+
     return pUser->getAudioKeeper()->getSeKeeper()->requestHoldSe(alSoundNameUtil::getSoundId(rName.cstr(), false),
                                                                  pUnused, nullptr, nullptr, nullptr);
 }
@@ -66,9 +68,11 @@ s32 startSeByName(const IUseAudioKeeper* pUser, const sead::SafeString& rName, M
     if (isForceInvalidSe(pUser)) {
         return false;
     }
+
     if (!isEnableSeKeeper(pUser)) {
         return false;
     }
+
     return pUser->getAudioKeeper()->getSeKeeper()->requestPlaySeFromName(rName.cstr(), pMeInfo, false);
 }
 
@@ -83,6 +87,7 @@ s32 tryStartSeByName(const IUseAudioKeeper* pUser, const sead::SafeString& rName
     if (!isEnableSeKeeper(pUser)) {
         return false;
     }
+
     return pUser->getAudioKeeper()->getSeKeeper()->requestPlaySeFromName(rName.cstr(), pMeInfo, false);
 }
 
@@ -97,9 +102,11 @@ s32 holdSeByName(const IUseAudioKeeper* pUser, const sead::SafeString& rName, Me
     if (isForceInvalidSe(pUser)) {
         return false;
     }
+
     if (!isEnableSeKeeper(pUser)) {
         return false;
     }
+
     return pUser->getAudioKeeper()->getSeKeeper()->requestPlaySeFromName(rName.cstr(), pMeInfo, true);
 }
 
@@ -114,6 +121,7 @@ s32 tryHoldSeByName(const IUseAudioKeeper* pUser, const sead::SafeString& rName,
     if (!isEnableSeKeeper(pUser)) {
         return false;
     }
+
     return pUser->getAudioKeeper()->getSeKeeper()->requestPlaySeFromName(rName.cstr(), pMeInfo, true);
 }
 
@@ -129,6 +137,7 @@ SePlayParamList* startSeByNameWithParam(const IUseAudioKeeper* pUser, const sead
     if (!isEnableSeKeeper(pUser)) {
         return nullptr;
     }
+
     return pUser->getAudioKeeper()->getSeKeeper()->requestPlaySeFromNameWithParam(rName.cstr(), param, pMeInfo,
                                                                                   false, false);
 }
@@ -145,6 +154,7 @@ SePlayParamList* tryStartSeByNameWithParam(const IUseAudioKeeper* pUser, const s
     if (!isEnableSeKeeper(pUser)) {
         return nullptr;
     }
+
     return pUser->getAudioKeeper()->getSeKeeper()->requestPlaySeFromNameWithParam(rName.cstr(), param, pMeInfo,
                                                                                   false, true);
 }
@@ -161,6 +171,7 @@ SePlayParamList* holdSeByNameWithParam(const IUseAudioKeeper* pUser, const sead:
     if (!isEnableSeKeeper(pUser)) {
         return nullptr;
     }
+
     return pUser->getAudioKeeper()->getSeKeeper()->requestPlaySeFromNameWithParam(rName.cstr(), param, pMeInfo,
                                                                                   true, false);
 }
@@ -177,6 +188,7 @@ SePlayParamList* tryHoldSeByNameWithParam(const IUseAudioKeeper* pUser, const se
     if (!isEnableSeKeeper(pUser)) {
         return nullptr;
     }
+
     return pUser->getAudioKeeper()->getSeKeeper()->requestPlaySeFromNameWithParam(rName.cstr(), param, pMeInfo,
                                                                                   true, true);
 }
@@ -190,9 +202,11 @@ void stopSeByName(const IUseAudioKeeper* pUser, const sead::SafeString& rName) {
     if (isForceInvalidSe(pUser)) {
         return;
     }
+
     if (!isEnableSeKeeper(pUser)) {
         return;
     }
+
     pUser->getAudioKeeper()->getSeKeeper()->stopSeFromName(rName.cstr());
 }
 
@@ -205,6 +219,7 @@ void tryStopSeByName(const IUseAudioKeeper* pUser, const sead::SafeString& rName
     if (!isEnableSeKeeper(pUser)) {
         return;
     }
+
     pUser->getAudioKeeper()->getSeKeeper()->stopSeFromName(rName.cstr());
 }
 
@@ -219,9 +234,11 @@ s32 startSe(const IUseAudioKeeper* pUser, const sead::SafeString& rName, MeInfo*
     if (isForceInvalidSe(pUser)) {
         return false;
     }
+
     if (!isEnableSeKeeper(pUser)) {
         return false;
     }
+
     return pUser->getAudioKeeper()->getSeKeeper()->requestPlaySeFromName(rName.cstr(), pMeInfo, false);
 }
 
@@ -236,6 +253,7 @@ s32 tryStartSe(const IUseAudioKeeper* pUser, const sead::SafeString& rName, MeIn
     if (!isEnableSeKeeper(pUser)) {
         return false;
     }
+
     return pUser->getAudioKeeper()->getSeKeeper()->requestPlaySeFromName(rName.cstr(), pMeInfo, false);
 }
 
@@ -250,9 +268,11 @@ s32 holdSe(const IUseAudioKeeper* pUser, const sead::SafeString& rName, MeInfo* 
     if (isForceInvalidSe(pUser)) {
         return false;
     }
+
     if (!isEnableSeKeeper(pUser)) {
         return false;
     }
+
     return pUser->getAudioKeeper()->getSeKeeper()->requestPlaySeFromName(rName.cstr(), pMeInfo, true);
 }
 
@@ -267,6 +287,7 @@ s32 tryHoldSe(const IUseAudioKeeper* pUser, const sead::SafeString& rName, MeInf
     if (!isEnableSeKeeper(pUser)) {
         return false;
     }
+
     return pUser->getAudioKeeper()->getSeKeeper()->requestPlaySeFromName(rName.cstr(), pMeInfo, true);
 }
 
@@ -282,6 +303,7 @@ SePlayParamList* startSeWithParam(const IUseAudioKeeper* pUser, const sead::Safe
     if (!isEnableSeKeeper(pUser)) {
         return nullptr;
     }
+
     return pUser->getAudioKeeper()->getSeKeeper()->requestPlaySeFromNameWithParam(rName.cstr(), param, pMeInfo,
                                                                                   false, false);
 }
@@ -298,6 +320,7 @@ SePlayParamList* tryStartSeWithParam(const IUseAudioKeeper* pUser, const sead::S
     if (!isEnableSeKeeper(pUser)) {
         return nullptr;
     }
+
     return pUser->getAudioKeeper()->getSeKeeper()->requestPlaySeFromNameWithParam(rName.cstr(), param, pMeInfo,
                                                                                   false, true);
 }
@@ -314,6 +337,7 @@ SePlayParamList* holdSeWithParam(const IUseAudioKeeper* pUser, const sead::SafeS
     if (!isEnableSeKeeper(pUser)) {
         return nullptr;
     }
+
     return pUser->getAudioKeeper()->getSeKeeper()->requestPlaySeFromNameWithParam(rName.cstr(), param, pMeInfo,
                                                                                   true, false);
 }
@@ -330,6 +354,7 @@ SePlayParamList* tryHoldSeWithParam(const IUseAudioKeeper* pUser, const sead::Sa
     if (!isEnableSeKeeper(pUser)) {
         return nullptr;
     }
+
     return pUser->getAudioKeeper()->getSeKeeper()->requestPlaySeFromNameWithParam(rName.cstr(), param, pMeInfo,
                                                                                   true, true);
 }
@@ -343,6 +368,7 @@ void tryStopSe(const IUseAudioKeeper* pUser, const sead::SafeString& rName) {
     if (!isEnableSeKeeper(pUser)) {
         return;
     }
+
     pUser->getAudioKeeper()->getSeKeeper()->stopSeFromName(rName.cstr());
 }
 
@@ -357,14 +383,17 @@ SePlayParamList* startSeSetPitchByName(const IUseAudioKeeper* pUser, const sead:
     if (!isEnableSeKeeper(pUser)) {
         return nullptr;
     }
+
     SePlayParamList* paramList =
         pUser->getAudioKeeper()->getSeKeeper()->requestPlaySeFromNameGetParamList(rName.cstr(), nullptr, false);
     if (paramList == nullptr) {
         return nullptr;
     }
+
     if (pitch >= 0.0f) {
         paramList->setPitch(pitch);
     }
+
     return paramList;
 }
 
@@ -381,19 +410,23 @@ SePlayParamList* startSeSetPitchVolumeTempoByName(const IUseAudioKeeper* pUser, 
     if (!isEnableSeKeeper(pUser)) {
         return nullptr;
     }
+
     SePlayParamList* paramList =
         pUser->getAudioKeeper()->getSeKeeper()->requestPlaySeFromNameGetParamList(rName.cstr(), nullptr, false);
     if (paramList != nullptr) {
         if (volume >= 0.0f) {
             paramList->setVolume(volume);
         }
+
         if (pitch >= 0.0f) {
             paramList->setPitch(pitch);
         }
+
         if (tempo >= 0.0f) {
             paramList->setTempo(tempo);
         }
     }
+
     return paramList;
 }
 
@@ -408,14 +441,17 @@ SePlayParamList* startSeSetVolumeByName(const IUseAudioKeeper* pUser, const sead
     if (!isEnableSeKeeper(pUser)) {
         return nullptr;
     }
+
     SePlayParamList* paramList =
         pUser->getAudioKeeper()->getSeKeeper()->requestPlaySeFromNameGetParamList(rName.cstr(), nullptr, false);
     if (paramList == nullptr) {
         return nullptr;
     }
+
     if (volume >= 0.0f) {
         paramList->setVolume(volume);
     }
+
     return paramList;
 }
 
@@ -431,16 +467,19 @@ SePlayParamList* startSeSetPitchVolumeByName(const IUseAudioKeeper* pUser, const
     if (!isEnableSeKeeper(pUser)) {
         return nullptr;
     }
+
     SePlayParamList* paramList =
         pUser->getAudioKeeper()->getSeKeeper()->requestPlaySeFromNameGetParamList(rName.cstr(), nullptr, false);
     if (paramList != nullptr) {
         if (volume >= 0.0f) {
             paramList->setVolume(volume);
         }
+
         if (pitch >= 0.0f) {
             paramList->setPitch(pitch);
         }
     }
+
     return paramList;
 }
 
@@ -456,11 +495,13 @@ SePlayParamList* startSeSetSeqLoacalVariableByName(const IUseAudioKeeper* pUser,
     if (!isEnableSeKeeper(pUser)) {
         return nullptr;
     }
+
     SePlayParamList* paramList =
         pUser->getAudioKeeper()->getSeKeeper()->requestPlaySeFromNameGetParamList(rName.cstr(), nullptr, false);
     if (paramList != nullptr) {
         paramList->setLocalVariable(index, value);
     }
+
     return paramList;
 }
 
@@ -476,16 +517,19 @@ SePlayParamList* startSeSetVolumeTempoByName(const IUseAudioKeeper* pUser, const
     if (!isEnableSeKeeper(pUser)) {
         return nullptr;
     }
+
     SePlayParamList* paramList =
         pUser->getAudioKeeper()->getSeKeeper()->requestPlaySeFromNameGetParamList(rName.cstr(), nullptr, false);
     if (paramList != nullptr) {
         if (volume >= 0.0f) {
             paramList->setVolume(volume);
         }
+
         if (tempo >= 0.0f) {
             paramList->setTempo(tempo);
         }
     }
+
     return paramList;
 }
 
@@ -501,12 +545,14 @@ SePlayParamList* holdSeSetPitchVolumeByName(const IUseAudioKeeper* pUser, const 
     if (!isEnableSeKeeper(pUser)) {
         return nullptr;
     }
+
     SePlayParamList* paramList =
         pUser->getAudioKeeper()->getSeKeeper()->requestPlaySeFromNameGetParamList(rName.cstr(), nullptr, true);
     if (paramList != nullptr) {
         paramList->setVolume(volume);
         paramList->setPitch(pitch);
     }
+
     return paramList;
 }
 
@@ -522,12 +568,14 @@ SePlayParamList* holdSeSetVolumeTempoByName(const IUseAudioKeeper* pUser, const 
     if (!isEnableSeKeeper(pUser)) {
         return nullptr;
     }
+
     SePlayParamList* paramList =
         pUser->getAudioKeeper()->getSeKeeper()->requestPlaySeFromNameGetParamList(rName.cstr(), nullptr, true);
     if (paramList != nullptr) {
         paramList->setVolume(volume);
         paramList->setTempo(tempo);
     }
+
     return paramList;
 }
 
@@ -543,11 +591,13 @@ SePlayParamList* holdSeSetSeqLoacalVariableByName(const IUseAudioKeeper* pUser, 
     if (!isEnableSeKeeper(pUser)) {
         return nullptr;
     }
+
     SePlayParamList* paramList =
         pUser->getAudioKeeper()->getSeKeeper()->requestPlaySeFromNameGetParamList(rName.cstr(), nullptr, true);
     if (paramList != nullptr) {
         paramList->setLocalVariable(index, value);
     }
+
     return paramList;
 }
 
@@ -561,6 +611,7 @@ void setSeSeqLocalVariableDefault(const IUseAudioKeeper* pUser, s32 index, s32 v
     if (isForceInvalidSe(pUser)) {
         return;
     }
+
     pUser->getAudioKeeper()->getSeKeeper()->setSeqLocalVariableDefault(index, value);
 }
 
@@ -574,6 +625,7 @@ void setSeBiquadFilterDefault(const IUseAudioKeeper* pUser, s32 type, f32 value)
     if (isForceInvalidSe(pUser)) {
         return;
     }
+
     pUser->getAudioKeeper()->getSeKeeper()->setBiquadFilterDefault(type, value);
 }
 
@@ -586,6 +638,7 @@ void setSeSourceVolume(const IUseAudioKeeper* pUser, f32 volume) {
     if (isForceInvalidSe(pUser)) {
         return;
     }
+
     pUser->getAudioKeeper()->getSeKeeper()->setSeSourceVolume(volume);
 }
 
@@ -602,9 +655,11 @@ SePlayParamList* startSeSetPitch(const IUseAudioKeeper* pUser, const sead::SafeS
     if (paramList == nullptr) {
         return nullptr;
     }
+
     if (pitch >= 0.0f) {
         paramList->setPitch(pitch);
     }
+
     return paramList;
 }
 
@@ -623,13 +678,16 @@ SePlayParamList* startSeSetPitchVolumeTempo(const IUseAudioKeeper* pUser, const 
         if (volume >= 0.0f) {
             paramList->setVolume(volume);
         }
+
         if (pitch >= 0.0f) {
             paramList->setPitch(pitch);
         }
+
         if (tempo >= 0.0f) {
             paramList->setTempo(tempo);
         }
     }
+
     return paramList;
 }
 
@@ -645,9 +703,11 @@ SePlayParamList* startSeSetVolume(const IUseAudioKeeper* pUser, const sead::Safe
     if (paramList == nullptr) {
         return nullptr;
     }
+
     if (volume >= 0.0f) {
         paramList->setVolume(volume);
     }
+
     return paramList;
 }
 
@@ -677,6 +737,7 @@ SePlayParamList* startSeSetSeqLoacalVariable(const IUseAudioKeeper* pUser, const
     if (paramList != nullptr) {
         paramList->setLocalVariable(index, value);
     }
+
     return paramList;
 }
 
@@ -707,6 +768,7 @@ SePlayParamList* holdSeSetPitchVolume(const IUseAudioKeeper* pUser, const sead::
         paramList->setVolume(volume);
         paramList->setPitch(pitch);
     }
+
     return paramList;
 }
 
@@ -722,6 +784,7 @@ SePlayParamList* holdSeSetPitch(const IUseAudioKeeper* pUser, const sead::SafeSt
     if (paramList != nullptr) {
         paramList->setPitch(pitch);
     }
+
     return paramList;
 }
 
@@ -739,6 +802,7 @@ SePlayParamList* holdSeSetVolumeTempo(const IUseAudioKeeper* pUser, const sead::
         paramList->setVolume(volume);
         paramList->setTempo(tempo);
     }
+
     return paramList;
 }
 
@@ -755,6 +819,7 @@ SePlayParamList* holdSeSetSeqLoacalVariable(const IUseAudioKeeper* pUser, const 
     if (paramList != nullptr) {
         paramList->setLocalVariable(index, value);
     }
+
     return paramList;
 }
 
@@ -768,6 +833,7 @@ void stopSe(const IUseAudioKeeper* pUser, const sead::SafeString& rName, s32 fad
     if (isForceInvalidSe(pUser)) {
         return;
     }
+
     pUser->getAudioKeeper()->getSeKeeper()->stopSe(alSoundNameUtil::getSoundId(rName.cstr(), false), fadeFrames,
                                                    nullptr, nullptr);
 }
@@ -783,6 +849,7 @@ void stopAllSeId(const IUseAudioKeeper* pUser, const sead::SafeString& rName, s3
     if (pUser->getAudioKeeper()->getSeKeeper() == nullptr) {
         return;
     }
+
     pUser->getAudioKeeper()->getSeKeeper()->stopAllSeFromName(rName.cstr(), fadeFrames, pUnused, false);
 }
 
@@ -795,6 +862,7 @@ void stopAllSeFromUser(const IUseAudioKeeper* pUser, s32 fadeFrames) {
     if (isForceInvalidSe(pUser)) {
         return;
     }
+
     pUser->getAudioKeeper()->getSeKeeper()->stopAll(fadeFrames);
 }
 
@@ -817,9 +885,11 @@ void tryUpdateSeMaterialCode(IUseAudioKeeper* pUser, const char* pMaterialName) 
     if (isForceInvalidSe(pUser)) {
         return;
     }
+
     if (pUser->getAudioKeeper()->getSeKeeper() == nullptr) {
         return;
     }
+
     pUser->getAudioKeeper()->getSeKeeper()->tryUpdateMaterial(pMaterialName);
 }
 
@@ -832,9 +902,11 @@ void updateSeMaterialWater(IUseAudioKeeper* pUser, bool isInWater) {
     if (isForceInvalidSe(pUser)) {
         return;
     }
+
     if (pUser->getAudioKeeper()->getSeKeeper() == nullptr) {
         return;
     }
+
     pUser->getAudioKeeper()->getSeKeeper()->setIsInWater(isInWater);
 }
 
@@ -847,9 +919,11 @@ void updateSeMaterialWet(IUseAudioKeeper* pUser, bool isWet) {
     if (isForceInvalidSe(pUser)) {
         return;
     }
+
     if (pUser->getAudioKeeper()->getSeKeeper() == nullptr) {
         return;
     }
+
     pUser->getAudioKeeper()->getSeKeeper()->setIsMaterialWet(isWet);
 }
 
@@ -862,9 +936,11 @@ void updateSeMaterialWetSingleMode(IUseAudioKeeper* pUser, bool isWet) {
     if (isForceInvalidSe(pUser)) {
         return;
     }
+
     if (pUser->getAudioKeeper()->getSeKeeper() == nullptr) {
         return;
     }
+
     pUser->getAudioKeeper()->getSeKeeper()->setIsMaterialWetSingleMode(isWet);
 }
 
@@ -877,9 +953,11 @@ void updateSeMaterialBeyondWall(IUseAudioKeeper* pUser, bool isBeyondWall) {
     if (isForceInvalidSe(pUser)) {
         return;
     }
+
     if (pUser->getAudioKeeper()->getSeKeeper() == nullptr) {
         return;
     }
+
     pUser->getAudioKeeper()->getSeKeeper()->setIsBeyondWall(isBeyondWall);
 }
 
@@ -891,6 +969,7 @@ void resetSeMaterialName(const IUseAudioKeeper* pUser) {
     if (isForceInvalidSe(pUser)) {
         return;
     }
+
     pUser->getAudioKeeper()->getSeKeeper()->resetMaterialName();
 }
 
@@ -904,6 +983,7 @@ bool isCurSeMaterialNameEqual(const IUseAudioKeeper* pUser, const char* pMateria
     if (isForceInvalidSe(pUser)) {
         return false;
     }
+
     const char* curName = pUser->getAudioKeeper()->getSeKeeper()->getMaterialName();
     return isEqualString(curName != nullptr ? curName : "NULL", pMaterialName);
 }
@@ -917,9 +997,11 @@ bool isSeMaterialWetSingleModeSet(IUseAudioKeeper* pUser) {
     if (isForceInvalidSe(pUser)) {
         return false;
     }
+
     if (pUser->getAudioKeeper()->getSeKeeper() == nullptr) {
         return false;
     }
+
     return pUser->getAudioKeeper()->getSeKeeper()->isMaterialWetSingleMode();
 }
 }  // namespace al
@@ -937,20 +1019,24 @@ bool isExistSeActionNameInUserInfo(const IUseAudioKeeper* pUser, const char* pAc
     if (isForceInvalidSe(pUser)) {
         return false;
     }
+
     const SeUserInfo* userInfo = pUser->getAudioKeeper()->getSeKeeper()->getUserInfo();
     if (userInfo == nullptr) {
         return false;
     }
+
     const AudioInfoList<SeActionInfo>* actionInfoList = userInfo->mActionInfoList;
     if (actionInfoList == nullptr) {
         return false;
     }
+
     for (s32 i = 0; i < actionInfoList->getInfoNum(); i++) {
         const SeActionInfo* actionInfo = actionInfoList->getInfo(i);
         if (actionInfo != nullptr && isEqualString(actionInfo->mName, pActionName)) {
             return true;
         }
     }
+
     return false;
 }
 
@@ -964,23 +1050,28 @@ bool isExistSeResourceNameInUserInfo(const IUseAudioKeeper* pUser, const char* p
     if (isForceInvalidSe(pUser)) {
         return false;
     }
+
     const SeUserInfo* userInfo = pUser->getAudioKeeper()->getSeKeeper()->getUserInfo();
     if (userInfo == nullptr) {
         return false;
     }
+
     const AudioInfoList<SePlayInfo>* playInfoList = userInfo->mPlayInfoList;
     if (playInfoList == nullptr) {
         return false;
     }
+
     for (s32 i = 0; i < playInfoList->getInfoNum(); i++) {
         const SePlayInfo* playInfo = playInfoList->getInfo(i);
         if (playInfo == nullptr) {
             continue;
         }
+
         const AudioInfoList<SeResourceInfo>* resourceInfoList = playInfo->mResourceInfoList;
         if (resourceInfoList == nullptr) {
             continue;
         }
+
         for (s32 j = 0; j < resourceInfoList->getInfoNum(); j++) {
             const SeResourceInfo* resourceInfo = resourceInfoList->getInfo(j);
             if (resourceInfo != nullptr && isEqualString(resourceInfo->mName, pResourceName)) {
@@ -988,6 +1079,7 @@ bool isExistSeResourceNameInUserInfo(const IUseAudioKeeper* pUser, const char* p
             }
         }
     }
+
     return false;
 }
 
@@ -1001,29 +1093,36 @@ bool isExistSePlayNameInUserInfo(const IUseAudioKeeper* pUser, const char* pPlay
     if (pUser == nullptr) {
         return false;
     }
+
     if (isForceInvalidSe(pUser)) {
         return false;
     }
+
     if (pUser->getAudioKeeper() == nullptr) {
         return false;
     }
+
     if (pUser->getAudioKeeper()->getSeKeeper() == nullptr) {
         return false;
     }
+
     const SeUserInfo* userInfo = pUser->getAudioKeeper()->getSeKeeper()->getUserInfo();
     if (userInfo == nullptr) {
         return false;
     }
+
     const AudioInfoList<SePlayInfo>* playInfoList = userInfo->mPlayInfoList;
     if (playInfoList == nullptr) {
         return false;
     }
+
     for (s32 i = 0; i < playInfoList->getInfoNum(); i++) {
         const SePlayInfo* playInfo = playInfoList->getInfo(i);
         if (playInfo != nullptr && isEqualString(playInfo->mName, pPlayName)) {
             return true;
         }
     }
+
     return false;
 }
 
@@ -1036,6 +1135,7 @@ void setSeModifier(const IUseAudioKeeper* pUser, ISeModifier* pModifier) {
     if (isForceInvalidSe(pUser)) {
         return;
     }
+
     pUser->getAudioKeeper()->getSeKeeper()->setModifier(pModifier);
 }
 
@@ -1085,6 +1185,7 @@ SePlayParamList* startSeFromControllerOrTvDrc(const IUseAudioKeeper* pUser, cons
             setSeOutputTvDrcRemoteAll(paramList);
         }
     }
+
     return paramList;
 }
 }  // namespace al

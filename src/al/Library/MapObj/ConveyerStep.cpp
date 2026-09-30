@@ -52,6 +52,7 @@ bool ConveyerStep::receiveMsg(const SensorMsg* pMsg, HitSensor* pOther, HitSenso
     if (mHost) {
         return mHost->receiveMsg(pMsg, pOther, pSelf);
     }
+
     return false;
 }
 
@@ -101,17 +102,20 @@ void ConveyerStep::setTransByCoord(f32 coord, bool isForwards, bool isForceReset
             (!mKeyHitReactionName || !isEqualString(mKeyHitReactionName, keyHitReactionName))) {
             startHitReaction(this, keyHitReactionName);
         }
+
         if (tryGetStringArg(&actionName, *conveyerKey.mPlacementInfo, "ActionName") &&
             (!mActionName || !isEqualString(mActionName, actionName))) {
             startAction(this, actionName);
         }
     }
+
     mKeyHitReactionName = keyHitReactionName;
     mActionName = actionName;
     if ((isForwards && newCoord < mCurrentCoord) || (!isForwards && newCoord > mCurrentCoord) ||
         isForceReset) {
         resetPosition(this, false);
     }
+
     f32 totalMoveDistance = mConveyerKeyKeeper->getTotalMoveDistance();
     bool isHide = isHideModel(this);
     if (newCoord > totalMoveDistance) {
@@ -119,14 +123,17 @@ void ConveyerStep::setTransByCoord(f32 coord, bool isForwards, bool isForceReset
             if (isExistCollisionParts(this)) {
                 invalidateCollisionParts(this);
             }
+
             hideModel(this);
         }
     } else if (isHide) {
         if (isExistCollisionParts(this)) {
             validateCollisionParts(this);
         }
+
         showModel(this);
     }
+
     mCurrentCoord = newCoord;
 }
 

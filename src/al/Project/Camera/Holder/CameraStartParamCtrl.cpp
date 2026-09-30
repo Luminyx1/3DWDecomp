@@ -38,6 +38,7 @@ static void updateCurrentArea(CameraStartParamArea** pCurrentArea, AreaObjGroup*
         if (*pCurrentArea && area->mPriority < (*pCurrentArea)->mPriority) {
             continue;
         }
+
         if (area->isValidParam() && area->isInVolume(rPos)) {
             *pCurrentArea = area;
         }
@@ -53,6 +54,7 @@ void CameraStartParamCtrl::update(const sead::Vector3f& rPos) {
     if (mAreaGroup) {
         updateCurrentArea(&mCurrentArea, mAreaGroup, rPos);
     }
+
     if (alCameraFunction::isValidCameraAreaKids(mFlagCtrl) && mAreaGroupKids) {
         updateCurrentArea(&mCurrentArea, mAreaGroupKids, rPos);
     }
@@ -66,12 +68,15 @@ void CameraStartParamCtrl::tryApplyParam(CameraStartInfo* pInfo) {
     if (!mCurrentArea) {
         return;
     }
+
     if (mCurrentArea->getAngleH()) {
         pInfo->setAreaAngleH(*mCurrentArea->getAngleH());
     }
+
     if (mCurrentArea->getAngleV()) {
         pInfo->setAreaAngleV(*mCurrentArea->getAngleV());
     }
+
     if (mCurrentArea->isOneTime()) {
         mCurrentArea->invalidateParam();
     }

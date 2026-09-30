@@ -288,10 +288,12 @@ void ClippingAreaDirector::setLODDisabled(LiveActor* pActor, bool isDisabled) {
     if (!node) {
         return;
     }
+
     ClippingAreaActorInfo* info = node->mInfo;
     if (!info) {
         info->mIsLODDisabled = isDisabled;
     }
+
     setLodDisabled(pActor, isDisabled);
 }
 }  // namespace al

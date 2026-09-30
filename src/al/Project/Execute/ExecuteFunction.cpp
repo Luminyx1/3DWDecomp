@@ -18,6 +18,7 @@ s32 calcExecutorListNumMax(const al::ExecuteOrder* pOrders, s32 orderNum, const 
             count++;
         }
     }
+
     return count;
 }
 

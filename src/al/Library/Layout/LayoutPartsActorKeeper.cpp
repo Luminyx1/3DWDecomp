@@ -76,6 +76,7 @@ LayoutActor* LayoutPartsActorKeeper::getPartsActor(const char* pName) const {
             return mPartsActors[i];
         }
     }
+
     return nullptr;
 }
 }  // namespace al

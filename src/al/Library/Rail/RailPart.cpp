@@ -50,6 +50,7 @@ bool RailPart::getAngleS(f32* pAngle) {
     if (!mIsSetAngleS) {
         return false;
     }
+
     *pAngle = mAngleS;
     return true;
 }
@@ -58,6 +59,7 @@ bool RailPart::getAngleE(f32* pAngle) {
     if (!mIsSetAngleE) {
         return false;
     }
+
     *pAngle = mAngleE;
     return true;
 }

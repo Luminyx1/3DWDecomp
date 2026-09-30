@@ -47,12 +47,14 @@ void SkyboxDirector::execute() {
     if (!areaDirector) {
         return;
     }
+
     CurrentGraphicsAreaParam areaParam;
     areaDirector->getCurrentGraphicsAreaParam(&areaParam, static_cast<GraphicsAreaParamType>(1));
     const char* name = areaParam.mParamName;
     if (!name || isEqualString(name, "")) {
         return;
     }
+
     s32 num = mNamedParams.size();
     for (s32 i = 0; i < num; i++) {
         if (isEqualString(name, mNamedParams[i]->getName())) {
@@ -70,6 +72,7 @@ NamedSkyboxParam* SkyboxDirector::findSkyboxParamByName(const char* pName) const
     if (!pName || isEqualString(pName, "")) {
         return nullptr;
     }
+
     s32 num = mNamedParams.size();
     for (s32 i = 0; i < num; i++) {
         NamedSkyboxParam* param = mNamedParams[i];
@@ -77,6 +80,7 @@ NamedSkyboxParam* SkyboxDirector::findSkyboxParamByName(const char* pName) const
             return param;
         }
     }
+
     return nullptr;
 }
 
@@ -102,6 +106,7 @@ void SkyboxDirector::initStageResource(const Resource* pResource, const char* pS
         mParamIO.applyResParameterArchive(agl::utl::ResParameterArchive(file));
         isLoaded = true;
     }
+
     mIsLoadedParam = isLoaded;
 }
 }  // namespace al

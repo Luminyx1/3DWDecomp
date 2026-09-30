@@ -29,6 +29,7 @@ ClippingViewFadeInAreas::ClippingViewFadeInAreas(const char* pLinkName,
     } else if (fadeTime == 0) {
         fadeTime = 1;
     }
+
     mFadeStep = 1.0f / fadeTime;
     mFadeRate = 0.0f;
 
@@ -51,6 +52,7 @@ ClippingViewFadeInAreas::ClippingViewFadeInAreas(const char* pLinkName,
             isValidBox = false;
             continue;
         }
+
         const sead::Vector3f& boxMin = localBox.getMin();
         const sead::Vector3f& boxMax = localBox.getMax();
         sead::Vector3f corners[8] = {
@@ -59,6 +61,7 @@ ClippingViewFadeInAreas::ClippingViewFadeInAreas(const char* pLinkName,
             {boxMin.x, boxMax.y, boxMin.z}, {boxMax.x, boxMax.y, boxMin.z},
             {boxMax.x, boxMax.y, boxMax.z}, {boxMin.x, boxMax.y, boxMax.z},
         };
+
         const sead::Vector3f& scale = areaObj->mShape->mScale;
         for (s32 j = 0; j < 8; j++) {
             sead::Vector3f& corner = corners[j];
@@ -69,18 +72,23 @@ ClippingViewFadeInAreas::ClippingViewFadeInAreas(const char* pLinkName,
             if (corner.x < min.x) {
                 min.x = corner.x;
             }
+
             if (corner.x > max.x) {
                 max.x = corner.x;
             }
+
             if (corner.y < min.y) {
                 min.y = corner.y;
             }
+
             if (corner.y > max.y) {
                 max.y = corner.y;
             }
+
             if (corner.z < min.z) {
                 min.z = corner.z;
             }
+
             if (corner.z > max.z) {
                 max.z = corner.z;
             }
@@ -104,27 +112,33 @@ f32 ClippingViewFadeInAreas::updateClipping(const sead::Vector3f& rPos, bool isF
         (rPos - mCenter).squaredLength() > mRadius * mRadius) {
         return 0.0f;
     }
+
     if (getInVolumeAreaObj(rPos)) {
         if (isForce) {
             mFadeRate = 1.0f;
             return 1.0f;
         }
+
         mFadeRate += mFadeStep;
         if (mFadeRate > 1.0f) {
             mFadeRate = 1.0f;
             return 1.0f;
         }
+
         return mFadeRate;
     }
+
     if (isForce) {
         mFadeRate = 0.0f;
         return 0.0f;
     }
+
     mFadeRate -= mFadeStep;
     if (mFadeRate < 0.0f) {
         mFadeRate = 0.0f;
         return 0.0f;
     }
+
     return mFadeRate;
 }
 
@@ -161,6 +175,7 @@ bool ClipForceViewArea::isInArea(const sead::Vector3f& rPos) {
             return true;
         }
     }
+
     return false;
 }
 }  // namespace al

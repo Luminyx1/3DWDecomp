@@ -10,6 +10,7 @@ bool CameraStopJudge::isStop() const {
     if (mIsInvalidStopJudgeByDemo) {
         return false;
     }
+
     return mIsInCameraStopArea || mIsStopByDeathPlayer;
 }
 

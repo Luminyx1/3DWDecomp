@@ -29,9 +29,11 @@ void LayoutActor::appear() {
     if (mAudioKeeper) {
         mAudioKeeper->appear();
     }
+
     if (mLayoutPartsActorKeeper) {
         mLayoutPartsActorKeeper->appear();
     }
+
     updateLayoutPaneRecursive(this);
     calcAnim(false);
 }
@@ -43,12 +45,15 @@ void LayoutActor::kill() {
     if (mEffectKeeper) {
         mEffectKeeper->deleteAndClearEffectAll();
     }
+
     if (mAudioKeeper) {
         mAudioKeeper->kill();
     }
+
     if (mLayoutPartsActorKeeper) {
         mLayoutPartsActorKeeper->kill();
     }
+
     mIsAlive = false;
 }
 
@@ -59,28 +64,35 @@ void LayoutActor::movement() {
     if (!mIsAlive) {
         return;
     }
+
     if (mNerveKeeper) {
         mNerveKeeper->update();
         if (!mIsAlive) {
             return;
         }
     }
+
     control();
     if (mLayoutPartsActorKeeper) {
         mLayoutPartsActorKeeper->update();
     }
+
     if (mLayoutKeeper->getGroupNum() < 1) {
         return;
     }
+
     if (mEffectKeeper) {
         mEffectKeeper->update();
     }
+
     if (mAudioKeeper) {
         mAudioKeeper->update();
     }
+
     if (mLayoutActionKeeper) {
         mLayoutActionKeeper->update();
     }
+
     if (mTextPaneAnimator) {
         mTextPaneAnimator->update();
     }
@@ -93,12 +105,15 @@ void LayoutActor::syncAction() {
     if (mEffectKeeper) {
         mEffectKeeper->update();
     }
+
     if (mAudioKeeper) {
         mAudioKeeper->update();
     }
+
     if (mLayoutActionKeeper) {
         mLayoutActionKeeper->update();
     }
+
     if (mTextPaneAnimator) {
         mTextPaneAnimator->update();
     }
@@ -112,6 +127,7 @@ void LayoutActor::calcAnim(bool isRecursive) {
     if (!mIsAlive) {
         return;
     }
+
     mLayoutKeeper->calcAnim(isRecursive);
     if (mLayoutPartsActorKeeper) {
         mLayoutPartsActorKeeper->calcAnim(isRecursive);

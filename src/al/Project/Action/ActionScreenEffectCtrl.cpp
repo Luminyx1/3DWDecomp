@@ -41,9 +41,11 @@ ActionScreenEffectCtrl* ActionScreenEffectCtrl::tryCreate(const LiveActor* pActo
     if (!isExistModelResource(pActor)) {
         return nullptr;
     }
+
     if (!isExistModelOrAnimResourceYaml(pActor, "ScreenEffectCtrl", nullptr)) {
         return nullptr;
     }
+
     return new ActionScreenEffectCtrl(pActor);
 }
 
@@ -56,6 +58,7 @@ void ActionScreenEffectCtrl::startAction(const char* pActionName) {
     for (s32 i = 0; i < mInfoCount; i++) {
         mInfos[i].mIsActive = false;
     }
+
     for (s32 i = 0; i < mInfoCount; i++) {
         ActionScreenEffectCtrlInfo* info = &mInfos[i];
         if (isEqualString(mActionName, info->mActionName)) {
@@ -75,10 +78,12 @@ void ActionScreenEffectCtrl::update(f32 frame, f32 frameRate) {
         if (!info->mIsActive || !info->mRadialBlur.mIsEnable) {
             continue;
         }
+
         if (!alAnimFunction::checkPass(frame, frameRate,
                                        static_cast<f32>(info->mRadialBlur.mStartFrame))) {
             continue;
         }
+
         s32 blurFrame = info->mRadialBlur.mBlurFrame;
         const char* jointName = info->mRadialBlur.mJointName;
         sead::Vector3f pos;
@@ -87,6 +92,7 @@ void ActionScreenEffectCtrl::update(f32 frame, f32 frameRate) {
         } else {
             pos.setAdd(getTrans(mParentActor), info->mRadialBlur.mPosOffset);
         }
+
         emitRadialBlur(mParentActor, pos, info->mRadialBlur.mRadiusBegin,
                        info->mRadialBlur.mRadiusEnd, blurFrame, -1);
     }

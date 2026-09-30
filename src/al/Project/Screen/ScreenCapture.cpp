@@ -129,10 +129,12 @@ ScreenCapture::~ScreenCapture() {
         delete mBlurFilter;
         mBlurFilter = nullptr;
     }
+
     if (mImageAddr.getMemoryPool()) {
         mImageAddr.deleteGPUMemBlock();
         mImageAddr.invalidate();
     }
+
     if (mTextureData) {
         delete mTextureData;
         mTextureData = nullptr;

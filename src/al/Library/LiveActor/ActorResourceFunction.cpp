@@ -91,6 +91,7 @@ bool isExistModelOrAnimResourceYaml(const LiveActor* pActor, const char* pName,
     if (isExistModelResourceYaml(pActor, pName, pSuffix)) {
         return true;
     }
+
     return tryGetAnimResource(pActor) && isExistResourceYaml(getAnimResource(pActor), pName, pSuffix);
 }
 
@@ -128,6 +129,7 @@ const u8* getModelOrAnimResourceYaml(const LiveActor* pActor, const char* pName,
     if (isExistModelResourceYaml(pActor, pName, pSuffix)) {
         return getModelResourceYaml(pActor, pName, pSuffix);
     }
+
     return getAnimResourceYaml(pActor, pName, pSuffix);
 }
 
@@ -159,6 +161,7 @@ const u8* tryGetMapPartsResourceYaml(const ActorInitInfo& rInfo, const char* pNa
     if (!resource->isExistFile(StringTmp<256>("%s.byml", pName))) {
         return nullptr;
     }
+
     return resource->getByml(pName);
 }
 
@@ -182,6 +185,7 @@ bool tryGetInitFileIterAndName(ByamlIter* pIter, sead::BufferedSafeString* pFile
         if (!suffixIter.isExistKey(pKey)) {
             return false;
         }
+
         suffixIter.tryGetStringByKey(&suffixName, pKey);
     }
 
@@ -200,9 +204,11 @@ bool tryGetInitFileIterAndName(ByamlIter* pIter, sead::BufferedSafeString* pFile
     } else {
         return false;
     }
+
     if (pFileName) {
         pFileName->format(fileName.cstr());
     }
+
     return true;
 }
 
@@ -219,11 +225,13 @@ bool tryGetSuffixIter(ByamlIter* pIter, const Resource* pResource, const char* p
     if (!pSuffix) {
         return false;
     }
+
     StringTmp<256> fileName;
     createFileNameBySuffix(&fileName, pName, pSuffix);
     if (!pResource->isExistFile(StringTmp<64>("%s.byml", fileName.cstr()))) {
         return false;
     }
+
     *pIter = ByamlIter(pResource->getByml(fileName));
     return true;
 }
@@ -404,6 +412,7 @@ bool tryGetActorAnimInitFileName(sead::BufferedSafeString* pFileName, const Live
     if (!animResource) {
         return false;
     }
+
     return tryGetInitFileIterAndName(nullptr, pFileName, getModelResource(pActor), pKey, pSuffix,
                                      "InitActor", animResource);
 }

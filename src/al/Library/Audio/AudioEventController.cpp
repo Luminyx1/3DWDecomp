@@ -37,6 +37,7 @@ bool isPlayerInWater(const al::IUseAreaObj* pUser, const al::PlayerHolder* pPlay
         if (al::isPlayerDead(pPlayerHolder, i) || !al::isPlayerAreaTarget(pPlayerHolder, i)) {
             continue;
         }
+
         targetNum++;
         sead::Vector3f pos = al::getPlayerPos(pPlayerHolder, i);
         if (al::isInWaterAreaNoSink(pUser, pos)) {
@@ -45,9 +46,11 @@ bool isPlayerInWater(const al::IUseAreaObj* pUser, const al::PlayerHolder* pPlay
                 *pInWaterFrames = 0;
                 continue;
             }
+
             if (al::isPlayerInRouteDokan(al::getPlayerActor(pPlayerHolder, i))) {
                 return false;
             }
+
             if (*pInWaterFrames >= 28) {
                 inWaterNum++;
                 isAnyInWater = true;
@@ -61,9 +64,11 @@ bool isPlayerInWater(const al::IUseAreaObj* pUser, const al::PlayerHolder* pPlay
             *pInWaterFrames = 0;
         }
     }
+
     if (targetNum == 0) {
         return false;
     }
+
     f32 rate = static_cast<f32>(inWaterNum) / static_cast<f32>(targetNum);
     return isAnyInWater && rate > 0.5f;
 }
@@ -134,12 +139,14 @@ void AudioEventController::update() {
             if (name == nullptr) {
                 name = mDefaultBgmPlayName;
             }
+
             const char* curName = mCurBgmPlayName;
             if (!mIsDisableBgmChangeArea && (name != nullptr || curName != nullptr)) {
                 bool isDiffer = true;
                 if (name != nullptr && curName != nullptr) {
                     isDiffer = !isEqualString(curName, name);
                 }
+
                 if (name != nullptr && isDiffer) {
                     const BgmDataBase* dataBase = getBgmDirector(this)->getBgmDataBase();
                     IUseAudioKeeper* upperUser = getUpperLayerAudioUser(this);
@@ -149,6 +156,7 @@ void AudioEventController::update() {
                     startBgm(user, name, -1, 0, -1, -1);
                 }
             }
+
             mCurBgmPlayName = name;
         }
     }
@@ -164,6 +172,7 @@ void AudioEventController::update() {
                 startFadeInFrames = mOverrideFadeInFrames;
                 mIsOverrideFadeInFrames = false;
             }
+
             const char* name = nullptr;
             mBgmStartAreaChecker->tryGetStringArgInCurArea(&name, "Kind");
             if (name != nullptr) {
@@ -203,6 +212,7 @@ void AudioEventController::update() {
             if (name == nullptr) {
                 name = mDefaultAudioEffectName;
             }
+
             changeAudioEffect(this, name);
         }
     }
@@ -221,6 +231,7 @@ void AudioEventController::update() {
         } else if (mIsInWater) {
             changeBgmSituation(this, "OutWater");
         }
+
         mIsInWater = isInWater;
     }
 
@@ -312,6 +323,7 @@ void AudioEventController::deactivate() {
     if (mSeAreaTriggeredPlayer != nullptr) {
         mSeAreaTriggeredPlayer->reset();
     }
+
     mEnableEventFlags = 0;
 }
 
@@ -339,6 +351,7 @@ bool AudioEventController::isInBgmStopArea() {
     if (mBgmStopAreaChecker == nullptr) {
         return false;
     }
+
     return mBgmStopAreaChecker->isInArea();
 }
 
@@ -352,6 +365,7 @@ const char* AudioEventController::getBgmPlayNameByAreaChecker(bool isIgnoreDefau
     if (name == nullptr && !isIgnoreDefault) {
         return mDefaultBgmPlayName;
     }
+
     return name;
 }
 
@@ -372,6 +386,7 @@ const char* AudioEventController::getAudioEffectNameByAreaChecker() {
     if (name != nullptr) {
         return name;
     }
+
     return mDefaultAudioEffectName;
 }
 
@@ -388,11 +403,13 @@ const char* AudioEventController::getBgmPlayNameInThisPosition(const sead::Vecto
             return mDefaultBgmPlayName;
         }
     }
+
     const char* name = nullptr;
     bool isFound = tryGetAreaObjStringArg(&name, areaObj, "Kind");
     if (name != nullptr && isFound) {
         return name;
     }
+
     return mDefaultBgmPlayName;
 }
 

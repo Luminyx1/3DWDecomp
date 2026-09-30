@@ -83,6 +83,7 @@ bool YFogParam::operator==(const YFogParam& rOther) const {
             }
         }
     }
+
     return false;
 }
 
@@ -214,6 +215,7 @@ bool FogDirector::isUsingMulFog() const {
         const sead::Color4f& mulColor = *param.mMulColor;
         return mulColor.r != 1.0f || mulColor.g != 1.0f || mulColor.b != 1.0f;
     }
+
     return false;
 }
 
@@ -226,6 +228,7 @@ bool FogDirector::isUsingMulYFog() const {
         const sead::Color4f& mulColor = *param.mMulColor;
         return mulColor.r != 1.0f || mulColor.g != 1.0f || mulColor.b != 1.0f;
     }
+
     return false;
 }
 

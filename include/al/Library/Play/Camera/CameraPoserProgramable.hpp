@@ -15,5 +15,6 @@ public:
     sead::Vector3f mProgramCameraPos = {0.0f, 500.0f, 500.0f};
     sead::Vector3f mProgramCameraUp = sead::Vector3f::ey;
 };
+
 static_assert(sizeof(CameraPoserProgramable) == 0xc0);
 }  // namespace al

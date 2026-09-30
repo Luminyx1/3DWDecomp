@@ -44,6 +44,7 @@ const sead::Vector3f* SeSource3DLine::calcPosition(const sead::Vector3f& rListen
     } else {
         mPos.setScaleAdd(dist, mDir, mMtxPose->get3DPos());
     }
+
     return &mPos;
 }
 }  // namespace al

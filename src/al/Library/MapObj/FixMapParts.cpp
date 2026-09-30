@@ -26,9 +26,11 @@ void FixMapParts::initWithSuffix(const ActorInitInfo& rInfo, const char* pSuffix
     if (!mActorPoseKeeper) {
         initActorPoseTQSV(this);
     }
+
     if (!trySyncStageSwitchAppear(this)) {
         trySyncStageSwitchKill(this);
     }
+
     bool isConnectCollision = false;
     if (tryGetArg(&isConnectCollision, rInfo, "IsConnectCollision") && isConnectCollision) {
         mConnector = createMtxConnector(this);
@@ -91,14 +93,17 @@ bool FixMapParts::receiveMsg(const SensorMsg* pMsg, HitSensor* pOther, HitSensor
     if (isMsgAskSafetyPoint(pMsg)) {
         return true;
     }
+
     if (isMsgShowModel(pMsg)) {
         showModelIfHide(this);
         return true;
     }
+
     if (isMsgHideModel(pMsg)) {
         hideModelIfShow(this);
         return true;
     }
+
     return isMsgSink(pMsg);
 }
 }  // namespace al

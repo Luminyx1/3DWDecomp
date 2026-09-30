@@ -20,6 +20,7 @@ s32 calcIsOneTimeInUserInfo(const al::SeUserInfo* pUserInfo) {
     if (pUserInfo->mActionInfoList == nullptr) {
         return 0;
     }
+
     s32 actionNum = pUserInfo->mActionInfoList->getInfoNum();
     s32 count = 0;
     for (s32 i = 0; i < actionNum; i++) {
@@ -29,11 +30,13 @@ s32 calcIsOneTimeInUserInfo(const al::SeUserInfo* pUserInfo) {
         if (playInfoList == nullptr) {
             continue;
         }
+
         s32 playNum = playInfoList->getInfoNum();
         for (s32 j = 0; j < playNum; j++) {
             count += actionInfo->mPlayInfoList->getInfo(j)->mIsOneTime;
         }
     }
+
     return count;
 }
 
@@ -46,12 +49,15 @@ al::SeInputFunctionId convertInputFunctionNameToId(const char* pName) {
     if (al::isEqualString(pName, "Minus")) {
         return static_cast<al::SeInputFunctionId>(1);
     }
+
     if (al::isEqualString(pName, "Abs")) {
         return static_cast<al::SeInputFunctionId>(2);
     }
+
     if (al::isEqualString(pName, "Square")) {
         return static_cast<al::SeInputFunctionId>(3);
     }
+
     return static_cast<al::SeInputFunctionId>(0);
 }
 
@@ -64,6 +70,7 @@ const char* convertInputFunctionIdToName(al::SeInputFunctionId id) {
     if (static_cast<u32>(id) <= 3) {
         return cInputFunctionNames[id];
     }
+
     return "InvalidID";
 }
 
@@ -128,6 +135,7 @@ const char* createNameAreaAndCopy(const char* pName) {
     if (pName == nullptr) {
         return nullptr;
     }
+
     al::StringTmp<128> name(pName);
     s32 size = name.calcLength() + 1;
     char* buffer = new char[size];

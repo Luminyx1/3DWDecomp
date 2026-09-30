@@ -58,6 +58,7 @@ bool PadTouchController::gatherInput() {
     if (!device) {
         return false;
     }
+
     const nn::hid::TouchScreenState<1>* state = &device->getTouchScreenState();
     std::memmove(&mTouchScreenState, state, sizeof(mTouchScreenState));
     return true;

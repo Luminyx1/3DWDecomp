@@ -61,6 +61,7 @@ void SurfMapParts::exeWait() {
             calcQuatUp(&mUpDir, quat);
         }
     }
+
     if (mIsEnableSlope) {
         turnQuatYDirRate(getQuatPtr(this), mStartQuat, mUpDir, 1.0f);
     }

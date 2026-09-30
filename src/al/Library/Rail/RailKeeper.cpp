@@ -28,6 +28,7 @@ RailKeeper* tryCreateRailKeeper(const PlacementInfo& rInfo, const char* pLinkNam
     if (!tryGetLinksInfo(&railInfo, rInfo, pLinkName)) {
         return nullptr;
     }
+
     return new RailKeeper(railInfo);
 }
 
@@ -60,6 +61,7 @@ RailKeeperGroup* tryCreateRailKeeperGroup(const PlacementInfo& rInfo, const char
     if (calcLinkChildNum(rInfo, pLinkName) == 0) {
         return nullptr;
     }
+
     RailKeeperGroup* group = new RailKeeperGroup();
     group->init(rInfo, pLinkName);
     return group;

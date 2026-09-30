@@ -11,11 +11,13 @@ inline void checkHit(HitSensor* pA, HitSensor* pB) {
     if (pA->mHostActor == pB->mHostActor) {
         return;
     }
+
     sead::Vector3f diff = pA->mPos - pB->mPos;
     f32 radius = pA->mRadius + pB->mRadius;
     if (diff.squaredLength() >= radius * radius) {
         return;
     }
+
     switch (pB->mSensorType) {
     case HitSensorType::Eye:
     case HitSensorType::PlayerEye:
@@ -24,6 +26,7 @@ inline void checkHit(HitSensor* pA, HitSensor* pB) {
         pA->addHitSensor(pB);
         break;
     }
+
     switch (pA->mSensorType) {
     case HitSensorType::Eye:
     case HitSensorType::PlayerEye:
@@ -87,6 +90,7 @@ HitSensorDirector::HitSensorDirector(ExecuteDirector* pExecuteDirector, s32 scal
     if (mQueueThread != nullptr) {
         mThreadUpdate = new MultiThreadUpdate(pExecuteDirector, this);
     }
+
     registerExecutorUser(this, pExecuteDirector, "センサー");
 }
 

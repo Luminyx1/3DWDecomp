@@ -42,9 +42,11 @@ bool CollisionPartsFilterActor::isInvalidParts(const CollisionParts& rParts) con
     if (!rParts.mSensor) {
         return false;
     }
+
     if (mIsInvalidActorParts) {
         return getSensorHost(rParts.mSensor) == mActor;
     }
+
     return getSensorHost(rParts.mSensor) != mActor;
 }
 
@@ -57,6 +59,7 @@ bool CollisionPartsFilterConnectedSensor::isInvalidParts(const CollisionParts& r
     if (!rParts.mSensor) {
         return false;
     }
+
     return rParts.mSensor == mSensor;
 }
 
@@ -69,6 +72,7 @@ bool CollisionPartsFilterConnectedSensorType::isInvalidParts(const CollisionPart
     if (!rParts.mSensor) {
         return false;
     }
+
     return isSensorType(rParts.mSensor, mSensorType);
 }
 
@@ -81,6 +85,7 @@ bool CollisionPartsFilterSpecialPurpose::isInvalidParts(const CollisionParts& rP
     if (!rParts.mSpecialPurpose) {
         return false;
     }
+
     return !isEqualString(mSpecialPurpose, rParts.mSpecialPurpose);
 }
 
@@ -102,6 +107,7 @@ bool CollisionPartsFilterOnlySpecialPurpose::isInvalidParts(const CollisionParts
     if (!rParts.mSpecialPurpose) {
         return true;
     }
+
     return !isEqualString(mSpecialPurpose, rParts.mSpecialPurpose);
 }
 

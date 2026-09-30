@@ -173,6 +173,7 @@ s32 GraphicsStressDirector::getBufferSizeX() const {
                 break;
             }
         }
+
         scale = sead::Mathi::min(getCurrentParam().getScreenWidthScale(), limit);
     }
 
@@ -201,6 +202,7 @@ s32 GraphicsStressDirector::getBufferSizeY() const {
                 break;
             }
         }
+
         scale = sead::Mathi::min(getCurrentParam().getScreenHeightScale(), limit);
     }
 
@@ -342,6 +344,7 @@ GraphicsQualityController::GraphicsQualityController(f32* pRecoverPercents)
         mQualityLevels[i].level = i;
         mQualityLevels[i].rate = 1.0f;
     }
+
     initNerve(&NrvGraphicsQualityControllerWait, 0);
 }
 

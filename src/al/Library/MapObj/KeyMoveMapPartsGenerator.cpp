@@ -47,6 +47,7 @@ void KeyMoveMapPartsGenerator::init(const ActorInitInfo& rInfo) {
         makeActorDead();
         return;
     }
+
     for (s32 i = 0; i < partsCount; i++) {
         KeyMoveMapParts* keyMoveMapParts = new KeyMoveMapParts("キー移動マップマップパーツ");
         initLinksActor(keyMoveMapParts, rInfo, "Generate", 0);
@@ -54,6 +55,7 @@ void KeyMoveMapPartsGenerator::init(const ActorInitInfo& rInfo) {
         keyMoveMapParts->makeActorDead();
         mKeyMoveMapPartsGroup->registerActor(keyMoveMapParts);
     }
+
     KeyMoveMapParts* keyMoveMapParts = mKeyMoveMapPartsGroup->getDeriveActor(0);
     f32 clippingRadius = 0.0f;
     calcKeyMoveClippingInfo(&mClippingTrans, &clippingRadius, keyMoveMapParts->getKeyPoseKeeper(),
@@ -65,6 +67,7 @@ void KeyMoveMapPartsGenerator::init(const ActorInitInfo& rInfo) {
     if (mDelayTime > 0) {
         setNerve(this, &NrvKeyMoveMapPartsGeneratorDelay);
     }
+
     getNerveKeeper()->update();
     initStageSwitch(this, rInfo);
     makeActorAppeared();

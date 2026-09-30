@@ -57,6 +57,7 @@ void SimpleCircleShadowXZ::updatePose() {
         mRotate.y = mStartRotate.y + rate * (mEndRotate.y - mStartRotate.y);
         mRotate.z = mStartRotate.z + rate * (mEndRotate.z - mStartRotate.z);
     }
+
     sead::Matrix34f hostMtx = *mHost->getBaseMtx();
     hostMtx.m[1][3] = 0.0f;
     sead::Vector3f trans;

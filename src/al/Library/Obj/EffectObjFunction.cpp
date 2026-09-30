@@ -41,6 +41,7 @@ void initActorEffectObj(LiveActor* pActor, const ActorInitInfo& rInfo, const cha
         initExecutorUpdate(pActor, rInfo, "エフェクトオブジェ");
         alPlacementFunction::isEnableGroupClipping(rInfo);
     }
+
     initActorEffectKeeper(pActor, rInfo, pArchiveName, true);
 }
 }  // namespace al::EffectObjFunction

@@ -45,6 +45,7 @@ SeUserInfo* SeUserInfo::createInfo(const ByamlIter& rIter, const sead::SafeStrin
             info->mEmitterInfoList = alSeDbFunction::createDefaultEmitterInfoList();
         }
     }
+
     return info;
 }
 

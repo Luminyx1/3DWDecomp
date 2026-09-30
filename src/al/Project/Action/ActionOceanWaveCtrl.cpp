@@ -12,9 +12,11 @@ const OceanWaveActionInfo* tryFindActionInfo(const OceanWaveUserInfo* pUserInfo,
     if (!pActionName) {
         return nullptr;
     }
+
     if (!pUserInfo->mActionInfoList) {
         return nullptr;
     }
+
     return pUserInfo->mActionInfoList->tryFindInfo(pActionName);
 }
 
@@ -29,13 +31,16 @@ ActionOceanWaveCtrl* ActionOceanWaveCtrl::tryCreate(LiveActor* pActor) {
     if (!pActor) {
         return nullptr;
     }
+
     OceanWaveKeeper* keeper = pActor->mOceanWaveKeeper;
     if (!keeper) {
         return nullptr;
     }
+
     if (!keeper->getUserInfo()) {
         return nullptr;
     }
+
     return new ActionOceanWaveCtrl(pActor);
 }
 
@@ -59,15 +64,18 @@ void ActionOceanWaveCtrl::update(f32 frame, f32 frameRate) {
     if (!mActionInfo || !mActionInfo->mPlayInfoList) {
         return;
     }
+
     if (!mOceanWaveKeeper->getDirector()) {
         return;
     }
+
     s32 infoNum = mActionInfo->mPlayInfoList->getInfoNum();
     for (s32 i = 0; i < infoNum; i++) {
         const OceanWavePlayInfoInAction* info = mActionInfo->mPlayInfoList->getInfo(i);
         if (frameRate <= 0.0f) {
             continue;
         }
+
         if (info->mStartFrame <= frame && frame - frameRate < info->mStartFrame) {
             startOceanWave(mParentActor, info->mName);
         }

@@ -66,6 +66,7 @@ void ClippingDirector::addToGroupClipping(LiveActor* pActor, const ActorInitInfo
     if (!alPlacementFunction::isEnableGroupClipping(rInfo)) {
         return;
     }
+
     ClippingActorInfo* info = mClippingActorHolder->initGroupClipping(pActor, rInfo);
     mClippingGroupHolder->createAndAdd(info, rInfo, num);
 }

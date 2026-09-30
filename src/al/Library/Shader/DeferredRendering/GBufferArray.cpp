@@ -56,6 +56,7 @@ GBufferArray::GBufferArray(const agl::RenderTargetDepth* pDepthTarget,
     for (s32 i = 0; i < cIndex_Num; i++) {
         mGBuffers[i].mTexture = nullptr;
     }
+
     mGBuffers[cIndex_Albedo].mFormat = agl::TextureFormat(0x1d);
     mGBuffers[cIndex_NrmView].mFormat = agl::TextureFormat(0x22);
     mGBuffers[cIndex_DepthView].mFormat = agl::TextureFormat(isHighPrecisionDepth ? 0x19 : 9);
@@ -77,6 +78,7 @@ void GBufferArray::freeGBuf(s32 index) {
     if (index == cIndex_LightBuffer) {
         return;
     }
+
     freeGBufferTexture(&mGBuffers[index]);
 }
 
@@ -117,6 +119,7 @@ void GBufferArray::allocGBuffer(s32 subIndex) {
         default:
             return;
         }
+
         gbuffer.mTexture = allocator->alloc(getDrawContext(), name, gbuffer.mFormat, width,
                                             height, 1, nullptr, type, true, false);
         gbuffer.mRenderTarget.applyTextureData(*gbuffer.mTexture);
@@ -136,9 +139,11 @@ void GBufferArray::clearGBuffer() {
         if (i == cIndex_LightBuffer) {
             break;
         }
+
         if (!mGBuffers[i].mIsClear) {
             continue;
         }
+
         agl::RenderTargetColor renderTarget;
         renderTarget.applyTextureData(*mGBuffers[i].mTexture);
         agl::RenderBuffer renderBuffer;
@@ -317,6 +322,7 @@ void GBufferArray::bindRenderBuffer(s32 num) {
             renderBuffer.setRenderTargetColor(&mGBuffers[i].mRenderTarget, i);
         }
     }
+
     renderBuffer.setRenderTargetDepth(const_cast<agl::RenderTargetDepth*>(mDepthTarget));
     renderBuffer.bind(GameFrameworkNx::sInstance->mDrawContext);
     sead::Viewport viewport(renderBuffer);
@@ -393,21 +399,25 @@ void GBufferArray::setContextMRTCustom(sead::GraphicsContextMRT* pContext,
         setContextMRT(pContext);
         return;
     }
+
     const char* blendMode = getBlendMode(pMaterial);
     bool isCustom = isEqualString(blendMode, "Custom");
     if (getAlphaTestEnable(pMaterial)) {
         setContextMRTAlphaMask(pContext);
         return;
     }
+
     bool isXlu = isXluBlend(pMaterial);
     if (!isCustom && isXlu) {
         setContextMRTXlu(pContext);
         return;
     }
+
     if (!isEqualString(blendMode, "Custom")) {
         setContextMRT(pContext);
         return;
     }
+
     if (isNoNrm) {
         pContext->setBlendEnable(3, true);
         pContext->setColorMask(0, false, false, false, false);
@@ -422,6 +432,7 @@ void GBufferArray::setContextMRTCustom(sead::GraphicsContextMRT* pContext,
         pContext->setColorMask(2, true, true, true, true);
         pContext->setColorMask(3, true, true, true, true);
     }
+
     setPolygonCtrlToContext(pContext, pMaterial);
     setDepthCtrlToContext(pContext, pMaterial);
     setAlphaTestToContext(pContext, pMaterial);
@@ -495,11 +506,13 @@ void GBufferArray::bindRenderBufferAndContextMRT() {
         for (s32 i = 0; i < cIndex_Num; i++) {
             renderBuffer.setRenderTargetColor(&mGBuffers[i].mRenderTarget, i);
         }
+
         renderBuffer.setRenderTargetDepth(const_cast<agl::RenderTargetDepth*>(mDepthTarget));
         renderBuffer.bind(GameFrameworkNx::sInstance->mDrawContext);
         sead::Viewport viewport(renderBuffer);
         viewport.apply(GameFrameworkNx::sInstance->mDrawContext, renderBuffer);
     }
+
     sead::GraphicsContextMRT context;
     setContextMRT(&context);
     context.apply(GameFrameworkNx::sInstance->mDrawContext);

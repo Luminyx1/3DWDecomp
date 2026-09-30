@@ -129,6 +129,7 @@ bool isInScreen(const sead::Vector2f& rPos, f32 margin) {
     if (rPos.x < -margin) {
         return false;
     }
+
     bool isInTop = rPos.y >= -margin;
     bool isInRight = rPos.x <= margin + 1920.0f;
     bool isInBottom = rPos.y <= margin + 1080.0f;

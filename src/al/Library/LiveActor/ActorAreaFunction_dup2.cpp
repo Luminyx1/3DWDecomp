@@ -15,6 +15,7 @@ bool isInDeathArea(const LiveActor* pActor) {
     if (!isAreaTarget(pActor)) {
         return false;
     }
+
     const IUseAreaObj* areaUser = pActor;
     const sead::Vector3f& trans = getTrans(pActor);
     return areaUser->getAreaObjDirector()->getInVolumeAreaObj("DeathArea", trans) != nullptr;

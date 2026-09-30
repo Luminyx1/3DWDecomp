@@ -45,6 +45,7 @@ bool SeadAudio3DActorWrapper::isPlayingSound() const {
             return true;
         }
     }
+
     return false;
 }
 }  // namespace al

@@ -43,6 +43,7 @@ void CameraTargetCollideInfoHolder::update(bool isValid, const sead::Vector3f& r
                                               &sTriangleFilter)) {
         return;
     }
+
     mIsExistCollisionUnderTarget = true;
     mTargetCollisionNormal = *triangle.getNormal(0);
     normalize(&mTargetCollisionNormal);
@@ -50,6 +51,7 @@ void CameraTargetCollideInfoHolder::update(bool isValid, const sead::Vector3f& r
     if (!isInRange(calcAngleDegree(-sDownDir, mTargetCollisionNormal), 15.0f, 70.0f)) {
         return;
     }
+
     mIsExistSlopeCollisionUnderTarget = true;
     sead::Vector3f side;
     side.setCross(-sDownDir, mTargetCollisionNormal);
@@ -87,6 +89,7 @@ bool CameraTargetCollideInfoHolder::isExistUnderWall() const {
     if (!mIsExistCollisionUnderTarget) {
         return false;
     }
+
     return isWallPolygon(mTargetCollisionNormal, -sead::Vector3f::ey);
 }
 
@@ -99,9 +102,11 @@ bool CameraTargetCollideInfoHolder::tryCalcSlopeDownFrontDirH(sead::Vector3f* pD
     if (!isNormalize(mGravity, 0.001f)) {
         return false;
     }
+
     if (isParallelDirection(mSlopeDownDir, -sDownDir, 0.01f)) {
         return false;
     }
+
     verticalizeVec(pDir, -sDownDir, mSlopeDownDir);
     normalize(pDir);
     return true;

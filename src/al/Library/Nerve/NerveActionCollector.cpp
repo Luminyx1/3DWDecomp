@@ -12,6 +12,7 @@ void NerveActionCollector::addNerve(al::NerveAction* pAction) {
         mNumActions++;
         return;
     }
+
     mEndAction->mNextNode = pAction;
     mEndAction = pAction;
     mNumActions++;

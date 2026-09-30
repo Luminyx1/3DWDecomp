@@ -49,6 +49,7 @@ bool PlacementId::isEqual(const PlacementId& rOther) const {
     if (mCommonID) {
         return rOther.mCommonID && isEqualString(mCommonID, rOther.mCommonID);
     }
+
     if (rOther.mCommonID) {
         return false;
     }

@@ -29,14 +29,17 @@ bool JoyPadAccelerometerAddon::calc() {
     if (!npad->isConnected()) {
         return false;
     }
+
     s64 index = mIndex;
     if (index >= npad->getSixAxisSensorNum()) {
         return false;
     }
+
     if (npad->getAccelerometerWaitCount() >= 1) {
         mWaitCount = 5;
         return false;
     }
+
     if (mWaitCount - 1 >= 0) {
         mWaitCount--;
         return false;

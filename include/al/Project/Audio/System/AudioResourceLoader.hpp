@@ -38,5 +38,6 @@ private:
     IAudioResourceLoader* mLoader;
     sead::RingBuffer<u32> mLoadedItemIds;
 };
+
 static_assert(sizeof(AudioResourceLayer) == 0x38);
 }  // namespace al

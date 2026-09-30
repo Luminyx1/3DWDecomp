@@ -36,6 +36,7 @@ void MultiCoreExecutorThreadBase::threadFunction(sead::Thread* pThread, s64 mess
         mMessageQueue.push(-1, sead::MessageQueue::BlockType::Blocking);
         return;
     }
+
     executeOnThread(message);
 }
 

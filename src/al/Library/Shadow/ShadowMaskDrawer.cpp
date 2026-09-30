@@ -90,6 +90,7 @@ u8 ShadowMaskKeeper::getShadowIntensity(s32 category) const {
     default:
         break;
     }
+
     return intensity;
 }
 

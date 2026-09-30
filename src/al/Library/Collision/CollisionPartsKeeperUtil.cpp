@@ -27,12 +27,14 @@ const char* getCollisionCodeName(const Triangle& rTriangle, const char* pCategor
     if (!attributes.isValid()) {
         return nullptr;
     }
+
     if (isTypeStringByKey(attributes, pCategory)) {
         const char* code = nullptr;
         if (attributes.tryGetStringByKey(&code, pCategory)) {
             return code;
         }
     }
+
     ByamlIter codeIter;
     if (attributes.tryGetIterByKey(&codeIter, pCategory)) {
         const char* code = nullptr;
@@ -40,6 +42,7 @@ const char* getCollisionCodeName(const Triangle& rTriangle, const char* pCategor
             return code;
         }
     }
+
     return nullptr;
 }
 

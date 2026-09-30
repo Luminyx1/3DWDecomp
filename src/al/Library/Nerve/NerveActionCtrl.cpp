@@ -30,6 +30,7 @@ NerveAction* NerveActionCtrl::findNerve(const char* pName) const {
             return action;
         }
     }
+
     return nullptr;
 }
 }  // namespace al

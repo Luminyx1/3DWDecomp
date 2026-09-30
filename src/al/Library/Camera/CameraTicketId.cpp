@@ -11,6 +11,7 @@ inline bool isEqualStringOrBothNull(const char* pStr1, const char* pStr2) {
     if (pStr1 != nullptr && pStr2 != nullptr) {
         return isEqualString(pStr1, pStr2);
     }
+
     return pStr1 == nullptr && pStr2 == nullptr;
 }
 }  // namespace
@@ -32,12 +33,15 @@ bool CameraTicketId::isEqual(const CameraTicketId& rOther) const {
     if (!mPlacementId && rOther.mPlacementId) {
         return false;
     }
+
     if (mPlacementId && !rOther.mPlacementId) {
         return false;
     }
+
     if (!mPlacementId && !rOther.mPlacementId) {
         return isEqualString(mSuffix, rOther.mSuffix);
     }
+
     if (!mPlacementId->isEqual(*rOther.mPlacementId)) {
         return false;
     }
@@ -46,6 +50,7 @@ bool CameraTicketId::isEqual(const CameraTicketId& rOther) const {
     if (mSuffix && rOther.mSuffix) {
         return isEqualString(mSuffix, rOther.mSuffix);
     }
+
     return isNoneSuffix;
 }
 
@@ -68,6 +73,7 @@ bool CameraTicketId::isEqual(const ByamlIter& rIter) const {
     if (!isEqualStringOrBothNull(getObjId(), tryGetByamlKeyStringOrNULL(rIter, "ObjId"))) {
         return false;
     }
+
     return isEqualStringOrBothNull(mSuffix, tryGetByamlKeyStringOrNULL(rIter, "Suffix"));
 }
 
@@ -81,6 +87,7 @@ bool CameraTicketId::isEqual(const ByamlIter& rIter, const PlacementId* pPlaceme
     if (!isEqualStringOrBothNull(pPlacementId->mPlacementID, tryGetByamlKeyStringOrNULL(rIter, "ObjId"))) {
         return false;
     }
+
     return tryGetByamlKeyStringOrNULL(rIter, "Suffix") == nullptr;
 }
 
@@ -92,6 +99,7 @@ const char* CameraTicketId::tryGetObjId() const {
     if (!mPlacementId) {
         return nullptr;
     }
+
     return mPlacementId->mPlacementID;
 }
 

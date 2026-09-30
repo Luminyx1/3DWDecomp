@@ -40,6 +40,7 @@ ArchiveEntry* ArchiveHolder::tryFindEntry(const sead::SafeString& rFileName) {
             return entry;
         }
     }
+
     return nullptr;
 }
 
@@ -62,6 +63,7 @@ void ArchiveHolder::clearEntry() {
     for (s32 i = 0; i < mSize; i++) {
         mArchiveEntries.get(i)->clear();
     }
+
     mSize = 0;
 }
 }  // namespace al

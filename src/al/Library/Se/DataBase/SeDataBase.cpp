@@ -43,6 +43,7 @@ void SeDataBase::createUserInfoList(const Resource* pResource) {
         SeUserInfo* info = SeUserInfo::createInfo(iter, fileName);
         mUserInfoList->mInfos->pushBack(info);
     }
+
     mUserInfoList->sortInfo();
 }
 
@@ -66,11 +67,13 @@ void SeDataBase::createResourceSespecificInfoList(const Resource* pResource, Sea
         if (info == nullptr) {
             continue;
         }
+
         SoundInfo soundInfo;
         bool isRead = pPlayer->readSoundInfo(&soundInfo, info->mSoundId);
         info->mPlayerId = isRead ? static_cast<u8>(soundInfo.playerId) : 0;
         mResourceSpecificInfoList->mInfos->pushBack(info);
     }
+
     mResourceSpecificInfoList->sortInfo();
 }
 
@@ -171,6 +174,7 @@ SeArchiveLoadingInfo* SeArchiveLoadingInfo::createInfo(const ByamlIter& rIter) {
     } else {
         info->mUserLoadingInfoList = nullptr;
     }
+
     return info;
 }
 

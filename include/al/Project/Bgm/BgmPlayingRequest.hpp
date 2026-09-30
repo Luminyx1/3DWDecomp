@@ -18,5 +18,6 @@ struct BgmPlayingRequest {
     s32 _18 = -1;
     s32 _1c;
 };
+
 static_assert(sizeof(BgmPlayingRequest) == 0x20);
 }  // namespace al

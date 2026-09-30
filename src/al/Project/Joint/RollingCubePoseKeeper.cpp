@@ -65,6 +65,7 @@ void RollingCubePoseKeeper::init(const ActorInitInfo& initInfo) {
             mRollingCubePoses[mirrorIndex].setCubeSize(mCubeSize);
             mRollingCubePoses[mirrorIndex].init(nextPlacementInfo);
         }
+
         currentPlacementInfo = nextPlacementInfo;
     }
 

@@ -40,6 +40,7 @@ ActorActionKeeper* ActorActionKeeper::tryCreate(LiveActor* pActor, const char* p
         !screenEffectCtrl && !oceanWaveCtrl) {
         return nullptr;
     }
+
     return new ActorActionKeeper(pActor, name, animCtrl, nerveActionCtrl, flagCtrl, effectCtrl,
                                  seCtrl, bgmCtrl, oceanWaveCtrl, padAndCameraCtrl,
                                  screenEffectCtrl);
@@ -55,6 +56,7 @@ bool ActorActionKeeper::startAction(const char* pActionName) {
     if (!mNerveActionCtrl) {
         tryStartActionNoAnim(pActionName);
     }
+
     return mAnimCtrl && mAnimCtrl->start(pActionName);
 }
 
@@ -66,21 +68,27 @@ void ActorActionKeeper::tryStartActionNoAnim(const char* pActionName) {
     if (mFlagCtrl) {
         mFlagCtrl->start(pActionName);
     }
+
     if (mEffectCtrl) {
         mEffectCtrl->startAction(pActionName);
     }
+
     if (mSeCtrl) {
         mSeCtrl->startAction(pActionName);
     }
+
     if (mBgmCtrl) {
         mBgmCtrl->startAction(pActionName);
     }
+
     if (mOceanWaveCtrl) {
         mOceanWaveCtrl->startAction(pActionName);
     }
+
     if (mPadAndCameraCtrl) {
         mPadAndCameraCtrl->startAction(pActionName);
     }
+
     if (mScreenEffectCtrl) {
         mScreenEffectCtrl->startAction(pActionName);
     }
@@ -121,26 +129,33 @@ void ActorActionKeeper::updatePost() {
             if (mFlagCtrl) {
                 mFlagCtrl->update(frame, frameRate);
             }
+
             if (mEffectCtrl) {
                 mEffectCtrl->update(frame, frameRate);
             }
+
             if (mSeCtrl) {
                 mSeCtrl->update(frame, frameRate);
             }
+
             if (mBgmCtrl) {
                 mBgmCtrl->update(frame, frameRate);
             }
+
             if (mOceanWaveCtrl) {
                 mOceanWaveCtrl->update(frame, frameRate);
             }
+
             if (mPadAndCameraCtrl) {
                 mPadAndCameraCtrl->update(frame, frameRate);
             }
+
             if (mScreenEffectCtrl) {
                 mScreenEffectCtrl->update(frame, frameRate);
             }
         }
     }
+
     mIsActionStarted = false;
 }
 
@@ -151,6 +166,7 @@ void ActorActionKeeper::updateSeActionCtrl() {
     if (!mSeCtrl) {
         return;
     }
+
     f32 frame = mNerveActionCtrl ? static_cast<s32>(mActor->getNerveKeeper()->mNerveStep) - 1 :
                                    getActionFrame(mActor);
     f32 frameRate = mNerveActionCtrl ? 1.0f : getActionFrameRate(mActor);
@@ -161,22 +177,27 @@ void ActorActionKeeper::tryUpdateSeEffect(f32 frameFrom, f32 frameTo) {
     if (frameFrom == frameTo) {
         return;
     }
+
     if (!mSeCtrl && !mEffectCtrl) {
         return;
     }
+
     const char* actionName = getActionName(mActor);
     if (!actionName) {
         return;
     }
+
     f32 frameRate;
     if (frameFrom > frameTo) {
         frameRate = getActionFrameMax(mActor, actionName) - frameFrom + frameTo;
     } else {
         frameRate = frameTo - frameFrom;
     }
+
     if (mSeCtrl) {
         mSeCtrl->update(frameFrom, frameRate);
     }
+
     if (mEffectCtrl) {
         mEffectCtrl->update(frameFrom, frameRate);
     }

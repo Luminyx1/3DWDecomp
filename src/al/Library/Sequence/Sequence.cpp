@@ -39,15 +39,19 @@ void Sequence::update() {
         mCurrentScene = mNextScene;
         mNextScene = nullptr;
     }
+
     if (mCurrentScene && mCurrentScene->isAlive()) {
         mCurrentScene->movement();
     }
+
     if (mIsChangeScene) {
         updateNerve();
     }
+
     if (mAudioDirector) {
         mAudioDirector->update();
     }
+
     if (mAudioKeeper) {
         mAudioKeeper->update();
     }

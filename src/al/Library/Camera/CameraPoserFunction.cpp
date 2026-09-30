@@ -830,6 +830,7 @@ void initSnapShotCameraCtrlZoomRollMove(al::CameraPoser_RS* pPoser, bool isValid
     if (isValidMove) {
         snapShotCtrl->setIsValidMove(true);
     }
+
     pPoser->setSnapShotCtrl(snapShotCtrl);
 }
 
@@ -1122,6 +1123,7 @@ al::CameraLimitRailKeeper* tryFindNearestLimitRailKeeper(const al::CameraPoser_R
         if (!railHolder->isActive()) {
             continue;
         }
+
         for (s32 j = 0; j < railHolder->getRailCount(); j++) {
             al::CameraLimitRailKeeper* railKeeper = railHolder->getRail(j);
 
@@ -1149,6 +1151,7 @@ void calcCameraRotateStick(sead::Vector2f* pStick, const al::CameraPoser_RS* pPo
         pPoser->getInputHolder()->getInput(i)->calcInputStick(&inputStick);
         stick += inputStick;
     }
+
     pStick->set(stick);
 
     if (pPoser->getFlagCtrl()->isCameraReverseInputH)
@@ -1247,11 +1250,13 @@ bool isTriggerCameraResetRotate(const al::CameraPoser_RS* pPoser) {
     if (isSnapShotMode(pPoser)) {
         return false;
     }
+
     for (s32 i = 0; i < pPoser->getInputHolder()->getInputNum(); i++) {
         if (pPoser->getInputHolder()->getInput(i)->isTriggerReset()) {
             return true;
         }
     }
+
     return false;
 }
 

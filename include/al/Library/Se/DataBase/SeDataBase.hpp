@@ -21,6 +21,7 @@ public:
     const char* mName;
     u32 mSoundId;
 };
+
 static_assert(sizeof(SeBankLoadingInfo) == 0x10);
 
 class SeUserLoadingInfo {
@@ -30,6 +31,7 @@ public:
 
     const char* mName;
 };
+
 static_assert(sizeof(SeUserLoadingInfo) == 0x8);
 
 class SeArchiveLoadingInfo {
@@ -41,6 +43,7 @@ public:
     AudioInfoList<SeBankLoadingInfo>* mBankLoadingInfoList;
     AudioInfoList<SeUserLoadingInfo>* mUserLoadingInfoList;
 };
+
 static_assert(sizeof(SeArchiveLoadingInfo) == 0x18);
 
 class SeDataBase {
@@ -66,9 +69,11 @@ public:
         if (mResourceSpecificInfoList == nullptr) {
             return nullptr;
         }
+
         if (pName == nullptr) {
             return nullptr;
         }
+
         return mResourceSpecificInfoList->tryFindInfo(pName);
     }
 
@@ -77,5 +82,6 @@ private:
     AudioInfoList<SeResourceSpecificInfo>* mResourceSpecificInfoList = nullptr;
     AudioInfoList<SeArchiveLoadingInfo>* mArchiveLoadingInfoList = nullptr;
 };
+
 static_assert(sizeof(SeDataBase) == 0x18);
 }  // namespace al

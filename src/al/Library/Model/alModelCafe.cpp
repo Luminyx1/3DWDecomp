@@ -115,6 +115,7 @@ alModelCafe::~alModelCafe() {
         delete mBaseMtx;
         mBaseMtx = nullptr;
     }
+
     if (mModelG3D) {
         delete mModelG3D;
         mModelG3D = nullptr;
@@ -156,6 +157,7 @@ void alModelCafe::initResource(const char* pModelArcName, const char* pAnimArcNa
         if (!texResFile) {
             texResFile = getResFile(mModelRes);
         }
+
         texRes->tryCreateResGraphicsFile(texFileName, texResFile);
     }
 
@@ -212,6 +214,7 @@ void alModelCafe::initModel(s32 bufferNum, al::GpuMemAllocator* pAllocator) {
     if (mAnimPlayerSkl) {
         mAnimPlayerSkl->initInterp(mFileName);
     }
+
     if (!mat0 && !mat2) {
         mModelG3D->tryInitFixedMatUbo();
     }
@@ -267,15 +270,19 @@ void alModelCafe::update() {
     if (mAnimPlayerSkl) {
         mAnimPlayerSkl->update();
     }
+
     if (mAnimPlayerMat1) {
         mAnimPlayerMat1->update();
     }
+
     if (mAnimPlayerMat0) {
         mAnimPlayerMat0->update();
     }
+
     if (mAnimPlayerMat2) {
         mAnimPlayerMat2->update();
     }
+
     if (mAnimPlayerVis) {
         mAnimPlayerVis->update();
     }
@@ -295,15 +302,19 @@ void alModelCafe::updateLast() {
     if (mAnimPlayerSkl) {
         mAnimPlayerSkl->updateLast();
     }
+
     if (mAnimPlayerMat1) {
         mAnimPlayerMat1->updateLast();
     }
+
     if (mAnimPlayerMat0) {
         mAnimPlayerMat0->updateLast();
     }
+
     if (mAnimPlayerMat2) {
         mAnimPlayerMat2->updateLast();
     }
+
     if (mAnimPlayerVis) {
         mAnimPlayerVis->updateLast();
     }
@@ -318,18 +329,23 @@ void alModelCafe::calc(const sead::Matrix34f& rMtx, const sead::Vector3f& rScale
     if (mAnimPlayerSkl) {
         mAnimPlayerSkl->calcSklAnim();
     }
+
     if (mAnimPlayerSkl) {
         mAnimPlayerSkl->calcNeedUpdateAnimNext();
     }
+
     if (mAnimPlayerMat1) {
         mAnimPlayerMat1->calcNeedUpdateAnimNext();
     }
+
     if (mAnimPlayerMat0) {
         mAnimPlayerMat0->calcNeedUpdateAnimNext();
     }
+
     if (mAnimPlayerMat2) {
         mAnimPlayerMat2->calcNeedUpdateAnimNext();
     }
+
     if (mAnimPlayerVis) {
         mAnimPlayerVis->calcNeedUpdateAnimNext();
     }
@@ -341,10 +357,12 @@ void alModelCafe::calc(const sead::Matrix34f& rMtx, const sead::Vector3f& rScale
     if (!mWorldMtxArray) {
         return;
     }
+
     const nn::g3d::SkeletonObj* skeleton = mModelG3D->getModelObj()->GetSkeleton();
     if (!skeleton) {
         return;
     }
+
     u32 boneNum = skeleton->GetBoneCount();
     for (u32 i = 0; i < boneNum; i++) {
         storeWorldMtx(&mWorldMtxArray[i], skeleton->GetWorldMtxArray()[i]);
@@ -384,6 +402,7 @@ const nn::g3d::ResModel* alModelCafe::getResModel() const {
     if (mTextureRes) {
         return getFirstResModel(getResFile(mTextureRes));
     }
+
     return getFirstResModel(getResFile(mModelRes));
 }
 
@@ -401,6 +420,7 @@ void alModelCafe::initUpdateBounding() {
             break;
         }
     }
+
     mModelG3D->_44 = isExist;
 }
 

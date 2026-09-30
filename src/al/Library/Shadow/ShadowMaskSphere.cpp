@@ -31,10 +31,12 @@ void ShadowMaskSphere::calcShadowMatrix(sead::Matrix34f* pMtx) {
     if (mMtxConnector) {
         mMtxConnector->calcConnectInfo(&trans, nullptr, nullptr, mOffset, sead::Vector3f::zero);
     }
+
     f32 scale = mScale;
     if (mHost && mIsFollowHostScale) {
         scale *= getScale(mHost).x;
     }
+
     pMtx->makeST(sead::Vector3f(scale, scale, scale), trans);
 }
 
@@ -45,6 +47,7 @@ void ShadowMaskSphere::update() {
     if (!mIsShadowFixed) {
         calcShadowMatrix(&mShadowMtx);
     }
+
     ShadowMaskFunction::getShadowMaskKeeper(mHost)->addSphere(
         mShadowMtx, mColor, mExp, getShadowIntensity(), mDrawCategory.getRelativeIndex());
 }
