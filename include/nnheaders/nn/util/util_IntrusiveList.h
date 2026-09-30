@@ -1,6 +1,7 @@
 #pragma once
 
 #include <nn/types.h>
+#include <iterator>
 
 namespace nn {
 namespace util {
@@ -79,6 +80,12 @@ class IntrusiveList {
 public:
     class const_iterator {
     public:
+        using iterator_category = std::bidirectional_iterator_tag;
+        using value_type = T;
+        using difference_type = ptrdiff_t;
+        using pointer = const T*;
+        using reference = const T&;
+
         explicit const_iterator(const IntrusiveListNode* pNode) : m_pNode(pNode) {}
 
         const T& operator*() const { return NodeTraits::GetItem(*m_pNode); }
@@ -86,6 +93,11 @@ public:
 
         const_iterator& operator++() {
             m_pNode = m_pNode->GetNext();
+            return *this;
+        }
+
+        const_iterator& operator--() {
+            m_pNode = m_pNode->GetPrev();
             return *this;
         }
 
@@ -98,6 +110,12 @@ public:
 
     class iterator {
     public:
+        using iterator_category = std::bidirectional_iterator_tag;
+        using value_type = T;
+        using difference_type = ptrdiff_t;
+        using pointer = T*;
+        using reference = T&;
+
         explicit iterator(IntrusiveListNode* pNode) : m_pNode(pNode) {}
 
         T& operator*() const { return NodeTraits::GetItem(*m_pNode); }
@@ -114,6 +132,11 @@ public:
             return temporary;
         }
 
+        iterator& operator--() {
+            m_pNode = m_pNode->GetPrev();
+            return *this;
+        }
+
         bool operator==(const iterator& rOther) const { return m_pNode == rOther.m_pNode; }
         bool operator!=(const iterator& rOther) const { return !(*this == rOther); }
 
@@ -122,6 +145,13 @@ public:
     private:
         IntrusiveListNode* m_pNode;
     };
+
+    using reverse_iterator = std::reverse_iterator<iterator>;
+    using const_reverse_iterator = std::reverse_iterator<const_iterator>;
+    reverse_iterator rbegin() { return reverse_iterator(end()); }
+    const_reverse_iterator rbegin() const { return const_reverse_iterator(end()); }
+    reverse_iterator rend() { return reverse_iterator(begin()); }
+    const_reverse_iterator rend() const { return const_reverse_iterator(begin()); }
 
     void push_back(T& rValue) { m_Root.LinkPrev(&NodeTraits::GetNode(rValue)); }
     void push_front(T& rValue) { m_Root.LinkNext(&NodeTraits::GetNode(rValue)); }

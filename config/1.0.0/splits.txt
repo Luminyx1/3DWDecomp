@@ -3635,29 +3635,29 @@ src/nw/gfx/detail/gfx_Device-api.nvn.8-os.horizon.cpp:
     .text   start:0x0058EB50 end:0x0058EC8C
 src/nw/gfx/gfx_Interop-api.nvn.cpp:
     .text   start:0x0058EC90 end:0x0058EF84
-src/nw/ui2d/ui2d_AnimButton.cpp:
+src/nw/ui2d/ui2d_AnimButton.cpp: done
     .text   start:0x0058EF90 end:0x0058FDC4
-src/nw/ui2d/ui2d_ButtonBase.cpp:
+src/nw/ui2d/ui2d_ButtonBase.cpp: done
     .text   start:0x0058FDD0 end:0x005909D0
 src/nw/ui2d/ui2d_ButtonGroup.cpp:
     .text   start:0x005909D0 end:0x005911E4
 src/nw/ui2d/ui2d_DefaultControlCreator.cpp:
     .text   start:0x005911F0 end:0x00591794
-src/nw/ui2d/ui2d_CheckButton.cpp:
+src/nw/ui2d/ui2d_CheckButton.cpp: done
     .text   start:0x005917A0 end:0x00591A44
-src/nw/ui2d/ui2d_DecisionButton.cpp:
+src/nw/ui2d/ui2d_DecisionButton.cpp: done
     .text   start:0x00591A50 end:0x00591C14
-src/nw/ui2d/ui2d_DragButton.cpp:
+src/nw/ui2d/ui2d_DragButton.cpp: done
     .text   start:0x00591C20 end:0x00591F34
-src/nw/ui2d/ui2d_NormalButton.cpp:
+src/nw/ui2d/ui2d_NormalButton.cpp: done
     .text   start:0x00591F40 end:0x00592268
-src/nw/ui2d/ui2d_SelectButton.cpp:
+src/nw/ui2d/ui2d_SelectButton.cpp: done
     .text   start:0x00592270 end:0x005924D4
-src/nw/ui2d/ui2d_TouchDragButton.cpp:
+src/nw/ui2d/ui2d_TouchDragButton.cpp: done
     .text   start:0x005924E0 end:0x00592838
-src/nw/ui2d/ui2d_TouchOffButton.cpp:
+src/nw/ui2d/ui2d_TouchOffButton.cpp: done
     .text   start:0x00592840 end:0x00592A44
-src/nw/ui2d/ui2d_TouchOffCheckButton.cpp:
+src/nw/ui2d/ui2d_TouchOffCheckButton.cpp: done
     .text   start:0x00592A50 end:0x00592C98
 src/nw/ui2d/ui2d_Animation.cpp:
     .text   start:0x00592CA0 end:0x0059653C
@@ -3665,7 +3665,7 @@ src/nw/ui2d/ui2d_ControlCreator.cpp: done
     .text   start:0x00596540 end:0x005967D0
 src/nw/ui2d/ui2d_Layout.cpp:
     .text   start:0x005967D0 end:0x0059F830
-src/nw/ui2d/ui2d_Animator.cpp:
+src/nw/ui2d/ui2d_Animator.cpp: done
     .text   start:0x0059F830 end:0x005A01B8
 src/nw/ui2d/ui2d_Group.cpp:
     .text   start:0x005A01C0 end:0x005A06BC
@@ -3725,7 +3725,7 @@ src/nw/ui2d/ui2d_TextureContainer.cpp: done
     .text   start:0x005E2370 end:0x005E253C
 src/nw/ui2d/ui2d_ArcExtractor.cpp:
     .text   start:0x005E2540 end:0x005E2EEC
-src/nw/ui2d/ui2d_ShaderContainer.cpp:
+src/nw/ui2d/ui2d_ShaderContainer.cpp: done
     .text   start:0x005E2EF0 end:0x005E3374
 src/nw/ui2d/ui2d_ResourceAccessor_dup2.cpp:
     .text   start:0x005E3380 end:0x005E36C0
@@ -3733,7 +3733,7 @@ src/nw/ui2d/ui2d_FontMgr.cpp:
     .text   start:0x005E36C0 end:0x005E42AC
 src/nw/ui2d/ui2d_ArcResourceAccessor.cpp:
     .text   start:0x005E42B0 end:0x005E6FC8
-src/nw/ui2d/ui2d_FontContainer.cpp:
+src/nw/ui2d/ui2d_FontContainer.cpp: done
     .text   start:0x005E6FD0 end:0x005E739C
 src/nw/ui2d/ui2d_TextureContainer_dup2.cpp:
     .text   start:0x005E73A0 end:0x005E7B48

@@ -61,6 +61,7 @@ public:
     static void* AllocateMemory(size_t, size_t);
     static void* AllocateMemory(size_t);
     static void FreeMemory(void* src);
+    GroupAnimator* CreateGroupAnimatorAuto(nn::gfx::Device* device, const char* name, bool enabled);
     const void* GetAnimResourceData(const char* pName) const;
 
     template <typename T>
