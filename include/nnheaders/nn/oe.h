@@ -45,11 +45,18 @@ struct DisplayVersion {
 
 typedef s32 PerformanceConfiguration;
 
+enum CpuBoostMode {
+    CpuBoostMode_Disabled = 0,
+    CpuBoostMode_Enabled = 1,
+};
+
 void Initialize();
 void FinishStartupLogo();
 void EnableGamePlayRecording(void*, u64);
 void SetExpectedVolumeBalance(f32, f32);
 void SetPerformanceConfiguration(nn::oe::PerformanceMode, nn::oe::PerformanceConfiguration);
+nn::oe::PerformanceConfiguration GetPerformanceConfiguration(nn::oe::PerformanceMode);
+void SetCpuBoostMode(nn::oe::CpuBoostMode);
 void SetResumeNotificationEnabled(bool);
 void SetOperationModeChangedNotificationEnabled(bool);
 void SetPerformanceModeChangedNotificationEnabled(bool);

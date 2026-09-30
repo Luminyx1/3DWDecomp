@@ -8,6 +8,10 @@
 #include <nn/types.h>
 
 namespace nn {
+struct TimeSpanType {
+    s64 _nanoSeconds;
+};
+
 class TimeSpan {
 public:
     u64 nanoseconds;

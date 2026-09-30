@@ -319,16 +319,18 @@ struct AnalogStickState {
 };
 
 struct ControllerSupportArg {
-    u8 mMinPlayerCount;
-    u8 mMaxPlayerCount;
+    void SetDefault();
+
+    s8 mMinPlayerCount;
+    s8 mMaxPlayerCount;
     u8 mTakeOverConnection;
     bool mLeftJustify;
     bool mPermitJoyconDual;
     bool mSingleMode;
     bool mUseColors;
-    Color4u8 mColors[4];
+    Color4u8 mColors[8];
     u8 mUsingControllerNames;
-    char mControllerNames[4][0x81];
+    char mControllerNames[8][0x81];
 };
 
 struct ControllerSupportArgV2 {
@@ -510,7 +512,7 @@ void InitializeNpad();
 void SetSupportedNpadIdType(const u32*, u64);
 void SetSupportedNpadStyleSet(NpadStyleSet);
 NpadStyleSet GetNpadStyleSet(const u32& port);
-s32 ShowControllerSupport(ControllerSupportResultInfo*, const ControllerSupportArg&);
+Result ShowControllerSupport(ControllerSupportResultInfo*, const ControllerSupportArg&);
 
 void GetNpadState(NpadFullKeyState*, const u32& port);
 void GetNpadState(NpadHandheldState*, const u32& port);
@@ -532,10 +534,13 @@ void SetNpadJoyAssignmentModeDual(const u32& port);
 Result MergeSingleJoyAsDualJoy(const u32& port1, const u32& port2);
 void SwapNpadAssignment(const u32& port1, const u32& port2);
 void DisconnectNpad(const u32& port);
+Result GetNpadControllerColor(NpadControllerColor* pOutLeft, NpadControllerColor* pOutRight,
+                              const u32& port);
 
 s32 GetSixAxisSensorHandles(SixAxisSensorHandle*, s32, const u32& port, NpadStyleSet);
 void StartSixAxisSensor(const SixAxisSensorHandle&);
 s32 GetSixAxisSensorStates(SixAxisSensorState*, s32, const SixAxisSensorHandle&);
+bool IsSixAxisSensorAtRest(const SixAxisSensorHandle&);
 
 s32 GetVibrationDeviceHandles(VibrationDeviceHandle*, s32, const u32& port, NpadStyleSet);
 void InitializeVibrationDevice(const VibrationDeviceHandle&);
@@ -543,6 +548,9 @@ void SendVibrationValue(const VibrationDeviceHandle&, const VibrationValue&);
 
 void InitializeMouse();
 void InitializeKeyboard();
+void InitializeTouchScreen();
+template <u64 N>
+void GetTouchScreenState(TouchScreenState<N>* pOutState);
 
 void GetMouseState(MouseState*);
 void GetKeyboardState(KeyboardState*);
