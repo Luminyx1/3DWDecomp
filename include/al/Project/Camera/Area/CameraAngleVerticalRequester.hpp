@@ -2,14 +2,14 @@
 
 #include <math/seadVector.h>
 
+#include "Library/HostIO/IUseHioNode.hpp"
 #include "Project/AreaObj/IUseAreaObj.hpp"
 
 namespace al {
 class AreaObj;
 class AreaObjGroup;
 
-/// Requests a vertical camera angle while the camera target is inside a CameraAngleVerticalRequestArea.
-class CameraAngleVerticalRequester : public IUseAreaObj {
+class CameraAngleVerticalRequester : public HioNode, public IUseAreaObj {
 public:
     CameraAngleVerticalRequester();
 
@@ -19,10 +19,12 @@ public:
     void initAfterPlacement();
     void update(const sead::Vector3f& rPos);
 
-    s32 mFramesUnchanged = 0;                  // _8
-    f32 mAngleVertical = 0.0f;                 // _C
-    const AreaObj* mRequestArea = nullptr;     // _10
-    AreaObjGroup* mRequestAreaGroup = nullptr; // _18
-    AreaObjDirector* mAreaObjDirector = nullptr;  // _20
+private:
+    s32 mFramesUnchanged = 0;
+    f32 mAngleVertical = 0.0f;
+    const AreaObj* mRequestArea = nullptr;
+    AreaObjGroup* mRequestAreaGroup = nullptr;
+    AreaObjDirector* mAreaObjDirector = nullptr;
 };
+
 }  // namespace al
