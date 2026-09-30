@@ -27,6 +27,7 @@ Audio3DListenerGroupNin::~Audio3DListenerGroupNin() = default;
  */
 void Audio3DListenerGroupNin::append(Audio3DListenerNin& rListener) {
     reflectGroupParamToListener_(rListener);
+
     if (mMgr && !mMgr->isListenerAddedToNw(rListener)) {
         mMgr->getSound3DManager()->AddListener(&rListener);
     }

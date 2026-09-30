@@ -12,6 +12,7 @@ namespace sead {
  */
 Audio3DMgrNin::Audio3DMgrNin(bool createDefaultListener) {
     mSound3DManager = new nn::atk::Sound3DManager();
+
     if (createDefaultListener) {
         mDefaultListener = new (static_cast<s32>(alignof(Audio3DListenerNin))) Audio3DListenerNin();
     }
@@ -25,6 +26,7 @@ Audio3DMgrNin::Audio3DMgrNin(bool createDefaultListener) {
  */
 Audio3DMgrNin::~Audio3DMgrNin() {
     mSound3DManager->Finalize();
+
     if (mWorkBuffer) {
         delete[] mWorkBuffer;
         mWorkBuffer = nullptr;
@@ -51,6 +53,7 @@ void Audio3DMgrNin::initialize(AudioMgr& rMgr, Heap* pHeap) {
     const nn::atk::SoundArchive* archive = player->getSoundDataMgr()->getSoundArchive();
     size_t size = mSound3DManager->GetRequiredMemSize(archive);
     mWorkBuffer = new (pHeap, 0x20) u8[size];
+
     if (mSound3DManager->Initialize(archive, mWorkBuffer, size) && mDefaultListener) {
         appendListener(*mDefaultListener);
     }
@@ -73,6 +76,7 @@ void Audio3DMgrNin::appendListener(Audio3DListenerNin& rListener) {
  */
 void Audio3DMgrNin::finalize() {
     mSound3DManager->Finalize();
+
     if (mWorkBuffer) {
         delete[] mWorkBuffer;
         mWorkBuffer = nullptr;
@@ -191,6 +195,7 @@ void Audio3DMgrNin::getDefaultListenerParameter(Audio3DListenerParameterNin* pPa
  */
 bool Audio3DMgrNin::isListenerAddedToNw(Audio3DListenerNin& rListener) const {
     const auto& list = mSound3DManager->GetListenerList();
+
     for (auto it = list.begin(); it != list.end(); ++it) {
         if (&*it == &rListener) {
             return true;
@@ -206,6 +211,7 @@ bool Audio3DMgrNin::isListenerAddedToNw(Audio3DListenerNin& rListener) const {
  */
 void Audio3DMgrNin::removeListener(Audio3DListenerNin& rListener) {
     mListeners.erase(&rListener);
+
     if (isListenerAddedToNw(rListener)) {
         mSound3DManager->RemoveListener(&rListener);
     }

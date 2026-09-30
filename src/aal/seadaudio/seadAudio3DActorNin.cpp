@@ -155,6 +155,7 @@ nn::atk::SoundStartable::StartResult Audio3DActorNin::SetupSound(nn::atk::SoundH
                                                                 const StartInfo* pStartInfo,
                                                                 void* pSetupArg) {
     DynamicCast<AudioSystemNin>(AudioMgr::instance()->getAudioSystem());
+
     if (mIsStartDisabled || AudioMgr::instance()->getResetter()->isResetting()) {
         return StartResult(StartResult::ResultCode_ErrorUser);
     }

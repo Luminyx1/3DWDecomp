@@ -36,6 +36,7 @@ void AudioSoundHeapNin::create_(size_t size, Heap* pHeap) {
  */
 AudioSoundHeapNin::~AudioSoundHeapNin() {
     Destroy();
+
     if (mBuffer) {
         delete[] mBuffer;
         mBuffer = nullptr;

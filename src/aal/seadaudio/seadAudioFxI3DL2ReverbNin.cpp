@@ -62,11 +62,13 @@ void AudioFxI3DL2ReverbNin::initVars_() {
     mEarlyCoef[1] = 0.0f;
     mReverbDelaySize = 0;
     mReverbDelayPos = 0;
+
     for (u32 j = 0; j < cCombCount; j++) {
         mCombDelaySize[j] = 0;
         mCombPos[j] = 0;
         mCombCoef[j][0] = 0.0f;
         mCombCoef[j][1] = 0.0f;
+
         for (u32 i = 0; i < cPairCountMax; i++) {
             mCombLpfHistory[j][i].set(0.0f, 0.0f);
         }
@@ -76,6 +78,7 @@ void AudioFxI3DL2ReverbNin::initVars_() {
     mCombLpfInGain[1] = 0.0f;
     mCombLpfHistoryGain[0] = 0.0f;
     mCombLpfHistoryGain[1] = 0.0f;
+
     for (u32 j = 0; j < cAllPassCount; j++) {
         mAllPassDelaySize[j] = 0;
         mAllPassPos[j] = 0;
@@ -83,6 +86,7 @@ void AudioFxI3DL2ReverbNin::initVars_() {
 
     mAllPassCoef[0] = 0.0f;
     mAllPassCoef[1] = 0.0f;
+
     for (u32 i = 0; i < cPairCountMax; i++) {
         mLpfHistory[i].set(0.0f, 0.0f);
     }
@@ -123,12 +127,14 @@ bool AudioFxI3DL2ReverbNin::Initialize() {
  */
 void AudioFxI3DL2ReverbNin::clearBuffer_() {
     u32 pairCount = mChannelCountMax / 2;
+
     for (u32 i = 0; i < pairCount; i++) {
         if (mReflectionsBuffer[i]) {
             memset(mReflectionsBuffer[i], 0, mReflectionsDelaySize * sizeof(Vector2f));
         }
 
         memset(mEarlyBuffer[i], 0, mEarlyDelaySize * sizeof(Vector2f));
+
         if (mReverbDelayBuffer[i]) {
             memset(mReverbDelayBuffer[i], 0, mReverbDelaySize * sizeof(Vector2f));
         }
@@ -166,6 +172,7 @@ void AudioFxI3DL2ReverbNin::UpdateSamples(s32* pSamples, const UpdateSamplesArg&
 
     mChannelCount = Mathu::clampMax(static_cast<u32>(rArg.channelCount), mChannelCountMax);
     s32 frameCount = rArg.readSampleCount / (rArg.sampleCountPerAudioFrame * rArg.channelCount);
+
     for (s32 i = 0; i < frameCount; i++) {
         s32 sampleCount = rArg.sampleCountPerAudioFrame;
         s32* ch0 = &pSamples[sampleCount * i * rArg.channelCount];
@@ -174,6 +181,7 @@ void AudioFxI3DL2ReverbNin::UpdateSamples(s32* pSamples, const UpdateSamplesArg&
         s32* ch3 = ch2 + sampleCount;
         s32* ch4 = ch3 + sampleCount;
         s32* ch5 = ch4 + sampleCount;
+
         switch (mChannelCount) {
         case 2:
             updateFx2ch_(ch0, ch1, sampleCount);
@@ -213,8 +221,10 @@ void AudioFxI3DL2ReverbNin::updateFx2ch_(s32* pCh0, s32* pCh1, u32 sampleCount) 
     const f32 lpfHistoryGain1 = mLpfHistoryGain[1];
     const f32 reverbGain0 = mReverbGain[0];
     const f32 reverbGain1 = mReverbGain[1];
+
     for (u32 i = 0; i < sampleCount; i++) {
         Vector2f in0(*pCh0, *pCh1);
+
         if (mReflectionsDelaySize != 0) {
             Vector2f* reflections0 = &mReflectionsBuffer[0][mReflectionsPos];
             Vector2f delayed0 = *reflections0;
@@ -229,6 +239,7 @@ void AudioFxI3DL2ReverbNin::updateFx2ch_(s32* pCh0, s32* pCh1, u32 sampleCount) 
         f32 out0x = earlyGain0 * early0x;
         f32 out0y = earlyGain1 * early0y;
         Vector2f combIn0 = in0;
+
         if (mReverbDelaySize != 0) {
             Vector2f* reverbDelay0 = &mReverbDelayBuffer[0][mReverbDelayPos];
             combIn0 = *reverbDelay0;
@@ -283,6 +294,7 @@ void AudioFxI3DL2ReverbNin::updateFx2ch_(s32* pCh0, s32* pCh1, u32 sampleCount) 
         }
 
         mEarlyPos = mEarlyPos + 1 >= mEarlyDelaySize ? 0 : mEarlyPos + 1;
+
         if (mReverbDelaySize != 0) {
             mReverbDelayPos = mReverbDelayPos + 1 >= mReverbDelaySize ? 0 : mReverbDelayPos + 1;
         }
@@ -324,9 +336,11 @@ void AudioFxI3DL2ReverbNin::updateFx4ch_(s32* pCh0, s32* pCh1, s32* pCh2, s32* p
     const f32 lpfHistoryGain1 = mLpfHistoryGain[1];
     const f32 reverbGain0 = mReverbGain[0];
     const f32 reverbGain1 = mReverbGain[1];
+
     for (u32 i = 0; i < sampleCount; i++) {
         Vector2f in0(*pCh0, *pCh1);
         Vector2f in1(*pCh2, *pCh3);
+
         if (mReflectionsDelaySize != 0) {
             Vector2f* reflections0 = &mReflectionsBuffer[0][mReflectionsPos];
             Vector2f delayed0 = *reflections0;
@@ -352,6 +366,7 @@ void AudioFxI3DL2ReverbNin::updateFx4ch_(s32* pCh0, s32* pCh1, s32* pCh2, s32* p
         f32 out1y = earlyGain1 * early1y;
         Vector2f combIn0 = in0;
         Vector2f combIn1 = in1;
+
         if (mReverbDelaySize != 0) {
             Vector2f* reverbDelay0 = &mReverbDelayBuffer[0][mReverbDelayPos];
             combIn0 = *reverbDelay0;
@@ -451,6 +466,7 @@ void AudioFxI3DL2ReverbNin::updateFx4ch_(s32* pCh0, s32* pCh1, s32* pCh2, s32* p
         }
 
         mEarlyPos = mEarlyPos + 1 >= mEarlyDelaySize ? 0 : mEarlyPos + 1;
+
         if (mReverbDelaySize != 0) {
             mReverbDelayPos = mReverbDelayPos + 1 >= mReverbDelaySize ? 0 : mReverbDelayPos + 1;
         }
@@ -494,10 +510,12 @@ void AudioFxI3DL2ReverbNin::updateFx6ch_(s32* pCh0, s32* pCh1, s32* pCh2, s32* p
     const f32 lpfHistoryGain1 = mLpfHistoryGain[1];
     const f32 reverbGain0 = mReverbGain[0];
     const f32 reverbGain1 = mReverbGain[1];
+
     for (u32 i = 0; i < sampleCount; i++) {
         Vector2f in0(*pCh0, *pCh1);
         Vector2f in1(*pCh2, *pCh3);
         Vector2f in2(*pCh4, *pCh5);
+
         if (mReflectionsDelaySize != 0) {
             Vector2f* reflections0 = &mReflectionsBuffer[0][mReflectionsPos];
             Vector2f delayed0 = *reflections0;
@@ -534,6 +552,7 @@ void AudioFxI3DL2ReverbNin::updateFx6ch_(s32* pCh0, s32* pCh1, s32* pCh2, s32* p
         Vector2f combIn0 = in0;
         Vector2f combIn1 = in1;
         Vector2f combIn2 = in2;
+
         if (mReverbDelaySize != 0) {
             Vector2f* reverbDelay0 = &mReverbDelayBuffer[0][mReverbDelayPos];
             combIn0 = *reverbDelay0;
@@ -678,6 +697,7 @@ void AudioFxI3DL2ReverbNin::updateFx6ch_(s32* pCh0, s32* pCh1, s32* pCh2, s32* p
         }
 
         mEarlyPos = mEarlyPos + 1 >= mEarlyDelaySize ? 0 : mEarlyPos + 1;
+
         if (mReverbDelaySize != 0) {
             mReverbDelayPos = mReverbDelayPos + 1 >= mReverbDelaySize ? 0 : mReverbDelayPos + 1;
         }
@@ -709,6 +729,7 @@ void AudioFxI3DL2ReverbNin::Finalize() {
  */
 bool AudioFxI3DL2ReverbNin::SetParam(const AudioFxI3DL2ReverbParamNin& rParam) {
     mChannelCountMax = rParam.mChannelCount;
+
     if (!mIsBufferAssigned) {
         setupDelaySizes_(rParam);
     }
@@ -735,6 +756,7 @@ void AudioFxI3DL2ReverbNin::setupDelaySizes_(const AudioFxI3DL2ReverbParamNin& r
     mEarlyCoef[1] = earlyCoef;
     mReverbDelaySize = getSampleRate_() * rParam.mReverbDelay;
     const u32(*fusedTable)[4] = nullptr;
+
     switch (mSampleRate) {
     case 0:
         fusedTable = cI3DL2FusedDelay32k;
@@ -760,6 +782,7 @@ void AudioFxI3DL2ReverbNin::setupGains_(const AudioFxI3DL2ReverbParamNin& rParam
     mEarlyGain[0] = room * AudioVolumeUtil::calcVolumeRatioFromMillibelTable(rParam.mReflections);
     mEarlyGain[1] = mEarlyGain[0];
     f32 hfReference = rParam.mHfReference;
+
     for (u32 i = 0; i < cCombCount; i++) {
         mCombCoef[i][0] = std::pow(
             10.0f, (mCombDelaySize[i] * -3.0f) / (rParam.mDecayTime * getSampleRate_()));
@@ -793,12 +816,14 @@ size_t AudioFxI3DL2ReverbNin::GetRequiredMemSize() const {
                     ((mEarlyDelaySize * sizeof(Vector2f) + 0x1f) & ~0x1f) +
                     ((mReverbDelaySize * sizeof(Vector2f) + 0x1f) & ~0x1f);
     u32 combSize = 0;
+
     for (u32 i = 0; i < cCombCount; i++) {
         combSize += (mCombDelaySize[i] * sizeof(Vector2f) + 0x1f) & ~0x1f;
         combSize *= pairCount;
     }
 
     u32 allPassSize = 0;
+
     for (u32 i = 0; i < cAllPassCount; i++) {
         allPassSize += (mAllPassDelaySize[i] * sizeof(Vector2f) + 0x1f) & ~0x1f;
         allPassSize *= pairCount;
@@ -824,6 +849,7 @@ bool AudioFxI3DL2ReverbNin::AssignWorkBuffer(void* pBuffer, u32 size) {
     uintptr_t start = reinterpret_cast<uintptr_t>(mFxWorkBuffer);
     u32 pairCount = mChannelCountMax / 2;
     uintptr_t current = (start + 0x1f) & ~0x1f;
+
     if (mReflectionsDelaySize != 0) {
         for (u32 i = 0; i < pairCount; i++) {
             mReflectionsBuffer[i] = reinterpret_cast<Vector2f*>(current);
@@ -877,6 +903,7 @@ bool AudioFxI3DL2ReverbNin::AssignWorkBuffer(void* pBuffer, u32 size) {
  */
 void AudioFxI3DL2ReverbNin::ReleaseWorkBuffer() {
     mIsBufferAssigned = false;
+
     for (u32 i = 0; i < cPairCountMax; i++) {
         mReflectionsBuffer[i] = nullptr;
         mEarlyBuffer[i] = nullptr;
@@ -909,6 +936,7 @@ void AudioFxI3DL2ReverbNin::initBufferPos_() {
     mReflectionsPos = 0;
     mEarlyPos = 0;
     mReverbDelayPos = 0;
+
     for (u32 i = 0; i < cCombCount; i++) {
         mCombPos[i] = 0;
     }

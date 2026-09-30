@@ -51,6 +51,7 @@ void AudioTaskThreadNin::calc_(MessageQueue::Element msg) {
     IAudioTaskNin* task = reinterpret_cast<IAudioTaskNin*>(msg);
     task->execute(mState == State::cQuitting);
     task->mPendingCount.decrement();
+
     if (mListener) {
         mListener->onTaskEnd();
     }

@@ -72,6 +72,7 @@ bool AudioFxDelayNin::Initialize() {
  */
 void AudioFxDelayNin::clearBuffer_() {
     u32 pairCount = mChannelCountMax / 2;
+
     for (u32 i = 0; i < pairCount; i++) {
         memset(mDelayBuffer[i], 0, mDelaySize * sizeof(Vector2f));
         mLpfHistory[i].set(0.0f, 0.0f);
@@ -88,6 +89,7 @@ void AudioFxDelayNin::clearBuffer_() {
 void AudioFxDelayNin::UpdateSamples(s32* pSamples, const UpdateSamplesArg& rArg) {
     mChannelCount = Mathu::clampMax(static_cast<u32>(rArg.channelCount), mChannelCountMax);
     s32 frameCount = rArg.readSampleCount / (rArg.sampleCountPerAudioFrame * rArg.channelCount);
+
     for (s32 i = 0; i < frameCount; i++) {
         s32 sampleCount = rArg.sampleCountPerAudioFrame;
         s32* ch0 = &pSamples[sampleCount * i * rArg.channelCount];
@@ -96,6 +98,7 @@ void AudioFxDelayNin::UpdateSamples(s32* pSamples, const UpdateSamplesArg& rArg)
         s32* ch3 = ch2 + sampleCount;
         s32* ch4 = ch3 + sampleCount;
         s32* ch5 = ch4 + sampleCount;
+
         switch (mChannelCount) {
         case 2:
             updateFx2ch_(ch0, ch1, sampleCount);
@@ -125,6 +128,7 @@ void AudioFxDelayNin::updateFx2ch_(s32* pCh0, s32* pCh1, u32 sampleCount) {
     const f32 lpfInGain1 = mLpfInGain[1];
     const f32 lpfHistoryGain0 = mLpfHistoryGain[0];
     const f32 lpfHistoryGain1 = mLpfHistoryGain[1];
+
     for (u32 i = 0; i < sampleCount; i++) {
         f32 in0 = *pCh0;
         f32 in1 = *pCh1;
@@ -163,6 +167,7 @@ void AudioFxDelayNin::updateFx4ch_(s32* pCh0, s32* pCh1, s32* pCh2, s32* pCh3, u
     const f32 lpfInGain1 = mLpfInGain[1];
     const f32 lpfHistoryGain0 = mLpfHistoryGain[0];
     const f32 lpfHistoryGain1 = mLpfHistoryGain[1];
+
     for (u32 i = 0; i < sampleCount; i++) {
         Vector2f* delay0 = &mDelayBuffer[0][mBufferPos];
         f32 in0 = *pCh0;
@@ -212,6 +217,7 @@ void AudioFxDelayNin::updateFx6ch_(s32* pCh0, s32* pCh1, s32* pCh2, s32* pCh3, s
     const f32 lpfInGain1 = mLpfInGain[1];
     const f32 lpfHistoryGain0 = mLpfHistoryGain[0];
     const f32 lpfHistoryGain1 = mLpfHistoryGain[1];
+
     for (u32 i = 0; i < sampleCount; i++) {
         Vector2f* delay0 = &mDelayBuffer[0][mBufferPos];
         f32 in0 = *pCh0;
@@ -269,6 +275,7 @@ void AudioFxDelayNin::Finalize() {
  */
 bool AudioFxDelayNin::SetParam(const AudioFxDelayParamNin& rParam) {
     mChannelCountMax = rParam.mChannelCount;
+
     if (!mIsBufferAssigned) {
         setupDelaySizes_(rParam);
     }
@@ -329,6 +336,7 @@ bool AudioFxDelayNin::AssignWorkBuffer(void* pBuffer, u32 size) {
     uintptr_t start = reinterpret_cast<uintptr_t>(mFxWorkBuffer);
     uintptr_t current = (start + 0x1f) & ~0x1f;
     u32 pairCount = mChannelCountMax / 2;
+
     for (u32 i = 0; i < pairCount; i++) {
         mDelayBuffer[i] = reinterpret_cast<Vector2f*>(current);
         current = (reinterpret_cast<uintptr_t>(mDelayBuffer[i] + mDelaySize) + 0x1f) & ~0x1f;
@@ -347,6 +355,7 @@ bool AudioFxDelayNin::AssignWorkBuffer(void* pBuffer, u32 size) {
  */
 void AudioFxDelayNin::ReleaseWorkBuffer() {
     mIsBufferAssigned = false;
+
     for (u32 i = 0; i < cPairCountMax; i++) {
         mDelayBuffer[i] = nullptr;
     }

@@ -66,6 +66,7 @@ void AudioSystemNin::AtkInitializeParam::setWorkMemory(u8* pWorkMemory, size_t s
  */
 void AudioSystemNin::initializeMain_() {
     initializeAtk_();
+
     if (mTaskThread) {
         mTaskThread->start();
     }
@@ -80,11 +81,13 @@ void AudioSystemNin::finalize() {
     }
 
     finalizeMain_();
+
     if (mWorkBuffer) {
         delete[] mWorkBuffer;
     }
 
     mWorkBuffer = nullptr;
+
     if (mTaskThread) {
         delete mTaskThread;
         mTaskThread = nullptr;
@@ -114,6 +117,7 @@ void AudioSystemNin::finalizeMain_() {
 bool AudioSystemNin::setOutputMode(AudioGlobal::OutputMode mode) {
     if (mIsAtkEnabled) {
         nn::atk::OutputMode nwMode;
+
         switch (mode) {
         case AudioGlobal::cOutputMode_Stereo:
             nwMode = nn::atk::OutputMode_Stereo;
@@ -407,6 +411,7 @@ void AudioSystemNin::appendSoundFrameCallback(ISoundFrameCallback& rCallback) {
     }
 
     mCriticalSection.lock();
+
     if (mSoundFrameCallbacks.indexOf(&rCallback) == -1) {
         mSoundFrameCallbacks.pushBack(&rCallback);
     }
@@ -432,11 +437,13 @@ void AudioSystemNin::removeSoundFrameCallback(ISoundFrameCallback& rCallback) {
     }
 
     mCriticalSection.lock();
+
     if (mSoundFrameCallbacks.indexOf(&rCallback) >= 0) {
         mSoundFrameCallbacks.erase(&rCallback);
     }
 
     mCriticalSection.unlock();
+
     if (mSoundFrameCallbacks.isEmpty()) {
         nn::atk::detail::driver::SoundThread::GetInstance().ClearSoundFrameUserCallback();
     }
@@ -461,6 +468,7 @@ void AudioSystemNin::clearSoundFrameCallback() {
  */
 void AudioSystemNin::soundFrameProc_() {
     mCriticalSection.lock();
+
     if (!mSoundFrameCallbacks.isEmpty()) {
         for (auto it = mSoundFrameCallbacks.begin(); it != mSoundFrameCallbacks.end(); ++it) {
             it->onSoundFrame();

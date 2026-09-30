@@ -27,6 +27,7 @@ AudioFrameProcessMgr::~AudioFrameProcessMgr() {
 void AudioFrameProcessMgr::clearProcess() {
     mCriticalSection.lock();
     mProcessList.clear();
+
     if (mIsCallbackRegistered) {
         unregisterAudioFrameCallback_();
     }
@@ -45,6 +46,7 @@ bool AudioFrameProcessMgr::addProcess(IAudioFrameProcess* pProcess) {
     }
 
     mCriticalSection.lock();
+
     if (!mIsCallbackRegistered) {
         registerAudioFrameCallback_();
     }
@@ -76,6 +78,7 @@ void AudioFrameProcessMgr::removeProcess(IAudioFrameProcess* pProcess) {
 
     mCriticalSection.lock();
     mProcessList.erase(pProcess);
+
     if (mProcessList.size() == 0 && mIsCallbackRegistered) {
         unregisterAudioFrameCallback_();
     }
@@ -98,6 +101,7 @@ bool AudioFrameProcessMgr::unregisterAudioFrameCallback_() {
  */
 void AudioFrameProcessMgr::audioFrameProcess_() {
     mCriticalSection.lock();
+
     for (auto& process : mProcessList) {
         process.audioFrameProcess();
     }

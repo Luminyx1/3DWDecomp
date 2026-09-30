@@ -24,6 +24,7 @@ void AudioResetterNin::initialize(AudioMgr& rMgr) {
  */
 void AudioResetterNin::calc() {
     f32 volume = nn::atk::detail::driver::HardwareManager::GetInstance().GetMasterVolume();
+
     if (mShutdownState == cState_Running) {
         if (volume == 0.0f) {
             mShutdownState = cState_Done;

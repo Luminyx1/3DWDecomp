@@ -59,6 +59,7 @@ bool AudioPlayerNin::trySetSoundMemoryPoolHandler(SoundMemoryPoolHandler* pHandl
  */
 AudioPlayerNin::~AudioPlayerNin() {
     stopAll(0);
+
     if (mSetupBuffer) {
         delete[] mSetupBuffer;
         mSetupBuffer = nullptr;
@@ -95,6 +96,7 @@ void AudioPlayerNin::stopAll(s32 fadeFrames) {
     }
 
     u32 count = GetSoundPlayerCount();
+
     for (u32 i = 0; i < count; i++) {
         GetSoundPlayer(0x4000000 + i).StopAllSound(fadeFrames);
     }
@@ -115,8 +117,10 @@ void AudioPlayerNin::finalize() {
 
     stopAll(0);
     destroySoundHeap();
+
     if (mStreamMemoryPool) {
         nn::audio::RequestDetachMemoryPool(mStreamMemoryPool);
+
         while (nn::audio::IsMemoryPoolAttached(mStreamMemoryPool)) {
         }
 
@@ -146,6 +150,7 @@ void AudioPlayerNin::destroySoundHeap() {
     }
 
     mSoundDataMgr->connectSoundHeap(nullptr);
+
     if (mSoundHeap) {
         delete mSoundHeap;
         mSoundHeap = nullptr;
@@ -161,6 +166,7 @@ void AudioPlayerNin::shutdownDataManagement() {
     }
 
     Finalize();
+
     if (mStreamBuffer) {
         delete[] mStreamBuffer;
         mStreamBuffer = nullptr;
@@ -255,6 +261,7 @@ u32 AudioPlayerNin::getSoundCount() const {
     }
 
     const nn::atk::SoundArchive* archive = mSoundDataMgr->getSoundArchive();
+
     if (!archive) {
         return 0;
     }
@@ -272,11 +279,13 @@ u32 AudioPlayerNin::getTotalSoundCount() const {
     }
 
     const nn::atk::SoundArchive* archive = mSoundDataMgr->getSoundArchive();
+
     if (!archive) {
         return 0;
     }
 
     u32 count = archive->GetSoundCount();
+
     for (u32 i = 0; i < mAddonArchiveCount - 1; i++) {
         if (GetAddonSoundArchive(i)->IsAvailable()) {
             count += GetAddonSoundArchive(i)->GetSoundCount();
@@ -297,6 +306,7 @@ const char* AudioPlayerNin::getSoundName(u32 soundId) const {
     }
 
     const nn::atk::SoundArchive* archive = mSoundDataMgr->getSoundArchive();
+
     if (!archive) {
         return nullptr;
     }
@@ -353,6 +363,7 @@ u32 AudioPlayerNin::getSoundId(const char* pSoundName) const {
     }
 
     const nn::atk::SoundArchive* archive = mSoundDataMgr->getSoundArchive();
+
     if (!archive) {
         return 0xffffffff;
     }
@@ -402,6 +413,7 @@ void AudioPlayerNin::pauseAll(s32 fadeFrames) {
     }
 
     u32 count = GetSoundPlayerCount();
+
     if (count == 0) {
         return;
     }
@@ -424,6 +436,7 @@ void AudioPlayerNin::setPauseAll_(s32 fadeFrames, bool pause) {
     }
 
     u32 count = GetSoundPlayerCount();
+
     if (count == 0) {
         return;
     }
@@ -445,6 +458,7 @@ void AudioPlayerNin::unpauseAll(s32 fadeFrames) {
     }
 
     u32 count = GetSoundPlayerCount();
+
     if (count == 0) {
         return;
     }
@@ -473,6 +487,7 @@ AudioPlayerNin::detail_SetupSound(nn::atk::SoundHandle* pHandle, u32 soundId, bo
     }
 
     DynamicCast<AudioSystemNin>(AudioMgr::instance()->getAudioSystem());
+
     if (mIsStartDisabled || AudioMgr::instance()->getResetter()->isResetting()) {
         return StartResult(StartResult::ResultCode_ErrorUser);
     }
@@ -551,6 +566,7 @@ bool AudioPlayerNin::setupDataManagementInner_(const nn::atk::SoundArchive& rArc
             &nn::atk::detail::driver::HardwareManager::GetInstance().GetAudioRendererConfig(),
             mStreamMemoryPool, mStreamBuffer, streamBufferSize);
         nn::audio::RequestAttachMemoryPool(mStreamMemoryPool);
+
         while (!nn::audio::IsMemoryPoolAttached(mStreamMemoryPool)) {
         }
 

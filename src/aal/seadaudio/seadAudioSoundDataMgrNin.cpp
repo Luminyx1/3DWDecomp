@@ -17,6 +17,7 @@ AudioFsSoundArchiveNin::AudioFsSoundArchiveNin(Heap* pHeap)
  */
 AudioFsSoundArchiveNin::~AudioFsSoundArchiveNin() {
     close();
+
     if (mHeaderBuffer) {
         delete[] mHeaderBuffer;
         mHeaderBuffer = nullptr;
@@ -47,6 +48,7 @@ bool AudioFsSoundArchiveNin::open(const void* pFileName) {
     size_t headerSize = GetHeaderSize();
     mHeaderBuffer = new (mHeap, 0x40) u8[headerSize];
     LoadHeader(mHeaderBuffer, headerSize);
+
     if (mIsLoadLabelString) {
         size_t labelSize = GetLabelStringDataSize();
         mLabelStringBuffer = new (mHeap, 0x40) u8[labelSize];
@@ -165,11 +167,13 @@ void AudioSoundDataMgrNin::connectSoundHeap(AudioSoundHeapNin* pHeap) {
     }
 
     mDefaultSoundHeap = pHeap;
+
     if (!pHeap) {
         return;
     }
 
     const nn::atk::SoundArchive* archive = getSoundArchive();
+
     if (archive) {
         mDefaultSoundHeap->setSoundDataManagement(*this, const_cast<nn::atk::SoundArchive&>(*archive));
     }
@@ -223,6 +227,7 @@ bool AudioSoundDataMgrNin::mountSoundArchiveFromFs(const SafeString& rPath, Heap
     AudioFsSoundArchiveNin* archive = new (pHeap, 0x40) AudioFsSoundArchiveNin(pHeap);
     mSoundArchive = archive;
     archive->setLoadLabelString(loadLabelString);
+
     if (mContentRootPath) {
         archive->setContentRootPath(mContentRootPath);
     }
@@ -283,6 +288,7 @@ void AudioSoundDataMgrNin::unmountSoundArchive() {
     }
 
     mSoundArchive = nullptr;
+
     if (mWorkBuffer) {
         delete[] mWorkBuffer;
         mWorkBuffer = nullptr;

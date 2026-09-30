@@ -25,12 +25,14 @@ AudioResourceLoaderNin::~AudioResourceLoaderNin() {
  */
 void AudioResourceLoaderNin::initialize(AudioMgr& rMgr) {
     mAudioMgr = &rMgr;
+
     if (!DynamicCast<AudioSystemNin>(rMgr.getAudioSystem())->isAtkEnabled()) {
         return;
     }
 
     AudioPlayerNin* player = DynamicCast<AudioPlayerNin>(mAudioMgr->getPlayer());
     Heap* heap = mHeap ? mHeap : HeapMgr::instance()->getCurrentHeap();
+
     switch (mArchiveType) {
     case cArchiveType_Fs:
         if (!mFsContentRootPath.isEmpty()) {
@@ -53,12 +55,14 @@ void AudioResourceLoaderNin::initialize(AudioMgr& rMgr) {
  */
 void AudioResourceLoaderNin::load() {
     AudioSystemNin* system = DynamicCast<AudioSystemNin>(mAudioMgr->getAudioSystem());
+
     if (!system->isAtkEnabled()) {
         return;
     }
 
     AudioPlayerNin* player = DynamicCast<AudioPlayerNin>(mAudioMgr->getPlayer());
     Heap* heap = mHeap ? mHeap : HeapMgr::instance()->getCurrentHeap();
+
     if (mStreamBufferSizeMergin != 0) {
         player->setupDataManagement(mStreamBufferSizeMergin, mStreamReadCacheSize, mUserParamSizePerSound, heap,
                                     system->getAddonArchiveCount());

@@ -22,6 +22,7 @@ AudioMgr::AudioMgr() {
  */
 AudioMgr::~AudioMgr() {
     exit();
+
     if (mIsAudioSystemOwned && mAudioSystem) {
         delete mAudioSystem;
         mAudioSystem = nullptr;
@@ -75,11 +76,13 @@ void AudioMgr::exit() {
  */
 void AudioMgr::prepare(AudioSettingParameter* pParam, Heap* pHeap, s32 addonArchiveCount) {
     mHeap = pHeap ? pHeap : HeapMgr::instance()->getCurrentHeap();
+
     if (pParam) {
         mAudioSystem = pParam->mAudioSystem;
         mResetter = pParam->mResetter;
         mPlayer = pParam->mPlayer;
         mResourceLoader = pParam->mResourceLoader;
+
         while (!pParam->mSubsetList.isEmpty()) {
             mSubsetList.pushBack(pParam->mSubsetList.popFront());
         }
@@ -124,6 +127,7 @@ void AudioMgr::prepare(AudioSettingParameter* pParam, Heap* pHeap, s32 addonArch
     }
 
     DynamicCast<AudioSystemNin>(mAudioSystem)->mAddonArchiveCount = addonArchiveCount;
+
     if (mResourceLoader) {
         mResourceLoader->load();
     }
@@ -147,6 +151,7 @@ void AudioMgr::appendAudioSubset(AudioSubsetBase* pSubset) {
  */
 bool AudioMgr::removeAudioSubset(AudioSubsetBase* pSubset) {
     auto it = mSubsetList.begin();
+
     for (; it != mSubsetList.end(); ++it) {
         if (&*it == pSubset) {
             break;
