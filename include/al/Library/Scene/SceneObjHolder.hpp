@@ -6,18 +6,18 @@
 typedef al::ISceneObj* (*CreateFunc)(int);
 
 namespace al {
-    class SceneObjHolder {
-    public:
-        SceneObjHolder(CreateFunc, int);
-        ISceneObj* create(int);
-        ISceneObj* tryGetObj(int) const;
-        ISceneObj* getObj(int) const;
-        bool isExist(int) const;
-        void setSceneObj(ISceneObj *, int);
-        void initAfterPlacementSceneObj(const ActorInitInfo &);
+class SceneObjHolder {
+public:
+    SceneObjHolder(CreateFunc pCreator, int numObjs);
+    ISceneObj* create(int objID);
+    ISceneObj* tryGetObj(int objID) const;
+    ISceneObj* getObj(int objID) const;
+    bool isExist(int objID) const;
+    void setSceneObj(ISceneObj* pObj, int objID);
+    void initAfterPlacementSceneObj(const ActorInitInfo& rInfo);
 
-        CreateFunc mFunc;           // 0x00
-        ISceneObj** mObjs;          // 0x08
-        int mNumObjs;               // 0x10
-    };
+    CreateFunc mFunc;   // 0x00
+    ISceneObj** mObjs;  // 0x08
+    int mNumObjs;       // 0x10
 };
+};  // namespace al
