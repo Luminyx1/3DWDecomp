@@ -1,21 +1,20 @@
 #include "Library/Screen/ScreenPointCheckGroup.hpp"
 
 namespace al {
-
 /**
- * @brief Constructs an empty group.
- * @param capacity The maximum number of targets.
+ * Creates a check group for a fixed number of targets.
+ * @param maxTargets maximum number of targets
  */
-ScreenPointCheckGroup::ScreenPointCheckGroup(s32 capacity) : mCapacity(capacity) {
-    mTargets = new ScreenPointTarget*[capacity];
-    for (s32 i = 0; i < mCapacity; i++) {
+ScreenPointCheckGroup::ScreenPointCheckGroup(s32 maxTargets) : mMaxTargets(maxTargets) {
+    mTargets = new ScreenPointTarget*[maxTargets];
+    for (s32 i = 0; i < mMaxTargets; i++) {
         mTargets[i] = nullptr;
     }
 }
 
 /**
- * @brief Moves a target into the valid part of the group.
- * @param pTarget The target to validate.
+ * Moves a target into the valid part of the group.
+ * @param pTarget target to validate
  */
 void ScreenPointCheckGroup::setValid(ScreenPointTarget* pTarget) {
     for (s32 i = mValidTargetNum; i < mTargetNum; i++) {
@@ -29,8 +28,8 @@ void ScreenPointCheckGroup::setValid(ScreenPointTarget* pTarget) {
 }
 
 /**
- * @brief Moves a target out of the valid part of the group.
- * @param pTarget The target to invalidate.
+ * Moves a target out of the valid part of the group.
+ * @param pTarget target to invalidate
  */
 void ScreenPointCheckGroup::setInvalid(ScreenPointTarget* pTarget) {
     for (s32 i = 0; i < mValidTargetNum; i++) {
@@ -44,21 +43,20 @@ void ScreenPointCheckGroup::setInvalid(ScreenPointTarget* pTarget) {
 }
 
 /**
- * @brief Gets a target by index.
- * @param index The index.
- * @return The target.
+ * Returns a target by index.
+ * @param index target index
+ * @return the target
  */
 ScreenPointTarget* ScreenPointCheckGroup::getTarget(s32 index) const {
     return mTargets[index];
 }
 
 /**
- * @brief Adds a target to the group.
- * @param pTarget The target.
+ * Adds a target to the group.
+ * @param pTarget target to add
  */
 void ScreenPointCheckGroup::setTarget(ScreenPointTarget* pTarget) {
     mTargets[mTargetNum] = pTarget;
     mTargetNum++;
 }
-
 }  // namespace al
