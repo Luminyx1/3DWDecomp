@@ -4,109 +4,106 @@
 #include "Project/Base/StringUtil.hpp"
 
 namespace al {
-
 /**
- * @brief Constructs an empty keeper.
- * @param maxNumTargets The maximum number of targets.
+ * Creates a keeper for a fixed number of screen point targets.
+ * @param maxTargets maximum number of targets
  */
-ScreenPointKeeper::ScreenPointKeeper(s32 maxNumTargets) : mMaxNumTargets(maxNumTargets) {
-    mTargets = new ScreenPointTarget*[maxNumTargets];
-    for (s32 i = 0; i < mMaxNumTargets; i++) {
+ScreenPointKeeper::ScreenPointKeeper(s32 maxTargets) : mMaxTargets(maxTargets) {
+    mTargets = new ScreenPointTarget*[maxTargets];
+    for (s32 i = 0; i < mMaxTargets; i++) {
         mTargets[i] = nullptr;
     }
 }
 
 /**
- * @brief Creates and adds a target.
- * @param pActor The actor that owns the target.
- * @param pName The target name.
- * @param radius The target radius.
- * @param pTrans The position the target follows when no joint is given.
- * @param pJointMtx The joint matrix the target follows, may be null.
- * @param rOffset The offset from the followed position.
- * @return The new target.
+ * Creates and adds a screen point target.
+ * @param pHost actor owning the target
+ * @param pName target name
+ * @param radius target radius
+ * @param pFollowPos position to follow, or nullptr
+ * @param pFollowMtx matrix to follow, or nullptr
+ * @param rOffset offset from the followed position or matrix
+ * @return the new target
  */
-ScreenPointTarget* ScreenPointKeeper::addTarget(LiveActor* pActor, const char* pName, f32 radius,
-                                                const sead::Vector3f* pTrans,
-                                                const sead::Matrix34f* pJointMtx,
+ScreenPointTarget* ScreenPointKeeper::addTarget(LiveActor* pHost, const char* pName, f32 radius,
+                                                const sead::Vector3f* pFollowPos,
+                                                const sead::Matrix34f* pFollowMtx,
                                                 const sead::Vector3f& rOffset) {
-    ScreenPointTarget* target = new ScreenPointTarget(pActor, pName, radius, pTrans, pJointMtx, rOffset);
-    mTargets[mCurNumTargets] = target;
-    mCurNumTargets++;
+    ScreenPointTarget* target =
+        new ScreenPointTarget(pHost, pName, radius, pFollowPos, pFollowMtx, rOffset);
+    mTargets[mTargetNum] = target;
+    mTargetNum++;
     return target;
 }
 
 /**
- * @brief Updates the positions of all targets.
+ * Updates the position of every target.
  */
 void ScreenPointKeeper::update() {
-    for (s32 i = 0; i < mCurNumTargets; i++) {
+    for (s32 i = 0; i < mTargetNum; i++) {
         mTargets[i]->update();
     }
 }
 
 /**
- * @brief Gets a target by index.
- * @param index The index.
- * @return The target.
+ * Returns a target by index.
+ * @param index target index
+ * @return the target
  */
 ScreenPointTarget* ScreenPointKeeper::getTarget(s32 index) const {
     return mTargets[index];
 }
 
 /**
- * @brief Validates all targets.
+ * Validates every target.
  */
 void ScreenPointKeeper::validate() {
-    for (s32 i = 0; i < mCurNumTargets; i++) {
+    for (s32 i = 0; i < mTargetNum; i++) {
         mTargets[i]->validate();
     }
 }
 
 /**
- * @brief Invalidates all targets.
+ * Invalidates every target.
  */
 void ScreenPointKeeper::invalidate() {
-    for (s32 i = 0; i < mCurNumTargets; i++) {
+    for (s32 i = 0; i < mTargetNum; i++) {
         mTargets[i]->invalidate();
     }
 }
 
 /**
- * @brief Validates all targets on behalf of the system.
+ * Validates every target on behalf of the system.
  */
 void ScreenPointKeeper::validateBySystem() {
-    for (s32 i = 0; i < mCurNumTargets; i++) {
+    for (s32 i = 0; i < mTargetNum; i++) {
         mTargets[i]->validateBySystem();
     }
 }
 
 /**
- * @brief Invalidates all targets on behalf of the system.
+ * Invalidates every target on behalf of the system.
  */
 void ScreenPointKeeper::invalidateBySystem() {
-    for (s32 i = 0; i < mCurNumTargets; i++) {
+    for (s32 i = 0; i < mTargetNum; i++) {
         mTargets[i]->invalidateBySystem();
     }
 }
 
 /**
- * @brief Gets a target by name. With a single target, it is returned regardless of its name.
- * @param pName The target name.
- * @return The target, or null if none matches.
+ * Returns a target by name, or the only target if there is just one.
+ * @param pName target name
+ * @return the target, or nullptr
  */
 ScreenPointTarget* ScreenPointKeeper::getTarget(const char* pName) const {
-    if (mCurNumTargets == 1) {
+    if (mTargetNum == 1) {
         return mTargets[0];
     }
-
-    for (s32 i = 0; i < mCurNumTargets; i++) {
-        if (isEqualString(mTargets[i]->mName, pName)) {
+    for (s32 i = 0; i < mTargetNum; i++) {
+        if (isEqualString(mTargets[i]->getName(), pName)) {
             return mTargets[i];
         }
     }
-
     return nullptr;
 }
-
 }  // namespace al

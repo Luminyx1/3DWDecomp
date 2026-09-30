@@ -10,20 +10,25 @@ class ScreenPointTarget;
 
 class ScreenPointKeeper {
 public:
-    ScreenPointKeeper(s32);
+    ScreenPointKeeper(s32 maxTargets);
 
-    ScreenPointTarget* addTarget(LiveActor*, const char*, f32, const sead::Vector3f*,
-                                 const sead::Matrix34f*, const sead::Vector3f&);
+    ScreenPointTarget* addTarget(LiveActor* pHost, const char* pName, f32 radius,
+                                 const sead::Vector3f* pFollowPos,
+                                 const sead::Matrix34f* pFollowMtx,
+                                 const sead::Vector3f& rOffset);
     void update();
-    ScreenPointTarget* getTarget(s32) const;
+    ScreenPointTarget* getTarget(s32 index) const;
     void validate();
     void invalidate();
     void validateBySystem();
     void invalidateBySystem();
-    ScreenPointTarget* getTarget(const char*) const;
+    ScreenPointTarget* getTarget(const char* pName) const;
 
-    s32 mMaxNumTargets;             // _0
-    s32 mCurNumTargets = 0;         // _4
-    ScreenPointTarget** mTargets;   // _8
+    s32 getTargetNum() const { return mTargetNum; }
+
+private:
+    s32 mMaxTargets;
+    s32 mTargetNum = 0;
+    ScreenPointTarget** mTargets;
 };
 }  // namespace al
