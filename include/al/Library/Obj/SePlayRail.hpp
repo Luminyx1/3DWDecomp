@@ -5,16 +5,16 @@
 namespace al {
 class SePlayRail : public LiveActor {
 public:
-    SePlayRail(const char*);
+    SePlayRail(const char* pName);
 
-    void init(const ActorInitInfo&) override;
+    void init(const ActorInitInfo& rInfo) override;
     void appear() override;
     void control() override;
 
     void startFirstStepSe();
 
-    const char* mSeName = nullptr;                      // _148
-    sead::Vector3f mRailClippingInfo = {0.0f, 0.0f, 0.0f};  // _150
-    bool _15c = false;
+    const char* mSeName = nullptr;
+    sead::Vector3f mRailClippingPos = {0.0f, 0.0f, 0.0f};
+    bool mIsValidSe = false;
 };
 }  // namespace al
