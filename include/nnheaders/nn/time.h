@@ -50,6 +50,28 @@ public:
         const s64 productHigh = highProduct + (middle >> 32) + (carry >> 32);
         return (productHigh >> 26) + (nanoseconds >> 63);
     }
+
+    // Return whole microseconds, truncating signed durations toward zero.
+    s64 GetMicroSeconds() const {
+        const u64 low = static_cast<u32>(nanoseconds);
+        const s64 high = static_cast<s64>(nanoseconds) >> 32;
+        const s64 middle = high * 0xe353f7cf + ((low * 0xe353f7cf) >> 32);
+        const s64 highProduct = high * 0x20c49ba5;
+        const u64 carry = low * 0x20c49ba5 + static_cast<u32>(middle);
+        const s64 productHigh = highProduct + (middle >> 32) + (carry >> 32);
+        return (productHigh >> 7) + (nanoseconds >> 63);
+    }
+
+    // Return whole milliseconds, truncating signed durations toward zero.
+    s64 GetMilliSeconds() const {
+        const u64 low = static_cast<u32>(nanoseconds);
+        const s64 high = static_cast<s64>(nanoseconds) >> 32;
+        const s64 middle = high * 0xd7b634db + ((low * 0xd7b634db) >> 32);
+        const s64 highProduct = high * 0x431bde82;
+        const s64 carry = low * 0x431bde82 + static_cast<u32>(middle);
+        const s64 productHigh = highProduct + (middle >> 32) + (carry >> 32);
+        return (productHigh >> 18) + (nanoseconds >> 63);
+    }
 };
 
 namespace time {

@@ -3461,7 +3461,7 @@ src/nw/atk/detail/util/atk_CurveAdshr.cpp:
     .text   start:0x0055C7E0 end:0x0055CCB8
 src/nw/atk/detail/util/atk_CurveLfo.cpp:
     .text   start:0x0055CCC0 end:0x0055CE7C
-src/nw/atk/detail/util/atk_InstancePool.cpp:
+src/nw/atk/detail/util/atk_InstancePool.cpp: done
     .text   start:0x0055CE80 end:0x0055D0A0
 src/nw/atk/detail/util/atk_MemoryFileStream.cpp: done
     .text   start:0x0055D0A0 end:0x0055D2B8
@@ -3487,7 +3487,7 @@ src/nw/atk/atk_SoundDataManager.cpp:
     .text   start:0x005645F0 end:0x00564E00
 src/nw/atk/detail/atk_SoundArchiveManager.cpp:
     .text   start:0x00564E00 end:0x00565258
-src/nw/atk/detail/atk_AddonSoundArchiveContainer.cpp:
+src/nw/atk/detail/atk_AddonSoundArchiveContainer.cpp: done
     .text   start:0x00565260 end:0x005653CC
 src/nw/atk/detail/seq/atk_SequenceSoundRuntime_dup2.cpp:
     .text   start:0x005653D0 end:0x00567710
@@ -3545,7 +3545,7 @@ src/nw/atk/fnd/os/atkfnd_Thread.cpp:
     .text   start:0x00577310 end:0x005775B4
 src/nw/atk/fnd/os/atkfnd_Thread.win32.cpp:
     .text   start:0x005775C0 end:0x00577718
-src/nw/atk/fnd/os/atkfnd_Time.win32.cpp:
+src/nw/atk/fnd/os/atkfnd_Time.win32.cpp: done
     .text   start:0x00577720 end:0x00577828
 src/nw/atk/fnd/os/atk_ChannelMixVolume.cpp:
     .text   start:0x00577830 end:0x005779D8
