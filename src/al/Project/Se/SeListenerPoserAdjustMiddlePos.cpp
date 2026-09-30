@@ -1,57 +1,43 @@
-#include "Project/Se/ISeListenerParam.hpp"
-#include "Project/Se/SeListenerPoser.hpp"
+#include "Project/Se/SeListenerPoserAdjustMiddlePos.hpp"
+
+#include <math/seadVector.h>
 
 namespace al {
+
 namespace {
-struct FovyRatioPoint {
-    f32 fovyDegree;
-    f32 ratio;
-};
+const sead::Vector2f cFovyRatioTable[] = {{20.0f, 0.85f}, {30.0f, 0.7f}, {45.0f, 0.5f}};
+}
 
-const s32 cFovyRatioTableSize = 3;
-}  // namespace
-
-/**
- * @brief Constructs a middle-position listener poser whose ratio adapts to the camera's field of view.
- * @param rName The name of the poser.
- * @param rUnused Unused second name.
- */
 SeListenerPoserAdjustMiddlePos::SeListenerPoserAdjustMiddlePos(const sead::SafeString& rName,
-                                                               const sead::SafeString& rUnused)
-    : SeListenerPoserMiddlePos(rName, rUnused, 0.5f) {}
+                                                               const sead::SafeString& rGroupName)
+    : SeListenerPoserMiddlePos(rName, rGroupName, 0.5f) {}
 
-/**
- * @brief Updates the camera-to-target ratio from the field of view, then computes the middle pose.
- * @param pMtx Output listener view matrix.
- * @param pPos Output listener position.
- * @param rParam The listener parameters providing the camera state.
- */
 void SeListenerPoserAdjustMiddlePos::calcListenerPose(sead::Matrix34f* pMtx, sead::Vector3f* pPos,
                                                       const ISeListenerParam& rParam) {
-    const FovyRatioPoint cFovyRatioTable[cFovyRatioTableSize] = {{20.0f, 0.85f}, {30.0f, 0.7f}, {45.0f, 0.5f}};
     f32 fovy = rParam.getFovyDegree();
-    if (mLastFovyDegree != fovy) {
-        s32 index = 0;
-        for (; index < cFovyRatioTableSize; index++) {
-            if (fovy <= cFovyRatioTable[index].fovyDegree) {
-                break;
+    if (mPrevFovyDegree != fovy) {
+        f32 ratio;
+        if (fovy <= cFovyRatioTable[0].x) {
+            ratio = cFovyRatioTable[0].y;
+        } else {
+            s32 i = 1;
+            for (; i < 3; i++) {
+                if (fovy <= cFovyRatioTable[i].x) {
+                    break;
+                }
+            }
+            if (i < 3) {
+                const sead::Vector2f& prev = cFovyRatioTable[i - 1];
+                const sead::Vector2f& next = cFovyRatioTable[i];
+                ratio = prev.y + (fovy - prev.x) / (next.x - prev.x) * (next.y - prev.y);
+            } else {
+                ratio = cFovyRatioTable[2].y;
             }
         }
-
-        f32 ratio;
-        if (index == 0) {
-            ratio = cFovyRatioTable[0].ratio;
-        } else if (index == cFovyRatioTableSize) {
-            ratio = cFovyRatioTable[cFovyRatioTableSize - 1].ratio;
-        } else {
-            const FovyRatioPoint& prev = cFovyRatioTable[index - 1];
-            const FovyRatioPoint& next = cFovyRatioTable[index];
-            f32 rate = (fovy - prev.fovyDegree) / (next.fovyDegree - prev.fovyDegree);
-            ratio = prev.ratio + rate * (next.ratio - prev.ratio);
-        }
         setBaseToMiddleRatio(ratio);
-        mLastFovyDegree = fovy;
+        mPrevFovyDegree = fovy;
     }
     SeListenerPoserMiddlePos::calcListenerPose(pMtx, pPos, rParam);
 }
+
 }  // namespace al
