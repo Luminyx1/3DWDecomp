@@ -3,48 +3,99 @@
 #include <basis/seadTypes.h>
 #include <math/seadMatrix.h>
 #include <math/seadVector.h>
-#include <nn/os.h>
 
 namespace al {
 class LiveActor;
 class SensorHitGroup;
 class HitSensor;
 
-using SensorSortCmpFunc = bool (*)(HitSensor* a, HitSensor* b);
+enum class HitSensorType : u32 {
+    Eye = 0,
+    Player = 1,
+    PlayerEye = 2,
+    Npc = 3,
+    Ride = 4,
+    Enemy = 5,
+    EnemyBody = 6,
+    EnemyAttack = 7,
+    KillerMagnum = 8,
+    Dossun = 9,
+    EnemySimple = 10,
+    MapObj = 11,
+    MapObjSimple = 12,
+    Bindable = 13,
+    CollisionParts = 14,
+    KickKoura = 15,
+    PlayerFireBall = 16,
+    WooGanSandBody = 17,
+    HoldObj = 18,
+    BindableGigaBell = 19,
+    BindableGoal = 20,
+    BindableAllPlayer = 21,
+    BindableBubbleOutScreen = 22,
+    BindableKoura = 23,
+    BindableRouteDokan = 24,
+    BindableBubblePadInput = 25,
+    MultiPlayer = 26,
+    KoopaJr = 27,
+    CutsceneStart = 28,
+    NpcAvoid = 29,
+    BindableNpc = 30,
+    BindableGoalItem = 31,
+};
+
+class SensorSortCmpFuncBase {
+public:
+    virtual bool compare(HitSensor* pA, HitSensor* pB) const = 0;
+};
+
+class SensorSortCmpFunc {
+public:
+    SensorSortCmpFunc(const SensorSortCmpFuncBase* pFunc) : mFunc(pFunc) {}
+
+    bool operator()(HitSensor* pA, HitSensor* pB) { return mFunc->compare(pA, pB); }
+
+    const SensorSortCmpFuncBase* mFunc;
+};
 
 class HitSensor {
 public:
-    HitSensor(LiveActor*, const char*, u32, f32, u16, const sead::Vector3f*, const sead::Matrix34f*,
-              const sead::Vector3f&);
+    HitSensor(LiveActor* pHost, const char* pName, u32 type, f32 radius, u16 maxSensors,
+              const sead::Vector3f* pFollowPos, const sead::Matrix34f* pFollowMtx,
+              const sead::Vector3f& rOffset);
 
-    void update();
-    void addHitSensor(HitSensor*);
-    void setTime();
     void trySensorSort();
-    void setFollowPosPtr(const sead::Vector3f*);
-    void setFollowMtxPtr(const sead::Matrix34f*);
+    void setFollowPosPtr(const sead::Vector3f* pFollowPos);
+    void setFollowMtxPtr(const sead::Matrix34f* pFollowMtx);
     void validate();
     void invalidate();
     void validateBySystem();
     void invalidateBySystem();
+    void update();
+    void addHitSensor(HitSensor* pSensor);
+    void setTime();
+
+    const char* getName() const { return mName; }
+    const sead::Vector3f& getPos() const { return mPos; }
+    f32 getRadius() const { return mRadius; }
+    LiveActor* getHost() const { return mHostActor; }
 
     const char* mName;
-    sead::Vector3f _8;
-    f32 _14;
+    HitSensorType mSensorType;
+    sead::Vector3f mPos = {0.0f, 0.0f, 0.0f};
     f32 mRadius;
-    u16 mMaxNumSensors;
-    u16 mNumSensors;
-    HitSensor** mSensors;
-    SensorSortCmpFunc* mCmpFunc;
-    SensorHitGroup* mHitGroup;
-    bool _38;
-    bool _39;
+    u16 mMaxSensors;
+    u16 mNumSensors = 0;
+    HitSensor** mSensors = nullptr;
+    SensorSortCmpFunc* mSortFunc = nullptr;
+    SensorHitGroup* mHitGroup = nullptr;
+    bool mIsValidBySystem = false;
+    bool mIsValid = true;
     LiveActor* mHostActor;
-    const sead::Vector3f* mFollowPosVec;
-    const sead::Matrix34f* mFollowPosMtx;
+    const sead::Vector3f* mFollowPos;
+    const sead::Matrix34f* mFollowMtx;
     sead::Vector3f mFollowPosOffset;
-    u32 _64;
-    nn::os::Tick mTime;
+    s64 mTime = -1;
 };
 
 }  // namespace al
