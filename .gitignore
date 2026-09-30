@@ -25,3 +25,6 @@ tools/bin/
 
 # website upload settings (tools/deploy_site.py) - contains credentials
 /deploy.ini
+
+# project tooling (kept local for now)
+/tools/
