@@ -2,19 +2,19 @@
 
 namespace al {
 /**
- * @brief Constructs a nerve action and appends it to the currently active action collector.
+ * Constructs a nerve action and registers it in the current collector.
  */
 NerveAction::NerveAction() {
-    alNerveFunction::NerveActionCollector* pCollector =
+    alNerveFunction::NerveActionCollector* collector =
         alNerveFunction::NerveActionCollector::sCurrentCollector;
-
-    if (pCollector->mStartAction != nullptr) {
-        pCollector->mEndAction->mNextNode = this;
-    } else {
-        pCollector->mStartAction = this;
+    if (collector->mStartAction == nullptr) {
+        collector->mStartAction = this;
+        collector->mEndAction = this;
+        collector->mNumActions++;
+        return;
     }
-
-    pCollector->mEndAction = this;
-    pCollector->mNumActions++;
+    collector->mEndAction->mNextNode = this;
+    collector->mEndAction = this;
+    collector->mNumActions++;
 }
 }  // namespace al
