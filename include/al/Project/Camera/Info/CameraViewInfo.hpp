@@ -1,23 +1,18 @@
 #pragma once
 
-#include <basis/seadTypes.h>
+#include <gfx/seadCamera.h>
+#include <gfx/seadProjection.h>
 #include <math/seadMatrix.h>
-
-namespace sead {
-class LookAtCamera;
-class Projection;
-}  // namespace sead
 
 namespace al {
 class CameraViewFlag;
-class OrthoProjectionInfo;
 class Projection;
+struct OrthoProjectionInfo;
 
-/// Everything describing one camera view: its camera, projection and flags.
 class CameraViewInfo {
 public:
-    CameraViewInfo(s32 index, const sead::LookAtCamera& rLookAtCam, Projection& rProjection,
-                   const CameraViewFlag& rFlag, const OrthoProjectionInfo& rOrthoProjectionInfo);
+    CameraViewInfo(s32 index, const sead::LookAtCamera& rCamera, Projection& rProjection,
+                   const CameraViewFlag& rFlag, const OrthoProjectionInfo& rOrthoInfo);
 
     sead::Projection& getProjectionSead();
     const sead::Projection& getProjectionSead() const;
@@ -26,13 +21,33 @@ public:
     f32 getNear() const;
     f32 getFar() const;
 
-    s32 mIndex;                                        // _0
-    bool mIsValid = true;                              // _4
-    bool mIsFirstCalc = true;                          // _5
-    bool mIsActiveInterpole = false;                   // _6
-    const sead::LookAtCamera& mLookAtCam;              // _8
-    Projection& mProjection;                           // _10
-    const CameraViewFlag& mFlag;                       // _18
-    const OrthoProjectionInfo& mOrthoProjectionInfo;   // _20
+    s32 getIndex() const { return mIndex; }
+
+    const sead::LookAtCamera& getLookAtCam() const { return mLookAtCam; }
+
+    const Projection& getProjection() const { return mProjection; }
+
+    bool isValid() const { return mIsValid; }
+
+    bool isFirstCalc() const { return mIsFirstCalc; }
+
+    bool isActiveInterpole() const { return mIsActiveInterpole; }
+
+    void setValid(bool isValid) { mIsValid = isValid; }
+
+    void setFirstCalc(bool isFirstCalc) { mIsFirstCalc = isFirstCalc; }
+
+    void setActiveInterpole(bool isActive) { mIsActiveInterpole = isActive; }
+
+private:
+    s32 mIndex;
+    bool mIsValid = true;
+    bool mIsFirstCalc = true;
+    bool mIsActiveInterpole = false;
+    const sead::LookAtCamera& mLookAtCam;
+    Projection& mProjection;
+    const CameraViewFlag& mFlag;
+    const OrthoProjectionInfo& mOrthoProjectionInfo;
 };
+
 }  // namespace al
