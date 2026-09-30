@@ -70,6 +70,7 @@ public:
     static bool Initialize(const SoundSystemParam& rParam, uintptr_t workMem, size_t workMemSize);
     static void Finalize();
     static bool IsInitialized();
+    static size_t GetPerformanceFrameBufferSize();
     static size_t GetRequiredEffectAuxBufferSize(const EffectAux* pEffect);
     static bool AppendEffect(AuxBus bus, EffectAux* pEffect, void* buffer, size_t bufferSize,
                              OutputDevice device);

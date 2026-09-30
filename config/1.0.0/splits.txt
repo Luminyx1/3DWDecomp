@@ -3559,7 +3559,7 @@ src/nw/atk/effect/atk_EffectBase.cpp:
     .text   start:0x00578A40 end:0x00578B78
 src/nw/atk/effect/atk_SubMix.cpp:
     .text   start:0x00578B80 end:0x0057AE78
-src/nw/atk/util/atk_AudioRendererPerformanceReader.cpp:
+src/nw/atk/util/atk_AudioRendererPerformanceReader.cpp: done
     .text   start:0x0057AE80 end:0x0057B024
 src/nw/atk/util/atk_DeviceOutRecorder.cpp:
     .text   start:0x0057B030 end:0x0057C178
