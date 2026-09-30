@@ -84,6 +84,8 @@ public:
 
     void setFlag(u32 flag) { mFlags.set(flag); }
 
+    const Info& getInfo(s32 index) const { return mInfo[index]; }
+
 private:
     static void pushHistory_(sead::RingBuffer<History>* pHistory, const History& rEntry)
     {

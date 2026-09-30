@@ -63,6 +63,7 @@ public:
         : ShaderLocation(rLocation), INamable(rName)
     {
     }
+    explicit SamplerLocation(const sead::SafeString& rName) : INamable(rName) {}
 
     void search(const ShaderProgram&);
 };

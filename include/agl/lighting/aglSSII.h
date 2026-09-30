@@ -145,6 +145,24 @@ public:
     void genMessage(sead::hostio::Context* pContext);
     void listenPropertyEvent(const sead::hostio::PropertyEvent* pEvent);
 
+    void setEnable(bool isEnable) { mFlags.change(1 << 0, isEnable); }
+    void setEnableDiffuse(bool isEnable) { mFlags.change(1 << 4, isEnable); }
+    void setEnableReflection(bool isEnable) { mFlags.change(1 << 3, isEnable); }
+    void setDifIntensity(f32 intensity) { mDifIntensity = intensity; }
+    void setRefIntensity(f32 intensity) { mRefIntensity = intensity; }
+    void setRedBufQuality(s32 quality)
+    {
+        mRedBufQuality = quality;
+        applyQualitySetting_();
+    }
+    void setSampleQuality(s32 quality)
+    {
+        mSampleQuality = quality;
+        applyQualitySetting_();
+    }
+    void setDifReduceLevel(s32 level) { mReduceLevel[0] = level; }
+    void setRefReduceLevel(s32 level) { mRefReduceLevel[0] = level; }
+
 private:
     void applyQualitySetting_();
     void draw_(DrawContext* pDrawContext, s32 view, const RenderBuffer* pRenderBuffer,

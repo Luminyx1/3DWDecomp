@@ -67,6 +67,7 @@ public:
                           u32 dstMipLevel);
 
     const TextureData& getCubeTextureData() const { return mTextureData; }
+    const RenderBuffer& getRenderBuffer() const { return mRenderBuffer; }
 
     static const sead::Matrix34f scDrawCubeMapScale[2];
 

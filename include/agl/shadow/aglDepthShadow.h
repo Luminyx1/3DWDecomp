@@ -96,6 +96,16 @@ public:
     void setDrawCallback(sead::IDelegate1<const DrawArg&>* pCallback) { mDrawCallback = pCallback; }
     void setDebugDrawFlag(u32 flag) { mDebugDrawFlag = flag; }
 
+    sead::BitFlag32 checkBox(const sead::BoundBox3f& rBox, s32 type, sead::BitFlag32 skip)
+    {
+        return (this->*mCheckBox)(rBox, type, skip);
+    }
+    sead::BitFlag32 checkSphere(const sead::Sphere<sead::Vector3f>& rSphere, s32 type,
+                                sead::BitFlag32 skip)
+    {
+        return (this->*mCheckSphere)(rSphere, type, skip);
+    }
+
 private:
     template <typename T>
     sead::BitFlag32 checkAndUpdateLightSpaceDirectional_(const T& rBounding, s32 type,

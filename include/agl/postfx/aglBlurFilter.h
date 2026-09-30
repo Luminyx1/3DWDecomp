@@ -34,6 +34,14 @@ public:
     void genMessage(sead::hostio::Context* pContext);
     void listenPropertyEvent(const sead::hostio::PropertyEvent* pEvent);
 
+    void setIteration(s32 iteration) { mIteration = iteration; }
+    void setEnable(bool isEnable) { mIsEnable = isEnable; }
+    bool isEnable() const { return mIsEnable; }
+    void setBlurType(s32 type, s32 param) {
+        mBlurType = type;
+        _984 = param;
+    }
+
 private:
     TextureData mTexture[2];
     mutable TextureSampler mSampler[2];

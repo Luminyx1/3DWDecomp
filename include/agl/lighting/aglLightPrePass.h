@@ -566,6 +566,11 @@ public:
     void genMessage(sead::hostio::Context* pContext);
     void listenPropertyEvent(const sead::hostio::PropertyEvent* pEvent);
 
+    TextureData* createLightBuffer(DrawContext* pDrawContext, s32 view, u32 width, u32 height,
+                                   bool useMultiTarget, bool clear) const
+    {
+        return createLightBuffer_(pDrawContext, view, width, height, useMultiTarget, clear);
+    }
     const Context& getContext(s32 view) const { return mContext[view]; }
     Context& getContext(s32 view) { return mContext[view]; }
     u32 getBufferIndex() const { return mBufferIndex; }

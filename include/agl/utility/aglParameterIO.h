@@ -28,6 +28,8 @@ public:
     s32 listenPropertyEventIO(sead::hostio::Reflexible* pReflexible,
                               const sead::hostio::PropertyEvent* pEvent);
 
+    const sead::SafeString& getType() const { return mType; }
+
 protected:
     virtual void callbackInvalidVersion_(ResParameterArchive) {}
 
