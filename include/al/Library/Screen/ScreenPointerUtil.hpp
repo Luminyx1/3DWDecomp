@@ -1,6 +1,5 @@
 #pragma once
 
-#include <basis/seadTypes.h>
 #include <math/seadVector.h>
 
 namespace al {
@@ -10,14 +9,19 @@ class ScreenPointer;
 class ScreenPointTarget;
 class SensorMsg;
 
-ScreenPointTarget* addScreenPointTarget(LiveActor*, const ActorInitInfo&, const char*, f32,
-                                        const char*, const sead::Vector3f&);
-bool hitCheckSegmentScreenPointTarget(ScreenPointer*, const sead::Vector3f&, const sead::Vector3f&);
-bool hitCheckScreenCircleScreenPointTarget(ScreenPointer*, const sead::Vector2f&, f32);
-bool sendMsgScreenPointTarget(const SensorMsg&, ScreenPointer*, ScreenPointTarget*);
-bool sendMsgScreenPointTargetSM(const SensorMsg&, ScreenPointer*, ScreenPointTarget*);
+ScreenPointTarget* addScreenPointTarget(LiveActor* pActor, const ActorInitInfo& rInfo,
+                                        const char* pName, f32 radius, const char* pJointName,
+                                        const sead::Vector3f& rOffset);
+bool hitCheckSegmentScreenPointTarget(ScreenPointer* pPointer, const sead::Vector3f& rStart,
+                                      const sead::Vector3f& rEnd);
+bool hitCheckScreenCircleScreenPointTarget(ScreenPointer* pPointer, const sead::Vector2f& rPos,
+                                           f32 radius);
+bool sendMsgScreenPointTarget(const SensorMsg& rMsg, ScreenPointer* pPointer,
+                              ScreenPointTarget* pTarget);
+bool sendMsgScreenPointTargetSM(const SensorMsg& rMsg, ScreenPointer* pPointer,
+                                ScreenPointTarget* pTarget);
 }  // namespace al
 
 namespace alScreenPointFunction {
-void updateScreenPointAll(al::LiveActor*);
-}  // namespace alScreenPointFunction
+void updateScreenPointAll(al::LiveActor* pActor);
+}
