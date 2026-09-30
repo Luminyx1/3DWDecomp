@@ -22,6 +22,7 @@ class MaterialObj;
 class ResSkeleton;
 class ResSkeletalAnim;
 class ResMaterialAnim;
+class ResPerMaterialAnim;
 class ResShapeAnim;
 class ResSceneAnim;
 
@@ -124,14 +125,15 @@ struct ResMaterialData {
     u8 _40[0x48 - 0x40];
     nn::util::BinTPtr<nn::util::ResDic> pSamplerDic;
     nn::util::BinTPtr<ResShaderParamData> pShaderParamArray;
-    u8 _58[8];
+    nn::util::BinTPtr<nn::util::ResDic> pShaderParamDic;
     nn::util::BinPtr pSourceParamData;
     u8 _68[0x10];
     nn::util::BinTPtr<u32> pVolatileParamFlags;
     u8 _80[8];
     nn::util::BinTPtr<u64> pSamplerSlotArray;
     nn::util::BinTPtr<u64> pTextureSlotArray;
-    u8 _98[0x9c - 0x98];
+    u16 index;
+    u16 _9a;
     u8 samplerCount;
     u8 textureCount;
     u16 shaderParamCount;
@@ -150,6 +152,16 @@ public:
     void Cleanup(nn::gfx::Device* device);
     void Reset();
     void Reset(u32 guard);
+    // name selects a shader parameter or sampler in its resource dictionary.
+    int FindShaderParamIndex(const char* name) const {
+        const nn::util::ResDic* dictionary = pShaderParamDic.Get();
+        return dictionary ? dictionary->FindIndex(name) : nn::util::ResDic::Npos;
+    }
+    int FindSamplerIndex(const char* name) const {
+        const nn::util::ResDic* dictionary = pSamplerDic.Get();
+        return dictionary ? dictionary->FindIndex(name) : nn::util::ResDic::Npos;
+    }
+    int GetIndex() const { return index; }
     int GetSamplerCount() const { return ToData().samplerCount; }
     int GetTextureCount() const { return ToData().textureCount; }
 
@@ -288,7 +300,9 @@ struct ResModelData {
     nn::util::BinTPtr<ResShape> pShapeArray;
     nn::util::BinTPtr<nn::util::ResDic> pShapeDic;
     nn::util::BinTPtr<ResMaterial> pMaterialArray;
-    u8 _40[0x60 - 0x40];
+    u8 _40[8];
+    nn::util::BinTPtr<nn::util::ResDic> pMaterialDic;
+    u8 _50[0x10];
     nn::util::BinPtr pUserPtr;
     u16 vertexCount;
     u16 shapeCount;
@@ -298,6 +312,13 @@ struct ResModelData {
 
 class ResModel : public nn::util::AccessorBase<ResModelData> {
 public:
+    // name selects a material; missing dictionary entries return null.
+    __attribute__((noinline)) const ResMaterial* FindMaterial(const char* name) const {
+        const nn::util::ResDic* dictionary = pMaterialDic.Get();
+        int index = dictionary ? dictionary->FindIndex(name) : nn::util::ResDic::Npos;
+        if (index == nn::util::ResDic::Npos) return nullptr;
+        return &pMaterialArray.Get()[index];
+    }
     // name identifies a shape in this model; return null if its dictionary has no entry.
     __attribute__((noinline)) const ResShape* FindShape(const char* name) const {
         const nn::util::ResDic* dictionary = pShapeDic.Get();
@@ -395,20 +416,36 @@ public:
 };
 
 struct ResMaterialAnimData {
-    u8 _0[0x30];
+    u32 signature;
+    u16 flags;
+    u8 _6[0x12];
+    const ResModel* boundModel;
+    u16* bindIndices;
+    ResPerMaterialAnim* materialAnims;
     nn::util::BinTPtr<const nn::gfx::TextureView*> pTextureArray;
     nn::util::BinTPtr<nn::util::BinPtrToString> pTextureNameArray;
     u8 _40[0x50 - 0x40];
     nn::util::BinTPtr<u64> pTextureSlotArray;
-    u8 _58[0x6c - 0x58];
+    u32 _58;
+    u32 bakedSize;
+    u16 _60;
+    u16 materialAnimCount;
+    u8 _64[8];
     u16 textureCount;
 };
 
 class ResMaterialAnim : public nn::util::AccessorBase<ResMaterialAnimData> {
 public:
+    BindResult PreBind(const ResModel* model);
+    BindResult BindCheck(const ResModel* model) const;
+    bool ForceBindTexture(const TextureRef& texture, const char* name);
+    bool BakeCurve(void* buffer, size_t size);
+    void* ResetCurve();
     BindResult BindTexture(TextureBindCallback callback, void* user);
     void ReleaseTexture();
     void Reset();
+    // index selects a texture descriptor in the animation resource.
+    u64 GetTextureDescriptorSlot(int index) const { return pTextureSlotArray.Get()[index]; }
     int GetTextureCount() const { return ToData().textureCount; }
     const nn::gfx::TextureView* GetTextureView(int index) const
     {

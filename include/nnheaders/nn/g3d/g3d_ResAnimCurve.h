@@ -15,8 +15,10 @@ public:
     float EvaluateFloat(float frame, AnimFrameCache* cache) const;
     int EvaluateInt(float frame, AnimFrameCache* cache) const;
     size_t CalculateBakedFloatSize() const;
+    size_t CalculateBakedIntSize() const;
     // buffer supplies size bytes of writable storage for baked samples.
     bool BakeFloat(void* buffer, size_t size);
+    bool BakeInt(void* buffer, size_t size);
     void ResetFloat();
     void ResetInt();
     void Reset() { if (flags & 0x40) ResetInt(); else ResetFloat(); }
