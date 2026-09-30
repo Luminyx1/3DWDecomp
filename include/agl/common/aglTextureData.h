@@ -41,6 +41,8 @@ public:
     sead::SafeString getTextureFormatName() const;
     u32 calcMipByteSize(u32 mipLevel) const;
     bool isCompressedFormat() const;
+    void compressTo(DrawContext* pDrawContext, const TextureData* pDestination,
+                    s32 slice, s32 mipLevel) const;
     bool isRenderTargetCompressAvailable() const;
     bool isDepthFormat() const;
     bool hasStencil() const;

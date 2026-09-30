@@ -42,8 +42,10 @@ public:
             unsigned char _00[0x28];
             Size size;
         };
-        unsigned char _00[0x20];
+        unsigned char _00[0x1f];
+        bool forceGlobalMatrixDirty;
         const LayoutInformation* pLayoutInformation;
+        bool globalMatrixDirty;
     };
     Pane();
     Pane(const Pane& rOther) { CopyImpl(rOther, nullptr, nullptr, nullptr); }
