@@ -37,7 +37,7 @@ bool FinalMix::AppendEffect(EffectAux* effect, void* buffer, size_t bufferSize) 
 bool FinalMix::RemoveEffect(EffectBase* effect) { return OutputMixer::RemoveEffect(effect, 0); }
 // effect identifies the auxiliary effect to remove from bus zero.
 bool FinalMix::RemoveEffect(EffectAux* effect) { return OutputMixer::RemoveEffect(effect, 0); }
-void FinalMix::ClearEffect() { OutputMixer::ClearEffect(0); }
+bool FinalMix::ClearEffect() { return OutputMixer::ClearEffect(0); }
 bool FinalMix::IsEffectEnabled() const { return mEffectsEnabled; }
 OutputReceiver::ReceiverType FinalMix::GetReceiverType() const { return ReceiverType_FinalMix; }
 int FinalMix::GetChannelCount() const { return mChannelCount; }

@@ -3553,7 +3553,7 @@ src/nw/atk/fnd/os/atk_FinalMix.cpp: done
     .text   start:0x005779E0 end:0x00577BB8
 src/nw/atk/fnd/os/atkfnd_WorkBufferAllocator.cpp: done
     .text   start:0x00577BC0 end:0x00577D04
-src/nw/atk/fnd/os/atk_OutputMixer.cpp:
+src/nw/atk/fnd/os/atk_OutputMixer.cpp: done
     .text   start:0x00577D10 end:0x00578A3C
 src/nw/atk/effect/atk_EffectBase.cpp:
     .text   start:0x00578A40 end:0x00578B78

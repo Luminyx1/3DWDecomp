@@ -1,5 +1,8 @@
 #pragma once
 #include <nn/audio.h>
+#include <nn/os/os_Mutex.h>
+#include <nn/atk/atk_EffectBase.h>
+#include <nn/atk/atk_EffectAux.h>
 #include <atomic>
 
 namespace nn::atk {
@@ -16,6 +19,13 @@ public:
 };
 class OutputMixer : public OutputReceiver {
 public:
+    OutputMixer();
+    bool HasEffect(int bus) const;
+    void UpdateEffectAux();
+    void OnChangeOutputMode();
+    void RemoveEffectImpl(EffectBase* effect, int bus);
+    void RemoveEffectImpl(EffectAux* effect, int bus);
+    void ClearEffectImpl(int bus);
     static size_t GetRequiredMemorySize(int busCount, bool effectsEnabled);
     void Initialize(int busCount, bool effectsEnabled, void* buffer, size_t bufferSize);
     void Finalize();
@@ -23,11 +33,15 @@ public:
     bool AppendEffect(EffectAux* effect, int bus, void* buffer, size_t bufferSize);
     bool RemoveEffect(EffectBase* effect, int bus);
     bool RemoveEffect(EffectAux* effect, int bus);
-    void ClearEffect(int bus);
+    bool ClearEffect(int bus);
 protected:
-    virtual bool AppendEffectImpl(EffectBase* effect, int bus, void* buffer, size_t bufferSize);
-    virtual bool AppendEffectImpl(EffectAux* effect, int bus, void* buffer, size_t bufferSize);
-    u8 mReserved08[0x30];
+    virtual void AppendEffectImpl(EffectBase* effect, int bus, void* buffer, size_t bufferSize);
+    virtual void AppendEffectImpl(EffectAux* effect, int bus, void* buffer, size_t bufferSize);
+    using EffectList = util::IntrusiveList<EffectBase, util::IntrusiveListMemberNodeTraits<EffectBase, &EffectBase::m_LinkNode>>;
+    using AuxList = util::IntrusiveList<EffectAux, util::IntrusiveListMemberNodeTraits<EffectAux, &EffectAux::m_AuxLinkNode>>;
+    mutable os::Mutex mMutex;
+    EffectList* mEffects;
+    AuxList* mAuxEffects;
     bool mEffectsEnabled;
 };
 class FinalMix : public OutputMixer {
@@ -40,7 +54,7 @@ public:
     bool AppendEffect(EffectAux* effect, void* buffer, size_t bufferSize);
     bool RemoveEffect(EffectBase* effect);
     bool RemoveEffect(EffectAux* effect);
-    void ClearEffect();
+    bool ClearEffect();
     bool IsEffectEnabled() const;
     ReceiverType GetReceiverType() const override;
     int GetChannelCount() const override;

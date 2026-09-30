@@ -31,6 +31,7 @@ public:
     void SetOutputMode(OutputMode mode, OutputDevice device);
 
     nn::audio::AudioRendererConfig& GetAudioRendererConfig() { return m_Config; }
+    const audio::AudioRendererParameter& GetAudioRendererParameter() const { return m_RendererParameter; }
     f32 GetMasterVolume() const { return m_MasterVolume.GetValue(); }
     OutputMode GetOutputMode(OutputDevice device) const { return m_OutputMode[device]; }
 
@@ -42,5 +43,7 @@ private:
     OutputMode m_EndUserOutputMode[OutputDevice_Count];
     u8 _e8[0xec - 0xe8];
     MoveValue<float, int> m_MasterVolume;
+    u8 _fc[0x8c0 - 0xfc];
+    audio::AudioRendererParameter m_RendererParameter;
 };
 }  // namespace nn::atk::detail::driver

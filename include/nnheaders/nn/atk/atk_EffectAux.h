@@ -35,6 +35,9 @@ public:
     void SetEnabled(bool isEnabled);
     void SetEffectBuffer(void* effectBuffer, size_t effectBufferSize);
     void Update();
+    bool AddEffect(audio::AudioRendererConfig* config, const audio::AudioRendererParameter& parameter, OutputMixer* mixer);
+    void RemoveEffect(audio::AudioRendererConfig* config, OutputMixer* mixer);
+    void SetEffectInputOutput(const s8* input, const s8* output, int inputCount, int outputCount);
 
 protected:
     virtual void UpdateSamples(s32* pSamples, const UpdateSamplesArg& rArg) = 0;
