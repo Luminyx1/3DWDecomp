@@ -1,4 +1,4 @@
-#include "Project/Camera/Poser/CameraPoserFixedPoint.hpp"
+#include "Library/Play/Camera/CameraPoserFixedPoint.hpp"
 
 #include <gfx/seadCamera.h>
 
@@ -6,11 +6,11 @@
 #include "Library/Play/Placement/PlacementId.hpp"
 #include "Library/Yaml/ByamlIter.hpp"
 #include "Project/Camera/Param/CameraFunction.hpp"
-#include "Project/Camera/Poser/PlayerWatcher.hpp"
+#include "Library/Obj/PlayerWatcher.hpp"
 
 namespace al {
 /**
- * @brief Creates the camera, keeping its own copy of the placement id.
+ * Creates the camera, keeping its own copy of the placement id.
  * @param pPlayerWatcher The watcher of the players to look at.
  * @param pPlacementId The placement id of the camera.
  */
@@ -20,7 +20,9 @@ CameraPoserFixedPoint::CameraPoserFixedPoint(const PlayerWatcher* pPlayerWatcher
     mPlacementId = new PlacementId(*pPlacementId);
 }
 
-/** @brief Places the camera at its position in the zone and turns it towards the top player. */
+/**
+ * Places the camera at its position in the zone and turns it towards the top player.
+ */
 void CameraPoserFixedPoint::update() {
     sead::Vector3f playerPos = mPlayerWatcher->getTopPlayerPos();
     CameraFunction::calcPosFromZoneToRoot(&mCameraPos, mLocalCameraPos, mZoneMtx);
@@ -31,7 +33,7 @@ void CameraPoserFixedPoint::update() {
 }
 
 /**
- * @brief Writes the pose of the camera.
+ * Writes the pose of the camera.
  * @param pCamera The camera to write to.
  */
 void CameraPoserFixedPoint::makeLookAtCamera(sead::LookAtCamera* pCamera) const {
@@ -42,7 +44,7 @@ void CameraPoserFixedPoint::makeLookAtCamera(sead::LookAtCamera* pCamera) const 
 }
 
 /**
- * @brief Reads the camera position and the interpolation setting.
+ * Reads the camera position and the interpolation setting.
  * @param pIter The camera parameters.
  */
 void CameraPoserFixedPoint::loadParam(const ByamlIter* pIter) {
