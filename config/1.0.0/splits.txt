@@ -3537,7 +3537,7 @@ src/nw/atk/effect/atk_EffectAux.cpp:
     .text   start:0x00575490 end:0x00575C08
 src/nw/atk/fnd/io/atkfnd_FileStreamImpl.cpp: done
     .text   start:0x00575C10 end:0x00575EA0
-src/nw/atk/fnd/io/atkfnd_FileStreamImpl.win32.cpp:
+src/nw/atk/fnd/io/atkfnd_FileStreamImpl.win32.cpp: done
     .text   start:0x00575EA0 end:0x005765F0
 src/nw/atk/fnd/io/atkfnd_StreamCache.cpp:
     .text   start:0x005765F0 end:0x00577304

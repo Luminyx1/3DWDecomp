@@ -23,7 +23,7 @@ public:
     bool IsCacheEnabled() const override;
     size_t GetIoBufferAlignment() const override;
     bool CanSetFsAccessLog() const override;
-    fnd::FsAccessLog* SetFsAccessLog(fnd::FsAccessLog* log) override;
+    fnd::FileStream* SetFsAccessLog(fnd::FsAccessLog* log) override;
     size_t GetCachePosition() override;
     size_t GetCachedLength() override;
 

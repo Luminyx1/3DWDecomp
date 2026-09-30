@@ -24,7 +24,7 @@ public:
     bool IsCacheEnabled() const override;
     size_t GetIoBufferAlignment() const override;
     bool CanSetFsAccessLog() const override;
-    FsAccessLog* SetFsAccessLog(FsAccessLog* log) override;
+    FileStream* SetFsAccessLog(FsAccessLog* log) override;
     size_t GetCachePosition() override;
     size_t GetCachedLength() override;
     size_t ReadDirect(void* output, size_t size, FndResult* result);

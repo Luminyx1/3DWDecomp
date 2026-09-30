@@ -47,8 +47,8 @@ void FileStreamProxy::DisableCache() { mStream->DisableCache(); }
 bool FileStreamProxy::IsCacheEnabled() const { return mStream->IsCacheEnabled(); }
 size_t FileStreamProxy::GetIoBufferAlignment() const { return mStream->GetIoBufferAlignment(); }
 bool FileStreamProxy::CanSetFsAccessLog() const { return mStream->CanSetFsAccessLog(); }
-// log is the filesystem access log to attach; the underlying stream supplies the returned log pointer.
-FsAccessLog* FileStreamProxy::SetFsAccessLog(FsAccessLog* log) { return mStream->SetFsAccessLog(log); }
+// log is the filesystem access log to attach; the underlying stream supplies the returned stream pointer.
+FileStream* FileStreamProxy::SetFsAccessLog(FsAccessLog* log) { return mStream->SetFsAccessLog(log); }
 size_t FileStreamProxy::GetCachePosition() { return mStream->GetCachePosition(); }
 size_t FileStreamProxy::GetCachedLength() { return mStream->GetCachedLength(); }
 }

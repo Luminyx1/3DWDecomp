@@ -46,7 +46,7 @@ bool MemoryFileStream::IsCacheEnabled() const { return false; }
 size_t MemoryFileStream::GetIoBufferAlignment() const { return 1; }
 bool MemoryFileStream::CanSetFsAccessLog() const { return false; }
 // log is unused; memory streams do not attach filesystem access logs.
-fnd::FsAccessLog* MemoryFileStream::SetFsAccessLog(fnd::FsAccessLog* log) { return nullptr; }
+fnd::FileStream* MemoryFileStream::SetFsAccessLog(fnd::FsAccessLog* log) { return nullptr; }
 size_t MemoryFileStream::GetCachePosition() { return 0; }
 size_t MemoryFileStream::GetCachedLength() { return 0; }
 }

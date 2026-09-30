@@ -2,7 +2,8 @@
 #include <nn/types.h>
 
 namespace nn::atk::detail::fnd {
-struct FndResult { u64 value; };
+struct FndResult { u32 value; };
+static_assert(sizeof(FndResult) == 4, "FndResult size");
 class FsAccessLog;
 class Stream {
 public:
@@ -30,7 +31,7 @@ public:
     virtual bool IsCacheEnabled() const = 0;
     virtual size_t GetIoBufferAlignment() const = 0;
     virtual bool CanSetFsAccessLog() const = 0;
-    virtual FsAccessLog* SetFsAccessLog(FsAccessLog* log) = 0;
+    virtual FileStream* SetFsAccessLog(FsAccessLog* log) = 0;
     virtual size_t GetCachePosition() = 0;
     virtual size_t GetCachedLength() = 0;
 };
