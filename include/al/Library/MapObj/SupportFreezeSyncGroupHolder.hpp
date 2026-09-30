@@ -4,40 +4,39 @@
 #include "Library/Scene/ISceneObj.hpp"
 
 namespace al {
-class HitSensor;
 class PlacementId;
 
 class SupportFreezeSyncGroup {
 public:
     SupportFreezeSyncGroup();
 
-    void init(const ActorInitInfo&);
-    void regist(LiveActor*);
-    void setHostSensor(HitSensor*);
-    bool isEqualGroupId(const ActorInitInfo&) const;
+    void init(const ActorInitInfo& rInfo);
+    void regist(LiveActor* pActor);
+    void setHostSensor(HitSensor* pSensor);
+    bool isEqualGroupId(const ActorInitInfo& rInfo) const;
     void movement();
 
-    PlacementId* mGroupId;             // _0
-    HitSensor* mHostSensor = nullptr;  // _8
-    LiveActor** mActors = nullptr;     // _10
-    s32 mActorNum = 0;                 // _18
-    s32 mActorMaxNum = 64;             // _1c
+    PlacementId* mPlacementId = nullptr;
+    HitSensor* mHostSensor = nullptr;
+    LiveActor** mActors = nullptr;
+    s32 mActorNum = 0;
+    s32 mActorMax = 64;
 };
 
 class SupportFreezeSyncGroupHolder : public LiveActor, public ISceneObj {
 public:
     SupportFreezeSyncGroupHolder();
 
-    void initAfterPlacementSceneObj(const ActorInitInfo&) override;
+    void initAfterPlacementSceneObj(const ActorInitInfo& rInfo) override;
     void movement() override;
 
-    void regist(LiveActor*, const ActorInitInfo&);
-    SupportFreezeSyncGroup* tryFindGroup(const ActorInitInfo&);
+    void regist(LiveActor* pActor, const ActorInitInfo& rInfo);
+    SupportFreezeSyncGroup* tryFindGroup(const ActorInitInfo& rInfo);
 
-    SupportFreezeSyncGroup** mGroups = nullptr;  // _150
-    s32 mGroupNum = 0;                           // _158
-    s32 mGroupMaxNum = 64;                       // _15c
+    SupportFreezeSyncGroup** mGroups = nullptr;
+    s32 mGroupNum = 0;
+    s32 mGroupMax = 64;
 };
 
-bool registSupportFreezeSyncGroup(LiveActor*, const ActorInitInfo&);
+bool registSupportFreezeSyncGroup(LiveActor* pActor, const ActorInitInfo& rInfo);
 }  // namespace al
