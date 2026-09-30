@@ -9,5 +9,6 @@ Result EnsureSaveData(const nn::account::Uid&);
 Result MountSaveData(const char*, UserId);
 Result MountSaveDataForDebug(const char*);
 Result CommitSaveData(const char* path);
+Result Commit(const char* pMountName);
 
 }  // namespace nn::fs

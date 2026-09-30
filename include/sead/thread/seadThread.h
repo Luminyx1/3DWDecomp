@@ -30,6 +30,7 @@ using ThreadListNode = TListNode<Thread*>;
 
 class Thread : public IDisposer, public INamable, public hostio::Reflexible
 {
+    friend class MemUtil;
 public:
     SEAD_ENUM(State, cInitialized, cRunning, cQuitting, cTerminated, cReleased)
 
@@ -132,6 +133,7 @@ protected:
 
 class ThreadMgr : public hostio::Node
 {
+    friend class MemUtil;
 #if not SEAD_THREADMGR_MOVED_SINGLETON_DISPOSER
     SEAD_SINGLETON_DISPOSER(ThreadMgr)
 #endif

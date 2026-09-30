@@ -3899,7 +3899,7 @@ src/sead/filedevice/seadFileDeviceMgr.cpp: done
     .text   start:0x00655760 end:0x00656848
 src/sead/filedevice/seadMainFileDevice.cpp: done
     .text   start:0x00656850 end:0x00656E0C
-src/sead/filedevice/nin/seadNinContentFileDevice.cpp:
+src/sead/filedevice/nin/seadNinContentFileDevice.cpp: done
     .text   start:0x00656E10 end:0x0065713C
 src/sead/filedevice/nin/seadNinFileDeviceBaseNin.cpp:
     .text   start:0x00657140 end:0x006581CC
@@ -4077,13 +4077,13 @@ src/sead/codec/seadHashCRC16.cpp: done
     .text   start:0x006A5330 end:0x006A5654
 src/sead/codec/seadHashCRC32.cpp: done
     .text   start:0x006A5660 end:0x006A5988
-src/sead/basis/seadMemUtil.cpp:
+src/sead/basis/seadMemUtil.cpp: done
     .text   start:0x006A5990 end:0x006A5A74
 src/sead/xml/seadXmlElement.cpp: done
     .text   start:0x006A5A80 end:0x006A7C08
 src/sead/xml/seadXmlUtil.cpp: done
     .text   start:0x006A7C10 end:0x006A8174
-src/sead/filedevice/nin/seadNinHostIOFileDevice.cpp:
+src/sead/filedevice/nin/seadNinHostIOFileDevice.cpp: done
     .text   start:0x006A8180 end:0x006A841C
 src/sead/xml/seadXmlDocument.cpp:
     .text   start:0x006A8420 end:0x006AEB6C
@@ -4113,7 +4113,7 @@ src/sead/devenv/seadPrintConfig.cpp:
     .text   start:0x006B4320 end:0x006B4638
 src/sead/basis/nin/seadRawPrintNin.cpp: done
     .text   start:0x006B4640 end:0x006B4644
-src/sead/filedevice/nin/seadNinSaveFileDevice.cpp:
+src/sead/filedevice/nin/seadNinSaveFileDevice.cpp: done
     .text   start:0x006B4650 end:0x006B490C
 src/sead/mc/seadWorkerMgr.cpp: done
     .text   start:0x006B4910 end:0x006B5548
