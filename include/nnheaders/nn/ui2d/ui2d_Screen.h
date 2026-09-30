@@ -2,6 +2,7 @@
 #include <nn/ui2d/ui2d_AnimButton.h>
 #include <nn/ui2d/ui2d_Types.h>
 namespace nn::ui2d {
+struct Size;
 class DrawInfo;
 class ControlCreator;
 class ResourceAccessor;
@@ -59,6 +60,14 @@ public:
     virtual void UpdateAnimator_();
     virtual ResourceAccessor* DoCreateResourceAccessor_();
     virtual void OnPostCalculate(Layout*);
-    // Instance storage is not yet reconstructed; use through pointers only.
+    void SetAnimatorActive(AnimatorEx* animator);
+    void EraseAnimatorFromActiveList(AnimatorEx* animator);
+    u8 _08[0x28];
+    nn::util::IntrusiveListNode mActiveAnimators;
+    u8 _40[0xd0];
+    ControlCreator* mControlCreator;
+    u8 _118[0x48];
+    int mScreenId;
+    // Remaining instance storage is not yet reconstructed; use through pointers only.
 };
 }

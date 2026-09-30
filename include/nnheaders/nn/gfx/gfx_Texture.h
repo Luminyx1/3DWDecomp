@@ -49,7 +49,7 @@ class TColorTargetView : public detail::ColorTargetViewImpl<TTarget> {
 public:
     typedef ColorTargetViewInfo InfoType;
 
-    TColorTargetView();
+    TColorTargetView() = default;
     // device owns the target; info describes its texture and subresource.
     void Initialize(TDevice<TTarget>* device, const InfoType& info) {
         detail::ColorTargetViewImpl<TTarget>::Initialize(device, info);

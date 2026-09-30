@@ -117,8 +117,7 @@ public:
     float mGlobalMtx[12];
     u64 _A0;
     void* mAnimExtUserData;
-    char mPanelName[0x18];
-    char mUserData[8];
-    u16 _D0;
+    char mPanelName[0x19];
+    char mUserData[9];
 };
 }  // namespace nn::ui2d

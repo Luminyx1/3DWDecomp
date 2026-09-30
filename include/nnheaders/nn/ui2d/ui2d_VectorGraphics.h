@@ -28,6 +28,9 @@ public:
     size_t GetAllocatedSize() const;
     void* Allocate(size_t);
     void* Allocate(size_t, size_t);
+    char* mMemory;
+    size_t mReservedSize;
+    char* mNext;
 };
 
 class VectorGraphicsShapePathProcessor {

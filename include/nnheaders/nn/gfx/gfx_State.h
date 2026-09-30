@@ -101,7 +101,7 @@ public:
 
     static size_t GetRequiredMemorySize(const InfoType&);
 
-    TViewportScissorState();
+    TViewportScissorState() = default;
     void SetMemory(void*, size_t);
     void* GetMemory();
     const void* GetMemory() const;

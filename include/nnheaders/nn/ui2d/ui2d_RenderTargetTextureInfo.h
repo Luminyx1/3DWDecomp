@@ -10,6 +10,9 @@ enum RenderTargetTextureLifetime : int;
 
 class RenderTargetTextureInfo : public PlacementTextureInfo {
 public:
+    RenderTargetTextureInfo()
+        : mTexture(nullptr), mTextureView(nullptr), mTextureSlot(nullptr), mLayout(nullptr),
+          mPrivateTextureInstance(nullptr), mFormat(static_cast<nn::gfx::ImageFormat>(0)), mLifetime(static_cast<RenderTargetTextureLifetime>(-1)) {}
     NN_RUNTIME_TYPEINFO(PlacementTextureInfo);
     ~RenderTargetTextureInfo() override;
     void Initialize(nn::gfx::Device*, const Layout*, const nn::gfx::TextureInfo&,

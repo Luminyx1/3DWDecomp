@@ -3735,7 +3735,7 @@ src/nw/ui2d/ui2d_ArcResourceAccessor.cpp:
     .text   start:0x005E42B0 end:0x005E6FC8
 src/nw/ui2d/ui2d_FontContainer.cpp: done
     .text   start:0x005E6FD0 end:0x005E739C
-src/nw/ui2d/ui2d_TextureContainer_dup2.cpp:
+src/nw/ui2d/ui2d_TextureContainer_dup2.cpp: done
     .text   start:0x005E73A0 end:0x005E7B48
 src/nw/ui2d/ui2d_ScalableFontMgr.cpp:
     .text   start:0x005E7B50 end:0x005E8AB0

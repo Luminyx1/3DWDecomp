@@ -6,6 +6,8 @@ class AnimatorEx;
 class Screen;
 class LayoutEx : public Layout {
 public:
+    explicit LayoutEx(Screen* screen);
+    AnimatorEx* FindAnimator(const char* name);
     NN_RUNTIME_TYPEINFO(Layout);
     bool BuildImpl(BuildResultInformation*, nn::gfx::Device*, const void*, ResourceAccessor*, const BuildArgSet&, const PartsBuildDataSet*) override;
     Layout* DoCreatePartsLayout_(const char*, const PartsBuildDataSet&, const BuildArgSet&) override;
@@ -15,6 +17,9 @@ public:
     AnimatorEx* CreateAnimatorExAuto(nn::gfx::Device* device, const char* name, bool enabled);
     AnimatorEx* TryCreateAnimatorExAuto(nn::gfx::Device* device, const char* name, bool enabled);
     Screen* mScreen;
-    // Remaining instance storage is not yet reconstructed.
+    AnimatorEx* mInOutAnimator;
+    AnimatorEx* mLoopAnimator;
+    AnimatorEx* mDefaultAnimator;
+    u32 mAnimationState;
 };
 }

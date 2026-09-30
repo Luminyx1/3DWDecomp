@@ -88,6 +88,7 @@ public:
     void ActivateVertexBuffer(nn::gfx::CommandBuffer*) const;
 
     static PresetBlendStateId GetPresetBlendStateId(const ResBlendMode*, const ResBlendMode*);
+    nn::gfx::BlendState* GetPresetBlendState(PresetBlendStateId id);
 
     ShaderInfo m_CommonShaderInfo;
     void* m_pUi2dBuildinShader;

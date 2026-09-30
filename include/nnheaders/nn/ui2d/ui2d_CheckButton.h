@@ -3,6 +3,7 @@
 namespace nn::ui2d {
 class CheckButton : public AnimButton {
 public:
+    CheckButton() : mChecked(false), mCheckAnimator(nullptr) {}
     NN_RUNTIME_TYPEINFO(AnimButton);
     void Build(nn::gfx::Device* device, Layout* layout, const ControlSrc& source);
     void ForceSetChecked(bool checked);

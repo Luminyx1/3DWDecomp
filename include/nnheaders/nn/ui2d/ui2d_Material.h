@@ -23,6 +23,12 @@ public:
     void Initialize();
     void ReserveMem(s32, s32, s32, s32, bool, s32, bool, s32, bool, bool);
     void SetupUserShaderConstantBufferInformation(nn::ui2d::UserShaderInformation const&);
+    size_t GetVertexShaderConstantBufferSize() const;
+    size_t GetPixelShaderConstantBufferSize() const;
+    size_t GetGeometryShaderConstantBufferSize() const;
+    size_t GetPixelShaderDetailedCombinerConstantBufferSize() const;
+    size_t GetPixelShaderCombinerUserShaderConstantBufferSize() const;
+    bool IsUseFramebufferTexture() const;
 
     virtual ~Material();
     virtual void BindAnimation(nn::ui2d::AnimTransform*);
@@ -36,13 +42,16 @@ public:
         m_pTexMaps[index].m_pTextureInfo = pInfo;
     }
 
-    unsigned char _08[0xc];
+    union { unsigned char _08[0xc]; struct { u32 mBlackColor; u32 mWhiteColor; u32 mResourceCapacity; }; };
     u32 mResourceCounts;
     TexMap* m_pTexMaps;
-    unsigned char _20[8];
+    union { unsigned char _20[8]; void* mShaderInfo; };
     const char* mName;
-    unsigned char _30[0x18];
-    u8 mTextureCount;
+    struct UserShaderConstantBufferInformation {
+        u32 vertexSize, pixelSize, geometrySize, flags;
+    };
+    union { unsigned char _30[0x18]; struct { void* mUserShader; UserShaderConstantBufferInformation* mUserShaderConstantBufferInformation; void* mDetailedCombiner; }; };
+    union { u32 mFlags; struct { u8 mTextureCount; u8 mOwnershipFlags; u16 mShaderVariation; }; };
 };
 }  // namespace ui2d
 }  // namespace nn

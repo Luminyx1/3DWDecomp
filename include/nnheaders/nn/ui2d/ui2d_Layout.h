@@ -64,6 +64,7 @@ public:
     static void* AllocateMemory(size_t, size_t);
     static void* AllocateMemory(size_t);
     static void FreeMemory(void* src);
+    static void SetDynamicTextureInitializationMemoryInfo(int captureCount, int vectorCount, int dynamicCount, int stackCount);
     GroupAnimator* CreateGroupAnimatorAuto(nn::gfx::Device* device, const char* name, bool enabled);
     const void* GetAnimResourceData(const char* pName) const;
 
@@ -105,6 +106,11 @@ public:
 
     static void* g_pAllocateFunction;
     static void* g_pFreeFunction;
+    static void* g_pUserDataForAllocator;
+    static int g_CaptureTextureShareInfoCountMax;
+    static int g_VectorGraphicsTextureShareInfoCountMax;
+    static int g_DynamicTextureShareInfoCountMax;
+    static int g_DynamicTextureShareInfoPartsStackMax;
     static LayoutPaneFactory* g_pLayoutPaneFactory;
     // Four words of shared random-generator state, initialized from the UI seed.
     static u32 g_Random[4];

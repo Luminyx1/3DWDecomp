@@ -9,6 +9,7 @@ struct ResAnimationContent;
 
 class AnimTransform {
 public:
+    AnimTransform();
     NN_RUNTIME_TYPEINFO_BASE();
     virtual ~AnimTransform();
     virtual void UpdateFrame(float step);
@@ -63,7 +64,7 @@ public:
 
     void* _28;
     void* _30;
-    u32 _38;
+    union { u32 _38; struct { u16 mBindCount; u16 mBindCapacity; }; };
 };
 static_assert(sizeof(AnimTransformBasic) == 0x40, "AnimTransformBasic size");
 }

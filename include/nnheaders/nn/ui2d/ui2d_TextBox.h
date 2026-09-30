@@ -37,11 +37,20 @@ public:
     virtual void SetupTextWriterUtf8(nn::font::TextWriterBase<char>*) const;
     virtual void InitializeStringWithTextSearcherInfo(nn::gfx::Device*, const BuildArgSet&, const TextSearcher::TextInfo&);
     virtual void InitializeStringWithTextSearcherInfoUtf8(nn::gfx::Device*, const BuildArgSet&, const TextSearcher::TextInfoUtf8&);
+    bool ValidateNextPrintableChar(const char* current, const char* next);
+    bool ValidateNextPrintableChar(const u16* current, const u16* next);
+    u32 GetCharFromPointer(const char* text);
+    u32 GetCharFromPointer(const u16* text);
 protected:
     // Text storage and rendering members await reconstruction; offsets are verified against constructors.
-    u8 _d2[0x42];
+    u8 _d2[6];
+    void* mTextBuffer;
+    u8 _e0[0x32];
+    u16 mTextLength;
     u16 mTextFlags;
-    u8 _116[0x42];
+    u8 _116[0x2a];
+    Material* mMaterial;
+    u8 _148[0x10];
 };
 static_assert(sizeof(TextBox) == 0x158, "TextBox size");
 }

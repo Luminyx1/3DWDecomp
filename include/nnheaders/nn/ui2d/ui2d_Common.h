@@ -28,10 +28,9 @@ public:
     void Copy(void const*, s32);
     bool CompareCopiedInstanceTest(nn::ui2d::detail::TexCoordArray const&) const;
 
-    u16 _0;
-    u16 _2;
-    u32 _4;                     // padding?
-    nn::ui2d::Layout* mLayout;  // _8
+    u8 mCapacity;
+    u8 mSize;
+    nn::util::Float2 (*mCoords)[4];
 };
 }  // namespace detail
 }  // namespace ui2d

@@ -28,7 +28,7 @@ Parts::~Parts() = default;
 
 // pName identifies this parts pane; lookup does not descend into the nested layout.
 Pane* Parts::FindPaneByNameRecursive(const char* pName) {
-    return SameName(mPanelName, pName, sizeof(mPanelName)) ? this : nullptr;
+    return SameName(mPanelName, pName, 24) ? this : nullptr;
 }
 
 // pName is forwarded to the mutable virtual lookup without modifying the parts pane.

@@ -30,6 +30,10 @@ public:
     void SetupPaneEffectSourceImageRenderState(nn::gfx::CommandBuffer&) const override;
     void CopyImpl(const Window&, nn::gfx::Device*, const Layout*, detail::BuildPaneTreeContext*);
 
-    unsigned char _D2[0x5e];
+    unsigned char _D2[0x16];
+    nn::util::Unorm8x4 mVertexColors[4];
+    unsigned char _F8[0x11];
+    u8 mFrameCount;
+    unsigned char _10A[0x26];
 };
 }  // namespace nn::ui2d
