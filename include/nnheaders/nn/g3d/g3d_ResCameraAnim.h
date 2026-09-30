@@ -4,17 +4,14 @@
 #include <nn/g3d/g3d_BindFuncTable.h>
 
 namespace nn::g3d {
-struct FogAnimResult { float values[5]; };
-class ResFogAnim {
+struct CameraAnimResult { float values[11]; };
+class ResCameraAnim {
 public:
     // result receives the resource's constant animation values.
-    void Initialize(FogAnimResult* result) const;
-    // table maps stored function names to application-provided function indices.
-    BindResult Bind(const BindFuncTable& table);
-    void Release();
+    void Initialize(CameraAnimResult* result) const;
     // result receives samples at frame; cache, when supplied, has one entry per curve.
-    void Evaluate(FogAnimResult* result, float frame) const;
-    void Evaluate(FogAnimResult* result, float frame, AnimFrameCache* cache) const;
+    void Evaluate(CameraAnimResult* result, float frame) const;
+    void Evaluate(CameraAnimResult* result, float frame, AnimFrameCache* cache) const;
     // buffer supplies size writable bytes for replacing curves with baked samples.
     bool BakeCurve(void* buffer, size_t size);
     void* ResetCurve();
@@ -28,12 +25,10 @@ public:
     void* baseValues;
     void* userData;
     void* userDataDictionary;
-    const char* fogFuncName; // 0x30, binary string including its length prefix
-    u32 frameCount; // 0x38
+    u32 frameCount; // 0x30
     u32 bakedSize;
     u16 userDataCount;
     u8 curveCount;
-    u8 fogFuncIndex;
-    u8 _44[4];
+    u8 _3b[5];
 };
 }

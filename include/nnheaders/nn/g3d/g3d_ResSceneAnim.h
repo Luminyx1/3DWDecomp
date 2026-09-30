@@ -6,16 +6,18 @@
 #pragma once
 
 #include <nn/types.h>
+#include <nn/g3d/g3d_Resources.h>
 
 namespace nn {
 namespace g3d {
 class ResLightAnim;
 class ResFogAnim;
-struct BindFuncTable;
+class BindFuncTable;
 
 class ResSceneAnim {
 public:
-    s32 Bind(nn::g3d::BindFuncTable const&);
+    // table resolves light and fog function names across this scene.
+    BindResult Bind(nn::g3d::BindFuncTable const& table);
     void Release();
     void Reset();
 

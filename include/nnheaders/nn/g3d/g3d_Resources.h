@@ -47,6 +47,8 @@ public:
     enum Flag { Flag_Success = 1 << 0, Flag_Failure = 1 << 16 };
 
     BindResult() : m_Flag(0), m_Pad(0) {}
+    // flags records the success and failure bits for a single binding attempt.
+    explicit BindResult(u32 flags) : m_Flag(flags), m_Pad(0) {}
     // result contributes success/failure bits from another resource binding operation.
     void Merge(const BindResult& result) { m_Flag |= result.m_Flag; }
     bool IsComplete() const { return (m_Flag & (Flag_Success | Flag_Failure)) == Flag_Success; }
