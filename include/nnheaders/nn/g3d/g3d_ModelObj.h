@@ -1,7 +1,10 @@
 #pragma once
 
 #include <nn/types.h>
+#include <nn/g3d/g3d_Resources.h>
+#include <nn/g3d/g3d_ShapeObj.h>
 #include <nn/g3d/g3d_SkeletonObj.h>
+#include <nn/gfx/gfx_Types.h>
 
 namespace nn::g3d {
 
@@ -9,6 +12,7 @@ class MaterialObj;
 class ResModel;
 class ShapeObj;
 class SkeletonObj;
+class Sphere;
 
 // TODO
 class ModelObj {
@@ -26,6 +30,36 @@ public:
     SkeletonObj* GetSkeleton() const { return m_Skeleton; }
 
     s32 GetNumShapes() const { return m_NumShapes; }
+    s32 GetNumMaterials() const { return m_NumMaterials; }
+    s32 GetLodCount() const { return _8c; }
+    ShapeObj* GetShape(int index) const { return &m_Shapes[index]; }
+    MaterialObj* GetMaterial(int index) const { return &m_Materials[index]; }
+    const Sphere* GetBounding() const { return m_pBounding; }
+
+    bool IsBlockBufferValid() const { return (_1a & 1) != 0; }
+    void CleanupBlockBuffer(gfx::Device* pDevice);
+
+    u32* GetBoneVisibilityArray() const { return m_BoneVisibility; }
+    VisibilityCallback GetBoneVisibilityCallback() const { return m_VisibilityCallback; }
+
+    bool IsBoneVisible(int index) const {
+        return (m_BoneVisibility[static_cast<u32>(index) >> 5] & (1 << index)) != 0;
+    }
+
+    bool IsMaterialVisible(int index) const {
+        return (static_cast<const u32*>(_10)[index >> 5] & (1 << index)) != 0;
+    }
+
+    void SetMaterialVisible(int index, bool isVisible) {
+        bool isPrevVisible = IsMaterialVisible(index);
+        u32 bit = 1 << index;
+        u32& word = static_cast<u32*>(_10)[index >> 5];
+        word = (word & ~bit) | (static_cast<u32>(isVisible) << index);
+        auto callback = reinterpret_cast<void (*)(ModelObj*, int)>(_80);
+        if (callback && isPrevVisible != isVisible) {
+            callback(this, index);
+        }
+    }
 
 private:
     struct InitializeArgument;
@@ -45,7 +79,7 @@ private:
     SkeletonObj* m_Skeleton;
     ShapeObj* m_Shapes;
     MaterialObj* m_Materials;
-    void* _50;
+    Sphere* m_pBounding;
     void* m_UserData;
     void* _60;
     void* _68;

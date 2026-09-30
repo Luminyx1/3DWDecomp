@@ -1,5 +1,7 @@
 #pragma once
 
+#include <nn/gfx/gfx_Buffer.h>
+#include <nn/gfx/gfx_Types.h>
 #include <nn/types.h>
 #include <nn/g3d/g3d_Resources.h>
 #include <nn/util/AccessorBase.h>
@@ -191,7 +193,8 @@ struct ResShadingModelData {
     u8 imageCount;
     u8 uniformBlockCount;
     s8 materialBlockIndex;
-    u8 _f1[2];
+    s8 shapeBlockIndex;
+    s8 skeletonBlockIndex;
     s8 optionBlockIndex;
     u8 storageBlockCount;
     u8 _f5[11];
@@ -253,6 +256,14 @@ public:
         return index == nn::util::ResDic::Npos ? nullptr : GetStaticOption(index);
     }
     int GetMaterialBlockIndex() const { return materialBlockIndex; }
+    int GetShapeBlockIndex() const { return shapeBlockIndex; }
+    int GetSkeletonBlockIndex() const { return skeletonBlockIndex; }
+    int GetOptionBlockIndex() const { return optionBlockIndex; }
+    size_t GetUniformBlockSize(int index) const { return pUniformBlocks.Get()[index].size; }
+    const char* GetUniformBlockName(int index) const {
+        const nn::util::ResDic* pDic = pUniformBlockDic.Get();
+        return pDic ? pDic->GetKey(index).data() : nullptr;
+    }
     // index selects a uniform block in the resource array.
     const ResUniformBlock* GetUniformBlock(int index) const { return &pUniformBlocks.Get()[index]; }
 
@@ -309,6 +320,8 @@ public:
     void WriteStaticKey(int option, int choice);
     int ReadStaticKey(int option) const;
     const ResShadingModel* GetResource() const { return resource; }
+    const gfx::Buffer* GetOptionBlock() const { return reinterpret_cast<const gfx::Buffer*>(buffers); }
+    bool IsBlockBufferValid() const { return (flags & 1) != 0; }
     // pStr receives formatted text and strLength is its capacity in bytes.
     int PrintRawKeyTo(char* pStr, int strLength) const;
     int PrintKeyTo(char* pStr, int strLength) const;
@@ -335,6 +348,8 @@ private:
 
 class ShaderSelector {
 public:
+    const ShadingModelObj* GetShadingModel() const { return model; }
+    const ResShaderProgram* GetProgram() const { return program; }
     struct InitializeArgument {
         ShadingModelObj* model;
         size_t memorySize;

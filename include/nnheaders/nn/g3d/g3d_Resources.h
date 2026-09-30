@@ -12,6 +12,7 @@
 #include <nn/gfx/gfx_Texture.h>
 #include <nn/gfx/gfx_Types.h>
 #include <nn/types.h>
+#include <nn/g3d/g3d_Bounding.h>
 #include <nn/g3d/g3d_Flag.h>
 #include <nn/util/util_BinTypes.h>
 #include <nn/util/util_BinaryFormat.h>
@@ -26,6 +27,9 @@ class ResMaterialAnim;
 class ResPerMaterialAnim;
 class ResShapeAnim;
 class ResSceneAnim;
+class ShapeObj;
+class ViewVolume;
+struct CullingContext;
 
 typedef nn::gfx::detail::BufferImpl<nn::gfx::ApiVariationNvn8> BufferImpl;
 
@@ -77,7 +81,8 @@ struct ResSamplerData {
 };
 
 struct ResShaderAssignData {
-    u8 _0[0x10];
+    nn::util::BinPtr pShaderArchiveName;
+    nn::util::BinPtr pShadingModelName;
     nn::util::BinTPtr<nn::util::BinPtrToString> pAttribAssignArray;
     nn::util::BinTPtr<nn::util::ResDic> pAttribAssignDic;
     nn::util::BinTPtr<nn::util::BinPtrToString> pSamplerAssignArray;
@@ -94,6 +99,13 @@ public:
         const nn::util::ResDic* dictionary = pOptionDic.Get();
         return (dictionary != nullptr) ? dictionary->GetKey(index).data() : nullptr;
     }
+    const char* GetShaderArchiveName() const {
+        return static_cast<const char*>(pShaderArchiveName.Get()) + 2;
+    }
+    const char* GetShadingModelName() const {
+        return static_cast<const char*>(pShadingModelName.Get()) + 2;
+    }
+    const char* FindShaderOption(const char* pName) const;
 };
 class ResShaderParam;
 // destination receives converted source data; parameter describes its layout; dependency is optional context.
@@ -130,6 +142,33 @@ public:
     static size_t ConvertTexSrtExCallback(void* destination, const void* source, const ResShaderParam* parameter, const void* user);
     // destination receives the GPU representation of source; swap enables byte swapping.
     template <bool swap> void Convert(void* destination, const void* source) const;
+
+    u16 GetSrcOffset() const { return sourceOffset; }
+    s32 GetOffset() const { return offset; }
+    int GetIndex() const { return index; }
+};
+
+class ResRenderInfo {
+public:
+    enum Type { Type_Int, Type_Float, Type_String };
+
+    const char* GetName() const { return m_pName + 2; }
+    int GetArrayLength() const { return m_ArrayLength; }
+    Type GetType() const { return static_cast<Type>(m_Type); }
+    const s32* GetInt() const { return m_pIntArray; }
+    const float* GetFloat() const { return m_pFloatArray; }
+    const char* GetString(int index) const { return m_pStringArray[index] + 2; }
+
+private:
+    const char* m_pName;
+    union {
+        const s32* m_pIntArray;
+        const float* m_pFloatArray;
+        const char* const* m_pStringArray;
+    };
+    u16 m_ArrayLength;
+    u8 m_Type;
+    u8 m_Reserved[5];
 };
 
 struct ResMaterialData {
@@ -204,6 +243,14 @@ public:
         ToData().pTextureArray.Get()[index] = nullptr;
         ToData().pTextureSlotArray.Get()[index] = TextureRef::InvalidDescriptorSlot;
     }
+
+    const ResShaderAssign* GetShaderAssign() const {
+        return reinterpret_cast<const ResShaderAssign*>(ToData().pShaderAssign.Get());
+    }
+    const ResShaderParam* GetShaderParam(int index) const {
+        return reinterpret_cast<const ResShaderParam*>(&ToData().pShaderParamArray.Get()[index]);
+    }
+    const ResRenderInfo* FindRenderInfo(const char* pName) const;
 };
 
 struct ResVertexAttribData {
@@ -258,6 +305,7 @@ public:
     void Cleanup(nn::gfx::Device* device);
     void DrawSubMesh(nn::gfx::CommandBuffer* command, int first, int count, int instances) const;
     void DrawSubMesh(nn::gfx::CommandBuffer* command, int first, int count, int instances, int baseInstance) const;
+    s32 GetSubMeshCount() const { return subMeshCount; }
 
     ResSubMesh* subMeshes;
     nn::gfx::MemoryPool* memoryPool;
@@ -282,10 +330,12 @@ struct ResShapeData {
     nn::util::BinPtr pSkinBoneIndexArray;
     nn::util::BinTPtr<ResKeyShape> pKeyShapeArray;
     nn::util::BinTPtr<nn::util::ResDic> pKeyShapeDic;
-    u8 _38[0x48 - 0x38];
+    nn::util::BinTPtr<Bounding> pBoundingArray;
+    u8 _40[0x48 - 0x40];
     nn::util::BinPtr pUserPtr;
     u16 index;
-    u8 _52[9];
+    u16 materialIndex;
+    u8 _54[7];
     u8 meshCount;
     u8 keyShapeCount;
     u8 _5d[3];
@@ -300,6 +350,12 @@ public:
         return dictionary->FindIndex(name);
     }
     int GetIndex() const { return index; }
+    const char* GetName() const { return static_cast<const char*>(pName.Get()) + 2; }
+    s32 GetMaterialIndex() const { return materialIndex; }
+    const ResMesh* GetMesh() const { return pMeshArray.Get(); }
+    const ResMesh* GetMesh(int meshIndex) const { return &pMeshArray.Get()[meshIndex]; }
+    int GetMeshCount() const { return meshCount; }
+    const Bounding* GetBoundingArray() const { return pBoundingArray.Get(); }
 
     void ActivateDynamicVertexAttrForShapeAnim();
     void Setup(nn::gfx::Device* device);
@@ -354,6 +410,14 @@ public:
     void Reset(u32 guard);
     int GetMaterialCount() const { return ToData().materialCount; }
     ResMaterial* GetMaterial(int index) { return &ToData().pMaterialArray.Get()[index]; }
+
+    int FindShapeIndex(const char* pName) const {
+        const nn::util::ResDic* pDic = ToData().pShapeDic.Get();
+        return pDic ? pDic->FindIndex(pName) : nn::util::ResDic::Npos;
+    }
+    s32 GetShapeCount() const { return ToData().shapeCount; }
+    const ResShape* GetShape(int index) const { return &ToData().pShapeArray.Get()[index]; }
+    const ResSkeleton* GetSkeleton() const { return ToData().pSkeleton.Get(); }
 };
 
 struct ResExternalFileData {
@@ -558,6 +622,21 @@ public:
         }
     }
 
+    template <typename T>
+    T* EditShaderParam(int paramIndex) {
+        const ResShaderParam* pParam = m_pRes->GetShaderParam(paramIndex);
+        if (pParam->GetOffset() >= 0) {
+            m_DirtyFlags.mPending[paramIndex >> 5] |= 1 << paramIndex;
+            m_DirtyFlags.mFlags |= 1;
+        }
+        int dependedIndex = pParam->GetIndex();
+        if (m_pRes->GetShaderParam(dependedIndex)->GetOffset() >= 0) {
+            m_DirtyFlags.mPending[dependedIndex >> 5] |= 1 << dependedIndex;
+            m_DirtyFlags.mFlags |= 1;
+        }
+        return reinterpret_cast<T*>(static_cast<u8*>(m_pParamSource) + pParam->GetSrcOffset());
+    }
+
 private:
     enum Flag { Flag_BlockBufferValid = 1 << 0 };
 
@@ -595,6 +674,12 @@ private:
 
 class ShapeObj {
 public:
+    const ResShape* GetResource() const { return m_pRes; }
+    const Sphere* GetBounding() const { return m_pBounding; }
+    const Aabb* GetSubMeshBoundingArray() const { return m_pSubMeshBoundingArray; }
+    bool TestSubMeshIntersection(CullingContext* pContext, const ViewVolume& rViewVolume,
+                                 int lodIndex) const;
+
     bool IsBlockBufferValid() const { return m_Flag & Flag_BlockBufferValid; }
     bool IsViewDependent() const { return m_ViewDependent; }
 
@@ -613,10 +698,22 @@ public:
         return (m_pShapeBlockArray != nullptr) ? &m_pShapeBlockArray[bufferIndex] : nullptr;
     }
 
+    const BufferImpl* GetShapeBlock(int viewIndex, int bufferIndex) const {
+        if (!IsBlockBufferValid()) {
+            return nullptr;
+        }
+        if (IsViewDependent()) {
+            return m_pShapeBlockArray ?
+                       &m_pShapeBlockArray[viewIndex * m_BufferingCount + bufferIndex] :
+                       nullptr;
+        }
+        return m_pShapeBlockArray ? &m_pShapeBlockArray[bufferIndex] : nullptr;
+    }
+
 private:
     enum Flag { Flag_BlockBufferValid = 1 << 0 };
 
-    u8 _0[0x8];
+    const ResShape* m_pRes;
     u8 m_Flag;
     u8 _9[0xd - 0x9];
     u8 m_ViewDependent;
@@ -624,6 +721,10 @@ private:
     u8 m_BufferingCount;
     u8 _10[0x20 - 0x10];
     BufferImpl* m_pShapeBlockArray;
+    u8 _28[0x38 - 0x28];
+    Sphere* m_pBounding;
+    Aabb* m_pSubMeshBoundingArray;
+    u8 _48[0x70 - 0x48];
 };
 
 }  // namespace nn::g3d
