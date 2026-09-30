@@ -4,6 +4,7 @@
 
 namespace nn::atk::detail {
 struct StreamSoundFile {
+    struct RegionInfo { u8 data[0x100]; };
     struct StreamSoundInfo {
         u8 sampleFormat, loop, channelCount, regionCount;
         u32 sampleRate, loopStart, loopEnd;

@@ -3435,10 +3435,10 @@ src/nw/atk/detail/strm/atk_StreamSoundFileReader.cpp: done
     .text   start:0x005583C0 end:0x00558798
 src/nw/atk/detail/strm/atk_StreamSoundFile.cpp: done
     .text   start:0x005587A0 end:0x00558B40
-src/nw/atk/detail/strm/_ZN2nn3atk6detail29StreamSoundPrefetchFileReaderC2Ev.cpp:
-    .text   start:0x00558B40 end:0x00558B7C
-src/nw/atk/detail/strm/atk_StreamSoundPrefetchFileReader.cpp:
-    .text   start:0x00558B80 end:0x005591B4
+src/nw/atk/detail/strm/atk_StreamSoundPrefetchFileReader.cpp: done
+    .text   start:0x00558B40 end:0x00558F34
+src/nw/atk/detail/strm/atk_StreamSoundPrefetchFile.cpp:
+    .text   start:0x00558F40 end:0x005591B4
 src/nw/atk/detail/strm/atk_StreamTrack.cpp:
     .text   start:0x005591C0 end:0x005591E0
 src/nw/atk/detail/strm/atk_StreamBufferPool.cpp: done
