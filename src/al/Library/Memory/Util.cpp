@@ -1,105 +1,97 @@
-#include "Library/Memory/MemoryUtil.hpp"
+#include "Library/Memory/Util.hpp"
 
 #include <heap/seadHeapMgr.h>
 
 namespace al {
-    /**
-     * @brief Copies memory in 16 byte blocks.
-     * @param pDst The destination buffer.
-     * @param pSrc The source buffer.
-     * @param size The number of bytes to copy (only whole 16 byte blocks are copied).
-     */
-    void copyMemoryFast(u32* pDst, const u32* pSrc, u32 size) {
-        for (u32 i = size >> 4; i != 0; i--) {
-            u32 word0 = pSrc[0];
-            u32 word1 = pSrc[1];
-            u32 word2 = pSrc[2];
-            u32 word3 = pSrc[3];
-            pDst[0] = word0;
-            pDst[1] = word1;
-            pDst[2] = word2;
-            pDst[3] = word3;
-            pDst += 4;
-            pSrc += 4;
+/**
+ * Copies memory in blocks of 16 bytes.
+ * @param pDst Destination buffer.
+ * @param pSrc Source buffer.
+ * @param size Number of bytes to copy (multiple of 16).
+ */
+void copyMemoryFast(u32* pDst, const u32* pSrc, u32 size) {
+    for (u32 i = size >> 4; i != 0; i--) {
+        u32 a = pSrc[0];
+        u32 b = pSrc[1];
+        u32 c = pSrc[2];
+        u32 d = pSrc[3];
+        pDst[0] = a;
+        pDst[1] = b;
+        pDst[2] = c;
+        pDst[3] = d;
+        pSrc += 4;
+        pDst += 4;
+    }
+}
+
+void copyMemory(void* pDst, const void* pSrc, u32 size) {
+    u32 srcAlign = reinterpret_cast<uintptr_t>(pSrc) & 3;
+    u32 dstAlign = reinterpret_cast<uintptr_t>(pDst) & 3;
+
+    if ((size & 0xf) == 0 && srcAlign == dstAlign) {
+        copyMemoryFast(static_cast<u32*>(pDst), static_cast<const u32*>(pSrc), size);
+        return;
+    }
+
+    u8* dst = static_cast<u8*>(pDst);
+    const u8* src = static_cast<const u8*>(pSrc);
+
+    if (size < 0x10 || srcAlign != dstAlign) {
+        for (; size != 0; size--) {
+            *dst++ = *src++;
         }
+        return;
     }
 
-    /**
-     * @brief Copies memory, using word copies when both buffers share the same alignment.
-     * @param pDst The destination buffer.
-     * @param pSrc The source buffer.
-     * @param size The number of bytes to copy.
-     */
-    void copyMemory(void* pDst, const void* pSrc, u32 size) {
-        u32 srcAlign = reinterpret_cast<uintptr_t>(pSrc) & 3;
-        u32 dstAlign = reinterpret_cast<uintptr_t>(pDst) & 3;
-
-        if ((size & 0xf) == 0 && srcAlign == dstAlign) {
-            copyMemoryFast(static_cast<u32*>(pDst), static_cast<const u32*>(pSrc), size);
-            return;
+    if (srcAlign != 0) {
+        for (u32 i = 4 - srcAlign; i != 0; i--) {
+            *dst++ = *src++;
         }
-
-        u8* dst = static_cast<u8*>(pDst);
-        const u8* src = static_cast<const u8*>(pSrc);
-
-        if (size >= 16 && srcAlign == dstAlign) {
-            if (srcAlign != 0) {
-                for (u32 i = 0; i < 4 - srcAlign; i++) {
-                    *dst++ = *src++;
-                }
-                size = size + srcAlign - 4;
-            }
-
-            u32* dst32 = reinterpret_cast<u32*>(dst);
-            const u32* src32 = reinterpret_cast<const u32*>(src);
-            while (size >= 4) {
-                *dst32++ = *src32++;
-                size -= 4;
-            }
-
-            dst = reinterpret_cast<u8*>(dst32);
-            src = reinterpret_cast<const u8*>(src32);
-            while (size != 0) {
-                *dst++ = *src++;
-                size--;
-            }
-        } else {
-            while (size != 0) {
-                *dst++ = *src++;
-                size--;
-            }
-        }
+        size += srcAlign - 4;
     }
 
-    /**
-     * @brief Compresses data with zlib (not supported in this build).
-     * @param pDst The destination buffer.
-     * @param pDstSize The destination size, updated with the compressed size.
-     * @param pSrc The source data.
-     * @param srcSize The source size.
-     * @return Whether compression succeeded.
-     */
-    bool tryCompressByZlib(u8* pDst, u32* pDstSize, const u8* pSrc, u32 srcSize) {
-        return false;
+    u32* dst32 = reinterpret_cast<u32*>(dst);
+    const u32* src32 = reinterpret_cast<const u32*>(src);
+    for (u32 rest = size; rest >= 4; rest -= 4) {
+        *dst32++ = *src32++;
     }
+    dst = reinterpret_cast<u8*>(dst32);
+    src = reinterpret_cast<const u8*>(src32);
 
-    /**
-     * @brief Decompresses zlib data (not supported in this build).
-     * @param pDst The destination buffer.
-     * @param pDstSize The destination size, updated with the decompressed size.
-     * @param pSrc The compressed data.
-     * @param srcSize The compressed size.
-     * @return Whether decompression succeeded.
-     */
-    bool tryDecompressByZlib(u8* pDst, u32* pDstSize, const u8* pSrc, u32 srcSize) {
-        return false;
+    for (size &= 3; size != 0; size--) {
+        *dst++ = *src++;
     }
+}
 
-    /**
-     * @brief Gets the current heap of the heap manager.
-     * @return The current heap.
-     */
-    sead::Heap* getCurrentHeap() {
-        return sead::HeapMgr::instance()->getCurrentHeap();
-    }
+/**
+ * Stub for zlib compression.
+ * @param pDst Destination buffer.
+ * @param pDstSize Destination size.
+ * @param pSrc Source buffer.
+ * @param srcSize Source size.
+ * @return Always false.
+ */
+bool tryCompressByZlib(u8* pDst, u32* pDstSize, const u8* pSrc, u32 srcSize) {
+    return false;
+}
+
+/**
+ * Stub for zlib decompression.
+ * @param pDst Destination buffer.
+ * @param pDstSize Destination size.
+ * @param pSrc Source buffer.
+ * @param srcSize Source size.
+ * @return Always false.
+ */
+bool tryDecompressByZlib(u8* pDst, u32* pDstSize, const u8* pSrc, u32 srcSize) {
+    return false;
+}
+
+/**
+ * Gets the current sead heap.
+ * @return The current heap.
+ */
+sead::Heap* getCurrentHeap() {
+    return sead::HeapMgr::instance()->getCurrentHeap();
+}
 }  // namespace al
