@@ -5,16 +5,16 @@
 namespace al {
 class MessageSyncParts : public LiveActor {
 public:
-    MessageSyncParts(const char*, LiveActor*);
+    MessageSyncParts(const char* pName, LiveActor* pHost);
 
     void attackSensor(HitSensor* pSelf, HitSensor* pOther) override;
-    bool receiveMsg(const SensorMsg* pMsg, HitSensor* pSelf, HitSensor* pOther) override;
+    bool receiveMsg(const SensorMsg* pMsg, HitSensor* pOther, HitSensor* pSelf) override;
     bool receiveMsgScreenPoint(const SensorMsg* pMsg, ScreenPointer* pPointer,
                                ScreenPointTarget* pTarget) override;
 
-    LiveActor* mHostActor;                  // _148
-    bool mIsSyncAttackSensor = true;        // _150
-    bool mIsSyncReceiveMsg = true;          // _151
-    bool mIsSyncReceiveScreenPoint = true;  // _152
+    LiveActor* mHost;
+    bool mIsSyncAttackSensor = true;
+    bool mIsSyncReceiveMsg = true;
+    bool mIsSyncReceiveMsgScreenPoint = true;
 };
 }  // namespace al

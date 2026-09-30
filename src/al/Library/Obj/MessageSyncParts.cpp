@@ -1,51 +1,51 @@
 #include "Library/Obj/MessageSyncParts.hpp"
 
 namespace al {
-    /**
-     * @brief Constructs a part that forwards sensor and screen point messages to its host.
-     * @param pName The actor name.
-     * @param pHost The host actor that receives the messages.
-     */
-    MessageSyncParts::MessageSyncParts(const char* pName, LiveActor* pHost)
-        : LiveActor(pName), mHostActor(pHost) {}
+/**
+ * Constructs parts that forward sensor messages to a host.
+ * @param pName actor name
+ * @param pHost host actor
+ */
+MessageSyncParts::MessageSyncParts(const char* pName, LiveActor* pHost)
+    : LiveActor(pName), mHost(pHost) {}
 
-    /**
-     * @brief Forwards sensor attacks to the host.
-     * @param pSelf The attacking sensor.
-     * @param pOther The attacked sensor.
-     */
-    void MessageSyncParts::attackSensor(HitSensor* pSelf, HitSensor* pOther) {
-        if (mIsSyncAttackSensor) {
-            mHostActor->attackSensor(pSelf, pOther);
-        }
+/**
+ * Forwards sensor attacks to the host.
+ * @param pSelf own sensor
+ * @param pOther other sensor
+ */
+void MessageSyncParts::attackSensor(HitSensor* pSelf, HitSensor* pOther) {
+    if (mIsSyncAttackSensor) {
+        mHost->attackSensor(pSelf, pOther);
     }
+}
 
-    /**
-     * @brief Forwards received messages to the host.
-     * @param pMsg The received message.
-     * @param pSelf The receiving sensor.
-     * @param pOther The sending sensor.
-     * @return Whether the host handled the message.
-     */
-    bool MessageSyncParts::receiveMsg(const SensorMsg* pMsg, HitSensor* pSelf, HitSensor* pOther) {
-        if (mIsSyncReceiveMsg) {
-            return mHostActor->receiveMsg(pMsg, pSelf, pOther);
-        }
-        return false;
+/**
+ * Forwards messages to the host.
+ * @param pMsg message
+ * @param pOther sender sensor
+ * @param pSelf receiver sensor
+ * @return whether the host handled the message
+ */
+bool MessageSyncParts::receiveMsg(const SensorMsg* pMsg, HitSensor* pOther, HitSensor* pSelf) {
+    if (mIsSyncReceiveMsg) {
+        return mHost->receiveMsg(pMsg, pOther, pSelf);
     }
+    return false;
+}
 
-    /**
-     * @brief Forwards received screen point messages to the host.
-     * @param pMsg The received message.
-     * @param pPointer The screen pointer.
-     * @param pTarget The screen point target.
-     * @return Whether the host handled the message.
-     */
-    bool MessageSyncParts::receiveMsgScreenPoint(const SensorMsg* pMsg, ScreenPointer* pPointer,
-                                                 ScreenPointTarget* pTarget) {
-        if (mIsSyncReceiveScreenPoint) {
-            return mHostActor->receiveMsgScreenPoint(pMsg, pPointer, pTarget);
-        }
-        return false;
+/**
+ * Forwards screen point messages to the host.
+ * @param pMsg message
+ * @param pPointer screen pointer
+ * @param pTarget screen point target
+ * @return whether the host handled the message
+ */
+bool MessageSyncParts::receiveMsgScreenPoint(const SensorMsg* pMsg, ScreenPointer* pPointer,
+                                             ScreenPointTarget* pTarget) {
+    if (mIsSyncReceiveMsgScreenPoint) {
+        return mHost->receiveMsgScreenPoint(pMsg, pPointer, pTarget);
     }
+    return false;
+}
 }  // namespace al
