@@ -24,12 +24,19 @@ public:
     u32 getFileSize(const sead::SafeString &) const;
     const u8* getByml(const sead::SafeString &) const;
     const void* getFile(const sead::SafeString &) const;
-
-    // ...
-
+    const u8* tryGetByml(const sead::SafeString&) const;
+    const void* getKcl(const sead::SafeString&) const;
+    const void* tryGetKcl(const sead::SafeString&) const;
+    const void* getPa(const sead::SafeString&) const;
     void* getOtherFile(const sead::SafeString&, u32*) const;
-    nn::g3d::ResFile* tryCreateResGraphicsFile(const sead::SafeString&, nn::g3d::ResFile*);
     const char* getArchiveName() const;
+    bool tryCreateResGraphicsFile(const sead::SafeString&, nn::g3d::ResFile*);
+    void cleanupResGraphicsFile();
+
+    sead::ArchiveRes* getFileArchive() const { return mArchive; }
+    sead::ArchiveFileDevice* getFileDevice() const { return mDevice; }
+    const char* getPath() const { return mResName.cstr(); }
+    nn::g3d::ResFile* getResFile() const { return mResFile; }
 
     sead::ArchiveRes* mArchive;                 // 0x00
     sead::ArchiveFileDevice* mDevice;           // 0x08
@@ -37,6 +44,9 @@ public:
     sead::Heap* mHeap;                          // 0xA8
     u64 _B0;
     Resource* mPatchRes;                        // 0xB8
-    u64 _C0;
+    union {
+        nn::g3d::ResFile* mResFile;                 // 0xC0
+        u64 _C0;
+    };
 };
 }  // namespace al
