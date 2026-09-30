@@ -69,7 +69,7 @@ BindResult ResShapeAnim::PreBind(const ResModel* model) {
     for (int i = 0; i < count; ++i) {
         ResVertexShapeAnim* anim = &shapeAnims[i];
         const ResShape* shape = model->FindShape(anim->name.Get()->GetData());
-        if (shape) {
+        if (shape != nullptr) {
             indices[i] = shape->GetIndex();
             result.Merge(anim->PreBind(shape));
         } else {
@@ -86,7 +86,7 @@ BindResult ResShapeAnim::BindCheck(const ResModel* model) const {
     for (int i = 0; i < count; ++i) {
         const ResVertexShapeAnim* anim = &shapeAnims[i];
         const ResShape* shape = model->FindShape(anim->name.Get()->GetData());
-        if (shape) result.Merge(anim->BindCheck(shape));
+        if (shape != nullptr) result.Merge(anim->BindCheck(shape));
         else result.Merge(BindResult(BindResult::Flag_Failure));
     }
     return result;
@@ -94,7 +94,7 @@ BindResult ResShapeAnim::BindCheck(const ResModel* model) const {
 // buffer supplies size writable bytes; an empty request already succeeds.
 bool ResShapeAnim::BakeCurve(void* buffer, size_t size) {
     if (!size) return true;
-    if (!buffer || bakedSize > size) return false;
+    if ((buffer == nullptr) || bakedSize > size) return false;
     u8* output = static_cast<u8*>(buffer);
     int count = shapeAnimCount;
     for (int i = 0; i < count; ++i) {

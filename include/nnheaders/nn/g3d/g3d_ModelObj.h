@@ -13,6 +13,8 @@ class SkeletonObj;
 // TODO
 class ModelObj {
 public:
+    // model identifies the changed object; index selects the bone whose visibility changed.
+    using VisibilityCallback = void (*)(ModelObj* model, int index);
     const ResModel* GetResource() const { return m_ResModel; }
     // index identifies the bone; visible is its new visibility state.
     void SetBoneVisible(int index, bool visible) {
@@ -48,7 +50,7 @@ private:
     void* _60;
     void* _68;
     void* _70;
-    void (*m_VisibilityCallback)(ModelObj*, int);
+    VisibilityCallback m_VisibilityCallback;
     void* _80;
     bool _88;
     int _8c;

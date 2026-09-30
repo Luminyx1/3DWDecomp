@@ -11,7 +11,7 @@ void ShaderUtility::InitializeShaderKey(u32* key, int capacity, const ResShading
     int count = assignment->ToData().optionCount;
     for (int i = 0; i < count; ++i) {
         const ResShaderOption* option = model->FindStaticOption(assignment->GetOptionName(i));
-        if (!option) continue;
+        if (option == nullptr) continue;
         int choice = option->FindChoiceIndex(assignment->ToData().pOptionArray.Get()[i].Get()->GetData());
         if (choice >= 0) option->WriteStaticKey(key, choice);
     }
@@ -40,7 +40,7 @@ void ShaderUtility::BindShaderParam(ResMaterial* material, const ResShadingModel
     for (int i = 0; i < count; ++i) {
         ResShaderParamData* param = &material->ToData().pShaderParamArray.Get()[i];
         const ResUniformVar* uniform = block->FindUniform(param->name.Get()->GetData());
-        param->offset = uniform ? uniform->offset - 1 : -1;
+        param->offset = (uniform != nullptr) ? uniform->offset - 1 : -1;
     }
 }
 // material receives model's default block contents in each buffered copy, then flushes the writes.

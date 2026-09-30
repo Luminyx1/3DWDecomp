@@ -61,7 +61,7 @@ void AnimBindTable::BindAll(const u16* indices) {
 // cache supplies per-curve frame caches; count is ignored when cache is null.
 void AnimContext::Initialize(AnimFrameCache* cache, int count) {
     mCache = cache;
-    mCount = cache ? count : 0;
+    mCount = (cache != nullptr) ? count : 0;
     mCurveCount = 0;
 }
 // frameCount sets the end frame; loop chooses wrapping instead of clamping playback.

@@ -49,9 +49,9 @@ void ResFile::ReleaseTexture() {
 void ResFile::Setup(nn::gfx::Device* device) {
     nn::util::ReferSymbol("SDK MW+Nintendo+NintendoWare_G3d-10_4_0-Release");
     nn::gfx::MemoryPool* pool = pMemoryPool.Get();
-    if (pool) {
+    if (pool != nullptr) {
         const nn::gfx::MemoryPoolInfo* info = pMemoryPoolInfo.Get();
-        if (info) {
+        if (info != nullptr) {
             new (pool) nn::gfx::MemoryPool;
             pool->Initialize(device, *info);
             nn::gfx::util::SetMemoryPoolDebugLabel(pool, "g3d");
@@ -63,7 +63,7 @@ void ResFile::Setup(nn::gfx::Device* device) {
 // device owns graphics objects; pool/offset locate external backing storage. size is unchecked here.
 void ResFile::Setup(nn::gfx::Device* device, nn::gfx::MemoryPool* pool, ptrdiff_t offset, size_t size) {
     nn::util::ReferSymbol("SDK MW+Nintendo+NintendoWare_G3d-10_4_0-Release");
-    if (pMemoryPool.Get() && pMemoryPoolInfo.Get())
+    if ((pMemoryPool.Get() != nullptr) && (pMemoryPoolInfo.Get() != nullptr))
         offset += static_cast<const u8*>(pMemoryPoolInfo.Get()->GetPoolMemory()) - reinterpret_cast<const u8*>(this);
     int count = modelCount;
     for (int i = 0; i < count; ++i) pModelArray.Get()[i].Setup(device, pool, offset);
@@ -72,7 +72,7 @@ void ResFile::Setup(nn::gfx::Device* device, nn::gfx::MemoryPool* pool, ptrdiff_
 void ResFile::Cleanup(nn::gfx::Device* device) {
     int count = modelCount;
     for (int i = 0; i < count; ++i) pModelArray.Get()[i].Cleanup(device);
-    if (pMemoryPoolInfo.Get()) {
+    if (pMemoryPoolInfo.Get() != nullptr) {
         nn::gfx::MemoryPool* pool = pMemoryPool.Get();
         if (pool->ToData()->state) {
             pool->Finalize(device);

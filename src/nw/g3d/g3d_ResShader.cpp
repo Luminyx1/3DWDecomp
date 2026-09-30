@@ -14,7 +14,7 @@ bool ResShaderProgram::IsBinaryAvailable(nn::gfx::Device* device) {
 // device owns the shader; type selects its stored code representation.
 bool ResShaderProgram::InitializePerType(nn::gfx::Device* device, nn::gfx::ShaderCodeType type) {
     nn::gfx::ResShaderProgram* program = variation->GetResShaderProgram(type);
-    if (!program || program->Initialize(device) != 0)
+    if ((program == nullptr) || program->Initialize(device) != 0)
         return false;
     switch (type) {
     case nn::gfx::ShaderCodeType_Binary:
@@ -55,6 +55,12 @@ void ResShaderProgram::Initialize(nn::gfx::Device* device, bool skipBinary) {
         return;
     InitializePerType(device, nn::gfx::ShaderCodeType_Source);
 }
+// shader supplies Interface bindings; name identifies a resource in stage, or null for an absent binding.
+template <nn::gfx::ShaderInterfaceType Interface>
+static inline int GetInterfaceSlot(const nn::gfx::Shader* shader, const nn::util::BinPtrToString& name,
+                                   nn::gfx::ShaderStage stage) {
+    return (name.Get() != nullptr) ? shader->GetInterfaceSlot(stage, Interface, name.Get()->GetData()) : -1;
+}
 // names supplies six stage names for each of count resources; table receives slots from shader.
 template <nn::gfx::ShaderInterfaceType Interface>
 static void UpdateSlots(const nn::gfx::Shader* shader, s32* table, const nn::util::BinPtrToString* names,
@@ -62,32 +68,17 @@ static void UpdateSlots(const nn::gfx::Shader* shader, s32* table, const nn::uti
     for (int i = 0; i < count; ++i, names += 6) {
         const nn::util::BinPtrToString* stageNames = names;
         s32* slots = table + i * 6;
-        slots[0] = stageNames[0].Get() ? shader->GetInterfaceSlot(nn::gfx::ShaderStage_Vertex, Interface,
-                                                                  stageNames[0].Get()->GetData())
-                                       : -1;
-        slots[1] = stageNames[1].Get() ? shader->GetInterfaceSlot(nn::gfx::ShaderStage_Geometry, Interface,
-                                                                  stageNames[1].Get()->GetData())
-                                       : -1;
-        slots[2] = stageNames[2].Get() ? shader->GetInterfaceSlot(nn::gfx::ShaderStage_Pixel, Interface,
-                                                                  stageNames[2].Get()->GetData())
-                                       : -1;
-        slots[3] = stageNames[3].Get() ? shader->GetInterfaceSlot(nn::gfx::ShaderStage_Compute, Interface,
-                                                                  stageNames[3].Get()->GetData())
-                                       : -1;
-        slots[4] = stageNames[4].Get() ? shader->GetInterfaceSlot(nn::gfx::ShaderStage_Hull, Interface,
-                                                                  stageNames[4].Get()->GetData())
-                                       : -1;
-        slots[5] = stageNames[5].Get() ? shader->GetInterfaceSlot(nn::gfx::ShaderStage_Domain, Interface,
-                                                                  stageNames[5].Get()->GetData())
-                                       : -1;
+        slots[0] = GetInterfaceSlot<Interface>(shader, stageNames[0], nn::gfx::ShaderStage_Vertex);
+        slots[1] = GetInterfaceSlot<Interface>(shader, stageNames[1], nn::gfx::ShaderStage_Geometry);
+        slots[2] = GetInterfaceSlot<Interface>(shader, stageNames[2], nn::gfx::ShaderStage_Pixel);
+        slots[3] = GetInterfaceSlot<Interface>(shader, stageNames[3], nn::gfx::ShaderStage_Compute);
+        slots[4] = GetInterfaceSlot<Interface>(shader, stageNames[4], nn::gfx::ShaderStage_Hull);
+        slots[5] = GetInterfaceSlot<Interface>(shader, stageNames[5], nn::gfx::ShaderStage_Domain);
     }
 }
 void ResShaderProgram::UpdateTable() {
     ResShadingModel* resource = model;
-    nn::gfx::ShaderCodeType type = (flags & 4)    ? nn::gfx::ShaderCodeType_Binary
-                                   : (flags & 16) ? nn::gfx::ShaderCodeType_Ir
-                                   : (flags & 8)  ? nn::gfx::ShaderCodeType_Source
-                                                  : nn::gfx::ShaderCodeType_End;
+    nn::gfx::ShaderCodeType type = GetCodeType();
     ShaderSymbolInfo* symbols = resource->ToData().symbolInfo;
     const nn::gfx::Shader* shader = variation->GetResShaderProgram(type)->GetShader();
     {
@@ -129,7 +120,7 @@ void ResShaderProgram::Update(nn::gfx::Device* device) {
         return;
     ResShadingModel* resource = model;
     nn::os::MutexType* lock = resource->ToData().mutex;
-    if (lock) {
+    if (lock != nullptr) {
         nn::os::LockMutex(lock);
         if (flags & 1)
             resource->UpdateProgram(device, this - resource->ToData().pPrograms.Get());
@@ -140,24 +131,18 @@ void ResShaderProgram::Update(nn::gfx::Device* device) {
 }
 // device and index identify the shader program requested from the archive callback.
 void ResShadingModel::UpdateProgram(nn::gfx::Device* device, int index) {
-    if (archive->updateProgram)
+    if (archive->updateProgram != nullptr)
         archive->updateProgram(device, this, index);
 }
 const nn::gfx::Shader* ResShaderProgram::GetShader() const {
-    nn::gfx::ShaderCodeType type = (flags & 4)    ? nn::gfx::ShaderCodeType_Binary
-                                   : (flags & 16) ? nn::gfx::ShaderCodeType_Ir
-                                   : (flags & 8)  ? nn::gfx::ShaderCodeType_Source
-                                                  : nn::gfx::ShaderCodeType_End;
+    nn::gfx::ShaderCodeType type = GetCodeType();
     if (type == nn::gfx::ShaderCodeType_End)
         return nullptr;
     return variation->GetResShaderProgram(type)->GetShader();
 }
 // commandBuffer receives the selected shader at every stage.
 void ResShaderProgram::Load(nn::gfx::CommandBuffer* commandBuffer) const {
-    nn::gfx::ShaderCodeType type = (flags & 4)    ? nn::gfx::ShaderCodeType_Binary
-                                   : (flags & 16) ? nn::gfx::ShaderCodeType_Ir
-                                   : (flags & 8)  ? nn::gfx::ShaderCodeType_Source
-                                                  : nn::gfx::ShaderCodeType_End;
+    nn::gfx::ShaderCodeType type = GetCodeType();
     if (type == nn::gfx::ShaderCodeType_End)
         return;
     const nn::gfx::Shader* shader = variation->GetResShaderProgram(type)->GetShader();
@@ -181,12 +166,12 @@ int ResShaderOption::ReadDynamicKey(const u32* key) const {
 }
 void ResShadingModel::Relocate() {
     nn::gfx::ResShaderFile* file = shaderFile;
-    if (file && !file->GetBinaryFileHeader()->IsRelocated())
+    if ((file != nullptr) && !file->GetBinaryFileHeader()->IsRelocated())
         file->GetBinaryFileHeader()->GetRelocationTable()->Relocate();
 }
 void ResShadingModel::Unrelocate() {
     nn::gfx::ResShaderFile* file = shaderFile;
-    if (file && file->GetBinaryFileHeader()->IsRelocated())
+    if ((file != nullptr) && file->GetBinaryFileHeader()->IsRelocated())
         file->GetBinaryFileHeader()->GetRelocationTable()->Unrelocate();
 }
 // device is used to probe the first program while its container is temporarily initialized.
@@ -367,7 +352,7 @@ bool ResShadingModel::FindProgramRange(ShaderRange* range, const u32* key) const
 // destination receives capacity bytes of text; key contains length packed key words.
 int ResShadingModel::PrintKeyTo(char* destination, size_t capacity, const u32* key, int length) {
     size_t required = length < 1 ? size_t(0) : size_t(length * 9 - 1);
-    if (!destination)
+    if (destination == nullptr)
         return required;
     if (required + 1 > capacity) {
         *destination = 0;
@@ -401,7 +386,7 @@ int ResShadingModel::PrintStaticOptionTo(char* destination, size_t capacity, con
     }
     if (required)
         --required;
-    if (!destination)
+    if (destination == nullptr)
         return required;
     if (required + 1 > capacity) {
         *destination = 0;
@@ -444,7 +429,7 @@ int ResShadingModel::PrintDynamicOptionTo(char* destination, size_t capacity, co
     }
     if (required)
         --required;
-    if (!destination)
+    if (destination == nullptr)
         return required;
     if (required + 1 > capacity) {
         *destination = 0;
@@ -512,7 +497,7 @@ void ResShaderArchive::Cleanup(nn::gfx::Device* device) {
     nn::os::MutexType* lock = static_cast<nn::os::MutexType*>(work);
     for (int i = 0; i < count; ++i) {
         models[i].Cleanup(device);
-        if (work) {
+        if (work != nullptr) {
             nn::os::FinalizeMutex(lock);
             ++lock;
         }
@@ -551,7 +536,7 @@ void ResShaderArchive::Setup(nn::gfx::Device* device, void* memory, size_t size)
     if (flags & 2)
         CheckBinary(this, device);
     if (count > 0) {
-        if (memory) {
+        if (memory != nullptr) {
             nn::os::MutexType* lock = static_cast<nn::os::MutexType*>(memory);
             for (int i = 0; i < count; ++i) {
                 ResShadingModel* resource = &models[i];
@@ -575,7 +560,7 @@ void ResShaderArchive::Setup(nn::gfx::Device* device, nn::gfx::MemoryPool* pool,
     if (flags & 2)
         CheckBinary(this, device);
     if (count > 0) {
-        if (memory) {
+        if (memory != nullptr) {
             nn::os::MutexType* lock = static_cast<nn::os::MutexType*>(memory);
             for (int i = 0; i < count; ++i) {
                 ResShadingModel* resource = &models[i];

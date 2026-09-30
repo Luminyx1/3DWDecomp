@@ -104,7 +104,7 @@ BindResult ResMaterialAnim::PreBind(const ResModel* model) {
     for (int i = 0; i < count; ++i) {
         ResPerMaterialAnim* anim = &materialAnims[i];
         const ResMaterial* material = model->FindMaterial(anim->name.Get()->GetData());
-        if (material) {
+        if (material != nullptr) {
             indices[i] = material->GetIndex();
             if (anim->visibilityCurve != 0xffff || anim->visibilityBase != 0xffff) result.Merge(BindResult(BindResult::Flag_Success));
             result.Merge(anim->PreBind(material));
@@ -122,7 +122,7 @@ BindResult ResMaterialAnim::BindCheck(const ResModel* model) const {
     for (int i = 0; i < count; ++i) {
         const ResPerMaterialAnim* anim = &materialAnims[i];
         const ResMaterial* material = model->FindMaterial(anim->name.Get()->GetData());
-        if (material) {
+        if (material != nullptr) {
             if (anim->visibilityCurve != 0xffff || anim->visibilityBase != 0xffff) result.Merge(BindResult(BindResult::Flag_Success));
             result.Merge(anim->BindCheck(material));
         } else result.Merge(BindResult(BindResult::Flag_Failure));
@@ -134,10 +134,10 @@ BindResult ResMaterialAnim::BindTexture(TextureBindCallback callback, void* user
     BindResult result;
     int count = textureCount;
     for (int i = 0; i < count; ++i) {
-        if (GetTextureView(i) && GetTextureDescriptorSlot(i) != TextureRef::InvalidDescriptorSlot) continue;
+        if ((GetTextureView(i) != nullptr) && GetTextureDescriptorSlot(i) != TextureRef::InvalidDescriptorSlot) continue;
         TextureRef texture = callback(GetTextureName(i), user);
         ForceBindTexture(i, texture);
-        if (!texture.GetTextureView() || texture.GetDescriptorSlot() == TextureRef::InvalidDescriptorSlot) result.Merge(BindResult(BindResult::Flag_Failure));
+        if ((texture.GetTextureView() == nullptr) || texture.GetDescriptorSlot() == TextureRef::InvalidDescriptorSlot) result.Merge(BindResult(BindResult::Flag_Failure));
         else result.Merge(BindResult(BindResult::Flag_Success));
     }
     return result;
@@ -158,7 +158,7 @@ void ResMaterialAnim::ReleaseTexture() {
 // buffer supplies size writable bytes for baked samples; an empty request already succeeds.
 bool ResMaterialAnim::BakeCurve(void* buffer, size_t size) {
     if (!size) return true;
-    if (!buffer || bakedSize > size) return false;
+    if ((buffer == nullptr) || bakedSize > size) return false;
     u8* output = static_cast<u8*>(buffer);
     int count = materialAnimCount;
     for (int i = 0; i < count; ++i) {

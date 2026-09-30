@@ -19,11 +19,12 @@ struct ShaderSymbolInfo {
     nn::util::BinPtrToString* storageBlockNames;
 };
 struct ResShaderArchive {
+    using ProgramUpdate = void (*)(nn::gfx::Device*, ResShadingModel*, int);
     u8 _0[0x10];
     ResShadingModel* models;
     u8 _18[0x10];
     // device owns the GPU shader; model and index select the program to prepare.
-    void (*updateProgram)(nn::gfx::Device* device, ResShadingModel* model, int index);
+    ProgramUpdate updateProgram;
     void* work;
     u8 _38[8];
     u16 modelCount;
@@ -86,6 +87,11 @@ public:
     // commandBuffer receives the initialized shader for all graphics stages.
     void Load(nn::gfx::CommandBuffer* commandBuffer) const;
     const nn::gfx::Shader* GetShader() const;
+    nn::gfx::ShaderCodeType GetCodeType() const {
+        return (flags & 4) ? nn::gfx::ShaderCodeType_Binary
+             : (flags & 16) ? nn::gfx::ShaderCodeType_Ir
+             : (flags & 8) ? nn::gfx::ShaderCodeType_Source : nn::gfx::ShaderCodeType_End;
+    }
     // device prepares the selected GPU shader program.
     void Update(nn::gfx::Device* device);
     int GetSamplerLocation(int samplerIndex, ShaderStage stage) const {
@@ -118,7 +124,7 @@ public:
     int ReadDynamicKey(const u32* key) const;
     // name selects a value in this shader option's choice dictionary.
     int FindChoiceIndex(const char* name) const {
-        return choiceDictionary ? choiceDictionary->FindIndex(name) : nn::util::ResDic::Npos;
+        return (choiceDictionary != nullptr) ? choiceDictionary->FindIndex(name) : nn::util::ResDic::Npos;
     }
     nn::util::BinTPtr<nn::util::BinString> name;
     nn::util::ResDic* choiceDictionary;
@@ -147,7 +153,7 @@ struct ResUniformBlock {
     u8 _1c[4];
     // name selects a uniform in the block; return null if it has no matching entry.
     const ResUniformVar* FindUniform(const char* name) const {
-        int index = dictionary ? dictionary->FindIndex(name) : nn::util::ResDic::Npos;
+        int index = (dictionary != nullptr) ? dictionary->FindIndex(name) : nn::util::ResDic::Npos;
         if (index == nn::util::ResDic::Npos) return nullptr;
         return &uniforms[index];
     }
@@ -225,10 +231,19 @@ public:
     int PrintStaticOptionTo(char* destination, size_t capacity, const u32* key) const;
     int PrintDynamicOptionTo(char* destination, size_t capacity, const u32* key) const;
     int GetStaticKeyLength() const { return staticKeyLength; }
+    int GetDynamicKeyLength() const { return dynamicKeyLength; }
+    int GetStaticOptionCount() const { return staticOptionCount; }
+    int GetDynamicOptionCount() const { return dynamicOptionCount; }
+    // index selects a dynamic option in the resource array.
+    const ResShaderOption* GetDynamicOption(int index) const { return &pDynamicOptions.Get()[index]; }
+    // index selects a program; shader initialization may mutate the GPU object through a const resource.
+    ResShaderProgram* GetProgram(int index) const {
+        return const_cast<ResShaderProgram*>(&pPrograms.Get()[index]);
+    }
     // name selects a static shader option; return Npos for a missing entry.
     int FindStaticOptionIndex(const char* name) const {
         const nn::util::ResDic* dictionary = pStaticOptionDic.Get();
-        return dictionary ? dictionary->FindIndex(name) : nn::util::ResDic::Npos;
+        return (dictionary != nullptr) ? dictionary->FindIndex(name) : nn::util::ResDic::Npos;
     }
     // index selects a static option in the resource array.
     const ResShaderOption* GetStaticOption(int index) const { return &pStaticOptions.Get()[index]; }
@@ -246,11 +261,11 @@ public:
 
     const char* GetAttribName(int index) const {
         const nn::util::ResDic* pDic = ToData().pAttribDic.Get();
-        return pDic ? pDic->GetKey(index).data() : nullptr;
+        return (pDic != nullptr) ? pDic->GetKey(index).data() : nullptr;
     }
     const char* GetSamplerName(int index) const {
         const nn::util::ResDic* pDic = ToData().pSamplerDic.Get();
-        return pDic ? pDic->GetKey(index).data() : nullptr;
+        return (pDic != nullptr) ? pDic->GetKey(index).data() : nullptr;
     }
     const ResAttribVarData* GetAttrib(int index) const {
         return &ToData().pAttribArray.Get()[index];
@@ -258,12 +273,12 @@ public:
 
     int FindSamplerIndex(const char* pName) const {
         const nn::util::ResDic* pDic = ToData().pSamplerDic.Get();
-        return pDic ? pDic->FindIndex(pName) : nn::util::ResDic::Npos;
+        return (pDic != nullptr) ? pDic->FindIndex(pName) : nn::util::ResDic::Npos;
     }
 
     int FindUniformBlockIndex(const char* pName) const {
         const nn::util::ResDic* pDic = ToData().pUniformBlockDic.Get();
-        return pDic ? pDic->FindIndex(pName) : nn::util::ResDic::Npos;
+        return (pDic != nullptr) ? pDic->FindIndex(pName) : nn::util::ResDic::Npos;
     }
 };
 

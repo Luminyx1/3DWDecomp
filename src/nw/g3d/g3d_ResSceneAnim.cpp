@@ -36,7 +36,7 @@ void ResCameraAnim::Evaluate(CameraAnimResult* result, float frame, AnimFrameCac
 // buffer is the beginning of size writable bytes; an empty request already succeeds.
 bool ResCameraAnim::BakeCurve(void* buffer, size_t size) {
     if (!size) return true;
-    if (!buffer || bakedSize > size) return false;
+    if ((buffer == nullptr) || bakedSize > size) return false;
     u8* output = static_cast<u8*>(buffer);
     int count = curveCount;
     for (int i = 0; i < count; ++i) {
@@ -153,7 +153,7 @@ void ResLightAnim::Evaluate(LightAnimResult* result, float frame, AnimFrameCache
 // buffer is the beginning of size writable bytes; an empty request already succeeds.
 bool ResLightAnim::BakeCurve(void* buffer, size_t size) {
     if (!size) return true;
-    if (!buffer || bakedSize > size) return false;
+    if ((buffer == nullptr) || bakedSize > size) return false;
     u8* output = static_cast<u8*>(buffer);
     int count = curveCount;
     for (int i = 0; i < count; ++i) {
@@ -225,7 +225,7 @@ void ResFogAnim::Evaluate(FogAnimResult* result, float frame, AnimFrameCache* ca
 // buffer is the beginning of size writable bytes; an empty request already succeeds.
 bool ResFogAnim::BakeCurve(void* buffer, size_t size) {
     if (!size) return true;
-    if (!buffer || bakedSize > size) return false;
+    if ((buffer == nullptr) || bakedSize > size) return false;
     u8* output = static_cast<u8*>(buffer);
     int count = curveCount;
     for (int i = 0; i < count; ++i) {

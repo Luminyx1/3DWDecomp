@@ -35,8 +35,8 @@ bool BoneVisibilityAnimObj::Initialize(const InitializeArgument& argument, void*
     int curves = argument.curveCount;
     mWorkMemory = memory;
     mResource = nullptr;
-    mBindTable.Initialize(static_cast<u32*>(argument.blocks[1].GetPointer(memory)), bindings);
-    mContext.Initialize(static_cast<AnimFrameCache*>(argument.blocks[2].GetPointer(memory)), curves);
+    mBindTable.Initialize(argument.blocks[1].GetPointer<u32>(memory), bindings);
+    mContext.Initialize(argument.blocks[2].GetPointer<AnimFrameCache>(memory), curves);
     mResult = argument.blocks[0].GetPointer(memory);
     mAnimCapacity = argument.animCount;
     return true;

@@ -86,11 +86,11 @@ BindResult ResMaterial::BindTexture(TextureBindCallback callback, void* user) {
     BindResult result;
     int count = samplerCount;
     for (int i = 0; i < count; ++i) {
-        if (GetTextureView(i) && GetTextureDescriptorSlot(i) != TextureRef::InvalidDescriptorSlot)
+        if ((GetTextureView(i) != nullptr) && GetTextureDescriptorSlot(i) != TextureRef::InvalidDescriptorSlot)
             continue;
         TextureRef texture = callback(GetTextureName(i), user);
         ForceBindTexture(i, texture);
-        if (!texture.GetTextureView() || texture.GetDescriptorSlot() == TextureRef::InvalidDescriptorSlot)
+        if ((texture.GetTextureView() == nullptr) || texture.GetDescriptorSlot() == TextureRef::InvalidDescriptorSlot)
             result.Merge(BindResult(BindResult::Flag_Failure));
         else
             result.Merge(BindResult(BindResult::Flag_Success));
@@ -123,16 +123,16 @@ void ResMaterial::Setup(nn::gfx::Device* device) {
         new (sampler) nn::gfx::Sampler;
         sampler->Initialize(device, *info);
         nn::util::ResDic* dictionary = pSamplerDic.Get();
-        const char* name = dictionary ? dictionary->GetKey(i).data() : nullptr;
+        const char* name = (dictionary != nullptr) ? dictionary->GetKey(i).data() : nullptr;
         nn::gfx::util::SetSamplerDebugLabel(sampler, name);
     }
-    static size_t (*const callbacks[])(void*, const void*, const ResShaderParam*, const void*) asm(
+    static const ShaderParamConvertCallback callbacks[] asm(
         "lbl_7101AD4FA0") = {ResShaderParam::ConvertSrt2dCallback, ResShaderParam::ConvertSrt3dCallback,
                              ResShaderParam::ConvertTexSrtCallback, ResShaderParam::ConvertTexSrtExCallback};
     count = shaderParamCount;
     for (int i = 0; i < count; ++i) {
         ResShaderParamData* parameter = &pShaderParamArray.Get()[i];
-        if (parameter->type >= 28 && !parameter->callback)
+        if (parameter->type >= 28 && (parameter->callback == nullptr))
             parameter->callback = callbacks[parameter->type - 28];
     }
 }

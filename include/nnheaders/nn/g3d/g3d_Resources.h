@@ -92,12 +92,15 @@ public:
     // index selects a shader option name in the assignment dictionary.
     const char* GetOptionName(int index) const {
         const nn::util::ResDic* dictionary = pOptionDic.Get();
-        return dictionary ? dictionary->GetKey(index).data() : nullptr;
+        return (dictionary != nullptr) ? dictionary->GetKey(index).data() : nullptr;
     }
 };
 class ResShaderParam;
+// destination receives converted source data; parameter describes its layout; dependency is optional context.
+using ShaderParamConvertCallback = size_t (*)(void* destination, const void* source,
+                                             const ResShaderParam* parameter, const void* dependency);
 struct ResShaderParamData {
-    size_t (*callback)(void*, const void*, const ResShaderParam*, const void*);
+    ShaderParamConvertCallback callback;
     nn::util::BinPtrToString name;
     u8 type;
     u8 sourceSize;
@@ -168,11 +171,11 @@ public:
     // name selects a shader parameter or sampler in its resource dictionary.
     int FindShaderParamIndex(const char* name) const {
         const nn::util::ResDic* dictionary = pShaderParamDic.Get();
-        return dictionary ? dictionary->FindIndex(name) : nn::util::ResDic::Npos;
+        return (dictionary != nullptr) ? dictionary->FindIndex(name) : nn::util::ResDic::Npos;
     }
     int FindSamplerIndex(const char* name) const {
         const nn::util::ResDic* dictionary = pSamplerDic.Get();
-        return dictionary ? dictionary->FindIndex(name) : nn::util::ResDic::Npos;
+        return (dictionary != nullptr) ? dictionary->FindIndex(name) : nn::util::ResDic::Npos;
     }
     int GetIndex() const { return index; }
     int GetSamplerCount() const { return ToData().samplerCount; }
@@ -293,7 +296,7 @@ public:
     // name identifies a key shape in the resource dictionary.
     int FindKeyShapeIndex(const char* name) const {
         const nn::util::ResDic* dictionary = pKeyShapeDic.Get();
-        if (!dictionary) return nn::util::ResDic::Npos;
+        if (dictionary == nullptr) return nn::util::ResDic::Npos;
         return dictionary->FindIndex(name);
     }
     int GetIndex() const { return index; }
@@ -328,14 +331,14 @@ public:
     // name selects a material; missing dictionary entries return null.
     __attribute__((noinline)) const ResMaterial* FindMaterial(const char* name) const {
         const nn::util::ResDic* dictionary = pMaterialDic.Get();
-        int index = dictionary ? dictionary->FindIndex(name) : nn::util::ResDic::Npos;
+        int index = (dictionary != nullptr) ? dictionary->FindIndex(name) : nn::util::ResDic::Npos;
         if (index == nn::util::ResDic::Npos) return nullptr;
         return &pMaterialArray.Get()[index];
     }
     // name identifies a shape in this model; return null if its dictionary has no entry.
     __attribute__((noinline)) const ResShape* FindShape(const char* name) const {
         const nn::util::ResDic* dictionary = pShapeDic.Get();
-        int index = dictionary ? dictionary->FindIndex(name) : nn::util::ResDic::Npos;
+        int index = (dictionary != nullptr) ? dictionary->FindIndex(name) : nn::util::ResDic::Npos;
         if (index == nn::util::ResDic::Npos) return nullptr;
         return &pShapeArray.Get()[index];
     }
@@ -409,13 +412,13 @@ public:
     int FindExternalFileIndex(const char* pName) const
     {
         const nn::util::ResDic* pDic = ToData().pExternalFileDic.Get();
-        return pDic ? pDic->FindIndex(pName) : nn::util::ResDic::Npos;
+        return (pDic != nullptr) ? pDic->FindIndex(pName) : nn::util::ResDic::Npos;
     }
     int GetExternalFileCount() const { return ToData().externalFileCount; }
     const char* GetExternalFileName(int index) const
     {
         const nn::util::ResDic* pDic = ToData().pExternalFileDic.Get();
-        return pDic ? pDic->GetKey(index).data() : nullptr;
+        return (pDic != nullptr) ? pDic->GetKey(index).data() : nullptr;
     }
     const ResExternalFileData* GetExternalFile(int index) const
     {
@@ -488,8 +491,19 @@ struct WorkMemoryBlock {
     ptrdiff_t offset;
     // bytes is the requested size; each block starts at an eight-byte boundary.
     void Initialize(size_t bytes) { size = bytes; alignment = 8; pointer = nullptr; offset = -1; }
+    // totalSize and requiredAlignment accumulate workspace requirements; this block receives its offset.
+    void AppendTo(size_t& totalSize, size_t& requiredAlignment) {
+        if (size != 0) {
+            size_t aligned = (totalSize + 7) & ~size_t(7);
+            requiredAlignment = 8;
+            totalSize = aligned + size;
+            offset = aligned;
+        }
+    }
     // buffer is the base of the allocated work area; empty blocks return null.
-    void* GetPointer(void* buffer) const { return buffer && size ? static_cast<u8*>(buffer) + offset : nullptr; }
+    void* GetPointer(void* buffer) const { return (buffer != nullptr) && size ? static_cast<u8*>(buffer) + offset : nullptr; }
+    // T selects the element type of the block within buffer.
+    template <class T> T* GetPointer(void* buffer) const { return static_cast<T*>(GetPointer(buffer)); }
 };
 }
 class MaterialObj {
@@ -523,7 +537,7 @@ public:
         {
             return nullptr;
         }
-        return m_pMaterialBlockArray ? &m_pMaterialBlockArray[bufferIndex] : nullptr;
+        return (m_pMaterialBlockArray != nullptr) ? &m_pMaterialBlockArray[bufferIndex] : nullptr;
     }
 
     size_t GetMaterialBlockSize() const { return m_MaterialBlockSize; }
@@ -537,7 +551,7 @@ public:
         const u64& rOldSlot = m_pTextureSlotArray[index];
         m_ppTextureArray[index] = rRef.GetTextureView();
         m_pTextureSlotArray[index] = rRef.GetDescriptorSlot();
-        if (m_pTextureChangeCallback &&
+        if ((m_pTextureChangeCallback != nullptr) &&
             (pOldView != rRef.GetTextureView() || rOldSlot != m_pTextureSlotArray[index]))
         {
             m_pTextureChangeCallback(this, index);
@@ -592,11 +606,11 @@ public:
         }
         if (IsViewDependent())
         {
-            return m_pShapeBlockArray ?
+            return (m_pShapeBlockArray != nullptr) ?
                        &m_pShapeBlockArray[viewIndex * m_BufferingCount + bufferIndex] :
                        nullptr;
         }
-        return m_pShapeBlockArray ? &m_pShapeBlockArray[bufferIndex] : nullptr;
+        return (m_pShapeBlockArray != nullptr) ? &m_pShapeBlockArray[bufferIndex] : nullptr;
     }
 
 private:

@@ -35,9 +35,9 @@ bool MaterialObj::Initialize(const InitializeArgument& argument, void* memory, s
     m_BufferingCount = argument.bufferCount;
     m_pParamSource = argument.blocks[1].GetPointer(memory);
     memcpy(m_pParamSource, resource->ToData().pSourceParamData.Get(), resource->ToData().sourceParamSize);
-    m_ppTextureArray = static_cast<const nn::gfx::TextureView**>(argument.blocks[2].GetPointer(memory));
-    m_pTextureSlotArray = static_cast<u64*>(argument.blocks[4].GetPointer(memory));
-    BufferImpl* buffers = static_cast<BufferImpl*>(argument.blocks[3].GetPointer(memory));
+    m_ppTextureArray = argument.blocks[2].GetPointer<const nn::gfx::TextureView*>(memory);
+    m_pTextureSlotArray = argument.blocks[4].GetPointer<u64>(memory);
+    BufferImpl* buffers = argument.blocks[3].GetPointer<BufferImpl>(memory);
     m_pMemoryPool = nullptr;
     m_pMaterialBlockArray = buffers;
     m_pCallbackUserData = nullptr;
@@ -173,7 +173,7 @@ template <bool swap> void MaterialObj::ConvertDirtyParams(void* destination, u32
             const ResShaderParam* parameter = reinterpret_cast<const ResShaderParam*>(&m_pRes->ToData().pShaderParamArray.Get()[i * 32 + bit]);
             void* target = static_cast<u8*>(destination) + parameter->ToData().offset;
             const void* source = static_cast<u8*>(m_pParamSource) + parameter->ToData().sourceOffset;
-            if (parameter->ToData().callback) {
+            if (parameter->ToData().callback != nullptr) {
                 u8 temporary[64];
                 size_t size = parameter->ToData().callback(temporary, source, parameter, m_pCallbackUserData);
                 int words = (size + 3) / 4;

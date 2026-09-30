@@ -14,15 +14,15 @@ void ResBoneAnim::Initialize(BoneAnimResult* result, const ResBone* bone) const 
     if (flag & 8) {
         std::memcpy(&result->scale, data, 12);
         data += 12;
-    } else result->scale = bone ? bone->GetScale() : DefaultScale;
+    } else result->scale = (bone != nullptr) ? bone->GetScale() : DefaultScale;
     if (flag & 16) {
         std::memcpy(&result->rotate, data, 16);
         data += 16;
-    } else result->rotate = bone ? bone->GetRotateQuat() : DefaultRotate;
+    } else result->rotate = (bone != nullptr) ? bone->GetRotateQuat() : DefaultRotate;
     if (flag & 32) std::memcpy(&result->translate, data, 12);
-    else result->translate = bone ? bone->GetTranslate() : *reinterpret_cast<const nn::util::Float3*>(&DefaultRotate);
+    else result->translate = (bone != nullptr) ? bone->GetTranslate() : *reinterpret_cast<const nn::util::Float3*>(&DefaultRotate);
     result->flags = flag & 0x0f800000;
-    if (bone) result->flags |= bone->GetRotateMode();
+    if (bone != nullptr) result->flags |= bone->GetRotateMode();
 }
 // result receives curve samples at frame; each sample uses a temporary interval cache.
 void ResBoneAnim::Evaluate(BoneAnimResult* result, float frame) const {
@@ -76,7 +76,7 @@ BindResult ResSkeletalAnim::BindCheck(const ResSkeleton* skeleton) const {
 // buffer supplies size writable bytes; an empty request already succeeds.
 bool ResSkeletalAnim::BakeCurve(void* buffer, size_t size) {
     if (!size) return true;
-    if (!buffer || bakedSize > size) return false;
+    if ((buffer == nullptr) || bakedSize > size) return false;
     u8* output = static_cast<u8*>(buffer);
     int count = boneAnimCount;
     for (int i = 0; i < count; ++i) {
