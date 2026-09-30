@@ -13,11 +13,10 @@ class StageSwitchFunctorListener : public StageSwitchListener {
 public:
     StageSwitchFunctorListener();
 
-    virtual void listenOn();
-    virtual void listenOff();
-
-    void setOnFunctor(const FunctorBase&);
-    void setOffFunctor(const FunctorBase&);
+    void setOnFunctor(const FunctorBase& rFunctor);
+    void setOffFunctor(const FunctorBase& rFunctor);
+    void listenOn() override;
+    void listenOff() override;
 
     FunctorBase* mOnFunctor = nullptr;
     FunctorBase* mOffFunctor = nullptr;
