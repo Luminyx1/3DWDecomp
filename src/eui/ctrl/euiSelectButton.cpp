@@ -1,8 +1,23 @@
 #include <eui/euiSelectButton.h>
 #include <eui/euiAnimator.h>
 #include <eui/euiAnimatorSet.h>
+#include <eui/euiLayoutEx.h>
+#include <nn/ui2d/ui2d_ControlSrc.h>
 
 namespace eui {
+// rSource names each state animation; pLayout creates and owns the animator set.
+void SelectButton::BuildStateAnim(const nn::ui2d::ControlSrc& rSource, LayoutEx* pLayout) {
+    const char* names[] = {
+        rSource.FindFunctionalAnimName("On"),
+        rSource.FindFunctionalAnimName("TouchOn"),
+        rSource.FindFunctionalAnimName("Off"),
+        rSource.FindFunctionalAnimName("TouchOff"),
+        rSource.FindFunctionalAnimName("Decide"),
+        rSource.FindFunctionalAnimName("TouchDecide"),
+        rSource.FindFunctionalAnimName("Cancel")
+    };
+    mStateAnimators = pLayout->createAnimatorSet(names, 7, true);
+}
 const char* SelectButton::getClassName() const { return "SelectButton"; }
 
 // rOther supplies button properties; pLayout owns the clone; pHeap holds its animations.

@@ -46,7 +46,7 @@ public:
 
     nn::ui2d::Pane* GetCursorPane() const { return mCursorPane; }
     void SetTouch(bool touch);
-    void DownOff(bool force);
+    bool DownOff(bool force);
     bool IsPlayDisableAnim() const;
     Animator* SelectStateAnim(int index);
     void CloneImpl_(const AnimButton& rOther, LayoutEx* pLayout, sead::Heap* pHeap);

@@ -27,6 +27,8 @@ public:
     virtual void UnbindMaterial(const Material* pMaterial) = 0;
     virtual void UnbindAll() = 0;
     u16 GetFrameSize() const;
+    bool IsLoopData() const;
+    bool IsWaitData() const;
 
     nn::util::IntrusiveListNode m_Link;
     const ResAnimationBlock* m_pResource;

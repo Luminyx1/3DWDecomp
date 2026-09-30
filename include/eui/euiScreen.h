@@ -6,6 +6,8 @@
 #include <math/seadBoundBox.h>
 #include <eui/euiDrawInfoEx.h>
 #include <eui/euiControlCreator.h>
+#include <eui/euiButtonBase.h>
+#include <eui/euiAnimator.h>
 namespace xlink2 { class UserInstanceSLink; class System; }
 namespace nn::ui2d { class ResourceAccessor; }
 namespace eui {
@@ -14,7 +16,8 @@ class UIController; class MultiArcResourceAccessor; class TagProcessor;
 class DrawTarget;
 class Screen : public sead::IDisposer, public sead::hostio::Node {
 public:
-    class OpenOption; class CloseOption; class AnimatorOperationType;
+    class OpenOption; class CloseOption;
+    enum AnimatorOperationType { cPlay, cPlayFromCurrent, cStop, cStopCurrent, cStopAtMin, cStopAtMax };
     Screen();
     ~Screen() override;
     SEAD_RTTI_BASE(Screen);
@@ -92,15 +95,20 @@ public:
     void updateStaticControl_();
     DrawTarget getDrawTarget() const;
     void eraseBoxCursorNodeFromRouteNodes(const BoxCursorNode* pNode);
+    void setAnimatorActive(Animator* pAnimator);
+    void eraseAnimatorFromActiveList(Animator* pAnimator);
+    bool moveBoxCursorByButton(const AnimButton* pButton);
+    void buttonStateChangeCallback(AnimButton* pButton, ButtonBase::State oldState, ButtonBase::State newState);
     ScreenMgr* mScreenMgr;
     LayoutEx* mLayout;
-    DrawInfoEx* mDrawInfo;
+    ButtonGroup* mButtonGroup;
     ControlList mControls;
     ControlList mStaticControls;
     UIController* mController;
-    ButtonGroup* mButtonGroup;
+    DrawInfoEx* mDrawInfo;
     BoxCursorNode* mPrimaryCursor;
-    nn::util::IntrusiveListNode mActiveAnimators;
+    nn::util::IntrusiveList<Animator,
+        nn::util::IntrusiveListMemberNodeTraits<Animator, &Animator::mActiveLink>> mActiveAnimators;
     sead::OffsetList<BoxCursorNode> mCursorNodes;
     sead::Heap* mInitializeHeap;
     int mScreenId;

@@ -1,9 +1,11 @@
 #pragma once
 #include <nn/ui2d/ui2d_Layout.h>
 #include <prim/seadSafeString.h>
+namespace nn::ui2d { class Group; }
 namespace eui {
 class Screen;
 class Animator;
+class AnimatorSet;
 class LayoutEx : public nn::ui2d::Layout {
 public:
     explicit LayoutEx(Screen* pScreen);
@@ -21,6 +23,14 @@ public:
     virtual void afterBuildPane_(nn::ui2d::Pane*, const nn::ui2d::BuildArgSet&);
     Animator* createAnimatorAuto(const char* pName, bool enabled);
     Animator* tryCreateAnimatorAuto(const char* pName, bool enabled);
+    Animator* tryCreateAnimatorAutoWithWarning(const char* pName, bool enabled);
+    AnimatorSet* createAnimatorSet(const char* const* pNames, u32 count, bool enabled);
+    const void* GetAnimResourceData(const char* pName);
+    Animator* createAnimatorWithPane(const char* pName, nn::ui2d::Pane* pPane, bool enabled);
+    Animator* createAnimatorWithGroup(const char* pName, nn::ui2d::Group* pGroup, bool enabled);
+    Animator* createAnimatorWithGroupIndex(const char* pName, u32 index, bool enabled);
+    Animator* tryCreateAnimatorWithGroupIndex(const char* pName, u32 index, bool enabled);
+    Animator* createUnbindedAnimator(const char* pName, bool enabled);
     void* _60;
     void* _68;
     void* _70;

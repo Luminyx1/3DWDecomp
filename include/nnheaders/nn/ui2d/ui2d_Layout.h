@@ -61,6 +61,7 @@ public:
     static void* AllocateMemory(size_t, size_t);
     static void* AllocateMemory(size_t);
     static void FreeMemory(void* src);
+    const void* GetAnimResourceData(const char* pName) const;
 
     template <typename T>
     static T* NewArray(int count) {
@@ -93,8 +94,8 @@ public:
     void* _20;
     void* _28;
     void* _30;
+    void* _38;
     ResourceAccessor* mResourceAccessor;
-    void* _40;
     nn::util::IntrusiveListNode _48;
     void* _58;
 

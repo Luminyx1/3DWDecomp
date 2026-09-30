@@ -21,6 +21,7 @@ public:
     bool LoadTexture(nn::ui2d::ResourceTextureInfo*, nn::gfx::Device*, const char*) override;
     bool LoadShader(nn::ui2d::ShaderInfo*, nn::gfx::Device*, const char*) override;
     bool LoadArchiveShader(nn::ui2d::ShaderInfo*, nn::gfx::Device*, u32, size_t, const u32*) override;
+    void* findAnimationResource(const char* pLayoutName, const char* pAnimationName, u32* pSize);
     const ArcResourceMgr* mArchives;
     const FontMgr* mFonts;
     nn::util::IntrusiveListNode mFontList;

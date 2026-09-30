@@ -4479,13 +4479,13 @@ src/eui/message/euiPartsEx.cpp: done
     .text   start:0x007C3C60 end:0x007C3E08
 src/eui/lytex/euiLayoutEx.cpp:
     .text   start:0x007C3E10 end:0x007C6E64
-src/eui/sys/euiAnimatorSet.cpp:
+src/eui/sys/euiAnimatorSet.cpp: cflags=-fno-strict-aliasing done
     .text   start:0x007C6E70 end:0x007C75EC
 src/eui/lytex/euiMultiArcResourceAccessor.cpp:
     .text   start:0x007C75F0 end:0x007C86A4
-src/eui/sys/euiAnimator.cpp:
+src/eui/sys/euiAnimator.cpp: done
     .text   start:0x007C86B0 end:0x007C91F8
-src/eui/sys/euiScreen.cpp:
+src/eui/sys/euiScreen.cpp: cflags=-fno-strict-aliasing
     .text   start:0x007C9200 end:0x007CCFD8
 src/eui/sys/euiButtonGroup.cpp:
     .text   start:0x007CCFE0 end:0x007CDE5C
@@ -4493,7 +4493,7 @@ src/eui/ctrl/euiAnimButton.cpp:
     .text   start:0x007CDE60 end:0x007CEDA4
 src/eui/ctrl/euiButtonBase.cpp:
     .text   start:0x007CEDB0 end:0x007CFBB4
-src/eui/ctrl/euiHoverButton.cpp:
+src/eui/ctrl/euiHoverButton.cpp: done
     .text   start:0x007CFBC0 end:0x007CFFF8
 src/eui/ctrl/euiBoxCursorMgr.cpp:
     .text   start:0x007D0000 end:0x007D05DC
@@ -4503,15 +4503,15 @@ src/eui/cursor/euiBoxCursorNode.cpp:
     .text   start:0x007D1500 end:0x007D18EC
 src/eui/sys/euiScreenMgr.cpp:
     .text   start:0x007D18F0 end:0x007D2A34
-src/eui/message/euiTextSearcher.cpp:
+src/eui/message/euiTextSearcher.cpp: done
     .text   start:0x007D2A40 end:0x007D2BC4
 src/eui/message/euiUIController.cpp: done
     .text   start:0x007D2BD0 end:0x007D303C
 src/eui/ctrl/euiControlCreator.cpp:
     .text   start:0x007D3040 end:0x007D3474
-src/eui/ctrl/euiDragButton.cpp:
+src/eui/ctrl/euiDragButton.cpp: done
     .text   start:0x007D3480 end:0x007D3998
-src/eui/ctrl/euiSelectButton.cpp:
+src/eui/ctrl/euiSelectButton.cpp: done
     .text   start:0x007D39A0 end:0x007D3D34
 src/eui/ctrl/euiUniteButton.cpp:
     .text   start:0x007D3D40 end:0x007D52E8
@@ -4519,7 +4519,7 @@ src/eui/ctrl/euiTraceGaugeControl.cpp:
     .text   start:0x007D52F0 end:0x007D5B64
 src/eui/ctrl/euiTwoTouchCheckKeepButton.cpp:
     .text   start:0x007D5B70 end:0x007D6298
-src/eui/ctrl/euiCheckButton.cpp:
+src/eui/ctrl/euiCheckButton.cpp: done
     .text   start:0x007D62A0 end:0x007D6524
 src/eui/ctrl/euiCheckKeepButton.cpp: done
     .text   start:0x007D6530 end:0x007D66C4

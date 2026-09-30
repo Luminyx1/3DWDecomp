@@ -14,6 +14,7 @@ namespace eui {
 
 class DrawInfoEx : public nn::ui2d::DrawInfo {
 public:
+    DrawInfoEx() : m_pRenderBufferInfo(nullptr), _1A8(false) {}
     struct RenderBufferInfo {
         const sead::FrameBuffer* pFrameBuffer;
         const sead::GraphicsContext* pGraphicsContext;

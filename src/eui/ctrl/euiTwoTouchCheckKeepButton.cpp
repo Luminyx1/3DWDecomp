@@ -1,6 +1,8 @@
 #include <eui/euiTwoTouchCheckKeepButton.h>
 #include <eui/euiAnimator.h>
 #include <eui/euiAnimatorSet.h>
+#include <eui/euiLayoutEx.h>
+#include <nn/ui2d/ui2d_ControlSrc.h>
 namespace eui {
 const char* TwoTouchCheckKeepButton::getClassName() const { return "TwoTouchCheckKeepButton"; }
 TwoTouchCheckKeepButton::TwoTouchCheckKeepButton()
@@ -74,5 +76,42 @@ void TwoTouchCheckKeepButton::FinishCancel() {
     mTouched = 0;
     SelectStateAnim(0)->StopAtMin();
     ChangeState(cState_Off);
+}
+// rSource names both touch-state animation sets; pLayout creates the corresponding animators.
+void TwoTouchCheckKeepButton::BuildStateAnim(const nn::ui2d::ControlSrc& rSource, LayoutEx* pLayout) {
+    AnimButton::BuildStateAnim(rSource, pLayout);
+    const char* names[] = {
+        rSource.FindFunctionalAnimName("TouchOn2"),
+        rSource.FindFunctionalAnimName(""),
+        rSource.FindFunctionalAnimName("TouchOff2"),
+        rSource.FindFunctionalAnimName(""),
+        rSource.FindFunctionalAnimName("TouchDecide2"),
+        rSource.FindFunctionalAnimName(""),
+        rSource.FindFunctionalAnimName("TouchCancel"),
+        rSource.FindFunctionalAnimName(""),
+    };
+    mSecondTouchAnimators = pLayout->createAnimatorSet(names, 8, true);
+    mSecondTouchAnimators->SetSkipFirstFrameAll(true);
+    mSecondTouchAnimators->SetSoundLinkAll(false);
+    Animator* selected = mSecondTouchAnimators->mSelected;
+    selected->nn::ui2d::AnimTransform::SetEnabled(false);
+    selected->mStep = 0;
+    mFirstTouchAnimators = mStateAnimators;
+}
+bool TwoTouchCheckKeepButton::ProcessCancel() {
+    if (!(mFlags & 0x40) || !mTouched) return AnimButton::ProcessCancel();
+    switch (mState) {
+    case cState_OnStart:
+    case cState_On:
+    case cState_OffStart:
+    case cState_DownStart:
+    case cState_Down: return false;
+    case cState_Off:
+        StartCancel();
+        ChangeState(cState_CancelStart);
+        break;
+    case cState_CancelStart: break;
+    }
+    return true;
 }
 }

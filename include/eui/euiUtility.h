@@ -4,6 +4,7 @@
 #include <prim/seadEnum.h>
 #include <common/aglTextureEnum.h>
 #include <math/seadVector.h>
+#include <prim/seadStringBuilder.h>
 
 namespace nn::gfx { class DescriptorSlot; }
 namespace nn::ui2d { class TextureInfo; struct ResExtUserData; struct ResExtUserDataList; }
@@ -13,6 +14,8 @@ namespace agl::utl { class MultiFilter; }
 
 namespace eui {
 class LayoutEx;
+void CreateLayoutItemUniqueName(sead::StringBuilderBase<char>* pName, const char* pItem, const LayoutEx* pLayout);
+void CreateLayoutItemUniqueNameByPath(sead::StringBuilderBase<char>* pName, const char* pPath, const LayoutEx* pLayout);
 // Draw targets are passed by value as a four-byte index.
 class DrawTarget { int mIndex; };
 const nn::ui2d::ResExtUserData* FindExtUserDataFromList(const nn::ui2d::ResExtUserDataList* pList, const char* pName);

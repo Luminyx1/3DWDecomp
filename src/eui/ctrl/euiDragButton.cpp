@@ -1,5 +1,7 @@
 #include <eui/euiDragButton.h>
 #include <eui/euiAnimator.h>
+#include <eui/euiLayoutEx.h>
+#include <nn/ui2d/ui2d_ControlSrc.h>
 #include <nn/ui2d/ui2d_Pane.h>
 namespace eui {
 const char* DragButton::getClassName() const { return "DragButton"; }
@@ -32,5 +34,30 @@ void DragButton::FinishCancel() {
     Animator* pAnimator = SelectStateAnim(0);
     if (touch) { pAnimator->StopAtMin(); ChangeState(cState_Off); }
     else { pAnimator->StopAtMax(); ChangeState(cState_On); }
+}
+// rOther supplies drag settings; pLayout and pHeap own the cloned button animations.
+DragButton::DragButton(const DragButton& rOther, LayoutEx* pLayout, sead::Heap* pHeap)
+    : SelectButton(rOther, pLayout, pHeap), mDragPane(pLayout->mRootPane),
+      mDragStart(rOther.mDragStart), mPaneStart(rOther.mPaneStart),
+      mDragX(rOther.mDragX), mDragY(rOther.mDragY) { mFlags |= 0x400; }
+// rSource supplies button resources; pLayout supplies the pane that moves during dragging.
+void DragButton::Build(const nn::ui2d::ControlSrc& rSource, LayoutEx* pLayout) {
+    AnimButton::Build(rSource, pLayout);
+    mFlags &= ~0x2000;
+    mDragPane = pLayout->mRootPane;
+}
+// rSource names state animations; pLayout creates their animator set.
+void DragButton::BuildStateAnim(const nn::ui2d::ControlSrc& rSource, LayoutEx* pLayout) {
+    const char* names[] = {
+        rSource.FindFunctionalAnimName("On"),
+        rSource.FindFunctionalAnimName("TouchOn"),
+        rSource.FindFunctionalAnimName("Off"),
+        rSource.FindFunctionalAnimName("TouchOff"),
+        rSource.FindFunctionalAnimName("Decide"),
+        rSource.FindFunctionalAnimName("TouchDecide"),
+        rSource.FindFunctionalAnimName("Cancel"),
+        rSource.FindFunctionalAnimName("TouchCancel"),
+    };
+    mStateAnimators = pLayout->createAnimatorSet(names, 8, true);
 }
 }

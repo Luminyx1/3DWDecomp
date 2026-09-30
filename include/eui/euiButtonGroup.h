@@ -9,6 +9,7 @@ public:
     virtual void Update(const sead::Vector2f* pPosition, bool triggered, bool held, bool released);
     void SetTouchDevice(bool touch);
     AnimButton* FindDownButton();
+    bool IsExistExcludingDown() const;
     void ForceOffAll();
     void ForceOnAll();
     void ForceDownAll();

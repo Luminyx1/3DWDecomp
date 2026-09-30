@@ -14,6 +14,6 @@ public:
     void FinishDown() override;
     void ForceOff() override;
     void Initialize(sead::Heap* pHeap, nn::ui2d::Pane* pPane, Animator* pAnimator, LayoutEx* pLayout);
-    static TapButton* CreateTapButton(nn::ui2d::Pane* pPane, LayoutEx* pLayout, ButtonGroup* pGroup);
+    static void CreateTapButton(nn::ui2d::Pane* pPane, LayoutEx* pLayout, ButtonGroup* pGroup);
 };
 }

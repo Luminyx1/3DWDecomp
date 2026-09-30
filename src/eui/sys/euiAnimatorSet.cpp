@@ -1,5 +1,6 @@
 #include <eui/euiAnimatorSet.h>
 #include <eui/euiAnimator.h>
+#include <eui/euiLayoutEx.h>
 
 namespace eui {
 AnimatorSet::AnimatorSet() : mSelected(nullptr) {}
@@ -9,6 +10,27 @@ AnimatorSet::~AnimatorSet() = default;
 void AnimatorSet::allocBuffer(u32 count, sead::Heap* pHeap) {
     mAnimators.tryAllocBuffer(count, pHeap);
     mAnimators.fill(nullptr);
+}
+
+// rOther supplies animator names and selection; pLayout owns the clones and pHeap stores their slots.
+AnimatorSet::AnimatorSet(const AnimatorSet& rOther, LayoutEx* pLayout, sead::Heap* pHeap) : mSelected(nullptr) {
+    if (!rOther.mAnimators.size()) return;
+    allocBuffer(rOther.mAnimators.size(), pHeap);
+    auto* const* source = rOther.mAnimators.getBufferPtr();
+    const u32 count = rOther.mAnimators.size();
+    for (size_t i = 0; i != count; ++i) {
+        Animator* animator = source[i];
+        if (animator) {
+            Animator* selected = rOther.mSelected;
+            Animator* clone = pLayout->createAnimatorAuto(animator->mName, animator == selected);
+            mAnimators.getBufferPtr()[i < u32(mAnimators.size()) ? i : 0] = clone;
+            if (animator == selected) {
+                const u32 capacity = mAnimators.size();
+                auto** slots = mAnimators.getBufferPtr();
+                mSelected = *(i < capacity ? slots + i : slots);
+            }
+        }
+    }
 }
 
 // ppBuffer supplies count externally owned slots, which are cleared on attachment.

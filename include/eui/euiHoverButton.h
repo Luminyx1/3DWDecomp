@@ -10,6 +10,6 @@ public:
     NN_RUNTIME_TYPEINFO(AnimButton);
     void Down() override;
     void Initialize(sead::Heap* pHeap, nn::ui2d::Pane* pPane, Animator* pAnimator, LayoutEx* pLayout);
-    static HoverButton* CreateHoverButton(nn::ui2d::Pane* pPane, LayoutEx* pLayout, ButtonGroup* pGroup);
+    static void CreateHoverButton(nn::ui2d::Pane* pPane, LayoutEx* pLayout, ButtonGroup* pGroup);
 };
 }
