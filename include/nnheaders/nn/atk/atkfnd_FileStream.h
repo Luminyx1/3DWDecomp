@@ -7,7 +7,8 @@ class FsAccessLog;
 class Stream {
 public:
     enum SeekOrigin { SeekOrigin_Begin, SeekOrigin_End, SeekOrigin_Current };
-    virtual ~Stream();
+    // Derived streams inline this empty destructor; retain its exported entry points.
+    __attribute__((used)) virtual ~Stream() {}
     virtual void Close() = 0;
     virtual bool IsOpened() const = 0;
     virtual size_t Read(void* output, size_t size, FndResult* result) = 0;

@@ -2,7 +2,6 @@
 #include <cstring>
 
 namespace nn::atk::detail {
-fnd::Stream::~Stream() = default;
 // memory supplies the read-only bytes; size is the length of the buffer.
 MemoryFileStream::MemoryFileStream(const void* memory, size_t size)
     : mMemory(static_cast<const u8*>(memory)), mSize(size), mPosition(0) {}

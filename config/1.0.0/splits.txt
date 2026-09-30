@@ -3579,7 +3579,7 @@ src/nw/atk/detail/util/atk_Sound3DListener.cpp:
     .text   start:0x0057F520 end:0x0057F678
 src/nw/atk/atk_FsSoundArchive.cpp:
     .text   start:0x0057F680 end:0x0057FDA0
-src/nw/atk/fnd/io/atkfnd_FileStreamProxy.cpp:
+src/nw/atk/fnd/io/atkfnd_FileStreamProxy.cpp: done
     .text   start:0x0057FDA0 end:0x00580000
 src/nw/atk/atk_MemorySoundArchive.cpp:
     .text   start:0x00580000 end:0x005802E8
