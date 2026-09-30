@@ -7,7 +7,7 @@ class SePlayArea : public AreaObj {
 public:
     SePlayArea(const char*);
 
-    virtual void init(const AreaInitInfo&);
+    void init(const AreaInitInfo& rInfo) override;
 
     const char* mPlayName = nullptr;
 };
