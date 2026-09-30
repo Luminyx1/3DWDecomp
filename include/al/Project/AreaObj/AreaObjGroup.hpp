@@ -23,11 +23,9 @@ public:
                                 sead::Vector3f*);
     AreaObj* getInFirstAreaObj(const sead::Vector3f&);
 
-    s32 getAreaObjCount() const { return mNumAreas; }
-
     const char* mGroupName;
-    AreaObj** mAreaObjs;
-    s32 mNumAreas;
-    s32 mMaxAreas;
+    AreaObj** mAreaObjs = nullptr;
+    s32 mNumAreas = 0;
+    s32 mMaxAreas = 0;
 };
 }  // namespace al
