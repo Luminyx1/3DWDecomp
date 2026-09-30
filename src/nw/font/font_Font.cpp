@@ -40,6 +40,7 @@ Font::~Font() = default;
  */
 const CharStrmReader Font::GetCharStrmReader(char dummy) const {
     CharStrmReader::ReadNextCharFunc func = nullptr;
+
     switch (GetCharacterCode()) {
     case CharacterCode_Unicode:
         func = &CharStrmReader::ReadNextCharUtf8;
@@ -62,6 +63,7 @@ const CharStrmReader Font::GetCharStrmReader(char dummy) const {
  */
 const CharStrmReader Font::GetCharStrmReader(uint16_t dummy) const {
     CharStrmReader::ReadNextCharFunc func = nullptr;
+
     switch (GetCharacterCode()) {
     case CharacterCode_Unicode:
         func = &CharStrmReader::ReadNextCharUtf16;

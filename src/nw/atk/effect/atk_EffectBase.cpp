@@ -21,6 +21,7 @@ void EffectBase::SetEffectBuffer(void* buffer, size_t size) {
 // mode selects mono, stereo, quad, or surround; return the corresponding channel count.
 int EffectBase::ConvertChannelModeToInt(ChannelMode mode) {
     static const int channelCounts[] = {1, 2, 4, 6};
+
     if (static_cast<u32>(mode) >= 4) NN_UNEXPECTED_DEFAULT;
     return channelCounts[static_cast<int>(mode)];
 }

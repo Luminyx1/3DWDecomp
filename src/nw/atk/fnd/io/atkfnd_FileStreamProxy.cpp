@@ -32,6 +32,7 @@ size_t FileStreamProxy::Write(const void* input, size_t size, FndResult* result)
 FndResult FileStreamProxy::Seek(long offset, SeekOrigin origin) {
     long length = mLength;
     long position;
+
     switch (origin) {
     case SeekOrigin_Begin: position = mBegin + offset; break;
     case SeekOrigin_End: position = mBegin + length - offset; break;
@@ -41,6 +42,7 @@ FndResult FileStreamProxy::Seek(long offset, SeekOrigin origin) {
 
     long end = mBegin + length;
     long clamped = position > end ? end : position;
+
     if (position < mBegin) clamped = mBegin;
     return {static_cast<u32>(mStream->Seek(clamped, origin).value)};
 }

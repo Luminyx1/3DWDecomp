@@ -8,6 +8,7 @@ namespace {
 inline bool SameShaderName(const char* name, const char* candidate) {
     for (size_t i = 0; i < 8; ++i) {
         if (name[i] != candidate[i]) return false;
+
         if (!name[i]) return true;
     }
 
@@ -38,6 +39,7 @@ void ShaderContainer::Finalize(nn::gfx::Device* device) {
 // name identifies the new shader; shared controls ownership of its resource.
 ShaderInfo* ShaderContainer::RegisterShader(const char* name, bool shared) {
     void* memory = Layout::AllocateMemory(sizeof(ShaderRefLink));
+
     if (!memory) return nullptr;
     auto* link = new (memory) ShaderRefLink(shared);
     link->SetName(name);
@@ -49,6 +51,7 @@ ShaderInfo* ShaderContainer::RegisterShader(const char* name, bool shared) {
 void ShaderContainer::UnregisterShader(ShaderInfo* shader) {
     for (auto it = mShaders.begin(); it != mShaders.end(); ++it) {
         auto* link = &*it;
+
         if (&link->mShader == shader) {
             mShaders.erase(it);
             link->~ShaderRefLink();

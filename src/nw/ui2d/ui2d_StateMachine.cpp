@@ -15,8 +15,10 @@ float StateMachineVariableManager::DoCalculateCalcVarLinearScaling_(const ResSta
 // resource selects wrapping or clamping for value; step is unused for range limiting.
 float StateMachineVariableManager::DoCalculateCalcVarRangeLimit_(const ResStateCalculatedVariables* resource, float value, float step) {
     if (resource->limitMode == 0) return value - resource->maximum * static_cast<int>(std::floor(value / resource->maximum));
+
     if (resource->limitMode == 1) {
         if (resource->maximum < value) value = resource->maximum;
+
         if (value < resource->minimum) value = resource->minimum;
     }
 

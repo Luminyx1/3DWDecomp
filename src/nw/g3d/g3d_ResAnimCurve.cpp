@@ -48,6 +48,7 @@ template <class T>
 void ResAnimCurve::FindFrame(AnimFrameCache* cache, float frame) const {
     using Frame = FrameValue<T>;
     Frame target;
+
     if (std::is_same<T, s16>::value)
         target = int(std::floor(frame * 32.0f));
     else if (std::is_same<T, u8>::value)
@@ -56,6 +57,7 @@ void ResAnimCurve::FindFrame(AnimFrameCache* cache, float frame) const {
         target = frame;
     const T* values = GetFrameArray<T>();
     const float factor = std::is_same<T, s16>::value ? 0.03125f : 1.0f;
+
     if (values[keyCount - 1] <= target) {
         cache->keyIndex = u16(keyCount - 1);
         cache->start = float(values[cache->keyIndex]) * factor;
@@ -64,6 +66,7 @@ void ResAnimCurve::FindFrame(AnimFrameCache* cache, float frame) const {
     }
 
     ptrdiff_t index = cache->keyIndex;
+
     if (values[index] > target) {
         do {
             --index;
@@ -85,6 +88,7 @@ void ResAnimCurve::UpdateFrameCache(AnimFrameCache* cache, float frame) const {
         float ratio = (frame - startFrame) * inverse;
         ratio *= keyCount;
         cache->keyIndex = int(ratio);
+
         if (keyCount <= unsigned(cache->keyIndex))
             cache->keyIndex = keyCount - 1;
         (this->*Impl::s_pFuncFindFrame[flags & 3])(cache, frame);
@@ -160,11 +164,13 @@ template <class T>
 inline T WrapFrame(float& frame, const ResAnimCurve* curve, T offset) {
     float start = curve->startFrame;
     float end = curve->endFrame;
+
     if (start <= frame && frame <= end)
         return offset;
     float distance = start - frame;
     int after;
     unsigned mode;
+
     if (distance > 0.0f) {
         if (!(curve->flags & 0x300)) {
             frame = start;
@@ -189,15 +195,18 @@ inline T WrapFrame(float& frame, const ResAnimCurve* curve, T offset) {
     float remainder = distance - length * cycles;
     mode &= 3;
     int direction;
+
     switch (mode) {
     case 3: {
         T repetitions = cycles + 1;
         T delta;
+
         if (std::is_same<T, float>::value)
             delta = curve->deltaFloat;
         else
             delta = curve->deltaInt;
         T shift = -delta * repetitions;
+
         if (after != 0)
             shift = delta * repetitions;
         offset += shift;
@@ -213,6 +222,7 @@ inline T WrapFrame(float& frame, const ResAnimCurve* curve, T offset) {
     }
 
     frame = end - remainder;
+
     if (direction == after)
         frame = start + remainder;
     return offset;
@@ -247,6 +257,7 @@ void ResAnimCurve::BakeImpl(void* buffer, float firstFrame, int count) {
     T* output = static_cast<T*>(buffer);
     int last = count - 1;
     output[0] = EvaluateStepInt<T>(startFrame, &cache);
+
     for (int i = 1; i < last; ++i)
         output[i] = EvaluateStepInt<T>(firstFrame + i, &cache);
     output[last] = EvaluateStepInt<T>(endFrame, &cache);
@@ -259,6 +270,7 @@ void ResAnimCurve::BakeImpl<bool>(void* buffer, float firstFrame, int count) {
     u32* output = static_cast<u32*>(buffer);
     int last = count - 1;
     output[0] = (output[0] & ~1u) | EvaluateStepBool(startFrame, &cache);
+
     for (int i = 1; i < last; ++i) {
         u32 value = EvaluateStepBool(firstFrame + i, &cache);
         output[unsigned(i) >> 5] = (output[unsigned(i) >> 5] & ~(1u << (i & 31))) | (value << (i & 31));
@@ -275,6 +287,7 @@ void ResAnimCurve::BakeImpl<float>(void* buffer, float firstFrame, int count) {
     float* output = static_cast<float*>(buffer);
     int last = count - 1;
     output[0] = EvaluateFloat(startFrame, &cache);
+
     for (int i = 1; i < last; ++i)
         output[i] = EvaluateFloat(firstFrame + i, &cache);
     output[last] = EvaluateFloat(endFrame, &cache);
@@ -282,12 +295,14 @@ void ResAnimCurve::BakeImpl<float>(void* buffer, float firstFrame, int count) {
     float fraction = startFrame - firstFrame;
     output[0] = (output[0] - fraction * output[1]) / (1.0f - fraction);
     fraction = lastFrame - endFrame;
+
     if (fraction < 1.0f)
         output[last] = (output[last] - fraction * output[count - 2]) / (1.0f - fraction);
 }
 
 size_t ResAnimCurve::CalculateBakedFloatSize() const {
     int count = GetBakedFloatIntervalCount() + 1;
+
     if (count < 3)
         return 0;
     static const size_t backupSize = FloatBackupSize();
@@ -296,9 +311,11 @@ size_t ResAnimCurve::CalculateBakedFloatSize() const {
 
 size_t ResAnimCurve::CalculateBakedIntSize() const {
     int count = GetBakedIntIntervalCount() + 1;
+
     if (count < 3)
         return 0;
     size_t bytes = 0;
+
     switch (((flags & 0x70) - 0x40u) >> 4) {
     case 0:
     case 1:
@@ -324,6 +341,7 @@ void ResAnimCurve::BakeFloat(void* buffer, size_t size) {
     if ((flags & 0x70) == 0x20)
         return;
     int count = GetBakedFloatIntervalCount() + 1;
+
     if (count < 3)
         return;
     BakeImpl<float>(buffer, std::floor(startFrame), count);
@@ -344,13 +362,16 @@ void ResAnimCurve::BakeFloat(void* buffer, size_t size) {
 // buffer holds size bytes for samples and the original curve state; size is validated only in debug builds.
 void ResAnimCurve::BakeInt(void* buffer, size_t size) {
     unsigned type = flags & 0x70;
+
     if (type == 0x20 || type == 0x70)
         return;
     int count = GetBakedIntIntervalCount() + 1;
+
     if (count < 3)
         return;
     float first = std::floor(startFrame);
     u16 bakedFlags = 0;
+
     if (type == 0x40) {
         if ((flags & 12) == 8)
             BakeImpl<s8>(buffer, first, count);

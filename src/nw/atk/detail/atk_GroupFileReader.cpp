@@ -5,11 +5,14 @@ namespace nn::atk::detail {
 GroupFileReader::GroupFileReader(const void* file)
     : mInfo(nullptr), mFileData(nullptr), mInfoEx(nullptr) {
     auto* header = static_cast<const GroupFile::FileHeader*>(file);
+
     if (header->signature != 0x50524746 || header->byteOrder != 0xfeff || header->version != 0x10000) return;
     const auto* info = header->GetInfoBlock();
     const auto* data = header->GetFileBlock();
     const auto* extra = header->GetInfoExBlock();
+
     if (!info || !data || info->signature != 0x4f464e49 || data->signature != 0x454c4946) return;
+
     if (extra) {
         if (extra->signature != 0x58464e49) return;
         mInfoEx = &extra->body;
@@ -22,8 +25,10 @@ GroupFileReader::GroupFileReader(const void* file)
 // info receives the file identifier and embedded address; index selects a group item.
 bool GroupFileReader::ReadGroupItemLocationInfo(GroupItemLocationInfo* info, u32 index) const {
     if (!mInfo) return false;
+
     if (mInfo->count <= index) return false;
     const auto* item = reinterpret_cast<const GroupFile::GroupItemInfo*>(reinterpret_cast<const u8*>(mInfo) + mInfo->items[index].offset);
+
     if (!item) return false;
     info->fileId = item->fileId;
     info->address = item->GetFileAddress(mFileData);
@@ -34,8 +39,10 @@ u32 GroupFileReader::GetGroupItemExCount() const { return mInfoEx ? mInfoEx->cou
 // info receives the extended item record; index selects an entry in the optional INFX block.
 bool GroupFileReader::ReadGroupItemInfoEx(GroupFile::GroupItemInfoEx* info, u32 index) const {
     if (!mInfoEx) return false;
+
     if (mInfoEx->count <= index) return false;
     const auto* item = reinterpret_cast<const GroupFile::GroupItemInfoEx*>(reinterpret_cast<const u8*>(mInfoEx) + mInfoEx->items[index].offset);
+
     if (!item) return false;
     *info = *item;
     return true;

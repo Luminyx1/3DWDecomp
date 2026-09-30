@@ -42,6 +42,7 @@ const StreamSoundFile::ChannelInfoTable* StreamSoundFile::InfoBlockBody::GetChan
 // index selects a track; out-of-range indices and incorrect tags return null.
 const StreamSoundFile::TrackInfo* StreamSoundFile::TrackInfoTable::GetTrackInfo(u32 index) const {
     if (index >= count) return nullptr;
+
     if (tracks[index].type != 0x4101) return nullptr;
     return reinterpret_cast<const TrackInfo*>(reinterpret_cast<const u8*>(this) + tracks[index].offset);
 }
@@ -49,6 +50,7 @@ const StreamSoundFile::TrackInfo* StreamSoundFile::TrackInfoTable::GetTrackInfo(
 // index selects a channel; out-of-range indices and incorrect tags return null.
 const StreamSoundFile::ChannelInfo* StreamSoundFile::ChannelInfoTable::GetChannelInfo(u32 index) const {
     if (index >= count) return nullptr;
+
     if (channels[index].type != 0x4102) return nullptr;
     return reinterpret_cast<const ChannelInfo*>(reinterpret_cast<const u8*>(this) + channels[index].offset);
 }

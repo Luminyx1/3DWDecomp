@@ -38,6 +38,7 @@ void CurveLfo::Update(int step) {
     }
 
     if (!(mParameter.speed > 0)) return;
+
     if (!mStarted) {
         mPhase = mParameter.phase / 127.0f;
         mStarted = true;
@@ -52,6 +53,7 @@ float CurveLfo::GetValue() const {
     if (mParameter.depth == 0 || mElapsedDelay < mParameter.delay) return 0;
     auto function = g_CurveLfoTable[mParameter.curve];
     float value = 1;
+
     if (function) {
         if (mParameter.curve == 4) {
             if (mWrapped) mRandomValue = function(mPhase);

@@ -16,6 +16,7 @@ size_t FileStreamImpl::Write(const void* input, size_t size, FndResult* result) 
 // offset and origin select a position through the active cached or direct path.
 FndResult FileStreamImpl::Seek(long offset, SeekOrigin origin) {
     FndResult result;
+
     if (IsCacheEnabled()) result = mCache.Seek(offset, origin);
     else result = SeekDirect(offset, origin);
     return {static_cast<u32>(result.value)};

@@ -12,6 +12,7 @@ TextureRefLink::~TextureRefLink() = default;
 void TextureRefLink::Finalize(nn::gfx::Device* device) {
     if (mOwned) mTexture->Finalize(device);
     TextureInfo* texture = mTexture;
+
     if (texture) { texture->~TextureInfo(); Layout::FreeMemory(texture); }
 }
 
@@ -35,6 +36,7 @@ ResourceTextureInfo* TextureContainer::RegisterResourceTexture(const char* name)
     void* memory = Layout::AllocateMemory(sizeof(ResourceTextureInfo));
     auto* texture = memory ? new (memory) ResourceTextureInfo : nullptr;
     memory = Layout::AllocateMemory(sizeof(TextureRefLink));
+
     if (!memory) return nullptr;
     auto* link = new (memory) TextureRefLink(texture, true);
     link->SetName(name);
@@ -47,6 +49,7 @@ PlacementTextureInfo* TextureContainer::RegisterPlacementTexture(const char* nam
     void* memory = Layout::AllocateMemory(sizeof(PlacementTextureInfo));
     auto* texture = memory ? new (memory) PlacementTextureInfo : nullptr;
     memory = Layout::AllocateMemory(sizeof(TextureRefLink));
+
     if (!memory) return nullptr;
     auto* link = new (memory) TextureRefLink(texture, owned);
     link->SetName(name);
@@ -59,6 +62,7 @@ RenderTargetTextureInfo* TextureContainer::RegisterRenderTargetTexture(const cha
     void* memory = Layout::AllocateMemory(sizeof(RenderTargetTextureInfo));
     auto* texture = memory ? new (memory) RenderTargetTextureInfo : nullptr;
     memory = Layout::AllocateMemory(sizeof(TextureRefLink));
+
     if (!memory) return nullptr;
     auto* link = new (memory) TextureRefLink(texture, owned);
     link->SetName(name);
@@ -83,6 +87,7 @@ void TextureContainer::RegisterTextureViewToDescriptorPool(RegisterCallback call
     for (auto& link : mTextures) {
         if (!link.mOwned) continue;
         const auto descriptor = link.mTexture->mDescriptor;
+
         if (!descriptor.IsValid())
             callback(&link.mTexture->mDescriptor, *link.mTexture->GetTextureView(), argument);
     }
@@ -93,6 +98,7 @@ void TextureContainer::UnregisterTextureViewFromDescriptorPool(UnregisterCallbac
     for (auto& link : mTextures) {
         if (!link.mOwned) continue;
         const auto descriptor = link.mTexture->mDescriptor;
+
         if (descriptor.IsValid()) {
             callback(&link.mTexture->mDescriptor, *link.mTexture->GetTextureView(), argument);
             link.mTexture->mDescriptor.Invalidate();
@@ -104,6 +110,7 @@ void TextureContainer::UnregisterTextureViewFromDescriptorPool(UnregisterCallbac
 TextureInfo* TextureContainer::FindTextureByName(const char* name) const {
     for (auto& link : mTextures) {
         bool same = true;
+
         for (size_t i = 0; i < sizeof(link.mName); ++i) {
             if (name[i] != link.mName[i]) { same = false; break; }
             if (!name[i]) break;

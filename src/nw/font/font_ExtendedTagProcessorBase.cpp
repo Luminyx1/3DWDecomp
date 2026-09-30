@@ -27,6 +27,7 @@ ExtendedTagProcessorBase<CharType>::ProcessTag(uint32_t code, PrintContext<CharT
 
     const TagInfo* pInfo;
     const CharType* pNext = AnalyzeTagHeader(&pInfo, pContext->str - 1);
+
     if (pInfo == nullptr || pNext > pContext->strEnd) {
         return TagProcessorBase<CharType>::Operation_EndDraw;
     }
@@ -49,9 +50,11 @@ const CharType* ExtendedTagProcessorBase<CharType>::AcquireNextPrintableChar(boo
                                                                              const CharType* pStr) {
     const CharType* pNext = pStr;
     const uint32_t code = detail::AcquireNextChar(&pNext);
+
     if (code == TagBegin || code == TagEnd) {
         const TagInfo* pInfo;
         AnalyzeTagHeader(&pInfo, pStr);
+
         if (pInfo != nullptr) {
             if (pInfo->index == 0) {
                 pNext = reinterpret_cast<const CharType*>(
@@ -133,6 +136,7 @@ ExtendedTagProcessorBase<CharType>::ProcessTagRuby(const TagInfo* pInfo,
                                                    PrintContext<CharType>* pContext,
                                                    Rectangle* pRect, const CharType* pBaseText) {
     pContext->str = pBaseText;
+
     if (pRect != nullptr) {
         return TagProcessorBase<CharType>::Operation_Default;
     }
@@ -164,6 +168,7 @@ ExtendedTagProcessorBase<CharType>::ProcessTagRuby(const TagInfo* pInfo,
     }
 
     const float diff = baseWidth - rubyWidth;
+
     if (diff > 0.0f) {
         const float space = diff / (rubyLength + 1);
         writer.MoveCursorX(space);
@@ -174,6 +179,7 @@ ExtendedTagProcessorBase<CharType>::ProcessTagRuby(const TagInfo* pInfo,
     }
 
     const TextWriterBase<CharType>& rParent = *pContext->writer;
+
     if (rParent.GetItalicRatio() != 0.0f) {
         writer.MoveCursorX(rParent.GetItalicRatio() * rParent.GetScaleH() *
                            rParent.GetFont()->GetWidth() * 0.5f);
@@ -187,9 +193,11 @@ ExtendedTagProcessorBase<CharType>::ProcessTagRuby(const TagInfo* pInfo,
         -(pContext->writer->GetScaleV() * pContext->writer->GetFont()->GetBaselinePos()));
 
     const Font* pFont = pContext->writer->GetFont();
+
     if (pFont != nullptr) {
         const int kerningValue = pFont->GetKerning(pContext->prevCode, *pBaseText);
         const float kerning = pContext->writer->GetScaleH() * kerningValue;
+
         if (kerning != 0.0f) {
             writer.MoveCursorX(kerning);
         }

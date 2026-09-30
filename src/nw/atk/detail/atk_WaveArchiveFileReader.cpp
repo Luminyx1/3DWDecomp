@@ -12,12 +12,14 @@ WaveArchiveFileReader::WaveArchiveFileReader(const void* file, bool individualLo
 // file supplies the archive; individualLoad selects addresses from its FWTA table rather than embedded data.
 void WaveArchiveFileReader::Initialize(const void* file, bool individualLoad) {
     auto* header = static_cast<const WaveArchiveFile::FileHeader*>(file);
+
     if (!header || header->signature != 0x52415746 || header->byteOrder != 0xfeff || header->version != 0x10000) return;
     mHeader = header;
     const auto* info = mHeader->GetInfoBlock();
     mInitialized = true;
     mInfo = &info->body;
     mFileTable = nullptr;
+
     if (individualLoad && HasIndividualLoadTable()) {
         mFileTable = reinterpret_cast<const void**>(const_cast<u8*>(static_cast<const u8*>(file)) + mHeader->GetFileBlockOffset() + 4);
     }
@@ -45,7 +47,9 @@ u32 WaveArchiveFileReader::GetWaveFileCount() const { return mInitialized ? mInf
 // index selects a wave; invalid indices or an uninitialized reader return null.
 const void* WaveArchiveFileReader::GetWaveFile(u32 index) const {
     if (!mInitialized) return nullptr;
+
     if (mInfo->count <= index) return nullptr;
+
     if (mFileTable) return mFileTable[index];
     u32 offset = mInfo->waves[index].offset;
     return mHeader->GetFileBlock()->data + offset;
@@ -66,7 +70,9 @@ u32 WaveArchiveFileReader::GetWaveFileOffsetFromFileHead(u32 index) const {
 // index selects a table entry and file supplies its loaded wave address; return the previous address.
 const void* WaveArchiveFileReader::SetWaveFile(u32 index, const void* file) {
     if (!mInitialized) return nullptr;
+
     if (!mFileTable) return nullptr;
+
     if (mInfo->count <= index) return nullptr;
     const void* previous = mFileTable[index];
     mFileTable[index] = file;

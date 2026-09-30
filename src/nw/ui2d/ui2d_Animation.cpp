@@ -15,6 +15,7 @@ bool AnimTransform::IsWaitData() const { return m_pResource->frameSize == 0; }
 AnimTransformBasic::AnimTransformBasic() : _28(nullptr), _30(nullptr), _38(0) {}
 AnimTransformBasic::~AnimTransformBasic() {
     if (_30) Layout::FreeMemory(_30);
+
     if (_28) Layout::FreeMemory(_28);
 }
 
@@ -25,8 +26,10 @@ void AnimTransformBasic::SetResource(nn::gfx::Device* device, ResourceAccessor* 
 
 void AnimTransformBasic::ResetAnimResource() {
     m_pResource = nullptr;
+
     if (_30) Layout::FreeMemory(_30);
     _30 = nullptr;
+
     if (_28) Layout::FreeMemory(_28);
     _28 = nullptr;
 }
@@ -43,6 +46,7 @@ const ResAnimationGroup* AnimResource::GetGroupArray() const {
 
 const ResExtUserDataList* AnimResource::GetExtUserDataList() const {
     if (!mTag) return nullptr;
+
     if (!mTag->userDataOffset) return nullptr;
     return reinterpret_cast<const ResExtUserDataList*>(reinterpret_cast<const char*>(mTag) + mTag->userDataOffset);
 }

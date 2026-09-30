@@ -39,8 +39,10 @@ void OutputMixer::Initialize(int busCount, bool effectsEnabled, void* buffer, si
     if (effectsEnabled) {
         detail::fnd::WorkBufferAllocator allocator(buffer, bufferSize);
         mEffects = static_cast<EffectList*>(allocator.Allocate(sizeof(EffectList), alignof(EffectList), busCount));
+
         for (int i = 0; i < busCount; ++i) new (&mEffects[i]) EffectList;
         mAuxEffects = static_cast<AuxList*>(allocator.Allocate(sizeof(AuxList), alignof(AuxList), busCount));
+
         for (int i = 0; i < busCount; ++i) new (&mAuxEffects[i]) AuxList;
     }
 
@@ -56,8 +58,10 @@ void OutputMixer::Finalize() {
 // bus is the zero-based chain to inspect for either kind of effect.
 bool OutputMixer::HasEffect(int bus) const {
     bool result = false;
+
     if (mEffectsEnabled) {
         MutexLock lock(mMutex);
+
         if (!mEffects[bus].empty() || !mAuxEffects[bus].empty()) result = true;
     }
 
@@ -136,6 +140,7 @@ bool OutputMixer::ClearEffect(int bus) {
 void OutputMixer::UpdateEffectAux() {
     mMutex.Lock();
     int count = GetBusCount();
+
     for (int bus = 0; bus < count; ++bus)
         for (auto it = mAuxEffects[bus].begin(); it != mAuxEffects[bus].end(); ++it) it->Update();
     mMutex.Unlock();
@@ -144,6 +149,7 @@ void OutputMixer::UpdateEffectAux() {
 void OutputMixer::OnChangeOutputMode() {
     mMutex.Lock();
     int count = GetBusCount();
+
     for (int bus = 0; bus < count; ++bus)
         for (auto it = mAuxEffects[bus].begin(); it != mAuxEffects[bus].end(); ++it) it->OnChangeOutputMode();
     mMutex.Unlock();
@@ -152,12 +158,15 @@ void OutputMixer::OnChangeOutputMode() {
 // effect is installed on bus using bufferSize bytes at buffer, if its sample rate is compatible.
 void OutputMixer::AppendEffectImpl(EffectBase* effect, int bus, void* buffer, size_t bufferSize) {
     auto& hardware = detail::driver::HardwareManager::GetInstance();
+
     if (!((hardware.GetAudioRendererParameter().sampleRate == 32000 && effect->GetSampleRate() == EffectBase::SampleRate_32000) ||
           (hardware.GetAudioRendererParameter().sampleRate == 48000 && effect->GetSampleRate() == EffectBase::SampleRate_48000))) return;
     effect->SetEffectBuffer(buffer, bufferSize);
+
     if (!effect->AddEffect(&detail::driver::HardwareManager::GetInstance().GetAudioRendererConfig(), this)) return;
     int count = GetChannelCount();
     s8 indices[6];
+
     for (int i = 0; i < count; ++i) indices[i] = bus * count + i;
     effect->SetEffectInputOutput(indices, indices, count, count);
     mMutex.Lock();
@@ -171,9 +180,11 @@ void OutputMixer::AppendEffectImpl(EffectAux* effect, int bus, void* buffer, siz
     effect->SetEffectBuffer(buffer, bufferSize);
     auto& config = detail::driver::HardwareManager::GetInstance().GetAudioRendererConfig();
     auto& parameter = detail::driver::HardwareManager::GetInstance().GetAudioRendererParameter();
+
     if (!effect->AddEffect(&config, parameter, this)) return;
     int count = GetChannelCount();
     s8 indices[6];
+
     for (int i = 0; i < count; ++i) indices[i] = bus * count + i;
     effect->SetEffectInputOutput(indices, indices, count, count);
     mMutex.Lock();
@@ -186,6 +197,7 @@ void OutputMixer::RemoveEffectImpl(EffectBase* effect, int bus) {
     auto& config = detail::driver::HardwareManager::GetInstance().GetAudioRendererConfig();
     MutexLock lock(mMutex);
     auto it = mEffects[bus].begin();
+
     for (; it != mEffects[bus].end(); ++it) {
         if (effect == &*it) break;
     }
@@ -201,6 +213,7 @@ void OutputMixer::RemoveEffectImpl(EffectBase* effect, int bus) {
 void OutputMixer::RemoveEffectImpl(EffectAux* effect, int bus) {
     auto& hardware = detail::driver::HardwareManager::GetInstance();
     mMutex.Lock();
+
     for (auto it = mAuxEffects[bus].begin(); it != mAuxEffects[bus].end(); ++it) {
         if (effect == &*it) {
             it->RemoveEffect(&hardware.GetAudioRendererConfig(), this);
@@ -219,12 +232,14 @@ void OutputMixer::ClearEffectImpl(int bus) {
     auto& config = detail::driver::HardwareManager::GetInstance().GetAudioRendererConfig();
     mMutex.Lock();
     int count = 0;
+
     for (auto it = mEffects[bus].begin(); it != mEffects[bus].end(); ++it) {
         it->RemoveEffect(&config, this);
         ++count;
     }
 
     mEffects[bus].clear();
+
     for (auto it = mAuxEffects[bus].begin(); it != mAuxEffects[bus].end(); ++it) {
         it->RemoveEffect(&config, this);
         it->Finalize();

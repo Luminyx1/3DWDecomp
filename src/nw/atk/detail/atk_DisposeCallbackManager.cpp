@@ -20,6 +20,7 @@ size_t DisposeCallbackManager::GetCallbackCount() const {
 // memory and size identify the half-open storage range passed to each callback.
 void DisposeCallbackManager::Dispose(const void* memory, size_t size) {
     auto it = GetInstance().mCallbacks.begin();
+
     while (it != GetInstance().mCallbacks.end()) {
         auto& callback = *it++;
         callback.InvalidateData(memory, static_cast<const u8*>(memory) + size);

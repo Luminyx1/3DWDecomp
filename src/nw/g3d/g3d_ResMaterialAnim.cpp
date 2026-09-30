@@ -8,6 +8,7 @@ void ResPerMaterialAnim::EvaluateShaderParamAnim(void* result, float frame, cons
     int count = parameterCount;
     const ResAnimCurve* allCurves = curves;
     const ResShaderParamAnimInfo* info = parameters;
+
     for (int i = 0; i < count; ++i, ++info) {
         if (indices[i] == 0xffff) continue;
         int first = info->firstCurve;
@@ -15,18 +16,22 @@ void ResPerMaterialAnim::EvaluateShaderParamAnim(void* result, float frame, cons
         const ResAnimCurve* curve = &allCurves[first];
         int floats = info->floatCount;
         int* intOutput = static_cast<int*>(result) + first;
+
         for (int j = 0; j < integers; ++j, ++intOutput) {
             if (cached) { *intOutput = curve->EvaluateInt(frame, cache); }
             else { AnimFrameCache temporary; *intOutput = curve->EvaluateInt(frame, &temporary); }
             ++curve;
+
             if (cached) ++cache;
         }
 
         float* floatOutput = static_cast<float*>(result) + (first + integers);
+
         for (int j = 0; j < floats; ++j, ++floatOutput) {
             if (cached) { *floatOutput = curve->EvaluateFloat(frame, cache); }
             else { AnimFrameCache temporary; *floatOutput = curve->EvaluateFloat(frame, &temporary); }
             ++curve;
+
             if (cached) ++cache;
         }
     }
@@ -38,8 +43,10 @@ void ResPerMaterialAnim::EvaluateTexturePatternAnim(int* result, float frame, co
     int count = textureCount;
     const ResTexturePatternAnimInfo* info = textures;
     int output = 0;
+
     for (int i = 0; i < count; ++i, ++info) {
         if (indices[i] == 0xffff || info->curveIndex == 0xffff) continue;
+
         if (cached) result[output] = curves[info->curveIndex].EvaluateInt(frame, &cache[output]);
         else { const ResAnimCurve* curve = &curves[info->curveIndex]; AnimFrameCache temporary; result[output] = curve->EvaluateInt(frame, &temporary); }
         ++output;
@@ -50,8 +57,10 @@ void ResPerMaterialAnim::EvaluateTexturePatternAnim(int* result, float frame, co
 template <bool cached>
 void ResPerMaterialAnim::EvaluateVisibilityAnim(int* result, float frame, AnimFrameCache* cache) const {
     int index = visibilityCurve;
+
     if (index == 0xffff) return;
     const ResAnimCurve* curve = &curves[index];
+
     if (cached) *result = curve->EvaluateInt(frame, cache);
     else { AnimFrameCache temporary; *result = curve->EvaluateInt(frame, &temporary); }
 }
@@ -67,18 +76,22 @@ BindResult ResPerMaterialAnim::PreBind(const ResMaterial* material) {
     BindResult result;
     int count = parameterCount;
     ResShaderParamAnimInfo* info = parameters;
+
     for (int i = 0; i < count; ++i, ++info) {
         int index = material->FindShaderParamIndex(info->name.Get()->GetData());
         info->bindIndex = index;
+
         if (index == -1) result.Merge(BindResult(BindResult::Flag_Failure));
         else result.Merge(BindResult(BindResult::Flag_Success));
     }
 
     count = textureCount;
     ResTexturePatternAnimInfo* texture = textures;
+
     for (int i = 0; i < count; ++i, ++texture) {
         int index = material->FindSamplerIndex(texture->name.Get()->GetData());
         texture->bindIndex = index;
+
         if (index == -1) result.Merge(BindResult(BindResult::Flag_Failure));
         else result.Merge(BindResult(BindResult::Flag_Success));
     }
@@ -91,16 +104,20 @@ BindResult ResPerMaterialAnim::BindCheck(const ResMaterial* material) const {
     BindResult result;
     int count = parameterCount;
     const ResShaderParamAnimInfo* info = parameters;
+
     for (int i = 0; i < count; ++i, ++info) {
         int index = material->FindShaderParamIndex(info->name.Get()->GetData());
+
         if (index == -1) result.Merge(BindResult(BindResult::Flag_Failure));
         else result.Merge(BindResult(BindResult::Flag_Success));
     }
 
     count = textureCount;
     const ResTexturePatternAnimInfo* texture = textures;
+
     for (int i = 0; i < count; ++i, ++texture) {
         int index = material->FindSamplerIndex(texture->name.Get()->GetData());
+
         if (index == -1) result.Merge(BindResult(BindResult::Flag_Failure));
         else result.Merge(BindResult(BindResult::Flag_Success));
     }
@@ -114,11 +131,14 @@ BindResult ResMaterialAnim::PreBind(const ResModel* model) {
     BindResult result;
     int count = materialAnimCount;
     u16* indices = bindIndices;
+
     for (int i = 0; i < count; ++i) {
         ResPerMaterialAnim* anim = &materialAnims[i];
         const ResMaterial* material = model->FindMaterial(anim->name.Get()->GetData());
+
         if (material != nullptr) {
             indices[i] = material->GetIndex();
+
             if (anim->visibilityCurve != 0xffff || anim->visibilityBase != 0xffff) result.Merge(BindResult(BindResult::Flag_Success));
             result.Merge(anim->PreBind(material));
         } else {
@@ -134,9 +154,11 @@ BindResult ResMaterialAnim::PreBind(const ResModel* model) {
 BindResult ResMaterialAnim::BindCheck(const ResModel* model) const {
     BindResult result;
     int count = materialAnimCount;
+
     for (int i = 0; i < count; ++i) {
         const ResPerMaterialAnim* anim = &materialAnims[i];
         const ResMaterial* material = model->FindMaterial(anim->name.Get()->GetData());
+
         if (material != nullptr) {
             if (anim->visibilityCurve != 0xffff || anim->visibilityBase != 0xffff) result.Merge(BindResult(BindResult::Flag_Success));
             result.Merge(anim->BindCheck(material));
@@ -150,10 +172,12 @@ BindResult ResMaterialAnim::BindCheck(const ResModel* model) const {
 BindResult ResMaterialAnim::BindTexture(TextureBindCallback callback, void* user) {
     BindResult result;
     int count = textureCount;
+
     for (int i = 0; i < count; ++i) {
         if ((GetTextureView(i) != nullptr) && GetTextureDescriptorSlot(i) != TextureRef::InvalidDescriptorSlot) continue;
         TextureRef texture = callback(GetTextureName(i), user);
         ForceBindTexture(i, texture);
+
         if ((texture.GetTextureView() == nullptr) || texture.GetDescriptorSlot() == TextureRef::InvalidDescriptorSlot) result.Merge(BindResult(BindResult::Flag_Failure));
         else result.Merge(BindResult(BindResult::Flag_Success));
     }
@@ -165,6 +189,7 @@ BindResult ResMaterialAnim::BindTexture(TextureBindCallback callback, void* user
 bool ResMaterialAnim::ForceBindTexture(const TextureRef& texture, const char* name) {
     bool found = false;
     int count = textureCount;
+
     for (int i = 0; i < count; ++i) {
         if (strcmp(GetTextureName(i), name) == 0) { ForceBindTexture(i, texture); found = true; }
     }
@@ -174,21 +199,26 @@ bool ResMaterialAnim::ForceBindTexture(const TextureRef& texture, const char* na
 
 void ResMaterialAnim::ReleaseTexture() {
     int count = textureCount;
+
     for (int i = 0; i < count; ++i) ReleaseTexture(i);
 }
 
 // buffer supplies size writable bytes for baked samples; an empty request already succeeds.
 bool ResMaterialAnim::BakeCurve(void* buffer, size_t size) {
     if (!size) return true;
+
     if ((buffer == nullptr) || bakedSize > size) return false;
     u8* output = static_cast<u8*>(buffer);
     int count = materialAnimCount;
+
     for (int i = 0; i < count; ++i) {
         ResPerMaterialAnim* anim = &materialAnims[i];
         int curves = anim->curveCount;
+
         for (int j = 0; j < curves; ++j) {
             ResAnimCurve* curve = &anim->curves[j];
             size_t bytes = curve->flags & 0x40 ? curve->CalculateBakedIntSize() : curve->CalculateBakedFloatSize();
+
             if (curve->flags & 0x40) curve->BakeInt(output, bytes);
             else curve->BakeFloat(output, bytes);
             output += bytes;
@@ -204,12 +234,15 @@ void* ResMaterialAnim::ResetCurve() {
     void* buffer = nullptr;
     bool found = false;
     int count = materialAnimCount;
+
     for (int i = 0; i < count; ++i) {
         ResPerMaterialAnim* anim = &materialAnims[i];
         int curves = anim->curveCount;
+
         for (int j = 0; j < curves; ++j) {
             ResAnimCurve* curve = &anim->curves[j];
             int type = curve->flags & 0x70;
+
             if (!found && (type == 0x20 || type == 0x70 || type == 0x50)) { buffer = curve->keys; found = true; }
             curve->Reset();
         }
@@ -223,22 +256,27 @@ void ResMaterialAnim::Reset() {
     boundModel = nullptr;
     int count = materialAnimCount;
     u16* indices = bindIndices;
+
     for (int i = 0; i < count; ++i) {
         ResPerMaterialAnim* anim = &materialAnims[i];
         int parameters = anim->parameterCount;
         ResShaderParamAnimInfo* info = anim->parameters;
+
         for (int j = 0; j < parameters; ++j, ++info) info->bindIndex = 0xffff;
         int textures = anim->textureCount;
         ResTexturePatternAnimInfo* texture = anim->textures;
+
         for (int j = 0; j < textures; ++j, ++texture) texture->bindIndex = 0xff;
         indices[i] = 0xffff;
     }
 
     if (!(flags & 1)) return;
     count = materialAnimCount;
+
     for (int i = 0; i < count; ++i) {
         ResPerMaterialAnim* anim = &materialAnims[i];
         int curves = anim->curveCount;
+
         for (int j = 0; j < curves; ++j) anim->curves[j].Reset();
     }
 

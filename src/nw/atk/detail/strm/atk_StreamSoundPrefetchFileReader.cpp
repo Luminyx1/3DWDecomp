@@ -17,8 +17,10 @@ void StreamSoundPrefetchFileReader::Initialize(const void* file) {
     if (!IsValidFileHeader(file)) return;
     mHeader = static_cast<const StreamSoundPrefetchFile::FileHeader*>(file);
     const auto* info = mHeader->GetInfoBlock();
+
     if (info->signature != 0x4f464e49) return;
     const auto* prefetch = mHeader->GetPrefetchDataBlock();
+
     if (prefetch->signature != 0x54414450) return;
     mInfo = &info->body;
     mPrefetch = &prefetch->body;
@@ -52,6 +54,7 @@ bool StreamSoundPrefetchFileReader::ReadStreamSoundInfo(StreamSoundFile::StreamS
 // param and loop receive decoder and loop contexts for a valid channel; absent ADPCM data returns false.
 bool StreamSoundPrefetchFileReader::ReadDspAdpcmChannelInfo(DspAdpcmParam* param, DspAdpcmLoopParam* loop, int channel) const {
     const auto* source = mInfo->GetChannelInfoTable()->GetChannelInfo(channel)->GetDspAdpcmChannelInfo();
+
     if (!source) return false;
     *param = source->param;
     *loop = source->loop;

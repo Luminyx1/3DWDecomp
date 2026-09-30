@@ -34,6 +34,7 @@ size_t ResShaderParam::GetSrcSize(Type type) {
 template <bool swap>
 void ResShaderParam::Convert(void* destination, const void* source) const {
     Type format = Type(type);
+
     if (format <= 15) {
         std::memcpy(destination, source, ((format & 3) + 1) * 4);
     } else if (format <= 27) {
@@ -41,6 +42,7 @@ void ResShaderParam::Convert(void* destination, const void* source) const {
         size_t bytes = ((format & 3) + 1) * 4;
         u8* output = static_cast<u8*>(destination);
         const u8* input = static_cast<const u8*>(source);
+
         for (int i = 0; i < rows; ++i) {
             std::memcpy(output, input, bytes);
             output += 16;
@@ -94,11 +96,13 @@ size_t ResShaderParam::ConvertSrt2dCallback(void* destination, const void* sourc
 BindResult ResMaterial::BindTexture(TextureBindCallback callback, void* user) {
     BindResult result;
     int count = samplerCount;
+
     for (int i = 0; i < count; ++i) {
         if ((GetTextureView(i) != nullptr) && GetTextureDescriptorSlot(i) != TextureRef::InvalidDescriptorSlot)
             continue;
         TextureRef texture = callback(GetTextureName(i), user);
         ForceBindTexture(i, texture);
+
         if ((texture.GetTextureView() == nullptr) || texture.GetDescriptorSlot() == TextureRef::InvalidDescriptorSlot)
             result.Merge(BindResult(BindResult::Flag_Failure));
         else
@@ -112,6 +116,7 @@ BindResult ResMaterial::BindTexture(TextureBindCallback callback, void* user) {
 bool ResMaterial::ForceBindTexture(const TextureRef& texture, const char* name) {
     bool found = false;
     int count = samplerCount;
+
     for (int i = 0; i < count; ++i) {
         if (strcmp(GetTextureName(i), name) == 0) {
             ForceBindTexture(i, texture);
@@ -124,6 +129,7 @@ bool ResMaterial::ForceBindTexture(const TextureRef& texture, const char* name) 
 
 void ResMaterial::ReleaseTexture() {
     int count = samplerCount;
+
     for (int i = 0; i < count; ++i)
         ReleaseTexture(i);
 }
@@ -131,6 +137,7 @@ void ResMaterial::ReleaseTexture() {
 // device owns samplers constructed from resource descriptions and named for debugging.
 void ResMaterial::Setup(nn::gfx::Device* device) {
     int count = samplerCount;
+
     for (int i = 0; i < count; ++i) {
         const nn::gfx::SamplerInfo* info = &pSamplerInfoArray.Get()[i];
         nn::gfx::Sampler* sampler = reinterpret_cast<nn::gfx::Sampler*>(&pSamplerArray.Get()[i]);
@@ -145,8 +152,10 @@ void ResMaterial::Setup(nn::gfx::Device* device) {
         "lbl_7101AD4FA0") = {ResShaderParam::ConvertSrt2dCallback, ResShaderParam::ConvertSrt3dCallback,
                              ResShaderParam::ConvertTexSrtCallback, ResShaderParam::ConvertTexSrtExCallback};
     count = shaderParamCount;
+
     for (int i = 0; i < count; ++i) {
         ResShaderParamData* parameter = &pShaderParamArray.Get()[i];
+
         if (parameter->type >= 28 && (parameter->callback == nullptr))
             parameter->callback = callbacks[parameter->type - 28];
     }
@@ -155,8 +164,10 @@ void ResMaterial::Setup(nn::gfx::Device* device) {
 // device owns initialized sampler objects being finalized and destroyed.
 void ResMaterial::Cleanup(nn::gfx::Device* device) {
     int count = samplerCount;
+
     for (int i = 0; i < count; ++i) {
         nn::gfx::Sampler* sampler = reinterpret_cast<nn::gfx::Sampler*>(&pSamplerArray.Get()[i]);
+
         if (sampler->ToData()->state) {
             sampler->Finalize(device);
             sampler->~TSampler();
@@ -166,6 +177,7 @@ void ResMaterial::Cleanup(nn::gfx::Device* device) {
 
 void ResMaterial::Reset() {
     int count = shaderParamCount;
+
     for (int i = 0; i < count; ++i) {
         ResShaderParamData* parameter = &pShaderParamArray.Get()[i];
         parameter->offset = -1;
@@ -182,6 +194,7 @@ void ResMaterial::Reset() {
 // guard bit zero preserves the caller-owned user pointer while clearing material state.
 void ResMaterial::Reset(u32 guard) {
     int count = shaderParamCount;
+
     for (int i = 0; i < count; ++i) {
         ResShaderParamData* parameter = &pShaderParamArray.Get()[i];
         parameter->offset = -1;
@@ -190,6 +203,7 @@ void ResMaterial::Reset(u32 guard) {
 
     textureCount = samplerCount;
     materialBlockSize = 0;
+
     if (!(guard & 1))
         pUserPtr.Clear();
     volatileParamCount = 0;

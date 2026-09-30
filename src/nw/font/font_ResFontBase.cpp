@@ -194,6 +194,7 @@ void ResFontBase::SetDefaultCharWidths(const CharWidths& rWidths) {
  */
 bool ResFontBase::SetAlternateChar(uint32_t c) {
     uint16_t index = FindGlyphIndex(c);
+
     if (index != InvalidGlyphIndex) {
         m_pFontInfo->alterCharIndex = index;
         return true;
@@ -210,6 +211,7 @@ bool ResFontBase::SetAlternateChar(uint32_t c) {
 uint16_t ResFontBase::FindGlyphIndex(uint32_t c) const {
     for (uint32_t offset = m_pFontInfo->pMap; offset != 0;) {
         const FontCodeMap* pMap = GetResourcePtr<FontCodeMap>(offset);
+
         if (pMap->codeBegin <= c && c <= pMap->codeEnd) {
             return FindGlyphIndex(pMap, c);
         }
@@ -244,6 +246,7 @@ int ResFontBase::GetCharWidth(uint32_t c) const {
  */
 const CharWidths ResFontBase::GetCharWidths(uint32_t c) const {
     uint16_t index = FindGlyphIndex(c);
+
     if (index == InvalidGlyphIndex) {
         index = m_pFontInfo->alterCharIndex;
     }
@@ -259,6 +262,7 @@ const CharWidths ResFontBase::GetCharWidths(uint32_t c) const {
 const CharWidths* ResFontBase::GetCharWidthsFromIndex(uint16_t index) const {
     for (uint32_t offset = m_pFontInfo->pWidth; offset != 0;) {
         const FontWidth* pWidth = GetResourcePtr<FontWidth>(offset);
+
         if (pWidth->indexBegin <= index && index <= pWidth->indexEnd) {
             return GetCharWidthsFromIndex(pWidth, index);
         }
@@ -353,9 +357,11 @@ int ResFontBase::GetKerning(uint32_t c0, uint32_t c1) const {
     uint32_t firstLow = 0;
     uint32_t firstHigh = pTable->firstWordCount;
     uint32_t firstMid;
+
     while (true) {
         firstMid = (firstLow + firstHigh) / 2;
         const uint32_t word = pTable->firstTable[firstMid].firstWord;
+
         if (word == c0) {
             break;
         }
@@ -380,6 +386,7 @@ int ResFontBase::GetKerning(uint32_t c0, uint32_t c1) const {
     uint32_t secondLow = 0;
     uint32_t secondHigh = pSecond->secondWordCount;
     uint32_t secondMid = secondHigh / 2;
+
     while (pSecond->elems[secondMid].secondWord != c1) {
         if (pSecond->elems[secondMid].secondWord < c1) {
             if (secondLow == secondMid) {
@@ -450,8 +457,10 @@ uint16_t ResFontBase::FindGlyphIndex(const FontCodeMap* pMap, uint32_t c) const 
         const CMapInfoScan* pScan = reinterpret_cast<const CMapInfoScan*>(pMap->mapInfo);
         const CMapScanEntry* pFirst = &pScan->entries[0];
         const CMapScanEntry* pLast = &pScan->entries[pScan->count - 1];
+
         while (pFirst <= pLast) {
             const CMapScanEntry* pMid = pFirst + (pLast - pFirst) / 2;
+
             if (pMid->code < c) {
                 pFirst = pMid + 1;
             } else if (c < pMid->code) {
@@ -510,8 +519,10 @@ void ResFontBase::SetGlyphMember(Glyph* pGlyph, uint16_t index, const FontTextur
 void* ResFontBase::FindBlock(detail::BinaryFileHeader* pHeader, uint32_t signature) {
     uint8_t* pPtr = reinterpret_cast<uint8_t*>(pHeader) + pHeader->headerSize;
     void* pResult = nullptr;
+
     for (int i = 0; i < pHeader->dataBlocks; i++) {
         detail::BinaryBlockHeader* pBlock = reinterpret_cast<detail::BinaryBlockHeader*>(pPtr);
+
         if (pBlock->kind == signature) {
             pResult = pBlock + 1;
             break;
@@ -589,6 +600,7 @@ bool ResFontBase::IsBorderEffectEnabled() const {
  */
 void ResFontBase::SetCharCodeRange(int count, uint32_t* pFirst, uint32_t* pLast) {
     m_CharCodeRangeCount = count;
+
     for (int i = 0; i < count; i++) {
         m_CharCodeRangeFirst[i] = pFirst[i];
         m_CharCodeRangeLast[i] = pLast[i];
@@ -667,11 +679,13 @@ void ResFontBase::UnloadTexture(nn::gfx::Device* pDevice, ResourceTextureObject*
     nn::gfx::ResTextureFile* pFile =
         nn::gfx::ResTextureFile::ResCast(const_cast<void*>(pTexObj->GetImage()));
     nn::gfx::ResTextureContainerData& rContainer = pFile->ToData().textureContainerData;
+
     if (rContainer.pCurrentMemoryPool.Get() != nullptr) {
         auto* pDeviceImpl = reinterpret_cast<detail::GfxDeviceImpl*>(pDevice);
         nn::gfx::ResTextureData& rData = pTexObj->m_pResTexture->ToData();
         static_cast<detail::GfxTextureImpl*>(rData.pTexture.Get())->Finalize(pDeviceImpl);
         static_cast<detail::GfxTextureViewImpl*>(rData.pTextureView.Get())->Finalize(pDeviceImpl);
+
         if (rContainer.pCurrentMemoryPool.Get() == rContainer.pTextureMemoryPool.Get()) {
             static_cast<detail::GfxMemoryPoolImpl*>(rContainer.pTextureMemoryPool.Get())
                 ->Finalize(pDeviceImpl);

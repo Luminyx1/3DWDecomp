@@ -7,8 +7,10 @@ namespace nn::ui2d {
 // pDevice owns the GPU texture and view; a missing or uninitialized texture is left alone.
 void ResourceTextureInfo::Finalize(nn::gfx::Device* pDevice) {
     auto* resource = m_pResource;
+
     if (!resource) return;
     auto* texture = static_cast<nn::gfx::Texture*>(resource->ToData().pTexture.Get());
+
     if (!texture || !nn::font::IsInitialized(*texture)) return;
     texture->nn::gfx::detail::TextureImpl<nn::gfx::ApiVariationNvn8>::Finalize(pDevice);
     auto* view = static_cast<nn::gfx::TextureView*>(resource->ToData().pTextureView.Get());

@@ -34,6 +34,7 @@ bool EffectAux::AddEffect(audio::AudioRendererConfig* config, const audio::Audio
     SplitEffectBuffer(&buffers, m_EffectBuffer, size);
     m_AuxReadBuffer = buffers.read;
     m_AudioRendererUpdateCountWhenAddedAux.store(HardwareManager::GetInstance().GetAudioRendererUpdateCount());
+
     switch (mixer->GetReceiverType()) {
     case OutputReceiver::ReceiverType_SubMix:
         if (audio::AddAux(config, &m_AuxType, static_cast<SubMix*>(mixer)->GetSubMix(),
@@ -62,6 +63,7 @@ void EffectAux::SplitEffectBuffer(BufferSet* output, void* buffer, size_t size) 
 // it uses the configured channel selection for both the send and return mappings.
 void EffectAux::SetEffectInputOutput(const s8* input, const s8* output, int inputCount, int outputCount) {
     s8 indices[ChannelCountMax];
+
     for (int i = 0; i < m_ChannelCount; ++i) indices[i] = input[m_ChannelSetting[i]];
     audio::SetAuxInputOutput(&m_AuxType, indices, indices, m_ChannelCount);
 }
@@ -69,6 +71,7 @@ void EffectAux::SetEffectInputOutput(const s8* input, const s8* output, int inpu
 // config is the renderer configuration and mixer is the current effect destination.
 void EffectAux::RemoveEffect(audio::AudioRendererConfig* config, OutputMixer* mixer) {
     if (!m_IsActive) return;
+
     switch (mixer->GetReceiverType()) {
     case OutputReceiver::ReceiverType_SubMix:
         audio::RemoveAux(config, &m_AuxType, static_cast<SubMix*>(mixer)->GetSubMix());
@@ -85,6 +88,7 @@ void EffectAux::RemoveEffect(audio::AudioRendererConfig* config, OutputMixer* mi
 // channelCount sets the inactive effect's channel count; channel indices reset even if active.
 bool EffectAux::SetChannelCount(int channelCount) {
     ResetChannelIndex();
+
     if (m_IsActive) return false;
     m_ChannelCount = channelCount;
     return true;
@@ -94,6 +98,7 @@ bool EffectAux::SetChannelCount(int channelCount) {
 bool EffectAux::SetChannelIndex(const ChannelIndex* indices, int count) {
     if (m_IsActive) return false;
     m_ChannelCount = count;
+
     for (int i = 0; i < count; ++i) m_ChannelSetting[i] = indices[i];
     return true;
 }
@@ -115,6 +120,7 @@ bool EffectAux::SetAudioFrameCount(int audioFrameCount) {
 int EffectAux::GetAudioFrameCount() const { return m_AudioFrameCount; }
 bool EffectAux::IsRemovable() const {
     if (!m_IsActive) return false;
+
     if (m_AudioRendererUpdateCountWhenAddedAux.load() >= HardwareManager::GetInstance().GetAudioRendererUpdateCount()) return false;
     HardwareManager::GetInstance().LockAudioRenderer();
     bool result = audio::IsAuxRemovable(&m_AuxType) &&
@@ -128,6 +134,7 @@ bool EffectAux::IsEnabled() const { return m_IsEnabled; }
 // isEnabled selects whether the renderer processes this effect; retain it before installation.
 void EffectAux::SetEnabled(bool isEnabled) {
     m_IsEnabled = isEnabled;
+
     if (m_IsActive) {
         HardwareManager::GetInstance().LockAudioRenderer();
         audio::SetAuxEnabled(&m_AuxType, isEnabled);

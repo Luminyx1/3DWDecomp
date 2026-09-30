@@ -14,6 +14,7 @@ void AnimFrameCtrl::Initialize(float start, float end, PlayPolicy policy) {
 // frame is the requested position, start/end bound playback, and user is unused by this policy.
 float AnimFrameCtrl::PlayOneTime(float frame, float start, float end, void* user) {
     float result = frame < start ? start : frame;
+
     if (frame >= end) result = end;
     return result;
 }
@@ -21,6 +22,7 @@ float AnimFrameCtrl::PlayOneTime(float frame, float start, float end, void* user
 // frame is wrapped into start/end; user is unused by the built-in looping policy.
 float AnimFrameCtrl::PlayLoop(float frame, float start, float end, void* user) {
     float distance, direction, origin;
+
     if (frame >= end) {
         distance = frame - end;
         direction = 1;
@@ -31,6 +33,7 @@ float AnimFrameCtrl::PlayLoop(float frame, float start, float end, void* user) {
         origin = end;
     } else return frame;
     float length = end - start;
+
     if (length == 0) return start;
     return origin + direction * (distance - length * static_cast<int>(distance / length));
 }
@@ -48,6 +51,7 @@ void AnimBindTable::Initialize(u32* buffer, int capacity) {
 void AnimBindTable::ClearAll(int targetCount) {
     u16 count = mAnimCount < static_cast<u16>(targetCount) ? static_cast<u16>(targetCount) : mAnimCount;
     mTargetCount = targetCount;
+
     for (int i = 0; i < count; ++i) mEntries[i] = 0xffffffff;
 }
 
@@ -55,6 +59,7 @@ void AnimBindTable::ClearAll(int targetCount) {
 void AnimBindTable::BindAll(const u16* indices) {
     for (int i = 0; i < mAnimCount; ++i) {
         u16 target = indices[i];
+
         if (target <= 0x7ffe) {
             mEntries[i] &= 0x3fff8000;
             mEntries[i] |= target & 0x7fff;
@@ -79,6 +84,7 @@ void AnimObj::ResetFrameCtrl(int frameCount, bool loop) {
 // targetIndex selects a model target; flag controls its bound animation's calculation/application.
 void ModelAnimObj::SetBindFlagImpl(int targetIndex, BindFlag flag) {
     u32 index = (mBindTable.mEntries[targetIndex] >> 15) & 0x7fff;
+
     if (index != 0x7fff) {
         mBindTable.mEntries[index] &= 0x3fffffff;
         mBindTable.mEntries[index] |= static_cast<u32>(flag) << 30;
@@ -88,6 +94,7 @@ void ModelAnimObj::SetBindFlagImpl(int targetIndex, BindFlag flag) {
 // targetIndex selects a model target; unbound targets return BindFlag_Disable.
 AnimObj::BindFlag ModelAnimObj::GetBindFlagImpl(int targetIndex) const {
     u32 index = (mBindTable.mEntries[targetIndex] >> 15) & 0x7fff;
+
     if (index == 0x7fff) return BindFlag_Disable;
     return static_cast<BindFlag>(mBindTable.mEntries[index] >> 30);
 }

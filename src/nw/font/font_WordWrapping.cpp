@@ -1194,10 +1194,12 @@ const int LineBreakRangeCount = sizeof(LineBreakRanges) / sizeof(LineBreakRanges
 LineBreakClass GetLineBreakClass(uint32_t code) {
     int low = 0;
     int high = LineBreakRangeCount;
+
     do {
         const int diff = high - low;
         const int mid = low + diff / 2;
         const LineBreakRange& rRange = LineBreakRanges[mid];
+
         if (static_cast<uint32_t>(diff + 1) <= 2) {
             if (code <= rRange.first + rRange.length) {
                 return static_cast<LineBreakClass>(rRange.lineBreakClass);
@@ -1282,13 +1284,16 @@ __attribute__((always_inline)) LineBreakClass
 ReadLineBreakClass(const CharType** ppCharPos, const CharType** ppPos, const CharType* pEnd,
                    WordWrapCallbackBase<CharType>& rCallback, size_t* pSkipCount) {
     uint32_t code;
+
     for (;;) {
         code = PeekChar(*ppPos);
+
         if (code >= 0x20) {
             break;
         }
 
         const size_t tagSize = rCallback.GetTagSize(pSkipCount, *ppPos, pEnd);
+
         if (tagSize == 0) {
             break;
         }
@@ -1303,6 +1308,7 @@ ReadLineBreakClass(const CharType** ppCharPos, const CharType** ppPos, const Cha
 
     *ppCharPos = *ppPos;
     StepChar(ppPos);
+
     if (*pSkipCount != 0) {
         (*pSkipCount)--;
         return LineBreakClass_GL;
@@ -1323,6 +1329,7 @@ const CharType* FindLineBreakImpl(const CharType* pStart, const CharType* pEnd,
     const CharType* pPos = pStart;
     const CharType* pCharPos;
     LineBreakClass prevClass = ReadLineBreakClass(&pCharPos, &pPos, pEnd, rCallback, &skipCount);
+
     if (prevClass == LineBreakClass_BK) {
         return pCharPos;
     }
@@ -1337,6 +1344,7 @@ const CharType* FindLineBreakImpl(const CharType* pStart, const CharType* pEnd,
     const CharType* pBreak = pEnd;
     const CharType* pPrevPos = pCharPos;
     bool isSpace = false;
+
     while (pPos != pEnd) {
         LineBreakClass lineBreakClass =
             ReadLineBreakClass(&pCharPos, &pPos, pEnd, rCallback, &skipCount);
@@ -1349,6 +1357,7 @@ const CharType* FindLineBreakImpl(const CharType* pStart, const CharType* pEnd,
         bool isMandatory = false;
         bool isDirect = false;
         bool canBreak = true;
+
         if (lineBreakClass == LineBreakClass_BK) {
             isMandatory = true;
         } else {
@@ -1422,6 +1431,7 @@ bool CalculateWordWrappingImpl(uint32_t* pOutLength, CharType* pDst, uint32_t ds
     }
 
     pDst[0] = 0;
+
     if (srcLength == 0 || pSrc[0] == 0) {
         return true;
     }
@@ -1430,6 +1440,7 @@ bool CalculateWordWrappingImpl(uint32_t* pOutLength, CharType* pDst, uint32_t ds
     const CharType* pEnd = pSrc + srcLength;
     int dstPos = 0;
     int lineCount = 0;
+
     for (;;) {
         const CharType* pBreak = FindLineBreakImpl(pSrc, pEnd, rCallback, rConfig);
         const int lineLength = pBreak - pSrc;
@@ -1438,6 +1449,7 @@ bool CalculateWordWrappingImpl(uint32_t* pOutLength, CharType* pDst, uint32_t ds
         int copyLength = remain < breakLength ? remain : lineLength + 1;
         const bool isSpace = IsSpace(ToCode((pSrc + copyLength)[-1]));
         copyLength -= isSpace;
+
         if (isSpace) {
             breakLength = lineLength;
         }
@@ -1445,6 +1457,7 @@ bool CalculateWordWrappingImpl(uint32_t* pOutLength, CharType* pDst, uint32_t ds
         std::memcpy(pDst + dstPos, pSrc, copyLength * sizeof(CharType));
         dstPos += copyLength;
         pDst[dstPos] = 0;
+
         if (breakLength != copyLength) {
             if (pOutLength != nullptr) {
                 *pOutLength = dstPos;
@@ -1455,6 +1468,7 @@ bool CalculateWordWrappingImpl(uint32_t* pOutLength, CharType* pDst, uint32_t ds
 
         pSrc = pBreak;
         StepChar(&pSrc);
+
         if (pSrc == pEnd) {
             if (pOutLength != nullptr) {
                 *pOutLength = dstPos;
@@ -1464,6 +1478,7 @@ bool CalculateWordWrappingImpl(uint32_t* pOutLength, CharType* pDst, uint32_t ds
         }
 
         lineCount++;
+
         if (maxLineCount > 0 && lineCount >= rConfig.maxLineCount) {
             if (pOutLength != nullptr) {
                 *pOutLength = dstPos;
@@ -1489,9 +1504,11 @@ bool CalculateWordWrappingImpl(uint32_t* pOutLength, CharType* pDst, uint32_t ds
         if (rConfig.isLeadingSpaceRemoved) {
             while (IsSpace(PeekChar(pSrc))) {
                 StepChar(&pSrc);
+
                 if (pSrc == pEnd) {
                     dstPos--;
                     pDst[dstPos] = 0;
+
                     if (pOutLength != nullptr) {
                         *pOutLength = dstPos;
                     }

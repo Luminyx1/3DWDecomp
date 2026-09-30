@@ -18,6 +18,7 @@ void ResCameraAnim::Initialize(CameraAnimResult* result) const {
 // result receives values at frame; a temporary cache is used for each sample.
 void ResCameraAnim::Evaluate(CameraAnimResult* result, float frame) const {
     int count = curveCount;
+
     for (int i = 0; i < count; ++i) {
         const ResAnimCurve* curve = &curves[i];
         u32 offset = curve->targetOffset;
@@ -29,6 +30,7 @@ void ResCameraAnim::Evaluate(CameraAnimResult* result, float frame) const {
 // result receives values at frame; cache stores the current interval for each curve.
 void ResCameraAnim::Evaluate(CameraAnimResult* result, float frame, AnimFrameCache* cache) const {
     int count = curveCount;
+
     for (int i = 0; i < count; ++i) {
         const ResAnimCurve* curve = &curves[i];
         u32 offset = curve->targetOffset;
@@ -39,9 +41,11 @@ void ResCameraAnim::Evaluate(CameraAnimResult* result, float frame, AnimFrameCac
 // buffer is the beginning of size writable bytes; an empty request already succeeds.
 bool ResCameraAnim::BakeCurve(void* buffer, size_t size) {
     if (!size) return true;
+
     if ((buffer == nullptr) || bakedSize > size) return false;
     u8* output = static_cast<u8*>(buffer);
     int count = curveCount;
+
     for (int i = 0; i < count; ++i) {
         ResAnimCurve* curve = &curves[i];
         size_t bytes = curve->CalculateBakedFloatSize();
@@ -58,8 +62,10 @@ void* ResCameraAnim::ResetCurve() {
     void* buffer = nullptr;
     bool found = false;
     int count = curveCount;
+
     for (int i = 0; i < count; ++i) {
         ResAnimCurve* curve = &curves[i];
+
         if (((curve->flags & 0x70) == 0x20) & !found) {
             buffer = curve->keys;
             found = true;
@@ -76,6 +82,7 @@ void ResCameraAnim::Reset() { ResetCurves(); }
 // result receives the constant values stored by this light animation.
 void ResLightAnim::Initialize(LightAnimResult* result) const {
     const u8* data = static_cast<const u8*>(baseValues);
+
     if (flags & (1u << 9)) { std::memcpy(&result->enabled, data, 4); data += 4; }
     if (flags & (1u << 10)) { std::memcpy(&result->position, data, 12); data += 12; }
     if (flags & (1u << 11)) { std::memcpy(&result->direction, data, 12); data += 12; }
@@ -88,9 +95,11 @@ void ResLightAnim::Initialize(LightAnimResult* result) const {
 // table supplies name/length pairs for each supported application function category.
 BindResult ResLightAnim::Bind(const BindFuncTable& table) {
     BindResult result;
+
     if (lightFuncIndex == 0xff) {
         int count = table.lengths[BindFuncTable::Light];
         const BindFuncTable::StringLength* names = table.strings[BindFuncTable::Light];
+
         for (int i = 0; i < count; ++i) {
             if (std::strncmp(lightFuncName + 2, names[i].content, names[i].length) == 0) {
                 lightFuncIndex = i;
@@ -105,6 +114,7 @@ BindResult ResLightAnim::Bind(const BindFuncTable& table) {
     if (distanceFuncIndex == 0xff) {
         int count = table.lengths[BindFuncTable::DistanceAttenuation];
         const BindFuncTable::StringLength* names = table.strings[BindFuncTable::DistanceAttenuation];
+
         for (int i = 0; i < count; ++i) {
             if (std::strncmp(distanceFuncName + 2, names[i].content, names[i].length) == 0) {
                 distanceFuncIndex = i;
@@ -119,6 +129,7 @@ BindResult ResLightAnim::Bind(const BindFuncTable& table) {
     if (angleFuncIndex == 0xff) {
         int count = table.lengths[BindFuncTable::AngleAttenuation];
         const BindFuncTable::StringLength* names = table.strings[BindFuncTable::AngleAttenuation];
+
         for (int i = 0; i < count; ++i) {
             if (std::strncmp(angleFuncName + 2, names[i].content, names[i].length) == 0) {
                 angleFuncIndex = i;
@@ -137,6 +148,7 @@ void ResLightAnim::Release() { lightFuncIndex = 0xff; distanceFuncIndex = 0xff; 
 // result receives values at frame; a temporary cache is used for each sample.
 void ResLightAnim::Evaluate(LightAnimResult* result, float frame) const {
     unsigned int first = 0;
+
     if (flags & 0x100) {
         const ResAnimCurve* curve = &curves[0];
         AnimFrameCache temporary;
@@ -145,6 +157,7 @@ void ResLightAnim::Evaluate(LightAnimResult* result, float frame) const {
     }
 
     unsigned int count = curveCount;
+
     for (unsigned int i = first; i < count; ++i) {
         const ResAnimCurve* curve = &curves[i];
         u32 offset = curve->targetOffset;
@@ -156,6 +169,7 @@ void ResLightAnim::Evaluate(LightAnimResult* result, float frame) const {
 // result receives values at frame; cache stores the current interval for each curve.
 void ResLightAnim::Evaluate(LightAnimResult* result, float frame, AnimFrameCache* cache) const {
     unsigned int first = 0;
+
     if (flags & 0x100) {
         result->enabled = curves[0].EvaluateInt(frame, cache);
         first = 1;
@@ -163,6 +177,7 @@ void ResLightAnim::Evaluate(LightAnimResult* result, float frame, AnimFrameCache
 
     cache += first;
     unsigned int count = curveCount;
+
     for (unsigned int i = first; i < count; ++i, ++cache) {
         const ResAnimCurve* curve = &curves[i];
         u32 offset = curve->targetOffset;
@@ -173,9 +188,11 @@ void ResLightAnim::Evaluate(LightAnimResult* result, float frame, AnimFrameCache
 // buffer is the beginning of size writable bytes; an empty request already succeeds.
 bool ResLightAnim::BakeCurve(void* buffer, size_t size) {
     if (!size) return true;
+
     if ((buffer == nullptr) || bakedSize > size) return false;
     u8* output = static_cast<u8*>(buffer);
     int count = curveCount;
+
     for (int i = 0; i < count; ++i) {
         ResAnimCurve* curve = &curves[i];
         size_t bytes = curve->CalculateBakedFloatSize();
@@ -192,8 +209,10 @@ void* ResLightAnim::ResetCurve() {
     void* buffer = nullptr;
     bool found = false;
     int count = curveCount;
+
     for (int i = 0; i < count; ++i) {
         ResAnimCurve* curve = &curves[i];
+
         if (!found && ((curve->flags & 0x70) == 0x20 || (curve->flags & 0x70) == 0x70)) {
             buffer = curve->keys;
             found = true;
@@ -215,9 +234,11 @@ void ResFogAnim::Initialize(FogAnimResult* result) const {
 // table supplies name/length pairs for each supported application function category.
 BindResult ResFogAnim::Bind(const BindFuncTable& table) {
     BindResult result;
+
     if (fogFuncIndex == 0xff) {
         int count = table.lengths[BindFuncTable::Fog];
         const BindFuncTable::StringLength* names = table.strings[BindFuncTable::Fog];
+
         for (int i = 0; i < count; ++i) {
             if (std::strncmp(fogFuncName + 2, names[i].content, names[i].length) == 0) {
                 fogFuncIndex = i;
@@ -235,6 +256,7 @@ void ResFogAnim::Release() { fogFuncIndex = 0xff; }
 // result receives values at frame; a temporary cache is used for each sample.
 void ResFogAnim::Evaluate(FogAnimResult* result, float frame) const {
     int count = curveCount;
+
     for (int i = 0; i < count; ++i) {
         const ResAnimCurve* curve = &curves[i];
         u32 offset = curve->targetOffset;
@@ -246,6 +268,7 @@ void ResFogAnim::Evaluate(FogAnimResult* result, float frame) const {
 // result receives values at frame; cache stores the current interval for each curve.
 void ResFogAnim::Evaluate(FogAnimResult* result, float frame, AnimFrameCache* cache) const {
     int count = curveCount;
+
     for (int i = 0; i < count; ++i) {
         const ResAnimCurve* curve = &curves[i];
         u32 offset = curve->targetOffset;
@@ -256,9 +279,11 @@ void ResFogAnim::Evaluate(FogAnimResult* result, float frame, AnimFrameCache* ca
 // buffer is the beginning of size writable bytes; an empty request already succeeds.
 bool ResFogAnim::BakeCurve(void* buffer, size_t size) {
     if (!size) return true;
+
     if ((buffer == nullptr) || bakedSize > size) return false;
     u8* output = static_cast<u8*>(buffer);
     int count = curveCount;
+
     for (int i = 0; i < count; ++i) {
         ResAnimCurve* curve = &curves[i];
         size_t bytes = curve->CalculateBakedFloatSize();
@@ -275,8 +300,10 @@ void* ResFogAnim::ResetCurve() {
     void* buffer = nullptr;
     bool found = false;
     int count = curveCount;
+
     for (int i = 0; i < count; ++i) {
         ResAnimCurve* curve = &curves[i];
+
         if (((curve->flags & 0x70) == 0x20) & !found) {
             buffer = curve->keys;
             found = true;
@@ -294,8 +321,10 @@ void ResFogAnim::Reset() { ResetCurves(); }
 BindResult ResSceneAnim::Bind(const BindFuncTable& table) {
     BindResult result;
     int count = mLightAnimCount;
+
     for (int i = 0; i < count; ++i) result.Merge(mLightAnims[i].Bind(table));
     count = mFogAnimCount;
+
     for (int i = 0; i < count; ++i) result.Merge(mFogAnims[i].Bind(table));
     return result;
 }

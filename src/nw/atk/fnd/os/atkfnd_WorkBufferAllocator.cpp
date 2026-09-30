@@ -14,6 +14,7 @@ void* WorkBufferAllocator::Allocate(size_t size) {
     if (!size) return nullptr;
     uintptr_t start = mBuffer + mOffset;
     uintptr_t end = start + size;
+
     if (end > mBuffer + mSize) return nullptr;
     mOffset = end - mBuffer;
     return reinterpret_cast<void*>(start);
@@ -22,9 +23,11 @@ void* WorkBufferAllocator::Allocate(size_t size) {
 // size requests bytes; alignment is the required power-of-two address alignment.
 void* WorkBufferAllocator::Allocate(size_t size, size_t alignment) {
     void* result = nullptr;
+
     if (size) {
         uintptr_t start = (mBuffer + mOffset + alignment - 1) & -alignment;
         uintptr_t end = start + size;
+
         if (end <= mBuffer + mSize) {
             mOffset = end - mBuffer;
             result = reinterpret_cast<void*>(start);
@@ -38,6 +41,7 @@ void* WorkBufferAllocator::Allocate(size_t size, size_t alignment) {
 // The original returns the first result even if a later allocation fails.
 void* WorkBufferAllocator::Allocate(size_t size, size_t alignment, int count) {
     void* first = Allocate(size, alignment);
+
     for (int i = 1; i < count; ++i) Allocate(size, alignment);
     return first;
 }

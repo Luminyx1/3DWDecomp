@@ -60,6 +60,7 @@ template <typename CharType>
 void TagProcessorBase<CharType>::ProcessTab(PrintContext<CharType>* pContext) const {
     TextWriterBase<CharType>& rWriter = *pContext->writer;
     const int tabWidth = rWriter.GetTabWidth();
+
     if (tabWidth > 0) {
         const float charWidth =
             rWriter.IsWidthFixed() ? rWriter.GetFixedWidth() : rWriter.GetFontWidth();
@@ -89,6 +90,7 @@ typename TagProcessorBase<CharType>::Operation TagProcessorBase<CharType>::Calcu
         ProcessLinefeed(pContext);
         pRect->left = rWriter.GetCursorX();
         pRect->bottom = rWriter.GetCursorY();
+
         if (!pContext->writer->GetLinefeedByCharacterHeightEnabled()) {
             pRect->bottom += pContext->writer->GetFontHeight();
         }

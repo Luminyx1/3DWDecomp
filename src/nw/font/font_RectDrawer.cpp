@@ -137,11 +137,13 @@ void RectDrawer::Finalize(nn::gfx::Device* pDevice) {
     FinalizeIfNecessary(m_IndexBuffer, pDevice);
     FinalizeIfNecessary(m_MemoryPoolForBuffers, pDevice);
     FinalizeIfNecessary(m_Sampler, pDevice);
+
     for (int i = 0; i < ShaderVariationCount; i++) {
         FinalizeIfNecessary(m_VertexStates[i], pDevice);
     }
 
     nn::gfx::ResShaderContainer* pContainer = m_pResShaderFile->GetShaderContainer();
+
     for (int i = 0; i < ShaderVariationCount; i++) {
         pContainer->GetResShaderVariation(i)->GetResShaderProgram(m_CodeType)->Finalize(pDevice);
     }
@@ -230,6 +232,7 @@ void RectDrawer::Draw(nn::gfx::CommandBuffer& rCommandBuffer,
     perCharacterParamsAddress.Offset(rBuffer.m_PerCharacterParamOffset);
 
     uint32_t flags = rBuffer.m_ShaderVariationFlags;
+
     if (rBuffer.m_IsDoubleDrawnBorder) {
         AddDrawCommand(rCommandBuffer, rVertexBufferData,
                        flags & ~DispStringBuffer::ShaderVariationFlag_BorderPass,
@@ -263,15 +266,19 @@ void RectDrawer::AddDrawCommand(nn::gfx::CommandBuffer& rCommandBuffer,
     nn::gfx::GpuAddress perCharacterParamsAddress = rPerCharacterParamsAddress;
 
     int currentVariation = 7;
+
     for (uint32_t i = 0; i < count; i++) {
         const DispStringBuffer::TextureUseInfo& rInfo = rVertexBufferData.textureUseInfos[i];
+
         if (rInfo.useCount == 0) {
             continue;
         }
 
         int variation = 0;
+
         if (shaderVariationFlags & DispStringBuffer::ShaderVariationFlag_PerCharacterTransform) {
             variation = 3;
+
             if (rInfo.flags & 2) {
                 variation = 4 | (shaderVariationFlags & 1);
             }
@@ -314,6 +321,7 @@ void RectDrawer::AddDrawCommand(nn::gfx::CommandBuffer& rCommandBuffer,
 
         {
             nn::gfx::GpuAddress gpuAddress;
+
             if (rInfo.flags & 1) {
                 m_ShaderParamBlackWhiteInterpolationEnabledBuffer.GetGpuAddress(&gpuAddress);
             } else {
@@ -386,6 +394,7 @@ bool RectDrawer::Initialize(nn::gfx::Device* pDevice, void* pWorkMemory, uint32_
 
     if (!isInitialized) {
         pProgram = pVariation->GetResShaderProgram(nn::gfx::ShaderCodeType_Ir);
+
         if (pProgram != nullptr) {
             m_CodeType = nn::gfx::ShaderCodeType_Ir;
             isInitialized =
@@ -440,6 +449,7 @@ bool RectDrawer::Initialize(nn::gfx::Device* pDevice, void* pWorkMemory, uint32_
         info.SetVertexBufferStateInfoArray(&buffer, 1);
 
         size_t memorySize = nn::gfx::VertexState::GetRequiredMemorySize(info);
+
         for (int i = 0; i < ShaderVariationCount; i++) {
             workMemory.AlignUp(8);
             m_VertexStates[i].SetMemory(workMemory.Get(), memorySize);
@@ -495,6 +505,7 @@ bool RectDrawer::Initialize(nn::gfx::Device* pDevice, void* pWorkMemory, uint32_
         m_VertexBuffer.Initialize(pDevice, info, pMemoryPool, vertexBufferOffset,
                                   info.GetSize());
         Vertex* pVertices = m_VertexBuffer.Map<Vertex>();
+
         for (int i = 0; i < VertexCount; i++) {
             pVertices[i].position[0] = static_cast<float>(i & 1);
             pVertices[i].position[1] = static_cast<float>(i >> 1);

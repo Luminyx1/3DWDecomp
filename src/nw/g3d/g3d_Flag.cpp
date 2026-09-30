@@ -7,8 +7,10 @@ void FlagSet::Initialize(int flagCount, int bufferCount, void* buffer, size_t bu
     mFlagCount = flagCount;
     mBufferCount = bufferCount;
     mWordCount = (flagCount + 31) >> 5;
+
     if (flagCount > 0) {
         mPending = static_cast<u32*>(buffer);
+
         if (bufferCount == 1) mBufferFlags = mPending;
         else mBufferFlags = mPending + mWordCount;
     } else {
@@ -22,9 +24,11 @@ void FlagSet::Initialize(int flagCount, int bufferCount, void* buffer, size_t bu
 
 void FlagSet::Caclulate() {
     if (!(mFlags & 1)) return;
+
     if (mBufferCount > 1 && mFlagCount > 0) {
         for (int word = 0; word < mWordCount; ++word) {
             u32 pending = mPending[word];
+
             for (int buffer = 0; buffer < mBufferCount; ++buffer)
                 mBufferFlags[buffer * mWordCount + word] |= pending;
             mPending[word] = 0;

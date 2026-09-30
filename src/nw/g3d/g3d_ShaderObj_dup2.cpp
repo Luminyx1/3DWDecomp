@@ -89,6 +89,7 @@ void Sphere::Merge(const Sphere& first, const Sphere& second) {
     float32x4_t difference = vsubq_f32(second.center._v, first.center._v);
     float distanceSquared = Dot(difference, difference);
     float radiusDifference = second.radius - first.radius;
+
     if (distanceSquared < vget_lane_f32(vmax_f32(vdup_n_f32(radiusDifference * radiusDifference), vdup_n_f32(0.0001f)), 0)) {
         *this = first.radius > second.radius ? first : second;
     } else {
@@ -105,6 +106,7 @@ void Sphere::Merge(const Sphere& first, const Sphere& second) {
 void Aabb::Set(const nn::util::Vector3fType* points, int count) {
     float32x4_t high = points[0]._v;
     float32x4_t low = high;
+
     for (int i = 0; i < count; ++i) {
         low = Minimum(low, points[i]._v);
         high = Maximum(high, points[i]._v);
@@ -159,6 +161,7 @@ void ViewVolume::SetFrustum(float top, float bottom, float left, float right, fl
     points[5]._v = Vector(ratio * right, ratio * top, -far);
     points[6]._v = Vector(ratio * right, ratio * bottom, -far);
     points[7]._v = Vector(ratio * left, ratio * bottom, -far);
+
     for (int i = 0; i < 8; ++i) points[i]._v = TransformPosition(points[i]._v, matrix);
     bounds.Set(points, 8);
     nn::util::Vector3fType origin = {matrix._m.val[3]};
@@ -183,6 +186,7 @@ void ViewVolume::SetOrtho(float top, float bottom, float left, float right, floa
     points[5]._v = Vector(right, top, -far);
     points[6]._v = Vector(right, bottom, -far);
     points[7]._v = Vector(left, bottom, -far);
+
     for (int i = 0; i < 8; ++i) points[i]._v = TransformPosition(points[i]._v, matrix);
     bounds.Set(points, 8);
     planes[0].Set(points[0], points[7], points[4]);
@@ -207,9 +211,12 @@ bool ViewVolume::TestIntersection(const Sphere& shape) const {
 // shape is classified as outside (-1), intersecting (0), or fully inside (1).
 int ViewVolume::TestIntersectionEx(const Sphere& shape) const {
     int result = 1;
+
     for (int i = 0; i < planeCount; ++i) {
         float distance = Dot(planes[i].normal._v, shape.center._v) + planes[i].distance;
+
         if (distance > shape.radius) return -1;
+
         if (distance >= -shape.radius) result = 0;
     }
 
@@ -220,10 +227,15 @@ int ViewVolume::TestIntersectionEx(const Sphere& shape) const {
 bool ViewVolume::TestIntersection(const Aabb& shape) const {
     if (useBounds) {
         if (bounds.minimum._v[0] > shape.maximum._v[0]) return false;
+
         if (shape.minimum._v[0] > bounds.maximum._v[0]) return false;
+
         if (bounds.minimum._v[1] > shape.maximum._v[1]) return false;
+
         if (shape.minimum._v[1] > bounds.maximum._v[1]) return false;
+
         if (bounds.minimum._v[2] > shape.maximum._v[2]) return false;
+
         if (shape.minimum._v[2] > bounds.maximum._v[2]) return false;
     }
 
@@ -235,6 +247,7 @@ bool ViewVolume::TestIntersection(const Aabb& shape) const {
         low = vsetq_lane_f32(normal[2] >= 0 ? shape.minimum._v[2] : shape.maximum._v[2], low, 2);
         float projected = Dot(normal, low);
         float distance = planes[i].distance;
+
         if (projected + distance > 0) return false;
     }
 
@@ -245,14 +258,20 @@ bool ViewVolume::TestIntersection(const Aabb& shape) const {
 int ViewVolume::TestIntersectionEx(const Aabb& shape) const {
     if (useBounds) {
         if (bounds.minimum._v[0] > shape.maximum._v[0]) return -1;
+
         if (shape.minimum._v[0] > bounds.maximum._v[0]) return -1;
+
         if (bounds.minimum._v[1] > shape.maximum._v[1]) return -1;
+
         if (shape.minimum._v[1] > bounds.maximum._v[1]) return -1;
+
         if (bounds.minimum._v[2] > shape.maximum._v[2]) return -1;
+
         if (shape.minimum._v[2] > bounds.maximum._v[2]) return -1;
     }
 
     int result = 1;
+
     for (int i = 0; i < planeCount; ++i) {
         float32x4_t normal = planes[i].normal._v;
         float low0 = normal[0] >= 0 ? shape.minimum._v[0] : shape.maximum._v[0];
@@ -264,7 +283,9 @@ int ViewVolume::TestIntersectionEx(const Aabb& shape) const {
         float32x4_t low = Vector(low0, low1, low2);
         float projected = Dot(normal, low);
         float distance = planes[i].distance;
+
         if (projected + distance > 0) return -1;
+
         if (result && distance + Dot(normal, Vector(high0, high1, high2)) >= 0) result = 0;
     }
 
@@ -275,13 +296,17 @@ int ViewVolume::TestIntersectionEx(const Aabb& shape) const {
 int SubMeshRange::And(SubMeshRange* output, const SubMeshRange* first, const SubMeshRange* second) {
     const SubMeshRange* early = first;
     const SubMeshRange* late = second;
+
     if (early->start > late->start) std::swap(early, late);
     int count = 0;
+
     while (early->count) {
         if (!late->count) break;
         unsigned end = early->start + early->count;
+
         if (end <= late->start) {
             ++early;
+
             if (early->start > late->start) std::swap(early, late);
             continue;
         }

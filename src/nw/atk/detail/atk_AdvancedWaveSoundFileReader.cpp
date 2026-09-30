@@ -14,11 +14,14 @@ u32 ReadPackedVersion(const nn::util::BinVersion& version) {
 // file points to a complete BAWSD resource. Invalid headers leave the reader uninitialized.
 AdvancedWaveSoundFileReader::AdvancedWaveSoundFileReader(const void* file) {
     const auto* header = static_cast<const AdvancedWaveSoundFile*>(file);
+
     if (!header->signature.IsValid("BAWSD   ") || header->_byteOrderMark != 0xfeff ||
         ReadPackedVersion(header->version) != 0x10000) return;
     const auto* block = header->GetBlock();
+
     if (!block) return;
     const char* signature = block->signature._str;
+
     if (signature[0] != 'I' || signature[1] != 'N' || signature[2] != 'F' || signature[3] != 'O') return;
     mInfo = &block->body;
 }
@@ -35,10 +38,12 @@ int AdvancedWaveSoundFileReader::GetWaveSoundClipCount(int track) const {
 // info receives the decoded tracks and clips. The file must fit its four tracks and ten clips per track.
 bool AdvancedWaveSoundFileReader::ReadWaveSoundTrackInfoSet(AdvancedWaveSoundTrackInfoSet* info) {
     info->trackCount = GetWaveSoundTrackCount();
+
     for (int i = 0; i < info->trackCount; ++i) {
         const auto* track = mInfo->GetWaveSoundTrack(i);
         auto& output = info->tracks[i];
         output.clipCount = track->GetClipReferenceTable()->count;
+
         for (int j = 0; j < output.clipCount; ++j) {
             const auto* clip = track->GetWaveSoundClip(j);
             auto& result = output.clips[j];

@@ -15,6 +15,7 @@ void BoneVisibilityAnimObj::InitializeArgument::CalculateMemorySize() {
     blocks[2].size = cacheAvailable && cacheEnabled ? (curveCount * sizeof(AnimFrameCache) + 7) & ~size_t(7) : 0;
     memorySize = 0;
     memoryAlignment = 8;
+
     for (int i = 0; i < 3; ++i) {
         if (blocks[i].size) {
             size_t offset = (memorySize + 7) & ~size_t(7);
@@ -28,9 +29,13 @@ void BoneVisibilityAnimObj::InitializeArgument::CalculateMemorySize() {
 // argument specifies capacities and caching; memory provides size bytes of working storage.
 bool BoneVisibilityAnimObj::Initialize(const InitializeArgument& argument, void* memory, size_t size) {
     if (!argument.memoryAlignment) return false;
+
     if (argument.targetCount < 0) return false;
+
     if (argument.animCount < 0) return false;
+
     if (argument.curveCount < 0) return false;
+
     if (argument.memorySize > size) return false;
     int bindings = argument.GetBindCount();
     int curves = argument.curveCount;
@@ -64,8 +69,10 @@ BindResult BoneVisibilityAnimObj::Bind(const ResModel* model) {
     BindResult result;
     int count = mBindTable.mAnimCount;
     const nn::util::BinPtrToString* names = mResource->names;
+
     for (int i = 0; i < count; ++i) {
         int target = dictionary->FindIndex(names[i].Get()->GetData());
+
         if (target >= 0) {
             mBindTable.mEntries[i] &= 0x3fff8000;
             mBindTable.mEntries[i] |= target & 0x7fff;
@@ -100,14 +107,18 @@ void BoneVisibilityAnimObj::BindFast(const ResModel* model) {
 void BoneVisibilityAnimObj::Calculate() {
     float lastFrame = mContext.mLastFrame;
     float frame = mFrameCtrlPointer->GetFrame();
+
     if (lastFrame == frame) return;
     u32* result = static_cast<u32*>(mResult);
+
     if (!mContext.IsCacheValid()) {
         // Walk target fields at the curve stride; only enabled bindings need a curve evaluation.
         ptrdiff_t fieldOffset = offsetof(ResAnimCurve, targetOffset);
+
         for (ptrdiff_t i = 0; i < mCurveCount; ++i, fieldOffset += sizeof(ResAnimCurve)) {
             const u8* field = reinterpret_cast<const u8*>(mCurves) + fieldOffset;
             int target = *reinterpret_cast<const s32*>(field);
+
             if (!(mBindTable.mEntries[target] & 0x40000000)) {
                 const ResAnimCurve* curve = reinterpret_cast<const ResAnimCurve*>(field - offsetof(ResAnimCurve, targetOffset));
                 AnimFrameCache cache;
@@ -122,6 +133,7 @@ void BoneVisibilityAnimObj::Calculate() {
         for (int i = 0; i < mCurveCount; ++i) {
             const ResAnimCurve* curve = &mCurves[i];
             int target = curve->targetOffset;
+
             if (!(mBindTable.mEntries[target] & 0x40000000)) {
                 bool visible = curve->EvaluateInt(frame, &mContext.mCache[i]) != 0;
                 u32* word = &result[target >> 5];
@@ -139,8 +151,10 @@ void BoneVisibilityAnimObj::Calculate() {
 void BoneVisibilityAnimObj::ApplyTo(ModelObj* model) const {
     int count = mBindTable.mAnimCount;
     const u32* result = static_cast<const u32*>(mResult);
+
     for (int i = 0; i < count; ++i) {
         u32 binding = mBindTable.mEntries[i];
+
         if (!(binding & 0x80000000))
             model->SetBoneVisible(binding & 0x7fff, (result[static_cast<unsigned>(i) >> 5] & (1u << (i & 31))) != 0);
     }
@@ -150,8 +164,10 @@ void BoneVisibilityAnimObj::ApplyTo(ModelObj* model) const {
 void BoneVisibilityAnimObj::RevertTo(ModelObj* model) const {
     int count = mBindTable.mAnimCount;
     const SkeletonObj* skeleton = model->GetSkeleton();
+
     for (int i = 0; i < count; ++i) {
         u32 binding = mBindTable.mEntries[i];
+
         if (!(binding & 0x80000000)) {
             int target = binding & 0x7fff;
             model->SetBoneVisible(target, skeleton->GetBone(target)->IsVisible());

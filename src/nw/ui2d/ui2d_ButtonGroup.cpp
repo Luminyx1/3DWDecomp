@@ -6,6 +6,7 @@ namespace {
 inline bool SameName(const char* name, const char* candidate) {
     for (size_t i = 0; i < 64; ++i) {
         if (name[i] != candidate[i]) return false;
+
         if (!name[i]) return true;
     }
 
@@ -21,11 +22,14 @@ void ButtonGroup::Update(const nn::util::Float2* position, bool pressed, bool re
     bool allowPress = !(mFlags & 2) || !IsExistExcludingDown();
     bool allowHit = ((mFlags & 4) >> 2) & ((position != nullptr) & allowPress);
     AnimButton* selected = nullptr;
+
     if (mDragging) {
         if (allowHit && (mDragging->mFlags & 0x10) && mDragging->IsHit(*position)) selected = mDragging;
         mDragging->UpdateDragPosition(position);
+
         if (released) {
             mDragging->Cancel();
+
             if (selected != mDragging) mDragging->Off();
             mDragging = nullptr;
         }
@@ -37,14 +41,17 @@ void ButtonGroup::Update(const nn::util::Float2* position, bool pressed, bool re
 
     if (mSelected != selected) {
         if (mSelected) mSelected->Off();
+
         if (selected) selected->On();
         mSelected = selected;
     }
 
     if (selected) {
         bool down = allowPress && pressed;
+
         if (down) { selected->Down(); selected = mSelected; }
         u32 dragMode = (selected->mFlags >> 6) & 3;
+
         if ((dragMode == 2 || (dragMode == 1 && down)) && !mDragging && !released) {
             mDragging = mSelected;
             mDragging->InitializeDragPosition(*position);

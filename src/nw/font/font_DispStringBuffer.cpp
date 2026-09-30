@@ -22,6 +22,7 @@ void MultiplyMatrixT4x3(nn::util::MatrixT4x4fType* pOut, const nn::util::MatrixT
     lhs.val[3] = vsetq_lane_f32(1.0f, vdupq_n_f32(0.0f), 3);
     float32x4x4_t rhs = rRhs._m;
     float32x4x4_t result;
+
     for (int i = 0; i < 4; i++) {
         result.val[i] = vmulq_laneq_f32(lhs.val[0], rhs.val[i], 0);
         result.val[i] = vfmaq_laneq_f32(result.val[i], lhs.val[1], rhs.val[i], 1);
@@ -188,8 +189,10 @@ void DispStringBuffer::BuildConstantBuffer(const nn::util::MatrixT4x4fType& rPro
     m_ConstantBufferOffset = m_pConstantBuffer->Allocate(shaderParamSize << m_IsDoubleDrawnBorder);
 
     void* pMapped = m_pConstantBuffer->GetMappedPointer();
+
     if (pMapped != nullptr) {
         nn::util::BytePtr ptr(pMapped, m_ConstantBufferOffset);
+
         if (m_IsDoubleDrawnBorder) {
             ConstantBufferAdditionalContent borderContent = rContent;
             std::memcpy(&borderContent.m_InterpolateWhite, &rContent.m_InterpolateBlack,
@@ -209,6 +212,7 @@ void DispStringBuffer::BuildConstantBuffer(const nn::util::MatrixT4x4fType& rPro
                                              isOriginToCenterEnabled);
 
     m_ShaderVariationFlags = rContent.m_ShaderVariationFlags;
+
     if (rContent.m_pShadowParam != nullptr) {
         m_ShaderVariationFlags |= ShaderVariationFlag_Shadow;
     }
@@ -226,6 +230,7 @@ void DispStringBuffer::BuildCommonConstantBufferData(
     }
 
     nn::util::MatrixT4x4fType mtx;
+
     if (rContent.m_pViewMatrix != nullptr) {
         MultiplyMatrixT4x3(&mtx, *rContent.m_pViewMatrix, rProjection);
     } else {
@@ -270,6 +275,7 @@ void DispStringBuffer::BuildPerCharacterAttributeConstantBuffer(
                        sizeof(detail::VertexShaderCharAttributeWithTransform) :
                        sizeof(detail::VertexShaderCharAttribute);
     size_t size = stride * charCount;
+
     if (rContent.m_pShadowParam != nullptr) {
         m_PerCharacterParamOffset = m_pConstantBuffer->Allocate(size * 2);
     } else {
@@ -294,9 +300,11 @@ void DispStringBuffer::BuildPerCharacterAttributeConstantBuffer(
 void DispStringBuffer::BuildTextureUseInfos(bool isDrawFromRightToLeftEnabled) {
     uint32_t count = 0;
     uint32_t charCount = m_CharCount;
+
     for (uint32_t i = 0; i < charCount; i++) {
         const TextureObject* pTexObj = m_pCharAttrs[i].GetTexObj();
         uint8_t index = 0;
+
         for (; index < count; index++) {
             if (m_VertexBufferData.textureUseInfos[index].pTexObj == pTexObj) {
                 break;
@@ -311,11 +319,13 @@ void DispStringBuffer::BuildTextureUseInfos(bool isDrawFromRightToLeftEnabled) {
             rInfo.useCount = 1;
             rInfo.flags = 0;
             rInfo.flags = pTexObj->IsColorBlackWhiteInterpolationEnabled();
+
             if (m_pCharAttrs[i].IsBorderEffectEnabled()) {
                 rInfo.flags |= 2;
             }
 
             count++;
+
             if (count >= TextureUseInfoCountMax) {
                 break;
             }
@@ -346,12 +356,14 @@ void DispStringBuffer::BuildPerCharacterParams(
 
     uint32_t startIndices[TextureUseInfoCountMax] = {};
     uint32_t sum = 0;
+
     for (int i = 0; i < static_cast<int>(m_VertexBufferData.textureUseInfoCount); i++) {
         startIndices[i] = sum;
         sum += m_VertexBufferData.textureUseInfos[i].useCount;
     }
 
     uint32_t counts[TextureUseInfoCountMax] = {};
+
     if (pMapped == nullptr) {
         return;
     }
@@ -491,6 +503,7 @@ void DispStringBuffer::CalculatePerCharacterTransform(
     bool isOriginToCenterEnabled, float shadowOffsetY) const {
     float centerX = (x + x + width + italicOffset) * 0.5f;
     float centerY = y;
+
     if (!isOriginToCenterEnabled) {
         switch (center) {
         case ConstantBufferAdditionalContent::PerCharacterTransformCenter_Center:

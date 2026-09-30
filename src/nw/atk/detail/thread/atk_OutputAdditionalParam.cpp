@@ -5,6 +5,7 @@ namespace nn::atk::detail {
 // config selects optional packets and the number of output buses needing storage.
 size_t OutputAdditionalParam::GetRequiredMemSize(const SoundInstanceConfig& config) {
     size_t size = config.busCount > 4 ? sizeof(ValueArray<float>) + sizeof(float) * (config.busCount - 4) : 0;
+
     if (config.enableBusMixVolume)
         size += sizeof(BusMixVolumePacket) + BusMixVolumePacket::GetRequiredMemSize(config.busCount);
     if (config.enableVolumeThroughMode)
@@ -16,6 +17,7 @@ size_t OutputAdditionalParam::GetRequiredMemSize(const SoundInstanceConfig& conf
 // Capacity checks are absent in this build; disabled packet pointers must already be null.
 void OutputAdditionalParam::Initialize(void* memory, size_t size, const SoundInstanceConfig& config) {
     auto* cursor = static_cast<u8*>(memory);
+
     if (config.busCount > 4) {
         mAdditionalSend = reinterpret_cast<ValueArray<float>*>(cursor);
         new (mAdditionalSend) ValueArray<float>;
@@ -52,12 +54,15 @@ void OutputAdditionalParam::Finalize() {
 
 void OutputAdditionalParam::Reset() {
     if (mAdditionalSend) mAdditionalSend->Reset();
+
     if (mBusMix) mBusMix->Reset();
+
     if (mVolumeThrough) mVolumeThrough->Reset();
 }
 
 void* OutputAdditionalParam::GetBufferAddr() {
     if (mAdditionalSend) return mAdditionalSend;
+
     if (mBusMix) return mBusMix;
     return mVolumeThrough;
 }
@@ -67,6 +72,7 @@ const ValueArray<float>* OutputAdditionalParam::GetAdditionalSendAddr() const { 
 // bus is an output bus index; indices beyond the four built-in buses access the extra sends.
 float OutputAdditionalParam::TryGetAdditionalSend(int bus) const {
     int index = bus - 4;
+
     if (index < 0 || mAdditionalSend->mCount <= index) return 0.0f;
     return mAdditionalSend->mValues[index];
 }
@@ -75,6 +81,7 @@ bool OutputAdditionalParam::IsAdditionalSendEnabled() const { return mAdditional
 // bus selects an extra send and send is its gain; out-of-range indices are ignored.
 void OutputAdditionalParam::TrySetAdditionalSend(int bus, float send) {
     int index = bus - 4;
+
     if (index < 0 || mAdditionalSend->mCount <= index) return;
     mAdditionalSend->mValues[index] = send;
 }
@@ -104,6 +111,7 @@ void OutputAdditionalParam::SetBinaryVolume(float volume) { if (mVolumeThrough) 
 // bus selects a mode byte; invalid indices return the default mode, zero.
 u8 OutputAdditionalParam::TryGetVolumeThroughMode(int bus) const {
     if (bus < 0) return 0;
+
     if (bus >= mVolumeThrough->mBusCount) return 0;
     return mVolumeThrough->mModes[bus];
 }
@@ -128,12 +136,15 @@ OutputAdditionalParam& OutputAdditionalParam::operator=(const OutputAdditionalPa
 
     if (mBusMix && other.mBusMix) {
         mBusMix->mUsed = other.mBusMix->mUsed;
+
         if (mBusMix->mUsed) {
             mBusMix->mVolume = other.mBusMix->mVolume;
             int destinationCount = mBusMix->mBusCount;
             int sourceCount = other.mBusMix->mBusCount;
             int count = sourceCount < destinationCount ? sourceCount : destinationCount;
+
             for (int i = 0; i < count; ++i) mBusMix->mEnabled[i] = other.mBusMix->mEnabled[i];
+
             if (count < mBusMix->mBusCount) {
                 // The original loop tests the bus count itself, rather than the index.
                 for (int i = count; mBusMix->mBusCount; ++i) mBusMix->mEnabled[i] = false;

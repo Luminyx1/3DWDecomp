@@ -53,17 +53,20 @@ void DrawInfo::ResetCurrentShader() {
 // bufferIndex selects the CPU-writable buffer in each optional constant-buffer collection.
 void DrawInfo::Map(int bufferIndex) {
     if (m_pConstantBuffer) m_pConstantBuffer->Map(bufferIndex);
+
     if (m_pFontConstantBuffer) m_pFontConstantBuffer->Map(bufferIndex);
 }
 
 void DrawInfo::Unmap() {
     if (m_pConstantBuffer) m_pConstantBuffer->Unmap();
+
     if (m_pFontConstantBuffer) m_pFontConstantBuffer->Unmap();
 }
 
 // bufferIndex selects which constant buffer each subsequent GPU command reads.
 void DrawInfo::SetGpuAccessBufferIndex(int bufferIndex) {
     if (m_pConstantBuffer) m_pConstantBuffer->m_GpuAccessBufferIndex = bufferIndex;
+
     if (m_pFontConstantBuffer) m_pFontConstantBuffer->m_GpuAccessBufferIndex = bufferIndex;
 }
 
@@ -103,7 +106,9 @@ void DrawInfo::ResetRenderTarget(nn::gfx::CommandBuffer& rCommands) const {
     commands.SetRenderTargets(1, reinterpret_cast<const ColorView* const*>(&m_pColorTarget), m_pDepthTarget);
     commands.SetScissors(0, 1, &mScissor);
     commands.SetViewports(0, 1, &mViewport);
+
     if (m_pDepthStencilState) commands.SetDepthStencilState(m_pDepthStencilState);
+
     if (m_pRasterizerState) commands.SetRasterizerState(m_pRasterizerState);
 }
 

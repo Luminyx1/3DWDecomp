@@ -6,6 +6,7 @@ namespace nn::atk::detail::driver {
 SequenceTrack* MmlSequenceTrackAllocator::AllocTrack(SequenceSoundPlayer* player) {
     void* memory = mPool.AllocImpl();
     auto* track = memory ? new (memory) MmlSequenceTrack : nullptr;
+
     if (track) {
         track->SetPlayer(player);
         track->SetParser(mParser);
@@ -17,6 +18,7 @@ SequenceTrack* MmlSequenceTrackAllocator::AllocTrack(SequenceSoundPlayer* player
 // track is detached and destroyed before its storage is returned to the pool.
 void MmlSequenceTrackAllocator::FreeTrack(SequenceTrack* track) {
     track->SetPlayer(nullptr);
+
     if (track) {
         track->~SequenceTrack();
         mPool.FreeImpl(track);

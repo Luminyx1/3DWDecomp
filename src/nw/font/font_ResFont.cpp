@@ -75,6 +75,7 @@ bool IsKnownBlock(uint32_t kind) {
  */
 void ResFont::RevertResource(void* pBfnt) {
     detail::BinaryFileHeader* pHeader = static_cast<detail::BinaryFileHeader*>(pBfnt);
+
     if (pHeader->signature != BinFileSignatureFontUnrelocated) {
         return;
     }
@@ -143,12 +144,14 @@ bool ResFont::SetResource(nn::gfx::Device* pDevice, void* pBfnt, nn::gfx::Memory
     }
 
     detail::BinaryFileHeader* pHeader = static_cast<detail::BinaryFileHeader*>(pBfnt);
+
     if (!detail::IsValidBinaryFile(pHeader, BinFileSignatureFont, FontFileVersion, 2)) {
         return false;
     }
 
     FontInformation* pFontInfo = Rebuild(pHeader);
     m_pResourceBase = pHeader;
+
     if (pFontInfo == nullptr) {
         return false;
     }

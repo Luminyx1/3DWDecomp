@@ -15,6 +15,7 @@ static_assert(sizeof(nn::gfx::Buffer) == 0x48, "Buffer object size");
 
 void ResSceneAnim::Release() {
     int count = mLightAnimCount;
+
     for (int i = 0; i < count; ++i) {
         ResLightAnim* anim = &mLightAnims[i];
         anim->lightFuncIndex = 0xff;
@@ -23,16 +24,20 @@ void ResSceneAnim::Release() {
     }
 
     count = mFogAnimCount;
+
     for (int i = 0; i < count; ++i) mFogAnims[i].fogFuncIndex = 0xff;
 }
 
 void ResSceneAnim::Reset() {
     int count = mCameraAnimCount;
+
     for (int i = 0; i < count; ++i)
         reinterpret_cast<ResCameraAnim*>(mCameraAnimOffset)[i].ResetCurves();
     count = mLightAnimCount;
+
     for (int i = 0; i < count; ++i) mLightAnims[i].ResetCurves();
     count = mFogAnimCount;
+
     for (int i = 0; i < count; ++i) mFogAnims[i].ResetCurves();
 }
 
@@ -41,6 +46,7 @@ void ResVertex::Setup(nn::gfx::Device* device) {
     ptrdiff_t offset = memoryPoolOffset;
     nn::gfx::MemoryPool* pool = pMemoryPool.Get();
     int count = bufferCount;
+
     for (ptrdiff_t i = 0; i < count; ++i) {
         pVertexBufferArray.Get()[i] = &pBufferObjects.Get()[i];
         nn::gfx::Buffer** table = pVertexBufferArray.Get();
@@ -58,6 +64,7 @@ void ResVertex::Setup(nn::gfx::Device* device) {
 void ResVertex::Setup(nn::gfx::Device* device, nn::gfx::MemoryPool* pool, ptrdiff_t offset) {
     int count = bufferCount;
     offset += memoryPoolOffset;
+
     for (int i = 0; i < count; ++i) {
         pVertexBufferArray.Get()[i] = &pBufferObjects.Get()[i];
         nn::gfx::BufferInfo* info = reinterpret_cast<nn::gfx::BufferInfo*>(&pVertexBufferInfoArray.Get()[i]);
@@ -73,9 +80,11 @@ void ResVertex::Setup(nn::gfx::Device* device, nn::gfx::MemoryPool* pool, ptrdif
 // device owns each initialized vertex buffer that must be finalized.
 void ResVertex::Cleanup(nn::gfx::Device* device) {
     int count = bufferCount;
+
     for (int i = 0; i < count; ++i) {
         pVertexBufferArray.Get()[i] = &pBufferObjects.Get()[i];
         nn::gfx::Buffer* buffer = pVertexBufferArray.Get()[i];
+
         if (buffer->ToData()->state) { buffer->Finalize(device); buffer->~TBuffer(); }
     }
 }
@@ -84,6 +93,7 @@ void ResVertex::Reset() { Reset(0); }
 // guard bit 0 preserves user data; bit 1 preserves dynamic attribute flags.
 void ResVertex::Reset(u32 guard) {
     int count = bufferCount;
+
     for (int i = 0; i < count; ++i) {
         nn::gfx::Buffer* object = pBufferObjects.Get();
         nn::gfx::Buffer** table = pVertexBufferArray.Get();
@@ -91,8 +101,10 @@ void ResVertex::Reset(u32 guard) {
     }
 
     if (!(guard & 1)) pUserPtr.Clear();
+
     if (!(guard & 2)) {
         count = attribCount;
+
         for (int i = 0; i < count; ++i) pAttribArray.Get()[i].flags &= ~1;
     }
 }
@@ -101,8 +113,10 @@ void ResVertex::Reset(u32 guard) {
 void ResVertex::CalculateDynamicVertexBufferIndex(nn::util::BitFlagSet<255, void>* indices) const {
     indices->Reset();
     int count = attribCount;
+
     for (int i = 0; i < count; ++i) {
         const ResVertexAttribData* attrib = &pAttribArray.Get()[i];
+
         if (attrib->flags & 1) indices->Set(attrib->bufferIndex);
     }
 }
@@ -111,6 +125,7 @@ void ResVertex::CalculateDynamicVertexBufferIndex(nn::util::BitFlagSet<255, void
 void ResShape::Setup(nn::gfx::Device* device) {
     if (flags & 8) return;
     int count = meshCount;
+
     for (int i = 0; i < count; ++i) pMeshArray.Get()[i].Setup(device);
 }
 
@@ -129,6 +144,7 @@ void ResMesh::Setup(nn::gfx::Device* device) {
 void ResShape::Setup(nn::gfx::Device* device, nn::gfx::MemoryPool* pool, ptrdiff_t offset) {
     if (flags & 8) return;
     int count = meshCount;
+
     for (int i = 0; i < count; ++i) pMeshArray.Get()[i].Setup(device, pool, offset);
 }
 
@@ -147,12 +163,14 @@ void ResMesh::Setup(nn::gfx::Device* device, nn::gfx::MemoryPool* pool, ptrdiff_
 void ResShape::Cleanup(nn::gfx::Device* device) {
     if (flags & 8) return;
     int count = meshCount;
+
     for (int i = 0; i < count; ++i) pMeshArray.Get()[i].Cleanup(device);
 }
 
 // device owns this mesh's initialized index buffer.
 void ResMesh::Cleanup(nn::gfx::Device* device) {
     nn::gfx::Buffer* object = buffer;
+
     if (object->ToData()->state) { object->Finalize(device); object->~TBuffer(); }
 }
 
@@ -173,8 +191,10 @@ void ResShape::ActivateDynamicVertexAttrForShapeAnim() {
     if (!keyShapeCount) return;
     const ResKeyShape* key = pKeyShapeArray.Get();
     ResVertex* vertex = pVertex.Get();
+
     for (int i = 0; i < 18; ++i) {
         int index = key->attribIndices[i];
+
         if (index) vertex->ToData().pAttribArray.Get()[index - 1].flags |= 1;
     }
 }

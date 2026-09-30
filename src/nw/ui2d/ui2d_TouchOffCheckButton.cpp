@@ -3,6 +3,7 @@ namespace nn::ui2d {
 // Consume selection changes only once the pending transition permits them.
 bool TouchOffCheckButton::ProcessOn() {
     bool processed = true;
+
     switch (mState) {
     case cState_Off:
         ChangeState(cState_OnStart);

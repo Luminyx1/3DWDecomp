@@ -23,8 +23,10 @@ T* AllocateControl() {
 // layout is checked against the runtime type hierarchy before using its extended interface.
 LayoutEx* AsLayoutEx(Layout* layout) {
     const auto* wanted = LayoutEx::GetRuntimeTypeInfoStatic();
+
     if (!layout) return nullptr;
     auto* type = layout->GetRuntimeTypeInfo();
+
     while (type && type != wanted) type = type->m_ParentTypeInfo;
     return type ? static_cast<LayoutEx*>(layout) : nullptr;
 }
@@ -36,6 +38,7 @@ DefaultControlCreator::DefaultControlCreator(ButtonGroup* buttons) : mButtons(bu
 void DefaultControlCreator::CreateControl(nn::gfx::Device* device, Layout* layout, const ControlSrc& source) {
     if (!mButtons) return;
     AnimButton* button;
+
     if (std::strcmp("NormalButton", source.mName) == 0) {
         if (AsLayoutEx(layout)) {
             button = AllocateControl<NormalButtonEx>(); button->BuildEx(device, layout, source);
@@ -57,6 +60,7 @@ void DefaultControlCreator::CreateControl(nn::gfx::Device* device, Layout* layou
     } else if (std::strcmp("TouchDragButton", source.mName) == 0) {
         auto* value = AllocateControl<TouchDragButton>(); value->Build(device, layout, source); button = value;
     } else return;
+
     if (button) mButtons->mButtons.push_back(*button);
 }
 
@@ -72,6 +76,7 @@ void DefaultControlCreatorEx::CreateControl(nn::gfx::Device* device, Layout* lay
     LayoutEx* extended = AsLayoutEx(layout);
     auto* control = AllocateControl<TraceGaugeControl>();
     control->Initialize(device, source, extended);
+
     if (control) mControls->push_back(*control);
 }
 }

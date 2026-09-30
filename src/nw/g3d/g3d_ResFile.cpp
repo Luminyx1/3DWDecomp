@@ -38,16 +38,20 @@ ResFile* ResFile::ResCast(void* file) {
 BindResult ResFile::BindTexture(TextureBindCallback callback, void* user) {
     BindResult result;
     int count = modelCount;
+
     for (int i = 0; i < count; ++i) result.Merge(pModelArray.Get()[i].BindTexture(callback, user));
     count = materialAnimCount;
+
     for (int i = 0; i < count; ++i) result.Merge(pMaterialAnimArray.Get()[i].BindTexture(callback, user));
     return result;
 }
 
 void ResFile::ReleaseTexture() {
     int count = modelCount;
+
     for (int i = 0; i < count; ++i) pModelArray.Get()[i].ReleaseTexture();
     count = materialAnimCount;
+
     for (int i = 0; i < count; ++i) pMaterialAnimArray.Get()[i].ReleaseTexture();
 }
 
@@ -55,8 +59,10 @@ void ResFile::ReleaseTexture() {
 void ResFile::Setup(nn::gfx::Device* device) {
     nn::util::ReferSymbol("SDK MW+Nintendo+NintendoWare_G3d-10_4_0-Release");
     nn::gfx::MemoryPool* pool = pMemoryPool.Get();
+
     if (pool != nullptr) {
         const nn::gfx::MemoryPoolInfo* info = pMemoryPoolInfo.Get();
+
         if (info != nullptr) {
             new (pool) nn::gfx::MemoryPool;
             pool->Initialize(device, *info);
@@ -65,24 +71,30 @@ void ResFile::Setup(nn::gfx::Device* device) {
     }
 
     int count = modelCount;
+
     for (int i = 0; i < count; ++i) pModelArray.Get()[i].Setup(device);
 }
 
 // device owns graphics objects; pool/offset locate external backing storage. size is unchecked here.
 void ResFile::Setup(nn::gfx::Device* device, nn::gfx::MemoryPool* pool, ptrdiff_t offset, size_t size) {
     nn::util::ReferSymbol("SDK MW+Nintendo+NintendoWare_G3d-10_4_0-Release");
+
     if ((pMemoryPool.Get() != nullptr) && (pMemoryPoolInfo.Get() != nullptr))
         offset += static_cast<const u8*>(pMemoryPoolInfo.Get()->GetPoolMemory()) - reinterpret_cast<const u8*>(this);
     int count = modelCount;
+
     for (int i = 0; i < count; ++i) pModelArray.Get()[i].Setup(device, pool, offset);
 }
 
 // device owns the graphics objects to release, including an initialized embedded memory pool.
 void ResFile::Cleanup(nn::gfx::Device* device) {
     int count = modelCount;
+
     for (int i = 0; i < count; ++i) pModelArray.Get()[i].Cleanup(device);
+
     if (pMemoryPoolInfo.Get() != nullptr) {
         nn::gfx::MemoryPool* pool = pMemoryPool.Get();
+
         if (pool->ToData()->state) {
             pool->Finalize(device);
             pool->~TMemoryPool();
@@ -92,14 +104,19 @@ void ResFile::Cleanup(nn::gfx::Device* device) {
 
 void ResFile::Reset() {
     int count = modelCount;
+
     for (int i = 0; i < count; ++i) pModelArray.Get()[i].Reset();
     count = skeletalAnimCount;
+
     for (int i = 0; i < count; ++i) pSkeletalAnimArray.Get()[i].Reset();
     count = materialAnimCount;
+
     for (int i = 0; i < count; ++i) pMaterialAnimArray.Get()[i].Reset();
     count = shapeAnimCount;
+
     for (int i = 0; i < count; ++i) pShapeAnimArray.Get()[i].Reset();
     count = sceneAnimCount;
+
     for (int i = 0; i < count; ++i) pSceneAnimArray.Get()[i].Reset();
     pUserPtr.Clear();
 }

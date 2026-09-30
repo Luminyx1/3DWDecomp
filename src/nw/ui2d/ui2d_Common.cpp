@@ -15,12 +15,14 @@ void TexCoordArray::Reserve(s32 size) {
     Free();
     mCoords = static_cast<nn::util::Float2 (*)[4]>(Layout::AllocateMemory(sizeof(*mCoords) * static_cast<u32>(size)));
     mCoords[0][0] = {0, 0};
+
     if (mCoords) mCapacity = size;
 }
 
 // size becomes the active set count; newly exposed sets cover the full texture.
 void TexCoordArray::SetSize(s32 size) {
     if (!mCoords || mCapacity < size) return;
+
     for (int i = mSize; i < size; ++i) {
         mCoords[i][0] = {0, 0}; mCoords[i][1] = {1, 0};
         mCoords[i][2] = {0, 1}; mCoords[i][3] = {1, 1};
@@ -43,6 +45,7 @@ void TexCoordArray::SetCoord(s32 index, const nn::util::Float2* coords) {
 void TexCoordArray::Copy(const void* source, s32 count) {
     if (mSize < static_cast<u8>(count)) mSize = count;
     auto* coords = static_cast<const nn::util::Float2*>(source);
+
     for (int i = 0; i < count; ++i)
         for (int j = 0; j < 4; ++j) {
             mCoords[i][j].x = coords[i * 4 + j].x;
@@ -53,6 +56,7 @@ void TexCoordArray::Copy(const void* source, s32 count) {
 // other is the copy whose allocated capacity and active coordinates are compared.
 bool TexCoordArray::CompareCopiedInstanceTest(const TexCoordArray& other) const {
     if (mCapacity != other.mCapacity || mSize != other.mSize) return false;
+
     for (int i = 0; i < mSize; ++i)
         for (int j = 0; j < 4; ++j)
             if (std::memcmp(&mCoords[i][j], &other.mCoords[i][j], sizeof(nn::util::Float2))) return false;

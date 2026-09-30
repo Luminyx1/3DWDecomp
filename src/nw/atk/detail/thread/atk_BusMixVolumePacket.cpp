@@ -9,6 +9,7 @@ size_t BusMixVolumePacket::GetRequiredMemSize(int busCount) {
 // memory holds busCount enable flags; size is its capacity, unchecked in this build.
 bool BusMixVolumePacket::Initialize(void* memory, size_t size, int busCount) {
     mEnabled = static_cast<bool*>(memory);
+
     for (int i = 0; i < busCount; ++i) mEnabled[i] = false;
     mBusCount = busCount;
     return true;
@@ -24,6 +25,7 @@ void BusMixVolumePacket::Reset() {
     for (auto& output : mVolume.volumes)
         for (float& volume : output) volume = 1.0f;
     mUsed = false;
+
     for (int i = 0; i < mBusCount; ++i) mEnabled[i] = false;
 }
 }

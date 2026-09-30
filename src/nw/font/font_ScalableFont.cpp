@@ -186,6 +186,7 @@ void ScalableFont::SetDefaultCharWidths(const CharWidths& rWidths) {
  */
 bool ScalableFont::SetAlternateChar(uint32_t c) {
     uint32_t code = ConvertCode(c);
+
     if (m_AlternateCharMode == AlternateCharMode_UseWhiteSpace) {
         return false;
     }
@@ -206,6 +207,7 @@ bool ScalableFont::SetAlternateChar(uint32_t c) {
 int ScalableFont::GetCharWidth(uint32_t c) const {
     uint32_t code = ConvertCode(c);
     GlyphNode* pNode = m_pTextureCache->FindGlyphNode(code, m_FontSize, m_FontFace);
+
     if (pNode == nullptr ||
         pNode->IsFlagOn(GlyphNode::FlagBit_NotPlotted | GlyphNode::FlagBit_NotInFont)) {
         if (m_AlternateCharMode != AlternateCharMode_UseAlternateChar &&
@@ -228,6 +230,7 @@ const CharWidths ScalableFont::GetCharWidths(uint32_t c) const {
     uint32_t code = ConvertCode(c);
     GlyphNode* pNode = m_pTextureCache->FindGlyphNode(code, m_FontSize, m_FontFace);
     CharWidths widths;
+
     if (pNode == nullptr ||
         pNode->IsFlagOn(GlyphNode::FlagBit_NotPlotted | GlyphNode::FlagBit_NotInFont)) {
         if (m_AlternateCharMode != AlternateCharMode_UseAlternateChar &&
@@ -259,6 +262,7 @@ int ScalableFont::GetGlyph(Glyph* pGlyph, uint32_t c) const {
     GlyphNode* pNode = m_pTextureCache->FindGlyphNode(code, m_FontSize, m_FontFace);
     int result;
     int width;
+
     if (pNode != nullptr &&
         !pNode->IsFlagOn(GlyphNode::FlagBit_NotPlotted | GlyphNode::FlagBit_NotInFont) &&
         (pNode->IsFlagOn(GlyphNode::FlagBit_Requested | GlyphNode::FlagBit_Used |
@@ -269,6 +273,7 @@ int ScalableFont::GetGlyph(Glyph* pGlyph, uint32_t c) const {
     } else {
         bool isExist = m_pTextureCache->IsGlyphExistInFont(code, m_FontFace);
         result = isExist ? 1 : 2;
+
         if (m_AlternateCharMode != AlternateCharMode_UseAlternateChar && isExist) {
             width = m_pTextureCache->CalculateCharWidth(code, m_FontSize, m_FontFace);
             pNode = FindAlternateCharGlyphNode(' ');
@@ -289,13 +294,16 @@ int ScalableFont::GetGlyph(Glyph* pGlyph, uint32_t c) const {
  */
 GlyphNode* ScalableFont::FindAlternateCharGlyphNode(uint32_t c) const {
     GlyphNode* pNode = m_pTextureCache->FindGlyphNode(c, m_FontSize, m_FontFace);
+
     if (pNode != nullptr) {
         return pNode;
     }
 
     u32 fontFace = m_pTextureCache->AcquireFontFaceContainingGlyph(c);
+
     if (fontFace != 0xffffffff) {
         pNode = m_pTextureCache->FindGlyphNode(c, m_FontSize, fontFace);
+
         if (pNode != nullptr) {
             return pNode;
         }
@@ -338,6 +346,7 @@ void ScalableFont::SetGlyphNodeToGlyph(Glyph* pGlyph, GlyphNode* pNode, int widt
 bool ScalableFont::HasGlyph(uint32_t c) const {
     uint32_t code = ConvertCode(c);
     GlyphNode* pNode = m_pTextureCache->FindGlyphNode(code, m_FontSize, m_FontFace);
+
     if (pNode == nullptr) {
         return false;
     }
@@ -468,6 +477,7 @@ void ScalableFont::GetAlternateCharGlyph(Glyph* pGlyph, uint32_t c) const {
     uint32_t code = ConvertCode(c);
     GlyphNode* pNode;
     int width;
+
     if (m_AlternateCharMode != AlternateCharMode_UseAlternateChar &&
         m_pTextureCache->IsGlyphExistInFont(code, m_FontFace)) {
         width = m_pTextureCache->CalculateCharWidth(code, m_FontSize, m_FontFace);

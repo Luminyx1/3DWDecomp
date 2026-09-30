@@ -6,6 +6,7 @@ namespace {
 // text is scanned for a terminator within at most count bytes.
 int BoundedLength(const char* text, int count) {
     int length = 0;
+
     for (; count > 0; --count) {
         if (!*text++) break;
         ++length;
@@ -17,9 +18,11 @@ int BoundedLength(const char* text, int count) {
 // left and right are compared for at most count bytes, stopping at a terminator.
 int CompareNames(const char* left, const char* right, int count) {
     unsigned char a = 0, b = 0;
+
     for (; count > 0; --count) {
         a = *left++;
         b = *right++;
+
         if (!a || a != b) break;
     }
 

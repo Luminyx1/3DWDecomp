@@ -12,7 +12,9 @@ Thread::RunArgs::RunArgs()
       priority(16), fsPriority(FsPriority_Default), argument(nullptr), handler(nullptr) {}
 bool Thread::RunArgs::IsValid() const {
     if (!stack) return false;
+
     if (!stackSize) return false;
+
     if (priority > 31) return false;
     return handler != nullptr;
 }
@@ -23,8 +25,10 @@ bool Thread::Run(const RunArgs& args) {
     if (!args.IsValid()) return false;
     mArgument = args.argument;
     mHandler = args.handler;
+
     if (!Create(mThread, mId, args)) return false;
     SetName(args.name);
+
     if (args.affinity != AffinityMask_Default) SetAffinityMask(args.core, args.affinity);
     mPriority = args.priority;
     Resume();
@@ -53,6 +57,7 @@ int Thread::SetPriority(int priority) { return os::ChangeThreadPriority(&mThread
 // priority is one of the three file-system priority values, numbered zero through two.
 void Thread::SetFsPriority(FsPriority priority) {
     mFsPriority = priority;
+
     if (static_cast<u32>(priority) >= 3) NN_UNEXPECTED_DEFAULT;
     fs::SetPriorityOnCurrentThread(static_cast<fs::Priority>(priority));
 }

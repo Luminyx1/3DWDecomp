@@ -67,9 +67,11 @@ TaskProfileLogger::TaskProfileLogger() : mMutex(true), mEnabled(false) {}
 // profile is copied to each registered reader that has a free record slot.
 void TaskProfileLogger::Record(const TaskProfile& profile) {
     mMutex.Lock();
+
     for (auto& reader : mReaders) {
         if (reader.mCount.load(std::memory_order_acquire) < reader.mCapacity) {
             reader.mRecords[reader.mWriteIndex++] = profile;
+
             if (reader.mWriteIndex == reader.mCapacity) reader.mWriteIndex = 0;
             reader.mCount.fetch_add(1, std::memory_order_acq_rel);
         }

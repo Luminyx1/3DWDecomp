@@ -6,6 +6,7 @@ void StreamSoundFileReader::Initialize(const void* file) {
     if (!IsValidFileHeader(file)) return;
     mHeader = static_cast<const StreamSoundFile::FileHeader*>(file);
     const auto* block = static_cast<const u8*>(file) + mHeader->GetInfoBlockOffset();
+
     if (*reinterpret_cast<const u32*>(block) != 0x4f464e49) return;
     mInfo = reinterpret_cast<const StreamSoundFile::InfoBlockBody*>(block + 8);
 }
@@ -48,6 +49,7 @@ bool StreamSoundFileReader::ReadStreamSoundInfo(StreamSoundFile::StreamSoundInfo
     info->sampleData = source->sampleData;
     info->regionInfoSize = source->regionInfoSize;
     info->regionData = source->regionData;
+
     if (IsOriginalLoopAvailable()) {
         info->originalLoopStart = source->originalLoopStart;
         info->originalLoopEnd = source->originalLoopEnd;
@@ -64,6 +66,7 @@ bool StreamSoundFileReader::ReadStreamSoundInfo(StreamSoundFile::StreamSoundInfo
 // A missing table or track beyond its signed count returns false.
 bool StreamSoundFileReader::ReadStreamTrackInfo(TrackInfo* info, int track) const {
     const auto* table = mInfo->GetTrackInfoTable();
+
     if (!table || track >= static_cast<int>(table->count)) return false;
     const auto* source = table->GetTrackInfo(track);
     info->volume = source->volume;
@@ -72,6 +75,7 @@ bool StreamSoundFileReader::ReadStreamTrackInfo(TrackInfo* info, int track) cons
     info->_03 = source->_03;
     info->channelCount = source->GetChannelIndices()->count;
     unsigned count = info->channelCount < 2 ? info->channelCount : 2;
+
     for (unsigned i = 0; i < count; ++i) info->channels[i] = source->GetChannelIndices()->indices[i];
     return true;
 }
@@ -80,6 +84,7 @@ bool StreamSoundFileReader::ReadStreamTrackInfo(TrackInfo* info, int track) cons
 // A channel without DSP ADPCM information returns false without writing either output.
 bool StreamSoundFileReader::ReadDspAdpcmChannelInfo(DspAdpcmParam* param, DspAdpcmLoopParam* loop, int channel) const {
     const auto* source = mInfo->GetChannelInfoTable()->GetChannelInfo(channel)->GetDspAdpcmChannelInfo();
+
     if (!source) return false;
     *param = source->param;
     *loop = source->loop;

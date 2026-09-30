@@ -38,6 +38,7 @@ const char* ControlSrc::GetFunctionalPaneName(int index) const {
 const char* ControlSrc::FindFunctionalPaneName(const char* pName) const {
     for (size_t i = 0; i < mPaneCount; ++i) {
         const char* name = reinterpret_cast<const char*>(mPaneFunctionOffsets) + mPaneFunctionOffsets[i];
+
         if (std::strcmp(name, pName) == 0) return mPaneNames + i * 24;
     }
 
@@ -53,6 +54,7 @@ const char* ControlSrc::GetFunctionalAnimName(int index) const {
 const char* ControlSrc::FindFunctionalAnimName(const char* pName) const {
     for (size_t i = 0; i < mAnimCount; ++i) {
         const char* name = reinterpret_cast<const char*>(mAnimFunctionOffsets) + mAnimFunctionOffsets[i];
+
         if (std::strcmp(name, pName) == 0) return reinterpret_cast<const char*>(mAnimNameOffsets) + mAnimNameOffsets[i];
     }
 
@@ -64,8 +66,10 @@ const ResExtUserData* ControlSrc::GetExtUserDataArray() const { return mExtData 
 // pName identifies an extended user-data entry; null is returned when none matches.
 const ResExtUserData* ControlSrc::FindExtUserDataByName(const char* pName) const {
     const ResExtUserData* data = GetExtUserDataArray();
+
     for (u32 i = 0; i < u32(GetExtUserDataCount()); ++i, ++data) {
         const char* name = data->nameOffset ? reinterpret_cast<const char*>(data) + data->nameOffset : nullptr;
+
         if (std::strcmp(pName, name) == 0) return data;
     }
 

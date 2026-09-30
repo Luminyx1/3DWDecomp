@@ -90,6 +90,7 @@ float CharWriter::GetFontDescent() const {
 float CharWriter::PrintGlyph(const Glyph& rGlyph) {
     float width;
     float left;
+
     if (m_IsWidthFixed) {
         const float margin = (m_FixedWidth - rGlyph.widths.charWidth * m_Scale.x) * 0.5f;
         width = m_FixedWidth;
@@ -112,6 +113,7 @@ void CharWriter::PrintGlyph(float x, const Glyph& rGlyph) {
     float width;
     float height;
     float y;
+
     if (m_pFont->IsLinearFilterPaddingEnabled()) {
         u0 = (rGlyph.cellX - 0.5f) / rGlyph.texWidth;
         u1 = (static_cast<int>(rGlyph.cellX + rGlyph.widths.rawWidth) + 0.5f) / rGlyph.texWidth;
@@ -134,6 +136,7 @@ void CharWriter::PrintGlyph(float x, const Glyph& rGlyph) {
     }
 
     DispStringBuffer* pBuffer = m_pDispStringBuffer;
+
     if (pBuffer->m_CharCount >= pBuffer->m_CharCountMax) {
         return;
     }

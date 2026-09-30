@@ -31,13 +31,17 @@ static inline void CalculateScissorRectangle(float& x, float& y, float& width, f
     width = std::fabs(halfWidth) * 2.0f;
     height = std::fabs(halfHeight) * 2.0f;
     int originX = pane.mOriginFlags & 3, originY = (pane.mOriginFlags >> 2) & 3;
+
     if (originX == 1) centerX += halfWidth;
     else if (originX == 2) centerX -= halfWidth;
+
     if (originY == 1) centerY -= halfHeight;
     else if (originY == 2) centerY += halfHeight;
+
     if (info.mFlags & 8) centerY = -centerY;
     float frameWidth = float(info.mFramebufferWidth);
     float frameHeight = float(info.mFramebufferHeight);
+
     if ((info.mFramebufferWidth | info.mFramebufferHeight) == 0) {
         frameWidth = viewportWidth;
         frameHeight = viewportHeight;
@@ -64,12 +68,17 @@ void Scissor::Draw(DrawInfo& info, nn::gfx::CommandBuffer& commands) {
     float viewportHeight = info.mViewport.GetHeight();
     float x, y, width, height;
     CalculateScissorRectangle(x, y, width, height, *this, info, viewportX, viewportY, viewportWidth, viewportHeight);
+
     if (x < viewportX) { width -= viewportX - x; x = viewportX; }
     if (x + width > viewportWidth + viewportX) width = viewportWidth + viewportX - x;
+
     if (y < viewportY) { height -= viewportY - y; y = viewportY; }
     if (y + height > viewportHeight + viewportY) height = viewportHeight + viewportY - y;
+
     if (!(y < viewportHeight + viewportY && x < viewportWidth + viewportX)) return;
+
     if (!(width > 0)) return;
+
     if (!(height > 0)) return;
     {
         nn::gfx::ScissorStateInfo scissor;

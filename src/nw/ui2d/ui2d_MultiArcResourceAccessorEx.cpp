@@ -20,6 +20,7 @@ void MultiArcResourceAccessorEx::FindResourceByType(u32 type, ResourceCallback c
 void MultiArcResourceAccessorEx::RegisterTextureViewToDescriptorPool(RegisterTextureView callback, void* argument) {
     for (auto& link : mTextures) {
         TextureInfo& texture = link.texture;
+
         if (!texture.mDescriptor.IsValid()) callback(&texture.mDescriptor, *texture.GetTextureView(), argument);
     }
 }

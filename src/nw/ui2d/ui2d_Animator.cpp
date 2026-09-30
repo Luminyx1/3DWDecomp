@@ -14,6 +14,7 @@ void Animator::Play(PlayType type, float speed) {
     mSpeed = speed;
     mPlayType = type;
     mFlags &= ~0xfu;
+
     if (speed >= 0.0f) mFrame = 0.0f;
     else mFrame = float(GetFrameSize());
 }
@@ -39,8 +40,10 @@ void Animator::StopAtEndFrame() { mSpeed = 0; mFrame = float(GetFrameSize()); mF
 // step scales the playback speed; endpoint crossings update completion flags.
 void Animator::UpdateFrame(float step) {
     mFlags &= ~0xfu;
+
     if (mSpeed == 0.0f) return;
     float frame = mFrame + mSpeed * step;
+
     if (mSpeed > 0.0f) {
         if (frame >= float(GetFrameSize())) {
             switch (mPlayType) {
@@ -87,6 +90,7 @@ void GroupAnimator::Unbind() { UnbindGroup(mGroup); }
 // and enabled sets the animator's initial application state.
 void GroupAnimator::Setup(const AnimResource& resource, GroupContainer* groups, int index, bool enabled) {
     SetupAnimationResource(resource);
+
     if (index < resource.GetGroupCount()) Setup(groups->FindGroupByName(resource.GetGroupArray()[index].name), enabled);
 }
 
@@ -96,6 +100,7 @@ void GroupArrayAnimator::Setup(const AnimResource& resource, GroupContainer* gro
     SetupAnimationResource(resource);
     mGroupCount = resource.GetGroupCount();
     mGroups = storage;
+
     for (int i = 0; i < mGroupCount; ++i) {
         mGroups[i] = groups->FindGroupByName(resource.GetGroupArray()[i].name);
         BindGroup(mGroups[i]);

@@ -10,8 +10,10 @@ Group::Group(const char* name) : mName(name), mUserAllocated(false) {}
 // resource supplies the group name and pane-name array; root is searched recursively.
 Group::Group(const ResGroup* resource, Pane* root) : mName(resource->name), mUserAllocated(false) {
     const auto* names = reinterpret_cast<const char (*)[24]>(resource + 1);
+
     for (u32 i = 0; i < resource->paneCount; ++i) {
         Pane* pane = root->FindPaneByName(names[i], true);
+
         if (pane) AppendPane(pane);
     }
 }
@@ -30,6 +32,7 @@ Group::Group(const Group& source, Pane* root) : mName(source.mName), mUserAlloca
 // pane is referenced by a newly allocated link; the group does not own the pane.
 void Group::AppendPane(Pane* pane) {
     void* memory = Layout::AllocateMemory(sizeof(PaneLink));
+
     if (!memory) return;
     auto* link = new (memory) PaneLink;
     link->pane = pane;
@@ -51,6 +54,7 @@ GroupContainer::~GroupContainer() {
         auto current = it++;
         mGroups.erase(current);
         Group* group = &*current;
+
         if (!group->mUserAllocated) {
             group->~Group();
             Layout::FreeMemory(group);
@@ -64,6 +68,7 @@ void GroupContainer::AppendGroup(Group* group) { mGroups.push_back(*group); }
 static inline bool SameName(const char* left, const char* right) {
     for (size_t i = 0; i < 32; ++i) {
         if (left[i] != right[i]) return false;
+
         if (!left[i]) break;
     }
 

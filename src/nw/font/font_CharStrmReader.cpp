@@ -51,6 +51,7 @@ uint32_t CharStrmReader::ReadNextCharCp1252() {
  */
 uint32_t CharStrmReader::ReadNextCharSjis() {
     uint32_t code;
+
     if (IsSjisLeadByte(*GetChar<uint8_t>())) {
         code = (*GetChar<uint8_t>() << 8) | *GetChar<uint8_t>(1);
         StepStrm<uint8_t>(2);

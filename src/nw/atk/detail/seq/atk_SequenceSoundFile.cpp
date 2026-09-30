@@ -28,6 +28,7 @@ const char* SequenceSoundFile::LabelBlockBody::GetLabel(int index) const {
 const char* SequenceSoundFile::LabelBlockBody::GetLabelByOffset(u32 offset) const {
     for (int i = 0; i < static_cast<int>(count); ++i) {
         auto* info = reinterpret_cast<const LabelInfo*>(reinterpret_cast<const u8*>(this) + labels[i].offset);
+
         if (info->offset == offset) return info->label;
     }
 
@@ -45,8 +46,10 @@ bool SequenceSoundFile::LabelBlockBody::GetOffset(int index, u32* offset) const 
 // The original compares only strlen(label) bytes, so a shorter prefix also matches.
 bool SequenceSoundFile::LabelBlockBody::GetOffsetByLabel(const char* label, u32* offset) const {
     size_t length = std::strlen(label);
+
     for (int i = 0; i < static_cast<int>(count); ++i) {
         const LabelInfo* info = GetLabelInfo(i);
+
         if (std::strncmp(label, info->label, length) == 0) {
             *offset = info->offset;
             return true;

@@ -9,10 +9,13 @@ void UnbindAnimation(AnimTransform* animation, Group* group) { animation->Unbind
 // pane is the current node in a depth-first traversal; returns its successor.
 Pane* GetNextPane(Pane* pane) {
     auto* child = pane->m_Children.GetNext();
+
     if (child != &pane->m_Children) return reinterpret_cast<Pane*>(reinterpret_cast<char*>(child) - 8);
+
     while (pane->mParent) {
         auto* next = pane->m_Link.GetNext();
         auto* parent = pane->mParent;
+
         if (next != &parent->m_Children) return reinterpret_cast<Pane*>(reinterpret_cast<char*>(next) - 8);
         pane = parent;
     }

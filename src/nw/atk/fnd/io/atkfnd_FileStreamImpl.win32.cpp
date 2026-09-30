@@ -14,13 +14,19 @@ FndResult FileStreamImpl::Open(const char* path, AccessMode mode) {
     mOpened = true;
     int openMode = 1;
     unsigned index = unsigned(mode) - 2;
+
     if (index <= 4) openMode = OpenModes[static_cast<int>(index)];
     auto result = fs::OpenFile(&mHandle, path, openMode);
+
     if (result.IsSuccess()) return {0};
+
     if (result.GetModule() == 2) {
         u32 descriptionBits = result.GetInnerValueForDebug() & 0x3ffe00;
+
         if (descriptionBits == 0x200) return {0x81000001};
+
         if (unsigned(result.GetDescription() - 4000) < 1000) return {0x81000002};
+
         if (descriptionBits == 0xe00) return {0x81000003};
     }
 
@@ -40,6 +46,7 @@ bool FileStreamImpl::IsOpened() const { return mOpened; }
 size_t FileStreamImpl::GetSize() const {
     if (mFileSize == 0xffffffffu) {
         long size;
+
         if (fs::GetFileSize(&size, mHandle).IsFailure()) {
             nn::diag::detail::AbortImpl("", "", "", 0);
             __builtin_unreachable();
@@ -57,10 +64,12 @@ size_t FileStreamImpl::ReadDirect(void* output, size_t size, FndResult* result) 
     ValidateAlignment(output);
     size_t read = 0;
     u32 status;
+
     if (fs::ReadFile(&read, mHandle, mPosition, output, size).IsSuccess()) {
         status = read != size;
         mPosition += read;
     } else status = 0x81000000;
+
     if (result) result->value = status;
     return read;
 }
@@ -72,10 +81,12 @@ size_t FileStreamImpl::WriteDirect(const void* input, size_t size, FndResult* re
     mFileSize = 0xffffffffu;
     fs::WriteOption option;
     u32 status;
+
     if (fs::WriteFile(mHandle, mPosition, input, size, option).IsSuccess()) {
         mPosition += size;
         status = 0;
     } else status = 0x81000000;
+
     if (result) result->value = status;
     return size;
 }
@@ -85,6 +96,7 @@ size_t FileStreamImpl::WriteDirect(const void* input, size_t size, FndResult* re
 FndResult FileStreamImpl::SeekDirect(long offset, SeekOrigin origin) {
     long size = GetSize();
     long position = 0;
+
     switch (origin) {
     case SeekOrigin_Begin: position = offset > 0 ? offset : 0; break;
     case SeekOrigin_End: position = size - (offset < 0 ? offset : 0); break;

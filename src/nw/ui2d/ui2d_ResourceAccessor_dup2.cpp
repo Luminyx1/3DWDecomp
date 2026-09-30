@@ -14,10 +14,13 @@ nn::font::Font* ResourceAccessor::LoadFont(nn::gfx::Device* device, const char* 
     size_t size = 0;
     void* data = FindResourceByName(&size, 0x666f6e74, name);
     nn::font::ResFont* font = nullptr;
+
     if (data && size) {
         void* memory = Layout::AllocateMemory(sizeof(nn::font::ResFont));
+
         if (memory) {
             font = new (memory) nn::font::ResFont;
+
             if (!font->SetResource(device, data, nullptr, 0, 0)) {
                 font->~ResFont();
                 Layout::FreeMemory(font);
@@ -36,6 +39,7 @@ void ResourceAccessor::Finalize(nn::gfx::Device* device) {}
 TextureInfo* ResourceAccessor::AcquireDynamicGenerateTexture(char* output, int size, nn::gfx::Device* device, const char* prefix, const char* name) {
     if (prefix) {
         size_t prefixLength = std::strlen(prefix);
+
         if (prefixLength) {
             size_t nameLength = std::strlen(name);
             char* combined = static_cast<char*>(__builtin_alloca(prefixLength + nameLength + 2));
@@ -49,6 +53,7 @@ TextureInfo* ResourceAccessor::AcquireDynamicGenerateTexture(char* output, int s
     }
 
     TextureInfo* texture = AcquireTexture(device, name);
+
     if (output) {
         std::strncpy(output, name, size);
         output[size - 1] = 0;
@@ -63,6 +68,7 @@ TextureInfo* ResourceAccessor::AcquireDynamicGenerateTexture(char* output, int s
 TextureInfo* ResourceAccessor::AcquireDynamicGenerateTextureWithResolvePrefix(char* output, int size, const BuildArgSet& args, bool alternate, nn::gfx::Device* device, const char* name) {
     int depth;
     char* prefix = nullptr;
+
     if (alternate ? (depth = args.mAlternateDynamicTexturePrefixDepth) > 0
                   : (depth = args.mDynamicTexturePrefixDepth) > 0) {
         size_t length = CalcDynamicGenerateTexturePrefixLength(args, depth);

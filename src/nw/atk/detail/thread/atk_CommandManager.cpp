@@ -20,6 +20,7 @@ Command* CommandBuffer::AllocMemory(size_t size) {
     size_t words = (size + 3) / 4;
     volatile size_t read = mReadPosition;
     Command* command;
+
     if (read > mWritePosition) {
         if (mWritePosition + words > read) return nullptr;
         command = reinterpret_cast<Command*>(mBuffer + mWritePosition);
@@ -52,6 +53,7 @@ size_t CommandBuffer::GetAllocatableCommandSize() const {
     if (mFull) return 0;
     volatile size_t write = mWritePosition;
     volatile size_t read = mReadPosition;
+
     if (read > write) return (read - write) * 4;
     size_t endSpace = mCapacity - write;
     size_t beginSpace = read;
@@ -62,6 +64,7 @@ size_t CommandBuffer::GetAllocatedCommandBufferSize() const {
     if (mFull) return mCapacity * 4;
     volatile size_t write = mWritePosition;
     volatile size_t read = mReadPosition;
+
     if (read > write) return (write + (mCapacity - read)) * 4;
     return (write - read) * 4;
 }
@@ -102,6 +105,7 @@ size_t CommandManager::GetRequiredMemSize(size_t commandBufferSize, int commandC
 // size includes the command header. option is retained by the ABI but unused here.
 Command* CommandManager::AllocMemory(size_t size, bool option) {
     Command* command = TryAllocMemory(size);
+
     if (command) {
         ++mAllocatedCount;
         return command;
@@ -109,6 +113,7 @@ Command* CommandManager::AllocMemory(size_t size, bool option) {
 
     RecvCommandReply();
     command = TryAllocMemory(size);
+
     if (command) {
         ++mAllocatedCount;
         return command;
@@ -127,6 +132,7 @@ Command* CommandManager::AllocMemory(size_t size, bool option) {
 Command* CommandManager::TryAllocMemory(size_t size) { return mBuffer.AllocMemory(size); }
 void CommandManager::RecvCommandReply() {
     u64 message;
+
     while (os::TryReceiveMessageQueue(&message, &mReplies.queue))
         FinalizeCommandList(reinterpret_cast<Command*>(message));
 }
@@ -135,6 +141,7 @@ void CommandManager::RecvCommandReply() {
 // option is retained by the ABI but unused by this implementation.
 u32 CommandManager::FlushCommand(bool block, bool option) {
     Command* head = mHead;
+
     if (!head) {
         if (!block) return 0;
         Command* command = AllocMemory(sizeof(Command), false);
@@ -146,8 +153,10 @@ u32 CommandManager::FlushCommand(bool block, bool option) {
     u32 sequence = mSequence;
     mPendingCount.fetch_add(1, std::memory_order_acq_rel);
     u64 message = reinterpret_cast<u64>(head);
+
     if (!os::TrySendMessageQueue(&mCommands.queue, message)) {
         if (!block) return 0;
+
         if (mRequestCallback) mRequestCallback();
         os::SendMessageQueue(&mCommands.queue, message);
     }
@@ -166,6 +175,7 @@ void CommandManager::WaitCommandReply(u32 sequence) {
 
 Command* CommandManager::RecvCommandReplySync() {
     u64 message;
+
     if (!os::TryReceiveMessageQueue(&message, &mReplies.queue)) {
         if (mRequestCallback) mRequestCallback();
         os::ReceiveMessageQueue(&message, &mReplies.queue);
@@ -191,6 +201,7 @@ u32 CommandManager::FlushCommand(bool block) { return FlushCommand(block, false)
 void CommandManager::FinalizeCommandList(Command* command) {
     mFinishedSequence = command->sequence;
     Command* last;
+
     do {
         --mAllocatedCount;
         last = command;
@@ -211,9 +222,11 @@ size_t CommandManager::GetAllocatedCommandBufferSize() const { return mBuffer.Ge
 int CommandManager::GetAllocatedCommandCount() const { return mAllocatedCount; }
 bool CommandManager::ProcessCommand() {
     u64 message;
+
     if (!os::TryReceiveMessageQueue(&message, &mCommands.queue)) return false;
     mPendingCount.fetch_sub(1, std::memory_order_acq_rel);
     Command* command = reinterpret_cast<Command*>(message);
+
     if (command->type != 0xffffffffu) mProcessCallback(command);
     os::SendMessageQueue(&mReplies.queue, message);
     return true;

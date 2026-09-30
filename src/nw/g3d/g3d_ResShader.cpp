@@ -15,6 +15,7 @@ bool ResShaderProgram::IsBinaryAvailable(nn::gfx::Device* device) {
 // device owns the shader; type selects its stored code representation.
 bool ResShaderProgram::InitializePerType(nn::gfx::Device* device, nn::gfx::ShaderCodeType type) {
     nn::gfx::ResShaderProgram* program = variation->GetResShaderProgram(type);
+
     if ((program == nullptr) || program->Initialize(device) != 0)
         return false;
     switch (type) {
@@ -39,6 +40,7 @@ bool ResShaderProgram::InitializePerType(nn::gfx::Device* device, nn::gfx::Shade
 void ResShaderProgram::Cleanup(nn::gfx::Device* device) {
     if (flags & 2) {
         nn::gfx::ResShaderVariation* resource = variation;
+
         if (flags & 4)
             resource->GetResShaderProgram(nn::gfx::ShaderCodeType_Binary)->Finalize(device);
         if (flags & 16)
@@ -91,6 +93,7 @@ void ResShaderProgram::UpdateTable() {
     const nn::gfx::Shader* shader = variation->GetResShaderProgram(type)->GetShader();
     {
         int count = resource->ToData().samplerCount;
+
         if (count) {
             s32* table = pSamplerTable.Get();
             const nn::util::BinPtrToString* names = symbols->samplerNames;
@@ -100,6 +103,7 @@ void ResShaderProgram::UpdateTable() {
 
     {
         int count = resource->ToData().imageCount;
+
         if (count) {
             s32* table = pImageTable.Get();
             const nn::util::BinPtrToString* names = symbols->imageNames;
@@ -109,6 +113,7 @@ void ResShaderProgram::UpdateTable() {
 
     {
         int count = resource->ToData().uniformBlockCount;
+
         if (count) {
             s32* table = pUniformBlockTable.Get();
             const nn::util::BinPtrToString* names = symbols->uniformBlockNames;
@@ -118,6 +123,7 @@ void ResShaderProgram::UpdateTable() {
 
     {
         int count = resource->ToData().storageBlockCount;
+
         if (count) {
             s32* table = pStorageBlockTable.Get();
             const nn::util::BinPtrToString* names = symbols->storageBlockNames;
@@ -132,8 +138,10 @@ void ResShaderProgram::Update(nn::gfx::Device* device) {
         return;
     ResShadingModel* resource = model;
     nn::os::MutexType* lock = resource->ToData().mutex;
+
     if (lock != nullptr) {
         nn::os::LockMutex(lock);
+
         if (flags & 1)
             resource->UpdateProgram(device, this - resource->ToData().pPrograms.Get());
         nn::os::UnlockMutex(lock);
@@ -150,6 +158,7 @@ void ResShadingModel::UpdateProgram(nn::gfx::Device* device, int index) {
 
 const nn::gfx::Shader* ResShaderProgram::GetShader() const {
     nn::gfx::ShaderCodeType type = GetCodeType();
+
     if (type == nn::gfx::ShaderCodeType_End)
         return nullptr;
     return variation->GetResShaderProgram(type)->GetShader();
@@ -158,6 +167,7 @@ const nn::gfx::Shader* ResShaderProgram::GetShader() const {
 // commandBuffer receives the selected shader at every stage.
 void ResShaderProgram::Load(nn::gfx::CommandBuffer* commandBuffer) const {
     nn::gfx::ShaderCodeType type = GetCodeType();
+
     if (type == nn::gfx::ShaderCodeType_End)
         return;
     const nn::gfx::Shader* shader = variation->GetResShaderProgram(type)->GetShader();
@@ -185,12 +195,14 @@ int ResShaderOption::ReadDynamicKey(const u32* key) const {
 
 void ResShadingModel::Relocate() {
     nn::gfx::ResShaderFile* file = shaderFile;
+
     if ((file != nullptr) && !file->GetBinaryFileHeader()->IsRelocated())
         file->GetBinaryFileHeader()->GetRelocationTable()->Relocate();
 }
 
 void ResShadingModel::Unrelocate() {
     nn::gfx::ResShaderFile* file = shaderFile;
+
     if ((file != nullptr) && file->GetBinaryFileHeader()->IsRelocated())
         file->GetBinaryFileHeader()->GetRelocationTable()->Unrelocate();
 }
@@ -210,6 +222,7 @@ bool ResShadingModel::IsBinaryAvailable(nn::gfx::Device* device) {
 void ResShadingModel::Setup(nn::gfx::Device* device, nn::os::MutexType* lock) {
     shaderFile->GetShaderContainer()->Initialize(device);
     int count = programCount;
+
     for (int i = 0; i < count; ++i)
         pPrograms.Get()[i].Setup(device);
     mutex = lock;
@@ -222,6 +235,7 @@ void ResShadingModel::Setup(nn::gfx::Device* device, nn::gfx::MemoryPool* pool, 
     container->Initialize(device, pool,
                           offset + (reinterpret_cast<u8*>(container) - reinterpret_cast<u8*>(this)), size);
     int count = programCount;
+
     for (int i = 0; i < count; ++i)
         pPrograms.Get()[i].Setup(device);
     mutex = lock;
@@ -230,6 +244,7 @@ void ResShadingModel::Setup(nn::gfx::Device* device, nn::gfx::MemoryPool* pool, 
 // device owns the programs and container being finalized.
 void ResShadingModel::Cleanup(nn::gfx::Device* device) {
     int count = programCount;
+
     for (int i = 0; i < count; ++i)
         pPrograms.Get()[i].Cleanup(device);
     shaderFile->GetShaderContainer()->Finalize(device);
@@ -259,6 +274,7 @@ void ResShadingModel::WriteDefaultStaticKey(u32* key) const {
     } else {
         std::fill(key, key + staticKeyLength, 0);
         int count = staticOptionCount;
+
         for (int i = 0; i < count; ++i) {
             const ResShaderOption& option = pStaticOptions.Get()[i];
             option.WriteStaticKey(key, option.defaultChoice);
@@ -274,6 +290,7 @@ void ResShadingModel::WriteDefaultDynamicKey(u32* key) const {
     } else {
         std::fill(key, key + dynamicKeyLength, 0);
         int count = dynamicOptionCount;
+
         for (int i = 0; i < count; ++i) {
             const ResShaderOption& option = pDynamicOptions.Get()[i];
             option.WriteDynamicKey(key, option.defaultChoice);
@@ -300,9 +317,11 @@ static bool KeyLess(const u32* first, const u32* second, size_t length) {
 static const u32* LowerKey(const u32*& first, const u32* end, const u32* key, size_t stride, size_t length) {
     if (length && size_t(end - first) >= stride) {
         size_t count = size_t(end - first) / stride;
+
         while (count > 0) {
             size_t half = count / 2;
             const u32* middle = first + half * stride;
+
             if (KeyLess(middle, key, length)) {
                 first = middle + stride;
                 count -= half + 1;
@@ -319,9 +338,11 @@ static const u32* UpperKey(const u32* first, const u32* end, const u32* key, siz
     if (size_t(end - first) < stride)
         return first;
     size_t count = size_t(end - first) / stride;
+
     while (count) {
         size_t half = count / 2;
         const u32* middle = first + half * stride;
+
         if (!KeyLess(key, middle, length)) {
             first = middle + stride;
             count -= half + 1;
@@ -339,6 +360,7 @@ int ResShadingModel::FindProgramIndex(const u32* key) const {
     const u32* end = first + stride * programCount;
     const u32* begin = first;
     const u32* found = LowerKey(begin, end, key, stride, stride);
+
     if (end == found || KeyLess(key, found, stride))
         return -1;
     return size_t(found - first) / stride;
@@ -349,6 +371,7 @@ int ResShadingModel::FindProgramIndex(const ShaderRange& range, const u32* key) 
     const u32* begin = range.begin;
     size_t stride = size_t(staticKeyLength) + dynamicKeyLength;
     const u32* found = LowerKey(begin, range.end, key, stride, dynamicKeyLength);
+
     if (range.end == found || KeyLess(key, found, dynamicKeyLength))
         return -1;
     return size_t(found - (pKeyTable.Get() + staticKeyLength)) / stride;
@@ -361,11 +384,14 @@ bool ResShadingModel::FindProgramRange(ShaderRange* range, const u32* key) const
     const u32* first = pKeyTable.Get();
     const u32* end = first + stride * programCount;
     const u32* last = first;
+
     if (size_t(end - first) >= stride) {
         size_t count = size_t(end - first) / stride;
+
         while (count) {
             size_t half = count / 2;
             const u32* middle = first + half * stride;
+
             if (KeyLess(middle, key, length)) {
                 first = middle + stride;
                 count -= half + 1;
@@ -392,6 +418,7 @@ bool ResShadingModel::FindProgramRange(ShaderRange* range, const u32* key) const
 // destination receives capacity bytes of text; key contains length packed key words.
 int ResShadingModel::PrintKeyTo(char* destination, size_t capacity, const u32* key, int length) {
     size_t required = length < 1 ? size_t(0) : size_t(length * 9 - 1);
+
     if (destination == nullptr)
         return required;
     if (required + 1 > capacity) {
@@ -406,6 +433,7 @@ int ResShadingModel::PrintKeyTo(char* destination, size_t capacity, const u32* k
 
     {
         ptrdiff_t i = 0;
+
         do {
             std::sprintf(destination, "%08X_", key[i]);
             destination += 9;
@@ -420,8 +448,10 @@ int ResShadingModel::PrintKeyTo(char* destination, size_t capacity, const u32* k
 int ResShadingModel::PrintStaticOptionTo(char* destination, size_t capacity, const u32* key) const {
     int count = staticOptionCount;
     size_t required = 0;
+
     if (count) {
         const ResShaderOption* options = pStaticOptions.Get();
+
         for (int i = 0; i < count; ++i) {
             size_t nameLength = std::strlen(options[i].name.Get()->GetData());
             int choice = options[i].ReadStaticKey(key);
@@ -469,8 +499,10 @@ int ResShadingModel::PrintStaticOptionTo(char* destination, size_t capacity, con
 int ResShadingModel::PrintDynamicOptionTo(char* destination, size_t capacity, const u32* key) const {
     int count = dynamicOptionCount;
     size_t required = 0;
+
     if (count) {
         const ResShaderOption* options = pDynamicOptions.Get();
+
         for (int i = 0; i < count; ++i) {
             size_t nameLength = std::strlen(options[i].name.Get()->GetData());
             int choice = options[i].ReadDynamicKey(key);
@@ -519,6 +551,7 @@ void ResShaderFile::Relocate() {
         fileHeader.GetRelocationTable()->Relocate();
     ResShaderArchive* resource = archive;
     int count = resource->modelCount;
+
     for (int i = 0; i < count; ++i)
         resource->models[i].Relocate();
 }
@@ -526,6 +559,7 @@ void ResShaderFile::Relocate() {
 void ResShaderFile::Unrelocate() {
     ResShaderArchive* resource = archive;
     int count = resource->modelCount;
+
     for (int i = 0; i < count; ++i)
         resource->models[i].Unrelocate();
     if (fileHeader.IsRelocated())
@@ -556,8 +590,10 @@ void ResShaderFile::Setup(nn::gfx::Device* device, nn::gfx::MemoryPool* pool, pt
 void ResShaderArchive::Cleanup(nn::gfx::Device* device) {
     int count = modelCount;
     nn::os::MutexType* lock = static_cast<nn::os::MutexType*>(work);
+
     for (int i = 0; i < count; ++i) {
         models[i].Cleanup(device);
+
         if (work != nullptr) {
             nn::os::FinalizeMutex(lock);
             ++lock;
@@ -575,6 +611,7 @@ static void DefaultUpdate(nn::gfx::Device* device, ResShadingModel* resource, in
     ResShaderProgram* program = &resource->ToData().pPrograms.Get()[index];
     program->Initialize(device, !(resource->ToData().archive->flags & 8));
     const nn::gfx::ResShaderFile* file = resource->ToData().shaderFile;
+
     if (file->GetShaderContainer()->ToData().targetApiType == 1)
         program->UpdateTable();
     // Publish shader and interface-table writes before clearing the pending-update flag.
@@ -589,6 +626,7 @@ static bool CheckBinary(ResShaderArchive* archive, nn::gfx::Device* device) {
     if (archive->flags & 8)
         return true;
     bool available = archive->models[0].IsBinaryAvailable(device);
+
     if (available)
         archive->flags |= 8;
     return available;
@@ -598,11 +636,13 @@ static bool CheckBinary(ResShaderArchive* archive, nn::gfx::Device* device) {
 void ResShaderArchive::Setup(nn::gfx::Device* device, void* memory, size_t size) {
     updateProgram = DefaultUpdate;
     int count = modelCount;
+
     if (flags & 2)
         CheckBinary(this, device);
     if (count > 0) {
         if (memory != nullptr) {
             nn::os::MutexType* lock = static_cast<nn::os::MutexType*>(memory);
+
             for (int i = 0; i < count; ++i) {
                 ResShadingModel* resource = &models[i];
                 nn::os::InitializeMutex(lock, false, 0);
@@ -624,11 +664,13 @@ void ResShaderArchive::Setup(nn::gfx::Device* device, nn::gfx::MemoryPool* pool,
                              size_t poolSize, void* memory, size_t size) {
     updateProgram = DefaultUpdate;
     int count = modelCount;
+
     if (flags & 2)
         CheckBinary(this, device);
     if (count > 0) {
         if (memory != nullptr) {
             nn::os::MutexType* lock = static_cast<nn::os::MutexType*>(memory);
+
             for (int i = 0; i < count; ++i) {
                 ResShadingModel* resource = &models[i];
                 ptrdiff_t modelOffset =

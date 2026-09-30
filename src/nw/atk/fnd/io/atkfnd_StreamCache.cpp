@@ -38,17 +38,20 @@ size_t StreamCache::Read(void* output, size_t size, FndResult* result, FsAccessL
     if (!IsInitialized()) {
         if (log) log->OnReadBegin(owner);
         size_t count = mStream->Read(output, size, result);
+
         if (log) log->OnReadEnd(owner);
         return count;
     }
 
     FndResult flush = FlushWriteCache();
+
     if (static_cast<s32>(flush.value) < 0) {
         if (result) *result = flush;
         return 0;
     }
 
     size_t hit = GetReadCacheHitLength(size);
+
     if (hit) {
         std::memcpy(output, static_cast<u8*>(mBuffer) + (mPosition - mCachePosition), hit);
         mPosition += hit;
@@ -57,6 +60,7 @@ size_t StreamCache::Read(void* output, size_t size, FndResult* result, FsAccessL
     if (hit >= size)
         return size;
     FndResult sync = SyncStreamCurrentPosition(mPosition);
+
     if (static_cast<s32>(sync.value) < 0) {
         if (result) *result = sync;
         return 0;
@@ -64,12 +68,16 @@ size_t StreamCache::Read(void* output, size_t size, FndResult* result, FsAccessL
 
     size_t remaining = size - hit;
     size_t actual;
+
     if (remaining > mBufferSize) {
         if (log) log->OnReadBegin(owner);
         FndResult status = {0};
         actual = mStream->Read(output, remaining, &status);
+
         if (log) log->OnReadEnd(owner);
+
         if (result) *result = status;
+
         if (static_cast<s32>(status.value) < 0) {
             ClearCache();
             return hit;
@@ -87,8 +95,11 @@ size_t StreamCache::Read(void* output, size_t size, FndResult* result, FsAccessL
         if (log) log->OnReadBegin(owner);
         FndResult status = {0};
         actual = mStream->Read(mBuffer, mBufferSize, &status);
+
         if (log) log->OnReadEnd(owner);
+
         if (result) *result = status;
+
         if (static_cast<s32>(status.value) < 0) {
             ClearCache();
             return hit;
@@ -103,6 +114,7 @@ size_t StreamCache::Read(void* output, size_t size, FndResult* result, FsAccessL
 
     mPosition += remaining;
     size_t total = hit + actual;
+
     if (total >= size) {
         if (result) result->value = 0;
         return size;
@@ -115,6 +127,7 @@ FndResult StreamCache::FlushWriteCache() {
     if (!mCachedLength || mState != Writing)
         return {1};
     FndResult result = SyncStreamCurrentPosition(mCachePosition);
+
     if (static_cast<s32>(result.value) < 0)
         return result;
     result.value = 0;
@@ -132,6 +145,7 @@ size_t StreamCache::GetReadCacheHitLength(size_t size) const {
     if (static_cast<long>(mPosition) < static_cast<long>(mCachePosition))
         return 0;
     long offset = mPosition - mCachePosition;
+
     if (mCachedLength < static_cast<size_t>(offset) + size)
         return (mCachedLength > static_cast<size_t>(offset) ? mCachedLength : static_cast<size_t>(offset)) - offset;
     return size;
@@ -158,6 +172,7 @@ size_t StreamCache::Write(const void* input, size_t size, FndResult* result) {
         return mStream->Write(input, size, result);
     if (size > mBufferSize) {
         FndResult status = FlushWriteCache();
+
         if (static_cast<s32>(status.value) < 0) {
             if (result) *result = status;
             return 0;
@@ -168,6 +183,7 @@ size_t StreamCache::Write(const void* input, size_t size, FndResult* result) {
 
     if (GetWritableCacheLength(size) < size) {
         FndResult status = FlushWriteCache();
+
         if (static_cast<s32>(status.value) < 0) {
             if (result) *result = status;
             return 0;
@@ -175,6 +191,7 @@ size_t StreamCache::Write(const void* input, size_t size, FndResult* result) {
     }
 
     std::memcpy(static_cast<u8*>(mBuffer) + mCachedLength, input, size);
+
     if (mState == Writing) {
         mCachedLength += size;
     } else {
@@ -184,8 +201,10 @@ size_t StreamCache::Write(const void* input, size_t size, FndResult* result) {
     }
 
     mPosition += size;
+
     if (mCachedLength && mCachedLength == mBufferSize) {
         FndResult status = FlushWriteCache();
+
         if (static_cast<s32>(status.value) < 0) {
             if (result) *result = status;
             return size;
@@ -201,6 +220,7 @@ size_t StreamCache::GetWritableCacheLength(size_t size) const {
     if (!IsInitialized())
         return 0;
     size_t available = mBufferSize;
+
     if (mState != Reading)
         available -= mCachedLength;
     return available < size ? available : size;
@@ -209,6 +229,7 @@ size_t StreamCache::GetWritableCacheLength(size_t size) const {
 // offset is relative to origin; successful seeks change only the logical position.
 FndResult StreamCache::Seek(long offset, Stream::SeekOrigin origin) {
     long size = mStream->GetSize();
+
     if (!IsInitialized())
         return mStream->Seek(offset, origin);
     if (!mStream->CanSeek())
@@ -221,6 +242,7 @@ FndResult StreamCache::Seek(long offset, Stream::SeekOrigin origin) {
         return {0};
     case Stream::SeekOrigin_Current: {
         long position = mPosition + offset;
+
         if (size <= position)
             return {0x80000000u};
         mPosition = position;
@@ -228,6 +250,7 @@ FndResult StreamCache::Seek(long offset, Stream::SeekOrigin origin) {
     }
     case Stream::SeekOrigin_End: {
         long position = size - offset;
+
         if (size < offset)
             return {0x80000000u};
         mPosition = position;

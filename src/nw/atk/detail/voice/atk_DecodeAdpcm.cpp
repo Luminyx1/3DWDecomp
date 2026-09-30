@@ -9,6 +9,7 @@ void DecodeDspAdpcm(long offset, AdpcmContext& context, const nn::audio::AdpcmPa
     long sample = offset - (offset / 14) * 14;
     int predictor = context.predictorScale >> 4;
     int scale = context.predictorScale & 15;
+
     for (int i = 0; static_cast<unsigned>(i) < count; ++i) {
         if (sample == 0) {
             context.predictorScale = *frame;
@@ -17,6 +18,7 @@ void DecodeDspAdpcm(long offset, AdpcmContext& context, const nn::audio::AdpcmPa
         }
 
         int nibble = frame[1 + sample / 2];
+
         if (!(sample & 1)) nibble >>= 4;
         s16 previous = context.previousSample;
         int value = previous * parameter.coefficients[predictor * 2]
@@ -31,6 +33,7 @@ void DecodeDspAdpcm(long offset, AdpcmContext& context, const nn::audio::AdpcmPa
         context.previousSample2 = previous;
         context.previousSample = value;
         output[i] = value;
+
         if (++sample == 14) { sample = 0; frame += 8; }
     }
 }

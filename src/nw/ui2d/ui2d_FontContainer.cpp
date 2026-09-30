@@ -11,6 +11,7 @@ void FontRefLink::Finalize(nn::gfx::Device* device) {
     if (mOwned && mFont) {
         mFont->Finalize(device);
         nn::font::Font* font = mFont;
+
         if (font) { font->~Font(); Layout::FreeMemory(font); }
         mFont = nullptr;
     }
@@ -41,6 +42,7 @@ void FontContainer::Finalize(nn::gfx::Device* device) {
 nn::font::Font* FontContainer::FindFontByName(const char* name) const {
     for (auto& link : mFonts) {
         bool same = true;
+
         for (size_t i = 0; i < sizeof(link.mName); ++i) {
             if (name[i] != link.mName[i]) { same = false; break; }
             if (!name[i]) break;
@@ -56,6 +58,7 @@ nn::font::Font* FontContainer::FindFontByName(const char* name) const {
 // The returned handle identifies this registration for UnregisterFont.
 const void* FontContainer::RegisterFont(const char* name, nn::font::Font* font, bool owned) {
     void* memory = Layout::AllocateMemory(sizeof(FontRefLink));
+
     if (!memory) return nullptr;
     auto* link = new (memory) FontRefLink;
     link->Set(name, font, owned);
@@ -67,6 +70,7 @@ const void* FontContainer::RegisterFont(const char* name, nn::font::Font* font, 
 void FontContainer::UnregisterFont(const void* handle) {
     auto* link = const_cast<FontRefLink*>(static_cast<const FontRefLink*>(handle));
     mFonts.erase(List::iterator(reinterpret_cast<nn::util::IntrusiveListNode*>(link)));
+
     if (link) { link->~FontRefLink(); Layout::FreeMemory(link); }
 }
 

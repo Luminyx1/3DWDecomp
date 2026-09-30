@@ -7,11 +7,13 @@ WaveFileReader::WaveFileReader(const void* file, s8 type)
     switch (type) {
     case 0: {
         auto* header = static_cast<const WaveFile::FileHeader*>(file);
+
         if (header->signature != 0x56415746 || header->byteOrder != 0xfeff ||
             header->version < 0x10000 || header->version > 0x10200) return;
         mHeader = header;
         const auto* info = mHeader->GetInfoBlock();
         const auto* data = mHeader->GetDataBlock();
+
         if (!info || !data || info->signature != 0x4f464e49 || data->signature != 0x41544144) return;
         mInfo = &info->body;
         mData = data->data;
@@ -39,10 +41,12 @@ bool WaveFileReader::ReadWaveInfo(WaveInfo* info, const void* waveData) const {
         info->loopEnd = mInfo->loopEnd;
         info->dataSize = mHeader->fileSize - size_t(0x20);
         info->originalLoopStart = IsOriginalLoopAvailable() ? mInfo->originalLoopStart : mInfo->loopStart;
+
         for (int i = 0; i < channelCount; ++i) {
             // Only the first two channel records are populated.
             if (i >= 2) continue;
             const auto* channel = mInfo->GetChannelInfo(i);
+
             if (channel->adpcm.offset) {
                 const auto* adpcm = channel->GetDspAdpcmInfo();
                 info->channels[i].adpcm = adpcm->adpcm;

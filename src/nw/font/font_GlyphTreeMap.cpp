@@ -71,6 +71,7 @@ void GlyphTreeMap::Initialize(AllocateFunction pAllocateFunction, void* pUserDat
         pAllocateFunction(sizeof(GlyphNode) * nodeCountMax, 8, pUserData));
     m_pFreeList = pNodes;
     int lastIndex = static_cast<int>(nodeCountMax) - 1;
+
     for (int i = 0; i < lastIndex; i++) {
         NextFreeNode(&pNodes[i]) = &pNodes[i + 1];
     }
@@ -127,6 +128,7 @@ GlyphNode* GlyphTreeMap::Find(GlyphNode* pNode, u64 key) const {
 
 GlyphNode* GlyphTreeMap::Insert(u32 code, u16 fontSize, u16 fontFace) {
     GlyphNode* pNode = m_pFreeList;
+
     if (pNode == nullptr) {
         return nullptr;
     }
@@ -191,6 +193,7 @@ void GlyphTreeMap::Erase(u32 code, u16 fontSize, u16 fontFace) {
     key.detail.fontSize = fontSize;
     key.detail.fontFace = fontFace;
     m_pRootNode = Erase(m_pRootNode, key.raw);
+
     if (m_pRootNode != nullptr) {
         m_pRootNode->m_IsRed = 0;
     }
@@ -225,6 +228,7 @@ GlyphNode* GlyphTreeMap::Erase(GlyphNode* pNode, u64 key) {
 
         if (key == pNode->m_Key.raw) {
             GlyphNode* pMinNode = pNode->m_pRightNode;
+
             while (pMinNode->m_pLeftNode != nullptr) {
                 pMinNode = pMinNode->m_pLeftNode;
             }
@@ -275,6 +279,7 @@ void GlyphTreeMap::Reset() {
     GlyphNode* pNodes = static_cast<GlyphNode*>(m_pNodeBuffer);
     m_pFreeList = pNodes;
     int lastIndex = static_cast<int>(m_NodeCountMax) - 1;
+
     for (int i = 0; i < lastIndex; i++) {
         NextFreeNode(&pNodes[i]) = &pNodes[i + 1];
     }
@@ -307,6 +312,7 @@ void GlyphTreeMap::UpdateFlagsForCompleteTextureCacheRecursive(GlyphNode* pNode)
  */
 void GlyphTreeMap::ClearLockGroupRecursive(GlyphNode* pNode, u32 group) {
     pNode->m_LockGroup &= ~group;
+
     if (pNode->m_pLeftNode != nullptr) {
         ClearLockGroupRecursive(pNode->m_pLeftNode, group);
     }
@@ -325,6 +331,7 @@ void GlyphTreeMap::ClearLockGroupRecursive(GlyphNode* pNode, u32 group) {
 int GlyphTreeMap::DumpRecursive(GlyphNode* pNode, u32 level) {
     level++;
     int count = 1;
+
     if (pNode->m_pLeftNode != nullptr) {
         count += DumpRecursive(pNode->m_pLeftNode, level);
     }
@@ -345,6 +352,7 @@ int GlyphTreeMap::DumpRecursive(GlyphNode* pNode, u32 level) {
 int GlyphTreeMap::DumpRecursiveLeftFirst(GlyphNode* pNode, u32 level) {
     level++;
     int count = 1;
+
     if (pNode->m_pLeftNode != nullptr) {
         count += DumpRecursiveLeftFirst(pNode->m_pLeftNode, level);
     }
@@ -365,6 +373,7 @@ int GlyphTreeMap::DumpRecursiveLeftFirst(GlyphNode* pNode, u32 level) {
 void GlyphTreeMap::DumpToFunctionRecursive(GlyphNode* pNode, DumpFunction pFunction,
                                            void* pUserData) {
     pFunction(pNode, pUserData);
+
     if (pNode->m_pLeftNode != nullptr) {
         DumpToFunctionRecursive(pNode->m_pLeftNode, pFunction, pUserData);
     }
@@ -387,6 +396,7 @@ void GlyphTreeMap::DumpToFunctionRecursiveLeftFirst(GlyphNode* pNode, DumpFuncti
     }
 
     pFunction(pNode, pUserData);
+
     if (pNode->m_pRightNode != nullptr) {
         DumpToFunctionRecursiveLeftFirst(pNode->m_pRightNode, pFunction, pUserData);
     }

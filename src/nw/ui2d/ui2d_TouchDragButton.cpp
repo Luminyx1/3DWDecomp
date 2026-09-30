@@ -11,6 +11,7 @@ void TouchDragButton::Build(nn::gfx::Device* device, Layout* layout, const Contr
     mDownAnimator->StopAtStartFrame();
     mCancelAnimator = layout->CreateGroupAnimatorAuto(device, source.FindFunctionalAnimName("Release"), false);
     const char* disable = source.FindFunctionalAnimName("Disable");
+
     if (disable && *disable) mDisableAnimator = layout->CreateGroupAnimatorAuto(device, disable, true);
     mHitPane = layout->mRootPane->FindPaneByName(source.FindFunctionalPaneName("Hit"), true);
     mName = layout->mRootPane->mParent ? layout->mRootPane->mPanelName : static_cast<const char*>(layout->_30);
@@ -28,6 +29,7 @@ bool TouchDragButton::ProcessOn() {
 
 bool TouchDragButton::ProcessCancel() {
     bool processed = true;
+
     switch (mState) {
     case cState_DownStart:
         processed = false;

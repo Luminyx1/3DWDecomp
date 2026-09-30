@@ -27,8 +27,10 @@ void DragButton::InitializeDragPosition(const nn::util::Float2& position) {
 void DragButton::UpdateDragPosition(const nn::util::Float2* position) {
     if (!position) return;
     float x = mPaneStart.x;
+
     if (mDragX) x += position->x - mDragStart.x;
     float y = mPaneStart.y;
+
     if (mDragY) y += position->y - mDragStart.y;
     Pane* pane = mDragPane;
     pane->mPositionX = x;
@@ -38,6 +40,7 @@ void DragButton::UpdateDragPosition(const nn::util::Float2* position) {
 
 bool DragButton::ProcessOff() {
     bool processed = true;
+
     switch (mState) {
     case cState_OnStart:
         ChangeState(cState_OffStart); StartOff(); break;
@@ -53,6 +56,7 @@ bool DragButton::ProcessOff() {
 
 bool DragButton::ProcessCancel() {
     bool processed = true;
+
     switch (mState) {
     case cState_DownStart: processed = false; break;
     case cState_Down:

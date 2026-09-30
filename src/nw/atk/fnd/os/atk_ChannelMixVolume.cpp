@@ -18,6 +18,7 @@ ChannelMixVolume::ChannelMixVolume(const MixVolume& volume) : mChannelCount(6) {
 ChannelMixVolume::ChannelMixVolume(const float* volumes, int count) {
     if (static_cast<unsigned>(count) - 1 > 23) { mChannelCount = 6; return; }
     mChannelCount = count;
+
     for (int i = 0; i < count; ++i) mVolumes[i] = volumes[i];
 }
 
@@ -46,7 +47,9 @@ float ChannelMixVolume::GetChannelVolume(int index) const {
 bool ChannelMixVolume::SetChannelVolume(int index, const float* volumes, int count) {
     if (index < 0) return false;
     const int last = static_cast<unsigned>(index) + count - 1;
+
     if (last < 24) return false;
+
     for (int i = 0; i < count; ++i) mVolumes[index + i] = volumes[i];
     return true;
 }

@@ -10,6 +10,7 @@ namespace {
 // layout is the candidate whose runtime ancestry is checked before downcasting.
 inline LayoutEx* AsLayoutEx(Layout* layout) {
     const auto* target = LayoutEx::GetRuntimeTypeInfoStatic();
+
     if (layout) {
         for (auto* type = layout->GetRuntimeTypeInfo(); type; type = type->m_ParentTypeInfo)
             if (type == target) return static_cast<LayoutEx*>(layout);
@@ -29,10 +30,15 @@ AnimButton::AnimButton()
 void AnimButton::CloneImpl_(nn::gfx::Device* device, const AnimButton& source, Layout* layout) {
     SetLayout(layout);
     LayoutEx* extended = AsLayoutEx(layout);
+
     if (source.mOnAnimator) mOnAnimator = extended->CreateAnimatorExAuto(device, source.mOnAnimator->GetTagName(), true);
+
     if (source.mDownAnimator) mDownAnimator = extended->CreateAnimatorExAuto(device, source.mDownAnimator->GetTagName(), false);
+
     if (source.mCancelAnimator) mCancelAnimator = extended->CreateAnimatorExAuto(device, source.mCancelAnimator->GetTagName(), false);
+
     if (source.mDisableAnimator) mDisableAnimator = extended->CreateAnimatorExAuto(device, source.mDisableAnimator->GetTagName(), false);
+
     if (source.mHitPane) mHitPane = layout->mRootPane->FindPaneByName(source.mHitPane->mPanelName, true);
     mName = layout->mRootPane->mParent ? layout->mRootPane->mPanelName : static_cast<const char*>(layout->_30);
 }
@@ -45,6 +51,7 @@ void AnimButton::Build(nn::gfx::Device* device, Layout* layout, const ControlSrc
     mOnAnimator->StopAtStartFrame();
     mDownAnimator = layout->CreateGroupAnimatorAuto(device, source.FindFunctionalAnimName("Down"), false);
     const char* disable = source.FindFunctionalAnimName("Disable");
+
     if (disable && *disable) mDisableAnimator = layout->CreateGroupAnimatorAuto(device, disable, false);
     mHitPane = layout->mRootPane->FindPaneByName(source.FindFunctionalPaneName("Hit"), true);
     mName = layout->mRootPane->mParent ? layout->mRootPane->mPanelName : static_cast<const char*>(layout->_30);
@@ -59,6 +66,7 @@ void AnimButton::BuildEx(nn::gfx::Device* device, Layout* layout, const ControlS
     mOnAnimator->StopAtStartFrame();
     mDownAnimator = extended->TryCreateAnimatorExAuto(device, source.FindFunctionalAnimName("Down"), false);
     const char* disable = source.FindFunctionalAnimName("Disable");
+
     if (disable && *disable) mDisableAnimator = extended->TryCreateAnimatorExAuto(device, disable, false);
     mHitPane = layout->mRootPane->FindPaneByName(source.FindFunctionalPaneName("Hit"), true);
     mName = layout->mRootPane->mParent ? layout->mRootPane->mPanelName : static_cast<const char*>(layout->_30);
@@ -74,8 +82,10 @@ void AnimButton::UpdateHitBox() {
     float y = vgetq_lane_f32(row1, 3);
     int originX = mHitPane->mOriginFlags & 3;
     int originY = (mHitPane->mOriginFlags >> 2) & 3;
+
     if (originX == 1) x += width;
     else if (originX == 2) x -= width;
+
     if (originY == 1) y -= height;
     else if (originY == 2) y += height;
     mHitBox = {x - width, y - height, x + width, y + height};
@@ -108,20 +118,26 @@ void AnimButton::PlayDisableAnim(bool disabled) {
 
 void AnimButton::SetAllAnimatorDisable() {
     if (mOnAnimator) mOnAnimator->SetEnabled(false);
+
     if (mDownAnimator) mDownAnimator->SetEnabled(false);
+
     if (mCancelAnimator) mCancelAnimator->SetEnabled(false);
+
     if (mDisableAnimator) mDisableAnimator->SetEnabled(false);
 }
 
 // animator is the sole enabled state animator; null disables all three.
 void AnimButton::EnableAnim(Animator* animator) {
     if (mOnAnimator) mOnAnimator->SetEnabled(mOnAnimator == animator);
+
     if (mDownAnimator) mDownAnimator->SetEnabled(mDownAnimator == animator);
+
     if (mCancelAnimator) mCancelAnimator->SetEnabled(mCancelAnimator == animator);
 }
 
 void AnimButton::ForceOff() {
     ButtonBase::ForceOff();
+
     if (mOnAnimator) {
         EnableAnim(mOnAnimator);
         mOnAnimator->StopAtStartFrame();
@@ -130,6 +146,7 @@ void AnimButton::ForceOff() {
 
 void AnimButton::ForceOn() {
     ButtonBase::ForceOn();
+
     if (mOnAnimator) {
         EnableAnim(mOnAnimator);
         mOnAnimator->StopAtEndFrame();
@@ -138,6 +155,7 @@ void AnimButton::ForceOn() {
 
 void AnimButton::ForceDown() {
     ButtonBase::ForceDown();
+
     if (mDownAnimator) {
         EnableAnim(mDownAnimator);
         mDownAnimator->StopAtEndFrame();
@@ -180,8 +198,10 @@ bool AnimButton::ProcessCancel() { return true; }
 // state is reported to the callback and owning screen before it becomes current.
 void AnimButton::ChangeState(State state) {
     if (mState == state) return;
+
     if (mCallback) mCallback(this, mState, state, mCallbackArg);
     LayoutEx* layout = AsLayoutEx(GetLayout());
+
     if (layout && layout->mScreen) layout->mScreen->HandleEventOnButtonStateChanged(this, mState, state);
     mState = state;
 }

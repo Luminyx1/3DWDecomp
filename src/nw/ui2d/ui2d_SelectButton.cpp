@@ -35,6 +35,7 @@ bool SelectButton::ProcessOff() {
 
 bool SelectButton::ProcessCancel() {
     bool processed = true;
+
     switch (mState) {
     case cState_DownStart:
         processed = false;
@@ -51,6 +52,7 @@ bool SelectButton::ProcessCancel() {
 
 void SelectButton::FinishCancel() {
     ChangeState(cState_Off);
+
     if (mOnAnimator) mOnAnimator->StopAtStartFrame();
 }
 }

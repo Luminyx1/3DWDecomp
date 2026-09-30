@@ -21,6 +21,7 @@ void Sound3DListener::SetMatrix(const nn::util::Matrix4x3fType& matrix) {
     position = vsetq_lane_f32(z, position, 2);
     m_Position._v = position;
     m_Matrix = matrix;
+
     if (m_ResetMatrixFlag) m_ResetMatrixFlag = false;
     else m_Velocity._v = vsubq_f32(position, previous);
 }

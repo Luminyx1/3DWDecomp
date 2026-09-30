@@ -5,12 +5,15 @@ namespace nn::atk::detail {
 SequenceSoundFileReader::SequenceSoundFileReader(const void* file)
     : mHeader(nullptr), mSequenceData(nullptr), mLabels(nullptr) {
     auto* header = static_cast<const SequenceSoundFile::FileHeader*>(file);
+
     if (header->signature != 0x51455346 || header->byteOrder != 0xfeff ||
         header->version < 0x10000 || header->version > 0x20000) return;
     mHeader = header;
     const auto* data = mHeader->GetDataBlock();
+
     if (data->signature != 0x41544144) return;
     const auto* labels = mHeader->GetLabelBlock();
+
     if (labels->signature != 0x4c42414c) return;
     mSequenceData = data->data;
     mLabels = &labels->body;

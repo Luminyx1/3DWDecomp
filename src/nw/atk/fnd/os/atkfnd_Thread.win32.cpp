@@ -29,6 +29,7 @@ void Thread::ThreadMain::Run(void* argument) {
     thread->mTerminated = false;
     thread->OnRun();
     FsPriority priority = thread->mFsPriority;
+
     if (static_cast<u32>(priority) >= 3) NN_UNEXPECTED_DEFAULT;
     fs::SetPriorityOnCurrentThread(static_cast<fs::Priority>(priority));
     thread->mHandler->Run(thread->mArgument);

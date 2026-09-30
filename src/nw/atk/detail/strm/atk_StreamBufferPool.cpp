@@ -24,8 +24,10 @@ void StreamBufferPool::Finalize() {
 void* StreamBufferPool::Alloc() {
     if (mAllocatedCount >= mBlockCount) return nullptr;
     const int bytes = ((mBlockCount + 7) & ~7) / 8;
+
     for (int i = 0; i < bytes; ++i) {
         if (mAllocated[i] == 0xff) continue;
+
         for (int bit = 0; bit < 8; ++bit) {
             if (!(mAllocated[i] & (1 << bit))) {
                 mAllocated[i] |= 1 << bit;

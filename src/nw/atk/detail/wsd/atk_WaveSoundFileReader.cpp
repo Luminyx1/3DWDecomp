@@ -4,10 +4,12 @@ namespace nn::atk::detail {
 // file points to a complete FWSD resource; unsupported headers leave the info pointer null.
 WaveSoundFileReader::WaveSoundFileReader(const void* file) : mHeader(nullptr), mInfo(nullptr) {
     auto* header = static_cast<const WaveSoundFile::FileHeader*>(file);
+
     if (header->signature != 0x44535746 || header->byteOrder != 0xfeff ||
         header->version < 0x10000 || header->version > 0x10100) return;
     mHeader = header;
     const auto* info = mHeader->GetInfoBlock();
+
     if (!info || info->signature != 0x4f464e49) return;
     mInfo = &info->body;
 }
@@ -31,6 +33,7 @@ bool WaveSoundFileReader::ReadWaveSoundInfo(WaveSoundInfo* info, u32 sound) cons
     info->surroundPan = source->GetSurroundPan();
     source->GetSendValue(&info->mainSend, info->auxSends, 3);
     info->envelope = *source->GetAdshrCurve();
+
     if (IsFilterSupportedVersion()) {
         info->lpfFrequency = source->GetLpfFreq();
         info->biquadType = source->GetBiquadType();
@@ -51,6 +54,7 @@ bool WaveSoundFileReader::ReadNoteInfo(WaveSoundNoteInfo* info, u32 sound, u32 n
     const auto* source = mInfo->GetWaveSoundData(sound)->GetNoteInfo(note);
     const auto* table = mInfo->GetWaveIdTable();
     u32 index = source->waveIndex;
+
     if (table->count <= index) return false;
     info->archiveId = table->waves[index].archiveId;
     info->waveIndex = table->waves[index].waveIndex;

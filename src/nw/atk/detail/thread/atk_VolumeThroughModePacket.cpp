@@ -10,6 +10,7 @@ size_t VolumeThroughModePacket::GetRequiredMemSize(int busCount) {
 bool VolumeThroughModePacket::Initialize(void* memory, size_t size, int busCount) {
     mModes = static_cast<u8*>(memory);
     mBusCount = busCount;
+
     for (int i = 0; i < mBusCount; ++i) mModes[i] = 0;
     return true;
 }
@@ -30,7 +31,9 @@ void VolumeThroughModePacket::Reset() {
 // other supplies mode bytes and volume state; excess destination entries are cleared.
 VolumeThroughModePacket& VolumeThroughModePacket::operator=(const VolumeThroughModePacket& other) {
     int count = other.mBusCount < mBusCount ? other.mBusCount : mBusCount;
+
     for (int i = 0; i < count; ++i) mModes[i] = other.mModes[i];
+
     for (int i = count; i < mBusCount; ++i) mModes[i] = 0;
     mUsed = other.mUsed;
     mVolume = other.mVolume;

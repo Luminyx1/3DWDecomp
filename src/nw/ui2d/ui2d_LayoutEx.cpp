@@ -9,11 +9,14 @@ AnimatorEx* LayoutEx::FindAnimator(const char* name) {
         auto* transform = reinterpret_cast<AnimTransform*>(reinterpret_cast<char*>(node) - 8);
         const auto* wanted = AnimatorEx::GetRuntimeTypeInfoStatic();
         const auto* type = transform->GetRuntimeTypeInfo();
+
         while (type && type != wanted) type = type->m_ParentTypeInfo;
         auto* animator = type ? static_cast<AnimatorEx*>(transform) : nullptr;
+
         if (!animator || !animator->GetTagName()) continue;
         const char* tag = animator->GetTagName();
         bool same = true;
+
         for (size_t i = 0; i < 64; ++i) {
             if (tag[i] != name[i]) { same = false; break; }
             if (!tag[i]) break;

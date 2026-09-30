@@ -18,6 +18,7 @@ void AudioRendererPerformanceReader::Initialize(int frameCount, void* buffer, si
     mFrames = static_cast<AudioRendererPerformanceInfo*>(buffer);
     size_t frameSize = SoundSystem::GetPerformanceFrameBufferSize();
     auto* data = static_cast<u8*>(buffer) + sizeof(AudioRendererPerformanceInfo) * frameCount;
+
     for (int i = 0; i < mFrameCount; ++i) {
         mFrames[i].buffer = data;
         mFrames[i].bufferSize = frameSize;
@@ -31,7 +32,9 @@ void AudioRendererPerformanceReader::Initialize(int frameCount, void* buffer, si
 
 const AudioRendererPerformanceInfo* AudioRendererPerformanceReader::ReadPerformanceInfo() {
     int next = mReadIndex.load(std::memory_order_acquire) + 1;
+
     if (next >= mFrameCount) next = 0;
+
     if (next == mWriteIndex.load(std::memory_order_acquire)) return nullptr;
     mReadIndex.store(next, std::memory_order_release);
     return &mFrames[next];
@@ -45,6 +48,7 @@ void AudioRendererPerformanceReader::Record(const void* frame, size_t frameSize,
     mFrames[index].tick = tick;
     std::memcpy(mFrames[index].buffer, frame, frameSize);
     int next = index + 1;
+
     if (next >= mFrameCount) next = 0;
     mWriteIndex.store(next, std::memory_order_release);
 }

@@ -7,6 +7,7 @@ namespace {
 bool SameName(const char* pStored, const char* pName, size_t length) {
     for (size_t i = 0; i < length; ++i) {
         if (pStored[i] != pName[i]) return false;
+
         if (pStored[i] == '\0') return true;
     }
 
@@ -40,8 +41,10 @@ const Pane* Parts::FindPaneByNameRecursive(const char* pName) const {
 // pName identifies a material attached directly to this parts pane.
 Material* Parts::FindMaterialByNameRecursive(const char* pName) {
     const u8 count = GetMaterialCount();
+
     for (u32 i = 0; i < count; ++i) {
         auto* material = GetMaterial(i);
+
         if (material && SameName(material->mName, pName, 28)) return material;
     }
 

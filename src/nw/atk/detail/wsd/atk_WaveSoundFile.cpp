@@ -15,6 +15,7 @@ const T* AtOffset(const void* base, s32 offset) {
 template <typename T>
 const T* GetRecord(const WaveSoundFile::ReferenceTable* table, u32 index, u16 type) {
     if (index >= table->count) return nullptr;
+
     if (table->items[index].type != type) return nullptr;
     return AtOffset<T>(table, table->items[index].offset);
 }
@@ -24,6 +25,7 @@ const T* GetRecord(const WaveSoundFile::ReferenceTable* table, u32 index, u16 ty
 u32 GetParameterIndex(u32 flags, unsigned bit) {
     if (!(flags & (1u << bit))) return 0;
     u32 index = 0;
+
     for (unsigned i = 0; i < bit; ++i)
         if (flags & (1u << i)) ++index;
     return index + 1;
@@ -32,6 +34,7 @@ u32 GetParameterIndex(u32 flags, unsigned bit) {
 // flags points to the flags word and its packed values; bit selects a present value.
 u32 GetParameter(const u32* flags, unsigned bit) {
     size_t index = 0;
+
     for (unsigned i = 0; i < bit; ++i) index += (*flags >> i) & 1;
     return flags[index + 1];
 }
@@ -97,6 +100,7 @@ float WaveSoundFile::WaveSoundInfo::GetPitch() const { return flags & 2 ? GetFlo
 // auxCount is the number of auxiliary outputs to clear when the parameter is absent.
 void WaveSoundFile::WaveSoundInfo::GetSendValue(u8* mainSend, u8* auxSends, u8 auxCount) const {
     u32 index = GetParameterIndex(flags, 8);
+
     if (!index) {
         *mainSend = 127;
         for (int i = 0; i < auxCount; ++i) auxSends[i] = 0;
@@ -106,11 +110,13 @@ void WaveSoundFile::WaveSoundInfo::GetSendValue(u8* mainSend, u8* auxSends, u8 a
     const u8* send = reinterpret_cast<const u8*>(this) + (&flags)[index];
     *mainSend = send[0];
     unsigned count = send[1] < 3 ? send[1] : 3;
+
     for (unsigned i = 0; i < count; ++i) auxSends[i] = send[2 + i];
 }
 
 const AdshrCurve* WaveSoundFile::WaveSoundInfo::GetAdshrCurve() const {
     u32 index = GetParameterIndex(flags, 9);
+
     if (!index) return &DefaultAdshrCurve;
     const auto* ref = reinterpret_cast<const Reference*>(reinterpret_cast<const u8*>(this) + (&flags)[index]);
     return AtOffset<AdshrCurve>(ref, ref->offset);
@@ -137,10 +143,12 @@ float WaveSoundFile::NoteInfo::GetPitch() const { return flags & 8 ? GetFloatPar
 // auxCount is the number of pointed-to auxiliary outputs to clear if the parameter is absent.
 void WaveSoundFile::NoteInfo::GetSendValue(u8* mainSend, u8** auxSends, u8 auxCount) const {
     u32 index = GetParameterIndex(flags, 8);
+
     if (index) {
         const u8* send = reinterpret_cast<const u8*>(this) + (&flags)[index];
         *mainSend = send[0];
         unsigned count = send[1] < 3 ? send[1] : 3;
+
         for (unsigned i = 0; i < count; ++i) *auxSends[i] = send[2 + i];
     } else {
         *mainSend = 127;
@@ -150,6 +158,7 @@ void WaveSoundFile::NoteInfo::GetSendValue(u8* mainSend, u8** auxSends, u8 auxCo
 
 const AdshrCurve* WaveSoundFile::NoteInfo::GetAdshrCurve() const {
     u32 index = GetParameterIndex(flags, 9);
+
     if (!index) return &DefaultAdshrCurve;
     const auto* ref = reinterpret_cast<const Reference*>(reinterpret_cast<const u8*>(this) + (&flags)[index]);
     return AtOffset<AdshrCurve>(ref, ref->offset);

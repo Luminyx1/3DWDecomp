@@ -56,6 +56,7 @@ void TextureCache::InitializeArg::SetDefault() {
     textureCacheHeight = TextureCacheSizeDefault;
     pAllocateFunction = nullptr;
     pUserDataForAllocateFunction = nullptr;
+
     for (int i = 0; i < FontFaceCountMax; i++) {
         for (int j = 0; j < InnerFontCountMax; j++) {
             pFontDatas[i][j] = nullptr;
@@ -74,6 +75,7 @@ void TextureCache::InitializeArg::SetDefault() {
             overwrittenAscents[i][j] = 0;
             overwrittenDescents[i][j] = 0;
             charCodeRangeCounts[i][j] = 0;
+
             for (int k = 0; k < CharCodeRangeCountMax; k++) {
                 charCodeRangeFirsts[i][j][k] = 0;
                 charCodeRangeLasts[i][j][k] = 0;
@@ -234,6 +236,7 @@ void TextureCache::Initialize(nn::gfx::Device* pDevice, const InitializeArg& rAr
     m_LineCurrentPos = 0;
     m_NoSpaceError = NoSpaceError_NoError;
     m_IsFsError = false;
+
     for (int i = 0; i < CoreCountMax; i++) {
         m_CurrentFontFacesNoPlot[i] = 0xffffffff;
     }
@@ -254,6 +257,7 @@ void TextureCache::Initialize(nn::gfx::Device* pDevice, const InitializeArg& rAr
         rArg.pAllocateFunction(rArg.workMemorySize, 4, rArg.pUserDataForAllocateFunction),
         rArg.workMemorySize);
     AssertFsError("Initialize");
+
     for (u32 i = 0; i < GetCoreCount(); i++) {
         if (rArg.isNoPlotWorkMemorySizeShared) {
             m_pFontEngineNoPlot[i].Initialize(
@@ -271,9 +275,11 @@ void TextureCache::Initialize(nn::gfx::Device* pDevice, const InitializeArg& rAr
     }
 
     int fontIndex = 0;
+
     for (u32 face = 0; face < m_FontFaceCount; face++) {
         for (u32 inner = 0; inner < m_InnerFontCounts[face]; inner++) {
             const void* pFontData;
+
             if (rArg.fontDataTypes[face][inner] == FontDataType_Bfttf ||
                 rArg.fontDataTypes[face][inner] == FontDataType_Bfotf) {
                 pFontData = fontll::ScalableFontEngineHelper::Decode(
@@ -289,6 +295,7 @@ void TextureCache::Initialize(nn::gfx::Device* pDevice, const InitializeArg& rAr
             m_pIsFixedWidth[fontIndex] = rArg.isFixedWidth[face][inner];
             m_pFixedWidths[fontIndex] = rArg.fixedWidths[face][inner];
             m_pCharCodeRangeCounts[fontIndex] = rArg.charCodeRangeCounts[face][inner];
+
             for (int i = 0; i < CharCodeRangeCountMax; i++) {
                 m_pCharCodeRangeFirsts[fontIndex][i] = rArg.charCodeRangeFirsts[face][inner][i];
                 m_pCharCodeRangeLasts[fontIndex][i] = rArg.charCodeRangeLasts[face][inner][i];
@@ -297,6 +304,7 @@ void TextureCache::Initialize(nn::gfx::Device* pDevice, const InitializeArg& rAr
             m_pFontEngine->LoadFont(GetFontName(fontIndex), pFontData,
                                     rArg.fontIndexes[face][inner], FontNameLength);
             AssertFsError("LoadFont");
+
             for (u32 i = 0; i < GetCoreCount(); i++) {
                 m_pFontEngineNoPlot[i].LoadFont(GetFontName(fontIndex),
                                                 pFontData, rArg.fontIndexes[face][inner],
@@ -308,6 +316,7 @@ void TextureCache::Initialize(nn::gfx::Device* pDevice, const InitializeArg& rAr
             fontll::Metrics metrics;
             m_pFontEngine->GetFontMetrics(&metrics);
             AssertFsError("GetFontMetrics");
+
             if (rArg.overwrittenAscents[face][inner] != 0) {
                 metrics.boundingBoxMaxY = rArg.overwrittenAscents[face][inner];
                 metrics.ascender = rArg.overwrittenAscents[face][inner];
@@ -332,6 +341,7 @@ void TextureCache::Initialize(nn::gfx::Device* pDevice, const InitializeArg& rAr
             m_pFontMetrics[fontIndex].baselineOffset = rArg.baselineOffsets[face][inner];
 
             fontll::OtfKerningTable* pKerningTable = nullptr;
+
             if ((rArg.fontDataTypes[face][inner] == FontDataType_Otf ||
                  rArg.fontDataTypes[face][inner] == FontDataType_Bfotf) &&
                 !rArg.isWidthFromBoundingBox[face][inner] && !rArg.isFixedWidth[face][inner]) {
@@ -346,13 +356,16 @@ void TextureCache::Initialize(nn::gfx::Device* pDevice, const InitializeArg& rAr
     }
 
     int fontIndexBase = 0;
+
     for (u32 face = 0; face < m_FontFaceCount; face++) {
         float boundingBoxAscentRatio = 0.0f;
         float boundingBoxHeightRatio = 0.0f;
         float ascentRatio = 0.0f;
         float heightRatio = 0.0f;
+
         for (int inner = 0; inner < m_InnerFontCounts[face]; inner++) {
             const FontMetrics& metrics = m_pFontMetrics[fontIndexBase + inner];
+
             if (boundingBoxHeightRatio < metrics.boundingBoxHeightRatio) {
                 boundingBoxHeightRatio = metrics.boundingBoxHeightRatio;
                 boundingBoxAscentRatio = metrics.boundingBoxAscentRatio;
@@ -381,6 +394,7 @@ void TextureCache::Initialize(nn::gfx::Device* pDevice, const InitializeArg& rAr
     size_t alignment =
         CalculateMemoryPoolAlignment(pDevice, m_TextureCacheWidth, m_TextureCacheHeight);
     size_t size = CalculateMemoryPoolSize(pDevice, m_TextureCacheWidth, m_TextureCacheHeight);
+
     if (pMemoryPool != nullptr) {
         m_pTextureBitMap = static_cast<u8*>(static_cast<MemoryPoolImpl*>(pMemoryPool)->Map()) +
                            memoryPoolOffset;
@@ -430,6 +444,7 @@ void TextureCache::Initialize(nn::gfx::Device* pDevice, const InitializeArg& rAr
  */
 int TextureCache::InitializeFontFaceTable(const InitializeArg& rArg) {
     int fontCount = 0;
+
     for (u32 i = 0; i < rArg.fontFaceCount; i++) {
         if (rArg.innerFontCounts[i] < 1 || rArg.innerFontCounts[i] > InnerFontCountMax) {
             return 0;
@@ -439,6 +454,7 @@ int TextureCache::InitializeFontFaceTable(const InitializeArg& rArg) {
     }
 
     u8 offset = 0;
+
     for (u32 i = 0; i < FontFaceCountMax; i++) {
         if (i >= rArg.fontFaceCount) {
             m_InnerFontCounts[i] = 0;
@@ -487,6 +503,7 @@ void TextureCache::SetFontFace(u32 fontFace) {
     AssertFsError("SetFont");
     m_pFontEngine->SetBoldWeight(m_pBoldWeights[fontFace]);
     AssertFsError("SetBoldWeight");
+
     if (m_pBorderWidths[fontFace] != 0) {
         m_pFontEngine->SetOutlineWidth(m_pBorderWidths[fontFace]);
         m_pFontEngine->SetFlags(fontll::ScalableFontEngine::Flags_Outlined);
@@ -508,11 +525,13 @@ void TextureCache::Finalize(nn::gfx::Device* pDevice, FreeFunction pFreeFunction
                             void* pUserData) {
     void* pWorkMemory = m_pFontEngine->GetPointerToWorkBuffer();
     void* pNoPlotWorkMemories[CoreCountMax] = {};
+
     for (u32 i = 0; i < GetCoreCount(); i++) {
         pNoPlotWorkMemories[i] = m_pFontEngineNoPlot[i].GetPointerToWorkBuffer();
     }
 
     int fontIndex = 0;
+
     for (u32 face = 0; face < m_FontFaceCount; face++) {
         for (u32 inner = 0; inner < m_InnerFontCounts[face]; inner++) {
             if (m_pOtfKerningTables[fontIndex] != nullptr) {
@@ -527,6 +546,7 @@ void TextureCache::Finalize(nn::gfx::Device* pDevice, FreeFunction pFreeFunction
 
     m_pFontEngine->Finalize();
     AssertFsError("Finalize");
+
     for (u32 i = 0; i < GetCoreCount(); i++) {
         m_pFontEngineNoPlot[i].Finalize();
         AssertFsErrorNoPlot("Finalize", i);
@@ -537,6 +557,7 @@ void TextureCache::Finalize(nn::gfx::Device* pDevice, FreeFunction pFreeFunction
     pFreeFunction(m_pFontEngineNoPlot, pUserData);
     m_pFontEngineNoPlot = nullptr;
     pFreeFunction(pWorkMemory, pUserData);
+
     for (u32 i = 0; i < GetCoreCount(); i++) {
         pFreeFunction(pNoPlotWorkMemories[i], pUserData);
     }
@@ -578,6 +599,7 @@ void TextureCache::Finalize(nn::gfx::Device* pDevice, FreeFunction pFreeFunction
     if (m_TextureObject.IsInitialized()) {
         static_cast<TextureViewImpl&>(m_TextureView).Finalize(pDevice);
         static_cast<TextureImpl&>(m_Texture).Finalize(pDevice);
+
         if (m_pActiveMemoryPool == &m_MemoryPool) {
             m_MemoryPool.Finalize(pDevice);
         }
@@ -625,13 +647,16 @@ bool TextureCache::RegisterGlyph(u32 code, u32 fontSize, u16 fontFace, int lockG
     }
 
     u32 innerFontFace;
+
     if (!GetInnerFontFace(&innerFontFace, fontFace, code)) {
         return false;
     }
 
     GlyphNode* pNode = m_GlyphTreeMap.Find(code, fontSize, innerFontFace);
+
     if (pNode != nullptr) {
         pNode->SetFlag(GlyphNode::FlagBit_Requested);
+
         if (lockGroup >= 0) {
             pNode->m_LockGroup |= 1 << lockGroup;
         }
@@ -640,8 +665,10 @@ bool TextureCache::RegisterGlyph(u32 code, u32 fontSize, u16 fontFace, int lockG
     }
 
     pNode = m_GlyphTreeMap.Insert(code, fontSize, innerFontFace);
+
     if (pNode != nullptr) {
         pNode->SetFlag(GlyphNode::FlagBit_Requested | GlyphNode::FlagBit_NotPlotted);
+
         if (lockGroup >= 0) {
             pNode->m_LockGroup |= 1 << lockGroup;
         }
@@ -667,10 +694,12 @@ bool TextureCache::RegisterGlyph(u32 code, u32 fontSize, u16 fontFace, int lockG
  */
 bool TextureCache::GetInnerFontFace(u32* pInnerFontFace, u32 fontFace, u32 code) {
     const u8* pInnerFontFaces = m_pInnerFontFaceTables[fontFace];
+
     for (u32 i = 0; i < m_InnerFontCounts[fontFace]; i++) {
         if (CheckCharCodeRange(pInnerFontFaces[i], code)) {
             u32 coreId = GetCoreId();
             SetFontFaceNoPlot(pInnerFontFaces[i], coreId);
+
             if (m_pFontEngineNoPlot[coreId].CheckGlyphExist(code)) {
                 *pInnerFontFace = pInnerFontFaces[i];
                 return true;
@@ -689,9 +718,11 @@ bool TextureCache::GetInnerFontFace(u32* pInnerFontFace, u32 fontFace, u32 code)
 u32 TextureCache::EraseNotInFontGlyphs() {
     u32 count = 0;
     GlyphList::iterator it = m_NotInFontGlyphList.begin();
+
     while (it != m_NotInFontGlyphList.end()) {
         GlyphList::iterator next = it;
         ++next;
+
         if (!it->IsFlagOn(GlyphNode::FlagBit_Requested | GlyphNode::FlagBit_UsedInLastFrame)) {
             GlyphNode& node = *it;
             m_NotInFontGlyphList.erase(it);
@@ -719,6 +750,7 @@ u32 TextureCache::RegisterGlyphsWithLength(const u16* pCodes, u32 codeLength, u3
                                            u16 fontFace, int lockGroup,
                                            bool isNoBreakHyphenReplaced) {
     u32 count = 0;
+
     for (u32 i = 0; i < codeLength; i++) {
         if (pCodes[i] == 0) {
             break;
@@ -745,9 +777,11 @@ u32 TextureCache::RegisterGlyphsWithLengthUtf8(const char* pCodes, u32 codeLengt
                                                bool isNoBreakHyphenReplaced) {
     u32 count = 0;
     const char* pStart = pCodes;
+
     while (static_cast<u32>(pCodes - pStart) != codeLength) {
         char buffer[4] = {};
         nn::util::PickOutCharacterFromUtf8String(buffer, &pCodes);
+
         if (buffer[0] == 0) {
             break;
         }
@@ -761,6 +795,7 @@ u32 TextureCache::RegisterGlyphsWithLengthUtf8(const char* pCodes, u32 codeLengt
 
 void TextureCache::UpdateTextureCache() {
     GlyphList::iterator it = m_NeedPlotGlyphList.begin();
+
     while (it != m_NeedPlotGlyphList.end()) {
         GlyphList::iterator next = it;
         ++next;
@@ -769,6 +804,7 @@ void TextureCache::UpdateTextureCache() {
         it = next;
 
         SetFontFace(pNode->GetFontFace());
+
         if (!m_pFontEngine->CheckGlyphExist(pNode->GetCode())) {
             pNode->SetFlag(GlyphNode::FlagBit_NotInFont);
             m_NotInFontGlyphList.push_back(*pNode);
@@ -788,6 +824,7 @@ void TextureCache::UpdateTextureCache() {
         pNode->m_LineKind = lineKind;
 
         LineInfo* pLine = nullptr;
+
         for (u32 i = 0; i < m_LineCurrentPos; i++) {
             if (m_LineInfos[i].kind == lineKind &&
                 m_LineInfos[i].currentX + pGlyph->width + 2 < m_TextureCacheWidth) {
@@ -816,6 +853,7 @@ void TextureCache::UpdateTextureCache() {
             pLine->currentX += pGlyph->width + 2;
         } else {
             GlyphNode* pEraseNode = FindAndReserveEraseGlyph(pNode->m_LineKind, pGlyph->width);
+
             if (pEraseNode == nullptr) {
                 m_NeedEraseGlyphList.push_back(*pNode);
                 m_pFontEngine->ReleasesGlyph(pGlyph);
@@ -843,6 +881,7 @@ void TextureCache::UpdateTextureCache() {
         pNode->m_CacheHeight = pGlyph->height + offsetY;
 
         int left;
+
         if (m_pIsWidthFromBoundingBox[pNode->GetFontFace()] && pGlyph->width != 0) {
             pNode->m_AdvanceX =
                 static_cast<int>(scaleWidth * (m_pLetterSpacings[pNode->GetFontFace()] + pGlyph->width));
@@ -883,6 +922,7 @@ void TextureCache::UpdateTextureCache() {
         }
 
         int row = -startY > 0 ? -startY : 0;
+
         if (m_pBorderWidths[pNode->GetFontFace()] != 0) {
             m_pFontEngine->SetFlags(fontll::ScalableFontEngine::Flags_OutlinedFilled);
             fontll::GlyphMap* pBorderGlyph = m_pFontEngine->AcquireGlyphmap(pNode->GetCode(), 8);
@@ -922,6 +962,7 @@ void TextureCache::UpdateTextureCache() {
         }
 
         u32 lineHeight = m_pCalculateLineHeightFunction(pNode->m_LineKind);
+
         for (u32 y = pGlyph->height; y < pGlyph->height + 2u && y < lineHeight; y++) {
             std::memset(&pBitMap[(m_TextureCacheHeight - 1 - (y + startY)) * m_TextureCacheWidth +
                                  pNode->m_CachePosX],
@@ -941,6 +982,7 @@ void TextureCache::UpdateTextureCache() {
  */
 TextureCache::LineInfo* TextureCache::CreateNewLineImpl(u8 lineKind) {
     u32 y;
+
     if (m_LineCurrentPos == 0) {
         y = 0;
     } else {
@@ -964,6 +1006,7 @@ TextureCache::LineInfo* TextureCache::CreateNewLineImpl(u8 lineKind) {
 GlyphNode* TextureCache::FindAndReserveEraseGlyph(u8 lineKind, u16 glyphWidth) {
     for (u32 i = 0; i < m_LineCurrentPos; i++) {
         LineInfo& line = m_LineInfos[i];
+
         if (line.kind != lineKind) {
             continue;
         }
@@ -972,6 +1015,7 @@ GlyphNode* TextureCache::FindAndReserveEraseGlyph(u8 lineKind, u16 glyphWidth) {
         GlyphLineList::iterator end = line.list.end();
         int count = 0;
         GlyphLineList::iterator first = begin;
+
         for (GlyphLineList::iterator it = begin; it != end; ++it) {
             if (it->m_Flag != 0 || it->m_LockGroup != 0) {
                 count = 0;
@@ -979,6 +1023,7 @@ GlyphNode* TextureCache::FindAndReserveEraseGlyph(u8 lineKind, u16 glyphWidth) {
             }
 
             u32 width = it->m_CacheWidth;
+
             if (count != 0) {
                 width = it->m_CachePosX + width - first->m_CachePosX;
             } else {
@@ -986,8 +1031,10 @@ GlyphNode* TextureCache::FindAndReserveEraseGlyph(u8 lineKind, u16 glyphWidth) {
             }
 
             int space = 0;
+
             if (first != begin) {
                 GlyphLineList::iterator prev = first;
+
                 do {
                     prev = GlyphLineList::iterator(prev.GetNode()->GetPrev());
                 } while (prev->IsFlagOn(GlyphNode::FlagBit_Erase) && begin != prev);
@@ -998,6 +1045,7 @@ GlyphNode* TextureCache::FindAndReserveEraseGlyph(u8 lineKind, u16 glyphWidth) {
             if (width >= glyphWidth) {
                 GlyphLineList::iterator last = it;
                 ++last;
+
                 for (GlyphLineList::iterator eraseIt = first; eraseIt != last; ++eraseIt) {
                     if (!eraseIt->IsFlagOn(GlyphNode::FlagBit_Erase)) {
                         eraseIt->SetFlag(GlyphNode::FlagBit_Erase);
@@ -1024,15 +1072,18 @@ GlyphNode* TextureCache::FindAndReserveEraseGlyph(u8 lineKind, u16 glyphWidth) {
  */
 void TextureCache::CompleteTextureCache() {
     GlyphList::iterator it = m_NeedEraseGlyphList.begin();
+
     while (it != m_NeedEraseGlyphList.end()) {
         GlyphList::iterator next = it;
         ++next;
         GlyphNode* pNode = &*it;
         m_NeedEraseGlyphList.erase(it);
+
         if (pNode->IsFlagOn(GlyphNode::FlagBit_Erase)) {
             GlyphLineList& list = m_LineInfos[pNode->m_LineNo].list;
             list.erase(list.iterator_to(*pNode));
             u16 currentX;
+
             if (list.size() == 0) {
                 currentX = 0;
             } else {
@@ -1071,6 +1122,7 @@ void TextureCache::ClearLockGlyphsWithLength(const u16* pCodes, u32 codeLength, 
                                              bool isNoBreakHyphenReplaced) {
     for (u32 i = 0; i < codeLength; i++) {
         u32 code = pCodes[i];
+
         if (isNoBreakHyphenReplaced && code == 0x2011) {
             code = '-';
         }
@@ -1080,11 +1132,13 @@ void TextureCache::ClearLockGlyphsWithLength(const u16* pCodes, u32 codeLength, 
         }
 
         u32 innerFontFace;
+
         if (!GetInnerFontFace(&innerFontFace, fontFace, code)) {
             return;
         }
 
         GlyphNode* pNode = m_GlyphTreeMap.Find(code, fontSize, innerFontFace);
+
         if (pNode != nullptr) {
             pNode->m_LockGroup &= ~(1 << lockGroup);
         }
@@ -1104,9 +1158,11 @@ void TextureCache::ClearLockGlyphsWithLengthUtf8(const char* pCodes, u32 codeLen
                                                  u32 fontSize, u16 fontFace, int lockGroup,
                                                  bool isNoBreakHyphenReplaced) {
     const char* pCurrent = pCodes;
+
     while (static_cast<u32>(pCurrent - pCodes) != codeLength) {
         char buffer[4] = {};
         nn::util::PickOutCharacterFromUtf8String(buffer, &pCurrent);
+
         if (buffer[0] == 0) {
             return;
         }
@@ -1114,11 +1170,13 @@ void TextureCache::ClearLockGlyphsWithLengthUtf8(const char* pCodes, u32 codeLen
         u32 code = ConvertCharacterUtf8ToUtf32(buffer);
         u32 convertedCode = isNoBreakHyphenReplaced && code == 0x2011 ? '-' : code;
         u32 innerFontFace;
+
         if (!GetInnerFontFace(&innerFontFace, fontFace, convertedCode)) {
             return;
         }
 
         GlyphNode* pNode = m_GlyphTreeMap.Find(convertedCode, fontSize, innerFontFace);
+
         if (pNode != nullptr) {
             pNode->m_LockGroup &= ~(1 << lockGroup);
         }
@@ -1137,6 +1195,7 @@ void TextureCache::ResetTextureCache() {
     m_NeedPlotGlyphList.clear();
     m_NeedEraseGlyphList.clear();
     m_NotInFontGlyphList.clear();
+
     for (u32 i = 0; i < m_LineCurrentPos; i++) {
         m_LineInfos[i].list.clear();
     }
@@ -1152,6 +1211,7 @@ void TextureCache::ResetTextureCache() {
  */
 void TextureCache::ChangeFontListOrder(u32 fontFace, u32* pOrders) {
     u8* pInnerFontFaces = m_pInnerFontFaceTables[fontFace];
+
     for (u32 i = 0; i < m_InnerFontCounts[fontFace]; i++) {
         pInnerFontFaces[i] = (pInnerFontFaces - m_InnerFontFaceTable) + pOrders[i];
     }
@@ -1191,6 +1251,7 @@ bool TextureCache::IsGlyphExistInFont(u32 code, u16 fontFace) {
 bool TextureCache::IsBorderEffectEnabled(u16 fontFace) const {
     u8 innerFontCount = m_InnerFontCounts[fontFace];
     const u8* pInnerFontFaces = m_pInnerFontFaceTables[fontFace];
+
     for (u32 i = 0; i < innerFontCount; i++) {
         if (m_pBorderWidths[pInnerFontFaces[i]] != 0) {
             return true;
@@ -1211,18 +1272,22 @@ bool TextureCache::IsBorderEffectEnabled(u16 fontFace) const {
 u32 TextureCache::CountPlottingGlyph(const u16* pCodes, u32 codeLength, u32 fontSize,
                                      u16 fontFace) {
     u32 count = 0;
+
     for (u32 i = 0; i < codeLength; i++) {
         u32 code = pCodes[i];
+
         if (code == 0) {
             break;
         }
 
         u32 innerFontFace;
+
         if (!GetInnerFontFace(&innerFontFace, fontFace, code)) {
             continue;
         }
 
         GlyphNode* pNode = m_GlyphTreeMap.Find(code, fontSize, innerFontFace);
+
         if (pNode == nullptr ||
             pNode->IsFlagOn(GlyphNode::FlagBit_NotPlotted | GlyphNode::FlagBit_NotInFont) ||
             (!pNode->IsFlagOn(GlyphNode::FlagBit_Requested | GlyphNode::FlagBit_Used |
@@ -1240,8 +1305,10 @@ const TextureCache::FontMetrics& TextureCache::GetFontMetrics(u16 fontFace) cons
     u32 innerFontCount = m_InnerFontCounts[fontFace];
     const FontMetrics* pFontMetrics = m_pFontMetrics;
     u32 index = pInnerFontFaces[0];
+
     if (innerFontCount >= 2) {
         float maxHeight = pFontMetrics[index].boundingBoxHeightRatio;
+
         for (u32 i = 1; i < innerFontCount; i++) {
             if (maxHeight < pFontMetrics[pInnerFontFaces[i]].boundingBoxHeightRatio) {
                 maxHeight = pFontMetrics[pInnerFontFaces[i]].boundingBoxHeightRatio;
@@ -1262,6 +1329,7 @@ const TextureCache::FontMetrics& TextureCache::GetFontMetrics(u16 fontFace) cons
  */
 int TextureCache::CalculateCharWidth(u32 code, u32 fontSize, u16 fontFace) {
     u32 innerFontFace;
+
     if (!GetInnerFontFace(&innerFontFace, fontFace, code)) {
         return 0;
     }
@@ -1277,6 +1345,7 @@ int TextureCache::CalculateCharWidth(u32 code, u32 fontSize, u16 fontFace) {
     int result = m_pFontEngineNoPlot[coreId].GetAdvance(&advanceX, &advanceY, &fixedAdvanceX,
                                                         &fixedAdvanceY, code, 8);
     int width = 0;
+
     if (result == 0) {
         width = static_cast<int>(m_pFontMetrics[innerFontFace].scaleWidth *
                                  (advanceX + m_pLetterSpacings[innerFontFace]));
@@ -1310,6 +1379,7 @@ void TextureCache::SetFontFaceNoPlot(u32 fontFace, u32 coreId) {
     AssertFsErrorNoPlot("SetFont", coreId);
     m_pFontEngineNoPlot[coreId].SetBoldWeight(m_pBoldWeights[fontFace]);
     AssertFsErrorNoPlot("SetBoldWeight", coreId);
+
     if (m_pBorderWidths[fontFace] != 0) {
         m_pFontEngineNoPlot[coreId].SetOutlineWidth(m_pBorderWidths[fontFace]);
         m_pFontEngineNoPlot[coreId].SetFlags(fontll::ScalableFontEngine::Flags_Outlined);
@@ -1323,6 +1393,7 @@ void TextureCache::SetFontFaceNoPlot(u32 fontFace, u32 coreId) {
 
 int TextureCache::CalculateKerning(u32 code0, u32 code1, u32 fontSize, u16 fontFace) {
     u32 innerFontFace;
+
     if (code0 == 0) {
         if (!GetInnerFontFace(&innerFontFace, fontFace, code1)) {
             return 0;
@@ -1336,6 +1407,7 @@ int TextureCache::CalculateKerning(u32 code0, u32 code1, u32 fontSize, u16 fontF
         SetFontFaceNoPlot(innerFontFace, coreId);
         m_pFontEngineNoPlot[coreId].SetScale(fontSize << 16, 0, 0, fontSize << 16);
         AssertFsErrorNoPlot("SetScale", coreId);
+
         if (m_pOtfKerningTables[innerFontFace] == nullptr) {
             return 0;
         }
@@ -1358,6 +1430,7 @@ int TextureCache::CalculateKerning(u32 code0, u32 code1, u32 fontSize, u16 fontF
         SetFontFaceNoPlot(innerFontFace, coreId);
         m_pFontEngineNoPlot[coreId].SetScale(fontSize << 16, 0, 0, fontSize << 16);
         AssertFsErrorNoPlot("SetScale", coreId);
+
         if (m_pOtfKerningTables[innerFontFace] == nullptr) {
             return 0;
         }
@@ -1368,6 +1441,7 @@ int TextureCache::CalculateKerning(u32 code0, u32 code1, u32 fontSize, u16 fontF
     }
 
     u32 innerFontFace1;
+
     if (!GetInnerFontFace(&innerFontFace, fontFace, code0)) {
         return 0;
     }
@@ -1392,6 +1466,7 @@ int TextureCache::CalculateKerning(u32 code0, u32 code1, u32 fontSize, u16 fontF
     bool isError = false;
     int kerning;
     int otfKerning = 0;
+
     if (m_pOtfKerningTables[innerFontFace] != nullptr) {
         otfKerning = m_pFontEngineNoPlot[coreId].AcquireOtfKerning(
             m_pOtfKerningTables[innerFontFace], code0, code1, fontSize);
@@ -1402,6 +1477,7 @@ int TextureCache::CalculateKerning(u32 code0, u32 code1, u32 fontSize, u16 fontF
     } else {
         int kerningX;
         int kerningY;
+
         if (m_pFontEngineNoPlot[coreId].GetKerning(&kerningX, &kerningY, code0, code1) != 0) {
             isError = true;
         } else {
@@ -1425,6 +1501,7 @@ int TextureCache::CalculateKerning(u32 code0, u32 code1, u32 fontSize, u16 fontF
  */
 GlyphNode* TextureCache::FindGlyphNode(u32 code, u32 fontSize, u16 fontFace) {
     u32 innerFontFace;
+
     if (!GetInnerFontFace(&innerFontFace, fontFace, code)) {
         return nullptr;
     }
@@ -1443,18 +1520,22 @@ GlyphNode* TextureCache::FindGlyphNode(u32 code, u32 fontSize, u16 fontFace) {
 u32 TextureCache::CountUnusableGlyph(const u16* pCodes, u32 codeLength, u32 fontSize,
                                      u16 fontFace) {
     u32 count = 0;
+
     for (u32 i = 0; i < codeLength; i++) {
         u32 code = pCodes[i];
+
         if (code == 0) {
             break;
         }
 
         u32 innerFontFace;
+
         if (!GetInnerFontFace(&innerFontFace, fontFace, code)) {
             continue;
         }
 
         GlyphNode* pNode = m_GlyphTreeMap.Find(code, fontSize, innerFontFace);
+
         if (pNode == nullptr ||
             pNode->IsFlagOn(GlyphNode::FlagBit_NotPlotted | GlyphNode::FlagBit_NotInFont) ||
             (!pNode->IsFlagOn(GlyphNode::FlagBit_Requested | GlyphNode::FlagBit_Used |
@@ -1475,12 +1556,14 @@ u32 TextureCache::CountUnusableGlyph(const u16* pCodes, u32 codeLength, u32 font
  */
 bool TextureCache::CheckCharCodeRange(u32 innerFontFace, u32 code) const {
     int rangeCount = m_pCharCodeRangeCounts[innerFontFace];
+
     if (rangeCount == 0) {
         return true;
     }
 
     for (int i = 0; i < rangeCount; i++) {
         u32 first = m_pCharCodeRangeFirsts[innerFontFace][i];
+
         if ((first & 0x7fffffff) <= code && code <= m_pCharCodeRangeLasts[innerFontFace][i]) {
             return (first & 0x80000000) == 0;
         }

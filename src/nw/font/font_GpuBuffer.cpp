@@ -100,6 +100,7 @@ void GpuBuffer::Map(int bufferIndex) {
     }
 
     m_MappedBufferIndex = bufferIndex;
+
     if (m_pBuffers != nullptr) {
         m_pMappedPointer = m_pBuffers[bufferIndex].Map();
     }

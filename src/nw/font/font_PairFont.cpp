@@ -177,6 +177,7 @@ void PairFont::SetDefaultCharWidths(const CharWidths& rWidths) {
 bool PairFont::SetAlternateChar(uint32_t c) {
     bool isFirstSet = m_pFirstFont->SetAlternateChar(c);
     bool isSecondSet = m_pSecondFont->SetAlternateChar(c);
+
     if (isFirstSet || isSecondSet) {
         m_IsAlternateCharInFirstFont = isFirstSet;
         return true;
@@ -233,6 +234,7 @@ const CharWidths PairFont::GetCharWidths(uint32_t c) const {
  */
 int PairFont::GetGlyph(Glyph* pGlyph, uint32_t c) const {
     int result;
+
     if (m_pFirstFont->IsGlyphExistInFont(c) ||
         (!m_pSecondFont->IsGlyphExistInFont(c) && m_IsAlternateCharInFirstFont)) {
         result = m_pFirstFont->GetGlyph(pGlyph, c);

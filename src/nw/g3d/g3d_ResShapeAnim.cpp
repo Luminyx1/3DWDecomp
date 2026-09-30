@@ -7,9 +7,11 @@ static_assert(sizeof(ResShapeAnim) == 0x50, "Shape animation resource size");
 void ResVertexShapeAnim::Evaluate(float* result, float frame, const s8* indices) const {
     int count = keyShapeCount;
     const ResKeyShapeAnimInfo* info = keyShapes;
+
     for (int i = 0; i < count; ++i, ++info) {
         if (indices[i] == -1) continue;
         int index = info->curveIndex;
+
         if (index == -1) continue;
         const ResAnimCurve* curve = &curves[index];
         AnimFrameCache temporary;
@@ -21,9 +23,11 @@ void ResVertexShapeAnim::Evaluate(float* result, float frame, const s8* indices)
 void ResVertexShapeAnim::Evaluate(float* result, float frame, const s8* indices, AnimFrameCache* cache) const {
     int count = keyShapeCount;
     const ResKeyShapeAnimInfo* info = keyShapes;
+
     for (int i = 0; i < count; ++i, ++info) {
         if (indices[i] == -1) continue;
         int index = info->curveIndex;
+
         if (index == -1) continue;
 
         result[i] = curves[index].EvaluateFloat(frame, &cache[index]);
@@ -35,9 +39,11 @@ BindResult ResVertexShapeAnim::PreBind(const ResShape* shape) {
     BindResult result;
     int count = keyShapeCount;
     ResKeyShapeAnimInfo* info = keyShapes;
+
     for (int i = 0; i < count; ++i, ++info) {
         int index = shape->FindKeyShapeIndex(info->name.Get()->GetData());
         info->bindIndex = index;
+
         if (index == -1) result.Merge(BindResult(BindResult::Flag_Failure));
         else result.Merge(BindResult(BindResult::Flag_Success));
     }
@@ -50,8 +56,10 @@ BindResult ResVertexShapeAnim::BindCheck(const ResShape* shape) const {
     BindResult result;
     int count = keyShapeCount;
     const ResKeyShapeAnimInfo* info = keyShapes;
+
     for (int i = 0; i < count; ++i, ++info) {
         int index = shape->FindKeyShapeIndex(info->name.Get()->GetData());
+
         if (index == -1) result.Merge(BindResult(BindResult::Flag_Failure));
         else result.Merge(BindResult(BindResult::Flag_Success));
     }
@@ -64,6 +72,7 @@ void ResVertexShapeAnim::Initialize(float* result) const {
     result[0] = 0.0f;
     int count = keyShapeCount;
     const float* values = baseValues;
+
     for (int i = 1; i < count; ++i) result[i] = values[i - 1];
 }
 
@@ -73,9 +82,11 @@ BindResult ResShapeAnim::PreBind(const ResModel* model) {
     BindResult result;
     int count = shapeAnimCount;
     u16* indices = bindIndices;
+
     for (int i = 0; i < count; ++i) {
         ResVertexShapeAnim* anim = &shapeAnims[i];
         const ResShape* shape = model->FindShape(anim->name.Get()->GetData());
+
         if (shape != nullptr) {
             indices[i] = shape->GetIndex();
             result.Merge(anim->PreBind(shape));
@@ -92,9 +103,11 @@ BindResult ResShapeAnim::PreBind(const ResModel* model) {
 BindResult ResShapeAnim::BindCheck(const ResModel* model) const {
     BindResult result;
     int count = shapeAnimCount;
+
     for (int i = 0; i < count; ++i) {
         const ResVertexShapeAnim* anim = &shapeAnims[i];
         const ResShape* shape = model->FindShape(anim->name.Get()->GetData());
+
         if (shape != nullptr) result.Merge(anim->BindCheck(shape));
         else result.Merge(BindResult(BindResult::Flag_Failure));
     }
@@ -105,12 +118,15 @@ BindResult ResShapeAnim::BindCheck(const ResModel* model) const {
 // buffer supplies size writable bytes; an empty request already succeeds.
 bool ResShapeAnim::BakeCurve(void* buffer, size_t size) {
     if (!size) return true;
+
     if ((buffer == nullptr) || bakedSize > size) return false;
     u8* output = static_cast<u8*>(buffer);
     int count = shapeAnimCount;
+
     for (int i = 0; i < count; ++i) {
         ResVertexShapeAnim* anim = &shapeAnims[i];
         int curves = anim->curveCount;
+
         for (int j = 0; j < curves; ++j) {
             ResAnimCurve* curve = &anim->curves[j];
             size_t bytes = curve->CalculateBakedFloatSize();
@@ -128,11 +144,14 @@ void* ResShapeAnim::ResetCurve() {
     void* buffer = nullptr;
     bool found = false;
     int count = shapeAnimCount;
+
     for (int i = 0; i < count; ++i) {
         ResVertexShapeAnim* anim = &shapeAnims[i];
         int curves = anim->curveCount;
+
         for (int j = 0; j < curves; ++j) {
             ResAnimCurve* curve = &anim->curves[j];
+
             if (((curve->flags & 0x70) == 0x20) & !found) {
                 buffer = curve->keys;
                 found = true;
@@ -150,19 +169,23 @@ void ResShapeAnim::Reset() {
     boundModel = nullptr;
     int count = shapeAnimCount;
     u16* indices = bindIndices;
+
     for (int i = 0; i < count; ++i) {
         ResVertexShapeAnim* anim = &shapeAnims[i];
         int keys = anim->keyShapeCount;
         ResKeyShapeAnimInfo* info = anim->keyShapes;
+
         for (int j = 0; j < keys; ++j, ++info) info->bindIndex = -1;
         indices[i] = 0xffff;
     }
 
     if (!(flags & 1)) return;
     count = shapeAnimCount;
+
     for (int i = 0; i < count; ++i) {
         ResVertexShapeAnim* anim = &shapeAnims[i];
         int curves = anim->curveCount;
+
         for (int j = 0; j < curves; ++j) anim->curves[j].Reset();
     }
 

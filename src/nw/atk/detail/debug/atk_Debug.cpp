@@ -14,6 +14,7 @@ u32 GetWarningMask(DebugWarningFlag flag) {
 // flag selects a warning category (zero selects all); enabled sets or clears its bits.
 void Debug_SetWarningFlag(DebugWarningFlag flag, bool enabled) {
     u32 mask = GetWarningMask(flag);
+
     if (enabled) warningFlags |= mask;
     else warningFlags &= ~mask;
 }

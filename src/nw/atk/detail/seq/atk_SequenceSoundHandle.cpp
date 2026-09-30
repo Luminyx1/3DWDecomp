@@ -5,6 +5,7 @@ namespace nn::atk {
 SequenceSoundHandle::SequenceSoundHandle(SoundHandle* handle) : mSound(nullptr) {
     if (handle && handle->IsAttachedSound()) {
         auto* sound = detail::SoundCast<detail::SequenceSound>(handle->m_pSound);
+
         if (sound) detail_AttachSoundAsTempHandle(sound);
     }
 }
@@ -12,6 +13,7 @@ SequenceSoundHandle::SequenceSoundHandle(SoundHandle* handle) : mSound(nullptr) 
 // sound receives this temporary handle after detaching its previous special handle.
 void SequenceSoundHandle::detail_AttachSoundAsTempHandle(detail::SequenceSound* sound) {
     mSound = sound;
+
     if (mSound->IsAttachedTempSpecialHandle()) mSound->DetachTempSpecialHandle();
     mSound->mTempHandle = this;
 }
@@ -19,6 +21,7 @@ void SequenceSoundHandle::detail_AttachSoundAsTempHandle(detail::SequenceSound* 
 void SequenceSoundHandle::DetachSound() {
     if (mSound) {
         if (mSound->mTempHandle == this) mSound->mTempHandle = nullptr;
+
         if (mSound) mSound = nullptr;
     }
 }

@@ -28,6 +28,7 @@ void ShadingModelObj::InitializeArgument::CalculateMemorySize() {
     blocks[3].size = bufferCount * sizeof(nn::gfx::Buffer);
     memorySize = 0;
     memoryAlignment = 8;
+
     for (int i = 0; i < 4; ++i) {
         blocks[i].AppendTo(memorySize, memoryAlignment);
     }
@@ -79,8 +80,10 @@ size_t ShadingModelObj::CalculateBlockBufferSize(nn::gfx::Device* device) {
 // device creates buffers in pool at offset; size has already been validated by the caller.
 void ShadingModelObj::SetupBlockBufferImpl(nn::gfx::Device* device, nn::gfx::MemoryPool* pool, ptrdiff_t offset, size_t size) {
     size_t bytes = CalculateBlockBufferSize(device) / bufferCount;
+
     if (dirtyFlags.mWordCount > 0) memset(dirtyFlags.mPending, 0, static_cast<unsigned>(dirtyFlags.mWordCount) * sizeof(u32));
     dirtyFlags.mFlags &= ~1;
+
     if (dirtyFlags.mBufferCount > 1) {
         for (int i = 0; i < dirtyFlags.mBufferCount; ++i) {
             if (dirtyFlags.mWordCount > 0) memset(dirtyFlags.mBufferFlags + i * dirtyFlags.mWordCount, 0, static_cast<unsigned>(dirtyFlags.mWordCount) * sizeof(u32));
@@ -89,6 +92,7 @@ void ShadingModelObj::SetupBlockBufferImpl(nn::gfx::Device* device, nn::gfx::Mem
 
     nn::gfx::BufferInfo info;
     InitializeOptionBufferInfo(&info, bytes);
+
     for (size_t i = 0; i < bufferCount; ++i) {
         nn::gfx::Buffer* buffer = new (&buffers[i]) nn::gfx::Buffer;
         buffer->Initialize(device, info, pool, offset, bytes);
@@ -99,6 +103,7 @@ void ShadingModelObj::SetupBlockBufferImpl(nn::gfx::Device* device, nn::gfx::Mem
 
     blockSize = bytes;
     const ResUniformBlock* block = resource->ToData().optionBlockIndex >= 0 ? resource->GetUniformBlock(resource->ToData().optionBlockIndex) : nullptr;
+
     if (resource->ToData().optionBlockIndex >= 0 && block->size) {
         for (size_t i = 0; i < bufferCount; ++i) {
             BufferImpl* buffer = &buffers[i];
@@ -115,7 +120,9 @@ void ShadingModelObj::SetupBlockBufferImpl(nn::gfx::Device* device, nn::gfx::Mem
 // device/pool identify storage; offset and size delimit the available region.
 bool ShadingModelObj::SetupBlockBuffer(nn::gfx::Device* device, nn::gfx::MemoryPool* pool, ptrdiff_t offset, size_t size) {
     size_t required = CalculateBlockBufferSize(device);
+
     if (required > size) return false;
+
     if (required) {
         this->pool = pool;
         poolOffset = offset;
@@ -150,15 +157,19 @@ void ShadingModelObj::CalculateOptionBlock(int bufferIndex) {
     if (!blockSize) return;
     dirtyFlags.Caclulate();
     int mask = 1 << bufferIndex;
+
     if (!(dirtyFlags.mDirtyBuffers & mask)) return;
     void* mapped = buffers[bufferIndex].Map();
     int words = (resource->GetStaticOptionCount() + sizeof(u32) * 8 - 1) / (sizeof(u32) * 8);
+
     for (int i = 0; i < words; ++i) {
         dirtyFlags.mDirtyBuffers &= ~mask;
         u32 value = (dirtyFlags.mBufferFlags + dirtyFlags.mWordCount * bufferIndex)[static_cast<ptrdiff_t>(i)];
+
         while (value) {
             int bit = HighestBit(value);
             const ResShaderOption* option = resource->GetStaticOption(static_cast<int>(i * 32) + bit);
+
             if (option->blockOffset) {
                 const u32* values = option->values;
                 int choice = option->ReadStaticKey(optionKey);
@@ -172,6 +183,7 @@ void ShadingModelObj::CalculateOptionBlock(int bufferIndex) {
     }
 
     int wordCount = dirtyFlags.mWordCount;
+
     if (!(wordCount < 1)) memset(dirtyFlags.mBufferFlags + wordCount * bufferIndex, 0, static_cast<unsigned>(wordCount) * sizeof(u32));
     size_t size = blockSize;
     BufferImpl* buffer = &buffers[bufferIndex];
@@ -181,12 +193,15 @@ void ShadingModelObj::CalculateOptionBlock(int bufferIndex) {
 
 void ShadingModelObj::ClearStaticKey() {
     int count = resource->GetStaticOptionCount();
+
     for (int i = 0; i < count; ++i) {
         const ResShaderOption* option = resource->GetStaticOption(i);
         int choice = option->defaultChoice;
+
         if (!(option->flags & 1)) option->WriteStaticKey(staticKey, choice);
         else {
             option->WriteStaticKey(optionKey, choice);
+
             if (option->blockOffset) {
                 dirtyFlags.mPending[static_cast<unsigned>(i) >> 5] |= 1u << (i & 31);
                 dirtyFlags.mFlags |= 1;
@@ -198,9 +213,11 @@ void ShadingModelObj::ClearStaticKey() {
 // optionIndex selects a static option and choice selects its value.
 void ShadingModelObj::WriteStaticKey(int optionIndex, int choice) {
     const ResShaderOption* option = resource->GetStaticOption(optionIndex);
+
     if (!(option->flags & 1)) option->WriteStaticKey(staticKey, choice);
     else {
         option->WriteStaticKey(optionKey, choice);
+
         if (option->blockOffset) {
             dirtyFlags.mPending[optionIndex >> 5] |= 1u << (optionIndex & 31);
             dirtyFlags.mFlags |= 1;
@@ -224,6 +241,7 @@ void ShaderSelector::InitializeArgument::CalculateMemorySize() {
     blocks[2].size = resource->GetDynamicKeyLength() * sizeof(u32);
     memorySize = 0;
     memoryAlignment = 8;
+
     for (int i = 0; i < 3; ++i) {
         blocks[i].AppendTo(memorySize, memoryAlignment);
     }
@@ -239,6 +257,7 @@ bool ShaderSelector::Initialize(const InitializeArgument& argument, void* memory
     previousKey = argument.blocks[2].GetPointer<u32>(memory);
     work = memory;
     int count = model->GetResource()->GetDynamicKeyLength();
+
     if (count) {
         resource->WriteDefaultDynamicKey(dynamicKey);
         std::copy(dynamicKey, dynamicKey + count, optionKey);
@@ -259,9 +278,11 @@ bool ShaderSelector::UpdateVariation(nn::gfx::Device* device) {
     const u32* current = dynamicKey;
     u32* previous = previousKey;
     const u32* end = current + count;
+
     for (const u32* cursor = current; cursor != end; ++cursor) {
         if (*cursor != previous[cursor - current]) {
             int index = resource->FindProgramIndex(model->range, current);
+
             if (index == -1) {
                 resource->WriteInvalidDynamicKey(previousKey);
                 program = nullptr;
@@ -280,9 +301,11 @@ bool ShaderSelector::UpdateVariation(nn::gfx::Device* device) {
 
 void ShaderSelector::ClearDynamicKey() {
     int count = model->GetResource()->GetDynamicOptionCount();
+
     for (int i = 0; i < count; ++i) {
         const ResShaderOption* option = model->GetResource()->GetDynamicOption(i);
         int choice = option->defaultChoice;
+
         if (!(option->flags & 1)) option->WriteDynamicKey(dynamicKey, choice);
         else option->WriteDynamicKey(optionKey, choice);
     }
@@ -291,6 +314,7 @@ void ShaderSelector::ClearDynamicKey() {
 // optionIndex selects a dynamic option and choice identifies its value.
 void ShaderSelector::WriteDynamicKey(int optionIndex, int choice) {
     const ResShaderOption* option = model->GetResource()->GetDynamicOption(optionIndex);
+
     if (!(option->flags & 1)) option->WriteDynamicKey(dynamicKey, choice);
     else option->WriteDynamicKey(optionKey, choice);
 }
@@ -315,6 +339,7 @@ int ShadingModelObj::PrintRawOptionTo(char* destination, int capacity) const {
 int ShadingModelObj::PrintKeyTo(char* destination, int capacity) const {
     u32 key[32] = {};
     int count = resource->GetStaticOptionCount();
+
     for (int i = 0; i < count; ++i) {
         const ResShaderOption* option = resource->GetStaticOption(i);
         int choice = option->ReadStaticKey(option->flags & 1 ? optionKey : staticKey);
@@ -329,6 +354,7 @@ int ShadingModelObj::PrintOptionTo(char* destination, int capacity) const {
     u32 key[32] = {};
     int count = resource->GetStaticOptionCount();
     const ResShadingModel* current = resource;
+
     for (int i = 0; i < count; ++i) {
         const ResShaderOption* option = current->GetStaticOption(i);
         int choice = option->ReadStaticKey(option->flags & 1 ? optionKey : staticKey);
@@ -356,6 +382,7 @@ int ShaderSelector::PrintKeyTo(char* destination, int capacity) const {
     const ResShadingModel* resource = model->GetResource();
     u32 key[32] = {};
     int count = model->GetResource()->GetDynamicOptionCount();
+
     for (int i = 0; i < count; ++i) {
         const ResShaderOption* option = model->GetResource()->GetDynamicOption(i);
         int choice = option->ReadDynamicKey(option->flags & 1 ? optionKey : dynamicKey);
@@ -370,6 +397,7 @@ int ShaderSelector::PrintOptionTo(char* destination, int capacity) const {
     const ResShadingModel* resource = model->GetResource();
     u32 key[32] = {};
     int count = model->GetResource()->GetDynamicOptionCount();
+
     for (int i = 0; i < count; ++i) {
         const ResShaderOption* option = model->GetResource()->GetDynamicOption(i);
         int choice = option->ReadDynamicKey(option->flags & 1 ? optionKey : dynamicKey);

@@ -9,10 +9,13 @@ void ShaderUtility::InitializeShaderKey(u32* key, int capacity, const ResShading
     model->WriteDefaultStaticKey(key);
     model->WriteDefaultDynamicKey(key + staticLength);
     int count = assignment->ToData().optionCount;
+
     for (int i = 0; i < count; ++i) {
         const ResShaderOption* option = model->FindStaticOption(assignment->GetOptionName(i));
+
         if (option == nullptr) continue;
         int choice = option->FindChoiceIndex(assignment->ToData().pOptionArray.Get()[i].Get()->GetData());
+
         if (choice >= 0) option->WriteStaticKey(key, choice);
     }
 }
@@ -21,13 +24,16 @@ void ShaderUtility::InitializeShaderKey(u32* key, int capacity, const ResShading
 void ShaderUtility::InitializeShaderKey(ShadingModelObj* object, const ResShaderAssign* assignment, bool check) {
     object->ClearStaticKey();
     int count = assignment->ToData().optionCount;
+
     for (int i = 0; i < count; ++i) {
         const char* name = assignment->GetOptionName(i);
         const ResShadingModel* model = object->GetResource();
         int index = model->FindStaticOptionIndex(name);
+
         if (index < 0) continue;
         const ResShaderOption* option = model->GetStaticOption(index);
         int choice = option->FindChoiceIndex(assignment->ToData().pOptionArray.Get()[i].Get()->GetData());
+
         if (choice >= 0) object->WriteStaticKey(index, choice);
     }
 }
@@ -35,10 +41,12 @@ void ShaderUtility::InitializeShaderKey(ShadingModelObj* object, const ResShader
 // material receives offsets for parameters found in model's material uniform block.
 void ShaderUtility::BindShaderParam(ResMaterial* material, const ResShadingModel* model) {
     int blockIndex = model->GetMaterialBlockIndex();
+
     if (blockIndex == -1) { material->ToData().materialBlockSize = 0; return; }
     const ResUniformBlock* block = model->GetUniformBlock(blockIndex);
     material->ToData().materialBlockSize = block->size;
     int count = material->ToData().shaderParamCount;
+
     for (int i = 0; i < count; ++i) {
         ResShaderParamData* param = &material->ToData().pShaderParamArray.Get()[i];
         const ResUniformVar* uniform = block->FindUniform(param->name.Get()->GetData());
@@ -49,9 +57,11 @@ void ShaderUtility::BindShaderParam(ResMaterial* material, const ResShadingModel
 // material receives model's default block contents in each buffered copy, then flushes the writes.
 void ShaderUtility::InitializeShaderParam(MaterialObj* material, const ResShadingModel* model) {
     int blockIndex = model->GetMaterialBlockIndex();
+
     if (blockIndex == -1) return;
     const ResUniformBlock* block = model->GetUniformBlock(blockIndex);
     int count = material->GetBufferingCount();
+
     for (int i = 0; i < count; ++i) {
         void* output = material->GetMaterialBlock(i)->Map();
         std::memcpy(output, block->defaultValues, block->size);
