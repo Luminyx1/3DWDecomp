@@ -2,93 +2,63 @@
 
 #include <basis/seadTypes.h>
 
+#include "Library/Yaml/ByamlHeader.hpp"
+
 namespace al {
 class ByamlData;
 
 class ByamlIter {
 public:
     ByamlIter();
-    ByamlIter(const u8 *);
-    ByamlIter(const ByamlIter&);
+    ByamlIter(const u8* pData);
+    ByamlIter(const u8* pData, const u8* pRootNode);
+    ByamlIter(const ByamlIter& rOther);
+
+    ByamlIter& operator=(const ByamlIter& rOther) = default;
 
     bool isValid() const;
     bool isTypeHash() const;
     bool isTypeArray() const;
     bool isTypeContainer() const;
-    bool isExistKey(const char*) const;
-    s32 getKeyIndex(const char*) const;
+    bool isExistKey(const char* pKey) const;
+    s32 getKeyIndex(const char* pKey) const;
     s32 getSize() const;
-    ByamlIter getIterByIndex(s32) const;
-    bool getByamlDataByIndex(ByamlData*, s32) const;
-    ByamlIter getIterByKey(const char*) const;
-    bool getByamlDataByKey(ByamlData*, const char*) const;
-    bool getByamlDataByKeyIndex(ByamlData*, s32) const;
-    bool getByamlDataAndKeyName(ByamlData*, const char**, s32) const;
-    bool getKeyName(const char**, s32) const;
-    bool tryGetIterByIndex(ByamlIter*, s32) const;
-    bool tryGetIterAndKeyNameByIndex(ByamlIter*, const char**, s32) const;
-    bool tryGetIterByKey(ByamlIter*, const char*) const;
-    bool tryGetStringByKey(const char**, const char*) const;
-    bool tryConvertString(const char**, const ByamlData*) const;
-    bool tryGetBinaryByKey(const u8**, s32*, const char*) const;
-    bool tryConvertBinary(const u8**, s32*, const ByamlData*) const;
-    bool tryGetBoolByKey(bool*, const char*) const;
-    bool tryConvertBool(bool*, const ByamlData*) const;
-    bool tryGetIntByKey(s32*, const char*) const;
-    bool tryConvertInt(s32*, const ByamlData*) const;
-    bool tryGetUIntByKey(u32*, const char*) const;
-    bool tryConvertUInt(u32*, const ByamlData*) const;
-    bool tryGetFloatByKey(f32*, const char*) const;
-    bool tryConvertFloat(f32*, const ByamlData*) const;
-    bool tryGetInt64ByKey(s64*, const char*) const;
-    bool tryConvertInt64(s64*, const ByamlData*) const;
-    bool tryGetUInt64ByKey(u64*, const char*) const;
-    bool tryConvertUInt64(u64*, const ByamlData*) const;
-    bool tryGetDoubleByKey(f64*, const char*) const;
-    bool tryConvertDouble(f64*, const ByamlData*) const;
-    bool tryGetStringByIndex(const char**, s32) const;
-    bool tryGetBinaryByIndex(const u8**, s32*, s32) const;
-    bool tryGetBoolByIndex(bool*, s32) const;
-    bool tryGetIntByIndex(s32*, s32) const;
-    bool tryGetUIntByIndex(u32*, s32) const;
-    bool tryGetFloatByIndex(f32*, s32) const;
-    bool tryGetInt64ByIndex(s64*, s32) const;
-    bool tryGetUInt64ByIndex(u64*, s32) const;
-    bool tryGetDoubleByIndex(f64*, s32) const;
-    bool tryConvertIter(ByamlIter*, const ByamlData*) const;
-    bool isEqualData(const ByamlIter&) const;
+    ByamlIter getIterByIndex(s32 index) const;
+    bool getByamlDataByIndex(ByamlData* pData, s32 index) const;
+    ByamlIter getIterByKey(const char* pKey) const;
+    bool getByamlDataByKey(ByamlData* pData, const char* pKey) const;
+    bool getByamlDataByKeyIndex(ByamlData* pData, s32 index) const;
+    bool getByamlDataAndKeyName(ByamlData* pData, const char** pKey, s32 index) const;
+    bool getKeyName(const char** pKey, s32 index) const;
+    bool tryGetIterByIndex(ByamlIter* pIter, s32 index) const;
+    bool tryGetIterAndKeyNameByIndex(ByamlIter* pIter, const char** pKey, s32 index) const;
+    bool tryGetIterByKey(ByamlIter* pIter, const char* pKey) const;
+    bool tryGetStringByKey(const char** pValue, const char* pKey) const;
+    bool tryConvertString(const char** pValue, const ByamlData* pData) const;
+    bool tryGetBinaryByKey(const u8** pValue, s32* pSize, const char* pKey) const;
+    bool tryConvertBinary(const u8** pValue, s32* pSize, const ByamlData* pData) const;
+    bool tryGetIntByKey(s32* pValue, const char* pKey) const;
+    bool tryConvertInt(s32* pValue, const ByamlData* pData) const;
+    bool tryGetUIntByKey(u32* pValue, const char* pKey) const;
+    bool tryConvertUInt(u32* pValue, const ByamlData* pData) const;
+    bool tryGetFloatByKey(f32* pValue, const char* pKey) const;
+    bool tryConvertFloat(f32* pValue, const ByamlData* pData) const;
+    bool tryGetBoolByKey(bool* pValue, const char* pKey) const;
+    bool tryConvertBool(bool* pValue, const ByamlData* pData) const;
+    bool tryGetStringByIndex(const char** pValue, s32 index) const;
+    bool tryGetBinaryByIndex(const u8** pValue, s32* pSize, s32 index) const;
+    bool tryGetIntByIndex(s32* pValue, s32 index) const;
+    bool tryGetUIntByIndex(u32* pValue, s32 index) const;
+    bool tryGetFloatByIndex(f32* pValue, s32 index) const;
+    bool tryGetBoolByIndex(bool* pValue, s32 index) const;
+    bool isEqualData(const ByamlIter& rOther) const;
 
-    const u8* mData;
-    const u8* mRoot;
-};
+    const ByamlHeader* getHeader() const { return reinterpret_cast<const ByamlHeader*>(mData); }
+    const u8* getData() const { return mData; }
+    const u8* getRootNode() const { return mRootNode; }
 
-class ByamlStringTableIter {
-public:
-    ByamlStringTableIter();
-    ByamlStringTableIter(const u8* pData);
-
-    s32 getSize() const;
-    const u32* getAddressTable() const;
-    u32 getStringAddress(s32) const;
-    u32 getEndAddress() const;
-    const char* getString(s32) const;
-    s32 getStringSize(s32) const;
-    s32 findStringIndex(const char*) const;
-
+private:
     const u8* mData = nullptr;
-};
-
-class ByamlArrayIter {
-public:
-    ByamlArrayIter();
-    ByamlArrayIter(const u8*);
-
-    u32 getSize() const;
-    const u8* getTypeTable() const;
-    const u32* getDataTable() const;
-    bool getDataByIndex(ByamlData*, s32) const;
-    const u8* getOffsetData(u32) const;
-
-    const u8* mData = nullptr;
+    const u8* mRootNode = nullptr;
 };
 }  // namespace al
