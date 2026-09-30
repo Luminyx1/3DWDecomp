@@ -4,7 +4,7 @@
 
 namespace alNerveFunction {
 class NerveActionCollector;
-}
+}  // namespace alNerveFunction
 
 namespace al {
 class NerveAction;
@@ -15,7 +15,7 @@ public:
 
     NerveAction* findNerve(const char* pName) const;
 
-    s32 mNumActions;         // _0
-    NerveAction** mActions;  // _8
+    s32 mNumActions = 0;
+    NerveAction** mActions = nullptr;
 };
 }  // namespace al

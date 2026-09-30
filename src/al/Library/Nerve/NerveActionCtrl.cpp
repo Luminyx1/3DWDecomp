@@ -5,35 +5,31 @@
 
 namespace al {
 /**
- * @brief Builds the action table from every action gathered by a collector.
- * @param pCollector The collector holding the linked list of actions.
+ * Constructs a nerve action controller from the actions of a collector.
+ * @param pCollector The collector holding the actions.
  */
 NerveActionCtrl::NerveActionCtrl(alNerveFunction::NerveActionCollector* pCollector) {
-    mNumActions = 0;
-    mActions = nullptr;
     mNumActions = pCollector->mNumActions;
     mActions = new NerveAction*[mNumActions];
-
-    NerveAction* pCurrent = pCollector->mStartAction;
+    NerveAction* action = pCollector->mStartAction;
     for (s32 i = 0; i < mNumActions; i++) {
-        mActions[i] = pCurrent;
-        pCurrent = pCurrent->mNextNode;
+        mActions[i] = action;
+        action = action->mNextNode;
     }
 }
 
 /**
- * @brief Finds an action by its name.
- * @param pName The name of the action to look up.
- * @return The matching action, or nullptr if none has that name.
+ * Finds a nerve action by name.
+ * @param pName The action name.
+ * @return The action, or nullptr if none has that name.
  */
 NerveAction* NerveActionCtrl::findNerve(const char* pName) const {
     for (s32 i = 0; i < mNumActions; i++) {
-        NerveAction* pAction = mActions[i];
-        if (isEqualString(pAction->getActionName(), pName)) {
-            return pAction;
+        NerveAction* action = mActions[i];
+        if (isEqualString(action->getActionName(), pName)) {
+            return action;
         }
     }
-
     return nullptr;
 }
 }  // namespace al
