@@ -4,7 +4,7 @@
 namespace sead
 {
 template <>
-const MathCalcCommon<float>::SinCosSample MathCalcCommon<float>::cSinCosTbl[257] = {
+const Mathf::SinCosSample Mathf::cSinCosTbl[257] = {
     {0.0, 0.024541229009628296, 1.0, -0.00030118130962364376},
     {0.024541229009628296, 0.02452644519507885, 0.99969881772995, -0.0009033624664880335},
     {0.049067676067352295, 0.024496888741850853, 0.9987954497337341, -0.0015049994690343738},
@@ -265,7 +265,7 @@ const MathCalcCommon<float>::SinCosSample MathCalcCommon<float>::cSinCosTbl[257]
 };
 
 template <>
-const MathCalcCommon<f32>::AtanSample MathCalcCommon<f32>::cAtanTbl[128 + 1] = {
+const Mathf::AtanSample Mathf::cAtanTbl[128 + 1] = {
     {0x0, 5340245.0f},        {0x517c55, 5339593.0f},   {0xa2f61e, 5338290.0f},
     {0xf46ad0, 5336337.0f},   {0x145d7e1, 5333734.0f},  {0x1973ac7, 5330485.0f},
     {0x1e890fc, 5326591.0f},  {0x239d7fb, 5322056.0f},  {0x28b0d43, 5316880.0f},
@@ -312,7 +312,7 @@ const MathCalcCommon<f32>::AtanSample MathCalcCommon<f32>::cAtanTbl[128 + 1] = {
 };
 
 template <>
-const MathCalcCommon<f32>::ExpSample MathCalcCommon<f32>::cExpTbl[32 + 1]{
+const Mathf::ExpSample Mathf::cExpTbl[32 + 1]{
     {0.5, 0.02213689126074314},
     {0.5221368670463562, 0.023116976022720337},
     {0.5452538728713989, 0.024140451103448868},
@@ -349,7 +349,7 @@ const MathCalcCommon<f32>::ExpSample MathCalcCommon<f32>::cExpTbl[32 + 1]{
 };
 
 template <>
-const MathCalcCommon<f32>::LogSample MathCalcCommon<f32>::cLogTbl[256 + 1]{
+const Mathf::LogSample Mathf::cLogTbl[256 + 1]{
     {0.0, 0.0038986403960734606},
     {0.0038986403960734606, 0.0038835001178085804},
     {0.007782140281051397, 0.0038684767205268145},
@@ -634,13 +634,13 @@ T MathCalcCommon<T>::lcm(T x, T y)
     return x / gcd(x, y) * y;
 }
 
-template s32 MathCalcCommon<s32>::gcd(s32 x, s32 y);
-template s32 MathCalcCommon<s32>::lcm(s32 x, s32 y);
-template u32 MathCalcCommon<u32>::gcd(u32 x, u32 y);
-template u32 MathCalcCommon<u32>::lcm(u32 x, u32 y);
+template s32 Mathi::gcd(s32 x, s32 y);
+template s32 Mathi::lcm(s32 x, s32 y);
+template u32 Mathu::gcd(u32 x, u32 y);
+template u32 Mathu::lcm(u32 x, u32 y);
 
 template <>
-u32 MathCalcCommon<f32>::atanIdx_(f32 t)
+u32 Mathf::atanIdx_(f32 t)
 {
     t *= 128;
     s32 index = t;
@@ -655,7 +655,7 @@ static f32 ldexp(f32 value, s32 exp)
 }
 
 template <>
-f32 MathCalcCommon<f32>::expTable(f32 x)
+f32 Mathf::expTable(f32 x)
 {
     s32 v1 = static_cast<s32>(x * ln2Inv());
     f32 t = ((x - (v1 * ln2())) + ln2()) * 23.0831203460693359375f;
@@ -673,7 +673,7 @@ static f32 frexp(f32 value, s32* exp)
 }
 
 template <>
-f32 MathCalcCommon<f32>::logTable(f32 x)
+f32 Mathf::logTable(f32 x)
 {
     s32 exp;
     f32 frac = frexp(x, &exp);

@@ -134,6 +134,8 @@ private:
     T mD;
 };
 
+using Plane3f = Plane3<f32>;
+
 class Geometry
 {
 public:

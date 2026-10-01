@@ -187,7 +187,7 @@ f32 Geometry::calcSquaredDistancePointToPlane(const Vector2f& rPoint, const Plan
  * @param rPlane Plane.
  * @return Squared distance.
  */
-f32 Geometry::calcSquaredDistancePointToPlane(const Vector3f& rPoint, const Plane3<f32>& rPlane)
+f32 Geometry::calcSquaredDistancePointToPlane(const Vector3f& rPoint, const Plane3f& rPlane)
 {
     const Vector3f point = rPoint;
     const f32 distance = point.dot(rPlane.getNormal()) - rPlane.getD();
@@ -227,7 +227,7 @@ f32 Geometry::calcSquaredDistanceSphereToPlane(const Sphere<Vector2f>& rSphere,
  * @return Squared distance.
  */
 f32 Geometry::calcSquaredDistanceSphereToPlane(const Sphere<Vector3f>& rSphere,
-                                               const Plane3<f32>& rPlane)
+                                               const Plane3f& rPlane)
 {
     const f32 distance = rPlane.getNormal().dot(rSphere.getCenter()) - rPlane.getD();
     const f32 radius = rSphere.getRadius();
@@ -252,7 +252,7 @@ f32 Geometry::calcSquaredDistanceSphereToPlane(const Sphere<Vector3f>& rSphere,
  * @param pClosest Receives the closest point inside the box; may be null.
  * @return Squared distance.
  */
-f32 Geometry::calcSquaredDistancePointToAABB(const Vector2f& rPoint, const BoundBox2<f32>& rBox,
+f32 Geometry::calcSquaredDistancePointToAABB(const Vector2f& rPoint, const BoundBox2f& rBox,
                                              Vector2f* pClosest)
 {
     f32 distance = 0.0f;
@@ -306,7 +306,7 @@ f32 Geometry::calcSquaredDistancePointToAABB(const Vector2f& rPoint, const Bound
  * @param pClosest Receives the closest point inside the box; may be null.
  * @return Squared distance.
  */
-f32 Geometry::calcSquaredDistancePointToAABB(const Vector3f& rPoint, const BoundBox3<f32>& rBox,
+f32 Geometry::calcSquaredDistancePointToAABB(const Vector3f& rPoint, const BoundBox3f& rBox,
                                              Vector3f* pClosest)
 {
     f32 distance = 0.0f;
@@ -1163,7 +1163,7 @@ s32 Geometry::calcIntersectionLineToPlane(const Line<Vector2f>& rLine, const Pla
  * @param pT Receives the parameter of the intersection on the line; may be null.
  * @return 1 for a single intersection, 3 if the line lies in the plane, 0 otherwise.
  */
-s32 Geometry::calcIntersectionLineToPlane(const Line<Vector3f>& rLine, const Plane3<f32>& rPlane,
+s32 Geometry::calcIntersectionLineToPlane(const Line<Vector3f>& rLine, const Plane3f& rPlane,
                                           f32* pT)
 {
     const f32 denom = rLine.getDir().dot(rPlane.getNormal());
@@ -1224,7 +1224,7 @@ s32 Geometry::calcIntersectionRayToPlane(const Ray<Vector2f>& rRay, const Plane2
  * @param pT Receives the parameter of the intersection on the ray; may be null.
  * @return 1 for a single intersection, 3 if the ray lies in the plane, 0 otherwise.
  */
-s32 Geometry::calcIntersectionRayToPlane(const Ray<Vector3f>& rRay, const Plane3<f32>& rPlane,
+s32 Geometry::calcIntersectionRayToPlane(const Ray<Vector3f>& rRay, const Plane3f& rPlane,
                                          f32* pT)
 {
     const Ray<Vector3f> ray = rRay;
@@ -1303,7 +1303,7 @@ s32 Geometry::calcIntersectionSegmentToPlane(const Segment<Vector2f>& rSegment,
  * @return 1 for a single intersection, 3 if the segment lies in the plane, 0 otherwise.
  */
 s32 Geometry::calcIntersectionSegmentToPlane(const Segment<Vector3f>& rSegment,
-                                             const Plane3<f32>& rPlane, f32* pT)
+                                             const Plane3f& rPlane, f32* pT)
 {
     const Vector3f dir = rSegment.getPos1() - rSegment.getPos0();
     const f32 distance = rSegment.getPos0().dot(rPlane.getNormal()) - rPlane.getD();
@@ -1708,12 +1708,12 @@ s32 Geometry::calcIntersectionSegmentToSphere(const Segment<Vector3f>& rSegment,
  * @param pT1 Receives the parameter where the line leaves the box; may be null.
  * @return true if they intersect.
  */
-bool Geometry::calcIntersectionLineToAABB(const Line<Vector2f>& rLine, const BoundBox2<f32>& rBox,
+bool Geometry::calcIntersectionLineToAABB(const Line<Vector2f>& rLine, const BoundBox2f& rBox,
                                           f32* pT0, f32* pT1)
 {
     return calcIntersectionLineToAABB_(rLine.getPos(), rLine.getDir(), rBox.getMin(), rBox.getMax(),
-                                       pT0, pT1, -MathCalcCommon<f32>::maxNumber(),
-                                       MathCalcCommon<f32>::maxNumber());
+                                       pT0, pT1, -Mathf::maxNumber(),
+                                       Mathf::maxNumber());
 }
 
 /**
@@ -1724,12 +1724,12 @@ bool Geometry::calcIntersectionLineToAABB(const Line<Vector2f>& rLine, const Bou
  * @param pT1 Receives the parameter where the line leaves the box; may be null.
  * @return true if they intersect.
  */
-bool Geometry::calcIntersectionLineToAABB(const Line<Vector3f>& rLine, const BoundBox3<f32>& rBox,
+bool Geometry::calcIntersectionLineToAABB(const Line<Vector3f>& rLine, const BoundBox3f& rBox,
                                           f32* pT0, f32* pT1)
 {
     return calcIntersectionLineToAABB_(rLine.getPos(), rLine.getDir(), rBox.getMin(), rBox.getMax(),
-                                       pT0, pT1, -MathCalcCommon<f32>::maxNumber(),
-                                       MathCalcCommon<f32>::maxNumber());
+                                       pT0, pT1, -Mathf::maxNumber(),
+                                       Mathf::maxNumber());
 }
 
 /**
@@ -1740,11 +1740,11 @@ bool Geometry::calcIntersectionLineToAABB(const Line<Vector3f>& rLine, const Bou
  * @param pT1 Receives the parameter where the ray leaves the box; may be null.
  * @return true if they intersect.
  */
-bool Geometry::calcIntersectionRayToAABB(const Ray<Vector2f>& rRay, const BoundBox2<f32>& rBox,
+bool Geometry::calcIntersectionRayToAABB(const Ray<Vector2f>& rRay, const BoundBox2f& rBox,
                                          f32* pT0, f32* pT1)
 {
     return calcIntersectionLineToAABB_(rRay.getPos(), rRay.getDir(), rBox.getMin(), rBox.getMax(),
-                                       pT0, pT1, 0.0f, MathCalcCommon<f32>::maxNumber());
+                                       pT0, pT1, 0.0f, Mathf::maxNumber());
 }
 
 /**
@@ -1755,11 +1755,11 @@ bool Geometry::calcIntersectionRayToAABB(const Ray<Vector2f>& rRay, const BoundB
  * @param pT1 Receives the parameter where the ray leaves the box; may be null.
  * @return true if they intersect.
  */
-bool Geometry::calcIntersectionRayToAABB(const Ray<Vector3f>& rRay, const BoundBox3<f32>& rBox,
+bool Geometry::calcIntersectionRayToAABB(const Ray<Vector3f>& rRay, const BoundBox3f& rBox,
                                          f32* pT0, f32* pT1)
 {
     return calcIntersectionLineToAABB_(rRay.getPos(), rRay.getDir(), rBox.getMin(), rBox.getMax(),
-                                       pT0, pT1, 0.0f, MathCalcCommon<f32>::maxNumber());
+                                       pT0, pT1, 0.0f, Mathf::maxNumber());
 }
 
 /**
@@ -1771,7 +1771,7 @@ bool Geometry::calcIntersectionRayToAABB(const Ray<Vector3f>& rRay, const BoundB
  * @return true if they intersect.
  */
 bool Geometry::calcIntersectionSegmentToAABB(const Segment<Vector2f>& rSegment,
-                                             const BoundBox2<f32>& rBox, f32* pT0, f32* pT1)
+                                             const BoundBox2f& rBox, f32* pT0, f32* pT1)
 {
     const Vector2f dir = rSegment.getPos1() - rSegment.getPos0();
     return calcIntersectionLineToAABB_(rSegment.getPos0(), dir, rBox.getMin(), rBox.getMax(), pT0,
@@ -1787,7 +1787,7 @@ bool Geometry::calcIntersectionSegmentToAABB(const Segment<Vector2f>& rSegment,
  * @return true if they intersect.
  */
 bool Geometry::calcIntersectionSegmentToAABB(const Segment<Vector3f>& rSegment,
-                                             const BoundBox3<f32>& rBox, f32* pT0, f32* pT1)
+                                             const BoundBox3f& rBox, f32* pT0, f32* pT1)
 {
     const Vector3f dir = rSegment.getPos1() - rSegment.getPos0();
     return calcIntersectionLineToAABB_(rSegment.getPos0(), dir, rBox.getMin(), rBox.getMax(), pT0,
@@ -1801,9 +1801,9 @@ bool Geometry::calcIntersectionSegmentToAABB(const Segment<Vector3f>& rSegment,
  * @return true if they intersect.
  */
 bool Geometry::calcIntersectionSphereToAABB(const Sphere<Vector2f>& rSphere,
-                                            const BoundBox2<f32>& rBox)
+                                            const BoundBox2f& rBox)
 {
-    const BoundBox2<f32> box = rBox;
+    const BoundBox2f box = rBox;
     const f32 distance = calcSquaredDistancePointToAABB(rSphere.getCenter(), box, nullptr);
     return distance <= rSphere.getRadius() * rSphere.getRadius();
 }
@@ -1815,9 +1815,9 @@ bool Geometry::calcIntersectionSphereToAABB(const Sphere<Vector2f>& rSphere,
  * @return true if they intersect.
  */
 bool Geometry::calcIntersectionSphereToAABB(const Sphere<Vector3f>& rSphere,
-                                            const BoundBox3<f32>& rBox)
+                                            const BoundBox3f& rBox)
 {
-    const BoundBox3<f32> box = rBox;
+    const BoundBox3f box = rBox;
     const f32 distance = calcSquaredDistancePointToAABB(rSphere.getCenter(), box, nullptr);
     return distance <= rSphere.getRadius() * rSphere.getRadius();
 }
@@ -1851,7 +1851,7 @@ bool Geometry::calcIntersectionSphereToSphere(const Sphere<Vector3f>& rSphere0,
 }
 
 // NON_MATCHING: operand order of one fmul
-bool Geometry::calcIntersectionPlaneToAABB(const Plane2<f32>& rPlane, const BoundBox2<f32>& rBox)
+bool Geometry::calcIntersectionPlaneToAABB(const Plane2<f32>& rPlane, const BoundBox2f& rBox)
 {
     const Vector2f center(rBox.getMin().x + rBox.getHalfSizeX(),
                           rBox.getMin().y + rBox.getHalfSizeY());
@@ -1868,7 +1868,7 @@ bool Geometry::calcIntersectionPlaneToAABB(const Plane2<f32>& rPlane, const Boun
 }
 
 // NON_MATCHING: scheduling
-bool Geometry::calcIntersectionPlaneToAABB(const Plane3<f32>& rPlane, const BoundBox3<f32>& rBox)
+bool Geometry::calcIntersectionPlaneToAABB(const Plane3f& rPlane, const BoundBox3f& rBox)
 {
     Vector3f center = rBox.getMin();
     center.x += rBox.getHalfSizeX();
@@ -2026,7 +2026,7 @@ bool Geometry::calcIntersectionPlaneToCapsule(const Plane2<f32>& rPlane,
  * @param rCapsule Capsule.
  * @return true if they intersect.
  */
-bool Geometry::calcIntersectionPlaneToCapsule(const Plane3<f32>& rPlane,
+bool Geometry::calcIntersectionPlaneToCapsule(const Plane3f& rPlane,
                                               const Capsule<Vector3f>& rCapsule)
 {
     const f32 distance0 = rPlane.getNormal().dot(rCapsule.getSegment().getPos0()) - rPlane.getD();

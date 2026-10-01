@@ -16,22 +16,22 @@ inline bool isEqualCharIgnoreCase(T a, T b)
 namespace sead
 {
 template <>
-const char SafeStringBase<char>::cNullChar = '\0';
+const char SafeString::cNullChar = '\0';
 
 template <>
-const char SafeStringBase<char>::cLineBreakChar = '\n';
+const char SafeString::cLineBreakChar = '\n';
 
 template <>
-const SafeStringBase<char> SafeStringBase<char>::cEmptyString("");
+const SafeString SafeString::cEmptyString("");
 
 template <>
-const char16 SafeStringBase<char16>::cNullChar = 0;
+const char16 WSafeString::cNullChar = 0;
 
 template <>
-const char16 SafeStringBase<char16>::cLineBreakChar = static_cast<char16>('\n');
+const char16 WSafeString::cLineBreakChar = static_cast<char16>('\n');
 
 template <>
-const SafeStringBase<char16> SafeStringBase<char16>::cEmptyString(cEmptyStringChar16);
+const WSafeString WSafeString::cEmptyString(cEmptyStringChar16);
 
 // NON_MATCHING: in-place branch computes the new-string copy address from the updated dst_i
 // (target sign-extends the old index and subtracts new_str_len separately)
@@ -226,13 +226,13 @@ s32 replaceStringImpl_(T* pDst, s32* pLength, s32 dstSize, const T* pSrc, s32 sr
 
 template s32 replaceStringImpl_<char>(char* buffer, s32* pLength, s32 buffer_size,
                                       const char* target_buf, s32 target_len,
-                                      const SafeStringBase<char>& rOldStr,
-                                      const SafeStringBase<char>& rNewStr, bool* pIsBufferOverflow);
+                                      const SafeString& rOldStr,
+                                      const SafeString& rNewStr, bool* pIsBufferOverflow);
 
 template s32 replaceStringImpl_<char16>(char16* buffer, s32* pLength, s32 buffer_size,
                                         const char16* target_buf, s32 target_len,
-                                        const SafeStringBase<char16>& rOldStr,
-                                        const SafeStringBase<char16>& rNewStr,
+                                        const WSafeString& rOldStr,
+                                        const WSafeString& rNewStr,
                                         bool* pIsBufferOverflow);
 
 /**
@@ -261,8 +261,8 @@ bool SafeStringBase<T>::includeIgnoreCase(const T& c) const
     return false;
 }
 
-template bool SafeStringBase<char>::includeIgnoreCase(const char& c) const;
-template bool SafeStringBase<char16>::includeIgnoreCase(const char16& c) const;
+template bool SafeString::includeIgnoreCase(const char& c) const;
+template bool WSafeString::includeIgnoreCase(const char16& c) const;
 
 /**
  * Checks whether the string contains a substring, ignoring ASCII case.
@@ -295,8 +295,8 @@ bool SafeStringBase<T>::includeIgnoreCase(const SafeStringBase<T>& str) const
     return false;
 }
 
-template bool SafeStringBase<char>::includeIgnoreCase(const SafeStringBase<char>& str) const;
-template bool SafeStringBase<char16>::includeIgnoreCase(const SafeStringBase<char16>& str) const;
+template bool SafeString::includeIgnoreCase(const SafeString& str) const;
+template bool WSafeString::includeIgnoreCase(const WSafeString& str) const;
 
 /**
  * Compares two strings for equality, ignoring ASCII case.
@@ -329,8 +329,8 @@ bool SafeStringBase<T>::isEqualIgnoreCase(const SafeStringBase<T>& str) const
     return false;
 }
 
-template bool SafeStringBase<char>::isEqualIgnoreCase(const SafeStringBase<char>& str) const;
-template bool SafeStringBase<char16>::isEqualIgnoreCase(const SafeStringBase<char16>& str) const;
+template bool SafeString::isEqualIgnoreCase(const SafeString& str) const;
+template bool WSafeString::isEqualIgnoreCase(const WSafeString& str) const;
 
 /**
  * Checks whether the string starts with a prefix, ignoring ASCII case.
@@ -357,9 +357,9 @@ bool SafeStringBase<T>::startsWithIgnoreCase(const SafeStringBase<T>& prefix) co
     return true;
 }
 
-template bool SafeStringBase<char>::startsWithIgnoreCase(const SafeStringBase<char>& prefix) const;
+template bool SafeString::startsWithIgnoreCase(const SafeString& prefix) const;
 template bool
-SafeStringBase<char16>::startsWithIgnoreCase(const SafeStringBase<char16>& prefix) const;
+WSafeString::startsWithIgnoreCase(const WSafeString& prefix) const;
 
 /**
  * Checks whether the string ends with a suffix, ignoring ASCII case.
@@ -397,34 +397,34 @@ bool SafeStringBase<T>::endsWithIgnoreCase(const SafeStringBase<T>& suffix) cons
     return true;
 }
 
-template bool SafeStringBase<char>::endsWithIgnoreCase(const SafeStringBase<char>& suffix) const;
-template bool SafeStringBase<char16>::endsWithIgnoreCase(const SafeStringBase<char16>& suffix) const;
+template bool SafeString::endsWithIgnoreCase(const SafeString& suffix) const;
+template bool WSafeString::endsWithIgnoreCase(const WSafeString& suffix) const;
 
 template <>
-SafeStringBase<char>& SafeStringBase<char>::operator=(const SafeStringBase<char>& other) = default;
+SafeString& SafeString::operator=(const SafeString& other) = default;
 
 template <>
-SafeStringBase<char16>&
-SafeStringBase<char16>::operator=(const SafeStringBase<char16>& other) = default;
+WSafeString&
+WSafeString::operator=(const WSafeString& other) = default;
 
 template <>
-BufferedSafeStringBase<char>&
-BufferedSafeStringBase<char>::operator=(const SafeStringBase<char>& other)
+BufferedSafeString&
+BufferedSafeString::operator=(const SafeString& other)
 {
     copy(other);
     return *this;
 }
 
 template <>
-BufferedSafeStringBase<char16>&
-BufferedSafeStringBase<char16>::operator=(const SafeStringBase<char16>& other)
+WBufferedSafeString&
+WBufferedSafeString::operator=(const WSafeString& other)
 {
     copy(other);
     return *this;
 }
 
 template <>
-HeapSafeStringBase<char>& HeapSafeStringBase<char>::operator=(const SafeStringBase<char>& other)
+HeapSafeString& HeapSafeString::operator=(const SafeString& other)
 {
     this->copy(other);
     return *this;
@@ -432,35 +432,35 @@ HeapSafeStringBase<char>& HeapSafeStringBase<char>::operator=(const SafeStringBa
 
 template <>
 HeapSafeStringBase<char16>&
-HeapSafeStringBase<char16>::operator=(const SafeStringBase<char16>& other)
+HeapSafeStringBase<char16>::operator=(const WSafeString& other)
 {
     this->copy(other);
     return *this;
 }
 
 template <>
-void BufferedSafeStringBase<char>::assureTerminationImpl_() const
+void BufferedSafeString::assureTerminationImpl_() const
 {
-    auto* mutableSafeString = const_cast<BufferedSafeStringBase<char>*>(this);
+    auto* mutableSafeString = const_cast<BufferedSafeString*>(this);
     mutableSafeString->getMutableStringTop_()[mBufferSize - 1] = cNullChar;
 }
 
 template <>
-void BufferedSafeStringBase<char16>::assureTerminationImpl_() const
+void WBufferedSafeString::assureTerminationImpl_() const
 {
-    auto* mutableSafeString = const_cast<BufferedSafeStringBase<char16>*>(this);
+    auto* mutableSafeString = const_cast<WBufferedSafeString*>(this);
     mutableSafeString->getMutableStringTop_()[mBufferSize - 1] = cNullChar;
 }
 
 template <>
-s32 BufferedSafeStringBase<char>::formatImpl_(char* pS, s32 n, const char* pFormatStr, va_list args)
+s32 BufferedSafeString::formatImpl_(char* pS, s32 n, const char* pFormatStr, va_list args)
 {
     const s32 ret = StringUtil::vsnprintf(pS, n, pFormatStr, args);
     return ret < 0 ? n - 1 : ret;
 }
 
 template <>
-s32 BufferedSafeStringBase<char16>::formatImpl_(char16* pS, s32 n, const char16* pFormatStr,
+s32 WBufferedSafeString::formatImpl_(char16* pS, s32 n, const char16* pFormatStr,
                                                 va_list args)
 {
     const s32 ret = StringUtil::vsw16printf(pS, n, pFormatStr, args);
@@ -475,21 +475,21 @@ s32 BufferedSafeStringBase<char16>::formatImpl_(char16* pS, s32 n, const char16*
 }
 
 template <>
-s32 BufferedSafeStringBase<char>::formatV(const char* pFormatStr, va_list args)
+s32 BufferedSafeString::formatV(const char* pFormatStr, va_list args)
 {
     char* mutableString = getMutableStringTop_();
     return formatImpl_(mutableString, mBufferSize, pFormatStr, args);
 }
 
 template <>
-s32 BufferedSafeStringBase<char16>::formatV(const char16* pFormatStr, va_list args)
+s32 WBufferedSafeString::formatV(const char16* pFormatStr, va_list args)
 {
     char16* mutableString = getMutableStringTop_();
     return formatImpl_(mutableString, mBufferSize, pFormatStr, args);
 }
 
 template <>
-s32 BufferedSafeStringBase<char>::format(const char* pFormatStr, ...)
+s32 BufferedSafeString::format(const char* pFormatStr, ...)
 {
     va_list args;
     va_start(args, pFormatStr);
@@ -500,7 +500,7 @@ s32 BufferedSafeStringBase<char>::format(const char* pFormatStr, ...)
 }
 
 template <>
-s32 BufferedSafeStringBase<char16>::format(const char16* pFormatStr, ...)
+s32 WBufferedSafeString::format(const char16* pFormatStr, ...)
 {
     va_list args;
     va_start(args, pFormatStr);
@@ -511,7 +511,7 @@ s32 BufferedSafeStringBase<char16>::format(const char16* pFormatStr, ...)
 }
 
 template <>
-s32 BufferedSafeStringBase<char>::appendWithFormatV(const char* pFormat, std::va_list args)
+s32 BufferedSafeString::appendWithFormatV(const char* pFormat, std::va_list args)
 {
     char* mutableString = getMutableStringTop_();
     const s32 len = calcLength();
@@ -519,7 +519,7 @@ s32 BufferedSafeStringBase<char>::appendWithFormatV(const char* pFormat, std::va
 }
 
 template <>
-s32 BufferedSafeStringBase<char16>::appendWithFormatV(const char16* pFormat, std::va_list args)
+s32 WBufferedSafeString::appendWithFormatV(const char16* pFormat, std::va_list args)
 {
     char16* mutableString = getMutableStringTop_();
     const s32 len = calcLength();
@@ -527,7 +527,7 @@ s32 BufferedSafeStringBase<char16>::appendWithFormatV(const char16* pFormat, std
 }
 
 template <>
-s32 BufferedSafeStringBase<char>::appendWithFormat(const char* pFormat, ...)
+s32 BufferedSafeString::appendWithFormat(const char* pFormat, ...)
 {
     std::va_list args;
     va_start(args, pFormat);
@@ -537,7 +537,7 @@ s32 BufferedSafeStringBase<char>::appendWithFormat(const char* pFormat, ...)
 }
 
 template <>
-s32 BufferedSafeStringBase<char16>::appendWithFormat(const char16* pFormat, ...)
+s32 WBufferedSafeString::appendWithFormat(const char16* pFormat, ...)
 {
     std::va_list args;
     va_start(args, pFormat);

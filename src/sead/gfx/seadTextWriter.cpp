@@ -217,7 +217,7 @@ void TextWriter::vprintfImpl_(const char16_t* pFormat, std::va_list args, bool i
         bufferSize = 0x200;
     }
 
-    BufferedSafeStringBase<char16_t> str(buffer, bufferSize);
+    WBufferedSafeString str(buffer, bufferSize);
     str.formatV(pFormat, args);
     printImpl_(str.cstr(), -1, isDraw, pRect);
 }
@@ -272,7 +272,7 @@ void TextWriter::vprintfImpl_(const char* pFormat, std::va_list args, bool isDra
         bufferSize = 0x200;
     }
 
-    BufferedSafeStringBase<char> str(reinterpret_cast<char*>(buffer) + bufferSize, bufferSize);
+    BufferedSafeString str(reinterpret_cast<char*>(buffer) + bufferSize, bufferSize);
     str.formatV(pFormat, args);
     StringUtil::convertUtf8ToUtf16(buffer, bufferSize, str.cstr(), bufferSize - 1);
     printImpl_(buffer, -1, isDraw, pRect);
