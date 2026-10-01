@@ -15,6 +15,8 @@ public:
 
 class AudioFrameProcessMgr {
 public:
+    using ProcessList = sead::OffsetList<IAudioFrameProcess>;
+
     static AudioFrameProcessMgr* instance() { return sInstance; }
 
     AudioFrameProcessMgr();
@@ -32,7 +34,7 @@ private:
 
     static AudioFrameProcessMgr* sInstance;
 
-    sead::OffsetList<IAudioFrameProcess> mProcessList;
+    ProcessList mProcessList;
     sead::CriticalSection mCriticalSection;
     bool mIsCallbackRegistered = false;
 };
