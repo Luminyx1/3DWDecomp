@@ -28,6 +28,15 @@ public:
     void setTriangleFilter(const TriangleFilterBase* pFilter);
     void setCollisionPartsFilter(const CollisionPartsFilterBase* pFilter);
 
+    f32 getRadius() const { return mRadius; }
+    f32 getOffsetY() const { return mOffsetY; }
+    void setRadius(f32 radius) { mRadius = radius; }
+    void setOffsetY(f32 offsetY) { mOffsetY = offsetY; }
+    void setReactMovePower(bool isEnabled) { mIsReactMovePower = isEnabled; }
+    bool isCollidedFloor() const { return _110 >= 0.0f; }
+    bool isCollidedWall() const { return _1b8 >= 0.0f; }
+    bool isCollidedCeiling() const { return _260 >= 0.0f; }
+
     CollisionDirector* mCollisionDirector = nullptr;
     TriangleFilterBase* mTriFilterBase = nullptr;
     CollisionPartsFilterBase* mColFilterBase = nullptr;

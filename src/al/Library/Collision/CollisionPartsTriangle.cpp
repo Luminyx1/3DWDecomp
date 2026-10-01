@@ -157,17 +157,17 @@ sead::Vector3f* Triangle::calcAndGetNormal(s32 index) {
         return calcAndGetFaceNormal();
     case 1:
         mNormals[1] = server->getEdgeNormal1(mPrismData, mPrismHeader);
-        mNormals[1].setRotated(parts->mBaseMtx, mNormals[1]);
+        mNormals[1].setRotated(parts->getBaseMtx(), mNormals[1]);
         normalize(&mNormals[1]);
         return &mNormals[index];
     case 2:
         mNormals[2] = server->getEdgeNormal2(mPrismData, mPrismHeader);
-        mNormals[2].setRotated(parts->mBaseMtx, mNormals[2]);
+        mNormals[2].setRotated(parts->getBaseMtx(), mNormals[2]);
         normalize(&mNormals[2]);
         return &mNormals[index];
     case 3:
         mNormals[3] = server->getEdgeNormal3(mPrismData, mPrismHeader);
-        mNormals[3].setRotated(parts->mBaseMtx, mNormals[3]);
+        mNormals[3].setRotated(parts->getBaseMtx(), mNormals[3]);
         normalize(&mNormals[3]);
         return &mNormals[index];
     default:
@@ -182,7 +182,7 @@ sead::Vector3f* Triangle::calcAndGetNormal(s32 index) {
 sead::Vector3f* Triangle::calcAndGetFaceNormal() {
     const CollisionParts* parts = mCollisionParts;
     mNormals[0] = parts->mKColServer->getFaceNormal(mPrismData, mPrismHeader);
-    mNormals[0].setRotated(parts->mBaseMtx, mNormals[0]);
+    mNormals[0].setRotated(parts->getBaseMtx(), mNormals[0]);
     normalize(&mNormals[0]);
     return &mNormals[0];
 }
@@ -199,17 +199,17 @@ sead::Vector3f* Triangle::calcAndGetEdgeNormal(s32 index) {
     switch (index) {
     case 0:
         mNormals[1] = server->getEdgeNormal1(mPrismData, mPrismHeader);
-        mNormals[1].rotate(parts->mBaseMtx);
+        mNormals[1].rotate(parts->getBaseMtx());
         normalize(&mNormals[1]);
         return &mNormals[index + 1];
     case 1:
         mNormals[2] = server->getEdgeNormal2(mPrismData, mPrismHeader);
-        mNormals[2].rotate(parts->mBaseMtx);
+        mNormals[2].rotate(parts->getBaseMtx());
         normalize(&mNormals[2]);
         return &mNormals[index + 1];
     case 2:
         mNormals[3] = server->getEdgeNormal3(mPrismData, mPrismHeader);
-        mNormals[3].rotate(parts->mBaseMtx);
+        mNormals[3].rotate(parts->getBaseMtx());
         normalize(&mNormals[3]);
         return &mNormals[index + 1];
     default:
@@ -224,7 +224,7 @@ sead::Vector3f* Triangle::calcAndGetEdgeNormal(s32 index) {
  */
 sead::Vector3f* Triangle::calcAndGetPos(s32 index) {
     mCollisionParts->mKColServer->calcPosLocal(&mPos[index], mPrismData, index, mPrismHeader);
-    mPos[index].mul(mCollisionParts->mBaseMtx);
+    mPos[index].mul(mCollisionParts->getBaseMtx());
     return &mPos[index];
 }
 
@@ -280,7 +280,7 @@ bool Triangle::getAttributes(ByamlIter* pIter) const {
  * @return sensor
  */
 HitSensor* Triangle::getSensor() const {
-    return mCollisionParts->mSensor;
+    return mCollisionParts->getSensor();
 }
 
 /**
@@ -288,7 +288,7 @@ HitSensor* Triangle::getSensor() const {
  * @return base matrix
  */
 const sead::Matrix34f* Triangle::getBaseMtx() const {
-    return &mCollisionParts->mBaseMtx;
+    return &mCollisionParts->getBaseMtx();
 }
 
 /**
@@ -296,7 +296,7 @@ const sead::Matrix34f* Triangle::getBaseMtx() const {
  * @return inverse base matrix
  */
 const sead::Matrix34f* Triangle::getBaseInvMtx() const {
-    return &mCollisionParts->mBaseInvMtx;
+    return &mCollisionParts->getBaseInvMtx();
 }
 
 /**

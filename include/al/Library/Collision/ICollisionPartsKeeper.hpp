@@ -16,6 +16,8 @@ class HitInfo;
 class SphereCheckInfo;
 class SphereHitResultBuffer;
 
+using CollisionPartsDelegate = sead::IDelegate1<CollisionParts*>;
+
 class ICollisionPartsKeeper : public IUseHioNode {
 public:
     virtual void endInit() = 0;
@@ -34,9 +36,9 @@ public:
     virtual s32 checkStrikeDisk(DiskHitResultBuffer* pBuffer,
                                 const DiskCheckInfo& rCheckInfo) const = 0;
     virtual void searchWithSphere(const sead::Vector3f& rPos, f32 radius,
-                                  sead::IDelegate1<CollisionParts*>& rDelegate) const = 0;
+                                  CollisionPartsDelegate& rDelegate) const = 0;
     virtual void searchWithSphere(const SphereCheckInfo& rCheckInfo,
-                                  sead::IDelegate1<CollisionParts*>& rDelegate) const = 0;
+                                  CollisionPartsDelegate& rDelegate) const = 0;
     virtual void movement() = 0;
 };
 }  // namespace al

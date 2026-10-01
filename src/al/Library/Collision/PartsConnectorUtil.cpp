@@ -132,7 +132,7 @@ void attachMtxConnectorToCollision(MtxConnector* pConnector, const LiveActor* pA
  * @param pParts collision parts
  */
 void attachMtxConnectorToCollisionParts(MtxConnector* pConnector, const CollisionParts* pParts) {
-    pConnector->init(&pParts->mBaseMtx, pParts->mBaseInvMtx);
+    pConnector->init(&pParts->getBaseMtx(), pParts->getBaseInvMtx());
 }
 
 /**
@@ -250,7 +250,7 @@ void attachMtxConnectorToCollisionRT(MtxConnector* pConnector, const LiveActor* 
     mtx.makeRT({sead::Mathf::deg2rad(rotate.x), sead::Mathf::deg2rad(rotate.y),
                 sead::Mathf::deg2rad(rotate.z)},
                isUseHitPos ? hitPos : getTrans(pActor));
-    pConnector->init(&parts->mBaseMtx, parts->mBaseInvMtx * mtx);
+    pConnector->init(&parts->getBaseMtx(), parts->getBaseInvMtx() * mtx);
 }
 
 /**
@@ -282,7 +282,7 @@ void attachMtxConnectorToCollisionQT(MtxConnector* pConnector, const LiveActor* 
 
     sead::Matrix34f mtx;
     mtx.makeQT(getQuat(pActor), isUseHitPos ? hitPos : getTrans(pActor));
-    pConnector->init(&parts->mBaseMtx, parts->mBaseInvMtx * mtx);
+    pConnector->init(&parts->getBaseMtx(), parts->getBaseInvMtx() * mtx);
 }
 
 /**
@@ -325,7 +325,7 @@ void attachMtxConnectorToMtxPtr(MtxConnector* pConnector, const sead::Matrix34f*
 void attachToHitTriangle(CollisionPartsConnector* pConnector, const Triangle& rTriangle,
                          const sead::Matrix34f& rMtx) {
     const CollisionParts* parts = rTriangle.mCollisionParts;
-    pConnector->init(&parts->mBaseMtx, parts->mBaseInvMtx * rMtx, parts);
+    pConnector->init(&parts->getBaseMtx(), parts->getBaseInvMtx() * rMtx, parts);
 }
 
 /**

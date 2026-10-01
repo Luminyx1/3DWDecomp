@@ -24,9 +24,9 @@ public:
     s32 checkStrikeDisk(DiskHitResultBuffer* pBuffer,
                         const DiskCheckInfo& rCheckInfo) const override;
     void searchWithSphere(const sead::Vector3f& rPos, f32 radius,
-                          sead::IDelegate1<CollisionParts*>& rDelegate) const override;
+                          CollisionPartsDelegate& rDelegate) const override;
     void searchWithSphere(const SphereCheckInfo& rCheckInfo,
-                          sead::IDelegate1<CollisionParts*>& rDelegate) const override;
+                          CollisionPartsDelegate& rDelegate) const override;
     void movement() override;
 
 private:

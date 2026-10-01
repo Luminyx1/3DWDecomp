@@ -31,6 +31,15 @@ public:
     void calcForceMovePower(sead::Vector3f* pPower, const sead::Vector3f& rPos) const;
     void calcForceRotatePower(sead::Quatf* pPower) const;
     LiveActor* getConnectedHost() const;
+
+    const sead::Matrix34f& getBaseMtx() const { return mBaseMtx; }
+    const sead::Matrix34f& getBaseInvMtx() const { return mBaseInvMtx; }
+    const sead::Matrix34f* getSyncCollisionMtx() const { return mSyncCollisionMtx; }
+    HitSensor* getSensor() const { return mSensor; }
+    const char* getSpecialPurpose() const { return mSpecialPurpose; }
+    void setSyncCollisionMtx(const sead::Matrix34f* pMtx) { mSyncCollisionMtx = pMtx; }
+    void setSensor(HitSensor* pSensor) { mSensor = pSensor; }
+    void setSpecialPurpose(const char* pName) { mSpecialPurpose = pName; }
     s32 checkStrikePoint(HitInfo* pHitInfo, const sead::Vector3f& rPos,
                          const TriangleFilterBase* pFilter) const;
     s32 checkStrikeSphere(SphereHitResultBuffer* pBuffer, const sead::Vector3f& rPos, f32 radius,

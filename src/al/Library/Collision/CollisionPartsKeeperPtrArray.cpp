@@ -122,7 +122,7 @@ s32 CollisionPartsKeeperPtrArray::checkStrikeDisk(DiskHitResultBuffer* pBuffer,
  * @param rDelegate delegate to call
  */
 void CollisionPartsKeeperPtrArray::searchWithSphere(
-    const sead::Vector3f& rPos, f32 radius, sead::IDelegate1<CollisionParts*>& rDelegate) const {
+    const sead::Vector3f& rPos, f32 radius, CollisionPartsDelegate& rDelegate) const {
     s32 num = mPartsArray->size();
 
     for (s32 i = 0; i < num; i++) {
@@ -140,7 +140,7 @@ void CollisionPartsKeeperPtrArray::searchWithSphere(
  * @param rDelegate delegate to call
  */
 void CollisionPartsKeeperPtrArray::searchWithSphere(
-    const SphereCheckInfo& rCheckInfo, sead::IDelegate1<CollisionParts*>& rDelegate) const {
+    const SphereCheckInfo& rCheckInfo, CollisionPartsDelegate& rDelegate) const {
     s32 num = mPartsArray->size();
 
     for (s32 i = 0; i < num; i++) {
