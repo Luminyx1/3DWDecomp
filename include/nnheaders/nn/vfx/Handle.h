@@ -18,6 +18,11 @@ public:
         return m_EmitterSet != nullptr && m_CreateId == m_EmitterSet->GetCreateId();
     }
 
+    void Invalidate() {
+        m_EmitterSet = nullptr;
+        m_CreateId = -1;
+    }
+
     EmitterSet* m_EmitterSet;
     s32 m_CreateId;
 };
