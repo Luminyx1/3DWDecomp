@@ -221,5 +221,43 @@ protected:
     sead::Buffer<sead::FixedSafeString<64>> mNamedParamNames;
 };
 
-}  // namespace al
+/**
+ * Interpolates a parameter IO towards the highest-priority request made each frame.
+ */
+class GraphicsParamRequesterImpl {
+public:
+    GraphicsParamRequesterImpl(agl::utl::IParameterIO* pParamIo, const char* pName);
 
+    void endInit();
+    void clearRequest();
+    void updateRequest();
+    f32 calcRate() const;
+    void requestParam(s32 priority, s32 step, void* pData);
+    void requestParamDirect(s32 priority, void* pData);
+    bool isRequested() const;
+
+private:
+    agl::utl::IParameterIO* mParamIo;
+    u8 _8[0x30];
+};
+
+static_assert(sizeof(GraphicsParamRequesterImpl) == 0x38);
+
+/**
+ * Parameter requester that owns the parameter IO it interpolates.
+ */
+template <typename T>
+class GraphicsParamRequester : public GraphicsParamRequesterImpl {
+public:
+    GraphicsParamRequester(T* pParam, const char* pName)
+        : GraphicsParamRequesterImpl(pParam, pName), mParam(pParam) {}
+
+    ~GraphicsParamRequester() { delete mParam; }
+
+    T* getParam() const { return mParam; }
+
+private:
+    T* mParam;
+};
+
+}  // namespace al
