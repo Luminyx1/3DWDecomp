@@ -33,10 +33,10 @@ void CameraStartParamCtrl::initAfterPlacement() {
 
 static void updateCurrentArea(CameraStartParamArea** pCurrentArea, AreaObjGroup* pGroup,
                               const sead::Vector3f& rPos) {
-    for (s32 i = 0; i < pGroup->mNumAreas; i++) {
+    for (s32 i = 0; i < pGroup->getSize(); i++) {
         CameraStartParamArea* area = static_cast<CameraStartParamArea*>(pGroup->getAreaObj(i));
 
-        if (*pCurrentArea != nullptr && area->mPriority < (*pCurrentArea)->mPriority) {
+        if (*pCurrentArea != nullptr && area->getPriority() < (*pCurrentArea)->mPriority) {
             continue;
         }
 

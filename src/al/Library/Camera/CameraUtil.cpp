@@ -407,7 +407,7 @@ CameraTicket* initObjectCameraManual_RS(const IUseCamera_RS* pUser, const char* 
 
 CameraTicket* tryInitObjectCamera_RS(const IUseCamera_RS* pUser, const ActorInitInfo& rInfo,
                                      const char* pSuffix) {
-    if (!getCameraDirector(pUser)->isObjectCameraExist(*rInfo.mPlacementInfo)) {
+    if (!getCameraDirector(pUser)->isObjectCameraExist(rInfo.getPlacementInfo())) {
         return nullptr;
     }
 
@@ -999,7 +999,7 @@ void restartCartCamera(const CameraTicket* pTicket) {
 CameraTicket* initActorRailParallelCamera(const LiveActor* pActor, const ActorInitInfo& rInfo,
                                           const char* pSuffix) {
     CameraPoserActorRailParallel* poser =
-        new CameraPoserActorRailParallel("アクターレール並行", pActor->mRailKeeper);
+        new CameraPoserActorRailParallel("アクターレール並行", pActor->getRailKeeper());
     return alCameraFunction::initCamera(poser, pActor, rInfo, pSuffix,
                                         CameraTicket::Priority_Object);
 }

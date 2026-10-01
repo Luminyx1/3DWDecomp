@@ -8,6 +8,9 @@ class CameraSubTargetBase;
 class CameraTargetBase;
 class PlayerHolder;
 
+using CameraTargetArray = sead::PtrArray<CameraTargetBase>;
+using CameraSubTargetArray = sead::PtrArray<CameraSubTargetBase>;
+
 struct ViewTargetInfo {
     CameraTargetBase* target = nullptr;
     s8 hasTargetChanged = false;
@@ -28,12 +31,12 @@ public:
     CameraTargetBase* tryGetViewTarget(s32 index) const;
     void update();
     s32 tryFindIndex(const CameraTargetBase* pTarget,
-                     const sead::PtrArray<CameraTargetBase>& rArray);
+                     const CameraTargetArray& rArray);
     s32 tryFindIndex(const CameraSubTargetBase* pTarget,
-                     const sead::PtrArray<CameraSubTargetBase>& rArray);
-    bool tryRemovePtr(const CameraTargetBase* pTarget, sead::PtrArray<CameraTargetBase>& rArray);
+                     const CameraSubTargetArray& rArray);
+    bool tryRemovePtr(const CameraTargetBase* pTarget, CameraTargetArray& rArray);
     bool tryRemovePtr(const CameraSubTargetBase* pTarget,
-                      sead::PtrArray<CameraSubTargetBase>& rArray);
+                      CameraSubTargetArray& rArray);
     void addTarget(CameraTargetBase* pTarget);
     void removeTarget(CameraTargetBase* pTarget);
     CameraTargetBase* getViewTarget(s32 index) const;
@@ -52,10 +55,10 @@ private:
     s32 mViewTargetSize = 0;
     CameraTargetBase** mViewTargetArray = nullptr;
     ViewTargetInfo* mViewTargetInfo = nullptr;
-    sead::PtrArray<CameraTargetBase> mTargetArray;
+    CameraTargetArray mTargetArray;
     ViewSubTargetInfo mTopSubTargetInfo;
-    sead::PtrArray<CameraSubTargetBase> mSubTargetArray;
-    sead::PtrArray<CameraSubTargetBase> mPlacementSubTargetArray;
+    CameraSubTargetArray mSubTargetArray;
+    CameraSubTargetArray mPlacementSubTargetArray;
     const PlayerHolder* mPlayerHolder = nullptr;
     bool _60 = false;
 };

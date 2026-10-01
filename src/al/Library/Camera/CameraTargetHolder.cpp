@@ -84,7 +84,7 @@ void CameraTargetHolder::update() {
 }
 
 s32 CameraTargetHolder::tryFindIndex(const CameraTargetBase* pTarget,
-                                     const sead::PtrArray<CameraTargetBase>& rArray) {
+                                     const CameraTargetArray& rArray) {
     s32 index = 0;
 
     for (auto& target : rArray) {
@@ -99,7 +99,7 @@ s32 CameraTargetHolder::tryFindIndex(const CameraTargetBase* pTarget,
 }
 
 s32 CameraTargetHolder::tryFindIndex(const CameraSubTargetBase* pTarget,
-                                     const sead::PtrArray<CameraSubTargetBase>& rArray) {
+                                     const CameraSubTargetArray& rArray) {
     s32 index = 0;
 
     for (auto& target : rArray) {
@@ -114,7 +114,7 @@ s32 CameraTargetHolder::tryFindIndex(const CameraSubTargetBase* pTarget,
 }
 
 bool CameraTargetHolder::tryRemovePtr(const CameraTargetBase* pTarget,
-                                      sead::PtrArray<CameraTargetBase>& rArray) {
+                                      CameraTargetArray& rArray) {
     s32 index = tryFindIndex(pTarget, rArray);
 
     if (index < 0) {
@@ -126,7 +126,7 @@ bool CameraTargetHolder::tryRemovePtr(const CameraTargetBase* pTarget,
 }
 
 bool CameraTargetHolder::tryRemovePtr(const CameraSubTargetBase* pTarget,
-                                      sead::PtrArray<CameraSubTargetBase>& rArray) {
+                                      CameraSubTargetArray& rArray) {
     s32 index = tryFindIndex(pTarget, rArray);
 
     if (index < 0) {

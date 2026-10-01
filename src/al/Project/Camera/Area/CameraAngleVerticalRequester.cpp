@@ -28,7 +28,7 @@ void CameraAngleVerticalRequester::update(const sead::Vector3f& rPos) {
         mFramesUnchanged = -1;
 
         if (area != nullptr) {
-            getArg(&mAngleVertical, *area->mPlacementInfo, "AngleVertical");
+            getArg(&mAngleVertical, area->getPlacementInfo(), "AngleVertical");
         }
     }
 

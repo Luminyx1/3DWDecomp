@@ -24,7 +24,7 @@ void CameraInSwitchOnAreaDirector::update() {
         return;
     }
 
-    s32 areaNum = mAreaObjGroup->mNumAreas;
+    s32 areaNum = mAreaObjGroup->getSize();
 
     for (s32 i = 0; i < areaNum; i++) {
         AreaObj* area = mAreaObjGroup->getAreaObj(i);
