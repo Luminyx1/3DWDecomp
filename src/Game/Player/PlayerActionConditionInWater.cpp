@@ -13,5 +13,5 @@ PlayerActionConditionInWater::PlayerActionConditionInWater(const PlayerProperty*
  * @return whether the player is in water
  */
 bool PlayerActionConditionInWater::check() {
-    return mCheckArea->isInWater(mProperty->mTrans);
+    return mCheckArea->isInWater(mProperty->getTrans());
 }

@@ -19,5 +19,5 @@ PlayerActionConditionGroundMoveToDashRolling::PlayerActionConditionGroundMoveToD
  */
 bool PlayerActionConditionGroundMoveToDashRolling::check() {
     return mInput->isSquatTrigOn() && mDashChecker->isDashing() &&
-           mProperty->mVelocity.length() > mConstParam->getNormalMaxSpeed();
+           mProperty->getVelocity().length() > mConstParam->getNormalMaxSpeed();
 }

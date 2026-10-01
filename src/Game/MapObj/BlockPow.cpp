@@ -133,7 +133,7 @@ void BlockPow::startExplosion(bool a1) {
 }
 
 bool BlockPow::receiveMsgScreenPoint(const al::SensorMsg* pMsg, al::ScreenPointer* pPointer, al::ScreenPointTarget* pTarget) {
-    al::IUseStageSwitch* sw = (al::IUseStageSwitch*)(al::LiveActor*)this;
+    al::IUseStageSwitch* sw = static_cast<al::LiveActor*>(this);
 
     if ((al::isValidStageSwitch(sw, "EnableKnockSwitch") && !al::isOnStageSwitch(sw, "EnableKnockSwitch")) || !isNerve(this, &NrvBlockPowWait) ||
         !al::isMsgTouchAssistTrig(pMsg)) {
@@ -196,16 +196,8 @@ void BlockPow::exeReaction() {
         al::startHitReaction(this, _171 ? "爆発[水中]" : "爆発");
     }
 
-    al::requestPrePassLightColor(this, mIsWideRangeLight ? "爆発[広範囲]" : "爆発", cLightColor);
-    bool val = _171 == 0;
-    f32 v4 = cSensorRadius[val];
-    f32 radius = al::getSensorRadius(this, "Explosion");
-
-    if (v4 <= radius) {
-        // empty conditional
-    } else {
-        al::setSensorRadius(this, "Explosion", radius + (!_171 ? 15.0f : 10.0f));
-    }
+    requestLightExplosion();
+    updateSensor();
 
     if (al::isActionEnd(this)) {
         if (mIsAppearEmpty) {

@@ -12,5 +12,5 @@ PlayerActionConditionWallInhibitAfterBind::PlayerActionConditionWallInhibitAfter
  * @return whether wall actions are inhibited after the bind
  */
 bool PlayerActionConditionWallInhibitAfterBind::check() {
-    return mBindEndParamGetter->getBindEndParam()->mIsInhibitWall;
+    return mBindEndParamGetter->getBindEndParam()->isInhibitWall();
 }

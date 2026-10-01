@@ -27,7 +27,7 @@ bool PlayerActionConditionAirMoveToHipDrop::check() {
 
     const PlayerProperty* pProperty = mProperty;
     IUsePlayerCollisionCheckArrow* pCheckArrow = mCheckArrow;
-    sead::Vector3f start = pProperty->mTrans + pProperty->mUpDir * 75.0f;
-    sead::Vector3f arrow = pProperty->mGravity * (mConstParam->getHipDropHeight() + 75.0f);
+    sead::Vector3f start = pProperty->getTrans() + pProperty->getUpDir() * 75.0f;
+    sead::Vector3f arrow = pProperty->getGravity() * (mConstParam->getHipDropHeight() + 75.0f);
     return !pCheckArrow->checkArrow(start, arrow);
 }

@@ -5,5 +5,5 @@
  * @return whether the player is falling
  */
 bool PlayerActionConditionFalling::check() {
-    return mProperty->mGravity.dot(mProperty->mVelocity) > 0.0f;
+    return mProperty->getGravity().dot(mProperty->getVelocity()) > 0.0f;
 }

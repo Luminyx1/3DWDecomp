@@ -23,7 +23,7 @@ bool PlayerActionConditionDashInput::check() {
     sead::Vector3f moveDir = mInput->getMoveVec();
     al::normalizeOrZero(&moveDir);
 
-    if (mInput->isStickOn() && mInput->isDashButtonOn() && moveDir.dot(mProperty->mFront) > 0.70710678f) {
+    if (mInput->isStickOn() && mInput->isDashButtonOn() && moveDir.dot(mProperty->getFront()) > 0.70710678f) {
         mFrame = 0;
     } else {
         mFrame++;

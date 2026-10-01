@@ -20,5 +20,5 @@ bool PlayerActionConditionGroundMoveToNormalRolling::check() {
         return false;
     }
 
-    return mProperty->mVelocity.length() > mConstParam->getSquatShiftSpeedRate() * mConstParam->getNormalMaxSpeed();
+    return mProperty->getVelocity().length() > mConstParam->getSquatShiftSpeedRate() * mConstParam->getNormalMaxSpeed();
 }

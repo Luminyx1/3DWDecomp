@@ -21,12 +21,12 @@ PlayerActionConditionWaitToPivot::PlayerActionConditionWaitToPivot(const IUsePla
  */
 bool PlayerActionConditionWaitToPivot::check() {
     sead::Vector3f moveDir = mInput->getMoveVec();
-    al::verticalizeVec(&moveDir, mProperty->mGroundUp, moveDir);
+    al::verticalizeVec(&moveDir, mProperty->getGroundUp(), moveDir);
 
     if (al::normalizeOrZero(&moveDir)) {
         return false;
     }
 
-    f32 dot = moveDir.dot(mProperty->mFront);
+    f32 dot = moveDir.dot(mProperty->getFront());
     return dot <= std::cos(mConstParam->getPivotDegree() * 0.017453292f);
 }

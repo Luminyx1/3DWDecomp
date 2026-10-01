@@ -13,5 +13,5 @@ PlayerActionConditionToAbyss::PlayerActionConditionToAbyss(const PlayerProperty*
  * @return whether the player is in an abyss
  */
 bool PlayerActionConditionToAbyss::check() {
-    return mCheckArea->isInAbyss(mProperty->mTrans);
+    return mCheckArea->isInAbyss(mProperty->getTrans());
 }

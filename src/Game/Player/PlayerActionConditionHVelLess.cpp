@@ -15,6 +15,6 @@ PlayerActionConditionHVelLess::PlayerActionConditionHVelLess(const PlayerPropert
  */
 bool PlayerActionConditionHVelLess::check() {
     sead::Vector3f hVel;
-    al::verticalizeVec(&hVel, mProperty->mUpDir, mProperty->mVelocity);
+    al::verticalizeVec(&hVel, mProperty->getUpDir(), mProperty->getVelocity());
     return hVel.squaredLength() < mMaxSpeedSq;
 }

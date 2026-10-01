@@ -16,6 +16,6 @@ PlayerActionConditionStickThreshold::PlayerActionConditionStickThreshold(const P
  * @return whether the stick is tilted more than 90%
  */
 bool PlayerActionConditionStickThreshold::check() {
-    const sead::Vector3f& rMoveVec = mArg->mInput->getMoveVec();
+    const sead::Vector3f& rMoveVec = mArg->getInput()->getMoveVec();
     return sead::Mathf::sqrt(rMoveVec.x * rMoveVec.x + rMoveVec.z * rMoveVec.z) > 0.9f;
 }

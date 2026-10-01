@@ -23,14 +23,14 @@ PlayerActionConditionGroundMoveToTurnJump::PlayerActionConditionGroundMoveToTurn
  */
 bool PlayerActionConditionGroundMoveToTurnJump::check() {
     sead::Vector3f moveDir = mInput->getMoveVec();
-    al::verticalizeVec(&moveDir, mProperty->mGroundUp, moveDir);
+    al::verticalizeVec(&moveDir, mProperty->getGroundUp(), moveDir);
     al::normalizeOrZero(&moveDir);
 
     if (mDashChecker->isDashing() || mDashChecker->isDashingFast()) {
         return false;
     }
 
-    return PlayerActionFunc::isOppositeSide(moveDir, mProperty->mFront);
+    return PlayerActionFunc::isOppositeSide(moveDir, mProperty->getFront());
 }
 
 /**
@@ -50,10 +50,10 @@ void PlayerActionConditionGroundMoveToTurnJump::checkStickOn(const sead::Vector3
     }
 
     sead::Vector3f hVel;
-    al::verticalizeVec(&hVel, mProperty->mGroundUp, mProperty->mVelocity);
+    al::verticalizeVec(&hVel, mProperty->getGroundUp(), mProperty->getVelocity());
     sead::Vector3f hDir = hVel;
     al::normalizeOrZero(&hDir);
-    const sead::Vector3f& rFront = mProperty->mFront;
+    const sead::Vector3f& rFront = mProperty->getFront();
 
     if (hVel.length() < mConstParam->getDashBrakeSpeed() || hVel.dot(rStick) < 0.70710678f ||
         rStick.dot(rFront) < 0.70710678f) {

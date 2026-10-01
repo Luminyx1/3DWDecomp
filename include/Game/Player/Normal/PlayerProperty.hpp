@@ -4,6 +4,13 @@
 
 /// The player's physical state shared by the actions.
 struct PlayerProperty {
+    const sead::Vector3f& getTrans() const { return mTrans; }
+    const sead::Vector3f& getFront() const { return mFront; }
+    const sead::Vector3f& getGroundUp() const { return mGroundUp; }
+    const sead::Vector3f& getVelocity() const { return mVelocity; }
+    const sead::Vector3f& getGravity() const { return mGravity; }
+    const sead::Vector3f& getUpDir() const { return mUpDir; }
+
     sead::Vector3f mTrans;     // 0x0
     sead::Vector3f mFront;     // 0xc
     sead::Vector3f mGroundUp;  // 0x18

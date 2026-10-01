@@ -15,5 +15,5 @@ PlayerActionConditionBrakeToTurnJump::PlayerActionConditionBrakeToTurnJump(const
  * @return whether to do a side somersault
  */
 bool PlayerActionConditionBrakeToTurnJump::check() {
-    return PlayerActionFunc::isOppositeInput(mInput, mProperty, mProperty->mFront) && mInput->isJumpTrigOn();
+    return PlayerActionFunc::isOppositeInput(mInput, mProperty, mProperty->getFront()) && mInput->isJumpTrigOn();
 }

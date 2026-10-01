@@ -16,5 +16,5 @@ PlayerActionConditionArea::PlayerActionConditionArea(const PlayerProperty* pProp
  * @return whether the player is in the area
  */
 bool PlayerActionConditionArea::check() {
-    return (mCheckArea->*mCheckFunc)(mProperty->mTrans);
+    return (mCheckArea->*mCheckFunc)(mProperty->getTrans());
 }

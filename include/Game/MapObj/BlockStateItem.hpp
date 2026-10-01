@@ -48,6 +48,9 @@ public:
     void exeHeadgear();
     void exeEnd();
 
+    bool isLong() const { return mIsLong; }
+    void setConnectedRailBlock() { _77 = 1; }
+
     int mItemType;  // 0x20
     u32 _24;
     BlockEmpty* mBlockEmpty;             // 0x28

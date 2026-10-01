@@ -31,13 +31,14 @@ bool PlayerActionConditionSinkWater::check() {
         return true;
     }
 
-    if (mCheckArea->isInWaterNoSink(mProperty->mTrans)) {
+    if (mCheckArea->isInWaterNoSink(mProperty->getTrans())) {
         return true;
     }
 
     f32 height = mWaterSurfaceInfo->getWaterSurfaceHeight();
     f32 endDist = mFigureDirector->getFigure() == EPlayerFigure_Mini ? mConstParam->getSwimSurfaceEndDistShort() :
                                                                       mConstParam->getSwimSurfaceEndDist();
+
     if (height >= endDist) {
         return true;
     }

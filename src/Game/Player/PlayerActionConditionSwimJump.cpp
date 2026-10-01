@@ -18,7 +18,7 @@ PlayerActionConditionSwimJump::PlayerActionConditionSwimJump(const IUsePlayerWat
  * @return whether the player has moved upwards and the surface is at most 200 units above
  */
 bool PlayerActionConditionSwimJump::check() {
-    f32 upSpeed = mProperty->mVelocity.dot(mProperty->mUpDir);
+    f32 upSpeed = mProperty->getVelocity().dot(mProperty->getUpDir());
 
     if (upSpeed >= 0.0f) {
         mIsRising = true;

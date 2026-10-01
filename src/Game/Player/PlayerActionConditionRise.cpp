@@ -11,5 +11,5 @@ PlayerActionConditionRise::PlayerActionConditionRise(const PlayerProperty* pProp
  * @return whether the player is rising
  */
 bool PlayerActionConditionRise::check() {
-    return mProperty->mUpDir.dot(mProperty->mVelocity) > 0.0f;
+    return mProperty->getUpDir().dot(mProperty->getVelocity()) > 0.0f;
 }

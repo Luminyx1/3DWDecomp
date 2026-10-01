@@ -76,11 +76,11 @@ bool BlockQuestion::receiveMsgScreenPoint(const al::SensorMsg* pMsg, al::ScreenP
 void BlockQuestion::onConnectRailBlock() {
     _144 = 1;
     al::setShadowFixed(this, false);
-    mStateItem->_77 = 1;
+    mStateItem->setConnectedRailBlock();
 }
 
 bool BlockQuestion::isLong() const {
-    return mStateItem->mIsLong;
+    return mStateItem->isLong();
 }
 
 BlockStateItem* BlockQuestion::getBlockStateItem() const {

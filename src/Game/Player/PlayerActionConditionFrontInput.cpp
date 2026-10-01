@@ -23,7 +23,7 @@ bool PlayerActionConditionFrontInput::check() {
 
     sead::Vector3f moveDir = mInput->getMoveVec();
     al::normalize(&moveDir);
-    f32 dot = moveDir.dot(mProperty->mFront);
+    f32 dot = moveDir.dot(mProperty->getFront());
     f32 minDot = mIsWide ? 0.64278763f : 0.70710678f;
     return dot > minDot;
 }

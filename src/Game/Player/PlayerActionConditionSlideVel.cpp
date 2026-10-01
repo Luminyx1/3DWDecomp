@@ -24,5 +24,5 @@ bool PlayerActionConditionSlideVel::check() {
     mCollision->getFloorInfo(&info);
     sead::Vector3f downward;
     PlayerActionFunc::calcDownward(&downward, mProperty, info.mNormal);
-    return !(downward.dot(mProperty->mVelocity) <= 0.0f);
+    return !(downward.dot(mProperty->getVelocity()) <= 0.0f);
 }

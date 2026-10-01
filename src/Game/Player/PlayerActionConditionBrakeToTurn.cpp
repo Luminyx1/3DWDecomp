@@ -17,5 +17,5 @@ PlayerActionConditionBrakeToTurn::PlayerActionConditionBrakeToTurn(const IUsePla
  * @return whether to turn around
  */
 bool PlayerActionConditionBrakeToTurn::check() {
-    return mActionEnd->isEnd() && PlayerActionFunc::isOppositeInput(mInput, mProperty, mProperty->mFront);
+    return mActionEnd->isEnd() && PlayerActionFunc::isOppositeInput(mInput, mProperty, mProperty->getFront());
 }

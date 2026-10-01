@@ -16,7 +16,7 @@ PlayerActionConditionOutInWater::PlayerActionConditionOutInWater(const PlayerPro
  */
 bool PlayerActionConditionOutInWater::check() {
     bool isOutOfWater = mIsOutOfWater;
-    bool isInWater = mCheckArea->isInWater(mProperty->mTrans);
+    bool isInWater = mCheckArea->isInWater(mProperty->getTrans());
 
     if (isOutOfWater) {
         return isInWater;

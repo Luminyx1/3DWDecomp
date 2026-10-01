@@ -21,5 +21,5 @@ bool PlayerActionConditionFrontWallForGroundWall::check() {
 
     IUsePlayerCollision::Info info = {};
     mCollision->getFrontWallInfo(&info);
-    return mProperty->mFront.dot(info.mNormal) <= -0.2f;
+    return mProperty->getFront().dot(info.mNormal) <= -0.2f;
 }

@@ -25,7 +25,7 @@ bool PlayerActionConditionFloorAngle::check() {
 
     IUsePlayerCollision::Info info = {};
     mCollision->getFloorInfo(&info);
-    f32 cos = sead::Mathf::clamp(mProperty->mUpDir.dot(info.mNormal), -1.0f, 1.0f);
+    f32 cos = sead::Mathf::clamp(mProperty->getUpDir().dot(info.mNormal), -1.0f, 1.0f);
     f32 angle = sead::Mathf::rad2deg(sead::Mathf::acos(cos));
 
     switch (mOperationType) {

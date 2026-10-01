@@ -47,7 +47,7 @@ bool SnowCover::receiveMsg(const al::SensorMsg* pMsg, al::HitSensor* pSender, al
 
     if (GameDataFunction::isSingleMode(accessor) && _158 != nullptr) {
         if (al::isMsgPlayerHipDropAll(pMsg)) {
-            auto sensor = _158->mHitSensorKeeper->getSensor("Body");
+            auto sensor = _158->getHitSensorKeeper()->getSensor("Body");
 
             if (sensor != nullptr) {
                 if (al::sendMsgPlayerHipDrop(sensor, pSender, rc::tryGetMsgComboCount(pMsg))) {
