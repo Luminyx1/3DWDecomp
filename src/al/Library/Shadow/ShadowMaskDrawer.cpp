@@ -103,6 +103,6 @@ u8 ShadowMaskKeeper::getShadowIntensity(s32 category) const {
  * @return Shadow mask keeper.
  */
 al::ShadowMaskKeeper* ShadowMaskFunction::getShadowMaskKeeper(const al::LiveActor* pActor) {
-    return static_cast<al::GraphicsSystemInfo*>(pActor->getSceneInfo()->_78)
+    return pActor->getSceneInfo()->graphicsSystemInfo
         ->mShadowDirector->getShadowMaskKeeper();
 }

@@ -140,8 +140,8 @@ public:
     bool _658;
     u8 _659[0x678 - 0x659];
     sead::PtrArray<ShadowMaskDrawer> mDrawers;
-    sead::PtrArray<ShadowMaskBase> mEvenTargetMasks;
-    sead::PtrArray<ShadowMaskBase> mMasks;
+    ShadowMaskArray mEvenTargetMasks;
+    ShadowMaskArray mMasks;
     sead::ObjArray<ShadowMaskPrimInfo> mPrimInfoArray[3][17];
     u8 _d08[0x15b0 - 0xd08];
     s32 mDeclareCount[6][17];

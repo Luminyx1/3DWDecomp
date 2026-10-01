@@ -37,7 +37,7 @@ void attachMtxConnector(al::MtxConnector* pConnector, al::LiveActor* pActor,
 }
 
 template <typename T>
-void pushMask(sead::PtrArray<al::ShadowMaskBase>& rArray, T* pMask) {
+void pushMask(al::ShadowMaskArray& rArray, T* pMask) {
     pMask->createMtxConnector();
     rArray.pushBack(pMask);
 }

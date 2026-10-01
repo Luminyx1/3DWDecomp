@@ -5,6 +5,8 @@
 #include <gfx/seadColor.h>
 #include <math/seadVector.h>
 
+#include "Library/Shadow/ShadowMaskBase.hpp"
+
 namespace alYamlMacroUtil {
 class YamlParamGroup;
 }
@@ -60,8 +62,9 @@ public:
     s32 getShadowMaskNum() const { return mMaskArray.size(); }
 
     ShadowMaskBase* getShadowMask(s32 index) const { return mMaskArray[index]; }
+    ShadowMaskBase* tryGetShadowMask(s32 index) const { return mMaskArray.at(index); }
 
-    sead::PtrArray<ShadowMaskBase> mMaskArray;
+    ShadowMaskArray mMaskArray;
     void* _10;
     void* _18;
     void* _20;

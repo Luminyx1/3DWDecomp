@@ -1,6 +1,7 @@
 #pragma once
 
 #include <basis/seadTypes.h>
+#include <container/seadPtrArray.h>
 #include <gfx/seadColor.h>
 #include <math/seadMatrix.h>
 #include <math/seadVector.h>
@@ -57,6 +58,14 @@ public:
 
     bool isIgnoreHide() const { return mIsIgnoreHide; }
 
+    void setValid(bool isValid) { mIsValid = isValid; }
+
+    void setHide(bool isHide) { mIsHide = isHide; }
+
+    void setDropDir(const sead::Vector3f& rDir) { mDropDir = rDir; }
+
+    void setDropLength(f32 length) { mDropLength = length; }
+
     const LiveActor* mHost;
     MtxConnector* mMtxConnector;
     sead::Vector3f mOffset;
@@ -82,6 +91,8 @@ public:
     bool mIsIgnoreHostAlpha;
     bool _ea;
 };
+
+using ShadowMaskArray = sead::PtrArray<ShadowMaskBase>;
 
 static_assert(sizeof(ShadowMaskBase) == 0xf0);
 
