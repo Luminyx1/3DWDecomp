@@ -120,7 +120,7 @@ void GraphicsParamKeeperImpl::updateRequest() {
         return;
     }
 
-    GraphicsAreaDirector* areaDirector = mGraphicsSystemInfo->mGraphicsAreaDirector;
+    GraphicsAreaDirector* areaDirector = mGraphicsSystemInfo->getGraphicsAreaDirector();
 
     if (areaDirector == nullptr) {
         return;
@@ -231,7 +231,7 @@ agl::utl::IParameterIO* GraphicsParamRequestInterpKeeperImpl::getParamIo() {
  * @return Graphics area director.
  */
 GraphicsAreaDirector* GraphicsParamRequestInterpKeeperImpl::getGraphicsAreaDirector() {
-    return mGraphicsSystemInfo->mGraphicsAreaDirector;
+    return mGraphicsSystemInfo->getGraphicsAreaDirector();
 }
 
 }  // namespace al

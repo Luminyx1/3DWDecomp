@@ -55,6 +55,27 @@ namespace al {
         void activateDirLitColorTex() const;
         const sead::PtrArray<UniformBlock>* getViewIndexedUboArray(const char* pName) const;
 
+        CubeMapDirector* getCubeMapDirector() const { return mCubeMapDirector; }
+        SkyboxDirector* getSkyboxDirector() const { return mSkyboxDirector; }
+        GraphicsAreaDirector* getGraphicsAreaDirector() const { return mGraphicsAreaDirector; }
+        LightIntensityDirector* getLightIntensityDirector() const { return mLightIntensityDirector; }
+        ShaderEnvTextureKeeper* getShaderEnvTextureKeeper() const { return mShaderEnvTextureKeeper; }
+        ModelLightDirector* getModelLightDirector() const { return mModelLightDirector; }
+        ShadowDirector* getShadowDirector() const { return mShadowDirector; }
+        GraphicsStressDirector* getGraphicsStressDirector() const { return mGraphicsStressDirector; }
+        FogDirector* getFogDirector() const { return mFogDirector; }
+        const nn::g3d::ViewVolume& getViewVolume() const { return mViewVolume; }
+        ViewRenderer* getViewRenderer() const { return mViewRenderer; }
+        s32 getDrawEnvUpdateCount() const { return mDrawEnvUpdateCount; }
+        const sead::Vector3f& getDrawCameraPos() const { return mDrawCameraPos; }
+        GBufferArray* getDrawGBufferArray() const { return mDrawGBufferArray; }
+        sead::LookAtCamera* getDrawCamera() const { return mDrawCamera; }
+        sead::PerspectiveProjection* getDrawProjection() const { return mDrawProjection; }
+        s32 getDrawViewIndex() const { return mDrawViewIndex; }
+        AtmosScatter* getAtmosScatter() const { return mAtmosScatter; }
+        GpuMemAllocator* getGpuMemAllocator() const { return mGpuMemAllocator; }
+        const char* getLodSettingName() const { return mLodSettingName; }
+
         u8 _0[0x40];
         s32 _40;
         u8 _44[0x60 - 0x44];
