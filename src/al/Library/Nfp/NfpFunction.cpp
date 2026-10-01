@@ -327,14 +327,14 @@ bool isValidRegisterInfo(const NfpInfo& rInfo) {
  * @param pOwnerName owner name
  * @param rInfo NFP info
  */
-void getAmiiboOwnerName(sead::BufferedSafeStringBase<char16>* pOwnerName, const NfpInfo& rInfo) {}
+void getAmiiboOwnerName(sead::WBufferedSafeString* pOwnerName, const NfpInfo& rInfo) {}
 
 /**
  * Gets the nickname of an amiibo.
  * @param pNickName nickname
  * @param rInfo NFP info
  */
-void getAmiiboNickName(sead::BufferedSafeStringBase<char16>* pNickName, const NfpInfo& rInfo) {
+void getAmiiboNickName(sead::WBufferedSafeString* pNickName, const NfpInfo& rInfo) {
     pNickName->copy(rInfo.nickName);
 }
 

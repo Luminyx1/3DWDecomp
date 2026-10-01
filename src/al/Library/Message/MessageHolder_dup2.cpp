@@ -499,7 +499,7 @@ bool isMessageTagAlignCenter(const IUseMessageSystem* pMsgSystem, s32 groupIndex
  * @param pMessage source message
  * @param pString replacement string
  */
-void replaceMessageTagString(sead::BufferedSafeStringBase<char16_t>* pOut,
+void replaceMessageTagString(sead::WBufferedSafeString* pOut,
                              const IUseMessageSystem* pMsgSystem, const char16_t* pMessage,
                              const char16_t* pString) {
     ReplaceTagProcessorBase processor;
@@ -512,7 +512,7 @@ void replaceMessageTagString(sead::BufferedSafeStringBase<char16_t>* pOut,
  * @param pMsgSystem message system
  * @param rInfo time to write
  */
-void replaceMessageTagTimeDirectRaceTime(sead::BufferedSafeStringBase<char16_t>* pOut,
+void replaceMessageTagTimeDirectRaceTime(sead::WBufferedSafeString* pOut,
                                          const IUseMessageSystem* pMsgSystem,
                                          ReplaceTimeInfo& rInfo) {
     ReplaceTagProcessorBase processor;
@@ -545,7 +545,7 @@ const char16_t* getSystemMessageString(const IUseMessageSystem* pMsgSystem, cons
  * @param pMsgSystem message system
  * @param rInfo time to write
  */
-void replaceMessageTagTimeDirectDate(sead::BufferedSafeStringBase<char16_t>* pOut,
+void replaceMessageTagTimeDirectDate(sead::WBufferedSafeString* pOut,
                                      const IUseMessageSystem* pMsgSystem, ReplaceTimeInfo& rInfo) {
     ReplaceTagProcessorBase processor;
     processor.replaceTime(pOut, pMsgSystem,
@@ -559,7 +559,7 @@ void replaceMessageTagTimeDirectDate(sead::BufferedSafeStringBase<char16_t>* pOu
  * @param pMsgSystem message system
  * @param rInfo time to write
  */
-void replaceMessageTagTimeDirectDateDetail(sead::BufferedSafeStringBase<char16_t>* pOut,
+void replaceMessageTagTimeDirectDateDetail(sead::WBufferedSafeString* pOut,
                                            const IUseMessageSystem* pMsgSystem,
                                            ReplaceTimeInfo& rInfo) {
     ReplaceTagProcessorBase processor;
@@ -576,7 +576,7 @@ void replaceMessageTagTimeDirectDateDetail(sead::BufferedSafeStringBase<char16_t
  * @param score score to write
  * @param pName tag name
  */
-void replaceMessageTagScore(sead::BufferedSafeStringBase<char16_t>* pOut,
+void replaceMessageTagScore(sead::WBufferedSafeString* pOut,
                             const IUseMessageSystem* pMsgSystem, const char16_t* pMessage,
                             s32 score, const char* pName) {
     ReplaceTagProcessorBase processor;
@@ -591,7 +591,7 @@ void replaceMessageTagScore(sead::BufferedSafeStringBase<char16_t>* pOut,
  * @param coinNum coin number to write
  * @param pName tag name
  */
-void replaceMessageTagCoinNum(sead::BufferedSafeStringBase<char16_t>* pOut,
+void replaceMessageTagCoinNum(sead::WBufferedSafeString* pOut,
                               const IUseMessageSystem* pMsgSystem, const char16_t* pMessage,
                               s32 coinNum, const char* pName) {
     ReplaceTagProcessorBase processor;
@@ -606,7 +606,7 @@ void replaceMessageTagCoinNum(sead::BufferedSafeStringBase<char16_t>* pOut,
  * @param pAmiiboName amiibo name to write
  * @param pName tag name
  */
-void replaceMessageTagAmiiboName(sead::BufferedSafeStringBase<char16_t>* pOut,
+void replaceMessageTagAmiiboName(sead::WBufferedSafeString* pOut,
                                  const IUseMessageSystem* pMsgSystem, const char16_t* pMessage,
                                  const char* pAmiiboName, const char* pName) {
     ReplaceTagProcessorBase processor;
@@ -621,7 +621,7 @@ void replaceMessageTagAmiiboName(sead::BufferedSafeStringBase<char16_t>* pOut,
  * @param pUserName user name to write
  * @param pName tag name
  */
-void replaceMessageTagUserName(sead::BufferedSafeStringBase<char16_t>* pOut,
+void replaceMessageTagUserName(sead::WBufferedSafeString* pOut,
                                const IUseMessageSystem* pMsgSystem, const char16_t* pMessage,
                                const char16_t* pUserName, const char* pName) {
     ReplaceTagProcessorBase processor;
@@ -636,7 +636,7 @@ void replaceMessageTagUserName(sead::BufferedSafeStringBase<char16_t>* pOut,
  * @param pString string to write
  * @param pName tag name
  */
-void replaceMessageTagNamedString(sead::BufferedSafeStringBase<char16_t>* pOut,
+void replaceMessageTagNamedString(sead::WBufferedSafeString* pOut,
                                   const IUseMessageSystem* pMsgSystem, const char16_t* pMessage,
                                   const char16_t* pString, const char* pName) {
     ReplaceTagProcessorBase processor;
@@ -651,7 +651,7 @@ void replaceMessageTagNamedString(sead::BufferedSafeStringBase<char16_t>* pOut,
  * @param rInfo time to write
  * @param pName tag name
  */
-void replaceMessageTagTime(sead::BufferedSafeStringBase<char16_t>* pOut,
+void replaceMessageTagTime(sead::WBufferedSafeString* pOut,
                            const IUseMessageSystem* pMsgSystem, const char16_t* pMessage,
                            ReplaceTimeInfo& rInfo, const char* pName) {
     ReplaceTagProcessorBase processor;
@@ -774,7 +774,7 @@ void registerMessageTagDataString(MessageTagDataHolder* pHolder, const char* pNa
  * @param pHolder tag data holder
  * @param pMessage source message
  */
-void replaceMessageTagData(sead::BufferedSafeStringBase<char16_t>* pOut,
+void replaceMessageTagData(sead::WBufferedSafeString* pOut,
                            const IUseMessageSystem* pMsgSystem, const MessageTagDataHolder* pHolder,
                            const char16_t* pMessage) {
     pHolder->replaceMessage(pOut, pMsgSystem, pMessage);
@@ -1099,7 +1099,7 @@ s32 getMessageTagParamNum(const IUseMessageSystem* pMsgSystem, const MessageTag&
  * @param rTag tag
  * @param paramIndex index of the string parameter
  */
-void getMessageTagParamString(sead::BufferedSafeStringBase<char16_t>* pOut,
+void getMessageTagParamString(sead::WBufferedSafeString* pOut,
                               const IUseMessageSystem* pMsgSystem, const MessageTag& rTag,
                               s32 paramIndex) {
     const u8* param = rTag.getParamPtr(0);
@@ -1110,7 +1110,7 @@ void getMessageTagParamString(sead::BufferedSafeStringBase<char16_t>* pOut,
         size = *reinterpret_cast<const u16*>(param);
     }
 
-    pOut->copy(sead::SafeStringBase<char16_t>(reinterpret_cast<const char16_t*>(param + 2)),
+    pOut->copy(sead::WSafeString(reinterpret_cast<const char16_t*>(param + 2)),
                size / 2);
 }
 

@@ -26,22 +26,22 @@ public:
                     const char16_t* pSrc, ...) const;
     s32 replaceArgsVaList(char16_t* pDst, const IUseMessageSystem* pMsgSystem,
                           const char16_t* pSrc, std::va_list args) const;
-    s32 replaceNamedString(sead::BufferedSafeStringBase<char16_t>* pDst,
+    s32 replaceNamedString(sead::WBufferedSafeString* pDst,
                             const IUseMessageSystem* pMsgSystem, const char16_t* pString,
                             const char16_t* pSrc, const char* pName) const;
-    s32 replaceScore(sead::BufferedSafeStringBase<char16_t>* pDst,
+    s32 replaceScore(sead::WBufferedSafeString* pDst,
                       const IUseMessageSystem* pMsgSystem, s32 score, const char16_t* pSrc,
                       const char* pName) const;
-    s32 replaceCoinNum(sead::BufferedSafeStringBase<char16_t>* pDst,
+    s32 replaceCoinNum(sead::WBufferedSafeString* pDst,
                         const IUseMessageSystem* pMsgSystem, s32 coinNum, const char16_t* pSrc,
                         const char* pName) const;
-    s32 replaceUserName(sead::BufferedSafeStringBase<char16_t>* pDst,
+    s32 replaceUserName(sead::WBufferedSafeString* pDst,
                          const IUseMessageSystem* pMsgSystem, const char16_t* pUserName,
                          const char16_t* pSrc, const char* pName) const;
-    s32 replaceAmiiboName(sead::BufferedSafeStringBase<char16_t>* pDst,
+    s32 replaceAmiiboName(sead::WBufferedSafeString* pDst,
                            const IUseMessageSystem* pMsgSystem, const char* pAmiiboName,
                            const char16_t* pSrc, const char* pName) const;
-    s32 replaceTime(sead::BufferedSafeStringBase<char16_t>* pDst,
+    s32 replaceTime(sead::WBufferedSafeString* pDst,
                      const IUseMessageSystem* pMsgSystem, const char16_t* pSrc, const char* pName,
                      const ReplaceTimeInfo& rInfo) const;
     s32 replaceTimeImpl(char16_t* pDst, const IUseMessageSystem* pMsgSystem, const char16_t* pSrc,

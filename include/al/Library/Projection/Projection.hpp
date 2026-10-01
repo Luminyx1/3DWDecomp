@@ -71,12 +71,12 @@ private:
     sead::Matrix44f mProjInvMtx;
     sead::Matrix44f mProjMtxStd;
     sead::Matrix44f mProjInvMtxStd;
-    f32 mLeft = sead::MathCalcCommon<f32>::maxNumber();
-    f32 mBottom = sead::MathCalcCommon<f32>::maxNumber();
-    f32 mNear = sead::MathCalcCommon<f32>::maxNumber();
-    f32 mRight = sead::MathCalcCommon<f32>::minNumber();
-    f32 mTop = sead::MathCalcCommon<f32>::minNumber();
-    f32 mFar = sead::MathCalcCommon<f32>::minNumber();
+    f32 mLeft = sead::Mathf::maxNumber();
+    f32 mBottom = sead::Mathf::maxNumber();
+    f32 mNear = sead::Mathf::maxNumber();
+    f32 mRight = sead::Mathf::minNumber();
+    f32 mTop = sead::Mathf::minNumber();
+    f32 mFar = sead::Mathf::minNumber();
     f32 mFovy = 0.0f;
     f32 mFocalLength = 0.0f;
     f32 mAspect = 1.0f;

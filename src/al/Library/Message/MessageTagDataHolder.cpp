@@ -31,7 +31,7 @@ void MessageTagDataHolder::registerMessageTagData(MessageTagDataBase* pData) {
  * @param pMsgSystem message system
  * @param pMessage source message
  */
-void MessageTagDataHolder::replaceMessage(sead::BufferedSafeStringBase<char16_t>* pString,
+void MessageTagDataHolder::replaceMessage(sead::WBufferedSafeString* pString,
                                           const IUseMessageSystem* pMsgSystem,
                                           const char16_t* pMessage) const {
     char16_t buffer[0x400];

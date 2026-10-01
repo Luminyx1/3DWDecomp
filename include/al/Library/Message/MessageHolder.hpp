@@ -79,26 +79,26 @@ bool isMessageTagPadPair(const IUseMessageSystem*, s32, s32);
 bool isMessageTagPadStyle2P(const IUseMessageSystem*, s32, s32);
 bool isMessageTagAlignLeft(const IUseMessageSystem*, s32, s32);
 bool isMessageTagAlignCenter(const IUseMessageSystem*, s32, s32);
-void replaceMessageTagString(sead::BufferedSafeStringBase<char16_t>*, const IUseMessageSystem*, const char16_t*,
+void replaceMessageTagString(sead::WBufferedSafeString*, const IUseMessageSystem*, const char16_t*,
                              const char16_t*);
-void replaceMessageTagTimeDirectRaceTime(sead::BufferedSafeStringBase<char16_t>*, const IUseMessageSystem*,
+void replaceMessageTagTimeDirectRaceTime(sead::WBufferedSafeString*, const IUseMessageSystem*,
                                          ReplaceTimeInfo&);
 const char16_t* getSystemMessageString(const IUseMessageSystem*, const char*, const char*);
-void replaceMessageTagTimeDirectDate(sead::BufferedSafeStringBase<char16_t>*, const IUseMessageSystem*,
+void replaceMessageTagTimeDirectDate(sead::WBufferedSafeString*, const IUseMessageSystem*,
                                      ReplaceTimeInfo&);
-void replaceMessageTagTimeDirectDateDetail(sead::BufferedSafeStringBase<char16_t>*, const IUseMessageSystem*,
+void replaceMessageTagTimeDirectDateDetail(sead::WBufferedSafeString*, const IUseMessageSystem*,
                                            ReplaceTimeInfo&);
-void replaceMessageTagScore(sead::BufferedSafeStringBase<char16_t>*, const IUseMessageSystem*, const char16_t*,
+void replaceMessageTagScore(sead::WBufferedSafeString*, const IUseMessageSystem*, const char16_t*,
                             s32, const char*);
-void replaceMessageTagCoinNum(sead::BufferedSafeStringBase<char16_t>*, const IUseMessageSystem*, const char16_t*,
+void replaceMessageTagCoinNum(sead::WBufferedSafeString*, const IUseMessageSystem*, const char16_t*,
                               s32, const char*);
-void replaceMessageTagAmiiboName(sead::BufferedSafeStringBase<char16_t>*, const IUseMessageSystem*,
+void replaceMessageTagAmiiboName(sead::WBufferedSafeString*, const IUseMessageSystem*,
                                  const char16_t*, const char*, const char*);
-void replaceMessageTagUserName(sead::BufferedSafeStringBase<char16_t>*, const IUseMessageSystem*, const char16_t*,
+void replaceMessageTagUserName(sead::WBufferedSafeString*, const IUseMessageSystem*, const char16_t*,
                                const char16_t*, const char*);
-void replaceMessageTagNamedString(sead::BufferedSafeStringBase<char16_t>*, const IUseMessageSystem*,
+void replaceMessageTagNamedString(sead::WBufferedSafeString*, const IUseMessageSystem*,
                                   const char16_t*, const char16_t*, const char*);
-void replaceMessageTagTime(sead::BufferedSafeStringBase<char16_t>*, const IUseMessageSystem*, const char16_t*,
+void replaceMessageTagTime(sead::WBufferedSafeString*, const IUseMessageSystem*, const char16_t*,
                            ReplaceTimeInfo&, const char*);
 void createReplaceTimeInfoForRaceTime(ReplaceTimeInfo*, s32, s32, s32);
 void createReplaceTimeInfoForDateTime(ReplaceTimeInfo*, u64);
@@ -109,7 +109,7 @@ void registerMessageTagDataCoinNum(MessageTagDataHolder*, const char*, const s32
 void registerMessageTagDataUserName(MessageTagDataHolder*, const char*, const char16_t**);
 void registerMessageTagDataAmiiboName(MessageTagDataHolder*, const char*, const char**);
 void registerMessageTagDataString(MessageTagDataHolder*, const char*, const char16_t**);
-void replaceMessageTagData(sead::BufferedSafeStringBase<char16_t>*, const IUseMessageSystem*,
+void replaceMessageTagData(sead::WBufferedSafeString*, const IUseMessageSystem*,
                            const MessageTagDataHolder*, const char16_t*);
 s32 calcMessageSizeWithoutTag(const char16_t*, const char16_t*);
 bool isExistLayoutMessage(const IUseMessageSystem*, const char*);
@@ -130,7 +130,7 @@ s32 getSystemMessageLabelNum(const IUseMessageSystem*, const char*);
 s32 getLayoutMessageLabelNum(const IUseMessageSystem*, const char*);
 const char* getMessageTagParamName(const IUseMessageSystem*, const MessageTag&, s32);
 s32 getMessageTagParamNum(const IUseMessageSystem*, const MessageTag&);
-void getMessageTagParamString(sead::BufferedSafeStringBase<char16_t>*, const IUseMessageSystem*,
+void getMessageTagParamString(sead::WBufferedSafeString*, const IUseMessageSystem*,
                               const MessageTag&, s32);
 void getSystemMessageLabelString(sead::BufferedSafeString*, const IUseMessageSystem*, const char*,
                                  s32);

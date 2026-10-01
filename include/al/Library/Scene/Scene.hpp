@@ -13,6 +13,9 @@ struct Vector3;
 template <typename T>
 class Matrix34;
 class PerspectiveProjection;
+
+using Vector3f = Vector3<f32>;
+using Matrix34f = Matrix34<f32>;
 }  // namespace sead
 
 namespace al {
@@ -77,10 +80,10 @@ public:
     void initSceneAudio(const SceneInitInfo& rInfo, const char* pStageName, s32 seRequestNum,
                         s32 unused1, s32 unused2, bool isUseSituation, const char* pBgmStageName,
                         s32 unused3, f32 volume);
-    void initSceneAudio3D(const SceneInitInfo& rInfo, const sead::Vector3<f32>* pCameraPos,
-                          const sead::Matrix34<f32>* pCameraMtx,
+    void initSceneAudio3D(const SceneInitInfo& rInfo, const sead::Vector3f* pCameraPos,
+                          const sead::Matrix34f* pCameraMtx,
                           const sead::PerspectiveProjection* pProjection,
-                          const sead::Vector3<f32>* pCameraAt, const char* pStageName,
+                          const sead::Vector3f* pCameraAt, const char* pStageName,
                           AreaObjDirector* pAreaObjDirector, bool isUseListenerPoser);
     void initSceneAudioAfterInitPlacement(const SceneInitInfo& rInfo);
     void initAudioKeeper(const char* pName);

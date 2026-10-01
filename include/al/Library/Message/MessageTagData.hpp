@@ -8,7 +8,7 @@ class IUseMessageSystem;
 
 class MessageTagDataBase {
 public:
-    virtual void replaceMessage(sead::BufferedSafeStringBase<char16_t>* pString,
+    virtual void replaceMessage(sead::WBufferedSafeString* pString,
                                 const IUseMessageSystem* pMsgSystem,
                                 const char16_t* pMessage) const = 0;
 };
@@ -17,7 +17,7 @@ class MessageTagDataScore : public MessageTagDataBase {
 public:
     MessageTagDataScore(const char* pName, const s32* pScore) : mScore(pScore), mName(pName) {}
 
-    void replaceMessage(sead::BufferedSafeStringBase<char16_t>* pString,
+    void replaceMessage(sead::WBufferedSafeString* pString,
                         const IUseMessageSystem* pMsgSystem,
                         const char16_t* pMessage) const override;
 
@@ -30,7 +30,7 @@ class MessageTagDataCoinNum : public MessageTagDataBase {
 public:
     MessageTagDataCoinNum(const char* pName, const s32* pCoinNum) : mCoinNum(pCoinNum), mName(pName) {}
 
-    void replaceMessage(sead::BufferedSafeStringBase<char16_t>* pString,
+    void replaceMessage(sead::WBufferedSafeString* pString,
                         const IUseMessageSystem* pMsgSystem,
                         const char16_t* pMessage) const override;
 
@@ -44,7 +44,7 @@ public:
     MessageTagDataUserName(const char* pName, const char16_t** pUserName)
         : mUserName(pUserName), mName(pName) {}
 
-    void replaceMessage(sead::BufferedSafeStringBase<char16_t>* pString,
+    void replaceMessage(sead::WBufferedSafeString* pString,
                         const IUseMessageSystem* pMsgSystem,
                         const char16_t* pMessage) const override;
 
@@ -57,7 +57,7 @@ class MessageTagDataString : public MessageTagDataBase {
 public:
     MessageTagDataString(const char* pName, const char16_t** pString) : mString(pString), mName(pName) {}
 
-    void replaceMessage(sead::BufferedSafeStringBase<char16_t>* pString,
+    void replaceMessage(sead::WBufferedSafeString* pString,
                         const IUseMessageSystem* pMsgSystem,
                         const char16_t* pMessage) const override;
 
@@ -71,7 +71,7 @@ public:
     MessageTagDataAmiiboName(const char* pName, const char** pAmiiboName)
         : mAmiiboName(pAmiiboName), mName(pName) {}
 
-    void replaceMessage(sead::BufferedSafeStringBase<char16_t>* pString,
+    void replaceMessage(sead::WBufferedSafeString* pString,
                         const IUseMessageSystem* pMsgSystem,
                         const char16_t* pMessage) const override;
 

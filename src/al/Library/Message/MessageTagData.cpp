@@ -9,7 +9,7 @@ namespace al {
  * @param pMsgSystem message system
  * @param pMessage source message
  */
-void MessageTagDataScore::replaceMessage(sead::BufferedSafeStringBase<char16_t>* pString,
+void MessageTagDataScore::replaceMessage(sead::WBufferedSafeString* pString,
                                          const IUseMessageSystem* pMsgSystem,
                                          const char16_t* pMessage) const {
     replaceMessageTagScore(pString, pMsgSystem, pMessage, *mScore, mName);
@@ -21,7 +21,7 @@ void MessageTagDataScore::replaceMessage(sead::BufferedSafeStringBase<char16_t>*
  * @param pMsgSystem message system
  * @param pMessage source message
  */
-void MessageTagDataCoinNum::replaceMessage(sead::BufferedSafeStringBase<char16_t>* pString,
+void MessageTagDataCoinNum::replaceMessage(sead::WBufferedSafeString* pString,
                                            const IUseMessageSystem* pMsgSystem,
                                            const char16_t* pMessage) const {
     replaceMessageTagCoinNum(pString, pMsgSystem, pMessage, *mCoinNum, mName);
@@ -33,7 +33,7 @@ void MessageTagDataCoinNum::replaceMessage(sead::BufferedSafeStringBase<char16_t
  * @param pMsgSystem message system
  * @param pMessage source message
  */
-void MessageTagDataUserName::replaceMessage(sead::BufferedSafeStringBase<char16_t>* pString,
+void MessageTagDataUserName::replaceMessage(sead::WBufferedSafeString* pString,
                                             const IUseMessageSystem* pMsgSystem,
                                             const char16_t* pMessage) const {
     replaceMessageTagUserName(pString, pMsgSystem, pMessage, *mUserName, mName);
@@ -45,7 +45,7 @@ void MessageTagDataUserName::replaceMessage(sead::BufferedSafeStringBase<char16_
  * @param pMsgSystem message system
  * @param pMessage source message
  */
-void MessageTagDataString::replaceMessage(sead::BufferedSafeStringBase<char16_t>* pString,
+void MessageTagDataString::replaceMessage(sead::WBufferedSafeString* pString,
                                           const IUseMessageSystem* pMsgSystem,
                                           const char16_t* pMessage) const {
     replaceMessageTagNamedString(pString, pMsgSystem, pMessage, *mString, mName);
@@ -57,7 +57,7 @@ void MessageTagDataString::replaceMessage(sead::BufferedSafeStringBase<char16_t>
  * @param pMsgSystem message system
  * @param pMessage source message
  */
-void MessageTagDataAmiiboName::replaceMessage(sead::BufferedSafeStringBase<char16_t>* pString,
+void MessageTagDataAmiiboName::replaceMessage(sead::WBufferedSafeString* pString,
                                               const IUseMessageSystem* pMsgSystem,
                                               const char16_t* pMessage) const {
     replaceMessageTagAmiiboName(pString, pMsgSystem, pMessage, *mAmiiboName, mName);

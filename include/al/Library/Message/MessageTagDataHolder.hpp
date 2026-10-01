@@ -12,7 +12,7 @@ public:
     MessageTagDataHolder(s32 maxNum);
 
     void registerMessageTagData(MessageTagDataBase* pData);
-    void replaceMessage(sead::BufferedSafeStringBase<char16_t>* pString,
+    void replaceMessage(sead::WBufferedSafeString* pString,
                         const IUseMessageSystem* pMsgSystem, const char16_t* pMessage) const;
 
 private:

@@ -218,7 +218,7 @@ s32 ReplaceTagProcessorBase::replaceArgsVaList(char16_t* pDst, const IUseMessage
  * @param pName tag name to replace
  * @return number of written characters
  */
-s32 ReplaceTagProcessorBase::replaceNamedString(sead::BufferedSafeStringBase<char16_t>* pDst,
+s32 ReplaceTagProcessorBase::replaceNamedString(sead::WBufferedSafeString* pDst,
                                                 const IUseMessageSystem* pMsgSystem,
                                                 const char16_t* pString, const char16_t* pSrc,
                                                 const char* pName) const {
