@@ -44,7 +44,7 @@ void AudioTaskThreadNin::calc_(MessageQueue::Element msg) {
         return;
     }
 
-    if (mListener) {
+    if (mListener != nullptr) {
         mListener->onTaskBegin();
     }
 
@@ -52,7 +52,7 @@ void AudioTaskThreadNin::calc_(MessageQueue::Element msg) {
     task->execute(mState == State::cQuitting);
     task->mPendingCount.decrement();
 
-    if (mListener) {
+    if (mListener != nullptr) {
         mListener->onTaskEnd();
     }
 }

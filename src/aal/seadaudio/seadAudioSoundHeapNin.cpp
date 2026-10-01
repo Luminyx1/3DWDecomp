@@ -19,7 +19,7 @@ AudioSoundHeapNin::AudioSoundHeapNin(size_t size, Heap* pHeap) {
  * @param pHeap Heap to allocate from, or nullptr for the current heap.
  */
 void AudioSoundHeapNin::create_(size_t size, Heap* pHeap) {
-    if (!pHeap) {
+    if (pHeap == nullptr) {
         pHeap = HeapMgr::instance()->getCurrentHeap();
     }
 
@@ -74,7 +74,7 @@ void AudioSoundHeapNin::listenPropertyEvent(const hostio::PropertyEvent* pEvent)
  * Dumps the contents of the heap.
  */
 void AudioSoundHeapNin::dump() {
-    if (IsValid() && mSoundDataManager && mSoundArchive) {
+    if (IsValid() && mSoundDataManager != nullptr && mSoundArchive != nullptr) {
         Dump(*mSoundDataManager, *mSoundArchive);
     }
 }

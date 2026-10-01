@@ -75,12 +75,12 @@ AudioPlayerNin::~AudioPlayerNin() {
         mStreamCacheBuffer = nullptr;
     }
 
-    if (mSoundHeap) {
+    if (mSoundHeap != nullptr) {
         delete mSoundHeap;
         mSoundHeap = nullptr;
     }
 
-    if (mSoundDataMgr) {
+    if (mSoundDataMgr != nullptr) {
         delete mSoundDataMgr;
         mSoundDataMgr = nullptr;
     }
@@ -118,7 +118,7 @@ void AudioPlayerNin::finalize() {
     stopAll(0);
     destroySoundHeap();
 
-    if (mStreamMemoryPool) {
+    if (mStreamMemoryPool != nullptr) {
         nn::audio::RequestDetachMemoryPool(mStreamMemoryPool);
 
         while (nn::audio::IsMemoryPoolAttached(mStreamMemoryPool)) {
@@ -151,7 +151,7 @@ void AudioPlayerNin::destroySoundHeap() {
 
     mSoundDataMgr->connectSoundHeap(nullptr);
 
-    if (mSoundHeap) {
+    if (mSoundHeap != nullptr) {
         delete mSoundHeap;
         mSoundHeap = nullptr;
     }
@@ -262,7 +262,7 @@ u32 AudioPlayerNin::getSoundCount() const {
 
     const nn::atk::SoundArchive* archive = mSoundDataMgr->getSoundArchive();
 
-    if (!archive) {
+    if (archive == nullptr) {
         return 0;
     }
 
@@ -280,7 +280,7 @@ u32 AudioPlayerNin::getTotalSoundCount() const {
 
     const nn::atk::SoundArchive* archive = mSoundDataMgr->getSoundArchive();
 
-    if (!archive) {
+    if (archive == nullptr) {
         return 0;
     }
 
@@ -307,7 +307,7 @@ const char* AudioPlayerNin::getSoundName(u32 soundId) const {
 
     const nn::atk::SoundArchive* archive = mSoundDataMgr->getSoundArchive();
 
-    if (!archive) {
+    if (archive == nullptr) {
         return nullptr;
     }
 
@@ -325,7 +325,7 @@ const char* AudioPlayerNin::getAddonSoundName(u32 soundId) const {
     }
 
     for (u32 i = 0; i < mAddonArchiveCount - 1; i++) {
-        if (GetAddonSoundArchive(i)) {
+        if (GetAddonSoundArchive(i) != nullptr) {
             return GetAddonSoundArchive(i)->GetItemLabel(soundId);
         }
     }
@@ -344,7 +344,7 @@ const char* AudioPlayerNin::getAddonArchiveName(s32 soundId) const {
     }
 
     for (u32 i = 0; i < mAddonArchiveCount - 1; i++) {
-        if (GetAddonSoundArchive(i) && GetAddonSoundArchive(i)->GetItemLabel(soundId)) {
+        if (GetAddonSoundArchive(i) != nullptr && GetAddonSoundArchive(i)->GetItemLabel(soundId) != nullptr) {
             return GetAddonSoundArchiveName(i);
         }
     }
@@ -364,7 +364,7 @@ u32 AudioPlayerNin::getSoundId(const char* pSoundName) const {
 
     const nn::atk::SoundArchive* archive = mSoundDataMgr->getSoundArchive();
 
-    if (!archive) {
+    if (archive == nullptr) {
         return 0xffffffff;
     }
 
@@ -382,7 +382,7 @@ u32 AudioPlayerNin::getAddonSoundId(u32 soundId) const {
     }
 
     for (u32 i = 0; i < mAddonArchiveCount - 1; i++) {
-        if (GetAddonSoundArchive(i)) {
+        if (GetAddonSoundArchive(i) != nullptr) {
             GetAddonSoundArchive(i);
             return soundId | 0x1000000;
         }

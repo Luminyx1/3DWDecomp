@@ -67,7 +67,7 @@ void AudioSystemNin::AtkInitializeParam::setWorkMemory(u8* pWorkMemory, size_t s
 void AudioSystemNin::initializeMain_() {
     initializeAtk_();
 
-    if (mTaskThread) {
+    if (mTaskThread != nullptr) {
         mTaskThread->start();
     }
 }
@@ -88,7 +88,7 @@ void AudioSystemNin::finalize() {
 
     mWorkBuffer = nullptr;
 
-    if (mTaskThread) {
+    if (mTaskThread != nullptr) {
         delete mTaskThread;
         mTaskThread = nullptr;
     }
@@ -100,7 +100,7 @@ void AudioSystemNin::finalize() {
  * Stops the task thread and finalizes the Nintendo audio library.
  */
 void AudioSystemNin::finalizeMain_() {
-    if (mTaskThread) {
+    if (mTaskThread != nullptr) {
         mTaskThread->quitAndWaitDoneSingleThread(false);
     }
 

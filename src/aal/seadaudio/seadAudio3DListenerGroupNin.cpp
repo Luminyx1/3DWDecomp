@@ -28,7 +28,7 @@ Audio3DListenerGroupNin::~Audio3DListenerGroupNin() = default;
 void Audio3DListenerGroupNin::append(Audio3DListenerNin& rListener) {
     reflectGroupParamToListener_(rListener);
 
-    if (mMgr && !mMgr->isListenerAddedToNw(rListener)) {
+    if (mMgr != nullptr && !mMgr->isListenerAddedToNw(rListener)) {
         mMgr->getSound3DManager()->AddListener(&rListener);
     }
 
@@ -74,7 +74,7 @@ void Audio3DListenerGroupNin::reflectGroupParamToListener_(Audio3DListenerNin& r
  * @param rListener Listener.
  */
 void Audio3DListenerGroupNin::remove(Audio3DListenerNin& rListener) {
-    if (mMgr && mMgr->isListenerAddedToNw(rListener)) {
+    if (mMgr != nullptr && mMgr->isListenerAddedToNw(rListener)) {
         mMgr->getSound3DManager()->RemoveListener(&rListener);
     }
 
@@ -85,7 +85,7 @@ void Audio3DListenerGroupNin::remove(Audio3DListenerNin& rListener) {
  * Removes every listener from the group.
  */
 void Audio3DListenerGroupNin::removeAll() {
-    if (mMgr && !mListeners.isEmpty()) {
+    if (mMgr != nullptr && !mListeners.isEmpty()) {
         for (auto it = mListeners.begin(); it != mListeners.end(); ++it) {
             if (mMgr->isListenerAddedToNw(*it)) {
                 mMgr->getSound3DManager()->RemoveListener(&*it);

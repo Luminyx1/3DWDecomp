@@ -12,7 +12,7 @@
 namespace sead {
 namespace {
 bool convertStartResult(nn::atk::SoundStartable::StartResult result, AudioStartResult* pResult) {
-    if (pResult) {
+    if (pResult != nullptr) {
         s32 code = result.GetCode();
         *pResult = static_cast<AudioStartResult>(code < cAudioStartResult_Unknown ?
                                                      code :

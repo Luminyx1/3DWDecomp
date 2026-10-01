@@ -23,17 +23,17 @@ AudioMgr::AudioMgr() {
 AudioMgr::~AudioMgr() {
     exit();
 
-    if (mIsAudioSystemOwned && mAudioSystem) {
+    if (mIsAudioSystemOwned && mAudioSystem != nullptr) {
         delete mAudioSystem;
         mAudioSystem = nullptr;
     }
 
-    if (mIsPlayerOwned && mPlayer) {
+    if (mIsPlayerOwned && mPlayer != nullptr) {
         delete mPlayer;
         mPlayer = nullptr;
     }
 
-    if (mIsResetterOwned && mResetter) {
+    if (mIsResetterOwned && mResetter != nullptr) {
         delete mResetter;
         mResetter = nullptr;
     }
@@ -47,11 +47,11 @@ void AudioMgr::exit() {
         return;
     }
 
-    if (mPlayer) {
+    if (mPlayer != nullptr) {
         mPlayer->finalize();
     }
 
-    if (mResourceLoader) {
+    if (mResourceLoader != nullptr) {
         mResourceLoader->finalize();
     }
 
@@ -61,7 +61,7 @@ void AudioMgr::exit() {
         }
     }
 
-    if (mAudioSystem) {
+    if (mAudioSystem != nullptr) {
         mAudioSystem->finalize();
     }
 
@@ -75,9 +75,9 @@ void AudioMgr::exit() {
  * @param addonArchiveCount Number of add-on sound archives the player is set up for.
  */
 void AudioMgr::prepare(AudioSettingParameter* pParam, Heap* pHeap, s32 addonArchiveCount) {
-    mHeap = pHeap ? pHeap : HeapMgr::instance()->getCurrentHeap();
+    mHeap = (pHeap != nullptr) ? pHeap : HeapMgr::instance()->getCurrentHeap();
 
-    if (pParam) {
+    if (pParam != nullptr) {
         mAudioSystem = pParam->mAudioSystem;
         mResetter = pParam->mResetter;
         mPlayer = pParam->mPlayer;
@@ -88,35 +88,35 @@ void AudioMgr::prepare(AudioSettingParameter* pParam, Heap* pHeap, s32 addonArch
         }
     }
 
-    if (!mAudioSystem) {
+    if (mAudioSystem == nullptr) {
         mAudioSystem = new (pHeap) AudioSystemNin();
         mIsAudioSystemOwned = true;
     }
 
-    if (!mPlayer) {
+    if (mPlayer == nullptr) {
         mPlayer = new (pHeap) AudioPlayerNin();
         mIsPlayerOwned = true;
     }
 
-    if (!mResetter) {
+    if (mResetter == nullptr) {
         mResetter = new (pHeap) AudioResetterNin();
         mIsResetterOwned = true;
     }
 
-    if (mAudioSystem) {
+    if (mAudioSystem != nullptr) {
         static_cast<AudioSystemNin*>(mAudioSystem)->setVoiceCountMax(75);
         mAudioSystem->initialize();
     }
 
-    if (mPlayer) {
+    if (mPlayer != nullptr) {
         mPlayer->initialize();
     }
 
-    if (mResetter) {
+    if (mResetter != nullptr) {
         mResetter->initialize(*this);
     }
 
-    if (mResourceLoader) {
+    if (mResourceLoader != nullptr) {
         mResourceLoader->initialize(*this);
     }
 
@@ -128,7 +128,7 @@ void AudioMgr::prepare(AudioSettingParameter* pParam, Heap* pHeap, s32 addonArch
 
     DynamicCast<AudioSystemNin>(mAudioSystem)->mAddonArchiveCount = addonArchiveCount;
 
-    if (mResourceLoader) {
+    if (mResourceLoader != nullptr) {
         mResourceLoader->load();
     }
 
@@ -175,11 +175,11 @@ void AudioMgr::calc() {
         return;
     }
 
-    if (mPlayer) {
+    if (mPlayer != nullptr) {
         mPlayer->calc();
     }
 
-    if (mResetter) {
+    if (mResetter != nullptr) {
         mResetter->calc();
     }
 
@@ -201,11 +201,11 @@ void AudioMgr::initHostIO(hostio::Node* pNode) {}
  * @param pContext Host IO context.
  */
 void AudioMgr::genMessage(hostio::Context* pContext) {
-    if (mAudioSystem) {
+    if (mAudioSystem != nullptr) {
         DynamicCast<AudioSystemNin>(mAudioSystem);
     }
 
-    if (mPlayer) {
+    if (mPlayer != nullptr) {
         DynamicCast<AudioPlayerNin>(mPlayer);
     }
 

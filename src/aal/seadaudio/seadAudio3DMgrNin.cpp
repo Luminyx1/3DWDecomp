@@ -32,12 +32,12 @@ Audio3DMgrNin::~Audio3DMgrNin() {
         mWorkBuffer = nullptr;
     }
 
-    if (mDefaultListener) {
+    if (mDefaultListener != nullptr) {
         delete mDefaultListener;
         mDefaultListener = nullptr;
     }
 
-    if (mSound3DManager) {
+    if (mSound3DManager != nullptr) {
         delete mSound3DManager;
         mSound3DManager = nullptr;
     }
@@ -54,7 +54,7 @@ void Audio3DMgrNin::initialize(AudioMgr& rMgr, Heap* pHeap) {
     size_t size = mSound3DManager->GetRequiredMemSize(archive);
     mWorkBuffer = new (pHeap, 0x20) u8[size];
 
-    if (mSound3DManager->Initialize(archive, mWorkBuffer, size) && mDefaultListener) {
+    if (mSound3DManager->Initialize(archive, mWorkBuffer, size) && mDefaultListener != nullptr) {
         appendListener(*mDefaultListener);
     }
 }
@@ -256,7 +256,7 @@ void Audio3DMgrNin::removeListenerGroup(Audio3DListenerGroupNin& rGroup) {
  * @param pContext Host IO context.
  */
 void Audio3DMgrNin::genMessage(hostio::Context* pContext) {
-    if (!mSound3DManager) {
+    if (mSound3DManager == nullptr) {
         return;
     }
 

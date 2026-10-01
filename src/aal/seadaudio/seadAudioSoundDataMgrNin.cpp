@@ -138,7 +138,7 @@ AudioSoundDataMgrNin::~AudioSoundDataMgrNin() {
         mIsSetup = false;
     }
 
-    if (mSoundArchive) {
+    if (mSoundArchive != nullptr) {
         delete mSoundArchive;
         mSoundArchive = nullptr;
     }
@@ -168,13 +168,13 @@ void AudioSoundDataMgrNin::connectSoundHeap(AudioSoundHeapNin* pHeap) {
 
     mDefaultSoundHeap = pHeap;
 
-    if (!pHeap) {
+    if (pHeap == nullptr) {
         return;
     }
 
     const nn::atk::SoundArchive* archive = getSoundArchive();
 
-    if (archive) {
+    if (archive != nullptr) {
         mDefaultSoundHeap->setSoundDataManagement(*this, const_cast<nn::atk::SoundArchive&>(*archive));
     }
 }
@@ -196,7 +196,7 @@ const nn::atk::SoundArchive* AudioSoundDataMgrNin::getSoundArchive() const {
         return nullptr;
     }
 
-    if (!mSoundArchive) {
+    if (mSoundArchive == nullptr) {
         return nullptr;
     }
 
@@ -228,7 +228,7 @@ bool AudioSoundDataMgrNin::mountSoundArchiveFromFs(const SafeString& rPath, Heap
     mSoundArchive = archive;
     archive->setLoadLabelString(loadLabelString);
 
-    if (mContentRootPath) {
+    if (mContentRootPath != nullptr) {
         archive->setContentRootPath(mContentRootPath);
     }
 
@@ -283,7 +283,7 @@ void AudioSoundDataMgrNin::unmountSoundArchive() {
         mIsSetup = false;
     }
 
-    if (mSoundArchive) {
+    if (mSoundArchive != nullptr) {
         delete mSoundArchive;
     }
 
@@ -325,9 +325,9 @@ bool AudioSoundDataMgrNin::tryGetDefaultSoundHeapAndCheckReady_(AudioSoundHeapNi
         return false;
     }
 
-    if (!*ppHeap) {
+    if (*ppHeap == nullptr) {
         *ppHeap = mDefaultSoundHeap;
-        if (!*ppHeap) {
+        if (*ppHeap == nullptr) {
             return false;
         }
     }

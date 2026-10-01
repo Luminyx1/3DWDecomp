@@ -31,7 +31,7 @@ void AudioResourceLoaderNin::initialize(AudioMgr& rMgr) {
     }
 
     AudioPlayerNin* player = DynamicCast<AudioPlayerNin>(mAudioMgr->getPlayer());
-    Heap* heap = mHeap ? mHeap : HeapMgr::instance()->getCurrentHeap();
+    Heap* heap = (mHeap != nullptr) ? mHeap : HeapMgr::instance()->getCurrentHeap();
 
     switch (mArchiveType) {
     case cArchiveType_Fs:
@@ -61,7 +61,7 @@ void AudioResourceLoaderNin::load() {
     }
 
     AudioPlayerNin* player = DynamicCast<AudioPlayerNin>(mAudioMgr->getPlayer());
-    Heap* heap = mHeap ? mHeap : HeapMgr::instance()->getCurrentHeap();
+    Heap* heap = (mHeap != nullptr) ? mHeap : HeapMgr::instance()->getCurrentHeap();
 
     if (mStreamBufferSizeMergin != 0) {
         player->setupDataManagement(mStreamBufferSizeMergin, mStreamReadCacheSize, mUserParamSizePerSound, heap,
