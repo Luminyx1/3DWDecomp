@@ -22,7 +22,7 @@ inline nn::oe::PerformanceMode getPerformanceMode(const ApplicationMessageReceiv
 }
 
 inline const ApplicationMessageReceiver* getApplicationMessageReceiver(const LiveActor* pActor) {
-    const GraphicsSystemInfo* info = static_cast<GraphicsSystemInfo*>(pActor->getSceneInfo()->_78);
+    const GraphicsSystemInfo* info = pActor->getSceneInfo()->graphicsSystemInfo;
     return *reinterpret_cast<ApplicationMessageReceiver* const*>(&info->_d70[0x1040 - 0xd70]);
 }
 

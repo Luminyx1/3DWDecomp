@@ -10,7 +10,7 @@ namespace alSystemKitFunction {
  * @param rViewport The viewport.
  */
 void applyViewportTop(const sead::Viewport& rViewport) {
-    rViewport.apply(al::GameFrameworkNx::sInstance->mDrawContext,
+    rViewport.apply(al::GameFrameworkNx::getDrawContext(),
                     *alProjectInterface::getSystemKit()->getFrameBufferTop());
 }
 
@@ -19,7 +19,7 @@ void applyViewportTop(const sead::Viewport& rViewport) {
  * @param rViewport The viewport.
  */
 void applyViewportBtm(const sead::Viewport& rViewport) {
-    rViewport.apply(al::GameFrameworkNx::sInstance->mDrawContext,
+    rViewport.apply(al::GameFrameworkNx::getDrawContext(),
                     *alProjectInterface::getSystemKit()->getFrameBufferBtm());
 }
 }  // namespace alSystemKitFunction
