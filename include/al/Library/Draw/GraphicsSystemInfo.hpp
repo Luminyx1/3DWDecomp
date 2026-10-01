@@ -58,6 +58,8 @@ namespace al {
         ShaderCubeMapKeeper* getShaderCubeMapKeeper() const;
         void activateDirLitColorTex() const;
         void registPartsGraphics(PartsGraphics* pPartsGraphics);
+        bool tryDirectionalLightInfo(sead::Vector3f* pDir, const char* pName,
+                                     f32* pIntensity) const;
         const sead::PtrArray<UniformBlock>* getViewIndexedUboArray(const char* pName) const;
 
         CubeMapDirector* getCubeMapDirector() const { return mCubeMapDirector; }
