@@ -6,6 +6,8 @@
 
 #include <basis/seadTypes.h>
 
+#include "Project/Effect/Effect.hpp"
+
 namespace agl {
 class DrawContext;
 class TextureData;
@@ -32,17 +34,10 @@ class IUseLayout;
 class ModelKeeper;
 class MtxPtrHolder;
 
-enum class EffectPrefixType : s32 {
-    Water = 0,
-    RouteDokan = 1,
-    Wet = 2,
-    Puddle = 3,
-};
-
 class EffectKeeper {
 public:
     EffectKeeper(const EffectSystemInfo* pSystemInfo, const char* pName,
-                 const sead::Vector3f* pTrans, const sead::Vector3f* pRotate,
+                 const sead::Vector3f* pTrans, const sead::Vector3f* pScale,
                  const sead::Matrix34f* pMtx);
 
     void update();
