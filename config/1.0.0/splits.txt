@@ -5684,9 +5684,9 @@ src/al/Library/Draw/ViewRendererCreator.cpp: done
 src/al/Library/Play/Draw/RenderVariables.cpp:
     .text   start:0x0098C860 end:0x0098CF30
 src/al/Project/Effect/Effect.cpp:
-    .text   start:0x0098CF30 end:0x0098F844
+    .text   start:0x0098CF30 end:0x0098FA0C
 src/al/Project/Effect/EffectCameraHolder.cpp:
-    .text   start:0x0098F850 end:0x0098FE68
+    .text   start:0x0098FA10 end:0x0098FE68
 src/al/Project/Effect/EffectEmitter.cpp:
     .text   start:0x0098FE70 end:0x00990598
 src/al/Library/Effect/EffectKeeper.cpp:
@@ -5696,19 +5696,23 @@ src/al/Library/Effect/EffectShaderHolder.cpp:
 src/al/Library/Effect/EffectSystem.cpp:
     .text   start:0x009952C0 end:0x009966B4
 src/al/Project/Effect/EffectHeap.cpp:
-    .text   start:0x009966C0 end:0x00997D48
-src/al/Project/Effect/EffectInfo.cpp:
-    .text   start:0x00997D50 end:0x00997EF4
+    .text   start:0x009966C0 end:0x00996894
+src/al/Project/Effect/EffectDataBase.cpp:
+    .text   start:0x009968A0 end:0x00997E48
+src/al/Project/Effect/EffectEnvParam.cpp:
+    .text   start:0x00997E50 end:0x00997EC0
 src/al/Project/Effect/EffectGroupDrawer.cpp:
-    .text   start:0x00997F00 end:0x009993A4
-src/al/Project/Effect/EffectLightDirector.cpp:
-    .text   start:0x009993B0 end:0x0099A7B4
+    .text   start:0x00997EC0 end:0x00998404
+src/al/Project/Effect/EffectLayoutDrawer.cpp:
+    .text   start:0x00998410 end:0x00998644
+src/al/Library/Effect/EffectShaderHolderNew.cpp:
+    .text   start:0x00998650 end:0x0099A7B4
 src/al/Project/Effect/EffectUtil.cpp:
-    .text   start:0x0099A7C0 end:0x0099A950
+    .text   start:0x0099A7C0 end:0x0099A938
 src/al/Library/Effect/EffectSystemInfo.cpp:
-    .text   start:0x0099A950 end:0x0099B310
+    .text   start:0x0099A940 end:0x0099B2E4
 src/al/Library/Effect/EmitterSetResourceInfoHolder.cpp:
-    .text   start:0x0099B310 end:0x0099B9EC
+    .text   start:0x0099B2F0 end:0x0099B9EC
 src/al/Library/Effect/PtclSystem.cpp:
     .text   start:0x0099B9F0 end:0x0099CBC4
 src/al/Project/Framework/MultiCoreQueueThread.cpp: done
