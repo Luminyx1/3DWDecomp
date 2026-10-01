@@ -59376,9 +59376,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710098EEA0			FALSE	_ZNK2al6Effect16isLoopOrInfinityEv	al::Effect::isLoopOrInfinity() const	
 0x710098EF00			FALSE	_ZNK2al6Effect15isEmitterActiveEv	al::Effect::isEmitterActive() const	
 0x710098EF70			FALSE	_ZNK2al6Effect20isEmitterActiveFullyEv	al::Effect::isEmitterActiveFully() const	
-0x710098EFE0			FALSE	sub_710098EFE0	sub_710098EFE0	
-0x710098F230			FALSE	sub_710098F230	sub_710098F230	
-0x710098F400			FALSE	sub_710098F400	sub_710098F400	
+0x710098EFE0			FALSE	_ZN2al12_GLOBAL__N_113createEmitterEPNS_13EffectEmitterEPKNS_14EffectEmitInfoEPKN4sead7Vector3IfEESA_NS_11JointMtxPtrEPNS_18EffectCameraHolderEmb	_ZN2al12_GLOBAL__N_113createEmitterEPNS_13EffectEmitterEPKNS_14EffectEmitInfoEPKN4sead7Vector3IfEESA_NS_11JointMtxPtrEPNS_18EffectCameraHolderEmb	
+0x710098F230			FALSE	_ZN2al12_GLOBAL__N_116calcEmitterTransEPN4sead7Vector3IfEEPKNS_14EffectEmitInfoEPKS3_NS_11JointMtxPtrEPNS_18EffectCameraHolderEb	_ZN2al12_GLOBAL__N_116calcEmitterTransEPN4sead7Vector3IfEEPKNS_14EffectEmitInfoEPKS3_NS_11JointMtxPtrEPNS_18EffectCameraHolderEb	
+0x710098F400			FALSE	_ZN2al12_GLOBAL__N_114calcEmitterMtxEPN4sead8Matrix34IfEEPKNS_14EffectEmitInfoEPKNS1_7Vector3IfEENS_11JointMtxPtrEPNS_18EffectCameraHolderEb	_ZN2al12_GLOBAL__N_114calcEmitterMtxEPN4sead8Matrix34IfEEPKNS_14EffectEmitInfoEPKNS1_7Vector3IfEENS_11JointMtxPtrEPNS_18EffectCameraHolderEb	
 0x710098F850			FALSE	_ZN2al16EffectPrefixType5text_Ei	al::EffectPrefixType::text_(int)	object/folder from OdysseyDecomp file list
 0x710098FA10		EffectCameraHolder.o	FALSE	_ZN2al18EffectCameraHolderC2Ev	al::EffectCameraHolder::EffectCameraHolder()	part of EffectCameraHolder.o (OdysseyDecomp)
 0x710098FA20			FALSE	_ZN2al18EffectCameraHolder18setSceneCameraInfoEPNS_15SceneCameraInfoE	al::EffectCameraHolder::setSceneCameraInfo(al::SceneCameraInfo*)	
@@ -59391,7 +59391,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710098FBA0			FALSE	_ZNK2al18EffectCameraHolder19tryMakeBillboardMtxEPN4sead8Matrix34IfEERKNS1_7Vector3IfEE	al::EffectCameraHolder::tryMakeBillboardMtx(sead::Matrix34<float>*, sead::Vector3<float> const&) const	
 0x710098FC90			FALSE	_ZNK2al18EffectCameraHolder20tryMakeYBillboardMtxEPN4sead8Matrix34IfEERKNS1_7Vector3IfEE	al::EffectCameraHolder::tryMakeYBillboardMtx(sead::Matrix34<float>*, sead::Vector3<float> const&) const	
 0x710098FD80			FALSE	_ZNK2al18EffectCameraHolder21tryMakeCameraFrontMtxEPN4sead8Matrix34IfEE	al::EffectCameraHolder::tryMakeCameraFrontMtx(sead::Matrix34<float>*) const	
-0x710098FE60			FALSE	sub_710098FE60	sub_710098FE60	
+0x710098FE60			FALSE	_ZNK2al12_GLOBAL__N_116EffectCameraUser18getSceneCameraInfoEv	_ZNK2al12_GLOBAL__N_116EffectCameraUser18getSceneCameraInfoEv	
 0x710098FE70		EffectEmitter.o	FALSE	_ZN2al13EffectEmitterC2EPKNS_16EffectSystemInfoEPNS_18EffectResourceInfoEi	al::EffectEmitter::EffectEmitter(al::EffectSystemInfo const*, al::EffectResourceInfo*, int)	
 0x710098FFA0			FALSE	_ZN2al13EffectEmitter10initMtxPtrENS_11JointMtxPtrE	al::EffectEmitter::initMtxPtr(al::JointMtxPtr)	
 0x710098FFB0			FALSE	_ZN2al13EffectEmitter12updateMtxPtrENS_11JointMtxPtrE	al::EffectEmitter::updateMtxPtr(al::JointMtxPtr)	
@@ -59486,7 +59486,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100993DE0			FALSE	_ZNK2al18EffectShaderHolder14renderDeferredERN2nn3vfx17RenderStateSetArgE	al::EffectShaderHolder::renderDeferred(nn::vfx::RenderStateSetArg&) const	
 0x7100993E90			FALSE	_ZN2al18EffectShaderHolder11updateLightEv	al::EffectShaderHolder::updateLight()	
 0x7100993EA0			FALSE	_ZN2al18EffectShaderHolder40CustomShaderRenderStateSetCallbackSharedERN2nn3vfx17RenderStateSetArgEm	al::EffectShaderHolder::CustomShaderRenderStateSetCallbackShared(nn::vfx::RenderStateSetArg&, unsigned long)	
-0x7100993FE0			FALSE	sub_7100993FE0	sub_7100993FE0	
+0x7100993FE0			FALSE	_ZN12_GLOBAL__N_123bindCustomShaderTextureERN2nn3vfx17RenderStateSetArgENS1_23CustomShaderTextureTypeEPKN3agl14TextureSamplerE	_ZN12_GLOBAL__N_123bindCustomShaderTextureERN2nn3vfx17RenderStateSetArgENS1_23CustomShaderTextureTypeEPKN3agl14TextureSamplerE	
 0x7100994150			FALSE	_ZN2al18EffectShaderHolder40CustomShaderRenderStateSetCallbackCommonERN2nn3vfx17RenderStateSetArgE	al::EffectShaderHolder::CustomShaderRenderStateSetCallbackCommon(nn::vfx::RenderStateSetArg&)	
 0x7100994350			FALSE	_ZN2al18EffectShaderHolder27StandardRenderStateCallbackERN2nn3vfx17RenderStateSetArgE	al::EffectShaderHolder::StandardRenderStateCallback(nn::vfx::RenderStateSetArg&)	
 0x7100994380			FALSE	_ZN2al18EffectShaderHolder43CustomShaderRenderStateSetCallbackNormalMapERN2nn3vfx17RenderStateSetArgE	al::EffectShaderHolder::CustomShaderRenderStateSetCallbackNormalMap(nn::vfx::RenderStateSetArg&)	
@@ -59500,7 +59500,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100994A70			FALSE	_ZN2al20GetAreaLoopRepeatNumEi	al::GetAreaLoopRepeatNum(int)	
 0x7100994A80			FALSE	_ZN2al18EffectShaderHolder28AreaLoopDrawOverrideCallbackERN2nn3vfx14EmitterDrawArgE	al::EffectShaderHolder::AreaLoopDrawOverrideCallback(nn::vfx::EmitterDrawArg&)	
 0x7100994B60			FALSE	_ZN2al18EffectShaderHolder30AreaLoopRenderStateSetCallbackERN2nn3vfx17RenderStateSetArgE	al::EffectShaderHolder::AreaLoopRenderStateSetCallback(nn::vfx::RenderStateSetArg&)	
-0x7100994FE0			FALSE	sub_7100994FE0	sub_7100994FE0	
+0x7100994FE0			FALSE	_ZN12_GLOBAL__N_125requestParticlePointLightEPN2al18PrePassLightKeeperEPKN2nn3vfx7EmitterERKN4sead7Color4fEhhf	_ZN12_GLOBAL__N_125requestParticlePointLightEPN2al18PrePassLightKeeperEPKN2nn3vfx7EmitterERKN4sead7Color4fEhhf	
 0x71009952C0		EffectSystem.o	FALSE	_ZN2al12EffectSystem12createSystemEPN3agl11DrawContextEPN4sead4HeapE	al::EffectSystem::createSystem(agl::DrawContext*, sead::Heap*)	
 0x7100995420			FALSE	_ZN2al12EffectSystem28createSystemWithPatchResouceEPN3agl11DrawContextEPN4sead4HeapE	al::EffectSystem::createSystemWithPatchResouce(agl::DrawContext*, sead::Heap*)	
 0x7100995590			FALSE	_ZN2al12EffectSystem18loadEffectResourceEPS0_	al::EffectSystem::loadEffectResource(al::EffectSystem*)	
@@ -59513,10 +59513,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100995960			FALSE	_ZN2al12EffectSystem14setDrawContextEPN3agl11DrawContextE	al::EffectSystem::setDrawContext(agl::DrawContext*)	
 0x7100995970			FALSE	_ZN2al12EffectSystem15addResourcePathEPKc	al::EffectSystem::addResourcePath(char const*)	
 0x7100995990			FALSE	_ZN2al12EffectSystem4initEv	al::EffectSystem::init()	
-0x7100995B50			FALSE	sub_7100995B50	sub_7100995B50	
-0x7100995BA0			FALSE	sub_7100995BA0	sub_7100995BA0	
-0x7100995BF0			FALSE	sub_7100995BF0	sub_7100995BF0	
-0x7100995C10			FALSE	sub_7100995C10	sub_7100995C10	
+0x7100995B50			FALSE	_ZZN2al12EffectSystem4initEvEN3$_08__invokeEPN2nn3gfx14DescriptorSlotERKNS3_12TTextureViewINS3_12ApiVariationINS3_7ApiTypeILi4EEENS3_10ApiVersionILi8EEEEEEEPv	_ZZN2al12EffectSystem4initEvEN3$_08__invokeEPN2nn3gfx14DescriptorSlotERKNS3_12TTextureViewINS3_12ApiVariationINS3_7ApiTypeILi4EEENS3_10ApiVersionILi8EEEEEEEPv	
+0x7100995BA0			FALSE	_ZZN2al12EffectSystem4initEvEN3$_18__invokeEPN2nn3gfx14DescriptorSlotERKNS3_8TSamplerINS3_12ApiVariationINS3_7ApiTypeILi4EEENS3_10ApiVersionILi8EEEEEEEPv	_ZZN2al12EffectSystem4initEvEN3$_18__invokeEPN2nn3gfx14DescriptorSlotERKNS3_8TSamplerINS3_12ApiVariationINS3_7ApiTypeILi4EEENS3_10ApiVersionILi8EEEEEEEPv	
+0x7100995BF0			FALSE	_ZZN2al12EffectSystem4initEvEN3$_28__invokeEPN2nn3gfx14DescriptorSlotERKNS3_12TTextureViewINS3_12ApiVariationINS3_7ApiTypeILi4EEENS3_10ApiVersionILi8EEEEEEEPv	_ZZN2al12EffectSystem4initEvEN3$_28__invokeEPN2nn3gfx14DescriptorSlotERKNS3_12TTextureViewINS3_12ApiVariationINS3_7ApiTypeILi4EEENS3_10ApiVersionILi8EEEEEEEPv	
+0x7100995C10			FALSE	_ZZN2al12EffectSystem4initEvEN3$_38__invokeEPN2nn3gfx14DescriptorSlotERKNS3_8TSamplerINS3_12ApiVariationINS3_7ApiTypeILi4EEENS3_10ApiVersionILi8EEEEEEEPv	_ZZN2al12EffectSystem4initEvEN3$_38__invokeEPN2nn3gfx14DescriptorSlotERKNS3_8TSamplerINS3_12ApiVariationINS3_7ApiTypeILi4EEENS3_10ApiVersionILi8EEEEEEEPv	
 0x7100995C30			FALSE	_ZN2al12EffectSystem14loadDbResourceEPN4sead4HeapE	al::EffectSystem::loadDbResource(sead::Heap*)	
 0x7100995D90			FALSE	_ZN2nn3vfx6ConfigD2Ev	nn::vfx::Config::~Config()	
 0x7100995DA0			FALSE	_ZN2al12EffectSystem9initSceneEv	al::EffectSystem::initScene()	
@@ -59552,10 +59552,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100996760			FALSE	_ZN2al10EffectHeapC1EPKcPvj	al::EffectHeap::EffectHeap(char const*, void*, unsigned int)	
 0x71009967E0			FALSE	_ZN2al10EffectHeap8tryAllocEmi	al::EffectHeap::tryAlloc(unsigned long, int)	
 0x7100996850			FALSE	_ZN2al10EffectHeapD0Ev	al::EffectHeap::~EffectHeap()	
-0x7100996880			FALSE	_ZN2al22EffectDrawCategoryInfoC2Ev	al::EffectDrawCategoryInfo::EffectDrawCategoryInfo()	
-0x71009968A0		EffectDataBase.o	FALSE	_ZN2al14EffectDataBaseC1EPKc	al::EffectDataBase::EffectDataBase(char const*)	
+0x7100996880		EffectDataBase.o	FALSE	_ZN2al22EffectDrawCategoryInfoC2Ev	al::EffectDrawCategoryInfo::EffectDrawCategoryInfo()	
+0x71009968A0			FALSE	_ZN2al14EffectDataBaseC1EPKc	al::EffectDataBase::EffectDataBase(char const*)	
 0x7100996C80			FALSE	_ZN24alEffectDataBaseFunction20createEffectUserInfoEPKN2al14EffectDataBaseEPKNS0_8ResourceERKN4sead14SafeStringBaseIcEE	alEffectDataBaseFunction::createEffectUserInfo(al::EffectDataBase const*, al::Resource const*, sead::SafeStringBase<char> const&)	
-0x7100997C00			FALSE	_ZN2al14EffectEmitInfoC2Ev	al::EffectEmitInfo::EffectEmitInfo()	
+0x7100997C00		EffectInfo.o	FALSE	_ZN2al14EffectEmitInfoC2Ev	al::EffectEmitInfo::EffectEmitInfo()	
 0x7100997C60			FALSE	_ZN2al16ActionEffectDataC2Ev	al::ActionEffectData::ActionEffectData()	
 0x7100997C80			FALSE	_ZN2al21EffectHitReactionDataC2Ev	al::EffectHitReactionData::EffectHitReactionData()	
 0x7100997C90			FALSE	_ZN2al21EffectHitReactionInfoC2Ev	al::EffectHitReactionInfo::EffectHitReactionInfo()	
@@ -59603,7 +59603,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100999FF0			FALSE	_ZN2al21EffectShaderHolderNew26customActionRipplePerticleERN2nn3vfx24ParticleCalculateArgImplE	al::EffectShaderHolderNew::customActionRipplePerticle(nn::vfx::ParticleCalculateArgImpl&)	
 0x710099A000			FALSE	_ZN2al21EffectShaderHolderNew22customActionGenerateUvERN2nn3vfx24ParticleCalculateArgImplE	al::EffectShaderHolderNew::customActionGenerateUv(nn::vfx::ParticleCalculateArgImpl&)	
 0x710099A0C0			FALSE	_ZN2al21EffectShaderHolderNew14customFieldCpuEPN2nn4util4neon12Vector3fTypeES5_PfS6_PNS1_3vfx7EmitterEPKNS7_6detail16ParticlePropertyEPKNSA_14ResFieldCustomEi	al::EffectShaderHolderNew::customFieldCpu(nn::util::neon::Vector3fType*, nn::util::neon::Vector3fType*, float*, float*, nn::vfx::Emitter*, nn::vfx::detail::ParticleProperty const*, nn::vfx::detail::ResFieldCustom const*, int)	
-0x710099A660			FALSE	sub_710099A660	sub_710099A660	
+0x710099A660			FALSE	_ZN12_GLOBAL__N_123bindCustomShaderTextureEPN2nn3vfx6SystemEPN3agl11DrawContextENS1_23CustomShaderTextureTypeEPKNS4_14TextureSamplerE	_ZN12_GLOBAL__N_123bindCustomShaderTextureEPN2nn3vfx6SystemEPN3agl11DrawContextENS1_23CustomShaderTextureTypeEPKNS4_14TextureSamplerE	
 0x710099A7C0	Project/Effect	EffectUtil.o	FALSE	_ZN2al12calcAnim8KeyEPN4sead7Color4fERKN2nn3vfx6detail19ResAnim8KeyParamSetEff	al::calcAnim8Key(sead::Color4f*, nn::vfx::detail::ResAnim8KeyParamSet const&, float, float)	
 0x710099A940	Library/Effect	EffectSystemInfo.o	FALSE	_ZN2al16EffectSystemInfoC2Ev	al::EffectSystemInfo::EffectSystemInfo()	
 0x710099A950			FALSE	_ZNK2al16EffectSystemInfo15getEffectSystemEv	al::EffectSystemInfo::getEffectSystem() const	object/folder from OdysseyDecomp file list

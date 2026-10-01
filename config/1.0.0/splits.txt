@@ -5685,9 +5685,9 @@ src/al/Library/Play/Draw/RenderVariables.cpp:
     .text   start:0x0098C860 end:0x0098CF30
 src/al/Project/Effect/Effect.cpp:
     .text   start:0x0098CF30 end:0x0098FA0C
-src/al/Project/Effect/EffectCameraHolder.cpp:
+src/al/Project/Effect/EffectCameraHolder.cpp: done
     .text   start:0x0098FA10 end:0x0098FE68
-src/al/Project/Effect/EffectEmitter.cpp:
+src/al/Project/Effect/EffectEmitter.cpp: done
     .text   start:0x0098FE70 end:0x00990598
 src/al/Library/Effect/EffectKeeper.cpp:
     .text   start:0x009905A0 end:0x00992BC0
@@ -5695,10 +5695,12 @@ src/al/Library/Effect/EffectShaderHolder.cpp:
     .text   start:0x00992BC0 end:0x009952BC
 src/al/Library/Effect/EffectSystem.cpp:
     .text   start:0x009952C0 end:0x009966B4
-src/al/Project/Effect/EffectHeap.cpp:
-    .text   start:0x009966C0 end:0x00996894
+src/al/Project/Effect/EffectHeap.cpp: done
+    .text   start:0x009966C0 end:0x00996874
 src/al/Project/Effect/EffectDataBase.cpp:
-    .text   start:0x009968A0 end:0x00997E48
+    .text   start:0x00996880 end:0x00997BFC
+src/al/Project/Effect/EffectInfo.cpp: done
+    .text   start:0x00997C00 end:0x00997E48
 src/al/Project/Effect/EffectEnvParam.cpp:
     .text   start:0x00997E50 end:0x00997EC0
 src/al/Project/Effect/EffectGroupDrawer.cpp:
@@ -5709,11 +5711,11 @@ src/al/Library/Effect/EffectShaderHolderNew.cpp:
     .text   start:0x00998650 end:0x0099A7B4
 src/al/Project/Effect/EffectUtil.cpp:
     .text   start:0x0099A7C0 end:0x0099A938
-src/al/Library/Effect/EffectSystemInfo.cpp:
+src/al/Library/Effect/EffectSystemInfo.cpp: done
     .text   start:0x0099A940 end:0x0099B2E4
 src/al/Library/Effect/EmitterSetResourceInfoHolder.cpp:
     .text   start:0x0099B2F0 end:0x0099B9EC
-src/al/Library/Effect/PtclSystem.cpp:
+src/al/Library/Effect/PtclSystem.cpp: done
     .text   start:0x0099B9F0 end:0x0099CBC4
 src/al/Project/Framework/MultiCoreQueueThread.cpp: done
     .text   start:0x0099CBD0 end:0x0099CF24
