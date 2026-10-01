@@ -33,6 +33,8 @@ public:
 
     f32 update(const ClippingJudge* pJudge);
 
+    void setOn(bool isOn) { mIsOn = isOn; }
+
     LiveActor* mActor;
     SphereInfo* mSphereInfos;
     s32 mSphereInfoNum;
