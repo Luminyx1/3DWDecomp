@@ -27,9 +27,9 @@ namespace al {
  */
 RailMoveMovement::RailMoveMovement(LiveActor* pHost, const ActorInitInfo& rInfo)
     : HostStateBase("レール移動挙動", pHost) {
-    tryGetArg(&mSpeed, *rInfo.mPlacementInfo, "Speed");
-    tryGetArg(reinterpret_cast<s32*>(&mMoveType), *rInfo.mPlacementInfo, "MoveType");
-    tryGetArg(&mWaitTime, *rInfo.mPlacementInfo, "WaitTime");
+    tryGetArg(&mSpeed, rInfo.getPlacementInfo(), "Speed");
+    tryGetArg(reinterpret_cast<s32*>(&mMoveType), rInfo.getPlacementInfo(), "MoveType");
+    tryGetArg(&mWaitTime, rInfo.getPlacementInfo(), "WaitTime");
 
     if (static_cast<u32>(mMoveType) >= 4) {
         mMoveType = MoveType::Loop;
