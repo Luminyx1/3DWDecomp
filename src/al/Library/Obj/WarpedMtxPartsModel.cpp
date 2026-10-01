@@ -172,19 +172,19 @@ void WarpedMtxPartsModel::calcAnim() {
     bool isUpdate = false;
 
     if (mModelKeeper != nullptr) {
-        isUpdate = mModelKeeper->_1a;
+        isUpdate = mModelKeeper->isNeedSetBaseMtxAndCalcAnim();
 
         if (isUpdate) {
             setBaseMtxAndCalcAnim(this, mWarpedMtx, sead::Vector3f::ones);
         }
 
-        mModelKeeper->_1a = false;
+        mModelKeeper->setNeedSetBaseMtxAndCalcAnim(false);
     }
 
     LiveActor::calcAnim();
 
     if (mModelKeeper != nullptr) {
-        mModelKeeper->_1a = isUpdate;
+        mModelKeeper->setNeedSetBaseMtxAndCalcAnim(isUpdate);
     }
 }
 

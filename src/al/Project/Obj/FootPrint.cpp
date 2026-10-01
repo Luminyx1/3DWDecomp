@@ -125,7 +125,7 @@ void FootPrint::setAnimationByMetamorphosis(const char* pAnimName) {
  */
 void FootPrint::setFollowCollisionParts(const CollisionParts* pParts) {
     mConnector->setBaseQuatTrans(getQuat(this), getTrans(this));
-    mConnector->init(&pParts->mBaseMtx, pParts->mBaseInvMtx, pParts);
+    mConnector->init(&pParts->getBaseMtx(), pParts->getBaseInvMtx(), pParts);
     mCollisionParts = pParts;
 }
 

@@ -16,10 +16,10 @@ SilhouetteModel::SilhouetteModel(LiveActor* pParent, const ActorInitInfo& rInfo,
                                  const char* pExecutorDrawName)
     : LiveActor("シルエットモデル"), mParent(pParent) {
     initActorSceneInfo(this, rInfo);
-    initPoseKeeper(mParent->mActorPoseKeeper);
+    initPoseKeeper(mParent->getPoseKeeper());
     ModelKeeper* modelKeeper = new ModelKeeper();
-    alModelCafe* model = alModelCafe::createFromOtherModel(pParent->mModelKeeper->getModelCafe());
-    modelKeeper->setModel(pParent->mModelKeeper->mModelName, model);
+    alModelCafe* model = alModelCafe::createFromOtherModel(pParent->getModelKeeper()->getModelCafe());
+    modelKeeper->setModel(pParent->getModelKeeper()->getModelName(), model);
     initModelKeeper(modelKeeper);
     initActorClipping(this, rInfo);
     invalidateClipping(this);

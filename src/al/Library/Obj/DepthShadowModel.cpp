@@ -15,11 +15,11 @@ DepthShadowModel::DepthShadowModel(LiveActor* pParent, const ActorInitInfo& rInf
                                    const char* pExecutorDrawName)
     : LiveActor("デプスシャドウモデル"), mParent(pParent) {
     initActorSceneInfo(this, rInfo);
-    initPoseKeeper(mParent->mActorPoseKeeper);
+    initPoseKeeper(mParent->getPoseKeeper());
     ModelKeeper* modelKeeper = new ModelKeeper();
-    alModelCafe* model = alModelCafe::createFromOtherModel(pParent->mModelKeeper->getModelCafe());
-    modelKeeper->_18 = pParent->mModelKeeper->_18;
-    modelKeeper->setModel(pParent->mModelKeeper->mModelName, model);
+    alModelCafe* model = alModelCafe::createFromOtherModel(pParent->getModelKeeper()->getModelCafe());
+    modelKeeper->setFixedModel(pParent->getModelKeeper()->isFixedModel());
+    modelKeeper->setModel(pParent->getModelKeeper()->getModelName(), model);
     initModelKeeper(modelKeeper);
     initExecutorDraw(this, rInfo, pExecutorDrawName);
     makeActorAppeared();
