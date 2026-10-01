@@ -16,7 +16,7 @@ namespace {
 template <typename T>
 al::PrePassLight<T>* tryGetPrePassLight(const al::LiveActor* pActor, const char* pName) {
     volatile s32 lightType = T::cLightType;
-    al::PrePassLightBase* light = pActor->mLightKeeper->getLightBase(pName);
+    al::PrePassLightBase* light = pActor->getActorPrePassLightKeeper()->getLightBase(pName);
 
     if (light && light->getLightType() == lightType) {
         return static_cast<al::PrePassLight<T>*>(light);
@@ -52,7 +52,7 @@ namespace al {
  * @return Whether the light is registered to the light keeper.
  */
 bool isActivePrePassLight(const LiveActor* pActor, const char* pName) {
-    PrePassLightBase* light = pActor->mLightKeeper->getLightBase(pName);
+    PrePassLightBase* light = pActor->getActorPrePassLightKeeper()->getLightBase(pName);
 
     if (light == nullptr) {
         return false;
@@ -68,7 +68,7 @@ bool isActivePrePassLight(const LiveActor* pActor, const char* pName) {
  * @return Whether the light exists.
  */
 bool isExistPrePassLight(const LiveActor* pActor, const char* pName) {
-    ActorPrePassLightKeeper* keeper = pActor->mLightKeeper;
+    ActorPrePassLightKeeper* keeper = pActor->getActorPrePassLightKeeper();
 
     if (keeper == nullptr) {
         return false;
@@ -84,7 +84,7 @@ bool isExistPrePassLight(const LiveActor* pActor, const char* pName) {
  * @return The light, or nullptr.
  */
 PrePassLightBase* getPrePassLineLight(const LiveActor* pActor, const char* pName) {
-    ActorPrePassLightKeeper* keeper = pActor->mLightKeeper;
+    ActorPrePassLightKeeper* keeper = pActor->getActorPrePassLightKeeper();
 
     if (keeper == nullptr) {
         return nullptr;
@@ -100,7 +100,7 @@ PrePassLightBase* getPrePassLineLight(const LiveActor* pActor, const char* pName
  * @param step Fade step.
  */
 void appearPrePassLight(const LiveActor* pActor, const char* pName, s32 step) {
-    PrePassLightBase* light = pActor->mLightKeeper->getLightBase(pName);
+    PrePassLightBase* light = pActor->getActorPrePassLightKeeper()->getLightBase(pName);
 
     if (light != nullptr) {
         light->requestAppearByUser(step);
@@ -114,7 +114,7 @@ void appearPrePassLight(const LiveActor* pActor, const char* pName, s32 step) {
  * @param step Fade step.
  */
 void killPrePassLight(const LiveActor* pActor, const char* pName, s32 step) {
-    PrePassLightBase* light = pActor->mLightKeeper->getLightBase(pName);
+    PrePassLightBase* light = pActor->getActorPrePassLightKeeper()->getLightBase(pName);
 
     if (light != nullptr) {
         light->requestKillByUser(step);
@@ -127,7 +127,7 @@ void killPrePassLight(const LiveActor* pActor, const char* pName, s32 step) {
  * @param step Fade step.
  */
 void appearPrePassLightAll(const LiveActor* pActor, s32 step) {
-    ActorPrePassLightKeeper* keeper = pActor->mLightKeeper;
+    ActorPrePassLightKeeper* keeper = pActor->getActorPrePassLightKeeper();
 
     if (keeper == nullptr) {
         return;
@@ -146,7 +146,7 @@ void appearPrePassLightAll(const LiveActor* pActor, s32 step) {
  * @param step Fade step.
  */
 void killPrePassLightAll(const LiveActor* pActor, s32 step) {
-    ActorPrePassLightKeeper* keeper = pActor->mLightKeeper;
+    ActorPrePassLightKeeper* keeper = pActor->getActorPrePassLightKeeper();
 
     if (keeper == nullptr) {
         return;
@@ -166,7 +166,7 @@ void killPrePassLightAll(const LiveActor* pActor, s32 step) {
  * @param rOffset Light offset.
  */
 void setPrePassLightOffset(const LiveActor* pActor, const char* pName, const sead::Vector3f& rOffset) {
-    PrePassLightBase* light = pActor->mLightKeeper->getLightBase(pName);
+    PrePassLightBase* light = pActor->getActorPrePassLightKeeper()->getLightBase(pName);
 
     if (light != nullptr) {
         light->mOffset = rOffset;
@@ -180,7 +180,7 @@ void setPrePassLightOffset(const LiveActor* pActor, const char* pName, const sea
  * @param rColor Light color.
  */
 void requestPrePassLightColor(const LiveActor* pActor, const char* pName, const sead::Color4f& rColor) {
-    PrePassLightBase* light = pActor->mLightKeeper->getLightBase(pName);
+    PrePassLightBase* light = pActor->getActorPrePassLightKeeper()->getLightBase(pName);
 
     if (light != nullptr) {
         light->requestUserColor(rColor);
@@ -194,7 +194,7 @@ void requestPrePassLightColor(const LiveActor* pActor, const char* pName, const 
  * @param rate Color scale.
  */
 void requestPrePassLightColor(const LiveActor* pActor, const char* pName, f32 rate) {
-    PrePassLightBase* light = pActor->mLightKeeper->getLightBase(pName);
+    PrePassLightBase* light = pActor->getActorPrePassLightKeeper()->getLightBase(pName);
 
     if (light != nullptr) {
         light->requestUserColor(light->mColor * rate);
@@ -210,8 +210,8 @@ void requestPrePassLightColor(const LiveActor* pActor, const char* pName, f32 ra
  */
 void requestPrePassLightColor(const LiveActor* pActor, const char* pName, const char* pColorName,
                               f32 rate) {
-    sead::Color4f color = pActor->mLightKeeper->findUserColor(pColorName) * rate;
-    PrePassLightBase* light = pActor->mLightKeeper->getLightBase(pName);
+    sead::Color4f color = pActor->getActorPrePassLightKeeper()->findUserColor(pColorName) * rate;
+    PrePassLightBase* light = pActor->getActorPrePassLightKeeper()->getLightBase(pName);
 
     if (light != nullptr) {
         light->requestUserColor(color);
@@ -225,7 +225,7 @@ void requestPrePassLightColor(const LiveActor* pActor, const char* pName, const 
  * @return The user color.
  */
 const sead::Color4f& getPrePassUserColor(const LiveActor* pActor, const char* pName) {
-    return pActor->mLightKeeper->findUserColor(pName);
+    return pActor->getActorPrePassLightKeeper()->findUserColor(pName);
 }
 
 /**
@@ -235,7 +235,7 @@ const sead::Color4f& getPrePassUserColor(const LiveActor* pActor, const char* pN
  * @param isEnable Whether the specular is enabled.
  */
 void setEnablePrePassLightSpecular(const LiveActor* pActor, const char* pName, bool isEnable) {
-    PrePassLightBase* light = pActor->mLightKeeper->getLightBase(pName);
+    PrePassLightBase* light = pActor->getActorPrePassLightKeeper()->getLightBase(pName);
 
     if (light != nullptr) {
         light->mIsEnableSpecular = isEnable;
@@ -474,7 +474,7 @@ void setPrePassSpotLightShadow(const LiveActor* pActor, const char* pName, bool 
  */
 void initPrePassLightMtxConnector(const LiveActor* pActor, const char* pName,
                                   const sead::Matrix34f* pMtx) {
-    PrePassLightBase* light = pActor->mLightKeeper->getLightBase(pName);
+    PrePassLightBase* light = pActor->getActorPrePassLightKeeper()->getLightBase(pName);
 
     if (light != nullptr) {
         attachMtxConnectorToMtxPtr(light->mMtxConnector, pMtx);
@@ -487,8 +487,7 @@ void initPrePassLightMtxConnector(const LiveActor* pActor, const char* pName,
  * @return The irradiance sampler.
  */
 const agl::TextureSampler* getTexIrradianceObj(const LiveActor* pActor) {
-    return static_cast<GraphicsSystemInfo*>(pActor->getSceneInfo()->_78)
-        ->mCubeMapDirector->getIrradianceSampler(1);
+    return pActor->getSceneInfo()->graphicsSystemInfo->getCubeMapDirector()->getIrradianceSampler(1);
 }
 
 /**

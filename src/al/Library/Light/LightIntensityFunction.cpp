@@ -11,6 +11,6 @@ namespace LightIntensityFunction {
      * @return The light intensity director.
      */
     al::LightIntensityDirector* getLightIntensityDirector(const al::LiveActor* pActor) {
-        return static_cast<al::GraphicsSystemInfo*>(pActor->getSceneInfo()->_78)->mLightIntensityDirector;
+        return pActor->getSceneInfo()->graphicsSystemInfo->getLightIntensityDirector();
     }
 }  // namespace LightIntensityFunction
