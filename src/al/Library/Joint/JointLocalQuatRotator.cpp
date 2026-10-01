@@ -14,7 +14,7 @@ namespace al {
 JointLocalQuatRotator::JointLocalQuatRotator(const LiveActor* pActor, const char* pJointName,
                                              const sead::Quatf* pQuat)
     : mActor(pActor), mQuat(pQuat) {
-    mJointIndex = getJointIndex(pActor->mModelKeeper, pJointName);
+    mJointIndex = getJointIndex(pActor->getModelKeeper(), pJointName);
     appendJointId(mJointIndex);
 }
 

@@ -44,14 +44,14 @@ void RollingCubePoseKeeper::init(const ActorInitInfo& initInfo) {
     mRollingCubePoses = new RollingCubePose[mPoseCount];
 
     mRollingCubePoses[0].setCubeSize(mCubeSize);
-    mRollingCubePoses[0].init(*initInfo.mPlacementInfo);
+    mRollingCubePoses[0].init(initInfo.getPlacementInfo());
 
     if (mMoveType == MoveType::Turn) {
         mRollingCubePoses[mPoseCount - 1].setCubeSize(mCubeSize);
-        mRollingCubePoses[mPoseCount - 1].init(*initInfo.mPlacementInfo);
+        mRollingCubePoses[mPoseCount - 1].init(initInfo.getPlacementInfo());
     }
 
-    PlacementInfo currentPlacementInfo = *initInfo.mPlacementInfo;
+    PlacementInfo currentPlacementInfo = initInfo.getPlacementInfo();
     PlacementInfo nextPlacementInfo;
 
     for (s32 i = 0; i < linkNextNum; i++) {

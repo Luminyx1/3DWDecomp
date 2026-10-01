@@ -20,7 +20,7 @@ JointRumbler::JointRumbler(const LiveActor* pActor, const char* pJointName, f32 
                            s32 duration, s32 startStep)
     : mActor(pActor), mCycle(cycle), mPower(power), mDuration(duration), mStartStep(startStep),
       mStep(duration + startStep) {
-    mJointIndex = getJointIndex(pActor->mModelKeeper, pJointName);
+    mJointIndex = getJointIndex(pActor->getModelKeeper(), pJointName);
     appendJointId(mJointIndex);
 
     for (s32 i = 0; i < 3; i++) {

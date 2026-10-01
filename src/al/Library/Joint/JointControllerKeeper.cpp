@@ -26,7 +26,7 @@ bool sIsPausedJointControllers = false;
 namespace al {
 
 static JointControllerKeeper* getJointControllerKeeper(const LiveActor* pActor) {
-    return pActor->mModelKeeper->getModelCafe()->mJointControllerKeeper;
+    return pActor->getModelKeeper()->getModelCafe()->getJointControllerKeeper();
 }
 
 static void registerJointController(const LiveActor* pActor, JointControllerBase* pController,
@@ -41,7 +41,7 @@ static void registerJointController(const LiveActor* pActor, JointControllerBase
  * @param maxControllers Maximum number of controllers.
  */
 void initJointControllerKeeper(const LiveActor* pActor, s32 maxControllers) {
-    pActor->mModelKeeper->getModelCafe()->initJointControllerKeeper(maxControllers);
+    pActor->getModelKeeper()->getModelCafe()->initJointControllerKeeper(maxControllers);
 }
 
 /**
@@ -73,7 +73,7 @@ void initJointLocalRotator(const LiveActor* pActor, sead::Vector3f* pRotate,
  * @param pJointName Name of the joint.
  */
 void initJointLocalXRotator(const LiveActor* pActor, f32* pDegree, const char* pJointName) {
-    s32 jointIndex = getJointIndex(pActor->mModelKeeper, pJointName);
+    s32 jointIndex = getJointIndex(pActor->getModelKeeper(), pJointName);
     registerJointController(pActor, new JointLocalAxisRotator(pDegree, sead::Vector3f::ex, true),
                             jointIndex);
 }
@@ -85,7 +85,7 @@ void initJointLocalXRotator(const LiveActor* pActor, f32* pDegree, const char* p
  * @param pJointName Name of the joint.
  */
 void initJointLocalYRotator(const LiveActor* pActor, f32* pDegree, const char* pJointName) {
-    s32 jointIndex = getJointIndex(pActor->mModelKeeper, pJointName);
+    s32 jointIndex = getJointIndex(pActor->getModelKeeper(), pJointName);
     registerJointController(pActor, new JointLocalAxisRotator(pDegree, sead::Vector3f::ey, true),
                             jointIndex);
 }
@@ -97,7 +97,7 @@ void initJointLocalYRotator(const LiveActor* pActor, f32* pDegree, const char* p
  * @param pJointName Name of the joint.
  */
 void initJointLocalZRotator(const LiveActor* pActor, f32* pDegree, const char* pJointName) {
-    s32 jointIndex = getJointIndex(pActor->mModelKeeper, pJointName);
+    s32 jointIndex = getJointIndex(pActor->getModelKeeper(), pJointName);
     registerJointController(pActor, new JointLocalAxisRotator(pDegree, sead::Vector3f::ez, true),
                             jointIndex);
 }
@@ -111,7 +111,7 @@ void initJointLocalZRotator(const LiveActor* pActor, f32* pDegree, const char* p
  */
 void initJointLocalAxisRotator(const LiveActor* pActor, const sead::Vector3f& rAxis, f32* pDegree,
                                const char* pJointName) {
-    s32 jointIndex = getJointIndex(pActor->mModelKeeper, pJointName);
+    s32 jointIndex = getJointIndex(pActor->getModelKeeper(), pJointName);
     registerJointController(pActor, new JointLocalAxisRotator(pDegree, rAxis, true), jointIndex);
 }
 
@@ -127,7 +127,7 @@ void initJointLocalAxisRotator(const LiveActor* pActor, const sead::Vector3f& rA
 JointLocalAxisRotator* initJointLocalAxisRotator_RS(const LiveActor* pActor,
                                                     const sead::Vector3f& rAxis, f32* pDegree,
                                                     const char* pJointName, bool isLocal) {
-    s32 jointIndex = getJointIndex(pActor->mModelKeeper, pJointName);
+    s32 jointIndex = getJointIndex(pActor->getModelKeeper(), pJointName);
     auto* rotator = new JointLocalAxisRotator(pDegree, rAxis, isLocal);
     registerJointController(pActor, rotator, jointIndex);
     return rotator;
@@ -140,7 +140,7 @@ JointLocalAxisRotator* initJointLocalAxisRotator_RS(const LiveActor* pActor,
  * @param pJointName Name of the joint.
  */
 void initJointGlobalXRotator(const LiveActor* pActor, f32* pDegree, const char* pJointName) {
-    s32 jointIndex = getJointIndex(pActor->mModelKeeper, pJointName);
+    s32 jointIndex = getJointIndex(pActor->getModelKeeper(), pJointName);
     registerJointController(pActor, new JointLocalAxisRotator(pDegree, sead::Vector3f::ex, false),
                             jointIndex);
 }
@@ -154,7 +154,7 @@ void initJointGlobalXRotator(const LiveActor* pActor, f32* pDegree, const char* 
  */
 void initJointGlobalAxisRotator(const LiveActor* pActor, const sead::Vector3f& rAxis,
                                 f32* pDegree, const char* pJointName) {
-    s32 jointIndex = getJointIndex(pActor->mModelKeeper, pJointName);
+    s32 jointIndex = getJointIndex(pActor->getModelKeeper(), pJointName);
     registerJointController(pActor, new JointLocalAxisRotator(pDegree, rAxis, false), jointIndex);
 }
 
@@ -165,7 +165,7 @@ void initJointGlobalAxisRotator(const LiveActor* pActor, const sead::Vector3f& r
  * @param pJointName Name of the joint.
  */
 void initJointGlobalYRotator(const LiveActor* pActor, f32* pDegree, const char* pJointName) {
-    s32 jointIndex = getJointIndex(pActor->mModelKeeper, pJointName);
+    s32 jointIndex = getJointIndex(pActor->getModelKeeper(), pJointName);
     registerJointController(pActor, new JointLocalAxisRotator(pDegree, sead::Vector3f::ey, false),
                             jointIndex);
 }
@@ -177,7 +177,7 @@ void initJointGlobalYRotator(const LiveActor* pActor, f32* pDegree, const char* 
  * @param pJointName Name of the joint.
  */
 void initJointGlobalZRotator(const LiveActor* pActor, f32* pDegree, const char* pJointName) {
-    s32 jointIndex = getJointIndex(pActor->mModelKeeper, pJointName);
+    s32 jointIndex = getJointIndex(pActor->getModelKeeper(), pJointName);
     registerJointController(pActor, new JointLocalAxisRotator(pDegree, sead::Vector3f::ez, false),
                             jointIndex);
 }
@@ -190,7 +190,7 @@ void initJointGlobalZRotator(const LiveActor* pActor, f32* pDegree, const char* 
  */
 void initJointLocalTransController(const LiveActor* pActor, const sead::Vector3f* pTrans,
                                    const char* pJointName) {
-    s32 jointIndex = getJointIndex(pActor->mModelKeeper, pJointName);
+    s32 jointIndex = getJointIndex(pActor->getModelKeeper(), pJointName);
     registerJointController(pActor, new JointLocalTransController(pActor, pTrans), jointIndex);
 }
 
@@ -202,7 +202,7 @@ void initJointLocalTransController(const LiveActor* pActor, const sead::Vector3f
  */
 void initJointLocalMtxController(const LiveActor* pActor, const sead::Matrix34f* pMtx,
                                  const char* pJointName) {
-    s32 jointIndex = getJointIndex(pActor->mModelKeeper, pJointName);
+    s32 jointIndex = getJointIndex(pActor->getModelKeeper(), pJointName);
     registerJointController(pActor, new JointMtxController(pActor, pMtx, true), jointIndex);
 }
 
@@ -214,7 +214,7 @@ void initJointLocalMtxController(const LiveActor* pActor, const sead::Matrix34f*
  */
 void initJointGlobalMtxController(const LiveActor* pActor, const sead::Matrix34f* pMtx,
                                   const char* pJointName) {
-    s32 jointIndex = getJointIndex(pActor->mModelKeeper, pJointName);
+    s32 jointIndex = getJointIndex(pActor->getModelKeeper(), pJointName);
     registerJointController(pActor, new JointMtxController(pActor, pMtx, false), jointIndex);
 }
 
@@ -226,7 +226,7 @@ void initJointGlobalMtxController(const LiveActor* pActor, const sead::Matrix34f
  */
 void initJointGlobalQuatController(const LiveActor* pActor, const sead::Quatf* pQuat,
                                    const char* pJointName) {
-    s32 jointIndex = getJointIndex(pActor->mModelKeeper, pJointName);
+    s32 jointIndex = getJointIndex(pActor->getModelKeeper(), pJointName);
     registerJointController(pActor, new JointQuatController(pActor, pQuat), jointIndex);
 }
 
@@ -238,7 +238,7 @@ void initJointGlobalQuatController(const LiveActor* pActor, const sead::Quatf* p
  */
 void initJointLocalDirController(const LiveActor* pActor, const JointDirectionInfo* pInfo,
                                  const char* pJointName) {
-    s32 jointIndex = getJointIndex(pActor->mModelKeeper, pJointName);
+    s32 jointIndex = getJointIndex(pActor->getModelKeeper(), pJointName);
     registerJointController(pActor, new JointLocalDirController(pInfo), jointIndex);
 }
 
@@ -250,7 +250,7 @@ void initJointLocalDirController(const LiveActor* pActor, const JointDirectionIn
  */
 void initJointAimController(const LiveActor* pActor, const JointAimInfo* pInfo,
                             const char* pJointName) {
-    s32 jointIndex = getJointIndex(pActor->mModelKeeper, pJointName);
+    s32 jointIndex = getJointIndex(pActor->getModelKeeper(), pJointName);
     registerJointController(pActor, new JointAimController(pInfo), jointIndex);
 }
 
@@ -374,7 +374,7 @@ void appendJointLookAtController(JointLookAtController* pController, const LiveA
                                  const char* pJointName, f32 rate, const sead::Vector2f& rYawRange,
                                  const sead::Vector2f& rPitchRange, const sead::Vector3f& rLocalFront,
                                  const sead::Vector3f& rLocalUp) {
-    pController->appendJoint(getJointIndex(pActor->mModelKeeper, pJointName), rate, rYawRange,
+    pController->appendJoint(getJointIndex(pActor->getModelKeeper(), pJointName), rate, rYawRange,
                              rPitchRange, rLocalFront, rLocalUp);
 }
 
@@ -395,7 +395,7 @@ void appendJointLookAtControllerNoJudge(JointLookAtController* pController,
                                         const sead::Vector2f& rPitchRange,
                                         const sead::Vector3f& rLocalFront,
                                         const sead::Vector3f& rLocalUp) {
-    pController->appendJointNoJudge(getJointIndex(pActor->mModelKeeper, pJointName), rate,
+    pController->appendJointNoJudge(getJointIndex(pActor->getModelKeeper(), pJointName), rate,
                                     rYawRange, rPitchRange, rLocalFront, rLocalUp);
 }
 
@@ -406,7 +406,7 @@ void appendJointLookAtControllerNoJudge(JointLookAtController* pController,
  * @return Created controller.
  */
 JointSpringController* initJointSpringController(const LiveActor* pActor, const char* pJointName) {
-    s32 jointIndex = getJointIndex(pActor->mModelKeeper, pJointName);
+    s32 jointIndex = getJointIndex(pActor->getModelKeeper(), pJointName);
     auto* controller = new JointSpringController();
     registerJointController(pActor, controller, jointIndex);
     return controller;

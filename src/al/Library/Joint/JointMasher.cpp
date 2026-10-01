@@ -22,7 +22,7 @@ JointMasher::JointMasher(const LiveActor* pActor, const bool* pIsValid, s32 maxJ
  * @param rate Scale applied to the joint.
  */
 void JointMasher::append(const char* pJointName, f32 rate) {
-    s32 jointIndex = getJointIndex(mActor->mModelKeeper, pJointName);
+    s32 jointIndex = getJointIndex(mActor->getModelKeeper(), pJointName);
     mMashInfos.emplaceBack(MashInfo{jointIndex, rate});
     appendJointId(jointIndex);
 }

@@ -31,7 +31,7 @@ void JointTranslateShaker::append(const char* pJointName, JointTranslateAxis axi
  * @return Joint index.
  */
 s32 JointTranslateShaker::getJointIndexActor(const char* pJointName) {
-    return getJointIndex(mActor->mModelKeeper, pJointName);
+    return getJointIndex(mActor->getModelKeeper(), pJointName);
 }
 
 /**
