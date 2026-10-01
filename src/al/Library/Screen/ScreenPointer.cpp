@@ -14,7 +14,7 @@ ScreenPointer::ScreenPointer(const ActorInitInfo& rInfo, const LiveActor* pHost,
                              const sead::Vector3f* pPos)
     : mHost(pHost), mPos(pPos) {
     mHitInfos.allocBuffer(0x400, nullptr);
-    mDirector = rInfo.mScreenPointerDirector;
+    mDirector = rInfo.getScreenPointDirector();
 }
 
 /**

@@ -23,11 +23,11 @@ namespace al {
 ScreenPointTarget* addScreenPointTarget(LiveActor* pActor, const ActorInitInfo& rInfo,
                                         const char* pName, f32 radius, const char* pJointName,
                                         const sead::Vector3f& rOffset) {
-    ScreenPointKeeper* keeper = pActor->mScreenPointKeeper;
+    ScreenPointKeeper* keeper = pActor->getScreenPointKeeper();
     const sead::Matrix34f* jointMtx = (pJointName != nullptr) ? getJointMtxPtr(pActor, pJointName) : nullptr;
     ScreenPointTarget* target =
         keeper->addTarget(pActor, pName, radius, getTransPtr(pActor), jointMtx, rOffset);
-    ScreenPointDirector* director = rInfo.mScreenPointerDirector;
+    ScreenPointDirector* director = rInfo.getScreenPointDirector();
     director->registerTarget(target);
     director->setCheckGroup(target);
     return target;
@@ -88,6 +88,6 @@ namespace alScreenPointFunction {
  * @param pActor actor
  */
 void updateScreenPointAll(al::LiveActor* pActor) {
-    pActor->mScreenPointKeeper->update();
+    pActor->getScreenPointKeeper()->update();
 }
 }  // namespace alScreenPointFunction

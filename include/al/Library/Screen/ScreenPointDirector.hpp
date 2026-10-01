@@ -3,10 +3,11 @@
 #include <container/seadObjArray.h>
 #include <math/seadVector.h>
 
+#include "Library/Screen/ScreenPointer.hpp"
+
 namespace al {
 class ScreenPointCheckGroup;
 class ScreenPointTarget;
-struct ScreenPointTargetHitInfo;
 
 class ScreenPointDirector {
 public:
@@ -14,9 +15,9 @@ public:
 
     void registerTarget(ScreenPointTarget* pTarget);
     void setCheckGroup(ScreenPointTarget* pTarget);
-    bool hitCheckSegment(sead::ObjArray<ScreenPointTargetHitInfo>* pHitInfos, s32 maxHits,
+    bool hitCheckSegment(ScreenPointTargetHitInfoArray* pHitInfos, s32 maxHits,
                          const sead::Vector3f& rStart, const sead::Vector3f& rEnd);
-    bool hitCheckScreenCircle(sead::ObjArray<ScreenPointTargetHitInfo>* pHitInfos, s32 maxHits,
+    bool hitCheckScreenCircle(ScreenPointTargetHitInfoArray* pHitInfos, s32 maxHits,
                               const sead::Vector2f& rPos, f32 radius);
 
 private:

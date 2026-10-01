@@ -17,6 +17,8 @@ struct ScreenPointTargetHitInfo {
     f32 _24 = 0.0f;
 };
 
+using ScreenPointTargetHitInfoArray = sead::ObjArray<ScreenPointTargetHitInfo>;
+
 class ScreenPointer {
 public:
     ScreenPointer(const ActorInitInfo& rInfo, const LiveActor* pHost, const sead::Vector3f* pPos);
@@ -33,6 +35,6 @@ private:
     sead::Vector3f mHitNormal = sead::Vector3f::zero;
     const sead::Vector3f* mPos;
     ScreenPointDirector* mDirector = nullptr;
-    sead::ObjArray<ScreenPointTargetHitInfo> mHitInfos;
+    ScreenPointTargetHitInfoArray mHitInfos;
 };
 }  // namespace al

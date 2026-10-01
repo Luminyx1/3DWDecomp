@@ -131,7 +131,7 @@ const sead::Vector3f& getHitScreenPointTargetNormal(const ScreenPointer* pPointe
  * @return the target
  */
 ScreenPointTarget* getScreenPointTarget(LiveActor* pActor, const char* pName) {
-    return pActor->mScreenPointKeeper->getTarget(pName);
+    return pActor->getScreenPointKeeper()->getTarget(pName);
 }
 
 /**
@@ -141,7 +141,7 @@ ScreenPointTarget* getScreenPointTarget(LiveActor* pActor, const char* pName) {
  * @return the target
  */
 ScreenPointTarget* getScreenPointTarget(LiveActor* pActor, s32 index) {
-    return pActor->mScreenPointKeeper->getTarget(index);
+    return pActor->getScreenPointKeeper()->getTarget(index);
 }
 
 /**
@@ -227,8 +227,8 @@ void setScreenPointTargetOffset(LiveActor* pActor, const char* pName,
  * @param pActor actor
  */
 void validateScreenPointTargetAll(LiveActor* pActor) {
-    if (pActor->mScreenPointKeeper != nullptr) {
-        pActor->mScreenPointKeeper->validate();
+    if (pActor->getScreenPointKeeper() != nullptr) {
+        pActor->getScreenPointKeeper()->validate();
     }
 }
 
@@ -237,8 +237,8 @@ void validateScreenPointTargetAll(LiveActor* pActor) {
  * @param pActor actor
  */
 void invalidateScreenPointTargetAll(LiveActor* pActor) {
-    if (pActor->mScreenPointKeeper != nullptr) {
-        pActor->mScreenPointKeeper->invalidate();
+    if (pActor->getScreenPointKeeper() != nullptr) {
+        pActor->getScreenPointKeeper()->invalidate();
     }
 }
 
