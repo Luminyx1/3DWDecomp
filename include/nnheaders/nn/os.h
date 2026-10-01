@@ -166,6 +166,11 @@ void SignalEvent(EventType*);
 void WaitEvent(EventType*);
 bool TryWaitEvent(EventType*);
 bool TimedWaitEvent(EventType*, nn::TimeSpan);
+
+// SYSTEM EVENT
+void DestroySystemEvent(SystemEventType*);
+bool TimedWaitSystemEvent(SystemEventType*, nn::TimeSpan);
+bool TryWaitSystemEvent(SystemEventType*);
 void ClearEvent(EventType*);
 
 // LIGHT EVENTS

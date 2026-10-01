@@ -27,5 +27,6 @@ public:
 
 u32 MakeErrorCode(ErrorCodeCategoryType err_category_type, u32 errorCodeNumber);
 void ShowApplicationError(const ApplicationErrorArg& arg);
+void ShowError(Result result);
 }  // namespace err
 }  // namespace nn
