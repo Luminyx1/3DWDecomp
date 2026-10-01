@@ -29,6 +29,10 @@ public:
                           CollisionPartsDelegate& rDelegate) const override;
     void movement() override;
 
+    sead::PtrArray<CollisionParts>* getPartsArray() const { return mPartsArray; }
+
+    void setPartsArray(sead::PtrArray<CollisionParts>* pPartsArray) { mPartsArray = pPartsArray; }
+
 private:
     sead::PtrArray<CollisionParts>* mPartsArray = nullptr;
 };
