@@ -49222,15 +49222,15 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100801150			FALSE	_ZN2al14DirectionParam17syncFromRPYDegreeERKN4sead7Vector3IfEE	al::DirectionParam::syncFromRPYDegree(sead::Vector3<float> const&)	
 0x7100801280			FALSE	_ZN2al14DirectionParam4lerpERKS0_S2_f	al::DirectionParam::lerp(al::DirectionParam const&, al::DirectionParam const&, float)	
 0x71008012E0		PlaneParam.o	FALSE	_ZN2al10PlaneParam10initializeERKN4sead7Vector3IfEEPN3agl3utl12ParameterObjEPKc	al::PlaneParam::initialize(sead::Vector3<float> const&, agl::utl::ParameterObj*, char const*)	object (class)
-0x7100801430			FALSE	_ZN2al22GraphicsNamedParamBaseC2EPKc	al::GraphicsNamedParamBase::GraphicsNamedParamBase(char const*)	
+0x7100801430		GraphicsNamedParamBase.o	FALSE	_ZN2al22GraphicsNamedParamBaseC2EPKc	al::GraphicsNamedParamBase::GraphicsNamedParamBase(char const*)	
 0x71008015B0			FALSE	_ZN3agl3utl9ParameterIN4sead15FixedSafeStringILi64EEEEC2ERKS4_RKNS2_14SafeStringBaseIcEESB_PNS0_13IParameterObjE	agl::utl::Parameter<sead::FixedSafeString<64> >::Parameter(sead::FixedSafeString<64> const&, sead::SafeStringBase<char> const&, sead::SafeStringBase<char> const&, agl::utl::IParameterObj*)	
 0x7100801740			FALSE	_ZN2al22GraphicsNamedParamBase6interpERKS0_S2_f	al::GraphicsNamedParamBase::interp(al::GraphicsNamedParamBase const&, al::GraphicsNamedParamBase const&, float)	
 0x7100801750			FALSE	_ZNK2al22GraphicsNamedParamBaseeqERKS0_	al::GraphicsNamedParamBase::operator==(al::GraphicsNamedParamBase const&) const	
-0x71008017A0			FALSE	_ZN2al13ExposureParamC2Eb	al::ExposureParam::ExposureParam(bool)	
+0x71008017A0		LightIntensityDirector.o	FALSE	_ZN2al13ExposureParamC2Eb	al::ExposureParam::ExposureParam(bool)	
 0x7100801870			FALSE	_ZNK2al13ExposureParam12getParamTypeEv	al::ExposureParam::getParamType() const	
 0x7100801880			FALSE	_ZN2al15BloomNamedParamC2Eb	al::BloomNamedParam::BloomNamedParam(bool)	
 0x71008019E0			FALSE	_ZNK2al15BloomNamedParam12getParamTypeEv	al::BloomNamedParam::getParamType() const	
-0x71008019F0		LIghtIntensityDirector.o	FALSE	_ZN2al22LightIntensityDirectorC2EPNS_15AreaObjDirectorEPKNS_12PlayerHolderE	al::LightIntensityDirector::LightIntensityDirector(al::AreaObjDirector*, al::PlayerHolder const*)	
+0x71008019F0			FALSE	_ZN2al22LightIntensityDirectorC2EPNS_15AreaObjDirectorEPKNS_12PlayerHolderE	al::LightIntensityDirector::LightIntensityDirector(al::AreaObjDirector*, al::PlayerHolder const*)	
 0x7100801AB0			FALSE	_ZN2al22LightIntensityDirector21initGraphicsAreaParamEPNS_20GraphicsAreaDirectorEPKc	al::LightIntensityDirector::initGraphicsAreaParam(al::GraphicsAreaDirector*, char const*)	
 0x7100801EE0			FALSE	_ZN2al22LightIntensityDirector7endInitEv	al::LightIntensityDirector::endInit()	
 0x7100801EF0			FALSE	_ZN2al22LightIntensityDirector7executeEv	al::LightIntensityDirector::execute()	
@@ -49248,7 +49248,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100802740			FALSE	_ZN2al15BloomNamedParamD2Ev	al::BloomNamedParam::~BloomNamedParam()	
 0x7100802770			FALSE	_ZN2al15BloomNamedParamD0Ev	al::BloomNamedParam::~BloomNamedParam()	
 0x7100802790			FALSE	_ZNK2al22LightIntensityDirector18getAreaObjDirectorEv	al::LightIntensityDirector::getAreaObjDirector() const	
-0x71008027A0		LightKeeper.o	FALSE	_ZN2al20isActivePrePassLightEPKNS_9LiveActorEPKc	al::isActivePrePassLight(al::LiveActor const*, char const*)	object/folder from OdysseyDecomp file list
+0x71008027A0		PrePassLightFunction.o	FALSE	_ZN2al20isActivePrePassLightEPKNS_9LiveActorEPKc	al::isActivePrePassLight(al::LiveActor const*, char const*)	object/folder from OdysseyDecomp file list
 0x71008027E0			FALSE	_ZN2al19isExistPrePassLightEPKNS_9LiveActorEPKc	al::isExistPrePassLight(al::LiveActor const*, char const*)	
 0x7100802810			FALSE	_ZN2al19getPrePassLineLightEPKNS_9LiveActorEPKc	al::getPrePassLineLight(al::LiveActor const*, char const*)	
 0x7100802820			FALSE	_ZN2al18appearPrePassLightEPKNS_9LiveActorEPKci	al::appearPrePassLight(al::LiveActor const*, char const*, int)	
@@ -49275,8 +49275,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71008032A0			FALSE	_ZN2al25setPrePassSpotLightShadowEPKNS_9LiveActorEPKcbbf	al::setPrePassSpotLightShadow(al::LiveActor const*, char const*, bool, bool, float)	
 0x7100803340			FALSE	_ZN2al28initPrePassLightMtxConnectorEPKNS_9LiveActorEPKcPKN4sead8Matrix34IfEE	al::initPrePassLightMtxConnector(al::LiveActor const*, char const*, sead::Matrix34<float> const*)	
 0x7100803380			FALSE	_ZN2al19getTexIrradianceObjEPKNS_9LiveActorE	al::getTexIrradianceObj(al::LiveActor const*)	
-0x71008033A0			FALSE	_ZN2al23ActorPrePassLightKeeper13LightBaseInfo6setPtrEv	al::ActorPrePassLightKeeper::LightBaseInfo::setPtr()	
-0x71008034D0	Library/Shadow	ShadowMaskCtrl.o	FALSE	_ZN15alYamlMacroUtil14YamlParamGroup11setParamPtrIPKcEEvS3_PT_	void alYamlMacroUtil::YamlParamGroup::setParamPtr<char const*>(char const*, char const**)	object/folder from OdysseyDecomp file list
+0x71008033A0	Project/Light	ActorPrePassLightKeeper.o	FALSE	_ZN2al23ActorPrePassLightKeeper13LightBaseInfo6setPtrEv	al::ActorPrePassLightKeeper::LightBaseInfo::setPtr()	
+0x71008034D0			FALSE	_ZN15alYamlMacroUtil14YamlParamGroup11setParamPtrIPKcEEvS3_PT_	void alYamlMacroUtil::YamlParamGroup::setParamPtr<char const*>(char const*, char const**)	object/folder from OdysseyDecomp file list
 0x71008035D0			FALSE	_ZN15alYamlMacroUtil14YamlParamGroup11setParamPtrIN4sead7Vector3IfEEEEvPKcPT_	void alYamlMacroUtil::YamlParamGroup::setParamPtr<sead::Vector3<float> >(char const*, sead::Vector3<float>*)	
 0x71008036D0			FALSE	_ZN15alYamlMacroUtil14YamlParamGroup11setParamPtrIN4sead7Color4fEEEvPKcPT_	void alYamlMacroUtil::YamlParamGroup::setParamPtr<sead::Color4f>(char const*, sead::Color4f*)	
 0x71008037D0			FALSE	_ZN15alYamlMacroUtil14YamlParamGroup11setParamPtrIbEEvPKcPT_	void alYamlMacroUtil::YamlParamGroup::setParamPtr<bool>(char const*, bool*)	
@@ -49294,7 +49294,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100804090			FALSE	_ZN2al23ActorPrePassLightKeeperC1Eb	al::ActorPrePassLightKeeper::ActorPrePassLightKeeper(bool)	
 0x71008040B0			FALSE	_ZN2al23ActorPrePassLightKeeperD2Ev	al::ActorPrePassLightKeeper::~ActorPrePassLightKeeper()	
 0x7100804110			FALSE	_ZN2al23ActorPrePassLightKeeper4initEPNS_9LiveActorERKNS_13ActorInitInfoERKNS_9ByamlIterE	al::ActorPrePassLightKeeper::init(al::LiveActor*, al::ActorInitInfo const&, al::ByamlIter const&)	
-0x7100804C00	Project/Light	ActorPrePassLightKeeper.o	FALSE	_ZN2al23ActorPrePassLightKeeper12initLightNumEi	al::ActorPrePassLightKeeper::initLightNum(int)	object/folder from OdysseyDecomp file list
+0x7100804C00			FALSE	_ZN2al23ActorPrePassLightKeeper12initLightNumEi	al::ActorPrePassLightKeeper::initLightNum(int)	object/folder from OdysseyDecomp file list
 0x7100804C10			FALSE	_ZN2al23ActorPrePassLightKeeper16setLightBaseInfoEPNS_16PrePassLightBaseERKNS0_13LightBaseInfoE	al::ActorPrePassLightKeeper::setLightBaseInfo(al::PrePassLightBase*, al::ActorPrePassLightKeeper::LightBaseInfo const&)	
 0x7100804C80			FALSE	_ZN2al23ActorPrePassLightKeeper18initAfterPlacementEv	al::ActorPrePassLightKeeper::initAfterPlacement()	
 0x7100804CD0			FALSE	_ZN2al23ActorPrePassLightKeeper6appearEb	al::ActorPrePassLightKeeper::appear(bool)	
@@ -49304,7 +49304,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100804DC0			FALSE	_ZNK2al23ActorPrePassLightKeeper12getLightBaseEPKc	al::ActorPrePassLightKeeper::getLightBase(char const*) const	
 0x7100804E70			FALSE	_ZNK2al23ActorPrePassLightKeeper12getLightBaseEi	al::ActorPrePassLightKeeper::getLightBase(int) const	
 0x7100804EA0			FALSE	_ZNK2al23ActorPrePassLightKeeper13findUserColorEPKc	al::ActorPrePassLightKeeper::findUserColor(char const*) const	
-0x7100804F60	Library/Shadow	ShadowMaskCtrl.o	FALSE	_ZN15alYamlMacroUtil13YamlParamBaseIbE8clearPtrEv	alYamlMacroUtil::YamlParamBase<bool>::clearPtr()	object/folder from OdysseyDecomp file list
+0x7100804F60			FALSE	_ZN15alYamlMacroUtil13YamlParamBaseIbE8clearPtrEv	alYamlMacroUtil::YamlParamBase<bool>::clearPtr()	object/folder from OdysseyDecomp file list
 0x7100804F70			FALSE	_ZNK15alYamlMacroUtil14YamlParam_bool10getClassIdEv	alYamlMacroUtil::YamlParam_bool::getClassId() const	
 0x7100804F80			FALSE	_ZNK15alYamlMacroUtil13YamlParamBaseIbE10isValidPtrEv	alYamlMacroUtil::YamlParamBase<bool>::isValidPtr() const	
 0x7100804F90			FALSE	_ZN15alYamlMacroUtil13IUseYamlParam9setPtr_u8EPh	alYamlMacroUtil::IUseYamlParam::setPtr_u8(unsigned char*)	
@@ -49342,7 +49342,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100805190			FALSE	_ZNK15alYamlMacroUtil13YamlParam_V2f10getClassIdEv	alYamlMacroUtil::YamlParam_V2f::getClassId() const	
 0x71008051A0			FALSE	_ZNK15alYamlMacroUtil13YamlParamBaseIN4sead7Vector2IfEEE10isValidPtrEv	alYamlMacroUtil::YamlParamBase<sead::Vector2<float> >::isValidPtr() const	
 0x71008051B0			FALSE	_ZN15alYamlMacroUtil13YamlParam_V2f10setPtr_V2fEPN4sead7Vector2IfEE	alYamlMacroUtil::YamlParam_V2f::setPtr_V2f(sead::Vector2<float>*)	
-0x71008051C0			FALSE	_ZN2al12LppLightType5text_Ei	al::LppLightType::text_(int)	
+0x71008051C0	Library/Light	PrePassLightBase.o	FALSE	_ZN2al12LppLightType5text_Ei	al::LppLightType::text_(int)	
 0x7100805380			TRUE	_ZN4sead15FixedSafeStringILi75EED0Ev	sead::FixedSafeString<75>::~FixedSafeString()	
 0x7100805390			TRUE	_ZN4sead15FixedSafeStringILi75EEaSERKNS_14SafeStringBaseIcEE	sead::FixedSafeString<75>::operator=(sead::SafeStringBase<char> const&)	
 0x7100805480			TRUE	_ZN4sead19FixedSafeStringBaseIcLi75EED0Ev	sead::FixedSafeStringBase<char, 75>::~FixedSafeStringBase()	
@@ -49356,7 +49356,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100806130			FALSE	_ZN29PrePassLightPlacementFuncImpl19setClippingInfoImplEPN2al9LiveActorEfPKN4sead7Vector3IfEE	PrePassLightPlacementFuncImpl::setClippingInfoImpl(al::LiveActor*, float, sead::Vector3<float> const*)	
 0x7100806140			FALSE	_ZN29PrePassLightPlacementFuncImpl10makeMtxSRTEPN4sead8Matrix34IfEEPKN2al9LiveActorE	PrePassLightPlacementFuncImpl::makeMtxSRT(sead::Matrix34<float>*, al::LiveActor const*)	
 0x7100806150			FALSE	_ZN2al16PrePassLightBaseC2EPKc	al::PrePassLightBase::PrePassLightBase(char const*)	
-0x7100806250	Library/Light	PrePassLightKeeper.o	FALSE	_ZN2al16PrePassLightBase4initERKNS_13ActorInitInfoE	al::PrePassLightBase::init(al::ActorInitInfo const&)	object/folder from OdysseyDecomp file list
+0x7100806250			FALSE	_ZN2al16PrePassLightBase4initERKNS_13ActorInitInfoE	al::PrePassLightBase::init(al::ActorInitInfo const&)	object/folder from OdysseyDecomp file list
 0x71008063C0			FALSE	_ZN2al13LppPointParam10initByInfoERKNS_13ActorInitInfoE	al::LppPointParam::initByInfo(al::ActorInitInfo const&)	
 0x7100806440			FALSE	_ZN2al12LppLineParam10initByInfoERKNS_13ActorInitInfoE	al::LppLineParam::initByInfo(al::ActorInitInfo const&)	
 0x7100806480			FALSE	_ZN2al12LppSpotParam10initByInfoERKNS_13ActorInitInfoE	al::LppSpotParam::initByInfo(al::ActorInitInfo const&)	
@@ -49411,7 +49411,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100808120			FALSE	sub_7100808120	sub_7100808120	
 0x71008081A0			FALSE	sub_71008081A0	sub_71008081A0	
 0x7100808220			FALSE	nullsub_320	nullsub_320	
-0x7100808230			FALSE	_ZNK2al18PrePassLightKeeper16getSpecularPowerEv	al::PrePassLightKeeper::getSpecularPower() const	
+0x7100808230		PrePassLightKeeper.o	FALSE	_ZNK2al18PrePassLightKeeper16getSpecularPowerEv	al::PrePassLightKeeper::getSpecularPower() const	
 0x7100808240			FALSE	_ZNK2al18PrePassLightKeeper10getFlesnelEv	al::PrePassLightKeeper::getFlesnel() const	
 0x7100808250			FALSE	_ZN2al18PrePassLightKeeperC1EPNS_18GraphicsSystemInfoEi	al::PrePassLightKeeper::PrePassLightKeeper(al::GraphicsSystemInfo*, int)	
 0x7100808490			FALSE	_ZN2al18PrePassLightKeeperD2Ev	al::PrePassLightKeeper::~PrePassLightKeeper()	
@@ -49640,11 +49640,11 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71008130E0			FALSE	_ZNK4sead15RuntimeTypeInfo6DeriveIN3agl4lght20LightPrePassLightMgrIN2al16LppLightDataBaseINS5_14SpotLightParamEEENS3_12LightPrePass7ContextENS9_11CallbackArgEEEE9isDerivedEPKNS0_9InterfaceE	sead::RuntimeTypeInfo::Derive<agl::lght::LightPrePassLightMgr<al::LppLightDataBase<al::SpotLightParam>, agl::lght::LightPrePass::Context, agl::lght::LightPrePass::CallbackArg> >::isDerived(sead::RuntimeTypeInfo::Interface const*) const	
 0x7100813170			FALSE	_ZNK4sead15RuntimeTypeInfo6DeriveIN3agl4lght20LightPrePassLightMgrIN2al16LppLightDataBaseINS5_14LineLightParamEEENS3_12LightPrePass7ContextENS9_11CallbackArgEEEE9isDerivedEPKNS0_9InterfaceE	sead::RuntimeTypeInfo::Derive<agl::lght::LightPrePassLightMgr<al::LppLightDataBase<al::LineLightParam>, agl::lght::LightPrePass::Context, agl::lght::LightPrePass::CallbackArg> >::isDerived(sead::RuntimeTypeInfo::Interface const*) const	
 0x7100813200			FALSE	_ZNK4sead15RuntimeTypeInfo6DeriveIN3agl4lght20LightPrePassLightMgrIN2al16LppLightDataBaseINS5_14ProjLightParamEEENS3_12LightPrePass7ContextENS9_11CallbackArgEEEE9isDerivedEPKNS0_9InterfaceE	sead::RuntimeTypeInfo::Derive<agl::lght::LightPrePassLightMgr<al::LppLightDataBase<al::ProjLightParam>, agl::lght::LightPrePass::Context, agl::lght::LightPrePass::CallbackArg> >::isDerived(sead::RuntimeTypeInfo::Interface const*) const	
-0x7100813290			FALSE	_ZN2al16PrePassLineLight4initERKNS_13ActorInitInfoE	al::PrePassLineLight::init(al::ActorInitInfo const&)	
+0x7100813290		PrePassLineLight.o	FALSE	_ZN2al16PrePassLineLight4initERKNS_13ActorInitInfoE	al::PrePassLineLight::init(al::ActorInitInfo const&)	
 0x7100813740			FALSE	_ZN2al16PrePassLineLight13setByBeginEndERKN4sead7Vector3IfEES5_	al::PrePassLineLight::setByBeginEnd(sead::Vector3<float> const&, sead::Vector3<float> const&)	
 0x7100813850			FALSE	_ZN2al16PrePassLineLightD1Ev	al::PrePassLineLight::~PrePassLineLight()	
 0x71008138E0			FALSE	_ZN2al16PrePassLineLightD0Ev	al::PrePassLineLight::~PrePassLineLight()	
-0x7100813980		SSIIKeeper.o	FALSE	_ZN2al9SSIIParam4initEv	al::SSIIParam::init()	object (smo)
+0x7100813980	Library/Light	SSIIKeeper.o	FALSE	_ZN2al9SSIIParam4initEv	al::SSIIParam::init()	object (smo)
 0x7100813AF0			FALSE	_ZNK2al9SSIIParameqERKS0_	al::SSIIParam::operator==(al::SSIIParam const&) const	
 0x7100813B80			FALSE	_ZN2al9SSIIParamaSERKS0_	al::SSIIParam::operator=(al::SSIIParam const&)	
 0x7100813BC0			FALSE	_ZN2al9SSIIParam6interpERKS0_S2_f	al::SSIIParam::interp(al::SSIIParam const&, al::SSIIParam const&, float)	

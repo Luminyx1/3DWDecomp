@@ -4694,21 +4694,23 @@ src/al/Library/Light/DirectionalLightRequester.cpp:
 src/al/Library/Light/DirectionParam.cpp:
     .text   start:0x00800C60 end:0x008012DC
 src/al/Library/Light/PlaneParam.cpp:
-    .text   start:0x008012E0 end:0x008019E8
-src/al/Library/Light/LIghtIntensityDirector.cpp:
-    .text   start:0x008019F0 end:0x00802704
+    .text   start:0x008012E0 end:0x00801424
+src/al/Library/Light/GraphicsNamedParamBase.cpp:
+    .text   start:0x00801430 end:0x008017A0
+src/al/Library/Light/LightIntensityDirector.cpp:
+    .text   start:0x008017A0 end:0x00802704
 src/al/Library/Light/LightIntensityFunction.cpp:
     .text   start:0x00802710 end:0x00802798
-src/al/Library/Light/LightKeeper.cpp:
-    .text   start:0x008027A0 end:0x008034CC
-src/al/Library/Shadow/ShadowMaskCtrl.cpp:
-    .text   start:0x008034D0 end:0x00804C00
+src/al/Library/Light/PrePassLightFunction.cpp:
+    .text   start:0x008027A0 end:0x008033A0
 src/al/Project/Light/ActorPrePassLightKeeper.cpp:
-    .text   start:0x00804C00 end:0x00804F54
-src/al/Library/Shadow/ShadowMaskCtrl_dup2.cpp:
-    .text   start:0x00804F60 end:0x00806250
+    .text   start:0x008033A0 end:0x008051B8
+src/al/Library/Light/PrePassLightBase.cpp:
+    .text   start:0x008051C0 end:0x00808224
 src/al/Library/Light/PrePassLightKeeper.cpp:
-    .text   start:0x00806250 end:0x00813974
+    .text   start:0x00808230 end:0x0081328C
+src/al/Library/Light/PrePassLineLight.cpp:
+    .text   start:0x00813290 end:0x00813974
 src/al/Library/Light/SSIIKeeper.cpp:
     .text   start:0x00813980 end:0x00814DF8
 src/al/Library/LiveActor/LiveActorGroup.cpp: done
