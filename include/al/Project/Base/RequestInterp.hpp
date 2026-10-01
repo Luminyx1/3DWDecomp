@@ -25,12 +25,11 @@ public:
         mRequestParam.init();
     }
 
-    void requestParam(s32 priority, s32 step, const T& rParam) {
+    bool requestParam(s32 priority, s32 step, const T& rParam) {
         s32 interpStep = RequestInterpMathImpl::max(1, step);
 
         if (mIsDirect) {
-            requestParamDirect_(priority, rParam);
-            return;
+            return requestParamDirect_(priority, rParam);
         }
 
         if (mPriority < priority) {
@@ -39,13 +38,22 @@ public:
             mRequestStep = interpStep;
             mRequestParam = rParam;
             mIsSamePriorityRequested = false;
-        } else if (mPriority == priority) {
-            if (!mIsSamePriorityRequested)
+            return false;
+        }
+
+        bool isSamePriorityRequested = false;
+
+        if (mPriority == priority) {
+            if (mIsSamePriorityRequested)
+                isSamePriorityRequested = true;
+            else
                 mIsRequested = true;
             mIsSamePriorityRequested = true;
         } else {
             mIsRequested = true;
         }
+
+        return isSamePriorityRequested;
     }
 
     bool requestParamDirect_(s32 priority, const T& rParam) {
