@@ -1,8 +1,8 @@
-#include <gfx/seadColor.h>
+#include "Library/Collision/CollisionPolygonUtil.hpp"
+
 #include <math/seadMathCalcCommon.h>
 
 #include "Library/Math/MathUtil.hpp"
-#include "Project/Collision/Collider.hpp"
 
 namespace al {
 /**
@@ -72,7 +72,11 @@ bool isCeilingPolygon(const sead::Vector3f& rNormal, const sead::Vector3f& rGrav
         return false;
     }
 
-    return dot >= 0.0f;
+    if (dot < 0.0f) {
+        return false;
+    }
+
+    return true;
 }
 
 /**
