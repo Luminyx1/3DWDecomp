@@ -76,6 +76,7 @@ public:
     void* getControlMemory() const { return mControlMemory; }
     NVNcommandHandle getHandle() const { return mHandle; }
     const NVNcommandHandle* getHandlePtr() const { return &mHandle; }
+    NVNcommandBuffer* getNvnCommandBuffer() const { return mNvnCommandBuffer; }
 
 private:
     static void outOfMemoryCallback_(NVNcommandBuffer* pCommandBuffer,
