@@ -1,39 +1,56 @@
 #pragma once
 
+#include <gfx/seadColor.h>
 #include <math/seadMatrix.h>
 #include <math/seadVector.h>
 
 namespace al {
-    class IUseEffectKeeper;
+class IUseEffectKeeper;
 
-    void emitEffectCurrentPos(IUseEffectKeeper*, const char*);
-    void tryUpdateEffectMaterialCode(IUseEffectKeeper* pKeeper, const char* pMaterialCode);
-    void resetEffectMaterialCode(IUseEffectKeeper* pKeeper);
-    void updateEffectMaterialWet(IUseEffectKeeper* pKeeper, bool isWet);
-    void updateEffectMaterialWater(IUseEffectKeeper* pKeeper, bool isWater);
-    void emitEffect(IUseEffectKeeper*, const char*, const sead::Vector3f*);
-    bool isEffectExist(IUseEffectKeeper*, const char*);
-    bool isEffectSnapshotCameraMode(IUseEffectKeeper*, const char*);
-    bool tryEmitEffect(IUseEffectKeeper*, const char*, const sead::Vector3f*);
-    void deleteEffect(IUseEffectKeeper*, const char*);
-    bool tryDeleteEffect(IUseEffectKeeper*, const char*);
-    bool tryDeleteEffectAndParticle(IUseEffectKeeper*, const char*);
-    void deleteEffectAll(IUseEffectKeeper*);
-    bool tryKillEmitterAndParticleAll(IUseEffectKeeper*);
-    bool tryDeleteEmitterAndParticleAll(IUseEffectKeeper*);
-    void onCalcAndDrawEffect(IUseEffectKeeper*);
-    void offCalcAndDrawEffect(IUseEffectKeeper*);
-    void updateEffects(IUseEffectKeeper*);
-    void forceSetStopCalcAndDraw(IUseEffectKeeper*, bool);
-    bool isEffectEmitting(const IUseEffectKeeper*, const char*);
-    bool isEffectEmittingFully(const IUseEffectKeeper*, const char*);
-    void setEffectEmitRatio(IUseEffectKeeper*, const char*, f32);
-    void setEffectEmitterScale(IUseEffectKeeper*, const char*, const sead::Vector3f&);
-    void setEffectScale(IUseEffectKeeper*, const char*, const sead::Vector3f&);
-    void setEffectEmitterVolumeScale(IUseEffectKeeper*, const char*, const sead::Vector3f&);
-    void setEffectParticleScale(IUseEffectKeeper*, const char*, f32);
-    void setEffectFollowPosPtr(IUseEffectKeeper*, const char*, const sead::Vector3f*);
-    void setEffectFollowMtxPtr(IUseEffectKeeper*, const char*, const sead::Matrix34f*);
-    void setEffectNamedMtxPtr(IUseEffectKeeper*, const char*, const sead::Matrix34f*);
-    bool trySetEffectNamedMtxPtr(IUseEffectKeeper*, const char*, const sead::Matrix34f*);
-};  // namespace al
+void emitEffectCurrentPos(IUseEffectKeeper* pUser, const char* pName);
+void emitEffect(IUseEffectKeeper* pUser, const char* pName, const sead::Vector3f* pPos);
+bool isEffectExist(IUseEffectKeeper* pUser, const char* pName);
+bool isEffectSnapshotCameraMode(IUseEffectKeeper* pUser, const char* pName);
+bool tryEmitEffect(IUseEffectKeeper* pUser, const char* pName, const sead::Vector3f* pPos);
+void deleteEffect(IUseEffectKeeper* pUser, const char* pName);
+void tryDeleteEffect(IUseEffectKeeper* pUser, const char* pName);
+void tryDeleteEffectAndParticle(IUseEffectKeeper* pUser, const char* pName);
+void deleteEffectAll(IUseEffectKeeper* pUser);
+void tryKillEmitterAndParticleAll(IUseEffectKeeper* pUser);
+void tryDeleteEmitterAndParticleAll(IUseEffectKeeper* pUser);
+void onCalcAndDrawEffect(IUseEffectKeeper* pUser);
+void offCalcAndDrawEffect(IUseEffectKeeper* pUser);
+void updateEffects(IUseEffectKeeper* pUser);
+void forceSetStopCalcAndDraw(IUseEffectKeeper* pUser, bool isStop);
+bool isEffectEmitting(const IUseEffectKeeper* pUser, const char* pName);
+bool isEffectEmittingFully(const IUseEffectKeeper* pUser, const char* pName);
+void setEffectEmitRatio(IUseEffectKeeper* pUser, const char* pName, f32 ratio);
+void setEffectEmitterScale(IUseEffectKeeper* pUser, const char* pName,
+                           const sead::Vector3f& rScale);
+void setEffectAllScale(IUseEffectKeeper* pUser, const char* pName, const sead::Vector3f& rScale);
+void setEffectEmitterVolumeScale(IUseEffectKeeper* pUser, const char* pName,
+                                 const sead::Vector3f& rScale);
+void setEffectParticleScale(IUseEffectKeeper* pUser, const char* pName, f32 scale);
+void setEffectParticleScale(IUseEffectKeeper* pUser, const char* pName,
+                            const sead::Vector3f& rScale);
+void setEffectParticleAlpha(IUseEffectKeeper* pUser, const char* pName, f32 alpha);
+void setEffectParticleColor(IUseEffectKeeper* pUser, const char* pName,
+                            const sead::Color4f& rColor);
+void setEffectEmitterColors(IUseEffectKeeper* pUser, const char* pName,
+                            const sead::Color4f& rColor0, const sead::Color4f& rColor1);
+void setParticleLifeScale(IUseEffectKeeper* pUser, const char* pName, f32 scale);
+void setEffectParticleDirectionalVel(IUseEffectKeeper* pUser, const char* pName, f32 vel);
+void setEffectFollowPosPtr(IUseEffectKeeper* pUser, const char* pName, const sead::Vector3f* pPos);
+void setEffectFollowMtxPtr(IUseEffectKeeper* pUser, const char* pName,
+                           const sead::Matrix34f* pMtx);
+void setEffectNamedMtxPtr(IUseEffectKeeper* pUser, const char* pName, const sead::Matrix34f* pMtx);
+void trySetEffectNamedMtxPtr(IUseEffectKeeper* pUser, const char* pName,
+                             const sead::Matrix34f* pMtx);
+void tryUpdateEffectMaterialCode(IUseEffectKeeper* pUser, const char* pMaterialCode);
+void resetEffectMaterialCode(IUseEffectKeeper* pUser);
+void updateEffectMaterialWater(IUseEffectKeeper* pUser, bool isOn);
+void updateEffectMaterialRouteDokan(IUseEffectKeeper* pUser, bool isOn);
+void updateEffectMaterialWet(IUseEffectKeeper* pUser, bool isOn);
+void updateEffectMaterialPuddle(IUseEffectKeeper* pUser, bool isOn);
+const sead::Vector3f* getEffectPosPtr(IUseEffectKeeper* pUser, const char* pName);
+}  // namespace al
