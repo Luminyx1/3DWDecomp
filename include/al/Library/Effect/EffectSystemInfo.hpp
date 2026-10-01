@@ -13,10 +13,10 @@ public:
 
     EffectSystem* getEffectSystem() const;
 
-    s32 _0;
-    PtclSystem* mPtclSystem;
-    EffectDataBase* mEffectDataBase;
-    s32 _18;
+    s32 _0 = 0;
+    PtclSystem* mPtclSystem = nullptr;
+    EffectDataBase* mEffectDataBase = nullptr;
+    s32 _18 = 0;
 };
 
 static_assert(sizeof(EffectSystemInfo) == 0x20);
