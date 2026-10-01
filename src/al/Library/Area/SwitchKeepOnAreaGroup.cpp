@@ -34,7 +34,7 @@ static bool isInAreaAll(const AreaObj* pAreaObj, const sead::Vector3f* pPosition
  * @param pGroup area group
  */
 SwitchKeepOnAreaGroup::SwitchKeepOnAreaGroup(AreaObjGroup* pGroup) : mGroup(pGroup) {
-    mCount = pGroup->mNumAreas;
+    mCount = pGroup->getSize();
 
     if (mCount > 0) {
         mKeepOnAreas = new AreaObj*[mCount];
@@ -50,7 +50,7 @@ SwitchKeepOnAreaGroup::SwitchKeepOnAreaGroup(AreaObjGroup* pGroup) : mGroup(pGro
 void SwitchKeepOnAreaGroup::update(const sead::Vector3f* pPositions, s32 num,
                                    bool isDisasterMode) {
     mKeepOnCount = 0;
-    s32 numAreas = mGroup->mNumAreas;
+    s32 numAreas = mGroup->getSize();
 
     for (s32 i = 0; i < numAreas; i++) {
         AreaObj* areaObj = mGroup->getAreaObj(i);
@@ -69,7 +69,7 @@ void SwitchKeepOnAreaGroup::update(const sead::Vector3f* pPositions, s32 num,
         }
 
         s32 onCondition = 0;
-        tryGetArg(&onCondition, *areaObj->mPlacementInfo, "OnCondition");
+        tryGetArg(&onCondition, areaObj->getPlacementInfo(), "OnCondition");
         bool isIn;
 
         switch (onCondition) {

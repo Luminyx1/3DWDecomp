@@ -54,12 +54,12 @@ AreaObj* tryFindAreaObjWithFilter(const IUseAreaObj* pAreaUser, const char* pNam
     }
 
     AreaObj* result = nullptr;
-    s32 num = group->mNumAreas;
+    s32 num = group->getSize();
 
     for (s32 i = 0; i < num; i++) {
         AreaObj* areaObj = group->getAreaObj(i);
 
-        if ((result == nullptr || result->mPriority <= areaObj->mPriority) && areaObj->isInVolume(rPos) &&
+        if ((result == nullptr || result->getPriority() <= areaObj->getPriority()) && areaObj->isInVolume(rPos) &&
             pFilter->isValidArea(areaObj)) {
             result = areaObj;
         }
@@ -91,7 +91,7 @@ AreaObj* tryFindAreaObj(const IUseAreaObj* pAreaUser, const char* pName) {
         return nullptr;
     }
 
-    s32 num = group->mNumAreas;
+    s32 num = group->getSize();
 
     for (s32 i = 0; i < num; i++) {
         AreaObj* areaObj = group->getAreaObj(i);
@@ -117,7 +117,7 @@ AreaObj* tryFindPlessieAreaObj(const IUseAreaObj* pAreaUser, const char* pName) 
         return nullptr;
     }
 
-    s32 num = group->mNumAreas;
+    s32 num = group->getSize();
 
     for (s32 i = 0; i < num; i++) {
         AreaObj* areaObj = group->getAreaObj(i);
@@ -143,7 +143,7 @@ AreaObj* tryFindPlessieTunnelAreaObj(const IUseAreaObj* pAreaUser, const char* p
         return nullptr;
     }
 
-    s32 num = group->mNumAreas;
+    s32 num = group->getSize();
 
     for (s32 i = 0; i < num; i++) {
         AreaObj* areaObj = group->getAreaObj(i);
@@ -187,7 +187,7 @@ bool isInDisasterCameraArea(const IUseAreaObj* pAreaUser, const sead::Vector3f& 
         return false;
     }
 
-    s32 num = group->mNumAreas;
+    s32 num = group->getSize();
 
     for (s32 i = 0; i < num; i++) {
         AreaObj* areaObj = group->getAreaObj(i);
@@ -214,7 +214,7 @@ bool isInPlessieCameraArea(const IUseAreaObj* pAreaUser, const sead::Vector3f& r
         return false;
     }
 
-    s32 num = group->mNumAreas;
+    s32 num = group->getSize();
 
     for (s32 i = 0; i < num; i++) {
         AreaObj* areaObj = group->getAreaObj(i);
@@ -243,7 +243,7 @@ AreaObj* getStartCameraArea(const IUseAreaObj* pAreaUser, const sead::Vector3f& 
         return nullptr;
     }
 
-    s32 num = group->mNumAreas;
+    s32 num = group->getSize();
 
     for (s32 i = 0; i < num; i++) {
         AreaObj* areaObj = group->getAreaObj(i);
@@ -303,7 +303,7 @@ AreaObj* tryFindAreaObjPlayerOne(const IUseAreaObj* pAreaUser, const char* pName
             continue;
         }
 
-        if (result == nullptr || result->mPriority < areaObj->mPriority) {
+        if (result == nullptr || result->getPriority() < areaObj->getPriority()) {
             result = areaObj;
         }
     }
@@ -326,7 +326,7 @@ AreaObj* tryFindAreaObjPlayerAll(const IUseAreaObj* pAreaUser, const char* pName
         return nullptr;
     }
 
-    s32 areaNum = group->mNumAreas;
+    s32 areaNum = group->getSize();
     s32 playerNum = getPlayerNumMax(pPlayerHolder);
     AreaObj* result = nullptr;
 
@@ -352,7 +352,7 @@ AreaObj* tryFindAreaObjPlayerAll(const IUseAreaObj* pAreaUser, const char* pName
             continue;
         }
 
-        if (result == nullptr || result->mPriority < found->mPriority) {
+        if (result == nullptr || result->getPriority() < found->mPriority) {
             result = found;
         }
     }

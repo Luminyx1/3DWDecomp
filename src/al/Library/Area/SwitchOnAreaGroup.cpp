@@ -20,7 +20,7 @@ SwitchOnAreaGroup::SwitchOnAreaGroup(AreaObjGroup* pGroup) : mGroup(pGroup) {}
  * @param isDisasterMode whether disaster mode is active
  */
 void SwitchOnAreaGroup::update(const sead::Vector3f* pPositions, s32 num, bool isDisasterMode) {
-    s32 numAreas = mGroup->mNumAreas;
+    s32 numAreas = mGroup->getSize();
 
     for (s32 i = 0; i < numAreas; i++) {
         AreaObj* areaObj = mGroup->getAreaObj(i);
@@ -57,7 +57,7 @@ void SwitchOnAreaGroup::endInit(IScenarioCompleteChecker* pChecker) {
         return;
     }
 
-    s32 numAreas = mGroup->mNumAreas;
+    s32 numAreas = mGroup->getSize();
 
     for (s32 i = 0; i < numAreas; i++) {
         AreaObj* areaObj = mGroup->getAreaObj(i);

@@ -15,7 +15,7 @@ static AreaObj* findAreaObj(const IUseAreaObj* pAreaUser, const char* pName,
 
 static bool checkArrow(sead::Vector3f* pHitPos, sead::Vector3f* pNormal, const AreaObj* pAreaObj,
                        const sead::Vector3f& rStart, const sead::Vector3f& rEnd) {
-    return pAreaObj->mShape->checkArrowCollision(pHitPos, pNormal, rStart, rEnd);
+    return pAreaObj->getAreaShape()->checkArrowCollision(pHitPos, pNormal, rStart, rEnd);
 }
 
 /**
@@ -120,7 +120,7 @@ bool isInPlessieTunnel(const IUseAreaObj* pAreaUser, const sead::Vector3f& rPos)
         return false;
     }
 
-    s32 num = group->mNumAreas;
+    s32 num = group->getSize();
 
     for (s32 i = 0; i < num; i++) {
         AreaObj* areaObj = group->getAreaObj(i);
@@ -145,7 +145,7 @@ bool tryGetAreaObjArg(s32* pArg, const AreaObj* pAreaObj, const char* pKey) {
         return false;
     }
 
-    return tryGetArg(pArg, *pAreaObj->mPlacementInfo, pKey);
+    return tryGetArg(pArg, pAreaObj->getPlacementInfo(), pKey);
 }
 
 /**
@@ -160,7 +160,7 @@ bool tryGetAreaObjArg(f32* pArg, const AreaObj* pAreaObj, const char* pKey) {
         return false;
     }
 
-    return tryGetArg(pArg, *pAreaObj->mPlacementInfo, pKey);
+    return tryGetArg(pArg, pAreaObj->getPlacementInfo(), pKey);
 }
 
 /**
@@ -175,7 +175,7 @@ bool tryGetAreaObjArg(bool* pArg, const AreaObj* pAreaObj, const char* pKey) {
         return false;
     }
 
-    return tryGetArg(pArg, *pAreaObj->mPlacementInfo, pKey);
+    return tryGetArg(pArg, pAreaObj->getPlacementInfo(), pKey);
 }
 
 /**
@@ -190,7 +190,7 @@ bool tryGetAreaObjStringArg(const char** pArg, const AreaObj* pAreaObj, const ch
         return false;
     }
 
-    return tryGetStringArg(pArg, *pAreaObj->mPlacementInfo, pKey);
+    return tryGetStringArg(pArg, pAreaObj->getPlacementInfo(), pKey);
 }
 
 /**

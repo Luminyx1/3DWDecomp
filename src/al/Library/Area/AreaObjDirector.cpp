@@ -131,7 +131,7 @@ void AreaObjDirector::createAreaObjGroupBuffer() {
         for (s32 j = i; j > 0; j--) {
             AreaObjGroup* prev = mAreaGroups[j - 1];
 
-            if (prev != nullptr && strcmp(mAreaGroups[j]->mGroupName, prev->mGroupName) >= 0) {
+            if (prev != nullptr && strcmp(mAreaGroups[j]->getName(), prev->getName()) >= 0) {
                 break;
             }
 
@@ -196,7 +196,7 @@ s32 AreaObjDirector::getTotalAreaObjs() const {
     s32 total = 0;
 
     for (s32 i = 0; i < mAreaGroupCount; i++) {
-        total += mAreaGroups[i]->mNumAreas;
+        total += mAreaGroups[i]->getSize();
     }
 
     return total;
@@ -267,7 +267,7 @@ void AreaObjDirector::setEnableAll(bool isEnable) {
             continue;
         }
 
-        for (s32 j = 0; j < group->mNumAreas; j++) {
+        for (s32 j = 0; j < group->getSize(); j++) {
             group->getAreaObj(j)->_66 = isEnable;
         }
     }
@@ -329,7 +329,7 @@ s32 AreaObjDirector::getAreaObjGroupIndex(const char* pName) const {
 
     while (lower < upper) {
         s32 mid = (lower + upper) / 2;
-        s32 cmp = strcmp(pName, mAreaGroups[mid]->mGroupName);
+        s32 cmp = strcmp(pName, mAreaGroups[mid]->getName());
 
         if (cmp == 0) {
             return mid;

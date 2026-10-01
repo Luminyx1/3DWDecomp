@@ -33,7 +33,7 @@ AreaObjGroup::AreaObjGroup(const char* pGroupName, const char* pLinkName,
     for (s32 i = 0; i < num; i++) {
         PlacementInfo placementInfo;
         getLinksInfoByIndex(&placementInfo, rInfo, pLinkName, i);
-        areaInitInfo.set(placementInfo, rInfo.mStageSwitchDirector);
+        areaInitInfo.set(placementInfo, rInfo.getStageSwitchDirector());
         AreaObj* areaObj = new AreaObj("name");
         areaObj->init(areaInitInfo);
         resisterAreaObj(areaObj);

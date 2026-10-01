@@ -19,9 +19,9 @@ namespace al {
 void calcNearestAreaObjEdgePos(sead::Vector3f* pOut, const AreaObj* pAreaObj,
                                const sead::Vector3f& rPos) {
     sead::Vector3f scale;
-    tryGetScale(&scale, *pAreaObj->mPlacementInfo);
+    tryGetScale(&scale, pAreaObj->getPlacementInfo());
     sead::Vector3f center;
-    tryGetTrans(&center, *pAreaObj->mPlacementInfo);
+    tryGetTrans(&center, pAreaObj->getPlacementInfo());
 
     sead::Vector3f side;
     sead::Vector3f up;
@@ -89,7 +89,7 @@ void calcNearestAreaObjEdgePos(sead::Vector3f* pOut, const AreaObj* pAreaObj,
 bool checkAreaObjCollisionByArrow(sead::Vector3f* pHitPos, sead::Vector3f* pNormal,
                                   const AreaObj* pAreaObj, const sead::Vector3f& rStart,
                                   const sead::Vector3f& rEnd) {
-    return pAreaObj->mShape->checkArrowCollision(pHitPos, pNormal, rStart, rEnd);
+    return pAreaObj->getAreaShape()->checkArrowCollision(pHitPos, pNormal, rStart, rEnd);
 }
 
 /**
@@ -108,10 +108,10 @@ AreaObj* tryFindAreaObjByName(const IUseAreaObj* pAreaUser, const char* pGroupNa
         return nullptr;
     }
 
-    for (u32 i = 0; i < group->mNumAreas; i++) {
+    for (u32 i = 0; i < group->getSize(); i++) {
         AreaObj* areaObj = group->getAreaObj(i);
 
-        if (tryGetPlacementID(&placementId, *areaObj->mPlacementInfo) &&
+        if (tryGetPlacementID(&placementId, areaObj->getPlacementInfo()) &&
             strcmp(placementId.mPlacementID, pName) == 0) {
             return areaObj;
         }
