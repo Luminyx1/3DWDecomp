@@ -32,6 +32,14 @@ public:
 
     IUseRequestParam* getParam(s32 index) const { return (&mCurrentParam)[index]; }
 
+    void setCurrentParam(IUseRequestParam* pParam) { mCurrentParam = pParam; }
+
+    void setStartParam(IUseRequestParam* pParam) { mStartParam = pParam; }
+
+    void setEndParam(IUseRequestParam* pParam) { mEndParam = pParam; }
+
+    void setRequestParam(IUseRequestParam* pParam) { mRequestParam = pParam; }
+
     s32 mPriority = -2;
     s32 mStep = -1;
     s32 mStepMax = 1;
