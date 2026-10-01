@@ -30,5 +30,7 @@ sead::Viewport* getDisplayViewport();
 sead::Viewport* getSubDisplayViewport();
 bool isInScreen(const sead::Vector2f& rPos, f32 margin);
 void calcScreenPosFromLayoutPos(sead::Vector2f* pOut, const sead::Vector2f& rLayoutPos);
+void calcScreenPosFromWorldPos(sead::Vector2f* pOut, const IUseCamera* pCamera, const sead::Vector3f& rPos,
+                               s32 viewIndex);
 void calcLayoutPosFromScreenPos(sead::Vector2f* pOut, const sead::Vector2f& rScreenPos);
 }  // namespace al
