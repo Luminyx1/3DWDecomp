@@ -58,7 +58,7 @@ void ModelDrawerDeferredSilhouette::createTable() {
         const char* optionNames[] = {"cSilhouetteMode", "cIsEnableDitherAlpha"};
         const char* optionValues[] = {"4", "1"};
         nn::g3d::ShaderSelector* selector =
-            alModelFunction::createShaderSelector(model->mGpuMemAllocator, shape, material,
+            alModelFunction::createShaderSelector(model->getGpuMemAllocator(), shape, material,
                                                   shadingModel, 2, optionNames, optionValues, false);
         table->insert(
             new MeshDrawer(shape->GetResource()->GetName(), modelObj, shape, selector, modelNum));
@@ -76,16 +76,16 @@ void ModelDrawerDeferredSilhouette::draw() const {
         return;
     }
 
-    mGraphicsContext.apply(GameFrameworkNx::sInstance->mDrawContext);
+    mGraphicsContext.apply(GameFrameworkNx::getDrawContext());
     ShaderFresnelTextureKeeper* fresnelTextureKeeper =
-        mGraphicsSystemInfo->mShaderEnvTextureKeeper->getFresnelTextureKeeper();
+        mGraphicsSystemInfo->getShaderEnvTextureKeeper()->getFresnelTextureKeeper();
     for (s32 i = 0; i < mMeshDrawerTable->size(); i++) {
         MeshDrawer* meshDrawer = (*mMeshDrawerTable)[i];
 
         if (meshDrawer->isExistDrawMesh()) {
             fresnelTextureKeeper->activateSilhouetteCurveTexture(
                 mCategory, getSamplerLocationSilhouetteCurve(), true);
-            meshDrawer->draw(&mGraphicsSystemInfo->mViewVolume, 0, nullptr);
+            meshDrawer->draw(&mGraphicsSystemInfo->getViewVolume(), 0, nullptr);
         }
     }
 }

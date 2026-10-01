@@ -49,7 +49,7 @@ void ModelDrawerDeferredEcho::createTable() {
         const char* optionNames[] = {"cEchoMode"};
         const char* optionValues[] = {"4"};
         nn::g3d::ShaderSelector* selector =
-            alModelFunction::createShaderSelector(model->mGpuMemAllocator, shape, material,
+            alModelFunction::createShaderSelector(model->getGpuMemAllocator(), shape, material,
                                                   shadingModel, 1, optionNames, optionValues, false);
         table->insert(
             new MeshDrawer(shape->GetResource()->GetName(), modelObj, shape, selector, modelNum));
@@ -67,26 +67,20 @@ void ModelDrawerDeferredEcho::draw() const {
         return;
     }
 
-    mGraphicsContext.apply(GameFrameworkNx::sInstance->mDrawContext);
+    mGraphicsContext.apply(GameFrameworkNx::getDrawContext());
     ModelAdditionalInfo additionalInfo(mGraphicsSystemInfo, false);
 
     for (s32 i = 0; i < mModelNum; i++) {
         SimpleModelG3D* model = mModels[i]->getModelG3D();
         model->setModelAdditionalInfo(additionalInfo);
 
-        if (!model->mIsLodDisabled) {
-            s32 updateCount = mGraphicsSystemInfo->mDrawEnvUpdateCount;
-
-            if (model->mLodUpdateCount != updateCount) {
-                model->updateLod(mGraphicsSystemInfo->mDrawCameraPos, updateCount);
-            }
-        }
+        tryUpdateModelLod(model);
     }
 
     const UniformBlock* uniformBlock =
         (*mGraphicsSystemInfo->getViewIndexedUboArray("EchoBlockEmitterUbo"))[0];
     uniformBlock->activate(
-        reinterpret_cast<agl::DrawContext*>(GameFrameworkNx::sInstance->mDrawContext),
+        GameFrameworkNx::getAglDrawContext(),
         getUniformBlockLocationEchoBlock());
 
     for (s32 i = 0; i < mMeshDrawerTable->size(); i++) {
@@ -95,9 +89,9 @@ void ModelDrawerDeferredEcho::draw() const {
         if (meshDrawer->isExistDrawMesh()) {
             additionalInfo.activateModelLightTexture(meshDrawer->getMaterialObj()->GetResource());
             alModelFunction::prepareModelShapeDrawDeferredGraphicsContextByRenderState(
-                reinterpret_cast<agl::DrawContext*>(GameFrameworkNx::sInstance->mDrawContext),
+                GameFrameworkNx::getAglDrawContext(),
                 mModels[0]->getModelG3D(), meshDrawer->getShapeIndex());
-            meshDrawer->draw(&mGraphicsSystemInfo->mViewVolume, 0, &additionalInfo);
+            meshDrawer->draw(&mGraphicsSystemInfo->getViewVolume(), 0, &additionalInfo);
         }
     }
 }

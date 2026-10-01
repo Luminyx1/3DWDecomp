@@ -31,7 +31,7 @@ protected:
 
     void updateLightInfo() {
         ShaderCubeMapKeeper* keeper =
-            mGraphicsSystemInfo->mCubeMapDirector->getShaderCubeMapKeeper();
+            mGraphicsSystemInfo->getCubeMapDirector()->getShaderCubeMapKeeper();
         if (keeper) {
             mLightInfo = keeper->getCurrentCategoryLightInfo(mCategory);
         }

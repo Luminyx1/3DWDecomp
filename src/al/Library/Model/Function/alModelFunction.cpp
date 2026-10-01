@@ -17,7 +17,7 @@ namespace alModelFunction {
  */
 f32 calcBoundingSphere(const alModelCafe* pModel) {
     const nn::g3d::Sphere* sphere = pModel->getModelG3D()->getModelObj()->GetBounding();
-    const sead::Matrix34f& mtx = *pModel->mBaseMtx;
+    const sead::Matrix34f& mtx = *pModel->getBaseMtx();
     nn::util::Vector3fType center = sphere->center;
     sead::Vector3f centerPos = {nn::util::VectorGetX(center), nn::util::VectorGetY(center),
                                 nn::util::VectorGetZ(center)};

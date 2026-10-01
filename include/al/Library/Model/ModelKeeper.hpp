@@ -33,13 +33,21 @@ public:
     void initLightCtrl(s32 num);
 
     alModelCafe* getModelCafe() const { return mModelCafe; }
+    const char* getModelName() const { return mModelName; }
+    bool isFixedModel() const { return mIsFixedModel; }
+    bool isIgnoreUpdateDrawClipping() const { return mIsIgnoreUpdateDrawClipping; }
+    bool isNeedSetBaseMtxAndCalcAnim() const { return mIsNeedSetBaseMtxAndCalcAnim; }
+    void setFixedModel(bool isFixed) { mIsFixedModel = isFixed; }
+    void setIgnoreUpdateDrawClipping(bool isIgnore) { mIsIgnoreUpdateDrawClipping = isIgnore; }
+    void setNeedSetBaseMtxAndCalcAnim(bool isNeed) { mIsNeedSetBaseMtxAndCalcAnim = isNeed; }
+    void setLodDisabled(bool isDisable) { mIsLodDisabled = isDisable; }
 
     alModelCafe* mModelCafe = nullptr;
     const char* mModelName = nullptr;
     void* _10 = nullptr;
-    bool _18 = false;
-    bool _19 = false;
-    bool _1a = true;
+    bool mIsFixedModel = false;
+    bool mIsIgnoreUpdateDrawClipping = false;
+    bool mIsNeedSetBaseMtxAndCalcAnim = true;
     bool mIsLodDisabled = false;
     bool _1c = false;
 };

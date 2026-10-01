@@ -64,7 +64,7 @@ void ModelDrawerForward::createTable() {
                 const nn::g3d::MaterialObj* material =
                     modelObj->GetMaterial(shape->GetResource()->GetMaterialIndex());
                 nn::g3d::ShaderSelector* selector =
-                    alModelFunction::createShaderSelectorFromAssignShader(model->mGpuMemAllocator,
+                    alModelFunction::createShaderSelectorFromAssignShader(model->getGpuMemAllocator(),
                                                                           shape, material);
                 mMeshDrawerTable->insert(new MeshDrawer(shape->GetResource()->GetName(), modelObj,
                                                         shape, selector, mModelNumMax));
@@ -89,13 +89,13 @@ void ModelDrawerForward::createTable() {
                 const char* optionNames[] = {"cSkyColor0Type", "cExposureConnect"};
                 const char* optionValues[] = {"1", "0"};
                 selector = alModelFunction::createShaderSelector(
-                    model->mGpuMemAllocator, shape, material, shadingModel, 2, optionNames,
+                    model->getGpuMemAllocator(), shape, material, shadingModel, 2, optionNames,
                     optionValues, false);
             } else {
                 const char* optionNames[] = {"cRenderType", "cSkyColor0Type", "cExposureConnect"};
                 const char* optionValues[] = {"3", "1", "0"};
                 selector = alModelFunction::createShaderSelector(
-                    model->mGpuMemAllocator, shape, material, shadingModel, 3, optionNames,
+                    model->getGpuMemAllocator(), shape, material, shadingModel, 3, optionNames,
                     optionValues, false);
             }
 
@@ -129,7 +129,7 @@ void ModelDrawerForward::draw() const {
     if (!mIsRenderStateInvalidate) {
         sead::GraphicsContext context;
         context.setBlendEnable(false);
-        context.apply(GameFrameworkNx::sInstance->mDrawContext);
+        context.apply(GameFrameworkNx::getDrawContext());
     }
 
     ModelAdditionalInfo additionalInfo(mGraphicsSystemInfo, mIsSecondCategory);
@@ -139,13 +139,7 @@ void ModelDrawerForward::draw() const {
         SimpleModelG3D* model = mModels[i]->getModelG3D();
         model->setModelAdditionalInfo(additionalInfo);
 
-        if (!model->mIsLodDisabled) {
-            s32 updateCount = mGraphicsSystemInfo->mDrawEnvUpdateCount;
-
-            if (model->mLodUpdateCount != updateCount) {
-                model->updateLod(mGraphicsSystemInfo->mDrawCameraPos, updateCount);
-            }
-        }
+        tryUpdateModelLod(model);
     }
 
     for (s32 i = 0; i < mMeshDrawerTable->size(); i++) {
@@ -153,7 +147,7 @@ void ModelDrawerForward::draw() const {
 
         if (meshDrawer->isExistDrawMesh()) {
             additionalInfo.activateModelLightTexture(meshDrawer->getMaterialObj()->GetResource());
-            meshDrawer->draw(&mGraphicsSystemInfo->mViewVolume, 0, &additionalInfo);
+            meshDrawer->draw(&mGraphicsSystemInfo->getViewVolume(), 0, &additionalInfo);
         }
     }
 }

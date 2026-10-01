@@ -75,7 +75,7 @@ void ModelDrawerDepthShadow::createTable() {
         }
 
         nn::g3d::ShaderSelector* selector =
-            alModelFunction::createShaderSelector(model->mGpuMemAllocator, shape, material,
+            alModelFunction::createShaderSelector(model->getGpuMemAllocator(), shape, material,
                                                   shadingModel, 2, optionNames, optionValues, false);
         bool isOpaque = renderStateMode != 1;
         auto* meshDrawer =
@@ -83,15 +83,15 @@ void ModelDrawerDepthShadow::createTable() {
         meshDrawer->initForDepthShadow();
 
         if (!isDepthAlphaMask && isOpaque) {
-            meshDrawer->createDisplayList(model->mGpuMemAllocator,
+            meshDrawer->createDisplayList(model->getGpuMemAllocator(),
                                           MeshDrawer::RENDER_STATE_ACTIVATE_TYPE(2),
                                           MeshDrawer::TEXTURE_ACTIVATE_TYPE(2),
                                           MeshDrawer::MATERIAL_ACTIVATE_TYPE(2), false);
         } else {
             meshDrawer->createDisplayList(
-                model->mGpuMemAllocator, MeshDrawer::RENDER_STATE_ACTIVATE_TYPE(2),
-                MeshDrawer::TEXTURE_ACTIVATE_TYPE(modelCafe->mAnimPlayerMat1 == nullptr),
-                MeshDrawer::MATERIAL_ACTIVATE_TYPE(modelCafe->mAnimPlayerMat2 == nullptr), false);
+                model->getGpuMemAllocator(), MeshDrawer::RENDER_STATE_ACTIVATE_TYPE(2),
+                MeshDrawer::TEXTURE_ACTIVATE_TYPE(modelCafe->getAnimPlayerMat1() == nullptr),
+                MeshDrawer::MATERIAL_ACTIVATE_TYPE(modelCafe->getAnimPlayerMat2() == nullptr), false);
         }
 
         table->insert(meshDrawer);
@@ -108,7 +108,7 @@ void ModelDrawerDepthShadow::draw() const {
         return;
     }
 
-    DepthShadowDrawer* depthShadowDrawer = mGraphicsSystemInfo->mShadowDirector->mDepthShadowDrawer;
+    DepthShadowDrawer* depthShadowDrawer = mGraphicsSystemInfo->getShadowDirector()->mDepthShadowDrawer;
 
     if (depthShadowDrawer->isPreDraw()) {
         for (s32 i = 0; i < mMeshDrawerTable->size(); i++) {

@@ -90,7 +90,7 @@ void ModelDrawerDepthOnly::createTable() {
         }
 
         nn::g3d::ShaderSelector* selector =
-            alModelFunction::createShaderSelector(model->mGpuMemAllocator, shape, material,
+            alModelFunction::createShaderSelector(model->getGpuMemAllocator(), shape, material,
                                                   shadingModel, 3, optionNames, optionValues, false);
 
         const char* ditherAlpha = shaderAssign->FindShaderOption("cIsEnableDitherAlbedoAlpha");
@@ -125,29 +125,23 @@ void ModelDrawerDepthOnly::draw() const {
         return;
     }
 
-    mGraphicsContext.apply(GameFrameworkNx::sInstance->mDrawContext);
+    mGraphicsContext.apply(GameFrameworkNx::getDrawContext());
     agl::driver::GraphicsDriverMgr::instance()->setPolygonOffset(
-        reinterpret_cast<agl::DrawContext*>(GameFrameworkNx::sInstance->mDrawContext), 3.0f, 2.0f);
+        GameFrameworkNx::getAglDrawContext(), 3.0f, 2.0f);
 
     for (s32 i = 0; i < mModelNum; i++) {
         SimpleModelG3D* model = mModels[i]->getModelG3D();
         model->setModelGlobalAlpha();
 
-        if (!model->mIsLodDisabled) {
-            s32 updateCount = mGraphicsSystemInfo->mDrawEnvUpdateCount;
-
-            if (model->mLodUpdateCount != updateCount) {
-                model->updateLod(mGraphicsSystemInfo->mDrawCameraPos, updateCount);
-            }
-        }
+        tryUpdateModelLod(model);
     }
 
     for (s32 i = 0; i < mMeshDrawerTable->size(); i++) {
-        (*mMeshDrawerTable)[i]->drawDepthOnly(&mGraphicsSystemInfo->mViewVolume, 0);
+        (*mMeshDrawerTable)[i]->drawDepthOnly(&mGraphicsSystemInfo->getViewVolume(), 0);
     }
 
     agl::driver::GraphicsDriverMgr::instance()->setPolygonOffset(
-        reinterpret_cast<agl::DrawContext*>(GameFrameworkNx::sInstance->mDrawContext), 0.0f, 0.0f);
+        GameFrameworkNx::getAglDrawContext(), 0.0f, 0.0f);
 }
 
 }  // namespace al

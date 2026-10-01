@@ -35,7 +35,7 @@
 namespace al {
 
 static agl::DrawContext* getDrawContext() {
-    return reinterpret_cast<agl::DrawContext*>(GameFrameworkNx::sInstance->mDrawContext);
+    return GameFrameworkNx::getAglDrawContext();
 }
 
 static nn::gfx::CommandBuffer* getCommandBuffer(agl::DrawContext* pContext) {
@@ -338,7 +338,7 @@ void MeshDrawer::draw(const nn::g3d::ViewVolume* pViewVolume, s32 viewIndex,
             continue;
         }
 
-        s32 lodIndex = model->mLodIndex;
+        s32 lodIndex = model->getLodIndex();
 
         if (lodIndex >= mesh->shapeObj->GetResource()->GetMeshCount()) {
             continue;
@@ -350,7 +350,7 @@ void MeshDrawer::draw(const nn::g3d::ViewVolume* pViewVolume, s32 viewIndex,
 
         nn::g3d::MaterialObj* material = const_cast<nn::g3d::MaterialObj*>(mesh->materialObj);
         const nn::g3d::SkeletonObj* skeleton = mesh->modelObj->GetSkeleton();
-        s32 bufferIndex = *model->mCurrentBufferIndex;
+        s32 bufferIndex = model->getCurrentBufferIndex();
 
         if (*reinterpret_cast<const u8*>(model->getResRenderState(mShapeIndex))) {
             model->useCustomRenderState(getDrawContext(), material, mShapeIndex);
@@ -358,7 +358,7 @@ void MeshDrawer::draw(const nn::g3d::ViewVolume* pViewVolume, s32 viewIndex,
 
         agl::DrawContext* context = getDrawContext();
 
-        if (mTextureType == 0 || model->mIsForceActivateTexture) {
+        if (mTextureType == 0 || model->isForceActivateTexture()) {
             mShaderAssign->getSampler().activate(context, material);
         }
 
@@ -397,7 +397,7 @@ void MeshDrawer::draw(const nn::g3d::ViewVolume* pViewVolume, s32 viewIndex,
             }
         }
 
-        activateUniformBlockAssignArray(*model->mUniformBlockAssignArray);
+        activateUniformBlockAssignArray(*model->getUniformBlockAssignArray());
         const nn::g3d::ShapeObj* shape = mesh->shapeObj;
         bool isExistBounding = alModelFunction::isExistBoundingNode(shape->GetResource());
 
@@ -449,7 +449,7 @@ void MeshDrawer::drawTest(const nn::g3d::ViewVolume* pViewVolume, s32 viewIndex)
         Mesh* mesh = mMeshes[i];
         const SimpleModelG3D* model = mesh->model;
         const nn::g3d::ResRenderState* renderState = model->getResRenderState(mShapeIndex);
-        s32 lodIndex = model->mLodIndex;
+        s32 lodIndex = model->getLodIndex();
 
         if (lodIndex >= mesh->shapeObj->GetResource()->GetMeshCount()) {
             continue;
@@ -461,7 +461,7 @@ void MeshDrawer::drawTest(const nn::g3d::ViewVolume* pViewVolume, s32 viewIndex)
 
         nn::g3d::MaterialObj* material = const_cast<nn::g3d::MaterialObj*>(mesh->materialObj);
         const nn::g3d::SkeletonObj* skeleton = mesh->modelObj->GetSkeleton();
-        s32 bufferIndex = *model->mCurrentBufferIndex;
+        s32 bufferIndex = model->getCurrentBufferIndex();
         agl::DrawContext* context = getDrawContext();
 
         if (mTextureType == 0) {
@@ -531,11 +531,11 @@ void MeshDrawer::drawSimple(const nn::g3d::ViewVolume* pViewVolume) const {
             continue;
         }
 
-        activateUniformBlockAssignArray(*mesh->model->mUniformBlockAssignArray);
+        activateUniformBlockAssignArray(*mesh->model->getUniformBlockAssignArray());
         alModelFunction::drawModelShape(
             mesh->modelObj->GetSkeleton(), mesh->materialObj, mesh->shapeObj,
             mShaderSelector->GetShadingModel(), mShaderAssign, pViewVolume, 0,
-            *mesh->model->mCurrentBufferIndex, mesh->model->mLodIndex);
+            mesh->model->getCurrentBufferIndex(), mesh->model->getLodIndex());
     }
 }
 
@@ -562,7 +562,7 @@ void MeshDrawer::drawDepthOnly(const nn::g3d::ViewVolume* pViewVolume, s32 viewI
             continue;
         }
 
-        s32 lodIndex = model->mLodIndex;
+        s32 lodIndex = model->getLodIndex();
 
         if (lodIndex >= mesh->shapeObj->GetResource()->GetMeshCount()) {
             continue;
@@ -574,7 +574,7 @@ void MeshDrawer::drawDepthOnly(const nn::g3d::ViewVolume* pViewVolume, s32 viewI
 
         const nn::g3d::MaterialObj* material = mesh->materialObj;
         const nn::g3d::SkeletonObj* skeleton = mesh->modelObj->GetSkeleton();
-        s32 bufferIndex = *model->mCurrentBufferIndex;
+        s32 bufferIndex = model->getCurrentBufferIndex();
         agl::DrawContext* context = getDrawContext();
 
         if (mIsAlphaTest) {
@@ -582,7 +582,7 @@ void MeshDrawer::drawDepthOnly(const nn::g3d::ViewVolume* pViewVolume, s32 viewI
         }
 
         mShaderAssign->activateMaterialUniformBlock(context, material, bufferIndex);
-        activateUniformBlockAssignArray(*mesh->model->mUniformBlockAssignArray);
+        activateUniformBlockAssignArray(*mesh->model->getUniformBlockAssignArray());
 
         if (mShapeBlockLocation >= 0) {
             agl::ShaderLocation location;
@@ -648,7 +648,7 @@ void MeshDrawer::drawDepthShadow(const nn::g3d::ViewVolume* pViewVolume, s32 vie
     for (s32 i = 0; i < mMeshNum; i++) {
         Mesh* mesh = mMeshes[i];
         const SimpleModelG3D* model = mesh->model;
-        s32 lodIndex = model->mLodIndex;
+        s32 lodIndex = model->getLodIndex();
 
         if (lodIndex < model->getModelObj()->GetLodCount() - 1) {
             lodIndex++;
@@ -672,7 +672,7 @@ void MeshDrawer::drawDepthShadow(const nn::g3d::ViewVolume* pViewVolume, s32 vie
 
         const nn::g3d::MaterialObj* material = mesh->materialObj;
         const nn::g3d::SkeletonObj* skeleton = mesh->modelObj->GetSkeleton();
-        s32 bufferIndex = *model->mCurrentBufferIndex;
+        s32 bufferIndex = model->getCurrentBufferIndex();
 
         if (mRenderStateType == 0) {
             sead::GraphicsContext context;
@@ -680,7 +680,7 @@ void MeshDrawer::drawDepthShadow(const nn::g3d::ViewVolume* pViewVolume, s32 vie
 
         agl::DrawContext* context = getDrawContext();
 
-        if (mTextureType == 0 || model->mIsForceActivateTexture) {
+        if (mTextureType == 0 || model->isForceActivateTexture()) {
             mShaderAssign->getSampler().activate(context, material);
         }
 
@@ -688,7 +688,7 @@ void MeshDrawer::drawDepthShadow(const nn::g3d::ViewVolume* pViewVolume, s32 vie
             mShaderAssign->activateMaterialUniformBlock(context, material, bufferIndex);
         }
 
-        activateUniformBlockAssignArray(*mesh->model->mUniformBlockAssignArray);
+        activateUniformBlockAssignArray(*mesh->model->getUniformBlockAssignArray());
 
         if (mShapeBlockLocation >= 0) {
             agl::ShaderLocation location;

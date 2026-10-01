@@ -42,7 +42,7 @@ void ModelDrawerCubeMap::createTable() {
         const char* optionNames[] = {"cRenderType", "cSkyColor0Type", "cExposureConnect"};
         const char* optionValues[] = {"3", "1", "0"};
         nn::g3d::ShaderSelector* selector =
-            alModelFunction::createShaderSelector(model->mGpuMemAllocator, shape, material,
+            alModelFunction::createShaderSelector(model->getGpuMemAllocator(), shape, material,
                                                   shadingModel, 3, optionNames, optionValues, false);
         table->insert(
             new MeshDrawer(shape->GetResource()->GetName(), modelObj, shape, selector, modelNum));

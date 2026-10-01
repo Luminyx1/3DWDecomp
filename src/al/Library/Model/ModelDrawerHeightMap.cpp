@@ -49,7 +49,7 @@ void ModelDrawerHeightMap::createTable() {
         nn::g3d::ResShadingModel* shadingModel =
             ShaderHolder::sInstance->getShadingModel("RenderHeightMap");
         nn::g3d::ShaderSelector* selector = alModelFunction::createShaderSelector(
-            model->mGpuMemAllocator, shape, material, shadingModel, 0, nullptr, nullptr, false);
+            model->getGpuMemAllocator(), shape, material, shadingModel, 0, nullptr, nullptr, false);
         table->insert(
             new MeshDrawer(shape->GetResource()->GetName(), modelObj, shape, selector, modelNum));
     }
@@ -74,13 +74,13 @@ void ModelDrawerHeightMap::draw() const {
         return;
     }
 
-    mGraphicsContext.apply(GameFrameworkNx::sInstance->mDrawContext);
+    mGraphicsContext.apply(GameFrameworkNx::getDrawContext());
 
     for (s32 i = 0; i < mMeshDrawerTable->size(); i++) {
         MeshDrawer* meshDrawer = (*mMeshDrawerTable)[i];
 
         if (meshDrawer->isExistDrawMesh()) {
-            meshDrawer->draw(&mGraphicsSystemInfo->mViewVolume, 0, nullptr);
+            meshDrawer->draw(&mGraphicsSystemInfo->getViewVolume(), 0, nullptr);
         }
     }
 }

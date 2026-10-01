@@ -27,11 +27,11 @@ ModelAdditionalInfoRenderCubeMap::ModelAdditionalInfoRenderCubeMap(const Graphic
 void ModelAdditionalInfo::activateEnvTextureIndividual(s32 shapeIndex,
                                                        const SimpleModelG3D* pModel) {
     const EnvTexInfo* envTexInfo = pModel->getShape(shapeIndex).mEnvTexInfo;
-    mGraphicsSystemInfo->mShaderEnvTextureKeeper->activateEnvTexture(*envTexInfo, this, true);
+    mGraphicsSystemInfo->getShaderEnvTextureKeeper()->activateEnvTexture(*envTexInfo, this, true);
     nn::g3d::ModelObj* modelObj = pModel->getModelObj();
     s32 materialIndex = modelObj->GetShape(shapeIndex)->GetResource()->GetMaterialIndex();
     const nn::g3d::ResMaterial* material = modelObj->GetMaterial(materialIndex)->GetResource();
-    mGraphicsSystemInfo->mModelLightDirector->activateModelLightTexture(material, envTexInfo, true);
+    mGraphicsSystemInfo->getModelLightDirector()->activateModelLightTexture(material, envTexInfo, true);
 }
 
 /**
@@ -41,7 +41,7 @@ void ModelAdditionalInfo::activateEnvTextureIndividual(s32 shapeIndex,
  */
 void ModelAdditionalInfo::activateEnvTexture(s32 shapeIndex, const SimpleModelG3D* pModel) {
     const EnvTexInfo* envTexInfo = pModel->getShape(shapeIndex).mEnvTexInfo;
-    mGraphicsSystemInfo->mShaderEnvTextureKeeper->activateEnvTexture(*envTexInfo, this, true);
+    mGraphicsSystemInfo->getShaderEnvTextureKeeper()->activateEnvTexture(*envTexInfo, this, true);
 }
 
 /**
@@ -54,7 +54,7 @@ void ModelAdditionalInfo::activateModelLightTexture(s32 shapeIndex, const Simple
     const EnvTexInfo* envTexInfo = pModel->getShape(shapeIndex).mEnvTexInfo;
     s32 materialIndex = modelObj->GetShape(shapeIndex)->GetResource()->GetMaterialIndex();
     const nn::g3d::ResMaterial* material = modelObj->GetMaterial(materialIndex)->GetResource();
-    mGraphicsSystemInfo->mModelLightDirector->activateModelLightTexture(material, envTexInfo, true);
+    mGraphicsSystemInfo->getModelLightDirector()->activateModelLightTexture(material, envTexInfo, true);
 }
 
 /**
@@ -62,7 +62,7 @@ void ModelAdditionalInfo::activateModelLightTexture(s32 shapeIndex, const Simple
  * @param pMaterial Material resource.
  */
 void ModelAdditionalInfo::activateModelLightTexture(const nn::g3d::ResMaterial* pMaterial) {
-    mGraphicsSystemInfo->mModelLightDirector->activateModelLightTexture(pMaterial, nullptr, false);
+    mGraphicsSystemInfo->getModelLightDirector()->activateModelLightTexture(pMaterial, nullptr, false);
 }
 
 /**
@@ -70,7 +70,7 @@ void ModelAdditionalInfo::activateModelLightTexture(const nn::g3d::ResMaterial* 
  * @param index Model light texture index.
  */
 void ModelAdditionalInfo::activateModelLightTexture(s32 index) {
-    mGraphicsSystemInfo->mModelLightDirector->activateModelLightTexture(index);
+    mGraphicsSystemInfo->getModelLightDirector()->activateModelLightTexture(index);
 }
 
 }  // namespace al

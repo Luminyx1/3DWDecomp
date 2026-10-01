@@ -94,6 +94,13 @@ public:
     void setGlobalAlphaPtr(f32* pAlpha) { mGlobalAlpha = pAlpha; }
 
     void setGlobalYOffsetPtr(f32* pYOffset) { mGlobalYOffset = pYOffset; }
+    GpuMemAllocator* getGpuMemAllocator() const { return mGpuMemAllocator; }
+    UniformBlockAssignArray* getUniformBlockAssignArray() const { return mUniformBlockAssignArray; }
+    s32 getCurrentBufferIndex() const { return *mCurrentBufferIndex; }
+    bool isForceActivateTexture() const { return mIsForceActivateTexture; }
+    bool isLodDisabled() const { return mIsLodDisabled; }
+    s32 getLodIndex() const { return mLodIndex; }
+    s32 getLodUpdateCount() const { return mLodUpdateCount; }
 
     bool mIsCreatedFromOther;
     nn::g3d::ModelObj* mModelObj;

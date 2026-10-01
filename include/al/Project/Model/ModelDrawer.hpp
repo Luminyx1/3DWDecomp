@@ -1,6 +1,8 @@
 #pragma once
 
+#include "Library/Draw/GraphicsSystemInfo.hpp"
 #include "Library/Model/ModelDrawerBase.hpp"
+#include "Project/Model/SimpleModelG3D.hpp"
 
 namespace al {
 class MeshDrawerTable;
@@ -17,6 +19,16 @@ public:
     bool isDraw() const;
 
 protected:
+    void tryUpdateModelLod(SimpleModelG3D* pModel) const {
+        if (!pModel->isLodDisabled()) {
+            s32 updateCount = mGraphicsSystemInfo->getDrawEnvUpdateCount();
+
+            if (pModel->getLodUpdateCount() != updateCount) {
+                pModel->updateLod(mGraphicsSystemInfo->getDrawCameraPos(), updateCount);
+            }
+        }
+    }
+
     s32 mModelNumMax = 0;
     s32 mModelNum = 0;
     alModelCafe** mModels = nullptr;

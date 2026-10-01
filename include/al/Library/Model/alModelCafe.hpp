@@ -45,6 +45,14 @@ public:
     void initJointControllerKeeper(s32 num);
 
     al::SimpleModelG3D* getModelG3D() const { return mModelG3D; }
+    al::Resource* getModelRes() const { return mModelRes; }
+    al::AnimPlayerSkl* getAnimPlayerSkl() const { return mAnimPlayerSkl; }
+    al::AnimPlayerMat* getAnimPlayerMat0() const { return mAnimPlayerMat0; }
+    al::AnimPlayerMat* getAnimPlayerMat1() const { return mAnimPlayerMat1; }
+    al::AnimPlayerMat* getAnimPlayerMat2() const { return mAnimPlayerMat2; }
+    al::AnimPlayerVis* getAnimPlayerVis() const { return mAnimPlayerVis; }
+    al::JointControllerKeeper* getJointControllerKeeper() const { return mJointControllerKeeper; }
+    sead::Matrix34f* getBaseMtx() const { return mBaseMtx; }
 
     bool mIsCreatedFromOther;
     const char* mModelName;

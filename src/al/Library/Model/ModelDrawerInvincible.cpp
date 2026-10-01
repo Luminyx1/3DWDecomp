@@ -47,7 +47,7 @@ void ModelDrawerInvincible::createTable() {
         nn::g3d::ResShadingModel* shadingModel =
             ShaderHolder::sInstance->getShadingModel("RenderInvincible");
         nn::g3d::ShaderSelector* selector = alModelFunction::createShaderSelector(
-            model->mGpuMemAllocator, shape, material, shadingModel, 0, nullptr, nullptr, false);
+            model->getGpuMemAllocator(), shape, material, shadingModel, 0, nullptr, nullptr, false);
         table->insert(
             new MeshDrawer(shape->GetResource()->GetName(), modelObj, shape, selector, modelNum));
     }
@@ -64,19 +64,19 @@ void ModelDrawerInvincible::draw() const {
         return;
     }
 
-    mGraphicsContext.apply(GameFrameworkNx::sInstance->mDrawContext);
+    mGraphicsContext.apply(GameFrameworkNx::getDrawContext());
     agl::driver::GraphicsDriverMgr::instance()->setPolygonOffset(
-        reinterpret_cast<agl::DrawContext*>(GameFrameworkNx::sInstance->mDrawContext), 0.0f, -400.0f);
+        GameFrameworkNx::getAglDrawContext(), 0.0f, -400.0f);
     for (s32 i = 0; i < mMeshDrawerTable->size(); i++) {
         MeshDrawer* meshDrawer = (*mMeshDrawerTable)[i];
 
         if (meshDrawer->isExistDrawMesh()) {
-            meshDrawer->draw(&mGraphicsSystemInfo->mViewVolume, 0, nullptr);
+            meshDrawer->draw(&mGraphicsSystemInfo->getViewVolume(), 0, nullptr);
         }
     }
 
     agl::driver::GraphicsDriverMgr::instance()->setPolygonOffset(
-        reinterpret_cast<agl::DrawContext*>(GameFrameworkNx::sInstance->mDrawContext), 0.0f, 0.0f);
+        GameFrameworkNx::getAglDrawContext(), 0.0f, 0.0f);
 }
 
 }  // namespace al

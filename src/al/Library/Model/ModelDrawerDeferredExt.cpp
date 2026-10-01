@@ -172,7 +172,7 @@ void ModelDrawerDeferredExt::draw() const {
 
     pushDebugGroup(
         agl::driver::getNvnCommandBuffer(
-            reinterpret_cast<agl::DrawContext*>(GameFrameworkNx::sInstance->mDrawContext)),
+            GameFrameworkNx::getAglDrawContext()),
         mName);
     ModelAdditionalInfo additionalInfo(mGraphicsSystemInfo, mIsSecondCategory);
     mGraphicsSystemInfo->activateDirLitColorTex();
@@ -181,13 +181,7 @@ void ModelDrawerDeferredExt::draw() const {
         SimpleModelG3D* model = mModels[i]->getModelG3D();
         model->setModelAdditionalInfo(additionalInfo);
 
-        if (!model->mIsLodDisabled) {
-            s32 updateCount = mGraphicsSystemInfo->mDrawEnvUpdateCount;
-
-            if (model->mLodUpdateCount != updateCount) {
-                model->updateLod(mGraphicsSystemInfo->mDrawCameraPos, updateCount);
-            }
-        }
+        tryUpdateModelLod(model);
     }
 
     for (s32 i = 0; i < mMeshDrawerTable->size(); i++) {
@@ -197,7 +191,7 @@ void ModelDrawerDeferredExt::draw() const {
             const agl::DisplayList* displayList = mDisplayLists[i];
             nvnCommandBufferCallCommands(
                 agl::driver::getNvnCommandBuffer(
-                    reinterpret_cast<agl::DrawContext*>(GameFrameworkNx::sInstance->mDrawContext)),
+                    GameFrameworkNx::getAglDrawContext()),
                 1, displayList->getHandlePtr());
             additionalInfo.activateModelLightTexture(meshDrawer->getMaterialObj()->GetResource());
 
@@ -205,12 +199,12 @@ void ModelDrawerDeferredExt::draw() const {
                 mDrawCallback(mDrawCallbackUserData, mModel);
             }
 
-            meshDrawer->draw(&mGraphicsSystemInfo->mViewVolume, 0, &additionalInfo);
+            meshDrawer->draw(&mGraphicsSystemInfo->getViewVolume(), 0, &additionalInfo);
         }
     }
 
     nvnCommandBufferPopDebugGroup(agl::driver::getNvnCommandBuffer(
-        reinterpret_cast<agl::DrawContext*>(GameFrameworkNx::sInstance->mDrawContext)));
+        GameFrameworkNx::getAglDrawContext()));
 }
 
 }  // namespace al
