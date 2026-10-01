@@ -1,21 +1,30 @@
 #pragma once
 
 #include <basis/seadTypes.h>
+#include <ptcl/seadPtclSystem.h>
 
 namespace al {
+class EffectEnvParam;
 class EffectSystem;
 class EmitterSetResourceInfoHolder;
 
-// TODO: derives from sead::ptcl::PtclSystem (no header yet)
-class PtclSystem {
+class PtclSystem : public sead::ptcl::PtclSystem {
 public:
+    PtclSystem(const sead::ptcl::Config& rConfig, EffectSystem* pEffectSystem);
+
+    s32 getNumResource() const;
+    void entryResourceEnd();
+    EffectEnvParam* getEffectEnvParam();
+
     EffectSystem* getEffectSystem() const { return mEffectSystem; }
     EmitterSetResourceInfoHolder* getEmitterSetResourceInfoHolder() const {
         return mEmitterSetResourceInfoHolder;
     }
 
-    u8 _0[0x2918];
+private:
     EffectSystem* mEffectSystem;
     EmitterSetResourceInfoHolder* mEmitterSetResourceInfoHolder;
 };
+
+static_assert(sizeof(PtclSystem) == 0x2928);
 }  // namespace al
