@@ -13,7 +13,7 @@ WaveArchiveFileReader::WaveArchiveFileReader(const void* file, bool individualLo
 void WaveArchiveFileReader::Initialize(const void* file, bool individualLoad) {
     auto* header = static_cast<const WaveArchiveFile::FileHeader*>(file);
 
-    if (!header || header->signature != 0x52415746 || header->byteOrder != 0xfeff || header->version != 0x10000) return;
+    if (header == nullptr || header->signature != 0x52415746 || header->byteOrder != 0xfeff || header->version != 0x10000) return;
     mHeader = header;
     const auto* info = mHeader->GetInfoBlock();
     mInitialized = true;
@@ -50,7 +50,7 @@ const void* WaveArchiveFileReader::GetWaveFile(u32 index) const {
 
     if (mInfo->count <= index) return nullptr;
 
-    if (mFileTable) return mFileTable[index];
+    if (mFileTable != nullptr) return mFileTable[index];
     u32 offset = mInfo->waves[index].offset;
     return mHeader->GetFileBlock()->data + offset;
 }
@@ -71,7 +71,7 @@ u32 WaveArchiveFileReader::GetWaveFileOffsetFromFileHead(u32 index) const {
 const void* WaveArchiveFileReader::SetWaveFile(u32 index, const void* file) {
     if (!mInitialized) return nullptr;
 
-    if (!mFileTable) return nullptr;
+    if (mFileTable == nullptr) return nullptr;
 
     if (mInfo->count <= index) return nullptr;
     const void* previous = mFileTable[index];

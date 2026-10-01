@@ -28,7 +28,7 @@ void PoolImpl::DestroyImpl() {
     uintptr_t begin = reinterpret_cast<uintptr_t>(mMemory);
     uintptr_t end = reinterpret_cast<uintptr_t>(static_cast<u8*>(mMemory) + mSize);
 
-    while (node) {
+    while (node != nullptr) {
         uintptr_t address = reinterpret_cast<uintptr_t>(node);
         Node* nextPrevious = node;
 
@@ -47,14 +47,14 @@ int PoolImpl::CountImpl() const {
     int count = -1;
     const Node* node = &mRoot;
 
-    do { node = node->next; ++count; } while (node);
+    do { node = node->next; ++count; } while (node != nullptr);
     return count;
 }
 
 void* PoolImpl::AllocImpl() {
     Node* node = mRoot.next;
 
-    if (node) mRoot.next = node->next;
+    if (node != nullptr) mRoot.next = node->next;
     return node;
 }
 

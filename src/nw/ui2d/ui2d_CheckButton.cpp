@@ -15,7 +15,7 @@ void CheckButton::Build(nn::gfx::Device* device, Layout* layout, const ControlSr
 void CheckButton::ForceSetChecked(bool checked) {
     mChecked = checked;
 
-    if (mCheckAnimator) {
+    if (mCheckAnimator != nullptr) {
         if (checked) mCheckAnimator->StopAtEndFrame();
         else mCheckAnimator->StopAtStartFrame();
     }
@@ -29,14 +29,14 @@ void CheckButton::FinishDown() {
 void CheckButton::StartDown() {
     AnimButton::StartDown();
 
-    if (mCheckAnimator) mCheckAnimator->Play(Animator::PlayType_Once, mChecked ? -1.0f : 1.0f);
+    if (mCheckAnimator != nullptr) mCheckAnimator->Play(Animator::PlayType_Once, mChecked ? -1.0f : 1.0f);
     mChecked = !mChecked;
 }
 
 bool CheckButton::UpdateDown() {
     bool finished = AnimButton::UpdateDown();
 
-    if (mCheckAnimator) {
+    if (mCheckAnimator != nullptr) {
         if (mChecked)
             finished = mDownAnimator->mFrame == float(mDownAnimator->GetFrameSize()) &&
                        mCheckAnimator->mFrame == float(mCheckAnimator->GetFrameSize());

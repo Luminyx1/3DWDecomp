@@ -45,7 +45,7 @@ Material* Parts::FindMaterialByNameRecursive(const char* pName) {
     for (u32 i = 0; i < count; ++i) {
         auto* material = GetMaterial(i);
 
-        if (material && SameName(material->mName, pName, 28)) return material;
+        if (material != nullptr && SameName(material->mName, pName, 28)) return material;
     }
 
     return nullptr;

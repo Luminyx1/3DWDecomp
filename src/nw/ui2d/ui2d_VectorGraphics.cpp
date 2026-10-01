@@ -9,7 +9,7 @@ void ReservedVectorGraphicsSceneMemory::Initialize(size_t size) {
 }
 
 void ReservedVectorGraphicsSceneMemory::Finalize() {
-    if (mMemory) { Layout::FreeMemory(mMemory); mMemory = nullptr; mReservedSize = 0; mNext = nullptr; }
+    if (mMemory != nullptr) { Layout::FreeMemory(mMemory); mMemory = nullptr; mReservedSize = 0; mNext = nullptr; }
 }
 
 size_t ReservedVectorGraphicsSceneMemory::GetReservedSize() const { return mReservedSize; }

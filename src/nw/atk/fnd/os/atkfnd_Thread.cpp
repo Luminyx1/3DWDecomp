@@ -11,7 +11,7 @@ Thread::RunArgs::RunArgs()
     : name(""), stack(nullptr), stackSize(0), core(-1), affinity(AffinityMask_Default),
       priority(16), fsPriority(FsPriority_Default), argument(nullptr), handler(nullptr) {}
 bool Thread::RunArgs::IsValid() const {
-    if (!stack) return false;
+    if (stack == nullptr) return false;
 
     if (!stackSize) return false;
 

@@ -35,7 +35,7 @@ ArcExtractor::~ArcExtractor() = default;
 
 // archive supplies the SARC header, allocation table, names, and resource data.
 bool ArcExtractor::PrepareArchive(const void* archive) {
-    if (!archive) return false;
+    if (archive == nullptr) return false;
     auto* header = static_cast<const ArchiveBlockHeader*>(archive);
     m_pArchiveBlockHeader = header;
 
@@ -103,7 +103,7 @@ void* ArcExtractor::GetFileFast(ArcFileInfo* info, int entryId) {
     if (entryId >= m_FATEntryCount) return nullptr;
     u32 start = Read32(m_pFATEntries[entryId].dataStartOffset, m_EndianType);
 
-    if (info) {
+    if (info != nullptr) {
         u32 end = Read32(m_pFATEntries[entryId].dataEndOffset, m_EndianType);
 
         if (end < start) return nullptr;

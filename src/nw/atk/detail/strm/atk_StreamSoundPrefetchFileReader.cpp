@@ -36,7 +36,7 @@ bool StreamSoundPrefetchFileReader::IsValidFileHeader(const void* file) const {
 }
 
 u32 StreamSoundPrefetchFileReader::GetRegionDataOffset() const {
-    if (!mHeader || !mHeader->HasRegionBlock()) return 0;
+    if (mHeader == nullptr || !mHeader->HasRegionBlock()) return 0;
     u32 offset = mHeader->GetRegionBlockOffset();
     return offset + mInfo->GetStreamSoundInfo()->regionData.offset + 8;
 }
@@ -55,7 +55,7 @@ bool StreamSoundPrefetchFileReader::ReadStreamSoundInfo(StreamSoundFile::StreamS
 bool StreamSoundPrefetchFileReader::ReadDspAdpcmChannelInfo(DspAdpcmParam* param, DspAdpcmLoopParam* loop, int channel) const {
     const auto* source = mInfo->GetChannelInfoTable()->GetChannelInfo(channel)->GetDspAdpcmChannelInfo();
 
-    if (!source) return false;
+    if (source == nullptr) return false;
     *param = source->param;
     *loop = source->loop;
     return true;

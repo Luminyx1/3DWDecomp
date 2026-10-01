@@ -5,9 +5,9 @@ namespace nn::atk::detail::driver {
 // player receives ownership of a track initialized with this allocator's parser.
 SequenceTrack* MmlSequenceTrackAllocator::AllocTrack(SequenceSoundPlayer* player) {
     void* memory = mPool.AllocImpl();
-    auto* track = memory ? new (memory) MmlSequenceTrack : nullptr;
+    auto* track = (memory != nullptr) ? new (memory) MmlSequenceTrack : nullptr;
 
-    if (track) {
+    if (track != nullptr) {
         track->SetPlayer(player);
         track->SetParser(mParser);
     }
@@ -19,7 +19,7 @@ SequenceTrack* MmlSequenceTrackAllocator::AllocTrack(SequenceSoundPlayer* player
 void MmlSequenceTrackAllocator::FreeTrack(SequenceTrack* track) {
     track->SetPlayer(nullptr);
 
-    if (track) {
+    if (track != nullptr) {
         track->~SequenceTrack();
         mPool.FreeImpl(track);
     }

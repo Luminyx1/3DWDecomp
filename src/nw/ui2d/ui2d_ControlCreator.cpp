@@ -61,8 +61,8 @@ const char* ControlSrc::FindFunctionalAnimName(const char* pName) const {
     return nullptr;
 }
 
-int ControlSrc::GetExtUserDataCount() const { return mExtData ? mExtData->count : 0; }
-const ResExtUserData* ControlSrc::GetExtUserDataArray() const { return mExtData ? mExtData->entries : nullptr; }
+int ControlSrc::GetExtUserDataCount() const { return (mExtData != nullptr) ? mExtData->count : 0; }
+const ResExtUserData* ControlSrc::GetExtUserDataArray() const { return (mExtData != nullptr) ? mExtData->entries : nullptr; }
 // pName identifies an extended user-data entry; null is returned when none matches.
 const ResExtUserData* ControlSrc::FindExtUserDataByName(const char* pName) const {
     const ResExtUserData* data = GetExtUserDataArray();

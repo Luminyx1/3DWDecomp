@@ -15,10 +15,10 @@ nn::font::Font* ResourceAccessor::LoadFont(nn::gfx::Device* device, const char* 
     void* data = FindResourceByName(&size, 0x666f6e74, name);
     nn::font::ResFont* font = nullptr;
 
-    if (data && size) {
+    if (data != nullptr && size) {
         void* memory = Layout::AllocateMemory(sizeof(nn::font::ResFont));
 
-        if (memory) {
+        if (memory != nullptr) {
             font = new (memory) nn::font::ResFont;
 
             if (!font->SetResource(device, data, nullptr, 0, 0)) {
@@ -37,7 +37,7 @@ void ResourceAccessor::Finalize(nn::gfx::Device* device) {}
 // output optionally receives the resolved name in a size-byte buffer; device
 // acquires the texture. A nonempty prefix is joined to name with a percent sign.
 TextureInfo* ResourceAccessor::AcquireDynamicGenerateTexture(char* output, int size, nn::gfx::Device* device, const char* prefix, const char* name) {
-    if (prefix) {
+    if (prefix != nullptr) {
         size_t prefixLength = std::strlen(prefix);
 
         if (prefixLength) {
@@ -54,7 +54,7 @@ TextureInfo* ResourceAccessor::AcquireDynamicGenerateTexture(char* output, int s
 
     TextureInfo* texture = AcquireTexture(device, name);
 
-    if (output) {
+    if (output != nullptr) {
         std::strncpy(output, name, size);
         output[size - 1] = 0;
     }

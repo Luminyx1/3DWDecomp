@@ -14,7 +14,7 @@ WaveFileReader::WaveFileReader(const void* file, s8 type)
         const auto* info = mHeader->GetInfoBlock();
         const auto* data = mHeader->GetDataBlock();
 
-        if (!info || !data || info->signature != 0x4f464e49 || data->signature != 0x41544144) return;
+        if (info == nullptr || data == nullptr || info->signature != 0x4f464e49 || data->signature != 0x41544144) return;
         mInfo = &info->body;
         mData = data->data;
         break;

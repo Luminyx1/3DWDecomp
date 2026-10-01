@@ -23,7 +23,7 @@ void ButtonGroup::Update(const nn::util::Float2* position, bool pressed, bool re
     bool allowHit = ((mFlags & 4) >> 2) & ((position != nullptr) & allowPress);
     AnimButton* selected = nullptr;
 
-    if (mDragging) {
+    if (mDragging != nullptr) {
         if (allowHit && (mDragging->mFlags & 0x10) && mDragging->IsHit(*position)) selected = mDragging;
         mDragging->UpdateDragPosition(position);
 
@@ -40,19 +40,19 @@ void ButtonGroup::Update(const nn::util::Float2* position, bool pressed, bool re
     }
 
     if (mSelected != selected) {
-        if (mSelected) mSelected->Off();
+        if (mSelected != nullptr) mSelected->Off();
 
-        if (selected) selected->On();
+        if (selected != nullptr) selected->On();
         mSelected = selected;
     }
 
-    if (selected) {
+    if (selected != nullptr) {
         bool down = allowPress && pressed;
 
         if (down) { selected->Down(); selected = mSelected; }
         u32 dragMode = (selected->mFlags >> 6) & 3;
 
-        if ((dragMode == 2 || (dragMode == 1 && down)) && !mDragging && !released) {
+        if ((dragMode == 2 || (dragMode == 1 && down)) && mDragging == nullptr && !released) {
             mDragging = mSelected;
             mDragging->InitializeDragPosition(*position);
         }

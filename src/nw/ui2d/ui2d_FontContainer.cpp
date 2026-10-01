@@ -8,11 +8,11 @@ FontRefLink::FontRefLink() : mFont(nullptr), mOwned(false) {}
 FontRefLink::~FontRefLink() = default;
 // device owns the font's GPU resources; only an owned font is destroyed.
 void FontRefLink::Finalize(nn::gfx::Device* device) {
-    if (mOwned && mFont) {
+    if (mOwned && mFont != nullptr) {
         mFont->Finalize(device);
         nn::font::Font* font = mFont;
 
-        if (font) { font->~Font(); Layout::FreeMemory(font); }
+        if (font != nullptr) { font->~Font(); Layout::FreeMemory(font); }
         mFont = nullptr;
     }
 }
@@ -59,7 +59,7 @@ nn::font::Font* FontContainer::FindFontByName(const char* name) const {
 const void* FontContainer::RegisterFont(const char* name, nn::font::Font* font, bool owned) {
     void* memory = Layout::AllocateMemory(sizeof(FontRefLink));
 
-    if (!memory) return nullptr;
+    if (memory == nullptr) return nullptr;
     auto* link = new (memory) FontRefLink;
     link->Set(name, font, owned);
     mFonts.push_back(*link);
@@ -71,7 +71,7 @@ void FontContainer::UnregisterFont(const void* handle) {
     auto* link = const_cast<FontRefLink*>(static_cast<const FontRefLink*>(handle));
     mFonts.erase(List::iterator(reinterpret_cast<nn::util::IntrusiveListNode*>(link)));
 
-    if (link) { link->~FontRefLink(); Layout::FreeMemory(link); }
+    if (link != nullptr) { link->~FontRefLink(); Layout::FreeMemory(link); }
 }
 
 // callback allocates descriptor slots for owned resource fonts; argument is its context.

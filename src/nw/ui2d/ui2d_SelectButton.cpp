@@ -53,6 +53,6 @@ bool SelectButton::ProcessCancel() {
 void SelectButton::FinishCancel() {
     ChangeState(cState_Off);
 
-    if (mOnAnimator) mOnAnimator->StopAtStartFrame();
+    if (mOnAnimator != nullptr) mOnAnimator->StopAtStartFrame();
 }
 }

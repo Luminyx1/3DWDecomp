@@ -70,7 +70,7 @@ size_t FileStreamImpl::ReadDirect(void* output, size_t size, FndResult* result) 
         mPosition += read;
     } else status = 0x81000000;
 
-    if (result) result->value = status;
+    if (result != nullptr) result->value = status;
     return read;
 }
 
@@ -87,7 +87,7 @@ size_t FileStreamImpl::WriteDirect(const void* input, size_t size, FndResult* re
         status = 0;
     } else status = 0x81000000;
 
-    if (result) result->value = status;
+    if (result != nullptr) result->value = status;
     return size;
 }
 

@@ -24,11 +24,11 @@ T* AllocateControl() {
 LayoutEx* AsLayoutEx(Layout* layout) {
     const auto* wanted = LayoutEx::GetRuntimeTypeInfoStatic();
 
-    if (!layout) return nullptr;
+    if (layout == nullptr) return nullptr;
     auto* type = layout->GetRuntimeTypeInfo();
 
-    while (type && type != wanted) type = type->m_ParentTypeInfo;
-    return type ? static_cast<LayoutEx*>(layout) : nullptr;
+    while (type != nullptr && type != wanted) type = type->m_ParentTypeInfo;
+    return (type != nullptr) ? static_cast<LayoutEx*>(layout) : nullptr;
 }
 }
 
@@ -36,11 +36,11 @@ LayoutEx* AsLayoutEx(Layout* layout) {
 DefaultControlCreator::DefaultControlCreator(ButtonGroup* buttons) : mButtons(buttons) {}
 // device owns resources, layout owns panes, and source describes the requested control.
 void DefaultControlCreator::CreateControl(nn::gfx::Device* device, Layout* layout, const ControlSrc& source) {
-    if (!mButtons) return;
+    if (mButtons == nullptr) return;
     AnimButton* button;
 
     if (std::strcmp("NormalButton", source.mName) == 0) {
-        if (AsLayoutEx(layout)) {
+        if (AsLayoutEx(layout) != nullptr) {
             button = AllocateControl<NormalButtonEx>(); button->BuildEx(device, layout, source);
         } else {
             button = AllocateControl<NormalButton>(); button->Build(device, layout, source);
@@ -61,7 +61,7 @@ void DefaultControlCreator::CreateControl(nn::gfx::Device* device, Layout* layou
         auto* value = AllocateControl<TouchDragButton>(); value->Build(device, layout, source); button = value;
     } else return;
 
-    if (button) mButtons->mButtons.push_back(*button);
+    if (button != nullptr) mButtons->mButtons.push_back(*button);
 }
 
 DefaultControlCreatorEx::DefaultControlCreatorEx() : DefaultControlCreator(nullptr), mControls(nullptr) {}
@@ -77,6 +77,6 @@ void DefaultControlCreatorEx::CreateControl(nn::gfx::Device* device, Layout* lay
     auto* control = AllocateControl<TraceGaugeControl>();
     control->Initialize(device, source, extended);
 
-    if (control) mControls->push_back(*control);
+    if (control != nullptr) mControls->push_back(*control);
 }
 }

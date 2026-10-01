@@ -34,7 +34,7 @@ Command* CommandBuffer::AllocMemory(size_t size) {
         mWritePosition = words;
     }
 
-    if (command) {
+    if (command != nullptr) {
         if (mWritePosition == read) mFull = true;
         command->bufferEnd = mWritePosition;
     }
@@ -106,7 +106,7 @@ size_t CommandManager::GetRequiredMemSize(size_t commandBufferSize, int commandC
 Command* CommandManager::AllocMemory(size_t size, bool option) {
     Command* command = TryAllocMemory(size);
 
-    if (command) {
+    if (command != nullptr) {
         ++mAllocatedCount;
         return command;
     }
@@ -114,16 +114,16 @@ Command* CommandManager::AllocMemory(size_t size, bool option) {
     RecvCommandReply();
     command = TryAllocMemory(size);
 
-    if (command) {
+    if (command != nullptr) {
         ++mAllocatedCount;
         return command;
     }
 
     do {
-        if (mHead) WaitCommandReply(FlushCommand(true, false));
+        if (mHead != nullptr) WaitCommandReply(FlushCommand(true, false));
         else RecvCommandReplySync();
         command = TryAllocMemory(size);
-    } while (!command);
+    } while (command == nullptr);
     ++mAllocatedCount;
     return command;
 }
@@ -142,7 +142,7 @@ void CommandManager::RecvCommandReply() {
 u32 CommandManager::FlushCommand(bool block, bool option) {
     Command* head = mHead;
 
-    if (!head) {
+    if (head == nullptr) {
         if (!block) return 0;
         Command* command = AllocMemory(sizeof(Command), false);
         command->type = 0xffffffffu;
@@ -157,7 +157,7 @@ u32 CommandManager::FlushCommand(bool block, bool option) {
     if (!os::TrySendMessageQueue(&mCommands.queue, message)) {
         if (!block) return 0;
 
-        if (mRequestCallback) mRequestCallback();
+        if (mRequestCallback != nullptr) mRequestCallback();
         os::SendMessageQueue(&mCommands.queue, message);
     }
 
@@ -177,7 +177,7 @@ Command* CommandManager::RecvCommandReplySync() {
     u64 message;
 
     if (!os::TryReceiveMessageQueue(&message, &mReplies.queue)) {
-        if (mRequestCallback) mRequestCallback();
+        if (mRequestCallback != nullptr) mRequestCallback();
         os::ReceiveMessageQueue(&message, &mReplies.queue);
     }
 
@@ -188,7 +188,7 @@ Command* CommandManager::RecvCommandReplySync() {
 
 // command is appended to the current batch; the return value identifies that batch.
 u32 CommandManager::PushCommand(Command* command) {
-    if (mTail) mTail->next = command;
+    if (mTail != nullptr) mTail->next = command;
     else mHead = command;
     mTail = command;
     command->next = nullptr;
@@ -206,7 +206,7 @@ void CommandManager::FinalizeCommandList(Command* command) {
         --mAllocatedCount;
         last = command;
         command = command->next;
-    } while (command);
+    } while (command != nullptr);
     mBuffer.FreeMemory(last);
 }
 

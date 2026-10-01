@@ -25,7 +25,7 @@ void TexMap::ResetTextureInfoState() { mTextureInfoState = 0; }
 
 // pTextureInfo replaces the texture and resets sampling; null leaves the map unchanged.
 void TexMap::Set(const TextureInfo* pTextureInfo) {
-    if (pTextureInfo) {
+    if (pTextureInfo != nullptr) {
         m_pTextureInfo = pTextureInfo;
         ResetSamplerSettings();
     }

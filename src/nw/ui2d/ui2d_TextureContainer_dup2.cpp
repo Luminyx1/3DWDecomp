@@ -13,7 +13,7 @@ void TextureRefLink::Finalize(nn::gfx::Device* device) {
     if (mOwned) mTexture->Finalize(device);
     TextureInfo* texture = mTexture;
 
-    if (texture) { texture->~TextureInfo(); Layout::FreeMemory(texture); }
+    if (texture != nullptr) { texture->~TextureInfo(); Layout::FreeMemory(texture); }
 }
 
 // name is copied into the fixed-length registration name.
@@ -34,10 +34,10 @@ void TextureContainer::Finalize(nn::gfx::Device* device) {
 // name identifies the new resource texture, which owns its GPU resources.
 ResourceTextureInfo* TextureContainer::RegisterResourceTexture(const char* name) {
     void* memory = Layout::AllocateMemory(sizeof(ResourceTextureInfo));
-    auto* texture = memory ? new (memory) ResourceTextureInfo : nullptr;
+    auto* texture = (memory != nullptr) ? new (memory) ResourceTextureInfo : nullptr;
     memory = Layout::AllocateMemory(sizeof(TextureRefLink));
 
-    if (!memory) return nullptr;
+    if (memory == nullptr) return nullptr;
     auto* link = new (memory) TextureRefLink(texture, true);
     link->SetName(name);
     mTextures.push_back(*link);
@@ -47,10 +47,10 @@ ResourceTextureInfo* TextureContainer::RegisterResourceTexture(const char* name)
 // name identifies the wrapper; owned controls GPU-resource finalization.
 PlacementTextureInfo* TextureContainer::RegisterPlacementTexture(const char* name, bool owned) {
     void* memory = Layout::AllocateMemory(sizeof(PlacementTextureInfo));
-    auto* texture = memory ? new (memory) PlacementTextureInfo : nullptr;
+    auto* texture = (memory != nullptr) ? new (memory) PlacementTextureInfo : nullptr;
     memory = Layout::AllocateMemory(sizeof(TextureRefLink));
 
-    if (!memory) return nullptr;
+    if (memory == nullptr) return nullptr;
     auto* link = new (memory) TextureRefLink(texture, owned);
     link->SetName(name);
     mTextures.push_back(*link);
@@ -60,10 +60,10 @@ PlacementTextureInfo* TextureContainer::RegisterPlacementTexture(const char* nam
 // name identifies the render target; owned controls GPU-resource finalization.
 RenderTargetTextureInfo* TextureContainer::RegisterRenderTargetTexture(const char* name, bool owned) {
     void* memory = Layout::AllocateMemory(sizeof(RenderTargetTextureInfo));
-    auto* texture = memory ? new (memory) RenderTargetTextureInfo : nullptr;
+    auto* texture = (memory != nullptr) ? new (memory) RenderTargetTextureInfo : nullptr;
     memory = Layout::AllocateMemory(sizeof(TextureRefLink));
 
-    if (!memory) return nullptr;
+    if (memory == nullptr) return nullptr;
     auto* link = new (memory) TextureRefLink(texture, owned);
     link->SetName(name);
     mTextures.push_back(*link);

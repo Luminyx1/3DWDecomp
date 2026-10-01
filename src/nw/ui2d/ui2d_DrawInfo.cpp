@@ -52,22 +52,22 @@ void DrawInfo::ResetCurrentShader() {
 
 // bufferIndex selects the CPU-writable buffer in each optional constant-buffer collection.
 void DrawInfo::Map(int bufferIndex) {
-    if (m_pConstantBuffer) m_pConstantBuffer->Map(bufferIndex);
+    if (m_pConstantBuffer != nullptr) m_pConstantBuffer->Map(bufferIndex);
 
-    if (m_pFontConstantBuffer) m_pFontConstantBuffer->Map(bufferIndex);
+    if (m_pFontConstantBuffer != nullptr) m_pFontConstantBuffer->Map(bufferIndex);
 }
 
 void DrawInfo::Unmap() {
-    if (m_pConstantBuffer) m_pConstantBuffer->Unmap();
+    if (m_pConstantBuffer != nullptr) m_pConstantBuffer->Unmap();
 
-    if (m_pFontConstantBuffer) m_pFontConstantBuffer->Unmap();
+    if (m_pFontConstantBuffer != nullptr) m_pFontConstantBuffer->Unmap();
 }
 
 // bufferIndex selects which constant buffer each subsequent GPU command reads.
 void DrawInfo::SetGpuAccessBufferIndex(int bufferIndex) {
-    if (m_pConstantBuffer) m_pConstantBuffer->m_GpuAccessBufferIndex = bufferIndex;
+    if (m_pConstantBuffer != nullptr) m_pConstantBuffer->m_GpuAccessBufferIndex = bufferIndex;
 
-    if (m_pFontConstantBuffer) m_pFontConstantBuffer->m_GpuAccessBufferIndex = bufferIndex;
+    if (m_pFontConstantBuffer != nullptr) m_pFontConstantBuffer->m_GpuAccessBufferIndex = bufferIndex;
 }
 
 // pTexture supplies the framebuffer image; width and height give its dimensions in pixels.

@@ -19,7 +19,7 @@ AdvancedWaveSoundFileReader::AdvancedWaveSoundFileReader(const void* file) {
         ReadPackedVersion(header->version) != 0x10000) return;
     const auto* block = header->GetBlock();
 
-    if (!block) return;
+    if (block == nullptr) return;
     const char* signature = block->signature._str;
 
     if (signature[0] != 'I' || signature[1] != 'N' || signature[2] != 'F' || signature[3] != 'O') return;

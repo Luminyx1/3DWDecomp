@@ -8,7 +8,7 @@ namespace nn::ui2d {
 void ResourceTextureInfo::Finalize(nn::gfx::Device* pDevice) {
     auto* resource = m_pResource;
 
-    if (!resource) return;
+    if (resource == nullptr) return;
     auto* texture = static_cast<nn::gfx::Texture*>(resource->ToData().pTexture.Get());
 
     if (!texture || !nn::font::IsInitialized(*texture)) return;
@@ -28,7 +28,7 @@ int ResourceTextureInfo::GetFormat() const {
 }
 
 bool ResourceTextureInfo::IsValid() const {
-    if (!m_pResource) return false;
+    if (m_pResource == nullptr) return false;
     const auto size = GetSize();
     return size.width != 0 && size.height != 0;
 }

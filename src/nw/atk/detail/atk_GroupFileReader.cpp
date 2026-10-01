@@ -11,9 +11,9 @@ GroupFileReader::GroupFileReader(const void* file)
     const auto* data = header->GetFileBlock();
     const auto* extra = header->GetInfoExBlock();
 
-    if (!info || !data || info->signature != 0x4f464e49 || data->signature != 0x454c4946) return;
+    if (info == nullptr || data == nullptr || info->signature != 0x4f464e49 || data->signature != 0x454c4946) return;
 
-    if (extra) {
+    if (extra != nullptr) {
         if (extra->signature != 0x58464e49) return;
         mInfoEx = &extra->body;
     }
@@ -24,26 +24,26 @@ GroupFileReader::GroupFileReader(const void* file)
 
 // info receives the file identifier and embedded address; index selects a group item.
 bool GroupFileReader::ReadGroupItemLocationInfo(GroupItemLocationInfo* info, u32 index) const {
-    if (!mInfo) return false;
+    if (mInfo == nullptr) return false;
 
     if (mInfo->count <= index) return false;
     const auto* item = reinterpret_cast<const GroupFile::GroupItemInfo*>(reinterpret_cast<const u8*>(mInfo) + mInfo->items[index].offset);
 
-    if (!item) return false;
+    if (item == nullptr) return false;
     info->fileId = item->fileId;
     info->address = item->GetFileAddress(mFileData);
     return true;
 }
 
-u32 GroupFileReader::GetGroupItemExCount() const { return mInfoEx ? mInfoEx->count : 0; }
+u32 GroupFileReader::GetGroupItemExCount() const { return (mInfoEx != nullptr) ? mInfoEx->count : 0; }
 // info receives the extended item record; index selects an entry in the optional INFX block.
 bool GroupFileReader::ReadGroupItemInfoEx(GroupFile::GroupItemInfoEx* info, u32 index) const {
-    if (!mInfoEx) return false;
+    if (mInfoEx == nullptr) return false;
 
     if (mInfoEx->count <= index) return false;
     const auto* item = reinterpret_cast<const GroupFile::GroupItemInfoEx*>(reinterpret_cast<const u8*>(mInfoEx) + mInfoEx->items[index].offset);
 
-    if (!item) return false;
+    if (item == nullptr) return false;
     *info = *item;
     return true;
 }

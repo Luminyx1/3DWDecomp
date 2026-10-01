@@ -8,5 +8,5 @@ nn::font::Font* FontMgr::GetFontByMessageIndex(u32 index) { return mMessageFonts
 // font supplies the ruby-annotation font.
 void FontMgr::SetRubyFont(const nn::font::Font* font) { mRubyFont = font; }
 // name is checked against the scalable-font registrations.
-bool FontMgr::IsScalableFont(const char* name) const { return mScalableFonts && mScalableFonts->GetFont(name); }
+bool FontMgr::IsScalableFont(const char* name) const { return (mScalableFonts != nullptr) && (mScalableFonts->GetFont(name) != nullptr); }
 }

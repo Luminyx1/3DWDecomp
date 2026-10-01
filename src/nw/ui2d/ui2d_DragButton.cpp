@@ -25,7 +25,7 @@ void DragButton::InitializeDragPosition(const nn::util::Float2& position) {
 
 // position is the current pointer position, or null when no pointer is present.
 void DragButton::UpdateDragPosition(const nn::util::Float2* position) {
-    if (!position) return;
+    if (position == nullptr) return;
     float x = mPaneStart.x;
 
     if (mDragX) x += position->x - mDragStart.x;

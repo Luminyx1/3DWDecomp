@@ -6,7 +6,7 @@
 namespace nn::ui2d::detail {
 void TexCoordArray::Initialize() { mCapacity = 0; mSize = 0; mCoords = nullptr; }
 void TexCoordArray::Free() {
-    if (mCoords) { Layout::FreeMemory(mCoords); mCoords = nullptr; mCapacity = 0; mSize = 0; }
+    if (mCoords != nullptr) { Layout::FreeMemory(mCoords); mCoords = nullptr; mCapacity = 0; mSize = 0; }
 }
 
 // size is the requested number of four-corner texture-coordinate sets.
@@ -16,12 +16,12 @@ void TexCoordArray::Reserve(s32 size) {
     mCoords = static_cast<nn::util::Float2 (*)[4]>(Layout::AllocateMemory(sizeof(*mCoords) * static_cast<u32>(size)));
     mCoords[0][0] = {0, 0};
 
-    if (mCoords) mCapacity = size;
+    if (mCoords != nullptr) mCapacity = size;
 }
 
 // size becomes the active set count; newly exposed sets cover the full texture.
 void TexCoordArray::SetSize(s32 size) {
-    if (!mCoords || mCapacity < size) return;
+    if (mCoords == nullptr || mCapacity < size) return;
 
     for (int i = mSize; i < size; ++i) {
         mCoords[i][0] = {0, 0}; mCoords[i][1] = {1, 0};

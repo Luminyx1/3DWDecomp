@@ -67,7 +67,7 @@ bool StreamSoundFileReader::ReadStreamSoundInfo(StreamSoundFile::StreamSoundInfo
 bool StreamSoundFileReader::ReadStreamTrackInfo(TrackInfo* info, int track) const {
     const auto* table = mInfo->GetTrackInfoTable();
 
-    if (!table || track >= static_cast<int>(table->count)) return false;
+    if (table == nullptr || track >= static_cast<int>(table->count)) return false;
     const auto* source = table->GetTrackInfo(track);
     info->volume = source->volume;
     info->pan = source->pan;
@@ -85,7 +85,7 @@ bool StreamSoundFileReader::ReadStreamTrackInfo(TrackInfo* info, int track) cons
 bool StreamSoundFileReader::ReadDspAdpcmChannelInfo(DspAdpcmParam* param, DspAdpcmLoopParam* loop, int channel) const {
     const auto* source = mInfo->GetChannelInfoTable()->GetChannelInfo(channel)->GetDspAdpcmChannelInfo();
 
-    if (!source) return false;
+    if (source == nullptr) return false;
     *param = source->param;
     *loop = source->loop;
     return true;

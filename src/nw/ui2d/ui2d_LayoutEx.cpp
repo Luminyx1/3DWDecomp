@@ -10,8 +10,8 @@ AnimatorEx* LayoutEx::FindAnimator(const char* name) {
         const auto* wanted = AnimatorEx::GetRuntimeTypeInfoStatic();
         const auto* type = transform->GetRuntimeTypeInfo();
 
-        while (type && type != wanted) type = type->m_ParentTypeInfo;
-        auto* animator = type ? static_cast<AnimatorEx*>(transform) : nullptr;
+        while (type != nullptr && type != wanted) type = type->m_ParentTypeInfo;
+        auto* animator = (type != nullptr) ? static_cast<AnimatorEx*>(transform) : nullptr;
 
         if (!animator || !animator->GetTagName()) continue;
         const char* tag = animator->GetTagName();

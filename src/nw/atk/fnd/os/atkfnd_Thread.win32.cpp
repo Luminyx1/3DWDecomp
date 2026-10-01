@@ -39,7 +39,7 @@ void Thread::ThreadMain::Run(void* argument) {
 
 void Thread::Detach() { os::DestroyThread(&mThread); }
 // name remains caller-owned; a null pointer selects an empty name.
-void Thread::SetName(const char* name) { os::SetThreadNamePointer(&mThread, name ? name : ""); }
+void Thread::SetName(const char* name) { os::SetThreadNamePointer(&mThread, (name != nullptr) ? name : ""); }
 // core selects the ideal core and mask identifies the permitted cores.
 void Thread::SetAffinityMask(int core, AffinityMask mask) { os::SetThreadCoreMask(&mThread, core, static_cast<u32>(mask)); }
 void Thread::Resume() {}

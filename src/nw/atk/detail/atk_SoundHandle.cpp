@@ -5,7 +5,7 @@ namespace nn::atk {
 void SoundHandle::detail_DuplicateHandle(SoundHandle* handle) {
     DetachSound();
 
-    if (handle && handle->IsAttachedSound()) detail_AttachSoundAsTempHandle(handle->m_pSound);
+    if (handle != nullptr && handle->IsAttachedSound()) detail_AttachSoundAsTempHandle(handle->m_pSound);
 }
 
 void SoundHandle::DetachSound() {

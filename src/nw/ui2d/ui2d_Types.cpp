@@ -81,6 +81,6 @@ DummyRenderTargetTextureInfo::DummyRenderTargetTextureInfo(const char* name) : m
 DummyRenderTargetTextureInfo::~DummyRenderTargetTextureInfo() {}
 // device is accepted by the common texture interface; this placeholder owns only a name.
 void DummyRenderTargetTextureInfo::Finalize(nn::gfx::Device* device) {
-    if (mName) { Layout::FreeMemory(mName); mName = nullptr; }
+    if (mName != nullptr) { Layout::FreeMemory(mName); mName = nullptr; }
 }
 }

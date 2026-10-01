@@ -14,9 +14,9 @@ bool AnimTransform::IsLoopData() const { return m_pResource->loop != 0; }
 bool AnimTransform::IsWaitData() const { return m_pResource->frameSize == 0; }
 AnimTransformBasic::AnimTransformBasic() : _28(nullptr), _30(nullptr), _38(0) {}
 AnimTransformBasic::~AnimTransformBasic() {
-    if (_30) Layout::FreeMemory(_30);
+    if (_30 != nullptr) Layout::FreeMemory(_30);
 
-    if (_28) Layout::FreeMemory(_28);
+    if (_28 != nullptr) Layout::FreeMemory(_28);
 }
 
 // device and accessor resolve resources; resource supplies the default bind capacity.
@@ -27,33 +27,33 @@ void AnimTransformBasic::SetResource(nn::gfx::Device* device, ResourceAccessor* 
 void AnimTransformBasic::ResetAnimResource() {
     m_pResource = nullptr;
 
-    if (_30) Layout::FreeMemory(_30);
+    if (_30 != nullptr) Layout::FreeMemory(_30);
     _30 = nullptr;
 
-    if (_28) Layout::FreeMemory(_28);
+    if (_28 != nullptr) Layout::FreeMemory(_28);
     _28 = nullptr;
 }
 
 void AnimTransformBasic::UnbindAll() { mBindCount = 0; }
 void AnimResource::Initialize() { mFile = nullptr; mAnimation = nullptr; mTag = nullptr; mSharedAnimations = nullptr; }
 bool AnimResource::CheckResource() const { return mAnimation != nullptr; }
-u16 AnimResource::GetTagOrder() const { return mTag ? mTag->order : 0xffff; }
-const char* AnimResource::GetTagName() const { return mTag ? reinterpret_cast<const char*>(mTag) + mTag->nameOffset : nullptr; }
-u16 AnimResource::GetGroupCount() const { return mTag ? mTag->groupCount : 0; }
+u16 AnimResource::GetTagOrder() const { return (mTag != nullptr) ? mTag->order : 0xffff; }
+const char* AnimResource::GetTagName() const { return (mTag != nullptr) ? reinterpret_cast<const char*>(mTag) + mTag->nameOffset : nullptr; }
+u16 AnimResource::GetGroupCount() const { return (mTag != nullptr) ? mTag->groupCount : 0; }
 const ResAnimationGroup* AnimResource::GetGroupArray() const {
-    return mTag ? reinterpret_cast<const ResAnimationGroup*>(reinterpret_cast<const char*>(mTag) + mTag->groupOffset) : nullptr;
+    return (mTag != nullptr) ? reinterpret_cast<const ResAnimationGroup*>(reinterpret_cast<const char*>(mTag) + mTag->groupOffset) : nullptr;
 }
 
 const ResExtUserDataList* AnimResource::GetExtUserDataList() const {
-    if (!mTag) return nullptr;
+    if (mTag == nullptr) return nullptr;
 
     if (!mTag->userDataOffset) return nullptr;
     return reinterpret_cast<const ResExtUserDataList*>(reinterpret_cast<const char*>(mTag) + mTag->userDataOffset);
 }
 
-bool AnimResource::IsDescendingBind() const { return mTag ? (mTag->flags & 1) != 0 : false; }
-u16 AnimResource::GetAnimationShareInfoCount() const { return mSharedAnimations ? mSharedAnimations->infoCount : 0; }
+bool AnimResource::IsDescendingBind() const { return (mTag != nullptr) ? (mTag->flags & 1) != 0 : false; }
+u16 AnimResource::GetAnimationShareInfoCount() const { return (mSharedAnimations != nullptr) ? mSharedAnimations->infoCount : 0; }
 const ResAnimationShareInfo* AnimResource::GetAnimationShareInfoArray() const {
-    return mSharedAnimations ? reinterpret_cast<const ResAnimationShareInfo*>(reinterpret_cast<const char*>(mSharedAnimations) + mSharedAnimations->infoOffset) : nullptr;
+    return (mSharedAnimations != nullptr) ? reinterpret_cast<const ResAnimationShareInfo*>(reinterpret_cast<const char*>(mSharedAnimations) + mSharedAnimations->infoOffset) : nullptr;
 }
 }

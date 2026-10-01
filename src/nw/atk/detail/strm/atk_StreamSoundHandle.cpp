@@ -3,10 +3,10 @@
 namespace nn::atk {
 // handle supplies a stream sound; null, detached, or incompatible handles leave this detached.
 StreamSoundHandle::StreamSoundHandle(SoundHandle* handle) : mSound(nullptr) {
-    if (handle && handle->IsAttachedSound()) {
+    if (handle != nullptr && handle->IsAttachedSound()) {
         auto* sound = detail::SoundCast<detail::StreamSound>(handle->m_pSound);
 
-        if (sound) detail_AttachSoundAsTempHandle(sound);
+        if (sound != nullptr) detail_AttachSoundAsTempHandle(sound);
     }
 }
 
@@ -19,10 +19,10 @@ void StreamSoundHandle::detail_AttachSoundAsTempHandle(detail::StreamSound* soun
 }
 
 void StreamSoundHandle::DetachSound() {
-    if (mSound) {
+    if (mSound != nullptr) {
         if (mSound->mTempHandle == this) mSound->mTempHandle = nullptr;
 
-        if (mSound) mSound = nullptr;
+        if (mSound != nullptr) mSound = nullptr;
     }
 }
 }

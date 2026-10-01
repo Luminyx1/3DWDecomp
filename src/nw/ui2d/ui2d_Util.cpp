@@ -12,7 +12,7 @@ Pane* GetNextPane(Pane* pane) {
 
     if (child != &pane->m_Children) return reinterpret_cast<Pane*>(reinterpret_cast<char*>(child) - 8);
 
-    while (pane->mParent) {
+    while (pane->mParent != nullptr) {
         auto* next = pane->m_Link.GetNext();
         auto* parent = pane->mParent;
 

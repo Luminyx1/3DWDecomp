@@ -14,14 +14,14 @@ Group::Group(const ResGroup* resource, Pane* root) : mName(resource->name), mUse
     for (u32 i = 0; i < resource->paneCount; ++i) {
         Pane* pane = root->FindPaneByName(names[i], true);
 
-        if (pane) AppendPane(pane);
+        if (pane != nullptr) AppendPane(pane);
     }
 }
 
 // source supplies group membership; root optionally replaces each pane by its
 // namesake in another pane tree. A null root retains the original pane pointers.
 Group::Group(const Group& source, Pane* root) : mName(source.mName), mUserAllocated(false) {
-    if (root) {
+    if (root != nullptr) {
         for (const auto& link : source.mPanes)
             AppendPane(root->FindPaneByName(link.pane->mPanelName, true));
     } else {
@@ -33,7 +33,7 @@ Group::Group(const Group& source, Pane* root) : mName(source.mName), mUserAlloca
 void Group::AppendPane(Pane* pane) {
     void* memory = Layout::AllocateMemory(sizeof(PaneLink));
 
-    if (!memory) return;
+    if (memory == nullptr) return;
     auto* link = new (memory) PaneLink;
     link->pane = pane;
     mPanes.push_back(*link);

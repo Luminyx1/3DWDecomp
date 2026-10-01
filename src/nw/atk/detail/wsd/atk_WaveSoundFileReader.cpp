@@ -10,7 +10,7 @@ WaveSoundFileReader::WaveSoundFileReader(const void* file) : mHeader(nullptr), m
     mHeader = header;
     const auto* info = mHeader->GetInfoBlock();
 
-    if (!info || info->signature != 0x4f464e49) return;
+    if (info == nullptr || info->signature != 0x4f464e49) return;
     mInfo = &info->body;
 }
 

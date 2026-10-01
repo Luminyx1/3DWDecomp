@@ -170,7 +170,7 @@ void MmlParser::CommandProc(MmlSequenceTrack* track, u32 command, int first, int
         case 0x88: {
             SequenceTrack* other = player->GetPlayerTrack(first);
 
-            if (other && other != track) {
+            if (other != nullptr && other != track) {
                 other->Close(); other->SetSeqData(track->mContext.mSequenceData, second); other->Open();
             }
 

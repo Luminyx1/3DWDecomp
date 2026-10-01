@@ -40,7 +40,7 @@ void ShaderContainer::Finalize(nn::gfx::Device* device) {
 ShaderInfo* ShaderContainer::RegisterShader(const char* name, bool shared) {
     void* memory = Layout::AllocateMemory(sizeof(ShaderRefLink));
 
-    if (!memory) return nullptr;
+    if (memory == nullptr) return nullptr;
     auto* link = new (memory) ShaderRefLink(shared);
     link->SetName(name);
     mShaders.push_back(*link);

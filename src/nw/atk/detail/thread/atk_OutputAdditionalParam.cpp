@@ -47,23 +47,23 @@ void OutputAdditionalParam::Initialize(void* memory, size_t size, const SoundIns
 }
 
 void OutputAdditionalParam::Finalize() {
-    if (mAdditionalSend) { mAdditionalSend->Finalize(); mAdditionalSend = nullptr; }
-    if (mBusMix) { mBusMix = nullptr; }
-    if (mVolumeThrough) { mVolumeThrough->Finalize(); mVolumeThrough = nullptr; }
+    if (mAdditionalSend != nullptr) { mAdditionalSend->Finalize(); mAdditionalSend = nullptr; }
+    if (mBusMix != nullptr) { mBusMix = nullptr; }
+    if (mVolumeThrough != nullptr) { mVolumeThrough->Finalize(); mVolumeThrough = nullptr; }
 }
 
 void OutputAdditionalParam::Reset() {
-    if (mAdditionalSend) mAdditionalSend->Reset();
+    if (mAdditionalSend != nullptr) mAdditionalSend->Reset();
 
-    if (mBusMix) mBusMix->Reset();
+    if (mBusMix != nullptr) mBusMix->Reset();
 
-    if (mVolumeThrough) mVolumeThrough->Reset();
+    if (mVolumeThrough != nullptr) mVolumeThrough->Reset();
 }
 
 void* OutputAdditionalParam::GetBufferAddr() {
-    if (mAdditionalSend) return mAdditionalSend;
+    if (mAdditionalSend != nullptr) return mAdditionalSend;
 
-    if (mBusMix) return mBusMix;
+    if (mBusMix != nullptr) return mBusMix;
     return mVolumeThrough;
 }
 
@@ -107,7 +107,7 @@ VolumeThroughModePacket* OutputAdditionalParam::GetVolumeThroughModePacketAddr()
 const VolumeThroughModePacket* OutputAdditionalParam::GetVolumeThroughModePacketAddr() const { return mVolumeThrough; }
 float OutputAdditionalParam::GetBinaryVolume() const { return mVolumeThrough->mVolume; }
 // volume is the binary's gain; writes are ignored when the optional packet is absent.
-void OutputAdditionalParam::SetBinaryVolume(float volume) { if (mVolumeThrough) mVolumeThrough->mVolume = volume; }
+void OutputAdditionalParam::SetBinaryVolume(float volume) { if (mVolumeThrough != nullptr) mVolumeThrough->mVolume = volume; }
 // bus selects a mode byte; invalid indices return the default mode, zero.
 u8 OutputAdditionalParam::TryGetVolumeThroughMode(int bus) const {
     if (bus < 0) return 0;
@@ -118,23 +118,23 @@ u8 OutputAdditionalParam::TryGetVolumeThroughMode(int bus) const {
 
 // bus selects the mode byte and mode supplies its flags; absent packets and invalid buses are ignored.
 void OutputAdditionalParam::TrySetVolumeThroughMode(int bus, u8 mode) {
-    if (bus < 0 || !mVolumeThrough || bus >= mVolumeThrough->mBusCount) return;
+    if (bus < 0 || mVolumeThrough == nullptr || bus >= mVolumeThrough->mBusCount) return;
     mVolumeThrough->mModes[bus] = mode;
 }
 
 bool OutputAdditionalParam::IsVolumeThroughModeEnabled() const { return mVolumeThrough != nullptr; }
-bool OutputAdditionalParam::IsVolumeThroughModeUsed() const { return mVolumeThrough && mVolumeThrough->mUsed; }
+bool OutputAdditionalParam::IsVolumeThroughModeUsed() const { return (mVolumeThrough != nullptr) && mVolumeThrough->mUsed; }
 // used controls volume-through processing when its packet is present.
-void OutputAdditionalParam::SetVolumeThroughModeUsed(bool used) { if (mVolumeThrough) mVolumeThrough->mUsed = used; }
+void OutputAdditionalParam::SetVolumeThroughModeUsed(bool used) { if (mVolumeThrough != nullptr) mVolumeThrough->mUsed = used; }
 
 // other supplies values for packets present in this object; storage ownership is retained.
 OutputAdditionalParam& OutputAdditionalParam::operator=(const OutputAdditionalParam& other) {
-    if (mAdditionalSend) {
-        if (other.mAdditionalSend) *mAdditionalSend = *other.mAdditionalSend;
+    if (mAdditionalSend != nullptr) {
+        if (other.mAdditionalSend != nullptr) *mAdditionalSend = *other.mAdditionalSend;
         else mAdditionalSend->Reset();
     }
 
-    if (mBusMix && other.mBusMix) {
+    if (mBusMix != nullptr && other.mBusMix != nullptr) {
         mBusMix->mUsed = other.mBusMix->mUsed;
 
         if (mBusMix->mUsed) {
@@ -152,8 +152,8 @@ OutputAdditionalParam& OutputAdditionalParam::operator=(const OutputAdditionalPa
         }
     }
 
-    if (mVolumeThrough) {
-        if (other.mVolumeThrough) *mVolumeThrough = *other.mVolumeThrough;
+    if (mVolumeThrough != nullptr) {
+        if (other.mVolumeThrough != nullptr) *mVolumeThrough = *other.mVolumeThrough;
         else mVolumeThrough->Reset();
     }
 

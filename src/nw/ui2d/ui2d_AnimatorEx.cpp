@@ -25,7 +25,7 @@ void AnimatorEx::Synchronize(const AnimatorEx& other) {
     else StopAt(other.mFrame);
 }
 
-const char* AnimatorEx::GetTagName() const { return mTag ? reinterpret_cast<const char*>(mTag) + mTag->nameOffset : nullptr; }
+const char* AnimatorEx::GetTagName() const { return (mTag != nullptr) ? reinterpret_cast<const char*>(mTag) + mTag->nameOffset : nullptr; }
 void AnimatorEx::Unbind() {}
 // resource supplies the tag metadata associated with this animator.
 void AnimatorEx::SetupAnimationResource(const AnimResource& resource) { mTag = resource.mTag; }

@@ -36,17 +36,17 @@ void StreamCache::Finalize() {
 // reads, passing owner through to identify the stream in each callback.
 size_t StreamCache::Read(void* output, size_t size, FndResult* result, FsAccessLog* log, void* owner) {
     if (!IsInitialized()) {
-        if (log) log->OnReadBegin(owner);
+        if (log != nullptr) log->OnReadBegin(owner);
         size_t count = mStream->Read(output, size, result);
 
-        if (log) log->OnReadEnd(owner);
+        if (log != nullptr) log->OnReadEnd(owner);
         return count;
     }
 
     FndResult flush = FlushWriteCache();
 
     if (static_cast<s32>(flush.value) < 0) {
-        if (result) *result = flush;
+        if (result != nullptr) *result = flush;
         return 0;
     }
 
@@ -62,7 +62,7 @@ size_t StreamCache::Read(void* output, size_t size, FndResult* result, FsAccessL
     FndResult sync = SyncStreamCurrentPosition(mPosition);
 
     if (static_cast<s32>(sync.value) < 0) {
-        if (result) *result = sync;
+        if (result != nullptr) *result = sync;
         return 0;
     }
 
@@ -70,13 +70,13 @@ size_t StreamCache::Read(void* output, size_t size, FndResult* result, FsAccessL
     size_t actual;
 
     if (remaining > mBufferSize) {
-        if (log) log->OnReadBegin(owner);
+        if (log != nullptr) log->OnReadBegin(owner);
         FndResult status = {0};
         actual = mStream->Read(output, remaining, &status);
 
-        if (log) log->OnReadEnd(owner);
+        if (log != nullptr) log->OnReadEnd(owner);
 
-        if (result) *result = status;
+        if (result != nullptr) *result = status;
 
         if (static_cast<s32>(status.value) < 0) {
             ClearCache();
@@ -92,13 +92,13 @@ size_t StreamCache::Read(void* output, size_t size, FndResult* result, FsAccessL
         mCachedLength = retained;
         std::memcpy(mBuffer, source, mBufferSize);
     } else {
-        if (log) log->OnReadBegin(owner);
+        if (log != nullptr) log->OnReadBegin(owner);
         FndResult status = {0};
         actual = mStream->Read(mBuffer, mBufferSize, &status);
 
-        if (log) log->OnReadEnd(owner);
+        if (log != nullptr) log->OnReadEnd(owner);
 
-        if (result) *result = status;
+        if (result != nullptr) *result = status;
 
         if (static_cast<s32>(status.value) < 0) {
             ClearCache();
@@ -116,7 +116,7 @@ size_t StreamCache::Read(void* output, size_t size, FndResult* result, FsAccessL
     size_t total = hit + actual;
 
     if (total >= size) {
-        if (result) result->value = 0;
+        if (result != nullptr) result->value = 0;
         return size;
     }
 
@@ -174,7 +174,7 @@ size_t StreamCache::Write(const void* input, size_t size, FndResult* result) {
         FndResult status = FlushWriteCache();
 
         if (static_cast<s32>(status.value) < 0) {
-            if (result) *result = status;
+            if (result != nullptr) *result = status;
             return 0;
         }
 
@@ -185,7 +185,7 @@ size_t StreamCache::Write(const void* input, size_t size, FndResult* result) {
         FndResult status = FlushWriteCache();
 
         if (static_cast<s32>(status.value) < 0) {
-            if (result) *result = status;
+            if (result != nullptr) *result = status;
             return 0;
         }
     }
@@ -206,12 +206,12 @@ size_t StreamCache::Write(const void* input, size_t size, FndResult* result) {
         FndResult status = FlushWriteCache();
 
         if (static_cast<s32>(status.value) < 0) {
-            if (result) *result = status;
+            if (result != nullptr) *result = status;
             return size;
         }
     }
 
-    if (result) result->value = 0;
+    if (result != nullptr) result->value = 0;
     return size;
 }
 
