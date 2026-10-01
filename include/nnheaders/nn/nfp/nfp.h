@@ -3,12 +3,12 @@
 #include <nn/types.h>
 
 namespace nn::os {
-class SystemEventType;
+struct SystemEventType;
 }  // namespace nn::os
 
 namespace nn::nfp {
 
-using DeviceHandle = u64;
+struct DeviceHandle;
 
 enum State : u32;
 enum DeviceState : u32;

@@ -4,7 +4,9 @@
 
 namespace nn::nfp {
 
-using DeviceHandle = u64;
+struct DeviceHandle {
+    u8 _handle[8];
+};
 
 const s32 AmiiboNameLength = 10;
 
