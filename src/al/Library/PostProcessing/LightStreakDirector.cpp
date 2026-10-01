@@ -23,7 +23,7 @@ const al::UniformBlockLayout cLightStreakUboLayout[] = {
 };
 
 agl::DrawContext* getDrawContext() {
-    return reinterpret_cast<agl::DrawContext*>(al::GameFrameworkNx::sInstance->mDrawContext);
+    return al::GameFrameworkNx::getAglDrawContext();
 }
 
 template <typename T>
