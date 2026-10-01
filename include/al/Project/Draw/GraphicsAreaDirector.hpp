@@ -25,5 +25,11 @@ public:
     s32 getGraphicsAreaNum() const;
     void getCurrentGraphicsAreaParam(CurrentGraphicsAreaParam* pParam,
                                      GraphicsAreaParamType type) const;
+
+    bool isLerpPaused() const { return mIsLerpPaused; }
+
+private:
+    u8 _0[0x290];
+    bool mIsLerpPaused;
 };
 }  // namespace al
