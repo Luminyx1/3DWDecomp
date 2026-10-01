@@ -11,6 +11,6 @@ namespace SkyboxFunction {
      * @return The skybox director.
      */
     al::SkyboxDirector* getSkyboxDirector(const al::LiveActor* pActor) {
-        return static_cast<al::GraphicsSystemInfo*>(pActor->getSceneInfo()->_78)->mSkyboxDirector;
+        return pActor->getSceneInfo()->graphicsSystemInfo->getSkyboxDirector();
     }
 }  // namespace SkyboxFunction

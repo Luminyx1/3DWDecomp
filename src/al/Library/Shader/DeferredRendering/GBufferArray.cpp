@@ -20,7 +20,7 @@ namespace {
  * @brief Gets the draw context of the game framework.
  */
 agl::DrawContext* getDrawContext() {
-    return reinterpret_cast<agl::DrawContext*>(al::GameFrameworkNx::sInstance->mDrawContext);
+    return al::GameFrameworkNx::getAglDrawContext();
 }
 
 /**
@@ -102,14 +102,14 @@ void GBufferArray::allocGBuffer(s32 subIndex) {
             type = agl::utl::DynamicTextureAllocator::cAllocateType_1;
             break;
         case cIndex_NrmView: {
-            const GraphicsStressDirector* stress = mGraphicsSystemInfo->mGraphicsStressDirector;
+            const GraphicsStressDirector* stress = mGraphicsSystemInfo->getGraphicsStressDirector();
             gbuffer.mIsClear = stress->isForceStressOff() || stress->isClearGBufferViewNrm();
             name = subIndex == 0 ? "gbuf_view_normal" : "gbuf_view_normal_sub";
             type = agl::utl::DynamicTextureAllocator::cAllocateType_1;
             break;
         }
         case cIndex_DepthView: {
-            const GraphicsStressDirector* stress = mGraphicsSystemInfo->mGraphicsStressDirector;
+            const GraphicsStressDirector* stress = mGraphicsSystemInfo->getGraphicsStressDirector();
             gbuffer.mIsClear = mIsClearDepthView || stress->isForceStressOff() ||
                                stress->isClearGBufferViewDepth();
             name = subIndex == 0 ? "gbuf_view_depth" : "gbuf_view_depth_sub";
@@ -153,10 +153,10 @@ void GBufferArray::clearGBuffer() {
         setRenderBufferSize(&renderBuffer, width, height);
         renderBuffer.setRenderTargetColorNullAll();
         renderBuffer.setRenderTargetColor(&renderTarget);
-        renderBuffer.bind(GameFrameworkNx::sInstance->mDrawContext);
+        renderBuffer.bind(GameFrameworkNx::getDrawContext());
         sead::Viewport viewport(renderBuffer);
-        viewport.apply(GameFrameworkNx::sInstance->mDrawContext, renderBuffer);
-        renderBuffer.clear(GameFrameworkNx::sInstance->mDrawContext, sead::FrameBuffer::cColor,
+        viewport.apply(GameFrameworkNx::getDrawContext(), renderBuffer);
+        renderBuffer.clear(GameFrameworkNx::getDrawContext(), sead::FrameBuffer::cColor,
                            sead::Color4f::cBlack, 1.0f, 0);
     }
 }
@@ -328,9 +328,9 @@ void GBufferArray::bindRenderBuffer(s32 num) {
     }
 
     renderBuffer.setRenderTargetDepth(const_cast<agl::RenderTargetDepth*>(mDepthTarget));
-    renderBuffer.bind(GameFrameworkNx::sInstance->mDrawContext);
+    renderBuffer.bind(GameFrameworkNx::getDrawContext());
     sead::Viewport viewport(renderBuffer);
-    viewport.apply(GameFrameworkNx::sInstance->mDrawContext, renderBuffer);
+    viewport.apply(GameFrameworkNx::getDrawContext(), renderBuffer);
 }
 
 /**
@@ -345,9 +345,9 @@ void GBufferArray::bindRenderBufferLightBuf() {
     renderBuffer.setRenderTargetColorNullAll();
     renderBuffer.setRenderTargetColor(&mGBuffers[cIndex_LightBuffer].mRenderTarget);
     renderBuffer.setRenderTargetDepth(const_cast<agl::RenderTargetDepth*>(mDepthTarget));
-    renderBuffer.bind(GameFrameworkNx::sInstance->mDrawContext);
+    renderBuffer.bind(GameFrameworkNx::getDrawContext());
     sead::Viewport viewport(renderBuffer);
-    viewport.apply(GameFrameworkNx::sInstance->mDrawContext, renderBuffer);
+    viewport.apply(GameFrameworkNx::getDrawContext(), renderBuffer);
 }
 
 /**
@@ -516,14 +516,14 @@ void GBufferArray::bindRenderBufferAndContextMRT() {
         }
 
         renderBuffer.setRenderTargetDepth(const_cast<agl::RenderTargetDepth*>(mDepthTarget));
-        renderBuffer.bind(GameFrameworkNx::sInstance->mDrawContext);
+        renderBuffer.bind(GameFrameworkNx::getDrawContext());
         sead::Viewport viewport(renderBuffer);
-        viewport.apply(GameFrameworkNx::sInstance->mDrawContext, renderBuffer);
+        viewport.apply(GameFrameworkNx::getDrawContext(), renderBuffer);
     }
 
     sead::GraphicsContextMRT context;
     setContextMRT(&context);
-    context.apply(GameFrameworkNx::sInstance->mDrawContext);
+    context.apply(GameFrameworkNx::getDrawContext());
 }
 
 }  // namespace al

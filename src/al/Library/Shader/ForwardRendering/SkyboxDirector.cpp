@@ -44,7 +44,7 @@ void SkyboxDirector::clearRequest() {}
  * Looks up the skybox parameter of the current graphics area.
  */
 void SkyboxDirector::execute() {
-    GraphicsAreaDirector* areaDirector = mGraphicsSystemInfo->mGraphicsAreaDirector;
+    GraphicsAreaDirector* areaDirector = mGraphicsSystemInfo->getGraphicsAreaDirector();
 
     if (areaDirector == nullptr) {
         return;

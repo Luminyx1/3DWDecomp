@@ -29,15 +29,15 @@ void AtmosScatterDrawer::draw() const {
         return;
     }
 
-    AtmosScatter* atmosScatter = info->mAtmosScatter;
+    AtmosScatter* atmosScatter = info->getAtmosScatter();
 
     if (atmosScatter == nullptr) {
         return;
     }
 
-    sead::PerspectiveProjection* projection = info->mDrawProjection;
-    atmosScatter->drawFarDeferred(info->mDrawViewIndex, info->mDrawGBufferArray,
-                                  info->mDrawCamera->getMatrix(), projection->getProjectionMatrix(),
+    sead::PerspectiveProjection* projection = info->getDrawProjection();
+    atmosScatter->drawFarDeferred(info->getDrawViewIndex(), info->getDrawGBufferArray(),
+                                  info->getDrawCamera()->getMatrix(), projection->getProjectionMatrix(),
                                   projection->getOffsetDirect(), projection->getFovy(),
                                   projection->getAspect(), static_cast<agl::ShaderMode>(4));
 }

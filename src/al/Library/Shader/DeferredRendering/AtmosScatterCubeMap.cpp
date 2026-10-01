@@ -43,7 +43,7 @@ namespace al {
  */
 AtmosScatterCubeMap::AtmosScatterCubeMap(GraphicsSystemInfo* pGraphicsSystemInfo)
     : NerveExecutor("大気散乱キューブマップ"), mGraphicsSystemInfo(pGraphicsSystemInfo),
-      mAtmosScatter(pGraphicsSystemInfo->mAtmosScatter), _20(pGraphicsSystemInfo->_d60) {
+      mAtmosScatter(pGraphicsSystemInfo->getAtmosScatter()), _20(pGraphicsSystemInfo->_d60) {
     initNerve(&NrvAtmosScatterCubeMapInitial, 0);
     mCubeMaps.pushBack(new agl::env::CubeMap());
     mCubeMaps.pushBack(new agl::env::CubeMap());
@@ -125,30 +125,30 @@ agl::ShaderMode AtmosScatterCubeMap::renderToCubeMap(agl::ShaderMode shaderMode)
     if (isNerve(this, &NrvAtmosScatterCubeMapDrawRoughness)) {
         agl::env::CubeMap* cubeMap = mCubeMaps[mCubeMapIndex];
         agl::DrawContext* drawContext =
-            reinterpret_cast<agl::DrawContext*>(GameFrameworkNx::sInstance->mDrawContext);
+            GameFrameworkNx::getAglDrawContext();
         cubeMap->begin(drawContext, false, true);
         u32 mipLevelNum = mCubeMaps[0]->getTextureData().getMipLevelNum();
 
         if (isFirstStep(this)) {
             cubeMap->generateMipMap(
-                reinterpret_cast<agl::DrawContext*>(GameFrameworkNx::sInstance->mDrawContext), 1, 2,
+                GameFrameworkNx::getAglDrawContext(), 1, 2,
                 cMipMapParam[0].mCount, cMipMapParam[0].mSigma, true);
         } else if (isStep(this, 1)) {
             cubeMap->generateMipMap(
-                reinterpret_cast<agl::DrawContext*>(GameFrameworkNx::sInstance->mDrawContext), 2, 3,
+                GameFrameworkNx::getAglDrawContext(), 2, 3,
                 cMipMapParam[1].mCount, cMipMapParam[1].mSigma, true);
             cubeMap->generateMipMap(
-                reinterpret_cast<agl::DrawContext*>(GameFrameworkNx::sInstance->mDrawContext), 3, 4,
+                GameFrameworkNx::getAglDrawContext(), 3, 4,
                 cMipMapParam[2].mCount, cMipMapParam[2].mSigma, true);
         } else {
             for (u32 i = 4; i < mipLevelNum; i++) {
                 cubeMap->generateMipMap(
-                    reinterpret_cast<agl::DrawContext*>(GameFrameworkNx::sInstance->mDrawContext), i,
+                    GameFrameworkNx::getAglDrawContext(), i,
                     i + 1, cMipMapParam[i - 1].mCount, cMipMapParam[i - 1].mSigma, true);
             }
         }
 
-        cubeMap->end(reinterpret_cast<agl::DrawContext*>(GameFrameworkNx::sInstance->mDrawContext));
+        cubeMap->end(GameFrameworkNx::getAglDrawContext());
     }
 
     return shaderMode;
@@ -193,7 +193,7 @@ bool AtmosScatterCubeMap::activateCubeMapTexture(s32 type, bool isRefract) const
         sampler = &mMirrorSampler;
     }
 
-    sampler->activate(reinterpret_cast<agl::DrawContext*>(GameFrameworkNx::sInstance->mDrawContext),
+    sampler->activate(GameFrameworkNx::getAglDrawContext(),
                       *location, -1, false);
     return true;
 }

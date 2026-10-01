@@ -75,14 +75,14 @@ void CubeMapDrawInfo::preDrawCubeMapFace(agl::env::CubeMap* pCubeMap, s32 face, 
     mCamera.updateViewMatrix();
 
     agl::DrawContext* drawContext =
-        reinterpret_cast<agl::DrawContext*>(GameFrameworkNx::sInstance->mDrawContext);
+        GameFrameworkNx::getAglDrawContext();
     pCubeMap->begin(drawContext, isClearColor, true);
-    pCubeMap->preDraw(reinterpret_cast<agl::DrawContext*>(GameFrameworkNx::sInstance->mDrawContext),
+    pCubeMap->preDraw(GameFrameworkNx::getAglDrawContext(),
                       face, mipLevel);
     const agl::RenderBuffer& renderBuffer = pCubeMap->getRenderBuffer();
     mViewport.setByFrameBuffer(renderBuffer);
-    mViewport.apply(GameFrameworkNx::sInstance->mDrawContext, renderBuffer);
-    renderBuffer.clear(GameFrameworkNx::sInstance->mDrawContext, 7, sead::Color4f::cGray, 1.0f, 0);
+    mViewport.apply(GameFrameworkNx::getDrawContext(), renderBuffer);
+    renderBuffer.clear(GameFrameworkNx::getDrawContext(), 7, sead::Color4f::cGray, 1.0f, 0);
 
     sead::Vector2f size(mViewport.getMax().x - mViewport.getMin().x,
                         mViewport.getMax().y - mViewport.getMin().y);
@@ -172,9 +172,9 @@ CubeMapDrawer::CubeMapDrawer(CubeMapDrawInfo* pDrawInfo, agl::ShaderMode* pShade
  * Finishes rendering a cube map face.
  */
 CubeMapDrawer::~CubeMapDrawer() {
-    mCubeMap->postDraw(reinterpret_cast<agl::DrawContext*>(GameFrameworkNx::sInstance->mDrawContext),
+    mCubeMap->postDraw(GameFrameworkNx::getAglDrawContext(),
                        true);
-    mCubeMap->end(reinterpret_cast<agl::DrawContext*>(GameFrameworkNx::sInstance->mDrawContext));
+    mCubeMap->end(GameFrameworkNx::getAglDrawContext());
     mCubeMap = nullptr;
 }
 }  // namespace al

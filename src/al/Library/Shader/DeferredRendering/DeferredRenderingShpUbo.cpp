@@ -98,7 +98,7 @@ void DeferredRenderingShpUbo::swap() {
 void DeferredRenderingShpUbo::activate() {
     s32 index = (mCurrentIndex + mUboNum - 1) % mUboNum;
     mUbos[index]->activate(
-        reinterpret_cast<agl::DrawContext*>(GameFrameworkNx::sInstance->mDrawContext), mLocation);
+        GameFrameworkNx::getAglDrawContext(), mLocation);
 }
 
 }  // namespace al

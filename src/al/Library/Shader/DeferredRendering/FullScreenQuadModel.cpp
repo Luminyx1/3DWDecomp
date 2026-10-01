@@ -65,8 +65,8 @@ FullScreenQuadModel::~FullScreenQuadModel() {
  * Draws the two screen covering triangles.
  */
 void FullScreenQuadModel::drawQuad() const {
-    mVertexAttribute.activate(reinterpret_cast<agl::DrawContext*>(GameFrameworkNx::sInstance->mDrawContext));
-    nvnCommandBufferDrawArrays(GameFrameworkNx::sInstance->mDrawContext->getNvnCommandBuffer(),
+    mVertexAttribute.activate(GameFrameworkNx::getAglDrawContext());
+    nvnCommandBufferDrawArrays(GameFrameworkNx::getDrawContext()->getNvnCommandBuffer(),
                                NVN_DRAW_PRIMITIVE_TRIANGLES, 0, 18);
 }
 }  // namespace al
