@@ -3,6 +3,7 @@
 #include <basis/seadTypes.h>
 #include <math/seadMatrix.h>
 #include <math/seadVector.h>
+#include <nn/vfx/Heap.h>
 
 #include "Library/Effect/EffectSystemInfo.hpp"
 
@@ -22,16 +23,37 @@ class Viewport;
 
 namespace al {
 class CameraDirector;
+class EffectCameraHolder;
+struct EffectDrawCategoryInfo;
+class EffectEnvParam;
+class EffectGroupDrawer;
+class EffectHeap;
+class EffectLayoutDrawer;
 class EffectShaderHolder;
 class ExecuteDirector;
 class GraphicsSystemInfo;
 
 class EffectSystem {
 public:
+    static EffectSystem* createSystem(agl::DrawContext* pDrawContext, sead::Heap* pHeap);
+    static EffectSystem* createSystemWithPatchResouce(agl::DrawContext* pDrawContext,
+                                                      sead::Heap* pHeap);
+    static void loadEffectResource(EffectSystem* pEffectSystem);
     static EffectSystem* initializeSystem(agl::DrawContext* pDrawContext, sead::Heap* pHeap,
-                                          bool isUsePatchResource);
+                                          bool isDelayLoadResource);
+    static EffectSystem* initializeSystemWithPatchResource(agl::DrawContext* pDrawContext,
+                                                           sead::Heap* pHeap,
+                                                           bool isDelayLoadResource);
 
-    void addCalcEffect(u64 groupId);
+    EffectSystem();
+
+    void loadPtclResource(sead::Heap* pHeap);
+    static bool isEnableBatchCompute();
+    static s32 getPauseForceCalcFrame();
+    void setDrawContext(agl::DrawContext* pDrawContext);
+    void addResourcePath(const char* pPath);
+    void init();
+    void loadDbResource(sead::Heap* pHeap);
     void initScene();
     void endInit();
     void startScene(ExecuteDirector* pExecuteDirector);
@@ -39,8 +61,10 @@ public:
     void postprocess();
     void endScene();
     void setCameraDirector(CameraDirector* pCameraDirector);
+    void calcParticle(u64 userData);
     void setGraphicsSystemInfo(const GraphicsSystemInfo* pGraphicsSystemInfo);
     void updateEffect(const char* pGroupName) const;
+    EffectGroupDrawer* findGroupDrawer(const char* pGroupName) const;
     void calcEffectCompute() const;
     void drawEffectWithRenderPathAndCamPos(const sead::Matrix44f& rProjMtx,
                                            const sead::Matrix34f& rViewMtx,
@@ -52,20 +76,68 @@ public:
                                   u32 renderPath, bool isCalcCompute) const;
     void calcShadowClipVolume(agl::sdw::DepthShadow* pDepthShadow, const char* pGroupName,
                               u32 renderPath) const;
+    void addCalcEffect(u64 userData);
     bool isHasRenderingEmitter(u32 flag) const;
+    void checkCalculateFlag(s32 groupId);
+    void calcParticle(s32 groupId);
+    void calcChildParticle(s32 groupId);
 
     EffectSystemInfo* getEffectSystemInfo() { return &mEffectSystemInfo; }
+    const EffectSystemInfo* getEffectSystemInfo() const { return &mEffectSystemInfo; }
+    PtclSystem* getPtclSystem() const { return mEffectSystemInfo.mPtclSystem; }
     EffectShaderHolder* getShaderHolder() const { return mShaderHolder; }
+    EffectCameraHolder* getEffectCameraHolder() const { return mEffectCameraHolder; }
     agl::DrawContext* getDrawContext() const { return mDrawContext; }
+    EffectEnvParam* getEffectEnvParam() const { return mEffectEnvParam; }
+    s32 getGroupDrawerNum() const { return mGroupDrawerNum; }
+    EffectGroupDrawer* getGroupDrawer(s32 index) const { return mGroupDrawers[index]; }
+    bool isStopCalc() const { return mIsStopCalc || mIsStopCalcByDemo; }
+    bool isSwapBuffer() const { return mIsSwapBuffer; }
 
-    void* _0;
+private:
+    void calcParticleImpl(u64 userData);
+    inline const EffectDrawCategoryInfo& getDrawCategory(s32 index) const;
+
+    sead::Heap* mHeap;
     EffectSystemInfo mEffectSystemInfo;
-    u8 _28[0x390 - 0x28];
+    EffectCameraHolder* mEffectCameraHolder;
+    s32 mGroupDrawerNum;
+    EffectGroupDrawer** mGroupDrawers;
+    s32 mResourcePathNum;
+    s32 mResourceIndex;
+    const char* mResourcePaths[6];
+    bool mIsLoadedPtclResource;
+    bool mIsStopCalc;
+    bool mIsStopCalcByDemo;
+    bool mIsSwapBuffer;
+    s32 mCalcEffectNum;
+    u64 mCalcEffects[0x60];
+    s32 mLayoutDrawerNum;
+    EffectLayoutDrawer** mLayoutDrawers;
     EffectShaderHolder* mShaderHolder;
-    u8 _398[0x3b8 - 0x398];
+    void* _398;
+    void* _3a0;
+    void* _3a8;
+    EffectHeap* mEffectHeap;
     agl::DrawContext* mDrawContext;
+    EffectEnvParam* mEffectEnvParam;
+    u32 mCalculateFlag;
 };
+
+static_assert(sizeof(EffectSystem) == 0x3d0);
 }  // namespace al
+
+class EffectHeapForNw : public nn::vfx::Heap {
+public:
+    explicit EffectHeapForNw(sead::Heap* pHeap) : mHeap(pHeap) {}
+
+    ~EffectHeapForNw() override;
+    void* Alloc(size_t size, size_t alignment) override;
+    void Free(void* ptr) override;
+
+private:
+    sead::Heap* mHeap;
+};
 
 namespace alEffectSystemFunction {
 void setDrawPathRenderStateSetCallbackSRT(const al::EffectSystem* pEffectSystem, bool isEnable);
