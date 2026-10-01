@@ -24,6 +24,8 @@ class ResFile;
 
 namespace al {
 class NoiseTextureKeeper;
+class PlayerHolder;
+class SceneCameraInfo;
 class ShaderHolder;
 class SimpleModelEnv;
 class UniformBlock;
@@ -63,6 +65,10 @@ private:
 
 class VignettingDrawer {
 public:
+    VignettingDrawer(ShaderHolder* pShaderHolder, const PlayerHolder* pPlayerHolder,
+                     const SceneCameraInfo* pCameraInfo);
+    ~VignettingDrawer();
+    void draw(agl::DrawContext* pContext, const agl::RenderBuffer& rBuffer) const;
     void endInit();
     void clearRequest();
     void update();
@@ -74,5 +80,6 @@ public:
 private:
     u8 _0[0x8];
     ParamRequestInterp* mRequestInterp;
+    u8 _10[0x138];
 };
 }  // namespace al

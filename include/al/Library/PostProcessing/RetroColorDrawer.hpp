@@ -95,5 +95,6 @@ public:
 private:
     u8 _0[0x8];
     ParamRequestInterp* mRequestInterp;
+    u8 _10[0x18];
 };
 }  // namespace al
