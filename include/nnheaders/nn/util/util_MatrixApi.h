@@ -28,6 +28,17 @@ inline void MatrixLoad(Matrix4x3fType* pOutValue, const FloatColumnMajor4x3& rSo
     pOutValue->_m = detail::Matrix4x4fTranspose(tmp);
 }
 
+inline void MatrixIdentity(Matrix4x3fType* pOutValue) {
+    pOutValue->_m.val[0] = float32x4_t{1.0f, 0.0f, 0.0f, 0.0f};
+    pOutValue->_m.val[1] = float32x4_t{0.0f, 1.0f, 0.0f, 0.0f};
+    pOutValue->_m.val[2] = float32x4_t{0.0f, 0.0f, 1.0f, 0.0f};
+    pOutValue->_m.val[3] = float32x4_t{0.0f, 0.0f, 0.0f, 0.0f};
+}
+
+inline void MatrixSetAxisW(Matrix4x3fType* pOutValue, const Vector3fType& rVector) {
+    pOutValue->_m.val[3] = rVector._v;
+}
+
 inline void MatrixStore(FloatColumnMajor4x3* pOutValue, const Matrix4x3fType& rSource) {
     float32x4x4_t transposed = detail::Matrix4x4fTranspose(rSource._m);
     vst1q_f32(pOutValue->m[0], transposed.val[0]);

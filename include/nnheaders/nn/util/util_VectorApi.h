@@ -28,6 +28,13 @@ inline void VectorSet(Vector3fType* pOutValue, float x, float y, float z) {
     pOutValue->_v = vcombine_f32(low, high);
 }
 
+inline void VectorLoad(Vector3fType* pOutValue, const Float3& rSource) {
+    float32x2_t low = vld1_f32(rSource.v);
+    float32x2_t high =
+        vcreate_f32(static_cast<uint64_t>(*reinterpret_cast<const uint32_t*>(&rSource.v[2])));
+    pOutValue->_v = vcombine_f32(low, high);
+}
+
 inline float VectorGetX(const Vector3fType& vector) {
     return vgetq_lane_f32(vector._v, 0);
 }
