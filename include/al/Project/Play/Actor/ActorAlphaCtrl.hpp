@@ -4,6 +4,8 @@
 #include <math/seadMatrix.h>
 #include <math/seadVector.h>
 
+#include "Library/LiveActor/Util/ActorPoseUtil.hpp"
+
 namespace al {
 class ByamlIter;
 class ClippingJudge;
@@ -17,6 +19,18 @@ public:
 
         void init(const ByamlIter& rIter, LiveActor* pActor);
         f32 update(LiveActor* pActor, const ClippingJudge* pJudge);
+
+        sead::Vector3f calcPos(const LiveActor* pActor) const {
+            sead::Vector3f pos;
+
+            if (mJointMtx != nullptr) {
+                pos.setMul(*mJointMtx, mPosOffset);
+            } else {
+                pos = getTrans(pActor) + mPosOffset;
+            }
+
+            return pos;
+        }
 
         f32 mNearDist = 200.0f;
         f32 mFarDist = 450.0f;
