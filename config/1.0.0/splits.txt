@@ -5607,19 +5607,19 @@ src/al/Project/Clipping/ViewInfoCtrl.cpp: done
     .text   start:0x00954320 end:0x009546C0
 src/al/Library/Collision/Collider.cpp:
     .text   start:0x009546C0 end:0x00956248
-src/al/Library/Collision/CollisionDirector.cpp:
+src/al/Library/Collision/CollisionDirector.cpp: done
     .text   start:0x00956250 end:0x00956D5C
-src/al/Library/Collision/CollisionDiscBase.cpp:
+src/al/Library/Collision/CollisionDiscBase.cpp: done
     .text   start:0x00956D60 end:0x00957444
-src/al/Library/Collision/CollisionMultiSphereBase.cpp:
-    .text   start:0x00957450 end:0x00957DF4
+src/al/Library/Collision/CollisionMultiSphereBase.cpp: done
+    .text   start:0x00957450 end:0x00957E04
 src/al/Library/Collision/CollisionParts.cpp:
     .text   start:0x00957E10 end:0x0095A4E8
 src/al/Library/Collision/CollisionPartsFilter.cpp: done
     .text   start:0x0095A4F0 end:0x0095A7A0
-src/al/Library/Collision/CollisionCheckCore.cpp:
+src/al/Library/Collision/CollisionCheckCore.cpp: done
     .text   start:0x0095A7A0 end:0x0095B38C
-src/al/Library/Collision/CollisionPartsKeeperArray.cpp:
+src/al/Library/Collision/CollisionPartsKeeperArray.cpp: done
     .text   start:0x0095B390 end:0x0095BE64
 src/al/Library/Collision/CollisionPartsKeeperOctree.cpp:
     .text   start:0x0095BE70 end:0x0095D6D4
