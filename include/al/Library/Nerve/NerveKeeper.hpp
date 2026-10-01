@@ -23,6 +23,10 @@ public:
         return static_cast<T*>(mKeeperUser);
     }
 
+    u32 getCurrentStep() const { return mNerveStep; }
+    NerveStateCtrl* getStateCtrl() const { return mStateCtrl; }
+    NerveActionCtrl* getActionCtrl() const { return mActionCtrl; }
+
     IUseNerve* mKeeperUser;
     const Nerve* mLastNerve;
     const Nerve* mNerve;

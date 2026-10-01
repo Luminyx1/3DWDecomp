@@ -28,7 +28,7 @@ namespace al {
     }
 
     s32 getNerveStep(const IUseNerve* pUser) {
-        return pUser->getNerveKeeper()->mNerveStep;
+        return pUser->getNerveKeeper()->getCurrentStep();
     }
 
     const Nerve* getNerve(const IUseNerve* pUser) {
@@ -398,7 +398,7 @@ namespace al {
      */
     void addNerveState(IUseNerve* pUser, NerveStateBase* pState, const Nerve* pNerve,
                        const char* pName) {
-        pUser->getNerveKeeper()->mStateCtrl->addState(pState, pNerve, pName);
+        pUser->getNerveKeeper()->getStateCtrl()->addState(pState, pNerve, pName);
     }
 
     /**
@@ -407,7 +407,7 @@ namespace al {
      * @return Whether the state ended.
      */
     bool updateNerveState(IUseNerve* pUser) {
-        return pUser->getNerveKeeper()->mStateCtrl->updateCurrentState();
+        return pUser->getNerveKeeper()->getStateCtrl()->updateCurrentState();
     }
 
     /**
@@ -417,7 +417,7 @@ namespace al {
      * @return Whether the state ended.
      */
     bool updateNerveStateAndNextNerve(IUseNerve* pUser, const Nerve* pNerve) {
-        if (pUser->getNerveKeeper()->mStateCtrl->updateCurrentState()) {
+        if (pUser->getNerveKeeper()->getStateCtrl()->updateCurrentState()) {
             pUser->getNerveKeeper()->setNerve(pNerve);
             return true;
         }
@@ -431,7 +431,7 @@ namespace al {
      * @return Whether the state ended.
      */
     bool isStateEnd(const IUseNerve* pUser) {
-        return pUser->getNerveKeeper()->mStateCtrl->isCurrentStateEnd();
+        return pUser->getNerveKeeper()->getStateCtrl()->isCurrentStateEnd();
     }
 };
 
@@ -443,6 +443,6 @@ namespace alNerveFunction {
      */
     void setNerveAction(al::IUseNerve* pUser, const char* pName) {
         al::NerveKeeper* keeper = pUser->getNerveKeeper();
-        keeper->setNerve(keeper->mActionCtrl->findNerve(pName));
+        keeper->setNerve(keeper->getActionCtrl()->findNerve(pName));
     }
 }  // namespace alNerveFunction
