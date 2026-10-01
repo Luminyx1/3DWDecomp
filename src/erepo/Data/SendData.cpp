@@ -19,7 +19,7 @@ namespace erepo {
  * @param rReporterId Id of the reporter creating the data.
  * @param isNothrow Whether to use the nothrow allocator.
  */
-SendData::SendData(sead::Heap* pHeap, const sead::FixedSafeString<31>& rEventId, s32 dataNum,
+SendData::SendData(sead::Heap* pHeap, const EventIdString& rEventId, s32 dataNum,
                    s32 arrayNum, s32 structNum, const StringId& rReporterId, bool isNothrow)
     : SendDataBase(pHeap, rEventId, rReporterId, isNothrow)
 {
@@ -45,7 +45,7 @@ SendData::~SendData()
  * @param isNothrow Whether to use the nothrow allocator.
  * @return The send data, or nullptr on failure.
  */
-SendData* SendData::CreateSendData(const sead::FixedSafeString<31>& rEventId, s32 dataNum,
+SendData* SendData::CreateSendData(const EventIdString& rEventId, s32 dataNum,
                                    s32 arrayNum, s32 structNum, const StringId& rReporterId,
                                    bool isNothrow)
 {
@@ -100,7 +100,7 @@ SendData* SendData::CreateSendData(const CreateArg& rArg)
  * @param value Value.
  * @return Whether the value was added.
  */
-bool SendData::addData(const sead::FixedSafeString<63>& rKey, bool value)
+bool SendData::addData(const KeyString& rKey, bool value)
 {
     if (!isInitialized()) {
         return false;
@@ -120,7 +120,7 @@ bool SendData::addData(const sead::FixedSafeString<63>& rKey, bool value)
  * @param value Value.
  * @return Whether the value was added.
  */
-bool SendData::addData(const sead::FixedSafeString<63>& rKey, u64 value)
+bool SendData::addData(const KeyString& rKey, u64 value)
 {
     if (!isInitialized()) {
         return false;
@@ -141,7 +141,7 @@ bool SendData::addData(const sead::FixedSafeString<63>& rKey, u64 value)
  * @param value Value.
  * @return Whether the value was added.
  */
-bool SendData::addData(const sead::FixedSafeString<63>& rKey, s64 value)
+bool SendData::addData(const KeyString& rKey, s64 value)
 {
     if (!isInitialized()) {
         return false;
@@ -161,7 +161,7 @@ bool SendData::addData(const sead::FixedSafeString<63>& rKey, s64 value)
  * @param value Value.
  * @return Whether the value was added.
  */
-bool SendData::addData(const sead::FixedSafeString<63>& rKey, u32 value)
+bool SendData::addData(const KeyString& rKey, u32 value)
 {
     if (!isInitialized()) {
         return false;
@@ -181,7 +181,7 @@ bool SendData::addData(const sead::FixedSafeString<63>& rKey, u32 value)
  * @param value Value.
  * @return Whether the value was added.
  */
-bool SendData::addData(const sead::FixedSafeString<63>& rKey, s32 value)
+bool SendData::addData(const KeyString& rKey, s32 value)
 {
     if (!isInitialized()) {
         return false;
@@ -201,7 +201,7 @@ bool SendData::addData(const sead::FixedSafeString<63>& rKey, s32 value)
  * @param value Value.
  * @return Whether the value was added.
  */
-bool SendData::addData(const sead::FixedSafeString<63>& rKey, f32 value)
+bool SendData::addData(const KeyString& rKey, f32 value)
 {
     if (!isInitialized()) {
         return false;
@@ -221,7 +221,7 @@ bool SendData::addData(const sead::FixedSafeString<63>& rKey, f32 value)
  * @param value Value.
  * @return Whether the value was added.
  */
-bool SendData::addData(const sead::FixedSafeString<63>& rKey, const char* value)
+bool SendData::addData(const KeyString& rKey, const char* value)
 {
     if (!isInitialized()) {
         return false;
@@ -241,7 +241,7 @@ bool SendData::addData(const sead::FixedSafeString<63>& rKey, const char* value)
  * @param rValue Value.
  * @return Whether the value was added.
  */
-bool SendData::addData(const sead::FixedSafeString<63>& rKey, const sead::SafeString& rValue)
+bool SendData::addData(const KeyString& rKey, const sead::SafeString& rValue)
 {
     if (!isInitialized()) {
         return false;
@@ -262,7 +262,7 @@ bool SendData::addData(const sead::FixedSafeString<63>& rKey, const sead::SafeSt
  * @param size Size of the value in bytes.
  * @return Whether the value was added.
  */
-bool SendData::addData(const sead::FixedSafeString<63>& rKey, const void* pValue, size_t size)
+bool SendData::addData(const KeyString& rKey, const void* pValue, size_t size)
 {
     if (!isInitialized()) {
         return false;
@@ -282,7 +282,7 @@ bool SendData::addData(const sead::FixedSafeString<63>& rKey, const void* pValue
  * @param rValue Value.
  * @return Whether the value was added.
  */
-bool SendData::addData(const sead::FixedSafeString<63>& rKey, const Array& rValue)
+bool SendData::addData(const KeyString& rKey, const Array& rValue)
 {
     if (!isInitialized()) {
         return false;
@@ -302,7 +302,7 @@ bool SendData::addData(const sead::FixedSafeString<63>& rKey, const Array& rValu
  * @param rValue Value.
  * @return Whether the value was added.
  */
-bool SendData::addData(const sead::FixedSafeString<63>& rKey, const Struct& rValue)
+bool SendData::addData(const KeyString& rKey, const Struct& rValue)
 {
     if (!isInitialized()) {
         return false;
@@ -462,7 +462,7 @@ void SendData::finalizeInnerData_()
  * @param rEventId Event id.
  * @return Whether the event id was accepted.
  */
-bool SendData::trySetInnerDataEventId_(const sead::FixedSafeString<31>& rEventId)
+bool SendData::trySetInnerDataEventId_(const EventIdString& rEventId)
 {
     return mReport->SetEventId(rEventId.cstr()).IsSuccess();
 }

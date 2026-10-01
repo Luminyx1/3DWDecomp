@@ -26,7 +26,7 @@ public:
     virtual bool report(const StringId& rId) = 0;
 
 protected:
-    SendData* createSendData_(const sead::FixedSafeString<31>& rEventId, s32 dataNum, s32 arrayNum,
+    SendData* createSendData_(const EventIdString& rEventId, s32 dataNum, s32 arrayNum,
                               s32 structNum, const StringId& rId, bool isNothrow);
     SendData* createSendData_(const SendDataBase::CreateArg& rArg);
 };

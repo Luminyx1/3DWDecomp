@@ -25,7 +25,7 @@ public:
     SEAD_ENUM(EFlag, cInitialized, cRequestSave, cSaving, cSaved)
 
     struct CreateArg {
-        sead::FixedSafeString<31> eventId;
+        EventIdString eventId;
         s32 dataNum;
         s32 arrayNum;
         s32 structNum;
@@ -38,44 +38,44 @@ public:
         s32 type;
     };
 
-    SendDataBase(sead::Heap* pHeap, const sead::FixedSafeString<31>& rEventId,
+    SendDataBase(sead::Heap* pHeap, const EventIdString& rEventId,
                  const StringId& rReporterId, bool isNothrow);
     virtual ~SendDataBase() = default;
 
-    virtual bool addData(const sead::FixedSafeString<63>& rKey, bool value) = 0;
-    virtual bool addData(const sead::FixedSafeString<63>& rKey, u64 value) = 0;
-    virtual bool addData(const sead::FixedSafeString<63>& rKey, s64 value) = 0;
-    virtual bool addData(const sead::FixedSafeString<63>& rKey, u32 value) = 0;
-    virtual bool addData(const sead::FixedSafeString<63>& rKey, s32 value) = 0;
-    virtual bool addData(const sead::FixedSafeString<63>& rKey, f32 value) = 0;
-    virtual bool addData(const sead::FixedSafeString<63>& rKey, const char* value) = 0;
-    virtual bool addData(const sead::FixedSafeString<63>& rKey, const sead::SafeString& rValue) = 0;
-    virtual bool addData(const sead::FixedSafeString<63>& rKey, const void* pValue, size_t size) = 0;
-    virtual bool addData(const sead::FixedSafeString<63>& rKey, const Array& rValue) = 0;
-    virtual bool addData(const sead::FixedSafeString<63>& rKey, const Struct& rValue) = 0;
+    virtual bool addData(const KeyString& rKey, bool value) = 0;
+    virtual bool addData(const KeyString& rKey, u64 value) = 0;
+    virtual bool addData(const KeyString& rKey, s64 value) = 0;
+    virtual bool addData(const KeyString& rKey, u32 value) = 0;
+    virtual bool addData(const KeyString& rKey, s32 value) = 0;
+    virtual bool addData(const KeyString& rKey, f32 value) = 0;
+    virtual bool addData(const KeyString& rKey, const char* value) = 0;
+    virtual bool addData(const KeyString& rKey, const sead::SafeString& rValue) = 0;
+    virtual bool addData(const KeyString& rKey, const void* pValue, size_t size) = 0;
+    virtual bool addData(const KeyString& rKey, const Array& rValue) = 0;
+    virtual bool addData(const KeyString& rKey, const Struct& rValue) = 0;
     virtual bool clear() = 0;
 
-    void addLog(const sead::FixedSafeString<63>& rKey, bool value);
+    void addLog(const KeyString& rKey, bool value);
     void addLog(const sead::SafeString& rKey, bool value);
-    void addLog(const sead::FixedSafeString<63>& rKey, u64 value);
+    void addLog(const KeyString& rKey, u64 value);
     void addLog(const sead::SafeString& rKey, u64 value);
-    void addLog(const sead::FixedSafeString<63>& rKey, s64 value);
+    void addLog(const KeyString& rKey, s64 value);
     void addLog(const sead::SafeString& rKey, s64 value);
-    void addLog(const sead::FixedSafeString<63>& rKey, u32 value);
+    void addLog(const KeyString& rKey, u32 value);
     void addLog(const sead::SafeString& rKey, u32 value);
-    void addLog(const sead::FixedSafeString<63>& rKey, s32 value);
+    void addLog(const KeyString& rKey, s32 value);
     void addLog(const sead::SafeString& rKey, s32 value);
-    void addLog(const sead::FixedSafeString<63>& rKey, f32 value);
+    void addLog(const KeyString& rKey, f32 value);
     void addLog(const sead::SafeString& rKey, f32 value);
-    void addLog(const sead::FixedSafeString<63>& rKey, const char* value);
+    void addLog(const KeyString& rKey, const char* value);
     void addLog(const sead::SafeString& rKey, const char* value);
-    void addLog(const sead::FixedSafeString<63>& rKey, const sead::SafeString& rValue);
+    void addLog(const KeyString& rKey, const sead::SafeString& rValue);
     void addLog(const sead::SafeString& rKey, const sead::SafeString& rValue);
-    void addLog(const sead::FixedSafeString<63>& rKey, const void* pValue, size_t size);
+    void addLog(const KeyString& rKey, const void* pValue, size_t size);
     void addLog(const sead::SafeString& rKey, const void* pValue, size_t size);
-    void addLog(const sead::FixedSafeString<63>& rKey, const Array& rValue);
+    void addLog(const KeyString& rKey, const Array& rValue);
     void addLog(const sead::SafeString& rKey, const Array& rValue);
-    void addLog(const sead::FixedSafeString<63>& rKey, const Struct& rValue);
+    void addLog(const KeyString& rKey, const Struct& rValue);
     void addLog(const sead::SafeString& rKey, const Struct& rValue);
 
     template <typename T>
@@ -98,7 +98,7 @@ protected:
     virtual bool isValid_() const { return false; }
     virtual bool initializeInnerData_(sead::Heap* pHeap) { return true; }
     virtual void finalizeInnerData_() {}
-    virtual bool trySetInnerDataEventId_(const sead::FixedSafeString<31>& rEventId)
+    virtual bool trySetInnerDataEventId_(const EventIdString& rEventId)
     {
         return true;
     }
@@ -109,7 +109,7 @@ protected:
     ESendResult saveImpl_();
     void initialize_(s32 dataNum, s32 arrayNum, s32 structNum, sead::Heap* pHeap);
     void finalize_();
-    void setEventId_(const sead::FixedSafeString<31>& rEventId);
+    void setEventId_(const EventIdString& rEventId);
     ESendResult checkCanSave_() const;
     void clearLog_();
 

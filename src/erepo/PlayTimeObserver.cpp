@@ -44,20 +44,12 @@ void PlayTimeObserver::load()
 
     SaveDataInfo info = manager->getSaveDataInfo();
 
-    if (info.mValues[3].isValid()) {
-        mSavedPlayTime = info.mValues[3].get();
-    }
-
-    if (info.mValues[0].isValid()) {
-        mSavedActiveTime = info.mValues[0].get();
-    }
-
-    if (info.mValues[2].isValid()) {
-        mSavedSleepTime = info.mValues[2].get();
-    }
+    info.getValue(SaveDataInfo::cValueIndex_PlayTime).tryGet(&mSavedPlayTime);
+    info.getValue(SaveDataInfo::cValueIndex_ActiveTime).tryGet(&mSavedActiveTime);
+    info.getValue(SaveDataInfo::cValueIndex_SleepTime).tryGet(&mSavedSleepTime);
 
     for (s32 i = 0; i < cPlayerNumMax; i++) {
-        mSavedPlayerNumTimes[i] = info.mFloats[i].isValid() ? info.mFloats[i].get() : 0.0f;
+        mSavedPlayerNumTimes[i] = info.getFloat(i).isValid() ? info.getFloat(i).get() : 0.0f;
     }
 }
 
@@ -74,12 +66,13 @@ void PlayTimeObserver::save(SaveData* pData) const
     }
 
     SaveDataInfo& info = manager->getSaveDataInfo();
-    info.mValues[3].set(static_cast<u32>(static_cast<f32>(mSavedPlayTime) + mPlayTime));
-    info.mValues[0].set(mSavedActiveTime + mActiveTime);
-    info.mValues[2].set(mSavedSleepTime + mSleepTime);
+    info.getValue(SaveDataInfo::cValueIndex_PlayTime)
+        .set(static_cast<u32>(static_cast<f32>(mSavedPlayTime) + mPlayTime));
+    info.getValue(SaveDataInfo::cValueIndex_ActiveTime).set(mSavedActiveTime + mActiveTime);
+    info.getValue(SaveDataInfo::cValueIndex_SleepTime).set(mSavedSleepTime + mSleepTime);
 
     for (s32 i = 0; i < cPlayerNumMax; i++) {
-        info.mFloats[i].set(mPlayerNumTimes[i] + mSavedPlayerNumTimes[i]);
+        info.getFloat(i).set(mPlayerNumTimes[i] + mSavedPlayerNumTimes[i]);
     }
 }
 
@@ -150,9 +143,9 @@ bool PlayTimeObserver::sendActiveBeacon_()
         return false;
     }
 
-    data->addData(sead::FixedSafeString<63>(sead::SafeString("IntervalTime")),
+    data->addData(KeyString(sead::SafeString("IntervalTime")),
                   cBeaconIntervals[mBeaconIndex]);
-    data->addData(sead::FixedSafeString<63>(sead::SafeString("UpdatedTime")),
+    data->addData(KeyString(sead::SafeString("UpdatedTime")),
                   static_cast<u32>(mPlayTime));
     return data->requestSave();
 }
@@ -166,10 +159,10 @@ bool PlayTimeObserver::report(const StringId& rId)
     }
 
     mActiveTime = nn::oe::GetProgramTotalActiveTime().GetSeconds();
-    data->addData(sead::FixedSafeString<63>(sead::SafeString("ActiveTime")), mActiveTime);
-    data->addData(sead::FixedSafeString<63>(sead::SafeString("UpdatedTime")),
+    data->addData(KeyString(sead::SafeString("ActiveTime")), mActiveTime);
+    data->addData(KeyString(sead::SafeString("UpdatedTime")),
                   static_cast<u32>(mPlayTime));
-    data->addData(sead::FixedSafeString<63>(sead::SafeString("SleepTime")),
+    data->addData(KeyString(sead::SafeString("SleepTime")),
                   static_cast<u32>(mSleepTime));
 
     Manager* manager = Manager::instance();
@@ -177,30 +170,30 @@ bool PlayTimeObserver::report(const StringId& rId)
     if (manager != nullptr) {
         const SaveDataInfo& info = manager->getSaveDataInfo();
 
-        if (info.mValues[0].isValid()) {
-            data->addData(sead::FixedSafeString<63>(sead::SafeString("ActiveTotalTime")),
+        if (info.getValue(SaveDataInfo::cValueIndex_ActiveTime).isValid()) {
+            data->addData(KeyString(sead::SafeString("ActiveTotalTime")),
                           mActiveTime + mSavedActiveTime);
         }
 
-        if (info.mValues[3].isValid()) {
-            data->addData(sead::FixedSafeString<63>(sead::SafeString("UpdatedTotalTime")),
+        if (info.getValue(SaveDataInfo::cValueIndex_PlayTime).isValid()) {
+            data->addData(KeyString(sead::SafeString("UpdatedTotalTime")),
                           static_cast<u32>(mPlayTime + static_cast<f32>(mSavedPlayTime)));
         }
 
-        if (info.mValues[2].isValid()) {
-            data->addData(sead::FixedSafeString<63>(sead::SafeString("SleepTotalTime")),
+        if (info.getValue(SaveDataInfo::cValueIndex_SleepTime).isValid()) {
+            data->addData(KeyString(sead::SafeString("SleepTotalTime")),
                           static_cast<u32>(mSleepTime + mSavedSleepTime));
         }
 
         for (s32 i = 0; i < cPlayerNumMax; i++) {
             if (mPlayerNumTimes[i] > 0.0f) {
-                sead::FixedSafeString<63> key;
+                KeyString key;
                 key.appendWithSeadFormat("MultiPlayTime_%@", i + 1);
                 data->addData(key, static_cast<u32>(mPlayerNumTimes[i]));
             }
 
             if (mSavedPlayerNumTimes[i] > 0.0f) {
-                sead::FixedSafeString<63> key;
+                KeyString key;
                 key.appendWithSeadFormat("MultiPlayTimeTotal_%@", i + 1);
                 data->addData(key, static_cast<u32>(mPlayerNumTimes[i] + mSavedPlayerNumTimes[i]));
             }

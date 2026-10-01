@@ -24,6 +24,8 @@ class Manager {
     SEAD_SINGLETON_DISPOSER(Manager)
 
 public:
+    using ReporterArray = sead::PtrArray<Reporter>;
+
     SEAD_ENUM(EFlag, cInitialized, cStartupRequested, cStartupFinished, cUnused3,
               cWaitFinishSending, cWaitFinishSendingAsync, cSystemReportTag,
               cRequestImmediateTransmission, cEnableSaveLoad, cEnableLog)
@@ -105,7 +107,7 @@ private:
 
     struct ReporterList {
         ReporterType type;
-        sead::PtrArray<Reporter> reporters;
+        ReporterArray reporters;
         ReporterSetting* setting = nullptr;
         AtomicBitFlag<ReporterType> requestFlag;
         StringId requestId;

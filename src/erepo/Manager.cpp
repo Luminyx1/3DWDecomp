@@ -14,7 +14,7 @@
 namespace erepo {
 
 namespace {
-void deleteReporters(sead::PtrArray<Reporter>& rReporters)
+void deleteReporters(Manager::ReporterArray& rReporters)
 {
     if (rReporters.data() == nullptr) {
         return;
@@ -218,19 +218,19 @@ void Manager::loadData(u32 value0, u32 value1, u32 value2, u32 value3, u32* pTim
         return;
     }
 
-    mSaveDataInfo.mValues[0].set(value0);
-    mSaveDataInfo.mValues[1].set(value1);
-    mSaveDataInfo.mValues[2].set(value2);
-    mSaveDataInfo.mValues[3].set(value3);
+    mSaveDataInfo.getValue(SaveDataInfo::cValueIndex_ActiveTime).set(value0);
+    mSaveDataInfo.getValue(SaveDataInfo::cValueIndex_LastDailyReportTime).set(value1);
+    mSaveDataInfo.getValue(SaveDataInfo::cValueIndex_SleepTime).set(value2);
+    mSaveDataInfo.getValue(SaveDataInfo::cValueIndex_PlayTime).set(value3);
 
-    for (s32 i = 0; i < 5; i++) {
-        mSaveDataInfo.mValues[4 + i].set(pTimes0[i]);
-        mSaveDataInfo.mValues[9 + i].set(pTimes1[i]);
-        mSaveDataInfo.mValues[14 + i].set(pTimes2[i]);
+    for (s32 i = 0; i < SaveDataInfo::cPlayStyleTimeNum; i++) {
+        mSaveDataInfo.getPlayStyleTime(0, i).set(pTimes0[i]);
+        mSaveDataInfo.getPlayStyleTime(1, i).set(pTimes1[i]);
+        mSaveDataInfo.getPlayStyleTime(2, i).set(pTimes2[i]);
     }
 
     for (s32 i = 0; i < 4; i++) {
-        mSaveDataInfo.mFloats[i].set(pFloats[i]);
+        mSaveDataInfo.getFloat(i).set(pFloats[i]);
     }
 }
 
@@ -267,40 +267,19 @@ void Manager::setLoadFinish()
 void Manager::saveData(u32* pValue0, u32* pValue1, u32* pValue2, u32* pValue3, u32* pTimes0,
                        u32* pTimes1, u32* pTimes2, f32* pFloats)
 {
-    if (mSaveDataInfo.mValues[0].isValid()) {
-        *pValue0 = mSaveDataInfo.mValues[0].get();
-    }
+    mSaveDataInfo.getValue(SaveDataInfo::cValueIndex_ActiveTime).tryGet(pValue0);
+    mSaveDataInfo.getValue(SaveDataInfo::cValueIndex_LastDailyReportTime).tryGet(pValue1);
+    mSaveDataInfo.getValue(SaveDataInfo::cValueIndex_SleepTime).tryGet(pValue2);
+    mSaveDataInfo.getValue(SaveDataInfo::cValueIndex_PlayTime).tryGet(pValue3);
 
-    if (mSaveDataInfo.mValues[1].isValid()) {
-        *pValue1 = mSaveDataInfo.mValues[1].get();
-    }
-
-    if (mSaveDataInfo.mValues[2].isValid()) {
-        *pValue2 = mSaveDataInfo.mValues[2].get();
-    }
-
-    if (mSaveDataInfo.mValues[3].isValid()) {
-        *pValue3 = mSaveDataInfo.mValues[3].get();
-    }
-
-    for (s32 i = 0; i < 5; i++) {
-        if (mSaveDataInfo.mValues[4 + i].isValid()) {
-            pTimes0[i] = mSaveDataInfo.mValues[4 + i].get();
-        }
-
-        if (mSaveDataInfo.mValues[9 + i].isValid()) {
-            pTimes1[i] = mSaveDataInfo.mValues[9 + i].get();
-        }
-
-        if (mSaveDataInfo.mValues[14 + i].isValid()) {
-            pTimes2[i] = mSaveDataInfo.mValues[14 + i].get();
-        }
+    for (s32 i = 0; i < SaveDataInfo::cPlayStyleTimeNum; i++) {
+        mSaveDataInfo.getPlayStyleTime(0, i).tryGet(&pTimes0[i]);
+        mSaveDataInfo.getPlayStyleTime(1, i).tryGet(&pTimes1[i]);
+        mSaveDataInfo.getPlayStyleTime(2, i).tryGet(&pTimes2[i]);
     }
 
     for (s32 i = 0; i < 4; i++) {
-        if (mSaveDataInfo.mFloats[i].isValid()) {
-            pFloats[i] = mSaveDataInfo.mFloats[i].get();
-        }
+        mSaveDataInfo.getFloat(i).tryGet(&pFloats[i]);
     }
 }
 
@@ -459,7 +438,7 @@ void Manager::updateFinishStartup_(const UpdateArg& rArg)
             requestSaveData();
         }
 
-        mSaveDataInfo.mValues[1].set(getCurrentDateTime());
+        mSaveDataInfo.getValue(SaveDataInfo::cValueIndex_LastDailyReportTime).set(getCurrentDateTime());
         requestSaveData();
     } else {
         for (auto& reporter : mReporterLists[0].reporters) {
@@ -531,11 +510,11 @@ bool Manager::sendStartupReport_(ReporterType type)
  */
 bool Manager::checkSendDailyReport_()
 {
-    if (!mSaveDataInfo.mValues[1].isValid()) {
+    if (!mSaveDataInfo.getValue(SaveDataInfo::cValueIndex_LastDailyReportTime).isValid()) {
         return false;
     }
 
-    u32 lastTime = mSaveDataInfo.mValues[1].get();
+    u32 lastTime = mSaveDataInfo.getValue(SaveDataInfo::cValueIndex_LastDailyReportTime).get();
     u32 nowTime = getCurrentDateTime();
 
     if (lastTime > nowTime) {

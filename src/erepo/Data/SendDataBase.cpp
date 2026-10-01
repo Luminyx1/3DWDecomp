@@ -30,7 +30,7 @@ bool SendDataBase::addSendDataNum_(s32 num)
  * @param rKey Value key.
  * @param value Logged value.
  */
-void SendDataBase::addLog(const sead::FixedSafeString<63>& rKey, bool value)
+void SendDataBase::addLog(const KeyString& rKey, bool value)
 {
     addLog(sead::SafeString(rKey.cstr()), value);
 }
@@ -47,7 +47,7 @@ void SendDataBase::addLog(const sead::SafeString& rKey, bool value) {}
  * @param rKey Value key.
  * @param value Logged value.
  */
-void SendDataBase::addLog(const sead::FixedSafeString<63>& rKey, u64 value)
+void SendDataBase::addLog(const KeyString& rKey, u64 value)
 {
     addLog(sead::SafeString(rKey.cstr()), value);
 }
@@ -64,7 +64,7 @@ void SendDataBase::addLog(const sead::SafeString& rKey, u64 value) {}
  * @param rKey Value key.
  * @param value Logged value.
  */
-void SendDataBase::addLog(const sead::FixedSafeString<63>& rKey, s64 value)
+void SendDataBase::addLog(const KeyString& rKey, s64 value)
 {
     addLog(sead::SafeString(rKey.cstr()), value);
 }
@@ -81,7 +81,7 @@ void SendDataBase::addLog(const sead::SafeString& rKey, s64 value) {}
  * @param rKey Value key.
  * @param value Logged value.
  */
-void SendDataBase::addLog(const sead::FixedSafeString<63>& rKey, u32 value)
+void SendDataBase::addLog(const KeyString& rKey, u32 value)
 {
     addLog(sead::SafeString(rKey.cstr()), value);
 }
@@ -98,7 +98,7 @@ void SendDataBase::addLog(const sead::SafeString& rKey, u32 value) {}
  * @param rKey Value key.
  * @param value Logged value.
  */
-void SendDataBase::addLog(const sead::FixedSafeString<63>& rKey, s32 value)
+void SendDataBase::addLog(const KeyString& rKey, s32 value)
 {
     addLog(sead::SafeString(rKey.cstr()), value);
 }
@@ -115,7 +115,7 @@ void SendDataBase::addLog(const sead::SafeString& rKey, s32 value) {}
  * @param rKey Value key.
  * @param value Logged value.
  */
-void SendDataBase::addLog(const sead::FixedSafeString<63>& rKey, f32 value)
+void SendDataBase::addLog(const KeyString& rKey, f32 value)
 {
     addLog(sead::SafeString(rKey.cstr()), value);
 }
@@ -132,7 +132,7 @@ void SendDataBase::addLog(const sead::SafeString& rKey, f32 value) {}
  * @param rKey Value key.
  * @param value Logged value.
  */
-void SendDataBase::addLog(const sead::FixedSafeString<63>& rKey, const char* value)
+void SendDataBase::addLog(const KeyString& rKey, const char* value)
 {
     addLog(sead::SafeString(rKey.cstr()), value);
 }
@@ -149,7 +149,7 @@ void SendDataBase::addLog(const sead::SafeString& rKey, const char* value) {}
  * @param rKey Value key.
  * @param rValue Logged value.
  */
-void SendDataBase::addLog(const sead::FixedSafeString<63>& rKey, const sead::SafeString& rValue)
+void SendDataBase::addLog(const KeyString& rKey, const sead::SafeString& rValue)
 {
     addLog(sead::SafeString(rKey.cstr()), rValue);
 }
@@ -167,7 +167,7 @@ void SendDataBase::addLog(const sead::SafeString& rKey, const sead::SafeString& 
  * @param pValue Logged value.
  * @param size Size of the logged value.
  */
-void SendDataBase::addLog(const sead::FixedSafeString<63>& rKey, const void* pValue, size_t size)
+void SendDataBase::addLog(const KeyString& rKey, const void* pValue, size_t size)
 {
     addLog(sead::SafeString(rKey.cstr()), pValue, size);
 }
@@ -185,7 +185,7 @@ void SendDataBase::addLog(const sead::SafeString& rKey, const void* pValue, size
  * @param rKey Value key.
  * @param rValue Logged value.
  */
-void SendDataBase::addLog(const sead::FixedSafeString<63>& rKey, const Array& rValue)
+void SendDataBase::addLog(const KeyString& rKey, const Array& rValue)
 {
     addLog(sead::SafeString(rKey.cstr()), rValue);
 }
@@ -202,7 +202,7 @@ void SendDataBase::addLog(const sead::SafeString& rKey, const Array& rValue) {}
  * @param rKey Value key.
  * @param rValue Logged value.
  */
-void SendDataBase::addLog(const sead::FixedSafeString<63>& rKey, const Struct& rValue)
+void SendDataBase::addLog(const KeyString& rKey, const Struct& rValue)
 {
     addLog(sead::SafeString(rKey.cstr()), rValue);
 }
@@ -359,7 +359,7 @@ SendDataBase::ESendResult SendDataBase::saveImpl_()
     mFlags.setOn(EFlag::cSaving);
 
     if (Manager::instance()->isFlagOn(Manager::EFlag::cSystemReportTag)) {
-        addData(sead::FixedSafeString<63>(sead::SafeString("system_report_tag")),
+        addData(KeyString(sead::SafeString("system_report_tag")),
                 mReporterId.getId());
     }
 
@@ -402,7 +402,7 @@ void SendDataBase::dump() {}
  * @param rReporterId Id of the reporter creating the data.
  * @param isNothrow Whether to use the nothrow allocator.
  */
-SendDataBase::SendDataBase(sead::Heap* pHeap, const sead::FixedSafeString<31>& rEventId,
+SendDataBase::SendDataBase(sead::Heap* pHeap, const EventIdString& rEventId,
                            const StringId& rReporterId, bool isNothrow)
     : mIsNothrow(isNothrow), mDataNum(0), mUid(), mReporterId(rReporterId), mSendDataNum(0)
 {
@@ -487,13 +487,13 @@ void SendDataBase::finalize_()
  * Sets the lowercased event id on the inner data.
  * @param rEventId Event id.
  */
-void SendDataBase::setEventId_(const sead::FixedSafeString<31>& rEventId)
+void SendDataBase::setEventId_(const EventIdString& rEventId)
 {
     if (!isInitialized()) {
         return;
     }
 
-    sead::FixedSafeString<31> eventId(rEventId);
+    EventIdString eventId(rEventId);
     eventId.replaceCharList("ABCDEFGHIJKLMNOPQRSTUVWXYZ", "abcdefghijklmnopqrstuvwxyz");
 
     if (trySetInnerDataEventId_(eventId)) {

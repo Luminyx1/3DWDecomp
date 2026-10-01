@@ -31,9 +31,9 @@ bool UserInfoObserver::report(const StringId& rId)
         return false;
     }
 
-    data->addData(sead::FixedSafeString<63>(sead::SafeString("Region")),
+    data->addData(KeyString(sead::SafeString("Region")),
                   static_cast<s32>(sead::EnvUtil::getRegion()));
-    data->addData(sead::FixedSafeString<63>(sead::SafeString("Language")),
+    data->addData(KeyString(sead::SafeString("Language")),
                   static_cast<s32>(sead::EnvUtil::getLanguage()));
 
     nn::time::CalendarTime calendarTime;
@@ -42,9 +42,9 @@ bool UserInfoObserver::report(const StringId& rId)
     nn::time::StandardUserSystemClock::GetCurrentTime(&posixTime);
     nn::time::ToCalendarTime(&calendarTime, &additionalInfo, posixTime);
 
-    data->addData(sead::FixedSafeString<63>(sead::SafeString("StandardTimeName")),
+    data->addData(KeyString(sead::SafeString("StandardTimeName")),
                   additionalInfo.timeZone.standardTimeName);
-    data->addData(sead::FixedSafeString<63>(sead::SafeString("UtcOffsetSeconds")),
+    data->addData(KeyString(sead::SafeString("UtcOffsetSeconds")),
                   additionalInfo.timeZone.utcOffset);
     return data->requestSave();
 }

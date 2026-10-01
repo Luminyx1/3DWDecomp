@@ -120,7 +120,7 @@ void PlayStyleObserver::load()
 
     for (s32 i = 0; i < 3; i++) {
         for (s32 j = 0; j < 5; j++) {
-            const auto& value = info.mValues[4 + i * 5 + j];
+            const auto& value = info.getPlayStyleTime(i, j);
             mSavedUseInfo[i][j].time = value.isValid() ? static_cast<f32>(value.get()) : 0.0f;
             mSavedUseInfo[i][j].nonActiveTime = 0.0f;
         }
@@ -143,7 +143,7 @@ void PlayStyleObserver::save(SaveData* pData) const
 
     for (s32 i = 0; i < 3; i++) {
         for (s32 j = 0; j < 5; j++) {
-            info.mValues[4 + i * 5 + j].set(
+            info.getPlayStyleTime(i, j).set(
                 static_cast<u32>(mUseInfo[i][j].time + mSavedUseInfo[i][j].time));
         }
     }
@@ -190,24 +190,24 @@ bool PlayStyleObserver::report(const StringId& rId)
                 prefix.appendWithSeadFormat("%@_%@_", EPlayStyle::text(i),
                                             EControllerStyle::text(j));
 
-                sead::FixedSafeString<63> key;
+                KeyString key;
                 key = prefix;
                 key.append("UseTime");
-                data->addData(sead::FixedSafeString<63>(key), static_cast<u32>(useInfo.time));
+                data->addData(KeyString(key), static_cast<u32>(useInfo.time));
 
                 key = prefix;
                 key.append("NonActiveTime");
-                data->addData(sead::FixedSafeString<63>(key),
+                data->addData(KeyString(key),
                               static_cast<u32>(useInfo.nonActiveTime));
 
                 key = prefix;
                 key.append("UseTimeTotal");
-                data->addData(sead::FixedSafeString<63>(key),
+                data->addData(KeyString(key),
                               static_cast<u32>(useInfo.time + savedUseInfo.time));
 
                 key = prefix;
                 key.append("NonActiveTimeTotal");
-                data->addData(sead::FixedSafeString<63>(key),
+                data->addData(KeyString(key),
                               static_cast<u32>(useInfo.nonActiveTime + savedUseInfo.nonActiveTime));
             }
         }

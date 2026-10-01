@@ -6,7 +6,7 @@
 namespace erepo {
 
 namespace {
-sead::FixedSafeString<63> sSendLogName(sead::SafeString("SendKibana"));
+KeyString sSendLogName(sead::SafeString("SendKibana"));
 }
 
 /**
@@ -19,7 +19,7 @@ sead::FixedSafeString<63> sSendLogName(sead::SafeString("SendKibana"));
  * @param isNothrow Whether creation must not fail.
  * @return Created send data, or nullptr.
  */
-SendData* ObserverBase::createSendData_(const sead::FixedSafeString<31>& rEventId, s32 dataNum,
+SendData* ObserverBase::createSendData_(const EventIdString& rEventId, s32 dataNum,
                                         s32 arrayNum, s32 structNum, const StringId& rId,
                                         bool isNothrow)
 {
