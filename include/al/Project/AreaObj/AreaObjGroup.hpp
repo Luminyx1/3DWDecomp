@@ -23,6 +23,10 @@ public:
                                 sead::Vector3f*);
     AreaObj* getInFirstAreaObj(const sead::Vector3f&);
 
+    const char* getName() const { return mGroupName; }
+
+    s32 getSize() const { return mNumAreas; }
+
     const char* mGroupName;
     AreaObj** mAreaObjs = nullptr;
     s32 mNumAreas = 0;

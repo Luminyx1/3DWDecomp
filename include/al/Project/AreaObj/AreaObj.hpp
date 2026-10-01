@@ -45,6 +45,12 @@ public:
 
     void disable() { mIsDisabled = true; }
 
+    const PlacementInfo& getPlacementInfo() const { return *mPlacementInfo; }
+
+    AreaShape* getAreaShape() const { return mShape; }
+
+    s32 getPriority() const { return mPriority; }
+
     bool isInVolume(const sead::Vector3f&, const sead::Vector3f&, sead::Vector3f*, sead::Vector3f*);
     void setStartPos(sead::Vector3f&);
     bool getStartPos(sead::Vector3f*);
