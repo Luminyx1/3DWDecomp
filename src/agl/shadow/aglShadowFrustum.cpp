@@ -147,7 +147,7 @@ void ShadowFrustum::clipByBoundBox(const sead::BoundBox3f& rBox, const sead::Mat
 void ShadowFrustum::clipByBoundBox_(const sead::Vector3f* pPoints, sead::BitFlag8 planeMask)
 {
     const sead::Vector3f center = (pPoints[0] + pPoints[6]) * 0.5f;
-    sead::Plane3<f32> plane(sead::Vector3f::ex, 0.0f);
+    sead::Plane3f plane(sead::Vector3f::ex, 0.0f);
 
     for (s32 i = 0; i < 6; i++)
     {
@@ -169,7 +169,7 @@ void ShadowFrustum::clipByBoundBox_(const sead::Vector3f* pPoints, sead::BitFlag
         const f32 len = n.normalize();
         const f32 sqLen = n.squaredLength();
 
-        if (!(len > 0.0f) || sead::MathCalcCommon<f32>::isNan(len))
+        if (!(len > 0.0f) || sead::Mathf::isNan(len))
         {
             continue;
         }
@@ -182,11 +182,11 @@ void ShadowFrustum::clipByBoundBox_(const sead::Vector3f* pPoints, sead::BitFlag
         }
 
         const f32 d = n.dot(p0);
-        plane = sead::Plane3<f32>(n, d);
+        plane = sead::Plane3f(n, d);
 
         if (center.dot(n) - d > 0.0f)
         {
-            plane = sead::Plane3<f32>(-n, -d);
+            plane = sead::Plane3f(-n, -d);
         }
 
         clipByPlane(plane);
@@ -197,7 +197,7 @@ void ShadowFrustum::clipByBoundBox_(const sead::Vector3f* pPoints, sead::BitFlag
  * Clips the polytope by a plane, keeping the part behind it.
  * @param rPlane plane to clip by
  */
-void ShadowFrustum::clipByPlane(const sead::Plane3<f32>& rPlane)
+void ShadowFrustum::clipByPlane(const sead::Plane3f& rPlane)
 {
     mInter.mNum = 0;
 
@@ -293,7 +293,7 @@ ShadowFrustum::Polygon* ShadowFrustum::Polytope::birthBack()
  * @param rPlane plane to clip by
  */
 void ShadowFrustum::clipPointByPlane_(Polygon* pDst, Polygon* pInter, const Polygon& rSrc,
-                                      const sead::Plane3<f32>& rPlane)
+                                      const sead::Plane3f& rPlane)
 {
     if (rSrc.mNum < 1)
     {

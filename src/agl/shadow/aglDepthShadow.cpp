@@ -474,7 +474,7 @@ sead::BitFlag32 DepthShadow::noCheck_(const T& rBounding, s32 type, sead::BitFla
  * Clips the frustum polytope of every cascade by a plane.
  * @param rPlane plane to clip by
  */
-void DepthShadow::clipByPlane(const sead::Plane3<f32>& rPlane)
+void DepthShadow::clipByPlane(const sead::Plane3f& rPlane)
 {
     for (s32 i = 0; i < *mCascadeNum; i++)
     {

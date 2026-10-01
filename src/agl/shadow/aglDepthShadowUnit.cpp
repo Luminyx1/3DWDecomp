@@ -350,7 +350,7 @@ void DepthShadowUnit::addCasterClipPlanes_(const sead::Matrix34f& rViewMtx,
         const f32 len = n.normalize();
         const f32 sqLen = n.squaredLength();
 
-        if (!(len > 0.0f) || sead::MathCalcCommon<f32>::isNan(len))
+        if (!(len > 0.0f) || sead::Mathf::isNan(len))
         {
             continue;
         }
@@ -362,13 +362,13 @@ void DepthShadowUnit::addCasterClipPlanes_(const sead::Matrix34f& rViewMtx,
             continue;
         }
 
-        sead::Plane3<f32>& plane = mClipPlanes[mClipPlaneNum];
+        sead::Plane3f& plane = mClipPlanes[mClipPlaneNum];
         const f32 d = p0.dot(n);
-        plane = sead::Plane3<f32>(n, d);
+        plane = sead::Plane3f(n, d);
 
         if (center.dot(n) - d > 0.0f)
         {
-            plane = sead::Plane3<f32>(-n, -d);
+            plane = sead::Plane3f(-n, -d);
         }
 
         if (pSweepDir == nullptr || pSweepDir->dot(plane.getNormal()) > -0.001f)
@@ -492,9 +492,9 @@ void DepthShadowUnit::convBoundingSphereToBox(sead::BoundBox3f* pBox,
  * Clips the frustum polytope by a plane, keeping the part in front of it.
  * @param rPlane plane to clip by
  */
-void DepthShadowUnit::clipByPlane(const sead::Plane3<f32>& rPlane)
+void DepthShadowUnit::clipByPlane(const sead::Plane3f& rPlane)
 {
-    mFrustum.clipByPlane(sead::Plane3<f32>(-rPlane.getNormal(), -rPlane.getD()));
+    mFrustum.clipByPlane(sead::Plane3f(-rPlane.getNormal(), -rPlane.getD()));
 }
 
 /**
@@ -592,9 +592,9 @@ f32 DepthShadowUnit::adjustTexelStable(f32 value, f32 size) const
  * @param rPlane plane to add
  * @return whether the plane was added
  */
-bool DepthShadowUnit::addCasterClipPlane_(const sead::Plane3<f32>& rPlane)
+bool DepthShadowUnit::addCasterClipPlane_(const sead::Plane3f& rPlane)
 {
-    sead::Plane3<f32>* pSame = findSameClipPlane_(rPlane.getNormal());
+    sead::Plane3f* pSame = findSameClipPlane_(rPlane.getNormal());
 
     if (pSame)
     {
@@ -626,7 +626,7 @@ void DepthShadowUnit::addCasterClipPlanesSweepDir_(const sead::Vector3f& rDir,
     const f32 len = n.normalize();
     const f32 sqLen = n.squaredLength();
 
-    if (!(len > 0.0f) || sead::MathCalcCommon<f32>::isNan(len))
+    if (!(len > 0.0f) || sead::Mathf::isNan(len))
     {
         return;
     }
@@ -638,10 +638,10 @@ void DepthShadowUnit::addCasterClipPlanesSweepDir_(const sead::Vector3f& rDir,
         return;
     }
 
-    sead::Plane3<f32>& plane = mClipPlanes[mClipPlaneNum];
+    sead::Plane3f& plane = mClipPlanes[mClipPlaneNum];
     const s32* pIndices = cFaceIndices[face];
     f32 d = n.dot(pPoints[pIndices[0]]);
-    plane = sead::Plane3<f32>(n, d);
+    plane = sead::Plane3f(n, d);
 
     for (s32 i = 1; i < 4; i++)
     {
@@ -650,7 +650,7 @@ void DepthShadowUnit::addCasterClipPlanesSweepDir_(const sead::Vector3f& rDir,
         if (dist - d > 0.0f)
         {
             d = dist;
-            plane = sead::Plane3<f32>(n, dist);
+            plane = sead::Plane3f(n, dist);
         }
     }
 

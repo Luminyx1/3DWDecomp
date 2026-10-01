@@ -343,7 +343,7 @@ bool NVNMgr::registerFastClearColor(TextureFormat format, const sead::Color4f& r
  * @param rColor clear color
  * @return whether the registration succeeded
  */
-bool NVNMgr::registerFastClearColor(TextureFormat format, const sead::Vector4<u32>& rColor)
+bool NVNMgr::registerFastClearColor(TextureFormat format, const sead::Vector4u& rColor)
 {
     NVNformat nvnFormat = TextureFormatInfo::convFormatAGLToDriver(format);
     u32 color[4] = {rColor.x, rColor.y, rColor.z, rColor.w};
@@ -356,7 +356,7 @@ bool NVNMgr::registerFastClearColor(TextureFormat format, const sead::Vector4<u3
  * @param rColor clear color
  * @return whether the registration succeeded
  */
-bool NVNMgr::registerFastClearColor(TextureFormat format, const sead::Vector4<s32>& rColor)
+bool NVNMgr::registerFastClearColor(TextureFormat format, const sead::Vector4i& rColor)
 {
     NVNformat nvnFormat = TextureFormatInfo::convFormatAGLToDriver(format);
     s32 color[4] = {rColor.x, rColor.y, rColor.z, rColor.w};

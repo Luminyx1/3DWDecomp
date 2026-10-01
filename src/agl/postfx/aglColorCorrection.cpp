@@ -368,9 +368,9 @@ void ColorCorrection::updateCurves_()
             (&level.x)[j] = curve.sead::hostio::Curve<f32>::interpolateToF32(t);
         }
 
-        if (!sead::MathCalcCommon<f32>::equalsEpsilon(t, level.x) ||
-            !sead::MathCalcCommon<f32>::equalsEpsilon(t, level.y) ||
-            !sead::MathCalcCommon<f32>::equalsEpsilon(t, level.z))
+        if (!sead::Mathf::equalsEpsilon(t, level.x) ||
+            !sead::Mathf::equalsEpsilon(t, level.y) ||
+            !sead::Mathf::equalsEpsilon(t, level.z))
         {
             isLevel = true;
         }
@@ -654,7 +654,7 @@ void ColorCorrection::calcRGB_(u32* pDst, f32 h, f32 s, f32 v) const
     }
 
     h *= 6.0f;
-    s32 i = sead::MathCalcCommon<f32>::floor(h);
+    s32 i = sead::Mathf::floor(h);
     s *= *mSaturation;
     v *= *mBrightness;
     f32 f = h - f32(i);

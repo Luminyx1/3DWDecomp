@@ -309,7 +309,7 @@ void TextureDataImageAccessor::sync(DrawContext* pDrawContext) const
  */
 void TextureDataImageAccessor::peek(sead::Vector4f* pColor, s32 x, s32 y) const
 {
-    sead::Vector4<u32> raw;
+    sead::Vector4u raw;
     peek(&raw, x, y);
 
     for (s32 i = 0; i < 4; i++)
@@ -382,7 +382,7 @@ void TextureDataImageAccessor::peek(sead::Vector4f* pColor, s32 x, s32 y) const
  * @param x pixel column
  * @param y pixel row
  */
-void TextureDataImageAccessor::peek(sead::Vector4<u32>* pColor, s32 x, s32 y) const
+void TextureDataImageAccessor::peek(sead::Vector4u* pColor, s32 x, s32 y) const
 {
     u8 pixelByteSize = TextureFormatInfo::getPixelByteSize(mFormat);
     const u32* pData = static_cast<const u32*>(
