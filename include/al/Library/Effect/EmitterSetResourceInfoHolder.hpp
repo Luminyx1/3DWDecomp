@@ -1,6 +1,7 @@
 #pragma once
 
 #include <basis/seadTypes.h>
+#include <container/seadObjArray.h>
 
 namespace al {
 class PtclSystem;
@@ -9,6 +10,8 @@ class EmitterSetResourceInfo {
 public:
     EmitterSetResourceInfo(const char* pName, s32 resourceId, s32 emitterSetId, u32 flags,
                            bool isLoop, bool isInfinity);
+
+    static EmitterSetResourceInfo InvalidResource;
 
     const char* mName;
     s32 mResourceId;
@@ -26,6 +29,11 @@ public:
     EmitterSetResourceInfo* findEffectResouceInfo(const char* pName) const;
     void createDataBase(PtclSystem* pPtclSystem);
 
-    u8 _0[0x20];
+private:
+    s32 searchIndex(const char* pName) const;
+
+    sead::ObjArray<EmitterSetResourceInfo> mInfos;
 };
+
+static_assert(sizeof(EmitterSetResourceInfoHolder) == 0x20);
 }  // namespace al
