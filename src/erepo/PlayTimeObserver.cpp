@@ -38,7 +38,7 @@ void PlayTimeObserver::load()
 {
     Manager* manager = Manager::instance();
 
-    if (!manager) {
+    if (manager == nullptr) {
         return;
     }
 
@@ -69,7 +69,7 @@ void PlayTimeObserver::save(SaveData* pData) const
 {
     Manager* manager = Manager::instance();
 
-    if (!manager) {
+    if (manager == nullptr) {
         return;
     }
 
@@ -102,7 +102,7 @@ void PlayTimeObserver::update(const Manager::UpdateArg& rArg)
         for (s32 i = 0; i < num; i++) {
             sead::Controller* controller = sead::ControllerMgr::instance()->getController(i);
 
-            if (!controller || !controller->isConnected()) {
+            if (controller == nullptr || !controller->isConnected()) {
                 mControllerActiveTimes[i] = 0;
                 continue;
             }
@@ -146,7 +146,7 @@ bool PlayTimeObserver::sendActiveBeacon_()
 {
     SendData* data =
         createSendData_(sead::SafeString("erepo_active_beacon"), 2, 0, 0, StringId(), false);
-    if (!data) {
+    if (data == nullptr) {
         return false;
     }
 
@@ -161,7 +161,7 @@ bool PlayTimeObserver::report(const StringId& rId)
 {
     SendData* data = createSendData_(sead::SafeString("erepo_time"), 16, 0, 0, rId, true);
 
-    if (!data) {
+    if (data == nullptr) {
         return false;
     }
 
@@ -174,7 +174,7 @@ bool PlayTimeObserver::report(const StringId& rId)
 
     Manager* manager = Manager::instance();
 
-    if (manager) {
+    if (manager != nullptr) {
         const SaveDataInfo& info = manager->getSaveDataInfo();
 
         if (info.mValues[0].isValid()) {

@@ -51,13 +51,13 @@ SendData* SendData::CreateSendData(const sead::FixedSafeString<31>& rEventId, s3
 {
     Manager* pManager = Manager::instance();
 
-    if (!pManager) {
+    if (pManager == nullptr) {
         return nullptr;
     }
 
     sead::Heap* pHeap = pManager->getHeap();
 
-    if (!pHeap) {
+    if (pHeap == nullptr) {
         return nullptr;
     }
 
@@ -71,7 +71,7 @@ SendData* SendData::CreateSendData(const sead::FixedSafeString<31>& rEventId, s3
             SendData(pHeap, rEventId, dataNum, arrayNum, structNum, rReporterId, isNothrow);
     }
 
-    if (!pSendData) {
+    if (pSendData == nullptr) {
         return nullptr;
     }
 
@@ -341,7 +341,7 @@ bool SendData::addInternetConnectionStatus()
  */
 size_t SendData::GetSize() const
 {
-    if (!mReport) {
+    if (mReport == nullptr) {
         return 0;
     }
 
@@ -354,7 +354,7 @@ size_t SendData::GetSize() const
  */
 s32 SendData::GetCount() const
 {
-    if (!mReport) {
+    if (mReport == nullptr) {
         return -1;
     }
 
@@ -395,7 +395,7 @@ bool SendData::isValid_() const
         return false;
     }
 
-    if (!mReport) {
+    if (mReport == nullptr) {
         return false;
     }
 
@@ -423,7 +423,7 @@ bool SendData::initializeInnerData_(sead::Heap* pHeap)
         mReport = new (pHeap) nn::prepo::PlayReport();
     }
 
-    if (!mReport) {
+    if (mReport == nullptr) {
         sead::FormatFixedSafeString<128> message(
             "メモリ不足で内部送信データが作成できませんでした[allocatable size : %u]",
             pHeap->getMaxAllocatableSize(sizeof(void*)));
@@ -449,7 +449,7 @@ bool SendData::initializeInnerData_(sead::Heap* pHeap)
  */
 void SendData::finalizeInnerData_()
 {
-    if (mReport) {
+    if (mReport != nullptr) {
         delete mReport;
         mReport = nullptr;
     }

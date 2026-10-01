@@ -223,7 +223,7 @@ Struct* SendDataBase::CreateStruct(s32 memberNum)
 {
     Struct* pStruct =
         Struct::createWithMemberNum(memberNum, Manager::instance()->getHeap(), mIsNothrow);
-    if (!pStruct) {
+    if (pStruct == nullptr) {
         return nullptr;
     }
 
@@ -249,7 +249,7 @@ Struct* SendDataBase::CreateStructWithBufferSize(s32 bufferSize)
 {
     Struct* pStruct =
         Struct::createWithBufferSize(bufferSize, Manager::instance()->getHeap(), mIsNothrow);
-    if (!pStruct) {
+    if (pStruct == nullptr) {
         sead::FormatFixedSafeString<128> message("構造体データが作成できませんでした");
         return nullptr;
     }
@@ -279,7 +279,7 @@ Array* SendDataBase::CreateStructArray(s32 num, s32 memberNum)
         pArray = new (pHeap) Array();
     }
 
-    if (!pArray) {
+    if (pArray == nullptr) {
         sead::FormatFixedSafeString<128> message(
             "メモリ不足で構造体配列データが作成できませんでした[allocatable size : %u]",
             pHeap->getMaxAllocatableSize(sizeof(void*)));
@@ -312,7 +312,7 @@ Array* SendDataBase::CreateStructArrayWithBufferSize(s32 num, s32 bufferSize)
         pArray = new (pHeap) Array();
     }
 
-    if (!pArray) {
+    if (pArray == nullptr) {
         sead::FormatFixedSafeString<128> message(
             "メモリ不足で構造体配列データが作成できませんでした[allocatable size : %u]",
             pHeap->getMaxAllocatableSize(sizeof(void*)));
@@ -337,7 +337,7 @@ bool SendDataBase::save(ESendResult* pResult)
 {
     ESendResult result = saveImpl_();
 
-    if (pResult) {
+    if (pResult != nullptr) {
         *pResult = result;
     }
 
@@ -424,7 +424,7 @@ void SendDataBase::initialize_(s32 dataNum, s32 arrayNum, s32 structNum, sead::H
     mDataNum = dataNum;
     mSendDataNum = 0;
 
-    if (!pHeap) {
+    if (pHeap == nullptr) {
         pHeap = Manager::instance()->getHeap();
     }
 

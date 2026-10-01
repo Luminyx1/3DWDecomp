@@ -60,7 +60,7 @@ bool SendThread::requestSave(SendDataBase* pSendData)
 {
     mFlags.setOn(EFlag::cSending);
 
-    if (!pSendData) {
+    if (pSendData == nullptr) {
         return false;
     }
 

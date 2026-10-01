@@ -63,7 +63,7 @@ void PlayStyleObserver::checkCurrentStyle_(const Manager::UpdateArg& rArg, bool 
 {
     auto* npad = sead::ControllerMgr::instance()->getControlDeviceAs<sead::NinJoyNpadDevice*>();
 
-    if (npad) {
+    if (npad != nullptr) {
         for (s32 i = 0; i < 9; i++) {
             switch (static_cast<s32>(npad->getNpadStyleTag(i))) {
             case 0:
@@ -112,7 +112,7 @@ void PlayStyleObserver::load()
 {
     Manager* manager = Manager::instance();
 
-    if (!manager) {
+    if (manager == nullptr) {
         return;
     }
 
@@ -135,7 +135,7 @@ void PlayStyleObserver::save(SaveData* pData) const
 {
     Manager* manager = Manager::instance();
 
-    if (!manager) {
+    if (manager == nullptr) {
         return;
     }
 
@@ -175,7 +175,7 @@ bool PlayStyleObserver::report(const StringId& rId)
 {
     SendData* data = createSendData_(sead::SafeString("erepo_playstyle"), 60, 0, 0, rId, true);
 
-    if (!data) {
+    if (data == nullptr) {
         return false;
     }
 

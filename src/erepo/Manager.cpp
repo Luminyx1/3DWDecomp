@@ -16,7 +16,7 @@ namespace erepo {
 namespace {
 void deleteReporters(sead::PtrArray<Reporter>& rReporters)
 {
-    if (!rReporters.data()) {
+    if (rReporters.data() == nullptr) {
         return;
     }
 
@@ -71,7 +71,7 @@ bool Manager::initialize(const InitializeArg& rArg)
     {
         auto* reporter = new (rArg.heap) Reporter(new (rArg.heap) UserInfoObserver());
 
-        if (reporter) {
+        if (reporter != nullptr) {
             reporter->setTimingOn(Reporter::ETiming::cStartup);
             mReporterLists[0].reporters.pushBack(reporter);
         }
@@ -82,7 +82,7 @@ bool Manager::initialize(const InitializeArg& rArg)
     {
         auto* reporter = new (rArg.heap) Reporter(new (rArg.heap) PlayTimeObserver());
 
-        if (reporter) {
+        if (reporter != nullptr) {
             reporter->setTimingOn(Reporter::ETiming::cDaily);
             reporter->setTimingOn(Reporter::ETiming::cStartup);
             mReporterLists[1].reporters.pushBack(reporter);
@@ -92,7 +92,7 @@ bool Manager::initialize(const InitializeArg& rArg)
     {
         auto* reporter = new (rArg.heap) Reporter(new (rArg.heap) PlayStyleObserver());
 
-        if (reporter) {
+        if (reporter != nullptr) {
             reporter->setTimingOn(Reporter::ETiming::cDaily);
             reporter->setTimingOn(Reporter::ETiming::cStartup);
             mReporterLists[1].reporters.pushBack(reporter);
@@ -103,7 +103,7 @@ bool Manager::initialize(const InitializeArg& rArg)
     {
         auto* reporter = new (rArg.heap) Reporter(mNetworkStatusObserver);
 
-        if (reporter) {
+        if (reporter != nullptr) {
             reporter->setTimingOn(Reporter::ETiming::cStartup);
             mReporterLists[1].reporters.pushBack(reporter);
         }
@@ -577,7 +577,7 @@ void Manager::finalize()
 
     mSendThread->quitAndWaitDoneSingleThread(false);
 
-    if (mSendThread) {
+    if (mSendThread != nullptr) {
         delete mSendThread;
         mSendThread = nullptr;
     }
@@ -676,7 +676,7 @@ bool Manager::requestWaitFinishSendingAsync(s32 timeoutMs)
  */
 bool Manager::isSending() const
 {
-    if (!mSendThread) {
+    if (mSendThread == nullptr) {
         return false;
     }
 
@@ -689,12 +689,12 @@ bool Manager::isSending() const
  */
 bool Manager::isSendThread() const
 {
-    if (!mSendThread) {
+    if (mSendThread == nullptr) {
         return false;
     }
 
     sead::Thread* thread = sead::ThreadMgr::instance()->getCurrentThread();
-    return thread && thread->getId() == mSendThread->getId();
+    return (thread != nullptr) && thread->getId() == mSendThread->getId();
 }
 
 /**
@@ -707,7 +707,7 @@ bool Manager::waitFinishSending(s32 timeoutMs)
     mFlags.setOn(EFlag::cWaitFinishSending);
     mWaitStartTime.setNow();
 
-    while (mSendThread) {
+    while (mSendThread != nullptr) {
         if (!mSendThread->isSending()) {
             return true;
         }

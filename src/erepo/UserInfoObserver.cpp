@@ -27,7 +27,7 @@ bool UserInfoObserver::report(const StringId& rId)
 {
     SendData* data = createSendData_(sead::SafeString("erepo_region"), 4, 0, 0, rId, true);
 
-    if (!data) {
+    if (data == nullptr) {
         return false;
     }
 

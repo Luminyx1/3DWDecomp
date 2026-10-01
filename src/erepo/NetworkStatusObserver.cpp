@@ -30,7 +30,7 @@ bool NetworkStatusObserver::report(const StringId& rId)
 {
     SendData* data = createSendData_(sead::SafeString("erepo_network_status"), 3, rId.getId(), 0,
                                      StringId(), false);
-    if (data) {
+    if (data != nullptr) {
         data->addInternetConnectionStatus();
 
         if (data->requestSave()) {

@@ -34,7 +34,7 @@ Array::~Array()
 template <>
 void Array::addData<bool>(const bool& rValue)
 {
-    if (mArray.GetBuffer()) {
+    if (mArray.GetBuffer() != nullptr) {
         mArray.Add(rValue);
     }
 }
@@ -46,7 +46,7 @@ void Array::addData<bool>(const bool& rValue)
 template <>
 void Array::addData<s32>(const s32& rValue)
 {
-    if (mArray.GetBuffer()) {
+    if (mArray.GetBuffer() != nullptr) {
         mArray.Add(static_cast<s64>(rValue));
     }
 }
@@ -58,7 +58,7 @@ void Array::addData<s32>(const s32& rValue)
 template <>
 void Array::addData<u32>(const u32& rValue)
 {
-    if (mArray.GetBuffer()) {
+    if (mArray.GetBuffer() != nullptr) {
         mArray.Add(static_cast<s64>(rValue));
     }
 }
@@ -70,7 +70,7 @@ void Array::addData<u32>(const u32& rValue)
 template <>
 void Array::addData<s64>(const s64& rValue)
 {
-    if (mArray.GetBuffer()) {
+    if (mArray.GetBuffer() != nullptr) {
         mArray.Add(rValue);
     }
 }
@@ -82,7 +82,7 @@ void Array::addData<s64>(const s64& rValue)
 template <>
 void Array::addData<u64>(const u64& rValue)
 {
-    if (mArray.GetBuffer()) {
+    if (mArray.GetBuffer() != nullptr) {
         nn::prepo::Any64BitId id = {rValue};
         mArray.Add(id);
     }
@@ -95,7 +95,7 @@ void Array::addData<u64>(const u64& rValue)
 template <>
 void Array::addData<f32>(const f32& rValue)
 {
-    if (mArray.GetBuffer()) {
+    if (mArray.GetBuffer() != nullptr) {
         mArray.Add(rValue);
     }
 }
@@ -107,7 +107,7 @@ void Array::addData<f32>(const f32& rValue)
 template <>
 void Array::addData<sead::SafeString>(const sead::SafeString& rValue)
 {
-    if (mArray.GetBuffer()) {
+    if (mArray.GetBuffer() != nullptr) {
         mArray.Add(rValue.cstr());
     }
 }
@@ -119,7 +119,7 @@ void Array::addData<sead::SafeString>(const sead::SafeString& rValue)
 template <>
 void Array::addData<Struct>(const Struct& rValue)
 {
-    if (mArray.GetBuffer()) {
+    if (mArray.GetBuffer() != nullptr) {
         mArray.Add(rValue.getStruct());
     }
 }
@@ -260,12 +260,12 @@ Struct* Array::CreateStruct(s32 memberNum)
 {
     Struct* pStruct = Struct::createWithMemberNum(memberNum, Manager::instance()->getHeap(), true);
 
-    if (!pStruct) {
+    if (pStruct == nullptr) {
         return nullptr;
     }
 
     for (s32 i = 0; i < mStructs.size(); i++) {
-        if (!mStructs(i)) {
+        if (mStructs(i) == nullptr) {
             mStructs(i) = pStruct;
             return pStruct;
         }
@@ -283,12 +283,12 @@ Struct* Array::CreateStructWithBufferSize(s32 bufferSize)
 {
     Struct* pStruct = Struct::createWithBufferSize(bufferSize, Manager::instance()->getHeap(), true);
 
-    if (!pStruct) {
+    if (pStruct == nullptr) {
         return nullptr;
     }
 
     for (s32 i = 0; i < mStructs.size(); i++) {
-        if (!mStructs(i)) {
+        if (mStructs(i) == nullptr) {
             mStructs(i) = pStruct;
             return pStruct;
         }

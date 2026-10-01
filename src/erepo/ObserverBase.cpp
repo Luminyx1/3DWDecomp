@@ -25,7 +25,7 @@ SendData* ObserverBase::createSendData_(const sead::FixedSafeString<31>& rEventI
 {
     SendData* data =
         SendData::CreateSendData(rEventId, dataNum, arrayNum, structNum, rId, isNothrow);
-    if (data && Manager::instance() && Manager::instance()->isFlagOn(Manager::EFlag::cEnableLog)) {
+    if (data != nullptr && Manager::instance() != nullptr && Manager::instance()->isFlagOn(Manager::EFlag::cEnableLog)) {
         data->addLog(sSendLogName, true);
     }
 
@@ -41,7 +41,7 @@ SendData* ObserverBase::createSendData_(const SendDataBase::CreateArg& rArg)
 {
     SendData* data = SendData::CreateSendData(rArg.eventId, rArg.dataNum, rArg.arrayNum,
                                               rArg.structNum, rArg.reporterId, rArg.isNothrow);
-    if (data && Manager::instance() && Manager::instance()->isFlagOn(Manager::EFlag::cEnableLog)) {
+    if (data != nullptr && Manager::instance() != nullptr && Manager::instance()->isFlagOn(Manager::EFlag::cEnableLog)) {
         data->addLog(sSendLogName, true);
     }
 

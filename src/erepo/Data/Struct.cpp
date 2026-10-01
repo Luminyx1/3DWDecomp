@@ -60,7 +60,7 @@ Struct* Struct::createWithMemberNum(s32 memberNum, sead::Heap* pHeap, bool isNot
         pStruct = new (pHeap) Struct();
     }
 
-    if (!pStruct) {
+    if (pStruct == nullptr) {
         return nullptr;
     }
 
@@ -89,7 +89,7 @@ Struct* Struct::createWithBufferSize(s32 bufferSize, sead::Heap* pHeap, bool isN
         pStruct = new (pHeap) Struct();
     }
 
-    if (!pStruct) {
+    if (pStruct == nullptr) {
         return nullptr;
     }
 
@@ -108,7 +108,7 @@ Struct* Struct::createWithBufferSize(s32 bufferSize, sead::Heap* pHeap, bool isN
  */
 void Struct::addData(const sead::SafeString& rKey, bool value)
 {
-    if (mStruct.GetBuffer()) {
+    if (mStruct.GetBuffer() != nullptr) {
         mStruct.Add(rKey.cstr(), value);
     }
 }
@@ -120,7 +120,7 @@ void Struct::addData(const sead::SafeString& rKey, bool value)
  */
 void Struct::addData(const sead::SafeString& rKey, s32 value)
 {
-    if (mStruct.GetBuffer()) {
+    if (mStruct.GetBuffer() != nullptr) {
         mStruct.Add(rKey.cstr(), static_cast<s64>(value));
     }
 }
@@ -132,7 +132,7 @@ void Struct::addData(const sead::SafeString& rKey, s32 value)
  */
 void Struct::addData(const sead::SafeString& rKey, u32 value)
 {
-    if (mStruct.GetBuffer()) {
+    if (mStruct.GetBuffer() != nullptr) {
         mStruct.Add(rKey.cstr(), static_cast<s64>(value));
     }
 }
@@ -144,7 +144,7 @@ void Struct::addData(const sead::SafeString& rKey, u32 value)
  */
 void Struct::addData(const sead::SafeString& rKey, s64 value)
 {
-    if (mStruct.GetBuffer()) {
+    if (mStruct.GetBuffer() != nullptr) {
         mStruct.Add(rKey.cstr(), value);
     }
 }
@@ -156,7 +156,7 @@ void Struct::addData(const sead::SafeString& rKey, s64 value)
  */
 void Struct::addData(const sead::SafeString& rKey, u64 value)
 {
-    if (mStruct.GetBuffer()) {
+    if (mStruct.GetBuffer() != nullptr) {
         nn::prepo::Any64BitId id = {value};
         mStruct.Add(rKey.cstr(), id);
     }
@@ -169,7 +169,7 @@ void Struct::addData(const sead::SafeString& rKey, u64 value)
  */
 void Struct::addData(const sead::SafeString& rKey, f32 value)
 {
-    if (mStruct.GetBuffer()) {
+    if (mStruct.GetBuffer() != nullptr) {
         mStruct.Add(rKey.cstr(), value);
     }
 }
@@ -181,7 +181,7 @@ void Struct::addData(const sead::SafeString& rKey, f32 value)
  */
 void Struct::addData(const sead::SafeString& rKey, const char* value)
 {
-    if (mStruct.GetBuffer()) {
+    if (mStruct.GetBuffer() != nullptr) {
         mStruct.Add(rKey.cstr(), value);
     }
 }
@@ -193,7 +193,7 @@ void Struct::addData(const sead::SafeString& rKey, const char* value)
  */
 void Struct::addData(const sead::SafeString& rKey, const sead::SafeString& rValue)
 {
-    if (mStruct.GetBuffer()) {
+    if (mStruct.GetBuffer() != nullptr) {
         mStruct.Add(rKey.cstr(), rValue.cstr());
     }
 }
