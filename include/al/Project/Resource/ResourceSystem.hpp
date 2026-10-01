@@ -30,6 +30,8 @@ public:
 
     static_assert(sizeof(ResourceCategory) == 0xc0);
 
+    using CategoryIterator = sead::RingBuffer<ResourceCategory*>::iterator;
+
     struct ResourceAudioInfo {
         ResourceAudioInfo(SeadAudioPlayer* pPlayerA, SeadAudioPlayer* pPlayerB,
                           const char* pPath)
@@ -47,8 +49,7 @@ public:
     ResourceCategory* addCategory(const sead::SafeString& rName, s32 size, sead::Heap* pHeap);
     Resource* findOrCreateResourceCategory(const sead::SafeString& rPath,
                                            const sead::SafeString& rCategory, const char* pExt);
-    sead::RingBuffer<ResourceCategory*>::iterator
-    findResourceCategoryIter(const sead::SafeString& rName);
+    CategoryIterator findResourceCategoryIter(const sead::SafeString& rName);
     bool isCategoryAdded(const sead::SafeString& rName);
     bool isEmptyCategoryResource(const sead::SafeString& rName);
     bool createCategoryResourceAll(const sead::SafeString& rName, sead::Event* pEvent);
@@ -57,7 +58,7 @@ public:
     void removeCategory(const sead::SafeString& rName);
     Resource* findResource(const sead::SafeString& rPath);
     Resource* findResourceCore(const sead::SafeString& rPath,
-                               sead::RingBuffer<ResourceCategory*>::iterator* pOutIter);
+                               CategoryIterator* pOutIter);
     Resource* findOrCreateResource(const sead::SafeString& rPath, const char* pExt);
     ResourceCategory* findResourceCategory(const sead::SafeString& rPath);
     void setCurrentCategory(const char* pName);

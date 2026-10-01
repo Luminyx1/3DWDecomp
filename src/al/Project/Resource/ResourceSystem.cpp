@@ -118,7 +118,7 @@ Resource* ResourceSystem::findOrCreateResourceCategory(const sead::SafeString& r
  * @param rName category name
  * @return category iterator
  */
-sead::RingBuffer<ResourceSystem::ResourceCategory*>::iterator
+ResourceSystem::CategoryIterator
 ResourceSystem::findResourceCategoryIter(const sead::SafeString& rName) {
     for (auto iter = mCategories.begin(); iter != mCategories.end(); ++iter) {
         if (isEqualString((*iter)->mName.cstr(), rName.cstr())) {
@@ -271,8 +271,8 @@ Resource* ResourceSystem::findResource(const sead::SafeString& rPath) {
  * @param pOutIter output category iterator
  * @return resource, or null
  */
-Resource* ResourceSystem::findResourceCore(
-    const sead::SafeString& rPath, sead::RingBuffer<ResourceCategory*>::iterator* pOutIter) {
+Resource* ResourceSystem::findResourceCore(const sead::SafeString& rPath,
+                                           CategoryIterator* pOutIter) {
     for (auto iter = mCategories.begin(); iter != mCategories.end(); ++iter) {
         auto* node = (*iter)->mResources.find(rPath);
 
