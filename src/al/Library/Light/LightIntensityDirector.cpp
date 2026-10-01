@@ -1,10 +1,14 @@
 #include "Library/Light/LightIntensityDirector.hpp"
+#include "Library/Light/LightIntensityFunction.hpp"
 
 #include <cmath>
 #include "postfx/aglBloom.h"
 #include "utility/aglParameterIO.h"
 #include "utility/aglResParameter.h"
 
+#include "Library/Draw/GraphicsSystemInfo.hpp"
+#include "Library/LiveActor/LiveActor.hpp"
+#include "Library/LiveActor/Util/ActorSceneInfo.hpp"
 #include "Library/Math/MathUtil.hpp"
 #include "Library/Resource/ResourceFunction.hpp"
 #include "Project/Draw/GraphicsAreaDirector.hpp"
@@ -12,35 +16,6 @@
 #include "Project/Base/StringUtil.hpp"
 
 namespace al {
-/**
- * Registers the name parameter of a named graphics parameter.
- * @param pDefaultName Initial name.
- */
-GraphicsNamedParamBase::GraphicsNamedParamBase(const char* pDefaultName) {
-    mName = new agl::utl::Parameter<sead::FixedSafeString<64>>(
-        sead::FixedSafeString<64>(pDefaultName), "name", "パラメータ名", this);
-}
-
-/**
- * Interpolates the parameters of two named parameters.
- * @param rA Start parameter.
- * @param rB End parameter.
- * @param rate Interpolation rate.
- */
-void GraphicsNamedParamBase::interp(const GraphicsNamedParamBase& rA,
-                                    const GraphicsNamedParamBase& rB, f32 rate) {
-    copyLerp(rA, rB, rate);
-}
-
-/**
- * Compares the names of two named parameters.
- * @param rOther Parameter to compare with.
- * @return Whether both parameters have the same name.
- */
-bool GraphicsNamedParamBase::operator==(const GraphicsNamedParamBase& rOther) const {
-    return isEqualString(getName(), rOther.getName());
-}
-
 /**
  * Registers the exposure parameter.
  * @param isDefault Whether this is the default parameter.
@@ -383,3 +358,14 @@ BloomNamedParam* LightIntensityDirector::findBloomParam(const char* pName) const
     return mBloomParams[0];
 }
 }  // namespace al
+
+namespace LightIntensityFunction {
+/**
+ * Gets the scene's light intensity director.
+ * @param pActor Actor of the scene.
+ * @return The light intensity director.
+ */
+al::LightIntensityDirector* getLightIntensityDirector(const al::LiveActor* pActor) {
+    return pActor->getSceneInfo()->graphicsSystemInfo->getLightIntensityDirector();
+}
+}  // namespace LightIntensityFunction
