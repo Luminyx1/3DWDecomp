@@ -5,6 +5,16 @@
 namespace al {
 
 /**
+ * Constructs the color clamp drawing parameters.
+ */
+ColorClampDrawParam::ColorClampDrawParam() {
+    mParamObj = new ParameterObj();
+    mIsEnable = new ParameterBool(false, mParamObj, "IsEnable", "IsEnable", "", true);
+    mClampColor = new ParameterC4f(sead::Color4f::cWhite, mParamObj, "ClampColor", "ClampColor", "Min=0, Max=1", true);
+    mModifyStyle = new ParameterS32(0, mParamObj, "ModifyStyle", "Style", "Min=0, Max=5", true);
+}
+
+/**
  * Checks the Enable flag.
  * @return Whether Enable is set.
  */
