@@ -22,11 +22,11 @@ bool turnDirectionDegree(const LiveActor* pActor, sead::Vector3f* pDir,
 void setClippingInfo(LiveActor* pActor, f32 radius, const sead::Vector3f* pPos);
 
 static RailRider* getRailRider(const LiveActor* pActor) {
-    return pActor->mRailKeeper->getRailRider();
+    return pActor->getRailKeeper()->getRailRider();
 }
 
 static Rail* getRail(const LiveActor* pActor) {
-    return pActor->mRailKeeper->getRail();
+    return pActor->getRailKeeper()->getRail();
 }
 
 void setRailPosToStart(const LiveActor* pActor) {
@@ -391,7 +391,7 @@ f32 getRailPartRate(const LiveActor* pActor, s32 index, f32 coord) {
 }
 
 bool isExistRail(const LiveActor* pActor) {
-    return (pActor->mRailKeeper != nullptr) && pActor->mRailKeeper->isValid();
+    return (pActor->getRailKeeper() != nullptr) && pActor->getRailKeeper()->isValid();
 }
 
 bool isRailReachedStart(const LiveActor* pActor) {
