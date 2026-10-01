@@ -58502,7 +58502,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710095A360			FALSE	_ZNK2al14CollisionParts20calcForceRotatePowerEPN4sead4QuatIfEE	al::CollisionParts::calcForceRotatePower(sead::Quat<float>*) const	
 0x710095A430			FALSE	_ZN2al14CollisionParts29setCheckBallIgnoreSeparateDirEb	al::CollisionParts::setCheckBallIgnoreSeparateDir(bool)	
 0x710095A440			FALSE	sub_710095A440	sub_710095A440	
-0x710095A4F0		PartsInterpolator.o	FALSE	_ZN2al30createCollisionPartsFilterFuncEPFbRKNS_14CollisionPartsEE	al::createCollisionPartsFilterFunc(bool (*)(al::CollisionParts const&))	object (smo)
+0x710095A4F0		CollisionPartsFilter.o	FALSE	_ZN2al30createCollisionPartsFilterFuncEPFbRKNS_14CollisionPartsEE	al::createCollisionPartsFilterFunc(bool (*)(al::CollisionParts const&))	object (smo)
 0x710095A530			FALSE	_ZN2al37createCollisionPartsFilterFuncSendMsgEPFbRKNS_14CollisionPartsEPNS_9HitSensorEES4_	al::createCollisionPartsFilterFuncSendMsg(bool (*)(al::CollisionParts const&, al::HitSensor*), al::HitSensor*)	
 0x710095A570			FALSE	_ZN2al41createCollisionPartsFilterConnectedSensorEPKNS_9HitSensorE	al::createCollisionPartsFilterConnectedSensor(al::HitSensor const*)	
 0x710095A5B0			FALSE	_ZNK2al25CollisionPartsFilterActor14isInvalidPartsERKNS_14CollisionPartsE	al::CollisionPartsFilterActor::isInvalidParts(al::CollisionParts const&) const	
@@ -58515,7 +58515,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710095A720			FALSE	_ZNK2al26CollisionPartsFilterOrPair14isInvalidPartsERKNS_14CollisionPartsE	al::CollisionPartsFilterOrPair::isInvalidParts(al::CollisionParts const&) const	
 0x710095A780			FALSE	_ZNK2al24CollisionPartsFilterFunc14isInvalidPartsERKNS_14CollisionPartsE	al::CollisionPartsFilterFunc::isInvalidParts(al::CollisionParts const&) const	
 0x710095A790			FALSE	_ZNK2al31CollisionPartsFilterFuncSendMsg14isInvalidPartsERKNS_14CollisionPartsE	al::CollisionPartsFilterFuncSendMsg::isInvalidParts(al::CollisionParts const&) const	
-0x710095A7A0		CollisionParts.o	FALSE	_ZN2al20checkStrikePointCoreEPNS_7HitInfoERKN4sead5TListIPNS_14CollisionPartsEEERKNS_22CollisionCheckInfoBaseE	al::checkStrikePointCore(al::HitInfo*, sead::TList<al::CollisionParts*> const&, al::CollisionCheckInfoBase const&)	object/folder from OdysseyDecomp file list
+0x710095A7A0		CollisionCheckCore.o	FALSE	_ZN2al20checkStrikePointCoreEPNS_7HitInfoERKN4sead5TListIPNS_14CollisionPartsEEERKNS_22CollisionCheckInfoBaseE	al::checkStrikePointCore(al::HitInfo*, sead::TList<al::CollisionParts*> const&, al::CollisionCheckInfoBase const&)	object/folder from OdysseyDecomp file list
 0x710095A850			FALSE	_ZN2al21checkStrikeSphereCoreEPNS_21SphereHitResultBufferERKN4sead5TListIPNS_14CollisionPartsEEERKNS_15SphereCheckInfoEbRKNS2_7Vector3IfEE	al::checkStrikeSphereCore(al::SphereHitResultBuffer*, sead::TList<al::CollisionParts*> const&, al::SphereCheckInfo const&, bool, sead::Vector3<float> const&)	
 0x710095A920			FALSE	_ZN2al20checkStrikeArrowCoreEPNS_20ArrowHitResultBufferERKN4sead5TListIPNS_14CollisionPartsEEERKNS_14ArrowCheckInfoE	al::checkStrikeArrowCore(al::ArrowHitResultBuffer*, sead::TList<al::CollisionParts*> const&, al::ArrowCheckInfo const&)	
 0x710095AA30			FALSE	_ZN2al30checkStrikeSphereForPlayerCoreEPNS_21SphereHitResultBufferERKN4sead5TListIPNS_14CollisionPartsEEERKNS_15SphereCheckInfoEbRKNS2_7Vector3IfEE	al::checkStrikeSphereForPlayerCore(al::SphereHitResultBuffer*, sead::TList<al::CollisionParts*> const&, al::SphereCheckInfo const&, bool, sead::Vector3<float> const&)	
@@ -58537,7 +58537,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710095B200			FALSE	sub_710095B200	sub_710095B200	
 0x710095B290			FALSE	sub_710095B290	sub_710095B290	
 0x710095B320			FALSE	sub_710095B320	sub_710095B320	
-0x710095B390			FALSE	_ZN2al25CollisionPartsKeeperArrayC1Ev	al::CollisionPartsKeeperArray::CollisionPartsKeeperArray()	
+0x710095B390		CollisionPartsKeeperArray.o	FALSE	_ZN2al25CollisionPartsKeeperArrayC1Ev	al::CollisionPartsKeeperArray::CollisionPartsKeeperArray()	
 0x710095B3F0			FALSE	_ZN2al25CollisionPartsKeeperArray17addCollisionPartsEPNS_14CollisionPartsE	al::CollisionPartsKeeperArray::addCollisionParts(al::CollisionParts*)	
 0x710095B400			FALSE	_ZN2al25CollisionPartsKeeperArray27connectToCollisionPartsListEPNS_14CollisionPartsE	al::CollisionPartsKeeperArray::connectToCollisionPartsList(al::CollisionParts*)	
 0x710095B4B0			FALSE	_ZN2al25CollisionPartsKeeperArray30disconnectToCollisionPartsListEPNS_14CollisionPartsE	al::CollisionPartsKeeperArray::disconnectToCollisionPartsList(al::CollisionParts*)	
@@ -58550,8 +58550,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710095BCA0			FALSE	_ZNK2al25CollisionPartsKeeperArray16searchWithSphereERKNS_15SphereCheckInfoERN4sead10IDelegate1IPNS_14CollisionPartsEEE	al::CollisionPartsKeeperArray::searchWithSphere(al::SphereCheckInfo const&, sead::IDelegate1<al::CollisionParts*>&) const	
 0x710095BDF0			FALSE	_ZN2al25CollisionPartsKeeperArray8movementEv	al::CollisionPartsKeeperArray::movement()	
 0x710095BE60			FALSE	_ZN2al25CollisionPartsKeeperArray7endInitEv	al::CollisionPartsKeeperArray::endInit()	
-0x710095BE70			FALSE	_ZN2al26CollisionPartsKeeperOctreeC2Eii	al::CollisionPartsKeeperOctree::CollisionPartsKeeperOctree(int, int)	
-0x710095BFC0		CollisionPartsKeeperOctree.o	FALSE	_ZN2al26CollisionPartsKeeperOctree7endInitEv	al::CollisionPartsKeeperOctree::endInit()	object/folder from OdysseyDecomp file list
+0x710095BE70		CollisionPartsKeeperOctree.o	FALSE	_ZN2al26CollisionPartsKeeperOctreeC2Eii	al::CollisionPartsKeeperOctree::CollisionPartsKeeperOctree(int, int)	
+0x710095BFC0			FALSE	_ZN2al26CollisionPartsKeeperOctree7endInitEv	al::CollisionPartsKeeperOctree::endInit()	object/folder from OdysseyDecomp file list
 0x710095C0E0			FALSE	_ZN2al26CollisionPartsKeeperOctree30insertMovingPartsListToOctNodeEv	al::CollisionPartsKeeperOctree::insertMovingPartsListToOctNode()	
 0x710095C190			FALSE	_ZN2al26CollisionPartsKeeperOctree17addCollisionPartsEPNS_14CollisionPartsE	al::CollisionPartsKeeperOctree::addCollisionParts(al::CollisionParts*)	
 0x710095C280			FALSE	_ZN2al26CollisionPartsKeeperOctree27connectToCollisionPartsListEPNS_14CollisionPartsE	al::CollisionPartsKeeperOctree::connectToCollisionPartsList(al::CollisionParts*)	
@@ -58574,8 +58574,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710095D560			FALSE	_ZNK2al26CollisionPartsKeeperOctree11isFitsInBoxEPKNS_14CollisionPartsERKN4sead9BoundBox3IfEE	al::CollisionPartsKeeperOctree::isFitsInBox(al::CollisionParts const*, sead::BoundBox3<float> const&) const	
 0x710095D610			FALSE	_ZNK2al26CollisionPartsKeeperOctree20calcNodeCubeSizeHalfEi	al::CollisionPartsKeeperOctree::calcNodeCubeSizeHalf(int) const	
 0x710095D630			FALSE	_ZNK2al26CollisionPartsKeeperOctree17isSphereFitsInBoxERKN4sead7Vector3IfEEfRKNS1_9BoundBox3IfEE	al::CollisionPartsKeeperOctree::isSphereFitsInBox(sead::Vector3<float> const&, float, sead::BoundBox3<float> const&) const	
-0x710095D6E0			FALSE	_ZN2al28CollisionPartsKeeperPtrArrayC2Ev	al::CollisionPartsKeeperPtrArray::CollisionPartsKeeperPtrArray()	
-0x710095D700		CollisionPartsKeeperPtrArray.o	FALSE	_ZNK2al28CollisionPartsKeeperPtrArray16checkStrikePointEPNS_7HitInfoERKNS_22CollisionCheckInfoBaseE	al::CollisionPartsKeeperPtrArray::checkStrikePoint(al::HitInfo*, al::CollisionCheckInfoBase const&) const	object/folder from OdysseyDecomp file list
+0x710095D6E0		CollisionPartsKeeperPtrArray.o	FALSE	_ZN2al28CollisionPartsKeeperPtrArrayC2Ev	al::CollisionPartsKeeperPtrArray::CollisionPartsKeeperPtrArray()	
+0x710095D700			FALSE	_ZNK2al28CollisionPartsKeeperPtrArray16checkStrikePointEPNS_7HitInfoERKNS_22CollisionCheckInfoBaseE	al::CollisionPartsKeeperPtrArray::checkStrikePoint(al::HitInfo*, al::CollisionCheckInfoBase const&) const	object/folder from OdysseyDecomp file list
 0x710095D7A0			FALSE	_ZNK2al28CollisionPartsKeeperPtrArray17checkStrikeSphereEPNS_21SphereHitResultBufferERKNS_15SphereCheckInfoEbRKN4sead7Vector3IfEE	al::CollisionPartsKeeperPtrArray::checkStrikeSphere(al::SphereHitResultBuffer*, al::SphereCheckInfo const&, bool, sead::Vector3<float> const&) const	
 0x710095D870			FALSE	_ZNK2al28CollisionPartsKeeperPtrArray16checkStrikeArrowEPNS_20ArrowHitResultBufferERKNS_14ArrowCheckInfoE	al::CollisionPartsKeeperPtrArray::checkStrikeArrow(al::ArrowHitResultBuffer*, al::ArrowCheckInfo const&) const	
 0x710095D930			FALSE	_ZNK2al28CollisionPartsKeeperPtrArray26checkStrikeSphereForPlayerEPNS_21SphereHitResultBufferERKNS_15SphereCheckInfoE	al::CollisionPartsKeeperPtrArray::checkStrikeSphereForPlayer(al::SphereHitResultBuffer*, al::SphereCheckInfo const&) const	
@@ -58666,7 +58666,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710095EF10			FALSE	_ZN2al24tryGetCollidedWallSensorEPKNS_9LiveActorE	al::tryGetCollidedWallSensor(al::LiveActor const*)	
 0x710095EF40			FALSE	_ZN2al27tryGetCollidedCeilingSensorEPKNS_9LiveActorE	al::tryGetCollidedCeilingSensor(al::LiveActor const*)	
 0x710095EF70			FALSE	_ZN2al25setForceCollisionScaleOneEPKNS_9LiveActorE	al::setForceCollisionScaleOne(al::LiveActor const*)	
-0x710095EF80	Library/Collision	CollisionPartsKeeperUtil.o	FALSE	_ZN15alCollisionUtil23getCollisionPartsKeeperEPKN2al13IUseCollisionE	alCollisionUtil::getCollisionPartsKeeper(al::IUseCollision const*)	object/folder from OdysseyDecomp file list
+0x710095EF80	Library/Collision	CollisionUtil.o	FALSE	_ZN15alCollisionUtil23getCollisionPartsKeeperEPKN2al13IUseCollisionE	alCollisionUtil::getCollisionPartsKeeper(al::IUseCollision const*)	object/folder from OdysseyDecomp file list
 0x710095EFA0			FALSE	_ZN15alCollisionUtil18getCollisionHitPosEPKN2al7HitInfoE	alCollisionUtil::getCollisionHitPos(al::HitInfo const*)	
 0x710095EFB0			FALSE	_ZN15alCollisionUtil21getCollisionHitNormalEPKN2al7HitInfoE	alCollisionUtil::getCollisionHitNormal(al::HitInfo const*)	
 0x710095EFC0			FALSE	_ZN15alCollisionUtil21getCollisionHitSensorEPKN2al7HitInfoE	alCollisionUtil::getCollisionHitSensor(al::HitInfo const*)	
@@ -58710,15 +58710,15 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100962050			FALSE	sub_7100962050	sub_7100962050	
 0x7100962610			FALSE	_ZNSt3__118__insertion_sort_3IRPFbRKN15alCollisionUtil17SphereMoveHitInfoES4_EPS2_EEvT0_S9_T_	void std::__1::__insertion_sort_3<bool (*&)(alCollisionUtil::SphereMoveHitInfo const&, alCollisionUtil::SphereMoveHitInfo const&), alCollisionUtil::SphereMoveHitInfo*>(alCollisionUtil::SphereMoveHitInfo*, alCollisionUtil::SphereMoveHitInfo*, bool (*&)(alCollisionUtil::SphereMoveHitInfo const&, alCollisionUtil::SphereMoveHitInfo const&))	
 0x71009628D0			FALSE	_ZNSt3__127__insertion_sort_incompleteIRPFbRKN15alCollisionUtil17SphereMoveHitInfoES4_EPS2_EEbT0_S9_T_	bool std::__1::__insertion_sort_incomplete<bool (*&)(alCollisionUtil::SphereMoveHitInfo const&, alCollisionUtil::SphereMoveHitInfo const&), alCollisionUtil::SphereMoveHitInfo*>(alCollisionUtil::SphereMoveHitInfo*, alCollisionUtil::SphereMoveHitInfo*, bool (*&)(alCollisionUtil::SphereMoveHitInfo const&, alCollisionUtil::SphereMoveHitInfo const&))	
-0x7100962DA0			FALSE	_ZN2al24ActorCollisionControllerC2EPNS_9LiveActorE	al::ActorCollisionController::ActorCollisionController(al::LiveActor*)	
-0x7100962DE0	Project/Collision	ActorCollisionController.o	FALSE	_ZN2al24ActorCollisionController17setColliderRadiusEf	al::ActorCollisionController::setColliderRadius(float)	object/folder from OdysseyDecomp file list
+0x7100962DA0	Project/Collision	ActorCollisionController.o	FALSE	_ZN2al24ActorCollisionControllerC2EPNS_9LiveActorE	al::ActorCollisionController::ActorCollisionController(al::LiveActor*)	
+0x7100962DE0			FALSE	_ZN2al24ActorCollisionController17setColliderRadiusEf	al::ActorCollisionController::setColliderRadius(float)	object/folder from OdysseyDecomp file list
 0x7100962DF0			FALSE	_ZN2al24ActorCollisionController18setColliderOffsetYEf	al::ActorCollisionController::setColliderOffsetY(float)	
 0x7100962E00			FALSE	_ZN2al24ActorCollisionController6updateEv	al::ActorCollisionController::update()	
 0x7100962EC0			FALSE	_ZN2al24ActorCollisionController13resetToOriginEi	al::ActorCollisionController::resetToOrigin(int)	
-0x7100962F10			FALSE	_ZN2al8TriangleC2Ev	al::Triangle::Triangle()	
+0x7100962F10	Library/Collision	CollisionPartsTriangle.o	FALSE	_ZN2al8TriangleC2Ev	al::Triangle::Triangle()	
 0x7100962F60			FALSE	_ZN2al8TriangleC1ERKNS_14CollisionPartsEPNS_11KCPrismDataEPKNS_13KCPrismHeaderE	al::Triangle::Triangle(al::CollisionParts const&, al::KCPrismData*, al::KCPrismHeader const*)	
 0x7100962F70			FALSE	_ZN2al8Triangle8fillDataERKNS_14CollisionPartsEPNS_11KCPrismDataEPKNS_13KCPrismHeaderE	al::Triangle::fillData(al::CollisionParts const&, al::KCPrismData*, al::KCPrismHeader const*)	
-0x7100963370	Library/Collision	CollisionPartsTriangle.o	FALSE	_ZN2al8Triangle4fillERKN4sead7Vector3IfEES5_S5_	al::Triangle::fill(sead::Vector3<float> const&, sead::Vector3<float> const&, sead::Vector3<float> const&)	object/folder from OdysseyDecomp file list
+0x7100963370			FALSE	_ZN2al8Triangle4fillERKN4sead7Vector3IfEES5_S5_	al::Triangle::fill(sead::Vector3<float> const&, sead::Vector3<float> const&, sead::Vector3<float> const&)	object/folder from OdysseyDecomp file list
 0x7100963530			FALSE	_ZNK2al8Triangle11isHostMovedEv	al::Triangle::isHostMoved() const	
 0x7100963550			FALSE	_ZNK2al8Triangle7isValidEv	al::Triangle::isValid() const	
 0x7100963560			FALSE	_ZNK2al8Triangle9getNormalEi	al::Triangle::getNormal(int) const	
@@ -58741,18 +58741,18 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100963D10			FALSE	_ZeqRKN2al8TriangleES2_	operator==(al::Triangle const&, al::Triangle const&)	
 0x7100963D40			FALSE	_ZneRKN2al8TriangleES2_	operator!=(al::Triangle const&, al::Triangle const&)	
 0x7100963D70			FALSE	_ZN2al7HitInfoC2Ev	al::HitInfo::HitInfo()	
-0x7100963DD0		KCollisionFunc.o	FALSE	_ZNK2al7HitInfo17isCollisionAtFaceEv	al::HitInfo::isCollisionAtFace() const	object/folder from OdysseyDecomp file list
+0x7100963DD0			FALSE	_ZNK2al7HitInfo17isCollisionAtFaceEv	al::HitInfo::isCollisionAtFace() const	object/folder from OdysseyDecomp file list
 0x7100963DE0			FALSE	_ZNK2al7HitInfo17isCollisionAtEdgeEv	al::HitInfo::isCollisionAtEdge() const	
 0x7100963E00			FALSE	_ZNK2al7HitInfo19isCollisionAtCornerEv	al::HitInfo::isCollisionAtCorner() const	
 0x7100963E20			FALSE	_ZNK2al13SphereHitInfo13calcFixVectorEPN4sead7Vector3IfEES4_	al::SphereHitInfo::calcFixVector(sead::Vector3<float>*, sead::Vector3<float>*) const	
 0x7100963F50			FALSE	_ZNK2al13SphereHitInfo19calcFixVectorNormalEPN4sead7Vector3IfEES4_	al::SphereHitInfo::calcFixVectorNormal(sead::Vector3<float>*, sead::Vector3<float>*) const	
 0x7100963F90			FALSE	_ZNK2al11DiskHitInfo13calcFixVectorEPN4sead7Vector3IfEES4_	al::DiskHitInfo::calcFixVector(sead::Vector3<float>*, sead::Vector3<float>*) const	
 0x71009640C0			FALSE	_ZNK2al11DiskHitInfo19calcFixVectorNormalEPN4sead7Vector3IfEES4_	al::DiskHitInfo::calcFixVectorNormal(sead::Vector3<float>*, sead::Vector3<float>*) const	
-0x7100964100			FALSE	_ZN16alKCollisionFunc16calcSphereHitPosEPN4sead7Vector3IfEEPKN2al16KCollisionServerERKS2_RKNS4_11KCPrismDataEPKNS4_13KCPrismHeaderEh	alKCollisionFunc::calcSphereHitPos(sead::Vector3<float>*, al::KCollisionServer const*, sead::Vector3<float> const&, al::KCPrismData const&, al::KCPrismHeader const*, unsigned char)	
+0x7100964100		KCollisionFunc.o	FALSE	_ZN16alKCollisionFunc16calcSphereHitPosEPN4sead7Vector3IfEEPKN2al16KCollisionServerERKS2_RKNS4_11KCPrismDataEPKNS4_13KCPrismHeaderEh	alKCollisionFunc::calcSphereHitPos(sead::Vector3<float>*, al::KCollisionServer const*, sead::Vector3<float> const&, al::KCPrismData const&, al::KCPrismHeader const*, unsigned char)	
 0x7100964360			FALSE	_ZN16alKCollisionFunc14projectToPlaneEPN4sead7Vector3IfEERKS2_S5_S5_	alKCollisionFunc::projectToPlane(sead::Vector3<float>*, sead::Vector3<float> const&, sead::Vector3<float> const&, sead::Vector3<float> const&)	
 0x71009643D0			FALSE	_ZN16alKCollisionFunc14calcDiskHitPosEPN4sead7Vector3IfEEPKN2al16KCollisionServerERKS2_fS9_RKNS4_11KCPrismDataEPKNS4_13KCPrismHeaderEh	alKCollisionFunc::calcDiskHitPos(sead::Vector3<float>*, al::KCollisionServer const*, sead::Vector3<float> const&, float, sead::Vector3<float> const&, al::KCPrismData const&, al::KCPrismHeader const*, unsigned char)	
-0x7100964630			FALSE	_ZN2al16KCollisionServerC2Ev	al::KCollisionServer::KCollisionServer()	
-0x7100964650		KCollisionServer.o	FALSE	_ZN2al16KCollisionServer20initKCollisionServerEPvPKv	al::KCollisionServer::initKCollisionServer(void*, void const*)	object/folder from OdysseyDecomp file list
+0x7100964630		KCollisionServer.o	FALSE	_ZN2al16KCollisionServerC2Ev	al::KCollisionServer::KCollisionServer()	
+0x7100964650			FALSE	_ZN2al16KCollisionServer20initKCollisionServerEPvPKv	al::KCollisionServer::initKCollisionServer(void*, void const*)	object/folder from OdysseyDecomp file list
 0x7100964770			FALSE	_ZN2al16KCollisionServer7setDataEPv	al::KCollisionServer::setData(void*)	
 0x7100964860			FALSE	_ZNK2al16KCollisionServer11getInnerKclEi	al::KCollisionServer::getInnerKcl(int) const	
 0x7100964880			FALSE	_ZNK2al16KCollisionServer14getNumInnerKclEv	al::KCollisionServer::getNumInnerKcl() const	
@@ -58802,12 +58802,12 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100968C50			FALSE	_ZNK2al16KCollisionServer19calcAreaBlockOffsetERKN4sead7Vector3IjEEPKNS_13KCPrismHeaderE	al::KCollisionServer::calcAreaBlockOffset(sead::Vector3<unsigned int> const&, al::KCPrismHeader const*) const	
 0x7100968C90			FALSE	_ZN2al16KCollisionServer20calcChildBlockOffsetERKN4sead7Vector3IjEEi	al::KCollisionServer::calcChildBlockOffset(sead::Vector3<unsigned int> const&, int)	
 0x7100968CC0			FALSE	_ZN2al16KCollisionServer12getBlockDataEPKjj	al::KCollisionServer::getBlockData(unsigned int const*, unsigned int)	
-0x7100968CD0		Collider.o	FALSE	_ZN2al13isWallPolygonERKN4sead7Vector3IfEES4_	al::isWallPolygon(sead::Vector3<float> const&, sead::Vector3<float> const&)	object/folder from OdysseyDecomp file list
+0x7100968CD0	Library/Collision	CollisionPolygonUtil.o	FALSE	_ZN2al13isWallPolygonERKN4sead7Vector3IfEES4_	al::isWallPolygon(sead::Vector3<float> const&, sead::Vector3<float> const&)	object/folder from OdysseyDecomp file list
 0x7100968D50			FALSE	_ZN2al14isFloorPolygonERKN4sead7Vector3IfEES4_	al::isFloorPolygon(sead::Vector3<float> const&, sead::Vector3<float> const&)	
 0x7100968DE0			FALSE	_ZN2al17isFloorPolygonCosERKN4sead7Vector3IfEES4_f	al::isFloorPolygonCos(sead::Vector3<float> const&, sead::Vector3<float> const&, float)	
 0x7100968EA0			FALSE	_ZN2al16isCeilingPolygonERKN4sead7Vector3IfEES4_	al::isCeilingPolygon(sead::Vector3<float> const&, sead::Vector3<float> const&)	
 0x7100968F40			FALSE	_ZN2al24calcTriangleColorByAngleEPN4sead7Color4fEPfRKNS0_7Vector3IfEE	al::calcTriangleColorByAngle(sead::Color4f*, float*, sead::Vector3<float> const&)	
-0x7100969020		PartsInterpolator.o	FALSE	_ZN2al18SphereInterpolator11startInterpERKN4sead7Vector3IfEES5_fff	al::SphereInterpolator::startInterp(sead::Vector3<float> const&, sead::Vector3<float> const&, float, float, float)	object/folder from OdysseyDecomp file list
+0x7100969020		SphereInterpolator.o	FALSE	_ZN2al18SphereInterpolator11startInterpERKN4sead7Vector3IfEES5_fff	al::SphereInterpolator::startInterp(sead::Vector3<float> const&, sead::Vector3<float> const&, float, float, float)	object/folder from OdysseyDecomp file list
 0x71009690E0			FALSE	_ZN2al18SphereInterpolator8nextStepEv	al::SphereInterpolator::nextStep()	
 0x7100969110			FALSE	_ZNK2al18SphereInterpolator13calcInterpPosEPN4sead7Vector3IfEE	al::SphereInterpolator::calcInterpPos(sead::Vector3<float>*) const	
 0x7100969160			FALSE	_ZNK2al18SphereInterpolator10calcInterpEPN4sead7Vector3IfEEPfS4_	al::SphereInterpolator::calcInterp(sead::Vector3<float>*, float*, sead::Vector3<float>*) const	

@@ -5615,33 +5615,35 @@ src/al/Library/Collision/CollisionMultiSphereBase.cpp:
     .text   start:0x00957450 end:0x00957DF4
 src/al/Library/Collision/CollisionParts.cpp:
     .text   start:0x00957E10 end:0x0095A4E8
-src/al/Library/Collision/PartsInterpolator.cpp: done
+src/al/Library/Collision/CollisionPartsFilter.cpp: done
     .text   start:0x0095A4F0 end:0x0095A7A0
-src/al/Library/Collision/CollisionParts_dup2.cpp:
-    .text   start:0x0095A7A0 end:0x0095BFBC
+src/al/Library/Collision/CollisionCheckCore.cpp:
+    .text   start:0x0095A7A0 end:0x0095B38C
+src/al/Library/Collision/CollisionPartsKeeperArray.cpp:
+    .text   start:0x0095B390 end:0x0095BE64
 src/al/Library/Collision/CollisionPartsKeeperOctree.cpp:
-    .text   start:0x0095BFC0 end:0x0095D6F4
+    .text   start:0x0095BE70 end:0x0095D6D4
 src/al/Library/Collision/CollisionPartsKeeperPtrArray.cpp: done
-    .text   start:0x0095D700 end:0x0095DC24
+    .text   start:0x0095D6E0 end:0x0095DC24
 src/al/Library/LiveActor/ActorCollisionFunction.cpp: done
     .text   start:0x0095DC30 end:0x0095E7C4
 src/al/Library/Collision/CollisionPartsKeeperUtil.cpp: done
     .text   start:0x0095E7D0 end:0x0095E9D8
 src/al/Library/LiveActor/ActorCollisionFunction_dup2.cpp:
     .text   start:0x0095E9E0 end:0x0095EF80
-src/al/Library/Collision/CollisionPartsKeeperUtil_dup2.cpp:
-    .text   start:0x0095EF80 end:0x00962DDC
-src/al/Project/Collision/ActorCollisionController.cpp:
-    .text   start:0x00962DE0 end:0x00963368
+src/al/Library/Collision/CollisionUtil.cpp:
+    .text   start:0x0095EF80 end:0x00962D9C
+src/al/Project/Collision/ActorCollisionController.cpp: done
+    .text   start:0x00962DA0 end:0x00962F04
 src/al/Library/Collision/CollisionPartsTriangle.cpp:
-    .text   start:0x00963370 end:0x00963DC8
+    .text   start:0x00962F10 end:0x00964100
 src/al/Library/Collision/KCollisionFunc.cpp:
-    .text   start:0x00963DD0 end:0x00964650
+    .text   start:0x00964100 end:0x00964628
 src/al/Library/Collision/KCollisionServer.cpp:
-    .text   start:0x00964650 end:0x00968CC8
-src/al/Library/Collision/Collider_dup2.cpp:
+    .text   start:0x00964630 end:0x00968CC8
+src/al/Library/Collision/CollisionPolygonUtil.cpp:
     .text   start:0x00968CD0 end:0x00969020
-src/al/Library/Collision/PartsInterpolator_dup2.cpp: done
+src/al/Library/Collision/SphereInterpolator.cpp: done
     .text   start:0x00969020 end:0x0096925C
 src/al/Library/Controller/GamePadSystem.cpp:
     .text   start:0x00969260 end:0x0096A6C8
