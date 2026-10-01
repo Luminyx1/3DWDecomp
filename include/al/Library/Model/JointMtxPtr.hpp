@@ -12,12 +12,17 @@ class JointMtxPtr {
 public:
     JointMtxPtr();
 
+    explicit JointMtxPtr(const sead::Matrix34f* pMtx) { set(pMtx); }
+
+
     void setNull();
     void set(const sead::Matrix34f* pMtx);
     void set(const Matrix43f* pMtx);
     void getTranslation(sead::Vector3f* pOut) const;
     void calcMtxScale(sead::Vector3f* pOut) const;
     void copyTo(sead::Matrix34f* pOut) const;
+
+    bool isValid() const { return mMtx != nullptr; }
 
 private:
     const void* mMtx;
