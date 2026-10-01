@@ -61,9 +61,12 @@ namespace al {
         const sead::PtrArray<UniformBlock>* getViewIndexedUboArray(const char* pName) const;
 
         CubeMapDirector* getCubeMapDirector() const { return mCubeMapDirector; }
+        DirectionalLightKeeper* getDirectionalLightKeeper() const { return mDirectionalLightKeeper; }
+        PrePassLightKeeper* getPrePassLightKeeper() const { return mPrePassLightKeeper; }
         SkyboxDirector* getSkyboxDirector() const { return mSkyboxDirector; }
         GraphicsAreaDirector* getGraphicsAreaDirector() const { return mGraphicsAreaDirector; }
         LightIntensityDirector* getLightIntensityDirector() const { return mLightIntensityDirector; }
+        UniformBlock* getLightEnvUbo() const { return mLightEnvUbo; }
         ShaderEnvTextureKeeper* getShaderEnvTextureKeeper() const { return mShaderEnvTextureKeeper; }
         ModelLightDirector* getModelLightDirector() const { return mModelLightDirector; }
         ShadowDirector* getShadowDirector() const { return mShadowDirector; }
@@ -127,7 +130,9 @@ namespace al {
         AtmosScatter* mAtmosScatter;
         void* _d60;
         AtmosScatterDrawer* mAtmosScatterDrawer;
-        u8 _d70[0x1048 - 0xd70];
+        u8 _d70[0x1020 - 0xd70];
+        UniformBlock* mLightEnvUbo;
+        u8 _1028[0x1048 - 0x1028];
         GpuMemAllocator* mGpuMemAllocator;
         FullScreenTriangle* mFullScreenTriangle;
         const char* mLodSettingName;
