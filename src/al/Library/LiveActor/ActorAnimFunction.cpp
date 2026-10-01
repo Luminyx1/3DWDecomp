@@ -17,24 +17,36 @@
 
 namespace al {
 namespace {
+inline alModelCafe* getModelCafe(const LiveActor* pActor) {
+    return pActor->getModelKeeper()->getModelCafe();
+}
+
+inline SimpleModelG3D* getModelG3D(const LiveActor* pActor) {
+    return getModelCafe(pActor)->getModelG3D();
+}
+
+inline nn::g3d::ModelObj* getModelObj(const LiveActor* pActor) {
+    return getModelG3D(pActor)->getModelObj();
+}
+
 inline AnimPlayerSkl* getSkl(const LiveActor* pActor) {
-    return pActor->mModelKeeper->mModelCafe->mAnimPlayerSkl;
+    return getModelCafe(pActor)->getAnimPlayerSkl();
 }
 
 inline AnimPlayerMat* getMtp(const LiveActor* pActor) {
-    return pActor->mModelKeeper->mModelCafe->mAnimPlayerMat1;
+    return getModelCafe(pActor)->getAnimPlayerMat1();
 }
 
 inline AnimPlayerMat* getMts(const LiveActor* pActor) {
-    return pActor->mModelKeeper->mModelCafe->mAnimPlayerMat2;
+    return getModelCafe(pActor)->getAnimPlayerMat2();
 }
 
 inline AnimPlayerMat* getMcl(const LiveActor* pActor) {
-    return pActor->mModelKeeper->mModelCafe->mAnimPlayerMat0;
+    return getModelCafe(pActor)->getAnimPlayerMat0();
 }
 
 inline AnimPlayerVis* getVis(const LiveActor* pActor) {
-    return pActor->mModelKeeper->mModelCafe->mAnimPlayerVis;
+    return getModelCafe(pActor)->getAnimPlayerVis();
 }
 }  // namespace
 
@@ -1350,8 +1362,8 @@ void setVisAnimFrameAndStopEnd(LiveActor* pActor) {
  * @return The retargetting info.
  */
 SklAnimRetargettingInfo* createSklAnimRetargetting(const LiveActor* pActor, const LiveActor* pTargetActor, const sead::Vector3f& rScale) {
-    return new SklAnimRetargettingInfo(pActor->mModelKeeper->mModelCafe->mModelG3D->getModelObj(),
-                                       pTargetActor->mModelKeeper->mModelCafe->mModelG3D->getModelObj(),
+    return new SklAnimRetargettingInfo(getModelObj(pActor),
+                                       getModelObj(pTargetActor),
                                        rScale);
 }
 
@@ -1363,7 +1375,7 @@ SklAnimRetargettingInfo* createSklAnimRetargetting(const LiveActor* pActor, cons
  * @return The retargetting info.
  */
 SklAnimRetargettingInfo* createSklAnimRetargetting(const LiveActor* pActor, const char* pArchiveName, const sead::Vector3f& rScale) {
-    const nn::g3d::ResSkeleton* skeleton = pActor->mModelKeeper->mModelCafe->getResModel()->GetSkeleton();
+    const nn::g3d::ResSkeleton* skeleton = getModelCafe(pActor)->getResModel()->GetSkeleton();
     const nn::g3d::ResSkeleton* targetSkeleton =
         findOrCreateResource(pArchiveName, nullptr)->getResFile()->GetModel(0)->GetSkeleton();
     return new SklAnimRetargettingInfo(skeleton, targetSkeleton, rScale);
@@ -1506,7 +1518,7 @@ void setPartialSklAnimFrameRate(LiveActor* pActor, s32 partIndex, f32 frameRate)
  * @param rScale The scale.
  */
 void setBaseMtxAndCalcAnim(LiveActor* pActor, const sead::Matrix34f& rMtx, const sead::Vector3f& rScale) {
-    pActor->mModelKeeper->calc(rMtx, rScale);
+    pActor->getModelKeeper()->calc(rMtx, rScale);
 }
 }  // namespace al
 

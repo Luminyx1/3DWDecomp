@@ -8,8 +8,8 @@
 namespace al {
 namespace {
 inline LiveActor* findSubActorInline(const SubActorKeeper* pKeeper, const char* pName) {
-    for (s32 i = 0; i < pKeeper->mCount; i++) {
-        const SubActorInfo* info = pKeeper->mInfos[i];
+    for (s32 i = 0; i < pKeeper->getSubActorNum(); i++) {
+        const SubActorInfo* info = pKeeper->getSubActorInfo(i);
 
         if (isEqualString(info->mSubActor->getName(), pName)) {
             return info->mSubActor;
@@ -20,10 +20,10 @@ inline LiveActor* findSubActorInline(const SubActorKeeper* pKeeper, const char* 
 }
 
 inline SubActorInfo* getSubActorInfo(const LiveActor* pActor, const LiveActor* pSubActor) {
-    SubActorKeeper* keeper = pActor->mSubActorKeeper;
+    SubActorKeeper* keeper = pActor->getSubActorKeeper();
 
-    for (s32 i = 0; i < keeper->mCount; i++) {
-        SubActorInfo* info = keeper->mInfos[i];
+    for (s32 i = 0; i < keeper->getSubActorNum(); i++) {
+        SubActorInfo* info = keeper->getSubActorInfo(i);
 
         if (info->mSubActor == pSubActor) {
             return info;
@@ -40,7 +40,7 @@ inline SubActorInfo* getSubActorInfo(const LiveActor* pActor, const LiveActor* p
  * @return Whether the sub actor keeper exists.
  */
 bool isExistSubActorKeeper(const LiveActor* pActor) {
-    return pActor->mSubActorKeeper != nullptr;
+    return pActor->getSubActorKeeper() != nullptr;
 }
 
 /**
@@ -48,14 +48,14 @@ bool isExistSubActorKeeper(const LiveActor* pActor) {
  * @param pActor The actor.
  */
 void setSubActorAlpha(LiveActor* pActor) {
-    SubActorKeeper* keeper = pActor->mSubActorKeeper;
+    SubActorKeeper* keeper = pActor->getSubActorKeeper();
 
     if (keeper == nullptr) {
         return;
     }
 
-    for (s32 i = 0; i < keeper->mCount; i++) {
-        LiveActor* subActor = keeper->mInfos[i]->mSubActor;
+    for (s32 i = 0; i < keeper->getSubActorNum(); i++) {
+        LiveActor* subActor = keeper->getSubActorInfo(i)->mSubActor;
         subActor->mGlobalAlphaLastFrame = pActor->mGlobalAlphaLastFrame;
     }
 }
@@ -66,17 +66,17 @@ void setSubActorAlpha(LiveActor* pActor) {
  * @param pAlpha The alpha pointer.
  */
 void setSubActorAlphaPtr(LiveActor* pActor, f32* pAlpha) {
-    SubActorKeeper* keeper = pActor->mSubActorKeeper;
+    SubActorKeeper* keeper = pActor->getSubActorKeeper();
 
     if (keeper == nullptr) {
         return;
     }
 
-    for (s32 i = 0; i < keeper->mCount; i++) {
-        LiveActor* subActor = keeper->mInfos[i]->mSubActor;
+    for (s32 i = 0; i < keeper->getSubActorNum(); i++) {
+        LiveActor* subActor = keeper->getSubActorInfo(i)->mSubActor;
 
-        if (subActor != nullptr && subActor->mModelKeeper != nullptr) {
-            subActor->mModelKeeper->setGlobalAlpha(pAlpha);
+        if (subActor != nullptr && subActor->getModelKeeper() != nullptr) {
+            subActor->getModelKeeper()->setGlobalAlpha(pAlpha);
         }
     }
 }
@@ -92,7 +92,7 @@ LiveActor* getSubActor(const LiveActor* pActor, const char* pName) {
         return nullptr;
     }
 
-    return findSubActorInline(pActor->mSubActorKeeper, pName);
+    return findSubActorInline(pActor->getSubActorKeeper(), pName);
 }
 
 /**
@@ -112,7 +112,7 @@ LiveActor* tryGetSubActor(const LiveActor* pActor, const char* pName) {
  * @return The sub actor.
  */
 LiveActor* getSubActor(const LiveActor* pActor, s32 index) {
-    return pActor->mSubActorKeeper->mInfos[index]->mSubActor;
+    return pActor->getSubActorKeeper()->getSubActorInfo(index)->mSubActor;
 }
 
 /**
@@ -121,7 +121,7 @@ LiveActor* getSubActor(const LiveActor* pActor, s32 index) {
  * @return The sub actor count.
  */
 s32 getSubActorNum(const LiveActor* pActor) {
-    return pActor->mSubActorKeeper->mCount;
+    return pActor->getSubActorKeeper()->getSubActorNum();
 }
 
 /**
@@ -142,10 +142,10 @@ void offSyncClippingSubActor(LiveActor* pActor, const LiveActor* pSubActor) {
  * @param pActor The actor.
  */
 void offSyncClippingSubActorAll(LiveActor* pActor) {
-    SubActorKeeper* keeper = pActor->mSubActorKeeper;
+    SubActorKeeper* keeper = pActor->getSubActorKeeper();
 
-    for (s32 i = 0; i < keeper->mCount; i++) {
-        SubActorInfo* info = keeper->mInfos[i];
+    for (s32 i = 0; i < keeper->getSubActorNum(); i++) {
+        SubActorInfo* info = keeper->getSubActorInfo(i);
 
         if (info->mSyncType & 2) {
             info->mSyncType &= ~2;
@@ -159,7 +159,7 @@ void offSyncClippingSubActorAll(LiveActor* pActor) {
  * @param pSubActor The sub actor.
  */
 void onSyncClippingSubActor(LiveActor* pActor, const LiveActor* pSubActor) {
-    SubActorInfo** infos = pActor->mSubActorKeeper->mInfos;
+    SubActorInfo** infos = pActor->getSubActorKeeper()->mInfos;
     SubActorInfo* info;
 
     do {
@@ -173,10 +173,10 @@ void onSyncClippingSubActor(LiveActor* pActor, const LiveActor* pSubActor) {
  * @param pActor The actor.
  */
 void onSyncClippingSubActorAll(LiveActor* pActor) {
-    SubActorKeeper* keeper = pActor->mSubActorKeeper;
+    SubActorKeeper* keeper = pActor->getSubActorKeeper();
 
-    for (s32 i = 0; i < keeper->mCount; i++) {
-        keeper->mInfos[i]->mSyncType |= 2;
+    for (s32 i = 0; i < keeper->getSubActorNum(); i++) {
+        keeper->getSubActorInfo(i)->mSyncType |= 2;
     }
 }
 }  // namespace al

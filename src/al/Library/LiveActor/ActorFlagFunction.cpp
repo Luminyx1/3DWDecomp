@@ -12,7 +12,7 @@ namespace al {
  * @return Whether the actor is alive.
  */
 bool isAlive(const LiveActor* pActor) {
-    return !pActor->mActorFlags->isDead;
+    return !pActor->getFlags()->isDead;
 }
 
 /**
@@ -21,7 +21,7 @@ bool isAlive(const LiveActor* pActor) {
  * @return Whether the actor is dead.
  */
 bool isDead(const LiveActor* pActor) {
-    return pActor->mActorFlags->isDead;
+    return pActor->getFlags()->isDead;
 }
 
 /**
@@ -30,7 +30,7 @@ bool isDead(const LiveActor* pActor) {
  * @return The dead-alive flag.
  */
 bool isDeadAlive(LiveActor* pActor) {
-    return pActor->mActorFlags->isDeadAlive;
+    return pActor->getFlags()->isDeadAlive;
 }
 
 /**
@@ -39,7 +39,7 @@ bool isDeadAlive(LiveActor* pActor) {
  * @return The dead-alive flag.
  */
 bool isCountAsAlive(LiveActor* pActor) {
-    return pActor->mActorFlags->isDeadAlive;
+    return pActor->getFlags()->isDeadAlive;
 }
 
 /**
@@ -48,7 +48,7 @@ bool isCountAsAlive(LiveActor* pActor) {
  * @return Whether collision is disabled.
  */
 bool isNoCollide(const LiveActor* pActor) {
-    return pActor->mActorFlags->isNoCollide;
+    return pActor->getFlags()->isNoCollide;
 }
 
 /**
@@ -56,7 +56,7 @@ bool isNoCollide(const LiveActor* pActor) {
  * @param pActor The actor.
  */
 void onCalcAnim(LiveActor* pActor) {
-    pActor->mActorFlags->isOffCalcAnim = false;
+    pActor->getFlags()->isOffCalcAnim = false;
 }
 
 /**
@@ -64,7 +64,7 @@ void onCalcAnim(LiveActor* pActor) {
  * @param pActor The actor.
  */
 void offCalcAnim(LiveActor* pActor) {
-    pActor->mActorFlags->isOffCalcAnim = true;
+    pActor->getFlags()->isOffCalcAnim = true;
 }
 
 /**
@@ -72,8 +72,8 @@ void offCalcAnim(LiveActor* pActor) {
  * @param pActor The actor.
  */
 void validateShadow(LiveActor* pActor) {
-    if (pActor->mShadowKeeper != nullptr) {
-        pActor->mShadowKeeper->validate();
+    if (pActor->getShadowKeeper() != nullptr) {
+        pActor->getShadowKeeper()->validate();
     }
 }
 
@@ -82,8 +82,8 @@ void validateShadow(LiveActor* pActor) {
  * @param pActor The actor.
  */
 void invalidateShadow(LiveActor* pActor) {
-    if (pActor->mShadowKeeper != nullptr) {
-        pActor->mShadowKeeper->invalidate();
+    if (pActor->getShadowKeeper() != nullptr) {
+        pActor->getShadowKeeper()->invalidate();
     }
 }
 
@@ -92,10 +92,10 @@ void invalidateShadow(LiveActor* pActor) {
  * @param pActor The actor.
  */
 void onCollide(LiveActor* pActor) {
-    pActor->mActorFlags->isNoCollide = false;
+    pActor->getFlags()->isNoCollide = false;
 
-    if (pActor->mCollider != nullptr) {
-        pActor->mCollider->onInvalidate();
+    if (pActor->getCollider() != nullptr) {
+        pActor->getCollider()->onInvalidate();
     }
 }
 
@@ -104,7 +104,7 @@ void onCollide(LiveActor* pActor) {
  * @param pActor The actor.
  */
 void offCollide(LiveActor* pActor) {
-    pActor->mActorFlags->isNoCollide = true;
+    pActor->getFlags()->isNoCollide = true;
 }
 
 /**
@@ -112,7 +112,7 @@ void offCollide(LiveActor* pActor) {
  * @param pActor The actor.
  */
 void validateMaterialCode(LiveActor* pActor) {
-    pActor->mActorFlags->isValidMatCode = true;
+    pActor->getFlags()->isValidMatCode = true;
 }
 
 /**
@@ -120,7 +120,7 @@ void validateMaterialCode(LiveActor* pActor) {
  * @param pActor The actor.
  */
 void validateCeilWallFloorMaterialCode(LiveActor* pActor) {
-    pActor->mActorFlags->isValidCeilWallFloorMatCode = true;
+    pActor->getFlags()->isValidCeilWallFloorMatCode = true;
 }
 
 /**
@@ -129,7 +129,7 @@ void validateCeilWallFloorMaterialCode(LiveActor* pActor) {
  * @return Whether the actor is an area target.
  */
 bool isAreaTarget(const LiveActor* pActor) {
-    return pActor->mActorFlags->isAreaTarget;
+    return pActor->getFlags()->isAreaTarget;
 }
 
 /**
@@ -137,7 +137,7 @@ bool isAreaTarget(const LiveActor* pActor) {
  * @param pActor The actor.
  */
 void onAreaTarget(LiveActor* pActor) {
-    pActor->mActorFlags->isAreaTarget = true;
+    pActor->getFlags()->isAreaTarget = true;
 }
 
 /**
@@ -145,7 +145,7 @@ void onAreaTarget(LiveActor* pActor) {
  * @param pActor The actor.
  */
 void offAreaTarget(LiveActor* pActor) {
-    pActor->mActorFlags->isAreaTarget = false;
+    pActor->getFlags()->isAreaTarget = false;
 }
 
 /**
@@ -154,7 +154,7 @@ void offAreaTarget(LiveActor* pActor) {
  * @return Whether those updates are enabled.
  */
 bool isUpdateMovementEffectAudioCollision(const LiveActor* pActor) {
-    return pActor->mActorFlags->isUpdMovementEffectAudioCol;
+    return pActor->getFlags()->isUpdMovementEffectAudioCol;
 }
 
 /**
@@ -162,7 +162,7 @@ bool isUpdateMovementEffectAudioCollision(const LiveActor* pActor) {
  * @param pActor The actor.
  */
 void onUpdateMovementEffectAudioCollision(LiveActor* pActor) {
-    pActor->mActorFlags->isUpdMovementEffectAudioCol = true;
+    pActor->getFlags()->isUpdMovementEffectAudioCol = true;
 }
 
 /**
@@ -170,6 +170,6 @@ void onUpdateMovementEffectAudioCollision(LiveActor* pActor) {
  * @param pActor The actor.
  */
 void offUpdateMovementEffectAudioCollision(LiveActor* pActor) {
-    pActor->mActorFlags->isUpdMovementEffectAudioCol = false;
+    pActor->getFlags()->isUpdMovementEffectAudioCol = false;
 }
 }  // namespace al

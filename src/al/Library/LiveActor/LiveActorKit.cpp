@@ -160,7 +160,7 @@ void LiveActorKit::initShadowDirector() {}
  */
 void LiveActorKit::initEffectSystem() {
     mEffectSystem = EffectSystem::initializeSystem(
-        reinterpret_cast<agl::DrawContext*>(GameFrameworkNx::sInstance->mDrawContext), nullptr,
+        GameFrameworkNx::getAglDrawContext(), nullptr,
         false);
 }
 
@@ -199,8 +199,8 @@ void LiveActorKit::endInit(IScenarioCompleteChecker* pChecker) {
         LiveActor* actor = mActorGroup->mActors[i];
         actor->initAfterPlacement();
 
-        if (actor->mShadowKeeper != nullptr) {
-            actor->mShadowKeeper->initAfterPlacement();
+        if (actor->getShadowKeeper() != nullptr) {
+            actor->getShadowKeeper()->initAfterPlacement();
         }
     }
 
@@ -216,7 +216,7 @@ void LiveActorKit::endInit(IScenarioCompleteChecker* pChecker) {
  * Enables reduced buffer effect rendering depending on the rendering emitters.
  */
 void LiveActorKit::updateReducedBufferEffect() {
-    ViewRenderer* viewRenderer = mGraphicsSystemInfo->mViewRenderer;
+    ViewRenderer* viewRenderer = mGraphicsSystemInfo->getViewRenderer();
 
     if (viewRenderer != nullptr) {
         viewRenderer->setReducedEffectRender(mEffectSystem->isHasRenderingEmitter(0x100), false);

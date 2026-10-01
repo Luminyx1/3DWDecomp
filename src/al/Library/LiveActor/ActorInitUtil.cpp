@@ -135,7 +135,7 @@ void initActorLod(LiveActor* pActor, const ActorInitInfo& rInfo, const Resource*
     }
 
     const char* lodSettingName =
-        static_cast<GraphicsSystemInfo*>(rInfo.mActorSceneInfo._78)->mLodSettingName;
+        rInfo.getActorSceneInfo().graphicsSystemInfo->getLodSettingName();
     ByamlIter lodSettingIter;
 
     if (iter.tryGetIterByKey(&lodSettingIter, lodSettingName)) {
@@ -159,8 +159,8 @@ void initActorExecutor(LiveActor* pActor, const ActorInitInfo& rInfo, const Reso
     bool isUsingDepthShadow = false;
     tryGetArg(&isUsingDepthShadow, rInfo, "UsingDepthShadow");
 
-    if (isUsingDepthShadow && pActor->mModelKeeper != nullptr) {
-        registerExecutorActorDraw(pActor, rInfo.mExecuteDirector, "デプスシャドウ[キャラクター]");
+    if (isUsingDepthShadow && pActor->getModelKeeper() != nullptr) {
+        registerExecutorActorDraw(pActor, rInfo.getExecuteDirector(), "デプスシャドウ[キャラクター]");
     }
 
     ByamlIter iter;
@@ -471,7 +471,7 @@ void initActorClippingFile(LiveActor* pActor, const ActorInitInfo& rInfo,
 
     if (iter.tryGetFloatByKey(&radius, "Radius")) {
         setClippingInfo(pActor, radius, nullptr);
-    } else if (pActor->mModelKeeper != nullptr) {
+    } else if (pActor->getModelKeeper() != nullptr) {
         const sead::Vector3f& scale = getScale(pActor);
         f32 maxXY = sead::Mathf::max(sead::Mathf::abs(scale.x), sead::Mathf::abs(scale.y));
         f32 maxXYZ = sead::Mathf::max(maxXY, sead::Mathf::abs(scale.z));
@@ -570,7 +570,7 @@ void initActorScore(LiveActor* pActor, const ActorInitInfo& rInfo, const Resourc
     }
 
     pActor->initScoreKeeper();
-    pActor->mScoreKeeper->init(iter);
+    pActor->getActorScoreKeeper()->init(iter);
 }
 
 void initActorScreenPoint(LiveActor* pActor, const ActorInitInfo& rInfo,
@@ -614,7 +614,7 @@ void initActorScreenPoint(LiveActor* pActor, const ActorInitInfo& rInfo,
 
 void initActorAlphaCtrlFile(LiveActor* pActor, const ActorInitInfo& rInfo,
                             const Resource* pResource, const char* pSuffix) {
-    if (!rInfo.mActorSceneInfo.isSingleMode) {
+    if (!rInfo.getActorSceneInfo().isSingleMode) {
         return;
     }
 
@@ -633,12 +633,12 @@ void initActorAction(LiveActor* pActor, const sead::SafeString& rFileName, const
     const char* actionName = getBaseName(rFileName.cstr());
     pActor->initActionKeeper(actionName, pSuffix);
 
-    if (pActor->mModelKeeper == nullptr) {
+    if (pActor->getModelKeeper() == nullptr) {
         return;
     }
 
-    if (!tryStartAction(pActor, actionName) && pActor->mActionKeeper != nullptr) {
-        pActor->mActionKeeper->startAction(actionName);
+    if (!tryStartAction(pActor, actionName) && pActor->getActorActionKeeper() != nullptr) {
+        pActor->getActorActionKeeper()->startAction(actionName);
     }
 }
 
@@ -649,7 +649,7 @@ void initFarLodActor(LiveActor* pActor, const ActorInitInfo& rInfo) {
 
     ActorInitInfo farLodInfo;
     PlacementInfo farLodPlacementInfo;
-    getLinksInfoByIndex(&farLodPlacementInfo, *rInfo.mPlacementInfo, "FarLOD", 0);
+    getLinksInfoByIndex(&farLodPlacementInfo, rInfo.getPlacementInfo(), "FarLOD", 0);
     farLodInfo.initViewIdSelf(&farLodPlacementInfo, rInfo);
     const char* displayName = nullptr;
     getDisplayName(&displayName, farLodPlacementInfo);
@@ -664,7 +664,7 @@ void initFarLodActor(LiveActor* pActor, const ActorInitInfo& rInfo) {
         initActorSceneInfo(farLodActor, rInfo);
     }
 
-    farLodActor->initPoseKeeper(pActor->mActorPoseKeeper);
+    farLodActor->initPoseKeeper(pActor->getPoseKeeper());
     initActorModel(farLodActor, rInfo, farLodResource, nullptr, farLodArchiveName);
     initActorLod(farLodActor, rInfo, farLodResource, nullptr);
     initActorExecutor(farLodActor, rInfo, farLodResource, nullptr);
@@ -673,7 +673,7 @@ void initFarLodActor(LiveActor* pActor, const ActorInitInfo& rInfo) {
     farLodActor->makeActorAppeared();
     farLodActor->startClipped();
 
-    if (farLodActor->mModelKeeper != nullptr && farLodActor->mModelKeeper->getLodNum() >= 1) {
+    if (farLodActor->getModelKeeper() != nullptr && farLodActor->getModelKeeper()->getLodNum() >= 1) {
         pActor->_142 = true;
     }
 }
@@ -763,11 +763,11 @@ void initActorImpl(LiveActor* pActor, const ActorInitInfo& rInfo,
     initActorParamHolder(pActor);
     initActorAction(pActor, rFileName, pSuffix);
 
-    if (pActor->getNerveKeeper() != nullptr && pActor->getNerveKeeper()->mActionCtrl != nullptr) {
+    if (pActor->getNerveKeeper() != nullptr && pActor->getNerveKeeper()->getActionCtrl() != nullptr) {
         resetNerveActionForInit(pActor);
     }
 
-    if (pActor->mSubActorKeeper == nullptr) {
+    if (pActor->getSubActorKeeper() == nullptr) {
         SubActorKeeper* subActorKeeper =
             SubActorKeeper::tryCreate(pActor, rInfo, pSuffix, maxSubActors);
         if (subActorKeeper != nullptr) {
@@ -909,7 +909,7 @@ void makeMapPartsModelName(sead::BufferedSafeString* pModelName, sead::BufferedS
  */
 void makeMapPartsModelName(sead::BufferedSafeString* pModelName, sead::BufferedSafeString* pPath,
                            const ActorInitInfo& rInfo) {
-    makeMapPartsModelName(pModelName, pPath, *rInfo.mPlacementInfo);
+    makeMapPartsModelName(pModelName, pPath, rInfo.getPlacementInfo());
 }
 
 /**
@@ -939,7 +939,7 @@ void initMapPartsActor(LiveActor* pActor, const ActorInitInfo& rInfo, const char
                        s32 maxSubActors) {
     StringTmp<256> modelName;
     StringTmp<256> folderName;
-    makeMapPartsModelAndFolderName(&modelName, &folderName, *rInfo.mPlacementInfo);
+    makeMapPartsModelAndFolderName(&modelName, &folderName, rInfo.getPlacementInfo());
     initActorImpl(pActor, rInfo, folderName, modelName, pSuffix, maxSubActors);
 }
 
@@ -953,7 +953,7 @@ void initMapPartsActor(LiveActor* pActor, const ActorInitInfo& rInfo, const char
  */
 void getLinksActorInfo(ActorInitInfo* pInfo, PlacementInfo* pPlacementInfo,
                        const ActorInitInfo& rInfo, const char* pLinkName, s32 index) {
-    getLinksInfoByIndex(pPlacementInfo, *rInfo.mPlacementInfo, pLinkName, index);
+    getLinksInfoByIndex(pPlacementInfo, rInfo.getPlacementInfo(), pLinkName, index);
     pInfo->initViewIdSelf(pPlacementInfo, rInfo);
 }
 
@@ -968,7 +968,7 @@ void initLinksActor(LiveActor* pActor, const ActorInitInfo& rInfo, const char* p
                     s32 index) {
     ActorInitInfo info;
     PlacementInfo placementInfo;
-    getLinksInfoByIndex(&placementInfo, *rInfo.mPlacementInfo, pLinkName, index);
+    getLinksInfoByIndex(&placementInfo, rInfo.getPlacementInfo(), pLinkName, index);
     info.initViewIdSelf(&placementInfo, rInfo);
     pActor->init(info);
 }
@@ -985,7 +985,7 @@ ActorInitInfo* createLinksPlayerActorInfo(LiveActor* pActor, const ActorInitInfo
     ActorInitInfo* info = new ActorInitInfo();
 
     if (restartPosNum == 1) {
-        getLinksInfoByIndex(placementInfo, *rInfo.mPlacementInfo, "PlayerRestartPos", 0);
+        getLinksInfoByIndex(placementInfo, rInfo.getPlacementInfo(), "PlayerRestartPos", 0);
         info->initViewIdSelf(placementInfo, rInfo);
     }
 
@@ -1003,7 +1003,7 @@ const char* getLinksActorClassName(const ActorInitInfo& rInfo, const char* pLink
     ActorInitInfo info;
     PlacementInfo placementInfo;
     const char* className = nullptr;
-    getLinksInfoByIndex(&placementInfo, *rInfo.mPlacementInfo, pLinkName, index);
+    getLinksInfoByIndex(&placementInfo, rInfo.getPlacementInfo(), pLinkName, index);
     info.initViewIdSelf(&placementInfo, rInfo);
     getClassName(&className, info);
     return className;
@@ -1019,7 +1019,7 @@ const char* getLinksActorClassName(const ActorInitInfo& rInfo, const char* pLink
 const char* getLinksActorDisplayName(const ActorInitInfo& rInfo, const char* pLinkName,
                                      s32 index) {
     PlacementInfo placementInfo;
-    getLinksInfoByIndex(&placementInfo, *rInfo.mPlacementInfo, pLinkName, index);
+    getLinksInfoByIndex(&placementInfo, rInfo.getPlacementInfo(), pLinkName, index);
     const char* displayName = nullptr;
     getDisplayName(&displayName, placementInfo);
     return displayName;
@@ -1097,7 +1097,7 @@ LiveActor* createLinksActorFromFactory(const ActorFactory& rFactory, const Actor
                                        const char* pLinkName, s32 index) {
     ActorInitInfo info;
     PlacementInfo placementInfo;
-    getLinksInfoByIndex(&placementInfo, *rInfo.mPlacementInfo, pLinkName, index);
+    getLinksInfoByIndex(&placementInfo, rInfo.getPlacementInfo(), pLinkName, index);
     info.initViewIdSelf(&placementInfo, rInfo);
     return createActorFromFactory(rFactory, info);
 }
@@ -1204,7 +1204,7 @@ bool tryListenStageSwitchKill(LiveActor* pActor) {
  */
 void syncSensorScaleY(LiveActor* pActor) {
     f32 scaleY = getScale(pActor).y;
-    s32 sensorNum = pActor->mHitSensorKeeper->mSensorCount;
+    s32 sensorNum = pActor->getHitSensorKeeper()->getSensorNum();
 
     for (s32 i = 0; i < sensorNum; i++) {
         setSensorRadius(pActor, i, scaleY * getSensorRadius(pActor, i));
@@ -1283,7 +1283,7 @@ bool tryAddDisplayScale(LiveActor* pActor, const ActorInitInfo& rInfo) {
  * @return The placement info.
  */
 const PlacementInfo& getPlacementInfo(const ActorInitInfo& rInfo) {
-    return *rInfo.mPlacementInfo;
+    return rInfo.getPlacementInfo();
 }
 
 /**
@@ -1292,7 +1292,7 @@ const PlacementInfo& getPlacementInfo(const ActorInitInfo& rInfo) {
  * @return The layout init info.
  */
 const LayoutInitInfo& getLayoutInitInfo(const ActorInitInfo& rInfo) {
-    return *rInfo.mLayoutInitInfo;
+    return *rInfo.getLayoutInitInfo();
 }
 
 /**
@@ -1301,7 +1301,7 @@ const LayoutInitInfo& getLayoutInitInfo(const ActorInitInfo& rInfo) {
  * @return The audio director.
  */
 AudioDirector* getAudioDirector(const ActorInitInfo& rInfo) {
-    return rInfo.mAudioDirector;
+    return rInfo.getAudioDirector();
 }
 
 /**

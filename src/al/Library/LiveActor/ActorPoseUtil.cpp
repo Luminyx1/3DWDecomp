@@ -58,7 +58,7 @@ void setRotate(LiveActor* pActor, const sead::Vector3f& rRotate) {
  * @param pActor The actor.
  */
 void makeMtxSRT(sead::Matrix34f* pMtx, const LiveActor* pActor) {
-    ActorPoseKeeperBase* poseKeeper = pActor->mActorPoseKeeper;
+    ActorPoseKeeperBase* poseKeeper = pActor->getPoseKeeper();
     poseKeeper->calcBaseMtx(pMtx);
     preScaleMtx(pMtx, poseKeeper->getScale());
 }
@@ -69,7 +69,7 @@ void makeMtxSRT(sead::Matrix34f* pMtx, const LiveActor* pActor) {
  * @param pActor The actor.
  */
 void makeMtxRT(sead::Matrix34f* pMtx, const LiveActor* pActor) {
-    pActor->mActorPoseKeeper->calcBaseMtx(pMtx);
+    pActor->getPoseKeeper()->calcBaseMtx(pMtx);
 }
 
 /**
@@ -102,7 +102,7 @@ void calcAnimFrontGravityPos(LiveActor* pActor, const sead::Vector3f& rFront) {
  * @return The gravity.
  */
 const sead::Vector3f& getGravity(const LiveActor* pActor) {
-    return pActor->mActorPoseKeeper->getGravity();
+    return pActor->getPoseKeeper()->getGravity();
 }
 
 /**
@@ -111,7 +111,7 @@ const sead::Vector3f& getGravity(const LiveActor* pActor) {
  * @return The translation.
  */
 const sead::Vector3f& getTrans(const LiveActor* pActor) {
-    return pActor->mActorPoseKeeper->mTranslation;
+    return pActor->getPoseKeeper()->getTrans();
 }
 
 /**
@@ -120,7 +120,7 @@ const sead::Vector3f& getTrans(const LiveActor* pActor) {
  * @return The scale.
  */
 const sead::Vector3f& getScale(const LiveActor* pActor) {
-    return pActor->mActorPoseKeeper->getScale();
+    return pActor->getPoseKeeper()->getScale();
 }
 
 /**
@@ -129,7 +129,7 @@ const sead::Vector3f& getScale(const LiveActor* pActor) {
  * @param pTarget The actor to copy.
  */
 void copyPose(LiveActor* pActor, const LiveActor* pTarget) {
-    pActor->mActorPoseKeeper->copyPose(pTarget->mActorPoseKeeper);
+    pActor->getPoseKeeper()->copyPose(pTarget->getPoseKeeper());
 }
 
 /**
@@ -138,7 +138,7 @@ void copyPose(LiveActor* pActor, const LiveActor* pTarget) {
  * @param rRotate The rotation in degrees.
  */
 void updatePoseRotate(LiveActor* pActor, const sead::Vector3f& rRotate) {
-    pActor->mActorPoseKeeper->updatePoseRotate(rRotate);
+    pActor->getPoseKeeper()->updatePoseRotate(rRotate);
 }
 
 /**
@@ -147,7 +147,7 @@ void updatePoseRotate(LiveActor* pActor, const sead::Vector3f& rRotate) {
  * @param rQuat The quaternion.
  */
 void updatePoseQuat(LiveActor* pActor, const sead::Quatf& rQuat) {
-    pActor->mActorPoseKeeper->updatePoseQuat(rQuat);
+    pActor->getPoseKeeper()->updatePoseQuat(rQuat);
 }
 
 /**
@@ -156,7 +156,7 @@ void updatePoseQuat(LiveActor* pActor, const sead::Quatf& rQuat) {
  * @param pMtx The matrix.
  */
 void updatePoseMtx(LiveActor* pActor, const sead::Matrix34f* pMtx) {
-    pActor->mActorPoseKeeper->updatePoseMtx(pMtx);
+    pActor->getPoseKeeper()->updatePoseMtx(pMtx);
 }
 
 /**
@@ -209,7 +209,7 @@ void calcQuat(sead::Quatf* pQuat, const LiveActor* pActor) {
  * @return The translation.
  */
 sead::Vector3f* getTransPtr(LiveActor* pActor) {
-    return &pActor->mActorPoseKeeper->mTranslation;
+    return pActor->getPoseKeeper()->getTransPtr();
 }
 
 /**
@@ -256,7 +256,7 @@ void setTransZ(LiveActor* pActor, f32 z) {
  * @return The rotation in degrees.
  */
 const sead::Vector3f& getRotate(const LiveActor* pActor) {
-    return pActor->mActorPoseKeeper->getRotate();
+    return pActor->getPoseKeeper()->getRotate();
 }
 
 /**
@@ -265,7 +265,7 @@ const sead::Vector3f& getRotate(const LiveActor* pActor) {
  * @return The rotation in degrees.
  */
 sead::Vector3f* getRotatePtr(LiveActor* pActor) {
-    return pActor->mActorPoseKeeper->getRotatePtr();
+    return pActor->getPoseKeeper()->getRotatePtr();
 }
 
 /**
@@ -338,7 +338,7 @@ void rotateTranslateActor(LiveActor* pActor, const sead::Vector3f& rRotate,
  * @return The scale, or nullptr if the pose keeper has none.
  */
 sead::Vector3f* tryGetScalePtr(LiveActor* pActor) {
-    return pActor->mActorPoseKeeper->getScalePtr();
+    return pActor->getPoseKeeper()->getScalePtr();
 }
 
 /**
@@ -430,7 +430,7 @@ void setScaleZ(LiveActor* pActor, f32 z) {
  * @return The quaternion.
  */
 const sead::Quatf& getQuat(const LiveActor* pActor) {
-    return pActor->mActorPoseKeeper->getQuat();
+    return pActor->getPoseKeeper()->getQuat();
 }
 
 /**
@@ -448,7 +448,7 @@ sead::Quatf* getQuatPtr(LiveActor* pActor) {
  * @return The quaternion, or nullptr if the pose keeper has none.
  */
 sead::Quatf* tryGetQuatPtr(LiveActor* pActor) {
-    return pActor->mActorPoseKeeper->getQuatPtr();
+    return pActor->getPoseKeeper()->getQuatPtr();
 }
 
 /**
@@ -466,7 +466,7 @@ void setQuat(LiveActor* pActor, const sead::Quatf& rQuat) {
  * @param rGravity The gravity.
  */
 void setGravity(const LiveActor* pActor, const sead::Vector3f& rGravity) {
-    pActor->mActorPoseKeeper->getGravityPtr()->set(rGravity);
+    pActor->getPoseKeeper()->getGravityPtr()->set(rGravity);
 }
 
 /**
@@ -475,7 +475,7 @@ void setGravity(const LiveActor* pActor, const sead::Vector3f& rGravity) {
  * @return The front direction.
  */
 const sead::Vector3f& getFront(const LiveActor* pActor) {
-    return pActor->mActorPoseKeeper->getFront();
+    return pActor->getPoseKeeper()->getFront();
 }
 
 /**
@@ -484,7 +484,7 @@ const sead::Vector3f& getFront(const LiveActor* pActor) {
  * @return The front direction.
  */
 sead::Vector3f* getFrontPtr(LiveActor* pActor) {
-    return pActor->mActorPoseKeeper->getFrontPtr();
+    return pActor->getPoseKeeper()->getFrontPtr();
 }
 
 /**
@@ -528,8 +528,8 @@ void multVecInvPose(sead::Vector3f* pOut, const LiveActor* pActor, const sead::V
  * @param rPos The position.
  */
 void multVecInvQuat(sead::Vector3f* pOut, const LiveActor* pActor, const sead::Vector3f& rPos) {
-    ActorPoseKeeperBase* poseKeeper = pActor->mActorPoseKeeper;
-    sead::Vector3f v = rPos - poseKeeper->mTranslation;
+    ActorPoseKeeperBase* poseKeeper = pActor->getPoseKeeper();
+    sead::Vector3f v = rPos - poseKeeper->getTrans();
     const sead::Quatf& q = poseKeeper->getQuat();
     sead::Quatf r;
     r.x = -(q.y * v.z) + (q.z * v.y) + (q.w * v.x);
@@ -658,7 +658,7 @@ bool faceToTarget(LiveActor* pActor, const sead::Vector3f& rTarget, f32 maxDegre
  */
 bool isActorObscured(const LiveActor* pActor, f32 radius, const sead::Vector3f* pOffset) {
     sead::Vector3f cameraPos = pActor->getSceneCameraInfo()->mLookAtCamera->getPos();
-    sead::Vector3f pos = pActor->mActorPoseKeeper->mTranslation;
+    sead::Vector3f pos = pActor->getPoseKeeper()->getTrans();
 
     if (pOffset) {
         pos.add(*pOffset);
@@ -683,7 +683,7 @@ namespace alActorPoseFunction {
  * @param pActor The actor.
  */
 void calcBaseMtx(sead::Matrix34f* pMtx, const al::LiveActor* pActor) {
-    pActor->mActorPoseKeeper->calcBaseMtx(pMtx);
+    pActor->getPoseKeeper()->calcBaseMtx(pMtx);
 }
 
 /**
@@ -691,7 +691,7 @@ void calcBaseMtx(sead::Matrix34f* pMtx, const al::LiveActor* pActor) {
  * @param pActor The actor.
  */
 void updatePoseTRMSV(al::LiveActor* pActor) {
-    al::ActorPoseKeeperBase* poseKeeper = pActor->mActorPoseKeeper;
+    al::ActorPoseKeeperBase* poseKeeper = pActor->getPoseKeeper();
     poseKeeper->updatePoseRotate(poseKeeper->getRotate());
 }
 }  // namespace alActorPoseFunction

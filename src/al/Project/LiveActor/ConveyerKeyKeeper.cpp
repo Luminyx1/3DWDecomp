@@ -50,9 +50,9 @@ void ConveyerKeyKeeper::init(const ActorInitInfo& rInfo) {
     tryGetLocalAxis(&mMoveDirection, rInfo, moveAxis);
     mConveyerKeyCount = calcLinkNestNum(rInfo, "KeyMoveNext") + 1;
     mConveyerKeys = new ConveyerKey[mConveyerKeyCount];
-    initConveyerKey(&mConveyerKeys[0], *rInfo.mPlacementInfo, mTrans, mMoveDirection);
+    initConveyerKey(&mConveyerKeys[0], rInfo.getPlacementInfo(), mTrans, mMoveDirection);
 
-    PlacementInfo linkPlacementSource = *rInfo.mPlacementInfo;
+    PlacementInfo linkPlacementSource = rInfo.getPlacementInfo();
     PlacementInfo linkPlacement;
 
     for (s32 i = 0; i < mConveyerKeyCount - 1; i++) {

@@ -10,10 +10,10 @@
 namespace al {
 namespace {
 inline bool isOnGroundInline(const LiveActor* pActor, u32 checkFrame, f32 margin) {
-    Collider* collider = pActor->mCollider;
+    Collider* collider = pActor->getCollider();
 
     if (collider != nullptr) {
-        if (!(collider->_110 >= 0.0f) && collider->_264 > checkFrame) {
+        if (!collider->isCollidedFloor() && collider->_264 > checkFrame) {
             return false;
         }
 
@@ -34,7 +34,7 @@ inline bool isOnGroundInline(const LiveActor* pActor, u32 checkFrame, f32 margin
  * @return The code name.
  */
 const char* getCollidedFloorMaterialCodeName(const LiveActor* pActor) {
-    return getCollisionCodeName(pActor->mCollider->mFloor.mTriangle, "MaterialCode");
+    return getCollisionCodeName(pActor->getCollider()->mFloor.mTriangle, "MaterialCode");
 }
 
 /**
@@ -43,7 +43,7 @@ const char* getCollidedFloorMaterialCodeName(const LiveActor* pActor) {
  * @return The code name.
  */
 const char* getCollidedFloorCodeName(const LiveActor* pActor) {
-    return getCollisionCodeName(pActor->mCollider->mFloor.mTriangle, "FloorCode");
+    return getCollisionCodeName(pActor->getCollider()->mFloor.mTriangle, "FloorCode");
 }
 
 /**
@@ -52,7 +52,7 @@ const char* getCollidedFloorCodeName(const LiveActor* pActor) {
  * @return The code name.
  */
 const char* getCollidedFloorWallCodeName(const LiveActor* pActor) {
-    return getCollisionCodeName(pActor->mCollider->mFloor.mTriangle, "WallCode");
+    return getCollisionCodeName(pActor->getCollider()->mFloor.mTriangle, "WallCode");
 }
 
 /**
@@ -61,7 +61,7 @@ const char* getCollidedFloorWallCodeName(const LiveActor* pActor) {
  * @return The code name.
  */
 const char* getCollidedWallMaterialCodeName(const LiveActor* pActor) {
-    return getCollisionCodeName(pActor->mCollider->mWall.mTriangle, "MaterialCode");
+    return getCollisionCodeName(pActor->getCollider()->mWall.mTriangle, "MaterialCode");
 }
 
 /**
@@ -70,7 +70,7 @@ const char* getCollidedWallMaterialCodeName(const LiveActor* pActor) {
  * @return The code name.
  */
 const char* getCollidedWallCodeName(const LiveActor* pActor) {
-    return getCollisionCodeName(pActor->mCollider->mWall.mTriangle, "WallCode");
+    return getCollisionCodeName(pActor->getCollider()->mWall.mTriangle, "WallCode");
 }
 
 /**
@@ -79,7 +79,7 @@ const char* getCollidedWallCodeName(const LiveActor* pActor) {
  * @return The code name.
  */
 const char* getCollidedCeilingMaterialCodeName(const LiveActor* pActor) {
-    return getCollisionCodeName(pActor->mCollider->mCeiling.mTriangle, "MaterialCode");
+    return getCollisionCodeName(pActor->getCollider()->mCeiling.mTriangle, "MaterialCode");
 }
 
 /**
@@ -97,7 +97,7 @@ bool isCollided(const LiveActor* pActor) {
  * @return Whether the actor collides with the ground.
  */
 bool isCollidedGround(const LiveActor* pActor) {
-    return pActor->mCollider->_110 >= 0.0f;
+    return pActor->getCollider()->isCollidedFloor();
 }
 
 /**
@@ -106,7 +106,7 @@ bool isCollidedGround(const LiveActor* pActor) {
  * @return Whether the actor collides with a wall.
  */
 bool isCollidedWall(const LiveActor* pActor) {
-    return pActor->mCollider->_1b8 >= 0.0f;
+    return pActor->getCollider()->isCollidedWall();
 }
 
 /**
@@ -115,7 +115,7 @@ bool isCollidedWall(const LiveActor* pActor) {
  * @return Whether the actor collides with a ceiling.
  */
 bool isCollidedCeiling(const LiveActor* pActor) {
-    return pActor->mCollider->_260 >= 0.0f;
+    return pActor->getCollider()->isCollidedCeiling();
 }
 
 /**
@@ -124,9 +124,9 @@ bool isCollidedCeiling(const LiveActor* pActor) {
  * @return Whether the actor collides with a wall face.
  */
 bool isCollidedWallFace(const LiveActor* pActor) {
-    Collider* collider = pActor->mCollider;
+    Collider* collider = pActor->getCollider();
 
-    if (!(collider->_1b8 >= 0.0f)) {
+    if (!collider->isCollidedWall()) {
         return false;
     }
 
@@ -175,7 +175,7 @@ bool isCollidedCeilingVelocity(const LiveActor* pActor) {
  * @return The wall normal.
  */
 const sead::Vector3f& getCollidedWallNormal(const LiveActor* pActor) {
-    return *pActor->mCollider->mWall.mTriangle.getFaceNormal();
+    return *pActor->getCollider()->mWall.mTriangle.getFaceNormal();
 }
 
 /**
@@ -184,7 +184,7 @@ const sead::Vector3f& getCollidedWallNormal(const LiveActor* pActor) {
  * @return The ceiling normal.
  */
 const sead::Vector3f& getCollidedCeilingNormal(const LiveActor* pActor) {
-    return *pActor->mCollider->mCeiling.mTriangle.getFaceNormal();
+    return *pActor->getCollider()->mCeiling.mTriangle.getFaceNormal();
 }
 
 /**
@@ -193,7 +193,7 @@ const sead::Vector3f& getCollidedCeilingNormal(const LiveActor* pActor) {
  * @return The ground normal.
  */
 const sead::Vector3f& getCollidedGroundNormal(const LiveActor* pActor) {
-    return *pActor->mCollider->mFloor.mTriangle.getFaceNormal();
+    return *pActor->getCollider()->mFloor.mTriangle.getFaceNormal();
 }
 
 /**
@@ -202,7 +202,7 @@ const sead::Vector3f& getCollidedGroundNormal(const LiveActor* pActor) {
  * @return The ground hit position.
  */
 const sead::Vector3f& getCollidedGroundPos(const LiveActor* pActor) {
-    return pActor->mCollider->mFloor.mPos;
+    return pActor->getCollider()->mFloor.mPos;
 }
 
 /**
@@ -211,7 +211,7 @@ const sead::Vector3f& getCollidedGroundPos(const LiveActor* pActor) {
  * @return The wall hit position.
  */
 const sead::Vector3f& getCollidedWallPos(const LiveActor* pActor) {
-    return pActor->mCollider->mWall.mPos;
+    return pActor->getCollider()->mWall.mPos;
 }
 
 /**
@@ -220,7 +220,7 @@ const sead::Vector3f& getCollidedWallPos(const LiveActor* pActor) {
  * @return The ceiling hit position.
  */
 const sead::Vector3f& getCollidedCeilingPos(const LiveActor* pActor) {
-    return pActor->mCollider->mCeiling.mPos;
+    return pActor->getCollider()->mCeiling.mPos;
 }
 
 /**
@@ -233,7 +233,7 @@ const CollisionParts* tryGetCollidedGroundCollisionParts(const LiveActor* pActor
         return nullptr;
     }
 
-    return pActor->mCollider->mFloor.mTriangle.mCollisionParts;
+    return pActor->getCollider()->mFloor.mTriangle.mCollisionParts;
 }
 
 /**
@@ -246,7 +246,7 @@ const CollisionParts* tryGetCollidedWallCollisionParts(const LiveActor* pActor) 
         return nullptr;
     }
 
-    return pActor->mCollider->mWall.mTriangle.mCollisionParts;
+    return pActor->getCollider()->mWall.mTriangle.mCollisionParts;
 }
 
 /**
@@ -259,7 +259,7 @@ const CollisionParts* tryGetCollidedCeilingCollisionParts(const LiveActor* pActo
         return nullptr;
     }
 
-    return pActor->mCollider->mCeiling.mTriangle.mCollisionParts;
+    return pActor->getCollider()->mCeiling.mTriangle.mCollisionParts;
 }
 
 /**
@@ -272,7 +272,7 @@ HitSensor* tryGetCollidedGroundSensor(const LiveActor* pActor) {
         return nullptr;
     }
 
-    return pActor->mCollider->mFloor.mTriangle.mCollisionParts->mSensor;
+    return pActor->getCollider()->mFloor.mTriangle.mCollisionParts->getSensor();
 }
 
 /**
@@ -285,7 +285,7 @@ HitSensor* tryGetCollidedWallSensor(const LiveActor* pActor) {
         return nullptr;
     }
 
-    return pActor->mCollider->mWall.mTriangle.mCollisionParts->mSensor;
+    return pActor->getCollider()->mWall.mTriangle.mCollisionParts->getSensor();
 }
 
 /**
@@ -298,7 +298,7 @@ HitSensor* tryGetCollidedCeilingSensor(const LiveActor* pActor) {
         return nullptr;
     }
 
-    return pActor->mCollider->mCeiling.mTriangle.mCollisionParts->mSensor;
+    return pActor->getCollider()->mCeiling.mTriangle.mCollisionParts->getSensor();
 }
 
 /**
@@ -306,6 +306,6 @@ HitSensor* tryGetCollidedCeilingSensor(const LiveActor* pActor) {
  * @param pActor The actor.
  */
 void setForceCollisionScaleOne(const LiveActor* pActor) {
-    pActor->mCollisionParts->_165 = 2;
+    pActor->getCollisionParts()->_165 = 2;
 }
 }  // namespace al

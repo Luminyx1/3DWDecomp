@@ -19,7 +19,7 @@ namespace al {
  * @param pActionName The action name.
  */
 void startAction(LiveActor* pActor, const char* pActionName) {
-    if (pActor->mActionKeeper == nullptr || !pActor->mActionKeeper->startAction(pActionName)) {
+    if (pActor->getActorActionKeeper() == nullptr || !pActor->getActorActionKeeper()->startAction(pActionName)) {
         tryStartSklAnimIfExist(pActor, pActionName);
         tryStartMtpAnimIfExist(pActor, pActionName);
         tryStartMclAnimIfExist(pActor, pActionName);
@@ -48,9 +48,9 @@ s32 startActionAtRandomFrame(LiveActor* pActor, const char* pActionName) {
  * @return Whether the action was started.
  */
 bool tryStartAction(LiveActor* pActor, const char* pActionName) {
-    if (pActor->mActionKeeper != nullptr && pActor->mActionKeeper->getAnimCtrl() != nullptr &&
-        pActor->mActionKeeper->getAnimCtrl()->isExistAction(pActionName)) {
-        pActor->mActionKeeper->startAction(pActionName);
+    if (pActor->getActorActionKeeper() != nullptr && pActor->getActorActionKeeper()->getAnimCtrl() != nullptr &&
+        pActor->getActorActionKeeper()->getAnimCtrl()->isExistAction(pActionName)) {
+        pActor->getActorActionKeeper()->startAction(pActionName);
         return true;
     }
 
@@ -64,8 +64,8 @@ bool tryStartAction(LiveActor* pActor, const char* pActionName) {
         return false;
     }
 
-    if (pActor->mActionKeeper != nullptr) {
-        pActor->mActionKeeper->startAction(pActionName);
+    if (pActor->getActorActionKeeper() != nullptr) {
+        pActor->getActorActionKeeper()->startAction(pActionName);
     }
 
     return true;
@@ -94,7 +94,7 @@ bool tryStartActionIfNotPlaying(LiveActor* pActor, const char* pActionName) {
  */
 bool isActionPlaying(const LiveActor* pActor, const char* pActionName) {
     const char* playingName = nullptr;
-    ActorActionKeeper* keeper = pActor->mActionKeeper;
+    ActorActionKeeper* keeper = pActor->getActorActionKeeper();
 
     if (keeper != nullptr && keeper->getAnimCtrl() != nullptr) {
         playingName = keeper->getAnimCtrl()->getPlayingActionName();
@@ -113,8 +113,8 @@ bool isActionPlaying(const LiveActor* pActor, const char* pActionName) {
  * @param pActionName The action name.
  */
 void tryStartActionNoAnim(LiveActor* pActor, const char* pActionName) {
-    if (pActor->mActionKeeper != nullptr) {
-        pActor->mActionKeeper->tryStartActionNoAnim(pActionName);
+    if (pActor->getActorActionKeeper() != nullptr) {
+        pActor->getActorActionKeeper()->tryStartActionNoAnim(pActionName);
     }
 }
 
@@ -124,8 +124,8 @@ void tryStartActionNoAnim(LiveActor* pActor, const char* pActionName) {
  * @param pActionName The action name.
  */
 void tryStartEffectAction(LiveActor* pActor, const char* pActionName) {
-    if (pActor->mActionKeeper != nullptr) {
-        pActor->mActionKeeper->startEffectAction(pActionName);
+    if (pActor->getActorActionKeeper() != nullptr) {
+        pActor->getActorActionKeeper()->startEffectAction(pActionName);
     }
 }
 
@@ -175,7 +175,7 @@ bool isExistAction(const LiveActor* pActor) {
  * @return Whether the action exists.
  */
 bool isExistAction(const LiveActor* pActor, const char* pActionName) {
-    ActorActionKeeper* keeper = pActor->mActionKeeper;
+    ActorActionKeeper* keeper = pActor->getActorActionKeeper();
 
     if (keeper != nullptr && keeper->getAnimCtrl() != nullptr && keeper->getAnimCtrl()->isExistAction(pActionName)) {
         return true;
@@ -193,9 +193,9 @@ bool isExistAction(const LiveActor* pActor, const char* pActionName) {
  * @return Whether the action plays only once.
  */
 bool isActionOneTime(const LiveActor* pActor, const char* pActionName) {
-    if (pActor->mActionKeeper != nullptr && pActor->mActionKeeper->getAnimCtrl() != nullptr &&
-        pActor->mActionKeeper->getAnimCtrl()->isExistAction(pActionName)) {
-        return pActor->mActionKeeper->getAnimCtrl()->isActionOneTime(pActionName);
+    if (pActor->getActorActionKeeper() != nullptr && pActor->getActorActionKeeper()->getAnimCtrl() != nullptr &&
+        pActor->getActorActionKeeper()->getAnimCtrl()->isExistAction(pActionName)) {
+        return pActor->getActorActionKeeper()->getAnimCtrl()->isActionOneTime(pActionName);
     }
 
     if (isSklAnimExist(pActor, pActionName)) {
@@ -227,7 +227,7 @@ bool isActionOneTime(const LiveActor* pActor, const char* pActionName) {
  * @return The frame.
  */
 f32 getActionFrame(const LiveActor* pActor) {
-    ActorActionKeeper* keeper = pActor->mActionKeeper;
+    ActorActionKeeper* keeper = pActor->getActorActionKeeper();
 
     if (keeper != nullptr && keeper->getAnimCtrl() != nullptr) {
         return keeper->getAnimCtrl()->getFrame();
@@ -243,7 +243,7 @@ f32 getActionFrame(const LiveActor* pActor) {
  * @return The last frame.
  */
 f32 getActionFrameMax(const LiveActor* pActor, const char* pActionName) {
-    ActorActionKeeper* keeper = pActor->mActionKeeper;
+    ActorActionKeeper* keeper = pActor->getActorActionKeeper();
 
     if (keeper != nullptr && keeper->getAnimCtrl() != nullptr) {
         return keeper->getAnimCtrl()->getActionFrameMax(pActionName);
@@ -258,7 +258,7 @@ f32 getActionFrameMax(const LiveActor* pActor, const char* pActionName) {
  * @return The frame rate.
  */
 f32 getActionFrameRate(const LiveActor* pActor) {
-    ActorActionKeeper* keeper = pActor->mActionKeeper;
+    ActorActionKeeper* keeper = pActor->getActorActionKeeper();
 
     if (keeper != nullptr && keeper->getAnimCtrl() != nullptr) {
         return keeper->getAnimCtrl()->getFrameRate();
@@ -273,7 +273,7 @@ f32 getActionFrameRate(const LiveActor* pActor) {
  * @return The action name.
  */
 const char* getActionName(const LiveActor* pActor) {
-    ActorActionKeeper* keeper = pActor->mActionKeeper;
+    ActorActionKeeper* keeper = pActor->getActorActionKeeper();
 
     if (keeper != nullptr && keeper->getAnimCtrl() != nullptr) {
         const char* actionName = keeper->getAnimCtrl()->getPlayingActionName();
@@ -421,8 +421,8 @@ void restartAction(LiveActor* pActor) {
  * @param frameTo The end frame.
  */
 void tryUpdateSeEffect(LiveActor* pActor, f32 frameFrom, f32 frameTo) {
-    if (pActor->mActionKeeper != nullptr) {
-        pActor->mActionKeeper->tryUpdateSeEffect(frameFrom, frameTo);
+    if (pActor->getActorActionKeeper() != nullptr) {
+        pActor->getActorActionKeeper()->tryUpdateSeEffect(frameFrom, frameTo);
     }
 }
 
@@ -449,8 +449,8 @@ void copyAction(LiveActor* pActor, const LiveActor* pSrcActor) {
  * @param pActionName The action name.
  */
 void startNerveAction(LiveActor* pActor, const char* pActionName) {
-    if (pActor->mActionKeeper != nullptr) {
-        pActor->mActionKeeper->tryStartActionNoAnim(pActionName);
+    if (pActor->getActorActionKeeper() != nullptr) {
+        pActor->getActorActionKeeper()->tryStartActionNoAnim(pActionName);
     }
 
     alNerveFunction::setNerveAction(pActor, pActionName);
@@ -472,7 +472,7 @@ void setNerveAtActionEnd(LiveActor* pActor, const Nerve* pNerve) {
  * @param pActor The actor.
  */
 void resetNerveActionForInit(LiveActor* pActor) {
-    NerveActionCtrl* actionCtrl = pActor->getNerveKeeper()->mActionCtrl;
+    NerveActionCtrl* actionCtrl = pActor->getNerveKeeper()->getActionCtrl();
     const Nerve* currentNerve = pActor->getNerveKeeper()->getCurrentNerve();
 
     for (s32 i = 0; i < actionCtrl->mNumActions; i++) {
@@ -489,8 +489,8 @@ void resetNerveActionForInit(LiveActor* pActor) {
  * @param pName The reaction name.
  */
 void startHitReaction(const LiveActor* pActor, const char* pName) {
-    if (pActor->mHitReactionKeeper != nullptr) {
-        pActor->mHitReactionKeeper->start(pName, nullptr, nullptr, nullptr);
+    if (pActor->getHitReactionKeeper() != nullptr) {
+        pActor->getHitReactionKeeper()->start(pName, nullptr, nullptr, nullptr);
     }
 }
 
@@ -502,8 +502,8 @@ void startHitReaction(const LiveActor* pActor, const char* pName) {
  * @param pSelf The own sensor.
  */
 void startHitReactionHitEffect(const LiveActor* pActor, const char* pName, const HitSensor* pOther, const HitSensor* pSelf) {
-    if (pActor->mHitReactionKeeper != nullptr) {
-        pActor->mHitReactionKeeper->start(pName, nullptr, pOther, pSelf);
+    if (pActor->getHitReactionKeeper() != nullptr) {
+        pActor->getHitReactionKeeper()->start(pName, nullptr, pOther, pSelf);
     }
 }
 
@@ -514,8 +514,8 @@ void startHitReactionHitEffect(const LiveActor* pActor, const char* pName, const
  * @param rPos The position.
  */
 void startHitReactionHitEffect(const LiveActor* pActor, const char* pName, const sead::Vector3f& rPos) {
-    if (pActor->mHitReactionKeeper != nullptr) {
-        pActor->mHitReactionKeeper->start(pName, &rPos, nullptr, nullptr);
+    if (pActor->getHitReactionKeeper() != nullptr) {
+        pActor->getHitReactionKeeper()->start(pName, &rPos, nullptr, nullptr);
     }
 }
 
@@ -526,9 +526,9 @@ void startHitReactionHitEffect(const LiveActor* pActor, const char* pName, const
  * @param pMtx The matrix.
  */
 void startHitReactionHitEffect(const LiveActor* pActor, const char* pName, const sead::Matrix34f* pMtx) {
-    if (pActor->mHitReactionKeeper != nullptr) {
+    if (pActor->getHitReactionKeeper() != nullptr) {
         sead::Vector3f pos(pMtx->m[0][3], pMtx->m[1][3], pMtx->m[2][3]);
-        pActor->mHitReactionKeeper->start(pName, &pos, nullptr, nullptr);
+        pActor->getHitReactionKeeper()->start(pName, &pos, nullptr, nullptr);
     }
 }
 
@@ -539,8 +539,8 @@ void startHitReactionHitEffect(const LiveActor* pActor, const char* pName, const
  * @param pSelf The own sensor.
  */
 void startHitReactionBlowHit(const LiveActor* pActor, const HitSensor* pOther, const HitSensor* pSelf) {
-    if (pActor->mHitReactionKeeper != nullptr) {
-        pActor->mHitReactionKeeper->start("吹き飛びヒット", nullptr, pOther, pSelf);
+    if (pActor->getHitReactionKeeper() != nullptr) {
+        pActor->getHitReactionKeeper()->start("吹き飛びヒット", nullptr, pOther, pSelf);
     }
 }
 
@@ -550,8 +550,8 @@ void startHitReactionBlowHit(const LiveActor* pActor, const HitSensor* pOther, c
  * @param rPos The position.
  */
 void startHitReactionBlowHit(const LiveActor* pActor, const sead::Vector3f& rPos) {
-    if (pActor->mHitReactionKeeper != nullptr) {
-        pActor->mHitReactionKeeper->start("吹き飛びヒット", &rPos, nullptr, nullptr);
+    if (pActor->getHitReactionKeeper() != nullptr) {
+        pActor->getHitReactionKeeper()->start("吹き飛びヒット", &rPos, nullptr, nullptr);
     }
 }
 
@@ -560,8 +560,8 @@ void startHitReactionBlowHit(const LiveActor* pActor, const sead::Vector3f& rPos
  * @param pActor The actor.
  */
 void startHitReactionBlowHit(const LiveActor* pActor) {
-    if (pActor->mHitReactionKeeper != nullptr) {
-        pActor->mHitReactionKeeper->start("吹き飛びヒット", nullptr, nullptr, nullptr);
+    if (pActor->getHitReactionKeeper() != nullptr) {
+        pActor->getHitReactionKeeper()->start("吹き飛びヒット", nullptr, nullptr, nullptr);
     }
 }
 
@@ -572,8 +572,8 @@ void startHitReactionBlowHit(const LiveActor* pActor) {
  * @param pSelf The own sensor.
  */
 void startHitReactionBlowHitDirect(const LiveActor* pActor, const HitSensor* pOther, const HitSensor* pSelf) {
-    if (pActor->mHitReactionKeeper != nullptr) {
-        pActor->mHitReactionKeeper->start("吹き飛びヒット[直接ヒット]", nullptr, pOther, pSelf);
+    if (pActor->getHitReactionKeeper() != nullptr) {
+        pActor->getHitReactionKeeper()->start("吹き飛びヒット[直接ヒット]", nullptr, pOther, pSelf);
     }
 }
 
@@ -583,8 +583,8 @@ void startHitReactionBlowHitDirect(const LiveActor* pActor, const HitSensor* pOt
  * @param rPos The position.
  */
 void startHitReactionBlowHitDirect(const LiveActor* pActor, const sead::Vector3f& rPos) {
-    if (pActor->mHitReactionKeeper != nullptr) {
-        pActor->mHitReactionKeeper->start("吹き飛びヒット[直接ヒット]", &rPos, nullptr, nullptr);
+    if (pActor->getHitReactionKeeper() != nullptr) {
+        pActor->getHitReactionKeeper()->start("吹き飛びヒット[直接ヒット]", &rPos, nullptr, nullptr);
     }
 }
 
@@ -593,8 +593,8 @@ void startHitReactionBlowHitDirect(const LiveActor* pActor, const sead::Vector3f
  * @param pActor The actor.
  */
 void startHitReactionBlowHitDirect(const LiveActor* pActor) {
-    if (pActor->mHitReactionKeeper != nullptr) {
-        pActor->mHitReactionKeeper->start("吹き飛びヒット[直接ヒット]", nullptr, nullptr, nullptr);
+    if (pActor->getHitReactionKeeper() != nullptr) {
+        pActor->getHitReactionKeeper()->start("吹き飛びヒット[直接ヒット]", nullptr, nullptr, nullptr);
     }
 }
 
@@ -603,8 +603,8 @@ void startHitReactionBlowHitDirect(const LiveActor* pActor) {
  * @param pActor The actor.
  */
 void startHitReactionAppear(const LiveActor* pActor) {
-    if (pActor->mHitReactionKeeper != nullptr) {
-        pActor->mHitReactionKeeper->start("出現", nullptr, nullptr, nullptr);
+    if (pActor->getHitReactionKeeper() != nullptr) {
+        pActor->getHitReactionKeeper()->start("出現", nullptr, nullptr, nullptr);
     }
 }
 
@@ -613,8 +613,8 @@ void startHitReactionAppear(const LiveActor* pActor) {
  * @param pActor The actor.
  */
 void startHitReactionDisappear(const LiveActor* pActor) {
-    if (pActor->mHitReactionKeeper != nullptr) {
-        pActor->mHitReactionKeeper->start("消滅", nullptr, nullptr, nullptr);
+    if (pActor->getHitReactionKeeper() != nullptr) {
+        pActor->getHitReactionKeeper()->start("消滅", nullptr, nullptr, nullptr);
     }
 }
 
@@ -623,8 +623,8 @@ void startHitReactionDisappear(const LiveActor* pActor) {
  * @param pActor The actor.
  */
 void startHitReactionBreak(const LiveActor* pActor) {
-    if (pActor->mHitReactionKeeper != nullptr) {
-        pActor->mHitReactionKeeper->start("破壊", nullptr, nullptr, nullptr);
+    if (pActor->getHitReactionKeeper() != nullptr) {
+        pActor->getHitReactionKeeper()->start("破壊", nullptr, nullptr, nullptr);
     }
 }
 
@@ -633,8 +633,8 @@ void startHitReactionBreak(const LiveActor* pActor) {
  * @param pActor The actor.
  */
 void startHitReactionDeath(const LiveActor* pActor) {
-    if (pActor->mHitReactionKeeper != nullptr) {
-        pActor->mHitReactionKeeper->start("死亡", nullptr, nullptr, nullptr);
+    if (pActor->getHitReactionKeeper() != nullptr) {
+        pActor->getHitReactionKeeper()->start("死亡", nullptr, nullptr, nullptr);
     }
 }
 
@@ -643,8 +643,8 @@ void startHitReactionDeath(const LiveActor* pActor) {
  * @param pActor The actor.
  */
 void startHitReactionGet(const LiveActor* pActor) {
-    if (pActor->mHitReactionKeeper != nullptr) {
-        pActor->mHitReactionKeeper->start("取得", nullptr, nullptr, nullptr);
+    if (pActor->getHitReactionKeeper() != nullptr) {
+        pActor->getHitReactionKeeper()->start("取得", nullptr, nullptr, nullptr);
     }
 }
 
@@ -653,8 +653,8 @@ void startHitReactionGet(const LiveActor* pActor) {
  * @param pActor The actor.
  */
 void startHitReactionStart(const LiveActor* pActor) {
-    if (pActor->mHitReactionKeeper != nullptr) {
-        pActor->mHitReactionKeeper->start("開始", nullptr, nullptr, nullptr);
+    if (pActor->getHitReactionKeeper() != nullptr) {
+        pActor->getHitReactionKeeper()->start("開始", nullptr, nullptr, nullptr);
     }
 }
 
@@ -663,8 +663,8 @@ void startHitReactionStart(const LiveActor* pActor) {
  * @param pActor The actor.
  */
 void startHitReactionEnd(const LiveActor* pActor) {
-    if (pActor->mHitReactionKeeper != nullptr) {
-        pActor->mHitReactionKeeper->start("終了", nullptr, nullptr, nullptr);
+    if (pActor->getHitReactionKeeper() != nullptr) {
+        pActor->getHitReactionKeeper()->start("終了", nullptr, nullptr, nullptr);
     }
 }
 
@@ -673,8 +673,8 @@ void startHitReactionEnd(const LiveActor* pActor) {
  * @param pActor The actor.
  */
 void startHitReactionHit(const LiveActor* pActor) {
-    if (pActor->mHitReactionKeeper != nullptr) {
-        pActor->mHitReactionKeeper->start("命中", nullptr, nullptr, nullptr);
+    if (pActor->getHitReactionKeeper() != nullptr) {
+        pActor->getHitReactionKeeper()->start("命中", nullptr, nullptr, nullptr);
     }
 }
 
@@ -683,8 +683,8 @@ void startHitReactionHit(const LiveActor* pActor) {
  * @param pActor The actor.
  */
 void startHitReactionExplode(const LiveActor* pActor) {
-    if (pActor->mHitReactionKeeper != nullptr) {
-        pActor->mHitReactionKeeper->start("爆発", nullptr, nullptr, nullptr);
+    if (pActor->getHitReactionKeeper() != nullptr) {
+        pActor->getHitReactionKeeper()->start("爆発", nullptr, nullptr, nullptr);
     }
 }
 
@@ -693,8 +693,8 @@ void startHitReactionExplode(const LiveActor* pActor) {
  * @param pActor The actor.
  */
 void startHitReactionOnGround(const LiveActor* pActor) {
-    if (pActor->mHitReactionKeeper != nullptr) {
-        pActor->mHitReactionKeeper->start("着地", nullptr, nullptr, nullptr);
+    if (pActor->getHitReactionKeeper() != nullptr) {
+        pActor->getHitReactionKeeper()->start("着地", nullptr, nullptr, nullptr);
     }
 }
 
@@ -703,8 +703,8 @@ void startHitReactionOnGround(const LiveActor* pActor) {
  * @param pActor The actor.
  */
 void startHitReactionPressDown(const LiveActor* pActor) {
-    if (pActor->mHitReactionKeeper != nullptr) {
-        pActor->mHitReactionKeeper->start("踏み潰され", nullptr, nullptr, nullptr);
+    if (pActor->getHitReactionKeeper() != nullptr) {
+        pActor->getHitReactionKeeper()->start("踏み潰され", nullptr, nullptr, nullptr);
     }
 }
 }  // namespace al

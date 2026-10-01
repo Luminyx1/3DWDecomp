@@ -147,6 +147,27 @@ namespace al {
 
         ActorSceneInfo* getSceneInfo() const;
 
+        ActorPoseKeeperBase* getPoseKeeper() const { return mActorPoseKeeper; }
+        ActorExecuteInfo* getExecuteInfo() const { return mActorExecuteInfo; }
+        ActorActionKeeper* getActorActionKeeper() const { return mActionKeeper; }
+        ActorItemKeeper* getActorItemKeeper() const { return mItemKeeper; }
+        ActorScoreKeeper* getActorScoreKeeper() const { return mScoreKeeper; }
+        Collider* getCollider() const { return mCollider; }
+        CollisionParts* getCollisionParts() const { return mCollisionParts; }
+        ModelKeeper* getModelKeeper() const { return mModelKeeper; }
+        HitSensorKeeper* getHitSensorKeeper() const { return mHitSensorKeeper; }
+        ScreenPointKeeper* getScreenPointKeeper() const { return mScreenPointKeeper; }
+        HitReactionKeeper* getHitReactionKeeper() const { return mHitReactionKeeper; }
+        RailKeeper* getRailKeeper() const { return mRailKeeper; }
+        ShadowKeeper* getShadowKeeper() const { return mShadowKeeper; }
+        ActorPrePassLightKeeper* getActorPrePassLightKeeper() const { return mLightKeeper; }
+        SubActorKeeper* getSubActorKeeper() const { return mSubActorKeeper; }
+        ActorParamHolder* getActorParamHolder() const { return mActorParamHolder; }
+        ClippingAreaActorInfoNode* getClippingInfoNode() const { return mClippingInfoNode; }
+        LiveActorFlag* getFlags() const { return mActorFlags; }
+        ActorAlphaCtrl* getAlphaCtrl() const { return mAlphaCtrl; }
+        LiveActor* getFarLodActor() const { return mFarLodActor; }
+
         void initPoseKeeper(ActorPoseKeeperBase*);
         void initExecuteInfo(ActorExecuteInfo*);
         void initModelKeeper(ModelKeeper*);

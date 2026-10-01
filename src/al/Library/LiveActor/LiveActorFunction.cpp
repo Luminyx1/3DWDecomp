@@ -13,9 +13,9 @@ namespace alSubActorFunction {
  * @param pKeeper The sub actor keeper.
  */
 void trySyncAlive(al::SubActorKeeper* pKeeper) {
-    for (s32 i = 0; i < pKeeper->mCount; i++) {
-        if (pKeeper->mInfos[i]->mSyncType & 1) {
-            pKeeper->mInfos[i]->mSubActor->makeActorAppeared();
+    for (s32 i = 0; i < pKeeper->getSubActorNum(); i++) {
+        if (pKeeper->getSubActorInfo(i)->mSyncType & 1) {
+            pKeeper->getSubActorInfo(i)->mSubActor->makeActorAppeared();
         }
     }
 }
@@ -25,9 +25,9 @@ void trySyncAlive(al::SubActorKeeper* pKeeper) {
  * @param pKeeper The sub actor keeper.
  */
 void trySyncDead(al::SubActorKeeper* pKeeper) {
-    for (s32 i = 0; i < pKeeper->mCount; i++) {
-        if (pKeeper->mInfos[i]->mSyncType & 1) {
-            pKeeper->mInfos[i]->mSubActor->makeActorDead();
+    for (s32 i = 0; i < pKeeper->getSubActorNum(); i++) {
+        if (pKeeper->getSubActorInfo(i)->mSyncType & 1) {
+            pKeeper->getSubActorInfo(i)->mSubActor->makeActorDead();
         }
     }
 }
@@ -37,8 +37,8 @@ void trySyncDead(al::SubActorKeeper* pKeeper) {
  * @param pKeeper The sub actor keeper.
  */
 void trySyncClippingStart(al::SubActorKeeper* pKeeper) {
-    for (s32 i = 0; i < pKeeper->mCount; i++) {
-        const al::SubActorInfo* info = pKeeper->mInfos[i];
+    for (s32 i = 0; i < pKeeper->getSubActorNum(); i++) {
+        const al::SubActorInfo* info = pKeeper->getSubActorInfo(i);
 
         if ((info->mSyncType & 2) && al::isAlive(info->mSubActor) &&
             !al::isClipped(info->mSubActor)) {
@@ -52,8 +52,8 @@ void trySyncClippingStart(al::SubActorKeeper* pKeeper) {
  * @param pKeeper The sub actor keeper.
  */
 void trySyncClippingEnd(al::SubActorKeeper* pKeeper) {
-    for (s32 i = 0; i < pKeeper->mCount; i++) {
-        const al::SubActorInfo* info = pKeeper->mInfos[i];
+    for (s32 i = 0; i < pKeeper->getSubActorNum(); i++) {
+        const al::SubActorInfo* info = pKeeper->getSubActorInfo(i);
 
         if ((info->mSyncType & 2) && al::isAlive(info->mSubActor) &&
             al::isClipped(info->mSubActor)) {
@@ -67,9 +67,9 @@ void trySyncClippingEnd(al::SubActorKeeper* pKeeper) {
  * @param pKeeper The sub actor keeper.
  */
 void trySyncShowModel(al::SubActorKeeper* pKeeper) {
-    for (s32 i = 0; i < pKeeper->mCount; i++) {
-        if (pKeeper->mInfos[i]->mSyncType & 4) {
-            al::showModelIfHide(pKeeper->mInfos[i]->mSubActor);
+    for (s32 i = 0; i < pKeeper->getSubActorNum(); i++) {
+        if (pKeeper->getSubActorInfo(i)->mSyncType & 4) {
+            al::showModelIfHide(pKeeper->getSubActorInfo(i)->mSubActor);
         }
     }
 }
@@ -79,9 +79,9 @@ void trySyncShowModel(al::SubActorKeeper* pKeeper) {
  * @param pKeeper The sub actor keeper.
  */
 void trySyncHideModel(al::SubActorKeeper* pKeeper) {
-    for (s32 i = 0; i < pKeeper->mCount; i++) {
-        if (pKeeper->mInfos[i]->mSyncType & 4) {
-            al::hideModelIfShow(pKeeper->mInfos[i]->mSubActor);
+    for (s32 i = 0; i < pKeeper->getSubActorNum(); i++) {
+        if (pKeeper->getSubActorInfo(i)->mSyncType & 4) {
+            al::hideModelIfShow(pKeeper->getSubActorInfo(i)->mSubActor);
         }
     }
 }
@@ -93,8 +93,8 @@ void trySyncHideModel(al::SubActorKeeper* pKeeper) {
  * @return The sub actor or nullptr.
  */
 al::LiveActor* findSubActor(const al::SubActorKeeper* pKeeper, const char* pName) {
-    for (s32 i = 0; i < pKeeper->mCount; i++) {
-        const al::SubActorInfo* info = pKeeper->mInfos[i];
+    for (s32 i = 0; i < pKeeper->getSubActorNum(); i++) {
+        const al::SubActorInfo* info = pKeeper->getSubActorInfo(i);
 
         if (al::isEqualString(info->mSubActor->getName(), pName)) {
             return info->mSubActor;
@@ -110,8 +110,8 @@ al::LiveActor* findSubActor(const al::SubActorKeeper* pKeeper, const char* pName
  * @param pOffset The Y offset reference.
  */
 void setGlobalYOffset(al::SubActorKeeper* pKeeper, f32* pOffset) {
-    for (s32 i = 0; i < pKeeper->mCount; i++) {
-        pKeeper->mInfos[i]->mSubActor->setGlobalYOffsetRef(pOffset);
+    for (s32 i = 0; i < pKeeper->getSubActorNum(); i++) {
+        pKeeper->getSubActorInfo(i)->mSubActor->setGlobalYOffsetRef(pOffset);
     }
 }
 }  // namespace alSubActorFunction

@@ -45,6 +45,26 @@ public:
     bool preDrawGraphics();
     void updatePadRumble();
 
+    AreaObjDirector* getAreaObjDirector() const { return mAreaObjDirector; }
+    ExecuteDirector* getExecuteDirector() const { return mExecDirector; }
+    EffectSystem* getEffectSystem() const { return mEffectSystem; }
+    GraphicsSystemInfo* getGraphicsSystemInfo() const { return mGraphicsSystemInfo; }
+    CameraDirector* getCameraDirector() const { return mCameraDirector; }
+    CameraDirector_RS* getCameraDirector_RS() const { return mCameraDirectorRS; }
+    ClippingDirectorBase* getClippingDirector() const { return mClippingDirector; }
+    CollisionDirector* getCollisionDirector() const { return mCollisionDirector; }
+    ItemDirectorBase* getItemDirector() const { return mItemDirector; }
+    PlayerHolder* getPlayerHolder() const { return mPlayerHolder; }
+    HitSensorDirector* getHitSensorDirector() const { return mSensorDirector; }
+    ScreenPointDirector* getScreenPointDirector() const { return mScreenPointDirector; }
+    ShadowDirector* getShadowDirector() const { return mShadowDirector; }
+    StageSwitchDirector* getStageSwitchDirector() const { return mStageSwitchDirector; }
+    SwitchAreaDirector* getSwitchAreaDirector() const { return mSwitchAreaDirector; }
+    LiveActorGroup* getActorGroup() const { return mActorGroup; }
+    DemoDirector* getDemoDirector() const { return mDemoDirector; }
+    PadRumbleDirector* getPadRumbleDirector() const { return mRumbleDirector; }
+    void setItemDirector(ItemDirectorBase* pDirector) { mItemDirector = pDirector; }
+
     s32 _0;
     s32 _4;
     AreaObjDirector* mAreaObjDirector;

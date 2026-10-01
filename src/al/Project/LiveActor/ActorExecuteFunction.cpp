@@ -27,7 +27,7 @@ void executeUpdate(LiveActorKit* pKit) {
  * @param pKit The actor kit.
  */
 void setLODForceLevel0(LiveActorKit* pKit) {
-    LiveActorGroup* group = pKit->mActorGroup;
+    LiveActorGroup* group = pKit->getActorGroup();
 
     for (s32 i = 0; i < group->mNumActors; i++) {
         setLODForceLevel0(group->mActors[i]);
@@ -40,10 +40,10 @@ void setLODForceLevel0(LiveActorKit* pKit) {
  * @param isForceLevel0 Whether to force the highest level of detail first.
  */
 void forceUpdateLOD(LiveActorKit* pKit, bool isForceLevel0) {
-    LiveActorGroup* group = pKit->mActorGroup;
-    const SceneCameraInfo* cameraInfo = (pKit->mCameraDirectorRS != nullptr) ?
-                                            pKit->mCameraDirectorRS->getSceneCameraInfo() :
-                                            pKit->mCameraDirector->mSceneCameraInfo;
+    LiveActorGroup* group = pKit->getActorGroup();
+    const SceneCameraInfo* cameraInfo = (pKit->getCameraDirector_RS() != nullptr) ?
+                                            pKit->getCameraDirector_RS()->getSceneCameraInfo() :
+                                            pKit->getCameraDirector()->mSceneCameraInfo;
     const sead::Vector3f& cameraPos = getCameraPos(cameraInfo);
 
     for (s32 i = 0; i < group->mNumActors; i++) {
@@ -53,8 +53,8 @@ void forceUpdateLOD(LiveActorKit* pKit, bool isForceLevel0) {
             setLODForceLevel0(actor);
         }
 
-        if (actor->mModelKeeper != nullptr) {
-            actor->mModelKeeper->updateLod(cameraPos, false);
+        if (actor->getModelKeeper() != nullptr) {
+            actor->getModelKeeper()->updateLod(cameraPos, false);
         }
     }
 }
@@ -65,7 +65,7 @@ void forceUpdateLOD(LiveActorKit* pKit, bool isForceLevel0) {
  * @param pListName The list name.
  */
 void executeUpdateList(LiveActorKit* pKit, const char* pListName) {
-    pKit->mExecDirector->executeList(pListName);
+    pKit->getExecuteDirector()->executeList(pListName);
 }
 
 /**
@@ -74,7 +74,7 @@ void executeUpdateList(LiveActorKit* pKit, const char* pListName) {
  * @param pListName The list name.
  */
 void executeUpdateListPaused(LiveActorKit* pKit, const char* pListName) {
-    pKit->mExecDirector->executeListPaused(pListName);
+    pKit->getExecuteDirector()->executeListPaused(pListName);
 }
 
 /**
@@ -83,7 +83,7 @@ void executeUpdateListPaused(LiveActorKit* pKit, const char* pListName) {
  * @param pListName The list name.
  */
 void executeUpdateListStall(LiveActorKit* pKit, const char* pListName) {
-    pKit->mExecDirector->executeListStall(pListName);
+    pKit->getExecuteDirector()->executeListStall(pListName);
 }
 
 /**
@@ -92,7 +92,7 @@ void executeUpdateListStall(LiveActorKit* pKit, const char* pListName) {
  * @param pTableName The execute table name.
  */
 void executeDraw(const LiveActorKit* pKit, const char* pTableName) {
-    pKit->mExecDirector->draw(pTableName);
+    pKit->getExecuteDirector()->draw(pTableName);
 }
 
 /**
@@ -102,7 +102,7 @@ void executeDraw(const LiveActorKit* pKit, const char* pTableName) {
  * @param pListName The draw list name.
  */
 void executeDrawList(const LiveActorKit* pKit, const char* pTableName, const char* pListName) {
-    pKit->mExecDirector->drawList(pTableName, pListName);
+    pKit->getExecuteDirector()->drawList(pTableName, pListName);
 }
 
 /**
@@ -112,7 +112,7 @@ void executeDrawList(const LiveActorKit* pKit, const char* pTableName, const cha
  * @return Whether the table is active.
  */
 bool isActiveDraw(const LiveActorKit* pKit, const char* pTableName) {
-    return pKit->mExecDirector->isActiveDraw(pTableName);
+    return pKit->getExecuteDirector()->isActiveDraw(pTableName);
 }
 
 /**
@@ -121,7 +121,7 @@ bool isActiveDraw(const LiveActorKit* pKit, const char* pTableName) {
  * @return The depth shadow drawer.
  */
 DepthShadowDrawer* getDepthShadowDrawer(LiveActorKit* pKit) {
-    return pKit->mGraphicsSystemInfo->mShadowDirector->mDepthShadowDrawer;
+    return pKit->getGraphicsSystemInfo()->getShadowDirector()->mDepthShadowDrawer;
 }
 
 /**
@@ -129,8 +129,8 @@ DepthShadowDrawer* getDepthShadowDrawer(LiveActorKit* pKit) {
  * @param pKit The actor kit.
  */
 void updatePadRumbleDirector(LiveActorKit* pKit) {
-    if (pKit->mRumbleDirector != nullptr) {
-        pKit->mRumbleDirector->update();
+    if (pKit->getPadRumbleDirector() != nullptr) {
+        pKit->getPadRumbleDirector()->update();
     }
 }
 }  // namespace al

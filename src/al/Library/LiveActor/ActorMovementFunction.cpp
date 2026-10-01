@@ -112,7 +112,7 @@ bool trySetPosOnGround(LiveActor* pActor) {
  * @return The result.
  */
 const sead::Vector3f& getVelocity(const LiveActor* pActor) {
-    return pActor->mActorPoseKeeper->getVelocity();
+    return pActor->getPoseKeeper()->getVelocity();
 }
 
 /**
@@ -121,7 +121,7 @@ const sead::Vector3f& getVelocity(const LiveActor* pActor) {
  * @return The result.
  */
 sead::Vector3f* getVelocityPtr(LiveActor* pActor) {
-    return pActor->mActorPoseKeeper->getVelocityPtr();
+    return pActor->getPoseKeeper()->getVelocityPtr();
 }
 
 /**

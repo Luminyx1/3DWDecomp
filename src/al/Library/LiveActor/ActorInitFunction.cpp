@@ -38,10 +38,10 @@ namespace al {
 namespace {
 void setupModelKeeper(LiveActor* pActor, ModelKeeper* pModelKeeper, const ActorInitInfo& rInfo,
                       s32 bufferNum) {
-    SceneCameraInfo* cameraInfo = rInfo.mActorSceneInfo.sceneCameraInfo;
+    SceneCameraInfo* cameraInfo = rInfo.getActorSceneInfo().sceneCameraInfo;
     pModelKeeper->initModel(
-        bufferNum, static_cast<GraphicsSystemInfo*>(rInfo.mActorSceneInfo._78)->mGpuMemAllocator);
-    pModelKeeper->mModelCafe->setCameraInfo(
+        bufferNum, rInfo.getActorSceneInfo().graphicsSystemInfo->getGpuMemAllocator());
+    pModelKeeper->getModelCafe()->setCameraInfo(
         cameraInfo->mViewMtx, static_cast<const sead::Matrix34f*>(cameraInfo->_8),
         static_cast<const sead::Matrix44f*>(cameraInfo->_10),
         static_cast<const sead::Matrix44f*>(cameraInfo->_18));
@@ -50,7 +50,7 @@ void setupModelKeeper(LiveActor* pActor, ModelKeeper* pModelKeeper, const ActorI
 
     if (cubeMapName != nullptr) {
         forceApplyCubeMap(pModelKeeper,
-                          static_cast<const GraphicsSystemInfo*>(pActor->getSceneInfo()->_78),
+                          pActor->getSceneInfo()->graphicsSystemInfo,
                           cubeMapName);
     }
 
@@ -67,9 +67,9 @@ void setupModelKeeper(LiveActor* pActor, ModelKeeper* pModelKeeper, const ActorI
  */
 void initActorSceneInfo(LiveActor* pActor, const ActorInitInfo& rInfo) {
     ActorSceneInfo* sceneInfo = new ActorSceneInfo();
-    *sceneInfo = rInfo.mActorSceneInfo;
+    *sceneInfo = rInfo.getActorSceneInfo();
     pActor->initSceneInfo(sceneInfo);
-    rInfo.mLiveActorGroup->registerActor(pActor);
+    rInfo.getLiveActorGroup()->registerActor(pActor);
     pActor->setPlacementHolder(rInfo);
 }
 
@@ -80,7 +80,7 @@ void initActorSceneInfo(LiveActor* pActor, const ActorInitInfo& rInfo) {
  * @param pListName The list name.
  */
 void initExecutorUpdate(LiveActor* pActor, const ActorInitInfo& rInfo, const char* pListName) {
-    registerExecutorActorUpdate(pActor, rInfo.mExecuteDirector, pListName);
+    registerExecutorActorUpdate(pActor, rInfo.getExecuteDirector(), pListName);
 }
 
 /**
@@ -90,7 +90,7 @@ void initExecutorUpdate(LiveActor* pActor, const ActorInitInfo& rInfo, const cha
  * @param pListName The list name.
  */
 void initExecutorDraw(LiveActor* pActor, const ActorInitInfo& rInfo, const char* pListName) {
-    registerExecutorActorDraw(pActor, rInfo.mExecuteDirector, pListName);
+    registerExecutorActorDraw(pActor, rInfo.getExecuteDirector(), pListName);
 }
 
 /**
@@ -99,8 +99,8 @@ void initExecutorDraw(LiveActor* pActor, const ActorInitInfo& rInfo, const char*
  * @param rInfo The actor init info.
  */
 void initExecutorPlayer(LiveActor* pActor, const ActorInitInfo& rInfo) {
-    registerExecutorActorUpdate(pActor, rInfo.mExecuteDirector, "プレイヤー");
-    registerExecutorActorDraw(pActor, rInfo.mExecuteDirector, "プレイヤー");
+    registerExecutorActorUpdate(pActor, rInfo.getExecuteDirector(), "プレイヤー");
+    registerExecutorActorDraw(pActor, rInfo.getExecuteDirector(), "プレイヤー");
 }
 
 /**
@@ -109,7 +109,7 @@ void initExecutorPlayer(LiveActor* pActor, const ActorInitInfo& rInfo) {
  * @param rInfo The actor init info.
  */
 void initExecutorPlayerPreMovement(LiveActor* pActor, const ActorInitInfo& rInfo) {
-    registerExecutorActorUpdate(pActor, rInfo.mExecuteDirector, "プレイヤー[PreMovement]");
+    registerExecutorActorUpdate(pActor, rInfo.getExecuteDirector(), "プレイヤー[PreMovement]");
 }
 
 /**
@@ -118,7 +118,7 @@ void initExecutorPlayerPreMovement(LiveActor* pActor, const ActorInitInfo& rInfo
  * @param rInfo The actor init info.
  */
 void initExecutorPlayerMovement(LiveActor* pActor, const ActorInitInfo& rInfo) {
-    registerExecutorActorUpdate(pActor, rInfo.mExecuteDirector, "プレイヤー[Movement]");
+    registerExecutorActorUpdate(pActor, rInfo.getExecuteDirector(), "プレイヤー[Movement]");
 }
 
 /**
@@ -127,8 +127,8 @@ void initExecutorPlayerMovement(LiveActor* pActor, const ActorInitInfo& rInfo) {
  * @param rInfo The actor init info.
  */
 void initExecutorPlayerModel(LiveActor* pActor, const ActorInitInfo& rInfo) {
-    registerExecutorActorUpdate(pActor, rInfo.mExecuteDirector, "プレイヤーモデル");
-    registerExecutorActorDraw(pActor, rInfo.mExecuteDirector, "プレイヤーモデル");
+    registerExecutorActorUpdate(pActor, rInfo.getExecuteDirector(), "プレイヤーモデル");
+    registerExecutorActorDraw(pActor, rInfo.getExecuteDirector(), "プレイヤーモデル");
 }
 
 /**
@@ -137,8 +137,8 @@ void initExecutorPlayerModel(LiveActor* pActor, const ActorInitInfo& rInfo) {
  * @param rInfo The actor init info.
  */
 void initExecutorPlayerDecoration(LiveActor* pActor, const ActorInitInfo& rInfo) {
-    registerExecutorActorUpdate(pActor, rInfo.mExecuteDirector, "プレイヤー装飾");
-    registerExecutorActorDraw(pActor, rInfo.mExecuteDirector, "プレイヤー装飾");
+    registerExecutorActorUpdate(pActor, rInfo.getExecuteDirector(), "プレイヤー装飾");
+    registerExecutorActorDraw(pActor, rInfo.getExecuteDirector(), "プレイヤー装飾");
 }
 
 /**
@@ -147,8 +147,8 @@ void initExecutorPlayerDecoration(LiveActor* pActor, const ActorInitInfo& rInfo)
  * @param rInfo The actor init info.
  */
 void initExecutorEnemy(LiveActor* pActor, const ActorInitInfo& rInfo) {
-    registerExecutorActorUpdate(pActor, rInfo.mExecuteDirector, "敵");
-    registerExecutorActorDraw(pActor, rInfo.mExecuteDirector, "敵");
+    registerExecutorActorUpdate(pActor, rInfo.getExecuteDirector(), "敵");
+    registerExecutorActorDraw(pActor, rInfo.getExecuteDirector(), "敵");
 }
 
 /**
@@ -157,7 +157,7 @@ void initExecutorEnemy(LiveActor* pActor, const ActorInitInfo& rInfo) {
  * @param rInfo The actor init info.
  */
 void initExecutorEnemyMovement(LiveActor* pActor, const ActorInitInfo& rInfo) {
-    registerExecutorActorUpdate(pActor, rInfo.mExecuteDirector, "敵[Movement]");
+    registerExecutorActorUpdate(pActor, rInfo.getExecuteDirector(), "敵[Movement]");
 }
 
 /**
@@ -166,8 +166,8 @@ void initExecutorEnemyMovement(LiveActor* pActor, const ActorInitInfo& rInfo) {
  * @param rInfo The actor init info.
  */
 void initExecutorEnemyDecoration(LiveActor* pActor, const ActorInitInfo& rInfo) {
-    registerExecutorActorUpdate(pActor, rInfo.mExecuteDirector, "敵装飾");
-    registerExecutorActorDraw(pActor, rInfo.mExecuteDirector, "敵装飾");
+    registerExecutorActorUpdate(pActor, rInfo.getExecuteDirector(), "敵装飾");
+    registerExecutorActorDraw(pActor, rInfo.getExecuteDirector(), "敵装飾");
 }
 
 /**
@@ -176,7 +176,7 @@ void initExecutorEnemyDecoration(LiveActor* pActor, const ActorInitInfo& rInfo) 
  * @param rInfo The actor init info.
  */
 void initExecutorEnemyDecorationMovement(LiveActor* pActor, const ActorInitInfo& rInfo) {
-    registerExecutorActorUpdate(pActor, rInfo.mExecuteDirector, "敵装飾[Movement]");
+    registerExecutorActorUpdate(pActor, rInfo.getExecuteDirector(), "敵装飾[Movement]");
 }
 
 /**
@@ -185,7 +185,7 @@ void initExecutorEnemyDecorationMovement(LiveActor* pActor, const ActorInitInfo&
  * @param rInfo The actor init info.
  */
 void initExecutorEnemyMapObjMovement(LiveActor* pActor, const ActorInitInfo& rInfo) {
-    registerExecutorActorUpdate(pActor, rInfo.mExecuteDirector, "EnemyMapObj[Movement]");
+    registerExecutorActorUpdate(pActor, rInfo.getExecuteDirector(), "EnemyMapObj[Movement]");
 }
 
 /**
@@ -194,8 +194,8 @@ void initExecutorEnemyMapObjMovement(LiveActor* pActor, const ActorInitInfo& rIn
  * @param rInfo The actor init info.
  */
 void initExecutorMapObj(LiveActor* pActor, const ActorInitInfo& rInfo) {
-    registerExecutorActorUpdate(pActor, rInfo.mExecuteDirector, "地形オブジェ");
-    registerExecutorActorDraw(pActor, rInfo.mExecuteDirector, "地形オブジェ");
+    registerExecutorActorUpdate(pActor, rInfo.getExecuteDirector(), "地形オブジェ");
+    registerExecutorActorDraw(pActor, rInfo.getExecuteDirector(), "地形オブジェ");
 }
 
 /**
@@ -204,7 +204,7 @@ void initExecutorMapObj(LiveActor* pActor, const ActorInitInfo& rInfo) {
  * @param rInfo The actor init info.
  */
 void initExecutorMapObjMovement(LiveActor* pActor, const ActorInitInfo& rInfo) {
-    registerExecutorActorUpdate(pActor, rInfo.mExecuteDirector, "地形オブジェ[Movement]");
+    registerExecutorActorUpdate(pActor, rInfo.getExecuteDirector(), "地形オブジェ[Movement]");
 }
 
 /**
@@ -213,8 +213,8 @@ void initExecutorMapObjMovement(LiveActor* pActor, const ActorInitInfo& rInfo) {
  * @param rInfo The actor init info.
  */
 void initExecutorMapObjDecoration(LiveActor* pActor, const ActorInitInfo& rInfo) {
-    registerExecutorActorUpdate(pActor, rInfo.mExecuteDirector, "地形オブジェ装飾");
-    registerExecutorActorDraw(pActor, rInfo.mExecuteDirector, "地形オブジェ装飾");
+    registerExecutorActorUpdate(pActor, rInfo.getExecuteDirector(), "地形オブジェ装飾");
+    registerExecutorActorDraw(pActor, rInfo.getExecuteDirector(), "地形オブジェ装飾");
 }
 
 /**
@@ -223,8 +223,8 @@ void initExecutorMapObjDecoration(LiveActor* pActor, const ActorInitInfo& rInfo)
  * @param rInfo The actor init info.
  */
 void initExecutorShadowVolume(LiveActor* pActor, const ActorInitInfo& rInfo) {
-    registerExecutorActorUpdate(pActor, rInfo.mExecuteDirector, "影ボリューム");
-    registerExecutorActorDraw(pActor, rInfo.mExecuteDirector, "影ボリューム");
+    registerExecutorActorUpdate(pActor, rInfo.getExecuteDirector(), "影ボリューム");
+    registerExecutorActorDraw(pActor, rInfo.getExecuteDirector(), "影ボリューム");
 }
 
 /**
@@ -233,8 +233,8 @@ void initExecutorShadowVolume(LiveActor* pActor, const ActorInitInfo& rInfo) {
  * @param rInfo The actor init info.
  */
 void initExecutorShadowVolumeFillStencil(LiveActor* pActor, const ActorInitInfo& rInfo) {
-    registerExecutorActorUpdate(pActor, rInfo.mExecuteDirector, "影ボリュームのフィル");
-    registerExecutorActorDraw(pActor, rInfo.mExecuteDirector, "影ボリュームのフィル");
+    registerExecutorActorUpdate(pActor, rInfo.getExecuteDirector(), "影ボリュームのフィル");
+    registerExecutorActorDraw(pActor, rInfo.getExecuteDirector(), "影ボリュームのフィル");
 }
 
 /**
@@ -243,7 +243,7 @@ void initExecutorShadowVolumeFillStencil(LiveActor* pActor, const ActorInitInfo&
  * @param rInfo The actor init info.
  */
 void initExecutorCollisionMapObjDecorationMovement(LiveActor* pActor, const ActorInitInfo& rInfo) {
-    registerExecutorActorUpdate(pActor, rInfo.mExecuteDirector, "コリジョン地形装飾[Movement]");
+    registerExecutorActorUpdate(pActor, rInfo.getExecuteDirector(), "コリジョン地形装飾[Movement]");
 }
 
 /**
@@ -252,7 +252,7 @@ void initExecutorCollisionMapObjDecorationMovement(LiveActor* pActor, const Acto
  * @param rInfo The actor init info.
  */
 void initExecutorWatchObj(LiveActor* pActor, const ActorInitInfo& rInfo) {
-    registerExecutorActorUpdate(pActor, rInfo.mExecuteDirector, "監視オブジェ");
+    registerExecutorActorUpdate(pActor, rInfo.getExecuteDirector(), "監視オブジェ");
 }
 
 /**
@@ -261,7 +261,7 @@ void initExecutorWatchObj(LiveActor* pActor, const ActorInitInfo& rInfo) {
  * @param rInfo The actor init info.
  */
 void initExecutorDebugMovement(LiveActor* pActor, const ActorInitInfo& rInfo) {
-    registerExecutorActorUpdate(pActor, rInfo.mExecuteDirector, "デバッグ[ActorMovement]");
+    registerExecutorActorUpdate(pActor, rInfo.getExecuteDirector(), "デバッグ[ActorMovement]");
 }
 
 /**
@@ -310,7 +310,7 @@ void initActorPoseTQSV(LiveActor* pActor) {
  * @param rInfo The actor init info.
  */
 void initActorSRT(LiveActor* pActor, const ActorInitInfo& rInfo) {
-    if (pActor->mActorPoseKeeper == nullptr) {
+    if (pActor->getPoseKeeper() == nullptr) {
         initActorPoseTRSV(pActor);
     }
 
@@ -331,7 +331,7 @@ void initActorSRT(LiveActor* pActor, const ActorInitInfo& rInfo) {
  * @param rInfo The actor init info.
  */
 void initActorSRT_ParentY(LiveActor* pActor, const ActorInitInfo& rInfo) {
-    if (pActor->mActorPoseKeeper == nullptr) {
+    if (pActor->getPoseKeeper() == nullptr) {
         initActorPoseTRSV(pActor);
     }
 
@@ -359,8 +359,8 @@ void initActorModelKeeper(LiveActor* pActor, const ActorInitInfo& rInfo, const c
     modelKeeper->initResource(pArchiveName, pAnimArchiveName, nullptr);
     setupModelKeeper(pActor, modelKeeper, rInfo, bufferNum);
     sead::Matrix34f baseMtx;
-    pActor->mActorPoseKeeper->calcBaseMtx(&baseMtx);
-    setBaseMtxAndCalcAnim(pActor, baseMtx, pActor->mActorPoseKeeper->getScale());
+    pActor->getPoseKeeper()->calcBaseMtx(&baseMtx);
+    setBaseMtxAndCalcAnim(pActor, baseMtx, pActor->getPoseKeeper()->getScale());
 }
 
 /**
@@ -378,9 +378,9 @@ void initActorModelKeeperWithInitFile(LiveActor* pActor, const ActorInitInfo& rI
     modelKeeper->initResource(pArchiveName, pAnimArchiveName, pSuffix);
     setupModelKeeper(pActor, modelKeeper, rInfo, bufferNum);
     sead::Matrix34f baseMtx;
-    pActor->mActorPoseKeeper->calcBaseMtx(&baseMtx);
-    setBaseMtxAndCalcAnim(pActor, baseMtx, pActor->mActorPoseKeeper->getScale());
-    modelKeeper->mModelCafe->initUpdateBounding();
+    pActor->getPoseKeeper()->calcBaseMtx(&baseMtx);
+    setBaseMtxAndCalcAnim(pActor, baseMtx, pActor->getPoseKeeper()->getScale());
+    modelKeeper->getModelCafe()->initUpdateBounding();
 }
 
 /**
@@ -394,8 +394,8 @@ void initActorModelKeeperShadowVolume(LiveActor* pActor, const ActorInitInfo& rI
     modelKeeper->initResource(pArchiveName, nullptr, nullptr);
     setupModelKeeper(pActor, modelKeeper, rInfo, 1);
     sead::Matrix34f baseMtx;
-    pActor->mActorPoseKeeper->calcBaseMtx(&baseMtx);
-    setBaseMtxAndCalcAnim(pActor, baseMtx, pActor->mActorPoseKeeper->getScale());
+    pActor->getPoseKeeper()->calcBaseMtx(&baseMtx);
+    setBaseMtxAndCalcAnim(pActor, baseMtx, pActor->getPoseKeeper()->getScale());
 }
 
 /**
@@ -409,8 +409,8 @@ void initActorModelKeeperShadowVolumeFillStencil(LiveActor* pActor, const ActorI
     modelKeeper->initResource(pArchiveName, nullptr, nullptr);
     setupModelKeeper(pActor, modelKeeper, rInfo, 1);
     sead::Matrix34f baseMtx;
-    pActor->mActorPoseKeeper->calcBaseMtx(&baseMtx);
-    setBaseMtxAndCalcAnim(pActor, baseMtx, pActor->mActorPoseKeeper->getScale());
+    pActor->getPoseKeeper()->calcBaseMtx(&baseMtx);
+    setBaseMtxAndCalcAnim(pActor, baseMtx, pActor->getPoseKeeper()->getScale());
 }
 
 /**
@@ -422,7 +422,7 @@ void initActorModelForceCubeMap(LiveActor* pActor, const ActorInitInfo& rInfo) {
     const char* cubeMapName = nullptr;
     tryGetStringArg(&cubeMapName, rInfo, "CubeMapUnitName");
 
-    if (cubeMapName != nullptr && pActor->mModelKeeper != nullptr) {
+    if (cubeMapName != nullptr && pActor->getModelKeeper() != nullptr) {
         forceApplyCubeMap(pActor, cubeMapName);
     }
 }
@@ -435,7 +435,7 @@ void initActorModelForceCubeMap(LiveActor* pActor, const ActorInitInfo& rInfo) {
  * @param isUnused Unused.
  */
 void initActorEffectKeeper(LiveActor* pActor, const ActorInitInfo& rInfo, const char* pName, bool isUnused) {
-    EffectKeeper* effectKeeper = new EffectKeeper(rInfo.mEffectSystemInfo, pName, getTransPtr(pActor), nullptr, pActor->getBaseMtx());
+    EffectKeeper* effectKeeper = new EffectKeeper(rInfo.getEffectSystemInfo(), pName, getTransPtr(pActor), nullptr, pActor->getBaseMtx());
     pActor->initEffectKeeper(effectKeeper);
 }
 
@@ -448,13 +448,13 @@ void initActorEffectKeeper(LiveActor* pActor, const ActorInitInfo& rInfo, const 
  */
 void initActorAudioKeeper(LiveActor* pActor, const ActorInitInfo& rInfo, const char* pSeName, const char* pBgmName) {
     AudioKeeper* audioKeeper = new AudioKeeper();
-    const AudioDirector* audioDirector = rInfo.mAudioDirector;
+    const AudioDirector* audioDirector = rInfo.getAudioDirector();
 
     if (audioDirector->isForceInvalidSe()) {
         audioKeeper->init(audioDirector, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr);
         audioKeeper->setIsForceInvalidSe(true);
     } else {
-        audioKeeper->init(audioDirector, pSeName, (pBgmName != nullptr) ? pBgmName : pSeName, getTransPtr(pActor), pActor->getBaseMtx(), pActor->mModelKeeper, nullptr);
+        audioKeeper->init(audioDirector, pSeName, (pBgmName != nullptr) ? pBgmName : pSeName, getTransPtr(pActor), pActor->getBaseMtx(), pActor->getModelKeeper(), nullptr);
     }
 
     pActor->initAudioKeeper(audioKeeper);
@@ -472,11 +472,11 @@ void initActorAudioKeeper(LiveActor* pActor, const ActorInitInfo& rInfo, const c
 void initActorAudioKeeper(LiveActor* pActor, const ActorInitInfo& rInfo, const char* pSeName, const char* pBgmName, const sead::Vector3f* pPos, const sead::Matrix34f* pMtx) {
     AudioKeeper* audioKeeper = new AudioKeeper();
 
-    if (rInfo.mAudioDirector->isForceInvalidSe()) {
-        audioKeeper->init(rInfo.mAudioDirector, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr);
+    if (rInfo.getAudioDirector()->isForceInvalidSe()) {
+        audioKeeper->init(rInfo.getAudioDirector(), nullptr, nullptr, nullptr, nullptr, nullptr, nullptr);
         audioKeeper->setIsForceInvalidSe(true);
     } else {
-        audioKeeper->init(rInfo.mAudioDirector, pSeName, (pBgmName != nullptr) ? pBgmName : pSeName, pPos, pMtx, pActor->mModelKeeper, nullptr);
+        audioKeeper->init(rInfo.getAudioDirector(), pSeName, (pBgmName != nullptr) ? pBgmName : pSeName, pPos, pMtx, pActor->getModelKeeper(), nullptr);
     }
 
     pActor->initAudioKeeper(audioKeeper);
@@ -492,11 +492,11 @@ void initActorAudioKeeper(LiveActor* pActor, const ActorInitInfo& rInfo, const c
 void initActorAudioKeeperWithout3D(LiveActor* pActor, const ActorInitInfo& rInfo, const char* pSeName, const char* pBgmName) {
     AudioKeeper* audioKeeper = new AudioKeeper();
 
-    if (rInfo.mAudioDirector->isForceInvalidSe()) {
-        audioKeeper->init(rInfo.mAudioDirector, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr);
+    if (rInfo.getAudioDirector()->isForceInvalidSe()) {
+        audioKeeper->init(rInfo.getAudioDirector(), nullptr, nullptr, nullptr, nullptr, nullptr, nullptr);
         audioKeeper->setIsForceInvalidSe(true);
     } else {
-        audioKeeper->init(rInfo.mAudioDirector, pSeName, (pBgmName != nullptr) ? pBgmName : pSeName, nullptr, nullptr, nullptr, nullptr);
+        audioKeeper->init(rInfo.getAudioDirector(), pSeName, (pBgmName != nullptr) ? pBgmName : pSeName, nullptr, nullptr, nullptr, nullptr);
     }
 
     pActor->initAudioKeeper(audioKeeper);
@@ -509,7 +509,7 @@ void initActorAudioKeeperWithout3D(LiveActor* pActor, const ActorInitInfo& rInfo
  * @param rIter The ocean wave yaml.
  */
 void initActorOceanWaveKeeper(LiveActor* pActor, const ActorInitInfo& rInfo, ByamlIter& rIter) {
-    OceanWaveKeeper* keeper = new OceanWaveKeeper(rInfo.mOceanWaveDirector);
+    OceanWaveKeeper* keeper = new OceanWaveKeeper(rInfo.getOceanWaveDirector());
     keeper->init(pActor->getName(), rIter);
     pActor->initOceanWaveKeeper(keeper);
 }
@@ -529,7 +529,7 @@ void initActorOceanWaveKeeper(LiveActor* pActor, const ActorInitInfo& rInfo, con
     }
 
     ByamlIter iter(byml);
-    OceanWaveKeeper* keeper = new OceanWaveKeeper(rInfo.mOceanWaveDirector);
+    OceanWaveKeeper* keeper = new OceanWaveKeeper(rInfo.getOceanWaveDirector());
     keeper->init(pActor->getName(), iter);
     pActor->initOceanWaveKeeper(keeper);
 }
@@ -652,13 +652,13 @@ void initActorCollisionWithArchiveName(LiveActor* pActor, const sead::SafeString
 void initActorCollisionWithFilePtr(LiveActor* pActor, void* pKcl, const void* pAttribute, HitSensor* pSensor, const sead::Matrix34f* pMtx, const char* pSpecialPurpose, s32 priority) {
     CollisionParts* parts = new CollisionParts(pKcl, pAttribute);
     parts->_165 = true;
-    parts->mSpecialPurpose = pSpecialPurpose;
+    parts->setSpecialPurpose(pSpecialPurpose);
     parts->mPriority = priority;
     sead::Matrix34f mtx;
     makeMtxSRT(&mtx, pActor);
-    parts->mSensor = pSensor;
+    parts->setSensor(pSensor);
     parts->initParts(mtx);
-    parts->mSyncCollisionMtx = pMtx;
+    parts->setSyncCollisionMtx(pMtx);
     pActor->getCollisionDirector()->getActivePartsKeeper()->addCollisionParts(parts);
     parts->invalidateBySystem();
     pActor->mCollisionParts = parts;
@@ -779,7 +779,7 @@ void initSubActorKeeperNoFile(LiveActor* pActor, const ActorInitInfo& rInfo, s32
  * @param isSyncHide Whether the sub actor also syncs appearance and hiding.
  */
 void registerSubActorSyncClipping(LiveActor* pActor, LiveActor* pSubActor, bool isSyncHide) {
-    pActor->mSubActorKeeper->registerSubActor(pSubActor, isSyncHide ? 7 : 2);
+    pActor->getSubActorKeeper()->registerSubActor(pSubActor, isSyncHide ? 7 : 2);
 }
 
 /**
@@ -787,10 +787,10 @@ void registerSubActorSyncClipping(LiveActor* pActor, LiveActor* pSubActor, bool 
  * @param pActor The actor.
  */
 void setSubActorOffSyncClipping(LiveActor* pActor) {
-    SubActorKeeper* keeper = pActor->mSubActorKeeper;
+    SubActorKeeper* keeper = pActor->getSubActorKeeper();
 
-    for (s32 i = 0; i < keeper->mCount; i++) {
-        keeper->mInfos[i]->mSyncType &= ~2;
+    for (s32 i = 0; i < keeper->getSubActorNum(); i++) {
+        keeper->getSubActorInfo(i)->mSyncType &= ~2;
     }
 }
 
@@ -799,10 +799,10 @@ void setSubActorOffSyncClipping(LiveActor* pActor) {
  * @param pActor The actor.
  */
 void setSubActorOnSyncAppear(LiveActor* pActor) {
-    SubActorKeeper* keeper = pActor->mSubActorKeeper;
+    SubActorKeeper* keeper = pActor->getSubActorKeeper();
 
-    for (s32 i = 0; i < keeper->mCount; i++) {
-        keeper->mInfos[i]->mSyncType |= 1;
+    for (s32 i = 0; i < keeper->getSubActorNum(); i++) {
+        keeper->getSubActorInfo(i)->mSyncType |= 1;
     }
 }
 }  // namespace al

@@ -58,7 +58,7 @@ void ActorInitInfo::initNew(
     mPlacementInfo = const_cast<PlacementInfo*>(pPlacementInfo);
     mLayoutInitInfo = pLayoutInitInfo;
     mActorSceneInfo.cameraDirector = pCameraDirector;
-    mActorSceneInfo._78 = pGraphicsSystemInfo;
+    mActorSceneInfo.graphicsSystemInfo = pGraphicsSystemInfo;
     mExecuteDirector = pExecuteDirector;
     mActorSceneInfo.isSingleMode = isSingleMode;
     mAudioDirector = pAudioDirector;

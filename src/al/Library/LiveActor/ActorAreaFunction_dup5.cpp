@@ -20,7 +20,7 @@ namespace al {
 void registerAreaHostMtx(const IUseAreaObj* pAreaUser, const sead::Matrix34f* pMtx,
                          const ActorInitInfo& rInfo) {
     pAreaUser->getAreaObjDirector()->getMtxConnecterHolder()->registerParentMtx(
-        pMtx, *rInfo.mPlacementInfo);
+        pMtx, rInfo.getPlacementInfo());
 }
 
 /**
@@ -41,7 +41,7 @@ void registerAreaHostMtx(const LiveActor* pActor, const ActorInitInfo& rInfo) {
 void registerAreaSyncHostMtx(const IUseAreaObj* pAreaUser, const sead::Matrix34f* pMtx,
                              const ActorInitInfo& rInfo) {
     pAreaUser->getAreaObjDirector()->getMtxConnecterHolder()->registerSyncParentMtx(
-        pMtx, *rInfo.mPlacementInfo);
+        pMtx, rInfo.getPlacementInfo());
 }
 
 /**

@@ -27,6 +27,9 @@ public:
                                         s32 maxSubActors);
     void registerSubActor(LiveActor* pSubActor, u32 syncType);
 
+    s32 getSubActorNum() const { return mCount; }
+    SubActorInfo* getSubActorInfo(s32 index) const { return mInfos[index]; }
+
     LiveActor* mRootActor;
     s32 mMaxCount = 0;
     s32 mCount = 0;

@@ -81,7 +81,7 @@ void setExpandedClippingMode(LiveActor* pActor, bool isExpanded) {
  * @return Whether the clipping is expanded.
  */
 bool isExpandedClippingMode(const LiveActor* pActor) {
-    ClippingAreaActorInfoNode* node = pActor->mClippingInfoNode;
+    ClippingAreaActorInfoNode* node = pActor->getClippingInfoNode();
 
     if (node == nullptr) {
         return false;
@@ -339,7 +339,7 @@ bool tryExpandClippingByExpandObject(LiveActor* pActor, const ActorInitInfo& rIn
  * @return Whether the actor is clipped.
  */
 bool isClipped(const LiveActor* pActor) {
-    return pActor->mActorFlags->isClipped;
+    return pActor->getFlags()->isClipped;
 }
 
 /**
@@ -348,7 +348,7 @@ bool isClipped(const LiveActor* pActor) {
  * @return Whether the clipping is invalid.
  */
 bool isInvalidClipping(const LiveActor* pActor) {
-    return pActor->mActorFlags->isInvalidClipping;
+    return pActor->getFlags()->isInvalidClipping;
 }
 
 /**
@@ -356,11 +356,11 @@ bool isInvalidClipping(const LiveActor* pActor) {
  * @param pActor The actor.
  */
 void invalidateClipping(LiveActor* pActor) {
-    if (pActor->mActorFlags->isClipped) {
+    if (pActor->getFlags()->isClipped) {
         pActor->endClipped();
     }
 
-    if (pActor->mActorFlags->isInvalidClipping) {
+    if (pActor->getFlags()->isInvalidClipping) {
         return;
     }
 
@@ -373,7 +373,7 @@ void invalidateClipping(LiveActor* pActor) {
  * @param pActor The actor.
  */
 void validateClipping(LiveActor* pActor) {
-    if (pActor->mActorFlags->isInvalidClipping) {
+    if (pActor->getFlags()->isInvalidClipping) {
         pActor->getSceneInfo()->clippingDirectorBase->validateActorClipping(pActor);
     }
 }
@@ -383,16 +383,16 @@ void validateClipping(LiveActor* pActor) {
  * @param pActor The actor.
  */
 void onDrawClipping(LiveActor* pActor) {
-    pActor->mActorFlags->isDrawClipping = true;
+    pActor->getFlags()->isDrawClipping = true;
 
-    if (!pActor->mActorFlags->isClipped) {
+    if (!pActor->getFlags()->isClipped) {
         return;
     }
 
     alActorSystemFunction::addToExecutorMovement(pActor);
 
-    if (pActor->mHitSensorKeeper != nullptr) {
-        pActor->mHitSensorKeeper->validateBySystem();
+    if (pActor->getHitSensorKeeper() != nullptr) {
+        pActor->getHitSensorKeeper()->validateBySystem();
         alSensorFunction::updateHitSensorsAll(pActor);
     }
 
@@ -410,16 +410,16 @@ void onDrawClipping(LiveActor* pActor) {
  * @param pActor The actor.
  */
 void offDrawClipping(LiveActor* pActor) {
-    pActor->mActorFlags->isDrawClipping = false;
+    pActor->getFlags()->isDrawClipping = false;
 
-    if (!pActor->mActorFlags->isClipped) {
+    if (!pActor->getFlags()->isClipped) {
         return;
     }
 
     alActorSystemFunction::removeFromExecutorMovement(pActor);
 
-    if (pActor->mHitSensorKeeper != nullptr) {
-        pActor->mHitSensorKeeper->invalidateBySystem();
+    if (pActor->getHitSensorKeeper() != nullptr) {
+        pActor->getHitSensorKeeper()->invalidateBySystem();
     }
 
     if (pActor->getEffectKeeper() != nullptr) {
@@ -455,6 +455,6 @@ namespace alActorFunction {
  * @return Whether the actor is drawn while clipped.
  */
 bool isDrawClipping(const al::LiveActor* pActor) {
-    return pActor->mActorFlags->isDrawClipping;
+    return pActor->getFlags()->isDrawClipping;
 }
 }  // namespace alActorFunction

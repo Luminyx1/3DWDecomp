@@ -17,7 +17,7 @@ static const ActorParamRebound sDefaultParamRebound = {};
  * @return The parameter, or a zero default if the actor has no parameters.
  */
 const ActorParamF32* findActorParamF32(const LiveActor* pActor, const char* pName) {
-    ActorParamHolder* holder = pActor->mActorParamHolder;
+    ActorParamHolder* holder = pActor->getActorParamHolder();
 
     if (holder == nullptr) {
         return &sDefaultParamF32;
@@ -33,7 +33,7 @@ const ActorParamF32* findActorParamF32(const LiveActor* pActor, const char* pNam
  * @return The parameter, or a zero default if the actor has no parameters.
  */
 const ActorParamS32* findActorParamS32(const LiveActor* pActor, const char* pName) {
-    ActorParamHolder* holder = pActor->mActorParamHolder;
+    ActorParamHolder* holder = pActor->getActorParamHolder();
 
     if (holder == nullptr) {
         return &sDefaultParamS32;
@@ -49,7 +49,7 @@ const ActorParamS32* findActorParamS32(const LiveActor* pActor, const char* pNam
  * @return The parameter, or a zero default if the actor has no parameters.
  */
 const ActorParamMove* findActorParamMove(const LiveActor* pActor, const char* pName) {
-    ActorParamHolder* holder = pActor->mActorParamHolder;
+    ActorParamHolder* holder = pActor->getActorParamHolder();
 
     if (holder == nullptr) {
         return &sDefaultParamMove;
@@ -65,7 +65,7 @@ const ActorParamMove* findActorParamMove(const LiveActor* pActor, const char* pN
  * @return The parameter, or a zero default if the actor has no parameters.
  */
 const ActorParamJump* findActorParamJump(const LiveActor* pActor, const char* pName) {
-    ActorParamHolder* holder = pActor->mActorParamHolder;
+    ActorParamHolder* holder = pActor->getActorParamHolder();
 
     if (holder == nullptr) {
         return &sDefaultParamJump;
@@ -81,7 +81,7 @@ const ActorParamJump* findActorParamJump(const LiveActor* pActor, const char* pN
  * @return The parameter, or a zero default if the actor has no parameters.
  */
 const ActorParamSight* findActorParamSight(const LiveActor* pActor, const char* pName) {
-    ActorParamHolder* holder = pActor->mActorParamHolder;
+    ActorParamHolder* holder = pActor->getActorParamHolder();
 
     if (holder == nullptr) {
         return &sDefaultParamSight;
@@ -97,7 +97,7 @@ const ActorParamSight* findActorParamSight(const LiveActor* pActor, const char* 
  * @return The parameter, or a zero default if the actor has no parameters.
  */
 const ActorParamRebound* findActorParamRebound(const LiveActor* pActor, const char* pName) {
-    ActorParamHolder* holder = pActor->mActorParamHolder;
+    ActorParamHolder* holder = pActor->getActorParamHolder();
 
     if (holder == nullptr) {
         return &sDefaultParamRebound;

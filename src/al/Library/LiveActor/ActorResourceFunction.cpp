@@ -18,7 +18,7 @@ namespace al {
  * @return Whether the model resource exists.
  */
 bool isExistModelResource(const LiveActor* pActor) {
-    return pActor->mModelKeeper != nullptr;
+    return pActor->getModelKeeper() != nullptr;
 }
 
 /**
@@ -36,7 +36,7 @@ bool isExistAnimResource(const LiveActor* pActor) {
  * @return The animation resource or nullptr.
  */
 Resource* tryGetAnimResource(const LiveActor* pActor) {
-    return const_cast<Resource*>(pActor->mModelKeeper->mModelCafe->getAnimResource());
+    return const_cast<Resource*>(pActor->getModelKeeper()->getModelCafe()->getAnimResource());
 }
 
 /**
@@ -56,7 +56,7 @@ bool isExistModelResourceYaml(const LiveActor* pActor, const char* pName, const 
  * @return The model resource.
  */
 Resource* getModelResource(const LiveActor* pActor) {
-    return pActor->mModelKeeper->mModelCafe->mModelRes;
+    return pActor->getModelKeeper()->getModelCafe()->getModelRes();
 }
 
 /**
@@ -76,7 +76,7 @@ bool isExistAnimResourceYaml(const LiveActor* pActor, const char* pName, const c
  * @return The animation resource.
  */
 Resource* getAnimResource(const LiveActor* pActor) {
-    return const_cast<Resource*>(pActor->mModelKeeper->mModelCafe->getAnimResource());
+    return const_cast<Resource*>(pActor->getModelKeeper()->getModelCafe()->getAnimResource());
 }
 
 /**
@@ -142,7 +142,7 @@ const u8* getModelOrAnimResourceYaml(const LiveActor* pActor, const char* pName,
 const u8* getMapPartsResourceYaml(const ActorInitInfo& rInfo, const char* pName) {
     StringTmp<256> modelName;
     StringTmp<256> path;
-    makeMapPartsModelName(&modelName, &path, *rInfo.mPlacementInfo);
+    makeMapPartsModelName(&modelName, &path, rInfo.getPlacementInfo());
     return findOrCreateResource(path, nullptr)->getByml(pName);
 }
 
@@ -155,7 +155,7 @@ const u8* getMapPartsResourceYaml(const ActorInitInfo& rInfo, const char* pName)
 const u8* tryGetMapPartsResourceYaml(const ActorInitInfo& rInfo, const char* pName) {
     StringTmp<256> modelName;
     StringTmp<256> path;
-    makeMapPartsModelName(&modelName, &path, *rInfo.mPlacementInfo);
+    makeMapPartsModelName(&modelName, &path, rInfo.getPlacementInfo());
     Resource* resource = findOrCreateResource(path, nullptr);
     StringTmp<256> fileName("%s.byml", pName);
 

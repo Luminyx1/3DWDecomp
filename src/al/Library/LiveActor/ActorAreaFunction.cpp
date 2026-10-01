@@ -28,7 +28,7 @@ AreaObj* tryGetAreaObjPlayerAll(const LiveActor* pActor, const AreaObjGroup* pGr
     }
 
     AreaObj* result = nullptr;
-    s32 num = pGroup->mNumAreas;
+    s32 num = pGroup->getSize();
 
     for (s32 i = 0; i < num; i++) {
         AreaObj* area = pGroup->getAreaObj(i);
@@ -40,7 +40,7 @@ AreaObj* tryGetAreaObjPlayerAll(const LiveActor* pActor, const AreaObjGroup* pGr
         if (result == nullptr) {
             result = area;
         } else {
-            result = result->mPriority < area->mPriority ? area : result;
+            result = result->getPriority() < area->getPriority() ? area : result;
         }
     }
 
@@ -81,7 +81,7 @@ bool isInAreaObjPlayerAll(const LiveActor* pActor, const AreaObj* pArea) {
  * @return Whether such an area exists.
  */
 bool isInAreaObjPlayerAll(const LiveActor* pActor, const AreaObjGroup* pGroup) {
-    s32 num = pGroup->mNumAreas;
+    s32 num = pGroup->getSize();
 
     for (s32 i = 0; i < num; i++) {
         if (isInAreaObjPlayerAll(pActor, pGroup->getAreaObj(i))) {
@@ -123,7 +123,7 @@ bool isInAreaObjPlayerAnyOne(const LiveActor* pActor, const AreaObj* pArea) {
  * @return Whether a player is inside.
  */
 bool isInAreaObjPlayerAnyOne(const LiveActor* pActor, const AreaObjGroup* pGroup) {
-    s32 num = pGroup->mNumAreas;
+    s32 num = pGroup->getSize();
 
     for (s32 i = 0; i < num; i++) {
         if (isInAreaObjPlayerAnyOne(pActor, pGroup->getAreaObj(i))) {
@@ -151,7 +151,7 @@ bool tryIsInAreaPos(const AreaObj* pArea, const sead::Vector3f& rPos) {
  * @return The area.
  */
 AreaObj* createAreaObj(const ActorInitInfo& rInfo, const char* pName) {
-    AreaInitInfo areaInitInfo(*rInfo.mPlacementInfo, rInfo.mStageSwitchDirector);
+    AreaInitInfo areaInitInfo(rInfo.getPlacementInfo(), rInfo.getStageSwitchDirector());
     AreaObj* area = new AreaObj(pName);
     area->init(areaInitInfo);
     return area;
@@ -177,12 +177,12 @@ AreaObjGroup* createLinkAreaGroup(LiveActor* pActor, const ActorInitInfo& rInfo,
 
     AreaObjGroup* group = new AreaObjGroup(pGroupName);
     group->createBuffer(num);
-    const PlacementInfo& placementInfo = *rInfo.mPlacementInfo;
+    const PlacementInfo& placementInfo = rInfo.getPlacementInfo();
 
     for (s32 i = 0; i < num; i++) {
         PlacementInfo linkInfo;
         getLinksInfoByIndex(&linkInfo, placementInfo, pLinkName, i);
-        AreaInitInfo areaInitInfo(linkInfo, rInfo.mStageSwitchDirector);
+        AreaInitInfo areaInitInfo(linkInfo, rInfo.getStageSwitchDirector());
         AreaObj* area = new AreaObj(pAreaName);
         area->init(areaInitInfo);
         group->resisterAreaObj(area);

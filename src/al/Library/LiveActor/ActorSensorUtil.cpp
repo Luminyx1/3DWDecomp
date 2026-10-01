@@ -202,7 +202,7 @@ SENSOR_MSG(TouchReleaseItem);
 
 static inline bool sendMsgSensorToSensor(const SensorMsg& rMsg, HitSensor* pReceiver,
                                          HitSensor* pSender) {
-    return pReceiver->mHostActor->receiveMsg(&rMsg, pSender, pReceiver);
+    return pReceiver->getHost()->receiveMsg(&rMsg, pSender, pReceiver);
 }
 
 static bool isCrossoverSensor(const HitSensor* pSelf, const HitSensor* pOther);
@@ -243,9 +243,9 @@ HitSensor* addHitSensorPlayer(LiveActor* pActor, const ActorInitInfo& rInfo, con
  */
 HitSensor* addHitSensor(LiveActor* pActor, const ActorInitInfo& rInfo, const char* pName, u32 type,
                         f32 radius, u16 maxSensors, const sead::Vector3f& rOffset) {
-    HitSensor* sensor = pActor->mHitSensorKeeper->addSensor(pActor, pName, type, radius, maxSensors,
+    HitSensor* sensor = pActor->getHitSensorKeeper()->addSensor(pActor, pName, type, radius, maxSensors,
                                                             getTransPtr(pActor), nullptr, rOffset);
-    rInfo.mHitSensorDirector->initGroup(sensor);
+    rInfo.getHitSensorDirector()->initGroup(sensor);
     return sensor;
 }
 
@@ -431,7 +431,7 @@ HitSensor* addHitSensorEye(LiveActor* pActor, const ActorInitInfo& rInfo, const 
  * @return The number of sensors.
  */
 s32 getHitSensorNum(const LiveActor* pActor) {
-    return pActor->mHitSensorKeeper->mSensorCount;
+    return pActor->getHitSensorKeeper()->getSensorNum();
 }
 
 /**
@@ -441,7 +441,7 @@ s32 getHitSensorNum(const LiveActor* pActor) {
  * @param pFunc The compare function.
  */
 void setHitSensorSort(LiveActor* pActor, const char* pName, const SensorSortCmpFuncBase* pFunc) {
-    HitSensor* sensor = pActor->mHitSensorKeeper->getSensor(pName);
+    HitSensor* sensor = pActor->getHitSensorKeeper()->getSensor(pName);
     sensor->mSortFunc = new SensorSortCmpFunc(pFunc);
 }
 
@@ -452,7 +452,7 @@ void setHitSensorSort(LiveActor* pActor, const char* pName, const SensorSortCmpF
  * @param pPos The position to follow.
  */
 void setHitSensorPosPtr(LiveActor* pActor, const char* pName, const sead::Vector3f* pPos) {
-    pActor->mHitSensorKeeper->getSensor(pName)->setFollowPosPtr(pPos);
+    pActor->getHitSensorKeeper()->getSensor(pName)->setFollowPosPtr(pPos);
 }
 
 /**
@@ -462,7 +462,7 @@ void setHitSensorPosPtr(LiveActor* pActor, const char* pName, const sead::Vector
  * @return The sensor.
  */
 HitSensor* getHitSensor(const LiveActor* pActor, const char* pName) {
-    return pActor->mHitSensorKeeper->getSensor(pName);
+    return pActor->getHitSensorKeeper()->getSensor(pName);
 }
 
 /**
@@ -472,7 +472,7 @@ HitSensor* getHitSensor(const LiveActor* pActor, const char* pName) {
  * @param pMtx The matrix to follow.
  */
 void setHitSensorMtxPtr(LiveActor* pActor, const char* pName, const sead::Matrix34f* pMtx) {
-    pActor->mHitSensorKeeper->getSensor(pName)->setFollowMtxPtr(pMtx);
+    pActor->getHitSensorKeeper()->getSensor(pName)->setFollowMtxPtr(pMtx);
 }
 
 /**
@@ -482,7 +482,7 @@ void setHitSensorMtxPtr(LiveActor* pActor, const char* pName, const sead::Matrix
  * @param pJointName The joint name.
  */
 void setHitSensorJointMtx(LiveActor* pActor, const char* pName, const char* pJointName) {
-    HitSensor* sensor = pActor->mHitSensorKeeper->getSensor(pName);
+    HitSensor* sensor = pActor->getHitSensorKeeper()->getSensor(pName);
     sensor->setFollowMtxPtr(getJointMtxPtr(pActor, pJointName));
 }
 
@@ -502,7 +502,7 @@ const sead::Matrix34f* getHitSensorFollowMtx(HitSensor* pSensor) {
  * @return The sensor.
  */
 HitSensor* getHitSensor(const LiveActor* pActor, s32 idx) {
-    return pActor->mHitSensorKeeper->getSensor(idx);
+    return pActor->getHitSensorKeeper()->getSensor(idx);
 }
 
 /**
@@ -512,7 +512,7 @@ HitSensor* getHitSensor(const LiveActor* pActor, s32 idx) {
  * @param radius The new radius.
  */
 void setSensorRadius(LiveActor* pActor, const char* pName, f32 radius) {
-    pActor->mHitSensorKeeper->getSensor(pName)->mRadius = radius;
+    pActor->getHitSensorKeeper()->getSensor(pName)->setRadius(radius);
 }
 
 /**
@@ -522,7 +522,7 @@ void setSensorRadius(LiveActor* pActor, const char* pName, f32 radius) {
  * @param radius The new radius.
  */
 void setSensorRadius(LiveActor* pActor, s32 idx, f32 radius) {
-    pActor->mHitSensorKeeper->getSensor(idx)->mRadius = radius;
+    pActor->getHitSensorKeeper()->getSensor(idx)->setRadius(radius);
 }
 
 /**
@@ -531,7 +531,7 @@ void setSensorRadius(LiveActor* pActor, s32 idx, f32 radius) {
  * @param radius The new radius.
  */
 void setSensorRadius(LiveActor* pActor, f32 radius) {
-    pActor->mHitSensorKeeper->getSensor(static_cast<const char*>(nullptr))->mRadius = radius;
+    pActor->getHitSensorKeeper()->getSensor(static_cast<const char*>(nullptr))->setRadius(radius);
 }
 
 /**
@@ -541,7 +541,7 @@ void setSensorRadius(LiveActor* pActor, f32 radius) {
  * @return The radius.
  */
 f32 getSensorRadius(const LiveActor* pActor, const char* pName) {
-    return pActor->mHitSensorKeeper->getSensor(pName)->mRadius;
+    return pActor->getHitSensorKeeper()->getSensor(pName)->getRadius();
 }
 
 /**
@@ -551,7 +551,7 @@ f32 getSensorRadius(const LiveActor* pActor, const char* pName) {
  * @return The radius.
  */
 f32 getSensorRadius(const LiveActor* pActor, s32 idx) {
-    return pActor->mHitSensorKeeper->getSensor(idx)->mRadius;
+    return pActor->getHitSensorKeeper()->getSensor(idx)->getRadius();
 }
 
 /**
@@ -560,7 +560,7 @@ f32 getSensorRadius(const LiveActor* pActor, s32 idx) {
  * @return The radius.
  */
 f32 getSensorRadius(const LiveActor* pActor) {
-    return pActor->mHitSensorKeeper->getSensor(static_cast<const char*>(nullptr))->mRadius;
+    return pActor->getHitSensorKeeper()->getSensor(static_cast<const char*>(nullptr))->getRadius();
 }
 
 /**
@@ -570,7 +570,7 @@ f32 getSensorRadius(const LiveActor* pActor) {
  * @param rOffset The new offset.
  */
 void setSensorFollowPosOffset(LiveActor* pActor, const char* pName, const sead::Vector3f& rOffset) {
-    HitSensor* sensor = pActor->mHitSensorKeeper->getSensor(pName);
+    HitSensor* sensor = pActor->getHitSensorKeeper()->getSensor(pName);
     sensor->mFollowPosOffset.e = rOffset.e;
 }
 
@@ -581,7 +581,7 @@ void setSensorFollowPosOffset(LiveActor* pActor, const char* pName, const sead::
  * @param rOffset The new offset.
  */
 void setSensorFollowPosOffset(LiveActor* pActor, s32 idx, const sead::Vector3f& rOffset) {
-    HitSensor* sensor = pActor->mHitSensorKeeper->getSensor(idx);
+    HitSensor* sensor = pActor->getHitSensorKeeper()->getSensor(idx);
     sensor->mFollowPosOffset.e = rOffset.e;
 }
 
@@ -591,7 +591,7 @@ void setSensorFollowPosOffset(LiveActor* pActor, s32 idx, const sead::Vector3f& 
  * @param rOffset The new offset.
  */
 void setSensorFollowPosOffset(LiveActor* pActor, const sead::Vector3f& rOffset) {
-    HitSensor* sensor = pActor->mHitSensorKeeper->getSensor(static_cast<const char*>(nullptr));
+    HitSensor* sensor = pActor->getHitSensorKeeper()->getSensor(static_cast<const char*>(nullptr));
     sensor->mFollowPosOffset.e = rOffset.e;
 }
 
@@ -602,7 +602,7 @@ void setSensorFollowPosOffset(LiveActor* pActor, const sead::Vector3f& rOffset) 
  * @return The offset.
  */
 const sead::Vector3f& getSensorFollowPosOffset(const LiveActor* pActor, const char* pName) {
-    return pActor->mHitSensorKeeper->getSensor(pName)->mFollowPosOffset;
+    return pActor->getHitSensorKeeper()->getSensor(pName)->getFollowPosOffset();
 }
 
 /**
@@ -612,7 +612,7 @@ const sead::Vector3f& getSensorFollowPosOffset(const LiveActor* pActor, const ch
  * @return The offset.
  */
 const sead::Vector3f& getSensorFollowPosOffset(const LiveActor* pActor, s32 idx) {
-    return pActor->mHitSensorKeeper->getSensor(idx)->mFollowPosOffset;
+    return pActor->getHitSensorKeeper()->getSensor(idx)->getFollowPosOffset();
 }
 
 /**
@@ -621,7 +621,7 @@ const sead::Vector3f& getSensorFollowPosOffset(const LiveActor* pActor, s32 idx)
  * @return The offset.
  */
 const sead::Vector3f& getSensorFollowPosOffset(const LiveActor* pActor) {
-    return pActor->mHitSensorKeeper->getSensor(static_cast<const char*>(nullptr))->mFollowPosOffset;
+    return pActor->getHitSensorKeeper()->getSensor(static_cast<const char*>(nullptr))->getFollowPosOffset();
 }
 
 /**
@@ -687,19 +687,19 @@ void resetActorSensorController(ActorSensorController* pController) {
  */
 void calcPosBetweenSensors(sead::Vector3f* pOut, const HitSensor* pA, const HitSensor* pB,
                            f32 offset) {
-    sead::Vector3f dir = pB->mPos;
-    dir -= pA->mPos;
+    sead::Vector3f dir = pB->getPos();
+    dir -= pA->getPos();
 
     if (isNearZero(dir, 0.001f)) {
-        pOut->e = pA->mPos.e;
+        pOut->e = pA->getPos().e;
         return;
     }
 
     normalize(&dir);
-    f32 gap = (pA->mPos - pB->mPos).length() - (pA->mRadius + pB->mRadius);
+    f32 gap = (pA->getPos() - pB->getPos()).length() - (pA->getRadius() + pB->getRadius());
     pOut->e = dir.e;
-    *pOut *= pA->mRadius + gap * 0.5f + offset;
-    *pOut += pA->mPos;
+    *pOut *= pA->getRadius() + gap * 0.5f + offset;
+    *pOut += pA->getPos();
 }
 
 /**
@@ -710,8 +710,8 @@ void calcPosBetweenSensors(sead::Vector3f* pOut, const HitSensor* pA, const HitS
  * @return The projected distance.
  */
 f32 calcDistanceV(const sead::Vector3f& rDir, const HitSensor* pA, const HitSensor* pB) {
-    sead::Vector3f diff = pB->mPos;
-    diff -= pA->mPos;
+    sead::Vector3f diff = pB->getPos();
+    diff -= pA->getPos();
 
     if (isNearZero(diff, 0.001f)) {
         return diff.length();
@@ -729,7 +729,7 @@ f32 calcDistanceV(const sead::Vector3f& rDir, const HitSensor* pA, const HitSens
  * @param pTo The end sensor.
  */
 void calcDirBetweenSensors(sead::Vector3f* pOut, const HitSensor* pFrom, const HitSensor* pTo) {
-    pOut->setSub(pTo->mPos, pFrom->mPos);
+    pOut->setSub(pTo->getPos(), pFrom->getPos());
     normalizeOrZero(pOut);
 }
 
@@ -740,7 +740,7 @@ void calcDirBetweenSensors(sead::Vector3f* pOut, const HitSensor* pFrom, const H
  * @param pTo The end sensor.
  */
 void calcDirBetweenSensorsH(sead::Vector3f* pOut, const HitSensor* pFrom, const HitSensor* pTo) {
-    pOut->setSub(pTo->mPos, pFrom->mPos);
+    pOut->setSub(pTo->getPos(), pFrom->getPos());
     pOut->y = 0.0f;
     normalizeOrZero(pOut);
 }
@@ -752,7 +752,7 @@ void calcDirBetweenSensorsH(sead::Vector3f* pOut, const HitSensor* pFrom, const 
  * @param pTo The end sensor.
  */
 void calcVecBetweenSensors(sead::Vector3f* pOut, const HitSensor* pFrom, const HitSensor* pTo) {
-    pOut->setSub(pTo->mPos, pFrom->mPos);
+    pOut->setSub(pTo->getPos(), pFrom->getPos());
 }
 
 /**
@@ -762,7 +762,7 @@ void calcVecBetweenSensors(sead::Vector3f* pOut, const HitSensor* pFrom, const H
  * @param pTo The end sensor.
  */
 void calcVecBetweenSensorsH(sead::Vector3f* pOut, const HitSensor* pFrom, const HitSensor* pTo) {
-    pOut->setSub(pTo->mPos, pFrom->mPos);
+    pOut->setSub(pTo->getPos(), pFrom->getPos());
     pOut->y = 0.0f;
 }
 
@@ -775,8 +775,8 @@ void calcVecBetweenSensorsH(sead::Vector3f* pOut, const HitSensor* pFrom, const 
  */
 bool isHitBoxSensor(const HitSensor* pSensor, const sead::Vector3f& rPos,
                     const sead::BoundBox3f& rBox) {
-    sead::Vector3f local = pSensor->mPos - rPos;
-    return isInsideBoxWithRadius(rBox, local, pSensor->mRadius);
+    sead::Vector3f local = pSensor->getPos() - rPos;
+    return isInsideBoxWithRadius(rBox, local, pSensor->getRadius());
 }
 
 /**
@@ -785,7 +785,7 @@ bool isHitBoxSensor(const HitSensor* pSensor, const sead::Vector3f& rPos,
  * @return The radius.
  */
 f32 getSensorRadius(const HitSensor* pSensor) {
-    return pSensor->mRadius;
+    return pSensor->getRadius();
 }
 
 /**
@@ -794,7 +794,7 @@ f32 getSensorRadius(const HitSensor* pSensor) {
  * @return The position.
  */
 const sead::Vector3f& getSensorPos(const HitSensor* pSensor) {
-    return pSensor->mPos;
+    return pSensor->getPos();
 }
 
 /**
@@ -809,8 +809,8 @@ bool isHitBoxSensor(const HitSensor* pSensor, const sead::Matrix34f& rMtx,
     sead::Matrix34f inv;
     inv.setInverse(rMtx);
     sead::Vector3f local;
-    local.setMul(inv, pSensor->mPos);
-    return isInsideBoxWithRadius(rBox, local, pSensor->mRadius);
+    local.setMul(inv, pSensor->getPos());
+    return isInsideBoxWithRadius(rBox, local, pSensor->getRadius());
 }
 
 /**
@@ -824,9 +824,9 @@ bool isHitBoxSensor(const HitSensor* pSensor, const sead::Matrix34f& rMtx,
 bool isHitCylinderSensor(const HitSensor* pSensor, const sead::Vector3f& rPos,
                          const sead::Vector3f& rAxis, f32 radius) {
     sead::Vector3f vertical;
-    sead::Vector3f diff = rPos - pSensor->mPos;
+    sead::Vector3f diff = rPos - pSensor->getPos();
     verticalizeVec(&vertical, rAxis, diff);
-    return vertical.length() <= pSensor->mRadius + radius;
+    return vertical.length() <= pSensor->getRadius() + radius;
 }
 
 /**
@@ -839,7 +839,7 @@ bool isHitCylinderSensor(const HitSensor* pSensor, const sead::Vector3f& rPos,
  */
 bool isHitCylinderSensor(const HitSensor* pSensor, const HitSensor* pOther,
                          const sead::Vector3f& rAxis, f32 radius) {
-    return isHitCylinderSensor(pSensor, pOther->mPos, rAxis, radius);
+    return isHitCylinderSensor(pSensor, pOther->getPos(), rAxis, radius);
 }
 
 /**
@@ -856,11 +856,11 @@ bool isHitCylinderSensor(sead::Vector3f* pHitPos, sead::Vector3f* pHitNormal,
                          const HitSensor* pSensor, const sead::Vector3f& rPos,
                          const sead::Vector3f& rAxis, f32 radius) {
     sead::Vector3f vertical;
-    sead::Vector3f diff = pSensor->mPos - rPos;
+    sead::Vector3f diff = pSensor->getPos() - rPos;
     verticalizeVec(&vertical, rAxis, diff);
     f32 dist = vertical.length();
 
-    if (dist > pSensor->mRadius + radius) {
+    if (dist > pSensor->getRadius() + radius) {
         return false;
     }
 
@@ -871,7 +871,7 @@ bool isHitCylinderSensor(sead::Vector3f* pHitPos, sead::Vector3f* pHitNormal,
             }
 
             if (pHitPos != nullptr) {
-                pHitPos->e = pSensor->mPos.e;
+                pHitPos->e = pSensor->getPos().e;
             }
         } else {
             sead::Vector3f dir = vertical * (1.0f / dist);
@@ -881,7 +881,7 @@ bool isHitCylinderSensor(sead::Vector3f* pHitPos, sead::Vector3f* pHitNormal,
             }
 
             if (pHitPos != nullptr) {
-                *pHitPos = (pSensor->mPos - vertical) + dir * (dist + (radius - pSensor->mRadius));
+                *pHitPos = (pSensor->getPos() - vertical) + dir * (dist + (radius - pSensor->getRadius()));
             }
         }
     }
@@ -902,7 +902,7 @@ bool isHitCylinderSensor(sead::Vector3f* pHitPos, sead::Vector3f* pHitNormal,
 bool isHitCylinderSensor(sead::Vector3f* pHitPos, sead::Vector3f* pHitNormal,
                          const HitSensor* pSensor, const HitSensor* pOther,
                          const sead::Vector3f& rAxis, f32 radius) {
-    return isHitCylinderSensor(pHitPos, pHitNormal, pSensor, pOther->mPos, rAxis, radius);
+    return isHitCylinderSensor(pHitPos, pHitNormal, pSensor, pOther->getPos(), rAxis, radius);
 }
 
 /**
@@ -920,7 +920,7 @@ bool isHitCircleSensor(sead::Vector3f* pHitPos, sead::Vector3f* pHitNormal,
                        const HitSensor* pSensor, const sead::Vector3f& rCenter,
                        const sead::Vector3f& rNormal, f32 circleRadius, f32 width) {
     sead::Vector3f vertical;
-    sead::Vector3f diff = pSensor->mPos - rCenter;
+    sead::Vector3f diff = pSensor->getPos() - rCenter;
     verticalizeVec(&vertical, rNormal, diff);
 
     if (normalizeOrZero(&vertical)) {
@@ -928,10 +928,10 @@ bool isHitCircleSensor(sead::Vector3f* pHitPos, sead::Vector3f* pHitNormal,
     }
 
     sead::Vector3f edge = vertical * circleRadius + rCenter;
-    diff = pSensor->mPos - edge;
+    diff = pSensor->getPos() - edge;
     f32 dist = diff.length();
 
-    if (dist > pSensor->mRadius + width) {
+    if (dist > pSensor->getRadius() + width) {
         return false;
     }
 
@@ -950,7 +950,7 @@ bool isHitCircleSensor(sead::Vector3f* pHitPos, sead::Vector3f* pHitNormal,
             }
 
             if (pHitPos != nullptr) {
-                *pHitPos = edge + diff * (dist + (width - pSensor->mRadius));
+                *pHitPos = edge + diff * (dist + (width - pSensor->getRadius()));
             }
         }
     }
@@ -972,7 +972,7 @@ bool isHitCircleSensor(sead::Vector3f* pHitPos, sead::Vector3f* pHitNormal,
 bool isHitCircleSensor(sead::Vector3f* pHitPos, sead::Vector3f* pHitNormal,
                        const HitSensor* pSensor, const HitSensor* pCenter,
                        const sead::Vector3f& rNormal, f32 circleRadius, f32 width) {
-    return isHitCircleSensor(pHitPos, pHitNormal, pSensor, pCenter->mPos, rNormal, circleRadius,
+    return isHitCircleSensor(pHitPos, pHitNormal, pSensor, pCenter->getPos(), rNormal, circleRadius,
                              width);
 }
 
@@ -988,17 +988,17 @@ bool isHitCircleSensor(sead::Vector3f* pHitPos, sead::Vector3f* pHitNormal,
 bool isHitCircleSensor(const HitSensor* pSensor, const sead::Vector3f& rCenter,
                        const sead::Vector3f& rNormal, f32 circleRadius, f32 width) {
     sead::Vector3f vertical;
-    sead::Vector3f diff = pSensor->mPos - rCenter;
+    sead::Vector3f diff = pSensor->getPos() - rCenter;
     verticalizeVec(&vertical, rNormal, diff);
 
     if (normalizeOrZero(&vertical)) {
-        f32 height = (pSensor->mPos - rCenter).dot(rNormal);
+        f32 height = (pSensor->getPos() - rCenter).dot(rNormal);
         return sead::Mathf::sqrt(circleRadius * circleRadius + height * height) <=
-               pSensor->mRadius + width;
+               pSensor->getRadius() + width;
     }
 
     sead::Vector3f edge = vertical * circleRadius + rCenter;
-    return (pSensor->mPos - edge).length() <= pSensor->mRadius + width;
+    return (pSensor->getPos() - edge).length() <= pSensor->getRadius() + width;
 }
 
 /**
@@ -1012,7 +1012,7 @@ bool isHitCircleSensor(const HitSensor* pSensor, const sead::Vector3f& rCenter,
  */
 bool isHitCircleSensor(const HitSensor* pSensor, const HitSensor* pCenter,
                        const sead::Vector3f& rNormal, f32 circleRadius, f32 width) {
-    return isHitCircleSensor(pSensor, pCenter->mPos, rNormal, circleRadius, width);
+    return isHitCircleSensor(pSensor, pCenter->getPos(), rNormal, circleRadius, width);
 }
 
 /**
@@ -1021,7 +1021,7 @@ bool isHitCircleSensor(const HitSensor* pSensor, const HitSensor* pCenter,
  * @return The host actor.
  */
 LiveActor* getSensorHost(const HitSensor* pSensor) {
-    return pSensor->mHostActor;
+    return pSensor->getHost();
 }
 
 /**
@@ -1030,7 +1030,7 @@ LiveActor* getSensorHost(const HitSensor* pSensor) {
  * @return The host's translation.
  */
 const sead::Vector3f& getActorTrans(const HitSensor* pSensor) {
-    return getTrans(pSensor->mHostActor);
+    return getTrans(pSensor->getHost());
 }
 
 /**
@@ -1039,7 +1039,7 @@ const sead::Vector3f& getActorTrans(const HitSensor* pSensor) {
  * @return The host's velocity.
  */
 const sead::Vector3f& getActorVelocity(const HitSensor* pSensor) {
-    return getVelocity(pSensor->mHostActor);
+    return getVelocity(pSensor->getHost());
 }
 
 /**
@@ -1049,7 +1049,7 @@ const sead::Vector3f& getActorVelocity(const HitSensor* pSensor) {
  * @return Whether the sensor has that name.
  */
 bool isSensorName(const HitSensor* pSensor, const char* pName) {
-    return isEqualString(pSensor->mName, pName);
+    return isEqualString(pSensor->getName(), pName);
 }
 
 /**
@@ -1059,7 +1059,7 @@ bool isSensorName(const HitSensor* pSensor, const char* pName) {
  * @return Whether the host has that name.
  */
 bool isSensorHostName(const HitSensor* pSensor, const char* pName) {
-    return isEqualString(pSensor->mHostActor->getName(), pName);
+    return isEqualString(pSensor->getHost()->getName(), pName);
 }
 
 /**
@@ -1069,7 +1069,7 @@ bool isSensorHostName(const HitSensor* pSensor, const char* pName) {
  * @return Whether the host's name contains the string.
  */
 bool isSensorHostSubName(const HitSensor* pSensor, const char* pName) {
-    return searchSubString(pSensor->mHostActor->getName(), pName) != nullptr;
+    return searchSubString(pSensor->getHost()->getName(), pName) != nullptr;
 }
 
 /**
@@ -1077,8 +1077,8 @@ bool isSensorHostSubName(const HitSensor* pSensor, const char* pName) {
  * @param pActor The actor.
  */
 void validateHitSensors(LiveActor* pActor) {
-    if (pActor->mHitSensorKeeper != nullptr) {
-        pActor->mHitSensorKeeper->validate();
+    if (pActor->getHitSensorKeeper() != nullptr) {
+        pActor->getHitSensorKeeper()->validate();
     }
 }
 
@@ -1087,8 +1087,8 @@ void validateHitSensors(LiveActor* pActor) {
  * @param pActor The actor.
  */
 void invalidateHitSensors(LiveActor* pActor) {
-    if (pActor->mHitSensorKeeper != nullptr) {
-        pActor->mHitSensorKeeper->invalidate();
+    if (pActor->getHitSensorKeeper() != nullptr) {
+        pActor->getHitSensorKeeper()->invalidate();
     }
 }
 
@@ -1107,7 +1107,7 @@ bool isSensorValid(const HitSensor* pSensor) {
  * @param pName The sensor name.
  */
 void validateHitSensor(LiveActor* pActor, const char* pName) {
-    pActor->mHitSensorKeeper->getSensor(pName)->validate();
+    pActor->getHitSensorKeeper()->getSensor(pName)->validate();
 }
 
 /**
@@ -1116,7 +1116,7 @@ void validateHitSensor(LiveActor* pActor, const char* pName) {
  * @param pName The sensor name.
  */
 void invalidateHitSensor(LiveActor* pActor, const char* pName) {
-    pActor->mHitSensorKeeper->getSensor(pName)->invalidate();
+    pActor->getHitSensorKeeper()->getSensor(pName)->invalidate();
 }
 
 /**
@@ -4740,8 +4740,8 @@ bool isMsgPlayerTrampleForCrossoverSensor(const SensorMsg* pMsg, const HitSensor
 }
 
 static bool isCrossoverSensor(const HitSensor* pSelf, const HitSensor* pOther) {
-    sead::Vector3f dir = pSelf->mPos - pOther->mPos;
-    sead::Vector3f gravity = getGravity(pOther->mHostActor);
+    sead::Vector3f dir = pSelf->getPos() - pOther->getPos();
+    sead::Vector3f gravity = getGravity(pOther->getHost());
 
     if (normalizeOrZero(&dir)) {
         return false;
@@ -4754,12 +4754,12 @@ static bool isCrossoverSensor(const HitSensor* pSelf, const HitSensor* pOther) {
         return false;
     }
 
-    if (dot < 0.9659258f && pSelf->mSensorType == HitSensorType::KoopaJr) {
+    if (dot < 0.9659258f && pSelf->isType(HitSensorType::KoopaJr)) {
         return false;
     }
 
     sead::Vector3f velDir;
-    normalizeOrZero(&velDir, getVelocity(pSelf->mHostActor));
+    normalizeOrZero(&velDir, getVelocity(pSelf->getHost()));
 
     if (dir.y < 0.0f) {
         return false;
@@ -4788,15 +4788,15 @@ bool isMsgPlayerUpperPunchForCrossoverSensor(const SensorMsg* pMsg, const HitSen
         return false;
     }
 
-    sead::Vector3f dir = pSelf->mPos - pOther->mPos;
-    sead::Vector3f gravity = getGravity(pOther->mHostActor);
+    sead::Vector3f dir = pSelf->getPos() - pOther->getPos();
+    sead::Vector3f gravity = getGravity(pOther->getHost());
     normalize(&dir);
 
     if (gravity.dot(dir) < 0.34202015f) {
         return false;
     }
 
-    return !(gravity.dot(getVelocity(pSelf->mHostActor)) >= -speed);
+    return !(gravity.dot(getVelocity(pSelf->getHost())) >= -speed);
 }
 
 /**
@@ -4827,15 +4827,15 @@ bool sendMsgEnemyAttackForCrossoverCylinderSensor(HitSensor* pReceiver, HitSenso
                                                   const sead::Vector3f& rAxis, f32 radius) {
     f32 innerRadius = sead::Mathf::clamp(radius - 20.0f, 0.0f, radius);
     {
-        sead::Vector3f dir = pReceiver->mPos - pSender->mPos;
-        sead::Vector3f gravity = getGravity(pSender->mHostActor);
+        sead::Vector3f dir = pReceiver->getPos() - pSender->getPos();
+        sead::Vector3f gravity = getGravity(pSender->getHost());
         verticalizeVec(&dir, rAxis, dir);
         dir.length();
 
         if (!(dir.squaredLength() < innerRadius * innerRadius)) {
             normalize(&dir);
             sead::Vector3f velDir;
-            normalizeOrZero(&velDir, getVelocity(pSender->mHostActor));
+            normalizeOrZero(&velDir, getVelocity(pSender->getHost()));
 
             if (!(dir.y < 0.0f)) {
                 f32 velDot = velDir.dot(-gravity);
@@ -4862,7 +4862,7 @@ bool sendMsgEnemyAttackForCrossoverCylinderSensor(HitSensor* pReceiver, HitSenso
  * @return Whether the sensor has that type.
  */
 bool isSensorType(const HitSensor* pSensor, s32 type) {
-    return pSensor->mSensorType == static_cast<HitSensorType>(type);
+    return pSensor->isType(static_cast<HitSensorType>(type));
 }
 
 /**
@@ -4880,7 +4880,7 @@ bool isSensorPlayer(const HitSensor* pSensor) {
  * @return Whether the sensor has that type.
  */
 bool isSensorPlayerType(const HitSensor* pSensor) {
-    return pSensor->mSensorType == HitSensorType::Player;
+    return pSensor->isType(HitSensorType::Player);
 }
 
 /**
@@ -4889,7 +4889,7 @@ bool isSensorPlayerType(const HitSensor* pSensor) {
  * @return Whether the sensor has that type.
  */
 bool isSensorPlayerEye(const HitSensor* pSensor) {
-    return pSensor->mSensorType == HitSensorType::PlayerEye;
+    return pSensor->isType(HitSensorType::PlayerEye);
 }
 
 /**
@@ -4907,7 +4907,7 @@ bool isSensorPlayerOrPlayerWeapon(const HitSensor* pSensor) {
  * @return Whether the sensor has that type.
  */
 bool isSensorKickKoura(const HitSensor* pSensor) {
-    return pSensor->mSensorType == HitSensorType::KickKoura;
+    return pSensor->isType(HitSensorType::KickKoura);
 }
 
 /**
@@ -4916,7 +4916,7 @@ bool isSensorKickKoura(const HitSensor* pSensor) {
  * @return Whether the sensor has that type.
  */
 bool isSensorNpc(const HitSensor* pSensor) {
-    return pSensor->mSensorType == HitSensorType::Npc;
+    return pSensor->isType(HitSensorType::Npc);
 }
 
 /**
@@ -4925,7 +4925,7 @@ bool isSensorNpc(const HitSensor* pSensor) {
  * @return Whether the sensor has that type.
  */
 bool isSensorNpcAvoid(const HitSensor* pSensor) {
-    return pSensor->mSensorType == HitSensorType::NpcAvoid;
+    return pSensor->isType(HitSensorType::NpcAvoid);
 }
 
 /**
@@ -4934,7 +4934,7 @@ bool isSensorNpcAvoid(const HitSensor* pSensor) {
  * @return Whether the sensor has that type.
  */
 bool isSensorRide(const HitSensor* pSensor) {
-    return pSensor->mSensorType == HitSensorType::Ride;
+    return pSensor->isType(HitSensorType::Ride);
 }
 
 /**
@@ -4943,7 +4943,7 @@ bool isSensorRide(const HitSensor* pSensor) {
  * @return Whether the sensor has that type.
  */
 bool isSensorEye(const HitSensor* pSensor) {
-    return pSensor->mSensorType == HitSensorType::Eye;
+    return pSensor->isType(HitSensorType::Eye);
 }
 
 /**
@@ -4963,7 +4963,7 @@ bool isSensorEnemy(const HitSensor* pSensor) {
  * @return Whether the sensor has that type.
  */
 bool isSensorEnemyType(const HitSensor* pSensor) {
-    return pSensor->mSensorType == HitSensorType::Enemy;
+    return pSensor->isType(HitSensorType::Enemy);
 }
 
 /**
@@ -4972,7 +4972,7 @@ bool isSensorEnemyType(const HitSensor* pSensor) {
  * @return Whether the sensor has that type.
  */
 bool isSensorEnemyBody(const HitSensor* pSensor) {
-    return pSensor->mSensorType == HitSensorType::EnemyBody;
+    return pSensor->isType(HitSensorType::EnemyBody);
 }
 
 /**
@@ -4981,7 +4981,7 @@ bool isSensorEnemyBody(const HitSensor* pSensor) {
  * @return Whether the sensor has that type.
  */
 bool isSensorEnemyAttack(const HitSensor* pSensor) {
-    return pSensor->mSensorType == HitSensorType::EnemyAttack;
+    return pSensor->isType(HitSensorType::EnemyAttack);
 }
 
 /**
@@ -4990,7 +4990,7 @@ bool isSensorEnemyAttack(const HitSensor* pSensor) {
  * @return Whether the sensor has that type.
  */
 bool isSensorDossun(const HitSensor* pSensor) {
-    return pSensor->mSensorType == HitSensorType::Dossun;
+    return pSensor->isType(HitSensorType::Dossun);
 }
 
 /**
@@ -4999,7 +4999,7 @@ bool isSensorDossun(const HitSensor* pSensor) {
  * @return Whether the sensor has that type.
  */
 bool isSensorKillerMagnum(const HitSensor* pSensor) {
-    return pSensor->mSensorType == HitSensorType::KillerMagnum;
+    return pSensor->isType(HitSensorType::KillerMagnum);
 }
 
 /**
@@ -5008,7 +5008,7 @@ bool isSensorKillerMagnum(const HitSensor* pSensor) {
  * @return Whether the sensor has that type.
  */
 bool isSensorMapObj(const HitSensor* pSensor) {
-    return pSensor->mSensorType == HitSensorType::MapObj;
+    return pSensor->isType(HitSensorType::MapObj);
 }
 
 /**
@@ -5017,7 +5017,7 @@ bool isSensorMapObj(const HitSensor* pSensor) {
  * @return Whether the sensor has that type.
  */
 bool isSensorCollision(const HitSensor* pSensor) {
-    return pSensor->mSensorType == HitSensorType::CollisionParts;
+    return pSensor->isType(HitSensorType::CollisionParts);
 }
 
 /**
@@ -5026,7 +5026,7 @@ bool isSensorCollision(const HitSensor* pSensor) {
  * @return Whether the sensor has that type.
  */
 bool isSensorPlayerFireBall(const HitSensor* pSensor) {
-    return pSensor->mSensorType == HitSensorType::PlayerFireBall;
+    return pSensor->isType(HitSensorType::PlayerFireBall);
 }
 
 /**
@@ -5035,7 +5035,7 @@ bool isSensorPlayerFireBall(const HitSensor* pSensor) {
  * @return Whether the sensor has that type.
  */
 bool isSensorHoldObj(const HitSensor* pSensor) {
-    return pSensor->mSensorType == HitSensorType::HoldObj;
+    return pSensor->isType(HitSensorType::HoldObj);
 }
 
 /**
@@ -5044,7 +5044,7 @@ bool isSensorHoldObj(const HitSensor* pSensor) {
  * @return Whether the sensor has that type.
  */
 bool isSensorMultiPlayer(const HitSensor* pSensor) {
-    return pSensor->mSensorType == HitSensorType::MultiPlayer;
+    return pSensor->isType(HitSensorType::MultiPlayer);
 }
 
 /**
@@ -5053,7 +5053,7 @@ bool isSensorMultiPlayer(const HitSensor* pSensor) {
  * @return Whether the sensor has that type.
  */
 bool isSensorKoopaJr(const HitSensor* pSensor) {
-    return pSensor->mSensorType == HitSensorType::KoopaJr;
+    return pSensor->isType(HitSensorType::KoopaJr);
 }
 
 /**
@@ -5062,7 +5062,7 @@ bool isSensorKoopaJr(const HitSensor* pSensor) {
  * @return Whether the sensor has that type.
  */
 bool isSensorBindableGigaBell(const HitSensor* pSensor) {
-    return pSensor->mSensorType == HitSensorType::BindableGigaBell;
+    return pSensor->isType(HitSensorType::BindableGigaBell);
 }
 
 /**
@@ -5071,7 +5071,7 @@ bool isSensorBindableGigaBell(const HitSensor* pSensor) {
  * @return Whether the sensor has that type.
  */
 bool isSensorBindableGoal(const HitSensor* pSensor) {
-    return pSensor->mSensorType == HitSensorType::BindableGoal;
+    return pSensor->isType(HitSensorType::BindableGoal);
 }
 
 /**
@@ -5080,7 +5080,7 @@ bool isSensorBindableGoal(const HitSensor* pSensor) {
  * @return Whether the sensor has that type.
  */
 bool isSensorBindableGoalItem(const HitSensor* pSensor) {
-    return pSensor->mSensorType == HitSensorType::BindableGoalItem;
+    return pSensor->isType(HitSensorType::BindableGoalItem);
 }
 
 /**
@@ -5089,7 +5089,7 @@ bool isSensorBindableGoalItem(const HitSensor* pSensor) {
  * @return Whether the sensor has that type.
  */
 bool isSensorBindableAllPlayer(const HitSensor* pSensor) {
-    return pSensor->mSensorType == HitSensorType::BindableAllPlayer;
+    return pSensor->isType(HitSensorType::BindableAllPlayer);
 }
 
 /**
@@ -5098,7 +5098,7 @@ bool isSensorBindableAllPlayer(const HitSensor* pSensor) {
  * @return Whether the sensor has that type.
  */
 bool isSensorBindableBubbleOutScreen(const HitSensor* pSensor) {
-    return pSensor->mSensorType == HitSensorType::BindableBubbleOutScreen;
+    return pSensor->isType(HitSensorType::BindableBubbleOutScreen);
 }
 
 /**
@@ -5107,7 +5107,7 @@ bool isSensorBindableBubbleOutScreen(const HitSensor* pSensor) {
  * @return Whether the sensor has that type.
  */
 bool isSensorBindableKoura(const HitSensor* pSensor) {
-    return pSensor->mSensorType == HitSensorType::BindableKoura;
+    return pSensor->isType(HitSensorType::BindableKoura);
 }
 
 /**
@@ -5116,7 +5116,7 @@ bool isSensorBindableKoura(const HitSensor* pSensor) {
  * @return Whether the sensor has that type.
  */
 bool isSensorBindableNpc(const HitSensor* pSensor) {
-    return pSensor->mSensorType == HitSensorType::BindableNpc;
+    return pSensor->isType(HitSensorType::BindableNpc);
 }
 
 /**
@@ -5125,7 +5125,7 @@ bool isSensorBindableNpc(const HitSensor* pSensor) {
  * @return Whether the sensor has that type.
  */
 bool isSensorBindableRouteDokan(const HitSensor* pSensor) {
-    return pSensor->mSensorType == HitSensorType::BindableRouteDokan;
+    return pSensor->isType(HitSensorType::BindableRouteDokan);
 }
 
 /**
@@ -5134,7 +5134,7 @@ bool isSensorBindableRouteDokan(const HitSensor* pSensor) {
  * @return Whether the sensor has that type.
  */
 bool isSensorBindableBubblePadInput(const HitSensor* pSensor) {
-    return pSensor->mSensorType == HitSensorType::BindableBubblePadInput;
+    return pSensor->isType(HitSensorType::BindableBubblePadInput);
 }
 
 /**
@@ -5143,7 +5143,7 @@ bool isSensorBindableBubblePadInput(const HitSensor* pSensor) {
  * @return Whether the sensor has that type.
  */
 bool isSensorBindable(const HitSensor* pSensor) {
-    return pSensor->mSensorType == HitSensorType::Bindable;
+    return pSensor->isType(HitSensorType::Bindable);
 }
 
 /**
@@ -5152,7 +5152,7 @@ bool isSensorBindable(const HitSensor* pSensor) {
  * @return Whether the host is a transparent block.
  */
 bool isSensorBlockTransparent(const HitSensor* pSensor) {
-    LiveActor* host = pSensor->mHostActor;
+    LiveActor* host = pSensor->getHost();
     return isEqualString(host->getName(), "ロング透明ブロック") ||
            isEqualString(host->getName(), "透明ブロック");
 }
@@ -5199,7 +5199,7 @@ bool isSensorGoalItemEmpty(const HitSensor* pSensor) {
  * @return Whether the host is Plessie.
  */
 bool isSensorPlessie(const HitSensor* pSensor) {
-    return isEqualString(sead::SafeString(pSensor->mHostActor->getName()),
+    return isEqualString(sead::SafeString(pSensor->getHost()->getName()),
                          sead::SafeString("ライドン"));
 }
 
@@ -5209,7 +5209,7 @@ bool isSensorPlessie(const HitSensor* pSensor) {
  * @return Whether the host is a potted Piranha Plant.
  */
 bool isSensorPackunWithPot(const HitSensor* pSensor) {
-    LiveActor* host = pSensor->mHostActor;
+    LiveActor* host = pSensor->getHost();
     return isEqualString(host->getName(), "パックンフラワー（鉢植えあり）") ||
            isEqualString(host->getName(), "PackunFlowerWithPotFur") ||
            isEqualString(host->getName(), "PackunFlowerWithPot");
@@ -5234,8 +5234,8 @@ bool isSensorBindableAll(const HitSensor* pSensor) {
  * @return Whether the sensor is simple.
  */
 bool isSensorSimple(const HitSensor* pSensor) {
-    if (pSensor->mSensorType == HitSensorType::EnemySimple ||
-        pSensor->mSensorType == HitSensorType::MapObjSimple) {
+    if (pSensor->isType(HitSensorType::EnemySimple) ||
+        pSensor->isType(HitSensorType::MapObjSimple)) {
         return true;
     }
 
@@ -5247,7 +5247,7 @@ bool isSensorSimple(const HitSensor* pSensor) {
  * @param pActor The actor.
  */
 void updateHitSensorsAll(LiveActor* pActor) {
-    pActor->mHitSensorKeeper->update();
+    pActor->getHitSensorKeeper()->update();
 }
 
 /**
@@ -5257,7 +5257,7 @@ void updateHitSensorsAll(LiveActor* pActor) {
  * @return Whether the actor owns the sensor.
  */
 bool isMySensor(const HitSensor* pSensor, const LiveActor* pActor) {
-    return pSensor->mHostActor == pActor;
+    return pSensor->getHost() == pActor;
 }
 
 /**
@@ -5271,7 +5271,7 @@ bool isSensorHitAnyPlane(const HitSensor* pSensor, const HitSensor* pPlane,
                          const sead::Vector3f& rNormal) {
     f32 radius = pPlane->mRadius;
     sead::Vector3f parallel;
-    sead::Vector3f diff = pSensor->mPos - pPlane->mPos;
+    sead::Vector3f diff = pSensor->getPos() - pPlane->mPos;
     parallelizeVec(&parallel, rNormal, diff);
     return parallel.squaredLength() < radius * radius;
 }
@@ -5287,8 +5287,8 @@ bool isSensorHitRingShape(const HitSensor* pSensor, const HitSensor* pRing, f32 
     sead::Matrix34f inv;
     inv.setInverse(*pRing->mHostActor->getBaseMtx());
     sead::Vector3f local;
-    local.setMul(inv, pSensor->mPos);
-    return sead::Mathf::abs(local.y) < width * 0.5f + pSensor->mRadius;
+    local.setMul(inv, pSensor->getPos());
+    return sead::Mathf::abs(local.y) < width * 0.5f + pSensor->getRadius();
 }
 
 /**
@@ -5302,7 +5302,7 @@ void sendMsgPushAndKillVelocityToTarget(LiveActor* pActor, HitSensor* pSelf, Hit
         return;
     }
 
-    sead::Vector3f dir = pTarget->mPos - pSelf->mPos;
+    sead::Vector3f dir = pTarget->mPos - pSelf->getPos();
 
     if (normalizeOrZero(&dir)) {
         dir.e = sead::Vector3f::ez.e;
@@ -5322,7 +5322,7 @@ void sendMsgPushAndKillVelocityToTarget(LiveActor* pActor, HitSensor* pSelf, Hit
  */
 void pushAndAddVelocity(LiveActor* pActor, const HitSensor* pOther, const HitSensor* pSelf,
                         f32 speed) {
-    sead::Vector3f dir = pSelf->mPos - pOther->mPos;
+    sead::Vector3f dir = pSelf->getPos() - pOther->getPos();
     normalizeOrDirZ(&dir);
     f32 addSpeed = speed - getVelocity(pActor).dot(dir);
 
@@ -5341,7 +5341,7 @@ void pushAndAddVelocity(LiveActor* pActor, const HitSensor* pOther, const HitSen
  */
 void pushAndAddVelocityH(LiveActor* pActor, const HitSensor* pOther, const HitSensor* pSelf,
                          f32 speed) {
-    sead::Vector3f dir = pSelf->mPos - pOther->mPos;
+    sead::Vector3f dir = pSelf->getPos() - pOther->getPos();
     dir.y = 0.0f;
     normalizeOrDirZ(&dir);
     f32 addSpeed = speed - getVelocity(pActor).dot(dir);
@@ -5460,7 +5460,7 @@ al::HitSensor* findNearestAttackSensor(const al::HitSensor* pSensor) {
 
     for (u32 i = 0; i != num; i++) {
         al::HitSensor* other = pSensor->mSensors[i];
-        f32 dist = (other->mPos - pSensor->mPos).length();
+        f32 dist = (other->getPos() - pSensor->getPos()).length();
 
         if (dist < nearestDist || nearest == nullptr) {
             nearestDist = dist;

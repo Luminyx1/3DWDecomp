@@ -37,6 +37,20 @@
 #include "Project/Model/SimpleModelG3D.hpp"
 
 namespace al {
+namespace {
+inline alModelCafe* getModelCafe(const LiveActor* pActor) {
+    return pActor->getModelKeeper()->getModelCafe();
+}
+
+inline SimpleModelG3D* getModelG3D(const LiveActor* pActor) {
+    return getModelCafe(pActor)->getModelG3D();
+}
+
+inline nn::g3d::ModelObj* getModelObj(const LiveActor* pActor) {
+    return getModelG3D(pActor)->getModelObj();
+}
+}  // namespace
+
 /**
  * Updates the wet state of an actor from the material code area it is in.
  * @param pActor The actor.
@@ -125,8 +139,8 @@ void resetMaterialCode(LiveActor* pActor) {
  * @param pAlpha The alpha.
  */
 void setModelAlphaPtr(LiveActor* pActor, f32* pAlpha) {
-    if (pActor->mModelKeeper != nullptr) {
-        pActor->mModelKeeper->setGlobalAlpha(pAlpha);
+    if (pActor->getModelKeeper() != nullptr) {
+        pActor->getModelKeeper()->setGlobalAlpha(pAlpha);
     }
 }
 
@@ -135,19 +149,19 @@ void setModelAlphaPtr(LiveActor* pActor, f32* pAlpha) {
  * @param pActor The actor.
  */
 void setLODForceLevel0(LiveActor* pActor) {
-    ModelKeeper* modelKeeper = pActor->mModelKeeper;
+    ModelKeeper* modelKeeper = pActor->getModelKeeper();
 
     if (modelKeeper == nullptr) {
         return;
     }
 
-    alModelCafe* model = modelKeeper->mModelCafe;
+    alModelCafe* model = modelKeeper->getModelCafe();
 
     if (model == nullptr) {
         return;
     }
 
-    SimpleModelG3D* modelG3D = model->mModelG3D;
+    SimpleModelG3D* modelG3D = model->getModelG3D();
 
     if (modelG3D == nullptr) {
         return;
@@ -163,25 +177,25 @@ void setLODForceLevel0(LiveActor* pActor) {
  */
 void showModel(LiveActor* pActor) {
     if (!isDead(pActor) && !isClipped(pActor)) {
-        if (pActor->mModelKeeper != nullptr) {
-            pActor->mModelKeeper->show();
+        if (pActor->getModelKeeper() != nullptr) {
+            pActor->getModelKeeper()->show();
         }
 
         alActorSystemFunction::addToExecutorDraw(pActor);
 
-        if (pActor->mLightKeeper != nullptr) {
-            pActor->mLightKeeper->appear(false);
+        if (pActor->getActorPrePassLightKeeper() != nullptr) {
+            pActor->getActorPrePassLightKeeper()->appear(false);
         }
 
-        if (pActor->mShadowKeeper != nullptr) {
+        if (pActor->getShadowKeeper() != nullptr) {
             showShadow(pActor);
         }
     }
 
-    pActor->mActorFlags->isHideModel = false;
+    pActor->getFlags()->isHideModel = false;
 
-    if (pActor->mSubActorKeeper != nullptr) {
-        alSubActorFunction::trySyncShowModel(pActor->mSubActorKeeper);
+    if (pActor->getSubActorKeeper() != nullptr) {
+        alSubActorFunction::trySyncShowModel(pActor->getSubActorKeeper());
     }
 }
 
@@ -190,7 +204,7 @@ void showModel(LiveActor* pActor) {
  * @param pActor The actor.
  */
 void showModelIfHide(LiveActor* pActor) {
-    if (pActor->mActorFlags->isHideModel) {
+    if (pActor->getFlags()->isHideModel) {
         showModel(pActor);
     }
 }
@@ -201,7 +215,7 @@ void showModelIfHide(LiveActor* pActor) {
  * @return Whether the model is hidden.
  */
 bool isHideModel(const LiveActor* pActor) {
-    return pActor->mActorFlags->isHideModel;
+    return pActor->getFlags()->isHideModel;
 }
 
 /**
@@ -210,25 +224,25 @@ bool isHideModel(const LiveActor* pActor) {
  */
 void hideModel(LiveActor* pActor) {
     if (!isDead(pActor) && !isClipped(pActor)) {
-        if (pActor->mModelKeeper != nullptr) {
-            pActor->mModelKeeper->hide();
+        if (pActor->getModelKeeper() != nullptr) {
+            pActor->getModelKeeper()->hide();
         }
 
-        if (pActor->mShadowKeeper != nullptr) {
+        if (pActor->getShadowKeeper() != nullptr) {
             hideShadow(pActor);
         }
 
         alActorSystemFunction::removeFromExecutorDraw(pActor);
 
-        if (pActor->mLightKeeper != nullptr) {
-            pActor->mLightKeeper->hideModel();
+        if (pActor->getActorPrePassLightKeeper() != nullptr) {
+            pActor->getActorPrePassLightKeeper()->hideModel();
         }
     }
 
-    pActor->mActorFlags->isHideModel = true;
+    pActor->getFlags()->isHideModel = true;
 
-    if (pActor->mSubActorKeeper != nullptr) {
-        alSubActorFunction::trySyncHideModel(pActor->mSubActorKeeper);
+    if (pActor->getSubActorKeeper() != nullptr) {
+        alSubActorFunction::trySyncHideModel(pActor->getSubActorKeeper());
     }
 }
 
@@ -237,7 +251,7 @@ void hideModel(LiveActor* pActor) {
  * @param pActor The actor.
  */
 void hideModelIfShow(LiveActor* pActor) {
-    if (!pActor->mActorFlags->isHideModel) {
+    if (!pActor->getFlags()->isHideModel) {
         hideModel(pActor);
     }
 }
@@ -248,7 +262,7 @@ void hideModelIfShow(LiveActor* pActor) {
  * @return Whether the actor has a model.
  */
 bool isExistModel(const LiveActor* pActor) {
-    return pActor->mModelKeeper != nullptr;
+    return pActor->getModelKeeper() != nullptr;
 }
 
 /**
@@ -260,7 +274,7 @@ void switchShowHideModelIfNearCamera(LiveActor* pActor, f32 distance) {
     const sead::Vector3f& trans = getTrans(pActor);
     const sead::Vector3f& cameraPos = getCameraPos(pActor);
     f32 cameraDistance = (trans - cameraPos).length();
-    bool isHide = pActor->mActorFlags->isHideModel;
+    bool isHide = pActor->getFlags()->isHideModel;
 
     if (cameraDistance < distance) {
         if (!isHide) {
@@ -278,14 +292,14 @@ void switchShowHideModelIfNearCamera(LiveActor* pActor, f32 distance) {
  * @param pActor The actor.
  */
 void showSilhouetteModel(LiveActor* pActor) {
-    s32 subActorNum = pActor->mSubActorKeeper->mCount;
+    s32 subActorNum = pActor->getSubActorKeeper()->getSubActorNum();
 
     for (s32 i = 0; i < subActorNum; i++) {
-        SubActorInfo* info = pActor->mSubActorKeeper->mInfos[i];
+        SubActorInfo* info = pActor->getSubActorKeeper()->getSubActorInfo(i);
 
         if (isEqualString(info->mSubActor->getName(), "シルエットモデル")) {
             showModelIfHide(info->mSubActor);
-        } else if (info->mSubActor->mSubActorKeeper != nullptr) {
+        } else if (info->mSubActor->getSubActorKeeper() != nullptr) {
             showSilhouetteModel(info->mSubActor);
         }
     }
@@ -296,14 +310,14 @@ void showSilhouetteModel(LiveActor* pActor) {
  * @param pActor The actor.
  */
 void hideSilhouetteModel(LiveActor* pActor) {
-    s32 subActorNum = pActor->mSubActorKeeper->mCount;
+    s32 subActorNum = pActor->getSubActorKeeper()->getSubActorNum();
 
     for (s32 i = 0; i < subActorNum; i++) {
-        SubActorInfo* info = pActor->mSubActorKeeper->mInfos[i];
+        SubActorInfo* info = pActor->getSubActorKeeper()->getSubActorInfo(i);
 
         if (isEqualString(info->mSubActor->getName(), "シルエットモデル")) {
             hideModelIfShow(info->mSubActor);
-        } else if (info->mSubActor->mSubActorKeeper != nullptr) {
+        } else if (info->mSubActor->getSubActorKeeper() != nullptr) {
             hideSilhouetteModel(info->mSubActor);
         }
     }
@@ -315,7 +329,7 @@ void hideSilhouetteModel(LiveActor* pActor) {
  * @return Whether the silhouette model is hidden.
  */
 bool isSilhouetteModelHidden(LiveActor* pActor) {
-    return isHideModel(alSubActorFunction::findSubActor(pActor->mSubActorKeeper, "シルエットモデル"));
+    return isHideModel(alSubActorFunction::findSubActor(pActor->getSubActorKeeper(), "シルエットモデル"));
 }
 
 /**
@@ -323,8 +337,8 @@ bool isSilhouetteModelHidden(LiveActor* pActor) {
  * @param pActor The actor.
  */
 void showSilhouetteModelIfHide(LiveActor* pActor) {
-    if (pActor->mSubActorKeeper != nullptr &&
-        isHideModel(alSubActorFunction::findSubActor(pActor->mSubActorKeeper, "シルエットモデル"))) {
+    if (pActor->getSubActorKeeper() != nullptr &&
+        isHideModel(alSubActorFunction::findSubActor(pActor->getSubActorKeeper(), "シルエットモデル"))) {
         showSilhouetteModel(pActor);
     }
 }
@@ -334,8 +348,8 @@ void showSilhouetteModelIfHide(LiveActor* pActor) {
  * @param pActor The actor.
  */
 void hideSilhouetteModelIfShow(LiveActor* pActor) {
-    if (pActor->mSubActorKeeper != nullptr &&
-        !isHideModel(alSubActorFunction::findSubActor(pActor->mSubActorKeeper, "シルエットモデル"))) {
+    if (pActor->getSubActorKeeper() != nullptr &&
+        !isHideModel(alSubActorFunction::findSubActor(pActor->getSubActorKeeper(), "シルエットモデル"))) {
         hideSilhouetteModel(pActor);
     }
 }
@@ -346,20 +360,20 @@ void hideSilhouetteModelIfShow(LiveActor* pActor) {
  * @return The silhouette model, or nullptr.
  */
 LiveActor* getSilhouetteModel(LiveActor* pActor) {
-    if (pActor->mSubActorKeeper == nullptr) {
+    if (pActor->getSubActorKeeper() == nullptr) {
         return nullptr;
     }
 
-    s32 subActorNum = pActor->mSubActorKeeper->mCount;
+    s32 subActorNum = pActor->getSubActorKeeper()->getSubActorNum();
 
     for (s32 i = 0; i < subActorNum; i++) {
-        SubActorInfo* info = pActor->mSubActorKeeper->mInfos[i];
+        SubActorInfo* info = pActor->getSubActorKeeper()->getSubActorInfo(i);
 
         if (isEqualString(info->mSubActor->getName(), "シルエットモデル")) {
             return info->mSubActor;
         }
 
-        if (info->mSubActor->mSubActorKeeper != nullptr) {
+        if (info->mSubActor->getSubActorKeeper() != nullptr) {
             return getSilhouetteModel(pActor);
         }
     }
@@ -373,19 +387,19 @@ LiveActor* getSilhouetteModel(LiveActor* pActor) {
  * @param isDisable Whether to disable drawing.
  */
 void setDisableDraw(LiveActor* pActor, bool isDisable) {
-    if (pActor->mModelKeeper == nullptr) {
+    if (pActor->getModelKeeper() == nullptr) {
         return;
     }
 
-    pActor->mModelKeeper->setDisableDraw(isDisable);
-    SubActorKeeper* keeper = pActor->mSubActorKeeper;
+    pActor->getModelKeeper()->setDisableDraw(isDisable);
+    SubActorKeeper* keeper = pActor->getSubActorKeeper();
 
     if (keeper == nullptr) {
         return;
     }
 
-    for (s32 i = 0; i < keeper->mCount; i++) {
-        SubActorInfo* info = keeper->mInfos[i];
+    for (s32 i = 0; i < keeper->getSubActorNum(); i++) {
+        SubActorInfo* info = keeper->getSubActorInfo(i);
 
         if (info != nullptr && info->mSubActor != nullptr) {
             setDisableDraw(info->mSubActor, isDisable);
@@ -398,17 +412,17 @@ void setDisableDraw(LiveActor* pActor, bool isDisable) {
  * @param pActor The actor.
  */
 void removeFromDepthShadowDrawer(LiveActor* pActor) {
-    ActorExecuteInfo* executeInfo = pActor->mActorExecuteInfo;
-    s32 drawerNum = executeInfo->mDrawerCount;
+    ActorExecuteInfo* executeInfo = pActor->getExecuteInfo();
+    s32 drawerNum = executeInfo->getDrawerCount();
 
     if (drawerNum <= 0) {
         return;
     }
 
-    alModelCafe* model = pActor->mModelKeeper->mModelCafe;
+    alModelCafe* model = getModelCafe(pActor);
 
     for (s32 i = 0; i < drawerNum; i++) {
-        ModelDrawerBase* drawer = executeInfo->mDrawers[i];
+        ModelDrawerBase* drawer = executeInfo->getDrawer(i);
 
         if (drawer->isDepthShadowDrawer()) {
             drawer->removeModel(model);
@@ -421,17 +435,17 @@ void removeFromDepthShadowDrawer(LiveActor* pActor) {
  * @param pActor The actor.
  */
 void addToDepthShadowDrawer(LiveActor* pActor) {
-    ActorExecuteInfo* executeInfo = pActor->mActorExecuteInfo;
-    s32 drawerNum = executeInfo->mDrawerCount;
+    ActorExecuteInfo* executeInfo = pActor->getExecuteInfo();
+    s32 drawerNum = executeInfo->getDrawerCount();
 
     if (drawerNum <= 0) {
         return;
     }
 
-    alModelCafe* model = pActor->mModelKeeper->mModelCafe;
+    alModelCafe* model = getModelCafe(pActor);
 
     for (s32 i = 0; i < drawerNum; i++) {
-        ModelDrawerBase* drawer = executeInfo->mDrawers[i];
+        ModelDrawerBase* drawer = executeInfo->getDrawer(i);
 
         if (drawer->isDepthShadowDrawer()) {
             drawer->addModel(model);
@@ -446,18 +460,18 @@ void addToDepthShadowDrawer(LiveActor* pActor) {
  * @param isUpdateDrawer Whether to update the depth shadow drawers.
  */
 void setDisableDepthShadow(LiveActor* pActor, bool isDisable, bool isUpdateDrawer) {
-    if (pActor->mModelKeeper == nullptr) {
+    if (pActor->getModelKeeper() == nullptr) {
         return;
     }
 
-    if (pActor->mModelKeeper->setDisableDepthShadow(isDisable) && isUpdateDrawer) {
-        ActorExecuteInfo* executeInfo = pActor->mActorExecuteInfo;
-        alModelCafe* model = pActor->mModelKeeper->mModelCafe;
-        s32 drawerNum = executeInfo->mDrawerCount;
+    if (pActor->getModelKeeper()->setDisableDepthShadow(isDisable) && isUpdateDrawer) {
+        ActorExecuteInfo* executeInfo = pActor->getExecuteInfo();
+        alModelCafe* model = getModelCafe(pActor);
+        s32 drawerNum = executeInfo->getDrawerCount();
 
         if (isDisable) {
             for (s32 i = 0; i < drawerNum; i++) {
-                ModelDrawerBase* drawer = executeInfo->mDrawers[i];
+                ModelDrawerBase* drawer = executeInfo->getDrawer(i);
 
                 if (drawer->isDepthShadowDrawer()) {
                     drawer->removeModel(model);
@@ -465,7 +479,7 @@ void setDisableDepthShadow(LiveActor* pActor, bool isDisable, bool isUpdateDrawe
             }
         } else {
             for (s32 i = 0; i < drawerNum; i++) {
-                ModelDrawerBase* drawer = executeInfo->mDrawers[i];
+                ModelDrawerBase* drawer = executeInfo->getDrawer(i);
 
                 if (drawer->isDepthShadowDrawer()) {
                     drawer->addModel(model);
@@ -474,14 +488,14 @@ void setDisableDepthShadow(LiveActor* pActor, bool isDisable, bool isUpdateDrawe
         }
     }
 
-    SubActorKeeper* keeper = pActor->mSubActorKeeper;
+    SubActorKeeper* keeper = pActor->getSubActorKeeper();
 
     if (keeper == nullptr) {
         return;
     }
 
-    for (s32 i = 0; i < keeper->mCount; i++) {
-        SubActorInfo* info = keeper->mInfos[i];
+    for (s32 i = 0; i < keeper->getSubActorNum(); i++) {
+        SubActorInfo* info = keeper->getSubActorInfo(i);
 
         if (info != nullptr && info->mSubActor != nullptr) {
             setDisableDepthShadow(info->mSubActor, isDisable, isUpdateDrawer);
@@ -494,7 +508,7 @@ void setDisableDepthShadow(LiveActor* pActor, bool isDisable, bool isUpdateDrawe
  * @param pActor The actor.
  */
 void setFixedModelFlag(LiveActor* pActor) {
-    pActor->mModelKeeper->_18 = true;
+    pActor->getModelKeeper()->setFixedModel(true);
 }
 
 /**
@@ -502,13 +516,13 @@ void setFixedModelFlag(LiveActor* pActor) {
  * @param pActor The actor.
  */
 void tryInitFixedModelGpuBuffer(LiveActor* pActor) {
-    ModelKeeper* modelKeeper = pActor->mModelKeeper;
+    ModelKeeper* modelKeeper = pActor->getModelKeeper();
 
-    if (modelKeeper == nullptr || pActor->mActorExecuteInfo == nullptr || !modelKeeper->_18) {
+    if (modelKeeper == nullptr || pActor->getExecuteInfo() == nullptr || !modelKeeper->isFixedModel()) {
         return;
     }
 
-    if (pActor->getEffectKeeper() != nullptr || pActor->getAudioKeeper() != nullptr || pActor->mHitSensorKeeper != nullptr) {
+    if (pActor->getEffectKeeper() != nullptr || pActor->getAudioKeeper() != nullptr || pActor->getHitSensorKeeper() != nullptr) {
         onUpdateMovementEffectAudioCollision(pActor);
     }
 
@@ -524,7 +538,7 @@ void tryInitFixedModelGpuBuffer(LiveActor* pActor) {
  * @param isIgnore Whether to update the model.
  */
 void setIgnoreUpdateDrawClipping(LiveActor* pActor, bool isIgnore) {
-    pActor->mModelKeeper->_19 = isIgnore;
+    pActor->getModelKeeper()->setIgnoreUpdateDrawClipping(isIgnore);
 }
 
 /**
@@ -533,7 +547,7 @@ void setIgnoreUpdateDrawClipping(LiveActor* pActor, bool isIgnore) {
  * @param isNeed Whether the base matrix must be set.
  */
 void setNeedSetBaseMtxAndCalcAnimFlag(LiveActor* pActor, bool isNeed) {
-    pActor->mModelKeeper->_1a = isNeed;
+    pActor->getModelKeeper()->setNeedSetBaseMtxAndCalcAnim(isNeed);
 }
 
 /**
@@ -541,14 +555,14 @@ void setNeedSetBaseMtxAndCalcAnimFlag(LiveActor* pActor, bool isNeed) {
  * @param pActor The actor.
  */
 void showInvincibleModel(LiveActor* pActor) {
-    s32 subActorNum = pActor->mSubActorKeeper->mCount;
+    s32 subActorNum = pActor->getSubActorKeeper()->getSubActorNum();
 
     for (s32 i = 0; i < subActorNum; i++) {
-        SubActorInfo* info = pActor->mSubActorKeeper->mInfos[i];
+        SubActorInfo* info = pActor->getSubActorKeeper()->getSubActorInfo(i);
 
         if (isEqualString(info->mSubActor->getName(), "無敵モデル")) {
             info->mSubActor->appear();
-        } else if (info->mSubActor->mSubActorKeeper != nullptr) {
+        } else if (info->mSubActor->getSubActorKeeper() != nullptr) {
             showInvincibleModel(info->mSubActor);
         }
     }
@@ -559,14 +573,14 @@ void showInvincibleModel(LiveActor* pActor) {
  * @param pActor The actor.
  */
 void hideInvincibleModel(LiveActor* pActor) {
-    s32 subActorNum = pActor->mSubActorKeeper->mCount;
+    s32 subActorNum = pActor->getSubActorKeeper()->getSubActorNum();
 
     for (s32 i = 0; i < subActorNum; i++) {
-        SubActorInfo* info = pActor->mSubActorKeeper->mInfos[i];
+        SubActorInfo* info = pActor->getSubActorKeeper()->getSubActorInfo(i);
 
         if (isEqualString(info->mSubActor->getName(), "無敵モデル")) {
             info->mSubActor->kill();
-        } else if (info->mSubActor->mSubActorKeeper != nullptr) {
+        } else if (info->mSubActor->getSubActorKeeper() != nullptr) {
             hideInvincibleModel(info->mSubActor);
         }
     }
@@ -578,7 +592,7 @@ void hideInvincibleModel(LiveActor* pActor) {
  * @return Whether the invincible model is dead.
  */
 bool isInvincibleModelHidden(LiveActor* pActor) {
-    return isDead(alSubActorFunction::findSubActor(pActor->mSubActorKeeper, "無敵モデル"));
+    return isDead(alSubActorFunction::findSubActor(pActor->getSubActorKeeper(), "無敵モデル"));
 }
 
 /**
@@ -586,7 +600,7 @@ bool isInvincibleModelHidden(LiveActor* pActor) {
  * @param pActor The actor.
  */
 void enableUpdateModelBounding(LiveActor* pActor) {
-    pActor->mModelKeeper->mModelCafe->mModelG3D->_44 = true;
+    getModelG3D(pActor)->_44 = true;
 }
 
 /**
@@ -594,7 +608,7 @@ void enableUpdateModelBounding(LiveActor* pActor) {
  * @param pActor The actor.
  */
 void disableUpdateModelBounding(LiveActor* pActor) {
-    pActor->mModelKeeper->mModelCafe->mModelG3D->_44 = false;
+    getModelG3D(pActor)->_44 = false;
 }
 
 /**
@@ -603,8 +617,8 @@ void disableUpdateModelBounding(LiveActor* pActor) {
  * @param pCubeMapName The cube map name.
  */
 void forceApplyCubeMap(LiveActor* pActor, const char* pCubeMapName) {
-    forceApplyCubeMap(pActor->mModelKeeper,
-                      static_cast<const GraphicsSystemInfo*>(pActor->getSceneInfo()->_78),
+    forceApplyCubeMap(pActor->getModelKeeper(),
+                      pActor->getSceneInfo()->graphicsSystemInfo,
                       pCubeMapName);
 }
 
@@ -613,7 +627,7 @@ void forceApplyCubeMap(LiveActor* pActor, const char* pCubeMapName) {
  * @param pActor The actor.
  */
 void createRenderState(LiveActor* pActor) {
-    SimpleModelG3D* modelG3D = pActor->mModelKeeper->mModelCafe->mModelG3D;
+    SimpleModelG3D* modelG3D = getModelG3D(pActor);
     s32 shapeNum = modelG3D->mModelObj->GetNumShapes();
 
     for (s32 i = 0; i < shapeNum; i++) {
@@ -626,7 +640,7 @@ void createRenderState(LiveActor* pActor) {
  * @param pActor The actor.
  */
 void resetRenderState(LiveActor* pActor) {
-    SimpleModelG3D* modelG3D = pActor->mModelKeeper->mModelCafe->mModelG3D;
+    SimpleModelG3D* modelG3D = getModelG3D(pActor);
     s32 shapeNum = modelG3D->mModelObj->GetNumShapes();
 
     for (s32 i = 0; i < shapeNum; i++) {
@@ -654,11 +668,11 @@ void setEnableDepthWrite(LiveActor* pActor, bool isEnable) {}
  * @param index The material index.
  */
 void hideMaterial(LiveActor* pActor, s32 index) {
-    if (pActor->mModelKeeper == nullptr) {
+    if (pActor->getModelKeeper() == nullptr) {
         return;
     }
 
-    nn::g3d::ModelObj* modelObj = pActor->mModelKeeper->mModelCafe->mModelG3D->mModelObj;
+    nn::g3d::ModelObj* modelObj = getModelObj(pActor);
 
     if (index >= modelObj->GetNumMaterials()) {
         return;
@@ -673,11 +687,11 @@ void hideMaterial(LiveActor* pActor, s32 index) {
  * @param index The material index.
  */
 void showMaterial(LiveActor* pActor, s32 index) {
-    if (pActor->mModelKeeper == nullptr) {
+    if (pActor->getModelKeeper() == nullptr) {
         return;
     }
 
-    nn::g3d::ModelObj* modelObj = pActor->mModelKeeper->mModelCafe->mModelG3D->mModelObj;
+    nn::g3d::ModelObj* modelObj = getModelObj(pActor);
 
     if (index >= modelObj->GetNumMaterials()) {
         return;
@@ -691,11 +705,11 @@ void showMaterial(LiveActor* pActor, s32 index) {
  * @param pActor The actor.
  */
 void hideMaterialAll(LiveActor* pActor) {
-    if (pActor->mModelKeeper == nullptr) {
+    if (pActor->getModelKeeper() == nullptr) {
         return;
     }
 
-    nn::g3d::ModelObj* modelObj = pActor->mModelKeeper->mModelCafe->mModelG3D->mModelObj;
+    nn::g3d::ModelObj* modelObj = getModelObj(pActor);
 
     for (s32 i = 0; i < modelObj->GetNumMaterials(); i++) {
         modelObj->SetMaterialVisible(i, false);
@@ -707,11 +721,11 @@ void hideMaterialAll(LiveActor* pActor) {
  * @param pActor The actor.
  */
 void showMaterialAll(LiveActor* pActor) {
-    if (pActor->mModelKeeper == nullptr) {
+    if (pActor->getModelKeeper() == nullptr) {
         return;
     }
 
-    nn::g3d::ModelObj* modelObj = pActor->mModelKeeper->mModelCafe->mModelG3D->mModelObj;
+    nn::g3d::ModelObj* modelObj = getModelObj(pActor);
 
     for (s32 i = 0; i < modelObj->GetNumMaterials(); i++) {
         modelObj->SetMaterialVisible(i, true);
@@ -724,8 +738,8 @@ void showMaterialAll(LiveActor* pActor) {
  * @param isDisable Whether to disable the level of detail.
  */
 void setLodDisabled(LiveActor* pActor, bool isDisable) {
-    if (pActor->mModelKeeper != nullptr) {
-        pActor->mModelKeeper->mIsLodDisabled = isDisable;
+    if (pActor->getModelKeeper() != nullptr) {
+        pActor->getModelKeeper()->setLodDisabled(isDisable);
     }
 }
 
@@ -734,7 +748,7 @@ void setLodDisabled(LiveActor* pActor, bool isDisable) {
  * @param pActor The actor.
  */
 void setMaterialProgrammable(LiveActor* pActor) {
-    SimpleModelG3D* modelG3D = pActor->mModelKeeper->mModelCafe->mModelG3D;
+    SimpleModelG3D* modelG3D = getModelG3D(pActor);
     s32 shapeNum = modelG3D->mModelObj->GetNumShapes();
 
     for (s32 i = 0; i < shapeNum; i++) {
@@ -749,7 +763,7 @@ void setMaterialProgrammable(LiveActor* pActor) {
  * @param rFunctor The callback.
  */
 void setPostUpdateWorldMatrixCallback(LiveActor* pActor, const FunctorBase& rFunctor) {
-    pActor->mModelKeeper->mModelCafe->mModelG3D->setPostUpdateWorldMatrixCallback(rFunctor);
+    getModelG3D(pActor)->setPostUpdateWorldMatrixCallback(rFunctor);
 }
 
 /**
@@ -759,7 +773,7 @@ void setPostUpdateWorldMatrixCallback(LiveActor* pActor, const FunctorBase& rFun
  * @return Whether the joint exists.
  */
 bool isExistJoint(const LiveActor* pActor, const char* pName) {
-    return isExistJoint(pActor->mModelKeeper, pName);
+    return isExistJoint(pActor->getModelKeeper(), pName);
 }
 
 /**
@@ -769,7 +783,7 @@ bool isExistJoint(const LiveActor* pActor, const char* pName) {
  * @return The joint matrix.
  */
 sead::Matrix34f* getJointMtxPtr(const LiveActor* pActor, const char* pName) {
-    return const_cast<sead::Matrix34f*>(getJointMtxPtr(pActor->mModelKeeper, pName));
+    return const_cast<sead::Matrix34f*>(getJointMtxPtr(pActor->getModelKeeper(), pName));
 }
 
 /**
@@ -779,7 +793,7 @@ sead::Matrix34f* getJointMtxPtr(const LiveActor* pActor, const char* pName) {
  * @return The joint matrix.
  */
 sead::Matrix34f* getJointMtxPtrByIndex(const LiveActor* pActor, s32 index) {
-    return const_cast<sead::Matrix34f*>(getJointMtxPtrByIndex(pActor->mModelKeeper, index));
+    return const_cast<sead::Matrix34f*>(getJointMtxPtrByIndex(pActor->getModelKeeper(), index));
 }
 
 /**
@@ -789,7 +803,7 @@ sead::Matrix34f* getJointMtxPtrByIndex(const LiveActor* pActor, s32 index) {
  * @return The joint local matrix.
  */
 const sead::Matrix34f* getJointLocalMtxPtr(const LiveActor* pActor, const char* pName) {
-    return getJointLocalMtxPtr(pActor->mModelKeeper, pName);
+    return getJointLocalMtxPtr(pActor->getModelKeeper(), pName);
 }
 
 /**
@@ -799,7 +813,7 @@ const sead::Matrix34f* getJointLocalMtxPtr(const LiveActor* pActor, const char* 
  * @return The joint local matrix.
  */
 const void* getJointLocalMtxPtrByIndex(const LiveActor* pActor, s32 index) {
-    return getJointLocalMtxPtrByIndex(pActor->mModelKeeper, index);
+    return getJointLocalMtxPtrByIndex(pActor->getModelKeeper(), index);
 }
 
 /**
@@ -878,7 +892,7 @@ void multVecJointInvMtx(sead::Vector3f* pOut, const sead::Vector3f& rVec, LiveAc
  * @param isVisible Whether the joint is visible.
  */
 void setJointVisibility(const LiveActor* pActor, const char* pName, bool isVisible) {
-    setJointVisibility(pActor->mModelKeeper, pName, isVisible);
+    setJointVisibility(pActor->getModelKeeper(), pName, isVisible);
 }
 
 /**
@@ -888,7 +902,7 @@ void setJointVisibility(const LiveActor* pActor, const char* pName, bool isVisib
  * @return Whether the joint is visible.
  */
 bool getJointVisibility(const LiveActor* pActor, const char* pName) {
-    return getJointVisibility(pActor->mModelKeeper, pName);
+    return getJointVisibility(pActor->getModelKeeper(), pName);
 }
 
 /**
@@ -897,7 +911,7 @@ bool getJointVisibility(const LiveActor* pActor, const char* pName) {
  * @return The model name.
  */
 const char* getModelName(const LiveActor* pActor) {
-    return pActor->mModelKeeper->mModelName;
+    return pActor->getModelKeeper()->getModelName();
 }
 
 /**
@@ -906,7 +920,7 @@ const char* getModelName(const LiveActor* pActor) {
  * @return The radius.
  */
 f32 calcModelBoundingSphereRadius(const LiveActor* pActor) {
-    return alModelFunction::calcBoundingSphere(pActor->mModelKeeper->mModelCafe);
+    return alModelFunction::calcBoundingSphere(getModelCafe(pActor));
 }
 
 /**
@@ -918,7 +932,7 @@ f32 calcModelBoundingSphereRadius(const LiveActor* pActor) {
 void getBoundingShpereCenterAndRadius(sead::Vector3f* pCenter, f32* pRadius,
                                       const LiveActor* pActor) {
     const nn::g3d::Sphere* bounding =
-        pActor->mModelKeeper->mModelCafe->mModelG3D->mModelObj->GetBounding();
+        getModelObj(pActor)->GetBounding();
     const f32* center = reinterpret_cast<const f32*>(&bounding->center);
     pCenter->x = center[0];
     pCenter->y = center[1];
@@ -932,7 +946,7 @@ void getBoundingShpereCenterAndRadius(sead::Vector3f* pCenter, f32* pRadius,
  * @param pActor The actor.
  */
 void calcModelBoundingBox(sead::BoundBox3f* pBox, const LiveActor* pActor) {
-    alModelFunction::calcBoundingBox(pBox, pActor->mModelKeeper->mModelCafe);
+    alModelFunction::calcBoundingBox(pBox, getModelCafe(pActor));
 }
 
 /**
@@ -951,7 +965,7 @@ void submitViewModel(const LiveActor* pActor, const sead::Matrix34f& rViewMtx) {
  */
 void setModelLodParams(const LiveActor* pActor, const f32* pSwitchDistances, s32 lodNum,
                        bool isDisableDemoLod) {
-    pActor->mModelKeeper->setLodParams(pSwitchDistances, lodNum, &getTrans(pActor),
+    pActor->getModelKeeper()->setLodParams(pSwitchDistances, lodNum, &getTrans(pActor),
                                        isDisableDemoLod);
 }
 
@@ -1041,24 +1055,24 @@ bool isJudgedToClipFrustumWithoutFar(const LiveActor* pActor, f32 radius, f32 ne
  * @param isSkipCalcAnim Whether to skip recalculating the animation.
  */
 void resetPosition(LiveActor* pActor, bool isSkipCalcAnim) {
-    if (pActor->mActorPoseKeeper != nullptr && !isSkipCalcAnim) {
+    if (pActor->getPoseKeeper() != nullptr && !isSkipCalcAnim) {
         alLiveActorFunction::calcAnimDirect(pActor);
     }
 
-    if (pActor->mHitSensorKeeper != nullptr) {
+    if (pActor->getHitSensorKeeper() != nullptr) {
         alSensorFunction::clearHitSensors(pActor);
         alSensorFunction::updateHitSensorsAll(pActor);
     }
 
-    if (pActor->mScreenPointKeeper != nullptr) {
+    if (pActor->getScreenPointKeeper() != nullptr) {
         alScreenPointFunction::updateScreenPointAll(pActor);
     }
 
-    if (pActor->mCollider != nullptr) {
-        pActor->mCollider->onInvalidate();
+    if (pActor->getCollider() != nullptr) {
+        pActor->getCollider()->onInvalidate();
     }
 
-    if (pActor->mCollisionParts != nullptr) {
+    if (pActor->getCollisionParts() != nullptr) {
         resetAllCollisionMtx(pActor);
     }
 

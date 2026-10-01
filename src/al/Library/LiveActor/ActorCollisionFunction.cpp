@@ -12,7 +12,7 @@
 namespace al {
 namespace {
 inline void resetCollisionPartsMtx(LiveActor* pActor, CollisionParts* pCollisionParts) {
-    if (pCollisionParts->mSyncCollisionMtx) {
+    if (pCollisionParts->getSyncCollisionMtx() != nullptr) {
         pCollisionParts->resetAllMtx();
     } else {
         sead::Matrix34f mtx;
@@ -28,7 +28,7 @@ inline void resetCollisionPartsMtx(LiveActor* pActor, CollisionParts* pCollision
  * @return The collider.
  */
 Collider* getActorCollider(const LiveActor* pActor) {
-    return pActor->mCollider;
+    return pActor->getCollider();
 }
 
 /**
@@ -37,7 +37,7 @@ Collider* getActorCollider(const LiveActor* pActor) {
  * @return Whether the collider exists.
  */
 bool isExistActorCollider(const LiveActor* pActor) {
-    return pActor->mCollider != nullptr;
+    return pActor->getCollider() != nullptr;
 }
 
 /**
@@ -46,7 +46,7 @@ bool isExistActorCollider(const LiveActor* pActor) {
  * @return The sensor.
  */
 const HitSensor* getActorCollisionPartsSensor(const LiveActor* pActor) {
-    return pActor->mCollisionParts->mSensor;
+    return pActor->getCollisionParts()->getSensor();
 }
 
 /**
@@ -55,7 +55,7 @@ const HitSensor* getActorCollisionPartsSensor(const LiveActor* pActor) {
  * @return Whether the collision parts exist.
  */
 bool isExistCollisionParts(const LiveActor* pActor) {
-    return pActor->mCollisionParts != nullptr;
+    return pActor->getCollisionParts() != nullptr;
 }
 
 /**
@@ -63,7 +63,7 @@ bool isExistCollisionParts(const LiveActor* pActor) {
  * @param pActor The actor.
  */
 void validateCollisionParts(LiveActor* pActor) {
-    CollisionParts* collisionParts = pActor->mCollisionParts;
+    CollisionParts* collisionParts = pActor->getCollisionParts();
     resetCollisionPartsMtx(pActor, collisionParts);
     collisionParts->validateByUser();
 }
@@ -73,7 +73,7 @@ void validateCollisionParts(LiveActor* pActor) {
  * @param pActor The actor.
  */
 void invalidateCollisionParts(LiveActor* pActor) {
-    pActor->mCollisionParts->invalidateByUser();
+    pActor->getCollisionParts()->invalidateByUser();
 }
 
 /**
@@ -81,7 +81,7 @@ void invalidateCollisionParts(LiveActor* pActor) {
  * @param pActor The actor.
  */
 void validateCollisionPartsBySystem(LiveActor* pActor) {
-    CollisionParts* collisionParts = pActor->mCollisionParts;
+    CollisionParts* collisionParts = pActor->getCollisionParts();
     collisionParts->validateBySystem();
     resetCollisionPartsMtx(pActor, collisionParts);
 }
@@ -91,7 +91,7 @@ void validateCollisionPartsBySystem(LiveActor* pActor) {
  * @param pActor The actor.
  */
 void invalidateCollisionPartsBySystem(LiveActor* pActor) {
-    pActor->mCollisionParts->invalidateBySystem();
+    pActor->getCollisionParts()->invalidateBySystem();
 }
 
 /**
@@ -99,18 +99,18 @@ void invalidateCollisionPartsBySystem(LiveActor* pActor) {
  * @param pActor The actor.
  */
 void validateAllCollisionParts(LiveActor* pActor) {
-    if (pActor->mCollisionParts != nullptr) {
-        pActor->mCollisionParts->validateByUser();
+    if (pActor->getCollisionParts() != nullptr) {
+        pActor->getCollisionParts()->validateByUser();
     }
 
-    SubActorKeeper* keeper = pActor->mSubActorKeeper;
+    SubActorKeeper* keeper = pActor->getSubActorKeeper();
 
     if (keeper == nullptr) {
         return;
     }
 
-    for (s32 i = 0; i < keeper->mCount; i++) {
-        LiveActor* subActor = keeper->mInfos[i]->mSubActor;
+    for (s32 i = 0; i < keeper->getSubActorNum(); i++) {
+        LiveActor* subActor = keeper->getSubActorInfo(i)->mSubActor;
 
         if (subActor != nullptr) {
             validateAllCollisionParts(subActor);
@@ -123,18 +123,18 @@ void validateAllCollisionParts(LiveActor* pActor) {
  * @param pActor The actor.
  */
 void invalidateAllCollisionParts(LiveActor* pActor) {
-    if (pActor->mCollisionParts != nullptr) {
-        pActor->mCollisionParts->invalidateByUser();
+    if (pActor->getCollisionParts() != nullptr) {
+        pActor->getCollisionParts()->invalidateByUser();
     }
 
-    SubActorKeeper* keeper = pActor->mSubActorKeeper;
+    SubActorKeeper* keeper = pActor->getSubActorKeeper();
 
     if (keeper == nullptr) {
         return;
     }
 
-    for (s32 i = 0; i < keeper->mCount; i++) {
-        LiveActor* subActor = keeper->mInfos[i]->mSubActor;
+    for (s32 i = 0; i < keeper->getSubActorNum(); i++) {
+        LiveActor* subActor = keeper->getSubActorInfo(i)->mSubActor;
 
         if (subActor != nullptr) {
             invalidateAllCollisionParts(subActor);
@@ -147,18 +147,18 @@ void invalidateAllCollisionParts(LiveActor* pActor) {
  * @param pActor The actor.
  */
 void disableAllCollisionParts(LiveActor* pActor) {
-    if (pActor->mCollisionParts != nullptr) {
-        pActor->mCollisionParts->invalidateBySystem();
+    if (pActor->getCollisionParts() != nullptr) {
+        pActor->getCollisionParts()->invalidateBySystem();
     }
 
-    SubActorKeeper* keeper = pActor->mSubActorKeeper;
+    SubActorKeeper* keeper = pActor->getSubActorKeeper();
 
     if (keeper == nullptr) {
         return;
     }
 
-    for (s32 i = 0; i < keeper->mCount; i++) {
-        LiveActor* subActor = keeper->mInfos[i]->mSubActor;
+    for (s32 i = 0; i < keeper->getSubActorNum(); i++) {
+        LiveActor* subActor = keeper->getSubActorInfo(i)->mSubActor;
 
         if (subActor != nullptr) {
             disableAllCollisionParts(subActor);
@@ -171,18 +171,18 @@ void disableAllCollisionParts(LiveActor* pActor) {
  * @param pActor The actor.
  */
 void enableAllCollisionParts(LiveActor* pActor) {
-    if (pActor->mCollisionParts != nullptr) {
-        pActor->mCollisionParts->validateBySystem();
+    if (pActor->getCollisionParts() != nullptr) {
+        pActor->getCollisionParts()->validateBySystem();
     }
 
-    SubActorKeeper* keeper = pActor->mSubActorKeeper;
+    SubActorKeeper* keeper = pActor->getSubActorKeeper();
 
     if (keeper == nullptr) {
         return;
     }
 
-    for (s32 i = 0; i < keeper->mCount; i++) {
-        LiveActor* subActor = keeper->mInfos[i]->mSubActor;
+    for (s32 i = 0; i < keeper->getSubActorNum(); i++) {
+        LiveActor* subActor = keeper->getSubActorInfo(i)->mSubActor;
 
         if (subActor != nullptr) {
             enableAllCollisionParts(subActor);
@@ -196,7 +196,7 @@ void enableAllCollisionParts(LiveActor* pActor) {
  * @return Whether the collision parts are valid.
  */
 bool isValidCollisionParts(const LiveActor* pActor) {
-    CollisionParts* collisionParts = pActor->mCollisionParts;
+    CollisionParts* collisionParts = pActor->getCollisionParts();
     return collisionParts->_160 && collisionParts->_161;
 }
 
@@ -206,7 +206,7 @@ bool isValidCollisionParts(const LiveActor* pActor) {
  * @param pName The special purpose name.
  */
 void setCollisionPartsSpecialPurposeName(LiveActor* pActor, const char* pName) {
-    pActor->mCollisionParts->mSpecialPurpose = pName;
+    pActor->getCollisionParts()->setSpecialPurpose(pName);
 }
 
 /**
@@ -214,7 +214,7 @@ void setCollisionPartsSpecialPurposeName(LiveActor* pActor, const char* pName) {
  * @param pActor The actor.
  */
 void resetAllCollisionMtx(LiveActor* pActor) {
-    resetCollisionPartsMtx(pActor, pActor->mCollisionParts);
+    resetCollisionPartsMtx(pActor, pActor->getCollisionParts());
 }
 
 /**
@@ -223,7 +223,7 @@ void resetAllCollisionMtx(LiveActor* pActor) {
  * @param pMtx The matrix to sync to, or nullptr to use the actor's SRT matrix.
  */
 void syncCollisionMtx(LiveActor* pActor, const sead::Matrix34f* pMtx) {
-    syncCollisionMtx(pActor, pActor->mCollisionParts, pMtx);
+    syncCollisionMtx(pActor, pActor->getCollisionParts(), pMtx);
 }
 
 /**
@@ -238,7 +238,7 @@ void syncCollisionMtx(LiveActor* pActor, CollisionParts* pCollisionParts,
         return;
     }
 
-    if (pCollisionParts->mSyncCollisionMtx) {
+    if (pCollisionParts->getSyncCollisionMtx() != nullptr) {
         pCollisionParts->syncMtx();
     } else if (pMtx) {
         pCollisionParts->syncMtx(*pMtx);
@@ -255,7 +255,7 @@ void syncCollisionMtx(LiveActor* pActor, CollisionParts* pCollisionParts,
  * @param pMtx The matrix pointer.
  */
 void setSyncCollisionMtxPtr(LiveActor* pActor, const sead::Matrix34f* pMtx) {
-    pActor->mCollisionParts->mSyncCollisionMtx = pMtx;
+    pActor->getCollisionParts()->setSyncCollisionMtx(pMtx);
 }
 
 /**
@@ -266,10 +266,10 @@ void setSyncCollisionMtxPtr(LiveActor* pActor, const sead::Matrix34f* pMtx) {
  * @return Whether the actor is on the ground.
  */
 bool isOnGround(const LiveActor* pActor, u32 checkFrame, f32 margin) {
-    Collider* collider = pActor->mCollider;
+    Collider* collider = pActor->getCollider();
 
     if (collider != nullptr) {
-        if (!(collider->_110 >= 0.0f) && collider->_264 > checkFrame) {
+        if (!collider->isCollidedFloor() && collider->_264 > checkFrame) {
             return false;
         }
 
@@ -298,8 +298,8 @@ bool isOnGroundFace(const LiveActor* pActor) {
  * @return Whether the ground is touched at an edge or corner.
  */
 bool isCollidedGroundEdgeOrCorner(const LiveActor* pActor) {
-    Collider* collider = pActor->mCollider;
-    return collider->_110 >= 0.0f && !collider->mFloor.isCollisionAtFace();
+    Collider* collider = pActor->getCollider();
+    return collider->isCollidedFloor() && !collider->mFloor.isCollisionAtFace();
 }
 
 /**
@@ -309,13 +309,13 @@ bool isCollidedGroundEdgeOrCorner(const LiveActor* pActor) {
  * @return Whether the actor is on the ground.
  */
 bool isOnGroundNoVelocity(const LiveActor* pActor, u32 checkFrame) {
-    Collider* collider = pActor->mCollider;
+    Collider* collider = pActor->getCollider();
 
     if (collider == nullptr) {
         return getTrans(pActor).y <= 0.0f;
     }
 
-    if (collider->_110 >= 0.0f) {
+    if (collider->isCollidedFloor()) {
         return true;
     }
 
@@ -329,7 +329,7 @@ bool isOnGroundNoVelocity(const LiveActor* pActor, u32 checkFrame) {
  * @return The ground normal.
  */
 const sead::Vector3f& getOnGroundNormal(const LiveActor* pActor, u32 offset) {
-    return pActor->mCollider->getRecentOnGroundNormal(offset);
+    return pActor->getCollider()->getRecentOnGroundNormal(offset);
 }
 
 /**
@@ -338,7 +338,7 @@ const sead::Vector3f& getOnGroundNormal(const LiveActor* pActor, u32 offset) {
  * @param radius The radius.
  */
 void setColliderRadius(LiveActor* pActor, f32 radius) {
-    pActor->mCollider->mRadius = radius;
+    pActor->getCollider()->setRadius(radius);
 }
 
 /**
@@ -347,7 +347,7 @@ void setColliderRadius(LiveActor* pActor, f32 radius) {
  * @param offsetY The Y offset.
  */
 void setColliderOffsetY(LiveActor* pActor, f32 offsetY) {
-    pActor->mCollider->mOffsetY = offsetY;
+    pActor->getCollider()->setOffsetY(offsetY);
 }
 
 /**
@@ -356,7 +356,7 @@ void setColliderOffsetY(LiveActor* pActor, f32 offsetY) {
  * @return The radius.
  */
 f32 getColliderRadius(const LiveActor* pActor) {
-    return pActor->mCollider->mRadius;
+    return pActor->getCollider()->getRadius();
 }
 
 /**
@@ -365,7 +365,7 @@ f32 getColliderRadius(const LiveActor* pActor) {
  * @return The Y offset.
  */
 f32 getColliderOffsetY(const LiveActor* pActor) {
-    return pActor->mCollider->mOffsetY;
+    return pActor->getCollider()->getOffsetY();
 }
 
 /**
@@ -374,7 +374,7 @@ f32 getColliderOffsetY(const LiveActor* pActor) {
  * @param pPos The output position.
  */
 void calcColliderPos(const LiveActor* pActor, sead::Vector3f* pPos) {
-    pActor->mCollider->calcCheckPos(pPos);
+    pActor->getCollider()->calcCheckPos(pPos);
 }
 
 /**
@@ -383,7 +383,7 @@ void calcColliderPos(const LiveActor* pActor, sead::Vector3f* pPos) {
  * @param isEnabled Whether to react.
  */
 void setColliderReactMovePower(LiveActor* pActor, bool isEnabled) {
-    pActor->mCollider->mIsReactMovePower = isEnabled;
+    pActor->getCollider()->setReactMovePower(isEnabled);
 }
 
 /**
@@ -392,7 +392,7 @@ void setColliderReactMovePower(LiveActor* pActor, bool isEnabled) {
  * @param pQuat The output rotation power.
  */
 void calcColliderFloorRotatePower(LiveActor* pActor, sead::Quatf* pQuat) {
-    pActor->mCollider->mFloor.mTriangle.calcForceRotatePower(pQuat);
+    pActor->getCollider()->mFloor.mTriangle.calcForceRotatePower(pQuat);
 }
 
 /**
@@ -402,17 +402,17 @@ void calcColliderFloorRotatePower(LiveActor* pActor, sead::Quatf* pQuat) {
  */
 void calcCollidedNormalSum(const LiveActor* pActor, sead::Vector3f* pOutNormal) {
     pOutNormal->set(0.0f, 0.0f, 0.0f);
-    Collider* collider = pActor->mCollider;
+    Collider* collider = pActor->getCollider();
 
-    if (collider->_110 >= 0.0f) {
+    if (collider->isCollidedFloor()) {
         *pOutNormal += *collider->mFloor.mTriangle.getFaceNormal();
     }
 
-    if (collider->_1b8 >= 0.0f) {
+    if (collider->isCollidedWall()) {
         *pOutNormal += *collider->mWall.mTriangle.getFaceNormal();
     }
 
-    if (collider->_260 >= 0.0f) {
+    if (collider->isCollidedCeiling()) {
         *pOutNormal += *collider->mCeiling.mTriangle.getFaceNormal();
     }
 
@@ -425,7 +425,7 @@ void calcCollidedNormalSum(const LiveActor* pActor, sead::Vector3f* pOutNormal) 
  * @param pTriangleFilter The triangle filter.
  */
 void setColliderFilterTriangle(LiveActor* pActor, const TriangleFilterBase* pTriangleFilter) {
-    pActor->mCollider->setTriangleFilter(pTriangleFilter);
+    pActor->getCollider()->setTriangleFilter(pTriangleFilter);
 }
 
 /**
@@ -435,7 +435,7 @@ void setColliderFilterTriangle(LiveActor* pActor, const TriangleFilterBase* pTri
  */
 void setColliderFilterCollisionParts(LiveActor* pActor,
                                      const CollisionPartsFilterBase* pCollisionPartsFilter) {
-    pActor->mCollider->setCollisionPartsFilter(pCollisionPartsFilter);
+    pActor->getCollider()->setCollisionPartsFilter(pCollisionPartsFilter);
 }
 
 /**

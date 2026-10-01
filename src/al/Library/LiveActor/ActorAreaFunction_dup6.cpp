@@ -4,7 +4,7 @@
 
 namespace al {
 inline SwitchKeepOnAreaGroup::SwitchKeepOnAreaGroup(AreaObjGroup* pGroup) : mGroup(pGroup) {
-    mCount = pGroup->mNumAreas;
+    mCount = pGroup->getSize();
 
     if (mCount > 0) {
         mKeepOnAreas = new AreaObj*[mCount];

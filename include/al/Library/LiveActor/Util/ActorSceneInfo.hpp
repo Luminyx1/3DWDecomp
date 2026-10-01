@@ -16,6 +16,7 @@ class CollisionDirector;
 class ItemDirectorBase;
 class ShadowDirector;
 class AreaObjDirector;
+class GraphicsSystemInfo;
 
 struct ActorSceneInfo {
     ActorSceneInfo();
@@ -35,6 +36,6 @@ struct ActorSceneInfo {
     CameraDirector_RS* cameraDirector = nullptr;
     bool isSingleMode = false;
     void* _70 = nullptr;
-    void* _78 = nullptr;
+    GraphicsSystemInfo* graphicsSystemInfo = nullptr;
 };
 }  // namespace al

@@ -11,8 +11,8 @@ namespace al {
  */
 ActorSensorController::ActorSensorController(LiveActor* pActor, const char* pSensorName) {
     mSensor = getHitSensor(pActor, pSensorName);
-    mSensorRadius = mSensor->mRadius;
-    mFollowPosOffs = mSensor->mFollowPosOffset;
+    mSensorRadius = mSensor->getRadius();
+    mFollowPosOffs = mSensor->getFollowPosOffset();
 }
 
 /**
@@ -30,7 +30,7 @@ void ActorSensorController::setSensorScale(f32 scale) {
  * @param radius The new radius.
  */
 void ActorSensorController::setSensorRadius(f32 radius) {
-    mSensor->mRadius = radius;
+    mSensor->setRadius(radius);
 }
 
 /**
@@ -46,7 +46,7 @@ void ActorSensorController::setSensorFollowPosOffset(const sead::Vector3f& rOffs
  */
 void ActorSensorController::resetActorSensorController() {
     HitSensor* sensor = mSensor;
-    sensor->mRadius = mSensorRadius;
+    sensor->setRadius(mSensorRadius);
     mSensor->mFollowPosOffset.e = mFollowPosOffs.e;
 }
 
