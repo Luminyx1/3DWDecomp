@@ -1,4 +1,4 @@
-#include "Library/Light/LightUtil.hpp"
+#include "Library/Light/PrePassLightFunction.hpp"
 
 #include <math/seadQuat.h>
 
@@ -18,11 +18,11 @@ al::PrePassLight<T>* tryGetPrePassLight(const al::LiveActor* pActor, const char*
     volatile s32 lightType = T::cLightType;
     al::PrePassLightBase* light = pActor->getActorPrePassLightKeeper()->getLightBase(pName);
 
-    if (light && light->getLightType() == lightType) {
-        return static_cast<al::PrePassLight<T>*>(light);
+    if (light != nullptr && light->getLightType() != lightType) {
+        light = nullptr;
     }
 
-    return nullptr;
+    return static_cast<al::PrePassLight<T>*>(light);
 }
 
 void calcLightPoseInfo(const al::PrePassLightBase* pLight, sead::Vector3f* pPos,
@@ -169,7 +169,7 @@ void setPrePassLightOffset(const LiveActor* pActor, const char* pName, const sea
     PrePassLightBase* light = pActor->getActorPrePassLightKeeper()->getLightBase(pName);
 
     if (light != nullptr) {
-        light->mOffset = rOffset;
+        static_cast<sead::BaseVec3<f32>&>(light->mOffset) = rOffset;
     }
 }
 
@@ -278,11 +278,11 @@ void setPrePassPointLightRadius(const LiveActor* pActor, const char* pName, f32 
  * @param pName Light name.
  * @param pDegree Output cone angle, may be nullptr.
  * @param pLength Output length, may be nullptr.
- * @param pPos Output position.
  * @param pDir Output direction, may be nullptr.
+ * @param pPos Output position.
  */
 void getPrePassSpotLightInfo(const LiveActor* pActor, const char* pName, f32* pDegree, f32* pLength,
-                             sead::Vector3f* pPos, sead::Vector3f* pDir) {
+                             sead::Vector3f* pDir, sead::Vector3f* pPos) {
     PrePassLight<LppSpotParam>* light = tryGetPrePassLight<LppSpotParam>(pActor, pName);
 
     if (pDegree) {
@@ -303,7 +303,11 @@ void getPrePassSpotLightInfo(const LiveActor* pActor, const char* pName, f32* pD
  * @param length Light length.
  */
 void setPrePassSpotLightLength(const LiveActor* pActor, const char* pName, f32 length) {
-    tryGetPrePassLight<LppSpotParam>(pActor, pName)->mParam.mLength = length;
+    PrePassLight<LppSpotParam>* light = tryGetPrePassLight<LppSpotParam>(pActor, pName);
+
+    if (light != nullptr) {
+        light->mParam.mLength = length;
+    }
 }
 
 /**
@@ -323,7 +327,11 @@ f32 getPrePassSpotLightCurrentLength(const LiveActor* pActor, const char* pName)
  * @param degree Cone angle.
  */
 void setPrePassSpotLightDegree(const LiveActor* pActor, const char* pName, f32 degree) {
-    tryGetPrePassLight<LppSpotParam>(pActor, pName)->mParam.mDegree = degree;
+    PrePassLight<LppSpotParam>* light = tryGetPrePassLight<LppSpotParam>(pActor, pName);
+
+    if (light != nullptr) {
+        light->mParam.mDegree = degree;
+    }
 }
 
 /**
@@ -333,7 +341,7 @@ void setPrePassSpotLightDegree(const LiveActor* pActor, const char* pName, f32 d
  * @return Whether the light strikes a collision.
  */
 bool isPrePassSpotLightStrikeCollision(const LiveActor* pActor, const char* pName) {
-    return tryGetPrePassLight<LppSpotParam>(pActor, pName)->mParam.mIsStrikeCollision;
+    return tryGetPrePassLight<LppSpotParam>(pActor, pName)->mParam.mIsHitCollision;
 }
 
 /**
@@ -342,11 +350,11 @@ bool isPrePassSpotLightStrikeCollision(const LiveActor* pActor, const char* pNam
  * @param pName Light name.
  * @param pFovyDegree Output field of view, may be nullptr.
  * @param pLength Output length, may be nullptr.
- * @param pPos Output position.
  * @param pDir Output direction, may be nullptr.
+ * @param pPos Output position.
  */
 void getPrePassProjLightInfo(const LiveActor* pActor, const char* pName, f32* pFovyDegree,
-                             f32* pLength, sead::Vector3f* pPos, sead::Vector3f* pDir) {
+                             f32* pLength, sead::Vector3f* pDir, sead::Vector3f* pPos) {
     PrePassLight<LppProjParam>* light = tryGetPrePassLight<LppProjParam>(pActor, pName);
 
     if (pFovyDegree) {
@@ -366,21 +374,21 @@ void getPrePassProjLightInfo(const LiveActor* pActor, const char* pName, f32* pF
  * @param pName Light name.
  * @param pLength Output length, may be nullptr.
  * @param pSize Output size, may be nullptr.
- * @param pPos Output position.
  * @param pDir Output direction, may be nullptr.
+ * @param pPos Output position.
  */
 void getPrePassProjOrthoLightInfo(const LiveActor* pActor, const char* pName, f32* pLength,
-                                  sead::Vector3f* pSize, sead::Vector3f* pPos,
-                                  sead::Vector3f* pDir) {
+                                  sead::Vector3f* pSize, sead::Vector3f* pDir,
+                                  sead::Vector3f* pPos) {
     PrePassLight<LppProjOrthoParam>* light = tryGetPrePassLight<LppProjOrthoParam>(pActor, pName);
 
     if (pSize) {
         light->mParam.calcSizeXZ(&pSize->x, &pSize->z);
-        pSize->y = light->mParam.mFarRate * 100.0f - light->mParam.mNear;
+        pSize->y = light->mParam.mScale.y * 100.0f - light->mParam.mNear;
     }
 
     if (pLength) {
-        *pLength = light->mParam.mFarRate * 100.0f - light->mParam.mNear;
+        *pLength = light->mParam.mScale.y * 100.0f - light->mParam.mNear;
     }
 
     calcLightPoseInfo(light, pPos, pDir);
@@ -393,7 +401,11 @@ void getPrePassProjOrthoLightInfo(const LiveActor* pActor, const char* pName, f3
  * @param far Far distance.
  */
 void setPrePassProjLightFar(const LiveActor* pActor, const char* pName, f32 far) {
-    tryGetPrePassLight<LppProjParam>(pActor, pName)->mParam.mFar = far;
+    PrePassLight<LppProjParam>* light = tryGetPrePassLight<LppProjParam>(pActor, pName);
+
+    if (light != nullptr) {
+        light->mParam.mFar = far;
+    }
 }
 
 /**
@@ -403,7 +415,11 @@ void setPrePassProjLightFar(const LiveActor* pActor, const char* pName, f32 far)
  * @param fovyDegree Field of view.
  */
 void setPrePassProjLightFovyDegree(const LiveActor* pActor, const char* pName, f32 fovyDegree) {
-    tryGetPrePassLight<LppProjParam>(pActor, pName)->mParam.mFovyDegree = fovyDegree;
+    PrePassLight<LppProjParam>* light = tryGetPrePassLight<LppProjParam>(pActor, pName);
+
+    if (light != nullptr) {
+        light->mParam.mFovyDegree = fovyDegree;
+    }
 }
 
 /**
@@ -420,7 +436,7 @@ void setPrePassProjLightShadow(const LiveActor* pActor, const char* pName, bool 
 
     if (isEnable) {
         light->mParam.mShadowType = (param != 0.0f && isSoft) ? 2 : 1;
-        light->mParam.mShadowParam = param;
+        light->mParam.mPcf = param;
     } else {
         light->mParam.mShadowType = 0;
     }
@@ -440,7 +456,7 @@ void setPrePassProjOrthoLightShadow(const LiveActor* pActor, const char* pName, 
 
     if (isEnable) {
         light->mParam.mShadowType = (param != 0.0f && isSoft) ? 2 : 1;
-        light->mParam.mShadowParam = param;
+        light->mParam.mPcf = param;
     } else {
         light->mParam.mShadowType = 0;
     }
@@ -460,7 +476,7 @@ void setPrePassSpotLightShadow(const LiveActor* pActor, const char* pName, bool 
 
     if (isEnable) {
         light->mParam.mShadowType = (param != 0.0f && isSoft) ? 2 : 1;
-        light->mParam.mShadowParam = param;
+        light->mParam.mPcf = param;
     } else {
         light->mParam.mShadowType = 0;
     }
@@ -488,26 +504,5 @@ void initPrePassLightMtxConnector(const LiveActor* pActor, const char* pName,
  */
 const agl::TextureSampler* getTexIrradianceObj(const LiveActor* pActor) {
     return pActor->getSceneInfo()->graphicsSystemInfo->getCubeMapDirector()->getIrradianceSampler(1);
-}
-
-/**
- * Binds the light parameter group to this info.
- */
-void ActorPrePassLightKeeper::LightBaseInfo::setPtr() {
-    auto& group = np_LightCommon::LightCommon;
-    group.readyToSetPtr();
-    group.setParamPtr("Name", &mName);
-    group.setParamPtr("LppLightType", &mLppLightType);
-    group.setParamPtr("LppLightShaderFunc", &mLppLightShaderFunc);
-    group.setParamPtr("ActorJointName", &mActorJointName);
-    group.setParamPtr("Offset", &mOffset);
-    group.setParamPtr("RotateOffset", &mRotateOffset);
-    group.setParamPtr("Color", &mColor);
-    group.setParamPtr("SpecularColor", &mSpecularColor);
-    group.setParamPtr("IsEnableSpecular", &mIsEnableSpecular);
-    group.setParamPtr("IsEnableSpecularColor", &mIsEnableSpecularColor);
-    group.setParamPtr("KillFrame", &mKillFrame);
-    group.setParamPtr("AppearFrame", &mAppearFrame);
-    group.setParamPtr("IsIndirectIllumination", &mIsIndirectIllumination);
 }
 }  // namespace al
