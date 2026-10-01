@@ -1,4 +1,5 @@
 #include "Library/Light/DirectionParam.hpp"
+#include "Library/Light/PlaneParam.hpp"
 
 #include <math/seadMathCalcCommon.h>
 #include <math/seadQuat.h>
@@ -69,7 +70,7 @@ void DirectionParam::initializeDir(const sead::Vector3f& rDir, agl::utl::Paramet
  * @param rDir New direction.
  */
 void DirectionParam::syncFromDirection(const sead::Vector3f& rDir) {
-    mDirection = rDir;
+    static_cast<sead::BaseVec3<f32>&>(mDirection) = rDir;
     syncFromDirection();
 }
 
@@ -124,7 +125,7 @@ void DirectionParam::lerp(const DirectionParam& rStart, const DirectionParam& rE
     lerpVec(&mDirection, rStart.mDirection, rEnd.mDirection, rate);
 
     if (normalizeOrZero(&mDirection)) {
-        mDirection = rEnd.mDirection;
+        static_cast<sead::BaseVec3<f32>&>(mDirection) = rEnd.mDirection;
     }
 
     syncFromDirection();

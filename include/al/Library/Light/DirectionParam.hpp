@@ -30,22 +30,10 @@ public:
 
 protected:
     agl::utl::Parameter<sead::Vector2f>* mCoordinate = nullptr;
-    sead::Vector3f mDirection = {0.0f, -1.0f, 0.0f};
+    sead::Vector3f mDirection = -sead::Vector3f::ey;
     f32 mRotateDegreeY = 0.0f;
 };
 
 static_assert(sizeof(DirectionParam) == 0x18);
-class PlaneParam : public DirectionParam {
-public:
-    PlaneParam() = default;
-
-    void initialize(const sead::Vector3f& rDir, agl::utl::ParameterObj* pParamObj,
-                    const char* pPlaneName);
-
-private:
-    agl::utl::Parameter<f32> mDistanceFromOrigin;
-};
-
-static_assert(sizeof(PlaneParam) == 0x38);
 
 }  // namespace al
