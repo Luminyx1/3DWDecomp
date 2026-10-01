@@ -5791,18 +5791,24 @@ src/al/Library/Model/ModelDrawerHeightMap.cpp:
     .text   start:0x009BAC60 end:0x009BAEF4
 src/al/Library/Model/ModelShaderAssign.cpp:
     .text   start:0x009BAF00 end:0x009BB2A8
-src/al/Library/Nfp/NfpDirector_dup2.cpp:
+src/al/Library/Nfp/NfpControllerThread.cpp:
     .text   start:0x009BB2B0 end:0x009BC9D4
-src/al/Library/Nfp/OceanWaveDirector.cpp:
+src/al/Project/OceanWave/OceanWaveDirector.cpp:
     .text   start:0x009BC9F0 end:0x009BCA98
-src/al/Library/Nfp/OceanWaveKeeper.cpp:
+src/al/Project/OceanWave/OceanWaveKeeper.cpp:
     .text   start:0x009BCAA0 end:0x009BCAF8
-src/al/Library/Nfp/OceanWaveUserInfo.cpp:
-    .text   start:0x009BCB00 end:0x009BE8F8
-src/al/Library/Nfp/SwitchTriggerArea.cpp:
-    .text   start:0x009BE900 end:0x009BFD60
+src/al/Project/OceanWave/OceanWaveUserInfo.cpp: done
+    .text   start:0x009BCB00 end:0x009BD3BC
+src/al/Project/OceanWave/OceanWavePlayInfo.cpp: done
+    .text   start:0x009BD3C0 end:0x009BD82C
+src/al/Project/OceanWave/OceanWaveInfo.cpp:
+    .text   start:0x009BD830 end:0x009BE328
+src/al/Project/Play/Actor/ActorAlphaCtrl.cpp:
+    .text   start:0x009BE330 end:0x009BE8F8
+src/al/Library/Area/SwitchTriggerArea.cpp: done
+    .text   start:0x009BE900 end:0x009BE9A4
 src/al/Library/Play/Graphics/NoiseTextureKeeper.cpp:
-    .text   start:0x009BFD60 end:0x009C39FC
+    .text   start:0x009BE9B0 end:0x009C39FC
 src/al/Library/Play/Draw/PartsGraphics.cpp: done
     .text   start:0x009C3A00 end:0x009C3A44
 src/al/Library/Placement/PlacementHolder.cpp: done

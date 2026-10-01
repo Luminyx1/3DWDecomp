@@ -60355,7 +60355,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71009BB070			FALSE	_ZN2al17ModelShaderAssign4bindEPKN2nn3g3d11ResMaterialEPKNS2_8ResShapeEPKNS2_15ResShadingModelEPKNS2_16ResShaderProgramE	al::ModelShaderAssign::bind(nn::g3d::ResMaterial const*, nn::g3d::ResShape const*, nn::g3d::ResShadingModel const*, nn::g3d::ResShaderProgram const*)	
 0x71009BB190			FALSE	_ZN2al17ModelShaderAssign15updateLocation_EPKN2nn3g3d11ResMaterialEPKNS2_15ResShadingModelEPKc	al::ModelShaderAssign::updateLocation_(nn::g3d::ResMaterial const*, nn::g3d::ResShadingModel const*, char const*)	
 0x71009BB250			FALSE	_ZNK2al17ModelShaderAssign28activateMaterialUniformBlockEPN3agl11DrawContextEPKN2nn3g3d11MaterialObjEi	al::ModelShaderAssign::activateMaterialUniformBlock(agl::DrawContext*, nn::g3d::MaterialObj const*, int) const	
-0x71009BB2B0	Library/Nfp	NfpDirector.o	FALSE	_ZN2al19NfpControllerThreadC2Ei	al::NfpControllerThread::NfpControllerThread(int)	object (smo)
+0x71009BB2B0	Library/Nfp	NfpControllerThread.o	FALSE	_ZN2al19NfpControllerThreadC2Ei	al::NfpControllerThread::NfpControllerThread(int)	object (smo)
 0x71009BB550			FALSE	_ZN2al19NfpControllerThread14executeCommandEPN4sead6ThreadEl	al::NfpControllerThread::executeCommand(sead::Thread*, long)	
 0x71009BB7A0			FALSE	_ZN2al19NfpControllerThreadD1Ev	al::NfpControllerThread::~NfpControllerThread()	
 0x71009BB850			FALSE	_ZN2al19NfpControllerThreadD0Ev	al::NfpControllerThread::~NfpControllerThread()	
@@ -60382,10 +60382,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71009BC940			FALSE	_ZN4sead9Delegate2IN2al19NfpControllerThreadEPNS_6ThreadElED0Ev	sead::Delegate2<al::NfpControllerThread, sead::Thread*, long>::~Delegate2()	
 0x71009BC950			FALSE	_ZN4sead9Delegate2IN2al19NfpControllerThreadEPNS_6ThreadElE6invokeES4_l	sead::Delegate2<al::NfpControllerThread, sead::Thread*, long>::invoke(sead::Thread*, long)	
 0x71009BC980			FALSE	_ZNK4sead9Delegate2IN2al19NfpControllerThreadEPNS_6ThreadElE5cloneEPNS_4HeapE	sead::Delegate2<al::NfpControllerThread, sead::Thread*, long>::clone(sead::Heap*) const	
-0x71009BC9F0		OceanWaveDirector.o	FALSE	_ZN2al17OceanWaveDirectorC2EPKc	al::OceanWaveDirector::OceanWaveDirector(char const*)	object (class)
-0x71009BCAA0		OceanWaveKeeper.o	FALSE	_ZN2al15OceanWaveKeeperC1EPNS_17OceanWaveDirectorE	al::OceanWaveKeeper::OceanWaveKeeper(al::OceanWaveDirector*)	object (class)
+0x71009BC9F0	Project/OceanWave	OceanWaveDirector.o	FALSE	_ZN2al17OceanWaveDirectorC2EPKc	al::OceanWaveDirector::OceanWaveDirector(char const*)	object (class)
+0x71009BCAA0	Project/OceanWave	OceanWaveKeeper.o	FALSE	_ZN2al15OceanWaveKeeperC1EPNS_17OceanWaveDirectorE	al::OceanWaveKeeper::OceanWaveKeeper(al::OceanWaveDirector*)	object (class)
 0x71009BCAB0			FALSE	_ZN2al15OceanWaveKeeper4initEPKcRNS_9ByamlIterE	al::OceanWaveKeeper::init(char const*, al::ByamlIter&)	
-0x71009BCB00		OceanWaveUserInfo.o	FALSE	_ZN2al17OceanWaveUserInfo10createInfoERKNS_9ByamlIterERKN4sead14SafeStringBaseIcEE	al::OceanWaveUserInfo::createInfo(al::ByamlIter const&, sead::SafeStringBase<char> const&)	object (class)
+0x71009BCB00	Project/OceanWave	OceanWaveUserInfo.o	FALSE	_ZN2al17OceanWaveUserInfo10createInfoERKNS_9ByamlIterERKN4sead14SafeStringBaseIcEE	al::OceanWaveUserInfo::createInfo(al::ByamlIter const&, sead::SafeStringBase<char> const&)	object (class)
 0x71009BCC70			FALSE	_ZN2al14createInfoListINS_19OceanWaveActionInfoEEEPNS_13AudioInfoListIT_EERKNS_9ByamlIterE	al::AudioInfoList<al::OceanWaveActionInfo>* al::createInfoList<al::OceanWaveActionInfo>(al::ByamlIter const&)	
 0x71009BCD50			FALSE	_ZN2al14createInfoListINS_17OceanWavePlayInfoEEEPNS_13AudioInfoListIT_EERKNS_9ByamlIterE	al::AudioInfoList<al::OceanWavePlayInfo>* al::createInfoList<al::OceanWavePlayInfo>(al::ByamlIter const&)	
 0x71009BCE30			FALSE	_ZN2al17OceanWaveUserInfo11compareInfoEPKS0_S2_	al::OceanWaveUserInfo::compareInfo(al::OceanWaveUserInfo const*, al::OceanWaveUserInfo const*)	
@@ -60393,12 +60393,12 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71009BD0C0			FALSE	_ZNK2al13AudioInfoListINS_19OceanWaveActionInfoEE10getInfoNumEv	al::AudioInfoList<al::OceanWaveActionInfo>::getInfoNum() const	
 0x71009BD100			FALSE	_ZN2al13AudioInfoListINS_17OceanWavePlayInfoEE8sortInfoEv	al::AudioInfoList<al::OceanWavePlayInfo>::sortInfo()	
 0x71009BD380			FALSE	_ZNK2al13AudioInfoListINS_17OceanWavePlayInfoEE10getInfoNumEv	al::AudioInfoList<al::OceanWavePlayInfo>::getInfoNum() const	
-0x71009BD3C0			FALSE	_ZN2al17OceanWavePlayInfo10createInfoERKNS_9ByamlIterE	al::OceanWavePlayInfo::createInfo(al::ByamlIter const&)	
+0x71009BD3C0	Project/OceanWave	OceanWavePlayInfo.o	FALSE	_ZN2al17OceanWavePlayInfo10createInfoERKNS_9ByamlIterE	al::OceanWavePlayInfo::createInfo(al::ByamlIter const&)	
 0x71009BD480			FALSE	_ZN2al14createInfoListINS_13OceanWaveInfoEEEPNS_13AudioInfoListIT_EERKNS_9ByamlIterE	al::AudioInfoList<al::OceanWaveInfo>* al::createInfoList<al::OceanWaveInfo>(al::ByamlIter const&)	
 0x71009BD560			FALSE	_ZN2al17OceanWavePlayInfo11compareInfoEPKS0_S2_	al::OceanWavePlayInfo::compareInfo(al::OceanWavePlayInfo const*, al::OceanWavePlayInfo const*)	
 0x71009BD570			FALSE	_ZN2al13AudioInfoListINS_13OceanWaveInfoEE8sortInfoEv	al::AudioInfoList<al::OceanWaveInfo>::sortInfo()	
 0x71009BD7F0			FALSE	_ZNK2al13AudioInfoListINS_13OceanWaveInfoEE10getInfoNumEv	al::AudioInfoList<al::OceanWaveInfo>::getInfoNum() const	
-0x71009BD830			FALSE	_ZN2al13OceanWaveInfo10createInfoERKNS_9ByamlIterE	al::OceanWaveInfo::createInfo(al::ByamlIter const&)	
+0x71009BD830		OceanWaveInfo.o	FALSE	_ZN2al13OceanWaveInfo10createInfoERKNS_9ByamlIterE	al::OceanWaveInfo::createInfo(al::ByamlIter const&)	
 0x71009BD930			FALSE	_ZN2al13OceanWaveInfo11compareInfoEPKS0_S2_	al::OceanWaveInfo::compareInfo(al::OceanWaveInfo const*, al::OceanWaveInfo const*)	
 0x71009BD940			FALSE	_ZN2al25OceanWavePlayInfoInAction10createInfoERKNS_9ByamlIterE	al::OceanWavePlayInfoInAction::createInfo(al::ByamlIter const&)	
 0x71009BD9D0			FALSE	_ZN2al25OceanWavePlayInfoInAction11compareInfoEPKS0_S2_	al::OceanWavePlayInfoInAction::compareInfo(al::OceanWavePlayInfoInAction const*, al::OceanWavePlayInfoInAction const*)	
@@ -60414,19 +60414,19 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71009BDDA0			FALSE	_ZN2al13AudioInfoListINS_25OceanWavePlayInfoInActionEE8sortInfoEv	al::AudioInfoList<al::OceanWavePlayInfoInAction>::sortInfo()	
 0x71009BE150			FALSE	_ZN2al14startOceanWaveEPNS_9LiveActorEPKc	al::startOceanWave(al::LiveActor*, char const*)	
 0x71009BE230			FALSE	_ZNK2al13AudioInfoListINS_17OceanWavePlayInfoEE11tryFindInfoEPKc	al::AudioInfoList<al::OceanWavePlayInfo>::tryFindInfo(char const*) const	
-0x71009BE330			FALSE	_ZN2al14ActorAlphaCtrl10SphereInfoC2Ev	al::ActorAlphaCtrl::SphereInfo::SphereInfo()	
+0x71009BE330	Project/Play/Actor	ActorAlphaCtrl.o	FALSE	_ZN2al14ActorAlphaCtrl10SphereInfoC2Ev	al::ActorAlphaCtrl::SphereInfo::SphereInfo()	
 0x71009BE360			FALSE	_ZN2al14ActorAlphaCtrl10SphereInfo4initERKNS_9ByamlIterEPNS_9LiveActorE	al::ActorAlphaCtrl::SphereInfo::init(al::ByamlIter const&, al::LiveActor*)	
 0x71009BE410			FALSE	_ZN2al14ActorAlphaCtrl10SphereInfo6updateEPNS_9LiveActorEPKNS_13ClippingJudgeE	al::ActorAlphaCtrl::SphereInfo::update(al::LiveActor*, al::ClippingJudge const*)	
 0x71009BE550			FALSE	_ZN2al14ActorAlphaCtrl9tryCreateEPNS_9LiveActorEPKNS_8ResourceEPKc	al::ActorAlphaCtrl::tryCreate(al::LiveActor*, al::Resource const*, char const*)	
 0x71009BE5D0			FALSE	_ZN2al14ActorAlphaCtrlC2ERKNS_9ByamlIterEPNS_9LiveActorE	al::ActorAlphaCtrl::ActorAlphaCtrl(al::ByamlIter const&, al::LiveActor*)	
 0x71009BE770			FALSE	_ZN2al14ActorAlphaCtrl6updateEPKNS_13ClippingJudgeE	al::ActorAlphaCtrl::update(al::ClippingJudge const*)	
-0x71009BE900		SwitchTriggerArea.o	FALSE	_ZN2al17SwitchTriggerAreaC2EPKc	al::SwitchTriggerArea::SwitchTriggerArea(char const*)	object (class)
+0x71009BE900	Library/Area	SwitchTriggerArea.o	FALSE	_ZN2al17SwitchTriggerAreaC2EPKc	al::SwitchTriggerArea::SwitchTriggerArea(char const*)	object (class)
 0x71009BE940			FALSE	_ZN2al17SwitchTriggerAreaC1EPKc	al::SwitchTriggerArea::SwitchTriggerArea(char const*)	
 0x71009BE990			FALSE	_ZN2al17SwitchTriggerArea4initERKNS_12AreaInitInfoE	al::SwitchTriggerArea::init(al::AreaInitInfo const&)	
 0x71009BE9A0			FALSE	_ZNK2al17SwitchTriggerArea10isInVolumeERKN4sead7Vector3IfEE	al::SwitchTriggerArea::isInVolume(sead::Vector3<float> const&) const	
-0x71009BE9B0			FALSE	_ZN2al18NoiseTextureKeeperC2EPNS_18GraphicsSystemInfoEPNS_12ShaderHolderE	al::NoiseTextureKeeper::NoiseTextureKeeper(al::GraphicsSystemInfo*, al::ShaderHolder*)	
+0x71009BE9B0	Library/Play/Graphics	NoiseTextureKeeper.o	FALSE	_ZN2al18NoiseTextureKeeperC2EPNS_18GraphicsSystemInfoEPNS_12ShaderHolderE	al::NoiseTextureKeeper::NoiseTextureKeeper(al::GraphicsSystemInfo*, al::ShaderHolder*)	
 0x71009BFCA0			FALSE	_ZN2al18NoiseTextureKeeperD2Ev	al::NoiseTextureKeeper::~NoiseTextureKeeper()	
-0x71009BFD60	Library/Play/Graphics	NoiseTextureKeeper.o	FALSE	_ZN2al18NoiseTextureKeeper8finalizeEv	al::NoiseTextureKeeper::finalize()	object/folder from OdysseyDecomp file list
+0x71009BFD60			FALSE	_ZN2al18NoiseTextureKeeper8finalizeEv	al::NoiseTextureKeeper::finalize()	object/folder from OdysseyDecomp file list
 0x71009BFE10			FALSE	_ZN2al18NoiseTextureKeeper7endInitEv	al::NoiseTextureKeeper::endInit()	
 0x71009C0850			FALSE	_ZN2al18NoiseTextureKeeper34declareUsingGemNoiseCubemapTextureEv	al::NoiseTextureKeeper::declareUsingGemNoiseCubemapTexture()	
 0x71009C0930			FALSE	_ZN2al18NoiseTextureKeeper35declareUsingPerlinFbmNoise2DTextureEv	al::NoiseTextureKeeper::declareUsingPerlinFbmNoise2DTexture()	
