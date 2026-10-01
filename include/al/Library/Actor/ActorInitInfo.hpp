@@ -59,6 +59,19 @@ public:
     void initViewIdHost(const PlacementInfo* pPlacementInfo, const ActorInitInfo& rInfo);
     void initNoViewId(const PlacementInfo* pPlacementInfo, const ActorInitInfo& rInfo);
 
+    const PlacementInfo& getPlacementInfo() const { return *mPlacementInfo; }
+    const LayoutInitInfo* getLayoutInitInfo() const { return mLayoutInitInfo; }
+    const ActorSceneInfo& getActorSceneInfo() const { return mActorSceneInfo; }
+    ExecuteDirector* getExecuteDirector() const { return mExecuteDirector; }
+    AudioDirector* getAudioDirector() const { return mAudioDirector; }
+    EffectSystemInfo* getEffectSystemInfo() const { return mEffectSystemInfo; }
+    OceanWaveDirector* getOceanWaveDirector() const { return mOceanWaveDirector; }
+    HitSensorDirector* getHitSensorDirector() const { return mHitSensorDirector; }
+    StageSwitchDirector* getStageSwitchDirector() const { return mStageSwitchDirector; }
+    ScreenPointDirector* getScreenPointDirector() const { return mScreenPointerDirector; }
+    PlacementId* getPlacementId() const { return mPlacementId; }
+    LiveActorGroup* getLiveActorGroup() const { return mLiveActorGroup; }
+
     PlacementInfo* mPlacementInfo = nullptr;
     const LayoutInitInfo* mLayoutInitInfo = nullptr;
     ActorSceneInfo mActorSceneInfo;

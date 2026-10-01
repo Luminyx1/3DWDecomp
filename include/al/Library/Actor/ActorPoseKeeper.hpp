@@ -30,6 +30,9 @@ public:
     virtual void copyPose(const ActorPoseKeeperBase* pOther);
     virtual void calcBaseMtx(sead::Matrix34f* pMtx) const = 0;
 
+    const sead::Vector3f& getTrans() const { return mTranslation; }
+    sead::Vector3f* getTransPtr() { return &mTranslation; }
+
     static sead::Vector3f sDefaultVelocity;
 
     sead::Vector3f mTranslation{0.0f, 0.0f, 0.0f};
