@@ -80,6 +80,8 @@ public:
     Controller* getController(int port) { return mControllers[port]; }
     Controller* getControllerUnsafe(int port) { return mControllers.unsafeAt(port); }
     s32 getControllerNum() const { return mControllers.size(); }
+    OffsetList<ControlDevice>& getControlDeviceList() { return mDevices; }
+    PtrArray<Controller>& getControllerList() { return mControllers; }
 
 private:
     OffsetList<ControlDevice> mDevices;

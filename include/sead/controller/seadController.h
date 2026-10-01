@@ -99,6 +99,8 @@ public:
     template <typename T>
     T getWrapperAs() const;
 
+    OffsetList<ControllerAddon>& getAddonList() { return mAddons; }
+
 protected:
     virtual void calcImpl_() = 0;
     virtual bool isIdle_();
