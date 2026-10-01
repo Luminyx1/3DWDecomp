@@ -4656,3 +4656,23 @@
 0x710211EED8 8 object _ZGVZN2nn3g3d12ResAnimCurve10ResetFloatEvE10backupSize
 0x710211EEE0 8 object _ZZN2nn3g3d12ResAnimCurve8ResetIntEvE10backupSize
 0x710211EEE8 8 object _ZGVZN2nn3g3d12ResAnimCurve8ResetIntEvE10backupSize
+
+# src/al/Project/PostProcessing/EdgeDrawer (cDefaultOffsetColor also referenced by src/al/Library/PostProcessing/PencilSketchDrawer)
+0x7101409640 16 object _ZN12_GLOBAL__N_119cDefaultOffsetColorE
+0x71016FF654 168 object _ZN12_GLOBAL__N_114cEdgeUboLayoutE
+0x71016FF6FC 24 object _ZN12_GLOBAL__N_119cReductionUboLayoutE
+0x7101B0ADB8 32 object _ZN12_GLOBAL__N_112sMacroValuesE
+0x7101B0ADD8 32 object _ZN12_GLOBAL__N_111sMacroNamesE
+
+# src/al/Project/PostProcessing/MangaDrawer
+0x71016FF73C 12 object _ZN12_GLOBAL__N_113cMipUboLayoutE
+
+# src/al/Project/PostProcessing/CartoonDrawer
+0x71022556C8 8 object _ZZN12_GLOBAL__N_115IndirectTexture5text_EiE9spTextPtr
+0x71022556D0 8 object _ZGVZN12_GLOBAL__N_115IndirectTexture5text_EiE8sTextAll
+0x71022556D8 32 object _ZZN12_GLOBAL__N_115IndirectTexture5text_EiE8sTextPtr
+0x71022556F8 72 object _ZZN12_GLOBAL__N_115IndirectTexture5text_EiE8sTextAll
+
+# src/al/Project/PostProcessing/KaleidoscopeDrawer
+0x71016FF748 12 object _ZN12_GLOBAL__N_119cKaleidoscopeLayoutE
+0x7101B0B378 80 object _ZN12_GLOBAL__N_111cNumberTextE

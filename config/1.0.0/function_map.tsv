@@ -60638,7 +60638,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71009CDE70			FALSE	_ZN2al9ParameterIiE3ptrEv	al::Parameter<int>::ptr()	
 0x71009CDE80			FALSE	_ZNK2al9ParameterIiE4sizeEv	al::Parameter<int>::size() const	
 0x71009CDE90			FALSE	_ZNK2al9ParameterIiE12getParamTypeEv	al::Parameter<int>::getParamType() const	
-0x71009CDEA0			FALSE	sub_71009CDEA0	sub_71009CDEA0	
+0x71009CDEA0			FALSE	_ZZNK2al11MangaDrawer4drawEPN3agl11DrawContextERKNS1_12RenderBufferEPKNS1_11TextureDataES9_S9_S9_fffENK3$_0clES9_S9_ib	al::MangaDrawer::draw(agl::DrawContext*, agl::RenderBuffer const&, agl::TextureData const*, agl::TextureData const*, agl::TextureData const*, agl::TextureData const*, float, float, float) const::$_0::operator()(agl::TextureData const*, agl::TextureData const*, int, bool) const	
 0x71009CE110		CartoonDrawer.o	FALSE	_ZN2al16CartoonDrawParamC2Ev	al::CartoonDrawParam::CartoonDrawParam()	
 0x71009CF110			FALSE	_ZNK2al16CartoonDrawParam8isEnableEv	al::CartoonDrawParam::isEnable() const	object/folder from OdysseyDecomp file list
 0x71009CF120			FALSE	_ZNK2al16CartoonDrawParam15isEnableFishEyeEv	al::CartoonDrawParam::isEnableFishEye() const	
@@ -60707,7 +60707,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71009D1790			FALSE	_ZNK2al17ContoursDrawParam12getParamNameEv	al::ContoursDrawParam::getParamName() const	
 0x71009D17A0			FALSE	_ZN2al17ContoursDrawParam11getParamObjEv	al::ContoursDrawParam::getParamObj()	
 0x71009D17B0			FALSE	_ZNK2al17ContoursDrawParam11getParamObjEv	al::ContoursDrawParam::getParamObj() const	
-0x71009D17C0			FALSE	sub_71009D17C0	sub_71009D17C0	
+0x71009D17C0			FALSE	_ZZN12_GLOBAL__N_116drawGaussianBlurEPN3agl11DrawContextEPNS0_3utl23DynamicTextureAllocatorEPKNS0_11TextureDataES8_iENKUlS8_S8_ibE_clES8_S8_ib	(anonymous namespace)::drawGaussianBlur(agl::DrawContext*, agl::utl::DynamicTextureAllocator*, agl::TextureData const*, agl::TextureData const*, int)::'lambda'(agl::TextureData const*, agl::TextureData const*, int, bool)::operator()(agl::TextureData const*, agl::TextureData const*, int, bool) const	
 0x71009D1A30		ColorClampDrawer.o	FALSE	_ZN2al19ColorClampDrawParamC2Ev	al::ColorClampDrawParam::ColorClampDrawParam()	
 0x71009D1DA0			FALSE	_ZNK2al19ColorClampDrawParam8isEnableEv	al::ColorClampDrawParam::isEnable() const	object/folder from OdysseyDecomp file list
 0x71009D1DB0			FALSE	_ZNK2al19ColorClampDrawParam13getClampColorEv	al::ColorClampDrawParam::getClampColor() const	
@@ -60723,7 +60723,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71009D2230			FALSE	_ZNK2al19ColorClampDrawParam12getParamNameEv	al::ColorClampDrawParam::getParamName() const	
 0x71009D2240			FALSE	_ZN2al19ColorClampDrawParam11getParamObjEv	al::ColorClampDrawParam::getParamObj()	
 0x71009D2250			FALSE	_ZNK2al19ColorClampDrawParam11getParamObjEv	al::ColorClampDrawParam::getParamObj() const	
-0x71009D2260			FALSE	_ZN2al17KaleidoscopeParamC2Ev	al::KaleidoscopeParam::KaleidoscopeParam()	
+0x71009D2260		KaleidoscopeDrawer.o	FALSE	_ZN2al17KaleidoscopeParamC2Ev	al::KaleidoscopeParam::KaleidoscopeParam()	
 0x71009D26B0			FALSE	_ZNK2al17KaleidoscopeParam8isEnableEv	al::KaleidoscopeParam::isEnable() const	
 0x71009D26C0			FALSE	_ZNK2al17KaleidoscopeParam13getMirrorTypeEv	al::KaleidoscopeParam::getMirrorType() const	
 0x71009D26D0			FALSE	_ZNK2al17KaleidoscopeParam12getDivideNumEv	al::KaleidoscopeParam::getDivideNum() const	
@@ -60740,7 +60740,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71009D2BE0			FALSE	_ZNK2al17KaleidoscopeParam12getParamNameEv	al::KaleidoscopeParam::getParamName() const	
 0x71009D2BF0			FALSE	_ZN2al17KaleidoscopeParam11getParamObjEv	al::KaleidoscopeParam::getParamObj()	
 0x71009D2C00			FALSE	_ZNK2al17KaleidoscopeParam11getParamObjEv	al::KaleidoscopeParam::getParamObj() const	
-0x71009D2C10			FALSE	_ZN2al20MetalReliefDrawParamC2Ev	al::MetalReliefDrawParam::MetalReliefDrawParam()	
+0x71009D2C10		MetalReliefDrawer.o	FALSE	_ZN2al20MetalReliefDrawParamC2Ev	al::MetalReliefDrawParam::MetalReliefDrawParam()	
 0x71009D44B0			FALSE	_ZNK2al20MetalReliefDrawParam8isEnableEv	al::MetalReliefDrawParam::isEnable() const	
 0x71009D44C0			FALSE	_ZNK2al20MetalReliefDrawParam13getLightAngleEv	al::MetalReliefDrawParam::getLightAngle() const	
 0x71009D44D0			FALSE	_ZNK2al20MetalReliefDrawParam14getLightAngle2Ev	al::MetalReliefDrawParam::getLightAngle2() const	
@@ -60780,8 +60780,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71009D5160			FALSE	_ZNK2al20MetalReliefDrawParam12getParamNameEv	al::MetalReliefDrawParam::getParamName() const	
 0x71009D5170			FALSE	_ZN2al20MetalReliefDrawParam11getParamObjEv	al::MetalReliefDrawParam::getParamObj()	
 0x71009D5180			FALSE	_ZNK2al20MetalReliefDrawParam11getParamObjEv	al::MetalReliefDrawParam::getParamObj() const	
-0x71009D5190			FALSE	_ZN2al21PencilSketchDrawParamC2Ev	al::PencilSketchDrawParam::PencilSketchDrawParam()	
-0x71009D5300	Library/PostProcessing	PencilSketchDrawer.o	FALSE	_ZNK2al21PencilSketchDrawParam8isEnableEv	al::PencilSketchDrawParam::isEnable() const	object/folder from OdysseyDecomp file list
+0x71009D5190	Library/PostProcessing	PencilSketchDrawer.o	FALSE	_ZN2al21PencilSketchDrawParamC2Ev	al::PencilSketchDrawParam::PencilSketchDrawParam()	
+0x71009D5300			FALSE	_ZNK2al21PencilSketchDrawParam8isEnableEv	al::PencilSketchDrawParam::isEnable() const	object/folder from OdysseyDecomp file list
 0x71009D5310			FALSE	_ZN2al18PencilSketchDrawerC1EPNS_12ShaderHolderE	al::PencilSketchDrawer::PencilSketchDrawer(al::ShaderHolder*)	
 0x71009D53B0			FALSE	_ZN2al18PencilSketchDrawerD2Ev	al::PencilSketchDrawer::~PencilSketchDrawer()	
 0x71009D53C0			FALSE	_ZN2al18PencilSketchDrawer7endInitEv	al::PencilSketchDrawer::endInit()	
