@@ -92,5 +92,6 @@ void calcFrustumPlanesWorldSpace(ViewFrustumPlanes* pPlanes, const sead::Matrix3
                                  const sead::Matrix44f& rProjInvMtx, ViewFrustumPoints* pPoints);
 void calcFrustumPointsAtWorldSpace(ViewFrustumPoints* pPoints, const sead::Matrix34f& rViewInvMtx,
                                    const sead::Matrix44f& rProjInvMtx);
+bool isMakeLinearDepthProjReverseInfinite();
 
 }  // namespace al
