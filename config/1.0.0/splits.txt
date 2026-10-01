@@ -5793,9 +5793,9 @@ src/al/Library/Model/ModelShaderAssign.cpp:
     .text   start:0x009BAF00 end:0x009BB2A8
 src/al/Library/Nfp/NfpControllerThread.cpp:
     .text   start:0x009BB2B0 end:0x009BC9D4
-src/al/Project/OceanWave/OceanWaveDirector.cpp:
+src/al/Project/OceanWave/OceanWaveDirector.cpp: done
     .text   start:0x009BC9F0 end:0x009BCA98
-src/al/Project/OceanWave/OceanWaveKeeper.cpp:
+src/al/Project/OceanWave/OceanWaveKeeper.cpp: done
     .text   start:0x009BCAA0 end:0x009BCAF8
 src/al/Project/OceanWave/OceanWaveUserInfo.cpp: done
     .text   start:0x009BCB00 end:0x009BD3BC
@@ -5803,7 +5803,7 @@ src/al/Project/OceanWave/OceanWavePlayInfo.cpp: done
     .text   start:0x009BD3C0 end:0x009BD82C
 src/al/Project/OceanWave/OceanWaveInfo.cpp:
     .text   start:0x009BD830 end:0x009BE328
-src/al/Project/Play/Actor/ActorAlphaCtrl.cpp:
+src/al/Project/Play/Actor/ActorAlphaCtrl.cpp: done
     .text   start:0x009BE330 end:0x009BE8F8
 src/al/Library/Area/SwitchTriggerArea.cpp: done
     .text   start:0x009BE900 end:0x009BE9A4

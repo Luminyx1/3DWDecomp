@@ -4686,3 +4686,5 @@
 0x7101AE8298 8 object _ZN12_GLOBAL__N_125NrvPrePassLightBaseAppearE
 0x7101AE82A0 8 object _ZN12_GLOBAL__N_123NrvPrePassLightBaseKillE
 0x7101AE82A8 8 object _ZN12_GLOBAL__N_123NrvPrePassLightBaseDeadE
+0x7102124620 4 object _ZN12_GLOBAL__N_115sThreadPriorityE
+0x7102124624 4 object _ZN12_GLOBAL__N_125sControllerThreadPriorityE

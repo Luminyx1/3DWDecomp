@@ -52831,7 +52831,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710087BA30			FALSE	_ZN4sead9Delegate2IN2al11NfpDirectorEPNS_6ThreadElED0Ev	sead::Delegate2<al::NfpDirector, sead::Thread*, long>::~Delegate2()	
 0x710087BA40			FALSE	_ZN4sead9Delegate2IN2al11NfpDirectorEPNS_6ThreadElE6invokeES4_l	sead::Delegate2<al::NfpDirector, sead::Thread*, long>::invoke(sead::Thread*, long)	
 0x710087BA70			FALSE	_ZNK4sead9Delegate2IN2al11NfpDirectorEPNS_6ThreadElE5cloneEPNS_4HeapE	sead::Delegate2<al::NfpDirector, sead::Thread*, long>::clone(sead::Heap*) const	
-0x710087BAE0			FALSE	sub_710087BAE0	sub_710087BAE0	
+0x710087BAE0			FALSE	_GLOBAL__sub_I_NfpDirector.cpp	_GLOBAL__sub_I_NfpDirector.cpp	
 0x710087BB00		NfpFunction.o	FALSE	_ZN2al19isAnyNfcTagDetectedERKNS_7NfpInfoE	al::isAnyNfcTagDetected(al::NfpInfo const&)	object/folder from OdysseyDecomp file list
 0x710087BB20			FALSE	_ZN2al11isNormalNfcERKNS_7NfpInfoE	al::isNormalNfc(al::NfpInfo const&)	
 0x710087BB30			FALSE	_ZN2al8isAmiiboERKNS_7NfpInfoE	al::isAmiibo(al::NfpInfo const&)	
