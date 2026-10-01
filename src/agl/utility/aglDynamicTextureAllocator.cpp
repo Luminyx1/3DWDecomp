@@ -111,7 +111,7 @@ void DynamicTextureAllocator::initialize(s32 textureNum, u64 size, u64 debugSize
 
     const u32 attribute = mFlags.isOn(0x200) ? 0x84 : 4;
 
-    auto* pBlock = new (pHeap) GPUMemBlock<u8>;
+    auto* pBlock = new (pHeap) GPUMemBlockU8;
     pBlock->allocBuffer(size, pHeap, 8, MemoryAttribute(attribute));
     GPUMemVoidAddr addr(*pBlock, 0);
 
@@ -120,7 +120,7 @@ void DynamicTextureAllocator::initialize(s32 textureNum, u64 size, u64 debugSize
 
     if (debugSize != 0 && pDebugHeap != nullptr)
     {
-        auto* pDebugBlock = new (pDebugHeap) GPUMemBlock<u8>;
+        auto* pDebugBlock = new (pDebugHeap) GPUMemBlockU8;
         pDebugBlock->allocBuffer(debugSize, pDebugHeap, 8, MemoryAttribute(attribute));
         debugAddr = GPUMemVoidAddr(*pDebugBlock, 0);
         debugHeapSize = 0x40000000;
@@ -180,7 +180,7 @@ void DynamicTextureAllocator::initialize(s32 textureNum, u64 size, u64 debugSize
 
         if (i != cContextNum - 1)
         {
-            auto* pDisplayListBlock = new (pHeap) GPUMemBlock<u8>;
+            auto* pDisplayListBlock = new (pHeap) GPUMemBlockU8;
             pDisplayListBlock->allocBuffer(0x1000, pHeap, 4, MemoryAttribute(0));
             rContext.mDisplayList.setBuffer(GPUMemAddr<u8>(*pDisplayListBlock, 0), 0x1000);
         }
@@ -691,7 +691,7 @@ bool DynamicTextureAllocator::free_(const TextureData* pTexture)
 {
     auto* pTextureEx = const_cast<TextureDataEx*>(static_cast<const TextureDataEx*>(pTexture));
 
-    sead::ScopedLock<sead::CriticalSection> allocatorLock(&mAllocatorCS);
+    sead::ScopedCriticalSectionLock allocatorLock(&mAllocatorCS);
 
     if (mFlags.isOn(0x4000))
     {
@@ -700,19 +700,17 @@ bool DynamicTextureAllocator::free_(const TextureData* pTexture)
             mFreeAddrs[mFreeAddrNum++] = pTextureEx->mMemoryBlock->mMemBlockAddr;
         }
 
-        pTextureEx->mContext->mAllocators[pTextureEx->mAllocatorIndex].free(
-            pTextureEx->mMemoryBlock, false);
+        pTextureEx->getAllocator().free(pTextureEx->mMemoryBlock, false);
     }
     else
     {
-        pTextureEx->mContext->mAllocators[pTextureEx->mAllocatorIndex].free(
-            pTextureEx->mMemoryBlock, true);
+        pTextureEx->getAllocator().free(pTextureEx->mMemoryBlock, true);
     }
 
     pTextureEx->mMemoryBlock = nullptr;
 
     {
-        sead::ScopedLock<sead::CriticalSection> textureLock(&mTextureCS);
+        sead::ScopedCriticalSectionLock textureLock(&mTextureCS);
         pTextureEx->mState.reset(1);
     }
 
@@ -972,7 +970,7 @@ void TextureDataEx::reset(DrawContext* pDrawContext, const sead::SafeString& rNa
         mInfo.change(2, textureID != getTextureID());
     }
 
-    mUseSize = mContext->mAllocators[mAllocatorIndex].getUsedSize();
+    mUseSize = getAllocator().getUsedSize();
     mName = rName;
     setCompSelDefault();
     mFrame = frame;
@@ -1114,7 +1112,7 @@ void DynamicTextureAllocator::listenPropertyEvent(const sead::hostio::PropertyEv
     {
     case 1000:
     {
-        sead::ScopedLock<sead::CriticalSection> lock(&mTextureCS);
+        sead::ScopedCriticalSectionLock lock(&mTextureCS);
 
         for (auto& rTexture : mTextures)
         {

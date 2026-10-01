@@ -36,7 +36,7 @@ TextureMemoryAllocator::~TextureMemoryAllocator()
  * @param blockNum maximum number of memory blocks
  * @param pHeap heap used for the memory block buffer
  */
-void TextureMemoryAllocator::initialize(GPUMemVoidAddr addr, sead::Buffer<Storage>* pStorage,
+void TextureMemoryAllocator::initialize(GPUMemVoidAddr addr, StorageBuffer* pStorage,
                                         u64 size, s32 blockNum, sead::Heap* pHeap)
 {
     if (size == 0)
@@ -153,7 +153,7 @@ bool TextureMemoryAllocator::alloc_(MemoryBlock* pBlock, const AllocateArg& rArg
         pBlock->mMemBlockAddr.invalidate();
         baseAddr = pBlock->mAddr;
 
-        if (sead::Buffer<Storage>* storages = mStorage)
+        if (StorageBuffer* storages = mStorage)
         {
             s32 storageClass = -1;
 
@@ -179,7 +179,7 @@ bool TextureMemoryAllocator::alloc_(MemoryBlock* pBlock, const AllocateArg& rArg
     else
     {
         const s32 alignment = fromFront ? rArg.mAlignment : -rArg.mAlignment;
-        auto* memBlock = new (heap, 8) GPUMemBlock<u8>;
+        auto* memBlock = new (heap, 8) GPUMemBlockU8;
         memBlock->allocBuffer_(size, heap, alignment, MemoryAttribute::CompressibleMemory);
         baseAddr = GPUMemVoidAddr(*memBlock, 0);
         pBlock->mMemBlockAddr = baseAddr;
@@ -388,7 +388,7 @@ bool TextureMemoryAllocator::isOverwrapperd(const TextureMemoryAllocator& rOther
  * @param size size of each storage
  * @param pHeap heap used for the storages
  */
-void TextureMemoryAllocator::setupStorage(sead::Buffer<Storage>* pStorage, GPUMemVoidAddr addr,
+void TextureMemoryAllocator::setupStorage(StorageBuffer* pStorage, GPUMemVoidAddr addr,
                                           u64 size, sead::Heap* pHeap)
 {
     struct StorageInfo

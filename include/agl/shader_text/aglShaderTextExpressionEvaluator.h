@@ -18,6 +18,8 @@ public:
     Clause* mClause;
 };
 
+using SyntaxLeashArray = sead::ObjArray<SyntaxLeash>;
+
 class ExpressionEvaluator {
 public:
     ExpressionEvaluator();

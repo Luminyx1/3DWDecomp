@@ -87,7 +87,7 @@ void ColorCorrection::initialize(s32 contextNum, sead::Heap* pHeap, bool unused)
                             cMapSize, 1, TextureAttribute(0), MultiSampleType(0), true);
     u32 size = mMapTexture.getSurface().mStorageSize;
     u32 alignment = mMapTexture.getSurface().mAlignment;
-    auto* block = new (pHeap, 8) GPUMemBlock<u8>;
+    auto* block = new (pHeap, 8) GPUMemBlockU8;
     block->allocBuffer_(size, pHeap, alignment, MemoryAttribute::CompressibleMemory);
     mMapImage = GPUMemAddr<u8>(*block, 0);
     mMapTexture.setDebugLabel("agl::pfx::ColorCorrection");

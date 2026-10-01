@@ -94,7 +94,7 @@ void ShadowFrustum::Polytope::initialize(sead::Heap* pHeap)
 void ShadowFrustum::clipByFrustum(const sead::Matrix44f& rViewProjMtx)
 {
     sead::Matrix44f inv;
-    sead::Matrix44CalcCommon<f32>::inverse(inv, rViewProjMtx);
+    inv.setInverse(rViewProjMtx);
     sead::BoundBox3f box(-sead::Vector3f::ones, sead::Vector3f::ones);
     clipByBoundBox(box, inv, sead::BitFlag8(0xff));
 }
@@ -528,9 +528,9 @@ void ShadowFrustum::updateByViewFrustum(const sead::Matrix34f& rViewMtx,
     };
 
     sead::Matrix44f invProj;
-    sead::Matrix44CalcCommon<f32>::inverse(invProj, rProjMtx);
+    invProj.setInverse(rProjMtx);
     sead::Matrix34f invView;
-    sead::Matrix34CalcCommon<f32>::inverse(invView, rViewMtx);
+    invView.setInverse(rViewMtx);
 
     for (s32 i = 0; i < 4; i++)
     {

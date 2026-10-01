@@ -64,7 +64,7 @@ void ShadowUtil::calcViewMatrix(sead::Matrix34f* pViewMtx, const sead::Vector3f&
 void ShadowUtil::calcNearFar(f32* pNear, f32* pFar, const sead::Matrix44f& rProjMtx)
 {
     sead::Matrix44f inv;
-    sead::Matrix44CalcCommon<f32>::inverse(inv, rProjMtx);
+    inv.setInverse(rProjMtx);
 
     if (pNear)
     {
@@ -96,14 +96,14 @@ void ShadowUtil::drawFrustum(DrawContext* pDrawContext, const sead::Matrix34f& r
     utl::DevTools::beginDrawImm(pDrawContext, rViewMtx, rProjMtx);
 
     sead::Matrix44f viewProj;
-    sead::Matrix44CalcCommon<f32>::multiply(viewProj, rFrustumProjMtx, rFrustumViewMtx);
+    viewProj.setMul(rFrustumProjMtx, rFrustumViewMtx);
     sead::Vector3f points[8] = {
         {-1.0f, 1.0f, -1.0f}, {-1.0f, -1.0f, -1.0f}, {1.0f, -1.0f, -1.0f}, {1.0f, 1.0f, -1.0f},
         {-1.0f, 1.0f, 0.99f}, {-1.0f, -1.0f, 0.99f}, {1.0f, -1.0f, 0.99f}, {1.0f, 1.0f, 0.99f},
     };
 
     sead::Matrix44f inv;
-    sead::Matrix44CalcCommon<f32>::inverse(inv, viewProj);
+    inv.setInverse(viewProj);
 
     for (s32 i = 0; i < 8; i++)
     {

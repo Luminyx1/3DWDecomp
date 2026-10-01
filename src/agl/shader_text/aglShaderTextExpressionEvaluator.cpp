@@ -41,7 +41,7 @@ void ExpressionEvaluator::initialize(sead::Heap* pHeap, sead::Heap* pClauseHeap,
  * @param pClause value clause to find
  * @return the matching leash, or nullptr
  */
-SyntaxLeash* ExpressionEvaluator::findSyntaxLeash(sead::ObjArray<SyntaxLeash>* pLeashes,
+SyntaxLeash* ExpressionEvaluator::findSyntaxLeash(SyntaxLeashArray* pLeashes,
                                                   const Clause* pClause) const {
     for (auto& leash : *pLeashes) {
         if (leash.mClause == pClause) {
@@ -52,7 +52,7 @@ SyntaxLeash* ExpressionEvaluator::findSyntaxLeash(sead::ObjArray<SyntaxLeash>* p
     return nullptr;
 }
 
-Clause* ExpressionEvaluator::createBinaryOperatorSyntaxTree(sead::ObjArray<SyntaxLeash>* pLeashes,
+Clause* ExpressionEvaluator::createBinaryOperatorSyntaxTree(SyntaxLeashArray* pLeashes,
                                                             Clause* pClause) {
     Clause* value = new (mClauseHeap) Clause(Clause::cType_Int, "0", "0" + 1);
     SyntaxTree* tree = new (mHeap) SyntaxTree(value);
@@ -85,15 +85,15 @@ Clause* ExpressionEvaluator::createBinaryOperatorSyntaxTree(sead::ObjArray<Synta
 }
 
 Clause* ExpressionEvaluator::createTernaryOperatorSyntaxTree(
-    sead::ObjArray<SyntaxLeash>* pLeashes, Clause* pClause) {
+    SyntaxLeashArray* pLeashes, Clause* pClause) {
     Clause* value = new (mClauseHeap) Clause(Clause::cType_Int, "0", "0" + 1);
     SyntaxTree* tree = new (mHeap) SyntaxTree(value);
     SyntaxLeash* leash = pLeashes->emplaceBack();
 
-    Clause* condition = pClause->mPrev;
-    Clause* trueValue = pClause->mNext;
-    Clause* colon = trueValue->mNext;
-    Clause* falseValue = colon->mNext;
+    Clause* condition = pClause->getPrev();
+    Clause* trueValue = pClause->getNext();
+    Clause* colon = trueValue->getNext();
+    Clause* falseValue = colon->getNext();
 
     SyntaxLeash* left = findSyntaxLeash(pLeashes, condition);
     SyntaxLeash* center = findSyntaxLeash(pLeashes, trueValue);
@@ -119,7 +119,7 @@ Clause* ExpressionEvaluator::createTernaryOperatorSyntaxTree(
     pLeashes->erase(pLeashes->indexOf(center));
     pLeashes->erase(pLeashes->indexOf(right));
 
-    condition->mPrev->insertAfter(value);
+    condition->getPrev()->insertAfter(value);
     condition->erase();
     trueValue->erase();
     falseValue->erase();
@@ -128,14 +128,14 @@ Clause* ExpressionEvaluator::createTernaryOperatorSyntaxTree(
     return value;
 }
 
-Clause* ExpressionEvaluator::createTokenOperatorSyntaxTree(sead::ObjArray<SyntaxLeash>* pLeashes,
+Clause* ExpressionEvaluator::createTokenOperatorSyntaxTree(SyntaxLeashArray* pLeashes,
                                                            Clause* pClause) {
     Clause* value = new (mClauseHeap) Clause(Clause::cType_Int, "0", "0" + 1);
     SyntaxTree* tree = new (mHeap) SyntaxTree(value);
     SyntaxLeash* leash = pLeashes->emplaceBack();
 
-    Clause* token = pClause->mNext;
-    Clause* close = token->mNext;
+    Clause* token = pClause->getNext();
+    Clause* close = token->getNext();
 
     SyntaxLeash* right = findSyntaxLeash(pLeashes, token);
 
@@ -150,24 +150,25 @@ Clause* ExpressionEvaluator::createTokenOperatorSyntaxTree(sead::ObjArray<Syntax
 
     pLeashes->erase(pLeashes->indexOf(right));
 
-    pClause->mPrev->insertAfter(value);
+    pClause->getPrev()->insertAfter(value);
     pClause->erase();
     token->erase();
     close->erase();
     return value;
 }
 
-void ExpressionEvaluator::resolveOperatorTokenConnect(sead::ObjArray<SyntaxLeash>* pLeashes,
+void ExpressionEvaluator::resolveOperatorTokenConnect(SyntaxLeashArray* pLeashes,
                                                       Clause* pBegin, Clause* pEnd) {
-    for (Clause* c = pBegin->mNext; c != pEnd; c = c->mNext) {
-        if (c->mType == Clause::cType_SingleQuote || c->mType == Clause::cType_DoubleQuote) {
+    for (Clause* c = pBegin->getNext(); c != pEnd; c = c->getNext()) {
+        if (c->getType() == Clause::cType_SingleQuote ||
+            c->getType() == Clause::cType_DoubleQuote) {
             c = createTokenOperatorSyntaxTree(pLeashes, c);
-        } else if (c->mType == Clause::cType_Dot) {
-            const Clause* prev = c->mPrev;
+        } else if (c->getType() == Clause::cType_Dot) {
+            const Clause* prev = c->getPrev();
 
-            if ((prev->isWord() || prev->mType == Clause::cType_RParen ||
-                 prev->mType == Clause::cType_RBracket) &&
-                c->mNext->isWord()) {
+            if ((prev->isWord() || prev->getType() == Clause::cType_RParen ||
+                 prev->getType() == Clause::cType_RBracket) &&
+                c->getNext()->isWord()) {
                 c = createBinaryOperatorSyntaxTree(pLeashes, c);
             }
         }
@@ -176,16 +177,16 @@ void ExpressionEvaluator::resolveOperatorTokenConnect(sead::ObjArray<SyntaxLeash
     resolveOperatorUnary(pLeashes, pBegin, pEnd);
 }
 
-void ExpressionEvaluator::resolveOperatorUnary(sead::ObjArray<SyntaxLeash>* pLeashes,
+void ExpressionEvaluator::resolveOperatorUnary(SyntaxLeashArray* pLeashes,
                                                Clause* pBegin, Clause* pEnd) {
-    for (Clause* c = pBegin->mNext; c != pEnd; c = c->mNext) {
-        if (c->mType == Clause::cType_Plus || c->mType == Clause::cType_Minus) {
-            const Clause* prev = c->mPrev;
+    for (Clause* c = pBegin->getNext(); c != pEnd; c = c->getNext()) {
+        if (c->getType() == Clause::cType_Plus || c->getType() == Clause::cType_Minus) {
+            const Clause* prev = c->getPrev();
 
-            if (prev->mType == Clause::cType_RBracket || prev->isWord()) {
+            if (prev->getType() == Clause::cType_RBracket || prev->isWord()) {
                 continue;
             }
-        } else if (c->mType != Clause::cType_Tilde && c->mType != Clause::cType_Not) {
+        } else if (c->getType() != Clause::cType_Tilde && c->getType() != Clause::cType_Not) {
             continue;
         }
 
@@ -193,7 +194,7 @@ void ExpressionEvaluator::resolveOperatorUnary(sead::ObjArray<SyntaxLeash>* pLea
         SyntaxTree* tree = new (mHeap) SyntaxTree(value);
         SyntaxLeash* leash = pLeashes->emplaceBack();
 
-        SyntaxLeash* right = findSyntaxLeash(pLeashes, c->mNext);
+        SyntaxLeash* right = findSyntaxLeash(pLeashes, c->getNext());
 
         tree->mRight = right->mTree;
         tree->mOperator = c;
@@ -206,8 +207,8 @@ void ExpressionEvaluator::resolveOperatorUnary(sead::ObjArray<SyntaxLeash>* pLea
 
         pLeashes->erase(pLeashes->indexOf(right));
 
-        c->mPrev->insertAfter(value);
-        c->mNext->erase();
+        c->getPrev()->insertAfter(value);
+        c->getNext()->erase();
         c->erase();
         c = value;
     }
@@ -221,10 +222,11 @@ void ExpressionEvaluator::resolveOperatorUnary(sead::ObjArray<SyntaxLeash>* pLea
  * @param pBegin clause before the range
  * @param pEnd clause after the range
  */
-void ExpressionEvaluator::resolveOperatorMathHigh(sead::ObjArray<SyntaxLeash>* pLeashes,
+void ExpressionEvaluator::resolveOperatorMathHigh(SyntaxLeashArray* pLeashes,
                                                   Clause* pBegin, Clause* pEnd) {
-    for (Clause* c = pBegin->mNext; c != pEnd; c = c->mNext) {
-        if (c->mType == Clause::cType_Mul || c->mType == Clause::cType_Div || c->mType == Clause::cType_Mod) {
+    for (Clause* c = pBegin->getNext(); c != pEnd; c = c->getNext()) {
+        if (c->getType() == Clause::cType_Mul || c->getType() == Clause::cType_Div ||
+            c->getType() == Clause::cType_Mod) {
             c = createBinaryOperatorSyntaxTree(pLeashes, c);
         }
     }
@@ -232,10 +234,10 @@ void ExpressionEvaluator::resolveOperatorMathHigh(sead::ObjArray<SyntaxLeash>* p
     resolveOperatorMathLow(pLeashes, pBegin, pEnd);
 }
 
-void ExpressionEvaluator::resolveOperatorMathLow(sead::ObjArray<SyntaxLeash>* pLeashes,
+void ExpressionEvaluator::resolveOperatorMathLow(SyntaxLeashArray* pLeashes,
                                                  Clause* pBegin, Clause* pEnd) {
-    for (Clause* c = pBegin->mNext; c != pEnd; c = c->mNext) {
-        if (c->mType == Clause::cType_Plus || c->mType == Clause::cType_Minus) {
+    for (Clause* c = pBegin->getNext(); c != pEnd; c = c->getNext()) {
+        if (c->getType() == Clause::cType_Plus || c->getType() == Clause::cType_Minus) {
             c = createBinaryOperatorSyntaxTree(pLeashes, c);
         }
     }
@@ -243,10 +245,10 @@ void ExpressionEvaluator::resolveOperatorMathLow(sead::ObjArray<SyntaxLeash>* pL
     resolveOperatorShift(pLeashes, pBegin, pEnd);
 }
 
-void ExpressionEvaluator::resolveOperatorShift(sead::ObjArray<SyntaxLeash>* pLeashes,
+void ExpressionEvaluator::resolveOperatorShift(SyntaxLeashArray* pLeashes,
                                                Clause* pBegin, Clause* pEnd) {
-    for (Clause* c = pBegin->mNext; c != pEnd; c = c->mNext) {
-        if (c->mType == Clause::cType_ShiftL || c->mType == Clause::cType_ShiftR) {
+    for (Clause* c = pBegin->getNext(); c != pEnd; c = c->getNext()) {
+        if (c->getType() == Clause::cType_ShiftL || c->getType() == Clause::cType_ShiftR) {
             c = createBinaryOperatorSyntaxTree(pLeashes, c);
         }
     }
@@ -260,11 +262,11 @@ void ExpressionEvaluator::resolveOperatorShift(sead::ObjArray<SyntaxLeash>* pLea
  * @param pBegin clause before the range
  * @param pEnd clause after the range
  */
-void ExpressionEvaluator::resolveOperatorCompareHigh(sead::ObjArray<SyntaxLeash>* pLeashes,
+void ExpressionEvaluator::resolveOperatorCompareHigh(SyntaxLeashArray* pLeashes,
                                                      Clause* pBegin, Clause* pEnd) {
-    for (Clause* c = pBegin->mNext; c != pEnd; c = c->mNext) {
-        if (c->mType == Clause::cType_Less || c->mType == Clause::cType_Greater ||
-            c->mType == Clause::cType_LessEqual || c->mType == Clause::cType_GreaterEqual) {
+    for (Clause* c = pBegin->getNext(); c != pEnd; c = c->getNext()) {
+        if (c->getType() == Clause::cType_Less || c->getType() == Clause::cType_Greater ||
+            c->getType() == Clause::cType_LessEqual || c->getType() == Clause::cType_GreaterEqual) {
             c = createBinaryOperatorSyntaxTree(pLeashes, c);
         }
     }
@@ -272,10 +274,10 @@ void ExpressionEvaluator::resolveOperatorCompareHigh(sead::ObjArray<SyntaxLeash>
     resolveOperatorCompareLow(pLeashes, pBegin, pEnd);
 }
 
-void ExpressionEvaluator::resolveOperatorCompareLow(sead::ObjArray<SyntaxLeash>* pLeashes,
+void ExpressionEvaluator::resolveOperatorCompareLow(SyntaxLeashArray* pLeashes,
                                                     Clause* pBegin, Clause* pEnd) {
-    for (Clause* c = pBegin->mNext; c != pEnd; c = c->mNext) {
-        if (c->mType == Clause::cType_NotEqual || c->mType == Clause::cType_Equal) {
+    for (Clause* c = pBegin->getNext(); c != pEnd; c = c->getNext()) {
+        if (c->getType() == Clause::cType_NotEqual || c->getType() == Clause::cType_Equal) {
             c = createBinaryOperatorSyntaxTree(pLeashes, c);
         }
     }
@@ -283,10 +285,10 @@ void ExpressionEvaluator::resolveOperatorCompareLow(sead::ObjArray<SyntaxLeash>*
     resolveOperatorBitOpAnd(pLeashes, pBegin, pEnd);
 }
 
-void ExpressionEvaluator::resolveOperatorBitOpAnd(sead::ObjArray<SyntaxLeash>* pLeashes,
+void ExpressionEvaluator::resolveOperatorBitOpAnd(SyntaxLeashArray* pLeashes,
                                                   Clause* pBegin, Clause* pEnd) {
-    for (Clause* c = pBegin->mNext; c != pEnd; c = c->mNext) {
-        if (c->mType == Clause::cType_And) {
+    for (Clause* c = pBegin->getNext(); c != pEnd; c = c->getNext()) {
+        if (c->getType() == Clause::cType_And) {
             c = createBinaryOperatorSyntaxTree(pLeashes, c);
         }
     }
@@ -300,10 +302,10 @@ void ExpressionEvaluator::resolveOperatorBitOpAnd(sead::ObjArray<SyntaxLeash>* p
  * @param pBegin clause before the range
  * @param pEnd clause after the range
  */
-void ExpressionEvaluator::resolveOperatorBitOpXor(sead::ObjArray<SyntaxLeash>* pLeashes,
+void ExpressionEvaluator::resolveOperatorBitOpXor(SyntaxLeashArray* pLeashes,
                                                   Clause* pBegin, Clause* pEnd) {
-    for (Clause* c = pBegin->mNext; c != pEnd; c = c->mNext) {
-        if (c->mType == Clause::cType_Xor) {
+    for (Clause* c = pBegin->getNext(); c != pEnd; c = c->getNext()) {
+        if (c->getType() == Clause::cType_Xor) {
             c = createBinaryOperatorSyntaxTree(pLeashes, c);
         }
     }
@@ -311,10 +313,10 @@ void ExpressionEvaluator::resolveOperatorBitOpXor(sead::ObjArray<SyntaxLeash>* p
     resolveOperatorBitOpOr(pLeashes, pBegin, pEnd);
 }
 
-void ExpressionEvaluator::resolveOperatorBitOpOr(sead::ObjArray<SyntaxLeash>* pLeashes,
+void ExpressionEvaluator::resolveOperatorBitOpOr(SyntaxLeashArray* pLeashes,
                                                  Clause* pBegin, Clause* pEnd) {
-    for (Clause* c = pBegin->mNext; c != pEnd; c = c->mNext) {
-        if (c->mType == Clause::cType_Or) {
+    for (Clause* c = pBegin->getNext(); c != pEnd; c = c->getNext()) {
+        if (c->getType() == Clause::cType_Or) {
             c = createBinaryOperatorSyntaxTree(pLeashes, c);
         }
     }
@@ -322,10 +324,10 @@ void ExpressionEvaluator::resolveOperatorBitOpOr(sead::ObjArray<SyntaxLeash>* pL
     resolveOperatorLogicalAnd(pLeashes, pBegin, pEnd);
 }
 
-void ExpressionEvaluator::resolveOperatorLogicalAnd(sead::ObjArray<SyntaxLeash>* pLeashes,
+void ExpressionEvaluator::resolveOperatorLogicalAnd(SyntaxLeashArray* pLeashes,
                                                     Clause* pBegin, Clause* pEnd) {
-    for (Clause* c = pBegin->mNext; c != pEnd; c = c->mNext) {
-        if (c->mType == Clause::cType_LogicalAnd) {
+    for (Clause* c = pBegin->getNext(); c != pEnd; c = c->getNext()) {
+        if (c->getType() == Clause::cType_LogicalAnd) {
             c = createBinaryOperatorSyntaxTree(pLeashes, c);
         }
     }
@@ -333,10 +335,10 @@ void ExpressionEvaluator::resolveOperatorLogicalAnd(sead::ObjArray<SyntaxLeash>*
     resolveOperatorLogicalOr(pLeashes, pBegin, pEnd);
 }
 
-void ExpressionEvaluator::resolveOperatorLogicalOr(sead::ObjArray<SyntaxLeash>* pLeashes,
+void ExpressionEvaluator::resolveOperatorLogicalOr(SyntaxLeashArray* pLeashes,
                                                    Clause* pBegin, Clause* pEnd) {
-    for (Clause* c = pBegin->mNext; c != pEnd; c = c->mNext) {
-        if (c->mType == Clause::cType_LogicalOr) {
+    for (Clause* c = pBegin->getNext(); c != pEnd; c = c->getNext()) {
+        if (c->getType() == Clause::cType_LogicalOr) {
             c = createBinaryOperatorSyntaxTree(pLeashes, c);
         }
     }
@@ -350,10 +352,10 @@ void ExpressionEvaluator::resolveOperatorLogicalOr(sead::ObjArray<SyntaxLeash>* 
  * @param pBegin clause before the range
  * @param pEnd clause after the range
  */
-void ExpressionEvaluator::resolveOperatorTernary(sead::ObjArray<SyntaxLeash>* pLeashes,
+void ExpressionEvaluator::resolveOperatorTernary(SyntaxLeashArray* pLeashes,
                                                  Clause* pBegin, Clause* pEnd) {
-    for (Clause* c = pBegin->mNext; c != pEnd; c = c->mNext) {
-        if (c->mType == Clause::cType_Question) {
+    for (Clause* c = pBegin->getNext(); c != pEnd; c = c->getNext()) {
+        if (c->getType() == Clause::cType_Question) {
             c = createTernaryOperatorSyntaxTree(pLeashes, c);
         }
     }
@@ -367,7 +369,7 @@ void ExpressionEvaluator::resolveOperatorTernary(sead::ObjArray<SyntaxLeash>* pL
  * @param pBegin clause before the range
  * @param pEnd clause after the range
  */
-void ExpressionEvaluator::resolveOperatorAssignment(sead::ObjArray<SyntaxLeash>* pLeashes,
+void ExpressionEvaluator::resolveOperatorAssignment(SyntaxLeashArray* pLeashes,
                                                     Clause* pBegin, Clause* pEnd) {}
 
 /**
@@ -376,20 +378,20 @@ void ExpressionEvaluator::resolveOperatorAssignment(sead::ObjArray<SyntaxLeash>*
  * @param pBegin clause before the range
  * @param pEnd clause after the range
  */
-void ExpressionEvaluator::resolveOperator(sead::ObjArray<SyntaxLeash>* pLeashes, Clause* pBegin,
+void ExpressionEvaluator::resolveOperator(SyntaxLeashArray* pLeashes, Clause* pBegin,
                                           Clause* pEnd) {
     resolveOperatorTokenConnect(pLeashes, pBegin, pEnd);
 }
 
-Clause* ExpressionEvaluator::resolveParenthesis(sead::ObjArray<SyntaxLeash>* pLeashes,
+Clause* ExpressionEvaluator::resolveParenthesis(SyntaxLeashArray* pLeashes,
                                                 Clause* pClose, Clause* pEnd) {
     Clause* open = pClose;
 
-    while (open->mType != Clause::cType_LParen) {
-        open = open->mPrev;
+    while (open->getType() != Clause::cType_LParen) {
+        open = open->getPrev();
     }
 
-    Clause* prev = open->mPrev;
+    Clause* prev = open->getPrev();
     resolveOperator(pLeashes, prev, pClose);
     (*mRemoveDelegate)(open);
     (*mRemoveDelegate)(pClose);
@@ -397,21 +399,21 @@ Clause* ExpressionEvaluator::resolveParenthesis(sead::ObjArray<SyntaxLeash>* pLe
 }
 
 SyntaxTree* ExpressionEvaluator::resolve(Clause* pBegin, Clause* pEnd, bool) {
-    Clause* head = pBegin->mPrev;
-    sead::ObjArray<SyntaxLeash> leashes;
+    Clause* head = pBegin->getPrev();
+    SyntaxLeashArray leashes;
 
     s32 depth = 0;
     u32 valueNum = 0;
 
-    for (Clause* c = head->mNext; c != pEnd;) {
-        Clause* next = c->mNext;
+    for (Clause* c = head->getNext(); c != pEnd;) {
+        Clause* next = c->getNext();
         const Clause::CharacterInfo& info = c->getInfo();
 
         if (info.mIsSpace) {
             (*mRemoveDelegate)(c);
-        } else if (c->mType == Clause::cType_LParen) {
+        } else if (c->getType() == Clause::cType_LParen) {
             depth++;
-        } else if (c->mType == Clause::cType_RParen) {
+        } else if (c->getType() == Clause::cType_RParen) {
             depth--;
         } else {
             bool isNotValue = c->isOperator() ||
@@ -428,8 +430,8 @@ SyntaxTree* ExpressionEvaluator::resolve(Clause* pBegin, Clause* pEnd, bool) {
 
     leashes.allocBuffer(valueNum + 1, mHeap, -4);
 
-    for (Clause* c = head->mNext; c != pEnd; c = c->mNext) {
-        if (c->mType == Clause::cType_LParen || c->mType == Clause::cType_RParen) {
+    for (Clause* c = head->getNext(); c != pEnd; c = c->getNext()) {
+        if (c->getType() == Clause::cType_LParen || c->getType() == Clause::cType_RParen) {
             continue;
         }
 
@@ -445,8 +447,8 @@ SyntaxTree* ExpressionEvaluator::resolve(Clause* pBegin, Clause* pEnd, bool) {
         leash->mClause = c;
     }
 
-    for (Clause* c = head->mNext; c != pEnd; c = c->mNext) {
-        if (c->mType == Clause::cType_RParen) {
+    for (Clause* c = head->getNext(); c != pEnd; c = c->getNext()) {
+        if (c->getType() == Clause::cType_RParen) {
             c = resolveParenthesis(&leashes, c, pEnd);
         }
     }

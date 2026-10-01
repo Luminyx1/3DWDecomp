@@ -283,7 +283,7 @@ void NVNMgr::initialize(sead::Heap* pHeap, sead::Heap* pDebugHeap)
 {
     initialize_(pHeap);
 
-    auto* block = new (pHeap, 8) GPUMemBlock<u8>;
+    auto* block = new (pHeap, 8) GPUMemBlockU8;
     block->allocBuffer_(0x400000, pHeap, 4, MemoryAttribute::_00);
     GPUMemAddrBase addr(*block, 0);
     mDisplayList.setBuffer(addr, 0x400000);
@@ -378,7 +378,7 @@ u32 NVNMgr::registerSampler(const NVNsampler* pSampler, const char* pName)
     const u32 key = sead::HashCRC16::calcHash(reinterpret_cast<const u8*>(pSampler) + 8, 0x58);
     graphicsMember<sead::Atomic<s32>>(sead::GraphicsNvn::instance(), 0x108).load();
 
-    sead::ScopedLock<sead::CriticalSection> lock(&mSamplerCS);
+    sead::ScopedCriticalSectionLock lock(&mSamplerCS);
 
     if (mFlags.isOnBit(0))
     {
@@ -536,7 +536,7 @@ s32 NVNMgr::compareSamplerKey_(const SamplerKey* pA, const SamplerKey* pB)
  */
 bool NVNMgr::countupSampler(u32 id)
 {
-    sead::ScopedLock<sead::CriticalSection> lock(&mSamplerCS);
+    sead::ScopedCriticalSectionLock lock(&mSamplerCS);
     mSamplers[id - mSamplerIdBase].mRefCount++;
     return true;
 }
@@ -548,7 +548,7 @@ bool NVNMgr::countupSampler(u32 id)
  */
 bool NVNMgr::releaseSampler(u32 id)
 {
-    sead::ScopedLock<sead::CriticalSection> lock(&mSamplerCS);
+    sead::ScopedCriticalSectionLock lock(&mSamplerCS);
 
     if (--mSamplers[id - mSamplerIdBase].mRefCount == 0)
     {
@@ -632,7 +632,7 @@ s32 NVNMgr::registerTexture_(s32 index, const NVNtexture* pTexture, const NVNtex
         id = mTextureIdBase + index;
         {
             auto* graphics = sead::GraphicsNvn::instance();
-            sead::ScopedLock<sead::CriticalSection> lock(graphics->getCriticalSection2());
+            sead::ScopedCriticalSectionLock lock(graphics->getCriticalSection2());
             nvnTexturePoolRegisterTexture(sead::GraphicsNvn::instance()->getTexturePool(), id,
                                           pTexture, pView);
         }
@@ -1078,7 +1078,7 @@ void NVNMgr::genMessage(sead::hostio::Context* pContext)
     }
 
     {
-        sead::ScopedLock<sead::CriticalSection> lock(&mSamplerCS);
+        sead::ScopedCriticalSectionLock lock(&mSamplerCS);
 
         for (auto it = mSamplers.begin(), end = mSamplers.end(); it != end; ++it)
         {

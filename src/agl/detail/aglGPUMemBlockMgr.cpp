@@ -723,7 +723,7 @@ void GPUMemBlockMgr::enableSharedMemoryPool(bool enabled)
 
 bool GPUMemBlockMgr::removeGPUMemBlockMgrHeapExIfNoMemoryPool(sead::Heap* pHeap)
 {
-    sead::ScopedLock<sead::CriticalSection> lock(&mCS);
+    sead::ScopedCriticalSectionLock lock(&mCS);
     bool removed;
     GPUMemBlockMgrHeapEx* heapEx = findGPUMemBlockMgrHeapEx_(pHeap, nullptr);
 

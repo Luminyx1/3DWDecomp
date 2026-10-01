@@ -317,9 +317,9 @@ void DepthShadowUnit::addCasterClipPlanes_(const sead::Matrix34f& rViewMtx,
                                            bool sweep)
 {
     sead::Matrix44f invProj;
-    sead::Matrix44CalcCommon<f32>::inverse(invProj, rProjMtx);
+    invProj.setInverse(rProjMtx);
     sead::Matrix34f invView;
-    sead::Matrix34CalcCommon<f32>::inverse(invView, rViewMtx);
+    invView.setInverse(rViewMtx);
 
     sead::Vector3f points[8] = {
         {-1.0f, -1.0f, zFar}, {1.0f, -1.0f, zFar}, {1.0f, -1.0f, zNear}, {-1.0f, -1.0f, zNear},
@@ -445,7 +445,7 @@ void DepthShadowUnit::convBoundingToLightSpaceNotDirectional_(sead::BoundBox3f* 
                                                               const sead::BoundBox3f& rBox) const
 {
     sead::Matrix44f viewProj;
-    sead::Matrix44CalcCommon<f32>::multiply(viewProj, mLightProjMtx, mLightViewMtx);
+    viewProj.setMul(mLightProjMtx, mLightViewMtx);
     sead::Vector3f points[8];
     setBoxCorners(points, rBox);
     pOut->setUndef();
@@ -523,7 +523,7 @@ void DepthShadowUnit::updatePlaneClipInfo()
 void DepthShadowUnit::updateShadowMatrix(s32 width, s32 height, f32 param0, f32 param1)
 {
     sead::Matrix44f lightViewProj;
-    sead::Matrix44CalcCommon<f32>::multiply(lightViewProj, mLightProjMtx, mLightViewMtx);
+    lightViewProj.setMul(mLightProjMtx, mLightViewMtx);
 
     mTotalBox.setUndef();
 
@@ -544,14 +544,14 @@ void DepthShadowUnit::updateShadowMatrix(s32 width, s32 height, f32 param0, f32 
         if (mIsDirectional)
         {
             sead::Matrix34f inv;
-            sead::Matrix34CalcCommon<f32>::inverse(inv, mLightViewMtx);
+            inv.setInverse(mLightViewMtx);
             mFrustum.clipByBoundBox(mTotalBox, inv, sead::BitFlag8(0xfe));
         }
         else
         {
             sead::Matrix44f inv;
-            sead::Matrix44CalcCommon<f32>::multiply(inv, mLightProjMtx, mLightViewMtx);
-            sead::Matrix44CalcCommon<f32>::inverse(inv, inv);
+            inv.setMul(mLightProjMtx, mLightViewMtx);
+            inv.setInverse(inv);
             mFrustum.clipByBoundBox(mTotalBox, inv, sead::BitFlag8(0xff));
         }
     }
@@ -572,7 +572,7 @@ void DepthShadowUnit::updateShadowMatrix(s32 width, s32 height, f32 param0, f32 
     static const sead::Matrix44f cBiasMtx(0.5f, 0.0f, 0.0f, 0.5f, 0.0f, -0.5f, 0.0f, 0.5f, 0.0f,
                                           0.0f, 0.5f, 0.5f, 0.0f, 0.0f, 0.0f, 1.0f);
     sead::Matrix44f viewProj;
-    sead::Matrix44CalcCommon<f32>::multiply(viewProj, mShadowProjMtx, mShadowViewMtx);
+    viewProj.setMul(mShadowProjMtx, mShadowViewMtx);
     detail::multiplyMtx44(mTexMtx, cBiasMtx, viewProj);
 }
 
@@ -705,7 +705,7 @@ void DepthShadowUnit::drawDebug(DrawContext* pDrawContext, const LightMatrix& rL
         if (mIsDirectional)
         {
             sead::Matrix34f inv;
-            sead::Matrix34CalcCommon<f32>::inverse(inv, mLightViewMtx);
+            inv.setInverse(mLightViewMtx);
 
             for (s32 i = 0; i < 8; i++)
             {
@@ -715,8 +715,8 @@ void DepthShadowUnit::drawDebug(DrawContext* pDrawContext, const LightMatrix& rL
         else
         {
             sead::Matrix44f inv;
-            sead::Matrix44CalcCommon<f32>::multiply(inv, mLightProjMtx, mLightViewMtx);
-            sead::Matrix44CalcCommon<f32>::inverse(inv, inv);
+            inv.setMul(mLightProjMtx, mLightViewMtx);
+            inv.setInverse(inv);
 
             for (s32 i = 0; i < 8; i++)
             {

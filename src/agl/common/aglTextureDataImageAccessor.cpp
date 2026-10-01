@@ -210,7 +210,7 @@ void TextureDataImageAccessor::initializeImageBuffer(const TextureData& rTexture
 
     u32 alignment = texture.getSurface().mAlignment;
     u32 size = texture.getSurface().mStorageSize;
-    auto* pBlock = new (pHeap) GPUMemBlock<u8>;
+    auto* pBlock = new (pHeap) GPUMemBlockU8;
     pBlock->allocBuffer_(size, pHeap, alignment, MemoryAttribute::CpuCached);
     mImageAddr = GPUMemAddrBase(*pBlock, 0);
     texture.setImagePtr(mImageAddr);

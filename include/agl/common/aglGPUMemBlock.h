@@ -76,4 +76,7 @@ public:
     ~GPUMemBlock() override { ; }
 };
 
+using GPUMemBlockU8 = GPUMemBlock<u8>;
+using GPUMemBlockU16 = GPUMemBlock<u16>;
+
 }  // namespace agl

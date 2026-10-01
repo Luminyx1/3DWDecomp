@@ -188,7 +188,7 @@ void PrimitiveTexture::initialize(sead::Heap* pHeap)
             break;
         }
 
-        auto* block = new (pHeap, 8) GPUMemBlock<u8>;
+        auto* block = new (pHeap, 8) GPUMemBlockU8;
         block->allocBuffer_(texture.getSurface().mStorageSize, pHeap,
                             texture.getSurface().mAlignment, MemoryAttribute(8));
         GPUMemVoidAddr addr(*block, 0);

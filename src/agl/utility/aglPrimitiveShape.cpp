@@ -313,7 +313,7 @@ void PrimitiveShape::setUpStreamCircle_(u32 divNum, sead::Heap* pHeap)
     {
         for (s32 drawType = 0; drawType < cDrawType_Num; drawType++)
         {
-            GPUMemBlock<u16>& rBlock = mCircleIndexBlocks[quality][drawType];
+            GPUMemBlockU16& rBlock = mCircleIndexBlocks[quality][drawType];
             rBlock.allocBuffer(
                 calcIdxArrayNumCircle_(divNum, DrawType(drawType), Quality(quality)), pHeap, 4,
                 MemoryAttribute(0));
@@ -343,7 +343,7 @@ void PrimitiveShape::setUpStreamSphere_(u32 divNumU, u32 divNumV, sead::Heap* pH
     {
         for (s32 drawType = 0; drawType < cDrawType_Num; drawType++)
         {
-            GPUMemBlock<u16>& rBlock = mSphereIndexBlocks[quality][drawType];
+            GPUMemBlockU16& rBlock = mSphereIndexBlocks[quality][drawType];
             rBlock.allocBuffer(calcIdxArrayNumSphere_(divNumU, divNumV, DrawType(drawType),
                                                       Quality(quality)),
                                pHeap, 4, MemoryAttribute(0));
@@ -373,7 +373,7 @@ void PrimitiveShape::setUpStreamHemisphere_(u32 divNumU, u32 divNumV, sead::Heap
     {
         for (s32 drawType = 0; drawType < cDrawType_Num; drawType++)
         {
-            GPUMemBlock<u16>& rBlock = mHemisphereIndexBlocks[quality][drawType];
+            GPUMemBlockU16& rBlock = mHemisphereIndexBlocks[quality][drawType];
             rBlock.allocBuffer(calcIdxArrayNumHemisphere_(divNumU, divNumV, DrawType(drawType),
                                                           Quality(quality)),
                                pHeap, 4, MemoryAttribute(0));
@@ -401,7 +401,7 @@ void PrimitiveShape::setUpStreamCylinder_(u32 divNumU, u32 divNumV, sead::Heap* 
 
     for (s32 quality = 0; quality < cQuality_Num; quality++)
     {
-        GPUMemBlock<u16>& rBlock = mCylinderTriangleIndexBlocks[quality];
+        GPUMemBlockU16& rBlock = mCylinderTriangleIndexBlocks[quality];
         rBlock.allocBuffer(
             calcIdxArrayNumCylinder_(divNumU, divNumV, cDrawType_Triangle, Quality(quality)),
             pHeap, 4, MemoryAttribute(0));
@@ -412,7 +412,7 @@ void PrimitiveShape::setUpStreamCylinder_(u32 divNumU, u32 divNumV, sead::Heap* 
 
     for (s32 quality = 0; quality < cQuality_Num; quality++)
     {
-        GPUMemBlock<u16>& rBlock = mCylinderLineIndexBlocks[quality];
+        GPUMemBlockU16& rBlock = mCylinderLineIndexBlocks[quality];
         rBlock.allocBuffer(
             calcIdxArrayNumCylinder_(divNumU, divNumV, cDrawType_Line, Quality(quality)), pHeap,
             4, MemoryAttribute(0));
@@ -439,7 +439,7 @@ void PrimitiveShape::setUpStreamCapsule_(u32 divNumU, u32 divNumV, u32 divNumH, 
 
     for (s32 quality = 0; quality < cQuality_Num; quality++)
     {
-        GPUMemBlock<u16>& rBlock = mCapsuleTriangleIndexBlocks[quality];
+        GPUMemBlockU16& rBlock = mCapsuleTriangleIndexBlocks[quality];
         rBlock.allocBuffer(calcIdxArrayNumCapsule_(divNumU, divNumV, divNumH, cDrawType_Triangle,
                                                    Quality(quality)),
                            pHeap, 4, MemoryAttribute(0));
@@ -450,7 +450,7 @@ void PrimitiveShape::setUpStreamCapsule_(u32 divNumU, u32 divNumV, u32 divNumH, 
 
     for (s32 quality = 0; quality < cQuality_Num; quality++)
     {
-        GPUMemBlock<u16>& rBlock = mCapsuleLineIndexBlocks[quality];
+        GPUMemBlockU16& rBlock = mCapsuleLineIndexBlocks[quality];
         rBlock.allocBuffer(calcIdxArrayNumCapsule_(divNumU, divNumV, divNumH, cDrawType_Line,
                                                    Quality(quality)),
                            pHeap, 4, MemoryAttribute(0));
@@ -476,7 +476,7 @@ void PrimitiveShape::setUpStreamCone_(u32 divNumU, u32 divNumV, sead::Heap* pHea
 
     for (s32 quality = 0; quality < cQuality_Num; quality++)
     {
-        GPUMemBlock<u16>& rBlock = mConeTriangleIndexBlocks[quality];
+        GPUMemBlockU16& rBlock = mConeTriangleIndexBlocks[quality];
         rBlock.allocBuffer(
             calcIdxArrayNumCone_(divNumU, divNumV, cDrawType_Triangle, Quality(quality)), pHeap,
             4, MemoryAttribute(0));
@@ -487,7 +487,7 @@ void PrimitiveShape::setUpStreamCone_(u32 divNumU, u32 divNumV, sead::Heap* pHea
 
     for (s32 quality = 0; quality < cQuality_Num; quality++)
     {
-        GPUMemBlock<u16>& rBlock = mConeLineIndexBlocks[quality];
+        GPUMemBlockU16& rBlock = mConeLineIndexBlocks[quality];
         rBlock.allocBuffer(calcIdxArrayNumCone_(divNumU, divNumV, cDrawType_Line, Quality(quality)),
                            pHeap, 4, MemoryAttribute(0));
         checkAddr_(GPUMemAddr<u16>(rBlock, 0));
@@ -517,7 +517,7 @@ void PrimitiveShape::setUpStreamTorus_(u32 divNumU, u32 divNumV, sead::Heap* pHe
 
     for (s32 quality = 0; quality < cQuality_Num; quality++)
     {
-        GPUMemBlock<u16>& rBlock = mTorusTriangleIndexBlocks[quality];
+        GPUMemBlockU16& rBlock = mTorusTriangleIndexBlocks[quality];
         rBlock.allocBuffer(
             calcIdxArrayNumTorus_(divNumU, divNumV, cDrawType_Triangle, Quality(quality)), pHeap,
             4, MemoryAttribute(0));
@@ -528,7 +528,7 @@ void PrimitiveShape::setUpStreamTorus_(u32 divNumU, u32 divNumV, sead::Heap* pHe
 
     for (s32 quality = 0; quality < cQuality_Num; quality++)
     {
-        GPUMemBlock<u16>& rBlock = mTorusLineIndexBlocks[quality];
+        GPUMemBlockU16& rBlock = mTorusLineIndexBlocks[quality];
         rBlock.allocBuffer(
             calcIdxArrayNumTorus_(divNumU, divNumV, cDrawType_Line, Quality(quality)), pHeap, 4,
             MemoryAttribute(0));

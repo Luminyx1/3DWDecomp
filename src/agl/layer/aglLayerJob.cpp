@@ -65,7 +65,7 @@ void LayerJob::finalize()
  * @param pArray job array to queue into, or nullptr to invoke immediately
  */
 void LayerJob::pushBackTo(const RenderDisplay* pDisplay, s32 priority,
-                          sead::PtrArray<LayerJob>* pArray)
+                          LayerJobArray* pArray)
 {
     mRenderDisplay = pDisplay;
     mPriority = priority;

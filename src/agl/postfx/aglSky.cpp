@@ -190,7 +190,7 @@ void createTexture2D(TextureSampler* pSampler, sead::Heap* pHeap, u32 width, u32
                         TextureAttribute(0), MultiSampleType(0), true);
     u32 size = texture.getImageByteSize();
     u32 alignment = texture.getAlignment();
-    auto* block = new (pHeap, 8) GPUMemBlock<u8>;
+    auto* block = new (pHeap, 8) GPUMemBlockU8;
     block->allocBuffer_(size, pHeap, alignment, MemoryAttribute::CpuCached);
     texture.setImagePtr(GPUMemAddr<u8>(*block, 0));
     texture.getImagePtr().flushCPUCache(texture.getImageByteSize());
@@ -213,7 +213,7 @@ inline void createTexture3D(TextureSampler* pSampler, sead::Heap* pHeap, u32 wid
                         1, TextureAttribute(0), MultiSampleType(0), true);
     u32 size = texture.getImageByteSize();
     u32 alignment = texture.getAlignment();
-    auto* block = new (pHeap, 8) GPUMemBlock<u8>;
+    auto* block = new (pHeap, 8) GPUMemBlockU8;
     block->allocBuffer_(size, pHeap, alignment, MemoryAttribute::CpuCached);
     texture.setImagePtr(GPUMemAddr<u8>(*block, 0));
     texture.getImagePtr().flushCPUCache(texture.getImageByteSize());

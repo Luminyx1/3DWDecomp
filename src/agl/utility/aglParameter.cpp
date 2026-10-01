@@ -389,7 +389,7 @@ void ParameterBase::applyResource(ResParameter res, f32 t)
         sead::Quatf quat;
         sead::MemUtil::copy(&quat, res.getData<void>(), size());
         auto* target = ptrT<sead::Quatf>();
-        sead::QuatCalcCommon<f32>::slerpTo(*target, *target, quat, t);
+        target->slerpTo(*target, quat, t);
         break;
     }
     case ParameterType::StringRef:
@@ -696,8 +696,8 @@ template <>
 void ParameterBase::copyLerp_<sead::Quatf>(const ParameterBase& rParam1,
                                            const ParameterBase& rParam2, f32 t)
 {
-    sead::QuatCalcCommon<f32>::slerpTo(*ptrT<sead::Quatf>(), *rParam1.ptrT<sead::Quatf>(),
-                                       *rParam2.ptrT<sead::Quatf>(), t);
+    ptrT<sead::Quatf>()->slerpTo(*rParam1.ptrT<sead::Quatf>(), *rParam2.ptrT<sead::Quatf>(),
+                                  t);
 }
 
 template <typename T>

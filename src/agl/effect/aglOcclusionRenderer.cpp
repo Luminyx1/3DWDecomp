@@ -169,7 +169,7 @@ void OcclusionRenderer::initialize(s32 contextNum, sead::Heap* pHeap)
                                        TextureAttribute(1), MultiSampleType(0), true);
             u32 alignment = rSub.mTexture->getAlignment();
             u32 size = rSub.mTexture->getImageByteSize();
-            GPUMemBlock<u8>* pBlock = new (pHeap, 8) GPUMemBlock<u8>;
+            GPUMemBlockU8* pBlock = new (pHeap, 8) GPUMemBlockU8;
             pBlock->allocBuffer_(size, pHeap, alignment, MemoryAttribute(0));
             rSub.mAddr = GPUMemVoidAddr(*pBlock, 0);
             rSub.mTexture->setImagePtr(rSub.mAddr, 0);

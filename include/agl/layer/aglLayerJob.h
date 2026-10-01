@@ -42,4 +42,6 @@ private:
 };
 static_assert(sizeof(LayerJob) == 0x38);
 
+using LayerJobArray = sead::PtrArray<LayerJob>;
+
 }  // namespace agl::lyr

@@ -591,7 +591,7 @@ void ShaderProgram::setShaderGX2_(DrawContext* pDrawContext) const {}
 s32 ShaderProgram::validate_() const
 {
     if (mFlags & cFlag_ReserveSetUp) {
-        sead::ScopedLock<sead::CriticalSection> lock(
+        sead::ScopedCriticalSectionLock lock(
             driver::NVNMgr::instance()->getCriticalSection());
         if (mFlags & cFlag_ReserveSetUp) {
             forceValidate_(false);

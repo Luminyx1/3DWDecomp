@@ -98,7 +98,7 @@ s32 ResParameterList::searchObjIndex(u32 obj_hash) const
 }
 
 static void getName_(sead::BufferedSafeString* pName, u32 hash,
-                     const sead::TreeMap<u32, const char*>* pNameTable)
+                     const ParameterNameTable* pNameTable)
 {
     if (pNameTable)
     {
@@ -112,7 +112,7 @@ static void getName_(sead::BufferedSafeString* pName, u32 hash,
     pName->format("0x%08x", hash);
 }
 
-void ResParameterList::dump(s32 indent, const sead::TreeMap<u32, const char*>* pNameTable) const
+void ResParameterList::dump(s32 indent, const ParameterNameTable* pNameTable) const
 {
     sead::FixedSafeString<32> name;
     getName_(&name, getParameterListNameHash(), pNameTable);

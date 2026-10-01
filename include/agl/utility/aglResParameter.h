@@ -13,6 +13,8 @@ class TreeMap;
 
 namespace agl::utl {
 
+using ParameterNameTable = sead::TreeMap<u32, const char*>;
+
 struct ResParameterData {
     constexpr u32 getParameterNameHash() const { return name_hash; }
     constexpr u32 getOffset() const { return 4 * (offset_and_type & 0xFFFFFF); }

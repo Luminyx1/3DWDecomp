@@ -93,7 +93,7 @@ void CubeMap::initialize(sead::Heap* pHeap, TextureFormat format, u32 width, u32
     if (size != 0)
     {
         u32 alignment = mTextureData.getSurface().mAlignment;
-        auto* pBlock = new (pHeap, 8) GPUMemBlock<u8>;
+        auto* pBlock = new (pHeap, 8) GPUMemBlockU8;
         pBlock->allocBuffer_(size, pHeap, alignment, MemoryAttribute(0));
         mImageAddr = GPUMemVoidAddr(*pBlock, 0);
     }
@@ -103,7 +103,7 @@ void CubeMap::initialize(sead::Heap* pHeap, TextureFormat format, u32 width, u32
     if (size != 0)
     {
         u32 alignment = mTextureData.getSurface().mAlignment;
-        auto* pBlock = new (pHeap, 8) GPUMemBlock<u8>;
+        auto* pBlock = new (pHeap, 8) GPUMemBlockU8;
         pBlock->allocBuffer_(size, pHeap, alignment, MemoryAttribute(0));
         mMipAddr = GPUMemVoidAddr(*pBlock, 0);
     }
@@ -182,7 +182,7 @@ void CubeMap::initialize(sead::Heap* pHeap, TextureFormat format, u32 width, u32
     if (size != 0)
     {
         u32 alignment = mTextureData.getSurface().mAlignment;
-        auto* pBlock = new (pHeap, 8) GPUMemBlock<u8>;
+        auto* pBlock = new (pHeap, 8) GPUMemBlockU8;
         pBlock->allocBuffer_(size, pHeap, alignment, MemoryAttribute(0));
         mImageAddr = GPUMemVoidAddr(*pBlock, 0);
     }
@@ -192,7 +192,7 @@ void CubeMap::initialize(sead::Heap* pHeap, TextureFormat format, u32 width, u32
     if (size != 0)
     {
         u32 alignment = mTextureData.getSurface().mAlignment;
-        auto* pBlock = new (pHeap, 8) GPUMemBlock<u8>;
+        auto* pBlock = new (pHeap, 8) GPUMemBlockU8;
         pBlock->allocBuffer_(size, pHeap, alignment, MemoryAttribute(0));
         mMipAddr = GPUMemVoidAddr(*pBlock, 0);
     }

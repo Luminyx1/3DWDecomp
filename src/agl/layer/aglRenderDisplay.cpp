@@ -151,7 +151,7 @@ void RenderDisplay::initialize(s32 displayIndex, const sead::SafeString& rName,
 
     for (auto& rDisplayList : mDisplayList)
     {
-        auto* pBlock = new (pHeap) GPUMemBlock<u8>();
+        auto* pBlock = new (pHeap) GPUMemBlockU8();
         pBlock->allocBuffer(0x10, pHeap, 4, MemoryAttribute::_00);
         rDisplayList.setBuffer(GPUMemAddr<u8>(*pBlock, 0), 0x10);
         rDisplayList.setControlMemory(new (pHeap, 8) u8[0x100], 0x100);
@@ -759,7 +759,7 @@ void RenderDisplay::draw(DrawContext* pDrawContext) const
  * Queues the display list jobs of every layer.
  * @param pJobs job array to queue into, or nullptr to run the jobs immediately
  */
-void RenderDisplay::calcDL(sead::PtrArray<LayerJob>* pJobs)
+void RenderDisplay::calcDL(LayerJobArray* pJobs)
 {
     s32 minWeight = 0x7fffffff;
 
@@ -788,7 +788,7 @@ void RenderDisplay::sortDL() const
  * Queues the GPU calculation jobs of every layer.
  * @param pJobs job array to queue into, or nullptr to run the jobs immediately
  */
-void RenderDisplay::calcGPU(sead::PtrArray<LayerJob>* pJobs) const
+void RenderDisplay::calcGPU(LayerJobArray* pJobs) const
 {
     for (auto& rLayer : mLayer)
     {

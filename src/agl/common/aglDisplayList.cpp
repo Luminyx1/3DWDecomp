@@ -198,7 +198,7 @@ void DisplayList::endDisplayListBuffer(sead::Heap* pHeap)
 
     if (size != 0)
     {
-        auto* pBlock = new (pHeap, 8) GPUMemBlock<u8>;
+        auto* pBlock = new (pHeap, 8) GPUMemBlockU8;
         pBlock->allocBuffer_(size, pHeap, 4, MemoryAttribute::_00);
         addr = GPUMemAddr<u8>(*pBlock, 0);
         std::memcpy(addr.getPtr(), getBuffer().getPtr(), mValidSize);

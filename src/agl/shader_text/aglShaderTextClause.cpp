@@ -769,7 +769,7 @@ s32 Clause::compareImpl(const sead::SafeString& rStr, u32 length, const Clause* 
             return -1;
         }
 
-        return next->compareImpl(sead::SafeString(rStr.cstr() + (mEnd - mBegin)), rest, next->mPrev);
+        return next->compareImpl(sead::SafeString(rStr.cstr() + (mEnd - mBegin)), rest, next->getPrev());
     }
 
     if (rest == 0) {

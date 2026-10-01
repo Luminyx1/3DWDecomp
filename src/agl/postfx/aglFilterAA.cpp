@@ -30,7 +30,7 @@ FilterAA::~FilterAA()
 {
     for (s32 i = 0; i < mContexts.size(); i++)
     {
-        GPUMemBlock<u8>& buffer = mContexts[i].mHistoryBuffer;
+        GPUMemBlockU8& buffer = mContexts[i].mHistoryBuffer;
 
         if (buffer.isAllocated())
         {
@@ -52,7 +52,7 @@ void FilterAA::initialize(const InitializeArg& rArg, sead::Heap* pHeap)
 
         if (rArg.mReprojectionBufferSize != 0)
         {
-            GPUMemBlock<u8>& buffer = mContexts[i].mHistoryBuffer;
+            GPUMemBlockU8& buffer = mContexts[i].mHistoryBuffer;
             buffer.allocBuffer_(rArg.mReprojectionBufferSize, pHeap, 0x2000,
                                 MemoryAttribute::Default);
             GPUMemAddr<u8> addr(buffer, 0);

@@ -187,7 +187,7 @@ void UniformBlock::create(sead::Heap* pHeap, s32 bufferNum, s32 blockNum)
 {
     u64 size = calcBufferSize_(bufferNum, blockNum);
     u32 alignment = getBlockAlignment_();
-    auto* pBlock = new (pHeap, 8) GPUMemBlock<u8>;
+    auto* pBlock = new (pHeap, 8) GPUMemBlockU8;
     pBlock->allocBuffer_(size, pHeap, alignment, MemoryAttribute::_01);
     GPUMemVoidAddr buffer(*pBlock, 0);
     mFlags.set(cFlag_OwnBuffer);

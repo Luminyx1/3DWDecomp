@@ -48,6 +48,8 @@ public:
     };
     static_assert(sizeof(Storage) == 0x40);
 
+    using StorageBuffer = sead::Buffer<Storage>;
+
     TextureMemoryAllocator();
     virtual ~TextureMemoryAllocator();
 

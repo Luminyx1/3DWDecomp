@@ -76,7 +76,7 @@ void FileIOMgr::setCheckoutCommandPath(const sead::SafeString& rPath) {
  * @return whether the document was saved
  */
 bool FileIOMgr::save(const sead::XmlDocument& rDocument, const DialogArg& rArg, u32 bufferSize) {
-    sead::ScopedLock<sead::CriticalSection> lock(&mCS);
+    sead::ScopedCriticalSectionLock lock(&mCS);
 
     sead::hostio::FileInfo info;
 
@@ -173,7 +173,7 @@ void FileIOMgr::showErrorDialog_(const sead::SafeString& rPath) const {
  * @return whether the data was saved
  */
 bool FileIOMgr::save(const void* pData, u32 size, const DialogArg& rArg) {
-    sead::ScopedLock<sead::CriticalSection> lock(&mCS);
+    sead::ScopedCriticalSectionLock lock(&mCS);
 
     sead::hostio::FileInfo info;
 
@@ -218,7 +218,7 @@ bool FileIOMgr::save(const void* pData, u32 size, const DialogArg& rArg) {
  * @return handle of the loaded file, or -1 on failure
  */
 s32 FileIOMgr::load(const DialogArg& rArg) {
-    sead::ScopedLock<sead::CriticalSection> lock(&mCS);
+    sead::ScopedCriticalSectionLock lock(&mCS);
 
     s32 handle = -1;
     File* file = nullptr;
@@ -267,7 +267,7 @@ s32 FileIOMgr::load(const DialogArg& rArg) {
  * @param handle handle returned by load
  */
 void FileIOMgr::close(s32 handle) {
-    sead::ScopedLock<sead::CriticalSection> lock(&mCS);
+    sead::ScopedCriticalSectionLock lock(&mCS);
     File& file = mFiles[handle];
 
     if (file.mData) {

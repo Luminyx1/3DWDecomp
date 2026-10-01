@@ -59,7 +59,7 @@ const char* ParameterStringMgr::appendString(const sead::SafeString& rString)
         return rString.cstr();
     }
 
-    sead::ScopedLock<sead::CriticalSection> lock(&mCS);
+    sead::ScopedCriticalSectionLock lock(&mCS);
 
     if (mStrings.size() == 0)
     {

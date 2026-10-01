@@ -210,6 +210,7 @@ public:
     bool isCloseBracket() const { return getInfo().mIsCloseBracket; }
     bool isSeparator() const { return getInfo().mIsSeparator; }
     u32 getLength() const { return mEnd - mBegin; }
+    bool isSpaceOrLineFeed() const { return mType == cType_Space || mType == cType_LineFeed; }
 
     u8 mType;
     u8 mFlag;

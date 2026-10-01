@@ -204,6 +204,8 @@ public:
     void genMessage(sead::hostio::Context* pContext);
     void clear();
 
+    TextureMemoryAllocator& getAllocator() const { return mContext->mAllocators[mAllocatorIndex]; }
+
 private:
     TextureMemoryAllocator::MemoryBlock* mMemoryBlock;
     TextureMemoryAllocator::AllocateArg mAllocateArg;

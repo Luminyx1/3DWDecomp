@@ -188,7 +188,7 @@ void LightPrePass::initialize(const CreateArg& rArg, sead::Heap* pHeap)
     mSpecPowTex.initialize_(TextureType::cTextureType_2D, TextureFormat::cTextureFormat_R16_G16_float,
                             0x100, 1, 1, 1, TextureAttribute(), MultiSampleType(), true);
     u32 size = mSpecPowTex.getSurface().mStorageSize;
-    auto* pBlock = new (pHeap) GPUMemBlock<u8>;
+    auto* pBlock = new (pHeap) GPUMemBlockU8;
     pBlock->allocBuffer_(size, pHeap, 0x2000, MemoryAttribute::Default);
     mSpecPowTexBuffer = GPUMemVoidAddr(*pBlock, 0);
     updateSpecPowTex_();

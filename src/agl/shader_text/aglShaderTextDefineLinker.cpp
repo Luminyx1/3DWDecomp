@@ -75,13 +75,13 @@ bool DefineLinker::setImpl(sead::Heap* pHeap, const Clause* pBegin, const Clause
     Clause* root = new (pHeap) Clause();
     root->insertListAfter(Clause::clone(pHeap, Clause::constIterator(pBegin),
                                         Clause::constIterator(pEnd), false));
-    for (Clause* clause = root->mNext; clause != root;) {
-        Clause* next = clause->mNext;
+    for (Clause* clause = root->getNext(); clause != root;) {
+        Clause* next = clause->getNext();
 
-        if (clause->mType == Clause::cType_BackSlash) {
+        if (clause->getType() == Clause::cType_BackSlash) {
             clause->erase();
             delete clause;
-            next = next->mNext;
+            next = next->getNext();
         }
 
         clause = next;
@@ -104,10 +104,10 @@ bool DefineLinker::setDirect(Clause* pRoot, u32 index, bool calcHash) {
     mValueBegin = nullptr;
     mValueEnd = nullptr;
 
-    Clause* clause = pRoot->mNext;
+    Clause* clause = pRoot->getNext();
 
-    for (; clause != pRoot; clause = clause->mNext) {
-        if (clause->mType == Clause::cType_Word && --index == 0) {
+    for (; clause != pRoot; clause = clause->getNext()) {
+        if (clause->getType() == Clause::cType_Word && --index == 0) {
             break;
         }
     }
@@ -121,10 +121,10 @@ bool DefineLinker::setDirect(Clause* pRoot, u32 index, bool calcHash) {
     s32 depth = 0;
     bool hasArgs = false;
 
-    for (clause = clause->mNext; clause != pRoot; clause = clause->mNext) {
-        if (clause->mType == Clause::cType_RParen) {
+    for (clause = clause->getNext(); clause != pRoot; clause = clause->getNext()) {
+        if (clause->getType() == Clause::cType_RParen) {
             depth--;
-        } else if (clause->mType == Clause::cType_LParen) {
+        } else if (clause->getType() == Clause::cType_LParen) {
             if (depth == 0) {
                 hasArgs = !hasArgs;
 
@@ -143,22 +143,22 @@ bool DefineLinker::setDirect(Clause* pRoot, u32 index, bool calcHash) {
     mArgEnd = clause;
 
     if (clause != pRoot) {
-        while (clause->mType == Clause::cType_Space || clause->mType == Clause::cType_LineFeed) {
-            clause = clause->mNext;
+        while (clause->isSpaceOrLineFeed()) {
+            clause = clause->getNext();
         }
 
         mValueBegin = clause;
 
-        if (clause->mType != Clause::cType_None) {
-            Clause* last = pRoot->mPrev;
+        if (clause->getType() != Clause::cType_None) {
+            Clause* last = pRoot->getPrev();
             mValueEnd = last;
 
-            while (last->mType == Clause::cType_Space) {
-                last = last->mPrev;
+            while (last->getType() == Clause::cType_Space) {
+                last = last->getPrev();
             }
 
             mValueEnd = last;
-            mValueEnd = last->mNext;
+            mValueEnd = last->getNext();
 
             if (mValueEnd != nullptr) {
                 goto end;
@@ -197,10 +197,10 @@ void DefineLinker::replace(sead::Heap* pHeap, const Clause* pBegin, const Clause
 
     if (mValueBegin != nullptr) {
         Clause* end = mValueEnd;
-        anchor = mValueBegin->mPrev;
+        anchor = mValueBegin->getPrev();
 
         for (Clause* clause = mValueBegin; clause != end;) {
-            Clause* next = clause->mNext;
+            Clause* next = clause->getNext();
             clause->erase();
             delete clause;
             clause = next;
@@ -213,12 +213,12 @@ void DefineLinker::replace(sead::Heap* pHeap, const Clause* pBegin, const Clause
     } else {
         static const char cSpace[] = " ";
         anchor = new (pHeap) Clause(Clause::cType_Space, cSpace, cSpace + 1);
-        mRoot->mPrev->insertAfter(anchor);
+        mRoot->getPrev()->insertAfter(anchor);
     }
 
     mValueBegin = Clause::clone(pHeap, Clause::constIterator(pBegin), Clause::constIterator(pEnd),
                                 includeEnd);
-    Clause* next = anchor->mNext;
+    Clause* next = anchor->getNext();
     anchor->insertListAfter(mValueBegin);
     mValueEnd = next;
 }
@@ -231,7 +231,7 @@ void DefineLinker::replace(sead::Heap* pHeap, const Clause* pBegin, const Clause
  */
 DefineLinker* DefineLinker::clone(sead::Heap* pHeap, sead::Heap* pClauseHeap) const {
     DefineLinker* linker = new (pHeap) DefineLinker();
-    linker->setImpl(pClauseHeap, mRoot->mNext, mRoot, false);
+    linker->setImpl(pClauseHeap, mRoot->getNext(), mRoot, false);
     linker->_38 = _38;
     linker->mHash = mHash;
     return linker;
@@ -247,7 +247,7 @@ DefineLinker* DefineLinker::cloneAll(sead::Heap* pHeap, sead::Heap* pClauseHeap)
     DefineLinker* head = nullptr;
     DefineLinker* last = nullptr;
 
-    for (const DefineLinker* linker = mNext; linker != this; linker = linker->mNext) {
+    for (const DefineLinker* linker = mNext; linker != this; linker = linker->getNext()) {
         DefineLinker* copy = linker->clone(pHeap, pClauseHeap);
 
         if (last != nullptr) {

@@ -163,7 +163,7 @@ void SSAO::initialize(s32 contextNum, sead::Heap* pHeap)
     const detail::Surface& surface = mRotateTexture.getSurface();
     const u32 alignment = surface.mAlignment;
     const u32 size = surface.mStorageSize;
-    auto* pBlock = new (pHeap, 8) GPUMemBlock<u8>;
+    auto* pBlock = new (pHeap, 8) GPUMemBlockU8;
     pBlock->allocBuffer_(size, pHeap, alignment, MemoryAttribute::CpuCached);
     mRotateTextureBuffer = GPUMemVoidAddr(*pBlock, 0);
 

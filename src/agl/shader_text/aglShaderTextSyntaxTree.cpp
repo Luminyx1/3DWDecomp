@@ -67,7 +67,7 @@ void SyntaxTree::removeClauseRecursive(const sead::AnyDelegate1Const<Clause*>* p
  * @return the value
  */
 f64 SyntaxTree::checkAndGetValue() const {
-    if (mValue->mType == Clause::cType_Word) {
+    if (mValue->getType() == Clause::cType_Word) {
         mIsValid = false;
     }
 
@@ -105,7 +105,7 @@ f64 SyntaxTree::evaluate() const {
         return mResult;
     }
 
-    u8 type = mOperator->mType;
+    u8 type = mOperator->getType();
 
     if (type == Clause::cType_SingleQuote || type == Clause::cType_DoubleQuote) {
         mIsValid = true;
@@ -123,7 +123,7 @@ f64 SyntaxTree::evaluate() const {
     f64 center = checkAndEvaluate(mCenter);
     f64 right = checkAndEvaluate(mRight);
 
-    switch (mOperator->mType) {
+    switch (mOperator->getType()) {
     case Clause::cType_Plus:
     case Clause::cType_PlusAssign:
         mResult = left + right;
@@ -268,7 +268,7 @@ Clause* SyntaxTree::constructRecursive(sead::Heap* pHeap, sead::Heap* pStringHea
     }
 
     if (mIsValid) {
-        switch (mOperator->mType) {
+        switch (mOperator->getType()) {
         case Clause::cType_Mod:
         case Clause::cType_And:
         case Clause::cType_Or:
@@ -327,23 +327,23 @@ Clause* SyntaxTree::constructRecursive(sead::Heap* pHeap, sead::Heap* pStringHea
         }
     }
 
-    u32 type = mOperator->mType;
+    u32 type = mOperator->getType();
     const Clause::CharacterInfo& info = Clause::cCharacterTable[type];
 
     if (info.mIsUnaryOperator) {
         Clause* list = new (pHeap) Clause(Clause::cType_LParen, "(", "(" + 1);
-        list->mPrev->insertListAfter(cloneClause(pHeap, mOperator));
-        list->mPrev->insertListAfter(mRight->constructRecursive(pHeap, pStringHeap));
-        list->mPrev->insertListAfter(new (pHeap) Clause(Clause::cType_RParen, ")", ")" + 1));
+        list->getPrev()->insertListAfter(cloneClause(pHeap, mOperator));
+        list->getPrev()->insertListAfter(mRight->constructRecursive(pHeap, pStringHeap));
+        list->getPrev()->insertListAfter(new (pHeap) Clause(Clause::cType_RParen, ")", ")" + 1));
         return list;
     }
 
     if (type - Clause::cType_SingleQuote < 2) {
         Clause* list = new (pHeap) Clause(Clause::cType_LParen, "(", "(" + 1);
-        list->mPrev->insertListAfter(cloneClause(pHeap, mOperator));
-        list->mPrev->insertListAfter(mRight->constructRecursive(pHeap, pStringHeap));
-        list->mPrev->insertListAfter(cloneClause(pHeap, mOperator));
-        list->mPrev->insertListAfter(new (pHeap) Clause(Clause::cType_RParen, ")", ")" + 1));
+        list->getPrev()->insertListAfter(cloneClause(pHeap, mOperator));
+        list->getPrev()->insertListAfter(mRight->constructRecursive(pHeap, pStringHeap));
+        list->getPrev()->insertListAfter(cloneClause(pHeap, mOperator));
+        list->getPrev()->insertListAfter(new (pHeap) Clause(Clause::cType_RParen, ")", ")" + 1));
         return list;
     }
 
@@ -367,20 +367,20 @@ Clause* SyntaxTree::constructRecursive(sead::Heap* pHeap, sead::Heap* pStringHea
         }
 
         Clause* list = new (pHeap) Clause(Clause::cType_LParen, "(", "(" + 1);
-        list->mPrev->insertListAfter(mLeft->constructRecursive(pHeap, pStringHeap));
-        list->mPrev->insertListAfter(cloneClause(pHeap, mOperator));
-        list->mPrev->insertListAfter(mCenter->constructRecursive(pHeap, pStringHeap));
-        list->mPrev->insertListAfter(new (pHeap) Clause(Clause::cType_Colon, ":", ":" + 1));
-        list->mPrev->insertListAfter(mRight->constructRecursive(pHeap, pStringHeap));
-        list->mPrev->insertListAfter(new (pHeap) Clause(Clause::cType_RParen, ")", ")" + 1));
+        list->getPrev()->insertListAfter(mLeft->constructRecursive(pHeap, pStringHeap));
+        list->getPrev()->insertListAfter(cloneClause(pHeap, mOperator));
+        list->getPrev()->insertListAfter(mCenter->constructRecursive(pHeap, pStringHeap));
+        list->getPrev()->insertListAfter(new (pHeap) Clause(Clause::cType_Colon, ":", ":" + 1));
+        list->getPrev()->insertListAfter(mRight->constructRecursive(pHeap, pStringHeap));
+        list->getPrev()->insertListAfter(new (pHeap) Clause(Clause::cType_RParen, ")", ")" + 1));
         return list;
     }
 
     Clause* list = new (pHeap) Clause(Clause::cType_LParen, "(", "(" + 1);
-    list->mPrev->insertListAfter(mLeft->constructRecursive(pHeap, pStringHeap));
-    list->mPrev->insertListAfter(cloneClause(pHeap, mOperator));
-    list->mPrev->insertListAfter(mRight->constructRecursive(pHeap, pStringHeap));
-    list->mPrev->insertListAfter(new (pHeap) Clause(Clause::cType_RParen, ")", ")" + 1));
+    list->getPrev()->insertListAfter(mLeft->constructRecursive(pHeap, pStringHeap));
+    list->getPrev()->insertListAfter(cloneClause(pHeap, mOperator));
+    list->getPrev()->insertListAfter(mRight->constructRecursive(pHeap, pStringHeap));
+    list->getPrev()->insertListAfter(new (pHeap) Clause(Clause::cType_RParen, ")", ")" + 1));
     return list;
 }
 
@@ -392,8 +392,8 @@ Clause* SyntaxTree::constructRecursive(sead::Heap* pHeap, sead::Heap* pStringHea
  */
 Clause* SyntaxTree::construct(sead::Heap* pHeap, sead::Heap* pStringHeap) const {
     Clause* list = new (pHeap) Clause(Clause::cType_LParen, "(", "(" + 1);
-    list->mPrev->insertListAfter(constructRecursive(pHeap, pStringHeap));
-    list->mPrev->insertListAfter(new (pHeap) Clause(Clause::cType_RParen, ")", ")" + 1));
+    list->getPrev()->insertListAfter(constructRecursive(pHeap, pStringHeap));
+    list->getPrev()->insertListAfter(new (pHeap) Clause(Clause::cType_RParen, ")", ")" + 1));
     return list;
 }
 

@@ -148,7 +148,7 @@ void TextureDataInitializerTGA::initialize(TextureData* pTextureData, sead::Heap
 
     const u64 size = detail::GPUMemBlockMgr::calcGPUMemorySize(data.mDstImageSize);
     const s32 alignment = detail::GPUMemBlockMgr::calcGPUMemoryAlignment(0x2000);
-    auto* block = new (pHeap, 8) GPUMemBlock<u8>;
+    auto* block = new (pHeap, 8) GPUMemBlockU8;
     block->allocBuffer_(size, pHeap, alignment, MemoryAttribute::CpuCached);
     GPUMemVoidAddr image_ptr(*block, 0);
     initializeTiling_(pTextureData, image_ptr, data, pWorkHeap);
@@ -209,7 +209,7 @@ void TextureDataInitializerTGA::initializeLinearAligned(TextureData* pTextureDat
 
     const u64 size = detail::GPUMemBlockMgr::calcGPUMemorySize(data.mDstImageSize);
     const s32 alignment = detail::GPUMemBlockMgr::calcGPUMemoryAlignment(0x2000);
-    auto* block = new (pHeap, 8) GPUMemBlock<u8>;
+    auto* block = new (pHeap, 8) GPUMemBlockU8;
     block->allocBuffer_(size, pHeap, alignment, MemoryAttribute::CpuCached);
     GPUMemVoidAddr image_ptr(*block, 0);
     initializeLinearAligned_(pTextureData, image_ptr, data, pWorkHeap);

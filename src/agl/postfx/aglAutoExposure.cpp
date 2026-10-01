@@ -57,7 +57,7 @@ void AutoExposure::ResultBuffer::Create(sead::Heap* pHeap, s32 width, s32 height
                          TextureAttribute(0), MultiSampleType(0), true);
     u32 size = mTexture.getSurface().mStorageSize;
     u32 alignment = mTexture.getSurface().mAlignment;
-    auto* block = new (pHeap, 8) GPUMemBlock<u8>;
+    auto* block = new (pHeap, 8) GPUMemBlockU8;
     block->allocBuffer_(size, pHeap, alignment, MemoryAttribute::Default);
     mImage = GPUMemAddr<u8>(*block, 0);
     mTexture.setImagePtr(mImage);
