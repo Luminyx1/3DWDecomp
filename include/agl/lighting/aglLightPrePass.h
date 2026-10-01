@@ -575,6 +575,15 @@ public:
     Context& getContext(s32 view) { return mContext[view]; }
     u32 getBufferIndex() const { return mBufferIndex; }
     const sead::BitFlag32& getFlags() const { return mFlags; }
+    sead::BitFlag32& getFlags() { return mFlags; }
+    LightMgrBase* getPointLightMgr() const { return mPointLightMgr; }
+    LightMgrBase* getSpotLightMgr() const { return mSpotLightMgr; }
+    LightMgrBase* getProjLightMgr() const { return mProjLightMgr; }
+    void setSpecPowScale(f32 scale)
+    {
+        mSpecPowScale = scale;
+        updateSpecPowTex_();
+    }
     s32 getQuality() const { return mQuality; }
 
 private:

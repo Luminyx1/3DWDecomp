@@ -12,6 +12,7 @@ class ShaderProgram;
 class ShaderLocation {
 public:
     ShaderLocation() : mUniformLocation(-1) {}
+    explicit ShaderLocation(s32 location) { setLocation(location); }
 
     void setLocation(s32);
     void setLocation(ShaderType, s32);
@@ -65,6 +66,10 @@ public:
     {
     }
     explicit SamplerLocation(const sead::SafeString& rName) : INamable(rName) {}
+    SamplerLocation(s32 location, const sead::SafeString& rName)
+        : ShaderLocation(location), INamable(rName)
+    {
+    }
 
     void search(const ShaderProgram&);
 };
