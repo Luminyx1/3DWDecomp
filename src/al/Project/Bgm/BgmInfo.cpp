@@ -212,9 +212,9 @@ s32 BgmActionInfo::compareInfoByKey(const BgmActionInfo* pInfo, const char* pKey
  * @param rIter BYAML data.
  * @return Created list.
  */
-sead::PtrArray<BgmActionInfo>* BgmActionInfoList::create(const ByamlIter& rIter) {
+BgmActionInfoArray* BgmActionInfoList::create(const ByamlIter& rIter) {
     s32 size = rIter.getSize();
-    sead::PtrArray<BgmActionInfo>* list = new sead::PtrArray<BgmActionInfo>;
+    BgmActionInfoArray* list = new BgmActionInfoArray;
 
     if (size >= 1) {
         list->allocBuffer(size, nullptr);
@@ -241,9 +241,9 @@ BgmUserInfo::BgmUserInfo() : mName(nullptr), mActionInfoList(nullptr) {}
  * @param rIter BYAML data.
  * @return Created list.
  */
-sead::PtrArray<BgmUserInfo>* BgmUserInfo::create(const ByamlIter& rIter) {
+BgmUserInfoArray* BgmUserInfo::create(const ByamlIter& rIter) {
     s32 size = rIter.getSize();
-    sead::PtrArray<BgmUserInfo>* list = new sead::PtrArray<BgmUserInfo>;
+    BgmUserInfoArray* list = new BgmUserInfoArray;
     list->allocBuffer(size, nullptr);
 
     for (s32 i = 0; i < size; i++) {

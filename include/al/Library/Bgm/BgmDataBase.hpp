@@ -5,10 +5,10 @@
 #include <prim/seadSafeString.h>
 
 #include "Project/Audio/AudioInfoList.hpp"
+#include "Project/Bgm/BgmInfo.hpp"
 
 namespace al {
 class ByamlIter;
-class BgmUserInfo;
 
 class BgmLineInfo {
 public:
@@ -268,7 +268,7 @@ public:
     AudioInfoList<BgmResourceInfo>* mResourceInfoList = nullptr;
     AudioInfoList<BgmStageInfo>* mStageInfoList = nullptr;
     AudioInfoList<BgmSituationInfo>* mSituationInfoList = nullptr;
-    sead::PtrArray<BgmUserInfo>* mUserInfoList;
+    BgmUserInfoArray* mUserInfoList;
 };
 
 static_assert(sizeof(BgmDataBase) == 0x30);

@@ -1046,7 +1046,7 @@ s32 getBgmSamplePos(const IUseAudioKeeper* pUser, const char* pName) {
  * @param pActionName Action name.
  */
 void tryPrepareActionFirstBgm(const LiveActor* pActor, const char* pActionName) {
-    pActor->mActionKeeper->getBgmCtrl()->tryPrepareActionFirstBgm(pActionName, false, 0);
+    pActor->getActorActionKeeper()->getBgmCtrl()->tryPrepareActionFirstBgm(pActionName, false, 0);
 }
 
 /**

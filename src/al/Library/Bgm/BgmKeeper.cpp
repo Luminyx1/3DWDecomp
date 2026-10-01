@@ -11,7 +11,7 @@ namespace {
  * @param pKey BGM user name.
  * @return Index, or -1 if not found.
  */
-s32 searchUserInfoIndex(const sead::PtrArray<al::BgmUserInfo>* pList, const char* pKey) {
+s32 searchUserInfoIndex(const al::BgmUserInfoArray* pList, const char* pKey) {
     if (pList->size() == 0) {
         return -1;
     }
@@ -55,7 +55,7 @@ BgmKeeper::BgmKeeper(AudioSystemInfo* pInfo, BgmDirector* pDirector, const char*
         return;
     }
 
-    const sead::PtrArray<BgmUserInfo>* userInfoList = pInfo->mBgmDataBase->mUserInfoList;
+    const BgmUserInfoArray* userInfoList = pInfo->mBgmDataBase->mUserInfoList;
     s32 index = searchUserInfoIndex(userInfoList, pUserName);
     mUserInfo = index >= 0 ? userInfoList->unsafeAt(index) : nullptr;
 }

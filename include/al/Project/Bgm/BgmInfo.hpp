@@ -8,6 +8,11 @@
 
 namespace al {
 class ByamlIter;
+class BgmActionInfo;
+class BgmUserInfo;
+
+using BgmActionInfoArray = sead::PtrArray<BgmActionInfo>;
+using BgmUserInfoArray = sead::PtrArray<BgmUserInfo>;
 
 class BgmPlayInfoInAction {
 public:
@@ -52,21 +57,21 @@ static_assert(sizeof(BgmActionInfo) == 0x10);
 
 class BgmActionInfoList {
 public:
-    static sead::PtrArray<BgmActionInfo>* create(const ByamlIter& rIter);
+    static BgmActionInfoArray* create(const ByamlIter& rIter);
 };
 
 class BgmUserInfo {
 public:
     BgmUserInfo();
 
-    static sead::PtrArray<BgmUserInfo>* create(const ByamlIter& rIter);
+    static BgmUserInfoArray* create(const ByamlIter& rIter);
     static BgmUserInfo* createInfo(const ByamlIter& rIter);
     static BgmUserInfo* createInfo(const ByamlIter& rIter, const sead::SafeString& rName);
     static s32 compareInfo(const BgmUserInfo* pA, const BgmUserInfo* pB);
     static s32 compareInfoByKey(const BgmUserInfo* pInfo, const char* pKey);
 
     const char* mName;
-    sead::PtrArray<BgmActionInfo>* mActionInfoList;
+    BgmActionInfoArray* mActionInfoList;
 };
 
 static_assert(sizeof(BgmUserInfo) == 0x10);

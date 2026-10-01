@@ -99,10 +99,10 @@ void printBgmSituationInfoList(const al::BgmDataBase* pDataBase) {}
  * @param pDataBase BGM database.
  */
 void printBgmUserInfoList(const al::BgmDataBase* pDataBase) {
-    const sead::PtrArray<al::BgmUserInfo>* userList = pDataBase->mUserInfoList;
+    const al::BgmUserInfoArray* userList = pDataBase->mUserInfoList;
 
     for (s32 i = 0; i < userList->size(); i++) {
-        const sead::PtrArray<al::BgmActionInfo>* actionList = userList->unsafeAt(i)->mActionInfoList;
+        const al::BgmActionInfoArray* actionList = userList->unsafeAt(i)->mActionInfoList;
 
         for (s32 j = 0; j < actionList->size(); j++) {
             const al::AudioInfoList<al::BgmPlayInfoInAction>* playList = actionList->unsafeAt(j)->mPlayInfoList;

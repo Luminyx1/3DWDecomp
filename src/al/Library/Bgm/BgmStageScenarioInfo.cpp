@@ -442,7 +442,7 @@ BgmDataBase::BgmDataBase() {
         }
     }
 
-    sead::PtrArray<BgmUserInfo>* userInfoList = new sead::PtrArray<BgmUserInfo>;
+    BgmUserInfoArray* userInfoList = new BgmUserInfoArray;
     s32 entryNum = resource->getEntryNum("/");
 
     if (entryNum >= 1) {
