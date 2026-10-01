@@ -1,4 +1,4 @@
-#include "Library/Nfp/SwitchTriggerArea.hpp"
+#include "Library/Area/SwitchTriggerArea.hpp"
 
 namespace al {
 /**
