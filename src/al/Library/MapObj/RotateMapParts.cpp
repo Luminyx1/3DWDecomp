@@ -62,7 +62,7 @@ void RotateMapParts::init(const ActorInitInfo& rInfo) {
     }
 
     trySyncStageSwitchAppear(this);
-    mIsSingleMode = rInfo.mActorSceneInfo.isSingleMode;
+    mIsSingleMode = rInfo.getActorSceneInfo().isSingleMode;
     mStartTrans = getTrans(this);
     mStartQuat = getQuat(this);
     tryGetArg(&mIsTriggerEffectOnAngle, rInfo, "IsTriggerEffectOnAngle");

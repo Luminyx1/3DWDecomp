@@ -76,7 +76,7 @@ void KeyMoveMapParts::init(const ActorInitInfo& rInfo) {
 
     initNerveAction(this, "Wait", &NrvKeyMoveMapParts.collector, 0);
     initActorPoseTQSV(this);
-    mIsSingleMode = rInfo.mActorSceneInfo.isSingleMode;
+    mIsSingleMode = rInfo.getActorSceneInfo().isSingleMode;
     const char* suffix = nullptr;
     tryGetStringArg(&suffix, rInfo, "SuffixName");
     initMapPartsActor(this, rInfo, suffix, 0);
