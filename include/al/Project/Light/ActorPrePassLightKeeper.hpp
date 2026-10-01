@@ -8,39 +8,53 @@ namespace al {
 class ActorInitInfo;
 class ByamlIter;
 class LiveActor;
+class LppLine;
+class LppPoint;
+class LppProj;
+class LppProjOrtho;
+class LppSpot;
 class PrePassLightBase;
 
 class ActorPrePassLightKeeper {
 public:
     struct LightBaseInfo {
         void setPtr();
+        void readIter(const ByamlIter& rIter);
 
-        const char* mName;
-        const char* mLppLightType;
-        const char* mLppLightShaderFunc;
-        const char* mActorJointName;
-        sead::Vector3f mOffset;
-        sead::Vector3f mRotateOffset;
-        sead::Color4f mColor;
-        sead::Color4f mSpecularColor;
-        bool mIsEnableSpecular;
-        bool mIsEnableSpecularColor;
-        s32 mKillFrame;
-        s32 mAppearFrame;
-        bool mIsIndirectIllumination;
+        const char* mName = nullptr;
+        const char* mLppLightType = nullptr;
+        const char* mLppLightShaderFunc = nullptr;
+        const char* mActorJointName = nullptr;
+        sead::Vector3f mOffset = sead::Vector3f::zero;
+        sead::Vector3f mRotateOffset = sead::Vector3f::zero;
+        sead::Color4f mColor = sead::Color4f::cWhite;
+        sead::Color4f mSpecularColor = sead::Color4f::cWhite;
+        bool mIsEnableSpecular = false;
+        bool mIsEnableSpecularColor = false;
+        s32 mKillFrame = -1;
+        s32 mAppearFrame = -1;
+        bool mIsIndirectIllumination = false;
     };
 
     static_assert(sizeof(LightBaseInfo) == 0x68);
 
     struct UserColor {
-        const char* mName;
-        sead::Color4f mColor;
+        void setPtr();
+        void readIter(const ByamlIter& rIter);
+
+        const char* mName = "色を追加できます";
+        sead::Color4f mColor = sead::Color4f::cWhite;
     };
 
     ActorPrePassLightKeeper(bool isIgnoreYaml);
     ~ActorPrePassLightKeeper();
 
-    void init(LiveActor* pActor, const ActorInitInfo& rInfo, const ByamlIter& rIter);
+    bool init(LiveActor* pActor, const ActorInitInfo& rInfo, const ByamlIter& rIter);
+    void setupPrePassPointLightParam(LppPoint* pLight) const;
+    void setupPrePassSpotLightParam(LppSpot* pLight) const;
+    void setupPrePassLineLightParam(LppLine* pLight) const;
+    void setupPrePassProjOrthoLightParam(LppProjOrtho* pLight) const;
+    void setupPrePassProjLightParam(LppProj* pLight) const;
 
     void initLightNum(s32 num);
     void setLightBaseInfo(PrePassLightBase* pLight, const LightBaseInfo& rInfo);
@@ -60,7 +74,7 @@ private:
     sead::PtrArray<UserColor> mUserColorArray;
     LiveActor* mParentActor;
     bool mIsIgnorePrePassYaml;
-    bool mIsIgnoreHideModel;
+    bool mIsIgnoreHideModel = false;
 };
 }  // namespace al
 
