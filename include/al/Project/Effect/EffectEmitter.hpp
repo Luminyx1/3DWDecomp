@@ -2,27 +2,27 @@
 
 #include <math/seadVector.h>
 
+#include "Library/Effect/EmitterSetResourceInfoHolder.hpp"
 #include "Library/Model/JointMtxPtr.hpp"
 
-namespace nn::vfx {
+namespace sead::ptcl {
 class Handle;
-}
+}  // namespace sead::ptcl
 
 namespace al {
-class EmitterSetResourceInfo;
 struct EffectResourceInfo;
 class EffectSystemInfo;
 
 class EffectEmitter {
 public:
-    EffectEmitter(const EffectSystemInfo* pSystemInfo, EffectResourceInfo* pResourceInfo,
-                  s32 handleNum);
+    EffectEmitter(const EffectSystemInfo* pSystemInfo, EffectResourceInfo* pResourceInfo, s32 handleNum);
 
     void initMtxPtr(JointMtxPtr mtxPtr);
     void updateMtxPtr(JointMtxPtr mtxPtr);
     void createEmitter(const JointMtxPtr* pMtxPtr, const sead::Vector3f* pPos, s32 groupId,
-                       s32 priority, u64 userData);
-    void tryDeleteEmitter(bool isKill);
+                       s32 forceCalcFrame, u64 userData);
+    bool tryDeleteEmitter(bool isKill);
+    bool tryDeleteHandle(sead::ptcl::Handle* pHandle, bool isKill);
     void setStopCalcAndDraw(bool isStop);
     void setEnableDraw(bool isEnable);
     bool isActive() const;
@@ -30,18 +30,24 @@ public:
     bool isFirstFrame() const;
     void resetFirstFrame();
 
-    nn::vfx::Handle* getHandle() const { return mHandle; }
+    sead::ptcl::Handle* getHandle() const { return mHandle; }
+
     EffectResourceInfo* getResourceInfo() const { return mResourceInfo; }
 
+    inline bool isLoopOrInfinity() const;
+
+    const JointMtxPtr& getJointMtxPtr() const { return mJointMtxPtr; }
+
+private:
     const EffectSystemInfo* mSystemInfo;
-    nn::vfx::Handle* mHandle = nullptr;
-    nn::vfx::Handle** mHandles = nullptr;
+    sead::ptcl::Handle* mHandle = nullptr;
+    sead::ptcl::Handle** mHandles = nullptr;
     s32 mHandleNum = 0;
     s32 mHandleIndex = 0;
     EffectResourceInfo* mResourceInfo;
-    bool _28 = false;
-    s32 _2c = -1;
-    s32 _30 = -1;
+    bool mIsFirstFrame = false;
+    s32 mEmitFrame = -1;
+    s32 mForceCalcFrame = 0;
     JointMtxPtr mJointMtxPtr;
 };
 
@@ -49,8 +55,15 @@ struct EffectResourceInfo {
     EffectResourceInfo();
 
     const char* mName;
-    u8 _8[0x18];
+    const char* mMaterialName;
+    const char* _10;
+    const char* _18;
     const char* mJointName;
     EmitterSetResourceInfo* mEmitterSetResourceInfo;
 };
+
+bool EffectEmitter::isLoopOrInfinity() const {
+    return mResourceInfo->mEmitterSetResourceInfo->mIsLoop ||
+           mResourceInfo->mEmitterSetResourceInfo->mIsInfinity;
+}
 }  // namespace al
