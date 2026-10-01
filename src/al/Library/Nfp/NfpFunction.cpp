@@ -1,5 +1,7 @@
 #include "Library/Nfp/NfpFunction.hpp"
 
+#include <nn/nfp/nfp_result.h>
+
 #include "Library/Nfp/NfpTypes.hpp"
 
 namespace al {
@@ -171,7 +173,7 @@ bool tryGetNumberingId(s32* pNumberingId, const NfpInfo& rInfo) {
  * @return whether it is an amiibo of the series
  */
 bool isEqualSeriesID(const NfpInfo& rInfo, s32 seriesId) {
-    return rInfo.isAmiibo & isEqualSeriesID(rInfo.modelInfo, seriesId);
+    return rInfo.isAmiibo && isEqualSeriesID(rInfo.modelInfo, seriesId);
 }
 
 /**
@@ -348,11 +350,7 @@ bool isInvalidFormatVersion(const NfpInfo& rInfo) {
         return false;
     }
 
-    if (rInfo.formatVersion.minor != 0x73) {
-        return false;
-    }
-
-    return rInfo.formatVersion.major == 0xb8;
+    return nn::nfp::ResultInvalidFormatVersion::Includes(rInfo.result);
 }
 
 /**
