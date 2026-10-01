@@ -35,6 +35,7 @@ protected:
 class UniformLocation : public ShaderLocation, public sead::INamable {
 public:
     UniformLocation() : INamable("Undefined") {}
+    explicit UniformLocation(const sead::SafeString& rName) : INamable(rName) {}
 
     void search(const ShaderProgram&);
     void setUniformNVN(DrawContext*, u32, const void*) const;
@@ -78,6 +79,7 @@ public:
 class UniformBlockLocation : public ShaderLocation, public sead::INamable {
 public:
     UniformBlockLocation() : INamable("Undefined") {}
+    explicit UniformBlockLocation(const sead::SafeString& rName) : INamable(rName) {}
     UniformBlockLocation(const ShaderLocation& rLocation, const sead::SafeString& rName)
         : ShaderLocation(rLocation), INamable(rName)
     {

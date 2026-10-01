@@ -79,6 +79,7 @@ public:
     void setGamma(f32 gamma);
 
     bool isEnable() const { return *mEnable; }
+    s32 getVariationIndex() const { return mVariationIndex; }
     void setEnable(bool enable) { *mEnable = enable; }
 
 protected:

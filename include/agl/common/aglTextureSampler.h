@@ -92,6 +92,18 @@ public:
                                             [](u32 value) { return value | (1 << 1); });
     }
 
+    void setWrapX(u8 wrap)
+    {
+        mSamplerObject.mWrapX = wrap;
+        setUpdateFlag_(1 << 1);
+    }
+
+    void setWrapY(u8 wrap)
+    {
+        mSamplerObject.mWrapY = wrap;
+        setUpdateFlag_(1 << 1);
+    }
+
     void setFilter(u8 magFilter, u8 minFilter, u8 mipFilter)
     {
         mSamplerObject.mMagFilter = magFilter;

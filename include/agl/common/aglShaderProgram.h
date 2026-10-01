@@ -179,6 +179,12 @@ public:
         VariationBuffer& buffer = mVariation->mVariationBuffer;
         return index < 0 ? buffer.mProgram : &buffer.mPrograms[index];
     }
+    const ShaderProgram* searchVariation(s32 macroNum, const char* const* pMacros,
+                                         const char* const* pValues) const
+    {
+        return getVariation(mVariation->mVariationBuffer.searchShaderProgramIndex(
+            macroNum, pMacros, pValues, mVariationIndex));
+    }
     s32 getVariationProgramNum() const { return mVariation->mVariationBuffer.mPrograms.size(); }
     u16 getVariationMacroStride(s32 macroIndex) const
     {

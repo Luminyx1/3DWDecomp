@@ -21,6 +21,10 @@ namespace agl {
 class DrawContext;
 }
 
+namespace al {
+class BlurFilter;
+}
+
 namespace agl::pfx {
 
 class BlurFilter : public sead::hostio::Node {
@@ -43,6 +47,8 @@ public:
     }
 
 private:
+    friend class al::BlurFilter;
+
     TextureData mTexture[2];
     mutable TextureSampler mSampler[2];
     RenderTargetColor mTarget[2];
