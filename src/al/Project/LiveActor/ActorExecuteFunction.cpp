@@ -41,7 +41,7 @@ void setLODForceLevel0(LiveActorKit* pKit) {
  */
 void forceUpdateLOD(LiveActorKit* pKit, bool isForceLevel0) {
     LiveActorGroup* group = pKit->mActorGroup;
-    const SceneCameraInfo* cameraInfo = pKit->mCameraDirectorRS ?
+    const SceneCameraInfo* cameraInfo = (pKit->mCameraDirectorRS != nullptr) ?
                                             pKit->mCameraDirectorRS->getSceneCameraInfo() :
                                             pKit->mCameraDirector->mSceneCameraInfo;
     const sead::Vector3f& cameraPos = getCameraPos(cameraInfo);
@@ -53,7 +53,7 @@ void forceUpdateLOD(LiveActorKit* pKit, bool isForceLevel0) {
             setLODForceLevel0(actor);
         }
 
-        if (actor->mModelKeeper) {
+        if (actor->mModelKeeper != nullptr) {
             actor->mModelKeeper->updateLod(cameraPos, false);
         }
     }
@@ -129,7 +129,7 @@ DepthShadowDrawer* getDepthShadowDrawer(LiveActorKit* pKit) {
  * @param pKit The actor kit.
  */
 void updatePadRumbleDirector(LiveActorKit* pKit) {
-    if (pKit->mRumbleDirector) {
+    if (pKit->mRumbleDirector != nullptr) {
         pKit->mRumbleDirector->update();
     }
 }

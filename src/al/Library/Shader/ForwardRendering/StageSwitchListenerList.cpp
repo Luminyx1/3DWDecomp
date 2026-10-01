@@ -16,7 +16,7 @@ StageSwitchListenerList::StageSwitchListenerList()
 void StageSwitchListenerList::addListener(StageSwitchListener* pListener) {
     Node* node = new Node{pListener, nullptr};
 
-    if (!mHead) {
+    if (mHead == nullptr) {
         mHead = node;
         mTail = node;
         return;
@@ -32,11 +32,11 @@ void StageSwitchListenerList::addListener(StageSwitchListener* pListener) {
 void StageSwitchListenerList::update() {
     if (mIsOn != mIsRequestOn) {
         if (mIsRequestOn) {
-            for (Node* node = mHead; node; node = node->mNext) {
+            for (Node* node = mHead; node != nullptr; node = node->mNext) {
                 node->mListener->listenOn();
             }
         } else {
-            for (Node* node = mHead; node; node = node->mNext) {
+            for (Node* node = mHead; node != nullptr; node = node->mNext) {
                 node->mListener->listenOff();
             }
         }

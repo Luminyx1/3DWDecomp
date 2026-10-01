@@ -9,11 +9,11 @@ namespace {
 
 const OceanWaveActionInfo* tryFindActionInfo(const OceanWaveUserInfo* pUserInfo,
                                              const char* pActionName) {
-    if (!pActionName) {
+    if (pActionName == nullptr) {
         return nullptr;
     }
 
-    if (!pUserInfo->mActionInfoList) {
+    if (pUserInfo->mActionInfoList == nullptr) {
         return nullptr;
     }
 
@@ -28,17 +28,17 @@ const OceanWaveActionInfo* tryFindActionInfo(const OceanWaveUserInfo* pUserInfo,
  * @return The new controller, or nullptr if the actor has no ocean wave user info.
  */
 ActionOceanWaveCtrl* ActionOceanWaveCtrl::tryCreate(LiveActor* pActor) {
-    if (!pActor) {
+    if (pActor == nullptr) {
         return nullptr;
     }
 
     OceanWaveKeeper* keeper = pActor->mOceanWaveKeeper;
 
-    if (!keeper) {
+    if (keeper == nullptr) {
         return nullptr;
     }
 
-    if (!keeper->getUserInfo()) {
+    if (keeper->getUserInfo() == nullptr) {
         return nullptr;
     }
 
@@ -55,7 +55,7 @@ ActionOceanWaveCtrl::ActionOceanWaveCtrl(LiveActor* pActor)
 void ActionOceanWaveCtrl::startAction(const char* pActionName) {
     const OceanWaveUserInfo* userInfo = mOceanWaveKeeper->getUserInfo();
 
-    if (userInfo) {
+    if (userInfo != nullptr) {
         mActionInfo = tryFindActionInfo(userInfo, pActionName);
     } else {
         mActionInfo = nullptr;
@@ -63,11 +63,11 @@ void ActionOceanWaveCtrl::startAction(const char* pActionName) {
 }
 
 void ActionOceanWaveCtrl::update(f32 frame, f32 frameRate) {
-    if (!mActionInfo || !mActionInfo->mPlayInfoList) {
+    if (mActionInfo == nullptr || mActionInfo->mPlayInfoList == nullptr) {
         return;
     }
 
-    if (!mOceanWaveKeeper->getDirector()) {
+    if (mOceanWaveKeeper->getDirector() == nullptr) {
         return;
     }
 

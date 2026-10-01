@@ -119,11 +119,11 @@ void PoseHistoryPath::calcPoseAndTrans(sead::Quatf* pQuat, sead::Vector3f* pTran
         sum += current.distance;
     }
 
-    if (!info) {
+    if (info == nullptr) {
         info = mHistory.get(0);
     }
 
-    if (nextInfo) {
+    if (nextInfo != nullptr) {
         sead::Quatf quat = info->quat;
         sead::Vector3f trans = info->trans;
         sead::Quatf nextQuat = nextInfo->quat;

@@ -70,8 +70,8 @@ void initActorModel(LiveActor* pActor, const ActorInitInfo& rInfo, const Resourc
     iter.tryGetIntByKey(&blendAnimMax, "BlendAnimMax");
     initActorModelKeeperWithInitFile(
         pActor, rInfo, iter, rArchiveName.cstr(), blendAnimMax,
-        animArc ? StringTmp<256>("ObjectData/%s", animArc).cstr() : nullptr,
-        textureArc ? StringTmp<256>("ObjectData/%s", textureArc).cstr() : nullptr);
+        (animArc != nullptr) ? StringTmp<256>("ObjectData/%s", animArc).cstr() : nullptr,
+        (textureArc != nullptr) ? StringTmp<256>("ObjectData/%s", textureArc).cstr() : nullptr);
 
     s32 partialAnimSlotNum = 0;
     iter.tryGetIntByKey(&partialAnimSlotNum, "PartialAnimSlotNum");
@@ -159,7 +159,7 @@ void initActorExecutor(LiveActor* pActor, const ActorInitInfo& rInfo, const Reso
     bool isUsingDepthShadow = false;
     tryGetArg(&isUsingDepthShadow, rInfo, "UsingDepthShadow");
 
-    if (isUsingDepthShadow && pActor->mModelKeeper) {
+    if (isUsingDepthShadow && pActor->mModelKeeper != nullptr) {
         registerExecutorActorDraw(pActor, rInfo.mExecuteDirector, "デプスシャドウ[キャラクター]");
     }
 
@@ -322,7 +322,7 @@ void initActorSensor(LiveActor* pActor, const ActorInitInfo& rInfo, const Resour
         const char* jointName = nullptr;
         sensorIter.tryGetStringByKey(&jointName, "Joint");
 
-        if (jointName) {
+        if (jointName != nullptr) {
             setHitSensorJointMtx(pActor, name, jointName);
         }
     }
@@ -340,7 +340,7 @@ void initActorCollision(LiveActor* pActor, const ActorInitInfo& rInfo, Resource*
     iter.tryGetStringByKey(&name, "Name");
     StringTmp<256> collisionName;
 
-    if (!name) {
+    if (name == nullptr) {
         name = getBaseName(pResource->getArchiveName());
     }
 
@@ -355,7 +355,7 @@ void initActorCollision(LiveActor* pActor, const ActorInitInfo& rInfo, Resource*
     iter.tryGetStringByKey(&jointName, "Joint");
     const sead::Matrix34f* jointMtx = nullptr;
 
-    if (jointName) {
+    if (jointName != nullptr) {
         jointMtx = getJointMtxPtr(pActor, jointName);
     }
 
@@ -471,7 +471,7 @@ void initActorClippingFile(LiveActor* pActor, const ActorInitInfo& rInfo,
 
     if (iter.tryGetFloatByKey(&radius, "Radius")) {
         setClippingInfo(pActor, radius, nullptr);
-    } else if (pActor->mModelKeeper) {
+    } else if (pActor->mModelKeeper != nullptr) {
         const sead::Vector3f& scale = getScale(pActor);
         f32 maxXY = sead::Mathf::max(sead::Mathf::abs(scale.x), sead::Mathf::abs(scale.y));
         f32 maxXYZ = sead::Mathf::max(maxXY, sead::Mathf::abs(scale.z));
@@ -624,7 +624,7 @@ void initActorAlphaCtrlFile(LiveActor* pActor, const ActorInitInfo& rInfo,
 void initActorParamHolder(LiveActor* pActor) {
     ActorParamHolder* paramHolder = ActorParamHolder::tryCreate(pActor);
 
-    if (paramHolder) {
+    if (paramHolder != nullptr) {
         pActor->mActorParamHolder = paramHolder;
     }
 }
@@ -633,11 +633,11 @@ void initActorAction(LiveActor* pActor, const sead::SafeString& rFileName, const
     const char* actionName = getBaseName(rFileName.cstr());
     pActor->initActionKeeper(actionName, pSuffix);
 
-    if (!pActor->mModelKeeper) {
+    if (pActor->mModelKeeper == nullptr) {
         return;
     }
 
-    if (!tryStartAction(pActor, actionName) && pActor->mActionKeeper) {
+    if (!tryStartAction(pActor, actionName) && pActor->mActionKeeper != nullptr) {
         pActor->mActionKeeper->startAction(actionName);
     }
 }
@@ -660,7 +660,7 @@ void initFarLodActor(LiveActor* pActor, const ActorInitInfo& rInfo) {
     makeMapPartsModelName(&modelName, &farLodArchiveName, *farLodInfo.mPlacementInfo);
     Resource* farLodResource = findOrCreateResource(farLodArchiveName, nullptr);
 
-    if (!farLodActor->getSceneInfo()) {
+    if (farLodActor->getSceneInfo() == nullptr) {
         initActorSceneInfo(farLodActor, rInfo);
     }
 
@@ -673,7 +673,7 @@ void initFarLodActor(LiveActor* pActor, const ActorInitInfo& rInfo) {
     farLodActor->makeActorAppeared();
     farLodActor->startClipped();
 
-    if (farLodActor->mModelKeeper && farLodActor->mModelKeeper->getLodNum() >= 1) {
+    if (farLodActor->mModelKeeper != nullptr && farLodActor->mModelKeeper->getLodNum() >= 1) {
         pActor->_142 = true;
     }
 }
@@ -732,7 +732,7 @@ void initActorImpl(LiveActor* pActor, const ActorInitInfo& rInfo,
     StringTmp<256> archiveName("%s/%s", rFolderName.cstr(), rFileName.cstr());
     Resource* resource = findOrCreateResource(archiveName, nullptr);
 
-    if (!pActor->getSceneInfo()) {
+    if (pActor->getSceneInfo() == nullptr) {
         initActorSceneInfo(pActor, rInfo);
     }
 
@@ -763,14 +763,14 @@ void initActorImpl(LiveActor* pActor, const ActorInitInfo& rInfo,
     initActorParamHolder(pActor);
     initActorAction(pActor, rFileName, pSuffix);
 
-    if (pActor->getNerveKeeper() && pActor->getNerveKeeper()->mActionCtrl) {
+    if (pActor->getNerveKeeper() != nullptr && pActor->getNerveKeeper()->mActionCtrl != nullptr) {
         resetNerveActionForInit(pActor);
     }
 
-    if (!pActor->mSubActorKeeper) {
+    if (pActor->mSubActorKeeper == nullptr) {
         SubActorKeeper* subActorKeeper =
             SubActorKeeper::tryCreate(pActor, rInfo, pSuffix, maxSubActors);
-        if (subActorKeeper) {
+        if (subActorKeeper != nullptr) {
             pActor->initSubActorKeeper(subActorKeeper);
         }
     }
@@ -1232,11 +1232,11 @@ void syncSensorAndColliderScaleY(LiveActor* pActor) {
  * @param pMaterialCode The material code.
  */
 void setMaterialCode(LiveActor* pActor, const char* pMaterialCode) {
-    if (pActor->getEffectKeeper()) {
+    if (pActor->getEffectKeeper() != nullptr) {
         tryUpdateEffectMaterialCode(pActor, pMaterialCode);
     }
 
-    if (pActor->getAudioKeeper()) {
+    if (pActor->getAudioKeeper() != nullptr) {
         tryUpdateSeMaterialCode(pActor, pMaterialCode);
     }
 }
@@ -1344,7 +1344,7 @@ void getActorRecourseDataV3f(sead::Vector3f* pValue, LiveActor* pActor, const ch
     isExistModelResourceYaml(pActor, pFileName, nullptr);
     ByamlIter iter(getModelResourceYaml(pActor, pFileName, nullptr));
 
-    if (pKey) {
+    if (pKey != nullptr) {
         tryGetByamlV3f(pValue, iter, pKey);
     } else {
         tryGetByamlV3f(pValue, iter);
@@ -1363,7 +1363,7 @@ void getActorRecourseDataBox3f(sead::BoundBox3f* pValue, LiveActor* pActor, cons
     isExistModelResourceYaml(pActor, pFileName, nullptr);
     ByamlIter iter(getModelResourceYaml(pActor, pFileName, nullptr));
 
-    if (pKey) {
+    if (pKey != nullptr) {
         tryGetByamlBox3f(pValue, iter, pKey);
     } else {
         tryGetByamlBox3f(pValue, iter);

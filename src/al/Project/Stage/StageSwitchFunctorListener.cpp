@@ -28,7 +28,7 @@ void StageSwitchFunctorListener::setOffFunctor(const FunctorBase& rFunctor) {
  * Calls the on functor.
  */
 void StageSwitchFunctorListener::listenOn() {
-    if (mOnFunctor) {
+    if (mOnFunctor != nullptr) {
         (*mOnFunctor)();
     }
 }
@@ -37,7 +37,7 @@ void StageSwitchFunctorListener::listenOn() {
  * Calls the off functor.
  */
 void StageSwitchFunctorListener::listenOff() {
-    if (mOffFunctor) {
+    if (mOffFunctor != nullptr) {
         (*mOffFunctor)();
     }
 }

@@ -119,7 +119,7 @@ bool CameraResourceHolder::tryFindParamResource(ByamlIter* pTicket,
 bool CameraResourceHolder::tryFindCameraParamList(ByamlIter* pParamList,
                                                   const PlacementId* pPlacementId,
                                                   const char* pParamName) const {
-    if (pPlacementId && pPlacementId->mUnitConfigName && *pPlacementId->mUnitConfigName) {
+    if (pPlacementId != nullptr && pPlacementId->mUnitConfigName != nullptr && *pPlacementId->mUnitConfigName) {
         return tryFindCameraParamList(pParamList, pPlacementId->mUnitConfigName, pParamName);
     }
 
@@ -170,9 +170,9 @@ bool CameraResourceHolder::tryFindParamResource(ByamlIter* pTicket,
 bool CameraResourceHolder::tryFindCameraParamList(ByamlIter* pParamList,
                                                   const PlacementId* pPlacementId, s32 zoneId,
                                                   const char* pParamName) const {
-    const char* stageName = pPlacementId ? pPlacementId->mUnitConfigName : nullptr;
+    const char* stageName = (pPlacementId != nullptr) ? pPlacementId->mUnitConfigName : nullptr;
 
-    if (!stageName || !*stageName) {
+    if (stageName == nullptr || !*stageName) {
         for (s32 i = 0; i < mNumEntries; i++) {
             if (mEntries[i]->zoneId == zoneId) {
                 return tryFindCameraParamList(pParamList, mEntries[i]->stageName.cstr(),
@@ -236,7 +236,7 @@ bool CameraResourceHolder::tryFindCameraParamList(ByamlIter* pParamList, const c
                                                   const char* pParamName) const {
     Entry* entry = findCameraResource(pStageName);
 
-    if (!entry || !entry->cameraParam) {
+    if (entry == nullptr || entry->cameraParam == nullptr) {
         return false;
     }
 
@@ -335,10 +335,10 @@ CameraResourceHolder::tryFindCameraResource(const char* pStageName) const {
  */
 CameraResourceHolder::Entry*
 CameraResourceHolder::tryFindCameraResource(const PlacementId* pPlacementId) const {
-    if (pPlacementId) {
+    if (pPlacementId != nullptr) {
         const char* stageName = pPlacementId->mUnitConfigName;
 
-        if (!stageName) {
+        if (stageName == nullptr) {
             stageName = mStageName;
         }
 

@@ -47,7 +47,7 @@ void ModelDrawer::addModel(alModelCafe* pModel) {
     mModels[mModelNum] = pModel;
     mModelNum++;
 
-    if (!mMeshDrawerTable) {
+    if (mMeshDrawerTable == nullptr) {
         return;
     }
 
@@ -64,7 +64,7 @@ void ModelDrawer::addModel(alModelCafe* pModel) {
  * @param pModel Model.
  */
 void ModelDrawer::removeModel(alModelCafe* pModel) {
-    if (mMeshDrawerTable) {
+    if (mMeshDrawerTable != nullptr) {
         for (s32 i = 0; i < mMeshDrawerTable->size(); i++) {
             MeshDrawer* meshDrawer = (*mMeshDrawerTable)[i];
             nn::g3d::ModelObj* modelObj = pModel->getModelG3D()->getModelObj();

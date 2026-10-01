@@ -25,7 +25,7 @@ void CollisionPartsConnector::init(const sead::Matrix34f* pParentMtx, const sead
  * @return true if connected
  */
 bool CollisionPartsConnector::isConnecting() const {
-    if (mCollisionParts && !(mCollisionParts->_160 && mCollisionParts->_161)) {
+    if (mCollisionParts != nullptr && !(mCollisionParts->_160 && mCollisionParts->_161)) {
         return false;
     }
 

@@ -106,7 +106,7 @@ bool tryStartSklAnimIfNotPlaying(LiveActor* pActor, const char* pAnimName) {
  */
 bool isSklAnimPlaying(const LiveActor* pActor, const char* pAnimName, s32 index) {
     const char* playingName = getPlayingSklAnimName(pActor, index);
-    return playingName && isEqualString(pAnimName, playingName);
+    return (playingName != nullptr) && isEqualString(pAnimName, playingName);
 }
 
 /**

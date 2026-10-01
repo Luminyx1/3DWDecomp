@@ -10,7 +10,7 @@ namespace al {
  * @return true if the position is in water
  */
 bool isInWaterArea(const IUseAreaObj* pAreaUser, const sead::Vector3f& rPos) {
-    if (pAreaUser->getAreaObjDirector()->getInVolumeAreaObj("NoWaterArea", rPos)) {
+    if (pAreaUser->getAreaObjDirector()->getInVolumeAreaObj("NoWaterArea", rPos) != nullptr) {
         return false;
     }
 

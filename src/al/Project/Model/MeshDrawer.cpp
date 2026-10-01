@@ -158,11 +158,11 @@ void MeshDrawer::preDrawToDepthShadow(DepthShadowDrawer* pDrawer) {
 
         const nn::g3d::Sphere* bounding = shape->GetBounding();
 
-        if (!bounding) {
+        if (bounding == nullptr) {
             bounding = mesh->modelObj->GetBounding();
         }
 
-        if (bounding) {
+        if (bounding != nullptr) {
             sead::Sphere<sead::Vector3f> sphere(
                 {nn::util::VectorGetX(bounding->center), nn::util::VectorGetY(bounding->center),
                  nn::util::VectorGetZ(bounding->center)},
@@ -308,7 +308,7 @@ void MeshDrawer::draw(const nn::g3d::ViewVolume* pViewVolume, s32 viewIndex,
         tryChangeShaderMode(getDrawContext(), agl::cShaderMode_UniformBlock);
     }
 
-    if (mDisplayList) {
+    if (mDisplayList != nullptr) {
         nvnCommandBufferCallCommands(agl::driver::getNvnCommandBuffer(getDrawContext()), 1,
                                      mDisplayList->getHandlePtr());
     } else {
@@ -383,11 +383,11 @@ void MeshDrawer::draw(const nn::g3d::ViewVolume* pViewVolume, s32 viewIndex,
                                           skeleton->GetMtxBlockSize(), bufferIndex);
         }
 
-        if (pAdditionalInfo) {
+        if (pAdditionalInfo != nullptr) {
             pAdditionalInfo->activateEnvTexture(mShapeIndex, model);
 
             if (mIsUsingModelLight) {
-                if (!prevEnvTexInfo ||
+                if (prevEnvTexInfo == nullptr ||
                     EnvTexId::isEnableTexId(prevEnvTexInfo->getCubeMapId()) !=
                         EnvTexId::isEnableTexId(
                             model->getShape(mShapeIndex).mEnvTexInfo->getCubeMapId())) {
@@ -401,7 +401,7 @@ void MeshDrawer::draw(const nn::g3d::ViewVolume* pViewVolume, s32 viewIndex,
         const nn::g3d::ShapeObj* shape = mesh->shapeObj;
         bool isExistBounding = alModelFunction::isExistBoundingNode(shape->GetResource());
 
-        if (pViewVolume && isExistBounding) {
+        if (pViewVolume != nullptr && isExistBounding) {
             nn::g3d::CullingContext cullingContext;
 
             while (shape->TestSubMeshIntersection(&cullingContext, *pViewVolume, lodIndex)) {
@@ -435,7 +435,7 @@ void MeshDrawer::drawTest(const nn::g3d::ViewVolume* pViewVolume, s32 viewIndex)
         tryChangeShaderMode(getDrawContext(), agl::cShaderMode_UniformBlock);
     }
 
-    if (mDisplayList) {
+    if (mDisplayList != nullptr) {
         nvnCommandBufferCallCommands(agl::driver::getNvnCommandBuffer(getDrawContext()), 1,
                                      mDisplayList->getHandlePtr());
     } else {
@@ -455,7 +455,7 @@ void MeshDrawer::drawTest(const nn::g3d::ViewVolume* pViewVolume, s32 viewIndex)
             continue;
         }
 
-        if (!renderState || !isDrawMesh(model)) {
+        if (renderState == nullptr || !isDrawMesh(model)) {
             continue;
         }
 
@@ -492,7 +492,7 @@ void MeshDrawer::drawTest(const nn::g3d::ViewVolume* pViewVolume, s32 viewIndex)
         const nn::g3d::ShapeObj* shape = mesh->shapeObj;
         bool isExistBounding = alModelFunction::isExistBoundingNode(shape->GetResource());
 
-        if (pViewVolume && isExistBounding) {
+        if (pViewVolume != nullptr && isExistBounding) {
             nn::g3d::CullingContext cullingContext;
 
             while (shape->TestSubMeshIntersection(&cullingContext, *pViewVolume, lodIndex)) {
@@ -604,7 +604,7 @@ void MeshDrawer::drawDepthOnly(const nn::g3d::ViewVolume* pViewVolume, s32 viewI
         const nn::g3d::ShapeObj* shape = mesh->shapeObj;
         bool isExistBounding = alModelFunction::isExistBoundingNode(shape->GetResource());
 
-        if (pViewVolume && isExistBounding) {
+        if (pViewVolume != nullptr && isExistBounding) {
             nn::g3d::CullingContext cullingContext;
 
             while (shape->TestSubMeshIntersection(&cullingContext, *pViewVolume, lodIndex)) {
@@ -634,7 +634,7 @@ void MeshDrawer::drawDepthShadow(const nn::g3d::ViewVolume* pViewVolume, s32 vie
 
     agl::DrawContext* drawContext = getDrawContext();
 
-    if (mDisplayList) {
+    if (mDisplayList != nullptr) {
         nvnCommandBufferCallCommands(agl::driver::getNvnCommandBuffer(drawContext), 1,
                                      mDisplayList->getHandlePtr());
     } else {
@@ -710,7 +710,7 @@ void MeshDrawer::drawDepthShadow(const nn::g3d::ViewVolume* pViewVolume, s32 vie
         const nn::g3d::ShapeObj* shape = mesh->shapeObj;
         bool isExistBounding = alModelFunction::isExistBoundingNode(shape->GetResource());
 
-        if (pViewVolume && isExistBounding) {
+        if (pViewVolume != nullptr && isExistBounding) {
             nn::g3d::CullingContext cullingContext;
 
             while (shape->TestSubMeshIntersection(&cullingContext, *pViewVolume, lodIndex)) {

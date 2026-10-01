@@ -49,11 +49,11 @@ void BlockRail::makeActorAppeared() {
     LiveActor::makeActorAppeared();
     mRailLink->validateRide();
 
-    if (mStartRailEnd) {
+    if (mStartRailEnd != nullptr) {
         mStartRailEnd->makeActorAppeared();
     }
 
-    if (mEndRailEnd) {
+    if (mEndRailEnd != nullptr) {
         mEndRailEnd->makeActorAppeared();
     }
 }
@@ -65,11 +65,11 @@ void BlockRail::makeActorDead() {
     LiveActor::makeActorDead();
     mRailLink->invalidateRide();
 
-    if (mStartRailEnd) {
+    if (mStartRailEnd != nullptr) {
         mStartRailEnd->makeActorDead();
     }
 
-    if (mEndRailEnd) {
+    if (mEndRailEnd != nullptr) {
         mEndRailEnd->makeActorDead();
     }
 }
@@ -116,7 +116,7 @@ void BlockRail::tryCreateRailEnd(const ActorInitInfo& rInfo) {
  */
 void BlockRail::createRailEnd(const ActorInitInfo& rInfo, const sead::Vector3f& rPos,
                               const sead::Vector3f& rDir, LiveActor** pRailEnd) {
-    if (!mEndModelName) {
+    if (mEndModelName == nullptr) {
         return;
     }
 
@@ -145,7 +145,7 @@ void BlockRail::createRailEnd(const ActorInitInfo& rInfo, const sead::Vector3f& 
         railEnd->kill();
     }
 
-    if (pRailEnd) {
+    if (pRailEnd != nullptr) {
         *pRailEnd = railEnd;
     }
 }

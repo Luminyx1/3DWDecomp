@@ -161,7 +161,7 @@ bool SaveDataDirector::updateSequence() {
 }
 
 bool SaveDataDirector::isDoneSequence() const {
-    return _29 || !mRunningSequence;
+    return _29 || (mRunningSequence == nullptr);
 }
 
 u8* SaveDataDirector::getWorkBuffer() {

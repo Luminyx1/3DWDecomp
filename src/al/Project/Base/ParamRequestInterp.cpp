@@ -9,7 +9,7 @@ namespace al {
  * @return whether the parameters are equal
  */
 bool IUseRequestParam::isEqual(const IUseRequestParam& rOther) const {
-    if (!getParamObj()) {
+    if (getParamObj() == nullptr) {
         return false;
     }
 
@@ -21,7 +21,7 @@ bool IUseRequestParam::isEqual(const IUseRequestParam& rOther) const {
  * @param rOther other request parameter
  */
 void IUseRequestParam::copy(const IUseRequestParam& rOther) {
-    if (!getParamObj()) {
+    if (getParamObj() == nullptr) {
         return;
     }
 
@@ -36,7 +36,7 @@ void IUseRequestParam::copy(const IUseRequestParam& rOther) {
  */
 void IUseRequestParam::copyInterp(const IUseRequestParam& rParamA,
                                   const IUseRequestParam& rParamB, f32 rate) {
-    if (!getParamObj()) {
+    if (getParamObj() == nullptr) {
         return;
     }
 

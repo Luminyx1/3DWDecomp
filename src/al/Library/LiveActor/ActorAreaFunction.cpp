@@ -23,7 +23,7 @@ inline bool isPlayerAreaTarget(const LiveActor* pPlayer) {
  * @return The area or nullptr.
  */
 AreaObj* tryGetAreaObjPlayerAll(const LiveActor* pActor, const AreaObjGroup* pGroup) {
-    if (!pGroup) {
+    if (pGroup == nullptr) {
         return nullptr;
     }
 
@@ -37,7 +37,7 @@ AreaObj* tryGetAreaObjPlayerAll(const LiveActor* pActor, const AreaObjGroup* pGr
             continue;
         }
 
-        if (!result) {
+        if (result == nullptr) {
             result = area;
         } else {
             result = result->mPriority < area->mPriority ? area : result;

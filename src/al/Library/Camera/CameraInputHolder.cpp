@@ -11,7 +11,7 @@ CameraInputHolder::CameraInputHolder(s32 size) : mInputsSize(1) {
 }
 
 void CameraInputHolder::initAfterPlacement() {
-    if (!mDefaultInput) {
+    if (mDefaultInput == nullptr) {
         mDefaultInput = new SimpleCameraInput(-1);
     }
 }
@@ -22,18 +22,18 @@ void CameraInputHolder::setInput(const ICameraInput* pInput, s32 index) {
 
 void CameraInputHolder::updateInput() {
     for (s32 i = 0; i < mInputsSize; i++) {
-        if (mInputs[i]) {
+        if (mInputs[i] != nullptr) {
             mInputs[i]->updateInput();
         }
     }
 
-    if (mDefaultInput) {
+    if (mDefaultInput != nullptr) {
         mDefaultInput->updateInput();
     }
 }
 
 ICameraInput* CameraInputHolder::getInput(s32 index) const {
-    return mInputs[index] ?: mDefaultInput;
+    return mInputs[index] != nullptr ? mInputs[index] : mDefaultInput;
 }
 
 }  // namespace al

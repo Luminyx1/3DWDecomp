@@ -24,7 +24,7 @@ SceneObjHolder::SceneObjHolder(CreateFunc pCreator, int numObjs)
  * @return The scene object.
  */
 __attribute__((noinline)) ISceneObj* SceneObjHolder::create(int objID) {
-    if (mObjs[objID]) {
+    if (mObjs[objID] != nullptr) {
         return mObjs[objID];
     }
 
@@ -75,7 +75,7 @@ __attribute__((noinline)) void SceneObjHolder::setSceneObj(ISceneObj* pObj, int 
  */
 void SceneObjHolder::initAfterPlacementSceneObj(const ActorInitInfo& rInfo) {
     for (int i = 0; i < mNumObjs; i++) {
-        if (mObjs[i]) {
+        if (mObjs[i] != nullptr) {
             mObjs[i]->initAfterPlacementSceneObj(rInfo);
         }
     }

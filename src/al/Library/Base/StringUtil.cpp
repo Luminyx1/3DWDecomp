@@ -31,7 +31,7 @@ char* createConcatString(const char* start, const char* end) {
 void createFileNameBySuffix(sead::BufferedSafeString* out, const char* name, const char* suffix) {
     out->clear();
 
-    if (!suffix) {
+    if (suffix == nullptr) {
         out->append(name);
         return;
     }
@@ -114,7 +114,7 @@ const char* getSubStringUnmatched(const char** pOutRest, const char* pStr, const
             pStr++;
             pattern++;
         } else if (*pattern == '?') {
-            if (pCallback) {
+            if (pCallback != nullptr) {
                 pCallback(pStr, pStr + 1, pUser);
             }
 
@@ -141,12 +141,12 @@ const char* getSubStringUnmatched(const char** pOutRest, const char* pStr, const
             } else {
                 found = searchSubString(pStr, next, len);
 
-                if (!found) {
+                if (found == nullptr) {
                     break;
                 }
             }
 
-            if (pCallback) {
+            if (pCallback != nullptr) {
                 pCallback(pStr, found, pUser);
             }
 
@@ -161,7 +161,7 @@ const char* getSubStringUnmatched(const char** pOutRest, const char* pStr, const
         pattern++;
     }
 
-    if (pOutRest) {
+    if (pOutRest != nullptr) {
         *pOutRest = pattern;
     }
 
@@ -191,7 +191,7 @@ void removeExtensionString(char* out, u32 len, const char* str) {
     char* dot = strrchr(out, '.');
     char* dirSeparator = strrchr(out, '/');
 
-    if (!dot || dot < dirSeparator || ++dirSeparator == dot)
+    if (dot == nullptr || dot < dirSeparator || ++dirSeparator == dot)
         return;
 
     *dot = '\0';
@@ -228,7 +228,7 @@ bool tryReplaceString(sead::BufferedSafeString* out, const char* targetStr, cons
                       const char* newStr) {
     const char* subStr = searchSubString(targetStr, oldStr);
 
-    if (!subStr)
+    if (subStr == nullptr)
         return false;
 
     StringTmp<1024> before;
@@ -247,7 +247,7 @@ bool tryReplaceStringNoRecursive(sead::BufferedSafeString* out, const char* targ
                                  const char* oldStr, const char* newStr) {
     const char* subStr = searchSubString(targetStr, oldStr);
 
-    if (!subStr)
+    if (subStr == nullptr)
         return false;
 
     StringTmp<256> before;
@@ -311,7 +311,7 @@ bool isEndWithString(const char* str, const char* end) {
 bool isMatchString(const char* str, const MatchStr& matchStr) {
     const char* subStr = getSubStringUnmatched(str, matchStr);
 
-    return subStr && subStr[0] == '\0';
+    return (subStr != nullptr) && subStr[0] == '\0';
 }
 
 s32 compareStringIgnoreCase(const char* str1, const char* str2) {

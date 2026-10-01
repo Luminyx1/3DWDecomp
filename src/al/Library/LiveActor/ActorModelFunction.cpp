@@ -44,7 +44,7 @@ namespace al {
 void updateMaterialCodeArea(LiveActor* pActor) {
     AreaObj* area = tryFindAreaObj(pActor, "MaterialCodeArea", getTrans(pActor));
 
-    if (!area) {
+    if (area == nullptr) {
         updateEffectMaterialWet(pActor, false);
         updateSeMaterialWet(pActor, false);
         resetEnvTexture(pActor);
@@ -86,7 +86,7 @@ void updateMaterialCodeWater(LiveActor* pActor) {
  * @param isAshore Whether the actor is at the shore.
  */
 void updateMaterialCodeWater(LiveActor* pActor, bool isInWater, bool isAshore) {
-    if (pActor->getEffectKeeper()) {
+    if (pActor->getEffectKeeper() != nullptr) {
         updateEffectMaterialWater(pActor, isInWater);
     }
 
@@ -108,7 +108,7 @@ void updateMaterialCodeWater(LiveActor* pActor, bool isInWater, bool isAshore) {
  * @param pActor The actor.
  */
 void resetMaterialCode(LiveActor* pActor) {
-    if (pActor->getEffectKeeper()) {
+    if (pActor->getEffectKeeper() != nullptr) {
         resetEffectMaterialCode(pActor);
     }
 
@@ -125,7 +125,7 @@ void resetMaterialCode(LiveActor* pActor) {
  * @param pAlpha The alpha.
  */
 void setModelAlphaPtr(LiveActor* pActor, f32* pAlpha) {
-    if (pActor->mModelKeeper) {
+    if (pActor->mModelKeeper != nullptr) {
         pActor->mModelKeeper->setGlobalAlpha(pAlpha);
     }
 }
@@ -137,19 +137,19 @@ void setModelAlphaPtr(LiveActor* pActor, f32* pAlpha) {
 void setLODForceLevel0(LiveActor* pActor) {
     ModelKeeper* modelKeeper = pActor->mModelKeeper;
 
-    if (!modelKeeper) {
+    if (modelKeeper == nullptr) {
         return;
     }
 
     alModelCafe* model = modelKeeper->mModelCafe;
 
-    if (!model) {
+    if (model == nullptr) {
         return;
     }
 
     SimpleModelG3D* modelG3D = model->mModelG3D;
 
-    if (!modelG3D) {
+    if (modelG3D == nullptr) {
         return;
     }
 
@@ -163,24 +163,24 @@ void setLODForceLevel0(LiveActor* pActor) {
  */
 void showModel(LiveActor* pActor) {
     if (!isDead(pActor) && !isClipped(pActor)) {
-        if (pActor->mModelKeeper) {
+        if (pActor->mModelKeeper != nullptr) {
             pActor->mModelKeeper->show();
         }
 
         alActorSystemFunction::addToExecutorDraw(pActor);
 
-        if (pActor->mLightKeeper) {
+        if (pActor->mLightKeeper != nullptr) {
             pActor->mLightKeeper->appear(false);
         }
 
-        if (pActor->mShadowKeeper) {
+        if (pActor->mShadowKeeper != nullptr) {
             showShadow(pActor);
         }
     }
 
     pActor->mActorFlags->isHideModel = false;
 
-    if (pActor->mSubActorKeeper) {
+    if (pActor->mSubActorKeeper != nullptr) {
         alSubActorFunction::trySyncShowModel(pActor->mSubActorKeeper);
     }
 }
@@ -210,24 +210,24 @@ bool isHideModel(const LiveActor* pActor) {
  */
 void hideModel(LiveActor* pActor) {
     if (!isDead(pActor) && !isClipped(pActor)) {
-        if (pActor->mModelKeeper) {
+        if (pActor->mModelKeeper != nullptr) {
             pActor->mModelKeeper->hide();
         }
 
-        if (pActor->mShadowKeeper) {
+        if (pActor->mShadowKeeper != nullptr) {
             hideShadow(pActor);
         }
 
         alActorSystemFunction::removeFromExecutorDraw(pActor);
 
-        if (pActor->mLightKeeper) {
+        if (pActor->mLightKeeper != nullptr) {
             pActor->mLightKeeper->hideModel();
         }
     }
 
     pActor->mActorFlags->isHideModel = true;
 
-    if (pActor->mSubActorKeeper) {
+    if (pActor->mSubActorKeeper != nullptr) {
         alSubActorFunction::trySyncHideModel(pActor->mSubActorKeeper);
     }
 }
@@ -285,7 +285,7 @@ void showSilhouetteModel(LiveActor* pActor) {
 
         if (isEqualString(info->mSubActor->getName(), "シルエットモデル")) {
             showModelIfHide(info->mSubActor);
-        } else if (info->mSubActor->mSubActorKeeper) {
+        } else if (info->mSubActor->mSubActorKeeper != nullptr) {
             showSilhouetteModel(info->mSubActor);
         }
     }
@@ -303,7 +303,7 @@ void hideSilhouetteModel(LiveActor* pActor) {
 
         if (isEqualString(info->mSubActor->getName(), "シルエットモデル")) {
             hideModelIfShow(info->mSubActor);
-        } else if (info->mSubActor->mSubActorKeeper) {
+        } else if (info->mSubActor->mSubActorKeeper != nullptr) {
             hideSilhouetteModel(info->mSubActor);
         }
     }
@@ -323,7 +323,7 @@ bool isSilhouetteModelHidden(LiveActor* pActor) {
  * @param pActor The actor.
  */
 void showSilhouetteModelIfHide(LiveActor* pActor) {
-    if (pActor->mSubActorKeeper &&
+    if (pActor->mSubActorKeeper != nullptr &&
         isHideModel(alSubActorFunction::findSubActor(pActor->mSubActorKeeper, "シルエットモデル"))) {
         showSilhouetteModel(pActor);
     }
@@ -334,7 +334,7 @@ void showSilhouetteModelIfHide(LiveActor* pActor) {
  * @param pActor The actor.
  */
 void hideSilhouetteModelIfShow(LiveActor* pActor) {
-    if (pActor->mSubActorKeeper &&
+    if (pActor->mSubActorKeeper != nullptr &&
         !isHideModel(alSubActorFunction::findSubActor(pActor->mSubActorKeeper, "シルエットモデル"))) {
         hideSilhouetteModel(pActor);
     }
@@ -346,7 +346,7 @@ void hideSilhouetteModelIfShow(LiveActor* pActor) {
  * @return The silhouette model, or nullptr.
  */
 LiveActor* getSilhouetteModel(LiveActor* pActor) {
-    if (!pActor->mSubActorKeeper) {
+    if (pActor->mSubActorKeeper == nullptr) {
         return nullptr;
     }
 
@@ -359,7 +359,7 @@ LiveActor* getSilhouetteModel(LiveActor* pActor) {
             return info->mSubActor;
         }
 
-        if (info->mSubActor->mSubActorKeeper) {
+        if (info->mSubActor->mSubActorKeeper != nullptr) {
             return getSilhouetteModel(pActor);
         }
     }
@@ -373,21 +373,21 @@ LiveActor* getSilhouetteModel(LiveActor* pActor) {
  * @param isDisable Whether to disable drawing.
  */
 void setDisableDraw(LiveActor* pActor, bool isDisable) {
-    if (!pActor->mModelKeeper) {
+    if (pActor->mModelKeeper == nullptr) {
         return;
     }
 
     pActor->mModelKeeper->setDisableDraw(isDisable);
     SubActorKeeper* keeper = pActor->mSubActorKeeper;
 
-    if (!keeper) {
+    if (keeper == nullptr) {
         return;
     }
 
     for (s32 i = 0; i < keeper->mCount; i++) {
         SubActorInfo* info = keeper->mInfos[i];
 
-        if (info && info->mSubActor) {
+        if (info != nullptr && info->mSubActor != nullptr) {
             setDisableDraw(info->mSubActor, isDisable);
         }
     }
@@ -446,7 +446,7 @@ void addToDepthShadowDrawer(LiveActor* pActor) {
  * @param isUpdateDrawer Whether to update the depth shadow drawers.
  */
 void setDisableDepthShadow(LiveActor* pActor, bool isDisable, bool isUpdateDrawer) {
-    if (!pActor->mModelKeeper) {
+    if (pActor->mModelKeeper == nullptr) {
         return;
     }
 
@@ -476,14 +476,14 @@ void setDisableDepthShadow(LiveActor* pActor, bool isDisable, bool isUpdateDrawe
 
     SubActorKeeper* keeper = pActor->mSubActorKeeper;
 
-    if (!keeper) {
+    if (keeper == nullptr) {
         return;
     }
 
     for (s32 i = 0; i < keeper->mCount; i++) {
         SubActorInfo* info = keeper->mInfos[i];
 
-        if (info && info->mSubActor) {
+        if (info != nullptr && info->mSubActor != nullptr) {
             setDisableDepthShadow(info->mSubActor, isDisable, isUpdateDrawer);
         }
     }
@@ -504,11 +504,11 @@ void setFixedModelFlag(LiveActor* pActor) {
 void tryInitFixedModelGpuBuffer(LiveActor* pActor) {
     ModelKeeper* modelKeeper = pActor->mModelKeeper;
 
-    if (!modelKeeper || !pActor->mActorExecuteInfo || !modelKeeper->_18) {
+    if (modelKeeper == nullptr || pActor->mActorExecuteInfo == nullptr || !modelKeeper->_18) {
         return;
     }
 
-    if (pActor->getEffectKeeper() || pActor->getAudioKeeper() || pActor->mHitSensorKeeper) {
+    if (pActor->getEffectKeeper() != nullptr || pActor->getAudioKeeper() != nullptr || pActor->mHitSensorKeeper != nullptr) {
         onUpdateMovementEffectAudioCollision(pActor);
     }
 
@@ -548,7 +548,7 @@ void showInvincibleModel(LiveActor* pActor) {
 
         if (isEqualString(info->mSubActor->getName(), "無敵モデル")) {
             info->mSubActor->appear();
-        } else if (info->mSubActor->mSubActorKeeper) {
+        } else if (info->mSubActor->mSubActorKeeper != nullptr) {
             showInvincibleModel(info->mSubActor);
         }
     }
@@ -566,7 +566,7 @@ void hideInvincibleModel(LiveActor* pActor) {
 
         if (isEqualString(info->mSubActor->getName(), "無敵モデル")) {
             info->mSubActor->kill();
-        } else if (info->mSubActor->mSubActorKeeper) {
+        } else if (info->mSubActor->mSubActorKeeper != nullptr) {
             hideInvincibleModel(info->mSubActor);
         }
     }
@@ -654,7 +654,7 @@ void setEnableDepthWrite(LiveActor* pActor, bool isEnable) {}
  * @param index The material index.
  */
 void hideMaterial(LiveActor* pActor, s32 index) {
-    if (!pActor->mModelKeeper) {
+    if (pActor->mModelKeeper == nullptr) {
         return;
     }
 
@@ -673,7 +673,7 @@ void hideMaterial(LiveActor* pActor, s32 index) {
  * @param index The material index.
  */
 void showMaterial(LiveActor* pActor, s32 index) {
-    if (!pActor->mModelKeeper) {
+    if (pActor->mModelKeeper == nullptr) {
         return;
     }
 
@@ -691,7 +691,7 @@ void showMaterial(LiveActor* pActor, s32 index) {
  * @param pActor The actor.
  */
 void hideMaterialAll(LiveActor* pActor) {
-    if (!pActor->mModelKeeper) {
+    if (pActor->mModelKeeper == nullptr) {
         return;
     }
 
@@ -707,7 +707,7 @@ void hideMaterialAll(LiveActor* pActor) {
  * @param pActor The actor.
  */
 void showMaterialAll(LiveActor* pActor) {
-    if (!pActor->mModelKeeper) {
+    if (pActor->mModelKeeper == nullptr) {
         return;
     }
 
@@ -724,7 +724,7 @@ void showMaterialAll(LiveActor* pActor) {
  * @param isDisable Whether to disable the level of detail.
  */
 void setLodDisabled(LiveActor* pActor, bool isDisable) {
-    if (pActor->mModelKeeper) {
+    if (pActor->mModelKeeper != nullptr) {
         pActor->mModelKeeper->mIsLodDisabled = isDisable;
     }
 }
@@ -1041,28 +1041,28 @@ bool isJudgedToClipFrustumWithoutFar(const LiveActor* pActor, f32 radius, f32 ne
  * @param isSkipCalcAnim Whether to skip recalculating the animation.
  */
 void resetPosition(LiveActor* pActor, bool isSkipCalcAnim) {
-    if (pActor->mActorPoseKeeper && !isSkipCalcAnim) {
+    if (pActor->mActorPoseKeeper != nullptr && !isSkipCalcAnim) {
         alLiveActorFunction::calcAnimDirect(pActor);
     }
 
-    if (pActor->mHitSensorKeeper) {
+    if (pActor->mHitSensorKeeper != nullptr) {
         alSensorFunction::clearHitSensors(pActor);
         alSensorFunction::updateHitSensorsAll(pActor);
     }
 
-    if (pActor->mScreenPointKeeper) {
+    if (pActor->mScreenPointKeeper != nullptr) {
         alScreenPointFunction::updateScreenPointAll(pActor);
     }
 
-    if (pActor->mCollider) {
+    if (pActor->mCollider != nullptr) {
         pActor->mCollider->onInvalidate();
     }
 
-    if (pActor->mCollisionParts) {
+    if (pActor->mCollisionParts != nullptr) {
         resetAllCollisionMtx(pActor);
     }
 
-    if (pActor->getAudioKeeper() && pActor->getAudioKeeper()->getSeKeeper()) {
+    if (pActor->getAudioKeeper() != nullptr && pActor->getAudioKeeper()->getSeKeeper() != nullptr) {
         pActor->getAudioKeeper()->getSeKeeper()->resetVelocity();
     }
 }

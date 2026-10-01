@@ -52,7 +52,7 @@ bool AreaObjMtxConnecter::trySyncParentMtx(const sead::Matrix34f* pParentMtx,
  * Updates the area matrix from the parent matrix.
  */
 void AreaObjMtxConnecter::update() {
-    if (_38) {
+    if (_38 != nullptr) {
         _38->multMtx(&mAreaObj->_28, _8);
     }
 }

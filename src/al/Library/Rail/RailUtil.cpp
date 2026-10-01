@@ -332,7 +332,7 @@ s32 getRailPointNum(const RailKeeper* pRailKeeper) {
 }
 
 const sead::Vector3f& getRailPos(const RailKeeper* pRailKeeper) {
-    if (pRailKeeper && pRailKeeper->getRailRider()) {
+    if (pRailKeeper != nullptr && pRailKeeper->getRailRider() != nullptr) {
         return pRailKeeper->getRailRider()->getPosition();
     }
 
@@ -391,7 +391,7 @@ f32 getRailPartRate(const LiveActor* pActor, s32 index, f32 coord) {
 }
 
 bool isExistRail(const LiveActor* pActor) {
-    return pActor->mRailKeeper && pActor->mRailKeeper->isValid();
+    return (pActor->mRailKeeper != nullptr) && pActor->mRailKeeper->isValid();
 }
 
 bool isRailReachedStart(const LiveActor* pActor) {

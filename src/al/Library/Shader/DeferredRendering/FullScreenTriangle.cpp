@@ -71,22 +71,22 @@ FullScreenTriangle::FullScreenTriangle() {
  * Destroys the vertex buffers.
  */
 FullScreenTriangle::~FullScreenTriangle() {
-    if (mVertexAttribute) {
+    if (mVertexAttribute != nullptr) {
         delete mVertexAttribute;
         mVertexAttribute = nullptr;
     }
 
-    if (mVertexBuffer) {
+    if (mVertexBuffer != nullptr) {
         delete mVertexBuffer;
         mVertexBuffer = nullptr;
     }
 
-    if (mVertexAttributeReverse) {
+    if (mVertexAttributeReverse != nullptr) {
         delete mVertexAttributeReverse;
         mVertexAttributeReverse = nullptr;
     }
 
-    if (mVertexBufferReverse) {
+    if (mVertexBufferReverse != nullptr) {
         delete mVertexBufferReverse;
         mVertexBufferReverse = nullptr;
     }

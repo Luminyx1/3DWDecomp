@@ -30,15 +30,15 @@ CameraTicketId::CameraTicketId(const PlacementId* pPlacementId, const char* pSuf
  * @return true if placement ids and suffixes are equal
  */
 bool CameraTicketId::isEqual(const CameraTicketId& rOther) const {
-    if (!mPlacementId && rOther.mPlacementId) {
+    if (mPlacementId == nullptr && rOther.mPlacementId != nullptr) {
         return false;
     }
 
-    if (mPlacementId && !rOther.mPlacementId) {
+    if (mPlacementId != nullptr && rOther.mPlacementId == nullptr) {
         return false;
     }
 
-    if (!mPlacementId && !rOther.mPlacementId) {
+    if (mPlacementId == nullptr && rOther.mPlacementId == nullptr) {
         return isEqualString(mSuffix, rOther.mSuffix);
     }
 
@@ -46,9 +46,9 @@ bool CameraTicketId::isEqual(const CameraTicketId& rOther) const {
         return false;
     }
 
-    bool isNoneSuffix = !mSuffix && !rOther.mSuffix;
+    bool isNoneSuffix = mSuffix == nullptr && (rOther.mSuffix == nullptr);
 
-    if (mSuffix && rOther.mSuffix) {
+    if (mSuffix != nullptr && rOther.mSuffix != nullptr) {
         return isEqualString(mSuffix, rOther.mSuffix);
     }
 
@@ -97,7 +97,7 @@ bool CameraTicketId::isEqual(const ByamlIter& rIter, const PlacementId* pPlaceme
  * @return object id, or null without a placement id
  */
 const char* CameraTicketId::tryGetObjId() const {
-    if (!mPlacementId) {
+    if (mPlacementId == nullptr) {
         return nullptr;
     }
 

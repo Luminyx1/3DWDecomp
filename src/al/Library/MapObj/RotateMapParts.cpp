@@ -48,7 +48,7 @@ void RotateMapParts::init(const ActorInitInfo& rInfo) {
     initMapPartsActor(this, rInfo, nullptr, calcChildStepCount(rInfo));
     registerAreaHostMtx(this, rInfo);
 
-    if (mHitSensorKeeper) {
+    if (mHitSensorKeeper != nullptr) {
         mIsSupportFreezeSync = registSupportFreezeSyncGroup(this, rInfo);
     }
 

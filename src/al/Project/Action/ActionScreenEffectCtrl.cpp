@@ -92,7 +92,7 @@ void ActionScreenEffectCtrl::update(f32 frame, f32 frameRate) {
         const char* jointName = info->mRadialBlur.mJointName;
         sead::Vector3f pos;
 
-        if (jointName && jointName[0] != '\0') {
+        if (jointName != nullptr && jointName[0] != '\0') {
             pos.setMul(*getJointMtxPtr(mParentActor, jointName), info->mRadialBlur.mPosOffset);
         } else {
             pos.setAdd(getTrans(mParentActor), info->mRadialBlur.mPosOffset);

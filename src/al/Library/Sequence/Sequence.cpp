@@ -20,7 +20,7 @@ Sequence::Sequence(const char* pName) : NerveExecutor(pName), mName(pName) {}
  * Finalizes the audio director if one was created.
  */
 Sequence::~Sequence() {
-    if (mAudioDirector) {
+    if (mAudioDirector != nullptr) {
         mAudioDirector->finalize();
     }
 }
@@ -35,12 +35,12 @@ void Sequence::init(const SequenceInitInfo& rInfo) {}
  * Switches to the next scene if requested and updates the scene, nerve and audio.
  */
 void Sequence::update() {
-    if (mNextScene && mIsChangeScene) {
+    if (mNextScene != nullptr && mIsChangeScene) {
         mCurrentScene = mNextScene;
         mNextScene = nullptr;
     }
 
-    if (mCurrentScene && mCurrentScene->isAlive()) {
+    if (mCurrentScene != nullptr && mCurrentScene->isAlive()) {
         mCurrentScene->movement();
     }
 
@@ -48,11 +48,11 @@ void Sequence::update() {
         updateNerve();
     }
 
-    if (mAudioDirector) {
+    if (mAudioDirector != nullptr) {
         mAudioDirector->update();
     }
 
-    if (mAudioKeeper) {
+    if (mAudioKeeper != nullptr) {
         mAudioKeeper->update();
     }
 }
@@ -111,7 +111,7 @@ AudioSystemInfo* Sequence::getAudioSystemInfo() const {
  * Draws the main screen of the current scene.
  */
 void Sequence::drawMain() const {
-    if (mCurrentScene && mCurrentScene->isAlive()) {
+    if (mCurrentScene != nullptr && mCurrentScene->isAlive()) {
         mCurrentScene->drawMain();
     }
 }
@@ -121,7 +121,7 @@ void Sequence::drawMain() const {
  * @param isForceDraw whether dead scenes are drawn too
  */
 void Sequence::doDrawScene(bool isForceDraw) const {
-    if (mCurrentScene && (mCurrentScene->isAlive() || isForceDraw)) {
+    if (mCurrentScene != nullptr && (mCurrentScene->isAlive() || isForceDraw)) {
         mCurrentScene->drawMain();
     }
 }
@@ -130,7 +130,7 @@ void Sequence::doDrawScene(bool isForceDraw) const {
  * Draws the sub screen of the current scene.
  */
 void Sequence::drawSub() const {
-    if (mCurrentScene && mCurrentScene->isAlive()) {
+    if (mCurrentScene != nullptr && mCurrentScene->isAlive()) {
         mCurrentScene->drawSub();
     }
 }

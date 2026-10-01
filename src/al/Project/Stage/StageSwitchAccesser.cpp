@@ -99,7 +99,7 @@ bool StageSwitchAccesser::isEnableWrite() const {
  * @return true if both use the same switch
  */
 bool StageSwitchAccesser::isEqualSwitch(const StageSwitchAccesser* pOther) const {
-    if (!pOther) {
+    if (pOther == nullptr) {
         return false;
     }
 

@@ -67,7 +67,7 @@ f32 ShadowMaskBase::getShadowIntensity() const {
     if (mIsApplyShadowIntensityUser) {
         intensity = mShadowIntensityUser;
     } else {
-        if (!mHost) {
+        if (mHost == nullptr) {
             return 0.0f;
         }
 
@@ -77,7 +77,7 @@ f32 ShadowMaskBase::getShadowIntensity() const {
 
     f32 rate = intensity * (1.0f / 255.0f);
 
-    if (mHost && !mIsIgnoreHostAlpha) {
+    if (mHost != nullptr && !mIsIgnoreHostAlpha) {
         rate *= mHost->mGlobalAlphaLastFrame;
     }
 

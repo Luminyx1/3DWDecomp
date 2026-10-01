@@ -69,7 +69,7 @@ void SlideMapParts::init(const ActorInitInfo& rInfo) {
     mSurfaceEffectMtx.makeQT(getQuat(this), surfaceTrans);
     mEffectMtxSetter = tryCreateEffectMtxSetter(this, "EffectMtxSetter");
 
-    if (mEffectMtxSetter) {
+    if (mEffectMtxSetter != nullptr) {
         mEffectMtxSetter->setMtxPtr(&mSurfaceEffectMtx, "SurfaceEffectMtx");
     }
 

@@ -392,7 +392,7 @@ bool tryGetZoneMatrixTR(sead::Matrix34f* pMtx, const PlacementInfo& rInfo) {
                   sead::Mathf::deg2rad(rotate.z)},
                  trans);
 
-    if (rInfo._20) {
+    if (rInfo._20 != nullptr) {
         sead::Matrix34f parentMtx;
 
         if (tryGetZoneMatrixTR(&parentMtx, *rInfo._20)) {
@@ -1184,7 +1184,7 @@ s32 tryGetLayerID(const ByamlIter& rIter) {
 s32 tryGetLayerIDbyParents(const PlacementInfo& rInfo) {
     const PlacementInfo* info = &rInfo;
 
-    while (info->_20) {
+    while (info->_20 != nullptr) {
         info = info->_20;
     }
 

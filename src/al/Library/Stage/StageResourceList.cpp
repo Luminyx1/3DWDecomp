@@ -50,7 +50,7 @@ static bool tryGetZoneListPlacementInfo(PlacementInfo* pOut, const char* pStageN
     makeStageDataArchivePath(&archivePath, pStageName, scenarioNo, "Map", isOneResource);
     Resource* resource = findOrCreateResource(archivePath, nullptr);
 
-    if (!resource) {
+    if (resource == nullptr) {
         return false;
     }
 
@@ -140,7 +140,7 @@ StageResourceList::StageResourceList(const char* pStageName, s32 scenarioNo,
         tryGetPlacementInfoByIndex(&zoneInfo, zoneListInfo, i);
         StageInfo* stageInfo = initZoneInfo(zoneInfo, scenarioNo, pResourceType, nullptr);
 
-        if (stageInfo) {
+        if (stageInfo != nullptr) {
             mStageInfos.pushBack(stageInfo);
         }
     }
@@ -220,7 +220,7 @@ void StageResourceList::initZoneInfoRecursive(const char* pStageName, const char
 
         StageInfo* stageInfo = initZoneInfo(zoneInfo, scenarioNo, pResourceType, pParentInfo);
 
-        if (!stageInfo) {
+        if (stageInfo == nullptr) {
             continue;
         }
 

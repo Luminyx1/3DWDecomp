@@ -71,7 +71,7 @@ bool MessageSystem::tryInitMessageHolder(MessageTreeMap* pTreeMap, const char* p
     makeLocalizedArchivePath(&archivePath, StringTmp<128>("MessageData/%s", pArchiveName));
     Resource* resource = findOrCreateResource(archivePath, nullptr);
 
-    if (!resource) {
+    if (resource == nullptr) {
         return false;
     }
 
@@ -81,7 +81,7 @@ bool MessageSystem::tryInitMessageHolder(MessageTreeMap* pTreeMap, const char* p
     for (s32 i = 0; i < entryNum; i++) {
         resource->getEntryName(&entryName, "/", i);
 
-        if (!searchSubString(entryName.cstr(), ".msbt")) {
+        if (searchSubString(entryName.cstr(), ".msbt") == nullptr) {
             continue;
         }
 
@@ -143,7 +143,7 @@ MessageHolder* MessageSystem::getSystemMessageHolder(const char* pName) const {
 MessageHolder* MessageSystem::getMessageHolderCore(const char* pName, s32 index) const {
     MessageTreeMap::Node* node = mTreeMaps[index]->find(pName);
 
-    if (!node) {
+    if (node == nullptr) {
         return nullptr;
     }
 
@@ -172,7 +172,7 @@ MessageHolder* MessageSystem::getMessageHolderCore(const char* pName, s32 index,
                                                    const char* pLanguage) const {
     MessageTreeMap::Node* node = mTreeMaps[index]->find(pName);
 
-    if (!node) {
+    if (node == nullptr) {
         return nullptr;
     }
 

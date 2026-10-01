@@ -114,7 +114,7 @@ void SnapShotCameraCtrl::update(const sead::LookAtCamera& rCamera,
             lerpValue(0.3f, mFovyDegreeTarget, sead::Mathf::clamp(nextFovy, minFovy, maxFovy));
         mFovyDegree = lerpValue(0.3f, mFovyDegree, mFovyDegreeTarget);
 
-        if (getAudioKeeper() && sead::Mathf::abs(mFovyDegree - prevFovy) > 0.2f) {
+        if (getAudioKeeper() != nullptr && sead::Mathf::abs(mFovyDegree - prevFovy) > 0.2f) {
             tryHoldSeWithParam(this, "PgZoom",
                                1.0f - (mFovyDegree - minFovy) / (maxFovy - minFovy), nullptr);
         }
@@ -134,7 +134,7 @@ void SnapShotCameraCtrl::update(const sead::LookAtCamera& rCamera,
         mRollTarget = lerpValue(0.2f, mRollTarget, sead::Mathf::clamp(nextRoll, -90.0f, 90.0f));
         mRollDegree = lerpValue(0.15f, mRollDegree, mRollTarget);
 
-        if (getAudioKeeper() && sead::Mathf::abs(mRollDegree - prevRoll) > 0.2f) {
+        if (getAudioKeeper() != nullptr && sead::Mathf::abs(mRollDegree - prevRoll) > 0.2f) {
             tryHoldSeWithParam(this, "PgRoll", sead::Mathf::abs(mRollDegree), nullptr);
         }
     }
@@ -228,7 +228,7 @@ void SnapShotCameraCtrl::makeLookAtCameraPost(sead::LookAtCamera* pCamera) {
     sead::Vector3f offsetPos = pos + mLookAtOffsetTarget;
     sead::Vector3f inkDir = {0.0f, mIsLongRange ? -3000.0f : -400.0f, 0.0f};
 
-    if (mIsInInk || (mCollision && isInInk(mCollision, offsetPos, inkDir, &inkDist))) {
+    if (mIsInInk || (mCollision != nullptr && isInInk(mCollision, offsetPos, inkDir, &inkDist))) {
         if (isNearZero(mLookAtOffset - mSafeLookAtOffset, 0.001f)) {
             if (mLookAtOffsetTarget.y < 100.0f) {
                 mLookAtOffsetTarget.y += 10.0f;
@@ -327,7 +327,7 @@ void SnapShotCameraCtrl::exeReset() {
  * @return Audio keeper, or nullptr if there is none.
  */
 AudioKeeper* SnapShotCameraCtrl::getAudioKeeper() const {
-    if (mSceneInfo && mSceneInfo->audioKeeper) {
+    if (mSceneInfo != nullptr && mSceneInfo->audioKeeper != nullptr) {
         return mSceneInfo->audioKeeper->getAudioKeeper();
     }
 

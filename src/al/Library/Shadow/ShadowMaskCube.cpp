@@ -25,7 +25,7 @@ ShadowMaskCube::ShadowMaskCube(const char* pName)
  * @param pTextureName Base name of the texture.
  */
 void ShadowMaskCube::tryInitTexture(const char* pTextureName) {
-    if (!pTextureName) {
+    if (pTextureName == nullptr) {
         mTextureBaseName = "None";
         return;
     }
@@ -48,7 +48,7 @@ void ShadowMaskCube::tryInitTexture(const char* pTextureName) {
  * Destroys the cube shadow mask and its texture sampler.
  */
 ShadowMaskCube::~ShadowMaskCube() {
-    if (mTextureSampler) {
+    if (mTextureSampler != nullptr) {
         delete mTextureSampler;
         mTextureSampler = nullptr;
     }

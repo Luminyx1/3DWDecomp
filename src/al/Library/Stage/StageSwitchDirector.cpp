@@ -56,7 +56,7 @@ s32 StageSwitchDirector::useSwitch(const StageSwitchAccesser* pAccesser) {
  * @return switch number, or -1 if not found
  */
 s32 StageSwitchDirector::findSwitchNoFromObjId(const PlacementId* pId) {
-    if (!pId) {
+    if (pId == nullptr) {
         return 0;
     }
 
@@ -82,7 +82,7 @@ void StageSwitchDirector::onSwitch(const StageSwitchAccesser* pAccesser) {
 
     mSwitchInfos[switchNo].mIsOn = true;
 
-    if (mListenerHolder) {
+    if (mListenerHolder != nullptr) {
         mListenerHolder->requestChange(switchNo, true);
     }
 }
@@ -98,7 +98,7 @@ void StageSwitchDirector::offSwitch(const StageSwitchAccesser* pAccesser) {
         return;
     }
 
-    if (mListenerHolder) {
+    if (mListenerHolder != nullptr) {
         mListenerHolder->requestChange(switchNo, false);
     }
 
@@ -131,7 +131,7 @@ void StageSwitchDirector::instantUpdate(StageSwitchAccesser* pAccesser) {
         return;
     }
 
-    if (mWatcherHolder) {
+    if (mWatcherHolder != nullptr) {
         return;
     }
 
@@ -147,7 +147,7 @@ void StageSwitchDirector::addListener(StageSwitchListener* pListener,
                                       StageSwitchAccesser* pAccesser) {
     StageSwitchWatcher* watcher = new StageSwitchWatcher(pListener, pAccesser);
 
-    if (mWatcherHolder) {
+    if (mWatcherHolder != nullptr) {
         mWatcherHolder->add(watcher);
         return;
     }
@@ -159,7 +159,7 @@ void StageSwitchDirector::addListener(StageSwitchListener* pListener,
  * Updates the switch watchers or listeners.
  */
 void StageSwitchDirector::execute() {
-    if (mWatcherHolder) {
+    if (mWatcherHolder != nullptr) {
         mWatcherHolder->movement();
         return;
     }

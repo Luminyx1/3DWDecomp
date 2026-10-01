@@ -153,7 +153,7 @@ bool isPrePriorityPlayer(const al::CameraStartInfo& rInfo) {
 }
 
 bool isEqualPreCameraName(const al::CameraStartInfo& rInfo, const char* pName) {
-    if (!rInfo.preCameraName)
+    if (rInfo.preCameraName == nullptr)
         return false;
     return al::isEqualString(pName, rInfo.preCameraName);
 }
@@ -335,7 +335,7 @@ void calcTargetTransWithOffset(sead::Vector3f* pTrans, const al::CameraPoser_RS*
     calcTargetTrans(pTrans, pPoser);
     al::CameraOffsetCtrlPreset* cameraOffsetCtrlPreset = pPoser->getOffsetCtrlPreset();
 
-    if (cameraOffsetCtrlPreset)
+    if (cameraOffsetCtrlPreset != nullptr)
         pTrans->add(cameraOffsetCtrlPreset->getOffset());
 }
 
@@ -490,7 +490,7 @@ f32 getSlopeCollisionDownSpeed(const al::CameraPoser_RS* pPoser) {
 }
 
 bool isExistSubTarget(const al::CameraPoser_RS* pPoser) {
-    return pPoser->getTargetHolder()->getTopSubTargetInfo().target;
+    return pPoser->getTargetHolder()->getTopSubTargetInfo().target != nullptr;
 }
 
 bool checkValidTurnToSubTarget(const al::CameraPoser_RS* pPoser) {
@@ -802,7 +802,7 @@ bool isTargetInvalidMoveByInput(const al::CameraPoser_RS* pPoser) {
 }
 
 bool isTargetEnableEndAfterInterpole(const al::CameraPoser_RS* pPoser) {
-    return tryGetTarget(pPoser) && getTarget(pPoser)->isEnableEndAfterInterpole();
+    return (tryGetTarget(pPoser) != nullptr) && getTarget(pPoser)->isEnableEndAfterInterpole();
 }
 
 bool isTargetWallCatch(const al::CameraPoser_RS* pPoser) {
@@ -1184,7 +1184,7 @@ void disableInput(const al::CameraPoser_RS* pPoser, bool isDisable) {
 void calcCameraRolledRotateStick(sead::Vector2f* pStick, const al::CameraPoser_RS* pPoser) {
     calcCameraRotateStick(pStick, pPoser);
 
-    if (!isSnapShotMode(pPoser) || !pPoser->getSnapShotCtrl()) {
+    if (!isSnapShotMode(pPoser) || pPoser->getSnapShotCtrl() == nullptr) {
         return;
     }
 

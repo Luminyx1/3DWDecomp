@@ -22,7 +22,7 @@ bool tryGetArg(f32* pValue, const ActorInitInfo& rInfo, const char* pKey);
 bool isExistShadow(LiveActor* pActor) {
     ShadowKeeper* keeper = pActor->mShadowKeeper;
 
-    if (!keeper) {
+    if (keeper == nullptr) {
         return false;
     }
 
@@ -38,7 +38,7 @@ bool isExistShadow(LiveActor* pActor) {
 bool isExistShadow(LiveActor* pActor, const char* pName) {
     ShadowKeeper* keeper = pActor->mShadowKeeper;
 
-    if (!keeper) {
+    if (keeper == nullptr) {
         return false;
     }
 
@@ -141,7 +141,7 @@ void showShadow(LiveActor* pActor, ShadowMaskBase* pMask) {
 void showShadow(LiveActor* pActor, const char* pName) {
     ShadowMaskBase* mask = pActor->mShadowKeeper->findShadowMask(pName);
 
-    if (mask) {
+    if (mask != nullptr) {
         showShadow(pActor, mask);
     }
 }
@@ -155,7 +155,7 @@ void showShadow(LiveActor* pActor, ShadowMaskDrawCategory category) {
     for (s32 i = 0; i < pActor->mShadowKeeper->getShadowMaskNum(); i++) {
         ShadowMaskBase* mask = pActor->mShadowKeeper->mMaskArray.at(i);
 
-        if (mask && mask->getDrawCategory() == category) {
+        if (mask != nullptr && mask->getDrawCategory() == category) {
             showShadow(pActor, mask);
         }
     }
@@ -186,7 +186,7 @@ void hideShadow(LiveActor* pActor, ShadowMaskBase* pMask) {
 void hideShadow(LiveActor* pActor, const char* pName) {
     ShadowMaskBase* mask = pActor->mShadowKeeper->findShadowMask(pName);
 
-    if (mask) {
+    if (mask != nullptr) {
         hideShadow(pActor, mask);
     }
 }
@@ -200,7 +200,7 @@ void hideShadow(LiveActor* pActor, ShadowMaskDrawCategory category) {
     for (s32 i = 0; i < pActor->mShadowKeeper->getShadowMaskNum(); i++) {
         ShadowMaskBase* mask = pActor->mShadowKeeper->mMaskArray.at(i);
 
-        if (mask && mask->getDrawCategory() == category) {
+        if (mask != nullptr && mask->getDrawCategory() == category) {
             hideShadow(pActor, mask);
         }
     }
@@ -258,7 +258,7 @@ void invalidateShadow(LiveActor* pActor, ShadowMaskBase* pMask) {
 void validateShadow(LiveActor* pActor, const char* pName) {
     ShadowMaskBase* mask = pActor->mShadowKeeper->findShadowMask(pName);
 
-    if (mask) {
+    if (mask != nullptr) {
         validateShadow(pActor, mask);
     }
 }
@@ -271,7 +271,7 @@ void validateShadow(LiveActor* pActor, const char* pName) {
 void invalidateShadow(LiveActor* pActor, const char* pName) {
     ShadowMaskBase* mask = pActor->mShadowKeeper->findShadowMask(pName);
 
-    if (mask) {
+    if (mask != nullptr) {
         invalidateShadow(pActor, mask);
     }
 }
@@ -285,7 +285,7 @@ void invalidateShadow(LiveActor* pActor, ShadowMaskDrawCategory category) {
     for (s32 i = 0; i < pActor->mShadowKeeper->getShadowMaskNum(); i++) {
         ShadowMaskBase* mask = pActor->mShadowKeeper->mMaskArray.at(i);
 
-        if (mask && mask->getDrawCategory() == category) {
+        if (mask != nullptr && mask->getDrawCategory() == category) {
             hideShadow(pActor, mask);
             mask->mIsValid = false;
         }
@@ -310,14 +310,14 @@ void invalidateShadowIntensityAll(LiveActor* pActor) {
 void setShadowFixed(LiveActor* pActor, bool isFixed) {
     ShadowKeeper* keeper = pActor->mShadowKeeper;
 
-    if (!keeper) {
+    if (keeper == nullptr) {
         return;
     }
 
     for (s32 i = 0; i < keeper->getShadowMaskNum(); i++) {
         ShadowMaskBase* mask = keeper->mMaskArray.at(i);
 
-        if (mask) {
+        if (mask != nullptr) {
             mask->mIsShadowFixed = isFixed;
         }
     }
@@ -332,7 +332,7 @@ void setShadowDropDir(LiveActor* pActor, const sead::Vector3f& rDir) {
     for (s32 i = 0; i < pActor->mShadowKeeper->getShadowMaskNum(); i++) {
         ShadowMaskBase* mask = pActor->mShadowKeeper->mMaskArray.at(i);
 
-        if (mask) {
+        if (mask != nullptr) {
             mask->mDropDir = rDir;
         }
     }
@@ -347,7 +347,7 @@ void setShadowDropDir(LiveActor* pActor, const sead::Vector3f& rDir) {
 void setShadowDropDir(LiveActor* pActor, const sead::Vector3f& rDir, const char* pName) {
     ShadowMaskBase* mask = pActor->mShadowKeeper->findShadowMask(pName);
 
-    if (mask) {
+    if (mask != nullptr) {
         mask->mDropDir = rDir;
     }
 }
@@ -383,7 +383,7 @@ void setShadowMaskSize(LiveActor* pActor, const char* pName, const sead::Vector3
 void setShadowMaskSize(LiveActor* pActor, const char* pName, f32 x, f32 y, f32 z) {
     ShadowMaskBase* mask = pActor->mShadowKeeper->findShadowMask(pName);
 
-    if (!mask) {
+    if (mask == nullptr) {
         return;
     }
 
@@ -436,7 +436,7 @@ void setShadowDropLength(LiveActor* pActor, f32 length) {
     for (s32 i = 0; i < pActor->mShadowKeeper->getShadowMaskNum(); i++) {
         ShadowMaskBase* mask = pActor->mShadowKeeper->mMaskArray.at(i);
 
-        if (mask) {
+        if (mask != nullptr) {
             mask->mDropLength = length;
         }
     }
@@ -451,7 +451,7 @@ void setShadowDropLength(LiveActor* pActor, f32 length) {
 void setShadowDropLength(LiveActor* pActor, f32 length, const char* pName) {
     ShadowMaskBase* mask = pActor->mShadowKeeper->findShadowMask(pName);
 
-    if (mask) {
+    if (mask != nullptr) {
         mask->mDropLength = length;
     }
 }
@@ -467,7 +467,7 @@ void setShadowDropLengthScaleWithDrawCategory(LiveActor* pActor, f32 scale,
     for (s32 i = 0; i < pActor->mShadowKeeper->getShadowMaskNum(); i++) {
         ShadowMaskBase* mask = pActor->mShadowKeeper->mMaskArray.at(i);
 
-        if (mask && mask->getDrawCategory() == category) {
+        if (mask != nullptr && mask->getDrawCategory() == category) {
             mask->mDropLength *= scale;
         }
     }
@@ -484,7 +484,7 @@ void setShadowDropLengthWithDrawCategory(LiveActor* pActor, f32 length,
     for (s32 i = 0; i < pActor->mShadowKeeper->getShadowMaskNum(); i++) {
         ShadowMaskBase* mask = pActor->mShadowKeeper->mMaskArray.at(i);
 
-        if (mask && mask->getDrawCategory() == category) {
+        if (mask != nullptr && mask->getDrawCategory() == category) {
             mask->mDropLength = length;
         }
     }
@@ -510,7 +510,7 @@ void setShadowDropLengthEvenWithTarget(ShadowMaskBase* pMask, const char* pTarge
  */
 void setShadowDropLengthEvenWithTarget(ShadowMaskBase* pMask, const ShadowMaskBase* pTarget,
                                        const sead::Vector3f& rNormal) {
-    if (!pTarget || pTarget == pMask) {
+    if (pTarget == nullptr || pTarget == pMask) {
         return;
     }
 
@@ -560,7 +560,7 @@ void setShadowDropLengthEvenWithDrawCategory(LiveActor* pActor, ShadowMaskDrawCa
     for (s32 i = 0; i < maskNum; i++) {
         ShadowMaskBase* mask = keeper->mMaskArray.at(i);
 
-        if (mask && mask->getDrawCategory() == category) {
+        if (mask != nullptr && mask->getDrawCategory() == category) {
             setShadowDropLengthEvenWithTarget(mask, target, sead::Vector3f::ey);
         }
     }
@@ -575,7 +575,7 @@ void setShadowDropLengthEvenPlaneNormal(const LiveActor* pActor, const sead::Vec
     for (s32 i = 0; i < pActor->mShadowKeeper->getShadowMaskNum(); i++) {
         ShadowMaskBase* mask = pActor->mShadowKeeper->mMaskArray.at(i);
 
-        if (mask) {
+        if (mask != nullptr) {
             mask->mUp = rNormal;
         }
     }
@@ -610,7 +610,7 @@ f32 getShadowDropLengthMax(const LiveActor* pActor) {
 void setShadowIntensityUser(LiveActor* pActor, u8 intensity, const char* pName) {
     ShadowMaskBase* mask = pActor->mShadowKeeper->findShadowMask(pName);
 
-    if (mask) {
+    if (mask != nullptr) {
         mask->mIsApplyShadowIntensityUser = true;
         mask->mShadowIntensityUser = intensity;
     }
@@ -713,7 +713,7 @@ bool trySetShadowLength(LiveActor* pActor, const ActorInitInfo& rInfo, const cha
     tryGetArg(&length, rInfo, "ShadowLength");
 
     if (length > 0.0f) {
-        if (pName) {
+        if (pName != nullptr) {
             setShadowDropLength(pActor, length, pName);
         } else {
             setShadowDropLength(pActor, length);

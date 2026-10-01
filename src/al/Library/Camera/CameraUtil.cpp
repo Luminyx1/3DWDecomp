@@ -1327,7 +1327,7 @@ bool tryCalcCameraPoseWithoutInterpole(sead::LookAtCamera* pCamera, const IUseCa
 void invalidateCameraPoserVerticalAbsorber(CameraTicket* pTicket) {
     CameraVerticalAbsorber* absorber = pTicket->getPoser()->getCameraVerticalAbsorber();
 
-    if (absorber) {
+    if (absorber != nullptr) {
         absorber->invalidate();
     }
 }
@@ -1484,7 +1484,7 @@ al::CameraTicket* initAreaCamera(const al::IUseCamera_RS* pUser, const al::Place
 
     al::CameraTicket* ticket;
 
-    if (poser) {
+    if (poser != nullptr) {
         sead::Matrix34f zoneMtx = sead::Matrix34f::ident;
         al::tryGetZoneMatrixTR(&zoneMtx, rInfo);
         al::CameraDirector_RS* director = pUser->getCameraDirector_RS();

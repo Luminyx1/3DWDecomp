@@ -165,7 +165,7 @@ void YamlFormatter::writeBlockString(const char* pPrefix, const char* pValue) {
     writeString("%s|\n", pPrefix);
     mIndent++;
 
-    while (pValue) {
+    while (pValue != nullptr) {
         if (!matcher.tryMatch(pValue)) {
             writeIndent();
             writeString("%s\n", pValue);

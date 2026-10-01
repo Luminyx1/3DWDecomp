@@ -22,7 +22,7 @@ ScreenCaptureExecutor::~ScreenCaptureExecutor() {
     for (s32 i = 0; i < mCaptureInfos.size(); i++) {
         CaptureInfo* info = mCaptureInfos.at(i);
 
-        if (info->screenCapture) {
+        if (info->screenCapture != nullptr) {
             delete info->screenCapture;
             info->screenCapture = nullptr;
         }

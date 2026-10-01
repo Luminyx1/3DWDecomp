@@ -46,7 +46,7 @@ void SkyboxDirector::clearRequest() {}
 void SkyboxDirector::execute() {
     GraphicsAreaDirector* areaDirector = mGraphicsSystemInfo->mGraphicsAreaDirector;
 
-    if (!areaDirector) {
+    if (areaDirector == nullptr) {
         return;
     }
 
@@ -54,7 +54,7 @@ void SkyboxDirector::execute() {
     areaDirector->getCurrentGraphicsAreaParam(&areaParam, static_cast<GraphicsAreaParamType>(1));
     const char* name = areaParam.mParamName;
 
-    if (!name || isEqualString(name, "")) {
+    if (name == nullptr || isEqualString(name, "")) {
         return;
     }
 
@@ -73,7 +73,7 @@ void SkyboxDirector::execute() {
  * @return The parameter, or nullptr.
  */
 NamedSkyboxParam* SkyboxDirector::findSkyboxParamByName(const char* pName) const {
-    if (!pName || isEqualString(pName, "")) {
+    if (pName == nullptr || isEqualString(pName, "")) {
         return nullptr;
     }
 
@@ -108,7 +108,7 @@ void SkyboxDirector::initStageResource(const Resource* pResource, const char* pS
     mParamFilePath->makeBinaryPath(&path);
     bool isLoaded = false;
 
-    if (pResource && pResource->isExistFile(path)) {
+    if (pResource != nullptr && pResource->isExistFile(path)) {
         const void* file = pResource->getOtherFile(path, nullptr);
         mParamIO.applyResParameterArchive(agl::utl::ResParameterArchive(file));
         isLoaded = true;

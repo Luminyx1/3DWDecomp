@@ -25,13 +25,13 @@ static bool checkArrow(sead::Vector3f* pHitPos, sead::Vector3f* pNormal, const A
  * @return depth below the surface, or -1 if the position isn't in water
  */
 f32 calcWaterSinkDepth(const IUseAreaObj* pAreaUser, const sead::Vector3f& rPos) {
-    if (findAreaObj(pAreaUser, "NoWaterArea", rPos)) {
+    if (findAreaObj(pAreaUser, "NoWaterArea", rPos) != nullptr) {
         return -1.0f;
     }
 
     AreaObj* areaObj = findAreaObj(pAreaUser, "WaterArea", rPos);
 
-    if (!areaObj) {
+    if (areaObj == nullptr) {
         return -1.0f;
     }
 
@@ -58,7 +58,7 @@ bool calcWaterDistanceCheck(const IUseAreaObj* pAreaUser, const sead::Vector3f& 
                             f32 distance, f32* pHeight) {
     AreaObj* areaObj = findAreaObj(pAreaUser, "WaterArea", rPos);
 
-    if (areaObj) {
+    if (areaObj != nullptr) {
         sead::Vector3f hitPos;
         sead::Vector3f normal;
         sead::Vector3f end = {rPos.x, rPos.y + distance, rPos.z};
@@ -79,7 +79,7 @@ bool calcWaterDistanceCheck(const IUseAreaObj* pAreaUser, const sead::Vector3f& 
     sead::Vector3f end = start + sead::Vector3f(0.0f, distance, 0.0f);
     AreaObj* startAreaObj = findAreaObj(pAreaUser, "WaterArea", start);
 
-    if (startAreaObj) {
+    if (startAreaObj != nullptr) {
         sead::Vector3f hitPos;
         sead::Vector3f normal;
 
@@ -116,7 +116,7 @@ f32 calcWaterSinkDepth(const LiveActor* pActor) {
 bool isInPlessieTunnel(const IUseAreaObj* pAreaUser, const sead::Vector3f& rPos) {
     AreaObjGroup* group = pAreaUser->getAreaObjDirector()->getAreaObjGroup("GraphicsArea");
 
-    if (!group) {
+    if (group == nullptr) {
         return false;
     }
 
@@ -141,7 +141,7 @@ bool isInPlessieTunnel(const IUseAreaObj* pAreaUser, const sead::Vector3f& rPos)
  * @return true if the argument exists
  */
 bool tryGetAreaObjArg(s32* pArg, const AreaObj* pAreaObj, const char* pKey) {
-    if (!pAreaObj->mPlacementInfo) {
+    if (pAreaObj->mPlacementInfo == nullptr) {
         return false;
     }
 
@@ -156,7 +156,7 @@ bool tryGetAreaObjArg(s32* pArg, const AreaObj* pAreaObj, const char* pKey) {
  * @return true if the argument exists
  */
 bool tryGetAreaObjArg(f32* pArg, const AreaObj* pAreaObj, const char* pKey) {
-    if (!pAreaObj->mPlacementInfo) {
+    if (pAreaObj->mPlacementInfo == nullptr) {
         return false;
     }
 
@@ -171,7 +171,7 @@ bool tryGetAreaObjArg(f32* pArg, const AreaObj* pAreaObj, const char* pKey) {
  * @return true if the argument exists
  */
 bool tryGetAreaObjArg(bool* pArg, const AreaObj* pAreaObj, const char* pKey) {
-    if (!pAreaObj->mPlacementInfo) {
+    if (pAreaObj->mPlacementInfo == nullptr) {
         return false;
     }
 
@@ -186,7 +186,7 @@ bool tryGetAreaObjArg(bool* pArg, const AreaObj* pAreaObj, const char* pKey) {
  * @return true if the argument exists
  */
 bool tryGetAreaObjStringArg(const char** pArg, const AreaObj* pAreaObj, const char* pKey) {
-    if (!pAreaObj->mPlacementInfo) {
+    if (pAreaObj->mPlacementInfo == nullptr) {
         return false;
     }
 
@@ -201,7 +201,7 @@ bool tryGetAreaObjStringArg(const char** pArg, const AreaObj* pAreaObj, const ch
 bool tryIsInAreaObjPlayer(AreaObjGroup* pGroup) {
     const sead::Vector3f& playerPos = alProjectInterface::getPlayerPos();
 
-    if (!pGroup) {
+    if (pGroup == nullptr) {
         return false;
     }
 
@@ -216,7 +216,7 @@ bool tryIsInAreaObjPlayer(AreaObjGroup* pGroup) {
 AreaObj* tryGetAreaObjPlayer(AreaObjGroup* pGroup) {
     const sead::Vector3f& playerPos = alProjectInterface::getPlayerPos();
 
-    if (!pGroup) {
+    if (pGroup == nullptr) {
         return nullptr;
     }
 

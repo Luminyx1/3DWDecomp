@@ -23,7 +23,7 @@ namespace al {
  */
 ActionAnimCtrl* ActionAnimCtrl::tryCreate(LiveActor* pActor, const char* pArchiveName,
                                           const char* pSuffix) {
-    if (!pActor->mModelKeeper) {
+    if (pActor->mModelKeeper == nullptr) {
         return nullptr;
     }
 
@@ -84,7 +84,7 @@ bool ActionAnimCtrl::start(const char* pActionName) {
     ActionAnimCtrlInfo* info = findAnimInfo(pActionName);
     mPlayingInfo = info;
 
-    if (!info) {
+    if (info == nullptr) {
         return false;
     }
 
@@ -215,7 +215,7 @@ f32 ActionAnimCtrl::getFrame() const {
 f32 ActionAnimCtrl::getActionFrameMax(const char* pActionName) const {
     ActionAnimCtrlInfo* info = findAnimInfo(pActionName);
 
-    if (!info) {
+    if (info == nullptr) {
         return alAnimFunction::getAllAnimFrameMax(mParentActor, pActionName, -1);
     }
 
@@ -306,7 +306,7 @@ bool ActionAnimCtrl::isExistAction(const char* pActionName) const {
 bool ActionAnimCtrl::isActionOneTime(const char* pActionName) const {
     ActionAnimCtrlInfo* info = findAnimInfo(pActionName);
 
-    if (!info) {
+    if (info == nullptr) {
         if (isSklAnimExist(mParentActor, pActionName)) {
             return isSklAnimOneTime(mParentActor, pActionName);
         }
@@ -393,7 +393,7 @@ bool ActionAnimCtrl::isActionOneTime(const char* pActionName) const {
  * @return Action name, or nullptr.
  */
 const char* ActionAnimCtrl::getPlayingActionName() const {
-    if (!mPlayingInfo) {
+    if (mPlayingInfo == nullptr) {
         return nullptr;
     }
 

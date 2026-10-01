@@ -65,14 +65,14 @@ s32 LayoutKeeper::getGroupNum() const {
  */
 void LayoutKeeper::calcAnim(bool isRecursive) {
     if (isRecursive) {
-        if (mScreen) {
+        if (mScreen != nullptr) {
             mScreen->updateAnimator_();
         }
 
         return;
     }
 
-    if (mScreen) {
+    if (mScreen != nullptr) {
         requestCaptureRecursive(getRootPane(mLayout));
     }
 

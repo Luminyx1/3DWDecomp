@@ -53,7 +53,7 @@ void SwitchOnAreaGroup::update(const sead::Vector3f& rPos) {
  * @param pChecker scenario completion checker
  */
 void SwitchOnAreaGroup::endInit(IScenarioCompleteChecker* pChecker) {
-    if (!pChecker) {
+    if (pChecker == nullptr) {
         return;
     }
 
@@ -82,7 +82,7 @@ SwitchOnAreaGroup* tryCreateSwitchOnAreaGroup(LiveActor* pActor, const ActorInit
     AreaObjGroup* group = createLinkAreaGroup(pActor, rInfo, "AreaSwitchOn",
                                               "子供スイッチOnエリアグループ",
                                               "子供スイッチOnエリア");
-    if (!group) {
+    if (group == nullptr) {
         return nullptr;
     }
 

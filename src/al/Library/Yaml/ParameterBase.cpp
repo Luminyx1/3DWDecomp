@@ -36,7 +36,7 @@ void ParameterBase::initializeListNode(const sead::SafeString& rName,
     mName = rName;
     mHash = calcHash(rName);
 
-    if (pObj) {
+    if (pObj != nullptr) {
         pObj->pushBackListNode(this);
     }
 }
@@ -55,7 +55,7 @@ u32 ParameterBase::calcHash(const sead::SafeString& rKey) {
  * @param pParam parameter to append
  */
 void ParameterObj::pushBackListNode(ParameterBase* pParam) {
-    if (mTailParam) {
+    if (mTailParam != nullptr) {
         mTailParam->setNext(pParam);
         mTailParam = pParam;
     } else {
@@ -146,7 +146,7 @@ void ParameterBase::tryGetParam(const ByamlIter& rIter) {
     case YamlParamType::StringRef: {
         const char* value = tryGetByamlKeyStringOrNULL(rIter, mName.cstr());
 
-        if (value) {
+        if (value != nullptr) {
             setPtrValue(value);
         }
 
@@ -157,7 +157,7 @@ void ParameterBase::tryGetParam(const ByamlIter& rIter) {
     case YamlParamType::String256: {
         const char* value = tryGetByamlKeyStringOrNULL(rIter, mName.cstr());
 
-        if (value) {
+        if (value != nullptr) {
             getMutableValuePtr<sead::BufferedSafeString>()->format("%s", value);
         }
 
@@ -367,11 +367,11 @@ void ParameterObj::tryGetParam(const ByamlIter& rIter) {
         }
     }
 
-    for (ParameterBase* param = mRootParam; param; param = param->getNext()) {
+    for (ParameterBase* param = mRootParam; param != nullptr; param = param->getNext()) {
         param->tryGetParam(*iter);
     }
 
-    for (ParameterArray* array = mParamArray; array; array = array->getNext()) {
+    for (ParameterArray* array = mParamArray; array != nullptr; array = array->getNext()) {
         ByamlIter arrayIter;
 
         if (array->getKey().isEmpty()) {
@@ -403,7 +403,7 @@ void ParameterArray::tryGetParam(const ByamlIter& rIter) {
     mSize = arrayIter.getSize();
     s32 index = 0;
 
-    for (ParameterObj* obj = mRootObjNode; obj; obj = obj->getNext()) {
+    for (ParameterObj* obj = mRootObjNode; obj != nullptr; obj = obj->getNext()) {
         ByamlIter objIter;
         arrayIter.tryGetIterByIndex(&objIter, index);
 
@@ -424,14 +424,14 @@ void ParameterArray::tryGetParam(const ByamlIter& rIter) {
 void ParameterObj::addArray(ParameterArray* pArray, const sead::SafeString& rKey) {
     pArray->setKey(rKey);
 
-    if (!mParamArray) {
+    if (mParamArray == nullptr) {
         mParamArray = pArray;
         return;
     }
 
     ParameterArray* array = mParamArray;
 
-    while (array->getNext()) {
+    while (array->getNext() != nullptr) {
         array = array->getNext();
     }
 
@@ -447,12 +447,12 @@ bool ParameterObj::isEqual(const ParameterObj& rObj) const {
     ParameterBase* param = mRootParam;
     ParameterBase* otherParam = rObj.getRootParam();
 
-    if (!param) {
-        if (otherParam) {
+    if (param == nullptr) {
+        if (otherParam != nullptr) {
             return false;
         }
     } else {
-        while (param && otherParam) {
+        while (param != nullptr && otherParam != nullptr) {
             if (!param->isEqual(*otherParam)) {
                 return false;
             }
@@ -465,16 +465,16 @@ bool ParameterObj::isEqual(const ParameterObj& rObj) const {
     ParameterArray* array = mParamArray;
     ParameterArray* otherArray = rObj.getParamArray();
 
-    if (!array) {
-        if (otherArray) {
+    if (array == nullptr) {
+        if (otherArray != nullptr) {
             return false;
         }
     } else {
-        if (!otherArray) {
+        if (otherArray == nullptr) {
             return false;
         }
 
-        while (array && otherArray) {
+        while (array != nullptr && otherArray != nullptr) {
             if (!array->isEqual(*otherArray)) {
                 return false;
             }
@@ -500,11 +500,11 @@ bool ParameterArray::isEqual(const ParameterArray& rArray) const {
     ParameterObj* obj = mRootObjNode;
     ParameterObj* otherObj = rArray.getRootObjNode();
 
-    if (!obj || !otherObj) {
-        return !obj && !otherObj;
+    if (obj == nullptr || otherObj == nullptr) {
+        return (obj == nullptr) && (otherObj == nullptr);
     }
 
-    while (obj && otherObj) {
+    while (obj != nullptr && otherObj != nullptr) {
         if (!obj->isEqual(*otherObj)) {
             return false;
         }
@@ -524,8 +524,8 @@ void ParameterObj::copy(const ParameterObj& rObj) {
     ParameterBase* param = mRootParam;
     ParameterBase* otherParam = rObj.getRootParam();
 
-    if (param) {
-        while (param && otherParam) {
+    if (param != nullptr) {
+        while (param != nullptr && otherParam != nullptr) {
             param->copy(*otherParam);
             param = param->getNext();
             otherParam = otherParam->getNext();
@@ -535,8 +535,8 @@ void ParameterObj::copy(const ParameterObj& rObj) {
     ParameterArray* otherArray = rObj.getParamArray();
     ParameterArray* array = mParamArray;
 
-    if (array) {
-        while (array && otherArray) {
+    if (array != nullptr) {
+        while (array != nullptr && otherArray != nullptr) {
             array->copy(*otherArray);
             array = array->getNext();
             otherArray = otherArray->getNext();
@@ -552,7 +552,7 @@ void ParameterArray::copy(const ParameterArray& rArray) {
     ParameterObj* otherObj = rArray.getRootObjNode();
     ParameterObj* obj = mRootObjNode;
 
-    while (obj && otherObj) {
+    while (obj != nullptr && otherObj != nullptr) {
         obj->copy(*otherObj);
         obj = obj->getNext();
         otherObj = otherObj->getNext();
@@ -570,21 +570,21 @@ void ParameterObj::copyLerp(const ParameterObj& rObjA, const ParameterObj& rObjB
     ParameterBase* paramA = rObjA.getRootParam();
     ParameterBase* paramB = rObjB.getRootParam();
 
-    if (param) {
+    if (param != nullptr) {
         if (rate <= 0.0f) {
-            while (param && paramA) {
+            while (param != nullptr && paramA != nullptr) {
                 param->copy(*paramA);
                 param = param->getNext();
                 paramA = paramA->getNext();
             }
         } else if (rate >= 1.0f) {
-            while (param && paramB) {
+            while (param != nullptr && paramB != nullptr) {
                 param->copy(*paramB);
                 param = param->getNext();
                 paramB = paramB->getNext();
             }
         } else {
-            while (param && paramA && paramB) {
+            while (param != nullptr && paramA != nullptr && paramB != nullptr) {
                 param->copyLerp(*paramA, *paramB, rate);
                 param = param->getNext();
                 paramA = paramA->getNext();
@@ -597,7 +597,7 @@ void ParameterObj::copyLerp(const ParameterObj& rObjA, const ParameterObj& rObjB
     ParameterArray* arrayA = rObjA.getParamArray();
     ParameterArray* array = mParamArray;
 
-    while (array && arrayA && arrayB) {
+    while (array != nullptr && arrayA != nullptr && arrayB != nullptr) {
         array->copyLerp(*arrayA, *arrayB, rate);
         array = array->getNext();
         arrayA = arrayA->getNext();
@@ -617,7 +617,7 @@ void ParameterArray::copyLerp(const ParameterArray& rArrayA, const ParameterArra
     ParameterObj* objA = rArrayA.getRootObjNode();
     ParameterObj* obj = mRootObjNode;
 
-    while (obj && objA && objB) {
+    while (obj != nullptr && objA != nullptr && objB != nullptr) {
         obj->copyLerp(*objA, *objB, rate);
         obj = obj->getNext();
         objA = objA->getNext();
@@ -637,14 +637,14 @@ ParameterArray::ParameterArray() = default;
 void ParameterArray::addObj(ParameterObj* pObj) {
     pObj->setKey(sead::SafeString::cEmptyString);
 
-    if (!mRootObjNode) {
+    if (mRootObjNode == nullptr) {
         mRootObjNode = pObj;
         return;
     }
 
     ParameterObj* obj = mRootObjNode;
 
-    while (obj->getNext()) {
+    while (obj->getNext() != nullptr) {
         obj = obj->getNext();
     }
 
@@ -657,7 +657,7 @@ void ParameterArray::addObj(ParameterObj* pObj) {
 void ParameterArray::clearObj() {
     ParameterObj* obj = mRootObjNode;
 
-    while (obj) {
+    while (obj != nullptr) {
         ParameterObj* next = obj->getNext();
         obj->setNext(nullptr);
         obj = next;
@@ -673,9 +673,9 @@ void ParameterArray::clearObj() {
 void ParameterArray::removeObj(ParameterObj* pObj) {
     ParameterObj* prev = nullptr;
 
-    for (ParameterObj* obj = mRootObjNode; obj; obj = obj->getNext()) {
+    for (ParameterObj* obj = mRootObjNode; obj != nullptr; obj = obj->getNext()) {
         if (obj == pObj) {
-            if (prev) {
+            if (prev != nullptr) {
                 prev->setNext(pObj->getNext());
             } else {
                 mRootObjNode = pObj->getNext();
@@ -695,7 +695,7 @@ void ParameterArray::removeObj(ParameterObj* pObj) {
  * @return true if the object is in the array
  */
 bool ParameterArray::isExistObj(ParameterObj* pObj) {
-    for (ParameterObj* obj = mRootObjNode; obj; obj = obj->getNext()) {
+    for (ParameterObj* obj = mRootObjNode; obj != nullptr; obj = obj->getNext()) {
         if (obj == pObj) {
             return true;
         }
@@ -717,14 +717,14 @@ ParameterList::ParameterList() = default;
 void ParameterList::addList(ParameterList* pList, const sead::SafeString& rKey) {
     pList->setKey(rKey);
 
-    if (!mRootListNode) {
+    if (mRootListNode == nullptr) {
         mRootListNode = pList;
         return;
     }
 
     ParameterList* list = mRootListNode;
 
-    while (list->getNext()) {
+    while (list->getNext() != nullptr) {
         list = list->getNext();
     }
 
@@ -739,14 +739,14 @@ void ParameterList::addList(ParameterList* pList, const sead::SafeString& rKey) 
 void ParameterList::addObj(ParameterObj* pObj, const sead::SafeString& rKey) {
     pObj->setKey(rKey);
 
-    if (!mRootObjNode) {
+    if (mRootObjNode == nullptr) {
         mRootObjNode = pObj;
         return;
     }
 
     ParameterObj* obj = mRootObjNode;
 
-    while (obj->getNext()) {
+    while (obj->getNext() != nullptr) {
         obj = obj->getNext();
     }
 
@@ -761,14 +761,14 @@ void ParameterList::addObj(ParameterObj* pObj, const sead::SafeString& rKey) {
 void ParameterList::addArray(ParameterArray* pArray, const sead::SafeString& rKey) {
     pArray->setKey(rKey);
 
-    if (!mRootArrayNode) {
+    if (mRootArrayNode == nullptr) {
         mRootArrayNode = pArray;
         return;
     }
 
     ParameterArray* array = mRootArrayNode;
 
-    while (array->getNext()) {
+    while (array->getNext() != nullptr) {
         array = array->getNext();
     }
 
@@ -781,7 +781,7 @@ void ParameterList::addArray(ParameterArray* pArray, const sead::SafeString& rKe
 void ParameterList::clearList() {
     ParameterList* list = mRootListNode;
 
-    while (list) {
+    while (list != nullptr) {
         ParameterList* next = list->getNext();
         list->setNext(nullptr);
         list = next;
@@ -796,7 +796,7 @@ void ParameterList::clearList() {
 void ParameterList::clearObj() {
     ParameterObj* obj = mRootObjNode;
 
-    while (obj) {
+    while (obj != nullptr) {
         ParameterObj* next = obj->getNext();
         obj->setNext(nullptr);
         obj = next;
@@ -812,9 +812,9 @@ void ParameterList::clearObj() {
 void ParameterList::removeList(ParameterList* pList) {
     ParameterList* prev = nullptr;
 
-    for (ParameterList* list = mRootListNode; list; list = list->getNext()) {
+    for (ParameterList* list = mRootListNode; list != nullptr; list = list->getNext()) {
         if (list == pList) {
-            if (prev) {
+            if (prev != nullptr) {
                 prev->setNext(pList->getNext());
             } else {
                 mRootListNode = pList->getNext();
@@ -835,9 +835,9 @@ void ParameterList::removeList(ParameterList* pList) {
 void ParameterList::removeObj(ParameterObj* pObj) {
     ParameterObj* prev = nullptr;
 
-    for (ParameterObj* obj = mRootObjNode; obj; obj = obj->getNext()) {
+    for (ParameterObj* obj = mRootObjNode; obj != nullptr; obj = obj->getNext()) {
         if (obj == pObj) {
-            if (prev) {
+            if (prev != nullptr) {
                 prev->setNext(pObj->getNext());
             } else {
                 mRootObjNode = pObj->getNext();
@@ -857,7 +857,7 @@ void ParameterList::removeObj(ParameterObj* pObj) {
  * @return true if the object is in the list
  */
 bool ParameterList::isExistObj(ParameterObj* pObj) {
-    for (ParameterObj* obj = mRootObjNode; obj; obj = obj->getNext()) {
+    for (ParameterObj* obj = mRootObjNode; obj != nullptr; obj = obj->getNext()) {
         if (obj == pObj) {
             return true;
         }
@@ -871,15 +871,15 @@ bool ParameterList::isExistObj(ParameterObj* pObj) {
  * @param rIter byaml to read from
  */
 void ParameterList::tryGetParam(const ByamlIter& rIter) {
-    for (ParameterObj* obj = mRootObjNode; obj; obj = obj->getNext()) {
+    for (ParameterObj* obj = mRootObjNode; obj != nullptr; obj = obj->getNext()) {
         obj->tryGetParam(rIter);
     }
 
-    for (ParameterArray* array = mRootArrayNode; array; array = array->getNext()) {
+    for (ParameterArray* array = mRootArrayNode; array != nullptr; array = array->getNext()) {
         array->tryGetParam(rIter);
     }
 
-    for (ParameterList* list = mRootListNode; list; list = list->getNext()) {
+    for (ParameterList* list = mRootListNode; list != nullptr; list = list->getNext()) {
         list->tryGetParam(rIter);
     }
 }

@@ -92,7 +92,7 @@ bool isExistModelOrAnimResourceYaml(const LiveActor* pActor, const char* pName,
         return true;
     }
 
-    return tryGetAnimResource(pActor) && isExistResourceYaml(getAnimResource(pActor), pName, pSuffix);
+    return (tryGetAnimResource(pActor) != nullptr) && isExistResourceYaml(getAnimResource(pActor), pName, pSuffix);
 }
 
 /**
@@ -196,11 +196,11 @@ bool tryGetInitFileIterAndName(ByamlIter* pIter, sead::BufferedSafeString* pFile
     StringTmp<64> filePath("%s.byml", fileName.cstr());
 
     if (pResource->isExistFile(filePath)) {
-        if (pIter) {
+        if (pIter != nullptr) {
             *pIter = ByamlIter(pResource->getByml(fileName));
         }
-    } else if (pSubResource && pSubResource->isExistFile(filePath)) {
-        if (pIter) {
+    } else if (pSubResource != nullptr && pSubResource->isExistFile(filePath)) {
+        if (pIter != nullptr) {
             *pIter = ByamlIter(pSubResource->getByml(fileName));
         }
     } else {
@@ -224,7 +224,7 @@ bool tryGetInitFileIterAndName(ByamlIter* pIter, sead::BufferedSafeString* pFile
  */
 bool tryGetSuffixIter(ByamlIter* pIter, const Resource* pResource, const char* pName,
                       const char* pSuffix) {
-    if (!pSuffix) {
+    if (pSuffix == nullptr) {
         return false;
     }
 
@@ -413,7 +413,7 @@ bool tryGetActorAnimInitFileName(sead::BufferedSafeString* pFileName, const Live
                                  const char* pKey, const char* pSuffix) {
     const Resource* animResource = tryGetAnimResource(pActor);
 
-    if (!animResource) {
+    if (animResource == nullptr) {
         return false;
     }
 

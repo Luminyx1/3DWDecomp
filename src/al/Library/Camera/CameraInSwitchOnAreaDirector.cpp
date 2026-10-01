@@ -20,7 +20,7 @@ void CameraInSwitchOnAreaDirector::initAfterPlacement() {
 }
 
 void CameraInSwitchOnAreaDirector::update() {
-    if (!mAreaObjGroup) {
+    if (mAreaObjGroup == nullptr) {
         return;
     }
 

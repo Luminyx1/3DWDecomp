@@ -44,7 +44,7 @@ void CameraTargetHolder::initAfterPlacement(const PlayerHolder* pPlayerHolder) {
 CameraTargetBase* CameraTargetHolder::tryGetViewTarget(s32 index) const {
     CameraTargetBase* target = mViewTargetArray[index];
 
-    if (target) {
+    if (target != nullptr) {
         return target;
     }
 
@@ -62,7 +62,7 @@ void CameraTargetHolder::update() {
         info->hasTargetChanged = info->target != target;
         info->target = target;
 
-        if (target) {
+        if (target != nullptr) {
             target->update();
         }
     }
@@ -78,7 +78,7 @@ void CameraTargetHolder::update() {
     mTopSubTargetInfo.hasTargetChanged = mTopSubTargetInfo.target != topSubTarget;
     mTopSubTargetInfo.target = topSubTarget;
 
-    if (topSubTarget) {
+    if (topSubTarget != nullptr) {
         topSubTarget->update();
     }
 }

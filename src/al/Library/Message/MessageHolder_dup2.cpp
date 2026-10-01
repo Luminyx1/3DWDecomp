@@ -25,13 +25,13 @@ inline bool isMessageTagNamed(const MessageProjectEx* pProject, const MessageTag
                               const char* pGroupName, const char* pTagName) {
     const char* groupName = pProject->getTagGroupNameByIndex(rTag.getGroup());
 
-    if (!groupName || !isEqualString(pGroupName, groupName)) {
+    if (groupName == nullptr || !isEqualString(pGroupName, groupName)) {
         return false;
     }
 
     const char* tagName = pProject->getTagNameByIndex(rTag.getGroup(), rTag.getType());
 
-    if (!tagName) {
+    if (tagName == nullptr) {
         return false;
     }
 
@@ -88,7 +88,7 @@ bool isMessageTagEndMark(char16_t c) {
  * @return whether it is a page break
  */
 bool isMessageTagPageBreak(const IUseMessageSystem* pMsgSystem, const char16_t* pMessage) {
-    if (!pMessage || !isMessageTagMark(*pMessage)) {
+    if (pMessage == nullptr || !isMessageTagMark(*pMessage)) {
         return false;
     }
 
@@ -200,7 +200,7 @@ s32 calcMessageSizeWithoutNullCharacter(const char16_t* pStart, const char16_t* 
 
         ptr = reinterpret_cast<const char16_t*>(reinterpret_cast<const u8*>(ptr) + step);
 
-        if (pEnd && ptr == pEnd) {
+        if (pEnd != nullptr && ptr == pEnd) {
             break;
         }
     }
@@ -359,7 +359,7 @@ bool tryGetMessageTagVoiceNameInPage(sead::BufferedSafeString* pOut,
 bool isMessageTagPictFont(const IUseMessageSystem* pMsgSystem, s32 groupIndex) {
     const char* groupName = getMessageTagGroupName(pMsgSystem, groupIndex);
 
-    if (!groupName) {
+    if (groupName == nullptr) {
         return false;
     }
 
@@ -375,7 +375,7 @@ bool isMessageTagPictFont(const IUseMessageSystem* pMsgSystem, s32 groupIndex) {
 bool isMessageTagDeviceFont(const IUseMessageSystem* pMsgSystem, s32 groupIndex) {
     const char* groupName = getMessageTagGroupName(pMsgSystem, groupIndex);
 
-    if (!groupName) {
+    if (groupName == nullptr) {
         return false;
     }
 
@@ -416,7 +416,7 @@ inline bool isMessageTagGroupAndName(const IUseMessageSystem* pMsgSystem, s32 gr
     const char* tagName = getMessageTagName(pMsgSystem, groupIndex, tagIndex);
     const char* groupName = getMessageTagGroupName(pMsgSystem, groupIndex);
 
-    if (!tagName || !groupName) {
+    if (tagName == nullptr || groupName == nullptr) {
         return false;
     }
 
@@ -532,7 +532,7 @@ const char16_t* getSystemMessageString(const IUseMessageSystem* pMsgSystem, cons
                                        const char* pLabel) {
     MessageHolder* holder =
         pMsgSystem->getMessageSystem()->getSystemMessageHolder(pFileName, pLabel);
-    if (!holder) {
+    if (holder == nullptr) {
         return u"NULL";
     }
 
@@ -804,7 +804,7 @@ s32 calcMessageSizeWithoutTag(const char16_t* pStart, const char16_t* pEnd) {
             ptr++;
         }
 
-        if (pEnd && ptr == pEnd) {
+        if (pEnd != nullptr && ptr == pEnd) {
             break;
         }
     }
@@ -855,7 +855,7 @@ bool isExistLabelInLayoutMessage(const IUseMessageSystem* pMsgSystem, const char
                                  const char* pLabel) {
     MessageHolder* holder = pMsgSystem->getMessageSystem()->getLayoutMessageHolder(pFileName);
 
-    if (!holder) {
+    if (holder == nullptr) {
         return false;
     }
 
@@ -873,7 +873,7 @@ bool isExistLabelInSystemMessage(const IUseMessageSystem* pMsgSystem, const char
                                  const char* pLabel) {
     MessageHolder* holder =
         pMsgSystem->getMessageSystem()->getSystemMessageHolder(pFileName, pLabel);
-    if (!holder) {
+    if (holder == nullptr) {
         return false;
     }
 
@@ -891,7 +891,7 @@ bool isExistLabelInStageMessage(const IUseMessageSystem* pMsgSystem, const char*
                                 const char* pLabel) {
     MessageHolder* holder = pMsgSystem->getMessageSystem()->getStageMessageHolder(pFileName);
 
-    if (!holder) {
+    if (holder == nullptr) {
         return false;
     }
 
@@ -936,7 +936,7 @@ const char16_t* getLayoutMessageString(const IUseMessageSystem* pMsgSystem, cons
                                        const char* pLabel) {
     MessageHolder* holder = pMsgSystem->getMessageSystem()->getLayoutMessageHolder(pFileName);
 
-    if (!holder) {
+    if (holder == nullptr) {
         return u"NULL";
     }
 
@@ -954,7 +954,7 @@ const char16_t* tryGetSystemMessageString(const IUseMessageSystem* pMsgSystem,
                                           const char* pFileName, const char* pLabel) {
     MessageHolder* holder =
         pMsgSystem->getMessageSystem()->getSystemMessageHolder(pFileName, pLabel);
-    if (!holder) {
+    if (holder == nullptr) {
         return u"NULL";
     }
 
@@ -973,11 +973,11 @@ const char16_t* getStageMessageString(const IUseMessageSystem* pMsgSystem, const
     MessageHolder* holder = pMsgSystem->getMessageSystem()->getStageMessageHolder(pFileName);
     const char16_t* text = nullptr;
 
-    if (holder) {
+    if (holder != nullptr) {
         text = holder->tryGetText(pLabel);
     }
 
-    return text ? text : u"NULL";
+    return (text != nullptr) ? text : u"NULL";
 }
 
 /**
@@ -992,7 +992,7 @@ bool tryGetStageMessageString(const char16_t** pOut, const IUseMessageSystem* pM
                               const char* pFileName, const char* pLabel) {
     MessageHolder* holder = pMsgSystem->getMessageSystem()->getStageMessageHolder(pFileName);
 
-    if (!holder) {
+    if (holder == nullptr) {
         return false;
     }
 
@@ -1011,7 +1011,7 @@ const char16_t* getLayoutMessageString(const IUseMessageSystem* pMsgSystem, cons
                                        s32 index) {
     MessageHolder* holder = pMsgSystem->getMessageSystem()->getLayoutMessageHolder(pFileName);
 
-    if (!holder) {
+    if (holder == nullptr) {
         return u"NULL";
     }
 
@@ -1029,7 +1029,7 @@ const char16_t* getSystemMessageString(const IUseMessageSystem* pMsgSystem, cons
                                        s32 index) {
     MessageHolder* holder = pMsgSystem->getMessageSystem()->getSystemMessageHolder(pFileName);
 
-    if (!holder) {
+    if (holder == nullptr) {
         return u"NULL";
     }
 
@@ -1045,7 +1045,7 @@ const char16_t* getSystemMessageString(const IUseMessageSystem* pMsgSystem, cons
 s32 getSystemMessageLabelNum(const IUseMessageSystem* pMsgSystem, const char* pFileName) {
     MessageHolder* holder = pMsgSystem->getMessageSystem()->getSystemMessageHolder(pFileName);
 
-    if (!holder) {
+    if (holder == nullptr) {
         return 0;
     }
 
@@ -1061,7 +1061,7 @@ s32 getSystemMessageLabelNum(const IUseMessageSystem* pMsgSystem, const char* pF
 s32 getLayoutMessageLabelNum(const IUseMessageSystem* pMsgSystem, const char* pFileName) {
     MessageHolder* holder = pMsgSystem->getMessageSystem()->getLayoutMessageHolder(pFileName);
 
-    if (!holder) {
+    if (holder == nullptr) {
         return 0;
     }
 

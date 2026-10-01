@@ -113,7 +113,7 @@ AreaObj* AreaObjGroup::getInVolumeAreaObj(const sead::Vector3f& rPos) {
     for (s32 i = 0; i < mNumAreas; i++) {
         AreaObj* areaObj = mAreaObjs[i];
 
-        if (!result || result->mPriority <= areaObj->mPriority) {
+        if (result == nullptr || result->mPriority <= areaObj->mPriority) {
             if (areaObj->isInVolume(rPos)) {
                 result = areaObj;
             }
@@ -136,7 +136,7 @@ s32 AreaObjGroup::getInVolumeAreaObj(const sead::Vector3f& rPos, AreaObj** pArea
     for (s32 i = 0; i < mNumAreas; i++) {
         AreaObj* areaObj = mAreaObjs[i];
 
-        if (!result || result->mPriority <= areaObj->mPriority) {
+        if (result == nullptr || result->mPriority <= areaObj->mPriority) {
             if (areaObj->mIsValid && !areaObj->mIsDisabled && areaObj->_66) {
                 count++;
 
@@ -166,7 +166,7 @@ AreaObj* AreaObjGroup::getInVolumeAreaObj(const sead::Vector3f& rStart, const se
     for (s32 i = 0; i < mNumAreas; i++) {
         AreaObj* areaObj = mAreaObjs[i];
 
-        if (!result || result->mPriority <= areaObj->mPriority) {
+        if (result == nullptr || result->mPriority <= areaObj->mPriority) {
             if (areaObj->isInVolume(rStart, rEnd, pHitPos, pNormal)) {
                 result = areaObj;
             }
@@ -187,7 +187,7 @@ AreaObj* AreaObjGroup::getInFirstAreaObj(const sead::Vector3f& rPos) {
     for (s32 i = 0; i < num; i++) {
         AreaObj* areaObj = mAreaObjs[i];
 
-        if (areaObj && areaObj->isInVolume(rPos)) {
+        if (areaObj != nullptr && areaObj->isInVolume(rPos)) {
             return areaObj;
         }
     }

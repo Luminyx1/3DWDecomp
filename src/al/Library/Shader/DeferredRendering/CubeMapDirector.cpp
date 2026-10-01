@@ -19,12 +19,12 @@ CubeMapDirector::CubeMapDirector(GraphicsSystemInfo* pGraphicsSystemInfo)
  * Destroys the cube map sources.
  */
 CubeMapDirector::~CubeMapDirector() {
-    if (mAtmosScatterCubeMap) {
+    if (mAtmosScatterCubeMap != nullptr) {
         delete mAtmosScatterCubeMap;
         mAtmosScatterCubeMap = nullptr;
     }
 
-    if (mShaderCubeMapKeeper) {
+    if (mShaderCubeMapKeeper != nullptr) {
         delete mShaderCubeMapKeeper;
         mShaderCubeMapKeeper = nullptr;
     }
@@ -38,7 +38,7 @@ CubeMapDirector::~CubeMapDirector() {
  */
 void CubeMapDirector::initStageResource(const Resource* pResource, const char* pName,
                                         const LiveActorKit* pKit) {
-    if (mShaderCubeMapKeeper) {
+    if (mShaderCubeMapKeeper != nullptr) {
         mShaderCubeMapKeeper->initStageResource(pResource, pName, pKit);
     }
 }
@@ -47,7 +47,7 @@ void CubeMapDirector::initStageResource(const Resource* pResource, const char* p
  * Updates the atmospheric scattering cube map before drawing.
  */
 void CubeMapDirector::preDrawGraphics() {
-    if (mAtmosScatterCubeMap) {
+    if (mAtmosScatterCubeMap != nullptr) {
         mAtmosScatterCubeMap->preDrawGraphics();
     }
 }
@@ -56,7 +56,7 @@ void CubeMapDirector::preDrawGraphics() {
  * Finishes the initialization of the capture point cube maps.
  */
 void CubeMapDirector::endInit() {
-    if (mShaderCubeMapKeeper) {
+    if (mShaderCubeMapKeeper != nullptr) {
         mShaderCubeMapKeeper->endInit();
     }
 }
@@ -73,7 +73,7 @@ void CubeMapDirector::initByCapturePoint(PlayerHolder* pPlayerHolder) {
  * Uses a cube map rendered from the atmospheric scattering.
  */
 void CubeMapDirector::initByAtmosScatter() {
-    if (mAtmosScatterCubeMap) {
+    if (mAtmosScatterCubeMap != nullptr) {
         return;
     }
 
@@ -85,11 +85,11 @@ void CubeMapDirector::initByAtmosScatter() {
  * @return Whether a cube map was activated.
  */
 bool CubeMapDirector::activateCubeMapTexture(s32 a, s32 b, s32 c, bool d) const {
-    if (mAtmosScatterCubeMap) {
+    if (mAtmosScatterCubeMap != nullptr) {
         return mAtmosScatterCubeMap->activateCubeMapTexture(b, d);
     }
 
-    if (mShaderCubeMapKeeper) {
+    if (mShaderCubeMapKeeper != nullptr) {
         return mShaderCubeMapKeeper->activateCubeMapTexture(a, b, c, d);
     }
 
@@ -101,7 +101,7 @@ bool CubeMapDirector::activateCubeMapTexture(s32 a, s32 b, s32 c, bool d) const 
  * @return Whether a capture point cube map is drawn.
  */
 bool CubeMapDirector::isDrawCapturePointCubeMap() const {
-    if (mShaderCubeMapKeeper) {
+    if (mShaderCubeMapKeeper != nullptr) {
         return mShaderCubeMapKeeper->isDrawCubeMap();
     }
 
@@ -114,7 +114,7 @@ bool CubeMapDirector::isDrawCapturePointCubeMap() const {
  * @return The shader mode after rendering.
  */
 agl::ShaderMode CubeMapDirector::renderToCubeMap(agl::ShaderMode shaderMode) const {
-    if (mAtmosScatterCubeMap && mGraphicsSystemInfo &&
+    if (mAtmosScatterCubeMap != nullptr && mGraphicsSystemInfo != nullptr &&
         (mGraphicsSystemInfo->_40 == 1 || mGraphicsSystemInfo->_40 == 2)) {
         return mAtmosScatterCubeMap->renderToCubeMap(shaderMode);
     }
@@ -128,11 +128,11 @@ agl::ShaderMode CubeMapDirector::renderToCubeMap(agl::ShaderMode shaderMode) con
  * @return The irradiance sampler.
  */
 const agl::TextureSampler* CubeMapDirector::getIrradianceSampler(s32 index) const {
-    if (mAtmosScatterCubeMap) {
+    if (mAtmosScatterCubeMap != nullptr) {
         return mAtmosScatterCubeMap->getIrradianceSampler(index);
     }
 
-    if (mShaderCubeMapKeeper) {
+    if (mShaderCubeMapKeeper != nullptr) {
         return mShaderCubeMapKeeper->getIrradiance(index, sead::Vector3f::zero);
     }
 
@@ -145,11 +145,11 @@ const agl::TextureSampler* CubeMapDirector::getIrradianceSampler(s32 index) cons
  * @return The mirror sampler.
  */
 const agl::TextureSampler* CubeMapDirector::getCubeMapMirrorSampler(s32 index) const {
-    if (mAtmosScatterCubeMap) {
+    if (mAtmosScatterCubeMap != nullptr) {
         return mAtmosScatterCubeMap->getCubeMapMirrorSampler(index);
     }
 
-    if (mShaderCubeMapKeeper) {
+    if (mShaderCubeMapKeeper != nullptr) {
         return mShaderCubeMapKeeper->getRoughnessCubeMap(0, index);
     }
 

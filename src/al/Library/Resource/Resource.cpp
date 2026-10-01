@@ -98,7 +98,7 @@ bool Resource::isExistFile(const sead::SafeString& rFilePath) const {
         return true;
     }
 
-    if (mPatchRes) {
+    if (mPatchRes != nullptr) {
         isExist = mPatchRes->isExistFile(rFilePath);
     }
 
@@ -133,7 +133,7 @@ u32 Resource::getSize() const {
 u32 Resource::getEntryNum(const sead::SafeString& rDirectoryPath) const {
     sead::DirectoryHandle handle;
 
-    if (!mDevice->tryOpenDirectory(&handle, rDirectoryPath)) {
+    if (mDevice->tryOpenDirectory(&handle, rDirectoryPath) == nullptr) {
         return 0;
     }
 
@@ -186,7 +186,7 @@ const u8* Resource::getByml(const sead::SafeString& rFilePath) const {
 const void* Resource::getFile(const sead::SafeString& rFilePath) const {
     const Resource* resource = this;
 
-    while (resource->mPatchRes && resource->mPatchRes->isExistFile(rFilePath)) {
+    while (resource->mPatchRes != nullptr && resource->mPatchRes->isExistFile(rFilePath)) {
         resource = resource->mPatchRes;
     }
 
@@ -279,13 +279,13 @@ const char* Resource::getArchiveName() const {
  */
 bool Resource::tryCreateResGraphicsFile(const sead::SafeString& rFilePath,
                                         nn::g3d::ResFile* pTextureFile) {
-    if (mResFile) {
+    if (mResFile != nullptr) {
         return false;
     }
 
     mResFile = nn::g3d::ResFile::ResCast(const_cast<void*>(getFile(rFilePath)));
 
-    if (pTextureFile) {
+    if (pTextureFile != nullptr) {
         agl::g3d::ResFile::BindTexture(mResFile, pTextureFile);
     }
 
@@ -298,14 +298,14 @@ bool Resource::tryCreateResGraphicsFile(const sead::SafeString& rFilePath,
  * Cleans up the graphics files of this resource and its patch archives.
  */
 void Resource::cleanupResGraphicsFile() {
-    if (mResFile) {
+    if (mResFile != nullptr) {
         mResFile->ReleaseTexture();
         mResFile->Reset();
         agl::g3d::ResFile::Cleanup(mResFile);
         mResFile = nullptr;
     }
 
-    if (mPatchRes) {
+    if (mPatchRes != nullptr) {
         mPatchRes->cleanupResGraphicsFile();
     }
 }

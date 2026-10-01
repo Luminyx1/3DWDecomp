@@ -26,7 +26,7 @@ ActorActionKeeper* ActorActionKeeper::tryCreate(LiveActor* pActor, const char* p
     const char* name = createStringIfInStack(getBaseName(pArchiveName));
     ActionAnimCtrl* animCtrl = ActionAnimCtrl::tryCreate(pActor, name, pSuffix);
     NerveActionCtrl* nerveActionCtrl =
-        pActor->getNerveKeeper() ? pActor->getNerveKeeper()->mActionCtrl : nullptr;
+        (pActor->getNerveKeeper() != nullptr) ? pActor->getNerveKeeper()->mActionCtrl : nullptr;
     ActionFlagCtrl* flagCtrl = ActionFlagCtrl::tryCreate(pActor, pSuffix);
     ActionEffectCtrl* effectCtrl = ActionEffectCtrl::tryCreate(pActor);
     ActionSeCtrl* seCtrl = ActionSeCtrl::tryCreate(pActor->getAudioKeeper());
@@ -36,8 +36,8 @@ ActorActionKeeper* ActorActionKeeper::tryCreate(LiveActor* pActor, const char* p
     ActionScreenEffectCtrl* screenEffectCtrl = ActionScreenEffectCtrl::tryCreate(pActor);
     ActionOceanWaveCtrl* oceanWaveCtrl = ActionOceanWaveCtrl::tryCreate(pActor);
 
-    if (!animCtrl && !flagCtrl && !effectCtrl && !seCtrl && !bgmCtrl && !padAndCameraCtrl &&
-        !screenEffectCtrl && !oceanWaveCtrl) {
+    if (animCtrl == nullptr && flagCtrl == nullptr && effectCtrl == nullptr && seCtrl == nullptr && bgmCtrl == nullptr && padAndCameraCtrl == nullptr &&
+        (screenEffectCtrl == nullptr) && oceanWaveCtrl == nullptr) {
         return nullptr;
     }
 
@@ -54,11 +54,11 @@ ActorActionKeeper* ActorActionKeeper::tryCreate(LiveActor* pActor, const char* p
 bool ActorActionKeeper::startAction(const char* pActionName) {
     mIsActionStarted = true;
 
-    if (!mNerveActionCtrl) {
+    if (mNerveActionCtrl == nullptr) {
         tryStartActionNoAnim(pActionName);
     }
 
-    return mAnimCtrl && mAnimCtrl->start(pActionName);
+    return (mAnimCtrl != nullptr) && mAnimCtrl->start(pActionName);
 }
 
 /**
@@ -66,31 +66,31 @@ bool ActorActionKeeper::startAction(const char* pActionName) {
  * @param pActionName the name of the action
  */
 void ActorActionKeeper::tryStartActionNoAnim(const char* pActionName) {
-    if (mFlagCtrl) {
+    if (mFlagCtrl != nullptr) {
         mFlagCtrl->start(pActionName);
     }
 
-    if (mEffectCtrl) {
+    if (mEffectCtrl != nullptr) {
         mEffectCtrl->startAction(pActionName);
     }
 
-    if (mSeCtrl) {
+    if (mSeCtrl != nullptr) {
         mSeCtrl->startAction(pActionName);
     }
 
-    if (mBgmCtrl) {
+    if (mBgmCtrl != nullptr) {
         mBgmCtrl->startAction(pActionName);
     }
 
-    if (mOceanWaveCtrl) {
+    if (mOceanWaveCtrl != nullptr) {
         mOceanWaveCtrl->startAction(pActionName);
     }
 
-    if (mPadAndCameraCtrl) {
+    if (mPadAndCameraCtrl != nullptr) {
         mPadAndCameraCtrl->startAction(pActionName);
     }
 
-    if (mScreenEffectCtrl) {
+    if (mScreenEffectCtrl != nullptr) {
         mScreenEffectCtrl->startAction(pActionName);
     }
 }
@@ -100,7 +100,7 @@ void ActorActionKeeper::tryStartActionNoAnim(const char* pActionName) {
  * @param pActionName the name of the action
  */
 void ActorActionKeeper::startBgmAction(const char* pActionName) {
-    if (mBgmCtrl) {
+    if (mBgmCtrl != nullptr) {
         mBgmCtrl->startAction(pActionName);
     }
 }
@@ -110,7 +110,7 @@ void ActorActionKeeper::startBgmAction(const char* pActionName) {
  * @param pActionName the name of the action
  */
 void ActorActionKeeper::startEffectAction(const char* pActionName) {
-    if (mEffectCtrl) {
+    if (mEffectCtrl != nullptr) {
         mEffectCtrl->startAction(pActionName);
     }
 }
@@ -121,38 +121,38 @@ void ActorActionKeeper::startEffectAction(const char* pActionName) {
 void ActorActionKeeper::updatePrev() {}
 
 void ActorActionKeeper::updatePost() {
-    if (mEffectCtrl || mSeCtrl || mBgmCtrl || mPadAndCameraCtrl || mScreenEffectCtrl ||
-        mOceanWaveCtrl) {
-        if (!mNerveActionCtrl || !isNewNerve(mActor)) {
-            f32 frame = mNerveActionCtrl ? static_cast<s32>(mActor->getNerveKeeper()->mNerveStep) - 1 :
+    if (mEffectCtrl != nullptr || mSeCtrl != nullptr || mBgmCtrl != nullptr || mPadAndCameraCtrl != nullptr || mScreenEffectCtrl != nullptr ||
+        (mOceanWaveCtrl != nullptr)) {
+        if (mNerveActionCtrl == nullptr || !isNewNerve(mActor)) {
+            f32 frame = (mNerveActionCtrl != nullptr) ? static_cast<s32>(mActor->getNerveKeeper()->mNerveStep) - 1 :
                                            getActionFrame(mActor);
-            f32 frameRate = mNerveActionCtrl ? 1.0f : getActionFrameRate(mActor);
+            f32 frameRate = (mNerveActionCtrl != nullptr) ? 1.0f : getActionFrameRate(mActor);
 
-            if (mFlagCtrl) {
+            if (mFlagCtrl != nullptr) {
                 mFlagCtrl->update(frame, frameRate);
             }
 
-            if (mEffectCtrl) {
+            if (mEffectCtrl != nullptr) {
                 mEffectCtrl->update(frame, frameRate);
             }
 
-            if (mSeCtrl) {
+            if (mSeCtrl != nullptr) {
                 mSeCtrl->update(frame, frameRate);
             }
 
-            if (mBgmCtrl) {
+            if (mBgmCtrl != nullptr) {
                 mBgmCtrl->update(frame, frameRate);
             }
 
-            if (mOceanWaveCtrl) {
+            if (mOceanWaveCtrl != nullptr) {
                 mOceanWaveCtrl->update(frame, frameRate);
             }
 
-            if (mPadAndCameraCtrl) {
+            if (mPadAndCameraCtrl != nullptr) {
                 mPadAndCameraCtrl->update(frame, frameRate);
             }
 
-            if (mScreenEffectCtrl) {
+            if (mScreenEffectCtrl != nullptr) {
                 mScreenEffectCtrl->update(frame, frameRate);
             }
         }
@@ -165,13 +165,13 @@ void ActorActionKeeper::updatePost() {
  * Updates the sound effect action controller.
  */
 void ActorActionKeeper::updateSeActionCtrl() {
-    if (!mSeCtrl) {
+    if (mSeCtrl == nullptr) {
         return;
     }
 
-    f32 frame = mNerveActionCtrl ? static_cast<s32>(mActor->getNerveKeeper()->mNerveStep) - 1 :
+    f32 frame = (mNerveActionCtrl != nullptr) ? static_cast<s32>(mActor->getNerveKeeper()->mNerveStep) - 1 :
                                    getActionFrame(mActor);
-    f32 frameRate = mNerveActionCtrl ? 1.0f : getActionFrameRate(mActor);
+    f32 frameRate = (mNerveActionCtrl != nullptr) ? 1.0f : getActionFrameRate(mActor);
     mSeCtrl->update(frame, frameRate);
 }
 
@@ -180,13 +180,13 @@ void ActorActionKeeper::tryUpdateSeEffect(f32 frameFrom, f32 frameTo) {
         return;
     }
 
-    if (!mSeCtrl && !mEffectCtrl) {
+    if (mSeCtrl == nullptr && mEffectCtrl == nullptr) {
         return;
     }
 
     const char* actionName = getActionName(mActor);
 
-    if (!actionName) {
+    if (actionName == nullptr) {
         return;
     }
 
@@ -198,11 +198,11 @@ void ActorActionKeeper::tryUpdateSeEffect(f32 frameFrom, f32 frameTo) {
         frameRate = frameTo - frameFrom;
     }
 
-    if (mSeCtrl) {
+    if (mSeCtrl != nullptr) {
         mSeCtrl->update(frameFrom, frameRate);
     }
 
-    if (mEffectCtrl) {
+    if (mEffectCtrl != nullptr) {
         mEffectCtrl->update(frameFrom, frameRate);
     }
 }
@@ -223,7 +223,7 @@ ActorActionKeeper::ActorActionKeeper(LiveActor* pActor, const char* pActorName,
  * Initializes the keeper after all actors are placed.
  */
 void ActorActionKeeper::init() {
-    if (mFlagCtrl) {
+    if (mFlagCtrl != nullptr) {
         mFlagCtrl->initPost();
     }
 }

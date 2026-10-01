@@ -84,7 +84,7 @@ void PartsModel::initPartsFixFile(LiveActor* pParent, const ActorInitInfo& rInfo
         const char* jointName = nullptr;
         iter.tryGetStringByKey(&jointName, "JointName");
 
-        if (jointName) {
+        if (jointName != nullptr) {
             mJointMtx = getJointMtxPtr(mParentModel, jointName);
         }
 

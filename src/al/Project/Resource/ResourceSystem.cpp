@@ -33,7 +33,7 @@ public:
 
         SeadAudioPlayer* player = alAudioSystemFunction::tryFindAudioPlayerRegistedSoundMemoryPoolHandler(
             pNode->key().cstr(), info->mAudioPlayerA, info->mAudioPlayerB);
-        if (player) {
+        if (player != nullptr) {
             while (!alAudioSystemFunction::tryDisableSoundMemoryPoolHandlerByFilePath(
                 pNode->key().cstr(), player)) {
             }
@@ -53,14 +53,14 @@ ResourceSystem::ResourceSystem(const char* pArchivePath) {
     addCategory("リソースシステム", 1, sead::HeapMgr::instance()->getCurrentHeap());
     const char* archivePath = "SystemData/ResourceSystem";
 
-    if (pArchivePath) {
+    if (pArchivePath != nullptr) {
         archivePath = pArchivePath;
     }
 
     if (isExistArchive(archivePath)) {
         Resource* resource = findOrCreateResourceCategory(archivePath, "リソースシステム", nullptr);
 
-        if (resource) {
+        if (resource != nullptr) {
             mResourceCategoryTable = new ByamlIter(resource->getByml("ResourceCategoryTable"));
         }
     }
@@ -100,7 +100,7 @@ Resource* ResourceSystem::findOrCreateResourceCategory(const sead::SafeString& r
                                                        const char* pExt) {
     Resource* resource = findResource(rPath);
 
-    if (resource) {
+    if (resource != nullptr) {
         return resource;
     }
 
@@ -161,7 +161,7 @@ bool ResourceSystem::isEmptyCategoryResource(const sead::SafeString& rName) {
  */
 bool ResourceSystem::createCategoryResourceAll(const sead::SafeString& rName,
                                                sead::Event* pEvent) {
-    if (!mResourceCategoryTable) {
+    if (mResourceCategoryTable == nullptr) {
         return false;
     }
 
@@ -213,7 +213,7 @@ bool ResourceSystem::createCategoryResourceAll(const sead::SafeString& rName,
 
             createResource(arcName, *iter, nullptr);
 
-            if (pEvent && pEvent->wait(sead::TickSpan(0))) {
+            if (pEvent != nullptr && pEvent->wait(sead::TickSpan(0))) {
                 return false;
             }
         }
@@ -257,7 +257,7 @@ Resource* ResourceSystem::findResource(const sead::SafeString& rPath) {
     for (auto iter = mCategories.begin(); iter != mCategories.end(); ++iter) {
         auto* node = (*iter)->mResources.find(rPath);
 
-        if (node) {
+        if (node != nullptr) {
             return node->value();
         }
     }
@@ -276,11 +276,11 @@ Resource* ResourceSystem::findResourceCore(
     for (auto iter = mCategories.begin(); iter != mCategories.end(); ++iter) {
         auto* node = (*iter)->mResources.find(rPath);
 
-        if (!node) {
+        if (node == nullptr) {
             continue;
         }
 
-        if (pOutIter) {
+        if (pOutIter != nullptr) {
             *pOutIter = iter;
         }
 
@@ -299,7 +299,7 @@ Resource* ResourceSystem::findResourceCore(
 Resource* ResourceSystem::findOrCreateResource(const sead::SafeString& rPath, const char* pExt) {
     Resource* resource = findResource(rPath);
 
-    if (resource) {
+    if (resource != nullptr) {
         return resource;
     }
 
@@ -313,7 +313,7 @@ Resource* ResourceSystem::findOrCreateResource(const sead::SafeString& rPath, co
  */
 ResourceSystem::ResourceCategory* ResourceSystem::findResourceCategory(
     const sead::SafeString& rPath) {
-    return *findResourceCategoryIter(mCurrentCategoryName ? mCurrentCategoryName : "Scene");
+    return *findResourceCategoryIter((mCurrentCategoryName != nullptr) ? mCurrentCategoryName : "Scene");
 }
 
 /**
@@ -330,7 +330,7 @@ void ResourceSystem::setCurrentCategory(const char* pName) {
  * @return category name, or null
  */
 const char* ResourceSystem::findCategoryNameFromTable(const sead::SafeString& rPath) const {
-    if (!mResourceCategoryTable) {
+    if (mResourceCategoryTable == nullptr) {
         return nullptr;
     }
 
@@ -388,7 +388,7 @@ const char* ResourceSystem::findCategoryNameFromTable(const sead::SafeString& rP
  */
 bool ResourceSystem::tryGetTableCategoryIter(ByamlIter* pIter,
                                              const sead::SafeString& rName) const {
-    if (!mResourceCategoryTable) {
+    if (mResourceCategoryTable == nullptr) {
         return false;
     }
 
@@ -425,10 +425,10 @@ Resource* ResourceSystem::createResource(const sead::SafeString& rPath,
                                          ResourceCategory* pCategory, const char* pExt) {
     sead::ScopedCurrentHeapSetter setter(pCategory->mHeap);
     Resource* resource = nullptr;
-    resource = pExt ? new Resource(rPath, loadArchiveWithExt(rPath, pExt)) : new Resource(rPath);
+    resource = (pExt != nullptr) ? new Resource(rPath, loadArchiveWithExt(rPath, pExt)) : new Resource(rPath);
     pCategory->mResources.insert(rPath, resource);
     createResourceCore(this, resource, resource->getArchiveName(), nullptr);
-    return resource->getFileArchive() ? resource : nullptr;
+    return (resource->getFileArchive() != nullptr) ? resource : nullptr;
 }
 
 /**
@@ -440,11 +440,11 @@ Resource* ResourceSystem::createResource(const sead::SafeString& rPath,
  */
 void createResourceCore(ResourceSystem* pSystem, Resource* pResource, const char* pArchiveName,
                         Resource* pParent) {
-    if (!pParent) {
+    if (pParent == nullptr) {
         pResource->loadPatchData();
     }
 
-    StringTmp<256> fileName(pParent ? "%s_p.bfres" : "%s.bfres", pArchiveName);
+    StringTmp<256> fileName((pParent != nullptr) ? "%s_p.bfres" : "%s.bfres", pArchiveName);
 
     if (pResource->isExistFile(fileName)) {
         ByamlIter iter;
@@ -454,7 +454,7 @@ void createResourceCore(ResourceSystem* pSystem, Resource* pResource, const char
             const char* textureArc = nullptr;
             iter.tryGetStringByKey(&textureArc, "TextureArc");
 
-            if (textureArc) {
+            if (textureArc != nullptr) {
                 resFile = pSystem
                               ->findOrCreateResource(StringTmp<256>("ObjectData/%s", textureArc),
                                                      nullptr)
@@ -462,7 +462,7 @@ void createResourceCore(ResourceSystem* pSystem, Resource* pResource, const char
             }
         }
 
-        if (pParent && !resFile) {
+        if (pParent != nullptr && resFile == nullptr) {
             resFile = pParent->getResFile();
         }
 
@@ -470,7 +470,7 @@ void createResourceCore(ResourceSystem* pSystem, Resource* pResource, const char
         pResource->_B0 = reinterpret_cast<u64>(new ActorInitResourceData(pResource));
     }
 
-    if (pResource->mPatchRes) {
+    if (pResource->mPatchRes != nullptr) {
         createResourceCore(pSystem, pResource->mPatchRes, pArchiveName, pResource);
     }
 }
@@ -483,7 +483,7 @@ void createResourceCore(ResourceSystem* pSystem, Resource* pResource, const char
  */
 bool ResourceSystem::tryGetGraphicsInfoIter(ByamlIter* pIter,
                                             const sead::SafeString& rName) const {
-    if (!mResourceCategoryTable) {
+    if (mResourceCategoryTable == nullptr) {
         return false;
     }
 

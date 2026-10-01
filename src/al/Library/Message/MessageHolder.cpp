@@ -47,7 +47,7 @@ void MessageHolder::init(Resource* pResource, const char* pFileName) {
  */
 const char16_t* MessageHolder::getText(s32 index) const {
     const char16_t* text = mMessageSet->getText(index);
-    return text ? text : u"NULL";
+    return (text != nullptr) ? text : u"NULL";
 }
 
 /**
@@ -57,7 +57,7 @@ const char16_t* MessageHolder::getText(s32 index) const {
  */
 const char16_t* MessageHolder::getText(const char* pLabel) const {
     const char16_t* text = mMessageSet->getTextByLabel(pLabel);
-    return text ? text : u"NULL";
+    return (text != nullptr) ? text : u"NULL";
 }
 
 /**

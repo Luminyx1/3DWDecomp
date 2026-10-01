@@ -56,7 +56,7 @@ GraphicsParamKeeperImpl::GraphicsParamKeeperImpl(GraphicsSystemInfo* pInfo,
  * @param pStageName Name of the stage.
  */
 void GraphicsParamKeeperImpl::initStageResource(const Resource* pResource, const char* pStageName) {
-    if (!pResource) {
+    if (pResource == nullptr) {
         return;
     }
 
@@ -80,7 +80,7 @@ void GraphicsParamKeeperImpl::initStageResource(const Resource* pResource, const
 
     const ParamBinary* binary = tryFindParamBinary("Default");
 
-    if (binary) {
+    if (binary != nullptr) {
         mParamIo->applyResParameterArchive(agl::utl::ResParameterArchive(binary->data));
         mIsLoaded = true;
     } else {
@@ -95,7 +95,7 @@ void GraphicsParamKeeperImpl::initStageResource(const Resource* pResource, const
  */
 const GraphicsParamKeeperImpl::ParamBinary*
 GraphicsParamKeeperImpl::tryFindParamBinary(const char* pName) const {
-    if (!pName || isEqualString(pName, "")) {
+    if (pName == nullptr || isEqualString(pName, "")) {
         return nullptr;
     }
 
@@ -122,7 +122,7 @@ void GraphicsParamKeeperImpl::updateRequest() {
 
     GraphicsAreaDirector* areaDirector = mGraphicsSystemInfo->mGraphicsAreaDirector;
 
-    if (!areaDirector) {
+    if (areaDirector == nullptr) {
         return;
     }
 
@@ -132,7 +132,7 @@ void GraphicsParamKeeperImpl::updateRequest() {
     const ParamBinary* binary = tryFindParamOrDefaultBinary(areaParam.mParamName);
     const ParamBinary* prevBinary = tryFindParamOrDefaultBinary(areaParam.mPrevParamName);
 
-    if (!binary) {
+    if (binary == nullptr) {
         return;
     }
 
@@ -142,7 +142,7 @@ void GraphicsParamKeeperImpl::updateRequest() {
 
     agl::utl::IParameterIO* paramIo = mParamIo;
 
-    if (!prevBinary) {
+    if (prevBinary == nullptr) {
         paramIo->applyResParameterArchive(agl::utl::ResParameterArchive(binary->data));
     } else {
         paramIo->applyResParameterArchiveLerp(agl::utl::ResParameterArchive(prevBinary->data),
@@ -162,7 +162,7 @@ const GraphicsParamKeeperImpl::ParamBinary*
 GraphicsParamKeeperImpl::tryFindParamOrDefaultBinary(const char* pName) const {
     const ParamBinary* binary = tryFindParamBinary(pName);
 
-    if (binary) {
+    if (binary != nullptr) {
         return binary;
     }
 

@@ -49,7 +49,7 @@ void ConveyerStep::init(const ActorInitInfo& rInfo) {
  * @return whether the host handled the message
  */
 bool ConveyerStep::receiveMsg(const SensorMsg* pMsg, HitSensor* pOther, HitSensor* pSelf) {
-    if (mHost) {
+    if (mHost != nullptr) {
         return mHost->receiveMsg(pMsg, pOther, pSelf);
     }
 
@@ -101,12 +101,12 @@ void ConveyerStep::setTransByCoord(f32 coord, bool isForwards, bool isForceReset
 
         if (tryGetStringArg(&keyHitReactionName, *conveyerKey.mPlacementInfo,
                             "KeyHitReactionName") &&
-            (!mKeyHitReactionName || !isEqualString(mKeyHitReactionName, keyHitReactionName))) {
+            (mKeyHitReactionName == nullptr || !isEqualString(mKeyHitReactionName, keyHitReactionName))) {
             startHitReaction(this, keyHitReactionName);
         }
 
         if (tryGetStringArg(&actionName, *conveyerKey.mPlacementInfo, "ActionName") &&
-            (!mActionName || !isEqualString(mActionName, actionName))) {
+            (mActionName == nullptr || !isEqualString(mActionName, actionName))) {
             startAction(this, actionName);
         }
     }

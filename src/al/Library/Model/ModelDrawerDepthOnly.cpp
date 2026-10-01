@@ -70,7 +70,7 @@ void ModelDrawerDepthOnly::createTable() {
         bool isAlphaTest = false;
         const char* depthAlphaMask = shaderAssign->FindShaderOption("enable_depthalphamask");
 
-        if (depthAlphaMask && isEqualString(depthAlphaMask, "1")) {
+        if (depthAlphaMask != nullptr && isEqualString(depthAlphaMask, "1")) {
             optionValues[0] = "1";
             isAlphaTest = true;
         }
@@ -81,7 +81,7 @@ void ModelDrawerDepthOnly::createTable() {
             continue;
         }
 
-        if (model->_28) {
+        if (model->_28 != nullptr) {
             optionValues[1] = "1";
         }
 
@@ -95,7 +95,7 @@ void ModelDrawerDepthOnly::createTable() {
 
         const char* ditherAlpha = shaderAssign->FindShaderOption("cIsEnableDitherAlbedoAlpha");
 
-        if (ditherAlpha && isEqualString(ditherAlpha, "1")) {
+        if (ditherAlpha != nullptr && isEqualString(ditherAlpha, "1")) {
             continue;
         }
 

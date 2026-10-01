@@ -39,7 +39,7 @@ CollisionPartsFilterBase* createCollisionPartsFilterConnectedSensor(const HitSen
  * @return true if the parts are filtered out
  */
 bool CollisionPartsFilterActor::isInvalidParts(const CollisionParts& rParts) const {
-    if (!rParts.mSensor) {
+    if (rParts.mSensor == nullptr) {
         return false;
     }
 
@@ -56,7 +56,7 @@ bool CollisionPartsFilterActor::isInvalidParts(const CollisionParts& rParts) con
  * @return true if the parts are filtered out
  */
 bool CollisionPartsFilterConnectedSensor::isInvalidParts(const CollisionParts& rParts) const {
-    if (!rParts.mSensor) {
+    if (rParts.mSensor == nullptr) {
         return false;
     }
 
@@ -69,7 +69,7 @@ bool CollisionPartsFilterConnectedSensor::isInvalidParts(const CollisionParts& r
  * @return true if the parts are filtered out
  */
 bool CollisionPartsFilterConnectedSensorType::isInvalidParts(const CollisionParts& rParts) const {
-    if (!rParts.mSensor) {
+    if (rParts.mSensor == nullptr) {
         return false;
     }
 
@@ -82,7 +82,7 @@ bool CollisionPartsFilterConnectedSensorType::isInvalidParts(const CollisionPart
  * @return true if the parts are filtered out
  */
 bool CollisionPartsFilterSpecialPurpose::isInvalidParts(const CollisionParts& rParts) const {
-    if (!rParts.mSpecialPurpose) {
+    if (rParts.mSpecialPurpose == nullptr) {
         return false;
     }
 
@@ -104,7 +104,7 @@ bool CollisionPartsFilterNoSpecialPurpose::isInvalidParts(const CollisionParts& 
  * @return true if the parts are filtered out
  */
 bool CollisionPartsFilterOnlySpecialPurpose::isInvalidParts(const CollisionParts& rParts) const {
-    if (!rParts.mSpecialPurpose) {
+    if (rParts.mSpecialPurpose == nullptr) {
         return true;
     }
 

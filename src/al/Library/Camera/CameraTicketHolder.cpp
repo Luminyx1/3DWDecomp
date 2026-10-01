@@ -19,7 +19,7 @@ void CameraTicketHolder::endInit() {
         mTickets[i]->getPoser()->endInit();
     }
 
-    if (mDefaultTicket) {
+    if (mDefaultTicket != nullptr) {
         mDefaultTicket->getPoser()->endInit();
     }
 }

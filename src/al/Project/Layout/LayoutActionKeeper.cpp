@@ -28,8 +28,8 @@ LayoutActionKeeper::LayoutActionKeeper(LayoutKeeper* pLayoutKeeper, IUseAudioKee
     for (s32 i = 0; i < mPaneGroupNum; i++) {
         mPaneGroupInfos[i].mPaneGroup = pLayoutKeeper->getGroup(i);
         mPaneGroupInfos[i].mEffectCtrl =
-            pEffectKeeper ? ActionEffectCtrl::tryCreate(pEffectKeeper) : nullptr;
-        if (pAudioKeeper) {
+            (pEffectKeeper != nullptr) ? ActionEffectCtrl::tryCreate(pEffectKeeper) : nullptr;
+        if (pAudioKeeper != nullptr) {
             mPaneGroupInfos[i].mSeCtrl = ActionSeCtrl::tryCreate(pAudioKeeper->getAudioKeeper());
             mPaneGroupInfos[i].mBgmCtrl = ActionBgmCtrl::tryCreate(pAudioKeeper->getAudioKeeper());
         } else {
@@ -48,26 +48,26 @@ LayoutActionKeeper::LayoutActionKeeper(LayoutKeeper* pLayoutKeeper, IUseAudioKee
 bool LayoutActionKeeper::startAction(const char* pActionName, const char* pGroupName) {
     PaneGroupInfo* info = findPaneGroupInfo(pGroupName);
 
-    if (!info) {
+    if (info == nullptr) {
         return false;
     }
 
     mIsActionStarted = true;
     info->mPaneGroup->startAnim(pActionName);
 
-    if (info->mEffectCtrl) {
+    if (info->mEffectCtrl != nullptr) {
         info->mEffectCtrl->startAction(pActionName);
     }
 
-    if (info->mSeCtrl) {
+    if (info->mSeCtrl != nullptr) {
         info->mSeCtrl->startAction(pActionName);
     }
 
-    if (info->mBgmCtrl) {
+    if (info->mBgmCtrl != nullptr) {
         info->mBgmCtrl->startAction(pActionName);
     }
 
-    if (mHitReactionKeeper) {
+    if (mHitReactionKeeper != nullptr) {
         mHitReactionKeeper->start(pActionName, nullptr, nullptr, nullptr);
     }
 
@@ -81,11 +81,11 @@ bool LayoutActionKeeper::startAction(const char* pActionName, const char* pGroup
  */
 LayoutActionKeeper::PaneGroupInfo*
 LayoutActionKeeper::findPaneGroupInfo(const char* pGroupName) const {
-    if (pGroupName) {
+    if (pGroupName != nullptr) {
         return findPaneGroupInfoByName(pGroupName);
     }
 
-    if (mMainGroupName) {
+    if (mMainGroupName != nullptr) {
         return findPaneGroupInfoByName(mMainGroupName);
     }
 
@@ -109,15 +109,15 @@ void LayoutActionKeeper::update() {
         f32 frameRate = paneGroup->getAnimFrameRate();
         paneGroup->isAnimOneTime();
 
-        if (info.mEffectCtrl) {
+        if (info.mEffectCtrl != nullptr) {
             info.mEffectCtrl->update(frame, frameRate);
         }
 
-        if (info.mSeCtrl) {
+        if (info.mSeCtrl != nullptr) {
             info.mSeCtrl->update(frame, frameRate);
         }
 
-        if (info.mBgmCtrl) {
+        if (info.mBgmCtrl != nullptr) {
             info.mBgmCtrl->update(frame, frameRate);
         }
     }
@@ -140,6 +140,6 @@ void LayoutActionKeeper::setMainGroupName(const char* pGroupName) {
  */
 LayoutPaneGroup* LayoutActionKeeper::getLayoutPaneGroup(const char* pGroupName) const {
     PaneGroupInfo* info = findPaneGroupInfo(pGroupName);
-    return info ? info->mPaneGroup : nullptr;
+    return (info != nullptr) ? info->mPaneGroup : nullptr;
 }
 }  // namespace al

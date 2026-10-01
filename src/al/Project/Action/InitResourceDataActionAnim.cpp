@@ -65,7 +65,7 @@ InitResourceDataActionAnim::InitResourceDataActionAnim(Resource* pResource,
         mAnimInfos[i] = ctrlInfo;
         iterIndex.tryGetStringByKey(&ctrlInfo->actionName, "ActionName");
 
-        if (i == 0 && !ctrlInfo->actionName) {
+        if (i == 0 && ctrlInfo->actionName == nullptr) {
             ctrlInfo->actionName = getResourceName(pResource);
         }
 

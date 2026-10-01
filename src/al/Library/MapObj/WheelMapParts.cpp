@@ -79,11 +79,11 @@ void WheelMapParts::init(const ActorInitInfo& rInfo) {
  * Updates the switch areas.
  */
 void WheelMapParts::control() {
-    if (mSwitchKeepOnAreaGroup) {
+    if (mSwitchKeepOnAreaGroup != nullptr) {
         mSwitchKeepOnAreaGroup->update(getTrans(this));
     }
 
-    if (mSwitchOnAreaGroup) {
+    if (mSwitchOnAreaGroup != nullptr) {
         mSwitchOnAreaGroup->update(getTrans(this));
     }
 }

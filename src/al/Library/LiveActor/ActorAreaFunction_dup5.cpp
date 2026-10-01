@@ -63,11 +63,11 @@ void registerAreaSyncHostMtx(const LiveActor* pActor, const ActorInitInfo& rInfo
  */
 bool tryReviseVelocityInsideAreaObj(sead::Vector3f* pPos, LiveActor* pActor, AreaObjGroup* pGroup,
                                     const AreaObj* pArea) {
-    if (!pGroup || !pArea) {
+    if (pGroup == nullptr || pArea == nullptr) {
         return false;
     }
 
-    if (!pGroup->getInVolumeAreaObj(getTrans(pActor))) {
+    if (pGroup->getInVolumeAreaObj(getTrans(pActor)) == nullptr) {
         calcNearestAreaObjEdgePos(pPos, pArea, getTrans(pActor));
         setTrans(pActor, *pPos);
         setVelocityZero(pActor);
@@ -77,7 +77,7 @@ bool tryReviseVelocityInsideAreaObj(sead::Vector3f* pPos, LiveActor* pActor, Are
     f32 speed = getVelocity(pActor).length();
     sead::Vector3f nextPos = getTrans(pActor) + getVelocity(pActor);
 
-    if (pGroup->getInVolumeAreaObj(nextPos)) {
+    if (pGroup->getInVolumeAreaObj(nextPos) != nullptr) {
         return false;
     }
 

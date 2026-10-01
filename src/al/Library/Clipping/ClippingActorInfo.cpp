@@ -57,7 +57,7 @@ void ClippingActorInfo::updateClipping(const ClippingJudge* pJudge) {
 bool ClippingActorInfo::judgeClipping(const ClippingJudge* pJudge) const {
     s32 farClipLevel = mFarClipLevel;
 
-    if (mViewGroupFarClipFlag && *mViewGroupFarClipFlag) {
+    if (mViewGroupFarClipFlag != nullptr && *mViewGroupFarClipFlag) {
         farClipLevel = 0;
     }
 

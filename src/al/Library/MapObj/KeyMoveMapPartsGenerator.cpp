@@ -90,7 +90,7 @@ void KeyMoveMapPartsGenerator::exeGenerate() {
     if (isIntervalStep(this, mGenerateInterval, 0)) {
         KeyMoveMapParts* keyMoveMapParts = mKeyMoveMapPartsGroup->tryFindDeadDeriveActor();
 
-        if (keyMoveMapParts) {
+        if (keyMoveMapParts != nullptr) {
             keyMoveMapParts->appearAndSetStart();
         }
     }

@@ -124,7 +124,7 @@ void CameraPoseUpdater::init(const CameraParamTransfer* pParamTransfer,
  * @return Near clip distance.
  */
 f32 CameraPoseUpdater::getNearClipDistance() const {
-    return mTicket && mTicket->getPoser()->getNearClipDistance() > 0.0f ?
+    return (mTicket != nullptr) && mTicket->getPoser()->getNearClipDistance() > 0.0f ?
                mTicket->getPoser()->getNearClipDistance() :
                mNearClipDistance;
 }
@@ -157,7 +157,7 @@ void CameraPoseUpdater::update(bool isPaused) {
 
     mSceneCameraViewCtrl->setShakeName(nullptr);
 
-    if (mAreaObjDirector) {
+    if (mAreaObjDirector != nullptr) {
         sead::Vector3f pos = mLookAtCamera.getPos();
         pos.y += -50.0f;
 
@@ -175,7 +175,7 @@ void CameraPoseUpdater::update(bool isPaused) {
 
     f32 fovy = mFovyDegree;
 
-    if (mPauseCameraCtrl && mPauseCameraCtrl->isCameraPause()) {
+    if (mPauseCameraCtrl != nullptr && mPauseCameraCtrl->isCameraPause()) {
         fovy = mPauseCameraCtrl->getFovyDegree();
     }
 
@@ -183,7 +183,7 @@ void CameraPoseUpdater::update(bool isPaused) {
                          mAspect);
     mProjection->calcMtx();
 
-    if (!mPauseCameraCtrl || !mPauseCameraCtrl->isCameraPause()) {
+    if (mPauseCameraCtrl == nullptr || !mPauseCameraCtrl->isCameraPause()) {
         mViewInfo->setFirstCalc(false);
     }
 }
@@ -193,7 +193,7 @@ void CameraPoseUpdater::update(bool isPaused) {
  * @return Whether the nerve was changed.
  */
 bool CameraPoseUpdater::trySwitchCamera() {
-    if (!mSwitcher) {
+    if (mSwitcher == nullptr) {
         return false;
     }
 
@@ -226,7 +226,7 @@ bool CameraPoseUpdater::trySwitchCamera() {
 
     CameraStartInfo startInfo;
 
-    if (prevTicket) {
+    if (prevTicket != nullptr) {
         startInfo.prePriorityType = static_cast<CameraTicket::Priority>(prevTicket->getPriority());
         startInfo.preCameraName = prevTicket->getPoser()->getName();
         startInfo.isInvalidCollidePreCamera =
@@ -245,11 +245,11 @@ bool CameraPoseUpdater::trySwitchCamera() {
 
         CameraVerticalAbsorber* absorber = prevTicket->getPoser()->getCameraVerticalAbsorber();
 
-        if (absorber && absorber->isAbsorbing()) {
+        if (absorber != nullptr && absorber->isAbsorbing()) {
             startInfo._25 = true;
         }
 
-        if (prevTicket->getPoser()->getAngleSwingInfo()) {
+        if (prevTicket->getPoser()->getAngleSwingInfo() != nullptr) {
             startInfo.preCameraSwingAngleH =
                 prevTicket->getPoser()->getAngleSwingInfo()->currentAngle.x;
             startInfo.preCameraSwingAngleV =
@@ -275,14 +275,14 @@ bool CameraPoseUpdater::trySwitchCamera() {
     mTicket->getPoser()->setViewInfo(mViewInfo);
     mTicket->getPoser()->appear(startInfo);
 
-    if (prevTicket) {
+    if (prevTicket != nullptr) {
         mInterpole->start(mTicket, mFovyDegree, mSwitcher->getNextInterpoleStep());
         mParamTransfer->tryTransferParam(prevTicket->getPoser(), mTicket->getPoser());
     } else {
         mInterpole->setTicket(mTicket);
     }
 
-    if (mClippingDirector && mSwitcher->isChanged() && mInterpole->getStep() <= 0) {
+    if (mClippingDirector != nullptr && mSwitcher->isChanged() && mInterpole->getStep() <= 0) {
         mClippingDirector->resetClippingDistanceStates();
     }
 
@@ -318,7 +318,7 @@ void CameraPoseUpdater::requestCancelInterpole() {
  * @return Whether a camera is active.
  */
 bool CameraPoseUpdater::calcCameraPoseWithoutInterpole(sead::LookAtCamera* pCamera) const {
-    if (!mTicket) {
+    if (mTicket == nullptr) {
         return false;
     }
 
@@ -331,7 +331,7 @@ bool CameraPoseUpdater::calcCameraPoseWithoutInterpole(sead::LookAtCamera* pCame
  * @param isLock Whether the camera is locked in snapshot mode.
  */
 void CameraPoseUpdater::startSnapShotMode(bool isLock) {
-    if (!mTicket) {
+    if (mTicket == nullptr) {
         return;
     }
 
@@ -349,7 +349,7 @@ void CameraPoseUpdater::startSnapShotMode(bool isLock) {
     alCameraPoserFunction::calcTargetTrans(&trans, mTicket->getPoser());
     AreaObj* areaObj = tryFindAreaObj(mTicket->getPoser(), "SnapShotInvalidCtrlArea", trans);
 
-    if (areaObj) {
+    if (areaObj != nullptr) {
         bool isValidCtrl = false;
 
         if (!tryGetAreaObjArg(&isValidCtrl, areaObj, "IsValidCtrl") || !isValidCtrl) {
@@ -367,7 +367,7 @@ void CameraPoseUpdater::startSnapShotMode(bool isLock) {
  * @param isEnable Whether rolling is enabled.
  */
 void CameraPoseUpdater::enableSnapShotRoll(bool isEnable) {
-    if (mTicket) {
+    if (mTicket != nullptr) {
         mTicket->getPoser()->enableSnapShotRoll(isEnable);
     }
 }
@@ -413,7 +413,7 @@ void CameraPoseUpdater::exeActive() {
         mIsMainView = true;
     }
 
-    if (mPauseCameraCtrl && mPauseCameraCtrl->isCameraPause() &&
+    if (mPauseCameraCtrl != nullptr && mPauseCameraCtrl->isCameraPause() &&
         !isNerve(this, &NrvCameraPoseUpdaterPause)) {
         setNerve(this, &NrvCameraPoseUpdaterPause);
         return;
@@ -459,7 +459,7 @@ void CameraPoseUpdater::exeActive() {
  * @param pTicket Default camera ticket.
  */
 void CameraPoseUpdater::setDefaultTicket(CameraTicket* pTicket) {
-    if (pTicket) {
+    if (pTicket != nullptr) {
         mDefaultTicket = pTicket;
         mFarClipDistance = pTicket->getPoser()->getFarClipDistance();
     }
@@ -473,7 +473,7 @@ void CameraPoseUpdater::exeDeactive() {
         mIsMainView = false;
     }
 
-    if (mPauseCameraCtrl && mPauseCameraCtrl->isCameraPause() &&
+    if (mPauseCameraCtrl != nullptr && mPauseCameraCtrl->isCameraPause() &&
         !isNerve(this, &NrvCameraPoseUpdaterPause)) {
         setNerve(this, &NrvCameraPoseUpdaterPause);
         return;
@@ -491,7 +491,7 @@ void CameraPoseUpdater::exeDeactive() {
  * Keeps the camera still until the stop judge releases it.
  */
 void CameraPoseUpdater::exeStop() {
-    if (mPauseCameraCtrl && mPauseCameraCtrl->isCameraPause() &&
+    if (mPauseCameraCtrl != nullptr && mPauseCameraCtrl->isCameraPause() &&
         !isNerve(this, &NrvCameraPoseUpdaterPause)) {
         setNerve(this, &NrvCameraPoseUpdaterPause);
         return;
@@ -501,7 +501,7 @@ void CameraPoseUpdater::exeStop() {
         return;
     }
 
-    if (mTicket) {
+    if (mTicket != nullptr) {
         startInterpole(60);
         setNerve(this, &NrvCameraPoseUpdaterActive);
     } else {
@@ -519,7 +519,7 @@ void CameraPoseUpdater::exePause() {
 
     if (mStopJudge->isStop()) {
         setNerve(this, &NrvCameraPoseUpdaterStop);
-    } else if (mTicket) {
+    } else if (mTicket != nullptr) {
         setNerve(this, &NrvCameraPoseUpdaterActive);
     } else {
         setNerve(this, &NrvCameraPoseUpdaterDeactive);
@@ -563,7 +563,7 @@ void CameraPoseUpdater::exeSnapShotNoUpdate() {}
  * @return Whether the current camera has the priority.
  */
 bool CameraPoseUpdater::isCurrentCameraPriority(s32 priority) const {
-    return mTicket && mTicket->getPriority() == priority;
+    return (mTicket != nullptr) && mTicket->getPriority() == priority;
 }
 
 /**
@@ -571,7 +571,7 @@ bool CameraPoseUpdater::isCurrentCameraPriority(s32 priority) const {
  * @return Whether changing to the subjective camera is invalid.
  */
 bool CameraPoseUpdater::isInvalidChangeSubjectiveCamera() const {
-    return mTicket && mTicket->getPoser()->getPoserFlag()->isInvalidChangeSubjective;
+    return (mTicket != nullptr) && mTicket->getPoser()->getPoserFlag()->isInvalidChangeSubjective;
 }
 
 /**
@@ -579,7 +579,7 @@ bool CameraPoseUpdater::isInvalidChangeSubjectiveCamera() const {
  * @return Whether the current camera is zooming.
  */
 bool CameraPoseUpdater::isCurrentCameraZooming() const {
-    return mTicket && mTicket->getPoser()->isZooming();
+    return (mTicket != nullptr) && mTicket->getPoser()->isZooming();
 }
 
 /**
@@ -587,7 +587,7 @@ bool CameraPoseUpdater::isCurrentCameraZooming() const {
  * @return Whether rotating by pad is enabled.
  */
 bool CameraPoseUpdater::isCurrentCameraEnableRotateByPad() const {
-    return mTicket && mTicket->getPoser()->isEnableRotateByPad();
+    return (mTicket != nullptr) && mTicket->getPoser()->isEnableRotateByPad();
 }
 
 /**
@@ -595,7 +595,7 @@ bool CameraPoseUpdater::isCurrentCameraEnableRotateByPad() const {
  * @return Whether the disaster flag is set.
  */
 bool CameraPoseUpdater::isCurrentCameraDisasterOn() const {
-    return mTicket && mTicket->is15();
+    return (mTicket != nullptr) && mTicket->is15();
 }
 
 /**
@@ -604,7 +604,7 @@ bool CameraPoseUpdater::isCurrentCameraDisasterOn() const {
  * @return Whether the request was accepted.
  */
 bool CameraPoseUpdater::tryReceiveCameraRequestFromObject(const CameraObjectRequestInfo& rInfo) {
-    return mTicket && mTicket->getPoser()->receiveRequestFromObjectCore(rInfo);
+    return (mTicket != nullptr) && mTicket->getPoser()->receiveRequestFromObjectCore(rInfo);
 }
 
 /**
@@ -613,7 +613,7 @@ bool CameraPoseUpdater::tryReceiveCameraRequestFromObject(const CameraObjectRequ
  * @return Whether the request was accepted.
  */
 bool CameraPoseUpdater::tryRequestCameraTurnToDirection(const CameraTurnInfo* pInfo) {
-    return mTicket && mTicket->getPoser()->requestTurnToDirection(pInfo);
+    return (mTicket != nullptr) && mTicket->getPoser()->requestTurnToDirection(pInfo);
 }
 
 }  // namespace al

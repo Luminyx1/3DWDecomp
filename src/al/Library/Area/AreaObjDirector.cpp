@@ -51,7 +51,7 @@ void AreaObjDirector::endInit() {}
  * Updates the matrix connected areas.
  */
 void AreaObjDirector::update() {
-    if (mMtxConnecterHolder) {
+    if (mMtxConnecterHolder != nullptr) {
         mMtxConnecterHolder->update();
     }
 }
@@ -105,7 +105,7 @@ void AreaObjDirector::createAreaObjGroup(const AreaInitInfo& rInfo) {
             continue;
         }
 
-        if (!mAreaGroups[index]) {
+        if (mAreaGroups[index] == nullptr) {
             mAreaGroups[index] = new AreaObjGroup(objName);
         }
 
@@ -121,7 +121,7 @@ void AreaObjDirector::createAreaObjGroupBuffer() {
     s32 num = mFactory->getNumFactoryEntries();
 
     for (s32 i = 0; i < num; i++) {
-        if (!mAreaGroups[i]) {
+        if (mAreaGroups[i] == nullptr) {
             continue;
         }
 
@@ -131,7 +131,7 @@ void AreaObjDirector::createAreaObjGroupBuffer() {
         for (s32 j = i; j > 0; j--) {
             AreaObjGroup* prev = mAreaGroups[j - 1];
 
-            if (prev && strcmp(mAreaGroups[j]->mGroupName, prev->mGroupName) >= 0) {
+            if (prev != nullptr && strcmp(mAreaGroups[j]->mGroupName, prev->mGroupName) >= 0) {
                 break;
             }
 
@@ -167,7 +167,7 @@ void AreaObjDirector::placementAreaObj(const AreaInitInfo& rInfo, const SceneObj
             continue;
         }
 
-        if (pScene && !pScene->isValidPlacement(objInfo)) {
+        if (pScene != nullptr && !pScene->isValidPlacement(objInfo)) {
             continue;
         }
 
@@ -232,7 +232,7 @@ bool AreaObjDirector::isExistAreaGroup(const char* pName) {
  */
 void AreaObjDirector::addToExtraAreaGroup(AreaObj* pAreaObj) {
     for (s32 i = 0; i < 100; i++) {
-        if (!mExtraAreaObjs[i]) {
+        if (mExtraAreaObjs[i] == nullptr) {
             mExtraAreaObjs[i] = pAreaObj;
             mExtraAreaObjCount++;
             return;
@@ -247,7 +247,7 @@ void AreaObjDirector::addToExtraAreaGroup(AreaObj* pAreaObj) {
  */
 AreaObj* AreaObjDirector::tryFindInExtraAreaObjGroup(const sead::Vector3f& rPos) {
     for (s32 i = 0; i < 100; i++) {
-        if (mExtraAreaObjs[i] && mExtraAreaObjs[i]->isInVolumeCheck(rPos)) {
+        if (mExtraAreaObjs[i] != nullptr && mExtraAreaObjs[i]->isInVolumeCheck(rPos)) {
             return mExtraAreaObjs[i];
         }
     }
@@ -263,7 +263,7 @@ void AreaObjDirector::setEnableAll(bool isEnable) {
     for (s32 i = 0; i < mAreaGroupCount; i++) {
         AreaObjGroup* group = mAreaGroups[i];
 
-        if (!group) {
+        if (group == nullptr) {
             continue;
         }
 
@@ -282,7 +282,7 @@ void AreaObjDirector::setEnableAll(bool isEnable) {
 AreaObj* AreaObjDirector::getInVolumeAreaObj(const char* pName, const sead::Vector3f& rPos) {
     AreaObjGroup* group = getAreaObjGroup(pName);
 
-    if (!group) {
+    if (group == nullptr) {
         return nullptr;
     }
 
@@ -303,7 +303,7 @@ AreaObj* AreaObjDirector::getInVolumeAreaObj(const char* pName, const sead::Vect
                                              sead::Vector3f* pNormal) {
     AreaObjGroup* group = getAreaObjGroup(pName);
 
-    if (!group) {
+    if (group == nullptr) {
         return nullptr;
     }
 

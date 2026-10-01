@@ -166,7 +166,7 @@ void setForceSceneHeapResourceDestroy() {
  * @param pStageName Stage name, or nullptr to also reset the custom allocator.
  */
 void createSceneHeap(const char* pStageName) {
-    if (!pStageName) {
+    if (pStageName == nullptr) {
         getMemorySystem()->setCustomSceneHeapAlloc(nullptr);
     }
 

@@ -237,14 +237,14 @@ void initLayoutInitInfo(LayoutInitInfo* pInfo, const Scene* pScene, const SceneI
     LiveActorKit* kit = pScene->getLiveActorKit();
     LayoutKit* layoutKit = pScene->getLayoutKit();
 
-    if (kit) {
+    if (kit != nullptr) {
         pInfo->init(kit->mExecDirector, kit->mEffectSystem->getEffectSystemInfo(),
                     pScene->getSceneObjHolder(), pScene->getAudioDirector(),
                     kit->mCameraDirector, pScene->getSceneCameraInfo(),
                     rInfo.mGameSystemInfo->getLayoutSystem(),
                     rInfo.mGameSystemInfo->getMessageSystem(),
                     rInfo.mGameSystemInfo->getGamePadSystem(), kit->mRumbleDirector);
-        if (layoutKit) {
+        if (layoutKit != nullptr) {
             pInfo->setDrawContext(layoutKit->getDrawContext());
             pInfo->setDrawInfo(layoutKit->getDrawInfo());
         }
@@ -304,7 +304,7 @@ void initPlacementAreaObj(Scene* pScene, const ActorInitInfo& rInfo,
         }
     }
 
-    if (pExtraList) {
+    if (pExtraList != nullptr) {
         s32 extraNum = pExtraList->getStageResourceNum();
 
         for (s32 i = 0; i < extraNum; i++) {
@@ -416,7 +416,7 @@ LiveActor* tryInitPlacementSingleObject(Scene* pScene, const ActorInitInfo& rInf
             getPlacementInfoByIndex(&info, placementInfo, j);
             LiveActor* created = createPlacementActorFromFactory(rFactory, rInfo, &info);
 
-            if (created) {
+            if (created != nullptr) {
                 actor = created;
             }
         }
@@ -487,7 +487,7 @@ void tryInitPlacementCategory(Scene* pScene, const ActorInitInfo& rInfo, s32 lis
 
             LiveActor* actor = createPlacementActorFromFactory(rFactory, rInfo, &info);
 
-            if (!actor) {
+            if (actor == nullptr) {
                 continue;
             }
 
@@ -523,7 +523,7 @@ void initPlacementByStageInfoSingle(const StageInfo* pStageInfo, const char* pNa
  */
 bool tryGetPlacementInfo(PlacementInfo* pOut, const Resource* pResource, const char* pFileName,
                          const char* pName) {
-    if (!pResource) {
+    if (pResource == nullptr) {
         return false;
     }
 
@@ -787,7 +787,7 @@ void updateEffectLayout(Scene* pScene) {
  * @param pScene scene
  */
 void updatePadRumbleDirector(Scene* pScene) {
-    if (pScene && pScene->getLiveActorKit()) {
+    if (pScene != nullptr && pScene->getLiveActorKit() != nullptr) {
         updatePadRumbleDirector(pScene->getLiveActorKit());
     }
 }
@@ -799,7 +799,7 @@ void updatePadRumbleDirector(Scene* pScene) {
 void updateHitSensorDirector(Scene* pScene) {
     HitSensorDirector* director = pScene->getLiveActorKit()->mSensorDirector;
 
-    if (director) {
+    if (director != nullptr) {
         director->trueExecute();
     }
 }
@@ -1007,7 +1007,7 @@ void offClippingPosAsPlayerPos(const Scene* pScene) {
 void initPadRumble(const Scene* pScene, const SceneInitInfo& rInfo) {
     WaveVibrationHolder* holder = rInfo.mGameSystemInfo->getWaveVibrationHolder();
 
-    if (!holder) {
+    if (holder == nullptr) {
         return;
     }
 
@@ -1023,7 +1023,7 @@ void initPadRumble(const Scene* pScene, const SceneInitInfo& rInfo) {
 void stopPadRumble(const Scene* pScene) {
     LiveActorKit* kit = pScene->getLiveActorKit();
 
-    if (kit && kit->mRumbleDirector) {
+    if (kit != nullptr && kit->mRumbleDirector != nullptr) {
         kit->mRumbleDirector->stopAllRumble();
     }
 }
@@ -1035,7 +1035,7 @@ void stopPadRumble(const Scene* pScene) {
 void pausePadRumble(const Scene* pScene) {
     LiveActorKit* kit = pScene->getLiveActorKit();
 
-    if (kit && kit->mRumbleDirector) {
+    if (kit != nullptr && kit->mRumbleDirector != nullptr) {
         kit->mRumbleDirector->pause();
     }
 }
@@ -1047,7 +1047,7 @@ void pausePadRumble(const Scene* pScene) {
 void endPausePadRumble(const Scene* pScene) {
     LiveActorKit* kit = pScene->getLiveActorKit();
 
-    if (kit && kit->mRumbleDirector) {
+    if (kit != nullptr && kit->mRumbleDirector != nullptr) {
         kit->mRumbleDirector->endPause();
     }
 }
@@ -1059,7 +1059,7 @@ void endPausePadRumble(const Scene* pScene) {
 void pauseDemoPadRumble(const Scene* pScene) {
     LiveActorKit* kit = pScene->getLiveActorKit();
 
-    if (kit && kit->mRumbleDirector) {
+    if (kit != nullptr && kit->mRumbleDirector != nullptr) {
         kit->mRumbleDirector->pauseActiveRumbles();
     }
 }
@@ -1071,7 +1071,7 @@ void pauseDemoPadRumble(const Scene* pScene) {
 void endPauseDemoPadRumble(const Scene* pScene) {
     LiveActorKit* kit = pScene->getLiveActorKit();
 
-    if (kit && kit->mRumbleDirector) {
+    if (kit != nullptr && kit->mRumbleDirector != nullptr) {
         kit->mRumbleDirector->resumeActiveRumbles();
     }
 }

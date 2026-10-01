@@ -27,7 +27,7 @@ static inline bool isUpdateListActor(const ExecuteOrder& rOrder) {
 ExecuteTableHolderUpdate::ExecuteTableHolderUpdate() = default;
 
 ExecuteTableHolderUpdate::~ExecuteTableHolderUpdate() {
-    if (mThread) {
+    if (mThread != nullptr) {
         delete mThread;
     }
 }
@@ -277,7 +277,7 @@ void ExecuteTableHolderUpdate::executePaused() const {
  * Waits for the anim calculation thread.
  */
 void ExecuteTableHolderUpdate::finishExecute() const {
-    if (mThread) {
+    if (mThread != nullptr) {
         mThread->waitDoneAll();
     }
 }

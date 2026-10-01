@@ -27,16 +27,16 @@ bool isOverDistance(f32 distance, f32 limit) {
 void startCameraShakeImpl(const LiveActor* pActor, const char* pShakeName,
                           const char* pActionName) {
     if (pActor->mActorSceneInfo->isSingleMode) {
-        if (pShakeName) {
+        if (pShakeName != nullptr) {
             startCameraShakeByAction(pActor, pShakeName, pActionName, -1, 0);
         }
-    } else if (pShakeName) {
+    } else if (pShakeName != nullptr) {
         requestStartCameraShake(pActor, pShakeName);
     }
 }
 
 void startPadRumbleImpl(const LiveActor* pActor, const char* pRumbleName, s32 port) {
-    if (pRumbleName) {
+    if (pRumbleName != nullptr) {
         alPadRumbleFunction::startPadRumble(pActor, pRumbleName, port, false);
     }
 }
@@ -139,7 +139,7 @@ void ActionPadAndCameraCtrl::updatePadAndCamera(const ActionPadAndCameraCtrlInfo
         startCameraShakeImpl(mParentActor, pInfo->mCameraShakeName, pInfo->mActionName);
 
         if (pInfo->mIsUsePadRumbleKeeper) {
-            if (pInfo->mPadRumbleName) {
+            if (pInfo->mPadRumbleName != nullptr) {
                 alPadRumbleFunction::startPadRumble(mParentActor, pInfo->mPadRumbleName,
                                                     mPadRumbleKeeper->getPort(), false);
             }
@@ -160,7 +160,7 @@ void ActionPadAndCameraCtrl::updatePadAndCamera(const ActionPadAndCameraCtrlInfo
                 continue;
             }
 
-            if (pInfo->mPadRumbleName) {
+            if (pInfo->mPadRumbleName != nullptr) {
                 alPadRumbleFunction::startPadRumble(mParentActor, pInfo->mPadRumbleName, port,
                                                     false);
             }

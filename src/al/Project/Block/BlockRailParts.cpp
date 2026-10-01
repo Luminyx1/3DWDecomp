@@ -225,7 +225,7 @@ void BlockRailParts::setIsHideModel(bool isHide) {
 
     SubActorKeeper* keeper = mSubActorKeeper;
 
-    if (keeper) {
+    if (keeper != nullptr) {
         for (s32 i = 0; i < keeper->mCount; i++) {
             keeper->mInfos[i]->mSyncType |= 4;
         }

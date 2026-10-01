@@ -53,7 +53,7 @@ namespace al {
     }
 
     bool NerveStateCtrl::isCurrentStateEnd() const {
-        return !mCurrentState || mCurrentState->mState->mIsDead;
+        return (mCurrentState == nullptr) || mCurrentState->mState->mIsDead;
     }
 
     void NerveStateCtrl::tryEndCurrentState() {

@@ -83,13 +83,13 @@ void setExpandedClippingMode(LiveActor* pActor, bool isExpanded) {
 bool isExpandedClippingMode(const LiveActor* pActor) {
     ClippingAreaActorInfoNode* node = pActor->mClippingInfoNode;
 
-    if (!node) {
+    if (node == nullptr) {
         return false;
     }
 
     ClippingAreaActorInfo* info = node->mInfo;
 
-    if (!info) {
+    if (info == nullptr) {
         return false;
     }
 
@@ -391,16 +391,16 @@ void onDrawClipping(LiveActor* pActor) {
 
     alActorSystemFunction::addToExecutorMovement(pActor);
 
-    if (pActor->mHitSensorKeeper) {
+    if (pActor->mHitSensorKeeper != nullptr) {
         pActor->mHitSensorKeeper->validateBySystem();
         alSensorFunction::updateHitSensorsAll(pActor);
     }
 
-    if (pActor->getEffectKeeper()) {
+    if (pActor->getEffectKeeper() != nullptr) {
         pActor->getEffectKeeper()->onCalcAndDraw();
     }
 
-    if (pActor->getAudioKeeper()) {
+    if (pActor->getAudioKeeper() != nullptr) {
         pActor->getAudioKeeper()->startClipped();
     }
 }
@@ -418,15 +418,15 @@ void offDrawClipping(LiveActor* pActor) {
 
     alActorSystemFunction::removeFromExecutorMovement(pActor);
 
-    if (pActor->mHitSensorKeeper) {
+    if (pActor->mHitSensorKeeper != nullptr) {
         pActor->mHitSensorKeeper->invalidateBySystem();
     }
 
-    if (pActor->getEffectKeeper()) {
+    if (pActor->getEffectKeeper() != nullptr) {
         pActor->getEffectKeeper()->offCalcAndDraw();
     }
 
-    if (pActor->getAudioKeeper()) {
+    if (pActor->getAudioKeeper() != nullptr) {
         pActor->getAudioKeeper()->endClipped();
     }
 }

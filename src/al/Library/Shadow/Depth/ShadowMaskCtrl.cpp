@@ -28,7 +28,7 @@ namespace {
 
 void attachMtxConnector(al::MtxConnector* pConnector, al::LiveActor* pActor,
                         const char* pJointName) {
-    if (pJointName && !al::isEqualString(pJointName, "") && al::isExistJoint(pActor, pJointName)) {
+    if (pJointName != nullptr && !al::isEqualString(pJointName, "") && al::isExistJoint(pActor, pJointName)) {
         al::attachMtxConnectorToJoint(pConnector, pActor, pJointName);
         return;
     }
@@ -116,13 +116,13 @@ bool ShadowKeeper::init(LiveActor* pActor, const ActorInitInfo& rInfo, const Bya
         info.setPtr();
         np_ShadowMaskCommon::ShadowMaskCommon.readParam(maskIter);
 
-        if (!info.mName) {
+        if (info.mName == nullptr) {
             continue;
         }
 
         const char* typeName = info.mShadowMaskType;
 
-        if (!typeName || isEqualString(typeName, ShadowMaskType::text(ShadowMaskType::None))) {
+        if (typeName == nullptr || isEqualString(typeName, ShadowMaskType::text(ShadowMaskType::None))) {
             continue;
         }
 
@@ -230,7 +230,7 @@ bool ShadowKeeper::init(LiveActor* pActor, const ActorInitInfo& rInfo, const Bya
 
         mask->mHeightEvenTarget = target;
 
-        if (target) {
+        if (target != nullptr) {
             target->_e8 = true;
         }
     }

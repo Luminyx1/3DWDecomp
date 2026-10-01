@@ -18,7 +18,7 @@ LayoutKit::LayoutKit(FontHolder* pFontHolder) : mFontHolder(pFontHolder) {}
  * Destroys the layout kit and its execute director.
  */
 LayoutKit::~LayoutKit() {
-    if (mLayoutSystem) {
+    if (mLayoutSystem != nullptr) {
         mLayoutSystem->getFontList()->isInvalid = true;
     }
 
@@ -51,7 +51,7 @@ void LayoutKit::createEffectSystem() {
  * Finishes initialization by creating the executor list table.
  */
 void LayoutKit::endInit() {
-    if (mExecuteDirector) {
+    if (mExecuteDirector != nullptr) {
         mExecuteDirector->createExecutorListTable();
     }
 }
@@ -60,7 +60,7 @@ void LayoutKit::endInit() {
  * Executes the layout update lists and updates the screens.
  */
 void LayoutKit::update() {
-    if (mExecuteDirector) {
+    if (mExecuteDirector != nullptr) {
         mExecuteDirector->execute();
     }
 
@@ -84,7 +84,7 @@ void LayoutKit::setFrameBuffer(const agl::RenderBuffer* pRenderBuffer,
  * @param pTableName draw table name
  */
 void LayoutKit::draw(const char* pTableName) const {
-    if (mExecuteDirector) {
+    if (mExecuteDirector != nullptr) {
         mExecuteDirector->draw(pTableName);
     }
 }

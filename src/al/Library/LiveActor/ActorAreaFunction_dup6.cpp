@@ -22,7 +22,7 @@ SwitchKeepOnAreaGroup* tryCreateSwitchKeepOnAreaGroup(LiveActor* pActor,
     AreaObjGroup* group = createLinkAreaGroup(pActor, rInfo, "AreaSwitchKeepOn",
                                               "子供スイッチキープエリアグループ",
                                               "子供スイッチキープエリア");
-    if (!group) {
+    if (group == nullptr) {
         return nullptr;
     }
 

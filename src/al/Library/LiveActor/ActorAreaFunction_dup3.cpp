@@ -14,7 +14,7 @@ inline AreaObj* findAreaObj(const IUseAreaObj* pAreaUser, const char* pName,
 }
 
 inline bool isInWaterAreaInline(const IUseAreaObj* pAreaUser, const sead::Vector3f& rPos) {
-    if (findAreaObj(pAreaUser, "NoWaterArea", rPos)) {
+    if (findAreaObj(pAreaUser, "NoWaterArea", rPos) != nullptr) {
         return false;
     }
 
@@ -58,12 +58,12 @@ bool isInWaterArea(const LiveActor* pActor, f32 offsetY) {
  * @return Whether the position is in non-sinking water.
  */
 bool isInWaterAreaNoSink(const IUseAreaObj* pAreaUser, const sead::Vector3f& rPos) {
-    if (findAreaObj(pAreaUser, "NoWaterArea", rPos)) {
+    if (findAreaObj(pAreaUser, "NoWaterArea", rPos) != nullptr) {
         return false;
     }
 
     AreaObj* area = findAreaObj(pAreaUser, "WaterArea", rPos);
-    return area && area->mIsNoSinkOcean;
+    return (area != nullptr) && area->mIsNoSinkOcean;
 }
 
 /**

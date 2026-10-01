@@ -68,7 +68,7 @@ void startPadRumble(const al::LiveActor* pActor, const char* pName, s32 port, bo
 void startPadRumbleNo3D(const al::LiveActor* pActor, const char* pName, s32 port, bool isFlag) {
     al::PadRumbleDirector* director = getPadRumbleDirector(pActor);
 
-    if (!director) {
+    if (director == nullptr) {
         return;
     }
 
@@ -195,7 +195,7 @@ void startPadRumblePos(const al::LiveActor* pActor, const sead::Vector3f& rPos, 
                        f32 near, f32 far, s32 port, bool isFlag) {
     al::PadRumbleDirector* director = getPadRumbleDirector(pActor);
 
-    if (!director) {
+    if (director == nullptr) {
         return;
     }
 
@@ -225,7 +225,7 @@ void startPadRumblePos(const al::LiveActor* pActor, const sead::Vector3f& rPos, 
  */
 void startPadRumbleNo3D(al::PadRumbleDirector* pDirector, const char* pName, s32 port,
                         bool isFlag) {
-    if (pDirector) {
+    if (pDirector != nullptr) {
         pDirector->startRumbleNo3D(pName, al::PadRumbleParam(), port, isFlag);
     }
 }
@@ -240,7 +240,7 @@ void startPadRumbleNo3D(al::PadRumbleDirector* pDirector, const char* pName, s32
  */
 void startPadRumbleNo3DWithParam(al::PadRumbleDirector* pDirector, const char* pName,
                                  const al::PadRumbleParam& rParam, s32 port, bool isFlag) {
-    if (pDirector) {
+    if (pDirector != nullptr) {
         pDirector->startRumbleNo3D(pName, rParam, port, isFlag);
     }
 }
@@ -259,7 +259,7 @@ void startPadRumbleNo3DWithParam(al::PadRumbleDirector* pDirector, const char* p
 void startPadRumbleNo3DWithParam(al::PadRumbleDirector* pDirector, const char* pName,
                                  f32 volumeLeft, f32 volumeRight, f32 pitchLeft, f32 pitchRight,
                                  s32 port, bool isFlag) {
-    if (pDirector) {
+    if (pDirector != nullptr) {
         al::PadRumbleParam param(0.0f, 0.0f, volumeLeft, volumeRight, pitchLeft, pitchRight);
         pDirector->startRumbleNo3D(pName, param, port, isFlag);
     }
@@ -290,7 +290,7 @@ void startPadRumbleNo3DWithParam(const al::LiveActor* pActor, const char* pName,
  * @param port controller port
  */
 void stopPadRumbleOneTime(al::PadRumbleDirector* pDirector, const char* pName, s32 port) {
-    if (pDirector) {
+    if (pDirector != nullptr) {
         pDirector->stopPadRumbleOneTime(pName, port);
     }
 }
@@ -317,7 +317,7 @@ void stopPadRumbleOneTime(const al::LiveActor* pActor, const char* pName, s32 po
  */
 void startPadRumbleLoop(al::PadRumbleDirector* pDirector, const char* pName,
                         const sead::Vector3f* pPos, f32 near, f32 far, s32 port, bool isFlag) {
-    if (pDirector) {
+    if (pDirector != nullptr) {
         pDirector->startRumbleLoop(pName, pPos, al::PadRumbleParam(), port, isFlag);
     }
 }
@@ -334,7 +334,7 @@ void startPadRumbleLoop(al::PadRumbleDirector* pDirector, const char* pName,
 void startPadRumbleLoopWithParam(al::PadRumbleDirector* pDirector, const char* pName,
                                  const sead::Vector3f* pPos, const al::PadRumbleParam& rParam,
                                  s32 port, bool isFlag) {
-    if (pDirector) {
+    if (pDirector != nullptr) {
         pDirector->startRumbleLoop(pName, pPos, rParam, port, isFlag);
     }
 }
@@ -353,7 +353,7 @@ void startPadRumbleLoop(const al::LiveActor* pActor, const char* pName, const se
                         f32 near, f32 far, s32 port, bool isFlag) {
     al::PadRumbleDirector* director = getPadRumbleDirector(pActor);
 
-    if (!director) {
+    if (director == nullptr) {
         return;
     }
 

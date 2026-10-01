@@ -31,7 +31,7 @@ void ClippingJudge::update() {
     FrustumRadar* frustumRadar = mFrustumRadar;
     const sead::LookAtCamera* camera;
 
-    if (cameraDirector) {
+    if (cameraDirector != nullptr) {
         const sead::Matrix34f& viewMtx = getViewMtx_RS(this, 0);
         const sead::Matrix44f& projMtx = getProjectionMtx_RS(this, 0);
         frustumRadar->calcFrustumArea(viewMtx, projMtx, 300.0f, getFarClipping());
@@ -58,7 +58,7 @@ void ClippingJudge::setPlayerPos(const PlayerHolder* pPlayerHolder) {
 
     LiveActor* player = tryFindAlivePlayerActorFirst(pPlayerHolder);
 
-    if (pPlayerHolder) {
+    if (pPlayerHolder != nullptr) {
         mPlayerPos = getTrans(player);
     }
 }

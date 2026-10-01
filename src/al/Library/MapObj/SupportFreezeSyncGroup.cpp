@@ -48,7 +48,7 @@ void SupportFreezeSyncGroup::setHostSensor(HitSensor* pSensor) {
  * @return whether the link group ids are equal
  */
 bool SupportFreezeSyncGroup::isEqualGroupId(const ActorInitInfo& rInfo) const {
-    if (!mPlacementId->mPlacementID) {
+    if (mPlacementId->mPlacementID == nullptr) {
         return false;
     }
 

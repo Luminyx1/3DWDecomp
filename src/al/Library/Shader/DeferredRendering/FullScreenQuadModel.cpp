@@ -55,7 +55,7 @@ FullScreenQuadModel::FullScreenQuadModel() {
  * Destroys the vertex buffer.
  */
 FullScreenQuadModel::~FullScreenQuadModel() {
-    if (mVertexBuffer) {
+    if (mVertexBuffer != nullptr) {
         delete mVertexBuffer;
         mVertexBuffer = nullptr;
     }

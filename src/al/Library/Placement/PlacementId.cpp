@@ -46,33 +46,33 @@ bool PlacementId::init(const PlacementInfo& rInfo) {
  * @return true if both ids refer to the same object
  */
 bool PlacementId::isEqual(const PlacementId& rOther) const {
-    if (mCommonID) {
-        return rOther.mCommonID && isEqualString(mCommonID, rOther.mCommonID);
+    if (mCommonID != nullptr) {
+        return (rOther.mCommonID != nullptr) && isEqualString(mCommonID, rOther.mCommonID);
     }
 
-    if (rOther.mCommonID) {
+    if (rOther.mCommonID != nullptr) {
         return false;
     }
 
-    if (mUnitConfigName) {
-        if (!rOther.mUnitConfigName || !isEqualString(mUnitConfigName, rOther.mUnitConfigName) ||
+    if (mUnitConfigName != nullptr) {
+        if (rOther.mUnitConfigName == nullptr || !isEqualString(mUnitConfigName, rOther.mUnitConfigName) ||
             !isEqualString(mZoneID, rOther.mZoneID)) {
             return false;
         }
-    } else if (rOther.mUnitConfigName) {
+    } else if (rOther.mUnitConfigName != nullptr) {
         return false;
     }
 
-    if (mLayerConfigName) {
-        if (!rOther.mLayerConfigName ||
+    if (mLayerConfigName != nullptr) {
+        if (rOther.mLayerConfigName == nullptr ||
             !isEqualString(mLayerConfigName, rOther.mLayerConfigName)) {
             return false;
         }
-    } else if (rOther.mLayerConfigName) {
+    } else if (rOther.mLayerConfigName != nullptr) {
         return false;
     }
 
-    return mPlacementID && rOther.mPlacementID &&
+    return (mPlacementID != nullptr) && rOther.mPlacementID != nullptr &&
            isEqualString(mPlacementID, rOther.mPlacementID);
 }
 

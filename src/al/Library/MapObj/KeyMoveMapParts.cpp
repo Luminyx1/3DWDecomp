@@ -120,7 +120,7 @@ void KeyMoveMapParts::init(const ActorInitInfo& rInfo) {
                             KeyMoveMapPartsFunctor(this, &KeyMoveMapParts::stop));
         mEffectMtxSetter = tryCreateEffectMtxSetter(this, "EffectMtxSetter");
 
-        if (mEffectMtxSetter) {
+        if (mEffectMtxSetter != nullptr) {
             mEffectMtxSetter->setMtxPtr(&mBaseEffectMtx, "BaseEffectMtx");
             mBaseQuat.set(getQuat(this));
         }
@@ -197,12 +197,12 @@ void KeyMoveMapParts::reverse() {
 void KeyMoveMapParts::killLights() {
     ActorPrePassLightKeeper* lightKeeper = mLightKeeper;
 
-    if (!lightKeeper) {
+    if (lightKeeper == nullptr) {
         return;
     }
 
     for (s32 i = 0; i < lightKeeper->getLightNum(); i++) {
-        if (strstr(lightKeeper->getLightBase(i)->mName, "Kill")) {
+        if (strstr(lightKeeper->getLightBase(i)->mName, "Kill") != nullptr) {
             lightKeeper->getLightBase(i)->requestKill();
         }
     }
@@ -223,7 +223,7 @@ void KeyMoveMapParts::stop() {
         startNerveAction(this, "Stop");
     }
 
-    if (mSeMoveName) {
+    if (mSeMoveName != nullptr) {
         tryStopSe(this, mSeMoveName);
         mSeMoveName = nullptr;
     }
@@ -235,7 +235,7 @@ void KeyMoveMapParts::stop() {
  * Places the base effect matrix on the ground below the map part.
  */
 void KeyMoveMapParts::initAfterPlacement() {
-    if (!mEffectMtxSetter || !mIsSingleMode) {
+    if (mEffectMtxSetter == nullptr || !mIsSingleMode) {
         return;
     }
 
@@ -315,11 +315,11 @@ void KeyMoveMapParts::appear() {
  * Updates the switch areas and the floor touch reverse timer.
  */
 void KeyMoveMapParts::control() {
-    if (mSwitchKeepOnAreaGroup) {
+    if (mSwitchKeepOnAreaGroup != nullptr) {
         mSwitchKeepOnAreaGroup->update(getTrans(this));
     }
 
-    if (mSwitchOnAreaGroup) {
+    if (mSwitchOnAreaGroup != nullptr) {
         mSwitchOnAreaGroup->update(getTrans(this));
     }
 
@@ -487,7 +487,7 @@ void KeyMoveMapParts::exeMove() {
 
             mSeMoveName = getMoveSeName(keyIndex);
 
-            if (mSeMoveName) {
+            if (mSeMoveName != nullptr) {
                 tryStartSe(this, mSeMoveName);
             }
         }
@@ -515,7 +515,7 @@ void KeyMoveMapParts::exeMove() {
                 startNerveAction(this, "Wait");
             }
 
-            if (mSeMoveName) {
+            if (mSeMoveName != nullptr) {
                 tryStopSe(this, mSeMoveName);
                 mSeMoveName = nullptr;
             }

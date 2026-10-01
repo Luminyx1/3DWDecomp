@@ -38,7 +38,7 @@ void ReplayController::pauseReplay() {
  * Ends replaying recorded input and closes the reader.
  */
 void ReplayController::endReplay() {
-    if (mIsReplaying && mPadDataReader) {
+    if (mIsReplaying && mPadDataReader != nullptr) {
         mPadDataReader->close();
     }
 
@@ -66,7 +66,7 @@ bool ReplayController::isRecording() const {
  * @return remaining frames, or 0 when not replaying
  */
 s32 ReplayController::getReplayRemainFrame() const {
-    if (mIsReplaying && mPadDataReader) {
+    if (mIsReplaying && mPadDataReader != nullptr) {
         return mPadDataReader->getRemainFrame();
     }
 
@@ -82,7 +82,7 @@ void ReplayController::calc(u32 prevHold, bool prevPointerOn) {
     mIsReadPadReplayData = false;
     sead::ControllerWrapper::calc(prevHold, prevPointerOn);
 
-    if (mIsReplaying && mPadDataReader) {
+    if (mIsReplaying && mPadDataReader != nullptr) {
         PadDataPack frameData;
         mPadDataReader->read(&frameData);
         mPadTrig.setDirect(frameData.trig);
@@ -97,7 +97,7 @@ void ReplayController::calc(u32 prevHold, bool prevPointerOn) {
         mIsReadPadReplayData = true;
     }
 
-    if (mIsRecording && mPadDataWriter) {
+    if (mIsRecording && mPadDataWriter != nullptr) {
         PadDataPack frameData;
         frameData.trig = mPadTrig.getDirect();
         frameData.hold = mPadHold.getDirect();
@@ -111,7 +111,7 @@ void ReplayController::calc(u32 prevHold, bool prevPointerOn) {
  * Starts recording input.
  */
 void ReplayController::startRecord() {
-    if (!mIsRecording && mPadDataWriter) {
+    if (!mIsRecording && mPadDataWriter != nullptr) {
         mPadDataWriter->open();
     }
 
@@ -122,7 +122,7 @@ void ReplayController::startRecord() {
  * Ends recording input.
  */
 void ReplayController::endRecord() {
-    if (mIsRecording && mPadDataWriter) {
+    if (mIsRecording && mPadDataWriter != nullptr) {
         mPadDataWriter->close();
     }
 

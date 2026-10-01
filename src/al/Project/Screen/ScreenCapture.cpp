@@ -55,7 +55,7 @@ void ScreenCapture::initBlur(const sead::LogicalFrameBuffer& rFrameBuffer,
  * @param isEnable whether the blur is enabled
  */
 void ScreenCapture::enableBlur(bool isEnable) {
-    if (mBlurFilter) {
+    if (mBlurFilter != nullptr) {
         mBlurFilter->setEnable(isEnable);
     }
 }
@@ -114,7 +114,7 @@ void ScreenCapture::drawCaptureImage(agl::DrawContext* pDrawContext,
                          pRenderBuffer->getVirtualSize().y / texture->getHeight(0));
     sampler.applyTextureData(*mTextureData);
 
-    if (mBlurFilter && mBlurFilter->isEnable()) {
+    if (mBlurFilter != nullptr && mBlurFilter->isEnable()) {
         mBlurFilter->draw(pDrawContext, *pRenderBuffer, sampler);
     } else {
         agl::utl::ImageFilter2D::drawTexture(pDrawContext, sampler, viewport, scale,
@@ -126,17 +126,17 @@ void ScreenCapture::drawCaptureImage(agl::DrawContext* pDrawContext,
  * Destroys the capture and its texture.
  */
 ScreenCapture::~ScreenCapture() {
-    if (mBlurFilter) {
+    if (mBlurFilter != nullptr) {
         delete mBlurFilter;
         mBlurFilter = nullptr;
     }
 
-    if (mImageAddr.getMemoryPool()) {
+    if (mImageAddr.getMemoryPool() != nullptr) {
         mImageAddr.deleteGPUMemBlock();
         mImageAddr.invalidate();
     }
 
-    if (mTextureData) {
+    if (mTextureData != nullptr) {
         delete mTextureData;
         mTextureData = nullptr;
     }

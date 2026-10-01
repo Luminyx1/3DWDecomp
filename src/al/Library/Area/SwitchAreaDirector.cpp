@@ -19,8 +19,8 @@ namespace al {
 SwitchAreaDirector* SwitchAreaDirector::tryCreate(AreaObjDirector* pAreaObjDirector,
                                                   const PlayerHolder* pPlayerHolder,
                                                   MultiCoreQueueThread* pThread) {
-    if (!pAreaObjDirector->getAreaObjGroup("SwitchOnArea") &&
-        !pAreaObjDirector->getAreaObjGroup("SwitchKeepOnArea")) {
+    if (pAreaObjDirector->getAreaObjGroup("SwitchOnArea") == nullptr &&
+        (pAreaObjDirector->getAreaObjGroup("SwitchKeepOnArea") == nullptr)) {
         return nullptr;
     }
 
@@ -31,7 +31,7 @@ SwitchAreaDirector* SwitchAreaDirector::tryCreate(AreaObjDirector* pAreaObjDirec
  * Waits until the threaded update is done.
  */
 void SwitchAreaDirector::waitDone() {
-    if (mThread) {
+    if (mThread != nullptr) {
         mThread->waitDone();
     }
 }
@@ -54,13 +54,13 @@ void SwitchAreaDirector::internalUpdate() {
     }
 
     LiveActor* player = getPlayerActor(mPlayerHolder, 0);
-    bool isDisaster = player ? isDisasterMode(player) : false;
+    bool isDisaster = (player != nullptr) ? isDisasterMode(player) : false;
 
-    if (mSwitchOnAreaGroup) {
+    if (mSwitchOnAreaGroup != nullptr) {
         mSwitchOnAreaGroup->update(positions, numPositions, isDisaster);
     }
 
-    if (mSwitchKeepOnAreaGroup) {
+    if (mSwitchKeepOnAreaGroup != nullptr) {
         mSwitchKeepOnAreaGroup->update(positions, numPositions, isDisaster);
     }
 }
@@ -69,7 +69,7 @@ void SwitchAreaDirector::internalUpdate() {
  * Updates the switch areas, on the thread if one is set.
  */
 void SwitchAreaDirector::update() {
-    if (mThread) {
+    if (mThread != nullptr) {
         mThread->requestExecute(this);
         return;
     }
@@ -89,7 +89,7 @@ void SwitchAreaDirector::executeOnThread() {
  * @param pChecker scenario completion checker
  */
 void SwitchAreaDirector::endInit(IScenarioCompleteChecker* pChecker) {
-    if (mSwitchOnAreaGroup) {
+    if (mSwitchOnAreaGroup != nullptr) {
         mSwitchOnAreaGroup->endInit(pChecker);
     }
 }
@@ -106,13 +106,13 @@ SwitchAreaDirector::SwitchAreaDirector(AreaObjDirector* pAreaObjDirector,
     : mPlayerHolder(pPlayerHolder), mAreaObjDirector(pAreaObjDirector), mThread(pThread) {
     AreaObjGroup* switchOnGroup = pAreaObjDirector->getAreaObjGroup("SwitchOnArea");
 
-    if (switchOnGroup) {
+    if (switchOnGroup != nullptr) {
         mSwitchOnAreaGroup = new SwitchOnAreaGroup(switchOnGroup);
     }
 
     AreaObjGroup* keepOnGroup = pAreaObjDirector->getAreaObjGroup("SwitchKeepOnArea");
 
-    if (keepOnGroup) {
+    if (keepOnGroup != nullptr) {
         mSwitchKeepOnAreaGroup = new SwitchKeepOnAreaGroup(keepOnGroup);
     }
 }
@@ -121,7 +121,7 @@ SwitchAreaDirector::SwitchAreaDirector(AreaObjDirector* pAreaObjDirector,
  * Waits until the threaded update is done.
  */
 SwitchAreaDirector::~SwitchAreaDirector() {
-    if (mThread) {
+    if (mThread != nullptr) {
         mThread->waitDone();
     }
 }

@@ -104,7 +104,7 @@ void RollingCubeMapPartsGenerator::exeGenerate() {
     if (isIntervalStep(this, mGenerateInterval, 0)) {
         RollingCubeMapParts* rollingCube = mRollingCubeMapPartsGroup->tryFindDeadDeriveActor();
 
-        if (rollingCube) {
+        if (rollingCube != nullptr) {
             rollingCube->appearAndSetStart();
         }
     }

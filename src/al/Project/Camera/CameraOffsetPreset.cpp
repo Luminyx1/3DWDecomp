@@ -51,7 +51,7 @@ CameraOffsetPreset::CameraOffsetPreset(const CameraOffsetPresetData* pPresetData
 void CameraOffsetPreset::loadParam(const ByamlIter& rIter) {
     const char* offsetName = tryGetByamlKeyStringOrNULL(rIter, "OffsetName");
 
-    if (!offsetName) {
+    if (offsetName == nullptr) {
         return;
     }
 

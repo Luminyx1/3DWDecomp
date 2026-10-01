@@ -91,7 +91,7 @@ void CameraShaker_RS::update(const char* pLoopShakeName, bool isPaused) {
         return;
     }
 
-    if (pLoopShakeName) {
+    if (pLoopShakeName != nullptr) {
         if (isEqualString(pLoopShakeName, "弱")) {
             mLoopParam = &sLoopShakeParams[1];
         } else {
@@ -182,7 +182,7 @@ void CameraShaker_RS::exeWait() {
 
 void CameraShaker_RS::exeShake() {
     if (isGreaterEqualStep(this, mShakeParam->steps)) {
-        if (mLoopParam) {
+        if (mLoopParam != nullptr) {
             setNerve(this, &NrvCameraShaker_RSShakeLoop);
             return;
         }
@@ -208,7 +208,7 @@ void CameraShaker_RS::exeShake() {
 
 void CameraShaker_RS::exeShakeMultiple() {
     if (isGreaterEqualStep(this, mShakeParam->steps)) {
-        if (mLoopParam) {
+        if (mLoopParam != nullptr) {
             setNerve(this, &NrvCameraShaker_RSShakeLoop);
             return;
         }
@@ -252,7 +252,7 @@ void CameraShaker_RS::exeShakeLoop() {
 void CameraShaker_RS::startShakeByIndex(s32 index, s32 steps) {
     const CameraShakeParam* param = &sShakeParams[index];
 
-    if (mShakeParam) {
+    if (mShakeParam != nullptr) {
         if (isWeakerShake(param, mShakeParam)) {
             return;
         }

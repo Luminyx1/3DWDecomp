@@ -18,7 +18,7 @@ IUseYamlParam::IUseYamlParam(const char* pName) : mName(pName) {
  * @param pParam parameter to add
  */
 void YamlParamGroup::addParam(IUseYamlParam* pParam) {
-    if (!mHeadParam) {
+    if (mHeadParam == nullptr) {
         mHeadParam = pParam;
         mTailParam = pParam;
         return;
@@ -41,7 +41,7 @@ bool IUseYamlParam::isEqualParamName(const char* pName) const {
  * Clears the value pointers of all parameters in the group.
  */
 void YamlParamGroup::readyToSetPtr() {
-    for (IUseYamlParam* param = mHeadParam; param; param = param->getNext()) {
+    for (IUseYamlParam* param = mHeadParam; param != nullptr; param = param->getNext()) {
         param->clearPtr();
     }
 }
@@ -51,7 +51,7 @@ void YamlParamGroup::readyToSetPtr() {
  * @param rIter hash iterator
  */
 void YamlParamGroup::readParam(const al::ByamlIter& rIter) {
-    for (IUseYamlParam* param = mHeadParam; param; param = param->getNext()) {
+    for (IUseYamlParam* param = mHeadParam; param != nullptr; param = param->getNext()) {
         switch (param->getClassId()) {
         case YamlClassId::U8:
             al::tryGetByamlU8(static_cast<YamlParamBase<u8>*>(param)->getParamPtr(), rIter,

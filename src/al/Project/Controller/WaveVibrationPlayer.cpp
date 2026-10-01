@@ -121,7 +121,7 @@ void WaveVibrationPlayer::start(const WaveVibrationData* pData, f32 leftVolume,
     mFrame = 0;
     mElapsed = 0;
 
-    if (pData) {
+    if (pData != nullptr) {
         mPlayer->Load(pData->data, pData->size);
         mPlayer->Play();
         mPlayer->SetLoop(loop);
@@ -185,7 +185,7 @@ bool WaveVibrationPlayer::isPlaying() const
 /** @return Whether the underlying player exists and is configured to loop. */
 bool WaveVibrationPlayer::isLoop() const
 {
-    return mPlayer && mPlayer->IsLoop();
+    return (mPlayer != nullptr) && mPlayer->IsLoop();
 }
 
 /**

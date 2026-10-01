@@ -45,7 +45,7 @@ void ClippingInfoGroup::setGroupId(const ActorInitInfo& rInfo) {
  * @return true if the clipping group ids are equal
  */
 bool ClippingInfoGroup::isEqualGroupId(const ActorInitInfo& rInfo) const {
-    if (!mGroupId->mPlacementID) {
+    if (mGroupId->mPlacementID == nullptr) {
         return false;
     }
 
@@ -146,7 +146,7 @@ void ClippingGroupHolder::createAndAdd(ClippingActorInfo* pInfo, const ActorInit
                                        s32 maxInfos) {
     ClippingInfoGroup* group = tryFindGroup(rInfo);
 
-    if (!group) {
+    if (group == nullptr) {
         group = new ClippingInfoGroup(maxInfos);
         group->setGroupId(rInfo);
         mGroups[mNumGroups] = group;

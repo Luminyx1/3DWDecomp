@@ -78,10 +78,10 @@ void HitReactionKeeper::start(const char* pName, const sead::Vector3f* pPos,
             continue;
         }
 
-        if (info.mEffectName) {
+        if (info.mEffectName != nullptr) {
             if (pPos) {
                 emitEffect(mActor, info.mEffectName, pPos);
-            } else if (pSensor1 && pSensor2) {
+            } else if (pSensor1 != nullptr && pSensor2 != nullptr) {
                 sead::Vector3f pos;
                 calcPosBetweenSensors(&pos, pSensor1, pSensor2,
                                       info.mEffectPosOffsetBetweenSensors);
@@ -91,16 +91,16 @@ void HitReactionKeeper::start(const char* pName, const sead::Vector3f* pPos,
             }
         }
 
-        if (info.mSeName) {
+        if (info.mSeName != nullptr) {
             startSe(mActor, info.mSeName);
         }
 
-        if (info.mOceanWaveName) {
+        if (info.mOceanWaveName != nullptr) {
             startOceanWave(mActor, info.mOceanWaveName);
         }
 
-        if (info.mPadRumbleName) {
-            if (mActor) {
+        if (info.mPadRumbleName != nullptr) {
+            if (mActor != nullptr) {
                 LiveActor* actor = mActor;
                 const s32* port = mPadRumblePort;
 
@@ -134,7 +134,7 @@ void HitReactionKeeper::start(const char* pName, const sead::Vector3f* pPos,
                                                             getPlayerPort(actor, p), false);
                     }
                 }
-            } else if (mLayoutActor) {
+            } else if (mLayoutActor != nullptr) {
                 const s32* port = mPadRumblePort;
                 PadRumbleDirector* director = alPadRumbleFunction::getPadRumbleDirector(mLayoutActor);
 
@@ -157,7 +157,7 @@ void HitReactionKeeper::start(const char* pName, const sead::Vector3f* pPos,
             }
         }
 
-        if (info.mCameraShakeName) {
+        if (info.mCameraShakeName != nullptr) {
             LiveActor* actor = mActor;
             bool isShake = true;
 
@@ -178,7 +178,7 @@ void HitReactionKeeper::start(const char* pName, const sead::Vector3f* pPos,
             }
 
             if (isShake) {
-                if (actor->mActorSceneInfo && actor->mActorSceneInfo->cameraDirector) {
+                if (actor->mActorSceneInfo != nullptr && actor->mActorSceneInfo->cameraDirector != nullptr) {
                     startCameraShakeByHitReaction(actor, info.mCameraShakeName, actor->getName(),
                                                   info.mReactionName, -1, 0);
                 } else {

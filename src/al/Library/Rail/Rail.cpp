@@ -144,7 +144,7 @@ s32 Rail::getIncludedSection(const RailPart** part, f32* partDistance, f32 dista
         longI += 0x100000000;
     }
 
-    if (part)
+    if (part != nullptr)
         *part = &mRailPart[maxRailPart];
     if (partDistance)
         *partDistance = sead::Mathf::clamp(startDistanceOnRail, 0.0, (*part)->getPartLength());

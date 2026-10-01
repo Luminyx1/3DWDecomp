@@ -118,7 +118,7 @@ void ModelDrawerForward::createTable() {
  * Draws all forward meshes.
  */
 void ModelDrawerForward::draw() const {
-    if (!mMeshDrawerTable) {
+    if (mMeshDrawerTable == nullptr) {
         return;
     }
 

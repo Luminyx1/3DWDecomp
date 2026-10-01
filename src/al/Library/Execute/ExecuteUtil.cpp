@@ -140,7 +140,7 @@ void addToExecutorDrawImmediate(al::LiveActor* pActor) {
 al::ModelDrawerBase* tryCompletelyRemoveFromExecutorDraw(al::LiveActor* pActor) {
     al::ModelDrawerBase* drawer = pActor->mActorExecuteInfo->removeOptDrawer();
 
-    if (drawer) {
+    if (drawer != nullptr) {
         drawer->removeModel(pActor->mModelKeeper->mModelCafe);
     }
 
@@ -159,7 +159,7 @@ void tryCompletelyRemoveFromExecutorDraw(al::LiveActor* pActor,
     while (true) {
         al::ModelDrawerBase* drawer = tryCompletelyRemoveFromExecutorDraw(pActor);
 
-        if (!drawer) {
+        if (drawer == nullptr) {
             break;
         }
 

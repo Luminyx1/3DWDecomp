@@ -162,7 +162,7 @@ void ModelDrawerDeferredExt::createTable() {
  * Draws all deferred meshes, invoking the draw callback before each one.
  */
 void ModelDrawerDeferredExt::draw() const {
-    if (!mMeshDrawerTable) {
+    if (mMeshDrawerTable == nullptr) {
         return;
     }
 

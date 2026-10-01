@@ -154,7 +154,7 @@ void ExecuteRequestKeeper::request(LiveActor* pActor, s32 requestType) {
 
     removeTable->removeRequest(pActor);
 
-    if (removeTable2) {
+    if (removeTable2 != nullptr) {
         removeTable2->removeRequest(pActor);
     }
 

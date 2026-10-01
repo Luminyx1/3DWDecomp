@@ -86,7 +86,7 @@ void WarpedMtxPartsModel::initPartsFixFile(LiveActor* pParent, const ActorInitIn
         const char* jointName = nullptr;
         iter.tryGetStringByKey(&jointName, "JointName");
 
-        if (jointName) {
+        if (jointName != nullptr) {
             mJointMtx = getJointMtxPtr(mParentModel, jointName);
         }
 
@@ -171,7 +171,7 @@ void WarpedMtxPartsModel::updatePose() {
 void WarpedMtxPartsModel::calcAnim() {
     bool isUpdate = false;
 
-    if (mModelKeeper) {
+    if (mModelKeeper != nullptr) {
         isUpdate = mModelKeeper->_1a;
 
         if (isUpdate) {
@@ -183,7 +183,7 @@ void WarpedMtxPartsModel::calcAnim() {
 
     LiveActor::calcAnim();
 
-    if (mModelKeeper) {
+    if (mModelKeeper != nullptr) {
         mModelKeeper->_1a = isUpdate;
     }
 }

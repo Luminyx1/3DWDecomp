@@ -91,7 +91,7 @@ void attachMtxConnectorToCollision(MtxConnector* pConnector, const LiveActor* pA
     CollisionPartsFilterActor filter(pActor);
     CollisionParts* parts = alCollisionUtil::getStrikeArrowCollisionParts(pActor, nullptr, rPos,
                                                                           rDir, &filter, nullptr);
-    if (!parts) {
+    if (parts == nullptr) {
         return;
     }
 
@@ -241,7 +241,7 @@ void attachMtxConnectorToCollisionRT(MtxConnector* pConnector, const LiveActor* 
     sead::Vector3f hitPos;
     CollisionParts* parts = alCollisionUtil::getStrikeArrowCollisionParts(pActor, &hitPos, pos,
                                                                           dir, &filter, nullptr);
-    if (!parts) {
+    if (parts == nullptr) {
         return;
     }
 
@@ -276,7 +276,7 @@ void attachMtxConnectorToCollisionQT(MtxConnector* pConnector, const LiveActor* 
     sead::Vector3f hitPos;
     CollisionParts* parts = alCollisionUtil::getStrikeArrowCollisionParts(pActor, &hitPos, pos,
                                                                           dir, &filter, nullptr);
-    if (!parts) {
+    if (parts == nullptr) {
         return;
     }
 

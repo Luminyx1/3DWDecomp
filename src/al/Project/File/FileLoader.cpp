@@ -52,7 +52,7 @@ bool FileLoader::isExistFile(const sead::SafeString& rPath, sead::FileDevice* pD
  */
 sead::FileDevice* FileLoader::getFileDevice(const sead::SafeString& rPath,
                                             sead::FileDevice* pDevice) const {
-    return pDevice ?: mFileDevice;
+    return pDevice != nullptr ? pDevice : mFileDevice;
 }
 
 /**
@@ -102,7 +102,7 @@ sead::ArchiveRes* FileLoader::loadArchive(const sead::SafeString& rPath,
                                           sead::FileDevice* pDevice) {
     ArchiveEntry* entry = mArchiveHolder->tryFindEntry(rPath);
 
-    if (entry) {
+    if (entry != nullptr) {
         if (entry->mFileState != FileState::IsLoadDone) {
             entry->waitLoadDone();
         }
@@ -147,7 +147,7 @@ ArchiveEntry* FileLoader::requestLoadArchive(const sead::SafeString& rPath, sead
  */
 bool FileLoader::tryRequestLoadArchive(const sead::SafeString& rPath, sead::Heap* pHeap,
                                        sead::FileDevice* pDevice) {
-    if (mArchiveHolder->tryFindEntry(rPath)) {
+    if (mArchiveHolder->tryFindEntry(rPath) != nullptr) {
         return false;
     }
 
@@ -165,7 +165,7 @@ bool FileLoader::tryRequestLoadArchive(const sead::SafeString& rPath, sead::Heap
 bool FileLoader::loadSoundItem(u32 itemId, u32 unk, IAudioResourceLoader* pLoader) {
     SoundItemEntry* entry = mSoundItemHolder->tryFindEntry(itemId, pLoader);
 
-    if (!entry) {
+    if (entry == nullptr) {
         entry = requestLoadSoundItem(itemId, unk, pLoader);
         entry->waitLoadDone();
     } else if (entry->mFileState != FileState::IsLoadDone) {
@@ -196,7 +196,7 @@ SoundItemEntry* FileLoader::requestLoadSoundItem(u32 itemId, u32 unk,
  * @return True if a new request was made.
  */
 bool FileLoader::tryRequestLoadSoundItem(u32 itemId, IAudioResourceLoader* pLoader) {
-    if (mSoundItemHolder->tryFindEntry(itemId, pLoader)) {
+    if (mSoundItemHolder->tryFindEntry(itemId, pLoader) != nullptr) {
         return false;
     }
 

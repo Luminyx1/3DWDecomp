@@ -74,7 +74,7 @@ LiveActorKit::~LiveActorKit() {
     delete mClippingDirector;
     delete mQueueThread;
 
-    if (mEffectSystem) {
+    if (mEffectSystem != nullptr) {
         mEffectSystem->endScene();
         mEffectSystem->setCameraDirector(nullptr);
         mEffectSystem->setGraphicsSystemInfo(nullptr);
@@ -104,7 +104,7 @@ void LiveActorKit::init(s32 unused, s32 maxScreenPointTargets, bool isUseMultiCo
         mCameraDirectorRS = new CameraDirector_RS(2);
     }
 
-    if (mEffectSystem) {
+    if (mEffectSystem != nullptr) {
         mEffectSystem->setCameraDirector(mCameraDirector);
         mEffectSystem->initScene();
     }
@@ -173,25 +173,25 @@ void LiveActorKit::endInit(IScenarioCompleteChecker* pChecker) {
     mClippingDirector->endInit();
     mAreaObjDirector->endInit();
 
-    if (mEffectSystem) {
+    if (mEffectSystem != nullptr) {
         mEffectSystem->startScene(mExecDirector);
     }
 
-    if (mItemDirector) {
+    if (mItemDirector != nullptr) {
         mItemDirector->endInit();
     }
 
-    if (mShadowDirector) {
+    if (mShadowDirector != nullptr) {
         mShadowDirector->endInit();
     }
 
-    if (mEffectSystem) {
+    if (mEffectSystem != nullptr) {
         mEffectSystem->setGraphicsSystemInfo(mGraphicsSystemInfo);
     }
 
     mGraphicsSystemInfo->endInit();
 
-    if (mEffectSystem) {
+    if (mEffectSystem != nullptr) {
         mEffectSystem->endInit();
     }
 
@@ -199,7 +199,7 @@ void LiveActorKit::endInit(IScenarioCompleteChecker* pChecker) {
         LiveActor* actor = mActorGroup->mActors[i];
         actor->initAfterPlacement();
 
-        if (actor->mShadowKeeper) {
+        if (actor->mShadowKeeper != nullptr) {
             actor->mShadowKeeper->initAfterPlacement();
         }
     }
@@ -207,7 +207,7 @@ void LiveActorKit::endInit(IScenarioCompleteChecker* pChecker) {
     mExecDirector->createExecutorListTable();
     mSwitchAreaDirector =
         SwitchAreaDirector::tryCreate(mAreaObjDirector, mPlayerHolder, mQueueThread);
-    if (mSwitchAreaDirector) {
+    if (mSwitchAreaDirector != nullptr) {
         mSwitchAreaDirector->endInit(pChecker);
     }
 }
@@ -218,7 +218,7 @@ void LiveActorKit::endInit(IScenarioCompleteChecker* pChecker) {
 void LiveActorKit::updateReducedBufferEffect() {
     ViewRenderer* viewRenderer = mGraphicsSystemInfo->mViewRenderer;
 
-    if (viewRenderer) {
+    if (viewRenderer != nullptr) {
         viewRenderer->setReducedEffectRender(mEffectSystem->isHasRenderingEmitter(0x100), false);
         viewRenderer->setReducedEffectRender(mEffectSystem->isHasRenderingEmitter(0x200), true);
     }
@@ -228,7 +228,7 @@ void LiveActorKit::updateReducedBufferEffect() {
  * Passes the area object director to the camera director.
  */
 void LiveActorKit::setupCameraAreaObjDirector() {
-    if (mCameraDirectorRS) {
+    if (mCameraDirectorRS != nullptr) {
         mCameraDirectorRS->setupCameraAreaObjDirector(mAreaObjDirector);
     }
 }
@@ -237,35 +237,35 @@ void LiveActorKit::setupCameraAreaObjDirector() {
  * Updates the directors of the scene.
  */
 void LiveActorKit::update() {
-    if (mSwitchAreaDirector) {
+    if (mSwitchAreaDirector != nullptr) {
         mSwitchAreaDirector->waitDone();
     }
 
-    if (mGraphicsSystemInfo) {
+    if (mGraphicsSystemInfo != nullptr) {
         mGraphicsSystemInfo->clearGraphicsRequest();
     }
 
-    if (mRumbleDirector) {
+    if (mRumbleDirector != nullptr) {
         mRumbleDirector->update();
     }
 
-    if (mExecDirector) {
+    if (mExecDirector != nullptr) {
         mExecDirector->execute();
     }
 
-    if (mGraphicsSystemInfo) {
+    if (mGraphicsSystemInfo != nullptr) {
         mGraphicsSystemInfo->updateGraphics(false);
     }
 
-    if (mEffectSystem) {
+    if (mEffectSystem != nullptr) {
         getEffectCalcHandler(mEffectSystem)->calc();
     }
 
-    if (mAreaObjDirector) {
+    if (mAreaObjDirector != nullptr) {
         mAreaObjDirector->update();
     }
 
-    if (mSwitchAreaDirector) {
+    if (mSwitchAreaDirector != nullptr) {
         mSwitchAreaDirector->update();
     }
 }
@@ -274,7 +274,7 @@ void LiveActorKit::update() {
  * Clears the graphics requests.
  */
 void LiveActorKit::clearGraphicsRequest() {
-    if (mGraphicsSystemInfo) {
+    if (mGraphicsSystemInfo != nullptr) {
         mGraphicsSystemInfo->clearGraphicsRequest();
     }
 }
@@ -284,11 +284,11 @@ void LiveActorKit::clearGraphicsRequest() {
  * @param isPaused Whether the scene is paused.
  */
 void LiveActorKit::updateGraphics(bool isPaused) {
-    if (mGraphicsSystemInfo) {
+    if (mGraphicsSystemInfo != nullptr) {
         mGraphicsSystemInfo->updateGraphics(isPaused);
     }
 
-    if (mEffectSystem) {
+    if (mEffectSystem != nullptr) {
         getEffectCalcHandler(mEffectSystem)->calc();
     }
 }
@@ -304,7 +304,7 @@ bool LiveActorKit::preDrawGraphics() {
         return false;
     }
 
-    if (mGraphicsSystemInfo) {
+    if (mGraphicsSystemInfo != nullptr) {
         mGraphicsSystemInfo->preDrawGraphics(mCameraDirector->mSceneCameraInfo);
     }
 

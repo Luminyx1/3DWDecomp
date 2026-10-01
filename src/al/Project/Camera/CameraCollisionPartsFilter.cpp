@@ -16,7 +16,7 @@ CameraCollisionPartsFilter::CameraCollisionPartsFilter() {}
  * @return Whether the parts have a special purpose other than "CameraMoveLimit".
  */
 bool CameraCollisionPartsFilter::isInvalidParts(const CollisionParts& rParts) const {
-    if (!rParts.mSpecialPurpose) {
+    if (rParts.mSpecialPurpose == nullptr) {
         return false;
     }
 

@@ -12,7 +12,7 @@ const char* getAnimName(const al::ActionAnimCtrlInfo* pCtrlInfo,
                         const al::ActionAnimDataInfo* pDataInfo) {
     const char* animName = pDataInfo->actionName;
 
-    if (!animName) {
+    if (animName == nullptr) {
         animName = pCtrlInfo->actionName;
     }
 

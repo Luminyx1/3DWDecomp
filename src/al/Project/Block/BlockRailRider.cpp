@@ -30,7 +30,7 @@ BlockRailRider::BlockRailRider() : mRouteSelecter(&sDefaultRouteSelecter) {}
 void BlockRailRider::move(f32 speed, sead::Vector3f* pPos, sead::Vector3f* pDir) {
     mIsReachEnd = false;
 
-    if (!mRailLink) {
+    if (mRailLink == nullptr) {
         return;
     }
 
@@ -66,7 +66,7 @@ void BlockRailRider::move(f32 speed, sead::Vector3f* pPos, sead::Vector3f* pDir)
             return;
         }
 
-        if (!nextLink) {
+        if (nextLink == nullptr) {
             calcPosAndDir(pPos, pDir);
 
             if (mIsLeaveAtEnd) {
@@ -116,7 +116,7 @@ void BlockRailRider::move(f32 speed, sead::Vector3f* pPos, sead::Vector3f* pDir)
  * @return whether the rider is on a rail
  */
 bool BlockRailRider::calcPosAndDir(sead::Vector3f* pPos, sead::Vector3f* pDir) const {
-    if (!mRailLink) {
+    if (mRailLink == nullptr) {
         return false;
     }
 
@@ -174,11 +174,11 @@ BlockRailLink* BlockRailRider::selectRoute(BlockRailLink* pCurrentLink,
         return pCurrentLink;
     }
 
-    if (!pCurrentLink) {
+    if (pCurrentLink == nullptr) {
         return pCandidateLink;
     }
 
-    if (!mRouteSelecter) {
+    if (mRouteSelecter == nullptr) {
         return pCurrentLink;
     }
 
@@ -195,7 +195,7 @@ BlockRailLink* BlockRailRider::selectRoute(BlockRailLink* pCurrentLink,
  * @return whether the rider is on a rail
  */
 bool BlockRailRider::calcDir(sead::Vector3f* pDir) const {
-    if (!mRailLink) {
+    if (mRailLink == nullptr) {
         return false;
     }
 

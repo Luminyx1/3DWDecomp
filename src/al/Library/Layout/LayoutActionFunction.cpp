@@ -39,7 +39,7 @@ void startAction(IUseLayoutAction* pLayout, const char* pActionName, const char*
 bool isPausedAction(IUseLayoutAction* pLayout, const char* pActionName, const char* pPaneName) {
     LayoutPaneGroup* paneGroup = getLayoutPaneGroup(pLayout, pPaneName);
 
-    if (!paneGroup || !paneGroup->isAnimPlaying()) {
+    if (paneGroup == nullptr || !paneGroup->isAnimPlaying()) {
         return false;
     }
 
@@ -58,7 +58,7 @@ bool isPausedAction(IUseLayoutAction* pLayout, const char* pActionName, const ch
 void pauseAction(IUseLayoutAction* pLayout, const char* pPaneName) {
     LayoutPaneGroup* paneGroup = getLayoutPaneGroup(pLayout, pPaneName);
 
-    if (paneGroup) {
+    if (paneGroup != nullptr) {
         paneGroup->setAnimFrameRate(0.0f);
     }
 }
@@ -71,7 +71,7 @@ void pauseAction(IUseLayoutAction* pLayout, const char* pPaneName) {
 void unpauseAction(IUseLayoutAction* pLayout, const char* pPaneName) {
     LayoutPaneGroup* paneGroup = getLayoutPaneGroup(pLayout, pPaneName);
 
-    if (paneGroup) {
+    if (paneGroup != nullptr) {
         paneGroup->setAnimFrameRate(1.0f);
     }
 }
@@ -186,7 +186,7 @@ bool isExistAction(const IUseLayoutAction* pLayout, const char* pActionName,
 bool isActionEnd(const IUseLayoutAction* pLayout, const char* pPaneName) {
     LayoutPaneGroup* paneGroup = getLayoutPaneGroup(pLayout, pPaneName);
 
-    if (paneGroup && paneGroup->isAnimPlaying() && paneGroup->isAnimOneTime()) {
+    if (paneGroup != nullptr && paneGroup->isAnimPlaying() && paneGroup->isAnimOneTime()) {
         return paneGroup->isAnimEnd();
     }
 

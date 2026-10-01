@@ -119,7 +119,7 @@ void AnimInfoTable::sort() {
     s32 num = mInfoCount;
     AnimResInfo* infos = mResInfos;
 
-    if (num >= 2 && infos) {
+    if (num >= 2 && infos != nullptr) {
         AnimResInfo value;
 
         for (s32 i = num / 2; i > 0; i--) {

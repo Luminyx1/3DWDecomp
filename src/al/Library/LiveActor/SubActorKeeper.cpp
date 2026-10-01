@@ -149,7 +149,7 @@ SubActorKeeper::SubActorKeeper(LiveActor* pRootActor, const ActorInitInfo& rInfo
             info->mSyncType |= 4;
         }
 
-        if (!className) {
+        if (className == nullptr) {
             LiveActor* actor = new LiveActor(objectName);
             info->mSubActor = actor;
 
@@ -172,10 +172,10 @@ SubActorKeeper::SubActorKeeper(LiveActor* pRootActor, const ActorInitInfo& rInfo
             const char* actionName = tryGetByamlKeyStringOrNULL(creatorIter, "ActionName");
             const char* jointName = tryGetByamlKeyStringOrNULL(creatorIter, "JointName");
             const sead::Matrix34f* jointMtx =
-                jointName ? getJointMtxPtr(rootActor, jointName) : nullptr;
+                (jointName != nullptr) ? getJointMtxPtr(rootActor, jointName) : nullptr;
             BreakModel* breakModel =
                 new BreakModel(rootActor, objectName, modelName, suffix, jointMtx,
-                               actionName ? actionName : "Break", false);
+                               (actionName != nullptr) ? actionName : "Break", false);
             initCreateActorNoPlacementInfo(breakModel, rInfo);
             info->mSubActor = breakModel;
         } else if (isEqualString(className, "SilhouetteModel")) {

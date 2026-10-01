@@ -129,7 +129,7 @@ void ActorInitInfo::initViewIdHost(const PlacementInfo* pPlacementInfo, const Ac
 void ActorInitInfo::initViewIdHostActor(const ActorInitInfo& rInfo, const LiveActor* pActor) {
     const ClippingActorInfo* clippingInfo = static_cast<const ClippingActorInfo*>(
         pActor->getSceneInfo()->clippingDirectorBase->findActorInfo(pActor));
-    mPlacementId = !clippingInfo ? rInfo.mPlacementId : clippingInfo->mPlacementId;
+    mPlacementId = (clippingInfo == nullptr) ? rInfo.mPlacementId : clippingInfo->mPlacementId;
     copyHostInfo(rInfo, rInfo.mPlacementInfo);
 }
 

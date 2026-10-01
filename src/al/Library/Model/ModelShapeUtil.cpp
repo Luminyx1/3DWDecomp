@@ -31,7 +31,7 @@ namespace al {
 s32 getJointNum(const ModelKeeper* pKeeper) {
     const nn::g3d::SkeletonObj* skeleton = getSkeletonObj(pKeeper);
 
-    if (!skeleton) {
+    if (skeleton == nullptr) {
         return 0;
     }
 
@@ -47,7 +47,7 @@ s32 getJointNum(const ModelKeeper* pKeeper) {
 s32 getJointIndex(const ModelKeeper* pKeeper, const char* pName) {
     const nn::g3d::SkeletonObj* skeleton = getSkeletonObj(pKeeper);
 
-    if (!skeleton) {
+    if (skeleton == nullptr) {
         return -1;
     }
 
@@ -63,7 +63,7 @@ s32 getJointIndex(const ModelKeeper* pKeeper, const char* pName) {
 bool isExistJoint(const ModelKeeper* pKeeper, const char* pName) {
     const nn::g3d::SkeletonObj* skeleton = getSkeletonObj(pKeeper);
 
-    if (!skeleton) {
+    if (skeleton == nullptr) {
         return false;
     }
 
@@ -83,7 +83,7 @@ bool isExistJoint(const ModelKeeper* pKeeper, const char* pName) {
 const char* getJointName(const ModelKeeper* pKeeper, s32 index) {
     const nn::g3d::SkeletonObj* skeleton = getSkeletonObj(pKeeper);
 
-    if (!skeleton) {
+    if (skeleton == nullptr) {
         return nullptr;
     }
 
@@ -99,7 +99,7 @@ const char* getJointName(const ModelKeeper* pKeeper, s32 index) {
 const sead::Matrix34f* getJointMtxPtr(const ModelKeeper* pKeeper, const char* pName) {
     const nn::g3d::SkeletonObj* skeleton = getSkeletonObj(pKeeper);
 
-    if (!skeleton) {
+    if (skeleton == nullptr) {
         return nullptr;
     }
 
@@ -116,7 +116,7 @@ const sead::Matrix34f* getJointMtxPtr(const ModelKeeper* pKeeper, const char* pN
 const sead::Matrix34f* getJointMtxPtrByIndex(const ModelKeeper* pKeeper, s32 index) {
     const nn::g3d::SkeletonObj* skeleton = getSkeletonObj(pKeeper);
 
-    if (!skeleton) {
+    if (skeleton == nullptr) {
         return nullptr;
     }
 
@@ -132,7 +132,7 @@ const sead::Matrix34f* getJointMtxPtrByIndex(const ModelKeeper* pKeeper, s32 ind
 const sead::Matrix34f* getJointLocalMtxPtr(const ModelKeeper* pKeeper, const char* pName) {
     const nn::g3d::SkeletonObj* skeleton = getSkeletonObj(pKeeper);
 
-    if (!skeleton) {
+    if (skeleton == nullptr) {
         return nullptr;
     }
 
@@ -149,7 +149,7 @@ const sead::Matrix34f* getJointLocalMtxPtr(const ModelKeeper* pKeeper, const cha
 const void* getJointLocalMtxPtrByIndex(const ModelKeeper* pKeeper, s32 index) {
     const nn::g3d::SkeletonObj* skeleton = getSkeletonObj(pKeeper);
 
-    if (!skeleton) {
+    if (skeleton == nullptr) {
         return nullptr;
     }
 

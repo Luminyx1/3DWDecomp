@@ -12,7 +12,7 @@ InitResourceDataAction* InitResourceDataAction::tryCreate(Resource* pResource,
                                                           const InitResourceDataAnim* pDataAnim) {
     InitResourceDataActionAnim* dataActionAnim =
         InitResourceDataActionAnim::tryCreate(pResource, pDataAnim);
-    if (!dataActionAnim) {
+    if (dataActionAnim == nullptr) {
         return nullptr;
     }
 

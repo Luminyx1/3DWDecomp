@@ -55,7 +55,7 @@ void PadTouchController::calcImpl_() {
 bool PadTouchController::gatherInput() {
     auto* device = static_cast<PadTouchDevice*>(
         getMgr()->getControlDevice(sead::ControllerDefine::cDevice_PadTouch));
-    if (!device) {
+    if (device == nullptr) {
         return false;
     }
 

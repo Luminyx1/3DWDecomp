@@ -31,7 +31,7 @@ void AtmosScatterDrawer::draw() const {
 
     AtmosScatter* atmosScatter = info->mAtmosScatter;
 
-    if (!atmosScatter) {
+    if (atmosScatter == nullptr) {
         return;
     }
 

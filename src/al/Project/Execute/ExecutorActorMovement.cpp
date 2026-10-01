@@ -83,7 +83,7 @@ ExecutorActorMovementCalcAnim::ExecutorActorMovementCalcAnim(const char* pName,
  * Runs the movement of all actors and calculates their anims, on another core for many actors.
  */
 void ExecutorActorMovementCalcAnim::execute() const {
-    if (mThread && mActorNum >= 11) {
+    if (mThread != nullptr && mActorNum >= 11) {
         for (s32 i = 0; i < mActorNum; i++) {
             mActors[i]->movement();
         }

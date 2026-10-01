@@ -48,8 +48,8 @@
 namespace al {
 namespace {
 inline void syncCollisionMtxByPose(LiveActor* pActor) {
-    if (pActor->mCollisionParts &&
-        (!pActor->mModelKeeper || !pActor->mModelKeeper->_18)) {
+    if (pActor->mCollisionParts != nullptr &&
+        (pActor->mModelKeeper == nullptr || !pActor->mModelKeeper->_18)) {
         sead::Matrix34f baseMtx;
         pActor->mActorPoseKeeper->calcBaseMtx(&baseMtx);
         preScaleMtx(&baseMtx, pActor->mActorPoseKeeper->getScale());
@@ -59,7 +59,7 @@ inline void syncCollisionMtxByPose(LiveActor* pActor) {
 
 inline bool isActiveDemo(const LiveActor* pActor) {
     DemoDirector* demoDirector = pActor->mActorSceneInfo->demoDirector;
-    return demoDirector && demoDirector->isActiveDemo();
+    return (demoDirector != nullptr) && demoDirector->isActiveDemo();
 }
 }  // namespace
 
@@ -67,7 +67,7 @@ inline bool isActiveDemo(const LiveActor* pActor) {
  * Updates the level of detail of the far LOD actor.
  */
 inline void LiveActor::updateLOD() {
-    if (mFarLodActor && mFarLodActor->mModelKeeper) {
+    if (mFarLodActor != nullptr && mFarLodActor->mModelKeeper != nullptr) {
         bool isDemo = isActiveDemo(this);
 
         if (isSingleMode(this)) {
@@ -90,12 +90,12 @@ LiveActor::LiveActor(const char* pName) : mActorName(pName) {
  * Destroys the actor's shadow and light keepers.
  */
 LiveActor::~LiveActor() {
-    if (mShadowKeeper) {
+    if (mShadowKeeper != nullptr) {
         delete mShadowKeeper;
         mShadowKeeper = nullptr;
     }
 
-    if (mLightKeeper) {
+    if (mLightKeeper != nullptr) {
         delete mLightKeeper;
         mLightKeeper = nullptr;
     }
@@ -107,7 +107,7 @@ LiveActor::~LiveActor() {
 void LiveActor::initAfterPlacement() {
     tryInitFixedModelGpuBuffer(this);
 
-    if (mLightKeeper) {
+    if (mLightKeeper != nullptr) {
         mLightKeeper->initAfterPlacement();
     }
 }
@@ -118,7 +118,7 @@ void LiveActor::initAfterPlacement() {
 void LiveActor::appear() {
     makeActorAppeared();
 
-    if (mActionKeeper && mActionKeeper->getSeCtrl()) {
+    if (mActionKeeper != nullptr && mActionKeeper->getSeCtrl() != nullptr) {
         mActionKeeper->getSeCtrl()->resetAction();
     }
 }
@@ -132,11 +132,11 @@ void LiveActor::reappear() {}
  * Makes the actor alive and enables all of its components.
  */
 void LiveActor::makeActorAppeared() {
-    if (mHitSensorKeeper) {
+    if (mHitSensorKeeper != nullptr) {
         mHitSensorKeeper->validateBySystem();
     }
 
-    if (mScreenPointKeeper) {
+    if (mScreenPointKeeper != nullptr) {
         mScreenPointKeeper->validateBySystem();
     }
 
@@ -146,23 +146,23 @@ void LiveActor::makeActorAppeared() {
         endClipped();
     }
 
-    if (!isHideModel(this) && mModelKeeper) {
+    if (!isHideModel(this) && mModelKeeper != nullptr) {
         mModelKeeper->show();
     }
 
     resetPosition(this, false);
 
-    if (mCollisionParts) {
+    if (mCollisionParts != nullptr) {
         validateCollisionPartsBySystem(this);
     }
 
-    if (mHitSensorKeeper) {
+    if (mHitSensorKeeper != nullptr) {
         mHitSensorKeeper->update();
     }
 
     alClippingFunction::addToClippingTarget(this);
 
-    if (mActorExecuteInfo) {
+    if (mActorExecuteInfo != nullptr) {
         alActorSystemFunction::addToExecutorMovement(this);
 
         if (!isHideModel(this) && mActorExecuteInfo->mDrawerCount >= 1) {
@@ -170,19 +170,19 @@ void LiveActor::makeActorAppeared() {
         }
     }
 
-    if (getAudioKeeper()) {
+    if (getAudioKeeper() != nullptr) {
         getAudioKeeper()->appear();
     }
 
-    if (mLightKeeper) {
+    if (mLightKeeper != nullptr) {
         mLightKeeper->appear(isHideModel(this));
     }
 
-    if (mShadowKeeper && !isHideModel(this)) {
+    if (mShadowKeeper != nullptr && !isHideModel(this)) {
         mShadowKeeper->show();
     }
 
-    if (mSubActorKeeper) {
+    if (mSubActorKeeper != nullptr) {
         alSubActorFunction::trySyncAlive(mSubActorKeeper);
     }
 }
@@ -206,55 +206,55 @@ void LiveActor::killComplete(bool isComplete) {
  * Makes the actor dead and disables all of its components.
  */
 void LiveActor::makeActorDead() {
-    if (mFarLodActor) {
+    if (mFarLodActor != nullptr) {
         endFarLod();
     }
 
-    if (mActorPoseKeeper) {
+    if (mActorPoseKeeper != nullptr) {
         setVelocityZero(this);
     }
 
     mActorFlags->isDead = true;
 
-    if (mHitSensorKeeper) {
+    if (mHitSensorKeeper != nullptr) {
         mHitSensorKeeper->invalidateBySystem();
     }
 
-    if (mScreenPointKeeper) {
+    if (mScreenPointKeeper != nullptr) {
         mScreenPointKeeper->invalidateBySystem();
     }
 
     alClippingFunction::removeFromClippingTarget(this);
 
-    if (mCollider) {
+    if (mCollider != nullptr) {
         mCollider->onInvalidate();
     }
 
-    if (mCollisionParts) {
+    if (mCollisionParts != nullptr) {
         invalidateCollisionPartsBySystem(this);
     }
 
-    if (mModelKeeper) {
+    if (mModelKeeper != nullptr) {
         mModelKeeper->hide();
     }
 
-    if (getEffectKeeper()) {
+    if (getEffectKeeper() != nullptr) {
         getEffectKeeper()->deleteAndClearEffectAll();
     }
 
-    if (getAudioKeeper()) {
+    if (getAudioKeeper() != nullptr) {
         getAudioKeeper()->kill();
     }
 
-    if (mLightKeeper) {
+    if (mLightKeeper != nullptr) {
         mLightKeeper->requestKill();
     }
 
-    if (mShadowKeeper) {
+    if (mShadowKeeper != nullptr) {
         mShadowKeeper->hide();
     }
 
-    if (mActorExecuteInfo) {
+    if (mActorExecuteInfo != nullptr) {
         alActorSystemFunction::removeFromExecutorMovement(this);
 
         if (mActorExecuteInfo->mDrawerCount >= 1) {
@@ -262,7 +262,7 @@ void LiveActor::makeActorDead() {
         }
     }
 
-    if (mSubActorKeeper) {
+    if (mSubActorKeeper != nullptr) {
         alSubActorFunction::trySyncDead(mSubActorKeeper);
     }
 }
@@ -284,7 +284,7 @@ bool LiveActor::showActor() {
         endClipped();
     }
 
-    if (mCollisionParts) {
+    if (mCollisionParts != nullptr) {
         mCollisionParts->validateBySystem();
     }
 
@@ -308,7 +308,7 @@ bool LiveActor::hideActor() {
         startClipped();
     }
 
-    if (mCollisionParts) {
+    if (mCollisionParts != nullptr) {
         mCollisionParts->invalidateBySystem();
     }
 
@@ -359,7 +359,7 @@ void LiveActor::movementPaused(bool isCalcAnim) {
 
     if (_140) {
         if (_142) {
-            if (mNerveKeeper && mActorFlags->isDead) {
+            if (mNerveKeeper != nullptr && mActorFlags->isDead) {
                 return;
             }
 
@@ -370,7 +370,7 @@ void LiveActor::movementPaused(bool isCalcAnim) {
         return;
     }
 
-    if (mModelKeeper) {
+    if (mModelKeeper != nullptr) {
         if (isSingleMode(this)) {
             bool isDemo = isActiveDemo(this);
             mModelKeeper->updateLod(mActorPoseKeeper->mTranslation, isDemo);
@@ -383,15 +383,15 @@ void LiveActor::movementPaused(bool isCalcAnim) {
         syncCollisionMtxByPose(this);
     }
 
-    if (isCalcAnim && mActorPoseKeeper) {
+    if (isCalcAnim && mActorPoseKeeper != nullptr) {
         sead::Matrix34f baseMtx;
         alActorPoseFunction::calcBaseMtx(&baseMtx, this);
 
-        if (mModelKeeper && mModelKeeper->_1a) {
+        if (mModelKeeper != nullptr && mModelKeeper->_1a) {
             setBaseMtxAndCalcAnim(this, baseMtx, getScale(this));
         }
 
-        if (mCollisionParts) {
+        if (mCollisionParts != nullptr) {
             preScaleMtx(&baseMtx, getScale(this));
             syncCollisionMtx(this, &baseMtx);
         }
@@ -422,7 +422,7 @@ void LiveActor::movement() {
 
     if (_140) {
         if (_142) {
-            if (mNerveKeeper) {
+            if (mNerveKeeper != nullptr) {
                 mNerveKeeper->update();
 
                 if (mActorFlags->isDead) {
@@ -430,11 +430,11 @@ void LiveActor::movement() {
                 }
             }
 
-            if (mAudioKeeper) {
+            if (mAudioKeeper != nullptr) {
                 mAudioKeeper->update();
             }
 
-            if (_143 && mActionKeeper) {
+            if (_143 && mActionKeeper != nullptr) {
                 mActionKeeper->updateSeActionCtrl();
             }
 
@@ -446,11 +446,11 @@ void LiveActor::movement() {
         return;
     }
 
-    if (mActionKeeper) {
+    if (mActionKeeper != nullptr) {
         mActionKeeper->updatePrev();
     }
 
-    if (mModelKeeper) {
+    if (mModelKeeper != nullptr) {
         bool isDemo = isActiveDemo(this);
 
         if (isSingleMode(this)) {
@@ -474,7 +474,7 @@ void LiveActor::movement() {
         setMaterialCode(this, getCollidedFloorMaterialCodeName(this));
     }
 
-    if (mHitSensorKeeper) {
+    if (mHitSensorKeeper != nullptr) {
         mHitSensorKeeper->attackSensor();
 
         if (mActorFlags->isDead) {
@@ -482,7 +482,7 @@ void LiveActor::movement() {
         }
     }
 
-    if (mNerveKeeper) {
+    if (mNerveKeeper != nullptr) {
         mNerveKeeper->update();
 
         if (mActorFlags->isDead) {
@@ -499,30 +499,30 @@ void LiveActor::movement() {
     updateCollider();
 
     if (isUpdateMovementEffectAudioCollision(this)) {
-        if (mEffectKeeper) {
+        if (mEffectKeeper != nullptr) {
             mEffectKeeper->update();
         }
 
-        if (mAudioKeeper) {
+        if (mAudioKeeper != nullptr) {
             mAudioKeeper->update();
         }
 
         syncCollisionMtxByPose(this);
     }
 
-    if (mActionKeeper) {
+    if (mActionKeeper != nullptr) {
         mActionKeeper->updatePost();
     }
 
-    if (mHitSensorKeeper) {
+    if (mHitSensorKeeper != nullptr) {
         mHitSensorKeeper->update();
     }
 
-    if (mScreenPointKeeper) {
+    if (mScreenPointKeeper != nullptr) {
         mScreenPointKeeper->update();
     }
 
-    if (mModelKeeper) {
+    if (mModelKeeper != nullptr) {
         mModelKeeper->mModelCafe->updateLast();
     }
 }
@@ -543,11 +543,11 @@ void LiveActor::calcAnim() {
         return;
     }
 
-    if (mActorPoseKeeper) {
+    if (mActorPoseKeeper != nullptr) {
         alLiveActorFunction::calcAnimDirect(this);
     }
 
-    if (mAudioKeeper) {
+    if (mAudioKeeper != nullptr) {
         mAudioKeeper->update();
     }
 }
@@ -565,7 +565,7 @@ bool LiveActor::modelUpdate() {
         return false;
     }
 
-    if (mAlphaCtrl) {
+    if (mAlphaCtrl != nullptr) {
         f32 alpha = mAlphaCtrl->update(getClippingJudge(this));
 
         if (!isInvalidClipping(this)) {
@@ -609,37 +609,37 @@ void LiveActor::startClipped() {
     mActorFlags->isClipped = true;
 
     if (!mActorFlags->isClippedByLOD) {
-        if (mModelKeeper) {
+        if (mModelKeeper != nullptr) {
             mModelKeeper->hide();
         }
 
         if (!mActorFlags->isDrawClipping) {
-            if (mHitSensorKeeper) {
+            if (mHitSensorKeeper != nullptr) {
                 mHitSensorKeeper->invalidateBySystem();
             }
 
-            if (getEffectKeeper()) {
+            if (getEffectKeeper() != nullptr) {
                 getEffectKeeper()->offCalcAndDraw();
             }
 
-            if (getAudioKeeper()) {
+            if (getAudioKeeper() != nullptr) {
                 getAudioKeeper()->startClipped();
             }
         }
 
-        if (mShadowKeeper) {
+        if (mShadowKeeper != nullptr) {
             hideShadow(this);
         }
 
-        if (mScreenPointKeeper) {
+        if (mScreenPointKeeper != nullptr) {
             mScreenPointKeeper->invalidateBySystem();
         }
 
-        if (mLightKeeper) {
+        if (mLightKeeper != nullptr) {
             mLightKeeper->hideModel();
         }
 
-        if (mActorExecuteInfo) {
+        if (mActorExecuteInfo != nullptr) {
             if (!mActorFlags->isDrawClipping) {
                 alActorSystemFunction::removeFromExecutorMovement(this);
             }
@@ -648,17 +648,17 @@ void LiveActor::startClipped() {
                 alActorSystemFunction::removeFromExecutorDraw(this);
             }
 
-            if (mActorFlags->isDrawClipping && mModelKeeper && mModelKeeper->_19) {
+            if (mActorFlags->isDrawClipping && mModelKeeper != nullptr && mModelKeeper->_19) {
                 setNeedSetBaseMtxAndCalcAnimFlag(this, false);
             }
         }
 
-        if (mSubActorKeeper) {
+        if (mSubActorKeeper != nullptr) {
             alSubActorFunction::trySyncClippingStart(mSubActorKeeper);
         }
     }
 
-    if (mFarLodActor && !isClipped(mFarLodActor)) {
+    if (mFarLodActor != nullptr && !isClipped(mFarLodActor)) {
         mFarLodActor->startClipped();
     }
 }
@@ -671,25 +671,25 @@ void LiveActor::endClipped() {
 
     if (!mActorFlags->isClippedByLOD) {
         if (!mActorFlags->isDrawClipping) {
-            if (mHitSensorKeeper) {
+            if (mHitSensorKeeper != nullptr) {
                 mHitSensorKeeper->validateBySystem();
                 updateHitSensorsAll(this);
             }
 
-            if (getEffectKeeper()) {
+            if (getEffectKeeper() != nullptr) {
                 getEffectKeeper()->onCalcAndDraw();
             }
 
-            if (getAudioKeeper()) {
+            if (getAudioKeeper() != nullptr) {
                 getAudioKeeper()->endClipped();
             }
         }
 
-        if (mScreenPointKeeper) {
+        if (mScreenPointKeeper != nullptr) {
             mScreenPointKeeper->validateBySystem();
         }
 
-        if (mActorExecuteInfo) {
+        if (mActorExecuteInfo != nullptr) {
             if (!mActorFlags->isDrawClipping) {
                 alActorSystemFunction::addToExecutorMovement(this);
             }
@@ -698,24 +698,24 @@ void LiveActor::endClipped() {
                 alActorSystemFunction::addToExecutorDraw(this);
             }
 
-            if (mModelKeeper && mModelKeeper->_19) {
+            if (mModelKeeper != nullptr && mModelKeeper->_19) {
                 setNeedSetBaseMtxAndCalcAnimFlag(this, true);
             }
         }
 
-        if (!isHideModel(this) && mModelKeeper) {
+        if (!isHideModel(this) && mModelKeeper != nullptr) {
             mModelKeeper->show();
         }
 
-        if (mLightKeeper) {
+        if (mLightKeeper != nullptr) {
             mLightKeeper->appear(isHideModel(this));
         }
 
-        if (mShadowKeeper && !isHideModel(this)) {
+        if (mShadowKeeper != nullptr && !isHideModel(this)) {
             showShadow(this);
         }
 
-        if (mSubActorKeeper) {
+        if (mSubActorKeeper != nullptr) {
             alSubActorFunction::trySyncClippingEnd(mSubActorKeeper);
         }
 
@@ -724,7 +724,7 @@ void LiveActor::endClipped() {
         }
     }
 
-    if (mFarLodActor && _140 && isClipped(mFarLodActor)) {
+    if (mFarLodActor != nullptr && _140 && isClipped(mFarLodActor)) {
         mFarLodActor->endClipped();
     }
 }
@@ -739,37 +739,37 @@ void LiveActor::startClippedByLod() {
         return;
     }
 
-    if (mModelKeeper) {
+    if (mModelKeeper != nullptr) {
         mModelKeeper->hide();
     }
 
     if (!mActorFlags->isDrawClipping) {
-        if (mHitSensorKeeper) {
+        if (mHitSensorKeeper != nullptr) {
             mHitSensorKeeper->invalidateBySystem();
         }
 
-        if (getEffectKeeper()) {
+        if (getEffectKeeper() != nullptr) {
             getEffectKeeper()->offCalcAndDraw();
         }
 
-        if (getAudioKeeper()) {
+        if (getAudioKeeper() != nullptr) {
             getAudioKeeper()->startClipped();
         }
     }
 
-    if (mShadowKeeper) {
+    if (mShadowKeeper != nullptr) {
         hideShadow(this);
     }
 
-    if (mScreenPointKeeper) {
+    if (mScreenPointKeeper != nullptr) {
         mScreenPointKeeper->invalidateBySystem();
     }
 
-    if (mLightKeeper) {
+    if (mLightKeeper != nullptr) {
         mLightKeeper->hideModel();
     }
 
-    if (mActorExecuteInfo) {
+    if (mActorExecuteInfo != nullptr) {
         if (!mActorFlags->isDrawClipping) {
             alActorSystemFunction::removeFromExecutorMovement(this);
         }
@@ -778,12 +778,12 @@ void LiveActor::startClippedByLod() {
             alActorSystemFunction::removeFromExecutorDraw(this);
         }
 
-        if (mActorFlags->isDrawClipping && mModelKeeper && mModelKeeper->_19) {
+        if (mActorFlags->isDrawClipping && mModelKeeper != nullptr && mModelKeeper->_19) {
             setNeedSetBaseMtxAndCalcAnimFlag(this, false);
         }
     }
 
-    if (mSubActorKeeper) {
+    if (mSubActorKeeper != nullptr) {
         alSubActorFunction::trySyncClippingStart(mSubActorKeeper);
     }
 }
@@ -799,25 +799,25 @@ void LiveActor::endClippedByLod() {
     }
 
     if (!mActorFlags->isDrawClipping) {
-        if (mHitSensorKeeper) {
+        if (mHitSensorKeeper != nullptr) {
             mHitSensorKeeper->validateBySystem();
             updateHitSensorsAll(this);
         }
 
-        if (getEffectKeeper()) {
+        if (getEffectKeeper() != nullptr) {
             getEffectKeeper()->onCalcAndDraw();
         }
 
-        if (getAudioKeeper()) {
+        if (getAudioKeeper() != nullptr) {
             getAudioKeeper()->endClipped();
         }
     }
 
-    if (mScreenPointKeeper) {
+    if (mScreenPointKeeper != nullptr) {
         mScreenPointKeeper->validateBySystem();
     }
 
-    if (mActorExecuteInfo) {
+    if (mActorExecuteInfo != nullptr) {
         if (!mActorFlags->isDrawClipping) {
             alActorSystemFunction::addToExecutorMovement(this);
         }
@@ -826,24 +826,24 @@ void LiveActor::endClippedByLod() {
             alActorSystemFunction::addToExecutorDrawImmediate(this);
         }
 
-        if (mModelKeeper && mModelKeeper->_19) {
+        if (mModelKeeper != nullptr && mModelKeeper->_19) {
             setNeedSetBaseMtxAndCalcAnimFlag(this, true);
         }
     }
 
-    if (!isHideModel(this) && mModelKeeper) {
+    if (!isHideModel(this) && mModelKeeper != nullptr) {
         mModelKeeper->show();
     }
 
-    if (mLightKeeper) {
+    if (mLightKeeper != nullptr) {
         mLightKeeper->appear(isHideModel(this));
     }
 
-    if (mShadowKeeper && !isHideModel(this)) {
+    if (mShadowKeeper != nullptr && !isHideModel(this)) {
         showShadow(this);
     }
 
-    if (mSubActorKeeper) {
+    if (mSubActorKeeper != nullptr) {
         alSubActorFunction::trySyncClippingEnd(mSubActorKeeper);
     }
 }
@@ -858,16 +858,16 @@ void LiveActor::setGlobalYOffsetRef(f32* pYOffset) {
     do {
         actor->mGlobalYOffsetRef = pYOffset;
 
-        if (actor->mModelKeeper) {
+        if (actor->mModelKeeper != nullptr) {
             actor->mModelKeeper->setGlobalYOffset(pYOffset);
         }
 
-        if (actor->mSubActorKeeper) {
+        if (actor->mSubActorKeeper != nullptr) {
             alSubActorFunction::setGlobalYOffset(actor->mSubActorKeeper, pYOffset);
         }
 
         actor = actor->mFarLodActor;
-    } while (actor);
+    } while (actor != nullptr);
 }
 
 /**
@@ -896,7 +896,7 @@ void LiveActor::startFarLod() {
 
     _140 = true;
 
-    if (mFarLodActor && isClipped(mFarLodActor) && !isClipped(this)) {
+    if (mFarLodActor != nullptr && isClipped(mFarLodActor) && !isClipped(this)) {
         mFarLodActor->endClipped();
         alActorSystemFunction::addToExecutorDrawImmediate(mFarLodActor);
     }
@@ -906,11 +906,11 @@ void LiveActor::startFarLod() {
         return;
     }
 
-    if (mFarLodActor && mActorPoseKeeper) {
+    if (mFarLodActor != nullptr && mActorPoseKeeper != nullptr) {
         alLiveActorFunction::calcAnimDirect(mFarLodActor);
     }
 
-    if (mActorExecuteInfo && mActorExecuteInfo->mDrawerCount >= 1) {
+    if (mActorExecuteInfo != nullptr && mActorExecuteInfo->mDrawerCount >= 1) {
         hideModelIfShow(this);
     }
 }
@@ -925,7 +925,7 @@ void LiveActor::endFarLod() {
 
     _140 = false;
 
-    if (mFarLodActor && !isClipped(mFarLodActor)) {
+    if (mFarLodActor != nullptr && !isClipped(mFarLodActor)) {
         mFarLodActor->startClipped();
     }
 
@@ -934,11 +934,11 @@ void LiveActor::endFarLod() {
         return;
     }
 
-    if (mActorPoseKeeper) {
+    if (mActorPoseKeeper != nullptr) {
         alLiveActorFunction::calcAnimDirect(this);
     }
 
-    if (mActorExecuteInfo && mActorExecuteInfo->mDrawerCount >= 1) {
+    if (mActorExecuteInfo != nullptr && mActorExecuteInfo->mDrawerCount >= 1) {
         showModelIfHide(this);
 
         if (!isDead(this) && !isClipped(this)) {
@@ -952,11 +952,11 @@ void LiveActor::endFarLod() {
  * @return The base matrix, or nullptr.
  */
 const sead::Matrix34f* LiveActor::getBaseMtx() const {
-    if (mModelKeeper) {
+    if (mModelKeeper != nullptr) {
         return mModelKeeper->mModelCafe->mBaseMtx;
     }
 
-    if (mActorPoseKeeper) {
+    if (mActorPoseKeeper != nullptr) {
         return mActorPoseKeeper->getMtxPtr();
     }
 
@@ -1046,7 +1046,7 @@ void LiveActor::initModelKeeper(ModelKeeper* pModelKeeper) {
 void LiveActor::initActionKeeper(const char* pArchiveName, const char* pSuffix) {
     mActionKeeper = ActorActionKeeper::tryCreate(this, pArchiveName, pSuffix);
 
-    if (mActionKeeper) {
+    if (mActionKeeper != nullptr) {
         mActionKeeper->init();
     }
 }
@@ -1082,7 +1082,7 @@ void LiveActor::initScreenPointKeeper(s32 num) {
 void LiveActor::initEffectKeeper(EffectKeeper* pEffectKeeper) {
     mEffectKeeper = pEffectKeeper;
 
-    if (mModelKeeper) {
+    if (mModelKeeper != nullptr) {
         alEffectKeeperInitFunction::setupModelToEffectKeeper(mEffectKeeper, mModelKeeper);
     }
 
@@ -1186,7 +1186,7 @@ void LiveActor::initSceneInfo(ActorSceneInfo* pSceneInfo) {
  * @param rInfo The actor init info.
  */
 void LiveActor::initActorAlphaCtrl(ActorAlphaCtrl* pAlphaCtrl, const ActorInitInfo& rInfo) {
-    if (pAlphaCtrl) {
+    if (pAlphaCtrl != nullptr) {
         mAlphaCtrl = pAlphaCtrl;
         registerExecutorActorUpdate(this, rInfo.mExecuteDirector, "アルファ制御");
     }
@@ -1198,18 +1198,18 @@ void LiveActor::initActorAlphaCtrl(ActorAlphaCtrl* pAlphaCtrl, const ActorInitIn
  */
 void LiveActor::setCollision(bool isEnable) {
     if (isEnable) {
-        if (mCollisionParts) {
+        if (mCollisionParts != nullptr) {
             validateCollisionPartsBySystem(this);
         }
 
         return;
     }
 
-    if (mCollider) {
+    if (mCollider != nullptr) {
         mCollider->onInvalidate();
     }
 
-    if (mCollisionParts) {
+    if (mCollisionParts != nullptr) {
         invalidateCollisionPartsBySystem(this);
     }
 }
@@ -1223,13 +1223,13 @@ void LiveActor::control() {}
  * Moves the actor by its velocity, colliding if it has a collider.
  */
 void LiveActor::updateCollider() {
-    if (!mActorPoseKeeper) {
+    if (mActorPoseKeeper == nullptr) {
         return;
     }
 
     const sead::Vector3f& velocity = getVelocity(this);
 
-    if (!mCollider) {
+    if (mCollider == nullptr) {
         *getTransPtr(this) += velocity;
         return;
     }
@@ -1257,11 +1257,11 @@ void LiveActor::setPlacementHolder(const ActorInitInfo& rInfo) {
  * @param pAlpha The alpha pointer.
  */
 void LiveActor::setGlobalAlphaPtr(f32* pAlpha) {
-    if (mModelKeeper) {
+    if (mModelKeeper != nullptr) {
         mModelKeeper->setGlobalAlpha(pAlpha);
     }
 
-    if (mSubActorKeeper) {
+    if (mSubActorKeeper != nullptr) {
         setSubActorAlphaPtr(this, pAlpha);
     }
 }
@@ -1277,16 +1277,16 @@ void calcAnimDirect(al::LiveActor* pActor) {
     sead::Matrix34f baseMtx;
     alActorPoseFunction::calcBaseMtx(&baseMtx, pActor);
 
-    if (pActor->mModelKeeper && pActor->mModelKeeper->_1a) {
+    if (pActor->mModelKeeper != nullptr && pActor->mModelKeeper->_1a) {
         al::setBaseMtxAndCalcAnim(pActor, baseMtx, al::getScale(pActor));
     }
 
-    if (pActor->mCollisionParts) {
+    if (pActor->mCollisionParts != nullptr) {
         al::preScaleMtx(&baseMtx, al::getScale(pActor));
         al::syncCollisionMtx(pActor, &baseMtx);
     }
 
-    if (pActor->getEffectKeeper()) {
+    if (pActor->getEffectKeeper() != nullptr) {
         pActor->getEffectKeeper()->update();
     }
 }
@@ -1301,7 +1301,7 @@ void forceUpdateTrans(al::LiveActor* pActor, const sead::Vector3f& rTrans, bool 
     al::setTrans(pActor, rTrans);
     calcAnimDirect(pActor);
 
-    if (pActor->mModelKeeper) {
+    if (pActor->mModelKeeper != nullptr) {
         pActor->mModelKeeper->update();
     }
 
@@ -1313,14 +1313,14 @@ void forceUpdateTrans(al::LiveActor* pActor, const sead::Vector3f& rTrans, bool 
 
     al::SubActorKeeper* keeper = pActor->mSubActorKeeper;
 
-    if (!keeper) {
+    if (keeper == nullptr) {
         return;
     }
 
     for (s32 i = 0; i < keeper->mCount; i++) {
         al::LiveActor* subActor = keeper->mInfos[i]->mSubActor;
 
-        if (subActor) {
+        if (subActor != nullptr) {
             forceUpdateTrans(subActor, rTrans, true);
         }
     }
@@ -1332,20 +1332,20 @@ void forceUpdateTrans(al::LiveActor* pActor, const sead::Vector3f& rTrans, bool 
  * @param isOn Whether the alpha control is enabled.
  */
 void setAlphaCtrlOn(al::LiveActor* pActor, bool isOn) {
-    if (pActor->mAlphaCtrl) {
+    if (pActor->mAlphaCtrl != nullptr) {
         pActor->mAlphaCtrl->mIsOn = isOn;
     }
 
     al::SubActorKeeper* keeper = pActor->mSubActorKeeper;
 
-    if (!keeper) {
+    if (keeper == nullptr) {
         return;
     }
 
     for (s32 i = 0; i < keeper->mCount; i++) {
         al::LiveActor* subActor = keeper->mInfos[i]->mSubActor;
 
-        if (subActor && subActor->mAlphaCtrl) {
+        if (subActor != nullptr && subActor->mAlphaCtrl != nullptr) {
             subActor->mAlphaCtrl->mIsOn = isOn;
         }
     }

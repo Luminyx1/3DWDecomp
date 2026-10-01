@@ -227,7 +227,7 @@ void setScreenPointTargetOffset(LiveActor* pActor, const char* pName,
  * @param pActor actor
  */
 void validateScreenPointTargetAll(LiveActor* pActor) {
-    if (pActor->mScreenPointKeeper) {
+    if (pActor->mScreenPointKeeper != nullptr) {
         pActor->mScreenPointKeeper->validate();
     }
 }
@@ -237,7 +237,7 @@ void validateScreenPointTargetAll(LiveActor* pActor) {
  * @param pActor actor
  */
 void invalidateScreenPointTargetAll(LiveActor* pActor) {
-    if (pActor->mScreenPointKeeper) {
+    if (pActor->mScreenPointKeeper != nullptr) {
         pActor->mScreenPointKeeper->invalidate();
     }
 }

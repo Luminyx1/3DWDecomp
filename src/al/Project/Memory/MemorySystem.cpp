@@ -87,11 +87,11 @@ void MemorySystem::freeAllSequenceHeap() {
 bool MemorySystem::createSceneHeap(const char* pStageName) {
     sead::Heap* resourceHeap = mSceneResourceHeap;
 
-    if (!resourceHeap) {
+    if (resourceHeap == nullptr) {
         createSceneResourceHeap(pStageName);
     }
 
-    if (mCustomAlloc) {
+    if (mCustomAlloc != nullptr) {
         mCustomAlloc->createSceneHeap(resourceHeap == nullptr);
     }
 
@@ -130,10 +130,10 @@ void MemorySystem::createSceneResourceHeap(const char* pStageName) {
     u64 size = 0x4600000;
     bool isDefaultSize = true;
 
-    if (pStageName && mIsExistFileResource) {
+    if (pStageName != nullptr && mIsExistFileResource) {
         size = findSceneResourceHeapSize(pStageName, size);
 
-        if (mStageSizeAdjuster) {
+        if (mStageSizeAdjuster != nullptr) {
             s64 adjustedSize = mStageSizeAdjuster->adjustSceneResourceSize(pStageName, size,
                                                                            mCustomAlloc);
             isDefaultSize = size == adjustedSize;
@@ -157,7 +157,7 @@ void MemorySystem::createSceneResourceHeap(const char* pStageName) {
 void MemorySystem::destroySceneHeap(bool isRemoveCategory) {
     mSceneHeap->destroy();
     mSceneHeap = nullptr;
-    bool isFree = mCustomAlloc ? mCustomAlloc->isFreeSceneResource(isRemoveCategory) :
+    bool isFree = (mCustomAlloc != nullptr) ? mCustomAlloc->isFreeSceneResource(isRemoveCategory) :
                                  isRemoveCategory;
     if (isFree) {
         mSceneResourceHeap->destroy();
@@ -175,7 +175,7 @@ bool MemorySystem::isReallyFreeSceneResource(bool isRemoveCategory) const {
         return false;
     }
 
-    if (!mCustomAlloc) {
+    if (mCustomAlloc == nullptr) {
         return true;
     }
 
@@ -186,7 +186,7 @@ bool MemorySystem::isReallyFreeSceneResource(bool isRemoveCategory) const {
  * Forces the scene resource heap to be destroyed with the scene heap.
  */
 void MemorySystem::setForceSceneHeapResourceDestroy() {
-    if (mCustomAlloc) {
+    if (mCustomAlloc != nullptr) {
         mCustomAlloc->setForceSceneHeapResourceDestroy();
     }
 }
@@ -229,7 +229,7 @@ void MemorySystem::freeAllPlayerHeap() {
 sead::Heap* MemorySystem::tryFindNamedHeap(const char* pHeapName) const {
     auto* node = mHeapList.find(pHeapName);
 
-    if (!node) {
+    if (node == nullptr) {
         return nullptr;
     }
 
@@ -244,7 +244,7 @@ sead::Heap* MemorySystem::tryFindNamedHeap(const char* pHeapName) const {
 sead::Heap* MemorySystem::findNamedHeap(const char* pHeapName) const {
     auto* node = mHeapList.find(pHeapName);
 
-    if (!node) {
+    if (node == nullptr) {
         return nullptr;
     }
 
@@ -257,7 +257,7 @@ sead::Heap* MemorySystem::findNamedHeap(const char* pHeapName) const {
  * @param pHeapName name, or null to use the heap's name
  */
 void MemorySystem::addNamedHeap(sead::Heap* pHeap, const char* pHeapName) {
-    mHeapList.insert(pHeapName ? pHeapName : pHeap->getName().cstr(), pHeap);
+    mHeapList.insert((pHeapName != nullptr) ? pHeapName : pHeap->getName().cstr(), pHeap);
 }
 
 /**
@@ -267,7 +267,7 @@ void MemorySystem::addNamedHeap(sead::Heap* pHeap, const char* pHeapName) {
 void MemorySystem::removeNamedHeap(const char* pHeapName) {
     sead::SafeString name = pHeapName;
 
-    if (mHeapList.find(name)) {
+    if (mHeapList.find(name) != nullptr) {
         mHeapList.erase(name);
     }
 }

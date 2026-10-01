@@ -116,7 +116,7 @@ alModelCafe::~alModelCafe() {
         mBaseMtx = nullptr;
     }
 
-    if (mModelG3D) {
+    if (mModelG3D != nullptr) {
         delete mModelG3D;
         mModelG3D = nullptr;
     }
@@ -135,7 +135,7 @@ void alModelCafe::initResource(const char* pModelArcName, const char* pAnimArcNa
     nn::g3d::ResFile* texResFile = nullptr;
     al::Resource* modelRes;
 
-    if (pTexArcName) {
+    if (pTexArcName != nullptr) {
         al::Resource* texRes = al::findOrCreateResource(pTexArcName, nullptr);
         al::StringTmp<256> texFileName("%s.bfres", al::getBaseName(pTexArcName));
         texRes->tryCreateResGraphicsFile(texFileName, nullptr);
@@ -152,19 +152,19 @@ void alModelCafe::initResource(const char* pModelArcName, const char* pAnimArcNa
 
     al::Resource* texRes;
 
-    if (mModelRes && (texRes = getTextureResource(mModelRes)) && getResFile(texRes) &&
+    if (mModelRes != nullptr && ((texRes = getTextureResource(mModelRes)) != nullptr) && getResFile(texRes) != nullptr &&
         getResFileCount(getResFile(texRes), 0xdc) != 0) {
         mTextureRes = texRes;
         al::StringTmp<256> texFileName("%s.bfres", al::getBaseName(pModelArcName));
 
-        if (!texResFile) {
+        if (texResFile == nullptr) {
             texResFile = getResFile(mModelRes);
         }
 
         texRes->tryCreateResGraphicsFile(texFileName, texResFile);
     }
 
-    if (pAnimArcName) {
+    if (pAnimArcName != nullptr) {
         mModelName = al::createStringIfInStack(al::getBaseName(pAnimArcName));
         mFileName = al::createStringIfInStack(pAnimArcName);
         al::Resource* animRes = al::findOrCreateResource(pAnimArcName, nullptr);
@@ -173,7 +173,7 @@ void alModelCafe::initResource(const char* pModelArcName, const char* pAnimArcNa
         animRes->tryCreateResGraphicsFile(animFileName, nullptr);
     }
 
-    if (!mFileName) {
+    if (mFileName == nullptr) {
         mFileName = al::createStringIfInStack(pModelArcName);
     }
 }
@@ -185,16 +185,16 @@ void alModelCafe::initResource(const char* pModelArcName, const char* pAnimArcNa
  */
 void alModelCafe::initModel(s32 bufferNum, al::GpuMemAllocator* pAllocator) {
     mModelG3D = new al::SimpleModelG3D();
-    mModelG3D->initResource(mTextureRes ? mTextureRes : mModelRes, 1, nullptr, pAllocator);
+    mModelG3D->initResource((mTextureRes != nullptr) ? mTextureRes : mModelRes, 1, nullptr, pAllocator);
 
     al::Resource* texRes = getTextureResource(mModelRes);
     nn::g3d::ResFile* texResFile;
 
-    if (texRes && (texResFile = getResFile(texRes)) &&
+    if (texRes != nullptr && ((texResFile = getResFile(texRes)) != nullptr) &&
         (getResFileCount(texResFile, 0xe2) != 0 || getResFileCount(texResFile, 0xe4) != 0 ||
          getResFileCount(texResFile, 0xe6) != 0)) {
         mInitResourceDataAnim = al::InitResourceDataAnim::tryCreate(mModelRes, mAnimRes, texRes);
-    } else if (mAnimRes) {
+    } else if (mAnimRes != nullptr) {
         mInitResourceDataAnim = al::InitResourceDataAnim::tryCreate(mModelRes, mAnimRes, nullptr);
     } else {
         mInitResourceDataAnim = getInitResourceData(mModelRes)->getAnimData();
@@ -204,7 +204,7 @@ void alModelCafe::initModel(s32 bufferNum, al::GpuMemAllocator* pAllocator) {
     mtx.makeT(sead::Vector3f::zero);
     mModelG3D->updateWorldMatrix(mtx, sead::Vector3f::ones);
 
-    al::AnimPlayerInitInfo info = {mAnimRes ? mAnimRes : mModelRes, mModelG3D->getModelObj(),
+    al::AnimPlayerInitInfo info = {(mAnimRes != nullptr) ? mAnimRes : mModelRes, mModelG3D->getModelObj(),
                                    mModelRes, mInitResourceDataAnim};
 
     mAnimPlayerSkl = al::AnimPlayerSkl::tryCreate(&info, bufferNum);
@@ -215,17 +215,17 @@ void alModelCafe::initModel(s32 bufferNum, al::GpuMemAllocator* pAllocator) {
     mAnimPlayerMat2 = mat2;
     mAnimPlayerVis = al::AnimPlayerVis::tryCreate(&info);
 
-    if (mAnimPlayerSkl) {
+    if (mAnimPlayerSkl != nullptr) {
         mAnimPlayerSkl->initInterp(mFileName);
     }
 
-    if (!mat0 && !mat2) {
+    if (mat0 == nullptr && mat2 == nullptr) {
         mModelG3D->tryInitFixedMatUbo();
     }
 
     const nn::g3d::SkeletonObj* skeleton = mModelG3D->getModelObj()->GetSkeleton();
 
-    if (skeleton && skeleton->GetBoneCount() != 0) {
+    if (skeleton != nullptr && skeleton->GetBoneCount() != 0) {
         mWorldMtxArray = new sead::Matrix34f[skeleton->GetBoneCount()];
         u32 boneNum = skeleton->GetBoneCount();
 
@@ -240,7 +240,7 @@ void alModelCafe::initModel(s32 bufferNum, al::GpuMemAllocator* pAllocator) {
  * @return Animation resource, or the model resource if there is none.
  */
 const al::Resource* alModelCafe::getAnimResource() const {
-    return mAnimRes ? mAnimRes : mModelRes;
+    return (mAnimRes != nullptr) ? mAnimRes : mModelRes;
 }
 
 /**
@@ -249,7 +249,7 @@ const al::Resource* alModelCafe::getAnimResource() const {
 void alModelCafe::show() {
     mModelG3D->mIsVisible = true;
 
-    if (mAnimPlayerSkl) {
+    if (mAnimPlayerSkl != nullptr) {
         mAnimPlayerSkl->reset();
     }
 }
@@ -275,23 +275,23 @@ void alModelCafe::hide() {
 void alModelCafe::update() {
     mModelG3D->swapGPUBuffer();
 
-    if (mAnimPlayerSkl) {
+    if (mAnimPlayerSkl != nullptr) {
         mAnimPlayerSkl->update();
     }
 
-    if (mAnimPlayerMat1) {
+    if (mAnimPlayerMat1 != nullptr) {
         mAnimPlayerMat1->update();
     }
 
-    if (mAnimPlayerMat0) {
+    if (mAnimPlayerMat0 != nullptr) {
         mAnimPlayerMat0->update();
     }
 
-    if (mAnimPlayerMat2) {
+    if (mAnimPlayerMat2 != nullptr) {
         mAnimPlayerMat2->update();
     }
 
-    if (mAnimPlayerVis) {
+    if (mAnimPlayerVis != nullptr) {
         mAnimPlayerVis->update();
     }
 }
@@ -307,23 +307,23 @@ void alModelCafe::updatePaused() {
  * Runs the last update step of the animation players.
  */
 void alModelCafe::updateLast() {
-    if (mAnimPlayerSkl) {
+    if (mAnimPlayerSkl != nullptr) {
         mAnimPlayerSkl->updateLast();
     }
 
-    if (mAnimPlayerMat1) {
+    if (mAnimPlayerMat1 != nullptr) {
         mAnimPlayerMat1->updateLast();
     }
 
-    if (mAnimPlayerMat0) {
+    if (mAnimPlayerMat0 != nullptr) {
         mAnimPlayerMat0->updateLast();
     }
 
-    if (mAnimPlayerMat2) {
+    if (mAnimPlayerMat2 != nullptr) {
         mAnimPlayerMat2->updateLast();
     }
 
-    if (mAnimPlayerVis) {
+    if (mAnimPlayerVis != nullptr) {
         mAnimPlayerVis->updateLast();
     }
 }
@@ -334,27 +334,27 @@ void alModelCafe::updateLast() {
  * @param rScale Scale.
  */
 void alModelCafe::calc(const sead::Matrix34f& rMtx, const sead::Vector3f& rScale) {
-    if (mAnimPlayerSkl) {
+    if (mAnimPlayerSkl != nullptr) {
         mAnimPlayerSkl->calcSklAnim();
     }
 
-    if (mAnimPlayerSkl) {
+    if (mAnimPlayerSkl != nullptr) {
         mAnimPlayerSkl->calcNeedUpdateAnimNext();
     }
 
-    if (mAnimPlayerMat1) {
+    if (mAnimPlayerMat1 != nullptr) {
         mAnimPlayerMat1->calcNeedUpdateAnimNext();
     }
 
-    if (mAnimPlayerMat0) {
+    if (mAnimPlayerMat0 != nullptr) {
         mAnimPlayerMat0->calcNeedUpdateAnimNext();
     }
 
-    if (mAnimPlayerMat2) {
+    if (mAnimPlayerMat2 != nullptr) {
         mAnimPlayerMat2->calcNeedUpdateAnimNext();
     }
 
-    if (mAnimPlayerVis) {
+    if (mAnimPlayerVis != nullptr) {
         mAnimPlayerVis->calcNeedUpdateAnimNext();
     }
 
@@ -368,7 +368,7 @@ void alModelCafe::calc(const sead::Matrix34f& rMtx, const sead::Vector3f& rScale
 
     const nn::g3d::SkeletonObj* skeleton = mModelG3D->getModelObj()->GetSkeleton();
 
-    if (!skeleton) {
+    if (skeleton == nullptr) {
         return;
     }
 
@@ -409,7 +409,7 @@ const sead::Matrix34f* alModelCafe::getWorldMtxPtrByIndex(s32 index) const {
  * @return Model resource.
  */
 const nn::g3d::ResModel* alModelCafe::getResModel() const {
-    if (mTextureRes) {
+    if (mTextureRes != nullptr) {
         return getFirstResModel(getResFile(mTextureRes));
     }
 

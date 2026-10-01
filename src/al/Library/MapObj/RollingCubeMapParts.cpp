@@ -95,7 +95,7 @@ void RollingCubeMapParts::init(const ActorInitInfo& rInfo) {
 
     mEffectMtxSetter = tryCreateEffectMtxSetter(this, "EffectMtxSetter");
 
-    if (mEffectMtxSetter) {
+    if (mEffectMtxSetter != nullptr) {
         mEffectMtxSetter->setMtxPtr(&mLandEffectMtx, "LandEffectMtx");
     }
 

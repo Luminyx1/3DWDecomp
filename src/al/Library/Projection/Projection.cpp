@@ -312,7 +312,7 @@ void calcFrustumPointsAtWorldSpace(ViewFrustumPoints* pPoints, const sead::Matri
 void calcFrustumPlanesWorldSpace(ViewFrustumPlanes* pPlanes, const sead::Matrix34f& rViewInvMtx,
                                  const sead::Matrix44f& rProjInvMtx, ViewFrustumPoints* pPoints) {
     ViewFrustumPoints points;
-    ViewFrustumPoints* target = pPoints ? pPoints : &points;
+    ViewFrustumPoints* target = (pPoints != nullptr) ? pPoints : &points;
     calcFrustumPointsAtWorldSpace(target, rViewInvMtx, rProjInvMtx);
     ViewFrustumPlanes planes;
     const sead::Vector3f* p = target->points;

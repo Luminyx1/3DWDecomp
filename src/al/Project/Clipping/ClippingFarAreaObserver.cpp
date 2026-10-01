@@ -45,7 +45,7 @@ void ClippingFarAreaObserver::endInit() {
  * Updates the far clip distances from the far clip area the players are in.
  */
 void ClippingFarAreaObserver::update() {
-    if (!mAreaObjGroup) {
+    if (mAreaObjGroup == nullptr) {
         return;
     }
 
@@ -59,11 +59,11 @@ void ClippingFarAreaObserver::update() {
 
         AreaObj* areaObj = mAreaObjGroup->getInVolumeAreaObj(getPlayerPos(mPlayerHolder, i));
 
-        if (!areaObj) {
+        if (areaObj == nullptr) {
             continue;
         }
 
-        if (!mCurrentArea || areaObj->mPriority > mCurrentArea->mPriority) {
+        if (mCurrentArea == nullptr || areaObj->mPriority > mCurrentArea->mPriority) {
             mCurrentArea = areaObj;
         }
     }
@@ -71,7 +71,7 @@ void ClippingFarAreaObserver::update() {
     mFarClipDistance = mDefaultFarClipDistance;
     mFarClipDistanceSub = mDefaultFarClipDistanceSub;
 
-    if (mCurrentArea) {
+    if (mCurrentArea != nullptr) {
         tryGetAreaObjArg(&mFarClipDistance, mCurrentArea, "FarClipDistance");
         tryGetAreaObjArg(&mFarClipDistanceSub, mCurrentArea, "FarClipDistanceSub");
     }

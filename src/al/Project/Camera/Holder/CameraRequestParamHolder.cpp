@@ -16,7 +16,7 @@ void CameraRequestParamHolder::resetPlayerType() {
 }
 
 bool CameraRequestParamHolder::isPlayerTypeFlyer() const {
-    return mFlyerCamera && mIsCurrFlyer;
+    return (mFlyerCamera != nullptr) && mIsCurrFlyer;
 }
 
 void CameraRequestParamHolder::onPlayerTypeFlyer(const IUseCamera* pCamera, const char* pName) {
@@ -25,7 +25,7 @@ void CameraRequestParamHolder::onPlayerTypeFlyer(const IUseCamera* pCamera, cons
 }
 
 bool CameraRequestParamHolder::isPlayerTypeHighSpeedMove() const {
-    return mHighSpeedMoveCamera && mIsCurrHighSpeedMove;
+    return (mHighSpeedMoveCamera != nullptr) && mIsCurrHighSpeedMove;
 }
 
 void CameraRequestParamHolder::onPlayerTypeHighSpeedMove(const IUseCamera* pCamera,
@@ -35,7 +35,7 @@ void CameraRequestParamHolder::onPlayerTypeHighSpeedMove(const IUseCamera* pCame
 }
 
 bool CameraRequestParamHolder::isPlayerTypeHighJump() const {
-    return mHighJumpCamera && mIsCurrHighJump;
+    return (mHighJumpCamera != nullptr) && mIsCurrHighJump;
 }
 
 void CameraRequestParamHolder::onPlayerTypeHighJump(const IUseCamera* pCamera, const char* pName) {
@@ -44,7 +44,7 @@ void CameraRequestParamHolder::onPlayerTypeHighJump(const IUseCamera* pCamera, c
 }
 
 bool CameraRequestParamHolder::isPlayerTypeNotTouchGround() const {
-    return mNotTouchGroundCamera && mIsCurrNotTouchGround;
+    return (mNotTouchGroundCamera != nullptr) && mIsCurrNotTouchGround;
 }
 
 void CameraRequestParamHolder::onPlayerTypeNotTouchGround(const IUseCamera* pCamera,

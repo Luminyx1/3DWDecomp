@@ -49,12 +49,12 @@ bool DemoDirector::isActiveDemo(const LiveActor* pActor) const {
  * @return whether any demo is active
  */
 bool DemoDirector::isAnyActiveDemo() const {
-    if (mActiveDemoName) {
+    if (mActiveDemoName != nullptr) {
         return true;
     }
 
     for (s32 i = 0; i < 20; i++) {
-        if (mOtherDemoActors[i]) {
+        if (mOtherDemoActors[i] != nullptr) {
             return true;
         }
     }
@@ -88,7 +88,7 @@ void DemoDirector::endDemo(const LiveActor* pActor, const char* pName) {
  */
 bool DemoDirector::isOtherDemoRunning() {
     for (s32 i = 0; i < 20; i++) {
-        if (mOtherDemoActors[i]) {
+        if (mOtherDemoActors[i] != nullptr) {
             return true;
         }
     }
@@ -121,7 +121,7 @@ void DemoDirector::setIsOtherDemoRunning(LiveActor* pActor, bool isRunning) {
         }
 
         for (s32 i = 0; i < 20; i++) {
-            if (!mOtherDemoActors[i]) {
+            if (mOtherDemoActors[i] == nullptr) {
                 mOtherDemoActors[i] = pActor;
                 return;
             }
@@ -141,7 +141,7 @@ void DemoDirector::setIsOtherDemoRunning(LiveActor* pActor, bool isRunning) {
  * @return demo name, or an empty string
  */
 const char* DemoDirector::getActiveDemoName() const {
-    return mActiveDemoName ? mActiveDemoName : "";
+    return (mActiveDemoName != nullptr) ? mActiveDemoName : "";
 }
 
 /**
@@ -174,7 +174,7 @@ bool DemoDirector::tryRequestStartDemo(const LiveActor* pActor, const char* pNam
         return false;
     }
 
-    if (mActiveDemoName) {
+    if (mActiveDemoName != nullptr) {
         return false;
     }
 
@@ -268,11 +268,11 @@ void DemoDirector::updateDemoActor(EffectSystem* pEffectSystem) {
         LiveActor* actor = mDemoActors[i];
         actor->movement();
 
-        if (actor->mModelKeeper) {
+        if (actor->mModelKeeper != nullptr) {
             actor->calcAnim();
         }
 
-        if (pEffectSystem && actor->getEffectKeeper()) {
+        if (pEffectSystem != nullptr && actor->getEffectKeeper() != nullptr) {
             pEffectSystem->addCalcEffect(reinterpret_cast<u64>(actor->getEffectKeeper()));
         }
     }

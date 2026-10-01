@@ -128,7 +128,7 @@ LightStreakDirector::LightStreakDirector(GraphicsSystemInfo* pInfo)
  * Destroys the full screen quad and the uniform blocks.
  */
 LightStreakDirector::~LightStreakDirector() {
-    if (mFullScreenQuadModel) {
+    if (mFullScreenQuadModel != nullptr) {
         delete mFullScreenQuadModel;
         mFullScreenQuadModel = nullptr;
     }
@@ -136,7 +136,7 @@ LightStreakDirector::~LightStreakDirector() {
     while (!mUniformBlocks.isEmpty()) {
         UniformBlock* uniformBlock = mUniformBlocks.popBack();
 
-        if (uniformBlock)
+        if (uniformBlock != nullptr)
             delete uniformBlock;
     }
 }

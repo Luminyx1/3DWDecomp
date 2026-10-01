@@ -61,7 +61,7 @@ void ModelShaderAssign::bind(const nn::g3d::ResMaterial* pMaterial, const nn::g3
                              const nn::g3d::ResShaderProgram* pProgram) {
     clear_();
 
-    if (!pProgram) {
+    if (pProgram == nullptr) {
         return;
     }
 
@@ -81,10 +81,10 @@ void ModelShaderAssign::bind(const nn::g3d::ResMaterial* pMaterial, const nn::g3
 void ModelShaderAssign::updateLocation_(const nn::g3d::ResMaterial* pMaterial,
                                         const nn::g3d::ResShadingModel* pShadingModel,
                                         const char* pName) {
-    if (mShaderProgram) {
+    if (mShaderProgram != nullptr) {
         mMaterialBlockLocation.setName(pName);
         mMaterialBlockLocation.search(*mShaderProgram);
-    } else if (mResShaderProgram) {
+    } else if (mResShaderProgram != nullptr) {
         s32 blockIndex = pShadingModel->GetMaterialBlockIndex();
 
         if (blockIndex != -1) {

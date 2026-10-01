@@ -12,7 +12,7 @@ namespace {
 inline bool isOnGroundInline(const LiveActor* pActor, u32 checkFrame, f32 margin) {
     Collider* collider = pActor->mCollider;
 
-    if (collider) {
+    if (collider != nullptr) {
         if (!(collider->_110 >= 0.0f) && collider->_264 > checkFrame) {
             return false;
         }

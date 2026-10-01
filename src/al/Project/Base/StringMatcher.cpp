@@ -57,7 +57,7 @@ void StringMatcher::handleAddMatchInfo(const char* pStart, const char* pEnd, voi
  */
 s32 StringMatcher::calcMatchNum() const {
     for (s32 i = 0; i < 10; i++) {
-        if (!mMatchInfo[i].mStart) {
+        if (mMatchInfo[i].mStart == nullptr) {
             return i;
         }
     }

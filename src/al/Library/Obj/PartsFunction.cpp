@@ -30,7 +30,7 @@ CollisionObj* createCollisionObj(const LiveActor* pParent, const ActorInitInfo& 
                                  const char* pCollisionFileName, HitSensor* pHitSensor,
                                  const char* pJointName, const char* pSuffix) {
     return new CollisionObj(rInfo, getModelResource(pParent), pCollisionFileName, pHitSensor,
-                            pJointName ? getJointMtxPtr(pParent, pJointName) :
+                            (pJointName != nullptr) ? getJointMtxPtr(pParent, pJointName) :
                                          pParent->getBaseMtx(),
                             pSuffix);
 }

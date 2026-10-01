@@ -14,13 +14,13 @@ void ShadowKeeper::show() {
     }
 
     for (auto it = mMaskArray.begin(); it != mMaskArray.end(); ++it) {
-        if (!it->mHeightEvenTarget) {
+        if (it->mHeightEvenTarget == nullptr) {
             showShadow(mHostActor, &*it);
         }
     }
 
     for (auto it = mMaskArray.begin(); it != mMaskArray.end(); ++it) {
-        if (it->mHeightEvenTarget) {
+        if (it->mHeightEvenTarget != nullptr) {
             showShadow(mHostActor, &*it);
         }
     }

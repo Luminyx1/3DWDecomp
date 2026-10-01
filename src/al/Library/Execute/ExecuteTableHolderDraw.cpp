@@ -54,7 +54,7 @@ ExecuteTableHolderDraw::ExecuteTableHolderDraw() = default;
 
 ExecuteTableHolderDraw::~ExecuteTableHolderDraw() {
     for (s32 i = 0; i < mActorModelListNum; i++) {
-        if (mActorModelLists[i]) {
+        if (mActorModelLists[i] != nullptr) {
             delete mActorModelLists[i];
         }
     }

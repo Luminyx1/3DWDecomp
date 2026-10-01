@@ -16,7 +16,7 @@ namespace al {
  */
 void GpuMemAllocator::createMemory(const char* pName, s32 size, sead::Heap* pHeap, s32 alignment,
                                    agl::MemoryAttribute attribute) {
-    if (findGpuMemInfo(pName)) {
+    if (findGpuMemInfo(pName) != nullptr) {
         return;
     }
 
@@ -79,7 +79,7 @@ void GpuMemAllocator::createMemoryWithTmp(const char* pName, s32 size, s32 tmpSi
 agl::GPUMemAddrBase GpuMemAllocator::allocMemory(const char* pName, s32 size, s32 alignment) {
     Block* block = findGpuMemInfo(pName);
 
-    if (!block) {
+    if (block == nullptr) {
         return {};
     }
 
@@ -107,7 +107,7 @@ agl::GPUMemAddrBase GpuMemAllocator::allocMemory(const char* pName, s32 size, s3
 agl::GPUMemAddrBase GpuMemAllocator::getTmpMemoryAddr(const char* pName) const {
     Block* block = findGpuMemInfo(pName);
 
-    if (!block) {
+    if (block == nullptr) {
         return {};
     }
 
@@ -123,7 +123,7 @@ agl::GPUMemAddrBase GpuMemAllocator::getTmpMemoryAddr(const char* pName) const {
 u32 GpuMemAllocator::getTmpMemorySize(const char* pName) const {
     Block* block = findGpuMemInfo(pName);
 
-    if (!block) {
+    if (block == nullptr) {
         return 0;
     }
 

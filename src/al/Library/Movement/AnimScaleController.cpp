@@ -50,7 +50,7 @@ const AnimScaleParam sDefaultParam;
 
 AnimScaleController::AnimScaleController(const AnimScaleParam* pParam)
     : NerveExecutor("スケールアニメコントロール"), mParam(pParam) {
-    if (!pParam) {
+    if (pParam == nullptr) {
         mParam = &sDefaultParam;
     }
 
@@ -58,7 +58,7 @@ AnimScaleController::AnimScaleController(const AnimScaleParam* pParam)
 }
 
 void AnimScaleController::setAnimScaleParam(const AnimScaleParam* pParam) {
-    mParam = pParam ? pParam : &sDefaultParam;
+    mParam = (pParam != nullptr) ? pParam : &sDefaultParam;
 }
 
 /**

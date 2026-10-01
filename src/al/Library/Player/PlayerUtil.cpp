@@ -27,7 +27,7 @@ static s32 findNearestPlayerIdFromPos(const LiveActor* actor, const sead::Vector
     for (s32 i = 0; i < playerNum; i++) {
         LiveActor* player = holder->getPlayer(i);
 
-        if (!player || isDead(player)) {
+        if (player == nullptr || isDead(player)) {
             continue;
         }
 
@@ -224,7 +224,7 @@ bool tryFindNearestPlayerPos(sead::Vector3f* pos, const LiveActor* actor) {
         return false;
     LiveActor* player = getPlayerActor(actor, nearestPlayerId);
 
-    if (!player)
+    if (player == nullptr)
         return false;
 
     *pos = getTrans(player);
@@ -240,7 +240,7 @@ bool tryFindNearestPlayerDisatanceFromTarget(f32* distance, const LiveActor* act
 
     LiveActor* player = getPlayerActor(actor, nearestPlayerId);
 
-    if (!player)
+    if (player == nullptr)
         return false;
 
     *distance = (getTrans(player) - target).length();
@@ -266,7 +266,7 @@ const sead::Vector3f& getFarPlayerPosMaxX(const LiveActor* actor) {
     for (s32 i = 0; i < getPlayerNumMax(holder); i++) {
         LiveActor* player = holder->getPlayer(i);
 
-        if (!farPlayer || maxX < getTrans(player).x) {
+        if (farPlayer == nullptr || maxX < getTrans(player).x) {
             maxX = getTrans(player).x;
             farPlayer = player;
         }
@@ -285,7 +285,7 @@ const sead::Vector3f& getFarPlayerPosMinX(const LiveActor* actor) {
     for (s32 i = 0; i < getPlayerNumMax(holder); i++) {
         LiveActor* player = holder->getPlayer(i);
 
-        if (!farPlayer || getTrans(player).x < minX) {
+        if (farPlayer == nullptr || getTrans(player).x < minX) {
             minX = getTrans(player).x;
             farPlayer = player;
         }
@@ -381,7 +381,7 @@ f32 calcDistanceToPlayer(const LiveActor* pActor) {
 }
 
 bool isPlayerInRouteDokan(const LiveActor* pActor) {
-    return pActor && pActor->isInRouteDokan();
+    return (pActor != nullptr) && pActor->isInRouteDokan();
 }
 
 }  // namespace al

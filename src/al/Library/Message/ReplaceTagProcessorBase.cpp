@@ -175,14 +175,14 @@ s32 ReplaceTagProcessorBase::replaceArgsVaList(char16_t* pDst, const IUseMessage
 
         MessageTag tag(pSrc);
 
-        if (!tag.getTag()) {
+        if (tag.getTag() == nullptr) {
             pSrc++;
             continue;
         }
 
         const char* groupName = getMessageTagGroupName(pMsgSystem, tag.getGroup());
 
-        if (!groupName) {
+        if (groupName == nullptr) {
             memcpy(out, pSrc, tag.getSkipLength() * sizeof(char16_t));
             out += tag.getSkipLength();
         } else if (isEqualString(groupName, "Number")) {

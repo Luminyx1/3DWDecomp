@@ -136,7 +136,7 @@ s32 getPadReplayRemainFrame(u32 port) {
 bool isPadRecording(u32 port) {
     ReplayController* controller = findReplayController(port);
 
-    if (!controller) {
+    if (controller == nullptr) {
         return false;
     }
 
@@ -167,7 +167,7 @@ void validatePadReplay(u32 port) {
 bool isValidReplayController(u32 port) {
     ReplayController* controller = findReplayController(port);
 
-    if (!controller) {
+    if (controller == nullptr) {
         return false;
     }
 
@@ -182,7 +182,7 @@ bool isValidReplayController(u32 port) {
 bool isReadPadReplayData(u32 port) {
     ReplayController* controller = findReplayController(port);
 
-    if (!controller) {
+    if (controller == nullptr) {
         return false;
     }
 

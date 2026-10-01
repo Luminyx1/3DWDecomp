@@ -44,7 +44,7 @@ Scene::Scene(const char* pName) : NerveExecutor(pName), mName(pName) {
 Scene::~Scene() {
     stopPadRumble(this);
 
-    if (mAudioDirector) {
+    if (mAudioDirector != nullptr) {
         mAudioDirector->finalize();
     }
 
@@ -76,22 +76,22 @@ void Scene::movement() {
         return;
     }
 
-    if (mSceneStopCtrl) {
+    if (mSceneStopCtrl != nullptr) {
         mSceneStopCtrl->update();
     }
 
-    if (mScreenCoverCtrl) {
+    if (mScreenCoverCtrl != nullptr) {
         mScreenCoverCtrl->update();
     }
 
     updateNerve();
     control();
 
-    if (mAudioKeeper) {
+    if (mAudioKeeper != nullptr) {
         mAudioKeeper->update();
     }
 
-    if (mAudioDirector) {
+    if (mAudioDirector != nullptr) {
         mAudioDirector->update();
     }
 }
@@ -219,7 +219,7 @@ void Scene::initLiveActorKitWithGraphics(const GraphicsInitArg& rArg, const Scen
     if (rArg._e) {
         GraphicsSystemInfo* graphicsInfo = mLiveActorKit->mGraphicsSystemInfo;
 
-        if (graphicsInfo) {
+        if (graphicsInfo != nullptr) {
             u8* unk = *reinterpret_cast<u8**>(&graphicsInfo->_130[0x240 - 0x130]);
 
             if (unk && isUseCameraRS) {
@@ -328,19 +328,19 @@ void Scene::initScreenCoverCtrl() {
  * @param pChecker scenario complete checker
  */
 void Scene::endInit(const ActorInitInfo& rInfo, IScenarioCompleteChecker* pChecker) {
-    if (mSceneObjHolder) {
+    if (mSceneObjHolder != nullptr) {
         mSceneObjHolder->initAfterPlacementSceneObj(rInfo);
     }
 
-    if (mLiveActorKit) {
-        if (mLiveActorKit->mDemoDirector) {
+    if (mLiveActorKit != nullptr) {
+        if (mLiveActorKit->mDemoDirector != nullptr) {
             mLiveActorKit->mDemoDirector->endInit(rInfo);
         }
 
         mLiveActorKit->endInit(pChecker);
     }
 
-    if (mLayoutKit) {
+    if (mLayoutKit != nullptr) {
         mLayoutKit->endInit();
     }
 }

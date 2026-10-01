@@ -49,7 +49,7 @@ AreaObj* tryFindAreaObjWithFilter(const IUseAreaObj* pAreaUser, const char* pNam
                                   const sead::Vector3f& rPos, AreaObjFilterBase* pFilter) {
     AreaObjGroup* group = tryFindAreaObjGroup(pAreaUser, pName);
 
-    if (!group) {
+    if (group == nullptr) {
         return nullptr;
     }
 
@@ -59,7 +59,7 @@ AreaObj* tryFindAreaObjWithFilter(const IUseAreaObj* pAreaUser, const char* pNam
     for (s32 i = 0; i < num; i++) {
         AreaObj* areaObj = group->getAreaObj(i);
 
-        if ((!result || result->mPriority <= areaObj->mPriority) && areaObj->isInVolume(rPos) &&
+        if ((result == nullptr || result->mPriority <= areaObj->mPriority) && areaObj->isInVolume(rPos) &&
             pFilter->isValidArea(areaObj)) {
             result = areaObj;
         }
@@ -87,7 +87,7 @@ AreaObjGroup* tryFindAreaObjGroup(const IUseAreaObj* pAreaUser, const char* pNam
 AreaObj* tryFindAreaObj(const IUseAreaObj* pAreaUser, const char* pName) {
     AreaObjGroup* group = tryFindAreaObjGroup(pAreaUser, pName);
 
-    if (!group) {
+    if (group == nullptr) {
         return nullptr;
     }
 
@@ -96,7 +96,7 @@ AreaObj* tryFindAreaObj(const IUseAreaObj* pAreaUser, const char* pName) {
     for (s32 i = 0; i < num; i++) {
         AreaObj* areaObj = group->getAreaObj(i);
 
-        if (areaObj && areaObj->mIsCodeLink && !areaObj->mIsPlessieCameraOn) {
+        if (areaObj != nullptr && areaObj->mIsCodeLink && !areaObj->mIsPlessieCameraOn) {
             return areaObj;
         }
     }
@@ -113,7 +113,7 @@ AreaObj* tryFindAreaObj(const IUseAreaObj* pAreaUser, const char* pName) {
 AreaObj* tryFindPlessieAreaObj(const IUseAreaObj* pAreaUser, const char* pName) {
     AreaObjGroup* group = tryFindAreaObjGroup(pAreaUser, pName);
 
-    if (!group) {
+    if (group == nullptr) {
         return nullptr;
     }
 
@@ -122,7 +122,7 @@ AreaObj* tryFindPlessieAreaObj(const IUseAreaObj* pAreaUser, const char* pName) 
     for (s32 i = 0; i < num; i++) {
         AreaObj* areaObj = group->getAreaObj(i);
 
-        if (areaObj && areaObj->mIsCodeLink && areaObj->mIsPlessieCameraOn) {
+        if (areaObj != nullptr && areaObj->mIsCodeLink && areaObj->mIsPlessieCameraOn) {
             return areaObj;
         }
     }
@@ -139,7 +139,7 @@ AreaObj* tryFindPlessieAreaObj(const IUseAreaObj* pAreaUser, const char* pName) 
 AreaObj* tryFindPlessieTunnelAreaObj(const IUseAreaObj* pAreaUser, const char* pName) {
     AreaObjGroup* group = tryFindAreaObjGroup(pAreaUser, pName);
 
-    if (!group) {
+    if (group == nullptr) {
         return nullptr;
     }
 
@@ -167,7 +167,7 @@ bool isInAreaObjInGroup(const IUseAreaObj* pAreaUser, const char* pName,
                         const sead::Vector3f& rPos) {
     AreaObjGroup* group = tryFindAreaObjGroup(pAreaUser, pName);
 
-    if (!group) {
+    if (group == nullptr) {
         return false;
     }
 
@@ -183,7 +183,7 @@ bool isInAreaObjInGroup(const IUseAreaObj* pAreaUser, const char* pName,
 bool isInDisasterCameraArea(const IUseAreaObj* pAreaUser, const sead::Vector3f& rPos) {
     AreaObjGroup* group = tryFindAreaObjGroup(pAreaUser, "CameraArea");
 
-    if (!group) {
+    if (group == nullptr) {
         return false;
     }
 
@@ -192,7 +192,7 @@ bool isInDisasterCameraArea(const IUseAreaObj* pAreaUser, const sead::Vector3f& 
     for (s32 i = 0; i < num; i++) {
         AreaObj* areaObj = group->getAreaObj(i);
 
-        if (areaObj && areaObj->mIsCodeLink && areaObj->mIsDisasterCameraOn &&
+        if (areaObj != nullptr && areaObj->mIsCodeLink && areaObj->mIsDisasterCameraOn &&
             areaObj->isInVolumeCheck(rPos)) {
             return true;
         }
@@ -210,7 +210,7 @@ bool isInDisasterCameraArea(const IUseAreaObj* pAreaUser, const sead::Vector3f& 
 bool isInPlessieCameraArea(const IUseAreaObj* pAreaUser, const sead::Vector3f& rPos) {
     AreaObjGroup* group = tryFindAreaObjGroup(pAreaUser, "CameraArea");
 
-    if (!group) {
+    if (group == nullptr) {
         return false;
     }
 
@@ -219,7 +219,7 @@ bool isInPlessieCameraArea(const IUseAreaObj* pAreaUser, const sead::Vector3f& r
     for (s32 i = 0; i < num; i++) {
         AreaObj* areaObj = group->getAreaObj(i);
 
-        if (areaObj && areaObj->mIsCodeLink && areaObj->mIsPlessieCameraOn &&
+        if (areaObj != nullptr && areaObj->mIsCodeLink && areaObj->mIsPlessieCameraOn &&
             areaObj->isInVolumeCheck(rPos)) {
             return true;
         }
@@ -239,7 +239,7 @@ AreaObj* getStartCameraArea(const IUseAreaObj* pAreaUser, const sead::Vector3f& 
                             CameraDirector_RS* pCameraDirector) {
     AreaObjGroup* group = tryFindAreaObjGroup(pAreaUser, "CameraArea");
 
-    if (!group) {
+    if (group == nullptr) {
         return nullptr;
     }
 
@@ -248,7 +248,7 @@ AreaObj* getStartCameraArea(const IUseAreaObj* pAreaUser, const sead::Vector3f& 
     for (s32 i = 0; i < num; i++) {
         AreaObj* areaObj = group->getAreaObj(i);
 
-        if (areaObj && areaObj->mIsSpawnEntranceCamera && areaObj->isInVolumeCheck(rPos)) {
+        if (areaObj != nullptr && areaObj->mIsSpawnEntranceCamera && areaObj->isInVolumeCheck(rPos)) {
             return areaObj;
         }
     }
@@ -299,11 +299,11 @@ AreaObj* tryFindAreaObjPlayerOne(const IUseAreaObj* pAreaUser, const char* pName
 
         AreaObj* areaObj = tryFindAreaObj(pAreaUser, pName, getPlayerPos(pPlayerHolder, i));
 
-        if (!areaObj) {
+        if (areaObj == nullptr) {
             continue;
         }
 
-        if (!result || result->mPriority < areaObj->mPriority) {
+        if (result == nullptr || result->mPriority < areaObj->mPriority) {
             result = areaObj;
         }
     }
@@ -322,7 +322,7 @@ AreaObj* tryFindAreaObjPlayerAll(const IUseAreaObj* pAreaUser, const char* pName
                                  const PlayerHolder* pPlayerHolder) {
     AreaObjGroup* group = tryFindAreaObjGroup(pAreaUser, pName);
 
-    if (!group) {
+    if (group == nullptr) {
         return nullptr;
     }
 
@@ -348,11 +348,11 @@ AreaObj* tryFindAreaObjPlayerAll(const IUseAreaObj* pAreaUser, const char* pName
             }
         }
 
-        if (!found) {
+        if (found == nullptr) {
             continue;
         }
 
-        if (!result || result->mPriority < found->mPriority) {
+        if (result == nullptr || result->mPriority < found->mPriority) {
             result = found;
         }
     }
@@ -377,7 +377,7 @@ bool isInAreaObj(AreaObjGroup* pGroup, const sead::Vector3f& rPos) {
  * @return true if an area contains the position
  */
 bool tryIsInAreaObj(AreaObjGroup* pGroup, const sead::Vector3f& rPos) {
-    if (!pGroup) {
+    if (pGroup == nullptr) {
         return false;
     }
 
@@ -391,7 +391,7 @@ bool tryIsInAreaObj(AreaObjGroup* pGroup, const sead::Vector3f& rPos) {
  * @return the area, or nullptr if none contains the position
  */
 AreaObj* tryGetAreaObj(AreaObjGroup* pGroup, const sead::Vector3f& rPos) {
-    if (!pGroup) {
+    if (pGroup == nullptr) {
         return nullptr;
     }
 

@@ -58,7 +58,7 @@ void BlockRailLink::init(const sead::Quatf& rQuat, const sead::Vector3f& rTrans,
  * @param rBaseTrans base translation
  */
 void BlockRailLink::calcOffset(const sead::Vector3f& rBaseTrans) {
-    if (mShape) {
+    if (mShape != nullptr) {
         mShape->calcOffset(rBaseTrans);
     }
 }
@@ -68,7 +68,7 @@ void BlockRailLink::calcOffset(const sead::Vector3f& rBaseTrans) {
  * @param rBaseTrans base translation
  */
 void BlockRailLink::updateLinkedTrans(const sead::Vector3f& rBaseTrans) {
-    if (mShape) {
+    if (mShape != nullptr) {
         mShape->updateLinkedTrans(rBaseTrans);
     }
 }
@@ -199,7 +199,7 @@ BlockRailLink* BlockRailLink::getNextLink(s32 index) const {
  * @return whether the link is connected to the start
  */
 bool BlockRailLink::isPrevLink(const BlockRailLink* pLink) const {
-    if (!pLink) {
+    if (pLink == nullptr) {
         return false;
     }
 
@@ -218,7 +218,7 @@ bool BlockRailLink::isPrevLink(const BlockRailLink* pLink) const {
  * @return whether the link is connected to the end
  */
 bool BlockRailLink::isNextLink(const BlockRailLink* pLink) const {
-    if (!pLink) {
+    if (pLink == nullptr) {
         return false;
     }
 

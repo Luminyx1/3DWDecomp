@@ -19,12 +19,12 @@ ExecuteDirector::ExecuteDirector(s32 requestCount, bool isUseMultiCore)
 
 ExecuteDirector::~ExecuteDirector() {
     for (s32 i = 0; i < mDrawTableNum; i++) {
-        if (mDrawTables[i]) {
+        if (mDrawTables[i] != nullptr) {
             delete mDrawTables[i];
         }
     }
 
-    if (mUpdateTable) {
+    if (mUpdateTable != nullptr) {
         delete mUpdateTable;
     }
 }
@@ -79,7 +79,7 @@ void ExecuteDirector::init(const ExecuteSystemInitInfo& rInfo) {
  * @param pListName List name.
  */
 void ExecuteDirector::registerActorUpdate(LiveActor* pActor, const char* pListName) {
-    if (!pActor->mActorExecuteInfo) {
+    if (pActor->mActorExecuteInfo == nullptr) {
         pActor->initExecuteInfo(new ActorExecuteInfo(mRequestKeeper));
     }
 
@@ -92,7 +92,7 @@ void ExecuteDirector::registerActorUpdate(LiveActor* pActor, const char* pListNa
  * @param pListName List name.
  */
 void ExecuteDirector::registerActorDraw(LiveActor* pActor, const char* pListName) {
-    if (!pActor->mActorExecuteInfo) {
+    if (pActor->mActorExecuteInfo == nullptr) {
         pActor->initExecuteInfo(new ActorExecuteInfo(mRequestKeeper));
     }
 
@@ -108,7 +108,7 @@ void ExecuteDirector::registerActorDraw(LiveActor* pActor, const char* pListName
  * @param pListName List name.
  */
 void ExecuteDirector::registerActorModelDraw(LiveActor* pActor, const char* pListName) {
-    if (!pActor->mActorExecuteInfo) {
+    if (pActor->mActorExecuteInfo == nullptr) {
         pActor->initExecuteInfo(new ActorExecuteInfo(mRequestKeeper));
     }
 
@@ -243,7 +243,7 @@ void ExecuteDirector::executeListStall(const char* pListName) const {
  * @param pTableName Table name, or nullptr for the first table.
  */
 void ExecuteDirector::draw(const char* pTableName) const {
-    if (!pTableName) {
+    if (pTableName == nullptr) {
         mDrawTables[0]->execute();
         return;
     }
@@ -276,7 +276,7 @@ void ExecuteDirector::drawList(const char* pTableName, const char* pListName) co
  * @return True if active.
  */
 bool ExecuteDirector::isActiveDraw(const char* pTableName) const {
-    if (!pTableName) {
+    if (pTableName == nullptr) {
         return mDrawTables[0]->isActive();
     }
 

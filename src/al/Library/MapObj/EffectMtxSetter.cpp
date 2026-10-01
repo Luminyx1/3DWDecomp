@@ -81,7 +81,7 @@ void EffectMtxInfo::init(const ByamlIter& rIter) {
 void EffectMtxSetter::setMtxPtr(const sead::Matrix34f* pMtx, const char* pMtxName) {
     EffectMtxInfo* info = tryFindEffectMtxInfo(pMtxName);
 
-    if (info) {
+    if (info != nullptr) {
         info->setMtxPtr(mActor, pMtx);
     }
 }
@@ -110,7 +110,7 @@ void EffectMtxInfo::setMtxPtr(LiveActor* pActor, const sead::Matrix34f* pMtx) {
     mMtx = pMtx;
 
     for (s32 i = 0; i < mEffectNum; i++) {
-        if (mEffectNames[i]) {
+        if (mEffectNames[i] != nullptr) {
             setEffectFollowMtxPtr(pActor, mEffectNames[i], pMtx);
         }
     }

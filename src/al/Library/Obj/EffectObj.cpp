@@ -58,7 +58,7 @@ void EffectObj::killBySwitch() {
  * Connects to the collision below the object.
  */
 void EffectObj::initAfterPlacement() {
-    if (mMtxConnector) {
+    if (mMtxConnector != nullptr) {
         attachMtxConnectorToCollision(mMtxConnector, this, false);
     }
 }
@@ -77,7 +77,7 @@ void EffectObj::makeActorAppeared() {
  * Follows the connected collision and updates the base matrix.
  */
 void EffectObj::control() {
-    if (mMtxConnector) {
+    if (mMtxConnector != nullptr) {
         connectPoseQT(this, mMtxConnector);
     }
 

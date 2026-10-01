@@ -125,7 +125,7 @@ void ModelDrawerDeferred::createTable() {
  * Draws all deferred meshes with their graphics context display lists.
  */
 void ModelDrawerDeferred::draw() const {
-    if (!mMeshDrawerTable) {
+    if (mMeshDrawerTable == nullptr) {
         return;
     }
 

@@ -117,7 +117,7 @@ f32 ClippingViewFadeInAreas::updateClipping(const sead::Vector3f& rPos, bool isF
         return 0.0f;
     }
 
-    if (getInVolumeAreaObj(rPos)) {
+    if (getInVolumeAreaObj(rPos) != nullptr) {
         if (isForce) {
             mFadeRate = 1.0f;
             return 1.0f;

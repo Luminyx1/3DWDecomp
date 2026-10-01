@@ -104,7 +104,7 @@ AreaObj* tryFindAreaObjByName(const IUseAreaObj* pAreaUser, const char* pGroupNa
     AreaObjGroup* group = pAreaUser->getAreaObjDirector()->getAreaObjGroup(pGroupName);
     PlacementId placementId;
 
-    if (!group) {
+    if (group == nullptr) {
         return nullptr;
     }
 

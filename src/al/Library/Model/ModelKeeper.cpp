@@ -18,7 +18,7 @@ ModelKeeper::ModelKeeper() = default;
  * Destroys the model keeper and its model.
  */
 ModelKeeper::~ModelKeeper() {
-    if (mModelCafe) {
+    if (mModelCafe != nullptr) {
         delete mModelCafe;
         mModelCafe = nullptr;
     }
@@ -29,7 +29,7 @@ ModelKeeper::~ModelKeeper() {
  * @param pAlpha Pointer to the global alpha value.
  */
 void ModelKeeper::setGlobalAlpha(f32* pAlpha) {
-    if (mModelCafe && mModelCafe->getModelG3D()) {
+    if (mModelCafe != nullptr && mModelCafe->getModelG3D() != nullptr) {
         mModelCafe->getModelG3D()->setGlobalAlphaPtr(pAlpha);
     }
 }
@@ -39,7 +39,7 @@ void ModelKeeper::setGlobalAlpha(f32* pAlpha) {
  * @param pYOffset Pointer to the global Y offset value.
  */
 void ModelKeeper::setGlobalYOffset(f32* pYOffset) {
-    if (mModelCafe && mModelCafe->getModelG3D()) {
+    if (mModelCafe != nullptr && mModelCafe->getModelG3D() != nullptr) {
         mModelCafe->getModelG3D()->setGlobalYOffsetPtr(pYOffset);
     }
 }
@@ -161,13 +161,13 @@ s32 ModelKeeper::getLodNum() const {
  * @return Whether the state changed.
  */
 bool ModelKeeper::setDisableDraw(bool isDisable) {
-    if (!mModelCafe) {
+    if (mModelCafe == nullptr) {
         return false;
     }
 
     SimpleModelG3D* model = mModelCafe->getModelG3D();
 
-    if (!model) {
+    if (model == nullptr) {
         return false;
     }
 
@@ -185,13 +185,13 @@ bool ModelKeeper::setDisableDraw(bool isDisable) {
  * @return Whether the state changed.
  */
 bool ModelKeeper::setDisableDepthShadow(bool isDisable) {
-    if (!mModelCafe) {
+    if (mModelCafe == nullptr) {
         return false;
     }
 
     SimpleModelG3D* model = mModelCafe->getModelG3D();
 
-    if (!model) {
+    if (model == nullptr) {
         return false;
     }
 
@@ -209,7 +209,7 @@ bool ModelKeeper::setDisableDepthShadow(bool isDisable) {
  * @return Joint world matrix.
  */
 const sead::Matrix34f* ModelKeeper::getWorldMtxPtrByIndex(s32 index) const {
-    if (!mModelCafe) {
+    if (mModelCafe == nullptr) {
         return nullptr;
     }
 

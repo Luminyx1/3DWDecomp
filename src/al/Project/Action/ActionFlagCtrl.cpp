@@ -91,7 +91,7 @@ void ActionFlagCtrl::initPost() {
 
         ByamlIter sensorListIter;
 
-        if (iter.tryGetIterByKey(&sensorListIter, "SensorList") && mHitSensorKeeper) {
+        if (iter.tryGetIterByKey(&sensorListIter, "SensorList") && mHitSensorKeeper != nullptr) {
             flagCtrlInfo->sensorCtrlInfoArray =
                 new ActionSensorCtrlInfo[mHitSensorKeeper->mSensorCount];
 
@@ -115,7 +115,7 @@ void ActionFlagCtrl::start(const char* name) {
     mCurrentCtrlInfo = findFlagInfo(name);
     mIsUpdateNeeded = false;
 
-    if (!mCurrentCtrlInfo)
+    if (mCurrentCtrlInfo == nullptr)
         return;
 
     startCtrlFlag();
@@ -139,14 +139,14 @@ void ActionFlagCtrl::startCtrlFlag() {
     else if (isFlagValidOff(0, !isHideModel(mParentActor)))
         hideModel(mParentActor);
 
-    if (mParentActor->mCollisionParts) {
+    if (mParentActor->mCollisionParts != nullptr) {
         if (isFlagValidOn(1, isValidCollisionParts(mParentActor)))
             validateCollisionParts(mParentActor);
         else if (isFlagValidOff(1, isValidCollisionParts(mParentActor)))
             invalidateCollisionParts(mParentActor);
     }
 
-    if (mParentActor->mCollider) {
+    if (mParentActor->mCollider != nullptr) {
         if (isFlagValidOn(2, !isNoCollide(mParentActor)))
             onCollide(mParentActor);
         else if (isFlagValidOff(2, !isNoCollide(mParentActor)))
@@ -160,7 +160,7 @@ void ActionFlagCtrl::startCtrlFlag() {
 }
 
 void ActionFlagCtrl::startCtrlSensor() {
-    if (!mHitSensorKeeper)
+    if (mHitSensorKeeper == nullptr)
         return;
 
     for (s32 i = 0; i < mHitSensorKeeper->mSensorCount; i++) {
@@ -188,9 +188,9 @@ void ActionFlagCtrl::startCtrlSensor() {
 }
 
 void ActionFlagCtrl::update(f32 frame, f32 frameRate) {
-    if (!mCurrentCtrlInfo || !mIsUpdateNeeded)
+    if (mCurrentCtrlInfo == nullptr || !mIsUpdateNeeded)
         return;
-    if (!mHitSensorKeeper)
+    if (mHitSensorKeeper == nullptr)
         return;
 
     updateCtrlSensor(frame, frameRate);
@@ -215,12 +215,12 @@ void ActionFlagCtrl::updateCtrlSensor(f32 frame, f32 frameRate) {
 }
 
 bool ActionFlagCtrl::isFlagValidOn(s32 index, bool isEnabled) const {
-    return mCurrentCtrlInfo && mCurrentCtrlInfo->ctrlFlags[index] == CtrlFlag::ValidOn &&
+    return (mCurrentCtrlInfo != nullptr) && mCurrentCtrlInfo->ctrlFlags[index] == CtrlFlag::ValidOn &&
            !isEnabled;
 }
 
 bool ActionFlagCtrl::isFlagValidOff(s32 index, bool isEnabled) const {
-    return mCurrentCtrlInfo && mCurrentCtrlInfo->ctrlFlags[index] == CtrlFlag::ValidOff &&
+    return (mCurrentCtrlInfo != nullptr) && mCurrentCtrlInfo->ctrlFlags[index] == CtrlFlag::ValidOff &&
            isEnabled;
 }
 

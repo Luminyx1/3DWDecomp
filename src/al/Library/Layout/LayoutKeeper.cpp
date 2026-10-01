@@ -39,25 +39,25 @@ LayoutKeeper::LayoutKeeper() = default;
  * Reinitializes the shaders of the screen's layout resource.
  */
 void LayoutKeeper::reinitializeShader() {
-    if (!mScreen) {
+    if (mScreen == nullptr) {
         return;
     }
 
     nn::ui2d::Layout* layout = mScreen->mLayout;
 
-    if (!layout) {
+    if (layout == nullptr) {
         return;
     }
 
     nn::ui2d::ResourceAccessor* accessor = getResourceAccessor(layout);
 
-    if (!accessor) {
+    if (accessor == nullptr) {
         return;
     }
 
     auto* resource = dynamicCastResourceAccessor<eui::MultiArcResourceAccessor>(accessor);
 
-    if (!resource) {
+    if (resource == nullptr) {
         return;
     }
 

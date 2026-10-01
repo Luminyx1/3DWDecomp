@@ -112,7 +112,7 @@ agl::ShaderMode AtmosScatterCubeMap::renderToCubeMap(agl::ShaderMode shaderMode)
         {
             CubeMapDrawer drawer(mDrawInfo, &shaderMode, mCubeMaps[mCubeMapIndex], face, 100.0f,
                                  100000.0f, mCubeMapPos, 0, true);
-            if (mAtmosScatter) {
+            if (mAtmosScatter != nullptr) {
                 shaderMode = mAtmosScatter->drawFarToCubeMap(
                     mGraphicsSystemInfo->_60 + face, drawer.getViewMatrix(), drawer.getProjMatrix(),
                     sead::Vector2f::zero, drawer.getFovy(), drawer.getAspect(), shaderMode);

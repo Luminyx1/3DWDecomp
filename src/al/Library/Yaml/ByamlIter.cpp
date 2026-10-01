@@ -263,11 +263,11 @@ bool ByamlIter::getByamlDataAndKeyName(ByamlData* pData, const char** pKey, s32 
     ByamlHashIter iter(mRootNode);
     const ByamlHashPair* pair = iter.getPairByIndex(index);
 
-    if (!pair) {
+    if (pair == nullptr) {
         return false;
     }
 
-    if (pData) {
+    if (pData != nullptr) {
         pData->set(pair);
     }
 

@@ -24,7 +24,7 @@ ScreenPointTarget* addScreenPointTarget(LiveActor* pActor, const ActorInitInfo& 
                                         const char* pName, f32 radius, const char* pJointName,
                                         const sead::Vector3f& rOffset) {
     ScreenPointKeeper* keeper = pActor->mScreenPointKeeper;
-    const sead::Matrix34f* jointMtx = pJointName ? getJointMtxPtr(pActor, pJointName) : nullptr;
+    const sead::Matrix34f* jointMtx = (pJointName != nullptr) ? getJointMtxPtr(pActor, pJointName) : nullptr;
     ScreenPointTarget* target =
         keeper->addTarget(pActor, pName, radius, getTransPtr(pActor), jointMtx, rOffset);
     ScreenPointDirector* director = rInfo.mScreenPointerDirector;

@@ -166,19 +166,19 @@ f32 ClippingActorHolder::getClippingRadius(const LiveActor* pActor) {
 ClippingActorInfo* ClippingActorHolder::find(const LiveActor* pActor) const {
     ClippingActorInfo* info = mClippingTargets->tryFind(pActor);
 
-    if (info) {
+    if (info != nullptr) {
         return info;
     }
 
     info = mNonClippingTargets->tryFind(pActor);
 
-    if (info) {
+    if (info != nullptr) {
         return info;
     }
 
     info = mGroupClippings->tryFind(pActor);
 
-    if (info) {
+    if (info != nullptr) {
         return info;
     }
 

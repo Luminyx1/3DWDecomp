@@ -126,11 +126,11 @@ bool RailMoveMapParts::receiveMsg(const SensorMsg* pMsg, HitSensor* pOther, HitS
  * Updates the switch areas and, if requested, the collision matrix.
  */
 void RailMoveMapParts::control() {
-    if (mSwitchKeepOnAreaGroup) {
+    if (mSwitchKeepOnAreaGroup != nullptr) {
         mSwitchKeepOnAreaGroup->update(getTrans(this));
     }
 
-    if (mSwitchOnAreaGroup) {
+    if (mSwitchOnAreaGroup != nullptr) {
         mSwitchOnAreaGroup->update(getTrans(this));
     }
 

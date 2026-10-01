@@ -50,7 +50,7 @@ void ModelDrawerDepthShadow::createTable() {
         bool isDepthAlphaMask = false;
         const char* depthAlphaMask = shaderAssign->FindShaderOption("enable_depthalphamask");
 
-        if (depthAlphaMask) {
+        if (depthAlphaMask != nullptr) {
             const char* shadingModelName =
                 material->GetResource()->GetShaderAssign()->GetShadingModelName();
             if (isEqualString(depthAlphaMask, "1") &&
@@ -66,11 +66,11 @@ void ModelDrawerDepthShadow::createTable() {
 
         const char* ditherAlpha = shaderAssign->FindShaderOption("cIsEnableDitherAlbedoAlpha");
 
-        if (ditherAlpha && isEqualString(ditherAlpha, "1")) {
+        if (ditherAlpha != nullptr && isEqualString(ditherAlpha, "1")) {
             continue;
         }
 
-        if (model->_28) {
+        if (model->_28 != nullptr) {
             optionValues[1] = "1";
         }
 

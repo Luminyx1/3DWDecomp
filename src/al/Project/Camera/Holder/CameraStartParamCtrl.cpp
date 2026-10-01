@@ -36,7 +36,7 @@ static void updateCurrentArea(CameraStartParamArea** pCurrentArea, AreaObjGroup*
     for (s32 i = 0; i < pGroup->mNumAreas; i++) {
         CameraStartParamArea* area = static_cast<CameraStartParamArea*>(pGroup->getAreaObj(i));
 
-        if (*pCurrentArea && area->mPriority < (*pCurrentArea)->mPriority) {
+        if (*pCurrentArea != nullptr && area->mPriority < (*pCurrentArea)->mPriority) {
             continue;
         }
 
@@ -53,11 +53,11 @@ static void updateCurrentArea(CameraStartParamArea** pCurrentArea, AreaObjGroup*
 void CameraStartParamCtrl::update(const sead::Vector3f& rPos) {
     mCurrentArea = nullptr;
 
-    if (mAreaGroup) {
+    if (mAreaGroup != nullptr) {
         updateCurrentArea(&mCurrentArea, mAreaGroup, rPos);
     }
 
-    if (alCameraFunction::isValidCameraAreaKids(mFlagCtrl) && mAreaGroupKids) {
+    if (alCameraFunction::isValidCameraAreaKids(mFlagCtrl) && mAreaGroupKids != nullptr) {
         updateCurrentArea(&mCurrentArea, mAreaGroupKids, rPos);
     }
 }
@@ -67,7 +67,7 @@ void CameraStartParamCtrl::update(const sead::Vector3f& rPos) {
  * @param pInfo Camera start info.
  */
 void CameraStartParamCtrl::tryApplyParam(CameraStartInfo* pInfo) {
-    if (!mCurrentArea) {
+    if (mCurrentArea == nullptr) {
         return;
     }
 

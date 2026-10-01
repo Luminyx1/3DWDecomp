@@ -50,7 +50,7 @@ bool isExistSubActorKeeper(const LiveActor* pActor) {
 void setSubActorAlpha(LiveActor* pActor) {
     SubActorKeeper* keeper = pActor->mSubActorKeeper;
 
-    if (!keeper) {
+    if (keeper == nullptr) {
         return;
     }
 
@@ -68,14 +68,14 @@ void setSubActorAlpha(LiveActor* pActor) {
 void setSubActorAlphaPtr(LiveActor* pActor, f32* pAlpha) {
     SubActorKeeper* keeper = pActor->mSubActorKeeper;
 
-    if (!keeper) {
+    if (keeper == nullptr) {
         return;
     }
 
     for (s32 i = 0; i < keeper->mCount; i++) {
         LiveActor* subActor = keeper->mInfos[i]->mSubActor;
 
-        if (subActor && subActor->mModelKeeper) {
+        if (subActor != nullptr && subActor->mModelKeeper != nullptr) {
             subActor->mModelKeeper->setGlobalAlpha(pAlpha);
         }
     }

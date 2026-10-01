@@ -137,7 +137,7 @@ Resource* findOrCreateResourceSystemData(const char* pName, const char* pExt) {
  * @return whether the file exists
  */
 bool isExistResourceYaml(const Resource* pResource, const char* pName, const char* pSuffix) {
-    if (pSuffix) {
+    if (pSuffix != nullptr) {
         StringTmp<128> fileName;
         createFileNameBySuffix(&fileName, pName, pSuffix);
         return pResource->isExistFile(StringTmp<64>("%s.byml", fileName.cstr()));
@@ -154,7 +154,7 @@ bool isExistResourceYaml(const Resource* pResource, const char* pName, const cha
  * @return byml data
  */
 const u8* findResourceYaml(const Resource* pResource, const char* pName, const char* pSuffix) {
-    if (pSuffix) {
+    if (pSuffix != nullptr) {
         StringTmp<128> fileName;
         createFileNameBySuffix(&fileName, pName, pSuffix);
         pName = fileName.cstr();

@@ -99,20 +99,20 @@ void invalidateCollisionPartsBySystem(LiveActor* pActor) {
  * @param pActor The actor.
  */
 void validateAllCollisionParts(LiveActor* pActor) {
-    if (pActor->mCollisionParts) {
+    if (pActor->mCollisionParts != nullptr) {
         pActor->mCollisionParts->validateByUser();
     }
 
     SubActorKeeper* keeper = pActor->mSubActorKeeper;
 
-    if (!keeper) {
+    if (keeper == nullptr) {
         return;
     }
 
     for (s32 i = 0; i < keeper->mCount; i++) {
         LiveActor* subActor = keeper->mInfos[i]->mSubActor;
 
-        if (subActor) {
+        if (subActor != nullptr) {
             validateAllCollisionParts(subActor);
         }
     }
@@ -123,20 +123,20 @@ void validateAllCollisionParts(LiveActor* pActor) {
  * @param pActor The actor.
  */
 void invalidateAllCollisionParts(LiveActor* pActor) {
-    if (pActor->mCollisionParts) {
+    if (pActor->mCollisionParts != nullptr) {
         pActor->mCollisionParts->invalidateByUser();
     }
 
     SubActorKeeper* keeper = pActor->mSubActorKeeper;
 
-    if (!keeper) {
+    if (keeper == nullptr) {
         return;
     }
 
     for (s32 i = 0; i < keeper->mCount; i++) {
         LiveActor* subActor = keeper->mInfos[i]->mSubActor;
 
-        if (subActor) {
+        if (subActor != nullptr) {
             invalidateAllCollisionParts(subActor);
         }
     }
@@ -147,20 +147,20 @@ void invalidateAllCollisionParts(LiveActor* pActor) {
  * @param pActor The actor.
  */
 void disableAllCollisionParts(LiveActor* pActor) {
-    if (pActor->mCollisionParts) {
+    if (pActor->mCollisionParts != nullptr) {
         pActor->mCollisionParts->invalidateBySystem();
     }
 
     SubActorKeeper* keeper = pActor->mSubActorKeeper;
 
-    if (!keeper) {
+    if (keeper == nullptr) {
         return;
     }
 
     for (s32 i = 0; i < keeper->mCount; i++) {
         LiveActor* subActor = keeper->mInfos[i]->mSubActor;
 
-        if (subActor) {
+        if (subActor != nullptr) {
             disableAllCollisionParts(subActor);
         }
     }
@@ -171,20 +171,20 @@ void disableAllCollisionParts(LiveActor* pActor) {
  * @param pActor The actor.
  */
 void enableAllCollisionParts(LiveActor* pActor) {
-    if (pActor->mCollisionParts) {
+    if (pActor->mCollisionParts != nullptr) {
         pActor->mCollisionParts->validateBySystem();
     }
 
     SubActorKeeper* keeper = pActor->mSubActorKeeper;
 
-    if (!keeper) {
+    if (keeper == nullptr) {
         return;
     }
 
     for (s32 i = 0; i < keeper->mCount; i++) {
         LiveActor* subActor = keeper->mInfos[i]->mSubActor;
 
-        if (subActor) {
+        if (subActor != nullptr) {
             enableAllCollisionParts(subActor);
         }
     }
@@ -268,7 +268,7 @@ void setSyncCollisionMtxPtr(LiveActor* pActor, const sead::Matrix34f* pMtx) {
 bool isOnGround(const LiveActor* pActor, u32 checkFrame, f32 margin) {
     Collider* collider = pActor->mCollider;
 
-    if (collider) {
+    if (collider != nullptr) {
         if (!(collider->_110 >= 0.0f) && collider->_264 > checkFrame) {
             return false;
         }
@@ -311,7 +311,7 @@ bool isCollidedGroundEdgeOrCorner(const LiveActor* pActor) {
 bool isOnGroundNoVelocity(const LiveActor* pActor, u32 checkFrame) {
     Collider* collider = pActor->mCollider;
 
-    if (!collider) {
+    if (collider == nullptr) {
         return getTrans(pActor).y <= 0.0f;
     }
 

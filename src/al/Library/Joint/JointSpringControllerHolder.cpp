@@ -57,7 +57,7 @@ void JointSpringControllerHolder::init(LiveActor* pActor, const ByamlIter& rIter
         const char* jointName = nullptr;
         iter.tryGetStringByKey(&jointName, "JointName");
 
-        if (!jointName) {
+        if (jointName == nullptr) {
             continue;
         }
 

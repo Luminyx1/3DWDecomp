@@ -750,7 +750,7 @@ ModelDrawerBase* ExecutorListActorModelDrawDeferredFootPrint::createDrawer(const
 
 ExecutorListActorModelDrawBase::~ExecutorListActorModelDrawBase() {
     for (s32 i = 0; i < mDrawerNumMax; i++) {
-        if (mDrawers[i]) {
+        if (mDrawers[i] != nullptr) {
             delete mDrawers[i];
         }
     }

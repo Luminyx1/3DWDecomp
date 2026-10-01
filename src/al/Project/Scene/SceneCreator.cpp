@@ -46,7 +46,7 @@ SceneCreator::SceneCreator(const GameSystemInfo* pGameSystemInfo, AudioDirector*
 Scene* SceneCreator::createScene(const char* pClassName, const char* pStageName, s32 scenarioNo,
                                  const char* pSceneName, bool isThreadInit, s32 priority,
                                  const char* pHeapName) {
-    const char* heapName = pHeapName ? pHeapName : pStageName;
+    const char* heapName = (pHeapName != nullptr) ? pHeapName : pStageName;
     setCustomSceneHeapAlloc(mSceneFactory->tryGetCustomAlloc(pClassName));
     createSceneHeap(heapName);
     SceneHeapSetter setter;
@@ -90,7 +90,7 @@ void SceneCreator::setSceneAndThreadInit(Scene* pScene, const char* pStageName, 
                                          sead::Heap* pHeap) {
     setCpuBoost(true, false);
 
-    if (pHeap) {
+    if (pHeap != nullptr) {
         sead::ScopedCurrentHeapSetter setter(pHeap);
         SceneInitInfo* info =
             new SceneInitInfo(mGameSystemInfo, mAudioDirector, mGameDataHolder,
@@ -130,7 +130,7 @@ void SceneCreator::setSceneAndInit(Scene* pScene, const char* pStageName, s32 sc
  * @return whether no initialize thread is running
  */
 bool SceneCreator::tryEndInitThread() {
-    if (mInitThread) {
+    if (mInitThread != nullptr) {
         if (!tryWaitDoneAndDestroyInitializeThread(mInitThread)) {
             return false;
         }

@@ -15,7 +15,7 @@ void reinitializeShaders(LayoutActor* pActor) {
 
     LayoutPartsActorKeeper* partsKeeper = pActor->getLayoutPartsActorKeeper();
 
-    if (!partsKeeper) {
+    if (partsKeeper == nullptr) {
         return;
     }
 

@@ -37,7 +37,7 @@ ViewInfoCtrl::ViewInfoCtrl(const AreaObjDirector* pAreaObjDirector,
  * @param pPlacementId view id of the actor, or nullptr
  */
 void ViewInfoCtrl::initActorInfo(ClippingActorInfo* pInfo, PlacementId* pPlacementId) {
-    if (!pPlacementId || !pPlacementId->mPlacementID) {
+    if (pPlacementId == nullptr || pPlacementId->mPlacementID == nullptr) {
         pInfo->mViewGroupFarClipFlag = &mDefaultPlacementId->mIsInViewCtrlArea;
         return;
     }
@@ -45,7 +45,7 @@ void ViewInfoCtrl::initActorInfo(ClippingActorInfo* pInfo, PlacementId* pPlaceme
     for (s32 i = 0; i < mClippingPlacementIdsSize; i++) {
         ClippingPlacementId* clippingId = mClippingPlacementIds[i];
 
-        if (clippingId->mParentId && clippingId->mParentId->isEqual(*pPlacementId)) {
+        if (clippingId->mParentId != nullptr && clippingId->mParentId->isEqual(*pPlacementId)) {
             pInfo->mViewGroupFarClipFlag = &clippingId->mIsInViewCtrlArea;
             return;
         }
@@ -69,7 +69,7 @@ void ViewInfoCtrl::endInit() {
  * Updates which view groups contain a player.
  */
 void ViewInfoCtrl::update() {
-    if (mIsInvalid || !mViewCtrlAreaGroup) {
+    if (mIsInvalid || mViewCtrlAreaGroup == nullptr) {
         return;
     }
 
@@ -93,7 +93,7 @@ void ViewInfoCtrl::update() {
                 alPlacementFunction::getClippingViewId(&viewId, *areaObj->mPlacementInfo);
                 ClippingPlacementId* clippingId = tryFindViewInfo(&viewId);
 
-                if (clippingId) {
+                if (clippingId != nullptr) {
                     clippingId->mIsInViewCtrlArea = true;
                 }
 
@@ -109,14 +109,14 @@ void ViewInfoCtrl::update() {
  * @return the view group, or nullptr if it doesn't exist
  */
 ViewInfoCtrl::ClippingPlacementId* ViewInfoCtrl::tryFindViewInfo(PlacementId* pPlacementId) const {
-    if (!pPlacementId) {
+    if (pPlacementId == nullptr) {
         return nullptr;
     }
 
     for (s32 i = 0; i < mClippingPlacementIdsSize; i++) {
         ClippingPlacementId* clippingId = mClippingPlacementIds[i];
 
-        if (clippingId->mParentId && clippingId->mParentId->isEqual(*pPlacementId)) {
+        if (clippingId->mParentId != nullptr && clippingId->mParentId->isEqual(*pPlacementId)) {
             return clippingId;
         }
     }

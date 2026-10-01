@@ -27,11 +27,11 @@ LayoutActor::LayoutActor(const char* pName)
 void LayoutActor::appear() {
     mIsAlive = true;
 
-    if (mAudioKeeper) {
+    if (mAudioKeeper != nullptr) {
         mAudioKeeper->appear();
     }
 
-    if (mLayoutPartsActorKeeper) {
+    if (mLayoutPartsActorKeeper != nullptr) {
         mLayoutPartsActorKeeper->appear();
     }
 
@@ -43,15 +43,15 @@ void LayoutActor::appear() {
  * Kills the actor.
  */
 void LayoutActor::kill() {
-    if (mEffectKeeper) {
+    if (mEffectKeeper != nullptr) {
         mEffectKeeper->deleteAndClearEffectAll();
     }
 
-    if (mAudioKeeper) {
+    if (mAudioKeeper != nullptr) {
         mAudioKeeper->kill();
     }
 
-    if (mLayoutPartsActorKeeper) {
+    if (mLayoutPartsActorKeeper != nullptr) {
         mLayoutPartsActorKeeper->kill();
     }
 
@@ -66,7 +66,7 @@ void LayoutActor::movement() {
         return;
     }
 
-    if (mNerveKeeper) {
+    if (mNerveKeeper != nullptr) {
         mNerveKeeper->update();
 
         if (!mIsAlive) {
@@ -76,7 +76,7 @@ void LayoutActor::movement() {
 
     control();
 
-    if (mLayoutPartsActorKeeper) {
+    if (mLayoutPartsActorKeeper != nullptr) {
         mLayoutPartsActorKeeper->update();
     }
 
@@ -84,19 +84,19 @@ void LayoutActor::movement() {
         return;
     }
 
-    if (mEffectKeeper) {
+    if (mEffectKeeper != nullptr) {
         mEffectKeeper->update();
     }
 
-    if (mAudioKeeper) {
+    if (mAudioKeeper != nullptr) {
         mAudioKeeper->update();
     }
 
-    if (mLayoutActionKeeper) {
+    if (mLayoutActionKeeper != nullptr) {
         mLayoutActionKeeper->update();
     }
 
-    if (mTextPaneAnimator) {
+    if (mTextPaneAnimator != nullptr) {
         mTextPaneAnimator->update();
     }
 }
@@ -105,19 +105,19 @@ void LayoutActor::movement() {
  * Updates the action related keepers of the actor.
  */
 void LayoutActor::syncAction() {
-    if (mEffectKeeper) {
+    if (mEffectKeeper != nullptr) {
         mEffectKeeper->update();
     }
 
-    if (mAudioKeeper) {
+    if (mAudioKeeper != nullptr) {
         mAudioKeeper->update();
     }
 
-    if (mLayoutActionKeeper) {
+    if (mLayoutActionKeeper != nullptr) {
         mLayoutActionKeeper->update();
     }
 
-    if (mTextPaneAnimator) {
+    if (mTextPaneAnimator != nullptr) {
         mTextPaneAnimator->update();
     }
 }
@@ -133,7 +133,7 @@ void LayoutActor::calcAnim(bool isRecursive) {
 
     mLayoutKeeper->calcAnim(isRecursive);
 
-    if (mLayoutPartsActorKeeper) {
+    if (mLayoutPartsActorKeeper != nullptr) {
         mLayoutPartsActorKeeper->calcAnim(isRecursive);
     }
 }
@@ -150,8 +150,8 @@ void LayoutActor::initLayoutKeeper(LayoutKeeper* pLayoutKeeper) {
  * Creates the action keeper.
  */
 void LayoutActor::initActionKeeper() {
-    mLayoutActionKeeper = new LayoutActionKeeper(mLayoutKeeper, mAudioKeeper ? this : nullptr,
-                                                 mEffectKeeper ? this : nullptr);
+    mLayoutActionKeeper = new LayoutActionKeeper(mLayoutKeeper, (mAudioKeeper != nullptr) ? this : nullptr,
+                                                 (mEffectKeeper != nullptr) ? this : nullptr);
 }
 
 /**
@@ -169,7 +169,7 @@ void LayoutActor::initTextPaneAnimator(LayoutTextPaneAnimator* pAnimator) {
 void LayoutActor::initHitReactionKeeper(HitReactionKeeper* pKeeper) {
     mHitReactionKeeper = pKeeper;
 
-    if (getLayoutActionKeeper()) {
+    if (getLayoutActionKeeper() != nullptr) {
         getLayoutActionKeeper()->setHitReactionKeeper(mHitReactionKeeper);
     }
 }
@@ -197,7 +197,7 @@ void LayoutActor::initLayoutPartsActorKeeper(s32 capacity) {
 void LayoutActor::initEffectKeeper(EffectKeeper* pEffectKeeper) {
     mEffectKeeper = pEffectKeeper;
 
-    if (mLayoutKeeper) {
+    if (mLayoutKeeper != nullptr) {
         alEffectKeeperInitFunction::setupLayoutToEffectKeeper(pEffectKeeper, this);
     }
 }

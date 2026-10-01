@@ -24,7 +24,7 @@ void ActorCameraTarget::calcTrans(sead::Vector3f* pTrans) const {
 }
 
 void ActorCameraTarget::setTrans(sead::Vector3f& rTrans) {
-    if (mActor && mActor->mActorPoseKeeper) {
+    if (mActor != nullptr && mActor->mActorPoseKeeper != nullptr) {
         mActor->mActorPoseKeeper->mTranslation.set(rTrans);
     }
 }
