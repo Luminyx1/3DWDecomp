@@ -13,9 +13,9 @@ void KeyPoseKeeper::init(const ActorInitInfo& rInfo) {
     tryGetArg((s32*)&mMoveType, rInfo, "MoveType");
     mKeyPoses = new KeyPose[mKeyPoseCount];
 
-    mKeyPoses[0].init(*rInfo.mPlacementInfo);
+    mKeyPoses[0].init(rInfo.getPlacementInfo());
 
-    PlacementInfo currentInfo = *rInfo.mPlacementInfo;
+    PlacementInfo currentInfo = rInfo.getPlacementInfo();
     PlacementInfo nextInfo;
 
     for (s32 i = 0; i < mKeyPoseCount - 1; i++) {
