@@ -95,7 +95,7 @@ void AudioGeneralPurposeAreaChecker::update(s32 islandId) {
             continue;
         }
 
-        if (curArea != nullptr && curArea->mPriority >= areaObj->mPriority) {
+        if (curArea != nullptr && curArea->getPriority() >= areaObj->getPriority()) {
             continue;
         }
 

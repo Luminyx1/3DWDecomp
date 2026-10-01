@@ -85,7 +85,7 @@ void AudioDirector::initAfterInitPlacement(const AudioSystemInfo* pInfo) {
         return;
     }
 
-    for (s32 i = 0; i < group->mNumAreas; i++) {
+    for (s32 i = 0; i < group->getSize(); i++) {
         AreaObj* areaObj = group->getAreaObj(i);
         const char* effectName = nullptr;
         bool isFound = tryGetAreaObjStringArg(&effectName, areaObj, "AudioEffectName");
