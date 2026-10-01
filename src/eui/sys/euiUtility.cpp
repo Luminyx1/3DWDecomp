@@ -13,7 +13,7 @@ namespace eui {
 
 // pList contains optional extended user data; pName selects the entry to return.
 const nn::ui2d::ResExtUserData* FindExtUserDataFromList(const nn::ui2d::ResExtUserDataList* pList, const char* pName) {
-    if (!pList) return nullptr;
+    if (pList == nullptr) return nullptr;
     const u32 count = pList->count;
     const auto* entry = pList->entries;
 
@@ -40,8 +40,8 @@ void SetupPaneAfterBuild(nn::ui2d::Pane* pPane, LayoutEx* pLayout) {
 void IteratePaneForSetupPaneAfterBuild(nn::ui2d::Pane* pPane, LayoutEx* pLayout) {
     const auto* partsType = PartsEx::GetRuntimeTypeInfoStatic();
 
-    if (pPane) {
-        for (auto* type = pPane->GetRuntimeTypeInfo(); type; type = type->m_ParentTypeInfo) {
+    if (pPane != nullptr) {
+        for (auto* type = pPane->GetRuntimeTypeInfo(); type != nullptr; type = type->m_ParentTypeInfo) {
             if (type == partsType) {
                 pLayout = static_cast<LayoutEx*>(static_cast<PartsEx*>(pPane)->m_pLayout);
                 break;

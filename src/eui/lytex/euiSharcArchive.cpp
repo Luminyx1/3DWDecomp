@@ -15,7 +15,7 @@ SharcArchive::~SharcArchive() {
 
 /** @brief Unloads the archive resource and clears its association. */
 void SharcArchive::finalize() {
-    if (m_pArchive) {
+    if (m_pArchive != nullptr) {
         sead::ResourceMgr::instance()->unload(m_pArchive);
         m_pArchive = nullptr;
     }
@@ -51,7 +51,7 @@ sead::FileDevice* SharcArchive::startFileReader(FileReader* pReader) const {
 
 /** @brief Closes the directory associated with an initialized archive reader. */
 SharcArchive::FileReader::~FileReader() {
-    if (m_FileDevice.getArchive()) {
+    if (m_FileDevice.getArchive() != nullptr) {
         m_FileDevice.tryCloseDirectory(&m_Handle);
     }
 }

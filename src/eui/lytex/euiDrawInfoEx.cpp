@@ -24,7 +24,7 @@ void DrawInfoEx::freeDynamicTexture() {
 void DrawInfoEx::applyRenderBufferInfo(const RenderBufferInfo* pInfo) {
     pInfo->pFrameBuffer->bind(pInfo->pDrawContext);
 
-    if (pInfo->pScissor) {
+    if (pInfo->pScissor != nullptr) {
         pInfo->pViewport->applyViewport(pInfo->pDrawContext, *pInfo->pFrameBuffer);
         pInfo->pScissor->applyScissor(pInfo->pDrawContext, *pInfo->pFrameBuffer);
     } else {

@@ -46,7 +46,7 @@ u16 TextBoxEx::setStringWithPage(const char16_t* pText, u16 length, bool* pHasNe
 
 // pText and length describe text to copy directly; null clears the string.
 u16 TextBoxEx::setStringNoPreproces(const char16_t* pText, u16 length) {
-    if (pText) return nn::ui2d::TextBox::SetString(reinterpret_cast<const u16*>(pText), 0, length);
+    if (pText != nullptr) return nn::ui2d::TextBox::SetString(reinterpret_cast<const u16*>(pText), 0, length);
     return nn::ui2d::TextBox::SetString(reinterpret_cast<const u16*>(sead::SafeStringBase<char16_t>::cEmptyString.cstr()), 0, 0);
 }
 
@@ -54,24 +54,24 @@ u16 TextBoxEx::setStringNoPreproces(const char16_t* pText, u16 length) {
 bool TextBoxEx::getTextAdjustMinScale_(float* pScale) {
     const auto* data = FindExtUserDataByName("TextScaleOn");
 
-    if (!data) return false;
+    if (data == nullptr) return false;
 
-    if (pScale) *pScale = *static_cast<const float*>(data->GetData());
+    if (pScale != nullptr) *pScale = *static_cast<const float*>(data->GetData());
     return true;
 }
 
 bool TextBoxEx::isWordwrapOn_() {
     const auto* data = FindExtUserDataByName("WordwrapOn");
-    return data && *static_cast<const s32*>(data->GetData()) != 0;
+    return (data != nullptr) && *static_cast<const s32*>(data->GetData()) != 0;
 }
 
 // pSpeed optionally receives the configured letter animation speed.
 bool TextBoxEx::getLetterAnimSpeed_(float* pSpeed) {
     const auto* data = FindExtUserDataByName("LetterAnimOn");
 
-    if (!data) return false;
+    if (data == nullptr) return false;
 
-    if (pSpeed) *pSpeed = *static_cast<const float*>(data->GetData());
+    if (pSpeed != nullptr) *pSpeed = *static_cast<const float*>(data->GetData());
     return true;
 }
 

@@ -36,10 +36,10 @@ void ScalableFontMgr::update() {
         _5e = false;
     }
 
-    if (mReservedTextBox) {
+    if (mReservedTextBox != nullptr) {
         auto* textBox = mReservedTextBox;
 
-        while (textBox) textBox = textBox->registerGlyphsAndGetNext(this);
+        while (textBox != nullptr) textBox = textBox->registerGlyphsAndGetNext(this);
         mReservedTextBox = nullptr;
     }
 
@@ -102,7 +102,7 @@ void ScalableFontMgr::clearLockAllGlyphs(int lockGroup) { mTextureCache->ClearLo
 bool ScalableFontMgr::isNeedPlot_(char16_t code, u32 size, u16 face) {
     auto* node = mTextureCache->FindGlyphNode(code, size, face);
 
-    if (node) {
+    if (node != nullptr) {
         node->SetFlag(nn::font::GlyphNode::FlagBit_Requested);
 
         if (!node->IsFlagOn(nn::font::GlyphNode::FlagBit_NotPlotted)) return false;

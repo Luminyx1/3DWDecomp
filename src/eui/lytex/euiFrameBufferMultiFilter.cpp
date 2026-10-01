@@ -16,7 +16,7 @@ FrameBufferMultiFilter::FrameBufferMultiFilter()
 
 // Release the owned filter before destroying its render targets.
 FrameBufferMultiFilter::~FrameBufferMultiFilter() {
-    if (m_pMultiFilter) {
+    if (m_pMultiFilter != nullptr) {
         delete m_pMultiFilter;
         m_pMultiFilter = nullptr;
     }
@@ -49,7 +49,7 @@ void FrameBufferMultiFilter::initialize(sead::Heap* pHeap, const nn::ui2d::Pane&
     m_RenderBuffer.setRenderTargetColor(&m_RenderTarget);
     resource = rPane.FindExtUserDataByName("FrameBufferAlpha");
 
-    if (resource) {
+    if (resource != nullptr) {
         const s32 alpha = *static_cast<const s32*>(resource->GetData());
 
         switch (alpha) {
@@ -87,7 +87,7 @@ void FrameBufferMultiFilter::applyTextureDataToWindowMaterial(WindowEx* pWindow,
 
 // pTexture is the captured texture to release when no filter result is owned.
 void FrameBufferMultiFilter::freeResultTexture(const agl::TextureData* pTexture) {
-    if (m_pMultiFilter && m_pMultiFilter->getResultTexture())
+    if (m_pMultiFilter != nullptr && m_pMultiFilter->getResultTexture() != nullptr)
         m_pMultiFilter->freeResultTexture();
     else
         agl::utl::DynamicTextureAllocator::instance()->free(pTexture);

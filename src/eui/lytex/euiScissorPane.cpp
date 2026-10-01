@@ -26,7 +26,7 @@ void ScissorPane::Draw(nn::ui2d::DrawInfo& rDrawInfo,
                        nn::gfx::CommandBuffer& rCommandBuffer) {
     auto& drawInfo = static_cast<DrawInfoEx&>(rDrawInfo);
 
-    if (!(mFlags & 1) || !drawInfo.m_pRenderBufferInfo || !mAlphaInfluence) {
+    if (!(mFlags & 1) || drawInfo.m_pRenderBufferInfo == nullptr || !mAlphaInfluence) {
         Pane::Draw(rDrawInfo, rCommandBuffer);
         return;
     }

@@ -10,7 +10,7 @@ void BoxCursorNode::initialize(AnimButton* pButton, Screen* pScreen) {
     mButton = pButton;
     mScreen = pScreen;
 
-    if (pScreen) pScreen->mCursorNodes.pushBack(this);
+    if (pScreen != nullptr) pScreen->mCursorNodes.pushBack(this);
 }
 
 // target selects the display whose cursor may navigate to this node.

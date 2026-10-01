@@ -19,7 +19,7 @@ BoxCursorNode* BoxCursorMgr::findNodeByName(Screen* pScreen, const char* pName) 
 // pScreenName identifies the screen; pName identifies a node within it.
 BoxCursorNode* BoxCursorMgr::findNodeByName(const char* pScreenName, const char* pName) {
     auto* screen = mScreenMgr->findScreenByName(pScreenName);
-    return screen ? screen->findBoxCursorNodeByName_(pName) : nullptr;
+    return (screen != nullptr) ? screen->findBoxCursorNodeByName_(pName) : nullptr;
 }
 
 // pScreen owns the nodes; pName identifies the node; pParentParts limits the parent parts.
@@ -30,7 +30,7 @@ BoxCursorNode* BoxCursorMgr::findNodeByNameWithParentParts_(Screen* pScreen, con
 // pScreenName identifies the screen; pName and pParentParts identify the node and its parent parts.
 BoxCursorNode* BoxCursorMgr::findNodeByNameWithParentParts_(const char* pScreenName, const char* pName, const char* pParentParts) {
     auto* screen = mScreenMgr->findScreenByName(pScreenName);
-    return screen ? screen->findBoxCursorNodeByNameWithParentParts_(pName, pParentParts) : nullptr;
+    return (screen != nullptr) ? screen->findBoxCursorNodeByNameWithParentParts_(pName, pParentParts) : nullptr;
 }
 
 // pScreen owns the cursor nodes; tag identifies the requested node.
@@ -41,17 +41,17 @@ BoxCursorNode* BoxCursorMgr::findNodeByTag(Screen* pScreen, int tag) {
 // pScreenName identifies the screen; tag identifies a node within it.
 BoxCursorNode* BoxCursorMgr::findNodeByTag(const char* pScreenName, int tag) {
     auto* screen = mScreenMgr->findScreenByName(pScreenName);
-    return screen ? screen->findBoxCursorNodeByTag_(tag) : nullptr;
+    return (screen != nullptr) ? screen->findBoxCursorNodeByTag_(tag) : nullptr;
 }
 
 // pNode becomes the reserved cursor selection on its screen's draw target.
 void BoxCursorMgr::moveBoxCursor(const BoxCursorNode* pNode) {
     auto* screen = pNode->mScreen;
 
-    if (!screen) return;
+    if (screen == nullptr) return;
     auto* control = mControls[int(screen->getDrawTarget())];
 
-    if (!control) return;
+    if (control == nullptr) return;
     control->mReservedActiveNode = pNode;
     screen->mLastActiveCursor = pNode;
 }
@@ -66,7 +66,7 @@ void BoxCursorMgr::updateDrawTarget(DrawTarget target) {
     const int index = target;
     auto* control = mControls[index];
 
-    if (!control) return;
+    if (control == nullptr) return;
     auto* screen = static_cast<LayoutEx*>(control->_20)->mScreen;
     const bool enabled = isEnable(DrawTarget(index));
     const bool closed = screen->isClosed();
@@ -75,7 +75,7 @@ void BoxCursorMgr::updateDrawTarget(DrawTarget target) {
         if (closed) {
             control->updateActiveNode(DrawTarget(index));
 
-            if (!control->mActiveNode) return;
+            if (control->mActiveNode == nullptr) return;
             screen->open(Screen::OpenOption(1));
         }
 
@@ -90,19 +90,19 @@ void BoxCursorMgr::updateDrawTarget(DrawTarget target) {
 // target selects the display whose active node's screen is returned.
 Screen* BoxCursorMgr::getActiveNodeScreen(DrawTarget target) {
     auto* control = mControls[int(target)];
-    return control ? control->getActiveNodeScreen() : nullptr;
+    return (control != nullptr) ? control->getActiveNodeScreen() : nullptr;
 }
 
 // target selects the display whose current cursor node is returned.
 const BoxCursorNode* BoxCursorMgr::getActiveNode(DrawTarget target) const {
     auto* control = mControls[int(target)];
-    return control ? control->mActiveNode : nullptr;
+    return (control != nullptr) ? control->mActiveNode : nullptr;
 }
 
 // target selects the display; rName is the parts layout name to compare with its active node.
 bool BoxCursorMgr::isEqualActiveNodePartsLayoutName(DrawTarget target, const sead::SafeString& rName) const {
     auto* control = mControls[int(target)];
-    return control ? control->isEqualActiveNodePartsLayoutName(rName) : false;
+    return (control != nullptr) ? control->isEqualActiveNodePartsLayoutName(rName) : false;
 }
 
 // target selects the cursor display; enabled controls whether its cursor can be shown.
@@ -128,7 +128,7 @@ void BoxCursorMgr::eraseNodeLinks(const BoxCursorNode* pNode) {
     mScreenMgr->eraseBoxCursorNodeFromRouteNodes(pNode);
 
     for (int i = 0; i < 2; ++i) {
-        if (mControls[i]) mControls[i]->clearActiveAndReservedActiveNode(pNode);
+        if (mControls[i] != nullptr) mControls[i]->clearActiveAndReservedActiveNode(pNode);
     }
 }
 

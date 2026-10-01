@@ -7,7 +7,7 @@ CheckKeepButton::CheckKeepButton(const CheckKeepButton& rOther, LayoutEx* pLayou
     : CheckButton(rOther, pLayout, pHeap) {}
 void CheckKeepButton::Uncheck() {
     if (mCheckEnabled && mChecked && !IsPlayDisableAnim()) {
-        if (mCheckAnimator) mCheckAnimator->Play(Animator::cPlayType_OneTime, -1);
+        if (mCheckAnimator != nullptr) mCheckAnimator->Play(Animator::cPlayType_OneTime, -1);
         mChecked = false;
     }
 }
@@ -16,7 +16,7 @@ void CheckKeepButton::StartDown() {
     AnimButton::StartDown();
 
     if (mCheckEnabled && !mChecked && !IsPlayDisableAnim()) {
-        if (mCheckAnimator) mCheckAnimator->Play(Animator::cPlayType_OneTime, 1);
+        if (mCheckAnimator != nullptr) mCheckAnimator->Play(Animator::cPlayType_OneTime, 1);
         mChecked = true;
     }
 }

@@ -52,10 +52,10 @@ ControlBase* ControlCreator::CreateControlImpl_(const nn::ui2d::ControlSrc& rSou
     else return nullptr;
     button->Build(rSource, layout);
 
-    if (button) InsertButtonToButtonGroup_(button);
+    if (button != nullptr) InsertButtonToButtonGroup_(button);
     return button;
 registerControl:
-    if (control) mControls->push_back(*control);
+    if (control != nullptr) mControls->push_back(*control);
     return control;
 }
 
@@ -82,7 +82,7 @@ void ControlCreator::InsertButtonToButtonGroup_(AnimButton* pButton) {
         }
     }
 
-    if (insertBefore) insertBefore->m_Link.LinkPrev(&pButton->m_Link);
+    if (insertBefore != nullptr) insertBefore->m_Link.LinkPrev(&pButton->m_Link);
     else buttons.push_back(*pButton);
 }
 

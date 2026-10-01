@@ -40,7 +40,7 @@ MassDrawPane::~MassDrawPane() = default;
 
 // rOther supplies the picture and instance buffers to duplicate into the layout heap.
 MassDrawPane::MassDrawPane(const MassDrawPane& rOther) : PictureEx(rOther) {
-    if (rOther.mAlphas.getBufferPtr()) {
+    if (rOther.mAlphas.getBufferPtr() != nullptr) {
         initialize(GetNwAllocatorHeap(), rOther.mAlphas.size());
         copyBuffer(rOther.mAlphas, mAlphas);
         copyBuffer(rOther.mIndices, mIndices);
@@ -74,7 +74,7 @@ void MassDrawPane::initializeTextureData_() {
 void MassDrawPane::DrawSelf(nn::ui2d::DrawInfo& rDrawInfo, nn::gfx::CommandBuffer& rCommands) {
     const auto* info = static_cast<DrawInfoEx&>(rDrawInfo).m_pRenderBufferInfo;
 
-    if (!info || !mAlphas.getBufferPtr()) return;
+    if (info == nullptr || mAlphas.getBufferPtr() == nullptr) return;
 
     if (!mTextureInitialized) {
         initializeTextureData_();

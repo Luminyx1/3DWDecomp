@@ -8,11 +8,11 @@ namespace eui {
 namespace {
 // pLayout receives the animator; pResource supplies the animation data to bind.
 inline Animator* CreateAnimator(LayoutEx* pLayout, const nn::ui2d::ResAnimationBlock* pResource) {
-    if (!pResource) return nullptr;
+    if (pResource == nullptr) return nullptr;
     auto* device = reinterpret_cast<nn::gfx::Device*>(sead::GraphicsNvn::instance()->getGfxDevice());
     void* memory = nn::ui2d::Layout::AllocateMemory(sizeof(Animator));
 
-    if (!memory) return nullptr;
+    if (memory == nullptr) return nullptr;
     auto* animator = new (memory) Animator;
     pLayout->mAnimTransformList.LinkPrev(&animator->m_Link);
     animator->SetResource(device, pLayout->mResourceAccessor, pResource);
@@ -38,8 +38,8 @@ const void* LayoutEx::GetAnimResourceData(const char* pName) {
     auto* accessor = mResourceAccessor;
     const auto* multiType = MultiArcResourceAccessor::GetRuntimeTypeInfoStatic();
 
-    if (accessor) {
-        for (auto* type = accessor->GetRuntimeTypeInfo(); type; type = type->m_ParentTypeInfo) {
+    if (accessor != nullptr) {
+        for (auto* type = accessor->GetRuntimeTypeInfo(); type != nullptr; type = type->m_ParentTypeInfo) {
             if (type == multiType)
                 return static_cast<MultiArcResourceAccessor*>(accessor)->findAnimationResource(
                     static_cast<const char*>(_30), pName, nullptr);
@@ -53,7 +53,7 @@ const void* LayoutEx::GetAnimResourceData(const char* pName) {
 Animator* LayoutEx::tryCreateAnimatorAuto(const char* pName, bool enabled) {
     const void* data = GetAnimResourceData(pName);
 
-    if (!data) return nullptr;
+    if (data == nullptr) return nullptr;
     nn::ui2d::AnimResource resource;
     resource.Set(data);
 
@@ -67,12 +67,12 @@ Animator* LayoutEx::tryCreateAnimatorAuto(const char* pName, bool enabled) {
 AnimatorSet* LayoutEx::createAnimatorSet(const char* const* pNames, u32 count, bool enabled) {
     void* memory = AllocateMemory(sizeof(AnimatorSet) + sizeof(Animator*) * size_t(count));
 
-    if (!memory) return nullptr;
+    if (memory == nullptr) return nullptr;
     auto* set = new (memory) AnimatorSet;
     set->setBuffer(count, reinterpret_cast<Animator**>(set + 1));
 
     for (size_t i = 0; i != count; ++i) {
-        if (pNames[i] && *pNames[i])
+        if (pNames[i] != nullptr && *pNames[i])
             set->setAnimator(i, tryCreateAnimatorAuto(pNames[i], enabled && i == 0));
     }
 
@@ -106,7 +106,7 @@ Animator* LayoutEx::createAnimatorWithGroupIndex(const char* pName, u32 index, b
 Animator* LayoutEx::tryCreateAnimatorWithGroupIndex(const char* pName, u32 index, bool enabled) {
     const void* data = GetAnimResourceData(pName);
 
-    if (!data) return nullptr;
+    if (data == nullptr) return nullptr;
     nn::ui2d::AnimResource resource;
     resource.Set(data);
 

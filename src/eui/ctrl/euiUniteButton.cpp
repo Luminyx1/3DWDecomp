@@ -9,7 +9,7 @@ const char* UniteButton::getClassName() const { return "UniteButton"; }
 void UniteButton::ForceSetChecked(bool checked) {
     mChecked = checked;
 
-    if (mCheckAnimator) {
+    if (mCheckAnimator != nullptr) {
         if (checked) mCheckAnimator->StopAtMax();
         else mCheckAnimator->StopAtMin();
     }

@@ -53,7 +53,7 @@ void DynamicCaptureUsePictureEx::setupDynamicCapture(DynamicCapturePane* pCaptur
  * @param[in] force Whether to force pane calculation, forwarded to the base implementation.
  */
 void DynamicCaptureUsePictureEx::Calculate(nn::ui2d::DrawInfo& rDrawInfo, CalculateContext& rContext, bool force) {
-    if (m_pCapture) {
+    if (m_pCapture != nullptr) {
         m_pCapture->applyTextureInfoToMaterialForCalculate(this,
             rContext.pLayoutInformation->size, mTextureIndex);
     }
@@ -67,7 +67,7 @@ void DynamicCaptureUsePictureEx::Calculate(nn::ui2d::DrawInfo& rDrawInfo, Calcul
  * @param[in,out] rCommands Command buffer that receives the draw commands.
  */
 void DynamicCaptureUsePictureEx::DrawSelf(nn::ui2d::DrawInfo& rDrawInfo, nn::gfx::CommandBuffer& rCommands) {
-    if (m_pCapture && m_pCapture->getDynamicTexture()) {
+    if (m_pCapture != nullptr && m_pCapture->getDynamicTexture() != nullptr) {
         ApplyTextureInfoToMaterial(this, m_pCapture->getTextureInfo(), mTextureIndex);
         PictureEx::DrawSelf(rDrawInfo, rCommands);
     }

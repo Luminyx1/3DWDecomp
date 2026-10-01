@@ -47,14 +47,14 @@ void CapturePane::initialize_(LayoutEx* pLayout) {
     Pane::mFlags |= 1;
     mClearColor = setupClearColor_(heap, this, pLayout, &mFlags);
 
-    if (FindExtUserDataByName("CaptureWorkFormat")) mFlags.set(4);
+    if (FindExtUserDataByName("CaptureWorkFormat") != nullptr) mFlags.set(4);
     setupCaptureOutputAlpha255_(this, &mFlags);
 
-    if (!mClearColor) mFlags.set(0x20);
+    if (mClearColor == nullptr) mFlags.set(0x20);
     mMultiFilter = InitializeMultiFilter(heap, *this, pLayout);
 
-    if (mMultiFilter) mMultiFilter->setUseTextureAlpha(true);
-    const char* name = pLayout->mScreen ? pLayout->mScreen->mName.cstr() : static_cast<const char*>(pLayout->_30);
+    if (mMultiFilter != nullptr) mMultiFilter->setUseTextureAlpha(true);
+    const char* name = (pLayout->mScreen != nullptr) ? pLayout->mScreen->mName.cstr() : static_cast<const char*>(pLayout->_30);
     initializeCaptureTextureData_(heap, name);
     mRenderBuffer.setRenderTargetColor(&mRenderTarget);
     const auto& source = reinterpret_cast<const nn::util::MatrixT4x3fType&>(sead::Matrix34f::ident);
@@ -64,7 +64,7 @@ void CapturePane::initialize_(LayoutEx* pLayout) {
     dest._m.val[2] = source._m.val[2];
     Pane::mFlags |= 0x40;
 
-    if (pLayout->mScreen) pLayout->mScreen->mFlags |= 0x10;
+    if (pLayout->mScreen != nullptr) pLayout->mScreen->mFlags |= 0x10;
 }
 
 // pHeap owns the optional color; pPane supplies metadata; pLayout is unused;
@@ -74,21 +74,21 @@ sead::Color4f* CapturePane::setupClearColor_(sead::Heap* pHeap, nn::ui2d::Pane* 
     const auto* colorData = pPane->FindExtUserDataByName("CaptureBGColor");
     const auto* alphaData = pPane->FindExtUserDataByName("CaptureBGAlpha");
 
-    if (colorData && colorData->count == 3) {
+    if (colorData != nullptr && colorData->count == 3) {
         const auto* rgb = static_cast<const s32*>(colorData->GetData());
         auto* color = new (pHeap, 8) sead::Color4f(u32(u8(rgb[0])) / 255.0f, u32(u8(rgb[1])) / 255.0f,
                                                  u32(u8(rgb[2])) / 255.0f, 0);
-        if (alphaData) color->a = *static_cast<const s32*>(alphaData->GetData()) / 255.0f;
+        if (alphaData != nullptr) color->a = *static_cast<const s32*>(alphaData->GetData()) / 255.0f;
         return color;
     }
 
-    if (alphaData && *static_cast<const s32*>(alphaData->GetData()) == 255) pFlags->set(2);
+    if (alphaData != nullptr && *static_cast<const s32*>(alphaData->GetData()) == 255) pFlags->set(2);
     return nullptr;
 }
 
 // pHeap owns the texture and GPU memory; pName labels the capture for graphics debugging.
 void CapturePane::initializeCaptureTextureData_(sead::Heap* pHeap, const char* pName) {
-    if (mTexture) return;
+    if (mTexture != nullptr) return;
     using Format = agl::TextureFormat;
     Format format = Format::cTextureFormat_R8_G8_B8_A8_uNorm;
     bool alphaOnly = false;
@@ -111,7 +111,7 @@ void CapturePane::initializeCaptureTextureData_(sead::Heap* pHeap, const char* p
     float width = mSizeX, height = mSizeY;
     const auto* scaleData = FindExtUserDataByName("CaptureScale");
 
-    if (scaleData) {
+    if (scaleData != nullptr) {
         const float scale = *static_cast<const float*>(scaleData->GetData());
 
         if (scale > 0) { width *= scale; height *= scale; }
@@ -189,7 +189,7 @@ void CapturePane::Draw(nn::ui2d::DrawInfo& rDrawInfo, nn::gfx::CommandBuffer& rC
     if (!mCalculated || static_cast<DrawInfoEx&>(rDrawInfo)._1A8) return;
     const auto* info = static_cast<DrawInfoEx&>(rDrawInfo).m_pRenderBufferInfo;
 
-    if (!info) return;
+    if (info == nullptr) return;
     const auto* captured = drawCapture_(this, rDrawInfo, &mFlags, mMultiFilter, &mRenderBuffer,
                                         &mRenderTarget, mClearColor, rCommands);
     using Format = agl::TextureFormat;
@@ -256,7 +256,7 @@ void CapturePane::Draw(nn::ui2d::DrawInfo& rDrawInfo, nn::gfx::CommandBuffer& rC
         agl::utl::ImageFilter2D::drawTextureQuadTriangle(static_cast<agl::DrawContext*>(info->pDrawContext), sampler);
     }
 
-    if (mMultiFilter && mMultiFilter->getResultTexture()) mMultiFilter->freeResultTexture();
+    if (mMultiFilter != nullptr && mMultiFilter->getResultTexture() != nullptr) mMultiFilter->freeResultTexture();
     else agl::utl::DynamicTextureAllocator::instance()->free(captured);
     mRenderTarget.invalidateGPUCache(static_cast<agl::DrawContext*>(info->pDrawContext));
     DrawInfoEx::applyRenderBufferInfo(info);
@@ -301,7 +301,7 @@ const agl::TextureData* CapturePane::drawCapture_(nn::ui2d::Pane* pPane, nn::ui2
     pBuffer->bind(info->pDrawContext);
     sead::Viewport viewport(*pBuffer);
 
-    if (pClearColor) {
+    if (pClearColor != nullptr) {
         pBuffer->fastClear(static_cast<agl::DrawContext*>(info->pDrawContext), 0, 1, *pClearColor, 0, 0, viewport, true);
     } else {
         viewport.apply(info->pDrawContext, *pBuffer);
@@ -350,10 +350,10 @@ const agl::TextureData* CapturePane::drawCapture_(nn::ui2d::Pane* pPane, nn::ui2
 
     pTarget->invalidateGPUCache(static_cast<agl::DrawContext*>(info->pDrawContext));
 
-    if (pFilter) {
+    if (pFilter != nullptr) {
         pFilter->draw(static_cast<agl::DrawContext*>(info->pDrawContext), *texture);
 
-        if (pFilter->getResultTexture()) {
+        if (pFilter->getResultTexture() != nullptr) {
             agl::utl::DynamicTextureAllocator::instance()->free(texture);
             return pFilter->getResultTexture();
         }
@@ -364,8 +364,8 @@ const agl::TextureData* CapturePane::drawCapture_(nn::ui2d::Pane* pPane, nn::ui2
 }
 
 CapturePane::~CapturePane() {
-    if (mClearColor) { delete mClearColor; mClearColor = nullptr; }
-    if (mMultiFilter) { delete mMultiFilter; mMultiFilter = nullptr; }
+    if (mClearColor != nullptr) { delete mClearColor; mClearColor = nullptr; }
+    if (mMultiFilter != nullptr) { delete mMultiFilter; mMultiFilter = nullptr; }
     if (mTextureMemory.isValid()) mTextureMemory.deleteGPUMemBlock();
     delete mTexture;
 }
@@ -374,6 +374,6 @@ CapturePane::~CapturePane() {
 void CapturePane::setupCaptureOutputAlpha255_(nn::ui2d::Pane* pPane, sead::BitFlag<u8>* pFlags) {
     const auto* data = pPane->FindExtUserDataByName("CaptureOutputAlpha");
 
-    if (data && *static_cast<const s32*>(data->GetData()) == 255) pFlags->set(8);
+    if (data != nullptr && *static_cast<const s32*>(data->GetData()) == 255) pFlags->set(8);
 }
 }

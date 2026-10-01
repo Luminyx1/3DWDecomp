@@ -37,7 +37,7 @@ void BoxCursorControl::initialize(const nn::ui2d::ControlSrc& rSource, LayoutEx*
 // NON_MATCHING: the tail-call relocation awaits selectActiveNode_ reconstruction.
 // target selects the display on which the active node must remain movable.
 void BoxCursorControl::updateActiveNode(DrawTarget target) {
-    if (mActiveNode && mActiveNode->isMovable(target)) return;
+    if (mActiveNode != nullptr && mActiveNode->isMovable(target)) return;
     selectActiveNode_();
 }
 
@@ -46,9 +46,9 @@ void BoxCursorControl::setActiveNode_(const BoxCursorNode* pNode) {
     const auto* previous = mActiveNode;
     mActiveNode = pNode;
 
-    if (previous && previous != pNode) previous->mButton->InactivateByBoxCursor();
+    if (previous != nullptr && previous != pNode) previous->mButton->InactivateByBoxCursor();
 
-    if (pNode) {
+    if (pNode != nullptr) {
         pNode->getPosition(&mPosition);
         pNode->mScreen->mLastActiveCursor = pNode;
 
@@ -61,13 +61,13 @@ void BoxCursorControl::clearActiveAndReservedActiveNode(const BoxCursorNode* pNo
     if (mActiveNode == pNode) {
         mActiveNode = nullptr;
 
-        if (pNode) pNode->mButton->InactivateByBoxCursor();
+        if (pNode != nullptr) pNode->mButton->InactivateByBoxCursor();
     }
 
     if (mReservedActiveNode == pNode) mReservedActiveNode = nullptr;
 }
 
 Screen* BoxCursorControl::getActiveNodeScreen() {
-    return mActiveNode ? mActiveNode->mScreen : nullptr;
+    return (mActiveNode != nullptr) ? mActiveNode->mScreen : nullptr;
 }
 }

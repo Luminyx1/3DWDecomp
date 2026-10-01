@@ -22,7 +22,7 @@ AnimatorSet::AnimatorSet(const AnimatorSet& rOther, LayoutEx* pLayout, sead::Hea
     for (size_t i = 0; i != count; ++i) {
         Animator* animator = source[i];
 
-        if (animator) {
+        if (animator != nullptr) {
             Animator* selected = rOther.mSelected;
             Animator* clone = pLayout->createAnimatorAuto(animator->mName, animator == selected);
             mAnimators.getBufferPtr()[i < u32(mAnimators.size()) ? i : 0] = clone;
@@ -46,7 +46,7 @@ void AnimatorSet::setBuffer(u32 count, Animator** ppBuffer) {
 void AnimatorSet::setAnimator(u32 index, Animator* pAnimator) {
     mAnimators[index] = pAnimator;
 
-    if (!mSelected) mSelected = pAnimator;
+    if (mSelected == nullptr) mSelected = pAnimator;
 }
 
 // index selects a stored animator, disabling the previously selected animation.
@@ -100,7 +100,7 @@ Animator* AnimatorSet::select(const sead::SafeString& rName) {
     auto** pAnimators = mAnimators.getBufferPtr();
 
     for (size_t i = 0, count = static_cast<u32>(mAnimators.size()); i != count; ++i) {
-        if (pAnimators[i] && rName == sead::SafeString(pAnimators[i]->mName)) {
+        if (pAnimators[i] != nullptr && rName == sead::SafeString(pAnimators[i]->mName)) {
             Animator* pPrevious = mSelected;
 
             if (pPrevious != pAnimators[i]) {

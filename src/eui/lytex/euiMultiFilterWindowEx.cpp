@@ -44,7 +44,7 @@ MultiFilterWindowEx::MultiFilterWindowEx(const MultiFilterWindowEx& rOther, Layo
 
 /** @brief Releases the framebuffer filter owned by the pane. */
 MultiFilterWindowEx::~MultiFilterWindowEx() {
-    if (m_pFilter) {
+    if (m_pFilter != nullptr) {
         delete m_pFilter;
         m_pFilter = nullptr;
     }
@@ -64,7 +64,7 @@ void MultiFilterWindowEx::DrawSelf(nn::ui2d::DrawInfo& rDrawInfo, nn::gfx::Comma
 
     const auto* pTexture = m_pFilter->captureAndFilter(*this, rDrawInfoEx);
 
-    if (pTexture) {
+    if (pTexture != nullptr) {
         m_pFilter->applyTextureDataToWindowMaterial(this, &m_TextureInfo, pTexture, rDrawInfoEx);
         WindowEx::DrawSelf(rDrawInfo, rCommands);
         m_pFilter->freeResultTexture(pTexture);

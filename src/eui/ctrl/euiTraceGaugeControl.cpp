@@ -30,12 +30,12 @@ TraceGaugeControl::TraceGaugeControl(const TraceGaugeControl& rOther, LayoutEx* 
     ResetFlags(&mGaugeAnimator->mFlags, 0x20);
     ResetFlags(&mTracingAnimator->mFlags, 0x20);
 
-    if (rOther.mTraceColorAnimator) {
+    if (rOther.mTraceColorAnimator != nullptr) {
         mTraceColorAnimator = pLayout->createAnimatorAuto(rOther.mTraceColorAnimator->mName, true);
         ResetFlags(&mTraceColorAnimator->mFlags, 0x20);
     }
 
-    if (rOther.mShortageAnimator) {
+    if (rOther.mShortageAnimator != nullptr) {
         mShortageAnimator = pLayout->createAnimatorAuto(rOther.mShortageAnimator->mName, true);
         ResetFlags(&mShortageAnimator->mFlags, 0x20);
     }
@@ -44,42 +44,42 @@ TraceGaugeControl::TraceGaugeControl(const TraceGaugeControl& rOther, LayoutEx* 
 // rSource supplies animation names and fallback settings; pLayout supplies pane metadata and ownership.
 void TraceGaugeControl::initialize(const nn::ui2d::ControlSrc& rSource, LayoutEx* pLayout) {
     _20 = pLayout;
-    _18 = pLayout->mRootPane->mParent ? pLayout->mRootPane->mPanelName : pLayout->_30;
+    _18 = (pLayout->mRootPane->mParent != nullptr) ? pLayout->mRootPane->mPanelName : pLayout->_30;
     mGaugeAnimator = pLayout->createAnimatorAuto(rSource.FindFunctionalAnimName("GaugeRatio"), true);
     mTracingAnimator = pLayout->createAnimatorAuto(rSource.FindFunctionalAnimName("TraceRatio"), true);
     ResetFlags(&mGaugeAnimator->mFlags, 0x20);
     ResetFlags(&mTracingAnimator->mFlags, 0x20);
     const char* name = rSource.FindFunctionalAnimName("TraceColor");
 
-    if (name && *name) {
+    if (name != nullptr && *name) {
         mTraceColorAnimator = pLayout->tryCreateAnimatorAutoWithWarning(name, true);
 
-        if (mTraceColorAnimator) ResetFlags(&mTraceColorAnimator->mFlags, 0x20);
+        if (mTraceColorAnimator != nullptr) ResetFlags(&mTraceColorAnimator->mFlags, 0x20);
     }
 
     name = rSource.FindFunctionalAnimName("Shortage");
 
-    if (name && *name) {
+    if (name != nullptr && *name) {
         mShortageAnimator = pLayout->tryCreateAnimatorAutoWithWarning(name, true);
 
-        if (mShortageAnimator) ResetFlags(&mShortageAnimator->mFlags, 0x20);
+        if (mShortageAnimator != nullptr) ResetFlags(&mShortageAnimator->mFlags, 0x20);
     }
 
     auto* data = pLayout->mRootPane->FindExtUserDataByName("TracingSpeed");
 
-    if (!data) data = rSource.FindExtUserDataByName("TracingSpeed");
+    if (data == nullptr) data = rSource.FindExtUserDataByName("TracingSpeed");
 
-    if (data && data->count) mTracingSpeed = *static_cast<const float*>(data->GetData());
+    if (data != nullptr && data->count) mTracingSpeed = *static_cast<const float*>(data->GetData());
     data = pLayout->mRootPane->FindExtUserDataByName("TracingFraction");
 
-    if (!data) data = rSource.FindExtUserDataByName("TracingFraction");
+    if (data == nullptr) data = rSource.FindExtUserDataByName("TracingFraction");
 
-    if (data && data->count) mTracingFraction = *static_cast<const float*>(data->GetData());
+    if (data != nullptr && data->count) mTracingFraction = *static_cast<const float*>(data->GetData());
     data = pLayout->mRootPane->FindExtUserDataByName("TracingWait");
 
-    if (!data) data = rSource.FindExtUserDataByName("TracingWait");
+    if (data == nullptr) data = rSource.FindExtUserDataByName("TracingWait");
 
-    if (data && data->count) mTracingWait = *static_cast<const float*>(data->GetData());
+    if (data != nullptr && data->count) mTracingWait = *static_cast<const float*>(data->GetData());
 }
 
 // NON_MATCHING: conditional selection and chase branches differ from the original.
@@ -90,7 +90,7 @@ void TraceGaugeControl::Update(float step) {
     const float previous = mPreviousValue;
 
     if (gauge != previous) {
-        if (mShortageAnimator) {
+        if (mShortageAnimator != nullptr) {
             float frame;
 
             if (gauge <= mShortageLower) frame = 2;
@@ -164,18 +164,18 @@ void TraceGaugeControl::applyAnimation_() {
         mGaugeAnimator->Stop(gauge * mGaugeAnimator->GetFrameSize());
         mTracingAnimator->Stop(tracing * mTracingAnimator->GetFrameSize());
 
-        if (mTraceColorAnimator) mTraceColorAnimator->Stop(1);
+        if (mTraceColorAnimator != nullptr) mTraceColorAnimator->Stop(1);
     } else if (mPreviousValue < mTracingValue) {
         mGaugeAnimator->Stop(tracing * mGaugeAnimator->GetFrameSize());
         mTracingAnimator->Stop(gauge * mTracingAnimator->GetFrameSize());
 
-        if (mTraceColorAnimator) mTraceColorAnimator->Stop(0);
+        if (mTraceColorAnimator != nullptr) mTraceColorAnimator->Stop(0);
     } else {
         const float frame = gauge * mGaugeAnimator->GetFrameSize();
         mGaugeAnimator->Stop(frame);
         mTracingAnimator->Stop(frame);
 
-        if (mTraceColorAnimator) mTraceColorAnimator->Stop(1);
+        if (mTraceColorAnimator != nullptr) mTraceColorAnimator->Stop(1);
     }
 }
 }

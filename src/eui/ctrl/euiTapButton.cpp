@@ -49,7 +49,7 @@ void TapButton::ForceOff() {
 // interaction animation, and pLayout provides ownership and the input mode.
 void TapButton::Initialize(sead::Heap* pHeap, nn::ui2d::Pane* pPane, Animator* pAnimator, LayoutEx* pLayout) {
     _20 = pLayout;
-    SetTouch(pLayout->mScreen ? pLayout->mScreen->_eb != 0 : false);
+    SetTouch((pLayout->mScreen != nullptr) ? pLayout->mScreen->_eb != 0 : false);
     mHitPane = pPane;
     mStateAnimators = new (pHeap, 8) AnimatorSet;
     mStateAnimators->allocBuffer(6, pHeap);
@@ -64,20 +64,20 @@ void TapButton::Initialize(sead::Heap* pHeap, nn::ui2d::Pane* pPane, Animator* p
 void TapButton::CreateTapButton(nn::ui2d::Pane* pPane, LayoutEx* pLayout, ButtonGroup* pGroup) {
     const auto* boundingType = BoundingEx::GetRuntimeTypeInfoStatic();
 
-    if (!pPane) return;
+    if (pPane == nullptr) return;
     bool isBounding = false;
 
-    for (auto* type = pPane->GetRuntimeTypeInfo(); type; type = type->m_ParentTypeInfo) {
+    for (auto* type = pPane->GetRuntimeTypeInfo(); type != nullptr; type = type->m_ParentTypeInfo) {
         if (type == boundingType) { isBounding = true; break; }
     }
 
     if (!isBounding) return;
     const auto* data = pPane->FindExtUserDataByName("TapButtonAnim");
 
-    if (!data) return;
+    if (data == nullptr) return;
     Animator* animator = pLayout->tryCreateAnimatorAuto(static_cast<const char*>(data->GetData()), true);
 
-    if (!animator) return;
+    if (animator == nullptr) return;
     sead::Heap* heap = GetNwAllocatorHeap();
     auto* button = new (heap, 8) TapButton;
     button->Initialize(heap, pPane, animator, pLayout);

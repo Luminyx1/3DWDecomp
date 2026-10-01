@@ -43,7 +43,7 @@ MultiFilterPictureEx::MultiFilterPictureEx(const MultiFilterPictureEx& rOther, L
 
 /** @brief Releases the framebuffer filter owned by the pane. */
 MultiFilterPictureEx::~MultiFilterPictureEx() {
-    if (m_pFilter) {
+    if (m_pFilter != nullptr) {
         delete m_pFilter;
         m_pFilter = nullptr;
     }
@@ -63,7 +63,7 @@ void MultiFilterPictureEx::DrawSelf(nn::ui2d::DrawInfo& rDrawInfo, nn::gfx::Comm
 
     const auto* pTexture = m_pFilter->captureAndFilter(*this, rDrawInfoEx);
 
-    if (pTexture) {
+    if (pTexture != nullptr) {
         m_pFilter->applyTextureDataToPictureMaterial(this, &m_TextureInfo, pTexture, rDrawInfoEx);
         PictureEx::DrawSelf(rDrawInfo, rCommands);
         m_pFilter->freeResultTexture(pTexture);

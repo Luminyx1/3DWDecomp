@@ -22,12 +22,12 @@ DynamicCapturePane::DynamicCapturePane(const DynamicCapturePane& rOther, LayoutE
 
 // Dispose of the separately allocated clear color and filter.
 DynamicCapturePane::~DynamicCapturePane() {
-    if (m_pClearColor) {
+    if (m_pClearColor != nullptr) {
         delete m_pClearColor;
         m_pClearColor = nullptr;
     }
 
-    if (m_pMultiFilter) {
+    if (m_pMultiFilter != nullptr) {
         delete m_pMultiFilter;
         m_pMultiFilter = nullptr;
     }
@@ -35,7 +35,7 @@ DynamicCapturePane::~DynamicCapturePane() {
 
 // Return the current capture to its owning filter or dynamic texture allocator.
 void DynamicCapturePane::freeDynamicTexture() {
-    if (m_pMultiFilter && m_pMultiFilter->getResultTexture())
+    if (m_pMultiFilter != nullptr && m_pMultiFilter->getResultTexture() != nullptr)
         m_pMultiFilter->freeResultTexture();
     else
         agl::utl::DynamicTextureAllocator::instance()->free(m_pDynamicTexture);

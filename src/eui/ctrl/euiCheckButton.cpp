@@ -31,7 +31,7 @@ const char* CheckButton::getClassName() const { return "CheckButton"; }
 void CheckButton::ForceSetChecked(bool checked) {
     mChecked = checked;
 
-    if (mCheckAnimator) {
+    if (mCheckAnimator != nullptr) {
         if (checked) mCheckAnimator->StopAtMax();
         else mCheckAnimator->StopAtMin();
     }
@@ -41,7 +41,7 @@ void CheckButton::StartDown() {
     AnimButton::StartDown();
 
     if (mCheckEnabled && !IsPlayDisableAnim()) {
-        if (mCheckAnimator)
+        if (mCheckAnimator != nullptr)
             mCheckAnimator->Play(Animator::cPlayType_OneTime, mChecked ? -1.0f : 1.0f);
         mChecked = !mChecked;
     }
@@ -50,7 +50,7 @@ void CheckButton::StartDown() {
 bool CheckButton::UpdateDown() {
     bool finished = AnimButton::UpdateDown();
 
-    if (mCheckEnabled && mCheckAnimator && !IsPlayDisableAnim()) {
+    if (mCheckEnabled && mCheckAnimator != nullptr && !IsPlayDisableAnim()) {
         if (mChecked)
             finished = finished && mCheckAnimator->mFrame == mCheckAnimator->GetFrameSize();
         else

@@ -25,7 +25,7 @@ void ScreenMgr::resetScreenId(int index) {
 void ScreenMgr::unloadScreen(int index) {
     Screen* screen = mScreens[index];
 
-    if (screen) {
+    if (screen != nullptr) {
         resetScreenId(index);
 
         if (screen->mFlags & 1) screen->mInitializeHeap->destroy();
@@ -34,7 +34,7 @@ void ScreenMgr::unloadScreen(int index) {
 
 // pNode is removed from navigation routes in every loaded screen.
 void ScreenMgr::eraseBoxCursorNodeFromRouteNodes(const BoxCursorNode* pNode) {
-    for (auto* screen : mScreens) if (screen) screen->eraseBoxCursorNodeFromRouteNodes(pNode);
+    for (auto* screen : mScreens) if (screen != nullptr) screen->eraseBoxCursorNodeFromRouteNodes(pNode);
 }
 
 // NON_MATCHING: creation still inherits the constructor mismatch; disposer calls await its destructor.
@@ -52,6 +52,6 @@ void ScreenMgr::updateSystem() {
     _440 = true;
     _441 = true;
 
-    if (mFontMgr->mScalableFontMgr) mFontMgr->mScalableFontMgr->update();
+    if (mFontMgr->mScalableFontMgr != nullptr) mFontMgr->mScalableFontMgr->update();
 }
 }
