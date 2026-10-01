@@ -10,6 +10,8 @@ bool isEqualString(const sead::SafeString&, const sead::SafeString&);
 bool isEqualStringCase(const char*, const char*);
 bool isEqualStringCase(const sead::SafeString&, const sead::SafeString&);
 bool isEqualSubString(const char*, const char*);
+bool isStartWithString(const char* pStr, const char* pPrefix);
+void removeExtensionString(char* pOut, u32 size, const char* pStr);
 
 template <s32 Length>
 class StringTmp : public sead::FixedSafeString<Length> {
