@@ -17,7 +17,7 @@ public:
     static const agl::TextureData* drawCapture_(nn::ui2d::Pane* pPane, nn::ui2d::DrawInfo& rDrawInfo,
         sead::BitFlag8* pFlags, agl::utl::MultiFilter* pFilter, agl::RenderBuffer* pBuffer,
         agl::RenderTargetColor* pTarget, sead::Color4f* pClearColor, nn::gfx::CommandBuffer& rCommands);
-    static void setupCaptureOutputAlpha255_(nn::ui2d::Pane* pPane, sead::BitFlag<u8>* pFlags);
+    static void setupCaptureOutputAlpha255_(nn::ui2d::Pane* pPane, sead::BitFlag8* pFlags);
     sead::BitFlag8 mFlags;
     bool mCaptureRequired;
     bool mAlwaysCapture;

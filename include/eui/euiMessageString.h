@@ -14,14 +14,14 @@ public:
     MessageString();
     MessageString(int length, const char16_t* pText);
     MessageString(const char16_t* pBegin, const char16_t* pEnd);
-    MessageString(const sead::SafeStringBase<char16_t>& rText);
+    MessageString(const sead::WSafeString& rText);
     MessageString(const MessageString& rOther);
     MessageString& operator=(const MessageString& rOther);
     const char16_t& operator[](int index) const;
     Iterator begin() const;
     Iterator end() const;
     Iterator toIterator(int index) const;
-    bool tryMakeTagStrippedString(sead::BufferedSafeStringBase<char16_t>* pOutput) const;
+    bool tryMakeTagStrippedString(sead::WBufferedSafeString* pOutput) const;
     int countPrintableStringLength() const;
 
     const char16_t* getText() const { return m_pText; }

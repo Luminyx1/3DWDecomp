@@ -14,8 +14,8 @@ namespace agl::utl { class MultiFilter; }
 
 namespace eui {
 class LayoutEx;
-void CreateLayoutItemUniqueName(sead::StringBuilderBase<char>* pName, const char* pItem, const LayoutEx* pLayout);
-void CreateLayoutItemUniqueNameByPath(sead::StringBuilderBase<char>* pName, const char* pPath, const LayoutEx* pLayout);
+void CreateLayoutItemUniqueName(sead::StringBuilder* pName, const char* pItem, const LayoutEx* pLayout);
+void CreateLayoutItemUniqueNameByPath(sead::StringBuilder* pName, const char* pPath, const LayoutEx* pLayout);
 // Draw targets are passed by value as a four-byte index.
 class DrawTarget {
 public:

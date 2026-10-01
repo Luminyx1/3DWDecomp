@@ -25,7 +25,7 @@ MessageString::MessageString(const char16_t* pBegin, const char16_t* pEnd)
  * @brief Creates a message view over a null-terminated safe string.
  * @param[in] rText Safe string whose character storage is referenced by the view.
  */
-MessageString::MessageString(const sead::SafeStringBase<char16_t>& rText)
+MessageString::MessageString(const sead::WSafeString& rText)
     : m_pText(rText.cstr()), mLength(rText.calcLength()) {}
 
 /**
@@ -89,7 +89,7 @@ MessageString::Iterator MessageString::toIterator(int index) const {
  * @param[out] pOutput Destination buffer for the null-terminated text with control tags removed.
  * @return True if all text fits; false if the destination buffer is too small.
  */
-bool MessageString::tryMakeTagStrippedString(sead::BufferedSafeStringBase<char16_t>* pOutput) const {
+bool MessageString::tryMakeTagStrippedString(sead::WBufferedSafeString* pOutput) const {
     auto* pBuffer = pOutput->getBuffer();
     const int capacity = pOutput->getBufferSize();
     int length = 0;

@@ -11,7 +11,7 @@ public:
     void Calculate(nn::ui2d::DrawInfo&, CalculateContext&, bool) override;
     void DrawSelf(nn::ui2d::DrawInfo&, nn::gfx::CommandBuffer&) override;
     u16 setStringNoPreproces(const char16_t*, u16) override;
-    void doPreprocess_(sead::BufferedSafeStringBase<char16_t>*, u32*, u32*, const char16_t*, u32, int, bool, void*) override;
+    void doPreprocess_(sead::WBufferedSafeString*, u32*, u32*, const char16_t*, u32, int, bool, void*) override;
     ScalableFontMgr* mFontMgr;
     u32 mGlyphState;
     u32 _16c;

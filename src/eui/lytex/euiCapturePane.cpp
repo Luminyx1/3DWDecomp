@@ -371,7 +371,7 @@ CapturePane::~CapturePane() {
 }
 
 // pPane supplies the capture alpha setting; pFlags receives bit 3 when the output is opaque.
-void CapturePane::setupCaptureOutputAlpha255_(nn::ui2d::Pane* pPane, sead::BitFlag<u8>* pFlags) {
+void CapturePane::setupCaptureOutputAlpha255_(nn::ui2d::Pane* pPane, sead::BitFlag8* pFlags) {
     const auto* data = pPane->FindExtUserDataByName("CaptureOutputAlpha");
 
     if (data != nullptr && *static_cast<const s32*>(data->GetData()) == 255) pFlags->set(8);

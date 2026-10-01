@@ -47,7 +47,7 @@ u16 TextBoxEx::setStringWithPage(const char16_t* pText, u16 length, bool* pHasNe
 // pText and length describe text to copy directly; null clears the string.
 u16 TextBoxEx::setStringNoPreproces(const char16_t* pText, u16 length) {
     if (pText != nullptr) return nn::ui2d::TextBox::SetString(reinterpret_cast<const u16*>(pText), 0, length);
-    return nn::ui2d::TextBox::SetString(reinterpret_cast<const u16*>(sead::SafeStringBase<char16_t>::cEmptyString.cstr()), 0, 0);
+    return nn::ui2d::TextBox::SetString(reinterpret_cast<const u16*>(sead::WSafeString::cEmptyString.cstr()), 0, 0);
 }
 
 // pScale optionally receives the minimum text scale when the pane defines TextScaleOn.
