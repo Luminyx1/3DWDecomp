@@ -7,7 +7,9 @@ namespace al {
  * Constructs an ocean wave keeper.
  * @param pDirector ocean wave director
  */
-OceanWaveKeeper::OceanWaveKeeper(OceanWaveDirector* pDirector) : mDirector(pDirector) {}
+OceanWaveKeeper::OceanWaveKeeper(OceanWaveDirector* pDirector) {
+    mDirector = pDirector;
+}
 
 /**
  * Initializes the ocean wave user info.
