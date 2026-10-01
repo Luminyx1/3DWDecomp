@@ -39,10 +39,10 @@ void ExecuteRequestKeeper::executeRequestActorMovementAllOn() {
 
     for (s32 i = 0; i < table->mSize; i++) {
         LiveActor* actor = table->mRequests[i];
-        ActorExecuteInfo* info = actor->mActorExecuteInfo;
+        ActorExecuteInfo* info = actor->getExecuteInfo();
 
-        for (s32 j = 0; j < info->mUpdaterCount; j++) {
-            info->mUpdaters[j]->addActor(actor);
+        for (s32 j = 0; j < info->getUpdaterCount(); j++) {
+            info->getUpdater(j)->addActor(actor);
         }
     }
 
@@ -57,10 +57,10 @@ void ExecuteRequestKeeper::executeRequestActorMovementAllOff() {
 
     for (s32 i = 0; i < table->mSize; i++) {
         LiveActor* actor = table->mRequests[i];
-        ActorExecuteInfo* info = actor->mActorExecuteInfo;
+        ActorExecuteInfo* info = actor->getExecuteInfo();
 
-        for (s32 j = 0; j < info->mUpdaterCount; j++) {
-            info->mUpdaters[j]->removeActor(actor);
+        for (s32 j = 0; j < info->getUpdaterCount(); j++) {
+            info->getUpdater(j)->removeActor(actor);
         }
     }
 
@@ -75,10 +75,10 @@ void ExecuteRequestKeeper::executeRequestActorDrawAllOn() {
 
     for (s32 i = 0; i < table->mSize; i++) {
         LiveActor* actor = table->mRequests[i];
-        ActorExecuteInfo* info = actor->mActorExecuteInfo;
+        ActorExecuteInfo* info = actor->getExecuteInfo();
 
-        for (s32 j = 0; j < info->mDrawerCount; j++) {
-            info->mDrawers[j]->addModel(actor->mModelKeeper->mModelCafe);
+        for (s32 j = 0; j < info->getDrawerCount(); j++) {
+            info->getDrawer(j)->addModel(actor->getModelKeeper()->getModelCafe());
         }
     }
 
@@ -93,10 +93,10 @@ void ExecuteRequestKeeper::executeRequestActorDrawAllOff() {
 
     for (s32 i = 0; i < table->mSize; i++) {
         LiveActor* actor = table->mRequests[i];
-        ActorExecuteInfo* info = actor->mActorExecuteInfo;
+        ActorExecuteInfo* info = actor->getExecuteInfo();
 
-        for (s32 j = 0; j < info->mDrawerCount; j++) {
-            info->mDrawers[j]->removeModel(actor->mModelKeeper->mModelCafe);
+        for (s32 j = 0; j < info->getDrawerCount(); j++) {
+            info->getDrawer(j)->removeModel(actor->getModelKeeper()->getModelCafe());
         }
     }
 
@@ -111,10 +111,10 @@ void ExecuteRequestKeeper::executeRequestActorDrawAllOnImmediate() {
 
     for (s32 i = 0; i < table->mSize; i++) {
         LiveActor* actor = table->mRequests[i];
-        ActorExecuteInfo* info = actor->mActorExecuteInfo;
+        ActorExecuteInfo* info = actor->getExecuteInfo();
 
-        for (s32 j = 0; j < info->mDrawerCount; j++) {
-            info->mDrawers[j]->addModel(actor->mModelKeeper->mModelCafe);
+        for (s32 j = 0; j < info->getDrawerCount(); j++) {
+            info->getDrawer(j)->addModel(actor->getModelKeeper()->getModelCafe());
         }
     }
 

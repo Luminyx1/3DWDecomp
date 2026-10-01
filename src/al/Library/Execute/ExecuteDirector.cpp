@@ -79,7 +79,7 @@ void ExecuteDirector::init(const ExecuteSystemInitInfo& rInfo) {
  * @param pListName List name.
  */
 void ExecuteDirector::registerActorUpdate(LiveActor* pActor, const char* pListName) {
-    if (pActor->mActorExecuteInfo == nullptr) {
+    if (pActor->getExecuteInfo() == nullptr) {
         pActor->initExecuteInfo(new ActorExecuteInfo(mRequestKeeper));
     }
 
@@ -92,7 +92,7 @@ void ExecuteDirector::registerActorUpdate(LiveActor* pActor, const char* pListNa
  * @param pListName List name.
  */
 void ExecuteDirector::registerActorDraw(LiveActor* pActor, const char* pListName) {
-    if (pActor->mActorExecuteInfo == nullptr) {
+    if (pActor->getExecuteInfo() == nullptr) {
         pActor->initExecuteInfo(new ActorExecuteInfo(mRequestKeeper));
     }
 
@@ -108,7 +108,7 @@ void ExecuteDirector::registerActorDraw(LiveActor* pActor, const char* pListName
  * @param pListName List name.
  */
 void ExecuteDirector::registerActorModelDraw(LiveActor* pActor, const char* pListName) {
-    if (pActor->mActorExecuteInfo == nullptr) {
+    if (pActor->getExecuteInfo() == nullptr) {
         pActor->initExecuteInfo(new ActorExecuteInfo(mRequestKeeper));
     }
 

@@ -16,6 +16,12 @@ public:
     void removeDrawer(ModelDrawerBase* pDrawer);
     ModelDrawerBase* removeOptDrawer();
 
+    ExecuteRequestKeeper* getRequestKeeper() const { return mRequestKeeper; }
+    s32 getUpdaterCount() const { return mUpdaterCount; }
+    ExecutorActorExecuteBase* getUpdater(s32 index) const { return mUpdaters[index]; }
+    s32 getDrawerCount() const { return mDrawerCount; }
+    ModelDrawerBase* getDrawer(s32 index) const { return mDrawers[index]; }
+
     ExecuteRequestKeeper* mRequestKeeper;
     s32 mUpdaterCount = 0;
     ExecutorActorExecuteBase* mUpdaters[4] = {};

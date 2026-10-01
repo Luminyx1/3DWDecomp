@@ -92,7 +92,7 @@ namespace alActorSystemFunction {
  * @param pActor The actor.
  */
 void addToExecutorMovement(al::LiveActor* pActor) {
-    pActor->mActorExecuteInfo->mRequestKeeper->request(
+    pActor->getExecuteInfo()->getRequestKeeper()->request(
         pActor, al::ExecuteRequestKeeper::Request_Movement);
 }
 
@@ -101,7 +101,7 @@ void addToExecutorMovement(al::LiveActor* pActor) {
  * @param pActor The actor.
  */
 void addToExecutorDraw(al::LiveActor* pActor) {
-    pActor->mActorExecuteInfo->mRequestKeeper->request(pActor,
+    pActor->getExecuteInfo()->getRequestKeeper()->request(pActor,
                                                        al::ExecuteRequestKeeper::Request_Draw);
 }
 
@@ -110,7 +110,7 @@ void addToExecutorDraw(al::LiveActor* pActor) {
  * @param pActor The actor.
  */
 void removeFromExecutorMovement(al::LiveActor* pActor) {
-    pActor->mActorExecuteInfo->mRequestKeeper->request(
+    pActor->getExecuteInfo()->getRequestKeeper()->request(
         pActor, al::ExecuteRequestKeeper::Request_RemoveFromMovement);
 }
 
@@ -119,7 +119,7 @@ void removeFromExecutorMovement(al::LiveActor* pActor) {
  * @param pActor The actor.
  */
 void removeFromExecutorDraw(al::LiveActor* pActor) {
-    pActor->mActorExecuteInfo->mRequestKeeper->request(
+    pActor->getExecuteInfo()->getRequestKeeper()->request(
         pActor, al::ExecuteRequestKeeper::Request_RemoveFromDraw);
 }
 
@@ -128,7 +128,7 @@ void removeFromExecutorDraw(al::LiveActor* pActor) {
  * @param pActor The actor.
  */
 void addToExecutorDrawImmediate(al::LiveActor* pActor) {
-    pActor->mActorExecuteInfo->mRequestKeeper->request(
+    pActor->getExecuteInfo()->getRequestKeeper()->request(
         pActor, al::ExecuteRequestKeeper::Request_DrawImmediate);
 }
 
@@ -138,10 +138,10 @@ void addToExecutorDrawImmediate(al::LiveActor* pActor) {
  * @return The removed drawer or nullptr.
  */
 al::ModelDrawerBase* tryCompletelyRemoveFromExecutorDraw(al::LiveActor* pActor) {
-    al::ModelDrawerBase* drawer = pActor->mActorExecuteInfo->removeOptDrawer();
+    al::ModelDrawerBase* drawer = pActor->getExecuteInfo()->removeOptDrawer();
 
     if (drawer != nullptr) {
-        drawer->removeModel(pActor->mModelKeeper->mModelCafe);
+        drawer->removeModel(pActor->getModelKeeper()->getModelCafe());
     }
 
     return drawer;
@@ -153,7 +153,7 @@ al::ModelDrawerBase* tryCompletelyRemoveFromExecutorDraw(al::LiveActor* pActor) 
  * @param pDrawers Receives the removed drawers.
  */
 void tryCompletelyRemoveFromExecutorDraw(al::LiveActor* pActor,
-                                         sead::PtrArray<al::ModelDrawerBase>* pDrawers) {
+                                         al::ModelDrawerArray* pDrawers) {
     pDrawers->allocBuffer(4, nullptr);
 
     while (true) {
@@ -173,8 +173,8 @@ void tryCompletelyRemoveFromExecutorDraw(al::LiveActor* pActor,
  * @param pDrawer The drawer.
  */
 void addBackToExecutorDraw(al::LiveActor* pActor, al::ModelDrawerBase* pDrawer) {
-    pActor->mActorExecuteInfo->addDrawer(pDrawer);
-    pDrawer->addModel(pActor->mModelKeeper->mModelCafe);
+    pActor->getExecuteInfo()->addDrawer(pDrawer);
+    pDrawer->addModel(pActor->getModelKeeper()->getModelCafe());
 }
 
 /**
@@ -182,11 +182,11 @@ void addBackToExecutorDraw(al::LiveActor* pActor, al::ModelDrawerBase* pDrawer) 
  * @param pActor The actor.
  * @param pDrawers The drawers.
  */
-void addBackToExecutorDraw(al::LiveActor* pActor, sead::PtrArray<al::ModelDrawerBase>* pDrawers) {
+void addBackToExecutorDraw(al::LiveActor* pActor, al::ModelDrawerArray* pDrawers) {
     for (s32 i = 0; i < pDrawers->size(); i++) {
         al::ModelDrawerBase* drawer = pDrawers->at(i);
-        pActor->mActorExecuteInfo->addDrawer(drawer);
-        drawer->addModel(pActor->mModelKeeper->mModelCafe);
+        pActor->getExecuteInfo()->addDrawer(drawer);
+        drawer->addModel(pActor->getModelKeeper()->getModelCafe());
     }
 }
 
@@ -196,8 +196,8 @@ void addBackToExecutorDraw(al::LiveActor* pActor, sead::PtrArray<al::ModelDrawer
  * @param pDrawer The drawer.
  */
 void removeFromExecutorDraw(al::LiveActor* pActor, al::ModelDrawerBase* pDrawer) {
-    pDrawer->removeModel(pActor->mModelKeeper->mModelCafe);
-    pActor->mActorExecuteInfo->removeDrawer(pDrawer);
+    pDrawer->removeModel(pActor->getModelKeeper()->getModelCafe());
+    pActor->getExecuteInfo()->removeDrawer(pDrawer);
 }
 
 /**
@@ -205,11 +205,11 @@ void removeFromExecutorDraw(al::LiveActor* pActor, al::ModelDrawerBase* pDrawer)
  * @param pActor The actor.
  * @param pDrawers The drawers.
  */
-void removeFromExecutorDraw(al::LiveActor* pActor, sead::PtrArray<al::ModelDrawerBase>* pDrawers) {
+void removeFromExecutorDraw(al::LiveActor* pActor, al::ModelDrawerArray* pDrawers) {
     for (s32 i = 0; i < pDrawers->size(); i++) {
         al::ModelDrawerBase* drawer = pDrawers->unsafeAt(i);
-        drawer->removeModel(pActor->mModelKeeper->mModelCafe);
-        pActor->mActorExecuteInfo->removeDrawer(drawer);
+        drawer->removeModel(pActor->getModelKeeper()->getModelCafe());
+        pActor->getExecuteInfo()->removeDrawer(drawer);
     }
 }
 }  // namespace alActorSystemFunction

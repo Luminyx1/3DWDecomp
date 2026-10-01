@@ -70,12 +70,12 @@ ExecutorListIUseExecutorDraw::ExecutorListIUseExecutorDraw(const char* pListName
  * Draws all users inside a debug group named after the list group.
  */
 void ExecutorListIUseExecutorDraw::executeList() const {
-    pushDebugGroup(GameFrameworkNx::sInstance->mDrawContext->getNvnCommandBuffer(), mGroupName);
+    pushDebugGroup(GameFrameworkNx::getDrawContext()->getNvnCommandBuffer(), mGroupName);
 
     for (s32 i = 0; i < mUserNum; i++) {
         mUsers[i]->draw();
     }
 
-    nvnCommandBufferPopDebugGroup(GameFrameworkNx::sInstance->mDrawContext->getNvnCommandBuffer());
+    nvnCommandBufferPopDebugGroup(GameFrameworkNx::getDrawContext()->getNvnCommandBuffer());
 }
 }  // namespace al

@@ -212,23 +212,23 @@ ExecutorListActorModelDrawBase::ExecutorListActorModelDrawBase(const char* pList
  * @param pActor The actor.
  */
 void ExecutorListActorModelDrawBase::registerActorModel(LiveActor* pActor) {
-    alModelCafe* model = pActor->mModelKeeper->mModelCafe;
-    const char* modelName = pActor->mModelKeeper->mModelName;
+    alModelCafe* model = pActor->getModelKeeper()->getModelCafe();
+    const char* modelName = pActor->getModelKeeper()->getModelName();
 
     for (s32 i = 0; i < mDrawerNum; i++) {
         ModelDrawerBase* drawer = mDrawers[i];
 
         if (isEqualString(drawer->getName(), modelName)) {
             drawer->registerModel(model);
-            pActor->mActorExecuteInfo->addDrawer(drawer);
+            pActor->getExecuteInfo()->addDrawer(drawer);
             return;
         }
     }
 
     ModelDrawerBase* drawer = createDrawer(modelName);
-    drawer->setDrawInfo(static_cast<GraphicsSystemInfo*>(pActor->getSceneInfo()->_78), model);
+    drawer->setDrawInfo(pActor->getSceneInfo()->graphicsSystemInfo, model);
     drawer->registerModel(model);
-    pActor->mActorExecuteInfo->addDrawer(drawer);
+    pActor->getExecuteInfo()->addDrawer(drawer);
     mDrawers[mDrawerNum] = drawer;
     mDrawerNum++;
 }
@@ -251,13 +251,13 @@ void ExecutorListActorModelDrawBase::executeList() const {
     }
 
     if (isEqualString(mListName, "シルエット[プレイヤー]")) {
-        pushDebugGroup(GameFrameworkNx::sInstance->mDrawContext->getNvnCommandBuffer(),
+        pushDebugGroup(GameFrameworkNx::getDrawContext()->getNvnCommandBuffer(),
                        "Render Silhouette Player");
     } else if (isEqualString(mListName, "シルエット[乗り物]")) {
-        pushDebugGroup(GameFrameworkNx::sInstance->mDrawContext->getNvnCommandBuffer(),
+        pushDebugGroup(GameFrameworkNx::getDrawContext()->getNvnCommandBuffer(),
                        "Render Silhouette Ride");
     } else {
-        pushDebugGroup(GameFrameworkNx::sInstance->mDrawContext->getNvnCommandBuffer(),
+        pushDebugGroup(GameFrameworkNx::getDrawContext()->getNvnCommandBuffer(),
                        "Actor Model");
     }
 
@@ -265,7 +265,7 @@ void ExecutorListActorModelDrawBase::executeList() const {
         mDrawers[i]->draw();
     }
 
-    nvnCommandBufferPopDebugGroup(GameFrameworkNx::sInstance->mDrawContext->getNvnCommandBuffer());
+    nvnCommandBufferPopDebugGroup(GameFrameworkNx::getDrawContext()->getNvnCommandBuffer());
 }
 
 /**

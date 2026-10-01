@@ -10,6 +10,8 @@ class LayoutActor;
 class LiveActor;
 class ModelDrawerBase;
 
+using ModelDrawerArray = sead::PtrArray<ModelDrawerBase>;
+
 void registerExecutorActorUpdate(LiveActor* pActor, ExecuteDirector* pDirector,
                                  const char* pListName);
 void registerExecutorActorDraw(LiveActor* pActor, ExecuteDirector* pDirector,
@@ -30,11 +32,11 @@ void addToExecutorDraw(al::LiveActor* pActor);
 void removeFromExecutorDraw(al::LiveActor* pActor);
 al::ModelDrawerBase* tryCompletelyRemoveFromExecutorDraw(al::LiveActor* pActor);
 void tryCompletelyRemoveFromExecutorDraw(al::LiveActor* pActor,
-                                         sead::PtrArray<al::ModelDrawerBase>* pDrawers);
+                                         al::ModelDrawerArray* pDrawers);
 void addBackToExecutorDraw(al::LiveActor* pActor, al::ModelDrawerBase* pDrawer);
-void addBackToExecutorDraw(al::LiveActor* pActor, sead::PtrArray<al::ModelDrawerBase>* pDrawers);
+void addBackToExecutorDraw(al::LiveActor* pActor, al::ModelDrawerArray* pDrawers);
 void removeFromExecutorDraw(al::LiveActor* pActor, al::ModelDrawerBase* pDrawer);
-void removeFromExecutorDraw(al::LiveActor* pActor, sead::PtrArray<al::ModelDrawerBase>* pDrawers);
+void removeFromExecutorDraw(al::LiveActor* pActor, al::ModelDrawerArray* pDrawers);
 }  // namespace alActorSystemFunction
 
 namespace alExecuteFunction {

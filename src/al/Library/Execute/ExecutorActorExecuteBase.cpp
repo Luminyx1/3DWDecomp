@@ -16,7 +16,7 @@ ExecutorActorExecuteBase::ExecutorActorExecuteBase(const char* pName) : mName(pN
  */
 void ExecutorActorExecuteBase::registerActor(LiveActor* pActor) {
     mActorNumMax++;
-    pActor->mActorExecuteInfo->addUpdater(this);
+    pActor->getExecuteInfo()->addUpdater(this);
 }
 
 /**

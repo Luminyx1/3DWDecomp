@@ -82,11 +82,11 @@ ExecutorListLayoutDrawNormal::ExecutorListLayoutDrawNormal(const char* pListName
  * Sets up the shader mode and graphics state for layout drawing.
  */
 void ExecutorListLayoutDrawNormal::startDraw() const {
-    tryChangeShaderMode(reinterpret_cast<agl::DrawContext*>(GameFrameworkNx::sInstance->mDrawContext),
+    tryChangeShaderMode(GameFrameworkNx::getAglDrawContext(),
                         agl::cShaderMode_UniformRegister);
     sead::GraphicsContext context;
     context.setDepthEnable(false, false);
     context.setCullingMode(0);
-    context.apply(GameFrameworkNx::sInstance->mDrawContext);
+    context.apply(GameFrameworkNx::getDrawContext());
 }
 }  // namespace al
