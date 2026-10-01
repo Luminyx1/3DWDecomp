@@ -25,6 +25,8 @@ public:
     void invalidateBySystem();
     HitSensor* getSensor(const char*) const;
 
+    s32 getSensorNum() const { return mSensorCount; }
+
     s32 mMaxSensorCount;
     s32 mSensorCount;
     HitSensor** mSensors;

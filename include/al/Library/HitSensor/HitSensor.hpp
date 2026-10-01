@@ -79,6 +79,12 @@ public:
     const sead::Vector3f& getPos() const { return mPos; }
     f32 getRadius() const { return mRadius; }
     LiveActor* getHost() const { return mHostActor; }
+    HitSensorType getType() const { return mSensorType; }
+    bool isType(HitSensorType type) const { return mSensorType == type; }
+    const sead::Vector3f& getFollowPosOffset() const { return mFollowPosOffset; }
+    void setRadius(f32 radius) { mRadius = radius; }
+    void setHitGroup(SensorHitGroup* pGroup) { mHitGroup = pGroup; }
+    void clearSensors() { mNumSensors = 0; }
 
     const char* mName;
     HitSensorType mSensorType;

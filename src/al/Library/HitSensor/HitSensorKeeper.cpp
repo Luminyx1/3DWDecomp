@@ -62,8 +62,8 @@ void HitSensorKeeper::attackSensor() {
         for (u32 j = 0; j < sensor->mNumSensors; j++) {
             HitSensor* other = sensor->mSensors[j];
 
-            if (!isDead(other->mHostActor)) {
-                sensor->mHostActor->attackSensor(sensor, other);
+            if (!isDead(other->getHost())) {
+                sensor->getHost()->attackSensor(sensor, other);
             }
         }
     }
@@ -83,7 +83,7 @@ HitSensor* HitSensorKeeper::getSensor(s32 idx) const {
  */
 void HitSensorKeeper::clear() {
     for (s32 i = 0; i < mSensorCount; i++) {
-        mSensors[i]->mNumSensors = 0;
+        mSensors[i]->clearSensors();
     }
 }
 
@@ -134,7 +134,7 @@ HitSensor* HitSensorKeeper::getSensor(const char* pName) const {
     }
 
     for (s32 i = 0; i < mSensorCount; i++) {
-        if (isEqualString(mSensors[i]->mName, pName)) {
+        if (isEqualString(mSensors[i]->getName(), pName)) {
             return mSensors[i];
         }
     }

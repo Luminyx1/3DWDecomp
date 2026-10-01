@@ -5,18 +5,18 @@
 namespace al {
 namespace {
 inline void checkHit(HitSensor* pA, HitSensor* pB) {
-    if (pA->mHostActor == pB->mHostActor) {
+    if (pA->getHost() == pB->getHost()) {
         return;
     }
 
-    sead::Vector3f diff = pA->mPos - pB->mPos;
-    f32 radius = pA->mRadius + pB->mRadius;
+    sead::Vector3f diff = pA->getPos() - pB->getPos();
+    f32 radius = pA->getRadius() + pB->getRadius();
 
     if (diff.squaredLength() >= radius * radius) {
         return;
     }
 
-    switch (pB->mSensorType) {
+    switch (pB->getType()) {
     case HitSensorType::Eye:
     case HitSensorType::PlayerEye:
         break;
@@ -25,7 +25,7 @@ inline void checkHit(HitSensor* pA, HitSensor* pB) {
         break;
     }
 
-    switch (pA->mSensorType) {
+    switch (pA->getType()) {
     case HitSensorType::Eye:
     case HitSensorType::PlayerEye:
         break;
@@ -86,7 +86,7 @@ HitSensor* SensorHitGroup::getSensor(s32 idx) const {
  */
 void SensorHitGroup::clear() const {
     for (s32 i = 0; i < mSensorCount; i++) {
-        mSensors[i]->mNumSensors = 0;
+        mSensors[i]->clearSensors();
     }
 }
 

@@ -52,7 +52,7 @@ namespace alSensorFunction {
  * @param pActor The actor.
  */
 void updateHitSensorsAll(al::LiveActor* pActor) {
-    pActor->mHitSensorKeeper->update();
+    pActor->getHitSensorKeeper()->update();
 }
 
 /**
@@ -60,7 +60,7 @@ void updateHitSensorsAll(al::LiveActor* pActor) {
  * @param pActor The actor.
  */
 void clearHitSensors(al::LiveActor* pActor) {
-    pActor->mHitSensorKeeper->clear();
+    pActor->getHitSensorKeeper()->clear();
 }
 
 /**

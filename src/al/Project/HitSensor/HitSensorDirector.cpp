@@ -8,18 +8,18 @@
 namespace al {
 namespace {
 inline void checkHit(HitSensor* pA, HitSensor* pB) {
-    if (pA->mHostActor == pB->mHostActor) {
+    if (pA->getHost() == pB->getHost()) {
         return;
     }
 
-    sead::Vector3f diff = pA->mPos - pB->mPos;
-    f32 radius = pA->mRadius + pB->mRadius;
+    sead::Vector3f diff = pA->getPos() - pB->getPos();
+    f32 radius = pA->getRadius() + pB->getRadius();
 
     if (diff.squaredLength() >= radius * radius) {
         return;
     }
 
-    switch (pB->mSensorType) {
+    switch (pB->getType()) {
     case HitSensorType::Eye:
     case HitSensorType::PlayerEye:
         break;
@@ -28,7 +28,7 @@ inline void checkHit(HitSensor* pA, HitSensor* pB) {
         break;
     }
 
-    switch (pA->mSensorType) {
+    switch (pA->getType()) {
     case HitSensorType::Eye:
     case HitSensorType::PlayerEye:
         break;
@@ -102,19 +102,19 @@ HitSensorDirector::HitSensorDirector(ExecuteDirector* pExecuteDirector, s32 scal
  */
 void HitSensorDirector::initGroup(HitSensor* pSensor) {
     if (isSensorPlayerEye(pSensor)) {
-        pSensor->mHitGroup = mPlayerEyeGroup;
+        pSensor->setHitGroup(mPlayerEyeGroup);
     } else if (isSensorPlayer(pSensor)) {
-        pSensor->mHitGroup = mPlayerGroup;
+        pSensor->setHitGroup(mPlayerGroup);
     } else if (isSensorRide(pSensor)) {
-        pSensor->mHitGroup = mRideGroup;
+        pSensor->setHitGroup(mRideGroup);
     } else if (isSensorEye(pSensor)) {
-        pSensor->mHitGroup = mEyeGroup;
+        pSensor->setHitGroup(mEyeGroup);
     } else if (isSensorSimple(pSensor)) {
-        pSensor->mHitGroup = mSimpleGroup;
+        pSensor->setHitGroup(mSimpleGroup);
     } else if (isSensorMapObj(pSensor)) {
-        pSensor->mHitGroup = mMapObjGroup;
+        pSensor->setHitGroup(mMapObjGroup);
     } else {
-        pSensor->mHitGroup = mCharacterGroup;
+        pSensor->setHitGroup(mCharacterGroup);
     }
 }
 
