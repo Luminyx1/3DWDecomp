@@ -20,7 +20,7 @@ bool isSameSePlayArea(const al::AreaObj* pAreaObj, const al::AreaObj* pOther) {
            otherName != nullptr && al::isEqualString(name, otherName);
 }
 
-const al::AreaObj* findSameSePlayArea(const sead::PtrArray<al::AreaObj>* pList, const al::AreaObj* pAreaObj) {
+const al::AreaObj* findSameSePlayArea(const al::AreaObjArray* pList, const al::AreaObj* pAreaObj) {
     for (s32 i = 0; i < pList->size(); i++) {
         const al::AreaObj* areaObj = pList->unsafeAt(i);
 
@@ -44,10 +44,10 @@ SeAreaTriggeredPlayer::SeAreaTriggeredPlayer(const AudioDirector* pDirector, Are
                                              const PlayerHolder* pPlayerHolder)
     : mAreaObjDirector(pAreaObjDirector), mPlayerHolder(pPlayerHolder) {
     mAudioKeeper = createAudioKeeper("SePlayArea", pDirector);
-    mAreaLists = new sead::PtrArray<AreaObj>*[2];
-    mAreaLists[0] = new sead::PtrArray<AreaObj>();
+    mAreaLists = new AreaObjArray*[2];
+    mAreaLists[0] = new AreaObjArray();
     mAreaLists[0]->allocBuffer(16, nullptr);
-    mAreaLists[1] = new sead::PtrArray<AreaObj>();
+    mAreaLists[1] = new AreaObjArray();
     mAreaLists[1]->allocBuffer(16, nullptr);
 }
 
@@ -55,7 +55,7 @@ SeAreaTriggeredPlayer::SeAreaTriggeredPlayer(const AudioDirector* pDirector, Are
  * Stops the SE of the areas the players were in and clears the area lists.
  */
 void SeAreaTriggeredPlayer::reset() {
-    sead::PtrArray<AreaObj>* prevList = mAreaLists[mCurListIndex > 0 ? mCurListIndex - 1 : 1];
+    AreaObjArray* prevList = mAreaLists[mCurListIndex > 0 ? mCurListIndex - 1 : 1];
 
     for (s32 i = 0; i < prevList->size(); i++) {
         const char* seName = nullptr;
@@ -85,10 +85,10 @@ void SeAreaTriggeredPlayer::update() {
         return;
     }
 
-    sead::PtrArray<AreaObj>* curList = mAreaLists[mCurListIndex];
+    AreaObjArray* curList = mAreaLists[mCurListIndex];
     curList->clear();
 
-    for (s32 i = 0; i < group->mNumAreas; i++) {
+    for (s32 i = 0; i < group->getSize(); i++) {
         AreaObj* areaObj = group->getAreaObj(i);
         const PlayerHolder* playerHolder = mPlayerHolder;
         s32 playerNum = getPlayerNumMax(playerHolder);
@@ -111,7 +111,7 @@ void SeAreaTriggeredPlayer::update() {
         }
     }
 
-    sead::PtrArray<AreaObj>* prevList = mAreaLists[mCurListIndex > 0 ? mCurListIndex - 1 : 1];
+    AreaObjArray* prevList = mAreaLists[mCurListIndex > 0 ? mCurListIndex - 1 : 1];
 
     for (s32 i = 0; i < prevList->size(); i++) {
         AreaObj* areaObj = prevList->unsafeAt(i);

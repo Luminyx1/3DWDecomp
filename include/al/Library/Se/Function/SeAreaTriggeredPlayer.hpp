@@ -11,6 +11,8 @@ class AreaObj;
 class AudioDirector;
 class PlayerHolder;
 
+using AreaObjArray = sead::PtrArray<AreaObj>;
+
 class SeAreaTriggeredPlayer : public IUseAudioKeeper, public IUseAreaObj {
 public:
     SeAreaTriggeredPlayer(const AudioDirector* pDirector, AreaObjDirector* pAreaObjDirector,
@@ -26,7 +28,7 @@ private:
     AudioKeeper* mAudioKeeper = nullptr;
     AreaObjDirector* mAreaObjDirector;
     const PlayerHolder* mPlayerHolder;
-    sead::PtrArray<AreaObj>** mAreaLists = nullptr;
+    AreaObjArray** mAreaLists = nullptr;
     s32 mCurListIndex = 0;
 };
 
