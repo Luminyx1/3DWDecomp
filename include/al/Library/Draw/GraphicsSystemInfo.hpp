@@ -4,6 +4,7 @@
 #include <container/seadPtrArray.h>
 #include <math/seadVector.h>
 #include <nn/g3d/g3d_ViewVolume.h>
+#include <prim/seadEnum.h>
 
 namespace agl::sdw {
     class PrimitiveOcclusion;
@@ -37,10 +38,13 @@ namespace al {
     class ViewRenderer;
     class LiveActorKit;
     class SceneCameraInfo;
+    class PartsGraphics;
     struct GraphicsInitArg;
 
     // Partial layout (3DW); only the members used so far are named.
     class ShaderCubeMapKeeper;
+
+    SEAD_ENUM(GraphicsAreaTarget, Player, CameraPos, CameraLookAt)
 
     class GraphicsSystemInfo {
     public:
@@ -53,6 +57,7 @@ namespace al {
         void preDrawGraphics(const SceneCameraInfo* pCameraInfo);
         ShaderCubeMapKeeper* getShaderCubeMapKeeper() const;
         void activateDirLitColorTex() const;
+        void registPartsGraphics(PartsGraphics* pPartsGraphics);
         const sead::PtrArray<UniformBlock>* getViewIndexedUboArray(const char* pName) const;
 
         CubeMapDirector* getCubeMapDirector() const { return mCubeMapDirector; }
@@ -75,6 +80,7 @@ namespace al {
         AtmosScatter* getAtmosScatter() const { return mAtmosScatter; }
         GpuMemAllocator* getGpuMemAllocator() const { return mGpuMemAllocator; }
         const char* getLodSettingName() const { return mLodSettingName; }
+        GraphicsAreaTarget getAreaTarget() const { return GraphicsAreaTarget(mAreaTarget); }
 
         u8 _0[0x40];
         s32 _40;
@@ -105,7 +111,9 @@ namespace al {
         void* mHdrCompose;
         SSIIKeeper* mSSIIKeeper;
         agl::sdw::PrimitiveOcclusion* mPrimitiveOcclusion;
-        u8 _130[0x150 - 0x130];
+        u8 _130[0x148 - 0x130];
+        s32 mAreaTarget;
+        u8 _14c[0x150 - 0x14c];
         nn::g3d::ViewVolume mViewVolume;
         ViewRenderer* mViewRenderer;
         u8 _248[0x250 - 0x248];
