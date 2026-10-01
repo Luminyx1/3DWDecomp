@@ -242,7 +242,7 @@ namespace FogFunction {
  * @brief Gets the fog director of the scene of an actor.
  */
 al::FogDirector* getFogDirector(const al::LiveActor* pActor) {
-    return static_cast<al::GraphicsSystemInfo*>(pActor->getSceneInfo()->_78)->mFogDirector;
+    return pActor->getSceneInfo()->graphicsSystemInfo->getFogDirector();
 }
 
 }  // namespace FogFunction
