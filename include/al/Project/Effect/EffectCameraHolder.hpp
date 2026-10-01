@@ -11,16 +11,19 @@ public:
     EffectCameraHolder();
 
     void setSceneCameraInfo(SceneCameraInfo* pInfo);
-    const sead::Vector3f& getCameraPos() const;
     const sead::Matrix34f* getViewMtxPtr() const;
     f32 getFovy() const;
-    bool calcScreenPosFromWorldPos(sead::Vector2f* pScreenPos, const sead::Vector3f& rPos) const;
-    f32 calcFarClipRateByFovy() const;
+    const sead::Vector3f& getCameraPos() const;
+    void calcScreenPosFromWorldPos(sead::Vector2f* pScreenPos, const sead::Vector3f& rPos) const;
     f32 calcFollowScaleByFovy() const;
-    bool tryMakeCameraFrontMtx(sead::Matrix34f* pMtx) const;
+    f32 calcFarClipRateByFovy() const;
     bool tryMakeBillboardMtx(sead::Matrix34f* pMtx, const sead::Vector3f& rPos) const;
     bool tryMakeYBillboardMtx(sead::Matrix34f* pMtx, const sead::Vector3f& rPos) const;
+    bool tryMakeCameraFrontMtx(sead::Matrix34f* pMtx) const;
 
-    SceneCameraInfo* mSceneCameraInfo = nullptr;
+    SceneCameraInfo* getSceneCameraInfo() const { return mSceneCameraInfo; }
+
+private:
+    SceneCameraInfo* mSceneCameraInfo;
 };
 }  // namespace al
