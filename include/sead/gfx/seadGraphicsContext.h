@@ -113,6 +113,7 @@ public:
         mStencilOpZPass = zpass;
     }
     void setStencilWriteMask(u32 mask) { mStencilWriteMask = mask; }
+    void setPolygonOffsetBackEnable(bool enable) { mPolygonOffsetBackEnable = enable; }
 
 private:
     bool mDepthTestEnable;
