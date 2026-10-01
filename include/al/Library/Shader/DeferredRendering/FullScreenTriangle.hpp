@@ -30,3 +30,18 @@ private:
 
 static_assert(sizeof(FullScreenTriangle) == 0x90);
 }  // namespace al
+
+namespace ShaderSearchImpl {
+bool isEqualStr(const char* pA, const char* pB);
+
+template <s32 N>
+inline s32 searchMacroIndex(const char* const (&rMacros)[N], const char* pMacro) {
+    for (s32 i = 0; i < N; i++) {
+        if (isEqualStr(rMacros[i], pMacro)) {
+            return i;
+        }
+    }
+
+    return -1;
+}
+}  // namespace ShaderSearchImpl

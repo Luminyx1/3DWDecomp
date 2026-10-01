@@ -12,6 +12,13 @@ public:
 
     s32 getSwapIndex() const { return mSwapIndex; }
 
+    template <typename T>
+    void setValue(s32 memberIndex, T value) const {
+        void* buffer = getCurrentBuffer();
+        T data = value;
+        setData_(buffer, memberIndex, &data, 0, 1);
+    }
+
 private:
     s32 mSwapIndex;
 };
