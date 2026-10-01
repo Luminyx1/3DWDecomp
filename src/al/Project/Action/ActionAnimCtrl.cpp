@@ -23,7 +23,7 @@ namespace al {
  */
 ActionAnimCtrl* ActionAnimCtrl::tryCreate(LiveActor* pActor, const char* pArchiveName,
                                           const char* pSuffix) {
-    if (pActor->mModelKeeper == nullptr) {
+    if (pActor->getModelKeeper() == nullptr) {
         return nullptr;
     }
 

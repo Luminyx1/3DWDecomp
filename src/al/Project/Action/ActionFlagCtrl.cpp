@@ -63,7 +63,7 @@ inline CtrlFlag getCtrlFlagByKey(ByamlIter iter, const char* name) {
 }
 
 void ActionFlagCtrl::initPost() {
-    mHitSensorKeeper = mParentActor->mHitSensorKeeper;
+    mHitSensorKeeper = mParentActor->getHitSensorKeeper();
 
     StringTmp<128> initFileName;
     tryGetActorInitFileName(&initFileName, mParentActor, "ActionFlagCtrl", mArchiveName);
@@ -93,9 +93,9 @@ void ActionFlagCtrl::initPost() {
 
         if (iter.tryGetIterByKey(&sensorListIter, "SensorList") && mHitSensorKeeper != nullptr) {
             flagCtrlInfo->sensorCtrlInfoArray =
-                new ActionSensorCtrlInfo[mHitSensorKeeper->mSensorCount];
+                new ActionSensorCtrlInfo[mHitSensorKeeper->getSensorNum()];
 
-            for (s32 j = 0; j < mHitSensorKeeper->mSensorCount; j++) {
+            for (s32 j = 0; j < mHitSensorKeeper->getSensorNum(); j++) {
                 ActionSensorCtrlInfo* sensorInfoArray = flagCtrlInfo->sensorCtrlInfoArray;
                 sensorInfoArray[j].name = mHitSensorKeeper->getSensor(j)->getName();
 
@@ -139,14 +139,14 @@ void ActionFlagCtrl::startCtrlFlag() {
     else if (isFlagValidOff(0, !isHideModel(mParentActor)))
         hideModel(mParentActor);
 
-    if (mParentActor->mCollisionParts != nullptr) {
+    if (mParentActor->getCollisionParts() != nullptr) {
         if (isFlagValidOn(1, isValidCollisionParts(mParentActor)))
             validateCollisionParts(mParentActor);
         else if (isFlagValidOff(1, isValidCollisionParts(mParentActor)))
             invalidateCollisionParts(mParentActor);
     }
 
-    if (mParentActor->mCollider != nullptr) {
+    if (mParentActor->getCollider() != nullptr) {
         if (isFlagValidOn(2, !isNoCollide(mParentActor)))
             onCollide(mParentActor);
         else if (isFlagValidOff(2, !isNoCollide(mParentActor)))
@@ -163,7 +163,7 @@ void ActionFlagCtrl::startCtrlSensor() {
     if (mHitSensorKeeper == nullptr)
         return;
 
-    for (s32 i = 0; i < mHitSensorKeeper->mSensorCount; i++) {
+    for (s32 i = 0; i < mHitSensorKeeper->getSensorNum(); i++) {
         ActionSensorCtrlInfo* sensor = mCurrentCtrlInfo->sensorCtrlInfoArray;
 
         if (sensor[i].startFrame > 0) {
@@ -197,7 +197,7 @@ void ActionFlagCtrl::update(f32 frame, f32 frameRate) {
 }
 
 void ActionFlagCtrl::updateCtrlSensor(f32 frame, f32 frameRate) {
-    for (s32 i = 0; i < mHitSensorKeeper->mSensorCount; i++) {
+    for (s32 i = 0; i < mHitSensorKeeper->getSensorNum(); i++) {
         ActionSensorCtrlInfo* ctrlInfo = mCurrentCtrlInfo->sensorCtrlInfoArray;
 
         f32 startFrame = ctrlInfo[i].startFrame;

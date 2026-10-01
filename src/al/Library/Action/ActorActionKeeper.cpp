@@ -26,7 +26,7 @@ ActorActionKeeper* ActorActionKeeper::tryCreate(LiveActor* pActor, const char* p
     const char* name = createStringIfInStack(getBaseName(pArchiveName));
     ActionAnimCtrl* animCtrl = ActionAnimCtrl::tryCreate(pActor, name, pSuffix);
     NerveActionCtrl* nerveActionCtrl =
-        (pActor->getNerveKeeper() != nullptr) ? pActor->getNerveKeeper()->mActionCtrl : nullptr;
+        (pActor->getNerveKeeper() != nullptr) ? pActor->getNerveKeeper()->getActionCtrl() : nullptr;
     ActionFlagCtrl* flagCtrl = ActionFlagCtrl::tryCreate(pActor, pSuffix);
     ActionEffectCtrl* effectCtrl = ActionEffectCtrl::tryCreate(pActor);
     ActionSeCtrl* seCtrl = ActionSeCtrl::tryCreate(pActor->getAudioKeeper());
@@ -124,7 +124,7 @@ void ActorActionKeeper::updatePost() {
     if (mEffectCtrl != nullptr || mSeCtrl != nullptr || mBgmCtrl != nullptr || mPadAndCameraCtrl != nullptr || mScreenEffectCtrl != nullptr ||
         (mOceanWaveCtrl != nullptr)) {
         if (mNerveActionCtrl == nullptr || !isNewNerve(mActor)) {
-            f32 frame = (mNerveActionCtrl != nullptr) ? static_cast<s32>(mActor->getNerveKeeper()->mNerveStep) - 1 :
+            f32 frame = (mNerveActionCtrl != nullptr) ? static_cast<s32>(mActor->getNerveKeeper()->getCurrentStep()) - 1 :
                                            getActionFrame(mActor);
             f32 frameRate = (mNerveActionCtrl != nullptr) ? 1.0f : getActionFrameRate(mActor);
 
@@ -169,7 +169,7 @@ void ActorActionKeeper::updateSeActionCtrl() {
         return;
     }
 
-    f32 frame = (mNerveActionCtrl != nullptr) ? static_cast<s32>(mActor->getNerveKeeper()->mNerveStep) - 1 :
+    f32 frame = (mNerveActionCtrl != nullptr) ? static_cast<s32>(mActor->getNerveKeeper()->getCurrentStep()) - 1 :
                                    getActionFrame(mActor);
     f32 frameRate = (mNerveActionCtrl != nullptr) ? 1.0f : getActionFrameRate(mActor);
     mSeCtrl->update(frame, frameRate);
