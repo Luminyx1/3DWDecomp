@@ -106,4 +106,6 @@ private:
 
 static_assert(sizeof(GBufferArray) == 0x11b8);
 
+void setContextMRTAlphaMask(sead::GraphicsContextMRT* pContext);
+
 }  // namespace al
