@@ -29,7 +29,7 @@ void BlockRailParts::init(const ActorInitInfo& rInfo) {
     tryGetStringArg(&mModelSuffix, rInfo, "ModelSuffix");
     initActorChangeModelSuffix(this, rInfo, mModelSuffix);
     initRailLink(rInfo);
-    mPlacementInfo = new PlacementInfo(*rInfo.mPlacementInfo);
+    mPlacementInfo = new PlacementInfo(rInfo.getPlacementInfo());
     mInitInfo = new ActorInitInfo();
     mInitInfo->initViewIdSelf(mPlacementInfo, rInfo);
     makeActorAppeared();
@@ -226,8 +226,8 @@ void BlockRailParts::setIsHideModel(bool isHide) {
     SubActorKeeper* keeper = mSubActorKeeper;
 
     if (keeper != nullptr) {
-        for (s32 i = 0; i < keeper->mCount; i++) {
-            keeper->mInfos[i]->mSyncType |= 4;
+        for (s32 i = 0; i < keeper->getSubActorNum(); i++) {
+            keeper->getSubActorInfo(i)->mSyncType |= 4;
         }
     }
 

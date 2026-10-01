@@ -124,7 +124,7 @@ void BlockRail::createRailEnd(const ActorInitInfo& rInfo, const sead::Vector3f& 
     info.initViewIdHostActor(rInfo, this);
     LiveActor* railEnd = new LiveActor("ブロックレール終端");
 
-    if (rInfo.mActorSceneInfo.isSingleMode) {
+    if (rInfo.getActorSceneInfo().isSingleMode) {
         addToHostActorClipping(railEnd, this);
     }
 
