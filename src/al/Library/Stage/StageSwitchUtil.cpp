@@ -33,7 +33,7 @@ StageSwitchAccesser* getStageSwitchAccesser(const IUseStageSwitch* pUser, const 
  * @param rInfo actor init info
  */
 void initStageSwitch(IUseStageSwitch* pUser, const ActorInitInfo& rInfo) {
-    initStageSwitch(pUser, rInfo.mStageSwitchDirector, *rInfo.mPlacementInfo);
+    initStageSwitch(pUser, rInfo.getStageSwitchDirector(), rInfo.getPlacementInfo());
 }
 
 /**
