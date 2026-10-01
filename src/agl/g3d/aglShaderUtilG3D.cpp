@@ -209,7 +209,7 @@ void ShaderUtilG3D::print(const nn::g3d::ShadingModelObj& rModel,
 {
     sead::Heap* pHeap = detail::PrivateResource::instance()->getDebugHeap();
 
-    if (!pHeap)
+    if (pHeap == nullptr)
     {
         return;
     }

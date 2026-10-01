@@ -36,7 +36,7 @@ INamedObjIndex::INamedObjIndex(const sead::FixedSafeString<32>& rValue,
  */
 INamedObjIndex::~INamedObjIndex()
 {
-    if (mListNode.isLinked() && mMgr)
+    if (mListNode.isLinked() && mMgr != nullptr)
     {
         mMgr->mIndexList.erase(this);
         mMgr = nullptr;
@@ -54,14 +54,14 @@ void INamedObjIndex::bind(INamedObjMgr* pMgr)
         return;
     }
 
-    if (mMgr)
+    if (mMgr != nullptr)
     {
         mMgr->mIndexList.erase(this);
     }
 
     mMgr = pMgr;
 
-    if (pMgr)
+    if (pMgr != nullptr)
     {
         pMgr->mIndexList.pushBack(this);
     }
@@ -72,7 +72,7 @@ void INamedObjIndex::bind(INamedObjMgr* pMgr)
  */
 void INamedObjIndex::syncIndexToName()
 {
-    if (!mMgr)
+    if (mMgr == nullptr)
     {
         return;
     }
@@ -87,7 +87,7 @@ void INamedObjIndex::syncIndexToName()
         mValue = sead::SafeString::cEmptyString;
     }
 
-    if (mCallback)
+    if (mCallback != nullptr)
     {
         mCallback->callbackSyncIndexToName(this);
     }
@@ -98,7 +98,7 @@ void INamedObjIndex::syncIndexToName()
  */
 void INamedObjIndex::syncNameToIndex()
 {
-    if (!mMgr)
+    if (mMgr == nullptr)
     {
         return;
     }
@@ -123,7 +123,7 @@ void INamedObjIndex::syncNameToIndex()
         }
     }
 
-    if (mCallback)
+    if (mCallback != nullptr)
     {
         mCallback->callbackSyncNameToIndex(this);
     }
@@ -136,7 +136,7 @@ void INamedObjIndex::syncNameToIndex()
  */
 void INamedObjIndex::genComboBoxSelect(sead::hostio::Context* pContext, bool isEnable)
 {
-    if (!mMgr)
+    if (mMgr == nullptr)
     {
         return;
     }

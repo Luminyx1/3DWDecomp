@@ -154,7 +154,7 @@ Renderer::~Renderer()
 {
     for (auto& pLayer : mLayer)
     {
-        if (pLayer)
+        if (pLayer != nullptr)
         {
             delete pLayer;
             pLayer = nullptr;
@@ -173,7 +173,7 @@ Renderer::~Renderer()
 
     for (auto* pDisplay : mDisplay)
     {
-        if (pDisplay)
+        if (pDisplay != nullptr)
         {
             delete pDisplay;
         }
@@ -194,7 +194,7 @@ void Renderer::calc(bool swapBuffer)
 
     for (auto* pLayer : mLayer)
     {
-        if (pLayer && pLayer->mFlag.isOn(Layer::cFlag_ListDirty))
+        if (pLayer != nullptr && pLayer->mFlag.isOn(Layer::cFlag_ListDirty))
         {
             mFlag.set(1);
 
@@ -214,7 +214,7 @@ void Renderer::calc(bool swapBuffer)
         {
             for (auto* pLayer : mLayer)
             {
-                if (pLayer && !pLayer->mFlag.isOn(1 << 11))
+                if (pLayer != nullptr && !pLayer->mFlag.isOn(1 << 11))
                 {
                     pLayer->mFlag.set(1 << 4);
                 }
@@ -269,7 +269,7 @@ void Renderer::calc(bool swapBuffer)
     {
         pController = mDebugCameraController;
 
-        if (pController)
+        if (pController != nullptr)
         {
             if (mDebugFlag & 1)
             {
@@ -289,7 +289,7 @@ void Renderer::calc(bool swapBuffer)
 
     for (auto* pLayer : mLayer)
     {
-        if (pLayer)
+        if (pLayer != nullptr)
         {
             pLayer->_9a = 0;
 
@@ -319,7 +319,7 @@ void Renderer::calc(bool swapBuffer)
         {
             for (auto* pLayer : mLayer)
             {
-                if (pLayer && pLayer->isRenderingEnabled())
+                if (pLayer != nullptr && pLayer->isRenderingEnabled())
                 {
                     s8 layerDisplayType = pLayer->mDisplayTypeOverride;
 
@@ -468,7 +468,7 @@ void Renderer::postCalcCommand()
 
     for (auto* pLayer : mLayer)
     {
-        if (pLayer)
+        if (pLayer != nullptr)
         {
             pLayer->postCalcCommand_();
         }
@@ -573,7 +573,7 @@ void Renderer::removeDrawMethodByObject(const void* pObject)
 
     for (auto* pLayer : mLayer)
     {
-        if (pLayer)
+        if (pLayer != nullptr)
         {
             pLayer->removeDrawMethodByObject(pObject);
         }
@@ -592,7 +592,7 @@ void Renderer::removeDrawMethod(const DrawMethod* pMethod)
 
     for (auto* pLayer : mLayer)
     {
-        if (pLayer)
+        if (pLayer != nullptr)
         {
             pLayer->removeDrawMethod(pMethod);
         }
@@ -638,7 +638,7 @@ bool Renderer::removeLayer(Layer* pLayer)
  */
 s32 Renderer::searchLayerIndex(const Layer* pLayer) const
 {
-    if (!pLayer)
+    if (pLayer == nullptr)
     {
         return -1;
     }
@@ -670,7 +670,7 @@ s32 Renderer::searchEmptyLayerIndexFromFront() const
 
     for (auto it = mLayer.begin(); it != mLayer.end(); ++it)
     {
-        if (!*it)
+        if (*it == nullptr)
         {
             result = it.getIndex();
             break;
@@ -692,7 +692,7 @@ s32 Renderer::searchEmptyLayerIndexFromBack() const
 
     for (s32 i = mLayer.size() - 1; i >= 0; i--)
     {
-        if (!mLayer[i])
+        if (mLayer[i] == nullptr)
         {
             result = i;
             break;
@@ -736,7 +736,7 @@ void Renderer::changeDebugCameraState(DebugCameraState state)
 
     for (auto* pLayer : mLayer)
     {
-        if (pLayer)
+        if (pLayer != nullptr)
         {
             if (mDebugCameraState == cDebugCameraState_None)
             {

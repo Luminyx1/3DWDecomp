@@ -225,7 +225,7 @@ void AutoExposure::drawHistogram(DrawContext* pDrawContext, s32 context,
     program->activate(pDrawContext, true);
     setCommonShaderParam(pDrawContext, program);
 
-    ctx.mSampler.applyTextureData(pTexture ? *pTexture :
+    ctx.mSampler.applyTextureData((pTexture != nullptr) ? *pTexture :
                                              *reinterpret_cast<const TextureData*>(
                                                  rRenderBuffer.getRenderTargetColor()));
     ctx.mSampler.activate(pDrawContext, program->getSamplerLocationValidate(0), -1, false);
@@ -318,7 +318,7 @@ void AutoExposure::drawSimple(DrawContext* pDrawContext, s32 context,
     program->activate(pDrawContext, true);
     setCommonShaderParam(pDrawContext, program);
 
-    ctx.mSampler.applyTextureData(pTexture ? *pTexture :
+    ctx.mSampler.applyTextureData((pTexture != nullptr) ? *pTexture :
                                              *reinterpret_cast<const TextureData*>(
                                                  rRenderBuffer.getRenderTargetColor()));
     ctx.mSampler.activate(pDrawContext, program->getSamplerLocationValidate(0), -1, false);
@@ -364,7 +364,7 @@ void AutoExposure::drawHistogramDebugVertex(DrawContext* pDrawContext, s32 conte
     program->activate(pDrawContext, true);
     setCommonShaderParam(pDrawContext, program);
 
-    ctx.mSampler.applyTextureData(pTexture ? *pTexture :
+    ctx.mSampler.applyTextureData((pTexture != nullptr) ? *pTexture :
                                              *reinterpret_cast<const TextureData*>(
                                                  rRenderBuffer.getRenderTargetColor()));
     ctx.mSampler.activate(pDrawContext, program->getSamplerLocationValidate(0), -1, false);

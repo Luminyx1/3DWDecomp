@@ -31,7 +31,7 @@ private:
 TextureSampler::TextureSampler()
     : mUpdateFlags(0xff), mFlags(0x20), mName("agl::TextureSampler")
 {
-    if (utl::PrimitiveTexture::sInstance)
+    if (utl::PrimitiveTexture::sInstance != nullptr)
     {
         applyTextureData(utl::PrimitiveTexture::sInstance->getDefaultSampler()->getTextureData());
     }

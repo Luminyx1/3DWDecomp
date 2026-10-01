@@ -17,7 +17,7 @@ const char* const cBindTypeName[] = {"none", "const", "non-const"};
  */
 DrawMethod::~DrawMethod()
 {
-    if (Renderer::instance())
+    if (Renderer::instance() != nullptr)
     {
         Renderer::instance()->removeDrawMethod(this);
     }

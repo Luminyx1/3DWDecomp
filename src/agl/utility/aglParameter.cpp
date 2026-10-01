@@ -48,7 +48,7 @@ void ParameterBase::initializeListNode(const sead::SafeString& name, const sead:
 
     mNameHash = calcHash(name);
 
-    if (param_obj)
+    if (param_obj != nullptr)
     {
         param_obj->pushBackListNode(this);
     }
@@ -519,7 +519,7 @@ bool ParameterBase::applyString(const sead::SafeString& rString, bool x)
     {
         sead::Heap* heap = ParameterStringMgr::instance()->getHeap();
 
-        if (!heap)
+        if (heap == nullptr)
         {
             return true;
         }

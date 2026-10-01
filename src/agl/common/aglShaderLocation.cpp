@@ -199,7 +199,7 @@ void UniformLocation::search(const ShaderProgram& rProgram)
         {
             if (strcmp(list.mEntries[j].mName, name) == 0)
             {
-                if (&list.mEntries[j])
+                if ((&list.mEntries[j]) != nullptr)
                 {
                     mUniformLocation = list.mEntries[j].mLocation;
                     return;

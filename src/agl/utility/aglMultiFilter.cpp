@@ -65,7 +65,7 @@ MultiFilter::~MultiFilter()
 
     freeResultTexture();
 
-    if (mDebugTexturePage)
+    if (mDebugTexturePage != nullptr)
     {
         mDebugTexturePage->cleanUp();
         delete mDebugTexturePage;
@@ -78,7 +78,7 @@ MultiFilter::~MultiFilter()
  */
 void MultiFilter::freeResultTexture() const
 {
-    if (mDrawContext.mResultTexture)
+    if (mDrawContext.mResultTexture != nullptr)
     {
         mDrawContext.mTextureCache.free(mDrawContext.mResultTexture);
         mDrawContext.mResultTexture = nullptr;
@@ -202,7 +202,7 @@ void MultiFilter::draw(DrawContext* pDrawContext, const TextureData& rTexture) c
         drawFilter_(pDrawContext, **it, index++);
     }
 
-    if (mDrawContext.mResultTexture)
+    if (mDrawContext.mResultTexture != nullptr)
     {
         bool isLinear = *mResultSamplerLinear;
         mDrawContext.mSampler.applyTextureData(*mDrawContext.mResultTexture);
@@ -224,7 +224,7 @@ void MultiFilter::drawFilter_(DrawContext* pDrawContext, const MultiFilterUnit& 
         rUnit.doDraw_(pDrawContext, &mDrawContext);
     }
 
-    if (mDrawContext.mResultTexture)
+    if (mDrawContext.mResultTexture != nullptr)
     {
         sead::FormatFixedSafeString<32> name(
             "%d_%s", index + 1, MultiFilterUnit::getFilterName(rUnit.getType()).cstr());
@@ -256,7 +256,7 @@ void MultiFilter::draw(DrawContext* pDrawContext, const TextureData& rTexture,
 void MultiFilter::drawDebug(DrawContext* pDrawContext, const sead::LogicalFrameBuffer& rFrameBuffer,
                             const sead::Viewport& rViewport) const
 {
-    if (!isDrawable_() || !mIsDrawDebug || !mDrawContext.mResultTexture)
+    if (!isDrawable_() || !mIsDrawDebug || mDrawContext.mResultTexture == nullptr)
     {
         return;
     }
@@ -283,7 +283,7 @@ void MultiFilter::genMessage(sead::hostio::Context* pContext)
 {
     genMessageIO(pContext, 0xf);
 
-    if (mDebugTexturePage)
+    if (mDebugTexturePage != nullptr)
     {
         mDebugTexturePage->genMessagePage(pContext, this);
     }
@@ -369,7 +369,7 @@ void MultiFilter::listenPropertyEvent(const sead::hostio::PropertyEvent* pEvent)
     {
         auto* pNode = mFreeUnits.mBuffer[addType].popFront();
 
-        if (pNode)
+        if (pNode != nullptr)
         {
             pNode->mList = nullptr;
             pNode->mData->activate();
@@ -402,13 +402,13 @@ void MultiFilter::listenPropertyEvent(const sead::hostio::PropertyEvent* pEvent)
             {
                 pNode = mFreeUnits[type].popFront();
 
-                if (pNode)
+                if (pNode != nullptr)
                 {
                     break;
                 }
             }
 
-            if (pNode)
+            if (pNode != nullptr)
             {
                 pNode->mList = nullptr;
                 pNode->mData->activate();
@@ -442,7 +442,7 @@ void MultiFilter::listenPropertyEvent(const sead::hostio::PropertyEvent* pEvent)
                 reinterpret_cast<uintptr_t>(pEvent) + 0x30);
             auto* pNode = mFreeUnits[type].popFront();
 
-            if (!pNode)
+            if (pNode == nullptr)
             {
                 return;
             }
@@ -470,7 +470,7 @@ sead::TListNode<MultiFilterUnit*>* MultiFilter::addFilter_(MultiFilterUnit::Filt
 {
     auto* pNode = mFreeUnits[type].popFront();
 
-    if (pNode)
+    if (pNode != nullptr)
     {
         pNode->mList = nullptr;
         pNode->mData->activate();

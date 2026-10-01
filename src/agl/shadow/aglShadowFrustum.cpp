@@ -206,7 +206,7 @@ void ShadowFrustum::clipByPlane(const sead::Plane3<f32>& rPlane)
         Polygon* pDst = getNextPolytope().birthBack();
         Polygon* pInter = mInter.birthBack();
 
-        if (!pDst || !pInter)
+        if (pDst == nullptr || pInter == nullptr)
         {
             break;
         }
@@ -378,7 +378,7 @@ bool ShadowFrustum::appendIntersectionPoint(Polytope* pDst)
 
     Polygon* pPolygon = pDst->birthBack();
 
-    if (!pPolygon)
+    if (pPolygon == nullptr)
     {
         return false;
     }
@@ -732,7 +732,7 @@ ShadowFrustum::Polytope::~Polytope()
 {
     for (s32 i = 0; i < mPolygons.size(); i++)
     {
-        if (mPolygons[i])
+        if (mPolygons[i] != nullptr)
         {
             delete mPolygons[i];
         }

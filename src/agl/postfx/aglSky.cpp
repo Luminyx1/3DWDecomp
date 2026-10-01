@@ -359,7 +359,7 @@ void Sky::finalize()
     mContexts.freeBuffer();
     mPrograms.freeBuffer();
 
-    if (mDebugTexturePage)
+    if (mDebugTexturePage != nullptr)
     {
         mDebugTexturePage->cleanUp();
         delete mDebugTexturePage;
@@ -531,7 +531,7 @@ void Sky::initialize(const InitializeArg& rArg)
     mTextureSizeEdit = mTextureSize;
     allocateTexture(rArg.mHeap);
 
-    if (rArg.mBasisImage)
+    if (rArg.mBasisImage != nullptr)
     {
         setBasisTextureImage(rArg.mBasisImage, rArg.mBasisImageSize);
     }
@@ -683,7 +683,7 @@ void Sky::drawBasis(DrawContext* pDrawContext, u32 context)
     {
         sead::InfLoopChecker* checker = sead::InfLoopChecker::instance();
 
-        if (checker && checker->isEnabled())
+        if (checker != nullptr && checker->isEnabled())
         {
             mFlags.set(cFlag_InfLoopCheckDisabled);
             checker->setEnabled(false);
@@ -1343,7 +1343,7 @@ void Sky::drawBoth(DrawContext* pDrawContext, u32 context, const sead::Matrix44f
         const ShaderProgram* program = base->getVariation(variation);
         program->activate(pDrawContext, true);
 
-        if (rContext.mCloudSampler)
+        if (rContext.mCloudSampler != nullptr)
         {
             rContext.mCloudSampler->activate(pDrawContext, program->getSamplerLocation(8), -1,
                                              false);
@@ -1442,7 +1442,7 @@ void Sky::drawSky(DrawContext* pDrawContext, u32 context, const sead::Matrix44f&
         const ShaderProgram* program = base->getVariation(variation);
         program->activate(pDrawContext, true);
 
-        if (rContext.mCloudSampler)
+        if (rContext.mCloudSampler != nullptr)
         {
             rContext.mCloudSampler->activate(pDrawContext, program->getSamplerLocation(8), -1,
                                              false);
@@ -1820,12 +1820,12 @@ void PostFxDrawer::draw(DrawContext* pDrawContext, const ShaderProgram* pProgram
                                                           false);
     mSky->getContext_(mContext).mBakedRangeTransmittance.activate(
         pDrawContext, pProgram->getSamplerLocation(7), -1, false);
-    if (mColor)
+    if (mColor != nullptr)
     {
         activateSampler(mSky, mContext, 0, *mColor, pDrawContext, pProgram, 0);
     }
 
-    if (mDepth)
+    if (mDepth != nullptr)
     {
         activateSampler(mSky, mContext, 1, *mDepth, pDrawContext, pProgram, 1);
     }

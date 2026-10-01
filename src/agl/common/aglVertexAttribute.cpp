@@ -86,12 +86,12 @@ void VertexAttribute::setVertexStream(s32 location, const VertexBuffer* pVertexB
 
     Attribute_& rAttribute = mAttributes[location];
 
-    if (rAttribute.mVertexBuffer)
+    if (rAttribute.mVertexBuffer != nullptr)
     {
         rAttribute.mBufferIndex = disableVertexBuffer_(&rAttribute);
     }
 
-    if (pVertexBuffer)
+    if (pVertexBuffer != nullptr)
     {
         rAttribute.mBufferIndex = enableVertexBuffer_(&rAttribute, pVertexBuffer, streamIndex);
     }
@@ -142,7 +142,7 @@ s32 VertexAttribute::enableVertexBuffer_(Attribute_* pAttribute,
             return i;
         }
 
-        if (!mVertexBuffers[i])
+        if (mVertexBuffers[i] == nullptr)
         {
             index = i;
         }
@@ -188,7 +188,7 @@ void VertexAttribute::setUp()
     {
         const VertexBuffer* pVertexBuffer = mAttributes[i].mVertexBuffer;
 
-        if (!pVertexBuffer)
+        if (pVertexBuffer == nullptr)
         {
             continue;
         }
@@ -210,7 +210,7 @@ void VertexAttribute::setUp()
 
     for (u32 i = 0; i < bufferNum; i++)
     {
-        if (ppVertexBuffer[i])
+        if (ppVertexBuffer[i] != nullptr)
         {
             nvnVertexStreamStateSetStride(&mStreamStates[i], ppVertexBuffer[i]->getStride());
         }
@@ -236,7 +236,7 @@ void VertexAttribute::activate(DrawContext* pDrawContext) const
     {
         const VertexBuffer* pVertexBuffer = ppVertexBuffer[i];
 
-        if (pVertexBuffer)
+        if (pVertexBuffer != nullptr)
         {
             nvnCommandBufferBindVertexBuffer(pCommandBuffer, i,
                                              nvnBufferGetAddress(pVertexBuffer->getNvnBuffer()),

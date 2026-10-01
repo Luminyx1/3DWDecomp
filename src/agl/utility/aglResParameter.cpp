@@ -225,7 +225,7 @@ ResParameterArchive::ResParameterArchive(const void* pData)
 {
     mpData = static_cast<const ResParameterArchiveData*>(pData);
 
-    if (!pData)
+    if (pData == nullptr)
     {
         return;
     }

@@ -256,7 +256,7 @@ void PrimitiveTexture::listenPropertyEvent(const sead::hostio::PropertyEvent* pE
         return;
     }
 
-    if (!detail::PrivateResource::instance()->getDebugHeap())
+    if (detail::PrivateResource::instance()->getDebugHeap() == nullptr)
     {
         return;
     }

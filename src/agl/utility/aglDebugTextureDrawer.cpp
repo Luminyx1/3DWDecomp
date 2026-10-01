@@ -29,7 +29,7 @@ void DebugTextureDrawer::initialize(sead::Heap* pHeap)
 {
     destroy();
 
-    if (pHeap)
+    if (pHeap != nullptr)
     {
         mTextures.tryAllocBuffer(cTextureNum, pHeap);
 
@@ -57,7 +57,7 @@ void DebugTextureDrawer::inactivateAll()
     {
         DebugTexturePage* pPage = mActivePages.popBack();
 
-        if (!pPage)
+        if (pPage == nullptr)
         {
             break;
         }
@@ -130,7 +130,7 @@ DebugTexture* DebugTextureDrawer::popBack_()
     {
         sead::TListNode<DebugTexture*>* pNode = mFreeTextures.popBack();
 
-        if (pNode)
+        if (pNode != nullptr)
         {
             pNode->mList = nullptr;
         }
@@ -226,7 +226,7 @@ void DebugTextureDrawer::listenNodeEvent(const sead::hostio::NodeEvent* pEvent) 
  */
 void DebugTextureDrawer::invalidateHostIoNode_(DebugTexturePage* pPage)
 {
-    if (pPage)
+    if (pPage != nullptr)
     {
         pPage->invalidateHostIoNode();
     }

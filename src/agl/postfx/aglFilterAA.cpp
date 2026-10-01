@@ -220,7 +220,7 @@ void FilterAA::FXAA(DrawContext* pDrawContext, u32 context, const RenderBuffer& 
     if (!(*mAlphaOut <= 0.0f))
     {
         Context& ctx = getContext_(context);
-        bool useReprojection = pDepth && pHistory && *mReprojection;
+        bool useReprojection = pDepth != nullptr && pHistory != nullptr && *mReprojection;
         pSource->getTextureData().getHeight(0);
 
         sead::Vector4f rcpFrame;

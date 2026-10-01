@@ -31,7 +31,7 @@ RenderDLBuffer::~RenderDLBuffer()
 
     mRenderDL.freeBuffer();
 
-    if (mControlMemory)
+    if (mControlMemory != nullptr)
     {
         delete static_cast<u8*>(mControlMemory);
     }

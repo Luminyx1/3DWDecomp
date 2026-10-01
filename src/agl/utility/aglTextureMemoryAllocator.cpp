@@ -80,7 +80,7 @@ TextureMemoryAllocator::alloc(const AllocateArg& rArg, GPUMemVoidAddr* pAddr, bo
 
     if (fromFront)
     {
-        for (MemoryBlock* block = mFreeList.front(); block; block = mFreeList.next(block))
+        for (MemoryBlock* block = mFreeList.front(); block != nullptr; block = mFreeList.next(block))
         {
             if (alloc_(block, rArg, pAddr, true))
             {
@@ -90,7 +90,7 @@ TextureMemoryAllocator::alloc(const AllocateArg& rArg, GPUMemVoidAddr* pAddr, bo
     }
     else
     {
-        for (MemoryBlock* block = mFreeList.back(); block; block = mFreeList.prev(block))
+        for (MemoryBlock* block = mFreeList.back(); block != nullptr; block = mFreeList.prev(block))
         {
             if (alloc_(block, rArg, pAddr, false))
             {
@@ -148,7 +148,7 @@ bool TextureMemoryAllocator::alloc_(MemoryBlock* pBlock, const AllocateArg& rArg
     GPUMemVoidAddr baseAddr;
     sead::Heap* heap = mHeap;
 
-    if (!heap)
+    if (heap == nullptr)
     {
         pBlock->mMemBlockAddr.invalidate();
         baseAddr = pBlock->mAddr;
@@ -200,7 +200,7 @@ bool TextureMemoryAllocator::alloc_(MemoryBlock* pBlock, const AllocateArg& rArg
         pBlock->mMipAddr.invalidate();
     }
 
-    if (pAddr && rArg.mExtraSize != 0)
+    if (pAddr != nullptr && rArg.mExtraSize != 0)
     {
         addr.roundUp(rArg.mExtraAlignment);
         *pAddr = addr;
@@ -221,7 +221,7 @@ u64 TextureMemoryAllocator::getMaxAllocatableSize() const
 {
     u64 maxSize = 0;
 
-    for (const MemoryBlock* block = mFreeList.front(); block; block = mFreeList.next(block))
+    for (const MemoryBlock* block = mFreeList.front(); block != nullptr; block = mFreeList.next(block))
     {
         if (maxSize < block->mSize)
         {
@@ -253,7 +253,7 @@ void TextureMemoryAllocator::free(MemoryBlock* pBlock, bool deleteMemBlock)
 
     mUsedList.erase(pBlock);
 
-    if (!mFreeList.front())
+    if (mFreeList.front() == nullptr)
     {
         mFreeList.pushFront(pBlock);
         return;
@@ -274,7 +274,7 @@ void TextureMemoryAllocator::free(MemoryBlock* pBlock, bool deleteMemBlock)
 
             MemoryBlock* prev = mFreeList.prev(pBlock);
 
-            if (prev && prev->getEndOffset() == pBlock->mAddr.getByteOffset())
+            if (prev != nullptr && prev->getEndOffset() == pBlock->mAddr.getByteOffset())
             {
                 pBlock->mAddr = prev->mAddr;
                 pBlock->mSize += prev->mSize;
@@ -291,7 +291,7 @@ void TextureMemoryAllocator::free(MemoryBlock* pBlock, bool deleteMemBlock)
         mFreeList.pushBack(pBlock);
         MemoryBlock* prev = mFreeList.prev(pBlock);
 
-        if (prev && prev->getEndOffset() == pBlock->mAddr.getByteOffset())
+        if (prev != nullptr && prev->getEndOffset() == pBlock->mAddr.getByteOffset())
         {
             pBlock->mAddr = prev->mAddr;
             pBlock->mSize += prev->mSize;
@@ -322,7 +322,7 @@ void TextureMemoryAllocator::dump(const sead::SafeString& rTitle, const sead::Sa
  */
 void TextureMemoryAllocator::dumpDetail() const
 {
-    if (mFreeList.front())
+    if (mFreeList.front() != nullptr)
     {
         for (const auto& block : mFreeList)
         {
@@ -330,7 +330,7 @@ void TextureMemoryAllocator::dumpDetail() const
         }
     }
 
-    if (mUsedList.front())
+    if (mUsedList.front() != nullptr)
     {
         for (const auto& block : mUsedList)
         {

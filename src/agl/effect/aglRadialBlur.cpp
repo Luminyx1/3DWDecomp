@@ -467,7 +467,7 @@ void RadialBlur::Context::draw2D(DrawContext* pDrawContext, s32 view, const Shar
  */
 void RadialBlur::Context::freeHalfBufferTexture() const
 {
-    if (mHalfBuffer)
+    if (mHalfBuffer != nullptr)
     {
         utl::DynamicTextureAllocator::instance()->free(mHalfBuffer);
         mHalfBuffer = nullptr;
@@ -519,7 +519,7 @@ void RadialBlur::freeReduceTexture(s32 index) const
  */
 void RadialBlur::Context::freeReduceTexture() const
 {
-    if (mReduceTexture)
+    if (mReduceTexture != nullptr)
     {
         utl::DynamicTextureAllocator::instance()->free(mReduceTexture);
         mReduceTexture = nullptr;

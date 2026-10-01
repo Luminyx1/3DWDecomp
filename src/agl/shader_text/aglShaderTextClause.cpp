@@ -614,7 +614,7 @@ decimal: {
 }
 
 end:
-    if (pIsReal) {
+    if (pIsReal != nullptr) {
         *pIsReal = isReal;
     }
 

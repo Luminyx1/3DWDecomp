@@ -6,12 +6,12 @@ namespace {
 
 s32 compareEnvObj(EnvObj* const* ppLhs, EnvObj* const* ppRhs)
 {
-    if (!*ppLhs)
+    if (*ppLhs == nullptr)
     {
         return 1;
     }
 
-    if (!*ppRhs)
+    if (*ppRhs == nullptr)
     {
         return -1;
     }
@@ -120,7 +120,7 @@ s32 EnvObjBuffer::searchBufferIndex(s32 type, const sead::SafeString& rName) con
 {
     for (auto it = begin(type), itEnd = end(type); it != itEnd; ++it)
     {
-        if (*it && (*it)->getEnvObjName() == rName)
+        if (*it != nullptr && (*it)->getEnvObjName() == rName)
         {
             return it.getIndex();
         }
@@ -136,7 +136,7 @@ s32 EnvObjBuffer::searchBufferIndex(s32 type, const sead::SafeString& rName) con
  */
 s32 EnvObjBuffer::searchTypeIndex(const EnvObj* pObj) const
 {
-    if (!pObj)
+    if (pObj == nullptr)
     {
         return -1;
     }
@@ -183,7 +183,7 @@ void EnvObjBuffer::setEnable(s32 type, bool enable)
 {
     for (auto it = begin(type), itEnd = end(type); it != itEnd; ++it)
     {
-        if (*it)
+        if (*it != nullptr)
         {
             (*it)->setEnable(enable);
         }
@@ -212,7 +212,7 @@ void EnvObjBuffer::setEnableAll(bool enable)
 {
     for (auto* pObj : mObj)
     {
-        if (pObj)
+        if (pObj != nullptr)
         {
             pObj->setEnable(enable);
         }

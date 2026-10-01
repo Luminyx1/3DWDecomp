@@ -352,7 +352,7 @@ void ReduceFilter::drawReduce_(DrawContext* pDrawContext, MultiFilterDrawContext
                                FilterScale scale) const
 {
     TextureData* pPrevResult = pContext->mResultTexture;
-    const TextureData* pSrc = pPrevResult ? pPrevResult : pContext->mSrcTexture;
+    const TextureData* pSrc = (pPrevResult != nullptr) ? pPrevResult : pContext->mSrcTexture;
 
     s32 width = getWidth(*pSrc) >> scale;
     width = width > 1 ? width : 1;
@@ -390,7 +390,7 @@ void ReduceFilter::drawReduce_(DrawContext* pDrawContext, MultiFilterDrawContext
         pContext->mRenderTarget.invalidateGPUCache(pDrawContext);
     }
 
-    if (pPrevResult)
+    if (pPrevResult != nullptr)
     {
         pContext->mTextureCache.free(pPrevResult);
     }
@@ -463,7 +463,7 @@ void ExpandFilter::drawExpand_(DrawContext* pDrawContext, MultiFilterDrawContext
 {
     const TextureData* pOrigin = pContext->mSrcTexture;
     TextureData* pPrevResult = pContext->mResultTexture;
-    const TextureData* pSrc = pPrevResult ? pPrevResult : pOrigin;
+    const TextureData* pSrc = (pPrevResult != nullptr) ? pPrevResult : pOrigin;
 
     s32 maxWidth = getWidth(*pOrigin);
     s32 width = s32(getWidth(*pSrc)) << scale;
@@ -503,7 +503,7 @@ void ExpandFilter::drawExpand_(DrawContext* pDrawContext, MultiFilterDrawContext
         pContext->mRenderTarget.invalidateGPUCache(pDrawContext);
     }
 
-    if (pPrevResult)
+    if (pPrevResult != nullptr)
     {
         pContext->mTextureCache.free(pPrevResult);
     }
@@ -600,7 +600,7 @@ void BlurFilter::drawBlur_(DrawContext* pDrawContext, MultiFilterDrawContext* pC
                            BlurType blurType, ImageFilter2D::GaussianKernel kernel) const
 {
     TextureData* pPrevResult = pContext->mResultTexture;
-    const TextureData* pSrc = pPrevResult ? pPrevResult : pContext->mSrcTexture;
+    const TextureData* pSrc = (pPrevResult != nullptr) ? pPrevResult : pContext->mSrcTexture;
 
     s32 width = getWidth(*pSrc);
     s32 height = getHeight(*pSrc);
@@ -642,7 +642,7 @@ void BlurFilter::drawBlur_(DrawContext* pDrawContext, MultiFilterDrawContext* pC
         pContext->mRenderTarget.invalidateGPUCache(pDrawContext);
     }
 
-    if (pPrevResult)
+    if (pPrevResult != nullptr)
     {
         pContext->mTextureCache.free(pPrevResult);
     }
@@ -705,7 +705,7 @@ void ColorCorrectionFilter::doInitialize_(sead::Heap* pHeap)
  */
 void ColorCorrectionFilter::doDestroy_()
 {
-    if (mColorCorrection)
+    if (mColorCorrection != nullptr)
     {
         delete mColorCorrection;
         mColorCorrection = nullptr;
@@ -720,13 +720,13 @@ void ColorCorrectionFilter::doDestroy_()
 void ColorCorrectionFilter::doDraw_(DrawContext* pDrawContext,
                                     MultiFilterDrawContext* pContext) const
 {
-    if (!mColorCorrection)
+    if (mColorCorrection == nullptr)
     {
         return;
     }
 
     TextureData* pPrevResult = pContext->mResultTexture;
-    const TextureData* pSrc = pPrevResult ? pPrevResult : pContext->mSrcTexture;
+    const TextureData* pSrc = (pPrevResult != nullptr) ? pPrevResult : pContext->mSrcTexture;
     pContext->mSampler.applyTextureData(*pSrc);
     s32 width = getWidth(*pSrc);
     s32 height = getHeight(*pSrc);
@@ -752,7 +752,7 @@ void ColorCorrectionFilter::doDraw_(DrawContext* pDrawContext,
         pContext->mRenderTarget.invalidateGPUCache(pDrawContext);
     }
 
-    if (pPrevResult)
+    if (pPrevResult != nullptr)
     {
         pContext->mTextureCache.free(pPrevResult);
     }
@@ -765,7 +765,7 @@ void ColorCorrectionFilter::doDraw_(DrawContext* pDrawContext,
  */
 void ColorCorrectionFilter::doResetParameters_()
 {
-    if (mColorCorrection)
+    if (mColorCorrection != nullptr)
     {
         mColorCorrection->resetAll();
     }
@@ -777,7 +777,7 @@ void ColorCorrectionFilter::doResetParameters_()
  */
 void ColorCorrectionFilter::doGenMessage_(sead::hostio::Context* pContext)
 {
-    if (mColorCorrection)
+    if (mColorCorrection != nullptr)
     {
         mColorCorrection->genMessageParameters(pContext);
     }
@@ -789,7 +789,7 @@ void ColorCorrectionFilter::doGenMessage_(sead::hostio::Context* pContext)
  */
 void ColorCorrectionFilter::doListenPropertyEvent_(const sead::hostio::PropertyEvent* pEvent)
 {
-    if (mColorCorrection)
+    if (mColorCorrection != nullptr)
     {
         mColorCorrection->listenPropertyEvent(pEvent);
     }
@@ -872,7 +872,7 @@ ColorDrift::~ColorDrift() = default;
 void ColorDrift::doDraw_(DrawContext* pDrawContext, MultiFilterDrawContext* pContext) const
 {
     TextureData* pPrevResult = pContext->mResultTexture;
-    const TextureData* pSrc = pPrevResult ? pPrevResult : pContext->mSrcTexture;
+    const TextureData* pSrc = (pPrevResult != nullptr) ? pPrevResult : pContext->mSrcTexture;
     s32 width = getWidth(*pSrc);
     s32 height = getHeight(*pSrc);
 
@@ -895,7 +895,7 @@ void ColorDrift::doDraw_(DrawContext* pDrawContext, MultiFilterDrawContext* pCon
         pContext->mRenderTarget.invalidateGPUCache(pDrawContext);
     }
 
-    if (pPrevResult)
+    if (pPrevResult != nullptr)
     {
         pContext->mTextureCache.free(pPrevResult);
     }
@@ -943,7 +943,7 @@ Trimming::~Trimming() = default;
 void Trimming::doDraw_(DrawContext* pDrawContext, MultiFilterDrawContext* pContext) const
 {
     TextureData* pPrevResult = pContext->mResultTexture;
-    const TextureData* pSrc = pPrevResult ? pPrevResult : pContext->mSrcTexture;
+    const TextureData* pSrc = (pPrevResult != nullptr) ? pPrevResult : pContext->mSrcTexture;
     const f32 srcWidth = getWidth(*pSrc);
     s32 width = mScale->x * srcWidth;
     width = width > 1 ? width : 1;
@@ -971,7 +971,7 @@ void Trimming::doDraw_(DrawContext* pDrawContext, MultiFilterDrawContext* pConte
         pContext->mRenderTarget.invalidateGPUCache(pDrawContext);
     }
 
-    if (pPrevResult)
+    if (pPrevResult != nullptr)
     {
         pContext->mTextureCache.free(pPrevResult);
     }

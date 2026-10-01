@@ -550,7 +550,7 @@ void LightPrePass::draw(DrawContext* pDrawContext, s32 view, const TextureData& 
         applyGraphicsContext(pDrawContext, arg, true, true);
     }
 
-    if (mPreDrawCallback)
+    if (mPreDrawCallback != nullptr)
     {
         mPreDrawCallback->invoke(arg);
     }
@@ -583,7 +583,7 @@ void LightPrePass::draw(DrawContext* pDrawContext, s32 view, const TextureData& 
         }
     }
 
-    if (mPostDrawCallback)
+    if (mPostDrawCallback != nullptr)
     {
         mPostDrawCallback->invoke(arg);
     }
@@ -733,7 +733,7 @@ void LightPrePass::release(s32 view) const
 {
     Context& rContext = const_cast<Context&>(mContext[view]);
 
-    if (rContext.mpLightBufferTexture)
+    if (rContext.mpLightBufferTexture != nullptr)
     {
         utl::DynamicTextureAllocator::instance()->free(rContext.mpLightBufferTexture);
         rContext.mpLightBufferTexture = nullptr;
@@ -940,7 +940,7 @@ void LightPrePass::setProjLight(s32 index, const sead::Vector3f& rPos, const sea
     rLight.mFlags.reset(4);
     rLight.mVisibleMask = 0xffffffff;
 
-    if (pTexture)
+    if (pTexture != nullptr)
     {
         rLight.mHasTexture = true;
         rLight.mTexture = *pTexture;
@@ -1023,7 +1023,7 @@ void LightPrePass::setProjLight_Ortho(s32 index, const sead::Vector3f& rPos,
     rLight.mFlags.set(4);
     rLight.mVisibleMask = 0xffffffff;
 
-    if (pTexture)
+    if (pTexture != nullptr)
     {
         rLight.mHasTexture = true;
         rLight.mTexture = *pTexture;

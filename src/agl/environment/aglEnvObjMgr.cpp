@@ -27,7 +27,7 @@ EnvObjMgr::~EnvObjMgr()
 {
     for (auto* pObj : mObj)
     {
-        if (pObj)
+        if (pObj != nullptr)
         {
             delete pObj;
         }
@@ -205,7 +205,7 @@ void EnvObjMgr::constructList()
             for (auto it = mEnvObjSet.begin(type), itEnd = mEnvObjSet.end(type); it != itEnd;
                  ++it)
             {
-                if (*it && mCurrentGroup != -1)
+                if (*it != nullptr && mCurrentGroup != -1)
                 {
                     if (mGroup[mCurrentGroup].getName() ==
                         static_cast<utl::INamedObj&>(**it).getGroupName())
@@ -354,7 +354,7 @@ void EnvObjMgr::drawFog_(DrawContext* pDrawContext, s32 viewIndex, const EnvObj&
 {
     const View& rView = mView[viewIndex];
 
-    if (!rView.mRenderBuffer)
+    if (rView.mRenderBuffer == nullptr)
     {
         return;
     }
@@ -463,7 +463,7 @@ void EnvObjMgr::applyResource_(utl::ResParameterArchive arc0, utl::ResParameterA
         s32 type = 0;
         IParameterList* pChild = getChildListHead();
 
-        for (; pChild; pChild = pChild->getNext(), type++)
+        for (; pChild != nullptr; pChild = pChild->getNext(), type++)
         {
             if (list.getParameterListNameHash() == pChild->getNameHash())
             {
@@ -471,7 +471,7 @@ void EnvObjMgr::applyResource_(utl::ResParameterArchive arc0, utl::ResParameterA
             }
         }
 
-        if (!pChild)
+        if (pChild == nullptr)
         {
             continue;
         }
@@ -486,14 +486,14 @@ void EnvObjMgr::applyResource_(utl::ResParameterArchive arc0, utl::ResParameterA
                 groupIndex != -1 ? obj.getResParameter(groupIndex) : utl::ResParameter{};
             s32 nameIndex = obj.searchIndex(cNameHash);
 
-            if (nameIndex == -1 || !groupParam.ptr())
+            if (nameIndex == -1 || groupParam.ptr() == nullptr)
             {
                 continue;
             }
 
             utl::ResParameter nameParam = obj.getResParameter(nameIndex);
 
-            if (!nameParam.ptr())
+            if (nameParam.ptr() == nullptr)
             {
                 continue;
             }
@@ -516,7 +516,7 @@ void EnvObjMgr::applyResource_(utl::ResParameterArchive arc0, utl::ResParameterA
                     continue;
                 }
 
-                if (!pFound && it.getIndex() > lastIndex &&
+                if (pFound == nullptr && it.getIndex() > lastIndex &&
                     pObj->getGroupName() == utl::INamedObj::getDefaultGroupName())
                 {
                     pFound = pObj;
@@ -530,7 +530,7 @@ void EnvObjMgr::applyResource_(utl::ResParameterArchive arc0, utl::ResParameterA
                 }
             }
 
-            if (!pFound)
+            if (pFound == nullptr)
             {
                 continue;
             }
@@ -600,7 +600,7 @@ void EnvObjMgr::genMessage(sead::hostio::Context* pContext)
 
     for (auto* pObj : mObj)
     {
-        if (pObj && pObj->isEnable() && pObj->mFlag.isOn(0x20))
+        if (pObj != nullptr && pObj->isEnable() && pObj->mFlag.isOn(0x20))
         {
             pObj->getEnvObjName();
         }

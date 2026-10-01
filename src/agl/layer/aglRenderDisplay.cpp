@@ -57,7 +57,7 @@ RenderDisplay::~RenderDisplay()
     mRenderDL.freeBuffer();
     mRenderDLSorted.freeBuffer();
 
-    if (mFrameBuffer)
+    if (mFrameBuffer != nullptr)
     {
         delete mFrameBuffer;
         mFrameBuffer = nullptr;
@@ -70,7 +70,7 @@ RenderDisplay::~RenderDisplay()
             rDisplayList.getBuffer().deleteGPUMemBlock();
         }
 
-        if (rDisplayList.isUserControlMemory() && rDisplayList.getControlMemory())
+        if (rDisplayList.isUserControlMemory() && rDisplayList.getControlMemory() != nullptr)
         {
             delete static_cast<u8*>(rDisplayList.getControlMemory());
         }
@@ -86,19 +86,19 @@ void RenderDisplay::freeFrameBuffer()
     {
         utl::DynamicTextureAllocator* pAllocator = utl::DynamicTextureAllocator::instance();
 
-        if (mColorTexture)
+        if (mColorTexture != nullptr)
         {
             pAllocator->free(mColorTexture);
             mColorTexture = nullptr;
         }
 
-        if (mDepthTexture)
+        if (mDepthTexture != nullptr)
         {
             pAllocator->free(mDepthTexture);
             mDepthTexture = nullptr;
         }
 
-        if (mResolveTexture)
+        if (mResolveTexture != nullptr)
         {
             pAllocator->free(mResolveTexture);
             mResolveTexture = nullptr;
@@ -180,7 +180,7 @@ void RenderDisplay::resetFrameBufferSize_(const sead::Vector2f& rSize)
     mViewport.setByFrameBuffer(*mLogicalFrameBuffer);
     mViewportOrigin = mViewport;
 
-    if (mFrameBuffer)
+    if (mFrameBuffer != nullptr)
     {
         mFrameBuffer->setVirtualSize(mLogicalFrameBuffer->getVirtualSize());
         mFrameBuffer->setPhysicalArea(mLogicalFrameBuffer->getPhysicalArea());
@@ -205,7 +205,7 @@ void RenderDisplay::calc()
  */
 void RenderDisplay::copyScanOutBuffer_() const
 {
-    if (!mFrameBuffer || !mColorTexture)
+    if (mFrameBuffer == nullptr || mColorTexture == nullptr)
     {
         return;
     }
@@ -264,7 +264,7 @@ void RenderDisplay::allocFrameBuffer(MultiSampleType multiSample, RenderDisplay*
                                         MultiSampleType(0), true);
     }
 
-    if (!pShare)
+    if (pShare == nullptr)
     {
         utl::DynamicTextureAllocator* pAllocator = utl::DynamicTextureAllocator::instance();
 
@@ -300,7 +300,7 @@ void RenderDisplay::allocFrameBuffer(MultiSampleType multiSample, RenderDisplay*
             mColorTarget.setZCullBufferDirect(pShare->mColorTarget.getZCullBuffer());
         }
 
-        if (pShare->mResolveTexture)
+        if (pShare->mResolveTexture != nullptr)
         {
             mResolveTexture = &mResolveTextureData;
             mResolveTextureData.setImagePtr(pShare->mResolveTexture->getImagePtr(), 0);
@@ -320,7 +320,7 @@ void RenderDisplay::allocFrameBuffer(MultiSampleType multiSample, RenderDisplay*
         mFlag.reset(cFlag_FrameBufferAllocated);
     }
 
-    if (mColorTexture)
+    if (mColorTexture != nullptr)
     {
         mFrameBuffer->setRenderTargetColor(&mColorTarget);
         mColorTarget.applyTextureData(*mColorTexture);
@@ -330,7 +330,7 @@ void RenderDisplay::allocFrameBuffer(MultiSampleType multiSample, RenderDisplay*
         mFrameBuffer->setRenderTargetColor(nullptr);
     }
 
-    if (mDepthTexture)
+    if (mDepthTexture != nullptr)
     {
         mFrameBuffer->setRenderTargetDepth(&mDepthTarget);
         mDepthTarget.applyTextureData(*mDepthTexture);
@@ -340,7 +340,7 @@ void RenderDisplay::allocFrameBuffer(MultiSampleType multiSample, RenderDisplay*
         mFrameBuffer->setRenderTargetDepth(nullptr);
     }
 
-    if (mResolveTexture)
+    if (mResolveTexture != nullptr)
     {
         mResolveTarget.applyTextureData(*mResolveTexture);
     }
@@ -411,7 +411,7 @@ void RenderDisplay::pushBackDL_(DrawContext* pDrawContext, RenderDL* pDL,
         return;
     }
 
-    if (pLayer)
+    if (pLayer != nullptr)
     {
         pLayer->setLastDisplayListSize(pDL->getValidSize());
         pDL->mLayer = pLayer;
@@ -421,12 +421,12 @@ void RenderDisplay::pushBackDL_(DrawContext* pDrawContext, RenderDL* pDL,
         pDL->mLayer = nullptr;
     }
 
-    if (!pLayer || pLayer->mFlag.isOn(1 << 10))
+    if (pLayer == nullptr || pLayer->mFlag.isOn(1 << 10))
     {
         mRenderDLPtr.pushBack(pDL);
     }
 
-    if (mRenderStepDrawMethod)
+    if (mRenderStepDrawMethod != nullptr)
     {
         RenderInfo info(pDrawContext, mDisplayIndex, mFrameBuffer);
         info.setRenderStep(4);
@@ -440,14 +440,14 @@ void RenderDisplay::pushBackDL_(DrawContext* pDrawContext, RenderDL* pDL,
  */
 void RenderDisplay::beginDraw_(DrawContext* pDrawContext) const
 {
-    if (mBeginDrawMethod)
+    if (mBeginDrawMethod != nullptr)
     {
         RenderInfo info(pDrawContext, mDisplayIndex, mFrameBuffer);
         info.setRenderStep(mDisplayIndex);
         mBeginDrawMethod->invoke(info);
     }
 
-    if (mFrameBuffer)
+    if (mFrameBuffer != nullptr)
     {
         bindAndClearRenderBuffer(pDrawContext);
     }
@@ -463,7 +463,7 @@ void RenderDisplay::bindAndClearRenderBuffer(DrawContext* pDrawContext) const
     {
         u32 clearFlag = mClearFlag;
 
-        if (!mFrameBuffer->getRenderTargetDepth())
+        if (mFrameBuffer->getRenderTargetDepth() == nullptr)
         {
             clearFlag &= ~2u;
         }
@@ -494,7 +494,7 @@ void RenderDisplay::preDrawLayer_(DrawContext* pDrawContext, const Layer* pLayer
 {
     RenderInfo info(pDrawContext, mDisplayIndex, frameworkType, mFrameBuffer,
                     mFlag.isOn(cFlag_DrawDebugInfo), pLayer);
-    if (mFrameBuffer)
+    if (mFrameBuffer != nullptr)
     {
         pLayer->getViewport().apply(pDrawContext, *mFrameBuffer);
     }
@@ -680,7 +680,7 @@ void RenderDisplay::calcSubLayerDL_(DrawContext* pDrawContext, const Layer* pLay
  */
 void RenderDisplay::endDraw_(DrawContext* pDrawContext) const
 {
-    if (mEndDrawMethod)
+    if (mEndDrawMethod != nullptr)
     {
         RenderInfo info(pDrawContext, mDisplayIndex, mFrameBuffer);
         info.setRenderStep(mDisplayIndex + 2);
@@ -729,7 +729,7 @@ void RenderDisplay::draw(DrawContext* pDrawContext) const
 
     endDraw_(pDrawContext);
 
-    if (mResolveTexture && mFrameBuffer)
+    if (mResolveTexture != nullptr && mFrameBuffer != nullptr)
     {
         mColorTarget.expandAuxBuffer(pDrawContext);
 

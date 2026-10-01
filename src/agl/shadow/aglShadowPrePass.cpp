@@ -214,7 +214,7 @@ void ShadowPrePass::release(s32 index) const
 {
     Context& context = mContexts[index];
 
-    if (context.mLightBuffer)
+    if (context.mLightBuffer != nullptr)
     {
         utl::DynamicTextureAllocator::instance()->free(context.mLightBuffer);
         context.mLightBuffer = nullptr;

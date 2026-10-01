@@ -28,7 +28,7 @@ void DrawContext::setCommandBuffer(DisplayList* pDisplayList)
 {
     mCommandBuffer = pDisplayList;
 
-    if (pDisplayList)
+    if (pDisplayList != nullptr)
     {
         setNvnCommandBuffer_(&mNvnCommandBuffer);
         pDisplayList->mNvnCommandBuffer = &mNvnCommandBuffer;

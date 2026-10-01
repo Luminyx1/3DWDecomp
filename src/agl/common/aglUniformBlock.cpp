@@ -206,7 +206,7 @@ void UniformBlock::setBuffer(GPUMemVoidAddr buffer, s32 bufferNum, s32 blockNum)
     mBuffer = GPUMemVoidAddr(buffer, 0);
     mBlockNum = blockNum;
 
-    if (mHeader)
+    if (mHeader != nullptr)
     {
         mBufferSize = calcBufferSize_(bufferNum, blockNum);
     }

@@ -30,7 +30,7 @@ DisplayList::DisplayList() : mFlags(0)
  */
 void DisplayList::setControlMemory(void* pMemory, u64 size)
 {
-    if (pMemory)
+    if (pMemory != nullptr)
     {
         mFlags.set(cFlag_UserControlMemory);
     }

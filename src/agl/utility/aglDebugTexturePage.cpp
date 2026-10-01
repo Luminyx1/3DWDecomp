@@ -192,14 +192,14 @@ bool DebugTexturePage::entryTexture_(DrawContext* pDrawContext, s32 index,
 
     DebugTextureDrawer* pDrawer = DebugTextureDrawer::instance();
 
-    if (!pDrawer)
+    if (pDrawer == nullptr)
     {
         return false;
     }
 
     DebugTexture* pTexture = pDrawer->popBack_();
 
-    if (!pTexture)
+    if (pTexture == nullptr)
     {
         return false;
     }
@@ -329,14 +329,14 @@ bool DebugTexturePage::entryRenderTargetDepth_(DrawContext* pDrawContext, s32 in
 
     DebugTextureDrawer* pDrawer = DebugTextureDrawer::instance();
 
-    if (!pDrawer)
+    if (pDrawer == nullptr)
     {
         return false;
     }
 
     DebugTexture* pTexture = pDrawer->popBack_();
 
-    if (!pTexture)
+    if (pTexture == nullptr)
     {
         return false;
     }
@@ -462,7 +462,7 @@ void DebugTexturePage::setActive(bool active)
 
     DebugTextureDrawer* pDrawer = DebugTextureDrawer::instance();
 
-    if (!pDrawer)
+    if (pDrawer == nullptr)
     {
         return;
     }
@@ -521,7 +521,7 @@ void DebugTexturePage::Context::clearEntryTextures() const
         pNode->mList = nullptr;
         pNode->mData->freeTexture();
 
-        if (DebugTextureDrawer::instance())
+        if (DebugTextureDrawer::instance() != nullptr)
         {
             DebugTextureDrawer::instance()->pushBack_(pNode->mData);
         }
@@ -555,7 +555,7 @@ void DebugTexturePage::genMessagePage_(sead::hostio::Context* pContext,
 {
     const char* pHeader;
 
-    if (pReflexible)
+    if (pReflexible != nullptr)
     {
         mOwner = pReflexible;
         pHeader = "Debug display";
@@ -630,7 +630,7 @@ void DebugTexturePage::Context::genMessageContextComboBox(
 {
     DebugTextureDrawer* pDrawer = DebugTextureDrawer::instance();
 
-    if (pDrawer && mLabelNum > 0)
+    if (pDrawer != nullptr && mLabelNum > 0)
     {
         pDrawer->mTextureLabels[0].cstr();
 
@@ -707,7 +707,7 @@ const DebugTexture* DebugTexturePage::Context::searchFullScreenTexture() const
     {
         DebugTextureDrawer* pDrawer = DebugTextureDrawer::instance();
 
-        if (!pDrawer)
+        if (pDrawer == nullptr)
         {
             return nullptr;
         }
@@ -732,7 +732,7 @@ const DebugTexture* DebugTexturePage::Context::searchFullScreenTexture() const
  */
 void DebugTexture::freeTexture()
 {
-    if (mTexture)
+    if (mTexture != nullptr)
     {
         if (mIsAllocated)
         {
@@ -751,7 +751,7 @@ void DebugTexturePage::Context::copyTextureLabel() const
 {
     DebugTextureDrawer* pDrawer = DebugTextureDrawer::instance();
 
-    if (!pDrawer)
+    if (pDrawer == nullptr)
     {
         return;
     }
@@ -1328,7 +1328,7 @@ void DebugTexturePage::Context::draw(DrawContext* pDrawContext,
     {
         const DebugTexture* pTexture = searchFullScreenTexture();
 
-        if (!pTexture)
+        if (pTexture == nullptr)
         {
             return;
         }

@@ -52,12 +52,12 @@ GPUMemBlockBase::~GPUMemBlockBase()
  */
 void GPUMemBlockBase::freeBuffer()
 {
-    if (!mMemoryBuffer)
+    if (mMemoryBuffer == nullptr)
     {
         return;
     }
 
-    if (mMemoryPoolHeap)
+    if (mMemoryPoolHeap != nullptr)
     {
         mMemoryPoolHeap->freeToHeap(this);
     }
@@ -92,7 +92,7 @@ void GPUMemBlockBase::free()
 void GPUMemBlockBase::allocBuffer_(u64 size, sead::Heap* pHeap, s32 alignment,
                                    MemoryAttribute attribute)
 {
-    if (!pHeap)
+    if (pHeap == nullptr)
     {
         pHeap = sead::HeapMgr::instance()->getCurrentHeap();
     }
@@ -192,7 +192,7 @@ void GPUMemBlockBase::initializeGfxMemoryPool(nn::gfx::MemoryPool* pMemoryPool) 
 
     nn::gfx::TInteroperation<nn::gfx::ApiVariationNvn8>::ConvertToGfxMemoryPool(
         pMemoryPool, mpMemoryPool->getDriverPool(),
-        mMemoryPoolHeap ? mMemoryPoolHeap->getBuffer() : mMemoryBuffer);
+        (mMemoryPoolHeap != nullptr) ? mMemoryPoolHeap->getBuffer() : mMemoryBuffer);
 }
 
 /**
@@ -205,7 +205,7 @@ s32 GPUMemBlockBase::addList(GPUMemBlockBase* pBlock)
     s32 count = 1;
     GPUMemBlockBase* pLast = this;
 
-    while (pLast->mpTail)
+    while (pLast->mpTail != nullptr)
     {
         pLast = pLast->mpTail;
         count++;
@@ -250,7 +250,7 @@ void GPUMemBlockBase::setMemoryPoolHeap(void* pBuffer, u64 size,
  */
 u64 GPUMemBlockBase::getByteOffset() const
 {
-    if (!mMemoryPoolHeap)
+    if (mMemoryPoolHeap == nullptr)
     {
         return 0;
     }
@@ -266,7 +266,7 @@ u64 GPUMemBlockBase::getByteOffset() const
 u32 GPUMemBlockBase::getMemoryPoolType() const
 {
     const detail::MemoryPoolType& rType =
-        mpMemoryPool ? mpMemoryPool->getMemoryType() : detail::MemoryPoolType::cInvalidPoolType;
+        (mpMemoryPool != nullptr) ? mpMemoryPool->getMemoryType() : detail::MemoryPoolType::cInvalidPoolType;
     return rType.getDirect() & ~detail::cGPUAccessMask;
 }
 

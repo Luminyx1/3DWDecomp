@@ -35,7 +35,7 @@ void ParameterStringMgr::initialize(sead::Heap* pHeap)
 {
     mHeap = pHeap;
 
-    if (pHeap)
+    if (pHeap != nullptr)
     {
         mStrings.allocBuffer(0x20000, pHeap);
         mStrings.clear();
@@ -49,7 +49,7 @@ void ParameterStringMgr::initialize(sead::Heap* pHeap)
  */
 const char* ParameterStringMgr::appendString(const sead::SafeString& rString)
 {
-    if (!mHeap)
+    if (mHeap == nullptr)
     {
         return sead::SafeString::cEmptyString.cstr();
     }

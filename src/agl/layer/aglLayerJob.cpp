@@ -70,7 +70,7 @@ void LayerJob::pushBackTo(const RenderDisplay* pDisplay, s32 priority,
     mRenderDisplay = pDisplay;
     mPriority = priority;
 
-    if (pArray)
+    if (pArray != nullptr)
     {
         pArray->pushBack(this);
     }
@@ -85,7 +85,7 @@ void LayerJob::pushBackTo(const RenderDisplay* pDisplay, s32 priority,
  */
 void LayerJob::invoke()
 {
-    if (!mLayer && (mType == cType_Draw || mType == cType_GPUCalc))
+    if (mLayer == nullptr && (mType == cType_Draw || mType == cType_GPUCalc))
     {
         return;
     }

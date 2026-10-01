@@ -267,7 +267,7 @@ void LightPrePass::PointLightMgr::drawImpl_(DrawContext* pDrawContext, const Poi
                                             s32 view, const Context& rContext,
                                             CallbackArg& rArg) const
 {
-    if (mDrawCallback)
+    if (mDrawCallback != nullptr)
     {
         if (!mDrawCallback->invoke(rArg, rLight))
         {
@@ -416,7 +416,7 @@ void LightPrePass::SpotLightMgr::drawImpl_(DrawContext* pDrawContext, const Spot
         useSpec = !mLightPrePass->getFlags().isOn(1 << 16);
     }
 
-    if (mDrawCallback)
+    if (mDrawCallback != nullptr)
     {
         if (!mDrawCallback->invoke(rArg, rLight))
         {
@@ -566,7 +566,7 @@ void LightPrePass::ProjLightMgr::drawImpl_(DrawContext* pDrawContext, const Proj
         useSpec = !mLightPrePass->getFlags().isOn(1 << 16);
     }
 
-    if (mDrawCallback)
+    if (mDrawCallback != nullptr)
     {
         if (!mDrawCallback->invoke(rArg, rLight))
         {

@@ -213,7 +213,7 @@ void DepthShadow::drawShadowMap(DrawContext* pDrawContext) const
 
         arg.mIndex = i;
 
-        if (mDrawCallback)
+        if (mDrawCallback != nullptr)
         {
             mDrawCallback->invoke(arg);
         }

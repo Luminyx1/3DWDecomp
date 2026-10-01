@@ -445,13 +445,13 @@ void DepthOfField::freeBuffer(s32 context) const
     Context& rContext = getContext_(context);
     auto* pAllocator = utl::DynamicTextureAllocator::instance();
 
-    if (rContext.mpBlurTexture)
+    if (rContext.mpBlurTexture != nullptr)
     {
         pAllocator->free(rContext.mpBlurTexture);
         rContext.mpBlurTexture = nullptr;
     }
 
-    if (rContext.mpDepthBlurTexture)
+    if (rContext.mpDepthBlurTexture != nullptr)
     {
         pAllocator->free(rContext.mpDepthBlurTexture);
         rContext.mpDepthBlurTexture = nullptr;
@@ -835,14 +835,14 @@ void DepthOfField::bindRenderBuffer_(DrawContext* pDrawContext, RenderBuffer& rR
     s32 width = -1;
     s32 height = -1;
 
-    if (rRenderBuffer.getRenderTargetColor())
+    if (rRenderBuffer.getRenderTargetColor() != nullptr)
     {
         rRenderBuffer.getRenderTargetColor()->setMipLevel(mipLevel);
         width = rRenderBuffer.getRenderTargetColor()->getMipWidth(mipLevel);
         height = getMipHeight(*rRenderBuffer.getRenderTargetColor(), mipLevel);
     }
 
-    if (rRenderBuffer.getRenderTargetDepth())
+    if (rRenderBuffer.getRenderTargetDepth() != nullptr)
     {
         s32 depthMipLevel = mipLevel + depthMipOffset;
         rRenderBuffer.getRenderTargetDepth()->setMipLevel(depthMipLevel);
@@ -1133,7 +1133,7 @@ bool DepthOfFieldParameter::enableDifferntShape_() const
 
 bool DepthOfFieldParameter::enableIndirect_() const
 {
-    return *mIndirectEnable && mpIndirectTexture && *mFarEnable;
+    return *mIndirectEnable && mpIndirectTexture != nullptr && *mFarEnable;
 }
 
 bool DepthOfFieldParameter::enableDepthOfField_() const
@@ -1253,7 +1253,7 @@ void DepthOfField::setIndirectTextureData(const TextureData* pTexture)
 {
     mpIndirectTexture = pTexture;
 
-    if (pTexture)
+    if (pTexture != nullptr)
     {
         mIndirectSampler.applyTextureData(*pTexture);
         mIndirectSampler.setWrapDirect(1, 1, 1);

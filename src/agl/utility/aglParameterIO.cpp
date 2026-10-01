@@ -89,7 +89,7 @@ s32 IParameterIO::loadText(const void* pData, u32 size, bool x)
     sead::XmlElement* header = root->findElement("./header");
     sead::XmlElement* data = root->findElement("./data");
 
-    if (header)
+    if (header != nullptr)
     {
         const sead::SafeString version = header->findAttributeValue("version");
         const sead::FormatFixedSafeString<1024> expected("%d", mVersion);
@@ -110,13 +110,13 @@ s32 IParameterIO::loadText(const void* pData, u32 size, bool x)
     {
         sead::XmlElement* obj = data->findElement(IParameterObj::getTagName());
 
-        if (obj)
+        if (obj != nullptr)
         {
-            result = mpChildObjHead ? mpChildObjHead->readFromXML(*obj, x) : 0;
+            result = (mpChildObjHead != nullptr) ? mpChildObjHead->readFromXML(*obj, x) : 0;
         }
         else
         {
-            result = mpChildObjHead ? mpChildObjHead->readFromXML(*data, x) : 0;
+            result = (mpChildObjHead != nullptr) ? mpChildObjHead->readFromXML(*data, x) : 0;
         }
     }
 

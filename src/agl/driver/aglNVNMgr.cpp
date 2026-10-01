@@ -223,7 +223,7 @@ s32 binarySearch(const sead::PtrArray<T>& rArray, const Key* pKey,
  */
 NVNMgr* NVNMgr::createInstance(sead::Heap* pHeap)
 {
-    if (!sInstance)
+    if (sInstance == nullptr)
     {
         auto* buffer = new (pHeap, alignof(NVNMgr)) u8[sizeof(NVNMgr)];
         auto* disposerBuffer = buffer + offsetof(NVNMgr, mSingletonDisposerBuf_);
@@ -637,7 +637,7 @@ s32 NVNMgr::registerTexture_(s32 index, const NVNtexture* pTexture, const NVNtex
                                           pTexture, pView);
         }
 
-        if (!pView)
+        if (pView == nullptr)
         {
             if (nvnTextureGetFlags(pTexture) & NVN_TEXTURE_FLAGS_COMPRESSIBLE)
             {
@@ -850,7 +850,7 @@ void NVNMgr::dampRegisteredTextureList() const
         if (texture.mRefCount > 0)
         {
             texture.mRefCount.load();
-            const char* name = texture.mName ? texture.mName : "untitled";
+            const char* name = (texture.mName != nullptr) ? texture.mName : "untitled";
             sead::FormatFixedSafeString<65> str("%.64s", name);
         }
     }

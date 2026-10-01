@@ -38,7 +38,7 @@ void clearTargets(const RenderBuffer* pRenderBuffer, DrawContext* pDrawContext, 
     }
 
     if ((flags & (sead::FrameBuffer::cDepth | sead::FrameBuffer::cStencil)) &&
-        pRenderBuffer->getRenderTargetDepth())
+        (pRenderBuffer->getRenderTargetDepth() != nullptr))
     {
         u32 stencilMask = (flags & sead::FrameBuffer::cStencil) ? 0xff : 0;
         nvnCommandBufferClearDepthStencil(pDrawContext->getNvnCommandBuffer(), depth,
@@ -131,13 +131,13 @@ void RenderBuffer::invalidateGPUCache(DrawContext* pDrawContext) const
 {
     for (s32 i = 0; i < cRenderTargetColorMax; i++)
     {
-        if (mRenderTargetColor[i])
+        if (mRenderTargetColor[i] != nullptr)
         {
             mRenderTargetColor[i]->invalidateGPUCache(pDrawContext);
         }
     }
 
-    if (mRenderTargetDepth)
+    if (mRenderTargetDepth != nullptr)
     {
         mRenderTargetDepth->invalidateGPUCache(pDrawContext);
     }
@@ -162,7 +162,7 @@ void RenderBuffer::bind_(DrawContext* pDrawContext, u16 srgbBitmap) const
     {
         const RenderTargetColor* pTarget = getRenderTargetColor(i);
 
-        if (!pTarget)
+        if (pTarget == nullptr)
         {
             continue;
         }
@@ -190,7 +190,7 @@ void RenderBuffer::bind_(DrawContext* pDrawContext, u16 srgbBitmap) const
 
     const RenderTargetDepth* pDepth = mRenderTargetDepth;
 
-    if (pDepth)
+    if (pDepth != nullptr)
     {
         textures[cRenderTargetColorMax] = pDepth->getTexture().getTexture();
         pDepth->updateRegs_();
@@ -269,12 +269,12 @@ void RenderBuffer::fastClear(DrawContext* pDrawContext, u32 target, u32 clearFla
                              const sead::Color4f& rColor, f32 depth, u32 stencil,
                              const sead::Viewport& rViewport, bool unused) const
 {
-    if (!mRenderTargetColor[s32(target)])
+    if (mRenderTargetColor[s32(target)] == nullptr)
     {
         clearFlag &= ~cColor;
     }
 
-    if (!mRenderTargetDepth)
+    if (mRenderTargetDepth == nullptr)
     {
         clearFlag &= ~(cDepth | cStencil);
     }
@@ -288,13 +288,13 @@ void RenderBuffer::fastClear(DrawContext* pDrawContext, u32 target, u32 clearFla
     {
         const RenderTargetColor* pTarget = getRenderTargetColor(i);
 
-        if (pTarget)
+        if (pTarget != nullptr)
         {
             pTarget->updateRegs_();
         }
     }
 
-    if (mRenderTargetDepth)
+    if (mRenderTargetDepth != nullptr)
     {
         mRenderTargetDepth->updateRegs_();
     }
@@ -332,7 +332,7 @@ bool RenderBuffer::initTextureDataFromBoundColor(DrawContext* pDrawContext,
 {
     const RenderBuffer* pRenderBuffer = pDrawContext->getBoundRenderBuffer();
 
-    if (!pRenderBuffer)
+    if (pRenderBuffer == nullptr)
     {
         return false;
     }
@@ -352,7 +352,7 @@ bool RenderBuffer::initTextureDataFromColor(DrawContext* pDrawContext, TextureDa
 {
     const RenderTargetColor* pTarget = mRenderTargetColor[colorIndex];
 
-    if (!pTarget)
+    if (pTarget == nullptr)
     {
         return false;
     }
@@ -371,7 +371,7 @@ bool RenderBuffer::initTextureDataFromBoundDepth(DrawContext* pDrawContext,
 {
     const RenderBuffer* pRenderBuffer = pDrawContext->getBoundRenderBuffer();
 
-    if (!pRenderBuffer)
+    if (pRenderBuffer == nullptr)
     {
         return false;
     }
@@ -390,7 +390,7 @@ bool RenderBuffer::initTextureDataFromDepth(DrawContext* pDrawContext,
 {
     const RenderTargetDepth* pTarget = mRenderTargetDepth;
 
-    if (!pTarget)
+    if (pTarget == nullptr)
     {
         return false;
     }
@@ -411,7 +411,7 @@ bool RenderBuffer::copyTextureDataFromBoundColor(DrawContext* pDrawContext,
 {
     const RenderBuffer* pRenderBuffer = pDrawContext->getBoundRenderBuffer();
 
-    if (!pRenderBuffer)
+    if (pRenderBuffer == nullptr)
     {
         return false;
     }
@@ -433,7 +433,7 @@ bool RenderBuffer::copyTextureDataFromColor(DrawContext* pDrawContext,
 {
     const RenderTargetColor* pTarget = mRenderTargetColor[colorIndex];
 
-    if (!pTarget)
+    if (pTarget == nullptr)
     {
         return false;
     }
@@ -453,7 +453,7 @@ bool RenderBuffer::copyTextureDataFromBoundDepth(DrawContext* pDrawContext,
 {
     const RenderBuffer* pRenderBuffer = pDrawContext->getBoundRenderBuffer();
 
-    if (!pRenderBuffer)
+    if (pRenderBuffer == nullptr)
     {
         return false;
     }
@@ -473,7 +473,7 @@ bool RenderBuffer::copyTextureDataFromDepth(DrawContext* pDrawContext,
 {
     const RenderTargetDepth* pTarget = mRenderTargetDepth;
 
-    if (!pTarget)
+    if (pTarget == nullptr)
     {
         return false;
     }

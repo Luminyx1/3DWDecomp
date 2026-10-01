@@ -96,7 +96,7 @@ void ResFile::Setup(nn::g3d::ResFile* pResFile)
 
     nn::gfx::ResTextureFile* pTextureFile = getResTextureFile(pResFile);
 
-    if (pTextureFile)
+    if (pTextureFile != nullptr)
     {
         nn::gfx::ResTextureContainerData& rContainer = getContainer(pTextureFile);
 
@@ -155,7 +155,7 @@ nn::gfx::ResTextureFile* ResFile::getResTextureFile(nn::g3d::ResFile* pResFile)
 {
     const nn::g3d::ResExternalFileData* pFile = pResFile->FindExternalFile("textures.bntx");
 
-    if (!pFile)
+    if (pFile == nullptr)
     {
         return nullptr;
     }
@@ -212,7 +212,7 @@ void ResFile::Cleanup(nn::g3d::ResFile* pResFile)
 
     nn::gfx::ResTextureFile* pTextureFile = getResTextureFile(pResFile);
 
-    if (pTextureFile)
+    if (pTextureFile != nullptr)
     {
         nn::gfx::ResTextureContainerData& rContainer = getContainer(pTextureFile);
         auto* pMemoryPool = static_cast<MemoryPoolImpl*>(rContainer.pTextureMemoryPool.Get());
@@ -287,7 +287,7 @@ const char* ResFile::GetTextureName(const nn::g3d::ResFile* pResFile, s32 index)
 {
     const nn::gfx::ResTextureFile* pTextureFile = getResTextureFile(pResFile);
 
-    if (!pTextureFile)
+    if (pTextureFile == nullptr)
     {
         return nullptr;
     }
@@ -304,7 +304,7 @@ const nn::gfx::ResTextureFile* ResFile::getResTextureFile(const nn::g3d::ResFile
 {
     const nn::g3d::ResExternalFileData* pFile = pResFile->FindExternalFile("textures.bntx");
 
-    if (!pFile)
+    if (pFile == nullptr)
     {
         return nullptr;
     }
@@ -321,7 +321,7 @@ s32 ResFile::GetTextureCount(const nn::g3d::ResFile* pResFile)
 {
     const nn::gfx::ResTextureFile* pTextureFile = getResTextureFile(pResFile);
 
-    if (!pTextureFile)
+    if (pTextureFile == nullptr)
     {
         return 0;
     }
@@ -339,7 +339,7 @@ s32 ResFile::GetTextureIndex(const nn::g3d::ResFile* pResFile, const char* pName
 {
     const nn::gfx::ResTextureFile* pTextureFile = getResTextureFile(pResFile);
 
-    if (!pTextureFile)
+    if (pTextureFile == nullptr)
     {
         return -1;
     }
@@ -357,7 +357,7 @@ nn::gfx::ResTexture* ResFile::GetTexture(nn::g3d::ResFile* pResFile, const char*
 {
     nn::gfx::ResTextureFile* pTextureFile = getResTextureFile(pResFile);
 
-    if (!pTextureFile)
+    if (pTextureFile == nullptr)
     {
         return nullptr;
     }
@@ -383,7 +383,7 @@ const nn::gfx::ResTexture* ResFile::GetTexture(const nn::g3d::ResFile* pResFile,
 {
     const nn::gfx::ResTextureFile* pTextureFile = getResTextureFile(pResFile);
 
-    if (!pTextureFile)
+    if (pTextureFile == nullptr)
     {
         return nullptr;
     }
@@ -409,7 +409,7 @@ nn::gfx::ResTexture* ResFile::GetTexture(nn::g3d::ResFile* pResFile, s32 index)
 {
     nn::gfx::ResTextureFile* pTextureFile = getResTextureFile(pResFile);
 
-    if (!pTextureFile)
+    if (pTextureFile == nullptr)
     {
         return nullptr;
     }
@@ -427,7 +427,7 @@ const nn::gfx::ResTexture* ResFile::GetTexture(const nn::g3d::ResFile* pResFile,
 {
     const nn::gfx::ResTextureFile* pTextureFile = getResTextureFile(pResFile);
 
-    if (!pTextureFile)
+    if (pTextureFile == nullptr)
     {
         return nullptr;
     }
@@ -445,7 +445,7 @@ bool ResFile::BindTexture(nn::g3d::ResFile* pResFile, const nn::g3d::ResFile* pT
 {
     const nn::gfx::ResTextureFile* pTextureFile = getResTextureFile(pTextureResFile);
 
-    if (!pTextureFile)
+    if (pTextureFile == nullptr)
     {
         return false;
     }
@@ -488,7 +488,7 @@ bool ResFile::BindSharedTexture(nn::g3d::ResFile* pResFile,
     files.mpFile = getResTextureFile(pResFile);
     files.mpSharedFile = getResTextureFile(pSharedResFile);
 
-    if (!files.mpFile && !files.mpSharedFile)
+    if (files.mpFile == nullptr && files.mpSharedFile == nullptr)
     {
         return false;
     }
@@ -506,7 +506,7 @@ nn::g3d::TextureRef ResFile::SharedTextureBindCallback(const char* pName, void* 
 {
     const auto* pFiles = static_cast<const SharedTextureFiles*>(pUserData);
 
-    if (pFiles->mpFile)
+    if (pFiles->mpFile != nullptr)
     {
         const nn::gfx::ResTextureContainerData& rContainer = getContainer(pFiles->mpFile);
         s32 index = rContainer.pTextureDic.Get()->FindIndex(pName);
@@ -517,7 +517,7 @@ nn::g3d::TextureRef ResFile::SharedTextureBindCallback(const char* pName, void* 
         }
     }
 
-    if (pFiles->mpSharedFile)
+    if (pFiles->mpSharedFile != nullptr)
     {
         const nn::gfx::ResTextureContainerData& rContainer = getContainer(pFiles->mpSharedFile);
         s32 index = rContainer.pTextureDic.Get()->FindIndex(pName);

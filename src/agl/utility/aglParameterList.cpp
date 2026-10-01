@@ -36,7 +36,7 @@ void IParameterList::addList(IParameterList* pChild, const sead::SafeString& rNa
     SEAD_ASSERT(pChild != nullptr);
     pChild->setParameterListName_(rName);
 
-    (!mpChildListTail ? mpChildListHead : mpChildListTail->mNext) = pChild;
+    ((mpChildListTail == nullptr) ? mpChildListHead : mpChildListTail->mNext) = pChild;
     mpChildListTail = pChild;
     pChild->mParent = this;
 }
@@ -58,7 +58,7 @@ void IParameterList::addObj(IParameterObj* pChild, const sead::SafeString& rName
 #endif
     pChild->mNameHash = ParameterBase::calcHash(rName);
 
-    (!mpChildObjTail ? mpChildObjHead : mpChildObjTail->mNext) = pChild;
+    ((mpChildObjTail == nullptr) ? mpChildObjHead : mpChildObjTail->mNext) = pChild;
     mpChildObjTail = pChild;
 }
 
@@ -67,7 +67,7 @@ void IParameterList::addObj(IParameterObj* pChild, const sead::SafeString& rName
  */
 void IParameterList::clearList()
 {
-    for (auto* i = mpChildListHead; i;)
+    for (auto* i = mpChildListHead; i != nullptr;)
     {
         auto* next = i->mNext;
         i->mNext = nullptr;
@@ -83,7 +83,7 @@ void IParameterList::clearList()
  */
 void IParameterList::clearObj()
 {
-    for (auto* i = mpChildObjHead; i;)
+    for (auto* i = mpChildObjHead; i != nullptr;)
     {
         auto* next = i->mNext;
         i->mNext = nullptr;
@@ -102,13 +102,13 @@ void IParameterList::removeList(IParameterList* pChild)
 {
     IParameterList* prev = nullptr;
 
-    for (auto* it = mpChildListHead; it; it = it->mNext)
+    for (auto* it = mpChildListHead; it != nullptr; it = it->mNext)
     {
         if (it == pChild)
         {
-            (prev ? prev->mNext : mpChildListHead) = pChild->mNext;
+            ((prev != nullptr) ? prev->mNext : mpChildListHead) = pChild->mNext;
 
-            if (!pChild->mNext)
+            if (pChild->mNext == nullptr)
             {
                 mpChildListTail = prev;
             }
@@ -129,13 +129,13 @@ void IParameterList::removeObj(IParameterObj* pChild)
 {
     IParameterObj* prev = nullptr;
 
-    for (auto* it = mpChildObjHead; it; it = it->mNext)
+    for (auto* it = mpChildObjHead; it != nullptr; it = it->mNext)
     {
         if (it == pChild)
         {
-            (prev ? prev->mNext : mpChildObjHead) = pChild->mNext;
+            ((prev != nullptr) ? prev->mNext : mpChildObjHead) = pChild->mNext;
 
-            if (!pChild->mNext)
+            if (pChild->mNext == nullptr)
             {
                 mpChildObjTail = prev;
             }
@@ -165,12 +165,12 @@ void IParameterList::applyResParameterList(ResParameterList list)
  */
 void IParameterList::applyResParameterList(ResParameterList list1, ResParameterList list2, f32 t)
 {
-    if (list1.ptr() && t <= 0.0)
+    if (list1.ptr() != nullptr && t <= 0.0)
     {
         return applyResParameterList_(false, list1, {}, 0.0);
     }
 
-    if (list2.ptr() && t >= 1.0)
+    if (list2.ptr() != nullptr && t >= 1.0)
     {
         return applyResParameterList_(false, list2, {}, 0.0);
     }
@@ -186,14 +186,14 @@ void IParameterList::applyResParameterList(ResParameterList list1, ResParameterL
  */
 bool IParameterList::isComplete(ResParameterList res, bool checkValues) const
 {
-    if (!res.ptr())
+    if (res.ptr() == nullptr)
     {
         return false;
     }
 
     s32 obj_count = 0;
 
-    for (auto* i = mpChildObjHead; i; i = i->mNext)
+    for (auto* i = mpChildObjHead; i != nullptr; i = i->mNext)
     {
         if (res.searchObjIndex(i->mNameHash) == -1)
         {
@@ -205,7 +205,7 @@ bool IParameterList::isComplete(ResParameterList res, bool checkValues) const
 
     s32 list_count = 0;
 
-    for (auto* i = mpChildListHead; i; i = i->mNext)
+    for (auto* i = mpChildListHead; i != nullptr; i = i->mNext)
     {
         if (res.searchListIndex(i->mNameHash) == -1)
         {
@@ -276,12 +276,12 @@ void IParameterList::writeToXML(sead::XmlElement* pElement, sead::Heap* pHeap) c
 
     sead::XmlElement* element = createAttribute(pElement, pHeap);
 
-    for (auto* obj = mpChildObjHead; obj; obj = obj->mNext)
+    for (auto* obj = mpChildObjHead; obj != nullptr; obj = obj->mNext)
     {
         obj->writeToXML(element, pHeap);
     }
 
-    for (auto* list = mpChildListHead; list; list = list->mNext)
+    for (auto* list = mpChildListHead; list != nullptr; list = list->mNext)
     {
         list->writeToXML(element, pHeap);
     }
@@ -310,7 +310,7 @@ s32 IParameterList::readFromXML(const sead::XmlElement& rElement, bool x)
         const sead::SafeString name =
             child->findAttributeValue(ParameterBase::getAttributeNameString());
 
-        for (auto* obj = mpChildObjHead; obj; obj = obj->mNext)
+        for (auto* obj = mpChildObjHead; obj != nullptr; obj = obj->mNext)
         {
             if (child->getName() != IParameterObj::getTagName())
             {
@@ -333,7 +333,7 @@ s32 IParameterList::readFromXML(const sead::XmlElement& rElement, bool x)
             break;
         }
 
-        for (auto* list = mpChildListHead; list; list = list->mNext)
+        for (auto* list = mpChildListHead; list != nullptr; list = list->mNext)
         {
             if (child->getName() != getTagName())
             {
@@ -369,12 +369,12 @@ bool IParameterList::verify() const
 {
     bool ok = verifyList() & verifyObj();
 
-    for (auto* i = mpChildListHead; i; i = i->mNext)
+    for (auto* i = mpChildListHead; i != nullptr; i = i->mNext)
     {
         ok &= i->verify();
     }
 
-    for (auto* i = mpChildObjHead; i; i = i->mNext)
+    for (auto* i = mpChildObjHead; i != nullptr; i = i->mNext)
     {
         ok &= i->verify();
     }
@@ -390,7 +390,7 @@ bool IParameterList::verifyList() const
 {
     bool ret = true;
 
-    for (auto* i = mpChildListHead; i; i = i->mNext)
+    for (auto* i = mpChildListHead; i != nullptr; i = i->mNext)
     {
         ret &= verifyList(i, i->mNext);
     }
@@ -406,7 +406,7 @@ bool IParameterList::verifyObj() const
 {
     bool ret = true;
 
-    for (auto* i = mpChildObjHead; i; i = i->mNext)
+    for (auto* i = mpChildObjHead; i != nullptr; i = i->mNext)
     {
         ret &= verifyObj(i, i->mNext);
     }
@@ -424,7 +424,7 @@ bool IParameterList::verifyList(IParameterList* pCheck, IParameterList* pOther) 
 {
     bool ok = true;
 
-    for (auto* it = pOther; it; it = it->mNext)
+    for (auto* it = pOther; it != nullptr; it = it->mNext)
     {
         if (pCheck->getNameHash() == it->getNameHash())
         {
@@ -445,7 +445,7 @@ bool IParameterList::verifyObj(IParameterObj* pCheck, IParameterObj* pOther) con
 {
     bool ok = true;
 
-    for (auto* it = pOther; it; it = it->mNext)
+    for (auto* it = pOther; it != nullptr; it = it->mNext)
     {
         if (pCheck->getNameHash() == it->getNameHash())
         {
@@ -465,7 +465,7 @@ bool IParameterList::verifyObj(IParameterObj* pCheck, IParameterObj* pOther) con
 ResParameterObj IParameterList::searchResParameterObj_(ResParameterList res,
                                                        const IParameterObj& rObj) const
 {
-    if (!res.ptr())
+    if (res.ptr() == nullptr)
     {
         return {};
     }
@@ -490,19 +490,19 @@ ResParameterObj IParameterList::searchResParameterObj_(ResParameterList res,
 IParameterObj* IParameterList::searchChildParameterObj_(ResParameterObj res,
                                                         IParameterObj* pObj) const
 {
-    if (!res.ptr() || !mpChildObjHead)
+    if (res.ptr() == nullptr || mpChildObjHead == nullptr)
     {
         return nullptr;
     }
 
-    auto* start = pObj ? pObj : mpChildObjHead;
+    auto* start = (pObj != nullptr) ? pObj : mpChildObjHead;
     auto* child = start;
 
     while (!child->isApply_(res))
     {
         child = child->mNext;
 
-        if (!child)
+        if (child == nullptr)
         {
             child = mpChildObjHead;
         }
@@ -525,7 +525,7 @@ IParameterObj* IParameterList::searchChildParameterObj_(ResParameterObj res,
 ResParameterList IParameterList::searchResParameterList_(ResParameterList res,
                                                          const IParameterList& rList) const
 {
-    if (!res.ptr())
+    if (res.ptr() == nullptr)
     {
         return {};
     }
@@ -548,12 +548,12 @@ ResParameterList IParameterList::searchResParameterList_(ResParameterList res,
  */
 IParameterList* IParameterList::searchChildParameterList_(ResParameterList res) const
 {
-    if (!res.ptr())
+    if (res.ptr() == nullptr)
     {
         return nullptr;
     }
 
-    for (auto* child = mpChildListHead; child; child = child->mNext)
+    for (auto* child = mpChildListHead; child != nullptr; child = child->mNext)
     {
         if (child->isApply_(res))
         {
@@ -572,7 +572,7 @@ IParameterList* IParameterList::searchChildParameterList_(ResParameterList res) 
  */
 void IParameterList::applyResParameterObjB_(bool interpolate, ResParameterList res, f32 t)
 {
-    if (!res.ptr())
+    if (res.ptr() == nullptr)
     {
         return;
     }
@@ -583,7 +583,7 @@ void IParameterList::applyResParameterObjB_(bool interpolate, ResParameterList r
     {
         auto* result = searchChildParameterObj_(*it, obj);
 
-        if (result)
+        if (result != nullptr)
         {
             result->applyResParameterObj_(interpolate, {}, *it, t, this);
             obj = result;
@@ -599,7 +599,7 @@ void IParameterList::applyResParameterObjB_(bool interpolate, ResParameterList r
  */
 void IParameterList::applyResParameterListB_(bool interpolate, ResParameterList res, f32 t)
 {
-    if (!res.ptr())
+    if (res.ptr() == nullptr)
     {
         return;
     }
@@ -608,7 +608,7 @@ void IParameterList::applyResParameterListB_(bool interpolate, ResParameterList 
     {
         auto* list = searchChildParameterList_(*it);
 
-        if (list)
+        if (list != nullptr)
         {
             list->applyResParameterList_(interpolate, {}, *it, t);
         }
@@ -630,7 +630,7 @@ void IParameterList::applyResParameterList_(bool interpolate, ResParameterList l
         return;
     }
 
-    if (l1.ptr())
+    if (l1.ptr() != nullptr)
     {
         IParameterObj* obj = nullptr;
 
@@ -638,7 +638,7 @@ void IParameterList::applyResParameterList_(bool interpolate, ResParameterList l
         {
             auto* child = searchChildParameterObj_(*it, obj);
 
-            if (child)
+            if (child != nullptr)
             {
                 const auto obj2 = searchResParameterObj_(l2, *child);
                 child->applyResParameterObj_(interpolate, *it, obj2, t, this);
@@ -655,15 +655,15 @@ void IParameterList::applyResParameterList_(bool interpolate, ResParameterList l
         applyResParameterObjB_(interpolate, l2, t);
     }
 
-    if (l1.ptr())
+    if (l1.ptr() != nullptr)
     {
         for (auto it = l1.listBegin(), end = l1.listEnd(); it != end; ++it)
         {
             auto* child = searchChildParameterList_(*it);
 
-            if (l2.ptr())
+            if (l2.ptr() != nullptr)
             {
-                if (child)
+                if (child != nullptr)
                 {
                     const auto other_list = searchResParameterList_(l2, *child);
                     child->applyResParameterList_(interpolate, *it, other_list, t);
@@ -675,7 +675,7 @@ void IParameterList::applyResParameterList_(bool interpolate, ResParameterList l
             }
             else
             {
-                if (child)
+                if (child != nullptr)
                 {
                     child->applyResParameterList_(interpolate, *it, {}, t);
                 }
@@ -700,14 +700,14 @@ void IParameterList::sortByHash()
 
     s32 list_num = 0;
 
-    for (auto* list = mpChildListHead; list; list = list->mNext)
+    for (auto* list = mpChildListHead; list != nullptr; list = list->mNext)
     {
         ++list_num;
     }
 
     s32 obj_num = 0;
 
-    for (auto* obj = mpChildObjHead; obj; obj = obj->mNext)
+    for (auto* obj = mpChildObjHead; obj != nullptr; obj = obj->mNext)
     {
         ++obj_num;
     }
@@ -717,7 +717,7 @@ void IParameterList::sortByHash()
         sead::PtrArray<IParameterList> array;
         array.allocBuffer(list_num, heap);
 
-        for (auto* list = mpChildListHead; list; list = list->mNext)
+        for (auto* list = mpChildListHead; list != nullptr; list = list->mNext)
         {
             array.pushBack(list);
         }
@@ -729,14 +729,14 @@ void IParameterList::sortByHash()
 
         for (auto it = array.begin(); it != array.end(); ++it)
         {
-            if (!mpChildListHead)
+            if (mpChildListHead == nullptr)
             {
                 mpChildListHead = &*it;
             }
 
             it->mNext = nullptr;
 
-            if (mpChildListTail)
+            if (mpChildListTail != nullptr)
             {
                 mpChildListTail->mNext = &*it;
             }
@@ -752,7 +752,7 @@ void IParameterList::sortByHash()
         sead::PtrArray<IParameterObj> array;
         array.allocBuffer(obj_num, heap);
 
-        for (auto* obj = mpChildObjHead; obj; obj = obj->mNext)
+        for (auto* obj = mpChildObjHead; obj != nullptr; obj = obj->mNext)
         {
             array.pushBack(obj);
         }
@@ -764,14 +764,14 @@ void IParameterList::sortByHash()
 
         for (auto it = array.begin(); it != array.end(); ++it)
         {
-            if (!mpChildObjHead)
+            if (mpChildObjHead == nullptr)
             {
                 mpChildObjHead = &*it;
             }
 
             it->mNext = nullptr;
 
-            if (mpChildObjTail)
+            if (mpChildObjTail != nullptr)
             {
                 mpChildObjTail->mNext = &*it;
             }
@@ -785,13 +785,13 @@ void IParameterList::sortByHash()
 
 void IParameterList::genMessageParameterList(sead::hostio::Context* pContext)
 {
-    for (auto* obj = mpChildObjHead; obj; obj = obj->mNext)
+    for (auto* obj = mpChildObjHead; obj != nullptr; obj = obj->mNext)
     {
         sead::FormatFixedSafeString<256> meta("GroupHeader=%s", obj->getParameterObjName().cstr());
         obj->genMessageParameter(pContext);
     }
 
-    for (auto* list = mpChildListHead; list; list = list->mNext)
+    for (auto* list = mpChildListHead; list != nullptr; list = list->mNext)
     {
         sead::FormatFixedSafeString<256> meta("GroupHeader=%s",
                                               list->getParameterListName().cstr());
@@ -807,12 +807,12 @@ void IParameterList::genMessageParameterList(sead::hostio::Context* pContext)
 void IParameterList::listenPropertyEventParameter(sead::hostio::Reflexible* pReflexible,
                                                   const sead::hostio::PropertyEvent* pEvent)
 {
-    for (auto* obj = mpChildObjHead; obj; obj = obj->mNext)
+    for (auto* obj = mpChildObjHead; obj != nullptr; obj = obj->mNext)
     {
         obj->listenPropertyEventParameter(pReflexible, pEvent);
     }
 
-    for (auto* list = mpChildListHead; list; list = list->mNext)
+    for (auto* list = mpChildListHead; list != nullptr; list = list->mNext)
     {
         list->listenPropertyEventParameter(pReflexible, pEvent);
     }

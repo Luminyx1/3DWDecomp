@@ -27,7 +27,7 @@ namespace {
  */
 sead::Heap* getHeap(sead::Heap* pHeap)
 {
-    if (!pHeap)
+    if (pHeap == nullptr)
     {
         pHeap = sead::HeapMgr::instance()->getCurrentHeap();
     }
@@ -96,7 +96,7 @@ void Initialize(const InitArg& rArg)
         detail::DynamicUniformBlock::instance()->initialize(rArg.mDynamicUniformBlockSize, pHeap);
     }
 
-    if (rArg.mDebugHeap)
+    if (rArg.mDebugHeap != nullptr)
     {
         utl::DebugTextureDrawer::createInstance(rArg.mDebugHeap);
         utl::DebugTextureDrawer::instance()->initialize(rArg.mDebugHeap);

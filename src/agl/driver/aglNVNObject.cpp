@@ -97,7 +97,7 @@ NVNtexture_& NVNtexture_::operator=(const NVNtexture_& other)
 bool NVNtexture_::registerTexture(const NVNtexture* pTexture, const NVNtextureView* pView,
                                   const char* pName, bool isOwner)
 {
-    if (pTexture)
+    if (pTexture != nullptr)
     {
         if (NVNMgr::isEqual(*pTexture, mTexture))
         {
@@ -120,7 +120,7 @@ bool NVNtexture_::registerTexture(const NVNtexture* pTexture, const NVNtextureVi
         return true;
     }
 
-    if (pView)
+    if (pView != nullptr)
     {
         NVNMgr::instance()->releaseTexture(mTextureID);
         mTextureID = NVNMgr::instance()->registerTexture(&mTexture, pView, pName);

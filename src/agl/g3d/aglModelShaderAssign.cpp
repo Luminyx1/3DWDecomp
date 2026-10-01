@@ -131,7 +131,7 @@ void ModelShaderAttribute::bind(const nn::g3d::ResMaterial* pMaterial,
 {
     const nn::g3d::ResShaderAssignData* pShaderAssign = pMaterial->ToData().pShaderAssign.Get();
 
-    if (!pShaderAssign)
+    if (pShaderAssign == nullptr)
     {
         return;
     }
@@ -144,7 +144,7 @@ void ModelShaderAttribute::bind(const nn::g3d::ResMaterial* pMaterial,
         const char* pName = pShadingModel->GetAttribName(i);
         const nn::util::ResDic* pAssignDic = pShaderAssign->pAttribAssignDic.Get();
 
-        if (!pAssignDic)
+        if (pAssignDic == nullptr)
         {
             continue;
         }
@@ -171,7 +171,7 @@ void ModelShaderAttribute::bind(const nn::g3d::ResMaterial* pMaterial,
             continue;
         }
 
-        if (pProgram && !pProgram->IsAttribActive(i))
+        if (pProgram != nullptr && !pProgram->IsAttribActive(i))
         {
             continue;
         }
@@ -181,7 +181,7 @@ void ModelShaderAttribute::bind(const nn::g3d::ResMaterial* pMaterial,
         const nn::util::ResDic* pVertexDic =
             pShape->ToData().pVertex.Get()->ToData().pAttribDic.Get();
         attributes[attributeNum].mIndex =
-            pVertexDic ? pVertexDic->FindIndex(pVertexAttribName->GetData()) : -1;
+            (pVertexDic != nullptr) ? pVertexDic->FindIndex(pVertexAttribName->GetData()) : -1;
         attributeNum++;
     }
 
@@ -567,7 +567,7 @@ void ModelShaderSampler::bind(const nn::g3d::ResMaterial* pMaterial,
 {
     const nn::g3d::ResShaderAssignData* pShaderAssign = pMaterial->ToData().pShaderAssign.Get();
 
-    if (!pShaderAssign)
+    if (pShaderAssign == nullptr)
     {
         return;
     }
@@ -579,7 +579,7 @@ void ModelShaderSampler::bind(const nn::g3d::ResMaterial* pMaterial,
         const char* pName = pShadingModel->GetSamplerName(i);
         const nn::util::ResDic* pAssignDic = pShaderAssign->pSamplerAssignDic.Get();
 
-        if (!pAssignDic)
+        if (pAssignDic == nullptr)
         {
             continue;
         }
@@ -594,7 +594,7 @@ void ModelShaderSampler::bind(const nn::g3d::ResMaterial* pMaterial,
         s32 samplerIndex;
         const nn::util::ResDic* pSamplerDic = mpResMaterial->ToData().pSamplerDic.Get();
 
-        if (pSamplerDic)
+        if (pSamplerDic != nullptr)
         {
             samplerIndex = pSamplerDic->FindIndex(
                 pShaderAssign->pSamplerAssignArray.Get()[assignIndex].Get()->GetData());
@@ -643,7 +643,7 @@ const char* ModelShaderSampler::getResSamplerName(s32 index) const
 {
     const nn::util::ResDic* pSamplerDic = mpResMaterial->ToData().pSamplerDic.Get();
 
-    if (!pSamplerDic)
+    if (pSamplerDic == nullptr)
     {
         return nullptr;
     }
@@ -663,7 +663,7 @@ void ModelShaderSampler::activate(DrawContext* pDrawContext,
     {
         const nn::gfx::ResTexture* pTexture =
             MaterialObj::GetResTexture(pMaterial, mSamplers[i].mSamplerIndex);
-        if (pTexture)
+        if (pTexture != nullptr)
         {
             u32 samplerId =
                 mpResMaterial->ToData().pSamplerSlotArray.Get()[mSamplers[i].mSamplerIndex];
@@ -694,12 +694,12 @@ void ModelShaderSampler::activate(DrawContext* pDrawContext, const nn::g3d::Mate
             MaterialObj::GetResTexture(pMaterial, mSamplers[i].mSamplerIndex);
         const nn::gfx::ResTexture* pOverride = ppTextures[mSamplers[i].mSamplerIndex];
 
-        if (pOverride)
+        if (pOverride != nullptr)
         {
             pTexture = pOverride;
         }
 
-        if (pTexture)
+        if (pTexture != nullptr)
         {
             u32 samplerId =
                 mpResMaterial->ToData().pSamplerSlotArray.Get()[mSamplers[i].mSamplerIndex];
@@ -727,7 +727,7 @@ void ModelShaderSampler::activate(DrawContext* pDrawContext,
     {
         const nn::gfx::ResTexture* pTexture =
             ResMaterial::GetTexture(pMaterial, mSamplers[i].mSamplerIndex);
-        if (pTexture)
+        if (pTexture != nullptr)
         {
             u32 samplerId =
                 mpResMaterial->ToData().pSamplerSlotArray.Get()[mSamplers[i].mSamplerIndex];

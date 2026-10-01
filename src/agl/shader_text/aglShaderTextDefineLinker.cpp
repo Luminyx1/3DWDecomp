@@ -20,7 +20,7 @@ DefineLinker::~DefineLinker() {
  * Deletes the clauses of the definition.
  */
 void DefineLinker::clear() {
-    if (!mRoot) {
+    if (mRoot == nullptr) {
         return;
     }
 
@@ -160,7 +160,7 @@ bool DefineLinker::setDirect(Clause* pRoot, u32 index, bool calcHash) {
             mValueEnd = last;
             mValueEnd = last->mNext;
 
-            if (mValueEnd) {
+            if (mValueEnd != nullptr) {
                 goto end;
             }
         }
@@ -195,7 +195,7 @@ void DefineLinker::replace(sead::Heap* pHeap, const Clause* pBegin, const Clause
                            bool includeEnd) {
     Clause* anchor;
 
-    if (mValueBegin) {
+    if (mValueBegin != nullptr) {
         Clause* end = mValueEnd;
         anchor = mValueBegin->mPrev;
 
@@ -250,7 +250,7 @@ DefineLinker* DefineLinker::cloneAll(sead::Heap* pHeap, sead::Heap* pClauseHeap)
     for (const DefineLinker* linker = mNext; linker != this; linker = linker->mNext) {
         DefineLinker* copy = linker->clone(pHeap, pClauseHeap);
 
-        if (last) {
+        if (last != nullptr) {
             last->insertAfter(copy);
         } else {
             head = copy;

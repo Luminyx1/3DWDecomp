@@ -352,7 +352,7 @@ void OcclusionRenderer::calcContext(s32 index, const sead::Matrix34f& rView,
     rContext.mAspect = mSampleSize / mSize;
     rContext.mRadiusScale = mOcclVtxStream.mScale / rContext.mScreenRadius;
 
-    if (pResult)
+    if (pResult != nullptr)
     {
         pResult->mScreenPos = center;
         pResult->mDepth = length;

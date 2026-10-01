@@ -350,13 +350,13 @@ void Bloom::draw_(DrawContext* pDrawContext, s32 context, const DrawArg& rArg,
     f32 resolution = rContext.mResolution;
     f32 scale = rContext.mScale.x;
     rContext.mColorSampler.applyTextureData(
-        rArg.mpColor ? *rArg.mpColor :
+        (rArg.mpColor != nullptr) ? *rArg.mpColor :
                        *reinterpret_cast<const TextureData*>(
                            rArg.mpRenderBuffer->getRenderTargetColor()));
 
     bool isLinearDepth = rArg.mIsLinearDepth;
 
-    if (rArg.mpDepth && !mFlags.isOn(cFlag_IgnoreDepth))
+    if (rArg.mpDepth != nullptr && !mFlags.isOn(cFlag_IgnoreDepth))
     {
         rContext.mDepthSampler.applyTextureData(*rArg.mpDepth);
     }
@@ -368,7 +368,7 @@ void Bloom::draw_(DrawContext* pDrawContext, s32 context, const DrawArg& rArg,
 
     resolution *= scale;
 
-    if (rArg.mpMask)
+    if (rArg.mpMask != nullptr)
     {
         rContext.mMaskSampler.applyTextureData(*rArg.mpMask);
     }
@@ -382,7 +382,7 @@ void Bloom::draw_(DrawContext* pDrawContext, s32 context, const DrawArg& rArg,
 
     TextureData* pReduce = nullptr;
 
-    if (mFlags.isOn(cFlag_Reduce) && !rArg.mpColor)
+    if (mFlags.isOn(cFlag_Reduce) && rArg.mpColor == nullptr)
     {
         f32 reduceWidth = f32(width) + f32(width);
         f32 reduceHeight = f32(height) + f32(height);
@@ -465,7 +465,7 @@ void Bloom::draw_(DrawContext* pDrawContext, s32 context, const DrawArg& rArg,
     drawDetect_(pDrawContext, context, isLinearDepth);
     rContext.mRenderBuffer.setRenderTargetColor(nullptr, 1);
 
-    if (pReduce)
+    if (pReduce != nullptr)
     {
         rCache.free(pReduce);
     }
@@ -1011,7 +1011,7 @@ void Bloom::drawShaft_(DrawContext* pDrawContext, s32 context) const
                                 utl::PrimitiveShape::instance()->getQuadTriangleIndexStream());
         rMRT.mTarget.invalidateGPUCache(pDrawContext);
 
-        if (pPrev)
+        if (pPrev != nullptr)
         {
             rContext.mTextureCache.free(pPrev);
         }
@@ -1058,7 +1058,7 @@ void Bloom::drawShaft_(DrawContext* pDrawContext, s32 context) const
     viewport.apply(pDrawContext, rContext.mRenderBuffer);
     drawGather_(pDrawContext, rShaftMRT.mSampler, *rParam.mShaft.mFinalGather,
                 sead::Color4f::cWhite);
-    if (pPrev)
+    if (pPrev != nullptr)
     {
         rContext.mTextureCache.free(pPrev);
     }
@@ -1068,7 +1068,7 @@ void Bloom::MRT::free(utl::DynamicTextureCache* pCache)
 {
     for (auto& pTexture : mTextures)
     {
-        if (pTexture)
+        if (pTexture != nullptr)
         {
             pCache->free(pTexture);
             pTexture = nullptr;
@@ -1098,7 +1098,7 @@ void Bloom::MRT::entry(DrawContext* pDrawContext, s32 context,
 {
     for (s32 i = 0; i < 5; i++)
     {
-        if (mTextures[i])
+        if (mTextures[i] != nullptr)
         {
             sead::FormatFixedSafeString<1024> name("bloom:%d", i);
         }
@@ -1137,7 +1137,7 @@ void Bloom::callbackNotAppliable_(utl::IParameterObj* pObj, utl::ParameterBase* 
 
         utl::ResParameter res = obj.getResParameter(index);
 
-        if (!res.ptr())
+        if (res.ptr() == nullptr)
         {
             return;
         }
@@ -1155,7 +1155,7 @@ void Bloom::callbackNotAppliable_(utl::IParameterObj* pObj, utl::ParameterBase* 
 
         utl::ResParameter res = obj.getResParameter(index);
 
-        if (!res.ptr())
+        if (res.ptr() == nullptr)
         {
             return;
         }
@@ -1174,7 +1174,7 @@ void Bloom::callbackNotAppliable_(utl::IParameterObj* pObj, utl::ParameterBase* 
 
         utl::ResParameter res = obj.getResParameter(index);
 
-        if (!res.ptr())
+        if (res.ptr() == nullptr)
         {
             return;
         }

@@ -356,7 +356,7 @@ bool ShaderProgramArchive::setUp_(bool noCompile)
 
     sead::TickTime time_end;
 
-    if (mSetUpDelegate) {
+    if (mSetUpDelegate != nullptr) {
         mSetUpDelegate->invoke(this);
     }
 
@@ -440,7 +440,7 @@ void ShaderProgramEdit::updateRawText()
     for (s32 type = 0; type < cShaderType_Num; type++) {
         Stage& stage = mStage[type];
 
-        if (stage.mSource && (stage.mSource->mFlags & ShaderSource::cFlag_Dirty)) {
+        if (stage.mSource != nullptr && (stage.mSource->mFlags & ShaderSource::cFlag_Dirty)) {
             stage.mCompileInfo.setSource(stage.mSource->mRawText);
             mArchive->mShaderPrograms[mProgramIndex].reserveSetUpAllVariation();
         }
@@ -494,7 +494,7 @@ void ShaderProgramArchive::genMessage(sead::hostio::Context* pContext)
             mResBinaryShaderArchive.isValid() ? mResBinaryShaderArchive.ref().mFileSize : 0);
     }
 
-    if (mDisplayListBuffer.getMemoryBlock()) {
+    if (mDisplayListBuffer.getMemoryBlock() != nullptr) {
         sead::FormatFixedSafeString<1024> str("DisplayList : %d[byte]",
                                               mDisplayListBuffer.getMemoryBlock()->getSize());
     }

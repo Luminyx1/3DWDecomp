@@ -26,7 +26,7 @@ u32 GPUMemAddrBase::verify_() const
 {
     const GPUMemBlockBase* pBlock = mMemoryBlock;
 
-    if (pBlock)
+    if (pBlock != nullptr)
     {
         if (pBlock->mMemoryBufferSize != 0)
         {
@@ -41,7 +41,7 @@ u32 GPUMemAddrBase::verify_() const
                 return 2;
             }
         }
-        else if (mMemoryPool)
+        else if (mMemoryPool != nullptr)
         {
             return 2;
         }
@@ -55,7 +55,7 @@ u32 GPUMemAddrBase::verify_() const
  */
 void GPUMemAddrBase::deleteGPUMemBlock() const
 {
-    if (mMemoryBlock)
+    if (mMemoryBlock != nullptr)
     {
         delete mMemoryBlock;
     }
@@ -88,7 +88,7 @@ void GPUMemAddrBase::setByteOffsetByPtr(void* pPtr)
 {
     mAlignmentAddr = reinterpret_cast<uintptr_t>(pPtr) -
                      reinterpret_cast<uintptr_t>(
-                         mMemoryPool ? nvnMemoryPoolMap(mMemoryPool->getDriverPool()) : nullptr);
+                         (mMemoryPool != nullptr) ? nvnMemoryPoolMap(mMemoryPool->getDriverPool()) : nullptr);
 }
 
 /**
@@ -106,7 +106,7 @@ void GPUMemAddrBase::roundUp(int alignment)
  */
 void GPUMemAddrBase::flushCPUCache(u64 size) const
 {
-    if (mMemoryPool &&
+    if (mMemoryPool != nullptr &&
         (nvnMemoryPoolGetFlags(mMemoryPool->getDriverPool()) & NVN_MEMORY_POOL_FLAGS_CPU_CACHED))
     {
         nvnMemoryPoolFlushMappedRange(mMemoryPool->getDriverPool(),
@@ -120,7 +120,7 @@ void GPUMemAddrBase::flushCPUCache(u64 size) const
  */
 void GPUMemAddrBase::invalidateCPUCache(u64 size) const
 {
-    if (mMemoryPool &&
+    if (mMemoryPool != nullptr &&
         (nvnMemoryPoolGetFlags(mMemoryPool->getDriverPool()) & NVN_MEMORY_POOL_FLAGS_CPU_CACHED))
     {
         nvnMemoryPoolInvalidateMappedRange(mMemoryPool->getDriverPool(),

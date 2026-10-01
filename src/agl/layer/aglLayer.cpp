@@ -71,7 +71,7 @@ Layer::~Layer()
     mRenderer->removeLayer(this);
     mRenderStep.freeBuffer();
 
-    if (mDebugInfo)
+    if (mDebugInfo != nullptr)
     {
         mDebugInfo->mInfoText.freeBuffer();
     }
@@ -96,7 +96,7 @@ void Layer::initialize_(sead::Heap* pHeap)
 
     sead::Heap* pDebugHeap = detail::PrivateResource::instance()->getDebugHeap();
 
-    if (pDebugHeap)
+    if (pDebugHeap != nullptr)
     {
         mDebugInfo = new (pDebugHeap) DebugInfo();
         mDebugInfo->mInfoText.tryAllocBuffer(2, pDebugHeap);
@@ -113,7 +113,7 @@ void Layer::updateDebugInfo_(u32 flag)
 {
     if (flag & 1)
     {
-        const sead::Camera* pCamera = mCamera ? mCamera : &sCameraIdentity;
+        const sead::Camera* pCamera = (mCamera != nullptr) ? mCamera : &sCameraIdentity;
 
         if (mDebugFlag.isOn(1 << 3))
         {
@@ -187,7 +187,7 @@ void Layer::updateDebugInfo_(u32 flag)
  */
 void Layer::copyCurrentCameraToDebugCamera_()
 {
-    if (!mCamera)
+    if (mCamera == nullptr)
     {
         return;
     }
@@ -210,14 +210,14 @@ void Layer::copyCurrentCameraToDebugCamera_()
         resetBoundDebugCameraAt();
     }
 
-    if (!mDebugInfo)
+    if (mDebugInfo == nullptr)
     {
         return;
     }
 
     setBoundDebugCameraAt(at);
 
-    if (!mDebugInfo)
+    if (mDebugInfo == nullptr)
     {
         return;
     }
@@ -236,7 +236,7 @@ void Layer::copyCurrentCameraToDebugCamera_()
  */
 f32 Layer::getDebugCameraAtDist() const
 {
-    if (mDebugInfo)
+    if (mDebugInfo != nullptr)
     {
         return mDebugInfo->mAtDist;
     }
@@ -251,7 +251,7 @@ void Layer::resetBoundDebugCameraAt()
 {
     mDebugFlag.set(1 << 4);
 
-    if (mDebugInfo)
+    if (mDebugInfo != nullptr)
     {
         mDebugInfo->mBoundAt = sead::Vector3f::zero;
     }
@@ -263,7 +263,7 @@ void Layer::resetBoundDebugCameraAt()
  */
 void Layer::setBoundDebugCameraAt(const sead::Vector3f& rAt)
 {
-    if (mDebugInfo)
+    if (mDebugInfo != nullptr)
     {
         mDebugInfo->mBoundAt = rAt;
     }
@@ -274,7 +274,7 @@ void Layer::setBoundDebugCameraAt(const sead::Vector3f& rAt)
  */
 void Layer::copyCurrentProjectionToDebugProjection_()
 {
-    if (!mProjection)
+    if (mProjection == nullptr)
     {
         return;
     }
@@ -286,7 +286,7 @@ void Layer::copyCurrentProjectionToDebugProjection_()
     sead::Vector2f offset;
     detail::SeadUtil::getNearFarAspectFovy(*mProjection, &near, &far, &aspect, &fovy, &offset);
 
-    if (mDebugInfo)
+    if (mDebugInfo != nullptr)
     {
         setDebugFovyDeg(sead::Mathf::rad2deg(fovy));
         setDebugNear(near);
@@ -386,12 +386,12 @@ void Layer::clearDrawMethod()
  */
 const sead::Camera* Layer::getRenderCamera() const
 {
-    if (mDebugFlag.isOn(1 << 1) && (mDebugFlag & 0x21) != 0 && mDebugInfo)
+    if (mDebugFlag.isOn(1 << 1) && (mDebugFlag & 0x21) != 0 && mDebugInfo != nullptr)
     {
         return &mDebugInfo->mCamera;
     }
 
-    return mCamera ? mCamera : &sCameraIdentity;
+    return (mCamera != nullptr) ? mCamera : &sCameraIdentity;
 }
 
 /**
@@ -400,12 +400,12 @@ const sead::Camera* Layer::getRenderCamera() const
  */
 const sead::Projection* Layer::getRenderProjection() const
 {
-    if ((mDebugDrawFlag & 2) && mDebugInfo)
+    if ((mDebugDrawFlag & 2) && mDebugInfo != nullptr)
     {
         return mDebugInfo->mProjection;
     }
 
-    return mProjection ? mProjection : &sProjectionIdentity;
+    return (mProjection != nullptr) ? mProjection : &sProjectionIdentity;
 }
 
 /**
@@ -489,7 +489,7 @@ void Layer::setDisplayType(s32 displayType)
 void Layer::calc_(const sead::Controller* pController, s32 controllerIndex,
                   bool isDebugCameraTwist)
 {
-    if (mDebugInfo)
+    if (mDebugInfo != nullptr)
     {
         if (mDebugInfo->mMessageTimer != 0)
         {
@@ -515,7 +515,7 @@ void Layer::calc_(const sead::Controller* pController, s32 controllerIndex,
         {
             if (mDebugFlag.isOn(1 << 0))
             {
-                if (pController)
+                if (pController != nullptr)
                 {
                     u32 hold = pController->getHoldMask();
                     u32 trig = pController->getTrigMask();
@@ -601,7 +601,7 @@ void Layer::calc_(const sead::Controller* pController, s32 controllerIndex,
             {
                 sead::LookAtCamera* pCamera = sead::DynamicCast<sead::LookAtCamera>(mCamera);
 
-                if (pCamera)
+                if (pCamera != nullptr)
                 {
                     f32 rotY = sead::Mathf::deg2rad(mDebugInfo->mRotateXDeg);
                     f32 rotX = sead::Mathf::deg2rad(mDebugInfo->mRotateYDeg);
@@ -629,7 +629,7 @@ void Layer::calc_(const sead::Controller* pController, s32 controllerIndex,
             }
         }
 
-        if (mProjection)
+        if (mProjection != nullptr)
         {
             if (!(mDebugDrawFlag & 2))
             {
@@ -640,7 +640,7 @@ void Layer::calc_(const sead::Controller* pController, s32 controllerIndex,
                 sead::Vector2f offset;
                 detail::SeadUtil::getNearFarAspectFovy(*mProjection, &near, &far, &aspect, &fovy,
                                                        &offset);
-                if (mDebugInfo)
+                if (mDebugInfo != nullptr)
                 {
                     setDebugFovyDeg(sead::Mathf::rad2deg(fovy));
                     setDebugNear(near);
@@ -661,7 +661,7 @@ void Layer::calc_(const sead::Controller* pController, s32 controllerIndex,
             {
                 auto* pPerspective = sead::DynamicCast<sead::PerspectiveProjection>(mProjection);
 
-                if (pPerspective)
+                if (pPerspective != nullptr)
                 {
                     pPerspective = sead::DynamicCast<sead::PerspectiveProjection>(mProjection);
                     mDebugInfo->mPerspectiveProjection = *pPerspective;
@@ -793,7 +793,7 @@ void Layer::clearColor_(const RenderInfo& rInfo) const
 
     const RenderBuffer* pFrameBuffer = rInfo.mFrameBuffer;
 
-    if (!pFrameBuffer)
+    if (pFrameBuffer == nullptr)
     {
         return;
     }
@@ -835,7 +835,7 @@ void Layer::drawRenderStep_(const RenderInfo& rInfo) const
  */
 void Layer::drawDebugCamera(DrawContext* pDrawContext) const
 {
-    if (!(mDebugInfo && mDebugFlag.isOn(1 << 1) && (mDebugFlag & 0x21) != 0 && mCamera &&
+    if (!(mDebugInfo != nullptr && mDebugFlag.isOn(1 << 1) && (mDebugFlag & 0x21) != 0 && mCamera != nullptr &&
           (mDebugFlag & 0xc0) != 0))
     {
         return;
@@ -885,7 +885,7 @@ void Layer::drawDebugInfo_(const RenderInfo& rInfo) const {}
  */
 void Layer::setDebugCameraAtDist(f32 dist)
 {
-    if (mDebugInfo)
+    if (mDebugInfo != nullptr)
     {
         mDebugInfo->mAtDist = dist;
     }
@@ -897,7 +897,7 @@ void Layer::setDebugCameraAtDist(f32 dist)
  */
 void Layer::setDebugCameraTwist(f32 twist)
 {
-    if (mDebugInfo)
+    if (mDebugInfo != nullptr)
     {
         mDebugInfo->mTwist = twist;
     }
@@ -909,7 +909,7 @@ void Layer::setDebugCameraTwist(f32 twist)
  */
 f32 Layer::getDebugCameraTwist()
 {
-    if (mDebugInfo)
+    if (mDebugInfo != nullptr)
     {
         return mDebugInfo->mTwist;
     }
@@ -923,7 +923,7 @@ f32 Layer::getDebugCameraTwist()
  */
 sead::LookAtCamera* Layer::getDebugCameraPtr()
 {
-    return mDebugInfo ? &mDebugInfo->mDebugCamera : nullptr;
+    return (mDebugInfo != nullptr) ? &mDebugInfo->mDebugCamera : nullptr;
 }
 
 /**
@@ -932,7 +932,7 @@ sead::LookAtCamera* Layer::getDebugCameraPtr()
  */
 void Layer::setDebugNear(f32 near)
 {
-    if (mDebugInfo)
+    if (mDebugInfo != nullptr)
     {
         mDebugInfo->mNear = near;
     }
@@ -944,7 +944,7 @@ void Layer::setDebugNear(f32 near)
  */
 void Layer::setDebugFar(f32 far)
 {
-    if (mDebugInfo)
+    if (mDebugInfo != nullptr)
     {
         mDebugInfo->mFar = far;
     }
@@ -956,7 +956,7 @@ void Layer::setDebugFar(f32 far)
  */
 void Layer::setDebugFovyDeg(f32 fovyDeg)
 {
-    if (mDebugInfo)
+    if (mDebugInfo != nullptr)
     {
         mDebugInfo->mFovyDeg = fovyDeg;
     }
@@ -993,7 +993,7 @@ void Layer::genMessage(sead::hostio::Context* pContext)
 
     f32 min;
 
-    if (mProjection)
+    if (mProjection != nullptr)
     {
         static const f32 cMin[] = {-1000.0f, 0.1f};
         min = cMin[mProjection->getProjectionType() == 0];
@@ -1043,7 +1043,7 @@ void Layer::genMessageCamera(sead::hostio::Context* pContext)
 
     {
         sead::FormatFixedSafeString<1024> str("GroupHeader=デバッグ, IsEnable=%s",
-                                              mCamera ? "true" : "false");
+                                              (mCamera != nullptr) ? "true" : "false");
     }
 
     {
@@ -1090,7 +1090,7 @@ void Layer::genMessageProjection(sead::hostio::Context* pContext)
 {
     f32 min;
 
-    if (mProjection)
+    if (mProjection != nullptr)
     {
         static const f32 cMin[] = {-1000.0f, 0.1f};
         min = cMin[mProjection->getProjectionType() == 0];

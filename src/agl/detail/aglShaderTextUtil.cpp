@@ -215,7 +215,7 @@ sead::HeapSafeString* ShaderTextUtil::createRawText(const sead::SafeString& rTex
                                                     const char* const* pSourceTexts,
                                                     s32 sourceNum, bool* pUsedFlags,
                                                     sead::Heap* pHeap) {
-    if (pUsedFlags) {
+    if (pUsedFlags != nullptr) {
         for (s32 i = 0; i < sourceNum; i++) {
             pUsedFlags[i] = false;
         }
@@ -266,11 +266,11 @@ sead::HeapSafeString* ShaderTextUtil::createRawText(const sead::SafeString& rTex
 
             const char* source = pSourceTexts[i];
 
-            if (pUsedFlags) {
+            if (pUsedFlags != nullptr) {
                 pUsedFlags[i] = true;
             }
 
-            if (!source) {
+            if (source == nullptr) {
                 break;
             }
 

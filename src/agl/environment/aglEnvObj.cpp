@@ -148,7 +148,7 @@ void EnvObj::copyFromImpl_(const EnvObj& rOther)
 {
     utl::ParameterBase* pFirst = mGroupName.getNext();
 
-    if (pFirst)
+    if (pFirst != nullptr)
     {
         copy(pFirst, mParamListTail, rOther.mGroupName.getNext(), rOther.mParamListTail);
     }
@@ -312,7 +312,7 @@ void EnvObj::listenPropertyEvent(const sead::hostio::PropertyEvent* pEvent)
             {
                 const EnvObj* pSrc = pMgr->getObj(type, mCopySrcIndex);
 
-                if (pSrc)
+                if (pSrc != nullptr)
                 {
                     copyFrom(*pSrc);
                 }

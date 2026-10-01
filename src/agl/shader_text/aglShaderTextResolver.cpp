@@ -293,7 +293,7 @@ void Resolver::restructDefineStack(DefineStackInfo* pInfo) {
         DefineLinker*& bucket = pInfo->mTable[static_cast<u8>(linker->mHash)];
         DefineLinker* at = bucket;
 
-        if (!at) {
+        if (at == nullptr) {
             bucket = linker;
             at = pInfo->mRoot->mPrev;
         }
@@ -367,7 +367,7 @@ DefineLinker* Resolver::createDefineLinker(Clause* pBegin, Clause* pEnd, bool* p
     DefineLinker*& bucket = mDefineStack.mTable[index];
     DefineLinker* at = bucket;
 
-    if (at) {
+    if (at != nullptr) {
         DefineLinker* root = mDefineStack.mRoot;
         const Clause* name = linker->mName;
 
@@ -429,7 +429,7 @@ const DefineLinker* Resolver::compareMacro(const Clause* pClause, u32 hash) cons
     u32 index = hash & 0xff;
     DefineLinker* linker = mDefineStack.mTable[index];
 
-    if (!linker) {
+    if (linker == nullptr) {
         return nullptr;
     }
 
@@ -487,7 +487,7 @@ Clause* Resolver::replaceMacro(Clause* pClause, const DefineLinker* pLinker, boo
         end = end->mNext;
     }
 
-    if (pLinker->mValueBegin) {
+    if (pLinker->mValueBegin != nullptr) {
         Clause::constIterator valueBegin(pLinker->mValueBegin);
         Clause::constIterator valueEnd(pLinker->mValueEnd);
         root->insertListAfter(Clause::clone(mUnitHeap, valueBegin, valueEnd, false));
@@ -661,7 +661,7 @@ Clause* Resolver::replaceMacro(Clause* pClause, const DefineLinker* pLinker, boo
 
     Clause* result = prev->mNext;
 
-    if (!list) {
+    if (list == nullptr) {
         return result;
     }
 
@@ -725,7 +725,7 @@ Clause* Resolver::resolveMacro(Clause* pClause, bool isExpandDefined, bool isCon
             if (c->compare("defined", 7) != 0) {
                 const DefineLinker* linker = compareMacro(c);
 
-                if (linker && linker->mIsEnabled) {
+                if (linker != nullptr && linker->mIsEnabled) {
                     if (macroLimit < 0) {
                         u32 num = calcMacroNum();
                         macroLimit = num * num;
@@ -747,7 +747,7 @@ Clause* Resolver::resolveMacro(Clause* pClause, bool isExpandDefined, bool isCon
                 if (isResolvable && !isDefined && close->mType == Clause::cType_Word) {
                     const DefineLinker* linker = compareMacro(close);
 
-                    if (linker) {
+                    if (linker != nullptr) {
                         isResolvable = linker->mIsResolvable;
                         isDefined = true;
                     } else if (mDeployInfoNum == 0) {
@@ -821,7 +821,7 @@ SyntaxTree* Resolver::resolveExpression(Clause* pBegin, Clause* pEnd, bool isSta
 
     SyntaxTree* tree = mEvaluator.resolve(pBegin, pEnd, !isStatic);
 
-    if (tree) {
+    if (tree != nullptr) {
         removeClause(backup->mNext, backup, true);
     } else {
         head->insertListAfter(backup);
@@ -872,7 +872,7 @@ Clause* Resolver::resolvePreprocessExpression(bool* pIsStatic, bool* pResult, Cl
         SyntaxTree* tree = resolveExpression(expr, exprLast, isStatic);
         removeClause(exprLast, exprLast->mPrev, true);
 
-        if (tree) {
+        if (tree != nullptr) {
             *pResult = tree->evaluate() != 0.0;
             *pIsStatic = tree->mIsValid;
             tree->removeClauseRecursive(mRemoveDelegate);
@@ -932,7 +932,7 @@ Clause* Resolver::resolvePreprocessExpression(bool* pIsStatic, bool* pResult, Cl
     if (directive->compare("ifdef", 5) == 0) {
         const DefineLinker* linker = compareMacro(name);
 
-        if (linker) {
+        if (linker != nullptr) {
             *pResult = true;
             *pIsStatic = linker->mIsResolvable;
             return lineEnd;
@@ -942,7 +942,7 @@ Clause* Resolver::resolvePreprocessExpression(bool* pIsStatic, bool* pResult, Cl
     } else if (directive->compare("ifndef", 6) == 0) {
         const DefineLinker* linker = compareMacro(name);
 
-        if (linker) {
+        if (linker != nullptr) {
             *pResult = false;
             *pIsStatic = linker->mIsResolvable;
             return lineEnd;
@@ -967,7 +967,7 @@ bool Resolver::resolvePreprocessBlock(Clause* pSharp, bool isStatic) {
     bool isResolved = false;
     Clause* lineEnd = resolvePreprocessExpression(&isResolved, &result, pSharp, isStatic);
 
-    if (!lineEnd) {
+    if (lineEnd == nullptr) {
         return false;
     }
 
@@ -1006,7 +1006,7 @@ bool Resolver::markPreprocessBlock(Clause** ppBlockBegin, Clause** ppBlockEnd, C
     bool isResolved = false;
     Clause* lineEnd = resolvePreprocessExpression(&isResolved, &result, pSharp, isStatic);
 
-    if (!lineEnd) {
+    if (lineEnd == nullptr) {
         return false;
     }
 
@@ -1057,7 +1057,7 @@ bool Resolver::resolveProgramBlock(Clause* pIf, bool* pResult) {
         }
     }
 
-    if (!close) {
+    if (close == nullptr) {
         return false;
     }
 
@@ -1111,7 +1111,7 @@ bool Resolver::resolveProgramBlock(Clause* pIf, bool* pResult) {
         tree = resolveExpression(expr, exprLast, true);
         removeClause(exprLast, exprLast->mPrev, true);
 
-        if (!tree) {
+        if (tree == nullptr) {
             return false;
         }
 
@@ -1119,7 +1119,7 @@ bool Resolver::resolveProgramBlock(Clause* pIf, bool* pResult) {
     } else {
         tree = resolveExpression(open, exprEnd, false);
 
-        if (!tree) {
+        if (tree == nullptr) {
             return false;
         }
     }
@@ -1181,7 +1181,7 @@ bool Resolver::resolveProgramBlock(Clause* pIf, bool* pResult) {
         }
     }
 
-    if (pResult) {
+    if (pResult != nullptr) {
         *pResult = result;
     }
 
@@ -1233,7 +1233,7 @@ bool Resolver::resolveTernaryBlock(Clause* pClause) {
         break;
     }
 
-    if (!question) {
+    if (question == nullptr) {
         return false;
     }
 
@@ -1291,7 +1291,7 @@ bool Resolver::resolveTernaryBlock(Clause* pClause) {
         tree = resolveExpression(expr, exprLast, true);
         removeClause(exprLast, exprLast->mPrev, true);
 
-        if (!tree) {
+        if (tree == nullptr) {
             return false;
         }
 
@@ -1299,7 +1299,7 @@ bool Resolver::resolveTernaryBlock(Clause* pClause) {
     } else {
         tree = resolveExpression(pClause, question, false);
 
-        if (!tree) {
+        if (tree == nullptr) {
             return false;
         }
     }
@@ -1566,7 +1566,7 @@ void Resolver::resolveStaticBranch(Clause* pBegin, Clause* pEnd) {
                                 } while (elseBodyEnd->isSpace());
                             }
                         } else if (!elseBodyEnd->isCloseBracket()) {
-                            for (; elseBodyEnd; elseBodyEnd = elseBodyEnd->mNext) {
+                            for (; elseBodyEnd != nullptr; elseBodyEnd = elseBodyEnd->mNext) {
                                 if (elseBodyEnd->mType == Clause::cType_Semicolon) {
                                     break;
                                 }
@@ -1636,7 +1636,7 @@ void Resolver::executePart(Clause* pSharp, Clause* pEnd, Clause* pSkip) {
             directive->compare("else", 4) == 0) {
             Clause* next = findPreprocessEnd(directive, pEnd, false);
 
-            if (!next) {
+            if (next == nullptr) {
                 next = pEnd;
             }
 
@@ -1785,7 +1785,7 @@ void Resolver::executeImpl(Clause* pBegin, Clause* pEnd, bool isInner) {
                 markPreprocessBlock(&blockBegin, &blockEnd, &partEnd, c, mFlags.isOn(0x20));
                 Clause* skip = nullptr;
 
-                if (blockBegin) {
+                if (blockBegin != nullptr) {
                     skip = blockBegin;
 
                     while (skip->mType != Clause::cType_Sharp) {
@@ -1795,7 +1795,7 @@ void Resolver::executeImpl(Clause* pBegin, Clause* pEnd, bool isInner) {
 
                 executePart(c, partEnd, skip);
 
-                if (blockBegin && blockEnd) {
+                if (blockBegin != nullptr && blockEnd != nullptr) {
                     executeImpl(blockBegin, blockEnd, false);
                 }
 

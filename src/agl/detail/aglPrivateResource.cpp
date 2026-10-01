@@ -35,12 +35,12 @@ PrivateResource::PrivateResource() : mDebugPrintFn(debugPrint) {}
  */
 PrivateResource::~PrivateResource()
 {
-    if (mCursorTextureSampler)
+    if (mCursorTextureSampler != nullptr)
     {
         mCursorTextureSampler->~TextureSampler();
     }
 
-    if (utl::ParameterStringMgr::instance())
+    if (utl::ParameterStringMgr::instance() != nullptr)
     {
         utl::ParameterStringMgr::deleteInstance();
     }
@@ -88,7 +88,7 @@ void PrivateResource::createArchive(sead::ArchiveRes* pArchive)
 
     const void* pFile = getFileFromArc("arrow.raw");
 
-    if (!pFile)
+    if (pFile == nullptr)
     {
         return;
     }

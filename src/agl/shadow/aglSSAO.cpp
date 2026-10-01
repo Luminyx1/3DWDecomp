@@ -57,7 +57,7 @@ SSAO::Context::Context()
  */
 SSAO::Context::~Context()
 {
-    if (mAOBuffer)
+    if (mAOBuffer != nullptr)
     {
         utl::DynamicTextureAllocator::instance()->free(mAOBuffer);
         mAOBuffer = nullptr;
@@ -80,7 +80,7 @@ void SSAO::Context::allocTexture(DrawContext* pDrawContext, TextureFormat format
     mRenderBuffer.setPhysicalArea(0.0f, 0.0f, static_cast<f32>(width), static_cast<f32>(height));
     mAOSampler.setFilterDirect(1, 1, 0);
 
-    if (mAOBuffer)
+    if (mAOBuffer != nullptr)
     {
         allocator->free(mAOBuffer);
     }
@@ -89,7 +89,7 @@ void SSAO::Context::allocTexture(DrawContext* pDrawContext, TextureFormat format
         allocator->alloc(pDrawContext, "ao_buffer", format, width, height, mipLevelNum, nullptr,
                          utl::DynamicTextureAllocator::cAllocateType_0, true, false);
 
-    if (!mSSAOTexture)
+    if (mSSAOTexture == nullptr)
     {
         mSSAOTexture = allocator->alloc(pDrawContext, "ssao_ao", format, width, height, 1, nullptr,
                                         utl::DynamicTextureAllocator::cAllocateType_1, true, false);
@@ -360,7 +360,7 @@ void SSAO::release(s32 index)
 {
     Context& context = mContexts[index];
 
-    if (context.mAOBuffer)
+    if (context.mAOBuffer != nullptr)
     {
         utl::DynamicTextureAllocator::instance()->free(context.mAOBuffer);
         context.mAOBuffer = nullptr;

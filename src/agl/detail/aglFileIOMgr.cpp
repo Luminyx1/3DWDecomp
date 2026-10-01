@@ -43,7 +43,7 @@ FileIOMgr::~FileIOMgr() {
  * @param pHeap heap used for the file table and device, or nullptr to skip allocation
  */
 void FileIOMgr::initialize(const CreateArg& rArg, sead::Heap* pHeap) {
-    if (pHeap) {
+    if (pHeap != nullptr) {
         mFiles.tryAllocBuffer(0x1000, pHeap);
 
         for (auto& file : mFiles) {
@@ -97,7 +97,7 @@ bool FileIOMgr::save(const sead::XmlDocument& rDocument, const DialogArg& rArg, 
     sead::FileHandle handle;
     sead::FileDevice* device =
         mDevice->tryOpen(&handle, info.mPath, sead::FileDevice::cFileOpenFlag_WriteOnly, 0);
-    if (!device) {
+    if (device == nullptr) {
         showErrorDialog_(info.mPath);
         return false;
     }
@@ -194,7 +194,7 @@ bool FileIOMgr::save(const void* pData, u32 size, const DialogArg& rArg) {
     sead::FileHandle handle;
     sead::FileDevice* device =
         mDevice->tryOpen(&handle, info.mPath, sead::FileDevice::cFileOpenFlag_WriteOnly, 0);
-    if (!device) {
+    if (device == nullptr) {
         return false;
     }
 

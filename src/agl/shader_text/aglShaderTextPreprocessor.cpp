@@ -50,22 +50,22 @@ void Preprocessor::finalize() {
     mRoot->erase();
     mDefineRoot->erase();
 
-    if (mLexicalHeap) {
+    if (mLexicalHeap != nullptr) {
         mLexicalHeap->destroy();
         mLexicalHeap = nullptr;
     }
 
-    if (mSyntacticHeap) {
+    if (mSyntacticHeap != nullptr) {
         mSyntacticHeap->destroy();
         mSyntacticHeap = nullptr;
     }
 
-    if (mFormatHeap) {
+    if (mFormatHeap != nullptr) {
         mFormatHeap->destroy();
         mFormatHeap = nullptr;
     }
 
-    if (mReplaceInfos) {
+    if (mReplaceInfos != nullptr) {
         for (u32 i = 0; i < mReplaceInfoNum; i++) {
             mReplaceInfos[i].mLinker.clear();
         }
@@ -75,13 +75,13 @@ void Preprocessor::finalize() {
         mReplaceInfoNum = 0;
     }
 
-    if (mDeployInfos) {
+    if (mDeployInfos != nullptr) {
         delete[] mDeployInfos;
         mDeployInfos = nullptr;
         mDeployInfoNum = 0;
     }
 
-    if (mAppendedMacros) {
+    if (mAppendedMacros != nullptr) {
         DefineLinker* root = mAppendedMacros;
 
         for (DefineLinker* linker = root->mNext; linker != root;) {
@@ -241,7 +241,7 @@ void Preprocessor::setDeployMacro(const char** pNames, u32 num) {
 void Preprocessor::appendMacro(const DefineLinker* pLinker) {
     sead::Heap* heap = mWorkHeap;
 
-    if (!mAppendedMacros) {
+    if (mAppendedMacros == nullptr) {
         mAppendedMacros = new (heap) DefineLinker();
     }
 
@@ -291,7 +291,7 @@ bool Preprocessor::preprocess(u32 flags, u64 clauseNum, u64 appendHeapSize) {
         Resolver resolver;
         appendHeap->mFlag.setBit(sead::Heap::Flag::cDisposing);
 
-        if (mAppendedMacros) {
+        if (mAppendedMacros != nullptr) {
             DefineLinker* root = mDefineRoot;
             root->insertListAfter(mAppendedMacros->cloneAll(appendHeap, clauseHeap));
         }
@@ -602,7 +602,7 @@ void Preprocessor::format(bool useTab) {
             removeClause(next, end, false);
         }
 
-        if (!bracket) {
+        if (bracket == nullptr) {
             continue;
         }
 

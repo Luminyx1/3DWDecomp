@@ -70,7 +70,7 @@ void ColorCorrection::destroy_()
     mSamplers.freeBuffer();
     mMapImage.deleteGPUMemBlock();
 
-    if (mDebugTexturePage)
+    if (mDebugTexturePage != nullptr)
     {
         mDebugTexturePage->cleanUp();
         delete mDebugTexturePage;
@@ -274,7 +274,7 @@ void ColorCorrection::genMessage(sead::hostio::Context* pContext)
 {
     genMessageIO(pContext, 0xf);
 
-    if (mDebugTexturePage)
+    if (mDebugTexturePage != nullptr)
     {
         mDebugTexturePage->genMessagePage(pContext, this);
     }

@@ -118,7 +118,7 @@ void DynamicTextureAllocator::initialize(s32 textureNum, u64 size, u64 debugSize
     GPUMemVoidAddr debugAddr;
     u64 debugHeapSize = 0;
 
-    if (debugSize != 0 && pDebugHeap)
+    if (debugSize != 0 && pDebugHeap != nullptr)
     {
         auto* pDebugBlock = new (pDebugHeap) GPUMemBlock<u8>;
         pDebugBlock->allocBuffer(debugSize, pDebugHeap, 8, MemoryAttribute(attribute));
@@ -286,7 +286,7 @@ TextureDataEx* DynamicTextureAllocator::alloc_(DrawContext* pDrawContext, Contex
             }
         }
 
-        if (pTexture)
+        if (pTexture != nullptr)
         {
             pTexture->mState.set(1);
             isNeedInitialize = pTexture->mOption.isOn(1);
@@ -333,7 +333,7 @@ TextureDataEx* DynamicTextureAllocator::alloc_(DrawContext* pDrawContext, Contex
             }
         }
 
-        if (!pTexture)
+        if (pTexture == nullptr)
         {
             u32 i = 0;
 
@@ -366,13 +366,13 @@ TextureDataEx* DynamicTextureAllocator::alloc_(DrawContext* pDrawContext, Contex
     pTexture->mAllocatorIndex = allocatorIndex;
     pTexture->mMemoryBlock = rAllocator.alloc(pTexture->mAllocateArg, pAddr, withContext);
 
-    if (pTexture->mMemoryBlock && !isValid_(withContext ? pContext : nullptr))
+    if (pTexture->mMemoryBlock != nullptr && !isValid_(withContext ? pContext : nullptr))
     {
         rAllocator.free(pTexture->mMemoryBlock, true);
         pTexture->mMemoryBlock = nullptr;
     }
 
-    if (!pTexture->mMemoryBlock)
+    if (pTexture->mMemoryBlock == nullptr)
     {
         dumpAll();
     }
@@ -768,7 +768,7 @@ bool DynamicTextureAllocator::queryTextureMemoryInfo(
 
         if (rTexture.mMemoryBlock == pBlock)
         {
-            if (ppName)
+            if (ppName != nullptr)
             {
                 *ppName = rTexture.mName.cstr();
             }
@@ -921,7 +921,7 @@ void TextureDataEx::initialize(TextureFormat format, TextureType type, u32 width
  */
 bool DynamicTextureAllocator::isValid_(const Context* pContext) const
 {
-    if (pContext)
+    if (pContext != nullptr)
     {
         return isContextValid_(pContext);
     }
@@ -1010,7 +1010,7 @@ void DynamicTextureAllocator::dump_(s32 index) const
 
     for (const auto& rTexture : mTextures)
     {
-        if (rTexture.mMemoryBlock && rTexture.mContext == &rContext)
+        if (rTexture.mMemoryBlock != nullptr && rTexture.mContext == &rContext)
         {
             const detail::Surface& rSurface = rTexture.getSurface();
             str.format("[%s] (%4dx%4d) size:%d [%s]", rTexture.mName.cstr(),

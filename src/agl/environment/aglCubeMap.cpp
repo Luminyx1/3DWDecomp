@@ -277,7 +277,7 @@ bool CubeMap::begin(DrawContext* pDrawContext, bool useColorBuffer, bool useDept
                        nullptr;
     mFlag.set(1 << 3);
 
-    if (!useDepthBuffer || mDepthBuffer)
+    if (!useDepthBuffer || mDepthBuffer != nullptr)
     {
         mFlag.set(1 << 5);
     }
@@ -310,14 +310,14 @@ bool CubeMap::preDraw(DrawContext* pDrawContext, u32 slice, u32 face, u32 mipLev
 
     if (!mFlag.isOn(1 << 4) || mCurrentSize != s32(size))
     {
-        if (mDepthBuffer)
+        if (mDepthBuffer != nullptr)
         {
             mDepthTexture.initialize_(TextureType(1), TextureFormat(0x3c), size, size, 1, 1,
                                       TextureAttribute(0), MultiSampleType(0), true);
             mDepthTexture.setImagePtr(mDepthBuffer->getImagePtr(), 0);
         }
 
-        if (mColorBuffer)
+        if (mColorBuffer != nullptr)
         {
             mColorTexture.initialize_(TextureType(1),
                                       TextureFormat(mColorBuffer->getTextureFormat()), size, size,
@@ -332,9 +332,9 @@ bool CubeMap::preDraw(DrawContext* pDrawContext, u32 slice, u32 face, u32 mipLev
     mCurrentMipLevel = mipLevel;
     mCurrentSize = size;
 
-    if (mColorBuffer)
+    if (mColorBuffer != nullptr)
     {
-        if (mDepthBuffer)
+        if (mDepthBuffer != nullptr)
         {
             bindRenderBuffer(pDrawContext, &mColorTexture, 0, 0, &mDepthTexture, mZCullBuffer,
                              true);
@@ -346,7 +346,7 @@ bool CubeMap::preDraw(DrawContext* pDrawContext, u32 slice, u32 face, u32 mipLev
     }
     else
     {
-        if (mDepthBuffer)
+        if (mDepthBuffer != nullptr)
         {
             bindRenderBuffer(pDrawContext, &mTextureData, mipLevel, slice * 6 + face,
                              &mDepthTexture, mZCullBuffer, true);
@@ -389,7 +389,7 @@ void CubeMap::bindRenderBuffer(DrawContext* pDrawContext, const TextureData* pCo
         mRenderTargetColor.invalidateGPUCache(pDrawContext);
     }
 
-    if (pDepth)
+    if (pDepth != nullptr)
     {
         mRenderTargetDepth.applyTextureData(*pDepth, 0, 0);
         GPUMemVoidAddr zcull = zcullBuffer;
@@ -414,7 +414,7 @@ void CubeMap::postDraw(DrawContext* pDrawContext, bool flip)
         return;
     }
 
-    if (mColorBuffer)
+    if (mColorBuffer != nullptr)
     {
         mRenderTargetColor.invalidateGPUCache(pDrawContext);
         sead::GraphicsContext context;
@@ -474,12 +474,12 @@ void CubeMap::end(DrawContext* pDrawContext)
 
     mRenderTargetColor.invalidateGPUCache(pDrawContext);
 
-    if (mColorBuffer)
+    if (mColorBuffer != nullptr)
     {
         utl::DynamicTextureAllocator::instance()->free(mColorBuffer);
     }
 
-    if (mDepthBuffer)
+    if (mDepthBuffer != nullptr)
     {
         utl::DynamicTextureAllocator::instance()->free(mDepthBuffer);
     }

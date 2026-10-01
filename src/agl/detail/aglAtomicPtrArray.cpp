@@ -13,7 +13,7 @@ void AtomicPtrArrayImpl::setBuffer(s32 ptrNumMax, void* pBuffer)
 {
     if (ptrNumMax >= 1)
     {
-        if (!pBuffer)
+        if (pBuffer == nullptr)
         {
             SEAD_ASSERT_MSG(false, "buf is null");
             return;

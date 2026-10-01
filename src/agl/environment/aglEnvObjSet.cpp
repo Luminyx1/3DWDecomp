@@ -83,7 +83,7 @@ void EnvObjSet::allocBuffer(const AllocateArg& rArg, sead::Heap* pHeap)
  */
 bool EnvObjSet::pushBack(EnvObj* pObj)
 {
-    if (!pObj)
+    if (pObj == nullptr)
     {
         return false;
     }
@@ -112,7 +112,7 @@ bool EnvObjSet::pushBack(EnvObj* pObj)
  */
 bool EnvObjSet::erase(EnvObj* pObj)
 {
-    if (!pObj)
+    if (pObj == nullptr)
     {
         return false;
     }

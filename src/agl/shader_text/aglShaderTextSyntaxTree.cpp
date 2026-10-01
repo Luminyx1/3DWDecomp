@@ -39,24 +39,24 @@ SyntaxTree::~SyntaxTree() {
  * @param pRemoveDelegate delegate that removes a clause
  */
 void SyntaxTree::removeClauseRecursive(const sead::AnyDelegate1Const<Clause*>* pRemoveDelegate) {
-    if (mLeft) {
+    if (mLeft != nullptr) {
         mLeft->removeClauseRecursive(pRemoveDelegate);
     }
 
-    if (mCenter) {
+    if (mCenter != nullptr) {
         mCenter->removeClauseRecursive(pRemoveDelegate);
     }
 
-    if (mRight) {
+    if (mRight != nullptr) {
         mRight->removeClauseRecursive(pRemoveDelegate);
     }
 
-    if (mOperator) {
+    if (mOperator != nullptr) {
         (*pRemoveDelegate)(mOperator);
         mOperator = nullptr;
     }
 
-    if (mValue) {
+    if (mValue != nullptr) {
         (*pRemoveDelegate)(mValue);
         mValue = nullptr;
     }
@@ -80,7 +80,7 @@ f64 SyntaxTree::checkAndGetValue() const {
  * @return the value
  */
 f64 SyntaxTree::checkAndEvaluate(const SyntaxTree* pTree) const {
-    if (pTree) {
+    if (pTree != nullptr) {
         f64 value = pTree->evaluate();
 
         if (!pTree->mIsValid) {
@@ -100,7 +100,7 @@ f64 SyntaxTree::checkAndEvaluate(const SyntaxTree* pTree) const {
 f64 SyntaxTree::evaluate() const {
     mIsValid = true;
 
-    if (!mOperator) {
+    if (mOperator == nullptr) {
         mResult = checkAndGetValue();
         return mResult;
     }
@@ -251,7 +251,7 @@ f64 SyntaxTree::evaluate() const {
  * @return first clause of the created list
  */
 Clause* SyntaxTree::constructRecursive(sead::Heap* pHeap, sead::Heap* pStringHeap) const {
-    if (!mOperator) {
+    if (mOperator == nullptr) {
         const Clause* value = mValue;
 
         if (value->mFlag & 1) {
@@ -357,7 +357,7 @@ Clause* SyntaxTree::constructRecursive(sead::Heap* pHeap, sead::Heap* pStringHea
                 list = mLeft->constructRecursive(pHeap, pStringHeap);
             }
 
-            if (list) {
+            if (list != nullptr) {
                 return list;
             }
         }

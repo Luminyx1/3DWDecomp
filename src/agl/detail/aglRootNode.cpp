@@ -45,7 +45,7 @@ void RootNode::initialize(sead::Heap* pHeap, const sead::SafeString& rMetaSuffix
  */
 void RootNode::setNodeMeta(sead::hostio::Node* pNode, const sead::SafeString& rMeta)
 {
-    if (sInstance && PrivateResource::instance()->getDebugHeap())
+    if (sInstance != nullptr && PrivateResource::instance()->getDebugHeap() != nullptr)
     {
         sead::FormatFixedSafeString<1024> meta("%s%s", rMeta.cstr(), sInstance->mMetaSuffix.cstr());
     }
@@ -58,7 +58,7 @@ void RootNode::setNodeMeta(sead::hostio::Node* pNode, const sead::SafeString& rM
  */
 void RootNode::appendChildAGL(const sead::SafeString& rName, sead::hostio::Node* pNode)
 {
-    if (pNode)
+    if (pNode != nullptr)
     {
         setNodeMeta(pNode, "Icon=NOTE");
     }
