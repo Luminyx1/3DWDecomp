@@ -45,12 +45,12 @@ ClippingViewFadeInAreas::ClippingViewFadeInAreas(const char* pLinkName,
     for (s32 i = 0; i < num; i++) {
         PlacementInfo placementInfo;
         getLinksInfoByIndex(&placementInfo, rPlacementInfo, pLinkName, i);
-        areaInitInfo.set(placementInfo, rInfo.mStageSwitchDirector);
+        areaInitInfo.set(placementInfo, rInfo.getStageSwitchDirector());
         AreaObj* areaObj = new AreaObj("linkName");
         areaObj->init(areaInitInfo);
         resisterAreaObj(areaObj);
 
-        if (!isValidBox || !areaObj->mShape->calcLocalBoundingBox(&localBox)) {
+        if (!isValidBox || !areaObj->getAreaShape()->calcLocalBoundingBox(&localBox)) {
             isValidBox = false;
             continue;
         }
@@ -64,7 +64,7 @@ ClippingViewFadeInAreas::ClippingViewFadeInAreas(const char* pLinkName,
             {boxMax.x, boxMax.y, boxMax.z}, {boxMin.x, boxMax.y, boxMax.z},
         };
 
-        const sead::Vector3f& scale = areaObj->mShape->mScale;
+        const sead::Vector3f& scale = areaObj->getAreaShape()->mScale;
 
         for (s32 j = 0; j < 8; j++) {
             sead::Vector3f& corner = corners[j];
@@ -164,7 +164,7 @@ ClipForceViewArea::ClipForceViewArea(const char* pLinkName, const PlacementInfo&
     for (s32 i = 0; i < num; i++) {
         PlacementInfo placementInfo;
         getLinksInfoByIndex(&placementInfo, rPlacementInfo, pLinkName, i);
-        areaInitInfo.set(placementInfo, rInfo.mStageSwitchDirector);
+        areaInitInfo.set(placementInfo, rInfo.getStageSwitchDirector());
         AreaObj* areaObj = new AreaObj("linkName");
         areaObj->init(areaInitInfo);
         resisterAreaObj(areaObj);

@@ -79,7 +79,7 @@ void ViewInfoCtrl::update() {
         clippingId->_9 = false;
     }
 
-    for (s32 i = 0; i < mViewCtrlAreaGroup->mNumAreas; i++) {
+    for (s32 i = 0; i < mViewCtrlAreaGroup->getSize(); i++) {
         AreaObj* areaObj = mViewCtrlAreaGroup->getAreaObj(i);
         s32 playerNum = getPlayerNumMax(mPlayerHolder);
 
@@ -90,7 +90,7 @@ void ViewInfoCtrl::update() {
 
             if (tryIsInAreaPos(areaObj, getPlayerPos(mPlayerHolder, j))) {
                 PlacementId viewId;
-                alPlacementFunction::getClippingViewId(&viewId, *areaObj->mPlacementInfo);
+                alPlacementFunction::getClippingViewId(&viewId, areaObj->getPlacementInfo());
                 ClippingPlacementId* clippingId = tryFindViewInfo(&viewId);
 
                 if (clippingId != nullptr) {

@@ -63,7 +63,7 @@ void ClippingFarAreaObserver::update() {
             continue;
         }
 
-        if (mCurrentArea == nullptr || areaObj->mPriority > mCurrentArea->mPriority) {
+        if (mCurrentArea == nullptr || areaObj->getPriority() > mCurrentArea->getPriority()) {
             mCurrentArea = areaObj;
         }
     }

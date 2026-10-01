@@ -285,7 +285,7 @@ void ClippingAreaDirector::waitPendingClippingRequest() {
  * @param isDisabled whether the LOD is disabled
  */
 void ClippingAreaDirector::setLODDisabled(LiveActor* pActor, bool isDisabled) {
-    ClippingAreaActorInfoNode* node = pActor->mClippingInfoNode;
+    ClippingAreaActorInfoNode* node = pActor->getClippingInfoNode();
 
     if (node == nullptr) {
         return;

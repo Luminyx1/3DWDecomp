@@ -43,7 +43,7 @@ void ClippingDirector::endInit() {
  */
 void ClippingDirector::registerActor(LiveActor* pActor, const ActorInitInfo& rInfo) {
     ClippingActorInfo* info = mClippingActorHolder->registerActor(pActor);
-    PlacementId* placementId = rInfo.mPlacementId;
+    PlacementId* placementId = rInfo.getPlacementId();
     info->mPlacementId = placementId;
     mViewInfoCtrl->initActorInfo(info, placementId);
 }

@@ -33,7 +33,7 @@ void ClippingActorHolder::update(const ClippingJudge* pJudge) {
  * @return the clipping info of the actor
  */
 ClippingActorInfo* ClippingActorHolder::registerActor(LiveActor* pActor) {
-    LiveActorFlag* flags = pActor->mActorFlags;
+    LiveActorFlag* flags = pActor->getFlags();
     flags->isInvalidClipping = false;
     flags->_1c = false;
     ClippingActorInfo* info = new ClippingActorInfo(pActor);
@@ -77,7 +77,7 @@ ClippingActorInfo* ClippingActorHolder::initGroupClipping(LiveActor* pActor,
  * @param pActor actor to enable clipping for
  */
 void ClippingActorHolder::validateClipping(LiveActor* pActor) {
-    LiveActorFlag* flags = pActor->mActorFlags;
+    LiveActorFlag* flags = pActor->getFlags();
     flags->isInvalidClipping = false;
     flags->_1c = false;
     ClippingActorInfo* info = mInvalidClippings->remove(pActor);
@@ -96,7 +96,7 @@ void ClippingActorHolder::validateClipping(LiveActor* pActor) {
  * @param pActor actor to disable clipping for
  */
 void ClippingActorHolder::invalidateClipping(LiveActor* pActor) {
-    LiveActorFlag* flags = pActor->mActorFlags;
+    LiveActorFlag* flags = pActor->getFlags();
     flags->isInvalidClipping = true;
     flags->_1c = false;
     ClippingActorInfoList* list;
