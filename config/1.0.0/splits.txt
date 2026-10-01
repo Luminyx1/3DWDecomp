@@ -5715,7 +5715,7 @@ src/al/Library/Effect/PtclSystem.cpp:
     .text   start:0x0099B9F0 end:0x0099CBC4
 src/al/Project/Framework/MultiCoreQueueThread.cpp: done
     .text   start:0x0099CBD0 end:0x0099CF24
-src/al/Library/Framework/GameFrameworkNx.cpp:
+src/al/Library/Framework/GameFrameworkNx.cpp: done
     .text   start:0x0099CF40 end:0x0099E6EC
 src/al/Project/Controller/PadTouchDevice.cpp: done
     .text   start:0x0099E6F0 end:0x0099E9DC
