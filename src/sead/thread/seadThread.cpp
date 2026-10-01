@@ -290,7 +290,7 @@ void ThreadMgr::destroy()
 
 void ThreadMgr::destroyMainThread_()
 {
-    if (mMainThread)
+    if (mMainThread != nullptr)
     {
         delete mMainThread;
         mMainThread = nullptr;

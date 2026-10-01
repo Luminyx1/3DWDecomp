@@ -306,14 +306,14 @@ bool FixedSizeJQ::run(u32 size, u32* pFinishedJobs, Worker* pWorker)
 
     if (size > 0 && mNumJobs > 0)
     {
-        if (pWorker)
+        if (pWorker != nullptr)
         {
             pWorker->setState(Worker::State::cRunning_WaitLock);
         }
 
         mLock.lock();
 
-        if (pWorker)
+        if (pWorker != nullptr)
         {
             pWorker->setState(Worker::State::cRunning_GetLock);
         }
@@ -332,7 +332,7 @@ bool FixedSizeJQ::run(u32 size, u32* pFinishedJobs, Worker* pWorker)
 
     mPerf.measureBeginRun();
 
-    if (pWorker)
+    if (pWorker != nullptr)
     {
         pWorker->setState(Worker::State::cRunning_Run);
     }
@@ -342,7 +342,7 @@ bool FixedSizeJQ::run(u32 size, u32* pFinishedJobs, Worker* pWorker)
         mJobs[i]->invoke();
     }
 
-    if (pWorker)
+    if (pWorker != nullptr)
     {
         pWorker->setState(Worker::State::cRunning_AfterRun);
     }
@@ -351,14 +351,14 @@ bool FixedSizeJQ::run(u32 size, u32* pFinishedJobs, Worker* pWorker)
 
     if (ret)
     {
-        if (pWorker)
+        if (pWorker != nullptr)
         {
             pWorker->setState(Worker::State::cRunning_AllJobDoneReturn);
         }
     }
     else
     {
-        if (pWorker)
+        if (pWorker != nullptr)
         {
             pWorker->setState(Worker::State::cRunning_BeforeReturn);
         }

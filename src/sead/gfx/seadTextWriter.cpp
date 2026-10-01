@@ -44,7 +44,7 @@ TextWriter::TextWriter(DrawContext* pDrawContext) : mViewport(nullptr), mDrawCon
  */
 FontBase* TextWriter::getDefaultFont()
 {
-    return sDefaultFont ? sDefaultFont : DebugFontMgrNvn::instance();
+    return (sDefaultFont != nullptr) ? sDefaultFont : DebugFontMgrNvn::instance();
 }
 
 /**
@@ -122,7 +122,7 @@ void TextWriter::setScaleFromFontHeight(f32 fontHeight)
  */
 void TextWriter::setProjectionAndCamera(const Projection* pProjection, const Camera* pCamera)
 {
-    if (pProjection && pCamera)
+    if (pProjection != nullptr && pCamera != nullptr)
     {
         mProjection = pProjection;
         mCamera = pCamera;
@@ -206,7 +206,7 @@ void TextWriter::vprintfImpl_(const char16_t* pFormat, std::va_list args, bool i
     char16_t* buffer;
     s32 bufferSize;
 
-    if (mFormatBuffer)
+    if (mFormatBuffer != nullptr)
     {
         buffer = mFormatBuffer;
         bufferSize = mFormatBufferSize;
@@ -261,7 +261,7 @@ void TextWriter::vprintfImpl_(const char* pFormat, std::va_list args, bool isDra
     char16_t* buffer;
     s32 bufferSize;
 
-    if (mFormatBuffer)
+    if (mFormatBuffer != nullptr)
     {
         buffer = mFormatBuffer;
         bufferSize = mFormatBufferSize;
@@ -457,7 +457,7 @@ void TextWriter::printImpl_(const char16_t* pStr, s32 length, bool isDraw, Bound
  */
 void TextWriter::printImpl_(const char16_t* pStr, s32 length, bool isDraw, BoundBox2f* pRect)
 {
-    if ((!mProjection || !mCamera) && isDraw)
+    if ((mProjection == nullptr || mCamera == nullptr) && isDraw)
     {
         OrthoProjection projection(1.0f, 1000.0f, *mViewport);
         OrthoCamera camera(projection);
@@ -483,7 +483,7 @@ void TextWriter::printImpl_(const char* pStr, s32 length, bool isDraw, BoundBox2
     char16_t* buffer;
     s32 bufferSize;
 
-    if (mFormatBuffer)
+    if (mFormatBuffer != nullptr)
     {
         buffer = mFormatBuffer;
         bufferSize = mFormatBufferSize;

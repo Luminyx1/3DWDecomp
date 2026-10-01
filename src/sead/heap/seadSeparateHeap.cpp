@@ -21,7 +21,7 @@ inline uintptr_t alignUp(uintptr_t value, u32 alignment)
 inline void notifyAllocFailed(HeapMgr* pMgr, Heap* pHeap, size_t size, s32 alignment,
                               size_t allocSize, s32 allocAlignment)
 {
-    if (!pMgr)
+    if (pMgr == nullptr)
     {
         return;
     }
@@ -61,7 +61,7 @@ SeparateHeap::SeparateHeap(const SafeString& rName, Heap* pParent, void* pManage
     ConditionalScopedLock<CriticalSection> lock(&mCS, isLockEnabled());
     s32 nodeNum = managementAreaSize / cBlockNodeSize;
 
-    if (pManagementArea && nodeNum > 0)
+    if (pManagementArea != nullptr && nodeNum > 0)
     {
         mBlockList.setBuffer(nodeNum, pManagementArea);
     }
@@ -112,11 +112,11 @@ SeparateHeap* SeparateHeap::tryCreate(const SafeString& rName, size_t management
         return nullptr;
     }
 
-    if (!pParent)
+    if (pParent == nullptr)
     {
         pParent = HeapMgr::instance()->getCurrentHeap();
 
-        if (!pParent)
+        if (pParent == nullptr)
         {
             return nullptr;
         }
@@ -186,7 +186,7 @@ void SeparateHeap::destroy()
 
     this->~SeparateHeap();
 
-    if (parent && parent->isFreeable())
+    if (parent != nullptr && parent->isFreeable())
     {
         parent->free(this);
     }
@@ -264,7 +264,7 @@ void* SeparateHeap::tryAlloc(size_t size, s32 alignment)
 
     Block* block;
 
-    if (next)
+    if (next != nullptr)
     {
         block = mBlockList.emplaceBefore(next);
     }
@@ -284,7 +284,7 @@ void* SeparateHeap::tryAlloc(size_t size, s32 alignment)
  */
 void SeparateHeap::free(void* pPtr)
 {
-    if (!pPtr)
+    if (pPtr == nullptr)
     {
         return;
     }
@@ -292,7 +292,7 @@ void SeparateHeap::free(void* pPtr)
     ConditionalScopedLock<CriticalSection> lock(&mCS, isLockEnabled());
     Block* block = findBlock_(pPtr);
 
-    if (block)
+    if (block != nullptr)
     {
         mBlockList.erase(block);
     }
@@ -327,7 +327,7 @@ void* SeparateHeap::resizeFront(void* pPtr, size_t size)
     ConditionalScopedLock<CriticalSection> lock(&mCS, isLockEnabled());
     Block* block = findBlock_(pPtr);
 
-    if (!block)
+    if (block == nullptr)
     {
         return nullptr;
     }
@@ -337,7 +337,7 @@ void* SeparateHeap::resizeFront(void* pPtr, size_t size)
     if (block->mSize < size)
     {
         Block* prev = mBlockList.prev(block);
-        uintptr_t prevEnd = prev ? uintptr_t(prev->mAddress) + prev->mSize : uintptr_t(mStart);
+        uintptr_t prevEnd = (prev != nullptr) ? uintptr_t(prev->mAddress) + prev->mSize : uintptr_t(mStart);
         void* newAddress = PtrUtil::addOffset(block->mAddress, diff);
 
         if (prevEnd > uintptr_t(newAddress))
@@ -372,7 +372,7 @@ void* SeparateHeap::resizeBack(void* pPtr, size_t size)
     ConditionalScopedLock<CriticalSection> lock(&mCS, isLockEnabled());
     Block* block = findBlock_(pPtr);
 
-    if (!block)
+    if (block == nullptr)
     {
         return nullptr;
     }
@@ -380,7 +380,7 @@ void* SeparateHeap::resizeBack(void* pPtr, size_t size)
     if (block->mSize < size)
     {
         Block* next = mBlockList.next(block);
-        uintptr_t nextStart = next ? uintptr_t(next->mAddress) : uintptr_t(mStart) + mSize;
+        uintptr_t nextStart = (next != nullptr) ? uintptr_t(next->mAddress) : uintptr_t(mStart) + mSize;
 
         if (nextStart < uintptr_t(pPtr) + size)
         {

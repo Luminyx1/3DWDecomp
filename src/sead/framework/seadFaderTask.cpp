@@ -141,16 +141,16 @@ void FaderTaskBase::calcCore_()
                     break;
                 case cStartType_Pop:
                 {
-                    TaskBase* task = mFromTask->parent() ? mFromTask->parent()->value() : nullptr;
+                    TaskBase* task = (mFromTask->parent() != nullptr) ? mFromTask->parent()->value() : nullptr;
                     TaskBase* to = mToTask;
                     mTaskMgr->doDestroyTask_(mFromTask);
 
-                    if (to)
+                    if (to != nullptr)
                     {
                         while (task != mToTask)
                         {
                             mTaskMgr->doDestroyTask_(task);
-                            task = task->parent() ? task->parent()->value() : nullptr;
+                            task = (task->parent() != nullptr) ? task->parent()->value() : nullptr;
                         }
                     }
 
@@ -199,12 +199,12 @@ void FaderTaskBase::calcCore_()
             mFrame = mFadeInEndFrame + 1;
             setFaderState_(cFaderState_None);
 
-            if (mFromTask)
+            if (mFromTask != nullptr)
             {
                 mFromTask->mInternalFlag.resetBit(0);
             }
 
-            if (mToTask)
+            if (mToTask != nullptr)
             {
                 mToTask->mInternalFlag.resetBit(0);
             }

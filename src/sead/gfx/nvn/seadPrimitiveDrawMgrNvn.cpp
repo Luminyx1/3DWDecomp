@@ -362,7 +362,7 @@ void PrimitiveDrawMgrNvn::drawImpl_(NVNcommandBuffer* pCommandBuffer, NVNdrawPri
         auto* textureHandle = reinterpret_cast<NVNtextureHandle*>(
             textureOffset + uintptr_t(mUniformBufferMap));
         *textureHandle =
-            pTexture ? DynamicCast<const TextureNvn>(pTexture)->getTextureHandle() : 0;
+            (pTexture != nullptr) ? DynamicCast<const TextureNvn>(pTexture)->getTextureHandle() : 0;
         nvnCommandBufferBindUniformBuffer(pCommandBuffer, NVN_SHADER_STAGE_FRAGMENT, 0,
                                           nvnBufferGetAddress(&mUniformBuffer) + textureOffset, 8);
     }

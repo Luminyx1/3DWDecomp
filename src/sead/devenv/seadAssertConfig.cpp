@@ -40,7 +40,7 @@ void AssertConfig::execCallbacks(const char* assertMessage)
 {
     sAssertEvent.emit(assertMessage);
 
-    if (sFinalCallback)
+    if (sFinalCallback != nullptr)
     {
         sFinalCallback->invoke(assertMessage);
     }

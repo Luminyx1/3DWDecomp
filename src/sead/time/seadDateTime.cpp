@@ -242,7 +242,7 @@ void DateTime::getCalendarTime(CalendarTime* pCalendar) const
     time.mMinute.setValue((reducedTime % 3600) / 60);
     time.mSecond.setValue(reducedTime % 60);
 
-    if (pCalendar)
+    if (pCalendar != nullptr)
     {
         pCalendar->setDate(
             CalendarTime::Date(y, CalendarTime::Month::makeFromValueOneOrigin(m), d));

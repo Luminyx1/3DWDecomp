@@ -53,13 +53,13 @@ void CalculateTask::attachCalcImpl()
 {
     ScopedLock<CriticalSection> lock(&getMethodTreeMgr()->mCS);
 
-    TaskBase* parentTask = parent() ? parent()->value() : nullptr;
+    TaskBase* parentTask = (parent() != nullptr) ? parent()->value() : nullptr;
 
     if (mTag == cSystem)
     {
         attachMethodWithCheck(0, &mCalcNode);
     }
-    else if (parentTask)
+    else if (parentTask != nullptr)
     {
         parentTask->getMethodTreeNode(1)->pushBackChild(&mCalcNode);
     }

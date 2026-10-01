@@ -12,7 +12,7 @@ namespace sead
  */
 XmlElement* XmlUtil::createBackSiblingElement(XmlElement* pElement, Heap* pHeap)
 {
-    if (!pHeap)
+    if (pHeap == nullptr)
     {
         pHeap = pElement->getHeap();
     }
@@ -30,7 +30,7 @@ XmlElement* XmlUtil::createBackSiblingElement(XmlElement* pElement, Heap* pHeap)
  */
 XmlElement* XmlUtil::createBackChildElement(XmlElement* pElement, Heap* pHeap)
 {
-    if (!pHeap)
+    if (pHeap == nullptr)
     {
         pHeap = pElement->getHeap();
     }
@@ -48,7 +48,7 @@ XmlElement* XmlUtil::createBackChildElement(XmlElement* pElement, Heap* pHeap)
  */
 XmlElement* XmlUtil::createFrontChildElement(XmlElement* pElement, Heap* pHeap)
 {
-    if (!pHeap)
+    if (pHeap == nullptr)
     {
         pHeap = pElement->getHeap();
     }
@@ -69,7 +69,7 @@ XmlElement* XmlUtil::createFrontChildElement(XmlElement* pElement, Heap* pHeap)
 XmlElement* XmlUtil::createBackSiblingAndSetupElement(XmlElement* pElement, const SafeString& rName,
                                                       const SafeString& rContent, Heap* pHeap)
 {
-    if (!pHeap)
+    if (pHeap == nullptr)
     {
         pHeap = pElement->getHeap();
     }
@@ -101,7 +101,7 @@ XmlElement* XmlUtil::createBackSiblingAndSetupElement(XmlElement* pElement, cons
 XmlElement* XmlUtil::createBackChildAndSetupElement(XmlElement* pElement, const SafeString& rName,
                                                     const SafeString& rContent, Heap* pHeap)
 {
-    if (!pHeap)
+    if (pHeap == nullptr)
     {
         pHeap = pElement->getHeap();
     }
@@ -133,7 +133,7 @@ XmlElement* XmlUtil::createBackChildAndSetupElement(XmlElement* pElement, const 
 XmlElement* XmlUtil::createFrontChildAndSetupElement(XmlElement* pElement, const SafeString& rName,
                                                      const SafeString& rContent, Heap* pHeap)
 {
-    if (!pHeap)
+    if (pHeap == nullptr)
     {
         pHeap = pElement->getHeap();
     }

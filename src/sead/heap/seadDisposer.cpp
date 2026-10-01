@@ -24,7 +24,7 @@ IDisposer::IDisposer(Heap* const pDisposerHeap, HeapNullOption heapNullOption)
 {
     mDisposerHeap = pDisposerHeap;
 
-    if (mDisposerHeap)
+    if (mDisposerHeap != nullptr)
     {
         mDisposerHeap->appendDisposer_(this);
         return;
@@ -35,14 +35,14 @@ IDisposer::IDisposer(Heap* const pDisposerHeap, HeapNullOption heapNullOption)
     case HeapNullOption::AlwaysUseSpecifiedHeap:
         SEAD_ASSERT_MSG(false, "disposerHeap must not be nullptr");
     case HeapNullOption::UseSpecifiedOrContainHeap:
-        if (!sead::HeapMgr::sInstancePtr)
+        if (sead::HeapMgr::sInstancePtr == nullptr)
         {
             return;
         }
 
         mDisposerHeap = sead::HeapMgr::sInstancePtr->findContainHeap(this);
 
-        if (mDisposerHeap)
+        if (mDisposerHeap != nullptr)
         {
             mDisposerHeap->appendDisposer_(this);
         }
@@ -51,14 +51,14 @@ IDisposer::IDisposer(Heap* const pDisposerHeap, HeapNullOption heapNullOption)
     case HeapNullOption::DoNotAppendDisposerIfNoHeapSpecified:
         return;
     case HeapNullOption::UseSpecifiedOrCurrentHeap:
-        if (!sead::HeapMgr::sInstancePtr)
+        if (sead::HeapMgr::sInstancePtr == nullptr)
         {
             return;
         }
 
         mDisposerHeap = sead::HeapMgr::sInstancePtr->getCurrentHeap();
 
-        if (mDisposerHeap)
+        if (mDisposerHeap != nullptr)
         {
             mDisposerHeap->appendDisposer_(this);
         }

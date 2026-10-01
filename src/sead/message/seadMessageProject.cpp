@@ -103,7 +103,7 @@ void MessageProject::finalize() {
  * @return the MSBP data passed to initialize, or nullptr.
  */
 const void* MessageProject::getInitializeData() const {
-    if (mProjFile) {
+    if (mProjFile != nullptr) {
         return mProjFile->commonInfo.pResource;
     }
 

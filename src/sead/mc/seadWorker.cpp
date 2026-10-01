@@ -89,7 +89,7 @@ void Worker::proc_()
     JobQueue* queue = getNextJQ_();
     const u32 core = mCore;
 
-    while (queue) {
+    while (queue != nullptr) {
         mCurrentQueue = queue;
         mCurrentQueueDescription = queue->getDescription();
         const u32 granularity = queue->getGranularity(core);

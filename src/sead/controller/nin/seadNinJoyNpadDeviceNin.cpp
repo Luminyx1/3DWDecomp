@@ -288,7 +288,7 @@ void NinJoyNpadDevice::VibrationThread::requestVibration(
 
     Request* request = mRequests.emplaceBack();
 
-    if (!request)
+    if (request == nullptr)
     {
         mCS.unlock();
         return;

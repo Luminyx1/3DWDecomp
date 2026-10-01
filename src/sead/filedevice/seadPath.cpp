@@ -161,14 +161,14 @@ bool Path::getDirectoryName(BufferedSafeString* pName, const SafeString& rPath)
 void Path::join(BufferedSafeString* pOut, const char* path1, const char* path2)
 {
     // Trivial case 1: path1 is empty.
-    if (!path1 || !path1[0])
+    if (path1 == nullptr || !path1[0])
     {
         pOut->copy(path2);
         return;
     }
 
     // Trivial case 2: path2 is empty.
-    if (!path2 || !path2[0])
+    if (path2 == nullptr || !path2[0])
     {
         pOut->copy(path1);
         return;

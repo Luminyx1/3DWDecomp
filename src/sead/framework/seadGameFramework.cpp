@@ -35,7 +35,7 @@ GameFramework::GameFramework()
  */
 GameFramework::~GameFramework()
 {
-    if (mUnk4)
+    if (mUnk4 != nullptr)
     {
         mUnk4->unk9(false);
         delete mUnk4;
@@ -169,7 +169,7 @@ void GameFramework::waitStartDisplayLoop_()
     mTaskMgr->afterCalc();
     Graphics::instance()->unlockDrawContext();
 
-    while (!mTaskMgr->mRootTask)
+    while (mTaskMgr->mRootTask == nullptr)
     {
         if (mDisplayStarted)
         {
@@ -202,7 +202,7 @@ void GameFramework::quitRun_([[maybe_unused]] Heap* pHeap) {}
  */
 void GameFramework::lockFrameDrawContext()
 {
-    if (mUnk5)
+    if (mUnk5 != nullptr)
     {
         mUnk5(true);
     }
@@ -213,7 +213,7 @@ void GameFramework::lockFrameDrawContext()
  */
 void GameFramework::unlockFrameDrawContext()
 {
-    if (mUnk5)
+    if (mUnk5 != nullptr)
     {
         mUnk5(false);
     }

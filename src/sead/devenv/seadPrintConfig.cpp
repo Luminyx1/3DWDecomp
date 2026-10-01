@@ -46,7 +46,7 @@ void PrintConfig::execCallbacks(const PrintEventArg& rArg)
         sPrintEvent.emit(rArg);
     }
 
-    if (sFinalCallback)
+    if (sFinalCallback != nullptr)
     {
         sFinalCallback->invoke(rArg);
     }

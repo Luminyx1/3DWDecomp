@@ -26,7 +26,7 @@ ControllerWrapperBase::~ControllerWrapperBase()
  */
 void ControllerWrapperBase::unregister()
 {
-    if (mController)
+    if (mController != nullptr)
     {
         mController->mWrappers.erase(this);
         mController = nullptr;
@@ -76,7 +76,7 @@ void ControllerWrapperBase::setEnable(bool enable)
  */
 void ControllerWrapperBase::setEnableOtherWrappers(bool enable) const
 {
-    if (!mController)
+    if (mController == nullptr)
     {
         return;
     }

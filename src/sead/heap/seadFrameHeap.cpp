@@ -27,7 +27,7 @@ inline uintptr_t alignDown(uintptr_t value, u32 alignment)
 inline void notifyAllocFailed(HeapMgr* pMgr, Heap* pHeap, size_t size, s32 alignment,
                               size_t allocSize, s32 allocAlignment)
 {
-    if (!pMgr)
+    if (pMgr == nullptr)
     {
         return;
     }
@@ -101,11 +101,11 @@ FrameHeap* FrameHeap::create(size_t size, const SafeString& rName, Heap* pParent
 FrameHeap* FrameHeap::tryCreate(size_t size, const SafeString& rName, Heap* pParent,
                                 s32 alignment, HeapDirection direction, bool enableLock)
 {
-    if (!pParent)
+    if (pParent == nullptr)
     {
         pParent = HeapMgr::instance()->getCurrentHeap();
 
-        if (!pParent)
+        if (pParent == nullptr)
         {
             return nullptr;
         }
@@ -134,7 +134,7 @@ FrameHeap* FrameHeap::tryCreate(size_t size, const SafeString& rName, Heap* pPar
 
     void* memory = pParent->tryAlloc(size, direction * alignment);
 
-    if (!memory)
+    if (memory == nullptr)
     {
         return nullptr;
     }
@@ -215,7 +215,7 @@ void FrameHeap::destroy()
 
     this->~FrameHeap();
 
-    if (parent && parent->isFreeable())
+    if (parent != nullptr && parent->isFreeable())
     {
         parent->free(start);
     }
@@ -259,7 +259,7 @@ void FrameHeap::freeAll()
  */
 size_t FrameHeap::adjust()
 {
-    if (!mParent)
+    if (mParent == nullptr)
     {
         return mSize;
     }
@@ -313,7 +313,7 @@ size_t FrameHeap::adjustBack_()
 {
     size_t newSize = uintptr_t(mState.mHeadPtr) - getStartAddress();
 
-    if (!mParent->resizeBack(mStart, newSize))
+    if (mParent->resizeBack(mStart, newSize) == nullptr)
     {
         return mSize;
     }
@@ -331,7 +331,7 @@ size_t FrameHeap::adjustFront_()
 {
     size_t newSize = getEndAddress() - uintptr_t(mState.mTailPtr);
 
-    if (!mParent->resizeFront(mStart, newSize))
+    if (mParent->resizeFront(mStart, newSize) == nullptr)
     {
         return mSize;
     }
@@ -478,14 +478,14 @@ void FrameHeap::restoreState(const State& rState)
 {
     ConditionalScopedLock<CriticalSection> lock(&mCS, isLockEnabled());
 
-    if (rState.mHeadPtr && rState.mHeadPtr != mState.mHeadPtr && isInclude(rState.mHeadPtr) &&
+    if (rState.mHeadPtr != nullptr && rState.mHeadPtr != mState.mHeadPtr && isInclude(rState.mHeadPtr) &&
         rState.mHeadPtr <= mState.mHeadPtr)
     {
         dispose_(rState.mHeadPtr, mState.mHeadPtr);
         mState.mHeadPtr = rState.mHeadPtr;
     }
 
-    if (rState.mTailPtr && rState.mTailPtr != mState.mTailPtr && isInclude(rState.mTailPtr) &&
+    if (rState.mTailPtr != nullptr && rState.mTailPtr != mState.mTailPtr && isInclude(rState.mTailPtr) &&
         rState.mTailPtr >= mState.mTailPtr)
     {
         dispose_(mState.mTailPtr, rState.mTailPtr);

@@ -261,7 +261,7 @@ void FileDeviceMgr::unmount(const SafeString& rName)
 {
     auto* device = findDevice(rName);
 
-    if (!device)
+    if (device == nullptr)
     {
         SEAD_ASSERT_MSG(false, "drive not found: %s\n", rName.cstr());
         return;
@@ -280,7 +280,7 @@ FileDevice* FileDeviceMgr::findDeviceFromPath(const SafeString& rPath,
     {
         device = mDefaultFileDevice;
 
-        if (!device)
+        if (device == nullptr)
         {
             SEAD_ASSERT_MSG(false, "drive name not found and default file device is null");
             return nullptr;
@@ -291,7 +291,7 @@ FileDevice* FileDeviceMgr::findDeviceFromPath(const SafeString& rPath,
         device = findDevice(driveName);
     }
 
-    if (!device)
+    if (device == nullptr)
     {
         return nullptr;
     }
@@ -336,7 +336,7 @@ FileDevice* FileDeviceMgr::tryOpenDirectory(DirectoryHandle* pHandle, const Safe
     FixedSafeString<256> pathNoDrive;
     FileDevice* device = findDeviceFromPath(rPath, &pathNoDrive);
 
-    if (!device)
+    if (device == nullptr)
     {
         return nullptr;
     }
@@ -390,7 +390,7 @@ bool FileDeviceMgr::trySave(FileDevice::SaveArg& rArg)
     FixedSafeString<256> pathNoDrive;
     FileDevice* device = findDeviceFromPath(rArg.path, &pathNoDrive);
 
-    if (!device)
+    if (device == nullptr)
     {
         return false;
     }

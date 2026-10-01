@@ -10,17 +10,17 @@ namespace system
 {
 void* NewImpl(Heap* pHeap, size_t size, s32 alignment, bool)
 {
-    if (!HeapMgr::sInstancePtr)
+    if (HeapMgr::sInstancePtr == nullptr)
     {
         SEAD_WARN("alloced[%zu] before sead system initialize", size);
         return malloc(size);
     }
 
-    if (!pHeap)
+    if (pHeap == nullptr)
     {
         pHeap = sead::HeapMgr::sInstancePtr->getCurrentHeap();
 
-        if (!pHeap)
+        if (pHeap == nullptr)
         {
             SEAD_ASSERT_MSG(false, "Current pHeap is null. Cannot alloc.");
             return nullptr;
@@ -32,21 +32,21 @@ void* NewImpl(Heap* pHeap, size_t size, s32 alignment, bool)
 
 void DeleteImpl(void* ptr)
 {
-    if (!sead::HeapMgr::sInstancePtr)
+    if (sead::HeapMgr::sInstancePtr == nullptr)
     {
         SEAD_WARN("free[0x%p] before sead system initialize", ptr);
         free(ptr);
         return;
     }
 
-    if (!ptr)
+    if (ptr == nullptr)
     {
         return;
     }
 
     Heap* containHeap = sead::HeapMgr::sInstancePtr->findContainHeap(ptr);
 
-    if (containHeap)
+    if (containHeap != nullptr)
     {
         containHeap->free(ptr);
     }

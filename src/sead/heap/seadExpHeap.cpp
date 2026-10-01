@@ -28,7 +28,7 @@ inline uintptr_t alignUp(uintptr_t value, u32 alignment)
 inline void notifyAllocFailed(HeapMgr* pMgr, Heap* pHeap, size_t size, s32 alignment,
                               size_t allocSize, s32 allocAlignment)
 {
-    if (!pMgr)
+    if (pMgr == nullptr)
     {
         return;
     }
@@ -106,11 +106,11 @@ ExpHeap* ExpHeap::create(size_t size, const SafeString& name, Heap* pParent, s32
 ExpHeap* ExpHeap::tryCreate(size_t size, const SafeString& name, Heap* pParent, s32 alignment,
                             HeapDirection direction, bool enableLock)
 {
-    if (!pParent)
+    if (pParent == nullptr)
     {
         pParent = HeapMgr::instance()->getCurrentHeap();
 
-        if (!pParent)
+        if (pParent == nullptr)
         {
             return nullptr;
         }
@@ -139,7 +139,7 @@ ExpHeap* ExpHeap::tryCreate(size_t size, const SafeString& name, Heap* pParent, 
 
     void* memory = pParent->tryAlloc(size, direction * alignment);
 
-    if (!memory)
+    if (memory == nullptr)
     {
         return nullptr;
     }
@@ -174,7 +174,7 @@ void ExpHeap::doCreate(ExpHeap* pHeap, Heap* pParent)
 {
     createMaxSizeFreeMemBlock_(pHeap);
 
-    if (pParent)
+    if (pParent != nullptr)
     {
         pParent->pushBackChild_(pHeap);
     }
@@ -230,7 +230,7 @@ ExpHeap* ExpHeap::create(void* pAddress, size_t size, const SafeString& name, He
 ExpHeap* ExpHeap::tryCreate(void* pAddress, size_t size, const SafeString& name, Heap* pParent,
                             bool enableLock)
 {
-    if (!pParent || !pParent->isInclude(pAddress))
+    if (pParent == nullptr || !pParent->isInclude(pAddress))
     {
         return nullptr;
     }
@@ -309,11 +309,11 @@ size_t ExpHeap::destroyAndGetAllocatableSize(s32 alignment)
 
     this->~ExpHeap();
 
-    if (parent && parent->isFreeable() && !flag.isOnBit(Flag::cEnableDebugFillSystem))
+    if (parent != nullptr && parent->isFreeable() && !flag.isOnBit(Flag::cEnableDebugFillSystem))
     {
         auto* expHeap = DynamicCast<ExpHeap>(parent);
 
-        if (expHeap)
+        if (expHeap != nullptr)
         {
             return expHeap->freeAndGetAllocatableSize(start, alignment);
         }
@@ -332,7 +332,7 @@ size_t ExpHeap::destroyAndGetAllocatableSize(s32 alignment)
  */
 size_t ExpHeap::freeAndGetAllocatableSize(void* pPtr, s32 alignment)
 {
-    if (!pPtr || !isInclude(pPtr))
+    if (pPtr == nullptr || !isInclude(pPtr))
     {
         return 0;
     }
@@ -346,7 +346,7 @@ size_t ExpHeap::freeAndGetAllocatableSize(void* pPtr, s32 alignment)
 
     MemBlock* block = MemBlock::FindManageArea(pPtr);
 
-    if (!block)
+    if (block == nullptr)
     {
         dumpUseList();
         dumpFreeList();
@@ -417,7 +417,7 @@ void ExpHeap::freeAll()
  */
 size_t ExpHeap::adjust()
 {
-    if (!mParent)
+    if (mParent == nullptr)
     {
         return mSize;
     }
@@ -457,7 +457,7 @@ size_t ExpHeap::adjustBack_()
 {
     MemBlock* block = findLastMemBlockIfFree_();
 
-    if (!block)
+    if (block == nullptr)
     {
         return mSize;
     }
@@ -465,7 +465,7 @@ size_t ExpHeap::adjustBack_()
     size_t newSize = uintptr_t(block) - uintptr_t(mStart);
     mFreeList.erase(block);
 
-    if (!mParent->resizeBack(mStart, newSize))
+    if (mParent->resizeBack(mStart, newSize) == nullptr)
     {
         return mSize;
     }
@@ -482,7 +482,7 @@ size_t ExpHeap::adjustFront_()
 {
     MemBlock* block = findFirstMemBlockIfFree_();
 
-    if (!block)
+    if (block == nullptr)
     {
         return mSize;
     }
@@ -491,7 +491,7 @@ size_t ExpHeap::adjustFront_()
     mFreeList.erase(block);
     void* newStart = mParent->resizeFront(mStart, newSize);
 
-    if (!newStart)
+    if (newStart == nullptr)
     {
         return mSize;
     }
@@ -530,7 +530,7 @@ MemBlock* ExpHeap::findFirstMemBlockIfFree_()
     MemBlock* firstFree = mFreeList.front();
     MemBlock* firstUsed = mUseList.front();
 
-    if (!firstUsed || firstFree < firstUsed)
+    if (firstUsed == nullptr || firstFree < firstUsed)
     {
         return firstFree;
     }
@@ -595,7 +595,7 @@ void* ExpHeap::tryAlloc(size_t size, s32 alignment)
         }
     }
 
-    if (block)
+    if (block != nullptr)
     {
         block->mHeapCheckTag = mHeapCheckTag;
         return block->getMemory();
@@ -614,7 +614,7 @@ MemBlock* ExpHeap::allocFromHead_(size_t size)
 {
     MemBlock* block = findFreeMemBlockFromHead_(size, static_cast<FindMode>(mAllocMode.mValue));
 
-    if (!block)
+    if (block == nullptr)
     {
         return nullptr;
     }
@@ -635,7 +635,7 @@ MemBlock* ExpHeap::allocFromHead_(size_t size)
         freeBlock->mSize = restSize - sizeof(MemBlock);
         freeBlock->mHeapCheckTag = MemBlock::cFreeHeapCheckTag;
 
-        if (next)
+        if (next != nullptr)
         {
             mFreeList.insertBefore(next, freeBlock);
         }
@@ -662,7 +662,7 @@ MemBlock* ExpHeap::allocFromHead_(size_t size, s32 alignment)
 {
     MemBlock* block =
         findFreeMemBlockFromHead_(size, alignment, static_cast<FindMode>(mAllocMode.mValue));
-    if (!block)
+    if (block == nullptr)
     {
         return nullptr;
     }
@@ -698,7 +698,7 @@ MemBlock* ExpHeap::allocFromHead_(size_t size, s32 alignment)
         freeBlock->mSize = restSize - sizeof(MemBlock);
         freeBlock->mHeapCheckTag = MemBlock::cFreeHeapCheckTag;
 
-        if (next)
+        if (next != nullptr)
         {
             mFreeList.insertBefore(next, freeBlock);
         }
@@ -724,7 +724,7 @@ MemBlock* ExpHeap::allocFromTail_(size_t size)
 {
     MemBlock* block = findFreeMemBlockFromTail_(size, static_cast<FindMode>(mAllocMode.mValue));
 
-    if (!block)
+    if (block == nullptr)
     {
         return nullptr;
     }
@@ -752,7 +752,7 @@ MemBlock* ExpHeap::allocFromTail_(size_t size, s32 alignment)
 {
     MemBlock* block =
         findFreeMemBlockFromTail_(size, alignment, static_cast<FindMode>(mAllocMode.mValue));
-    if (!block)
+    if (block == nullptr)
     {
         return nullptr;
     }
@@ -802,7 +802,7 @@ MemBlock* ExpHeap::findFreeMemBlockFromHead_(size_t size, FindMode mode) const
             return &block;
         }
 
-        if (!found || (mode == FindMode::BestFit && found->mSize > block.mSize) ||
+        if (found == nullptr || (mode == FindMode::BestFit && found->mSize > block.mSize) ||
             (mode == FindMode::LargestFit && found->mSize < block.mSize))
         {
             found = &block;
@@ -843,7 +843,7 @@ MemBlock* ExpHeap::findFreeMemBlockFromHead_(size_t size, s32 alignment, FindMod
             return &block;
         }
 
-        if (!found || (mode == FindMode::BestFit && found->mSize > block.mSize) ||
+        if (found == nullptr || (mode == FindMode::BestFit && found->mSize > block.mSize) ||
             (mode == FindMode::LargestFit && found->mSize < block.mSize))
         {
             found = &block;
@@ -863,7 +863,7 @@ MemBlock* ExpHeap::findFreeMemBlockFromTail_(size_t size, FindMode mode) const
 {
     MemBlock* found = nullptr;
 
-    for (MemBlock* block = mFreeList.back(); block; block = mFreeList.prev(block))
+    for (MemBlock* block = mFreeList.back(); block != nullptr; block = mFreeList.prev(block))
     {
         if (block->mSize < size)
         {
@@ -875,7 +875,7 @@ MemBlock* ExpHeap::findFreeMemBlockFromTail_(size_t size, FindMode mode) const
             return block;
         }
 
-        if (!found || (mode == FindMode::BestFit && found->mSize > block->mSize) ||
+        if (found == nullptr || (mode == FindMode::BestFit && found->mSize > block->mSize) ||
             (mode == FindMode::LargestFit && found->mSize < block->mSize))
         {
             found = block;
@@ -896,7 +896,7 @@ MemBlock* ExpHeap::findFreeMemBlockFromTail_(size_t size, s32 alignment, FindMod
 {
     MemBlock* found = nullptr;
 
-    for (MemBlock* block = mFreeList.back(); block; block = mFreeList.prev(block))
+    for (MemBlock* block = mFreeList.back(); block != nullptr; block = mFreeList.prev(block))
     {
         if (block->mSize < size)
         {
@@ -916,7 +916,7 @@ MemBlock* ExpHeap::findFreeMemBlockFromTail_(size_t size, s32 alignment, FindMod
             return block;
         }
 
-        if (!found || (mode == FindMode::BestFit && found->mSize > block->mSize) ||
+        if (found == nullptr || (mode == FindMode::BestFit && found->mSize > block->mSize) ||
             (mode == FindMode::LargestFit && found->mSize < block->mSize))
         {
             found = block;
@@ -956,7 +956,7 @@ MemBlock* ExpHeap::pushToFreeList_(MemBlock* pBlock)
     auto insertBetween = [this](MemBlock* prev, MemBlock* next, MemBlock* block) {
         bool merged = false;
 
-        if (prev && prev->getMemoryEnd() == reinterpret_cast<u8*>(block))
+        if (prev != nullptr && prev->getMemoryEnd() == reinterpret_cast<u8*>(block))
         {
             prev->mSize = prev->mSize + sizeof(MemBlock) + block->mOffset + block->mSize;
             block = prev;
@@ -1181,7 +1181,7 @@ void* ExpHeap::realloc_(void* pPtr, u8* pMemory, size_t copySize, size_t size, s
 {
     void* newPtr = tryAlloc(size, alignment);
 
-    if (newPtr)
+    if (newPtr != nullptr)
     {
         std::memcpy(newPtr, pMemory, copySize);
         free(pPtr);
@@ -1199,7 +1199,7 @@ void* ExpHeap::realloc_(void* pPtr, u8* pMemory, size_t copySize, size_t size, s
  */
 void* ExpHeap::tryRealloc(void* pPtr, size_t size, s32 alignment)
 {
-    if (!pPtr)
+    if (pPtr == nullptr)
     {
         return tryAlloc(size, alignment);
     }
@@ -1336,14 +1336,14 @@ size_t ExpHeap::getMaxAllocatableSize(int alignment) const
     {
         block = findFreeMemBlockFromHead_(8, absAlignment, FindMode::LargestFit);
 
-        if (block)
+        if (block != nullptr)
         {
             uintptr_t memory = uintptr_t(block->getMemory());
             padding = alignUp(memory, absAlignment) - memory;
         }
     }
 
-    if (!block)
+    if (block == nullptr)
     {
         return 0;
     }

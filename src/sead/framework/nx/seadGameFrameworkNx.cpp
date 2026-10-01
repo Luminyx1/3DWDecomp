@@ -435,7 +435,7 @@ void GameFrameworkNx::requestChangeUseGPU(bool useGpu)
  */
 size_t GameFrameworkNx::getGraphicsDevToolsAllocatorTotalFreeSize() const
 {
-    if (mGraphicsDevToolsAllocator)
+    if (mGraphicsDevToolsAllocator != nullptr)
     {
         return mGraphicsDevToolsAllocator->GetTotalFreeSize();
     }
@@ -545,7 +545,7 @@ void GameFrameworkNx::procDraw_()
 
     mIsPresentDone = false;
 
-    if (mUnk6)
+    if (mUnk6 != nullptr)
     {
         mUnk6(true);
     }
@@ -568,7 +568,7 @@ void GameFrameworkNx::procDraw_()
         nvnCommandBufferSetShaderScratchMemory(mCommandBuffer, mShaderScratchMemoryPool, 0,
                                                mShaderScratchMemorySize);
 
-        if (mMethodFrameBuffer)
+        if (mMethodFrameBuffer != nullptr)
         {
             mMethodFrameBuffer->bind(&context);
             clearFrameBuffers_(3);
@@ -576,11 +576,11 @@ void GameFrameworkNx::procDraw_()
 
         DynamicCast<SingleScreenMethodTreeMgr>(mMethodTreeMgr)->draw();
 
-        if (mOverrideFrameBuffer)
+        if (mOverrideFrameBuffer != nullptr)
         {
             mOverrideFrameBuffer->copyToDisplayBuffer(&context, mDisplayBuffer);
         }
-        else if (mMethodFrameBuffer)
+        else if (mMethodFrameBuffer != nullptr)
         {
             mMethodFrameBuffer->copyToDisplayBuffer(&context, mDisplayBuffer);
         }
@@ -601,22 +601,22 @@ void GameFrameworkNx::procDraw_()
         mPresentationThread->sendMessage(1, MessageQueue::BlockType::Blocking);
     }
 
-    if (PrimitiveDrawMgrNvn::instance())
+    if (PrimitiveDrawMgrNvn::instance() != nullptr)
     {
         PrimitiveDrawMgrNvn::instance()->swapUniformBlockBuffer();
     }
 
-    if (DebugFontMgrNvn::instance())
+    if (DebugFontMgrNvn::instance() != nullptr)
     {
         DebugFontMgrNvn::instance()->swapUniformBlockBuffer();
     }
 
-    if (DebugFontMgrJis1Nvn::instance())
+    if (DebugFontMgrJis1Nvn::instance() != nullptr)
     {
         DebugFontMgrJis1Nvn::instance()->swapUniformBlockBuffer();
     }
 
-    if (mUnk6)
+    if (mUnk6 != nullptr)
     {
         mUnk6(false);
     }
@@ -692,7 +692,7 @@ void GameFrameworkNx::swapBuffer_()
  */
 void GameFrameworkNx::clearFrameBuffers_(s32 flags)
 {
-    if (!mMethodFrameBuffer || !mCommandBuffer)
+    if (mMethodFrameBuffer == nullptr || mCommandBuffer == nullptr)
     {
         return;
     }
@@ -735,7 +735,7 @@ void GameFrameworkNx::waitForGpuDone_()
         CriticalSection* cs = GraphicsNvn::instance()->getCriticalSection1();
         cs->lock();
 
-        if (mGpuWaitCallback)
+        if (mGpuWaitCallback != nullptr)
         {
             mGpuWaitCallback(0);
         }
@@ -751,7 +751,7 @@ void GameFrameworkNx::waitForGpuDone_()
 
         nvnSyncWait(mGpuSync, u64(-1));
 
-        if (mGpuWaitCallback)
+        if (mGpuWaitCallback != nullptr)
         {
             mGpuWaitCallback(1);
         }

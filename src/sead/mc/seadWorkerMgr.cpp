@@ -66,7 +66,7 @@ static SafeString* makeWorkerName(Heap* pHeap, const WorkerMgr::InitializeArg& r
  */
 void WorkerMgr::initialize(const InitializeArg& rArg)
 {
-    if (InfLoopChecker::instance())
+    if (InfLoopChecker::instance() != nullptr)
     {
         InfLoopChecker::instance()->getEvent().connect(mInfLoopEventSlot);
     }
@@ -109,7 +109,7 @@ void WorkerMgr::finalize()
 
     for (u32 i = 0, n = CoreInfo::getNumCores(); i != n; ++i)
     {
-        if (mWorkers[i])
+        if (mWorkers[i] != nullptr)
         {
             delete mWorkers[i];
         }

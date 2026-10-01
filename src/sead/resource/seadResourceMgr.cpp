@@ -44,7 +44,7 @@ ResourceFactory* ResourceMgr::setDefaultFactory(ResourceFactory* pFactory)
 {
     ResourceFactory* const previous_default = mDefaultResourceFactory;
 
-    if (pFactory)
+    if (pFactory != nullptr)
     {
         mDefaultResourceFactory = pFactory;
     }
@@ -111,7 +111,7 @@ Resource* ResourceMgr::tryLoad(const ResourceMgr::LoadArg& rArg, const SafeStrin
     SafeString actual_factory_name;
     FixedSafeString<32> ext;
 
-    if (!pDecompressor)
+    if (pDecompressor == nullptr)
     {
         if (!Path::getExt(&ext, rArg.path))
         {
@@ -122,7 +122,7 @@ Resource* ResourceMgr::tryLoad(const ResourceMgr::LoadArg& rArg, const SafeStrin
         pDecompressor = findDecompressor(ext);
     }
 
-    if (pDecompressor)
+    if (pDecompressor != nullptr)
     {
         actual_factory_name = rFactoryName;
     }
@@ -133,18 +133,18 @@ Resource* ResourceMgr::tryLoad(const ResourceMgr::LoadArg& rArg, const SafeStrin
 
     auto* factory = rArg.factory;
 
-    if (!factory)
+    if (factory == nullptr)
     {
         factory = findFactory(actual_factory_name);
         SEAD_ASSERT(factory);
     }
 
-    if (rArg.has_tried_create_with_decomp)
+    if (rArg.has_tried_create_with_decomp != nullptr)
     {
-        *rArg.has_tried_create_with_decomp = pDecompressor;
+        *rArg.has_tried_create_with_decomp = (pDecompressor != nullptr);
     }
 
-    if (pDecompressor)
+    if (pDecompressor != nullptr)
     {
         return factory->tryCreateWithDecomp(rArg, pDecompressor);
     }
@@ -163,7 +163,7 @@ Resource* ResourceMgr::tryLoadWithoutDecomp(const ResourceMgr::LoadArg& rArg)
 {
     auto* factory = rArg.factory;
 
-    if (!factory)
+    if (factory == nullptr)
     {
         FixedSafeString<32> ext;
 
@@ -182,7 +182,7 @@ Resource* ResourceMgr::tryLoadWithoutDecomp(const ResourceMgr::LoadArg& rArg)
 
 void ResourceMgr::unload(Resource* pRes)
 {
-    if (pRes)
+    if (pRes != nullptr)
     {
         delete pRes;
     }
@@ -209,14 +209,14 @@ Resource* ResourceMgr::create(const ResourceMgr::CreateArg& rArg)
         return nullptr;
     }
 
-    if (rArg.factory)
+    if (rArg.factory != nullptr)
     {
         return rArg.factory->create(rArg);
     }
 
     auto* factory = findFactory(rArg.ext);
 
-    if (factory)
+    if (factory != nullptr)
     {
         return factory->create(rArg);
     }

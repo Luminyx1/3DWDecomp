@@ -355,7 +355,7 @@ bool NinFileDeviceBase::doGetFileSize_(u32* pFileSize, const SafeString& rPath)
 {
     FileHandle handle;
 
-    if (!doOpen_(&handle, rPath, cFileOpenFlag_ReadOnly))
+    if (doOpen_(&handle, rPath, cFileOpenFlag_ReadOnly) == nullptr)
     {
         return false;
     }

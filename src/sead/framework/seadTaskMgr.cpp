@@ -125,7 +125,7 @@ void TaskMgr::finalize()
     {
         Heap* heap = mHeapArray.mHeaps[i];
 
-        if (heap)
+        if (heap != nullptr)
         {
             heap->destroy();
             mHeapArray.mHeaps[i] = nullptr;
@@ -162,14 +162,14 @@ void TaskMgr::prepare_(Thread*, MessageQueue::Element)
 
     mCriticalSection.unlock();
 
-    if (task)
+    if (task != nullptr)
     {
         ScopedCurrentHeapSetter setter(task->mHeapArray.getPrimaryHeap());
         task->prepare();
 
         TaskCreateContext* context = mTaskCreateContextMgr->front();
 
-        for (; context; context = mTaskCreateContextMgr->next(context))
+        for (; context != nullptr; context = mTaskCreateContextMgr->next(context))
         {
             if (context->task == task)
             {
@@ -202,7 +202,7 @@ bool TaskMgr::requestCreateTask(const TaskBase::CreateArg& rArg)
 {
     ScopedLock<CriticalSection> lock(&mCriticalSection);
 
-    if (rArg.fader)
+    if (rArg.fader != nullptr)
     {
         return rArg.fader->startAsCreate_(rArg);
     }
@@ -234,12 +234,12 @@ void TaskMgr::createHeap_(HeapArray* pHeapArray, const TaskBase::CreateArg& rArg
 
             Heap* parent = policy.parent;
 
-            if (!parent)
+            if (parent == nullptr)
             {
-                parent = rArg.parent ? rArg.parent->mHeapArray.mHeaps[i] : mHeapArray.mHeaps[i];
+                parent = (rArg.parent != nullptr) ? rArg.parent->mHeapArray.mHeaps[i] : mHeapArray.mHeaps[i];
             }
 
-            if (!parent)
+            if (parent == nullptr)
             {
                 return nullptr;
             }
@@ -285,7 +285,7 @@ TaskBase* TaskMgr::createTaskSync(const TaskBase::CreateArg& rArg)
     {
         Heap* heap = task->mHeapArray.mHeaps[i];
 
-        if (heap)
+        if (heap != nullptr)
         {
             heap->setName(task->getName());
         }
@@ -315,14 +315,14 @@ TaskBase* TaskMgr::createTaskSync(const TaskBase::CreateArg& rArg)
     changeTaskState_(task, TaskBase::cPrepareDone);
     changeTaskState_(task, TaskBase::cRunning);
 
-    if (rArg.create_callback)
+    if (rArg.create_callback != nullptr)
     {
         DelegateEvent<TaskBase*> event;
         event.connect(*rArg.create_callback);
         event.emit(task);
     }
 
-    if (rArg.created_task)
+    if (rArg.created_task != nullptr)
     {
         *rArg.created_task = task;
     }
@@ -356,7 +356,7 @@ TaskBase* TaskMgr::doCreateTask_(const TaskBase::CreateArg& rArg, HeapArray* pHe
     task->mClassID = classID;
     task->mTag = tag;
 
-    if (rArg.parent)
+    if (rArg.parent != nullptr)
     {
         rArg.parent->pushBackChild(task);
     }
@@ -456,7 +456,7 @@ bool TaskMgr::doRequestCreateTask_(const TaskBase::CreateArg& rArg,
 
     TaskCreateContext* context = mTaskCreateContextMgr->emplaceBack();
 
-    if (!context)
+    if (context == nullptr)
     {
         return false;
     }
@@ -464,12 +464,12 @@ bool TaskMgr::doRequestCreateTask_(const TaskBase::CreateArg& rArg,
     context->arg = rArg;
     DelegateEvent<TaskBase*>::Slot* callback = rArg.create_callback;
 
-    if (pSlot)
+    if (pSlot != nullptr)
     {
         context->event.connect(*pSlot);
     }
 
-    if (callback)
+    if (callback != nullptr)
     {
         context->event.connect(*callback);
     }
@@ -513,7 +513,7 @@ bool TaskMgr::requestTakeover(const TaskBase::TakeoverArg& rArg)
     FaderTaskBase* fader = rArg.fader;
     TaskBase* src = rArg.src_task;
 
-    if (!fader)
+    if (fader == nullptr)
     {
         fader = mNullFaderTask;
     }
@@ -537,7 +537,7 @@ bool TaskMgr::requestTransition(TaskBase* pFrom, TaskBase* pTo, FaderTaskBase* p
 {
     ScopedLock<CriticalSection> lock(&mCriticalSection);
 
-    if (!pFader)
+    if (pFader == nullptr)
     {
         pFader = mNullFaderTask;
     }
@@ -557,7 +557,7 @@ bool TaskMgr::requestTransition(TaskBase* pFrom, TaskBase* pTo, FaderTaskBase* p
  */
 bool TaskMgr::requestPush(const TaskBase::PushArg& rArg)
 {
-    if (!rArg.src_task || !rArg.parent || rArg.src_task != rArg.parent)
+    if (rArg.src_task == nullptr || rArg.parent == nullptr || rArg.src_task != rArg.parent)
     {
         return false;
     }
@@ -566,7 +566,7 @@ bool TaskMgr::requestPush(const TaskBase::PushArg& rArg)
 
     FaderTaskBase* fader = rArg.fader;
 
-    if (!fader)
+    if (fader == nullptr)
     {
         fader = mNullFaderTask;
     }
@@ -586,7 +586,7 @@ bool TaskMgr::requestPush(const TaskBase::PushArg& rArg)
  */
 TaskBase* TaskMgr::pushSync(const TaskBase::PushArg& rArg)
 {
-    if (!rArg.src_task || !rArg.parent || rArg.src_task != rArg.parent)
+    if (rArg.src_task == nullptr || rArg.parent == nullptr || rArg.src_task != rArg.parent)
     {
         return nullptr;
     }
@@ -609,7 +609,7 @@ bool TaskMgr::requestPop(TaskBase* pTask, FaderTaskBase* pFader)
 {
     ScopedLock<CriticalSection> lock(&mCriticalSection);
 
-    if (!pFader)
+    if (pFader == nullptr)
     {
         pFader = mNullFaderTask;
     }
@@ -631,14 +631,14 @@ bool TaskMgr::popSync(TaskBase* pTask)
 {
     ScopedLock<CriticalSection> lock(&mCriticalSection);
 
-    if (pTask->mInternalFlag.isOnBit(0) || !pTask->parent())
+    if (pTask->mInternalFlag.isOnBit(0) || pTask->parent() == nullptr)
     {
         return false;
     }
 
     TaskBase* parentTask = pTask->parent()->value();
 
-    if (!parentTask)
+    if (parentTask == nullptr)
     {
         return false;
     }
@@ -698,7 +698,7 @@ bool TaskMgr::requestPop(TaskBase* pFrom, TaskBase* pTo, FaderTaskBase* pFader)
 {
     ScopedLock<CriticalSection> lock(&mCriticalSection);
 
-    if (!pFader)
+    if (pFader == nullptr)
     {
         pFader = mNullFaderTask;
     }
@@ -725,7 +725,7 @@ void TaskMgr::requestDestroyTask(TaskBase* pTask, FaderTaskBase*)
         pTask->onDestroy();
     }
 
-    for (auto* child = pTask->child(); child; child = pTask->child())
+    for (auto* child = pTask->child(); child != nullptr; child = pTask->child())
     {
         requestDestroyTask(child->value(), nullptr);
     }
@@ -745,7 +745,7 @@ bool TaskMgr::destroyable_(TaskBase* pTask)
         return false;
     }
 
-    for (auto* child = pTask->child(); child; child = pTask->child())
+    for (auto* child = pTask->child(); child != nullptr; child = pTask->child())
     {
         if (!destroyable_(child->value()))
         {
@@ -768,17 +768,17 @@ void TaskMgr::calcCreation_()
 
     TaskCreateContext* context = mTaskCreateContextMgr->front();
 
-    if (context)
+    if (context != nullptr)
     {
         TaskBase* task = context->task;
 
-        if (task)
+        if (task != nullptr)
         {
             if (task->mState == TaskBase::cPrepareDone)
             {
                 changeTaskState_(task, TaskBase::cRunning);
 
-                if (context->arg.created_task)
+                if (context->arg.created_task != nullptr)
                 {
                     *context->arg.created_task = task;
                 }
@@ -799,7 +799,7 @@ void TaskMgr::calcCreation_()
             {
                 Heap* heap = task->mHeapArray.mHeaps[i];
 
-                if (heap)
+                if (heap != nullptr)
                 {
                     heap->setName(task->getName());
                 }
@@ -860,7 +860,7 @@ void TaskMgr::destroyAllAndCreateRoot()
 {
     ScopedLock<CriticalSection> lock(&mCriticalSection);
 
-    if (mRootTask)
+    if (mRootTask != nullptr)
     {
         destroyTaskSync(mRootTask);
     }
@@ -899,7 +899,7 @@ void TaskMgr::destroyAllAndCreateRoot()
     {
         Heap* heap = mHeapArray.mHeaps[i];
 
-        if (heap)
+        if (heap != nullptr)
         {
             heap->freeAll();
         }

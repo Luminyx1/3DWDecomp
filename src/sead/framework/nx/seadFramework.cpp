@@ -63,7 +63,7 @@ Framework::RunArg::RunArg() = default;
  */
 void Framework::initialize(const InitializeArg& rArg)
 {
-    if (rArg.arena)
+    if (rArg.arena != nullptr)
     {
         HeapMgr::initialize(rArg.arena);
     }

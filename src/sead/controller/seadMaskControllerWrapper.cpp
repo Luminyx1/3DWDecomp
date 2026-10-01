@@ -49,7 +49,7 @@ MaskControllerWrapper::MaskControllerWrapper()
  */
 void MaskControllerWrapper::calc(u32 prevHold, bool prevPointerOn)
 {
-    if (mIsEnable && mController && mController->isConnected())
+    if (mIsEnable && mController != nullptr && mController->isConnected())
     {
         mPadHold = BitFlag32(createPadMaskFromControllerPadMask_(mController->getHoldMask()));
 

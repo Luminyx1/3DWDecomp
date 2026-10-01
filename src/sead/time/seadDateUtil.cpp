@@ -50,7 +50,7 @@ CalendarTime::Week calcWeekDay(const CalendarTime::Year& rYear, const CalendarTi
  */
 void calcSecondToCalendarSpan(CalendarSpan* pOutSpan, u64 sec)
 {
-    if (!pOutSpan)
+    if (pOutSpan == nullptr)
     {
         return;
     }
@@ -112,7 +112,7 @@ static bool parseW3CDTFSubString(bool* pOk, u32* pValue, SafeString* pStr, s32* 
 
     *pStr = pStr->getPart(parseLength + 1);
     *pStrLength -= parseLength + 1;
-    if (pOutSeparator)
+    if (pOutSeparator != nullptr)
     {
         *pOutSeparator = c;
     }

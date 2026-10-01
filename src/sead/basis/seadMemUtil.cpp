@@ -9,7 +9,7 @@ namespace sead {
  */
 bool MemUtil::isStack(const void* pAddress)
 {
-    if (!ThreadMgr::instance())
+    if (ThreadMgr::instance() == nullptr)
         return false;
     const auto contains = [](const void* address, const void* bottom, s32 size) {
         const uintptr_t start = reinterpret_cast<uintptr_t>(bottom);
@@ -19,7 +19,7 @@ bool MemUtil::isStack(const void* pAddress)
 
     Thread* main = ThreadMgr::instance()->getMainThread();
 
-    if (main && contains(pAddress, main->mThreadInner->_stack, main->mStackSize))
+    if (main != nullptr && contains(pAddress, main->mThreadInner->_stack, main->mStackSize))
         return true;
     {
         ScopedLock<CriticalSection> lock(ThreadMgr::instance()->getListCS());

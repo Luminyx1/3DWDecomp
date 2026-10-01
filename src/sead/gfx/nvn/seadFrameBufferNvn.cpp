@@ -191,7 +191,7 @@ void DisplayBufferNvn::setPresentInterval(u8 interval)
 {
     mPresentInterval = interval;
 
-    if (mWindow)
+    if (mWindow != nullptr)
     {
         nvnWindowSetPresentInterval(mWindow, interval);
     }

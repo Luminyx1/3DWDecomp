@@ -27,17 +27,17 @@ u32 XmlDocument::sDefaultEntityNum = 5;
  */
 static void freeXmlElement_(XmlElement* pElement)
 {
-    if (!pElement)
+    if (pElement == nullptr)
     {
         return;
     }
 
-    if (pElement->child())
+    if (pElement->child() != nullptr)
     {
         freeXmlElement_(pElement->child());
     }
 
-    if (pElement->next())
+    if (pElement->next() != nullptr)
     {
         freeXmlElement_(pElement->next());
     }
@@ -56,7 +56,7 @@ XmlDocument::XmlDocument() = default;
  */
 XmlDocument::~XmlDocument()
 {
-    if (mRoot)
+    if (mRoot != nullptr)
     {
         freeXmlElementAll();
     }
@@ -146,7 +146,7 @@ bool XmlDocument::eraseEntity(const SafeString& rName)
  */
 XmlDocument::EntityList* XmlDocument::expandEntityList(s32 num, Heap* pHeap)
 {
-    if (!pHeap)
+    if (pHeap == nullptr)
     {
         pHeap = mHeap;
     }
@@ -216,7 +216,7 @@ static void writeXmlInstanceAsBinary_(WriteStream* pStream, XmlElement* pElement
             pStream->writeU8(0);
         }
 
-        if (pElement->getContent() && !pElement->child())
+        if (pElement->getContent() && pElement->child() == nullptr)
         {
             u16 size = Endian::fromHostU16(Endian::cLittle, pElement->getContentSize());
             pStream->writeU16(size);
@@ -226,7 +226,7 @@ static void writeXmlInstanceAsBinary_(WriteStream* pStream, XmlElement* pElement
                 pStream->writeMemBlock(pElement->getContent(), size);
             }
 
-            if (!pElement->next())
+            if (pElement->next() == nullptr)
             {
                 pStream->writeU8(3);
                 return;
@@ -235,12 +235,12 @@ static void writeXmlInstanceAsBinary_(WriteStream* pStream, XmlElement* pElement
             pStream->writeU8(0);
             pElement = pElement->next();
         }
-        else if (pElement->child())
+        else if (pElement->child() != nullptr)
         {
             XmlElement* next = pElement->next();
             pStream->writeU16(0);
 
-            if (!next)
+            if (next == nullptr)
             {
                 pStream->writeU8(1);
                 pElement = pElement->child();
@@ -256,7 +256,7 @@ static void writeXmlInstanceAsBinary_(WriteStream* pStream, XmlElement* pElement
         {
             pStream->writeU16(0);
 
-            if (!pElement->next())
+            if (pElement->next() == nullptr)
             {
                 pStream->writeU8(5);
                 return;
@@ -281,11 +281,11 @@ bool XmlDocument::save(WriteStream* pStream, Heap* pHeap, bool isBinary,
 {
     pStream->setMode(Stream::Modes::Binary);
 
-    if (!pElement)
+    if (pElement == nullptr)
     {
         pElement = mRoot;
 
-        if (!pElement)
+        if (pElement == nullptr)
         {
             return false;
         }
@@ -385,7 +385,7 @@ static void writeXmlAttributes_(WriteStream* pStream, const XmlElement* pElement
 void XmlDocument::writeXmlInstanceAsText_(WriteStream* pStream, XmlElement* pElement, s32 depth,
                                           u32 workSize, Heap* pHeap)
 {
-    if (!pElement)
+    if (pElement == nullptr)
     {
         return;
     }
@@ -406,14 +406,14 @@ void XmlDocument::writeXmlInstanceAsText_(WriteStream* pStream, XmlElement* pEle
 
     XmlElement* child = pElement->child();
 
-    if (child)
+    if (child != nullptr)
     {
         pStream->writeString(">\n", 2);
         writeXmlInstanceAsText_(pStream, child, depth + 1, workSize, pHeap);
 
-        for (XmlElement* sibling = child->next(); sibling; sibling = sibling->next())
+        for (XmlElement* sibling = child->next(); sibling != nullptr; sibling = sibling->next())
         {
-            if (sibling->child())
+            if (sibling->child() != nullptr)
             {
                 writeXmlInstanceAsText_(pStream, sibling, depth + 1, workSize, pHeap);
                 continue;
@@ -578,7 +578,7 @@ static void readXmlInstanceAsBinary_(XmlElement* pElement, ReadStream* pStream, 
         case 4:
             pElement = XmlUtil::createBackSiblingElement(pElement, pHeap);
 
-            if (!pElement)
+            if (pElement == nullptr)
             {
                 return;
             }
@@ -598,7 +598,7 @@ static void readXmlInstanceAsBinary_(XmlElement* pElement, ReadStream* pStream, 
  */
 void XmlDocument::parseXml_(ReadStream* pStream, Heap* pHeap, bool isBinary)
 {
-    if (mRoot)
+    if (mRoot != nullptr)
     {
         freeXmlElementAll();
     }
@@ -1272,7 +1272,7 @@ XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
                     addAttribute:
                         XmlAttributeWork* attribute = attributes.emplaceBack();
 
-                        if (!attribute)
+                        if (attribute == nullptr)
                         {
                             goto fail;
                         }
@@ -1314,7 +1314,7 @@ XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
                         state = 6;
                     }
 
-                    if (!ppElement)
+                    if (ppElement == nullptr)
                     {
                         goto fail;
                     }
@@ -1747,7 +1747,7 @@ XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
 
                             if (stack.size() == 0)
                             {
-                                if (root)
+                                if (root != nullptr)
                                 {
                                     delete newElement;
                                     goto fail;
@@ -1788,7 +1788,7 @@ XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
             }
         }
 
-        if (!root)
+        if (root == nullptr)
         {
             goto fail;
         }
@@ -1816,7 +1816,7 @@ fail:
  */
 XmlDocument* XmlDocument::create(ReadStream* pStream, Heap* pHeap, bool isBinary, u32 workSize)
 {
-    if (!pHeap)
+    if (pHeap == nullptr)
     {
         pHeap = HeapMgr::instance()->getCurrentHeap();
     }
@@ -1824,11 +1824,11 @@ XmlDocument* XmlDocument::create(ReadStream* pStream, Heap* pHeap, bool isBinary
     auto* document = new (pHeap, sizeof(void*)) XmlDocument();
     document->mWorkSize = workSize;
 
-    if (pStream)
+    if (pStream != nullptr)
     {
         document->parseXml_(pStream, pHeap, isBinary);
 
-        if (!document->mRoot)
+        if (document->mRoot == nullptr)
         {
             delete document;
             return nullptr;
@@ -2082,7 +2082,7 @@ bool XmlDocument::replaceXmlCharacterEntityReference_(char* pText, u32 bufferSiz
  */
 XmlElement* XmlDocument::findElement(const SafeString& rPath)
 {
-    if (!mRoot)
+    if (mRoot == nullptr)
     {
         return nullptr;
     }

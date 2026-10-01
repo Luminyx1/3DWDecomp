@@ -9,11 +9,11 @@ void MethodTreeNode::pushBackChild(MethodTreeNode* pNode)
     pNode->detachSubTree();
     pNode->mCriticalSection = mCriticalSection;
 
-    if (pNode->child())
+    if (pNode->child() != nullptr)
     {
         auto* parent = pNode->child()->value();
 
-        if (parent)
+        if (parent != nullptr)
         {
             parent->attachMutexRec_(mCriticalSection);
         }
@@ -29,11 +29,11 @@ void MethodTreeNode::pushFrontChild(MethodTreeNode* pNode)
     pNode->detachSubTree();
     pNode->mCriticalSection = mCriticalSection;
 
-    if (pNode->child())
+    if (pNode->child() != nullptr)
     {
         auto* parent = pNode->child()->value();
 
-        if (parent)
+        if (parent != nullptr)
         {
             parent->attachMutexRec_(mCriticalSection);
         }
@@ -52,11 +52,11 @@ void MethodTreeNode::attachMutexRec_(CriticalSection* pM) const
         auto* child = node->child();
         node->mCriticalSection = pM;
 
-        if (child && child->value())
+        if (child != nullptr && child->value() != nullptr)
         {
             child->value()->attachMutexRec_(pM);
         }
-    } while (node->next() && (node = node->next()->value()));
+    } while (node->next() != nullptr && ((node = node->next()->value()) != nullptr));
 }
 
 void MethodTreeNode::detachAll()
@@ -108,9 +108,9 @@ void MethodTreeNode::callRec_()
 
     auto* node = child();
 
-    if (node && !mPauseFlag.isOn(cPause_Child))
+    if (node != nullptr && !mPauseFlag.isOn(cPause_Child))
     {
-        while (node)
+        while (node != nullptr)
         {
             node->value()->callRec_();
             node = node->value()->next();
@@ -130,30 +130,30 @@ MethodTreeNode* MethodTreeNode::find(Condition& rCondition)
         return this;
     }
 
-    if (child())
+    if (child() != nullptr)
     {
         MethodTreeNode* pChild = child()->value();
 
-        if (pChild)
+        if (pChild != nullptr)
         {
             MethodTreeNode* pFound = pChild->find(rCondition);
 
-            if (pFound)
+            if (pFound != nullptr)
             {
                 return pFound;
             }
         }
     }
 
-    if (next())
+    if (next() != nullptr)
     {
         MethodTreeNode* pNext = next()->value();
 
-        if (pNext)
+        if (pNext != nullptr)
         {
             MethodTreeNode* pFound = pNext->find(rCondition);
 
-            if (pFound)
+            if (pFound != nullptr)
             {
                 return pFound;
             }

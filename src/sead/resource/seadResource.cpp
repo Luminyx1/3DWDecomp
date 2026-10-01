@@ -193,15 +193,15 @@ Resource* IndirectResourceFactoryBase::tryCreate(const ResourceMgr::LoadArg& rLo
 
     bool isOpen;
 
-    if (rLoadArg.device)
+    if (rLoadArg.device != nullptr)
     {
         isOpen =
-            rLoadArg.device->tryOpen(&handle, rLoadArg.path, FileDevice::cFileOpenFlag_ReadOnly, 0);
+            (rLoadArg.device->tryOpen(&handle, rLoadArg.path, FileDevice::cFileOpenFlag_ReadOnly, 0) != nullptr);
     }
     else
     {
-        isOpen = FileDeviceMgr::instance()->tryOpen(&handle, rLoadArg.path,
-                                                    FileDevice::cFileOpenFlag_ReadOnly, 0);
+        isOpen = (FileDeviceMgr::instance()->tryOpen(&handle, rLoadArg.path,
+                                                    FileDevice::cFileOpenFlag_ReadOnly, 0) != nullptr);
     }
 
     if (!isOpen)

@@ -207,7 +207,7 @@ void GraphicsNvn::nvnDebugCallback(NVNdebugCallbackSource source, NVNdebugCallba
 {
     GraphicsNvn* graphics = instance();
 
-    if (!graphics)
+    if (graphics == nullptr)
     {
         return;
     }

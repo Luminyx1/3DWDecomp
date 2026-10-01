@@ -25,7 +25,7 @@ Thread::Thread(const SafeString& rName, Heap* pHeap, s32 priority,
 
     nn::os::SetThreadName(mThreadInner, rName.cstr());
 
-    if (ThreadMgr::instance())
+    if (ThreadMgr::instance() != nullptr)
     {
         ThreadMgr::instance()->addThread_(this);
     }
@@ -37,7 +37,7 @@ Thread::Thread(const SafeString& rName, Heap* pHeap, s32 priority,
 
 Thread::~Thread()
 {
-    if (!ThreadMgr::instance())
+    if (ThreadMgr::instance() == nullptr)
     {
         SEAD_ASSERT_MSG(false, "ThreadMgr not initialized");
         return;
@@ -63,12 +63,12 @@ Thread::~Thread()
 
         nn::os::DestroyThread(mThreadInner);
 
-        if (mThreadInner)
+        if (mThreadInner != nullptr)
         {
             delete mThreadInner;
         }
 
-        if (mStackTop)
+        if (mStackTop != nullptr)
         {
             delete[] static_cast<u8*>(mStackTop);
         }

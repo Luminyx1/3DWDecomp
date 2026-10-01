@@ -14,7 +14,7 @@ namespace sead
  */
 bool FileHandle::close()
 {
-    if (!mOriginalDevice)
+    if (mOriginalDevice == nullptr)
     {
         SEAD_ASSERT_MSG(false, "handle not opened");
         return false;
@@ -29,7 +29,7 @@ bool FileHandle::close()
  */
 bool FileHandle::tryClose()
 {
-    if (!mOriginalDevice)
+    if (mOriginalDevice == nullptr)
     {
         SEAD_ASSERT_MSG(false, "handle not opened");
         return false;
@@ -44,7 +44,7 @@ bool FileHandle::tryClose()
  */
 bool FileHandle::flush()
 {
-    if (!mOriginalDevice)
+    if (mOriginalDevice == nullptr)
     {
         SEAD_ASSERT_MSG(false, "handle not opened");
         return false;
@@ -59,7 +59,7 @@ bool FileHandle::flush()
  */
 bool FileHandle::tryFlush()
 {
-    if (!mOriginalDevice)
+    if (mOriginalDevice == nullptr)
     {
         SEAD_ASSERT_MSG(false, "handle not opened");
         return false;
@@ -76,7 +76,7 @@ bool FileHandle::tryFlush()
  */
 u32 FileHandle::read(u8* pOutBuffer, u32 bytesToRead)
 {
-    if (!mDevice)
+    if (mDevice == nullptr)
     {
         SEAD_ASSERT_MSG(false, "handle not opened");
         return 0;
@@ -94,7 +94,7 @@ u32 FileHandle::read(u8* pOutBuffer, u32 bytesToRead)
  */
 bool FileHandle::tryRead(u32* pActualSize, u8* pData, u32 size)
 {
-    if (!mDevice)
+    if (mDevice == nullptr)
     {
         SEAD_ASSERT_MSG(false, "handle not opened");
         return false;
@@ -111,7 +111,7 @@ bool FileHandle::tryRead(u32* pActualSize, u8* pData, u32 size)
  */
 u32 FileHandle::write(const u8* pData, u32 size)
 {
-    if (!mDevice)
+    if (mDevice == nullptr)
     {
         SEAD_ASSERT_MSG(false, "handle not opened");
         return 0;
@@ -129,7 +129,7 @@ u32 FileHandle::write(const u8* pData, u32 size)
  */
 bool FileHandle::tryWrite(u32* pActualSize, const u8* pData, u32 size)
 {
-    if (!mDevice)
+    if (mDevice == nullptr)
     {
         SEAD_ASSERT_MSG(false, "handle not opened");
         return false;
@@ -146,7 +146,7 @@ bool FileHandle::tryWrite(u32* pActualSize, const u8* pData, u32 size)
  */
 bool FileHandle::seek(s32 offset, FileDevice::SeekOrigin origin)
 {
-    if (!mDevice)
+    if (mDevice == nullptr)
     {
         SEAD_ASSERT_MSG(false, "handle not opened");
         return false;
@@ -163,7 +163,7 @@ bool FileHandle::seek(s32 offset, FileDevice::SeekOrigin origin)
  */
 bool FileHandle::trySeek(s32 offset, FileDevice::SeekOrigin origin)
 {
-    if (!mDevice)
+    if (mDevice == nullptr)
     {
         SEAD_ASSERT_MSG(false, "handle not opened");
         return false;
@@ -178,7 +178,7 @@ bool FileHandle::trySeek(s32 offset, FileDevice::SeekOrigin origin)
  */
 u32 FileHandle::getCurrentSeekPos()
 {
-    if (!mDevice)
+    if (mDevice == nullptr)
     {
         SEAD_ASSERT_MSG(false, "handle not opened");
         return 0;
@@ -194,7 +194,7 @@ u32 FileHandle::getCurrentSeekPos()
  */
 bool FileHandle::tryGetCurrentSeekPos(u32* pos)
 {
-    if (!mDevice)
+    if (mDevice == nullptr)
     {
         SEAD_ASSERT_MSG(false, "handle not opened");
         return false;
@@ -209,7 +209,7 @@ bool FileHandle::tryGetCurrentSeekPos(u32* pos)
  */
 u32 FileHandle::getFileSize()
 {
-    if (!mDevice)
+    if (mDevice == nullptr)
     {
         SEAD_ASSERT_MSG(false, "handle not opened");
         return 0;
@@ -225,7 +225,7 @@ u32 FileHandle::getFileSize()
  */
 bool FileHandle::tryGetFileSize(u32* pSize)
 {
-    if (!mDevice)
+    if (mDevice == nullptr)
     {
         SEAD_ASSERT_MSG(false, "handle not opened");
         return false;
@@ -240,7 +240,7 @@ bool FileHandle::tryGetFileSize(u32* pSize)
  */
 bool DirectoryHandle::close()
 {
-    if (!mOriginalDevice)
+    if (mOriginalDevice == nullptr)
     {
         SEAD_ASSERT_MSG(false, "handle not opened");
         return false;
@@ -255,7 +255,7 @@ bool DirectoryHandle::close()
  */
 bool DirectoryHandle::tryClose()
 {
-    if (!mOriginalDevice)
+    if (mOriginalDevice == nullptr)
     {
         SEAD_ASSERT_MSG(false, "handle not opened");
         return false;
@@ -272,7 +272,7 @@ bool DirectoryHandle::tryClose()
  */
 u32 DirectoryHandle::read(DirectoryEntry* pEntries, u32 count)
 {
-    if (!mDevice)
+    if (mDevice == nullptr)
     {
         SEAD_ASSERT_MSG(false, "handle not opened");
         return false;
@@ -290,7 +290,7 @@ u32 DirectoryHandle::read(DirectoryEntry* pEntries, u32 count)
  */
 bool DirectoryHandle::tryRead(u32* pActualCount, DirectoryEntry* pEntries, u32 count)
 {
-    if (!mDevice)
+    if (mDevice == nullptr)
     {
         SEAD_ASSERT_MSG(false, "handle not opened");
         return false;
@@ -343,7 +343,7 @@ u8* FileDevice::doLoad_(LoadArg& rArg)
 
     FileHandle handle;
 
-    if (!tryOpen(&handle, rArg.path, FileDevice::cFileOpenFlag_ReadOnly, rArg.div_size))
+    if (tryOpen(&handle, rArg.path, FileDevice::cFileOpenFlag_ReadOnly, rArg.div_size) == nullptr)
     {
         return nullptr;
     }
@@ -405,14 +405,14 @@ u8* FileDevice::doLoad_(LoadArg& rArg)
 
         Heap* heap = rArg.heap;
 
-        if (!heap)
+        if (heap == nullptr)
         {
             heap = HeapMgr::instance()->getCurrentHeap();
         }
 
         void* raw_buf = heap->tryAlloc(bytesToRead, alignment);
 
-        if (!raw_buf)
+        if (raw_buf == nullptr)
         {
             if (rArg.assert_on_alloc_fail)
             {
@@ -471,7 +471,7 @@ bool FileDevice::doSave_(FileDevice::SaveArg& rArg)
 
     FileHandle handle;
 
-    if (!tryOpen(&handle, rArg.path, cFileOpenFlag_WriteOnly))
+    if (tryOpen(&handle, rArg.path, cFileOpenFlag_WriteOnly) == nullptr)
     {
         return false;
     }
@@ -587,7 +587,7 @@ FileDevice* FileDevice::tryOpen(FileHandle* pHandle, const SafeString& rPath, Fi
     FileDevice* device = doOpen_(pHandle, rPath, flag);
     setHandleBaseFileDevice_(pHandle, device);
 
-    if (device)
+    if (device != nullptr)
     {
         setHandleBaseOriginalFileDevice_(pHandle, this);
     }
@@ -646,7 +646,7 @@ bool FileDevice::tryFlush(FileHandle* pHandle)
         return false;
     }
 
-    if (!pHandle)
+    if (pHandle == nullptr)
     {
         SEAD_ASSERT_MSG(false, "pHandle is null");
         return false;

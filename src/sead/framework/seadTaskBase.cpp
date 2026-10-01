@@ -128,9 +128,9 @@ TaskBase::TaskBase(const TaskConstructArg& rArg, const char* pName)
  */
 TaskBase::~TaskBase()
 {
-    if (mTaskMgr)
+    if (mTaskMgr != nullptr)
     {
-        while (child())
+        while (child() != nullptr)
         {
             mTaskMgr->destroyTaskSync(child()->value());
         }
@@ -205,9 +205,9 @@ void TaskBase::onEvent(const TaskEvent&) {}
  */
 bool TaskBase::isDescendantOf(TaskBase* pTask) const
 {
-    for (auto* node = parent(); node; node = node->value()->parent())
+    for (auto* node = parent(); node != nullptr; node = node->value()->parent())
     {
-        if (!node->value())
+        if (node->value() == nullptr)
         {
             return false;
         }
@@ -230,7 +230,7 @@ void TaskBase::adjustHeap(s32 index)
     ScopedLock<CriticalSection> lock(&mTaskMgr->mCriticalSection);
     Heap* heap = mHeapArray.getHeap(index);
 
-    if (heap && !mHeapArray.mAdjusted[index])
+    if (heap != nullptr && !mHeapArray.mAdjusted[index])
     {
         mHeapArray.mAdjusted[index] = true;
         heap->adjust();
@@ -246,7 +246,7 @@ void TaskBase::adjustHeapWithSlackWithoutLock_(s32 index, u32 slack)
 {
     Heap* heap = mHeapArray.getHeap(index);
 
-    if (!heap || mHeapArray.mAdjusted[index])
+    if (heap == nullptr || mHeapArray.mAdjusted[index])
     {
         return;
     }
@@ -255,7 +255,7 @@ void TaskBase::adjustHeapWithSlackWithoutLock_(s32 index, u32 slack)
     void* slackBuffer = slack != 0 ? heap->tryAlloc(slack, 8) : nullptr;
     heap->adjust();
 
-    if (slackBuffer)
+    if (slackBuffer != nullptr)
     {
         heap->free(slackBuffer);
     }
@@ -272,7 +272,7 @@ void TaskBase::adjustHeapAll()
     {
         Heap* heap = mHeapArray.getHeap(i);
 
-        if (heap && !mHeapArray.mAdjusted[i])
+        if (heap != nullptr && !mHeapArray.mAdjusted[i])
         {
             mHeapArray.mAdjusted[i] = true;
             heap->adjust();

@@ -48,7 +48,7 @@ void Heap::destruct_()
     dispose_(nullptr, nullptr);
     HeapMgr::removeFromFindContainHeapCache_(this);
 
-    if (mParent)
+    if (mParent != nullptr)
     {
         mParent->eraseChild_(this);
     }
@@ -72,7 +72,7 @@ void Heap::dispose_(const void* pBegin, const void* pEnd)
 
     while (it != mDisposerList.end())
     {
-        if (it->mDisposerHeap && (disposeAll || (pBegin <= &*it && &*it < pEnd)))
+        if (it->mDisposerHeap != nullptr && (disposeAll || (pBegin <= &*it && &*it < pEnd)))
         {
             it->~IDisposer();
             it = mDisposerList.begin();
@@ -225,7 +225,7 @@ void Heap::dumpYAML(WriteStream& rStream, int indent) const
         str.append(' ', indent);
     }
 
-    const char* parentName = mParent ? mParent->getName().cstr() : "--";
+    const char* parentName = (mParent != nullptr) ? mParent->getName().cstr() : "--";
     str.appendWithFormat("  parent: %s\n", parentName);
     rStream.writeDecorationText(str);
     str.clear();
@@ -291,7 +291,7 @@ void PrintFormatter::out<Heap>(const Heap& rHeap, const char*, PrintOutput* pOut
     OutImpl<char, SafeStringBase>::out(str.cstr(), nullptr, pOutput);
 
     str.format("            Parent: %s (0x%016llX)\n",
-               rHeap.mParent ? rHeap.mParent->getName().cstr() : "--", rHeap.mParent);
+               (rHeap.mParent != nullptr) ? rHeap.mParent->getName().cstr() : "--", rHeap.mParent);
     OutImpl<char, SafeStringBase>::out(str.cstr(), nullptr, pOutput);
 
     str.format("         Direction: %s\n",

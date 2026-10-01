@@ -19,7 +19,7 @@ inline uintptr_t alignUp(uintptr_t value, u32 alignment)
 inline void notifyAllocFailed(HeapMgr* pMgr, Heap* pHeap, size_t size, s32 alignment,
                               size_t allocSize, s32 allocAlignment)
 {
-    if (!pMgr)
+    if (pMgr == nullptr)
     {
         return;
     }
@@ -108,11 +108,11 @@ UnitHeap* UnitHeap::tryCreate(size_t size, const SafeString& rName, u32 blockSiz
         return nullptr;
     }
 
-    if (!pParent)
+    if (pParent == nullptr)
     {
         pParent = HeapMgr::instance()->getCurrentHeap();
 
-        if (!pParent)
+        if (pParent == nullptr)
         {
             return nullptr;
         }
@@ -138,7 +138,7 @@ UnitHeap* UnitHeap::tryCreate(size_t size, const SafeString& rName, u32 blockSiz
 
     void* memory = pParent->tryAlloc(size, 8);
 
-    if (!memory)
+    if (memory == nullptr)
     {
         return nullptr;
     }
@@ -202,11 +202,11 @@ UnitHeap* UnitHeap::tryCreateWithBlockNum(u32 blockSize, u32 blockNum, const Saf
         return nullptr;
     }
 
-    if (!pParent)
+    if (pParent == nullptr)
     {
         pParent = HeapMgr::instance()->getCurrentHeap();
 
-        if (!pParent)
+        if (pParent == nullptr)
         {
             return nullptr;
         }
@@ -217,7 +217,7 @@ UnitHeap* UnitHeap::tryCreateWithBlockNum(u32 blockSize, u32 blockNum, const Saf
 
     void* memory = pParent->tryAlloc(size, 8);
 
-    if (!memory)
+    if (memory == nullptr)
     {
         return nullptr;
     }
@@ -255,7 +255,7 @@ void UnitHeap::destroy()
 
     this->~UnitHeap();
 
-    if (parent && parent->isFreeable())
+    if (parent != nullptr && parent->isFreeable())
     {
         parent->free(start);
     }
@@ -318,9 +318,9 @@ void* UnitHeap::tryAlloc(size_t size, s32 alignment)
     ConditionalScopedLock<CriticalSection> lock(&mCS, isLockEnabled());
     void* ptr = mFreeList.getFree();
 
-    if (!ptr)
+    if (ptr == nullptr)
     {
-        HeapMgr::IAllocFailedCallback* callback = mgr ? mgr->getAllocFailedCallback() : nullptr;
+        HeapMgr::IAllocFailedCallback* callback = (mgr != nullptr) ? mgr->getAllocFailedCallback() : nullptr;
 
         if (callback)
         {
@@ -347,7 +347,7 @@ void* UnitHeap::tryAlloc(size_t size, s32 alignment)
  */
 void UnitHeap::free(void* pPtr)
 {
-    if (!pPtr || !isInclude(pPtr))
+    if (pPtr == nullptr || !isInclude(pPtr))
     {
         return;
     }
@@ -427,7 +427,7 @@ uintptr_t UnitHeap::getEndAddress() const
  */
 size_t UnitHeap::getMaxAllocatableSize(int alignment) const
 {
-    if (!mFreeList.getFree())
+    if (mFreeList.getFree() == nullptr)
     {
         return 0;
     }

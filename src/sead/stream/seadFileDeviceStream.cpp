@@ -12,7 +12,7 @@ FileDeviceStreamSrc::FileDeviceStreamSrc(FileHandle* pFileHandle)
 
 FileDeviceStreamSrc::~FileDeviceStreamSrc()
 {
-    if (mIsHandleOpen && mFileHandle)
+    if (mIsHandleOpen && mFileHandle != nullptr)
     {
         mFileHandle->close();
     }
@@ -52,7 +52,7 @@ void FileDeviceStreamSrc::setFileHandle(sead::FileHandle* pFileHandle)
 {
     mFileHandle = pFileHandle;
 
-    if (pFileHandle)
+    if (pFileHandle != nullptr)
     {
         mStartingPos = pFileHandle->getCurrentSeekPos();
         mFileSize = pFileHandle->getFileSize();
@@ -93,7 +93,7 @@ FileDeviceWriteStream::~FileDeviceWriteStream()
 
 void FileDeviceWriteStream::setFileHandle(sead::FileHandle* pFileHandle)
 {
-    if (src.getFileHandle())
+    if (src.getFileHandle() != nullptr)
     {
         flush();
         rewind();
@@ -135,7 +135,7 @@ FileDeviceReadStream::~FileDeviceReadStream()
 
 void FileDeviceReadStream::setFileHandle(sead::FileHandle* pFileHandle)
 {
-    if (src.getFileHandle())
+    if (src.getFileHandle() != nullptr)
     {
         rewind();
     }

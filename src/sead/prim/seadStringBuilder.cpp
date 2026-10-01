@@ -39,7 +39,7 @@ StringBuilderBase<T>* StringBuilderBase<T>::createImpl_(s32 buffer_size, Heap* h
         return nullptr;
     }
 
-    if (!heap)
+    if (heap == nullptr)
     {
         heap = HeapMgr::instance()->getCurrentHeap();
     }

@@ -81,7 +81,7 @@ SafeString XmlElement::findAttributeValue(const SafeString& rName) const
  */
 XmlElement::AttributeList* XmlElement::expandAttributeList(s32 num, Heap* pHeap)
 {
-    if (!pHeap)
+    if (pHeap == nullptr)
     {
         pHeap = mHeap;
     }
@@ -270,7 +270,7 @@ const XmlElement* XmlElement::findElementByRelativePath_(const SafeString& rPath
         {
             element = element->parent();
 
-            if (!element)
+            if (element == nullptr)
             {
                 return nullptr;
             }
@@ -342,7 +342,7 @@ const XmlElement* XmlElement::findRoot() const
 {
     const XmlElement* element = this;
 
-    while (element->parent())
+    while (element->parent() != nullptr)
     {
         element = element->parent();
     }
@@ -358,7 +358,7 @@ XmlElement* XmlElement::findRoot()
 {
     XmlElement* element = this;
 
-    while (element->parent())
+    while (element->parent() != nullptr)
     {
         element = element->parent();
     }
@@ -374,7 +374,7 @@ XmlElement* XmlElement::findRoot()
  */
 bool XmlElement::findSiblingElement_(const XmlElement** ppElement, SafeString name) const
 {
-    for (const XmlElement* element = *ppElement; element; element = element->next())
+    for (const XmlElement* element = *ppElement; element != nullptr; element = element->next())
     {
         s32 length = element->mName.calcLength();
 

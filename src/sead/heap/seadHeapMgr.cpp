@@ -127,14 +127,14 @@ void HeapMgr::setAllocFromNotSeadThreadHeap(Heap* pHeap)
 Heap* HeapMgr::findContainHeap(const void* ptr) const
 {
     ThreadMgr* pThreadMgr = ThreadMgr::instance();
-    Thread* pThread = pThreadMgr ? pThreadMgr->getCurrentThread() : nullptr;
+    Thread* pThread = (pThreadMgr != nullptr) ? pThreadMgr->getCurrentThread() : nullptr;
 
     Heap* pCurrentHeap = nullptr;
     Heap* pCheckedHeap = nullptr;
     FindContainHeapCache* pCache = nullptr;
     Heap* pHeap = nullptr;
 
-    if (pThread)
+    if (pThread != nullptr)
     {
         pCache = pThread->getFindContainHeapCache();
         pCurrentHeap = pThread->getCurrentHeap();
@@ -142,7 +142,7 @@ Heap* HeapMgr::findContainHeap(const void* ptr) const
         pHeap = pCache->tryAddHeap();
         bool isMiss = true;
 
-        if (pHeap && pHeap->mChildren.size() == 0)
+        if (pHeap != nullptr && pHeap->mChildren.size() == 0)
         {
             isMiss = !pHeap->isInclude(ptr);
             pCheckedHeap = isMiss ? pHeap : nullptr;
@@ -155,7 +155,7 @@ Heap* HeapMgr::findContainHeap(const void* ptr) const
             return pHeap;
         }
 
-        if (pCurrentHeap && pCheckedHeap != pCurrentHeap && pCurrentHeap->mChildren.size() == 0)
+        if (pCurrentHeap != nullptr && pCheckedHeap != pCurrentHeap && pCurrentHeap->mChildren.size() == 0)
         {
             if (pCurrentHeap->isInclude(ptr))
             {
@@ -169,15 +169,15 @@ Heap* HeapMgr::findContainHeap(const void* ptr) const
 
     ScopedLock<CriticalSection> lock(&sHeapTreeLockCS);
 
-    if (pThread)
+    if (pThread != nullptr)
     {
         pHeap = pCache->getHeap();
 
-        if (pHeap && pHeap != pCheckedHeap)
+        if (pHeap != nullptr && pHeap != pCheckedHeap)
         {
             Heap* pFound = pHeap->findContainHeap_(ptr);
 
-            if (pFound)
+            if (pFound != nullptr)
             {
                 if (pFound != pHeap)
                 {
@@ -190,11 +190,11 @@ Heap* HeapMgr::findContainHeap(const void* ptr) const
             pCheckedHeap = pHeap;
         }
 
-        if (pCurrentHeap && pCheckedHeap != pCurrentHeap)
+        if (pCurrentHeap != nullptr && pCheckedHeap != pCurrentHeap)
         {
             pHeap = pCurrentHeap->findContainHeap_(ptr);
 
-            if (pHeap)
+            if (pHeap != nullptr)
             {
                 pCache->setHeap(pHeap);
                 return pHeap;
@@ -206,7 +206,7 @@ Heap* HeapMgr::findContainHeap(const void* ptr) const
     {
         pHeap = rRoot.findContainHeap_(ptr);
 
-        if (pHeap)
+        if (pHeap != nullptr)
         {
             goto found;
         }
@@ -216,7 +216,7 @@ Heap* HeapMgr::findContainHeap(const void* ptr) const
     {
         pHeap = rRoot.findContainHeap_(ptr);
 
-        if (pHeap)
+        if (pHeap != nullptr)
         {
             goto found;
         }
@@ -225,7 +225,7 @@ Heap* HeapMgr::findContainHeap(const void* ptr) const
     return nullptr;
 
 found:
-    if (pCache)
+    if (pCache != nullptr)
     {
         pCache->setHeap(pHeap);
     }
@@ -237,14 +237,14 @@ void HeapMgr::removeFromFindContainHeapCache_(Heap* pHeap)
 {
     auto* threadMgr = ThreadMgr::instance();
 
-    if (!threadMgr)
+    if (threadMgr == nullptr)
     {
         return;
     }
 
     Thread* mainThread = threadMgr->getMainThread();
 
-    if (mainThread)
+    if (mainThread != nullptr)
     {
         while (!mainThread->getFindContainHeapCache()->tryRemoveHeap(pHeap))
         {
@@ -266,7 +266,7 @@ Heap* HeapMgr::findHeapByName(const sead::SafeString& rName, int index) const
     {
         Heap* found = findHeapByName_(&heap, rName, &index);
 
-        if (found)
+        if (found != nullptr)
         {
             return found;
         }
@@ -276,7 +276,7 @@ Heap* HeapMgr::findHeapByName(const sead::SafeString& rName, int index) const
     {
         Heap* found = findHeapByName_(&heap, rName, &index);
 
-        if (found)
+        if (found != nullptr)
         {
             return found;
         }
@@ -301,7 +301,7 @@ Heap* HeapMgr::findHeapByName_(Heap* pHeap, const SafeString& rName, int* pIndex
     {
         Heap* found = findHeapByName_(&child, rName, pIndex);
 
-        if (found)
+        if (found != nullptr)
         {
             return found;
         }
@@ -314,7 +314,7 @@ Heap* HeapMgr::getCurrentHeap() const
 {
     Thread* currentThread = ThreadMgr::instance()->getCurrentThread();
 
-    if (currentThread)
+    if (currentThread != nullptr)
     {
         return currentThread->getCurrentHeap();
     }

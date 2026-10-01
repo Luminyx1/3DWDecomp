@@ -35,11 +35,11 @@ void ControllerMgr::prepare()
 {
     auto* parameter = DynamicCast<Parameter>(mParameter);
 
-    if (parameter)
+    if (parameter != nullptr)
     {
         initialize(parameter->controllerMax, nullptr);
 
-        if (parameter->proc)
+        if (parameter->proc != nullptr)
         {
             parameter->proc->invoke(this);
         }
@@ -86,7 +86,7 @@ void ControllerMgr::finalizeDefault()
 {
     auto* device = getControlDevice(ControllerDefine::cDevice_NinJoyNpad);
 
-    if (device)
+    if (device != nullptr)
     {
         mDevices.erase(device);
         delete device;
@@ -163,7 +163,7 @@ ControllerAddon* ControllerMgr::getControllerAddon(s32 index, ControllerDefine::
 {
     Controller* controller = mControllers.at(index);
 
-    if (controller)
+    if (controller != nullptr)
     {
         return controller->getAddon(id);
     }
@@ -184,7 +184,7 @@ ControllerAddon* ControllerMgr::getControllerAddonByOrder(s32 controllerIndex,
 {
     Controller* controller = mControllers.at(controllerIndex);
 
-    if (controller)
+    if (controller != nullptr)
     {
         return controller->getAddonByOrder(id, addonIndex);
     }
@@ -261,7 +261,7 @@ void ControllerMgr::removeController(Controller* pController)
  */
 Framework* ControllerMgr::getFramework() const
 {
-    if (mTaskMgr)
+    if (mTaskMgr != nullptr)
     {
         return mTaskMgr->mParentFramework;
     }

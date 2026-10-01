@@ -16,7 +16,7 @@ void ListNode::insertBack_(ListNode* pNode)
     pNode->mPrev = this;
     pNode->mNext = next;
 
-    if (next)
+    if (next != nullptr)
     {
         next->mPrev = pNode;
     }

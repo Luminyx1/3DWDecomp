@@ -742,7 +742,7 @@ void setQuadVertex(Vertex* pVertex, u16* pIndex)
 
     static const u16 cIdx[6] = {0, 2, 1, 1, 2, 3};
 
-    if (pVertex)
+    if (pVertex != nullptr)
     {
         MemUtil::copy(pVertex, cVtx, sizeof(cVtx));
     }
@@ -766,7 +766,7 @@ void setLineVertex(Vertex* pVertex, u16* pIndex)
 
     static const u16 cIdx[2] = {0, 1};
 
-    if (pVertex)
+    if (pVertex != nullptr)
     {
         MemUtil::copy(pVertex, cVtx, sizeof(cVtx));
     }
@@ -803,7 +803,7 @@ void setCubeVertex(Vertex* pVertex, u16* pIndex)
     static const u16 cIdx[36] = {2, 1, 0, 3, 2, 0, 5, 2, 3, 4, 5, 3, 6, 5, 7, 7, 5, 4,
                                  1, 6, 0, 6, 7, 0, 0, 7, 3, 3, 7, 4, 1, 2, 6, 2, 5, 6};
 
-    if (pVertex)
+    if (pVertex != nullptr)
     {
         MemUtil::copy(pVertex, cVtx, sizeof(cVtx));
     }
@@ -840,7 +840,7 @@ void setWireCubeVertex(Vertex* pVertex, u16* pIndex)
  */
 void setSphereVertex(Vertex* pVertex, u16* pIndex, s32 x, s32 y)
 {
-    if (pVertex)
+    if (pVertex != nullptr)
     {
         for (s32 i = 0; i < y; i++)
         {
@@ -938,7 +938,7 @@ void setSphereVertex(Vertex* pVertex, u16* pIndex, s32 x, s32 y)
  */
 void setDiskVertex(Vertex* pVertex, u16* pIndex, s32 divNum)
 {
-    if (pVertex)
+    if (pVertex != nullptr)
     {
         for (s32 i = 0; i < divNum; i++)
         {
@@ -982,7 +982,7 @@ void setDiskVertex(Vertex* pVertex, u16* pIndex, s32 divNum)
  */
 void setCylinderVertex(Vertex* pVertex, u16* pIndex, s32 divNum)
 {
-    if (pVertex)
+    if (pVertex != nullptr)
     {
         for (s32 i = 0; i < divNum; i++)
         {

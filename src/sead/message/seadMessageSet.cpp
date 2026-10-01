@@ -68,7 +68,7 @@ void MessageSetBase::finalize() {
  * @return the MSBT data passed to initialize, or nullptr.
  */
 const void* MessageSetBase::getInitializeData() const {
-    if (mMsgFile) {
+    if (mMsgFile != nullptr) {
         return mMsgFile->commonInfo.pResource;
     }
 

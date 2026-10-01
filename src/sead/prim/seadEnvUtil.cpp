@@ -329,7 +329,7 @@ void RegionLanguageMgr::initialize(const InitArg& rArg)
 
     mRomType = rArg.romType;
 
-    if (rArg.maskFilePath)
+    if (rArg.maskFilePath != nullptr)
     {
         loadMask_(&mask, rArg);
     }
@@ -427,7 +427,7 @@ RegionID EnvUtil::getRegion()
 {
     RegionLanguageMgr* mgr = RegionLanguageMgr::instance();
 
-    if (mgr && mgr->isInitialized())
+    if (mgr != nullptr && mgr->isInitialized())
     {
         return mgr->getRegion();
     }
@@ -443,7 +443,7 @@ LanguageID EnvUtil::getLanguage()
 {
     RegionLanguageMgr* mgr = RegionLanguageMgr::instance();
 
-    if (mgr && mgr->isInitialized())
+    if (mgr != nullptr && mgr->isInitialized())
     {
         return mgr->getLanguage();
     }
@@ -478,7 +478,7 @@ RegionLanguageID EnvUtil::getRegionLanguage()
 {
     RegionLanguageMgr* mgr = RegionLanguageMgr::instance();
 
-    if (mgr && mgr->isInitialized())
+    if (mgr != nullptr && mgr->isInitialized())
     {
         return mgr->getRegionLanguage();
     }
@@ -503,7 +503,7 @@ const SafeString& EnvUtil::getRomType()
 {
     RegionLanguageMgr* mgr = RegionLanguageMgr::instance();
 
-    if (mgr && mgr->isInitialized())
+    if (mgr != nullptr && mgr->isInitialized())
     {
         return mgr->getRomType();
     }
@@ -567,7 +567,7 @@ s32 EnvUtil::convertToWinPath(BufferedSafeString* pOut, const SafeString& rPath)
     pOut->clear();
     FileDeviceMgr* mgr = FileDeviceMgr::instance();
 
-    if (!mgr)
+    if (mgr == nullptr)
     {
         return 0;
     }
@@ -577,7 +577,7 @@ s32 EnvUtil::convertToWinPath(BufferedSafeString* pOut, const SafeString& rPath)
 
         if (Path::getDriveName(&drive, rPath))
         {
-            if (!mgr->findDevice(drive))
+            if (mgr->findDevice(drive) == nullptr)
             {
                 return 0;
             }
