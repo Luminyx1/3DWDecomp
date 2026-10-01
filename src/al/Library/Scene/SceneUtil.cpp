@@ -214,17 +214,17 @@ void initActorInitInfo(ActorInitInfo* pInfo, const Scene* pScene,
                        const PlacementInfo* pPlacementInfo, const LayoutInitInfo* pLayoutInfo,
                        bool isUseCameraRS) {
     LiveActorKit* kit = pScene->getLiveActorKit();
-    pInfo->initNew(pPlacementInfo, pLayoutInfo, kit->mExecDirector, pScene->getAudioDirector(),
-                   kit->mEffectSystem->getEffectSystemInfo(), pScene->getOceanWaveDirector(),
+    pInfo->initNew(pPlacementInfo, pLayoutInfo, kit->getExecuteDirector(), pScene->getAudioDirector(),
+                   kit->getEffectSystem()->getEffectSystemInfo(), pScene->getOceanWaveDirector(),
                    pScene->getSceneObjHolder(), pScene->getSceneStopCtrl(),
-                   pScene->getScreenCoverCtrl(), kit->mSensorDirector, kit->mScreenPointDirector,
-                   kit->mClippingDirector, kit->mCollisionDirector, kit->mAreaObjDirector,
-                   kit->mStageSwitchDirector, kit->mPlayerHolder, kit->mItemDirector,
-                   kit->mShadowDirector, kit->mRumbleDirector, kit->mCameraDirectorRS,
-                   kit->mGraphicsSystemInfo,
-                   isUseCameraRS ? kit->mCameraDirectorRS->getSceneCameraInfo() :
-                                   kit->mCameraDirector->getSceneCameraInfo(),
-                   kit->mDemoDirector, kit->mActorGroup, isUseCameraRS);
+                   pScene->getScreenCoverCtrl(), kit->getHitSensorDirector(), kit->getScreenPointDirector(),
+                   kit->getClippingDirector(), kit->getCollisionDirector(), kit->getAreaObjDirector(),
+                   kit->getStageSwitchDirector(), kit->getPlayerHolder(), kit->getItemDirector(),
+                   kit->getShadowDirector(), kit->getPadRumbleDirector(), kit->getCameraDirector_RS(),
+                   kit->getGraphicsSystemInfo(),
+                   isUseCameraRS ? kit->getCameraDirector_RS()->getSceneCameraInfo() :
+                                   kit->getCameraDirector()->getSceneCameraInfo(),
+                   kit->getDemoDirector(), kit->getActorGroup(), isUseCameraRS);
 }
 
 /**
@@ -238,12 +238,12 @@ void initLayoutInitInfo(LayoutInitInfo* pInfo, const Scene* pScene, const SceneI
     LayoutKit* layoutKit = pScene->getLayoutKit();
 
     if (kit != nullptr) {
-        pInfo->init(kit->mExecDirector, kit->mEffectSystem->getEffectSystemInfo(),
+        pInfo->init(kit->getExecuteDirector(), kit->getEffectSystem()->getEffectSystemInfo(),
                     pScene->getSceneObjHolder(), pScene->getAudioDirector(),
-                    kit->mCameraDirector, pScene->getSceneCameraInfo(),
+                    kit->getCameraDirector(), pScene->getSceneCameraInfo(),
                     rInfo.mGameSystemInfo->getLayoutSystem(),
                     rInfo.mGameSystemInfo->getMessageSystem(),
-                    rInfo.mGameSystemInfo->getGamePadSystem(), kit->mRumbleDirector);
+                    rInfo.mGameSystemInfo->getGamePadSystem(), kit->getPadRumbleDirector());
         if (layoutKit != nullptr) {
             pInfo->setDrawContext(layoutKit->getDrawContext());
             pInfo->setDrawInfo(layoutKit->getDrawInfo());
@@ -270,7 +270,7 @@ inline bool tryInitAreaInitInfo(AreaInitInfo* pOut, const Scene* pScene,
         return false;
     }
 
-    pOut->set(placementInfo, rInfo.mStageSwitchDirector);
+    pOut->set(placementInfo, rInfo.getStageSwitchDirector());
     return true;
 }
 }  // namespace
@@ -314,7 +314,7 @@ void initPlacementAreaObj(Scene* pScene, const ActorInitInfo& rInfo,
         }
     }
 
-    pScene->getLiveActorKit()->mAreaObjDirector->placement(infos, num,
+    pScene->getLiveActorKit()->getAreaObjDirector()->placement(infos, num,
                                                            pScene->getSceneObjHolder(), pScene);
 }
 
@@ -585,7 +585,7 @@ void getPlacementInfoAndCount(PlacementInfo* pOut, s32* pCount, const StageInfo*
  * @param pFactory area object factory
  */
 void initAreaObjDirector(Scene* pScene, const AreaObjFactory* pFactory) {
-    pScene->getLiveActorKit()->mAreaObjDirector->init(pFactory);
+    pScene->getLiveActorKit()->getAreaObjDirector()->init(pFactory);
 }
 
 /**
@@ -602,7 +602,7 @@ void initHitSensorDirector(Scene* pScene) {
  * @param pDirector item director
  */
 void initItemDirector(Scene* pScene, ItemDirectorBase* pDirector) {
-    pScene->getLiveActorKit()->mItemDirector = pDirector;
+    pScene->getLiveActorKit()->setItemDirector(pDirector);
 }
 
 /**
@@ -614,7 +614,7 @@ void initItemDirector(Scene* pScene, ItemDirectorBase* pDirector) {
 void initCameraDirector(const Scene* pScene, const char* pName,
                         const CameraPoserFactory* pFactory) {
     LiveActorKit* kit = pScene->getLiveActorKit();
-    kit->mCameraDirector->init(kit->mPlayerHolder);
+    kit->getCameraDirector()->init(kit->getPlayerHolder());
 }
 
 /**
@@ -627,9 +627,9 @@ void initCameraDirector(const Scene* pScene, const char* pName,
 void initCameraDirector_RS(const Scene* pScene, const char* pName,
                            const CameraPoserFactory_RS* pFactory,
                            SceneCameraInfo* pSceneCameraInfo) {
-    pScene->getLiveActorKit()->mCameraDirectorRS->init(pScene->getCameraPoserSceneInfo(), pFactory,
+    pScene->getLiveActorKit()->getCameraDirector_RS()->init(pScene->getCameraPoserSceneInfo(), pFactory,
                                                        pSceneCameraInfo);
-    CameraDirector_RS* director = pScene->getLiveActorKit()->mCameraDirectorRS;
+    CameraDirector_RS* director = pScene->getLiveActorKit()->getCameraDirector_RS();
     CameraResourceHolder* holder = new CameraResourceHolder(pName, getStageInfoMapNum(pScene));
 
     for (s32 i = 0; i < getStageInfoMapNum(pScene); i++) {
@@ -652,7 +652,7 @@ void initCameraDirector_RS(const Scene* pScene, const char* pName,
 void initCameraDirectorWithoutStageResource(const Scene* pScene,
                                             const CameraPoserFactory* pFactory) {
     LiveActorKit* kit = pScene->getLiveActorKit();
-    kit->mCameraDirector->init(kit->mPlayerHolder);
+    kit->getCameraDirector()->init(kit->getPlayerHolder());
 }
 
 /**
@@ -665,7 +665,7 @@ void initCameraDirectorWithoutStageResource(const Scene* pScene,
 void initCameraDirectorFix(const Scene* pScene, const sead::Vector3f& rPos,
                            const sead::Vector3f& rLookAt, const CameraPoserFactory* pFactory) {
     LiveActorKit* kit = pScene->getLiveActorKit();
-    kit->mCameraDirector->init(kit->mPlayerHolder);
+    kit->getCameraDirector()->init(kit->getPlayerHolder());
 }
 
 /**
@@ -731,7 +731,7 @@ void updateLayoutKit(Scene* pScene) {
  * @param pScene scene
  */
 void updateEffect(Scene* pScene) {
-    alExecuteFunction::updateEffect(pScene->getLiveActorKit()->mExecDirector);
+    alExecuteFunction::updateEffect(pScene->getLiveActorKit()->getExecuteDirector());
 }
 
 /**
@@ -739,7 +739,7 @@ void updateEffect(Scene* pScene) {
  * @param pScene scene
  */
 void updateEffectSystem(Scene* pScene) {
-    alExecuteFunction::updateEffectSystem(pScene->getLiveActorKit()->mExecDirector);
+    alExecuteFunction::updateEffectSystem(pScene->getLiveActorKit()->getExecuteDirector());
 }
 
 /**
@@ -747,7 +747,7 @@ void updateEffectSystem(Scene* pScene) {
  * @param pScene scene
  */
 void updateEffectSystemStall(Scene* pScene) {
-    alExecuteFunction::updateEffectSystemStall(pScene->getLiveActorKit()->mExecDirector);
+    alExecuteFunction::updateEffectSystemStall(pScene->getLiveActorKit()->getExecuteDirector());
 }
 
 /**
@@ -755,7 +755,7 @@ void updateEffectSystemStall(Scene* pScene) {
  * @param pScene scene
  */
 void updateEffectPlayer(Scene* pScene) {
-    alExecuteFunction::updateEffectPlayer(pScene->getLiveActorKit()->mExecDirector);
+    alExecuteFunction::updateEffectPlayer(pScene->getLiveActorKit()->getExecuteDirector());
 }
 
 /**
@@ -763,7 +763,7 @@ void updateEffectPlayer(Scene* pScene) {
  * @param pScene scene
  */
 void updateEffectHitStop(Scene* pScene) {
-    alExecuteFunction::updateEffectHitStop(pScene->getLiveActorKit()->mExecDirector);
+    alExecuteFunction::updateEffectHitStop(pScene->getLiveActorKit()->getExecuteDirector());
 }
 
 /**
@@ -771,7 +771,7 @@ void updateEffectHitStop(Scene* pScene) {
  * @param pScene scene
  */
 void updateEffectDemo(Scene* pScene) {
-    alExecuteFunction::updateEffectDemo(pScene->getLiveActorKit()->mExecDirector);
+    alExecuteFunction::updateEffectDemo(pScene->getLiveActorKit()->getExecuteDirector());
 }
 
 /**
@@ -779,7 +779,7 @@ void updateEffectDemo(Scene* pScene) {
  * @param pScene scene
  */
 void updateEffectLayout(Scene* pScene) {
-    alExecuteFunction::updateEffectLayout(pScene->getLiveActorKit()->mExecDirector);
+    alExecuteFunction::updateEffectLayout(pScene->getLiveActorKit()->getExecuteDirector());
 }
 
 /**
@@ -797,7 +797,7 @@ void updatePadRumbleDirector(Scene* pScene) {
  * @param pScene scene
  */
 void updateHitSensorDirector(Scene* pScene) {
-    HitSensorDirector* director = pScene->getLiveActorKit()->mSensorDirector;
+    HitSensorDirector* director = pScene->getLiveActorKit()->getHitSensorDirector();
 
     if (director != nullptr) {
         director->trueExecute();
@@ -838,7 +838,7 @@ void drawLayoutKit(const Scene* pScene, const char* pListName) {
  * @param index camera index
  */
 void drawEffectDeferred(const Scene* pScene, s32 index) {
-    EffectSystem* effectSystem = pScene->getLiveActorKit()->mEffectSystem;
+    EffectSystem* effectSystem = pScene->getLiveActorKit()->getEffectSystem();
     const IUseCamera* camera = pScene;
     alEffectSystemFunction::drawEffectDeferred(effectSystem, getProjectionMtx(camera),
                                                getCameraViewMtx(camera), getCameraNear(camera),
@@ -979,7 +979,7 @@ void updateDemoActor(const Scene* pScene) {
  * @param pScene scene
  */
 void updateDemoActorWithEffects(const Scene* pScene) {
-    EffectSystem* effectSystem = pScene->getLiveActorKit()->mEffectSystem;
+    EffectSystem* effectSystem = pScene->getLiveActorKit()->getEffectSystem();
     pScene->getDemoDirector()->updateDemoActor(effectSystem);
 }
 
@@ -988,7 +988,7 @@ void updateDemoActorWithEffects(const Scene* pScene) {
  * @param pScene scene
  */
 void onClippingPosAsPlayerPos(const Scene* pScene) {
-    pScene->getLiveActorKit()->mClippingDirector->setClippingJudgeUsClippingPosAsPlayerPos(true);
+    pScene->getLiveActorKit()->getClippingDirector()->setClippingJudgeUsClippingPosAsPlayerPos(true);
 }
 
 /**
@@ -996,7 +996,7 @@ void onClippingPosAsPlayerPos(const Scene* pScene) {
  * @param pScene scene
  */
 void offClippingPosAsPlayerPos(const Scene* pScene) {
-    pScene->getLiveActorKit()->mClippingDirector->setClippingJudgeUsClippingPosAsPlayerPos(false);
+    pScene->getLiveActorKit()->getClippingDirector()->setClippingJudgeUsClippingPosAsPlayerPos(false);
 }
 
 /**
@@ -1011,9 +1011,9 @@ void initPadRumble(const Scene* pScene, const SceneInitInfo& rInfo) {
         return;
     }
 
-    pScene->getLiveActorKit()->mRumbleDirector->setWaveVibrationHolder(holder);
+    pScene->getLiveActorKit()->getPadRumbleDirector()->setWaveVibrationHolder(holder);
     alAudioSystemFunction::setPadRumbleDirectorForSe(pScene->getAudioDirector(),
-                                                     pScene->getLiveActorKit()->mRumbleDirector);
+                                                     pScene->getLiveActorKit()->getPadRumbleDirector());
 }
 
 /**
@@ -1023,8 +1023,8 @@ void initPadRumble(const Scene* pScene, const SceneInitInfo& rInfo) {
 void stopPadRumble(const Scene* pScene) {
     LiveActorKit* kit = pScene->getLiveActorKit();
 
-    if (kit != nullptr && kit->mRumbleDirector != nullptr) {
-        kit->mRumbleDirector->stopAllRumble();
+    if (kit != nullptr && kit->getPadRumbleDirector() != nullptr) {
+        kit->getPadRumbleDirector()->stopAllRumble();
     }
 }
 
@@ -1035,8 +1035,8 @@ void stopPadRumble(const Scene* pScene) {
 void pausePadRumble(const Scene* pScene) {
     LiveActorKit* kit = pScene->getLiveActorKit();
 
-    if (kit != nullptr && kit->mRumbleDirector != nullptr) {
-        kit->mRumbleDirector->pause();
+    if (kit != nullptr && kit->getPadRumbleDirector() != nullptr) {
+        kit->getPadRumbleDirector()->pause();
     }
 }
 
@@ -1047,8 +1047,8 @@ void pausePadRumble(const Scene* pScene) {
 void endPausePadRumble(const Scene* pScene) {
     LiveActorKit* kit = pScene->getLiveActorKit();
 
-    if (kit != nullptr && kit->mRumbleDirector != nullptr) {
-        kit->mRumbleDirector->endPause();
+    if (kit != nullptr && kit->getPadRumbleDirector() != nullptr) {
+        kit->getPadRumbleDirector()->endPause();
     }
 }
 
@@ -1059,8 +1059,8 @@ void endPausePadRumble(const Scene* pScene) {
 void pauseDemoPadRumble(const Scene* pScene) {
     LiveActorKit* kit = pScene->getLiveActorKit();
 
-    if (kit != nullptr && kit->mRumbleDirector != nullptr) {
-        kit->mRumbleDirector->pauseActiveRumbles();
+    if (kit != nullptr && kit->getPadRumbleDirector() != nullptr) {
+        kit->getPadRumbleDirector()->pauseActiveRumbles();
     }
 }
 
@@ -1071,8 +1071,8 @@ void pauseDemoPadRumble(const Scene* pScene) {
 void endPauseDemoPadRumble(const Scene* pScene) {
     LiveActorKit* kit = pScene->getLiveActorKit();
 
-    if (kit != nullptr && kit->mRumbleDirector != nullptr) {
-        kit->mRumbleDirector->resumeActiveRumbles();
+    if (kit != nullptr && kit->getPadRumbleDirector() != nullptr) {
+        kit->getPadRumbleDirector()->resumeActiveRumbles();
     }
 }
 
@@ -1081,7 +1081,7 @@ void endPauseDemoPadRumble(const Scene* pScene) {
  * @param pScene scene
  */
 void validatePadRumble(Scene* pScene) {
-    pScene->getLiveActorKit()->mRumbleDirector->validate();
+    pScene->getLiveActorKit()->getPadRumbleDirector()->validate();
 }
 
 /**
@@ -1089,7 +1089,7 @@ void validatePadRumble(Scene* pScene) {
  * @param pScene scene
  */
 void invalidatePadRumble(Scene* pScene) {
-    pScene->getLiveActorKit()->mRumbleDirector->invalidate();
+    pScene->getLiveActorKit()->getPadRumbleDirector()->invalidate();
 }
 
 /**
@@ -1098,7 +1098,7 @@ void invalidatePadRumble(Scene* pScene) {
  * @param level power level
  */
 void setPadRumblePowerLevel(Scene* pScene, s32 level) {
-    pScene->getLiveActorKit()->mRumbleDirector->setPowerLevel(level);
+    pScene->getLiveActorKit()->getPadRumbleDirector()->setPowerLevel(level);
 }
 
 /**

@@ -268,7 +268,7 @@ void DemoDirector::updateDemoActor(EffectSystem* pEffectSystem) {
         LiveActor* actor = mDemoActors[i];
         actor->movement();
 
-        if (actor->mModelKeeper != nullptr) {
+        if (actor->getModelKeeper() != nullptr) {
             actor->calcAnim();
         }
 

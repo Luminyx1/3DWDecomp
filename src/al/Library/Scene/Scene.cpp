@@ -116,10 +116,10 @@ void Scene::drawSub() const {
  */
 SceneCameraInfo* Scene::getSceneCameraInfo() const {
     if (mIsUseCameraRS) {
-        return mLiveActorKit->mCameraDirectorRS->getSceneCameraInfo();
+        return mLiveActorKit->getCameraDirector_RS()->getSceneCameraInfo();
     }
 
-    return mLiveActorKit->mCameraDirector->getSceneCameraInfo();
+    return mLiveActorKit->getCameraDirector()->getSceneCameraInfo();
 }
 
 /**
@@ -127,7 +127,7 @@ SceneCameraInfo* Scene::getSceneCameraInfo() const {
  * @return demo director
  */
 DemoDirector* Scene::getDemoDirector() const {
-    return mLiveActorKit->mDemoDirector;
+    return mLiveActorKit->getDemoDirector();
 }
 
 /**
@@ -217,7 +217,7 @@ void Scene::initLiveActorKitWithGraphics(const GraphicsInitArg& rArg, const Scen
     mLiveActorKit->initGraphics(rArg, rInfo.mStageName);
 
     if (rArg._e) {
-        GraphicsSystemInfo* graphicsInfo = mLiveActorKit->mGraphicsSystemInfo;
+        GraphicsSystemInfo* graphicsInfo = mLiveActorKit->getGraphicsSystemInfo();
 
         if (graphicsInfo != nullptr) {
             u8* unk = *reinterpret_cast<u8**>(&graphicsInfo->_130[0x240 - 0x130]);
@@ -238,7 +238,7 @@ void Scene::initLayoutKit(const SceneInitInfo& rInfo) {
     mLayoutKit->setEffectSystem(rInfo.mGameSystemInfo->getEffectSystem());
     mLayoutKit->setLayoutSystem(rInfo.mGameSystemInfo->getLayoutSystem());
     mLayoutKit->setDrawContext(
-        reinterpret_cast<agl::DrawContext*>(GameFrameworkNx::sInstance->mDrawContext));
+        GameFrameworkNx::getAglDrawContext());
 }
 
 /**
@@ -333,8 +333,8 @@ void Scene::endInit(const ActorInitInfo& rInfo, IScenarioCompleteChecker* pCheck
     }
 
     if (mLiveActorKit != nullptr) {
-        if (mLiveActorKit->mDemoDirector != nullptr) {
-            mLiveActorKit->mDemoDirector->endInit(rInfo);
+        if (mLiveActorKit->getDemoDirector() != nullptr) {
+            mLiveActorKit->getDemoDirector()->endInit(rInfo);
         }
 
         mLiveActorKit->endInit(pChecker);
