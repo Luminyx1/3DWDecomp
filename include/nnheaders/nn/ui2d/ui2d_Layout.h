@@ -94,6 +94,9 @@ public:
         }
     }
 
+    Pane* GetRootPane() const { return mRootPane; }
+    const char* GetName() const { return static_cast<const char*>(_30); }
+
     nn::util::IntrusiveListNode mAnimTransformList;
     Pane* mRootPane;
     void* _20;

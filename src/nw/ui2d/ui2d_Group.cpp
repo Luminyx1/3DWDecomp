@@ -22,10 +22,13 @@ Group::Group(const ResGroup* resource, Pane* root) : mName(resource->name), mUse
 // namesake in another pane tree. A null root retains the original pane pointers.
 Group::Group(const Group& source, Pane* root) : mName(source.mName), mUserAllocated(false) {
     if (root != nullptr) {
-        for (const auto& link : source.mPanes)
-            AppendPane(root->FindPaneByName(link.pane->mPanelName, true));
+        for (const auto& link : source.mPanes) {
+            AppendPane(root->FindPaneByName(link.pane->GetName(), true));
+        }
     } else {
-        for (const auto& link : source.mPanes) AppendPane(link.pane);
+        for (const auto& link : source.mPanes) {
+            AppendPane(link.pane);
+        }
     }
 }
 

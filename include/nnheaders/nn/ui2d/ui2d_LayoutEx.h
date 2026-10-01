@@ -16,6 +16,9 @@ public:
     virtual void DoBuildDefaultAnimatons_(nn::gfx::Device* device);
     AnimatorEx* CreateAnimatorExAuto(nn::gfx::Device* device, const char* name, bool enabled);
     AnimatorEx* TryCreateAnimatorExAuto(nn::gfx::Device* device, const char* name, bool enabled);
+
+    Screen* GetScreen() const { return mScreen; }
+
     Screen* mScreen;
     AnimatorEx* mInOutAnimator;
     AnimatorEx* mLoopAnimator;

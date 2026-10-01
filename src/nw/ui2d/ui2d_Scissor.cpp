@@ -22,23 +22,33 @@ void Scissor::SetScissorStateInfoValue(nn::gfx::ScissorStateInfo* scissor, float
 // The viewport bounds map it to pixels, returned through x/y/width/height.
 static inline void CalculateScissorRectangle(float& x, float& y, float& width, float& height,
     const Pane& pane, const DrawInfo& info, float viewportX, float viewportY, float viewportWidth, float viewportHeight) {
-    float32x4_t row0 = vld1q_f32(pane.mGlobalMtx);
-    float32x4_t row1 = vld1q_f32(pane.mGlobalMtx + 4);
-    float halfWidth = pane.mSizeX * vgetq_lane_f32(row0, 0) * 0.5f;
-    float halfHeight = pane.mSizeY * vgetq_lane_f32(row1, 1) * 0.5f;
+    float32x4_t row0 = vld1q_f32(pane.GetGlobalMtx());
+    float32x4_t row1 = vld1q_f32(pane.GetGlobalMtx() + 4);
+    float halfWidth = pane.GetSizeX() * vgetq_lane_f32(row0, 0) * 0.5f;
+    float halfHeight = pane.GetSizeY() * vgetq_lane_f32(row1, 1) * 0.5f;
     float centerX = vgetq_lane_f32(row0, 3);
     float centerY = vgetq_lane_f32(row1, 3);
     width = std::fabs(halfWidth) * 2.0f;
     height = std::fabs(halfHeight) * 2.0f;
-    int originX = pane.mOriginFlags & 3, originY = (pane.mOriginFlags >> 2) & 3;
+    int originX = pane.GetBasePositionX();
+    int originY = pane.GetBasePositionY();
 
-    if (originX == 1) centerX += halfWidth;
-    else if (originX == 2) centerX -= halfWidth;
+    if (originX == 1) {
+        centerX += halfWidth;
+    } else if (originX == 2) {
+        centerX -= halfWidth;
+    }
 
-    if (originY == 1) centerY -= halfHeight;
-    else if (originY == 2) centerY += halfHeight;
+    if (originY == 1) {
+        centerY -= halfHeight;
+    } else if (originY == 2) {
+        centerY += halfHeight;
+    }
 
-    if (info.mFlags & 8) centerY = -centerY;
+    if (info.mFlags & 8) {
+        centerY = -centerY;
+    }
+
     float frameWidth = float(info.mFramebufferWidth);
     float frameHeight = float(info.mFramebufferHeight);
 

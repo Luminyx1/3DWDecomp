@@ -95,6 +95,31 @@ public:
     void RemoveChild(Pane*);
     void GetVertexPos() const;
 
+    static Pane* FromLink(nn::util::IntrusiveListNode* node) {
+        return reinterpret_cast<Pane*>(reinterpret_cast<char*>(node) - 8);
+    }
+
+    static const Pane* FromLink(const nn::util::IntrusiveListNode* node) {
+        return reinterpret_cast<const Pane*>(reinterpret_cast<const char*>(node) - 8);
+    }
+
+    Pane* GetParent() const { return mParent; }
+    const char* GetName() const { return mPanelName; }
+    const float* GetGlobalMtx() const { return mGlobalMtx; }
+    float GetPositionX() const { return mPositionX; }
+    float GetPositionY() const { return mPositionY; }
+    float GetSizeX() const { return mSizeX; }
+    float GetSizeY() const { return mSizeY; }
+    int GetBasePositionX() const { return mOriginFlags & 3; }
+    int GetBasePositionY() const { return (mOriginFlags >> 2) & 3; }
+
+    // Sets the X/Y position and marks the global matrix dirty.
+    void SetPositionXY(float x, float y) {
+        mPositionX = x;
+        mPositionY = y;
+        mFlags |= 0x10;
+    }
+
     Pane* mParent;
     nn::util::IntrusiveListNode m_Children;
     float mPositionX;

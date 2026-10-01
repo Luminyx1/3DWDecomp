@@ -10,13 +10,18 @@ void UnbindAnimation(AnimTransform* animation, Group* group) { animation->Unbind
 Pane* GetNextPane(Pane* pane) {
     auto* child = pane->m_Children.GetNext();
 
-    if (child != &pane->m_Children) return reinterpret_cast<Pane*>(reinterpret_cast<char*>(child) - 8);
+    if (child != &pane->m_Children) {
+        return Pane::FromLink(child);
+    }
 
-    while (pane->mParent != nullptr) {
+    while (pane->GetParent() != nullptr) {
         auto* next = pane->m_Link.GetNext();
-        auto* parent = pane->mParent;
+        auto* parent = pane->GetParent();
 
-        if (next != &parent->m_Children) return reinterpret_cast<Pane*>(reinterpret_cast<char*>(next) - 8);
+        if (next != &parent->m_Children) {
+            return Pane::FromLink(next);
+        }
+
         pane = parent;
     }
 
@@ -26,8 +31,11 @@ Pane* GetNextPane(Pane* pane) {
 namespace detail {
 // value is clamped in place to the inclusive interval from minimum to maximum.
 void ClampValue(float& value, float minimum, float maximum) {
-    if (value < minimum) value = minimum;
-    else if (value > maximum) value = maximum;
+    if (value < minimum) {
+        value = minimum;
+    } else if (value > maximum) {
+        value = maximum;
+    }
 }
 
 // source is a terminated string copied into layout-allocated storage.

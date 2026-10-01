@@ -1,5 +1,7 @@
 #pragma once
 #include <nn/ui2d/ui2d_ButtonBase.h>
+#include <nn/ui2d/ui2d_Layout.h>
+#include <nn/ui2d/ui2d_Pane.h>
 #include <nn/font/font_Util.h>
 #include <nn/util/util_IntrusiveList.h>
 #include <nn/util/util_MathTypes.h>
@@ -44,6 +46,12 @@ public:
     void CloneImpl_(nn::gfx::Device* device, const AnimButton& source, Layout* layout);
     void EnableAnim(Animator* animator);
     void SetStateChangeCallback(StateChangeCallback callback, void* argument);
+
+    // A parts layout is named after its root pane; a top-level layout uses its own name.
+    static const char* GetControlName_(const Layout* layout) {
+        Pane* rootPane = layout->GetRootPane();
+        return rootPane->GetParent() != nullptr ? rootPane->GetName() : layout->GetName();
+    }
 
     nn::util::IntrusiveListNode mLink;
     StateChangeCallback mCallback;

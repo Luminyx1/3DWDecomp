@@ -20,6 +20,10 @@ public:
     virtual const char* GetTagName() const;
     virtual void Unbind() = 0;
     virtual void SetupAnimationResource(const AnimResource& resource);
+
+    // Set once a one-shot play reaches either end of the animation.
+    bool IsPlayFinished() const { return (mFlags & 1) != 0; }
+
     float mSpeed;
     PlayType mPlayType;
     u32 mFlags;

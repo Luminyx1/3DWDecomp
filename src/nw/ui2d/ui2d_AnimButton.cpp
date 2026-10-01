@@ -12,8 +12,12 @@ inline LayoutEx* AsLayoutEx(Layout* layout) {
     const auto* target = LayoutEx::GetRuntimeTypeInfoStatic();
 
     if (layout != nullptr) {
-        for (auto* type = layout->GetRuntimeTypeInfo(); type != nullptr; type = type->m_ParentTypeInfo)
-            if (type == target) return static_cast<LayoutEx*>(layout);
+        for (auto* type = layout->GetRuntimeTypeInfo(); type != nullptr;
+             type = type->m_ParentTypeInfo) {
+            if (type == target) {
+                return static_cast<LayoutEx*>(layout);
+            }
+        }
     }
 
     return nullptr;
@@ -31,30 +35,50 @@ void AnimButton::CloneImpl_(nn::gfx::Device* device, const AnimButton& source, L
     SetLayout(layout);
     LayoutEx* extended = AsLayoutEx(layout);
 
-    if (source.mOnAnimator != nullptr) mOnAnimator = extended->CreateAnimatorExAuto(device, source.mOnAnimator->GetTagName(), true);
+    if (source.mOnAnimator != nullptr) {
+        mOnAnimator =
+            extended->CreateAnimatorExAuto(device, source.mOnAnimator->GetTagName(), true);
+    }
 
-    if (source.mDownAnimator != nullptr) mDownAnimator = extended->CreateAnimatorExAuto(device, source.mDownAnimator->GetTagName(), false);
+    if (source.mDownAnimator != nullptr) {
+        mDownAnimator =
+            extended->CreateAnimatorExAuto(device, source.mDownAnimator->GetTagName(), false);
+    }
 
-    if (source.mCancelAnimator != nullptr) mCancelAnimator = extended->CreateAnimatorExAuto(device, source.mCancelAnimator->GetTagName(), false);
+    if (source.mCancelAnimator != nullptr) {
+        mCancelAnimator =
+            extended->CreateAnimatorExAuto(device, source.mCancelAnimator->GetTagName(), false);
+    }
 
-    if (source.mDisableAnimator != nullptr) mDisableAnimator = extended->CreateAnimatorExAuto(device, source.mDisableAnimator->GetTagName(), false);
+    if (source.mDisableAnimator != nullptr) {
+        mDisableAnimator =
+            extended->CreateAnimatorExAuto(device, source.mDisableAnimator->GetTagName(), false);
+    }
 
-    if (source.mHitPane != nullptr) mHitPane = layout->mRootPane->FindPaneByName(source.mHitPane->mPanelName, true);
-    mName = (layout->mRootPane->mParent != nullptr) ? layout->mRootPane->mPanelName : static_cast<const char*>(layout->_30);
+    if (source.mHitPane != nullptr) {
+        mHitPane = layout->GetRootPane()->FindPaneByName(source.mHitPane->GetName(), true);
+    }
+
+    mName = GetControlName_(layout);
 }
 
 // device creates animators, layout owns the panes, and source maps functional
 // control names to the layout's animation and pane resources.
 void AnimButton::Build(nn::gfx::Device* device, Layout* layout, const ControlSrc& source) {
     SetLayout(layout);
-    mOnAnimator = layout->CreateGroupAnimatorAuto(device, source.FindFunctionalAnimName("OnOff"), true);
+    mOnAnimator =
+        layout->CreateGroupAnimatorAuto(device, source.FindFunctionalAnimName("OnOff"), true);
     mOnAnimator->StopAtStartFrame();
-    mDownAnimator = layout->CreateGroupAnimatorAuto(device, source.FindFunctionalAnimName("Down"), false);
+    mDownAnimator =
+        layout->CreateGroupAnimatorAuto(device, source.FindFunctionalAnimName("Down"), false);
     const char* disable = source.FindFunctionalAnimName("Disable");
 
-    if (disable != nullptr && *disable) mDisableAnimator = layout->CreateGroupAnimatorAuto(device, disable, false);
-    mHitPane = layout->mRootPane->FindPaneByName(source.FindFunctionalPaneName("Hit"), true);
-    mName = (layout->mRootPane->mParent != nullptr) ? layout->mRootPane->mPanelName : static_cast<const char*>(layout->_30);
+    if (disable != nullptr && *disable != '\0') {
+        mDisableAnimator = layout->CreateGroupAnimatorAuto(device, disable, false);
+    }
+
+    mHitPane = layout->GetRootPane()->FindPaneByName(source.FindFunctionalPaneName("Hit"), true);
+    mName = GetControlName_(layout);
 }
 
 // device creates animators, layout owns the panes, and source maps functional
@@ -62,44 +86,63 @@ void AnimButton::Build(nn::gfx::Device* device, Layout* layout, const ControlSrc
 void AnimButton::BuildEx(nn::gfx::Device* device, Layout* layout, const ControlSrc& source) {
     SetLayout(layout);
     LayoutEx* extended = AsLayoutEx(layout);
-    mOnAnimator = extended->TryCreateAnimatorExAuto(device, source.FindFunctionalAnimName("OnOff"), true);
+    mOnAnimator =
+        extended->TryCreateAnimatorExAuto(device, source.FindFunctionalAnimName("OnOff"), true);
     mOnAnimator->StopAtStartFrame();
-    mDownAnimator = extended->TryCreateAnimatorExAuto(device, source.FindFunctionalAnimName("Down"), false);
+    mDownAnimator =
+        extended->TryCreateAnimatorExAuto(device, source.FindFunctionalAnimName("Down"), false);
     const char* disable = source.FindFunctionalAnimName("Disable");
 
-    if (disable != nullptr && *disable) mDisableAnimator = extended->TryCreateAnimatorExAuto(device, disable, false);
-    mHitPane = layout->mRootPane->FindPaneByName(source.FindFunctionalPaneName("Hit"), true);
-    mName = (layout->mRootPane->mParent != nullptr) ? layout->mRootPane->mPanelName : static_cast<const char*>(layout->_30);
+    if (disable != nullptr && *disable != '\0') {
+        mDisableAnimator = extended->TryCreateAnimatorExAuto(device, disable, false);
+    }
+
+    mHitPane = layout->GetRootPane()->FindPaneByName(source.FindFunctionalPaneName("Hit"), true);
+    mName = GetControlName_(layout);
 }
 
 void AnimButton::UpdateHitBox() {
-    if (mHitPane == nullptr) return;
-    float32x4_t row0 = vld1q_f32(mHitPane->mGlobalMtx);
-    float32x4_t row1 = vld1q_f32(mHitPane->mGlobalMtx + 4);
-    float width = std::fabs(mHitPane->mSizeX * vgetq_lane_f32(row0, 0)) * 0.5f;
-    float height = std::fabs(mHitPane->mSizeY * vgetq_lane_f32(row1, 1)) * 0.5f;
+    if (mHitPane == nullptr) {
+        return;
+    }
+
+    float32x4_t row0 = vld1q_f32(mHitPane->GetGlobalMtx());
+    float32x4_t row1 = vld1q_f32(mHitPane->GetGlobalMtx() + 4);
+    float width = std::fabs(mHitPane->GetSizeX() * vgetq_lane_f32(row0, 0)) * 0.5f;
+    float height = std::fabs(mHitPane->GetSizeY() * vgetq_lane_f32(row1, 1)) * 0.5f;
     float x = vgetq_lane_f32(row0, 3);
     float y = vgetq_lane_f32(row1, 3);
-    int originX = mHitPane->mOriginFlags & 3;
-    int originY = (mHitPane->mOriginFlags >> 2) & 3;
+    int originX = mHitPane->GetBasePositionX();
+    int originY = mHitPane->GetBasePositionY();
 
-    if (originX == 1) x += width;
-    else if (originX == 2) x -= width;
+    if (originX == 1) {
+        x += width;
+    } else if (originX == 2) {
+        x -= width;
+    }
 
-    if (originY == 1) y -= height;
-    else if (originY == 2) y += height;
+    if (originY == 1) {
+        y -= height;
+    } else if (originY == 2) {
+        y += height;
+    }
+
     mHitBox = {x - width, y - height, x + width, y + height};
 }
 
 // position is tested against the inclusive bounds calculated from the hit pane.
 bool AnimButton::IsHit(const nn::util::Float2& position) const {
-    if (mHitPane == nullptr) return false;
+    if (mHitPane == nullptr) {
+        return false;
+    }
+
     return mHitBox.x <= position.x && position.x <= mHitBox.z &&
            mHitBox.y <= position.y && position.y <= mHitBox.w;
 }
 
 // position is unused by the base class; draggable controls override these hooks.
 void AnimButton::InitializeDragPosition(const nn::util::Float2& position) {}
+
 void AnimButton::UpdateDragPosition(const nn::util::Float2* position) {}
 
 // callback observes transitions; argument is passed to it without modification.
@@ -117,22 +160,36 @@ void AnimButton::PlayDisableAnim(bool disabled) {
 }
 
 void AnimButton::SetAllAnimatorDisable() {
-    if (mOnAnimator != nullptr) mOnAnimator->SetEnabled(false);
+    if (mOnAnimator != nullptr) {
+        mOnAnimator->SetEnabled(false);
+    }
 
-    if (mDownAnimator != nullptr) mDownAnimator->SetEnabled(false);
+    if (mDownAnimator != nullptr) {
+        mDownAnimator->SetEnabled(false);
+    }
 
-    if (mCancelAnimator != nullptr) mCancelAnimator->SetEnabled(false);
+    if (mCancelAnimator != nullptr) {
+        mCancelAnimator->SetEnabled(false);
+    }
 
-    if (mDisableAnimator != nullptr) mDisableAnimator->SetEnabled(false);
+    if (mDisableAnimator != nullptr) {
+        mDisableAnimator->SetEnabled(false);
+    }
 }
 
 // animator is the sole enabled state animator; null disables all three.
 void AnimButton::EnableAnim(Animator* animator) {
-    if (mOnAnimator != nullptr) mOnAnimator->SetEnabled(mOnAnimator == animator);
+    if (mOnAnimator != nullptr) {
+        mOnAnimator->SetEnabled(mOnAnimator == animator);
+    }
 
-    if (mDownAnimator != nullptr) mDownAnimator->SetEnabled(mDownAnimator == animator);
+    if (mDownAnimator != nullptr) {
+        mDownAnimator->SetEnabled(mDownAnimator == animator);
+    }
 
-    if (mCancelAnimator != nullptr) mCancelAnimator->SetEnabled(mCancelAnimator == animator);
+    if (mCancelAnimator != nullptr) {
+        mCancelAnimator->SetEnabled(mCancelAnimator == animator);
+    }
 }
 
 void AnimButton::ForceOff() {
@@ -169,7 +226,8 @@ void AnimButton::StartOn() {
     }
 }
 
-bool AnimButton::UpdateOn() { return (mOnAnimator == nullptr) || (mOnAnimator->mFlags & 1); }
+bool AnimButton::UpdateOn() { return mOnAnimator == nullptr || mOnAnimator->IsPlayFinished(); }
+
 void AnimButton::StartOff() {
     if (mOnAnimator != nullptr) {
         EnableAnim(mOnAnimator);
@@ -177,7 +235,8 @@ void AnimButton::StartOff() {
     }
 }
 
-bool AnimButton::UpdateOff() { return (mOnAnimator == nullptr) || (mOnAnimator->mFlags & 1); }
+bool AnimButton::UpdateOff() { return mOnAnimator == nullptr || mOnAnimator->IsPlayFinished(); }
+
 void AnimButton::StartDown() {
     if (mDownAnimator != nullptr) {
         EnableAnim(mDownAnimator);
@@ -185,7 +244,8 @@ void AnimButton::StartDown() {
     }
 }
 
-bool AnimButton::UpdateDown() { return (mDownAnimator == nullptr) || (mDownAnimator->mFlags & 1); }
+bool AnimButton::UpdateDown() { return mDownAnimator == nullptr || mDownAnimator->IsPlayFinished(); }
+
 void AnimButton::StartCancel() {
     if (mCancelAnimator != nullptr) {
         EnableAnim(mCancelAnimator);
@@ -193,16 +253,28 @@ void AnimButton::StartCancel() {
     }
 }
 
-bool AnimButton::UpdateCancel() { return (mCancelAnimator == nullptr) || (mCancelAnimator->mFlags & 1); }
+bool AnimButton::UpdateCancel() {
+    return mCancelAnimator == nullptr || mCancelAnimator->IsPlayFinished();
+}
+
 bool AnimButton::ProcessCancel() { return true; }
+
 // state is reported to the callback and owning screen before it becomes current.
 void AnimButton::ChangeState(State state) {
-    if (mState == state) return;
+    if (mState == state) {
+        return;
+    }
 
-    if (mCallback) mCallback(this, mState, state, mCallbackArg);
+    if (mCallback != nullptr) {
+        mCallback(this, mState, state, mCallbackArg);
+    }
+
     LayoutEx* layout = AsLayoutEx(GetLayout());
 
-    if (layout != nullptr && layout->mScreen != nullptr) layout->mScreen->HandleEventOnButtonStateChanged(this, mState, state);
+    if (layout != nullptr && layout->GetScreen() != nullptr) {
+        layout->GetScreen()->HandleEventOnButtonStateChanged(this, mState, state);
+    }
+
     mState = state;
 }
 }
