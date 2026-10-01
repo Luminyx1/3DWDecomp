@@ -49221,7 +49221,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100801050			FALSE	_ZN2al14DirectionParam17syncFromDirectionEv	al::DirectionParam::syncFromDirection()	
 0x7100801150			FALSE	_ZN2al14DirectionParam17syncFromRPYDegreeERKN4sead7Vector3IfEE	al::DirectionParam::syncFromRPYDegree(sead::Vector3<float> const&)	
 0x7100801280			FALSE	_ZN2al14DirectionParam4lerpERKS0_S2_f	al::DirectionParam::lerp(al::DirectionParam const&, al::DirectionParam const&, float)	
-0x71008012E0		PlaneParam.o	FALSE	_ZN2al10PlaneParam10initializeERKN4sead7Vector3IfEEPN3agl3utl12ParameterObjEPKc	al::PlaneParam::initialize(sead::Vector3<float> const&, agl::utl::ParameterObj*, char const*)	object (class)
+0x71008012E0			FALSE	_ZN2al10PlaneParam10initializeERKN4sead7Vector3IfEEPN3agl3utl12ParameterObjEPKc	al::PlaneParam::initialize(sead::Vector3<float> const&, agl::utl::ParameterObj*, char const*)	object (class)
 0x7100801430		GraphicsNamedParamBase.o	FALSE	_ZN2al22GraphicsNamedParamBaseC2EPKc	al::GraphicsNamedParamBase::GraphicsNamedParamBase(char const*)	
 0x71008015B0			FALSE	_ZN3agl3utl9ParameterIN4sead15FixedSafeStringILi64EEEEC2ERKS4_RKNS2_14SafeStringBaseIcEESB_PNS0_13IParameterObjE	agl::utl::Parameter<sead::FixedSafeString<64> >::Parameter(sead::FixedSafeString<64> const&, sead::SafeStringBase<char> const&, sead::SafeStringBase<char> const&, agl::utl::IParameterObj*)	
 0x7100801740			FALSE	_ZN2al22GraphicsNamedParamBase6interpERKS0_S2_f	al::GraphicsNamedParamBase::interp(al::GraphicsNamedParamBase const&, al::GraphicsNamedParamBase const&, float)	
@@ -49243,7 +49243,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100802580			FALSE	_ZNK2al22LightIntensityDirector21getCurrentReduceScaleEv	al::LightIntensityDirector::getCurrentReduceScale() const	
 0x71008025C0			FALSE	_ZNK2al22LightIntensityDirector17findExposureParamEPKc	al::LightIntensityDirector::findExposureParam(char const*) const	
 0x7100802660			FALSE	_ZNK2al22LightIntensityDirector14findBloomParamEPKc	al::LightIntensityDirector::findBloomParam(char const*) const	
-0x7100802710		LightIntensityFunction.o	FALSE	_ZN22LightIntensityFunction25getLightIntensityDirectorEPKN2al9LiveActorE	LightIntensityFunction::getLightIntensityDirector(al::LiveActor const*)	object (class)
+0x7100802710			FALSE	_ZN22LightIntensityFunction25getLightIntensityDirectorEPKN2al9LiveActorE	LightIntensityFunction::getLightIntensityDirector(al::LiveActor const*)	object (class)
 0x7100802730			FALSE	_ZN2al13ExposureParamD0Ev	al::ExposureParam::~ExposureParam()	
 0x7100802740			FALSE	_ZN2al15BloomNamedParamD2Ev	al::BloomNamedParam::~BloomNamedParam()	
 0x7100802770			FALSE	_ZN2al15BloomNamedParamD0Ev	al::BloomNamedParam::~BloomNamedParam()	
@@ -49342,7 +49342,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100805190			FALSE	_ZNK15alYamlMacroUtil13YamlParam_V2f10getClassIdEv	alYamlMacroUtil::YamlParam_V2f::getClassId() const	
 0x71008051A0			FALSE	_ZNK15alYamlMacroUtil13YamlParamBaseIN4sead7Vector2IfEEE10isValidPtrEv	alYamlMacroUtil::YamlParamBase<sead::Vector2<float> >::isValidPtr() const	
 0x71008051B0			FALSE	_ZN15alYamlMacroUtil13YamlParam_V2f10setPtr_V2fEPN4sead7Vector2IfEE	alYamlMacroUtil::YamlParam_V2f::setPtr_V2f(sead::Vector2<float>*)	
-0x71008051C0	Library/Light	PrePassLightBase.o	FALSE	_ZN2al12LppLightType5text_Ei	al::LppLightType::text_(int)	
+0x71008051C0			FALSE	_ZN2al12LppLightType5text_Ei	al::LppLightType::text_(int)	
 0x7100805380			TRUE	_ZN4sead15FixedSafeStringILi75EED0Ev	sead::FixedSafeString<75>::~FixedSafeString()	
 0x7100805390			TRUE	_ZN4sead15FixedSafeStringILi75EEaSERKNS_14SafeStringBaseIcEE	sead::FixedSafeString<75>::operator=(sead::SafeStringBase<char> const&)	
 0x7100805480			TRUE	_ZN4sead19FixedSafeStringBaseIcLi75EED0Ev	sead::FixedSafeStringBase<char, 75>::~FixedSafeStringBase()	
@@ -49352,8 +49352,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100805750			TRUE	_ZN4sead15FixedSafeStringILi14EEaSERKNS_14SafeStringBaseIcEE	sead::FixedSafeString<14>::operator=(sead::SafeStringBase<char> const&)	
 0x7100805840			TRUE	_ZN4sead19FixedSafeStringBaseIcLi14EED0Ev	sead::FixedSafeStringBase<char, 14>::~FixedSafeStringBase()	
 0x7100805850			TRUE	_ZN4sead19FixedSafeStringBaseIcLi14EEaSERKNS_14SafeStringBaseIcEE	sead::FixedSafeStringBase<char, 14>::operator=(sead::SafeStringBase<char> const&)	
-0x7100805940			FALSE	sub_7100805940	sub_7100805940	
-0x7100806130			FALSE	_ZN29PrePassLightPlacementFuncImpl19setClippingInfoImplEPN2al9LiveActorEfPKN4sead7Vector3IfEE	PrePassLightPlacementFuncImpl::setClippingInfoImpl(al::LiveActor*, float, sead::Vector3<float> const*)	
+0x7100805940			FALSE	_GLOBAL__sub_I_ActorPrePassLightKeeper.cpp	_GLOBAL__sub_I_ActorPrePassLightKeeper.cpp	
+0x7100806130	Library/Light	PrePassLightBase.o	FALSE	_ZN29PrePassLightPlacementFuncImpl19setClippingInfoImplEPN2al9LiveActorEfPKN4sead7Vector3IfEE	PrePassLightPlacementFuncImpl::setClippingInfoImpl(al::LiveActor*, float, sead::Vector3<float> const*)	
 0x7100806140			FALSE	_ZN29PrePassLightPlacementFuncImpl10makeMtxSRTEPN4sead8Matrix34IfEEPKN2al9LiveActorE	PrePassLightPlacementFuncImpl::makeMtxSRT(sead::Matrix34<float>*, al::LiveActor const*)	
 0x7100806150			FALSE	_ZN2al16PrePassLightBaseC2EPKc	al::PrePassLightBase::PrePassLightBase(char const*)	
 0x7100806250			FALSE	_ZN2al16PrePassLightBase4initERKNS_13ActorInitInfoE	al::PrePassLightBase::init(al::ActorInitInfo const&)	object/folder from OdysseyDecomp file list
@@ -49391,6 +49391,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100807210			FALSE	_ZN11LppFunction10declareLppIN2al12LppProjParamEEEvRKT_RKNS1_16PrePassLightBaseEi	void LppFunction::declareLpp<al::LppProjParam>(al::LppProjParam const&, al::PrePassLightBase const&, int)	
 0x7100807230			FALSE	_ZN11LppFunction10declareLppIN2al17LppProjOrthoParamEEEvRKT_RKNS1_16PrePassLightBaseEi	void LppFunction::declareLpp<al::LppProjOrthoParam>(al::LppProjOrthoParam const&, al::PrePassLightBase const&, int)	
 0x7100807250			FALSE	_ZN11LppFunction10requestLppIN2al13LppPointParamEEEvPT_PNS1_16PrePassLightBaseE	void LppFunction::requestLpp<al::LppPointParam>(al::LppPointParam*, al::PrePassLightBase*)	
+0x7100807260			FALSE	_ZN12_GLOBAL__N_117requestPointLightEPKN2al13LppPointParamEPNS0_16PrePassLightBaseEPKN4sead7Vector3IfEEf	(anonymous namespace)::requestPointLight(al::LppPointParam const*, al::PrePassLightBase*, sead::Vector3<float> const*, float)	
 0x71008073C0			FALSE	_ZN11LppFunction15requestLppPointEPN2al13LppPointParamEPNS0_16PrePassLightBaseERKN4sead7Vector3IfEE	LppFunction::requestLppPoint(al::LppPointParam*, al::PrePassLightBase*, sead::Vector3<float> const&)	
 0x71008073D0			FALSE	_ZN11LppFunction10requestLppIN2al12LppLineParamEEEvPT_PNS1_16PrePassLightBaseE	void LppFunction::requestLpp<al::LppLineParam>(al::LppLineParam*, al::PrePassLightBase*)	
 0x71008075A0			FALSE	_ZN11LppFunction10requestLppIN2al12LppSpotParamEEEvPT_PNS1_16PrePassLightBaseE	void LppFunction::requestLpp<al::LppSpotParam>(al::LppSpotParam*, al::PrePassLightBase*)	
@@ -49407,11 +49408,11 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100808010			FALSE	_ZN11LppFunction17trySetupShadowLppIN2al12LppProjParamEEEvPNS1_18PrePassLightKeeperEPNS1_14ShadowDirectorEPT_i	void LppFunction::trySetupShadowLpp<al::LppProjParam>(al::PrePassLightKeeper*, al::ShadowDirector*, al::LppProjParam*, int)	
 0x7100808080			FALSE	_ZN11LppFunction17trySetupShadowLppIN2al17LppProjOrthoParamEEEvPNS1_18PrePassLightKeeperEPNS1_14ShadowDirectorEPT_i	void LppFunction::trySetupShadowLpp<al::LppProjOrthoParam>(al::PrePassLightKeeper*, al::ShadowDirector*, al::LppProjOrthoParam*, int)	
 0x7100808100			FALSE	_ZN2al16PrePassLightBase14trySetupShadowEiPNS_18PrePassLightKeeperEPNS_14ShadowDirectorE	al::PrePassLightBase::trySetupShadow(int, al::PrePassLightKeeper*, al::ShadowDirector*)	
-0x7100808110			FALSE	nullsub_319	nullsub_319	
-0x7100808120			FALSE	sub_7100808120	sub_7100808120	
-0x71008081A0			FALSE	sub_71008081A0	sub_71008081A0	
-0x7100808220			FALSE	nullsub_320	nullsub_320	
-0x7100808230		PrePassLightKeeper.o	FALSE	_ZNK2al18PrePassLightKeeper16getSpecularPowerEv	al::PrePassLightKeeper::getSpecularPower() const	
+0x7100808110			FALSE	_ZNK12_GLOBAL__N_123PrePassLightBaseNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_123PrePassLightBaseNrvWait7executeEPN2al11NerveKeeperE	
+0x7100808120			FALSE	_ZNK12_GLOBAL__N_125PrePassLightBaseNrvAppear7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_125PrePassLightBaseNrvAppear7executeEPN2al11NerveKeeperE	
+0x71008081A0			FALSE	_ZNK12_GLOBAL__N_123PrePassLightBaseNrvKill7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_123PrePassLightBaseNrvKill7executeEPN2al11NerveKeeperE	
+0x7100808220			FALSE	_ZNK12_GLOBAL__N_123PrePassLightBaseNrvDead7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_123PrePassLightBaseNrvDead7executeEPN2al11NerveKeeperE	
+0x7100808230	Library/Light	PrePassLightKeeper.o	FALSE	_ZNK2al18PrePassLightKeeper16getSpecularPowerEv	al::PrePassLightKeeper::getSpecularPower() const	
 0x7100808240			FALSE	_ZNK2al18PrePassLightKeeper10getFlesnelEv	al::PrePassLightKeeper::getFlesnel() const	
 0x7100808250			FALSE	_ZN2al18PrePassLightKeeperC1EPNS_18GraphicsSystemInfoEi	al::PrePassLightKeeper::PrePassLightKeeper(al::GraphicsSystemInfo*, int)	
 0x7100808490			FALSE	_ZN2al18PrePassLightKeeperD2Ev	al::PrePassLightKeeper::~PrePassLightKeeper()	
@@ -49464,7 +49465,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710080C520			FALSE	_ZN2al22AlbedoModeLineLightMgr16initViewUboImpl_EPN3agl12UniformBlockEPN4sead4HeapE	al::AlbedoModeLineLightMgr::initViewUboImpl_(agl::UniformBlock*, sead::Heap*)	
 0x710080C540			FALSE	_ZN2al22AlbedoModeLineLightMgr13calcViewImpl_ERNS_16LppLightDataBaseINS_14LineLightParamEEEiRKN3agl4lght12LightPrePass7ContextE	al::AlbedoModeLineLightMgr::calcViewImpl_(al::LppLightDataBase<al::LineLightParam>&, int, agl::lght::LightPrePass::Context const&)	
 0x710080C550			FALSE	_ZNK2al22AlbedoModeLineLightMgr10updateUBO_ERKNS_16LppLightDataBaseINS_14LineLightParamEEEiRKN3agl4lght12LightPrePass7ContextE	al::AlbedoModeLineLightMgr::updateUBO_(al::LppLightDataBase<al::LineLightParam> const&, int, agl::lght::LightPrePass::Context const&) const	
-0x710080C850			FALSE	sub_710080C850	sub_710080C850	
+0x710080C850			FALSE	_ZN12_GLOBAL__N_116calcLineLightMtxEPN4sead8Matrix34IfEEPfRKN2al14LineLightParamE	_ZN12_GLOBAL__N_116calcLineLightMtxEPN4sead8Matrix34IfEEPfRKN2al14LineLightParamE	
 0x710080C990			FALSE	_ZNK2al22AlbedoModeLineLightMgr9drawImpl_EPN3agl11DrawContextERKNS_16LppLightDataBaseINS_14LineLightParamEEEiRKNS1_4lght12LightPrePass7ContextERNSA_11CallbackArgE	al::AlbedoModeLineLightMgr::drawImpl_(agl::DrawContext*, al::LppLightDataBase<al::LineLightParam> const&, int, agl::lght::LightPrePass::Context const&, agl::lght::LightPrePass::CallbackArg&) const	
 0x710080CBE0			FALSE	_ZNK2al22AlbedoModeLineLightMgr14drawDebugImpl_EPN3agl11DrawContextERKNS_16LppLightDataBaseINS_14LineLightParamEEEiRKNS1_4lght12LightPrePass7ContextE	al::AlbedoModeLineLightMgr::drawDebugImpl_(agl::DrawContext*, al::LppLightDataBase<al::LineLightParam> const&, int, agl::lght::LightPrePass::Context const&) const	
 0x710080CD50			FALSE	_ZN2al22AlbedoModeProjLightMgrC1EPNS_18PrePassLightKeeperE	al::AlbedoModeProjLightMgr::AlbedoModeProjLightMgr(al::PrePassLightKeeper*)	

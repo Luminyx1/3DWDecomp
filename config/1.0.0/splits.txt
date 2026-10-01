@@ -4689,24 +4689,20 @@ src/al/Library/Layout/LayoutUtil.cpp: done
     .text   start:0x007FED60 end:0x007FEE3C
 src/al/Library/Light/DirectionalLightKeeper.cpp:
     .text   start:0x007FEE40 end:0x00800620
-src/al/Library/Light/DirectionalLightRequester.cpp:
+src/al/Library/Light/DirectionalLightRequester.cpp: done
     .text   start:0x00800620 end:0x00800C60
 src/al/Library/Light/DirectionParam.cpp:
-    .text   start:0x00800C60 end:0x008012DC
-src/al/Library/Light/PlaneParam.cpp:
-    .text   start:0x008012E0 end:0x00801424
-src/al/Library/Light/GraphicsNamedParamBase.cpp:
+    .text   start:0x00800C60 end:0x00801424
+src/al/Library/Light/GraphicsNamedParamBase.cpp: done
     .text   start:0x00801430 end:0x008017A0
 src/al/Library/Light/LightIntensityDirector.cpp:
-    .text   start:0x008017A0 end:0x00802704
-src/al/Library/Light/LightIntensityFunction.cpp:
-    .text   start:0x00802710 end:0x00802798
+    .text   start:0x008017A0 end:0x00802798
 src/al/Library/Light/PrePassLightFunction.cpp:
     .text   start:0x008027A0 end:0x008033A0
 src/al/Project/Light/ActorPrePassLightKeeper.cpp:
-    .text   start:0x008033A0 end:0x008051B8
-src/al/Library/Light/PrePassLightBase.cpp:
-    .text   start:0x008051C0 end:0x00808224
+    .text   start:0x008033A0 end:0x00806130
+src/al/Library/Light/PrePassLightBase.cpp: done
+    .text   start:0x00806130 end:0x00808224
 src/al/Library/Light/PrePassLightKeeper.cpp:
     .text   start:0x00808230 end:0x0081328C
 src/al/Library/Light/PrePassLineLight.cpp:
