@@ -16,7 +16,7 @@ namespace al {
      * @return The newly created item info.
      */
     ActorItemInfo* addItem(LiveActor* pActor, const ActorInitInfo& rInfo, const char* pItemName, bool isUnk) {
-        return pActor->mItemKeeper->addItem(rInfo, pItemName, nullptr, nullptr, isUnk);
+        return pActor->getActorItemKeeper()->addItem(rInfo, pItemName, nullptr, nullptr, isUnk);
     }
 
     /**
@@ -26,7 +26,7 @@ namespace al {
      * @param pSensor The attacker sensor.
      */
     void setAppearItemFactor(const LiveActor* pActor, const char* pFactor, const HitSensor* pSensor) {
-        pActor->mItemKeeper->setFactor(pFactor, pSensor);
+        pActor->getActorItemKeeper()->setFactor(pFactor, pSensor);
     }
 
     /**
@@ -35,7 +35,7 @@ namespace al {
      * @param rOffset The offset to add.
      */
     void setAppearItemOffset(const LiveActor* pActor, const sead::Vector3f& rOffset) {
-        static_cast<sead::BaseVec3<f32>&>(pActor->mItemKeeper->mItemOffset) = rOffset;
+        static_cast<sead::BaseVec3<f32>&>(pActor->getActorItemKeeper()->mItemOffset) = rOffset;
     }
 
     /**
@@ -44,7 +44,7 @@ namespace al {
      * @param pSensor The attacker sensor.
      */
     void setAppearItemAttackerSensor(const LiveActor* pActor, const HitSensor* pSensor) {
-        pActor->mItemKeeper->mAttackerSensor = pSensor;
+        pActor->getActorItemKeeper()->setAttackerSensor(pSensor);
     }
 
     /**
@@ -53,7 +53,7 @@ namespace al {
      */
     void appearItem(const LiveActor* pActor) {
         appearItemTiming(pActor, nullptr, getTrans(pActor), sead::Vector3f::ez,
-                         pActor->mItemKeeper->mAttackerSensor, false);
+                         pActor->getActorItemKeeper()->getAttackerSensor(), false);
     }
 
     /**
@@ -75,7 +75,7 @@ namespace al {
      * @param rFront The appear front direction.
      */
     void appearItem(const LiveActor* pActor, const sead::Vector3f& rPos, const sead::Vector3f& rFront) {
-        appearItemTiming(pActor, nullptr, rPos, rFront, pActor->mItemKeeper->mAttackerSensor, false);
+        appearItemTiming(pActor, nullptr, rPos, rFront, pActor->getActorItemKeeper()->getAttackerSensor(), false);
     }
 
     /**
@@ -85,7 +85,7 @@ namespace al {
      */
     void appearItemTiming(const LiveActor* pActor, const char* pTiming) {
         appearItemTiming(pActor, pTiming, getTrans(pActor), sead::Vector3f::ez,
-                         pActor->mItemKeeper->mAttackerSensor, false);
+                         pActor->getActorItemKeeper()->getAttackerSensor(), false);
     }
 
     /**
@@ -99,7 +99,7 @@ namespace al {
      */
     void appearItemTiming(const LiveActor* pActor, const char* pTiming, const sead::Vector3f& rPos,
                           const sead::Vector3f& rFront, const HitSensor* pSensor, bool isUnk) {
-        ActorItemInfo* info = pActor->mItemKeeper->getAppearItemInfo(pTiming);
+        ActorItemInfo* info = pActor->getActorItemKeeper()->getAppearItemInfo(pTiming);
 
         if (info == nullptr) {
             return;
@@ -107,7 +107,7 @@ namespace al {
 
         const char* itemKind = info->mItemKind;
         ItemDirectorBase* director = pActor->getSceneInfo()->itemDirectorBase;
-        ActorItemKeeper* keeper = pActor->mItemKeeper;
+        ActorItemKeeper* keeper = pActor->getActorItemKeeper();
         sead::Vector3f pos = rPos + keeper->mItemOffset;
         director->appearItem(itemKind, pos, rFront, pSensor, isUnk, false);
         keeper->mFactor = nullptr;
@@ -123,7 +123,7 @@ namespace al {
      */
     void appearItemTiming(const LiveActor* pActor, const char* pTiming, const sead::Vector3f& rPos,
                           const sead::Vector3f& rFront) {
-        appearItemTiming(pActor, pTiming, rPos, rFront, pActor->mItemKeeper->mAttackerSensor, false);
+        appearItemTiming(pActor, pTiming, rPos, rFront, pActor->getActorItemKeeper()->getAttackerSensor(), false);
     }
 
     /**

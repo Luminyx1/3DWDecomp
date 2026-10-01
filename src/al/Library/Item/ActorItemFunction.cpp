@@ -16,6 +16,6 @@ namespace al {
      */
     ActorItemInfo* addItem(LiveActor* pActor, const ActorInitInfo& rInfo, const char* pItemName,
                            const char* pTiming, const char* pFactor, bool isUnk) {
-        return pActor->mItemKeeper->addItem(rInfo, pItemName, pTiming, pFactor, isUnk);
+        return pActor->getActorItemKeeper()->addItem(rInfo, pItemName, pTiming, pFactor, isUnk);
     }
 }  // namespace al

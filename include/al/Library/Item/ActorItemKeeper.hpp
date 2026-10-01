@@ -18,6 +18,9 @@ public:
     void setFactor(const char*, const HitSensor*);
     ActorItemInfo* getAppearItemInfo(const char*) const;
 
+    const HitSensor* getAttackerSensor() const { return mAttackerSensor; }
+    void setAttackerSensor(const HitSensor* pSensor) { mAttackerSensor = pSensor; }
+
     const LiveActor* mHostActor;
     ActorItemInfo** mItemInfos;
     s32 mMaxItemInfos;
