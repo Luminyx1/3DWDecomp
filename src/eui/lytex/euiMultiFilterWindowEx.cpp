@@ -58,7 +58,7 @@ MultiFilterWindowEx::~MultiFilterWindowEx() {
 void MultiFilterWindowEx::DrawSelf(nn::ui2d::DrawInfo& rDrawInfo, nn::gfx::CommandBuffer& rCommands) {
     auto& rDrawInfoEx = static_cast<DrawInfoEx&>(rDrawInfo);
 
-    if (rDrawInfoEx._1A8) {
+    if (rDrawInfoEx.isCapturing()) {
         return;
     }
 

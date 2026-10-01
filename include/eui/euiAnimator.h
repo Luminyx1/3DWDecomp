@@ -28,6 +28,39 @@ public:
     void PlayRandom(PlayType type, float step);
     void Synchronize(const Animator& rOther);
     void DisableAndEraseFromActiveList();
+
+    const char* getName() const { return mName; }
+    float getStep() const { return mStep; }
+    float getFrame() const { return mFrame; }
+    bool isPlaying() const { return mStep != 0; }
+    bool isFrameMax() const { return mFrame == GetFrameSize(); }
+    bool isPlayEnd() const { return (mFlags & 1) != 0; }
+    bool isSkipFirstFrame() const { return (mFlags & 0x10) != 0; }
+    bool isSoundLink() const { return (mFlags & 0x20) != 0; }
+
+    void setSkipFirstFrame(bool skip) {
+        if (skip) {
+            mFlags |= 0x10;
+        } else {
+            mFlags &= ~0x10;
+        }
+    }
+
+    void setSoundLink(bool enabled) {
+        if (enabled) {
+            mFlags |= 0x20;
+        } else {
+            mFlags &= ~0x20;
+        }
+    }
+
+    void clearFrameEvents() { mFlags &= ~0xf; }
+
+    void disableKeepActive() {
+        nn::ui2d::AnimTransform::SetEnabled(false);
+        mStep = 0;
+    }
+
     nn::util::IntrusiveListNode mActiveLink;
     float mStep;
     u16 mLoopCount;

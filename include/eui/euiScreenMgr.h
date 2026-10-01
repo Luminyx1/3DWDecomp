@@ -12,6 +12,7 @@ class ArcResourceMgr;
 class BoxCursorMgr;
 class FontMgr;
 class BoxCursorNode;
+class MessageMgr;
 class ScreenMgr : public sead::hostio::Node {
     SEAD_SINGLETON_DISPOSER(ScreenMgr);
 public:
@@ -27,6 +28,12 @@ public:
     void resetScreenId(int index);
     void eraseBoxCursorNodeFromRouteNodes(const BoxCursorNode* pNode);
     Screen* findScreenByName(const char* pName);
+
+    BoxCursorMgr* getBoxCursorMgr() const { return mBoxCursorMgr; }
+    FontMgr* getFontMgr() const { return mFontMgr; }
+    MessageMgr* getMessageMgr() const { return static_cast<MessageMgr*>(_430); }
+    float getAnimationStep() const { return mAnimationStep; }
+
     sead::Buffer<Screen*> mScreens;
     sead::Buffer<s8> mScreenLayers;
     void* _48;

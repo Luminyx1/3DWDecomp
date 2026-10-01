@@ -14,17 +14,20 @@ void AnimatorSet::allocBuffer(u32 count, sead::Heap* pHeap) {
 
 // rOther supplies animator names and selection; pLayout owns the clones and pHeap stores their slots.
 AnimatorSet::AnimatorSet(const AnimatorSet& rOther, LayoutEx* pLayout, sead::Heap* pHeap) : mSelected(nullptr) {
-    if (!rOther.mAnimators.size()) return;
-    allocBuffer(rOther.mAnimators.size(), pHeap);
+    if (!rOther.getNum()) {
+        return;
+    }
+
+    allocBuffer(rOther.getNum(), pHeap);
     auto* const* source = rOther.mAnimators.getBufferPtr();
-    const u32 count = rOther.mAnimators.size();
+    const u32 count = rOther.getNum();
 
     for (size_t i = 0; i != count; ++i) {
         Animator* animator = source[i];
 
         if (animator != nullptr) {
-            Animator* selected = rOther.mSelected;
-            Animator* clone = pLayout->createAnimatorAuto(animator->mName, animator == selected);
+            Animator* selected = rOther.getSelected();
+            Animator* clone = pLayout->createAnimatorAuto(animator->getName(), animator == selected);
             mAnimators.getBufferPtr()[i < u32(mAnimators.size()) ? i : 0] = clone;
 
             if (animator == selected) {
@@ -46,7 +49,9 @@ void AnimatorSet::setBuffer(u32 count, Animator** ppBuffer) {
 void AnimatorSet::setAnimator(u32 index, Animator* pAnimator) {
     mAnimators[index] = pAnimator;
 
-    if (mSelected == nullptr) mSelected = pAnimator;
+    if (mSelected == nullptr) {
+        mSelected = pAnimator;
+    }
 }
 
 // index selects a stored animator, disabling the previously selected animation.
@@ -55,8 +60,7 @@ Animator* AnimatorSet::select(u32 index) {
     Animator* pPrevious = mSelected;
 
     if (pPrevious != pNext) {
-        pPrevious->nn::ui2d::AnimTransform::SetEnabled(false);
-        pPrevious->mStep = 0;
+        pPrevious->disableKeepActive();
         mSelected = pNext;
     }
 
@@ -66,8 +70,12 @@ Animator* AnimatorSet::select(u32 index) {
 u32 AnimatorSet::findSelectedIndex() const {
     auto* const* pAnimators = mAnimators.getBufferPtr();
 
-    for (size_t i = 0, count = static_cast<u32>(mAnimators.size()); i != count; ++i)
-        if (pAnimators[i] == mSelected) return i;
+    for (size_t i = 0, count = static_cast<u32>(mAnimators.size()); i != count; ++i) {
+        if (pAnimators[i] == mSelected) {
+            return i;
+        }
+    }
+
     return 0;
 }
 
@@ -76,9 +84,10 @@ void AnimatorSet::SetSkipFirstFrameAll(bool skip) {
     auto** pAnimators = mAnimators.getBufferPtr();
 
     for (u32 i = 0, count = mAnimators.size(); i < count; ++i) {
-        if (Animator* pAnimator = pAnimators[i]) {
-            if (skip) pAnimator->mFlags |= 0x10;
-            else pAnimator->mFlags &= ~0x10;
+        Animator* pAnimator = pAnimators[i];
+
+        if (pAnimator != nullptr) {
+            pAnimator->setSkipFirstFrame(skip);
         }
     }
 }
@@ -88,9 +97,10 @@ void AnimatorSet::SetSoundLinkAll(bool enabled) {
     auto** pAnimators = mAnimators.getBufferPtr();
 
     for (u32 i = 0, count = mAnimators.size(); i < count; ++i) {
-        if (Animator* pAnimator = pAnimators[i]) {
-            if (enabled) pAnimator->mFlags |= 0x20;
-            else pAnimator->mFlags &= ~0x20;
+        Animator* pAnimator = pAnimators[i];
+
+        if (pAnimator != nullptr) {
+            pAnimator->setSoundLink(enabled);
         }
     }
 }
@@ -100,12 +110,11 @@ Animator* AnimatorSet::select(const sead::SafeString& rName) {
     auto** pAnimators = mAnimators.getBufferPtr();
 
     for (size_t i = 0, count = static_cast<u32>(mAnimators.size()); i != count; ++i) {
-        if (pAnimators[i] != nullptr && rName == sead::SafeString(pAnimators[i]->mName)) {
+        if (pAnimators[i] != nullptr && rName == sead::SafeString(pAnimators[i]->getName())) {
             Animator* pPrevious = mSelected;
 
             if (pPrevious != pAnimators[i]) {
-                pPrevious->nn::ui2d::AnimTransform::SetEnabled(false);
-                pPrevious->mStep = 0;
+                pPrevious->disableKeepActive();
                 mSelected = pAnimators[i];
             }
 

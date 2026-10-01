@@ -15,12 +15,17 @@ namespace {
 // rDestination receives the common prefix of rSource without changing its allocation.
 template <typename T>
 void copyBuffer(const sead::Buffer<T>& rSource, sead::Buffer<T>& rDestination) {
-    if (&rDestination == &rSource) return;
+    if (&rDestination == &rSource) {
+        return;
+    }
+
     const int count = rSource.size() < rDestination.size() ? rSource.size() : rDestination.size();
     const T* source = rSource.getBufferPtr();
     T* destination = rDestination.getBufferPtr();
 
-    for (int i = 0; i < count; ++i) destination[i] = source[i];
+    for (int i = 0; i < count; ++i) {
+        destination[i] = source[i];
+    }
 }
 }
 
@@ -72,9 +77,11 @@ void MassDrawPane::initializeTextureData_() {
 
 // rDrawInfo supplies the render target and context; rCommands is unused by the agl drawing path.
 void MassDrawPane::DrawSelf(nn::ui2d::DrawInfo& rDrawInfo, nn::gfx::CommandBuffer& rCommands) {
-    const auto* info = static_cast<DrawInfoEx&>(rDrawInfo).m_pRenderBufferInfo;
+    const auto* info = static_cast<DrawInfoEx&>(rDrawInfo).getRenderBufferInfo();
 
-    if (info == nullptr || mAlphas.getBufferPtr() == nullptr) return;
+    if (info == nullptr || mAlphas.getBufferPtr() == nullptr) {
+        return;
+    }
 
     if (!mTextureInitialized) {
         initializeTextureData_();
@@ -111,7 +118,10 @@ void MassDrawPane::DrawSelf(nn::ui2d::DrawInfo& rDrawInfo, nn::gfx::CommandBuffe
     for (u32 i = 0; i < count; ++i) {
         const u8 alpha = alphas[i];
 
-        if (!alpha) continue;
+        if (!alpha) {
+            continue;
+        }
+
         sead::Matrix34f matrix = baseMatrix;
         matrix.setTranslation(scaleX * positions[i].x + matrix(0, 3),
                               scaleY * positions[i].y + matrix(1, 3), 0);

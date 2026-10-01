@@ -47,14 +47,23 @@ void CapturePane::initialize_(LayoutEx* pLayout) {
     Pane::mFlags |= 1;
     mClearColor = setupClearColor_(heap, this, pLayout, &mFlags);
 
-    if (FindExtUserDataByName("CaptureWorkFormat") != nullptr) mFlags.set(4);
+    if (FindExtUserDataByName("CaptureWorkFormat") != nullptr) {
+        mFlags.set(4);
+    }
+
     setupCaptureOutputAlpha255_(this, &mFlags);
 
-    if (mClearColor == nullptr) mFlags.set(0x20);
+    if (mClearColor == nullptr) {
+        mFlags.set(0x20);
+    }
+
     mMultiFilter = InitializeMultiFilter(heap, *this, pLayout);
 
-    if (mMultiFilter != nullptr) mMultiFilter->setUseTextureAlpha(true);
-    const char* name = (pLayout->mScreen != nullptr) ? pLayout->mScreen->mName.cstr() : static_cast<const char*>(pLayout->_30);
+    if (mMultiFilter != nullptr) {
+        mMultiFilter->setUseTextureAlpha(true);
+    }
+
+    const char* name = (pLayout->getScreen() != nullptr) ? pLayout->getScreen()->getName().cstr() : pLayout->getLayoutName();
     initializeCaptureTextureData_(heap, name);
     mRenderBuffer.setRenderTargetColor(&mRenderTarget);
     const auto& source = reinterpret_cast<const nn::util::MatrixT4x3fType&>(sead::Matrix34f::ident);
@@ -64,7 +73,9 @@ void CapturePane::initialize_(LayoutEx* pLayout) {
     dest._m.val[2] = source._m.val[2];
     Pane::mFlags |= 0x40;
 
-    if (pLayout->mScreen != nullptr) pLayout->mScreen->mFlags |= 0x10;
+    if (pLayout->getScreen() != nullptr) {
+        pLayout->getScreen()->mFlags |= 0x10;
+    }
 }
 
 // pHeap owns the optional color; pPane supplies metadata; pLayout is unused;
@@ -78,17 +89,27 @@ sead::Color4f* CapturePane::setupClearColor_(sead::Heap* pHeap, nn::ui2d::Pane* 
         const auto* rgb = static_cast<const s32*>(colorData->GetData());
         auto* color = new (pHeap, 8) sead::Color4f(u32(u8(rgb[0])) / 255.0f, u32(u8(rgb[1])) / 255.0f,
                                                  u32(u8(rgb[2])) / 255.0f, 0);
-        if (alphaData != nullptr) color->a = *static_cast<const s32*>(alphaData->GetData()) / 255.0f;
+
+        if (alphaData != nullptr) {
+            color->a = *static_cast<const s32*>(alphaData->GetData()) / 255.0f;
+        }
+
         return color;
     }
 
-    if (alphaData != nullptr && *static_cast<const s32*>(alphaData->GetData()) == 255) pFlags->set(2);
+    if (alphaData != nullptr && *static_cast<const s32*>(alphaData->GetData()) == 255) {
+        pFlags->set(2);
+    }
+
     return nullptr;
 }
 
 // pHeap owns the texture and GPU memory; pName labels the capture for graphics debugging.
 void CapturePane::initializeCaptureTextureData_(sead::Heap* pHeap, const char* pName) {
-    if (mTexture != nullptr) return;
+    if (mTexture != nullptr) {
+        return;
+    }
+
     using Format = agl::TextureFormat;
     Format format = Format::cTextureFormat_R8_G8_B8_A8_uNorm;
     bool alphaOnly = false;
@@ -101,11 +122,15 @@ void CapturePane::initializeCaptureTextureData_(sead::Heap* pHeap, const char* p
         else if (formatName == "RGB565") format = Format::cTextureFormat_R8_G8_B8_A8_uNorm;
         else if (formatName == "R10G10B10A2") format = Format::cTextureFormat_R10_G10_B10_A2_uNorm;
         else if (formatName == "L8") format = Format::cTextureFormat_R8_uNorm;
-        else if (formatName == "A8") { format = Format::cTextureFormat_R8_uNorm; alphaOnly = true; }
-        else if (formatName == "LA8") format = Format::cTextureFormat_R8_G8_uNorm;
+        else if (formatName == "A8") {
+            format = Format::cTextureFormat_R8_uNorm;
+            alphaOnly = true;
+        } else if (formatName == "LA8") format = Format::cTextureFormat_R8_G8_uNorm;
         else if (formatName == "BC4L") format = Format::cTextureFormat_BC4_uNorm;
-        else if (formatName == "BC4A") { format = Format::cTextureFormat_BC4_uNorm; alphaOnly = true; }
-        else if (formatName == "BC5") format = Format::cTextureFormat_BC5_uNorm;
+        else if (formatName == "BC4A") {
+            format = Format::cTextureFormat_BC4_uNorm;
+            alphaOnly = true;
+        } else if (formatName == "BC5") format = Format::cTextureFormat_BC5_uNorm;
     }
 
     float width = mSizeX, height = mSizeY;
@@ -114,7 +139,10 @@ void CapturePane::initializeCaptureTextureData_(sead::Heap* pHeap, const char* p
     if (scaleData != nullptr) {
         const float scale = *static_cast<const float*>(scaleData->GetData());
 
-        if (scale > 0) { width *= scale; height *= scale; }
+        if (scale > 0) {
+            width *= scale;
+            height *= scale;
+        }
     }
 
     mTexture = new (pHeap, 8) agl::TextureData;
@@ -148,7 +176,10 @@ void CapturePane::initializeCaptureTextureData_(sead::Heap* pHeap, const char* p
     default: break;
     }
 
-    if (mFlags.isOn(8)) alpha = agl::cTextureCompSel_1;
+    if (mFlags.isOn(8)) {
+        alpha = agl::cTextureCompSel_1;
+    }
+
     mTexture->setImagePtr(mTextureMemory);
     mTexture->setCompSel(red, green, blue, alpha);
     SetupTextureInfoByAglTextureData(&mTextureInfo, *mTexture, nullptr);
@@ -157,7 +188,10 @@ void CapturePane::initializeCaptureTextureData_(sead::Heap* pHeap, const char* p
 // rDrawInfo provides projection state; rContext carries matrix-dirty state;
 // force forwards the caller's calculation request to the captured pane tree.
 void CapturePane::Calculate(nn::ui2d::DrawInfo& rDrawInfo, CalculateContext& rContext, bool force) {
-    if ((!mCaptureRequired && !mAlwaysCapture) || !(Pane::mFlags & 1) || !mAlpha) return;
+    if ((!mCaptureRequired && !mAlwaysCapture) || !(Pane::mFlags & 1) || !mAlpha) {
+        return;
+    }
+
     mCalculated = true;
     const bool forceDirty = rContext.forceGlobalMatrixDirty;
     rContext.forceGlobalMatrixDirty = false;
@@ -186,10 +220,16 @@ void CapturePane::Calculate(nn::ui2d::DrawInfo& rDrawInfo, CalculateContext& rCo
 // NON_MATCHING: two format-dispatch branches are ordered differently.
 // rDrawInfo supplies the current render state; rCommands receives the captured pane commands.
 void CapturePane::Draw(nn::ui2d::DrawInfo& rDrawInfo, nn::gfx::CommandBuffer& rCommands) {
-    if (!mCalculated || static_cast<DrawInfoEx&>(rDrawInfo)._1A8) return;
-    const auto* info = static_cast<DrawInfoEx&>(rDrawInfo).m_pRenderBufferInfo;
+    if (!mCalculated || static_cast<DrawInfoEx&>(rDrawInfo).isCapturing()) {
+        return;
+    }
 
-    if (info == nullptr) return;
+    const auto* info = static_cast<DrawInfoEx&>(rDrawInfo).getRenderBufferInfo();
+
+    if (info == nullptr) {
+        return;
+    }
+
     const auto* captured = drawCapture_(this, rDrawInfo, &mFlags, mMultiFilter, &mRenderBuffer,
                                         &mRenderTarget, mClearColor, rCommands);
     using Format = agl::TextureFormat;
@@ -214,10 +254,12 @@ void CapturePane::Draw(nn::ui2d::DrawInfo& rDrawInfo, nn::gfx::CommandBuffer& rC
         if (rearrange) {
             agl::TextureData converted(*captured);
 
-            if (alpha == agl::cTextureCompSel_R)
+            if (alpha == agl::cTextureCompSel_R) {
                 converted.setCompSel(agl::cTextureCompSel_A, agl::cTextureCompSel_1, agl::cTextureCompSel_1, agl::cTextureCompSel_1);
-            else
+            } else {
                 converted.setCompSel(agl::cTextureCompSel_R, agl::cTextureCompSel_A, agl::cTextureCompSel_1, agl::cTextureCompSel_1);
+            }
+
             converted.compressTo(static_cast<agl::DrawContext*>(info->pDrawContext), mTexture, 0, 0);
         } else {
             captured->compressTo(static_cast<agl::DrawContext*>(info->pDrawContext), mTexture, 0, 0);
@@ -238,8 +280,10 @@ void CapturePane::Draw(nn::ui2d::DrawInfo& rDrawInfo, nn::gfx::CommandBuffer& rC
         switch (format) {
         case Format::cTextureFormat_R8_uNorm:
         case Format::cTextureFormat_BC4_uNorm:
-            if (alpha == agl::cTextureCompSel_R)
+            if (alpha == agl::cTextureCompSel_R) {
                 sampler.setCompSel(agl::cTextureCompSel_A, agl::cTextureCompSel_1, agl::cTextureCompSel_1, agl::cTextureCompSel_1);
+            }
+
             break;
         case Format::cTextureFormat_R8_G8_uNorm:
         case Format::cTextureFormat_BC5_uNorm:
@@ -256,8 +300,12 @@ void CapturePane::Draw(nn::ui2d::DrawInfo& rDrawInfo, nn::gfx::CommandBuffer& rC
         agl::utl::ImageFilter2D::drawTextureQuadTriangle(static_cast<agl::DrawContext*>(info->pDrawContext), sampler);
     }
 
-    if (mMultiFilter != nullptr && mMultiFilter->getResultTexture() != nullptr) mMultiFilter->freeResultTexture();
-    else agl::utl::DynamicTextureAllocator::instance()->free(captured);
+    if (mMultiFilter != nullptr && mMultiFilter->getResultTexture() != nullptr) {
+        mMultiFilter->freeResultTexture();
+    } else {
+        agl::utl::DynamicTextureAllocator::instance()->free(captured);
+    }
+
     mRenderTarget.invalidateGPUCache(static_cast<agl::DrawContext*>(info->pDrawContext));
     DrawInfoEx::applyRenderBufferInfo(info);
     rDrawInfo.ResetDrawState();
@@ -274,7 +322,7 @@ void CapturePane::Draw(nn::ui2d::DrawInfo& rDrawInfo, nn::gfx::CommandBuffer& rC
 const agl::TextureData* CapturePane::drawCapture_(nn::ui2d::Pane* pPane, nn::ui2d::DrawInfo& rDrawInfo,
     sead::BitFlag8* pFlags, agl::utl::MultiFilter* pFilter, agl::RenderBuffer* pBuffer,
     agl::RenderTargetColor* pTarget, sead::Color4f* pClearColor, nn::gfx::CommandBuffer& rCommands) {
-    const auto* info = static_cast<DrawInfoEx&>(rDrawInfo).m_pRenderBufferInfo;
+    const auto* info = static_cast<DrawInfoEx&>(rDrawInfo).getRenderBufferInfo();
     u32 width, height;
 
     if (pFlags->isOn(0x10)) {
@@ -309,10 +357,12 @@ const agl::TextureData* CapturePane::drawCapture_(nn::ui2d::Pane* pPane, nn::ui2
         source->invalidateGPUCache(static_cast<agl::DrawContext*>(info->pDrawContext));
         agl::TextureSampler sampler(*source);
 
-        if (pFlags->isOn(2))
+        if (pFlags->isOn(2)) {
             sampler.setCompSel(agl::cTextureCompSel_R, agl::cTextureCompSel_G, agl::cTextureCompSel_B, agl::cTextureCompSel_1);
-        else
+        } else {
             sampler.setCompSel(agl::cTextureCompSel_R, agl::cTextureCompSel_G, agl::cTextureCompSel_B, agl::cTextureCompSel_0);
+        }
+
         sampler.setFilter(1, 1, 1);
         sampler.setWrap(7, 7, 7);
         sead::GraphicsContext context;
@@ -364,9 +414,20 @@ const agl::TextureData* CapturePane::drawCapture_(nn::ui2d::Pane* pPane, nn::ui2
 }
 
 CapturePane::~CapturePane() {
-    if (mClearColor != nullptr) { delete mClearColor; mClearColor = nullptr; }
-    if (mMultiFilter != nullptr) { delete mMultiFilter; mMultiFilter = nullptr; }
-    if (mTextureMemory.isValid()) mTextureMemory.deleteGPUMemBlock();
+    if (mClearColor != nullptr) {
+        delete mClearColor;
+        mClearColor = nullptr;
+    }
+
+    if (mMultiFilter != nullptr) {
+        delete mMultiFilter;
+        mMultiFilter = nullptr;
+    }
+
+    if (mTextureMemory.isValid()) {
+        mTextureMemory.deleteGPUMemBlock();
+    }
+
     delete mTexture;
 }
 
@@ -374,6 +435,8 @@ CapturePane::~CapturePane() {
 void CapturePane::setupCaptureOutputAlpha255_(nn::ui2d::Pane* pPane, sead::BitFlag8* pFlags) {
     const auto* data = pPane->FindExtUserDataByName("CaptureOutputAlpha");
 
-    if (data != nullptr && *static_cast<const s32*>(data->GetData()) == 255) pFlags->set(8);
+    if (data != nullptr && *static_cast<const s32*>(data->GetData()) == 255) {
+        pFlags->set(8);
+    }
 }
 }

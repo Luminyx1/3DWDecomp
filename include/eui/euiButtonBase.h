@@ -54,6 +54,28 @@ public:
     void ProcessActionFromQueue();
     bool IsDowning() const;
 
+    bool IsActive() const { return (mFlags & 0x10) != 0; }
+    bool IsRepeatOn() const { return (mFlags & 0x80) != 0; }
+    bool IsTouch() const { return (mFlags & 0x40) != 0; }
+
+    void SetAllowNoTrigTouch(bool allow) {
+        if (allow) {
+            mFlags |= 0x100;
+        } else {
+            mFlags &= ~0x100;
+        }
+    }
+
+    void SetDownWithTouchOn(bool enabled) {
+        if (enabled) {
+            mFlags |= 0x200;
+        } else {
+            mFlags &= ~0x200;
+        }
+    }
+
+    void ClearActions() { mActions.count = 0; }
+
 protected:
     friend class ButtonGroup;
     friend class BoxCursorNode;

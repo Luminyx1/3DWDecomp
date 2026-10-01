@@ -1,7 +1,8 @@
 #pragma once
 #include <nn/ui2d/ui2d_Layout.h>
+#include <nn/ui2d/ui2d_Pane.h>
 #include <prim/seadSafeString.h>
-namespace nn::ui2d { class Group; }
+namespace nn::ui2d { class Group; class GroupContainer; }
 namespace eui {
 class Screen;
 class Animator;
@@ -31,6 +32,20 @@ public:
     Animator* createAnimatorWithGroupIndex(const char* pName, u32 index, bool enabled);
     Animator* tryCreateAnimatorWithGroupIndex(const char* pName, u32 index, bool enabled);
     Animator* createUnbindedAnimator(const char* pName, bool enabled);
+
+    Screen* getScreen() const { return mScreen; }
+    LayoutEx* getParentLayout() const { return mParentLayout; }
+    nn::ui2d::Pane* getRootPane() const { return mRootPane; }
+    nn::ui2d::Pane* findPaneByName(const char* pName) const { return mRootPane->FindPaneByName(pName, true); }
+
+    nn::ui2d::GroupContainer* getGroupContainer() const { return static_cast<nn::ui2d::GroupContainer*>(_20); }
+
+    const char* getLayoutName() const { return static_cast<const char*>(_30); }
+
+    const char* getRootName() const {
+        return mRootPane->mParent != nullptr ? mRootPane->mPanelName : getLayoutName();
+    }
+
     void* _60;
     void* _68;
     void* _70;

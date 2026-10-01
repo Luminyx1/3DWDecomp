@@ -13,14 +13,19 @@ namespace eui {
 
 // pList contains optional extended user data; pName selects the entry to return.
 const nn::ui2d::ResExtUserData* FindExtUserDataFromList(const nn::ui2d::ResExtUserDataList* pList, const char* pName) {
-    if (pList == nullptr) return nullptr;
+    if (pList == nullptr) {
+        return nullptr;
+    }
+
     const u32 count = pList->count;
     const auto* entry = pList->entries;
 
     for (size_t i = 0; i < count; ++i, ++entry) {
         const char* name = entry->nameOffset ? reinterpret_cast<const char*>(entry) + entry->nameOffset : nullptr;
 
-        if (std::strcmp(pName, name) == 0) return entry;
+        if (std::strcmp(pName, name) == 0) {
+            return entry;
+        }
     }
 
     return nullptr;
@@ -38,15 +43,10 @@ void SetupPaneAfterBuild(nn::ui2d::Pane* pPane, LayoutEx* pLayout) {
 // NON_MATCHING: runtime type information is inlined instead of called.
 // pPane starts the traversal; pLayout is replaced by a parts layout inside each parts pane.
 void IteratePaneForSetupPaneAfterBuild(nn::ui2d::Pane* pPane, LayoutEx* pLayout) {
-    const auto* partsType = PartsEx::GetRuntimeTypeInfoStatic();
+    auto* parts = DynamicCast<PartsEx>(pPane);
 
-    if (pPane != nullptr) {
-        for (auto* type = pPane->GetRuntimeTypeInfo(); type != nullptr; type = type->m_ParentTypeInfo) {
-            if (type == partsType) {
-                pLayout = static_cast<LayoutEx*>(static_cast<PartsEx*>(pPane)->m_pLayout);
-                break;
-            }
-        }
+    if (parts != nullptr) {
+        pLayout = static_cast<LayoutEx*>(parts->m_pLayout);
     }
 
     SetupPaneAfterBuild(pPane, pLayout);
@@ -60,7 +60,7 @@ void IteratePaneForSetupPaneAfterBuild(nn::ui2d::Pane* pPane, LayoutEx* pLayout)
 // NON_MATCHING: the tail-call relocation awaits recursive hit testing.
 // rPosition is the hit-test point; pLayout supplies the root pane and initial layout.
 LayoutEx* FindHitLayout(const sead::Vector2f& rPosition, LayoutEx* pLayout) {
-    return FindHitLayoutRecursive_(rPosition, nullptr, pLayout, pLayout->mRootPane);
+    return FindHitLayoutRecursive_(rPosition, nullptr, pLayout, pLayout->getRootPane());
 }
 
 /**

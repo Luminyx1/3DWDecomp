@@ -9,7 +9,10 @@ const char* ButtonBase::getClassName() const { return "ButtonBase"; }
 // A new action is appended only when the four-entry queue has room.
 void ButtonBase::ActionQueue::PushWithOmit(Action action) {
     for (int i = 0; i < count; ++i) {
-        if (actions[i] == action) { count = i + 1; return; }
+        if (actions[i] == action) {
+            count = i + 1;
+            return;
+        }
     }
 
     if (count < 4) {
@@ -21,14 +24,20 @@ void ButtonBase::ActionQueue::PushWithOmit(Action action) {
 // Remove the oldest queued action, preserving the order of the remaining actions.
 void ButtonBase::ActionQueue::Pop() {
     if (count > 0) {
-        for (int i = 0; i < count - 1; ++i) actions[i] = actions[i + 1];
+        for (int i = 0; i < count - 1; ++i) {
+            actions[i] = actions[i + 1];
+        }
+
         --count;
     }
 }
 
 bool ButtonBase::ActionQueue::IsDownExist() const {
     for (int i = 0; i < count; ++i)
-        if (actions[i] == cAction_Down) return true;
+        if (actions[i] == cAction_Down) {
+            return true;
+        }
+
     return false;
 }
 
@@ -37,14 +46,28 @@ bool ButtonBase::IsDowning() const {
 }
 
 // Forced transitions discard pending actions before selecting the settled state.
-void ButtonBase::ForceOff() { mActions.count = 0; ForceChangeState(cState_Off); }
-void ButtonBase::ForceOn() { mActions.count = 0; ForceChangeState(cState_On); }
-void ButtonBase::ForceDown() { mActions.count = 0; ForceChangeState(cState_Down); }
+void ButtonBase::ForceOff() {
+    ClearActions();
+    ForceChangeState(cState_Off);
+}
+
+void ButtonBase::ForceOn() {
+    ClearActions();
+    ForceChangeState(cState_On);
+}
+
+void ButtonBase::ForceDown() {
+    ClearActions();
+    ForceChangeState(cState_Down);
+}
 
 // active controls whether this button accepts input actions.
 void ButtonBase::SetActive(bool active) {
-    if (active) mFlags |= 0x10;
-    else mFlags &= ~0x10;
+    if (active) {
+        mFlags |= 0x10;
+    } else {
+        mFlags &= ~0x10;
+    }
 }
 
 bool ButtonBase::UpdateOn() { return true; }
@@ -141,7 +164,10 @@ bool ButtonBase::ProcessDown() {
 
 // Consume one queued action only when the state-specific handler accepts it.
 void ButtonBase::ProcessActionFromQueue() {
-    if (mActions.count == 0) return;
+    if (mActions.count == 0) {
+        return;
+    }
+
     bool processed = false;
 
     switch (mActions.actions[0]) {
@@ -151,7 +177,9 @@ void ButtonBase::ProcessActionFromQueue() {
     case cAction_Cancel: processed = ProcessCancel(); break;
     }
 
-    if (processed) mActions.Pop();
+    if (processed) {
+        mActions.Pop();
+    }
 }
 
 }  // namespace eui

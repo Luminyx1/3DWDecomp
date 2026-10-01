@@ -30,15 +30,23 @@ ControlBase* ControlCreator::CreateControlImpl_(const nn::ui2d::ControlSrc& rSou
     AnimButton* button = nullptr;
     ControlBase* control = nullptr;
 
-    if (std::strcmp("NormalButton", name) == 0) button = AllocateControl<NormalButton>();
-    else if (std::strcmp("DecisionButton", name) == 0) button = AllocateControl<DecisionButton>();
-    else if (std::strcmp("SelectButton", name) == 0) button = AllocateControl<SelectButton>();
-    else if (std::strcmp("CheckButton", name) == 0) button = AllocateControl<CheckButton>();
-    else if (std::strcmp("DragButton", name) == 0) button = AllocateControl<DragButton>();
-    else if (std::strcmp("CheckKeepButton", name) == 0) button = AllocateControl<CheckKeepButton>();
-    else if (std::strcmp("TwoTouchCheckKeepButton", name) == 0) button = AllocateControl<TwoTouchCheckKeepButton>();
-    else if (std::strcmp("UniteButton", name) == 0) button = AllocateControl<UniteButton>();
-    else if (std::strcmp("BoxCursor", name) == 0) {
+    if (std::strcmp("NormalButton", name) == 0) {
+        button = AllocateControl<NormalButton>();
+    } else if (std::strcmp("DecisionButton", name) == 0) {
+        button = AllocateControl<DecisionButton>();
+    } else if (std::strcmp("SelectButton", name) == 0) {
+        button = AllocateControl<SelectButton>();
+    } else if (std::strcmp("CheckButton", name) == 0) {
+        button = AllocateControl<CheckButton>();
+    } else if (std::strcmp("DragButton", name) == 0) {
+        button = AllocateControl<DragButton>();
+    } else if (std::strcmp("CheckKeepButton", name) == 0) {
+        button = AllocateControl<CheckKeepButton>();
+    } else if (std::strcmp("TwoTouchCheckKeepButton", name) == 0) {
+        button = AllocateControl<TwoTouchCheckKeepButton>();
+    } else if (std::strcmp("UniteButton", name) == 0) {
+        button = AllocateControl<UniteButton>();
+    } else if (std::strcmp("BoxCursor", name) == 0) {
         auto* cursor = AllocateControl<BoxCursorControl>();
         cursor->initialize(rSource, layout);
         control = cursor;
@@ -48,14 +56,24 @@ ControlBase* ControlCreator::CreateControlImpl_(const nn::ui2d::ControlSrc& rSou
         gauge->initialize(rSource, layout);
         control = gauge;
         goto registerControl;
-    } else if (std::strcmp("DragScrollButton", name) == 0) button = AllocateControl<DragScrollButton>();
-    else return nullptr;
+    } else if (std::strcmp("DragScrollButton", name) == 0) {
+        button = AllocateControl<DragScrollButton>();
+    } else {
+        return nullptr;
+    }
+
     button->Build(rSource, layout);
 
-    if (button != nullptr) InsertButtonToButtonGroup_(button);
+    if (button != nullptr) {
+        InsertButtonToButtonGroup_(button);
+    }
+
     return button;
 registerControl:
-    if (control != nullptr) mControls->push_back(*control);
+    if (control != nullptr) {
+        mControls->push_back(*control);
+    }
+
     return control;
 }
 
@@ -67,9 +85,9 @@ void ControlCreator::InsertButtonToButtonGroup_(AnimButton* pButton) {
 
     if (!buttons.empty()) {
         auto* current = &buttons.back();
-        auto* layout = pButton->_20;
+        auto* layout = pButton->getLayout();
 
-        if (static_cast<LayoutEx*>(current->_20)->mParentLayout == layout) {
+        if (current->getLayout()->getParentLayout() == layout) {
             do {
                 if (current == &*buttons.begin()) {
                     buttons.push_front(*pButton);
@@ -78,12 +96,15 @@ void ControlCreator::InsertButtonToButtonGroup_(AnimButton* pButton) {
 
                 insertBefore = current;
                 current = &nn::util::IntrusiveListMemberNodeTraits<ControlBase, &ControlBase::m_Link>::GetItem(*current->m_Link.GetPrev());
-            } while (static_cast<LayoutEx*>(current->_20)->mParentLayout == layout);
+            } while (current->getLayout()->getParentLayout() == layout);
         }
     }
 
-    if (insertBefore != nullptr) insertBefore->m_Link.LinkPrev(&pButton->m_Link);
-    else buttons.push_back(*pButton);
+    if (insertBefore != nullptr) {
+        insertBefore->m_Link.LinkPrev(&pButton->m_Link);
+    } else {
+        buttons.push_back(*pButton);
+    }
 }
 
 // pButtons receives created buttons; pControls and pStaticControls receive the other controls.

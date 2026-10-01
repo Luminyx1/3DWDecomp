@@ -9,48 +9,67 @@ namespace eui {
 // type selects endpoint behavior; step is signed playback speed, with negative values reversing playback.
 void Animator::Play(PlayType type, float step) {
     if (!(-float(GetFrameSize()) <= step && step <= float(GetFrameSize()))) {
-        if (!IsWaitData() || type != cPlayType_OneTime) { IsWaitData(); return; }
+        if (!IsWaitData() || type != cPlayType_OneTime) {
+            IsWaitData();
+            return;
+        }
     }
 
     mPlayType = type;
     mStep = step;
-    mFlags &= ~0xf;
+    clearFrameEvents();
 
     if (step >= 0) {
-        if ((mFlags & 0x10) && GetFrameSize()) mFrame = step;
-        else mFrame = 0;
+        if (isSkipFirstFrame() && GetFrameSize()) {
+            mFrame = step;
+        } else {
+            mFrame = 0;
+        }
     } else {
-        if ((mFlags & 0x10) && GetFrameSize()) mFrame = GetFrameSize() + step;
-        else mFrame = GetFrameSize();
+        if (isSkipFirstFrame() && GetFrameSize()) {
+            mFrame = GetFrameSize() + step;
+        } else {
+            mFrame = GetFrameSize();
+        }
     }
 
-    if (type == cPlayType_OneTime && (mFlags & 0x20)) mLayout->mScreen->invokeSoundLink2AnimPlayEvent(this, "_play");
+    if (type == cPlayType_OneTime && isSoundLink()) {
+        mLayout->getScreen()->invokeSoundLink2AnimPlayEvent(this, "_play");
+    }
+
     SetEnabled(true);
-    mLayout->mScreen->animatorOperationCallback(Screen::AnimatorOperationType::cPlay, this);
+    mLayout->getScreen()->animatorOperationCallback(Screen::AnimatorOperationType::cPlay, this);
 }
 
 // type selects endpoint behavior; step resumes playback from the current pose in either direction.
 void Animator::PlayFromCurrent(PlayType type, float step) {
     if (!(-float(GetFrameSize()) <= step && step <= float(GetFrameSize()))) {
-        if (!IsWaitData() || type != cPlayType_OneTime) { IsWaitData(); return; }
+        if (!IsWaitData() || type != cPlayType_OneTime) {
+            IsWaitData();
+            return;
+        }
     }
 
     mPlayType = type;
     mStep = step;
-    mFlags &= ~0xf;
+    clearFrameEvents();
 
-    if ((mFlags & 0x10) && GetFrameSize()) {
+    if (isSkipFirstFrame() && GetFrameSize()) {
         if (step >= 0) {
-            if (mFrame < step) mFrame = step;
+            if (mFrame < step) {
+                mFrame = step;
+            }
         } else {
             const float lastFrame = GetFrameSize() + step;
 
-            if (mFrame > lastFrame) mFrame = lastFrame;
+            if (mFrame > lastFrame) {
+                mFrame = lastFrame;
+            }
         }
     }
 
     SetEnabled(true);
-    mLayout->mScreen->animatorOperationCallback(Screen::AnimatorOperationType::cPlayFromCurrent, this);
+    mLayout->getScreen()->animatorOperationCallback(Screen::AnimatorOperationType::cPlayFromCurrent, this);
 }
 
 // type and step control playback; the initial pose is chosen uniformly from integer resource frames.
@@ -86,7 +105,10 @@ void Animator::SetupWithGroup(const nn::ui2d::AnimResource& rResource, LayoutEx*
 // and enabled selects the initial animation state. Invalid indices leave the animator unchanged.
 void Animator::SetupWithGroupIndex(const nn::ui2d::AnimResource& rResource, LayoutEx* pLayout,
     nn::ui2d::GroupContainer* pGroups, u32 index, bool enabled) {
-    if (index >= rResource.GetGroupCount()) return;
+    if (index >= rResource.GetGroupCount()) {
+        return;
+    }
+
     BindGroup(pGroups->FindGroupByName(rResource.GetGroupArray()[index].name));
     SetupBasic(rResource, pLayout, enabled);
 }
@@ -97,7 +119,10 @@ void Animator::SetupWithGroupAll(const nn::ui2d::AnimResource& rResource, Layout
     nn::ui2d::GroupContainer* pGroups, bool enabled) {
     const int count = rResource.GetGroupCount();
 
-    for (int i = 0; i < count; ++i) BindGroup(pGroups->FindGroupByName(rResource.GetGroupArray()[i].name));
+    for (int i = 0; i < count; ++i) {
+        BindGroup(pGroups->FindGroupByName(rResource.GetGroupArray()[i].name));
+    }
+
     SetupBasic(rResource, pLayout, enabled);
 }
 
@@ -107,32 +132,32 @@ void Animator::PlayAuto(float step) { Play(IsLoopData() ? cPlayType_Loop : cPlay
 void Animator::Stop(float frame) {
     mStep = 0;
     mFrame = frame;
-    mFlags &= ~0xf;
+    clearFrameEvents();
     SetEnabled(true);
-    mLayout->mScreen->animatorOperationCallback(Screen::AnimatorOperationType::cStop, this);
+    mLayout->getScreen()->animatorOperationCallback(Screen::AnimatorOperationType::cStop, this);
 }
 
 void Animator::StopCurrent() {
     mStep = 0;
-    mFlags &= ~0xf;
+    clearFrameEvents();
     SetEnabled(true);
-    mLayout->mScreen->animatorOperationCallback(Screen::AnimatorOperationType::cStopCurrent, this);
+    mLayout->getScreen()->animatorOperationCallback(Screen::AnimatorOperationType::cStopCurrent, this);
 }
 
 void Animator::StopAtMin() {
     mStep = 0;
     mFrame = 0;
-    mFlags &= ~0xf;
+    clearFrameEvents();
     SetEnabled(true);
-    mLayout->mScreen->animatorOperationCallback(Screen::AnimatorOperationType::cStopAtMin, this);
+    mLayout->getScreen()->animatorOperationCallback(Screen::AnimatorOperationType::cStopAtMin, this);
 }
 
 void Animator::StopAtMax() {
     mStep = 0;
     mFrame = GetFrameSize();
-    mFlags &= ~0xf;
+    clearFrameEvents();
     SetEnabled(true);
-    mLayout->mScreen->animatorOperationCallback(Screen::AnimatorOperationType::cStopAtMax, this);
+    mLayout->getScreen()->animatorOperationCallback(Screen::AnimatorOperationType::cStopAtMax, this);
 }
 
 // enabled controls evaluation; enabling registers the animator with its screen exactly once.
@@ -140,38 +165,68 @@ void Animator::SetEnabled(bool enabled) {
     nn::ui2d::AnimTransform::SetEnabled(enabled);
 
     if (enabled) {
-        if (!mActiveLink.IsLinked()) mLayout->mScreen->setAnimatorActive(this);
-    } else mStep = 0;
+        if (!mActiveLink.IsLinked()) {
+            mLayout->getScreen()->setAnimatorActive(this);
+        }
+    } else {
+        mStep = 0;
+    }
 }
 
 void Animator::DisableAndEraseFromActiveList() {
-    nn::ui2d::AnimTransform::SetEnabled(false);
-    mStep = 0;
+    disableKeepActive();
 
-    if (mActiveLink.IsLinked()) mLayout->mScreen->eraseAnimatorFromActiveList(this);
+    if (mActiveLink.IsLinked()) {
+        mLayout->getScreen()->eraseAnimatorFromActiveList(this);
+    }
 }
 
 // step scales this update's playback increment; endpoints stop, wrap, or reflect according to the mode.
 void Animator::UpdateFrame(float step) {
-    mFlags &= ~0xf;
+    clearFrameEvents();
 
-    if (mStep == 0) return;
+    if (mStep == 0) {
+        return;
+    }
+
     const float previousFrame = mFrame;
     float frame = mStep * step + previousFrame;
 
     if (mStep > 0) {
         if (frame >= GetFrameSize()) {
             switch (mPlayType) {
-            case cPlayType_OneTime: frame = GetFrameSize(); mStep = 0; mFlags |= 1; break;
-            case cPlayType_Loop: frame -= GetFrameSize(); mFlags |= 4; break;
-            case cPlayType_RoundTrip: frame = GetFrameSize() + (GetFrameSize() - frame); mStep = -mStep; mFlags |= 4; break;
+            case cPlayType_OneTime:
+                frame = GetFrameSize();
+                mStep = 0;
+                mFlags |= 1;
+                break;
+            case cPlayType_Loop:
+                frame -= GetFrameSize();
+                mFlags |= 4;
+                break;
+            case cPlayType_RoundTrip:
+                frame = GetFrameSize() + (GetFrameSize() - frame);
+                mStep = -mStep;
+                mFlags |= 4;
+                break;
             }
         }
     } else if (frame <= 0) {
         switch (mPlayType) {
-        case cPlayType_OneTime: frame = 0; mStep = 0; mFlags |= 1; break;
-        case cPlayType_Loop: frame += GetFrameSize(); mFlags |= 8; break;
-        case cPlayType_RoundTrip: frame = -frame; mStep = -mStep; mFlags |= 8; break;
+        case cPlayType_OneTime:
+            frame = 0;
+            mStep = 0;
+            mFlags |= 1;
+            break;
+        case cPlayType_Loop:
+            frame += GetFrameSize();
+            mFlags |= 8;
+            break;
+        case cPlayType_RoundTrip:
+            frame = -frame;
+            mStep = -mStep;
+            mFlags |= 8;
+            break;
         }
     }
 
@@ -190,10 +245,10 @@ void Animator::PlayFromFrame(float frame, PlayType type, float step) {
 
 // rOther supplies the frame, speed, and playback mode to mirror.
 void Animator::Synchronize(const Animator& rOther) {
-    if (rOther.mStep != 0) {
-        PlayFromFrame(rOther.mFrame, static_cast<PlayType>(rOther.mPlayType), rOther.mStep);
+    if (rOther.isPlaying()) {
+        PlayFromFrame(rOther.getFrame(), static_cast<PlayType>(rOther.mPlayType), rOther.getStep());
     } else {
-        Stop(rOther.mFrame);
+        Stop(rOther.getFrame());
     }
 }
 }

@@ -7,12 +7,12 @@ LetterAnimControl::LetterAnimControl()
       mTextLength(0), mPlaying(0), mFlags(0), mFlushMode(0), _61(0), _62(0), mAlpha(255),
       _64(0), _68(0), mAppTagCallback(nullptr), mChoiceExcludeCallback(nullptr) {}
 // pCallback receives application tags encountered during letter playback.
-void LetterAnimControl::setAppTagCallback(sead::IDelegate1<const sead::MessageSet<char16_t>::TagInfo*>* pCallback) {
+void LetterAnimControl::setAppTagCallback(AppTagCallback* pCallback) {
     mAppTagCallback = pCallback;
 }
 
 // pCallback decides whether a text choice should be excluded.
-void LetterAnimControl::setChoiceExcludeCallback(sead::IDelegate2R<const char16_t*, u16, bool>* pCallback) {
+void LetterAnimControl::setChoiceExcludeCallback(ChoiceExcludeCallback* pCallback) {
     mChoiceExcludeCallback = pCallback;
 }
 

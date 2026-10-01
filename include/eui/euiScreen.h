@@ -117,6 +117,18 @@ public:
     BoxCursorNode* findBoxCursorNodeByNameWithParentParts_(const char* pName, const char* pParentParts);
     BoxCursorNode* findBoxCursorNodeByTag_(int tag);
     void buttonStateChangeCallback(AnimButton* pButton, ButtonBase::State oldState, ButtonBase::State newState);
+
+    const sead::SafeString& getName() const { return mName; }
+    ScreenMgr* getScreenMgr() const { return mScreenMgr; }
+    ButtonGroup* getButtonGroup() const { return mButtonGroup; }
+    void setLastActiveCursor(const BoxCursorNode* pNode) { mLastActiveCursor = pNode; }
+    sead::Heap* getInitializeHeap() const { return mInitializeHeap; }
+    bool isOwnInitializeHeap() const { return (mFlags & 1) != 0; }
+    s8 getDrawLayer() const { return mDrawLayer; }
+    bool isTouchMode() const { return _eb != 0; }
+
+    static bool isTouchMode(const Screen* pScreen) { return pScreen != nullptr ? pScreen->isTouchMode() : false; }
+
     ScreenMgr* mScreenMgr;
     LayoutEx* mLayout;
     ButtonGroup* mButtonGroup;

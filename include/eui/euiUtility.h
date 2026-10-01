@@ -14,6 +14,22 @@ namespace agl::utl { class MultiFilter; }
 
 namespace eui {
 class LayoutEx;
+
+template <typename T, typename U>
+T* DynamicCast(U* pObj) {
+    const auto* pType = T::GetRuntimeTypeInfoStatic();
+
+    if (pObj != nullptr) {
+        for (auto* type = pObj->GetRuntimeTypeInfo(); type != nullptr; type = type->m_ParentTypeInfo) {
+            if (type == pType) {
+                return static_cast<T*>(pObj);
+            }
+        }
+    }
+
+    return nullptr;
+}
+
 void CreateLayoutItemUniqueName(sead::StringBuilder* pName, const char* pItem, const LayoutEx* pLayout);
 void CreateLayoutItemUniqueNameByPath(sead::StringBuilder* pName, const char* pPath, const LayoutEx* pLayout);
 // Draw targets are passed by value as a four-byte index.

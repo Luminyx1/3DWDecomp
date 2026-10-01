@@ -1,4 +1,5 @@
 #pragma once
+#include <eui/euiAnimButton.h>
 #include <eui/euiControlCreator.h>
 #include <math/seadVector.h>
 namespace eui {
@@ -16,6 +17,16 @@ public:
     void CancelAll();
     void SetAllowNoTrigTouchAll(bool allow);
     void SetDownWithTouchOnAll(bool enabled);
+
+    bool IsActive() const { return (mFlags & 2) != 0; }
+
+    template <typename Func>
+    void ForEachButton(Func func) {
+        for (auto& rControl : mButtons) {
+            func(static_cast<AnimButton&>(rControl));
+        }
+    }
+
     ControlList mButtons;
     nn::util::IntrusiveListNode mUpdateList;
     AnimButton* mHitButton;

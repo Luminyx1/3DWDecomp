@@ -11,7 +11,9 @@ void ScreenMgr::draw(s8 layer, const DrawInfoEx::RenderBufferInfo* pInfo) {
     const auto* layers = mScreenLayers.getBufferPtr();
 
     for (size_t i = 0; i != count; ++i) {
-        if (layers[i] == layer) mScreens.getBufferPtr()[i < u32(mScreens.size()) ? i : 0]->draw(pInfo);
+        if (layers[i] == layer) {
+            mScreens.getBufferPtr()[i < u32(mScreens.size()) ? i : 0]->draw(pInfo);
+        }
     }
 }
 
@@ -28,7 +30,9 @@ void ScreenMgr::unloadScreen(int index) {
     if (screen != nullptr) {
         resetScreenId(index);
 
-        if (screen->mFlags & 1) screen->mInitializeHeap->destroy();
+        if (screen->isOwnInitializeHeap()) {
+            screen->getInitializeHeap()->destroy();
+        }
     }
 }
 
@@ -47,11 +51,16 @@ void ScreenMgr::updateViewer_() {}
 // index selects the screen to remove from active drawing layers.
 void ScreenMgr::inactivateScreen(int index) { mScreenLayers[index] = -1; }
 // index selects the screen whose configured drawing layer becomes active.
-void ScreenMgr::activateScreen(int index) { mScreenLayers[index] = mScreens[index]->mDrawLayer; }
+void ScreenMgr::activateScreen(int index) {
+    mScreenLayers[index] = mScreens[index]->getDrawLayer();
+}
+
 void ScreenMgr::updateSystem() {
     _440 = true;
     _441 = true;
 
-    if (mFontMgr->mScalableFontMgr != nullptr) mFontMgr->mScalableFontMgr->update();
+    if (mFontMgr->getScalableFontMgr() != nullptr) {
+        mFontMgr->getScalableFontMgr()->update();
+    }
 }
 }

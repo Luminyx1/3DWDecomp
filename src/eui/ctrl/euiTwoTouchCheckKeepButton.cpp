@@ -15,30 +15,35 @@ TwoTouchCheckKeepButton::TwoTouchCheckKeepButton(const TwoTouchCheckKeepButton& 
     mSecondTouchAnimators = new (pHeap, 8) AnimatorSet(*rOther.mSecondTouchAnimators, pLayout, pHeap);
     mSecondTouchAnimators->SetSkipFirstFrameAll(true);
     mSecondTouchAnimators->SetSoundLinkAll(false);
-    Animator* pSelected = mSecondTouchAnimators->mSelected;
-    pSelected->nn::ui2d::AnimTransform::SetEnabled(false);
-    pSelected->mStep = 0;
+    mSecondTouchAnimators->getSelected()->disableKeepActive();
     mFirstTouchAnimators = mStateAnimators;
 }
 
 bool TwoTouchCheckKeepButton::IsTouchOnce() const {
-    if (!(mFlags & 0x40)) return true;
+    if (!IsTouch()) {
+        return true;
+    }
+
     return mTouched != 0;
 }
 
 // rPosition is the pointer position; cancellation temporarily rejects hit tests.
 bool TwoTouchCheckKeepButton::HitTest(const sead::Vector2f& rPosition) const {
-    if (mState == cState_CancelStart) return false;
+    if (mState == cState_CancelStart) {
+        return false;
+    }
+
     return AnimButton::HitTest(rPosition);
 }
 
 // touched chooses the first- or second-touch animations and resets the button state.
 // NON_MATCHING: the boolean conversion uses an additional saved register.
 void TwoTouchCheckKeepButton::ForceSetTouchOnce(bool touched) {
-    if (!(mFlags & 0x40)) return;
-    Animator* pSelected = mStateAnimators->mSelected;
-    pSelected->nn::ui2d::AnimTransform::SetEnabled(false);
-    pSelected->mStep = 0;
+    if (!IsTouch()) {
+        return;
+    }
+
+    mStateAnimators->getSelected()->disableKeepActive();
     AnimatorSet** ppSet = touched ? &mSecondTouchAnimators : &mFirstTouchAnimators;
     mStateAnimators = *ppSet;
     mTouched = touched;
@@ -46,7 +51,7 @@ void TwoTouchCheckKeepButton::ForceSetTouchOnce(bool touched) {
 }
 
 void TwoTouchCheckKeepButton::ActivateByBoxCursor() {
-    if (mFlags & 0x40) {
+    if (IsTouch()) {
         mStateAnimators = mFirstTouchAnimators;
         mTouched = 0;
     }
@@ -57,16 +62,24 @@ void TwoTouchCheckKeepButton::ActivateByBoxCursor() {
 void TwoTouchCheckKeepButton::InactivateByBoxCursor() {
     AnimButton::InactivateByBoxCursor();
 
-    if ((mFlags & 0x40) && mChecked && mState == cState_DownStart) ForceOff();
+    if (IsTouch() && mChecked && mState == cState_DownStart) {
+        ForceOff();
+    }
 }
 
 void TwoTouchCheckKeepButton::StartDown() {
-    if (IsTouchOnce()) CheckKeepButton::StartDown();
-    else AnimButton::StartDown();
+    if (IsTouchOnce()) {
+        CheckKeepButton::StartDown();
+    } else {
+        AnimButton::StartDown();
+    }
 }
 
 bool TwoTouchCheckKeepButton::UpdateDown() {
-    if (IsTouchOnce()) return CheckButton::UpdateDown();
+    if (IsTouchOnce()) {
+        return CheckButton::UpdateDown();
+    }
+
     return AnimButton::UpdateDown();
 }
 
@@ -83,7 +96,10 @@ void TwoTouchCheckKeepButton::StartCancel() {
     mStateAnimators->select(6)->Play(Animator::cPlayType_OneTime, 1);
 }
 
-bool TwoTouchCheckKeepButton::UpdateCancel() { return (mStateAnimators->mSelected->mFlags & 1) != 0; }
+bool TwoTouchCheckKeepButton::UpdateCancel() {
+    return mStateAnimators->getSelected()->isPlayEnd();
+}
+
 void TwoTouchCheckKeepButton::FinishCancel() {
     mStateAnimators = mFirstTouchAnimators;
     mTouched = 0;
@@ -108,14 +124,14 @@ void TwoTouchCheckKeepButton::BuildStateAnim(const nn::ui2d::ControlSrc& rSource
     mSecondTouchAnimators = pLayout->createAnimatorSet(names, 8, true);
     mSecondTouchAnimators->SetSkipFirstFrameAll(true);
     mSecondTouchAnimators->SetSoundLinkAll(false);
-    Animator* selected = mSecondTouchAnimators->mSelected;
-    selected->nn::ui2d::AnimTransform::SetEnabled(false);
-    selected->mStep = 0;
+    mSecondTouchAnimators->getSelected()->disableKeepActive();
     mFirstTouchAnimators = mStateAnimators;
 }
 
 bool TwoTouchCheckKeepButton::ProcessCancel() {
-    if (!(mFlags & 0x40) || !mTouched) return AnimButton::ProcessCancel();
+    if (!IsTouch() || !mTouched) {
+        return AnimButton::ProcessCancel();
+    }
 
     switch (mState) {
     case cState_OnStart:

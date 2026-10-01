@@ -29,7 +29,10 @@ SelectButton::SelectButton(const SelectButton& rOther, LayoutEx* pLayout, sead::
 
 // rPosition is the pointer position; cancelling buttons temporarily reject hit tests.
 bool SelectButton::HitTest(const sead::Vector2f& rPosition) const {
-    if (mState == cState_CancelStart) return false;
+    if (mState == cState_CancelStart) {
+        return false;
+    }
+
     return AnimButton::HitTest(rPosition);
 }
 
@@ -72,7 +75,9 @@ void SelectButton::StartCancel() {
     mStateAnimators->select(6)->Play(Animator::cPlayType_OneTime, 1);
 }
 
-bool SelectButton::UpdateCancel() { return (mStateAnimators->mSelected->mFlags & 1) != 0; }
+bool SelectButton::UpdateCancel() {
+    return mStateAnimators->getSelected()->isPlayEnd();
+}
 
 void SelectButton::FinishCancel() {
     SelectStateAnim(0)->StopAtMin();

@@ -27,6 +27,11 @@ public:
     void freeDynamicTexture();
     static void applyRenderBufferInfo(const RenderBufferInfo* pInfo);
 
+    const RenderBufferInfo* getRenderBufferInfo() const { return m_pRenderBufferInfo; }
+    void setRenderBufferInfo(const RenderBufferInfo* pInfo) { m_pRenderBufferInfo = pInfo; }
+    bool isCapturing() const { return _1A8; }
+
+
     const RenderBufferInfo* m_pRenderBufferInfo;
     bool _1A8;
     nn::util::IntrusiveList<DynamicCapturePane,

@@ -21,6 +21,10 @@ public:
     void setRouteNode(Direction direction, BoxCursorNode* pNode) { mRoutes[direction] = pNode; }
     void setRouteNodeEach(Direction direction, BoxCursorNode* pNode);
     void clearRouteAll();
+
+    AnimButton* getButton() const { return mButton; }
+    Screen* getScreen() const { return mScreen; }
+
     sead::ListNode mListNode;
     AnimButton* mButton;
     Screen* mScreen;

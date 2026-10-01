@@ -8,6 +8,9 @@ class LayoutEx;
 class MessageString;
 class LetterAnimControl : public ControlBase {
 public:
+    using AppTagCallback = sead::IDelegate1<const sead::MessageSet<char16_t>::TagInfo*>;
+    using ChoiceExcludeCallback = sead::IDelegate2R<const char16_t*, u16, bool>;
+
     LetterAnimControl();
     LetterAnimControl(const LetterAnimControl& rOther, LayoutEx* pLayout, sead::Heap* pHeap);
     ~LetterAnimControl() override = default;
@@ -16,8 +19,8 @@ public:
     void Update(float step) override;
     void reset();
     void initialize(sead::Heap* pHeap, TextBoxEx* pTextBox, LayoutEx* pLayout);
-    void setAppTagCallback(sead::IDelegate1<const sead::MessageSet<char16_t>::TagInfo*>* pCallback);
-    void setChoiceExcludeCallback(sead::IDelegate2R<const char16_t*, u16, bool>* pCallback);
+    void setAppTagCallback(AppTagCallback* pCallback);
+    void setChoiceExcludeCallback(ChoiceExcludeCallback* pCallback);
     void finishAnim_();
     void start();
     void stop();
@@ -46,8 +49,8 @@ public:
     u8 mAlpha;
     u32 _64;
     u64 _68;
-    sead::IDelegate1<const sead::MessageSet<char16_t>::TagInfo*>* mAppTagCallback;
-    sead::IDelegate2R<const char16_t*, u16, bool>* mChoiceExcludeCallback;
+    AppTagCallback* mAppTagCallback;
+    ChoiceExcludeCallback* mChoiceExcludeCallback;
 };
 
 static_assert(sizeof(LetterAnimControl) == 0x80, "LetterAnimControl size");

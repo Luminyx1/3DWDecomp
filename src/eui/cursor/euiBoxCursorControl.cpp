@@ -12,8 +12,8 @@ BoxCursorControl::BoxCursorControl()
     : mTopLeft(nullptr), mTopRight(nullptr), mBottomLeft(nullptr), mBottomRight(nullptr), mActiveNode(nullptr),
       mReservedActiveNode(nullptr), mPosition(sead::Vector2f::zero) {}
 BoxCursorControl::~BoxCursorControl() {
-    auto* screen = static_cast<LayoutEx*>(_20)->mScreen;
-    auto* manager = screen->mScreenMgr->mBoxCursorMgr;
+    auto* screen = getLayout()->getScreen();
+    auto* manager = screen->getScreenMgr()->getBoxCursorMgr();
     manager->registerControl(screen->getDrawTarget(), nullptr);
 }
 
@@ -21,23 +21,26 @@ BoxCursorControl::~BoxCursorControl() {
 void BoxCursorControl::initialize(const nn::ui2d::ControlSrc& rSource, LayoutEx* pLayout) {
     _20 = pLayout;
     const char* topLeft = rSource.FindFunctionalPaneName("TopLeft");
-    mTopLeft = pLayout->mRootPane->FindPaneByName(topLeft, true);
+    mTopLeft = pLayout->findPaneByName(topLeft);
     const char* topRight = rSource.FindFunctionalPaneName("TopRight");
-    mTopRight = pLayout->mRootPane->FindPaneByName(topRight, true);
+    mTopRight = pLayout->findPaneByName(topRight);
     const char* bottomLeft = rSource.FindFunctionalPaneName("BottomLeft");
-    mBottomLeft = pLayout->mRootPane->FindPaneByName(bottomLeft, true);
+    mBottomLeft = pLayout->findPaneByName(bottomLeft);
     const char* bottomRight = rSource.FindFunctionalPaneName("BottomRight");
-    mBottomRight = pLayout->mRootPane->FindPaneByName(bottomRight, true);
-    auto* screen = static_cast<LayoutEx*>(_20)->mScreen;
-    auto* manager = screen->mScreenMgr->mBoxCursorMgr;
+    mBottomRight = pLayout->findPaneByName(bottomRight);
+    auto* screen = getLayout()->getScreen();
+    auto* manager = screen->getScreenMgr()->getBoxCursorMgr();
     manager->registerControl(screen->getDrawTarget(), this);
-    static_cast<LayoutEx*>(_20)->mScreen->mFlags |= 4;
+    getLayout()->getScreen()->mFlags |= 4;
 }
 
 // NON_MATCHING: the tail-call relocation awaits selectActiveNode_ reconstruction.
 // target selects the display on which the active node must remain movable.
 void BoxCursorControl::updateActiveNode(DrawTarget target) {
-    if (mActiveNode != nullptr && mActiveNode->isMovable(target)) return;
+    if (mActiveNode != nullptr && mActiveNode->isMovable(target)) {
+        return;
+    }
+
     selectActiveNode_();
 }
 
@@ -46,13 +49,17 @@ void BoxCursorControl::setActiveNode_(const BoxCursorNode* pNode) {
     const auto* previous = mActiveNode;
     mActiveNode = pNode;
 
-    if (previous != nullptr && previous != pNode) previous->mButton->InactivateByBoxCursor();
+    if (previous != nullptr && previous != pNode) {
+        previous->getButton()->InactivateByBoxCursor();
+    }
 
     if (pNode != nullptr) {
         pNode->getPosition(&mPosition);
-        pNode->mScreen->mLastActiveCursor = pNode;
+        pNode->getScreen()->setLastActiveCursor(pNode);
 
-        if (previous != pNode) pNode->mButton->ActivateByBoxCursor();
+        if (previous != pNode) {
+            pNode->getButton()->ActivateByBoxCursor();
+        }
     }
 }
 
@@ -61,13 +68,17 @@ void BoxCursorControl::clearActiveAndReservedActiveNode(const BoxCursorNode* pNo
     if (mActiveNode == pNode) {
         mActiveNode = nullptr;
 
-        if (pNode != nullptr) pNode->mButton->InactivateByBoxCursor();
+        if (pNode != nullptr) {
+            pNode->getButton()->InactivateByBoxCursor();
+        }
     }
 
-    if (mReservedActiveNode == pNode) mReservedActiveNode = nullptr;
+    if (mReservedActiveNode == pNode) {
+        mReservedActiveNode = nullptr;
+    }
 }
 
 Screen* BoxCursorControl::getActiveNodeScreen() {
-    return (mActiveNode != nullptr) ? mActiveNode->mScreen : nullptr;
+    return (mActiveNode != nullptr) ? mActiveNode->getScreen() : nullptr;
 }
 }

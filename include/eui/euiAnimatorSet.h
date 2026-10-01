@@ -20,6 +20,11 @@ public:
     u32 findSelectedIndex() const;
     void SetSkipFirstFrameAll(bool skip);
     void SetSoundLinkAll(bool enabled);
+
+    u32 getNum() const { return mAnimators.size(); }
+    Animator* getAnimator(u32 index) const { return mAnimators[index]; }
+    Animator* getSelected() const { return mSelected; }
+
     sead::Buffer<Animator*> mAnimators;
     Animator* mSelected;
 };

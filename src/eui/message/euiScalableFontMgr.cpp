@@ -19,7 +19,7 @@ void ScalableFontMgr::UpdateTextureCacheThread::calc_(sead::MessageQueue::Elemen
 
 void ScalableFontMgr::update() {
     if (_5d) {
-        if (!mUpdateThread->mUpdatePending) {
+        if (!mUpdateThread->isUpdatePending()) {
             mTextureCache->CompleteTextureCache();
             _5d = false;
             ++_58;
@@ -31,7 +31,10 @@ void ScalableFontMgr::update() {
     if (_5e) {
         mTextureCache->ResetTextureCache();
 
-        for (const auto& entry : mFonts) entry.font.RegisterAlternateCharGlyph();
+        for (const auto& entry : mFonts) {
+            entry.font.RegisterAlternateCharGlyph();
+        }
+
         ++_58;
         _5e = false;
     }
@@ -39,7 +42,10 @@ void ScalableFontMgr::update() {
     if (mReservedTextBox != nullptr) {
         auto* textBox = mReservedTextBox;
 
-        while (textBox != nullptr) textBox = textBox->registerGlyphsAndGetNext(this);
+        while (textBox != nullptr) {
+            textBox = textBox->registerGlyphsAndGetNext(this);
+        }
+
         mReservedTextBox = nullptr;
     }
 
@@ -105,7 +111,9 @@ bool ScalableFontMgr::isNeedPlot_(char16_t code, u32 size, u16 face) {
     if (node != nullptr) {
         node->SetFlag(nn::font::GlyphNode::FlagBit_Requested);
 
-        if (!node->IsFlagOn(nn::font::GlyphNode::FlagBit_NotPlotted)) return false;
+        if (!node->IsFlagOn(nn::font::GlyphNode::FlagBit_NotPlotted)) {
+            return false;
+        }
     }
 
     return true;

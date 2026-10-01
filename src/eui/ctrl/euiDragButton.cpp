@@ -15,13 +15,22 @@ void DragButton::StartDrag(const sead::Vector2f& rPosition) {
 
 // pPosition is the current pointer location, or null when no position is available.
 void DragButton::UpdateDrag(const sead::Vector2f* pPosition) {
-    if (!pPosition) return;
+    if (!pPosition) {
+        return;
+    }
+
     float x = mPaneStart.x;
 
-    if (mDragX) x += pPosition->x - mDragStart.x;
+    if (mDragX) {
+        x += pPosition->x - mDragStart.x;
+    }
+
     float y = mPaneStart.y;
 
-    if (mDragY) y += pPosition->y - mDragStart.y;
+    if (mDragY) {
+        y += pPosition->y - mDragStart.y;
+    }
+
     mDragPane->mPositionX = x;
     mDragPane->mPositionY = y;
     mDragPane->mFlags |= 0x10;
@@ -29,29 +38,37 @@ void DragButton::UpdateDrag(const sead::Vector2f* pPosition) {
 
 // pPosition is unused; input mode decides whether the completed drag turns off or cancels.
 void DragButton::FinishDrag(const sead::Vector2f* pPosition) {
-    if (mFlags & 0x40) Off();
-    else Cancel();
+    if (IsTouch()) {
+        Off();
+    } else {
+        Cancel();
+    }
 }
 
 void DragButton::StartCancel() { SelectStateAnim(6)->Play(Animator::cPlayType_OneTime, 1); }
 void DragButton::FinishCancel() {
-    bool touch = (mFlags & 0x40) != 0;
+    bool touch = IsTouch();
     Animator* pAnimator = SelectStateAnim(0);
 
-    if (touch) { pAnimator->StopAtMin(); ChangeState(cState_Off); }
-    else { pAnimator->StopAtMax(); ChangeState(cState_On); }
+    if (touch) {
+        pAnimator->StopAtMin();
+        ChangeState(cState_Off);
+    } else {
+        pAnimator->StopAtMax();
+        ChangeState(cState_On);
+    }
 }
 
 // rOther supplies drag settings; pLayout and pHeap own the cloned button animations.
 DragButton::DragButton(const DragButton& rOther, LayoutEx* pLayout, sead::Heap* pHeap)
-    : SelectButton(rOther, pLayout, pHeap), mDragPane(pLayout->mRootPane),
+    : SelectButton(rOther, pLayout, pHeap), mDragPane(pLayout->getRootPane()),
       mDragStart(rOther.mDragStart), mPaneStart(rOther.mPaneStart),
       mDragX(rOther.mDragX), mDragY(rOther.mDragY) { mFlags |= 0x400; }
 // rSource supplies button resources; pLayout supplies the pane that moves during dragging.
 void DragButton::Build(const nn::ui2d::ControlSrc& rSource, LayoutEx* pLayout) {
     AnimButton::Build(rSource, pLayout);
     mFlags &= ~0x2000;
-    mDragPane = pLayout->mRootPane;
+    mDragPane = pLayout->getRootPane();
 }
 
 // rSource names state animations; pLayout creates their animator set.

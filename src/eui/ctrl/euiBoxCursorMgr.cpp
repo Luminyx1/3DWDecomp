@@ -46,14 +46,20 @@ BoxCursorNode* BoxCursorMgr::findNodeByTag(const char* pScreenName, int tag) {
 
 // pNode becomes the reserved cursor selection on its screen's draw target.
 void BoxCursorMgr::moveBoxCursor(const BoxCursorNode* pNode) {
-    auto* screen = pNode->mScreen;
+    auto* screen = pNode->getScreen();
 
-    if (screen == nullptr) return;
+    if (screen == nullptr) {
+        return;
+    }
+
     auto* control = mControls[int(screen->getDrawTarget())];
 
-    if (control == nullptr) return;
+    if (control == nullptr) {
+        return;
+    }
+
     control->mReservedActiveNode = pNode;
-    screen->mLastActiveCursor = pNode;
+    screen->setLastActiveCursor(pNode);
 }
 
 void BoxCursorMgr::update() {
@@ -66,8 +72,11 @@ void BoxCursorMgr::updateDrawTarget(DrawTarget target) {
     const int index = target;
     auto* control = mControls[index];
 
-    if (control == nullptr) return;
-    auto* screen = static_cast<LayoutEx*>(control->_20)->mScreen;
+    if (control == nullptr) {
+        return;
+    }
+
+    auto* screen = control->getLayout()->getScreen();
     const bool enabled = isEnable(DrawTarget(index));
     const bool closed = screen->isClosed();
 
@@ -75,12 +84,16 @@ void BoxCursorMgr::updateDrawTarget(DrawTarget target) {
         if (closed) {
             control->updateActiveNode(DrawTarget(index));
 
-            if (control->mActiveNode == nullptr) return;
+            if (control->mActiveNode == nullptr) {
+                return;
+            }
+
             screen->open(Screen::OpenOption(1));
         }
 
-        if (mAction == Action::cAction_Decide || mAction == Action::cAction_DecideRepeat)
+        if (mAction == Action::cAction_Decide || mAction == Action::cAction_DecideRepeat) {
             control->decideNode(mAction == Action::cAction_DecideRepeat);
+        }
     } else if (!closed) {
         control->setActiveNode_(nullptr);
         screen->close(Screen::CloseOption(-1));
@@ -114,12 +127,20 @@ void BoxCursorMgr::setEnable(DrawTarget target, bool enabled) {
 void BoxCursorMgr::setActionWithController(const sead::ControllerBase* pController) {
     Action action = Action::cAction_None;
 
-    if (pController->isTrig(1)) action = Action::cAction_Decide;
-    else if (pController->isRepeat(1)) action = Action::cAction_DecideRepeat;
-    else if (pController->isTrigWithRepeat(0x110000)) action = Action::cAction_Up;
-    else if (pController->isTrigWithRepeat(0x220000)) action = Action::cAction_Down;
-    else if (pController->isTrigWithRepeat(0x440000)) action = Action::cAction_Left;
-    else if (pController->isTrigWithRepeat(0x880000)) action = Action::cAction_Right;
+    if (pController->isTrig(1)) {
+        action = Action::cAction_Decide;
+    } else if (pController->isRepeat(1)) {
+        action = Action::cAction_DecideRepeat;
+    } else if (pController->isTrigWithRepeat(0x110000)) {
+        action = Action::cAction_Up;
+    } else if (pController->isTrigWithRepeat(0x220000)) {
+        action = Action::cAction_Down;
+    } else if (pController->isTrigWithRepeat(0x440000)) {
+        action = Action::cAction_Left;
+    } else if (pController->isTrigWithRepeat(0x880000)) {
+        action = Action::cAction_Right;
+    }
+
     setAction(action);
 }
 
@@ -128,7 +149,9 @@ void BoxCursorMgr::eraseNodeLinks(const BoxCursorNode* pNode) {
     mScreenMgr->eraseBoxCursorNodeFromRouteNodes(pNode);
 
     for (int i = 0; i < 2; ++i) {
-        if (mControls[i] != nullptr) mControls[i]->clearActiveAndReservedActiveNode(pNode);
+        if (mControls[i] != nullptr) {
+            mControls[i]->clearActiveAndReservedActiveNode(pNode);
+        }
     }
 }
 

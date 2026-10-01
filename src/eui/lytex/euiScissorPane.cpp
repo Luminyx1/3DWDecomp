@@ -26,12 +26,12 @@ void ScissorPane::Draw(nn::ui2d::DrawInfo& rDrawInfo,
                        nn::gfx::CommandBuffer& rCommandBuffer) {
     auto& drawInfo = static_cast<DrawInfoEx&>(rDrawInfo);
 
-    if (!(mFlags & 1) || drawInfo.m_pRenderBufferInfo == nullptr || !mAlphaInfluence) {
+    if (!(mFlags & 1) || drawInfo.getRenderBufferInfo() == nullptr || !mAlphaInfluence) {
         Pane::Draw(rDrawInfo, rCommandBuffer);
         return;
     }
 
-    const auto* original = drawInfo.m_pRenderBufferInfo;
+    const auto* original = drawInfo.getRenderBufferInfo();
     auto info = *original;
     const auto* frameBuffer = info.pFrameBuffer;
     sead::Viewport scissor(*frameBuffer);
@@ -47,11 +47,18 @@ void ScissorPane::Draw(nn::ui2d::DrawInfo& rDrawInfo,
     float centerX = scaleX * mGlobalMtx[3];
     float centerY = scaleY * mGlobalMtx[7];
 
-    if ((mOriginFlags & 3) == 1) centerX += halfX;
-    else if ((mOriginFlags & 3) == 2) centerX -= halfX;
+    if ((mOriginFlags & 3) == 1) {
+        centerX += halfX;
+    } else if ((mOriginFlags & 3) == 2) {
+        centerX -= halfX;
+    }
 
-    if (((mOriginFlags >> 2) & 3) == 1) centerY -= halfY;
-    else if (((mOriginFlags >> 2) & 3) == 2) centerY += halfY;
+    if (((mOriginFlags >> 2) & 3) == 1) {
+        centerY -= halfY;
+    } else if (((mOriginFlags >> 2) & 3) == 2) {
+        centerY += halfY;
+    }
+
     centerX = targetSize.x * 0.5f + centerX;
     centerY = targetSize.y * 0.5f + centerY;
     float minX = centerX - halfX, minY = centerY - halfY;
@@ -59,20 +66,32 @@ void ScissorPane::Draw(nn::ui2d::DrawInfo& rDrawInfo,
     minX = std::max(minX, 0.0f);
     minY = std::max(minY, 0.0f);
 
-    if (maxX > targetSize.x) maxX = targetSize.x;
+    if (maxX > targetSize.x) {
+        maxX = targetSize.x;
+    }
 
-    if (maxY > targetSize.y) maxY = targetSize.y;
+    if (maxY > targetSize.y) {
+        maxY = targetSize.y;
+    }
 
-    if (maxX - minX >= targetSize.x) { minX = 0; maxX = targetSize.x; }
-    if (maxY - minY >= targetSize.y) { minY = 0; maxY = targetSize.y; }
+    if (maxX - minX >= targetSize.x) {
+        minX = 0;
+        maxX = targetSize.x;
+    }
+
+    if (maxY - minY >= targetSize.y) {
+        minY = 0;
+        maxY = targetSize.y;
+    }
+
     scissor.setMin({minX, minY});
     scissor.setMax({maxX, maxY});
 
     if (!(maxX < minX || maxY < minY)) {
         scissor.applyScissor(info.pDrawContext, *frameBuffer);
-        drawInfo.m_pRenderBufferInfo = &info;
+        drawInfo.setRenderBufferInfo(&info);
         Pane::Draw(rDrawInfo, rCommandBuffer);
-        drawInfo.m_pRenderBufferInfo = original;
+        drawInfo.setRenderBufferInfo(original);
         original->pViewport->applyScissor(original->pDrawContext, *original->pFrameBuffer);
     }
 }

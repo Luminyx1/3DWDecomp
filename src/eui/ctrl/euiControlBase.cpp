@@ -11,7 +11,7 @@ const char* ControlBase::getClassName() const {
 }
 
 /** @brief Creates an unlinked control with empty context pointers. */
-ControlBase::ControlBase() : _18(nullptr), _20(nullptr) {}
+ControlBase::ControlBase() : mName(nullptr), _20(nullptr) {}
 
 /** @brief Destroys the base control. */
 ControlBase::~ControlBase() = default;

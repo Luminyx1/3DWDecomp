@@ -13,6 +13,9 @@ public:
     public:
         bool requestUpdate();
         void calc_(sead::MessageQueue::Element message) override;
+
+        bool isUpdatePending() const { return mUpdatePending; }
+
         nn::font::TextureCache* mTextureCache;
         volatile bool mUpdatePending;
     };
