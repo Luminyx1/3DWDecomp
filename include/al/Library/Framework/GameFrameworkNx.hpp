@@ -3,6 +3,10 @@
 #include <framework/nx/seadGameFrameworkNx.h>
 #include <gfx/seadDrawContext.h>
 
+namespace agl {
+class DrawContext;
+}
+
 namespace sead {
 class DrawContext;
 }
@@ -10,6 +14,12 @@ class DrawContext;
 namespace al {
 class GameFrameworkNx : public sead::GameFrameworkNx {
 public:
+    static sead::DrawContext* getDrawContext() { return sInstance->mDrawContext; }
+
+    static agl::DrawContext* getAglDrawContext() {
+        return reinterpret_cast<agl::DrawContext*>(sInstance->mDrawContext);
+    }
+
     static GameFrameworkNx* sInstance;
 
     sead::DrawContext* mDrawContext;
