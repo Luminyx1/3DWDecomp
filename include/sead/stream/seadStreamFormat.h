@@ -117,6 +117,11 @@ public:
 private:
     void getNextData_(StreamSrc* src);
 
+    template <typename T>
+    T readNumber_(StreamSrc* pSrc);
+
+    void writeToken_(StreamSrc* pSrc, const SafeString& rStr);
+
     FixedSafeString<128> mDelimiter;
 };
 

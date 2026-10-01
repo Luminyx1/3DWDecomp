@@ -99,6 +99,8 @@ public:
     void calcCreation_();
     void calcDestruction_();
 
+    CriticalSection* getCriticalSection() { return &mCriticalSection; }
+
     CriticalSection mCriticalSection;
     Framework* mParentFramework;
     DelegateThread* mPrepareThread;

@@ -59,7 +59,7 @@ void Task::draw() {}
  */
 void Task::attachCalcImpl()
 {
-    ScopedLock<CriticalSection> lock(&getMethodTreeMgr()->mCS);
+    ScopedCriticalSectionLock lock(getMethodTreeMgr()->getCriticalSection());
 
     TaskBase* parentTask = (parent() != nullptr) ? parent()->value() : nullptr;
 
@@ -82,7 +82,7 @@ void Task::attachCalcImpl()
  */
 void Task::attachDrawImpl()
 {
-    ScopedLock<CriticalSection> lock(&getMethodTreeMgr()->mCS);
+    ScopedCriticalSectionLock lock(getMethodTreeMgr()->getCriticalSection());
 
     TaskBase* parentTask = (parent() != nullptr) ? parent()->value() : nullptr;
 

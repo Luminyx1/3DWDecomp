@@ -46,6 +46,10 @@ public:
 
     bool isFree() const { return s16(mHeapCheckTag) == -1; }
 
+    void markFree() { mHeapCheckTag = cFreeHeapCheckTag; }
+
+    size_t getSize() const { return mSize; }
+
     void setOffset(u16 offset)
     {
         mOffset = offset;

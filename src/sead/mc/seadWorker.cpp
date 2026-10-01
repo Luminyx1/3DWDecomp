@@ -23,7 +23,7 @@ Worker::Worker(WorkerMgr* pMgr, u32 numJobs, s32 stackSize, s32 priority, const 
 /** Clears the pending queues while holding the queue lock. */
 void Worker::clearJobQQ()
 {
-    ScopedLock<JobQueueLock> lock(&mLock);
+    ScopedJobQueueLock lock(&mLock);
     mJobQueues.clear();
 }
 
@@ -46,7 +46,7 @@ void Worker::calc_(MessageQueue::Element msg)
  */
 bool Worker::pushJobQueue(const char* pName, JobQueue* pQueue, JobQueuePushType type)
 {
-    ScopedLock<JobQueueLock> lock(&mLock);
+    ScopedJobQueueLock lock(&mLock);
     bool result;
 
     if (type == JobQueuePushType::cForward)
@@ -63,7 +63,7 @@ bool Worker::pushJobQueue(const char* pName, JobQueue* pQueue, JobQueuePushType 
  */
 JobQueue* Worker::getNextJQ_()
 {
-    ScopedLock<JobQueueLock> lock(&mLock);
+    ScopedJobQueueLock lock(&mLock);
     return mJobQueues.popFront();
 }
 

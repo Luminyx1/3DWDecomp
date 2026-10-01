@@ -58,7 +58,7 @@ SeparateHeap::SeparateHeap(const SafeString& rName, Heap* pParent, void* pManage
                            bool enableLock)
     : Heap(rName, pParent, pHeapStart, heapSize, cHeapDirection_Forward, enableLock)
 {
-    ConditionalScopedLock<CriticalSection> lock(&mCS, isLockEnabled());
+    auto lock = makeScopedHeapLock();
     s32 nodeNum = managementAreaSize / cBlockNodeSize;
 
     if (pManagementArea != nullptr && nodeNum > 0)
@@ -224,7 +224,7 @@ void* SeparateHeap::tryAlloc(size_t size, s32 alignment)
         return nullptr;
     }
 
-    ConditionalScopedLock<CriticalSection> lock(&mCS, isLockEnabled());
+    auto lock = makeScopedHeapLock();
 
     if (mBlockList.isFull())
     {
@@ -289,7 +289,7 @@ void SeparateHeap::free(void* pPtr)
         return;
     }
 
-    ConditionalScopedLock<CriticalSection> lock(&mCS, isLockEnabled());
+    auto lock = makeScopedHeapLock();
     Block* block = findBlock_(pPtr);
 
     if (block != nullptr)
@@ -324,7 +324,7 @@ SeparateHeap::Block* SeparateHeap::findBlock_(void* pPtr)
  */
 void* SeparateHeap::resizeFront(void* pPtr, size_t size)
 {
-    ConditionalScopedLock<CriticalSection> lock(&mCS, isLockEnabled());
+    auto lock = makeScopedHeapLock();
     Block* block = findBlock_(pPtr);
 
     if (block == nullptr)
@@ -369,7 +369,7 @@ void* SeparateHeap::resizeFront(void* pPtr, size_t size)
  */
 void* SeparateHeap::resizeBack(void* pPtr, size_t size)
 {
-    ConditionalScopedLock<CriticalSection> lock(&mCS, isLockEnabled());
+    auto lock = makeScopedHeapLock();
     Block* block = findBlock_(pPtr);
 
     if (block == nullptr)
@@ -404,7 +404,7 @@ void* SeparateHeap::resizeBack(void* pPtr, size_t size)
  */
 void SeparateHeap::freeAll()
 {
-    ConditionalScopedLock<CriticalSection> lock(&mCS, isLockEnabled());
+    auto lock = makeScopedHeapLock();
     dispose_(nullptr, nullptr);
     mBlockList.clear();
 }
@@ -473,8 +473,7 @@ bool SeparateHeap::isInclude(const void* pPtr) const
  */
 void SeparateHeap::dumpBlockList() const
 {
-    ConditionalScopedLock<CriticalSection> lock(const_cast<CriticalSection*>(&mCS),
-                                                isLockEnabled());
+    auto lock = makeScopedHeapLock();
     for (auto& block : mBlockList)
     {
         static_cast<void>(block);
@@ -488,8 +487,7 @@ void SeparateHeap::dumpBlockList() const
  */
 void SeparateHeap::dumpYAML(WriteStream& rStream, int indent) const
 {
-    ConditionalScopedLock<CriticalSection> lock(const_cast<CriticalSection*>(&mCS),
-                                                isLockEnabled());
+    auto lock = makeScopedHeapLock();
 
     Heap::dumpYAML(rStream, indent);
 
@@ -522,8 +520,7 @@ template <>
 void PrintFormatter::out<SeparateHeap>(const SeparateHeap& rHeap, const char*,
                                        PrintOutput* pOutput)
 {
-    ConditionalScopedLock<CriticalSection> lock(const_cast<CriticalSection*>(&rHeap.mCS),
-                                                rHeap.isLockEnabled());
+    auto lock = rHeap.makeScopedHeapLock();
 
     PrintFormatter::out<Heap>(rHeap, nullptr, pOutput);
 
@@ -540,8 +537,7 @@ void PrintFormatter::out<SeparateHeap>(const SeparateHeap& rHeap, const char*,
  */
 void SeparateHeap::dump() const
 {
-    ConditionalScopedLock<CriticalSection> lock(const_cast<CriticalSection*>(&mCS),
-                                                isLockEnabled());
+    auto lock = makeScopedHeapLock();
     dumpBlockList();
 }
 

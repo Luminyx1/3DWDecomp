@@ -15,6 +15,21 @@ namespace
 {
 const char* sEntityNames[] = {"lt", "gt", "amp", "apos", "quot"};
 const char* sEntityValues[] = {"<", ">", "&", "'", "\""};
+
+inline bool readKeyword(ReadStream* pStream, const char* keyword)
+{
+    s32 keywordLength = SafeString(keyword).calcLength();
+
+    for (s32 i = 0; i < keywordLength; i++)
+    {
+        if (pStream->readU8() != static_cast<u8>(keyword[i]))
+        {
+            return false;
+        }
+    }
+
+    return true;
+}
 }  // namespace
 
 const char** XmlDocument::sDefaultEntityNames = sEntityNames;
@@ -771,15 +786,9 @@ s32 XmlDocument::parseXmlDeclare_(ReadStream* pStream, Heap* pHeap)
             }
             else if (c == 'D')
             {
-                const char* keyword = "OCTYPE";
-                s32 keywordLength = SafeString(keyword).calcLength();
-
-                for (s32 i = 0; i < keywordLength; i++)
+                if (!readKeyword(pStream, "OCTYPE"))
                 {
-                    if (pStream->readU8() != static_cast<u8>(keyword[i]))
-                    {
-                        return -1;
-                    }
+                    return -1;
                 }
 
                 s32 count = skipXmlUntil_(pStream, '[');
@@ -794,15 +803,9 @@ s32 XmlDocument::parseXmlDeclare_(ReadStream* pStream, Heap* pHeap)
             }
             else if (c == 'E')
             {
-                const char* keyword = "NTITY ";
-                s32 keywordLength = SafeString(keyword).calcLength();
-
-                for (s32 i = 0; i < keywordLength; i++)
+                if (!readKeyword(pStream, "NTITY "))
                 {
-                    if (pStream->readU8() != static_cast<u8>(keyword[i]))
-                    {
-                        return -1;
-                    }
+                    return -1;
                 }
 
                 FixedSafeString<8> name;
@@ -983,15 +986,9 @@ XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
                 }
                 else if (c == '!')
                 {
-                    const char* keyword = "--";
-                    s32 keywordLength = SafeString(keyword).calcLength();
-
-                    for (s32 i = 0; i < keywordLength; i++)
+                    if (!readKeyword(pStream, "--"))
                     {
-                        if (pStream->readU8() != static_cast<u8>(keyword[i]))
-                        {
-                            goto fail;
-                        }
+                        goto fail;
                     }
 
                     state = 3;
@@ -1370,15 +1367,9 @@ XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
 
                                 if (c == '[')
                                 {
-                                    const char* keyword = "CDATA[";
-                                    s32 keywordLength = SafeString(keyword).calcLength();
-
-                                    for (s32 i = 0; i < keywordLength; i++)
+                                    if (!readKeyword(pStream, "CDATA["))
                                     {
-                                        if (pStream->readU8() != static_cast<u8>(keyword[i]))
-                                        {
-                                            goto fail;
-                                        }
+                                        goto fail;
                                     }
 
                                     u32 end = isAllSpace ? 0 : textLength;
@@ -1400,15 +1391,9 @@ XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
 
                                 if (c == 'B')
                                 {
-                                    const char* keyword = "ASE64[";
-                                    s32 keywordLength = SafeString(keyword).calcLength();
-
-                                    for (s32 i = 0; i < keywordLength; i++)
+                                    if (!readKeyword(pStream, "ASE64["))
                                     {
-                                        if (pStream->readU8() != static_cast<u8>(keyword[i]))
-                                        {
-                                            goto fail;
-                                        }
+                                        goto fail;
                                     }
 
                                     u32 end = isAllSpace ? 0 : textLength;
@@ -1568,15 +1553,9 @@ XmlElement* XmlDocument::parseXmlInstance_(ReadStream* pStream, Heap* pHeap)
 
                         if (c == '!')
                         {
-                            const char* keyword = "BASE64[";
-                            s32 keywordLength = SafeString(keyword).calcLength();
-
-                            for (s32 i = 0; i < keywordLength; i++)
+                            if (!readKeyword(pStream, "BASE64["))
                             {
-                                if (pStream->readU8() != static_cast<u8>(keyword[i]))
-                                {
-                                    goto fail;
-                                }
+                                goto fail;
                             }
 
                             state = 8;

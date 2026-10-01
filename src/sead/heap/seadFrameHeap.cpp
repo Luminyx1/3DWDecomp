@@ -166,7 +166,7 @@ FrameHeap* FrameHeap::tryCreate(size_t size, const SafeString& rName, Heap* pPar
  */
 void FrameHeap::initialize_()
 {
-    ConditionalScopedLock<CriticalSection> lock(&mCS, isLockEnabled());
+    auto lock = makeScopedHeapLock();
     mState.mHeadPtr = getAreaStart_();
     mState.mTailPtr = getAreaEnd_();
 }
@@ -247,7 +247,7 @@ bool FrameHeap::isInclude(const void* pPtr) const
  */
 void FrameHeap::freeAll()
 {
-    ConditionalScopedLock<CriticalSection> lock(&mCS, isLockEnabled());
+    auto lock = makeScopedHeapLock();
     dispose_(nullptr, nullptr);
     mState.mHeadPtr = getAreaStart_();
     mState.mTailPtr = getAreaEnd_();
@@ -264,7 +264,7 @@ size_t FrameHeap::adjust()
         return mSize;
     }
 
-    ConditionalScopedLock<CriticalSection> lock(&mCS, isLockEnabled());
+    auto lock = makeScopedHeapLock();
     Heap* parent = mParent;
 
     if (parent->isLockEnabled())
@@ -363,7 +363,7 @@ void* FrameHeap::tryAlloc(size_t size, s32 alignment)
         return nullptr;
     }
 
-    ConditionalScopedLock<CriticalSection> lock(&mCS, isLockEnabled());
+    auto lock = makeScopedHeapLock();
 
     s32 allocAlignment = mDirection * alignment;
 
@@ -437,7 +437,7 @@ void* FrameHeap::resizeBack(void* pPtr, size_t size)
  */
 void FrameHeap::freeHead()
 {
-    ConditionalScopedLock<CriticalSection> lock(&mCS, isLockEnabled());
+    auto lock = makeScopedHeapLock();
 
     if (mDirection == cHeapDirection_Forward)
     {
@@ -456,7 +456,7 @@ void FrameHeap::freeHead()
  */
 void FrameHeap::freeTail()
 {
-    ConditionalScopedLock<CriticalSection> lock(&mCS, isLockEnabled());
+    auto lock = makeScopedHeapLock();
 
     if (mDirection == cHeapDirection_Forward)
     {
@@ -476,7 +476,7 @@ void FrameHeap::freeTail()
  */
 void FrameHeap::restoreState(const State& rState)
 {
-    ConditionalScopedLock<CriticalSection> lock(&mCS, isLockEnabled());
+    auto lock = makeScopedHeapLock();
 
     if (rState.mHeadPtr != nullptr && rState.mHeadPtr != mState.mHeadPtr && isInclude(rState.mHeadPtr) &&
         rState.mHeadPtr <= mState.mHeadPtr)
@@ -517,8 +517,7 @@ uintptr_t FrameHeap::getEndAddress() const
  */
 size_t FrameHeap::getFreeSize() const
 {
-    ConditionalScopedLock<CriticalSection> lock(const_cast<CriticalSection*>(&mCS),
-                                                isLockEnabled());
+    auto lock = makeScopedHeapLock();
     return uintptr_t(mState.mTailPtr) - uintptr_t(mState.mHeadPtr);
 }
 
@@ -537,8 +536,7 @@ size_t FrameHeap::getMaxAllocatableSize(int alignment) const
         return 0;
     }
 
-    ConditionalScopedLock<CriticalSection> lock(const_cast<CriticalSection*>(&mCS),
-                                                isLockEnabled());
+    auto lock = makeScopedHeapLock();
     void* head = reinterpret_cast<void*>((uintptr_t(mState.mHeadPtr) + mask) & ~uintptr_t(mask));
 
     if (mState.mTailPtr < head)
@@ -556,8 +554,7 @@ size_t FrameHeap::getMaxAllocatableSize(int alignment) const
  */
 void FrameHeap::dumpYAML(WriteStream& rStream, int indent) const
 {
-    ConditionalScopedLock<CriticalSection> lock(const_cast<CriticalSection*>(&mCS),
-                                                isLockEnabled());
+    auto lock = makeScopedHeapLock();
 
     Heap::dumpYAML(rStream, indent);
 
@@ -598,8 +595,7 @@ void FrameHeap::dumpYAML(WriteStream& rStream, int indent) const
 template <>
 void PrintFormatter::out<FrameHeap>(const FrameHeap& rHeap, const char*, PrintOutput* pOutput)
 {
-    ConditionalScopedLock<CriticalSection> lock(const_cast<CriticalSection*>(&rHeap.mCS),
-                                                rHeap.isLockEnabled());
+    auto lock = rHeap.makeScopedHeapLock();
 
     PrintFormatter::out<Heap>(rHeap, nullptr, pOutput);
 
@@ -621,8 +617,7 @@ void PrintFormatter::out<FrameHeap>(const FrameHeap& rHeap, const char*, PrintOu
  */
 void FrameHeap::dump() const
 {
-    ConditionalScopedLock<CriticalSection> lock(const_cast<CriticalSection*>(&mCS),
-                                                isLockEnabled());
+    auto lock = makeScopedHeapLock();
 }
 
 /**

@@ -377,7 +377,7 @@ void FixedSizeJQ::initialize(u32 size, Heap* pHeap)
 {
     mPerf.initialize(getName().cstr(), pHeap);
 
-    ScopedLock<JobQueueLock> lock(&mLock);
+    ScopedJobQueueLock lock(&mLock);
     mJobs.allocBufferAssert(size, pHeap);
     mNumJobs = 0;
     mNumProcessedJobs = 0;
@@ -420,7 +420,7 @@ bool FixedSizeJQ::enqueSafe(Job* pJob)
 {
     mStatus = Status::_3;
 
-    ScopedLock<JobQueueLock> lock(&mLock);
+    ScopedJobQueueLock lock(&mLock);
 
     if (mNumJobs >= u32(mJobs.size()))
     {
@@ -437,7 +437,7 @@ bool FixedSizeJQ::enqueSafe(Job* pJob)
  */
 Job* FixedSizeJQ::deque()
 {
-    ScopedLock<JobQueueLock> lock(&mLock);
+    ScopedJobQueueLock lock(&mLock);
 
     if (mNumProcessedJobs >= mNumJobs)
     {
@@ -455,7 +455,7 @@ Job* FixedSizeJQ::deque()
  */
 u32 FixedSizeJQ::deque(Job** pJobs, u32 count)
 {
-    ScopedLock<JobQueueLock> lock(&mLock);
+    ScopedJobQueueLock lock(&mLock);
 
     u32 ret = 0;
 

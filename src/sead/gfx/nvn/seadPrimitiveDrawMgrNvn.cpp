@@ -263,9 +263,8 @@ void PrimitiveDrawMgrNvn::beginImpl(DrawContext* pDrawContext, const Matrix34f& 
     nvnCommandBufferBindProgram(commandBuffer, &mNvnProgram, NVN_SHADER_STAGE_ALL_GRAPHICS_BITS);
     nvnCommandBufferBindVertexAttribState(commandBuffer, 3, mVertexAttribStates);
     nvnCommandBufferBindVertexStreamState(commandBuffer, 1, &mVertexStreamState);
-    Matrix44CalcCommon<f32>::multiply(
-        *reinterpret_cast<Matrix44f*>(static_cast<u8*>(mUniformBufferMap) + offset),
-        rProjectionMatrix, rViewMatrix);
+    reinterpret_cast<Matrix44f*>(static_cast<u8*>(mUniformBufferMap) + offset)
+        ->setMul(rProjectionMatrix, rViewMatrix);
     nvnCommandBufferBindUniformBuffer(commandBuffer, NVN_SHADER_STAGE_VERTEX, 0,
                                       nvnBufferGetAddress(&mUniformBuffer) + offset, 0x40);
 }

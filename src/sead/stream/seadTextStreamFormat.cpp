@@ -18,6 +18,23 @@ static Mutex sMutex;
  */
 TextStreamFormat::TextStreamFormat() : mDelimiter(" \t\r\n") {}
 
+template <typename T>
+inline T TextStreamFormat::readNumber_(StreamSrc* pSrc)
+{
+    ScopedMutexLock lock(&sMutex);
+    T value = 0;
+    getNextData_(pSrc);
+    StringUtil::tryParseNumber(&value, sBuffer.cstr(), StringUtil::CardinalNumber::BaseAuto);
+    return value;
+}
+
+inline void TextStreamFormat::writeToken_(StreamSrc* pSrc, const SafeString& rStr)
+{
+    const s32 length = rStr.calcLength();
+    pSrc->write(rStr.cstr(), length);
+    pSrc->write(mDelimiter.cstr(), 1);
+}
+
 /**
  * Reads the next token and parses it as a u8 value.
  * @param pSrc stream source
@@ -26,11 +43,7 @@ TextStreamFormat::TextStreamFormat() : mDelimiter(" \t\r\n") {}
  */
 u8 TextStreamFormat::readU8(StreamSrc* pSrc, [[maybe_unused]] Endian::Types endian)
 {
-    ScopedLock<Mutex> lock(&sMutex);
-    u8 value = 0;
-    getNextData_(pSrc);
-    StringUtil::tryParseNumber(&value, sBuffer.cstr(), StringUtil::CardinalNumber::BaseAuto);
-    return value;
+    return readNumber_<u8>(pSrc);
 }
 
 /**
@@ -152,11 +165,7 @@ void TextStreamFormat::getNextData_(StreamSrc* pSrc)
  */
 u16 TextStreamFormat::readU16(StreamSrc* pSrc, [[maybe_unused]] Endian::Types endian)
 {
-    ScopedLock<Mutex> lock(&sMutex);
-    u16 value = 0;
-    getNextData_(pSrc);
-    StringUtil::tryParseNumber(&value, sBuffer.cstr(), StringUtil::CardinalNumber::BaseAuto);
-    return value;
+    return readNumber_<u16>(pSrc);
 }
 
 /**
@@ -167,11 +176,7 @@ u16 TextStreamFormat::readU16(StreamSrc* pSrc, [[maybe_unused]] Endian::Types en
  */
 u32 TextStreamFormat::readU32(StreamSrc* pSrc, [[maybe_unused]] Endian::Types endian)
 {
-    ScopedLock<Mutex> lock(&sMutex);
-    u32 value = 0;
-    getNextData_(pSrc);
-    StringUtil::tryParseNumber(&value, sBuffer.cstr(), StringUtil::CardinalNumber::BaseAuto);
-    return value;
+    return readNumber_<u32>(pSrc);
 }
 
 /**
@@ -182,11 +187,7 @@ u32 TextStreamFormat::readU32(StreamSrc* pSrc, [[maybe_unused]] Endian::Types en
  */
 u64 TextStreamFormat::readU64(StreamSrc* pSrc, [[maybe_unused]] Endian::Types endian)
 {
-    ScopedLock<Mutex> lock(&sMutex);
-    u64 value = 0;
-    getNextData_(pSrc);
-    StringUtil::tryParseNumber(&value, sBuffer.cstr(), StringUtil::CardinalNumber::BaseAuto);
-    return value;
+    return readNumber_<u64>(pSrc);
 }
 
 /**
@@ -197,11 +198,7 @@ u64 TextStreamFormat::readU64(StreamSrc* pSrc, [[maybe_unused]] Endian::Types en
  */
 s8 TextStreamFormat::readS8(StreamSrc* pSrc, [[maybe_unused]] Endian::Types endian)
 {
-    ScopedLock<Mutex> lock(&sMutex);
-    s8 value = 0;
-    getNextData_(pSrc);
-    StringUtil::tryParseNumber(&value, sBuffer.cstr(), StringUtil::CardinalNumber::BaseAuto);
-    return value;
+    return readNumber_<s8>(pSrc);
 }
 
 /**
@@ -212,11 +209,7 @@ s8 TextStreamFormat::readS8(StreamSrc* pSrc, [[maybe_unused]] Endian::Types endi
  */
 s16 TextStreamFormat::readS16(StreamSrc* pSrc, [[maybe_unused]] Endian::Types endian)
 {
-    ScopedLock<Mutex> lock(&sMutex);
-    s16 value = 0;
-    getNextData_(pSrc);
-    StringUtil::tryParseNumber(&value, sBuffer.cstr(), StringUtil::CardinalNumber::BaseAuto);
-    return value;
+    return readNumber_<s16>(pSrc);
 }
 
 /**
@@ -227,11 +220,7 @@ s16 TextStreamFormat::readS16(StreamSrc* pSrc, [[maybe_unused]] Endian::Types en
  */
 s32 TextStreamFormat::readS32(StreamSrc* pSrc, [[maybe_unused]] Endian::Types endian)
 {
-    ScopedLock<Mutex> lock(&sMutex);
-    s32 value = 0;
-    getNextData_(pSrc);
-    StringUtil::tryParseNumber(&value, sBuffer.cstr(), StringUtil::CardinalNumber::BaseAuto);
-    return value;
+    return readNumber_<s32>(pSrc);
 }
 
 /**
@@ -242,11 +231,7 @@ s32 TextStreamFormat::readS32(StreamSrc* pSrc, [[maybe_unused]] Endian::Types en
  */
 s64 TextStreamFormat::readS64(StreamSrc* pSrc, [[maybe_unused]] Endian::Types endian)
 {
-    ScopedLock<Mutex> lock(&sMutex);
-    s64 value = 0;
-    getNextData_(pSrc);
-    StringUtil::tryParseNumber(&value, sBuffer.cstr(), StringUtil::CardinalNumber::BaseAuto);
-    return value;
+    return readNumber_<s64>(pSrc);
 }
 
 /**
@@ -257,7 +242,7 @@ s64 TextStreamFormat::readS64(StreamSrc* pSrc, [[maybe_unused]] Endian::Types en
  */
 f32 TextStreamFormat::readF32(StreamSrc* pSrc, [[maybe_unused]] Endian::Types endian)
 {
-    ScopedLock<Mutex> lock(&sMutex);
+    ScopedMutexLock lock(&sMutex);
     f32 value = 0.0f;
     getNextData_(pSrc);
 
@@ -278,7 +263,7 @@ f32 TextStreamFormat::readF32(StreamSrc* pSrc, [[maybe_unused]] Endian::Types en
 void TextStreamFormat::readString(StreamSrc* pSrc, BufferedSafeString* pStr,
                                   [[maybe_unused]] u32 size)
 {
-    ScopedLock<Mutex> lock(&sMutex);
+    ScopedMutexLock lock(&sMutex);
     getNextData_(pSrc);
     pStr->copy(sBuffer);
 }
@@ -292,7 +277,7 @@ void TextStreamFormat::readString(StreamSrc* pSrc, BufferedSafeString* pStr,
  */
 void TextStreamFormat::readBit(StreamSrc* pSrc, void* pData, u32 bits)
 {
-    ScopedLock<Mutex> lock(&sMutex);
+    ScopedMutexLock lock(&sMutex);
     getNextData_(pSrc);
 
     u8* data = static_cast<u8*>(pData);
@@ -336,7 +321,7 @@ void TextStreamFormat::readBit(StreamSrc* pSrc, void* pData, u32 bits)
  */
 u32 TextStreamFormat::readMemBlock(StreamSrc* pSrc, void* pBuffer, u32 size)
 {
-    ScopedLock<Mutex> lock(&sMutex);
+    ScopedMutexLock lock(&sMutex);
     getNextData_(pSrc);
     const u32 length = sBuffer.calcLength();
     size_t decodedSize = 0;
@@ -354,9 +339,7 @@ void TextStreamFormat::writeU8(StreamSrc* pSrc, [[maybe_unused]] Endian::Types e
 {
     FixedSafeString<32> str;
     str.format("%u", value);
-    const s32 length = str.calcLength();
-    pSrc->write(str.cstr(), length);
-    pSrc->write(mDelimiter.cstr(), 1);
+    writeToken_(pSrc, str);
 }
 
 /**
@@ -369,9 +352,7 @@ void TextStreamFormat::writeU16(StreamSrc* pSrc, [[maybe_unused]] Endian::Types 
 {
     FixedSafeString<32> str;
     str.format("%u", value);
-    const s32 length = str.calcLength();
-    pSrc->write(str.cstr(), length);
-    pSrc->write(mDelimiter.cstr(), 1);
+    writeToken_(pSrc, str);
 }
 
 /**
@@ -384,9 +365,7 @@ void TextStreamFormat::writeU32(StreamSrc* pSrc, [[maybe_unused]] Endian::Types 
 {
     FixedSafeString<32> str;
     str.format("%u", value);
-    const s32 length = str.calcLength();
-    pSrc->write(str.cstr(), length);
-    pSrc->write(mDelimiter.cstr(), 1);
+    writeToken_(pSrc, str);
 }
 
 /**
@@ -399,9 +378,7 @@ void TextStreamFormat::writeU64(StreamSrc* pSrc, [[maybe_unused]] Endian::Types 
 {
     FixedSafeString<32> str;
     str.format("%llu", value);
-    const s32 length = str.calcLength();
-    pSrc->write(str.cstr(), length);
-    pSrc->write(mDelimiter.cstr(), 1);
+    writeToken_(pSrc, str);
 }
 
 /**
@@ -414,9 +391,7 @@ void TextStreamFormat::writeS8(StreamSrc* pSrc, [[maybe_unused]] Endian::Types e
 {
     FixedSafeString<32> str;
     str.format("%d", value);
-    const s32 length = str.calcLength();
-    pSrc->write(str.cstr(), length);
-    pSrc->write(mDelimiter.cstr(), 1);
+    writeToken_(pSrc, str);
 }
 
 /**
@@ -429,9 +404,7 @@ void TextStreamFormat::writeS16(StreamSrc* pSrc, [[maybe_unused]] Endian::Types 
 {
     FixedSafeString<32> str;
     str.format("%d", value);
-    const s32 length = str.calcLength();
-    pSrc->write(str.cstr(), length);
-    pSrc->write(mDelimiter.cstr(), 1);
+    writeToken_(pSrc, str);
 }
 
 /**
@@ -444,9 +417,7 @@ void TextStreamFormat::writeS32(StreamSrc* pSrc, [[maybe_unused]] Endian::Types 
 {
     FixedSafeString<32> str;
     str.format("%d", value);
-    const s32 length = str.calcLength();
-    pSrc->write(str.cstr(), length);
-    pSrc->write(mDelimiter.cstr(), 1);
+    writeToken_(pSrc, str);
 }
 
 /**
@@ -459,9 +430,7 @@ void TextStreamFormat::writeS64(StreamSrc* pSrc, [[maybe_unused]] Endian::Types 
 {
     FixedSafeString<32> str;
     str.format("%lld", value);
-    const s32 length = str.calcLength();
-    pSrc->write(str.cstr(), length);
-    pSrc->write(mDelimiter.cstr(), 1);
+    writeToken_(pSrc, str);
 }
 
 /**
@@ -474,9 +443,7 @@ void TextStreamFormat::writeF32(StreamSrc* pSrc, [[maybe_unused]] Endian::Types 
 {
     FixedSafeString<32> str;
     str.format("%.8f", value);
-    const s32 length = str.calcLength();
-    pSrc->write(str.cstr(), length);
-    pSrc->write(mDelimiter.cstr(), 1);
+    writeToken_(pSrc, str);
 }
 
 /**
@@ -487,7 +454,7 @@ void TextStreamFormat::writeF32(StreamSrc* pSrc, [[maybe_unused]] Endian::Types 
  */
 void TextStreamFormat::writeBit(StreamSrc* pSrc, const void* pData, u32 bits)
 {
-    ScopedLock<Mutex> lock(&sMutex);
+    ScopedMutexLock lock(&sMutex);
     const u8* data = static_cast<const u8*>(pData);
     sBuffer.copy("0b");
 
@@ -554,7 +521,7 @@ void TextStreamFormat::writeString(StreamSrc* pSrc, const SafeString& rStr, u32 
  */
 void TextStreamFormat::writeMemBlock(StreamSrc* pSrc, const void* pBuffer, u32 size)
 {
-    ScopedLock<Mutex> lock(&sMutex);
+    ScopedMutexLock lock(&sMutex);
     sBuffer.clear();
 
     u32 blockCount = size / 3;
@@ -609,7 +576,7 @@ void TextStreamFormat::writeNullChar(StreamSrc* pSrc)
  */
 void TextStreamFormat::skip(StreamSrc* pSrc, [[maybe_unused]] u32 offset)
 {
-    ScopedLock<Mutex> lock(&sMutex);
+    ScopedMutexLock lock(&sMutex);
     getNextData_(pSrc);
 }
 

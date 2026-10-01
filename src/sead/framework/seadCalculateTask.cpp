@@ -51,7 +51,7 @@ void CalculateTask::calc() {}
  */
 void CalculateTask::attachCalcImpl()
 {
-    ScopedLock<CriticalSection> lock(&getMethodTreeMgr()->mCS);
+    ScopedCriticalSectionLock lock(getMethodTreeMgr()->getCriticalSection());
 
     TaskBase* parentTask = (parent() != nullptr) ? parent()->value() : nullptr;
 

@@ -1027,7 +1027,7 @@ void DirectProjection::updateAttributesForDirectProjection()
     }
 
     Matrix44f inv;
-    Matrix44CalcCommon<f32>::inverse(inv, mProjectionMatrix);
+    inv.setInverse(mProjectionMatrix);
 
     const Vector4f cCorners[8] = {{-1.0f, -1.0f, -1.0f, 1.0f}, {-1.0f, 1.0f, -1.0f, 1.0f},
                                   {1.0f, 1.0f, -1.0f, 1.0f},   {1.0f, -1.0f, -1.0f, 1.0f},
@@ -1088,7 +1088,7 @@ void DirectProjection::doScreenPosToCameraPosTo(Vector3f* pCameraPos,
                                                 const Vector3f& rScreenPos) const
 {
     Matrix44f inv;
-    Matrix44CalcCommon<f32>::inverse(inv, mProjectionMatrix);
+    inv.setInverse(mProjectionMatrix);
     pCameraPos->setMul(inv, rScreenPos);
 }
 

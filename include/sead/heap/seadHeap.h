@@ -109,6 +109,14 @@ public:
 
     sead::CriticalSection& getCriticalSection() { return mCS; }
 
+    using ScopedHeapLock = ConditionalScopedLock<CriticalSection>;
+
+    /// Locks this heap's critical section for the current scope if locking is enabled.
+    ScopedHeapLock makeScopedHeapLock() const
+    {
+        return ScopedHeapLock(const_cast<CriticalSection*>(&mCS), isLockEnabled());
+    }
+
     using HeapList = OffsetList<Heap>;
     using DisposerList = OffsetList<IDisposer>;
 

@@ -113,6 +113,8 @@ s32 convertUtf16ToUtf8(char* dst, u32 dst_len, const char16* src, s32 src_len);
 s32 convertSjisToUtf8(char* dst, u32 dst_len, const char* src, s32 src_len);
 s32 convertUtf8ToSjis(char* dst, u32 dst_len, const char* src, s32 src_len);
 
+using Char16PairTable = Buffer<const Char16Pair>;
+
 s32 compareChar16Pair(const Char16Pair& rPair, const char16& rKey);
 char16 replace(char16 c, const Buffer<const Char16Pair>& rSortedTable);
 

@@ -8,6 +8,7 @@
 
 #include <basis/seadTypes.h>
 #include <heap/seadDisposer.h>
+#include <prim/seadScopedLock.h>
 
 namespace sead
 {
@@ -39,5 +40,7 @@ public:
 #error "Unknown platform"
 #endif
 };
+
+using ScopedMutexLock = ScopedLock<Mutex>;
 
 }  // namespace sead

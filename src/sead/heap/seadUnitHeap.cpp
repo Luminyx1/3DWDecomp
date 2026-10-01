@@ -156,7 +156,7 @@ UnitHeap* UnitHeap::tryCreate(size_t size, const SafeString& rName, u32 blockSiz
  */
 void UnitHeap::doCreate(s32 alignment, bool isPadded, Heap* pParent)
 {
-    ConditionalScopedLock<CriticalSection> lock(&mCS, isLockEnabled());
+    auto lock = makeScopedHeapLock();
 
     uintptr_t base = uintptr_t(this) + sizeof(UnitHeap);
     u8* areaStart = reinterpret_cast<u8*>(alignUp(base, alignment));
@@ -278,7 +278,7 @@ bool UnitHeap::isInclude(const void* pPtr) const
  */
 void UnitHeap::freeAll()
 {
-    ConditionalScopedLock<CriticalSection> lock(&mCS, isLockEnabled());
+    auto lock = makeScopedHeapLock();
     dispose_(nullptr, nullptr);
     mFreeSize = mBlockSize * getBlockNum();
     resetFreeList_();
@@ -315,7 +315,7 @@ void* UnitHeap::tryAlloc(size_t size, s32 alignment)
         return nullptr;
     }
 
-    ConditionalScopedLock<CriticalSection> lock(&mCS, isLockEnabled());
+    auto lock = makeScopedHeapLock();
     void* ptr = mFreeList.getFree();
 
     if (ptr == nullptr)
@@ -357,7 +357,7 @@ void UnitHeap::free(void* pPtr)
         return;
     }
 
-    ConditionalScopedLock<CriticalSection> lock(&mCS, isLockEnabled());
+    auto lock = makeScopedHeapLock();
     mFreeList.free(pPtr);
     mFreeSize += mBlockSize;
 }
@@ -442,8 +442,7 @@ size_t UnitHeap::getMaxAllocatableSize(int alignment) const
  */
 void UnitHeap::dumpYAML(WriteStream& rStream, int indent) const
 {
-    ConditionalScopedLock<CriticalSection> lock(const_cast<CriticalSection*>(&mCS),
-                                                isLockEnabled());
+    auto lock = makeScopedHeapLock();
 
     Heap::dumpYAML(rStream, indent);
 
@@ -493,8 +492,7 @@ void UnitHeap::dumpYAML(WriteStream& rStream, int indent) const
 template <>
 void PrintFormatter::out<UnitHeap>(const UnitHeap& rHeap, const char*, PrintOutput* pOutput)
 {
-    ConditionalScopedLock<CriticalSection> lock(const_cast<CriticalSection*>(&rHeap.mCS),
-                                                rHeap.isLockEnabled());
+    auto lock = rHeap.makeScopedHeapLock();
 
     PrintFormatter::out<Heap>(rHeap, nullptr, pOutput);
 
@@ -519,8 +517,7 @@ void PrintFormatter::out<UnitHeap>(const UnitHeap& rHeap, const char*, PrintOutp
  */
 void UnitHeap::dump() const
 {
-    ConditionalScopedLock<CriticalSection> lock(const_cast<CriticalSection*>(&mCS),
-                                                isLockEnabled());
+    auto lock = makeScopedHeapLock();
 }
 
 /**

@@ -245,7 +245,7 @@ ThreadMgr::ThreadMgr() = default;
 
 ThreadMgr::~ThreadMgr()
 {
-    ScopedLock<CriticalSection> lock(getListCS());
+    ScopedCriticalSectionLock lock(getListCS());
 
     for (Thread* thread : mList)
     {

@@ -148,6 +148,19 @@ public:
     bool isConnectable(TaskBase* pTask) const;
     void attachMethodWithCheck(s32 methodType, MethodTreeNode* pNode);
 
+    State getState() const { return mState; }
+    void setState(State state) { mState = state; }
+    Tag getTag() const { return mTag; }
+    void setTag(Tag tag) { mTag = tag; }
+    TaskMgr* getTaskMgr() const { return mTaskMgr; }
+
+    /// Whether a fader currently owns this task (transitions are refused while set).
+    bool isInFade() const { return mInternalFlag.isOnBit(0); }
+    void setInFade() { mInternalFlag.setBit(0); }
+    void resetInFade() { mInternalFlag.resetBit(0); }
+    bool isDestroyRequested() const { return mInternalFlag.isOnBit(1); }
+    void setDestroyRequested() { mInternalFlag.setBit(1); }
+
     TaskParameter* mParameter;
     BitFlag32 mInternalFlag;
     ListNode mTaskListNode;

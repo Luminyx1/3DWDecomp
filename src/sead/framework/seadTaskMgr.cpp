@@ -69,7 +69,7 @@ void TaskMgr::doInit_()
     arg.param = nullptr;
     mNullFaderTask = new (heap) NullFaderTask(arg);
     mNullFaderTask->setName("NullFader");
-    mNullFaderTask->mState = TaskBase::cRunning;
+    mNullFaderTask->setState(TaskBase::cRunning);
 
     mTaskCreateContextMgr = new (heap) TaskCreateContextMgr(mMaxCreateQueueSize, heap);
 }
@@ -139,10 +139,10 @@ void TaskMgr::finalize()
  */
 void TaskMgr::destroyTaskSync(TaskBase* pTask)
 {
-    if (mParentFramework->mMethodTreeMgr->mCS.tryLock())
+    if (mParentFramework->getMethodTreeMgr()->getCriticalSection()->tryLock())
     {
         doDestroyTask_(pTask);
-        mParentFramework->mMethodTreeMgr->mCS.unlock();
+        mParentFramework->getMethodTreeMgr()->getCriticalSection()->unlock();
     }
 }
 
@@ -200,7 +200,7 @@ void TaskMgr::prepare_(Thread*, MessageQueue::Element)
  */
 bool TaskMgr::requestCreateTask(const TaskBase::CreateArg& rArg)
 {
-    ScopedLock<CriticalSection> lock(&mCriticalSection);
+    ScopedCriticalSectionLock lock(&mCriticalSection);
 
     if (rArg.fader != nullptr)
     {
@@ -220,7 +220,7 @@ void TaskMgr::createHeap_(HeapArray* pHeapArray, const TaskBase::CreateArg& rArg
     pHeapArray->mPrimaryIndex = rArg.heap_policies.mPrimaryIndex;
     const s32 rootHeapNum = HeapMgr::getRootHeapNum();
 
-    ScopedLock<CriticalSection> lock(&mCriticalSection);
+    ScopedCriticalSectionLock lock(&mCriticalSection);
 
     for (s32 i = 0; i < rootHeapNum; i++)
     {
@@ -273,7 +273,7 @@ void TaskMgr::createHeap_(HeapArray* pHeapArray, const TaskBase::CreateArg& rArg
  */
 TaskBase* TaskMgr::createTaskSync(const TaskBase::CreateArg& rArg)
 {
-    ScopedLock<CriticalSection> lock(&mCriticalSection);
+    ScopedCriticalSectionLock lock(&mCriticalSection);
 
     HeapArray heapArray;
     createHeap_(&heapArray, rArg);
@@ -296,7 +296,7 @@ TaskBase* TaskMgr::createTaskSync(const TaskBase::CreateArg& rArg)
         rArg.instance_cb(task);
     }
 
-    task->mState = TaskBase::cPrepare;
+    task->setState(TaskBase::cPrepare);
     {
         ScopedCurrentHeapSetter setter(heapArray.getPrimaryHeap());
         task->prepare();
@@ -338,7 +338,7 @@ TaskBase* TaskMgr::createTaskSync(const TaskBase::CreateArg& rArg)
  */
 TaskBase* TaskMgr::doCreateTask_(const TaskBase::CreateArg& rArg, HeapArray* pHeapArray)
 {
-    ScopedLock<CriticalSection> lock(&mCriticalSection);
+    ScopedCriticalSectionLock lock(&mCriticalSection);
 
     TaskClassID classID = rArg.factory;
     TaskBase::Tag tag = rArg.tag;
@@ -354,7 +354,7 @@ TaskBase* TaskMgr::doCreateTask_(const TaskBase::CreateArg& rArg, HeapArray* pHe
     }
 
     task->mClassID = classID;
-    task->mTag = tag;
+    task->setTag(tag);
 
     if (rArg.parent != nullptr)
     {
@@ -372,9 +372,9 @@ TaskBase* TaskMgr::doCreateTask_(const TaskBase::CreateArg& rArg, HeapArray* pHe
  */
 bool TaskMgr::changeTaskState_(TaskBase* pTask, TaskBase::State state)
 {
-    sead::ScopedLock<CriticalSection> lock{&mCriticalSection};
+    sead::ScopedCriticalSectionLock lock{&mCriticalSection};
 
-    if (pTask->mState == state)
+    if (pTask->getState() == state)
     {
         return false;
     }
@@ -382,12 +382,12 @@ bool TaskMgr::changeTaskState_(TaskBase* pTask, TaskBase::State state)
     switch (state)
     {
     case TaskBase::cPrepare:
-        if (pTask->mState != TaskBase::cCreated)
+        if (pTask->getState() != TaskBase::cCreated)
         {
             return false;
         }
 
-        pTask->mState = TaskBase::cPrepare;
+        pTask->setState(TaskBase::cPrepare);
         appendToList_(mPrepareList, pTask);
 
         if (mPrepareThread == nullptr ||
@@ -399,13 +399,13 @@ bool TaskMgr::changeTaskState_(TaskBase* pTask, TaskBase::State state)
         return false;
 
     case TaskBase::cPrepareDone:
-        pTask->mState = TaskBase::cPrepareDone;
+        pTask->setState(TaskBase::cPrepareDone);
         pTask->mTaskListNode.erase();
 
         return true;
 
     case TaskBase::cRunning:
-        pTask->mState = TaskBase::cRunning;
+        pTask->setState(TaskBase::cRunning);
         pTask->mTaskListNode.erase();
         appendToList_(mActiveList, pTask);
 
@@ -414,17 +414,17 @@ bool TaskMgr::changeTaskState_(TaskBase* pTask, TaskBase::State state)
         return true;
 
     case TaskBase::cDying:
-        pTask->mState = TaskBase::cDying;
+        pTask->setState(TaskBase::cDying);
 
         return true;
 
     case TaskBase::cDestroyable:
-        if (pTask->mState != TaskBase::cRunning)
+        if (pTask->getState() != TaskBase::cRunning)
         {
             return false;
         }
 
-        pTask->mState = TaskBase::cDestroyable;
+        pTask->setState(TaskBase::cDestroyable);
         pTask->detachCalcImpl();
         pTask->detachDrawImpl();
         appendToList_(mDestroyableList, pTask);
@@ -433,7 +433,7 @@ bool TaskMgr::changeTaskState_(TaskBase* pTask, TaskBase::State state)
 
     case TaskBase::cDead:
         pTask->exit();
-        pTask->mState = TaskBase::cDead;
+        pTask->setState(TaskBase::cDead);
         pTask->mTaskListNode.erase();
 
         return true;
@@ -452,7 +452,7 @@ bool TaskMgr::changeTaskState_(TaskBase* pTask, TaskBase::State state)
 bool TaskMgr::doRequestCreateTask_(const TaskBase::CreateArg& rArg,
                                    DelegateEvent<TaskBase*>::Slot* pSlot)
 {
-    ScopedLock<CriticalSection> lock(&mCriticalSection);
+    ScopedCriticalSectionLock lock(&mCriticalSection);
 
     TaskCreateContext* context = mTaskCreateContextMgr->emplaceBack();
 
@@ -484,13 +484,13 @@ bool TaskMgr::doRequestCreateTask_(const TaskBase::CreateArg& rArg,
  */
 void TaskMgr::appendToList_(TaskBase::List& rList, TaskBase* pTask)
 {
-    ScopedLock<CriticalSection> lock(&mCriticalSection);
+    ScopedCriticalSectionLock lock(&mCriticalSection);
 
     pTask->mTaskListNode.erase();
 
     for (auto it = rList.begin(); it != rList.end(); ++it)
     {
-        if ((*it)->mTag < pTask->mTag)
+        if ((*it)->getTag() < pTask->getTag())
         {
             TaskBase* task = *it;
             task->mTaskListNode.mList->insertBefore(&task->mTaskListNode, &pTask->mTaskListNode);
@@ -508,7 +508,7 @@ void TaskMgr::appendToList_(TaskBase::List& rList, TaskBase* pTask)
  */
 bool TaskMgr::requestTakeover(const TaskBase::TakeoverArg& rArg)
 {
-    ScopedLock<CriticalSection> lock(&mCriticalSection);
+    ScopedCriticalSectionLock lock(&mCriticalSection);
 
     FaderTaskBase* fader = rArg.fader;
     TaskBase* src = rArg.src_task;
@@ -518,7 +518,7 @@ bool TaskMgr::requestTakeover(const TaskBase::TakeoverArg& rArg)
         fader = mNullFaderTask;
     }
 
-    if (src->mInternalFlag.isOnBit(0))
+    if (src->isInFade())
     {
         return false;
     }
@@ -535,14 +535,14 @@ bool TaskMgr::requestTakeover(const TaskBase::TakeoverArg& rArg)
  */
 bool TaskMgr::requestTransition(TaskBase* pFrom, TaskBase* pTo, FaderTaskBase* pFader)
 {
-    ScopedLock<CriticalSection> lock(&mCriticalSection);
+    ScopedCriticalSectionLock lock(&mCriticalSection);
 
     if (pFader == nullptr)
     {
         pFader = mNullFaderTask;
     }
 
-    if (pFrom->mInternalFlag.isOnBit(0) || pTo->mInternalFlag.isOnBit(0))
+    if (pFrom->isInFade() || pTo->isInFade())
     {
         return false;
     }
@@ -562,7 +562,7 @@ bool TaskMgr::requestPush(const TaskBase::PushArg& rArg)
         return false;
     }
 
-    ScopedLock<CriticalSection> lock(&mCriticalSection);
+    ScopedCriticalSectionLock lock(&mCriticalSection);
 
     FaderTaskBase* fader = rArg.fader;
 
@@ -571,7 +571,7 @@ bool TaskMgr::requestPush(const TaskBase::PushArg& rArg)
         fader = mNullFaderTask;
     }
 
-    if (rArg.src_task->mInternalFlag.isOnBit(0))
+    if (rArg.src_task->isInFade())
     {
         return false;
     }
@@ -591,7 +591,7 @@ TaskBase* TaskMgr::pushSync(const TaskBase::PushArg& rArg)
         return nullptr;
     }
 
-    ScopedLock<CriticalSection> lock(&mCriticalSection);
+    ScopedCriticalSectionLock lock(&mCriticalSection);
 
     TaskBase* src = rArg.src_task;
     src->pauseCalc(true);
@@ -607,14 +607,14 @@ TaskBase* TaskMgr::pushSync(const TaskBase::PushArg& rArg)
  */
 bool TaskMgr::requestPop(TaskBase* pTask, FaderTaskBase* pFader)
 {
-    ScopedLock<CriticalSection> lock(&mCriticalSection);
+    ScopedCriticalSectionLock lock(&mCriticalSection);
 
     if (pFader == nullptr)
     {
         pFader = mNullFaderTask;
     }
 
-    if (pTask->mInternalFlag.isOnBit(0))
+    if (pTask->isInFade())
     {
         return false;
     }
@@ -629,9 +629,9 @@ bool TaskMgr::requestPop(TaskBase* pTask, FaderTaskBase* pFader)
  */
 bool TaskMgr::popSync(TaskBase* pTask)
 {
-    ScopedLock<CriticalSection> lock(&mCriticalSection);
+    ScopedCriticalSectionLock lock(&mCriticalSection);
 
-    if (pTask->mInternalFlag.isOnBit(0) || pTask->parent() == nullptr)
+    if (pTask->isInFade() || pTask->parent() == nullptr)
     {
         return false;
     }
@@ -658,7 +658,7 @@ bool TaskMgr::popSync(TaskBase* pTask)
  */
 void TaskMgr::doDestroyTask_(TaskBase* pTask)
 {
-    sead::ScopedLock<CriticalSection> lock{&mCriticalSection};
+    sead::ScopedCriticalSectionLock lock{&mCriticalSection};
 
     TreeNode* node = pTask->child();
 
@@ -696,14 +696,14 @@ void TaskMgr::doDestroyTask_(TaskBase* pTask)
  */
 bool TaskMgr::requestPop(TaskBase* pFrom, TaskBase* pTo, FaderTaskBase* pFader)
 {
-    ScopedLock<CriticalSection> lock(&mCriticalSection);
+    ScopedCriticalSectionLock lock(&mCriticalSection);
 
     if (pFader == nullptr)
     {
         pFader = mNullFaderTask;
     }
 
-    if (pFrom->mInternalFlag.isOnBit(0) || !pFrom->isDescendantOf(pTo))
+    if (pFrom->isInFade() || !pFrom->isDescendantOf(pTo))
     {
         return false;
     }
@@ -717,11 +717,11 @@ bool TaskMgr::requestPop(TaskBase* pFrom, TaskBase* pTo, FaderTaskBase* pFader)
  */
 void TaskMgr::requestDestroyTask(TaskBase* pTask, FaderTaskBase*)
 {
-    ScopedLock<CriticalSection> lock(&mCriticalSection);
+    ScopedCriticalSectionLock lock(&mCriticalSection);
 
     if (!pTask->mInternalFlag.isOn(6))
     {
-        pTask->mInternalFlag.setBit(1);
+        pTask->setDestroyRequested();
         pTask->onDestroy();
     }
 
@@ -738,9 +738,9 @@ void TaskMgr::requestDestroyTask(TaskBase* pTask, FaderTaskBase*)
  */
 bool TaskMgr::destroyable_(TaskBase* pTask)
 {
-    ScopedLock<CriticalSection> lock(&mCriticalSection);
+    ScopedCriticalSectionLock lock(&mCriticalSection);
 
-    if (!pTask->mInternalFlag.isOnAll(6) || pTask->mState != TaskBase::cRunning)
+    if (!pTask->mInternalFlag.isOnAll(6) || pTask->getState() != TaskBase::cRunning)
     {
         return false;
     }
@@ -774,7 +774,7 @@ void TaskMgr::calcCreation_()
 
         if (task != nullptr)
         {
-            if (task->mState == TaskBase::cPrepareDone)
+            if (task->getState() == TaskBase::cPrepareDone)
             {
                 changeTaskState_(task, TaskBase::cRunning);
 
@@ -835,7 +835,7 @@ void TaskMgr::calcDestruction_()
         TaskBase* task = *it;
         ++it;
 
-        if (task->mInternalFlag.isOnBit(1) && destroyable_(task))
+        if (task->isDestroyRequested() && destroyable_(task))
         {
             changeTaskState_(task, TaskBase::cDestroyable);
         }
@@ -858,7 +858,7 @@ void TaskMgr::calcDestruction_()
  */
 void TaskMgr::destroyAllAndCreateRoot()
 {
-    ScopedLock<CriticalSection> lock(&mCriticalSection);
+    ScopedCriticalSectionLock lock(&mCriticalSection);
 
     if (mRootTask != nullptr)
     {
@@ -916,13 +916,13 @@ void TaskMgr::destroyAllAndCreateRoot()
  */
 TaskBase* TaskMgr::findTask(const TaskClassID& rClassID)
 {
-    ScopedLock<CriticalSection> lock(&mCriticalSection);
+    ScopedCriticalSectionLock lock(&mCriticalSection);
 
     for (auto it = mActiveList.begin(); it != mActiveList.end(); ++it)
     {
         TaskBase* task = *it;
 
-        if (task->mState == TaskBase::cRunning && task->mClassID == rClassID)
+        if (task->getState() == TaskBase::cRunning && task->mClassID == rClassID)
         {
             return task;
         }

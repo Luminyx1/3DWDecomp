@@ -4,6 +4,29 @@
 
 namespace sead
 {
+namespace
+{
+inline XmlElement* createElement(Heap* pHeap)
+{
+    return new (pHeap, sizeof(void*)) XmlElement();
+}
+
+inline void setupElement(XmlElement* pElement, const SafeString& rName, const SafeString& rContent,
+                         Heap* pHeap)
+{
+    pElement->setName(rName);
+
+    if (rContent.isEmpty())
+    {
+        pElement->setContent(nullptr, 0, false);
+    }
+    else
+    {
+        pElement->setContentString(rContent, pHeap);
+    }
+}
+}  // namespace
+
 /**
  * Creates an empty element and links it as the last sibling of an element.
  * @param pElement element whose sibling list receives the new element
@@ -17,7 +40,7 @@ XmlElement* XmlUtil::createBackSiblingElement(XmlElement* pElement, Heap* pHeap)
         pHeap = pElement->getHeap();
     }
 
-    auto* element = new (pHeap, sizeof(void*)) XmlElement();
+    XmlElement* element = createElement(pHeap);
     pElement->pushBackSibling(element);
     return element;
 }
@@ -35,7 +58,7 @@ XmlElement* XmlUtil::createBackChildElement(XmlElement* pElement, Heap* pHeap)
         pHeap = pElement->getHeap();
     }
 
-    auto* element = new (pHeap, sizeof(void*)) XmlElement();
+    XmlElement* element = createElement(pHeap);
     pElement->pushBackChild(element);
     return element;
 }
@@ -53,7 +76,7 @@ XmlElement* XmlUtil::createFrontChildElement(XmlElement* pElement, Heap* pHeap)
         pHeap = pElement->getHeap();
     }
 
-    auto* element = new (pHeap, sizeof(void*)) XmlElement();
+    XmlElement* element = createElement(pHeap);
     pElement->pushFrontChild(element);
     return element;
 }
@@ -74,18 +97,9 @@ XmlElement* XmlUtil::createBackSiblingAndSetupElement(XmlElement* pElement, cons
         pHeap = pElement->getHeap();
     }
 
-    auto* element = new (pHeap, sizeof(void*)) XmlElement();
+    XmlElement* element = createElement(pHeap);
     pElement->pushBackSibling(element);
-    element->setName(rName);
-
-    if (rContent.isEmpty())
-    {
-        element->setContent(nullptr, 0, false);
-    }
-    else
-    {
-        element->setContentString(rContent, pHeap);
-    }
+    setupElement(element, rName, rContent, pHeap);
 
     return element;
 }
@@ -106,18 +120,9 @@ XmlElement* XmlUtil::createBackChildAndSetupElement(XmlElement* pElement, const 
         pHeap = pElement->getHeap();
     }
 
-    auto* element = new (pHeap, sizeof(void*)) XmlElement();
+    XmlElement* element = createElement(pHeap);
     pElement->pushBackChild(element);
-    element->setName(rName);
-
-    if (rContent.isEmpty())
-    {
-        element->setContent(nullptr, 0, false);
-    }
-    else
-    {
-        element->setContentString(rContent, pHeap);
-    }
+    setupElement(element, rName, rContent, pHeap);
 
     return element;
 }
@@ -138,18 +143,9 @@ XmlElement* XmlUtil::createFrontChildAndSetupElement(XmlElement* pElement, const
         pHeap = pElement->getHeap();
     }
 
-    auto* element = new (pHeap, sizeof(void*)) XmlElement();
+    XmlElement* element = createElement(pHeap);
     pElement->pushFrontChild(element);
-    element->setName(rName);
-
-    if (rContent.isEmpty())
-    {
-        element->setContent(nullptr, 0, false);
-    }
-    else
-    {
-        element->setContentString(rContent, pHeap);
-    }
+    setupElement(element, rName, rContent, pHeap);
 
     return element;
 }

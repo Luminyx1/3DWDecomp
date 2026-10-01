@@ -167,7 +167,7 @@ Heap* HeapMgr::findContainHeap(const void* ptr) const
         }
     }
 
-    ScopedLock<CriticalSection> lock(&sHeapTreeLockCS);
+    ScopedCriticalSectionLock lock(&sHeapTreeLockCS);
 
     if (pThread != nullptr)
     {

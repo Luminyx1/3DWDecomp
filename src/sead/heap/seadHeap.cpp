@@ -29,7 +29,7 @@ Heap::Heap(const SafeString& rName, Heap* pParent, void* pAddress, size_t size,
     mHeapCheckTag = tag;
     mFlag.changeBit(Flag::cEnableLock, enableLock);
 
-    ConditionalScopedLock<CriticalSection> lock(&mCS, isLockEnabled());
+    auto lock = makeScopedHeapLock();
     mChildren.initOffset(offsetof(Heap, mListNode));
     mDisposerList.initOffset(IDisposer::getListNodeOffset());
 }
@@ -44,7 +44,7 @@ Heap::~Heap() = default;
  */
 void Heap::destruct_()
 {
-    ConditionalScopedLock<CriticalSection> lock(&mCS, isLockEnabled());
+    auto lock = makeScopedHeapLock();
     dispose_(nullptr, nullptr);
     HeapMgr::removeFromFindContainHeapCache_(this);
 
@@ -92,8 +92,8 @@ void Heap::dispose_(const void* pBegin, const void* pEnd)
  */
 void Heap::eraseChild_(Heap* pChild)
 {
-    ScopedLock<CriticalSection> treeLock(&HeapMgr::sHeapTreeLockCS);
-    ConditionalScopedLock<CriticalSection> lock(&mCS, isLockEnabled());
+    ScopedCriticalSectionLock treeLock(&HeapMgr::sHeapTreeLockCS);
+    auto lock = makeScopedHeapLock();
     mChildren.erase(pChild);
 }
 
@@ -103,7 +103,7 @@ void Heap::eraseChild_(Heap* pChild)
  */
 void Heap::appendDisposer_(IDisposer* pDisposer)
 {
-    ConditionalScopedLock<CriticalSection> lock(&mCS, isLockEnabled());
+    auto lock = makeScopedHeapLock();
     mDisposerList.pushBack(pDisposer);
 }
 
@@ -113,7 +113,7 @@ void Heap::appendDisposer_(IDisposer* pDisposer)
  */
 void Heap::removeDisposer_(IDisposer* pDisposer)
 {
-    ConditionalScopedLock<CriticalSection> lock(&mCS, isLockEnabled());
+    auto lock = makeScopedHeapLock();
     mDisposerList.erase(pDisposer);
 }
 
@@ -146,8 +146,8 @@ Heap* Heap::findContainHeap_(const void* pAddress)
  */
 void Heap::pushBackChild_(Heap* pChild)
 {
-    ScopedLock<CriticalSection> treeLock(&HeapMgr::sHeapTreeLockCS);
-    ConditionalScopedLock<CriticalSection> lock(&mCS, isLockEnabled());
+    ScopedCriticalSectionLock treeLock(&HeapMgr::sHeapTreeLockCS);
+    auto lock = makeScopedHeapLock();
     mChildren.pushBack(pChild);
 }
 
@@ -188,8 +188,7 @@ void Heap::dumpTreeYAML(WriteStream& rStream, int indent) const
  */
 void Heap::dumpYAML(WriteStream& rStream, int indent) const
 {
-    ConditionalScopedLock<CriticalSection> lock(const_cast<CriticalSection*>(&mCS),
-                                                isLockEnabled());
+    auto lock = makeScopedHeapLock();
 
     FixedSafeString<128> str("");
 
@@ -275,8 +274,7 @@ void Heap::dumpYAML(WriteStream& rStream, int indent) const
 template <>
 void PrintFormatter::out<Heap>(const Heap& rHeap, const char*, PrintOutput* pOutput)
 {
-    ConditionalScopedLock<CriticalSection> lock(const_cast<CriticalSection*>(&rHeap.mCS),
-                                                rHeap.isLockEnabled());
+    auto lock = rHeap.makeScopedHeapLock();
 
     FixedSafeString<128> str;
     OutImpl<char, SafeStringBase>::out("\n", nullptr, pOutput);

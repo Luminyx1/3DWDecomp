@@ -6476,7 +6476,7 @@ s32 compareChar16Pair(const Char16Pair& rPair, const char16& rKey)
  * @param rSortedTable replacement pairs sorted by their source character
  * @return the replacement, or c if it is not in the table
  */
-char16 replace(char16 c, const Buffer<const Char16Pair>& rSortedTable)
+char16 replace(char16 c, const Char16PairTable& rSortedTable)
 {
     const s32 idx = rSortedTable.binarySearch(c, compareChar16Pair);
 
@@ -6495,7 +6495,7 @@ char16 replace(char16 c, const Buffer<const Char16Pair>& rSortedTable)
  */
 char16 toUpperCapital(char16 c)
 {
-    return replace(c, Buffer<const Char16Pair>(cToUpperTable));
+    return replace(c, Char16PairTable(cToUpperTable));
 }
 
 /**
@@ -6519,7 +6519,7 @@ void toUpperCapitalFirstCharactor(WBufferedSafeString* pStr)
  */
 char16 toLowerCapital(char16 c)
 {
-    return replace(c, Buffer<const Char16Pair>(cToLowerTable));
+    return replace(c, Char16PairTable(cToLowerTable));
 }
 
 /**

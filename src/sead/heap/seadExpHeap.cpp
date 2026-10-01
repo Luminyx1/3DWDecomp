@@ -25,6 +25,13 @@ inline uintptr_t alignUp(uintptr_t value, u32 alignment)
     return (value + mask) & ~uintptr_t(mask);
 }
 
+inline bool isBetterFit(ExpHeap::FindMode mode, const MemBlock* pFound, const MemBlock* pBlock)
+{
+    return pFound == nullptr ||
+           (mode == ExpHeap::FindMode::BestFit && pFound->getSize() > pBlock->getSize()) ||
+           (mode == ExpHeap::FindMode::LargestFit && pFound->getSize() < pBlock->getSize());
+}
+
 inline void notifyAllocFailed(HeapMgr* pMgr, Heap* pHeap, size_t size, s32 alignment,
                               size_t allocSize, s32 allocAlignment)
 {
@@ -64,7 +71,7 @@ ExpHeap::ExpHeap(const SafeString& name, Heap* pParent, void* pAddress, size_t s
     : Heap(name, pParent, pAddress, size, direction, enableLock), mAllocMode(AllocMode::FirstFit),
       mFindFreeBlockMode(FindFreeBlockMode::Auto)
 {
-    ConditionalScopedLock<CriticalSection> lock(&mCS, isLockEnabled());
+    auto lock = makeScopedHeapLock();
     mFreeList.initOffset(MemBlock::getOffset());
     mUseList.initOffset(MemBlock::getOffset());
 }
@@ -270,7 +277,7 @@ size_t ExpHeap::getManagementAreaSize(s32 alignment)
  */
 void ExpHeap::createMaxSizeFreeMemBlock_(ExpHeap* pHeap)
 {
-    ConditionalScopedLock<CriticalSection> lock(&pHeap->mCS, pHeap->isLockEnabled());
+    auto lock = pHeap->makeScopedHeapLock();
 
     MemBlock* block;
 
@@ -284,7 +291,7 @@ void ExpHeap::createMaxSizeFreeMemBlock_(ExpHeap* pHeap)
     }
 
     block->mSize = pHeap->mSize - sizeof(ExpHeap) - sizeof(MemBlock);
-    block->mHeapCheckTag = MemBlock::cFreeHeapCheckTag;
+    block->markFree();
     pHeap->mFreeList.pushBack(block);
 }
 
@@ -342,7 +349,7 @@ size_t ExpHeap::freeAndGetAllocatableSize(void* pPtr, s32 alignment)
         return 0;
     }
 
-    ConditionalScopedLock<CriticalSection> lock(&mCS, isLockEnabled());
+    auto lock = makeScopedHeapLock();
 
     MemBlock* block = MemBlock::FindManageArea(pPtr);
 
@@ -404,7 +411,7 @@ bool ExpHeap::isInclude(const void* pPtr) const
  */
 void ExpHeap::freeAll()
 {
-    ConditionalScopedLock<CriticalSection> lock(&mCS, isLockEnabled());
+    auto lock = makeScopedHeapLock();
     dispose_(nullptr, nullptr);
     mUseList.clear();
     mFreeList.clear();
@@ -422,7 +429,7 @@ size_t ExpHeap::adjust()
         return mSize;
     }
 
-    ConditionalScopedLock<CriticalSection> lock(&mCS, isLockEnabled());
+    auto lock = makeScopedHeapLock();
     Heap* parent = mParent;
 
     if (parent->isLockEnabled())
@@ -565,7 +572,7 @@ void* ExpHeap::tryAlloc(size_t size, s32 alignment)
         return nullptr;
     }
 
-    ConditionalScopedLock<CriticalSection> lock(&mCS, isLockEnabled());
+    auto lock = makeScopedHeapLock();
 
     s32 allocAlignment = mDirection * alignment;
     MemBlock* block;
@@ -633,7 +640,7 @@ MemBlock* ExpHeap::allocFromHead_(size_t size)
         void* pAddress = PtrUtil::addOffset(block, size + offset + sizeof(MemBlock));
         auto* freeBlock = new (pAddress) MemBlock();
         freeBlock->mSize = restSize - sizeof(MemBlock);
-        freeBlock->mHeapCheckTag = MemBlock::cFreeHeapCheckTag;
+        freeBlock->markFree();
 
         if (next != nullptr)
         {
@@ -696,7 +703,7 @@ MemBlock* ExpHeap::allocFromHead_(size_t size, s32 alignment)
         void* pAddress = PtrUtil::addOffset(block, size + block->mOffset + sizeof(MemBlock));
         auto* freeBlock = new (pAddress) MemBlock();
         freeBlock->mSize = restSize - sizeof(MemBlock);
-        freeBlock->mHeapCheckTag = MemBlock::cFreeHeapCheckTag;
+        freeBlock->markFree();
 
         if (next != nullptr)
         {
@@ -802,8 +809,7 @@ MemBlock* ExpHeap::findFreeMemBlockFromHead_(size_t size, FindMode mode) const
             return &block;
         }
 
-        if (found == nullptr || (mode == FindMode::BestFit && found->mSize > block.mSize) ||
-            (mode == FindMode::LargestFit && found->mSize < block.mSize))
+        if (isBetterFit(mode, found, &block))
         {
             found = &block;
         }
@@ -843,8 +849,7 @@ MemBlock* ExpHeap::findFreeMemBlockFromHead_(size_t size, s32 alignment, FindMod
             return &block;
         }
 
-        if (found == nullptr || (mode == FindMode::BestFit && found->mSize > block.mSize) ||
-            (mode == FindMode::LargestFit && found->mSize < block.mSize))
+        if (isBetterFit(mode, found, &block))
         {
             found = &block;
         }
@@ -875,8 +880,7 @@ MemBlock* ExpHeap::findFreeMemBlockFromTail_(size_t size, FindMode mode) const
             return block;
         }
 
-        if (found == nullptr || (mode == FindMode::BestFit && found->mSize > block->mSize) ||
-            (mode == FindMode::LargestFit && found->mSize < block->mSize))
+        if (isBetterFit(mode, found, block))
         {
             found = block;
         }
@@ -916,8 +920,7 @@ MemBlock* ExpHeap::findFreeMemBlockFromTail_(size_t size, s32 alignment, FindMod
             return block;
         }
 
-        if (found == nullptr || (mode == FindMode::BestFit && found->mSize > block->mSize) ||
-            (mode == FindMode::LargestFit && found->mSize < block->mSize))
+        if (isBetterFit(mode, found, block))
         {
             found = block;
         }
@@ -967,7 +970,7 @@ MemBlock* ExpHeap::pushToFreeList_(MemBlock* pBlock)
         {
             if (!merged)
             {
-                block->mHeapCheckTag = MemBlock::cFreeHeapCheckTag;
+                block->markFree();
                 mFreeList.insertBefore(next, block);
             }
 
@@ -976,7 +979,7 @@ MemBlock* ExpHeap::pushToFreeList_(MemBlock* pBlock)
         }
         else if (!merged)
         {
-            block->mHeapCheckTag = MemBlock::cFreeHeapCheckTag;
+            block->markFree();
             mFreeList.insertBefore(next, block);
         }
 
@@ -995,7 +998,7 @@ MemBlock* ExpHeap::pushToFreeList_(MemBlock* pBlock)
             }
         }
 
-        block->mHeapCheckTag = MemBlock::cFreeHeapCheckTag;
+        block->markFree();
         mFreeList.pushBack(block);
         return block;
     };
@@ -1052,8 +1055,7 @@ MemBlock* ExpHeap::pushToFreeList_(MemBlock* pBlock)
  */
 void ExpHeap::dumpUseList() const
 {
-    ConditionalScopedLock<CriticalSection> lock(const_cast<CriticalSection*>(&mCS),
-                                                isLockEnabled());
+    auto lock = makeScopedHeapLock();
     for (auto& block : mUseList)
     {
         static_cast<void>(block);
@@ -1065,8 +1067,7 @@ void ExpHeap::dumpUseList() const
  */
 void ExpHeap::dumpFreeList() const
 {
-    ConditionalScopedLock<CriticalSection> lock(const_cast<CriticalSection*>(&mCS),
-                                                isLockEnabled());
+    auto lock = makeScopedHeapLock();
     for (auto& block : mFreeList)
     {
         static_cast<void>(block);
@@ -1080,7 +1081,7 @@ void* ExpHeap::resizeFront(void* pPtr, size_t size)
         return nullptr;
     }
 
-    ConditionalScopedLock<CriticalSection> lock(&mCS, isLockEnabled());
+    auto lock = makeScopedHeapLock();
 
     MemBlock* block = MemBlock::FindManageArea(pPtr);
     u8* memory = block->getMemory();
@@ -1138,7 +1139,7 @@ void* ExpHeap::resizeBack(void* pPtr, size_t size)
         return nullptr;
     }
 
-    ConditionalScopedLock<CriticalSection> lock(&mCS, isLockEnabled());
+    auto lock = makeScopedHeapLock();
 
     MemBlock* block = MemBlock::FindManageArea(pPtr);
     size_t newSize = (size + 7) & ~size_t(7);
@@ -1215,7 +1216,7 @@ void* ExpHeap::tryRealloc(void* pPtr, size_t size, s32 alignment)
         return nullptr;
     }
 
-    ConditionalScopedLock<CriticalSection> lock(&mCS, isLockEnabled());
+    auto lock = makeScopedHeapLock();
 
     MemBlock* block = MemBlock::FindManageArea(pPtr);
     size_t newSize = (size + 7) & ~size_t(7);
@@ -1296,8 +1297,7 @@ size_t ExpHeap::getSize() const
  */
 size_t ExpHeap::getFreeSize() const
 {
-    ConditionalScopedLock<CriticalSection> lock(const_cast<CriticalSection*>(&mCS),
-                                                isLockEnabled());
+    auto lock = makeScopedHeapLock();
     size_t freeSize = 0;
 
     for (auto& block : mFreeList)
@@ -1322,8 +1322,7 @@ size_t ExpHeap::getMaxAllocatableSize(int alignment) const
         return 0;
     }
 
-    ConditionalScopedLock<CriticalSection> lock(const_cast<CriticalSection*>(&mCS),
-                                                isLockEnabled());
+    auto lock = makeScopedHeapLock();
 
     MemBlock* block;
     size_t padding = 0;
@@ -1390,8 +1389,7 @@ s32 ExpHeap::compareMemBlockAddr_(const MemBlock* pA, const MemBlock* pB)
  */
 bool ExpHeap::tryCheckFreeList() const
 {
-    ConditionalScopedLock<CriticalSection> lock(const_cast<CriticalSection*>(&mCS),
-                                                isLockEnabled());
+    auto lock = makeScopedHeapLock();
     for (auto& block : mFreeList)
     {
         if (block.mOffset != 0)
@@ -1414,8 +1412,7 @@ bool ExpHeap::tryCheckFreeList() const
  */
 bool ExpHeap::tryCheckUseList() const
 {
-    ConditionalScopedLock<CriticalSection> lock(const_cast<CriticalSection*>(&mCS),
-                                                isLockEnabled());
+    auto lock = makeScopedHeapLock();
     return mUseList.checkLinks();
 }
 
@@ -1441,8 +1438,7 @@ size_t ExpHeap::getAllocatedSize(void* pPtr)
  */
 void ExpHeap::dumpYAML(WriteStream& rStream, int indent) const
 {
-    ConditionalScopedLock<CriticalSection> lock(const_cast<CriticalSection*>(&mCS),
-                                                isLockEnabled());
+    auto lock = makeScopedHeapLock();
 
     Heap::dumpYAML(rStream, indent);
 
@@ -1503,8 +1499,7 @@ void ExpHeap::dumpYAML(WriteStream& rStream, int indent) const
 template <>
 void PrintFormatter::out<ExpHeap>(const ExpHeap& rHeap, const char*, PrintOutput* pOutput)
 {
-    ConditionalScopedLock<CriticalSection> lock(const_cast<CriticalSection*>(&rHeap.mCS),
-                                                rHeap.isLockEnabled());
+    auto lock = rHeap.makeScopedHeapLock();
 
     PrintFormatter::out<Heap>(rHeap, nullptr, pOutput);
 
@@ -1542,8 +1537,7 @@ void ExpHeap::setFindFreeBlockMode(FindFreeBlockMode mode)
  */
 void ExpHeap::dump() const
 {
-    ConditionalScopedLock<CriticalSection> lock(const_cast<CriticalSection*>(&mCS),
-                                                isLockEnabled());
+    auto lock = makeScopedHeapLock();
     dumpUseList();
     dumpFreeList();
 }

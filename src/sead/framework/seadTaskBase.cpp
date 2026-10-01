@@ -227,7 +227,7 @@ bool TaskBase::isDescendantOf(TaskBase* pTask) const
  */
 void TaskBase::adjustHeap(s32 index)
 {
-    ScopedLock<CriticalSection> lock(&mTaskMgr->mCriticalSection);
+    ScopedCriticalSectionLock lock(mTaskMgr->getCriticalSection());
     Heap* heap = mHeapArray.getHeap(index);
 
     if (heap != nullptr && !mHeapArray.mAdjusted[index])
@@ -266,7 +266,7 @@ void TaskBase::adjustHeapWithSlackWithoutLock_(s32 index, u32 slack)
  */
 void TaskBase::adjustHeapAll()
 {
-    ScopedLock<CriticalSection> lock(&mTaskMgr->mCriticalSection);
+    ScopedCriticalSectionLock lock(mTaskMgr->getCriticalSection());
 
     for (s32 i = 0; i < HeapMgr::getRootHeapNum(); i++)
     {
@@ -287,7 +287,7 @@ void TaskBase::adjustHeapAll()
  */
 void TaskBase::adjustHeapWithSlack(s32 index, u32 slack)
 {
-    ScopedLock<CriticalSection> lock(&mTaskMgr->mCriticalSection);
+    ScopedCriticalSectionLock lock(mTaskMgr->getCriticalSection());
     adjustHeapWithSlackWithoutLock_(index, slack);
 }
 

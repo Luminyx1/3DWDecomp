@@ -298,9 +298,8 @@ void DebugFontMgrNvn::print(DrawContext* pDrawContext, const Projection& rProjec
     }
 
     Matrix44f projView;
-    Matrix44CalcCommon<f32>::multiply(projView, rProjection.getDeviceProjectionMatrix(),
-                                      rCamera.getMatrix());
-    Matrix44CalcCommon<f32>::multiply(*reinterpret_cast<Matrix44f*>(uniform), projView, rMatrix);
+    projView.setMul(rProjection.getDeviceProjectionMatrix(), rCamera.getMatrix());
+    reinterpret_cast<Matrix44f*>(uniform)->setMul(projView, rMatrix);
     nvnCommandBufferBindUniformBuffer(commandBuffer, NVN_SHADER_STAGE_VERTEX, 0,
                                       nvnBufferGetAddress(&mUniformBuffer) + offset,
                                       vertexUniformSize);

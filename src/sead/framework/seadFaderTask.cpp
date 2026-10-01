@@ -81,7 +81,7 @@ FaderTaskBase::FaderTaskBase(const TaskConstructArg& rArg, const char* pName)
 void FaderTaskBase::onCreateDone_(TaskBase* pTask)
 {
     mToTask = pTask;
-    pTask->mInternalFlag.setBit(0);
+    pTask->setInFade();
 
     switch (mStartType)
     {
@@ -105,10 +105,10 @@ void FaderTaskBase::calcCore_()
     case cFaderState_FadeOut:
         if (mFrame > mFadeOutEndFrame)
         {
-            CriticalSection& cs = mTaskMgr->mCriticalSection;
+            CriticalSection* cs = mTaskMgr->getCriticalSection();
             mFrame = mFadeOutEndFrame + 1;
 
-            if (cs.tryLock())
+            if (cs->tryLock())
             {
                 onFadeEvent_(FadeEvent(FadeEvent::cFadeOutEnd));
                 mFaderState = cFaderState_Wait;
@@ -164,7 +164,7 @@ void FaderTaskBase::calcCore_()
                     break;
                 }
 
-                cs.unlock();
+                cs->unlock();
             }
         }
 
@@ -201,12 +201,12 @@ void FaderTaskBase::calcCore_()
 
             if (mFromTask != nullptr)
             {
-                mFromTask->mInternalFlag.resetBit(0);
+                mFromTask->resetInFade();
             }
 
             if (mToTask != nullptr)
             {
-                mToTask->mInternalFlag.resetBit(0);
+                mToTask->resetInFade();
             }
         }
 
@@ -259,7 +259,7 @@ void FaderTaskBase::setFrames(s32 fadeOutFrame, s32 waitFrame, s32 fadeInFrame)
  */
 bool FaderTaskBase::startAsCreate_(const CreateArg& rArg)
 {
-    ScopedLock<CriticalSection> lock(&mTaskMgr->mCriticalSection);
+    ScopedCriticalSectionLock lock(mTaskMgr->getCriticalSection());
 
     if (mFaderState != cFaderState_None)
     {
@@ -289,7 +289,7 @@ bool FaderTaskBase::startAsCreate_(const CreateArg& rArg)
  */
 bool FaderTaskBase::startCreate_()
 {
-    ScopedLock<CriticalSection> lock(&mTaskMgr->mCriticalSection);
+    ScopedCriticalSectionLock lock(mTaskMgr->getCriticalSection());
 
     if (mStartType == cStartType_Takeover)
     {
@@ -308,7 +308,7 @@ bool FaderTaskBase::startCreate_()
  */
 bool FaderTaskBase::startAsTakeover_(TaskBase* pFrom, const CreateArg& rArg)
 {
-    ScopedLock<CriticalSection> lock(&mTaskMgr->mCriticalSection);
+    ScopedCriticalSectionLock lock(mTaskMgr->getCriticalSection());
 
     if (mFaderState != cFaderState_None)
     {
@@ -323,7 +323,7 @@ bool FaderTaskBase::startAsTakeover_(TaskBase* pFrom, const CreateArg& rArg)
     }
 
     mFromTask = pFrom;
-    pFrom->mInternalFlag.setBit(0);
+    pFrom->setInFade();
     TaskEvent event(3);
     mFromTask->onEvent(event);
     mCreateArg = rArg;
@@ -343,7 +343,7 @@ bool FaderTaskBase::startAsTakeover_(TaskBase* pFrom, const CreateArg& rArg)
  */
 bool FaderTaskBase::startAsTransit_(TaskBase* pFrom, TaskBase* pTo)
 {
-    ScopedLock<CriticalSection> lock(&mTaskMgr->mCriticalSection);
+    ScopedCriticalSectionLock lock(mTaskMgr->getCriticalSection());
 
     if (mFaderState != cFaderState_None)
     {
@@ -353,8 +353,8 @@ bool FaderTaskBase::startAsTransit_(TaskBase* pFrom, TaskBase* pTo)
     mFromTask = pFrom;
     mStartType = cStartType_Transit;
     mToTask = pTo;
-    mFromTask->mInternalFlag.setBit(0);
-    mToTask->mInternalFlag.setBit(0);
+    mFromTask->setInFade();
+    mToTask->setInFade();
     mFrame = 0;
     mFaderState = cFaderState_FadeOut;
     mFadeInRequested = false;
@@ -371,7 +371,7 @@ bool FaderTaskBase::startAsTransit_(TaskBase* pFrom, TaskBase* pTo)
  */
 bool FaderTaskBase::startAsPush_(TaskBase* pFrom, const CreateArg& rArg)
 {
-    ScopedLock<CriticalSection> lock(&mTaskMgr->mCriticalSection);
+    ScopedCriticalSectionLock lock(mTaskMgr->getCriticalSection());
 
     if (mFaderState != cFaderState_None)
     {
@@ -387,7 +387,7 @@ bool FaderTaskBase::startAsPush_(TaskBase* pFrom, const CreateArg& rArg)
     }
 
     mFromTask = pFrom;
-    pFrom->mInternalFlag.setBit(0);
+    pFrom->setInFade();
     mFrame = 0;
     mFaderState = cFaderState_FadeOut;
     mFadeInRequested = false;
@@ -404,7 +404,7 @@ bool FaderTaskBase::startAsPush_(TaskBase* pFrom, const CreateArg& rArg)
  */
 bool FaderTaskBase::startAsPop_(TaskBase* pFrom, TaskBase* pTo)
 {
-    ScopedLock<CriticalSection> lock(&mTaskMgr->mCriticalSection);
+    ScopedCriticalSectionLock lock(mTaskMgr->getCriticalSection());
 
     if (mFaderState != cFaderState_None)
     {
@@ -413,7 +413,7 @@ bool FaderTaskBase::startAsPop_(TaskBase* pFrom, TaskBase* pTo)
 
     mFromTask = pFrom;
     mStartType = cStartType_Pop;
-    pFrom->mInternalFlag.setBit(0);
+    pFrom->setInFade();
     mToTask = pTo;
     mFrame = 0;
     mFaderState = cFaderState_FadeOut;

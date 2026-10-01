@@ -80,6 +80,8 @@ private:
     Atomic<u32> mSpinLock = 0;
 };
 
+using ScopedJobQueueLock = ScopedLock<JobQueueLock>;
+
 class JobQueue : public hostio::Node, public INamable
 {
 public:
