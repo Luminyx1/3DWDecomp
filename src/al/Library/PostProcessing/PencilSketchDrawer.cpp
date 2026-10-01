@@ -7,6 +7,14 @@ const sead::Color4f cDefaultOffsetColor(-0.5f, -0.5f, -0.5f, 0.0f);
 namespace al {
 
 /**
+ * Constructs the pencil sketch drawing parameters.
+ */
+PencilSketchDrawParam::PencilSketchDrawParam() {
+    mParamObj = new ParameterObj();
+    mIsEnable = new ParameterBool(false, mParamObj, "IsEnable", "IsEnable", "", true);
+}
+
+/**
  * Checks the Enable flag.
  * @return Whether Enable is set.
  */

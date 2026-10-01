@@ -8,6 +8,10 @@
 #include "Library/Yaml/ParameterBase.hpp"
 #include "Project/Base/ParamRequestInterp.hpp"
 
+namespace sead {
+class Camera;
+}
+
 namespace agl {
 class DrawContext;
 class RenderBuffer;
@@ -119,6 +123,7 @@ public:
 private:
     u8 _0[0x8];
     ParamRequestInterp* mRequestInterp;
+    u8 _10[0x28];
 };
 
 class EdgeDrawPostEffectParam : public IUseRequestParam {
@@ -152,7 +157,11 @@ private:
 class EdgeDrawerPostEffect {
 public:
     EdgeDrawerPostEffect(ShaderHolder* pShaderHolder, s32 viewNum);
-    ~EdgeDrawerPostEffect();
+    virtual ~EdgeDrawerPostEffect();
+    void draw(agl::DrawContext* pContext, const agl::RenderBuffer* pRenderBuffer,
+              const agl::RenderBuffer* pEdgeBuffer, const agl::TextureData* pColor,
+              const agl::TextureData* pLinearDepth, const agl::TextureData* pNormal, s32 viewIndex,
+              const sead::Camera& rCamera, f32 near, f32 far, bool isKeepBuffer) const;
     void endInit();
     void clearRequest();
     void update();
@@ -161,7 +170,7 @@ public:
     bool isEnable() const;
 
 private:
-    u8 _0[0x30];
+    u8 _8[0x28];
     ParamRequestInterp* mRequestInterp;
 };
 }  // namespace al
