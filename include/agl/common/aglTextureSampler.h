@@ -74,6 +74,7 @@ public:
     void setReference() const;
 
     const TextureData& getTextureData() const { return mTextureData; }
+    const driver::NVNsampler_& getSampler() const { return mSampler; }
 
     void setWrap(u8 wrapX, u8 wrapY, u8 wrapZ)
     {

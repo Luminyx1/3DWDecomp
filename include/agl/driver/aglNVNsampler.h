@@ -18,6 +18,7 @@ public:
     void updateTextureId(s32);
 
     u64 getHandle() const { return reinterpret_cast<u64>(_0); }
+    s32 getSamplerID() const { return _8; }
 
 private:
     void* _0;
