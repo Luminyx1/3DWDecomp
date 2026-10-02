@@ -12,6 +12,10 @@
 #include <nn/util/util_MathTypes.h>
 #include <nn/util/util_IntrusiveList.h>
 
+namespace nn::font {
+struct Rectangle;
+}
+
 namespace nn::ui2d {
 class AnimTransform;
 class Layout;
@@ -94,6 +98,7 @@ public:
     void InsertChild(Pane*, Pane*);
     void RemoveChild(Pane*);
     void GetVertexPos() const;
+    const nn::font::Rectangle GetPaneRect() const;
 
     static Pane* FromLink(nn::util::IntrusiveListNode* node) {
         return reinterpret_cast<Pane*>(reinterpret_cast<char*>(node) - 8);
@@ -112,6 +117,23 @@ public:
     float GetSizeY() const { return mSizeY; }
     int GetBasePositionX() const { return mOriginFlags & 3; }
     int GetBasePositionY() const { return (mOriginFlags >> 2) & 3; }
+
+    const nn::util::Float3& GetTranslate() const {
+        return *reinterpret_cast<const nn::util::Float3*>(&mPositionX);
+    }
+
+    void SetTranslate(const nn::util::Float3& rTranslate) {
+        *reinterpret_cast<nn::util::Float3*>(&mPositionX) = rTranslate;
+        mFlags |= 0x10;
+    }
+
+    void SetVisible(bool isVisible) {
+        if (isVisible) {
+            mFlags |= 1;
+        } else {
+            mFlags &= ~1;
+        }
+    }
 
     // Sets the X/Y position and marks the global matrix dirty.
     void SetPositionXY(float x, float y) {

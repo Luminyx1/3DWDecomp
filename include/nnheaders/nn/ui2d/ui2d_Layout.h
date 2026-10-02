@@ -9,7 +9,7 @@
 #include <nn/font/font_Util.h>
 #include <nn/gfx/gfx_Types.h>
 #include <nn/util/util_IntrusiveList.h>
-namespace nn::font { template<class T> class TagProcessorBase; }
+namespace nn::font { template<class T> class TagProcessorBase; struct Rectangle; }
 namespace nn::gfx { class DescriptorSlot; class TextureInfo; }
 
 namespace nn {
@@ -22,8 +22,14 @@ class ResourceAccessor;
 class LayoutPaneFactory;
 enum RenderTargetTextureLifetime : int;
 class GroupAnimator;
+class GroupContainer;
 class GroupArrayAnimator;
-struct BuildResultInformation;
+struct BuildResultInformation {
+    u64 _0;
+    u64 _8;
+};
+class ControlCreator;
+class TextSearcher;
 struct BuildArgSet;
 struct BuildResSet;
 struct ResVectorGraphicsTextureList;
@@ -31,6 +37,13 @@ struct ResVectorGraphicsTextureList;
 class Layout {
 public:
     struct PartsBuildDataSet;
+
+    struct BuildOption {
+        u64 _0 = 0;
+        u64 _8 = 0;
+        u64 _10 = 0;
+        u64 _18 = 0;
+    };
     NN_RUNTIME_TYPEINFO_BASE();
     Layout();
 
@@ -65,6 +78,12 @@ public:
     static void* AllocateMemory(size_t);
     static void FreeMemory(void* src);
     static void SetDynamicTextureInitializationMemoryInfo(int captureCount, int vectorCount, int dynamicCount, int stackCount);
+    bool BuildWithName(BuildResultInformation* pResult, nn::gfx::Device* pDevice,
+                       ResourceAccessor* pAccessor, ControlCreator* pControlCreator,
+                       TextSearcher* pTextSearcher, const BuildOption& rOption, const char* pName,
+                       bool isUtf8);
+    void Finalize(nn::gfx::Device* pDevice);
+    nn::font::Rectangle GetLayoutRect() const;
     GroupAnimator* CreateGroupAnimatorAuto(nn::gfx::Device* device, const char* name, bool enabled);
     const void* GetAnimResourceData(const char* pName) const;
 
@@ -96,6 +115,9 @@ public:
 
     Pane* GetRootPane() const { return mRootPane; }
     const char* GetName() const { return static_cast<const char*>(_30); }
+    GroupContainer* GetGroupContainer() const { return static_cast<GroupContainer*>(_20); }
+    ResourceAccessor* GetResourceAccessor() const { return mResourceAccessor; }
+    void Calculate(DrawInfo& rDrawInfo, bool isForceGlbMtxDirty = false) { CalculateImpl(rDrawInfo, isForceGlbMtxDirty); }
 
     nn::util::IntrusiveListNode mAnimTransformList;
     Pane* mRootPane;

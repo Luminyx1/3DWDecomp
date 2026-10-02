@@ -78,6 +78,9 @@ public:
     GraphicsResource();
     ~GraphicsResource();
 
+    void Setup(nn::gfx::Device* pDevice, int charMax, nn::gfx::MemoryPool* pMemoryPool,
+               ptrdiff_t memoryPoolOffset, size_t memoryPoolSize, nn::font::RectDrawer* pRectDrawer,
+               float zNear);
     void Finalize(nn::gfx::Device*);
     void RegisterCommonSamplerSlot(RegisterSamplerSlot, void*);
     void AcquireCommonSamplerSlot(AcquireSamplerSlot, void*);

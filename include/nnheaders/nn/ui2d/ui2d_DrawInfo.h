@@ -18,6 +18,8 @@ public:
     virtual ~DrawInfo();
     void ResetDrawState();
     void SetProjectionMtx(const nn::util::MatrixT4x4fType& rProjection);
+    void SetViewMtx(const nn::util::MatrixT4x3fType& rView) { m_ViewMtx = rView; }
+    void SetGraphicsResource(const GraphicsResource* pResource) { m_pGraphicsResource = pResource; }
     void ConfigureBeforeDrawing(Layout* pLayout);
     void ConfigureAfterDrawing();
     void ResetCurrentShader();

@@ -12,7 +12,7 @@ public:
         int bufferLengthOverride;
     };
     struct TextInfoUtf8;
-    virtual ~TextSearcher();
+    virtual ~TextSearcher() {}
     virtual void SearchText(TextInfo* pInfo, const char* pId, Layout* pLayout,
                             TextBox* pTextBox, Layout* pRootLayout) = 0;
     // The default searcher supplies no UTF-8 text for any identifier or layout.

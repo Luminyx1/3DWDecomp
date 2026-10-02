@@ -2,6 +2,9 @@
 #include <nn/ui2d/ui2d_Pane.h>
 #include <nn/ui2d/ui2d_TextSearcher.h>
 #include <nn/font/font_TagProcessorBase.h>
+namespace nn::font {
+class Font;
+}
 namespace nn::ui2d {
 struct BuildResultInformation;
 class TextBox : public Pane {
@@ -41,14 +44,57 @@ public:
     bool ValidateNextPrintableChar(const u16* current, const u16* next);
     u32 GetCharFromPointer(const char* text);
     u32 GetCharFromPointer(const u16* text);
+
+    const u16* GetStringBuffer() const { return static_cast<const u16*>(mTextBuffer); }
+    u16* GetStringBuffer() { return static_cast<u16*>(mTextBuffer); }
+    const nn::font::Font* GetFont() const;
+    void SetFont(const nn::font::Font* pFont);
+    void SetFontSize(const Size& rSize);
+    u16 GetStringBufferLength() const;
+
+    const Size& GetFontSize() const { return mFontSize; }
+    u16 GetStringLength() const { return mTextLength; }
+    const char* GetTextId() const { return mTextId; }
+    float GetLineSpace() const { return mLineSpace; }
+    u8 GetTextPositionH() const { return mTextPosition & 3; }
+    u8 GetTextPositionV() const { return (mTextPosition >> 2) & 3; }
+    bool IsTextFlag12() const { return mTextBits._12; }
+    nn::font::TagProcessorBase<u16>* GetTagProcessor() const { return mTagProcessor; }
+
+    void SetTagProcessor(nn::font::TagProcessorBase<u16>* pTagProcessor) {
+        bool isChanged = mTagProcessor != pTagProcessor;
+        mTextBits.isTagProcessorDirty = mTextBits.isTagProcessorDirty || isChanged;
+
+        if (isChanged) {
+            mTagProcessor = pTagProcessor;
+        }
+    }
+
 protected:
     // Text storage and rendering members await reconstruction; offsets are verified against constructors.
     u8 _d2[6];
     void* mTextBuffer;
-    u8 _e0[0x32];
+    const char* mTextId;
+    u8 _e8[0x10];
+    Size mFontSize;
+    float mLineSpace;
+    float mCharSpace;
+    nn::font::TagProcessorBase<u16>* mTagProcessor;
+    u16 _110;
     u16 mTextLength;
-    u16 mTextFlags;
-    u8 _116[0x2a];
+    union {
+        u16 mTextFlags;
+
+        struct {
+            u16 _0 : 2;
+            u16 isTagProcessorDirty : 1;
+            u16 _3 : 9;
+            u16 _12 : 1;
+            u16 _13 : 3;
+        } mTextBits;
+    };
+    u8 mTextPosition;
+    u8 _117[0x29];
     Material* mMaterial;
     u8 _148[0x10];
 };
