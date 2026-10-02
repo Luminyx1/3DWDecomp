@@ -30,13 +30,17 @@ public:
                          const agl::TextureData* pColor0, const agl::TextureData* pColor1,
                          const agl::TextureData* pColor2, const agl::TextureData* pColor3,
                          const agl::RenderTargetDepth* pDepth);
-    RenderBufferAttacher(agl::RenderBuffer* pRenderBuffer, s32 mipLevel,
+    RenderBufferAttacher(agl::RenderBuffer* pRenderBuffer, s32 slice,
                          const agl::TextureData* pColor0, const agl::TextureData* pColor1,
                          const agl::TextureData* pColor2, const agl::TextureData* pColor3,
                          const agl::RenderTargetDepth* pDepth);
     ~RenderBufferAttacher();
 
 private:
+    void attach_(const agl::TextureData* pColor0, const agl::TextureData* pColor1,
+                 const agl::TextureData* pColor2, const agl::TextureData* pColor3,
+                 const agl::RenderTargetDepth* pDepth);
+
     agl::RenderBuffer* mRenderBuffer;
     agl::RenderTargetColor mColorTargets[4];
     const agl::TextureData* mColorTextures[4];
