@@ -172,7 +172,9 @@ private:
 };
 
 struct ResMaterialData {
-    u8 _0[0x20];
+    u8 _0[0x10];
+    nn::util::BinTPtr<ResRenderInfo> pRenderInfoArray;
+    nn::util::BinTPtr<nn::util::ResDic> pRenderInfoDic;
     nn::util::BinTPtr<ResShaderAssignData> pShaderAssign;
     nn::util::BinTPtr<const nn::gfx::TextureView*> pTextureArray;
     nn::util::BinTPtr<nn::util::BinPtrToString> pTextureNameArray;
@@ -593,6 +595,14 @@ public:
     typedef void (*TextureChangeCallback)(MaterialObj* pMaterial, int index);
 
     const ResMaterial* GetResource() const { return m_pRes; }
+    // paramIndex selects a shader parameter whose source value is returned.
+    template <typename T>
+    const T* GetShaderParam(int paramIndex) const
+    {
+        const ResShaderParam* pParam = m_pRes->GetShaderParam(paramIndex);
+        return reinterpret_cast<const T*>(static_cast<const u8*>(m_pParamSource) +
+                                          pParam->GetSrcOffset());
+    }
     bool IsBlockBufferValid() const { return m_Flag & Flag_BlockBufferValid; }
 
     BufferImpl* GetMaterialBlock(int bufferIndex)

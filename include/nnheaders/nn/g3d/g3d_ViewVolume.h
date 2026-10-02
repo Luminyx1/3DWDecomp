@@ -15,10 +15,19 @@ public:
     // top/bottom/left/right and near/far bound the orthographic volume transformed by matrix.
     void SetOrtho(f32 top, f32 bottom, f32 left, f32 right, f32 near, f32 far, const nn::util::neon::MatrixRowMajor4x3fType& matrix);
     // shape is tested against this volume; Ex returns -1 outside, 0 crossing, or 1 inside.
+    Aabb& GetAabb() { return bounds; }
+    // index selects one of the six clipping planes.
+    Plane& GetPlane(int index) { return planes[index]; }
+    void SetPlaneCount(int count) { planeCount = count; }
+    void SetUseBounds(u32 use) { useBounds = use; }
+
     bool TestIntersection(const nn::g3d::Sphere& shape) const;
     s32 TestIntersectionEx(const nn::g3d::Sphere& shape) const;
     bool TestIntersection(const nn::g3d::Aabb& shape) const;
     s32 TestIntersectionEx(const nn::g3d::Aabb& shape) const;
+
+    // Empties the volume so nothing is culled against it.
+    void ClearPlanes() { planeCount = 0; }
 
 private:
     Aabb bounds;
