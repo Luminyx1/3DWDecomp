@@ -179,6 +179,12 @@ public:
     void genMessage(sead::hostio::Context* pContext);
     void listenPropertyEvent(const sead::hostio::PropertyEvent* pEvent);
 
+    Context& getContext(s32 context) const { return getContext_(context); }
+
+    void setEnable(bool isEnable) { *mEnable = isEnable; }
+
+    bool isEnable() const { return *mEnable && isEnableContext(-1); }
+
 protected:
     void postRead_() override;
     void callbackNotAppliable_(utl::IParameterObj* pObj, utl::ParameterBase* pParam,

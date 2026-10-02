@@ -142,6 +142,8 @@ public:
     void genMessage(sead::hostio::Context* pContext);
     void listenPropertyEvent(const sead::hostio::PropertyEvent* pEvent);
 
+    bool isEnable() const { return *mEnable && isEnableContext(-1); }
+
 private:
     void drawCopy_(DrawContext* pDrawContext, const Tex& rDst, const Tex& rSrc, bool isReduce,
                    bool isFirst, bool isThreshold, f32 threshold, f32 scale,

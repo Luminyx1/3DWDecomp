@@ -65,6 +65,7 @@ public:
     void listenPropertyEventDebugParameter(const sead::hostio::PropertyEvent* pEvent);
 
     s32 getShadowMapType() const { return *mShadowMapType; }
+    void setEnableHiZ(bool isEnable) { *mEnableHiZ = isEnable; }
     s32 getWidth() const { return *mSizeW; }
     s32 getHeight() const { return *mSizeH; }
     const TextureSampler* getDepthSampler() const { return mDepthSampler; }

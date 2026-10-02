@@ -3,7 +3,9 @@
 #include <basis/seadTypes.h>
 #include <math/seadBoundBox.h>
 #include <math/seadMatrix.h>
+#include <math/seadGeometry.h>
 #include <math/seadVector.h>
+#include <new>
 
 namespace sead {
 class Projection;
@@ -14,6 +16,19 @@ namespace agl::cull {
 class ViewFrustumCulling {
 public:
     ViewFrustumCulling();
+    ViewFrustumCulling(const sead::Matrix34f& rViewMtx, const sead::Matrix44f& rProjMtx, f32 near,
+                       f32 far, f32 fovy, f32 aspect, const sead::Vector2f& rOffset)
+    {
+        // Same member defaults as the out-of-line constructor, then a direct update.
+        for (s32 i = 0; i < 6; i++)
+        {
+            new (&mPlane[i]) sead::Plane3f(sead::Vector3f::ex, 0.0f);
+        }
+
+        new (&_204) sead::BoundBox3f();
+        mBoundBox = sead::BoundBox3f();
+        update(rViewMtx, rProjMtx, near, far, fovy, aspect, rOffset);
+    }
     ViewFrustumCulling& operator=(const ViewFrustumCulling& rOther);
 
     void update(const sead::Matrix34f& rViewMtx, const sead::Projection& rProjection);

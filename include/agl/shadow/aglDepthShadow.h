@@ -89,6 +89,7 @@ public:
     {
         return sead::Mathi::min(sead::Mathi::max(*mCascadeNum, 1), mUnits.size());
     }
+    s32 getCascadeNumParam() const { return *mCascadeNum; }
     DepthShadowUnit& getUnit(s32 index) { return mUnits[index]; }
     const DepthShadowUnit& getUnit(s32 index) const { return mUnits[index]; }
     LightMatrix& getLightMatrix() { return mLightMatrix; }

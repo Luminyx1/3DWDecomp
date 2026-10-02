@@ -61,6 +61,10 @@ public:
     void genMessage(sead::hostio::Context* pContext);
     void listenPropertyEvent(const sead::hostio::PropertyEvent* pEvent);
 
+    Context& getContext(s32 context) { return mContexts[context]; }
+
+    void offFlag(u32 flag) { mFlags &= ~flag; }
+
 private:
     sead::Buffer<Context> mContexts;
     s32 mVariation2 = 0;

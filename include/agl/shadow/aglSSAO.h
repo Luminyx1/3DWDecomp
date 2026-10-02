@@ -109,6 +109,20 @@ public:
     void listenPropertyEventDebugParameter(const sead::hostio::PropertyEvent* pEvent);
 
     bool isEnable() const { return *mIsEnable; }
+    const TextureSampler& getAOSampler() const { return mContexts.front().mAOSampler; }
+
+    void set_53c(f32 value) { _53c = value; }
+    void setAOFar(f32 far) { *mAOFar = far; }
+
+    void setSSAOParameter(f32 radius, f32 distAttn, f32 density, s32 samplePairNum,
+                          f32 depthOffset)
+    {
+        *mRadius = radius;
+        *mDistAttn = distAttn;
+        *mDensity = density;
+        *mSamplePairNum = samplePairNum;
+        *mDepthOffset = depthOffset;
+    }
 
 protected:
     void postRead_() override;

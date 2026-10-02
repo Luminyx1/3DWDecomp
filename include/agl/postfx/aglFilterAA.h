@@ -93,6 +93,22 @@ public:
     void genMessage(sead::hostio::Context* pContext);
     void listenPropertyEvent(const sead::hostio::PropertyEvent* pEvent);
 
+    void setType(Type type) { *mType = type; }
+    void setEnable(bool enable) { *mEnable = enable; }
+    bool isEnable() const { return *mEnable; }
+    f32 getAlphaOut() const { return *mAlphaOut; }
+    void setAlphaOut(f32 alphaOut) { *mAlphaOut = alphaOut; }
+    const sead::Color4f& getLumaCoeff() const { return *mLumaCoeff; }
+
+    void setFXAAParam(f32 alphaOut, s32 detectEdgeQuality, const sead::Color4f& lumaCoeff,
+                      f32 maxSpan)
+    {
+        *mDetectEdgeQuality = detectEdgeQuality;
+        *mLumaCoeff = lumaCoeff;
+        *mMaxSpan = maxSpan;
+        *mAlphaOut = alphaOut;
+    }
+
 private:
     using ProgramTable = sead::SafeArray<sead::SafeArray<const ShaderProgram*, 3>, 7>;
 

@@ -91,6 +91,10 @@ public:
     void calcGPU_StaticDepthShadow(s32 index, const sead::Matrix44f* pProjMtx,
                                    const sead::Matrix34f& rViewMtx);
     void release(s32 index) const;
+    void draw(DrawContext* pDrawContext, s32 index, const RenderTargetDepth* pDepthTarget,
+              const RenderTargetDepth* pHiZTarget, const TextureData* pDepth,
+              const TextureData* pShadowMap, const TextureSampler* pStaticShadowMap,
+              s32 cascadeNum) const;
     void clearShadowBuffer(DrawContext* pDrawContext, s32 index) const;
     s32 getPassType() const;
     const TextureSampler* getPrevSampler(DrawContext* pDrawContext, s32 index, s32 pass) const;
@@ -107,6 +111,7 @@ public:
     void listenPropertyEvent(const sead::hostio::PropertyEvent* pEvent);
 
     bool isEnable() const { return *mIsEnable; }
+    const Context& getContext(s32 index) const { return mContexts[index]; }
 
 private:
     void getTextureFormat_(s32 index, TextureFormat& rFormat, TextureFormat& rTempFormat) const;
