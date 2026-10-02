@@ -17,7 +17,7 @@ namespace al {
  */
 CameraPoserFixLook::CameraPoserFixLook(const char* pName)
     : CameraPoser_RS(pName), mTargetTrans(&sLookAtPos) {
-    mUp = sead::Vector3f::ey;
+    mUp.set(sead::Vector3f::ey);
 }
 
 /**
@@ -32,9 +32,9 @@ void CameraPoserFixLook::init() {
  * @param rInfo Camera start info.
  */
 void CameraPoserFixLook::start(const CameraStartInfo& rInfo) {
-    mAt = *mTargetTrans;
-    mEye = alCameraPoserFunction::getPreCameraPos(this);
-    mUp = alCameraPoserFunction::getPreUpDir(this);
+    mAt.set(*mTargetTrans);
+    mEye.set(alCameraPoserFunction::getPreCameraPos(this));
+    mUp.set(alCameraPoserFunction::getPreUpDir(this));
     mFovyDegree = alCameraPoserFunction::getPreFovyDegree(this);
 }
 
