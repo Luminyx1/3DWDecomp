@@ -1,4 +1,4 @@
-#include "Project/Draw/StressParam.hpp"
+#include "Project/Draw/GraphicsStressDirector.hpp"
 
 #include <agl/frame_control/aglGPUStressChecker.h>
 
@@ -8,7 +8,7 @@
 #include "Library/Nerve/NerveSetup.hpp"
 #include "Library/Nerve/NerveUtil.hpp"
 #include "Project/Draw/GraphicsQualityController.hpp"
-#include "Project/Draw/GraphicsStressDirector.hpp"
+#include "Project/Draw/StressParam.hpp"
 
 namespace {
 using namespace al;
@@ -67,26 +67,46 @@ void StressParam::init() {
  * @return Whether all values are equal.
  */
 bool StressParam::operator==(const StressParam& rOther) const {
-    if (*mScreenWidthScale != *rOther.mScreenWidthScale)
+    if (*mScreenWidthScale != *rOther.mScreenWidthScale) {
         return false;
-    if (*mScreenHeightScale != *rOther.mScreenHeightScale)
+    }
+
+    if (*mScreenHeightScale != *rOther.mScreenHeightScale) {
         return false;
-    if (*mIsUsing16BitDepth != *rOther.mIsUsing16BitDepth)
+    }
+
+    if (*mIsUsing16BitDepth != *rOther.mIsUsing16BitDepth) {
         return false;
-    if (*mIsUsingLppSpcMask != *rOther.mIsUsingLppSpcMask)
+    }
+
+    if (*mIsUsingLppSpcMask != *rOther.mIsUsingLppSpcMask) {
         return false;
-    if (*mIsClearLightBuffer != *rOther.mIsClearLightBuffer)
+    }
+
+    if (*mIsClearLightBuffer != *rOther.mIsClearLightBuffer) {
         return false;
-    if (*mIsClearGBufferViewNrm != *rOther.mIsClearGBufferViewNrm)
+    }
+
+    if (*mIsClearGBufferViewNrm != *rOther.mIsClearGBufferViewNrm) {
         return false;
-    if (*mIsClearGBufferViewDepth != *rOther.mIsClearGBufferViewDepth)
+    }
+
+    if (*mIsClearGBufferViewDepth != *rOther.mIsClearGBufferViewDepth) {
         return false;
-    if (*mIsLppLight != *rOther.mIsLppLight)
+    }
+
+    if (*mIsLppLight != *rOther.mIsLppLight) {
         return false;
-    if (*mAntiAliasingType != *rOther.mAntiAliasingType)
+    }
+
+    if (*mAntiAliasingType != *rOther.mAntiAliasingType) {
         return false;
-    if (*mAntiAliasDetectEdgeQuality != *rOther.mAntiAliasDetectEdgeQuality)
+    }
+
+    if (*mAntiAliasDetectEdgeQuality != *rOther.mAntiAliasDetectEdgeQuality) {
         return false;
+    }
+
     return *mReduceQualityPercentage == *rOther.mReduceQualityPercentage;
 }
 
@@ -119,17 +139,21 @@ StressParam& StressParam::operator=(const StressParam& rOther) {
  */
 void StressParam::interp(const StressParam& rA, const StressParam& rB, f32 rate) {
     *mScreenWidthScale =
-        (s32)lerpValueNew((f32)*rA.mScreenWidthScale, (f32)*rB.mScreenWidthScale, rate);
+        static_cast<s32>(lerpValueNew(static_cast<f32>(*rA.mScreenWidthScale),
+                                      static_cast<f32>(*rB.mScreenWidthScale), rate));
     *mScreenHeightScale =
-        (s32)lerpValueNew((f32)*rA.mScreenHeightScale, (f32)*rB.mScreenHeightScale, rate);
+        static_cast<s32>(lerpValueNew(static_cast<f32>(*rA.mScreenHeightScale),
+                                      static_cast<f32>(*rB.mScreenHeightScale), rate));
     mReduceQualityPercentage.copyLerp(rA.mReduceQualityPercentage, rB.mReduceQualityPercentage,
                                       rate);
 
     mIsUsing16BitDepth.copy(rate < 0.5f ? rA.mIsUsing16BitDepth : rB.mIsUsing16BitDepth);
     mIsUsingLppSpcMask.copy(rate < 0.5f ? rA.mIsUsingLppSpcMask : rB.mIsUsingLppSpcMask);
     mIsClearLightBuffer.copy(rate < 0.5f ? rA.mIsClearLightBuffer : rB.mIsClearLightBuffer);
-    mIsClearGBufferViewNrm.copy(rate < 0.5f ? rA.mIsClearGBufferViewNrm : rB.mIsClearGBufferViewNrm);
-    mIsClearGBufferViewDepth.copy(rate < 0.5f ? rA.mIsClearGBufferViewDepth : rB.mIsClearGBufferViewDepth);
+    mIsClearGBufferViewNrm.copy(rate < 0.5f ? rA.mIsClearGBufferViewNrm :
+                                              rB.mIsClearGBufferViewNrm);
+    mIsClearGBufferViewDepth.copy(rate < 0.5f ? rA.mIsClearGBufferViewDepth :
+                                                rB.mIsClearGBufferViewDepth);
     mAntiAliasingType.copy(rate < 0.5f ? rA.mAntiAliasingType : rB.mAntiAliasingType);
     mIsLppLight.copy(rate < 0.5f ? rA.mIsLppLight : rB.mIsLppLight);
     mAntiAliasDetectEdgeQuality.copyLerp(rA.mAntiAliasDetectEdgeQuality,
@@ -179,8 +203,10 @@ s32 GraphicsStressDirector::getBufferSizeX() const {
         scale = sead::Mathi::min(getCurrentParam().getScreenWidthScale(), limit);
     }
 
-    if (mIsFullResolution)
+    if (mIsFullResolution) {
         return scale * 240 / 160 * 8 * mStressInfo->baseWidth / 1920;
+    }
+
     return scale * 8 * mStressInfo->renderWidth / 1280;
 }
 
@@ -210,8 +236,10 @@ s32 GraphicsStressDirector::getBufferSizeY() const {
         scale = sead::Mathi::min(getCurrentParam().getScreenHeightScale(), limit);
     }
 
-    if (mIsFullResolution)
+    if (mIsFullResolution) {
         return scale * 135 / 90 * 8 * mStressInfo->baseHeight / 1080;
+    }
+
     return scale * 8 * mStressInfo->renderHeight / 720;
 }
 
@@ -236,8 +264,9 @@ void GraphicsStressDirector::setQualityControlEnable(bool isEnable) {
  * @param isForceDisable Whether quality control is forced off.
  */
 void GraphicsStressDirector::setForceDisable(bool isForceDisable) {
-    if (isForceDisable == mIsForceDisable)
+    if (isForceDisable == mIsForceDisable) {
         return;
+    }
 
     mIsForceDisable = isForceDisable;
 
@@ -256,10 +285,12 @@ void GraphicsStressDirector::setForceDisable(bool isForceDisable) {
  */
 void GraphicsStressDirector::setStressInfoMode(bool isSingleMode, s32 mode) {
     mIsSingleMode = isSingleMode;
-    s32 index = (u32)mode > 5 ? 0 : mode;
+    s32 index = static_cast<u32>(mode) > 5 ? 0 : mode;
 
-    if (mode < 0)
+    if (mode < 0) {
         index = 5;
+    }
+
     mStressInfo = &sStressInfos[index];
     mQualityController->setRecoverPercents(mStressInfo->recoverPercents);
 }
@@ -304,28 +335,28 @@ void GraphicsStressDirector::setForceStressOff(bool isForceStressOff) {
         return;
     }
 
-    s32 mode = mStressInfoModeBeforeForceOff;
-
-    if (mode >= 0)
-        mStressInfo = &sStressInfos[(u32)mode > 5 ? 0 : mode];
-    else
-        mStressInfo = &sStressInfos[mIsSingleMode ? 3 : 0];
-    mQualityController->setRecoverPercents(mStressInfo->recoverPercents);
+    if (mStressInfoModeBeforeForceOff >= 0) {
+        setStressInfoMode(mIsSingleMode, mStressInfoModeBeforeForceOff);
+    } else {
+        setSingleMode(mIsSingleMode);
+    }
 }
 
 /**
  * Updates the pseudo anti-aliasing jitter, the requested parameters and the quality controller.
  */
 void GraphicsStressDirector::movement() {
-    if (mIsForceDisable)
+    if (mIsForceDisable) {
         mQualityController->setEnable(false);
+    }
 
     mPseudoAAFrame = modi(mPseudoAAFrame + 3, 2);
 
-    if (mPseudoAAFrame == 0)
+    if (mPseudoAAFrame == 0) {
         mPseudoAAOffset.set(0.0f, 0.0f);
-    else if (mPseudoAAFrame == 1)
+    } else if (mPseudoAAFrame == 1) {
         mPseudoAAOffset.set(0.25f, 0.25f);
+    }
 
     updateRequest();
     mQualityController->setReduceQualityPercentage(getCurrentParam().getReduceQualityPercentage());
@@ -370,8 +401,10 @@ void GraphicsQualityController::exeWait() {
     predictLoad *= scale;
 
     if (mReduceQualityPercentage < predictLoad) {
-        if (!mIsEnable)
+        if (!mIsEnable) {
             return;
+        }
+
         if (mLevel < 5) {
             al::setNerve(this, &NrvGraphicsQualityControllerReduce);
             return;
@@ -380,21 +413,24 @@ void GraphicsQualityController::exeWait() {
         return;
     }
 
-    if (mLevel < 0)
+    if (mLevel < 0) {
         return;
+    }
 
     f32 average = info.mHistory.empty() ? load : info.mHistory(0).mAverage5;
 
-    if (scale * average < mReduceQualityPercentage - mRecoverPercents[mLevel])
+    if (scale * average < mReduceQualityPercentage - mRecoverPercents[mLevel]) {
         al::setNerve(this, &NrvGraphicsQualityControllerRecover);
+    }
 }
 
 /**
  * Lowers the quality by one level.
  */
 void GraphicsQualityController::exeReduce() {
-    if (al::isFirstStep(this))
+    if (al::isFirstStep(this)) {
         mLevel++;
+    }
 
     QualityLevel& level = mQualityLevels[mLevel];
     level.rate = 0.0f;
