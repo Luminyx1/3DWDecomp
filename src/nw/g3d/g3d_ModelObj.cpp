@@ -5,12 +5,23 @@
 
 namespace nn::g3d {
 namespace {
-// value is the current byte count; alignment is the next block's power-of-two requirement.
+/**
+ * @brief Round a byte count up to the required alignment.
+ * @param value Byte count to align.
+ * @param alignment Nonzero power-of-two alignment, in bytes.
+ * @return Aligned byte count.
+ */
 inline size_t AlignBlock(size_t value, size_t alignment) { return (value + alignment - 1) & -alignment; }
 } // namespace
 
 namespace {
-// block receives its offset; size and alignment accumulate requirements using blockAlignment.
+/**
+ * @brief Assign a workspace block offset and update the allocation requirements.
+ * @param block Block whose size is known and whose offset is assigned; empty blocks are skipped.
+ * @param size Accumulated workspace size, updated to include the block.
+ * @param alignment Accumulated alignment requirement, updated if the block requires more alignment.
+ * @param blockAlignment Nonzero power-of-two alignment required by this block, in bytes.
+ */
 inline void AppendWorkspaceBlock(detail::WorkMemoryBlock& block, size_t& size, size_t& alignment,
                                  size_t blockAlignment) {
     if (block.size != 0) {
@@ -21,7 +32,11 @@ inline void AppendWorkspaceBlock(detail::WorkMemoryBlock& block, size_t& size, s
     }
 }
 
-// argument receives the default workspace descriptors used before sizing its resource.
+/**
+ * @brief Reset an initialization argument's workspace sizes and block descriptors.
+ * @tparam Argument Initialization argument type containing workspace sizes and block descriptors.
+ * @param argument Initialization argument whose workspace descriptors are reset.
+ */
 template <class Argument> inline void InitializeWorkspace(Argument& argument) {
     for (auto& block : argument.blocks)
         block.Initialize(0);
@@ -29,7 +44,11 @@ template <class Argument> inline void InitializeWorkspace(Argument& argument) {
     argument.memoryAlignment = 0;
 }
 
-// resource identifies the shape whose default view and bounding settings are initialized.
+/**
+ * @brief Create default initialization settings for a shape resource.
+ * @param resource Shape resource to initialize; its buffering count is assigned by the caller.
+ * @return Shape initialization settings with empty workspace descriptors.
+ */
 inline ShapeObj::InitializeArgument MakeShapeArgument(const ResShape* resource) {
     ShapeObj::InitializeArgument argument;
     argument.resource = resource;
@@ -41,7 +60,12 @@ inline ShapeObj::InitializeArgument MakeShapeArgument(const ResShape* resource) 
     return argument;
 }
 
-// output receives first * second, composing the affine row-vector transforms.
+/**
+ * @brief Compose two affine transforms using row-vector matrix multiplication.
+ * @param output Destination for the product first * second.
+ * @param first First affine transform in the composition.
+ * @param second Second affine transform in the composition.
+ */
 inline void MultiplyWorld(nn::util::Matrix4x3fType* output, const nn::util::Matrix4x3fType& first,
                           const nn::util::Matrix4x3fType& second) {
     const float32x4_t a0 = first._m.val[0], a1 = first._m.val[1];
@@ -67,6 +91,9 @@ inline void MultiplyWorld(nn::util::Matrix4x3fType* output, const nn::util::Matr
 }
 } // namespace
 
+/**
+ * @brief Calculate workspace sizes, alignment, and offsets for the configured model.
+ */
 void ModelObj::InitializeArgument::CalculateMemorySize() {
     const ResModel* model = resource;
     const ResSkeleton* skeletonResource = model->GetSkeleton();
@@ -130,7 +157,13 @@ void ModelObj::InitializeArgument::CalculateMemorySize() {
     AppendWorkspaceBlock(blocks[8], memorySize, memoryAlignment, 16);
 }
 
-// argument selects resources and buffering; buffer supplies bufferSize bytes of working memory.
+/**
+ * @brief Initialize the model objects and their working storage.
+ * @param argument Model resources and capacities with workspace sizes already calculated.
+ * @param buffer Working storage satisfying the size and alignment calculated in argument.
+ * @param bufferSize Available size of buffer, in bytes.
+ * @return True if initialization succeeds; false if sizing was not performed or storage is insufficient.
+ */
 bool ModelObj::Initialize(const InitializeArgument& argument, void* buffer, size_t bufferSize) {
     if (argument.memoryAlignment == 0 || argument.memorySize > bufferSize)
         return false;
@@ -208,7 +241,12 @@ bool ModelObj::Initialize(const InitializeArgument& argument, void* buffer, size
     return true;
 }
 
-// viewIndex selects the camera, view supplies its transform, bufferIndex selects the GPU block.
+/**
+ * @brief Update view-dependent shape blocks, including billboard transforms.
+ * @param viewIndex Camera index selecting the view-dependent shape block.
+ * @param view View transform used to calculate billboards.
+ * @param bufferIndex Buffered GPU block index to update.
+ */
 void ModelObj::CalculateView(int viewIndex, const nn::util::Matrix4x3fType& view, int bufferIndex) {
     if (m_ViewDependent == 0 || m_NumShapes == 0)
         return;
@@ -246,19 +284,29 @@ void ModelObj::CalculateView(int viewIndex, const nn::util::Matrix4x3fType& view
     }
 }
 
+/**
+ * @brief Restore each bone's resource visibility and notify callbacks of changes.
+ */
 void ModelObj::ClearBoneVisible() {
     int count = m_Skeleton->GetBoneCount();
     for (int i = 0; i < count; ++i)
         SetBoneVisible(i, m_Skeleton->GetBone(i)->IsVisible());
 }
 
+/**
+ * @brief Restore each material's resource visibility and notify callbacks of changes.
+ */
 void ModelObj::ClearMaterialVisible() {
     int count = m_NumMaterials;
     for (int i = 0; i < count; ++i)
         SetMaterialVisible(i, (m_Materials[i].GetResource()->ToData().flags & 1) != 0);
 }
 
-// device supplies the alignment required by each uninitialized GPU block.
+/**
+ * @brief Find the largest alignment required by uninitialized model GPU blocks.
+ * @param device Graphics device supplying buffer alignment requirements.
+ * @return Required alignment in bytes, or 1 when no additional blocks are needed.
+ */
 size_t ModelObj::GetBlockBufferAlignment(gfx::Device* device) const {
     size_t alignment = 1;
     if ((m_Skeleton != nullptr) && !m_Skeleton->IsBlockBufferValid())
@@ -274,7 +322,11 @@ size_t ModelObj::GetBlockBufferAlignment(gfx::Device* device) const {
     return alignment;
 }
 
-// device supplies the storage and alignment requirements for uninitialized GPU blocks.
+/**
+ * @brief Calculate the total aligned storage needed for uninitialized model GPU blocks.
+ * @param device Graphics device supplying buffer sizes and alignment requirements.
+ * @return Required memory-pool storage size, in bytes.
+ */
 size_t ModelObj::CalculateBlockBufferSize(gfx::Device* device) {
     size_t size = 0;
     if ((m_Skeleton != nullptr) && !m_Skeleton->IsBlockBufferValid())
@@ -296,7 +348,14 @@ size_t ModelObj::CalculateBlockBufferSize(gfx::Device* device) {
     return size;
 }
 
-// device owns the buffers; pool supplies size bytes beginning at offset.
+/**
+ * @brief Initialize missing skeleton, shape, and material GPU blocks in a memory pool.
+ * @param device Graphics device that owns the GPU buffers.
+ * @param pool Memory pool providing storage for the GPU blocks.
+ * @param offset Byte offset of the reserved region within pool.
+ * @param size Available size of the reserved region, in bytes.
+ * @return True if every required block is initialized; false if space is insufficient or a setup fails.
+ */
 bool ModelObj::SetupBlockBuffer(gfx::Device* device, gfx::MemoryPool* pool, ptrdiff_t offset, size_t size) {
     if (CalculateBlockBufferSize(device) > size)
         return false;
@@ -331,7 +390,10 @@ bool ModelObj::SetupBlockBuffer(gfx::Device* device, gfx::MemoryPool* pool, ptrd
     return true;
 }
 
-// device owns the skeleton, shape, and material buffers being released.
+/**
+ * @brief Release initialized model GPU blocks and clear their memory-pool association.
+ * @param device Graphics device that owns the buffers being released.
+ */
 void ModelObj::CleanupBlockBuffer(gfx::Device* device) {
     if ((m_Skeleton != nullptr) && m_Skeleton->IsBlockBufferValid())
         m_Skeleton->CleanupBlockBuffer(device);
@@ -346,10 +408,16 @@ void ModelObj::CleanupBlockBuffer(gfx::Device* device) {
     m_MemoryPoolOffset = 0;
 }
 
-// world supplies the root transform for the model's skeleton.
+/**
+ * @brief Update the skeleton's world matrices from the model transform.
+ * @param world Root model-to-world transform.
+ */
 void ModelObj::CalculateWorld(const nn::util::Matrix4x3fType& world) { m_Skeleton->CalculateWorldMtx(world); }
 
-// lodIndex selects the output sphere and preferred mesh in each shape.
+/**
+ * @brief Combine shape bounds into the model's bounding sphere for a level of detail.
+ * @param lodIndex Allocated model bounding-sphere index; shapes lacking that mesh use their first mesh.
+ */
 void ModelObj::CalculateBounding(int lodIndex) {
     if ((m_pBounding == nullptr) || m_NumShapes == 0)
         return;
@@ -375,10 +443,16 @@ void ModelObj::CalculateBounding(int lodIndex) {
     }
 }
 
-// bufferIndex selects the buffered skeleton block.
+/**
+ * @brief Update a buffered skeleton matrix block.
+ * @param bufferIndex Buffered skeleton GPU block index to update.
+ */
 void ModelObj::CalculateSkeleton(int bufferIndex) { m_Skeleton->CalculateSkeleton(bufferIndex); }
 
-// bufferIndex selects the GPU blocks for view-independent shapes and shape animation.
+/**
+ * @brief Update view-independent shape blocks and enabled shape-animation results.
+ * @param bufferIndex Buffered shape GPU block index to update.
+ */
 void ModelObj::CalculateShape(int bufferIndex) {
     if (m_NumShapes == 0)
         return;
@@ -392,12 +466,18 @@ void ModelObj::CalculateShape(int bufferIndex) {
     }
 }
 
-// bufferIndex selects the buffered material blocks.
+/**
+ * @brief Update every material's buffered GPU block.
+ * @param bufferIndex Buffered material GPU block index to update.
+ */
 void ModelObj::CalculateMaterial(int bufferIndex) {
     for (int i = 0; i < m_NumMaterials; ++i)
         m_Materials[i].CalculateMaterial(bufferIndex);
 }
 
+/**
+ * @brief Refresh whether any shape requires view-dependent calculations.
+ */
 void ModelObj::UpdateViewDependency() {
     int dependent = 0;
     for (int i = 0; i < m_NumShapes; ++i)
@@ -406,19 +486,28 @@ void ModelObj::UpdateViewDependency() {
     m_ViewDependent = dependent;
 }
 
+/**
+ * @brief Enable shape-animation calculations on every shape in the model.
+ */
 void ModelObj::SetShapeAnimCalculationEnabled() {
     int count = m_NumShapes;
     for (int i = 0; i < count; ++i)
         m_Shapes[i].SetShapeAnimCalculationEnabled();
 }
 
+/**
+ * @brief Disable shape-animation calculations on every shape in the model.
+ */
 void ModelObj::SetShapeAnimCalculationDisabled() {
     int count = m_NumShapes;
     for (int i = 0; i < count; ++i)
         m_Shapes[i].SetShapeAnimCalculationDisabled();
 }
 
-// callback receives subsequent texture changes from every material in the model.
+/**
+ * @brief Set the texture-change callback for every material in the model.
+ * @param callback Callback receiving the changed material and texture slot; nullptr disables notifications.
+ */
 void ModelObj::SetTextureChangeCallback(MaterialObj::TextureChangeCallback callback) {
     int count = m_NumMaterials;
     for (int i = 0; i < count; ++i)

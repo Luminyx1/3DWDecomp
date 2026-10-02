@@ -371,7 +371,15 @@ public:
     const ResMesh* GetMesh() const { return pMeshArray.Get(); }
     const ResMesh* GetMesh(int meshIndex) const { return &pMeshArray.Get()[meshIndex]; }
     int GetMeshCount() const { return meshCount; }
+    /**
+     * @brief Get the bone that supplies the shape's rigid transform.
+     * @return Bone index in the model skeleton.
+     */
     int GetBoneIndex() const { return boneIndex; }
+    /**
+     * @brief Get the number of skinning influences per vertex.
+     * @return Skinning influence count; zero identifies a rigid shape.
+     */
     int GetVertexSkinCount() const { return vertexSkinCount; }
     const Bounding* GetBoundingArray() const { return pBoundingArray.Get(); }
 
@@ -631,9 +639,15 @@ public:
     template <bool swap> NOINLINE void ConvertDirtyParams(void* destination, u32* dirtyFlags);
     // material and index identify the texture slot that changed.
     using TextureChangeCallback = void (*)(MaterialObj* material, int index);
-    // callback receives subsequent texture changes; nullptr disables notifications.
+    /**
+     * @brief Set the callback for texture changes on this material.
+     * @param callback Callback receiving the material and texture slot; nullptr disables notifications.
+     */
     void SetTextureChangeCallback(TextureChangeCallback callback) { m_pTextureChangeCallback = callback; }
 
+    /**
+     * @brief Construct an empty material object without allocated GPU or working storage.
+     */
     MaterialObj() : m_pRes(nullptr), m_Flag(0), m_BufferingCount(0), m_DirtyFlags{},
         m_pMemoryPool(nullptr), m_MemoryPoolOffset(0), m_pMaterialBlockArray(nullptr),
         m_pParamSource(nullptr), m_ppTextureArray(nullptr), m_pTextureSlotArray(nullptr),
@@ -820,7 +834,11 @@ public:
     bool Initialize(const InitializeArgument& argument, void* buffer, size_t bufferSize);
     const ResShape* GetResource() const { return m_pRes; }
     const Sphere* GetBounding() const { return m_pBounding; }
-    // lodIndex selects a pair of local/world spheres; return its world sphere.
+    /**
+     * @brief Get the world-space bounding sphere for a level of detail.
+     * @param lodIndex Mesh level-of-detail index selecting a local/world sphere pair.
+     * @return World-space sphere, or nullptr when bounding storage is disabled.
+     */
     const Sphere* GetBounding(int lodIndex) const {
         return (m_pBounding != nullptr) ? &m_pBounding[2 * lodIndex] : nullptr;
     }
@@ -836,8 +854,18 @@ public:
     void CalculateShape(int viewIndex, const nn::util::Matrix4x3fType& world, int bufferIndex);
     // bufferIndex selects the shape-animation destination buffer.
     void CalculateShapeAnimResult(int bufferIndex);
+    /**
+     * @brief Check whether shape-animation data is present and its calculation is enabled.
+     * @return True when both required shape-animation flags are set.
+     */
     bool IsShapeAnimCalculationEnabled() const { return (m_Flag & 12) == 12; }
+    /**
+     * @brief Enable shape-animation calculations for this shape.
+     */
     void SetShapeAnimCalculationEnabled() { m_Flag |= 8; }
+    /**
+     * @brief Disable shape-animation calculations for this shape.
+     */
     void SetShapeAnimCalculationDisabled() { m_Flag &= ~8; }
     const Aabb* GetSubMeshBoundingArray() const { return m_pSubMeshBoundingArray; }
     bool TestSubMeshIntersection(CullingContext* pContext, const ViewVolume& rViewVolume,

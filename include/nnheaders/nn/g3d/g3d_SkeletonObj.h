@@ -21,6 +21,9 @@ static_assert(sizeof(LocalMtx) == 0x60);
 // TODO
 class SkeletonObj {
   public:
+    /**
+     * @brief Construct an empty skeleton object without allocated GPU or working storage.
+     */
     SkeletonObj()
         : m_Res(nullptr), m_Flag(0), m_BufferingCount(0), m_Bones(nullptr), m_pLocalMtxArray(nullptr),
           m_WorldMtxArray(nullptr), _28(nullptr), _30(nullptr), _38(nullptr), m_pMtxBlockArray(nullptr),

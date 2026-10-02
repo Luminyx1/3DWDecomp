@@ -8,6 +8,9 @@ class ShadingModelObj;
 namespace nn::g3d::detail {
 class FlagSet {
   public:
+    /**
+     * @brief Construct an empty flag set with no backing buffers.
+     */
     FlagSet()
         : mPending(nullptr), mBufferFlags(nullptr), mBufferCount(0), mWordCount(0), mFlagCount(0), mFlags(0),
           mDirtyBuffers(0) {}

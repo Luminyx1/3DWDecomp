@@ -18,8 +18,16 @@ class ModelObj {
   public:
     // model identifies the changed object; index selects the bone whose visibility changed.
     using VisibilityCallback = void (*)(ModelObj* model, int index);
+    /**
+     * @brief Get the model resource.
+     * @return Resource used to initialize the model.
+     */
     const ResModel* GetResource() const { return m_ResModel; }
-    // index identifies the bone; visible is its new visibility state.
+    /**
+     * @brief Change a bone's visibility and notify its callback when the value changes.
+     * @param index Bone index within the model skeleton.
+     * @param visible New visibility state for the bone.
+     */
     void SetBoneVisible(int index, bool visible) {
         u32 mask = 1u << (index & 31);
         bool previous = (m_BoneVisibility[static_cast<unsigned>(index) >> 5] & mask) != 0;
@@ -29,15 +37,49 @@ class ModelObj {
         if ((m_VisibilityCallback != nullptr) & (previous != visible))
             m_VisibilityCallback(this, index);
     }
+    /**
+     * @brief Get the model's skeleton object.
+     * @return Skeleton object associated with this model.
+     */
     SkeletonObj* GetSkeleton() const { return m_Skeleton; }
 
+    /**
+     * @brief Get the number of shapes in the model.
+     * @return Shape count.
+     */
     s32 GetNumShapes() const { return m_NumShapes; }
+    /**
+     * @brief Get the number of materials in the model.
+     * @return Material count.
+     */
     s32 GetNumMaterials() const { return m_NumMaterials; }
+    /**
+     * @brief Get the number of configured levels of detail.
+     * @return Level-of-detail count.
+     */
     s32 GetLodCount() const { return _8c; }
+    /**
+     * @brief Get a shape object.
+     * @param index Shape index in the range [0, GetNumShapes()).
+     * @return Selected shape object.
+     */
     ShapeObj* GetShape(int index) const { return &m_Shapes[index]; }
+    /**
+     * @brief Get a material object.
+     * @param index Material index in the range [0, GetNumMaterials()).
+     * @return Selected material object.
+     */
     MaterialObj* GetMaterial(int index) const { return &m_Materials[index]; }
+    /**
+     * @brief Get the model's bounding-sphere array.
+     * @return Bounding spheres by level of detail, or nullptr when bounding storage is disabled.
+     */
     const Sphere* GetBounding() const { return m_pBounding; }
 
+    /**
+     * @brief Check whether the model's GPU blocks have been initialized.
+     * @return True if block-buffer setup completed successfully.
+     */
     bool IsBlockBufferValid() const { return (m_Flag & 1) != 0; }
     void ClearBoneVisible();
     void ClearMaterialVisible();
@@ -64,18 +106,40 @@ class ModelObj {
     // callback receives the material and texture slot that changed.
     void SetTextureChangeCallback(MaterialObj::TextureChangeCallback callback);
 
+    /**
+     * @brief Get the packed bone-visibility flags.
+     * @return Array containing one visibility bit per bone.
+     */
     u32* GetBoneVisibilityArray() const { return m_BoneVisibility; }
+    /**
+     * @brief Get the callback for bone-visibility changes.
+     * @return Configured callback, or nullptr when notifications are disabled.
+     */
     VisibilityCallback GetBoneVisibilityCallback() const { return m_VisibilityCallback; }
 
+    /**
+     * @brief Check a bone's visibility.
+     * @param index Bone index within the model skeleton.
+     * @return True if the bone's visibility bit is set.
+     */
     bool IsBoneVisible(int index) const {
         return (m_BoneVisibility[static_cast<u32>(index) >> 5] & (1u << (index & 31))) != 0;
     }
 
+    /**
+     * @brief Check a material's visibility.
+     * @param index Material index in the range [0, GetNumMaterials()).
+     * @return True if the material's visibility bit is set.
+     */
     bool IsMaterialVisible(int index) const {
         return (m_MaterialVisibility[index >> 5] & (1u << (index & 31))) != 0;
     }
 
-    // index selects the material; isVisible is its new visibility state.
+    /**
+     * @brief Change a material's visibility and notify its callback when the value changes.
+     * @param index Material index in the range [0, GetNumMaterials()).
+     * @param isVisible New visibility state for the material.
+     */
     void SetMaterialVisible(int index, bool isVisible) {
         bool isPrevVisible = IsMaterialVisible(index);
         u32 bit = 1u << (index & 31);
