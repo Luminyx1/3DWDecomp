@@ -40,6 +40,7 @@ public:
 private:
     friend class ModelAnimObj;
     friend class BoneVisibilityAnimObj;
+    friend class MaterialAnimObj;
     u32* mEntries;
     u16 mFlags, mCapacity, mAnimCount, mTargetCount;
 };
@@ -56,6 +57,7 @@ public:
     void Initialize(AnimFrameCache* cache, int count);
 private:
     friend class BoneVisibilityAnimObj;
+    friend class MaterialAnimObj;
     AnimFrameCache* mCache;
     int mCount;
     int mCurveCount;
@@ -65,6 +67,7 @@ private:
 class AnimObj {
 public:
     AnimObj() : mResult(nullptr), mWorkMemory(nullptr) { mFrameCtrlPointer = &mFrameCtrl; }
+    /** @brief Destroy the animation base without releasing caller-owned storage. */
     virtual ~AnimObj() {}
     AnimFrameCtrl& GetFrameCtrl() { return *mFrameCtrlPointer; }
     const AnimFrameCtrl& GetFrameCtrl() const { return *mFrameCtrlPointer; }

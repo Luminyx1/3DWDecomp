@@ -4,6 +4,7 @@
 // Shared G3D resource and object declarations used by NintendoWare and AGL.
 
 #include <attributes.h>
+#include <cstring>
 #include <nn/gfx/gfx_Buffer.h>
 #include <nn/gfx/gfx_BufferInfo.h>
 #include <nn/gfx/gfx_SamplerInfo.h>
@@ -69,6 +70,12 @@ public:
     explicit BindResult(u32 flags) : m_Flag(flags), m_Pad(0) {}
     // result contributes success/failure bits from another resource binding operation.
     void Merge(const BindResult& result) { m_Flag |= result.m_Flag; }
+    /** @brief Test whether any target bound successfully.
+     * @return True when at least one binding succeeded. */
+    bool IsAnySuccess() const { return (m_Flag & Flag_Success) != 0; }
+    /** @brief Test whether binding failed without any successful targets.
+     * @return True when only the failure flag is set. */
+    bool IsFailure() const { return (m_Flag & (Flag_Success | Flag_Failure)) == Flag_Failure; }
     bool IsComplete() const { return (m_Flag & (Flag_Success | Flag_Failure)) == Flag_Success; }
 
 private:
@@ -681,6 +688,11 @@ public:
 
     const nn::gfx::TextureView* GetTextureView(int index) const { return m_ppTextureArray[index]; }
 
+    /**
+     * @brief Replace a material texture and notify its change callback when needed.
+     * @param index Sampler index within the material texture table.
+     * @param rRef Texture view and descriptor slot to install.
+     */
     void SetTexture(int index, const TextureRef& rRef)
     {
         const nn::gfx::TextureView* pOldView = m_ppTextureArray[index];
@@ -688,12 +700,18 @@ public:
         m_ppTextureArray[index] = rRef.GetTextureView();
         m_pTextureSlotArray[index] = rRef.GetDescriptorSlot();
         if ((m_pTextureChangeCallback != nullptr) &&
-            (pOldView != rRef.GetTextureView() || rOldSlot != m_pTextureSlotArray[index]))
+            (pOldView != rRef.GetTextureView() || std::memcmp(&rOldSlot, &m_pTextureSlotArray[index], sizeof(rOldSlot)) != 0))
         {
             m_pTextureChangeCallback(this, index);
         }
     }
 
+    /**
+     * @brief Mark a shader parameter and its dependent parameter dirty and expose its source data.
+     * @param paramIndex Shader parameter index within the material resource.
+     * @tparam T Type matching the selected shader parameter's source representation.
+     * @return Writable pointer to the parameter source value.
+     */
     template <typename T>
     T* EditShaderParam(int paramIndex) {
         const ResShaderParam* pParam = m_pRes->GetShaderParam(paramIndex);
@@ -747,6 +765,9 @@ public:
     // Builder accumulates the capacities needed by a set of models and animations.
     class Builder : public InitializeArgument {
     public:
+        /**
+         * @brief Initialize unset capacities and enable curve caching by default.
+         */
         Builder() {
             curveCount = -1;
             materialCount = -1;
@@ -758,11 +779,19 @@ public:
             memorySize = 0;
             memoryAlignment = 0;
 
-            for (int i = 0; i < 6; ++i) blocks[i].Initialize(0);
+            for (int i = 0; i < 6; ++i) {
+                blocks[i].Initialize(0);
+            }
         }
-        // model supplies the number of materials to bind to.
+        /**
+         * @brief Reserve bindings for the target model.
+         * @param model Model resource whose material count determines the target capacity.
+         */
         void Reserve(const ResModel* model) { materialCount = model->GetMaterialCount(); }
-        // resource raises the animation, texture and curve capacities to fit it.
+        /**
+         * @brief Increase capacities to accommodate an animation resource.
+         * @param resource Non-null animation resource whose counts must fit the workspace.
+         */
         void Reserve(const ResMaterialAnim* resource) {
             int count = resource->GetPerMaterialAnimCount();
             materialAnimCount = materialAnimCount < count ? count : materialAnimCount;
@@ -774,15 +803,33 @@ public:
             textureCount = textureCount < count ? count : textureCount;
             cacheAvailable |= !resource->IsCurveBaked();
         }
+        /**
+         * @brief Get the calculated workspace requirement.
+         * @return Workspace size in bytes after CalculateMemorySize.
+         */
         size_t GetWorkMemorySize() const { return memorySize; }
+        /**
+         * @brief Initialize an animation object using the calculated layout.
+         * @param object Non-null animation object to initialize.
+         * @param memory Workspace aligned to the calculated requirement.
+         * @param size Available bytes in memory; must cover the calculated requirement.
+         * @return True if the capacities and workspace are valid.
+         */
         bool Build(MaterialAnimObj* object, void* memory, size_t size) const {
             return object->Initialize(*this, memory, size);
         }
     };
 
+    /**
+     * @brief Construct an uninitialized material animation object.
+     */
     MaterialAnimObj()
-        : m_pRes(nullptr), _70(0), _78(nullptr), _80(nullptr), _88(nullptr),
+        : m_pRes(nullptr), m_pMaterialAnims(nullptr), m_MaterialAnimCapacity(0), m_ParamAnimCapacity(0),
+          m_TextureCapacity(0), m_CurveCapacity(0), m_pSubBindIndices(nullptr),
           m_ppTextureArray(nullptr), m_pTextureSlotArray(nullptr) {}
+    /**
+     * @brief Destroy the object without releasing caller-owned workspace.
+     */
     virtual ~MaterialAnimObj() {}
     bool Initialize(const InitializeArgument& argument, void* memory, size_t size);
     void SetResource(const ResMaterialAnim* resource);
@@ -792,12 +839,32 @@ public:
     virtual void ClearResult();
     virtual void Calculate();
     virtual void ApplyTo(ModelObj* model) const;
+    void RevertTo(ModelObj* pModel) const;
 
+    /**
+     * @brief Get the selected animation resource.
+     * @return Current animation resource, or nullptr before SetResource.
+     */
     const ResMaterialAnim* GetResource() const { return m_pRes; }
+    /**
+     * @brief Get a texture view from the animation texture table.
+     * @param index Texture index below the selected resource's texture count.
+     * @return Bound texture view, which may be nullptr.
+     */
     const nn::gfx::TextureView* GetTextureView(int index) const { return m_ppTextureArray[index]; }
+    /**
+     * @brief Get a texture view and its descriptor binding.
+     * @param index Texture index below the selected resource's texture count.
+     * @return Texture reference containing the current view and descriptor.
+     */
     TextureRef GetTexture(int index) const {
         return TextureRef(m_ppTextureArray[index], m_pTextureSlotArray[index]);
     }
+    /**
+     * @brief Replace an animation texture binding.
+     * @param index Texture index below the selected resource's texture count.
+     * @param rRef Texture view and descriptor slot to assign.
+     */
     void SetTexture(int index, const TextureRef& rRef)
     {
         m_ppTextureArray[index] = rRef.GetTextureView();
@@ -805,11 +872,18 @@ public:
     }
 
 private:
+    BindResult SubBind(const ResPerMaterialAnim* pAnim, const ResMaterial* pMaterial, int subBindIndex);
+    BindResult SubBindFast(const ResPerMaterialAnim* pAnim, int subBindIndex);
+    void ApplyTo(MaterialObj* pMaterial, const ResPerMaterialAnim* pAnim, int subBindIndex) const;
+    void RevertTo(MaterialObj* pMaterial, const ResPerMaterialAnim* pAnim, int subBindIndex) const;
+    template <bool cached> void CalculateMaterialImpl(const ResPerMaterialAnim* pAnim, float frame, int& rSubBindIndex);
     const ResMaterialAnim* m_pRes;
-    u64 _70;
-    void* _78;
-    void* _80;
-    void* _88;
+    const ResPerMaterialAnim* m_pMaterialAnims;
+    int m_MaterialAnimCapacity;
+    int m_ParamAnimCapacity;
+    int m_TextureCapacity;
+    int m_CurveCapacity;
+    u16* m_pSubBindIndices;
     const nn::gfx::TextureView** m_ppTextureArray;
     u64* m_pTextureSlotArray;
 };
