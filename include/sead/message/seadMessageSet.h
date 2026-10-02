@@ -60,4 +60,12 @@ public:
         return LMS_GetTextStyleByLabel(mMsgFile, pLabel);
     }
 };
+
+template <typename T>
+struct MessageSet<T>::TagInfo {
+    T mTagMark;
+    u16 mGroup;
+    u16 mType;
+    u16 mParamSize;
+};
 }  // namespace sead
