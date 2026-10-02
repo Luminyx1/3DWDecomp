@@ -55508,8 +55508,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71008EBD00			FALSE	_ZNK2al20AudioEventController14getAudioKeeperEv	al::AudioEventController::getAudioKeeper() const	
 0x71008EBD10			FALSE	_ZNK2al20AudioEventController18getAreaObjDirectorEv	al::AudioEventController::getAreaObjDirector() const	
 0x71008EBD20			FALSE	_ZThn8_NK2al20AudioEventController18getAreaObjDirectorEv	non-virtual thunk to al::AudioEventController::getAreaObjDirector() const	
-0x71008EBD30		AudioGeneralPurposeAreaChecker.o	FALSE	_ZN2al30AudioGeneralPurposeAreaCheckerC1EPKc	al::AudioGeneralPurposeAreaChecker::AudioGeneralPurposeAreaChecker(char const*)	
-0x71008EBD60	Library/Audio/System	AudioKeeper.o	FALSE	_ZN2al30AudioGeneralPurposeAreaChecker4initEPNS_15AreaObjDirectorE	al::AudioGeneralPurposeAreaChecker::init(al::AreaObjDirector*)	object/folder from OdysseyDecomp file list
+0x71008EBD30	Library/Audio/System	AudioKeeper.o	FALSE	_ZN2al30AudioGeneralPurposeAreaCheckerC1EPKc	al::AudioGeneralPurposeAreaChecker::AudioGeneralPurposeAreaChecker(char const*)	
+0x71008EBD60			FALSE	_ZN2al30AudioGeneralPurposeAreaChecker4initEPNS_15AreaObjDirectorE	al::AudioGeneralPurposeAreaChecker::init(al::AreaObjDirector*)	object/folder from OdysseyDecomp file list
 0x71008EBD70			FALSE	_ZN2al30AudioGeneralPurposeAreaChecker5resetEv	al::AudioGeneralPurposeAreaChecker::reset()	
 0x71008EBD90			FALSE	_ZN2al30AudioGeneralPurposeAreaChecker6updateEi	al::AudioGeneralPurposeAreaChecker::update(int)	
 0x71008EC050			FALSE	_ZNK2al30AudioGeneralPurposeAreaChecker8isInAreaEv	al::AudioGeneralPurposeAreaChecker::isInArea() const	
@@ -55538,7 +55538,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71008EC590			FALSE	_ZN2al11AudioKeeper6appearEv	al::AudioKeeper::appear()	
 0x71008EC5A0			FALSE	_ZN2al11AudioKeeper4killEv	al::AudioKeeper::kill()	
 0x71008EC5C0			FALSE	_ZN21alAudioKeeperFunction24createAndInitAudioKeeperEPKN2al13AudioDirectorEb	alAudioKeeperFunction::createAndInitAudioKeeper(al::AudioDirector const*, bool)	
-0x71008EC640		AudioRequestKeeperSyncedBgm.o	FALSE	_ZN2al27AudioRequestKeeperSyncedBgmC2Ev	al::AudioRequestKeeperSyncedBgm::AudioRequestKeeperSyncedBgm()	
+0x71008EC640	Library/Audio/System	AudioRequestKeeperSyncedBgm.o	FALSE	_ZN2al27AudioRequestKeeperSyncedBgmC2Ev	al::AudioRequestKeeperSyncedBgm::AudioRequestKeeperSyncedBgm()	
 0x71008EC9C0			FALSE	_ZN2al27AudioRequestKeeperSyncedBgm4initEPKNS_13AudioDirectorE	al::AudioRequestKeeperSyncedBgm::init(al::AudioDirector const*)	object (smo)
 0x71008EC9F0			FALSE	_ZN2al27AudioRequestKeeperSyncedBgm6updateEv	al::AudioRequestKeeperSyncedBgm::update()	
 0x71008ECB30			FALSE	_ZN2al27AudioRequestKeeperSyncedBgm10requestBgmENS_14BgmPlayingTypeERKNS_17BgmPlayingRequestEi	al::AudioRequestKeeperSyncedBgm::requestBgm(al::BgmPlayingType, al::BgmPlayingRequest const&, int)	
@@ -55578,7 +55578,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71008EDB90			FALSE	_ZN2nn3atk6detail14ISound3DEngineD2Ev	nn::atk::detail::ISound3DEngine::~ISound3DEngine()	
 0x71008EDBA0		AudioSystem.o	FALSE	_ZN2al11AudioSystemC2Ev	al::AudioSystem::AudioSystem()	
 0x71008EDC50			FALSE	_ZN2al11AudioSystem4initERKN4sead14SafeStringBaseIcEEfb	al::AudioSystem::init(sead::SafeStringBase<char> const&, float, bool)	
-0x71008EDCD0	Library/Audio/System	AudioKeeperFunction.o	FALSE	_ZN2al11AudioSystem4initERKNS_19AudioSystemInitInfoE	al::AudioSystem::init(al::AudioSystemInitInfo const&)	object/folder from OdysseyDecomp file list
+0x71008EDCD0			FALSE	_ZN2al11AudioSystem4initERKNS_19AudioSystemInitInfoE	al::AudioSystem::init(al::AudioSystemInitInfo const&)	object/folder from OdysseyDecomp file list
 0x71008EE260			FALSE	_ZN2al11AudioSystem18initSeadAudio3DMgrEPN4sead21AudioSettingParameterE	al::AudioSystem::initSeadAudio3DMgr(sead::AudioSettingParameter*)	
 0x71008EE300			FALSE	_ZN2al11AudioSystem15initDebugModuleEPN4sead21AudioSettingParameterE	al::AudioSystem::initDebugModule(sead::AudioSettingParameter*)	
 0x71008EE310			FALSE	_ZNK2al11AudioSystem28getSubArchiveSeadAudioPlayerEv	al::AudioSystem::getSubArchiveSeadAudioPlayer() const	
@@ -55631,8 +55631,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71008EEE80			FALSE	_ZNK4sead15AudioSubsetBase9isPausingEv	sead::AudioSubsetBase::isPausing() const	
 0x71008EEE90			FALSE	_ZNK4sead15RuntimeTypeInfo6DeriveINS_10Audio3DMgrEE9isDerivedEPKNS0_9InterfaceE	sead::RuntimeTypeInfo::Derive<sead::Audio3DMgr>::isDerived(sead::RuntimeTypeInfo::Interface const*) const	
 0x71008EEF20			FALSE	_ZNK4sead15RuntimeTypeInfo6DeriveINS_15AudioSubsetBaseEE9isDerivedEPKNS0_9InterfaceE	sead::RuntimeTypeInfo::Derive<sead::AudioSubsetBase>::isDerived(sead::RuntimeTypeInfo::Interface const*) const	
-0x71008EEFB0			FALSE	sub_71008EEFB0	sub_71008EEFB0	
-0x71008EEFC0			FALSE	_ZN2al16AudioMicPlatformC2ERN4sead21AudioSettingParameterEi	al::AudioMicPlatform::AudioMicPlatform(sead::AudioSettingParameter&, int)	
+0x71008EEFB0			FALSE	_GLOBAL__sub_I_AudioSystem.cpp	_GLOBAL__sub_I_AudioSystem.cpp	
+0x71008EEFC0		AudioMicPlatform.o	FALSE	_ZN2al16AudioMicPlatformC2ERN4sead21AudioSettingParameterEi	al::AudioMicPlatform::AudioMicPlatform(sead::AudioSettingParameter&, int)	
 0x71008EF070			FALSE	_ZN2al16AudioMicPlatform8finalizeEv	al::AudioMicPlatform::finalize()	
 0x71008EF080			FALSE	_ZN2al16AudioMicPlatform6updateEv	al::AudioMicPlatform::update()	
 0x71008EF090			FALSE	_ZN2al16AudioMicPlatform13validateInputEv	al::AudioMicPlatform::validateInput()	
@@ -55654,14 +55654,14 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71008EF3F0			FALSE	_ZN4sead10MicMgrCafe10initializeERNS_8AudioMgrEPNS_4HeapE	sead::MicMgrCafe::initialize(sead::AudioMgr&, sead::Heap*)	
 0x71008EF400			FALSE	_ZN4sead10MicMgrCafe8finalizeEv	sead::MicMgrCafe::finalize()	
 0x71008EF410			FALSE	_ZN4sead10MicMgrCafe4calcEv	sead::MicMgrCafe::calc()	
-0x71008EF420			FALSE	_ZN2al21AudioMicBreathCheckerC2Ev	al::AudioMicBreathChecker::AudioMicBreathChecker()	
+0x71008EF420		AudioMicBreathChecker.o	FALSE	_ZN2al21AudioMicBreathCheckerC2Ev	al::AudioMicBreathChecker::AudioMicBreathChecker()	
 0x71008EF440			FALSE	_ZN2al21AudioMicBreathChecker4calcEPsi	al::AudioMicBreathChecker::calc(short*, int)	
 0x71008EF450			FALSE	_ZN2al21AudioMicBreathChecker17analyzeByBandPassEPsi	al::AudioMicBreathChecker::analyzeByBandPass(short*, int)	
 0x71008EF5B0			FALSE	_ZN2al21AudioMicBreathChecker5startEv	al::AudioMicBreathChecker::start()	
 0x71008EF5E0			FALSE	_ZN2al21AudioMicBreathChecker4stopEv	al::AudioMicBreathChecker::stop()	
 0x71008EF5F0			FALSE	_ZN2al21AudioMicBreathChecker16analyzeByLowFreqEPsi	al::AudioMicBreathChecker::analyzeByLowFreq(short*, int)	
 0x71008EF7B0			FALSE	_ZN2al21AudioMicBreathChecker18analyzeByZeroCrossEPsi	al::AudioMicBreathChecker::analyzeByZeroCross(short*, int)	
-0x71008EFA80			FALSE	_ZN2al19AudioEffectDataBaseC2EPKcS2_	al::AudioEffectDataBase::AudioEffectDataBase(char const*, char const*)	
+0x71008EFA80	Project/Audio/System	System.o	FALSE	_ZN2al19AudioEffectDataBaseC2EPKcS2_	al::AudioEffectDataBase::AudioEffectDataBase(char const*, char const*)	
 0x71008EFB90			FALSE	_ZN2al14createInfoListINS_22SeEffectBusSettingInfoEEEPNS_13AudioInfoListIT_EERKNS_9ByamlIterE	al::AudioInfoList<al::SeEffectBusSettingInfo>* al::createInfoList<al::SeEffectBusSettingInfo>(al::ByamlIter const&)	
 0x71008EFC70			FALSE	_ZN2al14createInfoListINS_12SeEffectInfoEEEPNS_13AudioInfoListIT_EERKNS_9ByamlIterE	al::AudioInfoList<al::SeEffectInfo>* al::createInfoList<al::SeEffectInfo>(al::ByamlIter const&)	
 0x71008EFD50			FALSE	_ZN2al14createInfoListINS_17SeStageEffectInfoEEEPNS_13AudioInfoListIT_EERKNS_9ByamlIterE	al::AudioInfoList<al::SeStageEffectInfo>* al::createInfoList<al::SeStageEffectInfo>(al::ByamlIter const&)	
@@ -55672,7 +55672,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71008F03B0			FALSE	_ZN2al13AudioInfoListINS_17SeStageEffectInfoEE8sortInfoEv	al::AudioInfoList<al::SeStageEffectInfo>::sortInfo()	
 0x71008F0630			FALSE	_ZNK2al13AudioInfoListINS_17SeStageEffectInfoEE10getInfoNumEv	al::AudioInfoList<al::SeStageEffectInfo>::getInfoNum() const	
 0x71008F0670			FALSE	_ZN2al16AudioSystemDebugC2Ev	al::AudioSystemDebug::AudioSystemDebug()	
-0x71008F0690	Project/Audio/System	System.o	FALSE	_ZN2al16AudioSystemDebug6updateEv	al::AudioSystemDebug::update()	object/folder from OdysseyDecomp file list
+0x71008F0690			FALSE	_ZN2al16AudioSystemDebug6updateEv	al::AudioSystemDebug::update()	object/folder from OdysseyDecomp file list
 0x71008F06C0			FALSE	_ZNK2al16AudioSystemDebug4drawEv	al::AudioSystemDebug::draw() const	
 0x71008F06D0	Library/Audio/System	AudioKeeperFunction.o	FALSE	_ZN21alAudioSystemFunction18getAudioSystemInfoEPKN2al14GameSystemInfoE	alAudioSystemFunction::getAudioSystemInfo(al::GameSystemInfo const*)	object/folder from OdysseyDecomp file list
 0x71008F06E0			FALSE	_ZN21alAudioSystemFunction34loadResourceFromUserManagementFileEPKcPN2al15SeadAudioPlayerEb	alAudioSystemFunction::loadResourceFromUserManagementFile(char const*, al::SeadAudioPlayer*, bool)	
@@ -55731,8 +55731,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71008F1740		NWSound3DEngineCustomCAFE.o	FALSE	_ZN2al25NWSound3DEngineCustomCAFEC2Ev	al::NWSound3DEngineCustomCAFE::NWSound3DEngineCustomCAFE()	object (class)
 0x71008F1770			FALSE	_ZN2al25NWSound3DEngineCustomCAFE18UpdateAmbientParamEPN2nn3atk17SoundAmbientParamEPKNS2_14Sound3DManagerEPKNS2_12Sound3DParamEjj	al::NWSound3DEngineCustomCAFE::UpdateAmbientParam(nn::atk::SoundAmbientParam*, nn::atk::Sound3DManager const*, nn::atk::Sound3DParam const*, unsigned int, unsigned int)	
 0x71008F1A40			FALSE	_ZN2al25NWSound3DEngineCustomCAFED0Ev	al::NWSound3DEngineCustomCAFE::~NWSound3DEngineCustomCAFE()	
-0x71008F1A50		SeadAudioPlayer.o	FALSE	_ZN2al15SeadAudioPlayerC1Ev	al::SeadAudioPlayer::SeadAudioPlayer()	object (class)
-0x71008F1AA0	Project/Audio/System	AudioPlayer.o	FALSE	_ZN2al15SeadAudioPlayer13loadSoundItemERKN4sead14SafeStringBaseIcEEj	al::SeadAudioPlayer::loadSoundItem(sead::SafeStringBase<char> const&, unsigned int)	object/folder from OdysseyDecomp file list
+0x71008F1A50	Project/Audio/System	AudioPlayer.o	FALSE	_ZN2al15SeadAudioPlayerC1Ev	al::SeadAudioPlayer::SeadAudioPlayer()	object (class)
+0x71008F1AA0			FALSE	_ZN2al15SeadAudioPlayer13loadSoundItemERKN4sead14SafeStringBaseIcEEj	al::SeadAudioPlayer::loadSoundItem(sead::SafeStringBase<char> const&, unsigned int)	object/folder from OdysseyDecomp file list
 0x71008F1AF0			FALSE	_ZN2al15SeadAudioPlayer13loadSoundItemEjj	al::SeadAudioPlayer::loadSoundItem(unsigned int, unsigned int)	
 0x71008F1B00			FALSE	_ZNK2al15SeadAudioPlayer17isLoadedSoundItemEjj	al::SeadAudioPlayer::isLoadedSoundItem(unsigned int, unsigned int) const	
 0x71008F1B10			FALSE	_ZNK2al15SeadAudioPlayer10getSoundIdEPKc	al::SeadAudioPlayer::getSoundId(char const*) const	
@@ -55764,7 +55764,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71008F2560			FALSE	_ZThn8_N2al15SeadAudioPlayerD1Ev	non-virtual thunk to al::SeadAudioPlayer::~SeadAudioPlayer()	
 0x71008F2570			FALSE	_ZThn8_N2al15SeadAudioPlayerD0Ev	non-virtual thunk to al::SeadAudioPlayer::~SeadAudioPlayer()	
 0x71008F25A0			FALSE	_ZNK4sead15RuntimeTypeInfo6DeriveINS_14AudioPlayerNinEE9isDerivedEPKNS0_9InterfaceE	sead::RuntimeTypeInfo::Derive<sead::AudioPlayerNin>::isDerived(sead::RuntimeTypeInfo::Interface const*) const	
-0x71008F2630		SeadAudioResourceLoader.o	FALSE	_ZN2al23SeadAudioResourceLoader14setArchivePathERKN4sead14SafeStringBaseIcEE	al::SeadAudioResourceLoader::setArchivePath(sead::SafeStringBase<char> const&)	object (class)
+0x71008F2630	Project/Audio/System	SeadAudioResourceLoader.o	FALSE	_ZN2al23SeadAudioResourceLoader14setArchivePathERKN4sead14SafeStringBaseIcEE	al::SeadAudioResourceLoader::setArchivePath(sead::SafeStringBase<char> const&)	object (class)
 0x71008F2640		SoundHeapPtrWrapper.o	FALSE	_ZN2al28SeadAudioSoundHeapPtrWrapperC2Ev	al::SeadAudioSoundHeapPtrWrapper::SeadAudioSoundHeapPtrWrapper()	object (smo)
 0x71008F2650			FALSE	_ZN2al28SeadAudioSoundHeapPtrWrapper12setSoundHeapEPN4sead17AudioSoundHeapNinE	al::SeadAudioSoundHeapPtrWrapper::setSoundHeap(sead::AudioSoundHeapNin*)	
 0x71008F2660			FALSE	_ZN2al28SeadAudioSoundHeapPtrWrapper13saveHeapStateEv	al::SeadAudioSoundHeapPtrWrapper::saveHeapState()	
@@ -55784,7 +55784,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71008F2910			FALSE	_ZN15alSoundNameUtil10getSoundIdEPKcb	alSoundNameUtil::getSoundId(char const*, bool)	
 0x71008F2950			FALSE	_ZN15alSoundNameUtil13tryGetSoundIdEPjPKcb	alSoundNameUtil::tryGetSoundId(unsigned int*, char const*, bool)	
 0x71008F29D0			FALSE	_ZN2al13SoundNameUtilD0Ev	al::SoundNameUtil::~SoundNameUtil()	
-0x71008F29E0			FALSE	sub_71008F29E0	sub_71008F29E0	
+0x71008F29E0			FALSE	_GLOBAL__sub_I_SoundHeapPtrWrapper.cpp	_GLOBAL__sub_I_SoundHeapPtrWrapper.cpp	
 0x71008F2A50		SoundSubArchiveKeeper.o	FALSE	_ZN2al21SoundSubArchiveKeeperC2Ei	al::SoundSubArchiveKeeper::SoundSubArchiveKeeper(int)	object (class)
 0x71008F2B60			FALSE	_ZN2al21SoundSubArchiveKeeper6updateEv	al::SoundSubArchiveKeeper::update()	
 0x71008F2B70			FALSE	_ZN2al21SoundSubArchiveKeeper13loadSoundItemEjj	al::SoundSubArchiveKeeper::loadSoundItem(unsigned int, unsigned int)	
@@ -55803,7 +55803,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71008F2C40			FALSE	_ZN2al21SoundSubArchiveKeeperD0Ev	al::SoundSubArchiveKeeper::~SoundSubArchiveKeeper()	
 0x71008F2C50			FALSE	_ZThn8_N2al21SoundSubArchiveKeeperD1Ev	non-virtual thunk to al::SoundSubArchiveKeeper::~SoundSubArchiveKeeper()	
 0x71008F2C60			FALSE	_ZThn8_N2al21SoundSubArchiveKeeperD0Ev	non-virtual thunk to al::SoundSubArchiveKeeper::~SoundSubArchiveKeeper()	
-0x71008F2C70			FALSE	_ZN2al22AcLSoundHandlePlatformC2Ev	al::AcLSoundHandlePlatform::AcLSoundHandlePlatform()	
+0x71008F2C70	Project/Audio/Sound	SoundHandle.o	FALSE	_ZN2al22AcLSoundHandlePlatformC2Ev	al::AcLSoundHandlePlatform::AcLSoundHandlePlatform()	
 0x71008F2C90			FALSE	_ZN2al22AcLSoundHandlePlatform11detachSoundEv	al::AcLSoundHandlePlatform::detachSound()	
 0x71008F2CA0			FALSE	_ZNK2al22AcLSoundHandlePlatform7isPauseEv	al::AcLSoundHandlePlatform::isPause() const	
 0x71008F2CD0			FALSE	_ZNK2al22AcLSoundHandlePlatform9getVolumeEv	al::AcLSoundHandlePlatform::getVolume() const	
@@ -55821,7 +55821,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71008F2F10			FALSE	_ZN2al22AcLSoundHandlePlatform16setSeqTempoRatioEf	al::AcLSoundHandlePlatform::setSeqTempoRatio(float)	
 0x71008F2F50			FALSE	_ZN2al22AcLSoundHandlePlatform28setOutputDeviceSpeakerVolumeEiffffff	al::AcLSoundHandlePlatform::setOutputDeviceSpeakerVolume(int, float, float, float, float, float, float)	
 0x71008F2FF0			FALSE	_ZN2al22AcLSoundHandlePlatform31setAllOutputDeviceSpeakerVolumeEffffff	al::AcLSoundHandlePlatform::setAllOutputDeviceSpeakerVolume(float, float, float, float, float, float)	
-0x71008F3080	Project/Audio/Sound	SoundHandle.o	FALSE	_ZN2al14AcLSoundHandleC2Ev	al::AcLSoundHandle::AcLSoundHandle()	folder (alphabetical reset); object (smo, new folder (alphabetical reset))
+0x71008F3080			FALSE	_ZN2al14AcLSoundHandleC2Ev	al::AcLSoundHandle::AcLSoundHandle()	folder (alphabetical reset); object (smo, new folder (alphabetical reset))
 0x71008F30A0			FALSE	_ZN2al14AcLSoundHandle11detachSoundEv	al::AcLSoundHandle::detachSound()	
 0x71008F30B0			FALSE	_ZThn16_N2al14AcLSoundHandle11detachSoundEv	non-virtual thunk to al::AcLSoundHandle::detachSound()	
 0x71008F30C0			FALSE	_ZN2al14AcLSoundHandle4stopEi	al::AcLSoundHandle::stop(int)	
@@ -61024,12 +61024,12 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71009E4470			FALSE	_ZN2al14AudioMixVolume6updateEv	al::AudioMixVolume::update()	
 0x71009E44E0			FALSE	_ZN2al14AudioMixVolume6linkToEPKS0_	al::AudioMixVolume::linkTo(al::AudioMixVolume const*)	
 0x71009E44F0			FALSE	_ZNK2al14AudioMixVolume23calcLinkedVolumeDecibelEv	al::AudioMixVolume::calcLinkedVolumeDecibel() const	
-0x71009E4530	Project/Audio/System	AudioPlayer.o	FALSE	_ZN2al18calcDecibelToRatioEf	al::calcDecibelToRatio(float)	object/folder from OdysseyDecomp file list
+0x71009E4530	Library/Audio	AudioDecibelUtil.o	FALSE	_ZN2al18calcDecibelToRatioEf	al::calcDecibelToRatio(float)	object/folder from OdysseyDecomp file list
 0x71009E4560			FALSE	_ZN2al18calcRatioToDecibelEf	al::calcRatioToDecibel(float)	
-0x71009E4590			FALSE	_ZN2al10SeDataBaseC2EPKcPNS_15SeadAudioPlayerES2_	al::SeDataBase::SeDataBase(char const*, al::SeadAudioPlayer*, char const*)	
+0x71009E4590	Library/Se/DataBase	SeDataBase.o	FALSE	_ZN2al10SeDataBaseC2EPKcPNS_15SeadAudioPlayerES2_	al::SeDataBase::SeDataBase(char const*, al::SeadAudioPlayer*, char const*)	
 0x71009E4640			FALSE	_ZN2al10SeDataBase18createUserInfoListEPKNS_8ResourceE	al::SeDataBase::createUserInfoList(al::Resource const*)	
 0x71009E4940			FALSE	_ZN2al10SeDataBase32createResourceSespecificInfoListEPKNS_8ResourceEPNS_15SeadAudioPlayerE	al::SeDataBase::createResourceSespecificInfoList(al::Resource const*, al::SeadAudioPlayer*)	
-0x71009E4A90	Library/Se/DataBase	SeDataBase.o	FALSE	_ZN2al10SeDataBase30createStationedArchiveInfoListEPKNS_8ResourceE	al::SeDataBase::createStationedArchiveInfoList(al::Resource const*)	object/folder from OdysseyDecomp file list
+0x71009E4A90			FALSE	_ZN2al10SeDataBase30createStationedArchiveInfoListEPKNS_8ResourceE	al::SeDataBase::createStationedArchiveInfoList(al::Resource const*)	object/folder from OdysseyDecomp file list
 0x71009E4B00			FALSE	_ZN2al10SeDataBase33setResourceSpecInfoToResourceInfoEv	al::SeDataBase::setResourceSpecInfoToResourceInfo()	
 0x71009E4CA0			FALSE	_ZN2al13AudioInfoListINS_10SeUserInfoEE8sortInfoEv	al::AudioInfoList<al::SeUserInfo>::sortInfo()	
 0x71009E4F20			FALSE	_ZNK2al10SeDataBase30callLoadResourceStationedSoundEPNS_20IAudioResourceLoaderE	al::SeDataBase::callLoadResourceStationedSound(al::IAudioResourceLoader*) const	
@@ -61183,13 +61183,13 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71009EBB20			FALSE	_ZN2al11SoundFxUnitIN4sead21AudioFxI3DL2ReverbNinENS_23SeadFxReverbI3Dl2ParamsEE12appendEffectEPKNS_16SeEffectProcInfoE	al::SoundFxUnit<sead::AudioFxI3DL2ReverbNin, al::SeadFxReverbI3Dl2Params>::appendEffect(al::SeEffectProcInfo const*)	
 0x71009EBC60			FALSE	_ZNK2al13AudioInfoListINS_15SeEffectBusInfoEE10getInfoNumEv	al::AudioInfoList<al::SeEffectBusInfo>::getInfoNum() const	
 0x71009EBCA0			FALSE	_ZNK2al13AudioInfoListINS_19SeEffectBusUserInfoEE10getInfoNumEv	al::AudioInfoList<al::SeEffectBusUserInfo>::getInfoNum() const	
-0x71009EBCE0	Project/Audio/System	System.o	FALSE	_ZN21alAudioEffectFunction8getBusIdEPKc	alAudioEffectFunction::getBusId(char const*)	object/folder from OdysseyDecomp file list
+0x71009EBCE0	Project/Audio/System	AudioEffectFunction.o	FALSE	_ZN21alAudioEffectFunction8getBusIdEPKc	alAudioEffectFunction::getBusId(char const*)	object/folder from OdysseyDecomp file list
 0x71009EBD60			FALSE	_ZN21alAudioEffectFunction11getBusIndexEPKc	alAudioEffectFunction::getBusIndex(char const*)	
 0x71009EBDE0			FALSE	_ZN21alAudioEffectFunction19getBusNameFromIndexEi	alAudioEffectFunction::getBusNameFromIndex(int)	
 0x71009EBE00			FALSE	_ZN21alAudioEffectFunction14getOutDeviceIdEPKc	alAudioEffectFunction::getOutDeviceId(char const*)	
 0x71009EBE40			FALSE	_ZN21alAudioEffectFunction25getOutDeviceNameFromIndexEi	alAudioEffectFunction::getOutDeviceNameFromIndex(int)	
-0x71009EBE70			FALSE	_ZN2al24DspLinearValueControllerC2Ef	al::DspLinearValueController::DspLinearValueController(float)	
-0x71009EBE80	Library/Bgm	DspValueController.o	FALSE	_ZN2al24DspLinearValueController4initEf	al::DspLinearValueController::init(float)	object/folder from OdysseyDecomp file list
+0x71009EBE70	Library/Bgm	DspValueController.o	FALSE	_ZN2al24DspLinearValueControllerC2Ef	al::DspLinearValueController::DspLinearValueController(float)	
+0x71009EBE80			FALSE	_ZN2al24DspLinearValueController4initEf	al::DspLinearValueController::init(float)	object/folder from OdysseyDecomp file list
 0x71009EBE90			FALSE	_ZN2al24DspLinearValueController6updateEv	al::DspLinearValueController::update()	
 0x71009EBEF0			FALSE	_ZN2al24DspLinearValueController12changeTargetEfi	al::DspLinearValueController::changeTarget(float, int)	
 0x71009EBF20			FALSE	_ZN2al21DspSinValueControllerC1Eff	al::DspSinValueController::DspSinValueController(float, float)	
@@ -61197,7 +61197,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71009EBF70			FALSE	_ZN2al21DspSinValueController6updateEv	al::DspSinValueController::update()	
 0x71009EC040			FALSE	_ZN2al21DspSinValueController12changeTargetEfi	al::DspSinValueController::changeTarget(float, int)	
 0x71009EC080			FALSE	_ZN2al21DspSinValueController10changeFreqEf	al::DspSinValueController::changeFreq(float)	
-0x71009EC0A0			FALSE	_ZN2al21SeDelayEffectProcInfoC2Ev	al::SeDelayEffectProcInfo::SeDelayEffectProcInfo()	
+0x71009EC0A0	Project/Audio	AudioBusInfo.o	FALSE	_ZN2al21SeDelayEffectProcInfoC2Ev	al::SeDelayEffectProcInfo::SeDelayEffectProcInfo()	
 0x71009EC0D0			FALSE	_ZN2al25SeReverbStdEffectProcInfoC2Ev	al::SeReverbStdEffectProcInfo::SeReverbStdEffectProcInfo()	
 0x71009EC100			FALSE	_ZN2al24SeReverbHiEffectProcInfoC1Ev	al::SeReverbHiEffectProcInfo::SeReverbHiEffectProcInfo()	
 0x71009EC140			FALSE	_ZN2al27SeReverbI3Dl2EffectProcInfoC1Ev	al::SeReverbI3Dl2EffectProcInfo::SeReverbI3Dl2EffectProcInfo()	
@@ -61221,8 +61221,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71009ECD90			FALSE	_ZN2al24SeReverbHiEffectProcInfo10createInfoERKNS_9ByamlIterEPKc	al::SeReverbHiEffectProcInfo::createInfo(al::ByamlIter const&, char const*)	
 0x71009ED100			FALSE	_ZN2al27SeReverbI3Dl2EffectProcInfo10createInfoERKNS_9ByamlIterEPKc	al::SeReverbI3Dl2EffectProcInfo::createInfo(al::ByamlIter const&, char const*)	
 0x71009ED4D0			FALSE	_ZN2al22SeChorusEffectProcInfo10createInfoERKNS_9ByamlIterEPKc	al::SeChorusEffectProcInfo::createInfo(al::ByamlIter const&, char const*)	
-0x71009ED5E0	Project/Audio	AudioBusInfo.o	FALSE	_ZN2al19SeLpfEffectProcInfo10createInfoERKNS_9ByamlIterEPKc	al::SeLpfEffectProcInfo::createInfo(al::ByamlIter const&, char const*)	object/folder from OdysseyDecomp file list
-0x71009ED640			FALSE	sub_71009ED640	sub_71009ED640	
+0x71009ED5E0			FALSE	_ZN2al19SeLpfEffectProcInfo10createInfoERKNS_9ByamlIterEPKc	al::SeLpfEffectProcInfo::createInfo(al::ByamlIter const&, char const*)	object/folder from OdysseyDecomp file list
+0x71009ED640			FALSE	_ZN12_GLOBAL__N_116convertEarlyModeEPKc	_ZN12_GLOBAL__N_116convertEarlyModeEPKc	
 0x71009ED780			FALSE	_ZN2al22AudioEachBusEffectInfo10createInfoERKNS_9ByamlIterE	al::AudioEachBusEffectInfo::createInfo(al::ByamlIter const&)	
 0x71009ED810			FALSE	_ZN2al14createInfoListINS_16SeEffectProcInfoEEEPNS_13AudioInfoListIT_EERKNS_9ByamlIterE	al::AudioInfoList<al::SeEffectProcInfo>* al::createInfoList<al::SeEffectProcInfo>(al::ByamlIter const&)	
 0x71009ED8F0			FALSE	_ZN2al12SeEffectInfo10createInfoERKNS_9ByamlIterE	al::SeEffectInfo::createInfo(al::ByamlIter const&)	
@@ -61245,7 +61245,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71009EE5B0			FALSE	_ZN2al13AudioInfoListINS_22AudioEachBusEffectInfoEE8sortInfoEv	al::AudioInfoList<al::AudioEachBusEffectInfo>::sortInfo()	
 0x71009EE870			FALSE	_ZN2al13AudioInfoListINS_15SeUseEffectInfoEE8sortInfoEv	al::AudioInfoList<al::SeUseEffectInfo>::sortInfo()	
 0x71009EEB30			FALSE	_ZNK2al13AudioInfoListINS_15SeUseEffectInfoEE10getInfoNumEv	al::AudioInfoList<al::SeUseEffectInfo>::getInfoNum() const	
-0x71009EEB70			FALSE	_ZN12alSeFunction20isSoundSourceAmbientEPKc	alSeFunction::isSoundSourceAmbient(char const*)	
+0x71009EEB70	Library/Se/Function	SeFunction.o	FALSE	_ZN12alSeFunction20isSoundSourceAmbientEPKc	alSeFunction::isSoundSourceAmbient(char const*)	
 0x71009EEB80			FALSE	_ZN12alSeFunction20isSoundSource3DPointEPKc	alSeFunction::isSoundSource3DPoint(char const*)	
 0x71009EEB90			FALSE	_ZN12alSeFunction21isSoundSource3DSphereEPKc	alSeFunction::isSoundSource3DSphere(char const*)	
 0x71009EEBA0			FALSE	_ZN12alSeFunction21isSoundSource3DVectorEPKc	alSeFunction::isSoundSource3DVector(char const*)	
@@ -61257,7 +61257,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71009EEC10			FALSE	_ZN12alSeFunction15stopAllSeExceptEPN2al13AudioDirectorEjPPKcj	alSeFunction::stopAllSeExcept(al::AudioDirector*, unsigned int, char const**, unsigned int)	
 0x71009EEC20			FALSE	_ZN12alSeFunction23deactivateRequestKeeperEPN2al13AudioDirectorEPKc	alSeFunction::deactivateRequestKeeper(al::AudioDirector*, char const*)	
 0x71009EEC30			FALSE	_ZN12alSeFunction21activateRequestKeeperEPN2al13AudioDirectorEPKc	alSeFunction::activateRequestKeeper(al::AudioDirector*, char const*)	
-0x71009EEC40	Library/Se/Function	SeFunction.o	FALSE	_ZN12alSeFunction19setIsStateAfterGoalEPKN2al13AudioDirectorEb	alSeFunction::setIsStateAfterGoal(al::AudioDirector const*, bool)	object/folder from OdysseyDecomp file list
+0x71009EEC40			FALSE	_ZN12alSeFunction19setIsStateAfterGoalEPKN2al13AudioDirectorEb	alSeFunction::setIsStateAfterGoal(al::AudioDirector const*, bool)	object/folder from OdysseyDecomp file list
 0x71009EEC50			FALSE	_ZN12alSeFunction19setIsStateAfterGoalEPN2al15IUseAudioKeeperEb	alSeFunction::setIsStateAfterGoal(al::IUseAudioKeeper*, bool)	
 0x71009EEC90			FALSE	_ZN12alSeFunction18setIsExcludeCmNgSeEPKN2al13AudioDirectorE	alSeFunction::setIsExcludeCmNgSe(al::AudioDirector const*)	
 0x71009EECA0			FALSE	_ZN12alSeFunction29setRequestKeeperVolumeSettingEPKN2al13AudioDirectorEPKcS5_ib	alSeFunction::setRequestKeeperVolumeSetting(al::AudioDirector const*, char const*, char const*, int, bool)	

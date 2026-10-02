@@ -5273,12 +5273,10 @@ src/al/Library/Area/SwitchOnAreaGroup.cpp: done
     .text   start:0x008EAAB0 end:0x008EADE8
 src/al/Library/Audio/AudioDirector.cpp: done
     .text   start:0x008EADF0 end:0x008EB228
-src/al/Library/Audio/AudioEventController.cpp:
+src/al/Library/Audio/AudioEventController.cpp: done
     .text   start:0x008EB230 end:0x008EBD28
-src/al/Library/Audio/AudioGeneralPurposeAreaChecker.cpp: done
-    .text   start:0x008EBD30 end:0x008EBD54
 src/al/Library/Audio/System/AudioKeeper.cpp:
-    .text   start:0x008EBD60 end:0x008EC63C
+    .text   start:0x008EBD30 end:0x008EC63C
 src/al/Library/Audio/System/AudioRequestKeeperSyncedBgm.cpp:
     .text   start:0x008EC640 end:0x008ECBC8
 src/al/Library/Audio/System/AudioResourceDirector.cpp: done
@@ -5289,30 +5287,30 @@ src/al/Library/Audio/System/AudioSituation.cpp: done
     .text   start:0x008ED480 end:0x008ED518
 src/al/Library/Audio/System/AudioSituationDirector.cpp:
     .text   start:0x008ED520 end:0x008EDB94
-src/al/Library/Audio/System/AudioSystem.cpp:
-    .text   start:0x008EDBA0 end:0x008EDCCC
+src/al/Library/Audio/System/AudioSystem.cpp: done
+    .text   start:0x008EDBA0 end:0x008EEFBC
+src/al/Library/Audio/System/AudioMicPlatform.cpp: done
+    .text   start:0x008EEFC0 end:0x008EF414
+src/al/Library/Audio/System/AudioMicBreathChecker.cpp:
+    .text   start:0x008EF420 end:0x008EFA80
+src/al/Project/Audio/System/System.cpp: done
+    .text   start:0x008EFA80 end:0x008F06C4
 src/al/Library/Audio/System/AudioKeeperFunction.cpp:
-    .text   start:0x008EDCD0 end:0x008F0684
-src/al/Project/Audio/System/System.cpp:
-    .text   start:0x008F0690 end:0x008F06C4
-src/al/Library/Audio/System/AudioKeeperFunction_dup2.cpp:
     .text   start:0x008F06D0 end:0x008F122C
 src/al/Library/Audio/System/AudioVolumeCtrl.cpp: done
     .text   start:0x008F1230 end:0x008F1734
-src/al/Library/Audio/System/NWSound3DEngineCustomCAFE.cpp:
+src/al/Library/Audio/System/NWSound3DEngineCustomCAFE.cpp: done
     .text   start:0x008F1740 end:0x008F1A44
-src/al/Library/Audio/System/SeadAudioPlayer.cpp:
-    .text   start:0x008F1A50 end:0x008F1A94
 src/al/Project/Audio/System/AudioPlayer.cpp: done
-    .text   start:0x008F1AA0 end:0x008F262C
+    .text   start:0x008F1A50 end:0x008F262C
 src/al/Project/Audio/System/SeadAudioResourceLoader.cpp: done
     .text   start:0x008F2630 end:0x008F2634
 src/al/Project/Audio/System/SoundHeapPtrWrapper.cpp:
     .text   start:0x008F2640 end:0x008F2A4C
-src/al/Project/Audio/System/SoundSubArchiveKeeper.cpp:
-    .text   start:0x008F2A50 end:0x008F3080
+src/al/Project/Audio/System/SoundSubArchiveKeeper.cpp: done
+    .text   start:0x008F2A50 end:0x008F2C68
 src/al/Project/Audio/Sound/SoundHandle.cpp: done
-    .text   start:0x008F3080 end:0x008F31A8
+    .text   start:0x008F2C70 end:0x008F31A8
 src/al/Library/Base/HashCodeUtil.cpp: done
     .text   start:0x008F31B0 end:0x008F33D4
 src/al/Library/Base/RequestInterp.cpp: done
@@ -5885,24 +5883,24 @@ src/al/Library/Screen/ScreenFunction_dup3.cpp:
     .text   start:0x009E3910 end:0x009E3A04
 src/al/Library/Se/Function/SeFunction.cpp:
     .text   start:0x009E3A10 end:0x009E4530
-src/al/Project/Audio/System/AudioPlayer_dup2.cpp:
-    .text   start:0x009E4530 end:0x009E4A84
+src/al/Library/Audio/AudioDecibelUtil.cpp: done
+    .text   start:0x009E4530 end:0x009E4590
 src/al/Library/Se/DataBase/SeDataBase.cpp:
-    .text   start:0x009E4A90 end:0x009E6200
+    .text   start:0x009E4590 end:0x009E6200
 src/al/Library/Se/Function/SeDbFunction.cpp:
     .text   start:0x009E6200 end:0x009E6684
 src/al/Library/Math/InOutParam.cpp:
     .text   start:0x009E6690 end:0x009E6AA8
 src/al/Library/Se/Function/SeDirector.cpp:
     .text   start:0x009E6AB0 end:0x009EBCDC
-src/al/Project/Audio/System/System_dup2.cpp:
-    .text   start:0x009EBCE0 end:0x009EBE80
+src/al/Project/Audio/System/AudioEffectFunction.cpp: done
+    .text   start:0x009EBCE0 end:0x009EBE64
 src/al/Library/Bgm/DspValueController.cpp:
-    .text   start:0x009EBE80 end:0x009ED5D4
+    .text   start:0x009EBE70 end:0x009EC0A0
 src/al/Project/Audio/AudioBusInfo.cpp:
-    .text   start:0x009ED5E0 end:0x009EEC38
+    .text   start:0x009EC0A0 end:0x009EEB6C
 src/al/Library/Se/Function/SeFunction_dup2.cpp:
-    .text   start:0x009EEC40 end:0x009EF310
+    .text   start:0x009EEB70 end:0x009EF310
 src/al/Project/Se/SeEmitter.cpp:
     .text   start:0x009EF310 end:0x009EFF44
 src/al/Library/Se/Project/SeKeeper.cpp:
