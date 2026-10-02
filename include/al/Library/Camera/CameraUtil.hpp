@@ -66,11 +66,11 @@ f32 getCameraFar(const IUseCamera*);
 s32 calcSnapShotImageOrientation(const sead::LookAtCamera&, f32);
 f32 getCameraDistanceMin(const IUseCamera*);
 f32 getCameraDistanceMax(const IUseCamera*);
-CameraTicket* initObjectCamera(const IUseCamera*, const ActorInitInfo&, const char*);
-CameraTicket* initProgramableCamera(const IUseCamera*, const ActorInitInfo&, const char*);
-CameraTicket* initProgramableCamera(const IUseCamera*, const char*);
-CameraTicket* initAnimCamera(const IUseCamera*, const ActorInitInfo&, const Resource*, const char*, bool);
-CameraTicket* initAnimCamera(const LiveActor*, const ActorInitInfo&);
+CameraInfo* initObjectCamera(const IUseCamera*, const ActorInitInfo&, const char*);
+CameraInfo* initProgramableCamera(const IUseCamera*, const ActorInitInfo&, const char*);
+CameraInfo* initProgramableCamera(const IUseCamera*, const char*);
+CameraInfo* initAnimCamera(const IUseCamera*, const ActorInitInfo&, const Resource*, const char*, bool);
+CameraInfo* initAnimCamera(const LiveActor*, const ActorInitInfo&);
 CameraInfo* initObjectMapCamera(const IUseCamera*, const ActorInitInfo&, const char*);
 void startCamera(const IUseCamera*, const CameraInfo*, s32);
 void requestCancelInterpole(const IUseCamera*);
@@ -119,7 +119,7 @@ const CameraPoserZoomParam& getZoomParamNear(const IUseCamera*);
 const CameraPoserZoomParam& getZoomParamNormal(const IUseCamera*);
 const CameraPoserZoomParam& getZoomParamFar(const IUseCamera*);
 void requestCancelInputKinopioBrigadeCamera(const IUseCamera*, s32);
-void tryChangeSingleCameraMode(const CameraInfo*);
+bool tryChangeSingleCameraMode(const CameraInfo*);
 void requestOffGyroMode(const IUseCamera*);
 bool isInSuperbArea(const IUseCamera*);
 bool isActiveCamera(const IUseCamera*, const CameraInfo*);
@@ -379,3 +379,10 @@ al::CameraTicket* initMirrorAreaCamera(const al::IUseCamera_RS*, const al::Place
 }  // namespace alCameraFunction
 
 void validateFixPointCameraUsePreCameraPos(al::CameraTicket*);
+
+namespace alTempSeadUtility {
+f32 calcStereoCamera(sead::DirectProjection* pProjectionL, sead::DirectCamera* pCameraL,
+                     sead::DirectProjection* pProjectionR, sead::DirectCamera* pCameraR,
+                     const sead::Projection& rProjection, const sead::Camera& rCamera,
+                     f32 depthLevel, f32 factor, bool isRealSwitch);
+}  // namespace alTempSeadUtility
