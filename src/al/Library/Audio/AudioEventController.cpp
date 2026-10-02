@@ -30,9 +30,9 @@ namespace {
  */
 bool isPlayerInWater(const al::IUseAreaObj* pUser, const al::PlayerHolder* pPlayerHolder, u32* pInWaterFrames) {
     s32 playerNum = al::getPlayerNumMax(pPlayerHolder);
-    bool isAnyInWater = false;
-    s32 targetNum = 0;
     s32 inWaterNum = 0;
+    s32 targetNum = 0;
+    bool isAnyInWater = false;
 
     for (s32 i = 0; i < playerNum; i++) {
         if (al::isPlayerDead(pPlayerHolder, i) || !al::isPlayerAreaTarget(pPlayerHolder, i)) {
@@ -45,20 +45,19 @@ bool isPlayerInWater(const al::IUseAreaObj* pUser, const al::PlayerHolder* pPlay
         if (al::isInWaterAreaNoSink(pUser, pos)) {
             sead::Vector3f upperPos = pos + sead::Vector3f(0.0f, 80.0f, 0.0f);
 
-            if (!al::isInWaterAreaNoSink(pUser, upperPos)) {
-                *pInWaterFrames = 0;
-                continue;
-            }
+            if (al::isInWaterAreaNoSink(pUser, upperPos)) {
+                if (al::isPlayerInRouteDokan(al::getPlayerActor(pPlayerHolder, i))) {
+                    return false;
+                }
 
-            if (al::isPlayerInRouteDokan(al::getPlayerActor(pPlayerHolder, i))) {
-                return false;
-            }
-
-            if (*pInWaterFrames >= 28) {
-                inWaterNum++;
-                isAnyInWater = true;
+                if (*pInWaterFrames >= 28) {
+                    inWaterNum++;
+                    isAnyInWater = true;
+                } else {
+                    (*pInWaterFrames)++;
+                }
             } else {
-                (*pInWaterFrames)++;
+                *pInWaterFrames = 0;
             }
         } else if (al::isInWaterArea(pUser, pos)) {
             inWaterNum++;
@@ -200,10 +199,10 @@ void AudioEventController::update() {
             const char* name = nullptr;
             mBgmStopAreaChecker->tryGetStringArgInCurArea(&name, "StopBgmName");
 
-            if (name == nullptr) {
-                tryStopAllBgm(this, fadeOutFrames);
-            } else {
+            if (name != nullptr) {
                 stopBgm(this, name, fadeOutFrames, -1);
+            } else {
+                tryStopAllBgm(this, fadeOutFrames);
             }
         }
     }
@@ -243,11 +242,9 @@ void AudioEventController::update() {
     if (playerHolder != nullptr) {
         bool isInWater = isPlayerInWater(this, playerHolder, &mInWaterFrames);
 
-        if (isInWater) {
-            if (!mIsInWater) {
-                changeBgmSituation(this, "InWater");
-            }
-        } else if (mIsInWater) {
+        if (isInWater && !mIsInWater) {
+            changeBgmSituation(this, "InWater");
+        } else if (!isInWater && mIsInWater) {
             changeBgmSituation(this, "OutWater");
         }
 
