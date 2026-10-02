@@ -51,18 +51,20 @@ void AudioRequestKeeperSyncedBgm::update() {
             continue;
         }
 
+        const BgmPlayingRequest& bgmRequest = request->request;
+
         switch (request->type) {
         case BgmPlayingType_Start:
-            startBgm(this, request->request);
+            startBgm(this, bgmRequest);
             break;
         case BgmPlayingType_Stop:
-            stopBgm(this, request->request);
+            stopBgm(this, bgmRequest);
             break;
         case BgmPlayingType_Pause:
-            pauseBgm(this, request->request.name, request->request.fadeInFrames);
+            pauseBgm(this, bgmRequest.name, bgmRequest.fadeInFrames);
             break;
         case BgmPlayingType_Resume:
-            resumeBgm(this, request->request.name, request->request.fadeInFrames);
+            resumeBgm(this, bgmRequest.name, bgmRequest.fadeInFrames);
             break;
         default:
             break;
