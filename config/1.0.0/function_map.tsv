@@ -49165,7 +49165,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71007FE220			FALSE	_ZN2al45calcDistanceCurrentKeyRotateCenterToBoxCenterEPKNS_21RollingCubePoseKeeperE	al::calcDistanceCurrentKeyRotateCenterToBoxCenter(al::RollingCubePoseKeeper const*)	
 0x71007FE2D0			FALSE	_ZN2al27calcRollingCubeClippingInfoEPN4sead7Vector3IfEEPfPKNS_21RollingCubePoseKeeperEf	al::calcRollingCubeClippingInfo(sead::Vector3<float>*, float*, al::RollingCubePoseKeeper const*, float)	
 0x71007FE890			FALSE	_ZN2al17calcMtxLandEffectEPN4sead8Matrix34IfEEPKNS_21RollingCubePoseKeeperERKNS0_4QuatIfEERKNS0_7Vector3IfEE	al::calcMtxLandEffect(sead::Matrix34<float>*, al::RollingCubePoseKeeper const*, sead::Quat<float> const&, sead::Vector3<float> const&)	
-0x71007FEAB0	Library/Layout	LayoutSystem.o	FALSE	_ZN2al9LayoutKitC1EPNS_10FontHolderE	al::LayoutKit::LayoutKit(al::FontHolder*)	object (smo)
+0x71007FEAB0	Library/Layout	LayoutKit.o	FALSE	_ZN2al9LayoutKitC1EPNS_10FontHolderE	al::LayoutKit::LayoutKit(al::FontHolder*)	object (smo)
 0x71007FEAD0			FALSE	_ZN2al9LayoutKitD2Ev	al::LayoutKit::~LayoutKit()	
 0x71007FEB20			FALSE	_ZN2al9LayoutKit24createCameraParamForIconEv	al::LayoutKit::createCameraParamForIcon()	
 0x71007FEB30			FALSE	_ZN2al9LayoutKit21createExecuteDirectorEi	al::LayoutKit::createExecuteDirector(int)	
@@ -49178,7 +49178,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71007FEC50			FALSE	_ZN2al9LayoutKit15setLayoutSystemEPNS_12LayoutSystemE	al::LayoutKit::setLayoutSystem(al::LayoutSystem*)	
 0x71007FED30			FALSE	_ZN2al9LayoutKit14setDrawContextEPN3agl11DrawContextE	al::LayoutKit::setDrawContext(agl::DrawContext*)	
 0x71007FED50			FALSE	_ZN2al21ExecuteSystemInitInfoC2Ev	al::ExecuteSystemInitInfo::ExecuteSystemInitInfo()	
-0x71007FED60		LayoutUtil.o	FALSE	_ZN2al18initLayoutInitInfoEPNS_14LayoutInitInfoEPKNS_9LayoutKitEPNS_14SceneObjHolderEPKNS_13AudioDirectorEPKNS_12LayoutSystemEPKNS_13MessageSystemEPKNS_13GamePadSystemE	al::initLayoutInitInfo(al::LayoutInitInfo*, al::LayoutKit const*, al::SceneObjHolder*, al::AudioDirector const*, al::LayoutSystem const*, al::MessageSystem const*, al::GamePadSystem const*)	object (smo)
+0x71007FED60		LayoutKitFunction.o	FALSE	_ZN2al18initLayoutInitInfoEPNS_14LayoutInitInfoEPKNS_9LayoutKitEPNS_14SceneObjHolderEPKNS_13AudioDirectorEPKNS_12LayoutSystemEPKNS_13MessageSystemEPKNS_13GamePadSystemE	al::initLayoutInitInfo(al::LayoutInitInfo*, al::LayoutKit const*, al::SceneObjHolder*, al::AudioDirector const*, al::LayoutSystem const*, al::MessageSystem const*, al::GamePadSystem const*)	object (smo)
 0x71007FEDD0			FALSE	_ZN2al15setRenderBufferEPNS_9LayoutKitEPKN3agl12RenderBufferE	al::setRenderBuffer(al::LayoutKit*, agl::RenderBuffer const*)	
 0x71007FEDF0			FALSE	_ZN2al13executeUpdateEPNS_9LayoutKitE	al::executeUpdate(al::LayoutKit*)	
 0x71007FEE00			FALSE	_ZN2al17executeUpdateListEPNS_9LayoutKitEPKcS3_	al::executeUpdateList(al::LayoutKit*, char const*, char const*)	
@@ -59908,9 +59908,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71009A46E0			FALSE	sub_71009A46E0	sub_71009A46E0	
 0x71009A4740			FALSE	_ZN4sead16WFixedSafeStringILi1024EED0Ev	sead::WFixedSafeString<1024>::~WFixedSafeString()	
 0x71009A4750			FALSE	_ZN4sead16WFixedSafeStringILi1024EEaSERKNS_14SafeStringBaseIDsEE	sead::WFixedSafeString<1024>::operator=(sead::SafeStringBase<char16_t> const&)	
-0x71009A4840			FALSE	_ZN2al22LayoutAllocatorInScopeC2Ev	al::LayoutAllocatorInScope::LayoutAllocatorInScope()	
+0x71009A4840		LayoutInitFunction.o	FALSE	_ZN2al22LayoutAllocatorInScopeC2Ev	al::LayoutAllocatorInScope::LayoutAllocatorInScope()	
 0x71009A4860			FALSE	_ZN2al22LayoutAllocatorInScopeD2Ev	al::LayoutAllocatorInScope::~LayoutAllocatorInScope()	
-0x71009A4870	Project/Layout	LayoutActionKeeper.o	FALSE	_ZN2al21makeLayoutArchivePathEPN4sead22BufferedSafeStringBaseIcEERKNS0_14SafeStringBaseIcEEb	al::makeLayoutArchivePath(sead::BufferedSafeStringBase<char>*, sead::SafeStringBase<char> const&, bool)	object/folder from OdysseyDecomp file list
+0x71009A4870			FALSE	_ZN2al21makeLayoutArchivePathEPN4sead22BufferedSafeStringBaseIcEERKNS0_14SafeStringBaseIcEEb	al::makeLayoutArchivePath(sead::BufferedSafeStringBase<char>*, sead::SafeStringBase<char> const&, bool)	object/folder from OdysseyDecomp file list
 0x71009A4980			FALSE	_ZN2al22makeLayoutResourcePathEPN4sead22BufferedSafeStringBaseIcEERKNS0_14SafeStringBaseIcEEb	al::makeLayoutResourcePath(sead::BufferedSafeStringBase<char>*, sead::SafeStringBase<char> const&, bool)	
 0x71009A4A10			FALSE	_ZN2al19initLayoutSceneInfoEPNS_11LayoutActorERKNS_14LayoutInitInfoE	al::initLayoutSceneInfo(al::LayoutActor*, al::LayoutInitInfo const&)	
 0x71009A4A70			FALSE	_ZN2al22initLayoutEffectKeeperEPNS_11LayoutActorERKNS_14LayoutInitInfoEPKc	al::initLayoutEffectKeeper(al::LayoutActor*, al::LayoutInitInfo const&, char const*)	
@@ -59933,9 +59933,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71009A58D0			FALSE	_ZNK2al9EuiScreen27checkDerivedRuntimeTypeInfoEPKN4sead15RuntimeTypeInfo9InterfaceE	al::EuiScreen::checkDerivedRuntimeTypeInfo(sead::RuntimeTypeInfo::Interface const*) const	
 0x71009A59D0			FALSE	_ZNK2al9EuiScreen18getRuntimeTypeInfoEv	al::EuiScreen::getRuntimeTypeInfo() const	
 0x71009A5A40			FALSE	_ZNK4sead15RuntimeTypeInfo6DeriveIN3eui6ScreenEE9isDerivedEPKNS0_9InterfaceE	sead::RuntimeTypeInfo::Derive<eui::Screen>::isDerived(sead::RuntimeTypeInfo::Interface const*) const	
-0x71009A5AD0			FALSE	_ZN2al14LayoutInitInfoC2Ev	al::LayoutInitInfo::LayoutInitInfo()	
+0x71009A5AD0		LayoutInitInfo.o	FALSE	_ZN2al14LayoutInitInfoC2Ev	al::LayoutInitInfo::LayoutInitInfo()	
 0x71009A5B00			FALSE	_ZN2al14LayoutInitInfo4initEPNS_15ExecuteDirectorEPKNS_16EffectSystemInfoEPNS_14SceneObjHolderEPKNS_13AudioDirectorEPNS_14CameraDirectorEPNS_15SceneCameraInfoEPKNS_12LayoutSystemEPKNS_13MessageSystemEPKNS_13GamePadSystemEPNS_17PadRumbleDirectorE	al::LayoutInitInfo::init(al::ExecuteDirector*, al::EffectSystemInfo const*, al::SceneObjHolder*, al::AudioDirector const*, al::CameraDirector*, al::SceneCameraInfo*, al::LayoutSystem const*, al::MessageSystem const*, al::GamePadSystem const*, al::PadRumbleDirector*)	
-0x71009A5B30	Library/Layout	LayoutInitInfo.o	FALSE	_ZNK2al14LayoutInitInfo16getMessageSystemEv	al::LayoutInitInfo::getMessageSystem() const	object/folder from OdysseyDecomp file list
+0x71009A5B30			FALSE	_ZNK2al14LayoutInitInfo16getMessageSystemEv	al::LayoutInitInfo::getMessageSystem() const	object/folder from OdysseyDecomp file list
 0x71009A5B40			FALSE	_ZN2al15initLayoutActorEPNS_11LayoutActorERKNS_14LayoutInitInfoEPKcS6_	al::initLayoutActor(al::LayoutActor*, al::LayoutInitInfo const&, char const*, char const*)	
 0x71009A5BB0			FALSE	sub_71009A5BB0	sub_71009A5BB0	
 0x71009A5EA0			FALSE	_ZN2al24initLayoutActorLocalizedEPNS_11LayoutActorERKNS_14LayoutInitInfoEPKcS6_	al::initLayoutActorLocalized(al::LayoutActor*, al::LayoutInitInfo const&, char const*, char const*)	
@@ -59947,9 +59947,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71009A6570			FALSE	_ZN2al26initLayoutPartsAudioKeeperEPNS_11LayoutActorERKNS_14LayoutInitInfoERKN4sead14SafeStringBaseIcEE	al::initLayoutPartsAudioKeeper(al::LayoutActor*, al::LayoutInitInfo const&, sead::SafeStringBase<char> const&)	
 0x71009A6610			FALSE	sub_71009A6610	sub_71009A6610	
 0x71009A6760			FALSE	sub_71009A6760	sub_71009A6760	
-0x71009A6870		LayoutKeeper.o	FALSE	_ZN2al12LayoutKeeperC2Ev	al::LayoutKeeper::LayoutKeeper()	note: sorts before the previous object (folder boundary or misnamed object?)
+0x71009A6870	Library/Layout	LayoutKeeper.o	FALSE	_ZN2al12LayoutKeeperC2Ev	al::LayoutKeeper::LayoutKeeper()	note: sorts before the previous object (folder boundary or misnamed object?)
 0x71009A6890			FALSE	_ZN2al12LayoutKeeper18reinitializeShaderEv	al::LayoutKeeper::reinitializeShader()	
-0x71009A6990		LayoutPane.o	FALSE	_ZN2al12LayoutKeeper10initScreenEPN3eui6ScreenE	al::LayoutKeeper::initScreen(eui::Screen*)	object (smo)
+0x71009A6990			FALSE	_ZN2al12LayoutKeeper10initScreenEPN3eui6ScreenE	al::LayoutKeeper::initScreen(eui::Screen*)	object (smo)
 0x71009A69A0			FALSE	_ZN2al12LayoutKeeper10initLayoutEPN2nn4ui2d6LayoutEPNS_14LayoutResourceE	al::LayoutKeeper::initLayout(nn::ui2d::Layout*, al::LayoutResource*)	
 0x71009A6C00			FALSE	_ZN2al12LayoutKeeper12initDrawInfoEPN2nn4ui2d8DrawInfoE	al::LayoutKeeper::initDrawInfo(nn::ui2d::DrawInfo*)	
 0x71009A6C10			FALSE	_ZN2al12LayoutKeeper16initTagProcessorEPNS_18CustomTagProcessorE	al::LayoutKeeper::initTagProcessor(al::CustomTagProcessor*)	
