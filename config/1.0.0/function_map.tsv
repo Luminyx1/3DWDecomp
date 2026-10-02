@@ -56415,18 +56415,18 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710090A280			FALSE	_ZNK2al19CameraArrowCollider16makeLookAtCameraEPN4sead12LookAtCameraE	al::CameraArrowCollider::makeLookAtCamera(sead::LookAtCamera*) const	
 0x710090A350			FALSE	_ZNK2al19CameraArrowCollider13getPushLengthEv	al::CameraArrowCollider::getPushLength() const	
 0x710090A360			FALSE	_ZN2al19CameraArrowCollider7exeKeepEv	al::CameraArrowCollider::exeKeep()	
-0x710090A3F0			FALSE	sub_710090A3F0	sub_710090A3F0	
+0x710090A3F0			FALSE	_ZN12_GLOBAL__N_114calcPushLengthEPfPN2al20ArrowHitResultBufferEPKNS1_19CameraArrowColliderERKN4sead7Vector3IfEESB_PSA_SB_bf	_ZN12_GLOBAL__N_114calcPushLengthEPfPN2al20ArrowHitResultBufferEPKNS1_19CameraArrowColliderERKN4sead7Vector3IfEESB_PSA_SB_bf	
 0x710090ACF0			FALSE	_ZN2al19CameraArrowCollider9exeShrinkEv	al::CameraArrowCollider::exeShrink()	
 0x710090AE30			FALSE	_ZNK2al19CameraArrowCollider8isShrinkEv	al::CameraArrowCollider::isShrink() const	
 0x710090AE40			FALSE	_ZN2al19CameraArrowColliderD0Ev	al::CameraArrowCollider::~CameraArrowCollider()	
 0x710090AE70			FALSE	_ZNK2al19CameraArrowCollider20getCollisionDirectorEv	al::CameraArrowCollider::getCollisionDirector() const	
 0x710090AE80			FALSE	_ZThn16_NK2al19CameraArrowCollider20getCollisionDirectorEv	non-virtual thunk to al::CameraArrowCollider::getCollisionDirector() const	
-0x710090AE90			FALSE	sub_710090AE90	sub_710090AE90	
+0x710090AE90			FALSE	_ZNK12_GLOBAL__N_126CameraArrowColliderNrvKeep7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_126CameraArrowColliderNrvKeep7executeEPN2al11NerveKeeperE	
 0x710090AF20			FALSE	_ZNK12_GLOBAL__N_128CameraArrowColliderNrvShrink7executeEPN2al11NerveKeeperE	(anonymous namespace)::CameraArrowColliderNrvShrink::execute(al::NerveKeeper*) const	
 0x710090AF30			FALSE	_ZN4sead9Delegate1IN2al19CameraArrowColliderEPNS1_14CollisionPartsEED0Ev	sead::Delegate1<al::CameraArrowCollider, al::CollisionParts*>::~Delegate1()	
 0x710090AF40			FALSE	_ZN4sead9Delegate1IN2al19CameraArrowColliderEPNS1_14CollisionPartsEE6invokeES4_	sead::Delegate1<al::CameraArrowCollider, al::CollisionParts*>::invoke(al::CollisionParts*)	
 0x710090AF70			FALSE	_ZNK4sead9Delegate1IN2al19CameraArrowColliderEPNS1_14CollisionPartsEE5cloneEPNS_4HeapE	sead::Delegate1<al::CameraArrowCollider, al::CollisionParts*>::clone(sead::Heap*) const	
-0x710090AFE0			FALSE	sub_710090AFE0	sub_710090AFE0	
+0x710090AFE0			FALSE	_GLOBAL__sub_I_CameraArrowCollider.cpp	_GLOBAL__sub_I_CameraArrowCollider.cpp	
 0x710090B030		CameraPoserAnim_RS.o	FALSE	_ZN2al18CameraPoserAnim_RSC2Ev	al::CameraPoserAnim_RS::CameraPoserAnim_RS()	object (class)
 0x710090B0E0			FALSE	_ZN2al18CameraPoserAnim_RS16initAnimResourceEPKNS_8ResourceEPKN4sead8Matrix34IfEE	al::CameraPoserAnim_RS::initAnimResource(al::Resource const*, sead::Matrix34<float> const*)	
 0x710090B150			FALSE	_ZN2al18CameraPoserAnim_RS7setAnimEPKciii	al::CameraPoserAnim_RS::setAnim(char const*, int, int, int)	
@@ -56459,7 +56459,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710090CA40			FALSE	_ZN2al21CameraPoserBossBattle13exeFollowNearEv	al::CameraPoserBossBattle::exeFollowNear()	
 0x710090CCD0			FALSE	_ZNK12_GLOBAL__N_129CameraPoserBossBattleNrvTower7executeEPN2al11NerveKeeperE	(anonymous namespace)::CameraPoserBossBattleNrvTower::execute(al::NerveKeeper*) const	
 0x710090CCE0			FALSE	_ZNK12_GLOBAL__N_130CameraPoserBossBattleNrvFollow7executeEPN2al11NerveKeeperE	(anonymous namespace)::CameraPoserBossBattleNrvFollow::execute(al::NerveKeeper*) const	
-0x710090CCF0			FALSE	sub_710090CCF0	sub_710090CCF0	
+0x710090CCF0			FALSE	_ZNK12_GLOBAL__N_130CameraPoserBossBattleNrvFollow12executeOnEndEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_130CameraPoserBossBattleNrvFollow12executeOnEndEPN2al11NerveKeeperE	
 0x710090CD00			FALSE	_ZNK12_GLOBAL__N_134CameraPoserBossBattleNrvFollowNear7executeEPN2al11NerveKeeperE	(anonymous namespace)::CameraPoserBossBattleNrvFollowNear::execute(al::NerveKeeper*) const	
 0x710090CD10		CameraPoserCart.o	FALSE	_ZN2al15CameraPoserCartC1EPKc	al::CameraPoserCart::CameraPoserCart(char const*)	object (smo)
 0x710090CDA0			FALSE	_ZN2al15CameraPoserCart5startERKNS_15CameraStartInfoE	al::CameraPoserCart::start(al::CameraStartInfo const&)	
@@ -56470,14 +56470,14 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710090D140			FALSE	_ZN2al15CameraPoserCart22setUseDestinationAngleEfi	al::CameraPoserCart::setUseDestinationAngle(float, int)	
 0x710090D150			FALSE	_ZN2al14CameraPoser_RS6updateEv	al::CameraPoser_RS::update()	
 0x710090D160			FALSE	_ZNK12_GLOBAL__N_124CameraPoserCartNrvFollow7executeEPN2al11NerveKeeperE	(anonymous namespace)::CameraPoserCartNrvFollow::execute(al::NerveKeeper*) const	
-0x710090D170			FALSE	nullsub_338	nullsub_338	
+0x710090D170			FALSE	_ZNK12_GLOBAL__N_122CameraPoserCartNrvStop7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_122CameraPoserCartNrvStop7executeEPN2al11NerveKeeperE	
 0x710090D180		CameraPoserEntrance_RS.o	FALSE	_ZN2al22CameraPoserEntrance_RSC1EPKc	al::CameraPoserEntrance_RS::CameraPoserEntrance_RS(char const*)	object (class)
 0x710090D260			FALSE	_ZN2al22CameraPoserEntrance_RS9initParamEfffRKN4sead7Vector3IfEE	al::CameraPoserEntrance_RS::initParam(float, float, float, sead::Vector3<float> const&)	
 0x710090D290			FALSE	_ZN2al22CameraPoserEntrance_RS9initParamEfRKN4sead7Vector3IfEES5_	al::CameraPoserEntrance_RS::initParam(float, sead::Vector3<float> const&, sead::Vector3<float> const&)	
 0x710090D330			FALSE	_ZN2al22CameraPoserEntrance_RS19initLookAtPosDirectERKN4sead7Vector3IfEE	al::CameraPoserEntrance_RS::initLookAtPosDirect(sead::Vector3<float> const&)	
 0x710090D350			FALSE	_ZN2al22CameraPoserEntrance_RS9loadParamERKNS_9ByamlIterE	al::CameraPoserEntrance_RS::loadParam(al::ByamlIter const&)	
 0x710090D4A0			FALSE	_ZN2al22CameraPoserEntrance_RS5startERKNS_15CameraStartInfoE	al::CameraPoserEntrance_RS::start(al::CameraStartInfo const&)	
-0x710090D570			FALSE	sub_710090D570	sub_710090D570	
+0x710090D570			FALSE	_ZN12_GLOBAL__N_116updateCameraPoseEPN2al22CameraPoserEntrance_RSEPKNS1_5ParamERKN4sead7Vector3IfEE	_ZN12_GLOBAL__N_116updateCameraPoseEPN2al22CameraPoserEntrance_RSEPKNS1_5ParamERKN4sead7Vector3IfEE	
 0x710090D6D0			FALSE	_ZN2al22CameraPoserEntrance_RS8movementEv	al::CameraPoserEntrance_RS::movement()	
 0x710090D700			FALSE	_ZN2al22CameraPoserEntrance_RS6updateEv	al::CameraPoserEntrance_RS::update()	
 0x710090D750			FALSE	_ZN2al22CameraPoserEntrance_RS3endEv	al::CameraPoserEntrance_RS::end()	
@@ -56485,7 +56485,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710090D820			FALSE	_ZN2al22CameraPoserEntrance_RS12exeKeepInAirEv	al::CameraPoserEntrance_RS::exeKeepInAir()	
 0x710090D900			FALSE	_ZN2al22CameraPoserEntrance_RS11setStartPosERN4sead7Vector3IfEE	al::CameraPoserEntrance_RS::setStartPos(sead::Vector3<float>&)	
 0x710090D940			FALSE	_ZN2al22CameraPoserEntrance_RS7exeWaitEv	al::CameraPoserEntrance_RS::exeWait()	
-0x710090DB30			FALSE	sub_710090DB30	sub_710090DB30	
+0x710090DB30			FALSE	_ZN12_GLOBAL__N_114isTargetMovingEhPKN2al22CameraPoserEntrance_RSERKN4sead7Vector3IfEE	_ZN12_GLOBAL__N_114isTargetMovingEhPKN2al22CameraPoserEntrance_RSERKN4sead7Vector3IfEE	
 0x710090DC20			FALSE	_ZNK2al22CameraPoserEntrance_RS19isEnableRotateByPadEv	al::CameraPoserEntrance_RS::isEnableRotateByPad() const	
 0x710090DC30			FALSE	_ZNK12_GLOBAL__N_129CameraPoserEntrance_RSNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::CameraPoserEntrance_RSNrvWait::execute(al::NerveKeeper*) const	
 0x710090DC40			FALSE	_ZNK12_GLOBAL__N_135CameraPoserEntrance_RSNrvKeepByFlag7executeEPN2al11NerveKeeperE	(anonymous namespace)::CameraPoserEntrance_RSNrvKeepByFlag::execute(al::NerveKeeper*) const	
@@ -56495,7 +56495,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710090DE20			FALSE	_ZN2al19CameraPoserFixActor4initEv	al::CameraPoserFixActor::init()	
 0x710090DE50			FALSE	_ZN2al19CameraPoserFixActor9loadParamERKNS_9ByamlIterE	al::CameraPoserFixActor::loadParam(al::ByamlIter const&)	
 0x710090DEF0			FALSE	_ZN2al19CameraPoserFixActor5startERKNS_15CameraStartInfoE	al::CameraPoserFixActor::start(al::CameraStartInfo const&)	
-0x710090DF10			FALSE	sub_710090DF10	sub_710090DF10	
+0x710090DF10			FALSE	_ZN12_GLOBAL__N_122calcFixActorCameraPoseEPN2al14CameraPoser_RSEfPKNS0_9LiveActorERKN4sead7Vector3IfEEffbSA_	_ZN12_GLOBAL__N_122calcFixActorCameraPoseEPN2al14CameraPoser_RSEfPKNS0_9LiveActorERKN4sead7Vector3IfEEffbSA_	
 0x710090E0E0			FALSE	_ZN2al19CameraPoserFixActor5resetEv	al::CameraPoserFixActor::reset()	
 0x710090E110			FALSE	_ZN2al19CameraPoserFixActor11storeCameraERKN4sead7Vector3IfEES5_	al::CameraPoserFixActor::storeCamera(sead::Vector3<float> const&, sead::Vector3<float> const&)	
 0x710090E210			FALSE	_ZN2al19CameraPoserFixActor14setDirectAngleEv	al::CameraPoserFixActor::setDirectAngle()	
@@ -56523,8 +56523,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710090F670			FALSE	_ZN2al19CameraPoserFixPoint5startERKNS_15CameraStartInfoE	al::CameraPoserFixPoint::start(al::CameraStartInfo const&)	
 0x710090F6C0			FALSE	_ZN2al19CameraPoserFixPoint6updateEv	al::CameraPoserFixPoint::update()	
 0x710090F790			FALSE	_ZNK2al19CameraPoserFixPoint16makeLookAtCameraEPN4sead12LookAtCameraE	al::CameraPoserFixPoint::makeLookAtCamera(sead::LookAtCamera*) const	
-0x710090F830			FALSE	_ZN2al14CameraPoserFixC1EPKc	al::CameraPoserFix::CameraPoserFix(char const*)	
-0x710090F980		CameraPoserFix.o	FALSE	_ZN2al14CameraPoserFix4initEv	al::CameraPoserFix::init()	object/folder from OdysseyDecomp file list
+0x710090F830		CameraPoserFix.o	FALSE	_ZN2al14CameraPoserFixC1EPKc	al::CameraPoserFix::CameraPoserFix(char const*)	
+0x710090F980			FALSE	_ZN2al14CameraPoserFix4initEv	al::CameraPoserFix::init()	object/folder from OdysseyDecomp file list
 0x710090F990			FALSE	_ZN2al14CameraPoserFix25initCameraPosAndLookAtPosERKN4sead7Vector3IfEES5_	al::CameraPoserFix::initCameraPosAndLookAtPos(sead::Vector3<float> const&, sead::Vector3<float> const&)	
 0x710090FA90			FALSE	_ZN2al14CameraPoserFix9loadParamERKNS_9ByamlIterE	al::CameraPoserFix::loadParam(al::ByamlIter const&)	
 0x710090FB10			FALSE	_ZN2al14CameraPoserFix5startERKNS_15CameraStartInfoE	al::CameraPoserFix::start(al::CameraStartInfo const&)	
@@ -56625,12 +56625,12 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100915840			FALSE	_ZN2al30CameraVerticalAbsorber2DGalaxy12exeLimitOverEv	al::CameraVerticalAbsorber2DGalaxy::exeLimitOver()	
 0x71009158B0			FALSE	_ZN2al30CameraVerticalAbsorber2DGalaxy13exeLimitAfterEv	al::CameraVerticalAbsorber2DGalaxy::exeLimitAfter()	
 0x7100915950			FALSE	_ZN2al30CameraVerticalAbsorber2DGalaxyD0Ev	al::CameraVerticalAbsorber2DGalaxy::~CameraVerticalAbsorber2DGalaxy()	
-0x7100915980			FALSE	sub_7100915980	sub_7100915980	
+0x7100915980			FALSE	_ZNK12_GLOBAL__N_137CameraVerticalAbsorber2DGalaxyNrvNone7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_137CameraVerticalAbsorber2DGalaxyNrvNone7executeEPN2al11NerveKeeperE	
 0x7100915A00			FALSE	_ZNK12_GLOBAL__N_139CameraVerticalAbsorber2DGalaxyNrvGround7executeEPN2al11NerveKeeperE	(anonymous namespace)::CameraVerticalAbsorber2DGalaxyNrvGround::execute(al::NerveKeeper*) const	
 0x7100915A10			FALSE	_ZNK12_GLOBAL__N_138CameraVerticalAbsorber2DGalaxyNrvLimit7executeEPN2al11NerveKeeperE	(anonymous namespace)::CameraVerticalAbsorber2DGalaxyNrvLimit::execute(al::NerveKeeper*) const	
-0x7100915A20			FALSE	sub_7100915A20	sub_7100915A20	
-0x7100915AC0			FALSE	sub_7100915AC0	sub_7100915AC0	
-0x7100915B30			FALSE	_ZN2al14CameraDirectorC2EiPNS_15AreaObjDirectorEPNS_17CollisionDirectorE	al::CameraDirector::CameraDirector(int, al::AreaObjDirector*, al::CollisionDirector*)	
+0x7100915A20			FALSE	_ZNK12_GLOBAL__N_143CameraVerticalAbsorber2DGalaxyNrvLimitAfter7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_143CameraVerticalAbsorber2DGalaxyNrvLimitAfter7executeEPN2al11NerveKeeperE	
+0x7100915AC0			FALSE	_ZNK12_GLOBAL__N_142CameraVerticalAbsorber2DGalaxyNrvLimitOver7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_142CameraVerticalAbsorber2DGalaxyNrvLimitOver7executeEPN2al11NerveKeeperE	
+0x7100915B30	Library/Camera	CameraDirector.o	FALSE	_ZN2al14CameraDirectorC2EiPNS_15AreaObjDirectorEPNS_17CollisionDirectorE	al::CameraDirector::CameraDirector(int, al::AreaObjDirector*, al::CollisionDirector*)	
 0x71009161F0			FALSE	_ZN2al14CameraDirectorD2Ev	al::CameraDirector::~CameraDirector()	
 0x7100916210			FALSE	_ZN2al14CameraDirector17initCameraCreatorEib	al::CameraDirector::initCameraCreator(int, bool)	
 0x7100916230			FALSE	_ZN2al14CameraDirector17setCameraResourceEPKNS_8ResourceEi	al::CameraDirector::setCameraResource(al::Resource const*, int)	
@@ -56672,7 +56672,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100917B30			FALSE	_ZNK2al14CameraDirector20canEnterSnapshotModeEv	al::CameraDirector::canEnterSnapshotMode() const	
 0x7100917B70			FALSE	_ZN2al14CameraDirector22setSnapShotAudioKeeperEPNS_15IUseAudioKeeperE	al::CameraDirector::setSnapShotAudioKeeper(al::IUseAudioKeeper*)	
 0x7100917B80			FALSE	_ZNK2al14CameraDirector14getAudioKeeperEv	al::CameraDirector::getAudioKeeper() const	
-0x7100917B90			FALSE	_ZN2al13CameraCreatorC1EPNS_14CameraSwitcherEPNS_13PlayerWatcherEPKN4sead12LookAtCameraEPKNS5_21PerspectiveProjectionEPNS_17CollisionDirectorEPKbSF_SF_	al::CameraCreator::CameraCreator(al::CameraSwitcher*, al::PlayerWatcher*, sead::LookAtCamera const*, sead::PerspectiveProjection const*, al::CollisionDirector*, bool const*, bool const*, bool const*)	
+0x7100917B90		CameraCreator.o	FALSE	_ZN2al13CameraCreatorC1EPNS_14CameraSwitcherEPNS_13PlayerWatcherEPKN4sead12LookAtCameraEPKNS5_21PerspectiveProjectionEPNS_17CollisionDirectorEPKbSF_SF_	al::CameraCreator::CameraCreator(al::CameraSwitcher*, al::PlayerWatcher*, sead::LookAtCamera const*, sead::PerspectiveProjection const*, al::CollisionDirector*, bool const*, bool const*, bool const*)	
 0x7100917BC0			FALSE	_ZN2al13CameraCreator4initEib	al::CameraCreator::init(int, bool)	
 0x7100917C10			FALSE	_ZN2al13CameraCreator15setLiveActorKitEPNS_12LiveActorKitE	al::CameraCreator::setLiveActorKit(al::LiveActorKit*)	
 0x7100917C20			FALSE	_ZN2al13CameraCreator17setCameraResourceEPKNS_8ResourceEi	al::CameraCreator::setCameraResource(al::Resource const*, int)	
@@ -56681,7 +56681,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71009182C0			FALSE	_ZN2al13CameraCreator23createProgramableCameraERKNS_11PlacementIdE	al::CameraCreator::createProgramableCamera(al::PlacementId const&)	
 0x7100918300			FALSE	_ZN2al13CameraCreator16createAnimCameraEv	al::CameraCreator::createAnimCamera()	
 0x7100918340			FALSE	_ZN2al13CameraCreator20tryCreateStartCameraEb	al::CameraCreator::tryCreateStartCamera(bool)	
-0x7100918450			FALSE	_ZN2al16CameraCloseUpperC2EPN4sead12LookAtCameraEPNS1_21PerspectiveProjectionES5_Pi	al::CameraCloseUpper::CameraCloseUpper(sead::LookAtCamera*, sead::PerspectiveProjection*, sead::PerspectiveProjection*, int*)	
+0x7100918450		CameraCloseUpper.o	FALSE	_ZN2al16CameraCloseUpperC2EPN4sead12LookAtCameraEPNS1_21PerspectiveProjectionES5_Pi	al::CameraCloseUpper::CameraCloseUpper(sead::LookAtCamera*, sead::PerspectiveProjection*, sead::PerspectiveProjection*, int*)	
 0x7100918500			FALSE	_ZN2al16CameraCloseUpper4initEPKNS_12PlayerHolderE	al::CameraCloseUpper::init(al::PlayerHolder const*)	
 0x7100918570			FALSE	_ZN2al16CameraCloseUpper6updateEb	al::CameraCloseUpper::update(bool)	
 0x71009185E0			FALSE	_ZN2al16CameraCloseUpper7exeWaitEv	al::CameraCloseUpper::exeWait()	
@@ -56691,7 +56691,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100918940			FALSE	_ZN2al21CameraCloseUpperParamC2Ev	al::CameraCloseUpperParam::CameraCloseUpperParam()	
 0x7100918970			FALSE	_ZNK12_GLOBAL__N_123CameraCloseUpperNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::CameraCloseUpperNrvWait::execute(al::NerveKeeper*) const	
 0x7100918980			FALSE	_ZNK12_GLOBAL__N_127CameraCloseUpperNrvApproach7executeEPN2al11NerveKeeperE	(anonymous namespace)::CameraCloseUpperNrvApproach::execute(al::NerveKeeper*) const	
-0x7100918990			FALSE	_ZN2al18CameraAreaObserverC2EPNS_14CameraSwitcherEPKNS_13PlayerWatcherEPNS_15AreaObjDirectorE	al::CameraAreaObserver::CameraAreaObserver(al::CameraSwitcher*, al::PlayerWatcher const*, al::AreaObjDirector*)	
+0x7100918990		CameraAreaObserver.o	FALSE	_ZN2al18CameraAreaObserverC2EPNS_14CameraSwitcherEPKNS_13PlayerWatcherEPNS_15AreaObjDirectorE	al::CameraAreaObserver::CameraAreaObserver(al::CameraSwitcher*, al::PlayerWatcher const*, al::AreaObjDirector*)	
 0x71009189E0			FALSE	_ZN2al18CameraAreaObserver6updateEv	al::CameraAreaObserver::update()	
 0x7100918B70			FALSE	_ZN2al18CameraAreaObserver25tryFindAreaObjAllPlayerInEv	al::CameraAreaObserver::tryFindAreaObjAllPlayerIn()	
 0x7100918C80			FALSE	_ZNK2al18CameraAreaObserver18getAreaObjDirectorEv	al::CameraAreaObserver::getAreaObjDirector() const	
@@ -56833,7 +56833,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71009223E0			FALSE	_ZNK2al19CameraPoserParallel39isExistCameraPosWithinMoveLimitForMultiEv	al::CameraPoserParallel::isExistCameraPosWithinMoveLimitForMulti() const	
 0x7100922440			FALSE	_ZNK2al19CameraPoserParallel16makeLookAtCameraEPN4sead12LookAtCameraE	al::CameraPoserParallel::makeLookAtCamera(sead::LookAtCamera*) const	
 0x71009227E0			FALSE	_ZN2al19CameraPoserParallel9loadParamEPKNS_9ByamlIterE	al::CameraPoserParallel::loadParam(al::ByamlIter const*)	
-0x7100922BB0		CameraPoserParallelOnRail.o	FALSE	_ZN2al24CameraPoserParallelParamC2Ev	al::CameraPoserParallelParam::CameraPoserParallelParam()	object CameraPoserParallelOnRail.o (was CameraPoserParallelParam.o, a secondary class)
+0x7100922BB0			FALSE	_ZN2al24CameraPoserParallelParamC2Ev	al::CameraPoserParallelParam::CameraPoserParallelParam()	object CameraPoserParallelOnRail.o (was CameraPoserParallelParam.o, a secondary class)
 0x7100922C30			FALSE	_ZNK2al19CameraPoserParallel24calcPlayerWorldCenterPosEPN4sead7Vector3IfEE	al::CameraPoserParallel::calcPlayerWorldCenterPos(sead::Vector3<float>*) const	
 0x7100922D00			FALSE	_ZNK2al19CameraPoserParallel19isPlayerInLayoutBoxEi	al::CameraPoserParallel::isPlayerInLayoutBox(int) const	
 0x7100922DC0			FALSE	_ZNK2al19CameraPoserParallel29calcLayoutBoxIncludeAllPlayerEPN4sead9BoundBox2IfEEPb	al::CameraPoserParallel::calcLayoutBoxIncludeAllPlayer(sead::BoundBox2<float>*, bool*) const	
@@ -56850,7 +56850,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100923290			FALSE	_ZN2al19CameraPoserParallel21setSpeedCompensationVEf	al::CameraPoserParallel::setSpeedCompensationV(float)	
 0x71009232A0			FALSE	_ZNK2al19CameraPoserParallel20getCollisionDirectorEv	al::CameraPoserParallel::getCollisionDirector() const	
 0x71009232B0			FALSE	_ZThn168_NK2al19CameraPoserParallel20getCollisionDirectorEv	non-virtual thunk to al::CameraPoserParallel::getCollisionDirector() const	
-0x71009232C0			FALSE	_ZN2al25CameraPoserParallelOnRailC1ERKNS_30CameraPoserParallelOnRailParamEPKNS_13PlayerWatcherEPKN4sead21PerspectiveProjectionEPKNS_11PlacementIdE	al::CameraPoserParallelOnRail::CameraPoserParallelOnRail(al::CameraPoserParallelOnRailParam const&, al::PlayerWatcher const*, sead::PerspectiveProjection const*, al::PlacementId const*)	part of CameraPoserParallelOnRail.o
+0x71009232C0		CameraPoserParallelOnRail.o	FALSE	_ZN2al25CameraPoserParallelOnRailC1ERKNS_30CameraPoserParallelOnRailParamEPKNS_13PlayerWatcherEPKN4sead21PerspectiveProjectionEPKNS_11PlacementIdE	al::CameraPoserParallelOnRail::CameraPoserParallelOnRail(al::CameraPoserParallelOnRailParam const&, al::PlayerWatcher const*, sead::PerspectiveProjection const*, al::PlacementId const*)	part of CameraPoserParallelOnRail.o
 0x71009233F0			FALSE	_ZN2al25CameraPoserParallelOnRail8initRailEPKNS_13PlacementInfoE	al::CameraPoserParallelOnRail::initRail(al::PlacementInfo const*)	
 0x7100923430			FALSE	_ZN2al25CameraPoserParallelOnRail6updateEv	al::CameraPoserParallelOnRail::update()	
 0x71009236C0			FALSE	_ZNK2al25CameraPoserParallelOnRail21calcDirAngleTypeFixedEPN4sead7Vector3IfEE	al::CameraPoserParallelOnRail::calcDirAngleTypeFixed(sead::Vector3<float>*) const	
@@ -56883,7 +56883,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100925030			FALSE	_ZNK2al15CameraPoserRail12getRailCoordEv	al::CameraPoserRail::getRailCoord() const	
 0x7100925040			FALSE	_ZN2al15CameraPoserRail12setRailCoordEf	al::CameraPoserRail::setRailCoord(float)	
 0x7100925050			FALSE	_ZN2al20CameraPoserRailParamC2Ev	al::CameraPoserRailParam::CameraPoserRailParam()	joined CameraPoserRail.o (was CameraPoserRailParam.o, host weak functions follow it)
-0x7100925080			FALSE	sub_7100925080	sub_7100925080	
+0x7100925080			FALSE	_ZNK12_GLOBAL__N_122CameraPoserRailNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_122CameraPoserRailNrvWait7executeEPN2al11NerveKeeperE	
 0x71009250E0			FALSE	_ZNK12_GLOBAL__N_122CameraPoserRailNrvMove7executeEPN2al11NerveKeeperE	(anonymous namespace)::CameraPoserRailNrvMove::execute(al::NerveKeeper*) const	
 0x71009250F0		CameraPoserRailTower.o	FALSE	_ZN2al20CameraPoserRailTowerC2ERKNS_25CameraPoserRailTowerParamEPKNS_11PlacementIdE	al::CameraPoserRailTower::CameraPoserRailTower(al::CameraPoserRailTowerParam const&, al::PlacementId const*)	object (class)
 0x71009251A0			FALSE	_ZN2al20CameraPoserRailTower8initRailEPKNS_13PlacementInfoE	al::CameraPoserRailTower::initRail(al::PlacementInfo const*)	
@@ -56894,7 +56894,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100925440			FALSE	_ZNK2al20CameraPoserRailTower16makeLookAtCameraEPN4sead12LookAtCameraE	al::CameraPoserRailTower::makeLookAtCamera(sead::LookAtCamera*) const	
 0x7100925590			FALSE	_ZN2al20CameraPoserRailTower9loadParamEPKNS_9ByamlIterE	al::CameraPoserRailTower::loadParam(al::ByamlIter const*)	
 0x7100925620			FALSE	_ZN2al25CameraPoserRailTowerParamC2Ev	al::CameraPoserRailTowerParam::CameraPoserRailTowerParam()	joined CameraPoserRailTower.o (was CameraPoserRailTowerParam.o, host weak functions follow it)
-0x7100925640			FALSE	sub_7100925640	sub_7100925640	
+0x7100925640			FALSE	_ZNK12_GLOBAL__N_127CameraPoserRailTowerNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_127CameraPoserRailTowerNrvWait7executeEPN2al11NerveKeeperE	
 0x71009256A0			FALSE	_ZNK12_GLOBAL__N_127CameraPoserRailTowerNrvMove7executeEPN2al11NerveKeeperE	(anonymous namespace)::CameraPoserRailTowerNrvMove::execute(al::NerveKeeper*) const	
 0x71009256B0		CameraPoserTower.o	FALSE	_ZN2al16CameraPoserTowerC2ERKNS_21CameraPoserTowerParamEPKN4sead21PerspectiveProjectionEPKNS_13PlayerWatcherEPKNS_11PlacementIdE	al::CameraPoserTower::CameraPoserTower(al::CameraPoserTowerParam const&, sead::PerspectiveProjection const*, al::PlayerWatcher const*, al::PlacementId const*)	object (class)
 0x7100925810			FALSE	_ZN2al16CameraPoserTower6updateEv	al::CameraPoserTower::update()	
@@ -56954,7 +56954,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100928CA0			FALSE	_ZThn168_NK2al15CameraPoserZoom14getNerveKeeperEv	non-virtual thunk to al::CameraPoserZoom::getNerveKeeper() const	
 0x7100928CB0			FALSE	_ZNK12_GLOBAL__N_122CameraPoserZoomNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::CameraPoserZoomNrvWait::execute(al::NerveKeeper*) const	
 0x7100928CC0			FALSE	_ZNK12_GLOBAL__N_129CameraPoserZoomNrvInterpolate7executeEPN2al11NerveKeeperE	(anonymous namespace)::CameraPoserZoomNrvInterpolate::execute(al::NerveKeeper*) const	
-0x7100928CD0			FALSE	nullsub_339	nullsub_339	
+0x7100928CD0			FALSE	_ZNK12_GLOBAL__N_125CameraPoserZoomNrvInvalid7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_125CameraPoserZoomNrvInvalid7executeEPN2al11NerveKeeperE	
 0x7100928CE0		CameraRail.o	FALSE	_ZN2al10CameraRailC2ERKNS_13PlacementInfoE	al::CameraRail::CameraRail(al::PlacementInfo const&)	object (class)
 0x7100928D30			FALSE	_ZN2al10CameraRail13calcTopPlayerEPNS_9LiveActorEPi	al::CameraRail::calcTopPlayer(al::LiveActor*, int*)	
 0x7100928E50			FALSE	_ZN2al10CameraRail17calcPlayerRailPosEPNS_9LiveActorEi	al::CameraRail::calcPlayerRailPos(al::LiveActor*, int)	
@@ -57524,7 +57524,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100938E90			FALSE	_ZN2al22CameraVerticalAbsorber14liberateAbsorbEv	al::CameraVerticalAbsorber::liberateAbsorb()	
 0x7100938EE0			FALSE	_ZN2al22CameraVerticalAbsorber9exeAbsorbEv	al::CameraVerticalAbsorber::exeAbsorb()	
 0x7100939500			FALSE	_ZN2al22CameraVerticalAbsorber9exeFollowEv	al::CameraVerticalAbsorber::exeFollow()	
-0x7100939720			FALSE	sub_7100939720	sub_7100939720	
+0x7100939720			FALSE	_ZN12_GLOBAL__N_114updateLerpRateEPfPKN2al22CameraVerticalAbsorberEPKNS1_14CameraPoser_RSEff	_ZN12_GLOBAL__N_114updateLerpRateEPfPKN2al22CameraVerticalAbsorberEPKNS1_14CameraPoser_RSEff	
 0x7100939820			FALSE	_ZN2al22CameraVerticalAbsorber15exeFollowGroundEv	al::CameraVerticalAbsorber::exeFollowGround()	
 0x7100939A60			FALSE	_ZN2al22CameraVerticalAbsorber18exeFollowClimbPoleEv	al::CameraVerticalAbsorber::exeFollowClimbPole()	
 0x7100939C10			FALSE	_ZN2al22CameraVerticalAbsorber17exeFollowAbsoluteEv	al::CameraVerticalAbsorber::exeFollowAbsolute()	
@@ -57535,16 +57535,16 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100939F40			FALSE	_ZN2al22CameraVerticalAbsorberD2Ev	al::CameraVerticalAbsorber::~CameraVerticalAbsorber()	
 0x7100939F90			FALSE	_ZN2al22CameraVerticalAbsorberD0Ev	al::CameraVerticalAbsorber::~CameraVerticalAbsorber()	
 0x7100939FE0			FALSE	_ZNK12_GLOBAL__N_137CameraVerticalAbsorberNrvFollowGround7executeEPN2al11NerveKeeperE	(anonymous namespace)::CameraVerticalAbsorberNrvFollowGround::execute(al::NerveKeeper*) const	
-0x7100939FF0			FALSE	sub_7100939FF0	sub_7100939FF0	
-0x710093A030			FALSE	sub_710093A030	sub_710093A030	
-0x710093A040			FALSE	sub_710093A040	sub_710093A040	
+0x7100939FF0			FALSE	_ZNK12_GLOBAL__N_139CameraVerticalAbsorberNrvFollowAbsolute7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_139CameraVerticalAbsorberNrvFollowAbsolute7executeEPN2al11NerveKeeperE	
+0x710093A030			FALSE	_ZNK12_GLOBAL__N_148CameraVerticalAbsorberNrvFollowClimbPoleNoInterp7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_148CameraVerticalAbsorberNrvFollowClimbPoleNoInterp7executeEPN2al11NerveKeeperE	
+0x710093A040			FALSE	_ZNK12_GLOBAL__N_135CameraVerticalAbsorberNrvFollowSlow7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_135CameraVerticalAbsorberNrvFollowSlow7executeEPN2al11NerveKeeperE	
 0x710093A050			FALSE	_ZNK12_GLOBAL__N_131CameraVerticalAbsorberNrvAbsorb7executeEPN2al11NerveKeeperE	(anonymous namespace)::CameraVerticalAbsorberNrvAbsorb::execute(al::NerveKeeper*) const	
-0x710093A060			FALSE	sub_710093A060	sub_710093A060	
-0x710093A070			FALSE	sub_710093A070	sub_710093A070	
-0x710093A080			FALSE	_ZN2al23CameraPoserSceneInfo_RSC2Ev	al::CameraPoserSceneInfo_RS::CameraPoserSceneInfo_RS()	
+0x710093A060			FALSE	_ZNK12_GLOBAL__N_131CameraVerticalAbsorberNrvFollow7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_131CameraVerticalAbsorberNrvFollow7executeEPN2al11NerveKeeperE	
+0x710093A070			FALSE	_ZNK12_GLOBAL__N_140CameraVerticalAbsorberNrvFollowClimbPole7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_140CameraVerticalAbsorberNrvFollowClimbPole7executeEPN2al11NerveKeeperE	
+0x710093A080	Library/Camera	CameraPoserSceneInfo_RS.o	FALSE	_ZN2al23CameraPoserSceneInfo_RSC2Ev	al::CameraPoserSceneInfo_RS::CameraPoserSceneInfo_RS()	
 0x710093A0D0			FALSE	_ZN2al23CameraPoserSceneInfo_RS4initEPNS_15AreaObjDirectorEPNS_17CollisionDirectorEPKNS_13AudioDirectorE	al::CameraPoserSceneInfo_RS::init(al::AreaObjDirector*, al::CollisionDirector*, al::AudioDirector const*)	
 0x710093A0E0			FALSE	_ZN2al23CameraPoserSceneInfo_RS24registerCameraRailHolderEPNS_19CameraRailHolder_RSE	al::CameraPoserSceneInfo_RS::registerCameraRailHolder(al::CameraRailHolder_RS*)	
-0x710093A100			FALSE	_ZN2al14CameraPoser_RSC1EPKc	al::CameraPoser_RS::CameraPoser_RS(char const*)	
+0x710093A100		CameraPoser_RS.o	FALSE	_ZN2al14CameraPoser_RSC1EPKc	al::CameraPoser_RS::CameraPoser_RS(char const*)	
 0x710093A230			FALSE	_ZNK2al14CameraPoser_RS26tryCalcOrthoProjectionInfoEPNS_19OrthoProjectionInfoE	al::CameraPoser_RS::tryCalcOrthoProjectionInfo(al::OrthoProjectionInfo*) const	
 0x710093A290			FALSE	_ZNK2al14CameraPoser_RS19isEnableRotateByPadEv	al::CameraPoser_RS::isEnableRotateByPad() const	
 0x710093A2E0			FALSE	_ZNK2al14CameraPoser_RS13getFovyDegreeEv	al::CameraPoser_RS::getFovyDegree() const	
@@ -57591,13 +57591,13 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710093B2E0			FALSE	_ZN2al14CameraPoser_RS21startSnapShotModeCoreEv	al::CameraPoser_RS::startSnapShotModeCore()	
 0x710093B320			FALSE	_ZN2al14CameraPoser_RS18enableSnapShotRollEb	al::CameraPoser_RS::enableSnapShotRoll(bool)	
 0x710093B340			FALSE	_ZN2al14CameraPoser_RS19endSnapShotModeCoreEv	al::CameraPoser_RS::endSnapShotModeCore()	
-0x710093B350			FALSE	_ZN2al15CameraPoserFlagC2Ev	al::CameraPoserFlag::CameraPoserFlag()	
-0x710093B370	Library/Camera	CameraPoserFlag.o	FALSE	_ZN2al15CameraPoserFlag4loadERKNS_9ByamlIterE	al::CameraPoserFlag::load(al::ByamlIter const&)	object/folder from OdysseyDecomp file list
+0x710093B350		CameraPoserFlag.o	FALSE	_ZN2al15CameraPoserFlagC2Ev	al::CameraPoserFlag::CameraPoserFlag()	
+0x710093B370			FALSE	_ZN2al15CameraPoserFlag4loadERKNS_9ByamlIterE	al::CameraPoserFlag::load(al::ByamlIter const&)	object/folder from OdysseyDecomp file list
 0x710093B3E0			FALSE	_ZNK2al15CameraPoserFlag32isValidKeepPreSelfPoseNextCameraEv	al::CameraPoserFlag::isValidKeepPreSelfPoseNextCamera() const	
 0x710093B410			FALSE	_ZN2al17CameraPoseUpdaterC1EPNS_15SceneCameraInfoEi	al::CameraPoseUpdater::CameraPoseUpdater(al::SceneCameraInfo*, int)	
 0x710093B5A0			FALSE	_ZN2al17CameraPoseUpdater19setClippingDirectorEPNS_20ClippingDirectorBaseE	al::CameraPoseUpdater::setClippingDirector(al::ClippingDirectorBase*)	
 0x710093B5B0			FALSE	_ZN2al17CameraPoseUpdaterD2Ev	al::CameraPoseUpdater::~CameraPoseUpdater()	
-0x710093B600		CameraPoseUpdater.o	FALSE	_ZN2al17CameraPoseUpdaterD0Ev	al::CameraPoseUpdater::~CameraPoseUpdater()	object/folder from OdysseyDecomp file list
+0x710093B600	Library/Camera	CameraPoseUpdater.o	FALSE	_ZN2al17CameraPoseUpdaterD0Ev	al::CameraPoseUpdater::~CameraPoseUpdater()	object/folder from OdysseyDecomp file list
 0x710093B650			FALSE	_ZN2al17CameraPoseUpdater13getProjectionEv	al::CameraPoseUpdater::getProjection()	
 0x710093B660			FALSE	_ZN2al17CameraPoseUpdater4initEPKNS_19CameraParamTransferEPKNS_15CameraStopJudgeEPNS_20CameraStartParamCtrlE	al::CameraPoseUpdater::init(al::CameraParamTransfer const*, al::CameraStopJudge const*, al::CameraStartParamCtrl*)	
 0x710093B700			FALSE	_ZNK2al17CameraPoseUpdater19getNearClipDistanceEv	al::CameraPoseUpdater::getNearClipDistance() const	
@@ -58046,14 +58046,14 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71009470F0			FALSE	_ZNK2al19CameraSubTargetBase6calcUpEPN4sead7Vector3IfEE	al::CameraSubTargetBase::calcUp(sead::Vector3<float>*) const	
 0x7100947100			FALSE	_ZNK2al19CameraSubTargetBase9calcFrontEPN4sead7Vector3IfEE	al::CameraSubTargetBase::calcFront(sead::Vector3<float>*) const	
 0x7100947110			FALSE	_ZNK2al19CameraSubTargetBase12calcVelocityEPN4sead7Vector3IfEE	al::CameraSubTargetBase::calcVelocity(sead::Vector3<float>*) const	
-0x7100947120			FALSE	_ZN2al18CameraPoserFixLookC1EPKc	al::CameraPoserFixLook::CameraPoserFixLook(char const*)	
-0x7100947190	Library/Play/Camera	CameraPoserFixLock.o	FALSE	_ZN2al18CameraPoserFixLook4initEv	al::CameraPoserFixLook::init()	object/folder from OdysseyDecomp file list
+0x7100947120	Library/Play/Camera	CameraPoserFixLock.o	FALSE	_ZN2al18CameraPoserFixLookC1EPKc	al::CameraPoserFixLook::CameraPoserFixLook(char const*)	
+0x7100947190			FALSE	_ZN2al18CameraPoserFixLook4initEv	al::CameraPoserFixLook::init()	object/folder from OdysseyDecomp file list
 0x71009471A0			FALSE	_ZN2al18CameraPoserFixLook5startERKNS_15CameraStartInfoE	al::CameraPoserFixLook::start(al::CameraStartInfo const&)	
 0x7100947210			FALSE	_ZN2al18CameraPoserFixLook9loadParamERKNS_9ByamlIterE	al::CameraPoserFixLook::loadParam(al::ByamlIter const&)	
-0x7100947230			FALSE	sub_7100947230	sub_7100947230	
-0x7100947260			FALSE	_ZN2al19CameraSubTargetBaseC2Ev	al::CameraSubTargetBase::CameraSubTargetBase()	
+0x7100947230			FALSE	_GLOBAL__sub_I_CameraPoserFixLock.cpp	_GLOBAL__sub_I_CameraPoserFixLock.cpp	
+0x7100947260		ActorCameraSubTarget.o	FALSE	_ZN2al19CameraSubTargetBaseC2Ev	al::CameraSubTargetBase::CameraSubTargetBase()	
 0x71009472A0			FALSE	_ZN2al20ActorCameraSubTargetC2EPKNS_9LiveActorE	al::ActorCameraSubTarget::ActorCameraSubTarget(al::LiveActor const*)	
-0x71009472E0		ActorCameraSubTarget.o	FALSE	_ZNK2al20ActorCameraSubTarget13getTargetNameEv	al::ActorCameraSubTarget::getTargetName() const	object/folder from OdysseyDecomp file list
+0x71009472E0			FALSE	_ZNK2al20ActorCameraSubTarget13getTargetNameEv	al::ActorCameraSubTarget::getTargetName() const	object/folder from OdysseyDecomp file list
 0x71009472F0			FALSE	_ZNK2al20ActorCameraSubTarget9calcTransEPN4sead7Vector3IfEE	al::ActorCameraSubTarget::calcTrans(sead::Vector3<float>*) const	
 0x71009473F0			FALSE	_ZNK2al20ActorCameraSubTarget8calcSideEPN4sead7Vector3IfEE	al::ActorCameraSubTarget::calcSide(sead::Vector3<float>*) const	
 0x7100947400			FALSE	_ZNK2al20ActorCameraSubTarget6calcUpEPN4sead7Vector3IfEE	al::ActorCameraSubTarget::calcUp(sead::Vector3<float>*) const	
@@ -58062,8 +58062,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100947460			FALSE	_ZN2al30ActorBackAroundCameraSubTargetC2EPKNS_9LiveActorE	al::ActorBackAroundCameraSubTarget::ActorBackAroundCameraSubTarget(al::LiveActor const*)	
 0x7100947560			FALSE	_ZNK2al30ActorBackAroundCameraSubTarget9calcTransEPN4sead7Vector3IfEE	al::ActorBackAroundCameraSubTarget::calcTrans(sead::Vector3<float>*) const	
 0x71009475E0			FALSE	_ZNK2al30ActorBackAroundCameraSubTarget13getTargetNameEv	al::ActorBackAroundCameraSubTarget::getTargetName() const	
-0x7100947610			FALSE	_ZN2al20CameraPoserQuickTurnC1EPKc	al::CameraPoserQuickTurn::CameraPoserQuickTurn(char const*)	
-0x7100947690		CameraPoserQuickTurn.o	FALSE	_ZN2al20CameraPoserQuickTurn4initEv	al::CameraPoserQuickTurn::init()	object/folder from OdysseyDecomp file list
+0x7100947610		CameraPoserQuickTurn.o	FALSE	_ZN2al20CameraPoserQuickTurnC1EPKc	al::CameraPoserQuickTurn::CameraPoserQuickTurn(char const*)	
+0x7100947690			FALSE	_ZN2al20CameraPoserQuickTurn4initEv	al::CameraPoserQuickTurn::init()	object/folder from OdysseyDecomp file list
 0x71009476B0			FALSE	_ZN2al20CameraPoserQuickTurn9loadParamERKNS_9ByamlIterE	al::CameraPoserQuickTurn::loadParam(al::ByamlIter const&)	
 0x7100947720			FALSE	_ZNK2al20CameraPoserQuickTurn16makeLookAtCameraEPN4sead12LookAtCameraE	al::CameraPoserQuickTurn::makeLookAtCamera(sead::LookAtCamera*) const	
 0x71009478A0			FALSE	_ZN2al20CameraPoserQuickTurn9setFollowEv	al::CameraPoserQuickTurn::setFollow()	
@@ -58074,38 +58074,38 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100947E30			FALSE	_ZN2al20CameraPoserQuickTurn5startERKNS_15CameraStartInfoE	al::CameraPoserQuickTurn::start(al::CameraStartInfo const&)	
 0x7100947E40			FALSE	_ZNK12_GLOBAL__N_129CameraPoserQuickTurnNrvFollow7executeEPN2al11NerveKeeperE	(anonymous namespace)::CameraPoserQuickTurnNrvFollow::execute(al::NerveKeeper*) const	
 0x7100947E50			FALSE	_ZNK12_GLOBAL__N_127CameraPoserQuickTurnNrvRace7executeEPN2al11NerveKeeperE	(anonymous namespace)::CameraPoserQuickTurnNrvRace::execute(al::NerveKeeper*) const	
-0x7100947E60			FALSE	_ZN2al21CameraPoserInnerTowerC1EPKc	al::CameraPoserInnerTower::CameraPoserInnerTower(char const*)	
-0x7100947EE0		CameraPoserInnerTower.o	FALSE	_ZN2al21CameraPoserInnerTower4initEv	al::CameraPoserInnerTower::init()	object/folder from OdysseyDecomp file list
+0x7100947E60		CameraPoserInnerTower.o	FALSE	_ZN2al21CameraPoserInnerTowerC1EPKc	al::CameraPoserInnerTower::CameraPoserInnerTower(char const*)	
+0x7100947EE0			FALSE	_ZN2al21CameraPoserInnerTower4initEv	al::CameraPoserInnerTower::init()	object/folder from OdysseyDecomp file list
 0x7100947F70			FALSE	_ZN2al21CameraPoserInnerTower18initByPlacementObjERKNS_13PlacementInfoE	al::CameraPoserInnerTower::initByPlacementObj(al::PlacementInfo const&)	
 0x7100948000			FALSE	_ZN2al21CameraPoserInnerTower9loadParamERKNS_9ByamlIterE	al::CameraPoserInnerTower::loadParam(al::ByamlIter const&)	
 0x7100948120			FALSE	_ZN2al21CameraPoserInnerTower6updateEv	al::CameraPoserInnerTower::update()	
 0x71009484B0			FALSE	_ZN2al21CameraPoserInnerTower5startERKNS_15CameraStartInfoE	al::CameraPoserInnerTower::start(al::CameraStartInfo const&)	
-0x71009484C0			FALSE	_ZN2al24CameraPoserShooterSingleC1EPKc	al::CameraPoserShooterSingle::CameraPoserShooterSingle(char const*)	
-0x7100948570		CameraPoserShooterSingle.o	FALSE	_ZN2al24CameraPoserShooterSingle9loadParamERKNS_9ByamlIterE	al::CameraPoserShooterSingle::loadParam(al::ByamlIter const&)	object/folder from OdysseyDecomp file list
+0x71009484C0		CameraPoserShooterSingle.o	FALSE	_ZN2al24CameraPoserShooterSingleC1EPKc	al::CameraPoserShooterSingle::CameraPoserShooterSingle(char const*)	
+0x7100948570			FALSE	_ZN2al24CameraPoserShooterSingle9loadParamERKNS_9ByamlIterE	al::CameraPoserShooterSingle::loadParam(al::ByamlIter const&)	object/folder from OdysseyDecomp file list
 0x7100948580			FALSE	_ZN2al24CameraPoserShooterSingle6updateEv	al::CameraPoserShooterSingle::update()	
-0x71009486D0			FALSE	_ZN2al25CameraPoserProgramable_RSC2EPKN4sead7Vector3IfEES5_S5_	al::CameraPoserProgramable_RS::CameraPoserProgramable_RS(sead::Vector3<float> const*, sead::Vector3<float> const*, sead::Vector3<float> const*)	
+0x71009486D0		CameraPoserProgramable_RS.o	FALSE	_ZN2al25CameraPoserProgramable_RSC2EPKN4sead7Vector3IfEES5_S5_	al::CameraPoserProgramable_RS::CameraPoserProgramable_RS(sead::Vector3<float> const*, sead::Vector3<float> const*, sead::Vector3<float> const*)	
 0x7100948740			FALSE	_ZN2al25CameraPoserProgramable_RSC2Ev	al::CameraPoserProgramable_RS::CameraPoserProgramable_RS()	
 0x71009487A0			FALSE	_ZN2al25CameraPoserProgramable_RS6updateEv	al::CameraPoserProgramable_RS::update()	
 0x71009487F0			FALSE	_ZN2al25CameraPoserProgramable_RS7setPoseERKN4sead7Vector3IfEES5_S5_	al::CameraPoserProgramable_RS::setPose(sead::Vector3<float> const&, sead::Vector3<float> const&, sead::Vector3<float> const&)	
-0x7100948830			FALSE	_ZN2al27CameraPoserProgramableAngleC1EPKN4sead7Vector3IfEEPKfS7_S7_	al::CameraPoserProgramableAngle::CameraPoserProgramableAngle(sead::Vector3<float> const*, float const*, float const*, float const*)	
+0x7100948830		CameraPoserProgramableAngle.o	FALSE	_ZN2al27CameraPoserProgramableAngleC1EPKN4sead7Vector3IfEEPKfS7_S7_	al::CameraPoserProgramableAngle::CameraPoserProgramableAngle(sead::Vector3<float> const*, float const*, float const*, float const*)	
 0x71009488B0			FALSE	_ZN2al27CameraPoserProgramableAngle6updateEv	al::CameraPoserProgramableAngle::update()	
-0x71009489E0			FALSE	_ZN2al28CameraPoserActorRailParallelC1EPKcPKNS_10RailKeeperE	al::CameraPoserActorRailParallel::CameraPoserActorRailParallel(char const*, al::RailKeeper const*)	
-0x7100948A50		CameraPoserActorRailParallel.o	FALSE	_ZN2al28CameraPoserActorRailParallel4initEv	al::CameraPoserActorRailParallel::init()	object/folder from OdysseyDecomp file list
+0x71009489E0		CameraPoserActorRailParallel.o	FALSE	_ZN2al28CameraPoserActorRailParallelC1EPKcPKNS_10RailKeeperE	al::CameraPoserActorRailParallel::CameraPoserActorRailParallel(char const*, al::RailKeeper const*)	
+0x7100948A50			FALSE	_ZN2al28CameraPoserActorRailParallel4initEv	al::CameraPoserActorRailParallel::init()	object/folder from OdysseyDecomp file list
 0x7100948A60			FALSE	_ZN2al28CameraPoserActorRailParallel9loadParamERKNS_9ByamlIterE	al::CameraPoserActorRailParallel::loadParam(al::ByamlIter const&)	
 0x7100948AE0			FALSE	_ZN2al28CameraPoserActorRailParallel5startERKNS_15CameraStartInfoE	al::CameraPoserActorRailParallel::start(al::CameraStartInfo const&)	
 0x7100948BF0			FALSE	_ZN2al28CameraPoserActorRailParallel6updateEv	al::CameraPoserActorRailParallel::update()	
-0x7100948D10			FALSE	_ZN2al43CameraPoserProgramableKeepColliderPreCameraC2EPKN4sead7Vector3IfEES5_S5_	al::CameraPoserProgramableKeepColliderPreCamera::CameraPoserProgramableKeepColliderPreCamera(sead::Vector3<float> const*, sead::Vector3<float> const*, sead::Vector3<float> const*)	
-0x7100948D60		CameraPoserProgramableKeepColliderPreCamera.o	FALSE	_ZN2al43CameraPoserProgramableKeepColliderPreCamera4initEv	al::CameraPoserProgramableKeepColliderPreCamera::init()	object/folder from OdysseyDecomp file list
+0x7100948D10		CameraPoserProgramableKeepColliderPreCamera.o	FALSE	_ZN2al43CameraPoserProgramableKeepColliderPreCameraC2EPKN4sead7Vector3IfEES5_S5_	al::CameraPoserProgramableKeepColliderPreCamera::CameraPoserProgramableKeepColliderPreCamera(sead::Vector3<float> const*, sead::Vector3<float> const*, sead::Vector3<float> const*)	
+0x7100948D60			FALSE	_ZN2al43CameraPoserProgramableKeepColliderPreCamera4initEv	al::CameraPoserProgramableKeepColliderPreCamera::init()	object/folder from OdysseyDecomp file list
 0x7100948D70			FALSE	_ZN2al43CameraPoserProgramableKeepColliderPreCamera5startERKNS_15CameraStartInfoE	al::CameraPoserProgramableKeepColliderPreCamera::start(al::CameraStartInfo const&)	
-0x7100948D80			FALSE	_ZN2al14GyroCameraCtrlC2Ev	al::GyroCameraCtrl::GyroCameraCtrl()	
-0x7100948E70	Library/Camera	CameraGyroCtrl.o	FALSE	_ZN2al14GyroCameraCtrl5resetERKN4sead7Vector3IfEES5_S5_	al::GyroCameraCtrl::reset(sead::Vector3<float> const&, sead::Vector3<float> const&, sead::Vector3<float> const&)	object/folder from OdysseyDecomp file list
+0x7100948D80	Library/Camera	CameraGyroCtrl.o	FALSE	_ZN2al14GyroCameraCtrlC2Ev	al::GyroCameraCtrl::GyroCameraCtrl()	
+0x7100948E70			FALSE	_ZN2al14GyroCameraCtrl5resetERKN4sead7Vector3IfEES5_S5_	al::GyroCameraCtrl::reset(sead::Vector3<float> const&, sead::Vector3<float> const&, sead::Vector3<float> const&)	object/folder from OdysseyDecomp file list
 0x7100948F50			FALSE	_ZN2al14GyroCameraCtrl6updateERKN4sead7Vector3IfEES5_S5_	al::GyroCameraCtrl::update(sead::Vector3<float> const&, sead::Vector3<float> const&, sead::Vector3<float> const&)	
 0x7100949310			FALSE	_ZN2al14GyroCameraCtrl17reduceSensitivityEv	al::GyroCameraCtrl::reduceSensitivity()	
 0x7100949320			FALSE	_ZN2al15PauseCameraCtrlC2Ef	al::PauseCameraCtrl::PauseCameraCtrl(float)	
 0x7100949330			FALSE	_ZN2al19SceneCameraViewCtrlC2Ev	al::SceneCameraViewCtrl::SceneCameraViewCtrl()	
 0x7100949350			FALSE	_ZN2al15SceneCameraCtrlC2Ev	al::SceneCameraCtrl::SceneCameraCtrl()	
 0x7100949360			FALSE	_ZN2al15SceneCameraCtrl4initEi	al::SceneCameraCtrl::init(int)	
-0x71009493E0		SimpleCameraInput.o	FALSE	_ZN2al17SimpleCameraInputC2Ei	al::SimpleCameraInput::SimpleCameraInput(int)	object (smo)
+0x71009493E0	Library/Camera	SimpleCameraInput.o	FALSE	_ZN2al17SimpleCameraInputC2Ei	al::SimpleCameraInput::SimpleCameraInput(int)	object (smo)
 0x7100949430			FALSE	_ZN2al17SimpleCameraInput11updateInputEv	al::SimpleCameraInput::updateInput()	
 0x71009494C0			FALSE	_ZNK2al17SimpleCameraInput14calcInputStickEPN4sead7Vector2IfEE	al::SimpleCameraInput::calcInputStick(sead::Vector2<float>*) const	
 0x7100949520			FALSE	_ZNK2al17SimpleCameraInput14isTriggerResetEv	al::SimpleCameraInput::isTriggerReset() const	

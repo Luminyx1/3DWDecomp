@@ -5375,38 +5375,46 @@ src/al/Library/Play/Camera/ActorCameraTarget.cpp: done
     .text   start:0x009091C0 end:0x0090968C
 src/al/Library/Play/Camera/CameraArrowCollider.cpp:
     .text   start:0x00909690 end:0x0090B024
-src/al/Library/Play/Camera/CameraPoserAnim_RS.cpp:
+src/al/Library/Play/Camera/CameraPoserAnim_RS.cpp: done
     .text   start:0x0090B030 end:0x0090B9F4
-src/al/Library/Play/Camera/CameraPoserBossBattle.cpp:
+src/al/Library/Play/Camera/CameraPoserBossBattle.cpp: done
     .text   start:0x0090BA00 end:0x0090CD08
-src/al/Library/Play/Camera/CameraPoserCart.cpp:
+src/al/Library/Play/Camera/CameraPoserCart.cpp: done
     .text   start:0x0090CD10 end:0x0090D174
 src/al/Library/Play/Camera/CameraPoserEntrance_RS.cpp:
     .text   start:0x0090D180 end:0x0090DC58
 src/al/Library/Play/Camera/CameraPoserFixActor.cpp:
     .text   start:0x0090DC60 end:0x0090F4C8
-src/al/Library/Play/Camera/CameraPoserFixPoint.cpp:
-    .text   start:0x0090F4D0 end:0x0090F980
+src/al/Library/Play/Camera/CameraPoserFixPoint.cpp: done
+    .text   start:0x0090F4D0 end:0x0090F82C
 src/al/Library/Play/Camera/CameraPoserFix.cpp:
-    .text   start:0x0090F980 end:0x009101DC
+    .text   start:0x0090F830 end:0x009101DC
 src/al/Library/Play/Camera/CameraPoserFollowSimple.cpp: done
     .text   start:0x009101E0 end:0x009105B8
 src/al/Library/Play/Camera/CameraPoserKinopioBrigade_RS.cpp:
     .text   start:0x009105C0 end:0x00911908
 src/al/Library/Play/Camera/CameraPoserLookDown.cpp:
     .text   start:0x00911910 end:0x00911E74
-src/al/Library/Play/Camera/CameraPoserParallelSimple.cpp:
+src/al/Library/Play/Camera/CameraPoserParallelSimple.cpp: done
     .text   start:0x00911E80 end:0x009120F4
-src/al/Library/Play/Camera/CameraPoserRace.cpp:
+src/al/Library/Play/Camera/CameraPoserRace.cpp: done
     .text   start:0x00912100 end:0x0091252C
-src/al/Library/Play/Camera/CameraPoserSubjective_RS.cpp:
+src/al/Library/Play/Camera/CameraPoserSubjective_RS.cpp: done
     .text   start:0x00912530 end:0x00912E18
 src/al/Library/Play/Camera/CameraPoserTower_RS.cpp:
     .text   start:0x00912E20 end:0x009151A8
-src/al/Library/Play/Camera/CameraRailHolder_RS.cpp:
+src/al/Library/Play/Camera/CameraRailHolder_RS.cpp: done
     .text   start:0x009151B0 end:0x00915450
 src/al/Library/Play/Camera/CameraVerticalAbsorber2DGalaxy.cpp:
-    .text   start:0x00915450 end:0x00918C88
+    .text   start:0x00915450 end:0x00915B2C
+src/al/Library/Camera/CameraDirector.cpp:
+    .text   start:0x00915B30 end:0x00917B88
+src/al/Library/Camera/CameraCreator.cpp:
+    .text   start:0x00917B90 end:0x00918444
+src/al/Library/Camera/CameraCloseUpper.cpp:
+    .text   start:0x00918450 end:0x00918988
+src/al/Library/Camera/CameraAreaObserver.cpp:
+    .text   start:0x00918990 end:0x00918C88
 src/al/Project/Camera/Param/CameraFunction.cpp:
     .text   start:0x00918C90 end:0x00919538
 src/al/Project/Camera/Param/CameraHolder.cpp: done
@@ -5419,7 +5427,7 @@ src/al/Project/Camera/ControlAngleParam.cpp: done
     .text   start:0x0091A970 end:0x0091A99C
 src/al/Project/Camera/SettingParam.cpp: done
     .text   start:0x0091A9A0 end:0x0091AE38
-src/al/Library/Play/Camera/CameraPoserAnim.cpp:
+src/al/Library/Play/Camera/CameraPoserAnim.cpp: done
     .text   start:0x0091AE40 end:0x0091B4F0
 src/al/Library/Play/Camera/CameraPoserEntrance.cpp:
     .text   start:0x0091B4F0 end:0x0091BD68
@@ -5430,20 +5438,20 @@ src/al/Library/Play/Camera/CameraPoserFixedPoint.cpp: done
 src/al/Library/Play/Camera/CameraPoserKinopioBrigade.cpp:
     .text   start:0x0091C580 end:0x0091D140
 src/al/Library/Play/Camera/CameraPoserParallel.cpp:
-    .text   start:0x0091D140 end:0x00922BA4
+    .text   start:0x0091D140 end:0x009232B8
 src/al/Library/Play/Camera/CameraPoserParallelOnRail.cpp:
-    .text   start:0x00922BB0 end:0x00924548
+    .text   start:0x009232C0 end:0x00924548
 src/al/Library/Play/Camera/CameraPoserProgramable.cpp: done
     .text   start:0x00924550 end:0x009246F4
 src/al/Library/Play/Camera/CameraPoserRail.cpp:
     .text   start:0x00924700 end:0x009250E8
-src/al/Library/Play/Camera/CameraPoserRailTower.cpp:
+src/al/Library/Play/Camera/CameraPoserRailTower.cpp: done
     .text   start:0x009250F0 end:0x009256A8
 src/al/Library/Play/Camera/CameraPoserTower.cpp:
     .text   start:0x009256B0 end:0x00927D98
 src/al/Library/Play/Camera/CameraPoserZoomParam.cpp:
     .text   start:0x00927DA0 end:0x00928CD4
-src/al/Library/Play/Camera/CameraRail.cpp:
+src/al/Library/Play/Camera/CameraRail.cpp: done
     .text   start:0x00928CE0 end:0x00928FC0
 src/al/Library/Obj/CameraRailHolder.cpp: done
     .text   start:0x00928FC0 end:0x00929190
@@ -5500,9 +5508,13 @@ src/al/Project/Camera/CameraAngleSwingInfo.cpp:
 src/al/Project/Camera/CameraOffsetCtrlPreset.cpp: done
     .text   start:0x00938690 end:0x00938718
 src/al/Library/Play/Camera/CameraVerticalAbsorber.cpp:
-    .text   start:0x00938720 end:0x0093B368
+    .text   start:0x00938720 end:0x0093A078
+src/al/Library/Camera/CameraPoserSceneInfo_RS.cpp: done
+    .text   start:0x0093A080 end:0x0093A0FC
+src/al/Library/Camera/CameraPoser_RS.cpp:
+    .text   start:0x0093A100 end:0x0093B34C
 src/al/Library/Camera/CameraPoserFlag.cpp:
-    .text   start:0x0093B370 end:0x0093B5F8
+    .text   start:0x0093B350 end:0x0093B5F8
 src/al/Library/Camera/CameraPoseUpdater.cpp:
     .text   start:0x0093B600 end:0x0093C788
 src/al/Project/Camera/Holder/CameraInterpole_RS.cpp:
@@ -5542,23 +5554,27 @@ src/al/Library/Camera/CameraTicketId.cpp: done
 src/al/Library/Camera/CameraTriangleFilter.cpp:
     .text   start:0x00942AA0 end:0x00942D4C
 src/al/Library/Camera/CameraUtil.cpp:
-    .text   start:0x00942D50 end:0x00947190
-src/al/Library/Play/Camera/CameraPoserFixLock.cpp:
-    .text   start:0x00947190 end:0x009472D8
-src/al/Library/Play/Camera/ActorCameraSubTarget.cpp:
-    .text   start:0x009472E0 end:0x00947684
-src/al/Library/Play/Camera/CameraPoserQuickTurn.cpp:
-    .text   start:0x00947690 end:0x00947EDC
-src/al/Library/Play/Camera/CameraPoserInnerTower.cpp:
-    .text   start:0x00947EE0 end:0x00948564
-src/al/Library/Play/Camera/CameraPoserShooterSingle.cpp:
-    .text   start:0x00948570 end:0x00948A48
-src/al/Library/Play/Camera/CameraPoserActorRailParallel.cpp:
-    .text   start:0x00948A50 end:0x00948D5C
-src/al/Library/Play/Camera/CameraPoserProgramableKeepColliderPreCamera.cpp:
-    .text   start:0x00948D60 end:0x00948E68
+    .text   start:0x00942D50 end:0x0094711C
+src/al/Library/Play/Camera/CameraPoserFixLock.cpp: done
+    .text   start:0x00947120 end:0x00947254
+src/al/Library/Play/Camera/ActorCameraSubTarget.cpp: done
+    .text   start:0x00947260 end:0x00947610
+src/al/Library/Play/Camera/CameraPoserQuickTurn.cpp: done
+    .text   start:0x00947610 end:0x00947E58
+src/al/Library/Play/Camera/CameraPoserInnerTower.cpp: done
+    .text   start:0x00947E60 end:0x009484BC
+src/al/Library/Play/Camera/CameraPoserShooterSingle.cpp: done
+    .text   start:0x009484C0 end:0x009486D0
+src/al/Library/Play/Camera/CameraPoserProgramable_RS.cpp: done
+    .text   start:0x009486D0 end:0x00948824
+src/al/Library/Play/Camera/CameraPoserProgramableAngle.cpp: done
+    .text   start:0x00948830 end:0x009489D4
+src/al/Library/Play/Camera/CameraPoserActorRailParallel.cpp: done
+    .text   start:0x009489E0 end:0x00948D10
+src/al/Library/Play/Camera/CameraPoserProgramableKeepColliderPreCamera.cpp: done
+    .text   start:0x00948D10 end:0x00948D80
 src/al/Library/Camera/CameraGyroCtrl.cpp:
-    .text   start:0x00948E70 end:0x009493DC
+    .text   start:0x00948D80 end:0x009493DC
 src/al/Library/Camera/SimpleCameraInput.cpp: done
     .text   start:0x009493E0 end:0x009496CC
 src/al/Project/Camera/SimpleCameraShooter.cpp:
