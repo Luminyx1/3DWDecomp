@@ -310,6 +310,23 @@ struct ResVertexData {
 
 class ResVertex : public nn::util::AccessorBase<ResVertexData> {
 public:
+    /**
+     * @brief Access the graphics buffer description stored for a vertex stream.
+     * @param index Buffer index in the range [0, bufferCount).
+     * @return Pointer to the selected buffer description in the resource.
+     */
+    const gfx::BufferInfo* GetBufferInfo(ptrdiff_t index) const {
+        return reinterpret_cast<const gfx::BufferInfo*>(&pVertexBufferInfoArray.Get()[index]);
+    }
+    /**
+     * @brief Access a writable graphics buffer description for a vertex stream.
+     * @param index Buffer index in the range [0, bufferCount).
+     * @return Pointer to the selected buffer description in the resource.
+     */
+    gfx::BufferInfo* GetBufferInfo(ptrdiff_t index) {
+        return reinterpret_cast<gfx::BufferInfo*>(&pVertexBufferInfoArray.Get()[index]);
+    }
+
     void Setup(nn::gfx::Device* device);
     void Setup(nn::gfx::Device* device, nn::gfx::MemoryPool* pool, ptrdiff_t offset);
     void Cleanup(nn::gfx::Device* device);
@@ -921,6 +938,12 @@ static_assert(sizeof(MaterialAnimObj) == 0xa0, "Material animation object size")
 
 class ShapeObj {
 public:
+    struct Impl;
+    void ClearBlendWeights();
+    size_t CalculateShapeBlockBufferSize(gfx::Device* pDevice) const;
+    size_t CalculateDynamicVertexBufferSize(gfx::Device* pDevice) const;
+    const gfx::Buffer* GetDynamicVertexBuffer(int vertexBufferIndex, int bufferIndex) const;
+    bool IsDynamicVertexAttr(int attributeIndex) const;
     struct InitializeArgument {
         const ResShape* resource;
         int bufferCount;
@@ -954,7 +977,7 @@ public:
     // skeleton supplies bone transforms; lodIndex selects the mesh bounds.
     void CalculateBounding(const SkeletonObj* skeleton, int lodIndex);
     // viewIndex selects a camera, world supplies its transform, bufferIndex selects the GPU block.
-    void CalculateShape(int viewIndex, const nn::util::Matrix4x3fType& world, int bufferIndex);
+    void CalculateShape(int viewIndex, const nn::util::Matrix4x3fType& rWorld, int bufferIndex);
     // bufferIndex selects the shape-animation destination buffer.
     void CalculateShapeAnimResult(int bufferIndex);
     /**
@@ -1011,14 +1034,19 @@ private:
     u32 m_Flag;
     u8 _c;
     u8 m_ViewDependent;
-    u8 _e;
+    u8 m_ShapeBlockCount;
     u8 m_BufferingCount;
     u8 _10[0x20 - 0x10];
     BufferImpl* m_pShapeBlockArray;
-    u8 _28[0x38 - 0x28];
+    float* m_pBlendWeights;
+    u32* m_pBlendWeightFlags;
     Sphere* m_pBounding;
     Aabb* m_pSubMeshBoundingArray;
-    u8 _48[0x70 - 0x48];
+    gfx::Buffer** m_ppDynamicVertexBuffers;
+    const void* m_pUserArea;
+    size_t m_UserAreaSize;
+    u8 _60[0x70 - 0x60];
 };
 
 }  // namespace nn::g3d
+
