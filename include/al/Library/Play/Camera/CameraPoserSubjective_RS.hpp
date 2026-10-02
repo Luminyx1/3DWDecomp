@@ -1,31 +1,59 @@
 #pragma once
 
-#include <math/seadMatrix.h>
 #include <math/seadVector.h>
 
 #include "Library/Camera/CameraPoser_RS.hpp"
 
 namespace al {
+class IntervalTrigger;
 class LiveActor;
-class RailKeeper;
-class Resource;
 
 class CameraPoserSubjective_RS : public CameraPoser_RS {
 public:
     CameraPoserSubjective_RS(const char* pName);
+
+    void init() override;
+    void loadParam(const ByamlIter& rIter) override;
+    void start(const CameraStartInfo& rInfo) override;
+    void movement() override;
+    void update() override;
+    void startSnapShotMode() override;
+    void endSnapShotMode() override;
+
+    void exeWait();
+    void exeReset();
+
     static f32 getCameraOffsetFront();
 
+    bool isZooming() const override;
+    bool isEnableRotateByPad() const override;
+
 public:
-    u8 _142[0x27];
-    bool mIsRequestZoomIn;
-    bool mIsValidResetAngleH;
-    u8 _16b[0x11];
-    f32 mCameraOffsetUp;
-    u8 _180[0x4];
-    bool mIsSetStartAngleH;
-    u8 _185[0x3];
-    f32 mStartAngleH;
-    u8 _18c[0x24];
+    f32 mAngleH = 0.0f;
+    f32 mInputAngleH = 0.0f;
+    f32 mAngleV = 0.0f;
+    f32 mTargetAngleV = 0.0f;
+    f32 mInputSpeedH = 0.0f;
+    f32 mGyroAngleH = 0.0f;
+    f32 mGyroAngleV = 0.0f;
+    f32 _160 = 0.0f;
+    f32 _164 = 0.0f;
+    bool mIsZooming = false;
+    bool mIsRequestZoomIn = false;
+    bool mIsValidResetAngleH = false;
+    f32 mResetStartAngleH = 0.0f;
+    f32 mResetStartAngleV = 0.0f;
+    f32 mMinAngleV = -30.0f;
+    f32 mMaxAngleV = 75.0f;
+    f32 mCameraOffsetUp = 180.0f;
+    f32 mStartAngleV = 0.0f;
+    bool mIsSetStartAngleH = false;
+    f32 mStartAngleH = 0.0f;
+    f32 mPrevAngleH = 0.0f;
+    f32 mPrevAngleV = 0.0f;
+    IntervalTrigger* mMoveSeTrigger = nullptr;
+    LiveActor* mSeActor = nullptr;
+    bool mIsSnapShotMode = false;
 };
 
 static_assert(sizeof(CameraPoserSubjective_RS) == 0x1b0);
