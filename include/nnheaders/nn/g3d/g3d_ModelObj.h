@@ -14,9 +14,8 @@ class ShapeObj;
 class SkeletonObj;
 class Sphere;
 
-// TODO
 class ModelObj {
-public:
+  public:
     // model identifies the changed object; index selects the bone whose visibility changed.
     using VisibilityCallback = void (*)(ModelObj* model, int index);
     const ResModel* GetResource() const { return m_ResModel; }
@@ -24,8 +23,11 @@ public:
     void SetBoneVisible(int index, bool visible) {
         u32 mask = 1u << (index & 31);
         bool previous = (m_BoneVisibility[static_cast<unsigned>(index) >> 5] & mask) != 0;
-        m_BoneVisibility[static_cast<unsigned>(index) >> 5] = (m_BoneVisibility[static_cast<unsigned>(index) >> 5] & ~mask) | (static_cast<u32>(visible) << (index & 31));
-        if ((m_VisibilityCallback != nullptr) & (previous != visible)) m_VisibilityCallback(this, index);
+        m_BoneVisibility[static_cast<unsigned>(index) >> 5] =
+            (m_BoneVisibility[static_cast<unsigned>(index) >> 5] & ~mask) |
+            (static_cast<u32>(visible) << (index & 31));
+        if ((m_VisibilityCallback != nullptr) & (previous != visible))
+            m_VisibilityCallback(this, index);
     }
     SkeletonObj* GetSkeleton() const { return m_Skeleton; }
 
@@ -36,42 +38,80 @@ public:
     MaterialObj* GetMaterial(int index) const { return &m_Materials[index]; }
     const Sphere* GetBounding() const { return m_pBounding; }
 
-    bool IsBlockBufferValid() const { return (_1a & 1) != 0; }
-    void CleanupBlockBuffer(gfx::Device* pDevice);
+    bool IsBlockBufferValid() const { return (m_Flag & 1) != 0; }
+    void ClearBoneVisible();
+    void ClearMaterialVisible();
+    // device supplies the alignment and storage requirements for GPU blocks.
+    size_t GetBlockBufferAlignment(gfx::Device* device) const;
+    size_t CalculateBlockBufferSize(gfx::Device* device);
+    // pool supplies size bytes at offset; device initializes each object's GPU blocks.
+    bool SetupBlockBuffer(gfx::Device* device, gfx::MemoryPool* pool, ptrdiff_t offset, size_t size);
+    // device owns the GPU blocks being released.
+    void CleanupBlockBuffer(gfx::Device* device);
+    // world is the model-to-world transform applied to the skeleton.
+    void CalculateWorld(const nn::util::Matrix4x3fType& world);
+    // lodIndex selects the model bounds, falling back to each shape's first mesh.
+    void CalculateBounding(int lodIndex);
+    // bufferIndex selects the buffered GPU block to update.
+    void CalculateSkeleton(int bufferIndex);
+    void CalculateShape(int bufferIndex);
+    void CalculateMaterial(int bufferIndex);
+    // viewIndex and view select the camera; bufferIndex selects the buffered GPU block.
+    void CalculateView(int viewIndex, const nn::util::Matrix4x3fType& view, int bufferIndex);
+    void UpdateViewDependency();
+    void SetShapeAnimCalculationEnabled();
+    void SetShapeAnimCalculationDisabled();
+    // callback receives the material and texture slot that changed.
+    void SetTextureChangeCallback(MaterialObj::TextureChangeCallback callback);
 
     u32* GetBoneVisibilityArray() const { return m_BoneVisibility; }
     VisibilityCallback GetBoneVisibilityCallback() const { return m_VisibilityCallback; }
 
     bool IsBoneVisible(int index) const {
-        return (m_BoneVisibility[static_cast<u32>(index) >> 5] & (1 << index)) != 0;
+        return (m_BoneVisibility[static_cast<u32>(index) >> 5] & (1u << (index & 31))) != 0;
     }
 
     bool IsMaterialVisible(int index) const {
-        return (static_cast<const u32*>(_10)[index >> 5] & (1 << index)) != 0;
+        return (m_MaterialVisibility[index >> 5] & (1u << (index & 31))) != 0;
     }
 
+    // index selects the material; isVisible is its new visibility state.
     void SetMaterialVisible(int index, bool isVisible) {
         bool isPrevVisible = IsMaterialVisible(index);
-        u32 bit = 1 << index;
-        u32& word = static_cast<u32*>(_10)[index >> 5];
-        word = (word & ~bit) | (static_cast<u32>(isVisible) << index);
-        auto callback = reinterpret_cast<void (*)(ModelObj*, int)>(_80);
-        if (callback && isPrevVisible != isVisible) {
+        u32 bit = 1u << (index & 31);
+        u32& word = m_MaterialVisibility[index >> 5];
+        word = (word & ~bit) | (static_cast<u32>(isVisible) << (index & 31));
+        VisibilityCallback callback = m_MaterialVisibilityCallback;
+        if ((callback != nullptr) && isPrevVisible != isVisible) {
             callback(this, index);
         }
     }
 
-private:
-    struct InitializeArgument;
+  private:
+    struct InitializeArgument {
+        const ResModel* resource;
+        SkeletonObj* skeleton;
+        int skeletonBufferCount;
+        int shapeBufferCount;
+        int materialBufferCount;
+        int viewCount;
+        int lodCount;
+        const void* shapeUserArea;
+        bool boundingEnabled;
+        size_t memorySize;
+        size_t memoryAlignment;
+        detail::WorkMemoryBlock blocks[9];
+        void CalculateMemorySize();
+    };
 
     bool Initialize(const InitializeArgument& arg, void* buffer, size_t bufferSize);
 
     const ResModel* m_ResModel;
     u32* m_BoneVisibility;
-    void* _10;
+    u32* m_MaterialVisibility;
     u8 _18;
-    u8 _19;
-    u16 _1a;
+    u8 m_ViewDependent;
+    u16 m_Flag;
     void* _20;
     void* _28;
     u16 m_NumShapes;
@@ -82,12 +122,12 @@ private:
     Sphere* m_pBounding;
     void* m_UserData;
     void* _60;
-    void* _68;
-    void* _70;
+    gfx::MemoryPool* m_MemoryPool;
+    ptrdiff_t m_MemoryPoolOffset;
     VisibilityCallback m_VisibilityCallback;
-    void* _80;
+    VisibilityCallback m_MaterialVisibilityCallback;
     bool _88;
     int _8c;
 };
 
-}  // namespace nn::g3d
+} // namespace nn::g3d

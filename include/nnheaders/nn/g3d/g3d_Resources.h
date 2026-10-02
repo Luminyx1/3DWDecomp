@@ -1,4 +1,5 @@
 #pragma once
+#include <nn/g3d/g3d_Bounding.h>
 
 // Shared G3D resource and object declarations used by NintendoWare and AGL.
 
@@ -31,6 +32,7 @@ class ResShapeAnim;
 class ResSceneAnim;
 struct ResBoneVisibilityAnim;
 class ShapeObj;
+class SkeletonObj;
 class ViewVolume;
 struct CullingContext;
 
@@ -179,7 +181,8 @@ private:
 };
 
 struct ResMaterialData {
-    u8 _0[0x8];
+    u32 signature;
+    u32 flags;
     nn::util::BinPtr pName;
     nn::util::BinTPtr<ResRenderInfo> pRenderInfoArray;
     nn::util::BinTPtr<nn::util::ResDic> pRenderInfoDic;
@@ -346,7 +349,9 @@ struct ResShapeData {
     nn::util::BinPtr pUserPtr;
     u16 index;
     u16 materialIndex;
-    u8 _54[7];
+    u16 boneIndex;
+    u8 _56[4];
+    u8 vertexSkinCount;
     u8 meshCount;
     u8 keyShapeCount;
     u8 _5d[3];
@@ -366,6 +371,8 @@ public:
     const ResMesh* GetMesh() const { return pMeshArray.Get(); }
     const ResMesh* GetMesh(int meshIndex) const { return &pMeshArray.Get()[meshIndex]; }
     int GetMeshCount() const { return meshCount; }
+    int GetBoneIndex() const { return boneIndex; }
+    int GetVertexSkinCount() const { return vertexSkinCount; }
     const Bounding* GetBoundingArray() const { return pBoundingArray.Get(); }
 
     void ActivateDynamicVertexAttrForShapeAnim();
@@ -622,7 +629,16 @@ public:
     void ResetDirtyFlags();
     void CalculateMaterial(int bufferIndex);
     template <bool swap> NOINLINE void ConvertDirtyParams(void* destination, u32* dirtyFlags);
-    typedef void (*TextureChangeCallback)(MaterialObj* pMaterial, int index);
+    // material and index identify the texture slot that changed.
+    using TextureChangeCallback = void (*)(MaterialObj* material, int index);
+    // callback receives subsequent texture changes; nullptr disables notifications.
+    void SetTextureChangeCallback(TextureChangeCallback callback) { m_pTextureChangeCallback = callback; }
+
+    MaterialObj() : m_pRes(nullptr), m_Flag(0), m_BufferingCount(0), m_DirtyFlags{},
+        m_pMemoryPool(nullptr), m_MemoryPoolOffset(0), m_pMaterialBlockArray(nullptr),
+        m_pParamSource(nullptr), m_ppTextureArray(nullptr), m_pTextureSlotArray(nullptr),
+        m_MaterialBlockSize(0), m_pCallbackUserData(nullptr), m_pWorkMemory(nullptr),
+        m_pTextureChangeCallback(nullptr) {}
 
     const ResMaterial* GetResource() const { return m_pRes; }
     // name selects a shader parameter in the material's resource dictionary.
@@ -788,8 +804,41 @@ static_assert(sizeof(MaterialAnimObj) == 0xa0, "Material animation object size")
 
 class ShapeObj {
 public:
+    struct InitializeArgument {
+        const ResShape* resource;
+        int bufferCount;
+        int viewCount;
+        bool viewDependent;
+        bool boundingEnabled;
+        const void* userArea;
+        size_t memorySize;
+        size_t memoryAlignment;
+        detail::WorkMemoryBlock blocks[8];
+        void CalculateMemorySize();
+    };
+    // argument selects the shape; buffer supplies bufferSize bytes of working memory.
+    bool Initialize(const InitializeArgument& argument, void* buffer, size_t bufferSize);
     const ResShape* GetResource() const { return m_pRes; }
     const Sphere* GetBounding() const { return m_pBounding; }
+    // lodIndex selects a pair of local/world spheres; return its world sphere.
+    const Sphere* GetBounding(int lodIndex) const {
+        return (m_pBounding != nullptr) ? &m_pBounding[2 * lodIndex] : nullptr;
+    }
+    // device supplies GPU block requirements and owns their resources.
+    size_t GetBlockBufferAlignment(gfx::Device* device) const;
+    size_t CalculateBlockBufferSize(gfx::Device* device) const;
+    // pool supplies size bytes starting at offset for the shape blocks.
+    bool SetupBlockBuffer(gfx::Device* device, gfx::MemoryPool* pool, ptrdiff_t offset, size_t size);
+    void CleanupBlockBuffer(gfx::Device* device);
+    // skeleton supplies bone transforms; lodIndex selects the mesh bounds.
+    void CalculateBounding(const SkeletonObj* skeleton, int lodIndex);
+    // viewIndex selects a camera, world supplies its transform, bufferIndex selects the GPU block.
+    void CalculateShape(int viewIndex, const nn::util::Matrix4x3fType& world, int bufferIndex);
+    // bufferIndex selects the shape-animation destination buffer.
+    void CalculateShapeAnimResult(int bufferIndex);
+    bool IsShapeAnimCalculationEnabled() const { return (m_Flag & 12) == 12; }
+    void SetShapeAnimCalculationEnabled() { m_Flag |= 8; }
+    void SetShapeAnimCalculationDisabled() { m_Flag &= ~8; }
     const Aabb* GetSubMeshBoundingArray() const { return m_pSubMeshBoundingArray; }
     bool TestSubMeshIntersection(CullingContext* pContext, const ViewVolume& rViewVolume,
                                  int lodIndex) const;
@@ -817,19 +866,19 @@ public:
             return nullptr;
         }
         if (IsViewDependent()) {
-            return m_pShapeBlockArray ?
+            return (m_pShapeBlockArray != nullptr) ?
                        &m_pShapeBlockArray[viewIndex * m_BufferingCount + bufferIndex] :
                        nullptr;
         }
-        return m_pShapeBlockArray ? &m_pShapeBlockArray[bufferIndex] : nullptr;
+        return (m_pShapeBlockArray != nullptr) ? &m_pShapeBlockArray[bufferIndex] : nullptr;
     }
 
 private:
     enum Flag { Flag_BlockBufferValid = 1 << 0 };
 
     const ResShape* m_pRes;
-    u8 m_Flag;
-    u8 _9[0xd - 0x9];
+    u32 m_Flag;
+    u8 _c;
     u8 m_ViewDependent;
     u8 _e;
     u8 m_BufferingCount;
