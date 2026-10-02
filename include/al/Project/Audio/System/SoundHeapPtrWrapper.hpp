@@ -37,7 +37,7 @@ private:
 
 class SoundNameUtil {
 public:
-    SoundNameUtil() = default;
+    SoundNameUtil() {}
     virtual ~SoundNameUtil();
 
     IAudioResourceInfoAccessor* getAccessor() const { return mAccessor; }

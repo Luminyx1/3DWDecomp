@@ -30,17 +30,20 @@ public:
     f32 getMicInputPowerRatio() const;
 
 private:
-    s16* mSampleBuffer = nullptr;
+    u8* mSampleBuffer = nullptr;
     s32 mSampleNum;
     f32 mInputPower = 0.0f;
     f32 mInputPowerRatio = 0.0f;
     bool mIsValidInput = true;
     AudioMicBreathChecker* mBreathChecker = nullptr;
-    s16* mWorkBuffer = nullptr;
+    u8* mWorkBuffer = nullptr;
     s32 mHalfSampleNum;
-    sead::MicMgrCafe* mMicMgr;
+    sead::MicMgrCafe* mMicMgr = nullptr;
     void* _40 = nullptr;
 };
 
-class AudioMic : public AudioMicPlatform {};
+class AudioMic : public AudioMicPlatform {
+public:
+    using AudioMicPlatform::AudioMicPlatform;
+};
 }  // namespace al
