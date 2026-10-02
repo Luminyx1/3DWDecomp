@@ -1,13 +1,19 @@
 #include "Library/Layout/LayoutActionFunction.hpp"
 
+#include <nn/ui2d/ui2d_Layout.h>
+#include <nn/ui2d/ui2d_Pane.h>
+
 #include "Library/Layout/IUseLayoutAction.hpp"
 #include "Library/Layout/LayoutActor.hpp"
 #include "Library/Layout/LayoutPaneGroup.hpp"
+#include "Library/Layout/LayoutKeeper.hpp"
 #include "Library/Layout/LayoutTextPaneAnimator.hpp"
+#include "Library/LiveActor/HitReactionKeeper.hpp"
 #include "Library/Math/MathUtil.hpp"
 #include "Library/Message/LanguageUtil.hpp"
 #include "Library/Message/MessageHolder.hpp"
 #include "Library/Nerve/NerveUtil.hpp"
+#include "Library/Se/Function/SeFunction.hpp"
 #include "Project/Base/StringUtil.hpp"
 #include "Project/Layout/LayoutActionKeeper.hpp"
 
@@ -489,5 +495,64 @@ bool tryStartTextAnim(LayoutActor* pActor, const char16_t* pMessage) {
 
     startAction(pActor, animName.cstr(), "Font");
     return true;
+}
+
+/**
+ * Starts the voice requested by a message, or a default voice.
+ * @param pActor layout actor
+ * @param pMessage message
+ * @param pAudioKeeper audio keeper user playing the voice
+ * @param pName default voice name, or nullptr
+ * @param pVoiceName output name of the started voice
+ * @return whether a voice was started
+ */
+bool tryStartTextTagVoice(LayoutActor* pActor, const char16_t* pMessage,
+                          const IUseAudioKeeper* pAudioKeeper, const char* pName,
+                          sead::FixedSafeString<64>* pVoiceName) {
+    StringTmp<64> voiceName;
+    voiceName.clear();
+    tryGetMessageTagVoiceNameInPage(&voiceName, pActor, pMessage);
+
+    if (voiceName.isEmpty()) {
+        if (pName == nullptr || !isExistSeKeeper(pAudioKeeper)) {
+            return false;
+        }
+
+        tryStartSe(pAudioKeeper, pName);
+        *pVoiceName = pName;
+        return true;
+    }
+
+    if (!isExistSeKeeper(pAudioKeeper)) {
+        return false;
+    }
+
+    startSe(pAudioKeeper, voiceName.cstr());
+    pVoiceName->copy(voiceName);
+    return true;
+}
+
+/**
+ * Starts a hit reaction, optionally at the position of a pane.
+ * @param pActor layout actor
+ * @param pName hit reaction name
+ * @param pPaneName pane name, or nullptr
+ */
+void startHitReaction(const LayoutActor* pActor, const char* pName, const char* pPaneName) {
+    HitReactionKeeper* hitReactionKeeper = pActor->getHitReactionKeeper();
+
+    if (hitReactionKeeper == nullptr) {
+        return;
+    }
+
+    if (pPaneName == nullptr) {
+        hitReactionKeeper->start(pName, nullptr, nullptr, nullptr);
+        return;
+    }
+
+    nn::ui2d::Pane* pane =
+        pActor->getLayoutKeeper()->getLayout()->GetRootPane()->FindPaneByName(pPaneName, true);
+    sead::Vector3f trans(pane->mPositionX, pane->mPositionY, pane->mPositionZ);
+    hitReactionKeeper->start(pName, &trans, nullptr, nullptr);
 }
 }  // namespace al
