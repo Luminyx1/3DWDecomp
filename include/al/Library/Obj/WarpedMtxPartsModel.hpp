@@ -37,8 +37,7 @@ public:
     bool mIsUseFollowMtxScale = false;
     bool mIsForceHide = false;
     bool mIsUseLocalScale = false;
-    sead::Matrix34f mWarpedMtx = sead::Matrix34f(1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
-                                                 0.0f, 0.0f, 1.0f, 0.0f);
+    sead::Matrix34f mWarpedMtx;
 };
 
 static_assert(sizeof(WarpedMtxPartsModel) == 0x1b8);

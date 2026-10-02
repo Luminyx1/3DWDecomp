@@ -4,11 +4,11 @@
 #include "Library/LiveActor/Util/ActorClippingUtil.hpp"
 #include "Library/LiveActor/Util/ActorInitUtil.hpp"
 #include "Library/LiveActor/Util/ActorModelUtil.hpp"
-#include "Library/Model/ModelKeeper.hpp"
 #include "Library/LiveActor/Util/ActorPoseUtil.hpp"
 #include "Library/LiveActor/Util/ActorResourceUtil.hpp"
 #include "Library/Math/MathUtil.hpp"
 #include "Library/Math/MatrixUtil.hpp"
+#include "Library/Model/ModelKeeper.hpp"
 #include "Library/Obj/PartsFunction.hpp"
 #include "Library/Yaml/ByamlIter.hpp"
 #include "Library/Yaml/ByamlUtil.hpp"
@@ -20,7 +20,9 @@ namespace al {
  * Constructs a model following a joint of a parent with a warped base matrix.
  * @param pName actor name
  */
-WarpedMtxPartsModel::WarpedMtxPartsModel(const char* pName) : LiveActor(pName) {}
+WarpedMtxPartsModel::WarpedMtxPartsModel(const char* pName) : LiveActor(pName) {
+    mWarpedMtx.makeIdentity();
+}
 
 /**
  * Follows the given matrix.
@@ -31,8 +33,8 @@ WarpedMtxPartsModel::WarpedMtxPartsModel(const char* pName) : LiveActor(pName) {
  * @param isUseFollowMtxScale whether the scale of the matrix is used
  */
 void WarpedMtxPartsModel::initPartsMtx(LiveActor* pParent, const ActorInitInfo& rInfo,
-                              const char* pArchiveName, const sead::Matrix34f* pJointMtx,
-                              bool isUseFollowMtxScale) {
+                                       const char* pArchiveName, const sead::Matrix34f* pJointMtx,
+                                       bool isUseFollowMtxScale) {
     mParentModel = pParent;
     mJointMtx = pJointMtx;
     mIsUseFollowMtxScale = isUseFollowMtxScale;
@@ -52,8 +54,9 @@ void WarpedMtxPartsModel::initPartsMtx(LiveActor* pParent, const ActorInitInfo& 
  * @param isUseFollowMtxScale whether the scale of the matrix is used
  */
 void WarpedMtxPartsModel::initPartsSuffix(LiveActor* pParent, const ActorInitInfo& rInfo,
-                                 const char* pArchiveName, const char* pSuffix,
-                                 const sead::Matrix34f* pJointMtx, bool isUseFollowMtxScale) {
+                                          const char* pArchiveName, const char* pSuffix,
+                                          const sead::Matrix34f* pJointMtx,
+                                          bool isUseFollowMtxScale) {
     mParentModel = pParent;
     mJointMtx = pJointMtx;
     mIsUseFollowMtxScale = isUseFollowMtxScale;
@@ -72,8 +75,8 @@ void WarpedMtxPartsModel::initPartsSuffix(LiveActor* pParent, const ActorInitInf
  * @param pSuffix InitPartsFixInfo suffix
  */
 void WarpedMtxPartsModel::initPartsFixFile(LiveActor* pParent, const ActorInitInfo& rInfo,
-                                  const char* pArchiveName, const char* pArchiveSuffix,
-                                  const char* pSuffix) {
+                                           const char* pArchiveName, const char* pArchiveSuffix,
+                                           const char* pSuffix) {
     mParentModel = pParent;
     mJointMtx = pParent->getBaseMtx();
     initActorWithArchiveNameNoPlacementInfo(this, rInfo, pArchiveName, pArchiveSuffix);
@@ -119,10 +122,10 @@ void WarpedMtxPartsModel::makeActorAppeared() {
  */
 void WarpedMtxPartsModel::updatePose() {
     if (!mIsUseLocalPos) {
+        sead::Vector3f mtxScale;
         sead::Matrix34f baseMtx = *mJointMtx;
 
         if (mIsUseFollowMtxScale) {
-            sead::Vector3f mtxScale;
             calcMtxScale(&mtxScale, baseMtx);
             const sead::Vector3f& scale = sead::Vector3f::ones;
             mtxScale.x = scale.x * mtxScale.x;
@@ -148,8 +151,8 @@ void WarpedMtxPartsModel::updatePose() {
     sead::Matrix34f baseMtx = *mJointMtx;
 
     if (mIsUseFollowMtxScale) {
-        const sead::Vector3f& scale = mIsUseLocalScale ? mLocalScale : sead::Vector3f::ones;
         sead::Vector3f mtxScale;
+        const sead::Vector3f& scale = mIsUseLocalScale ? mLocalScale : sead::Vector3f::ones;
         calcMtxScale(&mtxScale, baseMtx);
         mtxScale.x = scale.x * mtxScale.x;
         mtxScale.y = scale.y * mtxScale.y;
