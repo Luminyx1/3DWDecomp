@@ -5212,18 +5212,18 @@ src/al/Project/Action/InitResourceDataAction.cpp: done
 src/al/Project/Action/InitResourceDataActionAnim.cpp: done
     .text   start:0x008DF900 end:0x008DFE30
 src/al/Project/Anim/AnimPlayerSimple.cpp:
-    .text   start:0x008DFE30 end:0x008E062C
+    .text   start:0x008DFE30 end:0x008E0618
 src/al/Project/Anim/AnimInfo.cpp:
-    .text   start:0x008E0630 end:0x008E0AF8
+    .text   start:0x008E0620 end:0x008E0AF8
 src/al/Library/Anim/AnimPlayerSkl.cpp:
     .text   start:0x008E0B00 end:0x008E2BE0
-src/al/Project/Anim/AnimPlayerSimple_dup2.cpp:
+src/al/Project/Anim/AnimPlayerVis.cpp:
     .text   start:0x008E2BE0 end:0x008E2E7C
-src/al/Project/Anim/InitResourceDataAnim.cpp:
+src/al/Project/Anim/InitResourceDataAnim.cpp: done
     .text   start:0x008E2E80 end:0x008E3808
 src/al/Library/Anim/ModelAnimInterp.cpp:
     .text   start:0x008E3810 end:0x008E4750
-src/al/Library/Anim/SklAnimRetargettingInfo.cpp:
+src/al/Library/Anim/SklAnimRetargettingInfo.cpp: done
     .text   start:0x008E4750 end:0x008E4EF0
 src/al/Library/Area/AreaInitInfo.cpp: done
     .text   start:0x008E4EF0 end:0x008E4FF8

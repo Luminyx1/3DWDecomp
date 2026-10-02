@@ -55208,8 +55208,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71008E0500			FALSE	_ZN2al16AnimPlayerSimple22calcNeedUpdateAnimNextEv	al::AnimPlayerSimple::calcNeedUpdateAnimNext()	
 0x71008E05A0			FALSE	_ZN2al16AnimPlayerSimple7applyToEv	al::AnimPlayerSimple::applyTo()	
 0x71008E0600			FALSE	_ZN2al14AnimPlayerBaseC2Ev	al::AnimPlayerBase::AnimPlayerBase()	
-0x71008E0620			FALSE	_ZN2al11AnimResInfoC2Ev	al::AnimResInfo::AnimResInfo()	
-0x71008E0630		AnimInfo.o	FALSE	_ZNK2al11AnimResInfo11getFrameMaxEv	al::AnimResInfo::getFrameMax() const	object/folder from OdysseyDecomp file list
+0x71008E0620		AnimInfo.o	FALSE	_ZN2al11AnimResInfoC2Ev	al::AnimResInfo::AnimResInfo()	
+0x71008E0630			FALSE	_ZNK2al11AnimResInfo11getFrameMaxEv	al::AnimResInfo::getFrameMax() const	object/folder from OdysseyDecomp file list
 0x71008E0640			FALSE	_ZNK2al11AnimResInfo6isLoopEv	al::AnimResInfo::isLoop() const	
 0x71008E0650			FALSE	_ZN2al13AnimInfoTableC2Ei	al::AnimInfoTable::AnimInfoTable(int)	part of AnimInfo.o (OdysseyDecomp)
 0x71008E06D0			FALSE	_ZN2al13AnimInfoTable3addEPKcPvfb	al::AnimInfoTable::add(char const*, void*, float, bool)	
@@ -55247,10 +55247,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71008E1CB0			FALSE	_ZN2al13AnimPlayerSkl15initPartialAnimEiii	al::AnimPlayerSkl::initPartialAnim(int, int, int)	
 0x71008E20F0			FALSE	_ZNK2al13AnimPlayerSkl21getPartialAnimSlotNumEv	al::AnimPlayerSkl::getPartialAnimSlotNum() const	
 0x71008E2110			FALSE	_ZNK2al13AnimPlayerSkl23getJoitsAmountFromJointEPKc	al::AnimPlayerSkl::getJoitsAmountFromJoint(char const*) const	
-0x71008E2160			FALSE	sub_71008E2160	sub_71008E2160	
+0x71008E2160			FALSE	_ZN12_GLOBAL__N_120countJointsRecursiveEPKN2nn3g3d11SkeletonObjEi	_ZN12_GLOBAL__N_120countJointsRecursiveEPKN2nn3g3d11SkeletonObjEi	
 0x71008E21E0			FALSE	_ZN2al13AnimPlayerSkl19addPartialAnimJointEiPKcS2_	al::AnimPlayerSkl::addPartialAnimJoint(int, char const*, char const*)	
 0x71008E2320			FALSE	_ZN2al13AnimPlayerSkl28addPartialAnimJointRecursiveEiPKc	al::AnimPlayerSkl::addPartialAnimJointRecursive(int, char const*)	
-0x71008E2370			FALSE	sub_71008E2370	sub_71008E2370	
+0x71008E2370			FALSE	_ZN12_GLOBAL__N_117addJointRecursiveEPN4sead8ObjArrayIiEEPKN2nn3g3d11SkeletonObjEi	_ZN12_GLOBAL__N_117addJointRecursiveEPN4sead8ObjArrayIiEEPKN2nn3g3d11SkeletonObjEi	
 0x71008E2430			FALSE	_ZN2al13AnimPlayerSkl16startPartialAnimEPKciiPKNS_23SklAnimRetargettingInfoE	al::AnimPlayerSkl::startPartialAnim(char const*, int, int, al::SklAnimRetargettingInfo const*)	
 0x71008E25A0			FALSE	_ZN2al13AnimPlayerSkl16clearPartialAnimEi	al::AnimPlayerSkl::clearPartialAnim(int)	
 0x71008E25D0			FALSE	_ZN2al13AnimPlayerSkl18getPartialAnimInfoEi	al::AnimPlayerSkl::getPartialAnimInfo(int)	
@@ -55266,13 +55266,13 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71008E27C0			FALSE	_ZNK2al13AnimPlayerSkl23getPartialAnimFrameRateEi	al::AnimPlayerSkl::getPartialAnimFrameRate(int) const	
 0x71008E27F0			FALSE	_ZN2al13AnimPlayerSkl23setPartialAnimFrameRateEif	al::AnimPlayerSkl::setPartialAnimFrameRate(int, float)	
 0x71008E2820			FALSE	_ZN2al13AnimPlayerSklC1EPKNS_18AnimPlayerInitInfoEi	al::AnimPlayerSkl::AnimPlayerSkl(al::AnimPlayerInitInfo const*, int)	
-0x71008E2BE0	Project/Anim	AnimPlayerSimple.o	FALSE	_ZN2al13AnimPlayerVis9tryCreateEPKNS_18AnimPlayerInitInfoE	al::AnimPlayerVis::tryCreate(al::AnimPlayerInitInfo const*)	object/folder from OdysseyDecomp file list
+0x71008E2BE0	Project/Anim	AnimPlayerVis.o	FALSE	_ZN2al13AnimPlayerVis9tryCreateEPKNS_18AnimPlayerInitInfoE	al::AnimPlayerVis::tryCreate(al::AnimPlayerInitInfo const*)	object/folder from OdysseyDecomp file list
 0x71008E2C70			FALSE	_ZN2al13AnimPlayerVisC2Ev	al::AnimPlayerVis::AnimPlayerVis()	
 0x71008E2CA0			FALSE	_ZN2al13AnimPlayerVis4initEPKNS_18AnimPlayerInitInfoE	al::AnimPlayerVis::init(al::AnimPlayerInitInfo const*)	
 0x71008E2E30			FALSE	_ZN2al13AnimPlayerVis14setAnimToModelEPKNS_11AnimResInfoE	al::AnimPlayerVis::setAnimToModel(al::AnimResInfo const*)	
 0x71008E2E80		InitResourceDataAnim.o	FALSE	_ZN2al20InitResourceDataAnim9tryCreateEPNS_8ResourceES2_S2_	al::InitResourceDataAnim::tryCreate(al::Resource*, al::Resource*, al::Resource*)	object (class)
 0x71008E35F0			FALSE	_ZN2al20InitResourceDataAnimC2EPNS_8ResourceEPKNS_13AnimInfoTableES5_S5_S5_S5_	al::InitResourceDataAnim::InitResourceDataAnim(al::Resource*, al::AnimInfoTable const*, al::AnimInfoTable const*, al::AnimInfoTable const*, al::AnimInfoTable const*, al::AnimInfoTable const*)	
-0x71008E3600			FALSE	sub_71008E3600	sub_71008E3600	
+0x71008E3600			FALSE	_ZN2al12_GLOBAL__N_114addMatAnimInfoEPNS_13AnimInfoTableEPKNS_8ResourceEPKcb	_ZN2al12_GLOBAL__N_114addMatAnimInfoEPNS_13AnimInfoTableEPKNS_8ResourceEPKcb	
 0x71008E3810	Library/Anim	ModelAnimInterp.o	FALSE	_ZN2al15ModelAnimInterpC1EPN2nn3g3d11SkeletonObjE	al::ModelAnimInterp::ModelAnimInterp(nn::g3d::SkeletonObj*)	object (smo)
 0x71008E3880			FALSE	_ZN2al15ModelAnimInterp6updateEv	al::ModelAnimInterp::update()	
 0x71008E38A0			FALSE	_ZN2al15ModelAnimInterp17prepareAnimInterpEPN2nn3g3d11SkeletonObjEPKcS6_RKN4sead6BufferIPNS2_15SkeletalAnimObjEEE	al::ModelAnimInterp::prepareAnimInterp(nn::g3d::SkeletonObj*, char const*, char const*, sead::Buffer<nn::g3d::SkeletalAnimObj*> const&)	
