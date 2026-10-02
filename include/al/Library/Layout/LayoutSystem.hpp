@@ -1,14 +1,10 @@
 #pragma once
 
 #include <basis/seadTypes.h>
-
-namespace agl {
-class DrawContext;
-class RenderBuffer;
-}  // namespace agl
+#include <prim/seadSafeString.h>
 
 namespace eui {
-class DrawInfoEx;
+class ScalableFontMgr;
 class ScreenMgr;
 }  // namespace eui
 
@@ -17,61 +13,65 @@ class Font;
 }
 
 namespace nn::ui2d {
-class DrawInfo;
 class GraphicsResource;
-}  // namespace nn::ui2d
+}
 
 namespace sead {
-class GraphicsContext;
-class Viewport;
-}  // namespace sead
+class Heap;
+}
 
 namespace al {
-class EffectSystem;
-class ExecuteDirector;
-class FontHolder;
+class Resource;
 
-struct LayoutFontList {
-    u8 _0[0x5e];
-    bool isInvalid;
+struct FontNamePair {
+    FontNamePair();
+
+    nn::font::Font* font;
+    sead::FixedSafeString<128> name;
+    bool isLoaded;
 };
+
+static_assert(sizeof(FontNamePair) == 0xa8);
 
 class LayoutSystem {
 public:
+    typedef sead::FixedSafeString<128> FontFileName;
+
     LayoutSystem();
 
-    void init(bool isInitEui);
+    void init(bool isSmallFontHeap);
     void initGraphicsResource();
+    void initFont();
+    void initEui();
     nn::font::Font* tryFindFont(const char* pFontName) const;
+    FontNamePair* getFontNamePair(s32 index) const;
+    void finalizeFontData();
+    void initFontForChangeLanguage();
+    void reinitFont(sead::Heap* pHeap);
     void beginDraw() const;
     void endDraw() const;
+    void initFontList();
 
     nn::ui2d::GraphicsResource* getGraphicsResource() const { return mGraphicsResource; }
+
     eui::ScreenMgr* getScreenMgr() const { return mScreenMgr; }
-    LayoutFontList* getFontList() const { return mFontList; }
+
+    eui::ScalableFontMgr* getScalableFontMgr() const { return mScalableFontMgr; }
+
+    s32 getFontNamePairNum() const { return mFontNamePairNum; }
 
 private:
     nn::ui2d::GraphicsResource* mGraphicsResource = nullptr;
-    void* _8 = nullptr;
-    s32 _10 = 0;
+    FontNamePair* mFontNamePairs = nullptr;
+    s32 mFontNamePairNum = 0;
     eui::ScreenMgr* mScreenMgr = nullptr;
-    void* _20 = nullptr;
-    LayoutFontList* mFontList = nullptr;
-    bool _30 = false;
-    void* _38 = nullptr;
-    void* _40 = nullptr;
-    s32 _48 = 0;
+    sead::Heap* mFontHeap = nullptr;
+    eui::ScalableFontMgr* mScalableFontMgr = nullptr;
+    bool mIsSmallFontHeap = false;
+    Resource* mFontResource = nullptr;
+    FontFileName* mFontFileNames = nullptr;
+    s32 mFontFileNameNum = 0;
 };
 
-struct LayoutRenderInfo {
-    const agl::RenderBuffer* renderBuffer = nullptr;
-    sead::GraphicsContext* graphicsContext = nullptr;
-    sead::Viewport* viewport = nullptr;
-    void* _18 = nullptr;
-    agl::DrawContext* drawContext = nullptr;
-};
-
-inline LayoutRenderInfo* getLayoutRenderInfo(eui::DrawInfoEx* pDrawInfo) {
-    return *reinterpret_cast<LayoutRenderInfo**>(reinterpret_cast<u8*>(pDrawInfo) + 0x1a0);
-}
+static_assert(sizeof(LayoutSystem) == 0x50);
 }  // namespace al
