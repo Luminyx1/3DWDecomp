@@ -15,22 +15,7 @@ inline size_t AlignBlock(size_t value, size_t alignment) { return (value + align
 } // namespace
 
 namespace {
-/**
- * @brief Assign a workspace block offset and update the allocation requirements.
- * @param block Block whose size is known and whose offset is assigned; empty blocks are skipped.
- * @param size Accumulated workspace size, updated to include the block.
- * @param alignment Accumulated alignment requirement, updated if the block requires more alignment.
- * @param blockAlignment Nonzero power-of-two alignment required by this block, in bytes.
- */
-inline void AppendWorkspaceBlock(detail::WorkMemoryBlock& block, size_t& size, size_t& alignment,
-                                 size_t blockAlignment) {
-    if (block.size != 0) {
-        size_t start = AlignBlock(size, blockAlignment);
-        alignment = std::max(alignment, blockAlignment);
-        size = start + block.size;
-        block.offset = start;
-    }
-}
+using detail::AppendWorkspaceBlock;
 
 /**
  * @brief Reset an initialization argument's workspace sizes and block descriptors.

@@ -609,6 +609,17 @@ struct WorkMemoryBlock {
     ptrdiff_t offset;
     // bytes is the requested size; each block starts at an eight-byte boundary.
     void Initialize(size_t bytes) { size = bytes; alignment = 8; pointer = nullptr; offset = -1; }
+    /**
+     * @brief Reset a workspace block with a specified size and alignment.
+     * @param bytes Required storage size in bytes; zero denotes an unused block.
+     * @param requiredAlignment Nonzero power-of-two byte alignment for this block.
+     */
+    void Initialize(size_t bytes, size_t requiredAlignment) {
+        size = bytes;
+        alignment = requiredAlignment;
+        pointer = nullptr;
+        offset = -1;
+    }
     // totalSize and requiredAlignment accumulate workspace requirements; this block receives its offset.
     void AppendTo(size_t& totalSize, size_t& requiredAlignment) {
         if (size != 0) {
@@ -623,6 +634,24 @@ struct WorkMemoryBlock {
     // T selects the element type of the block within buffer.
     template <class T> T* GetPointer(void* buffer) const { return static_cast<T*>(GetPointer(buffer)); }
 };
+/**
+ * @brief Assign a workspace block offset and update the allocation requirements.
+ * @param block Block whose size is known and whose offset is assigned; empty blocks are skipped.
+ * @param size Accumulated workspace size, updated to include the block.
+ * @param alignment Accumulated alignment requirement, updated if the block requires more alignment.
+ * @param blockAlignment Nonzero power-of-two alignment required by this block, in bytes.
+ */
+inline void AppendWorkspaceBlock(WorkMemoryBlock& block, size_t& size, size_t& alignment,
+                                 size_t blockAlignment) {
+    if (block.size != 0) {
+        size_t start = (size + blockAlignment - 1) & -blockAlignment;
+        alignment = alignment < blockAlignment ? blockAlignment : alignment;
+        size = start + block.size;
+        block.offset = start;
+    }
+}
+
+
 }
 class MaterialObj {
 public:
