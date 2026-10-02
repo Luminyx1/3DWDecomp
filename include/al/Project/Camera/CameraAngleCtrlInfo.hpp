@@ -32,6 +32,10 @@ public:
 
     f32 getAngleV() const { return mAngleV; }
 
+    f32 getDefaultMinAngleV() const { return mDefaultMinAngleV; }
+
+    f32 getDefaultMaxAngleV() const { return mDefaultMaxAngleV; }
+
 private:
     struct ResetInfo {
         s32 step = -1;

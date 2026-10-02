@@ -204,6 +204,8 @@ public:
 
     sead::Vector3f* getAtPtr() { return &mAt; }
 
+    sead::Vector3f* getUpPtr() { return &mUp; }
+
     const sead::Vector3f& getUp() const { return mUp; }
 
     const sead::Matrix34f& getViewMtx() const { return mViewMtx; }
