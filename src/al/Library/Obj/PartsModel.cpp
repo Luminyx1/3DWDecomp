@@ -117,10 +117,10 @@ void PartsModel::makeActorAppeared() {
  */
 void PartsModel::updatePose() {
     if (!mIsUseLocalPos) {
+        sead::Vector3f mtxScale;
         sead::Matrix34f baseMtx = *mJointMtx;
 
         if (mIsUseFollowMtxScale) {
-            sead::Vector3f mtxScale;
             calcMtxScale(&mtxScale, baseMtx);
             const sead::Vector3f& scale = sead::Vector3f::ones;
             mtxScale.x = scale.x * mtxScale.x;
@@ -145,8 +145,8 @@ void PartsModel::updatePose() {
     sead::Matrix34f baseMtx = *mJointMtx;
 
     if (mIsUseFollowMtxScale) {
-        const sead::Vector3f& scale = mIsUseLocalScale ? mLocalScale : sead::Vector3f::ones;
         sead::Vector3f mtxScale;
+        const sead::Vector3f& scale = mIsUseLocalScale ? mLocalScale : sead::Vector3f::ones;
         calcMtxScale(&mtxScale, baseMtx);
         mtxScale.x = scale.x * mtxScale.x;
         mtxScale.y = scale.y * mtxScale.y;
