@@ -34,6 +34,8 @@ struct HitReactionInfo {
 
 static_assert(sizeof(HitReactionInfo) == 0x78);
 
+class PadRumbleKeeper;
+
 class HitReactionKeeper {
 public:
     static HitReactionKeeper* tryCreate(LiveActor* pActor, const Resource* pResource,
@@ -46,6 +48,10 @@ public:
 
     void start(const char* pName, const sead::Vector3f* pPos, const HitSensor* pSensor1,
                const HitSensor* pSensor2);
+
+    void setPadRumbleKeeper(PadRumbleKeeper* pKeeper) {
+        mPadRumblePort = reinterpret_cast<const s32*>(pKeeper);
+    }
 
 private:
     LiveActor* mActor = nullptr;
