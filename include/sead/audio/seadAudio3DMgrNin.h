@@ -12,7 +12,7 @@ class Audio3DMgrNin : public Audio3DMgr {
     SEAD_RTTI_OVERRIDE(Audio3DMgrNin, Audio3DMgr)
 
 public:
-    explicit Audio3DMgrNin(bool createDefaultListener);
+    explicit Audio3DMgrNin(bool createDefaultListener = true);
     ~Audio3DMgrNin() override;
 
     void initialize(AudioMgr& rMgr, Heap* pHeap) override;
