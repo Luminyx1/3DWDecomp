@@ -17,7 +17,7 @@ enum LoadState { LOADING, LOADED };
 
 LoadState GetSharedFontLoadState(SharedFontType);
 void* GetSharedFontAddress(SharedFontType);
-u32 GetSharedFontSize(SharedFontType);
+size_t GetSharedFontSize(SharedFontType);
 void RequestSharedFontLoad(SharedFontType);
 
 }  // namespace nn::pl
