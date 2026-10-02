@@ -65,9 +65,9 @@ void CameraPoserFixPoint::start(const CameraStartInfo& rInfo) {
  * Places the camera at the fixed point and looks at the offset target position.
  */
 void CameraPoserFixPoint::update() {
-    mEye.set(mCameraPos);
-    mEye.setMul(mViewMtx, mEye);
     mUp.set(sead::Vector3f::ey);
+    mEye.set(mCameraPos);
+    mEye.mul(mViewMtx);
     alCameraPoserFunction::setLookAtPosToTargetAddOffset(this, {0.0f, mOffsetY, 0.0f});
 }
 
