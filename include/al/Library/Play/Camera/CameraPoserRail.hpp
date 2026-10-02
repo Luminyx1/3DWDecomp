@@ -37,6 +37,8 @@ public:
     f32 getRailCoord() const;
     void setRailCoord(f32 coord);
 
+    bool isReverseCoord() const { return mIsReverseCoord; }
+
 private:
     CameraPoserRailParam mParam;
     RailKeeper* mRailKeeper = nullptr;

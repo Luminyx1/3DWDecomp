@@ -55,6 +55,8 @@ public:
     static const CameraPoserZoomParam& getDefaultParamFar();
     NerveKeeper* getNerveKeeper() const override;
 
+    void setStickPlayerPort(s32 port) { mStickPlayerFlag.setDirect(1 << port); }
+
 private:
     friend void tryLoadZoomParam(CameraPoserZoom* pPoser, s32 level, const ByamlIter* pIter,
                                  const char* pKey);

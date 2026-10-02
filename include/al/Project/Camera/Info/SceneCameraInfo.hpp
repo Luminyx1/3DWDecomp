@@ -7,6 +7,7 @@
 namespace al {
 class CameraViewInfo;
 class Projection;
+struct SceneCameraControlInfo;
 
 class SceneCameraInfo {
 public:
@@ -27,7 +28,7 @@ public:
     void* _28 = nullptr;
     sead::Projection* mProjection = nullptr;
     sead::Projection* _38 = nullptr;
-    void* _40 = nullptr;
+    SceneCameraControlInfo* mControlInfo = nullptr;
     s32 mViewNumMax;
     CameraViewInfo** mViewArray;
 };
