@@ -16,6 +16,8 @@ NERVES_MAKE_NOSTRUCT(WipeSimple, Close, CloseEnd, Open, DelayOpen)
 }  // namespace
 
 namespace al {
+
+
 /**
  * Creates a simple wipe layout.
  * @param pName actor name
@@ -38,7 +40,7 @@ void WipeSimple::startClose(s32 frames) {
     mFrames = frames;
     startAction(this, "Appear");
     LayoutActor::appear();
-    setActionFrameRate(this, mFrames > 0 ? getActionFrameMax(this, nullptr) / mFrames : 1.0f);
+    updateFrameRate();
     setNerve(this, &NrvWipeSimpleClose);
 }
 
@@ -90,11 +92,11 @@ void WipeSimple::startOpenDelay(s32 delay, s32 frames) {
 }
 
 /**
- * Starts opening the wipe unless it is already opening.
+ * Starts opening the wipe if it is alive and not already opening.
  * @param frames open duration in frames, or a non-positive value for the action's own length
  */
 void WipeSimple::tryStartOpen(s32 frames) {
-    if (!isAlive() || !isNerve(this, &NrvWipeSimpleOpen)) {
+    if (isAlive() && !isNerve(this, &NrvWipeSimpleOpen)) {
         startOpen(frames);
     }
 }
@@ -130,7 +132,7 @@ void WipeSimple::exeCloseEnd() {
  */
 void WipeSimple::exeOpen() {
     if (isFirstStep(this)) {
-        setActionFrameRate(this, mFrames > 0 ? getActionFrameMax(this, nullptr) / mFrames : 1.0f);
+        updateFrameRate();
     }
 
     if (isActionEnd(this)) {
@@ -148,7 +150,7 @@ void WipeSimple::exeDelayOpen() {
 
     if (isStep(this, mDelay)) {
         startAction(this, "End");
-        setActionFrameRate(this, mFrames > 0 ? getActionFrameMax(this, nullptr) / mFrames : 1.0f);
+        updateFrameRate();
     }
 
     if (isActionEnd(this)) {

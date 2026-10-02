@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Library/Layout/LayoutActionFunction.hpp"
 #include "Library/Layout/LayoutActor.hpp"
 
 namespace al {
@@ -27,6 +28,14 @@ public:
     void appear() override;
 
 private:
+    void updateFrameRate() {
+        if (mFrames <= 0) {
+            setActionFrameRate(this, 1.0f);
+        } else {
+            setActionFrameRate(this, getActionFrameMax(this, nullptr) / mFrames);
+        }
+    }
+
     s32 mFrames = -1;
     s32 mDelay = -1;
 };
