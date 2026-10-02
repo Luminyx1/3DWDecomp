@@ -10,6 +10,15 @@
 namespace al {
 
 /**
+ * Constructs a poser that follows the rail position of an actor.
+ * @param pName Poser name.
+ * @param pRailKeeper Rail keeper of the followed actor.
+ */
+CameraPoserActorRailParallel::CameraPoserActorRailParallel(const char* pName,
+                                                           const RailKeeper* pRailKeeper)
+    : CameraPoser_RS(pName), mRailKeeper(pRailKeeper) {}
+
+/**
  * Initializes the camera move limit.
  */
 void CameraPoserActorRailParallel::init() {
@@ -28,6 +37,14 @@ void CameraPoserActorRailParallel::loadParam(const ByamlIter& rIter) {
     tryGetByamlF32(&mFollowRate, rIter, "FollowRate");
 }
 
+/**
+ * Calculates a camera position around a look-at position.
+ * @param pPos Output camera position.
+ * @param rAt Look-at position.
+ * @param distance Distance from the look-at position.
+ * @param angleDegreeH Horizontal angle, in degrees.
+ * @param angleDegreeV Vertical angle, in degrees.
+ */
 static void calcCameraPos(sead::Vector3f* pPos, const sead::Vector3f& rAt, f32 distance,
                           f32 angleDegreeH, f32 angleDegreeV) {
     f32 angleH = sead::Mathf::deg2rad(angleDegreeH);

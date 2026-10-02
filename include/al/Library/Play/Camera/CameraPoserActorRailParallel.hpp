@@ -18,11 +18,11 @@ public:
 
 private:
     const RailKeeper* mRailKeeper;
-    sead::Vector3f mOffset;
-    f32 mDistance;
-    f32 mAngleDegreeH;
-    f32 mAngleDegreeV;
-    f32 mFollowRate;
+    sead::Vector3f mOffset = {0.0f, 0.0f, 0.0f};
+    f32 mDistance = 1600.0f;
+    f32 mAngleDegreeH = 0.0f;
+    f32 mAngleDegreeV = 20.0f;
+    f32 mFollowRate = 1.0f;
 };
 
 static_assert(sizeof(CameraPoserActorRailParallel) == 0x170);
