@@ -58,8 +58,11 @@ void SimpleCircleShadowXZ::updatePose() {
         mRotate.z = mStartRotate.z + rate * (mEndRotate.z - mStartRotate.z);
     }
 
-    sead::Matrix34f hostMtx = *mHost->getBaseMtx();
-    hostMtx.m[1][3] = 0.0f;
+    sead::Matrix34f hostMtx;
+    hostMtx = *mHost->getBaseMtx();
+    sead::Vector3f hostTrans = hostMtx.getTranslation();
+    hostTrans.y = 0.0f;
+    hostMtx.setTranslation(hostTrans);
     sead::Vector3f trans;
     trans.setMul(hostMtx, mOffset);
     setTransX(this, trans.x);
@@ -75,7 +78,7 @@ void SimpleCircleShadowXZ::updatePose() {
     sead::Quatf rotate;
     rotate.setRPY(sead::Mathf::deg2rad(mRotate.x), sead::Mathf::deg2rad(mRotate.y),
                   sead::Mathf::deg2rad(mRotate.z));
-    quat = quat * rotate;
+    quat *= rotate;
     updatePoseQuat(this, quat);
 }
 
