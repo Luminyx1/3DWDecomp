@@ -64,6 +64,7 @@ void AudioGeneralPurposeAreaChecker::reset() {
  * @param islandId Current island, or a negative value outside islands.
  */
 void AudioGeneralPurposeAreaChecker::update(s32 islandId) {
+    bool isOneTime;
     _20 = false;
     mIsEnteredArea = false;
     mIsExitedArea = false;
@@ -128,7 +129,7 @@ void AudioGeneralPurposeAreaChecker::update(s32 islandId) {
         return;
     }
 
-    bool isOneTime = false;
+    isOneTime = false;
     tryGetAreaObjArg(&isOneTime, curArea, "IsOneTime");
 
     if (isOneTime) {
