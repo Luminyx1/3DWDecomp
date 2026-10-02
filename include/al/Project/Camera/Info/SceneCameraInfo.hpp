@@ -26,7 +26,7 @@ public:
     sead::LookAtCamera* mLookAtCamera = nullptr;
     void* _28 = nullptr;
     sead::Projection* mProjection = nullptr;
-    void* _38 = nullptr;
+    sead::Projection* _38 = nullptr;
     void* _40 = nullptr;
     s32 mViewNumMax;
     CameraViewInfo** mViewArray;

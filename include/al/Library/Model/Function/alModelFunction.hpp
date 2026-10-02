@@ -85,7 +85,7 @@ void createMeshDrawerTableDisplayListRenderStateInvalidate(const al::MeshDrawerT
 bool isShaderAssignAlphaMask(const nn::g3d::ModelObj* pModel, s32 index);
 bool isShaderAssignAlphaMask(const nn::g3d::MaterialObj* pMaterial);
 s32 getShaderAssignAlphaFunc(const nn::g3d::ModelObj* pModel, s32 index);
-s32 getShaderAssignAlphaFunc(const nn::g3d::MaterialObj* pMaterial);
+const char* getShaderAssignAlphaFunc(const nn::g3d::MaterialObj* pMaterial);
 bool isShaderUsingThickness(const nn::g3d::ShadingModelObj& rShadingModel);
 bool isShaderIndirect(const nn::g3d::ShadingModelObj& rShadingModel);
 bool isShaderUsingRefractTex(const nn::g3d::ShadingModelObj& rShadingModel);
