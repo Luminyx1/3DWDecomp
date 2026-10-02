@@ -33,6 +33,43 @@ template <class T> inline auto WeightedComponent(T value, float weight) {
         return value * weight;
     }
 }
+/**
+ * @brief Blend one packed vector attribute per vertex.
+ * @tparam T Float3 or Float4 packed vector representation.
+ * @tparam add Whether to accumulate weighted vectors instead of replacing the destination.
+ * @param pDestination Writable vertex buffer covering every output vector.
+ * @param destinationOffset Byte offset of the first destination vector, aligned for T.
+ * @param destinationStride Byte distance between destination vectors.
+ * @param pSource Vertex buffer containing all source vectors.
+ * @param sourceOffset Byte offset of the first source vector, aligned for T.
+ * @param sourceStride Byte distance between source vectors.
+ * @param weight Weight applied to each source vector.
+ * @param vertexCount Number of vectors to process; zero does no work.
+ */
+template <class T, bool add>
+inline void BlendVectors(void* pDestination, ptrdiff_t destinationOffset, ptrdiff_t destinationStride,
+                         void* pSource, ptrdiff_t sourceOffset, ptrdiff_t sourceStride, float weight,
+                         unsigned vertexCount) {
+    char* pSourceVertex = VertexAttribute<char>(pSource, sourceOffset);
+    char* pDestinationVertex = VertexAttribute<char>(pDestination, destinationOffset);
+    for (unsigned vertex = 0; vertex < vertexCount; ++vertex) {
+        T* pOutput = VertexAttribute<T>(pDestinationVertex, 0);
+        const T* pInput = VertexAttribute<T>(pSourceVertex, 0);
+        T weighted = WeightedComponent(*pInput, weight);
+        if constexpr (add) {
+            T original = *pOutput;
+            weighted.x += original.x;
+            weighted.y += original.y;
+            weighted.z += original.z;
+            if constexpr (std::is_same<T, util::Float4>::value) {
+                weighted.w += original.w;
+            }
+        }
+        *pOutput = weighted;
+        pDestinationVertex += destinationStride;
+        pSourceVertex += sourceStride;
+    }
+}
 } // namespace
 
 struct ShapeObj::Impl {
@@ -58,23 +95,15 @@ struct ShapeObj::Impl {
         static void Execute(void* pDestination, ptrdiff_t destinationOffset, ptrdiff_t destinationStride,
                             void* pSource, ptrdiff_t sourceOffset, ptrdiff_t sourceStride, float weight,
                             int componentCount, unsigned vertexCount) {
-            char* pDestinationVertex = VertexAttribute<char>(pDestination, destinationOffset);
-            char* pSourceVertex = VertexAttribute<char>(pSource, sourceOffset);
-            for (unsigned vertex = 0; vertex < vertexCount; ++vertex) {
-                T* pOutput = VertexAttribute<T>(pDestinationVertex, 0);
-                const T* pInput = VertexAttribute<T>(pSourceVertex, 0);
-                if constexpr (std::is_same<T, util::Float3>::value || std::is_same<T, util::Float4>::value) {
-                    T weighted = WeightedComponent(*pInput, weight);
-                    if constexpr (add) {
-                        weighted.x += pOutput->x;
-                        weighted.y += pOutput->y;
-                        weighted.z += pOutput->z;
-                        if constexpr (std::is_same<T, util::Float4>::value) {
-                            weighted.w += pOutput->w;
-                        }
-                    }
-                    *pOutput = weighted;
-                } else {
+            if constexpr (std::is_same<T, util::Float3>::value || std::is_same<T, util::Float4>::value) {
+                BlendVectors<T, add>(pDestination, destinationOffset, destinationStride, pSource,
+                                     sourceOffset, sourceStride, weight, vertexCount);
+            } else {
+                char* pDestinationVertex = VertexAttribute<char>(pDestination, destinationOffset);
+                char* pSourceVertex = VertexAttribute<char>(pSource, sourceOffset);
+                for (unsigned vertex = 0; vertex < vertexCount; ++vertex) {
+                    T* pOutput = VertexAttribute<T>(pDestinationVertex, 0);
+                    const T* pInput = VertexAttribute<T>(pSourceVertex, 0);
                     for (int component = 0; component < componentCount; ++component, ++pOutput, ++pInput) {
                         if constexpr (add) {
                             *pOutput += WeightedComponent(*pInput, weight);
@@ -82,9 +111,9 @@ struct ShapeObj::Impl {
                             *pOutput = WeightedComponent(*pInput, weight);
                         }
                     }
+                    pDestinationVertex += destinationStride;
+                    pSourceVertex += sourceStride;
                 }
-                pDestinationVertex += destinationStride;
-                pSourceVertex += sourceStride;
             }
         }
     };

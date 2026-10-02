@@ -1049,4 +1049,3 @@ private:
 };
 
 }  // namespace nn::g3d
-
