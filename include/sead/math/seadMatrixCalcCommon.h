@@ -111,6 +111,7 @@ public:
     static void makeST(Base& o, const Vec3& s, const Vec3& t);
     static void makeT(Base& o, const Vec3& t);
     static void toQuat(Quat& q, const Base& n);
+    static void slerpTo(Base& o, const Base& a, const Base& b, f32 t);
 
     static void getBase(Vec3& v, const Base& n, s32 axis);
     static void getRow(Vec4& v, const Base& n, s32 row);

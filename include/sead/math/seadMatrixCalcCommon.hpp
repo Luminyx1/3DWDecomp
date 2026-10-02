@@ -11,6 +11,7 @@
 #include <cmath>
 
 #include <math/seadMathCalcCommon.h>
+#include <math/seadQuatCalcCommon.h>
 #ifndef SEAD_MATH_MATRIX_CALC_COMMON_H_
 #include <math/seadMatrixCalcCommon.h>
 #endif
@@ -1739,6 +1740,19 @@ void Matrix34CalcCommon<T>::makeT(Base& o, const Vec3& t)
     o.m[2][1] = 0;
     o.m[2][2] = 1;
     o.m[2][3] = t.z;
+}
+
+template <typename T>
+void Matrix34CalcCommon<T>::slerpTo(Base& o, const Base& a, const Base& b, f32 t)
+{
+    Quat q1;
+    Quat q2;
+    toQuat(q1, a);
+    toQuat(q2, b);
+
+    Quat q;
+    QuatCalcCommon<T>::slerpTo(q, q1, q2, t);
+    makeQ(o, q);
 }
 
 template <typename T>
