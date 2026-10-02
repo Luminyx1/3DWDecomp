@@ -5,6 +5,20 @@
 #include "Library/Yaml/ByamlUtil.hpp"
 
 namespace al {
+namespace {
+
+/**
+ * Calculates the horizontal front direction of the camera target.
+ * @param pFront Output direction.
+ * @param pPoser Camera poser.
+ */
+inline void calcTargetFrontH(sead::Vector3f* pFront, const CameraPoser_RS* pPoser) {
+    alCameraPoserFunction::calcTargetFront(pFront, pPoser);
+    pFront->y = 0.0f;
+    normalize(pFront);
+}
+
+}  // namespace
 
 /**
  * Creates a camera that follows behind the moving direction of the target.
@@ -32,14 +46,25 @@ void CameraPoserRace::loadParam(const ByamlIter& rIter) {
     tryGetByamlBool(&mIsTurnToVelocity, rIter, "IsTurnToVelocity");
 }
 
+/**
+ * Resets the rotation and faces the current target direction.
+ * @param rInfo Camera start info.
+ */
 void CameraPoserRace::start(const CameraStartInfo& rInfo) {
     mRotateAngle = 0.0f;
     calcTargetFrontLocal(&mFrontDir, true);
 }
 
-void CameraPoserRace::calcTargetFrontLocal(sead::Vector3f* pFront, bool isUnused) const {
-    if (mFrontDirPtr) {
-        *pFront = *mFrontDirPtr;
+/**
+ * Calculates the horizontal direction the camera should face.
+ * @param pFront Output direction.
+ * @param isUseTargetFrontIfStopped Whether to fall back to the target front when the target does
+ * not move (both cases fall back to it for this poser).
+ */
+void CameraPoserRace::calcTargetFrontLocal(sead::Vector3f* pFront,
+                                           bool isUseTargetFrontIfStopped) const {
+    if (mFrontDirPtr != nullptr) {
+        pFront->set(*mFrontDirPtr);
         pFront->y = 0.0f;
         normalize(pFront);
         return;
@@ -51,14 +76,17 @@ void CameraPoserRace::calcTargetFrontLocal(sead::Vector3f* pFront, bool isUnused
         velocity.y = 0.0f;
 
         if (tryNormalizeOrZero(&velocity)) {
-            *pFront = velocity;
+            pFront->set(velocity);
+            return;
+        }
+
+        if (isUseTargetFrontIfStopped) {
+            calcTargetFrontH(pFront, this);
             return;
         }
     }
 
-    alCameraPoserFunction::calcTargetFront(pFront, this);
-    pFront->y = 0.0f;
-    normalize(pFront);
+    calcTargetFrontH(pFront, this);
 }
 
 /**
@@ -72,7 +100,7 @@ void CameraPoserRace::update() {
     rotateVectorDegreeY(&mFrontDir, mRotateAngle);
     mFrontDir.y = 0.0f;
     normalize(&mFrontDir);
-    mUp = sead::Vector3f::ey;
+    mUp.set(sead::Vector3f::ey);
     alCameraPoserFunction::setLookAtPosToTargetAddOffset(this, {0.0f, mOffsetY, 0.0f});
     sead::Vector3f dir = -mFrontDir;
     sead::Vector3f side;
@@ -86,7 +114,7 @@ void CameraPoserRace::update() {
         dir *= distance / length;
     }
 
-    mEye.set(mAt + dir);
+    mEye = mAt + dir;
 }
 
 }  // namespace al

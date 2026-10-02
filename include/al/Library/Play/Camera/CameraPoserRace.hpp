@@ -6,9 +6,6 @@
 #include "Library/Camera/CameraPoser_RS.hpp"
 
 namespace al {
-class LiveActor;
-class RailKeeper;
-class Resource;
 
 class CameraPoserRace : public CameraPoser_RS {
 public:
@@ -19,7 +16,7 @@ public:
     void start(const CameraStartInfo& rInfo) override;
     void update() override;
 
-    void calcTargetFrontLocal(sead::Vector3f* pFront, bool isUnused) const;
+    void calcTargetFrontLocal(sead::Vector3f* pFront, bool isUseTargetFrontIfStopped) const;
 
 public:
     const sead::Vector3f* mFrontDirPtr = nullptr;
