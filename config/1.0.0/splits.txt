@@ -3799,7 +3799,7 @@ src/nw/g3d/g3d_ResShape.cpp:
     .text   start:0x00603C70 end:0x00604AC8
 src/nw/g3d/g3d_ResShapeAnim.cpp: done
     .text   start:0x00604AD0 end:0x006055EC
-src/nw/g3d/g3d_ResSkeletalAnim.cpp:
+src/nw/g3d/g3d_ResSkeletalAnim.cpp: done
     .text   start:0x006055F0 end:0x00605E08
 src/nw/g3d/g3d_ResSkeleton.cpp: done
     .text   start:0x00605E10 end:0x00605F54
@@ -3935,13 +3935,13 @@ src/sead/framework/seadFaderTask.cpp: done
     .text   start:0x00661AD0 end:0x00663634
 src/sead/framework/seadTaskID.cpp: done
     .text   start:0x00663640 end:0x006636A0
-src/sead/gfx/nvn/seadDebugFontMgrJis1Nvn.cpp:
+src/sead/gfx/nvn/seadDebugFontMgrJis1Nvn.cpp: done
     .text   start:0x006636A0 end:0x006643C8
-src/sead/gfx/nvn/seadDebugFontMgrNvn.cpp:
+src/sead/gfx/nvn/seadDebugFontMgrNvn.cpp: done
     .text   start:0x006643D0 end:0x00664F68
 src/sead/gfx/nvn/seadFrameBufferNvn.cpp:
     .text   start:0x00664F70 end:0x0066601C
-src/sead/gfx/nvn/seadGraphicsNvn.cpp:
+src/sead/gfx/nvn/seadGraphicsNvn.cpp: done
     .text   start:0x00666020 end:0x00666850
 src/sead/gfx/nvn/seadPrimitiveDrawMgrNvn.cpp:
     .text   start:0x00666850 end:0x0066847C
@@ -4059,7 +4059,7 @@ src/sead/codec/seadBase64.cpp:
     .text   start:0x0069F850 end:0x0069FD54
 src/sead/hostio/seadHostIOCurve.cpp:
     .text   start:0x0069FD60 end:0x006A1B14
-src/sead/time/seadCalendarTime.cpp:
+src/sead/time/seadCalendarTime.cpp: done
     .text   start:0x006A1B20 end:0x006A1EC4
 src/sead/time/seadDateTime.cpp: done
     .text   start:0x006A1ED0 end:0x006A26E8
@@ -4067,7 +4067,7 @@ src/sead/time/seadDateSpan.cpp: done
     .text   start:0x006A26F0 end:0x006A282C
 src/sead/time/seadDateTimeUtc.cpp:
     .text   start:0x006A2830 end:0x006A2CF8
-src/sead/time/seadDateUtil.cpp:
+src/sead/time/seadDateUtil.cpp: done
     .text   start:0x006A2D00 end:0x006A3ADC
 src/sead/time/seadTickSpan.cpp: done
     .text   start:0x006A3AE0 end:0x006A3CF0
@@ -4233,7 +4233,7 @@ src/agl/detail/SamplerObject.cpp:
     .text   start:0x006DE5A0 end:0x006DE5C8
 src/agl/common/aglTextureDataImageAccessor.cpp:
     .text   start:0x006DE5D0 end:0x006DF580
-src/agl/common/aglTextureFormatInfo.cpp:
+src/agl/common/aglTextureFormatInfo.cpp: done
     .text   start:0x006DF580 end:0x006DF754
 src/agl/common/aglTextureSampler.cpp: done
     .text   start:0x006DF760 end:0x006DFCD4
@@ -4563,7 +4563,7 @@ src/al/Library/Debug/Render/RenderBufferAttacher.cpp:
     .text   start:0x007E6BD0 end:0x007E7BCC
 src/al/Library/Debug/Render/RenderBufferDepthAttacher.cpp:
     .text   start:0x007E7BD0 end:0x007E82A0
-src/al/Library/Execute/ExecuteDirector.cpp:
+src/al/Library/Execute/ExecuteDirector.cpp: done
     .text   start:0x007E82A0 end:0x007E8E18
 src/al/Library/Execute/ExecuteInfo.cpp: done
     .text   start:0x007E8E20 end:0x007E9018
@@ -4833,7 +4833,7 @@ src/al/Library/Model/alModelCafe.cpp:
     .text   start:0x00868DF0 end:0x00869800
 src/al/Library/Model/ModelDrawerBase.cpp: done
     .text   start:0x00869800 end:0x00869878
-src/al/Library/Model/ModelDrawerCubeMap.cpp:
+src/al/Library/Model/ModelDrawerCubeMap.cpp: done
     .text   start:0x00869880 end:0x00869BB4
 src/al/Project/Model/MeshDrawer.cpp:
     .text   start:0x00869BC0 end:0x0086B700
@@ -4847,11 +4847,11 @@ src/al/Library/Model/ModelDrawerDeferredSilhouette.cpp:
     .text   start:0x0086C240 end:0x0086C544
 src/al/Library/Model/ModelDrawerDeferredSky.cpp: done
     .text   start:0x0086C550 end:0x0086C6C4
-src/al/Library/Model/ModelDrawerDepthOnly.cpp:
+src/al/Library/Model/ModelDrawerDepthOnly.cpp: done
     .text   start:0x0086C6D0 end:0x0086CD88
 src/al/Library/Model/ModelDrawerDepthShadow.cpp:
     .text   start:0x0086CD90 end:0x0086D1C8
-src/al/Library/Model/ModelDrawerForward.cpp:
+src/al/Library/Model/ModelDrawerForward.cpp: done
     .text   start:0x0086D1D0 end:0x0086D718
 src/al/Library/Model/ModelDrawerInvincible.cpp:
     .text   start:0x0086D720 end:0x0086DA04
@@ -5775,7 +5775,7 @@ src/al/Library/Message/CustomTagProcessor.cpp:
     .text   start:0x009B1D70 end:0x009B2D84
 src/al/Library/Message/LanguageUtil.cpp:
     .text   start:0x009B2D90 end:0x009B31AC
-src/al/Library/Message/MessageHolder.cpp:
+src/al/Library/Message/MessageHolder.cpp: done
     .text   start:0x009B31B0 end:0x009B3544
 src/al/Library/Message/MessageSystem.cpp:
     .text   start:0x009B3550 end:0x009B5170
@@ -5839,11 +5839,11 @@ src/al/Project/PostProcessing/MangaDrawer.cpp:
     .text   start:0x009CA830 end:0x009CE10C
 src/al/Project/PostProcessing/CartoonDrawer.cpp:
     .text   start:0x009CE110 end:0x009D05DC
-src/al/Project/PostProcessing/ContoursDrawer.cpp:
+src/al/Project/PostProcessing/ContoursDrawer.cpp: done
     .text   start:0x009D05E0 end:0x009D1A2C
 src/al/Project/PostProcessing/ColorClampDrawer.cpp:
     .text   start:0x009D1A30 end:0x009D2258
-src/al/Project/PostProcessing/KaleidoscopeDrawer.cpp:
+src/al/Project/PostProcessing/KaleidoscopeDrawer.cpp: done
     .text   start:0x009D2260 end:0x009D2C08
 src/al/Project/PostProcessing/MetalReliefDrawer.cpp:
     .text   start:0x009D2C10 end:0x009D5188
