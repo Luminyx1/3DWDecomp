@@ -15,6 +15,8 @@ struct Rectangle {
     float right;
     float bottom;
 
+    ~Rectangle() {}
+
     float GetWidth() const { return right - left; }
     float GetHeight() const { return bottom - top; }
 
