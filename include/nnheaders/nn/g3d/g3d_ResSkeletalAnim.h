@@ -39,13 +39,23 @@ public:
     void* ResetCurve();
     void Reset();
 
+    int GetFrameCount() const { return frameCount; }
+    int GetCurveCount() const { return curveCount; }
+    int GetBoneAnimCount() const { return boneAnimCount; }
+    bool IsCurveBaked() const { return flags & 1; }
+    bool IsLooped() const { return flags & 4; }
+    const char* GetName() const { return name.Get()->GetData(); }
+
     u32 signature;
     u32 flags;
-    u8 _8[0x10];
+    nn::util::BinPtrToString name;
+    u8 _10[0x8];
     const ResSkeleton* boundSkeleton;
     u16* bindIndices;
     ResBoneAnim* boneAnims;
-    u8 _30[0x18];
+    u8 _30[0x10];
+    int frameCount;
+    int curveCount;
     u32 bakedSize;
     u16 boneAnimCount;
     u16 _4e;

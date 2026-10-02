@@ -12,6 +12,7 @@
 #include <nn/gfx/gfx_Texture.h>
 #include <nn/gfx/gfx_Types.h>
 #include <nn/types.h>
+#include <nn/g3d/g3d_AnimObj.h>
 #include <nn/g3d/g3d_Bounding.h>
 #include <nn/g3d/g3d_Flag.h>
 #include <nn/util/util_BinTypes.h>
@@ -27,6 +28,7 @@ class ResMaterialAnim;
 class ResPerMaterialAnim;
 class ResShapeAnim;
 class ResSceneAnim;
+struct ResBoneVisibilityAnim;
 class ShapeObj;
 class ViewVolume;
 struct CullingContext;
@@ -43,6 +45,10 @@ public:
 
     const nn::gfx::TextureView* GetTextureView() const { return m_pTextureView; }
     u64 GetDescriptorSlot() const { return m_DescriptorSlot; }
+    bool IsValid() const
+    {
+        return m_pTextureView != nullptr && m_DescriptorSlot != InvalidDescriptorSlot;
+    }
 
     static const u64 InvalidDescriptorSlot = 0xFFFFFFFFFFFFFFFF;
 
@@ -439,7 +445,8 @@ struct ResFileData {
     nn::util::BinPtr pSkeletalAnimDic;
     nn::util::BinTPtr<ResMaterialAnim> pMaterialAnimArray;
     nn::util::BinPtr pMaterialAnimDic;
-    u8 _78[0x88 - 0x78];
+    nn::util::BinTPtr<ResBoneVisibilityAnim> pBoneVisibilityAnimArray;
+    nn::util::BinPtr pBoneVisibilityAnimDic;
     nn::util::BinTPtr<ResShapeAnim> pShapeAnimArray;
     nn::util::BinPtr pShapeAnimDic;
     nn::util::BinTPtr<ResSceneAnim> pSceneAnimArray;
@@ -475,6 +482,9 @@ public:
     BindResult BindTexture(TextureBindCallback pCallback, void* pUserData);
 
     int GetModelCount() const { return ToData().modelCount; }
+    int GetSkeletalAnimCount() const { return ToData().skeletalAnimCount; }
+    int GetMaterialAnimCount() const { return ToData().materialAnimCount; }
+    int GetBoneVisibilityAnimCount() const { return ToData().boneVisibilityAnimCount; }
     ResModel* GetModel(int index) { return &ToData().pModelArray.Get()[index]; }
 
     // Defined in g3d_ResSceneAnim.h.
@@ -505,7 +515,9 @@ public:
 struct ResMaterialAnimData {
     u32 signature;
     u16 flags;
-    u8 _6[0x12];
+    u8 _6[2];
+    nn::util::BinPtrToString name;
+    u8 _10[8];
     const ResModel* boundModel;
     u16* bindIndices;
     ResPerMaterialAnim* materialAnims;
@@ -513,11 +525,14 @@ struct ResMaterialAnimData {
     nn::util::BinTPtr<nn::util::BinPtrToString> pTextureNameArray;
     u8 _40[0x50 - 0x40];
     nn::util::BinTPtr<u64> pTextureSlotArray;
-    u32 _58;
+    s32 frameCount;
     u32 bakedSize;
     u16 _60;
     u16 materialAnimCount;
-    u8 _64[8];
+    u16 curveCount;
+    u16 shaderParamAnimCount;
+    u16 texturePatternAnimCount;
+    u16 _6a;
     u16 textureCount;
 };
 
@@ -534,6 +549,15 @@ public:
     // index selects a texture descriptor in the animation resource.
     u64 GetTextureDescriptorSlot(int index) const { return pTextureSlotArray.Get()[index]; }
     int GetTextureCount() const { return ToData().textureCount; }
+    int GetPerMaterialAnimCount() const { return ToData().materialAnimCount; }
+    int GetCurveCount() const { return ToData().curveCount; }
+    int GetParamAnimCount() const {
+        return ToData().shaderParamAnimCount + ToData().texturePatternAnimCount;
+    }
+    bool IsCurveBaked() const { return ToData().flags & 1; }
+    bool IsLooped() const { return ToData().flags & 4; }
+    int GetFrameCount() const { return ToData().frameCount; }
+    const char* GetName() const { return ToData().name.Get()->GetData(); }
     const nn::gfx::TextureView* GetTextureView(int index) const
     {
         return ToData().pTextureArray.Get()[index];
@@ -674,9 +698,75 @@ private:
     TextureChangeCallback m_pTextureChangeCallback;
 };
 
-class MaterialAnimObj {
+class MaterialAnimObj : public ModelAnimObj {
 public:
+    struct InitializeArgument {
+        int materialCount;
+        int materialAnimCount;
+        int paramAnimCount;
+        int textureCount;
+        int curveCount;
+        bool cacheEnabled;
+        bool cacheAvailable;
+        size_t memorySize;
+        size_t memoryAlignment;
+        detail::WorkMemoryBlock blocks[6];
+        void CalculateMemorySize();
+    };
+    // Builder accumulates the capacities needed by a set of models and animations.
+    class Builder : public InitializeArgument {
+    public:
+        Builder() {
+            curveCount = -1;
+            materialCount = -1;
+            materialAnimCount = -1;
+            paramAnimCount = -1;
+            textureCount = -1;
+            cacheEnabled = true;
+            cacheAvailable = false;
+            memorySize = 0;
+            memoryAlignment = 0;
+
+            for (int i = 0; i < 6; ++i) blocks[i].Initialize(0);
+        }
+        // model supplies the number of materials to bind to.
+        void Reserve(const ResModel* model) { materialCount = model->GetMaterialCount(); }
+        // resource raises the animation, texture and curve capacities to fit it.
+        void Reserve(const ResMaterialAnim* resource) {
+            int count = resource->GetPerMaterialAnimCount();
+            materialAnimCount = materialAnimCount < count ? count : materialAnimCount;
+            count = resource->GetParamAnimCount();
+            paramAnimCount = paramAnimCount < count ? count : paramAnimCount;
+            count = resource->GetCurveCount();
+            curveCount = curveCount < count ? count : curveCount;
+            count = resource->GetTextureCount();
+            textureCount = textureCount < count ? count : textureCount;
+            cacheAvailable |= !resource->IsCurveBaked();
+        }
+        size_t GetWorkMemorySize() const { return memorySize; }
+        bool Build(MaterialAnimObj* object, void* memory, size_t size) const {
+            return object->Initialize(*this, memory, size);
+        }
+    };
+
+    MaterialAnimObj()
+        : m_pRes(nullptr), _70(0), _78(nullptr), _80(nullptr), _88(nullptr),
+          m_ppTextureArray(nullptr), m_pTextureSlotArray(nullptr) {}
+    virtual ~MaterialAnimObj() {}
+    bool Initialize(const InitializeArgument& argument, void* memory, size_t size);
+    void SetResource(const ResMaterialAnim* resource);
+    virtual BindResult Bind(const ResModel* model);
+    virtual BindResult Bind(const ModelObj* model);
+    virtual void BindFast(const ResModel* model);
+    virtual void ClearResult();
+    virtual void Calculate();
+    virtual void ApplyTo(ModelObj* model) const;
+
+    const ResMaterialAnim* GetResource() const { return m_pRes; }
     const nn::gfx::TextureView* GetTextureView(int index) const { return m_ppTextureArray[index]; }
+    TextureRef GetTexture(int index) const {
+        return TextureRef(m_ppTextureArray[index], m_pTextureSlotArray[index]);
+    }
     void SetTexture(int index, const TextureRef& rRef)
     {
         m_ppTextureArray[index] = rRef.GetTextureView();
@@ -684,10 +774,16 @@ public:
     }
 
 private:
-    u8 _0[0x90];
+    const ResMaterialAnim* m_pRes;
+    u64 _70;
+    void* _78;
+    void* _80;
+    void* _88;
     const nn::gfx::TextureView** m_ppTextureArray;
     u64* m_pTextureSlotArray;
 };
+
+static_assert(sizeof(MaterialAnimObj) == 0xa0, "Material animation object size");
 
 class ShapeObj {
 public:

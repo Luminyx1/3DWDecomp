@@ -10,8 +10,12 @@
 namespace nn::g3d {
 
 struct LocalMtx {
-    u8 _0[0x60];
+    nn::Bit32 flag;
+    nn::util::Vector3fType scale;
+    nn::util::Matrix4x3fType mtx;
 };
+
+static_assert(sizeof(LocalMtx) == 0x60);
 
 // TODO
 class SkeletonObj {
@@ -19,10 +23,13 @@ public:
     // index selects a bone in the skeleton resource array.
     const ResBone* GetBone(int index) const { return &m_Bones[index]; }
     const ResSkeleton* GetRes() const { return m_Res; }
+    // name selects a bone; returns -1 when the skeleton has no bone with that name.
+    int FindBoneIndex(const char* name) const;
 
     const nn::util::Matrix4x3fType* GetWorldMtxArray() const { return m_WorldMtxArray; }
     int GetBoneCount() const { return m_BoneCount; }
     const LocalMtx* GetLocalMtx(int index) const { return &m_pLocalMtxArray[index]; }
+    LocalMtx* GetLocalMtxArray() { return m_pLocalMtxArray; }
 
     const gfx::Buffer* GetMtxBlock(int bufferIndex) const {
         return m_pMtxBlockArray ? &m_pMtxBlockArray[bufferIndex] : nullptr;

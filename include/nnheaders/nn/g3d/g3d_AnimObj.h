@@ -8,9 +8,20 @@ class ModelObj;
 class BindResult;
 class AnimFrameCtrl {
 public:
+    using PlayPolicy = float (*)(float frame, float start, float end, void* user);
+    AnimFrameCtrl()
+        : mFrame(0.0f), mStart(0.0f), mEnd(0.0f), mStep(1.0f), mPolicy(PlayOneTime),
+          mUser(nullptr) {}
     static const float InvalidFrame;
     float GetFrame() const { return mFrame; }
-    using PlayPolicy = float (*)(float frame, float start, float end, void* user);
+    // frame is passed through the play policy before being stored.
+    void SetFrame(float frame) { mFrame = mPolicy(frame, mStart, mEnd, mUser); }
+    void UpdateFrame() { mFrame = mPolicy(mFrame + mStep, mStart, mEnd, mUser); }
+    float GetStartFrame() const { return mStart; }
+    float GetEndFrame() const { return mEnd; }
+    float GetStep() const { return mStep; }
+    void SetStep(float step) { mStep = step; }
+    PlayPolicy GetPlayPolicy() const { return mPolicy; }
     void Initialize(float start, float end, PlayPolicy policy);
     static float PlayOneTime(float frame, float start, float end, void* user);
     static float PlayLoop(float frame, float start, float end, void* user);
@@ -21,6 +32,8 @@ private:
 };
 class AnimBindTable {
 public:
+    AnimBindTable() : mEntries(nullptr), mFlags(0), mCapacity(0), mAnimCount(0), mTargetCount(0) {}
+    bool IsBound() const { return mFlags & 1; }
     void Initialize(u32* buffer, int capacity);
     void ClearAll(int targetCount);
     void BindAll(const u16* indices);
@@ -32,6 +45,7 @@ private:
 };
 class AnimContext {
 public:
+    AnimContext() : mCache(nullptr), mCount(0), mCurveCount(0), mLastFrame(0.0f) {}
     // count is the number of curves whose cached intervals should be invalidated.
     void SetCurveCount(int count) { mCurveCount = count; Reset(); }
     bool IsCacheValid() const { return mCurveCount > 0 && mCurveCount <= mCount; }
@@ -50,7 +64,10 @@ private:
 };
 class AnimObj {
 public:
+    AnimObj() : mResult(nullptr), mWorkMemory(nullptr) { mFrameCtrlPointer = &mFrameCtrl; }
     virtual ~AnimObj() {}
+    AnimFrameCtrl& GetFrameCtrl() { return *mFrameCtrlPointer; }
+    const AnimFrameCtrl& GetFrameCtrl() const { return *mFrameCtrlPointer; }
     virtual void ClearResult() = 0;
     virtual void Calculate() = 0;
     enum BindFlag { BindFlag_None, BindFlag_SkipCalculate, BindFlag_SkipApply, BindFlag_Disable };
@@ -70,6 +87,7 @@ public:
     virtual void ApplyTo(ModelObj* model) const = 0;
     void SetBindFlagImpl(int targetIndex, BindFlag flag);
     BindFlag GetBindFlagImpl(int targetIndex) const;
+    bool IsBound() const { return mBindTable.IsBound(); }
 protected:
     AnimBindTable mBindTable;
 };
