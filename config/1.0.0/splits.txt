@@ -4925,14 +4925,14 @@ src/al/Library/Obj/DepthShadowModel.cpp: done
     .text   start:0x0087C4A0 end:0x0087C720
 src/al/Library/Obj/EffectObj.cpp: done
     .text   start:0x0087C720 end:0x0087CB64
-src/al/Library/Obj/EffectObjFollowCamera.cpp:
+src/al/Library/Obj/EffectObjFollowCamera.cpp: done
     .text   start:0x0087CB70 end:0x0087D144
 src/al/Library/Obj/EffectObjFunction.cpp: done
     .text   start:0x0087D150 end:0x0087D294
-src/al/Project/Obj/FootPrint.cpp:
-    .text   start:0x0087D2A0 end:0x0087D92C
+src/al/Project/Obj/FootPrint.cpp: done
+    .text   start:0x0087D2A0 end:0x0087D828
 src/al/Library/Obj/FootPrintHolder.cpp:
-    .text   start:0x0087D930 end:0x0087E740
+    .text   start:0x0087D830 end:0x0087E740
 src/al/Library/Obj/FootPrintServer.cpp: done
     .text   start:0x0087E740 end:0x0087E8CC
 src/al/Library/Obj/MessageSyncParts.cpp: done
@@ -4951,8 +4951,10 @@ src/al/Library/Obj/SePlayRail.cpp: done
     .text   start:0x008801E0 end:0x008804F0
 src/al/Library/Obj/SilhouetteModel.cpp: done
     .text   start:0x008804F0 end:0x008807A0
-src/al/Library/Obj/Sky.cpp:
-    .text   start:0x00880F40 end:0x008821B4
+src/al/Library/Obj/Sky.cpp: done
+    .text   start:0x00880F40 end:0x0088111C
+src/al/Library/Obj/SkyProjection.cpp:
+    .text   start:0x00881120 end:0x008821B4
 src/al/Library/Obj/WarpedMtxPartsModel.cpp:
     .text   start:0x008821C0 end:0x00882C90
 src/al/Library/Play/Area/SePlayArea.cpp: done
@@ -5455,16 +5457,18 @@ src/al/Library/Play/Camera/CameraRail.cpp: done
     .text   start:0x00928CE0 end:0x00928FC0
 src/al/Library/Obj/CameraRailHolder.cpp: done
     .text   start:0x00928FC0 end:0x00929190
-src/al/Library/Obj/CameraShaker.cpp:
+src/al/Library/Camera/CameraShaker.cpp:
     .text   start:0x00929190 end:0x009293BC
-src/al/Library/Obj/CameraSwitcher.cpp:
-    .text   start:0x009293C0 end:0x00929F50
-src/al/Library/Obj/CameraUtil.cpp:
-    .text   start:0x00929F50 end:0x0092C028
-src/al/Library/Obj/GyroCameraController.cpp:
+src/al/Library/Camera/CameraSwitcher.cpp: done
+    .text   start:0x009293C0 end:0x00929EC8
+src/al/Library/Camera/CameraUtil.cpp:
+    .text   start:0x00929ED0 end:0x0092C028
+src/al/Library/Camera/GyroCameraController.cpp: done
     .text   start:0x0092C030 end:0x0092C998
-src/al/Library/Obj/PlayerWatcher.cpp:
-    .text   start:0x0092C9A0 end:0x0092DBC8
+src/al/Library/Camera/PlayerWatcher.cpp: done
+    .text   start:0x0092C9A0 end:0x0092DBB0
+src/al/Library/Camera/CameraViewFlag.cpp: done
+    .text   start:0x0092DBB0 end:0x0092DBC8
 src/al/Project/Camera/Info/CameraViewInfo.cpp: done
     .text   start:0x0092DBD0 end:0x0092DC58
 src/al/Project/Camera/Info/CameraViewRenderInfo.cpp: done
@@ -5553,7 +5557,7 @@ src/al/Library/Camera/CameraTicketId.cpp: done
     .text   start:0x009427B0 end:0x00942A98
 src/al/Library/Camera/CameraTriangleFilter.cpp:
     .text   start:0x00942AA0 end:0x00942D4C
-src/al/Library/Camera/CameraUtil.cpp:
+src/al/Library/Camera/CameraUtil_RS.cpp:
     .text   start:0x00942D50 end:0x0094711C
 src/al/Library/Play/Camera/CameraPoserFixLock.cpp: done
     .text   start:0x00947120 end:0x00947254
