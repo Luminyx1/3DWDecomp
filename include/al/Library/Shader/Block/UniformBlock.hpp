@@ -10,6 +10,11 @@ public:
     void swap();
     void flushOnly() const;
 
+    void flushAndSwap() {
+        flushOnly();
+        swap();
+    }
+
     s32 getSwapIndex() const { return mSwapIndex; }
 
     template <typename T>

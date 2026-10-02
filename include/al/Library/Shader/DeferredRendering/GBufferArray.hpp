@@ -66,6 +66,7 @@ public:
         agl::lght::LightPrePass* pLightPrePass, s32 view, s32 width, s32 height,
         const sead::LookAtCamera& rCamera, const sead::PerspectiveProjection& rProjection,
         bool isUseMultiTarget);
+    const GBuffer& getGBuffer(s32 index) const { return mGBuffers[index]; }
     const GBuffer* getGBufAlbedo() const;
     const GBuffer* getGBufNrmView() const;
     const GBuffer* getGBufDepthView() const;
