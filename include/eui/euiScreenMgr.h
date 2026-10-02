@@ -6,6 +6,7 @@
 #include <nn/ui2d/ui2d_ControlCreator.h>
 #include <eui/euiSharcArchive.h>
 #include <eui/euiDrawInfoEx.h>
+#include <eui/euiConstantBuffer.h>
 namespace eui {
 class Screen;
 class ArcResourceMgr;
@@ -13,10 +14,26 @@ class BoxCursorMgr;
 class FontMgr;
 class BoxCursorNode;
 class MessageMgr;
+class ScreenFactory;
 class ScreenMgr : public sead::hostio::Node {
     SEAD_SINGLETON_DISPOSER(ScreenMgr);
 public:
+    struct InitializeArg {
+        sead::Heap* heap = nullptr;
+        ScreenFactory* screenFactory = nullptr;
+        ArcResourceMgr* arcResourceMgr = nullptr;
+        void* _18 = nullptr;
+        void* multiFilterArchiveData = nullptr;
+        u32 multiFilterArchiveSize = 0;
+        u8 _2c = 10;
+        MessageMgr* messageMgr = nullptr;
+        FontMgr* fontMgr = nullptr;
+        u32 _40 = 0x200;
+        ConstantBuffer::InitConfig constantBufferConfig;
+    };
+
     ScreenMgr();
+    void initialize(const InitializeArg& rArg);
     virtual ~ScreenMgr();
     void updateViewer_();
     void inactivateScreen(int index);
@@ -33,6 +50,7 @@ public:
     FontMgr* getFontMgr() const { return mFontMgr; }
     MessageMgr* getMessageMgr() const { return static_cast<MessageMgr*>(_430); }
     float getAnimationStep() const { return mAnimationStep; }
+    ConstantBuffer* getConstantBuffer() const { return static_cast<ConstantBuffer*>(_448); }
 
     sead::Buffer<Screen*> mScreens;
     sead::Buffer<s8> mScreenLayers;

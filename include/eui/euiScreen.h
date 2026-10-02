@@ -101,6 +101,7 @@ public:
     virtual void invokeSoundLink2Event_(const char*);
     virtual void invokeSoundLink2ButtonEvent_(AnimButton*, const char*);
     virtual void invokeSoundLink2AnimPlayEvent(Animator*, const char*);
+    void initializeForMinimum(ScreenMgr* pScreenMgr, const char* pLayoutName);
     bool isOpened() const;
     bool isClosed() const;
     bool isOpening() const;

@@ -10,9 +10,17 @@ class FontMgr {
 public:
     FontMgr();
     virtual ~FontMgr();
+    void initialize(sead::Heap* pHeap, void* pArchiveData, u32 archiveSize,
+                    const sead::Buffer<const char*>& rFontNames, ScalableFontMgr* pScalableFontMgr);
+    void finalize();
+    nn::font::Font* tryGetFont(const sead::SafeString& rName);
+    void setRubyFont(const sead::SafeString& rName);
+    nn::font::Font* getFont(const sead::SafeString& rName);
+    const nn::font::Font* getFont(const sead::SafeString& rName) const;
     nn::font::Font* getFontByMessageIndex(u32 index);
     const nn::font::Font* getFontByMessageIndex(u32 index) const;
     void setRubyFont(const nn::font::Font* pFont);
+    nn::font::Font* tryGetFont(const sead::SafeString& rName) const;
 
     ScalableFontMgr* getScalableFontMgr() const { return mScalableFontMgr; }
 

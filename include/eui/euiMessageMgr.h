@@ -13,6 +13,7 @@ public:
     struct GradationColor { sead::Color4u8 top; sead::Color4u8 bottom; };
     MessageMgr();
     virtual ~MessageMgr();
+    void initialize(sead::Heap* pHeap, u32 gradationColorNum);
     virtual void loadArchive(sead::Heap* pHeap, void* pData, u32 size);
     virtual void unloadArchive(void* pData);
     void setGradationColor(u32 index, sead::Color4u8 top, sead::Color4u8 bottom);

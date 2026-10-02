@@ -29,6 +29,8 @@ public:
     void setToDispStringBufferInitializeArg(nn::font::DispStringBuffer::InitializeArg* pArg);
     void setToDispStringBuffer(nn::font::DispStringBuffer* pBuffer);
 
+    void flipBufferIndex() { mBufferIndex = 1 - mBufferIndex; }
+
 private:
     nn::gfx::MemoryPool m_MemoryPool;
     nn::font::GpuBuffer m_PaneBuffer;

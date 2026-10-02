@@ -29,9 +29,20 @@ public:
         int _10;
     };
 
+    struct InitializeArg {
+        InitializeArg();
+        sead::Heap* heap;
+        nn::font::TextureCache::InitializeArg* textureCacheArg;
+        const FontParameter* fontParameters;
+        s32 fontParameterNum;
+        s32 threadPriority;
+        u32 threadCoreMask;
+    };
+
     struct FontEntry { sead::SafeString name; nn::font::ScalableFont font; };
     ScalableFontMgr();
     virtual ~ScalableFontMgr();
+    void initialize(const InitializeArg& rArg);
     bool isGlyphsReady(const char16_t* pText, u32 length, const nn::font::ScalableFont* pFont);
     bool registerGlyphs(const char16_t* pText, u32 length, const nn::font::ScalableFont* pFont, int lockGroup);
     bool registerGlyphs_(const char16_t* pText, u32 length, const nn::font::ScalableFont* pFont, int lockGroup, bool checkOnly);

@@ -11,7 +11,13 @@ public:
     using Context = nn::font::PrintContext<u16>;
     using Rect = nn::font::Rectangle;
     using TagInfo = sead::MessageSet<char16_t>::TagInfo;
-    struct PreProcessOption;
+    struct PreProcessOption {
+        PreProcessOption() : _0(false), _1(false) {}
+
+        bool _0;
+        bool _1;
+        s32 _4;
+    };
     TagProcessor(MessageMgr*, FontMgr*);
     ~TagProcessor() override = default;
     NN_RUNTIME_TYPEINFO(nn::font::TagProcessorBase<u16>);

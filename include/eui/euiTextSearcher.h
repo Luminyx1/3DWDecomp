@@ -6,7 +6,7 @@ class TagProcessor;
 class TextSearcher : public nn::ui2d::TextSearcher {
 public:
     TextSearcher(const MessageSet* pMessages, TagProcessor* pProcessor);
-    ~TextSearcher() override;
+    ~TextSearcher() override {}
     void SearchText(TextInfo* pInfo, const char* pId, nn::ui2d::Layout* pLayout,
                     nn::ui2d::TextBox* pTextBox, nn::ui2d::Layout* pRootLayout) override;
     const MessageSet* mMessages;
