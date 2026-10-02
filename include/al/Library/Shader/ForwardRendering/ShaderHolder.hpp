@@ -20,6 +20,7 @@ public:
     void cleanupShaderArchives();
     nn::g3d::ResShadingModel* getShadingModel(const char* pName) const;
     agl::ShaderProgram* getShaderProgram(const char* pName) const;
+    agl::ShaderProgram* tryGetShaderProgram(const char* pName) const;
 };
 
 }  // namespace al

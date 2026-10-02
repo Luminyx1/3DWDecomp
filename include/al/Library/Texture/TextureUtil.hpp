@@ -68,7 +68,7 @@ struct CompSelType {
 
     operator s32() const { return mValue; }
 
-    s32 mValue;
+    volatile s32 mValue;
 };
 
 /**
@@ -111,6 +111,9 @@ public:
     void invalidateGpuCacheWrite(agl::DrawContext* pDrawContext);
     bool tryCreateTexture(const TextureInitArg& rArg);
     void applyCompSel(const CompSelType& rType);
+
+    agl::TextureData* getTextureData() const { return mTexture; }
+    agl::TextureSampler* getSampler() const { return mSampler; }
 
 private:
     agl::TextureData* mTexture = nullptr;
