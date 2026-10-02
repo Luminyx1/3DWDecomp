@@ -31,5 +31,10 @@ public:
     void setSpeakerVolumeRearLR(f32 left, f32 right);
     SePlayParam* getParam(s32 index) const;
     bool isParamEmpty() const;
+
+private:
+    SePlayParam** mParams;
+    bool _8;
+    s32 _c;
 };
 }  // namespace al
