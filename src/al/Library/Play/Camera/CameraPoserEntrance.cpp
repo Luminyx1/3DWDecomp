@@ -5,10 +5,10 @@
 #include <math/seadMatrix.h>
 #include <math/seadQuat.h>
 
-#include "Library/Obj/PlayerWatcher.hpp"
+#include "Library/Camera/PlayerWatcher.hpp"
 #include "Library/Play/Placement/PlacementId.hpp"
 #include "Library/Yaml/ByamlIter.hpp"
-#include "Project/Camera/Holder/CameraSwitcher.hpp"
+#include "Library/Camera/CameraSwitcher.hpp"
 
 namespace al {
 

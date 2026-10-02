@@ -7,7 +7,7 @@
 #include "Library/Play/Placement/PlacementId.hpp"
 #include "Library/Resource/Resource.hpp"
 #include "Project/Base/StringUtil.hpp"
-#include "Project/Camera/Holder/CameraSwitcher.hpp"
+#include "Library/Camera/CameraSwitcher.hpp"
 
 /**
  * Looks up a camera animation of the scene animation by name.

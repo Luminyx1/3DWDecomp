@@ -7,7 +7,7 @@
 #include <math/seadMatrix.h>
 
 #include "Library/Math/MathUtil.hpp"
-#include "Library/Obj/PlayerWatcher.hpp"
+#include "Library/Camera/PlayerWatcher.hpp"
 #include "Library/Play/Placement/PlacementId.hpp"
 #include "Library/Screen/ScreenFunction.hpp"
 #include "Library/Yaml/ByamlIter.hpp"

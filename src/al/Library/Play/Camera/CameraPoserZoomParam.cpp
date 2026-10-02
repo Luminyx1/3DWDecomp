@@ -10,7 +10,7 @@
 #include "Library/Nerve/Nerve.hpp"
 #include "Library/Nerve/NerveKeeper.hpp"
 #include "Library/Nerve/NerveUtil.hpp"
-#include "Library/Obj/PlayerWatcher.hpp"
+#include "Library/Camera/PlayerWatcher.hpp"
 #include "Library/Play/Placement/PlacementId.hpp"
 #include "Library/Se/Function/SeFunction.hpp"
 #include "Library/Yaml/ByamlIter.hpp"

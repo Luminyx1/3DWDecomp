@@ -8,7 +8,7 @@
 
 #include "Library/Controller/InputFunction.hpp"
 #include "Library/Math/MathUtil.hpp"
-#include "Library/Obj/PlayerWatcher.hpp"
+#include "Library/Camera/PlayerWatcher.hpp"
 #include "Library/Play/Placement/PlacementId.hpp"
 #include "Library/Player/PlayerUtil.hpp"
 #include "Library/Se/Function/SeFunction.hpp"
@@ -205,8 +205,7 @@ void CameraPoserKinopioBrigade::update() {
     mDrcAngleV = drcAngleV;
     mDrcAngleH = drcAngleH;
 
-    // The player watcher starts with the player holder.
-    const PlayerHolder* holder = *reinterpret_cast<const PlayerHolder* const*>(mPlayerWatcher);
+    const PlayerHolder* holder = mPlayerWatcher->getPlayerHolder();
     sead::Vector2f stick = sead::Vector2f(0.0f, 0.0f);
 
     if (!tryGetOwnerStick(&stick, this, holder)) {

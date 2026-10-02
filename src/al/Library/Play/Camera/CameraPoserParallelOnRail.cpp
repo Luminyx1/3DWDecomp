@@ -8,7 +8,7 @@
 #include <math/seadQuat.h>
 
 #include "Library/Math/MatrixUtil.hpp"
-#include "Library/Obj/PlayerWatcher.hpp"
+#include "Library/Camera/PlayerWatcher.hpp"
 #include "Library/Play/Placement/PlacementId.hpp"
 #include "Library/Rail/RailKeeper.hpp"
 #include "Library/Rail/RailRider.hpp"

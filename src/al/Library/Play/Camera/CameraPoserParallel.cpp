@@ -9,7 +9,7 @@
 
 #include "Library/Math/MathUtil.hpp"
 #include "Library/Memory/Util.hpp"
-#include "Library/Obj/PlayerWatcher.hpp"
+#include "Library/Camera/PlayerWatcher.hpp"
 #include "Library/Play/Placement/PlacementId.hpp"
 #include "Library/Screen/ScreenFunction.hpp"
 #include "Library/Yaml/ByamlIter.hpp"
@@ -17,30 +17,6 @@
 #include "Project/Camera/Param/CameraFunction.hpp"
 #include "Project/Collision/CollisionUtil.hpp"
 #include "Project/Collision/HitDb.hpp"
-
-namespace {
-
-/**
- * Reads a per-player flag of the player watcher that lets the parallel camera approach again.
- * The layout of PlayerWatcher is not declared yet.
- */
-bool isPlayerApproachFlag(const al::PlayerWatcher* pPlayerWatcher, s32 index) {
-    const bool* const* pFlags = reinterpret_cast<const bool* const*>(
-        reinterpret_cast<const u8*>(pPlayerWatcher) + 0x58);
-    return (*pFlags)[index];
-}
-
-/**
- * Reads whether a player has priority for the parallel camera.
- * The layout of PlayerWatcher is not declared yet.
- */
-bool isPlayerPrior(const al::PlayerWatcher* pPlayerWatcher, s32 index) {
-    const bool* const* pFlags = reinterpret_cast<const bool* const*>(
-        reinterpret_cast<const u8*>(pPlayerWatcher) + 0x60);
-    return (*pFlags)[index];
-}
-
-}  // namespace
 
 namespace al {
 
@@ -367,7 +343,7 @@ void CameraPoserParallel::updateMultiCamera() {
     if (mParam.mSettingParam._35) {
         mIsTopPlayerBase = true;
     } else if (mPlayerWatcher->isExistPriorPlayer()) {
-        if (isPlayerPrior(mPlayerWatcher, mPlayerWatcher->getTopPlayerIndex())) {
+        if (mPlayerWatcher->isPlayerPrior(mPlayerWatcher->getTopPlayerIndex())) {
             mIsTopPlayerBase = true;
         } else {
             mIsTopPlayerBase = false;
@@ -505,7 +481,7 @@ void CameraPoserParallel::updateMultiCamera() {
                 f32 maxSpeed = -1.0f;
 
                 for (s32 i = 0; i < mPlayerWatcher->getPlayerNum(); i++) {
-                    if (!isPlayerPrior(mPlayerWatcher, i) ||
+                    if (!mPlayerWatcher->isPlayerPrior(i) ||
                         i == mPlayerWatcher->getTopPlayerIndex()) {
                         continue;
                     }
@@ -1642,7 +1618,7 @@ void CameraPoserParallel::includeBaseAfterMoveLimit() {
 bool CameraPoserParallel::checkEnableCameraApproach() {
     if (mIsWaitApproach) {
         for (s32 i = 0; i < mPlayerWatcher->getPlayerNum(); i++) {
-            if (mPlayerWatcher->isPlayerAlive(i) && isPlayerApproachFlag(mPlayerWatcher, i)) {
+            if (mPlayerWatcher->isPlayerAlive(i) && mPlayerWatcher->isPlayerApproach(i)) {
                 mIsPlayerApproachChecked[i] = true;
             }
         }
@@ -1662,7 +1638,7 @@ bool CameraPoserParallel::checkEnableCameraApproach() {
     }
 
     for (s32 i = 0; i < mPlayerWatcher->getPlayerNum(); i++) {
-        if (mPlayerWatcher->isPlayerAlive(i) && isPlayerApproachFlag(mPlayerWatcher, i)) {
+        if (mPlayerWatcher->isPlayerAlive(i) && mPlayerWatcher->isPlayerApproach(i)) {
             return true;
         }
     }

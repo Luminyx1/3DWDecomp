@@ -6,7 +6,7 @@
 
 #include "Library/Nerve/Nerve.hpp"
 #include "Library/Nerve/NerveKeeper.hpp"
-#include "Library/Obj/PlayerWatcher.hpp"
+#include "Library/Camera/PlayerWatcher.hpp"
 #include "Library/Play/Placement/PlacementFunction.hpp"
 #include "Library/Play/Placement/PlacementId.hpp"
 #include "Library/Play/Placement/PlacementInfo.hpp"

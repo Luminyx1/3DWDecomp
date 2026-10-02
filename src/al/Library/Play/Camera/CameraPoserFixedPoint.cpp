@@ -6,7 +6,7 @@
 #include "Library/Play/Placement/PlacementId.hpp"
 #include "Library/Yaml/ByamlIter.hpp"
 #include "Project/Camera/Param/CameraFunction.hpp"
-#include "Library/Obj/PlayerWatcher.hpp"
+#include "Library/Camera/PlayerWatcher.hpp"
 
 namespace al {
 /**
