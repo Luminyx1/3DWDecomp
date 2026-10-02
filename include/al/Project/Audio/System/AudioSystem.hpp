@@ -1,6 +1,7 @@
 #pragma once
 
 #include <basis/seadTypes.h>
+#include <nn/os.h>
 #include <prim/seadSafeString.h>
 
 #include "Project/Audio/System/AudioPlayer.hpp"
@@ -18,22 +19,40 @@ class AudioSettingParameter;
 
 namespace al {
 class AudioEffectDataBase;
+class AudioMic;
 class AudioResourceDirector;
 class AudioSystemDebug;
 class AudioSystemInfo;
 class BgmDataBase;
 class SeadAudio3DMgr;
+class SeadAudioSoundHeapPtrWrapper;
 class SeDataBase;
 class SoundSubArchiveKeeper;
-struct AudioSystemInitInfo;
 
-class AudioSystem : public IAudioResourceLoader, public IAudioHeapController, public IUseSeadAudioPlayer {
+extern const char* UMF_SE_STATIONED_SYSTEM;
+extern const char* UMF_BGM_STATIONED_1ST;
+
+struct AudioSystemInitInfo {
+    const char* archiveName = nullptr;
+    bool isUseMic = false;
+    f32 masterVolume = 1.0f;
+    f32 tvOutputVolume = 1.0f;
+    f32 _14 = 1.0f;
+    f32 otherOutputVolume = 1.0f;
+};
+
+static_assert(sizeof(AudioSystemInitInfo) == 0x20);
+
+class AudioSystem : public IAudioResourceLoader,
+                    public IAudioHeapController,
+                    public IUseSeadAudioPlayer {
 public:
     AudioSystem();
+    ~AudioSystem() override;
 
-    void init(const sead::SafeString& rArchiveName, f32 volume, bool isUseSubArchive);
+    void init(const sead::SafeString& rArchiveName, f32 masterVolume, bool isUseMic);
     void init(const AudioSystemInitInfo& rInfo);
-    void initSeadAudio3DMgr(sead::AudioSettingParameter* pParam);
+    SeadAudio3DMgr* initSeadAudio3DMgr(sead::AudioSettingParameter* pParam);
     void initDebugModule(sead::AudioSettingParameter* pParam);
     SeadAudioPlayer* getSubArchiveSeadAudioPlayer() const;
     void initSpy();
@@ -63,17 +82,20 @@ private:
     SeDataBase* mSeDataBase = nullptr;
     BgmDataBase* mBgmDataBase = nullptr;
     AudioSystemInfo* mAudioSystemInfo = nullptr;
-    void* _40 = nullptr;
-    void* _48 = nullptr;
-    void* _50 = nullptr;
-    void* _58 = nullptr;
+    AudioResourceDirector* mResourceDirector = nullptr;
+    AudioResourceDirector* mSubArchiveResourceDirector = nullptr;
+    SeadAudioSoundHeapPtrWrapper* mSoundHeapPtrWrapper = nullptr;
+    AudioMic* mAudioMic = nullptr;
     SoundSubArchiveKeeper* mSubArchiveKeeper = nullptr;
     AudioSystemDebug* mAudioSystemDebug = nullptr;
-    f32 _70[3] = {1.0f, 1.0f, 1.0f};
-    void* _80 = nullptr;
+    f32 mMasterVolume = 1.0f;
+    f32 mTvOutputVolume = 1.0f;
+    f32 mOtherOutputVolume = 1.0f;
+    void* _80;
     aal::AudioFrameProcessMgr* mAudioFrameProcessMgr = nullptr;
-    u8 _90[0x28];
-    bool _b8 = false;
-    bool _c0 = false;
+    nn::os::SystemEvent mDeviceNotificationEvent;
+    bool mIsStereo = false;
 };
+
+static_assert(sizeof(AudioSystem) == 0xc8);
 }  // namespace al
