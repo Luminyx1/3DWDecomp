@@ -442,7 +442,12 @@ public:
     agl::VertexAttribute mConeAttribute;
     agl::VertexAttribute mCylinderAttribute;
     agl::VertexAttribute mCubeAttribute;
-    u8 _a10[0xa90 - 0xa10];
+    sead::Matrix34f mDrawViewMtx;
+    sead::Matrix44f mDrawViewProjMtx;
+    f32 mDrawNear;
+    f32 mDrawFar;
+    f32 mDrawTanHalfFovy;
+    f32 mDrawTanHalfFovyAspect;
     LightList mLightList;
     AlbedoModePointLightMgr* mPointLightMgr;
     AlbedoModeSpotLightMgr* mSpotLightMgr;

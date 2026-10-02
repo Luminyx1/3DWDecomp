@@ -44,6 +44,8 @@ public:
 
     f32& getSpcPower() { return *mSpcPower; }
 
+    f32 getSpcPower() const { return *mSpcPower; }
+
     agl::utl::ParameterObj* getParamObj() { return &mParamObj; }
 
     void syncToDirection() {
@@ -93,6 +95,8 @@ public:
     void initStageResource(const Resource* pResource, const char* pStageName);
 
     const sead::Color4f& getCurrentColor() const { return mInterp.getCurrentParam().getColor(); }
+
+    const DirLightParam& getCurrentParam() const { return mInterp.getCurrentParam(); }
 
 private:
     using NamedParamArray = sead::FixedPtrArray<NamedDirLightParam, 64>;

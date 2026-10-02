@@ -76,6 +76,8 @@ public:
 
     AreaObjDirector* getAreaObjDirector() const override { return mAreaObjDirector; }
 
+    bool isLoadedBloomParam() const { return mIsLoadedBloomParam; }
+
 private:
     GraphicsAreaDirector* mGraphicsAreaDirector = nullptr;
     s32 mParamNum = 0;
