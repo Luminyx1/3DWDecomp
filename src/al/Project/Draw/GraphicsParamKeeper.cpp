@@ -12,7 +12,7 @@ namespace GraphicsParamKeeperFuncImpl {
 
 /**
  * Checks whether a string is empty.
- * @param pStr String.
+ * @param pStr String to check.
  * @return Whether the string is empty.
  */
 bool isEmptyString(const char* pStr) {
@@ -20,10 +20,10 @@ bool isEmptyString(const char* pStr) {
 }
 
 /**
- * Checks whether a string matches a pattern.
- * @param pStr String.
- * @param pPattern Pattern.
- * @return Whether the string matches.
+ * Checks whether a string matches a wildcard pattern.
+ * @param pStr String to check.
+ * @param pPattern Pattern to match against.
+ * @return Whether the string matches the pattern.
  */
 bool isMatchString(const char* pStr, const char* pPattern) {
     return al::isMatchString(pStr, al::MatchStr(pPattern));
@@ -45,7 +45,7 @@ GraphicsParamKeeperImpl::GraphicsParamKeeperImpl(GraphicsSystemInfo* pInfo,
                                                  agl::utl::IParameterIO* pParamIo,
                                                  const char* pName, const char* pExtension,
                                                  s32 paramType)
-    : mGraphicsSystemInfo(pInfo), mFilePath(new GraphicsParamFilePath("", pExtension)),
+    : mGraphicsSystemInfo(pInfo), mFilePath(new GraphicsParamFilePath("Default", pExtension)),
       mParamIo(pParamIo), mParamType(paramType) {
     mName = pName;
 }
@@ -61,9 +61,9 @@ void GraphicsParamKeeperImpl::initStageResource(const Resource* pResource, const
     }
 
     StringTmp<32> suffix(".b%s", mFilePath->getExtension());
-    s32 entryNum = pResource->getEntryNum("/");
+    u32 entryNum = pResource->getEntryNum("/");
 
-    for (s32 i = 0; i < entryNum; i++) {
+    for (u32 i = 0; i < entryNum; i++) {
         StringTmp<256> entryName;
         pResource->getEntryName(&entryName, "/", i);
 
@@ -232,6 +232,53 @@ agl::utl::IParameterIO* GraphicsParamRequestInterpKeeperImpl::getParamIo() {
  */
 GraphicsAreaDirector* GraphicsParamRequestInterpKeeperImpl::getGraphicsAreaDirector() {
     return mGraphicsSystemInfo->getGraphicsAreaDirector();
+}
+
+/**
+ * Constructs the IO of a parameter file.
+ * @param pDirName Directory name of the parameter file.
+ * @param pExtension Extension of the parameter file.
+ * @param pTypeName Type name of the parameters, the directory name if nullptr.
+ */
+__attribute__((noinline)) GraphicsParamIo::GraphicsParamIo(const char* pDirName, const char* pExtension,
+                                 const char* pTypeName)
+    : mFilePath(new GraphicsParamFilePath(pDirName, pExtension)), mDirName(pDirName),
+      mTypeName(pTypeName != nullptr ? pTypeName : pDirName) {}
+
+/**
+ * Applies the stage parameter file if it exists.
+ * @param pResource Stage resource.
+ * @param pStageName Name of the stage.
+ */
+void GraphicsParamIo::initStageResource(const Resource* pResource, const char* pStageName) {
+    if (pResource == nullptr) {
+        return;
+    }
+
+    StringTmp<256> path;
+    mFilePath->makeBinaryPath(&path);
+
+    if (pResource->isExistFile(path)) {
+        const void* file = pResource->getOtherFile(path, nullptr);
+        mParamIo.applyResParameterArchive(agl::utl::ResParameterArchive(file));
+    }
+}
+
+/**
+ * Constructs the path of a graphics parameter file.
+ * @param pName Name of the file.
+ * @param pExtension Extension of the file.
+ */
+__attribute__((noinline))
+GraphicsParamFilePath::GraphicsParamFilePath(const char* pName, const char* pExtension)
+    : mName(pName), mExtension(pExtension) {}
+
+/**
+ * Makes the path of the binary parameter file.
+ * @param pPath Output path.
+ */
+__attribute__((noinline)) void GraphicsParamFilePath::makeBinaryPath(StringTmp<256>* pPath) const {
+    pPath->format("%s.b%s", mName.cstr(), mExtension.cstr());
 }
 
 }  // namespace al

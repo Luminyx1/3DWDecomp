@@ -84,6 +84,23 @@ private:
 
 static_assert(sizeof(GraphicsParamKeeperImpl) == 0x140);
 
+/**
+ * Parameter keeper that also remembers the object owning the parameter IO.
+ */
+template <typename T>
+class GraphicsParamKeeper : public GraphicsParamKeeperImpl {
+public:
+    GraphicsParamKeeper(GraphicsSystemInfo* pInfo, T* pParam, const char* pName,
+                        const char* pExtension, s32 paramType)
+        : GraphicsParamKeeperImpl(pInfo, pParam, pName, pExtension, paramType),
+          mParam(pParam) {}
+
+    T* getParam() const { return mParam; }
+
+private:
+    T* mParam;
+};
+
 class GraphicsParamRequestInterpKeeperImpl {
 public:
     GraphicsParamRequestInterpKeeperImpl(GraphicsSystemInfo* pInfo, s32 paramType,
@@ -170,20 +187,22 @@ public:
         for (s32 i = 0; i < namedParamNum; i++) {
             NamedParam* namedParam = mNamedParams[i];
 
-            if (isEqualString(pName, namedParam->mName->cstr()))
+            if (isEqualString(pName, namedParam->mName->cstr())) {
                 return namedParam;
+            }
         }
 
         return nullptr;
     }
 
     void updateRequest() {
-        if (!isExistNamedParamAtLeastOne() && !mIsForceUpdate)
+        if (!isExistNamedParamAtLeastOne() && !mIsForceUpdate) {
             return;
+        }
 
         GraphicsAreaDirector* areaDirector = getGraphicsAreaDirector();
 
-        if (!areaDirector) {
+        if (areaDirector == nullptr) {
             mRequestInterp.requestParam(-1, 1, mDefaultParam);
         } else {
             CurrentGraphicsAreaParam areaParam;
@@ -192,12 +211,15 @@ public:
             const char* paramName = areaParam.mParamName;
             NamedParam* namedParam = nullptr;
 
-            if (paramName && !GraphicsParamKeeperFuncImpl::isEmptyString(paramName))
+            if (paramName != nullptr && !GraphicsParamKeeperFuncImpl::isEmptyString(paramName)) {
                 namedParam = tryFindNamedParam(paramName);
-            if (namedParam)
+            }
+
+            if (namedParam != nullptr) {
                 mRequestInterp.requestParam(areaParam.mPriority, areaParam._14, *namedParam);
-            else
+            } else {
                 mRequestInterp.requestParam(-1, 1, mDefaultParam);
+            }
         }
 
         mRequestInterp.updateInterp();
@@ -212,6 +234,16 @@ public:
     RequestInterp<T>& getRequestInterp() { return mRequestInterp; }
 
     void setForceUpdate(bool isForceUpdate) { mIsForceUpdate = isForceUpdate; }
+
+    void endInit() {
+        mRequestInterp.getCurrentParam() = mDefaultParam;
+        mRequestInterp.endInit();
+    }
+
+    void clearRequest() {
+        mRequestInterp.clearRequest();
+        mIsForceUpdate = false;
+    }
 
 protected:
     sead::FixedPtrArray<NamedParam, 64> mNamedParams;
@@ -232,13 +264,23 @@ public:
     void clearRequest();
     void updateRequest();
     f32 calcRate() const;
-    void requestParam(s32 priority, s32 step, void* pData);
-    void requestParamDirect(s32 priority, void* pData);
+    bool requestParam(s32 priority, s32 step, void* pData);
+    bool requestParamDirect(s32 priority, void* pData);
     bool isRequested() const;
 
 private:
     agl::utl::IParameterIO* mParamIo;
-    u8 _8[0x30];
+    s32 mPriority = -2;
+    s32 mStep = -1;
+    s32 mStepNum = 1;
+    bool mIsSamePriorityRequested = false;
+    bool mIsRequested = false;
+    bool mIsEndInit = false;
+    bool mIsBeforeFirstUpdate = true;
+    void* mCurrentData = nullptr;
+    void* mPrevData = nullptr;
+    s32 mRequestStep = -1;
+    void* mRequestData = nullptr;
 };
 
 static_assert(sizeof(GraphicsParamRequesterImpl) == 0x38);
