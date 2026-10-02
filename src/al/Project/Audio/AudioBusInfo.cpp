@@ -4,46 +4,7 @@
 #include "Project/Base/StringUtil.hpp"
 
 namespace {
-/**
- * Converts an early reflection mode name to its id.
- * @param pName Early reflection mode name.
- * @return Early reflection mode id.
- */
-s32 convertEarlyMode(const char* pName) {
-    if (al::isEqualString(pName, "EARLY_REFLECTION_5MS")) {
-        return 0;
-    }
-
-    if (al::isEqualString(pName, "EARLY_REFLECTION_10MS")) {
-        return 1;
-    }
-
-    if (al::isEqualString(pName, "EARLY_REFLECTION_15MS")) {
-        return 2;
-    }
-
-    if (al::isEqualString(pName, "EARLY_REFLECTION_20MS")) {
-        return 3;
-    }
-
-    if (al::isEqualString(pName, "EARLY_REFLECTION_25MS")) {
-        return 4;
-    }
-
-    if (al::isEqualString(pName, "EARLY_REFLECTION_30MS")) {
-        return 5;
-    }
-
-    if (al::isEqualString(pName, "EARLY_REFLECTION_35MS")) {
-        return 6;
-    }
-
-    if (al::isEqualString(pName, "EARLY_REFLECTION_40MS")) {
-        return 7;
-    }
-
-    return 5;
-}
+s32 convertEarlyMode(const char* pName);
 
 /**
  * Converts a fused mode name to its id.
@@ -563,31 +524,90 @@ SeLpfEffectProcInfo* SeLpfEffectProcInfo::createInfo(const ByamlIter& rIter, con
     return info;
 }
 
+}  // namespace al
+
+namespace {
+/**
+ * Converts an early reflection mode name to its id.
+ * @param pName Early reflection mode name.
+ * @return Early reflection mode id.
+ */
+s32 convertEarlyMode(const char* pName) {
+    if (al::isEqualString(pName, "EARLY_REFLECTION_5MS")) {
+        return 0;
+    }
+
+    if (al::isEqualString(pName, "EARLY_REFLECTION_10MS")) {
+        return 1;
+    }
+
+    if (al::isEqualString(pName, "EARLY_REFLECTION_15MS")) {
+        return 2;
+    }
+
+    if (al::isEqualString(pName, "EARLY_REFLECTION_20MS")) {
+        return 3;
+    }
+
+    if (al::isEqualString(pName, "EARLY_REFLECTION_25MS")) {
+        return 4;
+    }
+
+    if (al::isEqualString(pName, "EARLY_REFLECTION_30MS")) {
+        return 5;
+    }
+
+    if (al::isEqualString(pName, "EARLY_REFLECTION_35MS")) {
+        return 6;
+    }
+
+    if (al::isEqualString(pName, "EARLY_REFLECTION_40MS")) {
+        return 7;
+    }
+
+    return 5;
+}
+
+}  // namespace
+
+namespace al {
+/**
+ * Creates per-bus effect information from BYAML data.
+ * @param rIter BYAML data.
+ * @return Created information, or nullptr if it has no effect process list.
+ */
 AudioEachBusEffectInfo* AudioEachBusEffectInfo::createInfo(const ByamlIter& rIter) {
     AudioEachBusEffectInfo* info = new AudioEachBusEffectInfo;
     rIter.tryGetStringByKey(&info->mName, "Name");
     ByamlIter procIter;
 
-    if (!rIter.tryGetIterByKey(&procIter, "EffectProcInfoList")) {
+    if (rIter.tryGetIterByKey(&procIter, "EffectProcInfoList")) {
+        info->mEffectProcInfoList = createInfoList<SeEffectProcInfo>(procIter);
+    } else {
         info->mEffectProcInfoList = nullptr;
-        return nullptr;
+        info = nullptr;
     }
 
-    info->mEffectProcInfoList = createInfoList<SeEffectProcInfo>(procIter);
     return info;
 }
 
+/**
+ * Creates effect information from BYAML data.
+ * @param rIter BYAML data.
+ * @return Created information, or nullptr if it has no per-bus effect list.
+ */
 SeEffectInfo* SeEffectInfo::createInfo(const ByamlIter& rIter) {
     SeEffectInfo* info = new SeEffectInfo;
     rIter.tryGetStringByKey(&info->mName, "Name");
     ByamlIter busIter;
 
-    if (!rIter.tryGetIterByKey(&busIter, "EachBusEffectInfoList")) {
+    if (rIter.tryGetIterByKey(&busIter, "EachBusEffectInfoList")) {
+        info->mEachBusEffectInfoList = createInfoList<AudioEachBusEffectInfo>(busIter);
+    } else {
         info->mEachBusEffectInfoList = nullptr;
-        return nullptr;
+        info = nullptr;
     }
 
-    info->mEachBusEffectInfoList = createInfoList<AudioEachBusEffectInfo>(busIter);
     return info;
 }
 
