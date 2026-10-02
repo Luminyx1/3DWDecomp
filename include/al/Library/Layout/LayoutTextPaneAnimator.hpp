@@ -1,6 +1,8 @@
 #pragma once
 
 #include <basis/seadTypes.h>
+#include <eui/euiLetterAnimControl.h>
+#include <nn/util/util_MathTypes.h>
 #include <prim/seadSafeString.h>
 
 namespace eui {
@@ -17,6 +19,27 @@ class LayoutActor;
 class MessageTagDataHolder;
 class ReplaceTagProcessorBase;
 class SePlayParamList;
+
+class EuiLetterAnimCtrl : public eui::LetterAnimControl {
+public:
+    EuiLetterAnimCtrl() : mIsSkip(false) {}
+    ~EuiLetterAnimCtrl() override = default;
+
+    void Update(f32 step) override {
+        eui::LetterAnimControl::Update(step);
+
+        if (mIsSkip) {
+            _4c = 0;
+        }
+    }
+
+    void setSkip(bool isSkip) { mIsSkip = isSkip; }
+
+private:
+    bool mIsSkip;
+};
+
+static_assert(sizeof(EuiLetterAnimCtrl) == 0x88);
 
 class LayoutTextPaneAnimator {
 public:
@@ -40,31 +63,35 @@ public:
     bool isAnimating() const { return mIsAnimating; }
     bool isExistNextPage() const { return mCurrentPage < mPageNum; }
     void setAudioKeeper(const IUseAudioKeeper* pAudioKeeper) { mAudioKeeper = pAudioKeeper; }
+    LayoutActor* getActor() const { return mActor; }
 
 private:
-    void* _0 = nullptr;
-    void* _8 = nullptr;
+    const IUseAudioKeeper* getVoiceAudioKeeper() const;
+
+    EuiLetterAnimCtrl* mLetterAnimCtrl = nullptr;
+    EuiLetterAnimCtrl* mShadowLetterAnimCtrl = nullptr;
     nn::ui2d::TextBox* mTextBox;
-    void* _18 = nullptr;
-    void* _20 = nullptr;
-    sead::WFixedSafeString<2048> mMessage;
+    nn::ui2d::TextBox* mShadowTextBox = nullptr;
+    const char16_t* mMessage = nullptr;
+    sead::WFixedSafeString<2048> mText;
     bool mIsAnimating = false;
-    bool _1041 = false;
-    s32 _1044 = 0;
-    s32 _1048 = 0;
-    s32 _104c = 0;
-    const u16* mTextBoxString = nullptr;
-    s32 mTextBoxStringLength = 0;
-    s32 _105c = 0;
-    s32 _1060 = 0;
+    bool mIsTextAnim = false;
+    s32 mFrame = 0;
+    s32 mInterval = 0;
+    s32 mTextNum = 0;
+    nn::util::Float3 mBaseTrans = {};
+    f32 mTextWidth = 0.0f;
+    f32 mTextHeight = 0.0f;
     s32 mCurrentPage = 0;
     s32 mPageNum = 0;
     LayoutActor* mActor;
-    s32 _1078 = 0;
+    s32 mStep = 0;
     SePlayParamList* mSePlayParamList = nullptr;
-    u16 _1088 = 0;
-    bool _108a = false;
+    char16_t mLastChar = 0;
+    bool mIsCharAdded = false;
     const IUseAudioKeeper* mAudioKeeper = nullptr;
-    bool _1098 = false;
+    bool mIsExistVoice = false;
 };
+
+static_assert(sizeof(LayoutTextPaneAnimator) == 0x10a0);
 }  // namespace al
