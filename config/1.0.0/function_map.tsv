@@ -48333,11 +48333,11 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71007DD900			FALSE	_ZN2al30makeTmpExpandEnvironmentStringERKN4sead14SafeStringBaseIcEE	al::makeTmpExpandEnvironmentString(sead::SafeStringBase<char> const&)	
 0x71007DD980			FALSE	_ZN2al19makeTmpFileFullPathEPKc	al::makeTmpFileFullPath(char const*)	
 0x71007DD9D0			FALSE	_ZN2al11getALCommonEv	al::getALCommon()	
-0x71007DD9E0			FALSE	_ZN2al24CurrentGraphicsAreaParamC2Ev	al::CurrentGraphicsAreaParam::CurrentGraphicsAreaParam()	
+0x71007DD9E0	Project/Draw	GraphicsAreaDirector.o	FALSE	_ZN2al24CurrentGraphicsAreaParamC2Ev	al::CurrentGraphicsAreaParam::CurrentGraphicsAreaParam()	
 0x71007DDA00			FALSE	_ZN2al16GraphicsAreaInfoC1EPKNS_7AreaObjE	al::GraphicsAreaInfo::GraphicsAreaInfo(al::AreaObj const*)	
 0x71007DDE40			FALSE	_ZN3agl3utl9ParameterIN4sead15FixedSafeStringILi32EEEEC2ERKS4_RKNS2_14SafeStringBaseIcEESB_PNS0_13IParameterObjE	agl::utl::Parameter<sead::FixedSafeString<32> >::Parameter(sead::FixedSafeString<32> const&, sead::SafeStringBase<char> const&, sead::SafeStringBase<char> const&, agl::utl::IParameterObj*)	
 0x71007DDFD0			FALSE	_ZN2al20GraphicsAreaDirectorC2EPKNS_18GraphicsSystemInfoE	al::GraphicsAreaDirector::GraphicsAreaDirector(al::GraphicsSystemInfo const*)	
-0x71007DE0A0	Project/Draw	GraphicsAreaDirector.o	FALSE	_ZN2al20GraphicsAreaDirector4initEPNS_15AreaObjDirectorEPKNS_15SceneCameraInfoEPKNS_12PlayerHolderE	al::GraphicsAreaDirector::init(al::AreaObjDirector*, al::SceneCameraInfo const*, al::PlayerHolder const*)	object/folder from OdysseyDecomp file list
+0x71007DE0A0			FALSE	_ZN2al20GraphicsAreaDirector4initEPNS_15AreaObjDirectorEPKNS_15SceneCameraInfoEPKNS_12PlayerHolderE	al::GraphicsAreaDirector::init(al::AreaObjDirector*, al::SceneCameraInfo const*, al::PlayerHolder const*)	object/folder from OdysseyDecomp file list
 0x71007DE0C0			FALSE	_ZN2al20GraphicsAreaDirector12setStageNameEPKci	al::GraphicsAreaDirector::setStageName(char const*, int)	
 0x71007DE0D0			FALSE	_ZN2al20GraphicsAreaDirector18initAfterPlacementEv	al::GraphicsAreaDirector::initAfterPlacement()	
 0x71007DE300			FALSE	_ZNK2al20GraphicsAreaDirector18getGraphicsAreaNumEv	al::GraphicsAreaDirector::getGraphicsAreaNum() const	
@@ -48361,13 +48361,13 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71007DEC50			FALSE	_ZThn8_NK2al20GraphicsAreaDirector14getNerveKeeperEv	non-virtual thunk to al::GraphicsAreaDirector::getNerveKeeper() const	
 0x71007DEC60			FALSE	_ZThn16_N2al20GraphicsAreaDirectorD1Ev	non-virtual thunk to al::GraphicsAreaDirector::~GraphicsAreaDirector()	
 0x71007DEC80			FALSE	_ZThn16_N2al20GraphicsAreaDirectorD0Ev	non-virtual thunk to al::GraphicsAreaDirector::~GraphicsAreaDirector()	
-0x71007DEC90			FALSE	sub_71007DEC90	sub_71007DEC90	
-0x71007DECF0			FALSE	sub_71007DECF0	sub_71007DECF0	
-0x71007DED50			FALSE	sub_71007DED50	sub_71007DED50	
-0x71007DEDB0			FALSE	sub_71007DEDB0	sub_71007DEDB0	
-0x71007DEE10			FALSE	sub_71007DEE10	sub_71007DEE10	
-0x71007DEEC0			FALSE	sub_71007DEEC0	sub_71007DEEC0	
-0x71007DEEE0		StressParam.o	FALSE	_ZN2al11StressParam4initEv	al::StressParam::init()	object (class)
+0x71007DEC90			FALSE	_ZNK12_GLOBAL__N_127GraphicsAreaDirectorNrvInit7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_127GraphicsAreaDirectorNrvInit7executeEPN2al11NerveKeeperE	
+0x71007DECF0			FALSE	_ZNK12_GLOBAL__N_133GraphicsAreaDirectorNrvCancelLerp7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_133GraphicsAreaDirectorNrvCancelLerp7executeEPN2al11NerveKeeperE	
+0x71007DED50			FALSE	_ZNK12_GLOBAL__N_138GraphicsAreaDirectorNrvChangeImmediate7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_138GraphicsAreaDirectorNrvChangeImmediate7executeEPN2al11NerveKeeperE	
+0x71007DEDB0			FALSE	_ZNK12_GLOBAL__N_127GraphicsAreaDirectorNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_127GraphicsAreaDirectorNrvWait7executeEPN2al11NerveKeeperE	
+0x71007DEE10			FALSE	_ZNK12_GLOBAL__N_127GraphicsAreaDirectorNrvLerp7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_127GraphicsAreaDirectorNrvLerp7executeEPN2al11NerveKeeperE	
+0x71007DEEC0			FALSE	_ZNK12_GLOBAL__N_132GraphicsAreaDirectorNrvLerpPause7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_132GraphicsAreaDirectorNrvLerpPause7executeEPN2al11NerveKeeperE	
+0x71007DEEE0	Project/Draw	GraphicsStressDirector.o	FALSE	_ZN2al11StressParam4initEv	al::StressParam::init()	object (class)
 0x71007DF1C0			FALSE	_ZNK2al11StressParameqERKS0_	al::StressParam::operator==(al::StressParam const&) const	
 0x71007DF2D0			FALSE	_ZN2al11StressParamaSERKS0_	al::StressParam::operator=(al::StressParam const&)	
 0x71007DF330			FALSE	_ZN2al11StressParam6interpERKS0_S2_f	al::StressParam::interp(al::StressParam const&, al::StressParam const&, float)	
@@ -48387,14 +48387,14 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71007E0210			FALSE	_ZN2al32GraphicsParamRequestInterpKeeperINS_11StressParamEE13updateRequestEv	al::GraphicsParamRequestInterpKeeper<al::StressParam>::updateRequest()	
 0x71007E04B0			FALSE	_ZNK2al22GraphicsStressDirector22calcPseudoAAProjOffsetEPN4sead7Vector2IfEEii	al::GraphicsStressDirector::calcPseudoAAProjOffset(sead::Vector2<float>*, int, int) const	
 0x71007E04D0			FALSE	_ZN2al25GraphicsQualityControllerC2EPf	al::GraphicsQualityController::GraphicsQualityController(float*)	
-0x71007E0570		GraphicsQualityController.o	FALSE	_ZN2al25GraphicsQualityController7exeWaitEv	al::GraphicsQualityController::exeWait()	object/folder from OdysseyDecomp file list
+0x71007E0570			FALSE	_ZN2al25GraphicsQualityController7exeWaitEv	al::GraphicsQualityController::exeWait()	object/folder from OdysseyDecomp file list
 0x71007E0670			FALSE	_ZN2al25GraphicsQualityController9exeReduceEv	al::GraphicsQualityController::exeReduce()	
 0x71007E06E0			FALSE	_ZN2al25GraphicsQualityController10exeRecoverEv	al::GraphicsQualityController::exeRecover()	
 0x71007E0760			FALSE	_ZN2al32GraphicsParamRequestInterpKeeperINS_11StressParamEE24checkNamedParamExistanceEv	al::GraphicsParamRequestInterpKeeper<al::StressParam>::checkNamedParamExistance()	
 0x71007E0850			FALSE	_ZN2al25GraphicsQualityControllerD0Ev	al::GraphicsQualityController::~GraphicsQualityController()	
 0x71007E0880			FALSE	_ZNK12_GLOBAL__N_132GraphicsQualityControllerNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::GraphicsQualityControllerNrvWait::execute(al::NerveKeeper*) const	
-0x71007E0890			FALSE	sub_71007E0890	sub_71007E0890	
-0x71007E0910			FALSE	sub_71007E0910	sub_71007E0910	
+0x71007E0890			FALSE	_ZNK12_GLOBAL__N_134GraphicsQualityControllerNrvReduce7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_134GraphicsQualityControllerNrvReduce7executeEPN2al11NerveKeeperE	
+0x71007E0910			FALSE	_ZNK12_GLOBAL__N_135GraphicsQualityControllerNrvRecover7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_135GraphicsQualityControllerNrvRecover7executeEPN2al11NerveKeeperE	
 0x71007E09A0			FALSE	_ZN2al32GraphicsParamRequestInterpKeeperINS_11StressParamEE10NamedParamC2Ev	al::GraphicsParamRequestInterpKeeper<al::StressParam>::NamedParam::NamedParam()	
 0x71007E0CB0			FALSE	_ZN2al13RequestInterpINS_11StressParamEE12updateInterpEv	al::RequestInterp<al::StressParam>::updateInterp()	
 0x71007E0EB0			FALSE	_ZN2al13RequestInterpINS_11StressParamEE19requestParamDirect_EiRKS1_	al::RequestInterp<al::StressParam>::requestParamDirect_(int, al::StressParam const&)	
@@ -59267,9 +59267,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100983060			FALSE	_ZNK2al19WaveVibrationPlayer6isLoopEv	al::WaveVibrationPlayer::isLoop() const	
 0x7100983070	Project/Draw	dpr.o	FALSE	_ZN3nst3dpr27GetUndepressWorkingDataSizeEv	nst::dpr::GetUndepressWorkingDataSize()	object (class)
 0x7100983080			FALSE	_ZN3nst3dpr26HuffmanUndepressLZ77streamEPvPNS0_20DepressStreamContextE	nst::dpr::HuffmanUndepressLZ77stream(void*, nst::dpr::DepressStreamContext*)	
-0x7100983220			FALSE	sub_7100983220	sub_7100983220	
+0x7100983220			FALSE	_ZN3nst3dprL18decodeHuffmanBlockEPNS0_12_GLOBAL__N_111HuffmanWorkEPPKhPhS7_	_ZN3nst3dprL18decodeHuffmanBlockEPNS0_12_GLOBAL__N_111HuffmanWorkEPPKhPhS7_	
 0x7100983E60			FALSE	_ZN3nst3dpr20HuffmanUndepressLZ77EPvS1_S1_	nst::dpr::HuffmanUndepressLZ77(void*, void*, void*)	
-0x7100983EC0			FALSE	sub_7100983EC0	sub_7100983EC0	
+0x7100983EC0			FALSE	_ZN3nst3dprL16buildHuffmanTreeEPNS0_12_GLOBAL__N_111HuffmanWorkEPNS1_9BitReaderEPNS1_11HuffmanNodeEm	_ZN3nst3dprL16buildHuffmanTreeEPNS0_12_GLOBAL__N_111HuffmanWorkEPNS1_9BitReaderEPNS1_11HuffmanNodeEm	
 0x7100984790			FALSE	_ZN3nst3dpr12UndepressRLEEPvS1_	nst::dpr::UndepressRLE(void*, void*)	
 0x71009848F0			FALSE	_ZN3nst3dpr18UndepressStreamRLEEPvPNS0_20DepressStreamContextE	nst::dpr::UndepressStreamRLE(void*, nst::dpr::DepressStreamContext*)	
 0x7100984B50			FALSE	_ZN3nst3dpr13UndepressLZ77EPvS1_	nst::dpr::UndepressLZ77(void*, void*)	
@@ -59282,13 +59282,13 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100985690			FALSE	_ZN2al15GpuMemAllocator15allocMemoryPoolEv	al::GpuMemAllocator::allocMemoryPool()	
 0x71009856C0			FALSE	_ZN2al15GpuMemAllocator16registerModelObjEPN2nn3g3d8ModelObjE	al::GpuMemAllocator::registerModelObj(nn::g3d::ModelObj*)	
 0x71009856F0			FALSE	_ZN2al15GpuMemAllocator23registerShadingModelObjEPN2nn3g3d15ShadingModelObjE	al::GpuMemAllocator::registerShadingModelObj(nn::g3d::ShadingModelObj*)	
-0x7100985720	Project/Draw	GpuMemAllocator.o	FALSE	_ZN2al15GpuMemAllocator12createMemoryEPKciPN4sead4HeapEiN3agl15MemoryAttributeE	al::GpuMemAllocator::createMemory(char const*, int, sead::Heap*, int, agl::MemoryAttribute)	object/folder from OdysseyDecomp file list
+0x7100985720			FALSE	_ZN2al15GpuMemAllocator12createMemoryEPKciPN4sead4HeapEiN3agl15MemoryAttributeE	al::GpuMemAllocator::createMemory(char const*, int, sead::Heap*, int, agl::MemoryAttribute)	object/folder from OdysseyDecomp file list
 0x7100985960			FALSE	_ZNK2al15GpuMemAllocator14findGpuMemInfoEPKc	al::GpuMemAllocator::findGpuMemInfo(char const*) const	
 0x7100985A00			FALSE	_ZN2al15GpuMemAllocator19createMemoryWithTmpEPKciiPN4sead4HeapEiN3agl15MemoryAttributeE	al::GpuMemAllocator::createMemoryWithTmp(char const*, int, int, sead::Heap*, int, agl::MemoryAttribute)	
 0x7100985B30			FALSE	_ZN2al15GpuMemAllocator11allocMemoryEPKcii	al::GpuMemAllocator::allocMemory(char const*, int, int)	
 0x7100985C40			FALSE	_ZNK2al15GpuMemAllocator16getTmpMemoryAddrEPKc	al::GpuMemAllocator::getTmpMemoryAddr(char const*) const	
 0x7100985D10			FALSE	_ZNK2al15GpuMemAllocator16getTmpMemorySizeEPKc	al::GpuMemAllocator::getTmpMemorySize(char const*) const	
-0x7100985DB0		RenderState.o	FALSE	_ZN2al11RenderStateC2Ev	al::RenderState::RenderState()	object (class)
+0x7100985DB0	Project/Draw	RenderState.o	FALSE	_ZN2al11RenderStateC2Ev	al::RenderState::RenderState()	object (class)
 0x7100985DD0			FALSE	_ZNK2al11RenderState3UseEPN3agl11DrawContextEPN2nn3g3d11MaterialObjE	al::RenderState::Use(agl::DrawContext*, nn::g3d::MaterialObj*) const	
 0x7100985FA0	Library/Draw	ViewRenderer.o	FALSE	_ZN2al12ViewRendererC2EPNS_18GraphicsSystemInfoE	al::ViewRenderer::ViewRenderer(al::GraphicsSystemInfo*)	object (class)
 0x71009862C0			FALSE	_ZN2al12ViewRendererD2Ev	al::ViewRenderer::~ViewRenderer()	
@@ -59303,13 +59303,13 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100988F00			FALSE	_ZNK2al12ViewRenderer10drawMirrorEiPNS_15RenderVariablesEbN3agl10ShaderModeE	al::ViewRenderer::drawMirror(int, al::RenderVariables*, bool, agl::ShaderMode) const	
 0x71009893E0			FALSE	_ZNK2al12ViewRenderer10drawSystemEPNS_12LiveActorKitEN3agl10ShaderModeE	al::ViewRenderer::drawSystem(al::LiveActorKit*, agl::ShaderMode) const	
 0x71009894D0			FALSE	_ZN2al12ViewRenderer9enableSSREv	al::ViewRenderer::enableSSR()	
-0x71009894E0			FALSE	_ZN2al11ScreenFaderC1Ev	al::ScreenFader::ScreenFader()	
-0x7100989510	Library/Screen	ScreenFader.o	FALSE	_ZN2al11ScreenFader5startEiifRKN4sead7Color4fE	al::ScreenFader::start(int, int, float, sead::Color4f const&)	object/folder from OdysseyDecomp file list
+0x71009894E0	Library/Screen	ScreenFader.o	FALSE	_ZN2al11ScreenFaderC1Ev	al::ScreenFader::ScreenFader()	
+0x7100989510			FALSE	_ZN2al11ScreenFader5startEiifRKN4sead7Color4fE	al::ScreenFader::start(int, int, float, sead::Color4f const&)	object/folder from OdysseyDecomp file list
 0x7100989530			FALSE	_ZN2al11ScreenFader3endEi	al::ScreenFader::end(int)	
 0x7100989560			FALSE	_ZN2al11ScreenFader6updateEv	al::ScreenFader::update()	
 0x71009895A0			FALSE	_ZNK2al11ScreenFader7tryDrawEPN3agl11DrawContextERKN4sead8ViewportERKNS1_12RenderBufferE	al::ScreenFader::tryDraw(agl::DrawContext*, sead::Viewport const&, agl::RenderBuffer const&) const	
-0x7100989660			FALSE	sub_7100989660	sub_7100989660	
-0x7100989840			FALSE	_ZNK2al17DeferredRendering21isUsingDepthShadowMapEv	al::DeferredRendering::isUsingDepthShadowMap() const	
+0x7100989660			FALSE	_ZN2al12_GLOBAL__N_112drawFadeQuadEPN3agl11DrawContextERKN4sead7Color4fEffRKNS4_8ViewportERKNS4_11FrameBufferE	_ZN2al12_GLOBAL__N_112drawFadeQuadEPN3agl11DrawContextERKN4sead7Color4fEffRKNS4_8ViewportERKNS4_11FrameBufferE	
+0x7100989840	Library/Draw	DeferredRendering.o	FALSE	_ZNK2al17DeferredRendering21isUsingDepthShadowMapEv	al::DeferredRendering::isUsingDepthShadowMap() const	
 0x7100989850			FALSE	_ZN2al17DeferredRenderingC2EPNS_18GraphicsSystemInfoEi	al::DeferredRendering::DeferredRendering(al::GraphicsSystemInfo*, int)	
 0x7100989930			FALSE	_ZN2al17DeferredRenderingD2Ev	al::DeferredRendering::~DeferredRendering()	
 0x71009899B0			FALSE	_ZN2al17DeferredRendering20prepareRenderGBufferEiiPNS_12GBufferArrayEiRKN4sead8Matrix34IfEERKNS3_8Matrix44IfEEffffRKNS3_7Vector2IfEEPNS_12LiveActorKitEPNS_17DepthShadowDrawerE	al::DeferredRendering::prepareRenderGBuffer(int, int, al::GBufferArray*, int, sead::Matrix34<float> const&, sead::Matrix44<float> const&, float, float, float, float, sead::Vector2<float> const&, al::LiveActorKit*, al::DepthShadowDrawer*)	
@@ -59320,9 +59320,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710098A570			FALSE	_ZN2al17DeferredRendering19drawDeferredShadingEPNS_12LiveActorKitERKN3agl12RenderBufferERKN4sead8ViewportEPNS_17DepthShadowDrawerERKNS7_8Matrix34IfEERKNS7_8Matrix44IfEEPNS_12GBufferArrayEiNS_11SkyFillTypeENS3_10ShaderModeEPKNS_14SimpleModelEnvEb	al::DeferredRendering::drawDeferredShading(al::LiveActorKit*, agl::RenderBuffer const&, sead::Viewport const&, al::DepthShadowDrawer*, sead::Matrix34<float> const&, sead::Matrix44<float> const&, al::GBufferArray*, int, al::SkyFillType, agl::ShaderMode, al::SimpleModelEnv const*, bool)	
 0x710098A6B0			FALSE	_ZN2al17DeferredRendering22prepareDeferredShadingEPNS_12LiveActorKitERKN4sead8Matrix34IfEERKNS3_8Matrix44IfEEPNS_12GBufferArrayEiPNS_17DepthShadowDrawerEN3agl10ShaderModeEPKNS_14SimpleModelEnvEb	al::DeferredRendering::prepareDeferredShading(al::LiveActorKit*, sead::Matrix34<float> const&, sead::Matrix44<float> const&, al::GBufferArray*, int, al::DepthShadowDrawer*, agl::ShaderMode, al::SimpleModelEnv const*, bool)	
 0x710098AF70			FALSE	_ZN2al17DeferredRendering15preDrawGraphicsEv	al::DeferredRendering::preDrawGraphics()	
-0x710098AF80			FALSE	_ZN2al21ReducedBufferRendererC1EPKNS_12ShaderHolderEPKNS_18FullScreenTriangleE	al::ReducedBufferRenderer::ReducedBufferRenderer(al::ShaderHolder const*, al::FullScreenTriangle const*)	
+0x710098AF80		ReducedBufferRenderer.o	FALSE	_ZN2al21ReducedBufferRendererC1EPKNS_12ShaderHolderEPKNS_18FullScreenTriangleE	al::ReducedBufferRenderer::ReducedBufferRenderer(al::ShaderHolder const*, al::FullScreenTriangle const*)	
 0x710098B080			FALSE	_ZN2al21ReducedBufferRendererD2Ev	al::ReducedBufferRenderer::~ReducedBufferRenderer()	
-0x710098B170	Library/Draw	ReducedBufferRenderer.o	FALSE	_ZN2al21ReducedBufferRenderer17freeReducedBufferEv	al::ReducedBufferRenderer::freeReducedBuffer()	object/folder from OdysseyDecomp file list
+0x710098B170			FALSE	_ZN2al21ReducedBufferRenderer17freeReducedBufferEv	al::ReducedBufferRenderer::freeReducedBuffer()	object/folder from OdysseyDecomp file list
 0x710098B1B0			FALSE	_ZN2al21ReducedBufferRenderer20freeReducedBufferHdrEv	al::ReducedBufferRenderer::freeReducedBufferHdr()	
 0x710098B1F0			FALSE	_ZN2al21ReducedBufferRenderer23freeReducedDepthBuffersEv	al::ReducedBufferRenderer::freeReducedDepthBuffers()	
 0x710098B270			FALSE	_ZN2al21ReducedBufferRenderer25createReducedDepthBuffersEPN3agl11DrawContextERKN4sead7Vector2IiEE	al::ReducedBufferRenderer::createReducedDepthBuffers(agl::DrawContext*, sead::Vector2<int> const&)	
@@ -59335,7 +59335,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710098BF10			FALSE	_ZN2al21ReducedBufferRenderer21drawComposeFullScreenEPKN3agl11TextureDataEff	al::ReducedBufferRenderer::drawComposeFullScreen(agl::TextureData const*, float, float)	
 0x710098C140			FALSE	_ZN2al21ReducedBufferRenderer13RenderEffectsERKNS_15RenderVariablesEPKN3agl11TextureDataES7_PFvPKNS_12EffectSystemERKN4sead8Matrix44IfEERKNSB_8Matrix34IfEEfffESF_SJ_fffbb	al::ReducedBufferRenderer::RenderEffects(al::RenderVariables const&, agl::TextureData const*, agl::TextureData const*, void (*)(al::EffectSystem const*, sead::Matrix44<float> const&, sead::Matrix34<float> const&, float, float, float), sead::Matrix44<float> const&, sead::Matrix34<float> const&, float, float, float, bool, bool)	
 0x710098C310			FALSE	_ZN2al21ReducedBufferRenderer4drawERKNS_15RenderVariablesEPKN3agl11TextureDataERKN4sead8Matrix44IfEERKNS8_8Matrix34IfEEfffb	al::ReducedBufferRenderer::draw(al::RenderVariables const&, agl::TextureData const*, sead::Matrix44<float> const&, sead::Matrix34<float> const&, float, float, float, bool)	
-0x710098C800		ViewRendererCreator.o	FALSE	_ZN2al19ViewRendererCreator18createViewRendererEPNS_18GraphicsSystemInfoE	al::ViewRendererCreator::createViewRenderer(al::GraphicsSystemInfo*)	object (class)
+0x710098C800	Library/Draw	ViewRendererCreator.o	FALSE	_ZN2al19ViewRendererCreator18createViewRendererEPNS_18GraphicsSystemInfoE	al::ViewRendererCreator::createViewRenderer(al::GraphicsSystemInfo*)	object (class)
 0x710098C840			FALSE	_ZN2al19ViewRendererCreator18deleteViewRendererEPNS_12ViewRendererE	al::ViewRendererCreator::deleteViewRenderer(al::ViewRenderer*)	
 0x710098C860	Library/Play/Draw	RenderVariables.o	FALSE	_ZN2al15RenderVariablesC2EPNS_18GraphicsSystemInfoEPNS_12LiveActorKitEPKNS_14SimpleModelEnvEiiibb	al::RenderVariables::RenderVariables(al::GraphicsSystemInfo*, al::LiveActorKit*, al::SimpleModelEnv const*, int, int, int, bool, bool)	folder (alphabetical reset); object (class, new folder (alphabetical reset))
 0x710098C9B0			FALSE	_ZN2al15RenderVariables16allocDepthBufferEv	al::RenderVariables::allocDepthBuffer()	
@@ -60852,16 +60852,16 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71009D9260			FALSE	_ZNK2al23EdgeDrawPostEffectParam12getParamNameEv	al::EdgeDrawPostEffectParam::getParamName() const	
 0x71009D9270			FALSE	_ZN2al23EdgeDrawPostEffectParam11getParamObjEv	al::EdgeDrawPostEffectParam::getParamObj()	
 0x71009D9280			FALSE	_ZNK2al23EdgeDrawPostEffectParam11getParamObjEv	al::EdgeDrawPostEffectParam::getParamObj() const	
-0x71009D9290			FALSE	_ZN2al26GraphicsParamRequesterImplC2EPN3agl3utl12IParameterIOEPKc	al::GraphicsParamRequesterImpl::GraphicsParamRequesterImpl(agl::utl::IParameterIO*, char const*)	
-0x71009D92C0	Project/Draw	GraphicsParamKeeper.o	FALSE	_ZN2al26GraphicsParamRequesterImpl7endInitEv	al::GraphicsParamRequesterImpl::endInit()	object/folder from OdysseyDecomp file list
+0x71009D9290	Project/Draw	GraphicsParamRequester.o	FALSE	_ZN2al26GraphicsParamRequesterImplC2EPN3agl3utl12IParameterIOEPKc	al::GraphicsParamRequesterImpl::GraphicsParamRequesterImpl(agl::utl::IParameterIO*, char const*)	
+0x71009D92C0			FALSE	_ZN2al26GraphicsParamRequesterImpl7endInitEv	al::GraphicsParamRequesterImpl::endInit()	object/folder from OdysseyDecomp file list
 0x71009D92D0			FALSE	_ZN2al26GraphicsParamRequesterImpl12clearRequestEv	al::GraphicsParamRequesterImpl::clearRequest()	
 0x71009D92E0			FALSE	_ZN2al26GraphicsParamRequesterImpl13updateRequestEv	al::GraphicsParamRequesterImpl::updateRequest()	
 0x71009D9410			FALSE	_ZNK2al26GraphicsParamRequesterImpl8calcRateEv	al::GraphicsParamRequesterImpl::calcRate() const	
 0x71009D9440			FALSE	_ZN2al26GraphicsParamRequesterImpl12requestParamEiiPv	al::GraphicsParamRequesterImpl::requestParam(int, int, void*)	
 0x71009D9570			FALSE	_ZN2al26GraphicsParamRequesterImpl18requestParamDirectEiPv	al::GraphicsParamRequesterImpl::requestParamDirect(int, void*)	
 0x71009D9630			FALSE	_ZNK2al26GraphicsParamRequesterImpl11isRequestedEv	al::GraphicsParamRequesterImpl::isRequested() const	
-0x71009D9640			FALSE	_ZN2al19RetroColorDrawParamC2Ev	al::RetroColorDrawParam::RetroColorDrawParam()	
-0x71009DA7F0	Library/PostProcessing	RetroColorDrawer.o	FALSE	_ZNK2al19RetroColorDrawParam8isEnableEv	al::RetroColorDrawParam::isEnable() const	object/folder from OdysseyDecomp file list
+0x71009D9640	Library/PostProcessing	RetroColorDrawer.o	FALSE	_ZN2al19RetroColorDrawParamC2Ev	al::RetroColorDrawParam::RetroColorDrawParam()	
+0x71009DA7F0			FALSE	_ZNK2al19RetroColorDrawParam8isEnableEv	al::RetroColorDrawParam::isEnable() const	object/folder from OdysseyDecomp file list
 0x71009DA800			FALSE	_ZNK2al19RetroColorDrawParam22isCheckPaletteWithLumaEv	al::RetroColorDrawParam::isCheckPaletteWithLuma() const	
 0x71009DA810			FALSE	_ZNK2al19RetroColorDrawParam15isPointSamplingEv	al::RetroColorDrawParam::isPointSampling() const	
 0x71009DA820			FALSE	_ZNK2al19RetroColorDrawParam15isBaseColorModeEv	al::RetroColorDrawParam::isBaseColorMode() const	
@@ -60893,7 +60893,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71009DC170			FALSE	_ZN2al19RetroColorDrawParam11getParamObjEv	al::RetroColorDrawParam::getParamObj()	
 0x71009DC180			FALSE	_ZNK2al19RetroColorDrawParam11getParamObjEv	al::RetroColorDrawParam::getParamObj() const	
 0x71009DC190			FALSE	_ZN2al19ScreenBlurDrawParamC2Ev	al::ScreenBlurDrawParam::ScreenBlurDrawParam()	
-0x71009DC840		ScreenBlurDrawer.o	FALSE	_ZNK2al19ScreenBlurDrawParam8isEnableEv	al::ScreenBlurDrawParam::isEnable() const	object/folder from OdysseyDecomp file list
+0x71009DC840	Library/PostProcessing	ScreenBlurDrawer.o	FALSE	_ZNK2al19ScreenBlurDrawParam8isEnableEv	al::ScreenBlurDrawParam::isEnable() const	object/folder from OdysseyDecomp file list
 0x71009DC850			FALSE	_ZNK2al19ScreenBlurDrawParam10getBlurNumEv	al::ScreenBlurDrawParam::getBlurNum() const	
 0x71009DC860			FALSE	_ZNK2al19ScreenBlurDrawParam12getSampleNumEv	al::ScreenBlurDrawParam::getSampleNum() const	
 0x71009DC870			FALSE	_ZNK2al19ScreenBlurDrawParam11getPositionEv	al::ScreenBlurDrawParam::getPosition() const	

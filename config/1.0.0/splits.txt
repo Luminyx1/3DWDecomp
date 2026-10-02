@@ -4546,14 +4546,12 @@ src/al/Library/Collision/MtxConnector.cpp: done
 src/al/Library/Collision/PartsMtxConnector.cpp:
     .text   start:0x007DBB80 end:0x007DC5A4
 src/al/Library/Debug/Host.cpp:
-    .text   start:0x007DCF70 end:0x007DE094
-src/al/Project/Draw/GraphicsAreaDirector.cpp:
-    .text   start:0x007DE0A0 end:0x007DEEE0
-src/al/Project/Draw/StressParam.cpp:
-    .text   start:0x007DEEE0 end:0x007E056C
-src/al/Project/Draw/GraphicsQualityController.cpp:
-    .text   start:0x007E0570 end:0x007E1028
-src/al/Project/Draw/GraphicsParamKeeper.cpp:
+    .text   start:0x007DCF70 end:0x007DD9DC
+src/al/Project/Draw/GraphicsAreaDirector.cpp: done
+    .text   start:0x007DD9E0 end:0x007DEEE0
+src/al/Project/Draw/GraphicsStressDirector.cpp:
+    .text   start:0x007DEEE0 end:0x007E1028
+src/al/Project/Draw/GraphicsParamKeeper.cpp: done
     .text   start:0x007E1030 end:0x007E1AFC
 src/al/Library/Draw/GraphicsSystemInfo.cpp:
     .text   start:0x007E1B00 end:0x007E4694
@@ -5670,20 +5668,20 @@ src/al/Project/Controller/WaveVibrationPlayer.cpp:
 src/al/Project/Draw/dpr.cpp:
     .text   start:0x00983070 end:0x009853F8
 src/al/Project/Draw/GpuMemAllocator.cpp: done
-    .text   start:0x00985400 end:0x0098571C
-src/al/Project/Draw/GpuMemAllocator_dup2.cpp: done
-    .text   start:0x00985720 end:0x00985DB0
+    .text   start:0x00985400 end:0x00985DB0
 src/al/Project/Draw/RenderState.cpp: done
     .text   start:0x00985DB0 end:0x00985F94
 src/al/Library/Draw/ViewRenderer.cpp:
-    .text   start:0x00985FA0 end:0x00989504
+    .text   start:0x00985FA0 end:0x009894E0
 src/al/Library/Screen/ScreenFader.cpp:
-    .text   start:0x00989510 end:0x0098B164
+    .text   start:0x009894E0 end:0x0098983C
+src/al/Library/Draw/DeferredRendering.cpp:
+    .text   start:0x00989840 end:0x0098AF7C
 src/al/Library/Draw/ReducedBufferRenderer.cpp:
-    .text   start:0x0098B170 end:0x0098C7FC
+    .text   start:0x0098AF80 end:0x0098C7FC
 src/al/Library/Draw/ViewRendererCreator.cpp: done
     .text   start:0x0098C800 end:0x0098C858
-src/al/Library/Play/Draw/RenderVariables.cpp:
+src/al/Library/Play/Draw/RenderVariables.cpp: done
     .text   start:0x0098C860 end:0x0098CF30
 src/al/Project/Effect/Effect.cpp:
     .text   start:0x0098CF30 end:0x0098FA0C
@@ -5848,11 +5846,11 @@ src/al/Project/PostProcessing/KaleidoscopeDrawer.cpp: done
 src/al/Project/PostProcessing/MetalReliefDrawer.cpp:
     .text   start:0x009D2C10 end:0x009D5188
 src/al/Library/PostProcessing/PencilSketchDrawer.cpp:
-    .text   start:0x009D5190 end:0x009D92B8
-src/al/Project/Draw/GraphicsParamKeeper_dup2.cpp:
-    .text   start:0x009D92C0 end:0x009DA7E8
+    .text   start:0x009D5190 end:0x009D9288
+src/al/Project/Draw/GraphicsParamRequester.cpp: done
+    .text   start:0x009D9290 end:0x009D9638
 src/al/Library/PostProcessing/RetroColorDrawer.cpp:
-    .text   start:0x009DA7F0 end:0x009DC840
+    .text   start:0x009D9640 end:0x009DC840
 src/al/Library/PostProcessing/ScreenBlurDrawer.cpp:
     .text   start:0x009DC840 end:0x009DCC78
 src/al/Library/PostProcessing/ViewDepthDrawer.cpp:
