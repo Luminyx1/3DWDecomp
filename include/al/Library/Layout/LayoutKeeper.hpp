@@ -40,6 +40,8 @@ public:
     nn::ui2d::Layout* getLayout() const { return mLayout; }
     eui::Screen* getScreen() const { return mScreen; }
 
+    void setDrawContext(sead::DrawContext* pDrawContext) { mDrawContext = pDrawContext; }
+
 private:
     CustomTagProcessor* mTagProcessor = nullptr;
     nn::ui2d::DrawInfo* mDrawInfo = nullptr;
