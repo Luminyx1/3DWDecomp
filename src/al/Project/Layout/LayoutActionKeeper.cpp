@@ -27,8 +27,12 @@ LayoutActionKeeper::LayoutActionKeeper(LayoutKeeper* pLayoutKeeper, IUseAudioKee
 
     for (s32 i = 0; i < mPaneGroupNum; i++) {
         mPaneGroupInfos[i].mPaneGroup = pLayoutKeeper->getGroup(i);
-        mPaneGroupInfos[i].mEffectCtrl =
-            (pEffectKeeper != nullptr) ? ActionEffectCtrl::tryCreate(pEffectKeeper) : nullptr;
+        if (pEffectKeeper != nullptr) {
+            mPaneGroupInfos[i].mEffectCtrl = ActionEffectCtrl::tryCreate(pEffectKeeper);
+        } else {
+            mPaneGroupInfos[i].mEffectCtrl = nullptr;
+        }
+
         if (pAudioKeeper != nullptr) {
             mPaneGroupInfos[i].mSeCtrl = ActionSeCtrl::tryCreate(pAudioKeeper->getAudioKeeper());
             mPaneGroupInfos[i].mBgmCtrl = ActionBgmCtrl::tryCreate(pAudioKeeper->getAudioKeeper());
