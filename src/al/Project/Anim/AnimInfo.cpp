@@ -8,6 +8,11 @@
 namespace al {
 
 /**
+ * Constructs an empty animation entry.
+ */
+AnimResInfo::AnimResInfo() = default;
+
+/**
  * Gets the last frame of the animation.
  * @return Frame count.
  */
@@ -47,6 +52,11 @@ void AnimInfoTable::add(const char* pName, void* pResAnim, f32 frameMax, bool is
     mInfoCount++;
 }
 
+/**
+ * Finds an animation by name, using a binary search once the table is sorted.
+ * @param pName Animation name.
+ * @return The animation, or nullptr if it is not in the table.
+ */
 const AnimResInfo* AnimInfoTable::findAnimInfo(const char* pName) const {
     if (!mIsSorted) {
         for (s32 i = 0; i < mInfoCount; i++) {
@@ -81,6 +91,11 @@ const AnimResInfo* AnimInfoTable::findAnimInfo(const char* pName) const {
     return nullptr;
 }
 
+/**
+ * Looks up an animation by name, using a binary search once the table is sorted.
+ * @param pName Animation name.
+ * @return The animation, or nullptr if it is not in the table.
+ */
 const AnimResInfo* AnimInfoTable::tryFindAnimInfo(const char* pName) const {
     if (!mIsSorted) {
         for (s32 i = 0; i < mInfoCount; i++) {
@@ -115,6 +130,9 @@ const AnimResInfo* AnimInfoTable::tryFindAnimInfo(const char* pName) const {
     return nullptr;
 }
 
+/**
+ * Sorts the table by animation name (heap sort) so lookups can use a binary search.
+ */
 void AnimInfoTable::sort() {
     s32 num = mInfoCount;
     AnimResInfo* infos = mResInfos;

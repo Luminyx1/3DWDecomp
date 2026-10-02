@@ -5,6 +5,8 @@
 namespace al {
 
 struct AnimResInfo {
+    AnimResInfo();
+
     s32 getFrameMax() const;
     bool isLoop() const;
 
