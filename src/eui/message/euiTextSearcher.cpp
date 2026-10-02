@@ -4,7 +4,6 @@
 #include <eui/euiUtility.h>
 #include <nn/ui2d/ui2d_TextBox.h>
 #include <nn/ui2d/ui2d_ExtUserData.h>
-nn::ui2d::TextSearcher::~TextSearcher() = default;
 namespace eui {
 // pInfo receives localized text; pId selects a label or layout path. pLayout supplies the
 // naming context, pTextBox supplies fallback metadata, and pRootLayout is unused here.
@@ -36,7 +35,6 @@ void TextSearcher::SearchText(TextInfo* pInfo, const char* pId, nn::ui2d::Layout
     if (pInfo->bufferLengthOverride != -1) pInfo->bufferLength = pInfo->bufferLengthOverride;
 }
 
-TextSearcher::~TextSearcher() = default;
 // pMessages supplies localized strings; pProcessor handles embedded formatting tags.
 TextSearcher::TextSearcher(const MessageSet* pMessages, TagProcessor* pProcessor)
     : mMessages(pMessages), mProcessor(pProcessor) {}
