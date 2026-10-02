@@ -18,6 +18,8 @@ struct AudioDeviceName {
 static_assert(sizeof(AudioDeviceName) == 0x100);
 
 void AcquireAudioDeviceSwitchNotification(nn::os::SystemEvent* event);
+void AcquireAudioDeviceNotificationForOutput(nn::os::SystemEvent* event);
+s32 GetActiveAudioDeviceChannelCountForOutput();
 s32 ListAudioDeviceName(nn::audio::AudioDeviceName* buffer, s32 bufferCount);
 Result SetAudioDeviceOutputVolume(nn::audio::AudioDeviceName const* device, float volume);
 u32 GetActiveChannelCount();

@@ -4,6 +4,7 @@
 #include <nn/atk/atk_Sound3DListener.h>
 
 namespace nn::atk {
+class Sound3DEngine;
 class SoundArchive;
 
 class Sound3DManager {
@@ -18,6 +19,7 @@ public:
     size_t GetRequiredMemSize(const SoundArchive* pArchive);
     bool Initialize(const SoundArchive* pArchive, void* pBuffer, size_t size);
     void Finalize();
+    void SetEngine(Sound3DEngine* pEngine);
 
     void AddListener(Sound3DListener* pListener) { m_ListenerList.push_back(*pListener); }
     void RemoveListener(Sound3DListener* pListener) {

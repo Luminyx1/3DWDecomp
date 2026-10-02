@@ -90,6 +90,11 @@ struct SystemEventType {
     u8 state;
 };
 struct SystemEvent {
+    SystemEvent() { m_SystemEventType.state = SystemEventType::State_NotInitialized; }
+    ~SystemEvent();
+
+    bool TryWait();
+
     SystemEventType m_SystemEventType;
 };
 
@@ -171,6 +176,18 @@ bool TimedWaitEvent(EventType*, nn::TimeSpan);
 void DestroySystemEvent(SystemEventType*);
 bool TimedWaitSystemEvent(SystemEventType*, nn::TimeSpan);
 bool TryWaitSystemEvent(SystemEventType*);
+
+inline SystemEvent::~SystemEvent() {
+    if (m_SystemEventType.state == SystemEventType::State_NotInitialized) {
+        return;
+    }
+
+    DestroySystemEvent(&m_SystemEventType);
+}
+
+inline bool SystemEvent::TryWait() {
+    return TryWaitSystemEvent(&m_SystemEventType);
+}
 void ClearEvent(EventType*);
 
 // LIGHT EVENTS
