@@ -1,5 +1,6 @@
 #include "Library/Anim/ModelAnimInterp.hpp"
 
+#include <attributes.h>
 #include <basis/seadNew.h>
 #include <math/seadMatrix.h>
 #include <nn/g3d/g3d_SkeletalAnimObj.h>
@@ -156,7 +157,7 @@ bool ModelAnimInterp::interpAnim(nn::g3d::SkeletonObj* pSkeleton) const {
 /**
  * Constructs an empty holder with no interpolation lengths.
  */
-__attribute__((noinline)) ModelAnimInterpInfoHolder::ModelAnimInterpInfoHolder()
+NOINLINE ModelAnimInterpInfoHolder::ModelAnimInterpInfoHolder()
     : mFrameMap(new FrameMap()), mDefaultFrame(0) {}
 
 /**
@@ -164,7 +165,7 @@ __attribute__((noinline)) ModelAnimInterpInfoHolder::ModelAnimInterpInfoHolder()
  * @param pArcPath The archive path.
  * @param unused Unused.
  */
-__attribute__((noinline)) void ModelAnimInterpInfoHolder::initWithArcPath(const char* pArcPath,
+NOINLINE void ModelAnimInterpInfoHolder::initWithArcPath(const char* pArcPath,
                                                                          s32 unused) {
     Resource* resource = findOrCreateResource(pArcPath, nullptr);
 
@@ -194,7 +195,7 @@ __attribute__((noinline)) void ModelAnimInterpInfoHolder::initWithArcPath(const 
  * @param pNextAnimName Name looked up first, may be nullptr.
  * @return The registered interpolation length, or the default length.
  */
-__attribute__((noinline)) s32
+NOINLINE s32
 ModelAnimInterpInfoHolder::getInterpFrame(const char* pAnimName, const char* pNextAnimName) const {
     FrameMap::Node* node = nullptr;
 

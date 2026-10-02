@@ -1,5 +1,6 @@
 #include "common/aglShaderLocation.h"
 
+#include <attributes.h>
 #include <cstring>
 #include <nvn/nvn_FuncPtrInline.h>
 
@@ -32,21 +33,21 @@ struct ReflectionEntry
 {
     const char* mName;
     s32 mLocation;
-} __attribute__((packed));
+} PACKED;
 
 struct ReflectionBlockEntry
 {
     const char* mName;
     s32 mLocation;
     u32 mSize;
-} __attribute__((packed));
+} PACKED;
 
 template <typename Entry>
 struct ReflectionList
 {
     u32 mNum;
     const Entry* mEntries;
-} __attribute__((packed));
+} PACKED;
 
 struct ShaderReflection
 {
@@ -57,7 +58,7 @@ struct ShaderReflection
     ReflectionList<ReflectionEntry> mUniforms;
     ReflectionList<ReflectionEntry> mSamplers;
     ReflectionList<ReflectionEntry> mImages;
-} __attribute__((packed));
+} PACKED;
 
 template <typename Entry>
 s32 findLocation(const sead::INamable& rLoc, const ShaderProgram& rProgram, ShaderType type,

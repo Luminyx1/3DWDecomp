@@ -1,5 +1,6 @@
 #include "Project/Anim/InitResourceDataAnim.hpp"
 
+#include <attributes.h>
 #include <nn/g3d/g3d_BoneVisibilityAnimObj.h>
 #include <nn/g3d/g3d_ResFile.h>
 #include <nn/g3d/g3d_ResSkeletalAnim.h>
@@ -101,7 +102,7 @@ inline s32 countMatAnim(const Resource* pResource, const char* pSuffix) {
  * @param pSuffix The name suffix of the material animation type.
  * @param isCheckExist Whether to skip animations that are already registered.
  */
-__attribute__((noinline)) void addMatAnimInfo(AnimInfoTable* pTable, const Resource* pResource,
+NOINLINE void addMatAnimInfo(AnimInfoTable* pTable, const Resource* pResource,
                                               const char* pSuffix, bool isCheckExist) {
     s32 animNum = pResource->getResFile()->GetMaterialAnimCount();
 
@@ -132,7 +133,7 @@ __attribute__((noinline)) void addMatAnimInfo(AnimInfoTable* pTable, const Resou
  * @param isCheckExist Whether to skip animations that are already registered.
  * @return The sorted table, or nullptr if there is no matching animation.
  */
-__attribute__((always_inline)) inline AnimInfoTable*
+ALWAYS_INLINE inline AnimInfoTable*
 createMatAnimInfoTable(Resource* const* pResources, s32 resourceNum, const char* pSuffix,
                        bool isCheckExist) {
     s32 animNum = 0;

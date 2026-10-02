@@ -1,3 +1,4 @@
+#include <attributes.h>
 #include <nn/font/font_RectDrawer.h>
 
 #include <cstring>
@@ -12,7 +13,7 @@
 namespace nn {
 namespace font {
 
-extern const uint8_t g_RectDrawerShaderBinary[] __attribute__((visibility("hidden")));
+extern const uint8_t g_RectDrawerShaderBinary[] HIDDEN;
 
 namespace {
 

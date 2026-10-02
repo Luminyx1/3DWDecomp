@@ -1,4 +1,5 @@
 // This original unit contains shared RTTI and template instantiations; FontMgr's methods are in euiFontMgr_dup2.
+#include <attributes.h>
 #include <eui/euiPartsEx.h>
 #include <eui/euiWindowEx.h>
 #include <eui/euiPictureEx.h>
@@ -6,7 +7,7 @@
 #include <filedevice/seadFileDevice.h>
 namespace {
 // Keep the same shared runtime type definitions emitted in this translation unit.
-const nn::font::detail::RuntimeTypeInfo* (*const typeInfoFunctions[])() __attribute__((used)) = {
+const nn::font::detail::RuntimeTypeInfo* (*const typeInfoFunctions[])() USED = {
     &eui::PartsEx::GetRuntimeTypeInfoStatic, &eui::WindowEx::GetRuntimeTypeInfoStatic,
     &eui::PictureEx::GetRuntimeTypeInfoStatic, &eui::TextBoxEx::GetRuntimeTypeInfoStatic
 };

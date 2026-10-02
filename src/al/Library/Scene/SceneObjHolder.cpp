@@ -1,5 +1,7 @@
 #include "Library/Scene/SceneObjHolder.hpp"
 
+#include <attributes.h>
+
 #include "Library/Scene/ISceneObj.hpp"
 #include "Library/Scene/SceneObjUtil.hpp"
 
@@ -23,7 +25,7 @@ SceneObjHolder::SceneObjHolder(CreateFunc pCreator, int numObjs)
  * @param objID Scene object id.
  * @return The scene object.
  */
-__attribute__((noinline)) ISceneObj* SceneObjHolder::create(int objID) {
+NOINLINE ISceneObj* SceneObjHolder::create(int objID) {
     if (mObjs[objID] != nullptr) {
         return mObjs[objID];
     }
@@ -38,7 +40,7 @@ __attribute__((noinline)) ISceneObj* SceneObjHolder::create(int objID) {
  * @param objID Scene object id.
  * @return The scene object or nullptr.
  */
-__attribute__((noinline)) ISceneObj* SceneObjHolder::tryGetObj(int objID) const {
+NOINLINE ISceneObj* SceneObjHolder::tryGetObj(int objID) const {
     return mObjs[objID];
 }
 
@@ -47,7 +49,7 @@ __attribute__((noinline)) ISceneObj* SceneObjHolder::tryGetObj(int objID) const 
  * @param objID Scene object id.
  * @return The scene object.
  */
-__attribute__((noinline)) ISceneObj* SceneObjHolder::getObj(int objID) const {
+NOINLINE ISceneObj* SceneObjHolder::getObj(int objID) const {
     return mObjs[objID];
 }
 
@@ -56,7 +58,7 @@ __attribute__((noinline)) ISceneObj* SceneObjHolder::getObj(int objID) const {
  * @param objID Scene object id.
  * @return True if it exists.
  */
-__attribute__((noinline)) bool SceneObjHolder::isExist(int objID) const {
+NOINLINE bool SceneObjHolder::isExist(int objID) const {
     return mObjs[objID] != nullptr;
 }
 
@@ -65,7 +67,7 @@ __attribute__((noinline)) bool SceneObjHolder::isExist(int objID) const {
  * @param pObj The scene object.
  * @param objID Scene object id.
  */
-__attribute__((noinline)) void SceneObjHolder::setSceneObj(ISceneObj* pObj, int objID) {
+NOINLINE void SceneObjHolder::setSceneObj(ISceneObj* pObj, int objID) {
     mObjs[objID] = pObj;
 }
 

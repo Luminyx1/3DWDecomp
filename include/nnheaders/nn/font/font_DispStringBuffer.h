@@ -1,5 +1,6 @@
 #pragma once
 
+#include <attributes.h>
 #include <cstring>
 #include <nn/font/font_GpuBuffer.h>
 #include <nn/gfx/gfx_Device.h>
@@ -93,7 +94,7 @@ struct CharAttribute {
 };
 
 // These are emitted out of line by font_CharWriter.cpp as in the original binary.
-#define NN_FONT_DETAIL_EMIT __attribute__((used))
+#define NN_FONT_DETAIL_EMIT USED
 
 struct VertexShaderCharAttribute {
     nn::util::Float4 posAndSize;

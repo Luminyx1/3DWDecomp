@@ -1,6 +1,7 @@
 #ifndef SEAD_LIST_IMPL_H_
 #define SEAD_LIST_IMPL_H_
 
+#include <attributes.h>
 #include <basis/seadTypes.h>
 
 namespace sead
@@ -29,7 +30,7 @@ private:
 class ListImpl
 {
 public:
-    __attribute__((always_inline)) ListImpl() : mStartEnd(), mCount(0)
+    ALWAYS_INLINE ListImpl() : mStartEnd(), mCount(0)
     {
         mStartEnd.mNext = &mStartEnd;
         mStartEnd.mPrev = &mStartEnd;

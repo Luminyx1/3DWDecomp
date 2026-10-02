@@ -5,6 +5,7 @@
 
 #pragma once
 
+#include <attributes.h>
 #include <nn/types.h>
 #include <nn/g3d/g3d_ResCameraAnim.h>
 #include <nn/g3d/g3d_Resources.h>
@@ -44,7 +45,7 @@ public:
     u16 mFogAnimCount;                   // _5E
 };
 
-__attribute__((noinline)) inline const ResSceneAnim*
+NOINLINE inline const ResSceneAnim*
 ResFile::FindSceneAnim(const char* pName) const {
     const nn::util::ResDic* pDic =
         static_cast<const nn::util::ResDic*>(ToData().pSceneAnimDic.Get());

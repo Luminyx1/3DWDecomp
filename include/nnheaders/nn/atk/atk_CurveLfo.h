@@ -1,9 +1,10 @@
 #pragma once
+#include <attributes.h>
 #include <nn/types.h>
 
 namespace nn::atk::detail {
 using LfoCurveFunction = float (*)(float);
-extern LfoCurveFunction g_CurveLfoTable[128] __attribute__((visibility("hidden")));
+extern LfoCurveFunction g_CurveLfoTable[128] HIDDEN;
 struct CurveLfoParam {
     void Initialize();
     float depth, speed;

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <attributes.h>
 #include <basis/seadTypes.h>
 #include <gfx/seadColor.h>
 #include <math/seadVector.h>
@@ -12,8 +13,8 @@ class WriteStream;
 namespace al {
 class YamlFormatter {
 public:
-    __attribute__((used)) YamlFormatter() {}
-    __attribute__((used)) virtual ~YamlFormatter() {}
+    USED YamlFormatter() {}
+    USED virtual ~YamlFormatter() {}
 
     void startDocument();
     void writeString(const char* pFormat, ...);

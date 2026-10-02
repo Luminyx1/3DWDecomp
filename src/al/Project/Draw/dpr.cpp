@@ -1,5 +1,6 @@
 #include "Project/Draw/dpr.hpp"
 
+#include <attributes.h>
 #include <cstring>
 
 namespace nst::dpr {
@@ -289,7 +290,7 @@ static u8* decodeHuffmanBlock(HuffmanWork* pWork, const u8** ppSrc, u8* pDst, u8
  * @param pDst Destination of the decompressed data.
  * @param pWork Unused, a static working memory is used instead.
  */
-__attribute__((noinline)) void HuffmanUndepressLZ77(void* pSrc, void* pDst, void* pWork) {
+NOINLINE void HuffmanUndepressLZ77(void* pSrc, void* pDst, void* pWork) {
     const UndepressHeader* header = static_cast<const UndepressHeader*>(pSrc);
     const u8* src = reinterpret_cast<const u8*>(header + 1);
     u8* dst = static_cast<u8*>(pDst);

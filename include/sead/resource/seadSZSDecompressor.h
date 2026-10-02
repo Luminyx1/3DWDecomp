@@ -1,6 +1,7 @@
 #ifndef SEAD_SZS_DECOMPRESSOR_H_
 #define SEAD_SZS_DECOMPRESSOR_H_
 
+#include <attributes.h>
 #include <basis/seadTypes.h>
 #include <resource/seadDecompressor.h>
 #include <resource/seadResource.h>
@@ -25,7 +26,7 @@ public:
 
         void initialize(void* dst);
 
-        __attribute__((always_inline)) bool doCopy(u32 n)
+        ALWAYS_INLINE bool doCopy(u32 n)
         {
             if (u32(this->destCount) < n)
             {

@@ -1,5 +1,6 @@
 #include "Library/Play/Camera/CameraPoserAnim.hpp"
 
+#include <attributes.h>
 #include <gfx/seadCamera.h>
 #include <nn/g3d/g3d_ResSceneAnim.h>
 
@@ -14,7 +15,7 @@
  * @param pName Name of the camera animation.
  * @return The camera animation, or nullptr if it does not exist.
  */
-__attribute__((noinline)) inline const nn::g3d::ResCameraAnim*
+NOINLINE inline const nn::g3d::ResCameraAnim*
 nn::g3d::ResSceneAnim::FindCameraAnim(const char* pName) const {
     const nn::util::ResDic* dictionary =
         reinterpret_cast<const nn::util::ResDic*>(mCameraAnimDictOffset);

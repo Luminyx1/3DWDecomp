@@ -1,4 +1,5 @@
 #pragma once
+#include <attributes.h>
 #include <nn/atk/atk_WaveFile.h>
 
 namespace nn::atk::detail {
@@ -14,8 +15,8 @@ struct DspadpcmHeader {
 static_assert(sizeof(DspadpcmHeader) == 0x60, "DspadpcmHeader size");
 class DspadpcmReader {
 public:
-    __attribute__((noinline)) DspadpcmReader();
-    __attribute__((noinline)) bool ReadWaveInfo(WaveInfo* info) const;
+    NOINLINE DspadpcmReader();
+    NOINLINE bool ReadWaveInfo(WaveInfo* info) const;
 private:
     friend class WaveFileReader;
     const DspadpcmHeader* mHeader;

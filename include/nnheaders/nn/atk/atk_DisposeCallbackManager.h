@@ -1,11 +1,12 @@
 #pragma once
 
+#include <attributes.h>
 #include <nn/atk/atk_SoundDataManager.h>
 
 namespace nn::atk::detail::driver {
 class DisposeCallbackManager {
 public:
-    static __attribute__((noinline)) DisposeCallbackManager& GetInstance();
+    static NOINLINE DisposeCallbackManager& GetInstance();
     DisposeCallbackManager();
     void RegisterDisposeCallback(DisposeCallback* callback);
     void UnregisterDisposeCallback(DisposeCallback* callback);

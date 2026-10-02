@@ -1,5 +1,6 @@
 #include "Library/Play/Camera/CameraPoserEntrance_RS.hpp"
 
+#include <attributes.h>
 #include <math/seadMathCalcCommon.h>
 
 #include "Library/Camera/CameraPoserFunction.hpp"
@@ -76,7 +77,7 @@ void updateCameraPose(CameraPoserEntrance_RS* pPoser, const CameraPoserEntrance_
  * @param rPrevTargetTrans Previous position of the target.
  * @return Whether the target is moving.
  */
-__attribute__((noinline)) bool isTargetMoving(u8 isCheckVelocity,
+NOINLINE bool isTargetMoving(u8 isCheckVelocity,
                                               const CameraPoserEntrance_RS* pPoser,
                                               const sead::Vector3f& rPrevTargetTrans) {
     if (!isCheckVelocity) {

@@ -1,5 +1,7 @@
 #include "Library/Play/Camera/ActorCameraSubTarget.hpp"
 
+#include <attributes.h>
+
 #include "Library/LiveActor/LiveActor.hpp"
 #include "Library/LiveActor/Util/ActorMovementUtil.hpp"
 #include "Library/LiveActor/Util/ActorPoseUtil.hpp"
@@ -13,7 +15,7 @@ const CameraSubTargetTurnParam sDefaultTurnParam;
 /**
  * @brief Constructs a sub target using the default turn parameters.
  */
-__attribute__((noinline)) CameraSubTargetBase::CameraSubTargetBase()
+NOINLINE CameraSubTargetBase::CameraSubTargetBase()
     : mTurnParam(&sDefaultTurnParam) {}
 
 /**

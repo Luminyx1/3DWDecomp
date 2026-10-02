@@ -1,4 +1,5 @@
 #pragma once
+#include <attributes.h>
 #include <nn/atk/atk_BinaryFileFormat.h>
 
 namespace nn::atk::detail {
@@ -9,7 +10,7 @@ struct SequenceSoundFile {
         ReferenceWithSize blocks[1];
         const LabelBlock* GetLabelBlock() const;
         // Keep the block lookup as a call, as in the original reader.
-        __attribute__((noinline)) const DataBlock* GetDataBlock() const {
+        NOINLINE const DataBlock* GetDataBlock() const {
             for (size_t i = 0; i < blockCount; ++i)
                 if (blocks[i].type == 0x5000) {
                     s32 offset = blocks[i].offset;

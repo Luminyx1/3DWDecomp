@@ -1,5 +1,6 @@
 #include "Library/Play/Camera/CameraPoserTower_RS.hpp"
 
+#include <attributes.h>
 #include <gfx/seadCamera.h>
 #include <math/seadMathCalcCommon.h>
 
@@ -75,7 +76,7 @@ inline void CameraPoserTower_RS::startInterpRotate(f32 startAngleH, f32 endAngle
 /**
  * @return Horizontal distance between the tower axis and the target.
  */
-[[gnu::always_inline]] inline f32 CameraPoserTower_RS::calcAxisDistanceH() const {
+ALWAYS_INLINE inline f32 CameraPoserTower_RS::calcAxisDistanceH() const {
     sead::Vector3f axisPos;
     calcAxisPos(&axisPos);
     sead::Vector3f targetTrans = {0.0f, 0.0f, 0.0f};
@@ -89,7 +90,7 @@ inline void CameraPoserTower_RS::startInterpRotate(f32 startAngleH, f32 endAngle
  * @param distance Distance to check.
  * @return Whether the target is closer to the tower axis than the distance.
  */
-[[gnu::always_inline]] inline bool CameraPoserTower_RS::isNearAxis(f32 distance) const {
+ALWAYS_INLINE inline bool CameraPoserTower_RS::isNearAxis(f32 distance) const {
     return calcAxisDistanceH() < distance;
 }
 

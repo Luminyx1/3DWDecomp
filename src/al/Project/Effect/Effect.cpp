@@ -1,5 +1,6 @@
 #include "Project/Effect/Effect.hpp"
 
+#include <attributes.h>
 #include <nn/util/util_MatrixApi.h>
 #include <nn/util/util_VectorApi.h>
 #include <nn/vfx/EmitterSet.h>
@@ -220,7 +221,7 @@ void calcEmitterMtx(sead::Matrix34f* pMtx, const EffectEmitParam* pParam,
     pMtx->setTranslation(*pTrans);
 }
 
-__attribute__((noinline)) void createEmitter(EffectEmitter* pEmitter, const EffectEmitParam* pParam,
+NOINLINE void createEmitter(EffectEmitter* pEmitter, const EffectEmitParam* pParam,
                                              const sead::Vector3f* pPos,
                                              const sead::Vector3f* pScalePtr, JointMtxPtr mtxPtr,
                                              EffectCameraHolder* pCameraHolder, u64 userData,

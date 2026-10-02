@@ -1,5 +1,6 @@
 #include "Project/Effect/Core/EffectKeeper.hpp"
 
+#include <attributes.h>
 #include <cstring>
 
 #include <agl/common/aglDrawContext.h>
@@ -687,7 +688,7 @@ namespace alEffectFunction {
  * @param pName Name of the user.
  * @return The user, or nullptr if there is none.
  */
-__attribute__((noinline)) al::EffectUserInfo* tryFindEffectUser(const al::EffectSystemInfo* pSystemInfo,
+NOINLINE al::EffectUserInfo* tryFindEffectUser(const al::EffectSystemInfo* pSystemInfo,
                                       const char* pName) {
     const al::EffectDataBase* dataBase = pSystemInfo->mEffectDataBase;
     s32 low = 0;

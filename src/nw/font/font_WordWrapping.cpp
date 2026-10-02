@@ -1,3 +1,4 @@
+#include <attributes.h>
 #include <nn/font/font_WordWrapping.h>
 
 #include <cstdlib>
@@ -1280,7 +1281,7 @@ uint32_t ToCode(char c) {
 }
 
 template <typename CharType>
-__attribute__((always_inline)) LineBreakClass
+ALWAYS_INLINE LineBreakClass
 ReadLineBreakClass(const CharType** ppCharPos, const CharType** ppPos, const CharType* pEnd,
                    WordWrapCallbackBase<CharType>& rCallback, size_t* pSkipCount) {
     uint32_t code;

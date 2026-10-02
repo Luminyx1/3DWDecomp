@@ -1,4 +1,5 @@
 #pragma once
+#include <attributes.h>
 #include <nn/atk/atk_BinaryFileFormat.h>
 
 namespace nn::atk::detail {
@@ -20,9 +21,9 @@ struct GroupFile {
     struct InfoExBlock { u32 signature, size; InfoExBlockBody body; };
     struct FileHeader : BinaryFileHeader {
         ReferenceWithSize blocks[1];
-        __attribute__((noinline)) const InfoBlock* GetInfoBlock() const;
-        __attribute__((noinline)) const FileBlock* GetFileBlock() const;
-        __attribute__((noinline)) const InfoExBlock* GetInfoExBlock() const;
+        NOINLINE const InfoBlock* GetInfoBlock() const;
+        NOINLINE const FileBlock* GetFileBlock() const;
+        NOINLINE const InfoExBlock* GetInfoExBlock() const;
     };
 };
 struct GroupItemLocationInfo {

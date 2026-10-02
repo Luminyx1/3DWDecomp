@@ -1,3 +1,4 @@
+#include <attributes.h>
 #include <filedevice/seadFileDeviceMgr.h>
 #include <heap/seadHeap.h>
 #include <heap/seadHeapMgr.h>
@@ -11,7 +12,7 @@
 namespace
 {
 #ifdef cafe
-__attribute__((aligned(0x20))) s32 decodeSZSCafeAsm_(void* dst, const void* src)
+ALIGNED(0x20) s32 decodeSZSCafeAsm_(void* dst, const void* src)
 {
     asm("lwz r5, 0x4(r4)\n");
     asm("li r11, 0x20\n");
@@ -119,7 +120,7 @@ __attribute__((aligned(0x20))) s32 decodeSZSCafeAsm_(void* dst, const void* src)
 }  // namespace
 
 #ifdef SWITCH
-__attribute__((noinline)) s32 decodeSZSNxAsm64_(void* pDst, const void* pSrc)
+NOINLINE s32 decodeSZSNxAsm64_(void* pDst, const void* pSrc)
 {
     register s32 error asm("w2");
     asm volatile(

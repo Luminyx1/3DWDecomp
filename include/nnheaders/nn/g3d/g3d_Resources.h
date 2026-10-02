@@ -2,6 +2,7 @@
 
 // Shared G3D resource and object declarations used by NintendoWare and AGL.
 
+#include <attributes.h>
 #include <nn/gfx/gfx_Buffer.h>
 #include <nn/gfx/gfx_BufferInfo.h>
 #include <nn/gfx/gfx_SamplerInfo.h>
@@ -395,14 +396,14 @@ struct ResModelData {
 class ResModel : public nn::util::AccessorBase<ResModelData> {
 public:
     // name selects a material; missing dictionary entries return null.
-    __attribute__((noinline)) const ResMaterial* FindMaterial(const char* name) const {
+    NOINLINE const ResMaterial* FindMaterial(const char* name) const {
         const nn::util::ResDic* dictionary = pMaterialDic.Get();
         int index = (dictionary != nullptr) ? dictionary->FindIndex(name) : nn::util::ResDic::Npos;
         if (index == nn::util::ResDic::Npos) return nullptr;
         return &pMaterialArray.Get()[index];
     }
     // name identifies a shape in this model; return null if its dictionary has no entry.
-    __attribute__((noinline)) const ResShape* FindShape(const char* name) const {
+    NOINLINE const ResShape* FindShape(const char* name) const {
         const nn::util::ResDic* dictionary = pShapeDic.Get();
         int index = (dictionary != nullptr) ? dictionary->FindIndex(name) : nn::util::ResDic::Npos;
         if (index == nn::util::ResDic::Npos) return nullptr;
@@ -620,7 +621,7 @@ public:
     void CleanupBlockBuffer(nn::gfx::Device* device);
     void ResetDirtyFlags();
     void CalculateMaterial(int bufferIndex);
-    template <bool swap> __attribute__((noinline)) void ConvertDirtyParams(void* destination, u32* dirtyFlags);
+    template <bool swap> NOINLINE void ConvertDirtyParams(void* destination, u32* dirtyFlags);
     typedef void (*TextureChangeCallback)(MaterialObj* pMaterial, int index);
 
     const ResMaterial* GetResource() const { return m_pRes; }

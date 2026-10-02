@@ -1,6 +1,7 @@
 #include "Library/Effect/EffectShaderHolderNew.hpp"
 
 #include <arm_neon.h>
+#include <attributes.h>
 #include <gfx/seadGraphicsContext.h>
 #include <gfx/seadGraphicsContextMRT.h>
 #include <math/seadMathCalcCommon.h>
@@ -359,7 +360,7 @@ void EffectShaderHolderNew::setupTextureProg0(const agl::TextureData* pTexture) 
  * @param index the material light index (unused)
  * @return the irradiance sampler
  */
-__attribute__((noinline, weak, disable_tail_calls)) const agl::TextureSampler*
+NOINLINE WEAK DISABLE_TAIL_CALLS const agl::TextureSampler*
 EffectShaderHolderNew::getTextureMaterialLight(s32 index) const {
     return mGraphicsSystemInfo->getCubeMapDirector()->getIrradianceSampler(0);
 }
@@ -369,7 +370,7 @@ EffectShaderHolderNew::getTextureMaterialLight(s32 index) const {
  * @param index the noise texture index (unused)
  * @return nullptr
  */
-__attribute__((noinline, weak)) const agl::TextureSampler*
+NOINLINE WEAK const agl::TextureSampler*
 EffectShaderHolderNew::getTextureNoise(s32 index) const {
     return nullptr;
 }
@@ -411,7 +412,7 @@ void EffectShaderHolderNew::renderDeferred(nn::vfx::RenderStateSetArg& rArg) con
  * @param rColor the light color
  * @param isEnableSpecular whether the light has a specular term
  */
-__attribute__((noinline)) void EffectLight::set(const sead::Vector3f& rPos, f32 radius,
+NOINLINE void EffectLight::set(const sead::Vector3f& rPos, f32 radius,
                                                 const sead::Color4f& rColor,
                                                 bool isEnableSpecular) {
     mPos = rPos;
@@ -431,7 +432,7 @@ EffectLightDirector::EffectLightDirector() {
  * Takes a light from the pool.
  * @return the light, or nullptr if the pool is exhausted
  */
-__attribute__((noinline)) EffectLight* EffectLightDirector::tryCreateLight() {
+NOINLINE EffectLight* EffectLightDirector::tryCreateLight() {
     return mLightList.emplaceBack();
 }
 
@@ -439,7 +440,7 @@ __attribute__((noinline)) EffectLight* EffectLightDirector::tryCreateLight() {
  * Returns a light to the pool.
  * @param pLight the light
  */
-__attribute__((noinline)) void EffectLightDirector::removeLight(EffectLight* pLight) {
+NOINLINE void EffectLightDirector::removeLight(EffectLight* pLight) {
     mLightList.erase(pLight);
 }
 
@@ -447,7 +448,7 @@ __attribute__((noinline)) void EffectLightDirector::removeLight(EffectLight* pLi
  * Requests a point light for every light in use.
  * @param pKeeper the light pre-pass keeper
  */
-__attribute__((noinline)) void EffectLightDirector::update(PrePassLightKeeper* pKeeper) {
+NOINLINE void EffectLightDirector::update(PrePassLightKeeper* pKeeper) {
     for (EffectLight& light : mLightList) {
         pKeeper->requestPointLight(light.getPos(), light.getRadius(), light.getColor(), 0.95f, 0.0f,
                                    light.isEnableSpecular(), false, sead::Color4f::cWhite, 0);

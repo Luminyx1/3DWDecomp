@@ -1,4 +1,5 @@
 #pragma once
+#include <attributes.h>
 #include <nn/types.h>
 #include <nn/util/util_BinaryFormat.h>
 
@@ -20,10 +21,10 @@ struct AdvancedWaveSoundFile : nn::util::BinaryFileHeader {
     };
     struct InfoBlockBody {
         u32 trackTableOffset;
-        __attribute__((noinline)) const ReferenceTable* GetTrackReferenceTable() const;
+        NOINLINE const ReferenceTable* GetTrackReferenceTable() const;
         const WaveSoundTrack* GetWaveSoundTrack(int index) const;
     };
     struct InfoBlock : nn::util::BinaryBlockHeader { InfoBlockBody body; };
-    __attribute__((noinline)) const InfoBlock* GetBlock() const;
+    NOINLINE const InfoBlock* GetBlock() const;
 };
 }

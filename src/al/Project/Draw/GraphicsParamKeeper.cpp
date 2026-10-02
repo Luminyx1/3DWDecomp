@@ -1,5 +1,6 @@
 #include "Project/Draw/GraphicsParamKeeper.hpp"
 
+#include <attributes.h>
 #include <utility/aglParameterIO.h>
 #include <utility/aglResParameter.h>
 
@@ -240,7 +241,7 @@ GraphicsAreaDirector* GraphicsParamRequestInterpKeeperImpl::getGraphicsAreaDirec
  * @param pExtension Extension of the parameter file.
  * @param pTypeName Type name of the parameters, the directory name if nullptr.
  */
-__attribute__((noinline)) GraphicsParamIo::GraphicsParamIo(const char* pDirName, const char* pExtension,
+NOINLINE GraphicsParamIo::GraphicsParamIo(const char* pDirName, const char* pExtension,
                                  const char* pTypeName)
     : mFilePath(new GraphicsParamFilePath(pDirName, pExtension)), mDirName(pDirName),
       mTypeName(pTypeName != nullptr ? pTypeName : pDirName) {}
@@ -269,7 +270,7 @@ void GraphicsParamIo::initStageResource(const Resource* pResource, const char* p
  * @param pName Name of the file.
  * @param pExtension Extension of the file.
  */
-__attribute__((noinline))
+NOINLINE
 GraphicsParamFilePath::GraphicsParamFilePath(const char* pName, const char* pExtension)
     : mName(pName), mExtension(pExtension) {}
 
@@ -277,7 +278,7 @@ GraphicsParamFilePath::GraphicsParamFilePath(const char* pName, const char* pExt
  * Makes the path of the binary parameter file.
  * @param pPath Output path.
  */
-__attribute__((noinline)) void GraphicsParamFilePath::makeBinaryPath(StringTmp<256>* pPath) const {
+NOINLINE void GraphicsParamFilePath::makeBinaryPath(StringTmp<256>* pPath) const {
     pPath->format("%s.b%s", mName.cstr(), mExtension.cstr());
 }
 

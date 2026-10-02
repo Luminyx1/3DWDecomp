@@ -1,5 +1,6 @@
 #include "utility/aglImageFilter2D.h"
 
+#include <attributes.h>
 #include <gfx/seadColor.h>
 #include <gfx/seadProjection.h>
 #include <gfx/seadViewport.h>
@@ -137,7 +138,7 @@ inline void drawQuadTriangle_(DrawContext* pDrawContext)
                                  PrimitiveShape::instance()->getQuadTriangleIndexStream());
 }
 
-[[gnu::always_inline]] inline void drawBC_(DrawContext* pDrawContext, const TextureSampler& rSampler, u32 mipLevel,
+ALWAYS_INLINE inline void drawBC_(DrawContext* pDrawContext, const TextureSampler& rSampler, u32 mipLevel,
                     u32 slice, ImageFilter2D::TextureCompressType type, s32 programType)
 {
     const TextureData& rTexture = rSampler.getTextureData();

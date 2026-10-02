@@ -1,6 +1,7 @@
 #include "Project/Anim/AnimPlayerSimple.hpp"
 
 #include <agl/g3d/aglNW4FToNN.h>
+#include <attributes.h>
 #include <basis/seadNew.h>
 #include <nn/g3d/g3d_ModelObj.h>
 #include <nn/g3d/g3d_ResMaterialAnim.h>
@@ -136,7 +137,7 @@ void AnimPlayerMat::setAnimToModel(const AnimResInfo* pInfo) {
  * Constructs a player without an animation.
  * Not inlined into AnimPlayerMat::tryCreate in the original binary.
  */
-__attribute__((noinline)) AnimPlayerSimple::AnimPlayerSimple() {
+NOINLINE AnimPlayerSimple::AnimPlayerSimple() {
     mModelAnim = new AnimPlayerModelAnim();
 }
 
@@ -321,6 +322,6 @@ void AnimPlayerSimple::applyTo() {
  * Constructs a player without an animation table.
  * Originally its own translation unit (AnimPlayerBase.cpp), hence never inlined.
  */
-__attribute__((noinline)) AnimPlayerBase::AnimPlayerBase() = default;
+NOINLINE AnimPlayerBase::AnimPlayerBase() = default;
 
 }  // namespace al

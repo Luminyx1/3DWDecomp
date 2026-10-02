@@ -1,5 +1,6 @@
 #include "Library/Draw/GraphicsFunction.hpp"
 
+#include <attributes.h>
 #include <common/aglDrawContext.h>
 #include <common/aglRenderBuffer.h>
 #include <common/aglRenderTarget.h>
@@ -29,7 +30,7 @@ extern template bool sead::Matrix34CalcCommon<f32>::inverse(Base& o, const Base&
  * @param pName Name of the shader option.
  * @return The option value string, or nullptr if the option does not exist.
  */
-__attribute__((noinline)) inline const char*
+NOINLINE inline const char*
 nn::g3d::ResShaderAssign::FindShaderOption(const char* pName) const {
     const nn::util::ResDic* dictionary = pOptionDic.Get();
 
@@ -51,7 +52,7 @@ nn::g3d::ResShaderAssign::FindShaderOption(const char* pName) const {
  * @param pName Name of the render info.
  * @return The render info, or nullptr if it does not exist.
  */
-__attribute__((noinline)) inline const nn::g3d::ResRenderInfo*
+NOINLINE inline const nn::g3d::ResRenderInfo*
 nn::g3d::ResMaterial::FindRenderInfo(const char* pName) const {
     const nn::util::ResDic* dictionary = ToData().pRenderInfoDic.Get();
 

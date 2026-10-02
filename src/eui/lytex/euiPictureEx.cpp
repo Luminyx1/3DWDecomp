@@ -1,10 +1,11 @@
+#include <attributes.h>
 #include <eui/euiPictureEx.h>
 
 #include <gfx/nin/seadGraphicsNvn.h>
 #include <nn/ui2d/ui2d_Material.h>
 
 // Original local build-result storage; its data section has not been split yet.
-extern nn::ui2d::BuildResultInformation lbl_7102122AB0 __attribute__((visibility("hidden")));
+extern nn::ui2d::BuildResultInformation lbl_7102122AB0 HIDDEN;
 
 namespace eui {
 

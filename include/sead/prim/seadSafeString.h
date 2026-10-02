@@ -1,5 +1,6 @@
 #pragma once
 
+#include <attributes.h>
 #include <cstdarg>
 
 #include <basis/seadRawPrint.h>
@@ -165,7 +166,7 @@ template <typename T>
 class BufferedSafeStringBase : public SafeStringBase<T>
 {
 public:
-    __attribute__((always_inline)) BufferedSafeStringBase(T* buffer, s32 size)
+    ALWAYS_INLINE BufferedSafeStringBase(T* buffer, s32 size)
         : SafeStringBase<T>(buffer)
     {
         mBufferSize = size;

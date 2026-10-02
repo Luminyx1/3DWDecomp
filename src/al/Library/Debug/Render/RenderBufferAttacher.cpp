@@ -1,5 +1,6 @@
 #include "Library/Debug/Render/RenderBufferAttacher.hpp"
 
+#include <attributes.h>
 #include <common/aglDrawContext.h>
 #include <common/aglRenderBuffer.h>
 #include <common/aglTextureData.h>
@@ -36,7 +37,7 @@ namespace al {
  * @param pColor3 Texture for color target 3, or nullptr.
  * @param pDepth Depth target to attach, or nullptr.
  */
-[[gnu::always_inline]] inline void
+ALWAYS_INLINE inline void
 RenderBufferAttacher::attach_(const agl::TextureData* pColor0, const agl::TextureData* pColor1,
                               const agl::TextureData* pColor2, const agl::TextureData* pColor3,
                               const agl::RenderTargetDepth* pDepth) {

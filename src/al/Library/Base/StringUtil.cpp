@@ -1,6 +1,7 @@
 #include "Project/Base/StringOpUtil.hpp"
 #include "Project/Base/StringUtil.hpp"
 
+#include <attributes.h>
 #include <basis/seadRawPrint.h>
 #include <cstdio>
 #include <cstring>
@@ -396,11 +397,11 @@ void copyStringW(char16* out, const char16* str, u32 len) {
     sead::StringUtil::wcs16cpy(out, len, str);
 }
 
-__attribute__((noinline)) bool isInStack(const void* element) {
+NOINLINE bool isInStack(const void* element) {
     return sead::MemUtil::isStack(element);
 }
 
-__attribute__((noinline)) bool isEqualString(const char* str1, const char* str2) {
+NOINLINE bool isEqualString(const char* str1, const char* str2) {
     while (*str1 == *str2) {
         char val = *str1;
 

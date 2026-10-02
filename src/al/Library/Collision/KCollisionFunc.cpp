@@ -1,10 +1,12 @@
 #include "Library/Collision/KCollisionFunc.hpp"
 
+#include <attributes.h>
+
 #include "Library/Collision/KCollisionServer.hpp"
 
 namespace alKCollisionFunc {
 namespace {
-[[gnu::always_inline]] inline void calcHitPos(sead::Vector3f* pHitPos, const al::KCollisionServer* pServer,
+ALWAYS_INLINE inline void calcHitPos(sead::Vector3f* pHitPos, const al::KCollisionServer* pServer,
                        const sead::Vector3f& rPos, const al::KCPrismData& rData,
                        const al::KCPrismHeader* pHeader, u8 location) {
     switch (location) {
