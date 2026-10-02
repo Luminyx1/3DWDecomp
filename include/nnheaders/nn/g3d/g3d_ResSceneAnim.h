@@ -6,7 +6,9 @@
 #pragma once
 
 #include <nn/types.h>
+#include <nn/g3d/g3d_ResCameraAnim.h>
 #include <nn/g3d/g3d_Resources.h>
+#include <nn/util/util_ResDic.h>
 
 namespace nn {
 namespace g3d {
@@ -20,6 +22,9 @@ public:
     BindResult Bind(nn::g3d::BindFuncTable const& table);
     void Release();
     void Reset();
+
+    // Defined by the translation units that use it.
+    const ResCameraAnim* FindCameraAnim(const char* pName) const;
 
     char mMagic[4];                      // _0
     s32 mBlockOffset;                    // _4
@@ -38,5 +43,18 @@ public:
     u16 mLightAnimCount;                 // _5C
     u16 mFogAnimCount;                   // _5E
 };
+
+__attribute__((noinline)) inline const ResSceneAnim*
+ResFile::FindSceneAnim(const char* pName) const {
+    const nn::util::ResDic* pDic =
+        static_cast<const nn::util::ResDic*>(ToData().pSceneAnimDic.Get());
+
+    if (pDic == nullptr) {
+        return nullptr;
+    }
+
+    int index = pDic->FindIndex(pName);
+    return index != nn::util::ResDic::Npos ? &ToData().pSceneAnimArray.Get()[index] : nullptr;
+}
 }  // namespace g3d
 }  // namespace nn

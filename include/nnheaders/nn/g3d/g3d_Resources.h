@@ -475,6 +475,9 @@ public:
     int GetModelCount() const { return ToData().modelCount; }
     ResModel* GetModel(int index) { return &ToData().pModelArray.Get()[index]; }
 
+    // Defined in g3d_ResSceneAnim.h.
+    const ResSceneAnim* FindSceneAnim(const char* pName) const;
+
     int FindExternalFileIndex(const char* pName) const
     {
         const nn::util::ResDic* pDic = ToData().pExternalFileDic.Get();
