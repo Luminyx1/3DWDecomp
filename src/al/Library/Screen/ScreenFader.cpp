@@ -12,6 +12,16 @@
 
 namespace al {
 namespace {
+
+/**
+ * Draws a screen-filling quad in the fade color.
+ * @param pDrawContext draw context
+ * @param rColor fade color
+ * @param alpha alpha of the fade
+ * @param maxAlpha maximum alpha of the fade
+ * @param rViewport viewport
+ * @param rFrameBuffer frame buffer to draw to
+ */
 void drawFadeQuad(agl::DrawContext* pDrawContext, const sead::Color4f& rColor, f32 alpha,
                   f32 maxAlpha, const sead::Viewport& rViewport,
                   const sead::FrameBuffer& rFrameBuffer) {
@@ -48,7 +58,13 @@ void drawFadeQuad(agl::DrawContext* pDrawContext, const sead::Color4f& rColor, f
     context.apply(pDrawContext);
     pDrawContext->changeShaderMode(agl::cShaderMode_UniformBlock, agl::ShaderOptimizeType(0));
 }
+
 }  // namespace
+
+/**
+ * Constructs a fader that is not fading.
+ */
+ScreenFader::ScreenFader() = default;
 
 /**
  * Starts fading the screen in.
