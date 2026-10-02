@@ -6,9 +6,6 @@
 #include "Library/Camera/CameraPoser_RS.hpp"
 
 namespace al {
-class LiveActor;
-class RailKeeper;
-class Resource;
 
 class CameraPoserParallelSimple : public CameraPoser_RS {
 public:

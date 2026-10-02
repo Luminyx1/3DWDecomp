@@ -34,7 +34,7 @@ void CameraPoserParallelSimple::loadParam(const ByamlIter& rIter) {
  * Places the camera at a fixed direction and distance from the offset target position.
  */
 void CameraPoserParallelSimple::update() {
-    mUp = sead::Vector3f::ey;
+    mUp.set(sead::Vector3f::ey);
     alCameraPoserFunction::calcTargetTrans(&mAt, this);
     sead::Vector3f offset = mLookAtOffset;
     rotateVectorDegreeY(&offset, mAngleH);
