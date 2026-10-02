@@ -4683,8 +4683,10 @@ src/al/Project/Joint/RollingCubePoseKeeper.cpp:
     .text   start:0x007FCA90 end:0x007FE044
 src/al/Project/Joint/RollingCubePoseKeeperUtil.cpp:
     .text   start:0x007FE050 end:0x007FEAB0
-src/al/Library/Layout/LayoutKit.cpp:
-    .text   start:0x007FEAB0 end:0x007FED54
+src/al/Library/Layout/LayoutKit.cpp: done
+    .text   start:0x007FEAB0 end:0x007FED44
+src/al/Project/Execute/ExecuteSystemInitInfo.cpp: done
+    .text   start:0x007FED50 end:0x007FED54
 src/al/Library/Layout/LayoutKitFunction.cpp: done
     .text   start:0x007FED60 end:0x007FEE3C
 src/al/Library/Light/DirectionalLightKeeper.cpp:
@@ -4957,11 +4959,11 @@ src/al/Library/Play/Area/SePlayArea.cpp: done
     .text   start:0x00882C90 end:0x00882D90
 src/al/Library/Play/Layout/SimpleLayoutAppear.cpp: done
     .text   start:0x00882D90 end:0x00882F04
-src/al/Library/Play/Layout/SimpleLayoutAppearWait.cpp:
+src/al/Library/Play/Layout/SimpleLayoutAppearWait.cpp: done
     .text   start:0x00882F10 end:0x00883234
-src/al/Library/Play/Layout/SimpleLayoutAppearWaitEnd.cpp:
+src/al/Library/Play/Layout/SimpleLayoutAppearWaitEnd.cpp: done
     .text   start:0x00883240 end:0x00883694
-src/al/Library/Play/Layout/WipeSimple.cpp:
+src/al/Library/Play/Layout/WipeSimple.cpp: done
     .text   start:0x008836A0 end:0x00883E58
 src/al/Library/Placement/PlacementId.cpp: done
     .text   start:0x00883E60 end:0x00883FF4
@@ -5733,7 +5735,7 @@ src/al/Project/Draw/GpuPerf.cpp: done
     .text   start:0x0099F2E0 end:0x0099F3B0
 src/al/Library/Layout/LayoutActionFunction.cpp:
     .text   start:0x0099F3B0 end:0x009A0204
-src/al/Project/Layout/LayoutActionKeeper.cpp:
+src/al/Project/Layout/LayoutActionKeeper.cpp: done
     .text   start:0x009A0210 end:0x009A0890
 src/al/Library/Layout/LayoutActor.cpp: done
     .text   start:0x009A0890 end:0x009A101C
@@ -5741,8 +5743,10 @@ src/al/Library/Layout/LayoutUtil.cpp: done
     .text   start:0x009A1020 end:0x009A109C
 src/al/Library/Layout/LayoutActorUtil.cpp:
     .text   start:0x009A10A0 end:0x009A483C
-src/al/Library/Layout/LayoutInitFunction.cpp:
-    .text   start:0x009A4840 end:0x009A5ACC
+src/al/Library/Layout/LayoutInitFunction.cpp: done
+    .text   start:0x009A4840 end:0x009A5654
+src/al/Library/Layout/EuiScreen.cpp: done
+    .text   start:0x009A5660 end:0x009A5ACC
 src/al/Library/Layout/LayoutInitInfo.cpp:
     .text   start:0x009A5AD0 end:0x009A6864
 src/al/Library/Layout/LayoutKeeper.cpp: done
@@ -5756,7 +5760,9 @@ src/al/Library/Layout/LayoutResource.cpp:
 src/al/Library/Layout/LayoutSceneInfo.cpp: done
     .text   start:0x009A9400 end:0x009A9414
 src/al/Library/Layout/LayoutSystem.cpp:
-    .text   start:0x009A9420 end:0x009AC5FC
+    .text   start:0x009A9420 end:0x009AC274
+src/al/Library/Layout/EuiScreenFactory.cpp: done
+    .text   start:0x009AC280 end:0x009AC5FC
 src/al/Library/Layout/LayoutTextPaneAnimator.cpp:
     .text   start:0x009AC600 end:0x009ADB6C
 src/al/Library/Math/IntervalTrigger.cpp: done

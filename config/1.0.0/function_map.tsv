@@ -49177,8 +49177,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71007FEC40			FALSE	_ZNK2al9LayoutKit8drawListEPKcS2_	al::LayoutKit::drawList(char const*, char const*) const	
 0x71007FEC50			FALSE	_ZN2al9LayoutKit15setLayoutSystemEPNS_12LayoutSystemE	al::LayoutKit::setLayoutSystem(al::LayoutSystem*)	
 0x71007FED30			FALSE	_ZN2al9LayoutKit14setDrawContextEPN3agl11DrawContextE	al::LayoutKit::setDrawContext(agl::DrawContext*)	
-0x71007FED50			FALSE	_ZN2al21ExecuteSystemInitInfoC2Ev	al::ExecuteSystemInitInfo::ExecuteSystemInitInfo()	
-0x71007FED60		LayoutKitFunction.o	FALSE	_ZN2al18initLayoutInitInfoEPNS_14LayoutInitInfoEPKNS_9LayoutKitEPNS_14SceneObjHolderEPKNS_13AudioDirectorEPKNS_12LayoutSystemEPKNS_13MessageSystemEPKNS_13GamePadSystemE	al::initLayoutInitInfo(al::LayoutInitInfo*, al::LayoutKit const*, al::SceneObjHolder*, al::AudioDirector const*, al::LayoutSystem const*, al::MessageSystem const*, al::GamePadSystem const*)	object (smo)
+0x71007FED50	Project/Execute	ExecuteSystemInitInfo.o	FALSE	_ZN2al21ExecuteSystemInitInfoC2Ev	al::ExecuteSystemInitInfo::ExecuteSystemInitInfo()	
+0x71007FED60	Library/Layout	LayoutKitFunction.o	FALSE	_ZN2al18initLayoutInitInfoEPNS_14LayoutInitInfoEPKNS_9LayoutKitEPNS_14SceneObjHolderEPKNS_13AudioDirectorEPKNS_12LayoutSystemEPKNS_13MessageSystemEPKNS_13GamePadSystemE	al::initLayoutInitInfo(al::LayoutInitInfo*, al::LayoutKit const*, al::SceneObjHolder*, al::AudioDirector const*, al::LayoutSystem const*, al::MessageSystem const*, al::GamePadSystem const*)	object (smo)
 0x71007FEDD0			FALSE	_ZN2al15setRenderBufferEPNS_9LayoutKitEPKN3agl12RenderBufferE	al::setRenderBuffer(al::LayoutKit*, agl::RenderBuffer const*)	
 0x71007FEDF0			FALSE	_ZN2al13executeUpdateEPNS_9LayoutKitE	al::executeUpdate(al::LayoutKit*)	
 0x71007FEE00			FALSE	_ZN2al17executeUpdateListEPNS_9LayoutKitEPKcS3_	al::executeUpdateList(al::LayoutKit*, char const*, char const*)	
@@ -53046,8 +53046,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71008830C0			FALSE	_ZN2al22SimpleLayoutAppearWait7appear2Ev	al::SimpleLayoutAppearWait::appear2()	
 0x7100883110			FALSE	_ZN2al22SimpleLayoutAppearWait9exeAppearEv	al::SimpleLayoutAppearWait::exeAppear()	
 0x7100883160			FALSE	_ZN2al22SimpleLayoutAppearWait7exeWaitEv	al::SimpleLayoutAppearWait::exeWait()	
-0x71008831A0			FALSE	sub_71008831A0	sub_71008831A0	
-0x71008831F0			FALSE	sub_71008831F0	sub_71008831F0	
+0x71008831A0			FALSE	_ZNK12_GLOBAL__N_131SimpleLayoutAppearWaitNrvAppear7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_131SimpleLayoutAppearWaitNrvAppear7executeEPN2al11NerveKeeperE	
+0x71008831F0			FALSE	_ZNK12_GLOBAL__N_129SimpleLayoutAppearWaitNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_129SimpleLayoutAppearWaitNrvWait7executeEPN2al11NerveKeeperE	
 0x7100883240		SimpleLayoutAppearWaitEnd.o	FALSE	_ZN2al25SimpleLayoutAppearWaitEndC2EPKcS2_RKNS_14LayoutInitInfoES2_b	al::SimpleLayoutAppearWaitEnd::SimpleLayoutAppearWaitEnd(char const*, char const*, al::LayoutInitInfo const&, char const*, bool)	object (smo)
 0x7100883310			FALSE	_ZN2al25SimpleLayoutAppearWaitEndC1EPKcS2_RKNS_14LayoutInitInfoES2_b	al::SimpleLayoutAppearWaitEnd::SimpleLayoutAppearWaitEnd(char const*, char const*, al::LayoutInitInfo const&, char const*, bool)	
 0x71008833E0			FALSE	_ZN2al25SimpleLayoutAppearWaitEnd6appearEv	al::SimpleLayoutAppearWaitEnd::appear()	
@@ -53058,9 +53058,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100883560			FALSE	_ZN2al25SimpleLayoutAppearWaitEnd6exeEndEv	al::SimpleLayoutAppearWaitEnd::exeEnd()	
 0x71008835E0			FALSE	_ZNK2al25SimpleLayoutAppearWaitEnd6isWaitEv	al::SimpleLayoutAppearWaitEnd::isWait() const	
 0x71008835F0			FALSE	_ZNK2al25SimpleLayoutAppearWaitEnd5isEndEv	al::SimpleLayoutAppearWaitEnd::isEnd() const	
-0x7100883600			FALSE	sub_7100883600	sub_7100883600	
-0x7100883610			FALSE	sub_7100883610	sub_7100883610	
-0x7100883620			FALSE	sub_7100883620	sub_7100883620	
+0x7100883600			FALSE	_ZNK12_GLOBAL__N_134SimpleLayoutAppearWaitEndNrvAppear7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_134SimpleLayoutAppearWaitEndNrvAppear7executeEPN2al11NerveKeeperE	
+0x7100883610			FALSE	_ZNK12_GLOBAL__N_131SimpleLayoutAppearWaitEndNrvEnd7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_131SimpleLayoutAppearWaitEndNrvEnd7executeEPN2al11NerveKeeperE	
+0x7100883620			FALSE	_ZNK12_GLOBAL__N_132SimpleLayoutAppearWaitEndNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_132SimpleLayoutAppearWaitEndNrvWait7executeEPN2al11NerveKeeperE	
 0x7100883630			FALSE	_ZN2al18createSimpleLayoutEPKcS1_RKNS_14LayoutInitInfoES1_	al::createSimpleLayout(char const*, char const*, al::LayoutInitInfo const&, char const*)	
 0x71008836A0		WipeSimple.o	FALSE	_ZN2al10WipeSimpleC2EPKcS2_RKNS_14LayoutInitInfoES2_	al::WipeSimple::WipeSimple(char const*, char const*, al::LayoutInitInfo const&, char const*)	
 0x7100883760			FALSE	_ZN2al10WipeSimpleC1EPKcS2_RKNS_14LayoutInitInfoES2_	al::WipeSimple::WipeSimple(char const*, char const*, al::LayoutInitInfo const&, char const*)	
@@ -53077,9 +53077,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100883C10			FALSE	_ZN2al10WipeSimple12exeDelayOpenEv	al::WipeSimple::exeDelayOpen()	
 0x7100883CC0			FALSE	_ZNK2al10WipeSimple15getWipeFrameNumEv	al::WipeSimple::getWipeFrameNum() const	
 0x7100883D00			FALSE	_ZN2al10WipeSimple6appearEv	al::WipeSimple::appear()	
-0x7100883D10			FALSE	sub_7100883D10	sub_7100883D10	
-0x7100883D60			FALSE	sub_7100883D60	sub_7100883D60	
-0x7100883DB0			FALSE	sub_7100883DB0	sub_7100883DB0	
+0x7100883D10			FALSE	_ZNK12_GLOBAL__N_118WipeSimpleNrvClose7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_118WipeSimpleNrvClose7executeEPN2al11NerveKeeperE	
+0x7100883D60			FALSE	_ZNK12_GLOBAL__N_121WipeSimpleNrvCloseEnd7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_121WipeSimpleNrvCloseEnd7executeEPN2al11NerveKeeperE	
+0x7100883DB0			FALSE	_ZNK12_GLOBAL__N_117WipeSimpleNrvOpen7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_117WipeSimpleNrvOpen7executeEPN2al11NerveKeeperE	
 0x7100883E50			FALSE	_ZNK12_GLOBAL__N_122WipeSimpleNrvDelayOpen7executeEPN2al11NerveKeeperE	(anonymous namespace)::WipeSimpleNrvDelayOpen::execute(al::NerveKeeper*) const	
 0x7100883E60	Library/Placement	PlacementId.o	FALSE	_ZN2al11PlacementIdC1Ev	al::PlacementId::PlacementId()	
 0x7100883E70			FALSE	_ZN2al11PlacementIdC1EPKcS2_S2_S2_	al::PlacementId::PlacementId(char const*, char const*, char const*, char const*)	
@@ -59849,7 +59849,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71009A2170			FALSE	_ZN2al18isContainPointPaneEPKNS_10IUseLayoutEPKcRKN4sead7Vector2IfEE	al::isContainPointPane(al::IUseLayout const*, char const*, sead::Vector2<float> const&)	
 0x71009A2230			FALSE	_ZN2al18isContainPointPaneEPKNS_10IUseLayoutEiPKc	al::isContainPointPane(al::IUseLayout const*, int, char const*)	
 0x71009A22F0			FALSE	_ZN2al24findHitPaneFromLayoutPosEPKNS_10IUseLayoutERKN4sead7Vector2IfEE	al::findHitPaneFromLayoutPos(al::IUseLayout const*, sead::Vector2<float> const&)	
-0x71009A2330			FALSE	sub_71009A2330	sub_71009A2330	
+0x71009A2330			FALSE	_ZN2al12_GLOBAL__N_120findHitPaneRecursiveEPN2nn4ui2d4PaneERKN4sead7Vector2IfEE	_ZN2al12_GLOBAL__N_120findHitPaneRecursiveEPN2nn4ui2d4PaneERKN4sead7Vector2IfEE	
 0x71009A2630			FALSE	_ZN2al27isExistHitPaneFromLayoutPosEPKNS_10IUseLayoutERKN4sead7Vector2IfEE	al::isExistHitPaneFromLayoutPos(al::IUseLayout const*, sead::Vector2<float> const&)	
 0x71009A2670			FALSE	_ZN2al24findHitPaneFromScreenPosEPKNS_10IUseLayoutERKN4sead7Vector2IfEE	al::findHitPaneFromScreenPos(al::IUseLayout const*, sead::Vector2<float> const&)	
 0x71009A26C0			FALSE	_ZN2al27isExistHitPaneFromScreenPosEPKNS_10IUseLayoutERKN4sead7Vector2IfEE	al::isExistHitPaneFromScreenPos(al::IUseLayout const*, sead::Vector2<float> const&)	
@@ -59895,17 +59895,17 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71009A4180			FALSE	_ZN2al14setPaneTextureEPNS_10IUseLayoutEPKcPKN2nn4ui2d11TextureInfoE	al::setPaneTexture(al::IUseLayout*, char const*, nn::ui2d::TextureInfo const*)	
 0x71009A41F0			FALSE	_ZN2al24registerLayoutPartsActorEPNS_11LayoutActorES1_	al::registerLayoutPartsActor(al::LayoutActor*, al::LayoutActor*)	
 0x71009A4200			FALSE	_ZN2al25updateLayoutPaneRecursiveEPNS_11LayoutActorE	al::updateLayoutPaneRecursive(al::LayoutActor*)	
-0x71009A4250			FALSE	sub_71009A4250	sub_71009A4250	
+0x71009A4250			FALSE	_ZN2al12_GLOBAL__N_119updatePaneRecursiveEPNS_11LayoutActorEPN3eui8LayoutExEPN2nn4ui2d4PaneE	_ZN2al12_GLOBAL__N_119updatePaneRecursiveEPNS_11LayoutActorEPN3eui8LayoutExEPN2nn4ui2d4PaneE	
 0x71009A44E0			FALSE	_ZN2al21getLayoutPaneGroupNumEPNS_11LayoutActorE	al::getLayoutPaneGroupNum(al::LayoutActor*)	
 0x71009A4500			FALSE	_ZN2al18getLayoutPaneGroupEPNS_11LayoutActorEi	al::getLayoutPaneGroup(al::LayoutActor*, int)	
 0x71009A4530			FALSE	_ZN2al18getLayoutPaneGroupEPKNS_11LayoutActorEPKc	al::getLayoutPaneGroup(al::LayoutActor const*, char const*)	
 0x71009A4560			FALSE	_ZN2al17getLayoutPartsNumEPNS_11LayoutActorE	al::getLayoutPartsNum(al::LayoutActor*)	
 0x71009A4580			FALSE	_ZN2al19getLayoutPartsActorEPNS_11LayoutActorEi	al::getLayoutPartsActor(al::LayoutActor*, int)	
 0x71009A45B0			FALSE	_ZN2al19getLayoutPartsActorEPNS_11LayoutActorEPKc	al::getLayoutPartsActor(al::LayoutActor*, char const*)	
-0x71009A45C0			FALSE	sub_71009A45C0	sub_71009A45C0	
-0x71009A4620			FALSE	sub_71009A4620	sub_71009A4620	
-0x71009A4680			FALSE	sub_71009A4680	sub_71009A4680	
-0x71009A46E0			FALSE	sub_71009A46E0	sub_71009A46E0	
+0x71009A45C0			FALSE	_ZN2al12_GLOBAL__N_119DisposerTextureInfoD2Ev	_ZN2al12_GLOBAL__N_119DisposerTextureInfoD2Ev	
+0x71009A4620			FALSE	_ZN2al12_GLOBAL__N_119DisposerTextureInfoD0Ev	_ZN2al12_GLOBAL__N_119DisposerTextureInfoD0Ev	
+0x71009A4680			FALSE	_ZThn24_N2al12_GLOBAL__N_119DisposerTextureInfoD1Ev	_ZThn24_N2al12_GLOBAL__N_119DisposerTextureInfoD1Ev	
+0x71009A46E0			FALSE	_ZThn24_N2al12_GLOBAL__N_119DisposerTextureInfoD0Ev	_ZThn24_N2al12_GLOBAL__N_119DisposerTextureInfoD0Ev	
 0x71009A4740			FALSE	_ZN4sead16WFixedSafeStringILi1024EED0Ev	sead::WFixedSafeString<1024>::~WFixedSafeString()	
 0x71009A4750			FALSE	_ZN4sead16WFixedSafeStringILi1024EEaSERKNS_14SafeStringBaseIDsEE	sead::WFixedSafeString<1024>::operator=(sead::SafeStringBase<char16_t> const&)	
 0x71009A4840		LayoutInitFunction.o	FALSE	_ZN2al22LayoutAllocatorInScopeC2Ev	al::LayoutAllocatorInScope::LayoutAllocatorInScope()	
@@ -59918,15 +59918,15 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71009A4B90			FALSE	_ZN2al19initLayoutBgmKeeperEPNS_11LayoutActorERKNS_14LayoutInitInfoEPKc	al::initLayoutBgmKeeper(al::LayoutActor*, al::LayoutInitInfo const&, char const*)	
 0x71009A4C10			FALSE	_ZN2al21initHitReactionKeeperEPNS_11LayoutActorERKNS_14LayoutInitInfoEPKNS_8ResourceEPKc	al::initHitReactionKeeper(al::LayoutActor*, al::LayoutInitInfo const&, al::Resource const*, char const*)	
 0x71009A4C80			FALSE	_ZN2al17initLayoutMessageEPNS_12LayoutKeeperERKNS_14LayoutInitInfoEPKNS_8ResourceE	al::initLayoutMessage(al::LayoutKeeper*, al::LayoutInitInfo const&, al::Resource const*)	
-0x71009A4D30			FALSE	sub_71009A4D30	sub_71009A4D30	
+0x71009A4D30			FALSE	_ZN2al12_GLOBAL__N_124initPaneMessageRecursiveEPN2nn4ui2d4PaneEPKNS_13MessageSystemEPKNS2_6LayoutESA_PKNS_9ByamlIterE	_ZN2al12_GLOBAL__N_124initPaneMessageRecursiveEPN2nn4ui2d4PaneEPKNS_13MessageSystemEPKNS2_6LayoutESA_PKNS_9ByamlIterE	
 0x71009A4EE0			FALSE	_ZN2al19initDrawInfoDefaultEPN2nn4ui2d8DrawInfoEPNS1_16GraphicsResourceE	al::initDrawInfoDefault(nn::ui2d::DrawInfo*, nn::ui2d::GraphicsResource*)	
 0x71009A4F70			FALSE	_ZN2al12initDrawInfoEPN2nn4ui2d8DrawInfoEPNS1_16GraphicsResourceERKNS0_4font9RectangleE	al::initDrawInfo(nn::ui2d::DrawInfo*, nn::ui2d::GraphicsResource*, nn::font::Rectangle const&)	
 0x71009A5120			FALSE	_ZN2al16initLayoutKeeperEPNS_12LayoutKeeperERKNS_14LayoutInitInfoEPKNS_8ResourceEPNS_18CustomTagProcessorEb	al::initLayoutKeeper(al::LayoutKeeper*, al::LayoutInitInfo const&, al::Resource const*, al::CustomTagProcessor*, bool)	
 0x71009A52B0			FALSE	_ZN2al18createTagProcessorERKNS_14LayoutInitInfoEPKNS_8ResourceE	al::createTagProcessor(al::LayoutInitInfo const&, al::Resource const*)	
 0x71009A5300			FALSE	_ZN2al29reallocateTextBoxStringBufferEPNS_11LayoutActorEPKNS_8ResourceEPKc	al::reallocateTextBoxStringBuffer(al::LayoutActor*, al::Resource const*, char const*)	
-0x71009A5380			FALSE	sub_71009A5380	sub_71009A5380	
-0x71009A54B0			FALSE	sub_71009A54B0	sub_71009A54B0	
-0x71009A5660			FALSE	_ZN2al9EuiScreenC2Ev	al::EuiScreen::EuiScreen()	
+0x71009A5380			FALSE	_ZN2al12_GLOBAL__N_138reallocateTextBoxStringBufferRecursiveEPN2nn4ui2d4PaneEPKNS_9ByamlIterE	_ZN2al12_GLOBAL__N_138reallocateTextBoxStringBufferRecursiveEPN2nn4ui2d4PaneEPKNS_9ByamlIterE	
+0x71009A54B0			FALSE	_ZN2al12_GLOBAL__N_124tryFindTextBoxBufferSizeEPiPKNS_9ByamlIterEPKcS6_	_ZN2al12_GLOBAL__N_124tryFindTextBoxBufferSizeEPiPKNS_9ByamlIterEPKcS6_	
+0x71009A5660		EuiScreen.o	FALSE	_ZN2al9EuiScreenC2Ev	al::EuiScreen::EuiScreen()	
 0x71009A56C0			FALSE	_ZN2al9EuiScreenD1Ev	al::EuiScreen::~EuiScreen()	
 0x71009A5840			FALSE	_ZN2al9EuiScreenD0Ev	al::EuiScreen::~EuiScreen()	
 0x71009A5870			FALSE	_ZN2al9EuiScreen16doSetupDrawInfo_Ev	al::EuiScreen::doSetupDrawInfo_()	
@@ -59937,16 +59937,17 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71009A5B00			FALSE	_ZN2al14LayoutInitInfo4initEPNS_15ExecuteDirectorEPKNS_16EffectSystemInfoEPNS_14SceneObjHolderEPKNS_13AudioDirectorEPNS_14CameraDirectorEPNS_15SceneCameraInfoEPKNS_12LayoutSystemEPKNS_13MessageSystemEPKNS_13GamePadSystemEPNS_17PadRumbleDirectorE	al::LayoutInitInfo::init(al::ExecuteDirector*, al::EffectSystemInfo const*, al::SceneObjHolder*, al::AudioDirector const*, al::CameraDirector*, al::SceneCameraInfo*, al::LayoutSystem const*, al::MessageSystem const*, al::GamePadSystem const*, al::PadRumbleDirector*)	
 0x71009A5B30			FALSE	_ZNK2al14LayoutInitInfo16getMessageSystemEv	al::LayoutInitInfo::getMessageSystem() const	object/folder from OdysseyDecomp file list
 0x71009A5B40			FALSE	_ZN2al15initLayoutActorEPNS_11LayoutActorERKNS_14LayoutInitInfoEPKcS6_	al::initLayoutActor(al::LayoutActor*, al::LayoutInitInfo const&, char const*, char const*)	
-0x71009A5BB0			FALSE	sub_71009A5BB0	sub_71009A5BB0	
+0x71009A5BB0			FALSE	_ZN2al12_GLOBAL__N_119initLayoutActorImplEPNS_11LayoutActorERKNS_14LayoutInitInfoEPKNS_8ResourceEPKcb	_ZN2al12_GLOBAL__N_119initLayoutActorImplEPNS_11LayoutActorERKNS_14LayoutInitInfoEPKNS_8ResourceEPKcb	
 0x71009A5EA0			FALSE	_ZN2al24initLayoutActorLocalizedEPNS_11LayoutActorERKNS_14LayoutInitInfoEPKcS6_	al::initLayoutActorLocalized(al::LayoutActor*, al::LayoutInitInfo const&, char const*, char const*)	
 0x71009A5F70			FALSE	_ZN2al30initLayoutActorUseOtherMessageEPNS_11LayoutActorERKNS_14LayoutInitInfoEPKcS6_S6_	al::initLayoutActorUseOtherMessage(al::LayoutActor*, al::LayoutInitInfo const&, char const*, char const*, char const*)	
 0x71009A5F80			FALSE	_ZN2al26initLayoutTextPaneAnimatorEPNS_11LayoutActorEPKc	al::initLayoutTextPaneAnimator(al::LayoutActor*, char const*)	
 0x71009A6020			FALSE	_ZN2al36initLayoutTextPaneAnimatorWithShadowEPNS_11LayoutActorEPKc	al::initLayoutTextPaneAnimatorWithShadow(al::LayoutActor*, char const*)	
 0x71009A6240			FALSE	_ZN2al20initLayoutPartsActorEPNS_11LayoutActorES1_RKNS_14LayoutInitInfoEPKcS6_	al::initLayoutPartsActor(al::LayoutActor*, al::LayoutActor*, al::LayoutInitInfo const&, char const*, char const*)	
+0x71009A6250			FALSE	_ZN2al12_GLOBAL__N_124initLayoutPartsActorImplEPNS_11LayoutActorES2_RKNS_14LayoutInitInfoEPKcS7_b	al::(anonymous namespace)::initLayoutPartsActorImpl(al::LayoutActor*, al::LayoutActor*, al::LayoutInitInfo const&, char const*, char const*, bool)	
 0x71009A6560			FALSE	_ZN2al29initLayoutPartsActorLocalizedEPNS_11LayoutActorES1_RKNS_14LayoutInitInfoEPKcS6_	al::initLayoutPartsActorLocalized(al::LayoutActor*, al::LayoutActor*, al::LayoutInitInfo const&, char const*, char const*)	
 0x71009A6570			FALSE	_ZN2al26initLayoutPartsAudioKeeperEPNS_11LayoutActorERKNS_14LayoutInitInfoERKN4sead14SafeStringBaseIcEE	al::initLayoutPartsAudioKeeper(al::LayoutActor*, al::LayoutInitInfo const&, sead::SafeStringBase<char> const&)	
-0x71009A6610			FALSE	sub_71009A6610	sub_71009A6610	
-0x71009A6760			FALSE	sub_71009A6760	sub_71009A6760	
+0x71009A6610			FALSE	_ZN2al12_GLOBAL__N_130createTagProcessorWithInitFileERKNS_14LayoutInitInfoEPKNS_8ResourceEPKc	_ZN2al12_GLOBAL__N_130createTagProcessorWithInitFileERKNS_14LayoutInitInfoEPKNS_8ResourceEPKc	
+0x71009A6760			FALSE	_ZN2al12_GLOBAL__N_115initLayoutAudioEPNS_11LayoutActorERKNS_14LayoutInitInfoEPKNS_8ResourceEPKc	_ZN2al12_GLOBAL__N_115initLayoutAudioEPNS_11LayoutActorERKNS_14LayoutInitInfoEPKNS_8ResourceEPKc	
 0x71009A6870	Library/Layout	LayoutKeeper.o	FALSE	_ZN2al12LayoutKeeperC2Ev	al::LayoutKeeper::LayoutKeeper()	note: sorts before the previous object (folder boundary or misnamed object?)
 0x71009A6890			FALSE	_ZN2al12LayoutKeeper18reinitializeShaderEv	al::LayoutKeeper::reinitializeShader()	
 0x71009A6990			FALSE	_ZN2al12LayoutKeeper10initScreenEPN3eui6ScreenE	al::LayoutKeeper::initScreen(eui::Screen*)	object (smo)
@@ -60027,11 +60028,11 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71009AAF70			FALSE	_ZNK2al12LayoutSystem9beginDrawEv	al::LayoutSystem::beginDraw() const	
 0x71009AAF80			FALSE	_ZNK2al12LayoutSystem7endDrawEv	al::LayoutSystem::endDraw() const	
 0x71009AAFA0			FALSE	_ZN2al12LayoutSystem12initFontListEv	al::LayoutSystem::initFontList()	
-0x71009AB7A0			FALSE	sub_71009AB7A0	sub_71009AB7A0	
+0x71009AB7A0			FALSE	_ZN12_GLOBAL__N_121createScalableFontMgrEPN4sead4HeapEb	_ZN12_GLOBAL__N_121createScalableFontMgrEPN4sead4HeapEb	
 0x71009ABEF0			FALSE	_ZN2al12FontNamePairC2Ev	al::FontNamePair::FontNamePair()	
-0x71009ABFB0			FALSE	sub_71009ABFB0	sub_71009ABFB0	
-0x71009ABFE0			FALSE	sub_71009ABFE0	sub_71009ABFE0	
-0x71009AC280			FALSE	_ZN2al16EuiScreenFactory10initializeEPN4sead4HeapEi	al::EuiScreenFactory::initialize(sead::Heap*, int)	
+0x71009ABFB0			FALSE	_ZN12_GLOBAL__N_121LayoutScalableFontMgrD0Ev	_ZN12_GLOBAL__N_121LayoutScalableFontMgrD0Ev	
+0x71009ABFE0			FALSE	_GLOBAL__sub_I_LayoutSystem.cpp	_GLOBAL__sub_I_LayoutSystem.cpp	
+0x71009AC280		EuiScreenFactory.o	FALSE	_ZN2al16EuiScreenFactory10initializeEPN4sead4HeapEi	al::EuiScreenFactory::initialize(sead::Heap*, int)	
 0x71009AC450			FALSE	_ZN2al16EuiScreenFactory12createScreenEPN4sead4HeapEi	al::EuiScreenFactory::createScreen(sead::Heap*, int)	
 0x71009AC4E0			FALSE	_ZNK2al16EuiScreenFactory13getScreenNameEi	al::EuiScreenFactory::getScreenName(int) const	
 0x71009AC500			FALSE	_ZNK2al16EuiScreenFactory12getScreenNumEv	al::EuiScreenFactory::getScreenNum() const	
@@ -60044,7 +60045,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71009AC700			FALSE	_ZN2al22LayoutTextPaneAnimator21initEuiLetterAnimCtrlEPN3eui8LayoutExE	al::LayoutTextPaneAnimator::initEuiLetterAnimCtrl(eui::LayoutEx*)	
 0x71009AC7A0			FALSE	_ZN2al22LayoutTextPaneAnimator31initEuiLetterAnimCtrlWithShadowEPN3eui8LayoutExEPN2nn4ui2d7TextBoxE	al::LayoutTextPaneAnimator::initEuiLetterAnimCtrlWithShadow(eui::LayoutEx*, nn::ui2d::TextBox*)	
 0x71009AC8C0			FALSE	_ZN2al22LayoutTextPaneAnimator5startEPKDsPKNS_20MessageTagDataHolderEPKNS_23ReplaceTagProcessorBaseE	al::LayoutTextPaneAnimator::start(char16_t const*, al::MessageTagDataHolder const*, al::ReplaceTagProcessorBase const*)	
-0x71009ACC80			FALSE	sub_71009ACC80	sub_71009ACC80	
+0x71009ACC80			FALSE	_ZN2al12_GLOBAL__N_115startLetterAnimEPNS_17EuiLetterAnimCtrlEPKDsPNS_11LayoutActorE	_ZN2al12_GLOBAL__N_115startLetterAnimEPNS_17EuiLetterAnimCtrlEPKDsPNS_11LayoutActorE	
 0x71009ACDE0			FALSE	_ZN2al22LayoutTextPaneAnimator3endEv	al::LayoutTextPaneAnimator::end()	
 0x71009ACE20			FALSE	_ZN2al22LayoutTextPaneAnimator6updateEv	al::LayoutTextPaneAnimator::update()	
 0x71009AD090			FALSE	_ZN2al22LayoutTextPaneAnimator10updateTextEv	al::LayoutTextPaneAnimator::updateText()	
@@ -60057,15 +60058,15 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71009AD810			FALSE	_ZN2al17EuiLetterAnimCtrlD0Ev	al::EuiLetterAnimCtrl::~EuiLetterAnimCtrl()	
 0x71009AD840			FALSE	_ZN2al17EuiLetterAnimCtrl6UpdateEf	al::EuiLetterAnimCtrl::Update(float)	
 0x71009AD870			FALSE	_ZN4sead10IDelegate1IPKNS_10MessageSetIDsE7TagInfoEED2Ev	sead::IDelegate1<sead::MessageSet<char16_t>::TagInfo const*>::~IDelegate1()	
-0x71009AD880			FALSE	j__ZdlPv_3	j__ZdlPv_3	
-0x71009AD890			FALSE	sub_71009AD890	sub_71009AD890	
+0x71009AD880			FALSE	_ZN2al12_GLOBAL__N_122TextPaneAppTagCallbackD0Ev	_ZN2al12_GLOBAL__N_122TextPaneAppTagCallbackD0Ev	
+0x71009AD890			FALSE	_ZN2al12_GLOBAL__N_122TextPaneAppTagCallback6invokeEPKN4sead10MessageSetIDsE7TagInfoE	_ZN2al12_GLOBAL__N_122TextPaneAppTagCallback6invokeEPKN4sead10MessageSetIDsE7TagInfoE	
 0x71009AD9E0			FALSE	_ZNK4sead10IDelegate1IPKNS_10MessageSetIDsE7TagInfoEE5cloneEPNS_4HeapE	sead::IDelegate1<sead::MessageSet<char16_t>::TagInfo const*>::clone(sead::Heap*) const	
 0x71009AD9F0			FALSE	_ZNK4sead10IDelegate1IPKNS_10MessageSetIDsE7TagInfoEE9isNoDummyEv	sead::IDelegate1<sead::MessageSet<char16_t>::TagInfo const*>::isNoDummy() const	
-0x71009ADA00			FALSE	sub_71009ADA00	sub_71009ADA00	
-0x71009ADA30			FALSE	sub_71009ADA30	sub_71009ADA30	
-0x71009ADA80			FALSE	sub_71009ADA80	sub_71009ADA80	
-0x71009ADAD0			FALSE	sub_71009ADAD0	sub_71009ADAD0	
-0x71009ADB20			FALSE	sub_71009ADB20	sub_71009ADB20	
+0x71009ADA00			FALSE	_ZN2al12_GLOBAL__N_120TextPaneTagProcessorD0Ev	_ZN2al12_GLOBAL__N_120TextPaneTagProcessorD0Ev	
+0x71009ADA30			FALSE	_ZN2al12_GLOBAL__N_120TextPaneTagProcessor20preProcessSystemTag_EPKN4sead10MessageSetIDsE7TagInfoEPDsPjS9_jPKDsjPv	_ZN2al12_GLOBAL__N_120TextPaneTagProcessor20preProcessSystemTag_EPKN4sead10MessageSetIDsE7TagInfoEPDsPjS9_jPKDsjPv	
+0x71009ADA80			FALSE	_ZN2al12_GLOBAL__N_120TextPaneTagProcessor17preProcessEuiTag_EPKN4sead10MessageSetIDsE7TagInfoEPDsPjS9_jPKDsjPv	_ZN2al12_GLOBAL__N_120TextPaneTagProcessor17preProcessEuiTag_EPKN4sead10MessageSetIDsE7TagInfoEPDsPjS9_jPKDsjPv	
+0x71009ADAD0			FALSE	_ZN2al12_GLOBAL__N_120TextPaneTagProcessor21preProcessGrammarTag_EPKN4sead10MessageSetIDsE7TagInfoEPDsPjS9_jPKDsjPv	_ZN2al12_GLOBAL__N_120TextPaneTagProcessor21preProcessGrammarTag_EPKN4sead10MessageSetIDsE7TagInfoEPDsPjS9_jPKDsjPv	
+0x71009ADB20			FALSE	_ZN2al12_GLOBAL__N_120TextPaneTagProcessor17preProcessAppTag_EPKN4sead10MessageSetIDsE7TagInfoEPDsPjS9_jPKDsjPv	_ZN2al12_GLOBAL__N_120TextPaneTagProcessor17preProcessAppTag_EPKN4sead10MessageSetIDsE7TagInfoEPDsPjS9_jPKDsjPv	
 0x71009ADB70	Library/Math	IntervalTrigger.o	FALSE	_ZN2al15IntervalTriggerC2Ef	al::IntervalTrigger::IntervalTrigger(float)	
 0x71009ADB80			FALSE	_ZN2al15IntervalTrigger6updateEf	al::IntervalTrigger::update(float)	
 0x71009ADC10		MatrixPtrHolder.o	FALSE	_ZN2al12MtxPtrHolderC2Ev	al::MtxPtrHolder::MtxPtrHolder()	
