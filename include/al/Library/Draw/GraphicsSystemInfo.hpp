@@ -2,142 +2,236 @@
 
 #include <basis/seadTypes.h>
 #include <container/seadPtrArray.h>
+#include <container/seadStrTreeMap.h>
+#include <container/seadTList.h>
+#include <gfx/seadColor.h>
+#include <heap/seadDisposer.h>
+#include <math/seadMatrix.h>
 #include <math/seadVector.h>
 #include <nn/g3d/g3d_ViewVolume.h>
+#include <postfx/aglFilterAA.h>
 #include <prim/seadEnum.h>
+#include <utility/aglParameter.h>
+#include <utility/aglParameterIO.h>
+#include <utility/aglParameterObj.h>
+
+#include "common/aglShaderEnum.h"
+#include "Library/Draw/GraphicsInitArg.hpp"
+
+namespace agl {
+class ShaderProgram;
+}  // namespace agl
+
+namespace agl::pfx {
+class ColorCorrection;
+}  // namespace agl::pfx
 
 namespace agl::sdw {
-    class PrimitiveOcclusion;
-}
+class PrimitiveOcclusion;
+class SSAO;
+}  // namespace agl::sdw
 
 namespace sead {
-    class LookAtCamera;
-    class PerspectiveProjection;
+class Camera;
+class LookAtCamera;
+class PerspectiveProjection;
 }  // namespace sead
 
 namespace al {
-    class AtmosScatter;
-    class AtmosScatterDrawer;
-    class CubeMapDirector;
-    class DirectionalLightKeeper;
-    class FogDirector;
-    class FullScreenTriangle;
-    class GBufferArray;
-    class GpuMemAllocator;
-    class GraphicsStressDirector;
-    class GraphicsAreaDirector;
-    class LightIntensityDirector;
-    class ModelLightDirector;
-    class PrePassLightKeeper;
-    class ShaderEnvTextureKeeper;
-    class ShaderMirrorDirector;
-    class ShadowDirector;
-    class SkyboxDirector;
-    class SSIIKeeper;
-    class UniformBlock;
-    class ViewRenderer;
-    class LiveActorKit;
-    class SceneCameraInfo;
-    class PartsGraphics;
-    struct GraphicsInitArg;
+class ApplicationMessageReceiver;
+class AtmosScatter;
+class AtmosScatterDrawer;
+class CubeMapDirector;
+class DepthOfFieldDrawer;
+class DirectionalLightKeeper;
+class EdgeDrawer;
+class FlareFilterDirector;
+class FogDirector;
+class FullScreenQuadModel;
+class FullScreenTriangle;
+class GBufferArray;
+class GodRayDirector;
+class GpuMemAllocator;
+class GraphicsAreaDirector;
+class GraphicsParamFilePath;
+class GraphicsParamKeeperImpl;
+class GraphicsStressDirector;
+class HdrCompose;
+class LightIntensityDirector;
+class LightStreakDirector;
+class LiveActorKit;
+class ModelLightDirector;
+class NoiseTextureKeeper;
+class OccludedEffectDirector;
+class PartsGraphics;
+class PostProcessingFilter;
+class PrePassLightKeeper;
+class RadialBlurDirector;
+class Resource;
+class SceneCameraInfo;
+class ShaderCubeMapKeeper;
+class ShaderEnvTextureKeeper;
+class ShaderHolder;
+class ShaderMirrorDirector;
+class ShadowDirector;
+class SimpleModelEnv;
+class SkyboxDirector;
+class SSIIKeeper;
+class UniformBlock;
+class ViewRenderer;
 
-    // Partial layout (3DW); only the members used so far are named.
-    class ShaderCubeMapKeeper;
+template <typename T>
+class GraphicsParamKeeper;
 
-    SEAD_ENUM(GraphicsAreaTarget, Player, CameraPos, CameraLookAt)
+using SSAOParamKeeper = GraphicsParamKeeper<agl::sdw::SSAO>;
+using ColorCorrectionParamKeeper = GraphicsParamKeeper<agl::pfx::ColorCorrection>;
 
-    class GraphicsSystemInfo {
-    public:
-        GraphicsSystemInfo(const char* pStageName);
+SEAD_ENUM(GraphicsAreaTarget, Player, CameraPos, CameraLookAt)
 
-        void init(const GraphicsInitArg& rArg, LiveActorKit* pKit);
-        void endInit();
-        void clearGraphicsRequest();
-        void updateGraphics(bool isPaused);
-        void preDrawGraphics(const SceneCameraInfo* pCameraInfo);
-        ShaderCubeMapKeeper* getShaderCubeMapKeeper() const;
-        void activateDirLitColorTex() const;
-        void registPartsGraphics(PartsGraphics* pPartsGraphics);
-        bool tryDirectionalLightInfo(sead::Vector3f* pDir, const char* pName,
-                                     f32* pIntensity) const;
-        const sead::PtrArray<UniformBlock>* getViewIndexedUboArray(const char* pName) const;
+/**
+ * Owns every graphics director of a scene (lights, shadows, post effects, atmosphere...) and
+ * drives their per-frame update.
+ */
+class GraphicsSystemInfo : public sead::IDisposer {
+public:
+    using UniformBlockArray = sead::PtrArray<UniformBlock>;
+    using ViewIndexedUboArrayTree = sead::StrTreeMap<128, const UniformBlockArray*>;
+    using PartsGraphicsList = sead::TList<PartsGraphics*>;
 
-        CubeMapDirector* getCubeMapDirector() const { return mCubeMapDirector; }
-        DirectionalLightKeeper* getDirectionalLightKeeper() const { return mDirectionalLightKeeper; }
-        PrePassLightKeeper* getPrePassLightKeeper() const { return mPrePassLightKeeper; }
-        SkyboxDirector* getSkyboxDirector() const { return mSkyboxDirector; }
-        GraphicsAreaDirector* getGraphicsAreaDirector() const { return mGraphicsAreaDirector; }
-        LightIntensityDirector* getLightIntensityDirector() const { return mLightIntensityDirector; }
-        UniformBlock* getLightEnvUbo() const { return mLightEnvUbo; }
-        ShaderEnvTextureKeeper* getShaderEnvTextureKeeper() const { return mShaderEnvTextureKeeper; }
-        ModelLightDirector* getModelLightDirector() const { return mModelLightDirector; }
-        ShadowDirector* getShadowDirector() const { return mShadowDirector; }
-        GraphicsStressDirector* getGraphicsStressDirector() const { return mGraphicsStressDirector; }
-        FogDirector* getFogDirector() const { return mFogDirector; }
-        const nn::g3d::ViewVolume& getViewVolume() const { return mViewVolume; }
-        ViewRenderer* getViewRenderer() const { return mViewRenderer; }
-        s32 getDrawEnvUpdateCount() const { return mDrawEnvUpdateCount; }
-        const sead::Vector3f& getDrawCameraPos() const { return mDrawCameraPos; }
-        GBufferArray* getDrawGBufferArray() const { return mDrawGBufferArray; }
-        sead::LookAtCamera* getDrawCamera() const { return mDrawCamera; }
-        sead::PerspectiveProjection* getDrawProjection() const { return mDrawProjection; }
-        s32 getDrawViewIndex() const { return mDrawViewIndex; }
-        AtmosScatter* getAtmosScatter() const { return mAtmosScatter; }
-        GpuMemAllocator* getGpuMemAllocator() const { return mGpuMemAllocator; }
-        const char* getLodSettingName() const { return mLodSettingName; }
-        GraphicsAreaTarget getAreaTarget() const { return GraphicsAreaTarget(mAreaTarget); }
+    GraphicsSystemInfo(const char* pStageName);
+    ~GraphicsSystemInfo() override;
 
-        u8 _0[0x40];
-        s32 _40;
-        u8 _44[0x60 - 0x44];
-        s32 _60;
-        u8 _64[0x70 - 0x64];
-        CubeMapDirector* mCubeMapDirector;
-        DirectionalLightKeeper* mDirectionalLightKeeper;
-        SkyboxDirector* mSkyboxDirector;
-        GraphicsAreaDirector* mGraphicsAreaDirector;
-        LightIntensityDirector* mLightIntensityDirector;
-        void* mRadialBlurDirector;
-        PrePassLightKeeper* mPrePassLightKeeper;
-        ShaderEnvTextureKeeper* mShaderEnvTextureKeeper;
-        ModelLightDirector* mModelLightDirector;
-        ShadowDirector* mShadowDirector;
-        void* mEdgeDrawer;
-        void* mDepthOfFieldDrawer;
-        GraphicsStressDirector* mGraphicsStressDirector;
-        ShaderMirrorDirector* mShaderMirrorDirector;
-        void* mSSAOParamKeeper;
-        void* mColorCorrectionParamKeeper;
-        void* mFlareFilterDirector;
-        void* mGodRayDirector;
-        FogDirector* mFogDirector;
-        void* mOccludedEffectDirector;
-        void* mLightStreakDirector;
-        void* mHdrCompose;
-        SSIIKeeper* mSSIIKeeper;
-        agl::sdw::PrimitiveOcclusion* mPrimitiveOcclusion;
-        u8 _130[0x148 - 0x130];
-        s32 mAreaTarget;
-        u8 _14c[0x150 - 0x14c];
-        nn::g3d::ViewVolume mViewVolume;
-        ViewRenderer* mViewRenderer;
-        u8 _248[0x250 - 0x248];
-        GBufferArray* mDrawGBufferArray;
-        sead::LookAtCamera* mDrawCamera;
-        sead::PerspectiveProjection* mDrawProjection;
-        s32 mDrawViewIndex;
-        s32 mDrawEnvUpdateCount;
-        sead::Vector3f mDrawCameraPos;
-        u8 _27c[0xd58 - 0x27c];
-        AtmosScatter* mAtmosScatter;
-        void* _d60;
-        AtmosScatterDrawer* mAtmosScatterDrawer;
-        u8 _d70[0x1020 - 0xd70];
-        UniformBlock* mLightEnvUbo;
-        u8 _1028[0x1048 - 0x1028];
-        GpuMemAllocator* mGpuMemAllocator;
-        FullScreenTriangle* mFullScreenTriangle;
-        const char* mLodSettingName;
-        u8 _1060[0x1080 - 0x1060];
+    ShaderCubeMapKeeper* getShaderCubeMapKeeper() const;
+    const UniformBlockArray* getViewIndexedUboArray(const char* pName) const;
+    void setViewIndexedUboArray(const char* pName, const UniformBlockArray* pArray);
+    void initAtmosScatter(LiveActorKit* pKit);
+    void init(const GraphicsInitArg& rArg, LiveActorKit* pKit);
+    void initProjectResource();
+    void initStageResource(const Resource* pResource, const char* pStageName, LiveActorKit* pKit,
+                           bool isSkipAreaParam, s32 scenarioNo);
+    void endInit();
+    void setDrawEnv(s32 viewIndex, GBufferArray* pGBufferArray, const sead::Camera* pCamera,
+                    const sead::PerspectiveProjection* pProjection);
+    void clearGraphicsRequest();
+    void cancelLerp();
+    void updateGraphics(bool isPaused);
+    void preDrawGraphics(const SceneCameraInfo* pCameraInfo);
+    void updateViewGpu(s32 viewIndex, const sead::Camera* pCamera,
+                       const sead::PerspectiveProjection* pProjection);
+    void updateViewVolume(const sead::Matrix34f& rViewMtx, const sead::Matrix44f& rProjMtx);
+    bool tryGetAtmosLightDir(sead::Vector3f* pDir) const;
+    bool registPartsGraphics(PartsGraphics* pPartsGraphics);
+    bool tryDirectionalLightInfo(sead::Vector3f* pDir, const char* pName, f32* pIntensity) const;
+    agl::ShaderMode drawFarClearGBuffer(agl::ShaderMode shaderMode) const;
+    agl::ShaderMode drawFarClear(agl::ShaderMode shaderMode, bool isGBuffer,
+                                 const sead::Color4f& rColor) const;
+    void activateDirLitColorTex() const;
+
+    const GraphicsInitArg& getInitArg() const { return mInitArg; }
+    CubeMapDirector* getCubeMapDirector() const { return mCubeMapDirector; }
+    DirectionalLightKeeper* getDirectionalLightKeeper() const { return mDirectionalLightKeeper; }
+    PrePassLightKeeper* getPrePassLightKeeper() const { return mPrePassLightKeeper; }
+    SkyboxDirector* getSkyboxDirector() const { return mSkyboxDirector; }
+    GraphicsAreaDirector* getGraphicsAreaDirector() const { return mGraphicsAreaDirector; }
+    LightIntensityDirector* getLightIntensityDirector() const { return mLightIntensityDirector; }
+    UniformBlock* getLightEnvUbo() const { return mLightEnvUbo; }
+    ShaderEnvTextureKeeper* getShaderEnvTextureKeeper() const { return mShaderEnvTextureKeeper; }
+    ModelLightDirector* getModelLightDirector() const { return mModelLightDirector; }
+    ShadowDirector* getShadowDirector() const { return mShadowDirector; }
+    GraphicsStressDirector* getGraphicsStressDirector() const { return mGraphicsStressDirector; }
+    FogDirector* getFogDirector() const { return mFogDirector; }
+    PostProcessingFilter* getPostProcessingFilter() const { return mPostProcessingFilter; }
+    const nn::g3d::ViewVolume& getViewVolume() const { return mViewVolume; }
+    ViewRenderer* getViewRenderer() const { return mViewRenderer; }
+    SimpleModelEnv* getSimpleModelEnv() const { return mSimpleModelEnv; }
+    s32 getDrawEnvUpdateCount() const { return mDrawEnvUpdateCount; }
+    const sead::Vector3f& getDrawCameraPos() const { return mDrawCameraPos; }
+    GBufferArray* getDrawGBufferArray() const { return mDrawGBufferArray; }
+    sead::LookAtCamera* getDrawCamera() const { return mDrawCamera; }
+    sead::PerspectiveProjection* getDrawProjection() const { return mDrawProjection; }
+    s32 getDrawViewIndex() const { return mDrawViewIndex; }
+    AtmosScatter* getAtmosScatter() const { return mAtmosScatter; }
+    GpuMemAllocator* getGpuMemAllocator() const { return mGpuMemAllocator; }
+    ApplicationMessageReceiver* getApplicationMessageReceiver() const {
+        return mApplicationMessageReceiver;
+    }
+    const char* getLodSettingName() const { return mLodSettingName; }
+    GraphicsAreaTarget getAreaTarget() const { return GraphicsAreaTarget(mAreaTarget); }
+
+    ViewIndexedUboArrayTree mViewIndexedUboArrayTree;
+    union {
+        GraphicsInitArg mInitArg;
+        // Older aliases of mInitArg.mAtmosScatterType and mInitArg._20 used by other units.
+        struct {
+            s32 _40;
+            u8 _44[0x60 - 0x44];
+            s32 _60;
+        };
     };
-};  // namespace al
+    CubeMapDirector* mCubeMapDirector;
+    DirectionalLightKeeper* mDirectionalLightKeeper;
+    SkyboxDirector* mSkyboxDirector;
+    GraphicsAreaDirector* mGraphicsAreaDirector;
+    LightIntensityDirector* mLightIntensityDirector;
+    RadialBlurDirector* mRadialBlurDirector;
+    PrePassLightKeeper* mPrePassLightKeeper;
+    ShaderEnvTextureKeeper* mShaderEnvTextureKeeper;
+    ModelLightDirector* mModelLightDirector;
+    ShadowDirector* mShadowDirector;
+    EdgeDrawer* mEdgeDrawer;
+    DepthOfFieldDrawer* mDepthOfFieldDrawer;
+    GraphicsStressDirector* mGraphicsStressDirector;
+    ShaderMirrorDirector* mShaderMirrorDirector;
+    SSAOParamKeeper* mSSAOParamKeeper;
+    ColorCorrectionParamKeeper* mColorCorrectionParamKeeper;
+    FlareFilterDirector* mFlareFilterDirector;
+    GodRayDirector* mGodRayDirector;
+    FogDirector* mFogDirector;
+    OccludedEffectDirector* mOccludedEffectDirector;
+    LightStreakDirector* mLightStreakDirector;
+    HdrCompose* mHdrCompose;
+    SSIIKeeper* mSSIIKeeper;
+    agl::sdw::PrimitiveOcclusion* mPrimitiveOcclusion;
+    PostProcessingFilter* mPostProcessingFilter;
+    NoiseTextureKeeper* mNoiseTextureKeeper;
+    ShaderHolder* mShaderHolder;
+    s32 mAreaTarget;
+    nn::g3d::ViewVolume mViewVolume;
+    ViewRenderer* mViewRenderer;
+    SimpleModelEnv* mSimpleModelEnv;
+    GBufferArray* mDrawGBufferArray;
+    sead::LookAtCamera* mDrawCamera;
+    sead::PerspectiveProjection* mDrawProjection;
+    s32 mDrawViewIndex;
+    s32 mDrawEnvUpdateCount;
+    sead::Vector3f mDrawCameraPos;
+    agl::pfx::FilterAA mFilterAA;
+    AtmosScatter* mAtmosScatter;
+    void* _d60;
+    AtmosScatterDrawer* mAtmosScatterDrawer;
+    FullScreenQuadModel* mFullScreenQuadModel;
+    const agl::ShaderProgram* mFarClearShader;
+    UniformBlock* mFarClearUbo;
+    GraphicsParamFilePath* mParamFilePath;
+    agl::utl::IParameterIO mParamIO;
+    agl::utl::ParameterObj mParamObj;
+    agl::utl::Parameter<s32> mAtmosScatterType;
+    agl::utl::Parameter<bool> mIsUsingUpdateAtmosCubeMap;
+    UniformBlock* mLightEnvUbo;
+    UniformBlock* mLightEnvExUbo;
+    f32 mLightEnvParams[4];
+    ApplicationMessageReceiver* mApplicationMessageReceiver;
+    GpuMemAllocator* mGpuMemAllocator;
+    FullScreenTriangle* mFullScreenTriangle;
+    const char* mLodSettingName;
+    bool mIsEnableForceCameraAreaFind;
+    PartsGraphicsList mPartsGraphicsList;
+};
+
+static_assert(sizeof(GraphicsSystemInfo) == 0x1080);
+
+}  // namespace al
+
+namespace alGfxUtil {
+void tryWarningLightPresetSetting(const al::GraphicsSystemInfo* pInfo);
+}  // namespace alGfxUtil

@@ -23,7 +23,7 @@ inline nn::oe::PerformanceMode getPerformanceMode(const ApplicationMessageReceiv
 
 inline const ApplicationMessageReceiver* getApplicationMessageReceiver(const LiveActor* pActor) {
     const GraphicsSystemInfo* info = pActor->getSceneInfo()->graphicsSystemInfo;
-    return *reinterpret_cast<ApplicationMessageReceiver* const*>(&info->_d70[0x1040 - 0xd70]);
+    return info->getApplicationMessageReceiver();
 }
 
 void setPerformanceConfiguration(nn::oe::PerformanceMode mode, u64 cpu, u64 gpu, u64 memory) {

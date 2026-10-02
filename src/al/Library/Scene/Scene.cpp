@@ -216,11 +216,11 @@ void Scene::initLiveActorKitWithGraphics(const GraphicsInitArg& rArg, const Scen
     initPadRumble(this, rInfo);
     mLiveActorKit->initGraphics(rArg, rInfo.mStageName);
 
-    if (rArg._e) {
+    if (rArg.mIsUsingViewRenderer) {
         GraphicsSystemInfo* graphicsInfo = mLiveActorKit->getGraphicsSystemInfo();
 
         if (graphicsInfo != nullptr) {
-            u8* unk = *reinterpret_cast<u8**>(&graphicsInfo->_130[0x240 - 0x130]);
+            u8* unk = reinterpret_cast<u8*>(graphicsInfo->getViewRenderer());
 
             if (unk && isUseCameraRS) {
                 unk[0xe72] = true;
