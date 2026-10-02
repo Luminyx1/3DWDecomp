@@ -1,14 +1,10 @@
 #pragma once
 
-#include <math/seadMatrix.h>
 #include <math/seadVector.h>
 
 #include "Library/Camera/CameraPoser_RS.hpp"
 
 namespace al {
-class LiveActor;
-class RailKeeper;
-class Resource;
 
 class CameraPoserLookDown : public CameraPoser_RS {
 public:
@@ -19,7 +15,7 @@ public:
     void update() override;
     void makeLookAtCamera(sead::LookAtCamera* pCamera) const override;
 
-public:
+private:
     sead::Vector3f mStartAt;
     f32 mOffsetY = -200.0f;
     f32 mDistance = 2200.0f;

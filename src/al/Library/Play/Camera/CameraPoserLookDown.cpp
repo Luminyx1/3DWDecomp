@@ -35,12 +35,16 @@ void CameraPoserLookDown::loadParam(const ByamlIter& rIter) {
  */
 void CameraPoserLookDown::start(const CameraStartInfo& rInfo) {
     const sead::LookAtCamera& camera = alCameraPoserFunction::getLookAtCamera(this);
-    mEye = camera.getPos();
-    mAt = camera.getAt();
-    mUp = camera.getUp();
-    mStartAt.set(camera.getAt());
+    mEye.set(camera.getPos());
+    mAt.set(camera.getAt());
+    mUp.set(camera.getUp());
+    mStartAt = camera.getAt();
 }
 
+/**
+ * Follows the target, keeping the horizontal direction to the camera, and rotates the camera with
+ * the stick if enabled.
+ */
 void CameraPoserLookDown::update() {
     sead::Vector3f prevAt = mAt;
 
@@ -53,7 +57,7 @@ void CameraPoserLookDown::update() {
             trans.y = mStartAt.y;
         }
 
-        mAt = trans;
+        setAt(trans);
         mAt.y = offsetY + mAt.y;
     } else {
         alCameraPoserFunction::calcTargetTrans(&mAt, this);
@@ -68,7 +72,7 @@ void CameraPoserLookDown::update() {
     dir.y = 0.0f;
 
     if (isNearZero(dir, 0.001f)) {
-        dir = sead::Vector3f::ez;
+        dir.set(sead::Vector3f::ez);
     }
 
     f32 distance = mDistance;
@@ -86,7 +90,7 @@ void CameraPoserLookDown::update() {
         dir = -back;
     }
 
-    mEye.set(mAt + dir);
+    mEye = mAt + dir;
 
     if (mIsRotateV) {
         sead::Vector2f stick = sead::Vector2f::zero;
@@ -96,6 +100,10 @@ void CameraPoserLookDown::update() {
     }
 }
 
+/**
+ * Tilts the camera down by the angle and keeps it at the configured distance.
+ * @param pCamera Camera to write to.
+ */
 void CameraPoserLookDown::makeLookAtCamera(sead::LookAtCamera* pCamera) const {
     sead::Vector3f dir = mEye - mAt;
     sead::Vector3f front = dir;
