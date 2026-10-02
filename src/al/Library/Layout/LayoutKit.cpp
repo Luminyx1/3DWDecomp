@@ -1,10 +1,16 @@
-#include "Library/Layout/LayoutSystem.hpp"
+#include "Library/Layout/LayoutKit.hpp"
 
+#include <eui/euiConstantBuffer.h>
+#include <eui/euiDrawInfoEx.h>
+#include <eui/euiScalableFontMgr.h>
 #include <eui/euiScreenMgr.h>
+#include <gfx/seadGraphicsContext.h>
+#include <gfx/seadViewport.h>
 
 #include "Library/Effect/EffectSystem.hpp"
 #include "Library/Execute/ExecuteDirector.hpp"
-#include "Library/Layout/LayoutKit.hpp"
+#include "Library/Layout/LayoutInitInfo.hpp"
+#include "Library/Layout/LayoutSystem.hpp"
 #include "Project/Execute/ExecuteSystemInitInfo.hpp"
 
 namespace al {
@@ -19,7 +25,7 @@ LayoutKit::LayoutKit(FontHolder* pFontHolder) : mFontHolder(pFontHolder) {}
  */
 LayoutKit::~LayoutKit() {
     if (mLayoutSystem != nullptr) {
-        mLayoutSystem->getFontList()->isInvalid = true;
+        mLayoutSystem->getScalableFontMgr()->_5e = true;
     }
 
     delete mExecuteDirector;
@@ -99,6 +105,26 @@ void LayoutKit::drawList(const char* pTableName, const char* pListName) const {
 }
 
 /**
+ * Sets the layout system and creates the render info and draw info.
+ * @param pLayoutSystem layout system
+ */
+void LayoutKit::setLayoutSystem(LayoutSystem* pLayoutSystem) {
+    mLayoutSystem = pLayoutSystem;
+    mRenderInfo = new LayoutRenderInfo();
+    mRenderInfo->viewport = new sead::Viewport();
+
+    auto* graphicsContext = new sead::GraphicsContext();
+    graphicsContext->setDepthEnable(false, false);
+    graphicsContext->setCullingMode(0);
+    mRenderInfo->graphicsContext = graphicsContext;
+
+    mDrawInfo = new (16) eui::DrawInfoEx();
+    setLayoutRenderInfo(mDrawInfo, mRenderInfo);
+    initDrawInfoDefault(mDrawInfo, mLayoutSystem->getGraphicsResource());
+    mLayoutSystem->getScreenMgr()->getConstantBuffer()->setToDrawInfo(mDrawInfo);
+}
+
+/**
  * Sets the draw context used for layouts and effects.
  * @param pDrawContext draw context
  */
@@ -106,9 +132,4 @@ void LayoutKit::setDrawContext(agl::DrawContext* pDrawContext) {
     mDrawContext = pDrawContext;
     getLayoutRenderInfo(mDrawInfo)->drawContext = pDrawContext;
 }
-
-/**
- * Creates empty execute system init info.
- */
-ExecuteSystemInitInfo::ExecuteSystemInitInfo() {}
 }  // namespace al

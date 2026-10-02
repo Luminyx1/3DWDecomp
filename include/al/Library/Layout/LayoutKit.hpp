@@ -12,15 +12,31 @@ class DrawInfoEx;
 }
 
 namespace sead {
+class GraphicsContext;
 class Viewport;
-}
+}  // namespace sead
 
 namespace al {
 class EffectSystem;
 class ExecuteDirector;
 class FontHolder;
 class LayoutSystem;
-struct LayoutRenderInfo;
+
+struct LayoutRenderInfo {
+    const agl::RenderBuffer* renderBuffer = nullptr;
+    sead::GraphicsContext* graphicsContext = nullptr;
+    sead::Viewport* viewport = nullptr;
+    void* _18 = nullptr;
+    agl::DrawContext* drawContext = nullptr;
+};
+
+inline LayoutRenderInfo* getLayoutRenderInfo(eui::DrawInfoEx* pDrawInfo) {
+    return *reinterpret_cast<LayoutRenderInfo**>(reinterpret_cast<u8*>(pDrawInfo) + 0x1a0);
+}
+
+inline void setLayoutRenderInfo(eui::DrawInfoEx* pDrawInfo, LayoutRenderInfo* pRenderInfo) {
+    *reinterpret_cast<LayoutRenderInfo**>(reinterpret_cast<u8*>(pDrawInfo) + 0x1a0) = pRenderInfo;
+}
 
 class LayoutKit {
 public:
