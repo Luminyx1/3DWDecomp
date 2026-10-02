@@ -46,6 +46,12 @@ NERVE_DECL(CameraVerticalAbsorber, FollowClimbPole)
 NERVES_MAKE_NOSTRUCT(CameraVerticalAbsorber, FollowGround, FollowAbsolute, FollowClimbPoleNoInterp,
                      FollowSlow, Absorb, Follow, FollowClimbPole)
 
+/**
+ * Calculates the vertical offset of the look at position from the previous target position.
+ * @param pAbsorbVec Vertical offset.
+ * @param pPoser Camera poser.
+ * @param rPrevTrans Previous target position.
+ */
 inline void updateAbsorbVec(sead::Vector3f* pAbsorbVec, const CameraPoser_RS* pPoser,
                             const sead::Vector3f& rPrevTrans) {
     sead::Vector3f gravity = {0.0f, 0.0f, 0.0f};
@@ -54,9 +60,28 @@ inline void updateAbsorbVec(sead::Vector3f* pAbsorbVec, const CameraPoser_RS* pP
     parallelizeVec(pAbsorbVec, gravity, *pAbsorbVec);
 }
 
+/**
+ * Calculates the component of a vector along the look direction of a camera.
+ * @param pOut Component of the vector along the look direction.
+ * @param rCamera Camera.
+ * @param rVec Vector to project.
+ */
+inline void calcVecOnLookDir(sead::Vector3f* pOut, const sead::LookAtCamera& rCamera,
+                             const sead::Vector3f& rVec) {
+    sead::Vector3f dir = rCamera.getAt() - rCamera.getPos();
+    normalize(&dir);
+    parallelizeVec(pOut, dir, rVec);
+}
+
 const f32 sAbsorbStartScreenPosUp = 50.0f;
 const f32 sAbsorbStartScreenPosUpMoonGravity = 100.0f;
 
+/**
+ * Calculates the rate at which the camera follows the target vertically.
+ * @param pAbsorber Vertical absorber.
+ * @param pPoser Camera poser.
+ * @return Follow rate.
+ */
 inline f32 calcFollowRate(const CameraVerticalAbsorber* pAbsorber,
                           const CameraPoser_RS* pPoser) {
     if (alCameraPoserFunction::isPlayerTypeHighJump(pPoser) ||
@@ -72,18 +97,27 @@ inline f32 calcFollowRate(const CameraVerticalAbsorber* pAbsorber,
         return calcNerveValue(pAbsorber, 60, 0.05f, 0.3f);
     }
 
-    if (pAbsorber->getFollowRate()) {
+    if (pAbsorber->getFollowRate() != nullptr) {
         return *pAbsorber->getFollowRate();
     }
 
     return 0.05f;
 }
 
+/**
+ * Smoothly moves a rate towards the follow rate.
+ * @param pRate Rate to update.
+ * @param pAbsorber Vertical absorber.
+ * @param pPoser Camera poser.
+ * @param rateA Interpolation rate towards the follow rate.
+ * @param rateB Interpolation rate towards the intermediate rate.
+ */
 void updateLerpRate(f32* pRate, const CameraVerticalAbsorber* pAbsorber,
                     const CameraPoser_RS* pPoser, f32 rateA, f32 rateB) {
     f32 prev = *pRate;
     f32 followRate = calcFollowRate(pAbsorber, pPoser);
-    *pRate = lerpValue(rateB, *pRate, lerpValue(rateA, prev, followRate));
+    f32 rate = lerpValue(rateA, prev, followRate);
+    *pRate = lerpValue(rateB, *pRate, rate);
 }
 
 }  // namespace
@@ -133,7 +167,7 @@ void CameraVerticalAbsorber::load(const ByamlIter& rIter) {
 void CameraVerticalAbsorber::start(const sead::Vector3f& rPos, const CameraStartInfo& rInfo) {
     alCameraPoserFunction::calcTargetFront(&mPrevTargetFront, mCameraPoser);
     mAbsorbVec = {0.0f, 0.0f, 0.0f};
-    mPrevTargetTrans = rPos;
+    mPrevTargetTrans.set(rPos);
 
     if (!isValid() || alCameraPoserFunction::isPlayerTypeNotTouchGround(mCameraPoser)) {
         return setNerve(this, &NrvCameraVerticalAbsorberFollowAbsolute);
@@ -151,7 +185,7 @@ void CameraVerticalAbsorber::start(const sead::Vector3f& rPos, const CameraStart
         return setNerve(this, &NrvCameraVerticalAbsorberFollowGround);
     }
 
-    mPrevTargetTrans = alCameraPoserFunction::getPreLookAtPos(mCameraPoser);
+    mPrevTargetTrans.set(alCameraPoserFunction::getPreLookAtPos(mCameraPoser));
     const CameraPoser_RS* poser = mCameraPoser;
     sead::Vector3f gravity = {0.0f, 0.0f, 0.0f};
     alCameraPoserFunction::calcTargetGravity(&gravity, poser);
@@ -215,7 +249,7 @@ void CameraVerticalAbsorber::update() {
     }
 
     mPrevTargetTrans.set(mCameraPoser->getAt() - mAbsorbVec);
-    mPrevTargetFront = mTargetFront;
+    mPrevTargetFront.set(mTargetFront);
 }
 
 /**
@@ -241,6 +275,18 @@ void CameraVerticalAbsorber::liberateAbsorb() {
     if (isNerve(this, &NrvCameraVerticalAbsorberAbsorb)) {
         setNerve(this, &NrvCameraVerticalAbsorberFollow);
     }
+}
+
+/**
+ * Projects a position onto the display with the absorbed camera.
+ * @param pOut Projected screen position, relative to the screen center.
+ * @param rPos Position to project.
+ */
+inline void CameraVerticalAbsorber::projectToScreen(sead::Vector2f* pOut,
+                                                    const sead::Vector3f& rPos) const {
+    sead::Viewport viewport(0.0f, 0.0f, static_cast<u32>(getDisplayWidth()),
+                            static_cast<u32>(getDisplayHeight()));
+    mLookAtCamera.projectByMatrix(pOut, rPos, mProjection, viewport);
 }
 
 /**
@@ -281,12 +327,7 @@ void CameraVerticalAbsorber::exeAbsorb() {
     }
 
     sead::Vector2f screenPos = {0.0f, 0.0f};
-    {
-        const sead::Vector3f& at = mCameraPoser->getAt();
-        sead::Viewport viewport(0.0f, 0.0f, static_cast<u32>(getDisplayWidth()),
-                                static_cast<u32>(getDisplayHeight()));
-        mLookAtCamera.projectByMatrix(&screenPos, at, mProjection, viewport);
-    }
+    projectToScreen(&screenPos, mCameraPoser->getAt());
 
     screenPos.x += static_cast<u32>(getDisplayWidth()) * 0.5f;
     screenPos.y = static_cast<u32>(getDisplayHeight()) * 0.5f - screenPos.y;
@@ -297,9 +338,7 @@ void CameraVerticalAbsorber::exeAbsorb() {
     }
 
     sead::Vector3f absorbV = {0.0f, 0.0f, 0.0f};
-    sead::Vector3f dir = mLookAtCamera.getAt() - mLookAtCamera.getPos();
-    normalize(&dir);
-    parallelizeVec(&absorbV, dir, mAbsorbVec);
+    calcVecOnLookDir(&absorbV, mLookAtCamera, mAbsorbVec);
 
     if (absorbV.length() > 1000.0f ||
         alCameraPoserFunction::isExistWallCollisionUnderTarget(mCameraPoser)) {
@@ -309,10 +348,10 @@ void CameraVerticalAbsorber::exeAbsorb() {
 
     if (alCameraPoserFunction::isExistCollisionUnderTarget(mCameraPoser)) {
         if (!mIsExistCollisionUnderTarget) {
-            mUnderTargetCollisionPos =
-                alCameraPoserFunction::getUnderTargetCollisionPos(mCameraPoser);
-            mUnderTargetCollisionNormal =
-                alCameraPoserFunction::getUnderTargetCollisionNormal(mCameraPoser);
+            mUnderTargetCollisionPos.set(
+                alCameraPoserFunction::getUnderTargetCollisionPos(mCameraPoser));
+            mUnderTargetCollisionNormal.set(
+                alCameraPoserFunction::getUnderTargetCollisionNormal(mCameraPoser));
             mIsExistCollisionUnderTarget = true;
         } else {
             sead::Vector3f gravity = {0.0f, 0.0f, 0.0f};
@@ -330,10 +369,11 @@ void CameraVerticalAbsorber::exeAbsorb() {
                     return;
                 }
 
-                sead::Vector3f diffNew =
+                const sead::Vector3f moveVec =
                     alCameraPoserFunction::getUnderTargetCollisionPos(mCameraPoser) -
                     mUnderTargetCollisionPos;
-                sead::Vector3f diffPrev = diffNew;
+                sead::Vector3f diffNew = moveVec;
+                sead::Vector3f diffPrev = moveVec;
                 parallelizeVec(&diffNew,
                                alCameraPoserFunction::getUnderTargetCollisionNormal(mCameraPoser),
                                diffNew);
@@ -347,21 +387,21 @@ void CameraVerticalAbsorber::exeAbsorb() {
                 }
 
                 mLerp2 = diff.length();
-                mUnderTargetCollisionPos =
-                    alCameraPoserFunction::getUnderTargetCollisionPos(mCameraPoser);
+                mUnderTargetCollisionPos.set(
+                    alCameraPoserFunction::getUnderTargetCollisionPos(mCameraPoser));
             }
         }
 
         f32 length = mAbsorbVec.length();
-    f32 prevAbsorbLength = mLerp2;
-    mLerp2 = lerpValue(0.9f, prevAbsorbLength, 0.0f);
-    mLerp2 = lerpValue(0.9f, prevAbsorbLength, mLerp2);
-    f32 rate = normalize(prevAbsorbLength - mLerp2, 0.0f, mAbsorbVec.length());
-    f32 curLength = mAbsorbVec.length();
+        f32 prevAbsorbLength = mLerp2;
+        mLerp2 = lerpValue(0.9f, prevAbsorbLength, 0.0f);
+        mLerp2 = lerpValue(0.9f, prevAbsorbLength, mLerp2);
+        f32 rate = normalize(prevAbsorbLength - mLerp2, 0.0f, mAbsorbVec.length());
+        f32 curLength = mAbsorbVec.length();
 
-    if (curLength > 0.0f) {
-        mAbsorbVec *= length * (1.0f - rate) / curLength;
-    }
+        if (curLength > 0.0f) {
+            mAbsorbVec *= length * (1.0f - rate) / curLength;
+        }
     } else {
         mIsExistCollisionUnderTarget = false;
     }
@@ -371,9 +411,11 @@ void CameraVerticalAbsorber::exeAbsorb() {
         alCameraPoserFunction::isTargetInMoonGravity(mCameraPoser) ?
                              sAbsorbStartScreenPosUpMoonGravity :
                              sAbsorbStartScreenPosUp;
+
     if (mAbsorbScreenPosUp < startScreenPosUp && screenPos.y < startScreenPosUp) {
         f32 rate = easeIn(normalize(screenPos.y, mAbsorbScreenPosUp, startScreenPosUp));
-        mLerp1 = lerpValue(mLerp1, lerpValue(mLerp1, rate, 0.05f), 0.05f);
+        f32 lerp = lerpValue(mLerp1, rate, 0.05f);
+        mLerp1 = lerpValue(mLerp1, lerp, 0.05f);
     }
 
     mAbsorbVec *= 1.0f - mLerp1;

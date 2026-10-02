@@ -47,6 +47,8 @@ public:
     const f32* getFollowRate() const { return mFollowRate; }
 
 private:
+    void projectToScreen(sead::Vector2f* pOut, const sead::Vector3f& rPos) const;
+
     const CameraPoser_RS* mCameraPoser;
     sead::LookAtCamera mLookAtCamera;
     sead::PerspectiveProjection mProjection;
