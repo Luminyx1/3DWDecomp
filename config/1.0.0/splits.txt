@@ -4545,7 +4545,9 @@ src/al/Library/Collision/MtxConnector.cpp: done
     .text   start:0x007DBB20 end:0x007DBB80
 src/al/Library/Collision/PartsMtxConnector.cpp:
     .text   start:0x007DBB80 end:0x007DC5A4
-src/al/Library/Debug/Host.cpp:
+src/al/Library/Debug/CommandOption.cpp: done
+    .text   start:0x007DC5B0 end:0x007DCF64
+src/al/Library/Debug/Host.cpp: done
     .text   start:0x007DCF70 end:0x007DD9DC
 src/al/Project/Draw/GraphicsAreaDirector.cpp: done
     .text   start:0x007DD9E0 end:0x007DEEE0
@@ -4557,7 +4559,7 @@ src/al/Library/Draw/GraphicsSystemInfo.cpp:
     .text   start:0x007E1B00 end:0x007E4694
 src/al/Library/Draw/GraphicsFunction.cpp:
     .text   start:0x007E46A0 end:0x007E6BCC
-src/al/Library/Debug/Render/RenderBufferAttacher.cpp:
+src/al/Library/Debug/Render/RenderBufferAttacher.cpp: done
     .text   start:0x007E6BD0 end:0x007E7BCC
 src/al/Library/Debug/Render/RenderBufferDepthAttacher.cpp:
     .text   start:0x007E7BD0 end:0x007E82A0

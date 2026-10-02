@@ -48318,7 +48318,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71007DC2F0			FALSE	_ZNK2al12MtxConnector17calcMtxWithOffsetEPN4sead8Matrix34IfEERKNS1_7Vector3IfEES8_	al::MtxConnector::calcMtxWithOffset(sead::Matrix34<float>*, sead::Vector3<float> const&, sead::Vector3<float> const&) const	
 0x71007DC570			FALSE	_ZNK2al12MtxConnector17tryGetParentTransEPN4sead7Vector3IfEE	al::MtxConnector::tryGetParentTrans(sead::Vector3<float>*) const	
 0x71007DC5A0			FALSE	_ZN2al12MtxConnectorD0Ev	al::MtxConnector::~MtxConnector()	
-0x71007DC5B0	Library/Debug		FALSE	_ZN2al13isCommandNameEPKcS1_	al::isCommandName(char const*, char const*)	
+0x71007DC5B0	Library/Debug	CommandOption.o	FALSE	_ZN2al13isCommandNameEPKcS1_	al::isCommandName(char const*, char const*)	
 0x71007DC720			FALSE	_ZN2al13isExistOptionEPKcS1_PN4sead22BufferedSafeStringBaseIcEE	al::isExistOption(char const*, char const*, sead::BufferedSafeStringBase<char>*)	
 0x71007DCCC0			FALSE	_ZN2al20tryGetIntOptionValueEPiPKcS2_	al::tryGetIntOptionValue(int*, char const*, char const*)	
 0x71007DCD70			FALSE	_ZN2al22tryGetFloatOptionValueEPfPKcS2_	al::tryGetFloatOptionValue(float*, char const*, char const*)	
@@ -48329,7 +48329,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71007DD050			FALSE	_ZN2al11getUserNameEPN4sead22BufferedSafeStringBaseIcEE	al::getUserName(sead::BufferedSafeStringBase<char>*)	
 0x71007DD0E0			FALSE	_ZN2al27makeUniqueTemporaryFilenameEPN4sead22BufferedSafeStringBaseIcEEPKc	al::makeUniqueTemporaryFilename(sead::BufferedSafeStringBase<char>*, char const*)	
 0x71007DD1E0			FALSE	_ZN2al23expandEnvironmentStringEPN4sead22BufferedSafeStringBaseIcEERKNS0_14SafeStringBaseIcEE	al::expandEnvironmentString(sead::BufferedSafeStringBase<char>*, sead::SafeStringBase<char> const&)	
-0x71007DD200			FALSE	sub_71007DD200	sub_71007DD200	
+0x71007DD200			FALSE	_ZN2alL31appendExpandedEnvironmentStringEPN4sead22BufferedSafeStringBaseIcEERKNS0_14SafeStringBaseIcEE	_ZN2alL31appendExpandedEnvironmentStringEPN4sead22BufferedSafeStringBaseIcEERKNS0_14SafeStringBaseIcEE	
 0x71007DD900			FALSE	_ZN2al30makeTmpExpandEnvironmentStringERKN4sead14SafeStringBaseIcEE	al::makeTmpExpandEnvironmentString(sead::SafeStringBase<char> const&)	
 0x71007DD980			FALSE	_ZN2al19makeTmpFileFullPathEPKc	al::makeTmpFileFullPath(char const*)	
 0x71007DD9D0			FALSE	_ZN2al11getALCommonEv	al::getALCommon()	
