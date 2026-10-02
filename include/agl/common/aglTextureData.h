@@ -55,6 +55,7 @@ public:
                 s32 mipLevel) const;
     void copyTo(DrawContext* pDrawContext, const TextureData* pDst, s32 dstSlice, s32 dstMipLevel,
                 s32 srcSlice, s32 srcMipLevel) const;
+    void generateMipMap(DrawContext* pDrawContext) const;
     void setDebugLabel(const sead::SafeString& rDebugLabel);
     sead::SafeString getDebugLabel() const;
     void setImagePtr(GPUMemVoidAddr imagePtr, u32 releaseOnly);
