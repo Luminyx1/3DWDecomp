@@ -107,11 +107,7 @@ void printBgmUserInfoList(const al::BgmDataBase* pDataBase) {
         for (s32 j = 0; j < actionList->size(); j++) {
             const al::AudioInfoList<al::BgmPlayInfoInAction>* playList = actionList->unsafeAt(j)->mPlayInfoList;
 
-            if (playList == nullptr) {
-                continue;
-            }
-
-            for (s32 k = 0; k < playList->getInfoNum(); k++) {
+            for (s32 k = 0; playList != nullptr && k < playList->getInfoNum(); k++) {
                 playList->tryGetInfo(k);
             }
         }
@@ -185,11 +181,11 @@ bool checkLoadIfWaveSound(const char* pName, al::SeadAudioPlayer* pPlayer) {
  * @return True if the BGM is played by the upper layer audio user.
  */
 bool isPlayingBgmByUpperLayerAudioUser(const al::BgmDataBase* pDataBase, const char* pName) {
-    const al::BgmPlayInfo* info = nullptr;
-
-    if (pName != nullptr && pDataBase->mPlayInfoList != nullptr) {
-        info = pDataBase->mPlayInfoList->tryFindInfo(pName);
+    if (pName == nullptr || pDataBase->mPlayInfoList == nullptr) {
+        return false;
     }
+
+    const al::BgmPlayInfo* info = pDataBase->mPlayInfoList->tryFindInfo(pName);
 
     if (info == nullptr) {
         return false;
