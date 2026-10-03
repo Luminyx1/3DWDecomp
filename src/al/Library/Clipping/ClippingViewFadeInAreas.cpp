@@ -40,6 +40,7 @@ ClippingViewFadeInAreas::ClippingViewFadeInAreas(const char* pLinkName,
     sead::BoundBox3f localBox;
     sead::Vector3f min = {FLT_MAX, FLT_MAX, FLT_MAX};
     sead::Vector3f max = {-FLT_MAX, -FLT_MAX, -FLT_MAX};
+    sead::Vector3f corners[8];
     bool isValidBox = true;
 
     for (s32 i = 0; i < num; i++) {
@@ -57,12 +58,14 @@ ClippingViewFadeInAreas::ClippingViewFadeInAreas(const char* pLinkName,
 
         const sead::Vector3f& boxMin = localBox.getMin();
         const sead::Vector3f& boxMax = localBox.getMax();
-        sead::Vector3f corners[8] = {
-            {boxMin.x, boxMin.y, boxMin.z}, {boxMax.x, boxMin.y, boxMin.z},
-            {boxMax.x, boxMin.y, boxMax.z}, {boxMin.x, boxMin.y, boxMax.z},
-            {boxMin.x, boxMax.y, boxMin.z}, {boxMax.x, boxMax.y, boxMin.z},
-            {boxMax.x, boxMax.y, boxMax.z}, {boxMin.x, boxMax.y, boxMax.z},
-        };
+        corners[0].set(boxMin.x, boxMin.y, boxMin.z);
+        corners[1].set(boxMax.x, boxMin.y, boxMin.z);
+        corners[2].set(boxMax.x, boxMin.y, boxMax.z);
+        corners[3].set(boxMin.x, boxMin.y, boxMax.z);
+        corners[4].set(boxMin.x, boxMax.y, boxMin.z);
+        corners[5].set(boxMax.x, boxMax.y, boxMin.z);
+        corners[6].set(boxMax.x, boxMax.y, boxMax.z);
+        corners[7].set(boxMin.x, boxMax.y, boxMax.z);
 
         const sead::Vector3f& scale = areaObj->getAreaShape()->mScale;
 
@@ -73,28 +76,14 @@ ClippingViewFadeInAreas::ClippingViewFadeInAreas(const char* pLinkName,
             corner.z *= scale.z;
             corner.setMul(areaObj->_28, corner);
 
-            if (corner.x < min.x) {
-                min.x = corner.x;
-            }
+            for (s32 k = 0; k < 3; k++) {
+                if (corner.e[k] < min.e[k]) {
+                    min.e[k] = corner.e[k];
+                }
 
-            if (corner.x > max.x) {
-                max.x = corner.x;
-            }
-
-            if (corner.y < min.y) {
-                min.y = corner.y;
-            }
-
-            if (corner.y > max.y) {
-                max.y = corner.y;
-            }
-
-            if (corner.z < min.z) {
-                min.z = corner.z;
-            }
-
-            if (corner.z > max.z) {
-                max.z = corner.z;
+                if (corner.e[k] > max.e[k]) {
+                    max.e[k] = corner.e[k];
+                }
             }
         }
     }
@@ -120,29 +109,23 @@ f32 ClippingViewFadeInAreas::updateClipping(const sead::Vector3f& rPos, bool isF
     if (getInVolumeAreaObj(rPos) != nullptr) {
         if (isForce) {
             mFadeRate = 1.0f;
-            return 1.0f;
         }
 
         mFadeRate += mFadeStep;
 
         if (mFadeRate > 1.0f) {
             mFadeRate = 1.0f;
-            return 1.0f;
+        }
+    } else {
+        if (isForce) {
+            mFadeRate = 0.0f;
         }
 
-        return mFadeRate;
-    }
+        mFadeRate -= mFadeStep;
 
-    if (isForce) {
-        mFadeRate = 0.0f;
-        return 0.0f;
-    }
-
-    mFadeRate -= mFadeStep;
-
-    if (mFadeRate < 0.0f) {
-        mFadeRate = 0.0f;
-        return 0.0f;
+        if (mFadeRate < 0.0f) {
+            mFadeRate = 0.0f;
+        }
     }
 
     return mFadeRate;
