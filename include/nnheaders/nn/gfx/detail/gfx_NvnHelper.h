@@ -84,6 +84,9 @@ public:
                               void* pUserParam);
 };
 
+/// Returns whether the GLSLC compiler can emit thin GPU binaries.
+bool IsThinBinaryAvailable();
+
 /// Entry points of the GLSLC shader compiler library.
 class GlslcDll {
 public:
