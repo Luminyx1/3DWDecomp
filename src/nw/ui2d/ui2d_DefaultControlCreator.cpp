@@ -14,69 +14,127 @@
 #include <new>
 namespace nn::ui2d {
 namespace {
-template<class T>
-T* AllocateControl() {
+/**
+ * @brief Allocate storage and construct a layout control with its default settings.
+ * @tparam T Control type whose size determines the allocation.
+ * @return Constructed control, or nullptr when layout allocation fails.
+ */
+template <class T> inline T* AllocateControl() {
     void* memory = Layout::AllocateMemory(sizeof(T));
-    return memory ? new (memory) T : nullptr;
+    return memory != nullptr ? new (memory) T : nullptr;
 }
 
-// layout is checked against the runtime type hierarchy before using its extended interface.
-LayoutEx* AsLayoutEx(Layout* layout) {
+/**
+ * @brief Obtain the extended layout interface after checking its runtime type hierarchy.
+ * @param layout Layout to inspect; may be nullptr.
+ * @return Extended layout, or nullptr for a null or incompatible layout.
+ */
+inline LayoutEx* AsLayoutEx(Layout* layout) {
     const auto* wanted = LayoutEx::GetRuntimeTypeInfoStatic();
 
-    if (layout == nullptr) return nullptr;
+    if (layout == nullptr) {
+        return nullptr;
+    }
     auto* type = layout->GetRuntimeTypeInfo();
 
-    while (type != nullptr && type != wanted) type = type->m_ParentTypeInfo;
-    return (type != nullptr) ? static_cast<LayoutEx*>(layout) : nullptr;
+    while (type != nullptr) {
+        if (type == wanted) {
+            return static_cast<LayoutEx*>(layout);
+        }
+        type = type->m_ParentTypeInfo;
+    }
+    return nullptr;
 }
-}
+} // namespace
 
-// buttons receives the button controls created from layout resources.
+/**
+ * @brief Create a factory that registers buttons with the supplied group.
+ * @param buttons Destination group; nullptr disables standard button creation.
+ */
 DefaultControlCreator::DefaultControlCreator(ButtonGroup* buttons) : mButtons(buttons) {}
-// device owns resources, layout owns panes, and source describes the requested control.
+/**
+ * @brief Construct and register a recognized button described by a control resource.
+ * @param device Graphics device used when building the button's animations.
+ * @param layout Layout containing the panes and animations referenced by the resource.
+ * @param source Control resource whose name selects the button type; unknown names are ignored.
+ */
 void DefaultControlCreator::CreateControl(nn::gfx::Device* device, Layout* layout, const ControlSrc& source) {
-    if (mButtons == nullptr) return;
+    if (mButtons == nullptr) {
+        return;
+    }
     AnimButton* button;
 
     if (std::strcmp("NormalButton", source.mName) == 0) {
         if (AsLayoutEx(layout) != nullptr) {
-            button = AllocateControl<NormalButtonEx>(); button->BuildEx(device, layout, source);
+            button = AllocateControl<NormalButtonEx>();
+            button->BuildEx(device, layout, source);
         } else {
-            button = AllocateControl<NormalButton>(); button->Build(device, layout, source);
+            button = AllocateControl<NormalButton>();
+            button->Build(device, layout, source);
         }
     } else if (std::strcmp("DecisionButton", source.mName) == 0) {
-        button = AllocateControl<DecisionButton>(); button->Build(device, layout, source);
+        button = AllocateControl<DecisionButton>();
+        button->Build(device, layout, source);
     } else if (std::strcmp("SelectButton", source.mName) == 0) {
-        auto* value = AllocateControl<SelectButton>(); value->Build(device, layout, source); button = value;
+        auto* value = AllocateControl<SelectButton>();
+        value->Build(device, layout, source);
+        button = value;
     } else if (std::strcmp("CheckButton", source.mName) == 0) {
-        auto* value = AllocateControl<CheckButton>(); value->Build(device, layout, source); button = value;
+        auto* value = AllocateControl<CheckButton>();
+        value->Build(device, layout, source);
+        button = value;
     } else if (std::strcmp("TouchOffButton", source.mName) == 0) {
-        button = AllocateControl<TouchOffButton>(); button->Build(device, layout, source);
+        button = AllocateControl<TouchOffButton>();
+        button->Build(device, layout, source);
     } else if (std::strcmp("TouchOffCheckButton", source.mName) == 0) {
-        auto* value = AllocateControl<TouchOffCheckButton>(); value->Build(device, layout, source); button = value;
+        auto* value = AllocateControl<TouchOffCheckButton>();
+        value->Build(device, layout, source);
+        button = value;
     } else if (std::strcmp("DragButton", source.mName) == 0) {
-        auto* value = AllocateControl<DragButton>(); value->Build(device, layout, source); button = value;
+        auto* value = AllocateControl<DragButton>();
+        value->Build(device, layout, source);
+        button = value;
     } else if (std::strcmp("TouchDragButton", source.mName) == 0) {
-        auto* value = AllocateControl<TouchDragButton>(); value->Build(device, layout, source); button = value;
-    } else return;
+        auto* value = AllocateControl<TouchDragButton>();
+        value->Build(device, layout, source);
+        button = value;
+    } else {
+        return;
+    }
 
-    if (button != nullptr) mButtons->mButtons.push_back(*button);
+    if (button != nullptr) {
+        mButtons->mButtons.push_back(*button);
+    }
 }
 
+/** @brief Construct a factory with no button group or control list attached. */
 DefaultControlCreatorEx::DefaultControlCreatorEx() : DefaultControlCreator(nullptr), mControls(nullptr) {}
-// buttons and controls receive the two categories of created controls.
-DefaultControlCreatorEx::DefaultControlCreatorEx(ButtonGroup* buttons, ControlList* controls) : DefaultControlCreator(buttons), mControls(controls) {}
-// device and layout own resources; source selects a gauge or a standard button.
-void DefaultControlCreatorEx::CreateControl(nn::gfx::Device* device, Layout* layout, const ControlSrc& source) {
+/**
+ * @brief Create a factory for standard buttons and extended display controls.
+ * @param buttons Destination button group; nullptr disables standard button creation.
+ * @param controls Destination control list; must be valid when creating trace gauges.
+ */
+DefaultControlCreatorEx::DefaultControlCreatorEx(ButtonGroup* buttons, ControlList* controls)
+    : DefaultControlCreator(buttons), mControls(controls) {}
+/**
+ * @brief Construct a trace gauge or delegate other names to the standard button factory.
+ * @param device Graphics device used to create animation resources.
+ * @param layout Owning layout; must support LayoutEx when the resource selects a trace gauge.
+ * @param source Control resource selecting the type and its pane and animation bindings.
+ */
+void DefaultControlCreatorEx::CreateControl(nn::gfx::Device* device, Layout* layout,
+                                            const ControlSrc& source) {
     if (std::strcmp("TraceGaugeControl", source.mName) != 0) {
-        DefaultControlCreator::CreateControl(device, layout, source); return;
+        DefaultControlCreator::CreateControl(device, layout, source);
+        return;
     }
 
     LayoutEx* extended = AsLayoutEx(layout);
     auto* control = AllocateControl<TraceGaugeControl>();
     control->Initialize(device, source, extended);
 
-    if (control != nullptr) mControls->push_back(*control);
+    if (control != nullptr) {
+        mControls->push_back(*control);
+    }
 }
-}
+} // namespace nn::ui2d
