@@ -505,9 +505,10 @@ PrePassLightBase* ActorPrePassLightKeeper::getLightBase(const char* pName) const
     }
 
     s32 num = mLightBaseArray.size();
+    PrePassLightBase* light = nullptr;
 
     for (s32 i = 0; i < num; i++) {
-        PrePassLightBase* light = mLightBaseArray[i];
+        light = mLightBaseArray[i];
 
         if (isEqualString(light->mName, pName)) {
             return light;
