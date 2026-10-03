@@ -61653,7 +61653,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71009FE960			FALSE	_ZN2al21startSeFromControllerEPKNS_15IUseAudioKeeperERKN4sead14SafeStringBaseIcEEib	al::startSeFromController(al::IUseAudioKeeper const*, sead::SafeStringBase<char> const&, int, bool)	
 0x71009FEA10			FALSE	_ZN2al28startSeFromControllerOrTvDrcEPKNS_15IUseAudioKeeperERKN4sead14SafeStringBaseIcEEi	al::startSeFromControllerOrTvDrc(al::IUseAudioKeeper const*, sead::SafeStringBase<char> const&, int)	
 0x71009FEAE0		SeVolumeCtrl.o	FALSE	_ZN2al12SeVolumeCtrlC1EPN4sead10OffsetListINS_9SeRequestEEEPNS_15SeadAudioPlayerEPKc	al::SeVolumeCtrl::SeVolumeCtrl(sead::OffsetList<al::SeRequest>*, al::SeadAudioPlayer*, char const*)	object (class)
-0x71009FEB60			FALSE	sub_71009FEB60	sub_71009FEB60	
+0x71009FEB60			FALSE	_ZN2al12_GLOBAL__N_117findVolumeSettingEPKc	_ZN2al12_GLOBAL__N_117findVolumeSettingEPKc	Finds a named SE volume preset
 0x71009FEE40			FALSE	_ZN2al12SeVolumeCtrl6updateEb	al::SeVolumeCtrl::update(bool)	
 0x71009FF350			FALSE	_ZN2al12SeVolumeCtrl16setVolumeSettingEPKcf	al::SeVolumeCtrl::setVolumeSetting(char const*, float)	
 0x71009FF390		SeWaitingListKeeper.o	FALSE	_ZN2al19SeWaitingListKeeperC2Ev	al::SeWaitingListKeeper::SeWaitingListKeeper()	object (class)

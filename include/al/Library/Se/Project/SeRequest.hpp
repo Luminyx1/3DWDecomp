@@ -12,6 +12,13 @@ class SeSource;
 class SeRequest {
   public:
     void setMulParamVolume(f32 volume);
+    void applyVolume(bool isAfterGoal, f32 volume);
+
+    /**
+     * @brief Gets the sound-archive identifier of this request.
+     * @return Current sound identifier.
+     */
+    u32 getSoundId() const { return mSoundId; }
 
     /**
      * @brief Gets the resource settings used by this sound request.
