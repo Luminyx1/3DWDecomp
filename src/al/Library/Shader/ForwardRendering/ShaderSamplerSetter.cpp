@@ -1,5 +1,6 @@
 #include "Library/Shader/ForwardRendering/ShaderSamplerSetter.hpp"
 
+#include <attributes.h>
 #include <cmath>
 #include <nn/g3d/g3d_ResFile.h>
 
@@ -32,6 +33,28 @@ T* getAddrPtr(const agl::GPUMemAddrBase& rAddr) {
         rAddr.getByteOffset());
 }
 }  // namespace
+
+/**
+ * @brief Sorts the texture infos by name.
+ */
+template <>
+NOINLINE inline void sead::PtrArray<al::TextureInfo>::sort() {
+    if (size() < 2) {
+        return;
+    }
+
+    shakerSort_<al::TextureInfo>([](const al::TextureInfo* pA, const al::TextureInfo* pB) -> s32 {
+        if (*pA < *pB) {
+            return -1;
+        }
+
+        if (*pB < *pA) {
+            return 1;
+        }
+
+        return 0;
+    });
+}
 
 namespace al {
 
@@ -338,7 +361,7 @@ void LutTexture::initTexData() {
  * @brief Binds the image memory to the texture and sets up the sampler.
  */
 void LutTexture::initCore() {
-    mTextureData.setImagePtr(agl::GPUMemAddrBase(mMemBlock, 0), 0);
+    mTextureData.setImagePtr(agl::GPUMemAddrBase(mMemBlock, 0));
     agl::TextureDataInitializerRAW::copyTileImage(&mTextureData,
                                                   agl::GPUMemAddrBase(mMemBlock, 0), 0);
     mSampler.applyTextureData(mTextureData);

@@ -8,6 +8,7 @@
 #include <hostio/seadHostIOCurve.h>
 #include <prim/seadSafeString.h>
 #include <utility/aglParameter.h>
+#include <utility/aglParameterCurve.hpp>
 #include <utility/aglParameterIO.h>
 #include <utility/aglParameterObj.h>
 
@@ -109,6 +110,8 @@ public:
 
     const agl::TextureSampler& getSampler() const { return mSampler; }
 
+    const agl::DisplayList* getDisplayList() const { return mDisplayList; }
+
 protected:
     agl::TextureData mTextureData;
     agl::TextureSampler mSampler;
@@ -127,6 +130,11 @@ static_assert(sizeof(LutTexture) == 0x2e8);
  */
 class LutCurve : public LutTexture {
 public:
+    LutCurve(const sead::SafeString& rName, const sead::SafeString& rLabel,
+             agl::utl::IParameterObj* pParamObj)
+        : LutTexture(agl::TextureFormat::cTextureFormat_R32_float, 64, 0, 0),
+          mCurve(rName, rLabel, pParamObj) {}
+
     void updateTexData();
 
 private:
@@ -142,6 +150,8 @@ public:
             const char* pArchiveName);
 
     void loadResource();
+
+    agl::utl::ParameterObj* getParamObj() { return &mParamObj; }
 
 private:
     agl::utl::IParameterIO mParamIO;
