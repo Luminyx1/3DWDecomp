@@ -52416,8 +52416,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710086A1A0			FALSE	_ZNK2al10MeshDrawerltERKS0_	al::MeshDrawer::operator<(al::MeshDrawer const&) const	
 0x710086A1D0			FALSE	_ZNK2al10MeshDrawergtERKS0_	al::MeshDrawer::operator>(al::MeshDrawer const&) const	
 0x710086A200			FALSE	_ZN2al10MeshDrawer17createDisplayListEPNS_15GpuMemAllocatorENS0_26RENDER_STATE_ACTIVATE_TYPEENS0_21TEXTURE_ACTIVATE_TYPEENS0_22MATERIAL_ACTIVATE_TYPEEb	al::MeshDrawer::createDisplayList(al::GpuMemAllocator*, al::MeshDrawer::RENDER_STATE_ACTIVATE_TYPE, al::MeshDrawer::TEXTURE_ACTIVATE_TYPE, al::MeshDrawer::MATERIAL_ACTIVATE_TYPE, bool)	
-0x710086A370			FALSE	sub_710086A370	sub_710086A370	
-0x710086A460			FALSE	sub_710086A460	sub_710086A460	
+0x710086A370			FALSE	_ZN2alL19activateRenderStateEPN3agl11DrawContextEPKN2nn3g3d11MaterialObjEib	_ZN2alL19activateRenderStateEPN3agl11DrawContextEPKN2nn3g3d11MaterialObjEib	
+0x710086A460			FALSE	_ZN2alL19activateOptionBlockEPN3agl11DrawContextEPKN2nn3g3d14ShaderSelectorE	_ZN2alL19activateOptionBlockEPN3agl11DrawContextEPKN2nn3g3d14ShaderSelectorE	
 0x710086A530			FALSE	_ZNK2al10MeshDrawer4drawEPKN2nn3g3d10ViewVolumeEiPNS_19ModelAdditionalInfoE	al::MeshDrawer::draw(nn::g3d::ViewVolume const*, int, al::ModelAdditionalInfo*) const	
 0x710086AA00			FALSE	_ZNK2al10MeshDrawer8drawTestEPKN2nn3g3d10ViewVolumeEi	al::MeshDrawer::drawTest(nn::g3d::ViewVolume const*, int) const	
 0x710086AD80			FALSE	_ZNK2al10MeshDrawer10drawSimpleEPKN2nn3g3d10ViewVolumeE	al::MeshDrawer::drawSimple(nn::g3d::ViewVolume const*) const	
@@ -52441,8 +52441,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710086C070			FALSE	_ZNK2al25ModelDrawerDeferredPlayer4drawEv	al::ModelDrawerDeferredPlayer::draw() const	
 0x710086C080			FALSE	_ZN2al19ModelDrawerDeferredD0Ev	al::ModelDrawerDeferred::~ModelDrawerDeferred()	
 0x710086C090			FALSE	_ZN2al25ModelDrawerDeferredPlayerD0Ev	al::ModelDrawerDeferredPlayer::~ModelDrawerDeferredPlayer()	
-0x710086C0A0			FALSE	_ZN2al28ModelDrawerDeferredFootPrintC1EPKc	al::ModelDrawerDeferredFootPrint::ModelDrawerDeferredFootPrint(char const*)	
-0x710086C130		ModelDrawerDeferredFootPrint.o	FALSE	_ZN2al28ModelDrawerDeferredFootPrint11createTableEv	al::ModelDrawerDeferredFootPrint::createTable()	object/folder from OdysseyDecomp file list
+0x710086C0A0		ModelDrawerDeferredFootPrint.o	FALSE	_ZN2al28ModelDrawerDeferredFootPrintC1EPKc	al::ModelDrawerDeferredFootPrint::ModelDrawerDeferredFootPrint(char const*)	
+0x710086C130			FALSE	_ZN2al28ModelDrawerDeferredFootPrint11createTableEv	al::ModelDrawerDeferredFootPrint::createTable()	object/folder from OdysseyDecomp file list
 0x710086C170			FALSE	_ZNK2al28ModelDrawerDeferredFootPrint4drawEv	al::ModelDrawerDeferredFootPrint::draw() const	
 0x710086C230			FALSE	_ZN2al28ModelDrawerDeferredFootPrintD0Ev	al::ModelDrawerDeferredFootPrint::~ModelDrawerDeferredFootPrint()	
 0x710086C240		ModelDrawerDeferredSilhouette.o	FALSE	_ZN2al29ModelDrawerDeferredSilhouetteC2EPKcNS_22SilhouetteDrawCategoryE	al::ModelDrawerDeferredSilhouette::ModelDrawerDeferredSilhouette(char const*, al::SilhouetteDrawCategory)	object (smo)
@@ -52501,7 +52501,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710086EEB0			FALSE	_ZN15alModelFunction20isMaterialXluWithNrmEPKN2nn3g3d11ResMaterialE	alModelFunction::isMaterialXluWithNrm(nn::g3d::ResMaterial const*)	
 0x710086EEF0			FALSE	_ZN15alModelFunction27isMaterialOnlyBlendLightBufEPKN2nn3g3d11ResMaterialE	alModelFunction::isMaterialOnlyBlendLightBuf(nn::g3d::ResMaterial const*)	
 0x710086EF30			FALSE	_ZN15alModelFunction38bindShaderParamAndConvertParamCallbackEPN2nn3g3d8ResModelEPKN2al12ShaderHolderE	alModelFunction::bindShaderParamAndConvertParamCallback(nn::g3d::ResModel*, al::ShaderHolder const*)	
-0x710086F2A0			FALSE	sub_710086F2A0	sub_710086F2A0	
+0x710086F2A0			FALSE	_ZN12_GLOBAL__N_121convertTexMtxCallbackEPvPKvPKN2nn3g3d14ResShaderParamES2_	_ZN12_GLOBAL__N_121convertTexMtxCallbackEPvPKvPKN2nn3g3d14ResShaderParamES2_	
 0x710086F380			FALSE	_ZN15alModelFunction17isShaderAssignXluEPKN2nn3g3d8ModelObjEi	alModelFunction::isShaderAssignXlu(nn::g3d::ModelObj const*, int)	
 0x710086F430			FALSE	_ZN15alModelFunction17isShaderAssignXluEPKN2nn3g3d11MaterialObjE	alModelFunction::isShaderAssignXlu(nn::g3d::MaterialObj const*)	
 0x710086F4C0			FALSE	_ZN15alModelFunction22isShaderAssignDeferredEPKN2nn3g3d8ModelObjEi	alModelFunction::isShaderAssignDeferred(nn::g3d::ModelObj const*, int)	
@@ -52510,7 +52510,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710086F640			FALSE	_ZN15alModelFunction21isShaderAssignForwardEPKN2nn3g3d11MaterialObjE	alModelFunction::isShaderAssignForward(nn::g3d::MaterialObj const*)	
 0x710086F7B0			FALSE	_ZN15alModelFunction23createModelShaderAssignEPKN2nn3g3d8ShapeObjEPKNS1_11MaterialObjEPNS1_15ResShadingModelEiPKPKcSD_	alModelFunction::createModelShaderAssign(nn::g3d::ShapeObj const*, nn::g3d::MaterialObj const*, nn::g3d::ResShadingModel*, int, char const* const*, char const* const*)	
 0x710086F900			FALSE	_ZN2nn3g3d15ResShadingModel16FindStaticOptionEPKc	nn::g3d::ResShadingModel::FindStaticOption(char const*)	
-0x710086FA40	Library/Shader/DeferredRendering	PeripheryRendering.o	FALSE	_ZNK2nn3g3d15ResShaderOption15FindChoiceIndexEPKc	nn::g3d::ResShaderOption::FindChoiceIndex(char const*) const	object (smo)
+0x710086FA40			FALSE	_ZNK2nn3g3d15ResShaderOption15FindChoiceIndexEPKc	nn::g3d::ResShaderOption::FindChoiceIndex(char const*) const	object (smo)
 0x710086FB60			FALSE	_ZN15alModelFunction20createShaderSelectorEPN2al15GpuMemAllocatorEPKN2nn3g3d8ShapeObjEPKNS4_11MaterialObjEPNS4_15ResShadingModelEiPKPKcSG_b	alModelFunction::createShaderSelector(al::GpuMemAllocator*, nn::g3d::ShapeObj const*, nn::g3d::MaterialObj const*, nn::g3d::ResShadingModel*, int, char const* const*, char const* const*, bool)	
 0x71008700F0			FALSE	_ZN2al13RoughnessType5text_Ei	al::RoughnessType::text_(int)	
 0x71008702B0			TRUE	_ZN4sead15FixedSafeStringILi78EED0Ev	sead::FixedSafeString<78>::~FixedSafeString()	
@@ -52553,8 +52553,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100870DC0			FALSE	_ZN2al12hideMaterialEPNS_11ModelKeeperEPKc	al::hideMaterial(al::ModelKeeper*, char const*)	
 0x7100870DD0			FALSE	_ZN2al12showMaterialEPNS_11ModelKeeperEPKc	al::showMaterial(al::ModelKeeper*, char const*)	
 0x7100870DE0			FALSE	_ZN2al17forceApplyCubeMapEPNS_11ModelKeeperEPKNS_18GraphicsSystemInfoEPKc	al::forceApplyCubeMap(al::ModelKeeper*, al::GraphicsSystemInfo const*, char const*)	
-0x7100870E20		SimpleModel.o	FALSE	_ZN2al14SimpleModelEnvC2Ev	al::SimpleModelEnv::SimpleModelEnv()	
-0x7100870E30		SimpleModelEnv.o	FALSE	_ZN2al14SimpleModelEnvD2Ev	al::SimpleModelEnv::~SimpleModelEnv()	object (smo)
+0x7100870E20		SimpleModelEnv.o	FALSE	_ZN2al14SimpleModelEnvC2Ev	al::SimpleModelEnv::SimpleModelEnv()	
+0x7100870E30			FALSE	_ZN2al14SimpleModelEnvD2Ev	al::SimpleModelEnv::~SimpleModelEnv()	object (smo)
 0x7100870E90			FALSE	_ZN2al14SimpleModelEnv10initializeEiPKNS_18GraphicsSystemInfoEPN4sead4HeapE	al::SimpleModelEnv::initialize(int, al::GraphicsSystemInfo const*, sead::Heap*)	
 0x7100870F20			FALSE	_ZN2al14SimpleModelEnv9updateEnvEiRKN4sead8Matrix34IfEERKNS1_8Matrix44IfEERKNS1_7Vector2IfEESD_ffffSB_PKNS_9LightInfoESG_SG_fPKc	al::SimpleModelEnv::updateEnv(int, sead::Matrix34<float> const&, sead::Matrix44<float> const&, sead::Vector2<float> const&, sead::Vector2<float> const&, float, float, float, float, sead::Vector2<float>, al::LightInfo const*, al::LightInfo const*, al::LightInfo const*, float, char const*)	
 0x7100871B10			FALSE	_ZN2al14SimpleModelEnv10swapBufferEv	al::SimpleModelEnv::swapBuffer()	
@@ -52568,7 +52568,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100872710			FALSE	_ZNK2al23CategoryLightInfoHolder15tryGetLightInfoEPKc	al::CategoryLightInfoHolder::tryGetLightInfo(char const*) const	
 0x71008727F0			FALSE	_ZN2al23CategoryLightInfoHolderD0Ev	al::CategoryLightInfoHolder::~CategoryLightInfoHolder()	
 0x7100872800	Project/Model	ModelAdditionalInfo.o	FALSE	_ZN2al19ModelAdditionalInfoC1EPKNS_18GraphicsSystemInfoEb	al::ModelAdditionalInfo::ModelAdditionalInfo(al::GraphicsSystemInfo const*, bool)	folder (alphabetical reset); object (class, new folder (alphabetical reset))
-0x7100872870		ModelAdditionalInfoRenderCubeMap.o	FALSE	_ZN2al32ModelAdditionalInfoRenderCubeMapC1EPKNS_18GraphicsSystemInfoE	al::ModelAdditionalInfoRenderCubeMap::ModelAdditionalInfoRenderCubeMap(al::GraphicsSystemInfo const*)	object (class)
+0x7100872870			FALSE	_ZN2al32ModelAdditionalInfoRenderCubeMapC1EPKNS_18GraphicsSystemInfoE	al::ModelAdditionalInfoRenderCubeMap::ModelAdditionalInfoRenderCubeMap(al::GraphicsSystemInfo const*)	object (class)
 0x71008728D0			FALSE	_ZN2al19ModelAdditionalInfo28activateEnvTextureIndividualEiPKNS_14SimpleModelG3DE	al::ModelAdditionalInfo::activateEnvTextureIndividual(int, al::SimpleModelG3D const*)	
 0x7100872970			FALSE	_ZN2al19ModelAdditionalInfo18activateEnvTextureEiPKNS_14SimpleModelG3DE	al::ModelAdditionalInfo::activateEnvTexture(int, al::SimpleModelG3D const*)	
 0x71008729B0			FALSE	_ZN2al19ModelAdditionalInfo25activateModelLightTextureEiPKNS_14SimpleModelG3DE	al::ModelAdditionalInfo::activateModelLightTexture(int, al::SimpleModelG3D const*)	
@@ -54032,9 +54032,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71008A78F0			FALSE	_ZN2al24isScreenPointTargetValidEPKNS_17ScreenPointTargetE	al::isScreenPointTargetValid(al::ScreenPointTarget const*)	
 0x71008A7910			FALSE	_ZN2al25validateScreenPointTargetEPNS_9LiveActorEPKc	al::validateScreenPointTarget(al::LiveActor*, char const*)	
 0x71008A7930			FALSE	_ZN2al27invalidateScreenPointTargetEPNS_9LiveActorEPKc	al::invalidateScreenPointTarget(al::LiveActor*, char const*)	
-0x71008A7950			FALSE	_ZN2al21ScreenCaptureExecutorC1Ei	al::ScreenCaptureExecutor::ScreenCaptureExecutor(int)	
+0x71008A7950		ScreenCaptureExecutor.o	FALSE	_ZN2al21ScreenCaptureExecutorC1Ei	al::ScreenCaptureExecutor::ScreenCaptureExecutor(int)	
 0x71008A79F0			FALSE	_ZN2al21ScreenCaptureExecutorD2Ev	al::ScreenCaptureExecutor::~ScreenCaptureExecutor()	
-0x71008A7A90		ScreenFunction.o	FALSE	_ZN2al21ScreenCaptureExecutorD0Ev	al::ScreenCaptureExecutor::~ScreenCaptureExecutor()	object/folder from OdysseyDecomp file list
+0x71008A7A90			FALSE	_ZN2al21ScreenCaptureExecutorD0Ev	al::ScreenCaptureExecutor::~ScreenCaptureExecutor()	object/folder from OdysseyDecomp file list
 0x71008A7B30			FALSE	_ZN2al21ScreenCaptureExecutor19createScreenCaptureEiii	al::ScreenCaptureExecutor::createScreenCapture(int, int, int)	
 0x71008A7B90			FALSE	_ZN2al21ScreenCaptureExecutor17tryCaptureAndDrawEPN3agl11DrawContextEPKNS1_12RenderBufferEi	al::ScreenCaptureExecutor::tryCaptureAndDraw(agl::DrawContext*, agl::RenderBuffer const*, int)	
 0x71008A7C30			FALSE	_ZNK2al21ScreenCaptureExecutor6isDrawEi	al::ScreenCaptureExecutor::isDraw(int) const	
@@ -54049,11 +54049,11 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71008A7E00			FALSE	_ZNK2al21ScreenCaptureExecutor15isActiveRequestEi	al::ScreenCaptureExecutor::isActiveRequest(int) const	
 0x71008A7E10			FALSE	_ZN2al21ScreenCaptureExecutor13offDrawGlobalEv	al::ScreenCaptureExecutor::offDrawGlobal()	
 0x71008A7E50			FALSE	_ZNK2al21ScreenCaptureExecutor18isAnyActiveRequestEv	al::ScreenCaptureExecutor::isAnyActiveRequest() const	
-0x71008A7EA0			FALSE	_ZN2al13ScreenCaptureC2Eii	al::ScreenCapture::ScreenCapture(int, int)	
+0x71008A7EA0	Project/Screen	ScreenCapture.o	FALSE	_ZN2al13ScreenCaptureC2Eii	al::ScreenCapture::ScreenCapture(int, int)	
 0x71008A7FE0			FALSE	_ZN2al13ScreenCapture8initBlurERKN4sead18LogicalFrameBufferERKNS1_8ViewportEN3agl3utl13ImageFilter2D11ReduceScaleE	al::ScreenCapture::initBlur(sead::LogicalFrameBuffer const&, sead::Viewport const&, agl::utl::ImageFilter2D::ReduceScale)	
 0x71008A8090			FALSE	_ZN2al13ScreenCapture10enableBlurEb	al::ScreenCapture::enableBlur(bool)	
 0x71008A80B0			FALSE	_ZN2al13ScreenCaptureD2Ev	al::ScreenCapture::~ScreenCapture()	
-0x71008A8130	Project/Screen	ScreenCapture.o	FALSE	_ZN2al13ScreenCaptureD0Ev	al::ScreenCapture::~ScreenCapture()	object/folder from OdysseyDecomp file list
+0x71008A8130			FALSE	_ZN2al13ScreenCaptureD0Ev	al::ScreenCapture::~ScreenCapture()	object/folder from OdysseyDecomp file list
 0x71008A81B0			FALSE	_ZN2al13ScreenCapture24copyImageFromFrameBufferEPN3agl11DrawContextEPKNS1_12RenderBufferE	al::ScreenCapture::copyImageFromFrameBuffer(agl::DrawContext*, agl::RenderBuffer const*)	
 0x71008A82E0			FALSE	_ZNK2al13ScreenCapture16drawCaptureImageEPN3agl11DrawContextEPKNS1_12RenderBufferE	al::ScreenCapture::drawCaptureImage(agl::DrawContext*, agl::RenderBuffer const*) const	
 0x71008A8420	Library/Screen	ScreenFunction.o	FALSE	_ZN2al15getDisplayWidthEv	al::getDisplayWidth()	object/folder from OdysseyDecomp file list
@@ -60999,11 +60999,11 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71009E2C80			FALSE	_ZN2al27calcFrustumPlanesWorldSpaceEPNS_17ViewFrustumPlanesERKN4sead8Matrix34IfEERKNS2_8Matrix44IfEEPNS_17ViewFrustumPointsE	al::calcFrustumPlanesWorldSpace(al::ViewFrustumPlanes*, sead::Matrix34<float> const&, sead::Matrix44<float> const&, al::ViewFrustumPoints*)	
 0x71009E2F40			FALSE	_ZN2al22calcFrustumPlanesMergeEPNS_17ViewFrustumPlanesEPNS_17ViewFrustumPointsERKS2_S5_RKN4sead7Vector3IfEESA_	al::calcFrustumPlanesMerge(al::ViewFrustumPlanes*, al::ViewFrustumPoints*, al::ViewFrustumPoints const&, al::ViewFrustumPoints const&, sead::Vector3<float> const&, sead::Vector3<float> const&)	
 0x71009E38F0			FALSE	_ZN2al17ViewFrustumPoints10calcPointsERKN4sead8Matrix44IfEE	al::ViewFrustumPoints::calcPoints(sead::Matrix44<float> const&)	
-0x71009E3900			FALSE	_ZN2al15ScreenCoverCtrlC2Ev	al::ScreenCoverCtrl::ScreenCoverCtrl()	
-0x71009E3910	Library/Screen	ScreenFunction.o	FALSE	_ZN2al15ScreenCoverCtrl25requestCaptureScreenCoverEi	al::ScreenCoverCtrl::requestCaptureScreenCover(int)	object/folder from OdysseyDecomp file list
+0x71009E3900	Library/Screen	ScreenCoverCtrl.o	FALSE	_ZN2al15ScreenCoverCtrlC2Ev	al::ScreenCoverCtrl::ScreenCoverCtrl()	
+0x71009E3910			FALSE	_ZN2al15ScreenCoverCtrl25requestCaptureScreenCoverEi	al::ScreenCoverCtrl::requestCaptureScreenCover(int)	object/folder from OdysseyDecomp file list
 0x71009E3940			FALSE	_ZN2al15ScreenCoverCtrl6updateEv	al::ScreenCoverCtrl::update()	
-0x71009E3960			FALSE	_ZN2al21SeAreaTriggeredPlayerC2EPKNS_13AudioDirectorEPNS_15AreaObjDirectorEPKNS_12PlayerHolderE	al::SeAreaTriggeredPlayer::SeAreaTriggeredPlayer(al::AudioDirector const*, al::AreaObjDirector*, al::PlayerHolder const*)	
-0x71009E3A10	Library/Se/Function	SeFunction.o	FALSE	_ZN2al21SeAreaTriggeredPlayer5resetEv	al::SeAreaTriggeredPlayer::reset()	object/folder from OdysseyDecomp file list
+0x71009E3960	Library/Se/Function	SeFunction.o	FALSE	_ZN2al21SeAreaTriggeredPlayerC2EPKNS_13AudioDirectorEPNS_15AreaObjDirectorEPKNS_12PlayerHolderE	al::SeAreaTriggeredPlayer::SeAreaTriggeredPlayer(al::AudioDirector const*, al::AreaObjDirector*, al::PlayerHolder const*)	
+0x71009E3A10			FALSE	_ZN2al21SeAreaTriggeredPlayer5resetEv	al::SeAreaTriggeredPlayer::reset()	object/folder from OdysseyDecomp file list
 0x71009E3AE0			FALSE	_ZN2al21SeAreaTriggeredPlayer6updateEv	al::SeAreaTriggeredPlayer::update()	
 0x71009E3E80			FALSE	_ZNK2al21SeAreaTriggeredPlayer14getAudioKeeperEv	al::SeAreaTriggeredPlayer::getAudioKeeper() const	
 0x71009E3E90			FALSE	_ZNK2al21SeAreaTriggeredPlayer18getAreaObjDirectorEv	al::SeAreaTriggeredPlayer::getAreaObjDirector() const	

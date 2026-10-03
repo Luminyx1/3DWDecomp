@@ -4844,39 +4844,33 @@ src/al/Project/Model/MeshDrawer.cpp:
 src/al/Project/Model/ModelDrawer.cpp: done
     .text   start:0x0086B700 end:0x0086B990
 src/al/Library/Model/ModelDrawerDeferred.cpp:
-    .text   start:0x0086B9A0 end:0x0086C130
+    .text   start:0x0086B9A0 end:0x0086C094
 src/al/Library/Model/ModelDrawerDeferredFootPrint.cpp: done
-    .text   start:0x0086C130 end:0x0086C234
-src/al/Library/Model/ModelDrawerDeferredSilhouette.cpp:
+    .text   start:0x0086C0A0 end:0x0086C234
+src/al/Library/Model/ModelDrawerDeferredSilhouette.cpp: done
     .text   start:0x0086C240 end:0x0086C544
 src/al/Library/Model/ModelDrawerDeferredSky.cpp: done
     .text   start:0x0086C550 end:0x0086C6C4
 src/al/Library/Model/ModelDrawerDepthOnly.cpp: done
     .text   start:0x0086C6D0 end:0x0086CD88
-src/al/Library/Model/ModelDrawerDepthShadow.cpp:
+src/al/Library/Model/ModelDrawerDepthShadow.cpp: done
     .text   start:0x0086CD90 end:0x0086D1C8
 src/al/Library/Model/ModelDrawerForward.cpp: done
     .text   start:0x0086D1D0 end:0x0086D718
-src/al/Library/Model/ModelDrawerInvincible.cpp:
+src/al/Library/Model/ModelDrawerInvincible.cpp: done
     .text   start:0x0086D720 end:0x0086DA04
 src/al/Library/Model/Function/alModelFunction.cpp:
     .text   start:0x0086DA10 end:0x0086DBBC
 src/al/Library/Model/Function/ModelFunction.cpp:
-    .text   start:0x0086DBC0 end:0x0086FA38
-src/al/Library/Shader/DeferredRendering/PeripheryRendering.cpp:
-    .text   start:0x0086FA40 end:0x008704AC
+    .text   start:0x0086DBC0 end:0x008704AC
 src/al/Library/Model/ModelKeeper.cpp: done
     .text   start:0x008704B0 end:0x008707C4
-src/al/Library/Model/ModelShapeUtil.cpp:
+src/al/Library/Model/ModelShapeUtil.cpp: done
     .text   start:0x008707D0 end:0x00870E1C
-src/al/Library/Model/SimpleModel.cpp: done
-    .text   start:0x00870E20 end:0x00870E2C
-src/al/Library/Model/SimpleModelEnv.cpp:
-    .text   start:0x00870E30 end:0x008727F4
+src/al/Library/Model/SimpleModelEnv.cpp: done
+    .text   start:0x00870E20 end:0x008727F4
 src/al/Project/Model/ModelAdditionalInfo.cpp:
-    .text   start:0x00872800 end:0x00872870
-src/al/Project/Model/ModelAdditionalInfoRenderCubeMap.cpp:
-    .text   start:0x00872870 end:0x00872A2C
+    .text   start:0x00872800 end:0x00872A2C
 src/al/Project/Model/SimpleModelG3D.cpp:
     .text   start:0x00872A30 end:0x00873E5C
 src/al/Library/Movement/AnimScaleController.cpp:
@@ -5071,13 +5065,13 @@ src/al/Library/Screen/ScreenPointerUtil.cpp: done
     .text   start:0x008A7050 end:0x008A7168
 src/al/Library/Screen/ScreenPointKeeper.cpp: done
     .text   start:0x008A7170 end:0x008A74CC
-src/al/Library/Screen/ScreenPointTarget.cpp:
-    .text   start:0x008A74D0 end:0x008A7A88
-src/al/Library/Screen/ScreenFunction.cpp:
-    .text   start:0x008A7A90 end:0x008A812C
+src/al/Library/Screen/ScreenPointTarget.cpp: done
+    .text   start:0x008A74D0 end:0x008A7948
+src/al/Library/Screen/ScreenCaptureExecutor.cpp: done
+    .text   start:0x008A7950 end:0x008A7E94
 src/al/Project/Screen/ScreenCapture.cpp: done
-    .text   start:0x008A8130 end:0x008A841C
-src/al/Library/Screen/ScreenFunction_dup2.cpp:
+    .text   start:0x008A7EA0 end:0x008A841C
+src/al/Library/Screen/ScreenFunction.cpp:
     .text   start:0x008A8420 end:0x008AA454
 src/al/Library/Sequence/Sequence.cpp:
     .text   start:0x008AA460 end:0x008AAD5C
@@ -5109,7 +5103,7 @@ src/al/Library/Shader/DeferredRendering/GBufferArray.cpp:
     .text   start:0x008B18E0 end:0x008B2CE8
 src/al/Library/Shader/DeferredRendering/ModelLightParam.cpp:
     .text   start:0x008B2CF0 end:0x008B4440
-src/al/Library/Shader/DeferredRendering/PeripheryRendering_dup2.cpp:
+src/al/Library/Shader/DeferredRendering/PeripheryRendering.cpp:
     .text   start:0x008B4440 end:0x008B4E90
 src/al/Library/Shader/DeferredRendering/SamplerLocation.cpp:
     .text   start:0x008B4E90 end:0x008B6444
@@ -5809,15 +5803,15 @@ src/al/Library/Message/MessageTagData.cpp: done
     .text   start:0x009B8A20 end:0x009B8ABC
 src/al/Library/Message/ReplaceTagProcessorBase.cpp:
     .text   start:0x009B8AC0 end:0x009BA188
-src/al/Library/Model/JointMtxPtr.cpp:
+src/al/Library/Model/JointMtxPtr.cpp: done
     .text   start:0x009BA190 end:0x009BA2D0
-src/al/Library/Model/ModelDrawerDeferredEcho.cpp:
+src/al/Library/Model/ModelDrawerDeferredEcho.cpp: done
     .text   start:0x009BA2D0 end:0x009BA674
-src/al/Library/Model/ModelDrawerDeferredExt.cpp:
+src/al/Library/Model/ModelDrawerDeferredExt.cpp: done
     .text   start:0x009BA680 end:0x009BAC54
-src/al/Library/Model/ModelDrawerHeightMap.cpp:
+src/al/Library/Model/ModelDrawerHeightMap.cpp: done
     .text   start:0x009BAC60 end:0x009BAEF4
-src/al/Library/Model/ModelShaderAssign.cpp:
+src/al/Library/Model/ModelShaderAssign.cpp: done
     .text   start:0x009BAF00 end:0x009BB2A8
 src/al/Library/Nfp/NfpControllerThread.cpp:
     .text   start:0x009BB2B0 end:0x009BC9D4
@@ -5878,11 +5872,11 @@ src/al/Library/PostProcessing/ViewDepthDrawer.cpp:
 src/al/Library/PostProcessing/VignettingDrawer.cpp:
     .text   start:0x009DD530 end:0x009E16B0
 src/al/Library/Projection/Projection.cpp:
-    .text   start:0x009E16B0 end:0x009E3910
-src/al/Library/Screen/ScreenFunction_dup3.cpp:
-    .text   start:0x009E3910 end:0x009E3A04
+    .text   start:0x009E16B0 end:0x009E38F4
+src/al/Library/Screen/ScreenCoverCtrl.cpp: done
+    .text   start:0x009E3900 end:0x009E3958
 src/al/Library/Se/Function/SeFunction.cpp:
-    .text   start:0x009E3A10 end:0x009E4530
+    .text   start:0x009E3960 end:0x009E4530
 src/al/Library/Audio/AudioDecibelUtil.cpp: done
     .text   start:0x009E4530 end:0x009E4590
 src/al/Library/Se/DataBase/SeDataBase.cpp:
