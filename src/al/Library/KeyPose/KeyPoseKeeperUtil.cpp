@@ -3,207 +3,338 @@
 #include <math/seadBoundBox.h>
 
 #include "Library/KeyPose/KeyPoseKeeper.hpp"
-#include "Library/LiveActor/Util/ActorInitUtil.hpp"
+#include "Library/LiveActor/Util/ActorClippingUtil.hpp"
 #include "Library/Math/MathUtil.hpp"
 #include "Library/Play/Placement/PlacementFunction.hpp"
 #include "Project/Joint/KeyPose.hpp"
 
 namespace al {
-KeyPoseKeeper* createKeyPoseKeeper(const ActorInitInfo& info) {
+
+/**
+ * Creates and initializes a key pose keeper for an actor.
+ * @param rInfo Init info of the owning actor.
+ * @return The new keeper.
+ */
+KeyPoseKeeper* createKeyPoseKeeper(const ActorInitInfo& rInfo) {
     KeyPoseKeeper* keyPoseKeeper = new KeyPoseKeeper();
-    keyPoseKeeper->init(info);
+    keyPoseKeeper->init(rInfo);
 
     return keyPoseKeeper;
 }
 
-void resetKeyPose(KeyPoseKeeper* keyPoseKeeper) {
-    keyPoseKeeper->reset();
+/**
+ * Returns the keeper to its first key pose.
+ * @param pKeyPoseKeeper The keeper.
+ */
+void resetKeyPose(KeyPoseKeeper* pKeyPoseKeeper) {
+    pKeyPoseKeeper->reset();
 }
 
-void nextKeyPose(KeyPoseKeeper* keyPoseKeeper) {
-    keyPoseKeeper->next();
+/**
+ * Advances the keeper to its next key pose.
+ * @param pKeyPoseKeeper The keeper.
+ */
+void nextKeyPose(KeyPoseKeeper* pKeyPoseKeeper) {
+    pKeyPoseKeeper->next();
 }
 
-void restartKeyPose(KeyPoseKeeper* keyPoseKeeper, sead::Vector3f* pos, sead::Quatf* orientation) {
-    resetKeyPose(keyPoseKeeper);
+/**
+ * Resets the keeper and reads the first key pose.
+ * @param pKeyPoseKeeper The keeper.
+ * @param pTrans Receives the first translation; may be nullptr.
+ * @param pQuat Receives the first rotation; may be nullptr.
+ */
+void restartKeyPose(KeyPoseKeeper* pKeyPoseKeeper, sead::Vector3f* pTrans, sead::Quatf* pQuat) {
+    resetKeyPose(pKeyPoseKeeper);
 
-    const KeyPose& keyPose = keyPoseKeeper->getKeyPose(0);
+    const KeyPose& keyPose = pKeyPoseKeeper->getKeyPose(0);
 
-    if (pos)
-        pos->set(keyPose.getTrans());
+    if (pTrans != nullptr) {
+        pTrans->set(keyPose.getTrans());
+    }
 
-    if (orientation)
-        orientation->set(keyPose.getQuat());
+    if (pQuat != nullptr) {
+        pQuat->set(keyPose.getQuat());
+    }
 }
 
-
-const sead::Vector3f& getCurrentKeyTrans(const KeyPoseKeeper* keyPoseKeeper) {
-    return keyPoseKeeper->getCurrentKeyPose().getTrans();
+/**
+ * @param pKeyPoseKeeper The keeper.
+ * @return Translation of the current key pose.
+ */
+const sead::Vector3f& getCurrentKeyTrans(const KeyPoseKeeper* pKeyPoseKeeper) {
+    return pKeyPoseKeeper->getCurrentKeyPose().getTrans();
 }
 
-const sead::Vector3f& getNextKeyTrans(const KeyPoseKeeper* keyPoseKeeper) {
-    return keyPoseKeeper->getNextKeyPose().getTrans();
+/**
+ * @param pKeyPoseKeeper The keeper.
+ * @return Translation of the next key pose.
+ */
+const sead::Vector3f& getNextKeyTrans(const KeyPoseKeeper* pKeyPoseKeeper) {
+    return pKeyPoseKeeper->getNextKeyPose().getTrans();
 }
 
-const sead::Quatf& getCurrentKeyQuat(const KeyPoseKeeper* keyPoseKeeper) {
-    return keyPoseKeeper->getCurrentKeyPose().getQuat();
+/**
+ * @param pKeyPoseKeeper The keeper.
+ * @return Rotation of the current key pose.
+ */
+const sead::Quatf& getCurrentKeyQuat(const KeyPoseKeeper* pKeyPoseKeeper) {
+    return pKeyPoseKeeper->getCurrentKeyPose().getQuat();
 }
 
-const sead::Quatf& getNextKeyQuat(const KeyPoseKeeper* keyPoseKeeper) {
-    return keyPoseKeeper->getNextKeyPose().getQuat();
+/**
+ * @param pKeyPoseKeeper The keeper.
+ * @return Rotation of the next key pose.
+ */
+const sead::Quatf& getNextKeyQuat(const KeyPoseKeeper* pKeyPoseKeeper) {
+    return pKeyPoseKeeper->getNextKeyPose().getQuat();
 }
 
-const PlacementInfo& getCurrentKeyPlacementInfo(const KeyPoseKeeper* keyPoseKeeper) {
-    return keyPoseKeeper->getCurrentKeyPose().getPlacementInfo();
+/**
+ * @param pKeyPoseKeeper The keeper.
+ * @return Placement of the current key pose.
+ */
+const PlacementInfo& getCurrentKeyPlacementInfo(const KeyPoseKeeper* pKeyPoseKeeper) {
+    return pKeyPoseKeeper->getCurrentKeyPose().getPlacementInfo();
 }
 
-const PlacementInfo& getNextKeyPlacementInfo(const KeyPoseKeeper* keyPoseKeeper) {
-    return keyPoseKeeper->getNextKeyPose().getPlacementInfo();
+/**
+ * @param pKeyPoseKeeper The keeper.
+ * @return Placement of the next key pose.
+ */
+const PlacementInfo& getNextKeyPlacementInfo(const KeyPoseKeeper* pKeyPoseKeeper) {
+    return pKeyPoseKeeper->getNextKeyPose().getPlacementInfo();
 }
 
-s32 getKeyPoseCount(const KeyPoseKeeper* keyPoseKeeper) {
-    return keyPoseKeeper->getKeyPoseCount();
+/**
+ * @param pKeyPoseKeeper The keeper.
+ * @return Number of key poses.
+ */
+s32 getKeyPoseCount(const KeyPoseKeeper* pKeyPoseKeeper) {
+    return pKeyPoseKeeper->getKeyPoseCount();
 }
 
-void getKeyPoseTrans(sead::Vector3f* out, const KeyPoseKeeper* keyPoseKeeper, s32 idx) {
-    out->set(keyPoseKeeper->getKeyPose(idx).getTrans());
+/**
+ * Reads the translation of a key pose.
+ * @param pOut Receives the translation.
+ * @param pKeyPoseKeeper The keeper.
+ * @param idx Index of the key pose.
+ */
+void getKeyPoseTrans(sead::Vector3f* pOut, const KeyPoseKeeper* pKeyPoseKeeper, s32 idx) {
+    pOut->set(pKeyPoseKeeper->getKeyPose(idx).getTrans());
 }
 
-void getKeyPoseQuat(sead::Quatf* out, const KeyPoseKeeper* keyPoseKeeper, s32 idx) {
-    out->set(keyPoseKeeper->getKeyPose(idx).getQuat());
+/**
+ * Reads the rotation of a key pose.
+ * @param pOut Receives the rotation.
+ * @param pKeyPoseKeeper The keeper.
+ * @param idx Index of the key pose.
+ */
+void getKeyPoseQuat(sead::Quatf* pOut, const KeyPoseKeeper* pKeyPoseKeeper, s32 idx) {
+    pOut->set(pKeyPoseKeeper->getKeyPose(idx).getQuat());
 }
 
-void calcLerpKeyTrans(sead::Vector3f* out, const KeyPoseKeeper* keyPoseKeeper, f32 rate) {
-    const KeyPose& current = keyPoseKeeper->getCurrentKeyPose();
-    const KeyPose& next = keyPoseKeeper->getNextKeyPose();
+/**
+ * Interpolates the translation between the current and next key pose, eased by the current key's
+ * "InterpolateType".
+ * @param pOut Receives the translation.
+ * @param pKeyPoseKeeper The keeper.
+ * @param rate Progress from the current to the next key pose (0-1).
+ */
+void calcLerpKeyTrans(sead::Vector3f* pOut, const KeyPoseKeeper* pKeyPoseKeeper, f32 rate) {
+    const KeyPose& current = pKeyPoseKeeper->getCurrentKeyPose();
+    const KeyPose& next = pKeyPoseKeeper->getNextKeyPose();
 
     s32 interpolateType = 0;
     tryGetArg(&interpolateType, current.getPlacementInfo(), "InterpolateType");
 
-    lerpVec(out, current.getTrans(), next.getTrans(), easeByType(rate, interpolateType));
+    lerpVec(pOut, current.getTrans(), next.getTrans(), easeByType(rate, interpolateType));
 }
 
-void calcSlerpKeyQuat(sead::Quatf* out, const KeyPoseKeeper* keyPoseKeeper, f32 rate) {
-    const KeyPose& current = keyPoseKeeper->getCurrentKeyPose();
-    const KeyPose& next = keyPoseKeeper->getNextKeyPose();
+/**
+ * Interpolates the rotation between the current and next key pose, eased by the current key's
+ * "InterpolateType".
+ * @param pOut Receives the rotation.
+ * @param pKeyPoseKeeper The keeper.
+ * @param rate Progress from the current to the next key pose (0-1).
+ */
+void calcSlerpKeyQuat(sead::Quatf* pOut, const KeyPoseKeeper* pKeyPoseKeeper, f32 rate) {
+    const KeyPose& current = pKeyPoseKeeper->getCurrentKeyPose();
+    const KeyPose& next = pKeyPoseKeeper->getNextKeyPose();
 
     s32 interpolateType = 0;
     tryGetArg(&interpolateType, current.getPlacementInfo(), "InterpolateType");
 
-    slerpQuat(out, current.getQuat(), next.getQuat(), easeByType(rate, interpolateType));
+    slerpQuat(pOut, current.getQuat(), next.getQuat(), easeByType(rate, interpolateType));
 }
 
-bool isMoveSignKey(const KeyPoseKeeper* keyPoseKeeper) {
+/**
+ * @param pKeyPoseKeeper The keeper.
+ * @return Whether the current key has "IsPlaySign" set.
+ */
+bool isMoveSignKey(const KeyPoseKeeper* pKeyPoseKeeper) {
     bool isPlaySign = false;
-    tryGetArg(&isPlaySign, getCurrentKeyPlacementInfo(keyPoseKeeper), "IsPlaySign");
+    tryGetArg(&isPlaySign, getCurrentKeyPlacementInfo(pKeyPoseKeeper), "IsPlaySign");
 
     return isPlaySign;
 }
 
-bool isLastKey(const KeyPoseKeeper* keyPoseKeeper) {
-    return keyPoseKeeper->isLastKey();
+/**
+ * @param pKeyPoseKeeper The keeper.
+ * @return Whether the current key pose is the last one in the current direction.
+ */
+bool isLastKey(const KeyPoseKeeper* pKeyPoseKeeper) {
+    return pKeyPoseKeeper->isLastKey();
 }
 
-bool isFirstKey(const KeyPoseKeeper* keyPoseKeeper) {
-    return keyPoseKeeper->isFirstKey();
+/**
+ * @param pKeyPoseKeeper The keeper.
+ * @return Whether the current key pose is the first one.
+ */
+bool isFirstKey(const KeyPoseKeeper* pKeyPoseKeeper) {
+    return pKeyPoseKeeper->isFirstKey();
 }
 
-
-bool isStop(const KeyPoseKeeper* keyPoseKeeper) {
-    return keyPoseKeeper->isStop();
+/**
+ * @param pKeyPoseKeeper The keeper.
+ * @return Whether the keeper stopped at its last key pose.
+ */
+bool isStop(const KeyPoseKeeper* pKeyPoseKeeper) {
+    return pKeyPoseKeeper->isStop();
 }
 
-bool isRestart(const KeyPoseKeeper* keyPoseKeeper) {
-    return keyPoseKeeper->isRestart();
+/**
+ * @param pKeyPoseKeeper The keeper.
+ * @return Whether the keeper requested a restart at its last key pose.
+ */
+bool isRestart(const KeyPoseKeeper* pKeyPoseKeeper) {
+    return pKeyPoseKeeper->isRestart();
 }
 
-f32 calcDistanceNextKeyTrans(const KeyPoseKeeper* keyPoseKeeper) {
-    return (getCurrentKeyTrans(keyPoseKeeper) - getNextKeyTrans(keyPoseKeeper)).length();
+/**
+ * @param pKeyPoseKeeper The keeper.
+ * @return Distance between the current and next key translations.
+ */
+f32 calcDistanceNextKeyTrans(const KeyPoseKeeper* pKeyPoseKeeper) {
+    return (getCurrentKeyTrans(pKeyPoseKeeper) - getNextKeyTrans(pKeyPoseKeeper)).length();
 }
 
-s32 calcTimeToNextKeyMove(const KeyPoseKeeper* keyPoseKeeper, f32 speed) {
-    return sead::Mathi::clampMin((s32)(calcDistanceNextKeyTrans(keyPoseKeeper) / speed), 1);
+/**
+ * @param pKeyPoseKeeper The keeper.
+ * @param speed Movement speed per frame.
+ * @return Frames needed to reach the next key at the given speed (at least 1).
+ */
+s32 calcTimeToNextKeyMove(const KeyPoseKeeper* pKeyPoseKeeper, f32 speed) {
+    return sead::Mathi::clampMin(static_cast<s32>(calcDistanceNextKeyTrans(pKeyPoseKeeper) / speed),
+                                 1);
 }
 
-void calcDirToNextKey(sead::Vector3f* out, const KeyPoseKeeper* keyPoseKeeper) {
-    const sead::Vector3f& currTrans = getCurrentKeyTrans(keyPoseKeeper);
-    const sead::Vector3f& nextTrans = getNextKeyTrans(keyPoseKeeper);
+/**
+ * Calculates the direction from the current to the next key translation.
+ * @param pOut Receives the normalized direction, or the Z axis if both keys coincide.
+ * @param pKeyPoseKeeper The keeper.
+ */
+void calcDirToNextKey(sead::Vector3f* pOut, const KeyPoseKeeper* pKeyPoseKeeper) {
+    const sead::Vector3f& currentTrans = getCurrentKeyTrans(pKeyPoseKeeper);
+    const sead::Vector3f& nextTrans = getNextKeyTrans(pKeyPoseKeeper);
 
-    out->x = nextTrans.x - currTrans.x;
-    out->y = nextTrans.y - currTrans.y;
-    out->z = nextTrans.z - currTrans.z;
+    pOut->x = nextTrans.x - currentTrans.x;
+    pOut->y = nextTrans.y - currentTrans.y;
+    pOut->z = nextTrans.z - currentTrans.z;
 
-    if (normalizeOrZero(out)) {
-        out->set(sead::Vector3f::ez);
+    if (normalizeOrZero(pOut)) {
+        pOut->set(sead::Vector3f::ez);
     }
 }
 
-f32 calcKeyMoveSpeed(const KeyPoseKeeper* keyPoseKeeper) {
+/**
+ * @param pKeyPoseKeeper The keeper.
+ * @return The current key's "Speed", or -1 if unset or negative.
+ */
+f32 calcKeyMoveSpeed(const KeyPoseKeeper* pKeyPoseKeeper) {
     f32 speed = -1.0f;
-    tryGetArg(&speed, getCurrentKeyPlacementInfo(keyPoseKeeper), "Speed");
+    tryGetArg(&speed, getCurrentKeyPlacementInfo(pKeyPoseKeeper), "Speed");
 
-    if (speed < 0.0f)
+    if (speed < 0.0f) {
         return -1.0f;
+    }
 
     return speed;
 }
 
-f32 calcKeyMoveSpeedByTime(const KeyPoseKeeper* keyPoseKeeper) {
-    s32 speed = -1;
-    tryGetArg(&speed, getCurrentKeyPlacementInfo(keyPoseKeeper), "SpeedByTime");
+/**
+ * @param pKeyPoseKeeper The keeper.
+ * @return The current key's "SpeedByTime", or -1 if unset or negative.
+ */
+f32 calcKeyMoveSpeedByTime(const KeyPoseKeeper* pKeyPoseKeeper) {
+    s32 speedByTime = -1;
+    tryGetArg(&speedByTime, getCurrentKeyPlacementInfo(pKeyPoseKeeper), "SpeedByTime");
 
-    if (speed < 0.0f)
+    if (speedByTime < 0.0f) {
         return -1.0f;
+    }
 
-    return speed;
+    return speedByTime;
 }
 
-s32 calcKeyMoveWaitTime(const KeyPoseKeeper* keyPoseKeeper) {
+/**
+ * @param pKeyPoseKeeper The keeper.
+ * @return The current key's "WaitTime", at least -1.
+ */
+s32 calcKeyMoveWaitTime(const KeyPoseKeeper* pKeyPoseKeeper) {
     s32 waitTime = -1;
-    tryGetArg(&waitTime, getCurrentKeyPlacementInfo(keyPoseKeeper), "WaitTime");
+    tryGetArg(&waitTime, getCurrentKeyPlacementInfo(pKeyPoseKeeper), "WaitTime");
 
     return sead::Mathi::max(waitTime, -1);
 }
 
-s32 calcKeyMoveMoveTime(const KeyPoseKeeper* keyPoseKeeper) {
-    s32 t = (s32)calcKeyMoveSpeedByTime(keyPoseKeeper);
+/**
+ * Calculates the frames needed to move to the next key, from "SpeedByTime" or "Speed".
+ * @param pKeyPoseKeeper The keeper.
+ * @return The move time in frames; 60 if neither parameter is set.
+ */
+s32 calcKeyMoveMoveTime(const KeyPoseKeeper* pKeyPoseKeeper) {
+    s32 moveTime = static_cast<s32>(calcKeyMoveSpeedByTime(pKeyPoseKeeper));
 
-    if (t >= 1)
-        return t;
-
-    f32 v = calcKeyMoveSpeed(keyPoseKeeper);
-    return v > 0.0f ? calcTimeToNextKeyMove(keyPoseKeeper, v) : 60;
-}
-
-f32 getClippingRadius(const LiveActor* pActor);
-void setClippingInfo(LiveActor* pActor, f32 radius, const sead::Vector3f* pPos);
-
-void calcKeyMoveClippingInfo(sead::Vector3f* pPos, f32* pRadius, const KeyPoseKeeper* pKeeper,
-                             f32 offset) {
-    s32 count = pKeeper->getKeyPoseCount();
-    sead::BoundBox3f box;
-    box.setUndef();
-
-    for (s32 i = 0; i < count; i++) {
-        box.addPoint(pKeeper->getKeyPose(i).getTrans());
+    if (moveTime >= 1) {
+        return moveTime;
     }
 
-    box.getCenter(pPos);
-    *pRadius = (box.getMax() - box.getMin()).length() * 0.5f + offset;
+    f32 speed = calcKeyMoveSpeed(pKeyPoseKeeper);
+    return speed > 0.0f ? calcTimeToNextKeyMove(pKeyPoseKeeper, speed) : 60;
 }
 
-void setKeyMoveClippingInfo(LiveActor* pActor, sead::Vector3f* pPos,
-                            const KeyPoseKeeper* pKeeper) {
-    f32 radius = getClippingRadius(pActor);
-    s32 count = pKeeper->getKeyPoseCount();
+/**
+ * Calculates a clipping sphere enclosing all key translations.
+ * @param pPos Receives the sphere center.
+ * @param pRadius Receives the sphere radius.
+ * @param pKeyPoseKeeper The keeper.
+ * @param offset Extra radius added on top.
+ */
+void calcKeyMoveClippingInfo(sead::Vector3f* pPos, f32* pRadius,
+                             const KeyPoseKeeper* pKeyPoseKeeper, f32 offset) {
+    s32 count = pKeyPoseKeeper->getKeyPoseCount();
     sead::BoundBox3f box;
-    box.setUndef();
 
     for (s32 i = 0; i < count; i++) {
-        box.addPoint(pKeeper->getKeyPose(i).getTrans());
+        box.addPoint(pKeyPoseKeeper->getKeyPose(i).getTrans());
     }
 
     *pPos = box.getCenter();
-    setClippingInfo(pActor, radius + (box.getMax() - box.getMin()).length() * 0.5f, pPos);
+    *pRadius = (box.getMax() - box.getMin()).length() * 0.5f + offset;
 }
+
+/**
+ * Sets the actor's clipping sphere to enclose all key translations.
+ * @param pActor The actor.
+ * @param pPos Receives the sphere center, which the actor's clipping keeps pointing at.
+ * @param pKeyPoseKeeper The keeper.
+ */
+void setKeyMoveClippingInfo(LiveActor* pActor, sead::Vector3f* pPos,
+                            const KeyPoseKeeper* pKeyPoseKeeper) {
+    f32 radius = 0.0f;
+    calcKeyMoveClippingInfo(pPos, &radius, pKeyPoseKeeper, getClippingRadius(pActor));
+    setClippingInfo(pActor, radius, pPos);
+}
+
 }  // namespace al
