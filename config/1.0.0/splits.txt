@@ -3622,7 +3622,9 @@ src/nw/gfx/detail/gfx_TextureInfo.cpp: done
 src/nw/gfx/detail/gfx_State-api.nvn.8.cpp:
     .text   start:0x0058CC40 end:0x0058D928
 src/nw/gfx/detail/gfx_StateInfo.cpp:
-    .text   start:0x0058D930 end:0x0058DB20
+    .text   start:0x0058D930 end:0x0058DAF8
+src/nw/gfx/detail/gfx_BufferInfo.cpp:
+    .text   start:0x0058DB00 end:0x0058DB20
 src/nw/gfx/detail/gfx_Buffer-api.nvn.8.cpp:
     .text   start:0x0058DB20 end:0x0058E308
 src/nw/gfx/detail/gfx_SamplerInfo.cpp: done

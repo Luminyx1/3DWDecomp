@@ -37692,7 +37692,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710058DAC0			FALSE	_ZN2nn3gfx17ViewportStateInfo10SetDefaultEv	nn::gfx::ViewportStateInfo::SetDefault()	
 0x710058DAD0			FALSE	_ZN2nn3gfx16ScissorStateInfo10SetDefaultEv	nn::gfx::ScissorStateInfo::SetDefault()	
 0x710058DAE0			FALSE	_ZN2nn3gfx24ViewportScissorStateInfo10SetDefaultEv	nn::gfx::ViewportScissorStateInfo::SetDefault()	
-0x710058DB00			FALSE	_ZN2nn3gfx10BufferInfo10SetDefaultEv	nn::gfx::BufferInfo::SetDefault()	
+0x710058DB00		gfx_BufferInfo.o	FALSE	_ZN2nn3gfx10BufferInfo10SetDefaultEv	nn::gfx::BufferInfo::SetDefault()	
 0x710058DB10			FALSE	_ZN2nn3gfx21BufferTextureViewInfo10SetDefaultEv	nn::gfx::BufferTextureViewInfo::SetDefault()	
 0x710058DB20		gfx_Buffer-api.nvn.8.o	FALSE	_ZN2nn3gfx6detail10BufferImplINS0_12ApiVariationINS0_7ApiTypeILi4EEENS0_10ApiVersionILi8EEEEEE18GetBufferAlignmentEPNS1_10DeviceImplIS8_EERKNS0_10BufferInfoE	nn::gfx::detail::BufferImpl<nn::gfx::ApiVariation<nn::gfx::ApiType<4>, nn::gfx::ApiVersion<8> > >::GetBufferAlignment(nn::gfx::detail::DeviceImpl<nn::gfx::ApiVariation<nn::gfx::ApiType<4>, nn::gfx::ApiVersion<8> > >*, nn::gfx::BufferInfo const&)	
 0x710058DC50			FALSE	_ZN2nn3gfx6detail10BufferImplINS0_12ApiVariationINS0_7ApiTypeILi4EEENS0_10ApiVersionILi8EEEEEE18GetBufferAlignmentEPNS1_10DeviceImplIS8_EERKNS1_14BufferInfoImplIS8_EE	nn::gfx::detail::BufferImpl<nn::gfx::ApiVariation<nn::gfx::ApiType<4>, nn::gfx::ApiVersion<8> > >::GetBufferAlignment(nn::gfx::detail::DeviceImpl<nn::gfx::ApiVariation<nn::gfx::ApiType<4>, nn::gfx::ApiVersion<8> > >*, nn::gfx::detail::BufferInfoImpl<nn::gfx::ApiVariation<nn::gfx::ApiType<4>, nn::gfx::ApiVersion<8> > > const&)	
