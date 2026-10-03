@@ -31,3 +31,7 @@
 
 /// Never turn calls at the end of the function into tail calls.
 #define DISABLE_TAIL_CALLS __attribute__((disable_tail_calls))
+
+/// The function never returns null; callers may drop null checks on its result, as the original
+/// build did where it could see that the definition always returns a fresh allocation.
+#define RETURNS_NONNULL __attribute__((returns_nonnull))
