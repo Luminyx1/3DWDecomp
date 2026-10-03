@@ -1,5 +1,6 @@
 #pragma once
 
+#include <attributes.h>
 #include <basis/seadTypes.h>
 #include <container/seadPtrArray.h>
 #include <prim/seadSafeString.h>
@@ -7,13 +8,17 @@
 #include "Project/Audio/AudioInfoList.hpp"
 #include "Project/Bgm/BgmInfo.hpp"
 
+// The info classes below define some createInfo/compareInfo functions inline in this header so
+// that createInfoList<T>/sortInfo<T> instantiations can inline them; they are marked USED because
+// their owning units (BgmLineInfo, BgmPlayInfo, BgmResourceCategoryInfo) still emit out-of-line copies.
+
 namespace al {
 class ByamlIter;
 
 class BgmLineInfo {
 public:
     static BgmLineInfo* createInfo(const ByamlIter& rIter);
-    static s32 compareInfo(const BgmLineInfo* pA, const BgmLineInfo* pB);
+    USED static s32 compareInfo(const BgmLineInfo* pA, const BgmLineInfo* pB);
 
     const char* mName;
     s32 mPriority;
@@ -26,8 +31,8 @@ static_assert(sizeof(BgmLineInfo) == 0x10);
 
 class BgmCombinedLineInfo {
 public:
-    static BgmCombinedLineInfo* createInfo(const ByamlIter& rIter);
-    static s32 compareInfo(const BgmCombinedLineInfo* pA, const BgmCombinedLineInfo* pB);
+    USED static BgmCombinedLineInfo* createInfo(const ByamlIter& rIter);
+    USED static s32 compareInfo(const BgmCombinedLineInfo* pA, const BgmCombinedLineInfo* pB);
 
     const char* mName;
     AudioInfoList<BgmLineInfo>* mLineInfoList;
@@ -37,8 +42,8 @@ static_assert(sizeof(BgmCombinedLineInfo) == 0x10);
 
 class BgmPlayInfo {
 public:
-    static BgmPlayInfo* createInfo(const ByamlIter& rIter);
-    static s32 compareInfo(const BgmPlayInfo* pA, const BgmPlayInfo* pB);
+    USED static BgmPlayInfo* createInfo(const ByamlIter& rIter);
+    USED static s32 compareInfo(const BgmPlayInfo* pA, const BgmPlayInfo* pB);
 
     const char* mName;
     const char* mLineName;
@@ -51,9 +56,12 @@ static_assert(sizeof(BgmPlayInfo) == 0x20);
 class BgmResourceSuffixInfo {
 public:
     static BgmResourceSuffixInfo* createInfo(const ByamlIter& rIter);
-    static s32 compareInfo(const BgmResourceSuffixInfo* pA, const BgmResourceSuffixInfo* pB);
+    USED static s32 compareInfo(const BgmResourceSuffixInfo* pA, const BgmResourceSuffixInfo* pB);
 
-    const char* mSuffixName;
+    union {
+        const char* mName;
+        const char* mSuffixName;
+    };
     s32 mStartSample;
     f32 mBpm;
     s32 mSampleRate;
@@ -64,7 +72,7 @@ static_assert(sizeof(BgmResourceSuffixInfo) == 0x18);
 class BgmEnableSituationInfo {
 public:
     static BgmEnableSituationInfo* createInfo(const ByamlIter& rIter);
-    static s32 compareInfo(const BgmEnableSituationInfo* pA, const BgmEnableSituationInfo* pB);
+    USED static s32 compareInfo(const BgmEnableSituationInfo* pA, const BgmEnableSituationInfo* pB);
 
     const char* mName;
     const char* mSubSituationName;
@@ -75,7 +83,8 @@ static_assert(sizeof(BgmEnableSituationInfo) == 0x10);
 class BgmStartTriggerSituationInfo {
 public:
     static BgmStartTriggerSituationInfo* createInfo(const ByamlIter& rIter);
-    static s32 compareInfo(const BgmStartTriggerSituationInfo* pA, const BgmStartTriggerSituationInfo* pB);
+    USED static s32 compareInfo(const BgmStartTriggerSituationInfo* pA,
+                                const BgmStartTriggerSituationInfo* pB);
 
     const char* mName;
 };
@@ -84,8 +93,8 @@ static_assert(sizeof(BgmStartTriggerSituationInfo) == 0x8);
 
 class BgmResourceInfo {
 public:
-    static BgmResourceInfo* createInfo(const ByamlIter& rIter);
-    static s32 compareInfo(const BgmResourceInfo* pA, const BgmResourceInfo* pB);
+    USED RETURNS_NONNULL static BgmResourceInfo* createInfo(const ByamlIter& rIter);
+    USED static s32 compareInfo(const BgmResourceInfo* pA, const BgmResourceInfo* pB);
 
     const char* mName;
     s32 mStartSample;
@@ -100,6 +109,166 @@ public:
 };
 
 static_assert(sizeof(BgmResourceInfo) == 0x38);
+
+/**
+ * Creates combined BGM line information from BYAML data.
+ * @param rIter BYAML data.
+ * @return Created information.
+ */
+inline BgmCombinedLineInfo* BgmCombinedLineInfo::createInfo(const ByamlIter& rIter) {
+    BgmCombinedLineInfo* info = new BgmCombinedLineInfo();
+    rIter.tryGetStringByKey(&info->mName, "Name");
+    ByamlIter lineIter;
+    rIter.tryGetIterByKey(&lineIter, "LineInfoList");
+    info->mLineInfoList = createInfoList<BgmLineInfo>(lineIter);
+    return info;
+}
+
+/**
+ * Compares two BGM line information by name.
+ * @param pA First information.
+ * @param pB Second information.
+ * @return Comparison result.
+ */
+inline s32 BgmLineInfo::compareInfo(const BgmLineInfo* pA, const BgmLineInfo* pB) {
+    return strcmp(pA->mName, pB->mName);
+}
+
+/**
+ * Compares two combined BGM line information by name.
+ * @param pA First information.
+ * @param pB Second information.
+ * @return Comparison result.
+ */
+inline s32 BgmCombinedLineInfo::compareInfo(const BgmCombinedLineInfo* pA, const BgmCombinedLineInfo* pB) {
+    return strcmp(pA->mName, pB->mName);
+}
+
+/**
+ * Creates BGM play information from BYAML data.
+ * @param rIter BYAML data.
+ * @return Created information.
+ */
+inline BgmPlayInfo* BgmPlayInfo::createInfo(const ByamlIter& rIter) {
+    BgmPlayInfo* info = new BgmPlayInfo();
+    rIter.tryGetStringByKey(&info->mName, "Name");
+    rIter.tryGetStringByKey(&info->mLineName, "LineName");
+    rIter.tryGetStringByKey(&info->mDefaultResourceName, "DefaultResourceName");
+
+    if (!rIter.tryGetBoolByKey(&info->mIsPlayingByUpperLayerAudioUser, "IsPlayingByUpperLayerAudioUser")) {
+        info->mIsPlayingByUpperLayerAudioUser = false;
+    }
+
+    return info;
+}
+
+/**
+ * Compares two BGM play information by name.
+ * @param pA First information.
+ * @param pB Second information.
+ * @return Comparison result.
+ */
+inline s32 BgmPlayInfo::compareInfo(const BgmPlayInfo* pA, const BgmPlayInfo* pB) {
+    return strcmp(pA->mName, pB->mName);
+}
+
+/**
+ * Compares two BGM resource suffix information by suffix name.
+ * @param pA First information.
+ * @param pB Second information.
+ * @return Comparison result.
+ */
+inline s32 BgmResourceSuffixInfo::compareInfo(const BgmResourceSuffixInfo* pA, const BgmResourceSuffixInfo* pB) {
+    return strcmp(pA->mSuffixName, pB->mSuffixName);
+}
+
+/**
+ * Compares two BGM enable situation information by name.
+ * @param pA First information.
+ * @param pB Second information.
+ * @return Comparison result.
+ */
+inline s32 BgmEnableSituationInfo::compareInfo(const BgmEnableSituationInfo* pA, const BgmEnableSituationInfo* pB) {
+    return strcmp(pA->mName, pB->mName);
+}
+
+/**
+ * Compares two BGM start trigger situation information by name.
+ * @param pA First information.
+ * @param pB Second information.
+ * @return Comparison result.
+ */
+inline s32 BgmStartTriggerSituationInfo::compareInfo(const BgmStartTriggerSituationInfo* pA,
+                                              const BgmStartTriggerSituationInfo* pB) {
+    return strcmp(pA->mName, pB->mName);
+}
+
+/**
+ * Compares two BGM resource information by name.
+ * @param pA First information.
+ * @param pB Second information.
+ * @return Comparison result.
+ */
+inline s32 BgmResourceInfo::compareInfo(const BgmResourceInfo* pA, const BgmResourceInfo* pB) {
+    return strcmp(pA->mName, pB->mName);
+}
+
+/**
+ * Creates BGM resource information from BYAML data.
+ * @param rIter BYAML data.
+ * @return Created information.
+ */
+inline BgmResourceInfo* BgmResourceInfo::createInfo(const ByamlIter& rIter) {
+    BgmResourceInfo* info = new BgmResourceInfo();
+    rIter.tryGetStringByKey(&info->mName, "Name");
+
+    if (!rIter.tryGetIntByKey(&info->mStartSample, "StartSample")) {
+        info->mStartSample = 0;
+    }
+
+    if (!rIter.tryGetFloatByKey(&info->mBpm, "Bpm")) {
+        info->mBpm = 1.0f;
+    }
+
+    if (!rIter.tryGetIntByKey(&info->mSampleRate, "SampleRate")) {
+        info->mSampleRate = 32000;
+    }
+
+    ByamlIter suffixIter;
+    info->mResourceSuffixInfoList = nullptr;
+
+    if (rIter.tryGetIterByKey(&suffixIter, "ResourceSuffixInfoList")) {
+        info->mResourceSuffixInfoList = createInfoList<BgmResourceSuffixInfo>(suffixIter);
+    }
+
+    ByamlIter enableIter;
+    info->mEnableSituationInfoList = nullptr;
+
+    if (rIter.tryGetIterByKey(&enableIter, "EnableSituationInfoList")) {
+        info->mEnableSituationInfoList = createInfoList<BgmEnableSituationInfo>(enableIter);
+    }
+
+    ByamlIter startTriggerIter;
+    info->mStartTriggerSituationInfoList = nullptr;
+
+    if (rIter.tryGetIterByKey(&startTriggerIter, "StartTriggerSituationInfoList")) {
+        info->mStartTriggerSituationInfoList = createInfoList<BgmStartTriggerSituationInfo>(startTriggerIter);
+    }
+
+    if (!rIter.tryGetBoolByKey(&info->mIsEnableRegionJump, "IsEnableRegionJump")) {
+        info->mIsEnableRegionJump = false;
+    }
+
+    if (!rIter.tryGetBoolByKey(&info->mIsDisableAudioEffect, "IsDisableAudioEffect")) {
+        info->mIsDisableAudioEffect = false;
+    }
+
+    if (!rIter.tryGetBoolByKey(&info->mIsEnableNwRender, "IsEnableNwRender")) {
+        info->mIsEnableNwRender = false;
+    }
+
+    return info;
+}
 
 class BgmStagePlayInfo {
 public:
