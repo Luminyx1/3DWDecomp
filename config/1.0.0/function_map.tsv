@@ -54163,7 +54163,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71008ABF60			FALSE	_ZN2al12AtmosScatter15preDrawGraphicsEv	al::AtmosScatter::preDrawGraphics()	
 0x71008ABFD0			FALSE	_ZNK2al12AtmosScatter15searchVariationEPKN3agl13ShaderProgramEi	al::AtmosScatter::searchVariation(agl::ShaderProgram const*, int) const	
 0x71008AC0D0			FALSE	_ZNK2al12AtmosScatter14drawPrecomputeEN3agl10ShaderModeE	al::AtmosScatter::drawPrecompute(agl::ShaderMode) const	
-0x71008AD0A0			FALSE	sub_71008AD0A0	sub_71008AD0A0	
+0x71008AD0A0			FALSE	_ZN12_GLOBAL__N_18setLayerEPKN3agl13ShaderProgramEi	_ZN12_GLOBAL__N_18setLayerEPKN3agl13ShaderProgramEi	
 0x71008AD2A0			FALSE	_ZNK2al12AtmosScatter14drawFarForwardEiRKN4sead8Matrix34IfEERKNS1_8Matrix44IfEERKNS1_7Vector2IfEEffN3agl10ShaderModeE	al::AtmosScatter::drawFarForward(int, sead::Matrix34<float> const&, sead::Matrix44<float> const&, sead::Vector2<float> const&, float, float, agl::ShaderMode) const	
 0x71008AD370			FALSE	_ZNK2al12AtmosScatter7drawFarEiRKN4sead8Matrix34IfEERKNS1_8Matrix44IfEERKNS1_7Vector2IfEEffNS_10RenderTypeEN3agl10ShaderModeE	al::AtmosScatter::drawFar(int, sead::Matrix34<float> const&, sead::Matrix44<float> const&, sead::Vector2<float> const&, float, float, al::RenderType, agl::ShaderMode) const	
 0x71008AD980			FALSE	_ZNK2al12AtmosScatter16drawFarToCubeMapEiRKN4sead8Matrix34IfEERKNS1_8Matrix44IfEERKNS1_7Vector2IfEEffN3agl10ShaderModeE	al::AtmosScatter::drawFarToCubeMap(int, sead::Matrix34<float> const&, sead::Matrix44<float> const&, sead::Vector2<float> const&, float, float, agl::ShaderMode) const	
@@ -54187,8 +54187,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71008AE4D0			FALSE	_ZNK2al15CubeMapDirector15renderToCubeMapEN3agl10ShaderModeE	al::CubeMapDirector::renderToCubeMap(agl::ShaderMode) const	
 0x71008AE500			FALSE	_ZNK2al15CubeMapDirector20getIrradianceSamplerEi	al::CubeMapDirector::getIrradianceSampler(int) const	
 0x71008AE530			FALSE	_ZNK2al15CubeMapDirector23getCubeMapMirrorSamplerEi	al::CubeMapDirector::getCubeMapMirrorSampler(int) const	
-0x71008AE560			FALSE	_ZN2al19AtmosScatterCubeMapC1EPNS_18GraphicsSystemInfoE	al::AtmosScatterCubeMap::AtmosScatterCubeMap(al::GraphicsSystemInfo*)	
-0x71008AE740		AtmosScatterCubeMap.o	FALSE	_ZN2al19AtmosScatterCubeMap15preDrawGraphicsEv	al::AtmosScatterCubeMap::preDrawGraphics()	object/folder from OdysseyDecomp file list
+0x71008AE560		AtmosScatterCubeMap.o	FALSE	_ZN2al19AtmosScatterCubeMapC1EPNS_18GraphicsSystemInfoE	al::AtmosScatterCubeMap::AtmosScatterCubeMap(al::GraphicsSystemInfo*)	
+0x71008AE740			FALSE	_ZN2al19AtmosScatterCubeMap15preDrawGraphicsEv	al::AtmosScatterCubeMap::preDrawGraphics()	object/folder from OdysseyDecomp file list
 0x71008AE750			FALSE	_ZN2al19AtmosScatterCubeMap10exeInitialEv	al::AtmosScatterCubeMap::exeInitial()	
 0x71008AE760			FALSE	_ZN2al19AtmosScatterCubeMap11exeDrawFaceEv	al::AtmosScatterCubeMap::exeDrawFace()	
 0x71008AE790			FALSE	_ZN2al19AtmosScatterCubeMap16exeDrawRoughnessEv	al::AtmosScatterCubeMap::exeDrawRoughness()	
@@ -54199,10 +54199,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71008AEB60			FALSE	_ZNK2al19AtmosScatterCubeMap22activateCubeMapTextureEib	al::AtmosScatterCubeMap::activateCubeMapTexture(int, bool) const	
 0x71008AEBF0			FALSE	_ZN2al19AtmosScatterCubeMapD2Ev	al::AtmosScatterCubeMap::~AtmosScatterCubeMap()	
 0x71008AEC60			FALSE	_ZN2al19AtmosScatterCubeMapD0Ev	al::AtmosScatterCubeMap::~AtmosScatterCubeMap()	
-0x71008AECD0			FALSE	sub_71008AECD0	sub_71008AECD0	
-0x71008AECF0			FALSE	sub_71008AECF0	sub_71008AECF0	
-0x71008AED20			FALSE	sub_71008AED20	sub_71008AED20	
-0x71008AED70			FALSE	sub_71008AED70	sub_71008AED70	
+0x71008AECD0			FALSE	_ZNK12_GLOBAL__N_129AtmosScatterCubeMapNrvInitial7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_129AtmosScatterCubeMapNrvInitial7executeEPN2al11NerveKeeperE	
+0x71008AECF0			FALSE	_ZNK12_GLOBAL__N_130AtmosScatterCubeMapNrvDrawFace7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_130AtmosScatterCubeMapNrvDrawFace7executeEPN2al11NerveKeeperE	
+0x71008AED20			FALSE	_ZNK12_GLOBAL__N_135AtmosScatterCubeMapNrvDrawRoughness7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_135AtmosScatterCubeMapNrvDrawRoughness7executeEPN2al11NerveKeeperE	
+0x71008AED70			FALSE	_ZNK12_GLOBAL__N_133AtmosScatterCubeMapNrvFlipCubeMap7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_133AtmosScatterCubeMapNrvFlipCubeMap7executeEPN2al11NerveKeeperE	
 0x71008AEE50		CubeMapDrawInfo.o	FALSE	_ZN2al15CubeMapDrawInfoC2EPKNS_18GraphicsSystemInfoE	al::CubeMapDrawInfo::CubeMapDrawInfo(al::GraphicsSystemInfo const*)	
 0x71008AEEF0			FALSE	_ZN2al15CubeMapDrawInfo18preDrawCubeMapFaceEPN3agl3env7CubeMapEiffRKN4sead7Vector3IfEEib	al::CubeMapDrawInfo::preDrawCubeMapFace(agl::env::CubeMap*, int, float, float, sead::Vector3<float> const&, int, bool)	
 0x71008AF210		CubeMapDrawer.o	FALSE	_ZNK2al13CubeMapDrawer22getCubeMapRenderBufferEv	al::CubeMapDrawer::getCubeMapRenderBuffer() const	object/folder from OdysseyDecomp file list
@@ -54214,7 +54214,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71008AF270			FALSE	_ZNK2al13CubeMapDrawer9getAspectEv	al::CubeMapDrawer::getAspect() const	
 0x71008AF280			FALSE	_ZN2al13CubeMapDrawerC1EPNS_15CubeMapDrawInfoEPN3agl10ShaderModeEPNS3_3env7CubeMapEiffRKN4sead7Vector3IfEEib	al::CubeMapDrawer::CubeMapDrawer(al::CubeMapDrawInfo*, agl::ShaderMode*, agl::env::CubeMap*, int, float, float, sead::Vector3<float> const&, int, bool)	
 0x71008AF2B0			FALSE	_ZN2al13CubeMapDrawerD2Ev	al::CubeMapDrawer::~CubeMapDrawer()	
-0x71008AF300			FALSE	sub_71008AF300	sub_71008AF300	
+0x71008AF300			FALSE	_GLOBAL__sub_I_CubeMapDrawer.cpp	_GLOBAL__sub_I_CubeMapDrawer.cpp	
 0x71008AF620		DeferredRenderingShader.o	FALSE	_ZN2al23DeferredRenderingShaderC1EPNS_15GpuMemAllocatorEb	al::DeferredRenderingShader::DeferredRenderingShader(al::GpuMemAllocator*, bool)	
 0x71008AF710			FALSE	_ZN2al23DeferredRenderingShader13setRenderTypeENS0_11ERenderTypeE	al::DeferredRenderingShader::setRenderType(al::DeferredRenderingShader::ERenderType)	
 0x71008AF740			FALSE	_ZN2al23DeferredRenderingShader13setAlbedoTypeENS0_11EAlbedoTypeE	al::DeferredRenderingShader::setAlbedoType(al::DeferredRenderingShader::EAlbedoType)	
@@ -54260,7 +54260,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71008B1200			FALSE	_ZN2al23DeferredRenderingShpUbo4swapEv	al::DeferredRenderingShpUbo::swap()	
 0x71008B1390			FALSE	_ZN2al23DeferredRenderingShpUbo8activateEv	al::DeferredRenderingShpUbo::activate()	
 0x71008B1430		FullScreenQuadModel.o	FALSE	_ZN2al19FullScreenQuadModelC2Ev	al::FullScreenQuadModel::FullScreenQuadModel()	
-0x71008B1780		FullScreenTriangle.o	FALSE	_ZN2al19FullScreenQuadModelD2Ev	al::FullScreenQuadModel::~FullScreenQuadModel()	object (smo)
+0x71008B1780			FALSE	_ZN2al19FullScreenQuadModelD2Ev	al::FullScreenQuadModel::~FullScreenQuadModel()	object (smo)
 0x71008B17D0			FALSE	_ZN3agl11GPUMemBlockIfED2Ev	agl::GPUMemBlock<float>::~GPUMemBlock()	
 0x71008B17F0			FALSE	_ZNK2al19FullScreenQuadModel8drawQuadEv	al::FullScreenQuadModel::drawQuad() const	
 0x71008B1840			FALSE	_ZN3agl11GPUMemBlockIfED0Ev	agl::GPUMemBlock<float>::~GPUMemBlock()	
@@ -54312,10 +54312,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71008B3D30			FALSE	_ZNK2al18ModelLightDirector25activateModelLightTextureEPKN2nn3g3d11ResMaterialEPKNS_10EnvTexInfoEb	al::ModelLightDirector::activateModelLightTexture(nn::g3d::ResMaterial const*, al::EnvTexInfo const*, bool) const	
 0x71008B3DA0			FALSE	_ZNK2al18ModelLightDirector25activateModelLightTextureEi	al::ModelLightDirector::activateModelLightTexture(int) const	
 0x71008B3E90			FALSE	_ZNK2al18ModelLightDirector21tryGetModelLightParamEPKc	al::ModelLightDirector::tryGetModelLightParam(char const*) const	
-0x71008B3F40			FALSE	_ZN2al26activateUniformBlockAssignERKNS_18UniformBlockAssignE	al::activateUniformBlockAssign(al::UniformBlockAssign const&)	
+0x71008B3F40		PeripheryRendering.o	FALSE	_ZN2al26activateUniformBlockAssignERKNS_18UniformBlockAssignE	al::activateUniformBlockAssign(al::UniformBlockAssign const&)	
 0x71008B3FC0			FALSE	_ZN2al31activateUniformBlockAssignArrayERKNS_23UniformBlockAssignArrayE	al::activateUniformBlockAssignArray(al::UniformBlockAssignArray const&)	
 0x71008B4080			FALSE	_ZN2al27tryCreateUniformBlockAssignEPNS_14SimpleModelG3DEPKcPKNS_18UniformBlockLayoutEi	al::tryCreateUniformBlockAssign(al::SimpleModelG3D*, char const*, al::UniformBlockLayout const*, int)	
-0x71008B4440		PeripheryRendering.o	FALSE	_ZN2al22findUniformBlockAssignEPKNS_23UniformBlockAssignArrayEPKc	al::findUniformBlockAssign(al::UniformBlockAssignArray const*, char const*)	object (smo)
+0x71008B4440			FALSE	_ZN2al22findUniformBlockAssignEPKNS_23UniformBlockAssignArrayEPKc	al::findUniformBlockAssign(al::UniformBlockAssignArray const*, char const*)	object (smo)
 0x71008B44E0			FALSE	_ZN2al27swapUniformBlockAssignArrayEPKNS_23UniformBlockAssignArrayE	al::swapUniformBlockAssignArray(al::UniformBlockAssignArray const*)	
 0x71008B4530			FALSE	_ZN2al14activateShaderEPKN2nn3g3d16ResShaderProgramEN3agl10ShaderModeE	al::activateShader(nn::g3d::ResShaderProgram const*, agl::ShaderMode)	
 0x71008B4590			FALSE	_ZN2al19initShaderKeyStaticEPN2nn3g3d15ShadingModelObjEPKNS1_15ResShaderAssignEPKNS1_8ModelObjEPKNS1_8ShapeObjEb	al::initShaderKeyStatic(nn::g3d::ShadingModelObj*, nn::g3d::ResShaderAssign const*, nn::g3d::ModelObj const*, nn::g3d::ShapeObj const*, bool)	
@@ -54356,16 +54356,16 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71008B5030			FALSE	_ZN2al24getSamplerLocationDitherEv	al::getSamplerLocationDither()	
 0x71008B5040			FALSE	_ZN2al19tryChangeShaderModeEPN3agl11DrawContextENS0_10ShaderModeE	al::tryChangeShaderMode(agl::DrawContext*, agl::ShaderMode)	
 0x71008B5060			FALSE	_ZN2al21forceChangeShaderModeEPN3agl11DrawContextENS0_10ShaderModeE	al::forceChangeShaderMode(agl::DrawContext*, agl::ShaderMode)	
-0x71008B5070			FALSE	sub_71008B5070	sub_71008B5070	
+0x71008B5070			FALSE	_GLOBAL__sub_I_SamplerLocation.cpp	_GLOBAL__sub_I_SamplerLocation.cpp	
 0x71008B57F0			FALSE	_ZN2al24createMakeHalfTextureUboEv	al::createMakeHalfTextureUbo()	
 0x71008B5810			FALSE	_ZN2al15calcTanFovyHalfEPN4sead7Vector2IfEES3_ffRKS2_	al::calcTanFovyHalf(sead::Vector2<float>*, sead::Vector2<float>*, float, float, sead::Vector2<float> const&)	
-0x71008B5880			FALSE	_ZN2al11CubeMapInfo15setCategoryNameEv	al::CubeMapInfo::setCategoryName()	
+0x71008B5880	Library/Shader/ForwardRendering	CubeMapKeeper.o	FALSE	_ZN2al11CubeMapInfo15setCategoryNameEv	al::CubeMapInfo::setCategoryName()	
 0x71008B5940			FALSE	_ZN2al19ShaderCubeMapKeeperC2EPNS_18GraphicsSystemInfoEPNS_12PlayerHolderE	al::ShaderCubeMapKeeper::ShaderCubeMapKeeper(al::GraphicsSystemInfo*, al::PlayerHolder*)	
 0x71008B5A20			FALSE	_ZN2al19ShaderCubeMapKeeperD2Ev	al::ShaderCubeMapKeeper::~ShaderCubeMapKeeper()	
 0x71008B5B00			FALSE	_ZN2al19ShaderCubeMapKeeper17initStageResourceEPKNS_8ResourceEPKcPKNS_12LiveActorKitE	al::ShaderCubeMapKeeper::initStageResource(al::Resource const*, char const*, al::LiveActorKit const*)	
-0x71008B5B70			FALSE	sub_71008B5B70	sub_71008B5B70	
+0x71008B5B70			FALSE	_ZN2al19ShaderCubeMapKeeper10TexResInfo7tryLoadEPKc	_ZN2al19ShaderCubeMapKeeper10TexResInfo7tryLoadEPKc	
 0x71008B5C90			FALSE	_ZN2al19ShaderCubeMapKeeper17makeTextureByInfoERKNS0_10TexResInfoEbPKcS5_	al::ShaderCubeMapKeeper::makeTextureByInfo(al::ShaderCubeMapKeeper::TexResInfo const&, bool, char const*, char const*)	
-0x71008B6450	Library/Shader/ForwardRendering	CubeMapKeeper.o	FALSE	_ZN2al19ShaderCubeMapKeeper7endInitEv	al::ShaderCubeMapKeeper::endInit()	object/folder from OdysseyDecomp file list
+0x71008B6450			FALSE	_ZN2al19ShaderCubeMapKeeper7endInitEv	al::ShaderCubeMapKeeper::endInit()	object/folder from OdysseyDecomp file list
 0x71008B6610			FALSE	_ZNK2al19ShaderCubeMapKeeper21findCubeMapInfoByNameEPKc	al::ShaderCubeMapKeeper::findCubeMapInfoByName(char const*) const	
 0x71008B66E0			FALSE	_ZN2al16RoughnessArrayDLC2Ev	al::RoughnessArrayDL::RoughnessArrayDL()	
 0x71008B6700			FALSE	_ZNK2al14RoughnessArray12isFileLoadedEv	al::RoughnessArray::isFileLoaded() const	
@@ -54392,10 +54392,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71008B7470			FALSE	_ZN2al13CategoryLight5text_Ei	al::CategoryLight::text_(int)	
 0x71008B7630			TRUE	_ZN4sead19FixedSafeStringBaseIcLi16EED0Ev	sead::FixedSafeStringBase<char, 16>::~FixedSafeStringBase()	
 0x71008B7640			TRUE	_ZN4sead19FixedSafeStringBaseIcLi16EEaSERKNS_14SafeStringBaseIcEE	sead::FixedSafeStringBase<char, 16>::operator=(sead::SafeStringBase<char> const&)	
-0x71008B7730			FALSE	sub_71008B7730	sub_71008B7730	
-0x71008B7840			FALSE	sub_71008B7840	sub_71008B7840	
-0x71008B78C0			FALSE	_ZN2al8EnvTexIdC2Ev	al::EnvTexId::EnvTexId()	
-0x71008B78E0		EnvTextureKeeper.o	FALSE	_ZN2al8EnvTexId13invalidateAllEv	al::EnvTexId::invalidateAll()	object/folder from OdysseyDecomp file list
+0x71008B7730			FALSE	_ZN12_GLOBAL__N_124createSamplerDisplayListEPN2al15GpuMemAllocatorERKN3agl11TextureDataERKNS3_15SamplerLocationE	_ZN12_GLOBAL__N_124createSamplerDisplayListEPN2al15GpuMemAllocatorERKN3agl11TextureDataERKNS3_15SamplerLocationE	
+0x71008B7840			FALSE	_GLOBAL__sub_I_CubeMapKeeper.cpp	_GLOBAL__sub_I_CubeMapKeeper.cpp	
+0x71008B78C0		EnvTextureKeeper.o	FALSE	_ZN2al8EnvTexIdC2Ev	al::EnvTexId::EnvTexId()	
+0x71008B78E0			FALSE	_ZN2al8EnvTexId13invalidateAllEv	al::EnvTexId::invalidateAll()	object/folder from OdysseyDecomp file list
 0x71008B7900			FALSE	_ZN2al8EnvTexId12initForCacheEv	al::EnvTexId::initForCache()	
 0x71008B7920			FALSE	_ZN2al8EnvTexId13isEnableTexIdEi	al::EnvTexId::isEnableTexId(int)	
 0x71008B7940			FALSE	_ZN2al8EnvTexId6changeERKS0_	al::EnvTexId::change(al::EnvTexId const&)	
@@ -54424,7 +54424,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71008B8260			FALSE	_ZN2al10EnvTexInfo8clearAllEv	al::EnvTexInfo::clearAll()	
 0x71008B8280			FALSE	_ZNK2al10EnvTexInfo17isIndirectRefractEv	al::EnvTexInfo::isIndirectRefract() const	
 0x71008B8290			FALSE	_ZNK2al10EnvTexInfo16isRefractCubeMapEv	al::EnvTexInfo::isRefractCubeMap() const	
-0x71008B82A0		ShaderEnvTextureKeeper.o	FALSE	_ZN2al22ShaderEnvTextureKeeperC2EPNS_18GraphicsSystemInfoEPNS_12PlayerHolderE	al::ShaderEnvTextureKeeper::ShaderEnvTextureKeeper(al::GraphicsSystemInfo*, al::PlayerHolder*)	object (class)
+0x71008B82A0	Library/Shader/ForwardRendering	ShaderEnvTextureKeeper.o	FALSE	_ZN2al22ShaderEnvTextureKeeperC2EPNS_18GraphicsSystemInfoEPNS_12PlayerHolderE	al::ShaderEnvTextureKeeper::ShaderEnvTextureKeeper(al::GraphicsSystemInfo*, al::PlayerHolder*)	object (class)
 0x71008B82D0			FALSE	_ZN2al22ShaderEnvTextureKeeperD2Ev	al::ShaderEnvTextureKeeper::~ShaderEnvTextureKeeper()	
 0x71008B8340			FALSE	_ZN2al22ShaderEnvTextureKeeper11initTextureEPNS_12ShaderHolderE	al::ShaderEnvTextureKeeper::initTexture(al::ShaderHolder*)	
 0x71008B83E0			FALSE	_ZN2al22ShaderEnvTextureKeeper21initGraphicsAreaParamEPNS_20GraphicsAreaDirectorEPKc	al::ShaderEnvTextureKeeper::initGraphicsAreaParam(al::GraphicsAreaDirector*, char const*)	
@@ -54451,11 +54451,11 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71008B9E40			FALSE	_ZNK2al26ShaderFresnelTextureKeeper22activateFresnelTextureEib	al::ShaderFresnelTextureKeeper::activateFresnelTexture(int, bool) const	
 0x71008B9EE0			FALSE	_ZNK2al26ShaderFresnelTextureKeeper29activateThicknessCurveTextureEib	al::ShaderFresnelTextureKeeper::activateThicknessCurveTexture(int, bool) const	
 0x71008B9F80			FALSE	_ZNK2al26ShaderFresnelTextureKeeper30activateSilhouetteCurveTextureEiRKN3agl15SamplerLocationEb	al::ShaderFresnelTextureKeeper::activateSilhouetteCurveTexture(int, agl::SamplerLocation const&, bool) const	
-0x71008B9FF0			FALSE	_ZN2al11MirrorParam4initEv	al::MirrorParam::init()	
+0x71008B9FF0		ShaderMirrorDirector.o	FALSE	_ZN2al11MirrorParam4initEv	al::MirrorParam::init()	
 0x71008BA7D0			FALSE	_ZNK2al11MirrorParameqERKS0_	al::MirrorParam::operator==(al::MirrorParam const&) const	
 0x71008BA9A0			FALSE	_ZN2al11MirrorParamaSERKS0_	al::MirrorParam::operator=(al::MirrorParam const&)	
 0x71008BABE0			FALSE	_ZN2al11MirrorParam6interpERKS0_S2_f	al::MirrorParam::interp(al::MirrorParam const&, al::MirrorParam const&, float)	
-0x71008BAEC0		ShaderMirrorDirector.o	FALSE	_ZN2al20ShaderMirrorDirectorC2EPNS_18GraphicsSystemInfoEPNS_12LiveActorKitE	al::ShaderMirrorDirector::ShaderMirrorDirector(al::GraphicsSystemInfo*, al::LiveActorKit*)	object (class)
+0x71008BAEC0			FALSE	_ZN2al20ShaderMirrorDirectorC2EPNS_18GraphicsSystemInfoEPNS_12LiveActorKitE	al::ShaderMirrorDirector::ShaderMirrorDirector(al::GraphicsSystemInfo*, al::LiveActorKit*)	object (class)
 0x71008BB360			FALSE	_ZN2al32GraphicsParamRequestInterpKeeperINS_11MirrorParamEEC2EPNS_18GraphicsSystemInfoEiPKcS6_S6_	al::GraphicsParamRequestInterpKeeper<al::MirrorParam>::GraphicsParamRequestInterpKeeper(al::GraphicsSystemInfo*, int, char const*, char const*, char const*)	
 0x71008BB710			FALSE	_ZN2al20ShaderMirrorDirectorD2Ev	al::ShaderMirrorDirector::~ShaderMirrorDirector()	
 0x71008BB8A0			FALSE	_ZN2al20ShaderMirrorDirector19pushBackMirrorActorEPNS_9LiveActorERKNS_13ActorInitInfoE	al::ShaderMirrorDirector::pushBackMirrorActor(al::LiveActor*, al::ActorInitInfo const&)	
@@ -54475,7 +54475,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71008BCA30			FALSE	_ZNK2al20ShaderMirrorDirector15getMirrorCameraEPKNS_9LiveActorE	al::ShaderMirrorDirector::getMirrorCamera(al::LiveActor const*) const	
 0x71008BCA50			FALSE	_ZN2al20ShaderMirrorDirector8movementEv	al::ShaderMirrorDirector::movement()	
 0x71008BCC70			FALSE	_ZN2al32GraphicsParamRequestInterpKeeperINS_11MirrorParamEE13updateRequestEv	al::GraphicsParamRequestInterpKeeper<al::MirrorParam>::updateRequest()	
-0x71008BCDA0			FALSE	sub_71008BCDA0	sub_71008BCDA0	
+0x71008BCDA0			FALSE	_ZN12_GLOBAL__N_118updateMirrorCameraEPN4sead12LookAtCameraEPN2al9LiveActorEf	_ZN12_GLOBAL__N_118updateMirrorCameraEPN4sead12LookAtCameraEPN2al9LiveActorEf	
 0x71008BCFA0			FALSE	_ZN2al15MirrorActorBaseC2EPKc	al::MirrorActorBase::MirrorActorBase(char const*)	
 0x71008BD020			FALSE	_ZN2al15MirrorActorBaseC1EPKc	al::MirrorActorBase::MirrorActorBase(char const*)	
 0x71008BD0B0			FALSE	_ZN2al15MirrorActorBase9initByArgERKNS_13ActorInitInfoE	al::MirrorActorBase::initByArg(al::ActorInitInfo const&)	
@@ -54532,7 +54532,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71008BF1A0			FALSE	_ZN2al12UniformBlockD0Ev	al::UniformBlock::~UniformBlock()	
 0x71008BF1D0		UniformBlockUtil.o	FALSE	_ZN2al18createUniformBlockEPKNS_18UniformBlockLayoutEiPN4sead4HeapEi	al::createUniformBlock(al::UniformBlockLayout const*, int, sead::Heap*, int)	object (smo)
 0x71008BF270			FALSE	_ZN2al19declareUniformBlockEPN3agl12UniformBlockEPKNS_18UniformBlockLayoutEiPN4sead4HeapE	al::declareUniformBlock(agl::UniformBlock*, al::UniformBlockLayout const*, int, sead::Heap*)	
-0x71008BF2E0	Library/Shader/ForwardRendering	ThunderRenderKeeper.o	FALSE	_ZN3agl3sdw15SphereOcclusion8setParamERKN4sead7Vector3IfEEff	agl::sdw::SphereOcclusion::setParam(sead::Vector3<float> const&, float, float)	object/folder from OdysseyDecomp file list
+0x71008BF2E0	agl/shadow	aglPrimitiveOcclusion.o	FALSE	_ZN3agl3sdw15SphereOcclusion8setParamERKN4sead7Vector3IfEEff	agl::sdw::SphereOcclusion::setParam(sead::Vector3<float> const&, float, float)	object/folder from OdysseyDecomp file list
 0x71008BF300			FALSE	_ZN3agl3sdw15SphereOcclusion10setDoParamERKN4sead7Vector3IfEEff	agl::sdw::SphereOcclusion::setDoParam(sead::Vector3<float> const&, float, float)	
 0x71008BF320			FALSE	_ZNK3agl3sdw15SphereOcclusion16storeUboStructAoEPNS0_8SphereAoERKN4sead8Matrix34IfEE	agl::sdw::SphereOcclusion::storeUboStructAo(agl::sdw::SphereAo*, sead::Matrix34<float> const&) const	
 0x71008BF3C0			FALSE	_ZNK3agl3sdw15SphereOcclusion16storeUboStructDoEPNS0_8SphereDoERKN4sead8Matrix34IfEE	agl::sdw::SphereOcclusion::storeUboStructDo(agl::sdw::SphereDo*, sead::Matrix34<float> const&) const	
@@ -54550,7 +54550,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71008C0780			FALSE	_ZN3agl3sdw18PrimitiveOcclusion11calcContextEiRKN4sead8Matrix34IfEERKNS2_8Matrix44IfEEffffRKNS2_7Vector2IfEE	agl::sdw::PrimitiveOcclusion::calcContext(int, sead::Matrix34<float> const&, sead::Matrix44<float> const&, float, float, float, float, sead::Vector2<float> const&)	
 0x71008C07D0			FALSE	_ZN3agl3sdw18PrimitiveOcclusion8calcViewEiPKN4sead6CameraEPKNS2_21PerspectiveProjectionE	agl::sdw::PrimitiveOcclusion::calcView(int, sead::Camera const*, sead::PerspectiveProjection const*)	
 0x71008C10C0			FALSE	_ZNK3agl3sdw18PrimitiveOcclusion6drawAoEiRKNS_11TextureDataES4_bNS_10ShaderModeE	agl::sdw::PrimitiveOcclusion::drawAo(int, agl::TextureData const&, agl::TextureData const&, bool, agl::ShaderMode) const	
-0x71008C1520			FALSE	sub_71008C1520	sub_71008C1520	
+0x71008C1520			FALSE	_ZN3agl3sdw12_GLOBAL__N_111bindGBufferERKNS_11TextureDataES4_	_ZN3agl3sdw12_GLOBAL__N_111bindGBufferERKNS_11TextureDataES4_	
 0x71008C1620			FALSE	_ZNK3agl3sdw18PrimitiveOcclusion6drawDoEiRKNS_11TextureDataES4_bNS_10ShaderModeE	agl::sdw::PrimitiveOcclusion::drawDo(int, agl::TextureData const&, agl::TextureData const&, bool, agl::ShaderMode) const	
 0x71008C1AA0			FALSE	_ZNK3agl3sdw18PrimitiveOcclusion9drawDebugEiNS_10ShaderModeE	agl::sdw::PrimitiveOcclusion::drawDebug(int, agl::ShaderMode) const	
 0x71008C1D10			FALSE	_ZNK3agl3sdw18PrimitiveOcclusion22drawPrecomputeSphereDoEiNS_10ShaderModeE	agl::sdw::PrimitiveOcclusion::drawPrecomputeSphereDo(int, agl::ShaderMode) const	
@@ -61661,14 +61661,14 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71009FF4A0			FALSE	_ZN2al19SeWaitingListKeeper5addSeEPNS_9SeRequestE	al::SeWaitingListKeeper::addSe(al::SeRequest*)	
 0x71009FF550			FALSE	_ZN2al17createAudioKeeperEPKcRKNS_13ActorInitInfoE	al::createAudioKeeper(char const*, al::ActorInitInfo const&)	
 0x71009FF5B0			FALSE	_ZN2al17createAudioKeeperEPKcPKNS_13AudioDirectorE	al::createAudioKeeper(char const*, al::AudioDirector const*)	
-0x71009FF610			FALSE	_ZN2al18FullScreenTriangleC2Ev	al::FullScreenTriangle::FullScreenTriangle()	
+0x71009FF610	Library/Shader/DeferredRendering	FullScreenTriangle.o	FALSE	_ZN2al18FullScreenTriangleC2Ev	al::FullScreenTriangle::FullScreenTriangle()	
 0x71009FFA50			FALSE	_ZN2al18FullScreenTriangleD2Ev	al::FullScreenTriangle::~FullScreenTriangle()	
-0x71009FFB10	Library/Shader/DeferredRendering	FullScreenTriangle.o	FALSE	_ZNK2al18FullScreenTriangle7drawFarEPN3agl11DrawContextE	al::FullScreenTriangle::drawFar(agl::DrawContext*) const	object/folder from OdysseyDecomp file list
+0x71009FFB10			FALSE	_ZNK2al18FullScreenTriangle7drawFarEPN3agl11DrawContextE	al::FullScreenTriangle::drawFar(agl::DrawContext*) const	object/folder from OdysseyDecomp file list
 0x71009FFB70			FALSE	_ZNK2al18FullScreenTriangle14drawTriReverseEPN3agl11DrawContextE	al::FullScreenTriangle::drawTriReverse(agl::DrawContext*) const	
 0x71009FFBB0			FALSE	_ZNK2al18FullScreenTriangle7drawTriEPN3agl11DrawContextE	al::FullScreenTriangle::drawTri(agl::DrawContext*) const	
 0x71009FFBF0			FALSE	_ZNK2al18FullScreenTriangle8drawNearEPN3agl11DrawContextE	al::FullScreenTriangle::drawNear(agl::DrawContext*) const	
-0x71009FFC50			FALSE	_ZN16ShaderSearchImpl10isEqualStrEPKcS1_	ShaderSearchImpl::isEqualStr(char const*, char const*)	
-0x71009FFC60	Library/Shader/ForwardRendering	ShaderHolder.o	FALSE	_ZN2al12ShaderHolder18SingletonDisposer_D1Ev	al::ShaderHolder::SingletonDisposer_::~SingletonDisposer_()	object (smo)
+0x71009FFC50	Library/Shader/ForwardRendering	ShaderHolder.o	FALSE	_ZN16ShaderSearchImpl10isEqualStrEPKcS1_	ShaderSearchImpl::isEqualStr(char const*, char const*)	
+0x71009FFC60			FALSE	_ZN2al12ShaderHolder18SingletonDisposer_D1Ev	al::ShaderHolder::SingletonDisposer_::~SingletonDisposer_()	object (smo)
 0x71009FFCE0			FALSE	_ZN2al12ShaderHolder18SingletonDisposer_D0Ev	al::ShaderHolder::SingletonDisposer_::~SingletonDisposer_()	
 0x71009FFD50			FALSE	_ZN2al12ShaderHolder14createInstanceEPN4sead4HeapE	al::ShaderHolder::createInstance(sead::Heap*)	
 0x71009FFE00			FALSE	_ZN2al12ShaderHolder14deleteInstanceEv	al::ShaderHolder::deleteInstance()	
@@ -61692,7 +61692,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100A01410			FALSE	_ZNK2al11SkyboxParameqERKS0_	al::SkyboxParam::operator==(al::SkyboxParam const&) const	
 0x7100A01420			FALSE	_ZN2al11SkyboxParamaSERKS0_	al::SkyboxParam::operator=(al::SkyboxParam const&)	
 0x7100A01430			FALSE	_ZN2al11SkyboxParam6interpERKS0_S2_f	al::SkyboxParam::interp(al::SkyboxParam const&, al::SkyboxParam const&, float)	
-0x7100A01440		SkyboxDirector.o	FALSE	_ZN2al14SkyboxDirectorC1EPNS_18GraphicsSystemInfoE	al::SkyboxDirector::SkyboxDirector(al::GraphicsSystemInfo*)	object (class)
+0x7100A01440	Library/Shader/ForwardRendering	SkyboxDirector.o	FALSE	_ZN2al14SkyboxDirectorC1EPNS_18GraphicsSystemInfoE	al::SkyboxDirector::SkyboxDirector(al::GraphicsSystemInfo*)	object (class)
 0x7100A01640			FALSE	_ZN2al14SkyboxDirector7endInitEv	al::SkyboxDirector::endInit()	
 0x7100A01650			FALSE	_ZN2al14SkyboxDirector12clearRequestEv	al::SkyboxDirector::clearRequest()	
 0x7100A01660			FALSE	_ZN2al14SkyboxDirector7executeEv	al::SkyboxDirector::execute()	

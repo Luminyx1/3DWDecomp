@@ -4869,7 +4869,7 @@ src/al/Library/Model/ModelShapeUtil.cpp: done
     .text   start:0x008707D0 end:0x00870E1C
 src/al/Library/Model/SimpleModelEnv.cpp: done
     .text   start:0x00870E20 end:0x008727F4
-src/al/Project/Model/ModelAdditionalInfo.cpp:
+src/al/Project/Model/ModelAdditionalInfo.cpp: done
     .text   start:0x00872800 end:0x00872A2C
 src/al/Project/Model/SimpleModelG3D.cpp:
     .text   start:0x00872A30 end:0x00873E5C
@@ -5083,47 +5083,45 @@ src/al/Library/Shader/DeferredRendering/AtmosScatter.cpp:
     .text   start:0x008AB180 end:0x008AE254
 src/al/Library/Shader/DeferredRendering/AtmosScatterDrawer.cpp: done
     .text   start:0x008AE260 end:0x008AE364
-src/al/Library/Shader/DeferredRendering/CubeMapDirector.cpp:
-    .text   start:0x008AE370 end:0x008AE73C
+src/al/Library/Shader/DeferredRendering/CubeMapDirector.cpp: done
+    .text   start:0x008AE370 end:0x008AE55C
 src/al/Library/Shader/DeferredRendering/AtmosScatterCubeMap.cpp:
-    .text   start:0x008AE740 end:0x008AEE48
-src/al/Library/Shader/DeferredRendering/CubeMapDrawInfo.cpp:
+    .text   start:0x008AE560 end:0x008AEE48
+src/al/Library/Shader/DeferredRendering/CubeMapDrawInfo.cpp: done
     .text   start:0x008AEE50 end:0x008AF208
-src/al/Library/Shader/DeferredRendering/CubeMapDrawer.cpp:
+src/al/Library/Shader/DeferredRendering/CubeMapDrawer.cpp: done
     .text   start:0x008AF210 end:0x008AF618
 src/al/Library/Shader/DeferredRendering/DeferredRenderingShader.cpp:
     .text   start:0x008AF620 end:0x008B0F88
 src/al/Library/Shader/DeferredRendering/DeferredRenderingShpUbo.cpp:
     .text   start:0x008B0F90 end:0x008B1428
 src/al/Library/Shader/DeferredRendering/FullScreenQuadModel.cpp: done
-    .text   start:0x008B1430 end:0x008B177C
-src/al/Library/Shader/DeferredRendering/FullScreenTriangle.cpp:
-    .text   start:0x008B1780 end:0x008B18D4
+    .text   start:0x008B1430 end:0x008B18D4
 src/al/Library/Shader/DeferredRendering/GBufferArray.cpp:
     .text   start:0x008B18E0 end:0x008B2CE8
 src/al/Library/Shader/DeferredRendering/ModelLightParam.cpp:
-    .text   start:0x008B2CF0 end:0x008B4440
+    .text   start:0x008B2CF0 end:0x008B3F34
 src/al/Library/Shader/DeferredRendering/PeripheryRendering.cpp:
-    .text   start:0x008B4440 end:0x008B4E90
-src/al/Library/Shader/DeferredRendering/SamplerLocation.cpp:
-    .text   start:0x008B4E90 end:0x008B6444
+    .text   start:0x008B3F40 end:0x008B4E90
+src/al/Library/Shader/DeferredRendering/SamplerLocation.cpp: done
+    .text   start:0x008B4E90 end:0x008B5880
 src/al/Library/Shader/ForwardRendering/CubeMapKeeper.cpp:
-    .text   start:0x008B6450 end:0x008B78D4
+    .text   start:0x008B5880 end:0x008B78C0
 src/al/Library/Shader/ForwardRendering/EnvTextureKeeper.cpp: done
-    .text   start:0x008B78E0 end:0x008B82A0
+    .text   start:0x008B78C0 end:0x008B82A0
 src/al/Library/Shader/ForwardRendering/ShaderEnvTextureKeeper.cpp:
     .text   start:0x008B82A0 end:0x008B9364
-src/al/Library/Shader/ForwardRendering/ShaderFresnelTextureKeeper.cpp:
-    .text   start:0x008B9370 end:0x008BAEBC
+src/al/Library/Shader/ForwardRendering/ShaderFresnelTextureKeeper.cpp: done
+    .text   start:0x008B9370 end:0x008B9FF0
 src/al/Library/Shader/ForwardRendering/ShaderMirrorDirector.cpp:
-    .text   start:0x008BAEC0 end:0x008BDBA4
-src/al/Library/Shader/ForwardRendering/ShaderSamplerSetter.cpp:
+    .text   start:0x008B9FF0 end:0x008BDBA4
+src/al/Library/Shader/ForwardRendering/ShaderSamplerSetter.cpp: done
     .text   start:0x008BDBB0 end:0x008BEFD0
 src/al/Library/Shader/Block/UniformBlock.cpp:
     .text   start:0x008BEFD0 end:0x008BF1C4
-src/al/Library/Shader/Block/UniformBlockUtil.cpp:
+src/al/Library/Shader/Block/UniformBlockUtil.cpp: done
     .text   start:0x008BF1D0 end:0x008BF2D8
-src/al/Library/Shader/ForwardRendering/ThunderRenderKeeper.cpp:
+src/agl/shadow/aglPrimitiveOcclusion.cpp:
     .text   start:0x008BF2E0 end:0x008C23C8
 src/al/Library/Shadow/ActorShadowFunction.cpp:
     .text   start:0x008C23D0 end:0x008C5D00
@@ -5956,20 +5954,20 @@ src/al/Library/Se/Function/SeFunction_dup3.cpp: done
 src/al/Library/Se/Function/SeVolumeCtrl.cpp:
     .text   start:0x009FEAE0 end:0x009FF390
 src/al/Library/Se/Function/SeWaitingListKeeper.cpp:
-    .text   start:0x009FF390 end:0x009FFB0C
-src/al/Library/Shader/DeferredRendering/FullScreenTriangle_dup2.cpp:
-    .text   start:0x009FFB10 end:0x009FFC54
-src/al/Library/Shader/ForwardRendering/ShaderHolder.cpp:
-    .text   start:0x009FFC60 end:0x00A01434
-src/al/Library/Shader/ForwardRendering/SkyboxDirector.cpp:
+    .text   start:0x009FF390 end:0x009FF610
+src/al/Library/Shader/DeferredRendering/FullScreenTriangle.cpp: done
+    .text   start:0x009FF610 end:0x009FFC48
+src/al/Library/Shader/ForwardRendering/ShaderHolder.cpp: done
+    .text   start:0x009FFC50 end:0x00A01434
+src/al/Library/Shader/ForwardRendering/SkyboxDirector.cpp: done
     .text   start:0x00A01440 end:0x00A018E8
 src/al/Library/Shader/ForwardRendering/SkyboxFunction.cpp: done
     .text   start:0x00A018F0 end:0x00A0190C
-src/al/Library/Shader/ForwardRendering/SSR.cpp:
+src/al/Library/Shader/ForwardRendering/SSR.cpp: done
     .text   start:0x00A01910 end:0x00A02964
 src/al/Library/Shader/ForwardRendering/StageSwitchListenerHolder.cpp:
     .text   start:0x00A02970 end:0x00A03044
-src/al/Library/Shader/ForwardRendering/StageSwitchListenerList.cpp:
+src/al/Library/Shader/ForwardRendering/StageSwitchListenerList.cpp: done
     .text   start:0x00A03050 end:0x00A0316C
 src/al/Library/System/GameSystemInfo.cpp:
     .text   start:0x00A03170 end:0x00A0386C
