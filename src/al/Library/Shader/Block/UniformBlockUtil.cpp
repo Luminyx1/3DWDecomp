@@ -14,12 +14,7 @@ namespace al {
 UniformBlock* createUniformBlock(const UniformBlockLayout* pLayout, s32 layoutNum, sead::Heap* pHeap,
                                  s32 bufferNum) {
     UniformBlock* block = new UniformBlock();
-    block->startDeclare(layoutNum, pHeap);
-
-    for (s32 i = 0; i < layoutNum; i++) {
-        block->declare(pLayout[i].mType, pLayout[i].mNum);
-    }
-
+    declareUniformBlock(block, pLayout, layoutNum, pHeap);
     block->create(pHeap, bufferNum, 1);
     return block;
 }
