@@ -10,9 +10,8 @@
 #include "Library/Draw/GraphicsSystemInfo.hpp"
 #include "Library/Framework/GameFrameworkNx.hpp"
 #include "Library/Model/Function/alModelFunction.hpp"
-#include "Library/Model/ModelDrawerDeferredFootPrint.hpp"
+#include "Library/Model/MeshDrawerTableSort.hpp"
 #include "Library/Model/alModelCafe.hpp"
-#include "Library/Shader/DeferredRendering/GBufferArray.hpp"
 #include "Project/Draw/GpuMemAllocator.hpp"
 #include "Project/Model/MeshDrawer.hpp"
 #include "Project/Model/ModelAdditionalInfo.hpp"
@@ -172,29 +171,6 @@ ModelDrawerDeferredPlayer::ModelDrawerDeferredPlayer(const char* pName, bool isS
  */
 void ModelDrawerDeferredPlayer::draw() const {
     ModelDrawerDeferred::draw();
-}
-
-/**
- * Constructs a deferred footprint drawer.
- * @param pName Name of the drawer.
- */
-ModelDrawerDeferredFootPrint::ModelDrawerDeferredFootPrint(const char* pName)
-    : ModelDrawer(pName) {
-    GBufferArray::setContextMRT(&mGraphicsContext);
-    mGraphicsContext.setBlendFactorSrcRGB(0, 9);
-    mGraphicsContext.setBlendFactorDstRGB(0, 1);
-    mGraphicsContext.setBlendEquationRGB(0, 1);
-    mGraphicsContext.setBlendFactorSrcRGB(1, 5);
-    mGraphicsContext.setBlendFactorDstRGB(1, 6);
-    mGraphicsContext.setBlendEquationRGB(1, 1);
-    mGraphicsContext.setBlendEnable(0, true);
-    mGraphicsContext.setBlendEnable(1, true);
-    mGraphicsContext.setAlphaTestEnable(true);
-    mGraphicsContext.setDepthEnable(true, false);
-    mGraphicsContext.setAlphaTestFunc(6);
-    mGraphicsContext.setAlphaTestRef(0.0f);
-    mGraphicsContext.setColorMask(0, true, true, true, false);
-    mGraphicsContext.setColorMask(1, true, true, true, false);
 }
 
 }  // namespace al
