@@ -34,7 +34,7 @@ public:
     NN_RUNTIME_TYPEINFO(Animator);
     void Setup(Pane* pane, bool enabled);
     void Unbind() override;
-    Pane* mPane;
+    Pane* mPane = nullptr;
 };
 class GroupAnimator : public Animator {
 public:
@@ -42,14 +42,14 @@ public:
     void Unbind() override;
     void Setup(Group* group, bool enabled);
     void Setup(const AnimResource& resource, GroupContainer* groups, int index, bool enabled);
-    Group* mGroup;
+    Group* mGroup = nullptr;
 };
 class GroupArrayAnimator : public Animator {
 public:
     NN_RUNTIME_TYPEINFO(Animator);
     void Setup(const AnimResource& resource, GroupContainer* groups, Group** storage, bool enabled);
     void Unbind() override;
-    Group** mGroups;
-    int mGroupCount;
+    Group** mGroups = nullptr;
+    int mGroupCount = 0;
 };
 }
