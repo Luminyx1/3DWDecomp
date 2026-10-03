@@ -122,6 +122,11 @@ public:
         return static_cast<const char*>(pShadingModelName.Get()) + 2;
     }
     const char* FindShaderOption(const char* pName) const;
+    int GetShaderOptionCount() const { return optionCount; }
+    // index selects the value of an assigned shader option.
+    const char* GetShaderOption(int index) const {
+        return pOptionArray.Get()[index].Get()->GetData();
+    }
 };
 class ResShaderParam;
 // destination receives converted source data; parameter describes its layout; dependency is optional context.

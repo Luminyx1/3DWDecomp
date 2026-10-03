@@ -24,7 +24,8 @@ struct ResShaderArchive {
     using ProgramUpdate = void (*)(nn::gfx::Device*, ResShadingModel*, int);
     u8 _0[0x10];
     ResShadingModel* models;
-    u8 _18[0x10];
+    nn::util::ResDic* shadingModelDic;
+    u8 _20[0x8];
     // device owns the GPU shader; model and index select the program to prepare.
     ProgramUpdate updateProgram;
     void* work;
@@ -39,6 +40,7 @@ struct ResShaderArchive {
                size_t poolSize, void* memory, size_t size);
     // device owns the programs and containers being finalized.
     void Cleanup(nn::gfx::Device* device);
+    ResShadingModel* FindShadingModel(const char* pName);
 };
 struct ResShaderFile {
     nn::util::BinaryFileHeader fileHeader;
@@ -127,6 +129,10 @@ public:
     // name selects a value in this shader option's choice dictionary.
     int FindChoiceIndex(const char* name) const {
         return (choiceDictionary != nullptr) ? choiceDictionary->FindIndex(name) : nn::util::ResDic::Npos;
+    }
+    // index selects a value in this option's choice dictionary; null when it has none.
+    const char* GetChoiceName(int index) const {
+        return (choiceDictionary != nullptr) ? choiceDictionary->GetKey(index).data() : nullptr;
     }
     nn::util::BinTPtr<nn::util::BinString> name;
     nn::util::ResDic* choiceDictionary;
@@ -366,6 +372,10 @@ public:
     // bufferIndex selects the buffered option block to update.
     void CalculateOptionBlock(int bufferIndex);
     void ClearStaticKey();
+    // name selects a static option of the shading model; return Npos for a missing entry.
+    int FindStaticOptionIndex(const char* name) const {
+        return resource->FindStaticOptionIndex(name);
+    }
     // option selects an option; choice identifies its value.
     void WriteStaticKey(int option, int choice);
     int ReadStaticKey(int option) const;
@@ -444,6 +454,10 @@ public:
     // device prepares the GPU program selected by the current options.
     bool UpdateVariation(nn::gfx::Device* device);
     void ClearDynamicKey();
+    // name selects a dynamic option of the shading model; return Npos for a missing entry.
+    int FindDynamicOptionIndex(const char* name) const {
+        return model->GetResource()->FindDynamicOptionIndex(name);
+    }
     // option selects a dynamic option; choice identifies its value.
     void WriteDynamicKey(int option, int choice);
     int ReadDynamicKey(int option) const;
