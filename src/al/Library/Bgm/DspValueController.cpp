@@ -22,23 +22,21 @@ void DspLinearValueController::init(f32 value) {
  * Moves the value towards the target.
  */
 void DspLinearValueController::update() {
-    if (mStep > 0.0f) {
-        if (mTarget > mValue) {
-            mValue += mStep;
+    if (mStep > 0.0f && mTarget > mValue) {
+        mValue += mStep;
 
-            if (mTarget < mValue) {
-                mValue = mTarget;
-            }
+        if (mTarget < mValue) {
+            mValue = mTarget;
         }
+
+        return;
     }
 
-    if (mStep < 0.0f) {
-        if (mTarget < mValue) {
-            mValue += mStep;
+    if (mStep < 0.0f && mTarget < mValue) {
+        mValue += mStep;
 
-            if (mTarget > mValue) {
-                mValue = mTarget;
-            }
+        if (mTarget > mValue) {
+            mValue = mTarget;
         }
     }
 }
