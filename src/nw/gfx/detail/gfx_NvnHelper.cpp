@@ -1,5 +1,6 @@
 #include <nn/gfx/detail/gfx_NvnHelper.h>
 
+#include <nn/gfx/detail/gfx_CommonHelper.h>
 #include <nn/gfx/gfx_BufferInfo.h>
 #include <nn/gfx/gfx_MemoryPoolInfo.h>
 #include <nn/gfx/gfx_QueueInfo.h>
@@ -593,11 +594,6 @@ void nvnLoadCProcs(const NVNdevice* device, PFNNVNDEVICEGETPROCADDRESSPROC devic
 #undef NVN_LOAD_PROC
 
 namespace nn::gfx::detail {
-
-// Defined in gfx_CommonHelper.
-ImageDimension GetImageDimension(ImageStorageDimension dimension, bool isArray,
-                                 bool isMultisample);
-size_t CalculateRowSize(uint32_t width, ChannelFormat format);
 
 namespace {
 
