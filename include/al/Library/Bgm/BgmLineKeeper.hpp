@@ -2,25 +2,34 @@
 
 #include <basis/seadTypes.h>
 #include <container/seadPtrArray.h>
+#include <container/seadSafeArray.h>
+
+#include "Project/Audio/AudioInfoList.hpp"
+#include "Project/Bgm/BgmPlayingRequest.hpp"
 
 namespace al {
 class AudioSystemInfo;
+class BgmDataBase;
 class BgmLine;
-struct BgmPlayingRequest;
+class BgmLineInfo;
+
+using BgmLineArray = sead::PtrArray<BgmLine>;
 
 class BgmLineKeeper {
 public:
-    BgmLineKeeper(f32 frameRate);
+    static constexpr s32 cIslandNum = 12;
 
-    void init(AudioSystemInfo* pInfo, const char* pStageName, const char* pScenarioName);
+    BgmLineKeeper(f32 bpmRate);
+
+    void init(AudioSystemInfo* pInfo, const char* pCombinedLineName, const char* pStageName);
     void update(bool isDisableStart);
     void startBgm(const BgmPlayingRequest& rRequest);
     s32 checkIfIslandBgm(const BgmPlayingRequest& rRequest);
     s32 checkPhaseBgm(const BgmPlayingRequest& rRequest);
-    void startIslandBgm(const BgmPlayingRequest& rRequest, BgmLine* pLine, s32 index);
+    s32 startIslandBgm(const BgmPlayingRequest& rRequest, BgmLine* pLine, s32 islandIndex);
     void prepareBgm(const BgmPlayingRequest& rRequest);
     void startPreparedBgm(const char* pName);
-    void stopBgm(const char* pName, s32 fadeFrames, s32 unk);
+    void stopBgm(const char* pName, s32 fadeFrames, s32 resumeFadeFrames);
     void pauseBgm(const char* pName, s32 fadeFrames);
     void resumeBgm(const char* pName, s32 fadeFrames);
     void pauseActiveBgmLine(s32 fadeFrames);
@@ -36,9 +45,9 @@ public:
     bool tryPauseBgmIfNotPlaying(const char* pName, s32 fadeFrames);
     void changeSituation(const char* pName);
     BgmLine* getActiveBgmLine() const;
-    void changeLineAutoStopMode(const char* pName, bool isAutoStop);
+    void changeLineAutoStopMode(const char* pName, bool isDisableAutoStop);
     void setActiveBgmPitch(f32 pitch);
-    void clearIslandList(u32 unk);
+    void clearIslandList(u32 islandIndex);
     void changeActiveBgmVolume(f32 volume, s32 fadeFrames);
     s32 getBgmSamplePos(const char* pName);
 
@@ -51,11 +60,28 @@ public:
     void setIsDisableLineChange(bool isDisable) { mIsDisableLineChange = isDisable; }
 
 private:
-    u8 _0[0x90];
-    s32 mIslandMapBgmVolume[2];
-    bool mIsIslandMapBgmVolume;
-    bool mIsDisableLineChange;
-    u8 _9a[0x6];
+    BgmLine* getCurLine() const { return mLines->unsafeAt(mActiveLineIndex); }
+
+    const BgmLineInfo* findLineInfo(const char* pPlayName) const;
+    const BgmLineInfo* findLineInfoByIndex(u32 index) const;
+    void clearWaitingRequest();
+
+    BgmLineArray* mLines = nullptr;
+    BgmDataBase* mDataBase = nullptr;
+    AudioInfoList<BgmLineInfo>* mLineInfoList = nullptr;
+    u32 mActiveLineIndex = 0;
+    bool _1c;
+    void* _20;
+    bool _28 = false;
+    sead::SafeArray<s32, cIslandNum> mIslandSamplePos;
+    BgmPlayingRequest mWaitingRequest = {"Dummy"};
+    s32 mWaitingTimer = 0;
+    bool mIsStartingWaitingBgm = false;
+    s32 mResumeFadeFrames = -1;
+    f32 mBpmRate;
+    s32 mIslandMapBgmVolume[2] = {-1, -1};
+    bool mIsIslandMapBgmVolume = false;
+    bool mIsDisableLineChange = false;
 };
 
 static_assert(sizeof(BgmLineKeeper) == 0xa0);
