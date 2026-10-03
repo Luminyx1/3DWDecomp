@@ -16,7 +16,7 @@ class SeSourcePose3DMtxBase;
 class SoundStartInfo;
 
 class SeSource {
-public:
+  public:
     SeSource(const sead::SafeString& rName);
 
     virtual void init() = 0;
@@ -25,14 +25,30 @@ public:
     virtual bool isPlayingSound() const = 0;
     virtual s32 getPriority() const = 0;
     virtual void resetVelocity() = 0;
+    /**
+     * @brief Tests whether this source performs spatial sound calculations.
+     * @return False for a non-spatial source.
+     */
     virtual bool isCalc3D() const { return false; }
     virtual const sead::Vector3f* getPosition() const = 0;
 
+    /**
+     * @brief Gets the source name.
+     * @return Name stored by this source.
+     */
     const sead::SafeString& getName() const { return mName; }
+    /**
+     * @brief Gets the source volume multiplier.
+     * @return Current linear volume multiplier.
+     */
     f32 getVolume() const { return mVolume; }
+    /**
+     * @brief Sets the source volume multiplier.
+     * @param volume Linear volume multiplier applied to this source.
+     */
     void setVolume(f32 volume) { mVolume = volume; }
 
-private:
+  private:
     sead::SafeString mName;
     f32 mVolume = 1.0f;
 };
@@ -40,17 +56,28 @@ private:
 static_assert(sizeof(SeSource) == 0x20);
 
 class SeSource3D : public SeSource {
-public:
+  public:
     SeSource3D(const sead::SafeString& rName, SeSourcePose3D* pPose, AudioSystemInfo* pInfo);
 
     void init() override;
     void update() override;
     bool startSound(AcLSoundHandle* pHandle, u32 soundId, const SoundStartInfo* pStartInfo) override;
     bool isPlayingSound() const override;
+    /**
+     * @brief Gets the priority calculated from listener distance.
+     * @return Request priority, or -1 when beyond the far-distance limit.
+     */
     s32 getPriority() const override { return mPriority; }
     void resetVelocity() override;
+    /**
+     * @brief Identifies this source as spatial.
+     * @return True.
+     */
     bool isCalc3D() const override { return true; }
     const sead::Vector3f* getPosition() const override;
+    /**
+     * @brief Destroys the source base without releasing externally managed resources.
+     */
     virtual ~SeSource3D() {}
 
     virtual void calcPositionInitialize() = 0;
@@ -59,7 +86,7 @@ public:
 
     void syncPosition();
 
-protected:
+  protected:
     SeadAudio3DActorWrapper* mActor = nullptr;
     SeSourcePose3D* mPose;
     s32 mPriority = 0;
@@ -69,14 +96,15 @@ protected:
 static_assert(sizeof(SeSource3D) == 0x40);
 
 class SeSource3DCircle : public SeSource3D {
-public:
-    SeSource3DCircle(SeSourcePose3DMtxBase* pPose, const f32* pRadius, AudioSystemInfo* pInfo, bool isVertical);
+  public:
+    SeSource3DCircle(SeSourcePose3DMtxBase* pPose, const f32* pRadius, AudioSystemInfo* pInfo,
+                     bool isVertical);
 
     void calcPositionInitialize() override;
     void calcPositionDynamic() override;
     const sead::Vector3f* calcPosition(const sead::Vector3f& rListenerPos) override;
 
-private:
+  private:
     SeSourcePose3DMtxBase* mMtxPose;
     const f32* mRadius;
     sead::Vector3f mPos = {0.0f, 0.0f, 0.0f};
@@ -87,14 +115,14 @@ private:
 static_assert(sizeof(SeSource3DCircle) == 0x90);
 
 class SeSource3DLine : public SeSource3D {
-public:
+  public:
     SeSource3DLine(SeSourcePose3DMtxBase* pPose, const sead::Vector3f* pLine, AudioSystemInfo* pInfo);
 
     void calcPositionInitialize() override;
     void calcPositionDynamic() override;
     const sead::Vector3f* calcPosition(const sead::Vector3f& rListenerPos) override;
 
-private:
+  private:
     SeSourcePose3DMtxBase* mMtxPose;
     const sead::Vector3f* mLine;
     sead::Vector3f mPos = {0.0f, 0.0f, 0.0f};
@@ -106,14 +134,14 @@ private:
 static_assert(sizeof(SeSource3DLine) == 0x78);
 
 class SeSource3DPlaneRect : public SeSource3D {
-public:
+  public:
     SeSource3DPlaneRect(SeSourcePose3DMtxBase* pPose, const sead::BoundBox2f* pRect, AudioSystemInfo* pInfo);
 
     void calcPositionInitialize() override;
     void calcPositionDynamic() override;
     const sead::Vector3f* calcPosition(const sead::Vector3f& rListenerPos) override;
 
-private:
+  private:
     SeSourcePose3DMtxBase* mMtxPose;
     const sead::BoundBox2f* mRect;
     sead::Vector3f mPos = {0.0f, 0.0f, 0.0f};
@@ -123,25 +151,28 @@ private:
 static_assert(sizeof(SeSource3DPlaneRect) == 0x90);
 
 class SeSource3DPoint : public SeSource3D {
-public:
+  public:
     SeSource3DPoint(SeSourcePose3D* pPose, AudioSystemInfo* pInfo);
 
     const sead::Vector3f* calcPosition(const sead::Vector3f& rListenerPos) override;
     void calcPositionDynamic() override;
+    /**
+     * @brief Leaves point-source initialization to the supplied pose.
+     */
     void calcPositionInitialize() override {}
 };
 
 static_assert(sizeof(SeSource3DPoint) == 0x40);
 
 class SeSource3DRing : public SeSource3D {
-public:
+  public:
     SeSource3DRing(SeSourcePose3DMtxBase* pPose, const f32* pRadius, AudioSystemInfo* pInfo);
 
     void calcPositionInitialize() override;
     void calcPositionDynamic() override;
     const sead::Vector3f* calcPosition(const sead::Vector3f& rListenerPos) override;
 
-private:
+  private:
     SeSourcePose3DMtxBase* mMtxPose;
     const f32* mRadius;
     sead::Vector3f mPos = {0.0f, 0.0f, 0.0f};
@@ -151,14 +182,14 @@ private:
 static_assert(sizeof(SeSource3DRing) == 0x90);
 
 class SeSource3DSphere : public SeSource3D {
-public:
+  public:
     SeSource3DSphere(SeSourcePose3D* pPose, const f32* pRadius, AudioSystemInfo* pInfo);
 
     void calcPositionInitialize() override;
     void calcPositionDynamic() override;
     const sead::Vector3f* calcPosition(const sead::Vector3f& rListenerPos) override;
 
-private:
+  private:
     const f32* mRadius;
     sead::Vector3f mPos = {0.0f, 0.0f, 0.0f};
 };
@@ -166,7 +197,7 @@ private:
 static_assert(sizeof(SeSource3DSphere) == 0x58);
 
 class SeSourceAmbient : public SeSource {
-public:
+  public:
     SeSourceAmbient(AudioSystemInfo* pInfo);
 
     bool startSound(AcLSoundHandle* pHandle, u32 soundId, const SoundStartInfo* pStartInfo) override;
@@ -177,10 +208,10 @@ public:
     void update() override;
     void resetVelocity() override;
 
-private:
+  private:
     SeadAudioActorWrapper* mActor = nullptr;
     AudioSystemInfo* mInfo;
 };
 
 static_assert(sizeof(SeSourceAmbient) == 0x30);
-}  // namespace al
+} // namespace al

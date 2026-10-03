@@ -61457,7 +61457,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71009F77D0			FALSE	_ZNK2al10SeSource3D14isPlayingSoundEv	al::SeSource3D::isPlayingSound() const	
 0x71009F77E0			FALSE	_ZNK2al10SeSource3D11getPositionEv	al::SeSource3D::getPosition() const	
 0x71009F77F0			FALSE	_ZN2al10SeSource3D13resetVelocityEv	al::SeSource3D::resetVelocity()	
-0x71009F7810			FALSE	sub_71009F7810	sub_71009F7810	
+0x71009F7810			FALSE	_GLOBAL__sub_I_SeSource3DCircle.cpp	_GLOBAL__sub_I_SeSource3DCircle.cpp	Initializes 3D sound distance and priority constants
 0x71009F7850			FALSE	_ZN2al23SeadAudio3DActorWrapper18startSoundWithInfoEPN4sead11SoundHandleEjPKNS_14SoundStartInfoEb	al::SeadAudio3DActorWrapper::startSoundWithInfo(sead::SoundHandle*, unsigned int, al::SoundStartInfo const*, bool)	
 0x71009F7870			FALSE	_ZNK2al23SeadAudio3DActorWrapper11getPositionEv	al::SeadAudio3DActorWrapper::getPosition() const	
 0x71009F7880			FALSE	_ZN2al23SeadAudio3DActorWrapper13resetVelocityEv	al::SeadAudio3DActorWrapper::resetVelocity()	
