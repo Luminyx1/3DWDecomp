@@ -3636,7 +3636,9 @@ src/nw/gfx/detail/gfx_Sampler-api.nvn.8.cpp:
 src/nw/gfx/gfx_ResShader.cpp:
     .text   start:0x0058E570 end:0x0058E5D4
 src/nw/gfx/detail/gfx_ResShader-api.nvn.8.cpp:
-    .text   start:0x0058E5E0 end:0x0058EB44
+    .text   start:0x0058E5E0 end:0x0058EAD8
+src/nw/gfx/gfx_ResTexture.cpp:
+    .text   start:0x0058EAE0 end:0x0058EB44
 src/nw/gfx/detail/gfx_Device-api.nvn.8-os.horizon.cpp:
     .text   start:0x0058EB50 end:0x0058EC8C
 src/nw/gfx/gfx_Interop-api.nvn.cpp:
