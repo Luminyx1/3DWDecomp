@@ -413,8 +413,8 @@ void TextWriterBase<CharType>::UpdateTextWriterWithTags(const CharType* pStr, in
  */
 template <typename CharType>
 float TextWriterBase<CharType>::CalculateLineWidth(const CharType* pStr, int length) {
-    Rectangle rect = {};
     const CharType* pPos = pStr;
+    Rectangle rect = {};
     TextWriterBase<CharType> myCopy(*this);
     myCopy.SetCursor(0.0f, 0.0f);
     myCopy.CalculateLineRectImpl(&rect, &pPos, length);
@@ -429,8 +429,8 @@ float TextWriterBase<CharType>::CalculateLineWidth(const CharType* pStr, int len
  */
 template <typename CharType>
 float TextWriterBase<CharType>::CalculateLineHeight(const CharType* pStr, int length) {
-    Rectangle rect = {};
     const CharType* pPos = pStr;
+    Rectangle rect = {};
     TextWriterBase<CharType> myCopy(*this);
     myCopy.SetCursor(0.0f, 0.0f);
     myCopy.CalculateLineRectImpl(&rect, &pPos, length);
@@ -519,8 +519,25 @@ bool IsPrintableChar(uint32_t code) {
     return true;
 }
 
+/**
+ * Halves a width for centering, rounding up when center ceiling is enabled.
+ * @param value width
+ * @param isCeilingEnabled whether to round up
+ * @return centering offset
+ */
+float AdjustCenterValue(float value, bool isCeilingEnabled) {
+    return isCeilingEnabled ? std::ceil(value * 0.5f) : value * 0.5f;
+}
+
 }  // namespace
 
+/**
+ * Calculates the rectangle of one line, stopping at a line break or the width limit.
+ * @param pRect destination rectangle
+ * @param ppStr string position, advanced past the line
+ * @param length remaining string length
+ * @return whether the line was broken by the width limit
+ */
 template <typename CharType>
 bool TextWriterBase<CharType>::CalculateLineRectImpl(Rectangle* pRect, const CharType** ppStr,
                                                      int length) {
@@ -546,11 +563,7 @@ bool TextWriterBase<CharType>::CalculateLineRectImpl(Rectangle* pRect, const Cha
 
     uint32_t code = reader.Next();
 
-    for (;;) {
-        if (static_cast<const CharType*>(reader.GetCurrentPos()) > pStrEnd) {
-            break;
-        }
-
+    while (static_cast<const CharType*>(reader.GetCurrentPos()) <= pStrEnd) {
         if (code < ' ') {
             if (code == '\n' && !m_IsLinefeedKerningEnabled) {
                 if (!isIgnoringKerning) {
@@ -565,7 +578,7 @@ bool TextWriterBase<CharType>::CalculateLineRectImpl(Rectangle* pRect, const Cha
             context.flags = isCharSpace ? 0 : PrintContextFlag_NoCharSpace;
             SetCursorX(x);
 
-            if (pPrevStreamPos != nullptr && widthLimit < FLT_MAX && code != '\n') {
+            if (widthLimit < FLT_MAX && code != '\n' && pPrevStreamPos != nullptr) {
                 PrintContext<CharType> context2 = context;
                 TextWriterBase<CharType> myCopy(*this);
                 Rectangle rect2 = {};
@@ -669,13 +682,21 @@ bool TextWriterBase<CharType>::CalculateLineRectImpl(Rectangle* pRect, const Cha
         x += GetFont()->GetKerning(context.prevCode, 0) * GetScaleH();
     }
 
-    pRect->left = std::min(pRect->left, x);
-    pRect->right = std::max(pRect->right, x);
+    pRect->left = x < pRect->left ? x : pRect->left;
+    pRect->right = pRect->right < x ? x : pRect->right;
     *ppStr = static_cast<const CharType*>(reader.GetCurrentPos());
     m_pTagProcessor->EndCalculateRect(&context);
     return isOverLimit;
 }
 
+/**
+ * Moves the origin and cursor according to the draw flags.
+ * @param pXOrigin horizontal origin, adjusted in place
+ * @param pYOrigin vertical origin, adjusted in place
+ * @param pStr string
+ * @param length string length
+ * @return width of the whole text
+ */
 template <typename CharType>
 float TextWriterBase<CharType>::AdjustCursor(float* pXOrigin, float* pYOrigin,
                                              const CharType* pStr, int length) {
@@ -701,16 +722,9 @@ float TextWriterBase<CharType>::AdjustCursor(float* pXOrigin, float* pYOrigin,
     }
 
     switch (m_DrawFlag & HorizontalOrigin_Mask) {
-    case HorizontalOrigin_Center: {
-        float offset = textWidth * 0.5f;
-
-        if (m_IsCenterCeilingEnabled) {
-            offset = std::ceil(offset);
-        }
-
-        *pXOrigin -= offset;
+    case HorizontalOrigin_Center:
+        *pXOrigin -= AdjustCenterValue(textWidth, m_IsCenterCeilingEnabled);
         break;
-    }
     case HorizontalOrigin_Right:
         *pXOrigin -= textWidth;
         break;
@@ -719,16 +733,9 @@ float TextWriterBase<CharType>::AdjustCursor(float* pXOrigin, float* pYOrigin,
     }
 
     switch (m_DrawFlag & VerticalOrigin_Mask) {
-    case VerticalOrigin_Middle: {
-        float offset = textHeight * 0.5f;
-
-        if (m_IsCenterCeilingEnabled) {
-            offset = std::ceil(offset);
-        }
-
-        *pYOrigin -= offset;
+    case VerticalOrigin_Middle:
+        *pYOrigin -= AdjustCenterValue(textHeight, m_IsCenterCeilingEnabled);
         break;
-    }
     case VerticalOrigin_Bottom:
         *pYOrigin -= textHeight;
         break;
@@ -743,11 +750,9 @@ float TextWriterBase<CharType>::AdjustCursor(float* pXOrigin, float* pYOrigin,
     switch (m_DrawFlag & HorizontalAlign_Mask) {
     case HorizontalAlign_Center: {
         const float lineWidth = CalculateLineWidth(pStr, length);
-        const float offset =
-            m_IsCenterCeilingEnabled ? std::ceil(textWidth * 0.5f) : textWidth * 0.5f;
-        const float lineOffset =
-            m_IsCenterCeilingEnabled ? std::ceil(lineWidth * 0.5f) : lineWidth * 0.5f;
-        SetCursorX(*pXOrigin + (offset - lineOffset));
+        const float offset = AdjustCenterValue(textWidth, m_IsCenterCeilingEnabled) -
+                             AdjustCenterValue(lineWidth, m_IsCenterCeilingEnabled);
+        SetCursorX(*pXOrigin + offset);
         break;
     }
     case HorizontalAlign_Right: {
@@ -770,6 +775,15 @@ float TextWriterBase<CharType>::AdjustCursor(float* pXOrigin, float* pYOrigin,
     return textWidth;
 }
 
+/**
+ * Prints a string from the current cursor position.
+ * @param pStr string
+ * @param length string length
+ * @param lineOffsetCount number of line offsets
+ * @param pLineOffset per-line horizontal offsets
+ * @param pLineWidth per-line width limit adjustments
+ * @return width of the printed text
+ */
 template <typename CharType>
 float TextWriterBase<CharType>::PrintImpl(const CharType* pStr, int length, int lineOffsetCount,
                                           const float* pLineOffset, const float* pLineWidth) {
@@ -803,13 +817,12 @@ float TextWriterBase<CharType>::PrintImpl(const CharType* pStr, int length, int 
     uint32_t code = reader.Next();
 
     while (static_cast<const CharType*>(reader.GetCurrentPos()) - pStr <= length) {
-        const bool isLineHead = lineNo >= lineOffsetCount && pPrevStreamPos == pLineHead;
-
         if (code < ' ') {
             context.str = static_cast<const CharType*>(reader.GetCurrentPos());
             context.flags = isCharSpace ? 0 : PrintContextFlag_NoCharSpace;
 
-            if (!(!(widthLimit < FLT_MAX) || code == '\n' || isLineHead)) {
+            if (!((lineNo >= lineOffsetCount && pPrevStreamPos == pLineHead) ||
+                  !(widthLimit < FLT_MAX) || code == '\n')) {
                 PrintContext<CharType> context2 = context;
                 TextWriterBase<CharType> myCopy(*this);
                 Rectangle rect = {};
@@ -848,25 +861,17 @@ float TextWriterBase<CharType>::PrintImpl(const CharType* pStr, int length, int 
                 case HorizontalAlign_Center: {
                     const float lineWidth = CalculateLineWidth(
                         context.str, length - static_cast<int>(context.str - pStr));
-                    float offset = textWidth * 0.5f;
-
-                    if (m_IsCenterCeilingEnabled) {
-                        offset = std::ceil(offset);
-                    }
-
-                    float lineOffsetCenter = lineWidth * 0.5f;
-
-                    if (m_IsCenterCeilingEnabled) {
-                        lineOffsetCenter = std::ceil(lineOffsetCenter);
-                    }
-
-                    SetCursorX(lineOffset + (context.xOrigin + (offset - lineOffsetCenter)));
+                    const float offset =
+                        AdjustCenterValue(textWidth, m_IsCenterCeilingEnabled) -
+                        AdjustCenterValue(lineWidth, m_IsCenterCeilingEnabled);
+                    SetCursorX(lineOffset + (context.xOrigin + offset));
                     break;
                 }
                 case HorizontalAlign_Right: {
                     const float lineWidth = CalculateLineWidth(
                         context.str, length - static_cast<int>(context.str - pStr));
-                    SetCursorX(lineOffset + (context.xOrigin + (textWidth - lineWidth)));
+                    const float offset = textWidth - lineWidth;
+                    SetCursorX(lineOffset + (context.xOrigin + offset));
                     break;
                 }
                 default: {
@@ -930,7 +935,8 @@ float TextWriterBase<CharType>::PrintImpl(const CharType* pStr, int length, int 
 
             right += nextKerning;
 
-            if (!(!(widthLimit < FLT_MAX) || isLineHead) &&
+            if (!(!(widthLimit < FLT_MAX) ||
+                  (lineNo >= lineOffsetCount && pPrevStreamPos == pLineHead)) &&
                 right > m_WidthLimit + GetLineWidth(lineOffsetCount, pLineWidth, lineNo)) {
                 context.prevCode = 0;
                 code = '\n';
