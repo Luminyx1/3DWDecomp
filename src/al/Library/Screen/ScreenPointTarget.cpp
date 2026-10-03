@@ -1,5 +1,7 @@
 #include "Library/Screen/ScreenPointTarget.hpp"
 
+#include <attributes.h>
+
 #include "Library/LiveActor/LiveActor.hpp"
 #include "Library/Screen/ScreenPointCheckGroup.hpp"
 #include "Library/Screen/ScreenPointKeeper.hpp"
@@ -49,7 +51,7 @@ void ScreenPointTarget::update() {
 /**
  * Validates the target.
  */
-void ScreenPointTarget::validate() {
+NOINLINE void ScreenPointTarget::validate() {
     if (mIsValid) {
         return;
     }
@@ -64,7 +66,7 @@ void ScreenPointTarget::validate() {
 /**
  * Invalidates the target.
  */
-void ScreenPointTarget::invalidate() {
+NOINLINE void ScreenPointTarget::invalidate() {
     if (!mIsValid) {
         return;
     }

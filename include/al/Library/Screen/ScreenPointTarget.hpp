@@ -25,7 +25,7 @@ public:
     f32 getRadius() const { return mRadius; }
     void setRadius(f32 radius) { mRadius = radius; }
     const sead::Vector3f& getOffset() const { return mOffset; }
-    void setOffset(const sead::Vector3f& rOffset) { mOffset = rOffset; }
+    void setOffset(const sead::Vector3f& rOffset) { mOffset.e = rOffset.e; }
     const sead::Vector3f& getPos() const { return mPos; }
     LiveActor* getHost() const { return mHost; }
     bool isValid() const { return mIsValid && mIsValidBySystem; }
