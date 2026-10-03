@@ -17,8 +17,7 @@ void StageSwitchListenerList::addListener(StageSwitchListener* pListener) {
     Node* node = new Node{pListener, nullptr};
 
     if (mHead == nullptr) {
-        mHead = node;
-        mTail = node;
+        mHead = mTail = node;
         return;
     }
 
