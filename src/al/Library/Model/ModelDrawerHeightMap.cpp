@@ -18,16 +18,16 @@ namespace al {
  * @param pName Name of the drawer.
  */
 ModelDrawerHeightMap::ModelDrawerHeightMap(const char* pName) : ModelDrawer(pName) {
-    mGraphicsContext.setBlendEquationRGB(0, 1);
-    mGraphicsContext.setBlendFactorDstRGB(0, 1);
-    mGraphicsContext.setBlendEnable(false);
     mGraphicsContext.setDepthEnable(false, false);
-    mGraphicsContext.setBlendFactorSrcA(0, 2);
-    mGraphicsContext.setCullingMode(0);
-    mGraphicsContext.setBlendFactorDstA(0, 2);
-    mGraphicsContext.setBlendFactorSrcRGB(0, 9);
     mGraphicsContext.setDepthFunc(5);
+    mGraphicsContext.setBlendEnable(false);
+    mGraphicsContext.setBlendFactorSrcRGB(0, 9);
+    mGraphicsContext.setBlendEquationRGB(0, 1);
+    mGraphicsContext.setCullingMode(0);
+    mGraphicsContext.setBlendFactorSrcA(0, 2);
     mGraphicsContext.setBlendEquationA(0, 5);
+    mGraphicsContext.setBlendFactorDstRGB(0, 1);
+    mGraphicsContext.setBlendFactorDstA(0, 2);
 }
 
 /**
