@@ -5,14 +5,6 @@
 
 namespace al {
 
-InOutParam::InOutParam() = default;
-
-InOutParam::InOutParam(const InOutParam& src)
-    : mInMin(src.mInMin), mInMax(src.mInMax), mOutMin(src.mOutMin), mOutMax(src.mOutMax) {}
-
-InOutParam::InOutParam(f32 inMin, f32 inMax, f32 outMin, f32 outMax)
-    : mInMin(inMin), mInMax(inMax), mOutMin(outMin), mOutMax(outMax) {}
-
 void InOutParam::init(const ByamlIter& iter) {
     iter.tryGetFloatByKey(&mInMin, "InMin");
     iter.tryGetFloatByKey(&mInMax, "InMax");

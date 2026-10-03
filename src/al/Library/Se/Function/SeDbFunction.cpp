@@ -11,8 +11,10 @@ const char* const cInputFunctionNames[] = {"None", "Minus", "Abs", "Square"};
 }
 
 namespace alSeDbFunction {
+using PlayInfoList = al::AudioInfoList<al::SePlayInfoInAction>;
+
 /**
- * Counts the one time play information in all actions of SE user information.
+ * @brief Counts the one time play information in all actions of SE user information.
  * @param pUserInfo SE user information.
  * @return Number of one time play information.
  */
@@ -25,18 +27,18 @@ s32 calcIsOneTimeInUserInfo(const al::SeUserInfo* pUserInfo) {
     s32 count = 0;
 
     for (s32 i = 0; i < actionNum; i++) {
-        const al::SeActionInfo* actionInfo =
+        const al::SeActionInfo* pActionInfo =
             pUserInfo->mActionInfoList != nullptr ? pUserInfo->mActionInfoList->getInfo(i) : nullptr;
-        const al::AudioInfoList<al::SePlayInfoInAction>* playInfoList = actionInfo->mPlayInfoList;
+        const PlayInfoList* pPlayInfoList = pActionInfo->mPlayInfoList;
 
-        if (playInfoList == nullptr) {
+        if (pPlayInfoList == nullptr) {
             continue;
         }
 
-        s32 playNum = playInfoList->getInfoNum();
+        s32 playNum = pPlayInfoList->getInfoNum();
 
         for (s32 j = 0; j < playNum; j++) {
-            count += actionInfo->mPlayInfoList->getInfo(j)->mIsOneTime;
+            count += pActionInfo->mPlayInfoList->getInfo(j)->mIsOneTime;
         }
     }
 
@@ -44,7 +46,7 @@ s32 calcIsOneTimeInUserInfo(const al::SeUserInfo* pUserInfo) {
 }
 
 /**
- * Converts an input function name to its id.
+ * @brief Converts an input function name to its id.
  * @param pName Input function name.
  * @return Input function id.
  */
@@ -65,7 +67,7 @@ al::SeInputFunctionId convertInputFunctionNameToId(const char* pName) {
 }
 
 /**
- * Converts an input function id to its name.
+ * @brief Converts an input function id to its name.
  * @param id Input function id.
  * @return Input function name.
  */
@@ -78,7 +80,7 @@ const char* convertInputFunctionIdToName(al::SeInputFunctionId id) {
 }
 
 /**
- * Applies an input function to a parameter.
+ * @brief Applies an input function to a parameter.
  * @param id Input function id.
  * @param param Parameter.
  * @return Converted parameter.
@@ -97,25 +99,21 @@ f32 convertSeInputParam(al::SeInputFunctionId id, f32 param) {
 }
 
 /**
- * Calculates the linearly interpolated value of an input and output parameter.
+ * @brief Calculates the linearly interpolated value of an input and output parameter.
  * @param pParam Input and output parameter.
  * @param value Input value.
  * @return Output value.
  */
-f32 calcLeapValue(al::InOutParam* pParam, f32 value) {
-    return pParam->calcLeapValue(value);
-}
+f32 calcLeapValue(al::InOutParam* pParam, f32 value) { return pParam->calcLeapValue(value); }
 
 /**
- * Creates the default sound source information.
+ * @brief Creates the default sound source information.
  * @return Always nullptr.
  */
-al::SeSoundSourceInfo* createDefaultSoundSourceInfo() {
-    return nullptr;
-}
+al::SeSoundSourceInfo* createDefaultSoundSourceInfo() { return nullptr; }
 
 /**
- * Creates the default emitter information list.
+ * @brief Creates the default emitter information list.
  * @return Created list.
  */
 al::AudioInfoList<al::SeEmitterInfo>* createDefaultEmitterInfoList() {
@@ -130,7 +128,7 @@ al::AudioInfoList<al::SeEmitterInfo>* createDefaultEmitterInfoList() {
 }
 
 /**
- * Creates a heap copy of a name.
+ * @brief Creates a heap copy of a name.
  * @param pName Name.
  * @return Created copy, or nullptr.
  */
@@ -145,4 +143,27 @@ const char* createNameAreaAndCopy(const char* pName) {
     snprintf(buffer, size, "%s", name.cstr());
     return buffer;
 }
-}  // namespace alSeDbFunction
+} // namespace alSeDbFunction
+
+namespace al {
+/** @brief Initializes both input and output endpoints to zero. */
+InOutParam::InOutParam() = default;
+
+/**
+ * @brief Copies the input and output endpoints.
+ * @param rOther Parameter range whose four endpoints are copied.
+ */
+InOutParam::InOutParam(const InOutParam& rOther)
+    : mInMin(rOther.mInMin), mInMax(rOther.mInMax), mOutMin(rOther.mOutMin), mOutMax(rOther.mOutMax) {}
+
+/**
+ * @brief Constructs an input-to-output range mapping without validating endpoint order.
+ * @param inMin Lower input endpoint.
+ * @param inMax Upper input endpoint.
+ * @param outMin Output value corresponding to inMin.
+ * @param outMax Output value corresponding to inMax.
+ */
+InOutParam::InOutParam(f32 inMin, f32 inMax, f32 outMin, f32 outMax)
+    : mInMin(inMin), mInMax(inMax), mOutMin(outMin), mOutMax(outMax) {}
+
+} // namespace al

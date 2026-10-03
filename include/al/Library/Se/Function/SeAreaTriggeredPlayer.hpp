@@ -14,17 +14,25 @@ class PlayerHolder;
 using AreaObjArray = sead::PtrArray<AreaObj>;
 
 class SeAreaTriggeredPlayer : public IUseAudioKeeper, public IUseAreaObj {
-public:
+  public:
     SeAreaTriggeredPlayer(const AudioDirector* pDirector, AreaObjDirector* pAreaObjDirector,
                           const PlayerHolder* pPlayerHolder);
 
     void reset();
     void update();
 
+    /**
+     * @brief Gets the audio keeper used for area sounds.
+     * @return Audio keeper created for this player.
+     */
     AudioKeeper* getAudioKeeper() const override { return mAudioKeeper; }
+    /**
+     * @brief Gets the director used to find sound-triggering areas.
+     * @return Area director supplied at construction; may be nullptr.
+     */
     AreaObjDirector* getAreaObjDirector() const override { return mAreaObjDirector; }
 
-private:
+  private:
     AudioKeeper* mAudioKeeper = nullptr;
     AreaObjDirector* mAreaObjDirector;
     const PlayerHolder* mPlayerHolder;
@@ -33,4 +41,4 @@ private:
 };
 
 static_assert(sizeof(SeAreaTriggeredPlayer) == 0x38);
-}  // namespace al
+} // namespace al

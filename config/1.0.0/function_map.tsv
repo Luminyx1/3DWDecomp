@@ -61310,7 +61310,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71009F1050			FALSE	_ZN2al8SeKeeper17setSeSourceVolumeEf	al::SeKeeper::setSeSourceVolume(float)	
 0x71009F10B0			FALSE	_ZN2al8SeKeeper6loadSeEPNS_20IAudioResourceLoaderE	al::SeKeeper::loadSe(al::IAudioResourceLoader*)	
 0x71009F11E0			FALSE	_ZN2al8SeKeeper8verifySeEPNS_15SeadAudioPlayerEPKc	al::SeKeeper::verifySe(al::SeadAudioPlayer*, char const*)	
-0x71009F1310			FALSE	sub_71009F1310	sub_71009F1310	
+0x71009F1310			FALSE	_GLOBAL__sub_I_SeKeeper.cpp	_GLOBAL__sub_I_SeKeeper.cpp	Initializes shared SeResourceSpecificInfo defaults
 0x71009F1350			FALSE	_ZN2al16SeListenerKeeperC2Ebi	al::SeListenerKeeper::SeListenerKeeper(bool, int)	
 0x71009F1690			FALSE	_ZN2al16SeListenerKeeper4initEPNS_14SeadAudio3DMgrEPKN4sead7Vector3IfEEPKNS3_8Matrix34IfEEPNS3_21PerspectiveProjectionES7_PKc	al::SeListenerKeeper::init(al::SeadAudio3DMgr*, sead::Vector3<float> const*, sead::Matrix34<float> const*, sead::PerspectiveProjection*, sead::Vector3<float> const*, char const*)	
 0x71009F1770			FALSE	_ZN2al16SeListenerKeeper6updateEv	al::SeListenerKeeper::update()	
@@ -61457,7 +61457,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71009F77D0			FALSE	_ZNK2al10SeSource3D14isPlayingSoundEv	al::SeSource3D::isPlayingSound() const	
 0x71009F77E0			FALSE	_ZNK2al10SeSource3D11getPositionEv	al::SeSource3D::getPosition() const	
 0x71009F77F0			FALSE	_ZN2al10SeSource3D13resetVelocityEv	al::SeSource3D::resetVelocity()	
-0x71009F7810			FALSE	sub_71009F7810	sub_71009F7810	
+0x71009F7810			FALSE	_GLOBAL__sub_I_SeSource3DCircle.cpp	_GLOBAL__sub_I_SeSource3DCircle.cpp	Initializes 3D sound distance and priority constants
 0x71009F7850			FALSE	_ZN2al23SeadAudio3DActorWrapper18startSoundWithInfoEPN4sead11SoundHandleEjPKNS_14SoundStartInfoEb	al::SeadAudio3DActorWrapper::startSoundWithInfo(sead::SoundHandle*, unsigned int, al::SoundStartInfo const*, bool)	
 0x71009F7870			FALSE	_ZNK2al23SeadAudio3DActorWrapper11getPositionEv	al::SeadAudio3DActorWrapper::getPosition() const	
 0x71009F7880			FALSE	_ZN2al23SeadAudio3DActorWrapper13resetVelocityEv	al::SeadAudio3DActorWrapper::resetVelocity()	
@@ -61653,7 +61653,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71009FE960			FALSE	_ZN2al21startSeFromControllerEPKNS_15IUseAudioKeeperERKN4sead14SafeStringBaseIcEEib	al::startSeFromController(al::IUseAudioKeeper const*, sead::SafeStringBase<char> const&, int, bool)	
 0x71009FEA10			FALSE	_ZN2al28startSeFromControllerOrTvDrcEPKNS_15IUseAudioKeeperERKN4sead14SafeStringBaseIcEEi	al::startSeFromControllerOrTvDrc(al::IUseAudioKeeper const*, sead::SafeStringBase<char> const&, int)	
 0x71009FEAE0		SeVolumeCtrl.o	FALSE	_ZN2al12SeVolumeCtrlC1EPN4sead10OffsetListINS_9SeRequestEEEPNS_15SeadAudioPlayerEPKc	al::SeVolumeCtrl::SeVolumeCtrl(sead::OffsetList<al::SeRequest>*, al::SeadAudioPlayer*, char const*)	object (class)
-0x71009FEB60			FALSE	sub_71009FEB60	sub_71009FEB60	
+0x71009FEB60			FALSE	_ZN2al12_GLOBAL__N_117findVolumeSettingEPKc	_ZN2al12_GLOBAL__N_117findVolumeSettingEPKc	Finds a named SE volume preset
 0x71009FEE40			FALSE	_ZN2al12SeVolumeCtrl6updateEb	al::SeVolumeCtrl::update(bool)	
 0x71009FF350			FALSE	_ZN2al12SeVolumeCtrl16setVolumeSettingEPKcf	al::SeVolumeCtrl::setVolumeSetting(char const*, float)	
 0x71009FF390		SeWaitingListKeeper.o	FALSE	_ZN2al19SeWaitingListKeeperC2Ev	al::SeWaitingListKeeper::SeWaitingListKeeper()	object (class)

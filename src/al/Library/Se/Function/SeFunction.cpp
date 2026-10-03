@@ -1,5 +1,7 @@
 #include "Library/Se/Function/SeAreaTriggeredPlayer.hpp"
 
+#include <attributes.h>
+
 #include "Library/Audio/System/AudioKeeper.hpp"
 #include "Library/Audio/System/AudioKeeperFunction.hpp"
 #include "Library/Player/PlayerUtil.hpp"
@@ -12,6 +14,12 @@
 #include "Project/Base/StringUtil.hpp"
 
 namespace {
+/**
+ * @brief Tests whether two areas name the same sound effect.
+ * @param pAreaObj First non-null area whose SePlayName argument is read.
+ * @param pOther Second non-null area whose SePlayName argument is read.
+ * @return True when both names exist and are equal.
+ */
 bool isSameSePlayArea(const al::AreaObj* pAreaObj, const al::AreaObj* pOther) {
     const char* name = nullptr;
     const char* otherName = nullptr;
@@ -20,6 +28,12 @@ bool isSameSePlayArea(const al::AreaObj* pAreaObj, const al::AreaObj* pOther) {
            otherName != nullptr && al::isEqualString(name, otherName);
 }
 
+/**
+ * @brief Finds an area with the same identity or sound-effect name.
+ * @param pList Non-null list of areas to search.
+ * @param pAreaObj Non-null area to compare against the list entries.
+ * @return Matching area, or nullptr if none is found.
+ */
 const al::AreaObj* findSameSePlayArea(const al::AreaObjArray* pList, const al::AreaObj* pAreaObj) {
     for (s32 i = 0; i < pList->size(); i++) {
         const al::AreaObj* areaObj = pList->unsafeAt(i);
@@ -31,16 +45,17 @@ const al::AreaObj* findSameSePlayArea(const al::AreaObjArray* pList, const al::A
 
     return nullptr;
 }
-}  // namespace
+} // namespace
 
 namespace al {
 /**
- * Constructs the player and its two area lists.
+ * @brief Constructs the player and its two area lists.
  * @param pDirector Audio director.
  * @param pAreaObjDirector Area object director.
  * @param pPlayerHolder Player holder.
  */
-SeAreaTriggeredPlayer::SeAreaTriggeredPlayer(const AudioDirector* pDirector, AreaObjDirector* pAreaObjDirector,
+SeAreaTriggeredPlayer::SeAreaTriggeredPlayer(const AudioDirector* pDirector,
+                                             AreaObjDirector* pAreaObjDirector,
                                              const PlayerHolder* pPlayerHolder)
     : mAreaObjDirector(pAreaObjDirector), mPlayerHolder(pPlayerHolder) {
     mAudioKeeper = createAudioKeeper("SePlayArea", pDirector);
@@ -52,17 +67,20 @@ SeAreaTriggeredPlayer::SeAreaTriggeredPlayer(const AudioDirector* pDirector, Are
 }
 
 /**
- * Stops the SE of the areas the players were in and clears the area lists.
+ * @brief Stops the SE of the areas the players were in and clears the area lists.
  */
 void SeAreaTriggeredPlayer::reset() {
     AreaObjArray* prevList = mAreaLists[mCurListIndex > 0 ? mCurListIndex - 1 : 1];
 
-    for (s32 i = 0; i < prevList->size(); i++) {
-        const char* seName = nullptr;
-        tryGetAreaObjStringArg(&seName, prevList->unsafeAt(i), "SePlayName");
+    if (prevList->size() > 0) {
+        for (s32 i = 0; i < prevList->size(); i++) {
+            const AreaObj* pArea = prevList->unsafeAt(i);
+            const char* seName = nullptr;
+            tryGetAreaObjStringArg(&seName, pArea, "SePlayName");
 
-        if (seName != nullptr) {
-            stopSeByName(this, seName);
+            if (seName != nullptr) {
+                stopSeByName(this, seName);
+            }
         }
     }
 
@@ -72,7 +90,7 @@ void SeAreaTriggeredPlayer::reset() {
 }
 
 /**
- * Starts the SE of areas the players entered and stops the SE of areas they left.
+ * @brief Starts the SE of areas the players entered and stops the SE of areas they left.
  */
 void SeAreaTriggeredPlayer::update() {
     if (mPlayerHolder == nullptr || mAreaObjDirector == nullptr) {
@@ -99,9 +117,10 @@ void SeAreaTriggeredPlayer::update() {
                 continue;
             }
 
-            isInArea |= areaObj->isInVolume(getPlayerPos(playerHolder, j));
+            bool isPlayerInArea = areaObj->isInVolume(getPlayerPos(playerHolder, j));
+            isInArea |= isPlayerInArea;
 
-            if (isInArea) {
+            if (isPlayerInArea) {
                 break;
             }
         }
@@ -156,7 +175,7 @@ void SeAreaTriggeredPlayer::update() {
 }
 
 /**
- * Constructs the list from category names.
+ * @brief Constructs the list from category names.
  * @param pNames Category names.
  * @param num Number of categories.
  */
@@ -169,16 +188,14 @@ SeCategoryNameList::SeCategoryNameList(const char** pNames, s32 num) {
 }
 
 /**
- * Gets a category name.
+ * @brief Gets a category name.
  * @param index Category index.
  * @return Category name.
  */
-const char* SeCategoryNameList::getCategoryName(s32 index) const {
-    return mNames.unsafeAt(index);
-}
+const char* SeCategoryNameList::getCategoryName(s32 index) const { return mNames.unsafeAt(index); }
 
 /**
- * Finds the index of a category.
+ * @brief Finds the index of a category.
  * @param pName Category name.
  * @return Category index, or -1.
  */
@@ -193,7 +210,7 @@ s32 SeCategoryNameList::findCategoryNoFromName(const char* pName) const {
 }
 
 /**
- * Constructs a volume list with one entry per category.
+ * @brief Constructs a volume list with one entry per category.
  * @param pNameList Category names.
  */
 SeCategoryInfoList::SeCategoryInfoList(const SeCategoryNameList* pNameList) : mNameList(pNameList) {
@@ -205,7 +222,7 @@ SeCategoryInfoList::SeCategoryInfoList(const SeCategoryNameList* pNameList) : mN
 }
 
 /**
- * Reads the category volumes from BYAML.
+ * @brief Reads the category volumes from BYAML.
  * @param rIter BYAML iterator with a CategoryVolume dictionary.
  * @return True if the dictionary exists.
  */
@@ -244,7 +261,7 @@ bool SeCategoryInfoList::importYaml(ByamlIter& rIter) {
 }
 
 /**
- * Sets the volume of a category.
+ * @brief Sets the volume of a category.
  * @param pName Category name.
  * @param volume Volume in decibels.
  */
@@ -257,10 +274,11 @@ void SeCategoryInfoList::setCategoryVolume(const char* pName, f32 volume) {
 }
 
 /**
- * Constructs a controller with one mix volume per category.
+ * @brief Constructs a controller with one mix volume per category.
  * @param pNameList Category names.
  */
-SeCategoryParamsController::SeCategoryParamsController(const SeCategoryNameList* pNameList) : mNameList(pNameList) {
+SeCategoryParamsController::SeCategoryParamsController(const SeCategoryNameList* pNameList)
+    : mNameList(pNameList) {
     mMixVolumes.allocBuffer(pNameList->getNum(), nullptr);
 
     for (s32 i = 0; i < mMixVolumes.capacity(); i++) {
@@ -269,7 +287,7 @@ SeCategoryParamsController::SeCategoryParamsController(const SeCategoryNameList*
 }
 
 /**
- * Moves all mix volumes to the volumes of a list.
+ * @brief Moves all mix volumes to the volumes of a list.
  * @param pInfoList Target volumes.
  * @param frames Length of the change in frames.
  */
@@ -281,7 +299,7 @@ void SeCategoryParamsController::moveTo(const SeCategoryInfoList* pInfoList, s32
 }
 
 /**
- * Updates all mix volumes.
+ * @brief Updates all mix volumes.
  */
 void SeCategoryParamsController::update() {
     for (s32 i = 0; i < mMixVolumes.size(); i++) {
@@ -290,7 +308,7 @@ void SeCategoryParamsController::update() {
 }
 
 /**
- * Links each mix volume to the one of another controller.
+ * @brief Links each mix volume to the one of another controller.
  * @param pController Controller to link to.
  */
 void SeCategoryParamsController::linkTo(const SeCategoryParamsController* pController) {
@@ -301,11 +319,72 @@ void SeCategoryParamsController::linkTo(const SeCategoryParamsController* pContr
 }
 
 /**
- * Gets the mix volume of a category.
+ * @brief Gets the mix volume of a category.
  * @param index Category index.
  * @return Mix volume.
  */
 AudioMixVolume* SeCategoryParamsController::getMixVolume(s32 index) const {
     return mMixVolumes.unsafeAt(index);
 }
-}  // namespace al
+
+/**
+ * @brief Constructs a mix volume at 0 dB.
+ */
+NOINLINE AudioMixVolume::AudioMixVolume() = default;
+
+/**
+ * @brief Starts moving the volume.
+ * @param volumeDb Target volume in decibels.
+ * @param frames Length of the change in frames.
+ */
+NOINLINE void AudioMixVolume::moveTo(f32 volumeDb, s32 frames) {
+    mTargetRatio = calcDecibelToRatio(volumeDb);
+    mCurRatio = calcDecibelToRatio(mVolumeDb);
+    mRemainFrames = frames;
+
+    if (frames > 0) {
+        mStep = (mTargetRatio - mCurRatio) / mRemainFrames;
+    } else {
+        mStep = 0.0f;
+    }
+}
+
+/**
+ * @brief Advances the volume change.
+ */
+NOINLINE void AudioMixVolume::update() {
+    if (mRemainFrames <= -1.0f) {
+        return;
+    }
+
+    mRemainFrames += -1.0f;
+
+    if (mRemainFrames <= 0.0f) {
+        mVolumeDb = calcRatioToDecibel(mTargetRatio);
+        mStep = 0.0f;
+        mRemainFrames = -1.0f;
+        return;
+    }
+
+    mCurRatio += mStep;
+    mVolumeDb = calcRatioToDecibel(mCurRatio);
+}
+
+/**
+ * @brief Links this volume to another one that is added to it.
+ * @param pVolume Linked volume.
+ */
+NOINLINE void AudioMixVolume::linkTo(const AudioMixVolume* pVolume) { mLinkedVolume = pVolume; }
+
+/**
+ * @brief Calculates the volume including all linked volumes.
+ * @return Volume in decibels.
+ */
+f32 AudioMixVolume::calcLinkedVolumeDecibel() const {
+    if (mLinkedVolume == nullptr) {
+        return mVolumeDb;
+    }
+
+    return mVolumeDb + mLinkedVolume->calcLinkedVolumeDecibel();
+}
+} // namespace al
