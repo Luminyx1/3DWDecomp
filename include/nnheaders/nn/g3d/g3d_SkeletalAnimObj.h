@@ -10,10 +10,13 @@
 namespace nn::g3d {
 class ResSkeleton;
 class SkeletonObj;
+struct QuatToMtx;
+struct EulerToMtx;
 
 class SkeletalAnimObj : public ModelAnimObj {
-public:
+  public:
     struct InitializeArgument {
+        /** @brief Initialize unset capacities and empty workspace blocks with curve caching enabled. */
         InitializeArgument() {
             boneCount = boneAnimCount = curveCount = -1;
             isContextEnabled = true;
@@ -26,10 +29,15 @@ public:
             }
         }
 
-        // count is the number of bones in the target skeleton.
+        /** @brief Set the maximum number of target bones.
+         * @param count Nonnegative bone capacity sufficient for every target skeleton.
+         */
         void SetMaxBoneCount(int count) { boneCount = count; }
 
-        // pResAnim is an animation this object must be able to play.
+        /**
+         * @brief Increase capacities to accommodate a skeletal animation resource.
+         * @param pResAnim Non-null animation this object must be able to evaluate.
+         */
         void Reserve(const ResSkeletalAnim* pResAnim) {
             boneAnimCount = std::max(boneAnimCount, pResAnim->GetBoneAnimCount());
             curveCount = std::max(curveCount, pResAnim->GetCurveCount());
@@ -37,6 +45,9 @@ public:
         }
 
         void CalculateMemorySize();
+        /** @brief Query the last calculated workspace requirement.
+         * @return Required bytes, or zero before the layout is calculated.
+         */
         size_t GetWorkMemorySize() const { return memorySize; }
 
         int boneCount = -1;
@@ -52,7 +63,9 @@ public:
 
     static_assert(sizeof(InitializeArgument) == 0xa0);
 
+    /** @brief Construct an empty skeletal animation object without allocated working storage. */
     SkeletalAnimObj() {}
+    /** @brief Destroy the animation object without releasing caller-owned workspace. */
     ~SkeletalAnimObj() override = default;
 
     void ClearResult() override;
@@ -65,16 +78,29 @@ public:
     bool Initialize(const InitializeArgument& rArg, void* pBuffer, size_t bufferSize);
     void SetResource(const ResSkeletalAnim* pRes);
     BindResult Bind(const ResSkeleton* pSkeleton);
+    BindResult Bind(const SkeletonObj* pSkeleton);
+    void ClearResult(const ResSkeleton* pSkeleton);
+    void BindFast(const ResSkeleton* pSkeleton);
+    void SetBindFlag(const ResSkeleton* pSkeleton, int boneIndex, BindFlag flag);
     void ApplyTo(SkeletonObj* pSkeleton) const;
 
+    /** @brief Access the selected skeletal animation resource.
+     * @return Active resource, or nullptr before resource selection.
+     */
     const ResSkeletalAnim* GetResource() const { return mResource; }
 
-private:
+  private:
     const ResSkeletalAnim* mResource = nullptr;
-    void* _70 = nullptr;
-    void* _78 = nullptr;
-    void* _80 = nullptr;
-    void* _88 = nullptr;
+    struct Impl;
+    template <bool mirrored, bool retargeted> void ClearImpl(const ResSkeleton* pSkeleton);
+    template <bool mirrored, bool retargeted> void CalculateImpl();
+    template <class Converter> void ApplyToImpl(SkeletonObj* pSkeleton) const;
+    BindResult BindImpl(const ResSkeleton* pSkeleton);
+    const ResBoneAnim* m_pBoneAnims = nullptr;
+    int m_BoneAnimCapacity = 0;
+    u32 m_Flags = 0;
+    util::Vector4fType* m_pRetargeting = nullptr;
+    const ResSkeleton* m_pBoundSkeleton = nullptr;
 };
 
 static_assert(sizeof(SkeletalAnimObj) == 0x90);
@@ -88,7 +114,7 @@ struct SkeletalAnimBlendResult {
 static_assert(sizeof(SkeletalAnimBlendResult) == 0x50);
 
 class SkeletalAnimBlender {
-public:
+  public:
     struct InitializeArgument {
         InitializeArgument() { blocks[0].Initialize(0); }
 
@@ -115,7 +141,7 @@ public:
     int GetBoneCount() const { return mBoneCount; }
     int GetMaxBoneCount() const { return mMaxBoneCount; }
 
-private:
+  private:
     SkeletalAnimBlendResult* mResult = nullptr;
     u16 mBoneCount = 0;
     u16 mMaxBoneCount = 0;
@@ -126,4 +152,4 @@ private:
 
 static_assert(sizeof(SkeletalAnimBlender) == 0x20);
 
-}  // namespace nn::g3d
+} // namespace nn::g3d

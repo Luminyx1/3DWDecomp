@@ -13,6 +13,23 @@ struct BoneAnimResult {
 };
 class ResBoneAnim {
 public:
+    /**
+     * @brief Access a typed constant value in the animation's base-value storage.
+     * @tparam T Constant channel representation, aligned to a four-byte word.
+     * @param wordIndex Four-byte offset within the resource's base-value storage.
+     * @return Read-only pointer to the selected constant channel.
+     */
+    template <class T> const T* GetBaseValue(int wordIndex) const {
+        return reinterpret_cast<const T*>(static_cast<const u8*>(baseValues) + wordIndex * 4);
+    }
+
+    /**
+     * @brief Access the constant translation stored for this bone animation.
+     * @return Read-only translation vector at the resource's base-value index.
+     */
+    const util::Float3& GetBaseTranslation() const {
+        return *reinterpret_cast<const util::Float3*>(static_cast<const float*>(baseValues) + translationBaseIndex);
+    }
     // result receives constant channels; bone supplies defaults for channels absent from the animation.
     void Initialize(BoneAnimResult* result, const ResBone* bone) const;
     // result receives samples at frame; optional cache holds one interval per curve.
@@ -26,7 +43,8 @@ public:
     u32 flags;
     u8 _2c[2];
     u8 curveCount;
-    u8 _2f[9];
+    u8 translationBaseIndex;
+    u8 _30[8];
 };
 class ResSkeletalAnim {
 public:
