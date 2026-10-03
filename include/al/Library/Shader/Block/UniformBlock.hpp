@@ -24,6 +24,11 @@ public:
         setData_(buffer, memberIndex, &data, 0, 1);
     }
 
+    template <typename T>
+    void setValueRef(s32 memberIndex, const T& rValue) const {
+        setData(memberIndex, &rValue, 0, 1);
+    }
+
 private:
     s32 mSwapIndex;
 };
