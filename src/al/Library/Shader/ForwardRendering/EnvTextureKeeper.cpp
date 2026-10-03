@@ -9,6 +9,21 @@
 namespace al {
 
 /**
+ * @brief Creates a set with every id invalid.
+ */
+EnvTexId::EnvTexId() {
+    mCubeMapId = -1;
+    mRefractCubeMapId = -1;
+    mRoughness = -1;
+    mRefract = -1;
+    mFresnel = -1;
+    mThickness = -1;
+    mLightCategory = -1;
+    mIrradiance = -1;
+    mMirrorTexId = -1;
+}
+
+/**
  * @brief Marks every id as invalid.
  */
 void EnvTexId::invalidateAll() {

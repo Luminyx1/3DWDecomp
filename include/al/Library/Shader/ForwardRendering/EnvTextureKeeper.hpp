@@ -4,6 +4,7 @@
 
 namespace nn::g3d {
 class ResMaterial;
+class ResRenderInfo;
 class ShadingModelObj;
 }  // namespace nn::g3d
 
@@ -18,17 +19,7 @@ class EnvTexId {
     friend class EnvTexInfo;
 
 public:
-    EnvTexId() {
-        mCubeMapId = -1;
-        mRefractCubeMapId = -1;
-        mRoughness = -1;
-        mRefract = -1;
-        mFresnel = -1;
-        mThickness = -1;
-        mLightCategory = -1;
-        mIrradiance = -1;
-        mMirrorTexId = -1;
-    }
+    EnvTexId();
 
     void invalidateAll();
     void initForCache();
@@ -50,6 +41,24 @@ public:
     s32 getLightCategory() const { return mLightCategory; }
     s32 getIrradiance() const { return mIrradiance; }
     s32 getMirrorTexId() const { return mMirrorTexId; }
+
+    void setCubeMapId(s32 id) { mCubeMapId = id; }
+
+    void setRefractCubeMapId(s32 id) { mRefractCubeMapId = id; }
+
+    void setRoughness(s32 roughness) { mRoughness = roughness; }
+
+    void setRefract(s32 refract) { mRefract = refract; }
+
+    void setFresnel(s32 fresnel) { mFresnel = fresnel; }
+
+    void setThickness(s32 thickness) { mThickness = thickness; }
+
+    void setLightCategory(s32 category) { mLightCategory = category; }
+
+    void setIrradiance(s32 irradiance) { mIrradiance = irradiance; }
+
+    void setMirrorTexId(s32 id) { mMirrorTexId = id; }
 
 private:
     s32 mCubeMapId;
@@ -86,6 +95,10 @@ public:
     void clearAll();
     bool isIndirectRefract() const;
     bool isRefractCubeMap() const;
+
+    const EnvTexId& getBaseId() const { return mBase; }
+
+    const EnvTexId& getOverrideId() const { return mOverride; }
 
     void setOverrideCubeMapId(s32 id) { mOverride.mCubeMapId = id; }
 
@@ -140,4 +153,5 @@ s32 calcFresnelType(const nn::g3d::ResMaterial& rMaterial);
 s32 calcThicknessType(const nn::g3d::ResMaterial& rMaterial,
                       const nn::g3d::ShadingModelObj& rShadingModel);
 s32 calcLightCategory(const nn::g3d::ResMaterial& rMaterial);
+s32 calcLightCategory(const nn::g3d::ResRenderInfo* pRenderInfo);
 }  // namespace alEnvTexFunction
