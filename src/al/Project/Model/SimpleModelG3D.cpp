@@ -23,6 +23,7 @@
 #include "Library/Shader/Block/UniformBlock.hpp"
 #include "Library/Shader/Block/UniformBlockUtil.hpp"
 #include "Library/Shader/DeferredRendering/CubeMapDirector.hpp"
+#include "Library/Shader/DeferredRendering/PeripheryRendering.hpp"
 #include "Library/Shader/ForwardRendering/CubeMapKeeper.hpp"
 #include "Library/Shader/ForwardRendering/EnvTextureKeeper.hpp"
 #include "Library/Shader/ForwardRendering/ShaderHolder.hpp"
@@ -31,7 +32,6 @@
 #include "Project/Draw/GpuMemAllocator.hpp"
 #include "Project/Draw/RenderState.hpp"
 #include "Project/Model/ModelAdditionalInfo.hpp"
-#include "Project/Model/UniformBlockAssign.hpp"
 
 namespace al {
 

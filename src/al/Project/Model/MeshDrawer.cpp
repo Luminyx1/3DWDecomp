@@ -26,6 +26,7 @@
 #include "Library/Model/Function/alModelFunction.hpp"
 #include "Library/Model/ModelShaderAssign.hpp"
 #include "Library/Shader/DeferredRendering/ModelLightParam.hpp"
+#include "Library/Shader/DeferredRendering/PeripheryRendering.hpp"
 #include "Library/Shader/DeferredRendering/SamplerLocation.hpp"
 #include "Library/Shader/ForwardRendering/EnvTextureKeeper.hpp"
 #include "Library/Shadow/Depth/DepthShadowDrawer.hpp"

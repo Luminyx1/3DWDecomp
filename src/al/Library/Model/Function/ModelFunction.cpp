@@ -23,6 +23,7 @@
 #include "Library/Model/ModelShaderAssign.hpp"
 #include "Library/Model/alModelCafe.hpp"
 #include "Library/Shader/DeferredRendering/GBufferArray.hpp"
+#include "Library/Shader/DeferredRendering/PeripheryRendering.hpp"
 #include "Library/Shader/DeferredRendering/SamplerLocation.hpp"
 #include "Library/Shader/ForwardRendering/ShaderHolder.hpp"
 #include "Project/Base/StringUtil.hpp"
@@ -36,18 +37,6 @@ namespace al {
 // clang-format off
 SEAD_ENUM(RoughnessType, Mirror , HighGlossy , MiddleGlossy , LowGlossy , Matte , Irradiance , TypeNum)
 // clang-format on
-
-// Defined in PeripheryRendering.
-void initShaderKeyStatic(nn::g3d::ShadingModelObj* pShadingModel,
-                         const nn::g3d::ResShaderAssign* pShaderAssign,
-                         const nn::g3d::ModelObj* pModel, const nn::g3d::ShapeObj* pShape,
-                         bool isUseDefault);
-void initShaderKeyDynamic(nn::g3d::ShaderSelector* pSelector,
-                          const nn::g3d::ResShaderAssign* pShaderAssign,
-                          const nn::g3d::ModelObj* pModel, const nn::g3d::ShapeObj* pShape);
-const char* searchVariationMacroValue(const nn::g3d::ShadingModelObj* pShadingModel,
-                                      const char* pName);
-const char* getShaderProgramName(const nn::g3d::ShadingModelObj* pShadingModel);
 
 }  // namespace al
 
