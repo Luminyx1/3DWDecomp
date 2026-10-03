@@ -24,18 +24,23 @@ public:
     static const bool IsMemoryPoolRequired = true;
 
     static size_t GetBufferAlignment(DeviceImpl<ApiVariationNvn8>*, const InfoType&);
+    static size_t GetBufferAlignment(DeviceImpl<ApiVariationNvn8>*,
+                                     const BufferInfoImpl<ApiVariationNvn8>&);
 
     BufferImpl();
     ~BufferImpl();
 
     void Initialize(DeviceImpl<Target>*, const BufferInfo&, MemoryPoolImpl<Target>*, ptrdiff_t,
                     size_t);
+    void Initialize(DeviceImpl<Target>*, const BufferInfoImpl<Target>&, MemoryPoolImpl<Target>*,
+                    ptrdiff_t, size_t);
     void Finalize(DeviceImpl<Target>*);
     void* Map() const;
     void Unmap() const;
     void FlushMappedRange(ptrdiff_t, size_t) const;
     void InvalidateMappedRange(ptrdiff_t, size_t) const;
     void GetGpuAddress(GpuAddress*) const;
+    void SetDebugLabel(DeviceImpl<Target>*, const char*);
 };
 
 template <>
