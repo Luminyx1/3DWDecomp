@@ -143,7 +143,7 @@ public:
     static const int64_t Signature = 0x48534E42;  // ??
     static const int MajorVersion = 2;
     static const int MinorVersion = 1;
-    static const int MicroVersion = 5;
+    static const int MicroVersion = 11;
 
     static size_t GetMaxFileAlignment();
 
