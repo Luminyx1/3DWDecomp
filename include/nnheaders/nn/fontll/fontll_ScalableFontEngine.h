@@ -18,9 +18,9 @@ struct Metrics {
     s16 boundingBoxMaxY;
     u8 reserved3[0x910];
     u16 unitsPerEm;
-    u8 reserved4[6];
+    u8 reserved4[0xe];
 };
-static_assert(sizeof(Metrics) == 0x938);
+static_assert(sizeof(Metrics) == 0x940);
 
 struct GlyphMap {
     u8 reserved0[0xc];
