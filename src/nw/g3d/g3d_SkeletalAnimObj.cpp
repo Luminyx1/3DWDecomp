@@ -1,9 +1,30 @@
 #include <nn/g3d/g3d_SkeletalAnimObj.h>
 #include <nn/g3d/g3d_SkeletonObj.h>
 #include <nn/g3d/g3d_ModelObj.h>
+#include <cmath>
 
 namespace nn::g3d {
 namespace detail {
+/**
+ * @brief Rotate a bone translation by its retargeting quaternion.
+ * @param pTranslation Writable three-component translation transformed in place.
+ * @param rRotation Unit quaternion correcting the source bone orientation to the target.
+ */
+inline void RotateRetargetedTranslation(util::Float3* pTranslation, const util::Vector4fType& rRotation) {
+    float x = pTranslation->x;
+    float y = pTranslation->y;
+    float z = pTranslation->z;
+    float rx = z * rRotation._v[1] + x * rRotation._v[3] - y * rRotation._v[2];
+    float ry = x * rRotation._v[2] + y * rRotation._v[3] - z * rRotation._v[0];
+    float rz = z * rRotation._v[3] + y * rRotation._v[0] - x * rRotation._v[1];
+    float rw = z * rRotation._v[2] + (x * rRotation._v[0] + y * rRotation._v[1]);
+    pTranslation->x =
+        rx * rRotation._v[3] + (rw * rRotation._v[0] + (rz * rRotation._v[1] - ry * rRotation._v[2]));
+    pTranslation->y =
+        ry * rRotation._v[3] + (rw * rRotation._v[1] + (rx * rRotation._v[2] - rz * rRotation._v[0]));
+    pTranslation->z =
+        rz * rRotation._v[3] + (rw * rRotation._v[2] + (ry * rRotation._v[0] - rx * rRotation._v[1]));
+}
 struct SkeletalAnimObjUtil {
     static bool CalculateRetargetingQuaternion(util::Vector4fType* pResult, const ResBone* pTarget,
                                                const ResBone* pSource);
@@ -62,6 +83,25 @@ template <> void SkeletalAnimObj::ClearImpl<false, false>(const ResSkeleton* pSk
             const ResBoneAnim* pAnim = &m_pBoneAnims[i];
             const ResBone* pBone = pSkeleton->GetBone(target);
             pAnim->Initialize(&pResults[i], pBone);
+        }
+    }
+}
+/**
+ * @brief Restore bound bone defaults and retarget eligible constant translations.
+ * @param pSkeleton Non-null bound skeleton supplying default bone transforms.
+ */
+template <> void SkeletalAnimObj::ClearImpl<false, true>(const ResSkeleton* pSkeleton) {
+    int count = mBindTable.mAnimCount;
+    auto* pResult = static_cast<BoneAnimResult*>(mResult);
+    for (int i = 0; i < count; ++i, ++pResult) {
+        unsigned target = mBindTable.mEntries[i] & 0x7fff;
+        if (target != 0x7fff) {
+            const ResBoneAnim* pAnim = &m_pBoneAnims[i];
+            const ResBone* pBone = pSkeleton->GetBone(target);
+            pAnim->Initialize(pResult, pBone);
+            if ((pAnim->flags & 0xe020) == 0x20) {
+                detail::RotateRetargetedTranslation(&pResult->translate, m_pRetargeting[i]);
+            }
         }
     }
 }
@@ -438,5 +478,104 @@ void SkeletalAnimObj::SetBindFlag(const ResSkeleton* pSkeleton, int boneIndex, B
         mBindTable.SetFlagsForTarget(index, flags);
         ++index;
     } while (index < endIndex);
+}
+struct SkeletalAnimBlender::Impl {
+    using ApplyFunction = void (SkeletalAnimBlender::*)(SkeletonObj*) const;
+    using ConvertFunction = void (SkeletalAnimBlender::*)();
+    static const ApplyFunction s_pFuncApplyTo[4];
+    static const ConvertFunction s_pFuncConvertResultRotate[2];
+};
+const SkeletalAnimBlender::Impl::ApplyFunction SkeletalAnimBlender::Impl::s_pFuncApplyTo[4] = {
+    &SkeletalAnimBlender::ApplyToImpl<AxesToMtx, BlendMode_Interpolate>,
+    &SkeletalAnimBlender::ApplyToImpl<AxesToMtx, BlendMode_Additive>,
+    &SkeletalAnimBlender::ApplyToImpl<QuatToMtx, BlendMode_Interpolate>,
+    &SkeletalAnimBlender::ApplyToImpl<QuatToMtx, BlendMode_Additive>};
+const SkeletalAnimBlender::Impl::ConvertFunction SkeletalAnimBlender::Impl::s_pFuncConvertResultRotate[2] = {
+    &SkeletalAnimBlender::ConvertResultRotate<AxesToQuat>,
+    &SkeletalAnimBlender::ConvertResultRotate<QuatToAxes>};
+
+/** @brief Calculate workspace storage for the maximum number of blended bone results. */
+void SkeletalAnimBlender::InitializeArgument::CalculateMemorySize() {
+    blocks[0].Initialize(boneCount * sizeof(SkeletalAnimBlendResult));
+    memorySize = 0;
+    memoryAlignment = 8;
+    blocks[0].AppendTo(memorySize, memoryAlignment);
+}
+/**
+ * @brief Attach a blender to its calculated caller-owned workspace.
+ * @param rArg Bone capacity and previously calculated storage layout.
+ * @param pBuffer Workspace aligned to the calculated requirement; may be null for an empty layout.
+ * @param bufferSize Available workspace bytes, at least the calculated requirement.
+ * @return True if the layout was calculated and fits in the supplied storage.
+ */
+bool SkeletalAnimBlender::Initialize(const InitializeArgument& rArg, void* pBuffer, size_t bufferSize) {
+    if (rArg.memoryAlignment == 0) {
+        return false;
+    }
+    if (rArg.memorySize > bufferSize) {
+        return false;
+    }
+    m_pWorkMemory = pBuffer;
+    mResult = rArg.blocks[0].GetPointer<SkeletalAnimBlendResult>(pBuffer);
+    u16 count = rArg.boneCount;
+    mBoneCount = count;
+    mMaxBoneCount = count;
+    return true;
+}
+/** @brief Clear every result slot and mark the accumulated blend as empty. */
+void SkeletalAnimBlender::ClearResult() {
+    m_Flags |= 4;
+    size_t bytes = mMaxBoneCount * sizeof(SkeletalAnimBlendResult);
+    std::memset(mResult, 0, bytes);
+}
+/**
+ * @brief Evaluate two animations and accumulate their weighted transform differences.
+ * @param pAnimObj Initialized source animation with valid bone bindings.
+ * @param pBaseAnimObj Initialized reference animation bound to the same target skeleton.
+ * @param weight Blend contribution; magnitudes below 0.001 are ignored.
+ */
+void SkeletalAnimBlender::Blend(SkeletalAnimObj* pAnimObj, SkeletalAnimObj* pBaseAnimObj, float weight) {
+    if (fabsf(weight) < 0.001f) {
+        return;
+    }
+    m_Flags &= ~4;
+    pAnimObj->Calculate();
+    pBaseAnimObj->Calculate();
+    BlendDiffAnim(pAnimObj, pBaseAnimObj, weight);
+}
+/**
+ * @brief Apply accumulated transforms and mark the blend as consumed.
+ * @param pSkeleton Initialized target skeleton whose bones correspond to the result array.
+ */
+void SkeletalAnimBlender::ApplyTo(SkeletonObj* pSkeleton) const {
+    (this->*Impl::s_pFuncApplyTo[(m_Flags & 3) | ((m_Flags >> 2) & 1)])(pSkeleton);
+    m_Flags |= 4;
+}
+/**
+ * @brief Begin blending, converting stored rotations when the representation changes.
+ * @param flags Bit zero selects additive blending and bit one selects quaternion rotation storage.
+ */
+void SkeletalAnimBlender::BeginBlend(u32 flags) {
+    size_t mode = m_Flags & 2;
+    if (static_cast<u32>(mode) != (flags & 2)) {
+        (this->*Impl::s_pFuncConvertResultRotate[mode / 2])();
+    }
+    m_Flags = (flags & 3) | 8;
+}
+/** @brief Normalize non-additive scale and translation accumulators and finish blending. */
+void SkeletalAnimBlender::EndBlend() {
+    SkeletalAnimBlendResult* pResult = mResult;
+    for (size_t i = 0; i < mMaxBoneCount; ++i, ++pResult) {
+        float weight = pResult->weight;
+        if (!(fabsf(weight) < 0.001f)) {
+            if ((m_Flags & 1) == 0 && !(fabsf(weight - 1.0f) < 0.001f)) {
+                float inverse = 1.0f / weight;
+                pResult->scale._v = vmulq_n_f32(pResult->scale._v, inverse);
+                pResult->translate._v = vmulq_n_f32(pResult->translate._v, inverse);
+            }
+            pResult->weight = 1.0f;
+        }
+    }
+    m_Flags = (m_Flags | 4) ^ 8;
 }
 } // namespace nn::g3d

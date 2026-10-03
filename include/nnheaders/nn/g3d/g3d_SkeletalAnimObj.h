@@ -12,6 +12,9 @@ class ResSkeleton;
 class SkeletonObj;
 struct QuatToMtx;
 struct EulerToMtx;
+struct AxesToMtx;
+struct AxesToQuat;
+struct QuatToAxes;
 
 class SkeletalAnimObj : public ModelAnimObj {
   public:
@@ -123,22 +126,32 @@ class SkeletalAnimObj : public ModelAnimObj {
 static_assert(sizeof(SkeletalAnimObj) == 0x90);
 
 struct SkeletalAnimBlendResult {
-    u8 _0[0x10];
+    nn::util::Vector3fType scale;
     nn::util::Vector3fType translate;
-    u8 _20[0x30];
+    u8 _20[0x20];
+    u32 flags;
+    float weight;
+    u8 _48[8];
 };
 
 static_assert(sizeof(SkeletalAnimBlendResult) == 0x50);
 
 class SkeletalAnimBlender {
   public:
+    enum BlendMode { BlendMode_Interpolate = 0, BlendMode_Additive = 1 };
     struct InitializeArgument {
+        /** @brief Initialize an empty result-storage block with an unset bone capacity. */
         InitializeArgument() { blocks[0].Initialize(0); }
 
-        // count is the number of bones in the target skeleton.
+        /** @brief Set the capacity of the blending result array.
+         * @param count Nonnegative number
+         * of bones in the largest target skeleton. */
         void SetMaxBoneCount(int count) { boneCount = count; }
 
         void CalculateMemorySize();
+        /** @brief Query the calculated workspace size.
+         * @return Required bytes, or zero before
+         * sizing. */
         size_t GetWorkMemorySize() const { return memorySize; }
 
         int boneCount = -1;
@@ -147,23 +160,40 @@ class SkeletalAnimBlender {
         detail::WorkMemoryBlock blocks[1];
     };
 
+    /** @brief Construct an empty blender without allocating storage. */
     SkeletalAnimBlender() {}
 
     bool Initialize(const InitializeArgument& rArg, void* pBuffer, size_t bufferSize);
     void ClearResult();
+    void EndBlend();
+    void BeginBlend(u32 flags);
     void Blend(SkeletalAnimObj* pAnimObj, float weight);
+    void Blend(SkeletalAnimObj* pAnimObj, SkeletalAnimObj* pBaseAnimObj, float weight);
     void ApplyTo(SkeletonObj* pSkeleton) const;
 
+    /** @brief Access the accumulated per-bone transforms.
+     * @return Caller-owned result array, or
+     * nullptr before initialization. */
     SkeletalAnimBlendResult* GetResult() const { return mResult; }
+    /** @brief Query the number of active bones.
+     * @return Active bone count established during
+     * initialization. */
     int GetBoneCount() const { return mBoneCount; }
+    /** @brief Query the result-array capacity.
+     * @return Maximum number of bone results that fit in the
+     * workspace. */
     int GetMaxBoneCount() const { return mMaxBoneCount; }
 
   private:
+    struct Impl;
+    template <class Converter, BlendMode mode> void ApplyToImpl(SkeletonObj* pSkeleton) const;
+    template <class Converter> void ConvertResultRotate();
+    void BlendDiffAnim(SkeletalAnimObj* pAnimObj, SkeletalAnimObj* pBaseAnimObj, float weight);
     SkeletalAnimBlendResult* mResult = nullptr;
     u16 mBoneCount = 0;
     u16 mMaxBoneCount = 0;
-    u32 _c = 0;
-    void* _10 = nullptr;
+    mutable u32 m_Flags = 0;
+    void* m_pWorkMemory = nullptr;
     void* _18 = nullptr;
 };
 
