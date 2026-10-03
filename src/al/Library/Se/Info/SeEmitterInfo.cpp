@@ -5,6 +5,11 @@
 #include "Library/Yaml/ByamlIter.hpp"
 
 namespace {
+/**
+ * @brief Creates the sound-source shape described by a BYAML dictionary.
+ * @param rIter Dictionary containing the source name and shape-specific fields.
+ * @return Newly allocated shape information, or nullptr for a missing or unknown name.
+ */
 al::SeSoundSourceInfo* createSoundSourceInfo(const al::ByamlIter& rIter) {
     const char* name = nullptr;
     al::SeSoundSourceInfo* sourceInfo = nullptr;
@@ -65,11 +70,11 @@ al::SeSoundSourceInfo* createSoundSourceInfo(const al::ByamlIter& rIter) {
 
     return sourceInfo;
 }
-}  // namespace
+} // namespace
 
 namespace al {
 /**
- * Creates SE emitter information from BYAML data.
+ * @brief Creates SE emitter information from BYAML data.
  * @param rIter BYAML data.
  * @return Created information.
  */
@@ -115,48 +120,7 @@ SeEmitterInfo* SeEmitterInfo::createInfo(const ByamlIter& rIter) {
 }
 
 /**
- * Creates a copy of SE emitter information with copied names.
- * @param pInfo Information to copy.
- * @return Created information.
- */
-SeEmitterInfo* SeEmitterInfo::duplicateInfo(const SeEmitterInfo* pInfo) {
-    SeEmitterInfo* info = new SeEmitterInfo;
-    info->mName = alSeDbFunction::createNameAreaAndCopy(pInfo->mName);
-    info->mJointName = alSeDbFunction::createNameAreaAndCopy(pInfo->mJointName);
-
-    if (pInfo->mOffset != nullptr) {
-        __builtin_trap();
-    }
-
-    const SeSoundSourceInfo* srcInfo = pInfo->mSoundSourceInfo;
-    SeSoundSourceInfo* sourceInfo = nullptr;
-
-    if (srcInfo != nullptr && srcInfo->mName != nullptr) {
-        const char* name = alSeDbFunction::createNameAreaAndCopy(srcInfo->mName);
-
-        if (name != nullptr) {
-            if (alSeFunction::isSoundSourceAmbient(name)) {
-                sourceInfo = new SeSoundSourceInfoAmbient(name);
-            } else if (alSeFunction::isSoundSource3DPoint(name)) {
-                sourceInfo = new SeSoundSourceInfo3DPoint(name);
-            } else if (alSeFunction::isSoundSource3DSphere(name)) {
-                sourceInfo = new SeSoundSourceInfo3DSphere(*static_cast<const SeSoundSourceInfo3DSphere*>(srcInfo));
-            } else if (alSeFunction::isSoundSource3DVector(name)) {
-                sourceInfo = new SeSoundSourceInfo3DVector(*static_cast<const SeSoundSourceInfo3DVector*>(srcInfo));
-            } else if (alSeFunction::isSoundSource3DBox(name)) {
-                sourceInfo = new SeSoundSourceInfo3DBox(*static_cast<const SeSoundSourceInfo3DBox*>(srcInfo));
-            } else if (alSeFunction::isSoundSource3DRing(name)) {
-                sourceInfo = new SeSoundSourceInfo3DRing(*static_cast<const SeSoundSourceInfo3DRing*>(srcInfo));
-            }
-        }
-    }
-
-    info->mSoundSourceInfo = sourceInfo;
-    return info;
-}
-
-/**
- * Compares two SE emitter information by name.
+ * @brief Compares two SE emitter information by name.
  * @param pA First information.
  * @param pB Second information.
  * @return Comparison result.
@@ -165,9 +129,4 @@ s32 SeEmitterInfo::compareInfo(const SeEmitterInfo* pA, const SeEmitterInfo* pB)
     return strcmp(pA->mName, pB->mName);
 }
 
-/**
- * Does nothing.
- */
-void SeSoundSourceInfo::dummy() {}
-
-}  // namespace al
+} // namespace al
