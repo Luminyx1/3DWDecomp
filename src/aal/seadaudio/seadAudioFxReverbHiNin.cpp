@@ -251,8 +251,10 @@ void AudioFxReverbHiNin::updateFx_(s32* pCh0, s32* pCh1, u32 sampleCount) {
         *outAllPass1 = temp1;
         f32 fused0 = allPassCoef0 * temp0 - delayed0;
         f32 fused1 = allPassCoef1 * temp1 - delayed1;
-        mOutAllPassPos[0] = mOutAllPassPos[0] + 1 >= mOutAllPassDelaySize[0] ? 0 : mOutAllPassPos[0] + 1;
-        mOutAllPassPos[1] = mOutAllPassPos[1] + 1 >= mOutAllPassDelaySize[1] ? 0 : mOutAllPassPos[1] + 1;
+        mOutAllPassPos[0] =
+            mOutAllPassPos[0] + 1 >= mOutAllPassDelaySize[0] ? 0 : mOutAllPassPos[0] + 1;
+        mOutAllPassPos[1] =
+            mOutAllPassPos[1] + 1 >= mOutAllPassDelaySize[1] ? 0 : mOutAllPassPos[1] + 1;
 
         f32 mix0 = earlyX + fusedGain0 * fused0;
         f32 mix1 = earlyY + fusedGain1 * fused1;
@@ -311,9 +313,10 @@ void AudioFxReverbHiNin::setupDelaySizes_(const AudioFxReverbHiParamNin& rParam)
     mEarlyMode = rParam.mEarlyMode;
     const u32(*earlyTable)[3] = mSampleRate == 0 ? cReverbHiEarlyDelay32k : cReverbHiEarlyDelay48k;
     mEarlyDelaySize = earlyTable[mEarlyMode][2];
-    mPreDelaySize = getSampleRate_() * rParam.mPreDelayTime;
+    mPreDelaySize = rParam.mPreDelayTime * getSampleRate_();
+    s32 fusedMode = rParam.mFusedMode;
     const u32(*fusedTable)[7] = mSampleRate == 0 ? cReverbHiFusedDelay32k : cReverbHiFusedDelay48k;
-    const u32* fused = fusedTable[rParam.mFusedMode];
+    const u32* fused = fusedTable[fusedMode];
     mCombDelaySize[0] = fused[0];
     mCombDelaySize[1] = fused[1];
     mCombDelaySize[2] = fused[2];
@@ -420,8 +423,9 @@ bool AudioFxReverbHiNin::AssignWorkBuffer(void* pBuffer, u32 size) {
 
     for (u32 i = 0; i < 2; i++) {
         mOutAllPassBuffer[i] = reinterpret_cast<f32*>(current);
-        current = (reinterpret_cast<uintptr_t>(mOutAllPassBuffer[i] + mOutAllPassDelaySize[i]) + 0x1f) &
-                  ~0x1f;
+        current =
+            (reinterpret_cast<uintptr_t>(mOutAllPassBuffer[i] + mOutAllPassDelaySize[i]) + 0x1f) &
+            ~0x1f;
     }
 
     if (static_cast<s64>(current - start) > size) {
@@ -463,10 +467,13 @@ void AudioFxReverbHiNin::ReleaseWorkBuffer() {
  * Rewinds the delay line positions.
  */
 void AudioFxReverbHiNin::initBufferPos_() {
-    const u32(*earlyTable)[3] = mSampleRate == 0 ? cReverbHiEarlyDelay32k : cReverbHiEarlyDelay48k;
+    s32 sampleRate = mSampleRate;
+    u32 delaySize = mEarlyDelaySize;
+    u32 earlyMode = mEarlyMode;
+    const u32(*earlyTable)[3] = sampleRate == 0 ? cReverbHiEarlyDelay32k : cReverbHiEarlyDelay48k;
 
     for (u32 i = 0; i < cEarlyTapCount; i++) {
-        mEarlyPos[i] = mEarlyDelaySize - earlyTable[mEarlyMode][i];
+        mEarlyPos[i] = delaySize - earlyTable[earlyMode][i];
     }
 
     mPreDelayPos = 0;
