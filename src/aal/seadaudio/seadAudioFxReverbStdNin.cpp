@@ -193,8 +193,10 @@ void AudioFxReverbStdNin::updateFx2ch_(s32* pCh0, s32* pCh1, u32 sampleCount) {
     const f32 outGain1 = mOutGain[1];
 
     for (u32 i = 0; i < sampleCount; i++) {
-        f32 in0x = *pCh0;
-        f32 in0y = *pCh1;
+        f32 in0y;
+        f32 in0x;
+        in0x = *pCh0;
+        in0y = *pCh1;
         Vector2f* early0 = &mEarlyBuffer[0][mEarlyPos];
         f32 early0x = early0->x;
         f32 early0y = early0->y;
@@ -211,16 +213,16 @@ void AudioFxReverbStdNin::updateFx2ch_(s32* pCh0, s32* pCh1, u32 sampleCount) {
             in0y = delayed0y;
         }
 
-        Vector2f* comb00 = &mCombBuffer[0][0][mCombPos[0]];
-        f32 comb00x = comb00->x;
-        f32 comb00y = comb00->y;
-        comb00->set(in0x + comb00x * combCoef[0][0], in0y + comb00y * combCoef[0][1]);
-        Vector2f* comb10 = &mCombBuffer[1][0][mCombPos[1]];
-        f32 comb10x = comb10->x;
-        f32 comb10y = comb10->y;
-        comb10->set(in0x + comb10x * combCoef[1][0], in0y + comb10y * combCoef[1][1]);
-        f32 out0x = comb00x + comb10x;
-        f32 out0y = comb00y + comb10y;
+        Vector2f combOut[cCombCount];
+
+        for (u32 j = 0; j < cCombCount; j++) {
+            Vector2f* comb0 = &mCombBuffer[j][0][mCombPos[j]];
+            combOut[j] = *comb0;
+            comb0->set(in0x + combOut[j].x * combCoef[j][0], in0y + combOut[j].y * combCoef[j][1]);
+        }
+
+        f32 out0x = combOut[0].x + combOut[1].x;
+        f32 out0y = combOut[0].y + combOut[1].y;
         Vector2f* allPass00 = &mAllPassBuffer[0][0][mAllPassPos[0]];
         f32 allPass00x = allPass00->x;
         f32 allPass00y = allPass00->y;
@@ -229,8 +231,12 @@ void AudioFxReverbStdNin::updateFx2ch_(s32* pCh0, s32* pCh1, u32 sampleCount) {
         allPass00->set(temp00x, temp00y);
         out0x = allPassCoef0 * temp00x - allPass00x;
         out0y = allPassCoef1 * temp00y - allPass00y;
-        f32 lpf0x = lpfHistoryGain0 * mLpfHistory[0].x + lpfInGain0 * out0x;
-        f32 lpf0y = lpfHistoryGain1 * mLpfHistory[0].y + lpfInGain1 * out0y;
+        out0x *= lpfInGain0;
+        out0y *= lpfInGain1;
+        f32 lpf0x = lpfHistoryGain0 * mLpfHistory[0].x;
+        f32 lpf0y = lpfHistoryGain1 * mLpfHistory[0].y;
+        lpf0x += out0x;
+        lpf0y += out0y;
         mLpfHistory[0].x = lpf0x;
         mLpfHistory[0].y = lpf0y;
         Vector2f* allPass10 = &mAllPassBuffer[1][0][mAllPassPos[1]];
@@ -241,8 +247,12 @@ void AudioFxReverbStdNin::updateFx2ch_(s32* pCh0, s32* pCh1, u32 sampleCount) {
         allPass10->set(temp10x, temp10y);
         out0x = allPassCoef0 * temp10x - allPass10x;
         out0y = allPassCoef1 * temp10y - allPass10y;
-        *pCh0++ = earlyOut0x + outGain0 * out0x;
-        *pCh1++ = earlyOut0y + outGain1 * out0y;
+        out0x *= outGain0;
+        out0y *= outGain1;
+        f32 result0x = earlyOut0x + out0x;
+        f32 result0y = earlyOut0y + out0y;
+        *pCh0++ = result0x;
+        *pCh1++ = result0y;
 
         mEarlyPos = mEarlyPos + 1 >= mEarlyDelaySize ? 0 : mEarlyPos + 1;
 
@@ -268,7 +278,8 @@ void AudioFxReverbStdNin::updateFx2ch_(s32* pCh0, s32* pCh1, u32 sampleCount) {
  * @param pCh3 Rear right samples.
  * @param sampleCount Number of samples per channel.
  */
-void AudioFxReverbStdNin::updateFx4ch_(s32* pCh0, s32* pCh1, s32* pCh2, s32* pCh3, u32 sampleCount) {
+void AudioFxReverbStdNin::updateFx4ch_(s32* pCh0, s32* pCh1, s32* pCh2, s32* pCh3,
+                                       u32 sampleCount) {
     const f32 earlyCoef0 = mEarlyCoef[0];
     const f32 earlyCoef1 = mEarlyCoef[1];
     const f32 earlyGain0 = mEarlyGain[0];
@@ -285,22 +296,26 @@ void AudioFxReverbStdNin::updateFx4ch_(s32* pCh0, s32* pCh1, s32* pCh2, s32* pCh
     const f32 outGain1 = mOutGain[1];
 
     for (u32 i = 0; i < sampleCount; i++) {
-        f32 in0x = *pCh0;
-        f32 in0y = *pCh1;
-        f32 in1x = *pCh2;
-        f32 in1y = *pCh3;
+        f32 in0y;
+        f32 in0x;
+        f32 in1y;
+        f32 in1x;
+        in0x = *pCh0;
+        in0y = *pCh1;
+        in1x = *pCh2;
+        in1y = *pCh3;
         Vector2f* early0 = &mEarlyBuffer[0][mEarlyPos];
         f32 early0x = early0->x;
         f32 early0y = early0->y;
         early0->set(earlyCoef0 * early0x + in0x, earlyCoef1 * early0y + in0y);
-        f32 earlyOut0x = earlyGain0 * early0x;
-        f32 earlyOut0y = earlyGain1 * early0y;
         Vector2f* early1 = &mEarlyBuffer[1][mEarlyPos];
         f32 early1x = early1->x;
         f32 early1y = early1->y;
         early1->set(earlyCoef0 * early1x + in1x, earlyCoef1 * early1y + in1y);
-        f32 earlyOut1x = earlyGain0 * early1x;
+        f32 earlyOut0y = earlyGain1 * early0y;
+        f32 earlyOut0x = earlyGain0 * early0x;
         f32 earlyOut1y = earlyGain1 * early1y;
+        f32 earlyOut1x = earlyGain0 * early1x;
 
         if (mPreDelaySize != 0) {
             Vector2f* preDelay0 = &mPreDelayBuffer[0][mPreDelayPos];
@@ -317,26 +332,30 @@ void AudioFxReverbStdNin::updateFx4ch_(s32* pCh0, s32* pCh1, s32* pCh2, s32* pCh
             in1y = delayed1y;
         }
 
-        Vector2f* comb00 = &mCombBuffer[0][0][mCombPos[0]];
-        f32 comb00x = comb00->x;
-        f32 comb00y = comb00->y;
-        comb00->set(in0x + comb00x * combCoef[0][0], in0y + comb00y * combCoef[0][1]);
-        Vector2f* comb01 = &mCombBuffer[0][1][mCombPos[0]];
-        f32 comb01x = comb01->x;
-        f32 comb01y = comb01->y;
-        comb01->set(in1x + comb01x * combCoef[0][0], in1y + comb01y * combCoef[0][1]);
-        Vector2f* comb10 = &mCombBuffer[1][0][mCombPos[1]];
-        f32 comb10x = comb10->x;
-        f32 comb10y = comb10->y;
-        comb10->set(in0x + comb10x * combCoef[1][0], in0y + comb10y * combCoef[1][1]);
-        Vector2f* comb11 = &mCombBuffer[1][1][mCombPos[1]];
-        f32 comb11x = comb11->x;
-        f32 comb11y = comb11->y;
-        comb11->set(in1x + comb11x * combCoef[1][0], in1y + comb11y * combCoef[1][1]);
-        f32 out0x = comb00x + comb10x;
-        f32 out0y = comb00y + comb10y;
-        f32 out1x = comb01x + comb11x;
-        f32 out1y = comb01y + comb11y;
+        f32 combOutX[cCombCount][2];
+        f32 combOutY[cCombCount][2];
+        const f32* coef = combCoef[0];
+
+        for (u32 j = 0; j < cCombCount; j++) {
+            Vector2f* comb0 = &mCombBuffer[j][0][mCombPos[j]];
+            f32 comb0x = comb0->x;
+            f32 comb0y = comb0->y;
+            comb0->set(in0x + comb0x * coef[0], in0y + comb0y * coef[1]);
+            combOutX[j][0] = comb0x;
+            combOutY[j][0] = comb0y;
+            Vector2f* comb1 = &mCombBuffer[j][1][mCombPos[j]];
+            f32 comb1x = comb1->x;
+            f32 comb1y = comb1->y;
+            comb1->set(in1x + comb1x * coef[0], in1y + comb1y * coef[1]);
+            combOutX[j][1] = comb1x;
+            combOutY[j][1] = comb1y;
+            coef += 2;
+        }
+
+        f32 out0x = combOutX[0][0] + combOutX[1][0];
+        f32 out0y = combOutY[0][0] + combOutY[1][0];
+        f32 out1x = combOutX[0][1] + combOutX[1][1];
+        f32 out1y = combOutY[0][1] + combOutY[1][1];
         Vector2f* allPass00 = &mAllPassBuffer[0][0][mAllPassPos[0]];
         f32 allPass00x = allPass00->x;
         f32 allPass00y = allPass00->y;
@@ -353,12 +372,20 @@ void AudioFxReverbStdNin::updateFx4ch_(s32* pCh0, s32* pCh1, s32* pCh2, s32* pCh
         allPass01->set(temp01x, temp01y);
         out1x = allPassCoef0 * temp01x - allPass01x;
         out1y = allPassCoef1 * temp01y - allPass01y;
-        f32 lpf0x = lpfHistoryGain0 * mLpfHistory[0].x + lpfInGain0 * out0x;
-        f32 lpf0y = lpfHistoryGain1 * mLpfHistory[0].y + lpfInGain1 * out0y;
+        out0x *= lpfInGain0;
+        out0y *= lpfInGain1;
+        out1x *= lpfInGain0;
+        out1y *= lpfInGain1;
+        f32 lpf0x = lpfHistoryGain0 * mLpfHistory[0].x;
+        f32 lpf0y = lpfHistoryGain1 * mLpfHistory[0].y;
+        lpf0x += out0x;
+        lpf0y += out0y;
         mLpfHistory[0].x = lpf0x;
         mLpfHistory[0].y = lpf0y;
-        f32 lpf1x = lpfHistoryGain0 * mLpfHistory[1].x + lpfInGain0 * out1x;
-        f32 lpf1y = lpfHistoryGain1 * mLpfHistory[1].y + lpfInGain1 * out1y;
+        f32 lpf1x = lpfHistoryGain0 * mLpfHistory[1].x;
+        f32 lpf1y = lpfHistoryGain1 * mLpfHistory[1].y;
+        lpf1x += out1x;
+        lpf1y += out1y;
         mLpfHistory[1].x = lpf1x;
         mLpfHistory[1].y = lpf1y;
         Vector2f* allPass10 = &mAllPassBuffer[1][0][mAllPassPos[1]];
@@ -377,10 +404,18 @@ void AudioFxReverbStdNin::updateFx4ch_(s32* pCh0, s32* pCh1, s32* pCh2, s32* pCh
         allPass11->set(temp11x, temp11y);
         out1x = allPassCoef0 * temp11x - allPass11x;
         out1y = allPassCoef1 * temp11y - allPass11y;
-        *pCh0++ = earlyOut0x + outGain0 * out0x;
-        *pCh1++ = earlyOut0y + outGain1 * out0y;
-        *pCh2++ = earlyOut1x + outGain0 * out1x;
-        *pCh3++ = earlyOut1y + outGain1 * out1y;
+        out0x *= outGain0;
+        out0y *= outGain1;
+        out1x *= outGain0;
+        out1y *= outGain1;
+        f32 result0x = earlyOut0x + out0x;
+        f32 result0y = earlyOut0y + out0y;
+        f32 result1x = earlyOut1x + out1x;
+        f32 result1y = earlyOut1y + out1y;
+        *pCh0++ = result0x;
+        *pCh1++ = result0y;
+        *pCh2++ = result1x;
+        *pCh3++ = result1y;
 
         mEarlyPos = mEarlyPos + 1 >= mEarlyDelaySize ? 0 : mEarlyPos + 1;
 
@@ -408,7 +443,8 @@ void AudioFxReverbStdNin::updateFx4ch_(s32* pCh0, s32* pCh1, s32* pCh2, s32* pCh
  * @param pCh5 Low-frequency samples.
  * @param sampleCount Number of samples per channel.
  */
-void AudioFxReverbStdNin::updateFx6ch_(s32* pCh0, s32* pCh1, s32* pCh2, s32* pCh3, s32* pCh4, s32* pCh5, u32 sampleCount) {
+void AudioFxReverbStdNin::updateFx6ch_(s32* pCh0, s32* pCh1, s32* pCh2, s32* pCh3, s32* pCh4,
+                                       s32* pCh5, u32 sampleCount) {
     const f32 earlyCoef0 = mEarlyCoef[0];
     const f32 earlyCoef1 = mEarlyCoef[1];
     const f32 earlyGain0 = mEarlyGain[0];
@@ -425,30 +461,36 @@ void AudioFxReverbStdNin::updateFx6ch_(s32* pCh0, s32* pCh1, s32* pCh2, s32* pCh
     const f32 outGain1 = mOutGain[1];
 
     for (u32 i = 0; i < sampleCount; i++) {
-        f32 in0x = *pCh0;
-        f32 in0y = *pCh1;
-        f32 in1x = *pCh2;
-        f32 in1y = *pCh3;
-        f32 in2x = *pCh4;
-        f32 in2y = *pCh5;
+        f32 in0y;
+        f32 in0x;
+        f32 in1y;
+        f32 in1x;
+        f32 in2y;
+        f32 in2x;
+        in0x = *pCh0;
+        in0y = *pCh1;
+        in1x = *pCh2;
+        in1y = *pCh3;
+        in2x = *pCh4;
+        in2y = *pCh5;
         Vector2f* early0 = &mEarlyBuffer[0][mEarlyPos];
         f32 early0x = early0->x;
         f32 early0y = early0->y;
         early0->set(earlyCoef0 * early0x + in0x, earlyCoef1 * early0y + in0y);
-        f32 earlyOut0x = earlyGain0 * early0x;
         f32 earlyOut0y = earlyGain1 * early0y;
+        f32 earlyOut0x = earlyGain0 * early0x;
         Vector2f* early1 = &mEarlyBuffer[1][mEarlyPos];
         f32 early1x = early1->x;
         f32 early1y = early1->y;
         early1->set(earlyCoef0 * early1x + in1x, earlyCoef1 * early1y + in1y);
-        f32 earlyOut1x = earlyGain0 * early1x;
         f32 earlyOut1y = earlyGain1 * early1y;
+        f32 earlyOut1x = earlyGain0 * early1x;
         Vector2f* early2 = &mEarlyBuffer[2][mEarlyPos];
         f32 early2x = early2->x;
         f32 early2y = early2->y;
         early2->set(earlyCoef0 * early2x + in2x, earlyCoef1 * early2y + in2y);
-        f32 earlyOut2x = earlyGain0 * early2x;
         f32 earlyOut2y = earlyGain1 * early2y;
+        f32 earlyOut2x = earlyGain0 * early2x;
 
         if (mPreDelaySize != 0) {
             Vector2f* preDelay0 = &mPreDelayBuffer[0][mPreDelayPos];
@@ -471,36 +513,38 @@ void AudioFxReverbStdNin::updateFx6ch_(s32* pCh0, s32* pCh1, s32* pCh2, s32* pCh
             in2y = delayed2y;
         }
 
-        Vector2f* comb00 = &mCombBuffer[0][0][mCombPos[0]];
-        f32 comb00x = comb00->x;
-        f32 comb00y = comb00->y;
-        comb00->set(in0x + comb00x * combCoef[0][0], in0y + comb00y * combCoef[0][1]);
-        Vector2f* comb01 = &mCombBuffer[0][1][mCombPos[0]];
-        f32 comb01x = comb01->x;
-        f32 comb01y = comb01->y;
-        comb01->set(in1x + comb01x * combCoef[0][0], in1y + comb01y * combCoef[0][1]);
-        Vector2f* comb02 = &mCombBuffer[0][2][mCombPos[0]];
-        f32 comb02x = comb02->x;
-        f32 comb02y = comb02->y;
-        comb02->set(in2x + comb02x * combCoef[0][0], in2y + comb02y * combCoef[0][1]);
-        Vector2f* comb10 = &mCombBuffer[1][0][mCombPos[1]];
-        f32 comb10x = comb10->x;
-        f32 comb10y = comb10->y;
-        comb10->set(in0x + comb10x * combCoef[1][0], in0y + comb10y * combCoef[1][1]);
-        Vector2f* comb11 = &mCombBuffer[1][1][mCombPos[1]];
-        f32 comb11x = comb11->x;
-        f32 comb11y = comb11->y;
-        comb11->set(in1x + comb11x * combCoef[1][0], in1y + comb11y * combCoef[1][1]);
-        Vector2f* comb12 = &mCombBuffer[1][2][mCombPos[1]];
-        f32 comb12x = comb12->x;
-        f32 comb12y = comb12->y;
-        comb12->set(in2x + comb12x * combCoef[1][0], in2y + comb12y * combCoef[1][1]);
-        f32 out0x = comb00x + comb10x;
-        f32 out0y = comb00y + comb10y;
-        f32 out1x = comb01x + comb11x;
-        f32 out1y = comb01y + comb11y;
-        f32 out2x = comb02x + comb12x;
-        f32 out2y = comb02y + comb12y;
+        f32 combOutX[cCombCount][3];
+        f32 combOutY[cCombCount][3];
+        const f32* coef = combCoef[0];
+
+        for (u32 j = 0; j < cCombCount; j++) {
+            Vector2f* comb0 = &mCombBuffer[j][0][mCombPos[j]];
+            f32 comb0x = comb0->x;
+            f32 comb0y = comb0->y;
+            comb0->set(in0x + comb0x * coef[0], in0y + comb0y * coef[1]);
+            combOutX[j][0] = comb0x;
+            combOutY[j][0] = comb0y;
+            Vector2f* comb1 = &mCombBuffer[j][1][mCombPos[j]];
+            f32 comb1x = comb1->x;
+            f32 comb1y = comb1->y;
+            comb1->set(in1x + comb1x * coef[0], in1y + comb1y * coef[1]);
+            combOutX[j][1] = comb1x;
+            combOutY[j][1] = comb1y;
+            Vector2f* comb2 = &mCombBuffer[j][2][mCombPos[j]];
+            f32 comb2x = comb2->x;
+            f32 comb2y = comb2->y;
+            comb2->set(in2x + comb2x * coef[0], in2y + comb2y * coef[1]);
+            combOutX[j][2] = comb2x;
+            combOutY[j][2] = comb2y;
+            coef += 2;
+        }
+
+        f32 out0x = combOutX[0][0] + combOutX[1][0];
+        f32 out0y = combOutY[0][0] + combOutY[1][0];
+        f32 out1x = combOutX[0][1] + combOutX[1][1];
+        f32 out1y = combOutY[0][1] + combOutY[1][1];
+        f32 out2x = combOutX[0][2] + combOutX[1][2];
+        f32 out2y = combOutY[0][2] + combOutY[1][2];
         Vector2f* allPass00 = &mAllPassBuffer[0][0][mAllPassPos[0]];
         f32 allPass00x = allPass00->x;
         f32 allPass00y = allPass00->y;
@@ -525,16 +569,28 @@ void AudioFxReverbStdNin::updateFx6ch_(s32* pCh0, s32* pCh1, s32* pCh2, s32* pCh
         allPass02->set(temp02x, temp02y);
         out2x = allPassCoef0 * temp02x - allPass02x;
         out2y = allPassCoef1 * temp02y - allPass02y;
-        f32 lpf0x = lpfHistoryGain0 * mLpfHistory[0].x + lpfInGain0 * out0x;
-        f32 lpf0y = lpfHistoryGain1 * mLpfHistory[0].y + lpfInGain1 * out0y;
+        out0x *= lpfInGain0;
+        out0y *= lpfInGain1;
+        out1x *= lpfInGain0;
+        out1y *= lpfInGain1;
+        out2x *= lpfInGain0;
+        out2y *= lpfInGain1;
+        f32 lpf0x = lpfHistoryGain0 * mLpfHistory[0].x;
+        f32 lpf0y = lpfHistoryGain1 * mLpfHistory[0].y;
+        lpf0x += out0x;
+        lpf0y += out0y;
         mLpfHistory[0].x = lpf0x;
         mLpfHistory[0].y = lpf0y;
-        f32 lpf1x = lpfHistoryGain0 * mLpfHistory[1].x + lpfInGain0 * out1x;
-        f32 lpf1y = lpfHistoryGain1 * mLpfHistory[1].y + lpfInGain1 * out1y;
+        f32 lpf1x = lpfHistoryGain0 * mLpfHistory[1].x;
+        f32 lpf1y = lpfHistoryGain1 * mLpfHistory[1].y;
+        lpf1x += out1x;
+        lpf1y += out1y;
         mLpfHistory[1].x = lpf1x;
         mLpfHistory[1].y = lpf1y;
-        f32 lpf2x = lpfHistoryGain0 * mLpfHistory[2].x + lpfInGain0 * out2x;
-        f32 lpf2y = lpfHistoryGain1 * mLpfHistory[2].y + lpfInGain1 * out2y;
+        f32 lpf2x = lpfHistoryGain0 * mLpfHistory[2].x;
+        f32 lpf2y = lpfHistoryGain1 * mLpfHistory[2].y;
+        lpf2x += out2x;
+        lpf2y += out2y;
         mLpfHistory[2].x = lpf2x;
         mLpfHistory[2].y = lpf2y;
         Vector2f* allPass10 = &mAllPassBuffer[1][0][mAllPassPos[1]];
@@ -561,12 +617,24 @@ void AudioFxReverbStdNin::updateFx6ch_(s32* pCh0, s32* pCh1, s32* pCh2, s32* pCh
         allPass12->set(temp12x, temp12y);
         out2x = allPassCoef0 * temp12x - allPass12x;
         out2y = allPassCoef1 * temp12y - allPass12y;
-        *pCh0++ = earlyOut0x + outGain0 * out0x;
-        *pCh1++ = earlyOut0y + outGain1 * out0y;
-        *pCh2++ = earlyOut1x + outGain0 * out1x;
-        *pCh3++ = earlyOut1y + outGain1 * out1y;
-        *pCh4++ = earlyOut2x + outGain0 * out2x;
-        *pCh5++ = earlyOut2y + outGain1 * out2y;
+        out0x *= outGain0;
+        out0y *= outGain1;
+        out1x *= outGain0;
+        out1y *= outGain1;
+        out2x *= outGain0;
+        out2y *= outGain1;
+        f32 result0x = earlyOut0x + out0x;
+        f32 result0y = earlyOut0y + out0y;
+        f32 result1x = earlyOut1x + out1x;
+        f32 result1y = earlyOut1y + out1y;
+        f32 result2x = earlyOut2x + out2x;
+        f32 result2y = earlyOut2y + out2y;
+        *pCh0++ = result0x;
+        *pCh1++ = result0y;
+        *pCh2++ = result1x;
+        *pCh3++ = result1y;
+        *pCh4++ = result2x;
+        *pCh5++ = result2y;
 
         mEarlyPos = mEarlyPos + 1 >= mEarlyDelaySize ? 0 : mEarlyPos + 1;
 
@@ -618,15 +686,21 @@ bool AudioFxReverbStdNin::SetParam(const AudioFxReverbStdParamNin& rParam) {
  */
 void AudioFxReverbStdNin::setupDelaySizes_(const AudioFxReverbStdParamNin& rParam) {
     mSampleRate = rParam.mSampleRate;
-    const u32* earlyTable = mSampleRate == 0 ? cReverbStdEarlyDelay32k : cReverbStdEarlyDelay48k;
-    mEarlyDelaySize = earlyTable[rParam.mEarlyMode];
+
+    if (mSampleRate == 0) {
+        mEarlyDelaySize = cReverbStdEarlyDelay32k[rParam.mEarlyMode];
+    } else {
+        mEarlyDelaySize = cReverbStdEarlyDelay48k[rParam.mEarlyMode];
+    }
+
     const f32& earlyCoef = rParam.mEarlyMode < AudioFxReverbStdParamNin::cEarlyMode_4 ?
                                cReverbStdEarlyCoefLow :
                                cReverbStdEarlyCoefHigh;
     mEarlyCoef[0] = earlyCoef;
     mEarlyCoef[1] = earlyCoef;
     mPreDelaySize = getSampleRate_() * rParam.mPreDelayTime;
-    const u32(*fusedTable)[4] = mSampleRate == 0 ? cReverbStdFusedDelay32k : cReverbStdFusedDelay48k;
+    const u32(*fusedTable)[4] =
+        mSampleRate == 0 ? cReverbStdFusedDelay32k : cReverbStdFusedDelay48k;
     const u32* fused = fusedTable[rParam.mFusedMode];
     mCombDelaySize[0] = fused[0];
     mCombDelaySize[1] = fused[1];
@@ -665,9 +739,9 @@ void AudioFxReverbStdNin::setupGains_(const AudioFxReverbStdParamNin& rParam) {
  * @return Required work buffer size in bytes.
  */
 size_t AudioFxReverbStdNin::GetRequiredMemSize() const {
+    u32 delaySize = ((mPreDelaySize * sizeof(Vector2f) + 0x1f) & ~0x1f) +
+                    ((mEarlyDelaySize * sizeof(Vector2f) + 0x1f) & ~0x1f);
     u32 pairCount = mChannelCountMax / 2;
-    u32 delaySize = ((mEarlyDelaySize * sizeof(Vector2f) + 0x1f) & ~0x1f) +
-                    ((mPreDelaySize * sizeof(Vector2f) + 0x1f) & ~0x1f);
     u32 combSize = 0;
 
     for (u32 i = 0; i < cCombCount; i++) {
