@@ -18,6 +18,7 @@
 #include <nn/g3d/g3d_ResShape.h>
 #include <nn/g3d/g3d_SkeletonObj.h>
 #include <nn/util/util_VectorApi.h>
+#include <attributes.h>
 #include <shadow/aglDepthShadow.h>
 
 #include "Library/Draw/GraphicsFunction.hpp"
@@ -29,17 +30,107 @@
 #include "Library/Shader/ForwardRendering/EnvTextureKeeper.hpp"
 #include "Library/Shadow/Depth/DepthShadowDrawer.hpp"
 #include "Project/Draw/GpuMemAllocator.hpp"
+#include "Project/Draw/RenderState.hpp"
 #include "Project/Model/ModelAdditionalInfo.hpp"
 #include "Project/Model/SimpleModelG3D.hpp"
 
 namespace al {
 
+/**
+ * Gets the draw context of the game framework.
+ * @return The draw context.
+ */
 static agl::DrawContext* getDrawContext() {
     return GameFrameworkNx::getAglDrawContext();
 }
 
+/**
+ * Gets the command buffer of a draw context.
+ * @param pContext Draw context.
+ * @return The command buffer.
+ */
 static nn::gfx::CommandBuffer* getCommandBuffer(agl::DrawContext* pContext) {
     return reinterpret_cast<nn::gfx::CommandBuffer*>(reinterpret_cast<uintptr_t>(pContext) + 8);
+}
+
+/**
+ * Reinterprets a vector of nn::util as a sead vector.
+ * @param rVector Vector.
+ * @return The same vector as sead::Vector3f.
+ */
+static const sead::Vector3f& toVector3f(const nn::util::Vector3fType& rVector) {
+    return reinterpret_cast<const sead::Vector3f&>(rVector);
+}
+
+/**
+ * Loads the shader program and activates the vertex attributes and buffers.
+ * @param pContext Draw context.
+ * @param pShaderAssign Shader assign.
+ */
+static ALWAYS_INLINE void activateShader(agl::DrawContext* pContext,
+                                         const ModelShaderAssign* pShaderAssign) {
+    pShaderAssign->getResShaderProgram()->Load(getCommandBuffer(pContext));
+    const agl::g3d::ModelShaderAttribute& attribute = pShaderAssign->getAttribute();
+    attribute.activateVertexAttribute(pContext);
+    attribute.activateVertexBuffer(pContext);
+}
+
+/**
+ * Activates the textures and the uniform block of a material.
+ * @param pContext Draw context.
+ * @param pShaderAssign Shader assign.
+ * @param pMaterial Material.
+ * @param isActivateTexture Whether the textures are activated.
+ * @param isActivateUniformBlock Whether the material uniform block is activated.
+ * @param bufferIndex GPU buffer index.
+ */
+static ALWAYS_INLINE void activateMaterial(agl::DrawContext* pContext,
+                                           const ModelShaderAssign* pShaderAssign,
+                                           const nn::g3d::MaterialObj* pMaterial,
+                                           bool isActivateTexture, bool isActivateUniformBlock,
+                                           s32 bufferIndex) {
+    if (isActivateTexture) {
+        pShaderAssign->getSampler().activate(pContext, pMaterial);
+    }
+
+    if (isActivateUniformBlock) {
+        pShaderAssign->activateMaterialUniformBlock(pContext, pMaterial, bufferIndex);
+    }
+}
+
+/**
+ * Checks a bit of a packed bit array.
+ * @param pArray Bit array.
+ * @param index Bit index.
+ * @return Whether the bit is set.
+ */
+static bool isBitOn(const u32* pArray, s32 index) {
+    return (pArray[index >> 5] & (1 << index)) != 0;
+}
+
+/**
+ * Draws the sub meshes of a shape, culled by the view volume if the shape has bounding nodes.
+ * @param pShape Shape object.
+ * @param pViewVolume View volume, may be nullptr.
+ * @param lodIndex Level of detail.
+ */
+static ALWAYS_INLINE void drawShape(const nn::g3d::ShapeObj* pShape,
+                                    const nn::g3d::ViewVolume* pViewVolume, s32 lodIndex) {
+    bool isExistBounding = alModelFunction::isExistBoundingNode(pShape->GetResource());
+
+    if (pViewVolume != nullptr && isExistBounding) {
+        nn::g3d::CullingContext cullingContext;
+
+        while (pShape->TestSubMeshIntersection(&cullingContext, *pViewVolume, lodIndex)) {
+            pShape->GetResource()->GetMesh(lodIndex)->DrawSubMesh(
+                getCommandBuffer(getDrawContext()), cullingContext.submeshIndex,
+                cullingContext.submeshCount, 1);
+        }
+    } else {
+        const nn::g3d::ResMesh* resMesh = pShape->GetResource()->GetMesh(lodIndex);
+        resMesh->DrawSubMesh(getCommandBuffer(getDrawContext()), 0, resMesh->GetSubMeshCount(),
+                             1);
+    }
 }
 
 /**
@@ -83,13 +174,19 @@ MeshDrawer::MeshDrawer(const char* pName, const nn::g3d::ModelObj* pModelObj,
     }
 
     const nn::g3d::ResShaderProgram* program = mShaderSelector->GetProgram();
-    const nn::g3d::ResShadingModel* shadingModel = mShaderSelector->GetShadingModel()->GetResource();
+    const nn::g3d::ResShadingModel* shadingModel =
+        mShaderSelector->GetShadingModel()->GetResource();
     mSkeletonBlockLocation = program->GetUniformBlockLocation(
         shadingModel->GetSkeletonBlockIndex(), nn::g3d::Stage_Vertex);
     mShapeBlockLocation = program->GetUniformBlockLocation(shadingModel->GetShapeBlockIndex(),
                                                            nn::g3d::Stage_Vertex);
 }
 
+/**
+ * Checks whether the shape of a model instance is drawn.
+ * @param pModel Model instance.
+ * @return Whether the shape is drawn.
+ */
 inline bool MeshDrawer::isDrawMesh(const SimpleModelG3D* pModel) const {
     s32 shapeIndex = mShapeIndex;
 
@@ -130,46 +227,40 @@ void MeshDrawer::preDrawToDepthShadow(DepthShadowDrawer* pDrawer) {
     for (s32 i = 0; i < mMeshNum; i++) {
         Mesh* mesh = mMeshes[i];
         sead::BitFlag32& flag = mDepthShadowFlags[i];
-        const SimpleModelG3D* model = mesh->model;
 
-        if (model->isDisableDepthShadow() || !isDrawMesh(model)) {
+        if (mesh->model->isDisableDepthShadow() || !isDrawMesh(mesh->model)) {
             continue;
         }
 
-        const_cast<SimpleModelG3D*>(model)->calcBoundingForDepth();
+        const_cast<SimpleModelG3D*>(mesh->model)->calcBoundingForDepth();
         const nn::g3d::ShapeObj* shape = mesh->shapeObj;
 
-        if (alModelFunction::isExistBoundingNode(shape->GetResource())) {
-            flag.makeAllZero();
-            s32 subMeshNum = shape->GetResource()->GetMesh()->GetSubMeshCount();
-            const nn::g3d::Aabb* aabb = shape->GetSubMeshBoundingArray();
+        if (!alModelFunction::isExistBoundingNode(shape->GetResource())) {
+            const nn::g3d::Sphere* bounding = shape->GetBounding();
 
-            for (s32 j = 0; j < subMeshNum; j++) {
-                sead::BoundBox3f box;
-                box.set({nn::util::VectorGetX(aabb[j].minimum), nn::util::VectorGetY(aabb[j].minimum),
-                         nn::util::VectorGetZ(aabb[j].minimum)},
-                        {nn::util::VectorGetX(aabb[j].maximum), nn::util::VectorGetY(aabb[j].maximum),
-                         nn::util::VectorGetZ(aabb[j].maximum)});
-                flag.set(depthShadow->checkBox(box, sead::CoreInfo::getCurrentCoreId(), 0));
+            if (bounding == nullptr) {
+                bounding = mesh->modelObj->GetBounding();
+            }
+
+            if (bounding != nullptr) {
+                sead::Sphere<sead::Vector3f> sphere;
+                sphere.setCenter(toVector3f(bounding->center));
+                sphere.setRadius(bounding->radius);
+                flag.set(depthShadow->checkSphere(sphere, sead::CoreInfo::getCurrentCoreId(), 0));
+            } else {
+                flag.makeAllOne();
             }
 
             continue;
         }
 
-        const nn::g3d::Sphere* bounding = shape->GetBounding();
+        flag.makeAllZero();
+        s32 subMeshNum = shape->GetResource()->GetMesh()->GetSubMeshCount();
+        const nn::g3d::Aabb* aabb = shape->GetSubMeshBoundingArray();
 
-        if (bounding == nullptr) {
-            bounding = mesh->modelObj->GetBounding();
-        }
-
-        if (bounding != nullptr) {
-            sead::Sphere<sead::Vector3f> sphere(
-                {nn::util::VectorGetX(bounding->center), nn::util::VectorGetY(bounding->center),
-                 nn::util::VectorGetZ(bounding->center)},
-                bounding->radius);
-            flag.set(depthShadow->checkSphere(sphere, sead::CoreInfo::getCurrentCoreId(), 0));
-        } else {
-            flag.makeAllOne();
+        for (s32 j = 0; j < subMeshNum; j++) {
+            sead::BoundBox3f box(toVector3f(aabb[j].minimum), toVector3f(aabb[j].maximum));
+            flag.set(depthShadow->checkBox(box, sead::CoreInfo::getCurrentCoreId(), 0));
         }
     }
 }
@@ -201,54 +292,9 @@ bool MeshDrawer::operator>(const MeshDrawer& rOther) const {
 }
 
 static void activateRenderState(agl::DrawContext* pContext, const nn::g3d::MaterialObj* pMaterial,
-                                s32 type, bool isBlend) {
-    if (type == 1) {
-        sead::GraphicsContext context;
-        setBlendCtrlToContext(&context, pMaterial, isBlend);
-        setDepthCtrlToContext(&context, pMaterial);
-        setPolygonCtrlToContext(&context, pMaterial);
-        setAlphaTestToContext(&context, pMaterial);
-        setPolygonOffsetToContext(pContext, &context, pMaterial, 0.0f);
-        context.apply(pContext);
-    } else if (type == 2) {
-        sead::GraphicsContext context;
-        context.setColorMask(0, false, false, false, false);
-        context.setBlendEnable(false);
-        setDepthCtrlToContext(&context, pMaterial);
-        setPolygonCtrlToContext(&context, pMaterial);
-        context.setPolygonOffsetFrontEnable(true);
-        context.apply(pContext);
-    }
-}
-
+                                s32 type, bool isBlend);
 static void activateOptionBlock(agl::DrawContext* pContext,
-                                const nn::g3d::ShaderSelector* pSelector) {
-    const nn::g3d::ShadingModelObj* shadingModel = pSelector->GetShadingModel();
-
-    if (!shadingModel->IsBlockBufferValid()) {
-        return;
-    }
-
-    s32 blockIndex = shadingModel->GetResource()->GetOptionBlockIndex();
-    size_t size = blockIndex >= 0 ? shadingModel->GetResource()->GetUniformBlockSize(blockIndex) : 0;
-    s32 vertexLocation =
-        pSelector->GetProgram()->GetUniformBlockLocation(blockIndex, nn::g3d::Stage_Vertex);
-    s32 pixelLocation =
-        pSelector->GetProgram()->GetUniformBlockLocation(blockIndex, nn::g3d::Stage_Pixel);
-    if (vertexLocation >= 0) {
-        agl::ShaderLocation location;
-        location.setLocation(vertexLocation);
-        agl::g3d::ShaderUtilG3D::load(pContext, location, *shadingModel->GetOptionBlock(), size,
-                                      0);
-    }
-
-    if (pixelLocation >= 0) {
-        agl::ShaderLocation location;
-        location.setLocation(pixelLocation);
-        agl::g3d::ShaderUtilG3D::load(pContext, location, *shadingModel->GetOptionBlock(), size,
-                                      0);
-    }
-}
+                                const nn::g3d::ShaderSelector* pSelector);
 
 /**
  * Records a display list activating the render state, shader and material of the shape.
@@ -270,26 +316,83 @@ void MeshDrawer::createDisplayList(GpuMemAllocator* pAllocator,
     {
         agl::DrawContext context;
         context.setCommandBuffer(mDisplayList);
-        agl::GPUMemAddr<u8> buffer = pAllocator->allocMemory("DisplayList", 0x400, 4);
+        agl::GPUMemAddrBase buffer = pAllocator->allocMemory("DisplayList", 0x400, 4);
         mDisplayList->beginDisplayListBuffer(buffer, 0x400, true);
         activateRenderState(&context, mMaterialObj, mRenderStateType, isBlend);
         activateOptionBlock(&context, mShaderSelector);
-        mShaderAssign->getResShaderProgram()->Load(getCommandBuffer(&context));
-        mShaderAssign->getAttribute().activateVertexAttribute(&context);
-        mShaderAssign->getAttribute().activateVertexBuffer(&context);
-
-        if (mTextureType == 1) {
-            mShaderAssign->getSampler().activate(&context, mMaterialObj);
-        }
-
-        if (mMaterialType == 1) {
-            mShaderAssign->activateMaterialUniformBlock(&context, mMaterialObj, 0);
-        }
+        activateShader(&context, mShaderAssign);
+        activateMaterial(&context, mShaderAssign, mMaterialObj, mTextureType == 1,
+                         mMaterialType == 1, 0);
 
         mDisplayList->endDisplayList();
     }
 
     sead::Graphics::instance()->unlockDrawContext();
+}
+
+/**
+ * Applies the render state of a material.
+ * @param pContext Draw context.
+ * @param pMaterial Material.
+ * @param type 1 applies the full material render state, 2 only the depth and polygon state.
+ * @param isBlend Whether blending is enabled.
+ */
+static void activateRenderState(agl::DrawContext* pContext, const nn::g3d::MaterialObj* pMaterial,
+                                s32 type, bool isBlend) {
+    switch (type) {
+    case 2: {
+        sead::GraphicsContext context;
+        context.setColorMask(0, false, false, false, false);
+        context.setBlendEnable(false);
+        setDepthCtrlToContext(&context, pMaterial);
+        setPolygonCtrlToContext(&context, pMaterial);
+        context.setPolygonOffsetFrontEnable(true);
+        context.apply(pContext);
+        break;
+    }
+    case 1: {
+        sead::GraphicsContext context;
+        setBlendCtrlToContext(&context, pMaterial, isBlend);
+        setDepthCtrlToContext(&context, pMaterial);
+        setPolygonCtrlToContext(&context, pMaterial);
+        setAlphaTestToContext(&context, pMaterial);
+        setPolygonOffsetToContext(pContext, &context, pMaterial, 0.0f);
+        context.apply(pContext);
+        break;
+    }
+    }
+}
+
+/**
+ * Loads the option uniform block of a shader selector.
+ * @param pContext Draw context.
+ * @param pSelector Shader selector.
+ */
+static void activateOptionBlock(agl::DrawContext* pContext,
+                                const nn::g3d::ShaderSelector* pSelector) {
+    if (!pSelector->GetShadingModel()->IsBlockBufferValid()) {
+        return;
+    }
+
+    const nn::g3d::ResShadingModel* shadingModel = pSelector->GetShadingModel()->GetResource();
+    s32 blockIndex = shadingModel->GetOptionBlockIndex();
+    size_t size = blockIndex >= 0 ? shadingModel->GetUniformBlockSize(blockIndex) : 0;
+    const s32* locations = &pSelector->GetProgram()->ToData().pUniformBlockTable.Get()[
+        blockIndex * nn::g3d::Stage_Num];
+    s32 vertexLocation = locations[nn::g3d::Stage_Vertex];
+    s32 pixelLocation = locations[nn::g3d::Stage_Pixel];
+
+    if (vertexLocation >= 0) {
+        agl::ShaderLocation location(vertexLocation);
+        agl::g3d::ShaderUtilG3D::load(pContext, location,
+                                      *pSelector->GetShadingModel()->GetOptionBlock(), size, 0);
+    }
+
+    if (pixelLocation >= 0) {
+        agl::ShaderLocation location(pixelLocation);
+        agl::g3d::ShaderUtilG3D::load(pContext, location,
+                                      *pSelector->GetShadingModel()->GetOptionBlock(), size, 0);
+    }
 }
 
 /**
@@ -305,7 +408,7 @@ void MeshDrawer::draw(const nn::g3d::ViewVolume* pViewVolume, s32 viewIndex,
     }
 
     if (mUniformRegisterBuffer || mUniformRegisterBuffer2) {
-        tryChangeShaderMode(getDrawContext(), agl::cShaderMode_UniformBlock);
+        tryChangeShaderMode(getDrawContext(), agl::cShaderMode_GeometryShader);
     }
 
     if (mDisplayList != nullptr) {
@@ -314,110 +417,77 @@ void MeshDrawer::draw(const nn::g3d::ViewVolume* pViewVolume, s32 viewIndex,
     } else {
         activateRenderState(getDrawContext(), mMaterialObj, mRenderStateType, false);
         activateOptionBlock(getDrawContext(), mShaderSelector);
-        agl::DrawContext* context = getDrawContext();
-        mShaderAssign->getResShaderProgram()->Load(getCommandBuffer(context));
-        mShaderAssign->getAttribute().activateVertexAttribute(context);
-        mShaderAssign->getAttribute().activateVertexBuffer(context);
-
-        if (mTextureType == 1) {
-            mShaderAssign->getSampler().activate(getDrawContext(), mMaterialObj);
-        }
-
-        if (mMaterialType == 1) {
-            mShaderAssign->activateMaterialUniformBlock(getDrawContext(), mMaterialObj, 0);
-        }
+        activateShader(getDrawContext(), mShaderAssign);
+        activateMaterial(getDrawContext(), mShaderAssign, mMaterialObj, mTextureType == 1,
+                         mMaterialType == 1, 0);
     }
 
     const EnvTexInfo* prevEnvTexInfo = nullptr;
 
     for (s32 i = 0; i < mMeshNum; i++) {
         Mesh* mesh = mMeshes[i];
-        const SimpleModelG3D* model = mesh->model;
 
-        if (model->isDisableDraw()) {
+        if (mesh->model->isDisableDraw()) {
             continue;
         }
 
-        s32 lodIndex = model->getLodIndex();
+        const nn::g3d::ShapeObj* shape = mesh->shapeObj;
+        s32 lodIndex = mesh->model->getLodIndex();
 
-        if (lodIndex >= mesh->shapeObj->GetResource()->GetMeshCount()) {
+        if (lodIndex >= shape->GetResource()->GetMeshCount()) {
             continue;
         }
 
-        if (!isDrawMesh(model)) {
+        if (!isDrawMesh(mesh->model)) {
             continue;
         }
 
         nn::g3d::MaterialObj* material = const_cast<nn::g3d::MaterialObj*>(mesh->materialObj);
         const nn::g3d::SkeletonObj* skeleton = mesh->modelObj->GetSkeleton();
-        s32 bufferIndex = model->getCurrentBufferIndex();
+        s32 bufferIndex = mesh->model->getCurrentBufferIndex();
 
-        if (*reinterpret_cast<const u8*>(model->getResRenderState(mShapeIndex))) {
-            model->useCustomRenderState(getDrawContext(), material, mShapeIndex);
+        if (mesh->model->getResRenderState(mShapeIndex)->isEnable()) {
+            mesh->model->useCustomRenderState(getDrawContext(), material, mShapeIndex);
         }
 
-        agl::DrawContext* context = getDrawContext();
-
-        if (mTextureType == 0 || model->isForceActivateTexture()) {
-            mShaderAssign->getSampler().activate(context, material);
-        }
-
-        if (mMaterialType == 0) {
-            mShaderAssign->activateMaterialUniformBlock(context, material, bufferIndex);
-        }
+        activateMaterial(getDrawContext(), mShaderAssign, material,
+                         mTextureType == 0 || mesh->model->isForceActivateTexture(),
+                         mMaterialType == 0, bufferIndex);
 
         if (mShapeBlockLocation >= 0) {
-            agl::ShaderLocation location;
-            location.setLocation(mShapeBlockLocation);
-            agl::g3d::ShaderUtilG3D::load(getDrawContext(), location,
-                                          static_cast<const nn::gfx::Buffer&>(
-                                              *mesh->shapeObj->GetShapeBlock(viewIndex, bufferIndex)),
-                                          0x100, bufferIndex);
+            agl::g3d::ShaderUtilG3D::load(
+                getDrawContext(), agl::ShaderLocation(mShapeBlockLocation),
+                static_cast<const nn::gfx::Buffer&>(*shape->GetShapeBlock(viewIndex, bufferIndex)),
+                0x100, bufferIndex);
         }
 
         if (mSkeletonBlockLocation >= 0) {
-            agl::ShaderLocation location;
-            location.setLocation(mSkeletonBlockLocation);
-            agl::g3d::ShaderUtilG3D::load(getDrawContext(), location,
+            agl::g3d::ShaderUtilG3D::load(getDrawContext(),
+                                          agl::ShaderLocation(mSkeletonBlockLocation),
                                           *skeleton->GetMtxBlock(bufferIndex),
                                           skeleton->GetMtxBlockSize(), bufferIndex);
         }
 
         if (pAdditionalInfo != nullptr) {
-            pAdditionalInfo->activateEnvTexture(mShapeIndex, model);
+            pAdditionalInfo->activateEnvTexture(mShapeIndex, mesh->model);
 
             if (mIsUsingModelLight) {
                 if (prevEnvTexInfo == nullptr ||
                     EnvTexId::isEnableTexId(prevEnvTexInfo->getCubeMapId()) !=
                         EnvTexId::isEnableTexId(
-                            model->getShape(mShapeIndex).mEnvTexInfo->getCubeMapId())) {
-                    pAdditionalInfo->activateModelLightTexture(mShapeIndex, model);
-                    prevEnvTexInfo = model->getShape(mShapeIndex).mEnvTexInfo;
+                            mesh->model->getShape(mShapeIndex).mEnvTexInfo->getCubeMapId())) {
+                    pAdditionalInfo->activateModelLightTexture(mShapeIndex, mesh->model);
+                    prevEnvTexInfo = mesh->model->getShape(mShapeIndex).mEnvTexInfo;
                 }
             }
         }
 
-        activateUniformBlockAssignArray(*model->getUniformBlockAssignArray());
-        const nn::g3d::ShapeObj* shape = mesh->shapeObj;
-        bool isExistBounding = alModelFunction::isExistBoundingNode(shape->GetResource());
-
-        if (pViewVolume != nullptr && isExistBounding) {
-            nn::g3d::CullingContext cullingContext;
-
-            while (shape->TestSubMeshIntersection(&cullingContext, *pViewVolume, lodIndex)) {
-                shape->GetResource()->GetMesh(lodIndex)->DrawSubMesh(
-                    getCommandBuffer(getDrawContext()), cullingContext.submeshIndex,
-                    cullingContext.submeshCount, 1);
-            }
-        } else {
-            const nn::g3d::ResMesh* resMesh = shape->GetResource()->GetMesh(lodIndex);
-            resMesh->DrawSubMesh(getCommandBuffer(getDrawContext()), 0,
-                                 resMesh->GetSubMeshCount(), 1);
-        }
+        activateUniformBlockAssignArray(*mesh->model->getUniformBlockAssignArray());
+        drawShape(shape, pViewVolume, lodIndex);
     }
 
     if (mUniformRegisterBuffer || mUniformRegisterBuffer2) {
-        tryChangeShaderMode(getDrawContext(), agl::cShaderMode_UniformRegister);
+        tryChangeShaderMode(getDrawContext(), agl::cShaderMode_UniformBlock);
     }
 }
 
@@ -432,83 +502,59 @@ void MeshDrawer::drawTest(const nn::g3d::ViewVolume* pViewVolume, s32 viewIndex)
     }
 
     if (mUniformRegisterBuffer || mUniformRegisterBuffer2) {
-        tryChangeShaderMode(getDrawContext(), agl::cShaderMode_UniformBlock);
+        tryChangeShaderMode(getDrawContext(), agl::cShaderMode_GeometryShader);
     }
 
     if (mDisplayList != nullptr) {
         nvnCommandBufferCallCommands(agl::driver::getNvnCommandBuffer(getDrawContext()), 1,
                                      mDisplayList->getHandlePtr());
     } else {
-        agl::DrawContext* context = getDrawContext();
-        mShaderAssign->getResShaderProgram()->Load(getCommandBuffer(context));
-        mShaderAssign->getAttribute().activateVertexAttribute(context);
-        mShaderAssign->getAttribute().activateVertexBuffer(context);
+        activateShader(getDrawContext(), mShaderAssign);
     }
 
     for (s32 i = 0; i < mMeshNum; i++) {
         Mesh* mesh = mMeshes[i];
-        const SimpleModelG3D* model = mesh->model;
-        const nn::g3d::ResRenderState* renderState = model->getResRenderState(mShapeIndex);
-        s32 lodIndex = model->getLodIndex();
-
-        if (lodIndex >= mesh->shapeObj->GetResource()->GetMeshCount()) {
-            continue;
-        }
-
-        if (renderState == nullptr || !isDrawMesh(model)) {
-            continue;
-        }
-
-        nn::g3d::MaterialObj* material = const_cast<nn::g3d::MaterialObj*>(mesh->materialObj);
+        const nn::g3d::ShapeObj* shape = mesh->shapeObj;
         const nn::g3d::SkeletonObj* skeleton = mesh->modelObj->GetSkeleton();
-        s32 bufferIndex = model->getCurrentBufferIndex();
-        agl::DrawContext* context = getDrawContext();
+        const nn::g3d::MaterialObj* material = mesh->materialObj;
+        // The render state is fetched but not used here.
+        mesh->model->getResRenderState(i);
+        s32 lodIndex = mesh->model->getLodIndex();
 
-        if (mTextureType == 0) {
-            mShaderAssign->getSampler().activate(context, material);
+        if (lodIndex >= shape->GetResource()->GetMeshCount()) {
+            continue;
         }
 
-        if (mMaterialType == 0) {
-            mShaderAssign->activateMaterialUniformBlock(context, material, bufferIndex);
+        const nn::g3d::ResShape* resShape = shape->GetResource();
+
+        if (!isBitOn(mesh->modelObj->GetMaterialVisibilityArray(), resShape->GetMaterialIndex()) ||
+            !isBitOn(mesh->modelObj->GetBoneVisibilityArray(), resShape->GetBoneIndex())) {
+            continue;
         }
+
+        s32 bufferIndex = mesh->model != nullptr ? mesh->model->getCurrentBufferIndex() : 0;
+        activateMaterial(getDrawContext(), mShaderAssign, material, true, mMaterialType == 0,
+                         bufferIndex);
 
         if (mShapeBlockLocation >= 0) {
-            agl::ShaderLocation location;
-            location.setLocation(mShapeBlockLocation);
-            agl::g3d::ShaderUtilG3D::load(getDrawContext(), location,
-                                          static_cast<const nn::gfx::Buffer&>(
-                                              *mesh->shapeObj->GetShapeBlock(viewIndex, bufferIndex)),
-                                          0x100, bufferIndex);
+            agl::g3d::ShaderUtilG3D::load(
+                getDrawContext(), agl::ShaderLocation(mShapeBlockLocation),
+                static_cast<const nn::gfx::Buffer&>(*shape->GetShapeBlock(viewIndex, bufferIndex)),
+                0x100, bufferIndex);
         }
 
         if (mSkeletonBlockLocation >= 0) {
-            agl::ShaderLocation location;
-            location.setLocation(mSkeletonBlockLocation);
-            agl::g3d::ShaderUtilG3D::load(getDrawContext(), location,
+            agl::g3d::ShaderUtilG3D::load(getDrawContext(),
+                                          agl::ShaderLocation(mSkeletonBlockLocation),
                                           *skeleton->GetMtxBlock(bufferIndex),
                                           skeleton->GetMtxBlockSize(), bufferIndex);
         }
 
-        const nn::g3d::ShapeObj* shape = mesh->shapeObj;
-        bool isExistBounding = alModelFunction::isExistBoundingNode(shape->GetResource());
-
-        if (pViewVolume != nullptr && isExistBounding) {
-            nn::g3d::CullingContext cullingContext;
-
-            while (shape->TestSubMeshIntersection(&cullingContext, *pViewVolume, lodIndex)) {
-                shape->GetResource()->GetMesh(lodIndex)->DrawSubMesh(
-                    getCommandBuffer(getDrawContext()), cullingContext.submeshIndex,
-                    cullingContext.submeshCount, 1);
-            }
-        } else {
-            const nn::g3d::ResMesh* resMesh = shape->GetResource()->GetMesh(lodIndex);
-            resMesh->DrawSubMesh(getCommandBuffer(getDrawContext()), 0,
-                                 resMesh->GetSubMeshCount(), 1);
-        }
+        drawShape(shape, pViewVolume, lodIndex);
     }
 
     if (mUniformRegisterBuffer || mUniformRegisterBuffer2) {
-        tryChangeShaderMode(getDrawContext(), agl::cShaderMode_UniformRegister);
+        tryChangeShaderMode(getDrawContext(), agl::cShaderMode_UniformBlock);
     }
 }
 
@@ -549,74 +595,48 @@ void MeshDrawer::drawDepthOnly(const nn::g3d::ViewVolume* pViewVolume, s32 viewI
         return;
     }
 
-    agl::DrawContext* drawContext = getDrawContext();
-    mShaderAssign->getResShaderProgram()->Load(getCommandBuffer(drawContext));
-    mShaderAssign->getAttribute().activateVertexAttribute(drawContext);
-    mShaderAssign->getAttribute().activateVertexBuffer(drawContext);
+    activateShader(getDrawContext(), mShaderAssign);
 
     for (s32 i = 0; i < mMeshNum; i++) {
         Mesh* mesh = mMeshes[i];
-        const SimpleModelG3D* model = mesh->model;
 
-        if (model->isDisableDraw()) {
+        if (mesh->model->isDisableDraw()) {
             continue;
         }
 
-        s32 lodIndex = model->getLodIndex();
+        const nn::g3d::ShapeObj* shape = mesh->shapeObj;
+        s32 lodIndex = mesh->model->getLodIndex();
 
-        if (lodIndex >= mesh->shapeObj->GetResource()->GetMeshCount()) {
+        if (lodIndex >= shape->GetResource()->GetMeshCount()) {
             continue;
         }
 
-        if (!isDrawMesh(model)) {
+        if (!isDrawMesh(mesh->model)) {
             continue;
         }
 
         const nn::g3d::MaterialObj* material = mesh->materialObj;
         const nn::g3d::SkeletonObj* skeleton = mesh->modelObj->GetSkeleton();
-        s32 bufferIndex = model->getCurrentBufferIndex();
-        agl::DrawContext* context = getDrawContext();
-
-        if (mIsAlphaTest) {
-            mShaderAssign->getSampler().activate(context, material);
-        }
-
-        mShaderAssign->activateMaterialUniformBlock(context, material, bufferIndex);
+        s32 bufferIndex = mesh->model->getCurrentBufferIndex();
+        activateMaterial(getDrawContext(), mShaderAssign, material, mIsAlphaTest, true,
+                         bufferIndex);
         activateUniformBlockAssignArray(*mesh->model->getUniformBlockAssignArray());
 
         if (mShapeBlockLocation >= 0) {
-            agl::ShaderLocation location;
-            location.setLocation(mShapeBlockLocation);
-            agl::g3d::ShaderUtilG3D::load(getDrawContext(), location,
-                                          static_cast<const nn::gfx::Buffer&>(
-                                              *mesh->shapeObj->GetShapeBlock(viewIndex, bufferIndex)),
-                                          0x100, bufferIndex);
+            agl::g3d::ShaderUtilG3D::load(
+                getDrawContext(), agl::ShaderLocation(mShapeBlockLocation),
+                static_cast<const nn::gfx::Buffer&>(*shape->GetShapeBlock(viewIndex, bufferIndex)),
+                0x100, bufferIndex);
         }
 
         if (mSkeletonBlockLocation >= 0) {
-            agl::ShaderLocation location;
-            location.setLocation(mSkeletonBlockLocation);
-            agl::g3d::ShaderUtilG3D::load(getDrawContext(), location,
+            agl::g3d::ShaderUtilG3D::load(getDrawContext(),
+                                          agl::ShaderLocation(mSkeletonBlockLocation),
                                           *skeleton->GetMtxBlock(bufferIndex),
                                           skeleton->GetMtxBlockSize(), bufferIndex);
         }
 
-        const nn::g3d::ShapeObj* shape = mesh->shapeObj;
-        bool isExistBounding = alModelFunction::isExistBoundingNode(shape->GetResource());
-
-        if (pViewVolume != nullptr && isExistBounding) {
-            nn::g3d::CullingContext cullingContext;
-
-            while (shape->TestSubMeshIntersection(&cullingContext, *pViewVolume, lodIndex)) {
-                shape->GetResource()->GetMesh(lodIndex)->DrawSubMesh(
-                    getCommandBuffer(getDrawContext()), cullingContext.submeshIndex,
-                    cullingContext.submeshCount, 1);
-            }
-        } else {
-            const nn::g3d::ResMesh* resMesh = shape->GetResource()->GetMesh(lodIndex);
-            resMesh->DrawSubMesh(getCommandBuffer(getDrawContext()), 0,
-                                 resMesh->GetSubMeshCount(), 1);
-        }
+        drawShape(shape, pViewVolume, lodIndex);
     }
 }
 
@@ -632,33 +652,30 @@ void MeshDrawer::drawDepthShadow(const nn::g3d::ViewVolume* pViewVolume, s32 vie
         return;
     }
 
-    agl::DrawContext* drawContext = getDrawContext();
-
     if (mDisplayList != nullptr) {
-        nvnCommandBufferCallCommands(agl::driver::getNvnCommandBuffer(drawContext), 1,
+        nvnCommandBufferCallCommands(agl::driver::getNvnCommandBuffer(getDrawContext()), 1,
                                      mDisplayList->getHandlePtr());
     } else {
-        mShaderAssign->getResShaderProgram()->Load(getCommandBuffer(drawContext));
-        mShaderAssign->getAttribute().activateVertexAttribute(drawContext);
-        mShaderAssign->getAttribute().activateVertexBuffer(drawContext);
+        activateShader(getDrawContext(), mShaderAssign);
     }
 
     u32 shadowBit = 1 << shadowIndex;
 
     for (s32 i = 0; i < mMeshNum; i++) {
         Mesh* mesh = mMeshes[i];
-        const SimpleModelG3D* model = mesh->model;
-        s32 lodIndex = model->getLodIndex();
+        s32 lodIndex = mesh->model->getLodIndex();
 
-        if (lodIndex < model->getModelObj()->GetLodCount() - 1) {
+        if (lodIndex < mesh->model->getModelObj()->GetLodCount() - 1) {
             lodIndex++;
         }
 
-        if (model->isDisableDepthShadow()) {
+        if (mesh->model->isDisableDepthShadow()) {
             continue;
         }
 
-        if (lodIndex >= mesh->shapeObj->GetResource()->GetMeshCount()) {
+        const nn::g3d::ShapeObj* shape = mesh->shapeObj;
+
+        if (lodIndex >= shape->GetResource()->GetMeshCount()) {
             continue;
         }
 
@@ -666,63 +683,38 @@ void MeshDrawer::drawDepthShadow(const nn::g3d::ViewVolume* pViewVolume, s32 vie
             continue;
         }
 
-        if (!isDrawMesh(model)) {
+        if (!isDrawMesh(mesh->model)) {
             continue;
         }
 
-        const nn::g3d::MaterialObj* material = mesh->materialObj;
         const nn::g3d::SkeletonObj* skeleton = mesh->modelObj->GetSkeleton();
-        s32 bufferIndex = model->getCurrentBufferIndex();
+        const nn::g3d::MaterialObj* material = mesh->materialObj;
+        s32 bufferIndex = mesh->model->getCurrentBufferIndex();
 
         if (mRenderStateType == 0) {
             sead::GraphicsContext context;
         }
 
-        agl::DrawContext* context = getDrawContext();
-
-        if (mTextureType == 0 || model->isForceActivateTexture()) {
-            mShaderAssign->getSampler().activate(context, material);
-        }
-
-        if (mMaterialType == 0) {
-            mShaderAssign->activateMaterialUniformBlock(context, material, bufferIndex);
-        }
-
+        activateMaterial(getDrawContext(), mShaderAssign, material,
+                         mTextureType == 0 || mesh->model->isForceActivateTexture(),
+                         mMaterialType == 0, bufferIndex);
         activateUniformBlockAssignArray(*mesh->model->getUniformBlockAssignArray());
 
         if (mShapeBlockLocation >= 0) {
-            agl::ShaderLocation location;
-            location.setLocation(mShapeBlockLocation);
-            agl::g3d::ShaderUtilG3D::load(getDrawContext(), location,
-                                          static_cast<const nn::gfx::Buffer&>(
-                                              *mesh->shapeObj->GetShapeBlock(viewIndex, bufferIndex)),
-                                          0x100, bufferIndex);
+            agl::g3d::ShaderUtilG3D::load(
+                getDrawContext(), agl::ShaderLocation(mShapeBlockLocation),
+                static_cast<const nn::gfx::Buffer&>(*shape->GetShapeBlock(viewIndex, bufferIndex)),
+                0x100, bufferIndex);
         }
 
         if (mSkeletonBlockLocation >= 0) {
-            agl::ShaderLocation location;
-            location.setLocation(mSkeletonBlockLocation);
-            agl::g3d::ShaderUtilG3D::load(getDrawContext(), location,
+            agl::g3d::ShaderUtilG3D::load(getDrawContext(),
+                                          agl::ShaderLocation(mSkeletonBlockLocation),
                                           *skeleton->GetMtxBlock(bufferIndex),
                                           skeleton->GetMtxBlockSize(), bufferIndex);
         }
 
-        const nn::g3d::ShapeObj* shape = mesh->shapeObj;
-        bool isExistBounding = alModelFunction::isExistBoundingNode(shape->GetResource());
-
-        if (pViewVolume != nullptr && isExistBounding) {
-            nn::g3d::CullingContext cullingContext;
-
-            while (shape->TestSubMeshIntersection(&cullingContext, *pViewVolume, lodIndex)) {
-                shape->GetResource()->GetMesh(lodIndex)->DrawSubMesh(
-                    getCommandBuffer(getDrawContext()), cullingContext.submeshIndex,
-                    cullingContext.submeshCount, 1);
-            }
-        } else {
-            const nn::g3d::ResMesh* resMesh = shape->GetResource()->GetMesh(lodIndex);
-            resMesh->DrawSubMesh(getCommandBuffer(getDrawContext()), 0,
-                                 resMesh->GetSubMeshCount(), 1);
-        }
+        drawShape(shape, pViewVolume, lodIndex);
     }
 }
 
@@ -790,8 +782,10 @@ void MeshDrawer::removeMesh(const nn::g3d::ModelObj* pModelObj,
  * @param pDrawer Mesh drawer.
  */
 void MeshDrawerTable::insert(MeshDrawer* pDrawer) {
+    s32 drawPriority = pDrawer->getDrawPriority();
+
     for (s32 i = 0; i < size(); i++) {
-        if (unsafeAt(i)->getDrawPriority() > pDrawer->getDrawPriority()) {
+        if (unsafeAt(i)->getDrawPriority() > drawPriority) {
             sead::PtrArray<MeshDrawer>::insert(i, pDrawer);
             return;
         }
