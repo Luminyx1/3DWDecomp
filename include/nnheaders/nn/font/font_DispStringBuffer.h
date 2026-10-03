@@ -48,16 +48,16 @@ struct ConstantBufferAdditionalContent {
         m_InterpolateBlack.z = 0.0f;
         m_InterpolateBlack.w = 0.0f;
         m_InterpolateWhite.x = 1.0f;
-        m_InterpolateWhite.y = 1.0f;
-        m_InterpolateWhite.z = 1.0f;
-        m_InterpolateWhite.w = 1.0f;
         m_ShadowInterpolateBlack.x = 0.0f;
-        m_ShadowInterpolateBlack.y = 0.0f;
-        m_ShadowInterpolateBlack.z = 0.0f;
-        m_ShadowInterpolateBlack.w = 0.0f;
         m_ShadowInterpolateWhite.x = 1.0f;
+        m_InterpolateWhite.y = 1.0f;
+        m_ShadowInterpolateBlack.y = 0.0f;
         m_ShadowInterpolateWhite.y = 1.0f;
+        m_InterpolateWhite.z = 1.0f;
+        m_ShadowInterpolateBlack.z = 0.0f;
         m_ShadowInterpolateWhite.z = 1.0f;
+        m_InterpolateWhite.w = 1.0f;
+        m_ShadowInterpolateBlack.w = 0.0f;
         m_ShadowInterpolateWhite.w = 1.0f;
     }
 
