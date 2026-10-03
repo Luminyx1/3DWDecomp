@@ -40,7 +40,7 @@ class ResTextureFile : public nn::util::AccessorBase<ResTextureFileData> {
 public:
     static const int64_t Signature = 0x58544E42;
     static const int MajorVersion = 4;
-    static const int MinorVersion = 0;
+    static const int MinorVersion = 1;
     static const int MicroVersion = 0;
 
     static size_t GetMaxFileAlignment();
