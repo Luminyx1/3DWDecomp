@@ -56038,15 +56038,15 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71008FC1C0			FALSE	_ZNK2al7BgmLine13getCurPlayPosEv	al::BgmLine::getCurPlayPos() const	
 0x71008FC1D0			FALSE	_ZN2al7BgmLine15changeBgmVolumeEfi	al::BgmLine::changeBgmVolume(float, int)	
 0x71008FC260			FALSE	_ZNK2al7BgmLine25getUnactiveBgmPlayerIndexEv	al::BgmLine::getUnactiveBgmPlayerIndex() const	
-0x71008FC270			FALSE	sub_71008FC270	sub_71008FC270	
-0x71008FC370			FALSE	sub_71008FC370	sub_71008FC370	
+0x71008FC270			FALSE	_ZN2al12_GLOBAL__N_118initRhythmInfoListEPNS_14BgmMusicalInfoERKNS_9ByamlIterE	_ZN2al12_GLOBAL__N_118initRhythmInfoListEPNS_14BgmMusicalInfoERKNS_9ByamlIterE	
+0x71008FC370			FALSE	_ZN2al12_GLOBAL__N_117initChordInfoListEPNS_14BgmMusicalInfoERKNS_9ByamlIterE	_ZN2al12_GLOBAL__N_117initChordInfoListEPNS_14BgmMusicalInfoERKNS_9ByamlIterE	
 0x71008FC590			FALSE	_ZNK2al13AudioInfoListINS_16BgmSituationInfoEE11tryFindInfoEPKc	al::AudioInfoList<al::BgmSituationInfo>::tryFindInfo(char const*) const	
 0x71008FC690			FALSE	_ZNK2al13AudioInfoListINS_19BgmSubSituationInfoEE11tryFindInfoEPKc	al::AudioInfoList<al::BgmSubSituationInfo>::tryFindInfo(char const*) const	
 0x71008FC790			FALSE	_ZNK2al13AudioInfoListINS_12BgmStageInfoEE11tryFindInfoEPKc	al::AudioInfoList<al::BgmStageInfo>::tryFindInfo(char const*) const	
 0x71008FC890			FALSE	_ZNK2al13AudioInfoListINS_15BgmResourceInfoEE11tryFindInfoEPKc	al::AudioInfoList<al::BgmResourceInfo>::tryFindInfo(char const*) const	
 0x71008FC990			FALSE	_ZNK2al13AudioInfoListINS_21BgmResourceSuffixInfoEE11tryFindInfoEPKc	al::AudioInfoList<al::BgmResourceSuffixInfo>::tryFindInfo(char const*) const	
 0x71008FCA90			FALSE	_ZNK2al13AudioInfoListINS_22BgmEnableSituationInfoEE11tryFindInfoEPKc	al::AudioInfoList<al::BgmEnableSituationInfo>::tryFindInfo(char const*) const	
-0x71008FCB90		LinearValueController.o	FALSE	_ZN2al21LinearValueControllerC2Ef	al::LinearValueController::LinearValueController(float)	object (class)
+0x71008FCB90	Project/Bgm	Bgm.o	FALSE	_ZN2al21LinearValueControllerC2Ef	al::LinearValueController::LinearValueController(float)	object (class)
 0x71008FCBA0			FALSE	_ZN2al21LinearValueController6updateEv	al::LinearValueController::update()	
 0x71008FCC00			FALSE	_ZN2al21LinearValueController12changeTargetEff	al::LinearValueController::changeTarget(float, float)	
 0x71008FCC20			FALSE	_ZN2al16BgmLpfControllerC1EPN4sead11SoundHandleE	al::BgmLpfController::BgmLpfController(sead::SoundHandle*)	
@@ -56065,8 +56065,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71008FD1E0			FALSE	_ZNK2al19BgmVolumeController16getCurFadeVolumeEv	al::BgmVolumeController::getCurFadeVolume() const	
 0x71008FD1F0			FALSE	_ZN2al3BgmC2Ev	al::Bgm::Bgm()	
 0x71008FD310			FALSE	_ZN2al3Bgm4initEPNS_15AudioSystemInfoE	al::Bgm::init(al::AudioSystemInfo*)	
-0x71008FD380	Project/Bgm	Bgm.o	FALSE	_ZN2al3Bgm6updateEv	al::Bgm::update()	object/folder from OdysseyDecomp file list
-0x71008FD570			FALSE	sub_71008FD570	sub_71008FD570	
+0x71008FD380			FALSE	_ZN2al3Bgm6updateEv	al::Bgm::update()	object/folder from OdysseyDecomp file list
+0x71008FD570			FALSE	_ZN12_GLOBAL__N_110startSoundEPN2al15SeadAudioPlayerEPN4sead11SoundHandleEPKNS0_18BgmSoundStartParamEb	_ZN12_GLOBAL__N_110startSoundEPN2al15SeadAudioPlayerEPN4sead11SoundHandleEPKNS0_18BgmSoundStartParamEb	
 0x71008FD810			FALSE	_ZN2al3Bgm8startBgmEPKNS_15BgmResourceInfoERKNS_17BgmPlayingRequestEb	al::Bgm::startBgm(al::BgmResourceInfo const*, al::BgmPlayingRequest const&, bool)	
 0x71008FD8F0			FALSE	_ZN2al3Bgm16startPreparedBgmERKNS_17BgmPlayingRequestE	al::Bgm::startPreparedBgm(al::BgmPlayingRequest const&)	
 0x71008FD920			FALSE	_ZN2al3Bgm31startPreparedBgmExistingRequestEv	al::Bgm::startPreparedBgmExistingRequest()	
@@ -56088,7 +56088,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71008FE1C0			FALSE	_ZN2al3Bgm16movePlayPositionEi	al::Bgm::movePlayPosition(int)	
 0x71008FE210			FALSE	_ZN2al3Bgm12attachSuffixEPKNS_17BgmSuffixProcInfoEb	al::Bgm::attachSuffix(al::BgmSuffixProcInfo const*, bool)	
 0x71008FE440			FALSE	_ZN2al3Bgm12detachSuffixEPKNS_17BgmSuffixProcInfoE	al::Bgm::detachSuffix(al::BgmSuffixProcInfo const*)	
-0x71008FE570			FALSE	sub_71008FE570	sub_71008FE570	
+0x71008FE570			FALSE	_ZN12_GLOBAL__N_114regionCallbackEPN2nn3atk25StreamRegionCallbackParamEPv	_ZN12_GLOBAL__N_114regionCallbackEPN2nn3atk25StreamRegionCallbackParamEPv	
 0x71008FE680			FALSE	_ZNK2al13AudioInfoListINS_18BgmTrackChangeInfoEE10getInfoNumEv	al::AudioInfoList<al::BgmTrackChangeInfo>::getInfoNum() const	
 0x71008FE6C0	Library/Bgm	BgmLineKeeper.o	FALSE	_ZN2al13BgmLineKeeperC2Ef	al::BgmLineKeeper::BgmLineKeeper(float)	
 0x71008FE720			FALSE	_ZN2al13BgmLineKeeper4initEPNS_15AudioSystemInfoEPKcS4_	al::BgmLineKeeper::init(al::AudioSystemInfo*, char const*, char const*)	
@@ -56259,7 +56259,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71009043C0			FALSE	_ZN2al22ChikaChikaBgmSequencer15updateSceneStopEv	al::ChikaChikaBgmSequencer::updateSceneStop()	
 0x71009044B0			FALSE	_ZN2al22ChikaChikaBgmSequencer7stopAllEv	al::ChikaChikaBgmSequencer::stopAll()	
 0x71009044C0			FALSE	_ZNK2al22ChikaChikaBgmSequencer14getAudioKeeperEv	al::ChikaChikaBgmSequencer::getAudioKeeper() const	
-0x71009044D0			FALSE	sub_71009044D0	sub_71009044D0	
+0x71009044D0			FALSE	_GLOBAL__sub_I_ChikaChikaBgmSequencer.cpp	_GLOBAL__sub_I_ChikaChikaBgmSequencer.cpp	
 0x7100905450	Project/Block	BlockRail.o	FALSE	_ZN2al9BlockRailC2EPKc	al::BlockRail::BlockRail(char const*)	object (class)
 0x71009054E0			FALSE	_ZN2al9BlockRailC1EPKc	al::BlockRail::BlockRail(char const*)	
 0x7100905570			FALSE	_ZN2al9BlockRail4initERKNS_13ActorInitInfoE	al::BlockRail::init(al::ActorInitInfo const&)	

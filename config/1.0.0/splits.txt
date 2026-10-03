@@ -3643,7 +3643,7 @@ src/nw/ui2d/ui2d_ButtonBase.cpp: done
     .text   start:0x0058FDD0 end:0x005909D0
 src/nw/ui2d/ui2d_ButtonGroup.cpp:
     .text   start:0x005909D0 end:0x005911E4
-src/nw/ui2d/ui2d_DefaultControlCreator.cpp:
+src/nw/ui2d/ui2d_DefaultControlCreator.cpp: done
     .text   start:0x005911F0 end:0x00591794
 src/nw/ui2d/ui2d_CheckButton.cpp: done
     .text   start:0x005917A0 end:0x00591A44
@@ -3683,7 +3683,7 @@ src/nw/ui2d/ui2d_ShaderInfo.cpp:
     .text   start:0x005A4740 end:0x005A51FC
 src/nw/ui2d/ui2d_LayoutEx.cpp:
     .text   start:0x005A5200 end:0x005A6230
-src/nw/ui2d/ui2d_AnimatorEx.cpp:
+src/nw/ui2d/ui2d_AnimatorEx.cpp: done
     .text   start:0x005A6230 end:0x005A6DAC
 src/nw/ui2d/ui2d_Material.cpp:
     .text   start:0x005A6DB0 end:0x005AEF58
@@ -5327,7 +5327,7 @@ src/al/Library/Bgm/BgmPlayInfo.cpp: done
     .text   start:0x008F56D0 end:0x008F578C
 src/al/Library/Bgm/BgmResourceCategoryInfo.cpp: done
     .text   start:0x008F5790 end:0x008F5EEC
-src/al/Library/Bgm/BgmStageScenarioInfo.cpp:
+src/al/Library/Bgm/BgmStageScenarioInfo.cpp: done
     .text   start:0x008F5EF0 end:0x008F9EBC
 src/al/Library/Bgm/BgmDirector.cpp: done
     .text   start:0x008F9EC0 end:0x008FA318
@@ -5337,21 +5337,19 @@ src/al/Library/Bgm/BgmKeeper.cpp: done
     .text   start:0x008FAAA0 end:0x008FAB98
 src/al/Library/Bgm/BgmLine.cpp:
     .text   start:0x008FABA0 end:0x008FCB88
-src/al/Library/Bgm/LinearValueController.cpp:
-    .text   start:0x008FCB90 end:0x008FD37C
 src/al/Project/Bgm/Bgm.cpp:
-    .text   start:0x008FD380 end:0x008FE6BC
+    .text   start:0x008FCB90 end:0x008FE6BC
 src/al/Library/Bgm/BgmLineKeeper.cpp:
     .text   start:0x008FE6C0 end:0x009003D8
 src/al/Library/Bgm/BgmRhythmCtrl.cpp: done
     .text   start:0x009003E0 end:0x00900828
 src/al/Library/Bgm/BgmRhythmDetector.cpp:
     .text   start:0x00900830 end:0x0090159C
-src/al/Project/Bgm/BgmInfo.cpp:
+src/al/Project/Bgm/BgmInfo.cpp: done
     .text   start:0x009015A0 end:0x009024C4
-src/al/Library/Bgm/BgmLineFunction.cpp:
+src/al/Library/Bgm/BgmLineFunction.cpp: done
     .text   start:0x009024D0 end:0x00904154
-src/al/Library/Bgm/ChikaChikaBgmSequencer.cpp:
+src/al/Library/Bgm/ChikaChikaBgmSequencer.cpp: done
     .text   start:0x00904160 end:0x00905444
 src/al/Project/Block/BlockRail.cpp: done
     .text   start:0x00905450 end:0x009059A0
@@ -5895,7 +5893,7 @@ src/al/Library/Se/Function/SeDirector.cpp:
     .text   start:0x009E6AB0 end:0x009EBCDC
 src/al/Project/Audio/System/AudioEffectFunction.cpp: done
     .text   start:0x009EBCE0 end:0x009EBE64
-src/al/Library/Bgm/DspValueController.cpp:
+src/al/Library/Bgm/DspValueController.cpp: done
     .text   start:0x009EBE70 end:0x009EC0A0
 src/al/Project/Audio/AudioBusInfo.cpp:
     .text   start:0x009EC0A0 end:0x009EEB6C
