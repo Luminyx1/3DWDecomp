@@ -61,7 +61,7 @@ public:
     s32 searchAttributeIndex(s32 location) const;
     s32 getVertexBufferStride(s32 index) const;
     s32 getVertexBufferSize(s32 index) const;
-    u32 getFetchShaderBufferSize() const;
+    u64 getFetchShaderBufferSize() const;
     void* getFetchShaderBuffer();
     const void* getFetchShaderBuffer() const;
     void flushVertexBuffer();

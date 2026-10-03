@@ -472,7 +472,7 @@ s32 ModelShaderAttribute::getVertexBufferSize(s32 index) const
  * Gets the fetch shader memory size required by the vertex state.
  * @return the size
  */
-u32 ModelShaderAttribute::getFetchShaderBufferSize() const
+u64 ModelShaderAttribute::getFetchShaderBufferSize() const
 {
     return mFetchShaderBufferSize;
 }
