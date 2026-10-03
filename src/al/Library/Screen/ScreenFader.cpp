@@ -39,8 +39,8 @@ void drawFadeQuad(agl::DrawContext* pDrawContext, const sead::Color4f& rColor, f
     sead::OrthoProjection projection(0.0f, 10000.0f, rViewport);
     sead::OrthoCamera camera(projection);
     sead::PrimitiveDrawer::QuadArg quadArg;
-    quadArg.setCenter(sead::Vector3f(0.0f, 0.0f, 0.0f));
     quadArg.setSize(rFrameBuffer.getVirtualSize());
+    quadArg.setCenter(sead::Vector3f(0.0f, 0.0f, 0.0f));
     quadArg.setColor(
         sead::Color4f(rColor.r, rColor.g, rColor.b, sead::Mathf::min(alpha, maxAlpha)));
 
