@@ -171,6 +171,11 @@ bool PlayStyleObserver::isControllerActive_() const
     return true;
 }
 
+/**
+ * Sends the use times of every play style and controller style that was used.
+ * @param rId Report id.
+ * @return Whether the data was queued.
+ */
 bool PlayStyleObserver::report(const StringId& rId)
 {
     SendData* data = createSendData_(sead::SafeString("erepo_playstyle"), 60, 0, 0, rId, true);
@@ -180,9 +185,12 @@ bool PlayStyleObserver::report(const StringId& rId)
     }
 
     for (s32 i = 0; i < 3; i++) {
+        const auto& useInfos = mUseInfo[i];
+        const auto& savedUseInfos = mSavedUseInfo[i];
+
         for (s32 j = 0; j < 5; j++) {
-            const UseInfo& useInfo = mUseInfo[i][j];
-            const UseInfo& savedUseInfo = mSavedUseInfo[i][j];
+            const UseInfo& useInfo = useInfos[j];
+            const UseInfo& savedUseInfo = savedUseInfos[j];
 
             if (useInfo.time > sead::Mathf::epsilon() ||
                 savedUseInfo.time > sead::Mathf::epsilon()) {
