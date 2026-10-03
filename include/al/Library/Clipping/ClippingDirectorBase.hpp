@@ -76,6 +76,7 @@ public:
     void setClippingJudgeUsClippingPosAsPlayerPos(bool isUse);
 
     static bool sLODDisabled;
+    static bool sCollisionForcedOn;
 
     ClippingJudge* mClippingJudge = nullptr;
     ClippingFarAreaObserver* mFarAreaObserver = nullptr;
