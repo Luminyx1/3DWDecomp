@@ -48,6 +48,10 @@ namespace {
 const AnimScaleParam sDefaultParam;
 }  // namespace
 
+/**
+ * Constructs a scale animation controller.
+ * @param pParam Animation parameters, or nullptr for the defaults.
+ */
 AnimScaleController::AnimScaleController(const AnimScaleParam* pParam)
     : NerveExecutor("スケールアニメコントロール"), mParam(pParam) {
     if (pParam == nullptr) {
@@ -57,6 +61,10 @@ AnimScaleController::AnimScaleController(const AnimScaleParam* pParam)
     initNerve(&NrvAnimScaleControllerStop, 0);
 }
 
+/**
+ * Replaces the animation parameters.
+ * @param pParam New parameters, or nullptr for the defaults.
+ */
 void AnimScaleController::setAnimScaleParam(const AnimScaleParam* pParam) {
     mParam = (pParam != nullptr) ? pParam : &sDefaultParam;
 }
@@ -68,6 +76,9 @@ void AnimScaleController::startAnim() {
     setNerve(this, &NrvAnimScaleControllerAnim);
 }
 
+/**
+ * Starts the vibration animation.
+ */
 void AnimScaleController::startVibration() {
     setNerve(this, &NrvAnimScaleControllerVibration);
 }
@@ -104,25 +115,36 @@ void AnimScaleController::startCrush() {
     setNerve(this, &NrvAnimScaleControllerCrush);
 }
 
+/**
+ * Stops the animation, keeping the current scale.
+ */
 void AnimScaleController::stopAnim() {
     mScaleVelocityY = 0.0f;
     setNerve(this, &NrvAnimScaleControllerStop);
 }
 
+/**
+ * Resets the scale and stops the animation.
+ */
 void AnimScaleController::stopAndReset() {
-    resetScale();
-    setNerve(this, &NrvAnimScaleControllerStop);
+    mAnimScale.set(1.0f, 1.0f, 1.0f);
+    mScale = mOriginalScale;
+    stopAnim();
 }
 
 /**
  * Resets the animated scale to the original scale.
  */
 void AnimScaleController::resetScale() {
-    mAnimScale.set(1.0f, 1.0f, 1.0f);
     mScaleVelocityY = 0.0f;
+    mAnimScale.set(1.0f, 1.0f, 1.0f);
     mScale = mOriginalScale;
 }
 
+/**
+ * Stops the animation and sets the animated scale.
+ * @param rScale Animated scale to apply on top of the original scale.
+ */
 void AnimScaleController::stopAndSetScale(const sead::Vector3f& rScale) {
     mScaleVelocityY = 0.0f;
     setNerve(this, &NrvAnimScaleControllerStop);
@@ -153,6 +175,10 @@ void AnimScaleController::addScaleVelocityY(f32 velocity) {
  */
 void AnimScaleController::exeStop() {}
 
+/**
+ * Derives the X and Z scale from the Y scale so the volume is preserved, then applies the
+ * original scale.
+ */
 inline void AnimScaleController::updateScaleXZ() {
     f32 scaleXZ = sead::Mathf::sqrt(1.0f / mAnimScale.y);
     mAnimScale.x = scaleXZ;
@@ -162,22 +188,32 @@ inline void AnimScaleController::updateScaleXZ() {
     mScale.z = mAnimScale.z * mOriginalScale.z;
 }
 
+/**
+ * Runs the spring animation until it settles.
+ */
 void AnimScaleController::exeAnim() {
     updateScale(mParam->_0, mParam->_4);
     tryStop();
 }
 
 /**
- * Updates the current animation.
+ * Steps the spring towards a Y scale of 1.
+ * @param stiffness Spring stiffness.
+ * @param damping Velocity damping factor.
  */
 void AnimScaleController::updateScale(f32 stiffness, f32 damping) {
     f32 scaleY = mAnimScale.y;
-    mScaleVelocityY = (mScaleVelocityY + (1.0f - scaleY) * stiffness) * damping;
+    mScaleVelocityY += (1.0f - scaleY) * stiffness;
+    mScaleVelocityY *= damping;
     mAnimScale.y = scaleY + mScaleVelocityY;
     mAnimScale.y = sead::Mathf::clamp(mAnimScale.y, mParam->_8, mParam->_c);
     updateScaleXZ();
 }
 
+/**
+ * Stops the animation once the spring has settled.
+ * @return Whether the animation was stopped.
+ */
 bool AnimScaleController::tryStop() {
     if (sead::Mathf::abs(1.0f - mAnimScale.y) < 0.001f &&
         sead::Mathf::abs(mScaleVelocityY) < 0.001f) {
@@ -189,14 +225,20 @@ bool AnimScaleController::tryStop() {
     return false;
 }
 
+/**
+ * Vibrates the Y scale around its base value.
+ */
 void AnimScaleController::exeVibration() {
     f32 base = mParam->_24;
     f32 rate = getNerveStep(this) / mParam->_28;
     f32 scaleY = base + sead::Mathf::sin(rate * 2 * sead::Mathf::pi()) * mParam->_2c;
-    mAnimScale.y = sead::Mathf::max(scaleY, 0.0001f);
+    mAnimScale.y = scaleY < 0.0001f ? 0.0001f : scaleY;  // not sead::Mathf::max (fmaxnm)
     updateScaleXZ();
 }
 
+/**
+ * Runs the hit reaction spring animation until it settles.
+ */
 void AnimScaleController::exeHitReaction() {
     if (isFirstStep(this)) {
         resetScale();
@@ -207,6 +249,9 @@ void AnimScaleController::exeHitReaction() {
     tryStop();
 }
 
+/**
+ * Runs the crush animation for a fixed number of steps.
+ */
 void AnimScaleController::exeCrush() {
     mScaleVelocityY = 0.0f;
     f32 rate = calcNerveRate(this, mParam->_1c);
@@ -243,6 +288,9 @@ void AnimScaleController::setOriginalScale(const sead::Vector3f& rScale) {
     mOriginalScale = rScale;
 }
 
+/**
+ * Updates the controller's nerve.
+ */
 void AnimScaleController::update() {
     updateNerve();
 }
