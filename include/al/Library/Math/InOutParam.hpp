@@ -8,7 +8,7 @@ class ByamlIter;
 class InOutParam {
 public:
     InOutParam();
-    InOutParam(const InOutParam& src);
+    InOutParam(const InOutParam& rOther);
     InOutParam(f32 inMin, f32 inMax, f32 outMin, f32 outMax);
     void init(const ByamlIter& iter);
     f32 calcLeapValue(f32 value) const;
