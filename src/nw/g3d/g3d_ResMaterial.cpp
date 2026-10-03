@@ -2,6 +2,7 @@
 #include <nn/gfx/gfx_Sampler.h>
 #include <nn/gfx/gfx_SamplerInfo.h>
 #include <nn/util/util_Arithmetic.h>
+#include <nn/util/util_MatrixApi.h>
 #include <cstring>
 #include <new>
 
@@ -23,6 +24,52 @@ struct RotationValues {
     float sine;
     float cosine;
 };
+
+struct VectorRotationValues {
+    float32x4_t sine;
+    float32x4_t cosine;
+};
+/**
+ * @brief Approximate sine and cosine for four radian angles with the resource polynomials.
+ * @param angles Four angles in radians, reduced to one revolution before evaluation.
+ * @return Sine and cosine vectors with corresponding input lanes.
+ */
+inline VectorRotationValues EvaluateRotation(float32x4_t angles) {
+    using namespace util::detail;
+    float32x4_t turns = vmulq_n_f32(angles, Float1Divided2Pi);
+    float32x4_t rounding = vbslq_f32(vcgezq_f32(turns), vdupq_n_f32(0.5f), vdupq_n_f32(-0.5f));
+    turns = vcvtq_f32_s32(vcvtq_s32_f32(vaddq_f32(turns, rounding)));
+    angles = vfmsq_n_f32(angles, turns, Float2Pi);
+    uint32x4_t upper = vcgtq_f32(angles, vdupq_n_f32(FloatPiDivided2));
+    angles = vbslq_f32(upper, vsubq_f32(vdupq_n_f32(FloatPi), angles), angles);
+    uint32x4_t lower = vcltq_f32(angles, vdupq_n_f32(-FloatPiDivided2));
+    angles = vbslq_f32(lower, vsubq_f32(vdupq_n_f32(-FloatPi), angles), angles);
+    float32x4_t sign = vbslq_f32(vorrq_u32(upper, lower), vdupq_n_f32(-1.0f), vdupq_n_f32(1.0f));
+    float32x4_t square = vmulq_f32(angles, angles);
+    float32x4_t sine = vfmsq_n_f32(vdupq_n_f32(SinCoefficients[1]), square, SinCoefficients[0]);
+    float32x4_t cosine = vfmsq_n_f32(vdupq_n_f32(CosCoefficients[1]), square, CosCoefficients[0]);
+    sine = vfmaq_f32(vdupq_n_f32(-SinCoefficients[2]), square, sine);
+    cosine = vfmaq_f32(vdupq_n_f32(-CosCoefficients[2]), square, cosine);
+    sine = vfmaq_f32(vdupq_n_f32(SinCoefficients[3]), square, sine);
+    cosine = vfmaq_f32(vdupq_n_f32(CosCoefficients[3]), square, cosine);
+    sine = vfmaq_f32(vdupq_n_f32(-SinCoefficients[4]), square, sine);
+    cosine = vfmaq_f32(vdupq_n_f32(-CosCoefficients[4]), square, cosine);
+    sine = vfmaq_f32(vdupq_n_f32(1.0f), square, sine);
+    cosine = vfmaq_f32(vdupq_n_f32(1.0f), square, cosine);
+    return {vmulq_f32(angles, sine), vmulq_f32(sign, cosine)};
+}
+
+/**
+ * @brief Load a packed three-component vector into zero-padded SIMD storage.
+ * @param rSource Three readable floating-point components.
+ * @return Vector with the source components and a zero fourth lane.
+ */
+inline float32x4_t LoadTransformVector(const util::Float3& rSource) {
+    float32x4_t value = vdupq_n_f32(0.0f);
+    value = vld1q_lane_f32(&rSource.x, value, 0);
+    value = vld1q_lane_f32(&rSource.y, value, 1);
+    return vld1q_lane_f32(&rSource.z, value, 2);
+}
 /**
  * @brief Evaluate sine and cosine using the resource transform lookup table.
  * @param rotation Rotation angle in radians.
@@ -36,6 +83,127 @@ inline RotationValues EvaluateRotation(float rotation) {
 static size_t ConvertTextureMode0(void* pDestination, const void* pSource) asm("sub_71005FECC0");
 static size_t ConvertTextureMode1(void* pDestination, const void* pSource) asm("sub_71005FEDB0");
 static size_t ConvertTextureMode2(void* pDestination, const void* pSource) asm("sub_71005FEE90");
+static size_t ConvertTextureExMode0(void* pDestination, const void* pSource) asm("sub_71005FEF60");
+static size_t ConvertTextureExMode1(void* pDestination, const void* pSource) asm("sub_71005FF180");
+static size_t ConvertTextureExMode2(void* pDestination, const void* pSource) asm("sub_71005FF3A0");
+
+/**
+ * @brief Store an affine texture matrix, composing an optional dependency matrix.
+ * @tparam reverseRotation Whether the first row subtracts its sine term.
+ * @param pOutput Writable storage for twelve floats.
+ * @param pDependency Optional twelve-float matrix; nullptr selects the identity dependency.
+ * @param xc Horizontal scale multiplied by the rotation cosine.
+ * @param xs Horizontal scale multiplied by the rotation sine.
+ * @param ys Vertical scale multiplied by the rotation sine.
+ * @param yc Vertical scale multiplied by the rotation cosine.
+ * @param tx Converted horizontal translation.
+ * @param ty Converted vertical translation.
+ */
+template <bool reverseRotation>
+[[gnu::always_inline]] inline void StoreTextureMatrix(float* pOutput, const float* pDependency,
+                                                              float xc, float xs, float ys, float yc,
+                                                              float tx, float ty) {
+    if (pDependency != nullptr) {
+        for (int i = 0; i < 4; ++i) {
+            if (reverseRotation) {
+                pOutput[i] = xc * pDependency[i] - xs * pDependency[4 + i] + tx * pDependency[8 + i];
+                pOutput[4 + i] = ys * pDependency[i] + yc * pDependency[4 + i] + ty * pDependency[8 + i];
+            } else {
+                pOutput[i] = xc * pDependency[i] + xs * pDependency[4 + i] + tx * pDependency[8 + i];
+                pOutput[4 + i] = -pDependency[i] * ys + yc * pDependency[4 + i] + ty * pDependency[8 + i];
+            }
+        }
+        std::memcpy(pOutput + 8, pDependency + 8, 4 * sizeof(float));
+    } else {
+        if (reverseRotation) {
+            pOutput[4] = ys;
+            pOutput[5] = yc;
+            pOutput[7] = 0.0f;
+            pOutput[8] = 0.0f;
+            pOutput[0] = xc;
+            pOutput[1] = -xs;
+        } else {
+            pOutput[0] = xc;
+            pOutput[1] = xs;
+            pOutput[4] = -ys;
+            pOutput[7] = 0.0f;
+            pOutput[8] = 0.0f;
+            pOutput[5] = yc;
+        }
+        pOutput[2] = tx;
+        pOutput[6] = ty;
+        pOutput[11] = 0.0f;
+        pOutput[9] = 0.0f;
+        pOutput[10] = 1.0f;
+        pOutput[3] = 0.0f;
+    }
+}
+
+/**
+ * @brief Convert extended texture mode zero and compose its optional dependency.
+ * @param pDestination Writable storage for twelve floats.
+ * @param pSource Packed texture transform with an optional dependency matrix pointer.
+ * @return Number of bytes written, always 48.
+ */
+static size_t ConvertTextureExMode0(void* pDestination, const void* pSource) {
+    const auto* pInput = static_cast<const TextureSrtEx*>(pSource);
+    RotationValues values = EvaluateRotation(pInput->rotation);
+    float x = pInput->scale.x;
+    float y = pInput->scale.y;
+    float xc = x * values.cosine;
+    float xs = x * values.sine;
+    float ys = y * values.sine;
+    float yc = y * values.cosine;
+    float tx = (xc + xs - x) * -0.5f - x * pInput->translation.x;
+    float halfY = (y + (yc - ys)) * -0.5f;
+    float ty = y * pInput->translation.y + halfY + 1.0f;
+    StoreTextureMatrix<false>(static_cast<float*>(pDestination), pInput->pDependency, xc, xs, ys, yc, tx, ty);
+    return 12 * sizeof(float);
+}
+
+/**
+ * @brief Convert extended texture mode one around the texture center.
+ * @param pDestination Writable storage for twelve floats.
+ * @param pSource Packed texture transform with an optional dependency matrix pointer.
+ * @return Number of bytes written, always 48.
+ */
+static size_t ConvertTextureExMode1(void* pDestination, const void* pSource) {
+    const auto* pInput = static_cast<const TextureSrtEx*>(pSource);
+    RotationValues values = EvaluateRotation(pInput->rotation);
+    float x = pInput->scale.x;
+    float y = pInput->scale.y;
+    float xc = x * values.cosine;
+    float xs = x * values.sine;
+    float yc = y * values.cosine;
+    float ys = y * values.sine;
+    float u = pInput->translation.x + 0.5f;
+    float v = pInput->translation.y - 0.5f;
+    float tx = v * xs - u * xc + 0.5f;
+    float ty = u * ys + v * yc + 0.5f;
+    StoreTextureMatrix<false>(static_cast<float*>(pDestination), pInput->pDependency, xc, xs, ys, yc, tx, ty);
+    return 12 * sizeof(float);
+}
+
+/**
+ * @brief Convert extended texture mode two with its inverted vertical axis.
+ * @param pDestination Writable storage for twelve floats.
+ * @param pSource Packed texture transform with an optional dependency matrix pointer.
+ * @return Number of bytes written, always 48.
+ */
+static size_t ConvertTextureExMode2(void* pDestination, const void* pSource) {
+    const auto* pInput = static_cast<const TextureSrtEx*>(pSource);
+    RotationValues values = EvaluateRotation(pInput->rotation);
+    float x = pInput->scale.x;
+    float y = pInput->scale.y;
+    float xc = x * values.cosine;
+    float ys = y * values.sine;
+    float yc = y * values.cosine;
+    float xs = x * values.sine;
+    float tx = (xs - pInput->translation.x * xc) - pInput->translation.y * xs;
+    float ty = pInput->translation.y * yc + (-y * values.cosine - pInput->translation.x * ys) + 1.0f;
+    StoreTextureMatrix<true>(static_cast<float*>(pDestination), pInput->pDependency, xc, xs, ys, yc, tx, ty);
+    return 12 * sizeof(float);
+}
 
 /**
  * @brief Convert texture-transform mode zero to six affine coefficients.
@@ -250,6 +418,63 @@ size_t ResShaderParam::ConvertTexSrtCallback(void* pDestination, const void* pSo
 }
 
 /**
+ * @brief Convert a three-dimensional scale, Euler rotation and translation to a matrix.
+ * @param pDestination Writable storage for a twelve-float column-major affine matrix.
+ * @param pSource Three packed Float3 vectors: scale, Euler angles in radians, and translation.
+ * @param pParameter Parameter description, unused by this built-in conversion.
+ * @param pUser User context, unused by this built-in conversion.
+ * @return Number of bytes written, always 48.
+ */
+size_t ResShaderParam::ConvertSrt3dCallback(void* pDestination, const void* pSource,
+                                            const ResShaderParam* pParameter, const void* pUser) {
+    const auto* pInput = static_cast<const util::Float3*>(pSource);
+    float32x4_t scale = LoadTransformVector(pInput[0]);
+    float32x4_t rotation = LoadTransformVector(pInput[1]);
+    float32x4_t translation = LoadTransformVector(pInput[2]);
+    VectorRotationValues values = EvaluateRotation(rotation);
+    float32x4_t sine = values.sine;
+    float32x4_t cosine = values.cosine;
+    float32x2_t sy = vdup_laneq_f32(sine, 1);
+    float32x2_t cy = vdup_laneq_f32(cosine, 1);
+    float32x2_t syZero = vset_lane_f32(0.0f, sy, 1);
+    float32x2_t cyZero = vset_lane_f32(0.0f, cy, 1);
+    float32x2_t czsz = vzip1_f32(vget_high_f32(cosine), vget_high_f32(sine));
+    float32x2_t szcz = vzip1_f32(vget_high_f32(sine), vget_high_f32(cosine));
+    float32x4_t shared = vcombine_f32(vmul_f32(czsz, sy), vmul_f32(cyZero, float32x2_t{1.0f, 0.0f}));
+    float32x4_t axisX = vcombine_f32(vmul_f32(czsz, cy), vmul_f32(syZero, float32x2_t{-1.0f, 0.0f}));
+    float32x4_t zPair = vcombine_f32(szcz, vdup_n_f32(0.0f));
+    float32x4_t cosPair = vmulq_laneq_f32(zPair, cosine, 0);
+    float32x4_t sinPair = vmulq_laneq_f32(zPair, sine, 0);
+    float32x4_t axisY =
+        vaddq_f32(vmulq_f32(cosPair, float32x4_t{-1.0f, 1.0f, 0.0f, 0.0f}), vmulq_laneq_f32(shared, sine, 0));
+    float32x4_t axisZ = vaddq_f32(vmulq_f32(sinPair, float32x4_t{1.0f, -1.0f, 0.0f, 0.0f}),
+                                  vmulq_laneq_f32(shared, cosine, 0));
+    util::Matrix4x3fType matrix;
+    matrix._m.val[0] = vmulq_laneq_f32(axisX, scale, 0);
+    matrix._m.val[1] = vmulq_laneq_f32(axisY, scale, 1);
+    matrix._m.val[2] = vmulq_laneq_f32(axisZ, scale, 2);
+    matrix._m.val[3] = translation;
+    util::MatrixStore(static_cast<util::FloatColumnMajor4x3*>(pDestination), matrix);
+    return 12 * sizeof(float);
+}
+
+/**
+ * @brief Dispatch an extended texture transform to its selected conversion convention.
+ * @param pDestination Writable storage for twelve output floats.
+ * @param pSource Extended texture transform whose mode is in the range [0, 3).
+ * @param pParameter Parameter description, unused by the built-in converters.
+ * @param pUser User context, unused by the built-in converters.
+ * @return Number of bytes written, always 48.
+ */
+size_t ResShaderParam::ConvertTexSrtExCallback(void* pDestination, const void* pSource,
+                                               const ResShaderParam* pParameter, const void* pUser) {
+    using ConvertFunction = size_t (*)(void*, const void*);
+    static const ConvertFunction converters[] asm("lbl_7101AD4F88") = {
+        ConvertTextureExMode0, ConvertTextureExMode1, ConvertTextureExMode2};
+    return converters[static_cast<const TextureSrt*>(pSource)->mode](pDestination, pSource);
+}
+
+/**
  * @brief Convert packed two-dimensional transform coefficients to an extended matrix.
  * @param pDestination Writable storage for twelve output floats; must not be null.
  * @param pSource Packed transform and optional twelve-float dependency matrix; must not be null.
@@ -270,27 +495,7 @@ size_t ResShaderParam::ConvertSrt2dExCallback(void* pDestination, const void* pS
     float ys = y * sine;
     float xs = x * sine;
     float yc = y * cosine;
-    const float* pDependency = pInput->pDependency;
-    if (pDependency != nullptr) {
-        for (int i = 0; i < 4; ++i) {
-            pOutput[i] = xc * pDependency[i] - xs * pDependency[4 + i] + x * pDependency[8 + i];
-            pOutput[4 + i] = ys * pDependency[i] + yc * pDependency[4 + i] + y * pDependency[8 + i];
-        }
-        std::memcpy(pOutput + 8, pDependency + 8, 4 * sizeof(float));
-    } else {
-        pOutput[4] = ys;
-        pOutput[5] = yc;
-        pOutput[7] = 0.0f;
-        pOutput[8] = 0.0f;
-        pOutput[0] = xc;
-        pOutput[1] = -xs;
-        pOutput[2] = x;
-        pOutput[6] = y;
-        pOutput[11] = 0.0f;
-        pOutput[9] = 0.0f;
-        pOutput[10] = 1.0f;
-        pOutput[3] = 0.0f;
-    }
+    StoreTextureMatrix<true>(pOutput, pInput->pDependency, xc, xs, ys, yc, x, y);
     return 12 * sizeof(float);
 }
 
