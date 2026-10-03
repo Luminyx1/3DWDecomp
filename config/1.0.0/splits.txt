@@ -4139,7 +4139,7 @@ src/aal/seadaudio/seadAudioSoundDataMgrNin.cpp: done
     .text   start:0x006B9570 end:0x006BB16C
 src/aal/seadaudio/seadAudioSoundHeapNin.cpp: done
     .text   start:0x006BB170 end:0x006BB46C
-src/aal/seadaudio/seadAudioMgr.cpp:
+src/aal/seadaudio/seadAudioMgr.cpp: done
     .text   start:0x006BB470 end:0x006BBEB4
 src/aal/seadaudio/seadAudioPlayerNin.cpp: done
     .text   start:0x006BBEC0 end:0x006BE048
@@ -5509,7 +5509,7 @@ src/al/Project/Camera/CameraAngleSwingInfo.cpp:
     .text   start:0x00937A30 end:0x00938688
 src/al/Project/Camera/CameraOffsetCtrlPreset.cpp: done
     .text   start:0x00938690 end:0x00938718
-src/al/Library/Play/Camera/CameraVerticalAbsorber.cpp:
+src/al/Library/Play/Camera/CameraVerticalAbsorber.cpp: done
     .text   start:0x00938720 end:0x0093A078
 src/al/Library/Camera/CameraPoserSceneInfo_RS.cpp: done
     .text   start:0x0093A080 end:0x0093A0FC
