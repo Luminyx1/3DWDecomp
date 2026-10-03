@@ -23,8 +23,8 @@ ModelDrawerInvincible::ModelDrawerInvincible(const char* pName) : ModelDrawer(pN
     mGraphicsContext.setDepthEnable(true, false);
     mGraphicsContext.setDepthFunc(4);
     mGraphicsContext.setColorMask(0, true, true, true, false);
-    mGraphicsContext.setBlendFactorDstRGB(3, 2);
     mGraphicsContext.setBlendFactorSrcRGB(3, 2);
+    mGraphicsContext.setBlendFactorDstRGB(3, 2);
     mGraphicsContext.setBlendEquationRGB(3, 1);
 }
 
