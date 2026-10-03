@@ -4677,8 +4677,12 @@ src/al/Library/Joint/JointSpringControllerHolder.cpp: done
     .text   start:0x007FB260 end:0x007FB7E8
 src/al/Library/Joint/JointTranslateShaker.cpp:
     .text   start:0x007FB7F0 end:0x007FBC14
-src/al/Library/KeyPose/KeyPoseKeeper.cpp:
-    .text   start:0x007FBC20 end:0x007FCA84
+src/al/Library/KeyPose/KeyPoseKeeper.cpp: done
+    .text   start:0x007FBC20 end:0x007FC01C
+src/al/Project/Joint/KeyPose.cpp: done
+    .text   start:0x007FC020 end:0x007FC0BC
+src/al/Library/KeyPose/KeyPoseKeeperUtil.cpp: done
+    .text   start:0x007FC0C0 end:0x007FCA84
 src/al/Project/Joint/RollingCubePoseKeeper.cpp:
     .text   start:0x007FCA90 end:0x007FE044
 src/al/Project/Joint/RollingCubePoseKeeperUtil.cpp:
@@ -5581,36 +5585,34 @@ src/al/Project/Camera/SimpleCameraShooter.cpp:
     .text   start:0x009496D0 end:0x00949E1C
 src/al/Library/Camera/SnapShotCameraCtrl.cpp:
     .text   start:0x00949E20 end:0x0094ACE8
-src/al/Library/Camera/SpecialCameraHolder.cpp:
-    .text   start:0x0094ACF0 end:0x0094B0AC
+src/al/Library/Camera/SpecialCameraHolder.cpp: done
+    .text   start:0x0094ACF0 end:0x0094ADFC
 src/al/Project/Clipping/ClippingAreaActorInfo.cpp:
-    .text   start:0x0094B0B0 end:0x0094B918
-src/al/Project/Clipping/ClippingAreaActorInfoNodeList.cpp:
-    .text   start:0x0094B920 end:0x0094DE64
+    .text   start:0x0094AE00 end:0x0094DE64
 src/al/Project/Clipping/ClippingAreaActorViewArea.cpp:
     .text   start:0x0094DE70 end:0x0094E944
-src/al/Project/Clipping/ClippingAreaActorViewHolder.cpp:
-    .text   start:0x0094E950 end:0x0094FE18
+src/al/Project/Clipping/ClippingAreaActorViewHolder.cpp: done
+    .text   start:0x0094E950 end:0x0094FB3C
+src/al/Project/Clipping/ClippingAreaActorInfoList.cpp: done
+    .text   start:0x0094FB40 end:0x0094FE18
 src/al/Project/Clipping/ClippingAreaDirector.cpp: done
     .text   start:0x0094FE20 end:0x009501D0
-src/al/Project/Clipping/ClippingDirector.cpp:
-    .text   start:0x009501D0 end:0x009505F0
-src/al/Library/Clipping/ClippingActorHolder.cpp:
-    .text   start:0x009505F0 end:0x00950CDC
-src/al/Library/Clipping/ClippingActorInfo.cpp:
-    .text   start:0x00950CE0 end:0x00950E90
+src/al/Project/Clipping/ClippingDirector.cpp: done
+    .text   start:0x009501D0 end:0x00950544
+src/al/Library/Clipping/ClippingActorHolder.cpp: done
+    .text   start:0x00950550 end:0x00950C7C
+src/al/Library/Clipping/ClippingActorInfo.cpp: done
+    .text   start:0x00950C80 end:0x00950E18
 src/al/Library/Clipping/ClippingActorInfoList.cpp: done
-    .text   start:0x00950E90 end:0x00951008
+    .text   start:0x00950E20 end:0x00951008
 src/al/Library/Clipping/ClippingDirectorBase.cpp: done
     .text   start:0x00951010 end:0x00951120
 src/al/Project/Clipping/ClippingFarAreaObserver.cpp: done
     .text   start:0x00951130 end:0x00951298
 src/al/Project/Clipping/ClippingFunction.cpp: done
     .text   start:0x009512A0 end:0x00951300
-src/al/Project/Clipping/ClippingInfoGroup.cpp:
-    .text   start:0x00951300 end:0x00951388
 src/al/Library/Clipping/ClippingGroupHolder.cpp: done
-    .text   start:0x00951390 end:0x00951AAC
+    .text   start:0x00951300 end:0x00951AAC
 src/al/Library/Clipping/ClippingJudge.cpp: done
     .text   start:0x00951AB0 end:0x00951DD8
 src/al/Library/Clipping/ClippingViewFadeInAreas.cpp:
@@ -5618,9 +5620,9 @@ src/al/Library/Clipping/ClippingViewFadeInAreas.cpp:
 src/al/Library/Clipping/FrustumRadar.cpp:
     .text   start:0x009524E0 end:0x0095335C
 src/al/Library/Clipping/ViewFrustum.cpp:
-    .text   start:0x00953360 end:0x0095431C
+    .text   start:0x00953360 end:0x0095430C
 src/al/Project/Clipping/ViewInfoCtrl.cpp: done
-    .text   start:0x00954320 end:0x009546C0
+    .text   start:0x00954310 end:0x009546C0
 src/al/Library/Collision/Collider.cpp:
     .text   start:0x009546C0 end:0x00956248
 src/al/Library/Collision/CollisionDirector.cpp: done

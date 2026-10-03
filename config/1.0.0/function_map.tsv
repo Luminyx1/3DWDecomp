@@ -49092,9 +49092,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71007FBFF0			FALSE	_ZN2al13KeyPoseKeeper15setMoveTypeTurnEv	al::KeyPoseKeeper::setMoveTypeTurn()	
 0x71007FC000			FALSE	_ZN2al13KeyPoseKeeper15setMoveTypeStopEv	al::KeyPoseKeeper::setMoveTypeStop()	
 0x71007FC010			FALSE	_ZN2al13KeyPoseKeeper18setMoveTypeRestartEv	al::KeyPoseKeeper::setMoveTypeRestart()	
-0x71007FC020			FALSE	_ZN2al7KeyPoseC2Ev	al::KeyPose::KeyPose()	
+0x71007FC020	Project/Joint	KeyPose.o	FALSE	_ZN2al7KeyPoseC2Ev	al::KeyPose::KeyPose()	
 0x71007FC050			FALSE	_ZN2al7KeyPose4initERKNS_13PlacementInfoE	al::KeyPose::init(al::PlacementInfo const&)	
-0x71007FC0C0			FALSE	_ZN2al19createKeyPoseKeeperERKNS_13ActorInitInfoE	al::createKeyPoseKeeper(al::ActorInitInfo const&)	
+0x71007FC0C0	Library/KeyPose	KeyPoseKeeperUtil.o	FALSE	_ZN2al19createKeyPoseKeeperERKNS_13ActorInitInfoE	al::createKeyPoseKeeper(al::ActorInitInfo const&)	
 0x71007FC100			FALSE	_ZN2al12resetKeyPoseEPNS_13KeyPoseKeeperE	al::resetKeyPose(al::KeyPoseKeeper*)	
 0x71007FC110			FALSE	_ZN2al11nextKeyPoseEPNS_13KeyPoseKeeperE	al::nextKeyPose(al::KeyPoseKeeper*)	
 0x71007FC120			FALSE	_ZN2al14restartKeyPoseEPNS_13KeyPoseKeeperEPN4sead7Vector3IfEEPNS2_4QuatIfEE	al::restartKeyPose(al::KeyPoseKeeper*, sead::Vector3<float>*, sead::Quat<float>*)	
@@ -58147,9 +58147,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710094AD00			FALSE	_ZN2al19SpecialCameraHolder25allocEntranceCameraBufferEi	al::SpecialCameraHolder::allocEntranceCameraBuffer(int)	
 0x710094AD70			FALSE	_ZN2al19SpecialCameraHolder22registerEntranceCameraEPNS_12CameraTicketE	al::SpecialCameraHolder::registerEntranceCamera(al::CameraTicket*)	
 0x710094AD90			FALSE	_ZNK2al19SpecialCameraHolder18findEntranceCameraEPKc	al::SpecialCameraHolder::findEntranceCamera(char const*) const	
-0x710094AE00			FALSE	_ZN2al21ClippingAreaActorInfo17updateAlphaOnListEfPNS_27ClippingAreaActorViewHolderE	al::ClippingAreaActorInfo::updateAlphaOnList(float, al::ClippingAreaActorViewHolder*)	
-0x710094AFF0			FALSE	sub_710094AFF0	sub_710094AFF0	
-0x710094B0B0	Project/Clipping	ClippingAreaActorInfo.o	FALSE	_ZN2al21ClippingAreaActorInfo27updateOnlyCollisionSettingsERKN4sead7Vector3IfEEPS4_fb	al::ClippingAreaActorInfo::updateOnlyCollisionSettings(sead::Vector3<float> const&, sead::Vector3<float> const*, float, bool)	object (class)
+0x710094AE00	Project/Clipping	ClippingAreaActorInfo.o	FALSE	_ZN2al21ClippingAreaActorInfo17updateAlphaOnListEfPNS_27ClippingAreaActorViewHolderE	al::ClippingAreaActorInfo::updateAlphaOnList(float, al::ClippingAreaActorViewHolder*)	
+0x710094AFF0			FALSE	_ZN2alL18updateDrawClippingEPNS_25ClippingAreaActorInfoNodeEPNS_13ClippingJudgeE	_ZN2alL18updateDrawClippingEPNS_25ClippingAreaActorInfoNodeEPNS_13ClippingJudgeE	
+0x710094B0B0			FALSE	_ZN2al21ClippingAreaActorInfo27updateOnlyCollisionSettingsERKN4sead7Vector3IfEEPS4_fb	al::ClippingAreaActorInfo::updateOnlyCollisionSettings(sead::Vector3<float> const&, sead::Vector3<float> const*, float, bool)	object (class)
 0x710094B260			FALSE	_ZN2al21ClippingAreaActorInfo23updateCollisionSettingsEfRKN4sead7Vector3IfEEPS4_fb	al::ClippingAreaActorInfo::updateCollisionSettings(float, sead::Vector3<float> const&, sead::Vector3<float> const*, float, bool)	
 0x710094B490			FALSE	_ZN2al21ClippingAreaActorInfo20updateShadowClippingERKN4sead7Vector3IfEE	al::ClippingAreaActorInfo::updateShadowClipping(sead::Vector3<float> const&)	
 0x710094B590			FALSE	_ZN2al21ClippingAreaActorInfo20readClippingDistanceERKNS_13PlacementInfoE	al::ClippingAreaActorInfo::readClippingDistance(al::PlacementInfo const&)	
@@ -58160,7 +58160,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710094B890			FALSE	_ZN2al21ClippingAreaActorInfo30switchMaxDistanceNoLODActivateEv	al::ClippingAreaActorInfo::switchMaxDistanceNoLODActivate()	
 0x710094B8B0			FALSE	_ZN2al21ClippingAreaActorInfo32switchMaxDistanceNoLODDeactivateEv	al::ClippingAreaActorInfo::switchMaxDistanceNoLODDeactivate()	
 0x710094B8C0			FALSE	_ZN2al21ClippingAreaActorInfo7setTypeEv	al::ClippingAreaActorInfo::setType()	
-0x710094B920		ClippingAreaActorInfoNodeList.o	FALSE	_ZN2al29ClippingAreaActorInfoNodeListC2Ev	al::ClippingAreaActorInfoNodeList::ClippingAreaActorInfoNodeList()	object (class)
+0x710094B920			FALSE	_ZN2al29ClippingAreaActorInfoNodeListC2Ev	al::ClippingAreaActorInfoNodeList::ClippingAreaActorInfoNodeList()	object (class)
 0x710094B930			FALSE	_ZN2al21ClippingAreaActorInfoC2EPNS_25ClippingAreaActorInfoNodeERKNS_13ActorInitInfoEPKNS_13PlacementInfoE	al::ClippingAreaActorInfo::ClippingAreaActorInfo(al::ClippingAreaActorInfoNode*, al::ActorInitInfo const&, al::PlacementInfo const*)	
 0x710094BBC0			FALSE	_ZN2al21ClippingAreaActorInfo13registerActorEPNS_25ClippingAreaActorInfoNodeEb	al::ClippingAreaActorInfo::registerActor(al::ClippingAreaActorInfoNode*, bool)	
 0x710094BC30			FALSE	_ZN2al21ClippingAreaActorInfoC1EPNS_25ClippingAreaActorInfoNodeERKNS_13ActorInitInfoEPKNS_13PlacementInfoE	al::ClippingAreaActorInfo::ClippingAreaActorInfo(al::ClippingAreaActorInfoNode*, al::ActorInitInfo const&, al::PlacementInfo const*)	
@@ -58189,7 +58189,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710094DDF0			FALSE	_ZNK2al21ClippingAreaActorInfo20getStageSwitchKeeperEv	al::ClippingAreaActorInfo::getStageSwitchKeeper() const	
 0x710094DE00			FALSE	_ZNK2al10FunctorV0MIPNS_21ClippingAreaActorInfoEMS1_FvvEEclEv	al::FunctorV0M<al::ClippingAreaActorInfo*, void (al::ClippingAreaActorInfo::*)()>::operator()() const	
 0x710094DE20			FALSE	_ZNK2al10FunctorV0MIPNS_21ClippingAreaActorInfoEMS1_FvvEE5cloneEv	al::FunctorV0M<al::ClippingAreaActorInfo*, void (al::ClippingAreaActorInfo::*)()>::clone() const	
-0x710094DE70		ClippingAreaActorViewArea.o	FALSE	_ZN2al25ClippingAreaActorViewAreaC2ERKNS_13PlacementInfoERKNS_13ActorInitInfoE	al::ClippingAreaActorViewArea::ClippingAreaActorViewArea(al::PlacementInfo const&, al::ActorInitInfo const&)	object (class)
+0x710094DE70	Project/Clipping	ClippingAreaActorViewArea.o	FALSE	_ZN2al25ClippingAreaActorViewAreaC2ERKNS_13PlacementInfoERKNS_13ActorInitInfoE	al::ClippingAreaActorViewArea::ClippingAreaActorViewArea(al::PlacementInfo const&, al::ActorInitInfo const&)	object (class)
 0x710094E2E0			FALSE	_ZN2al25ClippingAreaActorViewAreaC1ERKNS_13PlacementInfoERKNS_13ActorInitInfoE	al::ClippingAreaActorViewArea::ClippingAreaActorViewArea(al::PlacementInfo const&, al::ActorInitInfo const&)	
 0x710094E760			FALSE	_ZN2al25ClippingAreaActorViewArea14updateClippingERKN4sead7Vector3IfEEb	al::ClippingAreaActorViewArea::updateClipping(sead::Vector3<float> const&, bool)	
 0x710094E880			FALSE	_ZNK2al25ClippingAreaActorViewArea9isClippedEPNS_13ClippingJudgeE	al::ClippingAreaActorViewArea::isClipped(al::ClippingJudge*) const	
@@ -58227,7 +58227,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710094FAC0			FALSE	_ZN2al27ClippingAreaActorViewHolder23setExpandedClippingModeEb	al::ClippingAreaActorViewHolder::setExpandedClippingMode(bool)	
 0x710094FB20			FALSE	_ZNK2al27ClippingAreaActorViewHolder12executorNameEv	al::ClippingAreaActorViewHolder::executorName() const	
 0x710094FB30			FALSE	_ZThn8_NK2al27ClippingAreaActorViewHolder12executorNameEv	non-virtual thunk to al::ClippingAreaActorViewHolder::executorName() const	
-0x710094FB40			FALSE	_ZN2al25ClippingAreaActorInfoListC2EPNS_27ClippingAreaActorViewHolderEi	al::ClippingAreaActorInfoList::ClippingAreaActorInfoList(al::ClippingAreaActorViewHolder*, int)	
+0x710094FB40		ClippingAreaActorInfoList.o	FALSE	_ZN2al25ClippingAreaActorInfoListC2EPNS_27ClippingAreaActorViewHolderEi	al::ClippingAreaActorInfoList::ClippingAreaActorInfoList(al::ClippingAreaActorViewHolder*, int)	
 0x710094FB60			FALSE	_ZN2al25ClippingAreaActorInfoList12registerInfoEPNS_21ClippingAreaActorInfoE	al::ClippingAreaActorInfoList::registerInfo(al::ClippingAreaActorInfo*)	
 0x710094FBA0			FALSE	_ZN2al25ClippingAreaActorInfoList10removeInfoEPNS_21ClippingAreaActorInfoE	al::ClippingAreaActorInfoList::removeInfo(al::ClippingAreaActorInfo*)	
 0x710094FBE0			FALSE	_ZN2al25ClippingAreaActorInfoList9queueInfoEPNS_21ClippingAreaActorInfoE	al::ClippingAreaActorInfoList::queueInfo(al::ClippingAreaActorInfo*)	
@@ -58298,8 +58298,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100950520			FALSE	_ZN2al20ClippingDirectorBase25executeRequestAsyncUpdateEv	al::ClippingDirectorBase::executeRequestAsyncUpdate()	
 0x7100950530			FALSE	_ZN2al20ClippingDirectorBase26waitPendingClippingRequestEv	al::ClippingDirectorBase::waitPendingClippingRequest()	
 0x7100950540			FALSE	_ZN2al20ClippingDirectorBase14setLODDisabledEPNS_9LiveActorEb	al::ClippingDirectorBase::setLODDisabled(al::LiveActor*, bool)	
-0x7100950550			FALSE	_ZN2al19ClippingActorHolderC2Ei	al::ClippingActorHolder::ClippingActorHolder(int)	
-0x71009505F0	Library/Clipping	ClippingActorHolder.o	FALSE	_ZN2al19ClippingActorHolder6updateEPKNS_13ClippingJudgeE	al::ClippingActorHolder::update(al::ClippingJudge const*)	object/folder from OdysseyDecomp file list
+0x7100950550	Library/Clipping	ClippingActorHolder.o	FALSE	_ZN2al19ClippingActorHolderC2Ei	al::ClippingActorHolder::ClippingActorHolder(int)	
+0x71009505F0			FALSE	_ZN2al19ClippingActorHolder6updateEPKNS_13ClippingJudgeE	al::ClippingActorHolder::update(al::ClippingJudge const*)	object/folder from OdysseyDecomp file list
 0x7100950650			FALSE	_ZN2al19ClippingActorHolder13registerActorEPNS_9LiveActorE	al::ClippingActorHolder::registerActor(al::LiveActor*)	
 0x71009506C0			FALSE	_ZN2al19ClippingActorHolder17initGroupClippingEPNS_9LiveActorERKNS_13ActorInitInfoE	al::ClippingActorHolder::initGroupClipping(al::LiveActor*, al::ActorInitInfo const&)	
 0x71009507A0			FALSE	_ZN2al19ClippingActorHolder16validateClippingEPNS_9LiveActorE	al::ClippingActorHolder::validateClipping(al::LiveActor*)	
@@ -58312,19 +58312,19 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100950B20			FALSE	_ZN2al19ClippingActorHolder15setTypeToSphereEPNS_9LiveActorEfPKN4sead7Vector3IfEE	al::ClippingActorHolder::setTypeToSphere(al::LiveActor*, float, sead::Vector3<float> const*)	
 0x7100950BA0			FALSE	_ZN2al19ClippingActorHolder19setNearClipDistanceEPNS_9LiveActorEf	al::ClippingActorHolder::setNearClipDistance(al::LiveActor*, float)	
 0x7100950C10			FALSE	_ZN2al19ClippingActorHolder15setFarClipLevelEPNS_9LiveActorEi	al::ClippingActorHolder::setFarClipLevel(al::LiveActor*, int)	
-0x7100950C80			FALSE	_ZN2al17ClippingActorInfoC1EPNS_9LiveActorE	al::ClippingActorInfo::ClippingActorInfo(al::LiveActor*)	
-0x7100950CE0		ClippingActorInfo.o	FALSE	_ZN2al17ClippingActorInfo15setTypeToSphereEfPKN4sead7Vector3IfEE	al::ClippingActorInfo::setTypeToSphere(float, sead::Vector3<float> const*)	object/folder from OdysseyDecomp file list
+0x7100950C80		ClippingActorInfo.o	FALSE	_ZN2al17ClippingActorInfoC1EPNS_9LiveActorE	al::ClippingActorInfo::ClippingActorInfo(al::LiveActor*)	
+0x7100950CE0			FALSE	_ZN2al17ClippingActorInfo15setTypeToSphereEfPKN4sead7Vector3IfEE	al::ClippingActorInfo::setTypeToSphere(float, sead::Vector3<float> const*)	object/folder from OdysseyDecomp file list
 0x7100950D30			FALSE	_ZN2al17ClippingActorInfo14updateClippingEPKNS_13ClippingJudgeE	al::ClippingActorInfo::updateClipping(al::ClippingJudge const*)	
 0x7100950DC0			FALSE	_ZNK2al17ClippingActorInfo13judgeClippingEPKNS_13ClippingJudgeE	al::ClippingActorInfo::judgeClipping(al::ClippingJudge const*) const	
 0x7100950DF0			FALSE	_ZNK2al17ClippingActorInfo15isGroupClippingEv	al::ClippingActorInfo::isGroupClipping() const	
 0x7100950E10			FALSE	_ZN2al17ClippingActorInfo18setGroupClippingIdERKNS_13ActorInitInfoE	al::ClippingActorInfo::setGroupClippingId(al::ActorInitInfo const&)	
-0x7100950E20			FALSE	_ZN2al21ClippingActorInfoListC2Ei	al::ClippingActorInfoList::ClippingActorInfoList(int)	
-0x7100950E90		ClippingActorInfoList.o	FALSE	_ZN2al21ClippingActorInfoList3addEPNS_17ClippingActorInfoE	al::ClippingActorInfoList::add(al::ClippingActorInfo*)	object/folder from OdysseyDecomp file list
+0x7100950E20		ClippingActorInfoList.o	FALSE	_ZN2al21ClippingActorInfoListC2Ei	al::ClippingActorInfoList::ClippingActorInfoList(int)	
+0x7100950E90			FALSE	_ZN2al21ClippingActorInfoList3addEPNS_17ClippingActorInfoE	al::ClippingActorInfoList::add(al::ClippingActorInfo*)	object/folder from OdysseyDecomp file list
 0x7100950EB0			FALSE	_ZN2al21ClippingActorInfoList6removeEPNS_9LiveActorE	al::ClippingActorInfoList::remove(al::LiveActor*)	
 0x7100950F20			FALSE	_ZNK2al21ClippingActorInfoList4findEPKNS_9LiveActorEPi	al::ClippingActorInfoList::find(al::LiveActor const*, int*) const	
 0x7100950F80			FALSE	_ZNK2al21ClippingActorInfoList7tryFindEPKNS_9LiveActorE	al::ClippingActorInfoList::tryFind(al::LiveActor const*) const	
 0x7100950FC0			FALSE	_ZNK2al21ClippingActorInfoList8isInListEPKNS_9LiveActorE	al::ClippingActorInfoList::isInList(al::LiveActor const*) const	
-0x7100951010		ClippingDirectorBase.o	FALSE	_ZN2al20ClippingDirectorBaseC2EPNS_15ExecuteDirectorEPKNS_15AreaObjDirectorEPKNS_12PlayerHolderEPNS_15SceneCameraInfoEPNS_17CameraDirector_RSE	al::ClippingDirectorBase::ClippingDirectorBase(al::ExecuteDirector*, al::AreaObjDirector const*, al::PlayerHolder const*, al::SceneCameraInfo*, al::CameraDirector_RS*)	object (class)
+0x7100951010	Library/Clipping	ClippingDirectorBase.o	FALSE	_ZN2al20ClippingDirectorBaseC2EPNS_15ExecuteDirectorEPKNS_15AreaObjDirectorEPKNS_12PlayerHolderEPNS_15SceneCameraInfoEPNS_17CameraDirector_RSE	al::ClippingDirectorBase::ClippingDirectorBase(al::ExecuteDirector*, al::AreaObjDirector const*, al::PlayerHolder const*, al::SceneCameraInfo*, al::CameraDirector_RS*)	object (class)
 0x71009510D0			FALSE	_ZN2al20ClippingDirectorBase7endInitEv	al::ClippingDirectorBase::endInit()	
 0x71009510E0			FALSE	_ZN2al20ClippingDirectorBase7executeEv	al::ClippingDirectorBase::execute()	
 0x7100951110			FALSE	_ZN2al20ClippingDirectorBase40setClippingJudgeUsClippingPosAsPlayerPosEb	al::ClippingDirectorBase::setClippingJudgeUsClippingPosAsPlayerPos(bool)	
@@ -58335,8 +58335,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71009511B0			FALSE	_ZN2al23ClippingFarAreaObserver6updateEv	al::ClippingFarAreaObserver::update()	
 0x71009512A0		ClippingFunction.o	FALSE	_ZN18alClippingFunction19addToClippingTargetEPN2al9LiveActorE	alClippingFunction::addToClippingTarget(al::LiveActor*)	object (smo)
 0x71009512D0			FALSE	_ZN18alClippingFunction24removeFromClippingTargetEPN2al9LiveActorE	alClippingFunction::removeFromClippingTarget(al::LiveActor*)	
-0x7100951300		ClippingInfoGroup.o	FALSE	_ZN2al17ClippingInfoGroupC2Ei	al::ClippingInfoGroup::ClippingInfoGroup(int)	object (class)
-0x7100951390	Library/Clipping	ClippingGroupHolder.o	FALSE	_ZN2al17ClippingInfoGroup12registerInfoEPNS_17ClippingActorInfoE	al::ClippingInfoGroup::registerInfo(al::ClippingActorInfo*)	object/folder from OdysseyDecomp file list
+0x7100951300	Library/Clipping	ClippingGroupHolder.o	FALSE	_ZN2al17ClippingInfoGroupC2Ei	al::ClippingInfoGroup::ClippingInfoGroup(int)	object (class)
+0x7100951390			FALSE	_ZN2al17ClippingInfoGroup12registerInfoEPNS_17ClippingActorInfoE	al::ClippingInfoGroup::registerInfo(al::ClippingActorInfo*)	object/folder from OdysseyDecomp file list
 0x71009513B0			FALSE	_ZN2al17ClippingInfoGroup10setGroupIdERKNS_13ActorInitInfoE	al::ClippingInfoGroup::setGroupId(al::ActorInitInfo const&)	
 0x71009513C0			FALSE	_ZNK2al17ClippingInfoGroup14isEqualGroupIdERKNS_13ActorInitInfoE	al::ClippingInfoGroup::isEqualGroupId(al::ActorInitInfo const&) const	
 0x7100951430			FALSE	_ZNK2al17ClippingInfoGroup16judgeClippingAllEPKNS_13ClippingJudgeE	al::ClippingInfoGroup::judgeClippingAll(al::ClippingJudge const*) const	
@@ -58346,7 +58346,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100951710			FALSE	_ZN2al19ClippingGroupHolder6updateEPKNS_13ClippingJudgeE	al::ClippingGroupHolder::update(al::ClippingJudge const*)	
 0x71009518A0			FALSE	_ZN2al19ClippingGroupHolder12createAndAddEPNS_17ClippingActorInfoERKNS_13ActorInitInfoEi	al::ClippingGroupHolder::createAndAdd(al::ClippingActorInfo*, al::ActorInitInfo const&, int)	
 0x7100951A10			FALSE	_ZN2al19ClippingGroupHolder12tryFindGroupERKNS_13ActorInitInfoE	al::ClippingGroupHolder::tryFindGroup(al::ActorInitInfo const&)	
-0x7100951AB0		ClippingJudge.o	FALSE	_ZN2al13ClippingJudgeC2EPKNS_23ClippingFarAreaObserverEPNS_15SceneCameraInfoEPNS_17CameraDirector_RSE	al::ClippingJudge::ClippingJudge(al::ClippingFarAreaObserver const*, al::SceneCameraInfo*, al::CameraDirector_RS*)	object (class)
+0x7100951AB0	Library/Clipping	ClippingJudge.o	FALSE	_ZN2al13ClippingJudgeC2EPKNS_23ClippingFarAreaObserverEPNS_15SceneCameraInfoEPNS_17CameraDirector_RSE	al::ClippingJudge::ClippingJudge(al::ClippingFarAreaObserver const*, al::SceneCameraInfo*, al::CameraDirector_RS*)	object (class)
 0x7100951B00			FALSE	_ZN2al13ClippingJudge6updateEv	al::ClippingJudge::update()	
 0x7100951BF0			FALSE	_ZN2al13ClippingJudge12setPlayerPosEPKNS_12PlayerHolderE	al::ClippingJudge::setPlayerPos(al::PlayerHolder const*)	
 0x7100951C60			FALSE	_ZNK2al13ClippingJudge14getFarClippingEv	al::ClippingJudge::getFarClipping() const	
@@ -58390,10 +58390,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71009538A0			FALSE	_ZN2al11ViewFrustum22calcFrustumFromPoseMtxERKN4sead8Matrix34IfEEffff	al::ViewFrustum::calcFrustumFromPoseMtx(sead::Matrix34<float> const&, float, float, float, float)	
 0x71009538B0			FALSE	_ZNK2al11ViewFrustum17isIntersectSphereERKN4sead7Vector3IfEEf	al::ViewFrustum::isIntersectSphere(sead::Vector3<float> const&, float) const	
 0x71009539C0			FALSE	_ZNK2al11ViewFrustum17calcFrustumPointsEPNS0_6PointsE	al::ViewFrustum::calcFrustumPoints(al::ViewFrustum::Points*) const	
-0x7100953E30			FALSE	sub_7100953E30	sub_7100953E30	
+0x7100953E30			FALSE	_ZN2alL18calcPlaneCrossLineEPN4sead4LineINS0_7Vector3IfEEEEPKNS0_6Plane3IfEES9_	_ZN2alL18calcPlaneCrossLineEPN4sead4LineINS0_7Vector3IfEEEEPKNS0_6Plane3IfEES9_	
 0x7100953F70			FALSE	_ZNK2al11ViewFrustum21calcPlaneIntersectionEPNS0_17PlaneIntersectionEPKN4sead6Plane3IfEE	al::ViewFrustum::calcPlaneIntersection(al::ViewFrustum::PlaneIntersection*, sead::Plane3<float> const*) const	
-0x7100954310			FALSE	_ZN2al16ClippingViewInfoC2Ev	al::ClippingViewInfo::ClippingViewInfo()	
-0x7100954320	Project/Clipping	ViewInfoCtrl.o	FALSE	_ZN2al12ViewInfoCtrlC1EPKNS_15AreaObjDirectorEPKNS_12PlayerHolderE	al::ViewInfoCtrl::ViewInfoCtrl(al::AreaObjDirector const*, al::PlayerHolder const*)	object (class)
+0x7100954310	Project/Clipping	ViewInfoCtrl.o	FALSE	_ZN2al16ClippingViewInfoC2Ev	al::ClippingViewInfo::ClippingViewInfo()	
+0x7100954320			FALSE	_ZN2al12ViewInfoCtrlC1EPKNS_15AreaObjDirectorEPKNS_12PlayerHolderE	al::ViewInfoCtrl::ViewInfoCtrl(al::AreaObjDirector const*, al::PlayerHolder const*)	object (class)
 0x71009543F0			FALSE	_ZN2al12ViewInfoCtrl13initActorInfoEPNS_17ClippingActorInfoEPNS_11PlacementIdE	al::ViewInfoCtrl::initActorInfo(al::ClippingActorInfo*, al::PlacementId*)	
 0x71009544C0			FALSE	_ZN2al12ViewInfoCtrl7endInitEv	al::ViewInfoCtrl::endInit()	
 0x71009544F0			FALSE	_ZN2al12ViewInfoCtrl6updateEv	al::ViewInfoCtrl::update()	
