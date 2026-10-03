@@ -40,9 +40,12 @@ public:
     const void* getCurrentCategoryLightInfo(s32 category) const;
 
     const CubeMapInfo* getForceCubeMapInfo() const { return mForceCubeMapInfo; }
+    f32 getModelLightIntensity() const { return mModelLightIntensity; }
 
 private:
-    u8 _0[0x1f8];
+    u8 _0[0x8];
+    f32 mModelLightIntensity;
+    u8 _c[0x1f8 - 0xc];
     CubeMapInfo* mForceCubeMapInfo;
     u8 _200[0x258 - 0x200];
 };

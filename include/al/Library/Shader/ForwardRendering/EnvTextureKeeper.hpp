@@ -87,6 +87,12 @@ public:
     bool isIndirectRefract() const;
     bool isRefractCubeMap() const;
 
+    void setOverrideCubeMapId(s32 id) { mOverride.mCubeMapId = id; }
+
+    void setOverrideIrradiance(s32 irradiance) { mOverride.mIrradiance = irradiance; }
+
+    void setOverrideRefractCubeMapId(s32 id) { mOverride.mRefractCubeMapId = id; }
+
 private:
     void setRoughness(s32 roughness) {
         mBase.mRoughness = roughness;

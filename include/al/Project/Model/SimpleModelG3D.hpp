@@ -9,7 +9,7 @@ namespace nn::g3d {
 class MaterialObj;
 class ModelObj;
 class ResModel;
-class ResRenderState;
+class ShaderSelector;
 class ShadingModelObj;
 }  // namespace nn::g3d
 
@@ -24,27 +24,31 @@ class DrawContext;
 namespace al {
 class EnvTexInfo;
 class FunctorBase;
-class UniformBlockAssignArray;
 class GpuMemAllocator;
 class ModelAdditionalInfo;
+class ModelShaderAssign;
 class RenderState;
 class Resource;
 class ShaderHolder;
+struct UniformBlockAssign;
+class UniformBlockAssignArray;
 
 class SimpleModelG3D {
 public:
     struct Shape {
         Shape();
 
-        void* _0;
-        RenderState* mRenderState;
-        nn::g3d::ShadingModelObj* mShadingModelObj;
-        void* _18;
-        EnvTexInfo* mEnvTexInfo;
-        bool _28;
-        bool _29;
-        bool _2a;
+        ModelShaderAssign* mShaderAssign = nullptr;
+        RenderState* mRenderState = nullptr;
+        const nn::g3d::ShadingModelObj* mShadingModelObj = nullptr;
+        nn::g3d::ShaderSelector* mShaderSelector = nullptr;
+        EnvTexInfo* mEnvTexInfo = nullptr;
+        bool mIsRenderMaterial = true;
+        bool mIsRenderCloudLayer = false;
+        bool _2a = false;  // Material has to be recalculated every frame.
     };
+
+    static_assert(sizeof(Shape) == 0x30);
 
     static SimpleModelG3D* createFromOtherModel(SimpleModelG3D* pOther);
 
@@ -52,10 +56,11 @@ public:
     ~SimpleModelG3D();
 
     bool tryInitFixedMatUbo();
-    void initResource(Resource* pResource, s32 bufferNum, sead::Heap* pHeap, GpuMemAllocator* pAllocator);
-    void initialize(nn::g3d::ResModel* pResModel, s32 bufferNum, sead::Heap* pHeap,
+    void initResource(Resource* pResource, s32 viewNum, sead::Heap* pHeap,
+                      GpuMemAllocator* pAllocator);
+    void initialize(nn::g3d::ResModel* pResModel, s32 viewNum, sead::Heap* pHeap,
                     GpuMemAllocator* pAllocator);
-    void tryBindShader(const ShaderHolder* pShaderHolder);
+    bool tryBindShader(const ShaderHolder* pShaderHolder);
     void setModelGlobalAlpha() const;
     void calcBounding();
     void calcBoundingForDepth();
@@ -65,8 +70,8 @@ public:
     bool isShapeVisible(s32 index) const;
     void setModelAdditionalInfo(const ModelAdditionalInfo& rInfo) const;
     void setCubeMapIndexAllShape(s32 index);
-    const nn::g3d::ResRenderState* getResRenderState(s32 index) const;
-    nn::g3d::ResRenderState* getResRenderStatePtr(s32 index);
+    const RenderState* getResRenderState(s32 index) const;
+    RenderState* getResRenderStatePtr(s32 index);
     void useCustomRenderState(agl::DrawContext* pContext, nn::g3d::MaterialObj* pMaterial,
                               s32 index) const;
     void resetResRenderState(s32 index);
@@ -74,10 +79,12 @@ public:
     bool isCreateResRenderState(s32 index) const;
     nn::g3d::MaterialObj* getMaterialObj(s32 index) const;
     void setPostUpdateWorldMatrixCallback(const FunctorBase& rFunctor);
-    void updateLod(const sead::Vector3f& rPos, s32 lodIndex);
+    void updateLod(const sead::Vector3f& rPos, s32 updateCount);
     void setLodParams(const f32* pLodDistances, s32 lodNum);
 
     nn::g3d::ModelObj* getModelObj() const { return mModelObj; }
+
+    bool isVisible() const { return mIsVisible; }
 
     const Shape& getShape(s32 index) const { return (*mShapes)[index]; }
 
@@ -94,41 +101,45 @@ public:
     void setGlobalAlphaPtr(f32* pAlpha) { mGlobalAlpha = pAlpha; }
 
     void setGlobalYOffsetPtr(f32* pYOffset) { mGlobalYOffset = pYOffset; }
+
     GpuMemAllocator* getGpuMemAllocator() const { return mGpuMemAllocator; }
+
     UniformBlockAssignArray* getUniformBlockAssignArray() const { return mUniformBlockAssignArray; }
+
     s32 getCurrentBufferIndex() const { return *mCurrentBufferIndex; }
+
     bool isForceActivateTexture() const { return mIsForceActivateTexture; }
+
     bool isLodDisabled() const { return mIsLodDisabled; }
+
     s32 getLodIndex() const { return mLodIndex; }
+
     s32 getLodUpdateCount() const { return mLodUpdateCount; }
 
-    bool mIsCreatedFromOther;
-    nn::g3d::ModelObj* mModelObj;
-    sead::Buffer<Shape>* mShapes;
-    GpuMemAllocator* mGpuMemAllocator;
-    UniformBlockAssignArray* mUniformBlockAssignArray;
-    void* _28;
-    bool mIsVisible;
-    bool mIsDisableDepthShadow;
-    bool mIsDisableDraw;
-    const s32* mCurrentBufferIndex;
-    s32 mBufferNum;
-    bool _44;
-    bool _45;
-    bool _46;
-    bool mIsForceActivateTexture;
-    void* _48;
+    bool mIsCreatedFromOther = false;
+    nn::g3d::ModelObj* mModelObj = nullptr;
+    sead::Buffer<Shape>* mShapes = nullptr;
+    GpuMemAllocator* mGpuMemAllocator = nullptr;
+    UniformBlockAssignArray* mUniformBlockAssignArray = nullptr;
+    UniformBlockAssign* _28 = nullptr;  // "cModelAdditionalInfo" uniform block.
+    bool mIsVisible = true;
+    bool mIsDisableDepthShadow = false;
+    bool mIsDisableDraw = false;
+    s32* mCurrentBufferIndex = nullptr;
+    s32 mBufferNum = 2;
+    bool _44 = true;  // Bounding is calculated in updateWorldMatrix.
+    bool _45 = true;  // Material is calculated in updateGPUBuffer.
+    bool mIsDirtyBoundingForDepth = false;
+    bool mIsForceActivateTexture = false;
+    FunctorBase* mPostUpdateWorldMatrixCallback = nullptr;
     s32 mLodNum;
-    f32 _54;
-    f32 _58;
-    f32 _5c;
-    f32 _60;
-    s32 mLodIndex;
-    s32 mLodUpdateCount;
-    const sead::Vector3f* mLodPos;
-    bool mIsLodDisabled;
-    f32* mGlobalAlpha;
-    f32* mGlobalYOffset;
+    f32 mLodDistanceSq[4];
+    s32 mLodIndex = 0;
+    s32 mLodUpdateCount = -1;
+    const sead::Vector3f* mLodPos = nullptr;
+    bool mIsLodDisabled = true;
+    f32* mGlobalAlpha = nullptr;
+    f32* mGlobalYOffset = nullptr;
 };
 
 static_assert(sizeof(SimpleModelG3D) == 0x90);

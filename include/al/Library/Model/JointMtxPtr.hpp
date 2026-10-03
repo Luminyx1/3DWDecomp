@@ -14,7 +14,6 @@ public:
 
     explicit JointMtxPtr(const sead::Matrix34f* pMtx) { set(pMtx); }
 
-
     void setNull();
     void set(const sead::Matrix34f* pMtx);
     void set(const Matrix43f* pMtx);
@@ -22,10 +21,14 @@ public:
     void calcMtxScale(sead::Vector3f* pOut) const;
     void copyTo(sead::Matrix34f* pOut) const;
 
-    bool isValid() const { return mMtx != nullptr; }
+    bool isValid() const { return mMtx34 != nullptr; }
 
 private:
-    const void* mMtx;
+    union {
+        const sead::Matrix34f* mMtx34;
+        const Matrix43f* mMtx43;
+    };
+
     bool mIsMatrix43;
 };
 

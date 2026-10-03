@@ -59,13 +59,15 @@ void drawModelShape(const nn::g3d::SkeletonObj* pSkeleton, const nn::g3d::Materi
 bool isExistBoundingNode(const nn::g3d::ResShape* pShape);
 bool isModelShapeDraw(const al::SimpleModelG3D* pModel, s32 index,
                       const nn::g3d::ViewVolume& rViewVolume);
-al::MeshDrawerTable* createMeshDrawerTableFromAssignShader(const al::SimpleModelG3D* pModel, s32 type);
+al::MeshDrawerTable* createMeshDrawerTableFromAssignShader(const al::SimpleModelG3D* pModel,
+                                                           s32 meshNum);
 nn::g3d::ShaderSelector* createShaderSelector(al::GpuMemAllocator* pAllocator,
                                               const nn::g3d::ShapeObj* pShape,
                                               const nn::g3d::MaterialObj* pMaterial,
                                               nn::g3d::ResShadingModel* pShadingModel,
                                               s32 optionNum, const char* const* pOptionNames,
-                                              const char* const* pOptionValues, bool);
+                                              const char* const* pOptionValues,
+                                              bool isUseDefault);
 nn::g3d::ShaderSelector* createShaderSelectorFromAssignShader(al::GpuMemAllocator* pAllocator,
                                                               const nn::g3d::ShapeObj* pShape,
                                                               const nn::g3d::MaterialObj* pMaterial);
@@ -79,12 +81,13 @@ void prepareModelShapeDrawDeferredGraphicsContextByCustom(agl::DrawContext* pCon
                                                           const al::SimpleModelG3D* pModel,
                                                           s32 index, al::BlendType blendType);
 void createMeshDrawerTableDisplayList(const al::MeshDrawerTable* pTable, const alModelCafe* pModel,
-                                      bool);
+                                      bool isUseUniformRegister);
 void createMeshDrawerTableDisplayListRenderStateInvalidate(const al::MeshDrawerTable* pTable,
-                                                           const alModelCafe* pModel, bool);
+                                                           const alModelCafe* pModel,
+                                                           bool isUseUniformRegister);
 bool isShaderAssignAlphaMask(const nn::g3d::ModelObj* pModel, s32 index);
 bool isShaderAssignAlphaMask(const nn::g3d::MaterialObj* pMaterial);
-s32 getShaderAssignAlphaFunc(const nn::g3d::ModelObj* pModel, s32 index);
+const char* getShaderAssignAlphaFunc(const nn::g3d::ModelObj* pModel, s32 index);
 const char* getShaderAssignAlphaFunc(const nn::g3d::MaterialObj* pMaterial);
 bool isShaderUsingThickness(const nn::g3d::ShadingModelObj& rShadingModel);
 bool isShaderIndirect(const nn::g3d::ShadingModelObj& rShadingModel);
@@ -102,4 +105,9 @@ bool isShaderAssignDeferred(const nn::g3d::ModelObj* pModel, s32 index);
 bool isShaderAssignDeferred(const nn::g3d::MaterialObj* pMaterial);
 bool isShaderAssignForward(const nn::g3d::ModelObj* pModel, s32 index);
 bool isShaderAssignForward(const nn::g3d::MaterialObj* pMaterial);
+al::ModelShaderAssign* createModelShaderAssign(const nn::g3d::ShapeObj* pShape,
+                                               const nn::g3d::MaterialObj* pMaterial,
+                                               nn::g3d::ResShadingModel* pShadingModel,
+                                               s32 optionNum, const char* const* pOptionNames,
+                                               const char* const* pOptionValues);
 }  // namespace alModelFunction

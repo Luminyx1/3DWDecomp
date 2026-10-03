@@ -42,6 +42,8 @@ public:
 
     sead::Color4f& getSpcColor() { return *mSpcColor; }
 
+    const sead::Color4f& getSpcColor() const { return *mSpcColor; }
+
     f32& getSpcPower() { return *mSpcPower; }
 
     f32 getSpcPower() const { return *mSpcPower; }

@@ -24,6 +24,9 @@ public:
     void activateModelLightTexture(const nn::g3d::ResMaterial* pMaterial);
     void activateModelLightTexture(s32 index);
 
+    const GraphicsSystemInfo* getGraphicsSystemInfo() const { return mGraphicsSystemInfo; }
+    const void* getLightInfo() const { return mLightInfo; }
+
 protected:
     explicit ModelAdditionalInfo(const GraphicsSystemInfo* pInfo) : mGraphicsSystemInfo(pInfo) {
         mEnvTexId.initForCache();

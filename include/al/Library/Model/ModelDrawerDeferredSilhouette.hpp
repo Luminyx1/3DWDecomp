@@ -6,7 +6,10 @@
 
 namespace al {
 
-enum SilhouetteDrawCategory : s32 {};
+/// Draw category index, passed by value as a small struct (in a 64-bit register).
+struct SilhouetteDrawCategory {
+    s32 value;
+};
 
 class ModelDrawerDeferredSilhouette : public ModelDrawer {
 public:

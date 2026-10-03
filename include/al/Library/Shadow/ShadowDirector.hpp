@@ -58,7 +58,9 @@ public:
     s32 mComposeType;
     u8 _3e4[0x400 - 0x3e4];
     f32 _400;
-    u8 _404[0x1f00 - 0x404];
+    u8 _404[0x420 - 0x404];
+    f32 _420;
+    u8 _424[0x1f00 - 0x424];
 };
 
 static_assert(sizeof(ShadowDirector) == 0x1f00);

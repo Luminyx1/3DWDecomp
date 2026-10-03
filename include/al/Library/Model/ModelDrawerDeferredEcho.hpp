@@ -6,7 +6,10 @@
 
 namespace al {
 
-enum EchoDrawCategory : s32 {};
+/// Draw category index, passed by value as a small struct (in a 64-bit register).
+struct EchoDrawCategory {
+    s32 value;
+};
 
 class ModelDrawerDeferredEcho : public ModelDrawer {
 public:

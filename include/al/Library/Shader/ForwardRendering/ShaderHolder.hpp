@@ -19,6 +19,7 @@ public:
     void setupShaderArchives();
     void cleanupShaderArchives();
     nn::g3d::ResShadingModel* getShadingModel(const char* pName) const;
+    nn::g3d::ResShadingModel* getShadingModelUber(const char* pName) const;
     agl::ShaderProgram* getShaderProgram(const char* pName) const;
     agl::ShaderProgram* tryGetShaderProgram(const char* pName) const;
 };

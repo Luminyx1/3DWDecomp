@@ -18,6 +18,11 @@ public:
 
     void Use(agl::DrawContext* pDrawContext, nn::g3d::MaterialObj* pMaterialObj) const;
 
+    bool isEnable() const { return _0; }
+    s32 getMode() const { return _4; }
+    s32 getBlendMode() const { return _8; }
+    bool isAlphaTest() const { return _c; }
+
 private:
     bool _0;
     s32 _4;
