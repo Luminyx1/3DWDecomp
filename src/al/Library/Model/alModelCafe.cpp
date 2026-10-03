@@ -201,11 +201,11 @@ void alModelCafe::initModel(s32 bufferNum, al::GpuMemAllocator* pAllocator) {
     }
 
     sead::Matrix34f mtx;
-    mtx.makeT(sead::Vector3f::zero);
+    mtx.makeQT(sead::Quatf(1.0f, 0.0f, 0.0f, 0.0f), sead::Vector3f::zero);
     mModelG3D->updateWorldMatrix(mtx, sead::Vector3f::ones);
 
-    al::AnimPlayerInitInfo info = {(mAnimRes != nullptr) ? mAnimRes : mModelRes, mModelG3D->getModelObj(),
-                                   mModelRes, mInitResourceDataAnim};
+    al::AnimPlayerInitInfo info = {(mAnimRes != nullptr) ? mAnimRes : mModelRes,
+                                   mModelG3D->getModelObj(), mModelRes, mInitResourceDataAnim};
 
     mAnimPlayerSkl = al::AnimPlayerSkl::tryCreate(&info, bufferNum);
     mAnimPlayerMat1 = al::AnimPlayerMat::tryCreate(&info, 1);
