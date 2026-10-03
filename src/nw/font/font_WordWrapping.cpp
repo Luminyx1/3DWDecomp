@@ -1192,6 +1192,11 @@ const BreakAction PairTableDefault[LineBreakClass_PairCount][LineBreakClass_Pair
 
 const int LineBreakRangeCount = sizeof(LineBreakRanges) / sizeof(LineBreakRanges[0]);
 
+/**
+ * Looks up the UAX #14 line break class of a character.
+ * @param code UTF-32 character code
+ * @return the line break class, or ID if the character is not in the table
+ */
 LineBreakClass GetLineBreakClass(uint32_t code) {
     int low = 0;
     int high = LineBreakRangeCount;
@@ -1218,6 +1223,11 @@ LineBreakClass GetLineBreakClass(uint32_t code) {
     return LineBreakClass_ID;
 }
 
+/**
+ * Maps the classes without a pair table entry onto the classes they behave like.
+ * @param lineBreakClass raw line break class
+ * @return the resolved line break class
+ */
 LineBreakClass ResolveLineBreakClass(LineBreakClass lineBreakClass) {
     if (lineBreakClass >= LineBreakClass_CR && lineBreakClass <= LineBreakClass_NL) {
         lineBreakClass = LineBreakClass_BK;
@@ -1246,40 +1256,83 @@ LineBreakClass ResolveLineBreakClass(LineBreakClass lineBreakClass) {
     return lineBreakClass;
 }
 
+/**
+ * Checks whether a character is a breaking space.
+ * @param code UTF-32 character code
+ * @return whether the character has the SP line break class
+ */
 bool IsSpace(uint32_t code) {
     return GetLineBreakClass(code) == LineBreakClass_SP;
 }
 
+/**
+ * Reads a UTF-16 character without advancing.
+ * @param pPos position of the character
+ * @return the character code
+ */
 uint32_t PeekChar(const uint16_t* pPos) {
     return *pPos;
 }
 
+/**
+ * Reads a UTF-8 character without advancing.
+ * @param pPos position of the character
+ * @return the UTF-32 character code
+ */
 uint32_t PeekChar(const char* pPos) {
     uint32_t code;
+    const char* pCharPos = pPos;
     char buffer[4];
-    nn::util::PickOutCharacterFromUtf8String(buffer, &pPos);
+    nn::util::PickOutCharacterFromUtf8String(buffer, &pCharPos);
     code = 0;
     nn::util::ConvertCharacterUtf8ToUtf32(&code, buffer);
     return code;
 }
 
+/**
+ * Advances past a UTF-16 character.
+ * @param ppPos position to advance
+ */
 void StepChar(const uint16_t** ppPos) {
     (*ppPos)++;
 }
 
+/**
+ * Advances past a UTF-8 character.
+ * @param ppPos position to advance
+ */
 void StepChar(const char** ppPos) {
     char buffer[4];
     nn::util::PickOutCharacterFromUtf8String(buffer, ppPos);
 }
 
+/**
+ * Converts a UTF-16 code unit to a character code.
+ * @param c code unit
+ * @return the character code
+ */
 uint32_t ToCode(uint16_t c) {
     return c;
 }
 
+/**
+ * Converts a UTF-8 code unit to a character code.
+ * @param c code unit
+ * @return the code unit as an unsigned value
+ */
 uint32_t ToCode(char c) {
     return static_cast<uint8_t>(c);
 }
 
+/**
+ * Skips tags and reads the line break class of the next character.
+ * @param ppCharPos set to the position of the character read
+ * @param ppPos current position, advanced past the character
+ * @param pEnd end of the text
+ * @param rCallback callback giving the tag sizes
+ * @param pSkipCount number of following characters that must not be broken
+ * @return the resolved line break class of the character
+ */
 template <typename CharType>
 ALWAYS_INLINE LineBreakClass
 ReadLineBreakClass(const CharType** ppCharPos, const CharType** ppPos, const CharType* pEnd,
@@ -1318,6 +1371,14 @@ ReadLineBreakClass(const CharType** ppCharPos, const CharType** ppPos, const Cha
     return ResolveLineBreakClass(GetLineBreakClass(code));
 }
 
+/**
+ * Finds the position where a text should be broken.
+ * @param pStart start of the text
+ * @param pEnd end of the text
+ * @param rCallback callback giving the width limit and tag sizes
+ * @param rConfig word wrapping configuration
+ * @return the position of the last character on the line
+ */
 template <typename CharType>
 const CharType* FindLineBreakImpl(const CharType* pStart, const CharType* pEnd,
                                   WordWrapCallbackBase<CharType>& rCallback,
@@ -1326,88 +1387,95 @@ const CharType* FindLineBreakImpl(const CharType* pStart, const CharType* pEnd,
         return pStart;
     }
 
-    size_t skipCount = 0;
     const CharType* pPos = pStart;
+    size_t skipCount = 0;
     const CharType* pCharPos;
-    LineBreakClass prevClass = ReadLineBreakClass(&pCharPos, &pPos, pEnd, rCallback, &skipCount);
+    LineBreakClass firstClass = ReadLineBreakClass(&pCharPos, &pPos, pEnd, rCallback, &skipCount);
 
-    if (prevClass == LineBreakClass_BK) {
+    switch (firstClass) {
+    case LineBreakClass_SP:
+        firstClass = LineBreakClass_WJ;
+        break;
+    case LineBreakClass_BK:
         return pCharPos;
-    }
-
-    if (prevClass == LineBreakClass_SP) {
-        prevClass = LineBreakClass_WJ;
+    default:
+        break;
     }
 
     const CharType* pLimit = rCallback.GetLineBreakLimit(pStart, pEnd) - 1;
     const CharType* pResult = pLimit > pStart ? pLimit : pStart;
-    const CharType* pLimitPos = pResult + 1;
     const CharType* pBreak = pEnd;
     const CharType* pPrevPos = pCharPos;
-    bool isSpace = false;
+    uint8_t isSpace = false;
+    LineBreakClass prevClass = firstClass;
 
     while (pPos != pEnd) {
         LineBreakClass lineBreakClass =
             ReadLineBreakClass(&pCharPos, &pPos, pEnd, rCallback, &skipCount);
+
+        if (lineBreakClass == LineBreakClass_CY) {
+            if (rConfig.isCyrillicBreakEnabled &&
+                (isSpace || prevClass == LineBreakClass_OP || prevClass == LineBreakClass_QU ||
+                 prevClass == LineBreakClass_SY || prevClass == LineBreakClass_SP)) {
+                lineBreakClass = LineBreakClass_CY;
+            } else {
+                lineBreakClass = LineBreakClass_AL;
+            }
+        }
+
         if (lineBreakClass == LineBreakClass_SP) {
             isSpace = true;
-            pPrevPos = pCharPos;
-            continue;
-        }
-
-        bool isMandatory = false;
-        bool isDirect = false;
-        bool canBreak = true;
-
-        if (lineBreakClass == LineBreakClass_BK) {
-            isMandatory = true;
         } else {
-            if (lineBreakClass == LineBreakClass_CY) {
-                if (rConfig.isCyrillicBreakEnabled &&
-                    (isSpace || prevClass == LineBreakClass_OP || prevClass == LineBreakClass_QU ||
-                     prevClass == LineBreakClass_SY || prevClass == LineBreakClass_SP)) {
-                    lineBreakClass = LineBreakClass_CY;
-                } else {
-                    lineBreakClass = LineBreakClass_AL;
-                }
-            }
+            uint8_t isMandatory = false;
+            uint8_t isDirect = false;
+            bool canBreak = true;
 
-            const BreakAction action = rConfig.isAlternativePairTableUsed ?
-                                           PairTableAlternative[prevClass][lineBreakClass] :
-                                           PairTableDefault[prevClass][lineBreakClass];
-            if (action == IND || action == CIB) {
-                canBreak = isSpace;
-            } else if (action == DIR) {
-                isDirect = true;
+            if (lineBreakClass == LineBreakClass_BK) {
+                isMandatory = true;
             } else {
-                canBreak = false;
+                const BreakAction action = rConfig.isAlternativePairTableUsed ?
+                                               PairTableAlternative[prevClass][lineBreakClass] :
+                                               PairTableDefault[prevClass][lineBreakClass];
+                switch (action) {
+                case DIR:
+                    isDirect = true;
+                    break;
+                case IND:
+                case CIB:
+                    canBreak = isSpace;
+                    break;
+                default:
+                    canBreak = false;
+                    break;
+                }
             }
-        }
 
-        if (canBreak) {
-            if (pCharPos >= pLimitPos) {
-                if (isSpace && isDirect) {
-                    return pResult;
+            if (canBreak) {
+                if (pCharPos >= pResult + 1) {
+                    if (isSpace && isDirect) {
+                        return pResult;
+                    }
+
+                    return pPrevPos == pEnd ? pResult : pPrevPos;
                 }
 
-                return pPrevPos == pEnd ? pResult : pPrevPos;
+                if (isMandatory) {
+                    return pCharPos;
+                }
+
+                pBreak = pPrevPos;
+            } else if (pCharPos >= pResult + 1) {
+                return pBreak == pEnd ? pResult : pBreak;
             }
 
-            if (isMandatory) {
-                return pCharPos;
-            }
-
-            pBreak = pPrevPos;
-        } else if (pCharPos >= pLimitPos) {
-            return pBreak == pEnd ? pResult : pBreak;
+            isSpace = false;
+            prevClass = lineBreakClass;
         }
 
-        isSpace = false;
-        prevClass = lineBreakClass;
         pPrevPos = pCharPos;
     }
 
-    if (pLimitPos > pEnd) {
+    if (pResult + 1 > pEnd) {
         return pCharPos;
     }
 
@@ -1418,6 +1486,17 @@ const CharType* FindLineBreakImpl(const CharType* pStart, const CharType* pEnd,
     return pBreak == pEnd ? pResult : pBreak;
 }
 
+/**
+ * Copies a text inserting line breaks where it has to be wrapped.
+ * @param pOutLength set to the length of the output
+ * @param pDst output buffer
+ * @param dstSize size of the output buffer in characters
+ * @param pSrc input text
+ * @param srcLength length of the input text in characters
+ * @param rCallback callback giving the width limit and tag sizes
+ * @param rConfig word wrapping configuration
+ * @return whether the whole text fit in the buffer and line count
+ */
 template <typename CharType>
 bool CalculateWordWrappingImpl(uint32_t* pOutLength, CharType* pDst, uint32_t dstSize,
                                const CharType* pSrc, uint32_t srcLength,
@@ -1437,25 +1516,26 @@ bool CalculateWordWrappingImpl(uint32_t* pOutLength, CharType* pDst, uint32_t ds
         return true;
     }
 
+    const CharType* pPos = pSrc;
     const int maxLineCount = rConfig.maxLineCount;
     const CharType* pEnd = pSrc + srcLength;
     int dstPos = 0;
     int lineCount = 0;
 
     for (;;) {
-        const CharType* pBreak = FindLineBreakImpl(pSrc, pEnd, rCallback, rConfig);
-        const int lineLength = pBreak - pSrc;
+        const CharType* pBreak = FindLineBreakImpl(pPos, pEnd, rCallback, rConfig);
+        const int lineLength = pBreak - pPos;
         int breakLength = lineLength + 1;
         const int remain = dstSize - dstPos - 1;
         int copyLength = remain < breakLength ? remain : lineLength + 1;
-        const bool isSpace = IsSpace(ToCode((pSrc + copyLength)[-1]));
+        const bool isSpace = IsSpace(ToCode((pPos + copyLength)[-1]));
         copyLength -= isSpace;
 
         if (isSpace) {
             breakLength = lineLength;
         }
 
-        std::memcpy(pDst + dstPos, pSrc, copyLength * sizeof(CharType));
+        std::memcpy(pDst + dstPos, pPos, copyLength * sizeof(CharType));
         dstPos += copyLength;
         pDst[dstPos] = 0;
 
@@ -1467,10 +1547,10 @@ bool CalculateWordWrappingImpl(uint32_t* pOutLength, CharType* pDst, uint32_t ds
             return false;
         }
 
-        pSrc = pBreak;
-        StepChar(&pSrc);
+        pPos = pBreak;
+        StepChar(&pPos);
 
-        if (pSrc == pEnd) {
+        if (pPos == pEnd) {
             if (pOutLength != nullptr) {
                 *pOutLength = dstPos;
             }
@@ -1503,10 +1583,10 @@ bool CalculateWordWrappingImpl(uint32_t* pOutLength, CharType* pDst, uint32_t ds
         }
 
         if (rConfig.isLeadingSpaceRemoved) {
-            while (IsSpace(PeekChar(pSrc))) {
-                StepChar(&pSrc);
+            while (IsSpace(PeekChar(pPos))) {
+                StepChar(&pPos);
 
-                if (pSrc == pEnd) {
+                if (pPos == pEnd) {
                     dstPos--;
                     pDst[dstPos] = 0;
 
