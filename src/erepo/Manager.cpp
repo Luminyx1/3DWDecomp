@@ -14,6 +14,10 @@
 namespace erepo {
 
 namespace {
+/**
+ * Deletes every reporter of an array and frees its buffer.
+ * @param rReporters Reporter array.
+ */
 void deleteReporters(Manager::ReporterArray& rReporters)
 {
     if (rReporters.data() == nullptr) {
@@ -356,6 +360,9 @@ void Manager::update(const UpdateArg& rArg)
     mSendThread->sendMessage(SendThread::cMsgSave, sead::MessageQueue::BlockType::NonBlocking);
 }
 
+/**
+ * Advances a pending save or load, then sends the startup reports and marks startup as finished.
+ */
 void Manager::updateBeginStartup_()
 {
     switch (mSaveLoadState) {
@@ -404,66 +411,39 @@ bool Manager::waitFinishSendingAsync_(s32 timeoutMs)
     return true;
 }
 
+/**
+ * Updates the reporters once startup finished, sending the daily report when it is due.
+ * @param rArg Frame time and system message.
+ */
 void Manager::updateFinishStartup_(const UpdateArg& rArg)
 {
-    s32 counter = sUpdateCounter;
-    sUpdateCounter = counter + 1;
+    bool isDailyReportDue = sUpdateCounter % 3600 == 0;
+    sUpdateCounter++;
+    isDailyReportDue = isDailyReportDue && checkSendDailyReport_();
 
-    if (counter % 3600 == 0 && checkSendDailyReport_()) {
-        for (auto& reporter : mReporterLists[0].reporters) {
+    for (s32 i = 0; i < ReporterType::size(); i++) {
+        ReporterList& list = mReporterLists[i];
+
+        for (auto& reporter : list.reporters) {
             reporter.update(rArg);
         }
 
-        sendDailyReport_(mReporterLists[0].type);
+        if (isDailyReportDue) {
+            sendDailyReport_(list.type);
+        }
 
-        if (mReporterLists[0].requestFlag.testAndClear(ReporterType::cSystem)) {
-            for (auto& reporter : mReporterLists[0].reporters) {
-                reporter.report(mReporterLists[0].requestId);
+        if (list.requestFlag.testAndClear(ReporterType::cSystem)) {
+            for (auto& reporter : list.reporters) {
+                reporter.report(list.requestId);
             }
 
             requestSaveData();
         }
+    }
 
-        for (auto& reporter : mReporterLists[1].reporters) {
-            reporter.update(rArg);
-        }
-
-        sendDailyReport_(mReporterLists[1].type);
-
-        if (mReporterLists[1].requestFlag.testAndClear(ReporterType::cSystem)) {
-            for (auto& reporter : mReporterLists[1].reporters) {
-                reporter.report(mReporterLists[1].requestId);
-            }
-
-            requestSaveData();
-        }
-
+    if (isDailyReportDue) {
         mSaveDataInfo.getValue(SaveDataInfo::cValueIndex_LastDailyReportTime).set(getCurrentDateTime());
         requestSaveData();
-    } else {
-        for (auto& reporter : mReporterLists[0].reporters) {
-            reporter.update(rArg);
-        }
-
-        if (mReporterLists[0].requestFlag.testAndClear(ReporterType::cSystem)) {
-            for (auto& reporter : mReporterLists[0].reporters) {
-                reporter.report(mReporterLists[0].requestId);
-            }
-
-            requestSaveData();
-        }
-
-        for (auto& reporter : mReporterLists[1].reporters) {
-            reporter.update(rArg);
-        }
-
-        if (mReporterLists[1].requestFlag.testAndClear(ReporterType::cSystem)) {
-            for (auto& reporter : mReporterLists[1].reporters) {
-                reporter.report(mReporterLists[1].requestId);
-            }
-
-            requestSaveData();
-        }
     }
 
     updateSaveLoad_();
@@ -517,11 +497,11 @@ bool Manager::checkSendDailyReport_()
     u32 lastTime = mSaveDataInfo.getValue(SaveDataInfo::cValueIndex_LastDailyReportTime).get();
     u32 nowTime = getCurrentDateTime();
 
-    if (lastTime > nowTime) {
-        return false;
+    if (lastTime <= nowTime && sead::DateSpan(nowTime - lastTime).getSpan() >= 24 * 60 * 60) {
+        return true;
     }
 
-    return sead::DateSpan(nowTime - lastTime).getSpan() >= 24 * 60 * 60;
+    return false;
 }
 
 /**
@@ -565,6 +545,10 @@ void Manager::finalize()
     mHeap = nullptr;
 }
 
+/**
+ * Gets the time the application was launched.
+ * @return Launch time.
+ */
 const sead::DateTime& Manager::getLaunchTime() const
 {
     return sLaunchTime;
