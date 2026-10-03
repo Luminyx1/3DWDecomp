@@ -160,6 +160,38 @@ public:
         }
     }
 
+    T* findInfoDirect(s32 index) const {
+        const AudioInfoList<T>* list = this;
+
+        while (true) {
+            const sead::PtrArray<T>* infos = list->mInfos;
+
+            if (index < infos->size()) {
+                return infos->unsafeAt(index);
+            }
+
+            list = list->mNext;
+
+            if (list == nullptr) {
+                return nullptr;
+            }
+
+            index -= infos->size();
+
+            if (index < 0) {
+                return nullptr;
+            }
+        }
+    }
+
+    T* tryGetInfoDirect(s32 index) const {
+        if (index < 0) {
+            return nullptr;
+        }
+
+        return findInfoDirect(index);
+    }
+
     T* tryGetInfo(s32 index) const {
         if (index < 0) {
             return nullptr;
@@ -175,9 +207,9 @@ public:
             return -1;
         }
 
-        T** infos = mInfos->data();
         s32 lo = 0;
         s32 hi = num - 1;
+        T** infos = mInfos->data();
 
         while (lo < hi) {
             s32 mid = (lo + hi) / 2;
@@ -217,17 +249,14 @@ public:
 
     T* tryFindInfo(const char* pKey) const {
         const AudioInfoList<T>* list = this;
+        T* info;
 
         do {
-            T* info = list->tryGetInfo(list->searchInfoIndex(pKey));
-
-            if (info != nullptr) {
-                return info;
-            }
-
+            info = list->tryGetInfoDirect(list->searchInfoIndex(pKey));
             list = list->mNext;
-        } while (list != nullptr);
-        return nullptr;
+        } while (info == nullptr && list != nullptr);
+
+        return info;
     }
 
     sead::PtrArray<T>* mInfos;
