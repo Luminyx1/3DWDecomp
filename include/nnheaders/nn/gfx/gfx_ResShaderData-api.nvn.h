@@ -24,7 +24,8 @@ struct NvnShaderCode {
     nn::util::BinTPtr<const NvnDecomposedControlSection> pDecomposedControlSection;
     uint32_t scratchMemoryRecommended;
     uint32_t scratchMemoryPerWarp;
-    char reserved[16];
+    nn::util::BinTPtr<const void> pDebugDataHash;
+    char reserved[8];
 };
 
 struct NvnShaderPool {

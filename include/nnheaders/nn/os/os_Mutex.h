@@ -21,7 +21,7 @@ public:
     explicit Mutex(bool recursive) { InitializeMutex(&m_Mutex, recursive, 0); }
 
     Mutex(bool, int);
-    ~Mutex();
+    ~Mutex() { FinalizeMutex(&m_Mutex); }
 
     void Lock() { LockMutex(&m_Mutex); }
 
