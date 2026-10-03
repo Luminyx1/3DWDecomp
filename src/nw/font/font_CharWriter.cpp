@@ -108,6 +108,11 @@ float CharWriter::PrintGlyph(const Glyph& rGlyph) {
     return width;
 }
 
+/**
+ * Appends a glyph to the display string buffer.
+ * @param x left position of the glyph
+ * @param rGlyph glyph to print
+ */
 void CharWriter::PrintGlyph(float x, const Glyph& rGlyph) {
     float u0;
     float u1;
@@ -118,14 +123,17 @@ void CharWriter::PrintGlyph(float x, const Glyph& rGlyph) {
     float y;
 
     if (m_pFont->IsLinearFilterPaddingEnabled()) {
+        // Grow the quad by half a texel on every side so linear filtering samples the padding.
         u0 = (rGlyph.cellX - 0.5f) / rGlyph.texWidth;
         u1 = (static_cast<int>(rGlyph.cellX + rGlyph.widths.rawWidth) + 0.5f) / rGlyph.texWidth;
-        v0 = (rGlyph.cellY - 0.5f) / rGlyph.texHeight;
-        v1 = (static_cast<int>(rGlyph.cellY + rGlyph.rawHeight) + 0.5f) / rGlyph.texHeight;
+        const float top = rGlyph.cellY - 0.5f;
+        const float bottom = static_cast<int>(rGlyph.cellY + rGlyph.rawHeight) + 0.5f;
         x -= m_Scale.x * 0.5f;
-        width = m_Scale.x * (rGlyph.widths.glyphWidth + 1.0f);
-        height = m_Scale.y * (rGlyph.height + 1.0f);
         y = m_CursorPos.y - m_Scale.y * 0.5f;
+        height = m_Scale.y * (rGlyph.height + 1.0f);
+        width = m_Scale.x * (rGlyph.widths.glyphWidth + 1.0f);
+        v0 = top / rGlyph.texHeight;
+        v1 = bottom / rGlyph.texHeight;
     } else {
         u0 = rGlyph.cellX / static_cast<float>(rGlyph.texWidth);
         u1 = static_cast<int>(rGlyph.cellX + rGlyph.widths.rawWidth) /
@@ -166,8 +174,10 @@ void CharWriter::PrintGlyph(float x, const Glyph& rGlyph) {
                                            m_Scale.y + fontHeight :
                                            fontHeight);
     pAttr->sheetIndex = rGlyph.sheetIndex;
+
     const bool isBorder = m_pFont->IsBorderEffectEnabled();
-    pAttr->pTexObjAndFlag = reinterpret_cast<uintptr_t>(rGlyph.pTextureObject) | (isBorder ? 1 : 0);
+    pAttr->pTexObjAndFlag =
+        reinterpret_cast<uintptr_t>(rGlyph.pTextureObject) | (isBorder ? 1 : 0);
 }
 
 /**
@@ -228,6 +238,14 @@ size_t CharWriter::GetConstantBufferSize(nn::gfx::Device* pDevice, int charCount
     return DispStringBuffer::GetRequiredConstantBufferSize(pDevice, arg);
 }
 
+/**
+ * Constructs and initializes a display string buffer in place.
+ * @param pDevice gfx device
+ * @param pBuffer memory of GetDispStringBufferSize(charCount) bytes
+ * @param charCount maximum number of characters
+ * @param isShadowEnabled whether the shadow is drawn
+ * @return the initialized buffer
+ */
 DispStringBuffer* CharWriter::InitializeDispStringBuffer(nn::gfx::Device* pDevice, void* pBuffer,
                                                          uint32_t charCount,
                                                          bool isShadowEnabled) {
@@ -235,11 +253,10 @@ DispStringBuffer* CharWriter::InitializeDispStringBuffer(nn::gfx::Device* pDevic
     DispStringBuffer::InitializeArg arg;
     arg.pDrawBuffer = static_cast<uint8_t*>(pBuffer) + sizeof(DispStringBuffer);
     arg.charCountMax = charCount;
-    arg.isShadowEnabled = isShadowEnabled;
+    arg.isShadowEnabled = isShadowEnabled ? true : false;
     pDispStringBuffer->Initialize(pDevice, arg);
     return pDispStringBuffer;
 }
-
 
 }  // namespace font
 }  // namespace nn
