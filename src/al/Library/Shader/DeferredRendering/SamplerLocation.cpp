@@ -34,7 +34,7 @@ agl::SamplerLocation sFresnelCurve(makeLocation(-1, 8, -1), "cFresnelCurve");
 agl::SamplerLocation sTransformHeightMap(makeLocation(-1, 8, -1), "cTexTransformHeightMap");
 agl::SamplerLocation sCubeMapRoughnessRefract(makeLocation(23, 23, -1),
                                               "cTexCubeMapRoughnessRefract");
-agl::SamplerLocation sIndirect(makeLocation(-1, 9, -1), "cTextureIndirect");
+agl::SamplerLocation sIndirect(9, "cTextureIndirect");
 agl::SamplerLocation sThicknessCurve(makeLocation(-1, 10, -1), "cThicknessCurve");
 agl::SamplerLocation sSilhouetteCurve(makeLocation(-1, 0, -1), "cSilhouetteCurve");
 agl::SamplerLocation sAlphaProjMaskTex(makeLocation(-1, 12, -1), "cTexAlphaMaskProj");
