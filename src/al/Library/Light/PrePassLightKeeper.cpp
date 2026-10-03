@@ -61,10 +61,22 @@ const al::UniformBlockLayout cProjLightLayout[] = {
     {3, agl::UniformBlock::cType_Vec4, 7},
 };
 
+/**
+ * Copies a vector as a plain struct copy.
+ * @param pDst destination
+ * @param rSrc source
+ */
 void copyVec3(sead::Vector3f* pDst, const sead::Vector3f& rSrc) {
     static_cast<sead::BaseVec3<f32>&>(*pDst) = rSrc;
 }
 
+/**
+ * Computes the model matrix of the cylinder drawn for a line light.
+ * @param pMtx output model matrix
+ * @param pLength output length of the cylinder
+ * @param rLight light
+ * @return false if the line is degenerate
+ */
 bool calcLineLightMtx(sead::Matrix34f* pMtx, f32* pLength, const al::LineLightParam& rLight) {
     sead::Vector3f center = (rLight.mStart + rLight.mEnd) * 0.5f;
     sead::Vector3f dir;
@@ -76,10 +88,10 @@ bool calcLineLightMtx(sead::Matrix34f* pMtx, f32* pLength, const al::LineLightPa
     }
 
     *pLength += rLight.mRadius + rLight.mRadius;
-    axis = sead::Vector3f::ez;
+    copyVec3(&axis, sead::Vector3f::ez);
 
     if (al::isParallelDirection(axis, dir, 0.01f)) {
-        axis = sead::Vector3f::ex;
+        copyVec3(&axis, sead::Vector3f::ex);
     }
 
     al::makeMtxUpFrontPos(pMtx, dir, axis, center);
@@ -192,16 +204,21 @@ void AlbedoModeProjLightMgr::setShader(const agl::ShaderProgram* pProgram) {
     mShaderInfo->setShader(pProgram);
 }
 
+/**
+ * Creates agl's light pre-pass with the four albedo mode light managers as user light managers,
+ * sizes them from the declared light counts and sets up the shared vertex attributes and the
+ * graphics context used to draw the lights.
+ */
 void PrePassLightKeeper::endInit() {
     mLightPrePass = new agl::lght::LightPrePass();
     mLightPrePass->getFlags().reset(1 << 9);
 
     agl::lght::LightPrePass::CreateArg arg;
+    arg.mViewNum = mViewNum;
+    arg.mUserLightMgrNum = 4;
     arg.mPointLightNum = 1;
     arg.mSpotLightNum = 1;
     arg.mProjLightNum = 1;
-    arg.mViewNum = mViewNum;
-    arg.mUserLightMgrNum = 4;
     mLightPrePass->initialize(arg, getCurrentHeap());
     mLightPrePass->getFlags().set(1 << 8);
     mLightPrePass->setSpecPowScale(mSpecularPowerScale);
@@ -209,12 +226,9 @@ void PrePassLightKeeper::endInit() {
     agl::utl::ParameterCurve<2> curve;
 
     for (u32 i = 0; i < 2; i++) {
-        for (s32 j = 0; j < 12; j++) {
-            curve.getCurveData(i).f[j] = cSpecularCurve[j];
-        }
-
         curve.getCurve(i).setData(&curve.getCurveData(i), sead::hostio::CurveType::Linear2D, 30,
                                   12);
+        sead::MemUtil::copy(curve.getCurveData(i).f, cSpecularCurve, sizeof(cSpecularCurve));
     }
 
     mLightPrePass->setSpecularCurve(curve);
@@ -239,33 +253,36 @@ void PrePassLightKeeper::endInit() {
                               nullptr);
     mProjLightMgr->setValidNum(0);
 
-    agl::utl::PrimitiveShape* shape = agl::utl::PrimitiveShape::instance();
-
     mQuadAttribute.create(1, getCurrentHeap());
-    mQuadAttribute.setVertexStream(0, &shape->getQuadVertexBuffer(), 0);
+    mQuadAttribute.setVertexStream(
+        0, &agl::utl::PrimitiveShape::instance()->getQuadVertexBuffer(), 0);
     mQuadAttribute.setUp();
 
     mSphereAttribute.create(1, getCurrentHeap());
-    mSphereAttribute.setVertexStream(0, &shape->getSphereVertexBuffer(), 0);
+    mSphereAttribute.setVertexStream(
+        0, &agl::utl::PrimitiveShape::instance()->getSphereVertexBuffer(), 0);
     mSphereAttribute.setUp();
 
     mCylinderAttribute.create(1, getCurrentHeap());
-    mCylinderAttribute.setVertexStream(0, &shape->getCylinderVertexBuffer(), 0);
+    mCylinderAttribute.setVertexStream(
+        0, &agl::utl::PrimitiveShape::instance()->getCylinderVertexBuffer(), 0);
     mCylinderAttribute.setUp();
 
     mConeAttribute.create(1, getCurrentHeap());
-    mConeAttribute.setVertexStream(0, &shape->getConeVertexBuffer(), 0);
+    mConeAttribute.setVertexStream(
+        0, &agl::utl::PrimitiveShape::instance()->getConeVertexBuffer(), 0);
     mConeAttribute.setUp();
 
     mCubeAttribute.create(1, getCurrentHeap());
-    mCubeAttribute.setVertexStream(0, &shape->getCubeVertexBuffer(), 0);
+    mCubeAttribute.setVertexStream(
+        0, &agl::utl::PrimitiveShape::instance()->getCubeVertexBuffer(), 0);
     mCubeAttribute.setUp();
 
-    mGraphicsContext.setDepthEnable(true, false);
     mGraphicsContext.setBlendEnable(true);
-    mGraphicsContext.setColorMask(true, true, true, true);
     mGraphicsContext.setBlendFactorSrcRGB(0, 2);
     mGraphicsContext.setBlendFactorDstRGB(0, 2);
+    mGraphicsContext.setColorMask(true, true, true, true);
+    mGraphicsContext.setDepthEnable(true, false);
     mGraphicsContext.setDepthFunc(5);
     mGraphicsContext.setCullingMode(1);
 }
@@ -517,6 +534,26 @@ s32 PrePassLightKeeper::requestSpotLight(const sead::Vector3f& rPos, const sead:
     return index;
 }
 
+/**
+ * Requests a perspective projection light for the current frame.
+ * @param rPos position
+ * @param rDir direction
+ * @param rUp up vector
+ * @param rColor color
+ * @param near near clip distance
+ * @param far far clip distance
+ * @param fovy vertical field of view
+ * @param aspect aspect ratio
+ * @param attnPow attenuation power
+ * @param isEnableSpecular whether the light has specular
+ * @param isUseSpecularColor whether rSpecularColor is used instead of rColor for specular
+ * @param rSpecularColor specular color
+ * @param pTexture projected texture, nullptr for none
+ * @param isTextureWrap whether the projected texture repeats instead of being clamped
+ * @param rTexScale texture scale
+ * @param rTexOffset texture offset
+ * @return index of the light, -1 if it was not added
+ */
 s32 PrePassLightKeeper::requestProjLight(const sead::Vector3f& rPos, const sead::Vector3f& rDir,
                                          const sead::Vector3f& rUp, const sead::Color4f& rColor,
                                          f32 near, f32 far, f32 fovy, f32 aspect, f32 attnPow,
@@ -643,6 +680,28 @@ void AlbedoModeProjLightMgr::updateParameters_(ProjLightData& rLight) {
     }
 }
 
+/**
+ * Requests an orthographic projection light for the current frame.
+ * @param rPos position
+ * @param rDir direction
+ * @param rUp up vector
+ * @param rColor color
+ * @param near near clip distance
+ * @param far far clip distance
+ * @param top top of the projection volume
+ * @param bottom bottom of the projection volume
+ * @param left left of the projection volume
+ * @param right right of the projection volume
+ * @param attnPow attenuation power
+ * @param isEnableSpecular whether the light has specular
+ * @param isUseSpecularColor whether rSpecularColor is used instead of rColor for specular
+ * @param rSpecularColor specular color
+ * @param pTexture projected texture, nullptr for none
+ * @param isTextureWrap whether the projected texture repeats instead of being clamped
+ * @param rTexScale texture scale
+ * @param rTexOffset texture offset
+ * @return index of the light, -1 if it was not added
+ */
 s32 PrePassLightKeeper::requestProjLightOrtho(
     const sead::Vector3f& rPos, const sead::Vector3f& rDir, const sead::Vector3f& rUp,
     const sead::Color4f& rColor, f32 near, f32 far, f32 top, f32 bottom, f32 left, f32 right,
@@ -810,13 +869,20 @@ bool AlbedoModePointLightMgr::calcViewImpl_(PointLightData& rLight, s32 view,
     return rContext.mCulling.isInside(rLight.mPos, rLight.mRadius);
 }
 
+/**
+ * Writes the point light parameters of a view into the light's uniform block.
+ * @param rLight light
+ * @param view view index
+ * @param rContext light pre-pass context of the view
+ */
 void AlbedoModePointLightMgr::updateUBO_(const PointLightData& rLight, s32 view,
                                          const LppContext& rContext) const {
     const sead::Vector3f& rPos = rLight.mPos;
+    const sead::Matrix44f& rViewProjMtx = rContext.mViewProjMtx;
+    f32 radius = rLight.mRadius;
+    f32 attnStart = rLight.mAttnStart;
     sead::Vector3f viewPos;
     viewPos.setMul(rContext.mViewMtx, rPos);
-
-    const sead::Matrix44f& rViewProjMtx = rContext.mViewProjMtx;
     f32 x = rViewProjMtx(0, 0) * rPos.x + rViewProjMtx(0, 1) * rPos.y +
             rViewProjMtx(0, 2) * rPos.z + rViewProjMtx(0, 3);
     f32 y = rViewProjMtx(1, 0) * rPos.x + rViewProjMtx(1, 1) * rPos.y +
@@ -824,12 +890,10 @@ void AlbedoModePointLightMgr::updateUBO_(const PointLightData& rLight, s32 view,
     f32 w = rViewProjMtx(3, 0) * rPos.x + rViewProjMtx(3, 1) * rPos.y +
             rViewProjMtx(3, 2) * rPos.z + rViewProjMtx(3, 3);
     f32 screenX = -(rContext.mProjScale * (x / w)) - rContext.mScreenScaleX;
+    f32 scale = (1.0f / (radius * radius)) * (w * w);
     f32 screenY =
         -(rContext.mProjSign * ((y / w) * (rContext.mProjSign * rContext.mCulling.mTanHalfFovy))) -
         rContext.mScreenScaleY;
-    f32 radius = rLight.mRadius;
-    f32 attnStart = rLight.mAttnStart;
-    f32 scale = (1.0f / (radius * radius)) * (w * w);
 
     const agl::UniformBlock& rUbo = rLight.mView[view].mUbo;
     rUbo.dcbz(0);
@@ -854,14 +918,12 @@ void AlbedoModePointLightMgr::updateUBO_(const PointLightData& rLight, s32 view,
         rUbo.setData(3, &data, 0, 1);
     }
 
-    {
-        f32 size = radius + radius;
-        sead::Matrix44f modelMtx(size, 0.0f, 0.0f, rPos.x, 0.0f, size, 0.0f, rPos.y, 0.0f, 0.0f,
-                                 size, rPos.z, 0.0f, 0.0f, 0.0f, 1.0f);
-        sead::Matrix44f mtx;
-        agl::pfx::detail::multiplyMtx44(mtx, rViewProjMtx, modelMtx);
-        rUbo.setData(4, &mtx, 0, 4);
-    }
+    f32 size = radius + radius;
+    sead::Matrix44f modelMtx(size, 0.0f, 0.0f, rPos.x, 0.0f, size, 0.0f, rPos.y, 0.0f, 0.0f, size,
+                             rPos.z, 0.0f, 0.0f, 0.0f, 1.0f);
+    sead::Matrix44f mtx;
+    agl::pfx::detail::multiplyMtx44(mtx, rViewProjMtx, modelMtx);
+    rUbo.setData(4, &mtx, 0, 4);
 
     {
         sead::Vector4f data(mKeeper->getSpecularPower(), mKeeper->getFlesnel(), rLight.mAttnPow,
@@ -870,9 +932,17 @@ void AlbedoModePointLightMgr::updateUBO_(const PointLightData& rLight, s32 view,
     }
 }
 
-void AlbedoModePointLightMgr::drawImpl_(agl::DrawContext* pDrawContext, const PointLightData& rLight,
-                                        s32 view, const LppContext& rContext,
-                                        LppCallbackArg& rArg) const {
+/**
+ * Draws a point light into the light buffer.
+ * @param pDrawContext draw context
+ * @param rLight light
+ * @param view view index
+ * @param rContext light pre-pass context of the view (unused)
+ * @param rArg callback argument holding the shared view uniform block
+ */
+void AlbedoModePointLightMgr::drawImpl_(agl::DrawContext* pDrawContext,
+                                        const PointLightData& rLight, s32 view,
+                                        const LppContext& rContext, LppCallbackArg& rArg) const {
     const char* macros[] = {"LPP_ENABLE_SPECULAR", "LPP_ENABLE_BACK"};
     const char* values[] = {"1", "0"};
 
@@ -999,16 +1069,22 @@ bool AlbedoModeSpotLightMgr::calcViewImpl_(SpotLightData& rLight, s32 view,
     return rContext.mCulling.isInside(rLight.mPos, rLight.mLength);
 }
 
+/**
+ * Writes the spot light parameters of a view into the light's uniform block.
+ * @param rLight light
+ * @param view view index
+ * @param rContext light pre-pass context of the view
+ */
 void AlbedoModeSpotLightMgr::updateUBO_(const SpotLightData& rLight, s32 view,
                                         const LppContext& rContext) const {
     const sead::Matrix34f& rViewMtx = rContext.mViewMtx;
+    f32 length = rLight.mLength;
+    f32 cosAngle = rLight.mCosAngle;
+    f32 angleAttnStart = rLight.mAngleAttnStart;
     sead::Vector3f viewPos;
     viewPos.setMul(rViewMtx, rLight.mPos);
     sead::Vector3f viewDir;
     viewDir.setRotated(rViewMtx, rLight.mDir);
-    f32 length = rLight.mLength;
-    f32 cosAngle = rLight.mCosAngle;
-    f32 angleAttnStart = rLight.mAngleAttnStart;
     normalizeOrZero(&viewDir);
 
     const agl::UniformBlock& rUbo = rLight.mView[view].mUbo;
@@ -1047,33 +1123,33 @@ void AlbedoModeSpotLightMgr::updateUBO_(const SpotLightData& rLight, s32 view,
     f32 coneLength = rLight.mLength;
     f32 angle = rLight.mAngle;
     f32 coneRadius = coneLength * sead::Mathf::tan(angle);
+    sead::Vector3f dir = rLight.mDir;
+    dir.normalize();
+    sead::Quatf quat;
 
-    {
-        sead::Vector3f dir = rLight.mDir;
-        dir.normalize();
-        sead::Quatf quat;
-
-        if (!quat.makeVectorRotation(-sead::Vector3f::ey, dir)) {
-            quat.setAxisAngle(sead::Vector3f::ex, sead::Mathf::pi());
-        }
-
-        f32 diameter = coneRadius + coneRadius;
-        sead::Vector3f scale(diameter, coneLength * sead::Mathf::cos(angle), diameter);
-        sead::Matrix34f modelMtx;
-        modelMtx.makeSQT(scale, quat, rLight.mPos);
-        const sead::Matrix34f offsetMtx(1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, -0.5f, 0.0f,
-                                        0.0f, 1.0f, 0.0f);
-        sead::Matrix34f coneMtx;
-        coneMtx.setMul(modelMtx, offsetMtx);
-        sead::Matrix44f mtx;
-        mtx.setMul(rContext.mViewProjMtx, coneMtx);
-        rUbo.setData(5, &mtx, 0, 4);
+    if (!quat.makeVectorRotation(-sead::Vector3f::ey, dir)) {
+        quat.setAxisAngle(sead::Vector3f::ex, 180.0f);
     }
 
-    {
-        sead::Vector4f data(mKeeper->getSpecularPower(), mKeeper->getFlesnel(), coneScale, 0.0f);
-        rUbo.setData(6, &data, 0, 1);
-    }
+    sead::Matrix34f modelMtx;
+    modelMtx.fromQuat(quat);
+    f32 height = coneLength * sead::Mathf::cos(angle);
+    f32 diameter = coneRadius + coneRadius;
+    modelMtx.scaleBases(diameter, 1.0f, diameter);
+    // the cone axis is scaled with the scale on the left-hand side, unlike scaleBases
+    modelMtx.m[0][1] = height * modelMtx.m[0][1];
+    modelMtx.m[1][1] = height * modelMtx.m[1][1];
+    modelMtx.m[2][1] = height * modelMtx.m[2][1];
+    modelMtx.setTranslation(rLight.mPos);
+    const sead::Matrix34f offsetMtx(1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, -0.5f, 0.0f, 0.0f,
+                                    1.0f, 0.0f);
+    sead::Matrix34f coneMtx;
+    coneMtx.setMul(modelMtx, offsetMtx);
+    sead::Matrix44f coneViewProjMtx;
+    coneViewProjMtx.setMul(rContext.mViewProjMtx, coneMtx);
+    rUbo.setData(5, &coneViewProjMtx, 0, 4);
+    sead::Vector4f specParam(mKeeper->getSpecularPower(), mKeeper->getFlesnel(), coneScale, 0.0f);
+    rUbo.setData(6, &specParam, 0, 1);
 
     if (rLight.mView[view].mShadowMap == nullptr) {
         return;
@@ -1081,19 +1157,24 @@ void AlbedoModeSpotLightMgr::updateUBO_(const SpotLightData& rLight, s32 view,
 
     sead::Matrix34f invViewMtx = rContext.mCulling.mViewMtx;
     invViewMtx.invert();
-
-    {
-        sead::Matrix44f mtx;
-        mtx.setMul(rLight.mView[view].mShadowMtx, invViewMtx);
-        rUbo.setData(7, &mtx, 0, 4);
-    }
-
-    const agl::TextureData& rShadowTex = rLight.mView[view].mShadowMap->getTextureData();
+    sead::Matrix44f shadowMtx;
+    shadowMtx.setMul(rLight.mView[view].mShadowMtx, invViewMtx);
+    rUbo.setData(7, &shadowMtx, 0, 4);
     f32 shadowParam = rLight.mShadowParam;
-    sead::Vector2f data(shadowParam / rShadowTex.getWidth(0), shadowParam / rShadowTex.getHeight(0));
-    rUbo.setData(8, &data, 0, 1);
+    const agl::TextureData& rShadowTex = rLight.mView[view].mShadowMap->getTextureData();
+    sead::Vector2f shadowTexelSize(shadowParam / rShadowTex.getWidth(0),
+                                   shadowParam / rShadowTex.getHeight(0));
+    rUbo.setData(8, &shadowTexelSize, 0, 1);
 }
 
+/**
+ * Draws a spot light into the light buffer.
+ * @param pDrawContext draw context
+ * @param rLight light
+ * @param view view index
+ * @param rContext light pre-pass context of the view (unused)
+ * @param rArg callback argument holding the shared view uniform block
+ */
 void AlbedoModeSpotLightMgr::drawImpl_(agl::DrawContext* pDrawContext, const SpotLightData& rLight,
                                        s32 view, const LppContext& rContext,
                                        LppCallbackArg& rArg) const {
@@ -1106,11 +1187,11 @@ void AlbedoModeSpotLightMgr::drawImpl_(agl::DrawContext* pDrawContext, const Spo
 
     if (rLight.mView[view].mShadowMap != nullptr) {
         switch (rLight.mShadowType) {
-        case 2:
-            values[1] = "2";
-            break;
         case agl::lght::LightPrePass::cShadowType_Normal:
             values[1] = "1";
+            break;
+        case 2:
+            values[1] = "2";
             break;
         default:
             break;
@@ -1206,16 +1287,22 @@ bool AlbedoModeLineLightMgr::calcViewImpl_(LineLightData& rLight, s32 view,
     return true;
 }
 
+/**
+ * Writes the line light parameters of a view into the light's uniform block.
+ * @param rLight light
+ * @param view view index
+ * @param rContext light pre-pass context of the view
+ */
 void AlbedoModeLineLightMgr::updateUBO_(const LineLightData& rLight, s32 view,
                                         const LppContext& rContext) const {
-    f32 squaredLength = (rLight.mStart - rLight.mEnd).squaredLength();
     const sead::Matrix34f& rViewMtx = rContext.mViewMtx;
+    f32 squaredLength = (rLight.mStart - rLight.mEnd).squaredLength();
     sead::Vector3f viewStart;
     viewStart.setMul(rViewMtx, rLight.mStart);
-    sead::Vector3f viewEnd;
-    viewEnd.setMul(rViewMtx, rLight.mEnd);
     f32 radius = rLight.mRadius;
     f32 attnPow = rLight.mAttnPow;
+    sead::Vector3f viewEnd;
+    viewEnd.setMul(rViewMtx, rLight.mEnd);
 
     const agl::UniformBlock& rUbo = rLight.mView[view].mUbo;
     rUbo.dcbz(0);
@@ -1231,7 +1318,7 @@ void AlbedoModeLineLightMgr::updateUBO_(const LineLightData& rLight, s32 view,
     }
 
     {
-        sead::Vector4f data(viewEnd.x, viewEnd.y, viewEnd.z, radius / squaredLength);
+        sead::Vector4f data(viewEnd.x, viewEnd.y, viewEnd.z, 1.0f / squaredLength);
         rUbo.setData(2, &data, 0, 1);
     }
 
@@ -1242,11 +1329,9 @@ void AlbedoModeLineLightMgr::updateUBO_(const LineLightData& rLight, s32 view,
         return;
     }
 
-    {
-        sead::Matrix44f mtx;
-        mtx.setMul(rContext.mViewProjMtx, modelMtx);
-        rUbo.setData(3, &mtx, 0, 4);
-    }
+    sead::Matrix44f mtx;
+    mtx.setMul(rContext.mViewProjMtx, modelMtx);
+    rUbo.setData(3, &mtx, 0, 4);
 
     {
         sead::Vector4f data(mKeeper->getSpecularPower(), mKeeper->getFlesnel(), 0.0f, 0.0f);
@@ -1254,6 +1339,14 @@ void AlbedoModeLineLightMgr::updateUBO_(const LineLightData& rLight, s32 view,
     }
 }
 
+/**
+ * Draws a line light into the light buffer.
+ * @param pDrawContext draw context
+ * @param rLight light
+ * @param view view index
+ * @param rContext light pre-pass context of the view (unused)
+ * @param rArg callback argument holding the shared view uniform block
+ */
 void AlbedoModeLineLightMgr::drawImpl_(agl::DrawContext* pDrawContext, const LineLightData& rLight,
                                        s32 view, const LppContext& rContext,
                                        LppCallbackArg& rArg) const {
@@ -1350,8 +1443,8 @@ void AlbedoModeProjLightMgr::initImpl_(ProjLightData& rLight, sead::Heap* pHeap)
     rLight.mParam[7] = 0.8f;
     rLight.mAttnPow = 1.0f;
     rLight.mTexScale = sead::Vector2f::zero;
-    rLight.mTexOffset.set(1.0f, 1.0f);
     rLight.mHasTexture = false;
+    rLight.mTexOffset.set(1.0f, 1.0f);
 
     for (auto& rView : rLight.mView) {
         rView.mShadowMap = nullptr;
@@ -1394,6 +1487,12 @@ bool AlbedoModeProjLightMgr::calcViewImpl_(ProjLightData& rLight, s32 view,
     return rContext.mCulling.isInside(rLight.mBoundBox.getMin(), rLight.mBoundBox.getMax());
 }
 
+/**
+ * Writes the projection light parameters of a view into the light's uniform block.
+ * @param rLight light
+ * @param view view index
+ * @param rContext light pre-pass context of the view
+ */
 void AlbedoModeProjLightMgr::updateUBO_(const ProjLightData& rLight, s32 view,
                                         const LppContext& rContext) const {
     const agl::UniformBlock& rUbo = rLight.mView[view].mUbo;
@@ -1419,9 +1518,9 @@ void AlbedoModeProjLightMgr::updateUBO_(const ProjLightData& rLight, s32 view,
         sead::Vector3f specColor(rLight.mSpecColor.r, rLight.mSpecColor.g, rLight.mSpecColor.b);
 
         if (!mLightPrePass->getFlags().isOn(1 << 8) && !rLight.mHasTexture) {
-            specColor.x = (rLight.mSpecColor.r * 0.298912f + rLight.mSpecColor.g * 0.586611f +
-                           rLight.mSpecColor.b * 0.114478f) *
-                          rLight.mSpecColor.a;
+            specColor.x = rLight.mSpecColor.a *
+                          (rLight.mSpecColor.r * 0.298912f + rLight.mSpecColor.g * 0.586611f +
+                           rLight.mSpecColor.b * 0.114478f);
         }
 
         sead::Vector4f data(specColor.x, specColor.y, specColor.z, 0.0f);
@@ -1458,14 +1557,13 @@ void AlbedoModeProjLightMgr::updateUBO_(const ProjLightData& rLight, s32 view,
 
     {
         f32 frustumFar = rLight.mParam[1];
-        f32 frustumHeight = rLight.mTanHalfFovy + rLight.mTanHalfFovy;
-        f32 frustumWidth = frustumHeight * rLight.mParam[3];
         const sead::Matrix34f farMtx(frustumFar, 0.0f, 0.0f, 0.0f, 0.0f, frustumFar, 0.0f, 0.0f,
                                      0.0f, 0.0f, frustumFar, 0.0f);
         sead::Matrix34f farScaledMtx;
         farScaledMtx.setMul(lightMtx, farMtx);
-        const sead::Matrix34f sizeMtx(frustumWidth, 0.0f, 0.0f, 0.0f, 0.0f, frustumHeight, 0.0f,
-                                      0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
+        f32 frustumHeight = rLight.mTanHalfFovy + rLight.mTanHalfFovy;
+        const sead::Matrix34f sizeMtx(frustumHeight * rLight.mParam[3], 0.0f, 0.0f, 0.0f, 0.0f,
+                                      frustumHeight, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
         sead::Matrix34f sizeScaledMtx;
         sizeScaledMtx.setMul(farScaledMtx, sizeMtx);
         const sead::Matrix34f offsetMtx(1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f,
@@ -1479,35 +1577,34 @@ void AlbedoModeProjLightMgr::updateUBO_(const ProjLightData& rLight, s32 view,
         rUbo.setData(0, &mtx, 0, 4);
     }
 
-    sead::Vector3f viewUp;
-    viewUp.setRotated(rViewMtx, rLight.mNormUp);
     sead::Matrix34f lightViewMtx;
 
     {
+        sead::Vector3f viewUp;
+        viewUp.setRotated(rViewMtx, rLight.mNormUp);
         sead::LookAtCamera camera(viewPos, viewPos + viewDir, viewUp);
         camera.updateViewMatrix();
         lightViewMtx = camera.getMatrix();
     }
 
-    sead::Matrix44f lightViewProjMtx;
-
-    if (rLight.mFlags.isOff(4)) {
-        sead::PerspectiveProjection projection(rLight.mParam[0], rLight.mParam[1],
-                                               rLight.mParam[2], rLight.mParam[3]);
-        lightViewProjMtx.setMul(projection.getProjectionMatrix(), lightViewMtx);
-    } else {
-        sead::OrthoProjection projection(rLight.mParam[0], rLight.mParam[1], rLight.mDebugParam1,
-                                         -rLight.mDebugParam1, rLight.mDebugParam0,
-                                         -rLight.mDebugParam0);
-        lightViewProjMtx.setMul(projection.getProjectionMatrix(), lightViewMtx);
-    }
-
     {
+        sead::Matrix44f lightViewProjMtx;
+
+        if (rLight.mFlags.isOff(4)) {
+            sead::PerspectiveProjection projection(rLight.mParam[0], rLight.mParam[1],
+                                                   rLight.mParam[2], rLight.mParam[3]);
+            lightViewProjMtx.setMul(projection.getProjectionMatrix(), lightViewMtx);
+        } else {
+            sead::OrthoProjection projection(rLight.mParam[0], rLight.mParam[1],
+                                             rLight.mDebugParam1, -rLight.mDebugParam1,
+                                             rLight.mDebugParam0, -rLight.mDebugParam0);
+            lightViewProjMtx.setMul(projection.getProjectionMatrix(), lightViewMtx);
+        }
+
         const sead::Matrix44f biasMtx(0.5f, 0.0f, 0.0f, 0.5f, 0.0f, -0.5f, 0.0f, 0.5f, 0.0f, 0.0f,
                                       1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f);
-        sead::Matrix44f mtx;
-        agl::pfx::detail::multiplyMtx44(mtx, biasMtx, lightViewProjMtx);
-        rUbo.setData(1, &mtx, 0, 4);
+        agl::pfx::detail::multiplyMtx44(lightViewProjMtx, biasMtx, lightViewProjMtx);
+        rUbo.setData(1, &lightViewProjMtx, 0, 4);
     }
 
     if (rLight.mFlags.isOn(0x10)) {
@@ -1523,20 +1620,24 @@ void AlbedoModeProjLightMgr::updateUBO_(const ProjLightData& rLight, s32 view,
 
     sead::Matrix34f invViewMtx = rContext.mCulling.mViewMtx;
     invViewMtx.invert();
-
-    {
-        sead::Matrix44f mtx;
-        mtx.setMul(rLight.mView[view].mShadowMtx, invViewMtx);
-        rUbo.setData(2, &mtx, 0, 4);
-    }
-
-    const agl::TextureData& rShadowTex = rLight.mView[view].mShadowMap->getTextureData();
+    sead::Matrix44f shadowMtx;
+    shadowMtx.setMul(rLight.mView[view].mShadowMtx, invViewMtx);
+    rUbo.setData(2, &shadowMtx, 0, 4);
     f32 shadowParam = rLight.mShadowParam;
-    sead::Vector4f data(shadowParam / rShadowTex.getWidth(0), shadowParam / rShadowTex.getHeight(0),
-                        0.0f, 0.0f);
-    rUbo.setData(3, &data, 5, 1);
+    const agl::TextureData& rShadowTex = rLight.mView[view].mShadowMap->getTextureData();
+    sead::Vector4f shadowTexelSize(shadowParam / rShadowTex.getWidth(0),
+                                   shadowParam / rShadowTex.getHeight(0), 0.0f, 0.0f);
+    rUbo.setData(3, &shadowTexelSize, 5, 1);
 }
 
+/**
+ * Draws a projection light into the light buffer.
+ * @param pDrawContext draw context
+ * @param rLight light
+ * @param view view index
+ * @param rContext light pre-pass context of the view (unused)
+ * @param rArg callback argument holding the shared view uniform block
+ */
 void AlbedoModeProjLightMgr::drawImpl_(agl::DrawContext* pDrawContext, const ProjLightData& rLight,
                                        s32 view, const LppContext& rContext,
                                        LppCallbackArg& rArg) const {
@@ -1549,11 +1650,11 @@ void AlbedoModeProjLightMgr::drawImpl_(agl::DrawContext* pDrawContext, const Pro
 
     if (rLight.mView[view].mShadowMap != nullptr) {
         switch (rLight.mShadowType) {
-        case 2:
-            values[1] = "2";
-            break;
         case agl::lght::LightPrePass::cShadowType_Normal:
             values[1] = "1";
+            break;
+        case 2:
+            values[1] = "2";
             break;
         default:
             break;
