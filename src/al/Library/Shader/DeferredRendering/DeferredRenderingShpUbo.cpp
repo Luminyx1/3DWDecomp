@@ -80,15 +80,13 @@ void DeferredRenderingShpUbo::swap() {
 
     if (mWeightNumUpdateCount > 0) {
         mWeightNumUpdateCount--;
-        UniformBlock* ubo = mUbos[mCurrentIndex];
-        s32 weightNum = mWeightNum;
-        ubo->setData(1, &weightNum, 0, 1);
+        mUbos[mCurrentIndex]->setValue(1, mWeightNum);
     }
 
     const UniformBlock* ubo = mUbos[mCurrentIndex];
-    u32 offset = ubo->getCurrentBlockOffset(0);
-    agl::GPUMemVoidAddr addr = ubo->getBuffer();
-    agl::GPUMemVoidAddr(addr, offset).flushCPUCache(ubo->getBlockSize());
+    u32 size = ubo->getBlockSize();
+    s32 offset = ubo->getCurrentBlockOffset(0);
+    agl::GPUMemVoidAddr(ubo->getBuffer(), offset).flushCPUCache(size);
     mCurrentIndex = mCurrentIndex + 1 >= mUboNum ? 0 : mCurrentIndex + 1;
 }
 
@@ -96,9 +94,10 @@ void DeferredRenderingShpUbo::swap() {
  * @brief Binds the block written last.
  */
 void DeferredRenderingShpUbo::activate() {
-    s32 index = (mCurrentIndex + mUboNum - 1) % mUboNum;
-    mUbos[index]->activate(
-        GameFrameworkNx::getAglDrawContext(), mLocation);
+    agl::DrawContext* drawContext = GameFrameworkNx::getAglDrawContext();
+    const UniformBlock* ubo = mUbos[static_cast<s32>((mCurrentIndex + mUboNum - 1) % mUboNum)];
+    u64 address = nvnBufferGetAddress(ubo->getNvnBuffer()) + ubo->getCurrentBlockOffset(0);
+    ubo->setUniform(drawContext, address, mLocation, 0, ubo->getBlockSize());
 }
 
 }  // namespace al
