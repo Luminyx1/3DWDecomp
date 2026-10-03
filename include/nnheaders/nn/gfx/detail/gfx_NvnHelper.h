@@ -9,6 +9,10 @@
 #include <nvn/nvn.h>
 #include <nvnTool/nvnTool_GlslcInterface.h>
 
+namespace nn {
+class TimeSpan;
+}  // namespace nn
+
 namespace nn::gfx {
 
 struct ImageFormatProperty;
@@ -86,6 +90,7 @@ public:
     static int GetFirstScanBufferIndex();
     static void SetTextureViewFormat(NVNtextureView* pTextureView, NVNformat format,
                                      const NVNtexture* pTexture);
+    static TimeSpan ToTimeSpan(int64_t timestamp);
     static void ConvertToNvnSamplerBuilder(NVNsamplerBuilder* pBuilder, const SamplerInfo& rInfo);
     static void DebugCallback(NVNdebugCallbackSource source, NVNdebugCallbackType type, int id,
                               NVNdebugCallbackSeverity severity, const char* pMessage,
@@ -131,6 +136,16 @@ private:
 
     void* m_hDll;
 };
+
+/// Accessors for the statically linked GLSLC entry points used by GlslcDll::Initialize.
+GlslcDll::GlslcCompilePreSpecializedType GetGlslcCompilePreSpecializedFunction();
+GlslcDll::GlslcCompileSpecializedType GetGlslcCompileSpecializedFunction();
+GlslcDll::GlslcInitializeType GetGlslcInitializeFunction();
+GlslcDll::GlslcFinalizeType GetGlslcFinalizeFunction();
+GlslcDll::GlslcCompileType GetGlslcCompileFunction();
+GlslcDll::GlslcGetVersionType GetGlslcGetVersionFunction();
+GlslcDll::GlslcSetAllocatorType GetGlslcSetAllocatorFunction();
+GlslcDll::GlslcGetDefaultOptionsType GetGlslcGetDefaultOptionsFunction();
 
 }  // namespace detail
 
