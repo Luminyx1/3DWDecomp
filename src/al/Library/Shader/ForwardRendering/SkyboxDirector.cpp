@@ -16,7 +16,7 @@ namespace al {
 SkyboxDirector::SkyboxDirector(GraphicsSystemInfo* pGraphicsSystemInfo)
     : mGraphicsSystemInfo(pGraphicsSystemInfo) {
     mParamFilePath = new GraphicsParamFilePath("Skybox", "aglskybox");
-    mIsEnableDefaultParam.init(false, "IsEnableDefaultParam", "Enable Edit", "",
+    mIsEnableDefaultParam.init(false, "IsEnableDefaultParam", "Enable Edit",
                                &mDefaultParam.mParamObj);
     mParamIO.addObj(&mDefaultParam.mParamObj, "DefaultDirLit");
 
