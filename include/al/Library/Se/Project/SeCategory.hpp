@@ -54,6 +54,11 @@ class AudioMixVolume {
     void linkTo(const AudioMixVolume* pVolume);
     f32 calcLinkedVolumeDecibel() const;
 
+    /** @brief Removes the linked volume without changing this volume's own fade. */
+    void resetLink() { mLinkedVolume = nullptr; }
+    /** @brief Gets the parent volume used for linked mixing. @return Linked controller, or nullptr. */
+    const AudioMixVolume* getLinkedVolume() const { return mLinkedVolume; }
+
   private:
     f32 mVolumeDb = 0.0f;
     f32 mTargetRatio = 0.0f;

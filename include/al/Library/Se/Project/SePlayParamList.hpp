@@ -46,6 +46,11 @@ class SePlayParamList {
     SePlayParam* getParam(s32 index) const;
     bool isParamEmpty() const;
 
+    /** @brief Tests whether an output-line override is pending. @return True when an override is set. */
+    bool hasOutputLine() const { return _8; }
+    /** @brief Gets the requested output-line mask. @return Output-line bits for the sound. */
+    s32 getOutputLine() const { return _c; }
+
     SePlayParam* findAvailableRecord(s32 type, s32 index) const;
 
   private:
