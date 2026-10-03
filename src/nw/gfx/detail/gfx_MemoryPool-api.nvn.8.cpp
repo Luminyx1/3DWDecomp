@@ -2,16 +2,11 @@
 
 #include <nn/gfx/detail/gfx_Device-api.nvn.8.h>
 #include <nn/gfx/detail/gfx_MemoryPoolInfo-api.nvn.8.h>
+#include <nn/gfx/detail/gfx_NvnHelper.h>
 #include <nn/gfx/gfx_MemoryPoolInfo.h>
 #include <nvn/nvn_FuncPtrInline.h>
 
 namespace nn::gfx::detail {
-
-namespace Nvn {
-
-void ConvertToNvnMemoryPoolBuilder(NVNmemoryPoolBuilder* pBuilder, const MemoryPoolInfo& rInfo);
-
-}  // namespace Nvn
 
 typedef MemoryPoolImpl<ApiVariationNvn8> MemoryPoolImplNvn8;
 
