@@ -1,5 +1,6 @@
 #pragma once
 
+#include <attributes.h>
 #include <gfx/seadCamera.h>
 #include <gfx/seadProjection.h>
 #include <gfx/seadViewport.h>
@@ -14,11 +15,20 @@ namespace al {
 class GraphicsSystemInfo;
 class SimpleModelEnv;
 
+struct CubeMapFaceDir {
+    sead::Vector3f mAt;
+    sead::Vector3f mUp;
+};
+
 struct CubeMapFaceInfo {
-    sead::Vector3f mAt[6];
-    sead::Vector3f mUp[6];
+    CubeMapFaceDir mDirs[6];
     sead::Matrix33f mRotate[6];
 };
+
+static_assert(sizeof(CubeMapFaceInfo) == 0x168);
+
+/// View rotation of each cube map face, defined in CubeMapDrawer.cpp.
+extern PROTECTED CubeMapFaceInfo sCubeMapFaceInfo;
 
 class CubeMapDrawInfo {
 public:
