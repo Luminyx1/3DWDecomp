@@ -3612,7 +3612,9 @@ src/nw/gfx/detail/gfx_ShaderInfo.cpp:
 src/nw/gfx/detail/gfx_Texture-api.nvn.8.cpp:
     .text   start:0x00589770 end:0x0058A35C
 src/nw/gfx/detail/gfx_NvnHelper-os.horizon.cpp:
-    .text   start:0x0058A360 end:0x0058A52C
+    .text   start:0x0058A360 end:0x0058A4A8
+src/nw/gfx/detail/gfx_GlslcFunction-os.horizon.cpp:
+    .text   start:0x0058A4B0 end:0x0058A52C
 src/nw/gfx/detail/gfx_CommandBuffer-api.nvn.8.cpp:
     .text   start:0x0058A530 end:0x0058CAFC
 src/nw/gfx/detail/gfx_TextureInfo.cpp: done

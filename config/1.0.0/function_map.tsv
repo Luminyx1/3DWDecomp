@@ -37552,7 +37552,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710058A480			FALSE	_ZN2nn3gfx6detail8GlslcDll8FinalizeEv	nn::gfx::detail::GlslcDll::Finalize()	
 0x710058A490			FALSE	_ZNK2nn3gfx6detail8GlslcDll13IsInitializedEv	nn::gfx::detail::GlslcDll::IsInitialized() const	
 0x710058A4A0			FALSE	_ZN2nn3gfx6detail21IsThinBinaryAvailableEv	nn::gfx::detail::IsThinBinaryAvailable()	
-0x710058A4B0			FALSE	_ZN2nn3gfx6detail37GetGlslcCompilePreSpecializedFunctionEv	nn::gfx::detail::GetGlslcCompilePreSpecializedFunction()	
+0x710058A4B0		gfx_GlslcFunction-os.horizon.o	FALSE	_ZN2nn3gfx6detail37GetGlslcCompilePreSpecializedFunctionEv	nn::gfx::detail::GetGlslcCompilePreSpecializedFunction()	
 0x710058A4C0			FALSE	_ZN2nn3gfx6detail34GetGlslcCompileSpecializedFunctionEv	nn::gfx::detail::GetGlslcCompileSpecializedFunction()	
 0x710058A4D0			FALSE	_ZN2nn3gfx6detail26GetGlslcInitializeFunctionEv	nn::gfx::detail::GetGlslcInitializeFunction()	
 0x710058A4E0			FALSE	_ZN2nn3gfx6detail24GetGlslcFinalizeFunctionEv	nn::gfx::detail::GetGlslcFinalizeFunction()	
