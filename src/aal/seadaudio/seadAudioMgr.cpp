@@ -150,21 +150,15 @@ void AudioMgr::appendAudioSubset(AudioSubsetBase* pSubset) {
  * @return True if the subset was found and removed.
  */
 bool AudioMgr::removeAudioSubset(AudioSubsetBase* pSubset) {
-    auto it = mSubsetList.begin();
-
-    for (; it != mSubsetList.end(); ++it) {
-        if (&*it == pSubset) {
-            break;
+    for (auto& subset : mSubsetList.robustRange()) {
+        if (&subset == pSubset) {
+            subset.executeOnRemove();
+            mSubsetList.erase(&subset);
+            return true;
         }
     }
 
-    if (it == mSubsetList.end()) {
-        return false;
-    }
-
-    pSubset->executeOnRemove();
-    mSubsetList.erase(&*it);
-    return true;
+    return false;
 }
 
 /**
