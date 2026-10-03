@@ -14,9 +14,15 @@ JointLocalAxisRotator::JointLocalAxisRotator(f32* pDegree, const sead::Vector3f&
                                              bool isLocal)
     : mAxis(rAxis), mDegree(pDegree), mIsLocal(isLocal) {}
 
+/**
+ * Rotates the joint around the axis, either in joint-local or global space.
+ * @param jointIndex Index of the joint being calculated.
+ * @param pMtx Joint matrix to modify.
+ */
 void JointLocalAxisRotator::calcJointCallback(s32 jointIndex, sead::Matrix34f* pMtx) {
     sead::Quatf quat;
     quat.setAxisAngle(mAxis, *mDegree);
+
     sead::Matrix34f rotateMtx;
     rotateMtx.fromQuat(quat);
 
