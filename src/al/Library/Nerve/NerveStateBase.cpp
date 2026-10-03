@@ -17,7 +17,6 @@ namespace al {
         mHostActor = pActor;
     }
 
-    NerveStateBase::~NerveStateBase() {}
 
     ActorStateBase::~ActorStateBase() {}
 };
