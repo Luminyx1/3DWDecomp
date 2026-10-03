@@ -5875,7 +5875,7 @@ src/al/Library/Audio/AudioDecibelUtil.cpp: done
     .text   start:0x009E4530 end:0x009E4590
 src/al/Library/Se/DataBase/SeDataBase.cpp:
     .text   start:0x009E4590 end:0x009E6200
-src/al/Library/Se/Function/SeDbFunction.cpp:
+src/al/Library/Se/Function/SeDbFunction.cpp: done
     .text   start:0x009E6200 end:0x009E6684
 src/al/Library/Math/InOutParam.cpp: done
     .text   start:0x009E6690 end:0x009E6850
