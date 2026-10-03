@@ -164,7 +164,7 @@ BgmActionInfo::BgmActionInfo(const BgmActionInfo& rOther) : mName(rOther.mName),
         BgmPlayInfoInAction* info =
             rOther.mPlayInfoList != nullptr ? rOther.mPlayInfoList->getInfo(i) : nullptr;
         if (info == nullptr) {
-            break;
+            continue;
         }
 
         BgmPlayInfoInAction* copy = new BgmPlayInfoInAction(*info);
