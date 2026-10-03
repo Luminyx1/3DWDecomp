@@ -11,10 +11,9 @@ class ScreenPointTarget;
 
 struct ScreenPointTargetHitInfo {
     ScreenPointTarget* mTarget = nullptr;
+    f32 mDistance = 0.0f;
     sead::Vector3f mHitPos = sead::Vector3f::zero;
     sead::Vector3f mHitNormal = sead::Vector3f::zero;
-    f32 mDistance = 0.0f;
-    f32 _24 = 0.0f;
 };
 
 using ScreenPointTargetHitInfoArray = sead::ObjArray<ScreenPointTargetHitInfo>;
