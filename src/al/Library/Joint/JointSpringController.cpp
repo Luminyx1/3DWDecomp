@@ -11,6 +11,9 @@ namespace {
 const sead::Vector3f cDefaultChildLocalPos(200.0f, 0.0f, 0.0f);
 }  // namespace
 
+/**
+ * Constructs a spring controller with the default child position and spring parameters.
+ */
 JointSpringController::JointSpringController() : mChildLocalPos(cDefaultChildLocalPos) {}
 
 /**
@@ -109,7 +112,7 @@ void JointSpringController::reset() {
 void JointSpringController::calcChildPos(sead::Vector3f* pPos, const sead::Matrix34f* pMtx) const {
     sead::Vector3f localPos;
 
-    if (mChildLocalMtxPtr) {
+    if (mChildLocalMtxPtr != nullptr) {
         mChildLocalMtxPtr->getTranslation(localPos);
     } else {
         localPos = mChildLocalPos;
@@ -118,6 +121,11 @@ void JointSpringController::calcChildPos(sead::Vector3f* pPos, const sead::Matri
     pPos->setMul(*pMtx, localPos);
 }
 
+/**
+ * Swings the joint towards its lagging child point, simulating a damped spring.
+ * @param jointIndex Index of the joint being calculated.
+ * @param pMtx Joint matrix, modified in place.
+ */
 void JointSpringController::calcJointCallback(s32 jointIndex, sead::Matrix34f* pMtx) {
     bool isPaused = isPausedJointControllers();
 
@@ -144,21 +152,23 @@ void JointSpringController::calcJointCallback(s32 jointIndex, sead::Matrix34f* p
         return;
     }
 
-    sead::Vector3f childPos;
-    calcChildPos(&childPos, pMtx);
     sead::Vector3f trans;
     pMtx->getTranslation(trans);
+    sead::Vector3f childPos;
+    calcChildPos(&childPos, pMtx);
 
+    sead::Vector3f prevChildPos = mChildPos;
     sead::Vector3f velocity;
 
     if (isPaused) {
         velocity = mVelocity;
     } else {
-        mVelocity = ((childPos - mChildPos) * mStability + mVelocity) * mFriction;
+        mVelocity.setScaleAdd(mStability, childPos - prevChildPos, mVelocity);
+        mVelocity *= mFriction;
         velocity = mVelocity;
     }
 
-    sead::Vector3f nextDir = mChildPos + velocity - trans;
+    sead::Vector3f nextDir = prevChildPos + velocity - trans;
 
     if (normalizeOrZero(&nextDir)) {
         return;
@@ -170,9 +180,12 @@ void JointSpringController::calcJointCallback(s32 jointIndex, sead::Matrix34f* p
         return;
     }
 
-    sead::Vector3f invScale = {1.0f / scale.x, 1.0f / scale.y, 1.0f / scale.z};
-    preScaleMtx(pMtx, invScale);
     sead::Quatf quat;
+    sead::Vector3f invScale;
+    invScale.x = 1.0f / scale.x;
+    invScale.y = 1.0f / scale.y;
+    invScale.z = 1.0f / scale.z;
+    preScaleMtx(pMtx, invScale);
     pMtx->toQuat(quat);
     turnQuat(&quat, quat, currentDir, nextDir,
              sead::Mathf::deg2rad(mLimitDegree * mControlRate));
