@@ -2,7 +2,6 @@
 
 #include <nn/g3d/g3d_ModelObj.h>
 #include <nn/g3d/g3d_ResMaterial.h>
-#include <nn/g3d/g3d_ResRenderState.h>
 #include <nn/g3d/g3d_ResShape.h>
 
 #include "Library/Draw/GraphicsSystemInfo.hpp"
@@ -12,6 +11,7 @@
 #include "Library/Shadow/Depth/DepthShadowDrawer.hpp"
 #include "Library/Shadow/ShadowDirector.hpp"
 #include "Project/Base/StringUtil.hpp"
+#include "Project/Draw/RenderState.hpp"
 #include "Project/Model/MeshDrawer.hpp"
 #include "Project/Model/SimpleModelG3D.hpp"
 
@@ -45,7 +45,7 @@ void ModelDrawerDepthShadow::createTable() {
             ShaderHolder::sInstance->getShadingModel("RenderDepthOnly");
         const char* optionNames[] = {"cIsEnableAlphaTest", "cIsEnableDitherAlpha"};
         const char* optionValues[] = {"0", "0"};
-        s32 renderStateMode = model->getResRenderState(i)->GetMode();
+        s32 renderStateMode = model->getResRenderState(i)->getMode();
 
         bool isDepthAlphaMask = false;
         const char* depthAlphaMask = shaderAssign->FindShaderOption("enable_depthalphamask");
@@ -77,21 +77,20 @@ void ModelDrawerDepthShadow::createTable() {
         nn::g3d::ShaderSelector* selector =
             alModelFunction::createShaderSelector(model->getGpuMemAllocator(), shape, material,
                                                   shadingModel, 2, optionNames, optionValues, false);
-        bool isOpaque = renderStateMode != 1;
         auto* meshDrawer =
             new MeshDrawer(shape->GetResource()->GetName(), modelObj, shape, selector, modelNum);
         meshDrawer->initForDepthShadow();
 
-        if (!isDepthAlphaMask && isOpaque) {
-            meshDrawer->createDisplayList(model->getGpuMemAllocator(),
-                                          MeshDrawer::RENDER_STATE_ACTIVATE_TYPE(2),
-                                          MeshDrawer::TEXTURE_ACTIVATE_TYPE(2),
-                                          MeshDrawer::MATERIAL_ACTIVATE_TYPE(2), false);
-        } else {
+        if (isDepthAlphaMask || renderStateMode == 1) {
             meshDrawer->createDisplayList(
                 model->getGpuMemAllocator(), MeshDrawer::RENDER_STATE_ACTIVATE_TYPE(2),
                 MeshDrawer::TEXTURE_ACTIVATE_TYPE(modelCafe->getAnimPlayerMat1() == nullptr),
                 MeshDrawer::MATERIAL_ACTIVATE_TYPE(modelCafe->getAnimPlayerMat2() == nullptr), false);
+        } else {
+            meshDrawer->createDisplayList(model->getGpuMemAllocator(),
+                                          MeshDrawer::RENDER_STATE_ACTIVATE_TYPE(2),
+                                          MeshDrawer::TEXTURE_ACTIVATE_TYPE(2),
+                                          MeshDrawer::MATERIAL_ACTIVATE_TYPE(2), false);
         }
 
         table->insert(meshDrawer);
