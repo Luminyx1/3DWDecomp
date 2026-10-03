@@ -8,7 +8,7 @@ struct ActorInitInfo;
 class SwingMovement : public NerveExecutor {
 public:
     SwingMovement();
-    SwingMovement(const ActorInitInfo& info);
+    SwingMovement(const ActorInitInfo& rInfo);
 
     bool updateRotate();
 

@@ -17,6 +17,11 @@ class LiveActor;
 class JointTranslateShaker : public JointControllerBase {
 public:
     struct ShakeInfo {
+        ShakeInfo() = default;
+
+        ShakeInfo(s32 index, JointTranslateAxis translateAxis)
+            : jointIndex(index), axis(translateAxis) {}
+
         s32 jointIndex;
         JointTranslateAxis axis = JointTranslateAxis_X;
     };

@@ -8,22 +8,22 @@ class ParabolicPath {
 public:
     ParabolicPath();
 
-    void initFromUpVector(const sead::Vector3f& start, const sead::Vector3f& end,
-                          const sead::Vector3f& up);
-    void initFromUpVector(const sead::Vector3f& start, const sead::Vector3f& end,
-                          const sead::Vector3f& up, f32 maxHeight);
-    void initFromMaxHeight(const sead::Vector3f& start, const sead::Vector3f& end,
-                           const sead::Vector3f& projectedEnd);
-    void initFromUpVectorAddHeight(const sead::Vector3f& start, const sead::Vector3f& end,
-                                   const sead::Vector3f& up, f32 height);
+    void initFromUpVector(const sead::Vector3f& rStart, const sead::Vector3f& rEnd,
+                          const sead::Vector3f& rUp);
+    void initFromUpVector(const sead::Vector3f& rStart, const sead::Vector3f& rEnd,
+                          const sead::Vector3f& rUp, f32 maxHeight);
+    void initFromMaxHeight(const sead::Vector3f& rStart, const sead::Vector3f& rEnd,
+                           const sead::Vector3f& rProjectedEnd);
+    void initFromUpVectorAddHeight(const sead::Vector3f& rStart, const sead::Vector3f& rEnd,
+                                   const sead::Vector3f& rUp, f32 height);
 
     f32 getLength(f32 start, f32 end, s32 iterations) const;
     f32 getTotalLength(s32 iterations) const;
 
-    void calcPositionHV(sead::Vector3f* pos, f32 h, f32 v) const;
-    void calcPosition(sead::Vector3f* pos, f32 prog) const;
-    void calcPositionEaseOutH(sead::Vector3f* pos, f32 prog) const;
-    void calcDirection(sead::Vector3f* dir, f32 prog, f32 stepSize) const;
+    void calcPositionHV(sead::Vector3f* pPos, f32 h, f32 v) const;
+    void calcPosition(sead::Vector3f* pPos, f32 prog) const;
+    void calcPositionEaseOutH(sead::Vector3f* pPos, f32 prog) const;
+    void calcDirection(sead::Vector3f* pDir, f32 prog, f32 stepSize) const;
     f32 calcPathSpeedFromGravityAccel(f32 frames) const;
     f32 calcPathSpeedFromAverageSpeed(f32 frames) const;
     f32 calcPathSpeedFromHorizontalSpeed(f32 frames) const;

@@ -10,7 +10,6 @@ class JointSpringController : public JointControllerBase {
 public:
     JointSpringController();
 
-
     void setChildLocalPos(const sead::Vector3f& rPos);
     void setChildLocalMtxPtr(const sead::Matrix34f* pMtx);
     void setStability(f32 stability);
