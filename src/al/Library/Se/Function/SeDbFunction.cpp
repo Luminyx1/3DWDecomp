@@ -14,6 +14,24 @@ namespace alSeDbFunction {
 using PlayInfoList = al::AudioInfoList<al::SePlayInfoInAction>;
 
 /**
+ * @brief Adds the one-time playback records in an action to an accumulated total.
+ * @param rCount Running total updated with every one-time record in the action.
+ * @param pActionInfo Valid action descriptor; an absent play list contributes nothing.
+ */
+static inline void accumulateOneTimeCount(s32& rCount, const al::SeActionInfo* pActionInfo) {
+    const PlayInfoList* pPlayInfoList = pActionInfo->mPlayInfoList;
+
+    if (pPlayInfoList == nullptr) {
+        return;
+    }
+
+    s32 playNum = pPlayInfoList->getInfoNum();
+
+    for (s32 j = 0; j < playNum; j++) {
+        rCount += pActionInfo->mPlayInfoList->getInfo(j)->mIsOneTime;
+    }
+}
+/**
  * @brief Counts the one time play information in all actions of SE user information.
  * @param pUserInfo SE user information.
  * @return Number of one time play information.
@@ -26,20 +44,13 @@ s32 calcIsOneTimeInUserInfo(const al::SeUserInfo* pUserInfo) {
     s32 actionNum = pUserInfo->mActionInfoList->getInfoNum();
     s32 count = 0;
 
-    for (s32 i = 0; i < actionNum; i++) {
-        const al::SeActionInfo* pActionInfo =
-            pUserInfo->mActionInfoList != nullptr ? pUserInfo->mActionInfoList->getInfo(i) : nullptr;
-        const PlayInfoList* pPlayInfoList = pActionInfo->mPlayInfoList;
-
-        if (pPlayInfoList == nullptr) {
-            continue;
-        }
-
-        s32 playNum = pPlayInfoList->getInfoNum();
-
-        for (s32 j = 0; j < playNum; j++) {
-            count += pActionInfo->mPlayInfoList->getInfo(j)->mIsOneTime;
-        }
+    if (actionNum > 0) {
+        s32 i = 0;
+        do {
+            const al::SeActionInfo* pActionInfo =
+                pUserInfo->mActionInfoList != nullptr ? pUserInfo->mActionInfoList->getInfo(i) : nullptr;
+            accumulateOneTimeCount(count, pActionInfo);
+        } while (++i < actionNum);
     }
 
     return count;
