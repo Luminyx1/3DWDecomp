@@ -10,6 +10,29 @@
 namespace al {
 
 /**
+ * Constructs a deferred footprint drawer.
+ * @param pName Name of the drawer.
+ */
+ModelDrawerDeferredFootPrint::ModelDrawerDeferredFootPrint(const char* pName)
+    : ModelDrawer(pName) {
+    GBufferArray::setContextMRT(&mGraphicsContext);
+    mGraphicsContext.setBlendEnable(0, true);
+    mGraphicsContext.setBlendEnable(1, true);
+    mGraphicsContext.setBlendFactorSrcRGB(0, 9);
+    mGraphicsContext.setBlendFactorDstRGB(0, 1);
+    mGraphicsContext.setBlendEquationRGB(0, 1);
+    mGraphicsContext.setBlendFactorSrcRGB(1, 5);
+    mGraphicsContext.setBlendFactorDstRGB(1, 6);
+    mGraphicsContext.setBlendEquationRGB(1, 1);
+    mGraphicsContext.setAlphaTestEnable(true);
+    mGraphicsContext.setDepthEnable(true, false);
+    mGraphicsContext.setAlphaTestFunc(6);
+    mGraphicsContext.setAlphaTestRef(0.0f);
+    mGraphicsContext.setColorMask(0, true, true, true, false);
+    mGraphicsContext.setColorMask(1, true, true, true, false);
+}
+
+/**
  * Creates the mesh drawer table of the model.
  */
 void ModelDrawerDeferredFootPrint::createTable() {
