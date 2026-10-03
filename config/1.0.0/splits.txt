@@ -3223,17 +3223,17 @@ src/Game/Stage/SuperKouraBindPuppeteer.cpp:
     .text   start:0x004F0110 end:0x004F10B8
 src/Game/System/Application.cpp:
     .text   start:0x004F10C0 end:0x004F1BC0
-src/Game/System/ApplicationMain.cpp:
+src/Game/System/ApplicationMain.cpp: done
     .text   start:0x004F1BC0 end:0x004F1C68
 src/Game/System/AssetLoadingThread.cpp:
     .text   start:0x004F1C70 end:0x004F31A0
-src/Game/System/ControlUserData.cpp:
+src/Game/System/ControlUserData.cpp: done
     .text   start:0x004F31A0 end:0x004F322C
 src/Game/System/ControlUserDataHolder.cpp:
     .text   start:0x004F3230 end:0x004F3EF4
-src/Game/System/CourseGreenStarInfo.cpp:
+src/Game/System/CourseGreenStarInfo.cpp: done
     .text   start:0x004F3F00 end:0x004F4000
-src/Game/System/CourseInfo.cpp:
+src/Game/System/CourseInfo.cpp: done
     .text   start:0x004F4000 end:0x004F43F0
 src/Game/System/CourseInfoHolder.cpp:
     .text   start:0x004F43F0 end:0x004F4ED4
@@ -3241,7 +3241,7 @@ src/Game/System/DepressDecompressor.cpp:
     .text   start:0x004F4EE0 end:0x004F56AC
 src/Game/System/GameDataCommon.cpp:
     .text   start:0x004F56B0 end:0x004F5888
-src/Game/System/GameDataConst.cpp:
+src/Game/System/GameDataConst.cpp: done
     .text   start:0x004F5890 end:0x004F59AC
 src/Game/System/GameDataFile.cpp:
     .text   start:0x004F59B0 end:0x004F8588
@@ -3249,13 +3249,13 @@ src/Game/System/GameDataFileBase.cpp:
     .text   start:0x004F8590 end:0x004F8D08
 src/Game/System/GameDataFlagFunction.cpp:
     .text   start:0x004F8D10 end:0x004FAE80
-src/Game/System/SelectedGameDataFlagFunction.cpp:
+src/Game/System/SelectedGameDataFlagFunction.cpp: done
     .text   start:0x004FAE80 end:0x004FAEF8
 src/Game/System/GameDataFunction.cpp:
     .text   start:0x004FAF00 end:0x004FD738
 src/Game/System/GameDataHolder.cpp:
     .text   start:0x004FD740 end:0x004FEB3C
-src/Game/System/GameDataHolderAccessor.cpp:
+src/Game/System/GameDataHolderAccessor.cpp: done
     .text   start:0x004FEB40 end:0x004FEB9C
 src/Game/System/GameDataPlayReportCommon.cpp:
     .text   start:0x004FEBA0 end:0x004FEE30
@@ -3265,19 +3265,19 @@ src/Game/System/IslandData.cpp:
     .text   start:0x004FF380 end:0x004FF5E0
 src/Game/System/IslandDataList.cpp:
     .text   start:0x004FF5E0 end:0x0050028C
-src/Game/System/IslandSaveData.cpp:
+src/Game/System/IslandSaveData.cpp: done
     .text   start:0x00500290 end:0x005003E4
 src/Game/System/IslandSaveDataHolder.cpp:
     .text   start:0x005003F0 end:0x00500A6C
-src/Game/System/PlayingStageDataFunction.cpp:
+src/Game/System/PlayingStageDataFunction.cpp: done
     .text   start:0x00500A70 end:0x00500AB4
-src/Game/System/PlayLogData.cpp:
+src/Game/System/PlayLogData.cpp: done
     .text   start:0x00500AC0 end:0x00500C74
 src/Game/System/PlayLogFunction.cpp:
     .text   start:0x00500C80 end:0x00501274
 src/Game/System/RootTask.cpp:
     .text   start:0x00501280 end:0x005018FC
-src/Game/System/SaveDataAccessFunction.cpp:
+src/Game/System/SaveDataAccessFunction.cpp: done
     .text   start:0x00501900 end:0x00501B38
 src/Game/System/SaveDataAccessSequence.cpp:
     .text   start:0x00501B40 end:0x005026F0
@@ -3289,25 +3289,25 @@ src/Game/System/Data/SingleModeData.cpp:
     .text   start:0x00502DC0 end:0x00506368
 src/Game/System/Data/SingleModeDataFunction.cpp:
     .text   start:0x00506370 end:0x00508EEC
-src/Game/System/Data/SingleModeStockItemArray.cpp:
+src/Game/System/Data/SingleModeStockItemArray.cpp: done
     .text   start:0x00508EF0 end:0x0050906C
-src/Game/System/Data/StageDatabaseInfo.cpp:
+src/Game/System/Data/StageDatabaseInfo.cpp: done
     .text   start:0x00509070 end:0x00509344
 src/Game/System/Data/StageDataHolder.cpp:
     .text   start:0x00509350 end:0x0050A440
 src/Game/System/Data/StageListHolder.cpp:
     .text   start:0x0050A440 end:0x0050A888
-src/Game/System/Data/StageType.cpp:
+src/Game/System/Data/StageType.cpp: done
     .text   start:0x0050A890 end:0x0050AC4C
-src/Game/System/Data/StageUserData.cpp:
+src/Game/System/Data/StageUserData.cpp: done
     .text   start:0x0050AC50 end:0x0050AD38
-src/Game/System/Data/StampType.cpp:
+src/Game/System/Data/StampType.cpp: done
     .text   start:0x0050AD40 end:0x0050AEBC
 src/Game/System/Data/StockItemList.cpp:
     .text   start:0x0050AEC0 end:0x0050B37C
 src/Game/System/Data/TesselatorData.cpp:
     .text   start:0x0050B380 end:0x0050CB50
-src/Game/System/Data/WorldGameData.cpp:
+src/Game/System/Data/WorldGameData.cpp: done
     .text   start:0x0050CB50 end:0x0050CC40
 src/Game/System/Data/WorldGameDataHolder.cpp:
     .text   start:0x0050CC40 end:0x0050D5E8

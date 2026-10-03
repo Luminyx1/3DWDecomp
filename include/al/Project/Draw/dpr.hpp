@@ -31,12 +31,13 @@ enum UndepressType : u64 {
 class DepressStreamContext {
 public:
     /**
-     * Reads a range of the compressed blob.
+     * @brief Read a range of the compressed blob.
      * @param offset Byte offset in the compressed blob.
      * @param size Number of bytes to read.
      * @param pBuffer Destination; nullptr reads into mBuffer.
+     * @return Number of bytes actually read.
      */
-    virtual void read(u64 offset, u64 size, void* pBuffer) = 0;
+    virtual u32 ReadData(s64 offset, s64 size, void* pBuffer) = 0;
 
     void* mWorkBuffer;
     u8* mBuffer;

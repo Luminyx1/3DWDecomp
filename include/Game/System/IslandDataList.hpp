@@ -2,7 +2,11 @@
 
 #include "System/GameDataHolderAccessor.hpp"
 
-class SingleModeDataFunction {
-public:
-    static bool isScenarioComplete(GameDataHolderAccessor, int, int);
-};
+#include "System/Data/SingleModeDataFunction.hpp"
+namespace IslandDataFunction {
+int getQuadrantIndexFromIslandID(int islandId);
+int getIslandIDFromQuadrantIndex(int quadrant);
+int getIslandIDFromParam(int value);
+int getQuadrantIndexFromParam(int value);
+bool isGigaBellIsland(int islandId);
+} // namespace IslandDataFunction

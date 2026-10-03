@@ -155,7 +155,7 @@ inline void swapHeader(UndepressHeader* pHeader) {
 inline u8 readStreamByte(DepressStreamContext* pContext, const u8*& rSrc, u64& rOffset,
                          u8* pBuffer, u64 bufferSize) {
     if (rSrc >= pBuffer + bufferSize) {
-        pContext->read(rOffset, bufferSize, pBuffer);
+        pContext->ReadData(rOffset, bufferSize, pBuffer);
         rOffset += bufferSize;
         rSrc = pBuffer;
     }
@@ -187,7 +187,7 @@ u64 GetUndepressWorkingDataSize() {
 void HuffmanUndepressLZ77stream(void* pDst, DepressStreamContext* pContext) {
     u8* buffer = pContext->mBuffer;
     HuffmanWork* work = static_cast<HuffmanWork*>(pContext->mWorkBuffer);
-    pContext->read(0, sizeof(UndepressHeader), buffer);
+    pContext->ReadData(0, sizeof(UndepressHeader), buffer);
 
     UndepressHeader* header = reinterpret_cast<UndepressHeader*>(buffer);
     swapHeader(header);
@@ -198,7 +198,7 @@ void HuffmanUndepressLZ77stream(void* pDst, DepressStreamContext* pContext) {
 
     while (dst < dstEnd) {
         const u8* src = buffer;
-        pContext->read(offset, 8, buffer);
+        pContext->ReadData(offset, 8, buffer);
 
         BitReader reader;
         reader.init(buffer);
@@ -206,9 +206,9 @@ void HuffmanUndepressLZ77stream(void* pDst, DepressStreamContext* pContext) {
         u64 blockSize = reader.readBits(31);
 
         if (isCompressed != 0) {
-            pContext->read(offset + 8, (blockSize + 7) / 8, buffer + 8);
+            pContext->ReadData(offset + 8, (blockSize + 7) / 8, buffer + 8);
         } else {
-            pContext->read(offset + 8, blockSize, buffer + 8);
+            pContext->ReadData(offset + 8, blockSize, buffer + 8);
         }
         dst = decodeHuffmanBlock(work, &src, dst, dstEnd);
         offset += src - buffer;
@@ -460,7 +460,7 @@ void UndepressStreamRLE(void* pDst, DepressStreamContext* pContext) {
     u64 bufferSize = pContext->mBufferSize;
 
     UndepressHeader header;
-    pContext->read(0, sizeof(UndepressHeader), &header);
+    pContext->ReadData(0, sizeof(UndepressHeader), &header);
     swapHeader(&header);
 
     u64 size = header.mSize;
@@ -552,7 +552,7 @@ void UndepressStreamLZ77(void* pDst, DepressStreamContext* pContext) {
     u64 bufferSize = pContext->mBufferSize;
 
     UndepressHeader header;
-    pContext->read(0, sizeof(UndepressHeader), &header);
+    pContext->ReadData(0, sizeof(UndepressHeader), &header);
     swapHeader(&header);
 
     u64 size = header.mSize;
@@ -618,7 +618,7 @@ void* GeneralStreamUndepress(void* pDst, DepressStreamContext* pContext, long en
     gUndepressEndianSwap = endianSwap;
 
     UndepressHeader header;
-    pContext->read(0, sizeof(UndepressHeader), &header);
+    pContext->ReadData(0, sizeof(UndepressHeader), &header);
     swapHeader(&header);
 
     switch (header.mType) {
@@ -636,13 +636,13 @@ void* GeneralStreamUndepress(void* pDst, DepressStreamContext* pContext, long en
         u64 pos = 0;
 
         while (pos + pContext->mBufferSize <= header.mSize) {
-            pContext->read(pos + sizeof(UndepressHeader), pContext->mBufferSize, nullptr);
+            pContext->ReadData(pos + sizeof(UndepressHeader), pContext->mBufferSize, nullptr);
             memcpy(dst + pos, pContext->mBuffer, pContext->mBufferSize);
             pos += pContext->mBufferSize;
         }
 
         if (pos < header.mSize) {
-            pContext->read(pos + sizeof(UndepressHeader), header.mSize - pos, nullptr);
+            pContext->ReadData(pos + sizeof(UndepressHeader), header.mSize - pos, nullptr);
             memcpy(dst + pos, pContext->mBuffer, header.mSize - pos);
         }
 
