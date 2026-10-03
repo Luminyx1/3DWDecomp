@@ -20,11 +20,18 @@ class UniformBlock;
  */
 class SSR {
 public:
+    enum BlurType {
+        BlurType_Horizontal = 0,
+        BlurType_Vertical = 1,
+    };
+
     SSR(GraphicsSystemInfo* pInfo, s32 bufferNum);
     ~SSR();
 
     void setCam(const sead::LookAtCamera* pCamera);
     void draw(const agl::TextureData* pTexture) const;
+    void applyBlur(agl::TextureData* pDst, agl::TextureData* pSrc, u32 width, u32 height,
+                   const char* pName, BlurType blurType) const;
 
     void setEnable(bool isEnable) { mIsEnable = isEnable; }
 
@@ -32,9 +39,9 @@ public:
 
 private:
     GraphicsSystemInfo* mGraphicsSystemInfo;
-    UniformBlock* mUniformBlock;
-    const sead::LookAtCamera* mCamera = nullptr;
-    bool mIsEnable = false;
+    UniformBlock* mUniformBlock = nullptr;
+    const sead::LookAtCamera* mCamera;
+    bool mIsEnable;
     f32 _1c = 1.0f;
     FullScreenQuadModel* mFullScreenQuadModel;
 };
