@@ -471,6 +471,103 @@ bool tryNormalizeOrDirZ(sead::Vector3f* out, const sead::Vector3f& vec) {
     return tryNormalizeOrDirZ(out);
 }
 
+/**
+ * Finds the axis with the largest absolute component, checking X against Y before Z.
+ * @param rVec vector to inspect
+ * @return 0, 1 or 2 for the X, Y or Z axis
+ */
+static s32 calcMaxAbsAxis(const sead::Vector3f& rVec) {
+    f32 x = sead::Mathf::abs(rVec.x);
+    f32 y = sead::Mathf::abs(rVec.y);
+    f32 z = sead::Mathf::abs(rVec.z);
+
+    bool isNotMaxX = !(x > y) || !(x > z);
+
+    if (isNotMaxX) {
+        return y > z ? 1 : 2;
+    }
+
+    return 0;
+}
+
+/**
+ * Normalizes the three base axes of a matrix and rebuilds any degenerate (near zero) axes from
+ * the remaining ones so that the result is a complete basis again.
+ * @param pMtx matrix to normalize in place
+ */
+void normalizeComplement(sead::Matrix34f* pMtx) {
+    sead::Vector3f axisX = pMtx->getBase(0);
+    sead::Vector3f axisY = pMtx->getBase(1);
+    sead::Vector3f axisZ = pMtx->getBase(2);
+
+    bool isZeroX = isNearZero(axisX);
+    bool isZeroY = isNearZero(axisY);
+    bool isZeroZ = isNearZero(axisZ);
+    s32 zeroNum = isZeroX + isZeroY + isZeroZ;
+
+    if (!isZeroX) {
+        axisX.normalize();
+    }
+
+    if (!isZeroY) {
+        axisY.normalize();
+    }
+
+    if (!isZeroZ) {
+        axisZ.normalize();
+    }
+
+    switch (zeroNum) {
+    case 3:
+        axisX.set(sead::Vector3f::ex);
+        axisY.set(sead::Vector3f::ey);
+        axisZ.set(sead::Vector3f::ez);
+        break;
+    case 1:
+        if (isZeroX) {
+            axisX.setCross(axisY, axisZ);
+        } else if (isZeroY) {
+            axisY.setCross(axisZ, axisX);
+        } else if (isZeroZ) {
+            axisZ.setCross(axisX, axisY);
+        }
+
+        break;
+    case 2:
+        if (!isZeroX) {
+            if (calcMaxAbsAxis(axisX) != 1) {
+                axisY.set(sead::Vector3f::ey);
+                axisZ.setCross(axisX, axisY);
+            } else {
+                axisZ.set(sead::Vector3f::ez);
+                axisY.setCross(axisZ, axisX);
+            }
+        } else if (!isZeroY) {
+            if (calcMaxAbsAxis(axisY) != 2) {
+                axisZ.set(sead::Vector3f::ez);
+                axisX.setCross(axisY, axisZ);
+            } else {
+                axisX.set(sead::Vector3f::ex);
+                axisZ.setCross(axisX, axisY);
+            }
+        } else if (!isZeroZ) {
+            if (getMaxAbsElementIndex(axisZ) == 0) {
+                axisY.set(sead::Vector3f::ey);
+                axisX.setCross(axisY, axisZ);
+            } else {
+                axisX.set(sead::Vector3f::ex);
+                axisY.setCross(axisZ, axisX);
+            }
+        }
+
+        break;
+    }
+
+    pMtx->setBase(0, axisX);
+    pMtx->setBase(1, axisY);
+    pMtx->setBase(2, axisZ);
+}
+
 u32 getMaxAbsElementIndex(const sead::Vector3f& vec) {
     f32 x = sead::Mathf::abs(vec.x);
     f32 y = sead::Mathf::abs(vec.y);
@@ -1030,6 +1127,13 @@ s32 modi(s32 a, s32 b) {
     return a - (a / b) * b;
 }
 
+/**
+ * Splits a 2D vector into its length and normalized direction.
+ * @param pScalar receives the length of the vector
+ * @param pDir receives the normalized direction, or zero if the vector is near zero
+ * @param rVec vector to split
+ * @return true if the vector is near zero
+ */
 bool separateScalarAndDirection(f32* pScalar, sead::Vector2f* pDir, const sead::Vector2f& rVec) {
     *pScalar = rVec.length();
     if (isNearZero(rVec)) {
@@ -1037,8 +1141,7 @@ bool separateScalarAndDirection(f32* pScalar, sead::Vector2f* pDir, const sead::
         return true;
     }
 
-    *pDir = rVec;
-    normalize(pDir);
+    normalize(pDir, rVec);
     return false;
 }
 
@@ -1088,10 +1191,17 @@ void separateVectorHV(sead::Vector3f* outV, sead::Vector3f* outH, const sead::Ve
 }
 
 // computes how many `vec`s are required to go from `origin` to plane
+/**
+ * Adds a vector while limiting the resulting component along the added direction.
+ * @param pVec vector to add to
+ * @param rAdd vector to add
+ * @param limit maximum component of the result along the direction of rAdd
+ * @return true if anything was added
+ */
 bool addVectorLimit(sead::Vector3f* pVec, const sead::Vector3f& rAdd, f32 limit) {
-    f32 addLength = rAdd.length();
-    sead::Vector3f dir = rAdd;
-    tryNormalizeOrZero(&dir);
+    f32 addLength;
+    sead::Vector3f dir;
+    separateScalarAndDirection(&addLength, &dir, rAdd);
 
     if (isNearZero(dir)) {
         return false;
@@ -1562,6 +1672,12 @@ void calcQuatLocalAxis(sead::Vector3f* pOutVec, const sead::Quatf& rQuat, s32 ax
     }
 }
 
+/**
+ * Calculates a signed local axis of a quaternion.
+ * @param pOutVec receives the axis
+ * @param rQuat quaternion to read the axis from
+ * @param axis 1, 2 or 3 for side, up or front; negative values flip the axis
+ */
 void calcQuatLocalSignAxis(sead::Vector3f* pOutVec, const sead::Quatf& rQuat, s32 axis) {
     switch (sead::Mathi::abs(axis)) {
     case 1:
@@ -1578,7 +1694,7 @@ void calcQuatLocalSignAxis(sead::Vector3f* pOutVec, const sead::Quatf& rQuat, s3
     }
 
     if (axis <= 0) {
-        *pOutVec = -*pOutVec;
+        pOutVec->negate();
     }
 }
 
@@ -1596,6 +1712,12 @@ void calcQuatRotateRadian(sead::Vector3f* outVec, const sead::Quatf& quat) {
     quat.calcRPY(*outVec);
 }
 
+/**
+ * Converts a quaternion into a rotation axis and an angle in the range [-180, 180].
+ * @param outAxis receives the normalized rotation axis
+ * @param outDegree receives the rotation angle in degrees
+ * @param quat quaternion to convert
+ */
 void calcQuatRotateAxisAndDegree(sead::Vector3f* outAxis, f32* outDegree, const sead::Quatf& quat) {
     outAxis->set(quat.x, quat.y, quat.z);
     f32 len = outAxis->length();
@@ -1609,8 +1731,12 @@ void calcQuatRotateAxisAndDegree(sead::Vector3f* outAxis, f32* outDegree, const 
     f32 radian = sead::Mathf::atan2(len, quatW);
     f32 degree = wrapAngle(sead::Mathf::rad2deg(2.0f * radian));
 
-    if (degree >= 180.0f)
+    if (degree > 180.0f) {
         degree -= 360.0f;
+    } else if (degree < -180.0f) {
+        degree += 360.0f;
+    }
+
     *outDegree = degree;
 }
 
@@ -1701,13 +1827,16 @@ void rotateQuatLocalDirDegree(sead::Quatf* outQuat, const sead::Quatf& quat, s32
     rotateQuatRadian(outQuat, quat, vec, sead::Mathf::deg2rad(angle));
 }
 
-// https://decomp.me/scratch/WnkEF
-// NON_MATCHING: Same logic different store order
+/**
+ * Rotates a quaternion by a moment vector whose length is the angle in radians.
+ * @param outQuat receives the rotated quaternion
+ * @param quat quaternion to rotate
+ * @param vec rotation axis scaled by the angle in radians
+ */
 void rotateQuatMoment(sead::Quatf* outQuat, const sead::Quatf& quat, const sead::Vector3f& vec) {
-    f32 radian = vec.length();
-
+    f32 radian;
     sead::Vector3f axis;
-    tryNormalizeOrZero(&axis, vec);
+    separateScalarAndDirection(&radian, &axis, vec);
 
     // rotateQuatRadian(...)
     sead::Quatf rotation;
@@ -1717,14 +1846,17 @@ void rotateQuatMoment(sead::Quatf* outQuat, const sead::Quatf& quat, const sead:
     outQuat->normalize();
 }
 
-// https://decomp.me/scratch/ojgnQ
-// NON_MATCHING: Same logic different store order
+/**
+ * Rotates a quaternion by a moment vector whose length is the angle in degrees.
+ * @param outQuat receives the rotated quaternion
+ * @param quat quaternion to rotate
+ * @param vec rotation axis scaled by the angle in degrees
+ */
 void rotateQuatMomentDegree(sead::Quatf* outQuat, const sead::Quatf& quat,
                             const sead::Vector3f& vec) {
-    f32 degree = vec.length();
-
+    f32 degree;
     sead::Vector3f axis;
-    tryNormalizeOrZero(&axis, vec);
+    separateScalarAndDirection(&degree, &axis, vec);
 
     // rotateQuatDegree(...)
     sead::Quatf rotation;
@@ -1741,18 +1873,23 @@ void rotateQuatRollBall(sead::Quatf* outQuat, const sead::Quatf& quat, const sea
     rotateQuatMoment(outQuat, quat, vecNorm);
 }
 
+/**
+ * Calculates the rotation moment of a ball rolling with a velocity on a surface.
+ * @param outVec receives the moment, or zero if the up vector is near zero
+ * @param vecA velocity of the ball
+ * @param vecB up direction of the surface
+ * @param scale radius of the ball
+ */
 void calcMomentRollBall(sead::Vector3f* outVec, const sead::Vector3f& vecA,
                         const sead::Vector3f& vecB, f32 scale) {
-    sead::Vector3f vecNorm = vecB;
+    sead::Vector3f moment = vecB;
 
-    if (!tryNormalizeOrZero(&vecNorm)) {
-        *outVec = vecNorm;
-        return;
+    if (tryNormalizeOrZero(&moment)) {
+        moment.setCross(moment, vecA);
+        moment = (1.0f / scale) * moment;
     }
 
-    vecNorm.setCross(vecNorm, vecA);
-    scale = 1.0f / scale;
-    *outVec = scale * vecNorm;
+    outVec->set(moment.x, moment.y, moment.z);
 }
 
 bool turnQuat(sead::Quatf* pOutQuat, const sead::Quatf& rQuat, const sead::Vector3f& rAxis,
@@ -1974,6 +2111,15 @@ bool turnVecToVecCos(sead::Vector3f* pOutVec, const sead::Vector3f& rFrom, const
     return false;
 }
 
+/**
+ * Turns a vector towards another one on the plane given by a normal.
+ * @param pOutVec receives the turned vector
+ * @param rFrom vector to turn
+ * @param rTo vector to turn towards
+ * @param rPlaneNormal normal of the plane to turn on
+ * @param cosLimit cosine of the maximum turn angle
+ * @return true if the target direction was reached
+ */
 bool turnVecToVecCosOnPlane(sead::Vector3f* pOutVec, const sead::Vector3f& rFrom,
                             const sead::Vector3f& rTo, const sead::Vector3f& rPlaneNormal,
                             f32 cosLimit) {
@@ -1992,12 +2138,12 @@ bool turnVecToVecCosOnPlane(sead::Vector3f* pOutVec, const sead::Vector3f& rFrom
         return false;
     }
 
-    if (cosLimit <= -1.0f) {
-        pOutVec->set(to);
-        return true;
+    if (cosLimit > -1.0f) {
+        return turnVecToVecCos(pOutVec, from, to, cosLimit, rPlaneNormal, 0.02f);
     }
 
-    return turnVecToVecCos(pOutVec, from, to, cosLimit, rPlaneNormal, 0.02f);
+    pOutVec->set(to);
+    return true;
 }
 
 bool turnVecToVecCosOnPlane(sead::Vector3f* outVec, const sead::Vector3f& vecA,
@@ -2065,6 +2211,15 @@ f32 calcDistanceToFarthestBoundingBoxVertex(const sead::Vector3f& rPos, const se
     return sead::Vector3f(x, y, z).length();
 }
 
+/**
+ * Calculates the smallest sphere enclosing two spheres.
+ * @param pOutCenter receives the center of the enclosing sphere
+ * @param pOutRadius receives the radius of the enclosing sphere
+ * @param rCenterA center of the first sphere
+ * @param radiusA radius of the first sphere
+ * @param rCenterB center of the second sphere
+ * @param radiusB radius of the second sphere
+ */
 void calcSphereMargeSpheres(sead::Vector3f* pOutCenter, f32* pOutRadius,
                             const sead::Vector3f& rCenterA, f32 radiusA,
                             const sead::Vector3f& rCenterB, f32 radiusB) {
@@ -2089,7 +2244,7 @@ void calcSphereMargeSpheres(sead::Vector3f* pOutCenter, f32* pOutRadius,
     pOutCenter->set(rCenterA);
 
     if (!isNearZero(distance)) {
-        *pOutCenter += diff * ((*pOutRadius - radiusA) / distance);
+        pOutCenter->setScaleAdd((*pOutRadius - radiusA) / distance, diff, *pOutCenter);
     }
 }
 
@@ -2476,6 +2631,134 @@ bool checkHitPointCone(const sead::Vector3f& rPoint, const sead::Vector3f& rApex
     return true;
 }
 
+/**
+ * Result of the shared sphere/cone test used by checkHitSphereCone and checkHitSphereSpotLight.
+ */
+enum class SphereConeHitResult : s32 {
+    Hit = 0,
+    NoHit = 1,
+    CheckBase = 2,
+};
+
+/**
+ * Tests a sphere against the side of an infinite cone whose apex is at the origin.
+ * @param rDir normalized direction of the cone axis
+ * @param rApexToSphere vector from the cone apex to the sphere center
+ * @param radius radius of the sphere
+ * @param height height of the cone
+ * @param angleDegree half opening angle of the cone in degrees
+ * @return whether the sphere hits, misses, or the base of the cone has to be checked
+ */
+static SphereConeHitResult checkHitSphereConeSide(const sead::Vector3f& rDir,
+                                                  const sead::Vector3f& rApexToSphere, f32 radius,
+                                                  f32 height, f32 angleDegree) {
+    f32 distance;
+    sead::Vector3f dirToSphere;
+
+    if (separateScalarAndDirection(&distance, &dirToSphere, rApexToSphere)) {
+        return SphereConeHitResult::NoHit;
+    }
+
+    if (isReverseDirection(rDir, dirToSphere)) {
+        return distance < radius ? SphereConeHitResult::Hit : SphereConeHitResult::NoHit;
+    }
+
+    if (isNearDirection(rDir, dirToSphere)) {
+        return distance < radius + height ? SphereConeHitResult::Hit :
+                                            SphereConeHitResult::NoHit;
+    }
+
+    sead::Vector3f axis;
+    axis.setCross(rDir, dirToSphere);
+    tryNormalizeOrZero(&axis);
+
+    sead::Vector3f sideDir = rDir;
+    rotateVectorDegree(&sideDir, sideDir, axis, angleDegree);
+    tryNormalizeOrZero(&sideDir);
+    f32 sideDepth = sideDir.dot(rApexToSphere);
+
+    if (sideDepth <= 0.0f) {
+        return distance < radius ? SphereConeHitResult::Hit : SphereConeHitResult::NoHit;
+    }
+
+    sead::Vector3f cross;
+    cross.setCross(sideDir, dirToSphere);
+
+    if (axis.dot(cross) > 0.0f) {
+        f32 sideLength = height / sead::Mathf::cos(sead::Mathf::deg2rad(angleDegree));
+        sead::Vector3f nearestPos = sideDir * sead::Mathf::clamp(sideDepth, 0.0f, sideLength);
+        return (nearestPos - rApexToSphere).squaredLength() <= radius * radius ?
+                   SphereConeHitResult::Hit :
+                   SphereConeHitResult::NoHit;
+    }
+
+    return SphereConeHitResult::CheckBase;
+}
+
+/**
+ * Checks whether a sphere intersects a cone.
+ * @param rSpherePos center of the sphere
+ * @param sphereRadius radius of the sphere
+ * @param rConePos position of the cone apex
+ * @param rConeDir normalized direction of the cone axis
+ * @param coneHeight height of the cone
+ * @param coneAngle half opening angle of the cone in degrees
+ * @return true if the sphere and the cone intersect
+ */
+bool checkHitSphereCone(const sead::Vector3f& rSpherePos, f32 sphereRadius,
+                        const sead::Vector3f& rConePos, const sead::Vector3f& rConeDir,
+                        f32 coneHeight, f32 coneAngle) {
+    sead::Vector3f apexToSphere = rSpherePos;
+    apexToSphere -= rConePos;
+    SphereConeHitResult result = checkHitSphereConeSide(rConeDir, apexToSphere, sphereRadius,
+                                                        coneHeight, coneAngle);
+
+    if (result != SphereConeHitResult::CheckBase) {
+        return result == SphereConeHitResult::Hit;
+    }
+
+    sead::Vector3f basePos = rConeDir * coneHeight + rConePos;
+    f32 depth = rConeDir.dot(rSpherePos - basePos);
+
+    if (depth <= 0.0f) {
+        return true;
+    }
+
+    if (depth > sphereRadius) {
+        return false;
+    }
+
+    f32 cutRadius = sead::Mathf::sqrt(sphereRadius * sphereRadius - depth * depth);
+    sead::Vector3f baseToCut = apexToSphere - rConeDir * depth - rConeDir * coneHeight;
+    f32 baseRadius = sead::Mathf::tan(sead::Mathf::deg2rad(coneAngle)) * coneHeight;
+    return baseToCut.length() <= cutRadius + baseRadius;
+}
+
+/**
+ * Checks whether a sphere intersects a spot light shaped volume (a cone capped by a sphere).
+ * @param rSpherePos center of the sphere
+ * @param sphereRadius radius of the sphere
+ * @param rLightPos position of the light
+ * @param rLightDir normalized direction of the light
+ * @param lightLength reach of the light
+ * @param lightAngle half opening angle of the light in degrees
+ * @return true if the sphere and the light volume intersect
+ */
+bool checkHitSphereSpotLight(const sead::Vector3f& rSpherePos, f32 sphereRadius,
+                             const sead::Vector3f& rLightPos, const sead::Vector3f& rLightDir,
+                             f32 lightLength, f32 lightAngle) {
+    sead::Vector3f lightToSphere = rSpherePos;
+    lightToSphere -= rLightPos;
+    SphereConeHitResult result = checkHitSphereConeSide(rLightDir, lightToSphere, sphereRadius,
+                                                        lightLength, lightAngle);
+
+    if (result != SphereConeHitResult::CheckBase) {
+        return result == SphereConeHitResult::Hit;
+    }
+
+    return lightToSphere.length() <= sphereRadius + lightLength;
+}
+
 bool isNearCollideSphereAabb(const sead::Vector3f& center, f32 radius,
                              const sead::BoundBox3f& boundBox) {
     const sead::Vector3f& min = boundBox.getMin();
@@ -2536,13 +2819,20 @@ void calcBoxFacePoint(sead::Vector3f facePoints[4], const sead::BoundBox3f& boun
     }
 }
 
+/**
+ * Calculates the four corners of a box face transformed by a matrix.
+ * @param facePoints receives the four corners
+ * @param rBox box to read the face from
+ * @param axis face to read
+ * @param rMtx matrix to transform the corners with
+ */
 void calcBoxFacePoint(sead::Vector3f facePoints[4], const sead::BoundBox3f& rBox, s32 axis,
                       const sead::Matrix34f& rMtx) {
     sead::Vector3f localPoints[4];
     calcBoxFacePoint(localPoints, rBox, axis);
 
     for (s32 i = 0; i < 4; i++) {
-        facePoints[i] = rMtx * localPoints[i];
+        facePoints[i].setMul(rMtx, localPoints[i]);
     }
 }
 
@@ -2605,7 +2895,11 @@ void calcFittingBoxPoseEqualAxisTwo(sead::Quatf* pOutQuat, const sead::Quatf& rQ
     sead::Vector3f axisA;
     calcQuatLocalAxis(&axisB, rQuatB, axis);
     calcQuatLocalAxis(&axisA, rQuatA, axis);
-    axisA = axisA.dot(axisB) >= 0.0f ? axisB : -axisB;
+    if (axisA.dot(axisB) >= 0.0f) {
+        axisA = axisB;
+    } else {
+        axisA = -axisB;
+    }
 
     s32 nextAxis = (axis + 1) % 3;
     s32 lastAxis = (axis + 2) % 3;
@@ -2646,6 +2940,13 @@ void calcFittingBoxPose(sead::Quatf* pOutQuat, const sead::BoundBox3f& rBox,
     calcFittingBoxPoseEqualAxisNone(pOutQuat, rQuatA, rQuatB);
 }
 
+/**
+ * Calculates the foot of the perpendicular from a point to a line segment, clamped to the segment.
+ * @param pOut receives the foot of the perpendicular
+ * @param rPos point to project
+ * @param rLineStart start of the segment
+ * @param rLineEnd end of the segment
+ */
 void calcPerpendicFootToLineInside(sead::Vector3f* pOut, const sead::Vector3f& rPos,
                                    const sead::Vector3f& rLineStart,
                                    const sead::Vector3f& rLineEnd) {
@@ -2653,7 +2954,7 @@ void calcPerpendicFootToLineInside(sead::Vector3f* pOut, const sead::Vector3f& r
     f32 rate = (dir.dot(rPos) - rLineStart.dot(dir)) / dir.squaredLength();
     rate = sead::Mathf::clamp(rate, 0.0f, 1.0f);
     pOut->e = rLineStart.e;
-    *pOut += dir * rate;
+    pOut->setScaleAdd(rate, dir, *pOut);
 }
 
 bool calcReflectionVector(sead::Vector3f* vec, const sead::Vector3f& normal, f32 reboundRate,
@@ -2698,14 +2999,24 @@ void calcParabolicFunctionParam(f32* pGravity, f32* pInitialVelY, f32 maxHeight,
     *pInitialVelY = time * -2.0f * *pGravity;
 }
 
+/**
+ * Interpolates between two values with a decaying vibration.
+ * @param rate interpolation rate in [0, 1]
+ * @param start value at rate 0
+ * @param end value at rate 1
+ * @param amplitude strength of the vibration
+ * @param frequency frequency of the vibration
+ * @return the interpolated value
+ */
 f32 calcConvergeVibrationValue(f32 rate, f32 start, f32 end, f32 amplitude, f32 frequency) {
     f32 rateSq = rate * rate;
     f32 invRate = 1.0f - rate;
     f32 invRateSq = invRate * invRate;
-    f32 value = (1.0f - invRateSq * invRateSq) +
-                invRate * amplitude *
+    f32 invRateQuad = invRateSq * invRateSq;
+    f32 vibration = invRate * amplitude *
                     sead::Mathf::sin((rateSq * rateSq * frequency + rate) * sead::Mathf::pi());
-    return value * end + (1.0f - value) * start;
+    f32 value = (1.0f - invRateQuad) + vibration;
+    return (1.0f - value) * start + value * end;
 }
 
 bool calcSphericalPolarCoordPY(sead::Vector2f* pOutCoord, const sead::Vector3f& rDir,
@@ -2907,6 +3218,11 @@ bool calcDirViewInput(sead::Vector3f* pOutVec, const sead::Vector2f& rInput,
     return true;
 }
 
+/**
+ * Builds a Bayer dithering matrix.
+ * @param outMtx receives (1 << size) * (1 << size) threshold values
+ * @param size log2 of the matrix width
+ */
 void makeBayerMatrix(s32* outMtx, s32 size) {
     for (s32 y = 0; y < 1 << size; ++y) {
         for (s32 x = 0; x < 1 << size; x++) {
@@ -2914,8 +3230,8 @@ void makeBayerMatrix(s32* outMtx, s32 size) {
             s32 shift = 0;
 
             for (s32 k = size; k != 0 && size > 0; k--) {
-                s32 bitX = (x % (1 << k)) / (1 << (k - 1));
                 s32 bitY = (y % (1 << k)) / (1 << (k - 1));
+                s32 bitX = (x % (1 << k)) / (1 << (k - 1));
 
                 value += bayerMatrix2[bitY][bitX] << shift;
                 shift += 2;
