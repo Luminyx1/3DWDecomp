@@ -63,6 +63,13 @@ class SkeletalAnimObj : public ModelAnimObj {
 
     static_assert(sizeof(InitializeArgument) == 0xa0);
 
+    struct BindArgument {
+        const ResSkeleton* pTargetSkeleton;
+        const ResSkeleton* pSourceSkeleton;
+        bool isRetargetingEnabled;
+        bool isMirroringEnabled;
+    };
+
     /** @brief Construct an empty skeletal animation object without allocated working storage. */
     SkeletalAnimObj() {}
     /** @brief Destroy the animation object without releasing caller-owned workspace. */
@@ -79,6 +86,14 @@ class SkeletalAnimObj : public ModelAnimObj {
     void SetResource(const ResSkeletalAnim* pRes);
     BindResult Bind(const ResSkeleton* pSkeleton);
     BindResult Bind(const SkeletonObj* pSkeleton);
+    BindResult Bind(const BindArgument& rArg);
+    BindResult BindFast(const BindArgument& rArg);
+    BindResult Bind(const ResSkeleton* pTarget, const ResSkeleton* pSource);
+    BindResult Bind(const SkeletonObj* pTarget, const SkeletonObj* pSource);
+    BindResult Bind(const ResModel* pTarget, const ResModel* pSource);
+    BindResult Bind(const ModelObj* pTarget, const ModelObj* pSource);
+    BindResult BindFast(const ResSkeleton* pTarget, const ResSkeleton* pSource);
+    BindResult BindFast(const ResModel* pTarget, const ResModel* pSource);
     void ClearResult(const ResSkeleton* pSkeleton);
     void BindFast(const ResSkeleton* pSkeleton);
     void SetBindFlag(const ResSkeleton* pSkeleton, int boneIndex, BindFlag flag);
@@ -96,6 +111,8 @@ class SkeletalAnimObj : public ModelAnimObj {
     template <bool mirrored, bool retargeted> void CalculateImpl();
     template <class Converter> void ApplyToImpl(SkeletonObj* pSkeleton) const;
     BindResult BindImpl(const ResSkeleton* pSkeleton);
+    BindResult InitRetargeting(const ResSkeleton* pTarget, const ResSkeleton* pSource);
+    void BindFastImpl(const ResSkeleton* pTarget);
     const ResBoneAnim* m_pBoneAnims = nullptr;
     int m_BoneAnimCapacity = 0;
     u32 m_Flags = 0;
