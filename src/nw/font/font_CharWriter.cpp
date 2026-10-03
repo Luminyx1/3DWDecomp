@@ -1,3 +1,6 @@
+// The out-of-line copies of the detail vertex helpers live in this unit.
+#define NN_FONT_DETAIL_EMIT_OUT_OF_LINE
+
 #include <nn/font/font_CharWriter.h>
 
 #include <new>

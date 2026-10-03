@@ -93,8 +93,13 @@ struct CharAttribute {
     bool IsBorderEffectEnabled() const { return (pTexObjAndFlag & 1) != 0; }
 };
 
-// These are emitted out of line by font_CharWriter.cpp as in the original binary.
+// The original binary has out-of-line copies of these only in font_CharWriter.cpp, which defines
+// NN_FONT_DETAIL_EMIT_OUT_OF_LINE before including this header; every other user inlines them.
+#ifdef NN_FONT_DETAIL_EMIT_OUT_OF_LINE
 #define NN_FONT_DETAIL_EMIT USED
+#else
+#define NN_FONT_DETAIL_EMIT
+#endif
 
 struct VertexShaderCharAttribute {
     nn::util::Float4 posAndSize;
