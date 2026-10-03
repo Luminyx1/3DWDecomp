@@ -13,6 +13,11 @@ JointAimController::JointAimController(const JointAimInfo* pInfo) : mInfo(pInfo)
     mQuat.set(sead::Quatf::unit);
 }
 
+/**
+ * Turns the joint toward the target position, blending with the previous rotation.
+ * @param jointIndex Index of the joint being calculated.
+ * @param pMtx Joint matrix to modify.
+ */
 void JointAimController::calcJointCallback(s32 jointIndex, sead::Matrix34f* pMtx) {
     if (isNearZero(mInfo->mPowerRate)) {
         mQuat.set(sead::Quatf::unit);
@@ -21,7 +26,7 @@ void JointAimController::calcJointCallback(s32 jointIndex, sead::Matrix34f* pMtx
 
     sead::Matrix34f invMtx;
 
-    if (mInfo->mBaseMtxPtr) {
+    if (mInfo->mBaseMtxPtr != nullptr) {
         invMtx.setInverse(*mInfo->mBaseMtxPtr);
     } else {
         invMtx.setInverse(*pMtx);
@@ -35,10 +40,11 @@ void JointAimController::calcJointCallback(s32 jointIndex, sead::Matrix34f* pMtx
 
     if (!normalizeOrZero(&dir)) {
         if (mInfo->mIsEnableBackAim) {
-            f32 dot = mInfo->mBaseAimLocalDir.dot(dir);
+            const sead::Vector3f aimDir = mInfo->mBaseAimLocalDir;
+            f32 dot = aimDir.dot(dir);
 
             if (dot < 0.0f) {
-                dir -= mInfo->mBaseAimLocalDir * dot * 2.0f;
+                dir -= aimDir * dot * 2.0f;
                 normalizeOrZero(&dir);
             }
         }
