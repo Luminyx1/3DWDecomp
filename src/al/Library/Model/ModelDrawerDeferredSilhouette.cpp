@@ -84,7 +84,7 @@ void ModelDrawerDeferredSilhouette::draw() const {
 
         if (meshDrawer->isExistDrawMesh()) {
             fresnelTextureKeeper->activateSilhouetteCurveTexture(
-                mCategory, getSamplerLocationSilhouetteCurve(), true);
+                mCategory.value, getSamplerLocationSilhouetteCurve(), true);
             meshDrawer->draw(&mGraphicsSystemInfo->getViewVolume(), 0, nullptr);
         }
     }
