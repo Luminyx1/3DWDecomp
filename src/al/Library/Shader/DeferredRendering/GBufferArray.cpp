@@ -135,7 +135,7 @@ void GBufferArray::allocGBuffer(s32 subIndex) {
  * @brief Clears the G-buffers flagged for clearing.
  */
 void GBufferArray::clearGBuffer() {
-    for (s32 i = 0; i < cIndex_Num; i++) {
+    for (s32 i = 0; i != cIndex_Num; i++) {
         s32 width = mDepthTarget->getMipWidth(0);
         s32 height = mDepthTarget->getMipHeight(0);
 
@@ -425,18 +425,18 @@ void GBufferArray::setContextMRTCustom(sead::GraphicsContextMRT* pContext,
         return;
     }
 
-    if (isNoNrm) {
-        pContext->setBlendEnable(3, true);
-        pContext->setColorMask(0, false, false, false, false);
-        pContext->setColorMask(1, false, false, false, false);
-        pContext->setColorMask(2, false, false, false, false);
-        pContext->setColorMask(3, true, true, true, true);
-    } else {
+    if (!isNoNrm) {
         pContext->setBlendEnable(0, true);
         pContext->setBlendEnable(3, true);
         pContext->setColorMask(0, true, true, true, false);
         pContext->setColorMask(1, true, true, true, true);
         pContext->setColorMask(2, true, true, true, true);
+        pContext->setColorMask(3, true, true, true, true);
+    } else {
+        pContext->setBlendEnable(3, true);
+        pContext->setColorMask(0, false, false, false, false);
+        pContext->setColorMask(1, false, false, false, false);
+        pContext->setColorMask(2, false, false, false, false);
         pContext->setColorMask(3, true, true, true, true);
     }
 
