@@ -61310,7 +61310,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71009F1050			FALSE	_ZN2al8SeKeeper17setSeSourceVolumeEf	al::SeKeeper::setSeSourceVolume(float)	
 0x71009F10B0			FALSE	_ZN2al8SeKeeper6loadSeEPNS_20IAudioResourceLoaderE	al::SeKeeper::loadSe(al::IAudioResourceLoader*)	
 0x71009F11E0			FALSE	_ZN2al8SeKeeper8verifySeEPNS_15SeadAudioPlayerEPKc	al::SeKeeper::verifySe(al::SeadAudioPlayer*, char const*)	
-0x71009F1310			FALSE	sub_71009F1310	sub_71009F1310	
+0x71009F1310			FALSE	_GLOBAL__sub_I_SeKeeper.cpp	_GLOBAL__sub_I_SeKeeper.cpp	Initializes shared SeResourceSpecificInfo defaults
 0x71009F1350			FALSE	_ZN2al16SeListenerKeeperC2Ebi	al::SeListenerKeeper::SeListenerKeeper(bool, int)	
 0x71009F1690			FALSE	_ZN2al16SeListenerKeeper4initEPNS_14SeadAudio3DMgrEPKN4sead7Vector3IfEEPKNS3_8Matrix34IfEEPNS3_21PerspectiveProjectionES7_PKc	al::SeListenerKeeper::init(al::SeadAudio3DMgr*, sead::Vector3<float> const*, sead::Matrix34<float> const*, sead::PerspectiveProjection*, sead::Vector3<float> const*, char const*)	
 0x71009F1770			FALSE	_ZN2al16SeListenerKeeper6updateEv	al::SeListenerKeeper::update()	
