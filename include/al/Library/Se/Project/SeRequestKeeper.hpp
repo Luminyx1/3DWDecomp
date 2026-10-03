@@ -24,7 +24,7 @@ class SeRequestKeeper {
   public:
     using RequestList = sead::OffsetList<SeRequest>;
     SeRequestKeeper(SeadAudio3DMgr* pMgr, SeadAudioPlayer* pPlayer, const char* pName, s32 requestNum,
-                    f32 distance);
+                    f32 volume);
     SePlayParamList* addRequest(u32 soundId, SeSource* pSource, bool isLoop,
                                 const SeResourceSpecificInfo* pSpecificInfo,
                                 const AudioMixVolume* pMixVolume);
@@ -47,9 +47,19 @@ class SeRequestKeeper {
     void startPausedSeFromCameraDemo(alSeFunction::DemoType type);
     void pauseSystem(bool isPause, const char* pName, u32 fadeFrames);
     void updatePauseFlag(bool isPause, const char* pName);
+    void update(f32 distanceLimit);
+    void findIdAndSetIsPlayNext(RequestList::iterator it);
     void activateSystem();
     void deactivateSystem();
     void setVolumeSetting(const char* pName, s32 fadeFrames);
+
+    /** @brief Gets the routing name of this keeper. @return Name supplied at construction. */
+    const char* getName() const { return mName; }
+    /** @brief Enables post-goal volume overrides. @param isAfterGoal Whether the stage goal has been reached.
+     */
+    void setIsStateAfterGoal(bool isAfterGoal) { mIsAfterGoal = isAfterGoal; }
+    /** @brief Enables filtering for sounds marked unsuitable for promotional playback. */
+    void setIsExcludeCmNgSe() { mIsExcludeCmNgSe = true; }
 
   private:
     void stopAndRemove(SeRequest* pRequest, u32 fadeFrames);
@@ -70,7 +80,7 @@ class SeRequestKeeper {
     bool mIsActive = true;
     const char* mName;
     bool mIsExcludeCmNgSe = false;
-    f32 mDistance;
+    f32 mBaseVolume;
 };
 static_assert(sizeof(SeRequestKeeper) == 0x70);
 } // namespace al

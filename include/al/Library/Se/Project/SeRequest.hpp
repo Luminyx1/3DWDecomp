@@ -41,6 +41,32 @@ class SeRequest {
     void setMulParamVolume(f32 volume);
     void setParamLpfFreq(f32 freq);
     void applyVolume(bool isAfterGoal, f32 volume);
+    static s32 compareSeRequestByDistance(const SeRequest* pA, const SeRequest* pB);
+
+    enum PlaySelection { Undecided = 0, Play = 1, Skip = 2, Delay = 3 };
+    /** @brief Gets the request's playback state. @return Empty (0), new (1), playing (2), paused (3), or
+     * waiting (4). */
+    s32 getState() const { return mState; }
+    /** @brief Gets the selection made during this keeper update. @return Current playback selection. */
+    PlaySelection getPlaySelection() const { return static_cast<PlaySelection>(mPlayOrder); }
+    /**
+     * @brief Records the playback decision for this update.
+     * @param selection Whether to
+     * evaluate, play, skip, or delay the request.
+     */
+    void setPlaySelection(PlaySelection selection) { mPlayOrder = selection; }
+    /** @brief Gets the elapsed playback counter. @return Number of non-paused playback updates. */
+    s32 getPlayCount() const { return mPlayCount; }
+    /** @brief Gets the listener distance including its sorting bias. @return Biased distance. */
+    f32 getDistance() const { return mDistance; }
+    /** @brief Tests whether distance currently prevents playback. @return Distance-pause flag. */
+    bool isPausedByDistance() const { return mIsPausedByDistance; }
+    /**
+     * @brief Sets the delay multiplier assigned while limiting simultaneous triggers.
+     * @param
+     * multiplier Positive ordering index among requests queued for delayed playback.
+     */
+    void setDelayMultiplier(s32 multiplier) { mDelayMultiplier = multiplier; }
 
     /**
      * @brief Gets the sound-archive identifier of this request.
@@ -76,6 +102,8 @@ class SeRequest {
   private:
     void stopAndClear(s32 fadeFrames);
     u32 calcOriginalId() const;
+    void clearState();
+    void pauseRequest();
     u32 mSoundId;
     const SeResourceSpecificInfo* mSpecificInfo;
     s32 mState;
