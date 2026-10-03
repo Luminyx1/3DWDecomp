@@ -401,3 +401,238 @@ void SeDirector::stopAllId(u32 id, SeSource* pSource, u32 fadeFrames, const char
     }
 }
 } // namespace al
+
+namespace al {
+/** @brief Creates an empty musical-effect information keeper. */
+MeInfoKeeper::MeInfoKeeper() = default;
+/**
+ * @brief Finds the musical-effect parameter list associated with a sound name.
+ * @param pName Sound name, or nullptr to return no match.
+ * @return First named list matching pName, or nullptr when absent.
+ */
+MeInfoList* MeInfoKeeper::tryFindMeInfoList(const char* pName) const {
+    if (pName == nullptr) {
+        return nullptr;
+    }
+    for (s32 i = 0; i < mListNum; ++i) {
+        if (mLists[i]->mName != nullptr && isEqualString(mLists[i]->mName, pName)) {
+            return mLists[i];
+        }
+    }
+    return nullptr;
+}
+/**
+ * @brief Finds the musical-effect parameter list associated with a sound ID.
+ * @param soundId Archive sound ID; the invalid ID never matches.
+ * @return First valid list with this sound ID, or nullptr when absent.
+ */
+MeInfoList* MeInfoKeeper::tryFindMeInfoListById(s32 soundId) const {
+    if (AudioConst::SOUND_ID_INVALID == soundId) {
+        return nullptr;
+    }
+    for (s32 i = 0; i < mListNum; ++i) {
+        if (mLists[i]->mSoundId != AudioConst::SOUND_ID_INVALID && mLists[i]->mSoundId == soundId) {
+            return mLists[i];
+        }
+    }
+    return nullptr;
+}
+/**
+ * @brief Tests whether a sound has musical-effect parameters.
+ * @param soundId Archive sound ID; the invalid ID returns false.
+ * @return True when a matching musical-effect list exists.
+ */
+NOINLINE bool MeInfoKeeper::isMe(s32 soundId) const { return tryFindMeInfoListById(soundId) != nullptr; }
+} // namespace al
+
+#include "Library/Bgm/BgmRhythmCtrl.hpp"
+#include "Library/Bgm/BgmMusicalInfo.hpp"
+#include "Library/Resource/Resource.hpp"
+#include "Library/Resource/ResourceFunction.hpp"
+#include "Library/Yaml/ByamlIter.hpp"
+
+namespace al {
+extern s32 gStaticMeInfoNum;
+extern MeInfoList gStaticMeInfoList[];
+
+/**
+ * @brief Reads one musical-effect entry field, defaulting an absent value to zero.
+ * @param pList List owning the entry array; must be initialized.
+ * @param index Valid entry-array index.
+ * @param pField Integer field to populate in that entry.
+ * @param rIter BYAML record containing the entry parameters.
+ * @param pKey BYAML key for the integer field.
+ */
+static inline void readMeEntryValue(MeInfoList* pList, s32 index, s32 MeInfoEntry::* pField,
+                                    const ByamlIter& rIter, const char* pKey) {
+    if (!rIter.tryGetIntByKey(&(pList->mEntries[index].*pField), pKey)) {
+        pList->mEntries[index].*pField = 0;
+    }
+}
+/**
+ * @brief Creates one musical-effect parameter list from a BYAML record.
+ * @param rIter Record containing a sound name and local-variable entries.
+ * @return Newly allocated parameter list.
+ */
+static inline MeInfoList* createMeInfoList(const ByamlIter& rIter) {
+    MeInfoList* pList = new MeInfoList;
+    rIter.tryGetStringByKey(&pList->mName, "Name");
+    if (pList->mName != nullptr) {
+        pList->mSoundId = alSoundNameUtil::getSoundId(pList->mName, false);
+    }
+    ByamlIter variables;
+    rIter.tryGetIterByKey(&variables, "LocalVariableList");
+    const s32 entryNum = variables.getSize();
+    pList->mEntries = new MeInfoEntry[entryNum];
+    pList->mEntryNum = entryNum;
+    for (s32 j = 0; j < entryNum; ++j) {
+        ByamlIter entry;
+        variables.tryGetIterByIndex(&entry, j);
+        readMeEntryValue(pList, j, &MeInfoEntry::mVariable, entry, "Var");
+        readMeEntryValue(pList, j, &MeInfoEntry::mChord, entry, "Chord");
+        readMeEntryValue(pList, j, &MeInfoEntry::mScale, entry, "Scale");
+        readMeEntryValue(pList, j, &MeInfoEntry::mPitch, entry, "Pitch");
+    }
+    return pList;
+}
+/**
+ * @brief Loads musical-effect lists and appends the built-in sound mappings.
+ * @param pRhythmCtrl Rhythm controller used to select notes from the current background music.
+ */
+void MeInfoKeeper::init(BgmRhythmCtrl* pRhythmCtrl) {
+    Resource* pResource = findOrCreateResource("SoundData/MeData", nullptr);
+    const u8* pData = pResource->getByml("MeData");
+    ByamlIter root(pData);
+    const s32 resourceNum = root.getSize();
+    mListNum = resourceNum + gStaticMeInfoNum;
+    if (mListNum > 0) {
+        mLists = new MeInfoList*[mListNum];
+        for (s32 i = 0; i < resourceNum; ++i) {
+            ByamlIter iter;
+            if (!root.tryGetIterByIndex(&iter, i)) {
+                continue;
+            }
+            MeInfoList* pList = createMeInfoList(iter);
+            mLists[i] = pList;
+        }
+        for (s32 i = 0; i < gStaticMeInfoNum; ++i) {
+            mLists[resourceNum + i] = &gStaticMeInfoList[i];
+            if (gStaticMeInfoList[i].mName != nullptr) {
+                gStaticMeInfoList[i].mSoundId =
+                    alSoundNameUtil::getSoundId(gStaticMeInfoList[i].mName, false);
+            }
+        }
+    }
+    mRhythmCtrl = pRhythmCtrl;
+}
+/**
+ * @brief Converts a chord degree to its semitone offset, extending higher degrees by octaves.
+ * @param rChord Current chord; chordNum must be positive for a nonnegative degree.
+ * @param degree Chord degree, or a negative value to use a zero semitone offset.
+ * @return Chord tone in semitones including any octave displacement.
+ */
+static inline s32 calcMeChordPitch(const BgmChordInfo& rChord, s32 degree) {
+    if (degree < 0) {
+        return 0;
+    }
+    s32 octavePitch = 0;
+    if (degree >= rChord.chordNum) {
+        octavePitch = degree / rChord.chordNum * 12;
+        degree %= rChord.chordNum;
+    }
+    return rChord.chord[degree] + octavePitch;
+}
+/**
+ * @brief Finds the first scale tone at or above a requested pitch within an octave range.
+ * @param pIndex Receives the scale degree, or zero when no tone was found.
+ * @param pOctave Receives the octave offset, or zero when no tone was found.
+ * @param rChord Current chord and its ascending scale tones.
+ * @param pitch Lower bound in semitones.
+ */
+static inline void findMeScaleTone(s32* pIndex, s32* pOctave, const BgmChordInfo& rChord, s32 pitch) {
+    *pIndex = 0;
+    *pOctave = 0;
+    for (s32 octave = -1; octave < 8; ++octave) {
+        for (s32 i = 0; i < rChord.scaleNum; ++i) {
+            if (rChord.scale[i] + octave * 12 >= pitch) {
+                *pIndex = i;
+                *pOctave = octave;
+                return;
+            }
+        }
+    }
+}
+/**
+ * @brief Resolves musical-effect notes against the current BGM chord and writes sequence variables.
+ * @param pList Musical-effect entry list, or nullptr to perform no work.
+ * @param pParams Destination playback parameters; required when entries are processed.
+ * @param pInfo Optional per-play chord, scale, and pitch offsets.
+ * @param pName Unused diagnostic sound name.
+ */
+NOINLINE void MeInfoKeeper::applyMeInfoToParams(MeInfoList* pList, SePlayParamList* pParams, MeInfo* pInfo,
+                                                const char* pName) {
+    if (pList == nullptr || !mRhythmCtrl->isEnableRhythmAnim()) {
+        return;
+    }
+    const BgmChordInfo* pChord = mRhythmCtrl->getChordInfoCurrent();
+    mRhythmCtrl->getCurrentBpm();
+    if (pChord == nullptr) {
+        return;
+    }
+    for (s32 i = 0; i < pList->mEntryNum; ++i) {
+        s32 degree = pList->mEntries[i].mChord;
+        s32 scaleOffset = pList->mEntries[i].mScale;
+        s32 scaleIndex = 0;
+        s32 octave = 0;
+        if (pInfo != nullptr) {
+            if (degree < 0 && pInfo->mChordOffset < 0) {
+                degree = -1;
+            } else {
+                degree = (degree < 0 ? 0 : degree) + (pInfo->mChordOffset < 0 ? 0 : pInfo->mChordOffset);
+            }
+            const s32 pitch = calcMeChordPitch(*pChord, degree);
+            findMeScaleTone(&scaleIndex, &octave, *pChord, pitch + pInfo->mPitchOffset);
+            scaleOffset += scaleIndex;
+            scaleOffset += pInfo->mScaleOffset;
+            scaleOffset += octave * pChord->scaleNum;
+        } else {
+            const s32 pitch = calcMeChordPitch(*pChord, degree);
+            if (pitch >= 0) {
+                for (s32 j = 0; j < pChord->scaleNum; ++j) {
+                    if (pChord->scale[j] >= pitch) {
+                        scaleIndex = j;
+                        break;
+                    }
+                }
+            }
+            scaleOffset += scaleIndex;
+        }
+        octave = scaleOffset / pChord->scaleNum;
+        if (scaleOffset < 0) {
+            const s32 octaveCorrection = -scaleOffset / 12 + 1;
+            scaleOffset += octaveCorrection * 12;
+            octave -= octaveCorrection;
+        }
+        const s32 pitch = pChord->scale[scaleOffset % pChord->scaleNum] + octave * 12;
+        pParams->setLocalVariable(pitch, pList->mEntries[i].mVariable);
+    }
+}
+/**
+ * @brief Applies a named musical-effect list to playback parameters.
+ * @param pName Sound name, or nullptr to select no list.
+ * @param pParams Destination playback parameters.
+ * @param pInfo Optional per-play musical offsets.
+ */
+NOINLINE void MeInfoKeeper::applyMeInfoToParams(const char* pName, SePlayParamList* pParams, MeInfo* pInfo) {
+    applyMeInfoToParams(tryFindMeInfoList(pName), pParams, pInfo, pName);
+}
+/**
+ * @brief Applies a musical-effect list selected by archive sound ID.
+ * @param soundId Archive sound ID; the invalid ID selects no list.
+ * @param pParams Destination playback parameters.
+ * @param pInfo Optional per-play musical offsets.
+ */
+void MeInfoKeeper::applyMeInfoToParams(s32 soundId, SePlayParamList* pParams, MeInfo* pInfo) {
+    applyMeInfoToParams(tryFindMeInfoListById(soundId), pParams, pInfo, nullptr);
+}
+} // namespace al

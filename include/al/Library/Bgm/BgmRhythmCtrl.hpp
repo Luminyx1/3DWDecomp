@@ -5,6 +5,7 @@
 #include "Library/Bgm/IUseActiveBgmLine.hpp"
 
 namespace al {
+struct BgmChordInfo;
 class BgmRhythmCtrl {
 public:
     BgmRhythmCtrl(f32 frameRate);
@@ -22,7 +23,7 @@ public:
     f32 getAnimFrame() const;
     f32 getBeatRate() const;
     f32 getBeatRateForAnime() const;
-    const void* getChordInfoCurrent() const;
+    const BgmChordInfo* getChordInfoCurrent() const;
     f32 getCurBeat() const;
     f32 getBeatPerFrame() const;
     f32 getFrameRate() const;
