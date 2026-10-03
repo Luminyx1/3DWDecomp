@@ -54,6 +54,7 @@ const sead::Matrix44f& getProjectionMtx(const IUseCamera*);
 const sead::Matrix34f& getCameraViewMtx(const IUseCamera*);
 const sead::Matrix44f& getProjectionMtxSub(const IUseCamera*);
 const sead::Matrix34f& getCameraViewMtxSub(const IUseCamera*);
+const sead::Vector3f& getCameraPos(const IUseCamera*);
 const sead::Vector3f& getCameraLookAt(const IUseCamera*);
 const sead::Vector3f& getCameraUpDir(const IUseCamera*);
 const sead::Vector3f& getCameraPosSub(const IUseCamera*);

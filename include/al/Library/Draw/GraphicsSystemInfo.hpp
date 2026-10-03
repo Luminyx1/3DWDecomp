@@ -139,6 +139,7 @@ public:
     ModelLightDirector* getModelLightDirector() const { return mModelLightDirector; }
     ShadowDirector* getShadowDirector() const { return mShadowDirector; }
     GraphicsStressDirector* getGraphicsStressDirector() const { return mGraphicsStressDirector; }
+    ShaderMirrorDirector* getShaderMirrorDirector() const { return mShaderMirrorDirector; }
     FogDirector* getFogDirector() const { return mFogDirector; }
     PostProcessingFilter* getPostProcessingFilter() const { return mPostProcessingFilter; }
     const nn::g3d::ViewVolume& getViewVolume() const { return mViewVolume; }

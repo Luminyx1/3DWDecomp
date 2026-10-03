@@ -26,6 +26,8 @@ public:
 
     const GraphicsSystemInfo* getGraphicsSystemInfo() const { return mGraphicsSystemInfo; }
     const void* getLightInfo() const { return mLightInfo; }
+    EnvTexId* getEnvTexId() { return &mEnvTexId; }
+    s32 getCategory() const { return mCategory; }
 
 protected:
     explicit ModelAdditionalInfo(const GraphicsSystemInfo* pInfo) : mGraphicsSystemInfo(pInfo) {

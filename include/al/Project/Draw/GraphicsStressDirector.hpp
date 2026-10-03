@@ -48,6 +48,8 @@ public:
 
     bool isForceStressOff() const { return mIsForceStressOff; }
 
+    bool isFullResolution() const { return mIsFullResolution; }
+
 private:
     s32 mPseudoAAFrame = 0;
     sead::Vector2f mPseudoAAOffset = sead::Vector2f::zero;
