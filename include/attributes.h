@@ -26,6 +26,9 @@
 /// Give the symbol hidden visibility.
 #define HIDDEN __attribute__((visibility("hidden")))
 
+/// Give the symbol protected visibility (non-preemptible, accessed PC-relative like HIDDEN).
+#define PROTECTED __attribute__((visibility("protected")))
+
 /// Emit the definition as a weak symbol.
 #define WEAK __attribute__((weak))
 
