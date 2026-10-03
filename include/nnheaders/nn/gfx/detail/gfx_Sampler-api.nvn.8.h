@@ -19,7 +19,9 @@ public:
     SamplerImpl();
     ~SamplerImpl();
     void Initialize(DeviceImpl<ApiVariationNvn8>*, const InfoType&);
+    void Initialize(DeviceImpl<ApiVariationNvn8>*, const SamplerInfoImpl<ApiVariationNvn8>&);
     void Finalize(DeviceImpl<ApiVariationNvn8>*);
+    void SetDebugLabel(DeviceImpl<ApiVariationNvn8>*, const char*);
 };
 
 }  // namespace detail
