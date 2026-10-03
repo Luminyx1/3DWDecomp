@@ -1,8 +1,10 @@
 #pragma once
+#include <nn/g3d/g3d_Bounding.h>
 
 // Shared G3D resource and object declarations used by NintendoWare and AGL.
 
 #include <attributes.h>
+#include <cstring>
 #include <nn/gfx/gfx_Buffer.h>
 #include <nn/gfx/gfx_BufferInfo.h>
 #include <nn/gfx/gfx_SamplerInfo.h>
@@ -31,6 +33,7 @@ class ResShapeAnim;
 class ResSceneAnim;
 struct ResBoneVisibilityAnim;
 class ShapeObj;
+class SkeletonObj;
 class ViewVolume;
 struct CullingContext;
 
@@ -67,6 +70,12 @@ public:
     explicit BindResult(u32 flags) : m_Flag(flags), m_Pad(0) {}
     // result contributes success/failure bits from another resource binding operation.
     void Merge(const BindResult& result) { m_Flag |= result.m_Flag; }
+    /** @brief Test whether any target bound successfully.
+     * @return True when at least one binding succeeded. */
+    bool IsAnySuccess() const { return (m_Flag & Flag_Success) != 0; }
+    /** @brief Test whether binding failed without any successful targets.
+     * @return True when only the failure flag is set. */
+    bool IsFailure() const { return (m_Flag & (Flag_Success | Flag_Failure)) == Flag_Failure; }
     bool IsComplete() const { return (m_Flag & (Flag_Success | Flag_Failure)) == Flag_Success; }
 
 private:
@@ -179,7 +188,8 @@ private:
 };
 
 struct ResMaterialData {
-    u8 _0[0x8];
+    u32 signature;
+    u32 flags;
     nn::util::BinPtr pName;
     nn::util::BinTPtr<ResRenderInfo> pRenderInfoArray;
     nn::util::BinTPtr<nn::util::ResDic> pRenderInfoDic;
@@ -300,6 +310,23 @@ struct ResVertexData {
 
 class ResVertex : public nn::util::AccessorBase<ResVertexData> {
 public:
+    /**
+     * @brief Access the graphics buffer description stored for a vertex stream.
+     * @param index Buffer index in the range [0, bufferCount).
+     * @return Pointer to the selected buffer description in the resource.
+     */
+    const gfx::BufferInfo* GetBufferInfo(ptrdiff_t index) const {
+        return reinterpret_cast<const gfx::BufferInfo*>(&pVertexBufferInfoArray.Get()[index]);
+    }
+    /**
+     * @brief Access a writable graphics buffer description for a vertex stream.
+     * @param index Buffer index in the range [0, bufferCount).
+     * @return Pointer to the selected buffer description in the resource.
+     */
+    gfx::BufferInfo* GetBufferInfo(ptrdiff_t index) {
+        return reinterpret_cast<gfx::BufferInfo*>(&pVertexBufferInfoArray.Get()[index]);
+    }
+
     void Setup(nn::gfx::Device* device);
     void Setup(nn::gfx::Device* device, nn::gfx::MemoryPool* pool, ptrdiff_t offset);
     void Cleanup(nn::gfx::Device* device);
@@ -346,7 +373,9 @@ struct ResShapeData {
     nn::util::BinPtr pUserPtr;
     u16 index;
     u16 materialIndex;
-    u8 _54[7];
+    u16 boneIndex;
+    u8 _56[4];
+    u8 vertexSkinCount;
     u8 meshCount;
     u8 keyShapeCount;
     u8 _5d[3];
@@ -366,6 +395,16 @@ public:
     const ResMesh* GetMesh() const { return pMeshArray.Get(); }
     const ResMesh* GetMesh(int meshIndex) const { return &pMeshArray.Get()[meshIndex]; }
     int GetMeshCount() const { return meshCount; }
+    /**
+     * @brief Get the bone that supplies the shape's rigid transform.
+     * @return Bone index in the model skeleton.
+     */
+    int GetBoneIndex() const { return boneIndex; }
+    /**
+     * @brief Get the number of skinning influences per vertex.
+     * @return Skinning influence count; zero identifies a rigid shape.
+     */
+    int GetVertexSkinCount() const { return vertexSkinCount; }
     const Bounding* GetBoundingArray() const { return pBoundingArray.Get(); }
 
     void ActivateDynamicVertexAttrForShapeAnim();
@@ -587,6 +626,17 @@ struct WorkMemoryBlock {
     ptrdiff_t offset;
     // bytes is the requested size; each block starts at an eight-byte boundary.
     void Initialize(size_t bytes) { size = bytes; alignment = 8; pointer = nullptr; offset = -1; }
+    /**
+     * @brief Reset a workspace block with a specified size and alignment.
+     * @param bytes Required storage size in bytes; zero denotes an unused block.
+     * @param requiredAlignment Nonzero power-of-two byte alignment for this block.
+     */
+    void Initialize(size_t bytes, size_t requiredAlignment) {
+        size = bytes;
+        alignment = requiredAlignment;
+        pointer = nullptr;
+        offset = -1;
+    }
     // totalSize and requiredAlignment accumulate workspace requirements; this block receives its offset.
     void AppendTo(size_t& totalSize, size_t& requiredAlignment) {
         if (size != 0) {
@@ -601,6 +651,24 @@ struct WorkMemoryBlock {
     // T selects the element type of the block within buffer.
     template <class T> T* GetPointer(void* buffer) const { return static_cast<T*>(GetPointer(buffer)); }
 };
+/**
+ * @brief Assign a workspace block offset and update the allocation requirements.
+ * @param block Block whose size is known and whose offset is assigned; empty blocks are skipped.
+ * @param size Accumulated workspace size, updated to include the block.
+ * @param alignment Accumulated alignment requirement, updated if the block requires more alignment.
+ * @param blockAlignment Nonzero power-of-two alignment required by this block, in bytes.
+ */
+inline void AppendWorkspaceBlock(WorkMemoryBlock& block, size_t& size, size_t& alignment,
+                                 size_t blockAlignment) {
+    if (block.size != 0) {
+        size_t start = (size + blockAlignment - 1) & -blockAlignment;
+        alignment = alignment < blockAlignment ? blockAlignment : alignment;
+        size = start + block.size;
+        block.offset = start;
+    }
+}
+
+
 }
 class MaterialObj {
 public:
@@ -622,7 +690,22 @@ public:
     void ResetDirtyFlags();
     void CalculateMaterial(int bufferIndex);
     template <bool swap> NOINLINE void ConvertDirtyParams(void* destination, u32* dirtyFlags);
-    typedef void (*TextureChangeCallback)(MaterialObj* pMaterial, int index);
+    // material and index identify the texture slot that changed.
+    using TextureChangeCallback = void (*)(MaterialObj* material, int index);
+    /**
+     * @brief Set the callback for texture changes on this material.
+     * @param callback Callback receiving the material and texture slot; nullptr disables notifications.
+     */
+    void SetTextureChangeCallback(TextureChangeCallback callback) { m_pTextureChangeCallback = callback; }
+
+    /**
+     * @brief Construct an empty material object without allocated GPU or working storage.
+     */
+    MaterialObj() : m_pRes(nullptr), m_Flag(0), m_BufferingCount(0), m_DirtyFlags{},
+        m_pMemoryPool(nullptr), m_MemoryPoolOffset(0), m_pMaterialBlockArray(nullptr),
+        m_pParamSource(nullptr), m_ppTextureArray(nullptr), m_pTextureSlotArray(nullptr),
+        m_MaterialBlockSize(0), m_pCallbackUserData(nullptr), m_pWorkMemory(nullptr),
+        m_pTextureChangeCallback(nullptr) {}
 
     const ResMaterial* GetResource() const { return m_pRes; }
     // name selects a shader parameter in the material's resource dictionary.
@@ -651,6 +734,11 @@ public:
 
     const nn::gfx::TextureView* GetTextureView(int index) const { return m_ppTextureArray[index]; }
 
+    /**
+     * @brief Replace a material texture and notify its change callback when needed.
+     * @param index Sampler index within the material texture table.
+     * @param rRef Texture view and descriptor slot to install.
+     */
     void SetTexture(int index, const TextureRef& rRef)
     {
         const nn::gfx::TextureView* pOldView = m_ppTextureArray[index];
@@ -658,12 +746,18 @@ public:
         m_ppTextureArray[index] = rRef.GetTextureView();
         m_pTextureSlotArray[index] = rRef.GetDescriptorSlot();
         if ((m_pTextureChangeCallback != nullptr) &&
-            (pOldView != rRef.GetTextureView() || rOldSlot != m_pTextureSlotArray[index]))
+            (pOldView != rRef.GetTextureView() || std::memcmp(&rOldSlot, &m_pTextureSlotArray[index], sizeof(rOldSlot)) != 0))
         {
             m_pTextureChangeCallback(this, index);
         }
     }
 
+    /**
+     * @brief Mark a shader parameter and its dependent parameter dirty and expose its source data.
+     * @param paramIndex Shader parameter index within the material resource.
+     * @tparam T Type matching the selected shader parameter's source representation.
+     * @return Writable pointer to the parameter source value.
+     */
     template <typename T>
     T* EditShaderParam(int paramIndex) {
         const ResShaderParam* pParam = m_pRes->GetShaderParam(paramIndex);
@@ -717,6 +811,9 @@ public:
     // Builder accumulates the capacities needed by a set of models and animations.
     class Builder : public InitializeArgument {
     public:
+        /**
+         * @brief Initialize unset capacities and enable curve caching by default.
+         */
         Builder() {
             curveCount = -1;
             materialCount = -1;
@@ -728,11 +825,19 @@ public:
             memorySize = 0;
             memoryAlignment = 0;
 
-            for (int i = 0; i < 6; ++i) blocks[i].Initialize(0);
+            for (int i = 0; i < 6; ++i) {
+                blocks[i].Initialize(0);
+            }
         }
-        // model supplies the number of materials to bind to.
+        /**
+         * @brief Reserve bindings for the target model.
+         * @param model Model resource whose material count determines the target capacity.
+         */
         void Reserve(const ResModel* model) { materialCount = model->GetMaterialCount(); }
-        // resource raises the animation, texture and curve capacities to fit it.
+        /**
+         * @brief Increase capacities to accommodate an animation resource.
+         * @param resource Non-null animation resource whose counts must fit the workspace.
+         */
         void Reserve(const ResMaterialAnim* resource) {
             int count = resource->GetPerMaterialAnimCount();
             materialAnimCount = materialAnimCount < count ? count : materialAnimCount;
@@ -744,15 +849,33 @@ public:
             textureCount = textureCount < count ? count : textureCount;
             cacheAvailable |= !resource->IsCurveBaked();
         }
+        /**
+         * @brief Get the calculated workspace requirement.
+         * @return Workspace size in bytes after CalculateMemorySize.
+         */
         size_t GetWorkMemorySize() const { return memorySize; }
+        /**
+         * @brief Initialize an animation object using the calculated layout.
+         * @param object Non-null animation object to initialize.
+         * @param memory Workspace aligned to the calculated requirement.
+         * @param size Available bytes in memory; must cover the calculated requirement.
+         * @return True if the capacities and workspace are valid.
+         */
         bool Build(MaterialAnimObj* object, void* memory, size_t size) const {
             return object->Initialize(*this, memory, size);
         }
     };
 
+    /**
+     * @brief Construct an uninitialized material animation object.
+     */
     MaterialAnimObj()
-        : m_pRes(nullptr), _70(0), _78(nullptr), _80(nullptr), _88(nullptr),
+        : m_pRes(nullptr), m_pMaterialAnims(nullptr), m_MaterialAnimCapacity(0), m_ParamAnimCapacity(0),
+          m_TextureCapacity(0), m_CurveCapacity(0), m_pSubBindIndices(nullptr),
           m_ppTextureArray(nullptr), m_pTextureSlotArray(nullptr) {}
+    /**
+     * @brief Destroy the object without releasing caller-owned workspace.
+     */
     virtual ~MaterialAnimObj() {}
     bool Initialize(const InitializeArgument& argument, void* memory, size_t size);
     void SetResource(const ResMaterialAnim* resource);
@@ -762,12 +885,32 @@ public:
     virtual void ClearResult();
     virtual void Calculate();
     virtual void ApplyTo(ModelObj* model) const;
+    void RevertTo(ModelObj* pModel) const;
 
+    /**
+     * @brief Get the selected animation resource.
+     * @return Current animation resource, or nullptr before SetResource.
+     */
     const ResMaterialAnim* GetResource() const { return m_pRes; }
+    /**
+     * @brief Get a texture view from the animation texture table.
+     * @param index Texture index below the selected resource's texture count.
+     * @return Bound texture view, which may be nullptr.
+     */
     const nn::gfx::TextureView* GetTextureView(int index) const { return m_ppTextureArray[index]; }
+    /**
+     * @brief Get a texture view and its descriptor binding.
+     * @param index Texture index below the selected resource's texture count.
+     * @return Texture reference containing the current view and descriptor.
+     */
     TextureRef GetTexture(int index) const {
         return TextureRef(m_ppTextureArray[index], m_pTextureSlotArray[index]);
     }
+    /**
+     * @brief Replace an animation texture binding.
+     * @param index Texture index below the selected resource's texture count.
+     * @param rRef Texture view and descriptor slot to assign.
+     */
     void SetTexture(int index, const TextureRef& rRef)
     {
         m_ppTextureArray[index] = rRef.GetTextureView();
@@ -775,11 +918,18 @@ public:
     }
 
 private:
+    BindResult SubBind(const ResPerMaterialAnim* pAnim, const ResMaterial* pMaterial, int subBindIndex);
+    BindResult SubBindFast(const ResPerMaterialAnim* pAnim, int subBindIndex);
+    void ApplyTo(MaterialObj* pMaterial, const ResPerMaterialAnim* pAnim, int subBindIndex) const;
+    void RevertTo(MaterialObj* pMaterial, const ResPerMaterialAnim* pAnim, int subBindIndex) const;
+    template <bool cached> void CalculateMaterialImpl(const ResPerMaterialAnim* pAnim, float frame, int& rSubBindIndex);
     const ResMaterialAnim* m_pRes;
-    u64 _70;
-    void* _78;
-    void* _80;
-    void* _88;
+    const ResPerMaterialAnim* m_pMaterialAnims;
+    int m_MaterialAnimCapacity;
+    int m_ParamAnimCapacity;
+    int m_TextureCapacity;
+    int m_CurveCapacity;
+    u16* m_pSubBindIndices;
     const nn::gfx::TextureView** m_ppTextureArray;
     u64* m_pTextureSlotArray;
 };
@@ -788,8 +938,61 @@ static_assert(sizeof(MaterialAnimObj) == 0xa0, "Material animation object size")
 
 class ShapeObj {
 public:
+    struct Impl;
+    void ClearBlendWeights();
+    size_t CalculateShapeBlockBufferSize(gfx::Device* pDevice) const;
+    size_t CalculateDynamicVertexBufferSize(gfx::Device* pDevice) const;
+    const gfx::Buffer* GetDynamicVertexBuffer(int vertexBufferIndex, int bufferIndex) const;
+    bool IsDynamicVertexAttr(int attributeIndex) const;
+    struct InitializeArgument {
+        const ResShape* resource;
+        int bufferCount;
+        int viewCount;
+        bool viewDependent;
+        bool boundingEnabled;
+        const void* userArea;
+        size_t memorySize;
+        size_t memoryAlignment;
+        detail::WorkMemoryBlock blocks[8];
+        void CalculateMemorySize();
+    };
+    // argument selects the shape; buffer supplies bufferSize bytes of working memory.
+    bool Initialize(const InitializeArgument& argument, void* buffer, size_t bufferSize);
     const ResShape* GetResource() const { return m_pRes; }
     const Sphere* GetBounding() const { return m_pBounding; }
+    /**
+     * @brief Get the world-space bounding sphere for a level of detail.
+     * @param lodIndex Mesh level-of-detail index selecting a local/world sphere pair.
+     * @return World-space sphere, or nullptr when bounding storage is disabled.
+     */
+    const Sphere* GetBounding(int lodIndex) const {
+        return (m_pBounding != nullptr) ? &m_pBounding[2 * lodIndex] : nullptr;
+    }
+    // device supplies GPU block requirements and owns their resources.
+    size_t GetBlockBufferAlignment(gfx::Device* device) const;
+    size_t CalculateBlockBufferSize(gfx::Device* device) const;
+    // pool supplies size bytes starting at offset for the shape blocks.
+    bool SetupBlockBuffer(gfx::Device* device, gfx::MemoryPool* pool, ptrdiff_t offset, size_t size);
+    void CleanupBlockBuffer(gfx::Device* device);
+    // skeleton supplies bone transforms; lodIndex selects the mesh bounds.
+    void CalculateBounding(const SkeletonObj* skeleton, int lodIndex);
+    // viewIndex selects a camera, world supplies its transform, bufferIndex selects the GPU block.
+    void CalculateShape(int viewIndex, const nn::util::Matrix4x3fType& rWorld, int bufferIndex);
+    // bufferIndex selects the shape-animation destination buffer.
+    void CalculateShapeAnimResult(int bufferIndex);
+    /**
+     * @brief Check whether shape-animation data is present and its calculation is enabled.
+     * @return True when both required shape-animation flags are set.
+     */
+    bool IsShapeAnimCalculationEnabled() const { return (m_Flag & 12) == 12; }
+    /**
+     * @brief Enable shape-animation calculations for this shape.
+     */
+    void SetShapeAnimCalculationEnabled() { m_Flag |= 8; }
+    /**
+     * @brief Disable shape-animation calculations for this shape.
+     */
+    void SetShapeAnimCalculationDisabled() { m_Flag &= ~8; }
     const Aabb* GetSubMeshBoundingArray() const { return m_pSubMeshBoundingArray; }
     bool TestSubMeshIntersection(CullingContext* pContext, const ViewVolume& rViewVolume,
                                  int lodIndex) const;
@@ -817,28 +1020,32 @@ public:
             return nullptr;
         }
         if (IsViewDependent()) {
-            return m_pShapeBlockArray ?
+            return (m_pShapeBlockArray != nullptr) ?
                        &m_pShapeBlockArray[viewIndex * m_BufferingCount + bufferIndex] :
                        nullptr;
         }
-        return m_pShapeBlockArray ? &m_pShapeBlockArray[bufferIndex] : nullptr;
+        return (m_pShapeBlockArray != nullptr) ? &m_pShapeBlockArray[bufferIndex] : nullptr;
     }
 
 private:
     enum Flag { Flag_BlockBufferValid = 1 << 0 };
 
     const ResShape* m_pRes;
-    u8 m_Flag;
-    u8 _9[0xd - 0x9];
+    u32 m_Flag;
+    u8 _c;
     u8 m_ViewDependent;
-    u8 _e;
+    u8 m_ShapeBlockCount;
     u8 m_BufferingCount;
     u8 _10[0x20 - 0x10];
     BufferImpl* m_pShapeBlockArray;
-    u8 _28[0x38 - 0x28];
+    float* m_pBlendWeights;
+    u32* m_pBlendWeightFlags;
     Sphere* m_pBounding;
     Aabb* m_pSubMeshBoundingArray;
-    u8 _48[0x70 - 0x48];
+    gfx::Buffer** m_ppDynamicVertexBuffers;
+    const void* m_pUserArea;
+    size_t m_UserAreaSize;
+    u8 _60[0x70 - 0x60];
 };
 
 }  // namespace nn::g3d

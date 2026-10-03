@@ -8,16 +8,21 @@ struct ResShaderParamAnimInfo {
     u16 firstCurve;
     u16 floatCount;
     u16 intCount;
-    u8 _e[4];
+    u16 firstConstant;
+    u16 constantCount;
     u16 bindIndex;
     u8 _14[4];
 };
 struct ResTexturePatternAnimInfo {
     nn::util::BinPtrToString name;
     u16 curveIndex;
-    u16 _a;
+    u16 baseValueIndex;
     u8 bindIndex;
     u8 _d[3];
+};
+struct ResAnimConstant {
+    u32 targetOffset;
+    u32 value;
 };
 class ResPerMaterialAnim {
 public:
@@ -31,7 +36,10 @@ public:
     ResShaderParamAnimInfo* parameters;
     ResTexturePatternAnimInfo* textures;
     ResAnimCurve* curves;
-    u8 _20[0xe];
+    const ResAnimConstant* constants;
+    u16 shaderParamResultIndex;
+    u16 texturePatternResultIndex;
+    u16 visibilityResultIndex;
     u16 visibilityCurve;
     u16 visibilityBase;
     u16 parameterCount;

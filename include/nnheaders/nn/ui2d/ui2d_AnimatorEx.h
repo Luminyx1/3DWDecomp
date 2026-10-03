@@ -4,13 +4,19 @@
 namespace nn::ui2d {
 class LayoutEx;
 class AnimatorEx : public Animator {
-public:
+  public:
     AnimatorEx();
     void SetupBasic(const AnimResource& resource, LayoutEx* layout, bool enabled);
     void SetupWithPane(const AnimResource& resource, LayoutEx* layout, Pane* pane, bool enabled);
     void SetupWithGroup(const AnimResource& resource, LayoutEx* layout, Group* group, bool enabled);
+    void SetupWithGroupIndex(const AnimResource& resource, LayoutEx* layout, GroupContainer* groups,
+                             unsigned int index, bool enabled);
+    void SetupWithGroupAll(const AnimResource& resource, LayoutEx* layout, GroupContainer* groups,
+                           bool enabled);
+    void DisableAndEraseFromActiveList();
+    const ResExtUserData* FindExtUserData(const char* name) const;
     void Synchronize(const AnimatorEx& other);
-    NN_RUNTIME_TYPEINFO(Animator);
+    NN_RUNTIME_TYPEINFO(AnimTransformBasic);
     ~AnimatorEx() override;
     void UpdateFrame(float step) override;
     void SetEnabled(bool enabled) override;
@@ -32,4 +38,4 @@ public:
     u32 mExFlags;
 };
 static_assert(sizeof(AnimatorEx) == 0x70, "AnimatorEx size");
-}
+} // namespace nn::ui2d

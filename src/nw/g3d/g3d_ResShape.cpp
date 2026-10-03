@@ -60,14 +60,19 @@ void ResVertex::Setup(nn::gfx::Device* device) {
     }
 }
 
-// device owns the buffers; pool/offset locate external backing storage.
+/**
+ * @brief Initialize vertex buffers in an external graphics memory pool.
+ * @param device Graphics device owning the created buffers.
+ * @param pool Pool containing the vertex data and providing sufficient aligned storage.
+ * @param offset Base byte offset added to the resource's stored memory-pool offset.
+ */
 void ResVertex::Setup(nn::gfx::Device* device, nn::gfx::MemoryPool* pool, ptrdiff_t offset) {
     int count = bufferCount;
     offset += memoryPoolOffset;
 
     for (int i = 0; i < count; ++i) {
         pVertexBufferArray.Get()[i] = &pBufferObjects.Get()[i];
-        nn::gfx::BufferInfo* info = reinterpret_cast<nn::gfx::BufferInfo*>(&pVertexBufferInfoArray.Get()[i]);
+        nn::gfx::BufferInfo* info = GetBufferInfo(i);
         nn::gfx::Buffer* buffer = pVertexBufferArray.Get()[i];
         new (buffer) nn::gfx::Buffer;
         info->SetGpuAccessFlags(4);

@@ -5,8 +5,9 @@ class AnimatorEx;
 class LayoutEx;
 class ControlSrc;
 class ControlBase {
-public:
+  public:
     NN_RUNTIME_TYPEINFO_BASE();
+    /** @brief Destroy the control without taking ownership of its layout. */
     virtual ~ControlBase() = default;
     virtual void Finalize(nn::gfx::Device* device);
     virtual void UpdateControl(float step) = 0;
@@ -17,8 +18,9 @@ public:
 };
 static_assert(sizeof(ControlBase) == 0x28, "ControlBase size");
 class TraceGaugeControl : public ControlBase {
-public:
+  public:
     TraceGaugeControl();
+    TraceGaugeControl(nn::gfx::Device* pDevice, const TraceGaugeControl& rOther, LayoutEx* pLayout);
     NN_RUNTIME_TYPEINFO(ControlBase);
     void UpdateControl(float step) override;
     void UpdateControlUserInput(const nn::util::Float2* position, bool pressed, bool released) override;
@@ -32,8 +34,8 @@ public:
     void ApplyAnimation_();
     AnimatorEx* mAnimators[4];
     float mGaugeValue, mPreviousValue, mTracingValue, mTracingSpeed;
-    float mTracingFraction, mShortageUpper, mShortageLower, mWaitElapsed, mTracingWait;
+    float mTracingFraction, mShortageUpper, mShortageLower, mWaitRemaining, mTracingWait;
     bool mEnabled;
 };
 static_assert(sizeof(TraceGaugeControl) == 0x70, "TraceGaugeControl size");
-}
+} // namespace nn::ui2d

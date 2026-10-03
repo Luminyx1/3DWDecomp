@@ -82,13 +82,13 @@ void AnimObj::ResetFrameCtrl(int frameCount, bool loop) {
 }
 
 // targetIndex selects a model target; flag controls its bound animation's calculation/application.
+/**
+ * @brief Set calculation and application flags for the animation bound to a model target.
+ * @param targetIndex Target index within the initialized binding table.
+ * @param flag Binding policy applied to the target's animation, if bound.
+ */
 void ModelAnimObj::SetBindFlagImpl(int targetIndex, BindFlag flag) {
-    u32 index = (mBindTable.mEntries[targetIndex] >> 15) & 0x7fff;
-
-    if (index != 0x7fff) {
-        mBindTable.mEntries[index] &= 0x3fffffff;
-        mBindTable.mEntries[index] |= static_cast<u32>(flag) << 30;
-    }
+    mBindTable.SetFlagsForTarget(targetIndex, static_cast<u32>(flag) << 30);
 }
 
 // targetIndex selects a model target; unbound targets return BindFlag_Disable.

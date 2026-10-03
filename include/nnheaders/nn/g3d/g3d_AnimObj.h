@@ -37,9 +37,23 @@ public:
     void Initialize(u32* buffer, int capacity);
     void ClearAll(int targetCount);
     void BindAll(const u16* indices);
+    /**
+     * @brief Replace calculation and application flags for the animation bound to a target.
+     * @param targetIndex Target index within the initialized binding table.
+     * @param flags Encoded binding flags in bits 30 and 31; all other bits must be zero.
+     */
+    void SetFlagsForTarget(ptrdiff_t targetIndex, u32 flags) {
+        u32 index = (mEntries[targetIndex] >> 15) & 0x7fff;
+        if (index != 0x7fff) {
+            mEntries[index] &= 0x3fffffff;
+            mEntries[index] |= flags;
+        }
+    }
 private:
     friend class ModelAnimObj;
     friend class BoneVisibilityAnimObj;
+    friend class MaterialAnimObj;
+    friend class SkeletalAnimObj;
     u32* mEntries;
     u16 mFlags, mCapacity, mAnimCount, mTargetCount;
 };
@@ -56,6 +70,8 @@ public:
     void Initialize(AnimFrameCache* cache, int count);
 private:
     friend class BoneVisibilityAnimObj;
+    friend class MaterialAnimObj;
+    friend class SkeletalAnimObj;
     AnimFrameCache* mCache;
     int mCount;
     int mCurveCount;
@@ -65,6 +81,7 @@ private:
 class AnimObj {
 public:
     AnimObj() : mResult(nullptr), mWorkMemory(nullptr) { mFrameCtrlPointer = &mFrameCtrl; }
+    /** @brief Destroy the animation base without releasing caller-owned storage. */
     virtual ~AnimObj() {}
     AnimFrameCtrl& GetFrameCtrl() { return *mFrameCtrlPointer; }
     const AnimFrameCtrl& GetFrameCtrl() const { return *mFrameCtrlPointer; }

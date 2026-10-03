@@ -19,7 +19,16 @@ public:
 };
 class Screen : public ScreenBase {
 public:
-    enum AnimatorOperationType : int;
+    enum AnimatorOperationType : int {
+        AnimatorOperationType_Play,
+        AnimatorOperationType_PlayFromCurrent,
+        AnimatorOperationType_StopAt,
+        AnimatorOperationType_StopAtCurrentFrame,
+        AnimatorOperationType_StopAtStartFrame,
+        AnimatorOperationType_StopAtEndFrame,
+        AnimatorOperationType_CrossStart,
+        AnimatorOperationType_CrossEnd
+    };
     NN_RUNTIME_TYPEINFO(ScreenBase);
     void DrawCaptureTexture(nn::gfx::Device*, nn::gfx::CommandBuffer&) override;
     void DrawLayout(nn::gfx::CommandBuffer&) override;
