@@ -27,6 +27,11 @@ void JointMasher::append(const char* pJointName, f32 rate) {
     appendJointId(jointIndex);
 }
 
+/**
+ * Squashes the joint by its registered rate while keeping its translation.
+ * @param jointIndex Index of the joint being calculated.
+ * @param pMtx Joint matrix to modify.
+ */
 void JointMasher::calcJointCallback(s32 jointIndex, sead::Matrix34f* pMtx) {
     if (!*mIsValid) {
         return;
@@ -35,9 +40,10 @@ void JointMasher::calcJointCallback(s32 jointIndex, sead::Matrix34f* pMtx) {
     for (auto& info : mMashInfos) {
         if (info.jointIndex == jointIndex) {
             f32 rate = info.rate;
+
             sead::Vector3f trans;
             pMtx->getTranslation(trans);
-            pMtx->scaleBases(rate, rate, rate);
+            pMtx->scaleAllElements(rate);
             pMtx->setTranslation(trans);
             return;
         }
