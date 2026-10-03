@@ -126,6 +126,13 @@ GlyphNode* GlyphTreeMap::Find(GlyphNode* pNode, u64 key) const {
     return nullptr;
 }
 
+/**
+ * Takes a node from the free list and inserts it for a glyph.
+ * @param code character code
+ * @param fontSize font size
+ * @param fontFace font face
+ * @return the inserted node, or nullptr if no free node is left
+ */
 GlyphNode* GlyphTreeMap::Insert(u32 code, u16 fontSize, u16 fontFace) {
     GlyphNode* pNode = m_pFreeList;
 

@@ -29,13 +29,20 @@ public:
 
     GlyphNode(u32 code, u16 fontSize, u16 fontFace)
         : m_pLeftNode(nullptr), m_pRightNode(nullptr), m_Flag(0), m_IsRed(0), m_LineKind(0),
-          m_LineNo(0), m_LockGroup(0), m_CachePosX(0), m_CachePosY(0), m_CacheWidth(0),
-          m_CacheHeight(0), m_GlyphWidth(0), m_GlyphHeight(0), m_AdvanceX(0), m_LeftOffset(0),
-          m_BaselineOffset(0) {
+          m_LineNo(0), m_LockGroup(0) {
+        m_IsRed = 1;
+        m_CachePosX = 0;
+        m_CachePosY = 0;
+        m_CacheWidth = 0;
+        m_CacheHeight = 0;
+        m_GlyphWidth = 0;
+        m_GlyphHeight = 0;
+        m_AdvanceX = 0;
+        m_LeftOffset = 0;
+        m_BaselineOffset = 0;
         m_Key.detail.code = code;
         m_Key.detail.fontSize = fontSize;
         m_Key.detail.fontFace = fontFace;
-        m_IsRed = 1;
     }
 
     static u8 CalculateLineKind(u16 height);
