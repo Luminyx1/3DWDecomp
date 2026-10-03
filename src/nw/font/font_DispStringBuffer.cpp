@@ -13,6 +13,12 @@ namespace {
 
 const float ColorNormalizeScale = 1.0f / 255.0f;
 
+/**
+ * Multiplies a 4x3 matrix (extended with an implicit last row) by a 4x4 matrix.
+ * @param pOut destination matrix
+ * @param rLhs left-hand 4x3 matrix
+ * @param rRhs right-hand 4x4 matrix
+ */
 void MultiplyMatrixT4x3(nn::util::MatrixT4x4fType* pOut, const nn::util::MatrixT4x3fType& rLhs,
                         const nn::util::MatrixT4x4fType& rRhs) {
     float32x4x4_t lhs;
@@ -33,16 +39,33 @@ void MultiplyMatrixT4x3(nn::util::MatrixT4x4fType* pOut, const nn::util::MatrixT
     pOut->_m = result;
 }
 
+/**
+ * Multiplies two 8-bit normalized values.
+ * @param a first value
+ * @param b second value
+ * @return normalized product
+ */
 uint8_t MultiplyAlpha(uint32_t a, uint32_t b) {
     return a * b / 255;
 }
 
+/**
+ * Reads a color as a packed 32-bit value.
+ * @param rColor color to read
+ * @return packed color
+ */
 uint32_t LoadColor(const nn::util::Unorm8x4& rColor) {
     uint32_t value;
     std::memcpy(&value, &rColor, sizeof(value));
     return value;
 }
 
+/**
+ * Multiplies two colors component-wise.
+ * @param rLhs first color
+ * @param rRhs second color
+ * @return product color
+ */
 nn::util::Unorm8x4 MultiplyColor(const nn::util::Unorm8x4& rLhs, const nn::util::Unorm8x4& rRhs) {
     const uint32_t value = MultiplyAlpha(rLhs.v[0], rRhs.v[0]) |
                            (MultiplyAlpha(rLhs.v[1], rRhs.v[1]) << 8) |
@@ -53,6 +76,12 @@ nn::util::Unorm8x4 MultiplyColor(const nn::util::Unorm8x4& rLhs, const nn::util:
     return color;
 }
 
+/**
+ * Builds a color from a packed RGB value and an alpha.
+ * @param rgb packed color whose low 24 bits are used
+ * @param alpha alpha component
+ * @return resulting color
+ */
 nn::util::Unorm8x4 MakeColor(uint32_t rgb, uint8_t alpha) {
     const uint32_t value = (rgb & 0x00ffffff) | (static_cast<uint32_t>(alpha) << 24);
     nn::util::Unorm8x4 color;
@@ -171,6 +200,13 @@ void DispStringBuffer::GetConstantBufferGpuAddress(nn::gfx::GpuAddress* pGpuAddr
     *pGpuAddress = m_pConstantBuffer->GetGpuAddress();
 }
 
+/**
+ * Fills the constant buffer for the current characters.
+ * @param rProjection projection matrix
+ * @param pContent additional content, or nullptr for the defaults
+ * @param isDrawFromRightToLeftEnabled whether characters are drawn right to left
+ * @param isOriginToCenterEnabled whether the origin is the character center
+ */
 void DispStringBuffer::BuildConstantBuffer(const nn::util::MatrixT4x4fType& rProjection,
                                            const ConstantBufferAdditionalContent* pContent,
                                            bool isDrawFromRightToLeftEnabled,
@@ -222,6 +258,12 @@ void DispStringBuffer::BuildConstantBuffer(const nn::util::MatrixT4x4fType& rPro
     }
 }
 
+/**
+ * Writes the parameters shared by all characters.
+ * @param rShaderParam destination shader parameters
+ * @param rProjection projection matrix
+ * @param rContent additional content
+ */
 void DispStringBuffer::BuildCommonConstantBufferData(
     ShaderParam& rShaderParam, const nn::util::MatrixT4x4fType& rProjection,
     const ConstantBufferAdditionalContent& rContent) const {
@@ -267,26 +309,33 @@ void DispStringBuffer::BuildCommonConstantBufferData(
     rShaderParam.shadowInterpolateOffset = shadowInterpolateOffset;
 }
 
+/**
+ * Allocates and writes the per-character part of the constant buffer.
+ * @param rContent additional content
+ * @param isDrawFromRightToLeftEnabled whether characters are drawn right to left
+ * @param isOriginToCenterEnabled whether the origin is the character center
+ */
 void DispStringBuffer::BuildPerCharacterAttributeConstantBuffer(
     const ConstantBufferAdditionalContent& rContent, bool isDrawFromRightToLeftEnabled,
     bool isOriginToCenterEnabled) {
     int charCount = m_CharCount;
     size_t stride = m_IsPerCharacterTransformEnabled ?
-                       sizeof(detail::VertexShaderCharAttributeWithTransform) :
-                       sizeof(detail::VertexShaderCharAttribute);
-    size_t size = stride * charCount;
+                        sizeof(detail::VertexShaderCharAttributeWithTransform) :
+                        sizeof(detail::VertexShaderCharAttribute);
 
     if (rContent.m_pShadowParam != nullptr) {
-        m_PerCharacterParamOffset = m_pConstantBuffer->Allocate(size * 2);
+        const size_t size = stride * charCount * 2;
+        m_PerCharacterParamOffset = m_pConstantBuffer->Allocate(size);
     } else {
+        const size_t size = stride * charCount;
         m_PerCharacterParamOffset = m_pConstantBuffer->Allocate(size);
     }
 
-    const ShadowParameter* pShadowParam = rContent.m_pShadowParam;
-    const PerCharacterTransformInfo* pInfos = rContent.m_pPerCharacterTransformInfos;
+    float centerOffset = rContent.m_PerCharacterTransformCenterOffset;
     ConstantBufferAdditionalContent::PerCharacterTransformCenter center =
         rContent.m_PerCharacterTransformCenter;
-    float centerOffset = rContent.m_PerCharacterTransformCenterOffset;
+    const PerCharacterTransformInfo* pInfos = rContent.m_pPerCharacterTransformInfos;
+    const ShadowParameter* pShadowParam = rContent.m_pShadowParam;
 
     BuildTextureUseInfos(isDrawFromRightToLeftEnabled);
     BuildPerCharacterParams(m_PerCharacterParamOffset, pInfos, center, centerOffset, pShadowParam,
@@ -405,6 +454,20 @@ void DispStringBuffer::BuildPerCharacterParams(
     }
 }
 
+/**
+ * Writes the shadow vertex parameters of one character.
+ * @param offset offset of the per-character parameters
+ * @param pPerCharacterTransformInfos per-character transform information
+ * @param center center of the per-character transform
+ * @param centerOffset vertical offset of the transform center
+ * @param pShadowParam shadow parameters
+ * @param pStartIndices first vertex index of each texture
+ * @param base mapped constant buffer
+ * @param bufferCount number of vertex buffers (2 with a shadow)
+ * @param pCounts vertices written so far for each texture
+ * @param index character index
+ * @param isOriginToCenterEnabled whether the origin is the character center
+ */
 void DispStringBuffer::BuildShadowBufferPerCharacterParams(
     ptrdiff_t offset, const PerCharacterTransformInfo* pPerCharacterTransformInfos,
     ConstantBufferAdditionalContent::PerCharacterTransformCenter center, float centerOffset,
@@ -422,12 +485,11 @@ void DispStringBuffer::BuildShadowBufferPerCharacterParams(
     float x = isOriginToCenterEnabled ? width * -0.5f : rAttr.pos.z;
     x += pShadowParam->offset.x;
     float y = (rAttr.pos.y - height) + (rAttr.pos.w - pShadowParam->offset.y);
+    const uint32_t topColor = LoadColor(pShadowParam->topColor);
+    const uint32_t bottomColor = LoadColor(pShadowParam->bottomColor);
     float italicOffset =
         pShadowParam->scale.x * pShadowParam->italicRatio + static_cast<float>(rAttr.italicOffset);
     float italicRatio = rAttr.pos.y * italicOffset / m_FontHeight;
-
-    const uint32_t topColor = LoadColor(pShadowParam->topColor);
-    const uint32_t bottomColor = LoadColor(pShadowParam->bottomColor);
     uint8_t topAlpha = MultiplyAlpha(topColor >> 24, rAttr.shadowAlpha);
     uint8_t bottomAlpha = MultiplyAlpha(bottomColor >> 24, rAttr.shadowAlpha);
 
@@ -456,6 +518,19 @@ void DispStringBuffer::BuildShadowBufferPerCharacterParams(
                  rotateX, rotateY, translate);
 }
 
+/**
+ * Writes the vertex parameters of one character.
+ * @param offset offset of the per-character parameters
+ * @param pPerCharacterTransformInfos per-character transform information
+ * @param center center of the per-character transform
+ * @param centerOffset vertical offset of the transform center
+ * @param pStartIndices first vertex index of each texture
+ * @param base mapped constant buffer
+ * @param bufferCount number of vertex buffers (2 with a shadow)
+ * @param pCounts vertices written so far for each texture
+ * @param index character index
+ * @param isOriginToCenterEnabled whether the origin is the character center
+ */
 void DispStringBuffer::BuildCharacterBufferPerCharacterParams(
     ptrdiff_t offset, const PerCharacterTransformInfo* pPerCharacterTransformInfos,
     ConstantBufferAdditionalContent::PerCharacterTransformCenter center, float centerOffset,
@@ -471,13 +546,15 @@ void DispStringBuffer::BuildCharacterBufferPerCharacterParams(
     float width = rAttr.pos.x;
     float height = rAttr.pos.y;
     float x = isOriginToCenterEnabled ? width * -0.5f : rAttr.pos.z;
+    float y = rAttr.pos.w;
     float italicOffset = static_cast<float>(rAttr.italicOffset);
     float italicRatio = height * italicOffset / m_FontHeight;
-    float y = rAttr.pos.w;
+    const nn::util::Unorm8x4& rColorTop = rAttr.color[0];
+    const nn::util::Unorm8x4& rColorBottom = rAttr.color[1];
 
     if (pPerCharacterTransformInfos == nullptr) {
-        pVertex->VertexShaderCharAttribute::Set(x, y, width, height, rAttr.tex, rAttr.color[0],
-                                                rAttr.color[1], rAttr.sheetIndex, italicRatio,
+        pVertex->VertexShaderCharAttribute::Set(x, y, width, height, rAttr.tex, rColorTop,
+                                                rColorBottom, rAttr.sheetIndex, italicRatio,
                                                 italicOffset);
         return;
     }
@@ -490,11 +567,28 @@ void DispStringBuffer::BuildCharacterBufferPerCharacterParams(
                                    italicOffset, rInfo, center, centerOffset,
                                    isOriginToCenterEnabled, 0.0f);
 
-    pVertex->Set(x, y, width, height, rAttr.tex, MultiplyColor(rAttr.color[0], rInfo.lt),
-                 MultiplyColor(rAttr.color[1], rInfo.lb), rAttr.sheetIndex,
+    pVertex->Set(x, y, width, height, rAttr.tex, MultiplyColor(rColorTop, rInfo.lt),
+                 MultiplyColor(rColorBottom, rInfo.lb), rAttr.sheetIndex,
                  italicRatio, italicOffset, rotateX, rotateY, translate);
 }
 
+/**
+ * Calculates the rotation, scale and translation of one character.
+ * @param rRotateMatrixAndCenterX first rotation row and center x
+ * @param rRotateMatrixAndCenterY second rotation row and center y
+ * @param rTranslate translation
+ * @param x character x position
+ * @param y character y position
+ * @param width character width
+ * @param height character height
+ * @param italicRatio italic ratio
+ * @param italicOffset italic offset
+ * @param rInfo per-character transform information
+ * @param center center of the transform
+ * @param centerOffset vertical offset of the transform center
+ * @param isOriginToCenterEnabled whether the origin is the character center
+ * @param shadowOffsetY vertical shadow offset added to the translation
+ */
 void DispStringBuffer::CalculatePerCharacterTransform(
     nn::util::Float4& rRotateMatrixAndCenterX, nn::util::Float4& rRotateMatrixAndCenterY,
     nn::util::Float4& rTranslate, float x, float y, float width, float height, float italicRatio,
@@ -520,19 +614,20 @@ void DispStringBuffer::CalculatePerCharacterTransform(
         centerY -= centerOffset;
     }
 
-    const float cosX = rInfo.rotationCos[0];
-    const float cosY = rInfo.rotationCos[1];
+    // The load order decides the operand order of the commutative multiplies below.
     const float cosZ = rInfo.rotationCos[2];
-    const float sinX = rInfo.rotationSin[0];
-    const float sinY = rInfo.rotationSin[1];
+    const float cosY = rInfo.rotationCos[1];
     const float sinZ = rInfo.rotationSin[2];
+    const float sinY = rInfo.rotationSin[1];
+    const float sinX = rInfo.rotationSin[0];
+    const float cosX = rInfo.rotationCos[0];
 
-    const float m00 = cosY * cosZ;
-    const float m01 = cosY * sinZ;
+    const float m00 = cosZ * cosY;
+    const float m01 = sinZ * cosY;
     const float m02 = -sinY;
-    const float m10 = sinX * sinY * cosZ - cosX * sinZ;
-    const float m11 = sinX * sinY * sinZ + cosX * cosZ;
-    const float m12 = sinX * cosY;
+    const float m10 = cosZ * sinY * sinX - sinZ * cosX;
+    const float m11 = sinZ * sinY * sinX + cosZ * cosX;
+    const float m12 = cosY * sinX;
 
     rRotateMatrixAndCenterX.x = m00 * rInfo.scale[0];
     rRotateMatrixAndCenterX.y = m01 * rInfo.scale[0];
@@ -556,6 +651,11 @@ void DispStringBuffer::SetFontHeight(float fontHeight) {
     m_FontHeight = fontHeight;
 }
 
+/**
+ * Checks that a copied instance has the same settings.
+ * @param rOther instance to compare with
+ * @return whether the settings are equal
+ */
 bool DispStringBuffer::CompareCopiedInstanceTest(const DispStringBuffer& rOther) const {
     if (m_CharCountMax != rOther.m_CharCountMax) {
         return false;
