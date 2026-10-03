@@ -4,7 +4,7 @@
 
 #include "Library/Actor/ActorInitInfo.hpp"
 #include "Library/Audio/System/AudioKeeper.hpp"
-#include "Library/Clipping/ClippingAreaActorInfo.hpp"
+#include "Project/Clipping/ClippingAreaActorInfo.hpp"
 #include "Library/Clipping/ClippingDirectorBase.hpp"
 #include "Library/Execute/ActorSystemFunction.hpp"
 #include "Library/HitSensor/HitSensorKeeper.hpp"
