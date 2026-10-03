@@ -22,14 +22,14 @@ void StageSwitchListenerHolder::RequestList::init(s32 num) {
  * @param pList Listener list to add.
  */
 void StageSwitchListenerHolder::RequestList::addRequest(StageSwitchListenerList* pList) {
-    if (mCount != 0) {
+    if (mCount == 0) {
+        mArray[0] = pList;
+        mArray[0]->setRequestIndex(0);
+    } else {
         mArray[mCount] = mArray[0];
         mArray[mCount]->setRequestIndex(mCount);
         mArray[0] = pList;
         pList->setRequestIndex(0);
-    } else {
-        mArray[0] = pList;
-        mArray[0]->setRequestIndex(0);
     }
 
     mCount++;
@@ -73,7 +73,7 @@ void StageSwitchListenerHolder::RequestList::update() {
  * @param switchNum Number of switches.
  */
 StageSwitchListenerHolder::StageSwitchListenerHolder(s32 switchNum) : mSwitchNum(switchNum) {
-    mListenerLists = new StageSwitchListenerList[switchNum];
+    mListenerLists = new StageSwitchListenerList[mSwitchNum];
     mRequestListA.init(mSwitchNum);
     mRequestListB.init(mSwitchNum);
     mCurrentRequestList = &mRequestListA;
