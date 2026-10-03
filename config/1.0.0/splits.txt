@@ -4625,14 +4625,12 @@ src/al/Library/File/Holder/SoundItemEntry.cpp: done
     .text   start:0x007F0A90 end:0x007F0B8C
 src/al/Library/File/Holder/SoundItemHolder.cpp: done
     .text   start:0x007F0B90 end:0x007F0E30
-src/al/Library/Fog/FogParam.cpp:
-    .text   start:0x007F0E30 end:0x007F11A4
-src/al/Library/Fog/YFogParam.cpp:
-    .text   start:0x007F11B0 end:0x007F14AC
 src/al/Library/Fog/FogDirector.cpp:
-    .text   start:0x007F14B0 end:0x007F38B4
-src/al/Library/Fog/FogRequester.cpp:
-    .text   start:0x007F38C0 end:0x007F44F4
+    .text   start:0x007F0E30 end:0x007F38B4
+src/al/Library/Fog/FogRequester.cpp: done
+    .text   start:0x007F38C0 end:0x007F4454
+src/al/Library/Actor/ComboCounterWithSe.cpp: done
+    .text   start:0x007F4460 end:0x007F44F4
 src/al/Library/HitSensor/HitSensorKeeper.cpp: done
     .text   start:0x007F4500 end:0x007F495C
 src/al/Project/HitSensor/HitSensor.cpp:
@@ -4645,12 +4643,14 @@ src/al/Library/Item/ItemUtil.cpp: done
     .text   start:0x007F5F50 end:0x007F64D8
 src/al/Library/Joint/JointAimInfo.cpp:
     .text   start:0x007F6990 end:0x007F6FE8
-src/al/Library/Joint/JointControllerKeeper.cpp:
-    .text   start:0x007F6FF0 end:0x007F8054
-src/al/Library/Joint/JointControllerBase.cpp:
-    .text   start:0x007F8060 end:0x007F843C
-src/al/Library/Joint/JointControllerKeeper_dup2.cpp: done
-    .text   start:0x007F8440 end:0x007F8664
+src/al/Library/Joint/JointControllerFunction.cpp:
+    .text   start:0x007F6FF0 end:0x007F7CDC
+src/al/Project/Joint/JointAimController.cpp:
+    .text   start:0x007F7CE0 end:0x007F7FF0
+src/al/Library/Joint/JointControllerBase.cpp: done
+    .text   start:0x007F7FF0 end:0x007F8328
+src/al/Library/Joint/JointControllerKeeper.cpp: done
+    .text   start:0x007F8330 end:0x007F8664
 src/al/Library/Joint/JointDirectionInfo.cpp: done
     .text   start:0x007F8670 end:0x007F87D4
 src/al/Library/Joint/JointLocalAxisRotator.cpp:
@@ -4663,7 +4663,7 @@ src/al/Library/Joint/JointLocalTransController.cpp: done
     .text   start:0x007F8F60 end:0x007F9058
 src/al/Library/Joint/JointLookAtController.cpp:
     .text   start:0x007F9060 end:0x007FA284
-src/al/Library/Joint/JointMasher.cpp:
+src/al/Library/Joint/JointMasher.cpp: done
     .text   start:0x007FA290 end:0x007FA4EC
 src/al/Library/Joint/JointMtxController.cpp: done
     .text   start:0x007FA4F0 end:0x007FA5D8
@@ -4820,9 +4820,9 @@ src/al/Library/MapObj/WheelMapParts.cpp:
 src/al/Library/MapObj/WobbleMapParts.cpp:
     .text   start:0x00857DD0 end:0x00858888
 src/al/Library/Math/MathUtil.cpp:
-    .text   start:0x00858890 end:0x00865924
-src/al/Project/Math/FractalGenerator.cpp:
-    .text   start:0x00865930 end:0x008660C4
+    .text   start:0x00858890 end:0x00865910
+src/al/Project/Math/FractalGenerator.cpp: done
+    .text   start:0x00865910 end:0x008660C4
 src/al/Library/Math/ParabolicPath.cpp:
     .text   start:0x008660D0 end:0x00866BF8
 src/al/Library/Memory/HeapUtil.cpp:
@@ -4873,29 +4873,25 @@ src/al/Project/Model/ModelAdditionalInfo.cpp: done
     .text   start:0x00872800 end:0x00872A2C
 src/al/Project/Model/SimpleModelG3D.cpp:
     .text   start:0x00872A30 end:0x00873E5C
-src/al/Library/Movement/AnimScaleController.cpp:
+src/al/Library/Movement/AnimScaleController.cpp: done
     .text   start:0x00873E60 end:0x008747E8
 src/al/Library/Movement/FlashingCtrl.cpp: done
     .text   start:0x008747F0 end:0x00874B54
 src/al/Library/Movement/FlashingTimer.cpp: done
     .text   start:0x00874B60 end:0x00874BFC
-src/al/Library/Movement/KeyMoveMovement.cpp:
+src/al/Library/Movement/KeyMoveMovement.cpp: done
     .text   start:0x00874C00 end:0x00874ED8
-src/al/Library/Math/ParabolicPath_dup2.cpp:
-    .text   start:0x00874EE0 end:0x008750FC
-src/al/Library/Movement/ParabolicPathMovement.cpp:
-    .text   start:0x00875100 end:0x008752A8
+src/al/Library/Movement/ParabolicPathMovement.cpp: done
+    .text   start:0x00874EE0 end:0x008752A8
 src/al/Library/Movement/PoseHistoryPath.cpp:
     .text   start:0x008752B0 end:0x00875868
 src/al/Library/Movement/RailMoveMovement.cpp: done
-    .text   start:0x00875870 end:0x00875930
-src/al/Library/Movement/RailMovement.cpp:
-    .text   start:0x00875930 end:0x00875CA8
+    .text   start:0x00875870 end:0x00875CA8
 src/al/Library/Movement/RumbleCalculator.cpp: done
     .text   start:0x00875CB0 end:0x00875F04
 src/al/Library/Movement/SpringDynamics.cpp:
     .text   start:0x00875F10 end:0x00878114
-src/al/Library/Movement/SwingMovement.cpp:
+src/al/Library/Movement/SwingMovement.cpp: done
     .text   start:0x00878120 end:0x008785C4
 src/al/Library/Nerve/NerveAction.cpp: done
     .text   start:0x008785D0 end:0x00878618
@@ -5881,10 +5877,10 @@ src/al/Library/Se/DataBase/SeDataBase.cpp:
     .text   start:0x009E4590 end:0x009E6200
 src/al/Library/Se/Function/SeDbFunction.cpp:
     .text   start:0x009E6200 end:0x009E6684
-src/al/Library/Math/InOutParam.cpp:
-    .text   start:0x009E6690 end:0x009E6AA8
+src/al/Library/Math/InOutParam.cpp: done
+    .text   start:0x009E6690 end:0x009E6850
 src/al/Library/Se/Function/SeDirector.cpp:
-    .text   start:0x009E6AB0 end:0x009EBCDC
+    .text   start:0x009E6850 end:0x009EBCDC
 src/al/Project/Audio/System/AudioEffectFunction.cpp: done
     .text   start:0x009EBCE0 end:0x009EBE64
 src/al/Library/Bgm/DspValueController.cpp: done

@@ -48837,16 +48837,16 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71007F0C80			FALSE	_ZN2al15SoundItemHolder12tryFindEntryEjPNS_20IAudioResourceLoaderE	al::SoundItemHolder::tryFindEntry(unsigned int, al::IAudioResourceLoader*)	
 0x71007F0D30			FALSE	_ZN2al15SoundItemHolder15waitLoadDoneAllEv	al::SoundItemHolder::waitLoadDoneAll()	
 0x71007F0DC0			FALSE	_ZN2al15SoundItemHolder10clearEntryEv	al::SoundItemHolder::clearEntry()	
-0x71007F0E30	Library/Fog	FogParam.o	FALSE	_ZN2al8FogParam4initEv	al::FogParam::init()	object (class)
+0x71007F0E30	Library/Fog	FogDirector.o	FALSE	_ZN2al8FogParam4initEv	al::FogParam::init()	object (class)
 0x71007F0FA0			FALSE	_ZN2al8FogParam10initSystemEv	al::FogParam::initSystem()	
 0x71007F0FB0			FALSE	_ZNK2al8FogParameqERKS0_	al::FogParam::operator==(al::FogParam const&) const	
 0x71007F1080			FALSE	_ZN2al8FogParamaSERKS0_	al::FogParam::operator=(al::FogParam const&)	
 0x71007F10B0			FALSE	_ZN2al8FogParam6interpERKS0_S2_f	al::FogParam::interp(al::FogParam const&, al::FogParam const&, float)	
-0x71007F11B0		YFogParam.o	FALSE	_ZNK2al9YFogParameqERKS0_	al::YFogParam::operator==(al::YFogParam const&) const	object (class)
+0x71007F11B0			FALSE	_ZNK2al9YFogParameqERKS0_	al::YFogParam::operator==(al::YFogParam const&) const	object (class)
 0x71007F12E0			FALSE	_ZN2al9YFogParamaSERKS0_	al::YFogParam::operator=(al::YFogParam const&)	
 0x71007F1320			FALSE	_ZN2al9YFogParam6interpERKS0_S2_f	al::YFogParam::interp(al::YFogParam const&, al::YFogParam const&, float)	
 0x71007F1430			FALSE	_ZN2al9YFogParam4initEv	al::YFogParam::init()	
-0x71007F14B0	Library/Fog	FogDirector.o	FALSE	_ZN2al9YFogParam16trySetCameraYPosEPKN4sead6CameraE	al::YFogParam::trySetCameraYPos(sead::Camera const*)	object/folder from OdysseyDecomp file list
+0x71007F14B0			FALSE	_ZN2al9YFogParam16trySetCameraYPosEPKN4sead6CameraE	al::YFogParam::trySetCameraYPos(sead::Camera const*)	object/folder from OdysseyDecomp file list
 0x71007F1520			FALSE	_ZN2al11FogDirectorC1EPNS_18GraphicsSystemInfoE	al::FogDirector::FogDirector(al::GraphicsSystemInfo*)	
 0x71007F1590			FALSE	_ZN2al32GraphicsParamRequestInterpKeeperINS_8FogParamEEC2EPNS_18GraphicsSystemInfoEiPKcS6_S6_	al::GraphicsParamRequestInterpKeeper<al::FogParam>::GraphicsParamRequestInterpKeeper(al::GraphicsSystemInfo*, int, char const*, char const*, char const*)	
 0x71007F1C00			FALSE	_ZN2al32GraphicsParamRequestInterpKeeperINS_9YFogParamEEC2EPNS_18GraphicsSystemInfoEiPKcS6_S6_	al::GraphicsParamRequestInterpKeeper<al::YFogParam>::GraphicsParamRequestInterpKeeper(al::GraphicsSystemInfo*, int, char const*, char const*, char const*)	
@@ -48874,7 +48874,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71007F31F0			FALSE	_ZN2al13RequestInterpINS_8FogParamEE12updateInterpEv	al::RequestInterp<al::FogParam>::updateInterp()	
 0x71007F3440			FALSE	_ZN2al13RequestInterpINS_9YFogParamEE12requestParamEiiRKS1_	al::RequestInterp<al::YFogParam>::requestParam(int, int, al::YFogParam const&)	
 0x71007F3630			FALSE	_ZN2al13RequestInterpINS_9YFogParamEE12updateInterpEv	al::RequestInterp<al::YFogParam>::updateInterp()	
-0x71007F38C0		FogRequester.o	FALSE	_ZN2al12FogRequesterC2EPKc	al::FogRequester::FogRequester(char const*)	object/folder from OdysseyDecomp file list
+0x71007F38C0	Library/Fog	FogRequester.o	FALSE	_ZN2al12FogRequesterC2EPKc	al::FogRequester::FogRequester(char const*)	object/folder from OdysseyDecomp file list
 0x71007F3B40			FALSE	_ZN2al12FogRequesterC1EPKc	al::FogRequester::FogRequester(char const*)	
 0x71007F3DC0			FALSE	_ZN2al12FogRequester4initERKNS_13ActorInitInfoE	al::FogRequester::init(al::ActorInitInfo const&)	
 0x71007F4180			FALSE	_ZN2al12FogRequester14appearBySwitchEv	al::FogRequester::appearBySwitch()	
@@ -48884,7 +48884,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71007F43C0			FALSE	_ZN2al12FogRequesterD0Ev	al::FogRequester::~FogRequester()	
 0x71007F43F0			FALSE	_ZNK2al10FunctorV0MIPNS_12FogRequesterEMS1_FvvEEclEv	al::FunctorV0M<al::FogRequester*, void (al::FogRequester::*)()>::operator()() const	
 0x71007F4410			FALSE	_ZNK2al10FunctorV0MIPNS_12FogRequesterEMS1_FvvEE5cloneEv	al::FunctorV0M<al::FogRequester*, void (al::FogRequester::*)()>::clone() const	
-0x71007F4460			FALSE	_ZN2al18ComboCounterWithSeC1EPNS_9LiveActorE	al::ComboCounterWithSe::ComboCounterWithSe(al::LiveActor*)	
+0x71007F4460	Library/Actor	ComboCounterWithSe.o	FALSE	_ZN2al18ComboCounterWithSeC1EPNS_9LiveActorE	al::ComboCounterWithSe::ComboCounterWithSe(al::LiveActor*)	
 0x71007F4480			FALSE	_ZN2al18ComboCounterWithSe9incrementEv	al::ComboCounterWithSe::increment()	
 0x71007F44F0			FALSE	_ZN2al18ComboCounterWithSeD0Ev	al::ComboCounterWithSe::~ComboCounterWithSe()	
 0x71007F4500	Library/HitSensor	HitSensorKeeper.o	FALSE	_ZN2al15HitSensorKeeperC2Ei	al::HitSensorKeeper::HitSensorKeeper(int)	object (smo)
@@ -48965,7 +48965,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71007F6F60			FALSE	_ZN2al12JointAimInfo12addPowerRateEf	al::JointAimInfo::addPowerRate(float)	
 0x71007F6FA0			FALSE	_ZN2al12JointAimInfo12subPowerRateEf	al::JointAimInfo::subPowerRate(float)	
 0x71007F6FE0			FALSE	_ZN2al12JointAimInfo16setInterpoleRateEf	al::JointAimInfo::setInterpoleRate(float)	
-0x71007F6FF0		JointControllerKeeper.o	FALSE	_ZN2al25initJointControllerKeeperEPKNS_9LiveActorEi	al::initJointControllerKeeper(al::LiveActor const*, int)	object (smo)
+0x71007F6FF0		JointControllerFunction.o	FALSE	_ZN2al25initJointControllerKeeperEPKNS_9LiveActorEi	al::initJointControllerKeeper(al::LiveActor const*, int)	object (smo)
 0x71007F7000			FALSE	_ZN2al28isExistJointControllerKeeperEPKNS_9LiveActorE	al::isExistJointControllerKeeper(al::LiveActor const*)	
 0x71007F7020			FALSE	_ZN2al21initJointLocalRotatorEPKNS_9LiveActorEPN4sead7Vector3IfEEPKc	al::initJointLocalRotator(al::LiveActor const*, sead::Vector3<float>*, char const*)	
 0x71007F7170			FALSE	_ZN2al22initJointLocalXRotatorEPKNS_9LiveActorEPfPKc	al::initJointLocalXRotator(al::LiveActor const*, float*, char const*)	
@@ -48998,18 +48998,18 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71007F7CB0			FALSE	_ZN2al21pauseJointControllersEv	al::pauseJointControllers()	
 0x71007F7CC0			FALSE	_ZN2al22resumeJointControllersEv	al::resumeJointControllers()	
 0x71007F7CD0			FALSE	_ZN2al24isPausedJointControllersEv	al::isPausedJointControllers()	
-0x71007F7CE0			FALSE	_ZN2al18JointAimControllerC2EPKNS_12JointAimInfoE	al::JointAimController::JointAimController(al::JointAimInfo const*)	
+0x71007F7CE0	Project/Joint	JointAimController.o	FALSE	_ZN2al18JointAimControllerC2EPKNS_12JointAimInfoE	al::JointAimController::JointAimController(al::JointAimInfo const*)	
 0x71007F7D30			FALSE	_ZN2al18JointAimController17calcJointCallbackEiPN4sead8Matrix34IfEE	al::JointAimController::calcJointCallback(int, sead::Matrix34<float>*)	
-0x71007F7FF0			FALSE	_ZN2al19JointControllerBaseC2Ev	al::JointControllerBase::JointControllerBase()	merged into JointControllerKeeper.o (secondary class JointControllerBase.o)
-0x71007F8060		JointControllerBase.o	FALSE	_ZN2al19JointControllerBase13appendJointIdEi	al::JointControllerBase::appendJointId(int)	object/folder from OdysseyDecomp file list
+0x71007F7FF0	Library/Joint	JointControllerBase.o	FALSE	_ZN2al19JointControllerBaseC2Ev	al::JointControllerBase::JointControllerBase()	merged into JointControllerKeeper.o (secondary class JointControllerBase.o)
+0x71007F8060			FALSE	_ZN2al19JointControllerBase13appendJointIdEi	al::JointControllerBase::appendJointId(int)	object/folder from OdysseyDecomp file list
 0x71007F8290			FALSE	_ZNK2al19JointControllerBase10findNextIdEPii	al::JointControllerBase::findNextId(int*, int) const	
 0x71007F82E0			FALSE	_ZNK2al19JointControllerBase9isExistIdEi	al::JointControllerBase::isExistId(int) const	
-0x71007F8330			FALSE	_ZN2al21JointControllerKeeperC2Ei	al::JointControllerKeeper::JointControllerKeeper(int)	
-0x71007F8440		JointControllerKeeper.o	FALSE	_ZN2al21JointControllerKeeper4ExecERN2nn3g3d23ICalculateWorldCallback11CallbackArgERNS2_13WorldMtxManipE	al::JointControllerKeeper::Exec(nn::g3d::ICalculateWorldCallback::CallbackArg&, nn::g3d::WorldMtxManip&)	object/folder from OdysseyDecomp file list
+0x71007F8330		JointControllerKeeper.o	FALSE	_ZN2al21JointControllerKeeperC2Ei	al::JointControllerKeeper::JointControllerKeeper(int)	
+0x71007F8440			FALSE	_ZN2al21JointControllerKeeper4ExecERN2nn3g3d23ICalculateWorldCallback11CallbackArgERNS2_13WorldMtxManipE	al::JointControllerKeeper::Exec(nn::g3d::ICalculateWorldCallback::CallbackArg&, nn::g3d::WorldMtxManip&)	object/folder from OdysseyDecomp file list
 0x71007F8610			FALSE	_ZN2al21JointControllerKeeper18pushBackControllerEPNS_19JointControllerBaseE	al::JointControllerKeeper::pushBackController(al::JointControllerBase*)	
 0x71007F8650			FALSE	_ZN2nn3g3d23ICalculateWorldCallbackD2Ev	nn::g3d::ICalculateWorldCallback::~ICalculateWorldCallback()	
 0x71007F8660			FALSE	_ZN2al21JointControllerKeeperD0Ev	al::JointControllerKeeper::~JointControllerKeeper()	
-0x71007F8670		JointDirectionInfo.o	FALSE	_ZN2al18JointDirectionInfoC2Ev	al::JointDirectionInfo::JointDirectionInfo()	object (class)
+0x71007F8670	Library/Joint	JointDirectionInfo.o	FALSE	_ZN2al18JointDirectionInfoC2Ev	al::JointDirectionInfo::JointDirectionInfo()	object (class)
 0x71007F86C0			FALSE	_ZN2al18JointDirectionInfo15setLocalBaseDirERKN4sead7Vector3IfEE	al::JointDirectionInfo::setLocalBaseDir(sead::Vector3<float> const&)	
 0x71007F86E0			FALSE	_ZN2al18JointDirectionInfo18setLocalRotateAxisERKN4sead7Vector3IfEE	al::JointDirectionInfo::setLocalRotateAxis(sead::Vector3<float> const&)	
 0x71007F8700			FALSE	_ZN2al18JointDirectionInfo17setWorldTargetDirERKN4sead7Vector3IfEE	al::JointDirectionInfo::setWorldTargetDir(sead::Vector3<float> const&)	
@@ -52268,7 +52268,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100862F90			FALSE	_ZN2al18checkHitSegmentBoxERKN4sead7Vector3IfEES4_RKNS0_9BoundBox3IfEEPS2_	al::checkHitSegmentBox(sead::Vector3<float> const&, sead::Vector3<float> const&, sead::BoundBox3<float> const&, sead::Vector3<float>*)	
 0x71008632F0			FALSE	_ZN2al17checkHitPointConeERKN4sead7Vector3IfEES4_S4_ff	al::checkHitPointCone(sead::Vector3<float> const&, sead::Vector3<float> const&, sead::Vector3<float> const&, float, float)	
 0x71008633C0			FALSE	_ZN2al18checkHitSphereConeERKN4sead7Vector3IfEEfS4_S4_ff	al::checkHitSphereCone(sead::Vector3<float> const&, float, sead::Vector3<float> const&, sead::Vector3<float> const&, float, float)	
-0x7100863580			FALSE	sub_7100863580	sub_7100863580	
+0x7100863580			FALSE	_ZN2alL22checkHitSphereConeSideERKN4sead7Vector3IfEES4_fff	_ZN2alL22checkHitSphereConeSideERKN4sead7Vector3IfEES4_fff	
 0x7100863A50			FALSE	_ZN2al23checkHitSphereSpotLightERKN4sead7Vector3IfEEfS4_S4_ff	al::checkHitSphereSpotLight(sead::Vector3<float> const&, float, sead::Vector3<float> const&, sead::Vector3<float> const&, float, float)	
 0x7100863B10			FALSE	_ZN2al23isNearCollideSphereAabbERKN4sead7Vector3IfEEfRKNS0_9BoundBox3IfEE	al::isNearCollideSphereAabb(sead::Vector3<float> const&, float, sead::BoundBox3<float> const&)	
 0x7100863BC0			FALSE	_ZN2al16calcBoxFacePointEPN4sead7Vector3IfEERKNS0_9BoundBox3IfEEi	al::calcBoxFacePoint(sead::Vector3<float>*, sead::BoundBox3<float> const&, int)	
@@ -52297,8 +52297,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100865680			FALSE	_ZN2al14calcDirOnPlaneEPN4sead7Vector3IfEERKS2_S5_S5_	al::calcDirOnPlane(sead::Vector3<float>*, sead::Vector3<float> const&, sead::Vector3<float> const&, sead::Vector3<float> const&)	
 0x7100865780			FALSE	_ZN2al28calcDirFromLongitudeLatitudeEPN4sead7Vector3IfEEff	al::calcDirFromLongitudeLatitude(sead::Vector3<float>*, float, float)	
 0x7100865800			FALSE	_ZN2al28calcLongitudeLatitudeFromDirEPfS0_RKN4sead7Vector3IfEE	al::calcLongitudeLatitudeFromDir(float*, float*, sead::Vector3<float> const&)	
-0x7100865910			FALSE	_ZN2al16FractalGeneratorC1Ejfff	al::FractalGenerator::FractalGenerator(unsigned int, float, float, float)	
-0x7100865930	Project/Math	FractalGenerator.o	FALSE	_ZN2al16FractalGenerator8setParamEjfff	al::FractalGenerator::setParam(unsigned int, float, float, float)	object/folder from OdysseyDecomp file list
+0x7100865910	Project/Math	FractalGenerator.o	FALSE	_ZN2al16FractalGeneratorC1Ejfff	al::FractalGenerator::FractalGenerator(unsigned int, float, float, float)	
+0x7100865930			FALSE	_ZN2al16FractalGenerator8setParamEjfff	al::FractalGenerator::setParam(unsigned int, float, float, float)	object/folder from OdysseyDecomp file list
 0x7100865950			FALSE	_ZN2al16FractalGenerator11calcFractalEffb	al::FractalGenerator::calcFractal(float, float, bool)	
 0x7100865AF0			FALSE	_ZN2al16FractalGenerator21makeSmoothPerlinNoiseEff	al::FractalGenerator::makeSmoothPerlinNoise(float, float)	
 0x7100865BC0			FALSE	_ZN2al16FractalGenerator15makePerlinNoiseEff	al::FractalGenerator::makePerlinNoise(float, float)	
@@ -52628,9 +52628,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71008746A0			FALSE	_ZN2al19AnimScaleController16setOriginalScaleERKN4sead7Vector3IfEE	al::AnimScaleController::setOriginalScale(sead::Vector3<float> const&)	
 0x71008746C0			FALSE	_ZN2al19AnimScaleController6updateEv	al::AnimScaleController::update()	
 0x71008746D0			FALSE	_ZN2al19AnimScaleControllerD0Ev	al::AnimScaleController::~AnimScaleController()	
-0x7100874700			FALSE	nullsub_332	nullsub_332	
+0x7100874700			FALSE	_ZNK12_GLOBAL__N_126AnimScaleControllerNrvStop7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_126AnimScaleControllerNrvStop7executeEPN2al11NerveKeeperE	
 0x7100874710			FALSE	_ZNK12_GLOBAL__N_126AnimScaleControllerNrvAnim7executeEPN2al11NerveKeeperE	(anonymous namespace)::AnimScaleControllerNrvAnim::execute(al::NerveKeeper*) const	
-0x7100874720			FALSE	sub_7100874720	sub_7100874720	
+0x7100874720			FALSE	_ZNK12_GLOBAL__N_131AnimScaleControllerNrvVibration7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_131AnimScaleControllerNrvVibration7executeEPN2al11NerveKeeperE	
 0x71008747D0			FALSE	_ZNK12_GLOBAL__N_133AnimScaleControllerNrvHitReaction7executeEPN2al11NerveKeeperE	(anonymous namespace)::AnimScaleControllerNrvHitReaction::execute(al::NerveKeeper*) const	
 0x71008747E0			FALSE	_ZNK12_GLOBAL__N_127AnimScaleControllerNrvCrush7executeEPN2al11NerveKeeperE	(anonymous namespace)::AnimScaleControllerNrvCrush::execute(al::NerveKeeper*) const	
 0x71008747F0		FlashingCtrl.o	FALSE	_ZN2al12FlashingCtrlC1EPNS_9LiveActorEbb	al::FlashingCtrl::FlashingCtrl(al::LiveActor*, bool, bool)	
@@ -52653,18 +52653,18 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100874D60			FALSE	_ZN2al15KeyMoveMovement7exeMoveEv	al::KeyMoveMovement::exeMove()	
 0x7100874E10			FALSE	_ZN2al15KeyMoveMovement7exeStopEv	al::KeyMoveMovement::exeStop()	
 0x7100874E20			FALSE	_ZN2al15KeyMoveMovementD0Ev	al::KeyMoveMovement::~KeyMoveMovement()	
-0x7100874E50			FALSE	nullsub_333	nullsub_333	
-0x7100874E60			FALSE	sub_7100874E60	sub_7100874E60	
+0x7100874E50			FALSE	_ZNK12_GLOBAL__N_122KeyMoveMovementNrvStop7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_122KeyMoveMovementNrvStop7executeEPN2al11NerveKeeperE	
+0x7100874E60			FALSE	_ZNK12_GLOBAL__N_122KeyMoveMovementNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_122KeyMoveMovementNrvWait7executeEPN2al11NerveKeeperE	
 0x7100874ED0			FALSE	_ZNK12_GLOBAL__N_122KeyMoveMovementNrvMove7executeEPN2al11NerveKeeperE	(anonymous namespace)::KeyMoveMovementNrvMove::execute(al::NerveKeeper*) const	
-0x7100874EE0	Library/Math	ParabolicPath.o	FALSE	_ZN2al21ParabolicPathMovementC2EPNS_9LiveActorEb	al::ParabolicPathMovement::ParabolicPathMovement(al::LiveActor*, bool)	
+0x7100874EE0	Library/Movement	ParabolicPathMovement.o	FALSE	_ZN2al21ParabolicPathMovementC2EPNS_9LiveActorEb	al::ParabolicPathMovement::ParabolicPathMovement(al::LiveActor*, bool)	
 0x7100874F70			FALSE	_ZN2al21ParabolicPathMovement5startERKN4sead7Vector3IfEEff	al::ParabolicPathMovement::start(sead::Vector3<float> const&, float, float)	
 0x7100875040			FALSE	_ZN2al21ParabolicPathMovement14setOrbitParamsERKN4sead7Vector3IfEES5_ff	al::ParabolicPathMovement::setOrbitParams(sead::Vector3<float> const&, sead::Vector3<float> const&, float, float)	
-0x7100875100	Library/Movement	ParabolicPathMovement.o	FALSE	_ZNK2al21ParabolicPathMovement12isReachedEndEv	al::ParabolicPathMovement::isReachedEnd() const	object/folder from OdysseyDecomp file list
+0x7100875100			FALSE	_ZNK2al21ParabolicPathMovement12isReachedEndEv	al::ParabolicPathMovement::isReachedEnd() const	object/folder from OdysseyDecomp file list
 0x7100875150			FALSE	_ZNK2al21ParabolicPathMovement12isOverTheTopEv	al::ParabolicPathMovement::isOverTheTop() const	
 0x71008751A0			FALSE	_ZN2al21ParabolicPathMovement7exeMoveEv	al::ParabolicPathMovement::exeMove()	
 0x7100875270			FALSE	_ZN2al21ParabolicPathMovementD0Ev	al::ParabolicPathMovement::~ParabolicPathMovement()	
 0x71008752A0			FALSE	_ZNK12_GLOBAL__N_128ParabolicPathMovementNrvMove7executeEPN2al11NerveKeeperE	(anonymous namespace)::ParabolicPathMovementNrvMove::execute(al::NerveKeeper*) const	
-0x71008752B0		PoseHistoryPath.o	FALSE	_ZN2al15PoseHistoryPath8PoseInfoC2Ev	al::PoseHistoryPath::PoseInfo::PoseInfo()	
+0x71008752B0	Library/Movement	PoseHistoryPath.o	FALSE	_ZN2al15PoseHistoryPath8PoseInfoC2Ev	al::PoseHistoryPath::PoseInfo::PoseInfo()	
 0x7100875300			FALSE	_ZN2al15PoseHistoryPath8PoseInfoC1ERKN4sead4QuatIfEERKNS2_7Vector3IfEEPKcf	al::PoseHistoryPath::PoseInfo::PoseInfo(sead::Quat<float> const&, sead::Vector3<float> const&, char const*, float)	
 0x7100875330			FALSE	_ZN2al15PoseHistoryPathC2Ei	al::PoseHistoryPath::PoseHistoryPath(int)	
 0x7100875400			FALSE	_ZN2al15PoseHistoryPath5clearEv	al::PoseHistoryPath::clear()	
@@ -52674,7 +52674,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100875620			FALSE	_ZNK2al15PoseHistoryPath16calcPoseAndTransEPN4sead4QuatIfEEPNS1_7Vector3IfEEf	al::PoseHistoryPath::calcPoseAndTrans(sead::Quat<float>*, sead::Vector3<float>*, float) const	
 0x7100875650			FALSE	_ZNK2al15PoseHistoryPath16calcPoseAndTransEPN4sead4QuatIfEEPNS1_7Vector3IfEEPPKcf	al::PoseHistoryPath::calcPoseAndTrans(sead::Quat<float>*, sead::Vector3<float>*, char const**, float) const	
 0x7100875870		RailMoveMovement.o	FALSE	_ZN2al16RailMoveMovementC1EPNS_9LiveActorERKNS_13ActorInitInfoE	al::RailMoveMovement::RailMoveMovement(al::LiveActor*, al::ActorInitInfo const&)	
-0x7100875930		RailMovement.o	FALSE	_ZN2al16RailMoveMovement7exeMoveEv	al::RailMoveMovement::exeMove()	object/folder from OdysseyDecomp file list
+0x7100875930			FALSE	_ZN2al16RailMoveMovement7exeMoveEv	al::RailMoveMovement::exeMove()	object/folder from OdysseyDecomp file list
 0x71008759F0			FALSE	_ZN2al16RailMoveMovement10exeStandbyEv	al::RailMoveMovement::exeStandby()	
 0x7100875B70			FALSE	_ZN2al25tryCreateRailMoveMovementEPNS_9LiveActorERKNS_13ActorInitInfoE	al::tryCreateRailMoveMovement(al::LiveActor*, al::ActorInitInfo const&)	
 0x7100875C60			FALSE	_ZN2al16RailMoveMovementD0Ev	al::RailMoveMovement::~RailMoveMovement()	
@@ -52730,8 +52730,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71008784A0			FALSE	_ZNK2al13SwingMovement6isLeftEv	al::SwingMovement::isLeft() const	
 0x71008784F0			FALSE	_ZNK2al13SwingMovement6isStopEv	al::SwingMovement::isStop() const	
 0x7100878500			FALSE	_ZN2al13SwingMovementD0Ev	al::SwingMovement::~SwingMovement()	
-0x7100878530			FALSE	sub_7100878530	sub_7100878530	
-0x7100878580			FALSE	sub_7100878580	sub_7100878580	
+0x7100878530			FALSE	_ZNK12_GLOBAL__N_120SwingMovementNrvMove7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_120SwingMovementNrvMove7executeEPN2al11NerveKeeperE	
+0x7100878580			FALSE	_ZNK12_GLOBAL__N_120SwingMovementNrvStop7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_120SwingMovementNrvStop7executeEPN2al11NerveKeeperE	
 0x71008785D0	Library/Nerve	NerveAction.o	FALSE	_ZN2al11NerveActionC2Ev	al::NerveAction::NerveAction()	
 0x7100878620		NerveActionCollector.o	FALSE	_ZN15alNerveFunction20NerveActionCollector8addNerveEPN2al11NerveActionE	alNerveFunction::NerveActionCollector::addNerve(al::NerveAction*)	object (smo)
 0x7100878650			FALSE	_ZN15alNerveFunction20NerveActionCollectorC2Ev	alNerveFunction::NerveActionCollector::NerveActionCollector()	
@@ -61077,11 +61077,11 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71009E6790			FALSE	_ZNK2al10InOutParam18calcEaseInOutValueEf	al::InOutParam::calcEaseInOutValue(float) const	
 0x71009E67D0			FALSE	_ZNK2al10InOutParam13calcSqrtValueEf	al::InOutParam::calcSqrtValue(float) const	
 0x71009E6810			FALSE	_ZNK2al10InOutParam15calcSquareValueEf	al::InOutParam::calcSquareValue(float) const	
-0x71009E6850			FALSE	_ZN2al10SeDirectorC2Ev	al::SeDirector::SeDirector()	
+0x71009E6850	Library/Se/Function	SeDirector.o	FALSE	_ZN2al10SeDirectorC2Ev	al::SeDirector::SeDirector()	
 0x71009E6870			FALSE	_ZN2al10SeDirector4initEPNS_15AudioSystemInfoEPNS_13BgmRhythmCtrlEiiiif	al::SeDirector::init(al::AudioSystemInfo*, al::BgmRhythmCtrl*, int, int, int, int, float)	
 0x71009E6A00			FALSE	_ZN2al10SeDirector6init3DEPNS_14SeadAudio3DMgrEPKN4sead7Vector3IfEEPKNS3_8Matrix34IfEEPNS3_21PerspectiveProjectionES7_PKcb	al::SeDirector::init3D(al::SeadAudio3DMgr*, sead::Vector3<float> const*, sead::Matrix34<float> const*, sead::PerspectiveProjection*, sead::Vector3<float> const*, char const*, bool)	
 0x71009E6AA0			FALSE	_ZN2al10SeDirector28initCategoryParamsControllerEPNS_26SeCategoryParamsControllerE	al::SeDirector::initCategoryParamsController(al::SeCategoryParamsController*)	
-0x71009E6AB0	Library/Se/Function	SeDirector.o	FALSE	_ZN2al10SeDirector8finalizeEv	al::SeDirector::finalize()	object/folder from OdysseyDecomp file list
+0x71009E6AB0			FALSE	_ZN2al10SeDirector8finalizeEv	al::SeDirector::finalize()	object/folder from OdysseyDecomp file list
 0x71009E6B20			FALSE	_ZN2al10SeDirector7stopAllEjPKcS2_	al::SeDirector::stopAll(unsigned int, char const*, char const*)	
 0x71009E6C20			FALSE	_ZN2al10SeDirector6updateEv	al::SeDirector::update()	
 0x71009E6CB0			FALSE	_ZN2al10SeDirector10addRequestEjPNS_8SeSourceEbPKNS_22SeResourceSpecificInfoEPNS_6MeInfoEPKcibS9_	al::SeDirector::addRequest(unsigned int, al::SeSource*, bool, al::SeResourceSpecificInfo const*, al::MeInfo*, char const*, int, bool, char const*)	
