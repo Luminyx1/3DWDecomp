@@ -153,7 +153,7 @@ const void* getJointLocalMtxPtrByIndex(const ModelKeeper* pKeeper, s32 index) {
         return nullptr;
     }
 
-    return skeleton->GetLocalMtx(skeleton->GetBone(index)->GetIndex());
+    return skeleton->GetLocalMtx(0) + skeleton->GetBone(index)->GetIndex();
 }
 
 /**
@@ -208,12 +208,12 @@ void setJointVisibility(const ModelKeeper* pKeeper, const char* pName, bool isVi
     }
 
     bool isPrevVisible = modelObj->IsBoneVisible(index);
-    u32 bit = 1 << index;
+    u32 visible = isVisible;
     u32& word = modelObj->GetBoneVisibilityArray()[static_cast<u32>(index) >> 5];
-    word = (word & ~bit) | (static_cast<u32>(isVisible) << index);
+    word = (word & ~(1u << index)) | (visible << index);
     auto callback = modelObj->GetBoneVisibilityCallback();
 
-    if (callback && isPrevVisible != isVisible) {
+    if (callback != nullptr && isPrevVisible != isVisible) {
         callback(modelObj, index);
     }
 }
