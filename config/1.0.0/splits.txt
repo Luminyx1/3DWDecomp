@@ -3604,9 +3604,9 @@ src/nw/gfx/detail/gfx_MemoryPool-api.nvn.8.cpp:
 src/nw/gfx/detail/gfx_NvnHelper.cpp:
     .text   start:0x00583CB0 end:0x00588168
 src/nw/gfx/detail/gfx_CommonHelper.cpp:
-    .text   start:0x00588170 end:0x00588580
+    .text   start:0x00588170 end:0x00588530
 src/nw/gfx/detail/gfx_Shader-api.nvn.8.cpp:
-    .text   start:0x00588580 end:0x005896F4
+    .text   start:0x00588530 end:0x005896F4
 src/nw/gfx/detail/gfx_ShaderInfo.cpp:
     .text   start:0x00589700 end:0x00589764
 src/nw/gfx/detail/gfx_Texture-api.nvn.8.cpp:
