@@ -31,6 +31,7 @@ public:
     static void setAxisAngle(Base& q, const Vec3& axis, T angle);
     static void setAxisRadian(Base& q, const Vec3& axis, T angleRad);
     static void calcRPY(Vec3& rpy, const Base& q);
+    static void applyAngularVelocity(Base& q, const Vec3& angularVelocity, T dt);
 };
 
 }  // namespace sead
