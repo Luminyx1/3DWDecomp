@@ -4,7 +4,7 @@
 #include <container/seadPtrArray.h>
 
 namespace al {
-class BgmMusicalInfo;
+struct BgmMusicalInfo;
 class ByamlIter;
 struct BgmChordInfo;
 struct BgmRhythmInfo;
@@ -13,7 +13,8 @@ class BgmRhythmDetector {
 public:
     BgmRhythmDetector();
 
-    void init(BgmMusicalInfo* pMusicalInfo, f32 bpm, s32 sampleRate, s32 beginSample, s32 loopStartSample);
+    void init(BgmMusicalInfo* pMusicalInfo, f32 bpm, s32 sampleRate, s32 beginSample,
+              s32 loopStartSample);
     s32 getTrgStartSample() const;
     void update(s32 curSample);
     const BgmRhythmInfo* tryFindCurRhythmInfo(f32 beat) const;
@@ -21,7 +22,7 @@ public:
     bool isOverBeatInRhythmInfoList(f32 beat) const;
     bool isTriggerBeat(s32 beat) const;
     bool isTriggerBeatForAnime(s32 beat) const;
-    f32 calcAnimFrame(f32 beat) const;
+    s32 calcAnimFrame(f32 beat) const;
     s32 findAnimType(f32 beat) const;
     void initBeatList(ByamlIter iter);
     void initChordList(ByamlIter iter);
@@ -43,33 +44,33 @@ private:
     s32 _4 = -1;
     f32 mAnimFrame = 0.0f;
     s32 mAnimType = 0;
-    bool _10 = true;
-    bool _11 = false;
-    bool _12 = false;
+    bool mIsFirstUpdate = true;
+    bool mIsStartBeat = false;
+    bool mIsStartBeatForAnime = false;
     bool mIsTriggerRestartBgm = true;
-    bool _14 = false;
-    bool _15 = false;
+    bool mIsTriggerBeat = false;
+    bool mIsTriggerBeatForAnime = false;
     bool mIsTriggerRhythm = false;
     bool mIsTriggerAnimChange = false;
     const BgmChordInfo* mChordInfoCurrent = nullptr;
     sead::PtrArray<s32> _20;
     f32 mBpm = 1.0f;
-    f32 _34 = 0.0f;
+    f32 mBeatOffset = 0.0f;
     BgmMusicalInfo* mMusicalInfo = nullptr;
     bool _40 = false;
-    f32 _44 = 0.0f;
+    f32 mSamplePerBeat = 0.0f;
     f32 mBeatPerFrame = 0.0f;
     f32 mFrameRate = 0.0f;
     f32 _50 = 0.0f;
-    f32 _54 = 0.0f;
+    f32 mCurRhythmBeat = 0.0f;
     f32 mBeatRate = 0.0f;
     f32 mBeatRateForAnime = 0.0f;
-    u8 _60[0x8] = {};
-    f32 _68 = 0.0f;
+    const BgmRhythmInfo* mNextRhythmInfo = nullptr;
+    bool mIsOverRhythmInfoList = false;
     f32 mCurBeat = 0.0f;
-    f32 _70 = 0.0f;
-    f32 _74 = 0.0f;
-    f32 _78 = 0.0f;
+    f32 mCurBeatForAnime = 0.0f;
+    s32 mBeatCount = 0;
+    s32 mBeatCountForAnime = 0;
     s32 mSampleRate = 32000;
 };
 
