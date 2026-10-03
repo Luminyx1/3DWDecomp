@@ -43,6 +43,7 @@ class Pane : public detail::PaneBase {
 public:
     class CalculateContext {
     public:
+        void Set(const DrawInfo& rDrawInfo, const Layout* pLayout);
         struct LayoutInformation {
             unsigned char _00[0x28];
             Size size;
@@ -79,6 +80,7 @@ public:
     virtual void UnbindAnimation(AnimTransform*, bool);
     virtual void UnbindAnimationSelf(AnimTransform*);
     virtual void Calculate(DrawInfo&, CalculateContext&, bool);
+    void CalculateGlobalMatrix(CalculateContext& rContext, bool forceDirty);
     virtual void Draw(DrawInfo&, nn::gfx::CommandBuffer&);
     virtual void DrawSelf(DrawInfo&, nn::gfx::CommandBuffer&);
     virtual void SetupPaneEffectSourceImageRenderState(nn::gfx::CommandBuffer&) const;
