@@ -132,19 +132,24 @@ void AudioFxDelayNin::updateFx2ch_(s32* pCh0, s32* pCh1, u32 sampleCount) {
     for (u32 i = 0; i < sampleCount; i++) {
         f32 in0 = *pCh0;
         f32 in1 = *pCh1;
-        f32 history1 = lpfHistoryGain1 * mLpfHistory[0].y;
         f32 input0 = lpfInGain0 * in0;
         f32 input1 = lpfInGain1 * in1;
-        f32 lpf0x = input0 + lpfHistoryGain0 * mLpfHistory[0].x;
+        f32 history0 = lpfHistoryGain0 * mLpfHistory[0].x;
+        f32 history1 = lpfHistoryGain1 * mLpfHistory[0].y;
+        f32 lpf0x = input0 + history0;
         f32 lpf0y = input1 + history1;
         mLpfHistory[0].set(lpf0x, lpf0y);
 
         Vector2f* delay0 = &mDelayBuffer[0][mBufferPos];
         Vector2f out0 = *delay0;
-        delay0->set(lpf0x + feedbackGain0 * out0.x, lpf0y + feedbackGain1 * out0.y);
+        f32 feedback0 = feedbackGain0 * out0.x;
+        f32 feedback1 = feedbackGain1 * out0.y;
+        delay0->set(lpf0x + feedback0, lpf0y + feedback1);
+        f32 res0 = outGain0 * out0.x;
+        f32 res1 = outGain1 * out0.y;
 
-        *pCh0++ = outGain0 * out0.x;
-        *pCh1++ = outGain1 * out0.y;
+        *pCh0++ = res0;
+        *pCh1++ = res1;
 
         mBufferPos = mBufferPos + 1 >= mDelaySize ? 0 : mBufferPos + 1;
     }
@@ -169,29 +174,45 @@ void AudioFxDelayNin::updateFx4ch_(s32* pCh0, s32* pCh1, s32* pCh2, s32* pCh3, u
     const f32 lpfHistoryGain1 = mLpfHistoryGain[1];
 
     for (u32 i = 0; i < sampleCount; i++) {
-        Vector2f* delay0 = &mDelayBuffer[0][mBufferPos];
         f32 in0 = *pCh0;
         f32 in1 = *pCh1;
         f32 in2 = *pCh2;
         f32 in3 = *pCh3;
-        f32 lpf0x = lpfInGain0 * in0 + lpfHistoryGain0 * mLpfHistory[0].x;
-        f32 lpf0y = lpfInGain1 * in1 + lpfHistoryGain1 * mLpfHistory[0].y;
+        f32 input0 = lpfInGain0 * in0;
+        f32 input1 = lpfInGain1 * in1;
+        f32 history0 = lpfHistoryGain0 * mLpfHistory[0].x;
+        f32 history1 = lpfHistoryGain1 * mLpfHistory[0].y;
+        f32 lpf0x = input0 + history0;
+        f32 lpf0y = input1 + history1;
         mLpfHistory[0].set(lpf0x, lpf0y);
-        f32 lpf1x = lpfInGain0 * in2 + lpfHistoryGain0 * mLpfHistory[1].x;
-        f32 lpf1y = lpfInGain1 * in3 + lpfHistoryGain1 * mLpfHistory[1].y;
+        f32 input2 = lpfInGain0 * in2;
+        f32 input3 = lpfInGain1 * in3;
+        f32 history2 = lpfHistoryGain0 * mLpfHistory[1].x;
+        f32 history3 = lpfHistoryGain1 * mLpfHistory[1].y;
+        f32 lpf1x = input2 + history2;
+        f32 lpf1y = input3 + history3;
         mLpfHistory[1].set(lpf1x, lpf1y);
 
+        Vector2f* delay0 = &mDelayBuffer[0][mBufferPos];
         Vector2f out0 = *delay0;
-        delay0->set(lpf0x + feedbackGain0 * out0.x, lpf0y + feedbackGain1 * out0.y);
+        f32 feedback0 = feedbackGain0 * out0.x;
+        f32 feedback1 = feedbackGain1 * out0.y;
+        delay0->set(lpf0x + feedback0, lpf0y + feedback1);
+        f32 res0 = outGain0 * out0.x;
+        f32 res1 = outGain1 * out0.y;
 
         Vector2f* delay1 = &mDelayBuffer[1][mBufferPos];
         Vector2f out1 = *delay1;
-        delay1->set(lpf1x + feedbackGain0 * out1.x, lpf1y + feedbackGain1 * out1.y);
+        f32 feedback2 = feedbackGain0 * out1.x;
+        f32 feedback3 = feedbackGain1 * out1.y;
+        delay1->set(lpf1x + feedback2, lpf1y + feedback3);
+        f32 res2 = outGain0 * out1.x;
+        f32 res3 = outGain1 * out1.y;
 
-        *pCh0++ = outGain0 * out0.x;
-        *pCh1++ = outGain1 * out0.y;
-        *pCh2++ = outGain0 * out1.x;
-        *pCh3++ = outGain1 * out1.y;
+        *pCh0++ = res0;
+        *pCh1++ = res1;
+        *pCh2++ = res2;
+        *pCh3++ = res3;
 
         mBufferPos = mBufferPos + 1 >= mDelaySize ? 0 : mBufferPos + 1;
     }
@@ -219,40 +240,64 @@ void AudioFxDelayNin::updateFx6ch_(s32* pCh0, s32* pCh1, s32* pCh2, s32* pCh3, s
     const f32 lpfHistoryGain1 = mLpfHistoryGain[1];
 
     for (u32 i = 0; i < sampleCount; i++) {
-        Vector2f* delay0 = &mDelayBuffer[0][mBufferPos];
         f32 in0 = *pCh0;
         f32 in1 = *pCh1;
         f32 in2 = *pCh2;
         f32 in3 = *pCh3;
         f32 in4 = *pCh4;
         f32 in5 = *pCh5;
-        f32 lpf0x = lpfInGain0 * in0 + lpfHistoryGain0 * mLpfHistory[0].x;
-        f32 lpf0y = lpfInGain1 * in1 + lpfHistoryGain1 * mLpfHistory[0].y;
+        f32 input0 = lpfInGain0 * in0;
+        f32 input1 = lpfInGain1 * in1;
+        f32 history0 = lpfHistoryGain0 * mLpfHistory[0].x;
+        f32 history1 = lpfHistoryGain1 * mLpfHistory[0].y;
+        f32 lpf0x = input0 + history0;
+        f32 lpf0y = input1 + history1;
         mLpfHistory[0].set(lpf0x, lpf0y);
-        f32 lpf1x = lpfInGain0 * in2 + lpfHistoryGain0 * mLpfHistory[1].x;
-        f32 lpf1y = lpfInGain1 * in3 + lpfHistoryGain1 * mLpfHistory[1].y;
+        f32 input2 = lpfInGain0 * in2;
+        f32 input3 = lpfInGain1 * in3;
+        f32 history2 = lpfHistoryGain0 * mLpfHistory[1].x;
+        f32 history3 = lpfHistoryGain1 * mLpfHistory[1].y;
+        f32 lpf1x = input2 + history2;
+        f32 lpf1y = input3 + history3;
         mLpfHistory[1].set(lpf1x, lpf1y);
-        f32 lpf2x = lpfInGain0 * in4 + lpfHistoryGain0 * mLpfHistory[2].x;
-        f32 lpf2y = lpfInGain1 * in5 + lpfHistoryGain1 * mLpfHistory[2].y;
+        f32 input4 = lpfInGain0 * in4;
+        f32 input5 = lpfInGain1 * in5;
+        f32 history4 = lpfHistoryGain0 * mLpfHistory[2].x;
+        f32 history5 = lpfHistoryGain1 * mLpfHistory[2].y;
+        f32 lpf2x = input4 + history4;
+        f32 lpf2y = input5 + history5;
         mLpfHistory[2].set(lpf2x, lpf2y);
 
+        Vector2f* delay0 = &mDelayBuffer[0][mBufferPos];
         Vector2f out0 = *delay0;
-        delay0->set(lpf0x + feedbackGain0 * out0.x, lpf0y + feedbackGain1 * out0.y);
+        f32 feedback0 = feedbackGain0 * out0.x;
+        f32 feedback1 = feedbackGain1 * out0.y;
+        delay0->set(lpf0x + feedback0, lpf0y + feedback1);
+        f32 res0 = outGain0 * out0.x;
+        f32 res1 = outGain1 * out0.y;
 
         Vector2f* delay1 = &mDelayBuffer[1][mBufferPos];
         Vector2f out1 = *delay1;
-        delay1->set(lpf1x + feedbackGain0 * out1.x, lpf1y + feedbackGain1 * out1.y);
+        f32 feedback2 = feedbackGain0 * out1.x;
+        f32 feedback3 = feedbackGain1 * out1.y;
+        delay1->set(lpf1x + feedback2, lpf1y + feedback3);
+        f32 res2 = outGain0 * out1.x;
+        f32 res3 = outGain1 * out1.y;
 
         Vector2f* delay2 = &mDelayBuffer[2][mBufferPos];
         Vector2f out2 = *delay2;
-        delay2->set(lpf2x + feedbackGain0 * out2.x, lpf2y + feedbackGain1 * out2.y);
+        f32 feedback4 = feedbackGain0 * out2.x;
+        f32 feedback5 = feedbackGain1 * out2.y;
+        delay2->set(lpf2x + feedback4, lpf2y + feedback5);
+        f32 res4 = outGain0 * out2.x;
+        f32 res5 = outGain1 * out2.y;
 
-        *pCh0++ = outGain0 * out0.x;
-        *pCh1++ = outGain1 * out0.y;
-        *pCh2++ = outGain0 * out1.x;
-        *pCh3++ = outGain1 * out1.y;
-        *pCh4++ = outGain0 * out2.x;
-        *pCh5++ = outGain1 * out2.y;
+        *pCh0++ = res0;
+        *pCh1++ = res1;
+        *pCh2++ = res2;
+        *pCh3++ = res3;
+        *pCh4++ = res4;
+        *pCh5++ = res5;
 
         mBufferPos = mBufferPos + 1 >= mDelaySize ? 0 : mBufferPos + 1;
     }
