@@ -16,6 +16,30 @@ class LiveActor;
 class Resource;
 
 /**
+ * @brief Fog parameters are initialized through FogParam::initSystem, which dispatches to the
+ * (virtual) init.
+ */
+template <>
+inline void RequestInterp<FogParam>::init() {
+    mCurrentParam.initSystem();
+    mFromParam.initSystem();
+    mToParam.initSystem();
+    mRequestParam.initSystem();
+}
+
+/**
+ * @brief Height fog parameters are initialized through FogParam::initSystem, which dispatches to
+ * the (virtual) init.
+ */
+template <>
+inline void RequestInterp<YFogParam>::init() {
+    mCurrentParam.initSystem();
+    mFromParam.initSystem();
+    mToParam.initSystem();
+    mRequestParam.initSystem();
+}
+
+/**
  * @brief Keeps the requested distance fog and height fog parameters.
  */
 class FogDirector {
@@ -34,6 +58,8 @@ public:
 
     const FogParam& getFogParam() const { return mFogKeeper.getCurrentParam(); }
     const YFogParam& getYFogParam() const { return mYFogKeeper.getCurrentParam(); }
+
+    YFogParam& getYFogParam() { return mYFogKeeper.getCurrentParam(); }
 
 private:
     void* _0;

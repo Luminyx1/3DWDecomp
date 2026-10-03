@@ -20,6 +20,10 @@ namespace al {
         void interp(const YFogParam& rA, const YFogParam& rB, f32 rate);
         void trySetCameraYPos(const sead::Camera* pCamera);
 
+        void validateCameraYPos() { mIsValidCameraYPos = true; }
+
+        void setCameraYPos(f32 y) { mCameraYPos = y; }
+
         agl::utl::Parameter<bool> mIsFollowCamera;
         bool mIsValidCameraYPos;
         f32 mCameraYPos;
