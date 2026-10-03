@@ -44,11 +44,11 @@ void StageUserData::setAlive(bool alive) { mAlive = alive; }
 /**
  * @brief Records the player's goal result and its associated flags.
  * @param reachedGoal Whether the player reached the goal.
- * @param goalValue Numeric goal result; stored without validation.
- * @param goalOption Additional goal-result flag; its specific meaning is not yet established.
+ * @param goalHeight Player height on the goal pole; stored without validation.
+ * @param goalLeader Whether the player is the goal leader.
  */
-void StageUserData::setGoalState(bool reachedGoal, f32 goalValue, bool goalOption) {
+void StageUserData::setGoalState(bool reachedGoal, f32 goalHeight, bool goalLeader) {
     mReachedGoal = reachedGoal;
-    mGoalOption = goalOption;
-    mGoalValue = goalValue;
+    mGoalLeader = goalLeader;
+    mGoalHeight = goalHeight;
 }

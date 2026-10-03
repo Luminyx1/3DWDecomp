@@ -10,14 +10,14 @@ class StageUserData {
     void resetScore();
     void setFigureType(s32 figureType);
     void setAlive(bool alive);
-    void setGoalState(bool reachedGoal, f32 goalValue, bool goalOption);
+    void setGoalState(bool reachedGoal, f32 goalHeight, bool goalLeader);
 
     s32 mScore;
     s32 mFigureType;
     bool mAlive;
     bool mReachedGoal;
-    bool mGoalOption;
-    f32 mGoalValue;
+    bool mGoalLeader;
+    f32 mGoalHeight;
 
   private:
     /**
@@ -26,8 +26,8 @@ class StageUserData {
     void clearStageResult() {
         mAlive = false;
         mReachedGoal = false;
-        mGoalOption = false;
-        mGoalValue = 0.0f;
+        mGoalLeader = false;
+        mGoalHeight = 0.0f;
     }
 };
 
