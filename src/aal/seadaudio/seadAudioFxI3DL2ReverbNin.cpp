@@ -11,8 +11,10 @@ namespace sead {
 namespace {
 s32 sI3DL2ReverbSamplesPerFrame = 0;
 
-const u32 cI3DL2EarlyDelay32k[8] = {163, 317, 479, 641, 797, 967, 1123, 1283};
-const u32 cI3DL2EarlyDelay48k[8] = {241, 479, 719, 967, 1193, 1451, 1693, 1931};
+// Identical to the tables in seadAudioFxReverbStdNin.cpp; the game has a single copy, which is
+// labelled with the ReverbStd name.
+const u32 cReverbStdEarlyDelay32k[8] = {163, 317, 479, 641, 797, 967, 1123, 1283};
+const u32 cReverbStdEarlyDelay48k[8] = {241, 479, 719, 967, 1193, 1451, 1693, 1931};
 
 const f32 cI3DL2EarlyCoefLow = -0.33f;
 const f32 cI3DL2EarlyCoefHigh = 0.33f;
@@ -227,9 +229,10 @@ void AudioFxI3DL2ReverbNin::updateFx2ch_(s32* pCh0, s32* pCh1, u32 sampleCount) 
 
         if (mReflectionsDelaySize != 0) {
             Vector2f* reflections0 = &mReflectionsBuffer[0][mReflectionsPos];
-            Vector2f delayed0 = *reflections0;
-            *reflections0 = in0;
-            in0 = delayed0;
+            f32 delayed0y = reflections0->y;
+            f32 delayed0x = reflections0->x;
+            reflections0->set(in0.x, in0.y);
+            in0.set(delayed0x, delayed0y);
         }
 
         Vector2f* early0 = &mEarlyBuffer[0][mEarlyPos];
@@ -246,24 +249,27 @@ void AudioFxI3DL2ReverbNin::updateFx2ch_(s32* pCh0, s32* pCh1, u32 sampleCount) 
             *reverbDelay0 = in0;
         }
 
-        Vector2f* comb00 = &mCombBuffer[0][0][mCombPos[0]];
-        f32 comb00x = comb00->x;
-        f32 comb00y = comb00->y;
-        f32 combLpf00x = combLpfInGain0 * comb00x + combLpfHistoryGain0 * mCombLpfHistory[0][0].x;
-        f32 combLpf00y = combLpfInGain1 * comb00y + combLpfHistoryGain1 * mCombLpfHistory[0][0].y;
-        mCombLpfHistory[0][0].x = combLpf00x;
-        mCombLpfHistory[0][0].y = combLpf00y;
-        comb00->set(combLpf00x * combCoef[0][0] + combIn0.x, combLpf00y * combCoef[0][1] + combIn0.y);
-        Vector2f* comb10 = &mCombBuffer[1][0][mCombPos[1]];
-        f32 comb10x = comb10->x;
-        f32 comb10y = comb10->y;
-        f32 combLpf10x = combLpfInGain0 * comb10x + combLpfHistoryGain0 * mCombLpfHistory[1][0].x;
-        f32 combLpf10y = combLpfInGain1 * comb10y + combLpfHistoryGain1 * mCombLpfHistory[1][0].y;
-        mCombLpfHistory[1][0].x = combLpf10x;
-        mCombLpfHistory[1][0].y = combLpf10y;
-        comb10->set(combLpf10x * combCoef[1][0] + combIn0.x, combLpf10y * combCoef[1][1] + combIn0.y);
-        f32 wet0x = comb00x + comb10x;
-        f32 wet0y = comb00y + comb10y;
+        Vector2f combOut0[cCombCount];
+
+        for (u32 j = 0; j < cCombCount; j++) {
+            Vector2f* comb = &mCombBuffer[j][0][mCombPos[j]];
+            f32 combX = comb->x;
+            f32 combY = comb->y;
+            f32 combLpfX = combLpfInGain0 * combX;
+            f32 combLpfY = combLpfInGain1 * combY;
+            f32 historyX = combLpfHistoryGain0 * mCombLpfHistory[j][0].x;
+            f32 historyY = combLpfHistoryGain1 * mCombLpfHistory[j][0].y;
+            combLpfX += historyX;
+            combLpfY += historyY;
+            mCombLpfHistory[j][0].x = combLpfX;
+            mCombLpfHistory[j][0].y = combLpfY;
+            comb->set(combLpfX * combCoef[j][0] + combIn0.x, combLpfY * combCoef[j][1] + combIn0.y);
+            combOut0[j].set(combX, combY);
+        }
+
+        f32 wet0x = combOut0[0].x + combOut0[1].x;
+        f32 wet0y = combOut0[0].y + combOut0[1].y;
+
         Vector2f* allPass00 = &mAllPassBuffer[0][0][mAllPassPos[0]];
         f32 allPass00x = allPass00->x;
         f32 allPass00y = allPass00->y;
@@ -280,10 +286,16 @@ void AudioFxI3DL2ReverbNin::updateFx2ch_(s32* pCh0, s32* pCh1, u32 sampleCount) 
         allPass10->set(temp10x, temp10y);
         wet0x = allPassCoef0 * temp10x - allPass10x;
         wet0y = allPassCoef1 * temp10y - allPass10y;
-        out0x += reverbGain0 * wet0x;
-        out0y += reverbGain1 * wet0y;
-        f32 lpf0x = lpfHistoryGain0 * mLpfHistory[0].x + lpfInGain0 * out0x;
-        f32 lpf0y = lpfHistoryGain1 * mLpfHistory[0].y + lpfInGain1 * out0y;
+        wet0x *= reverbGain0;
+        wet0y *= reverbGain1;
+        out0x += wet0x;
+        out0y += wet0y;
+        out0x *= lpfInGain0;
+        out0y *= lpfInGain1;
+        f32 lpf0x = lpfHistoryGain0 * mLpfHistory[0].x;
+        f32 lpf0y = lpfHistoryGain1 * mLpfHistory[0].y;
+        lpf0x += out0x;
+        lpf0y += out0y;
         mLpfHistory[0].x = lpf0x;
         mLpfHistory[0].y = lpf0y;
         *pCh0++ = lpf0x;
@@ -343,13 +355,15 @@ void AudioFxI3DL2ReverbNin::updateFx4ch_(s32* pCh0, s32* pCh1, s32* pCh2, s32* p
 
         if (mReflectionsDelaySize != 0) {
             Vector2f* reflections0 = &mReflectionsBuffer[0][mReflectionsPos];
-            Vector2f delayed0 = *reflections0;
-            *reflections0 = in0;
-            in0 = delayed0;
+            f32 delayed0x = reflections0->x;
+            f32 delayed0y = reflections0->y;
+            reflections0->set(in0.x, in0.y);
+            in0.set(delayed0x, delayed0y);
             Vector2f* reflections1 = &mReflectionsBuffer[1][mReflectionsPos];
-            Vector2f delayed1 = *reflections1;
-            *reflections1 = in1;
-            in1 = delayed1;
+            f32 delayed1x = reflections1->x;
+            f32 delayed1y = reflections1->y;
+            reflections1->set(in1.x, in1.y);
+            in1.set(delayed1x, delayed1y);
         }
 
         Vector2f* early0 = &mEarlyBuffer[0][mEarlyPos];
@@ -376,42 +390,47 @@ void AudioFxI3DL2ReverbNin::updateFx4ch_(s32* pCh0, s32* pCh1, s32* pCh2, s32* p
             *reverbDelay1 = in1;
         }
 
-        Vector2f* comb00 = &mCombBuffer[0][0][mCombPos[0]];
-        f32 comb00x = comb00->x;
-        f32 comb00y = comb00->y;
-        f32 combLpf00x = combLpfInGain0 * comb00x + combLpfHistoryGain0 * mCombLpfHistory[0][0].x;
-        f32 combLpf00y = combLpfInGain1 * comb00y + combLpfHistoryGain1 * mCombLpfHistory[0][0].y;
-        mCombLpfHistory[0][0].x = combLpf00x;
-        mCombLpfHistory[0][0].y = combLpf00y;
-        comb00->set(combLpf00x * combCoef[0][0] + combIn0.x, combLpf00y * combCoef[0][1] + combIn0.y);
-        Vector2f* comb01 = &mCombBuffer[0][1][mCombPos[0]];
-        f32 comb01x = comb01->x;
-        f32 comb01y = comb01->y;
-        f32 combLpf01x = combLpfInGain0 * comb01x + combLpfHistoryGain0 * mCombLpfHistory[0][1].x;
-        f32 combLpf01y = combLpfInGain1 * comb01y + combLpfHistoryGain1 * mCombLpfHistory[0][1].y;
-        mCombLpfHistory[0][1].x = combLpf01x;
-        mCombLpfHistory[0][1].y = combLpf01y;
-        comb01->set(combLpf01x * combCoef[0][0] + combIn1.x, combLpf01y * combCoef[0][1] + combIn1.y);
-        Vector2f* comb10 = &mCombBuffer[1][0][mCombPos[1]];
-        f32 comb10x = comb10->x;
-        f32 comb10y = comb10->y;
-        f32 combLpf10x = combLpfInGain0 * comb10x + combLpfHistoryGain0 * mCombLpfHistory[1][0].x;
-        f32 combLpf10y = combLpfInGain1 * comb10y + combLpfHistoryGain1 * mCombLpfHistory[1][0].y;
-        mCombLpfHistory[1][0].x = combLpf10x;
-        mCombLpfHistory[1][0].y = combLpf10y;
-        comb10->set(combLpf10x * combCoef[1][0] + combIn0.x, combLpf10y * combCoef[1][1] + combIn0.y);
-        Vector2f* comb11 = &mCombBuffer[1][1][mCombPos[1]];
-        f32 comb11x = comb11->x;
-        f32 comb11y = comb11->y;
-        f32 combLpf11x = combLpfInGain0 * comb11x + combLpfHistoryGain0 * mCombLpfHistory[1][1].x;
-        f32 combLpf11y = combLpfInGain1 * comb11y + combLpfHistoryGain1 * mCombLpfHistory[1][1].y;
-        mCombLpfHistory[1][1].x = combLpf11x;
-        mCombLpfHistory[1][1].y = combLpf11y;
-        comb11->set(combLpf11x * combCoef[1][0] + combIn1.x, combLpf11y * combCoef[1][1] + combIn1.y);
-        f32 wet0x = comb00x + comb10x;
-        f32 wet0y = comb00y + comb10y;
-        f32 wet1x = comb01x + comb11x;
-        f32 wet1y = comb01y + comb11y;
+        Vector2f combOut0[cCombCount];
+        Vector2f combOut1[cCombCount];
+
+        const f32* coef = combCoef[0];
+
+        for (u32 j = 0; j < cCombCount; j++) {
+            Vector2f* comb0 = &mCombBuffer[j][0][mCombPos[j]];
+            f32 comb0x = comb0->x;
+            f32 comb0y = comb0->y;
+            f32 combLpf0x = combLpfInGain0 * comb0x;
+            f32 combLpf0y = combLpfInGain1 * comb0y;
+            f32 history0x = combLpfHistoryGain0 * mCombLpfHistory[j][0].x;
+            f32 history0y = combLpfHistoryGain1 * mCombLpfHistory[j][0].y;
+            combLpf0x += history0x;
+            combLpf0y += history0y;
+            mCombLpfHistory[j][0].x = combLpf0x;
+            mCombLpfHistory[j][0].y = combLpf0y;
+            comb0->set(combLpf0x * coef[0] + combIn0.x,
+                       combLpf0y * coef[1] + combIn0.y);
+            combOut0[j].set(comb0x, comb0y);
+            Vector2f* comb1 = &mCombBuffer[j][1][mCombPos[j]];
+            f32 comb1x = comb1->x;
+            f32 comb1y = comb1->y;
+            f32 combLpf1x = combLpfInGain0 * comb1x;
+            f32 combLpf1y = combLpfInGain1 * comb1y;
+            f32 history1x = combLpfHistoryGain0 * mCombLpfHistory[j][1].x;
+            f32 history1y = combLpfHistoryGain1 * mCombLpfHistory[j][1].y;
+            combLpf1x += history1x;
+            combLpf1y += history1y;
+            mCombLpfHistory[j][1].x = combLpf1x;
+            mCombLpfHistory[j][1].y = combLpf1y;
+            comb1->set(combLpf1x * coef[0] + combIn1.x,
+                       combLpf1y * coef[1] + combIn1.y);
+            combOut1[j].set(comb1x, comb1y);
+            coef += 2;
+        }
+
+        f32 wet0x = combOut0[0].x + combOut0[1].x;
+        f32 wet0y = combOut0[0].y + combOut0[1].y;
+        f32 wet1x = combOut1[0].x + combOut1[1].x;
+        f32 wet1y = combOut1[0].y + combOut1[1].y;
         Vector2f* allPass00 = &mAllPassBuffer[0][0][mAllPassPos[0]];
         f32 allPass00x = allPass00->x;
         f32 allPass00y = allPass00->y;
@@ -444,18 +463,30 @@ void AudioFxI3DL2ReverbNin::updateFx4ch_(s32* pCh0, s32* pCh1, s32* pCh2, s32* p
         allPass11->set(temp11x, temp11y);
         wet1x = allPassCoef0 * temp11x - allPass11x;
         wet1y = allPassCoef1 * temp11y - allPass11y;
-        out0x += reverbGain0 * wet0x;
-        out0y += reverbGain1 * wet0y;
-        f32 lpf0x = lpfHistoryGain0 * mLpfHistory[0].x + lpfInGain0 * out0x;
-        f32 lpf0y = lpfHistoryGain1 * mLpfHistory[0].y + lpfInGain1 * out0y;
+        wet0x *= reverbGain0;
+        wet0y *= reverbGain1;
+        out0x += wet0x;
+        out0y += wet0y;
+        out0x *= lpfInGain0;
+        out0y *= lpfInGain1;
+        f32 lpf0x = lpfHistoryGain0 * mLpfHistory[0].x;
+        f32 lpf0y = lpfHistoryGain1 * mLpfHistory[0].y;
+        lpf0x += out0x;
+        lpf0y += out0y;
         mLpfHistory[0].x = lpf0x;
         mLpfHistory[0].y = lpf0y;
         *pCh0++ = lpf0x;
         *pCh1++ = lpf0y;
-        out1x += reverbGain0 * wet1x;
-        out1y += reverbGain1 * wet1y;
-        f32 lpf1x = lpfHistoryGain0 * mLpfHistory[1].x + lpfInGain0 * out1x;
-        f32 lpf1y = lpfHistoryGain1 * mLpfHistory[1].y + lpfInGain1 * out1y;
+        wet1x *= reverbGain0;
+        wet1y *= reverbGain1;
+        out1x += wet1x;
+        out1y += wet1y;
+        out1x *= lpfInGain0;
+        out1y *= lpfInGain1;
+        f32 lpf1x = lpfHistoryGain0 * mLpfHistory[1].x;
+        f32 lpf1y = lpfHistoryGain1 * mLpfHistory[1].y;
+        lpf1x += out1x;
+        lpf1y += out1y;
         mLpfHistory[1].x = lpf1x;
         mLpfHistory[1].y = lpf1y;
         *pCh2++ = lpf1x;
@@ -518,17 +549,20 @@ void AudioFxI3DL2ReverbNin::updateFx6ch_(s32* pCh0, s32* pCh1, s32* pCh2, s32* p
 
         if (mReflectionsDelaySize != 0) {
             Vector2f* reflections0 = &mReflectionsBuffer[0][mReflectionsPos];
-            Vector2f delayed0 = *reflections0;
-            *reflections0 = in0;
-            in0 = delayed0;
+            f32 delayed0x = reflections0->x;
+            f32 delayed0y = reflections0->y;
+            reflections0->set(in0.x, in0.y);
+            in0.set(delayed0x, delayed0y);
             Vector2f* reflections1 = &mReflectionsBuffer[1][mReflectionsPos];
-            Vector2f delayed1 = *reflections1;
-            *reflections1 = in1;
-            in1 = delayed1;
+            f32 delayed1x = reflections1->x;
+            f32 delayed1y = reflections1->y;
+            reflections1->set(in1.x, in1.y);
+            in1.set(delayed1x, delayed1y);
             Vector2f* reflections2 = &mReflectionsBuffer[2][mReflectionsPos];
-            Vector2f delayed2 = *reflections2;
-            *reflections2 = in2;
-            in2 = delayed2;
+            f32 delayed2x = reflections2->x;
+            f32 delayed2y = reflections2->y;
+            reflections2->set(in2.x, in2.y);
+            in2.set(delayed2x, delayed2y);
         }
 
         Vector2f* early0 = &mEarlyBuffer[0][mEarlyPos];
@@ -565,60 +599,61 @@ void AudioFxI3DL2ReverbNin::updateFx6ch_(s32* pCh0, s32* pCh1, s32* pCh2, s32* p
             *reverbDelay2 = in2;
         }
 
-        Vector2f* comb00 = &mCombBuffer[0][0][mCombPos[0]];
-        f32 comb00x = comb00->x;
-        f32 comb00y = comb00->y;
-        f32 combLpf00x = combLpfInGain0 * comb00x + combLpfHistoryGain0 * mCombLpfHistory[0][0].x;
-        f32 combLpf00y = combLpfInGain1 * comb00y + combLpfHistoryGain1 * mCombLpfHistory[0][0].y;
-        mCombLpfHistory[0][0].x = combLpf00x;
-        mCombLpfHistory[0][0].y = combLpf00y;
-        comb00->set(combLpf00x * combCoef[0][0] + combIn0.x, combLpf00y * combCoef[0][1] + combIn0.y);
-        Vector2f* comb01 = &mCombBuffer[0][1][mCombPos[0]];
-        f32 comb01x = comb01->x;
-        f32 comb01y = comb01->y;
-        f32 combLpf01x = combLpfInGain0 * comb01x + combLpfHistoryGain0 * mCombLpfHistory[0][1].x;
-        f32 combLpf01y = combLpfInGain1 * comb01y + combLpfHistoryGain1 * mCombLpfHistory[0][1].y;
-        mCombLpfHistory[0][1].x = combLpf01x;
-        mCombLpfHistory[0][1].y = combLpf01y;
-        comb01->set(combLpf01x * combCoef[0][0] + combIn1.x, combLpf01y * combCoef[0][1] + combIn1.y);
-        Vector2f* comb02 = &mCombBuffer[0][2][mCombPos[0]];
-        f32 comb02x = comb02->x;
-        f32 comb02y = comb02->y;
-        f32 combLpf02x = combLpfInGain0 * comb02x + combLpfHistoryGain0 * mCombLpfHistory[0][2].x;
-        f32 combLpf02y = combLpfInGain1 * comb02y + combLpfHistoryGain1 * mCombLpfHistory[0][2].y;
-        mCombLpfHistory[0][2].x = combLpf02x;
-        mCombLpfHistory[0][2].y = combLpf02y;
-        comb02->set(combLpf02x * combCoef[0][0] + combIn2.x, combLpf02y * combCoef[0][1] + combIn2.y);
-        Vector2f* comb10 = &mCombBuffer[1][0][mCombPos[1]];
-        f32 comb10x = comb10->x;
-        f32 comb10y = comb10->y;
-        f32 combLpf10x = combLpfInGain0 * comb10x + combLpfHistoryGain0 * mCombLpfHistory[1][0].x;
-        f32 combLpf10y = combLpfInGain1 * comb10y + combLpfHistoryGain1 * mCombLpfHistory[1][0].y;
-        mCombLpfHistory[1][0].x = combLpf10x;
-        mCombLpfHistory[1][0].y = combLpf10y;
-        comb10->set(combLpf10x * combCoef[1][0] + combIn0.x, combLpf10y * combCoef[1][1] + combIn0.y);
-        Vector2f* comb11 = &mCombBuffer[1][1][mCombPos[1]];
-        f32 comb11x = comb11->x;
-        f32 comb11y = comb11->y;
-        f32 combLpf11x = combLpfInGain0 * comb11x + combLpfHistoryGain0 * mCombLpfHistory[1][1].x;
-        f32 combLpf11y = combLpfInGain1 * comb11y + combLpfHistoryGain1 * mCombLpfHistory[1][1].y;
-        mCombLpfHistory[1][1].x = combLpf11x;
-        mCombLpfHistory[1][1].y = combLpf11y;
-        comb11->set(combLpf11x * combCoef[1][0] + combIn1.x, combLpf11y * combCoef[1][1] + combIn1.y);
-        Vector2f* comb12 = &mCombBuffer[1][2][mCombPos[1]];
-        f32 comb12x = comb12->x;
-        f32 comb12y = comb12->y;
-        f32 combLpf12x = combLpfInGain0 * comb12x + combLpfHistoryGain0 * mCombLpfHistory[1][2].x;
-        f32 combLpf12y = combLpfInGain1 * comb12y + combLpfHistoryGain1 * mCombLpfHistory[1][2].y;
-        mCombLpfHistory[1][2].x = combLpf12x;
-        mCombLpfHistory[1][2].y = combLpf12y;
-        comb12->set(combLpf12x * combCoef[1][0] + combIn2.x, combLpf12y * combCoef[1][1] + combIn2.y);
-        f32 wet0x = comb00x + comb10x;
-        f32 wet0y = comb00y + comb10y;
-        f32 wet1x = comb01x + comb11x;
-        f32 wet1y = comb01y + comb11y;
-        f32 wet2x = comb02x + comb12x;
-        f32 wet2y = comb02y + comb12y;
+        Vector2f combOut0[cCombCount];
+        Vector2f combOut1[cCombCount];
+        Vector2f combOut2[cCombCount];
+
+        for (u32 j = 0; j < cCombCount; j++) {
+            Vector2f* comb0 = &mCombBuffer[j][0][mCombPos[j]];
+            f32 comb0x = comb0->x;
+            f32 comb0y = comb0->y;
+            f32 combLpf0x = combLpfInGain0 * comb0x;
+            f32 combLpf0y = combLpfInGain1 * comb0y;
+            f32 history0x = combLpfHistoryGain0 * mCombLpfHistory[j][0].x;
+            f32 history0y = combLpfHistoryGain1 * mCombLpfHistory[j][0].y;
+            combLpf0x += history0x;
+            combLpf0y += history0y;
+            mCombLpfHistory[j][0].x = combLpf0x;
+            mCombLpfHistory[j][0].y = combLpf0y;
+            comb0->set(combLpf0x * combCoef[j][0] + combIn0.x,
+                       combLpf0y * combCoef[j][1] + combIn0.y);
+            combOut0[j].set(comb0x, comb0y);
+            Vector2f* comb1 = &mCombBuffer[j][1][mCombPos[j]];
+            f32 comb1x = comb1->x;
+            f32 comb1y = comb1->y;
+            f32 combLpf1x = combLpfInGain0 * comb1x;
+            f32 combLpf1y = combLpfInGain1 * comb1y;
+            f32 history1x = combLpfHistoryGain0 * mCombLpfHistory[j][1].x;
+            f32 history1y = combLpfHistoryGain1 * mCombLpfHistory[j][1].y;
+            combLpf1x += history1x;
+            combLpf1y += history1y;
+            mCombLpfHistory[j][1].x = combLpf1x;
+            mCombLpfHistory[j][1].y = combLpf1y;
+            comb1->set(combLpf1x * combCoef[j][0] + combIn1.x,
+                       combLpf1y * combCoef[j][1] + combIn1.y);
+            combOut1[j].set(comb1x, comb1y);
+            Vector2f* comb2 = &mCombBuffer[j][2][mCombPos[j]];
+            f32 comb2x = comb2->x;
+            f32 comb2y = comb2->y;
+            f32 combLpf2x = combLpfInGain0 * comb2x;
+            f32 combLpf2y = combLpfInGain1 * comb2y;
+            f32 history2x = combLpfHistoryGain0 * mCombLpfHistory[j][2].x;
+            f32 history2y = combLpfHistoryGain1 * mCombLpfHistory[j][2].y;
+            combLpf2x += history2x;
+            combLpf2y += history2y;
+            mCombLpfHistory[j][2].x = combLpf2x;
+            mCombLpfHistory[j][2].y = combLpf2y;
+            comb2->set(combLpf2x * combCoef[j][0] + combIn2.x,
+                       combLpf2y * combCoef[j][1] + combIn2.y);
+            combOut2[j].set(comb2x, comb2y);
+        }
+
+        f32 wet0x = combOut0[0].x + combOut0[1].x;
+        f32 wet0y = combOut0[0].y + combOut0[1].y;
+        f32 wet1x = combOut1[0].x + combOut1[1].x;
+        f32 wet1y = combOut1[0].y + combOut1[1].y;
+        f32 wet2x = combOut2[0].x + combOut2[1].x;
+        f32 wet2y = combOut2[0].y + combOut2[1].y;
         Vector2f* allPass00 = &mAllPassBuffer[0][0][mAllPassPos[0]];
         f32 allPass00x = allPass00->x;
         f32 allPass00y = allPass00->y;
@@ -667,26 +702,44 @@ void AudioFxI3DL2ReverbNin::updateFx6ch_(s32* pCh0, s32* pCh1, s32* pCh2, s32* p
         allPass12->set(temp12x, temp12y);
         wet2x = allPassCoef0 * temp12x - allPass12x;
         wet2y = allPassCoef1 * temp12y - allPass12y;
-        out0x += reverbGain0 * wet0x;
-        out0y += reverbGain1 * wet0y;
-        f32 lpf0x = lpfHistoryGain0 * mLpfHistory[0].x + lpfInGain0 * out0x;
-        f32 lpf0y = lpfHistoryGain1 * mLpfHistory[0].y + lpfInGain1 * out0y;
+        wet0x *= reverbGain0;
+        wet0y *= reverbGain1;
+        out0x += wet0x;
+        out0y += wet0y;
+        out0x *= lpfInGain0;
+        out0y *= lpfInGain1;
+        f32 lpf0x = lpfHistoryGain0 * mLpfHistory[0].x;
+        f32 lpf0y = lpfHistoryGain1 * mLpfHistory[0].y;
+        lpf0x += out0x;
+        lpf0y += out0y;
         mLpfHistory[0].x = lpf0x;
         mLpfHistory[0].y = lpf0y;
         *pCh0++ = lpf0x;
         *pCh1++ = lpf0y;
-        out1x += reverbGain0 * wet1x;
-        out1y += reverbGain1 * wet1y;
-        f32 lpf1x = lpfHistoryGain0 * mLpfHistory[1].x + lpfInGain0 * out1x;
-        f32 lpf1y = lpfHistoryGain1 * mLpfHistory[1].y + lpfInGain1 * out1y;
+        wet1x *= reverbGain0;
+        wet1y *= reverbGain1;
+        out1x += wet1x;
+        out1y += wet1y;
+        out1x *= lpfInGain0;
+        out1y *= lpfInGain1;
+        f32 lpf1x = lpfHistoryGain0 * mLpfHistory[1].x;
+        f32 lpf1y = lpfHistoryGain1 * mLpfHistory[1].y;
+        lpf1x += out1x;
+        lpf1y += out1y;
         mLpfHistory[1].x = lpf1x;
         mLpfHistory[1].y = lpf1y;
         *pCh2++ = lpf1x;
         *pCh3++ = lpf1y;
-        out2x += reverbGain0 * wet2x;
-        out2y += reverbGain1 * wet2y;
-        f32 lpf2x = lpfHistoryGain0 * mLpfHistory[2].x + lpfInGain0 * out2x;
-        f32 lpf2y = lpfHistoryGain1 * mLpfHistory[2].y + lpfInGain1 * out2y;
+        wet2x *= reverbGain0;
+        wet2y *= reverbGain1;
+        out2x += wet2x;
+        out2y += wet2y;
+        out2x *= lpfInGain0;
+        out2y *= lpfInGain1;
+        f32 lpf2x = lpfHistoryGain0 * mLpfHistory[2].x;
+        f32 lpf2y = lpfHistoryGain1 * mLpfHistory[2].y;
+        lpf2x += out2x;
+        lpf2y += out2y;
         mLpfHistory[2].x = lpf2x;
         mLpfHistory[2].y = lpf2y;
         *pCh4++ = lpf2x;
@@ -747,8 +800,13 @@ bool AudioFxI3DL2ReverbNin::SetParam(const AudioFxI3DL2ReverbParamNin& rParam) {
 void AudioFxI3DL2ReverbNin::setupDelaySizes_(const AudioFxI3DL2ReverbParamNin& rParam) {
     mSampleRate = rParam.mSampleRate;
     mReflectionsDelaySize = rParam.mReflectionsDelay * getSampleRate_();
-    const u32* earlyTable = mSampleRate == 0 ? cI3DL2EarlyDelay32k : cI3DL2EarlyDelay48k;
-    mEarlyDelaySize = earlyTable[rParam.mEarlyMode];
+
+    if (mSampleRate == 0) {
+        mEarlyDelaySize = cReverbStdEarlyDelay32k[rParam.mEarlyMode];
+    } else {
+        mEarlyDelaySize = cReverbStdEarlyDelay48k[rParam.mEarlyMode];
+    }
+
     const f32& earlyCoef = rParam.mEarlyMode < AudioFxI3DL2ReverbParamNin::cEarlyMode_4 ?
                                cI3DL2EarlyCoefLow :
                                cI3DL2EarlyCoefHigh;
@@ -767,8 +825,8 @@ void AudioFxI3DL2ReverbNin::setupDelaySizes_(const AudioFxI3DL2ReverbParamNin& r
     }
 
     const u32* fused = fusedTable[rParam.mFusedMode];
-    mCombDelaySize[0] = (2.0f - rParam.mDensity / 100.0f) * fused[0];
-    mCombDelaySize[1] = (2.0f - rParam.mDensity / 100.0f) * fused[1];
+    mCombDelaySize[0] = fused[0] * (2.0f - rParam.mDensity / 100.0f);
+    mCombDelaySize[1] = fused[1] * (2.0f - rParam.mDensity / 100.0f);
     mAllPassDelaySize[0] = fused[2];
     mAllPassDelaySize[1] = fused[3];
 }
@@ -812,9 +870,9 @@ void AudioFxI3DL2ReverbNin::setupGains_(const AudioFxI3DL2ReverbParamNin& rParam
  */
 size_t AudioFxI3DL2ReverbNin::GetRequiredMemSize() const {
     u32 pairCount = mChannelCountMax / 2;
-    u32 delaySize = ((mReflectionsDelaySize * sizeof(Vector2f) + 0x1f) & ~0x1f) +
-                    ((mEarlyDelaySize * sizeof(Vector2f) + 0x1f) & ~0x1f) +
-                    ((mReverbDelaySize * sizeof(Vector2f) + 0x1f) & ~0x1f);
+    u32 delaySize = ((mReflectionsDelaySize * sizeof(Vector2f) + 0x1f) & ~0x1f) * pairCount +
+                    ((mEarlyDelaySize * sizeof(Vector2f) + 0x1f) & ~0x1f) * pairCount +
+                    ((mReverbDelaySize * sizeof(Vector2f) + 0x1f) & ~0x1f) * pairCount;
     u32 combSize = 0;
 
     for (u32 i = 0; i < cCombCount; i++) {
@@ -830,7 +888,7 @@ size_t AudioFxI3DL2ReverbNin::GetRequiredMemSize() const {
     }
 
     u32 size = AudioFxBaseNin::GetRequiredMemSize();
-    size += delaySize * pairCount + combSize + allPassSize + 0x20;
+    size += delaySize + combSize + allPassSize + 0x20;
     return size;
 }
 
