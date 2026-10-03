@@ -34,6 +34,9 @@ template <typename TTarget>
 class MemoryPoolInfoImpl;
 
 template <typename TTarget>
+class TextureInfoImpl;
+
+template <typename TTarget>
 class DeviceImpl;
 
 template <typename TTarget>

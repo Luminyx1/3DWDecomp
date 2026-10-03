@@ -1,7 +1,9 @@
 #pragma once
 
+#include <nn/gfx/detail/gfx_Declare.h>
 #include <nn/gfx/gfx_Enum.h>
 #include <nn/gfx/gfx_GpuAddress.h>
+#include <nn/gfx/gfx_Variation-api.nvn.h>
 #include <nn/types.h>
 #include <nn/util/util_BitPack.h>
 #include <nvn/nvn.h>
@@ -78,6 +80,12 @@ public:
                                               const MemoryPoolInfo& rInfo);
     static void ConvertToNvnBufferBuilder(NVNbufferBuilder* pBuilder, const BufferInfo& rInfo);
     static void ConvertToNvnTextureBuilder(NVNtextureBuilder* pBuilder, const TextureInfo& rInfo);
+    static void SetPackagedTextureDataImpl(NVNtextureBuilder* pBuilder,
+                                           MemoryPoolImpl<ApiVariationNvn8>* pMemoryPool,
+                                           ptrdiff_t memoryPoolOffset, size_t memoryPoolSize);
+    static int GetFirstScanBufferIndex();
+    static void SetTextureViewFormat(NVNtextureView* pTextureView, NVNformat format,
+                                     const NVNtexture* pTexture);
     static void ConvertToNvnSamplerBuilder(NVNsamplerBuilder* pBuilder, const SamplerInfo& rInfo);
     static void DebugCallback(NVNdebugCallbackSource source, NVNdebugCallbackType type, int id,
                               NVNdebugCallbackSeverity severity, const char* pMessage,
