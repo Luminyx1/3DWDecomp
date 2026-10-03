@@ -3963,7 +3963,7 @@ src/sead/heap/nin/seadArenaNin.cpp: done
     .text   start:0x006720E0 end:0x00672180
 src/sead/math/nerdMath.cpp:
     .text   start:0x00672180 end:0x00672344
-src/sead/prim/seadBitFlag.cpp:
+src/sead/prim/seadBitFlag.cpp: done
     .text   start:0x00672350 end:0x006725BC
 src/sead/prim/seadEnum.cpp: done
     .text   start:0x006725C0 end:0x00672970

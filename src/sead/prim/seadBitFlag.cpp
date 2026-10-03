@@ -2,8 +2,39 @@
 
 namespace sead
 {
+namespace
+{
 /**
- * Counts the set bits (population count).
+ * @brief Finds the requested set bit by clearing lower set bits in succession.
+ * @tparam T Unsigned 32-bit or 64-bit integer type.
+ * @param x Bit field to search; zero has no set bits.
+ * @param num One-based set-bit ordinal; callers require a positive value.
+ * @return Zero-based bit position, or -1 when the requested bit does not exist.
+ */
+template <class T>
+inline int findSetBitFromRight(T x, int num)
+{
+    while (x != 0)
+    {
+        if (num-- <= 1)
+        {
+            if constexpr (sizeof(T) == sizeof(u32))
+            {
+                return BitFlagUtil::countContinuousOffBitFromRight(x);
+            }
+            else
+            {
+                return BitFlagUtil::countContinuousOffBitFromRight64(x);
+            }
+        }
+        x &= x - 1;
+    }
+    return -1;
+}
+}  // namespace
+
+/**
+ * @brief Counts the set bits (population count).
  * @param x value to count in
  * @return number of bits that are 1
  */
@@ -18,7 +49,7 @@ int BitFlagUtil::countOnBit(u32 x)
 }
 
 /**
- * Counts the leading zero bits.
+ * @brief Counts the leading zero bits.
  * @param x value to look at
  * @return number of 0 bits above the highest 1 bit (32 for 0)
  */
@@ -28,9 +59,9 @@ int BitFlagUtil::countContinuousOffBitFromLeft(u32 x)
 }
 
 /**
- * Counts the set bits at or below a position.
+ * @brief Counts the set bits at or below a position.
  * @param x value to count in
- * @param bit highest bit position to include
+ * @param bit Highest bit position to include, from 0 to 31.
  * @return number of bits that are 1 in bits 0 to bit
  */
 int BitFlagUtil::countRightOnBit(u32 x, int bit)
@@ -40,37 +71,20 @@ int BitFlagUtil::countRightOnBit(u32 x, int bit)
     return countOnBit(x & mask);
 }
 
-// NON_MATCHING: loop exit compares against 2 with b.lt instead of 1 with b.le
 /**
- * Finds the position of the num-th set bit, counting from bit 0.
+ * @brief Finds the position of the num-th set bit, counting from bit 0.
  * @param x value to search
- * @param num which set bit to find (1 for the lowest)
+ * @param num Positive one-based set-bit ordinal (1 for the lowest).
  * @return the bit position, or -1 if x has fewer set bits
  */
 int BitFlagUtil::findOnBitFromRight(u32 x, int num)
 {
     SEAD_ASSERT(num > 0);
-
-    if (!x)
-    {
-        return -1;
-    }
-
-    while (num-- > 1)
-    {
-        x &= x - 1;
-
-        if (!x)
-        {
-            return -1;
-        }
-    }
-
-    return countContinuousOffBitFromRight(x);
+    return findSetBitFromRight(x, num);
 }
 
 /**
- * Counts the leading zero bits.
+ * @brief Counts the leading zero bits.
  * @param x value to look at
  * @return number of 0 bits above the highest 1 bit (64 for 0)
  */
@@ -80,9 +94,9 @@ int BitFlagUtil::countContinuousOffBitFromLeft64(u64 x)
 }
 
 /**
- * Counts the set bits at or below a position.
+ * @brief Counts the set bits at or below a position.
  * @param x value to count in
- * @param bit highest bit position to include
+ * @param bit Highest bit position to include, from 0 to 63.
  * @return number of bits that are 1 in bits 0 to bit
  */
 int BitFlagUtil::countRightOnBit64(u64 x, int bit)
@@ -92,33 +106,16 @@ int BitFlagUtil::countRightOnBit64(u64 x, int bit)
     return countOnBit64(x & mask);
 }
 
-// NON_MATCHING: loop exit compares against 2 with b.lt instead of 1 with b.le
 /**
- * Finds the position of the num-th set bit, counting from bit 0.
+ * @brief Finds the position of the num-th set bit, counting from bit 0.
  * @param x value to search
- * @param num which set bit to find (1 for the lowest)
+ * @param num Positive one-based set-bit ordinal (1 for the lowest).
  * @return the bit position, or -1 if x has fewer set bits
  */
 int BitFlagUtil::findOnBitFromRight64(u64 x, int num)
 {
     SEAD_ASSERT(num > 0);
-
-    if (!x)
-    {
-        return -1;
-    }
-
-    while (num-- > 1)
-    {
-        x &= x - 1;
-
-        if (!x)
-        {
-            return -1;
-        }
-    }
-
-    return countContinuousOffBitFromRight64(x);
+    return findSetBitFromRight(x, num);
 }
 
 }  // namespace sead
