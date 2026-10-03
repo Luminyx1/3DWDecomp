@@ -37,6 +37,9 @@ template <typename TTarget>
 class TextureInfoImpl;
 
 template <typename TTarget>
+class SamplerInfoImpl;
+
+template <typename TTarget>
 class DeviceImpl;
 
 template <typename TTarget>
