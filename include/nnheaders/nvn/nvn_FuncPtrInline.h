@@ -331,8 +331,8 @@ static inline void nvnMemoryPoolBuilderSetFlags(NVNmemoryPoolBuilder* builder, i
     pfnc_nvnMemoryPoolBuilderSetFlags(builder, flags);
 }
 
-static inline void nvnMemoryPoolBuilderGetMemory(const NVNmemoryPoolBuilder* builder) {
-    pfnc_nvnMemoryPoolBuilderGetMemory(builder);
+static inline void* nvnMemoryPoolBuilderGetMemory(const NVNmemoryPoolBuilder* builder) {
+    return pfnc_nvnMemoryPoolBuilderGetMemory(builder);
 }
 
 static inline size_t nvnMemoryPoolBuilderGetSize(const NVNmemoryPoolBuilder* builder) {
