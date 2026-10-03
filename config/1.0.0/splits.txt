@@ -3599,49 +3599,49 @@ src/nw/atk/fnd/basis/atk_SoundActor.cpp:
     .text   start:0x00582530 end:0x00582CD0
 src/nw/atk/fnd/basis/atk_Sound3DActor.cpp:
     .text   start:0x00582CD0 end:0x00583A28
-src/nw/gfx/detail/gfx_MemoryPool-api.nvn.8.cpp:
+src/nw/gfx/detail/gfx_MemoryPool-api.nvn.8.cpp: done
     .text   start:0x00583A30 end:0x00583CA8
-src/nw/gfx/detail/gfx_NvnHelper.cpp:
+src/nw/gfx/detail/gfx_NvnHelper.cpp: done
     .text   start:0x00583CB0 end:0x00588168
-src/nw/gfx/detail/gfx_CommonHelper.cpp:
+src/nw/gfx/detail/gfx_CommonHelper.cpp: done
     .text   start:0x00588170 end:0x00588530
-src/nw/gfx/detail/gfx_Shader-api.nvn.8.cpp:
+src/nw/gfx/detail/gfx_Shader-api.nvn.8.cpp: done
     .text   start:0x00588530 end:0x005896F4
-src/nw/gfx/detail/gfx_ShaderInfo.cpp:
+src/nw/gfx/detail/gfx_ShaderInfo.cpp: done
     .text   start:0x00589700 end:0x00589764
-src/nw/gfx/detail/gfx_Texture-api.nvn.8.cpp:
+src/nw/gfx/detail/gfx_Texture-api.nvn.8.cpp: done
     .text   start:0x00589770 end:0x0058A35C
-src/nw/gfx/detail/gfx_NvnHelper-os.horizon.cpp:
+src/nw/gfx/detail/gfx_NvnHelper-os.horizon.cpp: done
     .text   start:0x0058A360 end:0x0058A4A8
-src/nw/gfx/detail/gfx_GlslcFunction-os.horizon.cpp:
+src/nw/gfx/detail/gfx_GlslcFunction-os.horizon.cpp: done
     .text   start:0x0058A4B0 end:0x0058A52C
-src/nw/gfx/detail/gfx_CommandBuffer-api.nvn.8.cpp:
+src/nw/gfx/detail/gfx_CommandBuffer-api.nvn.8.cpp: done
     .text   start:0x0058A530 end:0x0058CAFC
 src/nw/gfx/detail/gfx_TextureInfo.cpp: done
     .text   start:0x0058CB00 end:0x0058CC34
-src/nw/gfx/detail/gfx_State-api.nvn.8.cpp:
+src/nw/gfx/detail/gfx_State-api.nvn.8.cpp: done
     .text   start:0x0058CC40 end:0x0058D928
-src/nw/gfx/detail/gfx_StateInfo.cpp:
+src/nw/gfx/detail/gfx_StateInfo.cpp: done
     .text   start:0x0058D930 end:0x0058DAF8
-src/nw/gfx/detail/gfx_BufferInfo.cpp:
+src/nw/gfx/detail/gfx_BufferInfo.cpp: done
     .text   start:0x0058DB00 end:0x0058DB20
-src/nw/gfx/detail/gfx_Buffer-api.nvn.8.cpp:
+src/nw/gfx/detail/gfx_Buffer-api.nvn.8.cpp: done
     .text   start:0x0058DB20 end:0x0058E308
 src/nw/gfx/detail/gfx_SamplerInfo.cpp: done
     .text   start:0x0058E310 end:0x0058E334
 src/nw/gfx/detail/gfx_MemoryPoolInfo.cpp: done
     .text   start:0x0058E340 end:0x0058E34C
-src/nw/gfx/detail/gfx_Sampler-api.nvn.8.cpp:
+src/nw/gfx/detail/gfx_Sampler-api.nvn.8.cpp: done
     .text   start:0x0058E350 end:0x0058E568
-src/nw/gfx/gfx_ResShader.cpp:
+src/nw/gfx/gfx_ResShader.cpp: done
     .text   start:0x0058E570 end:0x0058E5D4
-src/nw/gfx/detail/gfx_ResShader-api.nvn.8.cpp:
+src/nw/gfx/detail/gfx_ResShader-api.nvn.8.cpp: done
     .text   start:0x0058E5E0 end:0x0058EAD8
-src/nw/gfx/gfx_ResTexture.cpp:
+src/nw/gfx/gfx_ResTexture.cpp: done
     .text   start:0x0058EAE0 end:0x0058EB44
-src/nw/gfx/detail/gfx_Device-api.nvn.8-os.horizon.cpp:
+src/nw/gfx/detail/gfx_Device-api.nvn.8-os.horizon.cpp: done
     .text   start:0x0058EB50 end:0x0058EC8C
-src/nw/gfx/gfx_Interop-api.nvn.cpp:
+src/nw/gfx/gfx_Interop-api.nvn.cpp: done
     .text   start:0x0058EC90 end:0x0058EF84
 src/nw/ui2d/ui2d_AnimButton.cpp: done
     .text   start:0x0058EF90 end:0x0058FDC4
