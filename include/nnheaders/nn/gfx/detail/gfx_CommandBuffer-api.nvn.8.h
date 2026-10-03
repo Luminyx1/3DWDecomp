@@ -59,6 +59,10 @@ public:
     void DispatchIndirect(const GpuAddress&);
     void DrawIndirect(PrimitiveTopology, const GpuAddress&);
     void DrawIndexedIndirect(PrimitiveTopology, IndexFormat, const GpuAddress&, const GpuAddress&);
+    void MultiDrawIndirectCount(PrimitiveTopology, const GpuAddress&, const GpuAddress&, int,
+                                ptrdiff_t);
+    void MultiDrawIndexedIndirectCount(PrimitiveTopology, IndexFormat, const GpuAddress&,
+                                       const GpuAddress&, const GpuAddress&, int, ptrdiff_t);
 
     void SetPipeline(const PipelineImpl<ApiVariationNvn8>*);
     void SetRenderTargets(int, const ColorTargetViewImpl<ApiVariationNvn8>* const*,
@@ -118,6 +122,8 @@ public:
     void SetViewports(int, int, const ViewportStateInfo*);
     void SetScissors(int, int, const ScissorStateInfo*);
 
+    void UpdateBuffer(const GpuAddress&, size_t, ptrdiff_t, size_t, const void*);
+
     void SetConstantBuffer(int, ShaderStage, const DescriptorSlot&);
     void SetUnorderedAccessBuffer(int, ShaderStage, const DescriptorSlot&);
     void SetTextureAndSampler(int, ShaderStage, const DescriptorSlot&, const DescriptorSlot&);
@@ -136,6 +142,9 @@ public:
     void SetDepthStencilState(const DepthStencilStateImpl<ApiVariationNvn8>*);
     void SetVertexState(const VertexStateImpl<ApiVariationNvn8>*);
     void SetTessellationState(const TessellationStateImpl<ApiVariationNvn8>*);
+
+    void PushDebugGroup(const char*);
+    void PopDebugGroup();
 };
 
 }  // namespace detail
