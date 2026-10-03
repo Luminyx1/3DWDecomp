@@ -161,6 +161,8 @@ public:
 
     u16 GetSrcOffset() const { return sourceOffset; }
     s32 GetOffset() const { return offset; }
+    // pCallback converts the source value of this parameter into its GPU representation.
+    void SetConvertCallback(ShaderParamConvertCallback pCallback) { callback = pCallback; }
     int GetIndex() const { return index; }
 };
 
@@ -270,6 +272,14 @@ public:
     }
     const ResShaderParam* GetShaderParam(int index) const {
         return reinterpret_cast<const ResShaderParam*>(&ToData().pShaderParamArray.Get()[index]);
+    }
+    ResShaderParam* GetShaderParam(int index) {
+        return reinterpret_cast<ResShaderParam*>(&ToData().pShaderParamArray.Get()[index]);
+    }
+    // name selects a shader parameter; return null when its dictionary has no entry.
+    ResShaderParam* FindShaderParam(const char* name) {
+        int index = FindShaderParamIndex(name);
+        return index == nn::util::ResDic::Npos ? nullptr : GetShaderParam(index);
     }
     const ResRenderInfo* FindRenderInfo(const char* pName) const;
 };
@@ -468,6 +478,9 @@ public:
     s32 GetShapeCount() const { return ToData().shapeCount; }
     const ResShape* GetShape(int index) const { return &ToData().pShapeArray.Get()[index]; }
     const ResSkeleton* GetSkeleton() const { return ToData().pSkeleton.Get(); }
+    void SetUserPtr(void* ptr) { ToData().pUserPtr.Set(ptr); }
+    void* GetUserPtr() { return ToData().pUserPtr.Get(); }
+    const void* GetUserPtr() const { return ToData().pUserPtr.Get(); }
 };
 
 struct ResExternalFileData {
@@ -976,6 +989,8 @@ public:
     void CleanupBlockBuffer(gfx::Device* device);
     // skeleton supplies bone transforms; lodIndex selects the mesh bounds.
     void CalculateBounding(const SkeletonObj* skeleton, int lodIndex);
+    // skeleton supplies bone transforms; lodIndex selects the mesh whose sub-mesh bounds are updated.
+    void CalculateSubMeshBounding(const SkeletonObj* skeleton, int lodIndex);
     // viewIndex selects a camera, world supplies its transform, bufferIndex selects the GPU block.
     void CalculateShape(int viewIndex, const nn::util::Matrix4x3fType& rWorld, int bufferIndex);
     // bufferIndex selects the shape-animation destination buffer.

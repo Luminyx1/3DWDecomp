@@ -18,6 +18,18 @@ class ModelObj {
   public:
     // model identifies the changed object; index selects the bone whose visibility changed.
     using VisibilityCallback = void (*)(ModelObj* model, int index);
+
+    /**
+     * @brief Construct an empty model object without allocated GPU or working storage.
+     */
+    ModelObj()
+        : m_ResModel(nullptr), m_BoneVisibility(nullptr), m_MaterialVisibility(nullptr), _18(0),
+          m_ViewDependent(0), m_Flag(0), _20(nullptr), _28(nullptr), m_NumShapes(0),
+          m_NumMaterials(0), m_Skeleton(nullptr), m_Shapes(nullptr), m_Materials(nullptr),
+          m_pBounding(nullptr), m_UserData(nullptr), _60(nullptr), m_MemoryPool(nullptr),
+          m_MemoryPoolOffset(0), m_VisibilityCallback(nullptr),
+          m_MaterialVisibilityCallback(nullptr), _88(false), _8c(0) {}
+
     /**
      * @brief Get the model resource.
      * @return Resource used to initialize the model.
@@ -58,6 +70,11 @@ class ModelObj {
      * @return Level-of-detail count.
      */
     s32 GetLodCount() const { return _8c; }
+    /**
+     * @brief Get the number of views the model was initialized for.
+     * @return View count.
+     */
+    int GetViewCount() const { return _18; }
     /**
      * @brief Get a shape object.
      * @param index Shape index in the range [0, GetNumShapes()).
@@ -112,6 +129,11 @@ class ModelObj {
      */
     u32* GetBoneVisibilityArray() const { return m_BoneVisibility; }
     /**
+     * @brief Get the packed material-visibility flags.
+     * @return Array containing one visibility bit per material.
+     */
+    u32* GetMaterialVisibilityArray() const { return m_MaterialVisibility; }
+    /**
      * @brief Get the callback for bone-visibility changes.
      * @return Configured callback, or nullptr when notifications are disabled.
      */
@@ -151,8 +173,28 @@ class ModelObj {
         }
     }
 
-  private:
     struct InitializeArgument {
+        /**
+         * @brief Set up the default arguments for a model resource.
+         * @param pResource Model resource; its largest mesh count is the level-of-detail count.
+         */
+        explicit InitializeArgument(const ResModel* pResource)
+            : resource(pResource), skeleton(nullptr), skeletonBufferCount(1), shapeBufferCount(1),
+              materialBufferCount(1), viewCount(1), lodCount(1), shapeUserArea(nullptr),
+              boundingEnabled(false) {
+            for (detail::WorkMemoryBlock& block : blocks) {
+                block.Initialize(0);
+            }
+
+            memorySize = 0;
+            memoryAlignment = 0;
+
+            for (int i = 0; i < pResource->GetShapeCount(); i++) {
+                int meshCount = pResource->GetShape(i)->GetMeshCount();
+                lodCount = lodCount < meshCount ? meshCount : lodCount;
+            }
+        }
+
         const ResModel* resource;
         SkeletonObj* skeleton;
         int skeletonBufferCount;
@@ -169,6 +211,8 @@ class ModelObj {
     };
 
     bool Initialize(const InitializeArgument& arg, void* buffer, size_t bufferSize);
+
+  private:
 
     const ResModel* m_ResModel;
     u32* m_BoneVisibility;

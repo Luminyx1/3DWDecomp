@@ -152,7 +152,13 @@ struct ResUniformBlock {
     const void* defaultValues;
     u16 _18;
     u16 size;
-    u8 _1c[4];
+    u16 uniformCount;
+    u8 _1e[2];
+    int GetUniformCount() const { return uniformCount; }
+    // index selects a uniform in the block dictionary.
+    const char* GetUniformName(int index) const {
+        return (dictionary != nullptr) ? dictionary->GetKey(index).data() : nullptr;
+    }
     // name selects a uniform in the block; return null if it has no matching entry.
     const ResUniformVar* FindUniform(const char* name) const {
         int index = (dictionary != nullptr) ? dictionary->FindIndex(name) : nn::util::ResDic::Npos;
@@ -162,11 +168,11 @@ struct ResUniformBlock {
 };
 
 struct ResShadingModelData {
-    u8 _0[8];
+    nn::util::BinPtr pName;
     nn::util::BinTPtr<ResShaderOption> pStaticOptions;
     nn::util::BinTPtr<nn::util::ResDic> pStaticOptionDic;
     nn::util::BinTPtr<ResShaderOption> pDynamicOptions;
-    u8 _20[8];
+    nn::util::BinTPtr<nn::util::ResDic> pDynamicOptionDic;
     nn::util::BinTPtr<ResAttribVarData> pAttribArray;
     nn::util::BinTPtr<nn::util::ResDic> pAttribDic;
     char _38[0x40 - 0x38];
@@ -255,6 +261,22 @@ public:
         int index = FindStaticOptionIndex(name);
         return index == nn::util::ResDic::Npos ? nullptr : GetStaticOption(index);
     }
+    ResShaderOption* GetStaticOption(int index) { return &pStaticOptions.Get()[index]; }
+    NOINLINE ResShaderOption* FindStaticOption(const char* name) {
+        int index = FindStaticOptionIndex(name);
+        return index == nn::util::ResDic::Npos ? nullptr : GetStaticOption(index);
+    }
+    // name selects a dynamic shader option; return Npos for a missing entry.
+    int FindDynamicOptionIndex(const char* name) const {
+        const nn::util::ResDic* dictionary = pDynamicOptionDic.Get();
+        return (dictionary != nullptr) ? dictionary->FindIndex(name) : nn::util::ResDic::Npos;
+    }
+    const char* GetName() const { return static_cast<const char*>(pName.Get()) + 2; }
+    // name selects a uniform block; return null when its dictionary has no entry.
+    const ResUniformBlock* FindUniformBlock(const char* name) const {
+        int index = FindUniformBlockIndex(name);
+        return index == nn::util::ResDic::Npos ? nullptr : GetUniformBlock(index);
+    }
     int GetMaterialBlockIndex() const { return materialBlockIndex; }
     int GetShapeBlockIndex() const { return shapeBlockIndex; }
     int GetSkeletonBlockIndex() const { return skeletonBlockIndex; }
@@ -303,6 +325,34 @@ public:
         int bufferCount;
         void CalculateMemorySize();
     };
+    // Builder computes the workspace layout of a shading model object.
+    class Builder : public InitializeArgument {
+    public:
+        /**
+         * @brief Initialize an argument for a single-buffered shading model object.
+         * @param pResource Shading model resource.
+         */
+        explicit Builder(const ResShadingModel* pResource) {
+            resource = pResource;
+            for (int i = 0; i < 4; ++i) {
+                blocks[i].Initialize(0);
+            }
+            bufferCount = 1;
+            memorySize = 0;
+            memoryAlignment = 0;
+        }
+        size_t GetWorkMemorySize() const { return memorySize; }
+        bool Build(ShadingModelObj* pObj, void* pMemory, size_t size) const {
+            return pObj->Initialize(*this, pMemory, size);
+        }
+    };
+    /**
+     * @brief Construct an uninitialized shading model object.
+     */
+    ShadingModelObj()
+        : resource(nullptr), flags(0), staticKey(nullptr), optionKey(nullptr), range{nullptr, nullptr},
+          pool(nullptr), poolOffset(0), buffers(nullptr), blockSize(0), bufferCount(0), user(nullptr),
+          work(nullptr) {}
     // argument describes the model and buffering; memory provides size bytes of workspace.
     bool Initialize(const InitializeArgument& argument, void* memory, size_t size);
     // device supplies GPU buffer alignment and allocation requirements.
@@ -319,6 +369,11 @@ public:
     // option selects an option; choice identifies its value.
     void WriteStaticKey(int option, int choice);
     int ReadStaticKey(int option) const;
+    /**
+     * @brief Update the range of programs matching the current static key.
+     * @return True if a matching program range was found.
+     */
+    bool UpdateShaderRange() { return resource->FindProgramRange(&range, staticKey); }
     const ResShadingModel* GetResource() const { return resource; }
     const gfx::Buffer* GetOptionBlock() const { return reinterpret_cast<const gfx::Buffer*>(buffers); }
     bool IsBlockBufferValid() const { return (flags & 1) != 0; }
@@ -348,7 +403,14 @@ private:
 
 class ShaderSelector {
 public:
+    /**
+     * @brief Construct an uninitialized shader selector.
+     */
+    ShaderSelector()
+        : model(nullptr), dynamicKey(nullptr), optionKey(nullptr), previousKey(nullptr),
+          program(nullptr), work(nullptr) {}
     const ShadingModelObj* GetShadingModel() const { return model; }
+    ShadingModelObj* GetShadingModel() { return model; }
     const ResShaderProgram* GetProgram() const { return program; }
     struct InitializeArgument {
         ShadingModelObj* model;
@@ -356,6 +418,26 @@ public:
         size_t memoryAlignment;
         detail::WorkMemoryBlock blocks[3];
         void CalculateMemorySize();
+    };
+    // Builder computes the workspace layout of a shader selector.
+    class Builder : public InitializeArgument {
+    public:
+        /**
+         * @brief Initialize an argument for a shader selector.
+         * @param pModel Shading model object the selector selects programs of.
+         */
+        explicit Builder(ShadingModelObj* pModel) {
+            model = pModel;
+            memorySize = 0;
+            memoryAlignment = 0;
+            for (int i = 0; i < 3; ++i) {
+                blocks[i].Initialize(0);
+            }
+        }
+        size_t GetWorkMemorySize() const { return memorySize; }
+        bool Build(ShaderSelector* pSelector, void* pMemory, size_t size) const {
+            return pSelector->Initialize(*this, pMemory, size);
+        }
     };
     // argument describes the model; memory supplies size bytes of workspace.
     bool Initialize(const InitializeArgument& argument, void* memory, size_t size);
