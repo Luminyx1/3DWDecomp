@@ -1,6 +1,7 @@
 #pragma once
 
 #include <nn/gfx/detail/gfx_DataContainer.h>
+#include <nn/gfx/detail/gfx_Declare.h>
 #include <nn/gfx/gfx_Common.h>
 #include <nn/gfx/gfx_TextureData-api.nvn.8.h>
 
@@ -22,15 +23,30 @@ public:
     static const bool IsMemoryPoolRequired;
 
     static size_t CalculateMipDataAlignment(DeviceImpl<ApiVariationNvn8>*, const InfoType&);
+    static size_t CalculateMipDataAlignment(DeviceImpl<ApiVariationNvn8>*,
+                                            const TextureInfoImpl<ApiVariationNvn8>&);
     static size_t CalculateMipDataSize(DeviceImpl<ApiVariationNvn8>*, const InfoType&);
+    static size_t CalculateMipDataSize(DeviceImpl<ApiVariationNvn8>*,
+                                       const TextureInfoImpl<ApiVariationNvn8>&);
+    static void CalculateMipDataSizeAndAlignment(size_t*, size_t*, DeviceImpl<ApiVariationNvn8>*,
+                                                 const InfoType&);
+    static void CalculateMipDataSizeAndAlignment(size_t*, size_t*, DeviceImpl<ApiVariationNvn8>*,
+                                                 const TextureInfoImpl<ApiVariationNvn8>&);
     static void CalculateMipDataOffsets(ptrdiff_t*, DeviceImpl<ApiVariationNvn8>*, const InfoType&);
+    static void CalculateMipDataOffsets(ptrdiff_t*, DeviceImpl<ApiVariationNvn8>*,
+                                        const TextureInfoImpl<ApiVariationNvn8>&);
     static size_t GetRowPitch(DeviceImpl<ApiVariationNvn8>*, const InfoType&);
+    static size_t GetRowPitch(DeviceImpl<ApiVariationNvn8>*,
+                              const TextureInfoImpl<ApiVariationNvn8>&);
 
     TextureImpl();
     ~TextureImpl();
     void Initialize(DeviceImpl<ApiVariationNvn8>*, const InfoType&,
                     MemoryPoolImpl<ApiVariationNvn8>*, ptrdiff_t, size_t);
+    void Initialize(DeviceImpl<ApiVariationNvn8>*, const TextureInfoImpl<ApiVariationNvn8>&,
+                    MemoryPoolImpl<ApiVariationNvn8>*, ptrdiff_t, size_t);
     void Finalize(DeviceImpl<ApiVariationNvn8>*);
+    void SetDebugLabel(DeviceImpl<ApiVariationNvn8>*, const char*);
 };
 
 template <>
