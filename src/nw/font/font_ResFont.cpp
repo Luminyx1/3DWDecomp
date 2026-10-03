@@ -170,10 +170,12 @@ bool ResFont::SetResource(nn::gfx::Device* pDevice, void* pBfnt, nn::gfx::Memory
  * @return the font information, or nullptr if the binary has an unknown block
  */
 FontInformation* ResFont::Rebuild(detail::BinaryFileHeader* pHeader) {
+    int blockCount = 0;
     FontInformation* pFontInfo = nullptr;
     detail::BinaryBlockHeader* pBlock = reinterpret_cast<detail::BinaryBlockHeader*>(
         reinterpret_cast<uint8_t*>(pHeader) + pHeader->headerSize);
-    for (int i = 0; i < pHeader->dataBlocks; i++) {
+
+    while (blockCount < pHeader->dataBlocks) {
         switch (pBlock->kind) {
         case BinBlockSignatureFinf:
             pFontInfo = reinterpret_cast<FontInformation*>(pBlock + 1);
@@ -190,10 +192,12 @@ FontInformation* ResFont::Rebuild(detail::BinaryFileHeader* pHeader) {
 
         pBlock = reinterpret_cast<detail::BinaryBlockHeader*>(reinterpret_cast<uint8_t*>(pBlock) +
                                                               pBlock->size);
+        blockCount++;
     }
 
     return pFontInfo;
 }
+
 
 /**
  * Unrelocates the sheet texture file of a font binary.
