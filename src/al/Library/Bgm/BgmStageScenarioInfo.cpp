@@ -394,8 +394,12 @@ BgmDataBase::BgmDataBase() {
     {
         ByamlIter rootIter(resource->getByml("BgmLineInfoList"));
         ByamlIter iter;
-        mCombinedLineInfoList =
-            rootIter.tryGetIterByKey(&iter, "CombinedLineInfoList") ? createInfoList<BgmCombinedLineInfo>(iter) : nullptr;
+
+        if (rootIter.tryGetIterByKey(&iter, "CombinedLineInfoList")) {
+            mCombinedLineInfoList = createInfoList<BgmCombinedLineInfo>(iter);
+        } else {
+            mCombinedLineInfoList = nullptr;
+        }
     }
 
     {
@@ -447,14 +451,17 @@ BgmDataBase::BgmDataBase() {
 
     if (entryNum >= 1) {
         userInfoList->allocBuffer(entryNum, nullptr);
+        bool isFoundUserInfoList = false;
 
         for (s32 i = 0; i < entryNum; i++) {
             StringTmp<128> fileName;
             resource->getEntryName(&fileName, "/", i);
             const char* name = fileName.cstr();
 
-            if (isEqualString(name, "BgmLineInfoList.byml") || isEqualString(name, "BgmPlayInfoList.byml") ||
-                isEqualString(name, "BgmResourceInfoList.byml") || isEqualString(name, "BgmSituationInfoList.byml") ||
+            if (isEqualString(name, "BgmLineInfoList.byml") ||
+                isEqualString(name, "BgmPlayInfoList.byml") ||
+                isEqualString(name, "BgmResourceInfoList.byml") ||
+                isEqualString(name, "BgmSituationInfoList.byml") ||
                 isEqualString(name, "BgmStageInfoList.byml")) {
                 continue;
             }
@@ -464,8 +471,9 @@ BgmDataBase::BgmDataBase() {
             ByamlIter listIter;
 
             if (userIter.tryGetIterByKey(&listIter, "UserInfoList")) {
-                mUserInfoList = BgmUserInfo::create(listIter);
-                return;
+                userInfoList = BgmUserInfo::create(listIter);
+                isFoundUserInfoList = true;
+                break;
             }
 
             if (!userInfoList->pushBack(BgmUserInfo::createInfo(userIter, fileName))) {
@@ -473,7 +481,9 @@ BgmDataBase::BgmDataBase() {
             }
         }
 
-        shakerSortInfoArray<BgmUserInfo>(userInfoList, BgmUserInfo::compareInfo);
+        if (!isFoundUserInfoList) {
+            shakerSortInfoArray<BgmUserInfo>(userInfoList, BgmUserInfo::compareInfo);
+        }
     }
 
     mUserInfoList = userInfoList;
