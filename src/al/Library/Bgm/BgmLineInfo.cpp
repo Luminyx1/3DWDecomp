@@ -28,38 +28,4 @@ BgmLineInfo* BgmLineInfo::createInfo(const ByamlIter& rIter) {
 
     return info;
 }
-
-/**
- * Creates combined BGM line information from BYAML data.
- * @param rIter BYAML data.
- * @return Created information.
- */
-BgmCombinedLineInfo* BgmCombinedLineInfo::createInfo(const ByamlIter& rIter) {
-    BgmCombinedLineInfo* info = new BgmCombinedLineInfo();
-    rIter.tryGetStringByKey(&info->mName, "Name");
-    ByamlIter lineIter;
-    rIter.tryGetIterByKey(&lineIter, "LineInfoList");
-    info->mLineInfoList = createInfoList<BgmLineInfo>(lineIter);
-    return info;
-}
-
-/**
- * Compares two BGM line information by name.
- * @param pA First information.
- * @param pB Second information.
- * @return Comparison result.
- */
-s32 BgmLineInfo::compareInfo(const BgmLineInfo* pA, const BgmLineInfo* pB) {
-    return strcmp(pA->mName, pB->mName);
-}
-
-/**
- * Compares two combined BGM line information by name.
- * @param pA First information.
- * @param pB Second information.
- * @return Comparison result.
- */
-s32 BgmCombinedLineInfo::compareInfo(const BgmCombinedLineInfo* pA, const BgmCombinedLineInfo* pB) {
-    return strcmp(pA->mName, pB->mName);
-}
 }  // namespace al
