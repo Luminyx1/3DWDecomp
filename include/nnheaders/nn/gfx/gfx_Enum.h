@@ -514,6 +514,12 @@ enum GpuAccess {
 
 enum TileMode { TileMode_Optimal, TileMode_Linear, TileMode_End };
 
+enum QueueCapability {
+    QueueCapability_Graphics = 0x1,
+    QueueCapability_Compute = 0x2,
+    QueueCapability_Copy = 0x4
+};
+
 enum ShaderStage {
     ShaderStage_Vertex,
     ShaderStage_Hull,

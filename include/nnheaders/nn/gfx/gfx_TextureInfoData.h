@@ -101,6 +101,7 @@ struct BufferTextureCopyRegionData {
 
 struct ImageFormatProperty {
     Bit32 propertyFlags;
+    Bit32 propertyFlags2;  // Second flag word (8-byte copy in Nvn::GetImageFormatProperty).
 };
 
 }  // namespace nn::gfx
