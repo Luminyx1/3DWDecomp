@@ -44,8 +44,8 @@ void JointAimInfo::makeTurnQuatCircle(sead::Quatf* pQuat, const sead::Vector3f& 
 
 void JointAimInfo::makeTurnQuatOval(sead::Quatf* pQuat, const sead::Vector3f& rDir) const {
     f32 side = rDir.dot(mBaseSideLocalDir);
-    f32 sideSq = side * side;
     f32 up = rDir.dot(mBaseUpLocalDir);
+    f32 sideSq = side * side;
     f32 upSq = up * up;
     f32 lengthSq = sideSq + upSq;
 
