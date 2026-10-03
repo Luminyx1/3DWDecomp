@@ -176,6 +176,15 @@ size_t TextureCache::CalculateMemoryPoolSize(nn::gfx::Device* pDevice, int width
     return (width * height + granularity - 1) & -granularity;
 }
 
+/**
+ * Initializes the texture cache: allocates the per-font tables, sets up the font engines, loads
+ * every inner font and creates the cache texture.
+ * @param pDevice graphics device
+ * @param rArg initialization parameters
+ * @param pMemoryPool memory pool for the cache texture, or nullptr to allocate one internally
+ * @param memoryPoolOffset offset of the texture in pMemoryPool
+ * @param memoryPoolSize size of the texture region in pMemoryPool
+ */
 void TextureCache::Initialize(nn::gfx::Device* pDevice, const InitializeArg& rArg,
                               nn::gfx::MemoryPool* pMemoryPool, ptrdiff_t memoryPoolOffset,
                               size_t memoryPoolSize) {
@@ -424,14 +433,15 @@ void TextureCache::Initialize(nn::gfx::Device* pDevice, const InitializeArg& rAr
     nn::gfx::TextureViewInfo viewInfo;
     viewInfo.SetDefault();
     viewInfo.SetImageFormat(nn::gfx::ImageFormat_R8_Unorm);
+    viewInfo.SetImageDimension(nn::gfx::ImageDimension_2d);
     viewInfo.SetChannelMapping(nn::gfx::ChannelMapping_One, nn::gfx::ChannelMapping_One,
                                nn::gfx::ChannelMapping_One, nn::gfx::ChannelMapping_Red);
     viewInfo.SetTexturePtr(&m_Texture);
-    viewInfo.SetImageDimension(nn::gfx::ImageDimension_2d);
     static_cast<TextureViewImpl&>(m_TextureView).Initialize(pDevice, viewInfo);
 
     m_GlyphTreeMap.Initialize(rArg.pAllocateFunction, rArg.pUserDataForAllocateFunction,
                               rArg.glyphNodeCountMax);
+
     if (rArg.isAutoHintEnabled) {
         m_pFontEngine->SetAutoHint(true);
     }
@@ -793,6 +803,10 @@ u32 TextureCache::RegisterGlyphsWithLengthUtf8(const char* pCodes, u32 codeLengt
     return count;
 }
 
+/**
+ * Plots every glyph that is waiting to be plotted into the cache texture, allocating space on a
+ * line (or reclaiming it from erasable glyphs) for each one.
+ */
 void TextureCache::UpdateTextureCache() {
     GlyphList::iterator it = m_NeedPlotGlyphList.begin();
 
@@ -870,9 +884,9 @@ void TextureCache::UpdateTextureCache() {
 
         int top = pGlyph->top;
         int offsetY = baseline - top;
-        const FontMetrics& metrics = m_pFontMetrics[pNode->GetFontFace()];
         int posY = pNode->m_CachePosY;
         int startY = offsetY + posY;
+        const FontMetrics& metrics = m_pFontMetrics[pNode->GetFontFace()];
         float scaleWidth = metrics.scaleWidth;
         float scaleHeight = metrics.scaleHeight;
         pNode->m_GlyphWidth = static_cast<int>(scaleWidth * pGlyph->width);
@@ -883,8 +897,8 @@ void TextureCache::UpdateTextureCache() {
         int left;
 
         if (m_pIsWidthFromBoundingBox[pNode->GetFontFace()] && pGlyph->width != 0) {
-            pNode->m_AdvanceX =
-                static_cast<int>(scaleWidth * (m_pLetterSpacings[pNode->GetFontFace()] + pGlyph->width));
+            pNode->m_AdvanceX = static_cast<int>(
+                scaleWidth * (m_pLetterSpacings[pNode->GetFontFace()] + pGlyph->width));
             left = m_pLetterSpacings[pNode->GetFontFace()] / 2;
         } else if (m_pIsFixedWidth[pNode->GetFontFace()]) {
             pNode->m_AdvanceX = static_cast<int>(scaleWidth * m_pFixedWidths[pNode->GetFontFace()]);
@@ -1003,6 +1017,14 @@ TextureCache::LineInfo* TextureCache::CreateNewLineImpl(u8 lineKind) {
     return pLine;
 }
 
+/**
+ * Finds a run of unused glyphs on a line of the given kind that is wide enough for a new glyph
+ * and reserves them for erasure.
+ * @param lineKind line kind
+ * @param glyphWidth width needed for the new glyph
+ * @return the first glyph of the reserved run, whose position the new glyph takes over, or
+ *         nullptr if no run is wide enough
+ */
 GlyphNode* TextureCache::FindAndReserveEraseGlyph(u8 lineKind, u16 glyphWidth) {
     for (u32 i = 0; i < m_LineCurrentPos; i++) {
         LineInfo& line = m_LineInfos[i];
@@ -1036,8 +1058,9 @@ GlyphNode* TextureCache::FindAndReserveEraseGlyph(u8 lineKind, u16 glyphWidth) {
                 GlyphLineList::iterator prev = first;
 
                 do {
-                    prev = GlyphLineList::iterator(prev.GetNode()->GetPrev());
+                    --prev;
                 } while (prev->IsFlagOn(GlyphNode::FlagBit_Erase) && begin != prev);
+
                 space = first->m_CachePosX - 2 - prev->m_CachePosX - prev->m_CacheWidth;
                 width += space > 0 ? space : 0;
             }
@@ -1300,11 +1323,16 @@ u32 TextureCache::CountPlottingGlyph(const u16* pCodes, u32 codeLength, u32 font
     return count;
 }
 
+/**
+ * Gets the metrics of the tallest inner font of a font face.
+ * @param fontFace font face
+ * @return metrics of the inner font with the largest bounding box height
+ */
 const TextureCache::FontMetrics& TextureCache::GetFontMetrics(u16 fontFace) const {
     const u8* pInnerFontFaces = m_pInnerFontFaceTables[fontFace];
-    u32 innerFontCount = m_InnerFontCounts[fontFace];
     const FontMetrics* pFontMetrics = m_pFontMetrics;
     u32 index = pInnerFontFaces[0];
+    u32 innerFontCount = m_InnerFontCounts[fontFace];
 
     if (innerFontCount >= 2) {
         float maxHeight = pFontMetrics[index].boundingBoxHeightRatio;
@@ -1391,6 +1419,15 @@ void TextureCache::SetFontFaceNoPlot(u32 fontFace, u32 coreId) {
     m_CurrentFontFacesNoPlot[coreId] = fontFace;
 }
 
+/**
+ * Calculates the kerning between two characters. When one of the codes is 0, only the OTF
+ * kerning table entry for the other character is used.
+ * @param code0 preceding character code, or 0
+ * @param code1 following character code, or 0
+ * @param fontSize font size
+ * @param fontFace font face
+ * @return kerning amount, or 0 if there is none or it cannot be calculated
+ */
 int TextureCache::CalculateKerning(u32 code0, u32 code1, u32 fontSize, u16 fontFace) {
     u32 innerFontFace;
 
