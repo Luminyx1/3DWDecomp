@@ -13,6 +13,7 @@
 #include "Project/Audio/System/AudioPlayer.hpp"
 #include "Project/Base/StringUtil.hpp"
 #include "Library/Se/Project/SeMaterialInfoKeeper.hpp"
+#include "Project/Audio/System/SeadAudio3DMgr.hpp"
 
 namespace al {
 /** @brief Allocates reusable playback parameters, volume, and a sound handle for an empty request. */
@@ -26,7 +27,7 @@ NOINLINE SeRequest::SeRequest()
 }
 
 /** @brief Resets playback state and detaches the sound while retaining allocated request resources. */
-void SeRequest::clear() {
+inline void SeRequest::clearState() {
     mSoundId = AudioConst::SOUND_ID_INVALID;
     mSpecificInfo = nullptr;
     mState = 0;
@@ -46,13 +47,16 @@ void SeRequest::clear() {
     mMixVolume->resetLink();
 }
 
+/** @brief Resets an allocated request and detaches any attached sound. */
+NOINLINE void SeRequest::clear() { clearState(); }
+
 /**
  * @brief Stops the sound and makes its request available for reuse.
  * @param fadeFrames Number of frames over which the sound fades out.
  */
 inline void SeRequest::stopAndClear(s32 fadeFrames) {
     mHandle->stop(fadeFrames);
-    clear();
+    clearState();
 }
 
 /**
@@ -105,7 +109,7 @@ NOINLINE u32 SeRequest::getOriginalId() const { return calcOriginalId(); }
  */
 NOINLINE SePlayParamList* SeRequest::setNew(u32 soundId, SeSource* pSource, bool isLoop, bool isHold,
                                             const SeResourceSpecificInfo* pSpecificInfo) {
-    clear();
+    clearState();
     mState = 1;
     mSource = pSource;
     mSoundId = soundId;
@@ -118,13 +122,16 @@ NOINLINE SePlayParamList* SeRequest::setNew(u32 soundId, SeSource* pSource, bool
 }
 
 /** @brief Stops an attached sound immediately and marks its request paused. */
-void SeRequest::pause() {
+inline void SeRequest::pauseRequest() {
     if (mHandle->isAttachedSound()) {
         mHandle->stop(0);
     }
     verifyData();
     mState = 3;
 }
+
+/** @brief Stops the attached sound immediately and marks its request paused. */
+NOINLINE void SeRequest::pause() { pauseRequest(); }
 
 /**
  * @brief Checks the invariants of an empty or active sound request.
@@ -209,7 +216,7 @@ NOINLINE void SeRequest::tryPauseBySystem(bool isPause, u32 fadeFrames) {
  * @brief Resumes an attached sound or asks the source to start it.
  * @param isAfterGoal Unused in this version of the playback-start implementation.
  */
-void SeRequest::playStart(bool isAfterGoal) {
+NOINLINE void SeRequest::playStart(bool isAfterGoal) {
     if (mHandle->isAttachedSound()) {
         mHandle->unpause(0);
     } else {
@@ -222,9 +229,9 @@ void SeRequest::playStart(bool isAfterGoal) {
         mState = 2;
         verifyData();
     } else if (mIsLoop) {
-        pause();
+        pauseRequest();
     } else {
-        clear();
+        clearState();
     }
 }
 
@@ -235,14 +242,14 @@ NOINLINE SePlayParamList* SeRequest::extendHold() {
 }
 
 /** @brief Marks this request as waiting for its scheduled start. */
-void SeRequest::setStateWaitForStart() { mState = 4; }
+NOINLINE void SeRequest::setStateWaitForStart() { mState = 4; }
 
 /** @brief Detaches the current sound and clears the request without stopping playback. */
 void SeRequest::releaseHandle() {
     if (mHandle->isAttachedSound()) {
         mHandle->detachSound();
     }
-    clear();
+    clearState();
 }
 
 /** @brief Tests whether the attached sound supports a wave-sound handle. @return True for a wave sound. */
@@ -257,22 +264,22 @@ bool SeRequest::isWaveSound() const {
 }
 
 /** @brief Tests whether a playing request has lost its sound. @return True after playback has finished. */
-bool SeRequest::isFinishedPlaying() const { return mState == 2 && !mHandle->isAttachedSound(); }
+NOINLINE bool SeRequest::isFinishedPlaying() const { return mState == 2 && !mHandle->isAttachedSound(); }
 
 /** @brief Pauses a request because its source is outside the audible distance. */
-void SeRequest::pauseByDistanceSe() {
+NOINLINE void SeRequest::pauseByDistanceSe() {
     mIsPausedByDistance = true;
-    pause();
+    pauseRequest();
 }
 
 /** @brief Clears the distance-pause flag so the request can be reconsidered for playback. */
-void SeRequest::unpauseByDistanceSe() { mIsPausedByDistance = false; }
+NOINLINE void SeRequest::unpauseByDistanceSe() { mIsPausedByDistance = false; }
 
 /** @brief Tests whether the request still owns a sound handle attachment. @return True when attached. */
-bool SeRequest::isAttachedSound() const { return mHandle->isAttachedSound(); }
+NOINLINE bool SeRequest::isAttachedSound() const { return mHandle->isAttachedSound(); }
 
 /** @brief Advances a non-paused request's hold lifetime and stops it when that lifetime reaches zero. */
-void SeRequest::updateLifeTime() {
+NOINLINE void SeRequest::updateLifeTime() {
     if (mState == 3) {
         return;
     }
@@ -286,14 +293,14 @@ void SeRequest::updateLifeTime() {
 }
 
 /** @brief Updates the source of a request whose sound identifier is valid. */
-void SeRequest::updateSeSource() {
+NOINLINE void SeRequest::updateSeSource() {
     if (mSoundId != AudioConst::SOUND_ID_INVALID) {
         mSource->update();
     }
 }
 
 /** @brief Increments the playback counter unless the request is invalid, paused, or waiting. */
-void SeRequest::updatePlayCount() {
+NOINLINE void SeRequest::updatePlayCount() {
     if (mState == 3 || mState == 4) {
         return;
     }
@@ -309,7 +316,7 @@ void SeRequest::updatePlayCount() {
  * @param volume Unused in this implementation.
  * @param distance Unused in this implementation.
  */
-void SeRequest::applyParamToRequest(bool isAfterGoal, f32 volume, f32 distance) {
+NOINLINE void SeRequest::applyParamToRequest(bool isAfterGoal, f32 volume, f32 distance) {
     if (!mHandle->isAttachedSound()) {
         return;
     }
@@ -403,7 +410,7 @@ void SeRequest::applyVolume(bool isAfterGoal, f32 volume) {
  * @param order Request ordering index; contributes one hundredth of a unit per index.
  * @return True when the source uses spatial calculations.
  */
-bool SeRequest::calcDistance(sead::Vector3f& rListenerPos, s32 order) {
+NOINLINE bool SeRequest::calcDistance(sead::Vector3f& rListenerPos, s32 order) {
     f32 distance = 0.0f;
     if (mSource->isCalc3D()) {
         distance = (*mSource->getPosition() - rListenerPos).length();
@@ -419,7 +426,7 @@ const sead::Vector3f* SeRequest::getPosition() const { return mSource->getPositi
  * @brief Queues an additional volume multiplier.
  * @param volume Linear multiplier combined with other queued volume values.
  */
-void SeRequest::setMulParamVolume(f32 volume) { mParamList->setMulVolume(volume); }
+NOINLINE void SeRequest::setMulParamVolume(f32 volume) { mParamList->setMulVolume(volume); }
 
 /**
  * @brief Queues a low-pass filter frequency.
@@ -433,11 +440,11 @@ void SeRequest::setParamLpfFreq(f32 freq) { mParamList->setLpfFreq(freq); }
  * @param pPlayer Archive player used for sound-category queries.
  * @param pName Keeper name retained for later selection.
  * @param requestNum Number of reusable requests to allocate; must be nonnegative.
- * @param distance Distance limit retained by the keeper.
+ * @param volume Base playback volume forwarded during request updates.
  */
 SeRequestKeeper::SeRequestKeeper(SeadAudio3DMgr* pMgr, SeadAudioPlayer* pPlayer, const char* pName,
-                                 s32 requestNum, f32 distance)
-    : mRequestNum(requestNum), mName(pName), mDistance(distance) {
+                                 s32 requestNum, f32 volume)
+    : mRequestNum(requestNum), mName(pName), mBaseVolume(volume) {
     mActiveRequests.initOffset(SeRequest::getNodeOffset());
     mRequests.allocBuffer(requestNum, nullptr);
     for (s32 i = 0; i < mRequestNum; ++i) {
@@ -950,5 +957,253 @@ void SeRequestKeeper::notifiedUpdateMaterial(SeSource* pSource, const char* pMat
             addRequest(soundId, pSource, isLoop, pSpecificInfo, pMixVolume);
         }
     }
+}
+} // namespace al
+
+namespace al {
+/**
+ * @brief Compares two requests by their biased listener distance.
+ * @param pA First valid request to compare.
+ * @param pB Second valid request to compare.
+ * @return Integer-truncated distance difference, used to order nearer requests first.
+ */
+s32 SeRequest::compareSeRequestByDistance(const SeRequest* pA, const SeRequest* pB) {
+    return static_cast<s32>(pA->mDistance - pB->mDistance);
+}
+
+/**
+ * @brief Selects matching sound IDs for playback, delay, or suppression according to resource limits.
+ * @param it First request in the distance-sorted suffix to evaluate; its resource settings must be non-null.
+ */
+NOINLINE void SeRequestKeeper::findIdAndSetIsPlayNext(RequestList::iterator it) {
+    const u32 soundId = it->getSoundId();
+    const SeResourceSpecificInfo* pInfo = it->getSpecificInfo();
+    const bool isLoop = soundId != AudioConst::SOUND_ID_INVALID && it->isLoop();
+    const s32 playingLimit = pInfo->mLimitPlayingNum;
+    if (!isLoop) {
+        const s32 triggerFrame = pInfo->mLimitTriggerFrame;
+        const s32 triggerLimit = pInfo->mLimitTriggerNum;
+        const s32 delayFrame = pInfo->mDelayFrame;
+        const s32 delayLimit = pInfo->mDelayMaxNum;
+        s32 youngestPlayCount = 10000;
+        if (triggerFrame > 0) {
+            for (auto other = it; other != mActiveRequests.end(); ++other) {
+                if (other->getSoundId() == soundId) {
+                    s32 playCount = other->getPlayCount();
+                    if (playCount < youngestPlayCount && playCount > 0) {
+                        youngestPlayCount = playCount;
+                    }
+                }
+            }
+        }
+        const bool isTriggerTooSoon = triggerFrame > 0 && youngestPlayCount < triggerFrame;
+        s32 triggerCount = 0;
+        s32 delayCount = 0;
+        for (auto other = it; other != mActiveRequests.end(); ++other) {
+            if (other->getSoundId() != soundId) {
+                continue;
+            }
+            if (triggerLimit > 0 && other->getState() == 1) {
+                if (triggerCount < triggerLimit) {
+                    ++triggerCount;
+                } else if (delayFrame > 0 && delayCount < delayLimit) {
+                    ++delayCount;
+                    if (other->getSpecificInfo() == pInfo) {
+                        other->setPlaySelection(SeRequest::Delay);
+                        other->setDelayMultiplier(delayCount);
+                    } else {
+                        other->setPlaySelection(SeRequest::Skip);
+                    }
+                } else {
+                    other->setPlaySelection(SeRequest::Skip);
+                }
+            }
+            if (other->getState() == 1 && isTriggerTooSoon) {
+                other->setPlaySelection(SeRequest::Skip);
+            }
+        }
+    }
+    if (playingLimit > 0) {
+        if (isLoop) {
+            s32 playCount = 0;
+            for (auto other = it; other != mActiveRequests.end(); ++other) {
+                if (other->getSoundId() != soundId) {
+                    continue;
+                }
+                if (playCount < playingLimit &&
+                    (other->getState() == 1 || other->getState() == 2 || other->getState() == 3 ||
+                     other->getState() == 4) &&
+                    other->getPlaySelection() != SeRequest::Skip &&
+                    other->getPlaySelection() != SeRequest::Delay) {
+                    ++playCount;
+                } else {
+                    other->setPlaySelection(SeRequest::Skip);
+                }
+            }
+        } else {
+            s32 newCount = 0;
+            for (auto other = it; other != mActiveRequests.end(); ++other) {
+                if (other->getSoundId() == soundId && other->getState() == 1 &&
+                    other->getPlaySelection() != SeRequest::Skip &&
+                    other->getPlaySelection() != SeRequest::Delay) {
+                    ++newCount;
+                }
+            }
+            s32 remaining = playingLimit - newCount;
+            s32 playCount = 0;
+            if (remaining > 0) {
+                for (auto other = it; other != mActiveRequests.end(); ++other) {
+                    if (other->getSoundId() != soundId || other->getState() == 1) {
+                        continue;
+                    }
+                    if (playCount < remaining &&
+                        (other->getState() == 2 || other->getState() == 3 || other->getState() == 4) &&
+                        other->getPlaySelection() != SeRequest::Skip &&
+                        other->getPlaySelection() != SeRequest::Delay) {
+                        ++playCount;
+                    } else {
+                        other->setPlaySelection(SeRequest::Skip);
+                    }
+                }
+            } else {
+                for (auto other = it; other != mActiveRequests.end(); ++other) {
+                    if (other->getSoundId() != soundId) {
+                        continue;
+                    }
+                    if (playCount < playingLimit && other->getState() == 1 &&
+                        other->getPlaySelection() != SeRequest::Skip &&
+                        other->getPlaySelection() != SeRequest::Delay) {
+                        ++playCount;
+                    } else {
+                        other->setPlaySelection(SeRequest::Skip);
+                    }
+                }
+            }
+        }
+    }
+    for (auto other = it; other != mActiveRequests.end(); ++other) {
+        if (other->getSoundId() == soundId && other->getPlaySelection() == SeRequest::Undecided) {
+            other->setPlaySelection(SeRequest::Play);
+        }
+    }
+}
+
+/**
+ * @brief Updates request lifetimes, playback limits, distance pauses, and delayed starts.
+ * @param distanceLimit Positive distance beyond which spatial loops pause; nonpositive disables that test.
+ */
+void SeRequestKeeper::update(f32 distanceLimit) {
+    if (isSystemPaused() || !mIsActive) {
+        return;
+    }
+    const f32 volume = mBaseVolume;
+    sead::Vector3f listenerPos = mAudio3DMgr->getDefaultListener()->getPosition();
+    for (auto it = mActiveRequests.begin(); it != mActiveRequests.end(); ++it) {
+        if (it->getSoundId() == AudioConst::SOUND_ID_INVALID) {
+            continue;
+        }
+        it->updateLifeTime();
+        it->updateSeSource();
+        if (it->isFinishedPlaying()) {
+            if (it->getSoundId() != AudioConst::SOUND_ID_INVALID && it->isLoop()) {
+                it->pause();
+            } else {
+                it->clear();
+            }
+        }
+        if (it->getSoundId() == AudioConst::SOUND_ID_INVALID) {
+            continue;
+        }
+        it->setPlaySelection(SeRequest::Undecided);
+        bool isSpatial = it->calcDistance(listenerPos, it->getSoundId() & 0xff);
+        if (distanceLimit > 0.0f && isSpatial && it->getSoundId() != AudioConst::SOUND_ID_INVALID &&
+            it->isLoop() && !it->getSpecificInfo()->mIsIgnoreDistPause) {
+            if (it->isPausedByDistance()) {
+                if (it->getDistance() <= distanceLimit) {
+                    it->unpauseByDistanceSe();
+                }
+            } else if (it->getDistance() > distanceLimit) {
+                it->pauseByDistanceSe();
+            }
+        }
+    }
+    mActiveRequests.mergeSort(SeRequest::compareSeRequestByDistance);
+    for (auto it = mActiveRequests.begin(); it != mActiveRequests.end(); ++it) {
+        if (it->getSoundId() != AudioConst::SOUND_ID_INVALID && !it->isPausedByDistance() &&
+            it->getSpecificInfo() != nullptr && it->getPlaySelection() == SeRequest::Undecided) {
+            findIdAndSetIsPlayNext(it);
+        }
+    }
+    const u32 delayedCoinId = alSoundNameUtil::getSoundId("SeSyCoinWithDelay", false);
+    const u32 coinId = alSoundNameUtil::getSoundId("SeSyCoin", false);
+    const auto end = mActiveRequests.end();
+    s32 index = 0;
+    for (auto it = mActiveRequests.robustBegin(); it != mActiveRequests.robustEnd(); ++it) {
+        if (it->getSoundId() != AudioConst::SOUND_ID_INVALID && !it->isPausedByDistance()) {
+            switch (it->getPlaySelection()) {
+            case SeRequest::Play:
+                if (it->getState() == 1 || it->getState() == 3 || it->getState() == 4) {
+                    it->playStart(false);
+                    if (it->getSoundId() != AudioConst::SOUND_ID_INVALID &&
+                        (it->getSoundId() == delayedCoinId || it->getSoundId() == coinId)) {
+                        s32 otherIndex = index;
+                        for (auto other = mActiveRequests.begin(); other != end; ++other) {
+                            if (otherIndex != 0 &&
+                                (other->getSoundId() == delayedCoinId || other->getSoundId() == coinId)) {
+                                it->setMulParamVolume(0.92f);
+                            }
+                            --otherIndex;
+                        }
+                    }
+                }
+                break;
+            case SeRequest::Skip:
+                if (it->getState() == 2) {
+                    if (it->isLoop()) {
+                        it->pause();
+                    } else {
+                        it->stop(0);
+                    }
+                }
+                break;
+            case SeRequest::Delay:
+                mWaitingRequests->addSe(&*it);
+                mActiveRequests.erase(&*it);
+                continue;
+            default:
+                break;
+            }
+            if (it->getState() == 1) {
+                if (it->getSoundId() != AudioConst::SOUND_ID_INVALID && it->isLoop()) {
+                    it->setStateWaitForStart();
+                } else {
+                    it->clear();
+                }
+            }
+            if (it->getState() != 3 && it->getState() != 4 &&
+                it->getSoundId() != AudioConst::SOUND_ID_INVALID && !it->isAttachedSound()) {
+                if (it->getSoundId() != AudioConst::SOUND_ID_INVALID && it->isLoop()) {
+                    it->pause();
+                } else {
+                    it->clear();
+                }
+            }
+            if (it->getSoundId() != AudioConst::SOUND_ID_INVALID) {
+                if (mIsAfterGoal && it->getSpecificInfo()->mVolumeAfterGoal >= 0.0f) {
+                    it->setMulParamVolume(it->getSpecificInfo()->mVolumeAfterGoal);
+                }
+                it->applyParamToRequest(false, volume, volume);
+                it->updatePlayCount();
+            }
+        }
+        ++index;
+    }
+    for (auto it = mActiveRequests.robustBegin(); it != mActiveRequests.robustEnd(); ++it) {
+        if (it->getSoundId() == AudioConst::SOUND_ID_INVALID) {
+            mActiveRequests.erase(&*it);
+        }
+    }
+    mWaitingRequests->update(this);
+    mVolumeCtrl->update(false);
 }
 } // namespace al

@@ -143,10 +143,10 @@ f32 BgmRhythmCtrl::getBeatRateForAnime() const {
 }
 
 /**
- * Gets the current chord information.
+ * @brief Gets the current chord information.
  * @return Chord information.
  */
-const void* BgmRhythmCtrl::getChordInfoCurrent() const {
+const BgmChordInfo* BgmRhythmCtrl::getChordInfoCurrent() const {
     return getDetector(mActiveBgmLine)->getChordInfoCurrent();
 }
 

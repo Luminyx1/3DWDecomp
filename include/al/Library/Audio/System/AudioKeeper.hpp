@@ -16,7 +16,7 @@ class AudioRequestKeeperSyncedBgm;
 class AudioResourceDirector;
 class AudioSituationDirector;
 class BgmKeeper;
-class BgmRhythmCtrl;
+class SeListenerKeeper;
 class IUseAudioKeeper;
 class ModelKeeper;
 class PlayerHolder;
@@ -85,7 +85,8 @@ public:
     SeKeeper* getSeKeeper() const { return mSeKeeper; }
     BgmKeeper* getBgmKeeper() const { return mBgmKeeper; }
     AudioMic* getAudioMic() const { return mAudioMic; }
-    BgmRhythmCtrl* getBgmRhythmCtrl() const { return mBgmRhythmCtrl; }
+    /** @brief Gets the shared SE listener controller. @return Listener keeper, or nullptr before initialization. */
+    SeListenerKeeper* getListenerKeeper() const { return mListenerKeeper; }
     IUseAudioKeeper* getUpperLayerAudioUser() const { return mUpperLayerAudioUser; }
     bool isForceInvalidSe() const { return mIsForceInvalidSe; }
     void setIsForceInvalidSe(bool isInvalid) { mIsForceInvalidSe = isInvalid; }
@@ -98,7 +99,7 @@ private:
     SeKeeper* mSeKeeper = nullptr;
     BgmKeeper* mBgmKeeper = nullptr;
     AudioMic* mAudioMic = nullptr;
-    BgmRhythmCtrl* mBgmRhythmCtrl = nullptr;
+    SeListenerKeeper* mListenerKeeper = nullptr;
     IUseAudioKeeper* mUpperLayerAudioUser = nullptr;
     bool mIsForceInvalidSe = false;
 

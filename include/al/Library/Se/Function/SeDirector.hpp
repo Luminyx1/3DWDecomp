@@ -7,7 +7,7 @@
 namespace sead {
 class Audio3DListenerParameterNin;
 class PerspectiveProjection;
-}  // namespace sead
+} // namespace sead
 
 namespace alSeFunction {
 enum DemoType : s32;
@@ -23,9 +23,12 @@ class SePlayParamList;
 class SeRequestKeeper;
 class SeResourceSpecificInfo;
 class SeSource;
+class SeListenerKeeper;
+class MeInfoKeeper;
+class SeMaterialInfoKeeper;
 
 class SeDirector {
-public:
+  public:
     SeDirector();
 
     void init(AudioSystemInfo* pInfo, BgmRhythmCtrl* pRhythmCtrl, s32 requestNum, s32 holdRequestNum,
@@ -35,7 +38,7 @@ public:
                 const char* pStageName, bool isUseListenerPoser);
     void initCategoryParamsController(SeCategoryParamsController* pController);
     void finalize();
-    void stopAll(u32 fadeFrames, const char* pKeeperName, const char* pExceptName);
+    void stopAll(u32 fadeFrames, const char* pExceptName, const char* pKeeperName);
     void update();
     void stopAllExcept(u32 fadeFrames, const char** pExceptList, u32 exceptNum);
     void stopAllMain(u32 fadeFrames);
@@ -56,12 +59,13 @@ public:
     void resetListenerParam();
     void changeListenerPoser(const char* pName);
     void changeListenerPoserToLast();
-    SePlayParamList* addRequest(u32 id, SeSource* pSource, bool isHold, const SeResourceSpecificInfo* pSpecificInfo,
-                                MeInfo* pMeInfo, const char* pMaterialName, s32 waterState, bool isBeyondWall,
+    SePlayParamList* addRequest(u32 id, SeSource* pSource, bool isLoop,
+                                const SeResourceSpecificInfo* pSpecificInfo, MeInfo* pMeInfo,
+                                const char* pMaterialName, s32 waterState, bool isBeyondWall,
                                 const char* pPlayName);
     SePlayParamList* addHoldRequest(u32 id, SeSource* pSource, const SeResourceSpecificInfo* pSpecificInfo,
-                                    MeInfo* pMeInfo, const char* pMaterialName, s32 waterState, bool isBeyondWall,
-                                    const char* pPlayName);
+                                    MeInfo* pMeInfo, const char* pMaterialName, s32 waterState,
+                                    bool isBeyondWall, const char* pPlayName);
     void stop(u32 id, SeSource* pSource, u32 fadeFrames, const char* pPlayName);
     void stopAllId(u32 id, SeSource* pSource, u32 fadeFrames, const char* pPlayName);
     void stopAllFromSource(SeSource* pSource, u32 fadeFrames);
@@ -69,14 +73,37 @@ public:
     void reactivateSeFromSource(SeSource* pSource);
     void notifiedUpdateMaterial(SeSource* pSource, const char* pMaterialName, s32 waterState);
 
-    BgmRhythmCtrl* getBgmRhythmCtrl() const { return mBgmRhythmCtrl; }
+    /** @brief Gets the listener controller. @return Listener keeper, or nullptr before 3D initialization. */
+    SeListenerKeeper* getListenerKeeper() const { return mListenerKeeper; }
+    /** @brief Tests whether demo sound routing is active. @return True while a demo is active. */
     bool isInDemo() const { return mIsInDemo; }
 
-private:
-    u8 _0[0x20];
-    BgmRhythmCtrl* mBgmRhythmCtrl;
-    u8 _28[0x10];
+  private:
+    SeRequestKeeper* selectRequestKeeper(const char* pName) const;
+    SeRequestKeeper* findRequestKeeper(const char* pName) const;
+    /**
+     * @brief Applies an operation to every initialized request keeper in playback order.
+     * @tparam Callback Callable accepting a SeRequestKeeper pointer.
+     * @param rCallback Operation to apply; the main, demo, and player keepers must be initialized.
+     */
+    template <class Callback> void forEachRequestKeeper(Callback&& rCallback) {
+        rCallback(mMainKeeper);
+        rCallback(mDemoKeeper);
+        rCallback(mPlayerKeeper);
+        if (mSubKeeper != nullptr) {
+            rCallback(mSubKeeper);
+        }
+    }
+    SeRequestKeeper* mMainKeeper;
+    SeRequestKeeper* mDemoKeeper;
+    SeRequestKeeper* mPlayerKeeper;
+    SeRequestKeeper* mSubKeeper;
+    SeListenerKeeper* mListenerKeeper;
+    MeInfoKeeper* mMeInfoKeeper;
+    SeMaterialInfoKeeper* mMaterialInfoKeeper;
     bool mIsInDemo;
-    u8 _39[0xf];
+    bool mIsDistancePauseEnabled;
+    SeCategoryParamsController* mCategoryParamsController;
 };
-}  // namespace al
+static_assert(sizeof(SeDirector) == 0x48);
+} // namespace al

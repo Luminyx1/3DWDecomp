@@ -338,7 +338,7 @@ void AudioKeeper::init(const AudioDirector* pDirector, const char* pSeUserName, 
                        const ModelKeeper* pModelKeeper, const char* pMaterialName) {
     AudioSystemInfo* info = pDirector->getAudioSystemInfo();
     mAudioMic = pDirector->getAudioMic();
-    mBgmRhythmCtrl = pDirector->getSeDirector()->getBgmRhythmCtrl();
+    mListenerKeeper = pDirector->getSeDirector()->getListenerKeeper();
     mSeEffectController = pDirector->getSeEffectController();
     mAudioSituationDirector = pDirector->getAudioSituationDirector();
     mAudioEventController = pDirector->getAudioEventController();
@@ -393,7 +393,7 @@ void AudioKeeper::initBgmKeeper(const AudioDirector* pDirector, const char* pBgm
  */
 void AudioKeeper::initOtherAuido(const AudioDirector* pDirector) {
     mAudioMic = pDirector->getAudioMic();
-    mBgmRhythmCtrl = pDirector->getSeDirector()->getBgmRhythmCtrl();
+    mListenerKeeper = pDirector->getSeDirector()->getListenerKeeper();
     mSeEffectController = pDirector->getSeEffectController();
     mAudioSituationDirector = pDirector->getAudioSituationDirector();
     mAudioEventController = pDirector->getAudioEventController();

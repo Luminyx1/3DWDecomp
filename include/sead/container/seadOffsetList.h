@@ -88,7 +88,16 @@ public:
     void sort() { sort(compareT); }
     void sort(CompareCallback cmp) { ListImpl::sort<T>(mOffset, cmp); }
     void mergeSort() { mergeSort(compareT); }
-    void mergeSort(CompareCallback cmp) { ListImpl::mergeSort<T>(mOffset, cmp); }
+    /**
+     * @brief Stably sorts objects using their embedded nodes.
+     * @tparam ComparePredicate Callable comparator type.
+     * @param rCmp Comparator returning the relative ordering of two objects.
+     */
+    template <class ComparePredicate>
+    void mergeSort(ComparePredicate&& rCmp)
+    {
+        ListImpl::mergeSort<T>(mOffset, std::forward<ComparePredicate>(rCmp));
+    }
 
     T* find(const T* obj) const { return find(obj, compareT); }
     T* find(const T* obj, CompareCallback cmp) const
