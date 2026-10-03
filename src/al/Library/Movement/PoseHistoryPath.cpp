@@ -48,6 +48,14 @@ void PoseHistoryPath::addHistory(const sead::Quatf& rQuat, const sead::Vector3f&
     addHistory(rQuat, rTrans, "", minDistance);
 }
 
+/**
+ * Adds a pose. The previous pose is replaced if it was closer than the minimum distance to the
+ * pose before it.
+ * @param rQuat Rotation.
+ * @param rTrans Position.
+ * @param pName Name tag of the entry.
+ * @param minDistance Distance from the previous pose below which that pose may be replaced.
+ */
 void PoseHistoryPath::addHistory(const sead::Quatf& rQuat, const sead::Vector3f& rTrans,
                                  const char* pName, f32 minDistance) {
     PoseInfo info(rQuat, rTrans, pName, 0.0f);
@@ -81,6 +89,13 @@ void PoseHistoryPath::calcPoseAndTrans(sead::Quatf* pQuat, sead::Vector3f* pTran
     calcPoseAndTrans(pQuat, pTrans, &name, distance);
 }
 
+/**
+ * Calculates the pose at a distance back along the history, interpolating between entries.
+ * @param pQuat Receives the rotation.
+ * @param pTrans Receives the position.
+ * @param pName Receives the name tag of the entry the pose lies on.
+ * @param distance Distance from the newest pose.
+ */
 void PoseHistoryPath::calcPoseAndTrans(sead::Quatf* pQuat, sead::Vector3f* pTrans,
                                        const char** pName, f32 distance) const {
     s32 size = mHistory.size();
@@ -130,12 +145,12 @@ void PoseHistoryPath::calcPoseAndTrans(sead::Quatf* pQuat, sead::Vector3f* pTran
         sead::Vector3f nextTrans = nextInfo->trans;
         slerpQuat(pQuat, quat, nextQuat, rate);
         lerpVec(pTrans, trans, nextTrans, rate);
+        *pName = info->name;
     } else {
         pQuat->set(info->quat);
         pTrans->set(info->trans);
+        *pName = info->name;
     }
-
-    *pName = info->name;
 }
 
 }  // namespace al
