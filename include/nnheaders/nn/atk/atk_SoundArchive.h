@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cstring>
+#include <nn/atk/atk_Global.h>
 #include <nn/types.h>
 
 namespace nn::atk {
@@ -73,6 +75,71 @@ public:
         s32 singlePlayType;
         u16 singlePlayEffectiveDuration;
         bool isFrontBypass;
+    };
+
+    enum StreamFileType {
+        StreamFileType_Invalid = 0,
+        StreamFileType_NwStreamBinary,
+        StreamFileType_Opus = 3,
+    };
+
+    enum DecodeMode {
+        DecodeMode_Default = 0,
+        DecodeMode_Cpu,
+        DecodeMode_Accelerator,
+    };
+
+    static const ItemId InvalidId = 0xffffffff;
+    static const u32 StreamTrackCount = 8;
+    static const u32 WaveChannelMax = 2;
+
+    struct StreamTrackInfo {
+        StreamTrackInfo()
+            : volume(0), pan(0), surroundPan(0), mainSend(127), lowPassFilterFrequency(64), biquadType(0),
+              biquadValue(0), channelCount(0) {
+            std::memset(globalChannelIndex, -1, sizeof(s8) * WaveChannelMax);
+            std::memset(fxSend, 0, sizeof(u8) * AuxBus_Count);
+        }
+
+        u8 volume;
+        u8 pan;
+        u8 surroundPan;
+        u8 flags;
+        u8 mainSend;
+        u8 fxSend[AuxBus_Count];
+        u8 lowPassFilterFrequency;
+        u8 biquadType;
+        u8 biquadValue;
+        u8 channelCount;
+        s8 globalChannelIndex[WaveChannelMax];
+    };
+
+    struct StreamSoundInfo {
+        StreamSoundInfo()
+            : allocateTrackFlags(0), allocateChannelCount(0), pitch(1.0f), mainSend(127),
+              streamFileType(StreamFileType_Invalid), decodeMode(DecodeMode_Default), prefetchFileId(InvalidId),
+              streamBufferPool(nullptr) {
+            std::memset(fxSend, 0, sizeof(u8) * AuxBus_Count);
+        }
+
+        u16 allocateTrackFlags;
+        u16 allocateChannelCount;
+        f32 pitch;
+        u8 mainSend;
+        u8 fxSend[AuxBus_Count];
+        StreamTrackInfo trackInfo[StreamTrackCount];
+        StreamFileType streamFileType;
+        DecodeMode decodeMode;
+        FileId prefetchFileId;
+        void* streamBufferPool;
+    };
+
+    struct StreamSoundInfo2 {
+        StreamSoundInfo2() : isLoop(false), loopStartFrame(0), loopEndFrame(0) {}
+
+        bool isLoop;
+        u32 loopStartFrame;
+        u32 loopEndFrame;
     };
 
     SoundArchive();

@@ -4,7 +4,10 @@
 
 namespace nn::atk {
 namespace detail {
-class WaveSound : public BasicSound {};
+class WaveSound : public BasicSound {
+public:
+    s64 GetPlaySamplePosition(bool isOriginalSamplePosition) const;
+};
 }  // namespace detail
 
 class WaveSoundHandle {
@@ -14,6 +17,14 @@ public:
 
     void DetachSound();
     bool IsAttachedSound() const { return m_pSound != nullptr; }
+    bool IsPrepared() const { return IsAttachedSound() && m_pSound->IsPrepared(); }
+
+    s64 GetPlaySamplePosition() const {
+        if (!IsAttachedSound()) {
+            return -1;
+        }
+        return m_pSound->GetPlaySamplePosition(true);
+    }
 
     void SetMixMode(MixMode mode) {
         if (IsAttachedSound()) {

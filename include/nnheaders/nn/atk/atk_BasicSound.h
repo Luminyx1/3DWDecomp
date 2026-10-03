@@ -54,6 +54,10 @@ public:
     void SetMainSend(f32 send);
     void SetFxSend(AuxBus bus, f32 send);
     void SetLpfFreq(f32 freq);
+    void StartPrepared();
+    void FadeIn(int frames);
+    void SetOutputLine(u32 lineFlag);
+    void SetOutputFxSend(OutputDevice device, AuxBus bus, f32 send);
     void SetBiquadFilter(int type, f32 value);
     void SetMixMode(MixMode mode);
     void SetOutputChannelMixParameter(OutputDevice device, u32 channel, MixParameter param);

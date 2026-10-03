@@ -50,6 +50,37 @@ public:
         }
     }
 
+    void StartPrepared() {
+        if (IsAttachedSound()) {
+            m_pSound->StartPrepared();
+        }
+    }
+
+    bool IsPrepared() const {
+        if (IsAttachedSound() && m_pSound->IsPrepared()) {
+            return true;
+        }
+        return false;
+    }
+
+    void FadeIn(int frames) {
+        if (IsAttachedSound()) {
+            m_pSound->FadeIn(frames);
+        }
+    }
+
+    void SetOutputLine(u32 lineFlag) {
+        if (IsAttachedSound()) {
+            m_pSound->SetOutputLine(lineFlag);
+        }
+    }
+
+    void SetOutputEffectSend(OutputDevice device, AuxBus bus, f32 send) {
+        if (IsAttachedSound()) {
+            m_pSound->SetOutputFxSend(device, bus, send);
+        }
+    }
+
     void SetLpfFreq(f32 freq) {
         if (IsAttachedSound()) {
             m_pSound->SetLpfFreq(freq);
