@@ -20,17 +20,23 @@ public:
     typedef MemoryPoolInfo InfoType;
 
     static size_t GetPoolMemoryAlignment(DeviceImpl<ApiVariationNvn8>*, const InfoType&);
+    static size_t GetPoolMemoryAlignment(DeviceImpl<ApiVariationNvn8>*,
+                                         const MemoryPoolInfoImpl<ApiVariationNvn8>&);
     static size_t GetPoolMemorySizeGranularity(DeviceImpl<ApiVariationNvn8>*, const InfoType&);
+    static size_t GetPoolMemorySizeGranularity(DeviceImpl<ApiVariationNvn8>*,
+                                               const MemoryPoolInfoImpl<ApiVariationNvn8>&);
 
     MemoryPoolImpl();
     ~MemoryPoolImpl();
 
     void Initialize(DeviceImpl<Target>*, const InfoType&);
+    void Initialize(DeviceImpl<Target>*, const MemoryPoolInfoImpl<Target>&);
     void Finalize(DeviceImpl<Target>*);
     void* Map() const;
     void Unmap() const;
     void FlushMappedRange(ptrdiff_t, size_t) const;
     void InvalidateMappedRange(ptrdiff_t, size_t) const;
+    void SetDebugLabel(DeviceImpl<Target>*, const char*);
 };
 
 }  // namespace detail
