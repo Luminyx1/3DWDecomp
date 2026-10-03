@@ -64,6 +64,10 @@ size_t GetBufferAlignment(nn::gfx::Device* pDevice, int gpuAccessFlags) {
 
 }  // namespace
 
+/**
+ * Gets the alignment required for the work buffer.
+ * @return alignment of the embedded shader binary
+ */
 size_t RectDrawer::GetWorkBufferAlignment() {
     return nn::gfx::ResShaderFile::ToAccessor(
                reinterpret_cast<const nn::gfx::ResShaderFileData*>(g_RectDrawerShaderBinary))
@@ -71,12 +75,19 @@ size_t RectDrawer::GetWorkBufferAlignment() {
         ->GetAlignment();
 }
 
+/**
+ * Calculates the work buffer size needed by Initialize.
+ * @param pDevice gfx device
+ * @param charCount maximum number of characters
+ * @return work buffer size
+ */
 size_t RectDrawer::GetWorkBufferSize(nn::gfx::Device* pDevice, uint32_t charCount) {
-    size_t vertexStateSize = nn::util::align_up(GetVertexStateRequiredMemorySize(), 8);
+    size_t vertexStatesSize =
+        nn::util::align_up(GetVertexStateRequiredMemorySize(), 8) * ShaderVariationCount;
 
     nn::gfx::MemoryPoolInfo info;
     info.SetDefault();
-    size_t size = nn::util::align_up(ShaderBinarySize + vertexStateSize * ShaderVariationCount,
+    size_t size = nn::util::align_up(ShaderBinarySize + vertexStatesSize,
                                      nn::gfx::MemoryPool::GetPoolMemoryAlignment(pDevice, info));
     return size + CalculateMemoryPoolSize(pDevice, charCount);
 }
@@ -362,6 +373,16 @@ void RectDrawer::CreateIndices(uint16_t* pIndices, uint32_t charCount) {
     }
 }
 
+/**
+ * Initializes the shaders, vertex states, sampler and buffers.
+ * @param pDevice gfx device
+ * @param pWorkMemory work memory of at least GetWorkBufferSize() bytes
+ * @param charCount maximum number of characters
+ * @param pMemoryPool memory pool for the buffers, or nullptr to create one in the work memory
+ * @param memoryPoolOffset offset of the buffers in pMemoryPool
+ * @param memoryPoolSize size available in pMemoryPool
+ * @return true on success, false if already initialized
+ */
 bool RectDrawer::Initialize(nn::gfx::Device* pDevice, void* pWorkMemory, uint32_t charCount,
                             nn::gfx::MemoryPool* pMemoryPool, ptrdiff_t memoryPoolOffset,
                             size_t memoryPoolSize) {
@@ -379,15 +400,16 @@ bool RectDrawer::Initialize(nn::gfx::Device* pDevice, void* pWorkMemory, uint32_
     void* pShaderBinary = workMemory.Get();
     std::memcpy(pShaderBinary, g_RectDrawerShaderBinary, ShaderBinarySize);
     m_pResShaderFile = nn::gfx::ResShaderFile::ResCast(pShaderBinary);
+    workMemory.Advance(ShaderBinarySize);
 
     nn::gfx::ResShaderContainer* pContainer = m_pResShaderFile->GetShaderContainer();
     pContainer->Initialize(pDevice);
 
     nn::gfx::ResShaderVariation* pVariation = pContainer->GetResShaderVariation(0);
     bool isInitialized = false;
-    m_CodeType = nn::gfx::ShaderCodeType_Binary;
     nn::gfx::ResShaderProgram* pProgram =
         pVariation->GetResShaderProgram(nn::gfx::ShaderCodeType_Binary);
+    m_CodeType = nn::gfx::ShaderCodeType_Binary;
     if (pProgram != nullptr) {
         isInitialized =
             pProgram->Initialize(pDevice) == nn::gfx::ShaderInitializeResult_Success;
@@ -408,8 +430,6 @@ bool RectDrawer::Initialize(nn::gfx::Device* pDevice, void* pWorkMemory, uint32_
         m_CodeType = nn::gfx::ShaderCodeType_Source;
         pProgram->Initialize(pDevice);
     }
-
-    workMemory.Advance(ShaderBinarySize);
 
     for (int i = 1; i < ShaderVariationCount; i++) {
         pContainer->GetResShaderVariation(i)->GetResShaderProgram(m_CodeType)->Initialize(pDevice);
@@ -491,9 +511,9 @@ bool RectDrawer::Initialize(nn::gfx::Device* pDevice, void* pWorkMemory, uint32_
         const size_t poolSize = nn::util::align_up(
             disabledBufferOffset + sizeof(uint32_t) - memoryPoolOffset, poolGranularity);
         void* pPoolMemory = workMemory.AlignUp(poolAlignment).Get();
+        memoryPoolInfo.SetPoolMemory(pPoolMemory, poolSize);
         memoryPoolInfo.SetMemoryPoolProperty(nn::gfx::MemoryPoolProperty_CpuUncached |
                                              nn::gfx::MemoryPoolProperty_GpuCached);
-        memoryPoolInfo.SetPoolMemory(pPoolMemory, poolSize);
         m_MemoryPoolForBuffers.Initialize(pDevice, memoryPoolInfo);
         pMemoryPool = &m_MemoryPoolForBuffers;
     }
