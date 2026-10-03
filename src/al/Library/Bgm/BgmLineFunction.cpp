@@ -1065,7 +1065,7 @@ void setActiveBgmPitch(const IUseAudioKeeper* pUser, f32 pitch) {
 }
 
 /**
- * Checks whether rhythm animations are enabled for the given BGM.
+ * Checks whether rhythm animations are enabled, failing if another BGM than the given one is playing.
  * @param pUser Audio user.
  * @param pName Play name.
  * @return True if rhythm animations are enabled.
@@ -1074,18 +1074,18 @@ bool isEnableRhythmAnim(const IUseAudioKeeper* pUser, const char* pName) {
     if (pName != nullptr) {
         const char* curName = getCurPlayingBgmPlayName(pUser);
 
-        if (curName != nullptr && isEqualString(pName, curName)) {
-            BgmRhythmCtrl* rhythmCtrl = getActiveBgmRhythmCtrl(pUser);
-
-            if (rhythmCtrl == nullptr) {
-                return false;
-            }
-
-            return rhythmCtrl->isEnableRhythmAnim();
+        if (curName != nullptr && !isEqualString(pName, curName)) {
+            return false;
         }
     }
 
-    return false;
+    BgmRhythmCtrl* rhythmCtrl = getActiveBgmRhythmCtrl(pUser);
+
+    if (rhythmCtrl == nullptr) {
+        return false;
+    }
+
+    return rhythmCtrl->isEnableRhythmAnim();
 }
 
 /**
