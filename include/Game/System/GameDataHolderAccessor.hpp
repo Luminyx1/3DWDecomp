@@ -5,7 +5,8 @@
 
 class GameDataHolderAccessor {
 public:
-    GameDataHolderAccessor(const al::IUseSceneObjHolder*);
+    GameDataHolderAccessor(const al::IUseSceneObjHolder* pUser);
+    GameDataHolderAccessor(const al::SceneObjHolder* pHolder);
 
     al::ISceneObj* mSceneObj;  // 0x00
 };
