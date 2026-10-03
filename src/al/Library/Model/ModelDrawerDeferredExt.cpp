@@ -10,6 +10,7 @@
 #include "Library/Draw/GraphicsSystemInfo.hpp"
 #include "Library/Framework/GameFrameworkNx.hpp"
 #include "Library/Model/Function/alModelFunction.hpp"
+#include "Library/Model/MeshDrawerTableSort.hpp"
 #include "Library/Model/alModelCafe.hpp"
 #include "Project/Draw/GpuMemAllocator.hpp"
 #include "Project/Model/MeshDrawer.hpp"
@@ -100,8 +101,6 @@ void ModelDrawerDeferredExt::createTable() {
     }
 
     mMeshDrawerTable->sort();
-    alModelFunction::createMeshDrawerTableDisplayListRenderStateInvalidate(mMeshDrawerTable,
-                                                                           mModel, false);
 
     s32 drawerNum = mMeshDrawerTable->size();
     mDisplayLists.allocBuffer(drawerNum, nullptr);
