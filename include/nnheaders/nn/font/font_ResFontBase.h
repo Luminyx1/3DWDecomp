@@ -162,12 +162,14 @@ inline void ResourceTextureObject::Initialize(nn::gfx::Device* pDevice,
                                               ptrdiff_t memoryPoolOffset, size_t memoryPoolSize) {
     nn::gfx::ResTextureFile* pFile = nn::gfx::ResTextureFile::ResCast(const_cast<void*>(m_pImage));
     nn::gfx::ResTextureContainerData& rContainer = pFile->ToData().textureContainerData;
+
     if (rContainer.pCurrentMemoryPool.Get() != nullptr) {
         m_pResTexture = rContainer.pTexturePtrArray.Get()[0].Get();
         return;
     }
 
     auto* pDeviceImpl = reinterpret_cast<detail::GfxDeviceImpl*>(pDevice);
+
     if (pMemoryPool == nullptr) {
         nn::gfx::MemoryPoolInfo info;
         info.SetMemoryPoolProperty(0x21);
@@ -179,17 +181,19 @@ inline void ResourceTextureObject::Initialize(nn::gfx::Device* pDevice,
         rContainer.pCurrentMemoryPool.Set(rContainer.pTextureMemoryPool.Get());
         rContainer.memoryPoolOffsetBase = 0;
     } else {
-        rContainer.memoryPoolOffsetBase =
-            memoryPoolOffset - reinterpret_cast<uintptr_t>(pFile) +
-            reinterpret_cast<uintptr_t>(rContainer.pTextureData.Get()) +
-            sizeof(nn::util::BinaryBlockHeader);
         rContainer.pCurrentMemoryPool.Set(pMemoryPool);
+        rContainer.memoryPoolOffsetBase =
+            memoryPoolOffset +
+            nn::util::BytePtr(pFile).Distance(rContainer.pTextureData.Get()) +
+            sizeof(nn::util::BinaryBlockHeader);
     }
 
     nn::gfx::ResTexture* pResTexture = rContainer.pTexturePtrArray.Get()[0].Get();
     m_pResTexture = pResTexture;
 
     nn::gfx::ResTextureData& rData = pResTexture->ToData();
+    const nn::gfx::TextureInfo& rInfo =
+        *reinterpret_cast<const nn::gfx::TextureInfo*>(&rData.textureInfoData);
     nn::gfx::ResTextureContainerData* pContainer = rData.pResTextureContainerData.Get();
     ptrdiff_t offset =
         pContainer->memoryPoolOffsetBase -
@@ -197,8 +201,7 @@ inline void ResourceTextureObject::Initialize(nn::gfx::Device* pDevice,
                                     sizeof(nn::util::BinaryBlockHeader)) +
         reinterpret_cast<uintptr_t>(rData.pMipPtrArray.Get()->Get());
     static_cast<detail::GfxTextureImpl*>(rData.pTexture.Get())
-        ->Initialize(pDeviceImpl,
-                     *reinterpret_cast<const nn::gfx::TextureInfo*>(&rData.textureInfoData),
+        ->Initialize(pDeviceImpl, rInfo,
                      static_cast<detail::GfxMemoryPoolImpl*>(pContainer->pCurrentMemoryPool.Get()),
                      offset, rData.textureDataSize);
 

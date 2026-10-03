@@ -381,8 +381,9 @@ int ResFontBase::GetKerning(uint32_t c0, uint32_t c1) const {
         }
     }
 
-    const KerningSecondTable* pSecond = reinterpret_cast<const KerningSecondTable*>(
-        reinterpret_cast<uintptr_t>(pTable) + pTable->firstTable[firstMid].offset);
+    const KerningSecondTable* pSecond =
+        nn::util::ConstBytePtr(pTable, pTable->firstTable[firstMid].offset)
+            .Get<KerningSecondTable>();
     uint32_t secondLow = 0;
     uint32_t secondHigh = pSecond->secondWordCount;
     uint32_t secondMid = secondHigh / 2;
