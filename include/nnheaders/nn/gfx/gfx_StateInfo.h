@@ -306,13 +306,13 @@ public:
     void SetDefault();
 
     void SetVertexAttributeStateInfoArray(const VertexAttributeStateInfo* p, int c) {
-        attributeCount = c;
         pAttributeArray.ptr = p->ToData();
+        attributeCount = c;
     }
 
     void SetVertexBufferStateInfoArray(const VertexBufferStateInfo* p, int c) {
-        bufferCount = c;
         pBufferArray.ptr = p->ToData();
+        bufferCount = c;
     }
 
     int GetVertexAttributeCount() const { return attributeCount; }
