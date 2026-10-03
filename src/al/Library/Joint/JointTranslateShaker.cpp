@@ -16,11 +16,21 @@ JointTranslateShaker::JointTranslateShaker(const LiveActor* pActor, s32 maxJoint
     mShakeInfos.allocBuffer(maxJoints, nullptr);
 }
 
+/**
+ * Registers a joint to be shaken along an axis.
+ * @param jointIndex Joint index.
+ * @param axis Local axis to translate along.
+ */
 void JointTranslateShaker::append(s32 jointIndex, JointTranslateAxis axis) {
     appendJointId(jointIndex);
-    mShakeInfos.pushBack({jointIndex, axis});
+    mShakeInfos.emplaceBack(jointIndex, axis);
 }
 
+/**
+ * Registers a joint by name to be shaken along an axis.
+ * @param pJointName Joint name.
+ * @param axis Local axis to translate along.
+ */
 void JointTranslateShaker::append(const char* pJointName, JointTranslateAxis axis) {
     append(getJointIndexActor(pJointName), axis);
 }
@@ -53,10 +63,17 @@ void JointTranslateShaker::setShake(f32 amplitude, s32 duration, f32 cycle, f32 
     mAttenuation = attenuation;
 }
 
+/**
+ * Applies the current shake offset to a registered joint, advancing the shake once per frame.
+ * @param jointIndex Index of the joint being calculated.
+ * @param pMtx Joint matrix, modified in place.
+ */
 void JointTranslateShaker::calcJointCallback(s32 jointIndex, sead::Matrix34f* pMtx) {
     if (mStep < 0) {
         return;
     }
+
+    s32 infoNum = mShakeInfos.size();
 
     if (mShakeInfos(0).jointIndex == jointIndex) {
         mStep++;
@@ -67,16 +84,20 @@ void JointTranslateShaker::calcJointCallback(s32 jointIndex, sead::Matrix34f* pM
         }
     }
 
-    JointTranslateAxis axis = JointTranslateAxis_None;
+    // NOTE: volatile reproduces the original code keeping the axis on the stack.
+    volatile JointTranslateAxis axis = JointTranslateAxis_None;
+    bool isFound = false;
 
-    for (s32 i = 0; i < mShakeInfos.size(); i++) {
+    for (s32 i = 0; i < infoNum; i++) {
         if (mShakeInfos(i).jointIndex == jointIndex) {
-            axis = mShakeInfos(i).axis;
+            JointTranslateAxis infoAxis = mShakeInfos(i).axis;
+            axis = infoAxis;
+            isFound = infoAxis != JointTranslateAxis_None;
             break;
         }
     }
 
-    if (axis == JointTranslateAxis_None) {
+    if (!isFound) {
         return;
     }
 
@@ -96,7 +117,7 @@ void JointTranslateShaker::calcJointCallback(s32 jointIndex, sead::Matrix34f* pM
 
     sead::Matrix34f transMtx;
     transMtx.makeT(trans);
-    pMtx->setMul(*pMtx, transMtx);
+    *pMtx = *pMtx * transMtx;
 }
 
 }  // namespace al
