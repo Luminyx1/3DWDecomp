@@ -35009,7 +35009,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100532700			FALSE	_ZN13RigidBodyCore11initMembersEv	RigidBodyCore::initMembers()	
 0x7100532800			FALSE	_ZN13RigidBodyCore8initPoseEPKN4sead8Matrix34IfEE	RigidBodyCore::initPose(sead::Matrix34<float> const*)	
 0x7100532870			FALSE	_ZN13RigidBodyCore12requestPowerERKN4sead7Vector3IfEES4_	RigidBodyCore::requestPower(sead::Vector3<float> const&, sead::Vector3<float> const&)	
-0x7100532890		RigidBodyPower.o	FALSE	_ZN14RigidBodyPower5powerERKN13RigidBodyCore4PoseEfRKN4sead7Vector3IfEES8_	RigidBodyPower::power(RigidBodyCore::Pose const&, float, sead::Vector3<float> const&, sead::Vector3<float> const&)	object (class)
+0x7100532890			FALSE	_ZN14RigidBodyPower5powerERKN13RigidBodyCore4PoseEfRKN4sead7Vector3IfEES8_	RigidBodyPower::power(RigidBodyCore::Pose const&, float, sead::Vector3<float> const&, sead::Vector3<float> const&)	object (class)
 0x7100532B40			FALSE	_ZN13RigidBodyCore6updateEv	RigidBodyCore::update()	
 0x7100532E40			FALSE	_ZN13RigidBodyCore12startPhysicsEv	RigidBodyCore::startPhysics()	
 0x71005332F0			FALSE	_ZN13RigidBodyCore19calcCollisionImpactEv	RigidBodyCore::calcCollisionImpact()	
