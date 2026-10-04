@@ -16,4 +16,10 @@ namespace rc {
 
     bool trySendMsgBlockToUpperObj(al::HitSensor*, al::HitSensor*, int, al::ComboCounter*);
     bool trySendMsgBlockToLowerObj(al::HitSensor*, al::HitSensor*, al::ComboCounter*);
+
+    bool isMsgJumpPanelAction(const al::SensorMsg*);
+    bool isMsgPackunEat(const al::SensorMsg*);
+    bool isMsgBullAttack(const al::SensorMsg*);
+    bool isMsgStartGoalDemoPole(const al::SensorMsg*);
+    bool isMsgStartGoalDemoHouse(const al::SensorMsg*);
 };  // namespace rc
