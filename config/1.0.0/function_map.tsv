@@ -32452,7 +32452,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71004F29B0			FALSE	_ZN2rc18AssetLoadingThread31cancelAndDelete3DWorldStationedEv	rc::AssetLoadingThread::cancelAndDelete3DWorldStationed()	
 0x71004F29E0			FALSE	_ZN2rc18AssetLoadingThread19cancelAndDeleteLoadENS0_9LOAD_TYPEE	rc::AssetLoadingThread::cancelAndDeleteLoad(rc::AssetLoadingThread::LOAD_TYPE)	
 0x71004F2CD0			FALSE	_ZN2rc18AssetLoadingThread34cancelAndDeleteSingleModeStationedEv	rc::AssetLoadingThread::cancelAndDeleteSingleModeStationed()	
-0x71004F2CE0			FALSE	sub_71004F2CE0	sub_71004F2CE0	
+0x71004F2CE0			FALSE	_ZNK12_GLOBAL__N_117StationedCategory4textEv	(anonymous namespace)::StationedCategory::text() const	
 0x71004F2EA0			TRUE	_ZN4sead15FixedSafeStringILi120EED0Ev	sead::FixedSafeString<120>::~FixedSafeString()	
 0x71004F2EB0			TRUE	_ZN4sead15FixedSafeStringILi120EEaSERKNS_14SafeStringBaseIcEE	sead::FixedSafeString<120>::operator=(sead::SafeStringBase<char> const&)	
 0x71004F2FA0			TRUE	_ZN4sead19FixedSafeStringBaseIcLi120EED0Ev	sead::FixedSafeStringBase<char, 120>::~FixedSafeStringBase()	
@@ -32460,7 +32460,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71004F30A0			FALSE	_ZN4sead9Delegate2IN2rc18AssetLoadingThreadEPNS_6ThreadElED0Ev	sead::Delegate2<rc::AssetLoadingThread, sead::Thread*, long>::~Delegate2()	
 0x71004F30B0			FALSE	_ZN4sead9Delegate2IN2rc18AssetLoadingThreadEPNS_6ThreadElE6invokeES4_l	sead::Delegate2<rc::AssetLoadingThread, sead::Thread*, long>::invoke(sead::Thread*, long)	
 0x71004F30E0			FALSE	_ZNK4sead9Delegate2IN2rc18AssetLoadingThreadEPNS_6ThreadElE5cloneEPNS_4HeapE	sead::Delegate2<rc::AssetLoadingThread, sead::Thread*, long>::clone(sead::Heap*) const	
-0x71004F3150			FALSE	sub_71004F3150	sub_71004F3150	
+0x71004F3150			FALSE	_GLOBAL__sub_I_AssetLoadingThread.cpp	_GLOBAL__sub_I_AssetLoadingThread.cpp	
 0x71004F31A0		ControlUserDataHolder.o	FALSE	_ZN15ControlUserDataC2Ev	ControlUserData::ControlUserData()	
 0x71004F31E0			FALSE	_ZNK15ControlUserData8isActiveEv	ControlUserData::isActive() const	
 0x71004F31F0			FALSE	_ZNK15ControlUserData13isDeadInStageEv	ControlUserData::isDeadInStage() const	
