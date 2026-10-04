@@ -14,22 +14,39 @@ struct DspadpcmHeader {
 };
 static_assert(sizeof(DspadpcmHeader) == 0x60, "DspadpcmHeader size");
 class DspadpcmReader {
-public:
+  public:
     NOINLINE DspadpcmReader();
     NOINLINE bool ReadWaveInfo(WaveInfo* info) const;
-private:
+
+  private:
     friend class WaveFileReader;
     const DspadpcmHeader* mHeader;
 };
 class WaveFileReader {
-public:
+  public:
     WaveFileReader(const void* file, s8 type);
-    // format is the file's encoding byte; unknown encodings use DSP ADPCM.
-    static u32 GetSampleFormat(u8 format) { return format > 2 ? 2 : format; }
+    /**
+     * @brief Converts the wave file's encoding byte to a playback sample format.
+     * @param format File encoding value; unknown encodings select DSP ADPCM.
+     * @return Recognized encoding value, or the DSP ADPCM format value of 2.
+     */
+    USED static u32 GetSampleFormat(u8 format) {
+        switch (format) {
+        case 0:
+            return 0;
+        case 1:
+            return 1;
+        case 2:
+            return 2;
+        default:
+            return 2;
+        }
+    }
     bool IsOriginalLoopAvailable() const;
     bool ReadWaveInfo(WaveInfo* info, const void* waveData) const;
     const void* GetWaveDataAddress(const WaveFile::ChannelInfo* channel, const void* waveData) const;
-private:
+
+  private:
     const WaveFile::FileHeader* mHeader;
     const WaveFile::InfoBlockBody* mInfo;
     const void* mData;
@@ -37,4 +54,4 @@ private:
     s8 mType;
 };
 static_assert(sizeof(WaveFileReader) == 0x28, "WaveFileReader size");
-}
+} // namespace nn::atk::detail
