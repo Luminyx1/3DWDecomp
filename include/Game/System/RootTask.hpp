@@ -7,9 +7,15 @@ class RootTask : public sead::Task {
     void prepare() override;
     void enter() override;
     void calc() override;
-    void draw() override;
+
+    /**
+     * @brief Draw the main game view.
+     */
+    void draw() override { drawTop(); }
+
     virtual void drawTop();
     virtual void drawBtm();
+
     /**
      * @brief Access the game system owned by the root task.
      * @return The game system, or nullptr before preparation.
