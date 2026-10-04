@@ -3,6 +3,8 @@
 class IslandData {
   public:
     IslandData();
+    void init(const char* pName, const char* pDisplayName, s32 islandId, s32 unlockCount,
+              s32 scenarioNum);
     ScenarioData* getScenarioDataByIndex(s32 index);
     s32 getNumScenarios() const;
     bool isValid() const;

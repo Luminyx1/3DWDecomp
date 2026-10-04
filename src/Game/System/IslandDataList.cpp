@@ -10,27 +10,48 @@
 #include "System/Data/OceanScenarioList.hpp"
 #include "System/IslandData.hpp"
 
-namespace {
+/**
+ * @brief Creates an unassigned island with no scenario list.
+ */
+IslandData::IslandData() : mDisplayName(u"") {}
 
 /**
  * @brief Fills an island record and allocates its scenario list.
- * @param pIsland Island record to fill.
  * @param pName Internal island name.
  * @param pDisplayName Display name, converted to a wide string.
  * @param islandId Identifier assigned to the island.
  * @param unlockCount Unlock requirement of the island.
  * @param scenarioNum Number of scenarios to allocate.
  */
-void initIsland(IslandData* pIsland, const char* pName, const char* pDisplayName, int islandId,
-                int unlockCount, int scenarioNum) {
-    pIsland->mName = pName;
-    pIsland->mIslandId = islandId;
-    pIsland->mAttribute = unlockCount;
-    pIsland->mDisplayName.convertFromMultiByteString(pDisplayName, -1);
-    pIsland->mScenarios = new ScenarioList(scenarioNum);
+void IslandData::init(const char* pName, const char* pDisplayName, s32 islandId, s32 unlockCount,
+                      s32 scenarioNum) {
+    mName = pName;
+    mIslandId = islandId;
+    mAttribute = unlockCount;
+    mDisplayName.convertFromMultiByteString(pDisplayName, -1);
+    mScenarios = new ScenarioList(scenarioNum);
 }
 
-}  // namespace
+/**
+ * @brief Gets a scenario from the island list.
+ * @param index Nonnegative scenario index; the island must have a nonempty list.
+ * @return Selected scenario, clamped at the upper end of the list.
+ */
+ScenarioData* IslandData::getScenarioDataByIndex(s32 index) {
+    return mScenarios->getScenarioDataByIndex(index);
+}
+
+/**
+ * @brief Gets the number of scenarios on an initialized island.
+ * @return Scenario count; requires a valid scenario list.
+ */
+s32 IslandData::getNumScenarios() const { return mScenarios->mCount; }
+
+/**
+ * @brief Checks whether an island has a scenario list.
+ * @return True when the list pointer is non-null.
+ */
+bool IslandData::isValid() const { return mScenarios != nullptr; }
 
 /**
  * @brief Creates an empty list with room for a fixed number of islands.
@@ -86,7 +107,7 @@ bool IslandDataList::SharedIslandInit(IslandData* pIsland, al::ByamlIter& rIter,
     rIter.tryGetIterByKey(&scenarioListIter, "ScenarioList");
     int scenarioNum = scenarioListIter.getSize();
 
-    initIsland(pIsland, pName, pDisplayName, islandId, unlockCount, scenarioNum);
+    pIsland->init(pName, pDisplayName, islandId, unlockCount, scenarioNum);
 
     for (int i = 0; i < scenarioNum; i++) {
         scenarioListIter.tryGetIterByIndex(&scenarioIter, i);
