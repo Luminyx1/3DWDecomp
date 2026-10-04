@@ -49,6 +49,7 @@
 #include "Project/Base/StringUtil.hpp"
 #include "Project/Camera/Main/CameraDirector_RS.hpp"
 #include "Raidon/RaidonSurf.hpp"
+#include "Scene/SceneObjID.hpp"
 #include "System/Data/SingleModeDataFunction.hpp"
 #include "System/GameDataHolderAccessor.hpp"
 #include "System/GameDataHolderWriter.hpp"
@@ -84,10 +85,6 @@ namespace {
                          AppearOutOnly, Disappear, WaitAppearDestDokan, PlayerOutWithCameraWait,
                          PlayerOutWithCameraTicketWait, PlayerOut, PlayerOutWaitForDstAnimDone)
 };  // namespace
-
-constexpr s32 cSceneObjIslandMap = 45;
-constexpr s32 cSceneObjRaidonSurf = 51;
-constexpr s32 cSceneObjSingleModeSceneLayout = 53;
 
 /**
  * @brief Stop or restart the vertical move of the camera target that follows the player.
@@ -166,6 +163,7 @@ void Dokan::init(const al::ActorInitInfo& rInfo) {
     }
 
     mAudioDirector = al::getAudioDirector(rInfo);
+
     if (al::isObjectName(rInfo, "DokanUpsideDown")) {
         al::initActorWithArchiveName(this, rInfo, archiveName, "UpsideDown");
     } else {
@@ -214,7 +212,7 @@ void Dokan::init(const al::ActorInitInfo& rInfo) {
         al::PlacementInfo destPlacementInfo;
         al::getLinksActorInfo(&destInfo, &destPlacementInfo, rInfo, "DestDokan", 0);
 
-        Dokan* destDokan = new Dokan("土管");
+        auto* destDokan = new Dokan("土管");
         destDokan->init(destInfo);
         destDokan->mPairDokan = this;
         mPairDokan = destDokan;
@@ -229,8 +227,7 @@ void Dokan::init(const al::ActorInitInfo& rInfo) {
     mPuppeteerGroup = new BindPuppeteerGroup("土管バインド操作グループ", al::getPlayerNumMax(this));
 
     for (s32 i = 0; i < mPuppeteerGroup->getPuppeteerNumMax(); i++) {
-        DokanBindPuppeteer* puppeteer =
-            new DokanBindPuppeteer("土管バインド操作", mIsSide, false, this);
+        auto* puppeteer = new DokanBindPuppeteer("土管バインド操作", mIsSide, false, this);
         puppeteer->init(rInfo);
         mPuppeteerGroup->registerPuppeteer(puppeteer);
     }
@@ -242,7 +239,7 @@ void Dokan::init(const al::ActorInitInfo& rInfo) {
     // An upside-down pipe is always the out-only end of a pair.
     if (al::isObjectName(rInfo, "DokanUpsideDown")) {
         mIsUpsideDown = true;
-        mType = 1;
+        mType = Type::OutOnly;
         al::rotateQuatXDirDegree(this, 180.0f);
         al::tryGetArg(&mIsControlPlayerOut, rInfo, "IsControlPlayerOut");
     } else {
@@ -330,7 +327,7 @@ void Dokan::setIsHideModel(bool isHide) {
     mIsHideModel = isHide;
 
     if (isHide) {
-        al::SubActorKeeper* subActorKeeper = getSubActorKeeper();
+        auto* subActorKeeper = getSubActorKeeper();
 
         if (subActorKeeper != nullptr) {
             for (s32 i = 0; i < subActorKeeper->getSubActorNum(); i++) {
@@ -481,7 +478,7 @@ bool Dokan::receiveMsg(const al::SensorMsg* pMsg, al::HitSensor* pOther, al::Hit
 
     if (al::isMsgBindInit(pMsg)) {
         mBindSensor = pSelf;
-        DokanBindPuppeteer* puppeteer = getPuppeteer(pOther);
+        auto* puppeteer = getPuppeteer(pOther);
         al::LiveActor* player = al::getSensorHost(pOther);
 
         if (mIsSingleMode) {
@@ -492,8 +489,7 @@ bool Dokan::receiveMsg(const al::SensorMsg* pMsg, al::HitSensor* pOther, al::Hit
                 rc::trySetPlayerInvicibleBgmState(pOther, true);
             }
 
-            RaidonSurf* raidon =
-                static_cast<RaidonSurf*>(al::tryGetSceneObj(this, cSceneObjRaidonSurf));
+            auto* raidon = al::tryGetSceneObj<RaidonSurf>(this, SceneObjID_RaidonSurf);
 
             if (raidon != nullptr) {
                 raidon->forceSpawn(true);
@@ -530,7 +526,7 @@ bool Dokan::receiveMsg(const al::SensorMsg* pMsg, al::HitSensor* pOther, al::Hit
     }
 
     if (al::isMsgBindCancel(pMsg)) {
-        DokanBindPuppeteer* puppeteer = getPuppeteer(pOther);
+        auto* puppeteer = getPuppeteer(pOther);
         puppeteer->cancelBind();
         mBindOrderGroup->erasePuppeteer(puppeteer);
 
@@ -559,7 +555,7 @@ bool Dokan::receiveMsg(const al::SensorMsg* pMsg, al::HitSensor* pOther, al::Hit
  * @return True for an out-only pipe.
  */
 bool Dokan::isTypeOutOnly() const {
-    return mType == 1;
+    return mType == Type::OutOnly;
 }
 
 /**
@@ -629,8 +625,7 @@ void Dokan::setLayout(const al::HitSensor* pPlayerSensor) {
  * @return The puppeteer of the player.
  */
 DokanBindPuppeteer* Dokan::getPuppeteer(const al::HitSensor* pPlayerSensor) const {
-    return static_cast<DokanBindPuppeteer*>(
-        mPuppeteerGroup->getPuppeteerByPlayerIndex(pPlayerSensor));
+    return mPuppeteerGroup->getPuppeteerByPlayerIndex<DokanBindPuppeteer>(pPlayerSensor);
 }
 
 /// Drop the shadow of a side pipe along its front direction.
@@ -739,8 +734,7 @@ bool Dokan::isWarpStart() const {
     s32 bindNum = mBindOrderGroup->getPuppeteerNum();
 
     for (s32 i = 0; i < bindNum; i++) {
-        if (!static_cast<DokanBindPuppeteer*>(mBindOrderGroup->getPuppeteer(i))
-                 ->isWaitStartWarp()) {
+        if (!mBindOrderGroup->getPuppeteer<DokanBindPuppeteer>(i)->isWaitStartWarp()) {
             return false;
         }
     }
@@ -756,8 +750,7 @@ void Dokan::tryWarp() {
                            false;
 
     for (s32 i = 0; i < bindNum; i++) {
-        static_cast<DokanBindPuppeteer*>(mBindOrderGroup->getPuppeteer(i))
-            ->warp(i, bindNum, isUseCamera);
+        mBindOrderGroup->getPuppeteer<DokanBindPuppeteer>(i)->warp(i, bindNum, isUseCamera);
     }
 
     if (mIsSingleMode) {
@@ -881,8 +874,7 @@ void Dokan::exePlayerIn() {
                     rc::tryFindAreaObjGroup(this, rc::AreaObjType::MapDisableArea);
                 bool isEnterBonusArea =
                     mapDisableArea != nullptr ? !al::tryIsInAreaObjPlayer(mapDisableArea) : false;
-                IslandMap* islandMap =
-                    static_cast<IslandMap*>(al::tryGetSceneObj(this, cSceneObjIslandMap));
+                auto* islandMap = al::tryGetSceneObj<IslandMap>(this, SceneObjID_IslandMap);
 
                 if (islandMap != nullptr) {
                     if (isEnterBonusArea) {
@@ -909,7 +901,7 @@ void Dokan::exePlayerIn() {
         mIsRequestedBindAll = true;
     }
 
-    DisasterModeController* disaster = DisasterModeController::tryGetController(this);
+    auto* disaster = DisasterModeController::tryGetController(this);
 
     if (rc::isAllPlayerBinded(this)) {
         rc::setDisableReviveBubbleForAllPlayer(this);
@@ -998,10 +990,9 @@ void Dokan::exePlayerIn() {
         al::startCamera_RS(this, mPairDokan->mCameraTicket, -1);
 
         if (al::isEqualString(mPairDokan->mCameraTicket->getPoser()->getName(), "Fixed")) {
-            static_cast<al::CameraPoserFix*>(mPairDokan->mCameraTicket->getPoser())
-                ->setOwnerObject(mPairDokan);
-            static_cast<al::CameraPoserFix*>(mPairDokan->mCameraTicket->getPoser())
-                ->setDistanceInitOffset(mPipeInitOffset, mPipeInitOffsetDecayRate);
+            mPairDokan->mCameraTicket->getPoser<al::CameraPoserFix>()->setOwnerObject(mPairDokan);
+            mPairDokan->mCameraTicket->getPoser<al::CameraPoserFix>()->setDistanceInitOffset(
+                mPipeInitOffset, mPipeInitOffsetDecayRate);
         }
 
         if (!mIsSingleMode) {
@@ -1078,8 +1069,8 @@ void Dokan::exePlayerOut() {
         if (mIsGold) {
             al::AreaObjGroup* mapDisableArea =
                 rc::tryFindAreaObjGroup(this, rc::AreaObjType::MapDisableArea);
-            SingleModeSceneLayout* layout = static_cast<SingleModeSceneLayout*>(
-                al::tryGetSceneObj(this, cSceneObjSingleModeSceneLayout));
+            auto* layout = al::tryGetSceneObj<SingleModeSceneLayout>(
+                this, SceneObjID_SingleModeSceneLayout);
 
             if (mapDisableArea != nullptr && layout != nullptr) {
                 if (al::tryIsInAreaObjPlayer(mapDisableArea)) {
@@ -1110,7 +1101,7 @@ void Dokan::exePlayerOut() {
     if (al::isGreaterEqualStep(this, 0)) {
         for (s32 i = 0; i < mBindOrderGroup->getPuppeteerNum(); i++) {
             if (al::isStep(this, (mPairDokan->mIsUpsideDown ? 30 : 20) * i)) {
-                static_cast<DokanBindPuppeteer*>(mBindOrderGroup->getPuppeteer(i))->dokanOut();
+                mBindOrderGroup->getPuppeteer<DokanBindPuppeteer>(i)->dokanOut();
                 break;
             }
         }

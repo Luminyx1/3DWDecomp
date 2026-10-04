@@ -388,7 +388,7 @@ void DokanBindPuppeteer::warp(s32 index, s32 num, bool isUseCamera) {
     al::setNerve(this, &NrvDokanBindPuppeteerWaitStartDokanOut);
 
     if (!mDestDokan->isUpsideDown() && isUseCamera) {
-        PlayerActor* player = getPuppetPlayerActor(getPlayerPuppet());
+        auto* player = getPuppetPlayerActor(getPlayerPuppet());
         rc::hidePuppet(getPlayerPuppet());
         player->getPlayer()->getEquipmentDirector()->hideCrown();
     }
@@ -534,7 +534,7 @@ void DokanBindPuppeteer::exeDokanInSideMove() {
         IUsePlayerPuppet* puppet = getPlayerPuppet();
         trans = move + trans;
         rc::setPuppetTrans(puppet, trans);
-        PlayerActor* player = getPuppetPlayerActor(getPlayerPuppet());
+        auto* player = getPuppetPlayerActor(getPlayerPuppet());
 
         if (player != nullptr) {
             player->getProperty()->_78 = 0.9f;
@@ -542,7 +542,7 @@ void DokanBindPuppeteer::exeDokanInSideMove() {
     }
 
     if (al::isStep(this, 0)) {
-        PlayerActor* player = getPuppetPlayerActor(getPlayerPuppet());
+        auto* player = getPuppetPlayerActor(getPlayerPuppet());
 
         if (player != nullptr) {
             player->getPlayer()->getEquipmentDirector()->hideCrown();
@@ -677,7 +677,7 @@ void DokanBindPuppeteer::exeWaitStartDokanOut() {
         rc::startPuppetAction(getPlayerPuppet(), getDokanOutActionName());
         rc::setPuppetActionRate(getPlayerPuppet(), 0.0f);
         rc::invalidatePuppetDynamics(getPlayerPuppet());
-        PlayerActor* player = getPuppetPlayerActor(getPlayerPuppet());
+        auto* player = getPuppetPlayerActor(getPlayerPuppet());
 
         if (player != nullptr && mIsSide) {
             player->getProperty()->_78 = 1.0f;
@@ -700,7 +700,7 @@ void DokanBindPuppeteer::exeDokanOutUp() {
             mIsCameraTargetOn = false;
         }
 
-        PlayerActor* player = getPuppetPlayerActor(getPlayerPuppet());
+        auto* player = getPuppetPlayerActor(getPlayerPuppet());
 
         if (player != nullptr) {
             player->getProperty()->_78 = 1.0f;
@@ -714,6 +714,7 @@ void DokanBindPuppeteer::exeDokanOutUp() {
         }
 
         rc::showPuppetSilhouette(getPlayerPuppet());
+
         if (mDestDokan->isUpsideDown()) {
             rc::startPuppetAction(getPlayerPuppet(), "DokanJump");
             rc::setPuppetVelocity(getPlayerPuppet(), sead::Vector3f::zero);

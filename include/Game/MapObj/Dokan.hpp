@@ -23,6 +23,12 @@ class DokanGuideBalloon;
  */
 class Dokan : public al::LiveActor {
 public:
+    /// Placement type of a pipe (the "Type" argument).
+    enum class Type : s32 {
+        Normal = 0,   ///< Players can enter the pipe and come out of it.
+        OutOnly = 1,  ///< Destination-only pipe: it only appears while players come out of it.
+    };
+
     Dokan(const char* pName);
 
     void init(const al::ActorInitInfo& rInfo) override;
@@ -86,7 +92,7 @@ public:
 
 private:
     Dokan* mPairDokan = nullptr;                          // 0x148
-    s32 mType = 0;                                        // 0x150
+    Type mType = Type::Normal;                            // 0x150
     al::PlacementId* mPlacementId = new al::PlacementId;  // 0x158
     BindPuppeteerGroup* mPuppeteerGroup = nullptr;        // 0x160
     BindPuppeteerGroup* mBindOrderGroup = nullptr;        // 0x168

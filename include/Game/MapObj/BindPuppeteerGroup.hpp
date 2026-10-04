@@ -28,6 +28,26 @@ public:
     void erasePuppeteer(BindPuppeteer* pPuppeteer);
 
     /**
+     * @brief Get a puppeteer as its concrete type.
+     * @param index Index of the puppeteer in the group.
+     * @return The puppeteer.
+     */
+    template <typename T>
+    T* getPuppeteer(s32 index) const {
+        return static_cast<T*>(getPuppeteer(index));
+    }
+
+    /**
+     * @brief Get the puppeteer of a player as its concrete type.
+     * @param pPlayerSensor Sensor of the player.
+     * @return The puppeteer of the player.
+     */
+    template <typename T>
+    T* getPuppeteerByPlayerIndex(const al::HitSensor* pPlayerSensor) const {
+        return static_cast<T*>(getPuppeteerByPlayerIndex(pPlayerSensor));
+    }
+
+    /**
      * @brief Count the registered puppeteers.
      * @return Number of puppeteers in the group.
      */
