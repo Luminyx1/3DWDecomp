@@ -2,6 +2,7 @@
 
 #include <cstring>
 #include <nn/atk/atk_Global.h>
+#include <nn/atk/atk_BinaryFileFormat.h>
 #include <nn/types.h>
 
 namespace nn::atk {
@@ -11,25 +12,46 @@ class FileStream;
 
 namespace detail {
 class SoundArchiveFile {
-public:
-    struct FileHeader {
+  public:
+    struct FileHeader : BinaryFileHeader {
+        ReferenceWithSize blocks[3];
         u32 GetStringBlockSize() const;
         u32 GetInfoBlockSize() const;
+        s32 GetStringBlockOffset() const;
+        s32 GetInfoBlockOffset() const;
+        s32 GetFileBlockOffset() const;
     };
 };
 
 class SoundArchiveFileReader {
-public:
-    u32 GetInfoBlockSize() const { return m_Header.GetInfoBlockSize(); }
-    u32 GetStringBlockSize() const { return m_Header.GetStringBlockSize(); }
+  public:
+    SoundArchiveFileReader();
+    void Initialize(const void* pFile);
+    void Finalize();
+    void SetInfoBlock(const void* pBlock);
+    void SetStringBlock(const void* pBlock);
 
-private:
+    /** @brief Gets the metadata block size. @return INFO block size in bytes. */
+    u32 GetInfoBlockSize() const { return m_Header.GetInfoBlockSize(); }
+    /** @brief Gets the label block size. @return STRG block size, or 0xffffffff if absent. */
+    u32 GetStringBlockSize() const { return m_Header.GetStringBlockSize(); }
+    /** @brief Gets the metadata location. @return INFO block offset from the file header. */
+    s32 GetInfoBlockOffset() const { return m_Header.GetInfoBlockOffset(); }
+    /** @brief Gets the label location. @return STRG block offset from the file header. */
+    s32 GetStringBlockOffset() const { return m_Header.GetStringBlockOffset(); }
+    /** @brief Gets the embedded file block location. @return FILE block offset from the file header. */
+    s32 GetFileBlockOffset() const { return m_Header.GetFileBlockOffset(); }
+
+  private:
     SoundArchiveFile::FileHeader m_Header;
+    const void* mStringBlock;
+    const void* mInfoBlock;
 };
-}  // namespace detail
+static_assert(sizeof(SoundArchiveFileReader) == 0x48, "SoundArchiveFileReader size");
+} // namespace detail
 
 class SoundArchive {
-public:
+  public:
     typedef u32 ItemId;
     typedef ItemId FileId;
 
@@ -42,6 +64,7 @@ public:
     };
 
     struct FileInfo {
+        /** @brief Initializes an unresolved file record with no external path. */
         FileInfo() : fileSize(0xffffffff), offsetFromFileBlockHead(0xffffffff), externalFilePath(nullptr) {}
 
         u32 fileSize;
@@ -49,8 +72,16 @@ public:
         const char* externalFilePath;
     };
 
+    struct GroupInfo {
+        /** @brief Initializes an unresolved group with zero file size. */
+        GroupInfo() : fileId(InvalidId), fileSize(0) {}
+        FileId fileId;
+        u32 fileSize;
+    };
+
     struct SequenceSoundInfo {
-        SequenceSoundInfo() : startOffset(0), allocateTrackFlags(0), channelPriority(0), isReleasePriorityFix(false) {
+        SequenceSoundInfo()
+            : startOffset(0), allocateTrackFlags(0), channelPriority(0), isReleasePriorityFix(false) {
             for (s32 i = 0; i < 4; i++) {
                 bankIds[i] = 0xffffffff;
             }
@@ -117,8 +148,8 @@ public:
     struct StreamSoundInfo {
         StreamSoundInfo()
             : allocateTrackFlags(0), allocateChannelCount(0), pitch(1.0f), mainSend(127),
-              streamFileType(StreamFileType_Invalid), decodeMode(DecodeMode_Default), prefetchFileId(InvalidId),
-              streamBufferPool(nullptr) {
+              streamFileType(StreamFileType_Invalid), decodeMode(DecodeMode_Default),
+              prefetchFileId(InvalidId), streamBufferPool(nullptr) {
             std::memset(fxSend, 0, sizeof(u8) * AuxBus_Count);
         }
 
@@ -147,6 +178,8 @@ public:
 
     bool IsAvailable() const;
     u32 GetSoundCount() const;
+    u32 GetGroupCount() const;
+    bool ReadGroupInfo(GroupInfo* pInfo, ItemId id) const;
     const char* GetItemLabel(ItemId id) const;
     ItemId GetItemId(const char* pLabel) const;
     FileId GetItemFileId(ItemId id) const;
@@ -159,7 +192,9 @@ public:
     virtual const void* detail_GetFileAddress(FileId fileId) const = 0;
     virtual size_t detail_GetRequiredStreamBufferSize() const = 0;
 
-protected:
+  protected:
+    void Initialize(detail::SoundArchiveFileReader* pReader);
+    void Finalize();
     virtual void FileAccessBegin() const {}
     virtual void FileAccessEnd() const {}
     virtual bool IsAddon() const { return false; }
@@ -168,7 +203,7 @@ protected:
     virtual detail::fnd::FileStream* OpenExtStream(void* pBuffer, size_t size, const char* pExtFilePath,
                                                    void* pCacheBuffer, size_t cacheSize) const = 0;
 
-private:
+  private:
     u8 _8[0x2a0 - 0x8];
 };
 static_assert(sizeof(SoundArchive) == 0x2a0);
@@ -176,11 +211,8 @@ static_assert(sizeof(SoundArchive) == 0x2a0);
 class AddonSoundArchive : public SoundArchive {};
 
 class FsSoundArchive : public SoundArchive {
-public:
-    enum FileAccessMode {
-        FileAccessMode_Always,
-        FileAccessMode_InFunction
-    };
+  public:
+    enum FileAccessMode { FileAccessMode_Always, FileAccessMode_InFunction };
 
     FsSoundArchive();
     ~FsSoundArchive() override;
@@ -197,17 +229,16 @@ public:
     size_t detail_GetRequiredStreamBufferSize() const override;
     const void* detail_GetFileAddress(FileId fileId) const override { return nullptr; }
 
-protected:
+  protected:
     void FileAccessBegin() const override;
     void FileAccessEnd() const override;
-    detail::fnd::FileStream* OpenStream(void* pBuffer, size_t size, s64 begin,
-                                        size_t length) const override;
+    detail::fnd::FileStream* OpenStream(void* pBuffer, size_t size, s64 begin, size_t length) const override;
     detail::fnd::FileStream* OpenExtStream(void* pBuffer, size_t size, const char* pExtFilePath,
                                            void* pCacheBuffer, size_t cacheSize) const override;
 
-private:
+  private:
     detail::SoundArchiveFileReader m_ArchiveReader;
-    u8 _2a1[0x368 - 0x2a1];
+    u8 _2e8[0x368 - 0x2e8];
     bool m_IsOpened;
     u8 m_FileAccessMode;
     u8 _36a[0x610 - 0x36a];
@@ -215,7 +246,7 @@ private:
 static_assert(sizeof(FsSoundArchive) == 0x610);
 
 class MemorySoundArchive : public SoundArchive {
-public:
+  public:
     MemorySoundArchive();
     ~MemorySoundArchive() override;
 
@@ -225,14 +256,24 @@ public:
     size_t detail_GetRequiredStreamBufferSize() const override;
     const void* detail_GetFileAddress(FileId fileId) const override;
 
-protected:
-    detail::fnd::FileStream* OpenStream(void* pBuffer, size_t size, s64 begin,
-                                        size_t length) const override;
+  protected:
+    detail::fnd::FileStream* OpenStream(void* pBuffer, size_t size, s64 begin, size_t length) const override;
     detail::fnd::FileStream* OpenExtStream(void* pBuffer, size_t size, const char* pExtFilePath,
                                            void* pCacheBuffer, size_t cacheSize) const override;
 
-private:
-    u8 _2a0[0x2f0 - 0x2a0];
+  private:
+    /**
+     * @brief Locates a file relative to the archive's embedded FILE block.
+     * @param rInfo Resolved file metadata with a valid embedded offset.
+     * @return Pointer into the caller-owned archive image.
+     */
+    const void* GetEmbeddedFileAddress(const FileInfo& rInfo) const {
+        const u8* pData = mArchiveData;
+        u32 offset = rInfo.offsetFromFileBlockHead;
+        return pData + static_cast<u32>(mArchiveReader.GetFileBlockOffset() + offset);
+    }
+    const u8* mArchiveData;
+    detail::SoundArchiveFileReader mArchiveReader;
 };
 static_assert(sizeof(MemorySoundArchive) == 0x2f0);
-}  // namespace nn::atk
+} // namespace nn::atk
