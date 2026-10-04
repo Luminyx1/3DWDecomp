@@ -3361,7 +3361,7 @@ src/Game/Util/SceneUtil.cpp: done
     .text   start:0x00534DF0 end:0x00535328
 src/Game/Util/ScoreUtil.cpp: done
     .text   start:0x00535330 end:0x00536178
-src/nw/atk/atk_HardwareManager.cpp:
+src/nw/atk/atk_HardwareManager.cpp: done
     .text   start:0x00536180 end:0x005363D0
 src/nw/atk/detail/dsp/atk_HardwareManager.cpp:
     .text   start:0x00536580 end:0x005389E4
