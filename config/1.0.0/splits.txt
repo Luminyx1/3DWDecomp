@@ -3243,9 +3243,9 @@ src/Game/System/GameDataCommon.cpp:
     .text   start:0x004F56B0 end:0x004F5888
 src/Game/System/GameDataConst.cpp: done
     .text   start:0x004F5890 end:0x004F59AC
-src/Game/System/GameDataFile.cpp:
+src/Game/System/GameDataFile.cpp: done
     .text   start:0x004F59B0 end:0x004F8588
-src/Game/System/GameDataFileBase.cpp:
+src/Game/System/GameDataFileBase.cpp: done
     .text   start:0x004F8590 end:0x004F8D08
 src/Game/System/GameDataFlagFunction.cpp:
     .text   start:0x004F8D10 end:0x004FAE80
@@ -3283,9 +3283,9 @@ src/Game/System/SaveDataAccessSequence.cpp:
     .text   start:0x00501B40 end:0x005026F0
 src/Game/System/ScenarioList.cpp:
     .text   start:0x005026F0 end:0x00502BE0
-src/Game/System/Data/OceanScenarioList.cpp:
+src/Game/System/Data/OceanScenarioList.cpp: done
     .text   start:0x00502BE0 end:0x00502DC0
-src/Game/System/Data/SingleModeData.cpp:
+src/Game/System/Data/SingleModeData.cpp: done
     .text   start:0x00502DC0 end:0x00506368
 src/Game/System/Data/SingleModeDataFunction.cpp:
     .text   start:0x00506370 end:0x00508EEC
@@ -3293,9 +3293,9 @@ src/Game/System/Data/SingleModeStockItemArray.cpp: done
     .text   start:0x00508EF0 end:0x0050906C
 src/Game/System/Data/StageDatabaseInfo.cpp: done
     .text   start:0x00509070 end:0x00509344
-src/Game/System/Data/StageDataHolder.cpp:
+src/Game/System/Data/StageDataHolder.cpp: done
     .text   start:0x00509350 end:0x0050A440
-src/Game/System/Data/StageListHolder.cpp:
+src/Game/System/Data/StageListHolder.cpp: done
     .text   start:0x0050A440 end:0x0050A888
 src/Game/System/Data/StageType.cpp: done
     .text   start:0x0050A890 end:0x0050AC4C
@@ -3305,7 +3305,7 @@ src/Game/System/Data/StampType.cpp: done
     .text   start:0x0050AD40 end:0x0050AEBC
 src/Game/System/Data/StockItemList.cpp:
     .text   start:0x0050AEC0 end:0x0050B37C
-src/Game/System/Data/TesselatorData.cpp:
+src/Game/System/Data/TesselatorData.cpp: done
     .text   start:0x0050B380 end:0x0050CB50
 src/Game/System/Data/WorldGameData.cpp: done
     .text   start:0x0050CB50 end:0x0050CC40
