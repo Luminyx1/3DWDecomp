@@ -3461,7 +3461,7 @@ src/nw/atk/detail/thread/atk_TaskManager.cpp:
     .text   start:0x0055BC10 end:0x0055C464
 src/nw/atk/detail/thread/atk_TaskThread.cpp:
     .text   start:0x0055C470 end:0x0055C7DC
-src/nw/atk/detail/util/atk_CurveAdshr.cpp:
+src/nw/atk/detail/util/atk_CurveAdshr.cpp: done
     .text   start:0x0055C7E0 end:0x0055CCB8
 src/nw/atk/detail/util/atk_CurveLfo.cpp:
     .text   start:0x0055CCC0 end:0x0055CE7C
