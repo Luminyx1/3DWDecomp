@@ -6,10 +6,8 @@ namespace al {
     class ScreenPointer;
 };  // namespace al
 
-namespace rc {
-    bool tryFindDrcTouchActor(const al::LiveActor*, const al::ScreenPointer*);
-};
-
 namespace DrcFunction {
     al::HitSensor* tryFindDrcPlayerSensor(const al::LiveActor*, const al::ScreenPointer*);
+    al::HitSensor* tryFindDrcPlayerSensor(const al::LiveActor*, const al::HitSensor*);
+    al::LiveActor* tryFindDrcTouchActor(const al::LiveActor*, const al::ScreenPointer*);
 };  // namespace DrcFunction
