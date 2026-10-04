@@ -124,7 +124,7 @@ public:
     virtual void detachDrawImpl() = 0;
     virtual const RuntimeTypeInfo::Interface* getCorrespondingMethodTreeMgrTypeInfo() const = 0;
     virtual MethodTreeNode* getMethodTreeNode(s32 method_type) = 0;
-    virtual void onDestroy();
+    virtual void onDestroy() { doneDestroy(); }
 
     void attachCalc();
     void attachDraw();
