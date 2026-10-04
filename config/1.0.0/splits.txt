@@ -3227,10 +3227,8 @@ src/Game/System/ApplicationMain.cpp: done
     .text   start:0x004F1BC0 end:0x004F1C68
 src/Game/System/AssetLoadingThread.cpp:
     .text   start:0x004F1C70 end:0x004F31A0
-src/Game/System/ControlUserData.cpp: done
-    .text   start:0x004F31A0 end:0x004F322C
 src/Game/System/ControlUserDataHolder.cpp:
-    .text   start:0x004F3230 end:0x004F3EF4
+    .text   start:0x004F31A0 end:0x004F3EF4
 src/Game/System/CourseGreenStarInfo.cpp: done
     .text   start:0x004F3F00 end:0x004F4000
 src/Game/System/CourseInfoHolder.cpp:
