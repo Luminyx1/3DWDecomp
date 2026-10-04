@@ -34157,7 +34157,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100517B80			FALSE	_ZN2rc19isReallyPlayerActorEPKN2al9LiveActorE	rc::isReallyPlayerActor(al::LiveActor const*)	
 0x7100517BB0			FALSE	_ZN2rc19isReallyPlayerActorEPKN2al9HitSensorE	rc::isReallyPlayerActor(al::HitSensor const*)	
 0x7100517BE0			FALSE	_ZN2rc17doGigaHitReactionEPKN2al9LiveActorEPKc	rc::doGigaHitReaction(al::LiveActor const*, char const*)	
-0x7100517C40			FALSE	sub_7100517C40	sub_7100517C40	
+0x7100517C40			FALSE	_ZN12_GLOBAL__N_127appendGigaHitReactionSuffixEPKN2al9LiveActorEPN4sead22BufferedSafeStringBaseIcEE	(anonymous namespace)::appendGigaHitReactionSuffix(al::LiveActor const*, sead::BufferedSafeStringBase<char>*)	
 0x7100517EB0			FALSE	_ZN2rc17doGigaHitReactionEPKN2al9LiveActorEPKcRKN4sead7Vector3IfEE	rc::doGigaHitReaction(al::LiveActor const*, char const*, sead::Vector3<float> const&)	
 0x7100517F10			FALSE	_ZN2rc24getPlayerCharacterNumMaxEv	rc::getPlayerCharacterNumMax()	
 0x7100517F20			FALSE	_ZN2rc28getPlayerCharacterNumMaxTrueEv	rc::getPlayerCharacterNumMaxTrue()	
