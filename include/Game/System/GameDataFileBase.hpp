@@ -1,5 +1,7 @@
 #pragma once
 #include <basis/seadTypes.h>
+#include <nn/time.h>
+#include <nn/util/util_Uuid.h>
 #include <prim/seadSafeString.h>
 #include <time/seadDateTime.h>
 class GameDataHolder;
@@ -30,12 +32,14 @@ class GameDataFileBase {
     virtual void initPlayerLife(int life);
     virtual int getPlayerLife() const;
     virtual bool addPlayerLife(int life);
-    void initializeData(bool resetCreationTime);
+    void initializeData(bool isSingleMode);
     void copyFileBase(const GameDataFileBase& rOther);
     const ControlUserData* getControlUserData(int userId) const;
     int getMainPlayerCharacterType() const;
     int getMainPlayerCharacterTypeSaved() const;
     bool addCoin(int count);
+    void updateTotalPlayTimePR();
+    void initTotalPlayTimePR();
     s64 getTotalPlayTimePR(bool isIncludeCurrentPlay);
 
     /**
@@ -53,11 +57,11 @@ class GameDataFileBase {
     int mMainUserId;
     int mCoinCount;
     sead::DateTime mLastPlayingTime;
-    sead::DateTime mCreationTime;
-    u64 mUnknown40;
-    u64 mUnknown48;
-    u8 mUuid[16];
-    char mUnknown60[16];
+    sead::DateTime mPlayStartTime;
+    nn::TimeSpan mPlayStartActiveTime;
+    s64 mTotalPlayTime;
+    nn::util::Uuid mUuid;
+    char mUuidString[16];
     sead::SafeString mName;
 };
 static_assert(sizeof(GameDataFileBase) == 0x80);
