@@ -3459,7 +3459,7 @@ src/nw/atk/detail/thread/atk_Task.cpp: done
     .text   start:0x0055BB90 end:0x0055BBF4
 src/nw/atk/detail/thread/atk_TaskManager.cpp:
     .text   start:0x0055BC10 end:0x0055C464
-src/nw/atk/detail/thread/atk_TaskThread.cpp:
+src/nw/atk/detail/thread/atk_TaskThread.cpp: done
     .text   start:0x0055C470 end:0x0055C7DC
 src/nw/atk/detail/util/atk_CurveAdshr.cpp: done
     .text   start:0x0055C7E0 end:0x0055CCB8

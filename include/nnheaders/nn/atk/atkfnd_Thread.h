@@ -11,7 +11,12 @@ public:
     class Handler {
     public:
         virtual ~Handler() = default;
-        virtual void Run(void* argument) = 0;
+        /**
+         * @brief Executes the thread entry point.
+         * @param argument Caller context supplied in RunArgs.
+         * @return Thread completion result; the platform trampoline ignores this value.
+         */
+        virtual u32 Run(void* argument) = 0;
     };
     struct RunArgs {
         RunArgs();
