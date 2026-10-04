@@ -30,6 +30,18 @@ class StageDatabaseInfo {
     bool isGateKeeper() const;
     bool isUseCourseInfo() const;
     /**
+     * @brief Read the world this stage belongs to.
+     * @return The world identifier.
+     */
+    int getWorldId() const { return mAttributes00[0]; }
+
+    /**
+     * @brief Read the stage number inside its world.
+     * @return The stage identifier.
+     */
+    int getStageId() const { return mAttributes00[1]; }
+
+    /**
      * @brief Read the unique course identifier.
      * @return The course identifier.
      */
