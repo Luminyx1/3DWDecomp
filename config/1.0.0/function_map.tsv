@@ -36244,11 +36244,11 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710055CAF0			FALSE	_ZN2nn3atk6detail10CurveAdshr17CalcDecibelSquareEi	nn::atk::detail::CurveAdshr::CalcDecibelSquare(int)	
 0x710055CB00			FALSE	_ZN2nn3atk6detail10CurveAdshr11CalcReleaseEi	nn::atk::detail::CurveAdshr::CalcRelease(int)	
 0x710055CB80			FALSE	_ZN2nn3atk6detail8CurveLfo20InitializeCurveTableEv	nn::atk::detail::CurveLfo::InitializeCurveTable()	
-0x710055CBF0			FALSE	sub_710055CBF0	sub_710055CBF0	
-0x710055CC30			FALSE	sub_710055CC30	sub_710055CC30	
-0x710055CC60			FALSE	nullsub_312	nullsub_312	
-0x710055CC70			FALSE	sub_710055CC70	sub_710055CC70	
-0x710055CC90			FALSE	sub_710055CC90	sub_710055CC90	
+0x710055CBF0			FALSE	_ZN2nn3atk6detail12_GLOBAL__N_19SineCurveEf	nn::atk::detail::(anonymous namespace)::SineCurve(float)	TRUE
+0x710055CC30			FALSE	_ZN2nn3atk6detail12_GLOBAL__N_113TriangleCurveEf	nn::atk::detail::(anonymous namespace)::TriangleCurve(float)	TRUE
+0x710055CC60			FALSE	_ZN2nn3atk6detail12_GLOBAL__N_113SawtoothCurveEf	nn::atk::detail::(anonymous namespace)::SawtoothCurve(float)	TRUE
+0x710055CC70			FALSE	_ZN2nn3atk6detail12_GLOBAL__N_111SquareCurveEf	nn::atk::detail::(anonymous namespace)::SquareCurve(float)	TRUE
+0x710055CC90			FALSE	_ZN2nn3atk6detail12_GLOBAL__N_111RandomCurveEf	nn::atk::detail::(anonymous namespace)::RandomCurve(float)	TRUE
 0x710055CCC0		atk_CurveLfo.o	FALSE	_ZN2nn3atk6detail8CurveLfo17RegisterUserCurveEPFffEj	nn::atk::detail::CurveLfo::RegisterUserCurve(float (*)(float), unsigned int)	
 0x710055CCE0			FALSE	_ZN2nn3atk6detail8CurveLfo19UnregisterUserCurveEj	nn::atk::detail::CurveLfo::UnregisterUserCurve(unsigned int)	
 0x710055CD00			FALSE	_ZN2nn3atk6detail13CurveLfoParam10InitializeEv	nn::atk::detail::CurveLfoParam::Initialize()	
