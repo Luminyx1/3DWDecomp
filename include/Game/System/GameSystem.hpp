@@ -18,6 +18,12 @@ class GameSystem : public al::NerveExecutor {
     void exePlay();
     bool tryChangeSequence(const char* pName);
 
+    /**
+     * @brief Access the game pad system owned by the game system.
+     * @return The game pad system.
+     */
+    al::GamePadSystem* getGamePadSystem() const { return mpGamePad; }
+
   private:
     al::Sequence* mpSequence;
     al::GameSystemInfo* mpInfo;
