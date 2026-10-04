@@ -37,7 +37,7 @@ public:
      * @param pBuffer Destination; nullptr reads into mBuffer.
      * @return Number of bytes actually read.
      */
-    virtual u32 ReadData(s64 offset, s64 size, void* pBuffer) = 0;
+    virtual u64 ReadData(s64 offset, s64 size, void* pBuffer) = 0;
 
     void* mWorkBuffer;
     u8* mBuffer;
