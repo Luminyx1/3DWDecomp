@@ -11,7 +11,7 @@ class DepressDecompressor : public sead::Decompressor, public nst::dpr::DepressS
     DepressDecompressor(u8* pWorkBuffer, u32 workSize);
     u8* tryDecompFromDevice(const sead::ResourceMgr::LoadArg& rArg, sead::Resource* pResource, u32* pSize,
                             u32* pAllocSize, bool* pAllocated) override;
-    u32 ReadData(s64 offset, s64 size, void* pBuffer) override;
+    u64 ReadData(s64 offset, s64 size, void* pBuffer) override;
 
   private:
     u32 mWorkSize;
