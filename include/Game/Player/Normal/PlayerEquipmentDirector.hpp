@@ -27,4 +27,8 @@ public:
     void releaseEquipmentForce(PlayerReleaseEquipmentGoalType goalType);
     void pauseHeadgear();
     void resumeHeadgear();
+    void hideCrown();
+    void showCrown();
+    void hideHeadgear();
+    void showHeadgear();
 };

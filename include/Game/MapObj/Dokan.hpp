@@ -53,6 +53,24 @@ public:
     void tryWarp();
     bool isFinishWaitOutCamera();
 
+    /**
+     * @brief Check whether the pipe hangs upside down (players leave it downwards).
+     * @return True for an upside-down pipe.
+     */
+    bool isUpsideDown() const { return mIsUpsideDown; }
+
+    /**
+     * @brief Check whether players keep control when they come out of the pipe.
+     * @return True when players are controlled on the way out.
+     */
+    bool isControlPlayerOut() const { return mIsControlPlayerOut; }
+
+    /**
+     * @brief Check whether the player input is ignored for a moment after leaving the pipe.
+     * @return True when the input is ignored after the exit.
+     */
+    bool isIgnorePlayerControlAfterExit() const { return mIsIgnorePlayerControlAfterExit; }
+
     void exeWait();
     void exeAppear();
     void exeDisappear();

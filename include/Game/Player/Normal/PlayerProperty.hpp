@@ -21,4 +21,5 @@ struct PlayerProperty {
     unsigned char _30[0x30];
     sead::Vector3f mGravity;   // 0x60
     sead::Vector3f mUpDir;     // 0x6c
+    f32 _78;  // 0.9 while the player squeezes into a side pipe, 1.0 otherwise
 };
