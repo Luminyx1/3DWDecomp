@@ -3595,7 +3595,7 @@ src/nw/atk/detail/util/atk_FrameHeap.cpp:
     .text   start:0x00580880 end:0x00581534
 src/nw/atk/fnd/basis/atkfnd_FrameHeapImpl.cpp:
     .text   start:0x00581540 end:0x00581B34
-src/nw/atk/fnd/basis/atkfnd_HeapBase.cpp:
+src/nw/atk/fnd/basis/atkfnd_HeapBase.cpp: done
     .text   start:0x00581B40 end:0x00581E90
 src/nw/atk/fnd/basis/atk_SoundStartable.cpp:
     .text   start:0x00581E90 end:0x00582528
