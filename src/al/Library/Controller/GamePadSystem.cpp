@@ -117,7 +117,7 @@ void GamePadSystem::changeMultiPlayMode(s32 maxPlayerNum, s32 minPlayerNum) {
  */
 void GamePadSystem::disableControllerApplet(bool isDisable) {
     if (mDelegate != nullptr) {
-        mDelegate->disableControllerApplet(isDisable);
+        mDelegate->setAppletDisabled(isDisable);
     }
 }
 
@@ -127,7 +127,7 @@ void GamePadSystem::disableControllerApplet(bool isDisable) {
  */
 void GamePadSystem::disableControllerConnectChecker(bool isDisable) {
     if (mDelegate != nullptr) {
-        mDelegate->disableControllerConnectChecker(isDisable);
+        mDelegate->setDisabled(isDisable);
     }
 }
 
@@ -353,7 +353,7 @@ void GamePadSystem::setPadName(u8 index, const sead::WSafeString& rName) {
  */
 void GamePadSystem::callDisconnectController() {
     if (mDelegate != nullptr) {
-        mDelegate->callDisconnectController();
+        mDelegate->disconnect();
     }
 }
 
@@ -408,7 +408,7 @@ void GamePadSystem::setAssistMode(bool isAssist, bool isForceDisconnect) {
  */
 void GamePadSystem::setSoftwareKeyboard(IUseCancel* pCancel) {
     if (mDelegate != nullptr) {
-        mDelegate->setSoftwareKeyboard(pCancel);
+        mDelegate->setCancelUser(pCancel);
     }
 }
 }  // namespace al

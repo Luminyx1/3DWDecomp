@@ -16,10 +16,10 @@ class IUseCancel;
 
 class GamePadSystemDelegate {
 public:
-    virtual void disableControllerApplet(bool isDisable) = 0;
-    virtual void disableControllerConnectChecker(bool isDisable) = 0;
-    virtual void callDisconnectController() = 0;
-    virtual void setSoftwareKeyboard(IUseCancel* pCancel) = 0;
+    virtual void setAppletDisabled(bool isDisabled) = 0;
+    virtual void setDisabled(bool isDisabled) = 0;
+    virtual bool disconnect() = 0;
+    virtual void setCancelUser(IUseCancel* pCancelUser) = 0;
 };
 
 class GamePadSystem {
@@ -54,6 +54,22 @@ public:
     AudioSystem* getAudioSystem() const {
         return mAudioSystem;
     }
+
+    void setDelegate(GamePadSystemDelegate* pDelegate) { mDelegate = pDelegate; }
+
+    s32 getMaxPlayerNum() const { return mMaxPlayerNum; }
+
+    s32 getMinPlayerNum() const { return mMinPlayerNum; }
+
+    bool isForceImmediateDisconnect() const { return mIsForceImmediateDisconnect; }
+
+    void resetForceImmediateDisconnect() { mIsForceImmediateDisconnect = false; }
+
+    bool isAllowHandheld() const { return mIsAllowHandheld; }
+
+    bool is2PAssistMode() const { return _46; }
+
+    bool isEnableAutoHandheld() const { return mIsEnableAutoHandheld; }
 
 private:
     s32 mMaxPlayerNum = 1;
