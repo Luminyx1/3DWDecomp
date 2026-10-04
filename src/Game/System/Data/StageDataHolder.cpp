@@ -1,5 +1,38 @@
 #include "System/Data/StageDataHolder.hpp"
+#include "Library/Resource/Resource.hpp"
+#include "Library/Yaml/ByamlIter.hpp"
+#include "System/CourseInfo.hpp"
 #include "System/Data/StockItemList.hpp"
+#include "System/Data/WorldInfo.hpp"
+#include "System/GameDataFile.hpp"
+#include "System/GameDataFunction.hpp"
+#include "System/GameDataHolder.hpp"
+#include "Util/ControlUserUtil.hpp"
+
+/**
+ * @brief Allocate per-stage records and reset all stage state.
+ * @param pHolder Owning game-data holder; must outlive this object.
+ */
+StageDataHolder::StageDataHolder(GameDataHolder* pHolder)
+    : mpHolder(pHolder), mCourseId(GameDataFunction::getInvalidCourseId()), mPlaying(false),
+      mCleared(false), mWorldWarpClear(false), mFirstClear(false), mFirstStamp(false),
+      mNewBestScore(false), mNewBestTime(false), mRestart(false), mMysteryBox(false),
+      mRestartFromCheckpoint(false), mUnknown16(false), mRetired(false), mStampEntry(false),
+      mStampCurrent(false), mStampCheckpoint(false), mAssistCurrent(false),
+      mAssistCheckpoint(false), mCheckpointCharacter(-1), mUnknown24(-1), mUnknown28(0),
+      mUnknown30(0), mTimerFrames(0), mPlayFrames(0), mTeamScore(0), mAssistPlayerCount(-1),
+      mpUsers(nullptr), mpStockItems(nullptr), mpStarsCurrent(nullptr),
+      mpStarsCheckpoint(nullptr), mStampCharacter(-1) {
+    mpStarsCurrent = new CourseGreenStarInfo();
+    mpStarsCheckpoint = new CourseGreenStarInfo();
+    mpUsers = new StageUserData[rc::getControlUserNumMax()];
+    mpStockItems = new StockItemList(pHolder);
+}
+
+/**
+ * @brief Update stage progression state.
+ */
+void StageDataHolder::setContinuousMysteryBox() { mMysteryBox = true; }
 
 /**
  * @brief Read the current stage state.
@@ -14,15 +47,156 @@ bool StageDataHolder::isContinuousMysteryBox() const { return mMysteryBox; }
 bool StageDataHolder::isRestartFromCheckpoint() const { return mRestartFromCheckpoint; }
 
 /**
- * @brief Read the current stage state.
- * @return True when the corresponding stage state is set.
+ * @brief Reset the stage state, keeping persistent fields across restarts.
  */
-bool StageDataHolder::isAcquireIllustItem() const { return mStampCurrent; }
+void StageDataHolder::initializeData() {
+    if (!mRestart) {
+        mUnknown24 = -1;
+        mUnknown28 = 0;
+        mUnknown30 = 0;
+    }
+
+    mCourseId = GameDataFunction::getInvalidCourseId();
+    mCleared = false;
+    mWorldWarpClear = false;
+    mFirstClear = false;
+    mFirstStamp = false;
+    mNewBestScore = false;
+    mNewBestTime = false;
+    mRestart = false;
+    mMysteryBox = false;
+    mRestartFromCheckpoint = false;
+    mRetired = false;
+    mStampEntry = false;
+    mStampCurrent = false;
+    mStampCheckpoint = false;
+    mAssistCurrent = false;
+    mAssistCheckpoint = false;
+    mCheckpointCharacter = -1;
+    mpStarsCurrent->initialize();
+    mpStarsCheckpoint->initialize();
+    mTimerFrames = 0;
+    mPlayFrames = 0;
+    mTeamScore = 0;
+    mAssistPlayerCount = -1;
+    mStampCharacter = -1;
+    for (int i = 0; i < rc::getControlUserNumMax(); ++i) {
+        mpUsers[i].init();
+    }
+
+    mpStockItems->initialize();
+}
 
 /**
- * @brief Update stage progression state.
+ * @brief Begin playing a course from its saved progress.
+ * @param courseId Course identifier to start.
  */
-void StageDataHolder::setContinuousMysteryBox() { mMysteryBox = true; }
+void StageDataHolder::startStage(int courseId) {
+    mPlaying = true;
+    initializeData();
+    mCourseId = courseId;
+    GameDataFile* pFile = mpHolder->getPlayingFile();
+    const CourseInfo* pCourse = pFile->getCourseInfo(courseId);
+    setGreenStarAcquireFlag(pCourse->getGreenStarInfo());
+    setAcquireIllustItem(pCourse->isAcquireIllustItem());
+    mpStockItems->copy(pFile->getStockItemList());
+    mNewBestScore = false;
+    mNewBestTime = false;
+    mStampCharacter = -1;
+}
+
+/**
+ * @brief Set the current and checkpoint green-star flags.
+ * @param rStars Green-star flags to copy.
+ */
+void StageDataHolder::setGreenStarAcquireFlag(const CourseGreenStarInfo& rStars) {
+    mpStarsCheckpoint->copy(rStars);
+    mpStarsCurrent->copy(rStars);
+}
+
+/**
+ * @brief Set stamp ownership at stage entry and both restart states.
+ * @param acquired Whether the stage stamp is already owned.
+ */
+void StageDataHolder::setAcquireIllustItem(bool acquired) {
+    mStampCheckpoint = acquired;
+    mStampCurrent = acquired;
+    mStampEntry = acquired;
+}
+
+/**
+ * @brief Reset the stage state for the title screen.
+ */
+void StageDataHolder::startTitle() {
+    mPlaying = true;
+    initializeData();
+}
+
+/**
+ * @brief Restart the stage from the last checkpoint state.
+ */
+void StageDataHolder::restartStage() {
+    mPlaying = true;
+    mpStarsCurrent->copy(*mpStarsCheckpoint);
+    mStampCurrent = mStampCheckpoint;
+    mAssistCurrent = mAssistCheckpoint;
+    mTeamScore = 0;
+    for (int i = 0; i < rc::getControlUserNumMax(); ++i) {
+        mpUsers[i].init();
+    }
+
+    mPlayFrames = 0;
+    mRestartFromCheckpoint = isCheckpointPass();
+    mTimerFrames = 0;
+    mRestart = true;
+    mStampCharacter = -1;
+    mpStockItems->retireStage();
+}
+
+/**
+ * @brief Check whether a checkpoint has been saved.
+ * @return True when a checkpoint character is recorded.
+ */
+bool StageDataHolder::isCheckpointPass() const { return mCheckpointCharacter != -1; }
+
+/**
+ * @brief Restart a mystery-box stage.
+ */
+void StageDataHolder::restartMysteryBox() {
+    mPlaying = true;
+    restartStage();
+    mpStockItems->retireStage();
+}
+
+/**
+ * @brief Restart a mystery-box stage after a time-up, restoring the saved stock items.
+ */
+void StageDataHolder::restartTimeupMysteryBox() {
+    mPlaying = true;
+    restartStage();
+    resetStockItems();
+}
+
+/**
+ * @brief Start the current course again from its saved progress.
+ */
+void StageDataHolder::reenterStage() {
+    const bool restart = !mMysteryBox;
+    startStage(mCourseId);
+    mRestart = restart;
+}
+
+/**
+ * @brief Clear the team and player scores and the elapsed play time.
+ */
+void StageDataHolder::resetStageScore() {
+    mTeamScore = 0;
+    for (int i = 0; i < rc::getControlUserNumMax(); ++i) {
+        mpUsers[i].resetScore();
+    }
+
+    mPlayFrames = 0;
+}
 
 /**
  * @brief Update stage progression state.
@@ -33,40 +207,59 @@ void StageDataHolder::retireStage() {
 }
 
 /**
- * @brief Update stage progression state.
+ * @brief Leave the stage after a game over.
  */
-void StageDataHolder::acquireIllustItem() {
-    mStampCurrent = true;
-    mStampCheckpoint = true;
+void StageDataHolder::gameOverStage() {
+    mPlaying = false;
+    initializeData();
 }
 
 /**
- * @brief Update stage progression state.
+ * @brief Record a regular stage clear.
+ * @param firstClear Whether this is the course's first clear.
+ * @param newBestScore Whether the clear set a new best score.
+ * @param newBestTime Whether the clear set a new best time.
  */
-void StageDataHolder::setUseAssistBlock() {
-    mAssistCurrent = true;
-    mAssistCheckpoint = true;
+void StageDataHolder::clearStage(bool firstClear, bool newBestScore, bool newBestTime) {
+    mPlaying = false;
+    mCleared = true;
+    mWorldWarpClear = false;
+    mFirstClear = firstClear;
+    mFirstStamp = !mStampEntry && mStampCurrent;
+    mNewBestScore = newBestScore;
+    mNewBestTime = newBestTime;
+    mRetired = false;
+    mpStockItems->clearStage();
 }
 
 /**
- * @brief Update stage progression state.
+ * @brief Record a stage clear through a world warp.
  */
-void StageDataHolder::resetCheckpointPass() { mCheckpointCharacter = -1; }
+void StageDataHolder::clearStageWorldWarp() {
+    mPlaying = false;
+    mCleared = true;
+    mWorldWarpClear = true;
+    mFirstClear = false;
+    mFirstStamp = !mStampEntry && mStampCurrent;
+    mNewBestScore = false;
+    mNewBestTime = false;
+    mRetired = false;
+}
 
 /**
- * @brief Check whether a checkpoint has been saved.
- * @return True when a checkpoint character is recorded.
+ * @brief Read the saved best score of the current course.
+ * @return The best score.
  */
-bool StageDataHolder::isCheckpointPass() const { return mCheckpointCharacter != -1; }
+int StageDataHolder::getStageBestScore() const {
+    return mpHolder->getCourseInfo(mCourseId)->getBestScore();
+}
 
 /**
- * @brief Set stamp ownership at stage entry and both restart states.
- * @param acquired Whether the stage stamp is already owned.
+ * @brief Read the saved best time of the current course.
+ * @return The best time.
  */
-void StageDataHolder::setAcquireIllustItem(bool acquired) {
-    mStampEntry = acquired;
-    mStampCurrent = acquired;
-    mStampCheckpoint = acquired;
+int StageDataHolder::getStageBestTime() const {
+    return mpHolder->getCourseInfo(mCourseId)->getBestTime();
 }
 
 /**
@@ -108,11 +301,72 @@ void StageDataHolder::addScore(int score, int userId) { mpUsers[userId].addScore
 int StageDataHolder::getScore(int userId) const { return mpUsers[userId].mScore; }
 
 /**
+ * @brief Sum the team score and all player scores.
+ * @return The total score, capped at 999999.
+ */
+int StageDataHolder::getTotalScore() const {
+    int total = mTeamScore;
+    for (int i = 0; i < rc::getControlUserNumMax(); ++i) {
+        total += mpUsers[i].mScore;
+    }
+
+    return total < 999999 ? total : 999999;
+}
+
+/**
+ * @brief Find the active player with the unique highest score.
+ * @return The player's user ID, or -1 when tied or fewer than two players are active.
+ */
+int StageDataHolder::tryCalcLastStageBestScoreUserID() const {
+    int bestUserId = -1;
+    int bestScore = -1;
+    int activeCount = 0;
+    for (int i = 0; i < rc::getControlUserNumMax(); ++i) {
+        if (!rc::isActiveControlUser(GameDataHolderAccessor(mpHolder), i)) {
+            continue;
+        }
+
+        const int score = mpUsers[i].mScore;
+        ++activeCount;
+        if (bestScore < score) {
+            bestUserId = i;
+            bestScore = score;
+        } else if (bestScore == score) {
+            bestUserId = -1;
+        }
+    }
+
+    if (activeCount <= 1) {
+        return -1;
+    }
+
+    return bestUserId;
+}
+
+/**
+ * @brief Update a player's stage state.
+ * @param userId Control-user index within the allocated stage-user array.
+ * @param alive New value to store in the player record.
+ */
+void StageDataHolder::setAlive(int userId, bool alive) { mpUsers[userId].setAlive(alive); }
+
+/**
  * @brief Read a player's stage result.
  * @param userId Control-user index within the allocated stage-user array.
  * @return The requested value from the player record.
  */
 bool StageDataHolder::isAlive(int userId) const { return mpUsers[userId].mAlive; }
+
+/**
+ * @brief Record a player's goal result.
+ * @param userId Control-user index within the allocated stage-user array.
+ * @param success Whether the player successfully reached the goal.
+ * @param height Player height on the goal pole.
+ * @param leader Whether the player is the goal leader.
+ */
+void StageDataHolder::setGoalState(int userId, bool success, float height, bool leader) {
+    mpUsers[userId].setGoalState(success, height, leader);
+}
 
 /**
  * @brief Read a player's stage result.
@@ -136,20 +390,6 @@ float StageDataHolder::getGoalHeight(int userId) const { return mpUsers[userId].
 bool StageDataHolder::isGoalLeader(int userId) const { return mpUsers[userId].mGoalLeader; }
 
 /**
- * @brief Read a player's stage result.
- * @param userId Control-user index within the allocated stage-user array.
- * @return The requested value from the player record.
- */
-int StageDataHolder::getPlayerFigureType(int userId) const { return mpUsers[userId].mFigureType; }
-
-/**
- * @brief Update a player's stage state.
- * @param userId Control-user index within the allocated stage-user array.
- * @param alive New value to store in the player record.
- */
-void StageDataHolder::setAlive(int userId, bool alive) { mpUsers[userId].setAlive(alive); }
-
-/**
  * @brief Update a player's stage state.
  * @param userId Control-user index within the allocated stage-user array.
  * @param figureType New value to store in the player record.
@@ -159,15 +399,11 @@ void StageDataHolder::setPlayerFigureType(int userId, int figureType) {
 }
 
 /**
- * @brief Record a player's goal result.
+ * @brief Read a player's stage result.
  * @param userId Control-user index within the allocated stage-user array.
- * @param success Whether the player successfully reached the goal.
- * @param height Player height on the goal pole.
- * @param leader Whether the player is the goal leader.
+ * @return The requested value from the player record.
  */
-void StageDataHolder::setGoalState(int userId, bool success, float height, bool leader) {
-    mpUsers[userId].setGoalState(success, height, leader);
-}
+int StageDataHolder::getPlayerFigureType(int userId) const { return mpUsers[userId].mFigureType; }
 
 /**
  * @brief Add an item to the stage stock.
@@ -189,16 +425,85 @@ void StageDataHolder::useStockItem() { mpStockItems->useStockItem(); }
 int StageDataHolder::getStockItem(int index) const { return mpStockItems->getStockItem(index); }
 
 /**
+ * @brief Restore the stock items saved in the playing file.
+ */
+void StageDataHolder::resetStockItems() {
+    mpStockItems->copy(mpHolder->getPlayingFile()->getStockItemList());
+}
+
+/**
+ * @brief Collect a green star, also keeping it for checkpoint restarts outside Captain Toad stages.
+ * @param starIndex Zero-based green-star index.
+ */
+void StageDataHolder::acquireGreenStar(int starIndex) {
+    CourseGreenStarInfo* pStars = mpStarsCurrent;
+    const u32 bit = 1 << starIndex;
+    pStars->mFlags |= bit;
+    StageDatabaseInfo* pInfo =
+        GameDataFunction::findStageDatabaseInfo(GameDataHolderAccessor(mpHolder), mCourseId);
+    if (pInfo == nullptr || !pInfo->isKinopioBrigade()) {
+        mpStarsCheckpoint->mFlags |= bit;
+    }
+}
+
+/**
+ * @brief Update stage progression state.
+ */
+void StageDataHolder::acquireIllustItem() {
+    mStampCurrent = true;
+    mStampCheckpoint = true;
+}
+
+/**
  * @brief Remember which character collected the stamp.
  * @param characterType Character identifier of the player collecting the stamp.
  */
 void StageDataHolder::setStampPickupCharType(int characterType) { mStampCharacter = characterType; }
 
 /**
+ * @brief Read the current stage state.
+ * @return True when the corresponding stage state is set.
+ */
+bool StageDataHolder::isAcquireIllustItem() const { return mStampCurrent; }
+
+/**
+ * @brief Update stage progression state.
+ */
+void StageDataHolder::setUseAssistBlock() {
+    mAssistCurrent = true;
+    mAssistCheckpoint = true;
+}
+
+/**
+ * @brief Check whether a green star was collected in the current attempt.
+ * @param starIndex Zero-based green-star index.
+ * @return True when the star is collected.
+ */
+bool StageDataHolder::isAcquireGreenStar(int starIndex) const {
+    return mpStarsCurrent->isAcquired(starIndex);
+}
+
+/**
  * @brief Access the current green-star flags.
  * @return The current stage green-star record.
  */
 const CourseGreenStarInfo* StageDataHolder::getGreenStarAcquireFlag() const { return mpStarsCurrent; }
+
+/**
+ * @brief Save the current progress as the checkpoint state.
+ * @param characterType Character identifier of the player passing the checkpoint.
+ */
+void StageDataHolder::setCheckpointPass(int characterType) {
+    mCheckpointCharacter = characterType;
+    mpStarsCheckpoint->copy(*mpStarsCurrent);
+    mStampCheckpoint = mStampCurrent;
+    mAssistCheckpoint = mAssistCurrent;
+}
+
+/**
+ * @brief Update stage progression state.
+ */
+void StageDataHolder::resetCheckpointPass() { mCheckpointCharacter = -1; }
 
 /**
  * @brief Read the checkpoint character.
@@ -245,7 +550,8 @@ int StageDataHolder::calcStageTimerCount() const { return (mTimerFrames + 43) / 
  */
 int StageDataHolder::calcTimeAttackCount() const {
     const int count = mPlayFrames / 44;
-    return count < 0 ? 0 : count > 999 ? 999 : count;
+    const int capped = count < 999 ? count : 999;
+    return capped < 0 ? 0 : capped;
 }
 
 /**
@@ -322,4 +628,73 @@ StageDatabaseInfo* WorldInfoList::findStageDatabaseInfo(int courseId) const {
         }
     }
     return nullptr;
+}
+
+/**
+ * @brief Build the world and stage database from the StageList BYAML.
+ * @param pResource Resource containing the StageList BYAML.
+ * @return A newly allocated world list.
+ */
+WorldInfoList* StageInfoFunction::createWorldInfoList(al::Resource* pResource) {
+    al::ByamlIter root(pResource->getByml("StageList"));
+    al::ByamlIter worldList;
+    root.tryGetIterByKey(&worldList, "WorldList");
+    const int worldNum = worldList.getSize();
+    int stageNum = 0;
+    for (int i = 0; i < worldNum; ++i) {
+        al::ByamlIter world;
+        al::ByamlIter stageList;
+        worldList.tryGetIterByIndex(&world, i);
+        world.tryGetIterByKey(&stageList, "StageList");
+        stageNum += stageList.getSize();
+    }
+
+    WorldInfoList* pList = new WorldInfoList(worldNum, stageNum);
+    int stageIndex = 0;
+    for (int i = 0; i < worldNum; ++i) {
+        al::ByamlIter world;
+        worldList.tryGetIterByIndex(&world, i);
+        if (!world.isValid()) {
+            continue;
+        }
+
+        al::ByamlIter stageList;
+        world.tryGetIterByKey(&stageList, "StageList");
+        int worldId;
+        world.tryGetIntByKey(&worldId, "WorldId");
+        WorldInfo* pWorld = &pList->mpWorlds[i];
+        pWorld->init(worldId, pList->getStageInfoByIndex(stageIndex), stageList.getSize());
+        stageIndex += stageList.getSize();
+        for (int j = 0; j < stageList.getSize(); ++j) {
+            al::ByamlIter stage;
+            stageList.tryGetIterByIndex(&stage, j);
+            int stageId = 0;
+            int courseId = 0;
+            int greenStarNum = 0;
+            int greenStarLock = 0;
+            int stageTimer = 400;
+            int illustItemNum = 0;
+            int ghostId = -1;
+            int ghostBaseTime = 0;
+            int doubleMarioNum = 0;
+            const char* pTypeName = "NormalStage";
+            const char* pStageName = "";
+            stage.tryGetIntByKey(&stageId, "StageId");
+            stage.tryGetIntByKey(&courseId, "CourseId");
+            stage.tryGetIntByKey(&greenStarNum, "GreenStarNum");
+            stage.tryGetIntByKey(&greenStarLock, "GreenStarLock");
+            stage.tryGetIntByKey(&stageTimer, "StageTimer");
+            stage.tryGetIntByKey(&illustItemNum, "IllustItemNum");
+            stage.tryGetIntByKey(&ghostId, "GhostId");
+            stage.tryGetIntByKey(&ghostBaseTime, "GhostBaseTime");
+            stage.tryGetIntByKey(&doubleMarioNum, "DoubleMarioNum");
+            stage.tryGetStringByKey(&pStageName, "StageName");
+            stage.tryGetStringByKey(&pTypeName, "StageType");
+            pWorld->getStageInfoByIndex(j)->initialize(
+                worldId, stageId, courseId, greenStarNum, greenStarLock, stageTimer, illustItemNum,
+                ghostId, ghostBaseTime, doubleMarioNum, pTypeName, pStageName);
+        }
+    }
+
+    return pList;
 }

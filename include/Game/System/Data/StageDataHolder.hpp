@@ -5,6 +5,27 @@ class StockItemList;
 class CourseGreenStarInfo;
 class StageDataHolder {
   public:
+    explicit StageDataHolder(GameDataHolder* pHolder);
+    void initializeData();
+    void startStage(int courseId);
+    void setGreenStarAcquireFlag(const CourseGreenStarInfo& rStars);
+    void startTitle();
+    void restartStage();
+    void restartMysteryBox();
+    void restartTimeupMysteryBox();
+    void reenterStage();
+    void resetStageScore();
+    void gameOverStage();
+    void clearStage(bool firstClear, bool newBestScore, bool newBestTime);
+    void clearStageWorldWarp();
+    int getStageBestScore() const;
+    int getStageBestTime() const;
+    int getTotalScore() const;
+    int tryCalcLastStageBestScoreUserID() const;
+    void resetStockItems();
+    void acquireGreenStar(int starIndex);
+    bool isAcquireGreenStar(int starIndex) const;
+    void setCheckpointPass(int characterType);
     bool isContinuousMysteryBox() const;
     bool isRestartFromCheckpoint() const;
     bool isAcquireIllustItem() const;
@@ -75,7 +96,7 @@ class StageDataHolder {
     int mCheckpointCharacter;
     int mUnknown24;
     int mUnknown28;
-    alignas(8) u8 mUnknown30[8];
+    u64 mUnknown30;
     int mTimerFrames;
     int mPlayFrames;
     int mTeamScore;
