@@ -63,6 +63,72 @@ class StageDataHolder {
     int calcTimeAttackCount() const;
     static int calcStageTimerCountToFrame(int count);
 
+    /**
+     * @brief Read the course being played.
+     * @return The playing course identifier.
+     */
+    int getCourseId() const { return mCourseId; }
+
+    /**
+     * @brief Check whether the last stage was cleared.
+     * @return True when the stage was cleared.
+     */
+    bool isCleared() const { return mCleared; }
+
+    /**
+     * @brief Check whether the last stage was cleared through a world warp.
+     * @return True when the stage was cleared by a warp.
+     */
+    bool isWorldWarpClear() const { return mWorldWarpClear; }
+
+    /**
+     * @brief Check whether the last clear was the first one.
+     * @return True for a first clear.
+     */
+    bool isFirstClear() const { return mFirstClear; }
+
+    /**
+     * @brief Check whether the last stage awarded its stamp for the first time.
+     * @return True when the stamp was newly acquired.
+     */
+    bool isFirstStamp() const { return mFirstStamp; }
+
+    /**
+     * @brief Check whether the last clear set a new best score.
+     * @return True for a new best score.
+     */
+    bool isNewBestScore() const { return mNewBestScore; }
+
+    /**
+     * @brief Check whether the last clear set a new best time.
+     * @return True for a new best time.
+     */
+    bool isNewBestTime() const { return mNewBestTime; }
+
+    /**
+     * @brief Check whether the stage is being restarted.
+     * @return True while restarting.
+     */
+    bool isRestart() const { return mRestart; }
+
+    /**
+     * @brief Check whether the stage was retired.
+     * @return True when the player retired.
+     */
+    bool isRetired() const { return mRetired; }
+
+    /**
+     * @brief Check whether the assist block is in use in the current attempt.
+     * @return True when the assist block was used.
+     */
+    bool isUseAssistBlock() const { return mAssistCurrent; }
+
+    /**
+     * @brief Access the stage's stock items.
+     * @return The stock-item list of the playing stage.
+     */
+    StockItemList* getStockItemList() const { return mpStockItems; }
+
   private:
     /**
      * @brief Clamp the stage timer to its supported range.

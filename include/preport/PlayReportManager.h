@@ -1,6 +1,7 @@
 #pragma once
 
 #include <basis/seadTypes.h>
+#include <prim/seadSafeString.h>
 
 namespace preport {
 
@@ -17,6 +18,11 @@ enum KeyEventType : s32 {};
 class PlayReportManager {
   public:
     void requestSaveData();
+    bool EventBegin(KeyEventType type, int eventId, int option, bool isForce);
+    void EventEnd();
+    void KeySetValue(Key key, int value);
+    void KeySetValue(Key key, s64 value);
+    void KeySetValue(Key key, sead::SafeString& rValue);
 };
 
 } // namespace preport

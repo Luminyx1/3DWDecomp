@@ -15,4 +15,6 @@ namespace rc {
     s32 getControlUserNumMax();
     bool isActiveControlUser(GameDataHolderAccessor accessor, s32 userId);
     s32 getActiveControlUserFirst(GameDataHolderAccessor accessor);
+    s32 getActiveControlUserNum(GameDataHolderAccessor accessor);
+    s32 getControlUserCharacterType(GameDataHolderAccessor accessor, s32 userId);
 };
