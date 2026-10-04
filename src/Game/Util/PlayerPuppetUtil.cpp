@@ -8,18 +8,9 @@
 #include "Player/IUsePlayerInput.hpp"
 #include "Player/IUsePlayerInputArranger.hpp"
 #include "Player/IUsePlayerPuppet.hpp"
+#include "Player/Normal/PlayerActor.hpp"
 #include "System/GameDataConst.hpp"
 #include "Util/PlayerUtil.hpp"
-
-// PlayerActor has no header yet; only the member used by this unit is declared here.
-
-/**
- * @brief The player actor.
- */
-class PlayerActor : public al::LiveActor {
-public:
-    IUsePlayerPuppet* getPlayerPuppet();
-};
 
 namespace {
 

@@ -3,6 +3,7 @@
 #include "Library/LiveActor/LiveActor.hpp"
 #include "Library/LiveActor/Util/ActorSensorUtil.hpp"
 #include "Library/Player/PlayerUtil.hpp"
+#include "Player/Normal/PlayerActor.hpp"
 #include "System/ControlUserData.hpp"
 #include "System/ControlUserDataHolder.hpp"
 #include "System/Data/SingleModeData.hpp"
@@ -12,14 +13,6 @@
 #include "System/GameDataHolderWriter.hpp"
 #include "Util/DrcUtil.hpp"
 #include "Util/ProjectMsgUtil.hpp"
-
-/**
- * @brief Player actor; only the members used by this unit are declared.
- */
-class PlayerActor : public al::LiveActor {
-  public:
-    s32 getInputPort() const;
-};
 
 namespace LayoutFontUtil {
 const char16_t* getPictureFontPlayer(s32 characterType);
