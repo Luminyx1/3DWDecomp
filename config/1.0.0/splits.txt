@@ -3391,7 +3391,7 @@ src/nw/atk/detail/atk_SoundHandle.cpp: done
     .text   start:0x005433C0 end:0x00543540
 src/nw/atk/detail/atk_ExternalSoundPlayer.cpp:
     .text   start:0x00543540 end:0x00543BE4
-src/nw/atk/detail/atk_PlayerHeap.cpp:
+src/nw/atk/detail/atk_PlayerHeap.cpp: done
     .text   start:0x00543BF0 end:0x00543EBC
 src/nw/atk/detail/seq/atk_BankFileReader.cpp:
     .text   start:0x00543EC0 end:0x00544664
