@@ -25,7 +25,9 @@
   "$path_flags_note": [
     "Extra flags for sources under a path.  sead, agl and al are prebuilt libraries built with",
     "-fno-strict-aliasing: it reloads members after every store through another pointer",
-    "(e.g. sead::TreeNode::detachSubTree, al::LiveActorGroup::registerActor), which the game code does not."
+    "(e.g. sead::TreeNode::detachSubTree, al::LiveActorGroup::registerActor).",
+    "The game code is too: OceanScenarioList::addList reloads mPtrNum after the inlined PtrArray::pushBack",
+    "store, and switching src/Game/ to it changed no other Game unit's matching bytes."
   ],
   "path_flags": {
     "src/sead/": "-fno-strict-aliasing",
@@ -33,7 +35,8 @@
     "src/aal/": "-fno-strict-aliasing",
     "src/al/": "-fno-strict-aliasing",
     "src/erepo/": "-fno-strict-aliasing",
-    "src/nw/": "-fno-strict-aliasing -frtti"
+    "src/nw/": "-fno-strict-aliasing -frtti",
+    "src/Game/": "-fno-strict-aliasing"
   },
 
   "$include_note": [
