@@ -3391,7 +3391,7 @@ src/nw/atk/detail/atk_SoundHandle.cpp: done
     .text   start:0x005433C0 end:0x00543540
 src/nw/atk/detail/atk_ExternalSoundPlayer.cpp:
     .text   start:0x00543540 end:0x00543BE4
-src/nw/atk/detail/atk_PlayerHeap.cpp:
+src/nw/atk/detail/atk_PlayerHeap.cpp: done
     .text   start:0x00543BF0 end:0x00543EBC
 src/nw/atk/detail/seq/atk_BankFileReader.cpp:
     .text   start:0x00543EC0 end:0x00544664
@@ -3433,7 +3433,7 @@ src/nw/atk/atk_RegionManager.cpp:
     .text   start:0x00554A50 end:0x00555000
 src/nw/atk/detail/strm/atk_StreamSoundLoader.cpp:
     .text   start:0x00555000 end:0x00558390
-src/nw/atk/detail/strm/atk_StreamSoundFileLoader.cpp:
+src/nw/atk/detail/strm/atk_StreamSoundFileLoader.cpp: done
     .text   start:0x00558390 end:0x005583B8
 src/nw/atk/detail/strm/atk_StreamSoundFileReader.cpp: done
     .text   start:0x005583C0 end:0x00558798
@@ -3475,7 +3475,7 @@ src/nw/atk/detail/util/_ZN2nn3atk18SoundArchivePlayerC2Ev.cpp:
     .text   start:0x0055DD00 end:0x0055DE98
 src/nw/atk/atk_SoundArchivePlayer.cpp:
     .text   start:0x0055DEA0 end:0x005615F4
-src/nw/atk/atk_StartInfoReader.cpp:
+src/nw/atk/atk_StartInfoReader.cpp: done
     .text   start:0x00561600 end:0x005617A0
 src/nw/atk/detail/seq/atk_SequenceSoundRuntime.cpp:
     .text   start:0x005617A0 end:0x00561804
@@ -3595,7 +3595,7 @@ src/nw/atk/detail/util/atk_FrameHeap.cpp:
     .text   start:0x00580880 end:0x00581534
 src/nw/atk/fnd/basis/atkfnd_FrameHeapImpl.cpp:
     .text   start:0x00581540 end:0x00581B34
-src/nw/atk/fnd/basis/atkfnd_HeapBase.cpp:
+src/nw/atk/fnd/basis/atkfnd_HeapBase.cpp: done
     .text   start:0x00581B40 end:0x00581E90
 src/nw/atk/fnd/basis/atk_SoundStartable.cpp:
     .text   start:0x00581E90 end:0x00582528
