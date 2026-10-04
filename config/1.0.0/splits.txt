@@ -3305,45 +3305,45 @@ src/Game/System/Data/TesselatorData.cpp: done
     .text   start:0x0050B380 end:0x0050CB50
 src/Game/System/Data/WorldGameDataHolder.cpp:
     .text   start:0x0050CB50 end:0x0050D5E8
-src/Game/Util/AreaObjUtil.cpp:
+src/Game/Util/AreaObjUtil.cpp: done
     .text   start:0x0050D5F0 end:0x0050ED4C
-src/Game/Util/CoinUtil.cpp:
+src/Game/Util/CoinUtil.cpp: done
     .text   start:0x0050ED50 end:0x0050EE50
 src/Game/Util/ControllerConnectChecker.cpp:
     .text   start:0x0050EE50 end:0x0050FA5C
-src/Game/Util/ControllerEventWatcher.cpp:
+src/Game/Util/ControllerEventWatcher.cpp: done
     .text   start:0x0050FA60 end:0x00510078
-src/Game/Util/ControlUserUtil.cpp:
+src/Game/Util/ControlUserUtil.cpp: done
     .text   start:0x00510080 end:0x005112BC
-src/Game/Util/DemoActorGroupUtil.cpp:
+src/Game/Util/DemoActorGroupUtil.cpp: done
     .text   start:0x005112C0 end:0x005113E4
-src/Game/Util/DrcUtil.cpp:
+src/Game/Util/DrcUtil.cpp: done
     .text   start:0x005113F0 end:0x00511480
-src/Game/Util/InputUtil.cpp:
+src/Game/Util/InputUtil.cpp: done
     .text   start:0x00511480 end:0x00513A64
-src/Game/Util/InkUtil.cpp:
+src/Game/Util/InkUtil.cpp: done
     .text   start:0x00513A70 end:0x00513CF4
 src/Game/Util/ItemUtil.cpp:
     .text   start:0x00513D00 end:0x005155C8
 src/Game/Util/LayoutUtil.cpp:
     .text   start:0x005155D0 end:0x005166A4
-src/Game/Util/LuigiBrosUtil.cpp:
+src/Game/Util/LuigiBrosUtil.cpp: done
     .text   start:0x005166B0 end:0x005167F8
-src/Game/Util/PlayerPuppetUtil.cpp:
+src/Game/Util/PlayerPuppetUtil.cpp: done
     .text   start:0x00516800 end:0x00517AC4
 src/Game/Util/PlayerUtil.cpp:
     .text   start:0x00517AD0 end:0x005229F4
 src/Game/Util/ProjectMsgUtil.cpp:
     .text   start:0x00522A00 end:0x005324E4
-src/Game/Util/RigidBodyCollisionImpl.cpp:
+src/Game/Util/RigidBodyCollisionImpl.cpp: done
     .text   start:0x005324F0 end:0x005325E0
 src/Game/Util/RigidBodyCore.cpp:
     .text   start:0x005325E0 end:0x00534304
 src/Game/Util/RigidBodyUtil.cpp:
     .text   start:0x00534310 end:0x00534DF0
-src/Game/Util/SceneUtil.cpp:
+src/Game/Util/SceneUtil.cpp: done
     .text   start:0x00534DF0 end:0x00535328
-src/Game/Util/ScoreUtil.cpp:
+src/Game/Util/ScoreUtil.cpp: done
     .text   start:0x00535330 end:0x00536178
 src/nw/atk/atk_HardwareManager.cpp:
     .text   start:0x00536180 end:0x005363D0
