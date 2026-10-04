@@ -129,6 +129,18 @@ class StageDataHolder {
      */
     StockItemList* getStockItemList() const { return mpStockItems; }
 
+    /**
+     * @brief Check whether the stage start demo should be skipped.
+     * @return True when the start demo is skipped.
+     */
+    bool isSkipStartDemo() const { return mUnknown16; }
+
+    /**
+     * @brief Choose whether the stage start demo should be skipped.
+     * @param isSkip True to skip the start demo.
+     */
+    void setSkipStartDemo(bool isSkip) { mUnknown16 = isSkip; }
+
   private:
     /**
      * @brief Clamp the stage timer to its supported range.

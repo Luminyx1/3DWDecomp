@@ -250,6 +250,11 @@ class GameDataFile : public GameDataFileBase {
      */
     StockItemList* getStockItemList() const { return mpStockItems; }
 
+    /**
+     * @brief Count a stage restart chosen from the pause menu.
+     */
+    void incMenuRestartCount() { mUnknown98++; }
+
   private:
     friend inline void GameDataFileInternal::resetKinopioHouse(GameDataFile* pFile);
     friend class GameDataHolder;

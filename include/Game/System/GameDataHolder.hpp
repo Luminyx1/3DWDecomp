@@ -182,6 +182,17 @@ class GameDataHolder : public al::ISceneObj {
     void setSaveRequested(bool isRequested) { mIsSaveRequested = isRequested; }
 
     /**
+     * @brief Enable or disable skipping the save at the start of a stage.
+     * @param isSkip True while the title scene is active.
+     */
+    void setSkipStartSave(bool isSkip) { mIsSkipStartSave = isSkip; }
+
+    /**
+     * @brief Record that New Super Luigi U save data exists on the console.
+     */
+    void onExistLuigiUSaveData() { mUnknown51 = true; }
+
+    /**
      * @brief Check whether the Bowser's Fury prologue phase is active.
      * @return True during phase 0.
      */

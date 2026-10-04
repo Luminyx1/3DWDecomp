@@ -17,6 +17,24 @@ class StageListHolder {
     int findStageTypeID(int courseId) const;
     WorldInfo* findWorldInfo(int worldId) const;
 
+    /**
+     * @brief Read the course of the final Bowser castle.
+     * @return The course identifier.
+     */
+    int getLastKoopaCourseId() const { return mKoopaCastleCourseId; }
+
+    /**
+     * @brief Read the first special course following the final Bowser castle.
+     * @return The course identifier.
+     */
+    int getLastKoopaGK1CourseId() const { return mSpecialCourse100; }
+
+    /**
+     * @brief Read the second special course following the final Bowser castle.
+     * @return The course identifier.
+     */
+    int getLastKoopaGK2CourseId() const { return mSpecialCourse101; }
+
   private:
     WorldInfoList* mpWorldInfo = nullptr;
     int mKoopaCastleCourseId = 0;

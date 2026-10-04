@@ -34,6 +34,7 @@ bool isClose(GameDataHolderAccessor accessor, int courseId);
 bool isOpen(GameDataHolderAccessor accessor, int courseId);
 bool isClear(GameDataHolderAccessor accessor, int courseId);
 bool isGreenStarLock(GameDataHolderAccessor accessor, int courseId);
+int getMissCount(GameDataHolderAccessor accessor, int courseId);
 void addMissCount(GameDataHolderWriter writer, int courseId);
 bool isClearWithAssistBlock(GameDataHolderAccessor accessor, int courseId);
 bool isClearCharacter(GameDataHolderAccessor accessor, int courseId, int characterType);

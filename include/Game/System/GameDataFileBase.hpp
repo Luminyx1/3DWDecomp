@@ -67,6 +67,12 @@ class GameDataFileBase {
     int getFileId() const { return mFileId; }
 
     /**
+     * @brief Read the number of collected coins.
+     * @return The coin count.
+     */
+    int getCoinNum() const { return mCoinCount; }
+
+    /**
      * @brief Access the per-user control data of this file.
      * @return The control-user data holder.
      */

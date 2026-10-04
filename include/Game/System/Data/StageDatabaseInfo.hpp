@@ -65,6 +65,48 @@ class StageDatabaseInfo {
      */
     int getTypeId() const { return mStageType; }
 
+    /**
+     * @brief Read the number of Green Stars in the stage.
+     * @return The Green Star count.
+     */
+    int getGreenStarNum() const { return mAttributes00[3]; }
+
+    /**
+     * @brief Read the number of Green Stars needed to unlock the stage.
+     * @return The required Green Star count.
+     */
+    int getLockGreenStarNum() const { return mAttributes00[4]; }
+
+    /**
+     * @brief Read the number of stamps in the stage.
+     * @return The stamp count.
+     */
+    int getIllustItemNum() const { return mAttributes00[5]; }
+
+    /**
+     * @brief Read the initial stage timer.
+     * @return The initial timer count.
+     */
+    int getInitStageTimer() const { return mAttribute1c; }
+
+    /**
+     * @brief Read the ghost serial number of the stage.
+     * @return The ghost serial identifier, or -1 without a ghost.
+     */
+    int getGhostStageSerialId() const { return mAttribute20; }
+
+    /**
+     * @brief Read the reference time of the stage ghost.
+     * @return The ghost base time.
+     */
+    int getGhostBaseTime() const { return mAttribute24; }
+
+    /**
+     * @brief Read how many double cherry clones can exist at once.
+     * @return The maximum number of clones.
+     */
+    int getDoubleMarioNumMax() const { return mAttribute28; }
+
   private:
     s32 mAttributes00[6]{};
     s32 mStageType = -1;

@@ -18,5 +18,6 @@ namespace rc {
     s32 getActiveControlUserFirst(GameDataHolderAccessor accessor);
     s32 getActiveControlUserNum(GameDataHolderAccessor accessor);
     s32 getControlUserCharacterType(GameDataHolderAccessor accessor, s32 userId);
+    const char* getControlUserCharacterName(GameDataHolderAccessor accessor, s32 characterType);
     void setControlUserFigureType(GameDataHolderWriter writer, s32 userId, s32 figureType);
 };
