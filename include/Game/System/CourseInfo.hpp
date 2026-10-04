@@ -35,6 +35,24 @@ class CourseInfo {
     bool setBestScore(s32 score);
     bool setBestTime(s32 time);
 
+    /**
+     * @brief Read the best recorded score.
+     * @return The best score for the course.
+     */
+    s32 getBestScore() const { return mBestScore; }
+
+    /**
+     * @brief Read the best recorded clear time.
+     * @return The best clear time for the course.
+     */
+    s32 getBestTime() const { return mBestTime; }
+
+    /**
+     * @brief Access the saved Green Star flags.
+     * @return The course's Green Star record.
+     */
+    const CourseGreenStarInfo& getGreenStarInfo() const { return mGreenStars; }
+
   private:
     enum Flag : u32 {
         Open = 1,

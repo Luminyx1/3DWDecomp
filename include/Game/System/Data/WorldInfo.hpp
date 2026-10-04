@@ -1,5 +1,8 @@
 #pragma once
 #include "System/Data/StageDatabaseInfo.hpp"
+namespace al {
+class Resource;
+}
 class WorldInfo {
   public:
     WorldInfo();
@@ -20,3 +23,6 @@ class WorldInfoList {
     int mStageCount;
     StageDatabaseInfo* mpStages;
 };
+namespace StageInfoFunction {
+WorldInfoList* createWorldInfoList(al::Resource* pResource);
+} // namespace StageInfoFunction

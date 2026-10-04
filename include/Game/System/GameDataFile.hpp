@@ -4,6 +4,7 @@ class StageDataHolder;
 class CourseInfo;
 class CourseInfoHolder;
 class WorldGameData;
+class StockItemList;
 class GameDataFile : public GameDataFileBase {
   public:
     void initializeData() override;
@@ -109,8 +110,16 @@ class GameDataFile : public GameDataFileBase {
     static void setCameraReverseVertical(GameDataHolder* pHolder, bool reverse);
     static void setCameraReverseHorizontal(GameDataHolder* pHolder, bool reverse);
 
+    /**
+     * @brief Access the saved stock items of the file.
+     * @return The file's stock-item list.
+     */
+    StockItemList* getStockItemList() const { return mpStockItems; }
+
   private:
     static u8 sCameraSettings;
-    u8 mUnreconstructed80[0xb8]; // Per-course progress, counters, flags, and stage holders.
+    u8 mUnreconstructed80[0x50]; // Per-course progress, counters, flags, and stage holders.
+    StockItemList* mpStockItems;
+    u8 mUnreconstructedD8[0x60]; // Remaining counters, flags, and stage holders.
 };
 static_assert(sizeof(GameDataFile) == 0x138);
