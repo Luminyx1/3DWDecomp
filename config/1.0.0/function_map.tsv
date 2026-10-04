@@ -33070,12 +33070,12 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71004FF300			FALSE	_ZN10GameSystemD0Ev	GameSystem::~GameSystem()	
 0x71004FF330			FALSE	sub_71004FF330	sub_71004FF330	
 0x71004FF350			FALSE	_ZN18GameSystemFunction13getGameSystemEv	GameSystemFunction::getGameSystem()	
-0x71004FF380		IslandData.o	FALSE	_ZN10IslandDataC2Ev	IslandData::IslandData()	
+0x71004FF380		IslandDataList.o	FALSE	_ZN10IslandDataC2Ev	IslandData::IslandData()	
 0x71004FF450			FALSE	_ZN10IslandData4initEPKcS1_iii	IslandData::init(char const*, char const*, int, int, int)	
 0x71004FF5B0			FALSE	_ZN10IslandData22getScenarioDataByIndexEi	IslandData::getScenarioDataByIndex(int)	
 0x71004FF5C0			FALSE	_ZNK10IslandData15getNumScenariosEv	IslandData::getNumScenarios() const	
 0x71004FF5D0			FALSE	_ZNK10IslandData7isValidEv	IslandData::isValid() const	
-0x71004FF5E0		IslandDataList.o	FALSE	_ZN14IslandDataListC2Ei	IslandDataList::IslandDataList(int)	
+0x71004FF5E0			FALSE	_ZN14IslandDataListC2Ei	IslandDataList::IslandDataList(int)	
 0x71004FF750			FALSE	_ZN14IslandDataListC2Ev	IslandDataList::IslandDataList()	
 0x71004FF9A0			FALSE	_ZN14IslandDataList16SharedIslandInitEP10IslandDataRN2al9ByamlIterEi	IslandDataList::SharedIslandInit(IslandData*, al::ByamlIter&, int)	
 0x71004FFCD0			FALSE	_ZN14IslandDataList18RegisterIslandDataEPKN2al9StageInfoEi	IslandDataList::RegisterIslandData(al::StageInfo const*, int)	

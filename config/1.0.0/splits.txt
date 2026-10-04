@@ -3261,10 +3261,8 @@ src/Game/System/GameDataPlayReportCommon.cpp:
     .text   start:0x004FEBA0 end:0x004FEE30
 src/Game/System/GameSystem.cpp:
     .text   start:0x004FEE30 end:0x004FF374
-src/Game/System/IslandData.cpp:
-    .text   start:0x004FF380 end:0x004FF5E0
 src/Game/System/IslandDataList.cpp:
-    .text   start:0x004FF5E0 end:0x0050028C
+    .text   start:0x004FF380 end:0x0050028C
 src/Game/System/IslandSaveData.cpp: done
     .text   start:0x00500290 end:0x005003E4
 src/Game/System/IslandSaveDataHolder.cpp:
