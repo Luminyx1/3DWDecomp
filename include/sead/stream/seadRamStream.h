@@ -31,6 +31,8 @@ public:
     RamReadStream(const void* buffer, u32 buffer_size, StreamFormat* format);
     ~RamReadStream() override;
 
+    const RamStreamSrc& getSrc() const { return mSrc; }
+
 private:
     RamStreamSrc mSrc;
 };
