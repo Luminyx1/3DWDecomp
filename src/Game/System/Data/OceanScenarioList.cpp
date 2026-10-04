@@ -25,13 +25,19 @@ ScenarioList* OceanScenarioList::getScenarioListByQuadrant(s32 quadrant) {
 }
 
 /**
+ * @brief Creates an empty set of quadrant scenario lists.
+ * @param capacity Maximum number of quadrant lists that can be added.
+ */
+OceanScenarioList::OceanScenarioList(s32 capacity) {
+    mLists.allocBuffer(capacity, nullptr);
+}
+
+/**
  * @brief Appends a quadrant list when capacity is available.
  * @param pList Scenario list to append; subsequent queries require a non-null list.
  */
 void OceanScenarioList::addList(ScenarioList* pList) {
-    if (mLists.size() < mLists.capacity()) {
-        mLists.pushBack(pList);
-    }
+    mLists.pushBack(pList);
 }
 
 /**
@@ -53,8 +59,7 @@ s32 OceanScenarioList::getScenarioNum() const {
  */
 s32 OceanScenarioList::getQuadrantIndexFromScenarioId(s32 scenarioId) const {
     for (s32 i = 0; i < mLists.size(); ++i) {
-        const ScenarioList* pList =
-            static_cast<u32>(i) < static_cast<u32>(mLists.size()) ? mLists[i] : nullptr;
+        const ScenarioList* pList = mLists[i];
         for (s32 j = 0; j < pList->mCount; ++j) {
             if (pList->mScenarios[j].mScenarioId == scenarioId) {
                 return i;
