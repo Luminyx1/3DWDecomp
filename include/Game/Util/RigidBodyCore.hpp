@@ -43,6 +43,9 @@ public:
     void setSphereHolder(const IUseRigidBodyCollisionSphereList* pSphereHolder);
     void impact(const sead::Vector3f& rPos, const sead::Vector3f& rNormal, f32 overlap);
 
+    void setRadius(f32 radius) { mRadius = radius; }
+    void setCenterOffset(sead::Vector3f offset) { mCenterOffset = offset; }
+
     virtual ~RigidBodyCore() {}
 
     virtual void control() {}
