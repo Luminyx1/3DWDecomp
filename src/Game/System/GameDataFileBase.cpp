@@ -267,6 +267,6 @@ int GameDataFileBase::getPlayerLife() const { return 0; }
 /**
  * @brief Handle a life award for a mode without a life counter.
  * @param life Requested life increment; unused in the base implementation.
- * @return False because the base mode has no lives to update.
+ * @return Zero because the base mode has no lives to update.
  */
-bool GameDataFileBase::addPlayerLife(int life) { return false; }
+int GameDataFileBase::addPlayerLife(int life) { return 0; }

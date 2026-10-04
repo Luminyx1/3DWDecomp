@@ -15,7 +15,13 @@ class GameDataFileBase {
   public:
     GameDataFileBase(GameDataHolder* pHolder, int fileId, bool isSingleMode);
     virtual void initializeData() = 0;
-    virtual bool isNewFile() const;
+
+    /**
+     * @brief Check whether the file has never been played.
+     * @return True for a fresh file.
+     */
+    virtual bool isNewFile() const { return mNewFile; }
+
     virtual void onSave() = 0;
     virtual void startStage(int worldId, int stageId) = 0;
     virtual void onStageStart();
@@ -25,13 +31,19 @@ class GameDataFileBase {
     virtual bool isTwinkleData() const = 0;
     virtual bool readFromStream(sead::ReadStream* pStream);
     virtual void writeToStream(sead::WriteStream* pStream, bool option) const;
-    virtual sead::DateTime getLastPlayingTime() const;
+
+    /**
+     * @brief Read when the file was last played.
+     * @return The last playing time.
+     */
+    virtual sead::DateTime getLastPlayingTime() const { return mLastPlayingTime; }
+
     virtual bool entryPlayer(int userId, int characterType);
     virtual void startOpening();
     virtual void startSave();
     virtual void initPlayerLife(int life);
     virtual int getPlayerLife() const;
-    virtual bool addPlayerLife(int life);
+    virtual int addPlayerLife(int life);
     void initializeData(bool isSingleMode);
     void copyFileBase(const GameDataFileBase& rOther);
     const ControlUserData* getControlUserData(int userId) const;
