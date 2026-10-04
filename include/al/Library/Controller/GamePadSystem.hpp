@@ -71,6 +71,14 @@ public:
 
     bool isEnableAutoHandheld() const { return mIsEnableAutoHandheld; }
 
+    bool isChangedPadState() const { return mIsChangedPadState; }
+
+    void requestForceImmediateDisconnect() { mIsForceImmediateDisconnect = true; }
+
+    void set2PAssistMode(bool isAssist) { _46 = isAssist; }
+
+    void setIsEnableAutoHandheld(bool isEnable) { mIsEnableAutoHandheld = isEnable; }
+
 private:
     s32 mMaxPlayerNum = 1;
     s32 mMinPlayerNum = 1;
