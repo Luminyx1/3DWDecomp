@@ -60,6 +60,18 @@ class GameDataFileBase {
      */
     sead::SafeString& getName() { return mName; }
 
+    /**
+     * @brief Read the save-file slot of this file.
+     * @return The save-file slot index.
+     */
+    int getFileId() const { return mFileId; }
+
+    /**
+     * @brief Access the per-user control data of this file.
+     * @return The control-user data holder.
+     */
+    ControlUserDataHolder* getControlUserDataHolder() const { return mpUsers; }
+
   protected:
     GameDataHolder* mpHolder;
     int mFileId;

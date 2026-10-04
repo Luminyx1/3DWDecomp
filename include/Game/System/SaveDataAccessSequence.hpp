@@ -1,7 +1,15 @@
 #pragma once
 #include "Library/Nerve/NerveExecutor.hpp"
+class GameDataHolder;
+namespace al {
+class ErrorViewer;
+class NetworkSystem;
+class LayoutInitInfo;
+} // namespace al
 class SaveDataAccessSequence : public al::NerveExecutor {
   public:
+    SaveDataAccessSequence(GameDataHolder* pHolder, al::ErrorViewer* pErrorViewer,
+                           al::NetworkSystem* pNetworkSystem, const al::LayoutInitInfo& rInfo);
     bool isDone() const;
     bool isWaitShowError() const;
     void startInit();
@@ -24,6 +32,11 @@ class SaveDataAccessSequence : public al::NerveExecutor {
      * @return True when saving has not been disabled.
      */
     bool isSaveEnabled() const { return !mSaveDisabled; }
+
+    /**
+     * @brief Mark the sequence as the development variant.
+     */
+    void setDevelop() { mDevelop = true; }
 
   private:
     u8 mUnreconstructed10[0x4c]; // Save buffers, windows, error handling, and file selection.

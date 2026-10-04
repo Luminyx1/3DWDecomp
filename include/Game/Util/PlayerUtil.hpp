@@ -2,6 +2,7 @@
 
 namespace al {
     class HitSensor;
+    class LiveActor;
 };
 
 namespace rc {
@@ -11,4 +12,6 @@ namespace rc {
      */
     int getPlayerFigureTypeDefault();
     bool isPlayerMini(const al::HitSensor*);
+    al::LiveActor* tryFindAlivePlayerActorFirstByUserId(const al::LiveActor* pPlayer, int userId);
+    int getPlayerFigureType(const al::LiveActor* pPlayer);
 };

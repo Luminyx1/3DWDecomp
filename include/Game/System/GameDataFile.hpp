@@ -252,6 +252,7 @@ class GameDataFile : public GameDataFileBase {
 
   private:
     friend inline void GameDataFileInternal::resetKinopioHouse(GameDataFile* pFile);
+    friend class GameDataHolder;
 
     static u8 sCameraSettings;
 

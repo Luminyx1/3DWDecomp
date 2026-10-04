@@ -6,6 +6,7 @@
 class StageDatabaseInfo;
 namespace GameDataFunction {
 bool isSingleMode(GameDataHolderAccessor);
+void initTotalPlayTimeSM(GameDataHolderAccessor accessor, int fileId);
 int getInvalidCourseId();
 int getWorldNum(GameDataHolderAccessor accessor);
 int getCourseTotalNum(GameDataHolderAccessor accessor);
