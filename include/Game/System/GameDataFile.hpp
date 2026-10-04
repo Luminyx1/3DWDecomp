@@ -255,6 +255,40 @@ class GameDataFile : public GameDataFileBase {
      */
     void incMenuRestartCount() { mUnknown98++; }
 
+    /**
+     * @brief Set progression flag bits.
+     * @param flag Progression flag bits to set.
+     */
+    void onGameFlag(u32 flag) { mGameFlag |= flag; }
+
+    /**
+     * @brief Clear progression flag bits.
+     * @param flag Progression flag bits to clear.
+     */
+    void offGameFlag(u32 flag) { mGameFlag &= ~flag; }
+
+    /**
+     * @brief Check whether the file was resumed after a game over.
+     * @return True after a game over.
+     */
+    bool isAfterGameOver() const { return mUnknownAC; }
+
+    /**
+     * @brief Forget that the file was resumed after a game over.
+     */
+    void resetAfterGameOver() { mUnknownAC = false; }
+
+    /**
+     * @brief Check whether the ending was started.
+     * @return True after the ending.
+     */
+    bool isAfterEnding() const { return mIsStartEnding; }
+
+    /**
+     * @brief Forget that the ending was started.
+     */
+    void resetAfterEnding() { mIsStartEnding = false; }
+
   private:
     friend inline void GameDataFileInternal::resetKinopioHouse(GameDataFile* pFile);
     friend class GameDataHolder;
