@@ -1,14 +1,15 @@
 #include "System/Data/OceanScenarioList.hpp"
 #include "Library/Scene/SceneObjUtil.hpp"
+#include "Scene/SceneObjID.hpp"
 
 /**
- * @brief Finds a quadrant scenario list through scene object 42.
+ * @brief Finds a quadrant scenario list through the ocean scenario list scene object.
  * @param pUser Non-null scene user used to locate the ocean list.
  * @param quadrant Quadrant index; invalid indices return nullptr.
  * @return Scenario list, or nullptr when unavailable.
  */
 ScenarioList* OceanScenarioList::tryGetOceanScenarioList(const al::IUseSceneObjHolder* pUser, s32 quadrant) {
-    auto* pLists = static_cast<OceanScenarioList*>(al::tryGetSceneObj(pUser, 42));
+    auto* pLists = al::tryGetSceneObj<OceanScenarioList>(pUser, SceneObjID_OceanScenarioList);
     return pLists != nullptr ? pLists->getScenarioListByQuadrant(quadrant) : nullptr;
 }
 

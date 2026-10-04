@@ -2,6 +2,7 @@
 #include "Library/Scene/SceneObjHolder.hpp"
 #include "Library/Scene/SceneObjUtil.hpp"
 #include "Project/Base/StringUtil.hpp"
+#include "Scene/SceneObjID.hpp"
 #include "System/CourseInfoHolder.hpp"
 #include "System/Data/SingleModeData.hpp"
 #include "System/Data/SingleModeStockItemArray.hpp"
@@ -14,9 +15,6 @@
 #include "Util/ControlUserUtil.hpp"
 
 namespace {
-
-/// Scene-object identifier of the game-data holder.
-constexpr int cSceneObjGameDataHolder = 8;
 
 /// Number of save files of each game mode.
 constexpr int cFileNum = 4;
@@ -45,7 +43,7 @@ int calcOpenWorldIdMaxInFile(GameDataHolderAccessor accessor, int fileId) {
  * @return The game-data holder.
  */
 GameDataHolder* GameDataFunction::getGameDataHolder(const al::IUseSceneObjHolder* pUser) {
-    return static_cast<GameDataHolder*>(al::getSceneObj(pUser, cSceneObjGameDataHolder));
+    return al::getSceneObj<GameDataHolder>(pUser, SceneObjID_GameDataHolder);
 }
 
 /**
@@ -54,7 +52,7 @@ GameDataHolder* GameDataFunction::getGameDataHolder(const al::IUseSceneObjHolder
  * @return The game-data holder.
  */
 GameDataHolder* GameDataFunction::getGameDataHolder(const al::SceneObjHolder* pHolder) {
-    return static_cast<GameDataHolder*>(pHolder->getObj(cSceneObjGameDataHolder));
+    return static_cast<GameDataHolder*>(pHolder->getObj(SceneObjID_GameDataHolder));
 }
 
 /**

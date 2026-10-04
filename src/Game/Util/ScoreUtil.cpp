@@ -7,6 +7,7 @@
 #include "Library/LiveActor/Util/ActorSensorUtil.hpp"
 #include "Library/Scene/ISceneObj.hpp"
 #include "Library/Scene/SceneObjUtil.hpp"
+#include "Scene/SceneObjID.hpp"
 #include "Util/DrcUtil.hpp"
 #include "Util/ProjectMsgUtil.hpp"
 
@@ -26,15 +27,13 @@ public:
 };
 
 namespace {
-    constexpr s32 cSceneObjScoreHolder = 20;
-
     /**
      * @brief Gets the scene's score holder.
      * @param pHolder Scene object holder user.
      * @return The score holder scene object.
      */
     inline ScoreHolder* getScoreHolder(const al::IUseSceneObjHolder* pHolder) {
-        return static_cast<ScoreHolder*>(al::getSceneObj(pHolder, cSceneObjScoreHolder));
+        return al::getSceneObj<ScoreHolder>(pHolder, SceneObjID_ScoreHolder);
     }
 
     /**

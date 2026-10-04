@@ -7,6 +7,7 @@
 #include "Library/Stage/StageInfo.hpp"
 #include "Library/Yaml/ByamlIter.hpp"
 #include "Project/Base/StringUtil.hpp"
+#include "Scene/SceneObjID.hpp"
 #include "System/Data/OceanScenarioList.hpp"
 #include "System/IslandData.hpp"
 
@@ -224,7 +225,7 @@ const char* IslandDataFunction::getIslandScenarioName(al::IUseSceneObjHolder* pH
 const char* IslandDataFunction::getOceanScenarioName(al::IUseSceneObjHolder* pHolder,
                                                      al::IUseMessageSystem* pMessageSystem,
                                                      int scenarioId, int quadrant) {
-    if (al::tryGetSceneObj(pHolder, 42) == nullptr) {
+    if (al::tryGetSceneObj(pHolder, SceneObjID_OceanScenarioList) == nullptr) {
         return "";
     }
 

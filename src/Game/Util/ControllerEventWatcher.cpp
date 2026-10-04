@@ -4,19 +4,16 @@
 
 #include "Library/Controller/NpadController.hpp"
 #include "Library/Scene/SceneObjUtil.hpp"
+#include "Scene/SceneObjID.hpp"
 
 namespace {
-/// Scene object id of the controller event watcher.
-constexpr s32 cSceneObjControllerEventWatcher = 34;
-
 /**
  * Gets the controller event watcher of a scene.
  * @param pHolder scene object holder user
  * @return the watcher
  */
 ControllerEventWatcher* getControllerEventWatcher(const al::IUseSceneObjHolder* pHolder) {
-    return static_cast<ControllerEventWatcher*>(
-        al::getSceneObj(pHolder, cSceneObjControllerEventWatcher));
+    return al::getSceneObj<ControllerEventWatcher>(pHolder, SceneObjID_ControllerEventWatcher);
 }
 }  // namespace
 

@@ -11,6 +11,7 @@
 #include "Project/Base/StringUtil.hpp"
 #include "Scene/PhaseBossScene.hpp"
 #include "Scene/PhaseScene.hpp"
+#include "Scene/SceneObjID.hpp"
 #include "System/ControlUserDataHolder.hpp"
 #include "System/Data/OceanScenarioList.hpp"
 #include "System/Data/SingleModeData.hpp"
@@ -23,9 +24,6 @@
 #include "Util/ControlUserUtil.hpp"
 
 namespace {
-
-/// Scene-object id of the goal-item (Cat Shine) holder.
-constexpr s32 cGoalItemHolderSceneObjId = 36;
 
 /// Scenario types read from the island and ocean scenario lists.
 constexpr u32 cScenarioTypeCloud = 3;
@@ -809,8 +807,7 @@ bool SingleModeDataFunction::isNekoShine(GameDataHolderAccessor accessor, int is
  * @return True when the last remaining shine is a cat shine.
  */
 bool SingleModeDataFunction::allNekoShinesRemaining(const al::LiveActor* pActor) {
-    GoalItemHolder* pHolder =
-        static_cast<GoalItemHolder*>(al::tryGetSceneObj(pActor, cGoalItemHolderSceneObjId));
+    auto* pHolder = al::tryGetSceneObj<GoalItemHolder>(pActor, SceneObjID_GoalItemHolder);
     if (pHolder != nullptr) {
         return pHolder->isLastShineNeko();
     }
@@ -824,8 +821,7 @@ bool SingleModeDataFunction::allNekoShinesRemaining(const al::LiveActor* pActor)
  * @return True when the last remaining shine is a disaster shine.
  */
 bool SingleModeDataFunction::allDisasterShinesRemaining(const al::LiveActor* pActor) {
-    GoalItemHolder* pHolder =
-        static_cast<GoalItemHolder*>(al::tryGetSceneObj(pActor, cGoalItemHolderSceneObjId));
+    auto* pHolder = al::tryGetSceneObj<GoalItemHolder>(pActor, SceneObjID_GoalItemHolder);
     if (pHolder != nullptr) {
         return pHolder->isLastShineDisaster();
     }

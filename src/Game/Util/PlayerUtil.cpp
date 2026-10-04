@@ -1,4 +1,5 @@
 #include "Util/PlayerUtil.hpp"
+#include "Scene/SceneObjID.hpp"
 #include "Util/ProjectInterfaceUtil.hpp"
 
 #include <attributes.h>
@@ -89,21 +90,6 @@
 #include "Util/ProjectMsgUtil.hpp"
 
 namespace {
-
-/// Scene object id of the PlayerGroupSceneObj.
-constexpr s32 cSceneObjPlayerGroup = 0x10;
-
-/// Scene object id of the PlayerStocker.
-constexpr s32 cSceneObjPlayerStocker = 0x12;
-
-/// Scene object id of the surfing Plessie (RaidonSurf).
-constexpr s32 cSceneObjRaidonSurf = 0x33;
-
-/// Scene object id of the CloudBonusWatcher.
-constexpr s32 cSceneObjCloudBonusWatcher = 0x34;
-
-/// Scene object id of Bowser Jr. (PlayerKoopaJr).
-constexpr s32 cSceneObjPlayerKoopaJr = 0x38;
 
 /// Layout of the uniform block of the invincibility look: one color.
 const al::UniformBlockLayout cInvincibleUboLayout = {0, agl::UniformBlock::cType_Vec4, 1};
@@ -280,9 +266,8 @@ inline bool isBindedByName(const al::LiveActor* pActor, const char* pName) {
  */
 inline bool isRaidonSurfOnGroundOrWater(const al::LiveActor* pActor, const PlayerActor* pPlayer) {
     if (pPlayer->isRaidonExist()) {
-        al::ISceneObj* sceneObj = al::tryGetSceneObj(pActor, cSceneObjRaidonSurf);
-        RaidonSurf* raidon = static_cast<RaidonSurf*>(sceneObj);
-        if (sceneObj != nullptr && raidon->isOnGroundOrWaterRaidon()) {
+        auto* raidon = al::tryGetSceneObj<RaidonSurf>(pActor, SceneObjID_RaidonSurf);
+        if (raidon != nullptr && raidon->isOnGroundOrWaterRaidon()) {
             return true;
         }
     }
@@ -296,8 +281,7 @@ inline bool isRaidonSurfOnGroundOrWater(const al::LiveActor* pActor, const Playe
  * @return The player group.
  */
 inline PlayerGroup* getPlayerGroup(const al::LiveActor* pActor) {
-    return static_cast<PlayerGroupSceneObj*>(al::getSceneObj(pActor, cSceneObjPlayerGroup))
-        ->getPlayerGroup();
+    return al::getSceneObj<PlayerGroupSceneObj>(pActor, SceneObjID_PlayerGroup)->getPlayerGroup();
 }
 
 /**
@@ -1532,8 +1516,7 @@ bool isPlayerInInkLimiter(const al::LiveActor* pActor) {
  * @return True if a cloud bonus stage is being played.
  */
 bool isPlayerInCloudBonus(const al::LiveActor* pActor) {
-    CloudBonusWatcher* watcher =
-        static_cast<CloudBonusWatcher*>(al::getSceneObj(pActor, cSceneObjCloudBonusWatcher));
+    auto* watcher = al::getSceneObj<CloudBonusWatcher>(pActor, SceneObjID_CloudBonusWatcher);
     if (watcher == nullptr) {
         return false;
     }
@@ -4949,8 +4932,7 @@ void killAllPlayersEffect(al::LiveActor* pActor) {
         killAllPlayerEffect(playerHolder->getPlayer(i));
     }
 
-    PlayerKoopaJr* koopaJr =
-        static_cast<PlayerKoopaJr*>(al::tryGetSceneObj(pActor, cSceneObjPlayerKoopaJr));
+    auto* koopaJr = al::tryGetSceneObj<PlayerKoopaJr>(pActor, SceneObjID_PlayerKoopaJr);
     if (koopaJr != nullptr) {
         al::tryDeleteEmitterAndParticleAll(koopaJr);
     }
@@ -5157,8 +5139,7 @@ s32 getNextValidCharType(GameDataHolder* pHolder, al::LiveActor* pActor, bool is
 PlayerActor* changeCharType(GameDataHolder* pHolder, al::LiveActor* pActor, s32 characterType) {
     PlayerActor* player = toPlayerActor(pActor);
     s32 oldCharacterType = getPlayerCharaType(pActor);
-    PlayerStocker* stocker =
-        static_cast<PlayerStocker*>(al::getSceneObj(pActor, cSceneObjPlayerStocker));
+    auto* stocker = al::getSceneObj<PlayerStocker>(pActor, SceneObjID_PlayerStocker);
     PlayerActor* newPlayer = stocker->getUnusedPlayer(characterType);
     if (newPlayer == nullptr) {
         return nullptr;
