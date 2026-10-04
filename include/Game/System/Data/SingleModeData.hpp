@@ -148,14 +148,14 @@ class SingleModeData : public GameDataFileBase {
     void writeToStream(sead::WriteStream* pStream, bool isSkip) const override;
     void startSave() override;
 
-    const sead::SafeString& getPhaseName(const al::IUseSceneObjHolder* pUser);
-    const sead::SafeString& getPhaseNameForPhaseClearPR(int phase);
+    sead::SafeString& getPhaseName(const al::IUseSceneObjHolder* pUser);
+    sead::SafeString& getPhaseNameForPhaseClearPR(int phase);
     void resetBossPlayTime();
     void setBossPlayTime();
     s64 getBossPlayTime();
     void resetIslandPlayTime();
     void setIslandPlayTime();
-    s64 getIslandPlayTime();
+    s32 getIslandPlayTime();
     void resetPhaseTotalPlayTime();
     void setPhasePlayTime();
     void updatePhasePlayTime();
@@ -297,6 +297,190 @@ class SingleModeData : public GameDataFileBase {
     static constexpr s32 cLuckyIslandPosNum = 5;
 
     static Options sOptions;
+    static s32 sLastVisitedLighthouseID;
+
+    /**
+     * @brief Access the per-island save records.
+     * @return The island save-record holder.
+     */
+    IslandSaveDataHolder* getIslands() const { return mpIslands; }
+
+    /**
+     * @brief Access the stocked items.
+     * @return The stock-item array.
+     */
+    SingleModeStockItemArray* getStockItems() const { return mpStockItems; }
+
+    /**
+     * @brief Access the last passed checkpoint.
+     * @return The last passed checkpoint.
+     */
+    const CheckpointInfo& getCheckpoint() const { return mCheckpoint; }
+
+    /**
+     * @brief Access the last passed goal-item checkpoint.
+     * @return The last passed goal-item checkpoint.
+     */
+    const CheckpointInfo& getGoalItemCheckpoint() const { return mGoalItemCheckpoint; }
+
+    /**
+     * @brief Access the last passed island checkpoint.
+     * @return The island checkpoint, or a negative value when none was passed.
+     */
+    s32 getIslandCheckpoint() const { return mIslandCheckpoint; }
+
+    /**
+     * @brief Count the collected goal items (Cat Shines).
+     * @return The number of collected goal items.
+     */
+    s32 getGoalItemNum() const { return mGoalItemNum; }
+
+    /**
+     * @brief Check whether disaster mode (Fury Bowser) was active.
+     * @return True when disaster mode was active.
+     */
+    bool isDisasterMode() const { return mIsDisasterMode; }
+
+    /**
+     * @brief Record whether disaster mode is active.
+     * @param isDisaster True when disaster mode is active.
+     */
+    void setDisasterMode(bool isDisaster) { mIsDisasterMode = isDisaster; }
+
+    /**
+     * @brief Read the elapsed disaster-mode frames.
+     * @return The elapsed disaster-mode frames.
+     */
+    s32 getDisasterModeFrames() const { return mDisasterModeFrames; }
+
+    /**
+     * @brief Store the elapsed disaster-mode frames.
+     * @param frames Elapsed disaster-mode frames.
+     */
+    void setDisasterModeFrames(s32 frames) { mDisasterModeFrames = frames; }
+
+    /**
+     * @brief Check whether disaster mode transitions from hard to super hard.
+     * @return True while the transition is pending.
+     */
+    bool isHardToSuperDisasterTransition() const { return mIsHardToSuperDisasterTransition; }
+
+    /**
+     * @brief Mark whether disaster mode transitions from hard to super hard.
+     * @param isTransition True while the transition is pending.
+     */
+    void setHardToSuperDisasterTransition(bool isTransition) {
+        mIsHardToSuperDisasterTransition = isTransition;
+    }
+
+    /**
+     * @brief Check whether the disaster foreshadowing starts automatically.
+     * @return True when foreshadowing starts automatically.
+     */
+    bool isAutoForeshadow() const { return mIsAutoForeshadow; }
+
+    /**
+     * @brief Set whether the disaster foreshadowing starts automatically.
+     * @param isAuto True to start foreshadowing automatically.
+     */
+    void setAutoForeshadow(bool isAuto) { mIsAutoForeshadow = isAuto; }
+
+    /**
+     * @brief Read the peaceful frames left after a boss battle.
+     * @return The peaceful frames.
+     */
+    s32 getDisasterModePostBossPeaceFrames() const { return mDisasterModePostBossPeaceFrames; }
+
+    /**
+     * @brief Store the peaceful frames left after a boss battle.
+     * @param frames Peaceful frames.
+     */
+    void setDisasterModePostBossPeaceFrames(s32 frames) {
+        mDisasterModePostBossPeaceFrames = frames;
+    }
+
+    /**
+     * @brief Read the disaster-mode flow index.
+     * @return The disaster-mode flow index.
+     */
+    s32 getDisasterModeFlowIndex() const { return mDisasterModeFlowIndex; }
+
+    /**
+     * @brief Store the disaster-mode flow index.
+     * @param index Disaster-mode flow index.
+     */
+    void setDisasterModeFlowIndex(s32 index) { mDisasterModeFlowIndex = index; }
+
+    /**
+     * @brief Read the Giga Bell lock count.
+     * @return The Giga Bell lock count.
+     */
+    s32 getGigaBellLockCount() const { return mGigaBellLockCount; }
+
+    /**
+     * @brief Store the Giga Bell lock count.
+     * @param count Giga Bell lock count.
+     */
+    void setGigaBellLockCount(s32 count) { mGigaBellLockCount = count; }
+
+    /**
+     * @brief Check whether the Giga Bell is unlocked.
+     * @return True when the Giga Bell is unlocked.
+     */
+    bool isGigaBellUnlocked() const { return mIsGigaBellUnlocked; }
+
+    /**
+     * @brief Set whether the Giga Bell is unlocked.
+     * @param isUnlocked True when the Giga Bell is unlocked.
+     */
+    void setGigaBellUnlocked(bool isUnlocked) { mIsGigaBellUnlocked = isUnlocked; }
+
+    /**
+     * @brief Check whether a Giga Bell respawn point is stored.
+     * @return True when the Giga Bell respawn point is valid.
+     */
+    bool isGigaBellRespawnValid() const { return mIsGigaBellRespawnValid; }
+
+    /**
+     * @brief Check whether a generic respawn point is stored.
+     * @return True when the generic respawn point is valid.
+     */
+    bool isGenericRespawnValid() const { return mIsGenericRespawnValid; }
+
+    /**
+     * @brief Check whether the current phase has ended.
+     * @return True when the phase has ended.
+     */
+    bool isPhaseEnd() const { return mIsPhaseEnd; }
+
+    /**
+     * @brief Mark whether the current phase has ended.
+     * @param isEnd True when the phase has ended.
+     */
+    void setPhaseEnd(bool isEnd) { mIsPhaseEnd = isEnd; }
+
+    /**
+     * @brief Read the map zoom ratio.
+     * @return The map zoom ratio.
+     */
+    f32 getMapZoomRatio() const { return mMapZoomRatio; }
+
+    /**
+     * @brief Store the map zoom ratio.
+     * @param ratio Map zoom ratio.
+     */
+    void setMapZoomRatio(f32 ratio) { mMapZoomRatio = ratio; }
+
+    /**
+     * @brief Count the player deaths.
+     * @return The number of player deaths.
+     */
+    s32 getDeathCount() const { return mDeathCount; }
+
+    /**
+     * @brief Count one more player death.
+     */
+    void incDeathCount() { mDeathCount++; }
 
   private:
 
@@ -320,7 +504,7 @@ class SingleModeData : public GameDataFileBase {
     s32 mGoalItemNum;
     s32 mUnlockedPhase;
     s32 mUnlockedIslandNum;
-    bool mUnknownD0;
+    bool mIsDisasterMode;
     bool mIsNewToPhase1;
     bool mIsNewToPhase2;
     bool mIsNewToPhase3;
@@ -334,13 +518,13 @@ class SingleModeData : public GameDataFileBase {
     bool mIsNewToPhase2BowserExit;
     bool mIsNewToPhase3BowserExit;
     bool mShouldFadeToWhite;
-    bool mUnknownDE;
-    bool mUnknownDF;
-    s32 mUnknownE0;
-    s32 mUnknownE4;
-    s32 mUnknownE8;
-    s32 mUnknownEC = -1;
-    bool mUnknownF0 = false;
+    bool mIsHardToSuperDisasterTransition;
+    bool mIsAutoForeshadow;
+    s32 mDisasterModeFrames;
+    s32 mDisasterModePostBossPeaceFrames;
+    s32 mDisasterModeFlowIndex;
+    s32 mGigaBellLockCount = -1;
+    bool mIsGigaBellUnlocked = false;
     s32 mPhase1DarkBowserHitPoint;
     s32 mPhase2DarkBowserHitPoint;
     s32 mPhase3DarkBowserHitPoint;
@@ -354,7 +538,7 @@ class SingleModeData : public GameDataFileBase {
     bool mIsGenericRespawnValid = false;
     sead::Vector3f mGenericRespawnTrans;
     sead::Vector3f mGenericRespawnFront;
-    bool mUnknown148 = false;
+    bool mIsPhaseEnd = false;
     u32 mSeenCutsceneFlags = 0;
     u32 mSavedGenericItemFlags = 0;
     s8 mLuckyIslandPos[cLuckyIslandPosNum];
@@ -363,8 +547,8 @@ class SingleModeData : public GameDataFileBase {
     NekoParentData* mpNekoParentData;
     sead::Buffer<s32> mBlockHards;
     u32 mGuideMessageSeenFlags[2] = {};
-    s32 mUnknown198;
-    s32 mUnknown19C;
+    f32 mMapZoomRatio;
+    s32 mDeathCount;
     nn::TimeSpan mBossPlayStartTime = {};
     s64 mBossPlayTime;
     nn::TimeSpan mIslandPlayStartTime = {};

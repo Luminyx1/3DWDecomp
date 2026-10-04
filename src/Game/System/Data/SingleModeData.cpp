@@ -1,5 +1,7 @@
 #include "System/Data/SingleModeData.hpp"
+#include "Enemy/SuperBowser.hpp"
 #include "Library/Scene/IUseSceneObjHolder.hpp"
+#include "MapObj/DisasterModeController.hpp"
 #include "System/ControlUserDataHolder.hpp"
 #include "System/Data/OceanScenarioList.hpp"
 #include "System/Data/SingleModeDataFunction.hpp"
@@ -9,31 +11,12 @@
 #include "System/IslandData.hpp"
 #include "System/IslandDataList.hpp"
 #include "System/IslandSaveDataHolder.hpp"
+#include "System/ScenarioInfo.hpp"
 #include <cstring>
 #include <nn/oe.h>
 #include <stream/seadStream.h>
 
 // Minimal declarations of external types that have not been reconstructed yet.
-class SuperBowser {
-  public:
-    bool isLastPhase3Bowser();
-};
-
-class DisasterModeController {
-  public:
-    static DisasterModeController* tryGetController(const al::IUseSceneObjHolder* pUser);
-
-    /**
-     * @brief Access the Fury Bowser actor.
-     * @return The Fury Bowser actor, or nullptr when absent.
-     */
-    SuperBowser* getSuperBowser() const { return mpSuperBowser; }
-
-  private:
-    u8 mUnknown0[0x1e8];
-    SuperBowser* mpSuperBowser;
-};
-
 namespace neko {
 class Target {
   public:
@@ -46,12 +29,6 @@ class Target {
     s32 mId;
 };
 } // namespace neko
-
-class ScenarioInfo {
-  public:
-    s32 mIslandId;
-    s32 mScenarioIndex;
-};
 
 extern sead::SafeString sPhaseName;
 
@@ -73,7 +50,7 @@ struct SingleModeSaveData {
     s32 mGoalItemNum;
     s32 mUnlockedPhase;
     s32 mUnlockedIslandNum;
-    bool mUnknownD0;
+    bool mIsDisasterMode;
     bool mIsNewToPhase1;
     bool mIsNewToPhase2;
     bool mIsNewToPhase3;
@@ -87,13 +64,13 @@ struct SingleModeSaveData {
     bool mIsNewToPhase2BowserExit;
     bool mIsNewToPhase3BowserExit;
     bool mShouldFadeToWhite;
-    bool mUnknownDE;
-    bool mUnknownDF;
-    s32 mUnknownE0;
-    s32 mUnknownE4;
-    s32 mUnknownE8;
-    s32 mUnknownEC;
-    bool mUnknownF0;
+    bool mIsHardToSuperDisasterTransition;
+    bool mIsAutoForeshadow;
+    s32 mDisasterModeFrames;
+    s32 mDisasterModePostBossPeaceFrames;
+    s32 mDisasterModeFlowIndex;
+    s32 mGigaBellLockCount;
+    bool mIsGigaBellUnlocked;
     s32 mPhase1DarkBowserHitPoint;
     s32 mPhase2DarkBowserHitPoint;
     s32 mPhase3DarkBowserHitPoint;
@@ -114,7 +91,7 @@ struct SingleModeSaveData {
     sead::Vector3f mGigaBellRespawnFront;
     s32 mPhase4DarkBowserHitPointPreBattle;
     s32 mBlockHards[6];
-    s32 mUnknown19C;
+    s32 mDeathCount;
     u8 mUnknownB5C[0x10];
     u32 mIslandPlayTime;
     s64 mPhaseTotalPlayTime;
@@ -278,17 +255,17 @@ void SingleModeData::initializeData() {
     mPhaseTotalPlayTime = 0;
     mIslandPlayTime = 0;
     sPhaseName = sead::SafeString();
-    mUnknown148 = false;
+    mIsPhaseEnd = false;
     mUnlockedPhase = 1;
     mUnlockedIslandNum = 0;
-    mUnknown19C = 0;
-    mUnknownD0 = false;
-    mUnknownE4 = 0;
-    mUnknownE8 = 0;
+    mDeathCount = 0;
+    mIsDisasterMode = false;
+    mDisasterModePostBossPeaceFrames = 0;
+    mDisasterModeFlowIndex = 0;
     mShouldFadeToWhite = false;
-    mUnknownDE = false;
-    mUnknownDF = false;
-    mUnknownE0 = 0;
+    mIsHardToSuperDisasterTransition = false;
+    mIsAutoForeshadow = false;
+    mDisasterModeFrames = 0;
     mIsNewToPhase1 = true;
     mIsNewToPhase2 = true;
     mIsNewToPhase3 = true;
@@ -301,8 +278,8 @@ void SingleModeData::initializeData() {
     mIsNewToPhase1BowserExit = true;
     mIsNewToPhase2BowserExit = true;
     mIsNewToPhase3BowserExit = true;
-    mUnknownEC = -1;
-    mUnknownF0 = false;
+    mGigaBellLockCount = -1;
+    mIsGigaBellUnlocked = false;
     mPhase1DarkBowserHitPoint = 100;
     mPhase2DarkBowserHitPoint = 200;
     mPhase3DarkBowserHitPoint = 200;
@@ -324,7 +301,7 @@ void SingleModeData::initializeData() {
     mBlockHards.fill(0);
     mGuideMessageSeenFlags[0] = 0;
     mGuideMessageSeenFlags[1] = 0;
-    mUnknown198 = 0;
+    mMapZoomRatio = 0.0f;
 
     for (s32 i = 0; i < cLuckyIslandPosNum; i++) {
         mLuckyIslandPos[i] = -1;
@@ -336,7 +313,7 @@ void SingleModeData::initializeData() {
  * @param pUser Scene-object user used to detect the final Fury Bowser chase, or nullptr.
  * @return The shared phase-name string.
  */
-const sead::SafeString& SingleModeData::getPhaseName(const al::IUseSceneObjHolder* pUser) {
+sead::SafeString& SingleModeData::getPhaseName(const al::IUseSceneObjHolder* pUser) {
     switch (mUnlockedPhase) {
     case 0:
         sPhaseName = "phase_0";
@@ -394,7 +371,7 @@ const sead::SafeString& SingleModeData::getPhaseName(const al::IUseSceneObjHolde
  * @param phase Progression phase identifier.
  * @return The shared phase-name string.
  */
-const sead::SafeString& SingleModeData::getPhaseNameForPhaseClearPR(int phase) {
+sead::SafeString& SingleModeData::getPhaseNameForPhaseClearPR(int phase) {
     switch (phase) {
     case 0:
         sPhaseName = "phase_0";
@@ -467,7 +444,7 @@ void SingleModeData::setIslandPlayTime() {
  * @brief Accumulate the island play time.
  * @return The accumulated island play time in seconds.
  */
-s64 SingleModeData::getIslandPlayTime() {
+s32 SingleModeData::getIslandPlayTime() {
     mIslandPlayTime += calcElapsedSeconds(mIslandPlayStartTime);
     return mIslandPlayTime;
 }
@@ -590,7 +567,7 @@ bool SingleModeData::isSuperHardModeOn(int hitPoint) const {
         return true;
     }
 
-    if (mGoalItemNum >= 47 && mUnlockedPhase == 5 && mUnknownEC > hitPoint) {
+    if (mGoalItemNum >= 47 && mUnlockedPhase == 5 && mGigaBellLockCount > hitPoint) {
         return true;
     }
 
@@ -661,7 +638,7 @@ void SingleModeData::copySingleModeFile(const SingleModeData& rOther) {
     mGoalItemNum = rOther.mGoalItemNum;
     mUnlockedPhase = rOther.mUnlockedPhase;
     mUnlockedIslandNum = rOther.mUnlockedIslandNum;
-    mUnknownD0 = rOther.mUnknownD0;
+    mIsDisasterMode = rOther.mIsDisasterMode;
     mIsNewToPhase1 = rOther.mIsNewToPhase1;
     mIsNewToPhase2 = rOther.mIsNewToPhase2;
     mIsNewToPhase3 = rOther.mIsNewToPhase3;
@@ -675,13 +652,13 @@ void SingleModeData::copySingleModeFile(const SingleModeData& rOther) {
     mIsNewToPhase2BowserExit = rOther.mIsNewToPhase2BowserExit;
     mIsNewToPhase3BowserExit = rOther.mIsNewToPhase3BowserExit;
     mShouldFadeToWhite = rOther.mShouldFadeToWhite;
-    mUnknownDE = rOther.mUnknownDE;
-    mUnknownDF = rOther.mUnknownDF;
-    mUnknownE0 = rOther.mUnknownE0;
-    mUnknownE4 = rOther.mUnknownE4;
-    mUnknownE8 = rOther.mUnknownE8;
-    mUnknownEC = rOther.mUnknownEC;
-    mUnknownF0 = rOther.mUnknownF0;
+    mIsHardToSuperDisasterTransition = rOther.mIsHardToSuperDisasterTransition;
+    mIsAutoForeshadow = rOther.mIsAutoForeshadow;
+    mDisasterModeFrames = rOther.mDisasterModeFrames;
+    mDisasterModePostBossPeaceFrames = rOther.mDisasterModePostBossPeaceFrames;
+    mDisasterModeFlowIndex = rOther.mDisasterModeFlowIndex;
+    mGigaBellLockCount = rOther.mGigaBellLockCount;
+    mIsGigaBellUnlocked = rOther.mIsGigaBellUnlocked;
     mPhase1DarkBowserHitPoint = rOther.mPhase1DarkBowserHitPoint;
     mPhase2DarkBowserHitPoint = rOther.mPhase2DarkBowserHitPoint;
     mPhase3DarkBowserHitPoint = rOther.mPhase3DarkBowserHitPoint;
@@ -708,8 +685,8 @@ void SingleModeData::copySingleModeFile(const SingleModeData& rOther) {
 
     copyBrokenBlockHardList(rOther.mBlockHards);
     mGuideMessageSeenFlags[0] = rOther.mGuideMessageSeenFlags[0];
-    mUnknown198 = rOther.mUnknown198;
-    mUnknown19C = rOther.mUnknown19C;
+    mMapZoomRatio = rOther.mMapZoomRatio;
+    mDeathCount = rOther.mDeathCount;
     mBossPlayTime = rOther.mBossPlayTime;
     mIslandPlayTime = rOther.mIslandPlayTime;
     mPhaseTotalPlayTime = rOther.mPhaseTotalPlayTime;
@@ -1890,7 +1867,7 @@ bool SingleModeData::readFromStream(sead::ReadStream* pStream) {
     mGoalItemNum = save.mGoalItemNum;
     mUnlockedPhase = save.mUnlockedPhase;
     mUnlockedIslandNum = save.mUnlockedIslandNum;
-    mUnknownD0 = save.mUnknownD0;
+    mIsDisasterMode = save.mIsDisasterMode;
     mIsNewToPhase1 = save.mIsNewToPhase1;
     mIsNewToPhase2 = save.mIsNewToPhase2;
     mIsNewToPhase3 = save.mIsNewToPhase3;
@@ -1904,13 +1881,13 @@ bool SingleModeData::readFromStream(sead::ReadStream* pStream) {
     mIsNewToPhase2BowserExit = save.mIsNewToPhase2BowserExit;
     mIsNewToPhase3BowserExit = save.mIsNewToPhase3BowserExit;
     mShouldFadeToWhite = save.mShouldFadeToWhite;
-    mUnknownDE = save.mUnknownDE;
-    mUnknownDF = save.mUnknownDF;
-    mUnknownE0 = save.mUnknownE0;
-    mUnknownE4 = save.mUnknownE4;
-    mUnknownE8 = save.mUnknownE8;
-    mUnknownEC = save.mUnknownEC;
-    mUnknownF0 = save.mUnknownF0;
+    mIsHardToSuperDisasterTransition = save.mIsHardToSuperDisasterTransition;
+    mIsAutoForeshadow = save.mIsAutoForeshadow;
+    mDisasterModeFrames = save.mDisasterModeFrames;
+    mDisasterModePostBossPeaceFrames = save.mDisasterModePostBossPeaceFrames;
+    mDisasterModeFlowIndex = save.mDisasterModeFlowIndex;
+    mGigaBellLockCount = save.mGigaBellLockCount;
+    mIsGigaBellUnlocked = save.mIsGigaBellUnlocked;
     mPhase1DarkBowserHitPoint = save.mPhase1DarkBowserHitPoint;
     mPhase2DarkBowserHitPoint = save.mPhase2DarkBowserHitPoint;
     mPhase3DarkBowserHitPoint = save.mPhase3DarkBowserHitPoint;
@@ -1924,7 +1901,7 @@ bool SingleModeData::readFromStream(sead::ReadStream* pStream) {
     mGenericRespawnTrans = save.mGenericRespawnTrans;
     mGenericRespawnFront = save.mGenericRespawnFront;
     mGuideMessageSeenFlags[0] = save.mGuideMessageSeenFlags;
-    mUnknown19C = save.mUnknown19C;
+    mDeathCount = save.mDeathCount;
     mSavedGenericItemFlags = save.mSavedGenericItemFlags;
     mPhaseTotalPlayTime = save.mPhaseTotalPlayTime;
     mIslandPlayTime = save.mIslandPlayTime;
@@ -1984,7 +1961,7 @@ void SingleModeData::writeToStream(sead::WriteStream* pStream, bool isSkip) cons
         save.mGoalItemNum = mGoalItemNum;
         save.mUnlockedPhase = mUnlockedPhase;
         save.mUnlockedIslandNum = mUnlockedIslandNum;
-        save.mUnknownD0 = mUnknownD0;
+        save.mIsDisasterMode = mIsDisasterMode;
         save.mIsNewToPhase1 = mIsNewToPhase1;
         save.mIsNewToPhase2 = mIsNewToPhase2;
         save.mIsNewToPhase3 = mIsNewToPhase3;
@@ -1998,13 +1975,13 @@ void SingleModeData::writeToStream(sead::WriteStream* pStream, bool isSkip) cons
         save.mIsNewToPhase2BowserExit = mIsNewToPhase2BowserExit;
         save.mIsNewToPhase3BowserExit = mIsNewToPhase3BowserExit;
         save.mShouldFadeToWhite = mShouldFadeToWhite;
-        save.mUnknownDE = mUnknownDE;
-        save.mUnknownDF = mUnknownDF;
-        save.mUnknownE4 = mUnknownE4;
-        save.mUnknownE8 = mUnknownE8;
-        save.mUnknownE0 = mUnknownE0;
-        save.mUnknownEC = mUnknownEC;
-        save.mUnknownF0 = mUnknownF0;
+        save.mIsHardToSuperDisasterTransition = mIsHardToSuperDisasterTransition;
+        save.mIsAutoForeshadow = mIsAutoForeshadow;
+        save.mDisasterModePostBossPeaceFrames = mDisasterModePostBossPeaceFrames;
+        save.mDisasterModeFlowIndex = mDisasterModeFlowIndex;
+        save.mDisasterModeFrames = mDisasterModeFrames;
+        save.mGigaBellLockCount = mGigaBellLockCount;
+        save.mIsGigaBellUnlocked = mIsGigaBellUnlocked;
         save.mPhase1DarkBowserHitPoint = mPhase1DarkBowserHitPoint;
         save.mPhase2DarkBowserHitPoint = mPhase2DarkBowserHitPoint;
         save.mPhase3DarkBowserHitPoint = mPhase3DarkBowserHitPoint;
@@ -2018,7 +1995,7 @@ void SingleModeData::writeToStream(sead::WriteStream* pStream, bool isSkip) cons
         save.mGenericRespawnTrans = mGenericRespawnTrans;
         save.mGenericRespawnFront = mGenericRespawnFront;
         save.mGuideMessageSeenFlags = mGuideMessageSeenFlags[0];
-        save.mUnknown19C = mUnknown19C;
+        save.mDeathCount = mDeathCount;
         save.mSavedGenericItemFlags = mSavedGenericItemFlags;
         save.mPhaseTotalPlayTime = mPhaseTotalPlayTime;
         save.mIslandPlayTime = mIslandPlayTime;
