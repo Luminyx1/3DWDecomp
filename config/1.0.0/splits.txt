@@ -3491,7 +3491,7 @@ src/nw/atk/detail/debug/atk_Debug.cpp: done
     .data   start:0x01AA1EA0 end:0x01AA1EC0
 src/nw/atk/atk_SoundDataManager.cpp:
     .text   start:0x005645F0 end:0x00564E00
-src/nw/atk/detail/atk_SoundArchiveManager.cpp:
+src/nw/atk/detail/atk_SoundArchiveManager.cpp: done
     .text   start:0x00564E00 end:0x00565258
 src/nw/atk/detail/atk_AddonSoundArchiveContainer.cpp: done
     .text   start:0x00565260 end:0x005653CC

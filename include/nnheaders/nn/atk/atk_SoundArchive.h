@@ -11,6 +11,7 @@ class FileStream;
 }
 
 namespace detail {
+class SoundArchiveParametersHook;
 class SoundArchiveFile {
   public:
     struct FileHeader : BinaryFileHeader {
@@ -176,6 +177,11 @@ class SoundArchive {
     SoundArchive();
     virtual ~SoundArchive();
 
+    /**
+     * @brief Installs the archive parameter override hook.
+     * @param pHook Override provider, or nullptr to clear the hook.
+     */
+    void SetParametersHook(detail::SoundArchiveParametersHook* pHook) const { mParametersHook = pHook; }
     bool IsAvailable() const;
     u32 GetSoundCount() const;
     u32 GetGroupCount() const;
@@ -204,7 +210,9 @@ class SoundArchive {
                                                    void* pCacheBuffer, size_t cacheSize) const = 0;
 
   private:
-    u8 _8[0x2a0 - 0x8];
+    detail::SoundArchiveFileReader* mFileReader;
+    mutable detail::SoundArchiveParametersHook* mParametersHook;
+    u8 _18[0x2a0 - 0x18];
 };
 static_assert(sizeof(SoundArchive) == 0x2a0);
 
