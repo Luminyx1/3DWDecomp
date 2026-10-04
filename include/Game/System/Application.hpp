@@ -20,7 +20,7 @@ class Application {
      * @brief Access the engine system kit.
      * @return The system kit created by the application.
      */
-    al::SystemKit* getSystemKit() const { return static_cast<al::SystemKit*>(mpUnknown20); }
+    al::SystemKit* getSystemKit() const { return mpSystemKit; }
 
     /**
      * @brief Access the application's framework.
@@ -29,7 +29,7 @@ class Application {
     sead::Framework* getFramework() const { return mpFramework; }
 
   private:
-    void* mpUnknown20;
+    al::SystemKit* mpSystemKit;
     sead::Framework* mpFramework;
 };
 namespace ApplicationFunction {
