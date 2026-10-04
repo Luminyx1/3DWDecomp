@@ -12,6 +12,7 @@ namespace rc {
     al::ComboCounter* tryGetMsgComboCount(const al::SensorMsg*);
 
     bool isMsgAskControlUserId(const al::SensorMsg*, int);
+    bool sendMsgAskControlUserId(al::HitSensor*, int);
 
     bool trySendMsgBlockToUpperObj(al::HitSensor*, al::HitSensor*, int, al::ComboCounter*);
     bool trySendMsgBlockToLowerObj(al::HitSensor*, al::HitSensor*, al::ComboCounter*);
