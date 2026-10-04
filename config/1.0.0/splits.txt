@@ -3475,7 +3475,7 @@ src/nw/atk/detail/util/_ZN2nn3atk18SoundArchivePlayerC2Ev.cpp:
     .text   start:0x0055DD00 end:0x0055DE98
 src/nw/atk/atk_SoundArchivePlayer.cpp:
     .text   start:0x0055DEA0 end:0x005615F4
-src/nw/atk/atk_StartInfoReader.cpp:
+src/nw/atk/atk_StartInfoReader.cpp: done
     .text   start:0x00561600 end:0x005617A0
 src/nw/atk/detail/seq/atk_SequenceSoundRuntime.cpp:
     .text   start:0x005617A0 end:0x00561804
