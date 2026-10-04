@@ -33093,7 +33093,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100500180			FALSE	_ZNK14IslandDataList15getSceneObjNameEv	IslandDataList::getSceneObjName() const	
 0x7100500190			TRUE	_ZN4sead19FixedSafeStringBaseIDsLi128EED0Ev	sead::FixedSafeStringBase<char16_t, 128>::~FixedSafeStringBase()	
 0x71005001A0			TRUE	_ZN4sead19FixedSafeStringBaseIDsLi128EEaSERKNS_14SafeStringBaseIDsEE	sead::FixedSafeStringBase<char16_t, 128>::operator=(sead::SafeStringBase<char16_t> const&)	
-0x7100500290		IslandSaveData.o	FALSE	_ZN14IslandSaveDataC2Ev	IslandSaveData::IslandSaveData()	object (class)
+0x7100500290		IslandSaveDataHolder.o	FALSE	_ZN14IslandSaveDataC2Ev	IslandSaveData::IslandSaveData()	object (class)
 0x71005002B0			FALSE	_ZN14IslandSaveData10initializeEv	IslandSaveData::initialize()	
 0x71005002D0			FALSE	_ZN14IslandSaveData4copyERKS_	IslandSaveData::copy(IslandSaveData const&)	
 0x7100500310			FALSE	_ZN14IslandSaveData20setCurActiveScenarioEi	IslandSaveData::setCurActiveScenario(int)	
@@ -33103,7 +33103,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100500370			FALSE	_ZN14IslandSaveData16completeScenarioEi	IslandSaveData::completeScenario(int)	
 0x7100500390			FALSE	_ZN14IslandSaveData13resetScenarioEi	IslandSaveData::resetScenario(int)	
 0x71005003B0			FALSE	_ZNK14IslandSaveData23getNumScenariosCompleteEv	IslandSaveData::getNumScenariosComplete() const	
-0x71005003F0		IslandSaveDataHolder.o	FALSE	_ZN20IslandSaveDataHolderC2Ei	IslandSaveDataHolder::IslandSaveDataHolder(int)	object (class)
+0x71005003F0			FALSE	_ZN20IslandSaveDataHolderC2Ei	IslandSaveDataHolder::IslandSaveDataHolder(int)	object (class)
 0x7100500530			FALSE	_ZN20IslandSaveDataHolder10initializeEv	IslandSaveDataHolder::initialize()	
 0x7100500590			FALSE	_ZN20IslandSaveDataHolder25clearIslandVandalizedOnlyEv	IslandSaveDataHolder::clearIslandVandalizedOnly()	
 0x71005005D0			FALSE	_ZN20IslandSaveDataHolder4copyERKS_	IslandSaveDataHolder::copy(IslandSaveDataHolder const&)	
@@ -33118,7 +33118,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71005007B0			FALSE	_ZN20IslandSaveDataHolder20getIslandSaveDataPtrEi	IslandSaveDataHolder::getIslandSaveDataPtr(int)	
 0x71005007C0			FALSE	_ZN20IslandSaveDataHolder14readFromStreamEPN4sead10ReadStreamE	IslandSaveDataHolder::readFromStream(sead::ReadStream*)	
 0x71005008E0			FALSE	_ZNK20IslandSaveDataHolder13writeToStreamEPN4sead11WriteStreamEb	IslandSaveDataHolder::writeToStream(sead::WriteStream*, bool) const	
-0x71005009E0			FALSE	nninitStartup	nninitStartup	
+0x71005009E0		Main.o	FALSE	nninitStartup	nninitStartup	
 0x7100500A50			FALSE	nnMain	nnMain	
 0x7100500A60			FALSE	_ZN2rc15findNetworkHeapEv	rc::findNetworkHeap()	
 0x7100500A70		PlayingStageDataFunction.o	FALSE	_ZN24PlayingStageDataFunction31setStagePlayerNumForAssistBlockE20GameDataHolderWriteri	PlayingStageDataFunction::setStagePlayerNumForAssistBlock(GameDataHolderWriter, int)	object (class)
