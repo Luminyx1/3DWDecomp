@@ -1,5 +1,11 @@
 #pragma once
 #include "System/ControlUserData.hpp"
+
+namespace sead {
+class ReadStream;
+class WriteStream;
+} // namespace sead
+
 class ControlUserDataHolder {
   public:
     explicit ControlUserDataHolder(bool singleMode);
@@ -18,6 +24,8 @@ class ControlUserDataHolder {
     void setPlayerModel(s32 userIndex, s32 characterType);
     void setPlayerFigureType(s32 userIndex, s32 figureType);
     void onSave();
+    bool readFromStream(sead::ReadStream* pStream);
+    void writeToStream(sead::WriteStream* pStream, bool isSkip) const;
 
   private:
     ControlUserData mUsers[4];
