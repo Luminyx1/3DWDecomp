@@ -16,6 +16,8 @@ class SingleModeData;
 class StageListHolder;
 class StageDataHolder;
 class SaveDataAccessSequence;
+class OceanScenarioList;
+class IslandDataList;
 class CourseInfo;
 enum GameMode : int;
 class GameDataHolder : public al::ISceneObj {
@@ -71,6 +73,18 @@ class GameDataHolder : public al::ISceneObj {
      */
     SingleModeData* getSingleFile() const { return mpSingleFile; }
 
+    /**
+     * @brief Access the ocean-quadrant scenario lists.
+     * @return The ocean scenario lists.
+     */
+    OceanScenarioList* getOceanScenarioList() const { return mpOceanScenarioList; }
+
+    /**
+     * @brief Access the Bowser's Fury island database.
+     * @return The island list.
+     */
+    IslandDataList* getIslandDataList() const { return mpIslandDataList; }
+
   private:
     GameDataCommon* mpCommon;
     GameDataPlayReportCommon* mpPlayReportCommon;
@@ -79,7 +93,9 @@ class GameDataHolder : public al::ISceneObj {
     SingleModeData** mppSingleFiles;
     SingleModeData* mpSingleFile;
     StageListHolder* mpStageList;
-    u8 mUnknown40[0x20]; // Unreconstructed stage-transition and time fields.
+    OceanScenarioList* mpOceanScenarioList;
+    IslandDataList* mpIslandDataList;
+    u8 mUnknown50[0x10]; // Unreconstructed stage-transition and time fields.
     bool mSingleMode;
     u8 mUnknown61[0xf]; // Unreconstructed mode and report state.
     SaveDataAccessSequence* mpSaveAccess;

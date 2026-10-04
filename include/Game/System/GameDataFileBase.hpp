@@ -11,6 +11,7 @@ class WriteStream;
 } // namespace sead
 class GameDataFileBase {
   public:
+    GameDataFileBase(GameDataHolder* pHolder, int fileId, bool isSingleMode);
     virtual void initializeData() = 0;
     virtual bool isNewFile() const;
     virtual void onSave() = 0;
@@ -29,6 +30,8 @@ class GameDataFileBase {
     virtual void initPlayerLife(int life);
     virtual int getPlayerLife() const;
     virtual bool addPlayerLife(int life);
+    void initializeData(bool resetCreationTime);
+    void copyFileBase(const GameDataFileBase& rOther);
     const ControlUserData* getControlUserData(int userId) const;
     int getMainPlayerCharacterType() const;
     int getMainPlayerCharacterTypeSaved() const;

@@ -7,4 +7,6 @@ class SingleModeDataFunction {
     static int getUnlockedIslandNum(GameDataHolderAccessor accessor);
     static int getLastValidIslandVisited(GameDataHolderAccessor accessor);
     static int getCurValidIslandVisited(GameDataHolderAccessor accessor);
+    static int getScenarioNum(GameDataHolderAccessor accessor, int islandId);
+    static int getMaxCollectableGoalItems();
 };
