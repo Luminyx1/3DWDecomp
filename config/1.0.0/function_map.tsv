@@ -16769,19 +16769,19 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71002933A0			FALSE	_ZN5Dokan12exeGiantBlowEv	Dokan::exeGiantBlow()	
 0x7100293400			FALSE	_ZN5DokanD1Ev	Dokan::~Dokan()	
 0x7100293410			FALSE	_ZN5DokanD0Ev	Dokan::~Dokan()	
-0x7100293440			FALSE	sub_7100293440	sub_7100293440	
-0x7100293490			FALSE	sub_7100293490	sub_7100293490	
-0x71002934F0			FALSE	nullsub_172	nullsub_172	
+0x7100293440			FALSE	_ZNK12_GLOBAL__N_112DokanNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::DokanNrvWait::execute(al::NerveKeeper*) const	
+0x7100293490			FALSE	_ZNK12_GLOBAL__N_117DokanNrvGiantBlow7executeEPN2al11NerveKeeperE	(anonymous namespace)::DokanNrvGiantBlow::execute(al::NerveKeeper*) const	
+0x71002934F0			FALSE	_ZNK12_GLOBAL__N_116DokanNrvDeactive7executeEPN2al11NerveKeeperE	(anonymous namespace)::DokanNrvDeactive::execute(al::NerveKeeper*) const	
 0x7100293500			FALSE	_ZNK12_GLOBAL__N_116DokanNrvPlayerIn7executeEPN2al11NerveKeeperE	(anonymous namespace)::DokanNrvPlayerIn::execute(al::NerveKeeper*) const	
 0x7100293510			FALSE	_ZNK12_GLOBAL__N_126DokanNrvPlayerOutWaitInput7executeEPN2al11NerveKeeperE	(anonymous namespace)::DokanNrvPlayerOutWaitInput::execute(al::NerveKeeper*) const	
-0x7100293520			FALSE	sub_7100293520	sub_7100293520	
-0x7100293530			FALSE	sub_7100293530	sub_7100293530	
-0x7100293540			FALSE	sub_7100293540	sub_7100293540	
+0x7100293520			FALSE	_ZNK12_GLOBAL__N_114DokanNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::DokanNrvAppear::execute(al::NerveKeeper*) const	
+0x7100293530			FALSE	_ZNK12_GLOBAL__N_121DokanNrvAppearOutOnly7executeEPN2al11NerveKeeperE	(anonymous namespace)::DokanNrvAppearOutOnly::execute(al::NerveKeeper*) const	
+0x7100293540			FALSE	_ZNK12_GLOBAL__N_117DokanNrvDisappear7executeEPN2al11NerveKeeperE	(anonymous namespace)::DokanNrvDisappear::execute(al::NerveKeeper*) const	
 0x71002935D0			FALSE	_ZNK12_GLOBAL__N_127DokanNrvWaitAppearDestDokan7executeEPN2al11NerveKeeperE	(anonymous namespace)::DokanNrvWaitAppearDestDokan::execute(al::NerveKeeper*) const	
 0x71002935E0			FALSE	_ZNK12_GLOBAL__N_131DokanNrvPlayerOutWithCameraWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::DokanNrvPlayerOutWithCameraWait::execute(al::NerveKeeper*) const	
-0x71002935F0			FALSE	sub_71002935F0	sub_71002935F0	
+0x71002935F0			FALSE	_ZNK12_GLOBAL__N_137DokanNrvPlayerOutWithCameraTicketWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::DokanNrvPlayerOutWithCameraTicketWait::execute(al::NerveKeeper*) const	
 0x7100293650			FALSE	_ZNK12_GLOBAL__N_117DokanNrvPlayerOut7executeEPN2al11NerveKeeperE	(anonymous namespace)::DokanNrvPlayerOut::execute(al::NerveKeeper*) const	
-0x7100293660			FALSE	sub_7100293660	sub_7100293660	
+0x7100293660			FALSE	_ZNK12_GLOBAL__N_135DokanNrvPlayerOutWaitForDstAnimDone7executeEPN2al11NerveKeeperE	(anonymous namespace)::DokanNrvPlayerOutWaitForDstAnimDone::execute(al::NerveKeeper*) const	
 0x71002936C0			FALSE	_ZNK2al10FunctorV0MIP5DokanMS1_FvvEEclEv	al::FunctorV0M<Dokan*, void (Dokan::*)()>::operator()() const	
 0x71002936E0			FALSE	_ZNK2al10FunctorV0MIP5DokanMS1_FvvEE5cloneEv	al::FunctorV0M<Dokan*, void (Dokan::*)()>::clone() const	
 0x7100293730		DokanBindPuppeteer.o	FALSE	_ZN18DokanBindPuppeteerC1EPKcbbPN2al9LiveActorE	DokanBindPuppeteer::DokanBindPuppeteer(char const*, bool, bool, al::LiveActor*)	
