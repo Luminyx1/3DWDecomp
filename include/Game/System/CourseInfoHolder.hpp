@@ -34,6 +34,16 @@ bool isClose(GameDataHolderAccessor accessor, int courseId);
 bool isOpen(GameDataHolderAccessor accessor, int courseId);
 bool isClear(GameDataHolderAccessor accessor, int courseId);
 bool isGreenStarLock(GameDataHolderAccessor accessor, int courseId);
+bool isClearFlagTop(GameDataHolderAccessor accessor, int courseId);
+bool isClearComplete(GameDataHolderAccessor accessor, int courseId);
+s32 getClearTopCharacter(GameDataHolderAccessor accessor, int courseId);
+const CourseGreenStarInfo* getGreenStarAcquireFlag(GameDataHolderAccessor accessor, int courseId);
+f32 getHighestGoalPolePosition(GameDataHolderAccessor accessor, int courseId);
+s32 getBestScore(GameDataHolderAccessor accessor, int courseId);
+s32 getBestTime(GameDataHolderAccessor accessor, int courseId);
+bool isAcquireGreenStarAll(GameDataHolderAccessor accessor, int courseId);
+bool isAcquireIllustItem(GameDataHolderAccessor accessor, int courseId, bool isAllFile,
+                         int fileId);
 int getMissCount(GameDataHolderAccessor accessor, int courseId);
 void addMissCount(GameDataHolderWriter writer, int courseId);
 bool isClearWithAssistBlock(GameDataHolderAccessor accessor, int courseId);
