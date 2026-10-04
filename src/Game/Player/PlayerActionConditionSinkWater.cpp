@@ -36,7 +36,7 @@ bool PlayerActionConditionSinkWater::check() {
     }
 
     f32 height = mWaterSurfaceInfo->getWaterSurfaceHeight();
-    f32 endDist = mFigureDirector->getFigure() == EPlayerFigure_Mini ? mConstParam->getSwimSurfaceEndDistShort() :
+    f32 endDist = mFigureDirector->getFigure() == EPlayerFigure::Mini ? mConstParam->getSwimSurfaceEndDistShort() :
                                                                       mConstParam->getSwimSurfaceEndDist();
 
     if (height >= endDist) {

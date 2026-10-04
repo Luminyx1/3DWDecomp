@@ -1,19 +1,14 @@
 #pragma once
 
-/// Playable characters.
-enum EPlayerChara {};
+#include <prim/seadEnum.h>
 
-/// Power-up forms, named after PlayerFigureDirector::getFigureName.
-enum EPlayerFigure {
-    EPlayerFigure_Super = 0,
-    EPlayerFigure_Mini = 1,
-    EPlayerFigure_Fire = 2,
-    EPlayerFigure_Climb = 3,
-    EPlayerFigure_RaccoonDog = 4,
-    EPlayerFigure_Boomerang = 5,
-    EPlayerFigure_RaccoonDogWhite = 6,
-    EPlayerFigure_Manekineko = 7,
-};
+/// Playable characters, in the order of rc::getPlayerCharacterNameTrue.
+SEAD_ENUM(EPlayerChara, Mario, Luigi, Peach, Kinopio, Rosetta, KinopioBrigade, KinopioBrigadeMember,
+          KinopioBrigadeMember1, KinopioBrigadeMember2)
+
+/// Power-up forms, named after PlayerFigureDirector::getRealFigureName.
+SEAD_ENUM(EPlayerFigure, Super, Mini, Fire, Climb, RaccoonDog, Boomerang, RaccoonDogWhite, Manekineko,
+          ClimbWhite, ClimbGiga)
 
 /// Items the player can hold or wear (propeller box, ...).
 enum EPlayerEquipmentType : unsigned long {};

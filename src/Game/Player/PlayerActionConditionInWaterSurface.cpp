@@ -24,7 +24,7 @@ bool PlayerActionConditionInWaterSurface::check() {
     }
 
     f32 height = mWaterSurfaceInfo->getWaterSurfaceHeight();
-    f32 startDist = mFigureDirector->getFigure() == EPlayerFigure_Mini ? mConstParam->getSwimSurfaceStartDistShort() :
+    f32 startDist = mFigureDirector->getFigure() == EPlayerFigure::Mini ? mConstParam->getSwimSurfaceStartDistShort() :
                                                                         mConstParam->getSwimSurfaceStartDist();
     return height < startDist;
 }
