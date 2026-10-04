@@ -33845,7 +33845,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710050EC60			TRUE	_ZN4sead19FixedSafeStringBaseIcLi1839EEaSERKNS_14SafeStringBaseIcEE	sead::FixedSafeStringBase<char, 1839>::operator=(sead::SafeStringBase<char> const&)	
 0x710050ED50		CoinUtil.o	FALSE	_ZN8CoinUtil24getCoinAssistRotateParamEv	CoinUtil::getCoinAssistRotateParam()	
 0x710050ED60			FALSE	_ZN8CoinUtil28tryStartSpinCoinIfMicInputOnEPN2al9LiveActorEPKNS0_5NerveE	CoinUtil::tryStartSpinCoinIfMicInputOn(al::LiveActor*, al::Nerve const*)	
-0x710050EE20			FALSE	sub_710050EE20	sub_710050EE20	
+0x710050EE20			FALSE	_GLOBAL__sub_I_CoinUtil.cpp	_GLOBAL__sub_I_CoinUtil.cpp	
 0x710050EE50		ControllerConnectChecker.o	FALSE	_ZN24ControllerConnectCheckerC1EP14GameDataHolderPKN2al26ApplicationMessageReceiverEPNS2_13GamePadSystemE	ControllerConnectChecker::ControllerConnectChecker(GameDataHolder*, al::ApplicationMessageReceiver const*, al::GamePadSystem*)	
 0x710050EE90			FALSE	_ZN24ControllerConnectChecker10disconnectEv	ControllerConnectChecker::disconnect()	
 0x710050EEA0			FALSE	_ZN24ControllerConnectChecker13setCancelUserEPN2al10IUseCancelE	ControllerConnectChecker::setCancelUser(al::IUseCancel*)	
