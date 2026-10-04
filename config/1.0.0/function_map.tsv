@@ -34561,7 +34561,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100522810			FALSE	_ZN2rc17isCollidedInkSlowEPKN2al9LiveActorE	rc::isCollidedInkSlow(al::LiveActor const*)	
 0x71005228D0			FALSE	_ZN2rc16isCollidedNeedleEPKN2al9LiveActorE	rc::isCollidedNeedle(al::LiveActor const*)	
 0x7100522990			FALSE	_ZN2rc17getEffectCodeNameEPKcS1_	rc::getEffectCodeName(char const*, char const*)	
-0x71005229D0		ProjectInterfaceUtil.o	FALSE	_ZN18alProjectInterface17getEffectCodeNameEjj	alProjectInterface::getEffectCodeName(unsigned int, unsigned int)	
+0x71005229D0			FALSE	_ZN18alProjectInterface17getEffectCodeNameEjj	alProjectInterface::getEffectCodeName(unsigned int, unsigned int)	
 0x7100522A00		ProjectMsgUtil.o	FALSE	_ZN2rc23sendMsgAskControlUserIdEPN2al9HitSensorEi	rc::sendMsgAskControlUserId(al::HitSensor*, int)	
 0x7100522AB0			FALSE	_ZN2rc20sendMsgBlockRailRideEPN2al9HitSensorES2_PNS0_14BlockRailRiderE	rc::sendMsgBlockRailRide(al::HitSensor*, al::HitSensor*, al::BlockRailRider*)	
 0x7100522B10			FALSE	_ZN2rc17sendMsgCameraPushEPN2al9HitSensorES2_RKN4sead7Vector3IfEE	rc::sendMsgCameraPush(al::HitSensor*, al::HitSensor*, sead::Vector3<float> const&)	

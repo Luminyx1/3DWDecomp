@@ -3332,9 +3332,7 @@ src/Game/Util/LuigiBrosUtil.cpp:
 src/Game/Util/PlayerPuppetUtil.cpp:
     .text   start:0x00516800 end:0x00517AC4
 src/Game/Util/PlayerUtil.cpp:
-    .text   start:0x00517AD0 end:0x005229C4
-src/Game/Util/ProjectInterfaceUtil.cpp:
-    .text   start:0x005229D0 end:0x005229F4
+    .text   start:0x00517AD0 end:0x005229F4
 src/Game/Util/ProjectMsgUtil.cpp:
     .text   start:0x00522A00 end:0x005324E4
 src/Game/Util/RigidBodyCollisionImpl.cpp:
