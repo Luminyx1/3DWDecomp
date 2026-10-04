@@ -6,6 +6,8 @@ class ReadStream;
 class WriteStream;
 } // namespace sead
 
+class GameDataHolder;
+
 class ControlUserDataHolder {
   public:
     explicit ControlUserDataHolder(bool singleMode);
@@ -21,11 +23,13 @@ class ControlUserDataHolder {
     bool entryPlayer(s32 userIndex, s32 characterType);
     void retirePlayer(s32 userIndex);
     void resetPlayerAll();
+    void shufflePlayerModel(GameDataHolder* pHolder);
     void setPlayerModel(s32 userIndex, s32 characterType);
     void setPlayerFigureType(s32 userIndex, s32 figureType);
-    void onSave();
+    s32 tryCalcControlUserIdByCharacterType(s32 characterType);
     bool readFromStream(sead::ReadStream* pStream);
     void writeToStream(sead::WriteStream* pStream, bool isSkip) const;
+    void onSave();
 
   private:
     ControlUserData mUsers[4];
