@@ -3,14 +3,14 @@
 /**
  * @brief Allocate progress for the twelve worlds.
  */
-WorldGameDataHolder::WorldGameDataHolder() { mpWorlds = new WorldGameData[12]; }
+WorldGameDataHolder::WorldGameDataHolder() { mpWorlds = new WorldGameData[cWorldNum]; }
 
 /**
  * @brief Reset all world progress.
  */
 void WorldGameDataHolder::initialize() {
-    for (int i = 0; i < 12; ++i) {
-        mpWorlds[i].initialize();
+    for (s32 i = 0; i < cWorldNum; ++i) {
+        mpWorlds[i].clearAllFlags();
     }
 }
 
@@ -19,26 +19,8 @@ void WorldGameDataHolder::initialize() {
  * @param pOther Non-null source holder containing twelve world records.
  */
 void WorldGameDataHolder::copy(const WorldGameDataHolder* pOther) {
-    for (int i = 0; i < 12; ++i) {
-        mpWorlds[i] = pOther->mpWorlds[i];
-    }
-}
-
-/**
- * @brief Reset the corresponding collectible flags in every world.
- */
-void WorldGameDataHolder::resetItemFlag() {
-    for (int i = 0; i < 12; ++i) {
-        mpWorlds[i].resetItemFlag();
-    }
-}
-
-/**
- * @brief Reset the corresponding collectible flags in every world.
- */
-void WorldGameDataHolder::resetAllItemFlag() {
-    for (int i = 0; i < 12; ++i) {
-        mpWorlds[i].resetAllItemFlag();
+    for (s32 i = 0; i < cWorldNum; ++i) {
+        mpWorlds[i].copyFlags(pOther->mpWorlds[i]);
     }
 }
 
@@ -48,6 +30,48 @@ void WorldGameDataHolder::resetAllItemFlag() {
  * @return The selected world record.
  */
 WorldGameData* WorldGameDataHolder::getWorldGameData(int worldId) { return &mpWorlds[worldId - 1]; }
+
+/**
+ * @brief Clear item flags 0 through 49 in every world.
+ */
+void WorldGameDataHolder::resetItemFlag() {
+    for (s32 i = 0; i < cWorldNum; ++i) {
+        mpWorlds[i].clearItemFlags(50);
+    }
+}
+
+/**
+ * @brief Clear item flags 0 through 50 in every world.
+ */
+void WorldGameDataHolder::resetAllItemFlag() {
+    for (s32 i = 0; i < cWorldNum; ++i) {
+        mpWorlds[i].clearItemFlags(51);
+    }
+}
+
+/**
+ * @brief Load every world's flags from a save stream.
+ * @param pStream Non-null stream positioned at the world records.
+ * @return Always true.
+ */
+bool WorldGameDataHolder::readFromStream(sead::ReadStream* pStream) {
+    for (s32 i = 0; i < cWorldNum; ++i) {
+        mpWorlds[i].readFlags(pStream);
+    }
+
+    return true;
+}
+
+/**
+ * @brief Store every world's flags to a save stream, or skip over them.
+ * @param pStream Non-null stream positioned at the world records.
+ * @param isSkip True to advance past the records without writing them.
+ */
+void WorldGameDataHolder::writeToStream(sead::WriteStream* pStream, bool isSkip) const {
+    for (s32 i = 0; i < cWorldNum; ++i) {
+        mpWorlds[i].writeFlags(pStream, isSkip);
+    }
+}
 
 /**
  * @brief Identify the one-up item flag in a mushroom house.
