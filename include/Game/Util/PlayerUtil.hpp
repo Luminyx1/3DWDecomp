@@ -11,6 +11,7 @@ namespace rc {
      * @return The default player figure type identifier.
      */
     int getPlayerFigureTypeDefault();
+    int getPlayerCharacterNumMax();
     bool isPlayerMini(const al::HitSensor*);
     al::LiveActor* tryFindAlivePlayerActorFirstByUserId(const al::LiveActor* pPlayer, int userId);
     int getPlayerFigureType(const al::LiveActor* pPlayer);
