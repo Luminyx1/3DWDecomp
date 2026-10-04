@@ -20,7 +20,7 @@ class IslandSaveDataHolder {
     const IslandSaveData* getIslandSaveData(int islandId) const;
     IslandSaveData* getIslandSaveDataPtr(int islandId);
     bool readFromStream(sead::ReadStream* pStream);
-    void writeToStream(sead::WriteStream* pStream, bool option) const;
+    void writeToStream(sead::WriteStream* pStream, bool isSkip) const;
 
     /**
      * @brief Count the allocated island records.
