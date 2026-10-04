@@ -13465,7 +13465,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71002060D0			FALSE	sub_71002060D0	sub_71002060D0	
 0x7100206120			FALSE	sub_7100206120	sub_7100206120	
 0x71002061C0			FALSE	sub_71002061C0	sub_71002061C0	
-0x7100206270	unk	Backup.o	FALSE	_ZN6Backup10InitializeEmy	Backup::Initialize(unsigned long, unsigned long long)	
+0x7100206270	LuigiBros	Backup.o	FALSE	_ZN6Backup10InitializeEmy	Backup::Initialize(unsigned long, unsigned long long)	
 0x7100206300			FALSE	_ZN6Backup8FinalizeEv	Backup::Finalize()	
 0x7100206340			FALSE	_ZN6Backup4MainEv	Backup::Main()	
 0x7100206480			FALSE	_ZN6Backup16ExecuteRequestedEv	Backup::ExecuteRequested()	
@@ -13567,7 +13567,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710020A720			FALSE	_ZN2nn3atk6detail6driver15HardwareManagerD2Ev	nn::atk::detail::driver::HardwareManager::~HardwareManager()	
 0x710020A820			FALSE	_ZN13_SAudioSample18ProgressVideoFrameEv	_SAudioSample::ProgressVideoFrame()	
 0x710020AA60			FALSE	sub_710020AA60	sub_710020AA60	
-0x710020AB20	unk/Emulator	Emulator.o	FALSE	_ZN6Vessel8Emulator7Virtual11PlatformHvc4CHvcC2Ev	Vessel::Emulator::Virtual::PlatformHvc::CHvc::CHvc()	folder (alphabetical reset); object (class, new folder (alphabetical reset))
+0x710020AB20	LuigiBros/Emulator	Emulator.o	FALSE	_ZN6Vessel8Emulator7Virtual11PlatformHvc4CHvcC2Ev	Vessel::Emulator::Virtual::PlatformHvc::CHvc::CHvc()	folder (alphabetical reset); object (class, new folder (alphabetical reset))
 0x710020AD10			FALSE	_ZN6Vessel8Emulator7Virtual11PlatformHvc4CHvcD2Ev	Vessel::Emulator::Virtual::PlatformHvc::CHvc::~CHvc()	
 0x710020AED0			FALSE	_ZN6Vessel8Emulator7Virtual11PlatformHvc4CHvcD0Ev	Vessel::Emulator::Virtual::PlatformHvc::CHvc::~CHvc()	
 0x710020AF00			FALSE	_ZN6Vessel8Emulator7Virtual11PlatformHvc4CHvc8CommenceEPvS4_S4_S4_mm	Vessel::Emulator::Virtual::PlatformHvc::CHvc::Commence(void*, void*, void*, void*, unsigned long, unsigned long)	
@@ -14232,7 +14232,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100231D40			FALSE	_ZN6vessel15setDRCSensorBarEb	vessel::setDRCSensorBar(bool)	
 0x7100231D50			FALSE	_Z10patch_dataj	patch_data(unsigned int)	
 0x7100231D90			FALSE	_ZN4Perf3CPU4TickD2Ev	Perf::CPU::Tick::~Tick()	
-0x7100231DA0	unk/Vessel	performance.o	FALSE	_ZN11performance4initENS_4DISPE	performance::init(performance::DISP)	folder (alphabetical reset); object (class, new folder (alphabetical reset))
+0x7100231DA0	LuigiBros/Vessel	performance.o	FALSE	_ZN11performance4initENS_4DISPE	performance::init(performance::DISP)	folder (alphabetical reset); object (class, new folder (alphabetical reset))
 0x7100231E10			FALSE	_ZN11performance3cpuEv	performance::cpu()	
 0x7100231E20			FALSE	_ZN11performance3gpuEv	performance::gpu()	
 0x7100231E30			FALSE	_ZN11performance9cpu_startEv	performance::cpu_start()	
@@ -14448,7 +14448,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710023A270			FALSE	_Z11VESSEL_freePv	VESSEL_free(void*)	
 0x710023A280			FALSE	_Z15VESSE_STACKINITv	VESSE_STACKINIT()	
 0x710023A290			FALSE	_Z16VESSEL_STACKDISPPKcjS0_	VESSEL_STACKDISP(char const*, unsigned int, char const*)	
-0x710023A2A0	unk/Utility	Utility.o	FALSE	_ZN6Vessel7Utility12CTickWatcherC2Ev	Vessel::Utility::CTickWatcher::CTickWatcher()	folder (alphabetical reset); object (class, new folder (alphabetical reset))
+0x710023A2A0	LuigiBros/Utility	Utility.o	FALSE	_ZN6Vessel7Utility12CTickWatcherC2Ev	Vessel::Utility::CTickWatcher::CTickWatcher()	folder (alphabetical reset); object (class, new folder (alphabetical reset))
 0x710023A2D0			FALSE	_ZN6Vessel7Utility12CTickWatcherD1Ev	Vessel::Utility::CTickWatcher::~CTickWatcher()	
 0x710023A2E0			FALSE	_ZN6Vessel7Utility12CTickWatcherD0Ev	Vessel::Utility::CTickWatcher::~CTickWatcher()	
 0x710023A2F0			FALSE	_ZN6Vessel7Utility12CTickWatcher5ResetEv	Vessel::Utility::CTickWatcher::Reset()	

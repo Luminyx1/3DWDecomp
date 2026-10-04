@@ -1289,45 +1289,45 @@ src/Game/Layout/WipeCurtainResult.cpp:
     .text   start:0x00204A20 end:0x00205AF4
 src/Game/Layout/WipeCurtainStart.cpp:
     .text   start:0x00205B00 end:0x00206268
-src/Game/unk/Backup.cpp:
+src/Game/LuigiBros/Backup.cpp:
     .text   start:0x00206270 end:0x00207214
-src/Game/unk/bluetooth.cpp:
+src/Game/LuigiBros/bluetooth.cpp:
     .text   start:0x00207220 end:0x00207E84
-src/Game/unk/boot.cpp:
+src/Game/LuigiBros/boot.cpp:
     .text   start:0x00207E90 end:0x00208548
-src/Game/unk/PadAnalogStick.cpp:
+src/Game/LuigiBros/PadAnalogStick.cpp:
     .text   start:0x00208550 end:0x00208734
-src/Game/unk/config.cpp:
+src/Game/LuigiBros/config.cpp:
     .text   start:0x00208740 end:0x00208A4C
-src/Game/unk/Emu.cpp:
+src/Game/LuigiBros/Emu.cpp:
     .text   start:0x00208A50 end:0x00208A90
-src/Game/unk/HVCEmu.cpp:
+src/Game/LuigiBros/HVCEmu.cpp:
     .text   start:0x00208A90 end:0x0020AB20
-src/Game/unk/Emulator/Emulator.cpp:
+src/Game/LuigiBros/Emulator/Emulator.cpp:
     .text   start:0x0020AB20 end:0x0022CBFC
-src/Game/unk/Emulator/ErrorViewer.cpp:
+src/Game/LuigiBros/Emulator/ErrorViewer.cpp:
     .text   start:0x0022CC00 end:0x0022CE48
-src/Game/unk/Emulator/familycomputer.cpp:
+src/Game/LuigiBros/Emulator/familycomputer.cpp:
     .text   start:0x0022CE50 end:0x0022E720
-src/Game/unk/Emulator/inputdevice.cpp:
+src/Game/LuigiBros/Emulator/inputdevice.cpp:
     .text   start:0x0022E720 end:0x002305C4
-src/Game/unk/Emulator/LuigiBrosMain.cpp:
+src/Game/LuigiBros/Emulator/LuigiBrosMain.cpp:
     .text   start:0x002305D0 end:0x00230744
-src/Game/unk/Emulator/vessel.cpp:
+src/Game/LuigiBros/Emulator/vessel.cpp:
     .text   start:0x00230750 end:0x00231D94
-src/Game/unk/Vessel/performance.cpp:
+src/Game/LuigiBros/Vessel/performance.cpp:
     .text   start:0x00231DA0 end:0x00232034
-src/Game/unk/Vessel/Resource.cpp:
+src/Game/LuigiBros/Vessel/Resource.cpp:
     .text   start:0x00232040 end:0x00232164
-src/Game/unk/Vessel/screenfilter.cpp:
+src/Game/LuigiBros/Vessel/screenfilter.cpp:
     .text   start:0x00232170 end:0x00235EE4
-src/Game/unk/Vessel/VesselAnimButton.cpp:
+src/Game/LuigiBros/Vessel/VesselAnimButton.cpp:
     .text   start:0x00235EF0 end:0x00237DA4
-src/Game/unk/Vessel/VesselButtonGroup.cpp:
+src/Game/LuigiBros/Vessel/VesselButtonGroup.cpp:
     .text   start:0x00237DB0 end:0x0023A028
-src/Game/unk/Vessel/VesselControlCreator.cpp:
+src/Game/LuigiBros/Vessel/VesselControlCreator.cpp:
     .text   start:0x0023A030 end:0x0023A294
-src/Game/unk/Utility/Utility.cpp:
+src/Game/LuigiBros/Utility/Utility.cpp:
     .text   start:0x0023A2A0 end:0x0023A4B4
 src/Game/MapObj/ActorStateDemoCamera.cpp:
     .text   start:0x0023A4C0 end:0x0023AEC8
