@@ -32434,7 +32434,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71004F1AC0			FALSE	_ZN11ApplicationC2Ev	Application::Application()	
 0x71004F1AD0			FALSE	_ZN19ApplicationFunction10initializeEiPPc	ApplicationFunction::initialize(int, char**)	
 0x71004F1B20			TRUE	_ZN4sead15FixedSafeStringILi256EED0Ev	sead::FixedSafeString<256>::~FixedSafeString()	
-0x71004F1B30			FALSE	sub_71004F1B30	sub_71004F1B30	
+0x71004F1B30			FALSE	_GLOBAL__sub_I_Application.cpp	_GLOBAL__sub_I_Application.cpp	
 0x71004F1BC0		ApplicationMain.o	FALSE	_Z7AppMainiPPc	AppMain(int, char**)	
 0x71004F1C70		AssetLoadingThread.o	FALSE	_ZN2rc18AssetLoadingThread14createInstanceEPN4sead4HeapE	rc::AssetLoadingThread::createInstance(sead::Heap*)	
 0x71004F1CC0			FALSE	_ZN2rc18AssetLoadingThread14deleteInstanceEv	rc::AssetLoadingThread::deleteInstance()	
