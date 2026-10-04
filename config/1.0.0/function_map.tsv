@@ -16814,18 +16814,18 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100294F10			FALSE	_ZN18DokanBindPuppeteer13exeDokanOutUpEv	DokanBindPuppeteer::exeDokanOutUp()	
 0x71002951C0			FALSE	_ZN18DokanBindPuppeteer21exeWaitStartWorldWarpEv	DokanBindPuppeteer::exeWaitStartWorldWarp()	
 0x71002951D0			FALSE	_ZN18DokanBindPuppeteerD0Ev	DokanBindPuppeteer::~DokanBindPuppeteer()	
-0x7100295200			FALSE	sub_7100295200	sub_7100295200	
+0x7100295200			FALSE	_ZNK12_GLOBAL__N_129DokanBindPuppeteerNrvDeactive7executeEPN2al11NerveKeeperE	(anonymous namespace)::DokanBindPuppeteerNrvDeactive::execute(al::NerveKeeper*) const	
 0x7100295220			FALSE	_ZNK12_GLOBAL__N_134DokanBindPuppeteerNrvForceBindWarp7executeEPN2al11NerveKeeperE	(anonymous namespace)::DokanBindPuppeteerNrvForceBindWarp::execute(al::NerveKeeper*) const	
 0x7100295230			FALSE	_ZNK12_GLOBAL__N_135DokanBindPuppeteerNrvDokanInHipDrop7executeEPN2al11NerveKeeperE	(anonymous namespace)::DokanBindPuppeteerNrvDokanInHipDrop::execute(al::NerveKeeper*) const	
 0x7100295240			FALSE	_ZNK12_GLOBAL__N_135DokanBindPuppeteerNrvDokanInRolling7executeEPN2al11NerveKeeperE	(anonymous namespace)::DokanBindPuppeteerNrvDokanInRolling::execute(al::NerveKeeper*) const	
 0x7100295250			FALSE	_ZNK12_GLOBAL__N_132DokanBindPuppeteerNrvDokanInMove7executeEPN2al11NerveKeeperE	(anonymous namespace)::DokanBindPuppeteerNrvDokanInMove::execute(al::NerveKeeper*) const	
-0x7100295260			FALSE	sub_7100295260	sub_7100295260	
-0x71002952A0			FALSE	nullsub_173	nullsub_173	
+0x7100295260			FALSE	_ZNK12_GLOBAL__N_134DokanBindPuppeteerNrvWaitStartWarp7executeEPN2al11NerveKeeperE	(anonymous namespace)::DokanBindPuppeteerNrvWaitStartWarp::execute(al::NerveKeeper*) const	
+0x71002952A0			FALSE	_ZNK12_GLOBAL__N_139DokanBindPuppeteerNrvWaitStartWorldWarp7executeEPN2al11NerveKeeperE	(anonymous namespace)::DokanBindPuppeteerNrvWaitStartWorldWarp::execute(al::NerveKeeper*) const	
 0x71002952B0			FALSE	_ZNK12_GLOBAL__N_138DokanBindPuppeteerNrvWaitStartDokanOut7executeEPN2al11NerveKeeperE	(anonymous namespace)::DokanBindPuppeteerNrvWaitStartDokanOut::execute(al::NerveKeeper*) const	
 0x71002952C0			FALSE	_ZNK12_GLOBAL__N_131DokanBindPuppeteerNrvDokanOutUp7executeEPN2al11NerveKeeperE	(anonymous namespace)::DokanBindPuppeteerNrvDokanOutUp::execute(al::NerveKeeper*) const	
 0x71002952D0			FALSE	_ZNK12_GLOBAL__N_136DokanBindPuppeteerNrvDokanInSideMove7executeEPN2al11NerveKeeperE	(anonymous namespace)::DokanBindPuppeteerNrvDokanInSideMove::execute(al::NerveKeeper*) const	
 0x71002952E0			FALSE	_ZNK12_GLOBAL__N_132DokanBindPuppeteerNrvDokanInDown7executeEPN2al11NerveKeeperE	(anonymous namespace)::DokanBindPuppeteerNrvDokanInDown::execute(al::NerveKeeper*) const	
-0x71002952F0			FALSE	sub_71002952F0	sub_71002952F0	
+0x71002952F0			FALSE	_ZNK12_GLOBAL__N_137DokanBindPuppeteerNrvForceBindWarpEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::DokanBindPuppeteerNrvForceBindWarpEnd::execute(al::NerveKeeper*) const	
 0x7100295360		DokanWorldWarp.o	FALSE	_ZN14DokanWorldWarpC2EPKc	DokanWorldWarp::DokanWorldWarp(char const*)	
 0x7100295400			FALSE	_ZN14DokanWorldWarpC1EPKc	DokanWorldWarp::DokanWorldWarp(char const*)	
 0x71002954A0			FALSE	_ZN14DokanWorldWarp4initERKN2al13ActorInitInfoE	DokanWorldWarp::init(al::ActorInitInfo const&)	
