@@ -51,6 +51,8 @@ public:
 
     void setViewTarget(CameraTargetBase* pTarget, s32 index) { mViewTargetArray[index] = pTarget; }
 
+    CameraTargetBase* getTarget(s32 index) const { return mTargetArray[index]; }
+
 private:
     s32 mViewTargetSize = 0;
     CameraTargetBase** mViewTargetArray = nullptr;

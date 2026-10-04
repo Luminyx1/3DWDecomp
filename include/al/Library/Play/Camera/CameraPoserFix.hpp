@@ -34,6 +34,8 @@ public:
         mIsCalcNearestAtFromPreAt = isCalcNearestAtFromPreAt;
     }
 
+    void setOwnerObject(void* pOwner) { _1c8 = pOwner; }
+
 private:
     sead::Vector3f mLookAtPos = sead::Vector3f::zero;
     sead::Vector3f mReturnStartCameraPos = sead::Vector3f::zero;
