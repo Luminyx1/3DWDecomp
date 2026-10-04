@@ -1,8 +1,285 @@
+#include "System/CourseInfo.hpp"
 #include "System/CourseInfoHolder.hpp"
-#include "System/Data/StageDatabaseInfo.hpp"
-#include "System/GameDataFile.hpp"
-#include "System/GameDataFunction.hpp"
 #include <stream/seadStream.h>
+
+namespace {
+/**
+ * @brief Converts a playable character identifier into its course-clear flag.
+ * @param characterType Character identifier from 0 to 4; other values have no flag.
+ * @return The character's flag, or zero for an unsupported identifier.
+ */
+inline u32 getCharacterClearFlag(s32 characterType) {
+    switch (characterType) {
+    case 0:
+        return 8;
+    case 1:
+        return 16;
+    case 2:
+        return 32;
+    case 3:
+        return 64;
+    case 4:
+        return 128;
+    default:
+        return 0;
+    }
+}
+} // namespace
+
+/**
+ * @brief Creates an empty course record with unset score and time records.
+ */
+CourseInfo::CourseInfo() { reset(); }
+
+/**
+ * @brief Resets course flags, clear information, records, stars, and the miss count.
+ */
+void CourseInfo::reset() {
+    mFlags = 0;
+    mClearType = 0;
+    mClearValue = 0.0f;
+    mBestScore = -1;
+    mBestTime = -1;
+    mGreenStars.initialize();
+    mMissCount = 0;
+}
+
+/**
+ * @brief Clears all course progress flags.
+ */
+void CourseInfo::resetClearFlag() { mFlags = 0; }
+
+/**
+ * @brief Resets the casino room flags to the open state.
+ */
+void CourseInfo::openCasinoRoom() { mFlags = Open; }
+
+/**
+ * @brief Resets the Golden Express flags to the open state.
+ */
+void CourseInfo::openGoldenExpress() { mFlags = Open; }
+
+/**
+ * @brief Reopens a cleared Toad House and discards its other progress flags.
+ */
+void CourseInfo::resetKinopioHouse() {
+    if (isClear()) {
+        mFlags = Open;
+    }
+}
+
+/**
+ * @brief Checks the ordinary course-clear flag.
+ * @return True if the course has been cleared.
+ */
+bool CourseInfo::isClear() const { return hasAnyFlag(Clear); }
+
+/**
+ * @brief Sets the open flag if it is not already set.
+ * @return True if this call newly sets the open flag.
+ */
+bool CourseInfo::setOpen() {
+    if (isOpen()) {
+        return false;
+    }
+    mFlags |= Open;
+    return true;
+}
+
+/**
+ * @brief Checks whether the course is open.
+ * @return True when the open flag is set.
+ */
+bool CourseInfo::isOpen() const { return hasAnyFlag(Open); }
+
+/**
+ * @brief Marks an uncleared course as cleared and removes its warp-clear flag.
+ * @return True if the ordinary clear flag was newly set.
+ */
+bool CourseInfo::setClear() {
+    if (isClear()) {
+        return false;
+    }
+    mFlags &= ~WorldWarpClear;
+    mFlags |= Clear;
+    return true;
+}
+
+/**
+ * @brief Sets the warp-clear flag unless the course is already ordinarily cleared.
+ * @return True when the course does not have the ordinary clear flag.
+ */
+bool CourseInfo::setWorldWarpClear() {
+    if (isClear()) {
+        return false;
+    }
+    mFlags |= WorldWarpClear;
+    return true;
+}
+
+/**
+ * @brief Sets the Green Star lock flag unless the course is already exclusively locked.
+ * @return False only if the existing low three flags already represent the locked state.
+ */
+bool CourseInfo::setGreenStarLock() {
+    if (isGreenStarLock()) {
+        return false;
+    }
+    mFlags |= GreenStarLock;
+    return true;
+}
+
+/**
+ * @brief Checks for a Green Star lock without open or clear flags.
+ * @return True when locked and neither open nor cleared.
+ */
+bool CourseInfo::isGreenStarLock() const {
+    return (mFlags & (Open | Clear | GreenStarLock)) == GreenStarLock;
+}
+
+/**
+ * @brief Checks whether the course has no open, clear, or Green Star lock flag.
+ * @return True when all three state flags are clear.
+ */
+bool CourseInfo::isClose() const { return !hasAnyFlag(Open | Clear | GreenStarLock); }
+
+/**
+ * @brief Checks the warp-clear flag.
+ * @return True when the warp-clear flag is set.
+ */
+bool CourseInfo::isWorldWarpClear() const { return hasAnyFlag(WorldWarpClear); }
+
+/**
+ * @brief Records a clear with the specified playable character.
+ * @param characterType Character identifier from 0 to 4; other values leave the flags unchanged.
+ */
+void CourseInfo::setClearCharacter(s32 characterType) { mFlags |= getCharacterClearFlag(characterType); }
+
+/**
+ * @brief Checks whether the course was cleared with a specific character.
+ * @param characterType Character identifier from 0 to 4; other values return false.
+ * @return True when that character has a clear flag.
+ */
+bool CourseInfo::isClearCharacter(s32 characterType) const {
+    const u32 flags = mFlags;
+    return (flags & getCharacterClearFlag(characterType)) != 0;
+}
+
+/**
+ * @brief Checks whether all five playable characters have cleared the course.
+ * @return True when all five character flags are set.
+ */
+bool CourseInfo::isClearAllCharacter() const { return hasAllFlags(AllCharacters); }
+
+/**
+ * @brief Updates the acquired stamp flag.
+ * @param acquired Whether the course stamp has been acquired.
+ */
+void CourseInfo::setAcquireIllustItem(bool acquired) {
+    if (acquired) {
+        mFlags |= IllustItem;
+    } else {
+        mFlags &= ~IllustItem;
+    }
+}
+
+/**
+ * @brief Checks whether the course stamp has been acquired.
+ * @return True when the stamp flag is set.
+ */
+bool CourseInfo::isAcquireIllustItem() const { return hasAnyFlag(IllustItem); }
+
+/**
+ * @brief Counts acquired Green Stars in the requested range.
+ * @param starNum Number of leading star flags, from 0 to 32; negative values count all 32.
+ * @return Number of acquired stars in the range.
+ */
+s32 CourseInfo::calcGreenStarAcquireNum(s32 starNum) const {
+    return mGreenStars.calcGreenStarAcquireNum(starNum);
+}
+
+/**
+ * @brief Checks a single acquired Green Star flag.
+ * @param starIndex Zero-based Green Star bit index, from 0 to 31.
+ * @return True when the selected star was acquired.
+ */
+bool CourseInfo::isGreenStarAcquire(s32 starIndex) const { return mGreenStars.isAcquired(starIndex); }
+
+/**
+ * @brief Increments the miss count, saturating at 255.
+ */
+void CourseInfo::addMissCount() {
+    const s32 next = static_cast<s32>(static_cast<u32>(mMissCount) + 1);
+    mMissCount = next < 255 ? next : 255;
+}
+
+/**
+ * @brief Checks whether both the clear and assist-block flags are set.
+ * @return True when the course has an assisted clear.
+ */
+bool CourseInfo::isClearWithAssistBlock() const { return hasAllFlags(Clear | AssistBlock); }
+
+/**
+ * @brief Sets the assist-block flag without changing the ordinary clear flag.
+ */
+void CourseInfo::setClearWithAssistBlock() { mFlags |= AssistBlock; }
+
+/**
+ * @brief Clears the assist-block flag.
+ */
+void CourseInfo::resetClearWithAssistBlock() { mFlags &= ~AssistBlock; }
+
+/**
+ * @brief Replaces clear information when the new value is at least the recorded value.
+ * @param clearType Clear classification associated with the new value.
+ * @param clearValue Comparable clear result; lower values leave the current result unchanged.
+ */
+void CourseInfo::setClearInfo(s32 clearType, f32 clearValue) {
+    if (mClearValue <= clearValue) {
+        mClearValue = clearValue;
+        mClearType = clearType;
+    }
+}
+
+/**
+ * @brief Copies the acquired Green Star flags into this course.
+ * @param rStars Source set of acquired Green Stars.
+ */
+void CourseInfo::setGreenStarAcquireFlag(const CourseGreenStarInfo& rStars) { mGreenStars.copy(rStars); }
+
+/**
+ * @brief Updates the best score when the new nonnegative score improves the record.
+ * @param score Candidate score; negative values are ignored.
+ * @return True if an existing positive record was beaten; initializing a record returns false.
+ */
+bool CourseInfo::setBestScore(s32 score) {
+    if (score < 0) {
+        return false;
+    }
+    if (mBestScore < 1 || mBestScore < score) {
+        bool hadRecord = mBestScore > 0;
+        mBestScore = score;
+        return hadRecord;
+    }
+    return false;
+}
+
+/**
+ * @brief Updates the best time when the new positive time improves the record.
+ * @param time Candidate time in the game's stored units; nonpositive values are ignored.
+ * @return True if a previously set record was beaten; initializing a record returns false.
+ */
+bool CourseInfo::setBestTime(s32 time) {
+    if (time < 1) {
+        return false;
+    }
+    if (mBestTime == -1 || mBestTime > time) {
+        bool hadRecord = mBestTime != -1;
+        mBestTime = time;
+        return hadRecord;
+    }
+    return false;
+}
 
 namespace {
 /**
@@ -14,34 +291,6 @@ struct CourseInfoStreamData {
 };
 
 static_assert(sizeof(CourseInfoStreamData) == 0x20);
-
-/**
- * @brief Number of 3D World save files checked when looking for a stamp in any file.
- */
-constexpr s32 cGameDataFileNum = 4;
-
-/**
- * @brief Access the course records of the active 3D World save file.
- * @param accessor Accessor to the active game-data holder.
- * @return The course records of the playing file.
- */
-inline const CourseInfoHolder* getPlayingCourseInfoHolder(GameDataHolderAccessor accessor) {
-    return accessor.getHolder()->getPlayingFile()->getCourseInfoHolder();
-}
-
-/**
- * @brief Access the course records of a save file that is in use.
- * @param accessor Accessor to the active game-data holder.
- * @param fileId Valid 3D World save-file index.
- * @return The file's course records, or nullptr for an unused file.
- */
-inline const CourseInfoHolder* tryGetCourseInfoHolder(GameDataHolderAccessor accessor, int fileId) {
-    if (accessor.getHolder()->getGameDataFile(fileId)->isNewFile()) {
-        return nullptr;
-    }
-
-    return accessor.getHolder()->getGameDataFile(fileId)->getCourseInfoHolder();
-}
 } // namespace
 
 /**
@@ -109,320 +358,4 @@ void CourseInfoHolder::writeToStream(sead::WriteStream* pStream, bool isSkip) co
         data.mInfo = mpCourses[i];
         pStream->writeMemBlock(&data, sizeof(CourseInfoStreamData));
     }
-}
-
-/**
- * @brief Read or update course progression.
- * @param writer Accessor to the active game-data holder.
- * @param courseId Valid course identifier in the current save file.
- * @return True when the requested course condition holds.
- */
-bool CourseInfoFunction::setOpen(GameDataHolderWriter writer, int courseId) {
-    return writer.getHolder()->getCourseInfoPtr(courseId)->setOpen();
-}
-
-/**
- * @brief Read or update course progression.
- * @param writer Accessor to the active game-data holder.
- * @param courseId Valid course identifier in the current save file.
- * @return True when the requested course condition holds.
- */
-bool CourseInfoFunction::setGreenStarLock(GameDataHolderWriter writer, int courseId) {
-    return writer.getHolder()->getCourseInfoPtr(courseId)->setGreenStarLock();
-}
-
-/**
- * @brief Read or update course progression.
- * @param writer Accessor to the active game-data holder.
- * @param courseId Valid course identifier in the current save file.
- */
-void CourseInfoFunction::resetClearFlag(GameDataHolderWriter writer, int courseId) {
-    writer.getHolder()->getCourseInfoPtr(courseId)->resetClearFlag();
-}
-
-/**
- * @brief Read or update course progression.
- * @param writer Accessor to the active game-data holder.
- * @param courseId Valid course identifier in the current save file.
- */
-void CourseInfoFunction::openCasinoRoom(GameDataHolderWriter writer, int courseId) {
-    writer.getHolder()->getCourseInfoPtr(courseId)->openCasinoRoom();
-}
-
-/**
- * @brief Read or update course progression.
- * @param writer Accessor to the active game-data holder.
- * @param courseId Valid course identifier in the current save file.
- */
-void CourseInfoFunction::openGoldenExpress(GameDataHolderWriter writer, int courseId) {
-    writer.getHolder()->getCourseInfoPtr(courseId)->openGoldenExpress();
-}
-
-/**
- * @brief Read or update course progression.
- * @param accessor Accessor to the active game-data holder.
- * @param courseId Valid course identifier in the current save file.
- * @return True when the requested course condition holds.
- */
-bool CourseInfoFunction::isClose(GameDataHolderAccessor accessor, int courseId) {
-    return accessor.getHolder()->getCourseInfo(courseId)->isClose();
-}
-
-/**
- * @brief Read or update course progression.
- * @param accessor Accessor to the active game-data holder.
- * @param courseId Valid course identifier in the current save file.
- * @return True when the requested course condition holds.
- */
-bool CourseInfoFunction::isOpen(GameDataHolderAccessor accessor, int courseId) {
-    return accessor.getHolder()->getCourseInfo(courseId)->isOpen();
-}
-
-/**
- * @brief Read or update course progression.
- * @param accessor Accessor to the active game-data holder.
- * @param courseId Valid course identifier in the current save file.
- * @return True when the requested course condition holds.
- */
-bool CourseInfoFunction::isClear(GameDataHolderAccessor accessor, int courseId) {
-    if (accessor.getHolder()->isSingleMode()) {
-        return false;
-    }
-    return accessor.getHolder()->getCourseInfo(courseId)->isClear();
-}
-
-/**
- * @brief Read or update course progression.
- * @param accessor Accessor to the active game-data holder.
- * @param courseId Valid course identifier in the current save file.
- * @return True when the requested course condition holds.
- */
-bool CourseInfoFunction::isGreenStarLock(GameDataHolderAccessor accessor, int courseId) {
-    return accessor.getHolder()->getCourseInfo(courseId)->isGreenStarLock();
-}
-
-/**
- * @brief Check whether a character has cleared a course.
- * @param accessor Accessor to the active game-data holder.
- * @param courseId Valid course identifier in the current save file.
- * @param characterType Playable character identifier.
- * @return True when the character has cleared the course.
- */
-bool CourseInfoFunction::isClearCharacter(GameDataHolderAccessor accessor, int courseId,
-                                          int characterType) {
-    return accessor.getHolder()->getCourseInfo(courseId)->isClearCharacter(characterType);
-}
-
-/**
- * @brief Check whether a course is cleared at the top of its goal pole.
- * @param accessor Accessor to the active game-data holder.
- * @param courseId Valid course identifier in the current save file.
- * @return True for a top clear, or for any clear in a course without a goal pole.
- */
-bool CourseInfoFunction::isClearFlagTop(GameDataHolderAccessor accessor, int courseId) {
-    return isClearFlagTopCourseInfoHolder(getPlayingCourseInfoHolder(accessor), accessor, courseId);
-}
-
-/**
- * @brief Check whether a course is cleared at the top of its goal pole.
- * @param pHolder Non-null course records to examine.
- * @param accessor Accessor to the active game-data holder.
- * @param courseId Valid course identifier.
- * @return True for a top clear, or for any clear in a course without a goal pole.
- */
-bool CourseInfoFunction::isClearFlagTopCourseInfoHolder(const CourseInfoHolder* pHolder,
-                                                        GameDataHolderAccessor accessor,
-                                                        int courseId) {
-    const CourseInfo* pInfo = pHolder->getCourseInfo(courseId);
-    if (GameDataFunction::findStageDatabaseInfo(accessor, courseId)->isUseGoalPole()) {
-        return pInfo->getClearValue() >= 1.0f;
-    }
-
-    return pInfo->isClear();
-}
-
-/**
- * @brief Check whether everything in a course of the playing file has been collected.
- * @param accessor Accessor to the active game-data holder.
- * @param courseId Valid course identifier in the current save file.
- * @return True when the course is fully completed.
- */
-bool CourseInfoFunction::isClearComplete(GameDataHolderAccessor accessor, int courseId) {
-    return isClearCompleteCourseInfoHolder(getPlayingCourseInfoHolder(accessor), accessor,
-                                           courseId);
-}
-
-/**
- * @brief Check whether everything in a course has been collected.
- * @param pHolder Non-null course records to examine.
- * @param accessor Accessor to the active game-data holder.
- * @param courseId Valid course identifier.
- * @return True for a top clear with all Green Stars, the stamp and every character's clear;
- *         Captain Toad courses only need to be cleared.
- */
-bool CourseInfoFunction::isClearCompleteCourseInfoHolder(const CourseInfoHolder* pHolder,
-                                                         GameDataHolderAccessor accessor,
-                                                         int courseId) {
-    const CourseInfo* pInfo = pHolder->getCourseInfo(courseId);
-    const StageDatabaseInfo* pStage = GameDataFunction::findStageDatabaseInfo(accessor, courseId);
-    if (pStage->isKinopioBrigade()) {
-        return pInfo->isClear();
-    }
-
-    if (!isClearFlagTopCourseInfoHolder(pHolder, accessor, courseId)) {
-        return false;
-    }
-
-    if (!pInfo->getGreenStarInfo().isCompleteAcquire(pStage->getGreenStarNum())) {
-        return false;
-    }
-
-    if (pStage->getIllustItemNum() != 0 && !pInfo->isAcquireIllustItem()) {
-        return false;
-    }
-
-    return pInfo->isClearAllCharacter();
-}
-
-/**
- * @brief Read the character that recorded the top clear of a course.
- * @param accessor Accessor to the active game-data holder.
- * @param courseId Valid course identifier in the current save file.
- * @return The stored clear type.
- */
-s32 CourseInfoFunction::getClearTopCharacter(GameDataHolderAccessor accessor, int courseId) {
-    return accessor.getHolder()->getCourseInfo(courseId)->getClearType();
-}
-
-/**
- * @brief Access the Green Star flags of a course.
- * @param accessor Accessor to the active game-data holder.
- * @param courseId Valid course identifier in the current save file.
- * @return The course's Green Star record.
- */
-const CourseGreenStarInfo* CourseInfoFunction::getGreenStarAcquireFlag(
-    GameDataHolderAccessor accessor, int courseId) {
-    return &accessor.getHolder()->getCourseInfo(courseId)->getGreenStarInfo();
-}
-
-/**
- * @brief Read the highest goal-pole position reached in a course.
- * @param accessor Accessor to the active game-data holder.
- * @param courseId Valid course identifier in the current save file.
- * @return The stored clear value.
- */
-f32 CourseInfoFunction::getHighestGoalPolePosition(GameDataHolderAccessor accessor,
-                                                   int courseId) {
-    return accessor.getHolder()->getCourseInfo(courseId)->getClearValue();
-}
-
-/**
- * @brief Read the best score of a course.
- * @param accessor Accessor to the active game-data holder.
- * @param courseId Valid course identifier in the current save file.
- * @return The best score, or -1 when none is recorded.
- */
-s32 CourseInfoFunction::getBestScore(GameDataHolderAccessor accessor, int courseId) {
-    return accessor.getHolder()->getCourseInfo(courseId)->getBestScore();
-}
-
-/**
- * @brief Read the best clear time of a course.
- * @param accessor Accessor to the active game-data holder.
- * @param courseId Valid course identifier in the current save file.
- * @return The best time, or -1 when none is recorded.
- */
-s32 CourseInfoFunction::getBestTime(GameDataHolderAccessor accessor, int courseId) {
-    return accessor.getHolder()->getCourseInfo(courseId)->getBestTime();
-}
-
-/**
- * @brief Check whether every Green Star of a course has been collected.
- * @param accessor Accessor to the active game-data holder.
- * @param courseId Valid course identifier in the current save file.
- * @return True when all of the course's Green Stars are acquired.
- */
-bool CourseInfoFunction::isAcquireGreenStarAll(GameDataHolderAccessor accessor, int courseId) {
-    const StageDatabaseInfo* pStage = GameDataFunction::findStageDatabaseInfo(accessor, courseId);
-    const CourseInfo* pInfo = accessor.getHolder()->getCourseInfo(courseId);
-    return pInfo->getGreenStarInfo().isCompleteAcquire(pStage->getGreenStarNum());
-}
-
-/**
- * @brief Check whether the stamp of a course has been collected.
- * @param accessor Accessor to the active game-data holder.
- * @param courseId Valid course identifier.
- * @param isAllFile False to check the playing file only; true to check save files.
- * @param fileId Save file to check when isAllFile is set, or a negative value for any file.
- * @return True when the stamp has been collected.
- */
-bool CourseInfoFunction::isAcquireIllustItem(GameDataHolderAccessor accessor, int courseId,
-                                             bool isAllFile, int fileId) {
-    if (!isAllFile) {
-        return isAcquireIllustItemCourseInfoHolder(getPlayingCourseInfoHolder(accessor), accessor,
-                                                   courseId);
-    }
-
-    if (fileId >= 0) {
-        const CourseInfoHolder* pHolder = tryGetCourseInfoHolder(accessor, fileId);
-        if (pHolder == nullptr) {
-            return false;
-        }
-
-        if (isAcquireIllustItemCourseInfoHolder(pHolder, accessor, courseId)) {
-            return true;
-        }
-    } else {
-        for (s32 i = 0; i < cGameDataFileNum; ++i) {
-            const CourseInfoHolder* pHolder = tryGetCourseInfoHolder(accessor, i);
-            if (pHolder != nullptr &&
-                isAcquireIllustItemCourseInfoHolder(pHolder, accessor, courseId)) {
-                return true;
-            }
-        }
-    }
-
-    return false;
-}
-
-/**
- * @brief Check whether the stamp of a course has been collected.
- * @param pHolder Non-null course records to examine.
- * @param accessor Unused accessor to the active game-data holder.
- * @param courseId Valid course identifier.
- * @return True when the stamp has been collected.
- */
-bool CourseInfoFunction::isAcquireIllustItemCourseInfoHolder(const CourseInfoHolder* pHolder,
-                                                             GameDataHolderAccessor accessor,
-                                                             int courseId) {
-    return pHolder->getCourseInfo(courseId)->isAcquireIllustItem();
-}
-
-/**
- * @brief Read how many times the player missed in a course.
- * @param accessor Accessor to the active game-data holder.
- * @param courseId Valid course identifier in the current save file.
- * @return The miss count.
- */
-s32 CourseInfoFunction::getMissCount(GameDataHolderAccessor accessor, int courseId) {
-    return accessor.getHolder()->getCourseInfo(courseId)->getMissCount();
-}
-
-/**
- * @brief Read or update course progression.
- * @param writer Accessor to the active game-data holder.
- * @param courseId Valid course identifier in the current save file.
- */
-void CourseInfoFunction::addMissCount(GameDataHolderWriter writer, int courseId) {
-    writer.getHolder()->getCourseInfoPtr(courseId)->addMissCount();
-}
-
-/**
- * @brief Read or update course progression.
- * @param accessor Accessor to the active game-data holder.
- * @param courseId Valid course identifier in the current save file.
- * @return True when the requested course condition holds.
- */
-bool CourseInfoFunction::isClearWithAssistBlock(GameDataHolderAccessor accessor, int courseId) {
-    return accessor.getHolder()->getCourseInfo(courseId)->isClearWithAssistBlock();
 }
