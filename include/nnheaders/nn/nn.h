@@ -17,6 +17,7 @@ extern "C" {
 
 int main(int argc, char** argv);
 void nninitStartup();
+void nnMain();
 
 void _init();
 void _fini();

@@ -105,6 +105,17 @@ void SetHostArgv(char**);
 char** GetHostArgv();
 
 // MEMORY
+struct MemoryInfo {
+    u64 totalAvailableMemorySize;
+    u64 totalUsedMemorySize;
+    u64 totalMemoryHeapSize;
+    u64 allocatedMemoryHeapSize;
+    u64 programSize;
+    u64 totalThreadStackSize;
+    s32 threadCount;
+};
+
+void QueryMemoryInfo(MemoryInfo* pInfo);
 void InitializeVirtualAddressMemory();
 Result AllocateAddressRegion(u64*, u64);
 Result AllocateMemory(u64*, u64);
