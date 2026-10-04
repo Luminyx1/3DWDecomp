@@ -31,6 +31,9 @@ class SoundSubArchiveKeeper;
 
 extern const char* UMF_SE_STATIONED_SYSTEM;
 extern const char* UMF_BGM_STATIONED_1ST;
+extern const char* UMF_SE_STATIONED_1ST;
+extern const char* UMF_SE_STATIONED_2ND;
+extern const char* UMF_BGM_STATIONED_2ND;
 
 struct AudioSystemInitInfo {
     const char* archiveName = nullptr;

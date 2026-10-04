@@ -55,10 +55,11 @@ bool isEmptyCategoryResource(const sead::SafeString& rName) {
 /**
  * Creates every resource listed for a category.
  * @param rName category name
- * @param pEvent event signaled on completion
+ * @param pEvent event that cancels the creation when signaled, or null
+ * @return whether all resources were created
  */
-void createCategoryResourceAll(const sead::SafeString& rName, sead::Event* pEvent) {
-    getResourceSystem()->createCategoryResourceAll(rName, pEvent);
+bool createCategoryResourceAll(const sead::SafeString& rName, sead::Event* pEvent) {
+    return getResourceSystem()->createCategoryResourceAll(rName, pEvent);
 }
 
 /**

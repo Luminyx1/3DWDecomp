@@ -15,7 +15,7 @@ class ByamlIter;
 void addResourceCategory(const sead::SafeString& rName, s32 size, sead::Heap* pHeap);
 bool isCategoryAdded(const sead::SafeString& rName);
 bool isEmptyCategoryResource(const sead::SafeString& rName);
-void createCategoryResourceAll(const sead::SafeString& rName, sead::Event* pEvent);
+bool createCategoryResourceAll(const sead::SafeString& rName, sead::Event* pEvent);
 void removeResourceCategory(const sead::SafeString& rName);
 const char* getResourceName(const Resource* pResource);
 bool isExistResGraphicsFile(const Resource* pResource);
