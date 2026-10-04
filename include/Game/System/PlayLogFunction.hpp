@@ -11,6 +11,12 @@ void setMiiverseFlag(GameDataHolderWriter writer, bool isEnable);
 void setPlayChara(GameDataHolderWriter writer, int characterType);
 void setUserNum(GameDataHolderWriter writer, int num);
 void setPlayerEntry(GameDataHolderWriter writer);
+bool isUseDrcOneUser(GameDataHolderAccessor accessor);
+void useAssistPlayer(GameDataHolderWriter writer);
+void useCrossKey(GameDataHolderWriter writer);
+void useTouchPanel(GameDataHolderWriter writer);
+void useCameraRotate(GameDataHolderWriter writer);
+void setPostMiiverse(GameDataHolderWriter writer);
 void startStage(GameDataHolderWriter writer, int courseId);
 void onStageEnd(GameDataHolderWriter writer);
 void clearStage(GameDataHolderWriter writer, int courseId, int time, int greenStarNum,
