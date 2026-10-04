@@ -24,6 +24,17 @@ class HeapBase : public util::IntrusiveListNode {
     void LockHeap();
     void UnlockHeap();
 
+  protected:
+    /** @brief Obtain the managed range's start. @return Inclusive start address. */
+    u8* GetStart() const { return static_cast<u8*>(mStart); }
+    /** @brief Obtain the managed range's end. @return Exclusive end address. */
+    u8* GetEnd() const { return static_cast<u8*>(mEnd); }
+    /**
+     * @brief Update the managed range after a derived heap releases its tail.
+     * @param pEnd New exclusive end address within the original range.
+     */
+    void SetEnd(u8* pEnd) { mEnd = pEnd; }
+
   private:
     /**
      * @brief Test whether an address lies in this heap's managed range.
