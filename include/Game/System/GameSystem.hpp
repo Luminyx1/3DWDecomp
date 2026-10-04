@@ -10,10 +10,13 @@ class GameSystem : public al::NerveExecutor {
   public:
     GameSystem();
     void init();
+    void initAudio();
+    void setStartupSequence();
     void movement();
     void drawMain();
     void drawSub();
     void exePlay();
+    bool tryChangeSequence(const char* pName);
 
   private:
     al::Sequence* mpSequence;
