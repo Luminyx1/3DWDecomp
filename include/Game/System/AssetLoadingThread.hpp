@@ -19,6 +19,8 @@ class AssetLoadingThread {
      */
     void setAudioSystemInfo(al::AudioSystemInfo* pInfo) { mpAudioSystemInfo = pInfo; }
 
+    static AssetLoadingThread* createInstance(sead::Heap* pHeap);
+
     static AssetLoadingThread* sInstance;
 
   private:
