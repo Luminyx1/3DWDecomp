@@ -36,6 +36,13 @@ class GameDataFileBase {
     int getMainPlayerCharacterType() const;
     int getMainPlayerCharacterTypeSaved() const;
     bool addCoin(int count);
+    s64 getTotalPlayTimePR(bool isIncludeCurrentPlay);
+
+    /**
+     * @brief Access the save-file name.
+     * @return The save-file name.
+     */
+    sead::SafeString& getName() { return mName; }
 
   protected:
     GameDataHolder* mpHolder;
