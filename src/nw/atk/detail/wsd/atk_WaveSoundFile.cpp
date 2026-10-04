@@ -1,15 +1,15 @@
 #include <nn/atk/atk_WaveSoundFile.h>
+#include <nn/atk/atk_BinaryFileUtil.h>
 #include <cstring>
 
 namespace nn::atk::detail {
 namespace {
 const AdshrCurve DefaultAdshrCurve = {127, 127, 127, 127, 127};
 
-// base is the origin of the signed byte offset to the requested record type.
-template <typename T>
-const T* AtOffset(const void* base, s32 offset) {
-    return reinterpret_cast<const T*>(static_cast<const u8*>(base) + offset);
-}
+using file::AtOffset;
+using file::GetParameterIndex;
+using file::GetParameter;
+using file::GetFloatParameter;
 
 // table contains typed references; index selects one and type is the expected tag.
 template <typename T>
@@ -20,32 +20,7 @@ const T* GetRecord(const WaveSoundFile::ReferenceTable* table, u32 index, u16 ty
     return AtOffset<T>(table, table->items[index].offset);
 }
 
-// flags identifies the stored parameters; bit selects the desired optional value.
-// The returned word index includes the flags word; zero denotes an absent value.
-u32 GetParameterIndex(u32 flags, unsigned bit) {
-    if (!(flags & (1u << bit))) return 0;
-    u32 index = 0;
 
-    for (unsigned i = 0; i < bit; ++i)
-        if (flags & (1u << i)) ++index;
-    return index + 1;
-}
-
-// flags points to the flags word and its packed values; bit selects a present value.
-u32 GetParameter(const u32* flags, unsigned bit) {
-    size_t index = 0;
-
-    for (unsigned i = 0; i < bit; ++i) index += (*flags >> i) & 1;
-    return flags[index + 1];
-}
-
-// flags points to packed values; bit selects a present floating-point parameter.
-float GetFloatParameter(const u32* flags, unsigned bit) {
-    u32 bits = GetParameter(flags, bit);
-    float value;
-    std::memcpy(&value, &bits, sizeof(value));
-    return value;
-}
 }
 
 const WaveSoundFile::InfoBlock* WaveSoundFile::FileHeader::GetInfoBlock() const {
