@@ -10,11 +10,11 @@ int getActiveControlUserNum(GameDataHolderAccessor accessor);
  * @param pHolder Game-data holder supplying the active player count.
  */
 StockItemList::StockItemList(GameDataHolder* pHolder) : mpHolder(pHolder) {
-    StockItemSlot* pItems = new StockItemSlot[4];
+    s32* pItems = new s32[4];
     mpItems = pItems;
 
     for (int i = 0; i < 4; ++i) {
-        pItems[i].mItemId = 0;
+        pItems[i] = 0;
     }
 }
 
@@ -23,7 +23,7 @@ StockItemList::StockItemList(GameDataHolder* pHolder) : mpHolder(pHolder) {
  */
 void StockItemList::initialize() {
     for (int i = 0; i < 4; ++i) {
-        mpItems[i].mItemId = 0;
+        mpItems[i] = 0;
     }
 }
 
@@ -33,7 +33,7 @@ void StockItemList::initialize() {
  */
 void StockItemList::copy(const StockItemList* pOther) {
     for (int i = 0; i < 4; ++i) {
-        mpItems[i].mItemId = pOther->mpItems[i].mItemId;
+        mpItems[i] = pOther->mpItems[i];
     }
 }
 
@@ -60,21 +60,21 @@ bool StockItemList::stockItem(int itemId) {
         return false;
     }
 
-    StockItemSlot* pItems = mpItems;
+    s32* pItems = mpItems;
     const int count = rc::getActiveControlUserNum(GameDataHolderAccessor(mpHolder));
 
     if (itemId == 1) {
-        if (pItems[count - 1].mItemId != 0) {
+        if (pItems[count - 1] != 0) {
             return false;
         }
-    } else if (pItems[count - 1].mItemId != 0) {
+    } else if (pItems[count - 1] != 0) {
         for (int i = count - 1; i >= 0; --i) {
-            if (pItems[i].mItemId == 1) {
+            if (pItems[i] == 1) {
                 for (int j = i; j < 3; ++j) {
-                    pItems[j].mItemId = pItems[j + 1].mItemId;
+                    pItems[j] = pItems[j + 1];
                 }
 
-                pItems[3].mItemId = 0;
+                pItems[3] = 0;
                 break;
             }
         }
@@ -82,7 +82,7 @@ bool StockItemList::stockItem(int itemId) {
 
     int index = 4;
     for (u32 i = 0; i < 4; ++i) {
-        if (pItems[i].mItemId != 6) {
+        if (pItems[i] != 6) {
             index = i;
             break;
         }
@@ -90,14 +90,14 @@ bool StockItemList::stockItem(int itemId) {
 
     if (index != 4) {
         for (int j = 3; j > index; --j) {
-            pItems[j].mItemId = pItems[j - 1].mItemId;
+            pItems[j] = pItems[j - 1];
         }
 
-        pItems[index].mItemId = itemId;
+        pItems[index] = itemId;
     }
 
     for (int i = count; i < 4; ++i) {
-        pItems[i].mItemId = 0;
+        pItems[i] = 0;
     }
 
     return true;
@@ -107,15 +107,15 @@ bool StockItemList::stockItem(int itemId) {
  * @brief Consume the first stock item and shift remaining active slots.
  */
 void StockItemList::useStockItem() {
-    StockItemSlot* pItems = mpItems;
+    s32* pItems = mpItems;
     const int count = rc::getActiveControlUserNum(GameDataHolderAccessor(mpHolder));
 
     for (int i = 0; i < count - 1; ++i) {
-        pItems[i].mItemId = pItems[i + 1].mItemId;
+        pItems[i] = pItems[i + 1];
     }
 
     for (int i = count - 1; i < 4; ++i) {
-        pItems[i].mItemId = 0;
+        pItems[i] = 0;
     }
 }
 
@@ -124,11 +124,11 @@ void StockItemList::useStockItem() {
  * @param index Slot index from 0 through 3.
  * @return The item identifier, or zero for an empty slot.
  */
-int StockItemList::getStockItem(int index) const { return mpItems[index].mItemId; }
+int StockItemList::getStockItem(int index) const { return mpItems[index]; }
 
 /**
  * @brief Replace a stock-item slot.
  * @param index Slot index from 0 through 3.
  * @param itemId Item identifier; zero empties the slot.
  */
-void StockItemList::setStockItem(int index, int itemId) { mpItems[index].mItemId = itemId; }
+void StockItemList::setStockItem(int index, int itemId) { mpItems[index] = itemId; }
