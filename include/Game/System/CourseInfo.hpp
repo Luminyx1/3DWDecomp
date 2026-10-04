@@ -48,6 +48,24 @@ class CourseInfo {
     s32 getBestTime() const { return mBestTime; }
 
     /**
+     * @brief Read the character that recorded the course's top clear.
+     * @return The clear type stored by setClearInfo.
+     */
+    s32 getClearType() const { return mClearType; }
+
+    /**
+     * @brief Read the highest goal-pole position reached when clearing the course.
+     * @return The clear value stored by setClearInfo.
+     */
+    f32 getClearValue() const { return mClearValue; }
+
+    /**
+     * @brief Read how many times the player missed in the course.
+     * @return The miss count.
+     */
+    s32 getMissCount() const { return mMissCount; }
+
+    /**
      * @brief Access the saved Green Star flags.
      * @return The course's Green Star record.
      */
