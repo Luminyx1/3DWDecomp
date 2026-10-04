@@ -349,7 +349,6 @@ struct ControllerSupportArgV2 {
 struct ControllerSupportResultInfo {
     s8 mPlayerCount;
     s32 mSelectedId;
-    s32 mResult;
 };
 
 struct NpadControllerColor {
@@ -511,6 +510,7 @@ struct VibrationValue {
 void InitializeNpad();
 void SetSupportedNpadIdType(const u32*, u64);
 void SetSupportedNpadStyleSet(NpadStyleSet);
+NpadStyleSet GetSupportedNpadStyleSet();
 NpadStyleSet GetNpadStyleSet(const u32& port);
 Result ShowControllerSupport(ControllerSupportResultInfo*, const ControllerSupportArg&);
 
