@@ -35032,13 +35032,13 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71005342F0			FALSE	_ZN13RigidBodyCoreD0Ev	RigidBodyCore::~RigidBodyCore()	
 0x7100534300			FALSE	_ZN13RigidBodyCore7controlEv	RigidBodyCore::control()	
 0x7100534310		RigidBodyUtil.o	FALSE	_ZN13RigidBodyUtil32createCollisionSphereEveryJointsEPKN2al9LiveActorE	RigidBodyUtil::createCollisionSphereEveryJoints(al::LiveActor const*)	
-0x71005344B0			FALSE	sub_71005344B0	sub_71005344B0	
+0x71005344B0			FALSE	_ZN12_GLOBAL__N_132createCollisionSphereChildJointsEPN4sead8ObjArrayI17RBCollisionSphereEEPKN2al9LiveActorEPKN2nn3g3d11SkeletonObjEi	(anonymous namespace)::createCollisionSphereChildJoints(sead::ObjArray<RBCollisionSphere>*, al::LiveActor const*, nn::g3d::SkeletonObj const*, int)	
 0x71005346A0			FALSE	_ZN13RigidBodyUtil21adjustCenterOfGravityEP17RBCollisionSphereiPN4sead7Vector3IfEE	RigidBodyUtil::adjustCenterOfGravity(RBCollisionSphere*, int, sead::Vector3<float>*)	
 0x71005347A0			FALSE	_ZN13RigidBodyUtil15createRigidBodyEPKN2al9LiveActorEP22IUseRigidBodyCollisionPK17RBCollisionSphereiRKN4sead7Vector3IfEEf	RigidBodyUtil::createRigidBody(al::LiveActor const*, IUseRigidBodyCollision*, RBCollisionSphere const*, int, sead::Vector3<float> const&, float)	
 0x7100534900			FALSE	_ZN13RigidBodyUtil39createRigidBodyWithJointCollisionSphereEPKN2al9LiveActorEP22IUseRigidBodyCollisionf	RigidBodyUtil::createRigidBodyWithJointCollisionSphere(al::LiveActor const*, IUseRigidBodyCollision*, float)	
 0x7100534A70			FALSE	_ZN13RigidBodyUtil33calcInertiaTensorOfQuadraticPrismEPN4sead8Matrix33IfEEffff	RigidBodyUtil::calcInertiaTensorOfQuadraticPrism(sead::Matrix33<float>*, float, float, float, float)	
 0x7100534AC0			FALSE	_ZN13RigidBodyUtil19updateInertiaTensorEPN4sead8Matrix33IfEERKS2_RKNS0_4QuatIfEE	RigidBodyUtil::updateInertiaTensor(sead::Matrix33<float>*, sead::Matrix33<float> const&, sead::Quat<float> const&)	
-0x7100534DC0		RBCollisionSphereHolder.o	FALSE	_ZNK23RBCollisionSphereHolder6getNumEv	RBCollisionSphereHolder::getNum() const	note: sorts before the previous object (folder boundary or misnamed object?)
+0x7100534DC0			FALSE	_ZNK23RBCollisionSphereHolder6getNumEv	RBCollisionSphereHolder::getNum() const	note: sorts before the previous object (folder boundary or misnamed object?)
 0x7100534DD0			FALSE	_ZNK23RBCollisionSphereHolder6getPosEj	RBCollisionSphereHolder::getPos(unsigned int) const	
 0x7100534DE0			FALSE	_ZNK23RBCollisionSphereHolder9getRadiusEj	RBCollisionSphereHolder::getRadius(unsigned int) const	
 0x7100534DF0		SceneUtil.o	FALSE	_ZN2rc18isActiveDemoCameraEPKN2al5SceneE	rc::isActiveDemoCamera(al::Scene const*)	

@@ -3340,9 +3340,7 @@ src/Game/Util/RigidBodyCollisionImpl.cpp:
 src/Game/Util/RigidBodyCore.cpp:
     .text   start:0x005325E0 end:0x00534304
 src/Game/Util/RigidBodyUtil.cpp:
-    .text   start:0x00534310 end:0x00534DC0
-src/Game/Util/RBCollisionSphereHolder.cpp:
-    .text   start:0x00534DC0 end:0x00534DF0
+    .text   start:0x00534310 end:0x00534DF0
 src/Game/Util/SceneUtil.cpp:
     .text   start:0x00534DF0 end:0x00535328
 src/Game/Util/ScoreUtil.cpp:
