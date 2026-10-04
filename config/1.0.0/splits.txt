@@ -1299,34 +1299,50 @@ src/Game/LuigiBros/PadAnalogStick.cpp:
     .text   start:0x00208550 end:0x00208734
 src/Game/LuigiBros/config.cpp:
     .text   start:0x00208740 end:0x00208A4C
-src/Game/LuigiBros/Emu.cpp:
-    .text   start:0x00208A50 end:0x00208A90
 src/Game/LuigiBros/HVCEmu.cpp:
-    .text   start:0x00208A90 end:0x0020AB20
-src/Game/LuigiBros/Emulator/Emulator.cpp:
-    .text   start:0x0020AB20 end:0x0022CBFC
+    .text   start:0x00208A50 end:0x0020AB20
+src/Game/LuigiBros/Emulator/Hvc.cpp:
+    .text   start:0x0020AB20 end:0x002121D0
+src/Game/LuigiBros/Emulator/PlatformHvcUnit.cpp:
+    .text   start:0x002121D0 end:0x00213368
+src/Game/LuigiBros/Emulator/HvcCpu.cpp:
+    .text   start:0x00213370 end:0x002155DC
+src/Game/LuigiBros/Emulator/HvcDiskUtility.cpp:
+    .text   start:0x002155E0 end:0x002163E4
+src/Game/LuigiBros/Emulator/HvcGio.cpp:
+    .text   start:0x002163F0 end:0x00216B5C
+src/Game/LuigiBros/Emulator/HvcMmc.cpp:
+    .text   start:0x00216B60 end:0x0022314C
+src/Game/LuigiBros/Emulator/HvcPpu.cpp:
+    .text   start:0x00223150 end:0x002260CC
+src/Game/LuigiBros/Emulator/HvcSpu.cpp:
+    .text   start:0x002260D0 end:0x0022CBFC
 src/Game/LuigiBros/Emulator/ErrorViewer.cpp:
-    .text   start:0x0022CC00 end:0x0022CE48
+    .text   start:0x0022CC00 end:0x0022CE14
 src/Game/LuigiBros/Emulator/familycomputer.cpp:
-    .text   start:0x0022CE50 end:0x0022E720
+    .text   start:0x0022CE20 end:0x0022E5E4
 src/Game/LuigiBros/Emulator/inputdevice.cpp:
-    .text   start:0x0022E720 end:0x002305C4
+    .text   start:0x0022E5F0 end:0x00230250
+src/Game/LuigiBros/Emulator/cafe.cpp:
+    .text   start:0x00230250 end:0x002305C4
 src/Game/LuigiBros/Emulator/LuigiBrosMain.cpp:
-    .text   start:0x002305D0 end:0x00230744
-src/Game/LuigiBros/Emulator/vessel.cpp:
-    .text   start:0x00230750 end:0x00231D94
+    .text   start:0x002305D0 end:0x00231D90
 src/Game/LuigiBros/Vessel/performance.cpp:
-    .text   start:0x00231DA0 end:0x00232034
+    .text   start:0x00231D90 end:0x00232034
 src/Game/LuigiBros/Vessel/Resource.cpp:
     .text   start:0x00232040 end:0x00232164
 src/Game/LuigiBros/Vessel/screenfilter.cpp:
-    .text   start:0x00232170 end:0x00235EE4
+    .text   start:0x00232170 end:0x002350E8
+src/Game/LuigiBros/Vessel/gamescreen.cpp:
+    .text   start:0x002350F0 end:0x00235D84
+src/Game/LuigiBros/Vessel/FlashingFilter.cpp:
+    .text   start:0x00235D90 end:0x00235ED4
+src/Game/LuigiBros/Vessel/Debug.cpp:
+    .text   start:0x00235EE0 end:0x00235EE4
 src/Game/LuigiBros/Vessel/VesselAnimButton.cpp:
-    .text   start:0x00235EF0 end:0x00237DA4
-src/Game/LuigiBros/Vessel/VesselButtonGroup.cpp:
-    .text   start:0x00237DB0 end:0x0023A028
-src/Game/LuigiBros/Vessel/VesselControlCreator.cpp:
-    .text   start:0x0023A030 end:0x0023A294
+    .text   start:0x00235EF0 end:0x0023A258
+src/Game/LuigiBros/Vessel/VesselMemory.cpp:
+    .text   start:0x0023A260 end:0x0023A294
 src/Game/LuigiBros/Utility/Utility.cpp:
     .text   start:0x0023A2A0 end:0x0023A4B4
 src/Game/MapObj/ActorStateDemoCamera.cpp:
