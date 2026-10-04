@@ -32492,7 +32492,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71004F3F20			FALSE	_ZN19CourseGreenStarInfo4copyERKS_	CourseGreenStarInfo::copy(CourseGreenStarInfo const&)	
 0x71004F3F30			FALSE	_ZNK19CourseGreenStarInfo23calcGreenStarAcquireNumEi	CourseGreenStarInfo::calcGreenStarAcquireNum(int) const	
 0x71004F3FC0			FALSE	_ZNK19CourseGreenStarInfo17isCompleteAcquireEi	CourseGreenStarInfo::isCompleteAcquire(int) const	
-0x71004F4000		CourseInfo.o	FALSE	_ZN10CourseInfoC2Ev	CourseInfo::CourseInfo()	
+0x71004F4000		CourseInfoHolder.o	FALSE	_ZN10CourseInfoC2Ev	CourseInfo::CourseInfo()	
 0x71004F4050			FALSE	_ZN10CourseInfo5resetEv	CourseInfo::reset()	
 0x71004F4090			FALSE	_ZN10CourseInfo14resetClearFlagEv	CourseInfo::resetClearFlag()	
 0x71004F40A0			FALSE	_ZN10CourseInfo14openCasinoRoomEv	CourseInfo::openCasinoRoom()	
@@ -32522,12 +32522,12 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71004F4360			FALSE	_ZN10CourseInfo23setGreenStarAcquireFlagERK19CourseGreenStarInfo	CourseInfo::setGreenStarAcquireFlag(CourseGreenStarInfo const&)	
 0x71004F4370			FALSE	_ZN10CourseInfo12setBestScoreEi	CourseInfo::setBestScore(int)	
 0x71004F43B0			FALSE	_ZN10CourseInfo11setBestTimeEi	CourseInfo::setBestTime(int)	
-0x71004F43F0		CourseInfoHolder.o	FALSE	_ZN16CourseInfoHolderC2Ei	CourseInfoHolder::CourseInfoHolder(int)	
+0x71004F43F0			FALSE	_ZN16CourseInfoHolderC2Ei	CourseInfoHolder::CourseInfoHolder(int)	
 0x71004F44F0			FALSE	_ZN16CourseInfoHolder10initializeEv	CourseInfoHolder::initialize()	
 0x71004F4570			FALSE	_ZN16CourseInfoHolder4copyEPKS_	CourseInfoHolder::copy(CourseInfoHolder const*)	
 0x71004F45D0			FALSE	_ZN16CourseInfoHolder14readFromStreamEPN4sead10ReadStreamE	CourseInfoHolder::readFromStream(sead::ReadStream*)	
 0x71004F46A0			FALSE	_ZNK16CourseInfoHolder13writeToStreamEPN4sead11WriteStreamEb	CourseInfoHolder::writeToStream(sead::WriteStream*, bool) const	
-0x71004F47A0			FALSE	_ZN18CourseInfoFunction7setOpenE20GameDataHolderWriteri	CourseInfoFunction::setOpen(GameDataHolderWriter, int)	
+0x71004F47A0		CourseInfoFunction.o	FALSE	_ZN18CourseInfoFunction7setOpenE20GameDataHolderWriteri	CourseInfoFunction::setOpen(GameDataHolderWriter, int)	
 0x71004F47C0			FALSE	_ZN18CourseInfoFunction16setGreenStarLockE20GameDataHolderWriteri	CourseInfoFunction::setGreenStarLock(GameDataHolderWriter, int)	
 0x71004F47E0			FALSE	_ZN18CourseInfoFunction14resetClearFlagE20GameDataHolderWriteri	CourseInfoFunction::resetClearFlag(GameDataHolderWriter, int)	
 0x71004F4800			FALSE	_ZN18CourseInfoFunction14openCasinoRoomE20GameDataHolderWriteri	CourseInfoFunction::openCasinoRoom(GameDataHolderWriter, int)	

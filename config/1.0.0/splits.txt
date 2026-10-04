@@ -3233,10 +3233,10 @@ src/Game/System/ControlUserDataHolder.cpp:
     .text   start:0x004F3230 end:0x004F3EF4
 src/Game/System/CourseGreenStarInfo.cpp: done
     .text   start:0x004F3F00 end:0x004F4000
-src/Game/System/CourseInfo.cpp: done
-    .text   start:0x004F4000 end:0x004F43F0
 src/Game/System/CourseInfoHolder.cpp:
-    .text   start:0x004F43F0 end:0x004F4ED4
+    .text   start:0x004F4000 end:0x004F4798
+src/Game/System/CourseInfoFunction.cpp:
+    .text   start:0x004F47A0 end:0x004F4ED4
 src/Game/System/DepressDecompressor.cpp:
     .text   start:0x004F4EE0 end:0x004F56AC
 src/Game/System/GameDataCommon.cpp:
