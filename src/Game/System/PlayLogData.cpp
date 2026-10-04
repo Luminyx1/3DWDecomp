@@ -11,7 +11,9 @@ void PlayLogData::initializeData() { std::memset(mpValues, 0, 4000); }
  * @brief Access the common play-log counters.
  * @return The start of the common counter block.
  */
-u32* PlayLogData::getCommonData() { return mpValues; }
+PlayLogCommonData* PlayLogData::getCommonData() {
+    return reinterpret_cast<PlayLogCommonData*>(mpValues);
+}
 
 /**
  * @brief Find the play-log counters for a course.

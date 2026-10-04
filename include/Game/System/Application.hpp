@@ -1,5 +1,8 @@
 #pragma once
 #include <heap/seadDisposer.h>
+namespace al {
+class SystemKit;
+}
 namespace sead {
 class Framework;
 }
@@ -12,6 +15,12 @@ class Application {
     void run();
     RootTask* getRootTask() const;
     void preSwapBufferCallback();
+
+    /**
+     * @brief Access the engine system kit.
+     * @return The system kit created by the application.
+     */
+    al::SystemKit* getSystemKit() const { return static_cast<al::SystemKit*>(mpUnknown20); }
 
   private:
     void* mpUnknown20;
