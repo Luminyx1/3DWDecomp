@@ -33204,16 +33204,16 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71005023A0			FALSE	_ZNK22SaveDataAccessSequence24isWindowProcessingActiveEv	SaveDataAccessSequence::isWindowProcessingActive() const	
 0x71005023E0			FALSE	_ZN22SaveDataAccessSequence22makeSaveGhostWorldListEv	SaveDataAccessSequence::makeSaveGhostWorldList()	
 0x71005023F0			FALSE	_ZN22SaveDataAccessSequenceD0Ev	SaveDataAccessSequence::~SaveDataAccessSequence()	
-0x7100502420			FALSE	nullsub_310	nullsub_310	
-0x7100502430			FALSE	sub_7100502430	sub_7100502430	
-0x71005024A0			FALSE	sub_71005024A0	sub_71005024A0	
+0x7100502420			FALSE	_ZNK12_GLOBAL__N_129SaveDataAccessSequenceNrvIdle7executeEPN2al11NerveKeeperE	(anonymous namespace)::SaveDataAccessSequenceNrvIdle::execute(al::NerveKeeper*) const	
+0x7100502430			FALSE	_ZNK12_GLOBAL__N_133SaveDataAccessSequenceNrvPreError7executeEPN2al11NerveKeeperE	(anonymous namespace)::SaveDataAccessSequenceNrvPreError::execute(al::NerveKeeper*) const	
+0x71005024A0			FALSE	_ZNK12_GLOBAL__N_129SaveDataAccessSequenceNrvInit7executeEPN2al11NerveKeeperE	(anonymous namespace)::SaveDataAccessSequenceNrvInit::execute(al::NerveKeeper*) const	
 0x7100502530			FALSE	_ZNK12_GLOBAL__N_133SaveDataAccessSequenceNrvReadGame7executeEPN2al11NerveKeeperE	(anonymous namespace)::SaveDataAccessSequenceNrvReadGame::execute(al::NerveKeeper*) const	
-0x7100502540			FALSE	sub_7100502540	sub_7100502540	
-0x7100502550			FALSE	sub_7100502550	sub_7100502550	
-0x7100502560			FALSE	sub_7100502560	sub_7100502560	
-0x71005025F0			FALSE	sub_71005025F0	sub_71005025F0	
-0x7100502660			FALSE	sub_7100502660	sub_7100502660	
-0x7100502680			FALSE	sub_7100502680	sub_7100502680	
+0x7100502540			FALSE	_ZNK12_GLOBAL__N_134SaveDataAccessSequenceNrvWriteGame7executeEPN2al11NerveKeeperE	(anonymous namespace)::SaveDataAccessSequenceNrvWriteGame::execute(al::NerveKeeper*) const	
+0x7100502550			FALSE	_ZNK12_GLOBAL__N_149SaveDataAccessSequenceNrvWriteGameSkipPlayingFile7executeEPN2al11NerveKeeperE	(anonymous namespace)::SaveDataAccessSequenceNrvWriteGameSkipPlayingFile::execute(al::NerveKeeper*) const	
+0x7100502560			FALSE	_ZNK12_GLOBAL__N_135SaveDataAccessSequenceNrvProcessEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::SaveDataAccessSequenceNrvProcessEnd::execute(al::NerveKeeper*) const	
+0x71005025F0			FALSE	_ZNK12_GLOBAL__N_130SaveDataAccessSequenceNrvFlush7executeEPN2al11NerveKeeperE	(anonymous namespace)::SaveDataAccessSequenceNrvFlush::execute(al::NerveKeeper*) const	
+0x7100502660			FALSE	_ZNK12_GLOBAL__N_130SaveDataAccessSequenceNrvError7executeEPN2al11NerveKeeperE	(anonymous namespace)::SaveDataAccessSequenceNrvError::execute(al::NerveKeeper*) const	
+0x7100502680			FALSE	_ZNK12_GLOBAL__N_131SaveDataAccessSequenceNrvResult7executeEPN2al11NerveKeeperE	(anonymous namespace)::SaveDataAccessSequenceNrvResult::execute(al::NerveKeeper*) const	
 0x71005026F0		ScenarioList.o	FALSE	_ZN12ScenarioListC2Ei	ScenarioList::ScenarioList(int)	object (class)
 0x7100502850			FALSE	_ZN12ScenarioList22getScenarioDataByIndexEi	ScenarioList::getScenarioDataByIndex(int)	
 0x7100502870			FALSE	_ZN12ScenarioDataC2Ev	ScenarioData::ScenarioData()	
