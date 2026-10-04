@@ -35064,7 +35064,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71005357E0			FALSE	_ZN2rc13addScoreComboEPKN2al9LiveActorEPNS0_9HitSensorEPKNS0_9SensorMsgERKN4sead7Vector3IfEE	rc::addScoreCombo(al::LiveActor const*, al::HitSensor*, al::SensorMsg const*, sead::Vector3<float> const&)	
 0x71005358B0			FALSE	_ZN2rc13addScoreComboEPKN2al9LiveActorEPNS0_9HitSensorEPKNS0_9SensorMsgEPKN4sead7Vector3IfEERSC_	rc::addScoreCombo(al::LiveActor const*, al::HitSensor*, al::SensorMsg const*, sead::Vector3<float> const*, sead::Vector3<float> const&)	
 0x71005359A0			FALSE	_ZN2rc21addScoreComboByFactorEPKN2al9LiveActorEPNS0_9HitSensorEPKcPKNS0_9SensorMsgEf	rc::addScoreComboByFactor(al::LiveActor const*, al::HitSensor*, char const*, al::SensorMsg const*, float)	
-0x7100535AB0			FALSE	sub_7100535AB0	sub_7100535AB0	
+0x7100535AB0			FALSE	_ZN12_GLOBAL__N_116updateComboCountEPKN2al9LiveActorEPKNS0_9SensorMsgEPKc	(anonymous namespace)::updateComboCount(al::LiveActor const*, al::SensorMsg const*, char const*)	
 0x7100535B80			FALSE	_ZN2rc8addScoreEPKN2al9LiveActorEPNS0_13ScreenPointerEfi	rc::addScore(al::LiveActor const*, al::ScreenPointer*, float, int)	
 0x7100535C40			FALSE	_ZN2rc8addScoreEPKN2al9LiveActorEPNS0_13ScreenPointerERKN4sead7Vector3IfEEi	rc::addScore(al::LiveActor const*, al::ScreenPointer*, sead::Vector3<float> const&, int)	
 0x7100535CD0			FALSE	_ZN2rc16addScoreByFactorEPKN2al9LiveActorEPNS0_13ScreenPointerEPKcfi	rc::addScoreByFactor(al::LiveActor const*, al::ScreenPointer*, char const*, float, int)	
