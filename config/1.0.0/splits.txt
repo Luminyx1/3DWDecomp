@@ -3303,10 +3303,8 @@ src/Game/System/Data/StockItemList.cpp:
     .text   start:0x0050AEC0 end:0x0050B37C
 src/Game/System/Data/TesselatorData.cpp: done
     .text   start:0x0050B380 end:0x0050CB50
-src/Game/System/Data/WorldGameData.cpp: done
-    .text   start:0x0050CB50 end:0x0050CC40
 src/Game/System/Data/WorldGameDataHolder.cpp:
-    .text   start:0x0050CC40 end:0x0050D5E8
+    .text   start:0x0050CB50 end:0x0050D5E8
 src/Game/Util/AreaObjUtil.cpp:
     .text   start:0x0050D5F0 end:0x0050ED4C
 src/Game/Util/CoinUtil.cpp:

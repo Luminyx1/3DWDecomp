@@ -33791,7 +33791,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710050C7C0			FALSE	_ZN10Tesselator12createVertexERKN4sead7Vector3IfEE	Tesselator::createVertex(sead::Vector3<float> const&)	
 0x710050C860			FALSE	_ZN10Tesselator14createTriangleEjjj	Tesselator::createTriangle(unsigned int, unsigned int, unsigned int)	
 0x710050C9E0			FALSE	_ZN10Tesselator13selectiveCopyER14TesselatorDataRKS0_ffff	Tesselator::selectiveCopy(TesselatorData&, TesselatorData const&, float, float, float, float)	
-0x710050CB50		WorldGameData.o	FALSE	_ZN13WorldGameDataC2Ev	WorldGameData::WorldGameData()	object (class)
+0x710050CB50		WorldGameDataHolder.o	FALSE	_ZN13WorldGameDataC2Ev	WorldGameData::WorldGameData()	object (class)
 0x710050CB60			FALSE	_ZN13WorldGameData10initializeEv	WorldGameData::initialize()	
 0x710050CB70			FALSE	_ZNK13WorldGameData12isOnItemFlagEi	WorldGameData::isOnItemFlag(int) const	
 0x710050CB90			FALSE	_ZN13WorldGameData11setItemFlagEi	WorldGameData::setItemFlag(int)	
@@ -33799,7 +33799,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710050CBF0			FALSE	_ZN13WorldGameData16resetAllItemFlagEv	WorldGameData::resetAllItemFlag()	
 0x710050CC20			FALSE	_ZNK13WorldGameData15isShowFirstDemoEv	WorldGameData::isShowFirstDemo() const	
 0x710050CC30			FALSE	_ZN13WorldGameData20setShowFirstDemoFlagEv	WorldGameData::setShowFirstDemoFlag()	
-0x710050CC40		WorldGameDataHolder.o	FALSE	_ZN19WorldGameDataHolderC2Ev	WorldGameDataHolder::WorldGameDataHolder()	object (class)
+0x710050CC40			FALSE	_ZN19WorldGameDataHolderC2Ev	WorldGameDataHolder::WorldGameDataHolder()	object (class)
 0x710050CC80			FALSE	_ZN19WorldGameDataHolder10initializeEv	WorldGameDataHolder::initialize()	
 0x710050CCF0			FALSE	_ZN19WorldGameDataHolder4copyEPKS_	WorldGameDataHolder::copy(WorldGameDataHolder const*)	
 0x710050CE70			FALSE	_ZN19WorldGameDataHolder16getWorldGameDataEi	WorldGameDataHolder::getWorldGameData(int)	
