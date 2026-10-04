@@ -30,6 +30,15 @@ public:
 
     CameraPoser_RS* getPoser() const { return mPoser; }
 
+    /**
+     * @brief Get the camera poser as its concrete type.
+     * @return The camera poser.
+     */
+    template <typename T>
+    T* getPoser() const {
+        return static_cast<T*>(mPoser);
+    }
+
     const CameraTicketId* getTicketId() const { return mTicketId; }
 
     s32 getPriority() const { return mPriority; }

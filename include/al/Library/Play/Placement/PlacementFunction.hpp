@@ -1,5 +1,7 @@
 #pragma once
 
+#include <type_traits>
+
 #include <basis/seadTypes.h>
 #include <gfx/seadColor.h>
 #include <math/seadMatrix.h>
@@ -78,6 +80,20 @@ void calcMatrixMultParent(sead::Matrix34f* pMtx, const ActorInitInfo& rInfo,
                           const ActorInitInfo& rParentInfo);
 bool tryGetArg(s32* pArg, const ActorInitInfo& rInfo, const char* pKey);
 bool tryGetArg(s32* pArg, const PlacementInfo& rInfo, const char* pKey);
+
+/// Reads an integer argument straight into an enum stored as s32.
+template <typename T, typename = std::enable_if_t<std::is_enum<T>::value>>
+inline bool tryGetArg(T* pArg, const ActorInitInfo& rInfo, const char* pKey) {
+    static_assert(sizeof(T) == sizeof(s32));
+    return tryGetArg(reinterpret_cast<s32*>(pArg), rInfo, pKey);
+}
+
+/// Reads an integer argument straight into an enum stored as s32.
+template <typename T, typename = std::enable_if_t<std::is_enum<T>::value>>
+inline bool tryGetArg(T* pArg, const PlacementInfo& rInfo, const char* pKey) {
+    static_assert(sizeof(T) == sizeof(s32));
+    return tryGetArg(reinterpret_cast<s32*>(pArg), rInfo, pKey);
+}
 bool tryGetArg(f32* pArg, const ActorInitInfo& rInfo, const char* pKey);
 bool tryGetArg(f32* pArg, const PlacementInfo& rInfo, const char* pKey);
 bool tryGetArg(bool* pArg, const ActorInitInfo& rInfo, const char* pKey);
