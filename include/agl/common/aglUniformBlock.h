@@ -87,6 +87,7 @@ public:
     u32 getBlockSize() const { return mBlockSize; }
     u32 getAlignedBlockSize() const { return mAlignedBlockSize; }
     u32 getBufferSize() const { return mBufferSize; }
+    s32 getBufferNum() const { return mBufferNum; }
     void* getCurrentBuffer() const { return mCurrentBuffer; }
     GPUMemVoidAddr getBuffer() const { return mBuffer; }
     const NVNbuffer* getNvnBuffer() const { return &mNvnBuffer; }

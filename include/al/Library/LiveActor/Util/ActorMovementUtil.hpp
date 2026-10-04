@@ -10,6 +10,7 @@ struct ActorParamMove;
 
 void resetPosition(LiveActor* pActor, bool isResetCollision);
 void resetPosition(LiveActor* pActor, const sead::Vector3f& rTrans, const sead::Vector3f& rRotate);
+void resetPosition(LiveActor* pActor, const sead::Vector3f& rTrans, bool isResetCollision);
 bool trySetPosOnGround(LiveActor* pActor);
 const sead::Vector3f& getVelocity(const LiveActor* pActor);
 sead::Vector3f* getVelocityPtr(LiveActor* pActor);

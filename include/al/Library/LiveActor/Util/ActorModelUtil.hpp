@@ -12,8 +12,11 @@ namespace al {
     class FunctorBase;
     class SubActorKeeper;
     class ClippingDirectorBase;
+    class UniformBlock;
 
     void tryInitFixedModelGpuBuffer(LiveActor*);
+
+    UniformBlock* getModelUniformBlock(const LiveActor* pActor, const char* pName);
 
     bool isHideModel(const LiveActor*);
 
