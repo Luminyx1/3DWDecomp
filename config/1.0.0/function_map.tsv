@@ -32712,7 +32712,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71004F8CF0			FALSE	_ZNK16GameDataFileBase13getPlayerLifeEv	GameDataFileBase::getPlayerLife() const	
 0x71004F8D00			FALSE	_ZN16GameDataFileBase13addPlayerLifeEi	GameDataFileBase::addPlayerLife(int)	
 0x71004F8D10		GameDataFlagFunction.o	FALSE	_ZN20GameDataFlagFunction18isExistNewOpenFlagE22GameDataHolderAccessorb	GameDataFlagFunction::isExistNewOpenFlag(GameDataHolderAccessor, bool)	
-0x71004F8D80			FALSE	sub_71004F8D80	sub_71004F8D80	
+0x71004F8D80			FALSE	_ZN12_GLOBAL__N_115calcNewGameFlagE22GameDataHolderAccessor	(anonymous namespace)::calcNewGameFlag(GameDataHolderAccessor)	
 0x71004F9190			FALSE	_ZN20GameDataFlagFunction20isShowWorldStartDemoE22GameDataHolderAccessori	GameDataFlagFunction::isShowWorldStartDemo(GameDataHolderAccessor, int)	
 0x71004F91C0			FALSE	_ZN20GameDataFlagFunction20isShowWorldStartDemoE22GameDataHolderAccessorii	GameDataFlagFunction::isShowWorldStartDemo(GameDataHolderAccessor, int, int)	
 0x71004F9210			FALSE	_ZN20GameDataFlagFunction21setShowWorldStartDemoE20GameDataHolderWriteri	GameDataFlagFunction::setShowWorldStartDemo(GameDataHolderWriter, int)	
