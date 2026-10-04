@@ -22,11 +22,15 @@ public:
     const char* getOldFigureName();
 
     EPlayerFigure getFigure() const { return mFigure; }
+    EPlayerFigure getNextFigure() const { return mNextFigure; }
+    bool isNextFigureRequested() const { return mIsNextFigureRequested; }
 
 private:
     EPlayerFigure mFigure;  // 0x0
-    s32 _4;
+    EPlayerFigure mNextFigure;  // 0x4
     EPlayerFigure mOldFigure;  // 0x8
-    unsigned char _c[0x1c];
+    unsigned char _c[0x20 - 0xc];
+    s32 mIsNextFigureRequested;  // 0x20
+    unsigned char _24[0x28 - 0x24];
     IUsePlayerAudio* mAudio;  // 0x28
 };

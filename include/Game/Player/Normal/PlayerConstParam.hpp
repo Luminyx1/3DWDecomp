@@ -600,6 +600,9 @@ public:
     PLAYER_CONST_PARAM(f32, HeadLightPrePassPointLightOffsetY)
     PLAYER_CONST_PARAM(f32, HeadLightPrePassPointLightOffsetZ)
 
+    /// Make the getters ask the override parameter set (or stop doing so).
+    void setOverride(bool isOverride) { mIsOverride = isOverride; }
+
 private:
     f32 mGravity;  // 0x8
     f32 mCenterHeight;  // 0xc

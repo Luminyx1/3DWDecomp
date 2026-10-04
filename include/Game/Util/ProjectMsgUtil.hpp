@@ -1,6 +1,7 @@
 #pragma once
 
 #include <basis/seadTypes.h>
+#include <math/seadVector.h>
 
 namespace al {
     class HitSensor;
@@ -22,4 +23,6 @@ namespace rc {
     bool isMsgBullAttack(const al::SensorMsg*);
     bool isMsgStartGoalDemoPole(const al::SensorMsg*);
     bool isMsgStartGoalDemoHouse(const al::SensorMsg*);
+    bool sendMsgDebugMovePosition(al::HitSensor* pReceiver, al::HitSensor* pSender,
+                                  const sead::Vector3f& rPos);
 };  // namespace rc

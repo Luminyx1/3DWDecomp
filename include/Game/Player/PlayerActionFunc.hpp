@@ -12,4 +12,5 @@ namespace PlayerActionFunc {
     bool checkMapCode(const IUsePlayerCollision*, const char*);
     bool isOppositeSide(const sead::Vector3f&, const sead::Vector3f&);
     bool isOppositeInput(const IUsePlayerInput*, const PlayerProperty*, const sead::Vector3f&);
+    bool isMapCodeSkate(const IUsePlayerCollision*);
 }  // namespace PlayerActionFunc
