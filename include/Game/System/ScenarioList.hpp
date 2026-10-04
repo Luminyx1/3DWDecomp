@@ -3,6 +3,9 @@
 class ScenarioData {
   public:
     ScenarioData();
+    void init(s32 scenarioId, const char* pStageName, const char* pDisplayName,
+              const char* pType, s32 unlockScenarioId, bool isUpdateLevelData,
+              bool isDisasterDisable);
     bool isMainScenario() const;
     bool isSpecialScenario() const;
     s32 mScenarioId = -1;
