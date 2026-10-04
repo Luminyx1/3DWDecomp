@@ -45,12 +45,9 @@ public:
         // High half of the signed product with the reciprocal of 1,000,000,000.
         const u64 low = static_cast<u32>(nanoseconds);
         const s64 high = static_cast<s64>(nanoseconds) >> 32;
-        const s64 highLowProduct = high * 0x26d694b3;
-        const u64 lowProduct = low * 0x26d694b3;
+        const s64 middle = high * 0x26d694b3 + ((low * 0x26d694b3) >> 32);
         const s64 highProduct = high * 0x112e0be8;
-        const u64 lowHighProduct = low * 0x112e0be8;
-        const s64 middle = highLowProduct + (lowProduct >> 32);
-        const u64 carry = lowHighProduct + static_cast<u32>(middle);
+        const s64 carry = low * 0x112e0be8 + static_cast<u32>(middle);
         const s64 productHigh = highProduct + (middle >> 32) + (carry >> 32);
         return (productHigh >> 26) + (nanoseconds >> 63);
     }
