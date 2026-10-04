@@ -4,8 +4,11 @@
 #include <nn/oe.h>
 
 namespace al {
+class ApplicationMessageReceiver;
+class AudioSystem;
 class EffectSystem;
 class FontHolder;
+class NfpDirector;
 class GamePadSystem;
 class LayoutSystem;
 class MessageSystem;
@@ -24,6 +27,16 @@ struct GameSystemInfo {
     WaveVibrationHolder* getWaveVibrationHolder() const {
         return static_cast<WaveVibrationHolder*>(_58);
     }
+
+    void setAudioSystem(AudioSystem* pAudioSystem) { _0 = pAudioSystem; }
+    void setEffectSystem(EffectSystem* pEffectSystem) { _8 = pEffectSystem; }
+    void setLayoutSystem(LayoutSystem* pLayoutSystem) { _10 = pLayoutSystem; }
+    void setMessageSystem(MessageSystem* pMessageSystem) { _18 = pMessageSystem; }
+    void setGamePadSystem(GamePadSystem* pGamePadSystem) { _30 = pGamePadSystem; }
+    void setDrawSystemInfo(DrawSystemInfo* pDrawSystemInfo) { _38 = pDrawSystemInfo; }
+    void setNfpDirector(NfpDirector* pNfpDirector) { _48 = pNfpDirector; }
+    void setApplicationMessageReceiver(ApplicationMessageReceiver* pReceiver) { _50 = pReceiver; }
+    void setWaveVibrationHolder(WaveVibrationHolder* pHolder) { _58 = pHolder; }
 
     void* _0 = nullptr;
     void* _8 = nullptr;

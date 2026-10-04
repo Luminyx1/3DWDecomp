@@ -49,6 +49,8 @@ public:
     void setAssistMode(bool isAssist, bool isForceDisconnect);
     void setSoftwareKeyboard(IUseCancel* pCancel);
 
+    void setAudioSystem(AudioSystem* pAudioSystem) { mAudioSystem = pAudioSystem; }
+
     AudioSystem* getAudioSystem() const {
         return mAudioSystem;
     }
