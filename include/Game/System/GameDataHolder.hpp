@@ -8,6 +8,12 @@ class NetworkSystem;
 } // namespace al
 #include <preport/PlayReportManager.h>
 #include <prim/seadSafeString.h>
+#include <time/seadDateTime.h>
+namespace al {
+class ErrorViewer;
+class LayoutInitInfo;
+class PlayerHolder;
+} // namespace al
 class GameDataCommon;
 class GameDataPlayReportCommon;
 class GameDataFile;
@@ -22,6 +28,36 @@ class ControlUserDataHolder;
 enum GameMode : int;
 class GameDataHolder : public al::ISceneObj {
   public:
+    explicit GameDataHolder(al::NetworkSystem* pNetworkSystem);
+    void setPlayingFileId(int fileId);
+    void setSingleModePlayingFileID(int fileId, bool isInitPlayTime);
+    void initializeData();
+    void updatePlayerFigures(int figureType);
+    void initialize3DWorldData();
+    bool checkValid();
+    void createSaveDataAccessSequence(al::ErrorViewer* pErrorViewer,
+                                      al::NetworkSystem* pNetworkSystem,
+                                      const al::LayoutInitInfo& rInfo);
+    void createSaveDataAccessSequenceDevelop(al::ErrorViewer* pErrorViewer,
+                                             al::NetworkSystem* pNetworkSystem,
+                                             const al::LayoutInitInfo& rInfo);
+    void initIsPhase0();
+    bool initializePlayReport(const char* pName);
+    void updatePlayReport();
+    void updatePlayStyle();
+    bool isNewFile(int fileId) const;
+    void copySaveFile(int srcFileId, int dstFileId);
+    void deleteSaveFile(int fileId);
+    bool isNewFile() const;
+    void copySingleModeFile(int srcFileId, int dstFileId);
+    int tryGetLastStageBestScoreUserID() const;
+    void startOpening();
+    void startEnding();
+    bool isFirstPlay() const;
+    int calcCharacterTypeNumMax() const;
+    void readFromSaveDataBuffer();
+    void writeToSaveDataBuffer(bool isSkipPlayingFile);
+    void resetGameFileForTitleDemo();
     const char* getSceneObjName() const override;
     void setSceneObjHolder(al::SceneObjHolder* pHolder);
     GameDataFile* getGameDataFile(int fileId) const;
@@ -179,9 +215,13 @@ class GameDataHolder : public al::ISceneObj {
     StageListHolder* mpStageList;
     OceanScenarioList* mpOceanScenarioList;
     IslandDataList* mpIslandDataList;
-    u8 mUnknown50[0x10]; // Unreconstructed stage-transition and time fields.
+    bool mIsSaveDataRead;
+    bool mUnknown51;
+    bool mIsSkipStartSave;
+    sead::DateTime mPlayStartTime;
     bool mSingleMode;
-    u8 mUnknown61[2]; // Unreconstructed mode state.
+    bool mUnknown61;
+    bool mUnknown62;
     bool mIs2PAssistMode;
     bool mIsMapEnabled;
     bool mIsDemoWasCancelled;
@@ -189,10 +229,13 @@ class GameDataHolder : public al::ISceneObj {
     bool mIsSaveRequested;
     bool mIsPhase0;
     bool mIsSceneRestart;
-    u8 mUnknown6A[6]; // Unreconstructed report state.
+    bool mUnknown6A;
+    bool mUnknown6B;
+    bool mUnknown6C;
+    bool mIsEnablePlayReport;
     SaveDataAccessSequence* mpSaveAccess;
     al::NetworkSystem* mpNetwork;
-    void* mpUnknown80;
+    al::PlayerHolder* mpPlayerHolder;
     al::SceneObjHolder* mpSceneObjHolder;
     preport::PlayReportManager* mpPlayReportManager;
 };
