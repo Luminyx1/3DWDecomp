@@ -4,6 +4,7 @@
 namespace nn::atk::detail {
 class StreamSoundFileReader {
 public:
+    StreamSoundFileReader();
     struct TrackInfo { u8 volume, pan, surroundPan, _03, channelCount, channels[2]; };
     void Initialize(const void* file);
     static bool IsValidFileHeader(const void* file);

@@ -3433,7 +3433,7 @@ src/nw/atk/atk_RegionManager.cpp:
     .text   start:0x00554A50 end:0x00555000
 src/nw/atk/detail/strm/atk_StreamSoundLoader.cpp:
     .text   start:0x00555000 end:0x00558390
-src/nw/atk/detail/strm/atk_StreamSoundFileLoader.cpp:
+src/nw/atk/detail/strm/atk_StreamSoundFileLoader.cpp: done
     .text   start:0x00558390 end:0x005583B8
 src/nw/atk/detail/strm/atk_StreamSoundFileReader.cpp: done
     .text   start:0x005583C0 end:0x00558798
