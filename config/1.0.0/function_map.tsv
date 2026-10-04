@@ -34029,7 +34029,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71005155D0		LayoutUtil.o	FALSE	_ZN2rc25getMessageStringStageNameEPN2al17IUseMessageSystemEPK14GameDataHolderi	rc::getMessageStringStageName(al::IUseMessageSystem*, GameDataHolder const*, int)	
 0x7100515610			FALSE	_ZN2rc22setPaneStageNameStringEPN2al11LayoutActorEPNS0_10IUseLayoutEPKcPK14GameDataHolderi	rc::setPaneStageNameString(al::LayoutActor*, al::IUseLayout*, char const*, GameDataHolder const*, int)	
 0x7100515680			FALSE	_ZN2rc18setPaneWorldStringEPN2al11LayoutActorEPNS0_10IUseLayoutEPKcS6_S6_tS6_b	rc::setPaneWorldString(al::LayoutActor*, al::IUseLayout*, char const*, char const*, char const*, unsigned short, char const*, bool)	
-0x71005157E0			FALSE	sub_71005157E0	sub_71005157E0	
+0x71005157E0			FALSE	_ZN12_GLOBAL__N_117formatWorldStringEPN4sead22BufferedSafeStringBaseIDsEEt	(anonymous namespace)::formatWorldString(sead::BufferedSafeStringBase<char16_t>*, unsigned short)	
 0x7100515860			FALSE	_ZN2rc23setPaneWorldStageStringEPN2al11LayoutActorEPNS0_10IUseLayoutEPKcS6_S6_ttPK14GameDataHolderS6_b	rc::setPaneWorldStageString(al::LayoutActor*, al::IUseLayout*, char const*, char const*, char const*, unsigned short, unsigned short, GameDataHolder const*, char const*, bool)	
 0x7100515BE0			FALSE	_ZN2rc20replacePaneMsgNumberEPN2al17IUseMessageSystemEPNS0_10IUseLayoutEPKcS6_S6_i	rc::replacePaneMsgNumber(al::IUseMessageSystem*, al::IUseLayout*, char const*, char const*, char const*, int)	
 0x7100515C70			FALSE	_ZN2rc21replacePaneMsgNumber2EPN2al17IUseMessageSystemEPNS0_10IUseLayoutEPKcS6_S6_ii	rc::replacePaneMsgNumber2(al::IUseMessageSystem*, al::IUseLayout*, char const*, char const*, char const*, int, int)	
