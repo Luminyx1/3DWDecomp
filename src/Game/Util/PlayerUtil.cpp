@@ -1,4 +1,5 @@
 #include "Util/PlayerUtil.hpp"
+#include "Util/ProjectInterfaceUtil.hpp"
 
 #include <attributes.h>
 #include <common/aglShaderLocation.h>
@@ -523,16 +524,16 @@ void appendGigaHitReactionSuffix(const al::LiveActor* pActor, sead::BufferedSafe
 } // namespace
 
 /// Whether the old player parameters are used (debug toggle).
-static bool sIsUsingOldPlayerParams asm("lbl_71021115FC") = false;
+static bool sIsUsingOldPlayerParams = false;
 
 /// Whether holding uses the input instead of the key config (debug toggle).
-static bool sIsUsingHoldInput asm("lbl_7101A9FED0") = true;
+static bool sIsUsingHoldInput = true;
 
 /// The main player actor.
-USED static al::LiveActor* sMainPlayerActor asm("lbl_7102111600") = nullptr;
+static al::LiveActor* sMainPlayerActor = nullptr;
 
 /// Character names of every character type.
-static const char* const sPlayerCharacterNameTrue[] asm("lbl_7101A9FED8") = {
+static const char* const sPlayerCharacterNameTrue[] = {
     "Mario",          "Luigi",
     "Peach",          "Kinopio",
     "Rosetta",        "KinopioBrigade",
@@ -541,7 +542,7 @@ static const char* const sPlayerCharacterNameTrue[] asm("lbl_7101A9FED8") = {
 };
 
 /// Bubble material animation names of every character type.
-static const char* const sPlayerCharacterBubbleMatAnimName[] asm("lbl_7101A9FF20") = {
+static const char* const sPlayerCharacterBubbleMatAnimName[] = {
     "Mario",          "Luigi",
     "Peach",          "Kinopio",
     "Rosetta",        "KinopioBrigade",
@@ -550,24 +551,24 @@ static const char* const sPlayerCharacterBubbleMatAnimName[] asm("lbl_7101A9FF20
 };
 
 /// Names of the floor codes.
-static const char* const sFloorCodeName[] asm("lbl_7101A9FF68") = {
+static const char* const sFloorCodeName[] = {
     "Ground", "Needle", "DamageFire", "Poison", "Slide", "Slip", "NoSlip", "Skate",
 };
 
 /// Names of the wall codes.
-static const char* const sWallCodeName[] asm("lbl_7101A9FFA8") = {
+static const char* const sWallCodeName[] = {
     "Wall",
     "NoAction",
 };
 
 /// Names of the camera codes.
-static const char* const sCameraCodeName[] asm("lbl_7101A9FFB8") = {
+static const char* const sCameraCodeName[] = {
     "NoThrough",
     "Through",
 };
 
 /// Names of the material codes.
-static const char* const sMaterialCodeName[] asm("lbl_7101A9FFC8") = {
+static const char* const sMaterialCodeName[] = {
     "null",     "Soil",    "Lawn",  "FallenLeavesMetal", "MetalHeavy", "Stone", "StoneWet",
     "Sand",     "WoodThick", "WoodThin", "Wood", "WoodWet", "Snow", "Ice", "Glass", "Marble",
     "Carpet",   "Cloth",   "Cloud", "InWater",
@@ -5411,3 +5412,21 @@ const char* getEffectCodeName(const char* pCode, const char* pMaterialCode) {
 }
 
 }  // namespace rc
+
+namespace alProjectInterface {
+
+/**
+ * @brief Name used to pick an effect for a collision code pair.
+ * @param effectCode The effect code of the touched collision.
+ * @param materialCode The material code of the touched collision.
+ * @return "Poison" for poison collisions, otherwise the material code's name.
+ */
+const char* getEffectCodeName(u32 effectCode, u32 materialCode) {
+    if (effectCode == 3) {
+        return "Poison";
+    }
+
+    return sMaterialCodeName[static_cast<s32>(materialCode)];
+}
+
+}  // namespace alProjectInterface
