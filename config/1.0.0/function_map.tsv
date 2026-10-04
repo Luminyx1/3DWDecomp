@@ -33068,7 +33068,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71004FF1E0			FALSE	_ZN10GameSystem7exePlayEv	GameSystem::exePlay()	
 0x71004FF200			FALSE	_ZN10GameSystem17tryChangeSequenceEPKc	GameSystem::tryChangeSequence(char const*)	
 0x71004FF300			FALSE	_ZN10GameSystemD0Ev	GameSystem::~GameSystem()	
-0x71004FF330			FALSE	sub_71004FF330	sub_71004FF330	
+0x71004FF330			FALSE	_ZNK12_GLOBAL__N_117GameSystemNrvPlay7executeEPN2al11NerveKeeperE	(anonymous namespace)::GameSystemNrvPlay::execute(al::NerveKeeper*) const	
 0x71004FF350			FALSE	_ZN18GameSystemFunction13getGameSystemEv	GameSystemFunction::getGameSystem()	
 0x71004FF380		IslandDataList.o	FALSE	_ZN10IslandDataC2Ev	IslandData::IslandData()	
 0x71004FF450			FALSE	_ZN10IslandData4initEPKcS1_iii	IslandData::init(char const*, char const*, int, int, int)	

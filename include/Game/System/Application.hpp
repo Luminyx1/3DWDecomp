@@ -22,6 +22,12 @@ class Application {
      */
     al::SystemKit* getSystemKit() const { return static_cast<al::SystemKit*>(mpUnknown20); }
 
+    /**
+     * @brief Access the application's framework.
+     * @return The framework created by the application.
+     */
+    sead::Framework* getFramework() const { return mpFramework; }
+
   private:
     void* mpUnknown20;
     sead::Framework* mpFramework;
