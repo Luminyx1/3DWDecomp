@@ -15,27 +15,12 @@ class WorldGameData {
     void setShowFirstDemoFlag();
 
     /**
-     * @brief Clears every item and demo flag (inline form of initialize()).
-     */
-    void clearAllFlags() { mFlags.makeAllZero(); }
-
-    /**
      * @brief Copies every flag from another world record.
      * @param rOther Source record; copying a record onto itself does nothing.
      */
     void copyFlags(const WorldGameData& rOther) {
         if (this != &rOther) {
             mFlags = rOther.mFlags;
-        }
-    }
-
-    /**
-     * @brief Clears a prefix of the world's item flags.
-     * @param count Number of leading flags to clear, from 0 to 64.
-     */
-    void clearItemFlags(s32 count) {
-        for (s32 i = 0; i < count; ++i) {
-            mFlags.resetBit(i);
         }
     }
 
@@ -59,6 +44,16 @@ class WorldGameData {
     }
 
   private:
+    /**
+     * @brief Clears a prefix of the world's item flags.
+     * @param count Number of leading flags to clear, from 0 to 64.
+     */
+    void clearItemFlags(s32 count) {
+        for (s32 i = 0; i < count; ++i) {
+            mFlags.resetBit(i);
+        }
+    }
+
     sead::LongBitFlag<64> mFlags;
 };
 
