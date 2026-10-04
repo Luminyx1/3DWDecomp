@@ -9,10 +9,10 @@ class AudioSystem;
 class GameSystem : public al::NerveExecutor {
   public:
     GameSystem();
-    void init();
+    virtual void init();
     void initAudio();
     void setStartupSequence();
-    void movement();
+    virtual void movement();
     void drawMain();
     void drawSub();
     void exePlay();
