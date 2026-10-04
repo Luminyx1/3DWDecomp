@@ -4,6 +4,7 @@
 
 class IUsePlayerCollision;
 class IUsePlayerInput;
+class PlayerFigureDirector;
 struct PlayerProperty;
 
 namespace PlayerActionFunc {
@@ -13,4 +14,6 @@ namespace PlayerActionFunc {
     bool isOppositeSide(const sead::Vector3f&, const sead::Vector3f&);
     bool isOppositeInput(const IUsePlayerInput*, const PlayerProperty*, const sead::Vector3f&);
     bool isMapCodeSkate(const IUsePlayerCollision*);
+    bool isRaccoonDog(const PlayerFigureDirector*);
+    bool isClimb(const PlayerFigureDirector*);
 }  // namespace PlayerActionFunc
