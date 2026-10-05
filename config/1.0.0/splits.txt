@@ -509,7 +509,7 @@ src/Game/Demo/DemoScenePlayerModel.cpp:
     .text   start:0x000C1740 end:0x000C2298
 src/Game/Demo/DemoStartPosition.cpp: done
     .text   start:0x000C22A0 end:0x000C24D0
-src/Game/Demo/DemoTimerStageSwitchController.cpp:
+src/Game/Demo/DemoTimerStageSwitchController.cpp: done
     .text   start:0x000C24D0 end:0x000C29D0
 src/Game/Demo/DemoTimerStageSwitchInfo.cpp:
     .text   start:0x000C29D0 end:0x000C41EC
