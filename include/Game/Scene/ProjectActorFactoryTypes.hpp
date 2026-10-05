@@ -1,3 +1,4 @@
+#include "MapObj/BoomerangFlower.hpp"
 #include "MapObj/FireFlower.hpp"
 #include "MapObj/Fury/InkPatch.hpp"
 #include "MapObj/Fury/InteractableCatToy.hpp"
@@ -313,14 +314,7 @@ private:
 };
 static_assert(sizeof(BoomerangBros) == 0x1d0);
 
-class BoomerangFlower : public al::LiveActor {
-public:
-    explicit BoomerangFlower(const char* pName, ItemBubble* = nullptr, bool = false);
 
-private:
-    u8 mUnreconstructed[0x3c];
-};
-static_assert(sizeof(BoomerangFlower) == 0x180);
 
 
 

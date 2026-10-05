@@ -1435,7 +1435,7 @@ src/Game/MapObj/BlockTransparent.cpp: done
     .text   start:0x00255DE0 end:0x0025650C
 src/Game/MapObj/BobsledDashPanel.cpp: done
     .text   start:0x00256510 end:0x00256B34
-src/Game/MapObj/BoomerangFlower.cpp:
+src/Game/MapObj/BoomerangFlower.cpp: done
     .text   start:0x00256B40 end:0x00257734
 src/Game/MapObj/BoxCoin.cpp:
     .text   start:0x00257740 end:0x00258B08

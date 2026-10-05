@@ -15269,11 +15269,11 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71002574A0			FALSE	_ZN15BoomerangFlower24exeWaitAndCheckCollisionEv	BoomerangFlower::exeWaitAndCheckCollision()	
 0x7100257520			FALSE	_ZN15BoomerangFlowerD1Ev	BoomerangFlower::~BoomerangFlower()	
 0x7100257530			FALSE	_ZN15BoomerangFlowerD0Ev	BoomerangFlower::~BoomerangFlower()	
-0x7100257560			FALSE	sub_7100257560	sub_7100257560	
-0x71002575B0			FALSE	sub_71002575B0	sub_71002575B0	
-0x7100257600			FALSE	sub_7100257600	sub_7100257600	
-0x7100257650			FALSE	sub_7100257650	sub_7100257650	
-0x71002576D0			FALSE	sub_71002576D0	sub_71002576D0	
+0x7100257560			FALSE	_ZNK12_GLOBAL__N_122BoomerangFlowerNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_122BoomerangFlowerNrvWait7executeEPN2al11NerveKeeperE	
+0x71002575B0			FALSE	_ZNK12_GLOBAL__N_128BoomerangFlowerNrvPopUpAbove7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_128BoomerangFlowerNrvPopUpAbove7executeEPN2al11NerveKeeperE	
+0x7100257600			FALSE	_ZNK12_GLOBAL__N_128BoomerangFlowerNrvPopUpFront7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_128BoomerangFlowerNrvPopUpFront7executeEPN2al11NerveKeeperE	
+0x7100257650			FALSE	_ZNK12_GLOBAL__N_139BoomerangFlowerNrvWaitAndCheckCollision7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_139BoomerangFlowerNrvWaitAndCheckCollision7executeEPN2al11NerveKeeperE	
+0x71002576D0			FALSE	_ZNK12_GLOBAL__N_130BoomerangFlowerNrvAttachBubble7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_130BoomerangFlowerNrvAttachBubble7executeEPN2al11NerveKeeperE	
 0x7100257740		BoxCoin.o	FALSE	_ZN7BoxCoinC2EPKc	BoxCoin::BoxCoin(char const*)	
 0x7100257810			FALSE	_ZN7BoxCoinC1EPKc	BoxCoin::BoxCoin(char const*)	
 0x71002578F0			FALSE	_ZN7BoxCoin4initERKN2al13ActorInitInfoE	BoxCoin::init(al::ActorInitInfo const&)	
