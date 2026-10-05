@@ -1825,7 +1825,7 @@ src/Game/MapObj/LiftMike.cpp:
     .text   start:0x00310F90 end:0x0031266C
 src/Game/MapObj/LiftMikeBlockRail.cpp:
     .text   start:0x00312670 end:0x003130D8
-src/Game/MapObj/LiftMikeSlide.cpp:
+src/Game/MapObj/LiftMikeSlide.cpp: done
     .text   start:0x003130E0 end:0x00313AAC
 src/Game/MapObj/Lighthouse.cpp:
     .text   start:0x00313AB0 end:0x00318FBC

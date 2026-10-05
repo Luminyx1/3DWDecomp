@@ -19804,15 +19804,15 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71003137A0			FALSE	_ZN13LiftMikeSlide7exeBackEv	LiftMikeSlide::exeBack()	
 0x7100313810			FALSE	_ZN13LiftMikeSlideD1Ev	LiftMikeSlide::~LiftMikeSlide()	
 0x7100313820			FALSE	_ZN13LiftMikeSlideD0Ev	LiftMikeSlide::~LiftMikeSlide()	
-0x7100313850			FALSE	sub_7100313850	sub_7100313850	
-0x7100313890			FALSE	sub_7100313890	sub_7100313890	
-0x71003138A0			FALSE	sub_71003138A0	sub_71003138A0	
-0x7100313930			FALSE	sub_7100313930	sub_7100313930	
-0x7100313940			FALSE	sub_7100313940	sub_7100313940	
-0x71003139A0			FALSE	sub_71003139A0	sub_71003139A0	
-0x71003139B0			FALSE	sub_71003139B0	sub_71003139B0	
-0x7100313A20			FALSE	sub_7100313A20	sub_7100313A20	
-0x7100313A30			FALSE	sub_7100313A30	sub_7100313A30	
+0x7100313850			FALSE	_ZNK12_GLOBAL__N_120LiftMikeSlideNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_120LiftMikeSlideNrvWait7executeEPN2al11NerveKeeperE	
+0x7100313890			FALSE	_ZNK12_GLOBAL__N_120LiftMikeSlideNrvWait13getActionNameEv	_ZNK12_GLOBAL__N_120LiftMikeSlideNrvWait13getActionNameEv	
+0x71003138A0			FALSE	_ZNK12_GLOBAL__N_120LiftMikeSlideNrvMove7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_120LiftMikeSlideNrvMove7executeEPN2al11NerveKeeperE	
+0x7100313930			FALSE	_ZNK12_GLOBAL__N_120LiftMikeSlideNrvMove13getActionNameEv	_ZNK12_GLOBAL__N_120LiftMikeSlideNrvMove13getActionNameEv	
+0x7100313940			FALSE	_ZNK12_GLOBAL__N_120LiftMikeSlideNrvHold7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_120LiftMikeSlideNrvHold7executeEPN2al11NerveKeeperE	
+0x71003139A0			FALSE	_ZNK12_GLOBAL__N_120LiftMikeSlideNrvHold13getActionNameEv	_ZNK12_GLOBAL__N_120LiftMikeSlideNrvHold13getActionNameEv	
+0x71003139B0			FALSE	_ZNK12_GLOBAL__N_120LiftMikeSlideNrvBack7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_120LiftMikeSlideNrvBack7executeEPN2al11NerveKeeperE	
+0x7100313A20			FALSE	_ZNK12_GLOBAL__N_120LiftMikeSlideNrvBack13getActionNameEv	_ZNK12_GLOBAL__N_120LiftMikeSlideNrvBack13getActionNameEv	
+0x7100313A30			FALSE	_GLOBAL__sub_I_LiftMikeSlide.cpp	_GLOBAL__sub_I_LiftMikeSlide.cpp	
 0x7100313AB0		Lighthouse.o	FALSE	_ZN10LighthouseC2EPKc	Lighthouse::Lighthouse(char const*)	
 0x7100313C70			FALSE	_ZN10Lighthouse26disasterModeFadeInDoneFuncEv	Lighthouse::disasterModeFadeInDoneFunc()	
 0x7100313DA0			FALSE	_ZNK2al10FunctorV0MIP10LighthouseMS1_FvvEE5cloneEv	al::FunctorV0M<Lighthouse*, void (Lighthouse::*)()>::clone() const	

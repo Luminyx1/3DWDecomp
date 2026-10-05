@@ -1,3 +1,4 @@
+#include "MapObj/LiftMikeSlide.hpp"
 #include "MapObj/MysteryHouseChecker.hpp"
 #include "MapObj/MysteryBox.hpp"
 #include "MapObj/KinopioBrigadeChecker.hpp"
@@ -1865,14 +1866,7 @@ private:
 };
 static_assert(sizeof(LiftMikeBlockRail) == 0x1b0);
 
-class LiftMikeSlide : public al::LiveActor {
-public:
-    explicit LiftMikeSlide(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x2c];
-};
-static_assert(sizeof(LiftMikeSlide) == 0x170);
 
 class Lighthouse : public al::LiveActor {
 public:
