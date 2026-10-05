@@ -1,4 +1,5 @@
 #pragma once
+#include "MapObj/KoopaFireBallGenerator.hpp"
 #include "MapObj/GoalItem.hpp"
 #include "MapObj/CandlestandWatcher.hpp"
 #include "MapObj/Candlestand.hpp"
@@ -1870,13 +1871,7 @@ private:
 };
 static_assert(sizeof(KoopaChaseCar) == 0x160);
 
-class KoopaFireBallGenerator : public al::LiveActor {
-public:
-    explicit KoopaFireBallGenerator(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x1c];
-};
 static_assert(sizeof(KoopaFireBallGenerator) == 0x160);
 
 class KoopaGraffiti : public al::LiveActor {

@@ -19321,8 +19321,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71002FB6C0			FALSE	_ZN22KoopaFireBallGenerator7exeHideEv	KoopaFireBallGenerator::exeHide()	
 0x71002FB720			FALSE	_ZN22KoopaFireBallGeneratorD1Ev	KoopaFireBallGenerator::~KoopaFireBallGenerator()	
 0x71002FB730			FALSE	_ZN22KoopaFireBallGeneratorD0Ev	KoopaFireBallGenerator::~KoopaFireBallGenerator()	
-0x71002FB760			FALSE	sub_71002FB760	sub_71002FB760	
-0x71002FB7C0			FALSE	sub_71002FB7C0	sub_71002FB7C0	
+0x71002FB760			FALSE	_ZNK12_GLOBAL__N_129KoopaFireBallGeneratorNrvHide7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_129KoopaFireBallGeneratorNrvHide7executeEPN2al11NerveKeeperE	
+0x71002FB7C0			FALSE	_ZNK12_GLOBAL__N_130KoopaFireBallGeneratorNrvDelay7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_130KoopaFireBallGeneratorNrvDelay7executeEPN2al11NerveKeeperE	
 0x71002FB810			FALSE	_ZNK12_GLOBAL__N_129KoopaFireBallGeneratorNrvFall7executeEPN2al11NerveKeeperE	(anonymous namespace)::KoopaFireBallGeneratorNrvFall::execute(al::NerveKeeper*) const	
 0x71002FB820		KoopaFireBallGiant.o	FALSE	_ZN18KoopaFireBallGiantC2EPKcP11SuperBowser	KoopaFireBallGiant::KoopaFireBallGiant(char const*, SuperBowser*)	
 0x71002FB970			FALSE	_ZN18KoopaFireBallGiantC1EPKcP11SuperBowser	KoopaFireBallGiant::KoopaFireBallGiant(char const*, SuperBowser*)	

@@ -1795,7 +1795,7 @@ src/Game/MapObj/KoopaChaseCar.cpp:
     .text   start:0x002F8910 end:0x002F9198
 src/Game/MapObj/KoopaFireBall.cpp:
     .text   start:0x002F91A0 end:0x002FB2B8
-src/Game/MapObj/KoopaFireBallGenerator.cpp:
+src/Game/MapObj/KoopaFireBallGenerator.cpp: done
     .text   start:0x002FB2C0 end:0x002FB818
 src/Game/MapObj/KoopaFireBallGiant.cpp:
     .text   start:0x002FB820 end:0x002FE458
