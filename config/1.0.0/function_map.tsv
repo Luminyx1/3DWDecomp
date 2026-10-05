@@ -4663,8 +4663,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71000BB500			FALSE	_ZNK13DemoLayoutObj5isEndEi	DemoLayoutObj::isEnd(int) const	
 0x71000BB5B0			FALSE	_ZNK13DemoLayoutObj11getMaxFrameEv	DemoLayoutObj::getMaxFrame() const	
 0x71000BB5C0			FALSE	_ZNK13DemoLayoutObj15getCurrentFrameEv	DemoLayoutObj::getCurrentFrame() const	
-0x71000BB610			FALSE	sub_71000BB610	sub_71000BB610	
-0x71000BB690			FALSE	nullsub_41	nullsub_41	
+0x71000BB610			FALSE	_ZNK12_GLOBAL__N_120DemoLayoutObjNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::DemoLayoutObjNrvWait::execute(al::NerveKeeper*) const	
+0x71000BB690			FALSE	_ZNK12_GLOBAL__N_119DemoLayoutObjNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::DemoLayoutObjNrvEnd::execute(al::NerveKeeper*) const	
 0x71000BB6A0		DemoObjBase.o	FALSE	_ZN11DemoObjBaseC2EPKc	DemoObjBase::DemoObjBase(char const*)	
 0x71000BB760			FALSE	_ZN11DemoObjBaseC1EPKc	DemoObjBase::DemoObjBase(char const*)	
 0x71000BB820			FALSE	_ZN11DemoObjBase17initDemoPlacementERKN2al13ActorInitInfoE	DemoObjBase::initDemoPlacement(al::ActorInitInfo const&)	
@@ -5174,7 +5174,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71000C9880			FALSE	_ZN19StageStartEventDemoD1Ev	StageStartEventDemo::~StageStartEventDemo()	
 0x71000C9890			FALSE	_ZN19StageStartEventDemoD0Ev	StageStartEventDemo::~StageStartEventDemo()	
 0x71000C98C0			FALSE	_ZNK19StageStartEventDemo12getEventTypeEv	StageStartEventDemo::getEventType() const	
-0x71000C98D0			FALSE	sub_71000C98D0	sub_71000C98D0	
+0x71000C98D0			FALSE	_ZNK12_GLOBAL__N_125StageStartEventDemoNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::StageStartEventDemoNrvEnd::execute(al::NerveKeeper*) const	
 0x71000C98E0			FALSE	_ZNK12_GLOBAL__N_126StageStartEventDemoNrvPlay7executeEPN2al11NerveKeeperE	(anonymous namespace)::StageStartEventDemoNrvPlay::execute(al::NerveKeeper*) const	
 0x71000C98F0			FALSE	_ZNK12_GLOBAL__N_126StageStartEventDemoNrvFade7executeEPN2al11NerveKeeperE	(anonymous namespace)::StageStartEventDemoNrvFade::execute(al::NerveKeeper*) const	
 0x71000C9900			FALSE	_ZNK2al10FunctorV0MIP19StageStartEventDemoMS1_FvvEEclEv	al::FunctorV0M<StageStartEventDemo*, void (StageStartEventDemo::*)()>::operator()() const	
@@ -12916,10 +12916,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001F1DA0			FALSE	_ZN12StaffRollJob9setStringEPKc	StaffRollJob::setString(char const*)	
 0x71001F1E10			FALSE	_ZN12StaffRollJob10setStringWEPKDs	StaffRollJob::setStringW(char16_t const*)	
 0x71001F1E30			TRUE	_ZN4sead22WFormatFixedSafeStringILi128EEC2EPKDsz	sead::WFormatFixedSafeString<128>::WFormatFixedSafeString(char16_t const*, ...)	
-0x71001F1F00			FALSE	sub_71001F1F00	sub_71001F1F00	
-0x71001F1F50			FALSE	sub_71001F1F50	sub_71001F1F50	
-0x71001F1FC0			FALSE	sub_71001F1FC0	sub_71001F1FC0	
-0x71001F2010			FALSE	sub_71001F2010	sub_71001F2010	
+0x71001F1F00			FALSE	_ZNK12_GLOBAL__N_119StaffRollJobNrvHide7executeEPN2al11NerveKeeperE	(anonymous namespace)::StaffRollJobNrvHide::execute(al::NerveKeeper*) const	
+0x71001F1F50			FALSE	_ZNK12_GLOBAL__N_121StaffRollJobNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::StaffRollJobNrvAppear::execute(al::NerveKeeper*) const	
+0x71001F1FC0			FALSE	_ZNK12_GLOBAL__N_119StaffRollJobNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::StaffRollJobNrvWait::execute(al::NerveKeeper*) const	
+0x71001F2010			FALSE	_ZNK12_GLOBAL__N_118StaffRollJobNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::StaffRollJobNrvEnd::execute(al::NerveKeeper*) const	
 0x71001F2060			TRUE	_ZN4sead22WFormatFixedSafeStringILi128EED0Ev	sead::WFormatFixedSafeString<128>::~WFormatFixedSafeString()	
 0x71001F2070		StaffRollLayoutHolder.o	FALSE	_ZN21StaffRollLayoutHolderC1ERKN2al14LayoutInitInfoEb	StaffRollLayoutHolder::StaffRollLayoutHolder(al::LayoutInitInfo const&, bool)	
 0x71001F2710			FALSE	_ZN21StaffRollLayoutHolder12getJobStringEPPDsS0_	StaffRollLayoutHolder::getJobString(char16_t**, char16_t*)	
@@ -13350,8 +13350,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71002027B0			FALSE	_ZN16WindowProcessing7exeWaitEv	WindowProcessing::exeWait()	
 0x7100202890			FALSE	_ZN16WindowProcessing6exeEndEv	WindowProcessing::exeEnd()	
 0x71002028F0			FALSE	_ZNK12_GLOBAL__N_123WindowProcessingNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::WindowProcessingNrvWait::execute(al::NerveKeeper*) const	
-0x7100202900			FALSE	sub_7100202900	sub_7100202900	
-0x7100202980			FALSE	sub_7100202980	sub_7100202980	
+0x7100202900			FALSE	_ZNK12_GLOBAL__N_125WindowProcessingNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::WindowProcessingNrvAppear::execute(al::NerveKeeper*) const	
+0x7100202980			FALSE	_ZNK12_GLOBAL__N_122WindowProcessingNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::WindowProcessingNrvEnd::execute(al::NerveKeeper*) const	
 0x71002029F0		WindowSave.o	FALSE	_ZN10WindowSaveC2ERKN2al14LayoutInitInfoE	WindowSave::WindowSave(al::LayoutInitInfo const&)	
 0x7100202AF0			FALSE	_ZN10WindowSaveC1ERKN2al14LayoutInitInfoE	WindowSave::WindowSave(al::LayoutInitInfo const&)	
 0x7100202BF0			FALSE	_ZN10WindowSave12appearWindowEi	WindowSave::appearWindow(int)	

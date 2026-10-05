@@ -481,7 +481,7 @@ src/Game/Demo/DemoEffectObj.cpp:
     .text   start:0x000BA390 end:0x000BA944
 src/Game/Demo/DemoKoopaW7.cpp:
     .text   start:0x000BA950 end:0x000BB25C
-src/Game/Demo/DemoLayoutObj.cpp:
+src/Game/Demo/DemoLayoutObj.cpp: done
     .text   start:0x000BB260 end:0x000BB694
 src/Game/Demo/DemoObjBase.cpp:
     .text   start:0x000BB6A0 end:0x000BC054
@@ -527,7 +527,7 @@ src/Game/Demo/StageStartBindDemoMysteryHouse.cpp:
     .text   start:0x000C83E0 end:0x000C8E38
 src/Game/Demo/StageStartEventCamera.cpp: done
     .text   start:0x000C8E40 end:0x000C9384
-src/Game/Demo/StageStartEventDemo.cpp:
+src/Game/Demo/StageStartEventDemo.cpp: done
     .text   start:0x000C9390 end:0x000C9964
 src/Game/Demo/StageStartEventSound.cpp: done
     .text   start:0x000C9970 end:0x000C9E74
@@ -1223,7 +1223,7 @@ src/Game/Layout/SingleModeTitle.cpp:
     .text   start:0x001F0D60 end:0x001F15A4
 src/Game/Layout/StaffRollFin.cpp: done
     .text   start:0x001F15B0 end:0x001F1A54
-src/Game/Layout/StaffRollJob.cpp:
+src/Game/Layout/StaffRollJob.cpp: done
     .text   start:0x001F1A60 end:0x001F2064
 src/Game/Layout/StaffRollLayoutHolder.cpp:
     .text   start:0x001F2070 end:0x001F37E8
@@ -1277,7 +1277,7 @@ src/Game/Layout/WindowMiiSetUp.cpp:
     .text   start:0x00200F20 end:0x00201AC4
 src/Game/Layout/WindowMiiverseDetail.cpp:
     .text   start:0x00201AD0 end:0x00202498
-src/Game/Layout/WindowProcessing.cpp:
+src/Game/Layout/WindowProcessing.cpp: done
     .text   start:0x002024A0 end:0x002029E4
 src/Game/Layout/WindowSave.cpp:
     .text   start:0x002029F0 end:0x00202F14
