@@ -1967,7 +1967,7 @@ src/Game/MapObj/SoundKeyMoveParts.cpp:
     .text   start:0x0035D820 end:0x0035E124
 src/Game/MapObj/SpotLightPatroller.cpp:
     .text   start:0x0035E130 end:0x0035F2C4
-src/Game/MapObj/SpotLightPatrollerHolder.cpp:
+src/Game/MapObj/SpotLightPatrollerHolder.cpp: done
     .text   start:0x0035F2D0 end:0x0035F6D0
 src/Game/MapObj/SpotLightPatrollFunction.cpp:
     .text   start:0x0035F6D0 end:0x0035F78C
