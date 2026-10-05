@@ -1391,7 +1391,7 @@ src/Game/MapObj/BindWarpEffect.cpp:
     .text   start:0x00248690 end:0x00249160
 src/Game/MapObj/Bird.cpp:
     .text   start:0x00249160 end:0x002499E4
-src/Game/MapObj/BlockAssistLeaf.cpp:
+src/Game/MapObj/BlockAssistLeaf.cpp: done
     .text   start:0x002499F0 end:0x00249DE8
 src/Game/MapObj/BlockAssistWatcher.cpp:
     .text   start:0x00249DF0 end:0x0024A3A8
@@ -2037,7 +2037,7 @@ src/Game/MapObj/TestAndoWave.cpp:
     .text   start:0x00373A60 end:0x00374A68
 src/Game/MapObj/TestBlockQuestionRandomCoin.cpp:
     .text   start:0x00374A70 end:0x003751F4
-src/Game/MapObj/TestBlockTuccondor.cpp:
+src/Game/MapObj/TestBlockTuccondor.cpp: done
     .text   start:0x00375200 end:0x003755CC
 src/Game/MapObj/TestBoxQuestionLong.cpp:
     .text   start:0x003755D0 end:0x00376B40

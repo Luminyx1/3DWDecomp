@@ -14878,7 +14878,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100249D50			FALSE	_ZN15BlockAssistLeafD1Ev	BlockAssistLeaf::~BlockAssistLeaf()	
 0x7100249D60			FALSE	_ZN15BlockAssistLeafD0Ev	BlockAssistLeaf::~BlockAssistLeaf()	
 0x7100249D90			FALSE	_ZNK12_GLOBAL__N_122BlockAssistLeafNrvInit7executeEPN2al11NerveKeeperE	(anonymous namespace)::BlockAssistLeafNrvInit::execute(al::NerveKeeper*) const	
-0x7100249DA0			FALSE	sub_7100249DA0	sub_7100249DA0	
+0x7100249DA0			FALSE	_ZNK12_GLOBAL__N_122BlockAssistLeafNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_122BlockAssistLeafNrvWait7executeEPN2al11NerveKeeperE	
 0x7100249DF0		BlockAssistWatcher.o	FALSE	_ZN18BlockAssistWatcherC1EiP14GameDataHolder	BlockAssistWatcher::BlockAssistWatcher(int, GameDataHolder*)	
 0x7100249E80			FALSE	_ZN18BlockAssistWatcher26initAfterPlacementSceneObjERKN2al13ActorInitInfoE	BlockAssistWatcher::initAfterPlacementSceneObj(al::ActorInitInfo const&)	
 0x7100249F40			FALSE	_ZN18BlockAssistWatcher22setCheckpointFlagTransEPK14CheckpointFlag	BlockAssistWatcher::setCheckpointFlagTrans(CheckpointFlag const*)	
@@ -21963,8 +21963,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100375470			FALSE	_ZN18TestBlockTuccondor11exeReactionEv	TestBlockTuccondor::exeReaction()	
 0x71003754D0			FALSE	_ZN18TestBlockTuccondorD1Ev	TestBlockTuccondor::~TestBlockTuccondor()	
 0x71003754E0			FALSE	_ZN18TestBlockTuccondorD0Ev	TestBlockTuccondor::~TestBlockTuccondor()	
-0x7100375510			FALSE	sub_7100375510	sub_7100375510	
-0x7100375570			FALSE	sub_7100375570	sub_7100375570	
+0x7100375510			FALSE	_ZNK12_GLOBAL__N_125TestBlockTuccondorNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_125TestBlockTuccondorNrvWait7executeEPN2al11NerveKeeperE	
+0x7100375570			FALSE	_ZNK12_GLOBAL__N_129TestBlockTuccondorNrvReaction7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_129TestBlockTuccondorNrvReaction7executeEPN2al11NerveKeeperE	
 0x71003755D0		TestBoxQuestionLong.o	FALSE	_ZN19TestBoxQuestionLongC2EPKc	TestBoxQuestionLong::TestBoxQuestionLong(char const*)	
 0x7100375680			FALSE	_ZN19TestBoxQuestionLongC1EPKc	TestBoxQuestionLong::TestBoxQuestionLong(char const*)	
 0x7100375730			FALSE	_ZN19TestBoxQuestionLong4initERKN2al13ActorInitInfoE	TestBoxQuestionLong::init(al::ActorInitInfo const&)	
