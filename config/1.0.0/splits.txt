@@ -1663,7 +1663,7 @@ src/Game/MapObj/GoalDoor.cpp:
     .text   start:0x002C6DE0 end:0x002C7684
 src/Game/MapObj/GoalItem.cpp:
     .text   start:0x002C7690 end:0x002CE8AC
-src/Game/MapObj/GoalItemBindPuppeteer.cpp:
+src/Game/MapObj/GoalItemBindPuppeteer.cpp: done
     .text   start:0x002CE8B0 end:0x002CEC04
 src/Game/MapObj/GoalItemHolder.cpp:
     .text   start:0x002CEC10 end:0x002CF138
@@ -1683,7 +1683,7 @@ src/Game/MapObj/GoalPoleRunawayStep.cpp:
     .text   start:0x002D7D10 end:0x002D8090
 src/Game/MapObj/GoalPoleStateRunaway.cpp:
     .text   start:0x002D8090 end:0x002D8C94
-src/Game/MapObj/GoalPoleWing.cpp:
+src/Game/MapObj/GoalPoleWing.cpp: done
     .text   start:0x002D8CA0 end:0x002D8F80
 src/Game/MapObj/Gondola.cpp:
     .text   start:0x002D8F80 end:0x002D9E84
@@ -1933,7 +1933,7 @@ src/Game/MapObj/RouteDokanInOutEffect.cpp:
     .text   start:0x00350D80 end:0x003510F0
 src/Game/MapObj/RouteDokanLauncher.cpp:
     .text   start:0x003510F0 end:0x003525F4
-src/Game/MapObj/RouteDokanLauncherPUppeteer.cpp:
+src/Game/MapObj/RouteDokanLauncherPUppeteer.cpp: done
     .text   start:0x00352600 end:0x003528D0
 src/Game/MapObj/RouteDokanRider.cpp:
     .text   start:0x003528D0 end:0x00353D48

@@ -18133,9 +18133,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71002CEA90			FALSE	_ZN21GoalItemBindPuppeteer10exeAnimateEv	GoalItemBindPuppeteer::exeAnimate()	
 0x71002CEB20			FALSE	_ZN21GoalItemBindPuppeteer6exeEndEv	GoalItemBindPuppeteer::exeEnd()	
 0x71002CEB30			FALSE	_ZN21GoalItemBindPuppeteerD0Ev	GoalItemBindPuppeteer::~GoalItemBindPuppeteer()	
-0x71002CEB60			FALSE	nullsub_183	nullsub_183	
-0x71002CEB70			FALSE	sub_71002CEB70	sub_71002CEB70	
-0x71002CEC00			FALSE	nullsub_184	nullsub_184	
+0x71002CEB60			FALSE	_ZNK12_GLOBAL__N_129GoalItemBindPuppeteerNrvBegin7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_129GoalItemBindPuppeteerNrvBegin7executeEPN2al11NerveKeeperE	
+0x71002CEB70			FALSE	_ZNK12_GLOBAL__N_131GoalItemBindPuppeteerNrvAnimate7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_131GoalItemBindPuppeteerNrvAnimate7executeEPN2al11NerveKeeperE	
+0x71002CEC00			FALSE	_ZNK12_GLOBAL__N_127GoalItemBindPuppeteerNrvEnd7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_127GoalItemBindPuppeteerNrvEnd7executeEPN2al11NerveKeeperE	
 0x71002CEC10		GoalItemHolder.o	FALSE	_ZN14GoalItemHolderC2Ev	GoalItemHolder::GoalItemHolder()	
 0x71002CEC50			FALSE	_ZNK14GoalItemHolder15getSceneObjNameEv	GoalItemHolder::getSceneObjName() const	
 0x71002CEC60			FALSE	_ZN14GoalItemHolder26initAfterPlacementSceneObjERKN2al13ActorInitInfoE	GoalItemHolder::initAfterPlacementSceneObj(al::ActorInitInfo const&)	
@@ -18366,8 +18366,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71002D8E70			FALSE	_ZN12GoalPoleWing10exeRunawayEv	GoalPoleWing::exeRunaway()	
 0x71002D8EB0			FALSE	_ZN12GoalPoleWingD1Ev	GoalPoleWing::~GoalPoleWing()	
 0x71002D8EC0			FALSE	_ZN12GoalPoleWingD0Ev	GoalPoleWing::~GoalPoleWing()	
-0x71002D8EF0			FALSE	sub_71002D8EF0	sub_71002D8EF0	
-0x71002D8F40			FALSE	sub_71002D8F40	sub_71002D8F40	
+0x71002D8EF0			FALSE	_ZNK12_GLOBAL__N_121GoalPoleWingNrvAppear7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_121GoalPoleWingNrvAppear7executeEPN2al11NerveKeeperE	
+0x71002D8F40			FALSE	_ZNK12_GLOBAL__N_122GoalPoleWingNrvRunaway7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_122GoalPoleWingNrvRunaway7executeEPN2al11NerveKeeperE	
 0x71002D8F80		Gondola.o	FALSE	_ZN7GondolaC2EPKc	Gondola::Gondola(char const*)	
 0x71002D9030			FALSE	_ZN7GondolaC1EPKc	Gondola::Gondola(char const*)	
 0x71002D90E0			FALSE	_ZN7Gondola4initERKN2al13ActorInitInfoE	Gondola::init(al::ActorInitInfo const&)	
@@ -21050,8 +21050,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100352800			FALSE	_ZN27RouteDokanLauncherPuppeteer12exeBindForceEv	RouteDokanLauncherPuppeteer::exeBindForce()	
 0x7100352840			FALSE	_ZN27RouteDokanLauncherPuppeteer9exeInWaitEv	RouteDokanLauncherPuppeteer::exeInWait()	
 0x7100352850			FALSE	_ZN27RouteDokanLauncherPuppeteerD0Ev	RouteDokanLauncherPuppeteer::~RouteDokanLauncherPuppeteer()	
-0x7100352880			FALSE	nullsub_217	nullsub_217	
-0x7100352890			FALSE	sub_7100352890	sub_7100352890	
+0x7100352880			FALSE	_ZNK12_GLOBAL__N_136RouteDokanLauncherPuppeteerNrvInWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_136RouteDokanLauncherPuppeteerNrvInWait7executeEPN2al11NerveKeeperE	
+0x7100352890			FALSE	_ZNK12_GLOBAL__N_139RouteDokanLauncherPuppeteerNrvBindForce7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_139RouteDokanLauncherPuppeteerNrvBindForce7executeEPN2al11NerveKeeperE	
 0x71003528D0		RouteDokanRider.o	FALSE	_ZN15RouteDokanRiderC2EPKci	RouteDokanRider::RouteDokanRider(char const*, int)	
 0x7100352A50			FALSE	_ZN15RouteDokanRiderC1EPKci	RouteDokanRider::RouteDokanRider(char const*, int)	
 0x7100352BD0			FALSE	_ZN15RouteDokanRider4initERKN2al13ActorInitInfoE	RouteDokanRider::init(al::ActorInitInfo const&)	
