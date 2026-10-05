@@ -22110,8 +22110,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710037CB50			FALSE	_ZN14TestKinokoHead10receiveMsgEPKN2al9SensorMsgEPNS0_9HitSensorES5_	TestKinokoHead::receiveMsg(al::SensorMsg const*, al::HitSensor*, al::HitSensor*)	
 0x710037CCD0			FALSE	_ZN14TestKinokoHeadD1Ev	TestKinokoHead::~TestKinokoHead()	
 0x710037CCE0			FALSE	_ZN14TestKinokoHeadD0Ev	TestKinokoHead::~TestKinokoHead()	
-0x710037CD10			FALSE	sub_710037CD10	sub_710037CD10	
-0x710037CDA0			FALSE	sub_710037CDA0	sub_710037CDA0	
+0x710037CD10			FALSE	_ZNK12_GLOBAL__N_121TestKinokoHeadNrvItem7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_121TestKinokoHeadNrvItem7executeEPN2al11NerveKeeperE	
+0x710037CDA0			FALSE	_ZNK12_GLOBAL__N_121TestKinokoHeadNrvWorn7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_121TestKinokoHeadNrvWorn7executeEPN2al11NerveKeeperE	
 0x710037CE10			FALSE	_ZNK12_GLOBAL__N_125TestKinokoHeadNrvWornAnim7executeEPN2al11NerveKeeperE	(anonymous namespace)::TestKinokoHeadNrvWornAnim::execute(al::NerveKeeper*) const	
 0x710037CE20		TestKitaharaRouteBazooka.o	FALSE	_ZN24TestKitaharaRouteBazookaC2EPKc	TestKitaharaRouteBazooka::TestKitaharaRouteBazooka(char const*)	
 0x710037CEB0			FALSE	_ZN24TestKitaharaRouteBazookaC1EPKc	TestKitaharaRouteBazooka::TestKitaharaRouteBazooka(char const*)	
