@@ -1,3 +1,4 @@
+#include "MapObj/BoxKuribo.hpp"
 #include "MapObj/PlessieTerrain.hpp"
 #include "MapObj/DokanWorldWarp.hpp"
 #include "MapObj/WoodLogBridge.hpp"
@@ -342,14 +343,7 @@ private:
 };
 static_assert(sizeof(BoxKillerLauncher) == 0x168);
 
-class BoxKuribo : public al::LiveActor {
-public:
-    explicit BoxKuribo(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x2c];
-};
-static_assert(sizeof(BoxKuribo) == 0x170);
 
 class BoxLight : public al::LiveActor {
 public:

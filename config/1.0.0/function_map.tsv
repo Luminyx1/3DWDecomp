@@ -15402,12 +15402,12 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710025C830			FALSE	_ZN9BoxKuribo9hideActorEv	BoxKuribo::hideActor()	
 0x710025C870			FALSE	_ZN9BoxKuriboD1Ev	BoxKuribo::~BoxKuribo()	
 0x710025C880			FALSE	_ZN9BoxKuriboD0Ev	BoxKuribo::~BoxKuribo()	
-0x710025C8B0			FALSE	sub_710025C8B0	sub_710025C8B0	
-0x710025C8F0			FALSE	sub_710025C8F0	sub_710025C8F0	
+0x710025C8B0			FALSE	_ZNK12_GLOBAL__N_120BoxKuriboNrvWaitItem7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_120BoxKuriboNrvWaitItem7executeEPN2al11NerveKeeperE	
+0x710025C8F0			FALSE	_ZNK12_GLOBAL__N_116BoxKuriboNrvBlow7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_116BoxKuriboNrvBlow7executeEPN2al11NerveKeeperE	
 0x710025C930			FALSE	_ZNK12_GLOBAL__N_117BoxKuriboNrvPopUp7executeEPN2al11NerveKeeperE	(anonymous namespace)::BoxKuriboNrvPopUp::execute(al::NerveKeeper*) const	
 0x710025C940			FALSE	_ZNK12_GLOBAL__N_118BoxKuriboNrvAttach7executeEPN2al11NerveKeeperE	(anonymous namespace)::BoxKuriboNrvAttach::execute(al::NerveKeeper*) const	
-0x710025C950			FALSE	sub_710025C950	sub_710025C950	
-0x710025C960			FALSE	sub_710025C960	sub_710025C960	
+0x710025C950			FALSE	_ZNK12_GLOBAL__N_118BoxKuriboNrvRaidon7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_118BoxKuriboNrvRaidon7executeEPN2al11NerveKeeperE	
+0x710025C960			FALSE	_ZNK12_GLOBAL__N_116BoxKuriboNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_116BoxKuriboNrvWait7executeEPN2al11NerveKeeperE	
 0x710025C970		BoxLightCollisionChecker.o	FALSE	_ZN24BoxLightCollisionCheckerC2Ev	BoxLightCollisionChecker::BoxLightCollisionChecker()	
 0x710025C9C0			FALSE	_ZN24BoxLightCollisionChecker8exeNoHitEv	BoxLightCollisionChecker::exeNoHit()	
 0x710025C9E0			FALSE	_ZN24BoxLightCollisionChecker13exeToHitCheckEv	BoxLightCollisionChecker::exeToHitCheck()	
