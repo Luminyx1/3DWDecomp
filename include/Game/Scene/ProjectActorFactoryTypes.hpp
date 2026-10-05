@@ -1,3 +1,4 @@
+#include "MapObj/Crab.hpp"
 #include "MapObj/MultiLift.hpp"
 #include "MapObj/BlockBrickBig.hpp"
 #include "MapObj/BlockSwitch.hpp"
@@ -730,15 +731,6 @@ private:
     u8 mUnreconstructed[0x14];
 };
 static_assert(sizeof(CourseSelectWorldWarpDokan) == 0x158);
-
-class Crab : public al::LiveActor {
-public:
-    explicit Crab(const char* pName);
-
-private:
-    u8 mUnreconstructed[0x4c];
-};
-static_assert(sizeof(Crab) == 0x190);
 
 class Crawler : public al::LiveActor {
 public:

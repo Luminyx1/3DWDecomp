@@ -1555,7 +1555,7 @@ src/Game/MapObj/CollectRingHolder.cpp: done
     .text   start:0x00280300 end:0x002808D4
 src/Game/MapObj/CollisionSearchObj.cpp: done
     .text   start:0x002808E0 end:0x00280DC8
-src/Game/MapObj/Crab.cpp:
+src/Game/MapObj/Crab.cpp: done
     .text   start:0x00280DD0 end:0x00281698
 src/Game/MapObj/CubeMapController.cpp: done
     .text   start:0x002816A0 end:0x00281C44
