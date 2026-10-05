@@ -20656,8 +20656,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100340D20			FALSE	_ZN14PanelNoteGroup11exeCompleteEv	PanelNoteGroup::exeComplete()	
 0x7100340DA0			FALSE	_ZN14PanelNoteGroupD1Ev	PanelNoteGroup::~PanelNoteGroup()	
 0x7100340DB0			FALSE	_ZN14PanelNoteGroupD0Ev	PanelNoteGroup::~PanelNoteGroup()	
-0x7100340DE0			FALSE	sub_7100340DE0	sub_7100340DE0	
-0x7100340EA0			FALSE	sub_7100340EA0	sub_7100340EA0	
+0x7100340DE0			FALSE	_ZNK12_GLOBAL__N_121PanelNoteGroupNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_121PanelNoteGroupNrvWait7executeEPN2al11NerveKeeperE	
+0x7100340EA0			FALSE	_ZNK12_GLOBAL__N_125PanelNoteGroupNrvComplete7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_125PanelNoteGroupNrvComplete7executeEPN2al11NerveKeeperE	
 0x7100340F20		PanelNotePaint.o	FALSE	_ZN14PanelNotePaintC2EPKc	PanelNotePaint::PanelNotePaint(char const*)	
 0x7100340FC0			FALSE	_ZN14PanelNotePaintC1EPKc	PanelNotePaint::PanelNotePaint(char const*)	
 0x7100341070			FALSE	_ZN14PanelNotePaint4initERKN2al13ActorInitInfoE	PanelNotePaint::init(al::ActorInitInfo const&)	
