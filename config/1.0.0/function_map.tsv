@@ -7032,14 +7032,14 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710010E1F0			FALSE	_ZN15KillerGenerator17exeShootKeepShootEv	KillerGenerator::exeShootKeepShoot()	
 0x710010E260			FALSE	_ZN15KillerGeneratorD1Ev	KillerGenerator::~KillerGenerator()	
 0x710010E270			FALSE	_ZN15KillerGeneratorD0Ev	KillerGenerator::~KillerGenerator()	
-0x710010E2A0			FALSE	sub_710010E2A0	sub_710010E2A0	
-0x710010E310			FALSE	sub_710010E310	sub_710010E310	
-0x710010E3A0			FALSE	nullsub_65	nullsub_65	
-0x710010E3B0			FALSE	sub_710010E3B0	sub_710010E3B0	
-0x710010E440			FALSE	sub_710010E440	sub_710010E440	
-0x710010E490			FALSE	sub_710010E490	sub_710010E490	
-0x710010E500			FALSE	sub_710010E500	sub_710010E500	
-0x710010E570			FALSE	sub_710010E570	sub_710010E570	
+0x710010E2A0			FALSE	_ZNK12_GLOBAL__N_133KillerGeneratorNrvShootKeepAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::KillerGeneratorNrvShootKeepAppear::execute(al::NerveKeeper*) const	
+0x710010E310			FALSE	_ZNK12_GLOBAL__N_123KillerGeneratorNrvDelay7executeEPN2al11NerveKeeperE	(anonymous namespace)::KillerGeneratorNrvDelay::execute(al::NerveKeeper*) const	
+0x710010E3A0			FALSE	_ZNK12_GLOBAL__N_126KillerGeneratorNrvDeactive7executeEPN2al11NerveKeeperE	(anonymous namespace)::KillerGeneratorNrvDeactive::execute(al::NerveKeeper*) const	
+0x710010E3B0			FALSE	_ZNK12_GLOBAL__N_128KillerGeneratorNrvShootDelay7executeEPN2al11NerveKeeperE	(anonymous namespace)::KillerGeneratorNrvShootDelay::execute(al::NerveKeeper*) const	
+0x710010E440			FALSE	_ZNK12_GLOBAL__N_122KillerGeneratorNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::KillerGeneratorNrvWait::execute(al::NerveKeeper*) const	
+0x710010E490			FALSE	_ZNK12_GLOBAL__N_125KillerGeneratorNrvStandBy7executeEPN2al11NerveKeeperE	(anonymous namespace)::KillerGeneratorNrvStandBy::execute(al::NerveKeeper*) const	
+0x710010E500			FALSE	_ZNK12_GLOBAL__N_131KillerGeneratorNrvStandByAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::KillerGeneratorNrvStandByAppear::execute(al::NerveKeeper*) const	
+0x710010E570			FALSE	_ZNK12_GLOBAL__N_132KillerGeneratorNrvShootKeepShoot7executeEPN2al11NerveKeeperE	(anonymous namespace)::KillerGeneratorNrvShootKeepShoot::execute(al::NerveKeeper*) const	
 0x710010E5E0			FALSE	_ZNK2al10FunctorV0MIP15KillerGeneratorMS1_FvvEEclEv	al::FunctorV0M<KillerGenerator*, void (KillerGenerator::*)()>::operator()() const	
 0x710010E600			FALSE	_ZNK2al10FunctorV0MIP15KillerGeneratorMS1_FvvEE5cloneEv	al::FunctorV0M<KillerGenerator*, void (KillerGenerator::*)()>::clone() const	
 0x710010E650		KillerLauncher.o	FALSE	_ZN14KillerLauncherC2EPKc	KillerLauncher::KillerLauncher(char const*)	

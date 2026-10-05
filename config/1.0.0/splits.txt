@@ -679,7 +679,7 @@ src/Game/Enemy/KaronWing.cpp:
     .text   start:0x0010A2D0 end:0x0010C02C
 src/Game/Enemy/Killer.cpp:
     .text   start:0x0010C030 end:0x0010D604
-src/Game/Enemy/KillerGenerator.cpp:
+src/Game/Enemy/KillerGenerator.cpp: done
     .text   start:0x0010D610 end:0x0010E644
 src/Game/Enemy/KillerLauncher.cpp: done
     .text   start:0x0010E650 end:0x0010EAE0

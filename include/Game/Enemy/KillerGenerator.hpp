@@ -14,17 +14,19 @@ class KillerGenerator : public al::LiveActor {
 public:
     KillerGenerator(const char* pName, al::LiveActor* pHost, int type,
                     const al::CollisionPartsFilterBase* pFilter);
+    /** @brief Releases the projectile generator. */
     ~KillerGenerator() override = default;
     void init(const al::ActorInitInfo& rInfo) override;
     bool hideActor() override;
     bool showActor() override;
     void kill() override;
     void startShoot();
-    void stopShoot();
+    /** @brief Pauses automatic projectile firing. */
+    void stopShoot() { mIsShoot = false; }
     void killBySwitch();
     void updateQT(const sead::Vector3f& rTrans, const sead::Quatf& rQuat);
     void shoot();
-    void tryStartHostAction(const char* pAction);
+    bool tryStartHostAction(const char* pAction);
     float getAccelRate() const;
     void exeDeactive();
     void exeDelay();
