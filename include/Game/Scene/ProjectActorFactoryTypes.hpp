@@ -1,3 +1,5 @@
+#include "MapObj/SinkedItem.hpp"
+#include "MapObj/Shards.hpp"
 #include "MapObj/ShardsWatcher.hpp"
 #include "MapObj/SuperLeaf.hpp"
 #include "MapObj/KinokoSuper.hpp"
@@ -2107,14 +2109,7 @@ private:
 static_assert(sizeof(SePlayObj) == 0x168);
 
 
-class Shards : public al::LiveActor {
-public:
-    explicit Shards(const char* pName, bool = false);
 
-private:
-    u8 mUnreconstructed[0xbc];
-};
-static_assert(sizeof(Shards) == 0x200);
 
 
 
@@ -2131,14 +2126,7 @@ static_assert(sizeof(ShadowMarioPlayer) == 0x1b0);
 
 
 
-class SinkedItem : public al::LiveActor {
-public:
-    explicit SinkedItem(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x3c];
-};
-static_assert(sizeof(SinkedItem) == 0x180);
 
 class SkateShoes : public al::LiveActor {
 public:

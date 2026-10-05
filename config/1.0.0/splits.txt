@@ -1953,7 +1953,7 @@ src/Game/MapObj/SePlayObj.cpp: done
     .text   start:0x00354EF0 end:0x003554B4
 src/Game/MapObj/Shards.cpp:
     .text   start:0x003554C0 end:0x00357A40
-src/Game/MapObj/ShardsWatcher.cpp:
+src/Game/MapObj/ShardsWatcher.cpp: done
     .text   start:0x00357A40 end:0x00358888
 src/Game/MapObj/ShardsWatcherHolder.cpp: done
     .text   start:0x00358890 end:0x0035899C

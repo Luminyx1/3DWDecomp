@@ -21217,7 +21217,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71003586E0			FALSE	_ZNK13ShardsWatcher12isFinalShardEv	ShardsWatcher::isFinalShard() const	
 0x7100358780			FALSE	_ZN13ShardsWatcherD1Ev	ShardsWatcher::~ShardsWatcher()	
 0x7100358790			FALSE	_ZN13ShardsWatcherD0Ev	ShardsWatcher::~ShardsWatcher()	
-0x71003587C0			FALSE	sub_71003587C0	sub_71003587C0	
+0x71003587C0			FALSE	_ZNK12_GLOBAL__N_121ShardsWatcherNrvWatch7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_121ShardsWatcherNrvWatch7executeEPN2al11NerveKeeperE	
 0x7100358880			FALSE	_ZNK12_GLOBAL__N_125ShardsWatcherNrvWatchLast7executeEPN2al11NerveKeeperE	(anonymous namespace)::ShardsWatcherNrvWatchLast::execute(al::NerveKeeper*) const	
 0x7100358890		ShardsWatcherHolder.o	FALSE	_ZN19ShardsWatcherHolderC2Ei	ShardsWatcherHolder::ShardsWatcherHolder(int)	
 0x71003588C0			FALSE	_ZN19ShardsWatcherHolder20registerShardWatcherEP13ShardsWatcher	ShardsWatcherHolder::registerShardWatcher(ShardsWatcher*)	
