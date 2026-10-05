@@ -265,7 +265,7 @@ src/Game/Boss/TentackHead.cpp:
     .text   start:0x00066150 end:0x00068184
 src/Game/Boss/TentackHeadAttackBall.cpp: done
     .text   start:0x00068190 end:0x00068520
-src/Game/Boss/TentackHill.cpp:
+src/Game/Boss/TentackHill.cpp: done
     .text   start:0x00068520 end:0x00068A7C
 src/Game/Boss/TentackLv3.cpp:
     .text   start:0x00068A80 end:0x0006B9F8

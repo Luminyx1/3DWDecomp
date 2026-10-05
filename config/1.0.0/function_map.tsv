@@ -2365,11 +2365,11 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71000688B0			FALSE	_ZN11TentackHill12setDisappearEv	TentackHill::setDisappear()	
 0x71000688C0			FALSE	_ZN11TentackHillD1Ev	TentackHill::~TentackHill()	
 0x71000688D0			FALSE	_ZN11TentackHillD0Ev	TentackHill::~TentackHill()	
-0x7100068900			FALSE	sub_7100068900	sub_7100068900	
-0x7100068960			FALSE	sub_7100068960	sub_7100068960	
-0x71000689A0			FALSE	sub_71000689A0	sub_71000689A0	
-0x71000689E0			FALSE	sub_71000689E0	sub_71000689E0	
-0x7100068A20			FALSE	sub_7100068A20	sub_7100068A20	
+0x7100068900			FALSE	_ZNK12_GLOBAL__N_120TentackHillNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::TentackHillNrvAppear::execute(al::NerveKeeper*) const	matched nerve
+0x7100068960			FALSE	_ZNK12_GLOBAL__N_118TentackHillNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::TentackHillNrvWait::execute(al::NerveKeeper*) const	matched nerve
+0x71000689A0			FALSE	_ZNK12_GLOBAL__N_124TentackHillNrvAppearWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::TentackHillNrvAppearWait::execute(al::NerveKeeper*) const	matched nerve
+0x71000689E0			FALSE	_ZNK12_GLOBAL__N_127TentackHillNrvDisappearWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::TentackHillNrvDisappearWait::execute(al::NerveKeeper*) const	matched nerve
+0x7100068A20			FALSE	_ZNK12_GLOBAL__N_123TentackHillNrvDisappear7executeEPN2al11NerveKeeperE	(anonymous namespace)::TentackHillNrvDisappear::execute(al::NerveKeeper*) const	matched nerve
 0x7100068A80		TentackLv3.o	FALSE	_ZN10TentackLv3C2EPKc	TentackLv3::TentackLv3(char const*)	
 0x7100068BB0			FALSE	_ZN10TentackLv3C1EPKc	TentackLv3::TentackLv3(char const*)	
 0x7100068CD0			FALSE	_ZN10TentackLv34initERKN2al13ActorInitInfoE	TentackLv3::init(al::ActorInitInfo const&)	

@@ -4756,3 +4756,10 @@
 0x7101958AA8 8 object _ZN12_GLOBAL__N_120NrvKoopaLastWallSignE
 0x7101958AD0 8 object _ZN12_GLOBAL__N_120NrvKoopaLastWallWaitE
 0x7101958AF8 8 object _ZN12_GLOBAL__N_121NrvKoopaLastWallBreakE
+
+# TentackHill
+0x7101960300 8 object _ZN12_GLOBAL__N_120NrvTentackHillAppearE
+0x7101960328 8 object _ZN12_GLOBAL__N_124NrvTentackHillAppearWaitE
+0x7101960350 8 object _ZN12_GLOBAL__N_118NrvTentackHillWaitE
+0x7101960378 8 object _ZN12_GLOBAL__N_127NrvTentackHillDisappearWaitE
+0x71019603A0 8 object _ZN12_GLOBAL__N_123NrvTentackHillDisappearE
