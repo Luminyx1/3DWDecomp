@@ -1,3 +1,4 @@
+#include "MapObj/GrassHigh.hpp"
 #include "MapObj/CoinCirclePlacement.hpp"
 #include "MapObj/Coin.hpp"
 #include "MapObj/DashPanel.hpp"
@@ -1427,14 +1428,7 @@ private:
 static_assert(sizeof(GraphicsObjShadowMaskSphere) == 0x240);
 }  // namespace al
 
-class GrassHigh : public al::LiveActor {
-public:
-    explicit GrassHigh(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x4];
-};
-static_assert(sizeof(GrassHigh) == 0x148);
 
 class GreenCoin : public al::LiveActor {
 public:

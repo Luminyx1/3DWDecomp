@@ -18522,9 +18522,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71002DE1C0			FALSE	_ZN9GrassHigh10exeDestroyEv	GrassHigh::exeDestroy()	
 0x71002DE240			FALSE	_ZN9GrassHighD1Ev	GrassHigh::~GrassHigh()	
 0x71002DE250			FALSE	_ZN9GrassHighD0Ev	GrassHigh::~GrassHigh()	
-0x71002DE280			FALSE	sub_71002DE280	sub_71002DE280	
-0x71002DE2E0			FALSE	sub_71002DE2E0	sub_71002DE2E0	
-0x71002DE360			FALSE	sub_71002DE360	sub_71002DE360	
+0x71002DE280			FALSE	_ZNK12_GLOBAL__N_116GrassHighNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_116GrassHighNrvWait7executeEPN2al11NerveKeeperE	
+0x71002DE2E0			FALSE	_ZNK12_GLOBAL__N_119GrassHighNrvDestroy7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_119GrassHighNrvDestroy7executeEPN2al11NerveKeeperE	
+0x71002DE360			FALSE	_ZNK12_GLOBAL__N_120GrassHighNrvReaction7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_120GrassHighNrvReaction7executeEPN2al11NerveKeeperE	
 0x71002DE3B0		GreenCoin.o	FALSE	_ZN9GreenCoinC2EPKc	GreenCoin::GreenCoin(char const*)	
 0x71002DE480			FALSE	_ZN9GreenCoinC1EPKc	GreenCoin::GreenCoin(char const*)	
 0x71002DE550			FALSE	_ZN9GreenCoin4initERKN2al13ActorInitInfoE	GreenCoin::init(al::ActorInitInfo const&)	
