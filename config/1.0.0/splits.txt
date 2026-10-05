@@ -115,7 +115,7 @@ src/Game/Boss/BossWackunHand.cpp:
     .text   start:0x0000D520 end:0x0000DD78
 src/Game/Boss/Bunbun.cpp:
     .text   start:0x0000DD80 end:0x0000FCD8
-src/Game/Boss/BunbunArm.cpp:
+src/Game/Boss/BunbunArm.cpp: done
     .text   start:0x0000FCE0 end:0x000100B0
 src/Game/Boss/BunbunChameleon.cpp:
     .text   start:0x000100B0 end:0x000104F0
