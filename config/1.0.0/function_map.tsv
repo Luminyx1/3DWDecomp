@@ -15643,10 +15643,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100264FA0			FALSE	_ZN21ChameleonStateHipDrop13exeAppearWaitEv	ChameleonStateHipDrop::exeAppearWait()	
 0x7100264FE0			FALSE	_ZN21ChameleonStateHipDrop6exeEndEv	ChameleonStateHipDrop::exeEnd()	
 0x7100265040			FALSE	_ZN21ChameleonStateHipDropD0Ev	ChameleonStateHipDrop::~ChameleonStateHipDrop()	
-0x7100265070			FALSE	nullsub_158	nullsub_158	
+0x7100265070			FALSE	_ZNK12_GLOBAL__N_128ChameleonStateHipDropNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_128ChameleonStateHipDropNrvWait7executeEPN2al11NerveKeeperE	
 0x7100265080			FALSE	_ZNK12_GLOBAL__N_130ChameleonStateHipDropNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::ChameleonStateHipDropNrvAppear::execute(al::NerveKeeper*) const	
-0x7100265090			FALSE	sub_7100265090	sub_7100265090	
-0x71002650E0			FALSE	sub_71002650E0	sub_71002650E0	
+0x7100265090			FALSE	_ZNK12_GLOBAL__N_134ChameleonStateHipDropNrvAppearWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_134ChameleonStateHipDropNrvAppearWait7executeEPN2al11NerveKeeperE	
+0x71002650E0			FALSE	_ZNK12_GLOBAL__N_127ChameleonStateHipDropNrvEnd7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_127ChameleonStateHipDropNrvEnd7executeEPN2al11NerveKeeperE	
 0x7100265140		ChameleonStateMic.o	FALSE	_ZN17ChameleonStateMicC2EPN2al9LiveActorEP27RenderMaterialIndirectParamPKS3_	ChameleonStateMic::ChameleonStateMic(al::LiveActor*, RenderMaterialIndirectParam*, RenderMaterialIndirectParam const*)	
 0x71002651A0			FALSE	_ZN17ChameleonStateMic6appearEv	ChameleonStateMic::appear()	
 0x71002651B0			FALSE	_ZN17ChameleonStateMic6exeMicEv	ChameleonStateMic::exeMic()	

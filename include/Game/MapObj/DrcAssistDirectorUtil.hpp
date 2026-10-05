@@ -10,6 +10,8 @@ namespace al {
 };
 
 namespace rc {
+    bool isEnableTouchPointer(const al::LiveActor*);
+    const sead::Vector3f& getTouchPointerPosition(const al::LiveActor*);
     al::LiveActor* findDrcAssistDirectorPlayer(const al::IUseSceneObjHolder*,
                                                const al::ScreenPointer*);
     al::LiveActor* findDrcAssistDirectorPlayer(const al::IUseSceneObjHolder*,
