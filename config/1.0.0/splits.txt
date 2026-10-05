@@ -1987,7 +1987,7 @@ src/Game/MapObj/StampDirector.cpp:
     .text   start:0x003630C0 end:0x00364D3C
 src/Game/MapObj/StepScrollParts.cpp: done
     .text   start:0x00364D40 end:0x003650E0
-src/Game/MapObj/StepScrollWatcher.cpp:
+src/Game/MapObj/StepScrollWatcher.cpp: done
     .text   start:0x003650E0 end:0x00365CB4
 src/Game/MapObj/StrongHipDropReactPoint.cpp: done
     .text   start:0x00365CC0 end:0x00365F10

@@ -1,3 +1,4 @@
+#include "MapObj/StepScrollWatcher.hpp"
 #include "MapObj/SinkedItem.hpp"
 #include "MapObj/Shards.hpp"
 #include "MapObj/ShardsWatcher.hpp"
@@ -2272,14 +2273,7 @@ private:
 };
 static_assert(sizeof(StageStartEventSound) == 0x158);
 
-class StepScrollWatcher : public al::LiveActor {
-public:
-    explicit StepScrollWatcher(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x84];
-};
-static_assert(sizeof(StepScrollWatcher) == 0x1c8);
 
 class StrongHipDropReactPoint : public al::LiveActor {
 public:

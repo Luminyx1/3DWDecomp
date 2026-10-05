@@ -21524,8 +21524,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100365B40			FALSE	_ZN17StepScrollWatcher8exeAccelEv	StepScrollWatcher::exeAccel()	
 0x7100365B80			FALSE	_ZN17StepScrollWatcherD1Ev	StepScrollWatcher::~StepScrollWatcher()	
 0x7100365B90			FALSE	_ZN17StepScrollWatcherD0Ev	StepScrollWatcher::~StepScrollWatcher()	
-0x7100365BC0			FALSE	sub_7100365BC0	sub_7100365BC0	
-0x7100365C10			FALSE	sub_7100365C10	sub_7100365C10	
+0x7100365BC0			FALSE	_ZNK12_GLOBAL__N_124StepScrollWatcherNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_124StepScrollWatcherNrvWait7executeEPN2al11NerveKeeperE	
+0x7100365C10			FALSE	_ZNK12_GLOBAL__N_125StepScrollWatcherNrvAccel7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_125StepScrollWatcherNrvAccel7executeEPN2al11NerveKeeperE	
 0x7100365C50			FALSE	_ZNK2al10FunctorV0MIP17StepScrollWatcherMS1_FvvEEclEv	al::FunctorV0M<StepScrollWatcher*, void (StepScrollWatcher::*)()>::operator()() const	
 0x7100365C70			FALSE	_ZNK2al10FunctorV0MIP17StepScrollWatcherMS1_FvvEE5cloneEv	al::FunctorV0M<StepScrollWatcher*, void (StepScrollWatcher::*)()>::clone() const	
 0x7100365CC0		StrongHipDropReactPoint.o	FALSE	_ZN23StrongHipDropReactPointC2EPKc	StrongHipDropReactPoint::StrongHipDropReactPoint(char const*)	renamed from StongHipDropReactPoint.o (spelling)
