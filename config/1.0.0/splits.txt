@@ -639,7 +639,7 @@ src/Game/Enemy/FlyerStateParam.cpp: done
     .text   start:0x000F6270 end:0x000F629C
 src/Game/Enemy/FlyerStateReturnArea.cpp:
     .text   start:0x000F62A0 end:0x000F6630
-src/Game/Enemy/FlyerStateWanderParam.cpp:
+src/Game/Enemy/FlyerStateWanderParam.cpp: done
     .text   start:0x000F6630 end:0x000F6750
 src/Game/Enemy/FlyerStateWander.cpp:
     .text   start:0x000F6750 end:0x000F69F0
