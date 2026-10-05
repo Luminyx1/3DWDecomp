@@ -20253,8 +20253,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100323610			FALSE	_ZN16NeedleRollerFallD1Ev	NeedleRollerFall::~NeedleRollerFall()	
 0x7100323620			FALSE	_ZN16NeedleRollerFallD0Ev	NeedleRollerFall::~NeedleRollerFall()	
 0x7100323650			FALSE	_ZNK12_GLOBAL__N_123NeedleRollerFallNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::NeedleRollerFallNrvWait::execute(al::NerveKeeper*) const	
-0x7100323660			FALSE	nullsub_211	nullsub_211	
-0x7100323670			FALSE	sub_7100323670	sub_7100323670	
+0x7100323660			FALSE	_ZNK12_GLOBAL__N_127NeedleRollerFallNrvGenerate7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_127NeedleRollerFallNrvGenerate7executeEPN2al11NerveKeeperE	
+0x7100323670			FALSE	_ZNK12_GLOBAL__N_132NeedleRollerFallNrvSupportFreeze7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_132NeedleRollerFallNrvSupportFreeze7executeEPN2al11NerveKeeperE	
 0x71003236D0		NeedleRollerGenerator.o	FALSE	_ZN21NeedleRollerGeneratorC2EPKc	NeedleRollerGenerator::NeedleRollerGenerator(char const*)	
 0x7100323750			FALSE	_ZN21NeedleRollerGeneratorC1EPKc	NeedleRollerGenerator::NeedleRollerGenerator(char const*)	
 0x71003237E0			FALSE	_ZN21NeedleRollerGenerator4initERKN2al13ActorInitInfoE	NeedleRollerGenerator::init(al::ActorInitInfo const&)	
