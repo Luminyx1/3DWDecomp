@@ -21601,7 +21601,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71003681C0			FALSE	_ZN14SuperbViewAreaD1Ev	SuperbViewArea::~SuperbViewArea()	
 0x71003681D0			FALSE	_ZN14SuperbViewAreaD0Ev	SuperbViewArea::~SuperbViewArea()	
 0x7100368200			FALSE	_ZNK20SuperbViewAreaHolder15getSceneObjNameEv	SuperbViewAreaHolder::getSceneObjName() const	
-0x7100368210			FALSE	sub_7100368210	sub_7100368210	
+0x7100368210			FALSE	_ZNK12_GLOBAL__N_121SuperbViewAreaNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_121SuperbViewAreaNrvWait7executeEPN2al11NerveKeeperE	
 0x7100368280			FALSE	_ZNK12_GLOBAL__N_121SuperbViewAreaNrvLook7executeEPN2al11NerveKeeperE	(anonymous namespace)::SuperbViewAreaNrvLook::execute(al::NerveKeeper*) const	
 0x7100368290			FALSE	_ZNK2al10FunctorV0MIP14SuperbViewAreaMS1_FvvEEclEv	al::FunctorV0M<SuperbViewArea*, void (SuperbViewArea::*)()>::operator()() const	
 0x71003682B0			FALSE	_ZNK2al10FunctorV0MIP14SuperbViewAreaMS1_FvvEE5cloneEv	al::FunctorV0M<SuperbViewArea*, void (SuperbViewArea::*)()>::clone() const	

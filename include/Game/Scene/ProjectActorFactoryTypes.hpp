@@ -1,3 +1,5 @@
+#include "MapObj/SuperbViewArea.hpp"
+#include "MapObj/GuideObj.hpp"
 #include "MapObj/BreakMapParts.hpp"
 #include "MapObj/BoxKuribo.hpp"
 #include "MapObj/PlessieTerrain.hpp"
@@ -1359,14 +1361,7 @@ static_assert(sizeof(GroupClippingDummyTarget) == 0x148);
 
 
 
-class GuideObj : public al::LiveActor {
-public:
-    explicit GuideObj(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x14];
-};
-static_assert(sizeof(GuideObj) == 0x158);
 
 class GuideMessageAppear : public al::LiveActor {
 public:
@@ -2501,14 +2496,7 @@ private:
 };
 static_assert(sizeof(SuperBowserShell) == 0x210);
 
-class SuperbViewArea : public al::LiveActor {
-public:
-    explicit SuperbViewArea(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x3c];
-};
-static_assert(sizeof(SuperbViewArea) == 0x180);
 
 class SuperKoura : public al::LiveActor {
 public:

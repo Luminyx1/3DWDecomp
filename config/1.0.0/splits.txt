@@ -1990,7 +1990,7 @@ src/Game/MapObj/SuperBell.cpp:
     .text   start:0x00365F10 end:0x00366B64
 src/Game/MapObj/SuperBellSpecial.cpp:
     .text   start:0x00366B70 end:0x00367784
-src/Game/MapObj/SuperbViewArea.cpp:
+src/Game/MapObj/SuperbViewArea.cpp: done
     .text   start:0x00367790 end:0x003682F4
 src/Game/MapObj/SuperLeaf.cpp:
     .text   start:0x00368300 end:0x003694AC
