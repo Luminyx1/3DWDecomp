@@ -6,6 +6,7 @@
 
 namespace al {
     class HitSensor;
+    class SensorMsg;
 };
 
 class ItemStatePopUpFrontParam {
@@ -37,6 +38,12 @@ class ItemStatePopUpFront : public al::ActorStateBase {
 public:
     ItemStatePopUpFront(al::LiveActor*);
     void setParam(const ItemStatePopUpFrontParam&, const al::HitSensor*);
+    void setParamDefault();
+    void setParamOnCollide();
+    void setParamAnimName(const char*);
+    void setParamHoming(const al::HitSensor*);
+    void setParamInvalidateKillByArea(bool);
+    bool receiveMsg(const al::SensorMsg*, al::HitSensor*, al::HitSensor*);
 private:
     ItemStatePopUpFrontParam mParam;
     float mColliderRadius;

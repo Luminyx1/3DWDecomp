@@ -22,6 +22,7 @@ public:
     void exeWaitConnect();
     void exeFall();
 
+    void enableWaterReaction() { mWaterReaction = true; }
 private:
     al::CollisionPartsConnector* mConnector;
     const al::CollisionParts* mCollisionParts = nullptr;

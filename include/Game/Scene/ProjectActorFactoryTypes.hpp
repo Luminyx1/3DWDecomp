@@ -1,3 +1,4 @@
+#include "MapObj/FireFlower.hpp"
 #include "MapObj/Fury/InkPatch.hpp"
 #include "MapObj/Fury/InteractableCatToy.hpp"
 #include "MapObj/DoorLock.hpp"
@@ -1011,14 +1012,7 @@ private:
 };
 static_assert(sizeof(FireBros) == 0x1c8);
 
-class FireFlower : public al::LiveActor {
-public:
-    explicit FireFlower(const char* pName, ItemBubble* = nullptr);
 
-private:
-    u8 mUnreconstructed[0x44];
-};
-static_assert(sizeof(FireFlower) == 0x188);
 
 class Fireworks : public al::LiveActor {
 public:

@@ -1614,7 +1614,7 @@ src/Game/MapObj/FairyHouseIllustItemWatcher.cpp: done
     .text   start:0x002A75C0 end:0x002A79A4
 src/Game/MapObj/FireBar.cpp:
     .text   start:0x002A79B0 end:0x002A8520
-src/Game/MapObj/FireFlower.cpp:
+src/Game/MapObj/FireFlower.cpp: done
     .text   start:0x002A8520 end:0x002A9164
 src/Game/MapObj/Fireworks.cpp: done
     .text   start:0x002A9170 end:0x002A9EC8

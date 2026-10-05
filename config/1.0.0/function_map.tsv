@@ -17324,11 +17324,11 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71002A8EB0			FALSE	_ZN10FireFlower24exeWaitAndCheckCollisionEv	FireFlower::exeWaitAndCheckCollision()	
 0x71002A8F30			FALSE	_ZN10FireFlowerD1Ev	FireFlower::~FireFlower()	
 0x71002A8F40			FALSE	_ZN10FireFlowerD0Ev	FireFlower::~FireFlower()	
-0x71002A8F70			FALSE	sub_71002A8F70	sub_71002A8F70	
-0x71002A8FC0			FALSE	sub_71002A8FC0	sub_71002A8FC0	
-0x71002A9040			FALSE	sub_71002A9040	sub_71002A9040	
-0x71002A90A0			FALSE	sub_71002A90A0	sub_71002A90A0	
-0x71002A9100			FALSE	sub_71002A9100	sub_71002A9100	
+0x71002A8F70			FALSE	_ZNK12_GLOBAL__N_117FireFlowerNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_117FireFlowerNrvWait7executeEPN2al11NerveKeeperE	
+0x71002A8FC0			FALSE	_ZNK12_GLOBAL__N_134FireFlowerNrvWaitAndCheckCollision7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_134FireFlowerNrvWaitAndCheckCollision7executeEPN2al11NerveKeeperE	
+0x71002A9040			FALSE	_ZNK12_GLOBAL__N_123FireFlowerNrvPopUpAbove7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_123FireFlowerNrvPopUpAbove7executeEPN2al11NerveKeeperE	
+0x71002A90A0			FALSE	_ZNK12_GLOBAL__N_123FireFlowerNrvPopUpFront7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_123FireFlowerNrvPopUpFront7executeEPN2al11NerveKeeperE	
+0x71002A9100			FALSE	_ZNK12_GLOBAL__N_125FireFlowerNrvAttachBubble7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_125FireFlowerNrvAttachBubble7executeEPN2al11NerveKeeperE	
 0x71002A9170		Fireworks.o	FALSE	_ZN9FireworksC2EPKc	Fireworks::Fireworks(char const*)	
 0x71002A91F0			FALSE	_ZN9FireworksC1EPKc	Fireworks::Fireworks(char const*)	
 0x71002A9280			FALSE	_ZN9Fireworks4initERKN2al13ActorInitInfoE	Fireworks::init(al::ActorInitInfo const&)	
