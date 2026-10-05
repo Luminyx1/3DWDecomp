@@ -4695,9 +4695,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71000BBF00			FALSE	_ZN11DemoObjBase17registerFrameHookERKN2al11FunctorBaseEj	DemoObjBase::registerFrameHook(al::FunctorBase const&, unsigned int)	
 0x71000BBF60			FALSE	_ZN11DemoObjBase19registerEndDemoHookERKN2al11FunctorBaseE	DemoObjBase::registerEndDemoHook(al::FunctorBase const&)	
 0x71000BBF90			FALSE	_ZN11DemoObjBase22registerCancelDemoHookERKN2al11FunctorBaseE	DemoObjBase::registerCancelDemoHook(al::FunctorBase const&)	
-0x71000BBFC0			FALSE	nullsub_42	nullsub_42	
-0x71000BBFD0			FALSE	sub_71000BBFD0	sub_71000BBFD0	
-0x71000BBFE0			FALSE	sub_71000BBFE0	sub_71000BBFE0	
+0x71000BBFC0			FALSE	_ZNK12_GLOBAL__N_118DemoObjBaseNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::DemoObjBaseNrvWait::execute(al::NerveKeeper*) const	
+0x71000BBFD0			FALSE	_ZNK12_GLOBAL__N_118DemoObjBaseNrvPlay7executeEPN2al11NerveKeeperE	(anonymous namespace)::DemoObjBaseNrvPlay::execute(al::NerveKeeper*) const	
+0x71000BBFE0			FALSE	_ZNK12_GLOBAL__N_124DemoObjBaseNrvCancelDemo7executeEPN2al11NerveKeeperE	(anonymous namespace)::DemoObjBaseNrvCancelDemo::execute(al::NerveKeeper*) const	
 0x71000BBFF0			FALSE	_ZNK2al10FunctorV0MIP11DemoObjBaseMS1_FvvEEclEv	al::FunctorV0M<DemoObjBase*, void (DemoObjBase::*)()>::operator()() const	
 0x71000BC010			FALSE	_ZNK2al10FunctorV0MIP11DemoObjBaseMS1_FvvEE5cloneEv	al::FunctorV0M<DemoObjBase*, void (DemoObjBase::*)()>::clone() const	
 0x71000BC060		DemoOpeningSwitch.o	FALSE	_ZN17DemoOpeningSwitchC2EPKc	DemoOpeningSwitch::DemoOpeningSwitch(char const*)	

@@ -9,6 +9,7 @@ class DemoSkipLayout : public al::LayoutActor {
 public:
     DemoSkipLayout(const al::LayoutInitInfo& rInfo, bool isSingleMode);
     bool isSkip(sead::BitFlag<u16> ports);
+    void startHidden();
 
 private:
     bool mIsSingleMode;
