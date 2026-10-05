@@ -17368,8 +17368,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71002AA270			FALSE	_ZN19FireworksController4killEv	FireworksController::kill()	
 0x71002AA2D0			FALSE	_ZN19FireworksControllerD1Ev	FireworksController::~FireworksController()	
 0x71002AA2E0			FALSE	_ZN19FireworksControllerD0Ev	FireworksController::~FireworksController()	
-0x71002AA310			FALSE	sub_71002AA310	sub_71002AA310	
-0x71002AA390			FALSE	sub_71002AA390	sub_71002AA390	
+0x71002AA310			FALSE	_ZNK12_GLOBAL__N_126FireworksControllerNrvLoop7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_126FireworksControllerNrvLoop7executeEPN2al11NerveKeeperE	
+0x71002AA390			FALSE	_ZNK12_GLOBAL__N_126FireworksControllerNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_126FireworksControllerNrvWait7executeEPN2al11NerveKeeperE	
 0x71002AA3C0		FireworksEffectObj.o	FALSE	_ZN18FireworksEffectObjC2EPKc	FireworksEffectObj::FireworksEffectObj(char const*)	
 0x71002AA470			FALSE	_ZN18FireworksEffectObjC1EPKc	FireworksEffectObj::FireworksEffectObj(char const*)	
 0x71002AA520			FALSE	_ZN18FireworksEffectObj4initERKN2al13ActorInitInfoE	FireworksEffectObj::init(al::ActorInitInfo const&)	
@@ -17380,7 +17380,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71002AAB80			FALSE	_ZN18FireworksEffectObjD1Ev	FireworksEffectObj::~FireworksEffectObj()	
 0x71002AAB90			FALSE	_ZN18FireworksEffectObjD0Ev	FireworksEffectObj::~FireworksEffectObj()	
 0x71002AABC0			FALSE	_ZNK18FireworksEffectObj10getBaseMtxEv	FireworksEffectObj::getBaseMtx() const	
-0x71002AABD0			FALSE	sub_71002AABD0	sub_71002AABD0	
+0x71002AABD0			FALSE	_ZNK12_GLOBAL__N_125FireworksEffectObjNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_125FireworksEffectObjNrvWait7executeEPN2al11NerveKeeperE	
 0x71002AACA0			FALSE	_ZNK12_GLOBAL__N_125FireworksEffectObjNrvFire7executeEPN2al11NerveKeeperE	(anonymous namespace)::FireworksEffectObjNrvFire::execute(al::NerveKeeper*) const	
 0x71002AACB0			FALSE	_ZNK2al10FunctorV0MIP18FireworksEffectObjMS1_FvvEEclEv	al::FunctorV0M<FireworksEffectObj*, void (FireworksEffectObj::*)()>::operator()() const	
 0x71002AACD0			FALSE	_ZNK2al10FunctorV0MIP18FireworksEffectObjMS1_FvvEE5cloneEv	al::FunctorV0M<FireworksEffectObj*, void (FireworksEffectObj::*)()>::clone() const	

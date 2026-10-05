@@ -1617,9 +1617,9 @@ src/Game/MapObj/FireFlower.cpp:
     .text   start:0x002A8520 end:0x002A9164
 src/Game/MapObj/Fireworks.cpp:
     .text   start:0x002A9170 end:0x002A9EC8
-src/Game/MapObj/FireworksController.cpp:
+src/Game/MapObj/FireworksController.cpp: done
     .text   start:0x002A9ED0 end:0x002AA3C0
-src/Game/MapObj/FireworksEffectObj.cpp:
+src/Game/MapObj/FireworksEffectObj.cpp: done
     .text   start:0x002AA3C0 end:0x002AAD14
 src/Game/MapObj/Fish.cpp: done
     .text   start:0x002AAD20 end:0x002AAEB0
