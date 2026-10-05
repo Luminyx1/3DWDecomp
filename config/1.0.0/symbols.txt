@@ -5154,3 +5154,5 @@
 0x7101A01C98 8 object _ZN12_GLOBAL__N_131NrvChikaChikaBlockSwitchOffSignE
 0x7101A63660 32 object _ZTVN12_GLOBAL__N_123TestTanakaMapObjNrvWaitE
 0x7101A63680 8 object _ZN12_GLOBAL__N_123NrvTestTanakaMapObjWaitE
+0x7101A3A3E0 40 object _ZTVN12_GLOBAL__N_118MusicalItemNrvWaitE
+0x710210A040 40 object _ZN12_GLOBAL__N_114NrvMusicalItemE

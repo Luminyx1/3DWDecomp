@@ -20100,9 +20100,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710031E070			FALSE	_ZN11MusicalItem7exeWaitEv	MusicalItem::exeWait()	
 0x710031E080			FALSE	_ZN11MusicalItemD1Ev	MusicalItem::~MusicalItem()	
 0x710031E090			FALSE	_ZN11MusicalItemD0Ev	MusicalItem::~MusicalItem()	
-0x710031E0C0			FALSE	sub_710031E0C0	sub_710031E0C0	
-0x710031E0D0			FALSE	sub_710031E0D0	sub_710031E0D0	
-0x710031E0E0			FALSE	sub_710031E0E0	sub_710031E0E0	
+0x710031E0C0			FALSE	_ZNK12_GLOBAL__N_118MusicalItemNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_118MusicalItemNrvWait7executeEPN2al11NerveKeeperE	
+0x710031E0D0			FALSE	_ZNK12_GLOBAL__N_118MusicalItemNrvWait13getActionNameEv	_ZNK12_GLOBAL__N_118MusicalItemNrvWait13getActionNameEv	
+0x710031E0E0			FALSE	_GLOBAL__sub_I_MusicalItem.cpp	_GLOBAL__sub_I_MusicalItem.cpp	
 0x710031E120		MysteryBox.o	FALSE	_ZN10MysteryBoxC2EPKc	MysteryBox::MysteryBox(char const*)	
 0x710031E1F0			FALSE	_ZN10MysteryBoxC1EPKc	MysteryBox::MysteryBox(char const*)	
 0x710031E2D0			FALSE	_ZN10MysteryBox4initERKN2al13ActorInitInfoE	MysteryBox::init(al::ActorInitInfo const&)	
