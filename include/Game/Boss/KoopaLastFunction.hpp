@@ -10,6 +10,7 @@ class JointSpringController;
 }
 
 namespace KoopaLastFunction {
+void explosionCollision(al::LiveActor* pActor, const char* pName);
 void initActorKoopaLastCommon(al::LiveActor* pActor, const al::ActorInitInfo& rInfo,
                               const char* pName,
                               sead::PtrArray<al::JointSpringController>* pControllers);

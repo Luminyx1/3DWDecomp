@@ -4747,3 +4747,7 @@
 
 # KoopaLastFireBreath
 0x71019577E0 8 object _ZN12_GLOBAL__N_130NrvKoopaLastFireBreathCollidedE
+
+# KoopaLastStateTop
+0x7101958510 8 object _ZN12_GLOBAL__N_128NrvKoopaLastStateTopClimbEndE
+0x7101958560 8 object _ZN12_GLOBAL__N_125NrvKoopaLastStateTopShoutE

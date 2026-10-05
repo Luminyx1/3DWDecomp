@@ -1395,9 +1395,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71000382B0			FALSE	_ZN17KoopaLastStateTop7exeWaitEv	KoopaLastStateTop::exeWait()	
 0x7100038340			FALSE	_ZN17KoopaLastStateTop8exeShoutEv	KoopaLastStateTop::exeShout()	
 0x71000383A0			FALSE	_ZN17KoopaLastStateTopD0Ev	KoopaLastStateTop::~KoopaLastStateTop()	
-0x71000383D0			FALSE	sub_71000383D0	sub_71000383D0	
-0x7100038450			FALSE	_ZNK12_GLOBAL__N_124KoopaLastStateTopNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::KoopaLastStateTopNrvWait::execute(al::NerveKeeper*) const	
-0x7100038460			FALSE	sub_7100038460	sub_7100038460	
+0x71000383D0			FALSE	_ZNK12_GLOBAL__N_128KoopaLastStateTopNrvClimbEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::KoopaLastStateTopNrvClimbEnd::execute(al::NerveKeeper*) const	matched nerve
+0x7100038450			FALSE	_ZNK12_GLOBAL__N_124KoopaLastStateTopNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::KoopaLastStateTopNrvWait::execute(al::NerveKeeper*) const	matched nerve
+0x7100038460			FALSE	_ZNK12_GLOBAL__N_125KoopaLastStateTopNrvShout7executeEPN2al11NerveKeeperE	(anonymous namespace)::KoopaLastStateTopNrvShout::execute(al::NerveKeeper*) const	matched nerve
 0x71000384C0		KoopaLastWall.o	FALSE	_ZN13KoopaLastWallC2EPKc	KoopaLastWall::KoopaLastWall(char const*)	
 0x7100038540			FALSE	_ZN13KoopaLastWallC1EPKc	KoopaLastWall::KoopaLastWall(char const*)	
 0x71000385D0			FALSE	_ZN13KoopaLastWall5startEv	KoopaLastWall::start()	
