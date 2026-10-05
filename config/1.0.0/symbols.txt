@@ -4786,3 +4786,6 @@
 0x71019DC0F0 8 object _ZN12_GLOBAL__N_130NrvListClearStarFairyPartsHideE
 0x71019DC118 8 object _ZN12_GLOBAL__N_130NrvListClearStarFairyPartsShowE
 0x71019E7EE8 80 object _ZN12_GLOBAL__N_114sCursorActionsE
+
+# src/Game/Layout/GameOverMenu
+0x71019D9110 8 object _ZN12_GLOBAL__N_121NrvGameOverMenuAppearE

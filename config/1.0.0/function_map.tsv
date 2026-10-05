@@ -11728,7 +11728,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001C4060			FALSE	_ZN12GameOverMenu9exeAppearEv	GameOverMenu::exeAppear()	
 0x71001C40C0			FALSE	_ZN12GameOverMenu7exeWaitEv	GameOverMenu::exeWait()	
 0x71001C4140			FALSE	_ZN12GameOverMenu6exeEndEv	GameOverMenu::exeEnd()	
-0x71001C4220			FALSE	sub_71001C4220	sub_71001C4220	
+0x71001C4220			FALSE	_ZNK12_GLOBAL__N_121GameOverMenuNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::GameOverMenuNrvAppear::execute(al::NerveKeeper*) const	
 0x71001C4280			FALSE	_ZNK12_GLOBAL__N_119GameOverMenuNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::GameOverMenuNrvWait::execute(al::NerveKeeper*) const	
 0x71001C4290			FALSE	_ZNK12_GLOBAL__N_118GameOverMenuNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::GameOverMenuNrvEnd::execute(al::NerveKeeper*) const	
 0x71001C42A0		GhostMiiNameplate.o	FALSE	_ZN17GhostMiiNameplateC2EPN2al9LiveActorERKNS0_14LayoutInitInfoE	GhostMiiNameplate::GhostMiiNameplate(al::LiveActor*, al::LayoutInitInfo const&)	

@@ -1125,7 +1125,7 @@ src/Game/Layout/DokanGuideBalloon.cpp:
     .text   start:0x001C0800 end:0x001C0DB8
 src/Game/Layout/FileSelect.cpp:
     .text   start:0x001C0DC0 end:0x001C3DE4
-src/Game/Layout/GameOverMenu.cpp:
+src/Game/Layout/GameOverMenu.cpp: done
     .text   start:0x001C3DF0 end:0x001C4298
 src/Game/Layout/GhostMiiNameplate.cpp:
     .text   start:0x001C42A0 end:0x001C47A4
