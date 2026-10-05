@@ -4707,7 +4707,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71000BC200			FALSE	_ZN17DemoOpeningSwitch7exeWaitEv	DemoOpeningSwitch::exeWait()	
 0x71000BC210			FALSE	_ZN17DemoOpeningSwitchD1Ev	DemoOpeningSwitch::~DemoOpeningSwitch()	
 0x71000BC220			FALSE	_ZN17DemoOpeningSwitchD0Ev	DemoOpeningSwitch::~DemoOpeningSwitch()	
-0x71000BC250			FALSE	nullsub_43	nullsub_43	
+0x71000BC250			FALSE	_ZNK12_GLOBAL__N_124DemoOpeningSwitchNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::DemoOpeningSwitchNrvWait::execute(al::NerveKeeper*) const	
 0x71000BC260		DemoPlayerController.o	FALSE	_ZN20DemoPlayerControllerC2Ev	DemoPlayerController::DemoPlayerController()	
 0x71000BC270			FALSE	_ZN20DemoPlayerController14setPlayerActorEP11PlayerActor	DemoPlayerController::setPlayerActor(PlayerActor*)	
 0x71000BC280			FALSE	_ZN20DemoPlayerController12tryStartDemoEv	DemoPlayerController::tryStartDemo()	

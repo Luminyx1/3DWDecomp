@@ -485,7 +485,7 @@ src/Game/Demo/DemoLayoutObj.cpp: done
     .text   start:0x000BB260 end:0x000BB694
 src/Game/Demo/DemoObjBase.cpp: done
     .text   start:0x000BB6A0 end:0x000BC054
-src/Game/Demo/DemoOpeningSwitch.cpp:
+src/Game/Demo/DemoOpeningSwitch.cpp: done
     .text   start:0x000BC060 end:0x000BC254
 src/Game/Demo/DemoPlayerController.cpp:
     .text   start:0x000BC260 end:0x000BCBCC
