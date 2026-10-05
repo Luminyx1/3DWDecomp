@@ -1459,7 +1459,7 @@ src/Game/MapObj/BreakMapParts.cpp:
     .text   start:0x0025FD10 end:0x00260804
 src/Game/MapObj/Bush.cpp:
     .text   start:0x00260810 end:0x00261B18
-src/Game/MapObj/CameraInSwitchOnAreaWatcher.cpp:
+src/Game/MapObj/CameraInSwitchOnAreaWatcher.cpp: done
     .text   start:0x00261B20 end:0x00261D90
 src/Game/MapObj/CameraRailObserver.cpp:
     .text   start:0x00261D90 end:0x002622D4
@@ -1605,7 +1605,7 @@ src/Game/MapObj/EchoEmitTest.cpp: done
     .text   start:0x002A6920 end:0x002A6AB0
 src/Game/MapObj/EffectObjBreathBubble.cpp:
     .text   start:0x002A6AB0 end:0x002A7098
-src/Game/MapObj/EnterCatMarioMiddleViewRocket.cpp:
+src/Game/MapObj/EnterCatMarioMiddleViewRocket.cpp: done
     .text   start:0x002A70A0 end:0x002A7310
 src/Game/MapObj/ExplosionComboCounterHolder.cpp:
     .text   start:0x002A7310 end:0x002A75BC
@@ -1717,7 +1717,7 @@ src/Game/MapObj/HeadgearPoseBuilder.cpp:
     .text   start:0x002E27F0 end:0x002E3C48
 src/Game/MapObj/HeadgearStateBlow.cpp:
     .text   start:0x002E3C50 end:0x002E4018
-src/Game/MapObj/HexScrollAppearParts.cpp:
+src/Game/MapObj/HexScrollAppearParts.cpp: done
     .text   start:0x002E4020 end:0x002E4290
 src/Game/MapObj/HoldColliderControl.cpp:
     .text   start:0x002E4290 end:0x002E4528
