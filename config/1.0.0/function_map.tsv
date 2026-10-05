@@ -22463,9 +22463,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100389030			FALSE	_ZN9TimerCoin7exeSpinEv	TimerCoin::exeSpin()	
 0x71003890B0			FALSE	_ZN9TimerCoinD1Ev	TimerCoin::~TimerCoin()	
 0x71003890C0			FALSE	_ZN9TimerCoinD0Ev	TimerCoin::~TimerCoin()	
-0x71003890F0			FALSE	sub_71003890F0	sub_71003890F0	
-0x7100389150			FALSE	sub_7100389150	sub_7100389150	
-0x71003891D0			FALSE	sub_71003891D0	sub_71003891D0	
+0x71003890F0			FALSE	_ZNK12_GLOBAL__N_118TimerCoinNrvAppear7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_118TimerCoinNrvAppear7executeEPN2al11NerveKeeperE	
+0x7100389150			FALSE	_ZNK12_GLOBAL__N_116TimerCoinNrvSpin7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_116TimerCoinNrvSpin7executeEPN2al11NerveKeeperE	
+0x71003891D0			FALSE	_ZNK12_GLOBAL__N_121TimerCoinNrvCountDown7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_121TimerCoinNrvCountDown7executeEPN2al11NerveKeeperE	
 0x7100389210		TimerCoinHolder.o	FALSE	_ZN15TimerCoinHolderC2EPKc	TimerCoinHolder::TimerCoinHolder(char const*)	
 0x71003892A0			FALSE	_ZN15TimerCoinHolderC1EPKc	TimerCoinHolder::TimerCoinHolder(char const*)	
 0x7100389330			FALSE	_ZN15TimerCoinHolder4initERKN2al13ActorInitInfoE	TimerCoinHolder::init(al::ActorInitInfo const&)	

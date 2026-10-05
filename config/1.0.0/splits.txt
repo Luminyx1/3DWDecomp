@@ -2101,7 +2101,7 @@ src/Game/MapObj/TimeLimitStepSwitch.cpp: done
     .text   start:0x00387AA0 end:0x003884BC
 src/Game/MapObj/TimerClock.cpp: done
     .text   start:0x003884C0 end:0x00388974
-src/Game/MapObj/TimerCoin.cpp:
+src/Game/MapObj/TimerCoin.cpp: done
     .text   start:0x00388980 end:0x00389204
 src/Game/MapObj/TimerCoinHolder.cpp: done
     .text   start:0x00389210 end:0x00389848

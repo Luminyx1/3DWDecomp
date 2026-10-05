@@ -19,6 +19,10 @@ public:
     void init() override;
     void appear() override;
     void setRotateDegree(float degree);
+    void setConnector(al::MtxConnector* pConnector, const sead::Quatf& rQuat) {
+        mConnector = pConnector;
+        mBaseQuat = rQuat;
+    }
     void exeSpin();
     void rotate(float speed);
     void exeLerp();
