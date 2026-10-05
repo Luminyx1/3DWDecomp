@@ -4773,3 +4773,67 @@
 0x7101962148 8 object _ZN12_GLOBAL__N_134NrvTentackStateFallRockAttackStartE
 0x7101962170 8 object _ZN12_GLOBAL__N_128NrvTentackStateFallRockShootE
 0x7101962198 8 object _ZN12_GLOBAL__N_127NrvTentackStateFallRockWaitE
+# src/Game/Layout/SimpleAppearWaitEndParts
+0x71019E3688 8 object _ZN12_GLOBAL__N_131NrvSimpleAppearWaitEndPartsWaitE
+0x71019E36B0 8 object _ZN12_GLOBAL__N_133NrvSimpleAppearWaitEndPartsAppearE
+0x71019E36D8 8 object _ZN12_GLOBAL__N_130NrvSimpleAppearWaitEndPartsEndE
+
+# src/Game/Layout/StaffRollFin
+0x71019E4238 8 object _ZN12_GLOBAL__N_119NrvStaffRollFinHideE
+0x71019E4260 8 object _ZN12_GLOBAL__N_121NrvStaffRollFinAppearE
+0x71019E4288 8 object _ZN12_GLOBAL__N_119NrvStaffRollFinWaitE
+0x71019E42B0 8 object _ZN12_GLOBAL__N_118NrvStaffRollFinEndE
+
+# src/Game/Layout/StaffRollNintendo
+0x71019E4F00 8 object _ZN12_GLOBAL__N_124NrvStaffRollNintendoHideE
+0x71019E4F28 8 object _ZN12_GLOBAL__N_126NrvStaffRollNintendoAppearE
+0x71019E4F50 8 object _ZN12_GLOBAL__N_124NrvStaffRollNintendoWaitE
+0x71019E4F78 8 object _ZN12_GLOBAL__N_123NrvStaffRollNintendoEndE
+
+# Default spatial sound engine (atk_Sound3DManager)
+0x710211D8E8 24 object _ZN12_GLOBAL__N_121sDefaultSound3DEngineE
+0x710057E5F0 12 func _GLOBAL__sub_I_atk_Sound3DManager.cpp
+# src/Game/Layout/StaffRollName
+0x71019E4B38 8 object _ZN12_GLOBAL__N_120NrvStaffRollNameHideE
+0x71019E4B60 8 object _ZN12_GLOBAL__N_122NrvStaffRollNameAppearE
+0x71019E4B88 8 object _ZN12_GLOBAL__N_120NrvStaffRollNameWaitE
+0x71019E4BB0 8 object _ZN12_GLOBAL__N_119NrvStaffRollNameEndE
+
+# src/Game/Layout/StaffRollJob
+0x71019E4600 8 object _ZN12_GLOBAL__N_119NrvStaffRollJobHideE
+0x71019E4628 8 object _ZN12_GLOBAL__N_121NrvStaffRollJobAppearE
+0x71019E4650 8 object _ZN12_GLOBAL__N_119NrvStaffRollJobWaitE
+0x71019E4678 8 object _ZN12_GLOBAL__N_118NrvStaffRollJobEndE
+
+# src/Game/Layout/WindowProcessing
+0x71019E9BF8 8 object _ZN12_GLOBAL__N_125NrvWindowProcessingAppearE
+0x71019E9C20 8 object _ZN12_GLOBAL__N_122NrvWindowProcessingEndE
+
+# src/Game/Layout/WindowSave
+0x71019E9F70 8 object _ZN12_GLOBAL__N_117NrvWindowSaveWaitE
+0x71019E9F98 8 object _ZN12_GLOBAL__N_119NrvWindowSaveAppearE
+0x71019E9FC0 8 object _ZN12_GLOBAL__N_116NrvWindowSaveEndE
+
+# src/Game/Layout/CounterStampParts
+0x71019D5B88 8 object _ZN12_GLOBAL__N_124NrvCounterStampPartsWaitE
+0x71019D5B90 8 object _ZN12_GLOBAL__N_124NrvCounterStampPartsHideE
+0x71019D5B80 8 object _ZN12_GLOBAL__N_123NrvCounterStampPartsGetE
+
+# src/Game/Layout/GuideWindowParts
+0x71019DAFD8 8 object _ZN12_GLOBAL__N_123NrvGuideWindowPartsWaitE
+0x71019DB000 8 object _ZN12_GLOBAL__N_125NrvGuideWindowPartsAppearE
+0x71019DB028 8 object _ZN12_GLOBAL__N_122NrvGuideWindowPartsEndE
+
+# src/Game/Layout/ListClearStarFairyParts
+0x71019DC0F0 8 object _ZN12_GLOBAL__N_130NrvListClearStarFairyPartsHideE
+0x71019DC118 8 object _ZN12_GLOBAL__N_130NrvListClearStarFairyPartsShowE
+0x71019E7EE8 80 object _ZN12_GLOBAL__N_114sCursorActionsE
+
+# src/Game/Layout/GameOverMenu
+0x71019D9110 8 object _ZN12_GLOBAL__N_121NrvGameOverMenuAppearE
+
+# src/Game/Layout/ButtonArrowParts
+0x71019CFC40 8 object _ZN12_GLOBAL__N_123NrvButtonArrowPartsHideE
+0x71019CFC68 8 object _ZN12_GLOBAL__N_123NrvButtonArrowPartsWaitE
+0x71019CFC90 8 object _ZN12_GLOBAL__N_125NrvButtonArrowPartsDecideE
+0x7101B21FF0 16 object _ZN12_GLOBAL__N_111sTouchParamE

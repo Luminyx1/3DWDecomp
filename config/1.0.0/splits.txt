@@ -467,9 +467,9 @@ src/Game/CourseSelect/KinokoOneUpCourseSelect.cpp:
     .text   start:0x000B7620 end:0x000B7960
 src/Game/CourseSelect/TicoCourseSelect.cpp:
     .text   start:0x000B7960 end:0x000B7B10
-src/Game/Demo/DemoActionList.cpp:
+src/Game/Demo/DemoActionList.cpp: done
     .text   start:0x000B7B10 end:0x000B7DA4
-src/Game/Demo/DemoActorGroup.cpp:
+src/Game/Demo/DemoActorGroup.cpp: done
     .text   start:0x000B7DB0 end:0x000B7DF4
 src/Game/Demo/DemoAnimatic.cpp:
     .text   start:0x000B7E00 end:0x000B8110
@@ -477,23 +477,23 @@ src/Game/Demo/DemoCutscene.cpp:
     .text   start:0x000B8110 end:0x000B9AA8
 src/Game/Demo/DemoCutsceneSequence.cpp:
     .text   start:0x000B9AB0 end:0x000BA390
-src/Game/Demo/DemoEffectObj.cpp:
+src/Game/Demo/DemoEffectObj.cpp: done
     .text   start:0x000BA390 end:0x000BA944
 src/Game/Demo/DemoKoopaW7.cpp:
     .text   start:0x000BA950 end:0x000BB25C
-src/Game/Demo/DemoLayoutObj.cpp:
+src/Game/Demo/DemoLayoutObj.cpp: done
     .text   start:0x000BB260 end:0x000BB694
-src/Game/Demo/DemoObjBase.cpp:
+src/Game/Demo/DemoObjBase.cpp: done
     .text   start:0x000BB6A0 end:0x000BC054
-src/Game/Demo/DemoOpeningSwitch.cpp:
+src/Game/Demo/DemoOpeningSwitch.cpp: done
     .text   start:0x000BC060 end:0x000BC254
 src/Game/Demo/DemoPlayerController.cpp:
     .text   start:0x000BC260 end:0x000BCBCC
-src/Game/Demo/DemoPlayerControllerHolder.cpp:
+src/Game/Demo/DemoPlayerControllerHolder.cpp: done
     .text   start:0x000BCBD0 end:0x000BCF34
-src/Game/Demo/DemoPlayerLocator.cpp:
+src/Game/Demo/DemoPlayerLocator.cpp: done
     .text   start:0x000BCF40 end:0x000BD4D4
-src/Game/Demo/DemoPlayerModelDirector.cpp:
+src/Game/Demo/DemoPlayerModelDirector.cpp: done
     .text   start:0x000BD4E0 end:0x000BD7A8
 src/Game/Demo/DemoSceneActor.cpp:
     .text   start:0x000BD7B0 end:0x000BE2A8
@@ -501,15 +501,15 @@ src/Game/Demo/DemoSceneActorHolder.cpp:
     .text   start:0x000BE2B0 end:0x000BF4D0
 src/Game/Demo/DemoSceneActorPlayer.cpp:
     .text   start:0x000BF4D0 end:0x000BFD5C
-src/Game/Demo/DemoSceneCamera.cpp:
+src/Game/Demo/DemoSceneCamera.cpp: done
     .text   start:0x000BFD60 end:0x000C0724
 src/Game/Demo/DemoScenePlayer.cpp:
     .text   start:0x000C0730 end:0x000C1740
 src/Game/Demo/DemoScenePlayerModel.cpp:
     .text   start:0x000C1740 end:0x000C2298
-src/Game/Demo/DemoStartPosition.cpp:
+src/Game/Demo/DemoStartPosition.cpp: done
     .text   start:0x000C22A0 end:0x000C24D0
-src/Game/Demo/DemoTimerStageSwitchController.cpp:
+src/Game/Demo/DemoTimerStageSwitchController.cpp: done
     .text   start:0x000C24D0 end:0x000C29D0
 src/Game/Demo/DemoTimerStageSwitchInfo.cpp:
     .text   start:0x000C29D0 end:0x000C41EC
@@ -517,7 +517,7 @@ src/Game/Demo/DemoWorldClear.cpp:
     .text   start:0x000C41F0 end:0x000C4C28
 src/Game/Demo/ProjectDemoDirector.cpp:
     .text   start:0x000C4C30 end:0x000C5424
-src/Game/Demo/StageStartBindDemoCasinoRoom.cpp:
+src/Game/Demo/StageStartBindDemoCasinoRoom.cpp: done
     .text   start:0x000C5430 end:0x000C5C18
 src/Game/Demo/StageStartBindDemoKinopioBrigade.cpp:
     .text   start:0x000C5C20 end:0x000C7BB4
@@ -525,13 +525,13 @@ src/Game/Demo/StageStartBindDemoKinopioHouse.cpp:
     .text   start:0x000C7BC0 end:0x000C83D8
 src/Game/Demo/StageStartBindDemoMysteryHouse.cpp:
     .text   start:0x000C83E0 end:0x000C8E38
-src/Game/Demo/StageStartEventCamera.cpp:
+src/Game/Demo/StageStartEventCamera.cpp: done
     .text   start:0x000C8E40 end:0x000C9384
-src/Game/Demo/StageStartEventDemo.cpp:
+src/Game/Demo/StageStartEventDemo.cpp: done
     .text   start:0x000C9390 end:0x000C9964
-src/Game/Demo/StageStartEventSound.cpp:
+src/Game/Demo/StageStartEventSound.cpp: done
     .text   start:0x000C9970 end:0x000C9E74
-src/Game/Demo/StageStartEventTimer.cpp:
+src/Game/Demo/StageStartEventTimer.cpp: done
     .text   start:0x000C9E80 end:0x000CA59C
 src/Game/Enemy/ActorJointLookController.cpp:
     .text   start:0x000CA5A0 end:0x000CAC94
@@ -589,7 +589,7 @@ src/Game/Enemy/Chorobon.cpp:
     .text   start:0x000E56B0 end:0x000E6054
 src/Game/Enemy/ChorobonColony.cpp:
     .text   start:0x000E6060 end:0x000E6654
-src/Game/Enemy/ChorobonCube.cpp:
+src/Game/Enemy/ChorobonCube.cpp: done
     .text   start:0x000E6660 end:0x000E6804
 src/Game/Enemy/ChorobonCubeHolder.cpp:
     .text   start:0x000E6810 end:0x000E7064
@@ -729,7 +729,7 @@ src/Game/Enemy/MoamoaHolder.cpp:
     .text   start:0x00128630 end:0x00128B84
 src/Game/Enemy/ModelHolder.cpp:
     .text   start:0x00128B90 end:0x00128F34
-src/Game/Enemy/ModelHolderActor.cpp:
+src/Game/Enemy/ModelHolderActor.cpp: done
     .text   start:0x00128F40 end:0x001290D0
 src/Game/Enemy/NeedleSeed.cpp:
     .text   start:0x001290D0 end:0x001295EC
@@ -783,7 +783,7 @@ src/Game/Enemy/RunnerStateJump.cpp:
     .text   start:0x001430A0 end:0x00143B78
 src/Game/Enemy/SamboSnowBody.cpp:
     .text   start:0x00143B80 end:0x00144818
-src/Game/Enemy/SamboSnowHat.cpp:
+src/Game/Enemy/SamboSnowHat.cpp: done
     .text   start:0x00144820 end:0x00144AD8
 src/Game/Enemy/SamboSnowHead.cpp:
     .text   start:0x00144AE0 end:0x00148518
@@ -825,7 +825,7 @@ src/Game/Enemy/Teren.cpp:
     .text   start:0x0015B580 end:0x0015C444
 src/Game/Enemy/Teresa.cpp:
     .text   start:0x0015C450 end:0x0015E360
-src/Game/Enemy/TeresaConveyorTeresaBig.cpp:
+src/Game/Enemy/TeresaConveyorTeresaBig.cpp: done
     .text   start:0x0015E360 end:0x0015E620
 src/Game/Enemy/TeresaWall.cpp:
     .text   start:0x0015E620 end:0x0015EEC8
@@ -1083,23 +1083,23 @@ src/Game/Layout/CounterGreenStarAppend.cpp:
     .text   start:0x001B6EE0 end:0x001B7644
 src/Game/Layout/CounterGreenStarParts.cpp:
     .text   start:0x001B7650 end:0x001B812C
-src/Game/Layout/CounterMysteryBox.cpp:
+src/Game/Layout/CounterMysteryBox.cpp: done
     .text   start:0x001B8130 end:0x001B8304
 src/Game/Layout/CounterPlayerInfo.cpp:
     .text   start:0x001B8310 end:0x001B8A44
 src/Game/Layout/CounterPlayerParts.cpp:
     .text   start:0x001B8A50 end:0x001B9B04
-src/Game/Layout/CounterRecordParts.cpp:
+src/Game/Layout/CounterRecordParts.cpp: done
     .text   start:0x001B9B10 end:0x001B9F8C
-src/Game/Layout/CounterScoreParts.cpp:
+src/Game/Layout/CounterScoreParts.cpp: done
     .text   start:0x001B9F90 end:0x001BA294
-src/Game/Layout/CounterStampParts.cpp:
+src/Game/Layout/CounterStampParts.cpp: done
     .text   start:0x001BA2A0 end:0x001BA72C
 src/Game/Layout/CounterWarpCube.cpp:
     .text   start:0x001BA730 end:0x001BB4A4
-src/Game/Layout/CourseSelectInfo.cpp:
+src/Game/Layout/CourseSelectInfo.cpp: done
     .text   start:0x001BB4B0 end:0x001BB638
-src/Game/Layout/CourseSelectInfoA.cpp:
+src/Game/Layout/CourseSelectInfoA.cpp: done
     .text   start:0x001BB640 end:0x001BB78C
 src/Game/Layout/CourseSelectInfoBase.cpp:
     .text   start:0x001BB790 end:0x001BBF3C
@@ -1107,9 +1107,9 @@ src/Game/Layout/CourseSelectInfoLayoutFunction.cpp:
     .text   start:0x001BBF40 end:0x001BCE94
 src/Game/Layout/CourseSelectInfoDecideButton.cpp:
     .text   start:0x001BCEA0 end:0x001BD5D4
-src/Game/Layout/CourseSelectInfoMystery10.cpp:
+src/Game/Layout/CourseSelectInfoMystery10.cpp: done
     .text   start:0x001BD5E0 end:0x001BD71C
-src/Game/Layout/CourseSelectInfoMysteryMax.cpp:
+src/Game/Layout/CourseSelectInfoMysteryMax.cpp: done
     .text   start:0x001BD720 end:0x001BD864
 src/Game/Layout/CourseSelectLayout.cpp:
     .text   start:0x001BD870 end:0x001BDEE8
@@ -1119,13 +1119,13 @@ src/Game/Layout/CourseSelectSceneLayout.cpp:
     .text   start:0x001BE910 end:0x001C03A4
 src/Game/Layout/CourseSelectStartInfo.cpp:
     .text   start:0x001C03B0 end:0x001C06F4
-src/Game/Layout/CursorTarget.cpp:
+src/Game/Layout/CursorTarget.cpp: done
     .text   start:0x001C0700 end:0x001C07F8
 src/Game/Layout/DokanGuideBalloon.cpp:
     .text   start:0x001C0800 end:0x001C0DB8
 src/Game/Layout/FileSelect.cpp:
     .text   start:0x001C0DC0 end:0x001C3DE4
-src/Game/Layout/GameOverMenu.cpp:
+src/Game/Layout/GameOverMenu.cpp: done
     .text   start:0x001C3DF0 end:0x001C4298
 src/Game/Layout/GhostMiiNameplate.cpp:
     .text   start:0x001C42A0 end:0x001C47A4
@@ -1141,7 +1141,7 @@ src/Game/Layout/GuideMessage.cpp:
     .text   start:0x001C7520 end:0x001C8A68
 src/Game/Layout/GuideObj.cpp:
     .text   start:0x001C8A70 end:0x001C9168
-src/Game/Layout/GuideWindowParts.cpp:
+src/Game/Layout/GuideWindowParts.cpp: done
     .text   start:0x001C9170 end:0x001C9534
 src/Game/Layout/IslandMap.cpp:
     .text   start:0x001C9540 end:0x001CCFC8
@@ -1151,7 +1151,7 @@ src/Game/Layout/ListClearParts.cpp:
     .text   start:0x001CD7A0 end:0x001CE80C
 src/Game/Layout/ListClearStar.cpp:
     .text   start:0x001CE810 end:0x001CF8A4
-src/Game/Layout/ListClearStarFairyParts.cpp:
+src/Game/Layout/ListClearStarFairyParts.cpp: done
     .text   start:0x001CF8B0 end:0x001CFCB8
 src/Game/Layout/ListClearStarMaxParts.cpp:
     .text   start:0x001CFCC0 end:0x001D0BC8
@@ -1215,21 +1215,21 @@ src/Game/Layout/ScoreNumber.cpp:
     .text   start:0x001ECE30 end:0x001EDB58
 src/Game/Layout/ShowCourseSelect.cpp:
     .text   start:0x001EDB60 end:0x001EE358
-src/Game/Layout/SimpleAppearWaitEndParts.cpp:
+src/Game/Layout/SimpleAppearWaitEndParts.cpp: done
     .text   start:0x001EE360 end:0x001EE6D4
 src/Game/Layout/SingleModeSceneLayout.cpp:
     .text   start:0x001EE6E0 end:0x001F0D58
 src/Game/Layout/SingleModeTitle.cpp:
     .text   start:0x001F0D60 end:0x001F15A4
-src/Game/Layout/StaffRollFin.cpp:
+src/Game/Layout/StaffRollFin.cpp: done
     .text   start:0x001F15B0 end:0x001F1A54
-src/Game/Layout/StaffRollJob.cpp:
+src/Game/Layout/StaffRollJob.cpp: done
     .text   start:0x001F1A60 end:0x001F2064
 src/Game/Layout/StaffRollLayoutHolder.cpp:
     .text   start:0x001F2070 end:0x001F37E8
-src/Game/Layout/StaffRollName.cpp:
+src/Game/Layout/StaffRollName.cpp: done
     .text   start:0x001F37F0 end:0x001F3D14
-src/Game/Layout/StaffRollNintendo.cpp:
+src/Game/Layout/StaffRollNintendo.cpp: done
     .text   start:0x001F3D20 end:0x001F41C4
 src/Game/Layout/StageSceneLayout.cpp:
     .text   start:0x001F41D0 end:0x001F5568
@@ -1255,13 +1255,13 @@ src/Game/Layout/TestLayoutPartsActor.cpp:
     .text   start:0x001F9910 end:0x001F9B34
 src/Game/Layout/TestMusaLayout.cpp:
     .text   start:0x001F9B40 end:0x001F9F38
-src/Game/Layout/TimerClockNumber.cpp:
+src/Game/Layout/TimerClockNumber.cpp: done
     .text   start:0x001F9F40 end:0x001FA338
 src/Game/Layout/TitleLogo.cpp:
     .text   start:0x001FA340 end:0x001FB478
 src/Game/Layout/TopMenu.cpp:
     .text   start:0x001FB480 end:0x001FC530
-src/Game/Layout/TouchEffect.cpp:
+src/Game/Layout/TouchEffect.cpp: done
     .text   start:0x001FC530 end:0x001FC93C
 src/Game/Layout/Utl.cpp:
     .text   start:0x001FC940 end:0x001FD6EC
@@ -1277,9 +1277,9 @@ src/Game/Layout/WindowMiiSetUp.cpp:
     .text   start:0x00200F20 end:0x00201AC4
 src/Game/Layout/WindowMiiverseDetail.cpp:
     .text   start:0x00201AD0 end:0x00202498
-src/Game/Layout/WindowProcessing.cpp:
+src/Game/Layout/WindowProcessing.cpp: done
     .text   start:0x002024A0 end:0x002029E4
-src/Game/Layout/WindowSave.cpp:
+src/Game/Layout/WindowSave.cpp: done
     .text   start:0x002029F0 end:0x00202F14
 src/Game/Layout/WipeCurtainRanking.cpp:
     .text   start:0x00202F20 end:0x00203DF4
@@ -3575,9 +3575,9 @@ src/nw/atk/detail/util/atk_ProfileReader.cpp:
     .text   start:0x0057C9F0 end:0x0057DD18
 src/nw/atk/detail/util/atk_TaskProfileReader.cpp: done
     .text   start:0x0057DD20 end:0x0057E180
-src/nw/atk/detail/util/atk_Sound3DManager.cpp:
+src/nw/atk/detail/util/atk_Sound3DManager.cpp: done
     .text   start:0x0057E180 end:0x0057E5FC
-src/nw/atk/detail/util/atk_Sound3DEngine.cpp:
+src/nw/atk/detail/util/atk_Sound3DEngine.cpp: done
     .text   start:0x0057E600 end:0x0057EA94
 src/nw/atk/detail/util/atk_Sound3DCalculator.cpp:
     .text   start:0x0057EAA0 end:0x0057F488
