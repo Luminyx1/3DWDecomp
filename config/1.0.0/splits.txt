@@ -1665,7 +1665,7 @@ src/Game/MapObj/GoalItem.cpp:
     .text   start:0x002C7690 end:0x002CE8AC
 src/Game/MapObj/GoalItemBindPuppeteer.cpp: done
     .text   start:0x002CE8B0 end:0x002CEC04
-src/Game/MapObj/GoalItemHolder.cpp:
+src/Game/MapObj/GoalItemHolder.cpp: done
     .text   start:0x002CEC10 end:0x002CF138
 src/Game/MapObj/GoalItemWatcher.cpp: done
     .text   start:0x002CF140 end:0x002CF438

@@ -1,4 +1,5 @@
 #pragma once
+#include "MapObj/GoalItem.hpp"
 #include "MapObj/CandlestandWatcher.hpp"
 #include "MapObj/Candlestand.hpp"
 #include "MapObj/ItemBubbleSingleMode.hpp"
@@ -1359,13 +1360,7 @@ private:
 };
 static_assert(sizeof(GoalDoor) == 0x160);
 
-class GoalItem : public al::LiveActor {
-public:
-    explicit GoalItem(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x28c];
-};
 static_assert(sizeof(GoalItem) == 0x3d0);
 
 class GoalItemWatcher : public al::LiveActor {

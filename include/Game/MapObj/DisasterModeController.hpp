@@ -20,6 +20,7 @@ class DisasterModeController : public al::LiveActor {
     static DisasterModeController* tryGetController(const al::IUseSceneObjHolder* pUser);
 
     void endImmediate();
+    void setSuperBowserV2(bool);
     void pause(bool);
     void beginAndNeverEndDebug();
     void setGoalItemDisasterTrigger() { mGoalItemDisasterTrigger = true; }
