@@ -5985,7 +5985,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71000E67B0			FALSE	_ZN12ChorobonCube9exeFollowEv	ChorobonCube::exeFollow()	
 0x71000E67C0			FALSE	_ZN12ChorobonCubeD1Ev	ChorobonCube::~ChorobonCube()	
 0x71000E67D0			FALSE	_ZN12ChorobonCubeD0Ev	ChorobonCube::~ChorobonCube()	
-0x71000E6800			FALSE	nullsub_56	nullsub_56	
+0x71000E6800			FALSE	_ZNK12_GLOBAL__N_121ChorobonCubeNrvFollow7executeEPN2al11NerveKeeperE	(anonymous namespace)::ChorobonCubeNrvFollow::execute(al::NerveKeeper*) const	
 0x71000E6810		ChorobonCubeHolder.o	FALSE	_ZN18ChorobonCubeHolderC2EPKc	ChorobonCubeHolder::ChorobonCubeHolder(char const*)	
 0x71000E68D0			FALSE	_ZN18ChorobonCubeHolderC1EPKc	ChorobonCubeHolder::ChorobonCubeHolder(char const*)	
 0x71000E6990			FALSE	_ZN18ChorobonCubeHolder4initERKN2al13ActorInitInfoE	ChorobonCubeHolder::init(al::ActorInitInfo const&)	

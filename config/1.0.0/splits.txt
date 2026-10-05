@@ -589,7 +589,7 @@ src/Game/Enemy/Chorobon.cpp:
     .text   start:0x000E56B0 end:0x000E6054
 src/Game/Enemy/ChorobonColony.cpp:
     .text   start:0x000E6060 end:0x000E6654
-src/Game/Enemy/ChorobonCube.cpp:
+src/Game/Enemy/ChorobonCube.cpp: done
     .text   start:0x000E6660 end:0x000E6804
 src/Game/Enemy/ChorobonCubeHolder.cpp:
     .text   start:0x000E6810 end:0x000E7064
