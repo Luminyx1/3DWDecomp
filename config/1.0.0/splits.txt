@@ -1255,7 +1255,7 @@ src/Game/Layout/TestLayoutPartsActor.cpp:
     .text   start:0x001F9910 end:0x001F9B34
 src/Game/Layout/TestMusaLayout.cpp:
     .text   start:0x001F9B40 end:0x001F9F38
-src/Game/Layout/TimerClockNumber.cpp:
+src/Game/Layout/TimerClockNumber.cpp: done
     .text   start:0x001F9F40 end:0x001FA338
 src/Game/Layout/TitleLogo.cpp:
     .text   start:0x001FA340 end:0x001FB478
