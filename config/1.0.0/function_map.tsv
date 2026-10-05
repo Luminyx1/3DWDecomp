@@ -360,8 +360,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710000D480			FALSE	_ZN15BossWackunFrame7revivalEv	BossWackunFrame::revival()	
 0x710000D4C0			FALSE	_ZN15BossWackunFrameD1Ev	BossWackunFrame::~BossWackunFrame()	
 0x710000D4D0			FALSE	_ZN15BossWackunFrameD0Ev	BossWackunFrame::~BossWackunFrame()	
-0x710000D500			FALSE	sub_710000D500	sub_710000D500	
-0x710000D510			FALSE	sub_710000D510	sub_710000D510	
+0x710000D500			FALSE	_ZNK12_GLOBAL__N_122BossWackunFrameNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::BossWackunFrameNrvWait::execute(al::NerveKeeper*) const	matched nerve
+0x710000D510			FALSE	_ZNK12_GLOBAL__N_124BossWackunFrameNrvDamage7executeEPN2al11NerveKeeperE	(anonymous namespace)::BossWackunFrameNrvDamage::execute(al::NerveKeeper*) const	matched nerve
 0x710000D520		BossWackunHand.o	FALSE	_ZN14BossWackunHandC2EP10BossWackun	BossWackunHand::BossWackunHand(BossWackun*)	
 0x710000D5C0			FALSE	_ZN14BossWackunHandC1EP10BossWackun	BossWackunHand::BossWackunHand(BossWackun*)	
 0x710000D660			FALSE	_ZN14BossWackunHand4initERKN2al13ActorInitInfoE	BossWackunHand::init(al::ActorInitInfo const&)	
@@ -1137,9 +1137,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710002F730			FALSE	_ZN26KoopaChaseStateProvocation14exeProvocationEv	KoopaChaseStateProvocation::exeProvocation()	
 0x710002F7E0			FALSE	_ZN26KoopaChaseStateProvocation7exeFireEv	KoopaChaseStateProvocation::exeFire()	
 0x710002F830			FALSE	_ZN26KoopaChaseStateProvocationD0Ev	KoopaChaseStateProvocation::~KoopaChaseStateProvocation()	
-0x710002F860			FALSE	_ZNK12_GLOBAL__N_140KoopaChaseStateProvocationNrvProvocation7executeEPN2al11NerveKeeperE	(anonymous namespace)::KoopaChaseStateProvocationNrvProvocation::execute(al::NerveKeeper*) const	
-0x710002F870			FALSE	sub_710002F870	sub_710002F870	
-0x710002F8C0			FALSE	sub_710002F8C0	sub_710002F8C0	
+0x710002F860			FALSE	_ZNK12_GLOBAL__N_140KoopaChaseStateProvocationNrvProvocation7executeEPN2al11NerveKeeperE	(anonymous namespace)::KoopaChaseStateProvocationNrvProvocation::execute(al::NerveKeeper*) const	matched nerve
+0x710002F870			FALSE	_ZNK12_GLOBAL__N_133KoopaChaseStateProvocationNrvFire7executeEPN2al11NerveKeeperE	(anonymous namespace)::KoopaChaseStateProvocationNrvFire::execute(al::NerveKeeper*) const	matched nerve
+0x710002F8C0			FALSE	_ZNK12_GLOBAL__N_133KoopaChaseStateProvocationNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::KoopaChaseStateProvocationNrvWait::execute(al::NerveKeeper*) const	matched nerve
 0x710002F940		KoopaChaseStateThrow.o	FALSE	_ZN20KoopaChaseStateThrowC1EP10KoopaChaseRKN2al13ActorInitInfoEf	KoopaChaseStateThrow::KoopaChaseStateThrow(KoopaChase*, al::ActorInitInfo const&, float)	
 0x710002FAE0			FALSE	_ZN20KoopaChaseStateThrow4killEv	KoopaChaseStateThrow::kill()	
 0x710002FBA0			FALSE	_ZN20KoopaChaseStateThrow13tryStartThrowEb	KoopaChaseStateThrow::tryStartThrow(bool)	
@@ -1174,10 +1174,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100030D20			FALSE	_ZN19KoopaChaseWarpDummy14exeProvocationEv	KoopaChaseWarpDummy::exeProvocation()	
 0x7100030D90			FALSE	_ZN19KoopaChaseWarpDummyD1Ev	KoopaChaseWarpDummy::~KoopaChaseWarpDummy()	
 0x7100030DA0			FALSE	_ZN19KoopaChaseWarpDummyD0Ev	KoopaChaseWarpDummy::~KoopaChaseWarpDummy()	
-0x7100030DD0			FALSE	_ZNK12_GLOBAL__N_126KoopaChaseWarpDummyNrvMove7executeEPN2al11NerveKeeperE	(anonymous namespace)::KoopaChaseWarpDummyNrvMove::execute(al::NerveKeeper*) const	
-0x7100030DE0			FALSE	_ZNK12_GLOBAL__N_126KoopaChaseWarpDummyNrvLand7executeEPN2al11NerveKeeperE	(anonymous namespace)::KoopaChaseWarpDummyNrvLand::execute(al::NerveKeeper*) const	
-0x7100030DF0			FALSE	sub_7100030DF0	sub_7100030DF0	
-0x7100030E50			FALSE	sub_7100030E50	sub_7100030E50	
+0x7100030DD0			FALSE	_ZNK12_GLOBAL__N_126KoopaChaseWarpDummyNrvMove7executeEPN2al11NerveKeeperE	(anonymous namespace)::KoopaChaseWarpDummyNrvMove::execute(al::NerveKeeper*) const	matched nerve
+0x7100030DE0			FALSE	_ZNK12_GLOBAL__N_126KoopaChaseWarpDummyNrvLand7executeEPN2al11NerveKeeperE	(anonymous namespace)::KoopaChaseWarpDummyNrvLand::execute(al::NerveKeeper*) const	matched nerve
+0x7100030DF0			FALSE	_ZNK12_GLOBAL__N_126KoopaChaseWarpDummyNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::KoopaChaseWarpDummyNrvWait::execute(al::NerveKeeper*) const	matched nerve
+0x7100030E50			FALSE	_ZNK12_GLOBAL__N_133KoopaChaseWarpDummyNrvProvocation7executeEPN2al11NerveKeeperE	(anonymous namespace)::KoopaChaseWarpDummyNrvProvocation::execute(al::NerveKeeper*) const	matched nerve
 0x7100030EC0		KoopaLastAttack.o	FALSE	_ZN19KoopaLastAttackFireC2EPKc	KoopaLastAttackFire::KoopaLastAttackFire(char const*)	renamed from KoopaLasttAttack.o (spelling)
 0x7100030F40			FALSE	_ZN19KoopaLastAttackFireC1EPKc	KoopaLastAttackFire::KoopaLastAttackFire(char const*)	
 0x7100030FD0			FALSE	_ZN19KoopaLastAttackFire4initERKN2al13ActorInitInfoE	KoopaLastAttackFire::init(al::ActorInitInfo const&)	
@@ -1185,7 +1185,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71000310A0			FALSE	_ZN19KoopaLastAttackFire9exeAttackEv	KoopaLastAttackFire::exeAttack()	
 0x71000310B0			FALSE	_ZN19KoopaLastAttackFireD1Ev	KoopaLastAttackFire::~KoopaLastAttackFire()	
 0x71000310C0			FALSE	_ZN19KoopaLastAttackFireD0Ev	KoopaLastAttackFire::~KoopaLastAttackFire()	
-0x71000310F0			FALSE	sub_71000310F0	sub_71000310F0	
+0x71000310F0			FALSE	_ZNK12_GLOBAL__N_128KoopaLastAttackFireNrvAttack7executeEPN2al11NerveKeeperE	(anonymous namespace)::KoopaLastAttackFireNrvAttack::execute(al::NerveKeeper*) const	matched nerve
 0x7100031100		KoopaLastBeforeCheckPoint.o	FALSE	_ZN25KoopaLastBeforeCheckPointC2EPKc	KoopaLastBeforeCheckPoint::KoopaLastBeforeCheckPoint(char const*)	note: sorts before the previous object (folder boundary or misnamed object?)
 0x71000311D0			FALSE	_ZN25KoopaLastBeforeCheckPointC1EPKc	KoopaLastBeforeCheckPoint::KoopaLastBeforeCheckPoint(char const*)	
 0x71000312B0			FALSE	_ZN25KoopaLastBeforeCheckPoint4initERKN2al13ActorInitInfoE	KoopaLastBeforeCheckPoint::init(al::ActorInitInfo const&)	
@@ -1334,7 +1334,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71000363A0			FALSE	_ZN19KoopaLastFireBreathD1Ev	KoopaLastFireBreath::~KoopaLastFireBreath()	
 0x71000363B0			FALSE	_ZN19KoopaLastFireBreathD0Ev	KoopaLastFireBreath::~KoopaLastFireBreath()	
 0x71000363E0			FALSE	_ZNK12_GLOBAL__N_126KoopaLastFireBreathNrvMove7executeEPN2al11NerveKeeperE	(anonymous namespace)::KoopaLastFireBreathNrvMove::execute(al::NerveKeeper*) const	
-0x71000363F0			FALSE	sub_71000363F0	sub_71000363F0	
+0x71000363F0			FALSE	_ZNK12_GLOBAL__N_130KoopaLastFireBreathNrvCollided7executeEPN2al11NerveKeeperE	(anonymous namespace)::KoopaLastFireBreathNrvCollided::execute(al::NerveKeeper*) const	matched nerve
 0x7100036440		KoopaLastFloor.o	FALSE	_ZN14KoopaLastFloorC2EPKc	KoopaLastFloor::KoopaLastFloor(char const*)	
 0x71000364C0			FALSE	_ZN14KoopaLastFloorC1EPKc	KoopaLastFloor::KoopaLastFloor(char const*)	
 0x7100036550			FALSE	_ZN14KoopaLastFloor4initERKN2al13ActorInitInfoE	KoopaLastFloor::init(al::ActorInitInfo const&)	
@@ -1345,8 +1345,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71000366E0			FALSE	_ZN14KoopaLastFloor7exeSignEv	KoopaLastFloor::exeSign()	
 0x7100036720			FALSE	_ZN14KoopaLastFloorD1Ev	KoopaLastFloor::~KoopaLastFloor()	
 0x7100036730			FALSE	_ZN14KoopaLastFloorD0Ev	KoopaLastFloor::~KoopaLastFloor()	
-0x7100036760			FALSE	nullsub_8	nullsub_8	
-0x7100036770			FALSE	sub_7100036770	sub_7100036770	
+0x7100036760			FALSE	_ZNK12_GLOBAL__N_121KoopaLastFloorNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::KoopaLastFloorNrvWait::execute(al::NerveKeeper*) const	matched nerve
+0x7100036770			FALSE	_ZNK12_GLOBAL__N_121KoopaLastFloorNrvSign7executeEPN2al11NerveKeeperE	(anonymous namespace)::KoopaLastFloorNrvSign::execute(al::NerveKeeper*) const	matched nerve
 0x71000367B0			FALSE	_ZNK2al10FunctorV0MIP14KoopaLastFloorMS1_FvvEEclEv	al::FunctorV0M<KoopaLastFloor*, void (KoopaLastFloor::*)()>::operator()() const	
 0x71000367D0			FALSE	_ZNK2al10FunctorV0MIP14KoopaLastFloorMS1_FvvEE5cloneEv	al::FunctorV0M<KoopaLastFloor*, void (KoopaLastFloor::*)()>::clone() const	
 0x7100036820		KoopaLastFunction.o	FALSE	_ZN17KoopaLastFunction24initActorKoopaLastCommonEPN2al9LiveActorERKNS0_13ActorInitInfoEPKcPN4sead8PtrArrayINS0_21JointSpringControllerEEE	KoopaLastFunction::initActorKoopaLastCommon(al::LiveActor*, al::ActorInitInfo const&, char const*, sead::PtrArray<al::JointSpringController>*)	
@@ -1395,9 +1395,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71000382B0			FALSE	_ZN17KoopaLastStateTop7exeWaitEv	KoopaLastStateTop::exeWait()	
 0x7100038340			FALSE	_ZN17KoopaLastStateTop8exeShoutEv	KoopaLastStateTop::exeShout()	
 0x71000383A0			FALSE	_ZN17KoopaLastStateTopD0Ev	KoopaLastStateTop::~KoopaLastStateTop()	
-0x71000383D0			FALSE	sub_71000383D0	sub_71000383D0	
-0x7100038450			FALSE	_ZNK12_GLOBAL__N_124KoopaLastStateTopNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::KoopaLastStateTopNrvWait::execute(al::NerveKeeper*) const	
-0x7100038460			FALSE	sub_7100038460	sub_7100038460	
+0x71000383D0			FALSE	_ZNK12_GLOBAL__N_128KoopaLastStateTopNrvClimbEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::KoopaLastStateTopNrvClimbEnd::execute(al::NerveKeeper*) const	matched nerve
+0x7100038450			FALSE	_ZNK12_GLOBAL__N_124KoopaLastStateTopNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::KoopaLastStateTopNrvWait::execute(al::NerveKeeper*) const	matched nerve
+0x7100038460			FALSE	_ZNK12_GLOBAL__N_125KoopaLastStateTopNrvShout7executeEPN2al11NerveKeeperE	(anonymous namespace)::KoopaLastStateTopNrvShout::execute(al::NerveKeeper*) const	matched nerve
 0x71000384C0		KoopaLastWall.o	FALSE	_ZN13KoopaLastWallC2EPKc	KoopaLastWall::KoopaLastWall(char const*)	
 0x7100038540			FALSE	_ZN13KoopaLastWallC1EPKc	KoopaLastWall::KoopaLastWall(char const*)	
 0x71000385D0			FALSE	_ZN13KoopaLastWall5startEv	KoopaLastWall::start()	
@@ -1407,9 +1407,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100038760			FALSE	_ZN13KoopaLastWall8exeBreakEv	KoopaLastWall::exeBreak()	
 0x71000387D0			FALSE	_ZN13KoopaLastWallD1Ev	KoopaLastWall::~KoopaLastWall()	
 0x71000387E0			FALSE	_ZN13KoopaLastWallD0Ev	KoopaLastWall::~KoopaLastWall()	
-0x7100038810			FALSE	sub_7100038810	sub_7100038810	
-0x71000388B0			FALSE	sub_71000388B0	sub_71000388B0	
-0x71000388D0			FALSE	sub_71000388D0	sub_71000388D0	
+0x7100038810			FALSE	_ZNK12_GLOBAL__N_120KoopaLastWallNrvSign7executeEPN2al11NerveKeeperE	(anonymous namespace)::KoopaLastWallNrvSign::execute(al::NerveKeeper*) const	matched nerve
+0x71000388B0			FALSE	_ZNK12_GLOBAL__N_120KoopaLastWallNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::KoopaLastWallNrvWait::execute(al::NerveKeeper*) const	matched nerve
+0x71000388D0			FALSE	_ZNK12_GLOBAL__N_121KoopaLastWallNrvBreak7executeEPN2al11NerveKeeperE	(anonymous namespace)::KoopaLastWallNrvBreak::execute(al::NerveKeeper*) const	matched nerve
 0x7100038940			FALSE	_ZNK2al10FunctorV0MIP13KoopaLastWallMS1_FvvEEclEv	al::FunctorV0M<KoopaLastWall*, void (KoopaLastWall::*)()>::operator()() const	
 0x7100038960			FALSE	_ZNK2al10FunctorV0MIP13KoopaLastWallMS1_FvvEE5cloneEv	al::FunctorV0M<KoopaLastWall*, void (KoopaLastWall::*)()>::clone() const	
 0x71000389B0		KoopaLastWallClimb.o	FALSE	_ZN18KoopaLastWallClimbC2EPKc	KoopaLastWallClimb::KoopaLastWallClimb(char const*)	
@@ -2365,11 +2365,11 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71000688B0			FALSE	_ZN11TentackHill12setDisappearEv	TentackHill::setDisappear()	
 0x71000688C0			FALSE	_ZN11TentackHillD1Ev	TentackHill::~TentackHill()	
 0x71000688D0			FALSE	_ZN11TentackHillD0Ev	TentackHill::~TentackHill()	
-0x7100068900			FALSE	sub_7100068900	sub_7100068900	
-0x7100068960			FALSE	sub_7100068960	sub_7100068960	
-0x71000689A0			FALSE	sub_71000689A0	sub_71000689A0	
-0x71000689E0			FALSE	sub_71000689E0	sub_71000689E0	
-0x7100068A20			FALSE	sub_7100068A20	sub_7100068A20	
+0x7100068900			FALSE	_ZNK12_GLOBAL__N_120TentackHillNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::TentackHillNrvAppear::execute(al::NerveKeeper*) const	matched nerve
+0x7100068960			FALSE	_ZNK12_GLOBAL__N_118TentackHillNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::TentackHillNrvWait::execute(al::NerveKeeper*) const	matched nerve
+0x71000689A0			FALSE	_ZNK12_GLOBAL__N_124TentackHillNrvAppearWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::TentackHillNrvAppearWait::execute(al::NerveKeeper*) const	matched nerve
+0x71000689E0			FALSE	_ZNK12_GLOBAL__N_127TentackHillNrvDisappearWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::TentackHillNrvDisappearWait::execute(al::NerveKeeper*) const	matched nerve
+0x7100068A20			FALSE	_ZNK12_GLOBAL__N_123TentackHillNrvDisappear7executeEPN2al11NerveKeeperE	(anonymous namespace)::TentackHillNrvDisappear::execute(al::NerveKeeper*) const	matched nerve
 0x7100068A80		TentackLv3.o	FALSE	_ZN10TentackLv3C2EPKc	TentackLv3::TentackLv3(char const*)	
 0x7100068BB0			FALSE	_ZN10TentackLv3C1EPKc	TentackLv3::TentackLv3(char const*)	
 0x7100068CD0			FALSE	_ZN10TentackLv34initERKN2al13ActorInitInfoE	TentackLv3::init(al::ActorInitInfo const&)	
@@ -2499,8 +2499,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710006D9B0			FALSE	_ZN17TentackRockFaller19setValidFollowForceEv	TentackRockFaller::setValidFollowForce()	
 0x710006D9C0			FALSE	_ZN17TentackRockFallerD1Ev	TentackRockFaller::~TentackRockFaller()	
 0x710006D9D0			FALSE	_ZN17TentackRockFallerD0Ev	TentackRockFaller::~TentackRockFaller()	
-0x710006DA00			FALSE	sub_710006DA00	sub_710006DA00	
-0x710006DA40			FALSE	sub_710006DA40	sub_710006DA40	
+0x710006DA00			FALSE	_ZNK12_GLOBAL__N_128TentackRockFallerNrvFallRock7executeEPN2al11NerveKeeperE	(anonymous namespace)::TentackRockFallerNrvFallRock::execute(al::NerveKeeper*) const	matched local function
+0x710006DA40			FALSE	_GLOBAL__sub_I_TentackRockFaller.cpp	_GLOBAL__sub_I_TentackRockFaller.cpp	matched local function
 0x710006DA60		TentackStateAttackShot.o	FALSE	_ZN22TentackStateAttackShotC1EP11TentackHeadRKN2al13ActorInitInfoEPK27ITentackSwingTentacleHolder	TentackStateAttackShot::TentackStateAttackShot(TentackHead*, al::ActorInitInfo const&, ITentackSwingTentacleHolder const*)	
 0x710006DB90			FALSE	_ZN22TentackStateAttackShot6appearEv	TentackStateAttackShot::appear()	
 0x710006DBA0			FALSE	_ZN22TentackStateAttackShot4killEv	TentackStateAttackShot::kill()	
@@ -2564,10 +2564,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710006FB40			FALSE	_ZN20TentackStateFallRock5shootEb	TentackStateFallRock::shoot(bool)	
 0x710006FC70			FALSE	_ZN20TentackStateFallRock7exeWaitEv	TentackStateFallRock::exeWait()	
 0x710006FCC0			FALSE	_ZN20TentackStateFallRockD0Ev	TentackStateFallRock::~TentackStateFallRock()	
-0x710006FCF0			FALSE	sub_710006FCF0	sub_710006FCF0	
-0x710006FD40			FALSE	sub_710006FD40	sub_710006FD40	
-0x710006FDB0			FALSE	sub_710006FDB0	sub_710006FDB0	
-0x710006FE50			FALSE	sub_710006FE50	sub_710006FE50	
+0x710006FCF0			FALSE	_ZNK12_GLOBAL__N_132TentackStateFallRockNrvWaitStart7executeEPN2al11NerveKeeperE	(anonymous namespace)::TentackStateFallRockNrvWaitStart::execute(al::NerveKeeper*) const	matched nerve
+0x710006FD40			FALSE	_ZNK12_GLOBAL__N_134TentackStateFallRockNrvAttackStart7executeEPN2al11NerveKeeperE	(anonymous namespace)::TentackStateFallRockNrvAttackStart::execute(al::NerveKeeper*) const	matched nerve
+0x710006FDB0			FALSE	_ZNK12_GLOBAL__N_128TentackStateFallRockNrvShoot7executeEPN2al11NerveKeeperE	(anonymous namespace)::TentackStateFallRockNrvShoot::execute(al::NerveKeeper*) const	matched nerve
+0x710006FE50			FALSE	_ZNK12_GLOBAL__N_127TentackStateFallRockNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::TentackStateFallRockNrvWait::execute(al::NerveKeeper*) const	matched nerve
 0x710006FEA0		TentackTentacle.o	FALSE	_ZN19TentackTentacleInfoC2Ev	TentackTentacleInfo::TentackTentacleInfo()	
 0x710006FEB0			FALSE	_ZN19TentackTentacleInfo5resetEv	TentackTentacleInfo::reset()	
 0x710006FEC0			FALSE	_ZN19TentackTentacleInfo4copyEPS_	TentackTentacleInfo::copy(TentackTentacleInfo*)	

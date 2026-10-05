@@ -109,13 +109,13 @@ src/Game/Boss/BossWackun.cpp:
     .text   start:0x00008A10 end:0x0000B434
 src/Game/Boss/BossWackunBody.cpp:
     .text   start:0x0000B440 end:0x0000D268
-src/Game/Boss/BossWackunFrame.cpp:
+src/Game/Boss/BossWackunFrame.cpp: done
     .text   start:0x0000D270 end:0x0000D51C
 src/Game/Boss/BossWackunHand.cpp:
     .text   start:0x0000D520 end:0x0000DD78
 src/Game/Boss/Bunbun.cpp:
     .text   start:0x0000DD80 end:0x0000FCD8
-src/Game/Boss/BunbunArm.cpp:
+src/Game/Boss/BunbunArm.cpp: done
     .text   start:0x0000FCE0 end:0x000100B0
 src/Game/Boss/BunbunChameleon.cpp:
     .text   start:0x000100B0 end:0x000104F0
@@ -173,23 +173,23 @@ src/Game/Boss/KoopaChaseMover.cpp:
     .text   start:0x0002CF30 end:0x0002D2D8
 src/Game/Boss/KoopaChaseStateDamage.cpp:
     .text   start:0x0002D2E0 end:0x0002DA28
-src/Game/Boss/KoopaChaseDemoInfo.cpp:
+src/Game/Boss/KoopaChaseDemoInfo.cpp: done
     .text   start:0x0002DA30 end:0x0002DA4C
 src/Game/Boss/KoopaChaseStateDemo.cpp:
     .text   start:0x0002DA50 end:0x0002E8B0
 src/Game/Boss/KoopaChaseStateFire.cpp:
     .text   start:0x0002E8B0 end:0x0002F14C
-src/Game/Boss/KoopaStateChaseJump.cpp:
+src/Game/Boss/KoopaStateChaseJump.cpp: done
     .text   start:0x0002F150 end:0x0002F568
-src/Game/Boss/KoopaChaseStateProvocation.cpp:
+src/Game/Boss/KoopaChaseStateProvocation.cpp: done
     .text   start:0x0002F570 end:0x0002F934
 src/Game/Boss/KoopaChaseStateThrow.cpp:
     .text   start:0x0002F940 end:0x000305A8
-src/Game/Boss/KoopaChaseStateWarp.cpp:
+src/Game/Boss/KoopaChaseStateWarp.cpp: done
     .text   start:0x000305B0 end:0x000308D8
-src/Game/Boss/KoopaChaseWarpDummy.cpp:
+src/Game/Boss/KoopaChaseWarpDummy.cpp: done
     .text   start:0x000308E0 end:0x00030EB8
-src/Game/Boss/KoopaLastAttack.cpp:
+src/Game/Boss/KoopaLastAttack.cpp: done
     .text   start:0x00030EC0 end:0x000310F8
 src/Game/Boss/KoopaLastBeforeCheckPoint.cpp:
     .text   start:0x00031100 end:0x00031E60
@@ -205,13 +205,13 @@ src/Game/Boss/KoopaLastDemoAppear.cpp:
     .text   start:0x00034F20 end:0x000359B4
 src/Game/Boss/KoopaLastDemoEndActorHolder.cpp:
     .text   start:0x000359C0 end:0x00035FDC
-src/Game/Boss/KoopaLastFireBreath.cpp:
+src/Game/Boss/KoopaLastFireBreath.cpp: done
     .text   start:0x00035FE0 end:0x00036434
-src/Game/Boss/KoopaLastFloor.cpp:
+src/Game/Boss/KoopaLastFloor.cpp: done
     .text   start:0x00036440 end:0x00036814
-src/Game/Boss/KoopaLastFunction.cpp:
+src/Game/Boss/KoopaLastFunction.cpp: done
     .text   start:0x00036820 end:0x00036E00
-src/Game/Boss/KoopaLastPartsModel.cpp:
+src/Game/Boss/KoopaLastPartsModel.cpp: done
     .text   start:0x00036E00 end:0x00037330
 src/Game/Boss/KoopaLastStateAttackBreathFire.cpp:
     .text   start:0x00037330 end:0x00037B50
@@ -219,7 +219,7 @@ src/Game/Boss/KoopaLastStateAttack.cpp:
     .text   start:0x00037B50 end:0x0003814C
 src/Game/Boss/KoopaLastStateTop.cpp:
     .text   start:0x00038150 end:0x000384BC
-src/Game/Boss/KoopaLastWall.cpp:
+src/Game/Boss/KoopaLastWall.cpp: done
     .text   start:0x000384C0 end:0x000389A4
 src/Game/Boss/KoopaLastWallClimb.cpp:
     .text   start:0x000389B0 end:0x00039F48
@@ -263,9 +263,9 @@ src/Game/Boss/TentackAttachItem.cpp:
     .text   start:0x00065330 end:0x00066150
 src/Game/Boss/TentackHead.cpp:
     .text   start:0x00066150 end:0x00068184
-src/Game/Boss/TentackHeadAttackBall.cpp:
+src/Game/Boss/TentackHeadAttackBall.cpp: done
     .text   start:0x00068190 end:0x00068520
-src/Game/Boss/TentackHill.cpp:
+src/Game/Boss/TentackHill.cpp: done
     .text   start:0x00068520 end:0x00068A7C
 src/Game/Boss/TentackLv3.cpp:
     .text   start:0x00068A80 end:0x0006B9F8
@@ -273,7 +273,7 @@ src/Game/Boss/TentackMagmaBall.cpp:
     .text   start:0x0006BA00 end:0x0006C36C
 src/Game/Boss/TentackResourceParam.cpp:
     .text   start:0x0006C370 end:0x0006D114
-src/Game/Boss/TentackRock.cpp:
+src/Game/Boss/TentackRock.cpp: done
     .text   start:0x0006D120 end:0x0006D768
 src/Game/Boss/TentackRockFaller.cpp:
     .text   start:0x0006D770 end:0x0006DA5C
@@ -281,7 +281,7 @@ src/Game/Boss/TentackStateAttackShot.cpp:
     .text   start:0x0006DA60 end:0x0006E18C
 src/Game/Boss/TentackStateAttackTentacle.cpp:
     .text   start:0x0006E190 end:0x0006F8EC
-src/Game/Boss/TentackStateFallRock.cpp:
+src/Game/Boss/TentackStateFallRock.cpp: done
     .text   start:0x0006F8F0 end:0x0006FE98
 src/Game/Boss/TentackTentacle.cpp:
     .text   start:0x0006FEA0 end:0x00072B68
