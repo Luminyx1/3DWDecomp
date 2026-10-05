@@ -5057,3 +5057,4 @@
 0x7101A27468 8 object _ZN12_GLOBAL__N_130NrvHeadgearStateBlowBlowSilentE
 0x7101A27440 32 object _ZTVN12_GLOBAL__N_128HeadgearStateBlowNrvBlowGoalE
 0x7101A27470 8 object _ZN12_GLOBAL__N_128NrvHeadgearStateBlowBlowGoalE
+0x71016B4E88 28 object _ZN12_GLOBAL__N_113sDefaultParamE
