@@ -13,6 +13,7 @@ public:
     void exeAppear();
     void exeAppearWait();
     void exeEnd();
+    void resetAppearDelay() { mAppearDelay = 0; }
 
 private:
     RenderMaterialIndirectParam* mParam;
