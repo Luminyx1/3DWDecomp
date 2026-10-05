@@ -22275,10 +22275,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100383930			FALSE	_ZN22TestMusaBlockChameleon10receiveMsgEPKN2al9SensorMsgEPNS0_9HitSensorES5_	TestMusaBlockChameleon::receiveMsg(al::SensorMsg const*, al::HitSensor*, al::HitSensor*)	
 0x71003839A0			FALSE	_ZN22TestMusaBlockChameleonD1Ev	TestMusaBlockChameleon::~TestMusaBlockChameleon()	
 0x71003839B0			FALSE	_ZN22TestMusaBlockChameleonD0Ev	TestMusaBlockChameleon::~TestMusaBlockChameleon()	
-0x71003839E0			FALSE	sub_71003839E0	sub_71003839E0	
-0x7100383A30			FALSE	nullsub_234	nullsub_234	
-0x7100383A40			FALSE	sub_7100383A40	sub_7100383A40	
-0x7100383A90			FALSE	sub_7100383A90	sub_7100383A90	
+0x71003839E0			FALSE	_ZNK12_GLOBAL__N_129TestMusaBlockChameleonNrvMove7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_129TestMusaBlockChameleonNrvMove7executeEPN2al11NerveKeeperE	
+0x7100383A30			FALSE	_ZNK12_GLOBAL__N_129TestMusaBlockChameleonNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_129TestMusaBlockChameleonNrvWait7executeEPN2al11NerveKeeperE	
+0x7100383A40			FALSE	_ZNK12_GLOBAL__N_129TestMusaBlockChameleonNrvStop7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_129TestMusaBlockChameleonNrvStop7executeEPN2al11NerveKeeperE	
+0x7100383A90			FALSE	_ZNK12_GLOBAL__N_130TestMusaBlockChameleonNrvBreak7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_130TestMusaBlockChameleonNrvBreak7executeEPN2al11NerveKeeperE	
 0x7100383AC0		TestMusaCoinChameleon.o	FALSE	_ZN21TestMusaCoinChameleonC2EPKc	TestMusaCoinChameleon::TestMusaCoinChameleon(char const*)	
 0x7100383B60			FALSE	_ZN21TestMusaCoinChameleonC1EPKc	TestMusaCoinChameleon::TestMusaCoinChameleon(char const*)	
 0x7100383C00			FALSE	_ZN21TestMusaCoinChameleon4initERKN2al13ActorInitInfoE	TestMusaCoinChameleon::init(al::ActorInitInfo const&)	
