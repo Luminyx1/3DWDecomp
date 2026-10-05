@@ -15214,8 +15214,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100255C50			FALSE	_ZN11BlockSwitch9exeOnWaitEv	BlockSwitch::exeOnWait()	
 0x7100255C90			FALSE	_ZN11BlockSwitchD1Ev	BlockSwitch::~BlockSwitch()	
 0x7100255CA0			FALSE	_ZN11BlockSwitchD0Ev	BlockSwitch::~BlockSwitch()	
-0x7100255CD0			FALSE	sub_7100255CD0	sub_7100255CD0	
-0x7100255D10			FALSE	sub_7100255D10	sub_7100255D10	
+0x7100255CD0			FALSE	_ZNK12_GLOBAL__N_121BlockSwitchNrvOffWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_121BlockSwitchNrvOffWait7executeEPN2al11NerveKeeperE	
+0x7100255D10			FALSE	_ZNK12_GLOBAL__N_120BlockSwitchNrvOnWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_120BlockSwitchNrvOnWait7executeEPN2al11NerveKeeperE	
 0x7100255D50			FALSE	_ZNK12_GLOBAL__N_117BlockSwitchNrvOff7executeEPN2al11NerveKeeperE	(anonymous namespace)::BlockSwitchNrvOff::execute(al::NerveKeeper*) const	
 0x7100255D60			FALSE	_ZNK12_GLOBAL__N_116BlockSwitchNrvOn7executeEPN2al11NerveKeeperE	(anonymous namespace)::BlockSwitchNrvOn::execute(al::NerveKeeper*) const	
 0x7100255D70			FALSE	_ZNK2al10FunctorV0MIP11BlockSwitchMS1_FvvEEclEv	al::FunctorV0M<BlockSwitch*, void (BlockSwitch::*)()>::operator()() const	

@@ -1,3 +1,4 @@
+#include "MapObj/BlockSwitch.hpp"
 #include "MapObj/GoalDoor.hpp"
 #include "MapObj/CoinFallGenerator.hpp"
 #include "MapObj/PSwitchTimerCoinWatcher.hpp"
@@ -206,14 +207,7 @@ private:
 };
 static_assert(sizeof(BlockSlot) == 0x170);
 
-class BlockSwitch : public al::LiveActor {
-public:
-    explicit BlockSwitch(const char* pName);
 
-private:
-    u8 mUnreconstructed[0xc];
-};
-static_assert(sizeof(BlockSwitch) == 0x150);
 
 
 
