@@ -4766,3 +4766,8 @@
 # src/Game/Layout/WindowProcessing
 0x71019E9BF8 8 object _ZN12_GLOBAL__N_125NrvWindowProcessingAppearE
 0x71019E9C20 8 object _ZN12_GLOBAL__N_122NrvWindowProcessingEndE
+
+# src/Game/Layout/WindowSave
+0x71019E9F70 8 object _ZN12_GLOBAL__N_117NrvWindowSaveWaitE
+0x71019E9F98 8 object _ZN12_GLOBAL__N_119NrvWindowSaveAppearE
+0x71019E9FC0 8 object _ZN12_GLOBAL__N_116NrvWindowSaveEndE

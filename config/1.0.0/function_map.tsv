@@ -13358,9 +13358,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100202C50			FALSE	_ZN10WindowSave9exeAppearEv	WindowSave::exeAppear()	
 0x7100202CD0			FALSE	_ZN10WindowSave7exeWaitEv	WindowSave::exeWait()	
 0x7100202D50			FALSE	_ZN10WindowSave6exeEndEv	WindowSave::exeEnd()	
-0x7100202DB0			FALSE	sub_7100202DB0	sub_7100202DB0	
-0x7100202E30			FALSE	sub_7100202E30	sub_7100202E30	
-0x7100202EB0			FALSE	sub_7100202EB0	sub_7100202EB0	
+0x7100202DB0			FALSE	_ZNK12_GLOBAL__N_117WindowSaveNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::WindowSaveNrvWait::execute(al::NerveKeeper*) const	
+0x7100202E30			FALSE	_ZNK12_GLOBAL__N_119WindowSaveNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::WindowSaveNrvAppear::execute(al::NerveKeeper*) const	
+0x7100202EB0			FALSE	_ZNK12_GLOBAL__N_116WindowSaveNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::WindowSaveNrvEnd::execute(al::NerveKeeper*) const	
 0x7100202F20		WipeCurtainRanking.o	FALSE	_ZN18WipeCurtainRankingC2ERKN2al14LayoutInitInfoEPK14GameDataHolder	WipeCurtainRanking::WipeCurtainRanking(al::LayoutInitInfo const&, GameDataHolder const*)	
 0x7100203110			FALSE	_ZN18WipeCurtainRankingC1ERKN2al14LayoutInitInfoEPK14GameDataHolder	WipeCurtainRanking::WipeCurtainRanking(al::LayoutInitInfo const&, GameDataHolder const*)	
 0x7100203300			FALSE	_ZN18WipeCurtainRanking6appearEv	WipeCurtainRanking::appear()	
