@@ -18995,8 +18995,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71002F0170			FALSE	_ZN19JumpFlipSweetsCream14exeTouchActionEv	JumpFlipSweetsCream::exeTouchAction()	
 0x71002F0200			FALSE	_ZN19JumpFlipSweetsCreamD1Ev	JumpFlipSweetsCream::~JumpFlipSweetsCream()	
 0x71002F0210			FALSE	_ZN19JumpFlipSweetsCreamD0Ev	JumpFlipSweetsCream::~JumpFlipSweetsCream()	
-0x71002F0240			FALSE	sub_71002F0240	sub_71002F0240	
-0x71002F0280			FALSE	sub_71002F0280	sub_71002F0280	
+0x71002F0240			FALSE	_ZNK12_GLOBAL__N_126JumpFlipSweetsCreamNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_126JumpFlipSweetsCreamNrvWait7executeEPN2al11NerveKeeperE	
+0x71002F0280			FALSE	_ZNK12_GLOBAL__N_133JumpFlipSweetsCreamNrvTouchAction7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_133JumpFlipSweetsCreamNrvTouchAction7executeEPN2al11NerveKeeperE	
 0x71002F0310		JumpPanel.o	FALSE	_ZN9JumpPanelC2EPKc	JumpPanel::JumpPanel(char const*)	
 0x71002F03B0			FALSE	_ZN9JumpPanelC1EPKc	JumpPanel::JumpPanel(char const*)	
 0x71002F0460			FALSE	_ZN9JumpPanel4initERKN2al13ActorInitInfoE	JumpPanel::init(al::ActorInitInfo const&)	
