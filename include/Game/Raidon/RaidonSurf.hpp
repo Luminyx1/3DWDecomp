@@ -7,4 +7,5 @@
 class RaidonSurf : public RaidonActor, public al::ISceneObj {
 public:
     void forceSpawn(bool isForce);
+    void updateSpawns(bool);
 };

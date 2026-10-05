@@ -10896,8 +10896,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001A6AA0			FALSE	_ZN8InkPatchD1Ev	InkPatch::~InkPatch()	
 0x71001A6AB0			FALSE	_ZN8InkPatchD0Ev	InkPatch::~InkPatch()	
 0x71001A6AE0			FALSE	_ZNK8InkPatch14canLinkYOffsetEv	InkPatch::canLinkYOffset() const	
-0x71001A6AF0			FALSE	sub_71001A6AF0	sub_71001A6AF0	
-0x71001A6B90			FALSE	sub_71001A6B90	sub_71001A6B90	
+0x71001A6AF0			FALSE	_ZNK12_GLOBAL__N_115InkPatchNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_115InkPatchNrvWait7executeEPN2al11NerveKeeperE	
+0x71001A6B90			FALSE	_ZNK12_GLOBAL__N_115InkPatchNrvDone7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_115InkPatchNrvDone7executeEPN2al11NerveKeeperE	
 0x71001A6C20			FALSE	_ZNK12_GLOBAL__N_120InkPatchNrvDisappear7executeEPN2al11NerveKeeperE	(anonymous namespace)::InkPatchNrvDisappear::execute(al::NerveKeeper*) const	
 0x71001A6C30		InkPatchSpecial.o	FALSE	_ZN15InkPatchSpecial21tryGetSpecialInkPatchEPKN2al18IUseSceneObjHolderE	InkPatchSpecial::tryGetSpecialInkPatch(al::IUseSceneObjHolder const*)	
 0x71001A6C50			FALSE	_ZN15InkPatchSpecial21tryGetInkPatchSpecialEPKN2al18IUseSceneObjHolderE	InkPatchSpecial::tryGetInkPatchSpecial(al::IUseSceneObjHolder const*)	

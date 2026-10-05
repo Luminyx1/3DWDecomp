@@ -11,6 +11,8 @@ public:
     bool isUnlockerInkPatch(InkPatch*);
     bool isLastUnlockerInkPatch(InkPatch*);
     const char* getSceneObjName() const override;
+    void setSpecialPatch(InkPatch* patch) { mSpecialPatch = patch; }
+    int getProgress() const { return _20; }
 private:
     InkPatch* mSpecialPatch = nullptr;
     InkPatch* mUnlockers[2] = {};

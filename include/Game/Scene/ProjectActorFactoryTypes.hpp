@@ -1,3 +1,4 @@
+#include "MapObj/Fury/InkPatch.hpp"
 #include "MapObj/Fury/InteractableCatToy.hpp"
 #include "MapObj/DoorLock.hpp"
 #include "MapObj/DoorKey.hpp"
@@ -1403,14 +1404,7 @@ private:
 };
 static_assert(sizeof(InkBomb) == 0x1a8);
 
-class InkPatch : public al::LiveActor {
-public:
-    explicit InkPatch(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x1c];
-};
-static_assert(sizeof(InkPatch) == 0x160);
 
 class InkPuddle : public al::LiveActor {
 public:
