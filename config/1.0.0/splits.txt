@@ -1563,7 +1563,7 @@ src/Game/MapObj/DashPanel.cpp: done
     .text   start:0x00281C50 end:0x00282314
 src/Game/MapObj/DashPanelSeTriggerChecker.cpp: done
     .text   start:0x00282320 end:0x002824A8
-src/Game/MapObj/DestructableMapParts.cpp:
+src/Game/MapObj/DestructableMapParts.cpp: done
     .text   start:0x002824B0 end:0x00282ED0
 src/Game/MapObj/DisasterModeController.cpp:
     .text   start:0x00282ED0 end:0x00289ECC

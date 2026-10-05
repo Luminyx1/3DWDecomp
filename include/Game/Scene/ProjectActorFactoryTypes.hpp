@@ -1,3 +1,4 @@
+#include "MapObj/DestructableMapParts.hpp"
 #include "MapObj/GreenRing.hpp"
 #include "MapObj/GreenCoin.hpp"
 #include "MapObj/GustWind.hpp"
@@ -781,14 +782,7 @@ static_assert(sizeof(DarkBowserLaserIndicator) == 0x168);
 
 
 
-class DestructableMapParts : public al::LiveActor {
-public:
-    explicit DestructableMapParts(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x1c];
-};
-static_assert(sizeof(DestructableMapParts) == 0x160);
 
 class DisasterFixMapParts : public al::LiveActor {
 public:
