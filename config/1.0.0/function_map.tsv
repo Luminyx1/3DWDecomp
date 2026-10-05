@@ -9708,9 +9708,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100173E20			FALSE	_ZN24WalkerStateAttackSuccess19exeAttackSuccessEndEv	WalkerStateAttackSuccess::exeAttackSuccessEnd()	
 0x7100173EA0			FALSE	_ZN24WalkerStateAttackSuccessD0Ev	WalkerStateAttackSuccess::~WalkerStateAttackSuccess()	
 0x7100173ED0			FALSE	_ZNK12_GLOBAL__N_145WalkerStateAttackSuccessNrvAttackSuccessStart7executeEPN2al11NerveKeeperE	(anonymous namespace)::WalkerStateAttackSuccessNrvAttackSuccessStart::execute(al::NerveKeeper*) const	
-0x7100173EE0			FALSE	sub_7100173EE0	sub_7100173EE0	
-0x7100173F70			FALSE	sub_7100173F70	sub_7100173F70	
-0x7100174000			FALSE	sub_7100174000	sub_7100174000	
+0x7100173EE0			FALSE	_ZNK12_GLOBAL__N_140WalkerStateAttackSuccessNrvAttackSuccess7executeEPN2al11NerveKeeperE	(anonymous namespace)::WalkerStateAttackSuccessNrvAttackSuccess::execute(al::NerveKeeper*) const	
+0x7100173F70			FALSE	_ZNK12_GLOBAL__N_144WalkerStateAttackSuccessNrvAttackSuccessLoop7executeEPN2al11NerveKeeperE	(anonymous namespace)::WalkerStateAttackSuccessNrvAttackSuccessLoop::execute(al::NerveKeeper*) const	
+0x7100174000			FALSE	_ZNK12_GLOBAL__N_143WalkerStateAttackSuccessNrvAttackSuccessEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::WalkerStateAttackSuccessNrvAttackSuccessEnd::execute(al::NerveKeeper*) const	
 0x7100174090		WalkerStateChase.o	FALSE	_ZN21WalkerStateChaseParamC1Ev	WalkerStateChaseParam::WalkerStateChaseParam()	
 0x7100174290			FALSE	_ZN21WalkerStateChaseParamC2EfffffbbPKcS1_f	WalkerStateChaseParam::WalkerStateChaseParam(float, float, float, float, float, bool, bool, char const*, char const*, float)	
 0x71001744B0			FALSE	_ZN16WalkerStateChaseC1EPN2al9LiveActorEPN4sead7Vector3IfEEP12TargetFinderPK16WalkerStateParamPK21WalkerStateChaseParambPb	WalkerStateChase::WalkerStateChase(al::LiveActor*, sead::Vector3<float>*, TargetFinder*, WalkerStateParam const*, WalkerStateChaseParam const*, bool, bool*)	
