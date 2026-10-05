@@ -5210,8 +5210,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71000CA4E0			FALSE	_ZNK20StageStartEventTimer12getEventTypeEv	StageStartEventTimer::getEventType() const	
 0x71000CA4F0			FALSE	_ZNK12_GLOBAL__N_127StageStartEventTimerNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::StageStartEventTimerNrvWait::execute(al::NerveKeeper*) const	
 0x71000CA500			FALSE	_ZNK12_GLOBAL__N_129StageStartEventTimerNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::StageStartEventTimerNrvAppear::execute(al::NerveKeeper*) const	
-0x71000CA510			FALSE	sub_71000CA510	sub_71000CA510	
-0x71000CA520			FALSE	sub_71000CA520	sub_71000CA520	
+0x71000CA510			FALSE	_ZNK12_GLOBAL__N_126StageStartEventTimerNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::StageStartEventTimerNrvEnd::execute(al::NerveKeeper*) const	
+0x71000CA520			FALSE	_ZNK12_GLOBAL__N_127StageStartEventTimerNrvMove7executeEPN2al11NerveKeeperE	(anonymous namespace)::StageStartEventTimerNrvMove::execute(al::NerveKeeper*) const	
 0x71000CA5A0	Enemy	ActorJointLookController.o	FALSE	_ZN29ActorJointLookControllerParamC2Ev	ActorJointLookControllerParam::ActorJointLookControllerParam()	
 0x71000CA5C0			FALSE	_ZN29ActorJointLookControllerParamC2EfRKN4sead7Vector2IfEEbPKNS0_8Matrix34IfEES8_	ActorJointLookControllerParam::ActorJointLookControllerParam(float, sead::Vector2<float> const&, bool, sead::Matrix34<float> const*, sead::Matrix34<float> const*)	
 0x71000CA5E0			FALSE	_ZN24ActorJointLookControllerC2EPKN2al9LiveActorEi	ActorJointLookController::ActorJointLookController(al::LiveActor const*, int)	

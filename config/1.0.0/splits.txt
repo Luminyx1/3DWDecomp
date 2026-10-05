@@ -531,7 +531,7 @@ src/Game/Demo/StageStartEventDemo.cpp:
     .text   start:0x000C9390 end:0x000C9964
 src/Game/Demo/StageStartEventSound.cpp: done
     .text   start:0x000C9970 end:0x000C9E74
-src/Game/Demo/StageStartEventTimer.cpp:
+src/Game/Demo/StageStartEventTimer.cpp: done
     .text   start:0x000C9E80 end:0x000CA59C
 src/Game/Enemy/ActorJointLookController.cpp:
     .text   start:0x000CA5A0 end:0x000CAC94
