@@ -15149,9 +15149,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100253080			FALSE	_ZN17BlockStateCoinTen13exeAppearCoinEv	BlockStateCoinTen::exeAppearCoin()	
 0x7100253170			FALSE	_ZN17BlockStateCoinTen17exeAppearCoinWaitEv	BlockStateCoinTen::exeAppearCoinWait()	
 0x71002531B0			FALSE	_ZN17BlockStateCoinTenD0Ev	BlockStateCoinTen::~BlockStateCoinTen()	
-0x71002531E0			FALSE	sub_71002531E0	sub_71002531E0	
+0x71002531E0			FALSE	_ZNK12_GLOBAL__N_124BlockStateCoinTenNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_124BlockStateCoinTenNrvWait7executeEPN2al11NerveKeeperE	
 0x7100253220			FALSE	_ZNK12_GLOBAL__N_130BlockStateCoinTenNrvAppearCoin7executeEPN2al11NerveKeeperE	(anonymous namespace)::BlockStateCoinTenNrvAppearCoin::execute(al::NerveKeeper*) const	
-0x7100253230			FALSE	sub_7100253230	sub_7100253230	
+0x7100253230			FALSE	_ZNK12_GLOBAL__N_134BlockStateCoinTenNrvAppearCoinWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_134BlockStateCoinTenNrvAppearCoinWait7executeEPN2al11NerveKeeperE	
 0x7100253280		BlockStateHeadgear.o	FALSE	_ZN18BlockStateHeadgearC2EPN2al9LiveActorERKNS0_13ActorInitInfoEi	BlockStateHeadgear::BlockStateHeadgear(al::LiveActor*, al::ActorInitInfo const&, int)	
 0x7100253350			FALSE	_ZN18BlockStateHeadgear4initEv	BlockStateHeadgear::init()	
 0x7100253360			FALSE	_ZN18BlockStateHeadgear6appearEv	BlockStateHeadgear::appear()	

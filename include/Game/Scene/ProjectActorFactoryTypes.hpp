@@ -1,4 +1,5 @@
 #pragma once
+#include "MapObj/BoxCoin.hpp"
 #include "MapObj/BlockRoulette.hpp"
 #include "MapObj/CheckpointFlag.hpp"
 #include "MapObj/FairyHouseIllustItemWatcher.hpp"
@@ -308,14 +309,6 @@ private:
 };
 static_assert(sizeof(BossWackun) == 0x258);
 
-class BoxCoin : public al::LiveActor {
-public:
-    explicit BoxCoin(const char* pName);
-
-private:
-    u8 mUnreconstructed[0x6c];
-};
-static_assert(sizeof(BoxCoin) == 0x1b0);
 
 class BoxKiller : public al::LiveActor {
 public:
