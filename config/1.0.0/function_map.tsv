@@ -15161,8 +15161,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71002534F0			FALSE	_ZN18BlockStateHeadgear7exeWaitEv	BlockStateHeadgear::exeWait()	
 0x7100253530			FALSE	_ZN18BlockStateHeadgear17exeAppearHeadgearEv	BlockStateHeadgear::exeAppearHeadgear()	
 0x71002535C0			FALSE	_ZN18BlockStateHeadgearD0Ev	BlockStateHeadgear::~BlockStateHeadgear()	
-0x71002535F0			FALSE	sub_71002535F0	sub_71002535F0	
-0x7100253630			FALSE	sub_7100253630	sub_7100253630	
+0x71002535F0			FALSE	_ZNK12_GLOBAL__N_125BlockStateHeadgearNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_125BlockStateHeadgearNrvWait7executeEPN2al11NerveKeeperE	
+0x7100253630			FALSE	_ZNK12_GLOBAL__N_135BlockStateHeadgearNrvAppearHeadgear7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_135BlockStateHeadgearNrvAppearHeadgear7executeEPN2al11NerveKeeperE	
 0x71002536C0		BlockStateItem.o	FALSE	_ZN14BlockStateItemC2EPN2al9LiveActorERKNS0_13ActorInitInfoEbbbbb	BlockStateItem::BlockStateItem(al::LiveActor*, al::ActorInitInfo const&, bool, bool, bool, bool, bool)	
 0x7100253D80			FALSE	_ZNK14BlockStateItem18isUseStateHeadgearEv	BlockStateItem::isUseStateHeadgear() const	
 0x7100253DA0			FALSE	_ZNK14BlockStateItem10isItemTypeEi	BlockStateItem::isItemType(int) const	

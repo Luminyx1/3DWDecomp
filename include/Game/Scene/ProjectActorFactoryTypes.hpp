@@ -1,4 +1,6 @@
 #pragma once
+#include "MapObj/BoxKiller.hpp"
+#include "MapObj/BoxPropeller.hpp"
 #include "MapObj/BoxCoin.hpp"
 #include "MapObj/BlockRoulette.hpp"
 #include "MapObj/CheckpointFlag.hpp"
@@ -310,14 +312,6 @@ private:
 static_assert(sizeof(BossWackun) == 0x258);
 
 
-class BoxKiller : public al::LiveActor {
-public:
-    explicit BoxKiller(const char* pName, s32 = 0, s32 = 0);
-
-private:
-    u8 mUnreconstructed[0x64];
-};
-static_assert(sizeof(BoxKiller) == 0x1a8);
 
 class BoxKillerLauncher : public al::LiveActor {
 public:
@@ -2335,14 +2329,6 @@ private:
 };
 static_assert(sizeof(PSwitchTimerCoinWatcher) == 0x168);
 
-class BoxPropeller : public al::LiveActor {
-public:
-    explicit BoxPropeller(const char* pName);
-
-private:
-    u8 mUnreconstructed[0x64];
-};
-static_assert(sizeof(BoxPropeller) == 0x1a8);
 
 class PlayerNpc : public al::LiveActor {
 public:
