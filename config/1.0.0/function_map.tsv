@@ -15806,7 +15806,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710026B310			FALSE	_ZN22ChikaChikaBlockWatcherD0Ev	ChikaChikaBlockWatcher::~ChikaChikaBlockWatcher()	
 0x710026B340			FALSE	_ZNK12_GLOBAL__N_130ChikaChikaBlockWatcherNrvWatch7executeEPN2al11NerveKeeperE	(anonymous namespace)::ChikaChikaBlockWatcherNrvWatch::execute(al::NerveKeeper*) const	
 0x710026B350			FALSE	_ZNK12_GLOBAL__N_134ChikaChikaBlockWatcherNrvDisAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::ChikaChikaBlockWatcherNrvDisAppear::execute(al::NerveKeeper*) const	
-0x710026B360			FALSE	sub_710026B360	sub_710026B360	
+0x710026B360			FALSE	_ZNK12_GLOBAL__N_134ChikaChikaBlockWatcherNrvAllAppear7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_134ChikaChikaBlockWatcherNrvAllAppear7executeEPN2al11NerveKeeperE	
 0x710026B3C0		ChikuwaBlock.o	FALSE	_ZN12ChikuwaBlockC2EPKc	ChikuwaBlock::ChikuwaBlock(char const*)	
 0x710026B440			FALSE	_ZN12ChikuwaBlockC1EPKc	ChikuwaBlock::ChikuwaBlock(char const*)	
 0x710026B4C0			FALSE	_ZN12ChikuwaBlock4initERKN2al13ActorInitInfoE	ChikuwaBlock::init(al::ActorInitInfo const&)	
