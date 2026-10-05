@@ -17,7 +17,7 @@ public:
     void setStageTimer(StageTimer* pTimer);
     void init(const al::ActorInitInfo& rInfo) override;
     /** @brief Identifies a timer event. @return Timer event type, 4. */
-    int getEventType() const override { return 4; }
+    s64 getEventType() const override { return 4; }
     void startDemo() override;
     void endDemo() override;
     bool isEndDemo() const override;

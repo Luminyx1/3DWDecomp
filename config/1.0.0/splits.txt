@@ -525,7 +525,7 @@ src/Game/Demo/StageStartBindDemoKinopioHouse.cpp:
     .text   start:0x000C7BC0 end:0x000C83D8
 src/Game/Demo/StageStartBindDemoMysteryHouse.cpp:
     .text   start:0x000C83E0 end:0x000C8E38
-src/Game/Demo/StageStartEventCamera.cpp:
+src/Game/Demo/StageStartEventCamera.cpp: done
     .text   start:0x000C8E40 end:0x000C9384
 src/Game/Demo/StageStartEventDemo.cpp:
     .text   start:0x000C9390 end:0x000C9964

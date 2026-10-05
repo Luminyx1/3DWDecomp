@@ -10,7 +10,7 @@ public:
     ~StageStartEventSound() override = default;
     void init(const al::ActorInitInfo& rInfo) override;
     /** @brief Identifies a sound event. @return Sound event type, 2. */
-    int getEventType() const override { return 2; }
+    s64 getEventType() const override { return 2; }
     void startDemo() override;
     void endDemo() override;
     bool isEndDemo() const override;
