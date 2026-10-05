@@ -1887,7 +1887,7 @@ src/Game/MapObj/OneSideStepChameleon.cpp:
     .text   start:0x0033EE50 end:0x0033F968
 src/Game/MapObj/OneSideStepGenerator.cpp:
     .text   start:0x0033F970 end:0x0033FDE8
-src/Game/MapObj/OnPlayerInfoHolder.cpp:
+src/Game/MapObj/OnPlayerInfoHolder.cpp: done
     .text   start:0x0033FDF0 end:0x00340140
 src/Game/MapObj/PanelNote.cpp:
     .text   start:0x00340140 end:0x003409AC
@@ -2087,7 +2087,7 @@ src/Game/MapObj/TestMusaSandBox.cpp:
     .text   start:0x00384AA0 end:0x00385B68
 src/Game/MapObj/TestNut.cpp:
     .text   start:0x00385B70 end:0x003860B4
-src/Game/MapObj/TestRouteDokanRenderMaterialIndirect.cpp:
+src/Game/MapObj/TestRouteDokanRenderMaterialIndirect.cpp: done
     .text   start:0x003860C0 end:0x0038630C
 src/Game/MapObj/TestTanakaMapObj.cpp:
     .text   start:0x00386310 end:0x0038652C

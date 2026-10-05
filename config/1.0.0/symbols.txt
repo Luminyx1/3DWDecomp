@@ -4958,3 +4958,6 @@
 
 0x71019CD1E0 32 object _ZTVN12_GLOBAL__N_131GigaBellBindPuppeteerNrvAnimateE
 0x71019CD200 8 object _ZN12_GLOBAL__N_131NrvGigaBellBindPuppeteerAnimateE
+
+0x7101A63118 32 object _ZTVN12_GLOBAL__N_143TestRouteDokanRenderMaterialIndirectNrvWaitE
+0x7101A63138 8 object _ZN12_GLOBAL__N_143NrvTestRouteDokanRenderMaterialIndirectWaitE
