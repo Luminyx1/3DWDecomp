@@ -22289,7 +22289,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71003841F0			FALSE	_ZN21TestMusaCoinChameleon7exeWaitEv	TestMusaCoinChameleon::exeWait()	
 0x7100384200			FALSE	_ZN21TestMusaCoinChameleonD1Ev	TestMusaCoinChameleon::~TestMusaCoinChameleon()	
 0x7100384210			FALSE	_ZN21TestMusaCoinChameleonD0Ev	TestMusaCoinChameleon::~TestMusaCoinChameleon()	
-0x7100384240			FALSE	nullsub_235	nullsub_235	
+0x7100384240			FALSE	_ZNK12_GLOBAL__N_128TestMusaCoinChameleonNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_128TestMusaCoinChameleonNrvWait7executeEPN2al11NerveKeeperE	
 0x7100384250		TestMusaCubemap.o	FALSE	_ZN15TestMusaCubemapC2EPKc	TestMusaCubemap::TestMusaCubemap(char const*)	
 0x71003842E0			FALSE	_ZN15TestMusaCubemapC1EPKc	TestMusaCubemap::TestMusaCubemap(char const*)	
 0x7100384380			FALSE	_ZN15TestMusaCubemap4initERKN2al13ActorInitInfoE	TestMusaCubemap::init(al::ActorInitInfo const&)	

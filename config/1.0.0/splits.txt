@@ -2082,8 +2082,9 @@ src/Game/MapObj/TestMatsudaTrapezeBindPuppeter.cpp:
     .text   start:0x00382210 end:0x00383268
 src/Game/MapObj/TestMusaBlockChameleon.cpp:
     .text   start:0x00383270 end:0x00383AC0
-src/Game/MapObj/TestMusaCoinChameleon.cpp:
+src/Game/MapObj/TestMusaCoinChameleon.cpp: done
     .text   start:0x00383AC0 end:0x00384244
+    .rodata start:0x016B6694 end:0x016B66C4
 src/Game/MapObj/TestMusaCubemap.cpp:
     .text   start:0x00384250 end:0x00384AA0
 src/Game/MapObj/TestMusaSandBox.cpp:
