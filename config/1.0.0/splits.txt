@@ -597,7 +597,7 @@ src/Game/Enemy/ChorobonHolder.cpp:
     .text   start:0x000E7070 end:0x000E7868
 src/Game/Enemy/ChorobonItem.cpp:
     .text   start:0x000E7870 end:0x000E7E38
-src/Game/Enemy/ChorobonNode.cpp:
+src/Game/Enemy/ChorobonNode.cpp: done
     .text   start:0x000E7E40 end:0x000E7FC0
 src/Game/Enemy/Crawler.cpp:
     .text   start:0x000E7FC0 end:0x000E98F4
@@ -623,7 +623,7 @@ src/Game/Enemy/EnemyStateBlowDown.cpp:
     .text   start:0x000F2040 end:0x000F2868
 src/Game/Enemy/EnemyStateBlowDownNoCollider.cpp:
     .text   start:0x000F2870 end:0x000F29D8
-src/Game/Enemy/EnemyStateUtil.cpp:
+src/Game/Enemy/EnemyStateUtil.cpp: done
     .text   start:0x000F29E0 end:0x000F326C
 src/Game/Enemy/FireBros.cpp:
     .text   start:0x000F3270 end:0x000F48B0
@@ -633,13 +633,13 @@ src/Game/Enemy/FlyerStateChase.cpp:
     .text   start:0x000F54E0 end:0x000F5C3C
 src/Game/Enemy/FlyerStateFindPlayer.cpp:
     .text   start:0x000F5C40 end:0x000F61F8
-src/Game/Enemy/FlyerStateFunction.cpp:
+src/Game/Enemy/FlyerStateFunction.cpp: done
     .text   start:0x000F6200 end:0x000F626C
-src/Game/Enemy/FlyerStateParam.cpp:
+src/Game/Enemy/FlyerStateParam.cpp: done
     .text   start:0x000F6270 end:0x000F629C
 src/Game/Enemy/FlyerStateReturnArea.cpp:
     .text   start:0x000F62A0 end:0x000F6630
-src/Game/Enemy/FlyerStateWanderParam.cpp:
+src/Game/Enemy/FlyerStateWanderParam.cpp: done
     .text   start:0x000F6630 end:0x000F6750
 src/Game/Enemy/FlyerStateWander.cpp:
     .text   start:0x000F6750 end:0x000F69F0
@@ -679,9 +679,9 @@ src/Game/Enemy/KaronWing.cpp:
     .text   start:0x0010A2D0 end:0x0010C02C
 src/Game/Enemy/Killer.cpp:
     .text   start:0x0010C030 end:0x0010D604
-src/Game/Enemy/KillerGenerator.cpp:
+src/Game/Enemy/KillerGenerator.cpp: done
     .text   start:0x0010D610 end:0x0010E644
-src/Game/Enemy/KillerLauncher.cpp:
+src/Game/Enemy/KillerLauncher.cpp: done
     .text   start:0x0010E650 end:0x0010EAE0
 src/Game/Enemy/KillerStateFly.cpp:
     .text   start:0x0010EAE0 end:0x0010F0B4
@@ -731,7 +731,7 @@ src/Game/Enemy/ModelHolder.cpp:
     .text   start:0x00128B90 end:0x00128F34
 src/Game/Enemy/ModelHolderActor.cpp: done
     .text   start:0x00128F40 end:0x001290D0
-src/Game/Enemy/NeedleSeed.cpp:
+src/Game/Enemy/NeedleSeed.cpp: done
     .text   start:0x001290D0 end:0x001295EC
 src/Game/Enemy/Nokonoko.cpp:
     .text   start:0x001295F0 end:0x00129C24
@@ -751,9 +751,9 @@ src/Game/Enemy/PackunFlowerWithPot.cpp:
     .text   start:0x001323F0 end:0x00135320
 src/Game/Enemy/PackunStateHold.cpp:
     .text   start:0x00135320 end:0x001369F0
-src/Game/Enemy/PackunTrace.cpp:
+src/Game/Enemy/PackunTrace.cpp: done
     .text   start:0x001369F0 end:0x00136D90
-src/Game/Enemy/PackunTraceBig.cpp:
+src/Game/Enemy/PackunTraceBig.cpp: done
     .text   start:0x00136D90 end:0x001374E0
 src/Game/Enemy/Peto.cpp:
     .text   start:0x001374E0 end:0x00139040
@@ -829,7 +829,7 @@ src/Game/Enemy/TeresaConveyorTeresaBig.cpp: done
     .text   start:0x0015E360 end:0x0015E620
 src/Game/Enemy/TeresaWall.cpp:
     .text   start:0x0015E620 end:0x0015EEC8
-src/Game/Enemy/TerritoryMover.cpp:
+src/Game/Enemy/TerritoryMover.cpp: done
     .text   start:0x0015EED0 end:0x0015F040
 src/Game/Enemy/TestAoyagiEnemy.cpp:
     .text   start:0x0015F040 end:0x0015F52C
@@ -893,7 +893,7 @@ src/Game/Enemy/TuccondorAround.cpp:
     .text   start:0x0016EDF0 end:0x0016FAE8
 src/Game/Enemy/TuccondorBase.cpp:
     .text   start:0x0016FAF0 end:0x00170344
-src/Game/Enemy/TuccondorGlass.cpp:
+src/Game/Enemy/TuccondorGlass.cpp: done
     .text   start:0x00170350 end:0x00170760
 src/Game/Enemy/TuccondorGlassBlower.cpp:
     .text   start:0x00170760 end:0x001709D0
@@ -909,11 +909,11 @@ src/Game/Enemy/WalkerStateFall.cpp:
     .text   start:0x00174980 end:0x00174BC4
 src/Game/Enemy/WalkerStateFindPlayer.cpp:
     .text   start:0x00174BD0 end:0x001752C0
-src/Game/Enemy/WalkerStateFunction.cpp:
+src/Game/Enemy/WalkerStateFunction.cpp: done
     .text   start:0x001752C0 end:0x0017566C
 src/Game/Enemy/WalkerStateJump.cpp:
     .text   start:0x00175670 end:0x001765DC
-src/Game/Enemy/WalkerStateParam.cpp:
+src/Game/Enemy/WalkerStateParam.cpp: done
     .text   start:0x001765E0 end:0x00176614
 src/Game/Enemy/WalkerStateRailMove.cpp:
     .text   start:0x00176620 end:0x0017729C
