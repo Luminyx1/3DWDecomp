@@ -3169,7 +3169,7 @@ src/Game/Scene/SceneEventMessageSender.cpp:
     .text   start:0x004C6CC0 end:0x004C74D4
 src/Game/Scene/SceneObjFactory.cpp:
     .text   start:0x004C74E0 end:0x004C7800
-src/Game/Scene/SingleModeDrawer3D.cpp:
+src/Game/Scene/SingleModeDrawer3D.cpp: done
     .text   start:0x004C7800 end:0x004C7874
 src/Game/Scene/SingleModeScene.cpp:
     .text   start:0x004C7880 end:0x004D1E58
