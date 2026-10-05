@@ -2099,7 +2099,7 @@ src/Game/MapObj/ThrowMapParts.cpp:
     .text   start:0x00386A20 end:0x00387A9C
 src/Game/MapObj/TimeLimitStepSwitch.cpp: done
     .text   start:0x00387AA0 end:0x003884BC
-src/Game/MapObj/TimerClock.cpp:
+src/Game/MapObj/TimerClock.cpp: done
     .text   start:0x003884C0 end:0x00388974
 src/Game/MapObj/TimerCoin.cpp:
     .text   start:0x00388980 end:0x00389204
