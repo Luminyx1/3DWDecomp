@@ -477,7 +477,7 @@ src/Game/Demo/DemoCutscene.cpp:
     .text   start:0x000B8110 end:0x000B9AA8
 src/Game/Demo/DemoCutsceneSequence.cpp:
     .text   start:0x000B9AB0 end:0x000BA390
-src/Game/Demo/DemoEffectObj.cpp:
+src/Game/Demo/DemoEffectObj.cpp: done
     .text   start:0x000BA390 end:0x000BA944
 src/Game/Demo/DemoKoopaW7.cpp:
     .text   start:0x000BA950 end:0x000BB25C
