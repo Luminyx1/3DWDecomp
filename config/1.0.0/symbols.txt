@@ -4744,3 +4744,6 @@
 
 # KoopaLastFloor
 0x7101957D68 16 object _ZN12_GLOBAL__N_117NrvKoopaLastFloorE
+
+# KoopaLastFireBreath
+0x71019577E0 8 object _ZN12_GLOBAL__N_130NrvKoopaLastFireBreathCollidedE

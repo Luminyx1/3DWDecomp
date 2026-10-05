@@ -1334,7 +1334,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71000363A0			FALSE	_ZN19KoopaLastFireBreathD1Ev	KoopaLastFireBreath::~KoopaLastFireBreath()	
 0x71000363B0			FALSE	_ZN19KoopaLastFireBreathD0Ev	KoopaLastFireBreath::~KoopaLastFireBreath()	
 0x71000363E0			FALSE	_ZNK12_GLOBAL__N_126KoopaLastFireBreathNrvMove7executeEPN2al11NerveKeeperE	(anonymous namespace)::KoopaLastFireBreathNrvMove::execute(al::NerveKeeper*) const	
-0x71000363F0			FALSE	sub_71000363F0	sub_71000363F0	
+0x71000363F0			FALSE	_ZNK12_GLOBAL__N_130KoopaLastFireBreathNrvCollided7executeEPN2al11NerveKeeperE	(anonymous namespace)::KoopaLastFireBreathNrvCollided::execute(al::NerveKeeper*) const	matched nerve
 0x7100036440		KoopaLastFloor.o	FALSE	_ZN14KoopaLastFloorC2EPKc	KoopaLastFloor::KoopaLastFloor(char const*)	
 0x71000364C0			FALSE	_ZN14KoopaLastFloorC1EPKc	KoopaLastFloor::KoopaLastFloor(char const*)	
 0x7100036550			FALSE	_ZN14KoopaLastFloor4initERKN2al13ActorInitInfoE	KoopaLastFloor::init(al::ActorInitInfo const&)	
