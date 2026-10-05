@@ -1221,7 +1221,7 @@ src/Game/Layout/SingleModeSceneLayout.cpp:
     .text   start:0x001EE6E0 end:0x001F0D58
 src/Game/Layout/SingleModeTitle.cpp:
     .text   start:0x001F0D60 end:0x001F15A4
-src/Game/Layout/StaffRollFin.cpp:
+src/Game/Layout/StaffRollFin.cpp: done
     .text   start:0x001F15B0 end:0x001F1A54
 src/Game/Layout/StaffRollJob.cpp:
     .text   start:0x001F1A60 end:0x001F2064
