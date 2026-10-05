@@ -1089,7 +1089,7 @@ src/Game/Layout/CounterPlayerInfo.cpp:
     .text   start:0x001B8310 end:0x001B8A44
 src/Game/Layout/CounterPlayerParts.cpp:
     .text   start:0x001B8A50 end:0x001B9B04
-src/Game/Layout/CounterRecordParts.cpp:
+src/Game/Layout/CounterRecordParts.cpp: done
     .text   start:0x001B9B10 end:0x001B9F8C
 src/Game/Layout/CounterScoreParts.cpp: done
     .text   start:0x001B9F90 end:0x001BA294
