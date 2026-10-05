@@ -19092,8 +19092,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71002F30D0			FALSE	_ZNK24KeyMoveLoopLiftGenerator15isInStandByAreaEv	KeyMoveLoopLiftGenerator::isInStandByArea() const	
 0x71002F30F0			FALSE	_ZN24KeyMoveLoopLiftGeneratorD1Ev	KeyMoveLoopLiftGenerator::~KeyMoveLoopLiftGenerator()	
 0x71002F3100			FALSE	_ZN24KeyMoveLoopLiftGeneratorD0Ev	KeyMoveLoopLiftGenerator::~KeyMoveLoopLiftGenerator()	
-0x71002F3130			FALSE	sub_71002F3130	sub_71002F3130	
-0x71002F3180			FALSE	sub_71002F3180	sub_71002F3180	
+0x71002F3130			FALSE	_ZNK12_GLOBAL__N_134KeyMoveLoopLiftGeneratorNrvStandBy7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_134KeyMoveLoopLiftGeneratorNrvStandBy7executeEPN2al11NerveKeeperE	
+0x71002F3180			FALSE	_ZNK12_GLOBAL__N_135KeyMoveLoopLiftGeneratorNrvGenerate7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_135KeyMoveLoopLiftGeneratorNrvGenerate7executeEPN2al11NerveKeeperE	
 0x71002F3210		KillerTankPartsNeedle.o	FALSE	_ZN21KillerTankPartsNeedleC2EPKc	KillerTankPartsNeedle::KillerTankPartsNeedle(char const*)	
 0x71002F3290			FALSE	_ZN21KillerTankPartsNeedleC1EPKc	KillerTankPartsNeedle::KillerTankPartsNeedle(char const*)	
 0x71002F3310			FALSE	_ZN21KillerTankPartsNeedle4initERKN2al13ActorInitInfoE	KillerTankPartsNeedle::init(al::ActorInitInfo const&)	

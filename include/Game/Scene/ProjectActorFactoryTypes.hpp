@@ -1,4 +1,5 @@
 #pragma once
+#include "MapObj/KeyMoveLoopLiftGenerator.hpp"
 #include "MapObj/KoopaFireBallGenerator.hpp"
 #include "MapObj/GoalItem.hpp"
 #include "MapObj/CandlestandWatcher.hpp"
@@ -1718,13 +1719,7 @@ private:
 };
 static_assert(sizeof(KaronWing) == 0x1b8);
 
-class KeyMoveLoopLiftGenerator : public al::LiveActor {
-public:
-    explicit KeyMoveLoopLiftGenerator(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x2c];
-};
 static_assert(sizeof(KeyMoveLoopLiftGenerator) == 0x170);
 
 class KillerLauncher : public al::LiveActor {
