@@ -1465,7 +1465,7 @@ src/Game/MapObj/CameraRailObserver.cpp: done
     .text   start:0x00261D90 end:0x002622D4
 src/Game/MapObj/CameraWall.cpp:
     .text   start:0x002622E0 end:0x00262980
-src/Game/MapObj/Candlestand.cpp:
+src/Game/MapObj/Candlestand.cpp: done
     .text   start:0x00262980 end:0x0026316C
 src/Game/MapObj/CandlestandWatcher.cpp: done
     .text   start:0x00263170 end:0x00263594

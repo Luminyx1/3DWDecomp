@@ -15581,9 +15581,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100262F80			FALSE	_ZN11Candlestand10isLightOffEv	Candlestand::isLightOff()	
 0x7100262F90			FALSE	_ZN11CandlestandD1Ev	Candlestand::~Candlestand()	
 0x7100262FA0			FALSE	_ZN11CandlestandD0Ev	Candlestand::~Candlestand()	
-0x7100262FD0			FALSE	sub_7100262FD0	sub_7100262FD0	
-0x7100263090			FALSE	sub_7100263090	sub_7100263090	
-0x71002630E0			FALSE	sub_71002630E0	sub_71002630E0	
+0x7100262FD0			FALSE	_ZNK12_GLOBAL__N_121CandlestandNrvLightOn7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_121CandlestandNrvLightOn7executeEPN2al11NerveKeeperE	
+0x7100263090			FALSE	_ZNK12_GLOBAL__N_122CandlestandNrvLightOff7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_122CandlestandNrvLightOff7executeEPN2al11NerveKeeperE	
+0x71002630E0			FALSE	_ZNK12_GLOBAL__N_129CandlestandNrvLightOnAndShake7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_129CandlestandNrvLightOnAndShake7executeEPN2al11NerveKeeperE	
 0x7100263170		CandlestandWatcher.o	FALSE	_ZN18CandlestandWatcherC2EPKc	CandlestandWatcher::CandlestandWatcher(char const*)	
 0x71002631F0			FALSE	_ZN18CandlestandWatcherC1EPKc	CandlestandWatcher::CandlestandWatcher(char const*)	
 0x7100263280			FALSE	_ZN18CandlestandWatcher4initERKN2al13ActorInitInfoE	CandlestandWatcher::init(al::ActorInitInfo const&)	
