@@ -1,4 +1,6 @@
 #pragma once
+#include "MapObj/OneSideStep.hpp"
+#include "MapObj/OneSideStepGenerator.hpp"
 #include "MapObj/KeyMoveLoopLiftGenerator.hpp"
 #include "MapObj/KoopaFireBallGenerator.hpp"
 #include "MapObj/GoalItem.hpp"
@@ -2270,24 +2272,6 @@ private:
 };
 static_assert(sizeof(OccludedEffectRequester) == 0x168);
 }  // namespace al
-
-class OneSideStep : public al::LiveActor {
-public:
-    explicit OneSideStep(const char* pName);
-
-private:
-    u8 mUnreconstructed[0x114];
-};
-static_assert(sizeof(OneSideStep) == 0x258);
-
-class OneSideStepGenerator : public al::LiveActor {
-public:
-    explicit OneSideStepGenerator(const char* pName);
-
-private:
-    u8 mUnreconstructed[0x24];
-};
-static_assert(sizeof(OneSideStepGenerator) == 0x168);
 
 class PackunFire : public al::LiveActor {
 public:

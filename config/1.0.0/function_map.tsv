@@ -20614,7 +20614,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710033FD10			FALSE	_ZN20OneSideStepGenerator11exeGenerateEv	OneSideStepGenerator::exeGenerate()	
 0x710033FD60			FALSE	_ZN20OneSideStepGeneratorD1Ev	OneSideStepGenerator::~OneSideStepGenerator()	
 0x710033FD70			FALSE	_ZN20OneSideStepGeneratorD0Ev	OneSideStepGenerator::~OneSideStepGenerator()	
-0x710033FDA0			FALSE	sub_710033FDA0	sub_710033FDA0	
+0x710033FDA0			FALSE	_ZNK12_GLOBAL__N_131OneSideStepGeneratorNrvGenerate7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_131OneSideStepGeneratorNrvGenerate7executeEPN2al11NerveKeeperE	
 0x710033FDF0		OnPlayerInfoHolder.o	FALSE	_ZN18OnPlayerInfoHolderC2Ei	OnPlayerInfoHolder::OnPlayerInfoHolder(int)	
 0x710033FE70			FALSE	_ZN18OnPlayerInfoHolder15getOnPlayerInfoEPN2al9HitSensorE	OnPlayerInfoHolder::getOnPlayerInfo(al::HitSensor*)	
 0x710033FEE0			FALSE	_ZNK12OnPlayerInfo7isValidEv	OnPlayerInfo::isValid() const	

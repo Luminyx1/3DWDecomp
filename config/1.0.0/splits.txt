@@ -1885,7 +1885,7 @@ src/Game/MapObj/OneSideStep.cpp:
     .text   start:0x0033D6D0 end:0x0033EE44
 src/Game/MapObj/OneSideStepChameleon.cpp:
     .text   start:0x0033EE50 end:0x0033F968
-src/Game/MapObj/OneSideStepGenerator.cpp:
+src/Game/MapObj/OneSideStepGenerator.cpp: done
     .text   start:0x0033F970 end:0x0033FDE8
 src/Game/MapObj/OnPlayerInfoHolder.cpp: done
     .text   start:0x0033FDF0 end:0x00340140
