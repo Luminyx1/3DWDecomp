@@ -15245,8 +15245,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100256980			FALSE	_ZN16BobsledDashPanel8exeStartEv	BobsledDashPanel::exeStart()	
 0x71002569E0			FALSE	_ZN16BobsledDashPanelD1Ev	BobsledDashPanel::~BobsledDashPanel()	
 0x71002569F0			FALSE	_ZN16BobsledDashPanelD0Ev	BobsledDashPanel::~BobsledDashPanel()	
-0x7100256A20			FALSE	sub_7100256A20	sub_7100256A20	
-0x7100256A70			FALSE	sub_7100256A70	sub_7100256A70	
+0x7100256A20			FALSE	_ZNK12_GLOBAL__N_123BobsledDashPanelNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_123BobsledDashPanelNrvWait7executeEPN2al11NerveKeeperE	
+0x7100256A70			FALSE	_ZNK12_GLOBAL__N_124BobsledDashPanelNrvStart7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_124BobsledDashPanelNrvStart7executeEPN2al11NerveKeeperE	
 0x7100256AD0			FALSE	_ZNK2al10FunctorV0MIP16BobsledDashPanelMS1_FvvEEclEv	al::FunctorV0M<BobsledDashPanel*, void (BobsledDashPanel::*)()>::operator()() const	
 0x7100256AF0			FALSE	_ZNK2al10FunctorV0MIP16BobsledDashPanelMS1_FvvEE5cloneEv	al::FunctorV0M<BobsledDashPanel*, void (BobsledDashPanel::*)()>::clone() const	
 0x7100256B40		BoomerangFlower.o	FALSE	_ZN15BoomerangFlowerC2EPKcP10ItemBubbleb	BoomerangFlower::BoomerangFlower(char const*, ItemBubble*, bool)	
