@@ -1,3 +1,4 @@
+#include "MapObj/WoodLogBridge.hpp"
 #include "MapObj/PressureDeathObj.hpp"
 #include "MapObj/LiftMikeBlockRail.hpp"
 #include "MapObj/JumpFlipPanel.hpp"
@@ -2957,14 +2958,7 @@ static_assert(sizeof(WheelWatcher) == 0x158);
 
 
 
-class WoodLogBridge : public al::LiveActor {
-public:
-    explicit WoodLogBridge(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x1c];
-};
-static_assert(sizeof(WoodLogBridge) == 0x160);
 
 class ZigzagBuildingCover : public al::LiveActor {
 public:

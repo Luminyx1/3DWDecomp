@@ -23262,9 +23262,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71003A8850			FALSE	_ZN18WoodLogBridgeParts10exeHipDropEv	WoodLogBridgeParts::exeHipDrop()	
 0x71003A88C0			FALSE	_ZN18WoodLogBridgePartsD1Ev	WoodLogBridgeParts::~WoodLogBridgeParts()	
 0x71003A88D0			FALSE	_ZN18WoodLogBridgePartsD0Ev	WoodLogBridgeParts::~WoodLogBridgeParts()	
-0x71003A8900			FALSE	nullsub_259	nullsub_259	
-0x71003A8910			FALSE	sub_71003A8910	sub_71003A8910	
-0x71003A8980			FALSE	sub_71003A8980	sub_71003A8980	
+0x71003A8900			FALSE	_ZNK12_GLOBAL__N_125WoodLogBridgePartsNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_125WoodLogBridgePartsNrvWait7executeEPN2al11NerveKeeperE	
+0x71003A8910			FALSE	_ZNK12_GLOBAL__N_128WoodLogBridgePartsNrvHipDrop7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_128WoodLogBridgePartsNrvHipDrop7executeEPN2al11NerveKeeperE	
+0x71003A8980			FALSE	_ZNK12_GLOBAL__N_125WoodLogBridgePartsNrvRide7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_125WoodLogBridgePartsNrvRide7executeEPN2al11NerveKeeperE	
 0x71003A8A20		ZigzagBuildingCover.o	FALSE	_ZN19ZigzagBuildingCoverC2EPKc	ZigzagBuildingCover::ZigzagBuildingCover(char const*)	
 0x71003A8AA0			FALSE	_ZN19ZigzagBuildingCoverC1EPKc	ZigzagBuildingCover::ZigzagBuildingCover(char const*)	
 0x71003A8B20			FALSE	_ZN19ZigzagBuildingCover4initERKN2al13ActorInitInfoE	ZigzagBuildingCover::init(al::ActorInitInfo const&)	

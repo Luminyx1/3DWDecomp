@@ -5428,3 +5428,6 @@
 0x710210E100 12 object _ZN12_GLOBAL__N_114sPressureSizeAE
 0x710210E10C 12 object _ZN12_GLOBAL__N_114sPressureSizeBE
 0x710210E118 12 object _ZN12_GLOBAL__N_120sPressureSizeDefaultE
+
+0x7101A71660 8 object _ZN12_GLOBAL__N_125NrvWoodLogBridgePartsWaitE
+0x7101A716A8 16 object _ZN12_GLOBAL__N_121NrvWoodLogBridgePartsE

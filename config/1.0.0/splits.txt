@@ -2179,7 +2179,7 @@ src/Game/MapObj/WhiteBell.cpp:
     .text   start:0x003A6750 end:0x003A7284
 src/Game/MapObj/WoodBox.cpp:
     .text   start:0x003A7290 end:0x003A7F80
-src/Game/MapObj/WoodLogBridge.cpp:
+src/Game/MapObj/WoodLogBridge.cpp: done
     .text   start:0x003A7F80 end:0x003A8A18
 src/Game/MapObj/ZigzagBuildingCover.cpp: done
     .text   start:0x003A8A20 end:0x003A8BB0
