@@ -209,7 +209,7 @@ src/Game/Boss/KoopaLastFireBreath.cpp: done
     .text   start:0x00035FE0 end:0x00036434
 src/Game/Boss/KoopaLastFloor.cpp: done
     .text   start:0x00036440 end:0x00036814
-src/Game/Boss/KoopaLastFunction.cpp:
+src/Game/Boss/KoopaLastFunction.cpp: done
     .text   start:0x00036820 end:0x00036E00
 src/Game/Boss/KoopaLastPartsModel.cpp:
     .text   start:0x00036E00 end:0x00037330
