@@ -16105,8 +16105,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100276E00			FALSE	_ZN11CoinCountUpD0Ev	CoinCountUp::~CoinCountUp()	
 0x7100276E30			FALSE	_ZNK12_GLOBAL__N_116CoinCountUpNrvUp7executeEPN2al11NerveKeeperE	(anonymous namespace)::CoinCountUpNrvUp::execute(al::NerveKeeper*) const	
 0x7100276E40			FALSE	_ZNK12_GLOBAL__N_121CoinCountUpNrvUpQuick7executeEPN2al11NerveKeeperE	(anonymous namespace)::CoinCountUpNrvUpQuick::execute(al::NerveKeeper*) const	
-0x7100276E50			FALSE	sub_7100276E50	sub_7100276E50	
-0x7100276EA0			FALSE	sub_7100276EA0	sub_7100276EA0	
+0x7100276E50			FALSE	_ZNK12_GLOBAL__N_131CoinCountUpNrvDelayQuickStandby7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_131CoinCountUpNrvDelayQuickStandby7executeEPN2al11NerveKeeperE	
+0x7100276EA0			FALSE	_ZNK12_GLOBAL__N_121CoinCountUpNrvUpFront7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_121CoinCountUpNrvUpFront7executeEPN2al11NerveKeeperE	
 0x7100276F10		CoinFallGenerator.o	FALSE	_ZN17CoinFallGeneratorC2EPKc	CoinFallGenerator::CoinFallGenerator(char const*)	
 0x7100276FA0			FALSE	_ZN17CoinFallGeneratorC1EPKc	CoinFallGenerator::CoinFallGenerator(char const*)	
 0x7100277040			FALSE	_ZN17CoinFallGenerator4initERKN2al13ActorInitInfoE	CoinFallGenerator::init(al::ActorInitInfo const&)	

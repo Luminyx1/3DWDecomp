@@ -1521,7 +1521,7 @@ src/Game/MapObj/CoinCollectWatcher.cpp: done
     .text   start:0x00275290 end:0x00275788
 src/Game/MapObj/CoinConcentricCircle.cpp:
     .text   start:0x00275790 end:0x002768C8
-src/Game/MapObj/CoinCountUp.cpp:
+src/Game/MapObj/CoinCountUp.cpp: done
     .text   start:0x002768D0 end:0x00276F0C
 src/Game/MapObj/CoinFallGenerator.cpp:
     .text   start:0x00276F10 end:0x00277738
