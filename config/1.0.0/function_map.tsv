@@ -15630,7 +15630,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100264A70			FALSE	_ZN10ChainModel9startFallERKN4sead7Vector3IfEE	ChainModel::startFall(sead::Vector3<float> const&)	
 0x7100264AB0			FALSE	_ZN10ChainModelD1Ev	ChainModel::~ChainModel()	
 0x7100264AC0			FALSE	_ZN10ChainModelD0Ev	ChainModel::~ChainModel()	
-0x7100264AF0			FALSE	sub_7100264AF0	sub_7100264AF0	
+0x7100264AF0			FALSE	_ZNK12_GLOBAL__N_117ChainModelNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_117ChainModelNrvWait7executeEPN2al11NerveKeeperE	
 0x7100264B30			FALSE	_ZNK12_GLOBAL__N_117ChainModelNrvFall7executeEPN2al11NerveKeeperE	(anonymous namespace)::ChainModelNrvFall::execute(al::NerveKeeper*) const	
 0x7100264B40		ChameleonStateGiantPlayer.o	FALSE	_ZN25ChameleonStateGiantPlayerC1EPN2al9LiveActorEP27RenderMaterialIndirectParamPKS3_S6_ff	ChameleonStateGiantPlayer::ChameleonStateGiantPlayer(al::LiveActor*, RenderMaterialIndirectParam*, RenderMaterialIndirectParam const*, RenderMaterialIndirectParam const*, float, float)	
 0x7100264C00			FALSE	_ZN25ChameleonStateGiantPlayer14exeGiantPlayerEv	ChameleonStateGiantPlayer::exeGiantPlayer()	
@@ -22367,9 +22367,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71003867A0			FALSE	_ZN16TestTatsutaBlock8exeBreakEv	TestTatsutaBlock::exeBreak()	
 0x71003867F0			FALSE	_ZN16TestTatsutaBlockD1Ev	TestTatsutaBlock::~TestTatsutaBlock()	
 0x7100386800			FALSE	_ZN16TestTatsutaBlockD0Ev	TestTatsutaBlock::~TestTatsutaBlock()	
-0x7100386830			FALSE	sub_7100386830	sub_7100386830	
-0x7100386840			FALSE	nullsub_238	nullsub_238	
-0x7100386850			FALSE	sub_7100386850	sub_7100386850	
+0x7100386830			FALSE	_ZNK12_GLOBAL__N_123TestTatsutaBlockNrvMove7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_123TestTatsutaBlockNrvMove7executeEPN2al11NerveKeeperE	
+0x7100386840			FALSE	_ZNK12_GLOBAL__N_123TestTatsutaBlockNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_123TestTatsutaBlockNrvWait7executeEPN2al11NerveKeeperE	
+0x7100386850			FALSE	_ZNK12_GLOBAL__N_124TestTatsutaBlockNrvBreak7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_124TestTatsutaBlockNrvBreak7executeEPN2al11NerveKeeperE	
 0x71003868A0		TestTrampleSwitchGold.o	FALSE	_ZN21TestTrampleSwitchGoldC2EPKc	TestTrampleSwitchGold::TestTrampleSwitchGold(char const*)	
 0x7100386920			FALSE	_ZN21TestTrampleSwitchGoldC1EPKc	TestTrampleSwitchGold::TestTrampleSwitchGold(char const*)	
 0x71003869A0			FALSE	_ZN13TrampleSwitchD1Ev	TrampleSwitch::~TrampleSwitch()	

@@ -4982,3 +4982,15 @@
 
 0x7101A221B8 32 object _ZTVN12_GLOBAL__N_122GoalPoleWingNrvRunawayE
 0x7101A221D8 8 object _ZN12_GLOBAL__N_122NrvGoalPoleWingRunawayE
+
+0x7101A001E0 32 object _ZTVN12_GLOBAL__N_117ChainModelNrvWaitE
+0x7101A00200 8 object _ZN12_GLOBAL__N_117NrvChainModelWaitE
+
+0x7101A63BA8 32 object _ZTVN12_GLOBAL__N_123TestTatsutaBlockNrvMoveE
+0x7101A63C10 8 object _ZN12_GLOBAL__N_123NrvTestTatsutaBlockMoveE
+
+0x7101A63BC8 32 object _ZTVN12_GLOBAL__N_123TestTatsutaBlockNrvWaitE
+0x7101A63C18 8 object _ZN12_GLOBAL__N_123NrvTestTatsutaBlockWaitE
+
+0x7101A63BE8 32 object _ZTVN12_GLOBAL__N_124TestTatsutaBlockNrvBreakE
+0x7101A63C08 8 object _ZN12_GLOBAL__N_124NrvTestTatsutaBlockBreakE

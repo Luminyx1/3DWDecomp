@@ -1471,7 +1471,7 @@ src/Game/MapObj/CandlestandWatcher.cpp:
     .text   start:0x00263170 end:0x00263594
 src/Game/MapObj/CatGull.cpp:
     .text   start:0x002635A0 end:0x002647C4
-src/Game/MapObj/ChainModel.cpp:
+src/Game/MapObj/ChainModel.cpp: done
     .text   start:0x002647D0 end:0x00264B38
 src/Game/MapObj/ChameleonStateGiantPlayer.cpp:
     .text   start:0x00264B40 end:0x00264E28
@@ -2015,7 +2015,7 @@ src/Game/MapObj/TeresaConveyorBench.cpp:
     .text   start:0x0036CC90 end:0x0036D2C4
 src/Game/MapObj/TeresaFakeDokan.cpp: done
     .text   start:0x0036D2D0 end:0x0036D550
-src/Game/MapObj/TeresaFakeObject.cpp:
+src/Game/MapObj/TeresaFakeObject.cpp: done
     .text   start:0x0036D550 end:0x0036D880
 src/Game/MapObj/TestAlphaMaskMapObj.cpp:
     .text   start:0x0036D880 end:0x0036DC0C
@@ -2091,7 +2091,7 @@ src/Game/MapObj/TestRouteDokanRenderMaterialIndirect.cpp: done
     .text   start:0x003860C0 end:0x0038630C
 src/Game/MapObj/TestTanakaMapObj.cpp:
     .text   start:0x00386310 end:0x0038652C
-src/Game/MapObj/TestTatsutaBlock.cpp:
+src/Game/MapObj/TestTatsutaBlock.cpp: done
     .text   start:0x00386530 end:0x003868A0
 src/Game/MapObj/TestTrampleSwitchGold.cpp: done
     .text   start:0x003868A0 end:0x00386A20
