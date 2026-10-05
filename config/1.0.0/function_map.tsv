@@ -21425,9 +21425,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100361310			FALSE	_ZN15SplatterPlotter7disableEb	SplatterPlotter::disable(bool)	
 0x7100361320			FALSE	_ZN15SplatterPlotterD1Ev	SplatterPlotter::~SplatterPlotter()	
 0x7100361330			FALSE	_ZN15SplatterPlotterD0Ev	SplatterPlotter::~SplatterPlotter()	
-0x7100361360			FALSE	_ZNK2rc18TriangleWallFilter17isInvalidTriangleERKN2al8TriangleE	rc::TriangleWallFilter::isInvalidTriangle(al::Triangle const&) const	merged into SplatterPlotter.o (secondary class TriangleWallFilter.o)
+0x7100361360		Stamp.o	FALSE	_ZNK2rc18TriangleWallFilter17isInvalidTriangleERKN2al8TriangleE	rc::TriangleWallFilter::isInvalidTriangle(al::Triangle const&) const	merged into SplatterPlotter.o (secondary class TriangleWallFilter.o)
 0x7100361370			FALSE	_ZNK2rc24TriangleWallNoCodeFilter17isInvalidTriangleERKN2al8TriangleE	rc::TriangleWallNoCodeFilter::isInvalidTriangle(al::Triangle const&) const	merged into SplatterPlotter.o (secondary class TriangleWallNoCodeFilter.o)
-0x71003613E0		Stamp.o	FALSE	_ZN2rc5Stamp17getStampActorNameEv	rc::Stamp::getStampActorName()	object (class)
+0x71003613E0			FALSE	_ZN2rc5Stamp17getStampActorNameEv	rc::Stamp::getStampActorName()	object (class)
 0x71003613F0			FALSE	_ZN2rc5Stamp12isStampActorEPKN2al9LiveActorE	rc::Stamp::isStampActor(al::LiveActor const*)	
 0x7100361430			FALSE	_ZN2rc5StampC2ERKN2al13ActorInitInfoEPKcPK18DrcTouchAssistInfoPNS_13StampDirectorEi	rc::Stamp::Stamp(al::ActorInitInfo const&, char const*, DrcTouchAssistInfo const*, rc::StampDirector*, int)	
 0x71003615C0			FALSE	_ZN2rc5StampC1ERKN2al13ActorInitInfoEPKcPK18DrcTouchAssistInfoPNS_13StampDirectorEi	rc::Stamp::Stamp(al::ActorInitInfo const&, char const*, DrcTouchAssistInfo const*, rc::StampDirector*, int)	
@@ -21470,11 +21470,11 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100362DC0			FALSE	_ZN2rc5Stamp24initializeResTextureFileEPN2nn3gfx14ResTextureFileE	rc::Stamp::initializeResTextureFile(nn::gfx::ResTextureFile*)	
 0x7100362EA0			FALSE	_ZN2rc5StampD1Ev	rc::Stamp::~Stamp()	
 0x7100362F20			FALSE	_ZN2rc5StampD0Ev	rc::Stamp::~Stamp()	
-0x7100362FA0			FALSE	sub_7100362FA0	sub_7100362FA0	
+0x7100362FA0			FALSE	_ZNK12_GLOBAL__N_114StampNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::StampNrvAppear::execute(al::NerveKeeper*) const	
 0x7100362FE0			FALSE	_ZNK12_GLOBAL__N_113StampNrvErase7executeEPN2al11NerveKeeperE	(anonymous namespace)::StampNrvErase::execute(al::NerveKeeper*) const	
-0x7100362FF0			FALSE	sub_7100362FF0	sub_7100362FF0	
+0x7100362FF0			FALSE	_ZNK12_GLOBAL__N_113StampNrvSleep7executeEPN2al11NerveKeeperE	(anonymous namespace)::StampNrvSleep::execute(al::NerveKeeper*) const	
 0x7100363030			FALSE	_ZNK12_GLOBAL__N_112StampNrvHeld7executeEPN2al11NerveKeeperE	(anonymous namespace)::StampNrvHeld::execute(al::NerveKeeper*) const	
-0x7100363040			FALSE	sub_7100363040	sub_7100363040	
+0x7100363040			FALSE	_ZNK12_GLOBAL__N_115StampNrvHovered7executeEPN2al11NerveKeeperE	(anonymous namespace)::StampNrvHovered::execute(al::NerveKeeper*) const	
 0x71003630B0			FALSE	_ZNK12_GLOBAL__N_114StampNrvPlaced7executeEPN2al11NerveKeeperE	(anonymous namespace)::StampNrvPlaced::execute(al::NerveKeeper*) const	
 0x71003630C0		StampDirector.o	FALSE	_ZN2rc13StampDirector15StampUnlockInfo4initEPj	rc::StampDirector::StampUnlockInfo::init(unsigned int*)	object (class)
 0x7100363120			FALSE	_ZN2rc13StampDirector15StampUnlockInfo8addStampEi	rc::StampDirector::StampUnlockInfo::addStamp(int)	
