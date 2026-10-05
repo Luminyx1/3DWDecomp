@@ -6,6 +6,14 @@
 #include "Library/Nerve/NerveSetup.hpp"
 #include "Library/Nerve/NerveUtil.hpp"
 
+struct ItemAssistRotateParam {
+    int mSpinFrames;
+    float mSpinSpeed;
+    bool mUseLerp;
+    float mEndSpeed;
+    int mLerpFrames;
+};
+
 namespace {
     const ItemAssistRotateParam sDefaultParam = {60, 20.0f, true, 3.0f, 60};
     NERVE_DECL(ItemStateAssistRotate, Spin);

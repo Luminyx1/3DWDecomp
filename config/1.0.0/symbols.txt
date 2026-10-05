@@ -2,7 +2,6 @@
 # anonymous-namespace) data, and any function the function map lacks.
 #
 #   <address> <size> <func|object> <mangled name>
-#
 # Addresses are absolute (0x71...) like the function map.  The splitter uses
 # these names for relocations, so they must be the exact (mangled) names our
 # source produces - e.g. a nerve `_ZN12_GLOBAL__N_117FooNrvWaitE` or a C
@@ -11,61 +10,41 @@
 # LibMessageStudio (src/sead/lms/lms_memory.c)
 0x7102120908 8 object sMalloc
 0x7102120910 8 object sFree
-
 # src/Game/MapObj/BgmStopObj
 0x71019F2538 8 object _ZN12_GLOBAL__N_117NrvBgmStopObjStopE
-
 # src/Game/MapObj/BgmPlayObj
 0x71019F1618 8 object _ZN12_GLOBAL__N_117NrvBgmPlayObjWaitE
 0x71019F1640 8 object _ZN12_GLOBAL__N_120NrvBgmPlayObjPlayingE
-
 # src/Game/MapObj/BgmRegionChanger
 0x71019F1BA8 8 object _ZN12_GLOBAL__N_123NrvBgmRegionChangerWaitE
-
 # src/Game/MapObj/BgmRhythmAnimeController
 0x71019F1C48 336 object _ZN12_GLOBAL__N_17sNormalE
 0x71019F1D98 336 object _ZN12_GLOBAL__N_18sReverseE
 0x71019F1EE8 24 object _ZN12_GLOBAL__N_18sDefaultE
-
 # src/Game/MapObj/SwitchBlock
 0x7101A53B98 8 object _ZN12_GLOBAL__N_118NrvSwitchBlockWaitE
-
 # src/Game/MapObj/SwitchBlockWatcher
 0x7101A54110 8 object _ZN12_GLOBAL__N_125NrvSwitchBlockWatcherMoveE
-
 # src/Game/MapObj/TrampleSwitch
 0x7101A68788 8 object _ZN12_GLOBAL__N_123NrvTrampleSwitchOffWaitE
 0x7101A687A0 8 object _ZN12_GLOBAL__N_119NrvTrampleSwitchOffE
-
 # src/Game/MapObj/TrampleSwitchChara
 0x7101A68D48 8 object _ZN12_GLOBAL__N_128NrvTrampleSwitchCharaOffWaitE
 0x7101A68D50 8 object _ZN12_GLOBAL__N_127NrvTrampleSwitchCharaOnWaitE
 0x7101A68D58 8 object _ZN12_GLOBAL__N_123NrvTrampleSwitchCharaOnE
 0x7101A68D60 8 object _ZN12_GLOBAL__N_129NrvTrampleSwitchCharaReactionE
-
-# src/Game/MapObj/BgmStopObj
 0x71019F2510 8 object _ZN12_GLOBAL__N_117NrvBgmStopObjWaitE
-
 # src/Game/MapObj/BlockPow
-
 # src/Game/MapObj/SnowCover
-
 # src/al/Library/Obj/BreakModel
-
-# src/Game/MapObj/SnowCover
 0x7101A4DC68 8 object _ZN12_GLOBAL__N_116NrvSnowCoverWaitE
 0x7101A4DC70 8 object _ZN12_GLOBAL__N_116NrvSnowCoverThawE
 0x7101A4DC78 8 object _ZN12_GLOBAL__N_117NrvSnowCoverBreakE
-
-# src/Game/MapObj/BlockPow
 0x71019F6448 8 object _ZN12_GLOBAL__N_115NrvBlockPowWaitE
 0x71019F6450 8 object _ZN12_GLOBAL__N_119NrvBlockPowReactionE
 0x71019F63F8 8 object _ZN12_GLOBAL__N_116NrvBlockPowEmptyE
-
-# src/al/Library/Obj/BreakModel
 0x7101AF4AE8 8 object _ZN2al12_GLOBAL__N_117NrvBreakModelWaitE
 0x7101AF4B10 8 object _ZN2al12_GLOBAL__N_118NrvBreakModelBreakE
-
 # nerves (tools/name_nerves.py)
 0x710194C858 32 object _ZTVN12_GLOBAL__N_118BombBoundNrvKickedE
 0x710194C898 32 object _ZTVN12_GLOBAL__N_116BombBoundNrvRollE
@@ -3039,8 +3018,6 @@
 0x7101A261C0 8 object _ZN12_GLOBAL__N_115NrvGreenStarGotE
 0x7101A27EB8 32 object _ZTVN12_GLOBAL__N_117IllustItemNrvWaitE
 0x7101A27ED8 32 object _ZTVN12_GLOBAL__N_120IllustItemNrvSpinDrcE
-0x7101A27F58 8 object _ZN12_GLOBAL__N_117NrvIllustItemWaitE
-0x7101A27F60 8 object _ZN12_GLOBAL__N_120NrvIllustItemSpinDrcE
 0x7101A287F0 32 object _ZTVN12_GLOBAL__N_121IslandFlagNrvCameraInE
 0x7101A28810 8 object _ZN12_GLOBAL__N_121NrvIslandFlagCameraInE
 0x7101A29538 32 object _ZTVN12_GLOBAL__N_122ItemBubbleNrvDisappearE
@@ -4482,25 +4459,20 @@
 0x7101B0B838 8 object _ZN12_GLOBAL__N_146NrvSeEffectControllerWaitClearAllEffectFromBusE
 0x7101B0B960 8 object _ZN12_GLOBAL__N_131NrvSeEffectControllerPrepareRunE
 0x7101B0B970 8 object _ZN12_GLOBAL__N_139NrvSeEffectControllerWaitFadeOutBusSendE
-
 # C++ runtime
 0x710194B000 8 object __dso_handle
-
 # src/sead/prim/seadEnum
 0x710211F730 8 object _ZGVZN12_GLOBAL__N_128EnumParseTextCriticalSection9getObjectEvE7sObject
 0x710211F738 8 object _ZGVZN12_GLOBAL__N_133EnumInitValueArrayCriticalSection9getObjectEvE7sObject
 0x710211F740 64 object _ZZN12_GLOBAL__N_128EnumParseTextCriticalSection9getObjectEvE7sObject
 0x710211F780 64 object _ZZN12_GLOBAL__N_133EnumInitValueArrayCriticalSection9getObjectEvE7sObject
-
 # src/sead/framework/seadTaskMgr
 0x710211F2F8 4 object _ZN4seadL23sDefaultPreparePriorityE
-
 # src/sead/stream
 0x710211FB18 64 object _ZN4seadL6sMutexE
 0x710211FB58 1048 object _ZN4seadL7sBufferE
 0x7101AD8210 8 object _ZN4seadL21sBinaryStreamInstanceE
 0x710211FA78 160 object _ZN4seadL19sTextStreamInstanceE
-
 # src/sead/prim (StringUtil, EnvUtil)
 0x71016E8CF0 752 object _ZN4sead10StringUtilL13cToUpperTableE
 0x71016E8FE0 740 object _ZN4sead10StringUtilL13cToLowerTableE
@@ -4510,18 +4482,14 @@
 0x71016F5784 18800 object _ZN4sead10StringUtilL17cSjisToUtf16TableE
 0x710140A8E0 32 object _ZN4seadL23cRegionAndLanguageTableE
 0x71016E32F0 66 object _ZN4seadL20cRegionLanguageTableE
-
 # src/sead/framework/nx/seadGameFrameworkNx
 0x710211F2A8 8 object _ZZN4sead15GameFrameworkNx24initializeGraphicsSystemEPNS_4HeapERKNS_7Vector2IfEEE22cCommandMemoryPoolSize
 0x710211F2B0 8 object _ZGVZN4sead15GameFrameworkNx24initializeGraphicsSystemEPNS_4HeapERKNS_7Vector2IfEEE22cCommandMemoryPoolSize
-
 # src/sead/mc/seadJobQueue
 0x7102120870 8 object _ZGVZNK4sead12PerfJobQueue11getBarColorEjE7sColors
 0x7102120878 8 object _ZZNK4sead12PerfJobQueue11getBarColorEjE7sColors
-
 # src/agl/utility/aglParameter
 0x7101ADB7D8 8 object _ZN3agl3utlL19sParameterTypeNamesE
-
 # src/agl/layer, src/agl/environment, src/agl/utility/aglNamedObj
 0x7101ADE480 24 object _ZN3agl3lyr12_GLOBAL__N_113cBindTypeNameE
 0x7101ADE288 16 object cDisplayName
@@ -4531,7 +4499,6 @@
 0x7101ADFFF0 32 object _ZN3agl3env12_GLOBAL__N_113cMetaInfoNameE
 0x7102122870 2 object _ZN3agl3env12_GLOBAL__N_110sRegistNumE
 0x7102122872 8 object _ZN3agl3env12_GLOBAL__N_19sTypeInfoE
-
 # src/aal/seadaudio (seadAudioFx*Nin.cpp)
 0x7102120C00 4 object _ZN4sead12_GLOBAL__N_121sDelaySamplesPerFrameE
 0x7102120C28 4 object _ZN4sead12_GLOBAL__N_124sReverbHiSamplesPerFrameE
@@ -4548,7 +4515,6 @@
 0x7102120C58 4 object _ZN4sead12_GLOBAL__N_127sI3DL2ReverbSamplesPerFrameE
 0x71016FC3AC 96 object _ZN4sead12_GLOBAL__N_119cI3DL2FusedDelay32kE
 0x71016FC40C 96 object _ZN4sead12_GLOBAL__N_119cI3DL2FusedDelay48kE
-
 # C1/D1 aliases the function map lacks
 0x71006d2fd0 0 func _ZN3agl12RenderBufferC1Ev
 0x71006d30e0 0 func _ZN3agl12RenderBufferD1Ev
@@ -4563,7 +4529,6 @@
 0x71006cf4f0 0 func _ZN3agl6driver11NVNsampler_D1Ev
 0x7100698950 0 func _ZN4sead21PerspectiveProjectionC1Effff
 0x710069bc50 0 func _ZN4sead8ViewportC1ERKNS_18LogicalFrameBufferE
-
 # agl postfx / effect / utility statics
 0x71021229A8 4 object _ZN3agl3pfx12_GLOBAL__N_112sReduceScaleE
 0x7101ADE5C8 8 object _ZN3agl3pfx12_GLOBAL__N_115sGhostColorNameE
@@ -4579,18 +4544,15 @@
 0x71016FCDDC 16 object _ZN3agl3utl12_GLOBAL__N_114cBlurDirectionE
 0x71016FCDEC 16 object _ZN3agl3utl12_GLOBAL__N_115cFxaaLumaWeightE
 0x71016FCDFC 16 object _ZN3agl3utl12_GLOBAL__N_110cFxaaParamE
-
 # src/erepo/Manager
 0x7102256200 8 object _ZN5erepo12_GLOBAL__N_111sLaunchTimeE
 0x7102256208 4 object _ZN5erepo12_GLOBAL__N_114sUpdateCounterE
 0x71022562E0 88 object _ZN5erepo12_GLOBAL__N_112sSendLogNameE
-
 # src/nw/font
 0x7101ACC000 33848 object _ZN2nn4font24g_RectDrawerShaderBinaryE
 0x71016C040C 7944 object _ZN2nn4font12_GLOBAL__N_115LineBreakRangesE
 0x71016C2314 3600 object _ZN2nn4font12_GLOBAL__N_120PairTableAlternativeE
 0x71016C3124 3600 object _ZN2nn4font12_GLOBAL__N_116PairTableDefaultE
-
 # src/al/Library/LiveActor/ActorParamHolderUtil (zeroed defaults, look like empty strings to the splitter)
 0x71016FE994 4 object _ZN2alL16sDefaultParamF32E
 0x71016FE998 4 object _ZN2alL16sDefaultParamS32E
@@ -4598,7 +4560,6 @@
 0x71016FE9AC 8 object _ZN2alL17sDefaultParamJumpE
 0x71016FE9B4 12 object _ZN2alL18sDefaultParamSightE
 0x71016FE9C0 12 object _ZN2alL20sDefaultParamReboundE
-
 # al/Library/LiveActor/SensorFunction
 0x7101AE91C8 512 object _ZN12_GLOBAL__N_116cSensorTypeTableE
 0x7102124398 104 object _ZN12_GLOBAL__N_117NrvRotateMapPartsE
@@ -4619,28 +4580,22 @@
 0x710211F728 1 object _ZN4nerd12_GLOBAL__N_113sUseFastsqrteE
 0x71016E2A28 64 object _ZN4nerd12_GLOBAL__N_113cEstimateBaseE
 0x71016E2A68 64 object _ZN4nerd12_GLOBAL__N_114cEstimateSlopeE
-
 # ATK oscillator callbacks: five built-in curves and user slots 64-127.
 0x7102118348 1024 object _ZN2nn3atk6detail15g_CurveLfoTableE
-
 # ATK disposal manager's function-local singleton and initialization guard.
 0x7102112748 8 object _ZGVZN2nn3atk6detail6driver22DisposeCallbackManager11GetInstanceEvE8instance
 0x7102112750 16 object _ZZN2nn3atk6detail6driver22DisposeCallbackManager11GetInstanceEvE8instance
-
 # src/nw/atk/detail/wsd/atk_WaveSoundFile
 0x71016BE1E4 5 object _ZN2nn3atk6detail12_GLOBAL__N_117DefaultAdshrCurveE
-
 # ATK driver command singletons and their initialization guards.
 0x7102111CC8 8 object _ZGVZN2nn3atk6detail13DriverCommand11GetInstanceEvE8instance
 0x7102111CD0 8 object _ZGVZN2nn3atk6detail13DriverCommand24GetInstanceForTaskThreadEvE8instance
 0x7102111CD8 280 object _ZZN2nn3atk6detail13DriverCommand11GetInstanceEvE8instance
 0x7102111DF0 280 object _ZZN2nn3atk6detail13DriverCommand24GetInstanceForTaskThreadEvE8instance
-
 # ATK debug warning masks, mutable flags, and sound-type diagnostic names.
 0x71016BDC5C 24 object _ZN2nn3atk12_GLOBAL__N_112warningMasksE
 0x7101AA1EA0 4 object _ZN2nn3atk12_GLOBAL__N_112warningFlagsE
 0x7101AA1EA8 24 object _ZN2nn3atk12_GLOBAL__N_114soundTypeNamesE
-
 # G3D animation-curve baked-state backup sizes and initialization guards.
 0x710211EE90 8 object _ZZN2nn3g3d12ResAnimCurve9BakeFloatEPvmE10backupSize
 0x710211EE98 8 object _ZGVZN2nn3g3d12ResAnimCurve9BakeFloatEPvmE10backupSize
@@ -4654,23 +4609,19 @@
 0x710211EED8 8 object _ZGVZN2nn3g3d12ResAnimCurve10ResetFloatEvE10backupSize
 0x710211EEE0 8 object _ZZN2nn3g3d12ResAnimCurve8ResetIntEvE10backupSize
 0x710211EEE8 8 object _ZGVZN2nn3g3d12ResAnimCurve8ResetIntEvE10backupSize
-
 # src/al/Project/PostProcessing/EdgeDrawer (cDefaultOffsetColor also referenced by src/al/Library/PostProcessing/PencilSketchDrawer)
 0x7101409640 16 object _ZN12_GLOBAL__N_119cDefaultOffsetColorE
 0x71016FF654 168 object _ZN12_GLOBAL__N_114cEdgeUboLayoutE
 0x71016FF6FC 24 object _ZN12_GLOBAL__N_119cReductionUboLayoutE
 0x7101B0ADB8 32 object _ZN12_GLOBAL__N_112sMacroValuesE
 0x7101B0ADD8 32 object _ZN12_GLOBAL__N_111sMacroNamesE
-
 # src/al/Project/PostProcessing/MangaDrawer
 0x71016FF73C 12 object _ZN12_GLOBAL__N_113cMipUboLayoutE
-
 # src/al/Project/PostProcessing/CartoonDrawer
 0x71022556C8 8 object _ZZN12_GLOBAL__N_115IndirectTexture5text_EiE9spTextPtr
 0x71022556D0 8 object _ZGVZN12_GLOBAL__N_115IndirectTexture5text_EiE8sTextAll
 0x71022556D8 32 object _ZZN12_GLOBAL__N_115IndirectTexture5text_EiE8sTextPtr
 0x71022556F8 72 object _ZZN12_GLOBAL__N_115IndirectTexture5text_EiE8sTextAll
-
 # src/al/Project/PostProcessing/KaleidoscopeDrawer
 0x71016FF748 12 object _ZN12_GLOBAL__N_119cKaleidoscopeLayoutE
 0x7101B0B378 80 object _ZN12_GLOBAL__N_111cNumberTextE
@@ -4710,7 +4661,6 @@
 0x71016FF4EC 96 object _ZN12_GLOBAL__N_116cSharedFontTypesE
 0x7101B09CB8 32 object _ZTVN12_GLOBAL__N_121LayoutScalableFontMgrE
 0x7101B09888 128 object _ZTVN2al12_GLOBAL__N_119DisposerTextureInfoE
-
 # Dokan nerves (named from their execute functions)
 0x7101A0EF48 32 object _ZTVN12_GLOBAL__N_112DokanNrvWaitE
 0x7101A0EF68 32 object _ZTVN12_GLOBAL__N_117DokanNrvGiantBlowE
@@ -4732,44 +4682,34 @@
 0x71019954C0 32 object _ZTVN12_GLOBAL__N_126KillerStateFlyNrvFlySearchE
 0x7101995510 8 object _ZN12_GLOBAL__N_124NrvKillerStateFlyFlyWaitE
 0x71019954E0 32 object _ZTVN12_GLOBAL__N_124KillerStateFlyNrvFlyWaitE
-
 # KoopaLastAttack
 0x7101955188 8 object _ZN12_GLOBAL__N_128NrvKoopaLastAttackFireAttackE
-
 # BossWackunFrame
 0x710194EBC8 8 object _ZN12_GLOBAL__N_122NrvBossWackunFrameWaitE
 0x710194EBF0 8 object _ZN12_GLOBAL__N_124NrvBossWackunFrameDamageE
-
 # TentackRockFaller
 0x7101961D28 8 object _ZN12_GLOBAL__N_128NrvTentackRockFallerFallRockE
 0x7101B1CED4 32 object _ZN12_GLOBAL__N_114sFallRockParamE
-
 # KoopaLastFloor
 0x7101957D68 16 object _ZN12_GLOBAL__N_117NrvKoopaLastFloorE
-
 # KoopaLastFireBreath
 0x71019577E0 8 object _ZN12_GLOBAL__N_130NrvKoopaLastFireBreathCollidedE
-
 # KoopaLastStateTop
 0x7101958510 8 object _ZN12_GLOBAL__N_128NrvKoopaLastStateTopClimbEndE
 0x7101958560 8 object _ZN12_GLOBAL__N_125NrvKoopaLastStateTopShoutE
-
 # KoopaLastWall
 0x7101958AA8 8 object _ZN12_GLOBAL__N_120NrvKoopaLastWallSignE
 0x7101958AD0 8 object _ZN12_GLOBAL__N_120NrvKoopaLastWallWaitE
 0x7101958AF8 8 object _ZN12_GLOBAL__N_121NrvKoopaLastWallBreakE
-
 # TentackHill
 0x7101960300 8 object _ZN12_GLOBAL__N_120NrvTentackHillAppearE
 0x7101960328 8 object _ZN12_GLOBAL__N_124NrvTentackHillAppearWaitE
 0x7101960350 8 object _ZN12_GLOBAL__N_118NrvTentackHillWaitE
 0x7101960378 8 object _ZN12_GLOBAL__N_127NrvTentackHillDisappearWaitE
 0x71019603A0 8 object _ZN12_GLOBAL__N_123NrvTentackHillDisappearE
-
 # KoopaChaseWarpDummy
 0x7101954C08 8 object _ZN12_GLOBAL__N_126NrvKoopaChaseWarpDummyWaitE
 0x7101954C30 8 object _ZN12_GLOBAL__N_133NrvKoopaChaseWarpDummyProvocationE
-
 # TentackStateFallRock
 0x7101962120 8 object _ZN12_GLOBAL__N_132NrvTentackStateFallRockWaitStartE
 0x7101962148 8 object _ZN12_GLOBAL__N_134NrvTentackStateFallRockAttackStartE
@@ -4779,31 +4719,25 @@
 0x71019E3688 8 object _ZN12_GLOBAL__N_131NrvSimpleAppearWaitEndPartsWaitE
 0x71019E36B0 8 object _ZN12_GLOBAL__N_133NrvSimpleAppearWaitEndPartsAppearE
 0x71019E36D8 8 object _ZN12_GLOBAL__N_130NrvSimpleAppearWaitEndPartsEndE
-
 # src/Game/Layout/StaffRollFin
 0x71019E4238 8 object _ZN12_GLOBAL__N_119NrvStaffRollFinHideE
 0x71019E4260 8 object _ZN12_GLOBAL__N_121NrvStaffRollFinAppearE
 0x71019E4288 8 object _ZN12_GLOBAL__N_119NrvStaffRollFinWaitE
 0x71019E42B0 8 object _ZN12_GLOBAL__N_118NrvStaffRollFinEndE
-
 # src/Game/Layout/StaffRollNintendo
 0x71019E4F00 8 object _ZN12_GLOBAL__N_124NrvStaffRollNintendoHideE
 0x71019E4F28 8 object _ZN12_GLOBAL__N_126NrvStaffRollNintendoAppearE
 0x71019E4F50 8 object _ZN12_GLOBAL__N_124NrvStaffRollNintendoWaitE
 0x71019E4F78 8 object _ZN12_GLOBAL__N_123NrvStaffRollNintendoEndE
-
 # Default spatial sound engine (atk_Sound3DManager)
 0x710211D8E8 24 object _ZN12_GLOBAL__N_121sDefaultSound3DEngineE
 0x710057E5F0 12 func _GLOBAL__sub_I_atk_Sound3DManager.cpp
-
 # BootScene state instances.
 0x7101A94530 8 object _ZN12_GLOBAL__N_119NrvBootSceneLoadEndE
 0x7101A945A0 8 object _ZN12_GLOBAL__N_121NrvBootSceneInitErrorE
 0x7101A94598 8 object _ZN12_GLOBAL__N_132NrvBootSceneWaitLoadDoneResourceE
-
 # ProjectActorFactory registration table.
 0x7101A96B30 7344 object _ZN12_GLOBAL__N_113sActorEntriesE
-
 # NeonDrawer uniform layout and shader variation.
 0x71016B7604 108 object _ZN12_GLOBAL__N_111sNeonLayoutE
 0x7101A95E38 16 object _ZN12_GLOBAL__N_114sNeonVariationE
@@ -4836,62 +4770,49 @@
 0x7101A64F90 8 object _ZN12_GLOBAL__N_129NrvTimeLimitStepSwitchOffWaitE
 0x7101A64F98 8 object _ZN12_GLOBAL__N_124NrvTimeLimitStepSwitchOnE
 0x7101A64F68 8 object _ZN12_GLOBAL__N_125NrvTimeLimitStepSwitchOffE
-
 0x7101A18380 8 object _ZN12_GLOBAL__N_122NrvFlipCircusDoorAWaitE
 # src/Game/Layout/StaffRollName
 0x71019E4B38 8 object _ZN12_GLOBAL__N_120NrvStaffRollNameHideE
 0x71019E4B60 8 object _ZN12_GLOBAL__N_122NrvStaffRollNameAppearE
 0x71019E4B88 8 object _ZN12_GLOBAL__N_120NrvStaffRollNameWaitE
 0x71019E4BB0 8 object _ZN12_GLOBAL__N_119NrvStaffRollNameEndE
-
 # src/Game/Layout/StaffRollJob
 0x71019E4600 8 object _ZN12_GLOBAL__N_119NrvStaffRollJobHideE
 0x71019E4628 8 object _ZN12_GLOBAL__N_121NrvStaffRollJobAppearE
 0x71019E4650 8 object _ZN12_GLOBAL__N_119NrvStaffRollJobWaitE
 0x71019E4678 8 object _ZN12_GLOBAL__N_118NrvStaffRollJobEndE
-
 # src/Game/Layout/WindowProcessing
 0x71019E9BF8 8 object _ZN12_GLOBAL__N_125NrvWindowProcessingAppearE
 0x71019E9C20 8 object _ZN12_GLOBAL__N_122NrvWindowProcessingEndE
-
 # src/Game/Layout/WindowSave
 0x71019E9F70 8 object _ZN12_GLOBAL__N_117NrvWindowSaveWaitE
 0x71019E9F98 8 object _ZN12_GLOBAL__N_119NrvWindowSaveAppearE
 0x71019E9FC0 8 object _ZN12_GLOBAL__N_116NrvWindowSaveEndE
-
 # src/Game/Layout/CounterStampParts
 0x71019D5B88 8 object _ZN12_GLOBAL__N_124NrvCounterStampPartsWaitE
 0x71019D5B90 8 object _ZN12_GLOBAL__N_124NrvCounterStampPartsHideE
 0x71019D5B80 8 object _ZN12_GLOBAL__N_123NrvCounterStampPartsGetE
-
 # src/Game/Layout/GuideWindowParts
 0x71019DAFD8 8 object _ZN12_GLOBAL__N_123NrvGuideWindowPartsWaitE
 0x71019DB000 8 object _ZN12_GLOBAL__N_125NrvGuideWindowPartsAppearE
 0x71019DB028 8 object _ZN12_GLOBAL__N_122NrvGuideWindowPartsEndE
-
 # src/Game/Layout/ListClearStarFairyParts
 0x71019DC0F0 8 object _ZN12_GLOBAL__N_130NrvListClearStarFairyPartsHideE
 0x71019DC118 8 object _ZN12_GLOBAL__N_130NrvListClearStarFairyPartsShowE
 0x71019E7EE8 80 object _ZN12_GLOBAL__N_114sCursorActionsE
-
 # src/Game/Layout/GameOverMenu
 0x71019D9110 8 object _ZN12_GLOBAL__N_121NrvGameOverMenuAppearE
-
 # src/Game/Layout/ButtonArrowParts
 0x71019CFC40 8 object _ZN12_GLOBAL__N_123NrvButtonArrowPartsHideE
 0x71019CFC68 8 object _ZN12_GLOBAL__N_123NrvButtonArrowPartsWaitE
 0x71019CFC90 8 object _ZN12_GLOBAL__N_125NrvButtonArrowPartsDecideE
 0x7101B21FF0 16 object _ZN12_GLOBAL__N_111sTouchParamE
-
 # src/Game/MapObj/BoxLightCollisionChecker
 0x71019FC4A0 8 object _ZN12_GLOBAL__N_132NrvBoxLightCollisionCheckerNoHitE
 0x71019FC398 8 object _ZN12_GLOBAL__N_137NrvBoxLightCollisionCheckerToHitCheckE
 0x71019FC4A8 8 object _ZN12_GLOBAL__N_130NrvBoxLightCollisionCheckerHitE
 0x71019FC4B0 8 object _ZN12_GLOBAL__N_139NrvBoxLightCollisionCheckerToNoHitCheckE
-
 # src/Game/MapObj/ChameleonStateMic
-0x7101A00408 8 object _ZN12_GLOBAL__N_123NrvChameleonStateMicMicE
-
 # ChameleonStateHipDrop nerves.
 0x7101A002F8 32 object _ZTVN12_GLOBAL__N_128ChameleonStateHipDropNrvWaitE
 0x7101A00318 8 object _ZN12_GLOBAL__N_128NrvChameleonStateHipDropWaitE
@@ -4902,12 +4823,10 @@
 0x7101A00370 32 object _ZTVN12_GLOBAL__N_127ChameleonStateHipDropNrvEndE
 0x7101A00390 8 object _ZN12_GLOBAL__N_127NrvChameleonStateHipDropEndE
 0x71002650E0 96 func _ZNK12_GLOBAL__N_127ChameleonStateHipDropNrvEnd7executeEPN2al11NerveKeeperE
-
 # TestGraphicObj wait nerve.
 0x7101A5D3D8 32 object _ZTVN12_GLOBAL__N_121TestGraphicObjNrvWaitE
 0x7101A5D3F8 8 object _ZN12_GLOBAL__N_121NrvTestGraphicObjWaitE
 0x710037B5C0 8 func _ZNK12_GLOBAL__N_121TestGraphicObjNrvWait7executeEPN2al11NerveKeeperE
-
 # LanternSwingMovement nerves.
 0x7101A35148 32 object _ZTVN12_GLOBAL__N_127LanternSwingMovementNrvMoveE
 0x7101A35168 8 object _ZN12_GLOBAL__N_127NrvLanternSwingMovementMoveE
@@ -4915,72 +4834,50 @@
 0x7101A35170 32 object _ZTVN12_GLOBAL__N_126LanternSwingMovementNrvEndE
 0x7101A35190 8 object _ZN12_GLOBAL__N_126NrvLanternSwingMovementEndE
 0x7100310400 4 func _ZNK12_GLOBAL__N_126LanternSwingMovementNrvEnd7executeEPN2al11NerveKeeperE
-
 # LanternRing wait nerve.
 0x7101A350F8 32 object _ZTVN12_GLOBAL__N_118LanternRingNrvWaitE
 0x7101A35118 8 object _ZN12_GLOBAL__N_118NrvLanternRingWaitE
 0x7100310160 4 func _ZNK12_GLOBAL__N_118LanternRingNrvWait7executeEPN2al11NerveKeeperE
-
 # ItemStatePopUpAbove punch displacement table.
 0x71016B57E4 24 object _ZN12_GLOBAL__N_110sPunchMoveE
-
 0x71019CD1B8 32 object _ZTVN12_GLOBAL__N_128GigaBellBindPuppeteerNrvWaitE
 0x71019CD1D8 8 object _ZN12_GLOBAL__N_128NrvGigaBellBindPuppeteerWaitE
-
 0x71019CD1E0 32 object _ZTVN12_GLOBAL__N_131GigaBellBindPuppeteerNrvAnimateE
 0x71019CD200 8 object _ZN12_GLOBAL__N_131NrvGigaBellBindPuppeteerAnimateE
-
 0x7101A63118 32 object _ZTVN12_GLOBAL__N_143TestRouteDokanRenderMaterialIndirectNrvWaitE
 0x7101A63138 8 object _ZN12_GLOBAL__N_143NrvTestRouteDokanRenderMaterialIndirectWaitE
-
 0x7101A1F8F8 32 object _ZTVN12_GLOBAL__N_129GoalItemBindPuppeteerNrvBeginE
 0x7101A1F918 8 object _ZN12_GLOBAL__N_129NrvGoalItemBindPuppeteerBeginE
-
 0x7101A1F920 32 object _ZTVN12_GLOBAL__N_131GoalItemBindPuppeteerNrvAnimateE
 0x7101A1F940 8 object _ZN12_GLOBAL__N_131NrvGoalItemBindPuppeteerAnimateE
-
 0x7101A1F948 32 object _ZTVN12_GLOBAL__N_127GoalItemBindPuppeteerNrvEndE
 0x7101A1F968 8 object _ZN12_GLOBAL__N_127NrvGoalItemBindPuppeteerEndE
-
 0x7101A47F30 32 object _ZTVN12_GLOBAL__N_136RouteDokanLauncherPuppeteerNrvInWaitE
 0x7101A47F50 8 object _ZN12_GLOBAL__N_136NrvRouteDokanLauncherPuppeteerInWaitE
-
 0x7101A47F58 32 object _ZTVN12_GLOBAL__N_139RouteDokanLauncherPuppeteerNrvBindForceE
 0x7101A47F78 8 object _ZN12_GLOBAL__N_139NrvRouteDokanLauncherPuppeteerBindForceE
-
 0x7101A22190 32 object _ZTVN12_GLOBAL__N_121GoalPoleWingNrvAppearE
 0x7101A221B0 8 object _ZN12_GLOBAL__N_121NrvGoalPoleWingAppearE
-
 0x7101A221B8 32 object _ZTVN12_GLOBAL__N_122GoalPoleWingNrvRunawayE
 0x7101A221D8 8 object _ZN12_GLOBAL__N_122NrvGoalPoleWingRunawayE
-
 0x7101A001E0 32 object _ZTVN12_GLOBAL__N_117ChainModelNrvWaitE
 0x7101A00200 8 object _ZN12_GLOBAL__N_117NrvChainModelWaitE
-
 0x7101A63BA8 32 object _ZTVN12_GLOBAL__N_123TestTatsutaBlockNrvMoveE
 0x7101A63C10 8 object _ZN12_GLOBAL__N_123NrvTestTatsutaBlockMoveE
-
 0x7101A63BC8 32 object _ZTVN12_GLOBAL__N_123TestTatsutaBlockNrvWaitE
 0x7101A63C18 8 object _ZN12_GLOBAL__N_123NrvTestTatsutaBlockWaitE
-
 0x7101A63BE8 32 object _ZTVN12_GLOBAL__N_124TestTatsutaBlockNrvBreakE
 0x7101A63C08 8 object _ZN12_GLOBAL__N_124NrvTestTatsutaBlockBreakE
-
 0x7101A60348 32 object _ZTVN12_GLOBAL__N_134TestKitazonoBlockBrickBreakNrvWaitE
 0x7101A60368 8 object _ZN12_GLOBAL__N_134NrvTestKitazonoBlockBrickBreakWaitE
-
 0x7101A60370 32 object _ZTVN12_GLOBAL__N_135TestKitazonoBlockBrickBreakNrvBreakE
 0x7101A60390 8 object _ZN12_GLOBAL__N_135NrvTestKitazonoBlockBrickBreakBreakE
-
 0x7101A56CB8 32 object _ZTVN12_GLOBAL__N_126TestAlphaMaskMapObjNrvWaitE
 0x7101A56CD8 8 object _ZN12_GLOBAL__N_126NrvTestAlphaMaskMapObjWaitE
-
 0x7101A56CE0 32 object _ZTVN12_GLOBAL__N_134TestAlphaMaskMapObjNrvAlphaMaskOutE
 0x7101A56D00 8 object _ZN12_GLOBAL__N_134NrvTestAlphaMaskMapObjAlphaMaskOutE
-
 0x7101A56D08 32 object _ZTVN12_GLOBAL__N_133TestAlphaMaskMapObjNrvAlphaMaskInE
 0x7101A56D28 8 object _ZN12_GLOBAL__N_133NrvTestAlphaMaskMapObjAlphaMaskInE
-
 0x71016B57C0 20 object _ZN12_GLOBAL__N_113sDefaultParamE
 0x7101A48AA8 32 object _ZTVN12_GLOBAL__N_122SaveDataCheckerNrvWaitE
 0x7101A48AC8 8 object _ZN12_GLOBAL__N_122NrvSaveDataCheckerWaitE
@@ -5029,28 +4926,20 @@
 0x7101A27440 32 object _ZTVN12_GLOBAL__N_128HeadgearStateBlowNrvBlowGoalE
 0x7101A27470 8 object _ZN12_GLOBAL__N_128NrvHeadgearStateBlowBlowGoalE
 0x71016B4E88 28 object _ZN12_GLOBAL__N_113sDefaultParamE
-
 0x7101A39840 0x20 object _ZTVN12_GLOBAL__N_113MirrorNrvWaitE
 0x7101A39860 0x8 object _ZN12_GLOBAL__N_113NrvMirrorWaitE
-
 0x7101A39868 0x20 object _ZTVN12_GLOBAL__N_118MirrorNrvDisappearE
 0x7101A39888 0x8 object _ZN12_GLOBAL__N_118NrvMirrorDisappearE
-
 0x7101A0CE80 0x20 object _ZTVN12_GLOBAL__N_124CubeMapControllerNrvWaitE
 0x7101A0CEA0 0x8 object _ZN12_GLOBAL__N_124NrvCubeMapControllerWaitE
-
 0x7101A0CEA8 0x20 object _ZTVN12_GLOBAL__N_127CubeMapControllerNrvFadeOutE
 0x7101A0CEC8 0x8 object _ZN12_GLOBAL__N_127NrvCubeMapControllerFadeOutE
-
 0x7101A0CED0 0x20 object _ZTVN12_GLOBAL__N_126CubeMapControllerNrvFadeInE
 0x7101A0CEF0 0x8 object _ZN12_GLOBAL__N_126NrvCubeMapControllerFadeInE
-
 0x7101A12810 0x20 object _ZTVN12_GLOBAL__N_118EchoEmitterNrvKeepE
 0x7101A12830 0x8 object _ZN12_GLOBAL__N_118NrvEchoEmitterKeepE
-
 0x7101A12838 0x20 object _ZTVN12_GLOBAL__N_118EchoEmitterNrvStopE
 0x7101A12858 0x8 object _ZN12_GLOBAL__N_118NrvEchoEmitterStopE
-
 0x71019C7330 0x20 object _ZTVN12_GLOBAL__N_126DisasterLightningNrvStrikeE
 0x71019C7350 0x8 object _ZN12_GLOBAL__N_126NrvDisasterLightningStrikeE
 0x7101A0B860 0x20 object _ZTVN12_GLOBAL__N_118CollectRingNrvWaitE
@@ -5082,7 +4971,6 @@
 0x7101A55D48 0x8 object _ZN12_GLOBAL__N_126NrvTeresaConveyorBenchStopE
 0x7101A55CF8 0x20 object _ZTVN12_GLOBAL__N_126TeresaConveyorBenchNrvWaitE
 0x7101A55D50 0x8 object _ZN12_GLOBAL__N_126NrvTeresaConveyorBenchWaitE
-
 0x71019F5350 32 object _ZTVN12_GLOBAL__N_133BlockChoiceWatcherNrvReleasedItemE
 0x71019F5370 8 object _ZN12_GLOBAL__N_133NrvBlockChoiceWatcherReleasedItemE
 0x7101A26738 32 object _ZTVN12_GLOBAL__N_127GreenStarStandNrvBeforeWaitE
@@ -5224,27 +5112,20 @@
 0x7101A24FA8 8 object _ZN12_GLOBAL__N_119NrvGrassHighDestroyE
 0x7101A24F80 32 object _ZTVN12_GLOBAL__N_120GrassHighNrvReactionE
 0x7101A24FB0 8 object _ZN12_GLOBAL__N_120NrvGrassHighReactionE
-
 0x71019CC208 32 object _ZTVN12_GLOBAL__N_116FlowerCatNrvWaitE
 0x71019CC248 8 object _ZN12_GLOBAL__N_116NrvFlowerCatWaitE
-
 0x7101A23E90 32 object _ZTVN12_GLOBAL__N_129GraphicsAreaControllerNrvWaitE
 0x7101A23EB0 8 object _ZN12_GLOBAL__N_129NrvGraphicsAreaControllerWaitE
-
 0x7101A2E398 32 object _ZTVN12_GLOBAL__N_117KinokoGigaNrvWaitE
 0x7101A2E3B8 32 object _ZTVN12_GLOBAL__N_123KinokoGigaNrvPopUpFrontE
 0x7101A2E3D8 8 object _ZN12_GLOBAL__N_117NrvKinokoGigaWaitE
 0x7101A2E3E0 8 object _ZN12_GLOBAL__N_123NrvKinokoGigaPopUpFrontE
-
 0x7101A5DEB0 32 object _ZTVN12_GLOBAL__N_126TestIshiokaTrapWallNrvStopE
 0x7101A5DF58 8 object _ZN12_GLOBAL__N_126NrvTestIshiokaTrapWallStopE
-
 0x7101A5DED0 32 object _ZTVN12_GLOBAL__N_127TestIshiokaTrapWallNrvDelayE
 0x7101A5DF60 8 object _ZN12_GLOBAL__N_127NrvTestIshiokaTrapWallDelayE
-
 0x7101A5DEF0 32 object _ZTVN12_GLOBAL__N_126TestIshiokaTrapWallNrvWaitE
 0x7101A5DF68 8 object _ZN12_GLOBAL__N_126NrvTestIshiokaTrapWallWaitE
-
 0x7101A33AC8 32 object _ZTVN12_GLOBAL__N_117KouraGoldNrvUpperE
 0x7101A33AE8 8 object _ZN12_GLOBAL__N_117NrvKouraGoldUpperE
 0x7101A3D950 32 object _ZTVN12_GLOBAL__N_120NeedleTrapNrvStandbyE
@@ -5340,7 +5221,6 @@
 0x71016B4F24 56 object _ZN12_GLOBAL__N_113sHipDropParamE
 0x71016B4F5C 56 object _ZN12_GLOBAL__N_117sGiantPlayerParamE
 0x71016B4F94 56 object _ZN12_GLOBAL__N_19sMicParamE
-
 0x71019CA708 32 object _ZTVN12_GLOBAL__N_120FallingPillarNrvWaitE
 0x71019CA728 8 object _ZN12_GLOBAL__N_120NrvFallingPillarWaitE
 0x71019CA770 32 object _ZTVN12_GLOBAL__N_125FallingPillarNrvFallDelayE
@@ -5409,7 +5289,6 @@
 0x7101A369A8 40 object _ZTVN12_GLOBAL__N_120LiftMikeSlideNrvBackE
 0x7101A4A828 32 object _ZTVN12_GLOBAL__N_116SignBoardNrvWaitE
 0x7101A4A848 8 object _ZN12_GLOBAL__N_116NrvSignBoardWaitE
-0x7101A4A870 8 object _ZN12_GLOBAL__N_117NrvSignBoardBreakE
 0x7101A2B120 24 object _ZN12_GLOBAL__N_116NrvJumpFlipPanelE
 0x7101A2B0C0 32 object _ZTVN12_GLOBAL__N_130JumpFlipPanelNrvSwitchOffStartE
 0x7101A363F8 24 object _ZN12_GLOBAL__N_120NrvLiftMikeBlockRailE
@@ -5420,29 +5299,21 @@
 0x710210E100 12 object _ZN12_GLOBAL__N_114sPressureSizeAE
 0x710210E10C 12 object _ZN12_GLOBAL__N_114sPressureSizeBE
 0x710210E118 12 object _ZN12_GLOBAL__N_120sPressureSizeDefaultE
-
 0x7101A71660 8 object _ZN12_GLOBAL__N_125NrvWoodLogBridgePartsWaitE
 0x7101A716A8 16 object _ZN12_GLOBAL__N_121NrvWoodLogBridgePartsE
-
 0x7101A0FA78 8 object _ZN12_GLOBAL__N_121NrvDokanWorldWarpWaitE
 0x7101A0FAC0 16 object _ZN12_GLOBAL__N_117NrvDokanWorldWarpE
-
 0x71019F2B40 8 object _ZN12_GLOBAL__N_121NrvBindWarpEffectDoneE
-
 0x7101A43BC8 16 object _ZN12_GLOBAL__N_117NrvPlessieTerrainE
 0x7101A43B78 8 object _ZN12_GLOBAL__N_121NrvPlessieTerrainStayE
-
 0x71019FBDE0 48 object _ZN12_GLOBAL__N_112NrvBoxKuriboE
 0x71016B4FF8 12 object _ZN12_GLOBAL__N_113popUpVelocityE
-
 0x7101A51F98 32 object _ZTVN12_GLOBAL__N_121SuperbViewAreaNrvWaitE
 0x7101A51FB8 8 object _ZN12_GLOBAL__N_121NrvSuperbViewAreaWaitE
-
 0x7101A0A010 32 object _ZTVN12_GLOBAL__N_115CoinRingNrvStopE
 0x7101A0A030 32 object _ZTVN12_GLOBAL__N_116CoinRingNrvDelayE
 0x7101A0A098 32 object _ZTVN12_GLOBAL__N_115CoinRingNrvWaitE
 0x7101A0A0D8 32 object _ZN12_GLOBAL__N_111NrvCoinRingE
-
 0x7101A19428 32 object _ZTVN12_GLOBAL__N_119FlowerCactusNrvWaitE
 0x7101A19448 32 object _ZTVN12_GLOBAL__N_123FlowerCactusNrvBlowDownE
 0x7101A19468 32 object _ZTVN12_GLOBAL__N_120FlowerCactusNrvBreakE
@@ -5451,12 +5322,10 @@
 0x7101A194C8 32 object _ZTVN12_GLOBAL__N_126FlowerCactusNrvReactionEndE
 0x7101A194E8 32 object _ZTVN12_GLOBAL__N_123FlowerCactusNrvReactionE
 0x7101A19508 56 object _ZN12_GLOBAL__N_115NrvFlowerCactusE
-
 0x7101A10650 32 object _ZTVN12_GLOBAL__N_121DoorLockNrvClosedWaitE
 0x7101A10690 32 object _ZTVN12_GLOBAL__N_127DoorLockNrvWaitKeyDisappearE
 0x7101A106B0 32 object _ZTVN12_GLOBAL__N_125DoorLockNrvClosedReactionE
 0x7101A106F0 40 object _ZN12_GLOBAL__N_111NrvDoorLockE
-
 0x7101A40630 32 object _ZTVN12_GLOBAL__N_127OneSideStepChameleonNrvWaitE
 0x7101A40650 32 object _ZTVN12_GLOBAL__N_131OneSideStepChameleonNrvReactionE
 0x7101A40670 32 object _ZTVN12_GLOBAL__N_128OneSideStepChameleonNrvTouchE
@@ -5467,46 +5336,39 @@
 0x71016B5DE0 56 object _ZN12_GLOBAL__N_114sStepWaitParamE
 0x71016B5E18 56 object _ZN12_GLOBAL__N_117sStepHipDropParamE
 0x71016B5E50 56 object _ZN12_GLOBAL__N_113sStepMicParamE
-
 0x71019CEB58 32 object _ZTVN12_GLOBAL__N_115InkPatchNrvWaitE
 0x71019CEB78 8 object _ZN12_GLOBAL__N_115NrvInkPatchWaitE
 0x71019CEB80 32 object _ZTVN12_GLOBAL__N_115InkPatchNrvDoneE
 0x71019CEBA0 8 object _ZN12_GLOBAL__N_115NrvInkPatchDoneE
-
 0x7101A14D60 32 object _ZTVN12_GLOBAL__N_117FireFlowerNrvWaitE
 0x7101A14D80 32 object _ZTVN12_GLOBAL__N_134FireFlowerNrvWaitAndCheckCollisionE
 0x7101A14DA0 32 object _ZTVN12_GLOBAL__N_123FireFlowerNrvPopUpAboveE
 0x7101A14DC0 32 object _ZTVN12_GLOBAL__N_123FireFlowerNrvPopUpFrontE
 0x7101A14DE0 32 object _ZTVN12_GLOBAL__N_125FireFlowerNrvAttachBubbleE
 0x7101A14E00 40 object _ZN12_GLOBAL__N_113NrvFireFlowerE
-
 0x71019F9A78 32 object _ZTVN12_GLOBAL__N_122BoomerangFlowerNrvWaitE
 0x71019F9A98 32 object _ZTVN12_GLOBAL__N_128BoomerangFlowerNrvPopUpAboveE
 0x71019F9AB8 32 object _ZTVN12_GLOBAL__N_128BoomerangFlowerNrvPopUpFrontE
 0x71019F9AD8 32 object _ZTVN12_GLOBAL__N_139BoomerangFlowerNrvWaitAndCheckCollisionE
 0x71019F9AF8 32 object _ZTVN12_GLOBAL__N_130BoomerangFlowerNrvAttachBubbleE
 0x71019F9B18 40 object _ZN12_GLOBAL__N_118NrvBoomerangFlowerE
-
 0x7101A513A0 32 object _ZTVN12_GLOBAL__N_116SuperBellNrvWaitE
 0x7101A513C0 32 object _ZTVN12_GLOBAL__N_122SuperBellNrvPopUpFrontE
 0x7101A513E0 32 object _ZTVN12_GLOBAL__N_122SuperBellNrvPopUpAboveE
 0x7101A51400 32 object _ZTVN12_GLOBAL__N_133SuperBellNrvWaitAndCheckCollisionE
 0x7101A51420 32 object _ZTVN12_GLOBAL__N_124SuperBellNrvAttachBubbleE
 0x7101A51440 40 object _ZN12_GLOBAL__N_112NrvSuperBellE
-
 0x7101A51988 32 object _ZTVN12_GLOBAL__N_123SuperBellSpecialNrvWaitE
 0x7101A519A8 32 object _ZTVN12_GLOBAL__N_129SuperBellSpecialNrvPopUpFrontE
 0x7101A519C8 32 object _ZTVN12_GLOBAL__N_129SuperBellSpecialNrvPopUpAboveE
 0x7101A519E8 32 object _ZTVN12_GLOBAL__N_140SuperBellSpecialNrvWaitAndCheckCollisionE
 0x7101A51A08 32 object _ZTVN12_GLOBAL__N_131SuperBellSpecialNrvAttachBubbleE
 0x7101A51A28 40 object _ZN12_GLOBAL__N_119NrvSuperBellSpecialE
-
 0x7101A705F0 32 object _ZTVN12_GLOBAL__N_116WhiteBellNrvWaitE
 0x7101A70610 32 object _ZTVN12_GLOBAL__N_122WhiteBellNrvPopUpFrontE
 0x7101A70630 32 object _ZTVN12_GLOBAL__N_133WhiteBellNrvWaitAndCheckCollisionE
 0x7101A70650 32 object _ZTVN12_GLOBAL__N_124WhiteBellNrvAttachBubbleE
 0x7101A70670 32 object _ZN12_GLOBAL__N_112NrvWhiteBellE
-
 0x71019EEA60 32 object _ZTVN12_GLOBAL__N_117AssistLeafNrvWaitE
 0x71019EEA80 32 object _ZTVN12_GLOBAL__N_123AssistLeafNrvPopUpAboveE
 0x71019EEAA0 32 object _ZTVN12_GLOBAL__N_123AssistLeafNrvPopUpFrontE
@@ -5527,13 +5389,10 @@
 0x7101A53078 32 object _ZTVN12_GLOBAL__N_122SuperStarNrvPopUpFrontE
 0x7101A53098 32 object _ZTVN12_GLOBAL__N_124SuperStarNrvAttachBubbleE
 0x7101A530E0 24 object _ZN12_GLOBAL__N_112NrvSuperStarE
-
 0x71016B54E4 24 object _ZN12_GLOBAL__N_116sEchoBlockLayoutE
-
 0x71016B6694 48 object _ZN12_GLOBAL__N_120sCoinChameleonLayoutE
 0x7101A61B58 32 object _ZTVN12_GLOBAL__N_128TestMusaCoinChameleonNrvWaitE
 0x7101A61B78 8 object _ZN12_GLOBAL__N_128NrvTestMusaCoinChameleonWaitE
-
 0x71016B6664 48 object _ZN12_GLOBAL__N_121sBlockChameleonLayoutE
 0x7101A61598 32 object _ZTVN12_GLOBAL__N_129TestMusaBlockChameleonNrvMoveE
 0x7101A615B8 32 object _ZTVN12_GLOBAL__N_129TestMusaBlockChameleonNrvWaitE
@@ -5542,7 +5401,6 @@
 0x7101A615F8 8 object _ZN12_GLOBAL__N_129NrvTestMusaBlockChameleonStopE
 0x7101A61620 8 object _ZN12_GLOBAL__N_130NrvTestMusaBlockChameleonBreakE
 0x7101A61628 16 object _ZN12_GLOBAL__N_125NrvTestMusaBlockChameleonE
-
 0x71016B66C4 48 object _ZN12_GLOBAL__N_118sMusaCubemapLayoutE
 0x7101A620A0 32 object _ZTVN12_GLOBAL__N_122TestMusaCubemapNrvMoveE
 0x7101A620C0 32 object _ZTVN12_GLOBAL__N_122TestMusaCubemapNrvWaitE
@@ -5551,9 +5409,7 @@
 0x7101A62100 8 object _ZN12_GLOBAL__N_122NrvTestMusaCubemapStopE
 0x7101A62128 8 object _ZN12_GLOBAL__N_123NrvTestMusaCubemapBreakE
 0x7101A62130 16 object _ZN12_GLOBAL__N_118NrvTestMusaCubemapE
-
 0x7101A608F8 16 object _ZN12_GLOBAL__N_124NrvTestMatsudaFlashlightE
-
 0x7101A5FD60 32 object _ZTVN12_GLOBAL__N_129TestKitazonoBlockBrickNrvMoveE
 0x7101A5FD80 32 object _ZTVN12_GLOBAL__N_129TestKitazonoBlockBrickNrvWaitE
 0x7101A5FDA0 32 object _ZTVN12_GLOBAL__N_129TestKitazonoBlockBrickNrvStopE
@@ -5561,7 +5417,6 @@
 0x7101A5FDE8 32 object _ZTVN12_GLOBAL__N_130TestKitazonoBlockBrickNrvBreakE
 0x7101A5FDC0 8 object _ZN12_GLOBAL__N_129NrvTestKitazonoBlockBrickStopE
 0x7101A5FE08 32 object _ZN12_GLOBAL__N_125NrvTestKitazonoBlockBrickE
-
 0x7101A356B8 32 object _ZTVN12_GLOBAL__N_118LavaGeyserNrvReadyE
 0x7101A356D8 32 object _ZTVN12_GLOBAL__N_118LavaGeyserNrvDelayE
 0x7101A356F8 32 object _ZTVN12_GLOBAL__N_127LavaGeyserNrvSwitchOffStartE
@@ -5570,3 +5425,8 @@
 0x7101A35760 8 object _ZN12_GLOBAL__N_123NrvLavaGeyserKeepRisingE
 0x7101A357B0 8 object _ZN12_GLOBAL__N_117NrvLavaGeyserWaitE
 0x7101A357D8 24 object _ZN12_GLOBAL__N_113NrvLavaGeyserE
+0x7101A27F58 32 object _ZN12_GLOBAL__N_113NrvIllustItemE
+0x7102109CA0 20 object _ZN12_GLOBAL__N_118sIllustRotateParamE
+0x71016B56D4 12 object _ZN12_GLOBAL__N_119sIllustShadowLengthsE
+0x7101A27EF8 32 object _ZTVN12_GLOBAL__N_116IllustItemNrvGotE
+0x7101A27F18 32 object _ZTVN12_GLOBAL__N_119IllustItemNrvAppearE

@@ -1723,8 +1723,9 @@ src/Game/MapObj/HexScrollAppearParts.cpp: done
     .text   start:0x002E4020 end:0x002E4290
 src/Game/MapObj/HoldColliderControl.cpp: done
     .text   start:0x002E4290 end:0x002E4528
-src/Game/MapObj/IllustItem.cpp:
+src/Game/MapObj/IllustItem.cpp: done
     .text   start:0x002E4530 end:0x002E50B4
+    .rodata start:0x016B56D4 end:0x016B56E0
 src/Game/MapObj/IllustItemKeeper.cpp: done
     .text   start:0x002E50C0 end:0x002E5238
 src/Game/MapObj/IslandAreaWatcher.cpp:

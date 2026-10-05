@@ -18709,11 +18709,11 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71002E4EA0			FALSE	_ZN10IllustItemD0Ev	IllustItem::~IllustItem()	
 0x71002E4ED0			FALSE	_ZNK12_GLOBAL__N_117IllustItemNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::IllustItemNrvWait::execute(al::NerveKeeper*) const	
 0x71002E4EE0			FALSE	_ZNK12_GLOBAL__N_120IllustItemNrvSpinDrc7executeEPN2al11NerveKeeperE	(anonymous namespace)::IllustItemNrvSpinDrc::execute(al::NerveKeeper*) const	
-0x71002E4EF0			FALSE	sub_71002E4EF0	sub_71002E4EF0	
-0x71002E4F80			FALSE	sub_71002E4F80	sub_71002E4F80	
+0x71002E4EF0			FALSE	_ZNK12_GLOBAL__N_116IllustItemNrvGot7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_116IllustItemNrvGot7executeEPN2al11NerveKeeperE	
+0x71002E4F80			FALSE	_ZNK12_GLOBAL__N_119IllustItemNrvAppear7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_119IllustItemNrvAppear7executeEPN2al11NerveKeeperE	
 0x71002E5010			FALSE	_ZNK2al10FunctorV0MIP10IllustItemMS1_FvvEEclEv	al::FunctorV0M<IllustItem*, void (IllustItem::*)()>::operator()() const	
 0x71002E5030			FALSE	_ZNK2al10FunctorV0MIP10IllustItemMS1_FvvEE5cloneEv	al::FunctorV0M<IllustItem*, void (IllustItem::*)()>::clone() const	
-0x71002E5080			FALSE	sub_71002E5080	sub_71002E5080	
+0x71002E5080			FALSE	_GLOBAL__sub_I_IllustItem.cpp	_GLOBAL__sub_I_IllustItem.cpp	
 0x71002E50C0		IllustItemKeeper.o	FALSE	_ZN16IllustItemKeeperC2Ev	IllustItemKeeper::IllustItemKeeper()	
 0x71002E50E0			FALSE	_ZN16IllustItemKeeper26initAfterPlacementSceneObjERKN2al13ActorInitInfoE	IllustItemKeeper::initAfterPlacementSceneObj(al::ActorInitInfo const&)	
 0x71002E5120			FALSE	_ZN16IllustItemKeeper7declareEv	IllustItemKeeper::declare()	

@@ -1,3 +1,4 @@
+#include "MapObj/IllustItem.hpp"
 #include "MapObj/LavaGeyser.hpp"
 #include "MapObj/Fury/BlockHardLaserOnly.hpp"
 #include "MapObj/SuperStar.hpp"
@@ -1363,14 +1364,7 @@ private:
 };
 static_assert(sizeof(HexScrollAppearParts) == 0x148);
 
-class IllustItem : public al::LiveActor {
-public:
-    explicit IllustItem(const char* pName, bool = false);
 
-private:
-    u8 mUnreconstructed[0x2c];
-};
-static_assert(sizeof(IllustItem) == 0x170);
 
 class Imozo : public al::LiveActor {
 public:

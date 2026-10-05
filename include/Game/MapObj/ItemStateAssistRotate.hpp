@@ -5,13 +5,7 @@
 
 namespace al { class MtxConnector; }
 
-struct ItemAssistRotateParam {
-    int mSpinFrames;
-    float mSpinSpeed;
-    bool mUseLerp;
-    float mEndSpeed;
-    int mLerpFrames;
-};
+class ItemAssistRotateParam;
 
 class ItemStateAssistRotate : public al::ActorStateBase {
 public:
@@ -19,6 +13,7 @@ public:
     void init() override;
     void appear() override;
     void setRotateDegree(float degree);
+    void setRotateDegreePtr(float* degree) { mRotateDegree = degree; }
     void setConnector(al::MtxConnector* pConnector, const sead::Quatf& rQuat) {
         mConnector = pConnector;
         mBaseQuat = rQuat;
