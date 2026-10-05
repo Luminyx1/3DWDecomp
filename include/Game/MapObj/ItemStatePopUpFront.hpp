@@ -10,6 +10,7 @@ namespace al {
 
 class ItemStatePopUpFrontParam {
 public:
+    ItemStatePopUpFrontParam() : _8("PopUp") { setDefault(); }
     ItemStatePopUpFrontParam(const sead::Vector3f&, f32, f32, int, f32, bool, const char*, bool, al::HitSensor*);
 
     void setDefault();

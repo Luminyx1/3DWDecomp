@@ -1,3 +1,5 @@
+#include "Demo/DemoAnimatic.hpp"
+#include "MapObj/KinokoGiga.hpp"
 #include "MapObj/GraphicsAreaController.hpp"
 #include "MapObj/Fury/FlowerCat.hpp"
 #include "MapObj/GrassHigh.hpp"
@@ -828,14 +830,7 @@ private:
 };
 static_assert(sizeof(DemoEventGateKeeperChecker) == 0x180);
 
-class DemoAnimatic : public al::LiveActor {
-public:
-    explicit DemoAnimatic(const char* pName, alSeFunction::DemoType = static_cast<alSeFunction::DemoType>(5));
 
-private:
-    u8 mUnreconstructed[0x224];
-};
-static_assert(sizeof(DemoAnimatic) == 0x368);
 
 class DemoCutscene : public al::LiveActor {
 public:
@@ -1669,14 +1664,7 @@ private:
 };
 static_assert(sizeof(KillerTankPartsNeedle) == 0x148);
 
-class KinokoGiga : public al::LiveActor {
-public:
-    explicit KinokoGiga(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x24];
-};
-static_assert(sizeof(KinokoGiga) == 0x168);
 
 class KinokoOneUp : public al::LiveActor {
 public:
