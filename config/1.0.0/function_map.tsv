@@ -11448,7 +11448,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001BA070			FALSE	_ZN17CounterScorePartsC1ERKN2al14LayoutInitInfoEPKcS5_PNS0_11LayoutActorEPK14GameDataHolder	CounterScoreParts::CounterScoreParts(al::LayoutInitInfo const&, char const*, char const*, al::LayoutActor*, GameDataHolder const*)	
 0x71001BA160			FALSE	_ZN17CounterScoreParts9exeAppearEv	CounterScoreParts::exeAppear()	
 0x71001BA170			FALSE	_ZN17CounterScoreParts7exeWaitEv	CounterScoreParts::exeWait()	
-0x71001BA200			FALSE	sub_71001BA200	sub_71001BA200	
+0x71001BA200			FALSE	_ZNK12_GLOBAL__N_124CounterScorePartsNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::CounterScorePartsNrvWait::execute(al::NerveKeeper*) const	
 0x71001BA2A0		CounterStampParts.o	FALSE	_ZN17CounterStampPartsC2ERKN2al14LayoutInitInfoEPKcS5_PNS0_11LayoutActorEPK16IllustItemKeeper	CounterStampParts::CounterStampParts(al::LayoutInitInfo const&, char const*, char const*, al::LayoutActor*, IllustItemKeeper const*)	
 0x71001BA3B0			FALSE	_ZN17CounterStampPartsC1ERKN2al14LayoutInitInfoEPKcS5_PNS0_11LayoutActorEPK16IllustItemKeeper	CounterStampParts::CounterStampParts(al::LayoutInitInfo const&, char const*, char const*, al::LayoutActor*, IllustItemKeeper const*)	
 0x71001BA4B0			FALSE	_ZN17CounterStampParts7exeHideEv	CounterStampParts::exeHide()	
