@@ -18468,7 +18468,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71002DC4F0			FALSE	_ZN22GraphicsAreaControllerD0Ev	GraphicsAreaController::~GraphicsAreaController()	
 0x71002DC520			FALSE	_ZNK2al10FunctorV0MIP22GraphicsAreaControllerMS1_FvvEEclEv	al::FunctorV0M<GraphicsAreaController*, void (GraphicsAreaController::*)()>::operator()() const	
 0x71002DC540			FALSE	_ZNK2al10FunctorV0MIP22GraphicsAreaControllerMS1_FvvEE5cloneEv	al::FunctorV0M<GraphicsAreaController*, void (GraphicsAreaController::*)()>::clone() const	
-0x71002DC590			FALSE	nullsub_190	nullsub_190	
+0x71002DC590			FALSE	_ZNK12_GLOBAL__N_129GraphicsAreaControllerNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_129GraphicsAreaControllerNrvWait7executeEPN2al11NerveKeeperE	
 0x71002DC5A0		GraphicsObjShadowMaskCube.o	FALSE	_ZN2al25GraphicsObjShadowMaskCubeC2EPKc	al::GraphicsObjShadowMaskCube::GraphicsObjShadowMaskCube(char const*)	
 0x71002DC710			FALSE	_ZN2al25GraphicsObjShadowMaskCubeC1EPKc	al::GraphicsObjShadowMaskCube::GraphicsObjShadowMaskCube(char const*)	
 0x71002DC880			FALSE	_ZN2al25GraphicsObjShadowMaskCubeD2Ev	al::GraphicsObjShadowMaskCube::~GraphicsObjShadowMaskCube()	

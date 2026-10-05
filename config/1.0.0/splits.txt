@@ -1691,7 +1691,7 @@ src/Game/MapObj/Gong.cpp: done
     .text   start:0x002D9E90 end:0x002DA3E8
 src/Game/MapObj/Gotogoton.cpp:
     .text   start:0x002DA3F0 end:0x002DBE18
-src/Game/MapObj/GraphicsAreaController.cpp:
+src/Game/MapObj/GraphicsAreaController.cpp: done
     .text   start:0x002DBE20 end:0x002DC594
 src/Game/MapObj/GraphicsObjShadowMaskCube.cpp:
     .text   start:0x002DC5A0 end:0x002DD78C

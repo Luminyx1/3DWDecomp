@@ -5252,3 +5252,6 @@
 
 0x71019CC208 32 object _ZTVN12_GLOBAL__N_116FlowerCatNrvWaitE
 0x71019CC248 8 object _ZN12_GLOBAL__N_116NrvFlowerCatWaitE
+
+0x7101A23E90 32 object _ZTVN12_GLOBAL__N_129GraphicsAreaControllerNrvWaitE
+0x7101A23EB0 8 object _ZN12_GLOBAL__N_129NrvGraphicsAreaControllerWaitE

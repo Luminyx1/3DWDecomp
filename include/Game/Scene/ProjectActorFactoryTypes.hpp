@@ -1,3 +1,4 @@
+#include "MapObj/GraphicsAreaController.hpp"
 #include "MapObj/Fury/FlowerCat.hpp"
 #include "MapObj/GrassHigh.hpp"
 #include "MapObj/CoinCirclePlacement.hpp"
@@ -1381,14 +1382,7 @@ private:
 };
 static_assert(sizeof(Gotogoton) == 0x200);
 
-class GraphicsAreaController : public al::LiveActor {
-public:
-    explicit GraphicsAreaController(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x64];
-};
-static_assert(sizeof(GraphicsAreaController) == 0x1a8);
 
 namespace al {
 class GraphicsObjShadowMaskCube : public ShadowMaskBase, public LiveActor {
