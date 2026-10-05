@@ -1,3 +1,4 @@
+#include "MapObj/GeneratorBox.hpp"
 #include "MapObj/SoundKeyMoveParts.hpp"
 #include "MapObj/Crab.hpp"
 #include "MapObj/MultiLift.hpp"
@@ -1222,15 +1223,6 @@ private:
     u8 mUnreconstructed[0x34];
 };
 static_assert(sizeof(Gesso) == 0x178);
-
-class GeneratorBox : public al::LiveActor {
-public:
-    explicit GeneratorBox(const char* pName);
-
-private:
-    u8 mUnreconstructed[0xfc];
-};
-static_assert(sizeof(GeneratorBox) == 0x240);
 
 class GhostPlayerPlayer : public al::LiveActor {
 public:
