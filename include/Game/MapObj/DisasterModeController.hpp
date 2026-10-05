@@ -9,6 +9,7 @@ class IUseSceneObjHolder;
 }
 
 class SuperBowser;
+class DisasterBlockDirector;
 
 /**
  * @brief Controls Bowser's Fury disaster mode (Fury Bowser's rampages).
@@ -19,6 +20,7 @@ class DisasterModeController : public al::LiveActor {
   public:
     static DisasterModeController* tryGetController(const al::IUseSceneObjHolder* pUser);
 
+    DisasterBlockDirector* getBlockDirector() const { return mBlockDirector; }
     void endImmediate();
     void setSuperBowserV2(bool);
     void pause(bool);
@@ -60,7 +62,9 @@ class DisasterModeController : public al::LiveActor {
     al::LiveActor* getDemoSubActor() const { return mDemoSubActor; }
 
   private:
-    u8 mUnknown144[0x1c4 - 0x144]; // Unreconstructed state, from the actor tail padding.
+    u8 mUnknown144[0x160 - 0x144];
+    DisasterBlockDirector* mBlockDirector;
+    u8 mUnknown168[0x1c4 - 0x168];
     s32 mDisasterFrames;
     u8 mUnknown1C8[0x20];
     SuperBowser* mpSuperBowser;

@@ -1,3 +1,4 @@
+#include "MapObj/Fury/BlockHardLaserOnly.hpp"
 #include "MapObj/SuperStar.hpp"
 #include "MapObj/SuperBellSpecial.hpp"
 #include "MapObj/SuperBell.hpp"
@@ -204,14 +205,7 @@ private:
 };
 static_assert(sizeof(BlockHard) == 0x168);
 
-class BlockHardLaserOnly : public al::LiveActor {
-public:
-    explicit BlockHardLaserOnly(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x64];
-};
-static_assert(sizeof(BlockHardLaserOnly) == 0x1a8);
 
 class BlockQuestionCourseSelect : public al::LiveActor {
 public:
