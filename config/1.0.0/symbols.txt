@@ -4734,3 +4734,8 @@
 # Default spatial sound engine (atk_Sound3DManager)
 0x710211D8E8 24 object _ZN12_GLOBAL__N_121sDefaultSound3DEngineE
 0x710057E5F0 12 func _GLOBAL__sub_I_atk_Sound3DManager.cpp
+
+# BootScene state instances.
+0x7101A94530 8 object _ZN12_GLOBAL__N_119NrvBootSceneLoadEndE
+0x7101A945A0 8 object _ZN12_GLOBAL__N_121NrvBootSceneInitErrorE
+0x7101A94598 8 object _ZN12_GLOBAL__N_132NrvBootSceneWaitLoadDoneResourceE

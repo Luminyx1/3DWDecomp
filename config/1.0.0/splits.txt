@@ -3117,7 +3117,7 @@ src/Game/Raidon/SuperSkateShoes.cpp:
     .text   start:0x004AB170 end:0x004AD1F8
 src/Game/Raidon/TestAndoTrain.cpp:
     .text   start:0x004AD200 end:0x004AF198
-src/Game/Scene/BootScene.cpp:
+src/Game/Scene/BootScene.cpp: done
     .text   start:0x004AF1A0 end:0x004AFA70
 src/Game/Scene/DemoEndingScene.cpp:
     .text   start:0x004AFA70 end:0x004B0BE8

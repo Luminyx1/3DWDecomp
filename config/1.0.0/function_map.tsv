@@ -30509,10 +30509,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71004AF860			FALSE	_ZN9BootScene23exeWaitLoadDoneResourceEv	BootScene::exeWaitLoadDoneResource()	
 0x71004AF8D0			FALSE	_ZN9BootScene10exeLoadEndEv	BootScene::exeLoadEnd()	
 0x71004AF930			FALSE	_ZNK12_GLOBAL__N_116BootSceneNrvInit7executeEPN2al11NerveKeeperE	(anonymous namespace)::BootSceneNrvInit::execute(al::NerveKeeper*) const	
-0x71004AF940			FALSE	sub_71004AF940	sub_71004AF940	
-0x71004AF9A0			FALSE	sub_71004AF9A0	sub_71004AF9A0	
+0x71004AF940			FALSE	_ZNK12_GLOBAL__N_119BootSceneNrvLoadEnd7executeEPN2al11NerveKeeperE	sub_71004AF940	
+0x71004AF9A0			FALSE	_ZNK12_GLOBAL__N_121BootSceneNrvInitError7executeEPN2al11NerveKeeperE	sub_71004AF9A0	
 0x71004AF9F0			FALSE	_ZNK12_GLOBAL__N_124BootSceneNrvLoadSaveData7executeEPN2al11NerveKeeperE	(anonymous namespace)::BootSceneNrvLoadSaveData::execute(al::NerveKeeper*) const	
-0x71004AFA00			FALSE	sub_71004AFA00	sub_71004AFA00	
+0x71004AFA00			FALSE	_ZNK12_GLOBAL__N_132BootSceneNrvWaitLoadDoneResource7executeEPN2al11NerveKeeperE	sub_71004AFA00	
 0x71004AFA70		DemoEndingScene.o	FALSE	_ZN15DemoEndingSceneC2Ev	DemoEndingScene::DemoEndingScene()	
 0x71004AFB80			FALSE	_ZN15DemoEndingSceneD2Ev	DemoEndingScene::~DemoEndingScene()	
 0x71004AFC00			FALSE	_ZN15DemoEndingSceneD0Ev	DemoEndingScene::~DemoEndingScene()	
