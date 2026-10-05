@@ -1486,7 +1486,7 @@ src/Game/MapObj/ChameleonStateUtil.cpp:
     .text   start:0x00265690 end:0x00266014
 src/Game/MapObj/CheckPoint.cpp:
     .text   start:0x00266020 end:0x00267A28
-src/Game/MapObj/CheckpointFlag.cpp:
+src/Game/MapObj/CheckpointFlag.cpp: done
     .text   start:0x00267A30 end:0x0026887C
 src/Game/MapObj/CheckPointStar.cpp:
     .text   start:0x00268880 end:0x00269FF8

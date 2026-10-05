@@ -5,6 +5,7 @@ class ActorMicRumbler : public al::NerveExecutor {
 public:
     ActorMicRumbler(al::LiveActor*, const al::AnimScaleParam*);
     void update();
+    void stopAndReset();
 private:
     u8 mUnreconstructed[0x20];
 };

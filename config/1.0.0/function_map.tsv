@@ -15715,13 +15715,13 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100268520			FALSE	_ZN14CheckpointFlag13setStateAfterEv	CheckpointFlag::setStateAfter()	
 0x7100268650			FALSE	_ZN14CheckpointFlagD1Ev	CheckpointFlag::~CheckpointFlag()	
 0x7100268660			FALSE	_ZN14CheckpointFlagD0Ev	CheckpointFlag::~CheckpointFlag()	
-0x7100268690			FALSE	sub_7100268690	sub_7100268690	
+0x7100268690			FALSE	_ZNK12_GLOBAL__N_123CheckpointFlagNrvBefore7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_123CheckpointFlagNrvBefore7executeEPN2al11NerveKeeperE	
 0x71002686D0			FALSE	_ZNK12_GLOBAL__N_120CheckpointFlagNrvGet7executeEPN2al11NerveKeeperE	(anonymous namespace)::CheckpointFlagNrvGet::execute(al::NerveKeeper*) const	
-0x71002686E0			FALSE	sub_71002686E0	sub_71002686E0	
-0x7100268730			FALSE	sub_7100268730	sub_7100268730	
-0x7100268790			FALSE	sub_7100268790	sub_7100268790	
-0x7100268800			FALSE	sub_7100268800	sub_7100268800	
-0x7100268840			FALSE	sub_7100268840	sub_7100268840	
+0x71002686E0			FALSE	_ZNK12_GLOBAL__N_125CheckpointFlagNrvShakeEnd7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_125CheckpointFlagNrvShakeEnd7executeEPN2al11NerveKeeperE	
+0x7100268730			FALSE	_ZNK12_GLOBAL__N_128CheckpointFlagNrvShakeBefore7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_128CheckpointFlagNrvShakeBefore7executeEPN2al11NerveKeeperE	
+0x7100268790			FALSE	_ZNK12_GLOBAL__N_122CheckpointFlagNrvShake7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_122CheckpointFlagNrvShake7executeEPN2al11NerveKeeperE	
+0x7100268800			FALSE	_ZNK12_GLOBAL__N_122CheckpointFlagNrvAfter7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_122CheckpointFlagNrvAfter7executeEPN2al11NerveKeeperE	
+0x7100268840			FALSE	_GLOBAL__sub_I_CheckpointFlag.cpp	_GLOBAL__sub_I_CheckpointFlag.cpp	
 0x7100268880		CheckPointStar.o	FALSE	_ZN14CheckPointStarC2EPKcP10CheckPoint	CheckPointStar::CheckPointStar(char const*, CheckPoint*)	
 0x7100268940			FALSE	_ZN14CheckPointStarC1EPKcP10CheckPoint	CheckPointStar::CheckPointStar(char const*, CheckPoint*)	
 0x7100268A00			FALSE	_ZN14CheckPointStarD2Ev	CheckPointStar::~CheckPointStar()	
