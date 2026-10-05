@@ -3577,7 +3577,7 @@ src/nw/atk/detail/util/atk_TaskProfileReader.cpp: done
     .text   start:0x0057DD20 end:0x0057E180
 src/nw/atk/detail/util/atk_Sound3DManager.cpp: done
     .text   start:0x0057E180 end:0x0057E5FC
-src/nw/atk/detail/util/atk_Sound3DEngine.cpp:
+src/nw/atk/detail/util/atk_Sound3DEngine.cpp: done
     .text   start:0x0057E600 end:0x0057EA94
 src/nw/atk/detail/util/atk_Sound3DCalculator.cpp:
     .text   start:0x0057EAA0 end:0x0057F488
