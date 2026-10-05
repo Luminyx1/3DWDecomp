@@ -1,3 +1,5 @@
+#include "MapObj/LuckyIslandController.hpp"
+#include "MapObj/LuckyIsland.hpp"
 #include "Camera/CameraLookAtPoint.hpp"
 #include "MapObj/Fury/FloatingIslandRailPart.hpp"
 #include "MapObj/Fury/DisasterFixMapParts.hpp"
@@ -1752,23 +1754,9 @@ private:
 };
 static_assert(sizeof(LightningController) == 0x198);
 
-class LuckyIsland : public al::LiveActor {
-public:
-    explicit LuckyIsland(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x1ec];
-};
-static_assert(sizeof(LuckyIsland) == 0x330);
 
-class LuckyIslandController : public al::ISceneObj, public al::LiveActor {
-public:
-    explicit LuckyIslandController(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x3c];
-};
-static_assert(sizeof(LuckyIslandController) == 0x188);
 
 class MagmaFish : public al::LiveActor {
 public:

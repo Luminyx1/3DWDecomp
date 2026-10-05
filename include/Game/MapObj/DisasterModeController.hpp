@@ -11,7 +11,6 @@ class IUseSceneObjHolder;
 
 class SuperBowser;
 class DisasterBlockDirector;
-class DisasterModeStateListener;
 
 /**
  * @brief Controls Bowser's Fury disaster mode (Fury Bowser's rampages).
@@ -21,7 +20,11 @@ class DisasterModeStateListener;
 class DisasterModeController : public al::LiveActor {
   public:
     enum class State : int { Normal = 1, Disaster = 7 };
-    void registerStateListener(DisasterModeStateListener* listener) { if (!mStateListeners.isFull()) mStateListeners.pushBack(listener); }
+    class IUseEventReceiver {
+    public:
+        virtual void onDisasterModeStateChange(State) = 0;
+    };
+    void registerStateListener(IUseEventReceiver* listener) { if (!mStateListeners.isFull()) mStateListeners.pushBack(listener); }
     static DisasterModeController* tryGetController(const al::IUseSceneObjHolder* pUser);
 
     DisasterBlockDirector* getBlockDirector() const { return mBlockDirector; }
@@ -82,10 +85,7 @@ class DisasterModeController : public al::LiveActor {
     u8 mUnknown25C[0x2d0 - 0x25c];
     s32 mDisasterFramesOffset;
     u8 mUnknown2D4[0x390 - 0x2d4];
-    sead::PtrArray<DisasterModeStateListener> mStateListeners;
+    sead::PtrArray<IUseEventReceiver> mStateListeners;
 };
 
-class DisasterModeStateListener {
-public:
-    virtual void onDisasterModeStateChange(DisasterModeController::State) = 0;
-};
+using DisasterModeStateListener = DisasterModeController::IUseEventReceiver;
