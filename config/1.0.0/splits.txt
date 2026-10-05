@@ -1603,7 +1603,7 @@ src/Game/MapObj/EchoEmitterHolder.cpp:
     .text   start:0x002A5470 end:0x002A691C
 src/Game/MapObj/EchoEmitTest.cpp: done
     .text   start:0x002A6920 end:0x002A6AB0
-src/Game/MapObj/EffectObjBreathBubble.cpp:
+src/Game/MapObj/EffectObjBreathBubble.cpp: done
     .text   start:0x002A6AB0 end:0x002A7098
 src/Game/MapObj/EnterCatMarioMiddleViewRocket.cpp: done
     .text   start:0x002A70A0 end:0x002A7310
