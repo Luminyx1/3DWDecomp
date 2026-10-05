@@ -11404,7 +11404,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001B8200			FALSE	_ZN17CounterMysteryBox8setCountEi	CounterMysteryBox::setCount(int)	
 0x71001B8220			FALSE	_ZN17CounterMysteryBoxC1ERKN2al14LayoutInitInfoE	CounterMysteryBox::CounterMysteryBox(al::LayoutInitInfo const&)	
 0x71001B82F0			FALSE	_ZN17CounterMysteryBox7exeWaitEv	CounterMysteryBox::exeWait()	
-0x71001B8300			FALSE	nullsub_111	nullsub_111	
+0x71001B8300			FALSE	_ZNK12_GLOBAL__N_124CounterMysteryBoxNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::CounterMysteryBoxNrvWait::execute(al::NerveKeeper*) const	
 0x71001B8310		CounterPlayerInfo.o	FALSE	_ZN17CounterPlayerInfoC2ERKN2al14LayoutInitInfoEPK14GameDataHolder	CounterPlayerInfo::CounterPlayerInfo(al::LayoutInitInfo const&, GameDataHolder const*)	
 0x71001B8410			FALSE	_ZN17CounterPlayerInfoC1ERKN2al14LayoutInitInfoEPK14GameDataHolder	CounterPlayerInfo::CounterPlayerInfo(al::LayoutInitInfo const&, GameDataHolder const*)	
 0x71001B8520			FALSE	_ZN17CounterPlayerInfo6appearEv	CounterPlayerInfo::appear()	
