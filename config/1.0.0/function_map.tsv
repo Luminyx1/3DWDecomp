@@ -18557,7 +18557,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71002DF6E0			FALSE	_ZN9GreenRing13getSeParamNumEv	GreenRing::getSeParamNum()	
 0x71002DF6F0			FALSE	_ZN9GreenRingD1Ev	GreenRing::~GreenRing()	
 0x71002DF700			FALSE	_ZN9GreenRingD0Ev	GreenRing::~GreenRing()	
-0x71002DF730			FALSE	sub_71002DF730	sub_71002DF730	
+0x71002DF730			FALSE	_ZNK12_GLOBAL__N_116GreenRingNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_116GreenRingNrvWait7executeEPN2al11NerveKeeperE	
 0x71002DF7B0			FALSE	_ZNK12_GLOBAL__N_121GreenRingNrvCountDown7executeEPN2al11NerveKeeperE	(anonymous namespace)::GreenRingNrvCountDown::execute(al::NerveKeeper*) const	
 0x71002DF7C0		GreenStar.o	FALSE	_ZN9GreenStarC2EPKcP10ItemBubbleb	GreenStar::GreenStar(char const*, ItemBubble*, bool)	
 0x71002DF8C0			FALSE	_ZN9GreenStarC1EPKcP10ItemBubbleb	GreenStar::GreenStar(char const*, ItemBubble*, bool)	

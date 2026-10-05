@@ -4,6 +4,8 @@ class ItemBubble;
 class GreenStar : public al::LiveActor {
 public:
     explicit GreenStar(const char*, ItemBubble* = nullptr, bool = false);
+    void setNoConnect();
+    void appearWithPos(const sead::Vector3f&);
     bool isAcquiredInScene() const { return mIsAcquiredInScene; }
     al::HitSensor* getAcquirerSensor() const { return mAcquirerSensor; }
 private:

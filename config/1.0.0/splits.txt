@@ -1701,7 +1701,7 @@ src/Game/MapObj/GrassHigh.cpp: done
     .text   start:0x002DDCF0 end:0x002DE3A4
 src/Game/MapObj/GreenCoin.cpp:
     .text   start:0x002DE3B0 end:0x002DEDFC
-src/Game/MapObj/GreenRing.cpp:
+src/Game/MapObj/GreenRing.cpp: done
     .text   start:0x002DEE00 end:0x002DF7B8
 src/Game/MapObj/GreenStar.cpp:
     .text   start:0x002DF7C0 end:0x002E1530

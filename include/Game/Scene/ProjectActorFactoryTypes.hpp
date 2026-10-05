@@ -1,3 +1,5 @@
+#include "MapObj/GreenRing.hpp"
+#include "MapObj/GreenCoin.hpp"
 #include "MapObj/GustWind.hpp"
 #include "MapObj/CoinRedRing.hpp"
 #include "MapObj/KoopaChaseCar.hpp"
@@ -1357,23 +1359,9 @@ static_assert(sizeof(GraphicsObjShadowMaskSphere) == 0x240);
 
 
 
-class GreenCoin : public al::LiveActor {
-public:
-    explicit GreenCoin(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x4c];
-};
-static_assert(sizeof(GreenCoin) == 0x190);
 
-class GreenRing : public al::LiveActor {
-public:
-    explicit GreenRing(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x4c];
-};
-static_assert(sizeof(GreenRing) == 0x190);
 
 static_assert(sizeof(GreenStar) == 0x1d8);
 
