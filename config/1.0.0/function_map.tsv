@@ -1407,9 +1407,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100038760			FALSE	_ZN13KoopaLastWall8exeBreakEv	KoopaLastWall::exeBreak()	
 0x71000387D0			FALSE	_ZN13KoopaLastWallD1Ev	KoopaLastWall::~KoopaLastWall()	
 0x71000387E0			FALSE	_ZN13KoopaLastWallD0Ev	KoopaLastWall::~KoopaLastWall()	
-0x7100038810			FALSE	sub_7100038810	sub_7100038810	
-0x71000388B0			FALSE	sub_71000388B0	sub_71000388B0	
-0x71000388D0			FALSE	sub_71000388D0	sub_71000388D0	
+0x7100038810			FALSE	_ZNK12_GLOBAL__N_120KoopaLastWallNrvSign7executeEPN2al11NerveKeeperE	(anonymous namespace)::KoopaLastWallNrvSign::execute(al::NerveKeeper*) const	matched nerve
+0x71000388B0			FALSE	_ZNK12_GLOBAL__N_120KoopaLastWallNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::KoopaLastWallNrvWait::execute(al::NerveKeeper*) const	matched nerve
+0x71000388D0			FALSE	_ZNK12_GLOBAL__N_121KoopaLastWallNrvBreak7executeEPN2al11NerveKeeperE	(anonymous namespace)::KoopaLastWallNrvBreak::execute(al::NerveKeeper*) const	matched nerve
 0x7100038940			FALSE	_ZNK2al10FunctorV0MIP13KoopaLastWallMS1_FvvEEclEv	al::FunctorV0M<KoopaLastWall*, void (KoopaLastWall::*)()>::operator()() const	
 0x7100038960			FALSE	_ZNK2al10FunctorV0MIP13KoopaLastWallMS1_FvvEE5cloneEv	al::FunctorV0M<KoopaLastWall*, void (KoopaLastWall::*)()>::clone() const	
 0x71000389B0		KoopaLastWallClimb.o	FALSE	_ZN18KoopaLastWallClimbC2EPKc	KoopaLastWallClimb::KoopaLastWallClimb(char const*)	

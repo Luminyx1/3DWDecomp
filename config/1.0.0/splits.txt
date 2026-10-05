@@ -219,7 +219,7 @@ src/Game/Boss/KoopaLastStateAttack.cpp:
     .text   start:0x00037B50 end:0x0003814C
 src/Game/Boss/KoopaLastStateTop.cpp:
     .text   start:0x00038150 end:0x000384BC
-src/Game/Boss/KoopaLastWall.cpp:
+src/Game/Boss/KoopaLastWall.cpp: done
     .text   start:0x000384C0 end:0x000389A4
 src/Game/Boss/KoopaLastWallClimb.cpp:
     .text   start:0x000389B0 end:0x00039F48

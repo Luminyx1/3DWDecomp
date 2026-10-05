@@ -4751,3 +4751,8 @@
 # KoopaLastStateTop
 0x7101958510 8 object _ZN12_GLOBAL__N_128NrvKoopaLastStateTopClimbEndE
 0x7101958560 8 object _ZN12_GLOBAL__N_125NrvKoopaLastStateTopShoutE
+
+# KoopaLastWall
+0x7101958AA8 8 object _ZN12_GLOBAL__N_120NrvKoopaLastWallSignE
+0x7101958AD0 8 object _ZN12_GLOBAL__N_120NrvKoopaLastWallWaitE
+0x7101958AF8 8 object _ZN12_GLOBAL__N_121NrvKoopaLastWallBreakE
