@@ -2089,7 +2089,7 @@ src/Game/MapObj/TestNut.cpp: done
     .text   start:0x00385B70 end:0x003860B4
 src/Game/MapObj/TestRouteDokanRenderMaterialIndirect.cpp: done
     .text   start:0x003860C0 end:0x0038630C
-src/Game/MapObj/TestTanakaMapObj.cpp:
+src/Game/MapObj/TestTanakaMapObj.cpp: done
     .text   start:0x00386310 end:0x0038652C
 src/Game/MapObj/TestTatsutaBlock.cpp: done
     .text   start:0x00386530 end:0x003868A0

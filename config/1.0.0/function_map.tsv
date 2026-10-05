@@ -22356,7 +22356,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71003864D0			FALSE	_ZN16TestTanakaMapObj7exeWaitEv	TestTanakaMapObj::exeWait()	
 0x71003864E0			FALSE	_ZN16TestTanakaMapObjD1Ev	TestTanakaMapObj::~TestTanakaMapObj()	
 0x71003864F0			FALSE	_ZN16TestTanakaMapObjD0Ev	TestTanakaMapObj::~TestTanakaMapObj()	
-0x7100386520			FALSE	sub_7100386520	sub_7100386520	
+0x7100386520			FALSE	_ZNK12_GLOBAL__N_123TestTanakaMapObjNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_123TestTanakaMapObjNrvWait7executeEPN2al11NerveKeeperE	
 0x7100386530		TestTatsutaBlock.o	FALSE	_ZN16TestTatsutaBlockC2EPKc	TestTatsutaBlock::TestTatsutaBlock(char const*)	
 0x71003865B0			FALSE	_ZN16TestTatsutaBlockC1EPKc	TestTatsutaBlock::TestTatsutaBlock(char const*)	
 0x7100386640			FALSE	_ZN16TestTatsutaBlock4initERKN2al13ActorInitInfoE	TestTatsutaBlock::init(al::ActorInitInfo const&)	
