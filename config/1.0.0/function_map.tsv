@@ -19735,13 +19735,13 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100310CC0			FALSE	_ZN10LavaGeyser8exeDelayEv	LavaGeyser::exeDelay()	
 0x7100310D10			FALSE	_ZN10LavaGeyserD1Ev	LavaGeyser::~LavaGeyser()	
 0x7100310D20			FALSE	_ZN10LavaGeyserD0Ev	LavaGeyser::~LavaGeyser()	
-0x7100310D50			FALSE	sub_7100310D50	sub_7100310D50	
-0x7100310DC0			FALSE	sub_7100310DC0	sub_7100310DC0	
-0x7100310E10			FALSE	nullsub_205	nullsub_205	
+0x7100310D50			FALSE	_ZNK12_GLOBAL__N_118LavaGeyserNrvReady7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_118LavaGeyserNrvReady7executeEPN2al11NerveKeeperE	
+0x7100310DC0			FALSE	_ZNK12_GLOBAL__N_118LavaGeyserNrvDelay7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_118LavaGeyserNrvDelay7executeEPN2al11NerveKeeperE	
+0x7100310E10			FALSE	_ZNK12_GLOBAL__N_127LavaGeyserNrvSwitchOffStart7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_127LavaGeyserNrvSwitchOffStart7executeEPN2al11NerveKeeperE	
 0x7100310E20			FALSE	_ZNK12_GLOBAL__N_117LavaGeyserNrvRise7executeEPN2al11NerveKeeperE	(anonymous namespace)::LavaGeyserNrvRise::execute(al::NerveKeeper*) const	
-0x7100310E30			FALSE	sub_7100310E30	sub_7100310E30	
+0x7100310E30			FALSE	_ZNK12_GLOBAL__N_123LavaGeyserNrvKeepRising7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_123LavaGeyserNrvKeepRising7executeEPN2al11NerveKeeperE	
 0x7100310EA0			FALSE	_ZNK12_GLOBAL__N_121LavaGeyserNrvFallDown7executeEPN2al11NerveKeeperE	(anonymous namespace)::LavaGeyserNrvFallDown::execute(al::NerveKeeper*) const	
-0x7100310EB0			FALSE	sub_7100310EB0	sub_7100310EB0	
+0x7100310EB0			FALSE	_ZNK12_GLOBAL__N_117LavaGeyserNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_117LavaGeyserNrvWait7executeEPN2al11NerveKeeperE	
 0x7100310F20			FALSE	_ZNK2al10FunctorV0MIP10LavaGeyserMS1_FvvEEclEv	al::FunctorV0M<LavaGeyser*, void (LavaGeyser::*)()>::operator()() const	
 0x7100310F40			FALSE	_ZNK2al10FunctorV0MIP10LavaGeyserMS1_FvvEE5cloneEv	al::FunctorV0M<LavaGeyser*, void (LavaGeyser::*)()>::clone() const	
 0x7100310F90		LiftMike.o	FALSE	_ZN8LiftMikeC2EPKc	LiftMike::LiftMike(char const*)	

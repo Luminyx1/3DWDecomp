@@ -1,3 +1,4 @@
+#include "MapObj/LavaGeyser.hpp"
 #include "MapObj/Fury/BlockHardLaserOnly.hpp"
 #include "MapObj/SuperStar.hpp"
 #include "MapObj/SuperBellSpecial.hpp"
@@ -1758,14 +1759,7 @@ private:
 };
 static_assert(sizeof(Lantern) == 0x1a8);
 
-class LavaGeyser : public al::LiveActor {
-public:
-    explicit LavaGeyser(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x44];
-};
-static_assert(sizeof(LavaGeyser) == 0x188);
 
 class LiftMike : public al::LiveActor {
 public:

@@ -1821,7 +1821,7 @@ src/Game/MapObj/LanternRing.cpp: done
     .text   start:0x0030FE90 end:0x00310164
 src/Game/MapObj/LanternSwingMovement.cpp: done
     .text   start:0x00310170 end:0x00310404
-src/Game/MapObj/LavaGeyser.cpp:
+src/Game/MapObj/LavaGeyser.cpp: done
     .text   start:0x00310410 end:0x00310F84
 src/Game/MapObj/LiftMike.cpp:
     .text   start:0x00310F90 end:0x0031266C
