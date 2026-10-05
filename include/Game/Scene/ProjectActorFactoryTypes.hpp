@@ -1,4 +1,5 @@
 #pragma once
+#include "MapObj/Seaweed.hpp"
 #include "MapObj/KinopioBrigadeNpc.hpp"
 #include "MapObj/KinopioBrigadeWatcher.hpp"
 #include "MapObj/OneSideStep.hpp"
@@ -2546,14 +2547,6 @@ private:
 };
 static_assert(sizeof(SePlayObj) == 0x168);
 
-class Seaweed : public al::LiveActor {
-public:
-    explicit Seaweed(const char* pName);
-
-private:
-    u8 mUnreconstructed[0x14];
-};
-static_assert(sizeof(Seaweed) == 0x158);
 
 class Shards : public al::LiveActor {
 public:

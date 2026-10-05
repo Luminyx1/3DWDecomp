@@ -1941,7 +1941,7 @@ src/Game/MapObj/SaveDataChecker.cpp:
     .text   start:0x00353D50 end:0x00354154
 src/Game/MapObj/ScoreHolder.cpp:
     .text   start:0x00354160 end:0x0035494C
-src/Game/MapObj/Seaweed.cpp:
+src/Game/MapObj/Seaweed.cpp: done
     .text   start:0x00354950 end:0x00354EEC
 src/Game/MapObj/SePlayObj.cpp: done
     .text   start:0x00354EF0 end:0x003554B4

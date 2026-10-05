@@ -21124,10 +21124,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100354D00			FALSE	_ZN7Seaweed16exeReactionAfterEv	Seaweed::exeReactionAfter()	
 0x7100354D80			FALSE	_ZN7SeaweedD1Ev	Seaweed::~Seaweed()	
 0x7100354D90			FALSE	_ZN7SeaweedD0Ev	Seaweed::~Seaweed()	
-0x7100354DC0			FALSE	nullsub_218	nullsub_218	
-0x7100354DD0			FALSE	sub_7100354DD0	sub_7100354DD0	
-0x7100354E30			FALSE	sub_7100354E30	sub_7100354E30	
-0x7100354EB0			FALSE	sub_7100354EB0	sub_7100354EB0	
+0x7100354DC0			FALSE	_ZNK12_GLOBAL__N_114SeaweedNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_114SeaweedNrvWait7executeEPN2al11NerveKeeperE	
+0x7100354DD0			FALSE	_ZNK12_GLOBAL__N_118SeaweedNrvReaction7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_118SeaweedNrvReaction7executeEPN2al11NerveKeeperE	
+0x7100354E30			FALSE	_ZNK12_GLOBAL__N_123SeaweedNrvReactionAfter7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_123SeaweedNrvReactionAfter7executeEPN2al11NerveKeeperE	
+0x7100354EB0			FALSE	_GLOBAL__sub_I_Seaweed.cpp	_GLOBAL__sub_I_Seaweed.cpp	
 0x7100354EF0		SePlayObj.o	FALSE	_ZN9SePlayObjC2EPKc	SePlayObj::SePlayObj(char const*)	
 0x7100354F90			FALSE	_ZN9SePlayObjC1EPKc	SePlayObj::SePlayObj(char const*)	
 0x7100355030			FALSE	_ZN9SePlayObj4initERKN2al13ActorInitInfoE	SePlayObj::init(al::ActorInitInfo const&)	
