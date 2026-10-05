@@ -16176,10 +16176,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710027B080			FALSE	_ZN12CoinRailCoin7setMoveEv	CoinRailCoin::setMove()	
 0x710027B090			FALSE	_ZN12CoinRailCoinD1Ev	CoinRailCoin::~CoinRailCoin()	
 0x710027B0A0			FALSE	_ZN12CoinRailCoinD0Ev	CoinRailCoin::~CoinRailCoin()	
-0x710027B0D0			FALSE	sub_710027B0D0	sub_710027B0D0	
+0x710027B0D0			FALSE	_ZNK12_GLOBAL__N_119CoinRailCoinNrvMove7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_119CoinRailCoinNrvMove7executeEPN2al11NerveKeeperE	
 0x710027B100			FALSE	_ZNK12_GLOBAL__N_122CoinRailCoinNrvStandby7executeEPN2al11NerveKeeperE	(anonymous namespace)::CoinRailCoinNrvStandby::execute(al::NerveKeeper*) const	
-0x710027B110			FALSE	sub_710027B110	sub_710027B110	
-0x710027B190			FALSE	sub_710027B190	sub_710027B190	
+0x710027B110			FALSE	_ZNK12_GLOBAL__N_122CoinRailCoinNrvSpinDrc7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_122CoinRailCoinNrvSpinDrc7executeEPN2al11NerveKeeperE	
+0x710027B190			FALSE	_ZNK12_GLOBAL__N_119CoinRailCoinNrvStop7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_119CoinRailCoinNrvStop7executeEPN2al11NerveKeeperE	
 0x710027B200		CoinRed.o	FALSE	_ZN7CoinRedC2EPKcP11IUseRedCoin	CoinRed::CoinRed(char const*, IUseRedCoin*)	
 0x710027B2E0			FALSE	_ZN7CoinRedC1EPKcP11IUseRedCoin	CoinRed::CoinRed(char const*, IUseRedCoin*)	
 0x710027B3C0			FALSE	_ZN7CoinRed4initERKN2al13ActorInitInfoE	CoinRed::init(al::ActorInitInfo const&)	
