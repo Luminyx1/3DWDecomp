@@ -18676,9 +18676,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71002E3D20			FALSE	_ZN17HeadgearStateBlow8tryStartEPKN2al9SensorMsgEPNS0_9HitSensorE	HeadgearStateBlow::tryStart(al::SensorMsg const*, al::HitSensor*)	
 0x71002E3E90			FALSE	_ZN17HeadgearStateBlow7exeBlowEv	HeadgearStateBlow::exeBlow()	
 0x71002E3FC0			FALSE	_ZN17HeadgearStateBlowD0Ev	HeadgearStateBlow::~HeadgearStateBlow()	
-0x71002E3FF0			FALSE	sub_71002E3FF0	sub_71002E3FF0	
-0x71002E4000			FALSE	sub_71002E4000	sub_71002E4000	
-0x71002E4010			FALSE	sub_71002E4010	sub_71002E4010	
+0x71002E3FF0			FALSE	_ZNK12_GLOBAL__N_124HeadgearStateBlowNrvBlow7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_124HeadgearStateBlowNrvBlow7executeEPN2al11NerveKeeperE	
+0x71002E4000			FALSE	_ZNK12_GLOBAL__N_130HeadgearStateBlowNrvBlowSilent7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_130HeadgearStateBlowNrvBlowSilent7executeEPN2al11NerveKeeperE	
+0x71002E4010			FALSE	_ZNK12_GLOBAL__N_128HeadgearStateBlowNrvBlowGoal7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_128HeadgearStateBlowNrvBlowGoal7executeEPN2al11NerveKeeperE	
 0x71002E4020		HexScrollAppearParts.o	FALSE	_ZN20HexScrollAppearPartsC2EPKc	HexScrollAppearParts::HexScrollAppearParts(char const*)	
 0x71002E40A0			FALSE	_ZN20HexScrollAppearPartsC1EPKc	HexScrollAppearParts::HexScrollAppearParts(char const*)	
 0x71002E4120			FALSE	_ZN20HexScrollAppearParts4initERKN2al13ActorInitInfoE	HexScrollAppearParts::init(al::ActorInitInfo const&)	
