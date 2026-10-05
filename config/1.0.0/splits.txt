@@ -3133,7 +3133,7 @@ src/Game/Scene/DemoSingleModeEndingScene.cpp:
     .text   start:0x004B3870 end:0x004B4A18
 src/Game/Scene/DrcCameraScene.cpp:
     .text   start:0x004B4A20 end:0x004B4C54
-src/Game/Scene/InGameSceneBase.cpp:
+src/Game/Scene/InGameSceneBase.cpp: done
     .text   start:0x004B4C60 end:0x004B4D34
 src/Game/Scene/IslandScene.cpp:
     .text   start:0x004B4D40 end:0x004B5058
