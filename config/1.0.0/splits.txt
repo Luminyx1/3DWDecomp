@@ -2057,7 +2057,7 @@ src/Game/MapObj/TestIshiokaTrapWall.cpp:
     .text   start:0x0037BEF0 end:0x0037C624
 src/Game/MapObj/TestKinokoHead.cpp:
     .text   start:0x0037C630 end:0x0037CE18
-src/Game/MapObj/TestKitaharaRouteBazooka.cpp:
+src/Game/MapObj/TestKitaharaRouteBazooka.cpp: done
     .text   start:0x0037CE20 end:0x0037D5E4
 src/Game/MapObj/TestKitaharaRouteBazookaEntrance.cpp: done
     .text   start:0x0037D5F0 end:0x0037DBD0

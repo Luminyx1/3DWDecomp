@@ -11,6 +11,7 @@ public:
     void active();
     void deactive();
     TestKitaharaRouteBazookaEntrance* getEntrance(int) const;
+    int getEntranceCount() const { return mEntranceCount; }
     void setHost(TestKitaharaRouteBazooka*);
 private:
     TestKitaharaRouteBazookaEntrance** mEntrances = nullptr;
