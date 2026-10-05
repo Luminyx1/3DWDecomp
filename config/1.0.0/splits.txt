@@ -829,7 +829,7 @@ src/Game/Enemy/TeresaConveyorTeresaBig.cpp: done
     .text   start:0x0015E360 end:0x0015E620
 src/Game/Enemy/TeresaWall.cpp:
     .text   start:0x0015E620 end:0x0015EEC8
-src/Game/Enemy/TerritoryMover.cpp:
+src/Game/Enemy/TerritoryMover.cpp: done
     .text   start:0x0015EED0 end:0x0015F040
 src/Game/Enemy/TestAoyagiEnemy.cpp:
     .text   start:0x0015F040 end:0x0015F52C
