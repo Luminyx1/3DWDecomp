@@ -16394,9 +16394,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100281A40			FALSE	_ZN17CubeMapController9exeFadeInEv	CubeMapController::exeFadeIn()	
 0x7100281AB0			FALSE	_ZN17CubeMapControllerD1Ev	CubeMapController::~CubeMapController()	
 0x7100281AC0			FALSE	_ZN17CubeMapControllerD0Ev	CubeMapController::~CubeMapController()	
-0x7100281AF0			FALSE	nullsub_169	nullsub_169	
-0x7100281B00			FALSE	sub_7100281B00	sub_7100281B00	
-0x7100281B70			FALSE	sub_7100281B70	sub_7100281B70	
+0x7100281AF0			FALSE	_ZNK12_GLOBAL__N_124CubeMapControllerNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_124CubeMapControllerNrvWait7executeEPN2al11NerveKeeperE	
+0x7100281B00			FALSE	_ZNK12_GLOBAL__N_127CubeMapControllerNrvFadeOut7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_127CubeMapControllerNrvFadeOut7executeEPN2al11NerveKeeperE	
+0x7100281B70			FALSE	_ZNK12_GLOBAL__N_126CubeMapControllerNrvFadeIn7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_126CubeMapControllerNrvFadeIn7executeEPN2al11NerveKeeperE	
 0x7100281BE0			FALSE	_ZNK2al10FunctorV0MIP17CubeMapControllerMS1_FvvEEclEv	al::FunctorV0M<CubeMapController*, void (CubeMapController::*)()>::operator()() const	
 0x7100281C00			FALSE	_ZNK2al10FunctorV0MIP17CubeMapControllerMS1_FvvEE5cloneEv	al::FunctorV0M<CubeMapController*, void (CubeMapController::*)()>::clone() const	
 0x7100281C50		DashPanel.o	FALSE	_ZN9DashPanelC2EPKc	DashPanel::DashPanel(char const*)	
