@@ -1,4 +1,5 @@
 #pragma once
+#include "MapObj/CheckpointFlag.hpp"
 #include "MapObj/FairyHouseIllustItemWatcher.hpp"
 #include "MapObj/Fury/GigaBellPedestal.hpp"
 #include "MapObj/Fury/GigaBellManager.hpp"
@@ -473,14 +474,6 @@ private:
 };
 static_assert(sizeof(CheckPoint) == 0x1f8);
 
-class CheckpointFlag : public al::LiveActor {
-public:
-    explicit CheckpointFlag(const char* pName);
-
-private:
-    u8 mUnreconstructed[0x1c];
-};
-static_assert(sizeof(CheckpointFlag) == 0x160);
 
 class ChikuwaBlock : public al::LiveActor {
 public:
