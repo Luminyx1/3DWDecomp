@@ -20069,8 +20069,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710031D3D0			FALSE	_ZN2al15MirrorActorBaseD0Ev	al::MirrorActorBase::~MirrorActorBase()	
 0x710031D400			FALSE	_ZN6MirrorD1Ev	Mirror::~Mirror()	
 0x710031D410			FALSE	_ZN6MirrorD0Ev	Mirror::~Mirror()	
-0x710031D440			FALSE	nullsub_208	nullsub_208	
-0x710031D450			FALSE	sub_710031D450	sub_710031D450	
+0x710031D440			FALSE	_ZNK12_GLOBAL__N_113MirrorNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_113MirrorNrvWait7executeEPN2al11NerveKeeperE	
+0x710031D450			FALSE	_ZNK12_GLOBAL__N_118MirrorNrvDisappear7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_118MirrorNrvDisappear7executeEPN2al11NerveKeeperE	
 0x710031D4D0			FALSE	_ZNK2al10FunctorV0MIP6MirrorMS1_FvvEEclEv	al::FunctorV0M<Mirror*, void (Mirror::*)()>::operator()() const	
 0x710031D4F0			FALSE	_ZNK2al10FunctorV0MIP6MirrorMS1_FvvEE5cloneEv	al::FunctorV0M<Mirror*, void (Mirror::*)()>::clone() const	
 0x710031D540		MultiLift.o	FALSE	_ZN9MultiLiftC2EPKc	MultiLift::MultiLift(char const*)	

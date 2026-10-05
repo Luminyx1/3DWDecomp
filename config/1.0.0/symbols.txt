@@ -5058,3 +5058,9 @@
 0x7101A27440 32 object _ZTVN12_GLOBAL__N_128HeadgearStateBlowNrvBlowGoalE
 0x7101A27470 8 object _ZN12_GLOBAL__N_128NrvHeadgearStateBlowBlowGoalE
 0x71016B4E88 28 object _ZN12_GLOBAL__N_113sDefaultParamE
+
+0x7101A39840 0x20 object _ZTVN12_GLOBAL__N_113MirrorNrvWaitE
+0x7101A39860 0x8 object _ZN12_GLOBAL__N_113NrvMirrorWaitE
+
+0x7101A39868 0x20 object _ZTVN12_GLOBAL__N_118MirrorNrvDisappearE
+0x7101A39888 0x8 object _ZN12_GLOBAL__N_118NrvMirrorDisappearE
