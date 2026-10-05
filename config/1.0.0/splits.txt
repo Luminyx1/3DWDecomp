@@ -1909,7 +1909,7 @@ src/Game/MapObj/PressureDeathObj.cpp:
     .text   start:0x00346990 end:0x003473F4
 src/Game/MapObj/PSwitchTimerCoinWatcher.cpp:
     .text   start:0x00347400 end:0x00347BE4
-src/Game/MapObj/PuppetStickRouteSelecter.cpp:
+src/Game/MapObj/PuppetStickRouteSelecter.cpp: done
     .text   start:0x00347BF0 end:0x003480DC
 src/Game/MapObj/RaftConveyer.cpp:
     .text   start:0x003480E0 end:0x00348720
