@@ -1227,7 +1227,7 @@ src/Game/Layout/StaffRollJob.cpp:
     .text   start:0x001F1A60 end:0x001F2064
 src/Game/Layout/StaffRollLayoutHolder.cpp:
     .text   start:0x001F2070 end:0x001F37E8
-src/Game/Layout/StaffRollName.cpp:
+src/Game/Layout/StaffRollName.cpp: done
     .text   start:0x001F37F0 end:0x001F3D14
 src/Game/Layout/StaffRollNintendo.cpp: done
     .text   start:0x001F3D20 end:0x001F41C4

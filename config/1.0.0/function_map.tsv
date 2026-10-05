@@ -12965,10 +12965,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001F3AE0			FALSE	_ZNK13StaffRollName5isEndEv	StaffRollName::isEnd() const	
 0x71001F3B30			FALSE	_ZN13StaffRollName9setStringEPKc	StaffRollName::setString(char const*)	
 0x71001F3BA0			FALSE	_ZN13StaffRollName10setStringWEPKDs	StaffRollName::setStringW(char16_t const*)	
-0x71001F3BC0			FALSE	sub_71001F3BC0	sub_71001F3BC0	
-0x71001F3C10			FALSE	sub_71001F3C10	sub_71001F3C10	
-0x71001F3C80			FALSE	sub_71001F3C80	sub_71001F3C80	
-0x71001F3CD0			FALSE	sub_71001F3CD0	sub_71001F3CD0	
+0x71001F3BC0			FALSE	_ZNK12_GLOBAL__N_120StaffRollNameNrvHide7executeEPN2al11NerveKeeperE	(anonymous namespace)::StaffRollNameNrvHide::execute(al::NerveKeeper*) const	
+0x71001F3C10			FALSE	_ZNK12_GLOBAL__N_122StaffRollNameNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::StaffRollNameNrvAppear::execute(al::NerveKeeper*) const	
+0x71001F3C80			FALSE	_ZNK12_GLOBAL__N_120StaffRollNameNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::StaffRollNameNrvWait::execute(al::NerveKeeper*) const	
+0x71001F3CD0			FALSE	_ZNK12_GLOBAL__N_119StaffRollNameNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::StaffRollNameNrvEnd::execute(al::NerveKeeper*) const	
 0x71001F3D20		StaffRollNintendo.o	FALSE	_ZN17StaffRollNintendoC2ERKN2al14LayoutInitInfoE	StaffRollNintendo::StaffRollNintendo(al::LayoutInitInfo const&)	
 0x71001F3DF0			FALSE	_ZN17StaffRollNintendoC1ERKN2al14LayoutInitInfoE	StaffRollNintendo::StaffRollNintendo(al::LayoutInitInfo const&)	
 0x71001F3EC0			FALSE	_ZN17StaffRollNintendo6appearEv	StaffRollNintendo::appear()	
