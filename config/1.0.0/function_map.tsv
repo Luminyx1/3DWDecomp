@@ -23135,7 +23135,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71003A3B10			FALSE	_ZN19WarpCubeLockedPieceD1Ev	WarpCubeLockedPiece::~WarpCubeLockedPiece()	
 0x71003A3B20			FALSE	_ZN19WarpCubeLockedPieceD0Ev	WarpCubeLockedPiece::~WarpCubeLockedPiece()	
 0x71003A3B50			FALSE	_ZNK12_GLOBAL__N_126WarpCubeLockedPieceNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::WarpCubeLockedPieceNrvWait::execute(al::NerveKeeper*) const	
-0x71003A3B60			FALSE	sub_71003A3B60	sub_71003A3B60	
+0x71003A3B60			FALSE	_ZNK12_GLOBAL__N_134WarpCubeLockedPieceNrvAssistRotate7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_134WarpCubeLockedPieceNrvAssistRotate7executeEPN2al11NerveKeeperE	
 0x71003A3BC0			FALSE	_ZNK12_GLOBAL__N_132WarpCubeLockedPieceNrvAppearRise7executeEPN2al11NerveKeeperE	(anonymous namespace)::WarpCubeLockedPieceNrvAppearRise::execute(al::NerveKeeper*) const	
 0x71003A3BD0			FALSE	_ZNK12_GLOBAL__N_132WarpCubeLockedPieceNrvAppearFall7executeEPN2al11NerveKeeperE	(anonymous namespace)::WarpCubeLockedPieceNrvAppearFall::execute(al::NerveKeeper*) const	
 0x71003A3BE0		WarpDoor.o	FALSE	_ZN8WarpDoorC2EPKc	WarpDoor::WarpDoor(char const*)	note: sorts before the previous object (folder boundary or misnamed object?)
