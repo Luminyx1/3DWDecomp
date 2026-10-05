@@ -1699,7 +1699,7 @@ src/Game/MapObj/GraphicsObjShadowMaskSphere.cpp: done
     .text   start:0x002DD790 end:0x002DDCEC
 src/Game/MapObj/GrassHigh.cpp: done
     .text   start:0x002DDCF0 end:0x002DE3A4
-src/Game/MapObj/GreenCoin.cpp:
+src/Game/MapObj/GreenCoin.cpp: done
     .text   start:0x002DE3B0 end:0x002DEDFC
 src/Game/MapObj/GreenRing.cpp: done
     .text   start:0x002DEE00 end:0x002DF7B8

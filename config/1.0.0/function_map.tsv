@@ -18542,9 +18542,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71002DEB80			FALSE	_ZN9GreenCoin7exeSpinEv	GreenCoin::exeSpin()	
 0x71002DEC30			FALSE	_ZN9GreenCoinD1Ev	GreenCoin::~GreenCoin()	
 0x71002DEC40			FALSE	_ZN9GreenCoinD0Ev	GreenCoin::~GreenCoin()	
-0x71002DEC70			FALSE	sub_71002DEC70	sub_71002DEC70	
-0x71002DECF0			FALSE	sub_71002DECF0	sub_71002DECF0	
-0x71002DEDA0			FALSE	sub_71002DEDA0	sub_71002DEDA0	
+0x71002DEC70			FALSE	_ZNK12_GLOBAL__N_118GreenCoinNrvAppear7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_118GreenCoinNrvAppear7executeEPN2al11NerveKeeperE	
+0x71002DECF0			FALSE	_ZNK12_GLOBAL__N_116GreenCoinNrvSpin7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_116GreenCoinNrvSpin7executeEPN2al11NerveKeeperE	
+0x71002DEDA0			FALSE	_ZNK12_GLOBAL__N_121GreenCoinNrvCountDown7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_121GreenCoinNrvCountDown7executeEPN2al11NerveKeeperE	
 0x71002DEE00		GreenRing.o	FALSE	_ZN9GreenRingC2EPKc	GreenRing::GreenRing(char const*)	
 0x71002DEEA0			FALSE	_ZN9GreenRingC1EPKc	GreenRing::GreenRing(char const*)	
 0x71002DEF50			FALSE	_ZN9GreenRing4initERKN2al13ActorInitInfoE	GreenRing::init(al::ActorInitInfo const&)	
