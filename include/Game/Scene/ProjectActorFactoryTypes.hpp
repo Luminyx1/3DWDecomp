@@ -1,3 +1,4 @@
+#include "MapObj/BlockBrickBig.hpp"
 #include "MapObj/BlockSwitch.hpp"
 #include "MapObj/GoalDoor.hpp"
 #include "MapObj/CoinFallGenerator.hpp"
@@ -134,14 +135,7 @@ static_assert(sizeof(BlockAssistLeaf) == 0x158);
 
 
 
-class BlockBrickBig : public al::LiveActor {
-public:
-    explicit BlockBrickBig(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x2c];
-};
-static_assert(sizeof(BlockBrickBig) == 0x170);
 
 class BlockBrickBreakableCourseSelect : public al::LiveActor {
 public:
