@@ -4663,8 +4663,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71000BB500			FALSE	_ZNK13DemoLayoutObj5isEndEi	DemoLayoutObj::isEnd(int) const	
 0x71000BB5B0			FALSE	_ZNK13DemoLayoutObj11getMaxFrameEv	DemoLayoutObj::getMaxFrame() const	
 0x71000BB5C0			FALSE	_ZNK13DemoLayoutObj15getCurrentFrameEv	DemoLayoutObj::getCurrentFrame() const	
-0x71000BB610			FALSE	sub_71000BB610	sub_71000BB610	
-0x71000BB690			FALSE	nullsub_41	nullsub_41	
+0x71000BB610			FALSE	_ZNK12_GLOBAL__N_120DemoLayoutObjNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::DemoLayoutObjNrvWait::execute(al::NerveKeeper*) const	
+0x71000BB690			FALSE	_ZNK12_GLOBAL__N_119DemoLayoutObjNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::DemoLayoutObjNrvEnd::execute(al::NerveKeeper*) const	
 0x71000BB6A0		DemoObjBase.o	FALSE	_ZN11DemoObjBaseC2EPKc	DemoObjBase::DemoObjBase(char const*)	
 0x71000BB760			FALSE	_ZN11DemoObjBaseC1EPKc	DemoObjBase::DemoObjBase(char const*)	
 0x71000BB820			FALSE	_ZN11DemoObjBase17initDemoPlacementERKN2al13ActorInitInfoE	DemoObjBase::initDemoPlacement(al::ActorInitInfo const&)	

@@ -481,7 +481,7 @@ src/Game/Demo/DemoEffectObj.cpp:
     .text   start:0x000BA390 end:0x000BA944
 src/Game/Demo/DemoKoopaW7.cpp:
     .text   start:0x000BA950 end:0x000BB25C
-src/Game/Demo/DemoLayoutObj.cpp:
+src/Game/Demo/DemoLayoutObj.cpp: done
     .text   start:0x000BB260 end:0x000BB694
 src/Game/Demo/DemoObjBase.cpp:
     .text   start:0x000BB6A0 end:0x000BC054
