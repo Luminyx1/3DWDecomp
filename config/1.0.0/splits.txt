@@ -489,7 +489,7 @@ src/Game/Demo/DemoOpeningSwitch.cpp:
     .text   start:0x000BC060 end:0x000BC254
 src/Game/Demo/DemoPlayerController.cpp:
     .text   start:0x000BC260 end:0x000BCBCC
-src/Game/Demo/DemoPlayerControllerHolder.cpp:
+src/Game/Demo/DemoPlayerControllerHolder.cpp: done
     .text   start:0x000BCBD0 end:0x000BCF34
 src/Game/Demo/DemoPlayerLocator.cpp:
     .text   start:0x000BCF40 end:0x000BD4D4
