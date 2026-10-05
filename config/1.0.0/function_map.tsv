@@ -19076,14 +19076,14 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71002F2A20			FALSE	_ZN15KeyMoveLoopLift7exeStopEv	KeyMoveLoopLift::exeStop()	
 0x71002F2A70			FALSE	_ZN15KeyMoveLoopLiftD1Ev	KeyMoveLoopLift::~KeyMoveLoopLift()	
 0x71002F2A80			FALSE	_ZN15KeyMoveLoopLiftD0Ev	KeyMoveLoopLift::~KeyMoveLoopLift()	
-0x71002F2AB0			FALSE	nullsub_193	nullsub_193	
-0x71002F2AC0			FALSE	sub_71002F2AC0	sub_71002F2AC0	
-0x71002F2B20			FALSE	sub_71002F2B20	sub_71002F2B20	
+0x71002F2AB0			FALSE	_ZNK12_GLOBAL__N_125KeyMoveLoopLiftNrvStandBy7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_125KeyMoveLoopLiftNrvStandBy7executeEPN2al11NerveKeeperE	
+0x71002F2AC0			FALSE	_ZNK12_GLOBAL__N_127KeyMoveLoopLiftNrvStartSign7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_127KeyMoveLoopLiftNrvStartSign7executeEPN2al11NerveKeeperE	
+0x71002F2B20			FALSE	_ZNK12_GLOBAL__N_124KeyMoveLoopLiftNrvAppear7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_124KeyMoveLoopLiftNrvAppear7executeEPN2al11NerveKeeperE	
 0x71002F2B80			FALSE	_ZNK12_GLOBAL__N_122KeyMoveLoopLiftNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::KeyMoveLoopLiftNrvWait::execute(al::NerveKeeper*) const	
-0x71002F2B90			FALSE	sub_71002F2B90	sub_71002F2B90	
+0x71002F2B90			FALSE	_ZNK12_GLOBAL__N_126KeyMoveLoopLiftNrvMoveSign7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_126KeyMoveLoopLiftNrvMoveSign7executeEPN2al11NerveKeeperE	
 0x71002F2BF0			FALSE	_ZNK12_GLOBAL__N_122KeyMoveLoopLiftNrvMove7executeEPN2al11NerveKeeperE	(anonymous namespace)::KeyMoveLoopLiftNrvMove::execute(al::NerveKeeper*) const	
-0x71002F2C00			FALSE	sub_71002F2C00	sub_71002F2C00	
-0x71002F2C60			FALSE	sub_71002F2C60	sub_71002F2C60	
+0x71002F2C00			FALSE	_ZNK12_GLOBAL__N_126KeyMoveLoopLiftNrvStopSign7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_126KeyMoveLoopLiftNrvStopSign7executeEPN2al11NerveKeeperE	
+0x71002F2C60			FALSE	_ZNK12_GLOBAL__N_122KeyMoveLoopLiftNrvStop7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_122KeyMoveLoopLiftNrvStop7executeEPN2al11NerveKeeperE	
 0x71002F2CB0		KeyMoveLoopLiftGenerator.o	FALSE	_ZN24KeyMoveLoopLiftGeneratorC2EPKc	KeyMoveLoopLiftGenerator::KeyMoveLoopLiftGenerator(char const*)	
 0x71002F2D50			FALSE	_ZN24KeyMoveLoopLiftGeneratorC1EPKc	KeyMoveLoopLiftGenerator::KeyMoveLoopLiftGenerator(char const*)	
 0x71002F2E00			FALSE	_ZN24KeyMoveLoopLiftGenerator4initERKN2al13ActorInitInfoE	KeyMoveLoopLiftGenerator::init(al::ActorInitInfo const&)	

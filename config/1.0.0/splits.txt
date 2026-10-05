@@ -1769,7 +1769,7 @@ src/Game/MapObj/KarakuriCastleDoor.cpp: done
     .text   start:0x002F1480 end:0x002F1CDC
 src/Game/MapObj/KarakuriCastleDoorWatcher.cpp: done
     .text   start:0x002F1CE0 end:0x002F2298
-src/Game/MapObj/KeyMoveLoop.cpp:
+src/Game/MapObj/KeyMoveLoop.cpp: done
     .text   start:0x002F22A0 end:0x002F2CA8
 src/Game/MapObj/KeyMoveLoopLiftGenerator.cpp: done
     .text   start:0x002F2CB0 end:0x002F3208
