@@ -28,6 +28,9 @@ public:
                   size_t loadBlockSize);
     bool LoadData(const char* pItemName, SoundMemoryAllocatable* pAllocator, u32 loadFlag,
                   size_t loadBlockSize);
+    bool detail_LoadWaveArchiveByWaveSoundFile(const void* pWaveSoundFile, int index,
+                                              SoundMemoryAllocatable* pAllocator);
+    const void* detail_GetFileAddressByItemId(SoundArchive::ItemId id) const;
 
 protected:
     virtual const void* SetFileAddressToTable(SoundArchive::FileId fileId, const void* pAddress) = 0;
@@ -35,7 +38,7 @@ protected:
     virtual const void* GetFileAddressImpl(SoundArchive::FileId fileId) const = 0;
 
 private:
-    u8 _8[0x228 - 0x8];
+    u8 _8[0x218 - 0x8];
 };
 }  // namespace detail
 
@@ -56,6 +59,8 @@ protected:
     const void* SetFileAddressToTable(SoundArchive::FileId fileId, const void* pAddress) override;
     const void* GetFileAddressFromTable(SoundArchive::FileId fileId) const override;
     const void* GetFileAddressImpl(SoundArchive::FileId fileId) const override;
+private:
+    u8 _230[0x240 - 0x230];
 };
 static_assert(sizeof(SoundDataManager) == 0x240);
 }  // namespace nn::atk

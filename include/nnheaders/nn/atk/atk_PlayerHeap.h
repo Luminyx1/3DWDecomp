@@ -15,6 +15,8 @@ class PlayerHeap : public SoundMemoryAllocatable {
     void* Allocate(size_t size, DisposeCallback callback, void* pCallbackArg) override;
     size_t GetAllocateSize(size_t size, bool needMemoryPool) override;
     size_t GetFreeSize() const;
+    /** @brief Marks completion of an asynchronous data load, whether successful or failed. */
+    void SetLoadFinished() { mState = State::LoadFinished; }
 
   private:
     struct CallbackRecord : util::IntrusiveListNode {
@@ -33,7 +35,8 @@ class PlayerHeap : public SoundMemoryAllocatable {
     u8* mStart;
     u8* mEnd;
     u8* mCurrent;
-    bool mInUse;
+    enum class State : u8 { Free, Allocated, LoadFinished };
+    State mState;
     util::IntrusiveListNode mLink;
     CallbackList mCallbacks;
 };
