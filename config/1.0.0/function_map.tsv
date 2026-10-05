@@ -7746,8 +7746,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100129470			FALSE	_ZN10NeedleSeed8exeBreakEv	NeedleSeed::exeBreak()	
 0x71001294F0			FALSE	_ZN10NeedleSeedD1Ev	NeedleSeed::~NeedleSeed()	
 0x7100129500			FALSE	_ZN10NeedleSeedD0Ev	NeedleSeed::~NeedleSeed()	
-0x7100129530			FALSE	sub_7100129530	sub_7100129530	
-0x7100129570			FALSE	sub_7100129570	sub_7100129570	
+0x7100129530			FALSE	_ZNK12_GLOBAL__N_117NeedleSeedNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::NeedleSeedNrvWait::execute(al::NerveKeeper*) const	
+0x7100129570			FALSE	_ZNK12_GLOBAL__N_118NeedleSeedNrvBreak7executeEPN2al11NerveKeeperE	(anonymous namespace)::NeedleSeedNrvBreak::execute(al::NerveKeeper*) const	
 0x71001295F0		Nokonoko.o	FALSE	_ZN8NokonokoC2EPKc	Nokonoko::Nokonoko(char const*)	
 0x7100129670			FALSE	_ZN8NokonokoC1EPKc	Nokonoko::Nokonoko(char const*)	
 0x7100129700			FALSE	_ZN8Nokonoko4initERKN2al13ActorInitInfoE	Nokonoko::init(al::ActorInitInfo const&)	
