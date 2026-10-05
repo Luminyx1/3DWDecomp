@@ -4753,3 +4753,9 @@
 0x71019E4B60 8 object _ZN12_GLOBAL__N_122NrvStaffRollNameAppearE
 0x71019E4B88 8 object _ZN12_GLOBAL__N_120NrvStaffRollNameWaitE
 0x71019E4BB0 8 object _ZN12_GLOBAL__N_119NrvStaffRollNameEndE
+
+# src/Game/Layout/StaffRollJob
+0x71019E4600 8 object _ZN12_GLOBAL__N_119NrvStaffRollJobHideE
+0x71019E4628 8 object _ZN12_GLOBAL__N_121NrvStaffRollJobAppearE
+0x71019E4650 8 object _ZN12_GLOBAL__N_119NrvStaffRollJobWaitE
+0x71019E4678 8 object _ZN12_GLOBAL__N_118NrvStaffRollJobEndE

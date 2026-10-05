@@ -12916,10 +12916,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001F1DA0			FALSE	_ZN12StaffRollJob9setStringEPKc	StaffRollJob::setString(char const*)	
 0x71001F1E10			FALSE	_ZN12StaffRollJob10setStringWEPKDs	StaffRollJob::setStringW(char16_t const*)	
 0x71001F1E30			TRUE	_ZN4sead22WFormatFixedSafeStringILi128EEC2EPKDsz	sead::WFormatFixedSafeString<128>::WFormatFixedSafeString(char16_t const*, ...)	
-0x71001F1F00			FALSE	sub_71001F1F00	sub_71001F1F00	
-0x71001F1F50			FALSE	sub_71001F1F50	sub_71001F1F50	
-0x71001F1FC0			FALSE	sub_71001F1FC0	sub_71001F1FC0	
-0x71001F2010			FALSE	sub_71001F2010	sub_71001F2010	
+0x71001F1F00			FALSE	_ZNK12_GLOBAL__N_119StaffRollJobNrvHide7executeEPN2al11NerveKeeperE	(anonymous namespace)::StaffRollJobNrvHide::execute(al::NerveKeeper*) const	
+0x71001F1F50			FALSE	_ZNK12_GLOBAL__N_121StaffRollJobNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::StaffRollJobNrvAppear::execute(al::NerveKeeper*) const	
+0x71001F1FC0			FALSE	_ZNK12_GLOBAL__N_119StaffRollJobNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::StaffRollJobNrvWait::execute(al::NerveKeeper*) const	
+0x71001F2010			FALSE	_ZNK12_GLOBAL__N_118StaffRollJobNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::StaffRollJobNrvEnd::execute(al::NerveKeeper*) const	
 0x71001F2060			TRUE	_ZN4sead22WFormatFixedSafeStringILi128EED0Ev	sead::WFormatFixedSafeString<128>::~WFormatFixedSafeString()	
 0x71001F2070		StaffRollLayoutHolder.o	FALSE	_ZN21StaffRollLayoutHolderC1ERKN2al14LayoutInitInfoEb	StaffRollLayoutHolder::StaffRollLayoutHolder(al::LayoutInitInfo const&, bool)	
 0x71001F2710			FALSE	_ZN21StaffRollLayoutHolder12getJobStringEPPDsS0_	StaffRollLayoutHolder::getJobString(char16_t**, char16_t*)	
