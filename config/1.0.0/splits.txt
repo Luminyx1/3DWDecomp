@@ -783,7 +783,7 @@ src/Game/Enemy/RunnerStateJump.cpp:
     .text   start:0x001430A0 end:0x00143B78
 src/Game/Enemy/SamboSnowBody.cpp:
     .text   start:0x00143B80 end:0x00144818
-src/Game/Enemy/SamboSnowHat.cpp:
+src/Game/Enemy/SamboSnowHat.cpp: done
     .text   start:0x00144820 end:0x00144AD8
 src/Game/Enemy/SamboSnowHead.cpp:
     .text   start:0x00144AE0 end:0x00148518
