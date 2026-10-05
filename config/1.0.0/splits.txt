@@ -1644,7 +1644,7 @@ src/Game/MapObj/FrameOutChecker.cpp: done
     .text   start:0x002B3BC0 end:0x002B4240
 src/Game/MapObj/GateKeeperChecker.cpp:
     .text   start:0x002B4240 end:0x002B4794
-src/Game/MapObj/GeneralHeadgear.cpp:
+src/Game/MapObj/GeneralHeadgear.cpp: done
     .text   start:0x002B47A0 end:0x002B5418
 src/Game/MapObj/GeneratorBox.cpp:
     .text   start:0x002B5420 end:0x002B7134
