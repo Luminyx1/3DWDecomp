@@ -1,5 +1,7 @@
 #pragma once
 
+#include "MapObj/ChikaChikaBlockWatcher.hpp"
+
 #include "Enemy/AllDeadWatcher.hpp"
 #include "MapObj/Fury/DisasterBlockDeadWatcher.hpp"
 
@@ -486,15 +488,6 @@ private:
     u8 mUnreconstructed[0x1c];
 };
 static_assert(sizeof(CheckpointFlag) == 0x160);
-
-class ChikaChikaBlockWatcher : public al::LiveActor {
-public:
-    explicit ChikaChikaBlockWatcher(const char* pName);
-
-private:
-    u8 mUnreconstructed[0x1c];
-};
-static_assert(sizeof(ChikaChikaBlockWatcher) == 0x160);
 
 class ChikuwaBlock : public al::LiveActor {
 public:
