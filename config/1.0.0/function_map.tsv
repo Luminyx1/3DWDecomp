@@ -18321,11 +18321,11 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71002D7AF0			FALSE	_ZN2al10PartsModelD0Ev	al::PartsModel::~PartsModel()	
 0x71002D7B20			FALSE	_ZN12GoalPoleFlagD1Ev	GoalPoleFlag::~GoalPoleFlag()	
 0x71002D7B30			FALSE	_ZN12GoalPoleFlagD0Ev	GoalPoleFlag::~GoalPoleFlag()	
-0x71002D7B60			FALSE	sub_71002D7B60	sub_71002D7B60	
-0x71002D7BC0			FALSE	sub_71002D7BC0	sub_71002D7BC0	
+0x71002D7B60			FALSE	_ZNK12_GLOBAL__N_119GoalPoleFlagNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_119GoalPoleFlagNrvWait7executeEPN2al11NerveKeeperE	
+0x71002D7BC0			FALSE	_ZNK12_GLOBAL__N_126GoalPoleFlagNrvWaitRunaway7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_126GoalPoleFlagNrvWaitRunaway7executeEPN2al11NerveKeeperE	
 0x71002D7C20			FALSE	_ZNK12_GLOBAL__N_121GoalPoleFlagNrvUpward7executeEPN2al11NerveKeeperE	(anonymous namespace)::GoalPoleFlagNrvUpward::execute(al::NerveKeeper*) const	
-0x71002D7C30			FALSE	sub_71002D7C30	sub_71002D7C30	
-0x71002D7C90			FALSE	sub_71002D7C90	sub_71002D7C90	
+0x71002D7C30			FALSE	_ZNK12_GLOBAL__N_119GoalPoleFlagNrvLerp7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_119GoalPoleFlagNrvLerp7executeEPN2al11NerveKeeperE	
+0x71002D7C90			FALSE	_ZNK12_GLOBAL__N_123GoalPoleFlagNrvReachTop7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_123GoalPoleFlagNrvReachTop7executeEPN2al11NerveKeeperE	
 0x71002D7D10		GoalPoleRunawayStep.o	FALSE	_ZN19GoalPoleRunawayStepC2EPKN4sead8Matrix34IfEE	GoalPoleRunawayStep::GoalPoleRunawayStep(sead::Matrix34<float> const*)	
 0x71002D7DA0			FALSE	_ZN19GoalPoleRunawayStepC1EPKN4sead8Matrix34IfEE	GoalPoleRunawayStep::GoalPoleRunawayStep(sead::Matrix34<float> const*)	
 0x71002D7E30			FALSE	_ZN19GoalPoleRunawayStep4initERKN2al13ActorInitInfoE	GoalPoleRunawayStep::init(al::ActorInitInfo const&)	

@@ -1,3 +1,4 @@
+#include "MapObj/GoalPole.hpp"
 #include "MapObj/NeedleRoller.hpp"
 #include "MapObj/KoopaSignBoard.hpp"
 #include "MapObj/SingleModeCheckpoint.hpp"
@@ -1205,14 +1206,7 @@ private:
 };
 static_assert(sizeof(GoalPedestal) == 0x150);
 
-class GoalPole : public al::LiveActor {
-public:
-    explicit GoalPole(const char* pName);
 
-private:
-    u8 mUnreconstructed[0xfc];
-};
-static_assert(sizeof(GoalPole) == 0x240);
 
 namespace al {
 class GodRayRequester : public al::LiveActor {

@@ -1680,7 +1680,7 @@ src/Game/MapObj/GoalPole.cpp:
     .text   start:0x002D0CA0 end:0x002D4B94
 src/Game/MapObj/GoalPoleBindPuppeteer.cpp:
     .text   start:0x002D4BA0 end:0x002D7008
-src/Game/MapObj/GoalPoleFlag.cpp:
+src/Game/MapObj/GoalPoleFlag.cpp: done
     .text   start:0x002D7010 end:0x002D7D08
 src/Game/MapObj/GoalPoleRunawayStep.cpp: done
     .text   start:0x002D7D10 end:0x002D8090
