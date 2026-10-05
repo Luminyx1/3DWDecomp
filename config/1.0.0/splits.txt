@@ -1597,7 +1597,7 @@ src/Game/MapObj/EchoBlockDrawer.cpp:
     .text   start:0x002A49F0 end:0x002A4D48
 src/Game/MapObj/EchoBlockMapParts.cpp: done
     .text   start:0x002A4D50 end:0x002A4EF0
-src/Game/MapObj/EchoEmitter.cpp:
+src/Game/MapObj/EchoEmitter.cpp: done
     .text   start:0x002A4EF0 end:0x002A5464
 src/Game/MapObj/EchoEmitterHolder.cpp:
     .text   start:0x002A5470 end:0x002A691C

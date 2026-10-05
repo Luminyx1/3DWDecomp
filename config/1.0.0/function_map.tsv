@@ -17231,8 +17231,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71002A5370			FALSE	_ZN11EchoEmitterD1Ev	EchoEmitter::~EchoEmitter()	
 0x71002A5380			FALSE	_ZN11EchoEmitterD0Ev	EchoEmitter::~EchoEmitter()	
 0x71002A53B0			FALSE	_ZNK12_GLOBAL__N_118EchoEmitterNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::EchoEmitterNrvWait::execute(al::NerveKeeper*) const	
-0x71002A53C0			FALSE	sub_71002A53C0	sub_71002A53C0	
-0x71002A5450			FALSE	sub_71002A5450	sub_71002A5450	
+0x71002A53C0			FALSE	_ZNK12_GLOBAL__N_118EchoEmitterNrvKeep7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_118EchoEmitterNrvKeep7executeEPN2al11NerveKeeperE	
+0x71002A5450			FALSE	_ZNK12_GLOBAL__N_118EchoEmitterNrvStop7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_118EchoEmitterNrvStop7executeEPN2al11NerveKeeperE	
 0x71002A5470		EchoEmitterHolder.o	FALSE	_ZN17EchoEmitterHolderC2ERKN2al13ActorInitInfoE	EchoEmitterHolder::EchoEmitterHolder(al::ActorInitInfo const&)	
 0x71002A5670			FALSE	_ZN17EchoEmitterHolder26initAfterPlacementSceneObjERKN2al13ActorInitInfoE	EchoEmitterHolder::initAfterPlacementSceneObj(al::ActorInitInfo const&)	
 0x71002A5780			FALSE	_ZThn8_N17EchoEmitterHolder26initAfterPlacementSceneObjERKN2al13ActorInitInfoE	non-virtual thunk to EchoEmitterHolder::initAfterPlacementSceneObj(al::ActorInitInfo const&)	
