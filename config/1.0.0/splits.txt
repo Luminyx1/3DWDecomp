@@ -1958,7 +1958,7 @@ src/Game/MapObj/ShardsWatcherHolder.cpp:
     .text   start:0x00358890 end:0x0035899C
 src/Game/MapObj/SignBoard.cpp: done
     .text   start:0x003589A0 end:0x003593F8
-src/Game/MapObj/SingleModeCheckpoint.cpp:
+src/Game/MapObj/SingleModeCheckpoint.cpp: done
     .text   start:0x00359400 end:0x0035A0D0
 src/Game/MapObj/MessageAppearBase.cpp:
     .text   start:0x0035A0D0 end:0x0035AE24

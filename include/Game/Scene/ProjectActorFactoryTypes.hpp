@@ -1,3 +1,4 @@
+#include "MapObj/SingleModeCheckpoint.hpp"
 #include "MapObj/FlowerRhythm.hpp"
 #include "MapObj/IllustItem.hpp"
 #include "MapObj/LavaGeyser.hpp"
@@ -2199,14 +2200,7 @@ static_assert(sizeof(ShadowMarioPlayer) == 0x1b0);
 
 
 
-class SingleModeCheckpoint : public al::LiveActor {
-public:
-    explicit SingleModeCheckpoint(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x1c];
-};
-static_assert(sizeof(SingleModeCheckpoint) == 0x160);
 
 class SinkedItem : public al::LiveActor {
 public:
