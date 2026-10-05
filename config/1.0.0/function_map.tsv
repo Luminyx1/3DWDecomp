@@ -19562,7 +19562,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71003087D0			FALSE	_ZN9KouraGold7controlEv	KouraGold::control()	
 0x71003089A0			FALSE	_ZN9KouraGoldD1Ev	KouraGold::~KouraGold()	
 0x71003089B0			FALSE	_ZN9KouraGoldD0Ev	KouraGold::~KouraGold()	
-0x71003089E0			FALSE	sub_71003089E0	sub_71003089E0	
+0x71003089E0			FALSE	_ZNK12_GLOBAL__N_117KouraGoldNrvUpper7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_117KouraGoldNrvUpper7executeEPN2al11NerveKeeperE	
 0x71003089F0			FALSE	_ZNK2al10FunctorV0MIP9KouraGoldMS1_FvvEEclEv	al::FunctorV0M<KouraGold*, void (KouraGold::*)()>::operator()() const	
 0x7100308A10			FALSE	_ZNK2al10FunctorV0MIP9KouraGoldMS1_FvvEE5cloneEv	al::FunctorV0M<KouraGold*, void (KouraGold::*)()>::clone() const	
 0x7100308A60		KouraSurf.o	FALSE	_ZN9KouraSurfC2EPKc	KouraSurf::KouraSurf(char const*)	

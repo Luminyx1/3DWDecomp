@@ -5269,3 +5269,6 @@
 
 0x7101A5DEF0 32 object _ZTVN12_GLOBAL__N_126TestIshiokaTrapWallNrvWaitE
 0x7101A5DF68 8 object _ZN12_GLOBAL__N_126NrvTestIshiokaTrapWallWaitE
+
+0x7101A33AC8 32 object _ZTVN12_GLOBAL__N_117KouraGoldNrvUpperE
+0x7101A33AE8 8 object _ZN12_GLOBAL__N_117NrvKouraGoldUpperE

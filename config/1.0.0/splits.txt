@@ -1807,7 +1807,7 @@ src/Game/MapObj/Koura.cpp:
     .text   start:0x00300F30 end:0x00307054
 src/Game/MapObj/KourabindPuppeteer.cpp:
     .text   start:0x00307060 end:0x00308308
-src/Game/MapObj/KouraGold.cpp:
+src/Game/MapObj/KouraGold.cpp: done
     .text   start:0x00308310 end:0x00308A54
 src/Game/MapObj/KouraSurf.cpp:
     .text   start:0x00308A60 end:0x0030DCE4

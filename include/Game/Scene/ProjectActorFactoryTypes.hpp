@@ -1,3 +1,5 @@
+#include "MapObj/KouraGold.hpp"
+#include "MapObj/Koura.hpp"
 #include "Demo/DemoAnimatic.hpp"
 #include "MapObj/KinokoGiga.hpp"
 #include "MapObj/GraphicsAreaController.hpp"
@@ -1721,23 +1723,9 @@ private:
 };
 static_assert(sizeof(KinopioNpc) == 0x150);
 
-class Koura : public al::LiveActor {
-public:
-    explicit Koura(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x12c];
-};
-static_assert(sizeof(Koura) == 0x270);
 
-class KouraGold : public al::LiveActor {
-public:
-    explicit KouraGold(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x14c];
-};
-static_assert(sizeof(KouraGold) == 0x290);
 
 class KoopaChase : public al::LiveActor {
 public:
