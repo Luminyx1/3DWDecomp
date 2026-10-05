@@ -16273,10 +16273,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710027E020			FALSE	_ZN13CoinStackBase7exeLandEv	CoinStackBase::exeLand()	
 0x710027E0A0			FALSE	_ZN13CoinStackBaseD1Ev	CoinStackBase::~CoinStackBase()	
 0x710027E0B0			FALSE	_ZN13CoinStackBaseD0Ev	CoinStackBase::~CoinStackBase()	
-0x710027E0E0			FALSE	sub_710027E0E0	sub_710027E0E0	
+0x710027E0E0			FALSE	_ZNK12_GLOBAL__N_120CoinStackBaseNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_120CoinStackBaseNrvWait7executeEPN2al11NerveKeeperE	
 0x710027E120			FALSE	_ZNK12_GLOBAL__N_120CoinStackBaseNrvFall7executeEPN2al11NerveKeeperE	(anonymous namespace)::CoinStackBaseNrvFall::execute(al::NerveKeeper*) const	
-0x710027E130			FALSE	sub_710027E130	sub_710027E130	
-0x710027E180			FALSE	sub_710027E180	sub_710027E180	
+0x710027E130			FALSE	_ZNK12_GLOBAL__N_125CoinStackBaseNrvFloatWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_125CoinStackBaseNrvFloatWait7executeEPN2al11NerveKeeperE	
+0x710027E180			FALSE	_ZNK12_GLOBAL__N_120CoinStackBaseNrvLand7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_120CoinStackBaseNrvLand7executeEPN2al11NerveKeeperE	
 0x710027E200		CollectItem.o	FALSE	_ZN11CollectItemC2EPKcP10ItemBubbleb	CollectItem::CollectItem(char const*, ItemBubble*, bool)	
 0x710027E300			FALSE	_ZN11CollectItemC1EPKcP10ItemBubbleb	CollectItem::CollectItem(char const*, ItemBubble*, bool)	
 0x710027E410			FALSE	_ZN11CollectItem4initERKN2al13ActorInitInfoE	CollectItem::init(al::ActorInitInfo const&)	
