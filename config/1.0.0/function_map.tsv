@@ -13350,8 +13350,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71002027B0			FALSE	_ZN16WindowProcessing7exeWaitEv	WindowProcessing::exeWait()	
 0x7100202890			FALSE	_ZN16WindowProcessing6exeEndEv	WindowProcessing::exeEnd()	
 0x71002028F0			FALSE	_ZNK12_GLOBAL__N_123WindowProcessingNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::WindowProcessingNrvWait::execute(al::NerveKeeper*) const	
-0x7100202900			FALSE	sub_7100202900	sub_7100202900	
-0x7100202980			FALSE	sub_7100202980	sub_7100202980	
+0x7100202900			FALSE	_ZNK12_GLOBAL__N_125WindowProcessingNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::WindowProcessingNrvAppear::execute(al::NerveKeeper*) const	
+0x7100202980			FALSE	_ZNK12_GLOBAL__N_122WindowProcessingNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::WindowProcessingNrvEnd::execute(al::NerveKeeper*) const	
 0x71002029F0		WindowSave.o	FALSE	_ZN10WindowSaveC2ERKN2al14LayoutInitInfoE	WindowSave::WindowSave(al::LayoutInitInfo const&)	
 0x7100202AF0			FALSE	_ZN10WindowSaveC1ERKN2al14LayoutInitInfoE	WindowSave::WindowSave(al::LayoutInitInfo const&)	
 0x7100202BF0			FALSE	_ZN10WindowSave12appearWindowEi	WindowSave::appearWindow(int)	

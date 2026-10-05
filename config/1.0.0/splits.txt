@@ -1277,7 +1277,7 @@ src/Game/Layout/WindowMiiSetUp.cpp:
     .text   start:0x00200F20 end:0x00201AC4
 src/Game/Layout/WindowMiiverseDetail.cpp:
     .text   start:0x00201AD0 end:0x00202498
-src/Game/Layout/WindowProcessing.cpp:
+src/Game/Layout/WindowProcessing.cpp: done
     .text   start:0x002024A0 end:0x002029E4
 src/Game/Layout/WindowSave.cpp:
     .text   start:0x002029F0 end:0x00202F14

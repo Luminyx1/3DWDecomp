@@ -4759,3 +4759,7 @@
 0x71019E4628 8 object _ZN12_GLOBAL__N_121NrvStaffRollJobAppearE
 0x71019E4650 8 object _ZN12_GLOBAL__N_119NrvStaffRollJobWaitE
 0x71019E4678 8 object _ZN12_GLOBAL__N_118NrvStaffRollJobEndE
+
+# src/Game/Layout/WindowProcessing
+0x71019E9BF8 8 object _ZN12_GLOBAL__N_125NrvWindowProcessingAppearE
+0x71019E9C20 8 object _ZN12_GLOBAL__N_122NrvWindowProcessingEndE
