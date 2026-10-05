@@ -1,3 +1,4 @@
+#include "MapObj/NeedleTrap.hpp"
 #include "MapObj/KouraGold.hpp"
 #include "MapObj/Koura.hpp"
 #include "Demo/DemoAnimatic.hpp"
@@ -2113,14 +2114,7 @@ private:
 };
 static_assert(sizeof(NeedleSeed) == 0x150);
 
-class NeedleTrap : public al::LiveActor {
-public:
-    explicit NeedleTrap(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x24];
-};
-static_assert(sizeof(NeedleTrap) == 0x168);
 
 class Neko : public al::LiveActor {
 public:

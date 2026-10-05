@@ -20303,12 +20303,12 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100325450			FALSE	_ZN10NeedleTrap6exeEndEv	NeedleTrap::exeEnd()	
 0x71003254E0			FALSE	_ZN10NeedleTrapD1Ev	NeedleTrap::~NeedleTrap()	
 0x71003254F0			FALSE	_ZN10NeedleTrapD0Ev	NeedleTrap::~NeedleTrap()	
-0x7100325520			FALSE	sub_7100325520	sub_7100325520	
-0x7100325530			FALSE	sub_7100325530	sub_7100325530	
-0x7100325580			FALSE	sub_7100325580	sub_7100325580	
+0x7100325520			FALSE	_ZNK12_GLOBAL__N_120NeedleTrapNrvStandby7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_120NeedleTrapNrvStandby7executeEPN2al11NerveKeeperE	
+0x7100325530			FALSE	_ZNK12_GLOBAL__N_117NeedleTrapNrvStop7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_117NeedleTrapNrvStop7executeEPN2al11NerveKeeperE	
+0x7100325580			FALSE	_ZNK12_GLOBAL__N_117NeedleTrapNrvSign7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_117NeedleTrapNrvSign7executeEPN2al11NerveKeeperE	
 0x71003255E0			FALSE	_ZNK12_GLOBAL__N_119NeedleTrapNrvAttack7executeEPN2al11NerveKeeperE	(anonymous namespace)::NeedleTrapNrvAttack::execute(al::NerveKeeper*) const	
-0x71003255F0			FALSE	sub_71003255F0	sub_71003255F0	
-0x7100325680			FALSE	sub_7100325680	sub_7100325680	
+0x71003255F0			FALSE	_ZNK12_GLOBAL__N_116NeedleTrapNrvEnd7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_116NeedleTrapNrvEnd7executeEPN2al11NerveKeeperE	
+0x7100325680			FALSE	_ZNK12_GLOBAL__N_117NeedleTrapNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_117NeedleTrapNrvWait7executeEPN2al11NerveKeeperE	
 0x7100325690		Ocean.o	FALSE	_ZN5Ocean4initEv	Ocean::init()	
 0x71003257D0			FALSE	_ZN5Ocean6updateERKN4sead7Vector3IfEES4_	Ocean::update(sead::Vector3<float> const&, sead::Vector3<float> const&)	
 0x71003259C0			FALSE	_ZN5Ocean15updateWavePatchEP9WavePatchs	Ocean::updateWavePatch(WavePatch*, short)	
