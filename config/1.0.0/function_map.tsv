@@ -14849,7 +14849,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100249100			FALSE	_ZN14BindWarpEffectD0Ev	BindWarpEffect::~BindWarpEffect()	
 0x7100249130			FALSE	_ZNK12_GLOBAL__N_121BindWarpEffectNrvMove7executeEPN2al11NerveKeeperE	(anonymous namespace)::BindWarpEffectNrvMove::execute(al::NerveKeeper*) const	
 0x7100249140			FALSE	_ZNK12_GLOBAL__N_121BindWarpEffectNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::BindWarpEffectNrvWait::execute(al::NerveKeeper*) const	
-0x7100249150			FALSE	sub_7100249150	sub_7100249150	
+0x7100249150			FALSE	_ZNK12_GLOBAL__N_121BindWarpEffectNrvDone7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_121BindWarpEffectNrvDone7executeEPN2al11NerveKeeperE	
 0x7100249160		Bird.o	FALSE	_ZN4BirdC2EPKc	Bird::Bird(char const*)	
 0x7100249200			FALSE	_ZN4BirdC1EPKc	Bird::Bird(char const*)	
 0x71002492A0			FALSE	_ZN4Bird4initERKN2al13ActorInitInfoE	Bird::init(al::ActorInitInfo const&)	

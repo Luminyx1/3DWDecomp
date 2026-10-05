@@ -1387,7 +1387,7 @@ src/Game/MapObj/BindPuppeteer.cpp: done
     .text   start:0x00247DD0 end:0x00247F14
 src/Game/MapObj/BindPuppeteerGroup.cpp:
     .text   start:0x00247F20 end:0x00248690
-src/Game/MapObj/BindWarpEffect.cpp:
+src/Game/MapObj/BindWarpEffect.cpp: done
     .text   start:0x00248690 end:0x00249160
 src/Game/MapObj/Bird.cpp: done
     .text   start:0x00249160 end:0x002499E4

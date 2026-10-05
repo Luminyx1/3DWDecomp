@@ -5434,3 +5434,5 @@
 
 0x7101A0FA78 8 object _ZN12_GLOBAL__N_121NrvDokanWorldWarpWaitE
 0x7101A0FAC0 16 object _ZN12_GLOBAL__N_117NrvDokanWorldWarpE
+
+0x71019F2B40 8 object _ZN12_GLOBAL__N_121NrvBindWarpEffectDoneE
