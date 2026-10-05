@@ -3307,7 +3307,6 @@
 0x7101A43B38 32 object _ZTVN12_GLOBAL__N_121PlessieTerrainNrvHideE
 0x7101A43B80 32 object _ZTVN12_GLOBAL__N_123PlessieTerrainNrvAppearE
 0x7101A43BA0 8 object _ZN12_GLOBAL__N_123NrvPlessieTerrainAppearE
-0x7101A43BD0 8 object _ZN12_GLOBAL__N_121NrvPlessieTerrainHideE
 0x7101A440F8 40 object _ZTVN12_GLOBAL__N_123PressureDeathObjNrvMoveE
 0x7101A446D8 32 object _ZTVN12_GLOBAL__N_130PSwitchTimerCoinWatcherNrvWaitE
 0x7101A446F8 8 object _ZN12_GLOBAL__N_130NrvPSwitchTimerCoinWatcherWaitE
@@ -5436,3 +5435,6 @@
 0x7101A0FAC0 16 object _ZN12_GLOBAL__N_117NrvDokanWorldWarpE
 
 0x71019F2B40 8 object _ZN12_GLOBAL__N_121NrvBindWarpEffectDoneE
+
+0x7101A43BC8 16 object _ZN12_GLOBAL__N_117NrvPlessieTerrainE
+0x7101A43B78 8 object _ZN12_GLOBAL__N_121NrvPlessieTerrainStayE

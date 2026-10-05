@@ -1,3 +1,4 @@
+#include "MapObj/PlessieTerrain.hpp"
 #include "MapObj/DokanWorldWarp.hpp"
 #include "MapObj/WoodLogBridge.hpp"
 #include "MapObj/PressureDeathObj.hpp"
@@ -2076,14 +2077,7 @@ private:
 };
 static_assert(sizeof(PlayerSpotLightingObj) == 0x180);
 
-class PlessieTerrain : public al::LiveActor {
-public:
-    explicit PlessieTerrain(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x34];
-};
-static_assert(sizeof(PlessieTerrain) == 0x178);
 
 
 

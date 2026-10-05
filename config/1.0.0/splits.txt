@@ -1903,7 +1903,7 @@ src/Game/MapObj/PlayerPointLightingObj.cpp: done
     .text   start:0x00345640 end:0x00345A10
 src/Game/MapObj/PlayerSpotLightingObj.cpp: done
     .text   start:0x00345A10 end:0x00345F10
-src/Game/MapObj/PlessieTerrain.cpp:
+src/Game/MapObj/PlessieTerrain.cpp: done
     .text   start:0x00345F10 end:0x00346984
 src/Game/MapObj/PressureDeathObj.cpp: done
     .text   start:0x00346990 end:0x003473F4

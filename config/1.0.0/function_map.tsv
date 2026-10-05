@@ -20778,9 +20778,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100346760			FALSE	_ZN14PlessieTerrain9startHideEv	PlessieTerrain::startHide()	
 0x71003467E0			FALSE	_ZN14PlessieTerrainD1Ev	PlessieTerrain::~PlessieTerrain()	
 0x71003467F0			FALSE	_ZN14PlessieTerrainD0Ev	PlessieTerrain::~PlessieTerrain()	
-0x7100346820			FALSE	sub_7100346820	sub_7100346820	
+0x7100346820			FALSE	_ZNK12_GLOBAL__N_123PlessieTerrainNrvHidden7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_123PlessieTerrainNrvHidden7executeEPN2al11NerveKeeperE	
 0x71003468B0			FALSE	_ZNK12_GLOBAL__N_121PlessieTerrainNrvHide7executeEPN2al11NerveKeeperE	(anonymous namespace)::PlessieTerrainNrvHide::execute(al::NerveKeeper*) const	
-0x71003468C0			FALSE	sub_71003468C0	sub_71003468C0	
+0x71003468C0			FALSE	_ZNK12_GLOBAL__N_121PlessieTerrainNrvStay7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_121PlessieTerrainNrvStay7executeEPN2al11NerveKeeperE	
 0x7100346910			FALSE	_ZNK12_GLOBAL__N_123PlessieTerrainNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::PlessieTerrainNrvAppear::execute(al::NerveKeeper*) const	
 0x7100346920			FALSE	_ZNK2al10FunctorV0MIP14PlessieTerrainMS1_FvvEEclEv	al::FunctorV0M<PlessieTerrain*, void (PlessieTerrain::*)()>::operator()() const	
 0x7100346940			FALSE	_ZNK2al10FunctorV0MIP14PlessieTerrainMS1_FvvEE5cloneEv	al::FunctorV0M<PlessieTerrain*, void (PlessieTerrain::*)()>::clone() const	
