@@ -1594,8 +1594,9 @@ src/Game/MapObj/DrcTouchChecker.cpp: done
     .text   start:0x0029FD80 end:0x0029FF58
 src/Game/MapObj/DrcTouchPointer.cpp:
     .text   start:0x0029FF60 end:0x002A49F0
-src/Game/MapObj/EchoBlockDrawer.cpp:
+src/Game/MapObj/EchoBlockDrawer.cpp: done
     .text   start:0x002A49F0 end:0x002A4D48
+    .rodata start:0x016B54E4 end:0x016B54FC
 src/Game/MapObj/EchoBlockMapParts.cpp: done
     .text   start:0x002A4D50 end:0x002A4EF0
 src/Game/MapObj/EchoEmitter.cpp: done
