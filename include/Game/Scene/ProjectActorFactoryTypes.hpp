@@ -1,3 +1,4 @@
+#include "MapObj/Fury/GigaBellItem.hpp"
 #include "MapObj/Fury/FallingPillar.hpp"
 #include "MapObj/GeneratorBox.hpp"
 #include "MapObj/SoundKeyMoveParts.hpp"
@@ -1235,14 +1236,6 @@ private:
 };
 static_assert(sizeof(GiantTouchBreakMapParts) == 0x148);
 
-class GigaBellItem : public al::LiveActor {
-public:
-    explicit GigaBellItem(const char* pName);
-
-private:
-    u8 mUnreconstructed[0x4];
-};
-static_assert(sizeof(GigaBellItem) == 0x148);
 
 class GoalBonusGameBlockSlot : public al::LiveActor {
 public:

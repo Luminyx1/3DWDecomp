@@ -10858,10 +10858,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001A5B10			FALSE	_ZN12GigaBellItem15stopForCutsceneEv	GigaBellItem::stopForCutscene()	
 0x71001A5B60			FALSE	_ZN12GigaBellItemD1Ev	GigaBellItem::~GigaBellItem()	
 0x71001A5B70			FALSE	_ZN12GigaBellItemD0Ev	GigaBellItem::~GigaBellItem()	
-0x71001A5BA0			FALSE	sub_71001A5BA0	sub_71001A5BA0	
+0x71001A5BA0			FALSE	_ZNK12_GLOBAL__N_119GigaBellItemNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_119GigaBellItemNrvWait7executeEPN2al11NerveKeeperE	
 0x71001A5C30			FALSE	_ZNK12_GLOBAL__N_121GigaBellItemNrvHidden7executeEPN2al11NerveKeeperE	(anonymous namespace)::GigaBellItemNrvHidden::execute(al::NerveKeeper*) const	
-0x71001A5C40			FALSE	sub_71001A5C40	sub_71001A5C40	
-0x71001A5CE0			FALSE	sub_71001A5CE0	sub_71001A5CE0	
+0x71001A5C40			FALSE	_ZNK12_GLOBAL__N_125GigaBellItemNrvPopUpAbove7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_125GigaBellItemNrvPopUpAbove7executeEPN2al11NerveKeeperE	
+0x71001A5CE0			FALSE	_ZNK12_GLOBAL__N_130GigaBellItemNrvWaitForCutscene7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_130GigaBellItemNrvWaitForCutscene7executeEPN2al11NerveKeeperE	
 0x71001A5D70		GigaBellPedestal.o	FALSE	_ZN16GigaBellPedestalC2EPKc	GigaBellPedestal::GigaBellPedestal(char const*)	
 0x71001A5DF0			FALSE	_ZN16GigaBellPedestalC1EPKc	GigaBellPedestal::GigaBellPedestal(char const*)	
 0x71001A5E70			FALSE	_ZN16GigaBellPedestal4initERKN2al13ActorInitInfoE	GigaBellPedestal::init(al::ActorInitInfo const&)	
