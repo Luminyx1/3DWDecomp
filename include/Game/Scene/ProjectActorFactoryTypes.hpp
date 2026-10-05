@@ -1,3 +1,4 @@
+#include "MapObj/Fury/DisasterFixMapParts.hpp"
 #include "MapObj/GoalPole.hpp"
 #include "MapObj/NeedleRoller.hpp"
 #include "MapObj/KoopaSignBoard.hpp"
@@ -778,14 +779,7 @@ static_assert(sizeof(DarkBowserLaserIndicator) == 0x168);
 
 
 
-class DisasterFixMapParts : public al::LiveActor {
-public:
-    explicit DisasterFixMapParts(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x15c];
-};
-static_assert(sizeof(DisasterFixMapParts) == 0x2a0);
 
 class DemoEventGateKeeperChecker : public al::LiveActor {
 public:
