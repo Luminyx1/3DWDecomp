@@ -31,6 +31,10 @@ public:
     bool detail_LoadWaveArchiveByWaveSoundFile(const void* pWaveSoundFile, int index,
                                               SoundMemoryAllocatable* pAllocator);
     const void* detail_GetFileAddressByItemId(SoundArchive::ItemId id) const;
+    const void* GetFileAddressFromSoundArchive(SoundArchive::FileId id) const;
+    void SetSoundArchive(const SoundArchive* pArchive);
+    /** @brief Gets the archive currently attached to this loader. @return Archive pointer, or nullptr. */
+    const SoundArchive* GetSoundArchive() const { return mArchive; }
 
 protected:
     virtual const void* SetFileAddressToTable(SoundArchive::FileId fileId, const void* pAddress) = 0;
@@ -38,7 +42,8 @@ protected:
     virtual const void* GetFileAddressImpl(SoundArchive::FileId fileId) const = 0;
 
 private:
-    u8 _8[0x218 - 0x8];
+    const SoundArchive* mArchive;
+    u8 _10[0x218 - 0x10];
 };
 }  // namespace detail
 
@@ -49,8 +54,13 @@ public:
 
     size_t GetRequiredMemSize(const SoundArchive* pArchive) const;
     bool Initialize(const SoundArchive* pArchive, void* pBuffer, size_t size);
+    bool CreateTables(void** ppCursor, const SoundArchive* pArchive, void* pEnd);
     const void* detail_GetFileAddress(SoundArchive::FileId fileId) const;
-    void SetFileAddressInGroupFile(const void* pGroupFile, size_t size);
+    SoundArchive::FileId detail_GetFileIdFromTable(const void* pAddress) const;
+    const void* SetFileAddress(SoundArchive::FileId fileId, const void* pAddress);
+    bool SetFileAddressInGroupFile(const void* pGroupFile, size_t size);
+    void ClearFileAddressInGroupFile(const void* pGroupFile, size_t size);
+    void InvalidateSoundData(const void* pMemory, size_t size);
     void Finalize();
 
     void InvalidateData(const void* pStart, const void* pEnd) override;
@@ -60,7 +70,18 @@ protected:
     const void* GetFileAddressFromTable(SoundArchive::FileId fileId) const override;
     const void* GetFileAddressImpl(SoundArchive::FileId fileId) const override;
 private:
-    u8 _230[0x240 - 0x230];
+    struct FileTable {
+        u32 count;
+        const void* addresses[1];
+    };
+    class FileAddressProvider {
+    public:
+        /** @brief Destroys the optional external file-address provider interface. */
+        virtual ~FileAddressProvider() = default;
+        virtual const void* GetFileAddress(SoundArchive::FileId fileId) = 0;
+    };
+    FileTable* mFileTable;
+    FileAddressProvider* mFileAddressProvider;
 };
 static_assert(sizeof(SoundDataManager) == 0x240);
 }  // namespace nn::atk

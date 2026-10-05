@@ -80,6 +80,14 @@ class SoundArchive {
         u32 fileSize;
     };
 
+    struct WaveArchiveInfo {
+        /** @brief Initializes an unresolved wave archive with individual loading disabled. */
+        WaveArchiveInfo() : fileId(InvalidId), isLoadIndividual(false) {}
+        FileId fileId;
+        u32 waveCount;
+        bool isLoadIndividual;
+    };
+
     struct SequenceSoundInfo {
         SequenceSoundInfo()
             : startOffset(0), allocateTrackFlags(0), channelPriority(0), isReleasePriorityFix(false) {
@@ -185,6 +193,9 @@ class SoundArchive {
     bool IsAvailable() const;
     u32 GetSoundCount() const;
     u32 GetGroupCount() const;
+    u32 GetWaveArchiveCount() const;
+    u32 detail_GetFileCount() const;
+    bool ReadWaveArchiveInfo(ItemId id, WaveArchiveInfo* pInfo) const;
     bool ReadGroupInfo(GroupInfo* pInfo, ItemId id) const;
     const char* GetItemLabel(ItemId id) const;
     ItemId GetItemId(const char* pLabel) const;
