@@ -34,7 +34,7 @@ namespace {
     NERVE_DECL(ItemBubble, Disappear);
     NERVES_MAKE_NOSTRUCT(ItemBubble, Wait, Disappear)
 }
-ItemBubble::ItemBubble(const char* name, int type) : al::LiveActor("Ã£â€šÂ¢Ã£â€šÂ¤Ã£Æ’â€ Ã£Æ’Â Ã¦Â³Â¡"), mItemName(name), mItemType(type) {}
+ItemBubble::ItemBubble(const char* name, int type) : al::LiveActor("アイテム泡"), mItemName(name), mItemType(type) {}
 void ItemBubble::init(const al::ActorInitInfo& info) { initActor(info, "ItemBubble"); }
 void ItemBubble::initActor(const al::ActorInitInfo& info, const char* archive) {
     al::initActorWithArchiveName(this, info, archive, nullptr);
