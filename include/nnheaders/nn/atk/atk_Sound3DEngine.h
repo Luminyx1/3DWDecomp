@@ -30,11 +30,11 @@ class ISound3DEngine {
 public:
     virtual ~ISound3DEngine() {}
 
-    virtual s32 GetAmbientPriority(const Sound3DManager* pManager, const Sound3DParam* pParam,
-                                   u32 soundId) = 0;
     virtual void detail_UpdateAmbientParam(const Sound3DManager* pManager,
                                            const Sound3DParam* pParam, u32 soundId,
                                            SoundAmbientParam* pAmbientParam) = 0;
+    virtual s32 GetAmbientPriority(const Sound3DManager* pManager, const Sound3DParam* pParam,
+                                   u32 soundId) = 0;
 };
 }  // namespace detail
 

@@ -4730,3 +4730,7 @@
 0x7101A0F140 8 object _ZN12_GLOBAL__N_121NrvDokanAppearOutOnlyE
 0x7101A0F148 8 object _ZN12_GLOBAL__N_117NrvDokanDisappearE
 0x7101A0F160 8 object _ZN12_GLOBAL__N_137NrvDokanPlayerOutWithCameraTicketWaitE
+
+# Default spatial sound engine (atk_Sound3DManager)
+0x710211D8E8 24 object _ZN12_GLOBAL__N_121sDefaultSound3DEngineE
+0x710057E5F0 12 func _GLOBAL__sub_I_atk_Sound3DManager.cpp
