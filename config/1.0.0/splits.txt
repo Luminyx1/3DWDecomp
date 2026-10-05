@@ -1695,7 +1695,7 @@ src/Game/MapObj/GraphicsAreaController.cpp:
     .text   start:0x002DBE20 end:0x002DC594
 src/Game/MapObj/GraphicsObjShadowMaskCube.cpp:
     .text   start:0x002DC5A0 end:0x002DD78C
-src/Game/MapObj/GraphicsObjShadowMaskSphere.cpp:
+src/Game/MapObj/GraphicsObjShadowMaskSphere.cpp: done
     .text   start:0x002DD790 end:0x002DDCEC
 src/Game/MapObj/GrassHigh.cpp:
     .text   start:0x002DDCF0 end:0x002DE3A4
