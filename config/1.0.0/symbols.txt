@@ -4731,6 +4731,23 @@
 0x7101A0F148 8 object _ZN12_GLOBAL__N_117NrvDokanDisappearE
 0x7101A0F160 8 object _ZN12_GLOBAL__N_137NrvDokanPlayerOutWithCameraTicketWaitE
 
+# src/Game/Layout/SimpleAppearWaitEndParts
+0x71019E3688 8 object _ZN12_GLOBAL__N_131NrvSimpleAppearWaitEndPartsWaitE
+0x71019E36B0 8 object _ZN12_GLOBAL__N_133NrvSimpleAppearWaitEndPartsAppearE
+0x71019E36D8 8 object _ZN12_GLOBAL__N_130NrvSimpleAppearWaitEndPartsEndE
+
+# src/Game/Layout/StaffRollFin
+0x71019E4238 8 object _ZN12_GLOBAL__N_119NrvStaffRollFinHideE
+0x71019E4260 8 object _ZN12_GLOBAL__N_121NrvStaffRollFinAppearE
+0x71019E4288 8 object _ZN12_GLOBAL__N_119NrvStaffRollFinWaitE
+0x71019E42B0 8 object _ZN12_GLOBAL__N_118NrvStaffRollFinEndE
+
+# src/Game/Layout/StaffRollNintendo
+0x71019E4F00 8 object _ZN12_GLOBAL__N_124NrvStaffRollNintendoHideE
+0x71019E4F28 8 object _ZN12_GLOBAL__N_126NrvStaffRollNintendoAppearE
+0x71019E4F50 8 object _ZN12_GLOBAL__N_124NrvStaffRollNintendoWaitE
+0x71019E4F78 8 object _ZN12_GLOBAL__N_123NrvStaffRollNintendoEndE
+
 # Default spatial sound engine (atk_Sound3DManager)
 0x710211D8E8 24 object _ZN12_GLOBAL__N_121sDefaultSound3DEngineE
 0x710057E5F0 12 func _GLOBAL__sub_I_atk_Sound3DManager.cpp
