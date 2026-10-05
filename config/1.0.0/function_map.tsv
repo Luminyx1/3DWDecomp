@@ -18622,9 +18622,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71002E1A80			FALSE	_ZN14GreenStarStand12exeAfterWaitEv	GreenStarStand::exeAfterWait()	
 0x71002E1AC0			FALSE	_ZN14GreenStarStandD1Ev	GreenStarStand::~GreenStarStand()	
 0x71002E1AD0			FALSE	_ZN14GreenStarStandD0Ev	GreenStarStand::~GreenStarStand()	
-0x71002E1B00			FALSE	sub_71002E1B00	sub_71002E1B00	
-0x71002E1B40			FALSE	sub_71002E1B40	sub_71002E1B40	
-0x71002E1B80			FALSE	sub_71002E1B80	sub_71002E1B80	
+0x71002E1B00			FALSE	_ZNK12_GLOBAL__N_127GreenStarStandNrvBeforeWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_127GreenStarStandNrvBeforeWait7executeEPN2al11NerveKeeperE	
+0x71002E1B40			FALSE	_ZNK12_GLOBAL__N_126GreenStarStandNrvAfterWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_126GreenStarStandNrvAfterWait7executeEPN2al11NerveKeeperE	
+0x71002E1B80			FALSE	_ZNK12_GLOBAL__N_123GreenStarStandNrvAppear7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_123GreenStarStandNrvAppear7executeEPN2al11NerveKeeperE	
 0x71002E1BE0			FALSE	_ZNK2al10FunctorV0MIP14GreenStarStandMS1_FvvEEclEv	al::FunctorV0M<GreenStarStand*, void (GreenStarStand::*)()>::operator()() const	
 0x71002E1C00			FALSE	_ZNK2al10FunctorV0MIP14GreenStarStandMS1_FvvEE5cloneEv	al::FunctorV0M<GreenStarStand*, void (GreenStarStand::*)()>::clone() const	
 0x71002E1C50		GroupClippingDummyTarget.o	FALSE	_ZN24GroupClippingDummyTargetC2EPKc	GroupClippingDummyTarget::GroupClippingDummyTarget(char const*)	
