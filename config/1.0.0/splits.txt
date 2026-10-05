@@ -1495,7 +1495,7 @@ src/Game/MapObj/ChikaChikaBlockSynchronizer.cpp:
     .text   start:0x0026A990 end:0x0026ABCC
 src/Game/MapObj/ChikaChikaBlockWatcher.cpp:
     .text   start:0x0026ABD0 end:0x0026B3BC
-src/Game/MapObj/ChikuwaBlock.cpp:
+src/Game/MapObj/ChikuwaBlock.cpp: done
     .text   start:0x0026B3C0 end:0x0026B650
 src/Game/MapObj/ClimbHandle.cpp:
     .text   start:0x0026B650 end:0x0026C948
@@ -1635,7 +1635,7 @@ src/Game/MapObj/FlowerCactus.cpp:
     .text   start:0x002B1F20 end:0x002B2B3C
 src/Game/MapObj/FlowerRhythm.cpp:
     .text   start:0x002B2B40 end:0x002B3938
-src/Game/MapObj/FortressGoal.cpp:
+src/Game/MapObj/FortressGoal.cpp: done
     .text   start:0x002B3940 end:0x002B3BC0
 src/Game/MapObj/FrameOutChecker.cpp:
     .text   start:0x002B3BC0 end:0x002B4240
@@ -2013,7 +2013,7 @@ src/Game/MapObj/SwitchRotateWatcher.cpp: done
     .text   start:0x0036C440 end:0x0036CC88
 src/Game/MapObj/TeresaConveyorBench.cpp:
     .text   start:0x0036CC90 end:0x0036D2C4
-src/Game/MapObj/TeresaFakeDokan.cpp:
+src/Game/MapObj/TeresaFakeDokan.cpp: done
     .text   start:0x0036D2D0 end:0x0036D550
 src/Game/MapObj/TeresaFakeObject.cpp:
     .text   start:0x0036D550 end:0x0036D880
