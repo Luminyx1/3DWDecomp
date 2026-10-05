@@ -10536,7 +10536,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001977C0			FALSE	_ZN17DisasterLightning9exeStrikeEv	DisasterLightning::exeStrike()	
 0x7100197860			FALSE	_ZN17DisasterLightningD1Ev	DisasterLightning::~DisasterLightning()	
 0x7100197870			FALSE	_ZN17DisasterLightningD0Ev	DisasterLightning::~DisasterLightning()	
-0x71001978A0			FALSE	sub_71001978A0	sub_71001978A0	
+0x71001978A0			FALSE	_ZNK12_GLOBAL__N_126DisasterLightningNrvStrike7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_126DisasterLightningNrvStrike7executeEPN2al11NerveKeeperE	
 0x7100197940		DisasterSpikeBouncy.o	FALSE	_ZN19DisasterSpikeBouncyC2EPKc	DisasterSpikeBouncy::DisasterSpikeBouncy(char const*)	
 0x71001979D0			FALSE	_ZN19DisasterSpikeBouncyC1EPKc	DisasterSpikeBouncy::DisasterSpikeBouncy(char const*)	
 0x7100197A70			FALSE	_ZN19DisasterSpikeBouncy4initERKN2al13ActorInitInfoE	DisasterSpikeBouncy::init(al::ActorInitInfo const&)	
