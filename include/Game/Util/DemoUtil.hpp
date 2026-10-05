@@ -11,6 +11,7 @@ enum DemoType : s32;
 }  // namespace alSeFunction
 
 namespace rc {
+void setImmediateSwitchFlag(const al::LiveActor*);
 void setUpdateFreeze(const al::LiveActor*, bool);
 void setOtherActiveDemo(al::LiveActor*, bool);
 bool requestStartDemoIntro(al::LiveActor*, const char*, bool);

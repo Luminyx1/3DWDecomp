@@ -1842,7 +1842,7 @@ src/Game/MapObj/LuckyIsland.cpp:
     .text   start:0x0031B250 end:0x0031C548
 src/Game/MapObj/LuckyIslandController.cpp:
     .text   start:0x0031C550 end:0x0031CE2C
-src/Game/MapObj/LuckyIslandHolder.cpp:
+src/Game/MapObj/LuckyIslandHolder.cpp: done
     .text   start:0x0031CE30 end:0x0031D0EC
 src/Game/MapObj/Mirror.cpp: done
     .text   start:0x0031D0F0 end:0x0031D534
