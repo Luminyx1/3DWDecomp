@@ -17094,10 +17094,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710029FB70			FALSE	_ZN13DrcPianoBlock6exeOffEv	DrcPianoBlock::exeOff()	
 0x710029FC20			FALSE	_ZN13DrcPianoBlockD1Ev	DrcPianoBlock::~DrcPianoBlock()	
 0x710029FC30			FALSE	_ZN13DrcPianoBlockD0Ev	DrcPianoBlock::~DrcPianoBlock()	
-0x710029FC60			FALSE	sub_710029FC60	sub_710029FC60	
+0x710029FC60			FALSE	_ZNK12_GLOBAL__N_123DrcPianoBlockNrvOffWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_123DrcPianoBlockNrvOffWait7executeEPN2al11NerveKeeperE	
 0x710029FCB0			FALSE	_ZNK12_GLOBAL__N_118DrcPianoBlockNrvOn7executeEPN2al11NerveKeeperE	(anonymous namespace)::DrcPianoBlockNrvOn::execute(al::NerveKeeper*) const	
 0x710029FCC0			FALSE	_ZNK12_GLOBAL__N_122DrcPianoBlockNrvOnWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::DrcPianoBlockNrvOnWait::execute(al::NerveKeeper*) const	
-0x710029FCD0			FALSE	sub_710029FCD0	sub_710029FCD0	
+0x710029FCD0			FALSE	_ZNK12_GLOBAL__N_119DrcPianoBlockNrvOff7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_119DrcPianoBlockNrvOff7executeEPN2al11NerveKeeperE	
 0x710029FD80		DrcTouchChecker.o	FALSE	_ZN15DrcTouchCheckerC1EPN2al15SceneCameraInfoE	DrcTouchChecker::DrcTouchChecker(al::SceneCameraInfo*)	
 0x710029FDC0			FALSE	_ZN15DrcTouchChecker6updateEv	DrcTouchChecker::update()	
 0x710029FEA0			FALSE	_ZNK15DrcTouchChecker13isTouchSphereERKN4sead7Vector3IfEEfPf	DrcTouchChecker::isTouchSphere(sead::Vector3<float> const&, float, float*) const	

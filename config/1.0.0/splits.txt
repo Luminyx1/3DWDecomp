@@ -1587,7 +1587,7 @@ src/Game/MapObj/DrcAssistDirectorList.cpp:
     .text   start:0x0029CE00 end:0x0029E240
 src/Game/MapObj/DrcAssistDirectorUtil.cpp:
     .text   start:0x0029E240 end:0x0029F3DC
-src/Game/MapObj/DrcPianoBlock.cpp:
+src/Game/MapObj/DrcPianoBlock.cpp: done
     .text   start:0x0029F3E0 end:0x0029FD80
 src/Game/MapObj/DrcTouchChecker.cpp: done
     .text   start:0x0029FD80 end:0x0029FF58
