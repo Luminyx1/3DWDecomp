@@ -1003,7 +1003,7 @@ src/Game/MapObj/Fury/DisasterSpikeLaunch.cpp:
     .text   start:0x0019DA00 end:0x0019E008
 src/Game/MapObj/Fury/DisasterSpikeTorpedo.cpp:
     .text   start:0x0019E010 end:0x001A0A98
-src/Game/MapObj/Fury/DrcTouchEffectTraceTracker.cpp:
+src/Game/MapObj/Fury/DrcTouchEffectTraceTracker.cpp: done
     .text   start:0x001A0AA0 end:0x001A0AF8
 src/Game/MapObj/Fury/EffectObjFollowCameraGame.cpp:
     .text   start:0x001A0B00 end:0x001A0F3C
@@ -1669,7 +1669,7 @@ src/Game/MapObj/GoalItemHolder.cpp:
     .text   start:0x002CEC10 end:0x002CF138
 src/Game/MapObj/GoalItemWatcher.cpp:
     .text   start:0x002CF140 end:0x002CF438
-src/Game/MapObj/GoalObjHolder.cpp:
+src/Game/MapObj/GoalObjHolder.cpp: done
     .text   start:0x002CF440 end:0x002CF674
 src/Game/MapObj/GoalObjStateGoalDemo.cpp:
     .text   start:0x002CF680 end:0x002D0C98
@@ -1773,7 +1773,7 @@ src/Game/MapObj/KeyMoveLoop.cpp:
     .text   start:0x002F22A0 end:0x002F2CA8
 src/Game/MapObj/KeyMoveLoopLiftGenerator.cpp:
     .text   start:0x002F2CB0 end:0x002F3208
-src/Game/MapObj/KillerTankPartsNeedle.cpp:
+src/Game/MapObj/KillerTankPartsNeedle.cpp: done
     .text   start:0x002F3210 end:0x002F33E0
 src/Game/MapObj/KinokoBig.cpp:
     .text   start:0x002F33E0 end:0x002F3BD0
