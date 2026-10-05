@@ -16932,15 +16932,15 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710029A140			FALSE	_ZN11DoubleMario19exeItemGetAfterWaitEv	DoubleMario::exeItemGetAfterWait()	
 0x710029A190			FALSE	_ZN11DoubleMarioD1Ev	DoubleMario::~DoubleMario()	
 0x710029A1A0			FALSE	_ZN11DoubleMarioD0Ev	DoubleMario::~DoubleMario()	
-0x710029A1D0			FALSE	sub_710029A1D0	sub_710029A1D0	
-0x710029A220			FALSE	sub_710029A220	sub_710029A220	
-0x710029A250			FALSE	sub_710029A250	sub_710029A250	
-0x710029A2C0			FALSE	sub_710029A2C0	sub_710029A2C0	
-0x710029A320			FALSE	sub_710029A320	sub_710029A320	
-0x710029A390			FALSE	sub_710029A390	sub_710029A390	
+0x710029A1D0			FALSE	_ZNK12_GLOBAL__N_118DoubleMarioNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_118DoubleMarioNrvWait7executeEPN2al11NerveKeeperE	
+0x710029A220			FALSE	_ZNK12_GLOBAL__N_124DoubleMarioNrvPopUpFront7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_124DoubleMarioNrvPopUpFront7executeEPN2al11NerveKeeperE	
+0x710029A250			FALSE	_ZNK12_GLOBAL__N_126DoubleMarioNrvAttachBubble7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_126DoubleMarioNrvAttachBubble7executeEPN2al11NerveKeeperE	
+0x710029A2C0			FALSE	_ZNK12_GLOBAL__N_130DoubleMarioNrvItemGetAfterWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_130DoubleMarioNrvItemGetAfterWait7executeEPN2al11NerveKeeperE	
+0x710029A320			FALSE	_ZNK12_GLOBAL__N_118DoubleMarioNrvLand7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_118DoubleMarioNrvLand7executeEPN2al11NerveKeeperE	
+0x710029A390			FALSE	_ZNK12_GLOBAL__N_122DoubleMarioNrvLandWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_122DoubleMarioNrvLandWait7executeEPN2al11NerveKeeperE	
 0x710029A3E0			FALSE	_ZNK2al10FunctorV0MIP11DoubleMarioMS1_FvvEEclEv	al::FunctorV0M<DoubleMario*, void (DoubleMario::*)()>::operator()() const	
 0x710029A400			FALSE	_ZNK2al10FunctorV0MIP11DoubleMarioMS1_FvvEE5cloneEv	al::FunctorV0M<DoubleMario*, void (DoubleMario::*)()>::clone() const	
-0x710029A450			FALSE	sub_710029A450	sub_710029A450	
+0x710029A450			FALSE	_GLOBAL__sub_I_DoubleMario.cpp	_GLOBAL__sub_I_DoubleMario.cpp	
 0x710029A4C0		DrcAssistDirector.o	FALSE	_ZN18DrcTouchAssistInfoC2EbbbRKN4sead7Vector3IfEERKNS0_7Vector2IfEE	DrcTouchAssistInfo::DrcTouchAssistInfo(bool, bool, bool, sead::Vector3<float> const&, sead::Vector2<float> const&)	
 0x710029A530			FALSE	_ZN18DrcTouchAssistInfo5resetEv	DrcTouchAssistInfo::reset()	
 0x710029A580			FALSE	_ZNK17DrcAssistDirector18getSceneCameraInfoEv	DrcAssistDirector::getSceneCameraInfo() const	
