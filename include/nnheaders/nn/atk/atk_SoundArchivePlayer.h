@@ -3,42 +3,12 @@
 #include <nn/atk/atk_SoundArchive.h>
 #include <nn/atk/atk_SoundPlayer.h>
 #include <nn/atk/atk_SoundStartable.h>
-#include <nn/util/util_IntrusiveList.h>
+#include <nn/atk/detail/SoundArchiveManager.h>
 
 namespace nn::atk {
 class SoundDataManager;
 
-namespace detail {
-class AddonSoundArchiveContainer {
-public:
-    util::IntrusiveListNode m_ElementLink;
-};
 
-template <class Element>
-class IntrusiveList {
-public:
-    int Count() const { return m_ListImpl.size(); }
-
-private:
-    util::IntrusiveList<Element,
-                        util::IntrusiveListMemberNodeTraits<Element, &Element::m_ElementLink>>
-        m_ListImpl;
-};
-
-class SoundArchiveManager {
-public:
-    int GetAddonSoundArchiveCount() const { return m_ContainerList.Count(); }
-
-private:
-    const SoundArchive* m_pMainSoundArchive;
-    const SoundDataManager* m_pMainSoundDataManager;
-    IntrusiveList<AddonSoundArchiveContainer> m_ContainerList;
-    const SoundArchive* m_pCurrentSoundArchive;
-    const SoundDataManager* m_pCurrentSoundDataManager;
-    void* m_pParametersHook;
-};
-static_assert(sizeof(SoundArchiveManager) == 0x38);
-}  // namespace detail
 
 class SoundArchivePlayer : public SoundStartable {
 public:

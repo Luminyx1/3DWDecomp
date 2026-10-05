@@ -11,6 +11,7 @@ class FileStream;
 }
 
 namespace detail {
+class SoundArchiveParametersHook;
 class SoundArchiveFile {
   public:
     struct FileHeader : BinaryFileHeader {
@@ -77,6 +78,14 @@ class SoundArchive {
         GroupInfo() : fileId(InvalidId), fileSize(0) {}
         FileId fileId;
         u32 fileSize;
+    };
+
+    struct WaveArchiveInfo {
+        /** @brief Initializes an unresolved wave archive with individual loading disabled. */
+        WaveArchiveInfo() : fileId(InvalidId), isLoadIndividual(false) {}
+        FileId fileId;
+        u32 waveCount;
+        bool isLoadIndividual;
     };
 
     struct SequenceSoundInfo {
@@ -176,9 +185,17 @@ class SoundArchive {
     SoundArchive();
     virtual ~SoundArchive();
 
+    /**
+     * @brief Installs the archive parameter override hook.
+     * @param pHook Override provider, or nullptr to clear the hook.
+     */
+    void SetParametersHook(detail::SoundArchiveParametersHook* pHook) const { mParametersHook = pHook; }
     bool IsAvailable() const;
     u32 GetSoundCount() const;
     u32 GetGroupCount() const;
+    u32 GetWaveArchiveCount() const;
+    u32 detail_GetFileCount() const;
+    bool ReadWaveArchiveInfo(ItemId id, WaveArchiveInfo* pInfo) const;
     bool ReadGroupInfo(GroupInfo* pInfo, ItemId id) const;
     const char* GetItemLabel(ItemId id) const;
     ItemId GetItemId(const char* pLabel) const;
@@ -204,7 +221,9 @@ class SoundArchive {
                                                    void* pCacheBuffer, size_t cacheSize) const = 0;
 
   private:
-    u8 _8[0x2a0 - 0x8];
+    detail::SoundArchiveFileReader* mFileReader;
+    mutable detail::SoundArchiveParametersHook* mParametersHook;
+    u8 _18[0x2a0 - 0x18];
 };
 static_assert(sizeof(SoundArchive) == 0x2a0);
 

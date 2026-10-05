@@ -5985,7 +5985,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71000E67B0			FALSE	_ZN12ChorobonCube9exeFollowEv	ChorobonCube::exeFollow()	
 0x71000E67C0			FALSE	_ZN12ChorobonCubeD1Ev	ChorobonCube::~ChorobonCube()	
 0x71000E67D0			FALSE	_ZN12ChorobonCubeD0Ev	ChorobonCube::~ChorobonCube()	
-0x71000E6800			FALSE	nullsub_56	nullsub_56	
+0x71000E6800			FALSE	_ZNK12_GLOBAL__N_121ChorobonCubeNrvFollow7executeEPN2al11NerveKeeperE	(anonymous namespace)::ChorobonCubeNrvFollow::execute(al::NerveKeeper*) const	
 0x71000E6810		ChorobonCubeHolder.o	FALSE	_ZN18ChorobonCubeHolderC2EPKc	ChorobonCubeHolder::ChorobonCubeHolder(char const*)	
 0x71000E68D0			FALSE	_ZN18ChorobonCubeHolderC1EPKc	ChorobonCubeHolder::ChorobonCubeHolder(char const*)	
 0x71000E6990			FALSE	_ZN18ChorobonCubeHolder4initERKN2al13ActorInitInfoE	ChorobonCubeHolder::init(al::ActorInitInfo const&)	
@@ -8444,7 +8444,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001449E0			FALSE	_ZN12SamboSnowHat7exeBlowEv	SamboSnowHat::exeBlow()	
 0x7100144A80			FALSE	_ZN12SamboSnowHatD1Ev	SamboSnowHat::~SamboSnowHat()	
 0x7100144A90			FALSE	_ZN12SamboSnowHatD0Ev	SamboSnowHat::~SamboSnowHat()	
-0x7100144AC0			FALSE	nullsub_75	nullsub_75	
+0x7100144AC0			FALSE	_ZNK12_GLOBAL__N_119SamboSnowHatNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::SamboSnowHatNrvWait::execute(al::NerveKeeper*) const	
 0x7100144AD0			FALSE	_ZNK12_GLOBAL__N_119SamboSnowHatNrvBlow7executeEPN2al11NerveKeeperE	(anonymous namespace)::SamboSnowHatNrvBlow::execute(al::NerveKeeper*) const	
 0x7100144AE0		SamboSnowHead.o	FALSE	_ZN13SamboSnowHeadC2EPKc	SamboSnowHead::SamboSnowHead(char const*)	
 0x7100144BE0			FALSE	_ZN13SamboSnowHeadC1EPKc	SamboSnowHead::SamboSnowHead(char const*)	
@@ -9051,7 +9051,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710015E4E0			FALSE	_ZN23TeresaConveyorTeresaBig7exeWaitEv	TeresaConveyorTeresaBig::exeWait()	
 0x710015E560			FALSE	_ZN23TeresaConveyorTeresaBigD1Ev	TeresaConveyorTeresaBig::~TeresaConveyorTeresaBig()	
 0x710015E570			FALSE	_ZN23TeresaConveyorTeresaBigD0Ev	TeresaConveyorTeresaBig::~TeresaConveyorTeresaBig()	
-0x710015E5A0			FALSE	sub_710015E5A0	sub_710015E5A0	
+0x710015E5A0			FALSE	_ZNK12_GLOBAL__N_130TeresaConveyorTeresaBigNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::TeresaConveyorTeresaBigNrvWait::execute(al::NerveKeeper*) const	
 0x710015E620		TeresaWall.o	FALSE	_ZN10TeresaWallC2EPKc	TeresaWall::TeresaWall(char const*)	
 0x710015E6D0			FALSE	_ZN10TeresaWallC1EPKc	TeresaWall::TeresaWall(char const*)	
 0x710015E780			FALSE	_ZN10TeresaWall4initERKN2al13ActorInitInfoE	TeresaWall::init(al::ActorInitInfo const&)	
@@ -11404,7 +11404,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001B8200			FALSE	_ZN17CounterMysteryBox8setCountEi	CounterMysteryBox::setCount(int)	
 0x71001B8220			FALSE	_ZN17CounterMysteryBoxC1ERKN2al14LayoutInitInfoE	CounterMysteryBox::CounterMysteryBox(al::LayoutInitInfo const&)	
 0x71001B82F0			FALSE	_ZN17CounterMysteryBox7exeWaitEv	CounterMysteryBox::exeWait()	
-0x71001B8300			FALSE	nullsub_111	nullsub_111	
+0x71001B8300			FALSE	_ZNK12_GLOBAL__N_124CounterMysteryBoxNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::CounterMysteryBoxNrvWait::execute(al::NerveKeeper*) const	
 0x71001B8310		CounterPlayerInfo.o	FALSE	_ZN17CounterPlayerInfoC2ERKN2al14LayoutInitInfoEPK14GameDataHolder	CounterPlayerInfo::CounterPlayerInfo(al::LayoutInitInfo const&, GameDataHolder const*)	
 0x71001B8410			FALSE	_ZN17CounterPlayerInfoC1ERKN2al14LayoutInitInfoEPK14GameDataHolder	CounterPlayerInfo::CounterPlayerInfo(al::LayoutInitInfo const&, GameDataHolder const*)	
 0x71001B8520			FALSE	_ZN17CounterPlayerInfo6appearEv	CounterPlayerInfo::appear()	
@@ -11448,7 +11448,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001BA070			FALSE	_ZN17CounterScorePartsC1ERKN2al14LayoutInitInfoEPKcS5_PNS0_11LayoutActorEPK14GameDataHolder	CounterScoreParts::CounterScoreParts(al::LayoutInitInfo const&, char const*, char const*, al::LayoutActor*, GameDataHolder const*)	
 0x71001BA160			FALSE	_ZN17CounterScoreParts9exeAppearEv	CounterScoreParts::exeAppear()	
 0x71001BA170			FALSE	_ZN17CounterScoreParts7exeWaitEv	CounterScoreParts::exeWait()	
-0x71001BA200			FALSE	sub_71001BA200	sub_71001BA200	
+0x71001BA200			FALSE	_ZNK12_GLOBAL__N_124CounterScorePartsNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::CounterScorePartsNrvWait::execute(al::NerveKeeper*) const	
 0x71001BA2A0		CounterStampParts.o	FALSE	_ZN17CounterStampPartsC2ERKN2al14LayoutInitInfoEPKcS5_PNS0_11LayoutActorEPK16IllustItemKeeper	CounterStampParts::CounterStampParts(al::LayoutInitInfo const&, char const*, char const*, al::LayoutActor*, IllustItemKeeper const*)	
 0x71001BA3B0			FALSE	_ZN17CounterStampPartsC1ERKN2al14LayoutInitInfoEPKcS5_PNS0_11LayoutActorEPK16IllustItemKeeper	CounterStampParts::CounterStampParts(al::LayoutInitInfo const&, char const*, char const*, al::LayoutActor*, IllustItemKeeper const*)	
 0x71001BA4B0			FALSE	_ZN17CounterStampParts7exeHideEv	CounterStampParts::exeHide()	

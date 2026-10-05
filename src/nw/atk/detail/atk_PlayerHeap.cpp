@@ -5,11 +5,6 @@
 
 namespace nn::atk::detail {
 namespace {
-struct ReleaseHeapMemoryCommand : Command {
-    const void* pMemory;
-    size_t size;
-};
-
 /**
  * @brief Round a heap cursor upward to the next audio-memory page boundary.
  * @param pAddress Cursor to align; must allow rounding without address overflow.
@@ -22,12 +17,12 @@ inline u8* AlignHeapPage(u8* pAddress) {
 
 /** @brief Construct an unattached heap with no owner or disposal callbacks. */
 PlayerHeap::PlayerHeap()
-    : mOwner(nullptr), mStart(nullptr), mEnd(nullptr), mCurrent(nullptr), mInUse(false) {}
+    : mOwner(nullptr), mStart(nullptr), mEnd(nullptr), mCurrent(nullptr), mState(State::Free) {}
 
 /** @brief Clear outstanding allocations and mark this heap as unused. */
 PlayerHeap::~PlayerHeap() {
     Destroy();
-    mInUse = false;
+    mState = State::Free;
 }
 
 /**

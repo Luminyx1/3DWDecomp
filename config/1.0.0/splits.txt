@@ -589,7 +589,7 @@ src/Game/Enemy/Chorobon.cpp:
     .text   start:0x000E56B0 end:0x000E6054
 src/Game/Enemy/ChorobonColony.cpp:
     .text   start:0x000E6060 end:0x000E6654
-src/Game/Enemy/ChorobonCube.cpp:
+src/Game/Enemy/ChorobonCube.cpp: done
     .text   start:0x000E6660 end:0x000E6804
 src/Game/Enemy/ChorobonCubeHolder.cpp:
     .text   start:0x000E6810 end:0x000E7064
@@ -729,7 +729,7 @@ src/Game/Enemy/MoamoaHolder.cpp:
     .text   start:0x00128630 end:0x00128B84
 src/Game/Enemy/ModelHolder.cpp:
     .text   start:0x00128B90 end:0x00128F34
-src/Game/Enemy/ModelHolderActor.cpp:
+src/Game/Enemy/ModelHolderActor.cpp: done
     .text   start:0x00128F40 end:0x001290D0
 src/Game/Enemy/NeedleSeed.cpp:
     .text   start:0x001290D0 end:0x001295EC
@@ -783,7 +783,7 @@ src/Game/Enemy/RunnerStateJump.cpp:
     .text   start:0x001430A0 end:0x00143B78
 src/Game/Enemy/SamboSnowBody.cpp:
     .text   start:0x00143B80 end:0x00144818
-src/Game/Enemy/SamboSnowHat.cpp:
+src/Game/Enemy/SamboSnowHat.cpp: done
     .text   start:0x00144820 end:0x00144AD8
 src/Game/Enemy/SamboSnowHead.cpp:
     .text   start:0x00144AE0 end:0x00148518
@@ -825,7 +825,7 @@ src/Game/Enemy/Teren.cpp:
     .text   start:0x0015B580 end:0x0015C444
 src/Game/Enemy/Teresa.cpp:
     .text   start:0x0015C450 end:0x0015E360
-src/Game/Enemy/TeresaConveyorTeresaBig.cpp:
+src/Game/Enemy/TeresaConveyorTeresaBig.cpp: done
     .text   start:0x0015E360 end:0x0015E620
 src/Game/Enemy/TeresaWall.cpp:
     .text   start:0x0015E620 end:0x0015EEC8
@@ -1083,15 +1083,15 @@ src/Game/Layout/CounterGreenStarAppend.cpp:
     .text   start:0x001B6EE0 end:0x001B7644
 src/Game/Layout/CounterGreenStarParts.cpp:
     .text   start:0x001B7650 end:0x001B812C
-src/Game/Layout/CounterMysteryBox.cpp:
+src/Game/Layout/CounterMysteryBox.cpp: done
     .text   start:0x001B8130 end:0x001B8304
 src/Game/Layout/CounterPlayerInfo.cpp:
     .text   start:0x001B8310 end:0x001B8A44
 src/Game/Layout/CounterPlayerParts.cpp:
     .text   start:0x001B8A50 end:0x001B9B04
-src/Game/Layout/CounterRecordParts.cpp:
+src/Game/Layout/CounterRecordParts.cpp: done
     .text   start:0x001B9B10 end:0x001B9F8C
-src/Game/Layout/CounterScoreParts.cpp:
+src/Game/Layout/CounterScoreParts.cpp: done
     .text   start:0x001B9F90 end:0x001BA294
 src/Game/Layout/CounterStampParts.cpp:
     .text   start:0x001BA2A0 end:0x001BA72C
@@ -3409,7 +3409,7 @@ src/nw/atk/detail/atk_SoundArchiveFileReader.cpp:
     .text   start:0x005482F0 end:0x0054905C
 src/nw/atk/detail/atk_SoundArchiveFile.cpp:
     .text   start:0x00549060 end:0x0054A3C4
-src/nw/atk/detail/atk_PlayerHeapDataManager.cpp:
+src/nw/atk/detail/atk_PlayerHeapDataManager.cpp: done
     .text   start:0x0054A3D0 end:0x0054ACC4
 src/nw/atk/detail/seq/atk_SequenceSoundFileReader.cpp: done
     .text   start:0x0054ACE0 end:0x0054AE00
@@ -3457,9 +3457,9 @@ src/nw/atk/detail/thread/atk_SoundThread.cpp:
     .text   start:0x0055A640 end:0x0055BB84
 src/nw/atk/detail/thread/atk_Task.cpp: done
     .text   start:0x0055BB90 end:0x0055BBF4
-src/nw/atk/detail/thread/atk_TaskManager.cpp:
+src/nw/atk/detail/thread/atk_TaskManager.cpp: done
     .text   start:0x0055BC10 end:0x0055C464
-src/nw/atk/detail/thread/atk_TaskThread.cpp:
+src/nw/atk/detail/thread/atk_TaskThread.cpp: done
     .text   start:0x0055C470 end:0x0055C7DC
 src/nw/atk/detail/util/atk_CurveAdshr.cpp: done
     .text   start:0x0055C7E0 end:0x0055CCB8
@@ -3477,7 +3477,7 @@ src/nw/atk/atk_SoundArchivePlayer.cpp:
     .text   start:0x0055DEA0 end:0x005615F4
 src/nw/atk/atk_StartInfoReader.cpp: done
     .text   start:0x00561600 end:0x005617A0
-src/nw/atk/detail/seq/atk_SequenceSoundRuntime.cpp:
+src/nw/atk/detail/seq/atk_SequenceSoundRuntime.cpp: done
     .text   start:0x005617A0 end:0x00561804
 src/nw/atk/detail/strm/atk_StreamSoundRuntime.cpp:
     .text   start:0x00561810 end:0x00563140
@@ -3491,7 +3491,7 @@ src/nw/atk/detail/debug/atk_Debug.cpp: done
     .data   start:0x01AA1EA0 end:0x01AA1EC0
 src/nw/atk/atk_SoundDataManager.cpp:
     .text   start:0x005645F0 end:0x00564E00
-src/nw/atk/detail/atk_SoundArchiveManager.cpp:
+src/nw/atk/detail/atk_SoundArchiveManager.cpp: done
     .text   start:0x00564E00 end:0x00565258
 src/nw/atk/detail/atk_AddonSoundArchiveContainer.cpp: done
     .text   start:0x00565260 end:0x005653CC
@@ -3533,7 +3533,7 @@ src/nw/atk/detail/wsd/atk_WaveSoundFile.cpp: done
     .text   start:0x00571EE0 end:0x005725C4
 src/nw/atk/detail/wsd/atk_WaveSoundPlayer.cpp:
     .text   start:0x005725D0 end:0x0057360C
-src/nw/atk/detail/wsd/atk_WaveSoundLoader.cpp:
+src/nw/atk/detail/wsd/atk_WaveSoundLoader.cpp: done
     .text   start:0x00573610 end:0x00573A14
 src/nw/atk/detail/wsd/atk_WaveSoundRuntime.cpp:
     .text   start:0x00573A20 end:0x00574D20
@@ -3589,7 +3589,7 @@ src/nw/atk/fnd/io/atkfnd_FileStreamProxy.cpp: done
     .text   start:0x0057FDA0 end:0x00580000
 src/nw/atk/atk_MemorySoundArchive.cpp:
     .text   start:0x00580000 end:0x005802E8
-src/nw/atk/atk_SoundHeap.cpp:
+src/nw/atk/atk_SoundHeap.cpp: done
     .text   start:0x005802F0 end:0x00580878
 src/nw/atk/detail/util/atk_FrameHeap.cpp:
     .text   start:0x00580880 end:0x00581534

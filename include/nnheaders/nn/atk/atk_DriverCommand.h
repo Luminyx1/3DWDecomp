@@ -2,6 +2,10 @@
 #include <nn/atk/atk_CommandManager.h>
 
 namespace nn::atk::detail {
+struct ReleaseHeapMemoryCommand : Command {
+    const void* pMemory;
+    size_t size;
+};
 class DriverCommand : public CommandManager {
 public:
     DriverCommand();
