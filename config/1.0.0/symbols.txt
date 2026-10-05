@@ -4751,3 +4751,8 @@
 # Default spatial sound engine (atk_Sound3DManager)
 0x710211D8E8 24 object _ZN12_GLOBAL__N_121sDefaultSound3DEngineE
 0x710057E5F0 12 func _GLOBAL__sub_I_atk_Sound3DManager.cpp
+# src/Game/Layout/StaffRollName
+0x71019E4B38 8 object _ZN12_GLOBAL__N_120NrvStaffRollNameHideE
+0x71019E4B60 8 object _ZN12_GLOBAL__N_122NrvStaffRollNameAppearE
+0x71019E4B88 8 object _ZN12_GLOBAL__N_120NrvStaffRollNameWaitE
+0x71019E4BB0 8 object _ZN12_GLOBAL__N_119NrvStaffRollNameEndE

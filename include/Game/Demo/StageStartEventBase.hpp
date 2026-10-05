@@ -7,7 +7,7 @@ class StageStartEventBase : public al::LiveActor {
 public:
     /** @brief Creates the event actor. @param pName Actor name. */
     explicit StageStartEventBase(const char* pName) : al::LiveActor(pName) {}
-    virtual int getEventType() const = 0;
+    virtual s64 getEventType() const = 0;
     virtual void startDemo() = 0;
     virtual void endDemo() = 0;
     virtual bool isEndDemo() const = 0;
