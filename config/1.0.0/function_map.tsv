@@ -18810,7 +18810,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71002E8A50			FALSE	_ZN10ItemBubble11setItemTypeEi	ItemBubble::setItemType(int)	
 0x71002E8A60			FALSE	_ZN10ItemBubbleD1Ev	ItemBubble::~ItemBubble()	
 0x71002E8A70			FALSE	_ZN10ItemBubbleD0Ev	ItemBubble::~ItemBubble()	
-0x71002E8AA0			FALSE	sub_71002E8AA0	sub_71002E8AA0	
+0x71002E8AA0			FALSE	_ZNK12_GLOBAL__N_117ItemBubbleNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_117ItemBubbleNrvWait7executeEPN2al11NerveKeeperE	
 0x71002E8AE0			FALSE	_ZNK12_GLOBAL__N_122ItemBubbleNrvDisappear7executeEPN2al11NerveKeeperE	(anonymous namespace)::ItemBubbleNrvDisappear::execute(al::NerveKeeper*) const	
 0x71002E8AF0		ItemBubbleBuoyant.o	FALSE	_ZN17ItemBubbleBuoyantC2EPKci	ItemBubbleBuoyant::ItemBubbleBuoyant(char const*, int)	
 0x71002E8B90			FALSE	_ZN17ItemBubbleBuoyantC1EPKci	ItemBubbleBuoyant::ItemBubbleBuoyant(char const*, int)	

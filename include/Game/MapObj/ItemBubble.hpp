@@ -12,6 +12,8 @@ public:
     bool receiveMsg(const al::SensorMsg*, al::HitSensor*, al::HitSensor*) override;
     bool receiveMsgScreenPoint(const al::SensorMsg*, al::ScreenPointer*, al::ScreenPointTarget*) override;
     virtual sead::Vector3f getItemActorOffset(int) const;
+    void exeWait();
+    void exeDisappear();
     void initActor(const al::ActorInitInfo&, const char*);
     void setItemType(int);
     void updatePosture();
@@ -20,7 +22,11 @@ public:
     bool isEnableGetPlayerSensor() const;
     al::HitSensor* getHitPlayerSensor() const;
 protected:
-    al::LiveActor* mItemActor;
-    u8 mUnreconstructed150[0x18];
+    al::LiveActor* mItemActor = nullptr;
+    al::HitSensor* mHitPlayerSensor = nullptr;
+    const char* mItemName;
+    int mItemType;
+    bool mGetItem = false;
+    bool mRotateItem = false;
 };
 static_assert(sizeof(ItemBubble) == 0x168);

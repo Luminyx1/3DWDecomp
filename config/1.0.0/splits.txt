@@ -1739,6 +1739,7 @@ src/Game/MapObj/IslandKeyMoveMapParts.cpp: done
     .text   start:0x002E7A00 end:0x002E7E70
 src/Game/MapObj/ItemBubble.cpp:
     .text   start:0x002E7E70 end:0x002E8AE8
+    .rodata start:0x016B5770 end:0x016B57B4
 src/Game/MapObj/ItemBubbleBuoyant.cpp:
     .text   start:0x002E8AF0 end:0x002E8F48
 src/Game/MapObj/ItemBubbleSingleMode.cpp: done

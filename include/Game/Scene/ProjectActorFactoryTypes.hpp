@@ -1,3 +1,7 @@
+#include "MapObj/SuperLeaf.hpp"
+#include "MapObj/KinokoSuper.hpp"
+#include "MapObj/KinokoOneUp.hpp"
+#include "Enemy/Bomb.hpp"
 #include "MapObj/LuckyIslandController.hpp"
 #include "MapObj/LuckyIsland.hpp"
 #include "Camera/CameraLookAtPoint.hpp"
@@ -260,14 +264,7 @@ private:
 };
 static_assert(sizeof(BobsledDashPanel) == 0x190);
 
-class Bomb : public al::LiveActor {
-public:
-    explicit Bomb(const char* pName, bool = false);
 
-private:
-    u8 mUnreconstructed[0x5c];
-};
-static_assert(sizeof(Bomb) == 0x1a0);
 
 class BombBound : public al::LiveActor {
 public:
@@ -1472,14 +1469,7 @@ static_assert(sizeof(KillerTankPartsNeedle) == 0x148);
 
 
 
-class KinokoOneUp : public al::LiveActor {
-public:
-    explicit KinokoOneUp(const char* pName, ItemBubble* = nullptr);
 
-private:
-    u8 mUnreconstructed[0x44];
-};
-static_assert(sizeof(KinokoOneUp) == 0x188);
 
 class KinokoOneUpCourseSelect : public al::LiveActor {
 public:
@@ -1490,14 +1480,7 @@ private:
 };
 static_assert(sizeof(KinokoOneUpCourseSelect) == 0x148);
 
-class KinokoSuper : public al::LiveActor {
-public:
-    explicit KinokoSuper(const char* pName, ItemBubble* = nullptr);
 
-private:
-    u8 mUnreconstructed[0x44];
-};
-static_assert(sizeof(KinokoSuper) == 0x188);
 
 class KinokoTreasure : public al::LiveActor {
 public:
@@ -2370,14 +2353,7 @@ private:
 };
 static_assert(sizeof(SuperKoura) == 0x238);
 
-class SuperLeaf : public al::LiveActor {
-public:
-    explicit SuperLeaf(const char* pName, ItemBubble* = nullptr);
 
-private:
-    u8 mUnreconstructed[0x4c];
-};
-static_assert(sizeof(SuperLeaf) == 0x190);
 
 
 
