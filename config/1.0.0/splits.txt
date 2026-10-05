@@ -2070,7 +2070,7 @@ src/Game/MapObj/TestKitaharaRouteBazookaPartsGroup.cpp: done
     .text   start:0x0037E090 end:0x0037E2EC
 src/Game/MapObj/TestKitaharaRouteBazookaRider.cpp:
     .text   start:0x0037E2F0 end:0x0037F89C
-src/Game/MapObj/TestKitazonoBlockBrick.cpp:
+src/Game/MapObj/TestKitazonoBlockBrick.cpp: done
     .text   start:0x0037F8A0 end:0x0037FF00
 src/Game/MapObj/TestKitazonoBlockBrickBreak.cpp: done
     .text   start:0x0037FF00 end:0x003801DC
