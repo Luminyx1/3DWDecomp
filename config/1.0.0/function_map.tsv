@@ -16215,7 +16215,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710027C580			FALSE	_ZThn328_N11CoinRedRing13getMaxCoinNumEv	non-virtual thunk to CoinRedRing::getMaxCoinNum()	
 0x710027C590			FALSE	_ZN11CoinRedRingD1Ev	CoinRedRing::~CoinRedRing()	
 0x710027C5A0			FALSE	_ZN11CoinRedRingD0Ev	CoinRedRing::~CoinRedRing()	
-0x710027C5D0			FALSE	sub_710027C5D0	sub_710027C5D0	
+0x710027C5D0			FALSE	_ZNK12_GLOBAL__N_118CoinRedRingNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_118CoinRedRingNrvWait7executeEPN2al11NerveKeeperE	
 0x710027C610			FALSE	_ZNK12_GLOBAL__N_123CoinRedRingNrvCountDown7executeEPN2al11NerveKeeperE	(anonymous namespace)::CoinRedRingNrvCountDown::execute(al::NerveKeeper*) const	
 0x710027C620		CoinRing.o	FALSE	_ZN8CoinRingC2EPKc	CoinRing::CoinRing(char const*)	
 0x710027C6C0			FALSE	_ZN8CoinRingC1EPKc	CoinRing::CoinRing(char const*)	

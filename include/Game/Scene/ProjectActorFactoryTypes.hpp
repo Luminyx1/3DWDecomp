@@ -1,3 +1,4 @@
+#include "MapObj/CoinRedRing.hpp"
 #include "MapObj/KoopaChaseCar.hpp"
 #include "MapObj/Fury/GigaBellItem.hpp"
 #include "MapObj/Fury/FallingPillar.hpp"
@@ -609,14 +610,7 @@ private:
 };
 static_assert(sizeof(CoinRail) == 0x198);
 
-class CoinRedRing : public al::LiveActor {
-public:
-    explicit CoinRedRing(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x44];
-};
-static_assert(sizeof(CoinRedRing) == 0x188);
 
 class CoinRing : public al::LiveActor {
 public:
