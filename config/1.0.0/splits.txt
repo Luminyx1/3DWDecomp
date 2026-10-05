@@ -1507,7 +1507,7 @@ src/Game/MapObj/CloudBonusLauncherBindPuppeteer.cpp:
     .text   start:0x0026FCF0 end:0x00270688
 src/Game/MapObj/Coin.cpp:
     .text   start:0x00270690 end:0x00271494
-src/Game/MapObj/CoinAttach.cpp:
+src/Game/MapObj/CoinAttach.cpp: done
     .text   start:0x002714A0 end:0x00271EE8
 src/Game/MapObj/CoinBlow.cpp:
     .text   start:0x00271EF0 end:0x00272E38

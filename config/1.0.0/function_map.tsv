@@ -15984,9 +15984,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100271D60			FALSE	_ZN10CoinAttach10exeSpinDrcEv	CoinAttach::exeSpinDrc()	
 0x7100271DA0			FALSE	_ZN10CoinAttachD1Ev	CoinAttach::~CoinAttach()	
 0x7100271DB0			FALSE	_ZN10CoinAttachD0Ev	CoinAttach::~CoinAttach()	
-0x7100271DE0			FALSE	sub_7100271DE0	sub_7100271DE0	
-0x7100271E30			FALSE	sub_7100271E30	sub_7100271E30	
-0x7100271E70			FALSE	sub_7100271E70	sub_7100271E70	
+0x7100271DE0			FALSE	_ZNK12_GLOBAL__N_119CoinAttachNrvAttach7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_119CoinAttachNrvAttach7executeEPN2al11NerveKeeperE	
+0x7100271E30			FALSE	_ZNK12_GLOBAL__N_120CoinAttachNrvSpinDrc7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_120CoinAttachNrvSpinDrc7executeEPN2al11NerveKeeperE	
+0x7100271E70			FALSE	_ZNK12_GLOBAL__N_125CoinAttachNrvAttachBubble7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_125CoinAttachNrvAttachBubble7executeEPN2al11NerveKeeperE	
 0x7100271ED0			FALSE	_ZNK12_GLOBAL__N_123CoinAttachNrvPopUpFront7executeEPN2al11NerveKeeperE	(anonymous namespace)::CoinAttachNrvPopUpFront::execute(al::NerveKeeper*) const	
 0x7100271EE0			FALSE	_ZNK12_GLOBAL__N_117CoinAttachNrvLand7executeEPN2al11NerveKeeperE	(anonymous namespace)::CoinAttachNrvLand::execute(al::NerveKeeper*) const	
 0x7100271EF0		CoinBlow.o	FALSE	_ZN8CoinBlowC2EPKc	CoinBlow::CoinBlow(char const*)	

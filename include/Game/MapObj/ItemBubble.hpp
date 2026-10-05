@@ -17,6 +17,8 @@ public:
     void updatePosture();
     bool isDisappear() const;
     void startDisappear();
+    bool isEnableGetPlayerSensor() const;
+    al::HitSensor* getHitPlayerSensor() const;
 protected:
     al::LiveActor* mItemActor;
     u8 mUnreconstructed150[0x18];
