@@ -9726,8 +9726,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100174A20			FALSE	_ZN15WalkerStateFall7exeFallEv	WalkerStateFall::exeFall()	
 0x7100174A80			FALSE	_ZN15WalkerStateFall7exeLandEv	WalkerStateFall::exeLand()	
 0x7100174AE0			FALSE	_ZN15WalkerStateFallD0Ev	WalkerStateFall::~WalkerStateFall()	
-0x7100174B10			FALSE	sub_7100174B10	sub_7100174B10	
-0x7100174B60			FALSE	sub_7100174B60	sub_7100174B60	
+0x7100174B10			FALSE	_ZNK12_GLOBAL__N_122WalkerStateFallNrvFall7executeEPN2al11NerveKeeperE	(anonymous namespace)::WalkerStateFallNrvFall::execute(al::NerveKeeper*) const	
+0x7100174B60			FALSE	_ZNK12_GLOBAL__N_122WalkerStateFallNrvLand7executeEPN2al11NerveKeeperE	(anonymous namespace)::WalkerStateFallNrvLand::execute(al::NerveKeeper*) const	
 0x7100174BD0		WalkerStateFindPlayer.o	FALSE	_ZN26WalkerStateFindPlayerParamC2Ev	WalkerStateFindPlayerParam::WalkerStateFindPlayerParam()	
 0x7100174CF0			FALSE	_ZN26WalkerStateFindPlayerParamC2EifbPKc	WalkerStateFindPlayerParam::WalkerStateFindPlayerParam(int, float, bool, char const*)	
 0x7100174E10			FALSE	_ZN21WalkerStateFindPlayerC1EPN2al9LiveActorEPN4sead7Vector3IfEEPK12TargetFinderPK16WalkerStateParamPK26WalkerStateFindPlayerParamPK20WalkerStateJumpParam	WalkerStateFindPlayer::WalkerStateFindPlayer(al::LiveActor*, sead::Vector3<float>*, TargetFinder const*, WalkerStateParam const*, WalkerStateFindPlayerParam const*, WalkerStateJumpParam const*)	
