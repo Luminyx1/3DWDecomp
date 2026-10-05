@@ -1035,7 +1035,7 @@ src/Game/MapObj/Fury/GoalPedestal.cpp: done
     .text   start:0x001A60E0 end:0x001A62C0
 src/Game/MapObj/Fury/InkPatch.cpp:
     .text   start:0x001A62C0 end:0x001A6C28
-src/Game/MapObj/Fury/InkPatchSpecial.cpp:
+src/Game/MapObj/Fury/InkPatchSpecial.cpp: done
     .text   start:0x001A6C30 end:0x001A6D9C
 src/Game/MapObj/Fury/InteractableCatToy.cpp:
     .text   start:0x001A6DA0 end:0x001A76F8
@@ -2045,7 +2045,7 @@ src/Game/MapObj/TestBoxQuestionLongRot.cpp:
     .text   start:0x00376B40 end:0x00379650
 src/Game/MapObj/TestChikuwaBlockGold.cpp:
     .text   start:0x00379650 end:0x003799A0
-src/Game/MapObj/TestGhostPresentBox.cpp:
+src/Game/MapObj/TestGhostPresentBox.cpp: done
     .text   start:0x003799A0 end:0x00379B70
 src/Game/MapObj/TestGoldenKoura.cpp:
     .text   start:0x00379B70 end:0x0037B430
