@@ -1889,7 +1889,7 @@ src/Game/MapObj/OneSideStepGenerator.cpp:
     .text   start:0x0033F970 end:0x0033FDE8
 src/Game/MapObj/OnPlayerInfoHolder.cpp: done
     .text   start:0x0033FDF0 end:0x00340140
-src/Game/MapObj/PanelNote.cpp:
+src/Game/MapObj/PanelNote.cpp: done
     .text   start:0x00340140 end:0x003409AC
 src/Game/MapObj/PanelNoteGroup.cpp: done
     .text   start:0x003409B0 end:0x00340F18

@@ -20648,7 +20648,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100340930			FALSE	_ZNK12_GLOBAL__N_116PanelNoteNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::PanelNoteNrvWait::execute(al::NerveKeeper*) const	
 0x7100340940			FALSE	_ZNK12_GLOBAL__N_117PanelNoteNrvOnTrg7executeEPN2al11NerveKeeperE	(anonymous namespace)::PanelNoteNrvOnTrg::execute(al::NerveKeeper*) const	
 0x7100340950			FALSE	_ZNK12_GLOBAL__N_119PanelNoteNrvOnLevel7executeEPN2al11NerveKeeperE	(anonymous namespace)::PanelNoteNrvOnLevel::execute(al::NerveKeeper*) const	
-0x7100340960			FALSE	sub_7100340960	sub_7100340960	
+0x7100340960			FALSE	_ZNK12_GLOBAL__N_124PanelNoteNrvWaitWithGlow7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_124PanelNoteNrvWaitWithGlow7executeEPN2al11NerveKeeperE	
 0x71003409B0		PanelNoteGroup.o	FALSE	_ZN14PanelNoteGroupC2EPKc	PanelNoteGroup::PanelNoteGroup(char const*)	
 0x7100340A40			FALSE	_ZN14PanelNoteGroupC1EPKc	PanelNoteGroup::PanelNoteGroup(char const*)	
 0x7100340AD0			FALSE	_ZN14PanelNoteGroup4initERKN2al13ActorInitInfoE	PanelNoteGroup::init(al::ActorInitInfo const&)	
