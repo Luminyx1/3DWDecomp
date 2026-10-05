@@ -4911,3 +4911,12 @@
 0x71019CFC68 8 object _ZN12_GLOBAL__N_123NrvButtonArrowPartsWaitE
 0x71019CFC90 8 object _ZN12_GLOBAL__N_125NrvButtonArrowPartsDecideE
 0x7101B21FF0 16 object _ZN12_GLOBAL__N_111sTouchParamE
+
+# src/Game/MapObj/BoxLightCollisionChecker
+0x71019FC4A0 8 object _ZN12_GLOBAL__N_132NrvBoxLightCollisionCheckerNoHitE
+0x71019FC398 8 object _ZN12_GLOBAL__N_137NrvBoxLightCollisionCheckerToHitCheckE
+0x71019FC4A8 8 object _ZN12_GLOBAL__N_130NrvBoxLightCollisionCheckerHitE
+0x71019FC4B0 8 object _ZN12_GLOBAL__N_139NrvBoxLightCollisionCheckerToNoHitCheckE
+
+# src/Game/MapObj/ChameleonStateMic
+0x7101A00408 8 object _ZN12_GLOBAL__N_123NrvChameleonStateMicMicE

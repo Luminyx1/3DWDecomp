@@ -14,7 +14,6 @@ class PlayerBindEndParam;
 
 /**
  * @brief Base of the objects that drive a bound player (its puppet) through a scripted move.
- * @note Only what reconstructed code needs is declared so far.
  */
 class BindPuppeteer : public al::NerveExecutor {
 public:
@@ -36,7 +35,7 @@ public:
 
 private:
     IUsePlayerPuppet* mPlayerPuppet = nullptr;  // 0x10
-    s32 _18 = 0;
+    s32 mControlUserId = 0;  // 0x18
 };
 
 static_assert(sizeof(BindPuppeteer) == 0x20);

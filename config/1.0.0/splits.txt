@@ -1383,7 +1383,7 @@ src/Game/MapObj/BgmRhythmAnimeController.cpp: done
     .text   start:0x00247610 end:0x00247A38
 src/Game/MapObj/BgmStopObj.cpp: done
     .text   start:0x00247A40 end:0x00247DC4
-src/Game/MapObj/BindPuppeteer.cpp:
+src/Game/MapObj/BindPuppeteer.cpp: done
     .text   start:0x00247DD0 end:0x00247F14
 src/Game/MapObj/BindPuppeteerGroup.cpp:
     .text   start:0x00247F20 end:0x00248690
@@ -1447,7 +1447,7 @@ src/Game/MapObj/BoxKillerBullet.cpp:
     .text   start:0x0025AB30 end:0x0025BF50
 src/Game/MapObj/BoxKuribo.cpp:
     .text   start:0x0025BF50 end:0x0025C968
-src/Game/MapObj/BoxLightCollisionChecker.cpp:
+src/Game/MapObj/BoxLightCollisionChecker.cpp: done
     .text   start:0x0025C970 end:0x0025CB28
 src/Game/MapObj/BoxLight.cpp:
     .text   start:0x0025CB30 end:0x0025DF98
@@ -1561,7 +1561,7 @@ src/Game/MapObj/CubeMapController.cpp:
     .text   start:0x002816A0 end:0x00281C44
 src/Game/MapObj/DashPanel.cpp:
     .text   start:0x00281C50 end:0x00282314
-src/Game/MapObj/DashPanelSeTriggerChecker.cpp:
+src/Game/MapObj/DashPanelSeTriggerChecker.cpp: done
     .text   start:0x00282320 end:0x002824A8
 src/Game/MapObj/DestructableMapParts.cpp:
     .text   start:0x002824B0 end:0x00282ED0
@@ -1589,7 +1589,7 @@ src/Game/MapObj/DrcAssistDirectorUtil.cpp:
     .text   start:0x0029E240 end:0x0029F3DC
 src/Game/MapObj/DrcPianoBlock.cpp:
     .text   start:0x0029F3E0 end:0x0029FD80
-src/Game/MapObj/DrcTouchChecker.cpp:
+src/Game/MapObj/DrcTouchChecker.cpp: done
     .text   start:0x0029FD80 end:0x0029FF58
 src/Game/MapObj/DrcTouchPointer.cpp:
     .text   start:0x0029FF60 end:0x002A49F0
