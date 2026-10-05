@@ -31,6 +31,8 @@ public:
     al::LiveActor* getTargetActor();
     s32 getControlUserId() const;
     IUsePlayerPuppet* getPlayerPuppet() const;
+    /** @brief Checks for a bound player. @return Whether a puppet is attached. */
+    bool isBind() const { return mPlayerPuppet != nullptr; }
 
 private:
     IUsePlayerPuppet* mPlayerPuppet = nullptr;  // 0x10

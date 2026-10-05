@@ -517,7 +517,7 @@ src/Game/Demo/DemoWorldClear.cpp:
     .text   start:0x000C41F0 end:0x000C4C28
 src/Game/Demo/ProjectDemoDirector.cpp:
     .text   start:0x000C4C30 end:0x000C5424
-src/Game/Demo/StageStartBindDemoCasinoRoom.cpp:
+src/Game/Demo/StageStartBindDemoCasinoRoom.cpp: done
     .text   start:0x000C5430 end:0x000C5C18
 src/Game/Demo/StageStartBindDemoKinopioBrigade.cpp:
     .text   start:0x000C5C20 end:0x000C7BB4

@@ -5073,8 +5073,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71000C5AF0			FALSE	_ZNK28StageStartBindDemoCasinoRoom12getEventTypeEv	StageStartBindDemoCasinoRoom::getEventType() const	
 0x71000C5B00			FALSE	_ZN28StageStartBindDemoCasinoRoom9startDemoEv	StageStartBindDemoCasinoRoom::startDemo()	
 0x71000C5B10			FALSE	_ZN28StageStartBindDemoCasinoRoom7endDemoEv	StageStartBindDemoCasinoRoom::endDemo()	
-0x71000C5B20			FALSE	sub_71000C5B20	sub_71000C5B20	
-0x71000C5B90			FALSE	sub_71000C5B90	sub_71000C5B90	
+0x71000C5B20			FALSE	_ZNK12_GLOBAL__N_139StageStartBindDemoCasinoRoomNrvBindWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::StageStartBindDemoCasinoRoomNrvBindWait::execute(al::NerveKeeper*) const	
+0x71000C5B90			FALSE	_ZNK12_GLOBAL__N_138StageStartBindDemoCasinoRoomNrvBindEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::StageStartBindDemoCasinoRoomNrvBindEnd::execute(al::NerveKeeper*) const	
 0x71000C5C10			FALSE	_ZNK12_GLOBAL__N_138StageStartBindDemoCasinoRoomNrvMessage7executeEPN2al11NerveKeeperE	(anonymous namespace)::StageStartBindDemoCasinoRoomNrvMessage::execute(al::NerveKeeper*) const	
 0x71000C5C20		StageStartBindDemoKinopioBrigade.o	FALSE	_ZN32StageStartBindDemoKinopioBrigadeC2EPKc	StageStartBindDemoKinopioBrigade::StageStartBindDemoKinopioBrigade(char const*)	
 0x71000C5DA0			FALSE	_ZN32StageStartBindDemoKinopioBrigadeC1EPKc	StageStartBindDemoKinopioBrigade::StageStartBindDemoKinopioBrigade(char const*)	
