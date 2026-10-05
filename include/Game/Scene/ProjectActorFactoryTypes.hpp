@@ -1,4 +1,7 @@
 #pragma once
+#include "MapObj/Fury/GigaBellPedestal.hpp"
+#include "MapObj/Fury/GigaBellManager.hpp"
+#include "MapObj/Fury/GigaBell.hpp"
 #include "MapObj/NeedleRollerGenerator.hpp"
 #include "MapObj/Seaweed.hpp"
 #include "MapObj/KinopioBrigadeNpc.hpp"
@@ -2784,14 +2787,6 @@ private:
 };
 static_assert(sizeof(SuperBellSpecial) == 0x180);
 
-class GigaBell : public al::LiveActor {
-public:
-    explicit GigaBell(const char* pName);
-
-private:
-    u8 mUnreconstructed[0x1a4];
-};
-static_assert(sizeof(GigaBell) == 0x2e8);
 
 class KuriboGiga : public al::LiveActor {
 public:
@@ -2802,23 +2797,7 @@ private:
 };
 static_assert(sizeof(KuriboGiga) == 0x218);
 
-class GigaBellManager : public al::LiveActor {
-public:
-    explicit GigaBellManager(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x214];
-};
-static_assert(sizeof(GigaBellManager) == 0x358);
-
-class GigaBellPedestal : public al::LiveActor {
-public:
-    explicit GigaBellPedestal(const char* pName);
-
-private:
-    u8 mUnreconstructed[0x4];
-};
-static_assert(sizeof(GigaBellPedestal) == 0x148);
 
 class GigaRock : public al::LiveActor {
 public:

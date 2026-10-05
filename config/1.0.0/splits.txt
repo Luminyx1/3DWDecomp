@@ -1029,7 +1029,7 @@ src/Game/MapObj/Fury/GigaBellBindPuppeteer.cpp: done
     .text   start:0x001A5250 end:0x001A5500
 src/Game/MapObj/Fury/GigaBellItem.cpp:
     .text   start:0x001A5500 end:0x001A5D70
-src/Game/MapObj/Fury/GigaBellPedestal.cpp:
+src/Game/MapObj/Fury/GigaBellPedestal.cpp: done
     .text   start:0x001A5D70 end:0x001A60E0
 src/Game/MapObj/Fury/GoalPedestal.cpp: done
     .text   start:0x001A60E0 end:0x001A62C0
