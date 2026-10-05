@@ -1215,7 +1215,7 @@ src/Game/Layout/ScoreNumber.cpp:
     .text   start:0x001ECE30 end:0x001EDB58
 src/Game/Layout/ShowCourseSelect.cpp:
     .text   start:0x001EDB60 end:0x001EE358
-src/Game/Layout/SimpleAppearWaitEndParts.cpp:
+src/Game/Layout/SimpleAppearWaitEndParts.cpp: done
     .text   start:0x001EE360 end:0x001EE6D4
 src/Game/Layout/SingleModeSceneLayout.cpp:
     .text   start:0x001EE6E0 end:0x001F0D58

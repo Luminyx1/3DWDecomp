@@ -12808,9 +12808,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001EE520			FALSE	_ZN24SimpleAppearWaitEndParts9exeAppearEv	SimpleAppearWaitEndParts::exeAppear()	
 0x71001EE580			FALSE	_ZN24SimpleAppearWaitEndParts7exeWaitEv	SimpleAppearWaitEndParts::exeWait()	
 0x71001EE590			FALSE	_ZN24SimpleAppearWaitEndParts6exeEndEv	SimpleAppearWaitEndParts::exeEnd()	
-0x71001EE5F0			FALSE	nullsub_132	nullsub_132	
-0x71001EE600			FALSE	sub_71001EE600	sub_71001EE600	
-0x71001EE670			FALSE	sub_71001EE670	sub_71001EE670	
+0x71001EE5F0			FALSE	_ZNK12_GLOBAL__N_131SimpleAppearWaitEndPartsNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::SimpleAppearWaitEndPartsNrvWait::execute(al::NerveKeeper*) const	
+0x71001EE600			FALSE	_ZNK12_GLOBAL__N_133SimpleAppearWaitEndPartsNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::SimpleAppearWaitEndPartsNrvAppear::execute(al::NerveKeeper*) const	
+0x71001EE670			FALSE	_ZNK12_GLOBAL__N_130SimpleAppearWaitEndPartsNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::SimpleAppearWaitEndPartsNrvEnd::execute(al::NerveKeeper*) const	
 0x71001EE6E0		SingleModeSceneLayout.o	FALSE	_ZN21SingleModeSceneLayout27tryGetSingleModeSceneLayoutEPKN2al18IUseSceneObjHolderE	SingleModeSceneLayout::tryGetSingleModeSceneLayout(al::IUseSceneObjHolder const*)	
 0x71001EE710			FALSE	_ZN21SingleModeSceneLayout15tryDisablePauseEPKN2al18IUseSceneObjHolderEb	SingleModeSceneLayout::tryDisablePause(al::IUseSceneObjHolder const*, bool)	
 0x71001EE740			FALSE	_ZN21SingleModeSceneLayoutC2ERKN2al14LayoutInitInfoEP14GameDataHolderPKcPK15GreenStarKeeperPKNS0_12PlayerHolderEPK18PlayerAliveWatcherP19ProjectItemDirector	SingleModeSceneLayout::SingleModeSceneLayout(al::LayoutInitInfo const&, GameDataHolder*, char const*, GreenStarKeeper const*, al::PlayerHolder const*, PlayerAliveWatcher const*, ProjectItemDirector*)	

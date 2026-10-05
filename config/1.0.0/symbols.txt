@@ -4730,3 +4730,8 @@
 0x7101A0F140 8 object _ZN12_GLOBAL__N_121NrvDokanAppearOutOnlyE
 0x7101A0F148 8 object _ZN12_GLOBAL__N_117NrvDokanDisappearE
 0x7101A0F160 8 object _ZN12_GLOBAL__N_137NrvDokanPlayerOutWithCameraTicketWaitE
+
+# src/Game/Layout/SimpleAppearWaitEndParts
+0x71019E3688 8 object _ZN12_GLOBAL__N_131NrvSimpleAppearWaitEndPartsWaitE
+0x71019E36B0 8 object _ZN12_GLOBAL__N_133NrvSimpleAppearWaitEndPartsAppearE
+0x71019E36D8 8 object _ZN12_GLOBAL__N_130NrvSimpleAppearWaitEndPartsEndE
