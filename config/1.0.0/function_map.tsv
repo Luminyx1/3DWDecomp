@@ -22093,9 +22093,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710037C490			FALSE	_ZN19TestIshiokaTrapWall7exeStopEv	TestIshiokaTrapWall::exeStop()	
 0x710037C4A0			FALSE	_ZN19TestIshiokaTrapWallD1Ev	TestIshiokaTrapWall::~TestIshiokaTrapWall()	
 0x710037C4B0			FALSE	_ZN19TestIshiokaTrapWallD0Ev	TestIshiokaTrapWall::~TestIshiokaTrapWall()	
-0x710037C4E0			FALSE	nullsub_232	nullsub_232	
-0x710037C4F0			FALSE	sub_710037C4F0	sub_710037C4F0	
-0x710037C540			FALSE	sub_710037C540	sub_710037C540	
+0x710037C4E0			FALSE	_ZNK12_GLOBAL__N_126TestIshiokaTrapWallNrvStop7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_126TestIshiokaTrapWallNrvStop7executeEPN2al11NerveKeeperE	
+0x710037C4F0			FALSE	_ZNK12_GLOBAL__N_127TestIshiokaTrapWallNrvDelay7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_127TestIshiokaTrapWallNrvDelay7executeEPN2al11NerveKeeperE	
+0x710037C540			FALSE	_ZNK12_GLOBAL__N_126TestIshiokaTrapWallNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_126TestIshiokaTrapWallNrvWait7executeEPN2al11NerveKeeperE	
 0x710037C5B0			FALSE	_ZNK12_GLOBAL__N_126TestIshiokaTrapWallNrvMove7executeEPN2al11NerveKeeperE	(anonymous namespace)::TestIshiokaTrapWallNrvMove::execute(al::NerveKeeper*) const	
 0x710037C5C0			FALSE	_ZNK2al10FunctorV0MIP19TestIshiokaTrapWallMS1_FvvEEclEv	al::FunctorV0M<TestIshiokaTrapWall*, void (TestIshiokaTrapWall::*)()>::operator()() const	
 0x710037C5E0			FALSE	_ZNK2al10FunctorV0MIP19TestIshiokaTrapWallMS1_FvvEE5cloneEv	al::FunctorV0M<TestIshiokaTrapWall*, void (TestIshiokaTrapWall::*)()>::clone() const	

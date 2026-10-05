@@ -2053,7 +2053,7 @@ src/Game/MapObj/TestGraphicObj.cpp: done
     .text   start:0x0037B430 end:0x0037B5C8
 src/Game/MapObj/TestIshiokaTrapRock.cpp:
     .text   start:0x0037B5D0 end:0x0037BEE4
-src/Game/MapObj/TestIshiokaTrapWall.cpp:
+src/Game/MapObj/TestIshiokaTrapWall.cpp: done
     .text   start:0x0037BEF0 end:0x0037C624
 src/Game/MapObj/TestKinokoHead.cpp:
     .text   start:0x0037C630 end:0x0037CE18
