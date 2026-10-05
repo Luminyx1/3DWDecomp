@@ -1,4 +1,5 @@
 #pragma once
+#include "MapObj/ItemBubbleSingleMode.hpp"
 #include "MapObj/GreenStar.hpp"
 #include "MapObj/Fury/CoinStackMoving.hpp"
 #include "MapObj/CoinStack.hpp"
@@ -1674,13 +1675,7 @@ private:
 };
 static_assert(sizeof(IslandKeyMoveMapParts) == 0x220);
 
-class ItemBubbleSingleMode : public al::LiveActor {
-public:
-    explicit ItemBubbleSingleMode(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x24];
-};
 static_assert(sizeof(ItemBubbleSingleMode) == 0x168);
 
 class JumpFlipPanel : public al::LiveActor {

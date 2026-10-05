@@ -1737,7 +1737,7 @@ src/Game/MapObj/ItemBubble.cpp:
     .text   start:0x002E7E70 end:0x002E8AE8
 src/Game/MapObj/ItemBubbleBuoyant.cpp:
     .text   start:0x002E8AF0 end:0x002E8F48
-src/Game/MapObj/ItemBubbleSingleMode.cpp:
+src/Game/MapObj/ItemBubbleSingleMode.cpp: done
     .text   start:0x002E8F50 end:0x002E9360
 src/Game/MapObj/ItemHolder.cpp:
     .text   start:0x002E9360 end:0x002EB4C8
