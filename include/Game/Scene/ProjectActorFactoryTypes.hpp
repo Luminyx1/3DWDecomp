@@ -1,4 +1,5 @@
 #pragma once
+#include "MapObj/Fury/CoinStackMoving.hpp"
 #include "MapObj/CoinStack.hpp"
 
 #include "MapObj/AssistSlideMapParts.hpp"
@@ -674,14 +675,7 @@ private:
 };
 static_assert(sizeof(CoinRing) == 0x178);
 
-class CoinStackMoving : public al::LiveActor {
-public:
-    explicit CoinStackMoving(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x2c];
-};
-static_assert(sizeof(CoinStackMoving) == 0x170);
 
 class CollectRingHolder : public al::LiveActor {
 public:

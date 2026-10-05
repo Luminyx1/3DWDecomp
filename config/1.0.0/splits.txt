@@ -983,7 +983,7 @@ src/Game/MapObj/Fury/CloudBonusWatcher.cpp:
     .text   start:0x00194240 end:0x0019476C
 src/Game/MapObj/Fury/CoinBlowConcentric.cpp:
     .text   start:0x00194770 end:0x00195998
-src/Game/MapObj/Fury/CoinStackMoving.cpp:
+src/Game/MapObj/Fury/CoinStackMoving.cpp: done
     .text   start:0x001959A0 end:0x001960F8
 src/Game/MapObj/Fury/DisasterBlockDeadWatcher.cpp: done
     .text   start:0x00196100 end:0x00196370
