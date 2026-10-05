@@ -1929,7 +1929,7 @@ src/Game/MapObj/RouteDokanEntrance.cpp:
     .text   start:0x003501C0 end:0x003507F8
 src/Game/MapObj/RouteDokanEntranceGroup.cpp:
     .text   start:0x00350800 end:0x00350D78
-src/Game/MapObj/RouteDokanInOutEffect.cpp:
+src/Game/MapObj/RouteDokanInOutEffect.cpp: done
     .text   start:0x00350D80 end:0x003510F0
 src/Game/MapObj/RouteDokanLauncher.cpp:
     .text   start:0x003510F0 end:0x003525F4
