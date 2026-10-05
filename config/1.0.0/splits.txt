@@ -2061,9 +2061,9 @@ src/Game/MapObj/TestKitaharaRouteBazooka.cpp:
     .text   start:0x0037CE20 end:0x0037D5E4
 src/Game/MapObj/TestKitaharaRouteBazookaEntrance.cpp:
     .text   start:0x0037D5F0 end:0x0037DBD0
-src/Game/MapObj/TestKitaharaRouteBazookaEntranceGroup.cpp:
+src/Game/MapObj/TestKitaharaRouteBazookaEntranceGroup.cpp: done
     .text   start:0x0037DBD0 end:0x0037E088
-src/Game/MapObj/TestKitaharaRouteBazookaPartsGroup.cpp:
+src/Game/MapObj/TestKitaharaRouteBazookaPartsGroup.cpp: done
     .text   start:0x0037E090 end:0x0037E2EC
 src/Game/MapObj/TestKitaharaRouteBazookaRider.cpp:
     .text   start:0x0037E2F0 end:0x0037F89C
