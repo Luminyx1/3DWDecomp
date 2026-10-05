@@ -19055,7 +19055,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71002F2070			FALSE	_ZN25KarakuriCastleDoorWatcher7exeOpenEv	KarakuriCastleDoorWatcher::exeOpen()	
 0x71002F21D0			FALSE	_ZN25KarakuriCastleDoorWatcherD1Ev	KarakuriCastleDoorWatcher::~KarakuriCastleDoorWatcher()	
 0x71002F21E0			FALSE	_ZN25KarakuriCastleDoorWatcherD0Ev	KarakuriCastleDoorWatcher::~KarakuriCastleDoorWatcher()	
-0x71002F2210			FALSE	sub_71002F2210	sub_71002F2210	
+0x71002F2210			FALSE	_ZNK12_GLOBAL__N_132KarakuriCastleDoorWatcherNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_132KarakuriCastleDoorWatcherNrvWait7executeEPN2al11NerveKeeperE	
 0x71002F2290			FALSE	_ZNK12_GLOBAL__N_132KarakuriCastleDoorWatcherNrvOpen7executeEPN2al11NerveKeeperE	(anonymous namespace)::KarakuriCastleDoorWatcherNrvOpen::execute(al::NerveKeeper*) const	
 0x71002F22A0		KeyMoveLoop.o	FALSE	_ZN15KeyMoveLoopLiftC2EPKc	KeyMoveLoopLift::KeyMoveLoopLift(char const*)	
 0x71002F2340			FALSE	_ZN15KeyMoveLoopLiftC1EPKc	KeyMoveLoopLift::KeyMoveLoopLift(char const*)	
