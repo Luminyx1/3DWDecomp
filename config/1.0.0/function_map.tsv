@@ -15111,7 +15111,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100252180			FALSE	_ZN18BlockRouletteState14killDummyModelEv	BlockRouletteState::killDummyModel()	
 0x7100252240			FALSE	_ZN18BlockRouletteStateD0Ev	BlockRouletteState::~BlockRouletteState()	
 0x7100252270			FALSE	_ZNK12_GLOBAL__N_125BlockRouletteStateNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::BlockRouletteStateNrvWait::execute(al::NerveKeeper*) const	
-0x7100252280			FALSE	sub_7100252280	sub_7100252280	
+0x7100252280			FALSE	_ZNK12_GLOBAL__N_131BlockRouletteStateNrvAppearItem7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_131BlockRouletteStateNrvAppearItem7executeEPN2al11NerveKeeperE	
 0x7100252290		BlockSlot.o	FALSE	_ZN9BlockSlotC2EPKc	BlockSlot::BlockSlot(char const*)	
 0x7100252320			FALSE	_ZN9BlockSlotC1EPKc	BlockSlot::BlockSlot(char const*)	
 0x71002523C0			FALSE	_ZN9BlockSlot4initERKN2al13ActorInitInfoE	BlockSlot::init(al::ActorInitInfo const&)	
