@@ -35,4 +35,13 @@ public:
 class ItemStatePopUpFront : public al::ActorStateBase {
 public:
     ItemStatePopUpFront(al::LiveActor*);
+    void setParam(const ItemStatePopUpFrontParam&, const al::HitSensor*);
+private:
+    ItemStatePopUpFrontParam mParam;
+    float mColliderRadius;
+    bool _a4;
+    bool _a5;
+    al::HitSensor* _a8;
+    u8 _b0[8];
 };
+static_assert(sizeof(ItemStatePopUpFront) == 0xb8);

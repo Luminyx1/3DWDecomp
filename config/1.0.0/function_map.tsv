@@ -22339,10 +22339,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100385F00			FALSE	_ZN7TestNut8exeThrowEv	TestNut::exeThrow()	
 0x7100385F70			FALSE	_ZN7TestNutD1Ev	TestNut::~TestNut()	
 0x7100385F80			FALSE	_ZN7TestNutD0Ev	TestNut::~TestNut()	
-0x7100385FB0			FALSE	nullsub_237	nullsub_237	
-0x7100385FC0			FALSE	sub_7100385FC0	sub_7100385FC0	
-0x7100385FD0			FALSE	sub_7100385FD0	sub_7100385FD0	
-0x7100386050			FALSE	sub_7100386050	sub_7100386050	
+0x7100385FB0			FALSE	_ZNK12_GLOBAL__N_114TestNutNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_114TestNutNrvWait7executeEPN2al11NerveKeeperE	
+0x7100385FC0			FALSE	_ZNK12_GLOBAL__N_120TestNutNrvPlayerHold7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_120TestNutNrvPlayerHold7executeEPN2al11NerveKeeperE	
+0x7100385FD0			FALSE	_ZNK12_GLOBAL__N_115TestNutNrvThrow7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_115TestNutNrvThrow7executeEPN2al11NerveKeeperE	
+0x7100386050			FALSE	_GLOBAL__sub_I_TestNut.cpp	_GLOBAL__sub_I_TestNut.cpp	
 0x71003860C0		TestRouteDokanRenderMaterialIndirect.o	FALSE	_ZN36TestRouteDokanRenderMaterialIndirectC2EPKc	TestRouteDokanRenderMaterialIndirect::TestRouteDokanRenderMaterialIndirect(char const*)	
 0x7100386140			FALSE	_ZN36TestRouteDokanRenderMaterialIndirectC1EPKc	TestRouteDokanRenderMaterialIndirect::TestRouteDokanRenderMaterialIndirect(char const*)	
 0x71003861C0			FALSE	_ZN36TestRouteDokanRenderMaterialIndirect4initERKN2al13ActorInitInfoE	TestRouteDokanRenderMaterialIndirect::init(al::ActorInitInfo const&)	

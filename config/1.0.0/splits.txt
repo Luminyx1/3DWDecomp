@@ -2085,7 +2085,7 @@ src/Game/MapObj/TestMusaCubemap.cpp:
     .text   start:0x00384250 end:0x00384AA0
 src/Game/MapObj/TestMusaSandBox.cpp:
     .text   start:0x00384AA0 end:0x00385B68
-src/Game/MapObj/TestNut.cpp:
+src/Game/MapObj/TestNut.cpp: done
     .text   start:0x00385B70 end:0x003860B4
 src/Game/MapObj/TestRouteDokanRenderMaterialIndirect.cpp: done
     .text   start:0x003860C0 end:0x0038630C
