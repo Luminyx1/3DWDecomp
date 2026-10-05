@@ -14947,11 +14947,11 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710024BF80			FALSE	_ZN19BlockBrickBreakable8exeBreakEv	BlockBrickBreakable::exeBreak()	
 0x710024BFC0			FALSE	_ZN19BlockBrickBreakableD1Ev	BlockBrickBreakable::~BlockBrickBreakable()	
 0x710024BFD0			FALSE	_ZN19BlockBrickBreakableD0Ev	BlockBrickBreakable::~BlockBrickBreakable()	
-0x710024C000			FALSE	sub_710024C000	sub_710024C000	
-0x710024C040			FALSE	sub_710024C040	sub_710024C040	
-0x710024C090			FALSE	sub_710024C090	sub_710024C090	
-0x710024C0E0			FALSE	sub_710024C0E0	sub_710024C0E0	
-0x710024C130			FALSE	sub_710024C130	sub_710024C130	
+0x710024C000			FALSE	_ZNK12_GLOBAL__N_126BlockBrickBreakableNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_126BlockBrickBreakableNrvWait7executeEPN2al11NerveKeeperE	
+0x710024C040			FALSE	_ZNK12_GLOBAL__N_127BlockBrickBreakableNrvBreak7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_127BlockBrickBreakableNrvBreak7executeEPN2al11NerveKeeperE	
+0x710024C090			FALSE	_ZNK12_GLOBAL__N_134BlockBrickBreakableNrvBreakHipDrop7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_134BlockBrickBreakableNrvBreakHipDrop7executeEPN2al11NerveKeeperE	
+0x710024C0E0			FALSE	_ZNK12_GLOBAL__N_130BlockBrickBreakableNrvReaction7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_130BlockBrickBreakableNrvReaction7executeEPN2al11NerveKeeperE	
+0x710024C130			FALSE	_ZNK12_GLOBAL__N_137BlockBrickBreakableNrvReactionHipDrop7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_137BlockBrickBreakableNrvReactionHipDrop7executeEPN2al11NerveKeeperE	
 0x710024C180			FALSE	_ZNK2al10FunctorV0MIP19BlockBrickBreakableMS1_FvvEEclEv	al::FunctorV0M<BlockBrickBreakable*, void (BlockBrickBreakable::*)()>::operator()() const	
 0x710024C1A0			FALSE	_ZNK2al10FunctorV0MIP19BlockBrickBreakableMS1_FvvEE5cloneEv	al::FunctorV0M<BlockBrickBreakable*, void (BlockBrickBreakable::*)()>::clone() const	
 0x710024C1F0		BlockChoice.o	FALSE	_ZN11BlockChoiceC2EPKc	BlockChoice::BlockChoice(char const*)	
