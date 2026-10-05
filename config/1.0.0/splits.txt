@@ -1504,7 +1504,7 @@ src/Game/MapObj/ClimbHandleMapParts.cpp: done
     .text   start:0x0026C950 end:0x0026CDA0
 src/Game/MapObj/CloudBonusLauncher.cpp:
     .text   start:0x0026CDA0 end:0x0026FCE8
-src/Game/MapObj/CloudBonusLauncherBindPuppeteer.cpp:
+src/Game/MapObj/CloudBonusLauncherBindPuppeteer.cpp: done
     .text   start:0x0026FCF0 end:0x00270688
 src/Game/MapObj/Coin.cpp:
     .text   start:0x00270690 end:0x00271494

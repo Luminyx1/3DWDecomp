@@ -15902,7 +15902,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710026F8D0			FALSE	_ZN18CloudBonusLauncherD1Ev	CloudBonusLauncher::~CloudBonusLauncher()	
 0x710026F8E0			FALSE	_ZN18CloudBonusLauncherD0Ev	CloudBonusLauncher::~CloudBonusLauncher()	
 0x710026F910			FALSE	sub_710026F910	sub_710026F910	
-0x710026F950			FALSE	_ZNK12_GLOBAL__N_141CloudBonusLauncherBindPuppeteerNrvNothing7executeEPN2al11NerveKeeperE	(anonymous namespace)::CloudBonusLauncherBindPuppeteerNrvNothing::execute(al::NerveKeeper*) const	
+0x710026F950			FALSE	_ZNK12_GLOBAL__N_128CloudBonusLauncherNrvNothing7executeEPN2al11NerveKeeperE	(anonymous namespace)::CloudBonusLauncherNrvNothing::execute(al::NerveKeeper*) const	
 0x710026F960			FALSE	sub_710026F960	sub_710026F960	
 0x710026F9C0			FALSE	sub_710026F9C0	sub_710026F9C0	
 0x710026FA80			FALSE	_ZNK12_GLOBAL__N_123CloudBonusLauncherNrvIn7executeEPN2al11NerveKeeperE	(anonymous namespace)::CloudBonusLauncherNrvIn::execute(al::NerveKeeper*) const	
@@ -15936,10 +15936,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100270390			FALSE	_ZN31CloudBonusLauncherBindPuppeteer9exeLaunchEv	CloudBonusLauncherBindPuppeteer::exeLaunch()	
 0x7100270410			FALSE	_ZN31CloudBonusLauncherBindPuppeteer17exeBonusStartWarpEv	CloudBonusLauncherBindPuppeteer::exeBonusStartWarp()	
 0x7100270510			FALSE	_ZN31CloudBonusLauncherBindPuppeteerD0Ev	CloudBonusLauncherBindPuppeteer::~CloudBonusLauncherBindPuppeteer()	
-0x7100270540			FALSE	nullsub_165	nullsub_165	
-0x7100270550			FALSE	sub_7100270550	sub_7100270550	
-0x7100270590			FALSE	sub_7100270590	sub_7100270590	
-0x7100270600			FALSE	sub_7100270600	sub_7100270600	
+0x7100270540			FALSE	_ZNK12_GLOBAL__N_141CloudBonusLauncherBindPuppeteerNrvNothing7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_141CloudBonusLauncherBindPuppeteerNrvNothing7executeEPN2al11NerveKeeperE	
+0x7100270550			FALSE	_ZNK12_GLOBAL__N_143CloudBonusLauncherBindPuppeteerNrvBindForce7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_143CloudBonusLauncherBindPuppeteerNrvBindForce7executeEPN2al11NerveKeeperE	
+0x7100270590			FALSE	_ZNK12_GLOBAL__N_140CloudBonusLauncherBindPuppeteerNrvInWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_140CloudBonusLauncherBindPuppeteerNrvInWait7executeEPN2al11NerveKeeperE	
+0x7100270600			FALSE	_ZNK12_GLOBAL__N_140CloudBonusLauncherBindPuppeteerNrvLaunch7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_140CloudBonusLauncherBindPuppeteerNrvLaunch7executeEPN2al11NerveKeeperE	
 0x7100270680			FALSE	_ZNK12_GLOBAL__N_148CloudBonusLauncherBindPuppeteerNrvBonusStartWarp7executeEPN2al11NerveKeeperE	(anonymous namespace)::CloudBonusLauncherBindPuppeteerNrvBonusStartWarp::execute(al::NerveKeeper*) const	
 0x7100270690		Coin.o	FALSE	_ZN4CoinC2EPKc	Coin::Coin(char const*)	
 0x7100270740			FALSE	_ZN4CoinC1EPKc	Coin::Coin(char const*)	
