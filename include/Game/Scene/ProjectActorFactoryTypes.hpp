@@ -1,3 +1,4 @@
+#include "MapObj/CoinBlowGenerator.hpp"
 #include "MapObj/NeedleTrap.hpp"
 #include "MapObj/KouraGold.hpp"
 #include "MapObj/Koura.hpp"
@@ -530,14 +531,7 @@ private:
 };
 static_assert(sizeof(CoinBlowConcentric) == 0x180);
 
-class CoinBlowGenerator : public al::LiveActor {
-public:
-    explicit CoinBlowGenerator(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x24];
-};
-static_assert(sizeof(CoinBlowGenerator) == 0x168);
 
 class CoinChameleon : public al::LiveActor {
 public:

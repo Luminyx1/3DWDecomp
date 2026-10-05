@@ -1511,7 +1511,7 @@ src/Game/MapObj/CoinAttach.cpp:
     .text   start:0x002714A0 end:0x00271EE8
 src/Game/MapObj/CoinBlow.cpp:
     .text   start:0x00271EF0 end:0x00272E38
-src/Game/MapObj/CoinBlowGenerator.cpp:
+src/Game/MapObj/CoinBlowGenerator.cpp: done
     .text   start:0x00272E40 end:0x002735E8
 src/Game/MapObj/CoinChameleon.cpp:
     .text   start:0x002735F0 end:0x00274BC8
