@@ -43,6 +43,7 @@ public:
     void setParamAnimName(const char*);
     void setParamHoming(const al::HitSensor*);
     void setParamInvalidateKillByArea(bool);
+    void setParamInvalidateClippingOnKill(bool);
     bool receiveMsg(const al::SensorMsg*, al::HitSensor*, al::HitSensor*);
 private:
     ItemStatePopUpFrontParam mParam;

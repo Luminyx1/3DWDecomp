@@ -1,3 +1,4 @@
+#include "MapObj/SuperStar.hpp"
 #include "MapObj/SuperBellSpecial.hpp"
 #include "MapObj/SuperBell.hpp"
 #include "MapObj/BoomerangFlower.hpp"
@@ -2460,14 +2461,7 @@ static_assert(sizeof(SuperLeaf) == 0x190);
 
 
 
-class SuperStar : public al::LiveActor {
-public:
-    explicit SuperStar(const char* pName, ItemBubble* = nullptr);
 
-private:
-    u8 mUnreconstructed[0x34];
-};
-static_assert(sizeof(SuperStar) == 0x178);
 
 class Swimmer : public al::LiveActor {
 public:

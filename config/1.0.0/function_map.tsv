@@ -21668,9 +21668,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710036A4C0			FALSE	_ZN9SuperStar10exeRunawayEv	SuperStar::exeRunaway()	
 0x710036A5D0			FALSE	_ZN9SuperStarD1Ev	SuperStar::~SuperStar()	
 0x710036A5E0			FALSE	_ZN9SuperStarD0Ev	SuperStar::~SuperStar()	
-0x710036A610			FALSE	sub_710036A610	sub_710036A610	
-0x710036A650			FALSE	sub_710036A650	sub_710036A650	
-0x710036A6D0			FALSE	sub_710036A6D0	sub_710036A6D0	
+0x710036A610			FALSE	_ZNK12_GLOBAL__N_116SuperStarNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_116SuperStarNrvWait7executeEPN2al11NerveKeeperE	
+0x710036A650			FALSE	_ZNK12_GLOBAL__N_122SuperStarNrvPopUpFront7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_122SuperStarNrvPopUpFront7executeEPN2al11NerveKeeperE	
+0x710036A6D0			FALSE	_ZNK12_GLOBAL__N_124SuperStarNrvAttachBubble7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_124SuperStarNrvAttachBubble7executeEPN2al11NerveKeeperE	
 0x710036A740			FALSE	_ZNK12_GLOBAL__N_119SuperStarNrvRunaway7executeEPN2al11NerveKeeperE	(anonymous namespace)::SuperStarNrvRunaway::execute(al::NerveKeeper*) const	
 0x710036A750			FALSE	_ZN2al28registSupportFreezeSyncGroupEPNS_9LiveActorERKNS_13ActorInitInfoE	al::registSupportFreezeSyncGroup(al::LiveActor*, al::ActorInitInfo const&)	
 0x710036A7E0		SwitchAnd.o	FALSE	_ZN9SwitchAndC2EPKc	SwitchAnd::SwitchAnd(char const*)	
