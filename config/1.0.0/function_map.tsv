@@ -16198,10 +16198,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710027BAF0			FALSE	_ZN7CoinRed7exeStopEv	CoinRed::exeStop()	
 0x710027BB00			FALSE	_ZN7CoinRedD1Ev	CoinRed::~CoinRed()	
 0x710027BB10			FALSE	_ZN7CoinRedD0Ev	CoinRed::~CoinRed()	
-0x710027BB40			FALSE	sub_710027BB40	sub_710027BB40	
-0x710027BBC0			FALSE	sub_710027BBC0	sub_710027BBC0	
-0x710027BC70			FALSE	sub_710027BC70	sub_710027BC70	
-0x710027BC80			FALSE	sub_710027BC80	sub_710027BC80	
+0x710027BB40			FALSE	_ZNK12_GLOBAL__N_116CoinRedNrvAppear7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_116CoinRedNrvAppear7executeEPN2al11NerveKeeperE	
+0x710027BBC0			FALSE	_ZNK12_GLOBAL__N_114CoinRedNrvSpin7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_114CoinRedNrvSpin7executeEPN2al11NerveKeeperE	
+0x710027BC70			FALSE	_ZNK12_GLOBAL__N_114CoinRedNrvStop7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_114CoinRedNrvStop7executeEPN2al11NerveKeeperE	
+0x710027BC80			FALSE	_ZNK12_GLOBAL__N_119CoinRedNrvCountDown7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_119CoinRedNrvCountDown7executeEPN2al11NerveKeeperE	
 0x710027BCE0		CoinRedRing.o	FALSE	_ZN11CoinRedRingC2EPKc	CoinRedRing::CoinRedRing(char const*)	
 0x710027BD90			FALSE	_ZN11CoinRedRingC1EPKc	CoinRedRing::CoinRedRing(char const*)	
 0x710027BE30			FALSE	_ZN11CoinRedRing4initERKN2al13ActorInitInfoE	CoinRedRing::init(al::ActorInitInfo const&)	
