@@ -1,3 +1,4 @@
+#include "MapObj/CoinRing.hpp"
 #include "MapObj/SuperbViewArea.hpp"
 #include "MapObj/GuideObj.hpp"
 #include "MapObj/BreakMapParts.hpp"
@@ -612,14 +613,7 @@ static_assert(sizeof(CoinRail) == 0x198);
 
 
 
-class CoinRing : public al::LiveActor {
-public:
-    explicit CoinRing(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x34];
-};
-static_assert(sizeof(CoinRing) == 0x178);
 
 
 

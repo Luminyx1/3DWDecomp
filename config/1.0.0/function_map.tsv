@@ -16233,11 +16233,11 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710027CD70			FALSE	_ZN8CoinRing12exeDisappearEv	CoinRing::exeDisappear()	
 0x710027CF80			FALSE	_ZN8CoinRingD1Ev	CoinRing::~CoinRing()	
 0x710027CF90			FALSE	_ZN8CoinRingD0Ev	CoinRing::~CoinRing()	
-0x710027CFC0			FALSE	nullsub_167	nullsub_167	
-0x710027CFD0			FALSE	sub_710027CFD0	sub_710027CFD0	
+0x710027CFC0			FALSE	_ZNK12_GLOBAL__N_115CoinRingNrvStop7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_115CoinRingNrvStop7executeEPN2al11NerveKeeperE	
+0x710027CFD0			FALSE	_ZNK12_GLOBAL__N_116CoinRingNrvDelay7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_116CoinRingNrvDelay7executeEPN2al11NerveKeeperE	
 0x710027D020			FALSE	_ZNK12_GLOBAL__N_115CoinRingNrvMove7executeEPN2al11NerveKeeperE	(anonymous namespace)::CoinRingNrvMove::execute(al::NerveKeeper*) const	
 0x710027D030			FALSE	_ZNK12_GLOBAL__N_120CoinRingNrvDisappear7executeEPN2al11NerveKeeperE	(anonymous namespace)::CoinRingNrvDisappear::execute(al::NerveKeeper*) const	
-0x710027D040			FALSE	sub_710027D040	sub_710027D040	
+0x710027D040			FALSE	_ZNK12_GLOBAL__N_115CoinRingNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_115CoinRingNrvWait7executeEPN2al11NerveKeeperE	
 0x710027D0B0			FALSE	_ZNK2al10FunctorV0MIP8CoinRingMS1_FvvEEclEv	al::FunctorV0M<CoinRing*, void (CoinRing::*)()>::operator()() const	
 0x710027D0D0			FALSE	_ZNK2al10FunctorV0MIP8CoinRingMS1_FvvEE5cloneEv	al::FunctorV0M<CoinRing*, void (CoinRing::*)()>::clone() const	
 0x710027D120		CoinRotater.o	FALSE	_ZN11CoinRotaterC2EPN2al15ExecuteDirectorE	CoinRotater::CoinRotater(al::ExecuteDirector*)	
