@@ -2074,7 +2074,7 @@ src/Game/MapObj/TestKitazonoBlockBrick.cpp:
     .text   start:0x0037F8A0 end:0x0037FF00
 src/Game/MapObj/TestKitazonoBlockBrickBreak.cpp: done
     .text   start:0x0037FF00 end:0x003801DC
-src/Game/MapObj/TestMatsudaFlashlight.cpp:
+src/Game/MapObj/TestMatsudaFlashlight.cpp: done
     .text   start:0x003801E0 end:0x00380A98
 src/Game/MapObj/TestMatsudaTrapeze.cpp:
     .text   start:0x00380AA0 end:0x00382208
