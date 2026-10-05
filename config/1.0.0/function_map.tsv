@@ -7001,15 +7001,15 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710010D330			FALSE	_ZN6KillerD1Ev	Killer::~Killer()	
 0x710010D340			FALSE	_ZN6KillerD0Ev	Killer::~Killer()	
 0x710010D370			FALSE	_ZNK12_GLOBAL__N_115KillerNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::KillerNrvAppear::execute(al::NerveKeeper*) const	
-0x710010D380			FALSE	sub_710010D380	sub_710010D380	
-0x710010D3C0			FALSE	sub_710010D3C0	sub_710010D3C0	
-0x710010D430			FALSE	sub_710010D430	sub_710010D430	
+0x710010D380			FALSE	_ZNK12_GLOBAL__N_122KillerNrvSupportFreeze7executeEPN2al11NerveKeeperE	(anonymous namespace)::KillerNrvSupportFreeze::execute(al::NerveKeeper*) const	
+0x710010D3C0			FALSE	_ZNK12_GLOBAL__N_117KillerNrvBlowDown7executeEPN2al11NerveKeeperE	(anonymous namespace)::KillerNrvBlowDown::execute(al::NerveKeeper*) const	
+0x710010D430			FALSE	_ZNK12_GLOBAL__N_116KillerNrvFlyWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::KillerNrvFlyWait::execute(al::NerveKeeper*) const	
 0x710010D4A0			FALSE	_ZNK12_GLOBAL__N_116KillerNrvExplode7executeEPN2al11NerveKeeperE	(anonymous namespace)::KillerNrvExplode::execute(al::NerveKeeper*) const	
-0x710010D4B0			FALSE	sub_710010D4B0	sub_710010D4B0	
+0x710010D4B0			FALSE	_ZNK12_GLOBAL__N_116KillerNrvReflect7executeEPN2al11NerveKeeperE	(anonymous namespace)::KillerNrvReflect::execute(al::NerveKeeper*) const	
 0x710010D520			FALSE	_ZNK12_GLOBAL__N_120KillerNrvHipDropDown7executeEPN2al11NerveKeeperE	(anonymous namespace)::KillerNrvHipDropDown::execute(al::NerveKeeper*) const	
 0x710010D530			FALSE	_ZNK12_GLOBAL__N_117KillerNrvFallDown7executeEPN2al11NerveKeeperE	(anonymous namespace)::KillerNrvFallDown::execute(al::NerveKeeper*) const	
-0x710010D540			FALSE	sub_710010D540	sub_710010D540	
-0x710010D580			FALSE	sub_710010D580	sub_710010D580	
+0x710010D540			FALSE	_ZNK12_GLOBAL__N_116KillerNrvStandBy7executeEPN2al11NerveKeeperE	(anonymous namespace)::KillerNrvStandBy::execute(al::NerveKeeper*) const	
+0x710010D580			FALSE	_GLOBAL__sub_I_Killer.cpp	_GLOBAL__sub_I_Killer.cpp	
 0x710010D610		KillerGenerator.o	FALSE	_ZN15KillerGeneratorC2EPKcPN2al9LiveActorEiPKNS2_24CollisionPartsFilterBaseE	KillerGenerator::KillerGenerator(char const*, al::LiveActor*, int, al::CollisionPartsFilterBase const*)	
 0x710010D6E0			FALSE	_ZN15KillerGeneratorC1EPKcPN2al9LiveActorEiPKNS2_24CollisionPartsFilterBaseE	KillerGenerator::KillerGenerator(char const*, al::LiveActor*, int, al::CollisionPartsFilterBase const*)	
 0x710010D7B0			FALSE	_ZN15KillerGenerator4initERKN2al13ActorInitInfoE	KillerGenerator::init(al::ActorInitInfo const&)	

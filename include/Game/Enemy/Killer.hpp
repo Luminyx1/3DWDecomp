@@ -14,6 +14,7 @@ class Killer : public al::LiveActor {
 public:
     Killer(const char* pName, int type, KillerGenerator* pGenerator,
            const al::CollisionPartsFilterBase* pFilter);
+    /** @brief Releases the Bullet Bill actor. */
     ~Killer() override = default;
     void init(const al::ActorInitInfo& rInfo) override;
     void appear() override;

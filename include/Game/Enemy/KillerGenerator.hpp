@@ -37,6 +37,8 @@ public:
     void exeShootKeepShoot();
 
 private:
+    friend class Killer;
+
     al::LiveActor* mHost;
     al::DeriveActorGroup<Killer>* mKillers = nullptr;
     Killer* mStandByKiller = nullptr;
