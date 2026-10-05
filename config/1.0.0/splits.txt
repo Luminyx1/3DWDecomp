@@ -1609,7 +1609,7 @@ src/Game/MapObj/EnterCatMarioMiddleViewRocket.cpp: done
     .text   start:0x002A70A0 end:0x002A7310
 src/Game/MapObj/ExplosionComboCounterHolder.cpp: done
     .text   start:0x002A7310 end:0x002A75BC
-src/Game/MapObj/FairyHouseIllustItemWatcher.cpp:
+src/Game/MapObj/FairyHouseIllustItemWatcher.cpp: done
     .text   start:0x002A75C0 end:0x002A79A4
 src/Game/MapObj/FireBar.cpp:
     .text   start:0x002A79B0 end:0x002A8520

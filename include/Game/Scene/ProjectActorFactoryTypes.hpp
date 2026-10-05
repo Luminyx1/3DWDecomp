@@ -1,4 +1,5 @@
 #pragma once
+#include "MapObj/FairyHouseIllustItemWatcher.hpp"
 #include "MapObj/Fury/GigaBellPedestal.hpp"
 #include "MapObj/Fury/GigaBellManager.hpp"
 #include "MapObj/Fury/GigaBell.hpp"
@@ -1056,14 +1057,6 @@ private:
 };
 static_assert(sizeof(EnterCatMarioMiddleViewRocket) == 0x158);
 
-class FairyHouseIllustItemWatcher : public al::LiveActor {
-public:
-    explicit FairyHouseIllustItemWatcher(const char* pName);
-
-private:
-    u8 mUnreconstructed[0x14];
-};
-static_assert(sizeof(FairyHouseIllustItemWatcher) == 0x158);
 
 class FairyMii : public al::LiveActor {
 public:

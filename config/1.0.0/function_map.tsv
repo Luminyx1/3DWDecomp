@@ -17289,8 +17289,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71002A7860			FALSE	_ZNK27FairyHouseIllustItemWatcher12isShowLayoutEv	FairyHouseIllustItemWatcher::isShowLayout() const	
 0x71002A78A0			FALSE	_ZN27FairyHouseIllustItemWatcherD1Ev	FairyHouseIllustItemWatcher::~FairyHouseIllustItemWatcher()	
 0x71002A78B0			FALSE	_ZN27FairyHouseIllustItemWatcherD0Ev	FairyHouseIllustItemWatcher::~FairyHouseIllustItemWatcher()	
-0x71002A78E0			FALSE	sub_71002A78E0	sub_71002A78E0	
-0x71002A7930			FALSE	sub_71002A7930	sub_71002A7930	
+0x71002A78E0			FALSE	_ZNK12_GLOBAL__N_134FairyHouseIllustItemWatcherNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_134FairyHouseIllustItemWatcherNrvWait7executeEPN2al11NerveKeeperE	
+0x71002A7930			FALSE	_ZNK12_GLOBAL__N_140FairyHouseIllustItemWatcherNrvShowLayout7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_140FairyHouseIllustItemWatcherNrvShowLayout7executeEPN2al11NerveKeeperE	
 0x71002A79B0		FireBar.o	FALSE	_ZN7FireBarC2EPKcRKN4sead8Matrix34IfEES6_	FireBar::FireBar(char const*, sead::Matrix34<float> const&, sead::Matrix34<float> const&)	
 0x71002A7B30			FALSE	_ZN7FireBarC1EPKcRKN4sead8Matrix34IfEES6_	FireBar::FireBar(char const*, sead::Matrix34<float> const&, sead::Matrix34<float> const&)	
 0x71002A7CC0			FALSE	_ZN7FireBar4initERKN2al13ActorInitInfoE	FireBar::init(al::ActorInitInfo const&)	
