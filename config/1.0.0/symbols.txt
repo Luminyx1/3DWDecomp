@@ -4781,3 +4781,7 @@
 0x71019DAFD8 8 object _ZN12_GLOBAL__N_123NrvGuideWindowPartsWaitE
 0x71019DB000 8 object _ZN12_GLOBAL__N_125NrvGuideWindowPartsAppearE
 0x71019DB028 8 object _ZN12_GLOBAL__N_122NrvGuideWindowPartsEndE
+
+# src/Game/Layout/ListClearStarFairyParts
+0x71019DC0F0 8 object _ZN12_GLOBAL__N_130NrvListClearStarFairyPartsHideE
+0x71019DC118 8 object _ZN12_GLOBAL__N_130NrvListClearStarFairyPartsShowE

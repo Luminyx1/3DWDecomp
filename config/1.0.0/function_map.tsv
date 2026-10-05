@@ -12035,8 +12035,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001CFA80			FALSE	_ZN23ListClearStarFairyParts7exeHideEv	ListClearStarFairyParts::exeHide()	
 0x71001CFAD0			FALSE	_ZN23ListClearStarFairyParts7setHideEv	ListClearStarFairyParts::setHide()	
 0x71001CFAE0			FALSE	_ZN23ListClearStarFairyParts7setShowEii	ListClearStarFairyParts::setShow(int, int)	
-0x71001CFC20			FALSE	sub_71001CFC20	sub_71001CFC20	
-0x71001CFC70			FALSE	sub_71001CFC70	sub_71001CFC70	
+0x71001CFC20			FALSE	_ZNK12_GLOBAL__N_130ListClearStarFairyPartsNrvHide7executeEPN2al11NerveKeeperE	(anonymous namespace)::ListClearStarFairyPartsNrvHide::execute(al::NerveKeeper*) const	
+0x71001CFC70			FALSE	_ZNK12_GLOBAL__N_130ListClearStarFairyPartsNrvShow7executeEPN2al11NerveKeeperE	(anonymous namespace)::ListClearStarFairyPartsNrvShow::execute(al::NerveKeeper*) const	
 0x71001CFCC0		ListClearStarMaxParts.o	FALSE	_ZN21ListClearStarMaxPartsC2ERKN2al14LayoutInitInfoEPKcS5_PNS0_11LayoutActorEPK14GameDataHolder	ListClearStarMaxParts::ListClearStarMaxParts(al::LayoutInitInfo const&, char const*, char const*, al::LayoutActor*, GameDataHolder const*)	
 0x71001CFD80			FALSE	_ZN21ListClearStarMaxPartsC1ERKN2al14LayoutInitInfoEPKcS5_PNS0_11LayoutActorEPK14GameDataHolder	ListClearStarMaxParts::ListClearStarMaxParts(al::LayoutInitInfo const&, char const*, char const*, al::LayoutActor*, GameDataHolder const*)	
 0x71001CFE40			FALSE	_ZN21ListClearStarMaxParts7exeShowEv	ListClearStarMaxParts::exeShow()	

@@ -1151,7 +1151,7 @@ src/Game/Layout/ListClearParts.cpp:
     .text   start:0x001CD7A0 end:0x001CE80C
 src/Game/Layout/ListClearStar.cpp:
     .text   start:0x001CE810 end:0x001CF8A4
-src/Game/Layout/ListClearStarFairyParts.cpp:
+src/Game/Layout/ListClearStarFairyParts.cpp: done
     .text   start:0x001CF8B0 end:0x001CFCB8
 src/Game/Layout/ListClearStarMaxParts.cpp:
     .text   start:0x001CFCC0 end:0x001D0BC8
