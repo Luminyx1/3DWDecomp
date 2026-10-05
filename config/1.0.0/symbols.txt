@@ -4792,3 +4792,9 @@
 
 # src/Game/Layout/GameOverMenu
 0x71019D9110 8 object _ZN12_GLOBAL__N_121NrvGameOverMenuAppearE
+
+# src/Game/Layout/ButtonArrowParts
+0x71019CFC40 8 object _ZN12_GLOBAL__N_123NrvButtonArrowPartsHideE
+0x71019CFC68 8 object _ZN12_GLOBAL__N_123NrvButtonArrowPartsWaitE
+0x71019CFC90 8 object _ZN12_GLOBAL__N_125NrvButtonArrowPartsDecideE
+0x7101B21FF0 16 object _ZN12_GLOBAL__N_111sTouchParamE

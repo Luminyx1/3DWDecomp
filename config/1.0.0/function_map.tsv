@@ -10960,10 +10960,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001A9940			FALSE	_ZN16ButtonArrowParts7setHideEv	ButtonArrowParts::setHide()	
 0x71001A9950			FALSE	_ZN16ButtonArrowParts7setShowEv	ButtonArrowParts::setShow()	
 0x71001A9960			FALSE	_ZN16ButtonArrowParts7setPortEi	ButtonArrowParts::setPort(int)	
-0x71001A9970			FALSE	sub_71001A9970	sub_71001A9970	
-0x71001A99C0			FALSE	sub_71001A99C0	sub_71001A99C0	
-0x71001A9A20			FALSE	sub_71001A9A20	sub_71001A9A20	
-0x71001A9A90			FALSE	sub_71001A9A90	sub_71001A9A90	
+0x71001A9970			FALSE	_ZNK12_GLOBAL__N_123ButtonArrowPartsNrvHide7executeEPN2al11NerveKeeperE	(anonymous namespace)::ButtonArrowPartsNrvHide::execute(al::NerveKeeper*) const	
+0x71001A99C0			FALSE	_ZNK12_GLOBAL__N_123ButtonArrowPartsNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::ButtonArrowPartsNrvWait::execute(al::NerveKeeper*) const	
+0x71001A9A20			FALSE	_ZNK12_GLOBAL__N_125ButtonArrowPartsNrvDecide7executeEPN2al11NerveKeeperE	(anonymous namespace)::ButtonArrowPartsNrvDecide::execute(al::NerveKeeper*) const	
+0x71001A9A90			FALSE	_GLOBAL__sub_I_ButtonArrowParts.cpp	global constructors keyed to ButtonArrowParts.cpp	
 0x71001A9AC0		ButtonBackParts.o	FALSE	_ZN15ButtonBackPartsC2ERKN2al14LayoutInitInfoEPKcS5_PNS0_11LayoutActorEi	ButtonBackParts::ButtonBackParts(al::LayoutInitInfo const&, char const*, char const*, al::LayoutActor*, int)	
 0x71001A9BD0			FALSE	_ZN15ButtonBackPartsC1ERKN2al14LayoutInitInfoEPKcS5_PNS0_11LayoutActorEi	ButtonBackParts::ButtonBackParts(al::LayoutInitInfo const&, char const*, char const*, al::LayoutActor*, int)	
 0x71001A9CE0			FALSE	_ZN15ButtonBackParts6appearEv	ButtonBackParts::appear()	
