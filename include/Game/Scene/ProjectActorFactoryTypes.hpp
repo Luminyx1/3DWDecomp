@@ -1,5 +1,8 @@
 #pragma once
 
+#include "Enemy/AllDeadWatcher.hpp"
+#include "MapObj/Fury/DisasterBlockDeadWatcher.hpp"
+
 #include "MapObj/WoodBox.hpp"
 
 #include "Enemy/BossBunretsu.hpp"
@@ -22,24 +25,6 @@ class ItemBubble;
 class CandlestandWatcher;
 class CourseSelectMiniature;
 namespace alSeFunction { enum DemoType : s32; }
-
-class AllDeadWatcher : public al::LiveActor {
-public:
-    explicit AllDeadWatcher(const char* pName);
-
-private:
-    u8 mUnreconstructed[0x24];
-};
-static_assert(sizeof(AllDeadWatcher) == 0x168);
-
-class DisasterBlockDeadWatcher : public al::LiveActor {
-public:
-    explicit DisasterBlockDeadWatcher(const char* pName);
-
-private:
-    u8 mUnreconstructed[0x24];
-};
-static_assert(sizeof(DisasterBlockDeadWatcher) == 0x168);
 
 class AssistSlideMapParts : public al::LiveActor {
 public:
