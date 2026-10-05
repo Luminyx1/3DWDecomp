@@ -1,9 +1,16 @@
 #pragma once
 
 #include <nn/atk/atk_Global.h>
+#include <nn/util/util_IntrusiveList.h>
 #include <nn/types.h>
 
-namespace nn::atk { class SoundHandle; struct SoundParamCalculationValues; struct SoundAmbientParam; }
+namespace nn::atk {
+class SoundHandle;
+class SoundActor;
+class SoundPlayer;
+struct SoundParamCalculationValues;
+struct SoundAmbientParam;
+} // namespace nn::atk
 namespace nn::atk {
 enum MixMode {
     MixMode_Pan,
@@ -13,8 +20,9 @@ enum MixMode {
 struct MixParameter {
     f32 ch[ChannelIndex_Count];
 };
-}  // namespace nn::atk
+} // namespace nn::atk
 namespace nn::atk::detail {
+class ExternalSoundPlayer;
 struct RuntimeTypeInfo {
     // parent identifies the immediate base type, or null for the root type.
     explicit RuntimeTypeInfo(const RuntimeTypeInfo* parent) : parent(parent) {}
@@ -34,15 +42,18 @@ public:
 
     class AmbientParamUpdateCallback {
     public:
-        /** @brief Destroys the ambient-parameter callback. */
+        /**
+         * @brief Destroys the ambient-parameter callback.
+         */
         virtual ~AmbientParamUpdateCallback() = default;
-        virtual void detail_UpdateAmbientParam(const void* pArg, u32 soundId,
-                                               SoundAmbientParam* pParam) = 0;
+        virtual void detail_UpdateAmbientParam(const void* pArg, u32 soundId, SoundAmbientParam* pParam) = 0;
         virtual int detail_GetAmbientPriority(const void* pArg, u32 soundId) = 0;
     };
     class AmbientArgAllocator {
     public:
-        /** @brief Destroys the ambient-argument allocator. */
+        /**
+         * @brief Destroys the ambient-argument allocator.
+         */
         virtual ~AmbientArgAllocator() = default;
         virtual void* detail_AllocAmbientArg(size_t size) = 0;
         virtual void detail_FreeAmbientArg(void* pArg, const BasicSound* pSound) = 0;
@@ -54,6 +65,33 @@ public:
         virtual void detail_UpdateAmbientArg(void* pArg, const BasicSound* pSound) = 0;
     };
 
+    void AttachExternalSoundPlayer(ExternalSoundPlayer* pPlayer);
+    void DetachExternalSoundPlayer(ExternalSoundPlayer* pPlayer);
+    void DetachSoundActor(SoundActor* pActor);
+    void Pause(bool pause, int fadeFrames, PauseMode mode);
+    /**
+     * @brief Gets the actor owning this sound.
+     * @return Associated actor, or null.
+     */
+    SoundActor* GetSoundActor() const { return mSoundActor; }
+    /**
+     * @brief Combines player and ambient priority.
+     * @return Priority clamped to [0, 127].
+     */
+    int GetPlayerPriority() const {
+        int priority = mPlayerPriority + mAmbientPriority;
+        if (priority < 0) {
+            priority = 0;
+        }
+        return priority < 127 ? priority : 127;
+    }
+    /**
+     * @brief Gets the external player's intrusive linkage.
+     * @return Node initialized by the sound constructor.
+     */
+    util::IntrusiveListNode& GetExternalPlayerNode() {
+        return *reinterpret_cast<util::IntrusiveListNode*>(reinterpret_cast<char*>(this) + 0x200);
+    }
     void Stop(int fadeFrames);
     void Pause(bool flag, int fadeFrames);
     void SetVolume(f32 volume, int frames);
@@ -85,9 +123,16 @@ private:
     u8 _8[8];
     SoundHandle* mGeneralHandle;
     SoundHandle* mTempGeneralHandle;
-    u8 _20[0x110 - 0x20];
+    SoundPlayer* mSoundPlayer;
+    SoundActor* mSoundActor;
+    ExternalSoundPlayer* mExternalSoundPlayer;
+    u8 _38[0x7c - 0x38];
+    int mAmbientPriority;
+    u8 _80[0xf8 - 0x80];
+    u8 mPlayerPriority;
+    u8 _f9[0x110 - 0xf9];
     u32 m_Id;
     u8 _114[0x210 - 0x114];
 };
 static_assert(sizeof(BasicSound) == 0x210);
-}  // namespace nn::atk::detail
+} // namespace nn::atk::detail
