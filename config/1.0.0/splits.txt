@@ -1637,7 +1637,7 @@ src/Game/MapObj/FlowerRhythm.cpp:
     .text   start:0x002B2B40 end:0x002B3938
 src/Game/MapObj/FortressGoal.cpp: done
     .text   start:0x002B3940 end:0x002B3BC0
-src/Game/MapObj/FrameOutChecker.cpp:
+src/Game/MapObj/FrameOutChecker.cpp: done
     .text   start:0x002B3BC0 end:0x002B4240
 src/Game/MapObj/GateKeeperChecker.cpp:
     .text   start:0x002B4240 end:0x002B4794

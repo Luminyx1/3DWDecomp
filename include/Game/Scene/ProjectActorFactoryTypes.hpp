@@ -1,3 +1,4 @@
+#include "MapObj/FrameOutChecker.hpp"
 #include "MapObj/LiftMikeSlide.hpp"
 #include "MapObj/MysteryHouseChecker.hpp"
 #include "MapObj/MysteryBox.hpp"
@@ -1154,14 +1155,7 @@ private:
 };
 static_assert(sizeof(FortressGoal) == 0x148);
 
-class FrameOutChecker : public al::LiveActor {
-public:
-    explicit FrameOutChecker(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x3c];
-};
-static_assert(sizeof(FrameOutChecker) == 0x180);
 
 class Fugumannen : public al::LiveActor {
 public:
