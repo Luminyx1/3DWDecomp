@@ -179,7 +179,7 @@ src/Game/Boss/KoopaChaseStateDemo.cpp:
     .text   start:0x0002DA50 end:0x0002E8B0
 src/Game/Boss/KoopaChaseStateFire.cpp:
     .text   start:0x0002E8B0 end:0x0002F14C
-src/Game/Boss/KoopaStateChaseJump.cpp:
+src/Game/Boss/KoopaStateChaseJump.cpp: done
     .text   start:0x0002F150 end:0x0002F568
 src/Game/Boss/KoopaChaseStateProvocation.cpp: done
     .text   start:0x0002F570 end:0x0002F934
