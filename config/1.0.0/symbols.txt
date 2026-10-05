@@ -4768,3 +4768,8 @@
 0x71019E9F70 8 object _ZN12_GLOBAL__N_117NrvWindowSaveWaitE
 0x71019E9F98 8 object _ZN12_GLOBAL__N_119NrvWindowSaveAppearE
 0x71019E9FC0 8 object _ZN12_GLOBAL__N_116NrvWindowSaveEndE
+
+# src/Game/Layout/CounterStampParts
+0x71019D5B88 8 object _ZN12_GLOBAL__N_124NrvCounterStampPartsWaitE
+0x71019D5B90 8 object _ZN12_GLOBAL__N_124NrvCounterStampPartsHideE
+0x71019D5B80 8 object _ZN12_GLOBAL__N_123NrvCounterStampPartsGetE

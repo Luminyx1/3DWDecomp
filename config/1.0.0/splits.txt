@@ -1093,7 +1093,7 @@ src/Game/Layout/CounterRecordParts.cpp: done
     .text   start:0x001B9B10 end:0x001B9F8C
 src/Game/Layout/CounterScoreParts.cpp: done
     .text   start:0x001B9F90 end:0x001BA294
-src/Game/Layout/CounterStampParts.cpp:
+src/Game/Layout/CounterStampParts.cpp: done
     .text   start:0x001BA2A0 end:0x001BA72C
 src/Game/Layout/CounterWarpCube.cpp:
     .text   start:0x001BA730 end:0x001BB4A4
