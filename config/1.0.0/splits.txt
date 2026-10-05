@@ -1765,7 +1765,7 @@ src/Game/MapObj/JumpFlipSweetsCream.cpp: done
     .text   start:0x002EFD80 end:0x002F0308
 src/Game/MapObj/JumpPanel.cpp:
     .text   start:0x002F0310 end:0x002F1474
-src/Game/MapObj/KarakuriCastleDoor.cpp:
+src/Game/MapObj/KarakuriCastleDoor.cpp: done
     .text   start:0x002F1480 end:0x002F1CDC
 src/Game/MapObj/KarakuriCastleDoorWatcher.cpp: done
     .text   start:0x002F1CE0 end:0x002F2298

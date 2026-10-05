@@ -15,6 +15,7 @@ public:
                  bool isFollow, al::DemoDirector* pDemoDirector);
 
     void startShowGoalItem(int count);
+    void startShowDrcTouch(bool);
     void endShow();
 
 private:
