@@ -1775,7 +1775,7 @@ src/Game/MapObj/KeyMoveLoopLiftGenerator.cpp: done
     .text   start:0x002F2CB0 end:0x002F3208
 src/Game/MapObj/KillerTankPartsNeedle.cpp: done
     .text   start:0x002F3210 end:0x002F33E0
-src/Game/MapObj/KinokoBig.cpp:
+src/Game/MapObj/KinokoBig.cpp: done
     .text   start:0x002F33E0 end:0x002F3BD0
 src/Game/MapObj/KinokoGiga.cpp: done
     .text   start:0x002F3BD0 end:0x002F4304

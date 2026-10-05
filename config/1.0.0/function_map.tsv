@@ -19115,8 +19115,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71002F3A80			FALSE	_ZN9KinokoBig10exeRunawayEv	KinokoBig::exeRunaway()	
 0x71002F3AF0			FALSE	_ZN9KinokoBigD1Ev	KinokoBig::~KinokoBig()	
 0x71002F3B00			FALSE	_ZN9KinokoBigD0Ev	KinokoBig::~KinokoBig()	
-0x71002F3B30			FALSE	sub_71002F3B30	sub_71002F3B30	
-0x71002F3B60			FALSE	sub_71002F3B60	sub_71002F3B60	
+0x71002F3B30			FALSE	_ZNK12_GLOBAL__N_122KinokoBigNrvPopUpFront7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_122KinokoBigNrvPopUpFront7executeEPN2al11NerveKeeperE	
+0x71002F3B60			FALSE	_ZNK12_GLOBAL__N_119KinokoBigNrvRunaway7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_119KinokoBigNrvRunaway7executeEPN2al11NerveKeeperE	
 0x71002F3BD0		KinokoGiga.o	FALSE	_ZN10KinokoGigaC2EPKc	KinokoGiga::KinokoGiga(char const*)	
 0x71002F3C60			FALSE	_ZN10KinokoGigaC1EPKc	KinokoGiga::KinokoGiga(char const*)	
 0x71002F3CF0			FALSE	_ZN10KinokoGiga4initERKN2al13ActorInitInfoE	KinokoGiga::init(al::ActorInitInfo const&)	

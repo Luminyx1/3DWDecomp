@@ -8,6 +8,7 @@ public:
     void appear() override;
     bool receiveMsg(const al::SensorMsg*, al::HitSensor*, al::HitSensor*);
     void move(float speed, float gravity, float velocityScale, float turnDegrees, float deceleration);
+    void setSpeed(float speed) { mSpeed = speed; }
     void exeLand();
     void exeMove();
     void exeReaction();
