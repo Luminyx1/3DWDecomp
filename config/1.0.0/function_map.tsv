@@ -11897,9 +11897,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001C9360			FALSE	_ZN16GuideWindowParts9exeAppearEv	GuideWindowParts::exeAppear()	
 0x71001C93D0			FALSE	_ZN16GuideWindowParts7exeWaitEv	GuideWindowParts::exeWait()	
 0x71001C93E0			FALSE	_ZN16GuideWindowParts6exeEndEv	GuideWindowParts::exeEnd()	
-0x71001C9440			FALSE	nullsub_120	nullsub_120	
-0x71001C9450			FALSE	sub_71001C9450	sub_71001C9450	
-0x71001C94D0			FALSE	sub_71001C94D0	sub_71001C94D0	
+0x71001C9440			FALSE	_ZNK12_GLOBAL__N_123GuideWindowPartsNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::GuideWindowPartsNrvWait::execute(al::NerveKeeper*) const	
+0x71001C9450			FALSE	_ZNK12_GLOBAL__N_125GuideWindowPartsNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::GuideWindowPartsNrvAppear::execute(al::NerveKeeper*) const	
+0x71001C94D0			FALSE	_ZNK12_GLOBAL__N_122GuideWindowPartsNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::GuideWindowPartsNrvEnd::execute(al::NerveKeeper*) const	
 0x71001C9540		IslandMap.o	FALSE	_ZN9IslandMap15tryGetIslandMapEPKN2al18IUseSceneObjHolderE	IslandMap::tryGetIslandMap(al::IUseSceneObjHolder const*)	
 0x71001C9570			FALSE	_ZN9IslandMap19setIslandWarpEnableEPKN2al18IUseSceneObjHolderEb	IslandMap::setIslandWarpEnable(al::IUseSceneObjHolder const*, bool)	
 0x71001C95E0			FALSE	_ZN9IslandMap14setWarpEnabledEb	IslandMap::setWarpEnabled(bool)	

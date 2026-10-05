@@ -4776,3 +4776,8 @@
 0x71019D5B88 8 object _ZN12_GLOBAL__N_124NrvCounterStampPartsWaitE
 0x71019D5B90 8 object _ZN12_GLOBAL__N_124NrvCounterStampPartsHideE
 0x71019D5B80 8 object _ZN12_GLOBAL__N_123NrvCounterStampPartsGetE
+
+# src/Game/Layout/GuideWindowParts
+0x71019DAFD8 8 object _ZN12_GLOBAL__N_123NrvGuideWindowPartsWaitE
+0x71019DB000 8 object _ZN12_GLOBAL__N_125NrvGuideWindowPartsAppearE
+0x71019DB028 8 object _ZN12_GLOBAL__N_122NrvGuideWindowPartsEndE

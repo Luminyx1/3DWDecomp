@@ -1141,7 +1141,7 @@ src/Game/Layout/GuideMessage.cpp:
     .text   start:0x001C7520 end:0x001C8A68
 src/Game/Layout/GuideObj.cpp:
     .text   start:0x001C8A70 end:0x001C9168
-src/Game/Layout/GuideWindowParts.cpp:
+src/Game/Layout/GuideWindowParts.cpp: done
     .text   start:0x001C9170 end:0x001C9534
 src/Game/Layout/IslandMap.cpp:
     .text   start:0x001C9540 end:0x001CCFC8
