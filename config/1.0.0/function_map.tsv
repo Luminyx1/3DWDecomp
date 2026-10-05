@@ -2499,8 +2499,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710006D9B0			FALSE	_ZN17TentackRockFaller19setValidFollowForceEv	TentackRockFaller::setValidFollowForce()	
 0x710006D9C0			FALSE	_ZN17TentackRockFallerD1Ev	TentackRockFaller::~TentackRockFaller()	
 0x710006D9D0			FALSE	_ZN17TentackRockFallerD0Ev	TentackRockFaller::~TentackRockFaller()	
-0x710006DA00			FALSE	sub_710006DA00	sub_710006DA00	
-0x710006DA40			FALSE	sub_710006DA40	sub_710006DA40	
+0x710006DA00			FALSE	_ZNK12_GLOBAL__N_128TentackRockFallerNrvFallRock7executeEPN2al11NerveKeeperE	(anonymous namespace)::TentackRockFallerNrvFallRock::execute(al::NerveKeeper*) const	matched local function
+0x710006DA40			FALSE	_GLOBAL__sub_I_TentackRockFaller.cpp	_GLOBAL__sub_I_TentackRockFaller.cpp	matched local function
 0x710006DA60		TentackStateAttackShot.o	FALSE	_ZN22TentackStateAttackShotC1EP11TentackHeadRKN2al13ActorInitInfoEPK27ITentackSwingTentacleHolder	TentackStateAttackShot::TentackStateAttackShot(TentackHead*, al::ActorInitInfo const&, ITentackSwingTentacleHolder const*)	
 0x710006DB90			FALSE	_ZN22TentackStateAttackShot6appearEv	TentackStateAttackShot::appear()	
 0x710006DBA0			FALSE	_ZN22TentackStateAttackShot4killEv	TentackStateAttackShot::kill()	
