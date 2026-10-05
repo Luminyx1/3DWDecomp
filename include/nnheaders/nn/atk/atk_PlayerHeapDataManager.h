@@ -8,6 +8,8 @@ class PlayerHeapDataManager : public driver::DisposeCallback, public SoundArchiv
     ~PlayerHeapDataManager() override;
     void Initialize(const SoundArchive* pArchive);
     void Finalize();
+    const void* SetFileAddress(SoundArchive::FileId id, const void* pAddress);
+    const void* GetFileAddress(SoundArchive::FileId id) const;
     void InvalidateData(const void* pStart, const void* pEnd) override;
 
   protected:
