@@ -1,3 +1,4 @@
+#include "MapObj/Fury/InteractableCatToy.hpp"
 #include "MapObj/DoorLock.hpp"
 #include "MapObj/DoorKey.hpp"
 #include "MapObj/FlowerCactus.hpp"
@@ -1420,14 +1421,7 @@ private:
 };
 static_assert(sizeof(InkPuddle) == 0x150);
 
-class InteractableCatToy : public al::LiveActor {
-public:
-    explicit InteractableCatToy(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x34];
-};
-static_assert(sizeof(InteractableCatToy) == 0x178);
 
 class IntroFlyOverCamera : public al::LiveActor {
 public:

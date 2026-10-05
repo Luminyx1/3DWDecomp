@@ -4,6 +4,8 @@ class CoinBlow : public al::LiveActor {
 public:
     explicit CoinBlow(const char*);
     void setOffCollide(int);
+    void setOffSensor(int);
+    void appearWithHitReaction();
     void setHideModel(int);
     void setLifeTime(int frames) { mLifeTime = frames; }
     bool isCounted() const { return mCounted; }
