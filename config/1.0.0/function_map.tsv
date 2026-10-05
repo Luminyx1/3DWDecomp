@@ -1137,9 +1137,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710002F730			FALSE	_ZN26KoopaChaseStateProvocation14exeProvocationEv	KoopaChaseStateProvocation::exeProvocation()	
 0x710002F7E0			FALSE	_ZN26KoopaChaseStateProvocation7exeFireEv	KoopaChaseStateProvocation::exeFire()	
 0x710002F830			FALSE	_ZN26KoopaChaseStateProvocationD0Ev	KoopaChaseStateProvocation::~KoopaChaseStateProvocation()	
-0x710002F860			FALSE	_ZNK12_GLOBAL__N_140KoopaChaseStateProvocationNrvProvocation7executeEPN2al11NerveKeeperE	(anonymous namespace)::KoopaChaseStateProvocationNrvProvocation::execute(al::NerveKeeper*) const	
-0x710002F870			FALSE	sub_710002F870	sub_710002F870	
-0x710002F8C0			FALSE	sub_710002F8C0	sub_710002F8C0	
+0x710002F860			FALSE	_ZNK12_GLOBAL__N_140KoopaChaseStateProvocationNrvProvocation7executeEPN2al11NerveKeeperE	(anonymous namespace)::KoopaChaseStateProvocationNrvProvocation::execute(al::NerveKeeper*) const	matched nerve
+0x710002F870			FALSE	_ZNK12_GLOBAL__N_133KoopaChaseStateProvocationNrvFire7executeEPN2al11NerveKeeperE	(anonymous namespace)::KoopaChaseStateProvocationNrvFire::execute(al::NerveKeeper*) const	matched nerve
+0x710002F8C0			FALSE	_ZNK12_GLOBAL__N_133KoopaChaseStateProvocationNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::KoopaChaseStateProvocationNrvWait::execute(al::NerveKeeper*) const	matched nerve
 0x710002F940		KoopaChaseStateThrow.o	FALSE	_ZN20KoopaChaseStateThrowC1EP10KoopaChaseRKN2al13ActorInitInfoEf	KoopaChaseStateThrow::KoopaChaseStateThrow(KoopaChase*, al::ActorInitInfo const&, float)	
 0x710002FAE0			FALSE	_ZN20KoopaChaseStateThrow4killEv	KoopaChaseStateThrow::kill()	
 0x710002FBA0			FALSE	_ZN20KoopaChaseStateThrow13tryStartThrowEb	KoopaChaseStateThrow::tryStartThrow(bool)	
