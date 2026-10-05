@@ -4749,7 +4749,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71000BD480			FALSE	_ZN17DemoPlayerLocator7exeWaitEv	DemoPlayerLocator::exeWait()	
 0x71000BD490			FALSE	_ZN17DemoPlayerLocatorD1Ev	DemoPlayerLocator::~DemoPlayerLocator()	
 0x71000BD4A0			FALSE	_ZN17DemoPlayerLocatorD0Ev	DemoPlayerLocator::~DemoPlayerLocator()	
-0x71000BD4D0			FALSE	nullsub_44	nullsub_44	
+0x71000BD4D0			FALSE	_ZNK12_GLOBAL__N_124DemoPlayerLocatorNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::DemoPlayerLocatorNrvWait::execute(al::NerveKeeper*) const	
 0x71000BD4E0		DemoPlayerModelDirector.o	FALSE	_ZN23DemoPlayerModelDirectorC2Ev	DemoPlayerModelDirector::DemoPlayerModelDirector()	
 0x71000BD570			FALSE	_ZN23DemoPlayerModelDirector22requestCreateAllPlayerEPKc	DemoPlayerModelDirector::requestCreateAllPlayer(char const*)	
 0x71000BD5D0			FALSE	_ZN23DemoPlayerModelDirector15setPlayerSuffixEPKc	DemoPlayerModelDirector::setPlayerSuffix(char const*)	
