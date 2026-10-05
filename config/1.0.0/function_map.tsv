@@ -10726,10 +10726,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001A1D60			FALSE	_ZN13FallingPillar8isFallenEv	FallingPillar::isFallen()	
 0x71001A1DC0			FALSE	_ZN13FallingPillarD1Ev	FallingPillar::~FallingPillar()	
 0x71001A1DD0			FALSE	_ZN13FallingPillarD0Ev	FallingPillar::~FallingPillar()	
-0x71001A1E00			FALSE	nullsub_99	nullsub_99	
+0x71001A1E00			FALSE	_ZNK12_GLOBAL__N_120FallingPillarNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_120FallingPillarNrvWait7executeEPN2al11NerveKeeperE	
 0x71001A1E10			FALSE	_ZNK12_GLOBAL__N_120FallingPillarNrvFall7executeEPN2al11NerveKeeperE	(anonymous namespace)::FallingPillarNrvFall::execute(al::NerveKeeper*) const	
 0x71001A1E20			FALSE	_ZNK12_GLOBAL__N_120FallingPillarNrvLand7executeEPN2al11NerveKeeperE	(anonymous namespace)::FallingPillarNrvLand::execute(al::NerveKeeper*) const	
-0x71001A1E30			FALSE	sub_71001A1E30	sub_71001A1E30	
+0x71001A1E30			FALSE	_ZNK12_GLOBAL__N_125FallingPillarNrvFallDelay7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_125FallingPillarNrvFallDelay7executeEPN2al11NerveKeeperE	
 0x71001A1E80		FieryRotateParts.o	FALSE	_ZN16FieryRotatePartsC2EPKc	FieryRotateParts::FieryRotateParts(char const*)	
 0x71001A1F20			FALSE	_ZN16FieryRotatePartsC1EPKc	FieryRotateParts::FieryRotateParts(char const*)	
 0x71001A1FC0			FALSE	_ZN16FieryRotateParts4initERKN2al13ActorInitInfoE	FieryRotateParts::init(al::ActorInitInfo const&)	

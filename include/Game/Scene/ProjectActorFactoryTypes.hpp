@@ -1,3 +1,4 @@
+#include "MapObj/Fury/FallingPillar.hpp"
 #include "MapObj/GeneratorBox.hpp"
 #include "MapObj/SoundKeyMoveParts.hpp"
 #include "MapObj/Crab.hpp"
@@ -1015,14 +1016,6 @@ private:
 };
 static_assert(sizeof(FairyPrincess) == 0x1a0);
 
-class FallingPillar : public al::LiveActor {
-public:
-    explicit FallingPillar(const char* pName);
-
-private:
-    u8 mUnreconstructed[0x5c];
-};
-static_assert(sizeof(FallingPillar) == 0x1a0);
 
 class FieryRotateParts : public al::LiveActor {
 public:

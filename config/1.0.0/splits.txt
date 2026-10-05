@@ -1011,7 +1011,7 @@ src/Game/MapObj/Fury/EffectObjGame.cpp: done
     .text   start:0x001A0F40 end:0x001A1250
 src/Game/MapObj/Fury/EffectObjBattleArenaBunBun.cpp: done
     .text   start:0x001A1250 end:0x001A1624
-src/Game/MapObj/Fury/FallingPillar.cpp:
+src/Game/MapObj/Fury/FallingPillar.cpp: done
     .text   start:0x001A1630 end:0x001A1E74
 src/Game/MapObj/Fury/FieryRotateParts.cpp:
     .text   start:0x001A1E80 end:0x001A2180
