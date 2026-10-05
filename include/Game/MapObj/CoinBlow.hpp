@@ -6,8 +6,13 @@ public:
     void setOffCollide(int);
     void setHideModel(int);
     void setLifeTime(int frames) { mLifeTime = frames; }
+    bool isCounted() const { return mCounted; }
+    void setCounted() { mCounted = true; }
+    void disableCollider() { mUseCollider = false; }
 private:
-    int mUnknown144;
+    bool mCounted;
+    u8 _145[2];
+    bool mUseCollider;
     int mLifeTime;
     u8 mUnreconstructed14C[0x34];
 };

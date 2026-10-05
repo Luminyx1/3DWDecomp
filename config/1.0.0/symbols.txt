@@ -5303,3 +5303,5 @@
 0x7101A5E4F0 8 object _ZN12_GLOBAL__N_121NrvTestKinokoHeadItemE
 0x7101A5E4B0 32 object _ZTVN12_GLOBAL__N_121TestKinokoHeadNrvWornE
 0x7101A5E4F8 8 object _ZN12_GLOBAL__N_121NrvTestKinokoHeadWornE
+0x7101A07948 32 object _ZTVN12_GLOBAL__N_127CoinFallGeneratorNrvStandbyE
+0x7101A07968 8 object _ZN12_GLOBAL__N_127NrvCoinFallGeneratorStandbyE

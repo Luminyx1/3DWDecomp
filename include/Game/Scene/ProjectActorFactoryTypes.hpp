@@ -1,3 +1,4 @@
+#include "MapObj/CoinFallGenerator.hpp"
 #include "MapObj/PSwitchTimerCoinWatcher.hpp"
 #include "MapObj/TreeFarLodWatcher.hpp"
 #include "MapObj/Tree.hpp"
@@ -583,14 +584,7 @@ private:
 };
 static_assert(sizeof(CoinCourseSelect) == 0x158);
 
-class CoinFallGenerator : public al::LiveActor {
-public:
-    explicit CoinFallGenerator(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x2c];
-};
-static_assert(sizeof(CoinFallGenerator) == 0x170);
 
 class CoinFalls : public al::LiveActor {
 public:
