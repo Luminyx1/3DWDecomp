@@ -1,3 +1,4 @@
+#include "MapObj/Fury/FloatingIslandRailPart.hpp"
 #include "MapObj/Fury/DisasterFixMapParts.hpp"
 #include "MapObj/GoalPole.hpp"
 #include "MapObj/NeedleRoller.hpp"
@@ -1069,14 +1070,7 @@ private:
 };
 static_assert(sizeof(FloatingTerrain) == 0x170);
 
-class FloatingIslandRailPart : public al::LiveActor {
-public:
-    explicit FloatingIslandRailPart(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x1e4];
-};
-static_assert(sizeof(FloatingIslandRailPart) == 0x328);
 
 
 

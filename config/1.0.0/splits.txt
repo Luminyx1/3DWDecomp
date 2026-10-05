@@ -1015,7 +1015,7 @@ src/Game/MapObj/Fury/FallingPillar.cpp: done
     .text   start:0x001A1630 end:0x001A1E74
 src/Game/MapObj/Fury/FieryRotateParts.cpp:
     .text   start:0x001A1E80 end:0x001A2180
-src/Game/MapObj/Fury/FloatingIslandRailPart.cpp:
+src/Game/MapObj/Fury/FloatingIslandRailPart.cpp: done
     .text   start:0x001A2180 end:0x001A2880
 src/Game/MapObj/Fury/FloatingTerrain.cpp:
     .text   start:0x001A2880 end:0x001A3394
