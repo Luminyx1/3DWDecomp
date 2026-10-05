@@ -22302,10 +22302,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100384910			FALSE	_ZN15TestMusaCubemap10receiveMsgEPKN2al9SensorMsgEPNS0_9HitSensorES5_	TestMusaCubemap::receiveMsg(al::SensorMsg const*, al::HitSensor*, al::HitSensor*)	
 0x7100384980			FALSE	_ZN15TestMusaCubemapD1Ev	TestMusaCubemap::~TestMusaCubemap()	
 0x7100384990			FALSE	_ZN15TestMusaCubemapD0Ev	TestMusaCubemap::~TestMusaCubemap()	
-0x71003849C0			FALSE	sub_71003849C0	sub_71003849C0	
-0x7100384A10			FALSE	nullsub_236	nullsub_236	
-0x7100384A20			FALSE	sub_7100384A20	sub_7100384A20	
-0x7100384A70			FALSE	sub_7100384A70	sub_7100384A70	
+0x71003849C0			FALSE	_ZNK12_GLOBAL__N_122TestMusaCubemapNrvMove7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_122TestMusaCubemapNrvMove7executeEPN2al11NerveKeeperE	
+0x7100384A10			FALSE	_ZNK12_GLOBAL__N_122TestMusaCubemapNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_122TestMusaCubemapNrvWait7executeEPN2al11NerveKeeperE	
+0x7100384A20			FALSE	_ZNK12_GLOBAL__N_122TestMusaCubemapNrvStop7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_122TestMusaCubemapNrvStop7executeEPN2al11NerveKeeperE	
+0x7100384A70			FALSE	_ZNK12_GLOBAL__N_123TestMusaCubemapNrvBreak7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_123TestMusaCubemapNrvBreak7executeEPN2al11NerveKeeperE	
 0x7100384AA0		TestMusaSandBox.o	FALSE	_ZN15TestMusaSandBoxC2EPKc	TestMusaSandBox::TestMusaSandBox(char const*)	
 0x7100384BB0			FALSE	_ZN15TestMusaSandBoxC1EPKc	TestMusaSandBox::TestMusaSandBox(char const*)	
 0x7100384CD0			FALSE	_ZN15TestMusaSandBox4initERKN2al13ActorInitInfoE	TestMusaSandBox::init(al::ActorInitInfo const&)	
