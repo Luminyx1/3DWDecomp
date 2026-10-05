@@ -1,3 +1,5 @@
+#include "MapObj/DoorLock.hpp"
+#include "MapObj/DoorKey.hpp"
 #include "MapObj/FlowerCactus.hpp"
 #include "MapObj/CoinRing.hpp"
 #include "MapObj/SuperbViewArea.hpp"
@@ -858,23 +860,9 @@ private:
 };
 static_assert(sizeof(DisasterSpikeBouncy) == 0x340);
 
-class DoorKey : public al::LiveActor {
-public:
-    explicit DoorKey(const char* pName);
 
-private:
-    u8 mUnreconstructed[0xb4];
-};
-static_assert(sizeof(DoorKey) == 0x1f8);
 
-class DoorLock : public al::LiveActor {
-public:
-    explicit DoorLock(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x44];
-};
-static_assert(sizeof(DoorLock) == 0x188);
 
 
 

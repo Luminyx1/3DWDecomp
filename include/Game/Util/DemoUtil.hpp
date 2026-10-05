@@ -11,6 +11,8 @@ enum DemoType : s32;
 }  // namespace alSeFunction
 
 namespace rc {
+bool requestStartDemoInGameCutscene(const al::LiveActor* pActor);
+void requestEndDemoInGameCutscene(const al::LiveActor* pActor);
 void setUpdateItemsInDemo(const al::LiveActor* pActor);
 bool requestStartDemoPlayerCutscene(const al::LiveActor* pActor);
 void requestEndDemoPlayerCutscene(const al::LiveActor* pActor);

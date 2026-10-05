@@ -1578,7 +1578,7 @@ src/Game/MapObj/DokanWorldWarp.cpp: done
     .text   start:0x00295360 end:0x00295DA4
 src/Game/MapObj/DoorKey.cpp:
     .text   start:0x00295DB0 end:0x00298D20
-src/Game/MapObj/DoorLock.cpp:
+src/Game/MapObj/DoorLock.cpp: done
     .text   start:0x00298D20 end:0x00299838
 src/Game/MapObj/DoubleMario.cpp:
     .text   start:0x00299840 end:0x0029A4B8

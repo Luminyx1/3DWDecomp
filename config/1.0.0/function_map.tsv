@@ -16906,10 +16906,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71002996A0			FALSE	_ZN8DoorLock9hideActorEv	DoorLock::hideActor()	
 0x71002996D0			FALSE	_ZN8DoorLockD1Ev	DoorLock::~DoorLock()	
 0x71002996E0			FALSE	_ZN8DoorLockD0Ev	DoorLock::~DoorLock()	
-0x7100299710			FALSE	sub_7100299710	sub_7100299710	
+0x7100299710			FALSE	_ZNK12_GLOBAL__N_121DoorLockNrvClosedWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_121DoorLockNrvClosedWait7executeEPN2al11NerveKeeperE	
 0x7100299750			FALSE	_ZNK12_GLOBAL__N_115DoorLockNrvOpen7executeEPN2al11NerveKeeperE	(anonymous namespace)::DoorLockNrvOpen::execute(al::NerveKeeper*) const	
-0x7100299760			FALSE	sub_7100299760	sub_7100299760	
-0x71002997D0			FALSE	sub_71002997D0	sub_71002997D0	
+0x7100299760			FALSE	_ZNK12_GLOBAL__N_127DoorLockNrvWaitKeyDisappear7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_127DoorLockNrvWaitKeyDisappear7executeEPN2al11NerveKeeperE	
+0x71002997D0			FALSE	_ZNK12_GLOBAL__N_125DoorLockNrvClosedReaction7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_125DoorLockNrvClosedReaction7executeEPN2al11NerveKeeperE	
 0x7100299830			FALSE	_ZNK12_GLOBAL__N_119DoorLockNrvOpenWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::DoorLockNrvOpenWait::execute(al::NerveKeeper*) const	
 0x7100299840		DoubleMario.o	FALSE	_ZN11DoubleMarioC2EPKcP10ItemBubbleb	DoubleMario::DoubleMario(char const*, ItemBubble*, bool)	
 0x71002998E0			FALSE	_ZN11DoubleMarioC1EPKcP10ItemBubbleb	DoubleMario::DoubleMario(char const*, ItemBubble*, bool)	
