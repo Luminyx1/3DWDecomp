@@ -1,3 +1,4 @@
+#include "MapObj/PressureDeathObj.hpp"
 #include "MapObj/LiftMikeBlockRail.hpp"
 #include "MapObj/JumpFlipPanel.hpp"
 #include "MapObj/SignBoard.hpp"
@@ -2089,14 +2090,7 @@ private:
 };
 static_assert(sizeof(PlessieTerrain) == 0x178);
 
-class PressureDeathObj : public al::LiveActor {
-public:
-    explicit PressureDeathObj(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x34];
-};
-static_assert(sizeof(PressureDeathObj) == 0x178);
 
 
 

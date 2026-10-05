@@ -20797,16 +20797,16 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100347090			FALSE	_ZN16PressureDeathObjD1Ev	PressureDeathObj::~PressureDeathObj()	
 0x71003470A0			FALSE	_ZN16PressureDeathObjD0Ev	PressureDeathObj::~PressureDeathObj()	
 0x71003470D0			FALSE	_ZNK12_GLOBAL__N_123PressureDeathObjNrvMove7executeEPN2al11NerveKeeperE	(anonymous namespace)::PressureDeathObjNrvMove::execute(al::NerveKeeper*) const	
-0x71003470E0			FALSE	sub_71003470E0	sub_71003470E0	
-0x71003470F0			FALSE	sub_71003470F0	sub_71003470F0	
-0x7100347140			FALSE	sub_7100347140	sub_7100347140	
-0x7100347150			FALSE	sub_7100347150	sub_7100347150	
-0x71003471E0			FALSE	sub_71003471E0	sub_71003471E0	
-0x71003471F0			FALSE	nullsub_215	nullsub_215	
-0x7100347200			FALSE	sub_7100347200	sub_7100347200	
+0x71003470E0			FALSE	_ZNK12_GLOBAL__N_123PressureDeathObjNrvMove13getActionNameEv	_ZNK12_GLOBAL__N_123PressureDeathObjNrvMove13getActionNameEv	
+0x71003470F0			FALSE	_ZNK12_GLOBAL__N_124PressureDeathObjNrvDelay7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_124PressureDeathObjNrvDelay7executeEPN2al11NerveKeeperE	
+0x7100347140			FALSE	_ZNK12_GLOBAL__N_124PressureDeathObjNrvDelay13getActionNameEv	_ZNK12_GLOBAL__N_124PressureDeathObjNrvDelay13getActionNameEv	
+0x7100347150			FALSE	_ZNK12_GLOBAL__N_123PressureDeathObjNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_123PressureDeathObjNrvWait7executeEPN2al11NerveKeeperE	
+0x71003471E0			FALSE	_ZNK12_GLOBAL__N_123PressureDeathObjNrvWait13getActionNameEv	_ZNK12_GLOBAL__N_123PressureDeathObjNrvWait13getActionNameEv	
+0x71003471F0			FALSE	_ZNK12_GLOBAL__N_123PressureDeathObjNrvStop7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_123PressureDeathObjNrvStop7executeEPN2al11NerveKeeperE	
+0x7100347200			FALSE	_ZNK12_GLOBAL__N_123PressureDeathObjNrvStop13getActionNameEv	_ZNK12_GLOBAL__N_123PressureDeathObjNrvStop13getActionNameEv	
 0x7100347210			FALSE	_ZNK2al10FunctorV0MIP16PressureDeathObjMS1_FvvEEclEv	al::FunctorV0M<PressureDeathObj*, void (PressureDeathObj::*)()>::operator()() const	
 0x7100347230			FALSE	_ZNK2al10FunctorV0MIP16PressureDeathObjMS1_FvvEE5cloneEv	al::FunctorV0M<PressureDeathObj*, void (PressureDeathObj::*)()>::clone() const	
-0x7100347280			FALSE	sub_7100347280	sub_7100347280	
+0x7100347280			FALSE	_GLOBAL__sub_I_PressureDeathObj.cpp	_GLOBAL__sub_I_PressureDeathObj.cpp	
 0x7100347330			FALSE	_ZN2al17registerBlockRailEPNS_9BlockRailE	al::registerBlockRail(al::BlockRail*)	
 0x7100347380			FALSE	_ZN2al16tryRideBlockRailEPKNS_9LiveActorEPNS_14BlockRailRiderERKN4sead7Vector3IfEES9_	al::tryRideBlockRail(al::LiveActor const*, al::BlockRailRider*, sead::Vector3<float> const&, sead::Vector3<float> const&)	
 0x7100347400		PSwitchTimerCoinWatcher.o	FALSE	_ZN23PSwitchTimerCoinWatcherC2EPKc	PSwitchTimerCoinWatcher::PSwitchTimerCoinWatcher(char const*)	
