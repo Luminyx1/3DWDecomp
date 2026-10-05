@@ -281,7 +281,7 @@ src/Game/Boss/TentackStateAttackShot.cpp:
     .text   start:0x0006DA60 end:0x0006E18C
 src/Game/Boss/TentackStateAttackTentacle.cpp:
     .text   start:0x0006E190 end:0x0006F8EC
-src/Game/Boss/TentackStateFallRock.cpp:
+src/Game/Boss/TentackStateFallRock.cpp: done
     .text   start:0x0006F8F0 end:0x0006FE98
 src/Game/Boss/TentackTentacle.cpp:
     .text   start:0x0006FEA0 end:0x00072B68

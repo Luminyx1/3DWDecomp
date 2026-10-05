@@ -2564,10 +2564,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710006FB40			FALSE	_ZN20TentackStateFallRock5shootEb	TentackStateFallRock::shoot(bool)	
 0x710006FC70			FALSE	_ZN20TentackStateFallRock7exeWaitEv	TentackStateFallRock::exeWait()	
 0x710006FCC0			FALSE	_ZN20TentackStateFallRockD0Ev	TentackStateFallRock::~TentackStateFallRock()	
-0x710006FCF0			FALSE	sub_710006FCF0	sub_710006FCF0	
-0x710006FD40			FALSE	sub_710006FD40	sub_710006FD40	
-0x710006FDB0			FALSE	sub_710006FDB0	sub_710006FDB0	
-0x710006FE50			FALSE	sub_710006FE50	sub_710006FE50	
+0x710006FCF0			FALSE	_ZNK12_GLOBAL__N_132TentackStateFallRockNrvWaitStart7executeEPN2al11NerveKeeperE	(anonymous namespace)::TentackStateFallRockNrvWaitStart::execute(al::NerveKeeper*) const	matched nerve
+0x710006FD40			FALSE	_ZNK12_GLOBAL__N_134TentackStateFallRockNrvAttackStart7executeEPN2al11NerveKeeperE	(anonymous namespace)::TentackStateFallRockNrvAttackStart::execute(al::NerveKeeper*) const	matched nerve
+0x710006FDB0			FALSE	_ZNK12_GLOBAL__N_128TentackStateFallRockNrvShoot7executeEPN2al11NerveKeeperE	(anonymous namespace)::TentackStateFallRockNrvShoot::execute(al::NerveKeeper*) const	matched nerve
+0x710006FE50			FALSE	_ZNK12_GLOBAL__N_127TentackStateFallRockNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::TentackStateFallRockNrvWait::execute(al::NerveKeeper*) const	matched nerve
 0x710006FEA0		TentackTentacle.o	FALSE	_ZN19TentackTentacleInfoC2Ev	TentackTentacleInfo::TentackTentacleInfo()	
 0x710006FEB0			FALSE	_ZN19TentackTentacleInfo5resetEv	TentackTentacleInfo::reset()	
 0x710006FEC0			FALSE	_ZN19TentackTentacleInfo4copyEPS_	TentackTentacleInfo::copy(TentackTentacleInfo*)	

@@ -4767,3 +4767,9 @@
 # KoopaChaseWarpDummy
 0x7101954C08 8 object _ZN12_GLOBAL__N_126NrvKoopaChaseWarpDummyWaitE
 0x7101954C30 8 object _ZN12_GLOBAL__N_133NrvKoopaChaseWarpDummyProvocationE
+
+# TentackStateFallRock
+0x7101962120 8 object _ZN12_GLOBAL__N_132NrvTentackStateFallRockWaitStartE
+0x7101962148 8 object _ZN12_GLOBAL__N_134NrvTentackStateFallRockAttackStartE
+0x7101962170 8 object _ZN12_GLOBAL__N_128NrvTentackStateFallRockShootE
+0x7101962198 8 object _ZN12_GLOBAL__N_127NrvTentackStateFallRockWaitE
