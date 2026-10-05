@@ -3,7 +3,7 @@
 #include <nn/atk/atk_Global.h>
 #include <nn/types.h>
 
-namespace nn::atk { class SoundHandle; struct SoundParamCalculationValues; }
+namespace nn::atk { class SoundHandle; struct SoundParamCalculationValues; struct SoundAmbientParam; }
 namespace nn::atk {
 enum MixMode {
     MixMode_Pan,
@@ -31,6 +31,22 @@ public:
     virtual bool IsAttachedTempSpecialHandle() = 0;
     virtual void DetachTempSpecialHandle() = 0;
     class AmbientInfo;
+
+    class AmbientParamUpdateCallback {
+    public:
+        /** @brief Destroys the ambient-parameter callback. */
+        virtual ~AmbientParamUpdateCallback() = default;
+        virtual void detail_UpdateAmbientParam(const void* pArg, u32 soundId,
+                                               SoundAmbientParam* pParam) = 0;
+        virtual int detail_GetAmbientPriority(const void* pArg, u32 soundId) = 0;
+    };
+    class AmbientArgAllocator {
+    public:
+        /** @brief Destroys the ambient-argument allocator. */
+        virtual ~AmbientArgAllocator() = default;
+        virtual void* detail_AllocAmbientArg(size_t size) = 0;
+        virtual void detail_FreeAmbientArg(void* pArg, const BasicSound* pSound) = 0;
+    };
 
     class AmbientArgUpdateCallback {
     public:
