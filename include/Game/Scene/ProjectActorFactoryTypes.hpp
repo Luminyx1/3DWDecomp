@@ -1,3 +1,4 @@
+#include "MapObj/KinopioBrigadeChecker.hpp"
 #include "MapObj/CoinLine.hpp"
 #include "MapObj/DestructableMapParts.hpp"
 #include "MapObj/GreenRing.hpp"
@@ -1615,14 +1616,7 @@ private:
 };
 static_assert(sizeof(KinokoTreasure) == 0x188);
 
-class KinopioBrigadeChecker : public al::LiveActor {
-public:
-    explicit KinopioBrigadeChecker(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x84];
-};
-static_assert(sizeof(KinopioBrigadeChecker) == 0x1c8);
 
 
 class KinopioNpc : public al::LiveActor {

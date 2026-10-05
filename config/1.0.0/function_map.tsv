@@ -19255,8 +19255,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71002F8390			FALSE	_ZN21KinopioBrigadeCheckerD1Ev	KinopioBrigadeChecker::~KinopioBrigadeChecker()	
 0x71002F83A0			FALSE	_ZN21KinopioBrigadeCheckerD0Ev	KinopioBrigadeChecker::~KinopioBrigadeChecker()	
 0x71002F83D0			FALSE	_ZNK12_GLOBAL__N_132KinopioBrigadeCheckerNrvChecking7executeEPN2al11NerveKeeperE	(anonymous namespace)::KinopioBrigadeCheckerNrvChecking::execute(al::NerveKeeper*) const	
-0x71002F83E0			FALSE	sub_71002F83E0	sub_71002F83E0	
-0x71002F8420			FALSE	nullsub_195	nullsub_195	
+0x71002F83E0			FALSE	_ZNK12_GLOBAL__N_132KinopioBrigadeCheckerNrvGoalDemo7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_132KinopioBrigadeCheckerNrvGoalDemo7executeEPN2al11NerveKeeperE	
+0x71002F8420			FALSE	_ZNK12_GLOBAL__N_127KinopioBrigadeCheckerNrvEnd7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_127KinopioBrigadeCheckerNrvEnd7executeEPN2al11NerveKeeperE	
 0x71002F8430		KinopioBrigadeWatcher.o	FALSE	_ZN21KinopioBrigadeWatcherC2EPKc	KinopioBrigadeWatcher::KinopioBrigadeWatcher(char const*)	
 0x71002F84C0			FALSE	_ZN21KinopioBrigadeWatcherC1EPKc	KinopioBrigadeWatcher::KinopioBrigadeWatcher(char const*)	
 0x71002F8550			FALSE	_ZN21KinopioBrigadeWatcher4initERKN2al13ActorInitInfoE	KinopioBrigadeWatcher::init(al::ActorInitInfo const&)	
