@@ -1,4 +1,5 @@
 #pragma once
+#include "MapObj/GreenStar.hpp"
 #include "MapObj/Fury/CoinStackMoving.hpp"
 #include "MapObj/CoinStack.hpp"
 
@@ -1518,13 +1519,6 @@ private:
 };
 static_assert(sizeof(GreenRing) == 0x190);
 
-class GreenStar : public al::LiveActor {
-public:
-    explicit GreenStar(const char* pName, ItemBubble* = nullptr, bool = false);
-
-private:
-    u8 mUnreconstructed[0x94];
-};
 static_assert(sizeof(GreenStar) == 0x1d8);
 
 class GreenStarStand : public al::LiveActor {

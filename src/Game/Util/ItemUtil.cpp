@@ -1,4 +1,5 @@
 #include "Util/ItemUtil.hpp"
+#include "MapObj/GreenStar.hpp"
 #include "Library/Item/ItemUtil.hpp"
 #include "Library/Light/PrePassLightFunction.hpp"
 #include "Library/LiveActor/ActorAreaFunction.hpp"
@@ -132,17 +133,6 @@ public:
 
 private:
     u8 _148[0x1A0 - 0x148];
-};
-
-/**
- * @brief Green star.
- */
-class GreenStar : public al::LiveActor {
-public:
-    GreenStar(const char* pName, ItemBubble* pBubble, bool isAttached);
-
-private:
-    u8 _148[0x1D8 - 0x148];
 };
 
 /**

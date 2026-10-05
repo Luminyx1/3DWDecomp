@@ -1705,7 +1705,7 @@ src/Game/MapObj/GreenRing.cpp:
     .text   start:0x002DEE00 end:0x002DF7B8
 src/Game/MapObj/GreenStar.cpp:
     .text   start:0x002DF7C0 end:0x002E1530
-src/Game/MapObj/GreenStarKeeper.cpp:
+src/Game/MapObj/GreenStarKeeper.cpp: done
     .text   start:0x002E1530 end:0x002E1808
 src/Game/MapObj/GreenStarStand.cpp: done
     .text   start:0x002E1810 end:0x002E1C44
