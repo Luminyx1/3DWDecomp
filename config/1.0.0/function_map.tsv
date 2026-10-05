@@ -15232,9 +15232,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71002563F0			FALSE	_ZN16BlockTransparent8exeEmptyEv	BlockTransparent::exeEmpty()	
 0x7100256430			FALSE	_ZN16BlockTransparentD1Ev	BlockTransparent::~BlockTransparent()	
 0x7100256440			FALSE	_ZN16BlockTransparentD0Ev	BlockTransparent::~BlockTransparent()	
-0x7100256470			FALSE	sub_7100256470	sub_7100256470	
+0x7100256470			FALSE	_ZNK12_GLOBAL__N_123BlockTransparentNrvHide7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_123BlockTransparentNrvHide7executeEPN2al11NerveKeeperE	
 0x71002564C0			FALSE	_ZNK12_GLOBAL__N_129BlockTransparentNrvAppearItem7executeEPN2al11NerveKeeperE	(anonymous namespace)::BlockTransparentNrvAppearItem::execute(al::NerveKeeper*) const	
-0x71002564D0			FALSE	sub_71002564D0	sub_71002564D0	
+0x71002564D0			FALSE	_ZNK12_GLOBAL__N_124BlockTransparentNrvEmpty7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_124BlockTransparentNrvEmpty7executeEPN2al11NerveKeeperE	
 0x7100256510		BobsledDashPanel.o	FALSE	_ZN16BobsledDashPanelC2EPKc	BobsledDashPanel::BobsledDashPanel(char const*)	
 0x7100256600			FALSE	_ZN16BobsledDashPanelC1EPKc	BobsledDashPanel::BobsledDashPanel(char const*)	
 0x71002566F0			FALSE	_ZN16BobsledDashPanel4initERKN2al13ActorInitInfoE	BobsledDashPanel::init(al::ActorInitInfo const&)	

@@ -1,3 +1,4 @@
+#include "MapObj/BlockTransparent.hpp"
 #include "MapObj/BlockBrick.hpp"
 #include "MapObj/SuperSkateShoes.hpp"
 #include "MapObj/SuperSkateRail.hpp"
@@ -197,14 +198,7 @@ private:
 };
 static_assert(sizeof(BlockSwitch) == 0x150);
 
-class BlockTransparent : public al::LiveActor {
-public:
-    explicit BlockTransparent(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x24];
-};
-static_assert(sizeof(BlockTransparent) == 0x168);
 
 class BobsledDashPanel : public al::LiveActor {
 public:
