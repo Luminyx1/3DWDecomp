@@ -21404,7 +21404,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710035FA60			FALSE	_ZN26SpotLightPatrollerObserver8exeAlertEv	SpotLightPatrollerObserver::exeAlert()	
 0x710035FB10			FALSE	_ZN26SpotLightPatrollerObserverD1Ev	SpotLightPatrollerObserver::~SpotLightPatrollerObserver()	
 0x710035FB20			FALSE	_ZN26SpotLightPatrollerObserverD0Ev	SpotLightPatrollerObserver::~SpotLightPatrollerObserver()	
-0x710035FB50			FALSE	sub_710035FB50	sub_710035FB50	
+0x710035FB50			FALSE	_ZNK12_GLOBAL__N_135SpotLightPatrollerObserverNrvPatrol7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_135SpotLightPatrollerObserverNrvPatrol7executeEPN2al11NerveKeeperE	
 0x710035FBF0			FALSE	_ZNK12_GLOBAL__N_134SpotLightPatrollerObserverNrvAlert7executeEPN2al11NerveKeeperE	(anonymous namespace)::SpotLightPatrollerObserverNrvAlert::execute(al::NerveKeeper*) const	
 0x710035FC00		SplatterPlotter.o	FALSE	_ZN15SplatterPlotterC2EPKc	SplatterPlotter::SplatterPlotter(char const*)	note: sorts before the previous object (folder boundary or misnamed object?)
 0x710035FD80			FALSE	_ZN15SplatterPlotterC1EPKc	SplatterPlotter::SplatterPlotter(char const*)	

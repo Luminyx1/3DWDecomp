@@ -1971,7 +1971,7 @@ src/Game/MapObj/SpotLightPatrollerHolder.cpp:
     .text   start:0x0035F2D0 end:0x0035F6D0
 src/Game/MapObj/SpotLightPatrollFunction.cpp:
     .text   start:0x0035F6D0 end:0x0035F78C
-src/Game/MapObj/SpotLightPatrollerObserver.cpp:
+src/Game/MapObj/SpotLightPatrollerObserver.cpp: done
     .text   start:0x0035F790 end:0x0035FBF8
 src/Game/MapObj/SplatterPlotter.cpp:
     .text   start:0x0035FC00 end:0x003613D4
