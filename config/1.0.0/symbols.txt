@@ -4949,3 +4949,6 @@
 0x7101A350F8 32 object _ZTVN12_GLOBAL__N_118LanternRingNrvWaitE
 0x7101A35118 8 object _ZN12_GLOBAL__N_118NrvLanternRingWaitE
 0x7100310160 4 func _ZNK12_GLOBAL__N_118LanternRingNrvWait7executeEPN2al11NerveKeeperE
+
+# ItemStatePopUpAbove punch displacement table.
+0x71016B57E4 24 object _ZN12_GLOBAL__N_110sPunchMoveE

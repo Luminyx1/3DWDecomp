@@ -1719,7 +1719,7 @@ src/Game/MapObj/HeadgearStateBlow.cpp:
     .text   start:0x002E3C50 end:0x002E4018
 src/Game/MapObj/HexScrollAppearParts.cpp: done
     .text   start:0x002E4020 end:0x002E4290
-src/Game/MapObj/HoldColliderControl.cpp:
+src/Game/MapObj/HoldColliderControl.cpp: done
     .text   start:0x002E4290 end:0x002E4528
 src/Game/MapObj/IllustItem.cpp:
     .text   start:0x002E4530 end:0x002E50B4
