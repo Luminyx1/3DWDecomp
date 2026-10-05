@@ -1,3 +1,5 @@
+#include "MapObj/MysteryHouseChecker.hpp"
+#include "MapObj/MysteryBox.hpp"
 #include "MapObj/KinopioBrigadeChecker.hpp"
 #include "MapObj/CoinLine.hpp"
 #include "MapObj/DestructableMapParts.hpp"
@@ -1948,23 +1950,9 @@ static_assert(sizeof(MoamoaHolder) == 0x158);
 
 
 
-class MysteryBox : public al::LiveActor {
-public:
-    explicit MysteryBox(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x7c];
-};
-static_assert(sizeof(MysteryBox) == 0x1c0);
 
-class MysteryHouseChecker : public al::LiveActor {
-public:
-    explicit MysteryHouseChecker(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x504];
-};
-static_assert(sizeof(MysteryHouseChecker) == 0x648);
 
 class NeedleBarRoot : public al::LiveActor {
 public:

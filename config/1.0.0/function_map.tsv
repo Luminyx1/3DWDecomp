@@ -20179,9 +20179,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71003209F0			FALSE	_ZN19MysteryHouseCheckerD1Ev	MysteryHouseChecker::~MysteryHouseChecker()	
 0x7100320A00			FALSE	_ZN19MysteryHouseCheckerD0Ev	MysteryHouseChecker::~MysteryHouseChecker()	
 0x7100320A30			FALSE	_ZNK12_GLOBAL__N_130MysteryHouseCheckerNrvChecking7executeEPN2al11NerveKeeperE	(anonymous namespace)::MysteryHouseCheckerNrvChecking::execute(al::NerveKeeper*) const	
-0x7100320A40			FALSE	sub_7100320A40	sub_7100320A40	
-0x7100320A80			FALSE	nullsub_209	nullsub_209	
-0x7100320A90			FALSE	nullsub_210	nullsub_210	
+0x7100320A40			FALSE	_ZNK12_GLOBAL__N_130MysteryHouseCheckerNrvGoalDemo7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_130MysteryHouseCheckerNrvGoalDemo7executeEPN2al11NerveKeeperE	
+0x7100320A80			FALSE	_ZNK12_GLOBAL__N_125MysteryHouseCheckerNrvEnd7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_125MysteryHouseCheckerNrvEnd7executeEPN2al11NerveKeeperE	
+0x7100320A90			FALSE	_ZNK12_GLOBAL__N_126MysteryHouseCheckerNrvMiss7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_126MysteryHouseCheckerNrvMiss7executeEPN2al11NerveKeeperE	
 0x7100320AA0		NeedleBar.o	FALSE	_ZN9NeedleBarC2EPKc	NeedleBar::NeedleBar(char const*)	
 0x7100320B80			FALSE	_ZN9NeedleBarC1EPKc	NeedleBar::NeedleBar(char const*)	
 0x7100320C70			FALSE	_ZN9NeedleBar4initERKN2al13ActorInitInfoE	NeedleBar::init(al::ActorInitInfo const&)	

@@ -7,13 +7,18 @@ public:
     GoalObjStateGoalDemoParam();
     int _0;
     int _4;
-    unsigned char _8[8];
+    const char* mGoalPoseAction;
     int _10;
     int _14;
     int _18;
-    unsigned char _1c[0x14];
+    float _1c;
+    float _20;
+    float _24;
+    float _28;
+    float _2c;
     float _30;
-    unsigned char _34[0xc];
+    float _34;
+    float _38;
 };
 static_assert(sizeof(GoalObjStateGoalDemoParam) == 0x40);
 class GoalObjStateGoalDemo : public al::ActorStateBase {
