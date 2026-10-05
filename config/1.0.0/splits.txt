@@ -1389,7 +1389,7 @@ src/Game/MapObj/BindPuppeteerGroup.cpp:
     .text   start:0x00247F20 end:0x00248690
 src/Game/MapObj/BindWarpEffect.cpp:
     .text   start:0x00248690 end:0x00249160
-src/Game/MapObj/Bird.cpp:
+src/Game/MapObj/Bird.cpp: done
     .text   start:0x00249160 end:0x002499E4
 src/Game/MapObj/BlockAssistLeaf.cpp: done
     .text   start:0x002499F0 end:0x00249DE8

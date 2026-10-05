@@ -14863,7 +14863,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100249890			FALSE	_ZN4BirdD1Ev	Bird::~Bird()	
 0x71002498A0			FALSE	_ZN4BirdD0Ev	Bird::~Bird()	
 0x71002498D0			FALSE	_ZNK12_GLOBAL__N_111BirdNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::BirdNrvWait::execute(al::NerveKeeper*) const	
-0x71002498E0			FALSE	sub_71002498E0	sub_71002498E0	
+0x71002498E0			FALSE	_ZNK12_GLOBAL__N_110BirdNrvFly7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_110BirdNrvFly7executeEPN2al11NerveKeeperE	
 0x7100249970			FALSE	_ZNK12_GLOBAL__N_111BirdNrvTurn7executeEPN2al11NerveKeeperE	(anonymous namespace)::BirdNrvTurn::execute(al::NerveKeeper*) const	
 0x7100249980			FALSE	_ZNK2al10FunctorV0MIP4BirdMS1_FvvEEclEv	al::FunctorV0M<Bird*, void (Bird::*)()>::operator()() const	
 0x71002499A0			FALSE	_ZNK2al10FunctorV0MIP4BirdMS1_FvvEE5cloneEv	al::FunctorV0M<Bird*, void (Bird::*)()>::clone() const	
