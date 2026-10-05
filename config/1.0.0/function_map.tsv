@@ -21138,7 +21138,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100355380			FALSE	_ZN9SePlayObjD1Ev	SePlayObj::~SePlayObj()	
 0x7100355390			FALSE	_ZN9SePlayObjD0Ev	SePlayObj::~SePlayObj()	
 0x71003553C0			FALSE	_ZNK12_GLOBAL__N_116SePlayObjNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::SePlayObjNrvWait::execute(al::NerveKeeper*) const	
-0x71003553D0			FALSE	sub_71003553D0	sub_71003553D0	
+0x71003553D0			FALSE	_ZNK12_GLOBAL__N_120SePlayObjNrvAttached7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_120SePlayObjNrvAttached7executeEPN2al11NerveKeeperE	
 0x7100355450			FALSE	_ZNK2al10FunctorV0MIP9SePlayObjMS1_FvvEEclEv	al::FunctorV0M<SePlayObj*, void (SePlayObj::*)()>::operator()() const	
 0x7100355470			FALSE	_ZNK2al10FunctorV0MIP9SePlayObjMS1_FvvEE5cloneEv	al::FunctorV0M<SePlayObj*, void (SePlayObj::*)()>::clone() const	
 0x71003554C0		Shards.o	FALSE	_ZN6ShardsC2EPKcb	Shards::Shards(char const*, bool)	
