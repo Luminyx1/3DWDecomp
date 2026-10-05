@@ -21554,11 +21554,11 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71003668B0			FALSE	_ZN9SuperBell24exeWaitAndCheckCollisionEv	SuperBell::exeWaitAndCheckCollision()	
 0x7100366930			FALSE	_ZN9SuperBellD1Ev	SuperBell::~SuperBell()	
 0x7100366940			FALSE	_ZN9SuperBellD0Ev	SuperBell::~SuperBell()	
-0x7100366970			FALSE	sub_7100366970	sub_7100366970	
-0x71003669C0			FALSE	sub_71003669C0	sub_71003669C0	
-0x7100366A20			FALSE	sub_7100366A20	sub_7100366A20	
-0x7100366A80			FALSE	sub_7100366A80	sub_7100366A80	
-0x7100366B00			FALSE	sub_7100366B00	sub_7100366B00	
+0x7100366970			FALSE	_ZNK12_GLOBAL__N_116SuperBellNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_116SuperBellNrvWait7executeEPN2al11NerveKeeperE	
+0x71003669C0			FALSE	_ZNK12_GLOBAL__N_122SuperBellNrvPopUpFront7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_122SuperBellNrvPopUpFront7executeEPN2al11NerveKeeperE	
+0x7100366A20			FALSE	_ZNK12_GLOBAL__N_122SuperBellNrvPopUpAbove7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_122SuperBellNrvPopUpAbove7executeEPN2al11NerveKeeperE	
+0x7100366A80			FALSE	_ZNK12_GLOBAL__N_133SuperBellNrvWaitAndCheckCollision7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_133SuperBellNrvWaitAndCheckCollision7executeEPN2al11NerveKeeperE	
+0x7100366B00			FALSE	_ZNK12_GLOBAL__N_124SuperBellNrvAttachBubble7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_124SuperBellNrvAttachBubble7executeEPN2al11NerveKeeperE	
 0x7100366B70		SuperBellSpecial.o	FALSE	_ZN16SuperBellSpecialC2EPKcP10ItemBubble	SuperBellSpecial::SuperBellSpecial(char const*, ItemBubble*)	
 0x7100366C10			FALSE	_ZN16SuperBellSpecialC1EPKcP10ItemBubble	SuperBellSpecial::SuperBellSpecial(char const*, ItemBubble*)	
 0x7100366CB0			FALSE	_ZN16SuperBellSpecial4initERKN2al13ActorInitInfoE	SuperBellSpecial::init(al::ActorInitInfo const&)	

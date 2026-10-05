@@ -1,3 +1,4 @@
+#include "MapObj/SuperBell.hpp"
 #include "MapObj/BoomerangFlower.hpp"
 #include "MapObj/FireFlower.hpp"
 #include "MapObj/Fury/InkPatch.hpp"
@@ -2400,14 +2401,7 @@ private:
 };
 static_assert(sizeof(StrongHipDropReactPoint) == 0x148);
 
-class SuperBell : public al::LiveActor {
-public:
-    explicit SuperBell(const char* pName, ItemBubble* = nullptr);
 
-private:
-    u8 mUnreconstructed[0x3c];
-};
-static_assert(sizeof(SuperBell) == 0x180);
 
 class SuperBellSpecial : public al::LiveActor {
 public:

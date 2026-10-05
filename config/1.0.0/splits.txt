@@ -1987,7 +1987,7 @@ src/Game/MapObj/StepScrollWatcher.cpp:
     .text   start:0x003650E0 end:0x00365CB4
 src/Game/MapObj/StrongHipDropReactPoint.cpp: done
     .text   start:0x00365CC0 end:0x00365F10
-src/Game/MapObj/SuperBell.cpp:
+src/Game/MapObj/SuperBell.cpp: done
     .text   start:0x00365F10 end:0x00366B64
 src/Game/MapObj/SuperBellSpecial.cpp:
     .text   start:0x00366B70 end:0x00367784
