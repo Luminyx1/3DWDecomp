@@ -2011,7 +2011,7 @@ src/Game/MapObj/SwitchRotateSwitch.cpp: done
     .text   start:0x0036BDD0 end:0x0036C434
 src/Game/MapObj/SwitchRotateWatcher.cpp: done
     .text   start:0x0036C440 end:0x0036CC88
-src/Game/MapObj/TeresaConveyorBench.cpp:
+src/Game/MapObj/TeresaConveyorBench.cpp: done
     .text   start:0x0036CC90 end:0x0036D2C4
 src/Game/MapObj/TeresaFakeDokan.cpp: done
     .text   start:0x0036D2D0 end:0x0036D550

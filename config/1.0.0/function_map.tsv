@@ -21770,11 +21770,11 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710036D120			FALSE	_ZN19TeresaConveyorBench7exeStopEv	TeresaConveyorBench::exeStop()	
 0x710036D130			FALSE	_ZN19TeresaConveyorBenchD1Ev	TeresaConveyorBench::~TeresaConveyorBench()	
 0x710036D140			FALSE	_ZN19TeresaConveyorBenchD0Ev	TeresaConveyorBench::~TeresaConveyorBench()	
-0x710036D170			FALSE	nullsub_225	nullsub_225	
-0x710036D180			FALSE	sub_710036D180	sub_710036D180	
+0x710036D170			FALSE	_ZNK12_GLOBAL__N_129TeresaConveyorBenchNrvStandBy7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_129TeresaConveyorBenchNrvStandBy7executeEPN2al11NerveKeeperE	
+0x710036D180			FALSE	_ZNK12_GLOBAL__N_130TeresaConveyorBenchNrvMoveSign7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_130TeresaConveyorBenchNrvMoveSign7executeEPN2al11NerveKeeperE	
 0x710036D1E0			FALSE	_ZNK12_GLOBAL__N_126TeresaConveyorBenchNrvMove7executeEPN2al11NerveKeeperE	(anonymous namespace)::TeresaConveyorBenchNrvMove::execute(al::NerveKeeper*) const	
-0x710036D1F0			FALSE	nullsub_226	nullsub_226	
-0x710036D200			FALSE	sub_710036D200	sub_710036D200	
+0x710036D1F0			FALSE	_ZNK12_GLOBAL__N_126TeresaConveyorBenchNrvStop7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_126TeresaConveyorBenchNrvStop7executeEPN2al11NerveKeeperE	
+0x710036D200			FALSE	_ZNK12_GLOBAL__N_126TeresaConveyorBenchNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_126TeresaConveyorBenchNrvWait7executeEPN2al11NerveKeeperE	
 0x710036D260			FALSE	_ZNK2al10FunctorV0MIP19TeresaConveyorBenchMS1_FvvEEclEv	al::FunctorV0M<TeresaConveyorBench*, void (TeresaConveyorBench::*)()>::operator()() const	
 0x710036D280			FALSE	_ZNK2al10FunctorV0MIP19TeresaConveyorBenchMS1_FvvEE5cloneEv	al::FunctorV0M<TeresaConveyorBench*, void (TeresaConveyorBench::*)()>::clone() const	
 0x710036D2D0		TeresaFakeDokan.o	FALSE	_ZN15TeresaFakeDokanC2EPKc	TeresaFakeDokan::TeresaFakeDokan(char const*)	
