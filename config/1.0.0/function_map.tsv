@@ -15098,8 +15098,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71002513E0			FALSE	_ZN13BlockRoulette13exeAppearItemEv	BlockRoulette::exeAppearItem()	
 0x71002513F0			FALSE	_ZN13BlockRouletteD1Ev	BlockRoulette::~BlockRoulette()	
 0x7100251400			FALSE	_ZN13BlockRouletteD0Ev	BlockRoulette::~BlockRoulette()	
-0x7100251430			FALSE	sub_7100251430	sub_7100251430	
-0x71002514A0			FALSE	nullsub_157	nullsub_157	
+0x7100251430			FALSE	_ZNK12_GLOBAL__N_120BlockRouletteNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_120BlockRouletteNrvWait7executeEPN2al11NerveKeeperE	
+0x71002514A0			FALSE	_ZNK12_GLOBAL__N_126BlockRouletteNrvAppearItem7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_126BlockRouletteNrvAppearItem7executeEPN2al11NerveKeeperE	
 0x71002514B0		BlockRouletteState.o	FALSE	_ZN18BlockRouletteStateC2EPN2al9LiveActorERKNS0_13ActorInitInfoE	BlockRouletteState::BlockRouletteState(al::LiveActor*, al::ActorInitInfo const&)	
 0x7100251A10			FALSE	_ZNK18BlockRouletteState11getNextTypeEv	BlockRouletteState::getNextType() const	
 0x7100251AD0			FALSE	_ZN18BlockRouletteState10receiveMsgEPKN2al9SensorMsgEPNS0_9HitSensorES5_	BlockRouletteState::receiveMsg(al::SensorMsg const*, al::HitSensor*, al::HitSensor*)	

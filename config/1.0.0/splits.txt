@@ -1417,7 +1417,7 @@ src/Game/MapObj/BlockQuestionChameleon.cpp:
     .text   start:0x0024F870 end:0x00250094
 src/Game/MapObj/BlockRailMover.cpp:
     .text   start:0x002500A0 end:0x00250E84
-src/Game/MapObj/BlockRoulette.cpp:
+src/Game/MapObj/BlockRoulette.cpp: done
     .text   start:0x00250E90 end:0x002514A4
 src/Game/MapObj/BlockRouletteState.cpp:
     .text   start:0x002514B0 end:0x00252290

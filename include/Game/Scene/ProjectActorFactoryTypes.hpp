@@ -1,4 +1,5 @@
 #pragma once
+#include "MapObj/BlockRoulette.hpp"
 #include "MapObj/CheckpointFlag.hpp"
 #include "MapObj/FairyHouseIllustItemWatcher.hpp"
 #include "MapObj/Fury/GigaBellPedestal.hpp"
@@ -169,14 +170,6 @@ private:
 };
 static_assert(sizeof(BlockQuestionCourseSelect) == 0x158);
 
-class BlockRoulette : public al::LiveActor {
-public:
-    explicit BlockRoulette(const char* pName);
-
-private:
-    u8 mUnreconstructed[0x24];
-};
-static_assert(sizeof(BlockRoulette) == 0x168);
 
 class BlockRailMover : public al::LiveActor {
 public:
