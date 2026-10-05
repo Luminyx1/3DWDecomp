@@ -5011,3 +5011,5 @@
 0x7101A56D28 8 object _ZN12_GLOBAL__N_133NrvTestAlphaMaskMapObjAlphaMaskInE
 
 0x71016B57C0 20 object _ZN12_GLOBAL__N_113sDefaultParamE
+0x7101A48AA8 32 object _ZTVN12_GLOBAL__N_122SaveDataCheckerNrvWaitE
+0x7101A48AC8 8 object _ZN12_GLOBAL__N_122NrvSaveDataCheckerWaitE

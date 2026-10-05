@@ -21096,7 +21096,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100353FD0			FALSE	_ZN15SaveDataChecker7exeWaitEv	SaveDataChecker::exeWait()	
 0x7100354040			FALSE	_ZN15SaveDataCheckerD1Ev	SaveDataChecker::~SaveDataChecker()	
 0x7100354050			FALSE	_ZN15SaveDataCheckerD0Ev	SaveDataChecker::~SaveDataChecker()	
-0x7100354080			FALSE	sub_7100354080	sub_7100354080	
+0x7100354080			FALSE	_ZNK12_GLOBAL__N_122SaveDataCheckerNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_122SaveDataCheckerNrvWait7executeEPN2al11NerveKeeperE	
 0x71003540F0			FALSE	_ZNK2al10FunctorV0MIP15SaveDataCheckerMS1_FvvEEclEv	al::FunctorV0M<SaveDataChecker*, void (SaveDataChecker::*)()>::operator()() const	
 0x7100354110			FALSE	_ZNK2al10FunctorV0MIP15SaveDataCheckerMS1_FvvEE5cloneEv	al::FunctorV0M<SaveDataChecker*, void (SaveDataChecker::*)()>::clone() const	
 0x7100354160		ScoreHolder.o	FALSE	_ZN11ScoreHolderC2Ev	ScoreHolder::ScoreHolder()	

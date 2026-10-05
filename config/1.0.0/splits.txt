@@ -1901,7 +1901,7 @@ src/Game/MapObj/PlayerCrown.cpp:
     .text   start:0x003438F0 end:0x00345638
 src/Game/MapObj/PlayerPointLightingObj.cpp: done
     .text   start:0x00345640 end:0x00345A10
-src/Game/MapObj/PlayerSpotLightingObj.cpp:
+src/Game/MapObj/PlayerSpotLightingObj.cpp: done
     .text   start:0x00345A10 end:0x00345F10
 src/Game/MapObj/PlessieTerrain.cpp:
     .text   start:0x00345F10 end:0x00346984
