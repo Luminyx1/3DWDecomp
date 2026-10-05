@@ -3,6 +3,9 @@
 #include <nn/types.h>
 
 namespace nn::atk {
+
+/** @brief Pause policy shared by sound players and individual sounds. */
+enum PauseMode {};
 enum OutputMode {
     OutputMode_Monaural,
     OutputMode_Stereo,
