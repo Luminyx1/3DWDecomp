@@ -14505,7 +14505,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710023B870			FALSE	_ZNK12_GLOBAL__N_136ActorStateDemoCameraProtoNrvPlayWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::ActorStateDemoCameraProtoNrvPlayWait::execute(al::NerveKeeper*) const	
 0x710023B880			FALSE	_ZNK12_GLOBAL__N_132ActorStateDemoCameraProtoNrvPlay7executeEPN2al11NerveKeeperE	(anonymous namespace)::ActorStateDemoCameraProtoNrvPlay::execute(al::NerveKeeper*) const	
 0x710023B890			FALSE	_ZNK12_GLOBAL__N_135ActorStateDemoCameraProtoNrvPlayEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::ActorStateDemoCameraProtoNrvPlayEnd::execute(al::NerveKeeper*) const	
-0x710023B8A0			FALSE	sub_710023B8A0	sub_710023B8A0	
+0x710023B8A0			FALSE	_ZNK12_GLOBAL__N_132ActorStateDemoCameraProtoNrvDone7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_132ActorStateDemoCameraProtoNrvDone7executeEPN2al11NerveKeeperE	
 0x710023B8B0		ActorStateGiantBlow.o	FALSE	_ZN24ActorStateGiantBlowParamC2Ev	ActorStateGiantBlowParam::ActorStateGiantBlowParam()	
 0x710023B8E0			FALSE	_ZN19ActorStateGiantBlowC1EPN2al9LiveActorEPK24ActorStateGiantBlowParamS2_S2_	ActorStateGiantBlow::ActorStateGiantBlow(al::LiveActor*, ActorStateGiantBlowParam const*, al::LiveActor*, al::LiveActor*)	
 0x710023B990			FALSE	_ZN19ActorStateGiantBlow6appearEv	ActorStateGiantBlow::appear()	

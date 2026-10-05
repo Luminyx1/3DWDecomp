@@ -11,6 +11,14 @@ enum DemoType : s32;
 }  // namespace alSeFunction
 
 namespace rc {
+void setUpdateFreeze(const al::LiveActor*, bool);
+void setOtherActiveDemo(al::LiveActor*, bool);
+bool requestStartDemoIntro(al::LiveActor*, const char*, bool);
+bool requestStartDemoCamera(al::LiveActor*, const char*);
+bool isActiveSpecificDemo(const al::LiveActor*);
+bool isActiveDemoCamera(const al::LiveActor*);
+void requestEndDemoIntro(const al::LiveActor*);
+void requestEndDemoCamera(const al::LiveActor*);
 bool requestStartDemoInGameCutscene(const al::LiveActor* pActor);
 void requestEndDemoInGameCutscene(const al::LiveActor* pActor);
 void setUpdateItemsInDemo(const al::LiveActor* pActor);

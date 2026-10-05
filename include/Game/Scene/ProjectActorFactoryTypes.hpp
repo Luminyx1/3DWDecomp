@@ -1,3 +1,4 @@
+#include "Camera/CameraLookAtPoint.hpp"
 #include "MapObj/Fury/FloatingIslandRailPart.hpp"
 #include "MapObj/Fury/DisasterFixMapParts.hpp"
 #include "MapObj/GoalPole.hpp"
@@ -420,14 +421,7 @@ private:
 };
 static_assert(sizeof(CameraInSwitchOnAreaWatcher) == 0x150);
 
-class CameraLookAtPoint : public al::LiveActor {
-public:
-    explicit CameraLookAtPoint(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x5c];
-};
-static_assert(sizeof(CameraLookAtPoint) == 0x1a0);
 
 class CameraRailObserver : public al::LiveActor {
 public:
