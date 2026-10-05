@@ -42,6 +42,7 @@ class DisasterModeController : public al::LiveActor {
      * @brief Check whether disaster mode is active.
      * @return True while disaster mode is active.
      */
+    bool isRaining();
     bool isDisasterMode() const { return mIsDisasterMode; }
 
     /**

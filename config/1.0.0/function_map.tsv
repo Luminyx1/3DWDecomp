@@ -10687,7 +10687,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001A0E40			TRUE	_ZN2al21EffectObjFollowCameraD0Ev	al::EffectObjFollowCamera::~EffectObjFollowCamera()	
 0x71001A0E70			FALSE	_ZN2rc25EffectObjFollowCameraGameD1Ev	rc::EffectObjFollowCameraGame::~EffectObjFollowCameraGame()	
 0x71001A0E80			FALSE	_ZN2rc25EffectObjFollowCameraGameD0Ev	rc::EffectObjFollowCameraGame::~EffectObjFollowCameraGame()	
-0x71001A0EB0			FALSE	sub_71001A0EB0	sub_71001A0EB0	
+0x71001A0EB0			FALSE	_ZNK12_GLOBAL__N_140EffectObjFollowCameraGameNrvDisasterMode7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_140EffectObjFollowCameraGameNrvDisasterMode7executeEPN2al11NerveKeeperE	
 0x71001A0F40		EffectObjGame.o	FALSE	_ZN2rc13EffectObjGameC2EPKc	rc::EffectObjGame::EffectObjGame(char const*)	
 0x71001A0FC0			FALSE	_ZN2rc13EffectObjGameC1EPKc	rc::EffectObjGame::EffectObjGame(char const*)	
 0x71001A1050			FALSE	_ZN2rc13EffectObjGame4initERKN2al13ActorInitInfoE	rc::EffectObjGame::init(al::ActorInitInfo const&)	
@@ -10707,8 +10707,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001A14C0			FALSE	_ZN26EffectObjBattleArenaBunBun4killEv	EffectObjBattleArenaBunBun::kill()	
 0x71001A14F0			FALSE	_ZN26EffectObjBattleArenaBunBunD1Ev	EffectObjBattleArenaBunBun::~EffectObjBattleArenaBunBun()	
 0x71001A1500			FALSE	_ZN26EffectObjBattleArenaBunBunD0Ev	EffectObjBattleArenaBunBun::~EffectObjBattleArenaBunBun()	
-0x71001A1530			FALSE	sub_71001A1530	sub_71001A1530	
-0x71001A15B0			FALSE	nullsub_98	nullsub_98	
+0x71001A1530			FALSE	_ZNK12_GLOBAL__N_137EffectObjBattleArenaBunBunNrvAppeared7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_137EffectObjBattleArenaBunBunNrvAppeared7executeEPN2al11NerveKeeperE	
+0x71001A15B0			FALSE	_ZNK12_GLOBAL__N_133EffectObjBattleArenaBunBunNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_133EffectObjBattleArenaBunBunNrvWait7executeEPN2al11NerveKeeperE	
 0x71001A15C0			FALSE	_ZNK2al10FunctorV0MIP26EffectObjBattleArenaBunBunMS1_FvvEEclEv	al::FunctorV0M<EffectObjBattleArenaBunBun*, void (EffectObjBattleArenaBunBun::*)()>::operator()() const	
 0x71001A15E0			FALSE	_ZNK2al10FunctorV0MIP26EffectObjBattleArenaBunBunMS1_FvvEE5cloneEv	al::FunctorV0M<EffectObjBattleArenaBunBun*, void (EffectObjBattleArenaBunBun::*)()>::clone() const	
 0x71001A1630		FallingPillar.o	FALSE	_ZN13FallingPillarC2EPKc	FallingPillar::FallingPillar(char const*)	

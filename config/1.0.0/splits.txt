@@ -1005,11 +1005,11 @@ src/Game/MapObj/Fury/DisasterSpikeTorpedo.cpp:
     .text   start:0x0019E010 end:0x001A0A98
 src/Game/MapObj/Fury/DrcTouchEffectTraceTracker.cpp: done
     .text   start:0x001A0AA0 end:0x001A0AF8
-src/Game/MapObj/Fury/EffectObjFollowCameraGame.cpp:
+src/Game/MapObj/Fury/EffectObjFollowCameraGame.cpp: done
     .text   start:0x001A0B00 end:0x001A0F3C
 src/Game/MapObj/Fury/EffectObjGame.cpp: done
     .text   start:0x001A0F40 end:0x001A1250
-src/Game/MapObj/Fury/EffectObjBattleArenaBunBun.cpp:
+src/Game/MapObj/Fury/EffectObjBattleArenaBunBun.cpp: done
     .text   start:0x001A1250 end:0x001A1624
 src/Game/MapObj/Fury/FallingPillar.cpp:
     .text   start:0x001A1630 end:0x001A1E74
