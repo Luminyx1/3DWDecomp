@@ -1559,7 +1559,7 @@ src/Game/MapObj/Crab.cpp:
     .text   start:0x00280DD0 end:0x00281698
 src/Game/MapObj/CubeMapController.cpp: done
     .text   start:0x002816A0 end:0x00281C44
-src/Game/MapObj/DashPanel.cpp:
+src/Game/MapObj/DashPanel.cpp: done
     .text   start:0x00281C50 end:0x00282314
 src/Game/MapObj/DashPanelSeTriggerChecker.cpp: done
     .text   start:0x00282320 end:0x002824A8

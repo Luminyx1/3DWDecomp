@@ -1,3 +1,4 @@
+#include "MapObj/DashPanel.hpp"
 #include "MapObj/BlockTransparent.hpp"
 #include "MapObj/BlockBrick.hpp"
 #include "MapObj/SuperSkateShoes.hpp"
@@ -807,14 +808,7 @@ private:
 };
 static_assert(sizeof(DarkBowserLaserIndicator) == 0x168);
 
-class DashPanel : public al::LiveActor {
-public:
-    explicit DashPanel(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x5c];
-};
-static_assert(sizeof(DashPanel) == 0x1a0);
 
 class DestructableMapParts : public al::LiveActor {
 public:
