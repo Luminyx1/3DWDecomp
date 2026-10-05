@@ -1993,7 +1993,7 @@ src/Game/MapObj/SuperbViewArea.cpp:
     .text   start:0x00367790 end:0x003682F4
 src/Game/MapObj/SuperLeaf.cpp:
     .text   start:0x00368300 end:0x003694AC
-src/Game/MapObj/SuperSkateRail.cpp:
+src/Game/MapObj/SuperSkateRail.cpp: done
     .text   start:0x003694B0 end:0x00369B30
 src/Game/MapObj/SuperStar.cpp:
     .text   start:0x00369B30 end:0x0036A7D4

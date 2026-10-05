@@ -1,3 +1,5 @@
+#include "MapObj/SuperSkateShoes.hpp"
+#include "MapObj/SuperSkateRail.hpp"
 #pragma once
 #include "MapObj/BoxKiller.hpp"
 #include "MapObj/BoxPropeller.hpp"
@@ -2802,23 +2804,9 @@ private:
 };
 static_assert(sizeof(SuperLeaf) == 0x190);
 
-class SuperSkateRail : public al::LiveActor {
-public:
-    explicit SuperSkateRail(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x1c];
-};
-static_assert(sizeof(SuperSkateRail) == 0x160);
 
-class SuperSkateShoes : public al::LiveActor {
-public:
-    explicit SuperSkateShoes(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x3c];
-};
-static_assert(sizeof(SuperSkateShoes) == 0x180);
 
 class SuperStar : public al::LiveActor {
 public:
