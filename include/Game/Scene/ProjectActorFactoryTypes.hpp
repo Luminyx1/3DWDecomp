@@ -1,3 +1,4 @@
+#include "MapObj/ShardsWatcher.hpp"
 #include "MapObj/SuperLeaf.hpp"
 #include "MapObj/KinokoSuper.hpp"
 #include "MapObj/KinokoOneUp.hpp"
@@ -2115,14 +2116,7 @@ private:
 };
 static_assert(sizeof(Shards) == 0x200);
 
-class ShardsWatcher : public al::LiveActor {
-public:
-    explicit ShardsWatcher(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x6c];
-};
-static_assert(sizeof(ShardsWatcher) == 0x1b0);
 
 class ShadowMarioPlayer : public al::LiveActor {
 public:
