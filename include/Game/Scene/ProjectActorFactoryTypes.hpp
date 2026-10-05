@@ -1,3 +1,5 @@
+#include "MapObj/CoinCirclePlacement.hpp"
+#include "MapObj/Coin.hpp"
 #include "MapObj/DashPanel.hpp"
 #include "MapObj/BlockTransparent.hpp"
 #include "MapObj/BlockBrick.hpp"
@@ -509,14 +511,7 @@ private:
 };
 static_assert(sizeof(CloudBonusLauncher) == 0x298);
 
-class Coin : public al::LiveActor {
-public:
-    explicit Coin(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x44];
-};
-static_assert(sizeof(Coin) == 0x188);
 
 class CoinBlowConcentric : public al::LiveActor {
 public:
@@ -554,14 +549,7 @@ private:
 };
 static_assert(sizeof(CoinChameleonCourseSelect) == 0x190);
 
-class CoinCirclePlacement : public al::LiveActor {
-public:
-    explicit CoinCirclePlacement(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x44];
-};
-static_assert(sizeof(CoinCirclePlacement) == 0x188);
 
 class CoinCollectWatcher : public al::LiveActor {
 public:
