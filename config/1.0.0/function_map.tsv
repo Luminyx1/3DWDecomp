@@ -20199,9 +20199,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100321240			FALSE	_ZN9NeedleBar20exeSupportFreezeSyncEv	NeedleBar::exeSupportFreezeSync()	
 0x7100321280			FALSE	_ZN9NeedleBarD1Ev	NeedleBar::~NeedleBar()	
 0x7100321290			FALSE	_ZN9NeedleBarD0Ev	NeedleBar::~NeedleBar()	
-0x71003212C0			FALSE	sub_71003212C0	sub_71003212C0	
-0x7100321300			FALSE	sub_7100321300	sub_7100321300	
-0x7100321360			FALSE	sub_7100321360	sub_7100321360	
+0x71003212C0			FALSE	_ZNK12_GLOBAL__N_116NeedleBarNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_116NeedleBarNrvWait7executeEPN2al11NerveKeeperE	
+0x7100321300			FALSE	_ZNK12_GLOBAL__N_125NeedleBarNrvSupportFreeze7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_125NeedleBarNrvSupportFreeze7executeEPN2al11NerveKeeperE	
+0x7100321360			FALSE	_ZNK12_GLOBAL__N_129NeedleBarNrvSupportFreezeSync7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_129NeedleBarNrvSupportFreezeSync7executeEPN2al11NerveKeeperE	
 0x71003213A0		NeedleBarRoot.o	FALSE	_ZN13NeedleBarRootC2EPKc	NeedleBarRoot::NeedleBarRoot(char const*)	
 0x7100321420			FALSE	_ZN13NeedleBarRootC1EPKc	NeedleBarRoot::NeedleBarRoot(char const*)	
 0x71003214B0			FALSE	_ZN13NeedleBarRoot4initERKN2al13ActorInitInfoE	NeedleBarRoot::init(al::ActorInitInfo const&)	

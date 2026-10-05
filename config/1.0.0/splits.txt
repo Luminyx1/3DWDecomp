@@ -1851,7 +1851,7 @@ src/Game/MapObj/MysteryBoxConnector.cpp: done
     .text   start:0x003200C0 end:0x003201AC
 src/Game/MapObj/MysteryHouseChecker.cpp:
     .text   start:0x003201B0 end:0x00320A94
-src/Game/MapObj/NeedleBar.cpp:
+src/Game/MapObj/NeedleBar.cpp: done
     .text   start:0x00320AA0 end:0x003213A0
 src/Game/MapObj/NeedleBarRoot.cpp:
     .text   start:0x003213A0 end:0x00321998
