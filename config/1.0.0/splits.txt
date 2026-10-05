@@ -1119,7 +1119,7 @@ src/Game/Layout/CourseSelectSceneLayout.cpp:
     .text   start:0x001BE910 end:0x001C03A4
 src/Game/Layout/CourseSelectStartInfo.cpp:
     .text   start:0x001C03B0 end:0x001C06F4
-src/Game/Layout/CursorTarget.cpp:
+src/Game/Layout/CursorTarget.cpp: done
     .text   start:0x001C0700 end:0x001C07F8
 src/Game/Layout/DokanGuideBalloon.cpp:
     .text   start:0x001C0800 end:0x001C0DB8
