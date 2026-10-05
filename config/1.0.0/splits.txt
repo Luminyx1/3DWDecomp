@@ -207,7 +207,7 @@ src/Game/Boss/KoopaLastDemoEndActorHolder.cpp:
     .text   start:0x000359C0 end:0x00035FDC
 src/Game/Boss/KoopaLastFireBreath.cpp:
     .text   start:0x00035FE0 end:0x00036434
-src/Game/Boss/KoopaLastFloor.cpp:
+src/Game/Boss/KoopaLastFloor.cpp: done
     .text   start:0x00036440 end:0x00036814
 src/Game/Boss/KoopaLastFunction.cpp:
     .text   start:0x00036820 end:0x00036E00

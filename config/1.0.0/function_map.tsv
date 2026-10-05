@@ -1345,8 +1345,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71000366E0			FALSE	_ZN14KoopaLastFloor7exeSignEv	KoopaLastFloor::exeSign()	
 0x7100036720			FALSE	_ZN14KoopaLastFloorD1Ev	KoopaLastFloor::~KoopaLastFloor()	
 0x7100036730			FALSE	_ZN14KoopaLastFloorD0Ev	KoopaLastFloor::~KoopaLastFloor()	
-0x7100036760			FALSE	nullsub_8	nullsub_8	
-0x7100036770			FALSE	sub_7100036770	sub_7100036770	
+0x7100036760			FALSE	_ZNK12_GLOBAL__N_121KoopaLastFloorNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::KoopaLastFloorNrvWait::execute(al::NerveKeeper*) const	matched nerve
+0x7100036770			FALSE	_ZNK12_GLOBAL__N_121KoopaLastFloorNrvSign7executeEPN2al11NerveKeeperE	(anonymous namespace)::KoopaLastFloorNrvSign::execute(al::NerveKeeper*) const	matched nerve
 0x71000367B0			FALSE	_ZNK2al10FunctorV0MIP14KoopaLastFloorMS1_FvvEEclEv	al::FunctorV0M<KoopaLastFloor*, void (KoopaLastFloor::*)()>::operator()() const	
 0x71000367D0			FALSE	_ZNK2al10FunctorV0MIP14KoopaLastFloorMS1_FvvEE5cloneEv	al::FunctorV0M<KoopaLastFloor*, void (KoopaLastFloor::*)()>::clone() const	
 0x7100036820		KoopaLastFunction.o	FALSE	_ZN17KoopaLastFunction24initActorKoopaLastCommonEPN2al9LiveActorERKNS0_13ActorInitInfoEPKcPN4sead8PtrArrayINS0_21JointSpringControllerEEE	KoopaLastFunction::initActorKoopaLastCommon(al::LiveActor*, al::ActorInitInfo const&, char const*, sead::PtrArray<al::JointSpringController>*)	

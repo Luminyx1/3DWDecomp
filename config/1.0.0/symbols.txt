@@ -4741,3 +4741,6 @@
 # TentackRockFaller
 0x7101961D28 8 object _ZN12_GLOBAL__N_128NrvTentackRockFallerFallRockE
 0x7101B1CED4 32 object _ZN12_GLOBAL__N_114sFallRockParamE
+
+# KoopaLastFloor
+0x7101957D68 16 object _ZN12_GLOBAL__N_117NrvKoopaLastFloorE
