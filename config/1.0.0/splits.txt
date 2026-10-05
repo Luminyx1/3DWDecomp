@@ -501,7 +501,7 @@ src/Game/Demo/DemoSceneActorHolder.cpp:
     .text   start:0x000BE2B0 end:0x000BF4D0
 src/Game/Demo/DemoSceneActorPlayer.cpp:
     .text   start:0x000BF4D0 end:0x000BFD5C
-src/Game/Demo/DemoSceneCamera.cpp:
+src/Game/Demo/DemoSceneCamera.cpp: done
     .text   start:0x000BFD60 end:0x000C0724
 src/Game/Demo/DemoScenePlayer.cpp:
     .text   start:0x000C0730 end:0x000C1740
