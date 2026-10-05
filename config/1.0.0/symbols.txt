@@ -4741,3 +4741,9 @@
 0x71019E4260 8 object _ZN12_GLOBAL__N_121NrvStaffRollFinAppearE
 0x71019E4288 8 object _ZN12_GLOBAL__N_119NrvStaffRollFinWaitE
 0x71019E42B0 8 object _ZN12_GLOBAL__N_118NrvStaffRollFinEndE
+
+# src/Game/Layout/StaffRollNintendo
+0x71019E4F00 8 object _ZN12_GLOBAL__N_124NrvStaffRollNintendoHideE
+0x71019E4F28 8 object _ZN12_GLOBAL__N_126NrvStaffRollNintendoAppearE
+0x71019E4F50 8 object _ZN12_GLOBAL__N_124NrvStaffRollNintendoWaitE
+0x71019E4F78 8 object _ZN12_GLOBAL__N_123NrvStaffRollNintendoEndE

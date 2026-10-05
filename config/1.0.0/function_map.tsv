@@ -12978,10 +12978,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001F3FD0			FALSE	_ZN17StaffRollNintendo7exeHideEv	StaffRollNintendo::exeHide()	
 0x71001F4010			FALSE	_ZNK17StaffRollNintendo5isEndEv	StaffRollNintendo::isEnd() const	
 0x71001F4060			FALSE	_ZN17StaffRollNintendo8startEndEv	StaffRollNintendo::startEnd()	
-0x71001F4070			FALSE	sub_71001F4070	sub_71001F4070	
-0x71001F40C0			FALSE	sub_71001F40C0	sub_71001F40C0	
-0x71001F4130			FALSE	sub_71001F4130	sub_71001F4130	
-0x71001F4180			FALSE	sub_71001F4180	sub_71001F4180	
+0x71001F4070			FALSE	_ZNK12_GLOBAL__N_124StaffRollNintendoNrvHide7executeEPN2al11NerveKeeperE	(anonymous namespace)::StaffRollNintendoNrvHide::execute(al::NerveKeeper*) const	
+0x71001F40C0			FALSE	_ZNK12_GLOBAL__N_126StaffRollNintendoNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::StaffRollNintendoNrvAppear::execute(al::NerveKeeper*) const	
+0x71001F4130			FALSE	_ZNK12_GLOBAL__N_124StaffRollNintendoNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::StaffRollNintendoNrvWait::execute(al::NerveKeeper*) const	
+0x71001F4180			FALSE	_ZNK12_GLOBAL__N_123StaffRollNintendoNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::StaffRollNintendoNrvEnd::execute(al::NerveKeeper*) const	
 0x71001F41D0		StageSceneLayout.o	FALSE	_ZN16StageSceneLayoutC2ERKN2al14LayoutInitInfoEP14GameDataHolderPKcPK15GreenStarKeeperPK16IllustItemKeeperPKNS0_12PlayerHolderEPK18PlayerAliveWatcherP19ProjectItemDirector	StageSceneLayout::StageSceneLayout(al::LayoutInitInfo const&, GameDataHolder*, char const*, GreenStarKeeper const*, IllustItemKeeper const*, al::PlayerHolder const*, PlayerAliveWatcher const*, ProjectItemDirector*)	
 0x71001F4590			FALSE	_ZN16StageSceneLayoutC1ERKN2al14LayoutInitInfoEP14GameDataHolderPKcPK15GreenStarKeeperPK16IllustItemKeeperPKNS0_12PlayerHolderEPK18PlayerAliveWatcherP19ProjectItemDirector	StageSceneLayout::StageSceneLayout(al::LayoutInitInfo const&, GameDataHolder*, char const*, GreenStarKeeper const*, IllustItemKeeper const*, al::PlayerHolder const*, PlayerAliveWatcher const*, ProjectItemDirector*)	
 0x71001F4950			FALSE	_ZN16StageSceneLayout9startDemoEbb	StageSceneLayout::startDemo(bool, bool)	
