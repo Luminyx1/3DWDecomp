@@ -1659,7 +1659,7 @@ src/Game/MapObj/GigaRock.cpp:
     .text   start:0x002C3710 end:0x002C5E60
 src/Game/MapObj/GoalBonusGameBlockSlot.cpp:
     .text   start:0x002C5E60 end:0x002C6DD8
-src/Game/MapObj/GoalDoor.cpp:
+src/Game/MapObj/GoalDoor.cpp: done
     .text   start:0x002C6DE0 end:0x002C7684
 src/Game/MapObj/GoalItem.cpp:
     .text   start:0x002C7690 end:0x002CE8AC

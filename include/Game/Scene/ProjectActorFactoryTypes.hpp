@@ -1,3 +1,4 @@
+#include "MapObj/GoalDoor.hpp"
 #include "MapObj/CoinFallGenerator.hpp"
 #include "MapObj/PSwitchTimerCoinWatcher.hpp"
 #include "MapObj/TreeFarLodWatcher.hpp"
@@ -1285,14 +1286,7 @@ private:
 };
 static_assert(sizeof(GoalBonusGameBlockSlot) == 0x180);
 
-class GoalDoor : public al::LiveActor {
-public:
-    explicit GoalDoor(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x1c];
-};
-static_assert(sizeof(GoalDoor) == 0x160);
 
 
 static_assert(sizeof(GoalItem) == 0x3d0);

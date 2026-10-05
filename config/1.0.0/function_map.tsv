@@ -17988,12 +17988,12 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71002C74D0			FALSE	_ZNK8GoalDoor12isRetireGoalEv	GoalDoor::isRetireGoal() const	
 0x71002C74E0			FALSE	_ZThn328_NK8GoalDoor11isUseResultEv	non-virtual thunk to GoalDoor::isUseResult() const	
 0x71002C74F0			FALSE	_ZThn328_NK8GoalDoor12isRetireGoalEv	non-virtual thunk to GoalDoor::isRetireGoal() const	
-0x71002C7500			FALSE	sub_71002C7500	sub_71002C7500	
+0x71002C7500			FALSE	_ZNK12_GLOBAL__N_115GoalDoorNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_115GoalDoorNrvWait7executeEPN2al11NerveKeeperE	
 0x71002C7540			FALSE	_ZNK12_GLOBAL__N_115GoalDoorNrvOpen7executeEPN2al11NerveKeeperE	(anonymous namespace)::GoalDoorNrvOpen::execute(al::NerveKeeper*) const	
-0x71002C7550			FALSE	sub_71002C7550	sub_71002C7550	
-0x71002C75B0			FALSE	nullsub_181	nullsub_181	
-0x71002C75C0			FALSE	sub_71002C75C0	sub_71002C75C0	
-0x71002C7620			FALSE	sub_71002C7620	sub_71002C7620	
+0x71002C7550			FALSE	_ZNK12_GLOBAL__N_117GoalDoorNrvCancel7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_117GoalDoorNrvCancel7executeEPN2al11NerveKeeperE	
+0x71002C75B0			FALSE	_ZNK12_GLOBAL__N_114GoalDoorNrvEnd7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_114GoalDoorNrvEnd7executeEPN2al11NerveKeeperE	
+0x71002C75C0			FALSE	_ZNK12_GLOBAL__N_119GoalDoorNrvOpenWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_119GoalDoorNrvOpenWait7executeEPN2al11NerveKeeperE	
+0x71002C7620			FALSE	_ZNK12_GLOBAL__N_116GoalDoorNrvClose7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_116GoalDoorNrvClose7executeEPN2al11NerveKeeperE	
 0x71002C7690		GoalItem.o	FALSE	_ZN8GoalItemC2EPKc	GoalItem::GoalItem(char const*)	
 0x71002C78E0			FALSE	_ZN8GoalItemC1EPKc	GoalItem::GoalItem(char const*)	
 0x71002C7B30			FALSE	_ZN8GoalItem4initERKN2al13ActorInitInfoE	GoalItem::init(al::ActorInitInfo const&)	
