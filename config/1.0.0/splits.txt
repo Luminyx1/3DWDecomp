@@ -623,7 +623,7 @@ src/Game/Enemy/EnemyStateBlowDown.cpp:
     .text   start:0x000F2040 end:0x000F2868
 src/Game/Enemy/EnemyStateBlowDownNoCollider.cpp:
     .text   start:0x000F2870 end:0x000F29D8
-src/Game/Enemy/EnemyStateUtil.cpp:
+src/Game/Enemy/EnemyStateUtil.cpp: done
     .text   start:0x000F29E0 end:0x000F326C
 src/Game/Enemy/FireBros.cpp:
     .text   start:0x000F3270 end:0x000F48B0
