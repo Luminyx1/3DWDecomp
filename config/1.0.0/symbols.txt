@@ -5177,3 +5177,5 @@
 0x71016B67B8 252 object _ZN12_GLOBAL__N_116cJumpOutVelocityE
 0x71016B68B4 252 object _ZN12_GLOBAL__N_113cJumpOutTransE
 0x71016B69B0 576 object _ZN12_GLOBAL__N_113cJumpOutOrderE
+0x71019FF640 32 object _ZTVN12_GLOBAL__N_126CandlestandWatcherNrvWatchE
+0x71019FF660 8 object _ZN12_GLOBAL__N_126NrvCandlestandWatcherWatchE

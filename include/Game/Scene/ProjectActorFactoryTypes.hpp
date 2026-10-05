@@ -1,4 +1,6 @@
 #pragma once
+#include "MapObj/CandlestandWatcher.hpp"
+#include "MapObj/Candlestand.hpp"
 #include "MapObj/ItemBubbleSingleMode.hpp"
 #include "MapObj/GreenStar.hpp"
 #include "MapObj/Fury/CoinStackMoving.hpp"
@@ -434,22 +436,10 @@ private:
 };
 static_assert(sizeof(CameraWall) == 0x168);
 
-class Candlestand : public al::LiveActor {
-public:
-    explicit Candlestand(const char* pName, CandlestandWatcher* = nullptr);
 
-private:
-    u8 mUnreconstructed[0x3c];
-};
 static_assert(sizeof(Candlestand) == 0x180);
 
-class CandlestandWatcher : public al::LiveActor {
-public:
-    explicit CandlestandWatcher(const char* pName);
 
-private:
-    u8 mUnreconstructed[0xc];
-};
 static_assert(sizeof(CandlestandWatcher) == 0x150);
 
 class CatGull : public al::LiveActor {

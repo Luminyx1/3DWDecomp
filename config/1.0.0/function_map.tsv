@@ -15591,7 +15591,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100263450			FALSE	_ZN18CandlestandWatcher16isEnableAddScoreEv	CandlestandWatcher::isEnableAddScore()	
 0x71002634D0			FALSE	_ZN18CandlestandWatcherD1Ev	CandlestandWatcher::~CandlestandWatcher()	
 0x71002634E0			FALSE	_ZN18CandlestandWatcherD0Ev	CandlestandWatcher::~CandlestandWatcher()	
-0x7100263510			FALSE	sub_7100263510	sub_7100263510	
+0x7100263510			FALSE	_ZNK12_GLOBAL__N_126CandlestandWatcherNrvWatch7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_126CandlestandWatcherNrvWatch7executeEPN2al11NerveKeeperE	
 0x71002635A0		CatGull.o	FALSE	_ZN7CatGullC2EPKc	CatGull::CatGull(char const*)	
 0x7100263680			FALSE	_ZN7CatGullC1EPKc	CatGull::CatGull(char const*)	
 0x7100263750			FALSE	_ZN7CatGull4initERKN2al13ActorInitInfoE	CatGull::init(al::ActorInitInfo const&)	
