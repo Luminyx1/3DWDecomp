@@ -1021,7 +1021,7 @@ src/Game/MapObj/Fury/FloatingTerrain.cpp:
     .text   start:0x001A2880 end:0x001A3394
 src/Game/MapObj/Fury/FlowerCat.cpp:
     .text   start:0x001A33A0 end:0x001A3AD8
-src/Game/MapObj/Fury/GameSkyProjection.cpp:
+src/Game/MapObj/Fury/GameSkyProjection.cpp: done
     .text   start:0x001A3AE0 end:0x001A3CA0
 src/Game/MapObj/Fury/GigaBell3in1.cpp:
     .text   start:0x001A3CA0 end:0x001A5248
@@ -1031,7 +1031,7 @@ src/Game/MapObj/Fury/GigaBellItem.cpp:
     .text   start:0x001A5500 end:0x001A5D70
 src/Game/MapObj/Fury/GigaBellPedestal.cpp:
     .text   start:0x001A5D70 end:0x001A60E0
-src/Game/MapObj/Fury/GoalPedestal.cpp:
+src/Game/MapObj/Fury/GoalPedestal.cpp: done
     .text   start:0x001A60E0 end:0x001A62C0
 src/Game/MapObj/Fury/InkPatch.cpp:
     .text   start:0x001A62C0 end:0x001A6C28
@@ -2021,7 +2021,7 @@ src/Game/MapObj/TestAlphaMaskMapObj.cpp:
     .text   start:0x0036D880 end:0x0036DC0C
 src/Game/MapObj/TestAndoChainDynamics.cpp:
     .text   start:0x0036DC10 end:0x0036E6E8
-src/Game/MapObj/TestAndoDashPanel.cpp:
+src/Game/MapObj/TestAndoDashPanel.cpp: done
     .text   start:0x0036E6F0 end:0x0036E8B0
 src/Game/MapObj/TestAndoGoalPole.cpp:
     .text   start:0x0036E8B0 end:0x00370328
@@ -2049,7 +2049,7 @@ src/Game/MapObj/TestGhostPresentBox.cpp:
     .text   start:0x003799A0 end:0x00379B70
 src/Game/MapObj/TestGoldenKoura.cpp:
     .text   start:0x00379B70 end:0x0037B430
-src/Game/MapObj/TestGraphicObj.cpp:
+src/Game/MapObj/TestGraphicObj.cpp: done
     .text   start:0x0037B430 end:0x0037B5C8
 src/Game/MapObj/TestIshiokaTrapRock.cpp:
     .text   start:0x0037B5D0 end:0x0037BEE4
@@ -2093,7 +2093,7 @@ src/Game/MapObj/TestTanakaMapObj.cpp:
     .text   start:0x00386310 end:0x0038652C
 src/Game/MapObj/TestTatsutaBlock.cpp:
     .text   start:0x00386530 end:0x003868A0
-src/Game/MapObj/TestTrampleSwitchGold.cpp:
+src/Game/MapObj/TestTrampleSwitchGold.cpp: done
     .text   start:0x003868A0 end:0x00386A20
 src/Game/MapObj/ThrowMapParts.cpp:
     .text   start:0x00386A20 end:0x00387A9C

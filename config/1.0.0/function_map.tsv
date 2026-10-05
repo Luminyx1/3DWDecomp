@@ -22066,7 +22066,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710037B570			FALSE	_ZN14TestGraphicObj7exeWaitEv	TestGraphicObj::exeWait()	
 0x710037B580			FALSE	_ZN14TestGraphicObjD1Ev	TestGraphicObj::~TestGraphicObj()	
 0x710037B590			FALSE	_ZN14TestGraphicObjD0Ev	TestGraphicObj::~TestGraphicObj()	
-0x710037B5C0			FALSE	sub_710037B5C0	sub_710037B5C0	
+0x710037B5C0			FALSE	_ZNK12_GLOBAL__N_121TestGraphicObjNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_121TestGraphicObjNrvWait7executeEPN2al11NerveKeeperE	
 0x710037B5D0		TestIshiokaTrapRock.o	FALSE	_ZN19TestIshiokaTrapRockC2EPKc	TestIshiokaTrapRock::TestIshiokaTrapRock(char const*)	
 0x710037B660			FALSE	_ZN19TestIshiokaTrapRockC1EPKc	TestIshiokaTrapRock::TestIshiokaTrapRock(char const*)	
 0x710037B6F0			FALSE	_ZN19TestIshiokaTrapRock4initERKN2al13ActorInitInfoE	TestIshiokaTrapRock::init(al::ActorInitInfo const&)	
