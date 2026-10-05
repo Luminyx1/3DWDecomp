@@ -6401,7 +6401,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71000F68B0			FALSE	_ZN16FlyerStateWander7exeWaitEv	FlyerStateWander::exeWait()	
 0x71000F6930			FALSE	_ZN16FlyerStateWanderD0Ev	FlyerStateWander::~FlyerStateWander()	
 0x71000F6960			FALSE	_ZNK12_GLOBAL__N_125FlyerStateWanderNrvWander7executeEPN2al11NerveKeeperE	(anonymous namespace)::FlyerStateWanderNrvWander::execute(al::NerveKeeper*) const	
-0x71000F6970			FALSE	sub_71000F6970	sub_71000F6970	
+0x71000F6970			FALSE	_ZNK12_GLOBAL__N_123FlyerStateWanderNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::FlyerStateWanderNrvWait::execute(al::NerveKeeper*) const	
 0x71000F69F0		Fugumannen.o	FALSE	_ZN10FugumannenC2EPKc	Fugumannen::Fugumannen(char const*)	
 0x71000F6A80			FALSE	_ZN10FugumannenC1EPKc	Fugumannen::Fugumannen(char const*)	
 0x71000F6B20			FALSE	_ZN10Fugumannen4initERKN2al13ActorInitInfoE	Fugumannen::init(al::ActorInitInfo const&)	
