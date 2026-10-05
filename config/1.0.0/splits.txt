@@ -1963,7 +1963,7 @@ src/Game/MapObj/SinkedItem.cpp:
     .text   start:0x0035BAD0 end:0x0035D1C8
 src/Game/MapObj/SnowCover.cpp: done
     .text   start:0x0035D1D0 end:0x0035D81C
-src/Game/MapObj/SoundKeyMoveParts.cpp:
+src/Game/MapObj/SoundKeyMoveParts.cpp: done
     .text   start:0x0035D820 end:0x0035E124
 src/Game/MapObj/SpotLightPatroller.cpp:
     .text   start:0x0035E130 end:0x0035F2C4

@@ -1,3 +1,4 @@
+#include "MapObj/SoundKeyMoveParts.hpp"
 #include "MapObj/Crab.hpp"
 #include "MapObj/MultiLift.hpp"
 #include "MapObj/BlockBrickBig.hpp"
@@ -2476,15 +2477,6 @@ private:
     u8 mUnreconstructed[0x3c];
 };
 static_assert(sizeof(GameSkyProjection) == 0x180);
-
-class SoundKeyMoveParts : public al::LiveActor {
-public:
-    explicit SoundKeyMoveParts(const char* pName);
-
-private:
-    u8 mUnreconstructed[0x2c];
-};
-static_assert(sizeof(SoundKeyMoveParts) == 0x170);
 
 class Spinner : public al::LiveActor {
 public:
