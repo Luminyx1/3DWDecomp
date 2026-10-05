@@ -15361,8 +15361,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710025AA30			FALSE	_ZN19BoxKillerBlockBrick11exeReactionEv	BoxKillerBlockBrick::exeReaction()	
 0x710025AA70			FALSE	_ZN19BoxKillerBlockBrickD1Ev	BoxKillerBlockBrick::~BoxKillerBlockBrick()	
 0x710025AA80			FALSE	_ZN19BoxKillerBlockBrickD0Ev	BoxKillerBlockBrick::~BoxKillerBlockBrick()	
-0x710025AAB0			FALSE	sub_710025AAB0	sub_710025AAB0	
-0x710025AAF0			FALSE	sub_710025AAF0	sub_710025AAF0	
+0x710025AAB0			FALSE	_ZNK12_GLOBAL__N_126BoxKillerBlockBrickNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_126BoxKillerBlockBrickNrvWait7executeEPN2al11NerveKeeperE	
+0x710025AAF0			FALSE	_ZNK12_GLOBAL__N_130BoxKillerBlockBrickNrvReaction7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_130BoxKillerBlockBrickNrvReaction7executeEPN2al11NerveKeeperE	
 0x710025AB30		BoxKillerBullet.o	FALSE	_ZN15BoxKillerBulletC2EPKcPK9BoxKiller	BoxKillerBullet::BoxKillerBullet(char const*, BoxKiller const*)	
 0x710025ABD0			FALSE	_ZN15BoxKillerBulletC1EPKcPK9BoxKiller	BoxKillerBullet::BoxKillerBullet(char const*, BoxKiller const*)	
 0x710025AC70			FALSE	_ZN15BoxKillerBullet4initERKN2al13ActorInitInfoE	BoxKillerBullet::init(al::ActorInitInfo const&)	

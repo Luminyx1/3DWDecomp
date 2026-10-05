@@ -1441,7 +1441,7 @@ src/Game/MapObj/BoxCoin.cpp:
     .text   start:0x00257740 end:0x00258B08
 src/Game/MapObj/BoxKiller.cpp:
     .text   start:0x00258B10 end:0x0025A620
-src/Game/MapObj/BoxKillerBlockBrick.cpp:
+src/Game/MapObj/BoxKillerBlockBrick.cpp: done
     .text   start:0x0025A620 end:0x0025AB30
 src/Game/MapObj/BoxKillerBullet.cpp:
     .text   start:0x0025AB30 end:0x0025BF50
