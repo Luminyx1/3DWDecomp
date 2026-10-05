@@ -2035,7 +2035,7 @@ src/Game/MapObj/TestAndoShellFur.cpp:
     .text   start:0x00373280 end:0x00373A60
 src/Game/MapObj/TestAndoWave.cpp:
     .text   start:0x00373A60 end:0x00374A68
-src/Game/MapObj/TestBlockQuestionRandomCoin.cpp:
+src/Game/MapObj/TestBlockQuestionRandomCoin.cpp: done
     .text   start:0x00374A70 end:0x003751F4
 src/Game/MapObj/TestBlockTuccondor.cpp: done
     .text   start:0x00375200 end:0x003755CC
