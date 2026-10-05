@@ -4763,3 +4763,7 @@
 0x7101960350 8 object _ZN12_GLOBAL__N_118NrvTentackHillWaitE
 0x7101960378 8 object _ZN12_GLOBAL__N_127NrvTentackHillDisappearWaitE
 0x71019603A0 8 object _ZN12_GLOBAL__N_123NrvTentackHillDisappearE
+
+# KoopaChaseWarpDummy
+0x7101954C08 8 object _ZN12_GLOBAL__N_126NrvKoopaChaseWarpDummyWaitE
+0x7101954C30 8 object _ZN12_GLOBAL__N_133NrvKoopaChaseWarpDummyProvocationE

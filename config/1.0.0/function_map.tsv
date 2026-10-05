@@ -1174,10 +1174,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100030D20			FALSE	_ZN19KoopaChaseWarpDummy14exeProvocationEv	KoopaChaseWarpDummy::exeProvocation()	
 0x7100030D90			FALSE	_ZN19KoopaChaseWarpDummyD1Ev	KoopaChaseWarpDummy::~KoopaChaseWarpDummy()	
 0x7100030DA0			FALSE	_ZN19KoopaChaseWarpDummyD0Ev	KoopaChaseWarpDummy::~KoopaChaseWarpDummy()	
-0x7100030DD0			FALSE	_ZNK12_GLOBAL__N_126KoopaChaseWarpDummyNrvMove7executeEPN2al11NerveKeeperE	(anonymous namespace)::KoopaChaseWarpDummyNrvMove::execute(al::NerveKeeper*) const	
-0x7100030DE0			FALSE	_ZNK12_GLOBAL__N_126KoopaChaseWarpDummyNrvLand7executeEPN2al11NerveKeeperE	(anonymous namespace)::KoopaChaseWarpDummyNrvLand::execute(al::NerveKeeper*) const	
-0x7100030DF0			FALSE	sub_7100030DF0	sub_7100030DF0	
-0x7100030E50			FALSE	sub_7100030E50	sub_7100030E50	
+0x7100030DD0			FALSE	_ZNK12_GLOBAL__N_126KoopaChaseWarpDummyNrvMove7executeEPN2al11NerveKeeperE	(anonymous namespace)::KoopaChaseWarpDummyNrvMove::execute(al::NerveKeeper*) const	matched nerve
+0x7100030DE0			FALSE	_ZNK12_GLOBAL__N_126KoopaChaseWarpDummyNrvLand7executeEPN2al11NerveKeeperE	(anonymous namespace)::KoopaChaseWarpDummyNrvLand::execute(al::NerveKeeper*) const	matched nerve
+0x7100030DF0			FALSE	_ZNK12_GLOBAL__N_126KoopaChaseWarpDummyNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::KoopaChaseWarpDummyNrvWait::execute(al::NerveKeeper*) const	matched nerve
+0x7100030E50			FALSE	_ZNK12_GLOBAL__N_133KoopaChaseWarpDummyNrvProvocation7executeEPN2al11NerveKeeperE	(anonymous namespace)::KoopaChaseWarpDummyNrvProvocation::execute(al::NerveKeeper*) const	matched nerve
 0x7100030EC0		KoopaLastAttack.o	FALSE	_ZN19KoopaLastAttackFireC2EPKc	KoopaLastAttackFire::KoopaLastAttackFire(char const*)	renamed from KoopaLasttAttack.o (spelling)
 0x7100030F40			FALSE	_ZN19KoopaLastAttackFireC1EPKc	KoopaLastAttackFire::KoopaLastAttackFire(char const*)	
 0x7100030FD0			FALSE	_ZN19KoopaLastAttackFire4initERKN2al13ActorInitInfoE	KoopaLastAttackFire::init(al::ActorInitInfo const&)	
