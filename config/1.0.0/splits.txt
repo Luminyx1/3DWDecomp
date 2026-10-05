@@ -893,7 +893,7 @@ src/Game/Enemy/TuccondorAround.cpp:
     .text   start:0x0016EDF0 end:0x0016FAE8
 src/Game/Enemy/TuccondorBase.cpp:
     .text   start:0x0016FAF0 end:0x00170344
-src/Game/Enemy/TuccondorGlass.cpp:
+src/Game/Enemy/TuccondorGlass.cpp: done
     .text   start:0x00170350 end:0x00170760
 src/Game/Enemy/TuccondorGlassBlower.cpp:
     .text   start:0x00170760 end:0x001709D0

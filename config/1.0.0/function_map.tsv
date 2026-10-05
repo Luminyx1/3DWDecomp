@@ -9629,8 +9629,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100170660			FALSE	_ZN14TuccondorGlass5isEndEv	TuccondorGlass::isEnd()	
 0x7100170670			FALSE	_ZN14TuccondorGlassD1Ev	TuccondorGlass::~TuccondorGlass()	
 0x7100170680			FALSE	_ZN14TuccondorGlassD0Ev	TuccondorGlass::~TuccondorGlass()	
-0x71001706B0			FALSE	sub_71001706B0	sub_71001706B0	
-0x7100170730			FALSE	sub_7100170730	sub_7100170730	
+0x71001706B0			FALSE	_ZNK12_GLOBAL__N_121TuccondorGlassNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::TuccondorGlassNrvWait::execute(al::NerveKeeper*) const	
+0x7100170730			FALSE	_ZNK12_GLOBAL__N_120TuccondorGlassNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::TuccondorGlassNrvEnd::execute(al::NerveKeeper*) const	
 0x7100170760		TuccondorGlassBlower.o	FALSE	_ZN20TuccondorGlassBlowerC1EPN2al9LiveActorEP14TuccondorGlass	TuccondorGlassBlower::TuccondorGlassBlower(al::LiveActor*, TuccondorGlass*)	
 0x71001707E0			FALSE	_ZN20TuccondorGlassBlower19tryRequestGlassBlowEPKN2al9SensorMsgEPNS0_13ScreenPointerEPNS0_17ScreenPointTargetE	TuccondorGlassBlower::tryRequestGlassBlow(al::SensorMsg const*, al::ScreenPointer*, al::ScreenPointTarget*)	
 0x7100170900			FALSE	_ZN20TuccondorGlassBlower6updateEv	TuccondorGlassBlower::update()	
