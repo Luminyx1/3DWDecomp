@@ -635,7 +635,7 @@ src/Game/Enemy/FlyerStateFindPlayer.cpp:
     .text   start:0x000F5C40 end:0x000F61F8
 src/Game/Enemy/FlyerStateFunction.cpp:
     .text   start:0x000F6200 end:0x000F626C
-src/Game/Enemy/FlyerStateParam.cpp:
+src/Game/Enemy/FlyerStateParam.cpp: done
     .text   start:0x000F6270 end:0x000F629C
 src/Game/Enemy/FlyerStateReturnArea.cpp:
     .text   start:0x000F62A0 end:0x000F6630
