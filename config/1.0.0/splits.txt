@@ -1731,7 +1731,7 @@ src/Game/MapObj/IslandFlag.cpp:
     .text   start:0x002E5440 end:0x002E6484
 src/Game/MapObj/IslandKeeper.cpp:
     .text   start:0x002E6490 end:0x002E79FC
-src/Game/MapObj/IslandKeyMoveMapParts.cpp:
+src/Game/MapObj/IslandKeyMoveMapParts.cpp: done
     .text   start:0x002E7A00 end:0x002E7E70
 src/Game/MapObj/ItemBubble.cpp:
     .text   start:0x002E7E70 end:0x002E8AE8
