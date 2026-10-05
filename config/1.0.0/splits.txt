@@ -3153,7 +3153,7 @@ src/Game/Scene/PlayerStocker.cpp:
     .text   start:0x004B7F00 end:0x004B8E88
 src/Game/Scene/PrOceanScene.cpp:
     .text   start:0x004B8E90 end:0x004B8F14
-src/Game/Scene/ProjectActorFactory.cpp:
+src/Game/Scene/ProjectActorFactory.cpp: done
     .text   start:0x004B8F20 end:0x004B8F6C
 src/Game/Scene/ProjectActorFactoryEntries.cpp:
     .text   start:0x004B8F70 end:0x004C1338

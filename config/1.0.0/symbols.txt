@@ -4739,3 +4739,6 @@
 0x7101A94530 8 object _ZN12_GLOBAL__N_119NrvBootSceneLoadEndE
 0x7101A945A0 8 object _ZN12_GLOBAL__N_121NrvBootSceneInitErrorE
 0x7101A94598 8 object _ZN12_GLOBAL__N_132NrvBootSceneWaitLoadDoneResourceE
+
+# ProjectActorFactory registration table.
+0x7101A96B30 7344 object _ZN12_GLOBAL__N_113sActorEntriesE
