@@ -1,3 +1,4 @@
+#include "MapObj/KoopaChaseCar.hpp"
 #include "MapObj/Fury/GigaBellItem.hpp"
 #include "MapObj/Fury/FallingPillar.hpp"
 #include "MapObj/GeneratorBox.hpp"
@@ -1691,14 +1692,6 @@ private:
 };
 static_assert(sizeof(KoopaChaseWarpDummy) == 0x158);
 
-class KoopaChaseCar : public al::LiveActor {
-public:
-    explicit KoopaChaseCar(const char* pName);
-
-private:
-    u8 mUnreconstructed[0x1c];
-};
-static_assert(sizeof(KoopaChaseCar) == 0x160);
 
 
 static_assert(sizeof(KoopaFireBallGenerator) == 0x160);

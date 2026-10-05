@@ -19276,7 +19276,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71002F9070			FALSE	_ZN13KoopaChaseCar12startClippedEv	KoopaChaseCar::startClipped()	
 0x71002F90B0			FALSE	_ZN13KoopaChaseCarD1Ev	KoopaChaseCar::~KoopaChaseCar()	
 0x71002F90C0			FALSE	_ZN13KoopaChaseCarD0Ev	KoopaChaseCar::~KoopaChaseCar()	
-0x71002F90F0			FALSE	sub_71002F90F0	sub_71002F90F0	
+0x71002F90F0			FALSE	_ZNK12_GLOBAL__N_120KoopaChaseCarNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_120KoopaChaseCarNrvWait7executeEPN2al11NerveKeeperE	
 0x71002F9190			FALSE	_ZNK12_GLOBAL__N_124KoopaChaseCarNrvReaction7executeEPN2al11NerveKeeperE	(anonymous namespace)::KoopaChaseCarNrvReaction::execute(al::NerveKeeper*) const	
 0x71002F91A0		KoopaFireBall.o	FALSE	_ZN13KoopaFireBallC2EPKcbPN2al9LiveActorE	KoopaFireBall::KoopaFireBall(char const*, bool, al::LiveActor*)	
 0x71002F92D0			FALSE	_ZN13KoopaFireBallC1EPKcbPN2al9LiveActorE	KoopaFireBall::KoopaFireBall(char const*, bool, al::LiveActor*)	

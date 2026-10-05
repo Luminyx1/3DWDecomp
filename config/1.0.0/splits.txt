@@ -1791,7 +1791,7 @@ src/Game/MapObj/KinopioBrigadeChecker.cpp:
     .text   start:0x002F7A60 end:0x002F8424
 src/Game/MapObj/KinopioBrigadeWatcher.cpp: done
     .text   start:0x002F8430 end:0x002F8908
-src/Game/MapObj/KoopaChaseCar.cpp:
+src/Game/MapObj/KoopaChaseCar.cpp: done
     .text   start:0x002F8910 end:0x002F9198
 src/Game/MapObj/KoopaFireBall.cpp:
     .text   start:0x002F91A0 end:0x002FB2B8
