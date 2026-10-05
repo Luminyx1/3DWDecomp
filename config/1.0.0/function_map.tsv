@@ -14967,9 +14967,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710024C9C0			FALSE	_ZN11BlockChoice12setDisappearEv	BlockChoice::setDisappear()	
 0x710024C9F0			FALSE	_ZN11BlockChoiceD1Ev	BlockChoice::~BlockChoice()	
 0x710024CA00			FALSE	_ZN11BlockChoiceD0Ev	BlockChoice::~BlockChoice()	
-0x710024CA30			FALSE	sub_710024CA30	sub_710024CA30	
-0x710024CAA0			FALSE	sub_710024CAA0	sub_710024CAA0	
-0x710024CB10			FALSE	sub_710024CB10	sub_710024CB10	
+0x710024CA30			FALSE	_ZNK12_GLOBAL__N_118BlockChoiceNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_118BlockChoiceNrvWait7executeEPN2al11NerveKeeperE	
+0x710024CAA0			FALSE	_ZNK12_GLOBAL__N_119BlockChoiceNrvReact7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_119BlockChoiceNrvReact7executeEPN2al11NerveKeeperE	
+0x710024CB10			FALSE	_ZNK12_GLOBAL__N_126BlockChoiceNrvReactHipDrop7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_126BlockChoiceNrvReactHipDrop7executeEPN2al11NerveKeeperE	
 0x710024CB80		BlockChoiceWatcher.o	FALSE	_ZN18BlockChoiceWatcherC2EPKc	BlockChoiceWatcher::BlockChoiceWatcher(char const*)	
 0x710024CC10			FALSE	_ZN18BlockChoiceWatcherC1EPKc	BlockChoiceWatcher::BlockChoiceWatcher(char const*)	
 0x710024CCA0			FALSE	_ZN18BlockChoiceWatcher4initERKN2al13ActorInitInfoE	BlockChoiceWatcher::init(al::ActorInitInfo const&)	
