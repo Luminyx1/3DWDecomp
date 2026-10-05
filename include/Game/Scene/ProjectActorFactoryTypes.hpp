@@ -1,3 +1,4 @@
+#include "MapObj/GustWind.hpp"
 #include "MapObj/CoinRedRing.hpp"
 #include "MapObj/KoopaChaseCar.hpp"
 #include "MapObj/Fury/GigaBellItem.hpp"
@@ -1394,14 +1395,7 @@ private:
 };
 static_assert(sizeof(GroupClippingDummyTarget) == 0x148);
 
-class GustWind : public al::LiveActor {
-public:
-    explicit GustWind(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x5c];
-};
-static_assert(sizeof(GustWind) == 0x1a0);
 
 class GuideObj : public al::LiveActor {
 public:

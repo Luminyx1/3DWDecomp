@@ -1711,7 +1711,7 @@ src/Game/MapObj/GreenStarStand.cpp: done
     .text   start:0x002E1810 end:0x002E1C44
 src/Game/MapObj/GroupClippingDummyTarget.cpp: done
     .text   start:0x002E1C50 end:0x002E1E20
-src/Game/MapObj/GustWind.cpp:
+src/Game/MapObj/GustWind.cpp: done
     .text   start:0x002E1E20 end:0x002E27EC
 src/Game/MapObj/HeadgearPoseBuilder.cpp:
     .text   start:0x002E27F0 end:0x002E3C48

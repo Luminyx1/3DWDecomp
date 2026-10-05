@@ -18644,15 +18644,15 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71002E25A0			FALSE	_ZN8GustWindD1Ev	GustWind::~GustWind()	
 0x71002E25B0			FALSE	_ZN8GustWindD0Ev	GustWind::~GustWind()	
 0x71002E25E0			FALSE	_ZNK8GustWind10getBaseMtxEv	GustWind::getBaseMtx() const	
-0x71002E25F0			FALSE	sub_71002E25F0	sub_71002E25F0	
-0x71002E2640			FALSE	sub_71002E2640	sub_71002E2640	
-0x71002E2650			FALSE	sub_71002E2650	sub_71002E2650	
-0x71002E26A0			FALSE	sub_71002E26A0	sub_71002E26A0	
-0x71002E26B0			FALSE	sub_71002E26B0	sub_71002E26B0	
-0x71002E2700			FALSE	sub_71002E2700	sub_71002E2700	
-0x71002E2710			FALSE	sub_71002E2710	sub_71002E2710	
-0x71002E2760			FALSE	sub_71002E2760	sub_71002E2760	
-0x71002E2770			FALSE	sub_71002E2770	sub_71002E2770	
+0x71002E25F0			FALSE	_ZNK12_GLOBAL__N_115GustWindNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_115GustWindNrvWait7executeEPN2al11NerveKeeperE	
+0x71002E2640			FALSE	_ZNK12_GLOBAL__N_115GustWindNrvWait13getActionNameEv	_ZNK12_GLOBAL__N_115GustWindNrvWait13getActionNameEv	
+0x71002E2650			FALSE	_ZNK12_GLOBAL__N_119GustWindNrvBlowSign7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_119GustWindNrvBlowSign7executeEPN2al11NerveKeeperE	
+0x71002E26A0			FALSE	_ZNK12_GLOBAL__N_119GustWindNrvBlowSign13getActionNameEv	_ZNK12_GLOBAL__N_119GustWindNrvBlowSign13getActionNameEv	
+0x71002E26B0			FALSE	_ZNK12_GLOBAL__N_115GustWindNrvBlow7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_115GustWindNrvBlow7executeEPN2al11NerveKeeperE	
+0x71002E2700			FALSE	_ZNK12_GLOBAL__N_115GustWindNrvBlow13getActionNameEv	_ZNK12_GLOBAL__N_115GustWindNrvBlow13getActionNameEv	
+0x71002E2710			FALSE	_ZNK12_GLOBAL__N_118GustWindNrvBlowEnd7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_118GustWindNrvBlowEnd7executeEPN2al11NerveKeeperE	
+0x71002E2760			FALSE	_ZNK12_GLOBAL__N_118GustWindNrvBlowEnd13getActionNameEv	_ZNK12_GLOBAL__N_118GustWindNrvBlowEnd13getActionNameEv	
+0x71002E2770			FALSE	_GLOBAL__sub_I_GustWind.cpp	_GLOBAL__sub_I_GustWind.cpp	
 0x71002E27F0		HeadgearPoseBuilder.o	FALSE	_ZN19HeadgearPoseBuilderC2EPN2al9LiveActorEPK24HeadgearPoseBuilderParam	HeadgearPoseBuilder::HeadgearPoseBuilder(al::LiveActor*, HeadgearPoseBuilderParam const*)	
 0x71002E28A0			FALSE	_ZN19HeadgearPoseBuilder5startEPN2al9HitSensorE	HeadgearPoseBuilder::start(al::HitSensor*)	
 0x71002E28F0			FALSE	_ZN19HeadgearPoseBuilder6updateEv	HeadgearPoseBuilder::update()	
