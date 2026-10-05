@@ -18334,8 +18334,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71002D7F50			FALSE	_ZN19GoalPoleRunawayStep7exeWaitEv	GoalPoleRunawayStep::exeWait()	
 0x71002D7F90			FALSE	_ZN19GoalPoleRunawayStepD1Ev	GoalPoleRunawayStep::~GoalPoleRunawayStep()	
 0x71002D7FA0			FALSE	_ZN19GoalPoleRunawayStepD0Ev	GoalPoleRunawayStep::~GoalPoleRunawayStep()	
-0x71002D7FD0			FALSE	sub_71002D7FD0	sub_71002D7FD0	
-0x71002D8050			FALSE	sub_71002D8050	sub_71002D8050	
+0x71002D7FD0			FALSE	_ZNK12_GLOBAL__N_128GoalPoleRunawayStepNrvAppear7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_128GoalPoleRunawayStepNrvAppear7executeEPN2al11NerveKeeperE	
+0x71002D8050			FALSE	_ZNK12_GLOBAL__N_126GoalPoleRunawayStepNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_126GoalPoleRunawayStepNrvWait7executeEPN2al11NerveKeeperE	
 0x71002D8090		GoalPoleStateRunaway.o	FALSE	_ZN20GoalPoleStateRunawayC1EP8GoalPoleRKN2al13ActorInitInfoEPKN4sead8Matrix34IfEE	GoalPoleStateRunaway::GoalPoleStateRunaway(GoalPole*, al::ActorInitInfo const&, sead::Matrix34<float> const*)	
 0x71002D8290			FALSE	_ZN20GoalPoleStateRunaway5startEv	GoalPoleStateRunaway::start()	
 0x71002D82E0			FALSE	_ZN20GoalPoleStateRunaway4killEv	GoalPoleStateRunaway::kill()	
