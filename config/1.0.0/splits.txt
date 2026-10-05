@@ -3457,7 +3457,7 @@ src/nw/atk/detail/thread/atk_SoundThread.cpp:
     .text   start:0x0055A640 end:0x0055BB84
 src/nw/atk/detail/thread/atk_Task.cpp: done
     .text   start:0x0055BB90 end:0x0055BBF4
-src/nw/atk/detail/thread/atk_TaskManager.cpp:
+src/nw/atk/detail/thread/atk_TaskManager.cpp: done
     .text   start:0x0055BC10 end:0x0055C464
 src/nw/atk/detail/thread/atk_TaskThread.cpp: done
     .text   start:0x0055C470 end:0x0055C7DC
