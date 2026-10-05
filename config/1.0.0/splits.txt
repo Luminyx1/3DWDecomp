@@ -753,7 +753,7 @@ src/Game/Enemy/PackunStateHold.cpp:
     .text   start:0x00135320 end:0x001369F0
 src/Game/Enemy/PackunTrace.cpp: done
     .text   start:0x001369F0 end:0x00136D90
-src/Game/Enemy/PackunTraceBig.cpp:
+src/Game/Enemy/PackunTraceBig.cpp: done
     .text   start:0x00136D90 end:0x001374E0
 src/Game/Enemy/Peto.cpp:
     .text   start:0x001374E0 end:0x00139040

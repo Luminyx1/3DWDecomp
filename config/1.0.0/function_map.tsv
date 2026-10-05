@@ -8096,9 +8096,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100137340			FALSE	_ZN14PackunTraceBig11exeReactionEv	PackunTraceBig::exeReaction()	
 0x71001373A0			FALSE	_ZN14PackunTraceBigD1Ev	PackunTraceBig::~PackunTraceBig()	
 0x71001373B0			FALSE	_ZN14PackunTraceBigD0Ev	PackunTraceBig::~PackunTraceBig()	
-0x71001373E0			FALSE	sub_71001373E0	sub_71001373E0	
-0x7100137440			FALSE	sub_7100137440	sub_7100137440	
-0x71001374A0			FALSE	sub_71001374A0	sub_71001374A0	
+0x71001373E0			FALSE	_ZNK12_GLOBAL__N_123PackunTraceBigNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::PackunTraceBigNrvAppear::execute(al::NerveKeeper*) const	
+0x7100137440			FALSE	_ZNK12_GLOBAL__N_125PackunTraceBigNrvReaction7executeEPN2al11NerveKeeperE	(anonymous namespace)::PackunTraceBigNrvReaction::execute(al::NerveKeeper*) const	
+0x71001374A0			FALSE	_ZNK12_GLOBAL__N_121PackunTraceBigNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::PackunTraceBigNrvWait::execute(al::NerveKeeper*) const	
 0x71001374E0		Peto.o	FALSE	_ZN4PetoC2EPKc	Peto::Peto(char const*)	
 0x71001375D0			FALSE	_ZN4PetoC1EPKc	Peto::Peto(char const*)	
 0x71001376C0			FALSE	_ZN4Peto4initERKN2al13ActorInitInfoE	Peto::init(al::ActorInitInfo const&)	
