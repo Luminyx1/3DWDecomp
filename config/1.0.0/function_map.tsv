@@ -5191,8 +5191,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71000C9D30			FALSE	_ZN20StageStartEventSoundD1Ev	StageStartEventSound::~StageStartEventSound()	
 0x71000C9D40			FALSE	_ZN20StageStartEventSoundD0Ev	StageStartEventSound::~StageStartEventSound()	
 0x71000C9D70			FALSE	_ZNK20StageStartEventSound12getEventTypeEv	StageStartEventSound::getEventType() const	
-0x71000C9D80			FALSE	sub_71000C9D80	sub_71000C9D80	
-0x71000C9E20			FALSE	sub_71000C9E20	sub_71000C9E20	
+0x71000C9D80			FALSE	_ZNK12_GLOBAL__N_127StageStartEventSoundNrvPlay7executeEPN2al11NerveKeeperE	(anonymous namespace)::StageStartEventSoundNrvPlay::execute(al::NerveKeeper*) const	
+0x71000C9E20			FALSE	_ZNK12_GLOBAL__N_126StageStartEventSoundNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::StageStartEventSoundNrvEnd::execute(al::NerveKeeper*) const	
 0x71000C9E80		StageStartEventTimer.o	FALSE	_ZN20StageStartEventTimerC2EPKc	StageStartEventTimer::StageStartEventTimer(char const*)	
 0x71000C9F50			FALSE	_ZN20StageStartEventTimerC1EPKc	StageStartEventTimer::StageStartEventTimer(char const*)	
 0x71000C9FE0			FALSE	_ZN20StageStartEventTimer13setStageTimerEP10StageTimer	StageStartEventTimer::setStageTimer(StageTimer*)	
