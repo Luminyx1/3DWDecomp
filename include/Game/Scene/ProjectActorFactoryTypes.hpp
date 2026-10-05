@@ -1,5 +1,15 @@
 #pragma once
 
+#include "MapObj/WoodBox.hpp"
+
+#include "Enemy/BossBunretsu.hpp"
+
+#include "Enemy/MarchGenerator.hpp"
+
+#include "Enemy/KuriboTower.hpp"
+
+#include "MapObj/DoubleMario.hpp"
+
 #include "Library/LiveActor/LiveActor.hpp"
 #include "Library/Scene/ISceneObj.hpp"
 #include "Library/Shadow/ShadowMaskBase.hpp"
@@ -292,14 +302,7 @@ private:
 };
 static_assert(sizeof(BoomerangFlower) == 0x180);
 
-class BossBunretsu : public al::LiveActor {
-public:
-    explicit BossBunretsu(const char* pName);
 
-private:
-    u8 mUnreconstructed[0xac];
-};
-static_assert(sizeof(BossBunretsu) == 0x1f0);
 
 class BossGorobon : public al::LiveActor {
 public:
@@ -1039,14 +1042,7 @@ private:
 };
 static_assert(sizeof(Dossun) == 0x1e8);
 
-class DoubleMario : public al::LiveActor {
-public:
-    explicit DoubleMario(const char* pName, ItemBubble* = nullptr, bool = false);
 
-private:
-    u8 mUnreconstructed[0x24];
-};
-static_assert(sizeof(DoubleMario) == 0x168);
 
 class EchoBlockMapParts : public al::LiveActor {
 public:
@@ -2112,14 +2108,7 @@ private:
 };
 static_assert(sizeof(KuriboMiniGenerator) == 0x150);
 
-class KuriboTower : public al::LiveActor {
-public:
-    explicit KuriboTower(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x74];
-};
-static_assert(sizeof(KuriboTower) == 0x1b8);
 
 class KyoroHei : public al::LiveActor {
 public:
@@ -2229,14 +2218,7 @@ private:
 };
 static_assert(sizeof(MagmaFish) == 0x198);
 
-class MarchGenerator : public al::LiveActor {
-public:
-    explicit MarchGenerator(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x6c];
-};
-static_assert(sizeof(MarchGenerator) == 0x1b0);
 
 class MeraWanwan : public al::LiveActor {
 public:
@@ -3446,14 +3428,7 @@ private:
 };
 static_assert(sizeof(WheelWatcher) == 0x158);
 
-class WoodBox : public al::LiveActor {
-public:
-    explicit WoodBox(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x2c];
-};
-static_assert(sizeof(WoodBox) == 0x170);
 
 class WoodLogBridge : public al::LiveActor {
 public:
