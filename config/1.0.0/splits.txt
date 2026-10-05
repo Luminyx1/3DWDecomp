@@ -1789,7 +1789,7 @@ src/Game/MapObj/KinokoTreasure.cpp:
     .text   start:0x002F6900 end:0x002F7A54
 src/Game/MapObj/KinopioBrigadeChecker.cpp:
     .text   start:0x002F7A60 end:0x002F8424
-src/Game/MapObj/KinopioBrigadeWatcher.cpp:
+src/Game/MapObj/KinopioBrigadeWatcher.cpp: done
     .text   start:0x002F8430 end:0x002F8908
 src/Game/MapObj/KoopaChaseCar.cpp:
     .text   start:0x002F8910 end:0x002F9198

@@ -1,4 +1,6 @@
 #pragma once
+#include "MapObj/KinopioBrigadeNpc.hpp"
+#include "MapObj/KinopioBrigadeWatcher.hpp"
 #include "MapObj/OneSideStep.hpp"
 #include "MapObj/OneSideStepGenerator.hpp"
 #include "MapObj/KeyMoveLoopLiftGenerator.hpp"
@@ -1796,23 +1798,6 @@ private:
 };
 static_assert(sizeof(KinopioBrigadeChecker) == 0x1c8);
 
-class KinopioBrigadeNpc : public al::LiveActor {
-public:
-    explicit KinopioBrigadeNpc(const char* pName);
-
-private:
-    u8 mUnreconstructed[0xc4];
-};
-static_assert(sizeof(KinopioBrigadeNpc) == 0x208);
-
-class KinopioBrigadeWatcher : public al::LiveActor {
-public:
-    explicit KinopioBrigadeWatcher(const char* pName);
-
-private:
-    u8 mUnreconstructed[0x34];
-};
-static_assert(sizeof(KinopioBrigadeWatcher) == 0x178);
 
 class KinopioNpc : public al::LiveActor {
 public:
