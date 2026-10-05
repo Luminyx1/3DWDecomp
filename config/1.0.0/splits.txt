@@ -681,7 +681,7 @@ src/Game/Enemy/Killer.cpp:
     .text   start:0x0010C030 end:0x0010D604
 src/Game/Enemy/KillerGenerator.cpp:
     .text   start:0x0010D610 end:0x0010E644
-src/Game/Enemy/KillerLauncher.cpp:
+src/Game/Enemy/KillerLauncher.cpp: done
     .text   start:0x0010E650 end:0x0010EAE0
 src/Game/Enemy/KillerStateFly.cpp:
     .text   start:0x0010EAE0 end:0x0010F0B4
