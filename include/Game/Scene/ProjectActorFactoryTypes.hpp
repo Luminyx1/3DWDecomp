@@ -1,3 +1,4 @@
+#include "MapObj/BlockRailMover.hpp"
 #include "MapObj/StepScrollWatcher.hpp"
 #include "MapObj/SinkedItem.hpp"
 #include "MapObj/Shards.hpp"
@@ -237,14 +238,7 @@ private:
 static_assert(sizeof(BlockQuestionCourseSelect) == 0x158);
 
 
-class BlockRailMover : public al::LiveActor {
-public:
-    explicit BlockRailMover(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x34];
-};
-static_assert(sizeof(BlockRailMover) == 0x178);
 
 class BlockSlot : public al::LiveActor {
 public:

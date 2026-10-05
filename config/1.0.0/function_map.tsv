@@ -15082,10 +15082,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100250C10			FALSE	_ZN14BlockRailMover7exeMoveEv	BlockRailMover::exeMove()	
 0x7100250CA0			FALSE	_ZN14BlockRailMoverD1Ev	BlockRailMover::~BlockRailMover()	
 0x7100250CB0			FALSE	_ZN14BlockRailMoverD0Ev	BlockRailMover::~BlockRailMover()	
-0x7100250CE0			FALSE	nullsub_156	nullsub_156	
-0x7100250CF0			FALSE	sub_7100250CF0	sub_7100250CF0	
-0x7100250D40			FALSE	sub_7100250D40	sub_7100250D40	
-0x7100250DD0			FALSE	sub_7100250DD0	sub_7100250DD0	
+0x7100250CE0			FALSE	_ZNK12_GLOBAL__N_121BlockRailMoverNrvStop7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_121BlockRailMoverNrvStop7executeEPN2al11NerveKeeperE	
+0x7100250CF0			FALSE	_ZNK12_GLOBAL__N_124BlockRailMoverNrvStandBy7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_124BlockRailMoverNrvStandBy7executeEPN2al11NerveKeeperE	
+0x7100250D40			FALSE	_ZNK12_GLOBAL__N_121BlockRailMoverNrvMove7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_121BlockRailMoverNrvMove7executeEPN2al11NerveKeeperE	
+0x7100250DD0			FALSE	_ZNK12_GLOBAL__N_121BlockRailMoverNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_121BlockRailMoverNrvWait7executeEPN2al11NerveKeeperE	
 0x7100250E20			FALSE	_ZNK2al10FunctorV0MIP14BlockRailMoverMS1_FvvEEclEv	al::FunctorV0M<BlockRailMover*, void (BlockRailMover::*)()>::operator()() const	
 0x7100250E40			FALSE	_ZNK2al10FunctorV0MIP14BlockRailMoverMS1_FvvEE5cloneEv	al::FunctorV0M<BlockRailMover*, void (BlockRailMover::*)()>::clone() const	
 0x7100250E90		BlockRoulette.o	FALSE	_ZN13BlockRouletteC2EPKc	BlockRoulette::BlockRoulette(char const*)	

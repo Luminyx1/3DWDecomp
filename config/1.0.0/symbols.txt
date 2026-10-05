@@ -5658,3 +5658,12 @@
 
 0x7101A50918 32 object _ZTVN12_GLOBAL__N_125StepScrollWatcherNrvAccelE
 0x7101A50938 8 object _ZN12_GLOBAL__N_125NrvStepScrollWatcherAccelE
+
+0x71019F74D0 32 object _ZTVN12_GLOBAL__N_121BlockRailMoverNrvStopE
+
+0x71019F74F0 32 object _ZTVN12_GLOBAL__N_124BlockRailMoverNrvStandByE
+
+0x71019F7510 32 object _ZTVN12_GLOBAL__N_121BlockRailMoverNrvMoveE
+
+0x71019F7530 32 object _ZTVN12_GLOBAL__N_121BlockRailMoverNrvWaitE
+0x71019F7570 32 object _ZN12_GLOBAL__N_117NrvBlockRailMoverE
