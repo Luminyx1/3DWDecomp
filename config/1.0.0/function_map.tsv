@@ -11454,9 +11454,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001BA4B0			FALSE	_ZN17CounterStampParts7exeHideEv	CounterStampParts::exeHide()	
 0x71001BA530			FALSE	_ZN17CounterStampParts6exeGetEv	CounterStampParts::exeGet()	
 0x71001BA5A0			FALSE	_ZN17CounterStampParts7exeWaitEv	CounterStampParts::exeWait()	
-0x71001BA5F0			FALSE	sub_71001BA5F0	sub_71001BA5F0	
-0x71001BA640			FALSE	sub_71001BA640	sub_71001BA640	
-0x71001BA6C0			FALSE	sub_71001BA6C0	sub_71001BA6C0	
+0x71001BA5F0			FALSE	_ZNK12_GLOBAL__N_124CounterStampPartsNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::CounterStampPartsNrvWait::execute(al::NerveKeeper*) const	
+0x71001BA640			FALSE	_ZNK12_GLOBAL__N_124CounterStampPartsNrvHide7executeEPN2al11NerveKeeperE	(anonymous namespace)::CounterStampPartsNrvHide::execute(al::NerveKeeper*) const	
+0x71001BA6C0			FALSE	_ZNK12_GLOBAL__N_123CounterStampPartsNrvGet7executeEPN2al11NerveKeeperE	(anonymous namespace)::CounterStampPartsNrvGet::execute(al::NerveKeeper*) const	
 0x71001BA730		CounterWarpCube.o	FALSE	_ZN15CounterWarpCubeC2ERKN2al14LayoutInitInfoEP8WarpCubei	CounterWarpCube::CounterWarpCube(al::LayoutInitInfo const&, WarpCube*, int)	
 0x71001BA9E0			FALSE	_ZN15CounterWarpCubeC1ERKN2al14LayoutInitInfoEP8WarpCubei	CounterWarpCube::CounterWarpCube(al::LayoutInitInfo const&, WarpCube*, int)	
 0x71001BACA0			FALSE	_ZN15CounterWarpCube6appearEv	CounterWarpCube::appear()	
