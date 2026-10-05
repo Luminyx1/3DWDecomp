@@ -48,6 +48,8 @@ public:
     bool isStandBy() const;
 
 private:
+    friend class KillerStateFly;
+
     KillerGenerator* mGenerator;
     const al::CollisionPartsFilterBase* mFilter;
     al::LiveActor* mHipDropActor = nullptr;

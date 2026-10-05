@@ -7059,8 +7059,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710010EFE0			FALSE	_ZNK14KillerStateFly10getStepFlyEv	KillerStateFly::getStepFly() const	
 0x710010F050			FALSE	_ZN14KillerStateFlyD0Ev	KillerStateFly::~KillerStateFly()	
 0x710010F080			FALSE	_ZNK12_GLOBAL__N_129KillerStateFlyNrvFlyWaitStart7executeEPN2al11NerveKeeperE	(anonymous namespace)::KillerStateFlyNrvFlyWaitStart::execute(al::NerveKeeper*) const	
-0x710010F090			FALSE	sub_710010F090	sub_710010F090	
-0x710010F0A0			FALSE	sub_710010F0A0	sub_710010F0A0	
+0x710010F090			FALSE	_ZNK12_GLOBAL__N_126KillerStateFlyNrvFlySearch7executeEPN2al11NerveKeeperE	(anonymous namespace)::KillerStateFlyNrvFlyWait::execute(al::NerveKeeper*) const	
+0x710010F0A0			FALSE	_ZNK12_GLOBAL__N_124KillerStateFlyNrvFlyWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::KillerStateFlyNrvFlySearch::execute(al::NerveKeeper*) const	
 0x710010F0B0			TRUE	_ZN20WalkerStateJumpParamD2Ev	WalkerStateJumpParam::~WalkerStateJumpParam()	
 0x710010F0C0		Kuribo.o	FALSE	_ZN6KuriboC2EPKc	Kuribo::Kuribo(char const*)	
 0x710010F1C0			FALSE	_ZN6KuriboC1EPKc	Kuribo::Kuribo(char const*)	
