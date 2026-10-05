@@ -5254,7 +5254,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71000CB870			FALSE	_ZN23ActorStateSupportFreeze7exeBindEv	ActorStateSupportFreeze::exeBind()	
 0x71000CBCA0			FALSE	_ZN23ActorStateSupportFreezeD0Ev	ActorStateSupportFreeze::~ActorStateSupportFreeze()	
 0x71000CBCD0			FALSE	_ZNK12_GLOBAL__N_130ActorStateSupportFreezeNrvBind7executeEPN2al11NerveKeeperE	(anonymous namespace)::ActorStateSupportFreezeNrvBind::execute(al::NerveKeeper*) const	
-0x71000CBCE0			FALSE	sub_71000CBCE0	sub_71000CBCE0	
+0x71000CBCE0			FALSE	_GLOBAL__sub_I_ActorStateSupportFreeze.cpp	_GLOBAL__sub_I_ActorStateSupportFreeze.cpp	
 0x71000CBD80		AllDeadWatcher.o	FALSE	_ZN14AllDeadWatcherC2EPKc	AllDeadWatcher::AllDeadWatcher(char const*)	
 0x71000CBE20			FALSE	_ZN14AllDeadWatcherC1EPKc	AllDeadWatcher::AllDeadWatcher(char const*)	
 0x71000CBEC0			FALSE	_ZN14AllDeadWatcher4initERKN2al13ActorInitInfoE	AllDeadWatcher::init(al::ActorInitInfo const&)	

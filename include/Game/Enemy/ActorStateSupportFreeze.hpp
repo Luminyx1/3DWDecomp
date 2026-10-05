@@ -13,13 +13,13 @@ class ScreenPointTarget;
 
 struct ActorStateSupportFreezeParam {
     ActorStateSupportFreezeParam();
-    ActorStateSupportFreezeParam(bool isFreeze, int releaseFrame);
-    ActorStateSupportFreezeParam(bool isFreeze, int releaseFrame, bool isSyncSubActor,
+    ActorStateSupportFreezeParam(bool isStroke, int strokeEffectInterval);
+    ActorStateSupportFreezeParam(bool isStroke, int strokeEffectInterval, bool isSyncSubActor,
                                  bool isAppearItem, int strokeFrame,
                                  const sead::Vector3f& rItemOffset);
 
-    bool mIsFreeze;
-    int mReleaseFrame;
+    bool mIsStroke;
+    int mStrokeEffectInterval;
     bool mIsSyncSubActor;
     bool mIsAppearItem;
     int mStrokeFrame;
@@ -29,6 +29,7 @@ struct ActorStateSupportFreezeParam {
 class ActorStateSupportFreeze : public al::ActorStateBase {
 public:
     ActorStateSupportFreeze(al::LiveActor* pHost, const ActorStateSupportFreezeParam* pParam);
+    /** @brief Destroys the support-freeze state. */
     ~ActorStateSupportFreeze() override = default;
     void appear() override;
     void kill() override;
