@@ -23212,7 +23212,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71003A69E0			FALSE	_ZN9WhiteBell18initAfterPlacementEv	WhiteBell::initAfterPlacement()	
 0x71003A69F0			FALSE	_ZN9WhiteBell6appearEv	WhiteBell::appear()	
 0x71003A6A50			FALSE	_ZN9WhiteBell10receiveMsgEPKN2al9SensorMsgEPNS0_9HitSensorES5_	WhiteBell::receiveMsg(al::SensorMsg const*, al::HitSensor*, al::HitSensor*)	
-0x71003A6C50			FALSE	sub_71003A6C50	sub_71003A6C50	
+0x71003A6C50			FALSE	_ZN12_GLOBAL__N_116acquireWhiteBellEPN2al9LiveActorEPNS0_9HitSensorEb	_ZN12_GLOBAL__N_116acquireWhiteBellEPN2al9LiveActorEPNS0_9HitSensorEb	
 0x71003A6CE0			FALSE	_ZN9WhiteBell21receiveMsgScreenPointEPKN2al9SensorMsgEPNS0_13ScreenPointerEPNS0_17ScreenPointTargetE	WhiteBell::receiveMsgScreenPoint(al::SensorMsg const*, al::ScreenPointer*, al::ScreenPointTarget*)	
 0x71003A6D20			FALSE	_ZN9WhiteBell7controlEv	WhiteBell::control()	
 0x71003A6D80			FALSE	_ZN9WhiteBell16appearPopUpFrontEv	WhiteBell::appearPopUpFront()	
@@ -23225,10 +23225,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71003A7030			FALSE	_ZN9WhiteBell24exeWaitAndCheckCollisionEv	WhiteBell::exeWaitAndCheckCollision()	
 0x71003A70B0			FALSE	_ZN9WhiteBellD1Ev	WhiteBell::~WhiteBell()	
 0x71003A70C0			FALSE	_ZN9WhiteBellD0Ev	WhiteBell::~WhiteBell()	
-0x71003A70F0			FALSE	sub_71003A70F0	sub_71003A70F0	
-0x71003A7140			FALSE	sub_71003A7140	sub_71003A7140	
-0x71003A71A0			FALSE	sub_71003A71A0	sub_71003A71A0	
-0x71003A7220			FALSE	sub_71003A7220	sub_71003A7220	
+0x71003A70F0			FALSE	_ZNK12_GLOBAL__N_116WhiteBellNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_116WhiteBellNrvWait7executeEPN2al11NerveKeeperE	
+0x71003A7140			FALSE	_ZNK12_GLOBAL__N_122WhiteBellNrvPopUpFront7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_122WhiteBellNrvPopUpFront7executeEPN2al11NerveKeeperE	
+0x71003A71A0			FALSE	_ZNK12_GLOBAL__N_133WhiteBellNrvWaitAndCheckCollision7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_133WhiteBellNrvWaitAndCheckCollision7executeEPN2al11NerveKeeperE	
+0x71003A7220			FALSE	_ZNK12_GLOBAL__N_124WhiteBellNrvAttachBubble7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_124WhiteBellNrvAttachBubble7executeEPN2al11NerveKeeperE	
 0x71003A7290		WoodBox.o	FALSE	_ZN7WoodBoxC2EPKc	WoodBox::WoodBox(char const*)	
 0x71003A7320			FALSE	_ZN7WoodBoxC1EPKc	WoodBox::WoodBox(char const*)	
 0x71003A73C0			FALSE	_ZN7WoodBox4initERKN2al13ActorInitInfoE	WoodBox::init(al::ActorInitInfo const&)	

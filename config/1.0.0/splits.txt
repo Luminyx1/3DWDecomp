@@ -2177,7 +2177,7 @@ src/Game/MapObj/WaterAreaMoveModel.cpp:
     .text   start:0x003A5890 end:0x003A6344
 src/Game/MapObj/WheelWatcher.cpp: done
     .text   start:0x003A6350 end:0x003A6744
-src/Game/MapObj/WhiteBell.cpp:
+src/Game/MapObj/WhiteBell.cpp: done
     .text   start:0x003A6750 end:0x003A7284
 src/Game/MapObj/WoodBox.cpp:
     .text   start:0x003A7290 end:0x003A7F80
