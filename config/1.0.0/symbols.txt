@@ -5235,3 +5235,4 @@
 0x71019F82E0 8 object _ZN12_GLOBAL__N_125NrvBlockStateHeadgearWaitE
 0x71019F82C0 32 object _ZTVN12_GLOBAL__N_135BlockStateHeadgearNrvAppearHeadgearE
 0x71019F82E8 8 object _ZN12_GLOBAL__N_135NrvBlockStateHeadgearAppearHeadgearE
+0x7101A66E58 24 object _ZN12_GLOBAL__N_113cDefaultParamE

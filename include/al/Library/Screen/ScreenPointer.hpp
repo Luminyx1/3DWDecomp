@@ -25,6 +25,7 @@ public:
     bool hitCheckSegment(const sead::Vector3f& rStart, const sead::Vector3f& rEnd);
     bool hitCheckScreenCircle(const sead::Vector2f& rPos, f32 radius);
 
+    const LiveActor* getHost() const { return mHost; }
     const sead::Vector3f& getHitPos() const { return mHitPos; }
     const sead::Vector3f& getHitNormal() const { return mHitNormal; }
 
