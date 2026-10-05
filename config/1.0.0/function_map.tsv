@@ -5174,7 +5174,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71000C9880			FALSE	_ZN19StageStartEventDemoD1Ev	StageStartEventDemo::~StageStartEventDemo()	
 0x71000C9890			FALSE	_ZN19StageStartEventDemoD0Ev	StageStartEventDemo::~StageStartEventDemo()	
 0x71000C98C0			FALSE	_ZNK19StageStartEventDemo12getEventTypeEv	StageStartEventDemo::getEventType() const	
-0x71000C98D0			FALSE	sub_71000C98D0	sub_71000C98D0	
+0x71000C98D0			FALSE	_ZNK12_GLOBAL__N_125StageStartEventDemoNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::StageStartEventDemoNrvEnd::execute(al::NerveKeeper*) const	
 0x71000C98E0			FALSE	_ZNK12_GLOBAL__N_126StageStartEventDemoNrvPlay7executeEPN2al11NerveKeeperE	(anonymous namespace)::StageStartEventDemoNrvPlay::execute(al::NerveKeeper*) const	
 0x71000C98F0			FALSE	_ZNK12_GLOBAL__N_126StageStartEventDemoNrvFade7executeEPN2al11NerveKeeperE	(anonymous namespace)::StageStartEventDemoNrvFade::execute(al::NerveKeeper*) const	
 0x71000C9900			FALSE	_ZNK2al10FunctorV0MIP19StageStartEventDemoMS1_FvvEEclEv	al::FunctorV0M<StageStartEventDemo*, void (StageStartEventDemo::*)()>::operator()() const	
