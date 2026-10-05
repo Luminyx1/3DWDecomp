@@ -1549,9 +1549,9 @@ src/Game/MapObj/CoinStackBase.cpp:
     .text   start:0x0027D860 end:0x0027E1FC
 src/Game/MapObj/CollectItem.cpp:
     .text   start:0x0027E200 end:0x0027FF20
-src/Game/MapObj/CollectRing.cpp:
+src/Game/MapObj/CollectRing.cpp: done
     .text   start:0x0027FF20 end:0x00280300
-src/Game/MapObj/CollectRingHolder.cpp:
+src/Game/MapObj/CollectRingHolder.cpp: done
     .text   start:0x00280300 end:0x002808D4
 src/Game/MapObj/CollisionSearchObj.cpp: done
     .text   start:0x002808E0 end:0x00280DC8

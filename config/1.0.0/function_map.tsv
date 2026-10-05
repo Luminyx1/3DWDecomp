@@ -16332,7 +16332,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100280240			FALSE	_ZN11CollectRing7exeWaitEv	CollectRing::exeWait()	
 0x7100280280			FALSE	_ZN11CollectRingD1Ev	CollectRing::~CollectRing()	
 0x7100280290			FALSE	_ZN11CollectRingD0Ev	CollectRing::~CollectRing()	
-0x71002802C0			FALSE	sub_71002802C0	sub_71002802C0	
+0x71002802C0			FALSE	_ZNK12_GLOBAL__N_118CollectRingNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_118CollectRingNrvWait7executeEPN2al11NerveKeeperE	
 0x7100280300		CollectRingHolder.o	FALSE	_ZN17CollectRingHolderC2EPKc	CollectRingHolder::CollectRingHolder(char const*)	
 0x7100280380			FALSE	_ZN17CollectRingHolderC1EPKc	CollectRingHolder::CollectRingHolder(char const*)	
 0x7100280410			FALSE	_ZN17CollectRingHolder4initERKN2al13ActorInitInfoE	CollectRingHolder::init(al::ActorInitInfo const&)	
@@ -16343,7 +16343,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100280880			FALSE	_ZN17CollectRingHolderD1Ev	CollectRingHolder::~CollectRingHolder()	
 0x7100280890			FALSE	_ZN17CollectRingHolderD0Ev	CollectRingHolder::~CollectRingHolder()	
 0x71002808C0			FALSE	_ZNK12_GLOBAL__N_129CollectRingHolderNrvCountDown7executeEPN2al11NerveKeeperE	(anonymous namespace)::CollectRingHolderNrvCountDown::execute(al::NerveKeeper*) const	
-0x71002808D0			FALSE	nullsub_168	nullsub_168	
+0x71002808D0			FALSE	_ZNK12_GLOBAL__N_123CollectRingHolderNrvEnd7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_123CollectRingHolderNrvEnd7executeEPN2al11NerveKeeperE	
 0x71002808E0		CollisionSearchObj.o	FALSE	_ZN18CollisionSearchObjC2EPKc	CollisionSearchObj::CollisionSearchObj(char const*)	
 0x7100280970			FALSE	_ZN18CollisionSearchObjC1EPKc	CollisionSearchObj::CollisionSearchObj(char const*)	
 0x7100280A00			FALSE	_ZN18CollisionSearchObj4initERKN2al13ActorInitInfoE	CollisionSearchObj::init(al::ActorInitInfo const&)	
