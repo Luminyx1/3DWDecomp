@@ -1925,7 +1925,7 @@ src/Game/MapObj/RouteDokan.cpp:
     .text   start:0x0034AB70 end:0x0034DBC4
 src/Game/MapObj/RouteDokanBazookaRider.cpp:
     .text   start:0x0034DBD0 end:0x003501B8
-src/Game/MapObj/RouteDokanEntrance.cpp:
+src/Game/MapObj/RouteDokanEntrance.cpp: done
     .text   start:0x003501C0 end:0x003507F8
 src/Game/MapObj/RouteDokanEntranceGroup.cpp: done
     .text   start:0x00350800 end:0x00350D78

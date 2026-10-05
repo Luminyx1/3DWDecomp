@@ -20997,8 +20997,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100350690			FALSE	_ZN18RouteDokanEntrance6exeOutEv	RouteDokanEntrance::exeOut()	
 0x7100350700			FALSE	_ZN18RouteDokanEntranceD1Ev	RouteDokanEntrance::~RouteDokanEntrance()	
 0x7100350710			FALSE	_ZN18RouteDokanEntranceD0Ev	RouteDokanEntrance::~RouteDokanEntrance()	
-0x7100350740			FALSE	sub_7100350740	sub_7100350740	
-0x7100350790			FALSE	sub_7100350790	sub_7100350790	
+0x7100350740			FALSE	_ZNK12_GLOBAL__N_125RouteDokanEntranceNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_125RouteDokanEntranceNrvWait7executeEPN2al11NerveKeeperE	
+0x7100350790			FALSE	_ZNK12_GLOBAL__N_124RouteDokanEntranceNrvOut7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_124RouteDokanEntranceNrvOut7executeEPN2al11NerveKeeperE	
 0x7100350800		RouteDokanEntranceGroup.o	FALSE	_ZN23RouteDokanEntranceGroupC2EPKcS1_	RouteDokanEntranceGroup::RouteDokanEntranceGroup(char const*, char const*)	
 0x7100350810			FALSE	_ZN23RouteDokanEntranceGroup4initEPN2al19BlockRailPartsGroupERKNS0_13ActorInitInfoEb	RouteDokanEntranceGroup::init(al::BlockRailPartsGroup*, al::ActorInitInfo const&, bool)	
 0x7100350B60			FALSE	_ZN23RouteDokanEntranceGroup11addEntranceEPN2al14BlockRailPartsEP18RouteDokanEntrance	RouteDokanEntranceGroup::addEntrance(al::BlockRailParts*, RouteDokanEntrance*)	
