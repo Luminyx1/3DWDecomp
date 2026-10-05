@@ -3183,7 +3183,7 @@ src/Game/Scene/StageScene.cpp:
     .text   start:0x004D42E0 end:0x004DA344
 src/Game/Scene/StageSceneStateGameOver.cpp:
     .text   start:0x004DA350 end:0x004DAE64
-src/Game/Scene/TitleDemoInfo.cpp:
+src/Game/Scene/TitleDemoInfo.cpp: done
     .text   start:0x004DAE70 end:0x004DAE9C
 src/Game/Scene/TitleScene.cpp:
     .text   start:0x004DAEA0 end:0x004DDC6C
