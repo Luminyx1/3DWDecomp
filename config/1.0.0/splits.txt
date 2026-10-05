@@ -1607,7 +1607,7 @@ src/Game/MapObj/EffectObjBreathBubble.cpp:
     .text   start:0x002A6AB0 end:0x002A7098
 src/Game/MapObj/EnterCatMarioMiddleViewRocket.cpp: done
     .text   start:0x002A70A0 end:0x002A7310
-src/Game/MapObj/ExplosionComboCounterHolder.cpp:
+src/Game/MapObj/ExplosionComboCounterHolder.cpp: done
     .text   start:0x002A7310 end:0x002A75BC
 src/Game/MapObj/FairyHouseIllustItemWatcher.cpp:
     .text   start:0x002A75C0 end:0x002A79A4
@@ -1815,9 +1815,9 @@ src/Game/MapObj/KouraSurfBindPuppeteer.cpp:
     .text   start:0x0030DCF0 end:0x0030EC98
 src/Game/MapObj/Lantern.cpp:
     .text   start:0x0030ECA0 end:0x0030FE88
-src/Game/MapObj/LanternRing.cpp:
+src/Game/MapObj/LanternRing.cpp: done
     .text   start:0x0030FE90 end:0x00310164
-src/Game/MapObj/LanternSwingMovement.cpp:
+src/Game/MapObj/LanternSwingMovement.cpp: done
     .text   start:0x00310170 end:0x00310404
 src/Game/MapObj/LavaGeyser.cpp:
     .text   start:0x00310410 end:0x00310F84

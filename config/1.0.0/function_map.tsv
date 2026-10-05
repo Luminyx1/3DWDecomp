@@ -19706,7 +19706,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71003100C0			FALSE	_ZN11LanternRing12attackSensorEPN2al9HitSensorES2_	LanternRing::attackSensor(al::HitSensor*, al::HitSensor*)	
 0x7100310120			FALSE	_ZN11LanternRingD1Ev	LanternRing::~LanternRing()	
 0x7100310130			FALSE	_ZN11LanternRingD0Ev	LanternRing::~LanternRing()	
-0x7100310160			FALSE	nullsub_203	nullsub_203	
+0x7100310160			FALSE	_ZNK12_GLOBAL__N_118LanternRingNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_118LanternRingNrvWait7executeEPN2al11NerveKeeperE	
 0x7100310170		LanternSwingMovement.o	FALSE	_ZN20LanternSwingMovementC2Ev	LanternSwingMovement::LanternSwingMovement()	
 0x71003101D0			FALSE	_ZN20LanternSwingMovement7exeMoveEv	LanternSwingMovement::exeMove()	
 0x7100310260			FALSE	_ZN20LanternSwingMovement11updateSwingEv	LanternSwingMovement::updateSwing()	
@@ -19716,8 +19716,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100310300			FALSE	_ZN20LanternSwingMovement16getCurrentRotateEv	LanternSwingMovement::getCurrentRotate()	
 0x7100310330			FALSE	_ZNK20LanternSwingMovement5isEndEv	LanternSwingMovement::isEnd() const	
 0x7100310340			FALSE	_ZN20LanternSwingMovementD0Ev	LanternSwingMovement::~LanternSwingMovement()	
-0x7100310370			FALSE	sub_7100310370	sub_7100310370	
-0x7100310400			FALSE	nullsub_204	nullsub_204	
+0x7100310370			FALSE	_ZNK12_GLOBAL__N_127LanternSwingMovementNrvMove7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_127LanternSwingMovementNrvMove7executeEPN2al11NerveKeeperE	
+0x7100310400			FALSE	_ZNK12_GLOBAL__N_126LanternSwingMovementNrvEnd7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_126LanternSwingMovementNrvEnd7executeEPN2al11NerveKeeperE	
 0x7100310410		LavaGeyser.o	FALSE	_ZN10LavaGeyserC2EPKc	LavaGeyser::LavaGeyser(char const*)	
 0x71003104E0			FALSE	_ZN10LavaGeyserC1EPKc	LavaGeyser::LavaGeyser(char const*)	
 0x71003105B0			FALSE	_ZN10LavaGeyser4initERKN2al13ActorInitInfoE	LavaGeyser::init(al::ActorInitInfo const&)	
