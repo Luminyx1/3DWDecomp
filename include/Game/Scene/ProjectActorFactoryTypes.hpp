@@ -1,3 +1,4 @@
+#include "MapObj/SuperBellSpecial.hpp"
 #include "MapObj/SuperBell.hpp"
 #include "MapObj/BoomerangFlower.hpp"
 #include "MapObj/FireFlower.hpp"
@@ -2403,14 +2404,7 @@ static_assert(sizeof(StrongHipDropReactPoint) == 0x148);
 
 
 
-class SuperBellSpecial : public al::LiveActor {
-public:
-    explicit SuperBellSpecial(const char* pName, ItemBubble* = nullptr);
 
-private:
-    u8 mUnreconstructed[0x3c];
-};
-static_assert(sizeof(SuperBellSpecial) == 0x180);
 
 
 class KuriboGiga : public al::LiveActor {
