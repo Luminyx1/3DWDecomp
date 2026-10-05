@@ -19,6 +19,11 @@ class DisasterModeController : public al::LiveActor {
   public:
     static DisasterModeController* tryGetController(const al::IUseSceneObjHolder* pUser);
 
+    void endImmediate();
+    void pause(bool);
+    void beginAndNeverEndDebug();
+    void setGoalItemDisasterTrigger() { mGoalItemDisasterTrigger = true; }
+
     void forceDisasterForeshadowOff(bool isForce, s32 step);
 
     /**
@@ -59,7 +64,9 @@ class DisasterModeController : public al::LiveActor {
     al::LiveActor* mDemoSubActor;  // 0x1f0
     u8 mUnknown1F8;
     bool mIsDisasterMode;
-    u8 mUnknown1FA[0x25b - 0x1fa];
+    u8 mUnknown1FA[0x23c - 0x1fa];
+    bool mGoalItemDisasterTrigger;  // 0x23c
+    u8 mUnknown23D[0x25b - 0x23d];
     bool mIsDisasterForeshadow;  // 0x25b
     u8 mUnknown25C[0x2d0 - 0x25c];
     s32 mDisasterFramesOffset;

@@ -4952,3 +4952,9 @@
 
 # ItemStatePopUpAbove punch displacement table.
 0x71016B57E4 24 object _ZN12_GLOBAL__N_110sPunchMoveE
+
+0x71019CD1B8 32 object _ZTVN12_GLOBAL__N_128GigaBellBindPuppeteerNrvWaitE
+0x71019CD1D8 8 object _ZN12_GLOBAL__N_128NrvGigaBellBindPuppeteerWaitE
+
+0x71019CD1E0 32 object _ZTVN12_GLOBAL__N_131GigaBellBindPuppeteerNrvAnimateE
+0x71019CD200 8 object _ZN12_GLOBAL__N_131NrvGigaBellBindPuppeteerAnimateE

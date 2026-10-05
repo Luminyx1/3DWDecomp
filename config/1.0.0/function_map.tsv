@@ -10841,8 +10841,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001A53B0			FALSE	_ZN21GigaBellBindPuppeteer7exeWaitEv	GigaBellBindPuppeteer::exeWait()	
 0x71001A53C0			FALSE	_ZN21GigaBellBindPuppeteer10exeAnimateEv	GigaBellBindPuppeteer::exeAnimate()	
 0x71001A5440			FALSE	_ZN21GigaBellBindPuppeteerD0Ev	GigaBellBindPuppeteer::~GigaBellBindPuppeteer()	
-0x71001A5470			FALSE	nullsub_100	nullsub_100	
-0x71001A5480			FALSE	sub_71001A5480	sub_71001A5480	
+0x71001A5470			FALSE	_ZNK12_GLOBAL__N_128GigaBellBindPuppeteerNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_128GigaBellBindPuppeteerNrvWait7executeEPN2al11NerveKeeperE	
+0x71001A5480			FALSE	_ZNK12_GLOBAL__N_131GigaBellBindPuppeteerNrvAnimate7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_131GigaBellBindPuppeteerNrvAnimate7executeEPN2al11NerveKeeperE	
 0x71001A5500		GigaBellItem.o	FALSE	_ZN12GigaBellItemC2EPKc	GigaBellItem::GigaBellItem(char const*)	
 0x71001A5590			FALSE	_ZN12GigaBellItemC1EPKc	GigaBellItem::GigaBellItem(char const*)	
 0x71001A5620			FALSE	_ZN12GigaBellItem4initERKN2al13ActorInitInfoE	GigaBellItem::init(al::ActorInitInfo const&)	

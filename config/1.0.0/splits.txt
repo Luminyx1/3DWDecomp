@@ -1007,7 +1007,7 @@ src/Game/MapObj/Fury/DrcTouchEffectTraceTracker.cpp: done
     .text   start:0x001A0AA0 end:0x001A0AF8
 src/Game/MapObj/Fury/EffectObjFollowCameraGame.cpp:
     .text   start:0x001A0B00 end:0x001A0F3C
-src/Game/MapObj/Fury/EffectObjGame.cpp:
+src/Game/MapObj/Fury/EffectObjGame.cpp: done
     .text   start:0x001A0F40 end:0x001A1250
 src/Game/MapObj/Fury/EffectObjBattleArenaBunBun.cpp:
     .text   start:0x001A1250 end:0x001A1624
@@ -1025,7 +1025,7 @@ src/Game/MapObj/Fury/GameSkyProjection.cpp: done
     .text   start:0x001A3AE0 end:0x001A3CA0
 src/Game/MapObj/Fury/GigaBell3in1.cpp:
     .text   start:0x001A3CA0 end:0x001A5248
-src/Game/MapObj/Fury/GigaBellBindPuppeteer.cpp:
+src/Game/MapObj/Fury/GigaBellBindPuppeteer.cpp: done
     .text   start:0x001A5250 end:0x001A5500
 src/Game/MapObj/Fury/GigaBellItem.cpp:
     .text   start:0x001A5500 end:0x001A5D70
@@ -1667,7 +1667,7 @@ src/Game/MapObj/GoalItemBindPuppeteer.cpp:
     .text   start:0x002CE8B0 end:0x002CEC04
 src/Game/MapObj/GoalItemHolder.cpp:
     .text   start:0x002CEC10 end:0x002CF138
-src/Game/MapObj/GoalItemWatcher.cpp:
+src/Game/MapObj/GoalItemWatcher.cpp: done
     .text   start:0x002CF140 end:0x002CF438
 src/Game/MapObj/GoalObjHolder.cpp: done
     .text   start:0x002CF440 end:0x002CF674
