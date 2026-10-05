@@ -2059,7 +2059,7 @@ src/Game/MapObj/TestKinokoHead.cpp:
     .text   start:0x0037C630 end:0x0037CE18
 src/Game/MapObj/TestKitaharaRouteBazooka.cpp:
     .text   start:0x0037CE20 end:0x0037D5E4
-src/Game/MapObj/TestKitaharaRouteBazookaEntrance.cpp:
+src/Game/MapObj/TestKitaharaRouteBazookaEntrance.cpp: done
     .text   start:0x0037D5F0 end:0x0037DBD0
 src/Game/MapObj/TestKitaharaRouteBazookaEntranceGroup.cpp: done
     .text   start:0x0037DBD0 end:0x0037E088
