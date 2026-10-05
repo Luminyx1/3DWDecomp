@@ -1353,7 +1353,7 @@ src/Game/MapObj/ActorStateGiantBlow.cpp:
     .text   start:0x0023B8B0 end:0x0023BC68
 src/Game/MapObj/ActorStateRouteDokanMove.cpp:
     .text   start:0x0023BC70 end:0x0023C128
-src/Game/MapObj/AssistLeaf.cpp:
+src/Game/MapObj/AssistLeaf.cpp: done
     .text   start:0x0023C130 end:0x0023CD8C
 src/Game/MapObj/AssistSlideMapParts.cpp:
     .text   start:0x0023CD90 end:0x0023DC00

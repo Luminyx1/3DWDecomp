@@ -14543,11 +14543,11 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710023CA90			FALSE	_ZN10AssistLeaf24exeWaitAndCheckCollisionEv	AssistLeaf::exeWaitAndCheckCollision()	
 0x710023CB10			FALSE	_ZN10AssistLeafD1Ev	AssistLeaf::~AssistLeaf()	
 0x710023CB20			FALSE	_ZN10AssistLeafD0Ev	AssistLeaf::~AssistLeaf()	
-0x710023CB50			FALSE	sub_710023CB50	sub_710023CB50	
-0x710023CBA0			FALSE	sub_710023CBA0	sub_710023CBA0	
-0x710023CBD0			FALSE	sub_710023CBD0	sub_710023CBD0	
-0x710023CC00			FALSE	sub_710023CC00	sub_710023CC00	
-0x710023CC80			FALSE	sub_710023CC80	sub_710023CC80	
+0x710023CB50			FALSE	_ZNK12_GLOBAL__N_117AssistLeafNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_117AssistLeafNrvWait7executeEPN2al11NerveKeeperE	
+0x710023CBA0			FALSE	_ZNK12_GLOBAL__N_123AssistLeafNrvPopUpAbove7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_123AssistLeafNrvPopUpAbove7executeEPN2al11NerveKeeperE	
+0x710023CBD0			FALSE	_ZNK12_GLOBAL__N_123AssistLeafNrvPopUpFront7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_123AssistLeafNrvPopUpFront7executeEPN2al11NerveKeeperE	
+0x710023CC00			FALSE	_ZNK12_GLOBAL__N_134AssistLeafNrvWaitAndCheckCollision7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_134AssistLeafNrvWaitAndCheckCollision7executeEPN2al11NerveKeeperE	
+0x710023CC80			FALSE	_GLOBAL__sub_I_AssistLeaf.cpp	_GLOBAL__sub_I_AssistLeaf.cpp	
 0x710023CD90		AssistSlideMapParts.o	FALSE	_ZN19AssistSlideMapPartsC2EPKc	AssistSlideMapParts::AssistSlideMapParts(char const*)	
 0x710023CE90			FALSE	_ZN19AssistSlideMapPartsC1EPKc	AssistSlideMapParts::AssistSlideMapParts(char const*)	
 0x710023CFA0			FALSE	_ZN19AssistSlideMapParts4initERKN2al13ActorInitInfoE	AssistSlideMapParts::init(al::ActorInitInfo const&)	
