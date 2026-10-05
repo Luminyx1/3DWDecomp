@@ -12808,9 +12808,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001EE520			FALSE	_ZN24SimpleAppearWaitEndParts9exeAppearEv	SimpleAppearWaitEndParts::exeAppear()	
 0x71001EE580			FALSE	_ZN24SimpleAppearWaitEndParts7exeWaitEv	SimpleAppearWaitEndParts::exeWait()	
 0x71001EE590			FALSE	_ZN24SimpleAppearWaitEndParts6exeEndEv	SimpleAppearWaitEndParts::exeEnd()	
-0x71001EE5F0			FALSE	nullsub_132	nullsub_132	
-0x71001EE600			FALSE	sub_71001EE600	sub_71001EE600	
-0x71001EE670			FALSE	sub_71001EE670	sub_71001EE670	
+0x71001EE5F0			FALSE	_ZNK12_GLOBAL__N_131SimpleAppearWaitEndPartsNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::SimpleAppearWaitEndPartsNrvWait::execute(al::NerveKeeper*) const	
+0x71001EE600			FALSE	_ZNK12_GLOBAL__N_133SimpleAppearWaitEndPartsNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::SimpleAppearWaitEndPartsNrvAppear::execute(al::NerveKeeper*) const	
+0x71001EE670			FALSE	_ZNK12_GLOBAL__N_130SimpleAppearWaitEndPartsNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::SimpleAppearWaitEndPartsNrvEnd::execute(al::NerveKeeper*) const	
 0x71001EE6E0		SingleModeSceneLayout.o	FALSE	_ZN21SingleModeSceneLayout27tryGetSingleModeSceneLayoutEPKN2al18IUseSceneObjHolderE	SingleModeSceneLayout::tryGetSingleModeSceneLayout(al::IUseSceneObjHolder const*)	
 0x71001EE710			FALSE	_ZN21SingleModeSceneLayout15tryDisablePauseEPKN2al18IUseSceneObjHolderEb	SingleModeSceneLayout::tryDisablePause(al::IUseSceneObjHolder const*, bool)	
 0x71001EE740			FALSE	_ZN21SingleModeSceneLayoutC2ERKN2al14LayoutInitInfoEP14GameDataHolderPKcPK15GreenStarKeeperPKNS0_12PlayerHolderEPK18PlayerAliveWatcherP19ProjectItemDirector	SingleModeSceneLayout::SingleModeSceneLayout(al::LayoutInitInfo const&, GameDataHolder*, char const*, GreenStarKeeper const*, al::PlayerHolder const*, PlayerAliveWatcher const*, ProjectItemDirector*)	
@@ -12901,10 +12901,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001F1860			FALSE	_ZN12StaffRollFin7exeHideEv	StaffRollFin::exeHide()	
 0x71001F18A0			FALSE	_ZN12StaffRollFin8startEndEv	StaffRollFin::startEnd()	
 0x71001F18B0			FALSE	_ZNK12StaffRollFin5isEndEv	StaffRollFin::isEnd() const	
-0x71001F1900			FALSE	sub_71001F1900	sub_71001F1900	
-0x71001F1950			FALSE	sub_71001F1950	sub_71001F1950	
-0x71001F19C0			FALSE	sub_71001F19C0	sub_71001F19C0	
-0x71001F1A10			FALSE	sub_71001F1A10	sub_71001F1A10	
+0x71001F1900			FALSE	_ZNK12_GLOBAL__N_119StaffRollFinNrvHide7executeEPN2al11NerveKeeperE	(anonymous namespace)::StaffRollFinNrvHide::execute(al::NerveKeeper*) const	
+0x71001F1950			FALSE	_ZNK12_GLOBAL__N_121StaffRollFinNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::StaffRollFinNrvAppear::execute(al::NerveKeeper*) const	
+0x71001F19C0			FALSE	_ZNK12_GLOBAL__N_119StaffRollFinNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::StaffRollFinNrvWait::execute(al::NerveKeeper*) const	
+0x71001F1A10			FALSE	_ZNK12_GLOBAL__N_118StaffRollFinNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::StaffRollFinNrvEnd::execute(al::NerveKeeper*) const	
 0x71001F1A60		StaffRollJob.o	FALSE	_ZN12StaffRollJobC2ERKN2al14LayoutInitInfoE	StaffRollJob::StaffRollJob(al::LayoutInitInfo const&)	
 0x71001F1B30			FALSE	_ZN12StaffRollJobC1ERKN2al14LayoutInitInfoE	StaffRollJob::StaffRollJob(al::LayoutInitInfo const&)	
 0x71001F1C00			FALSE	_ZN12StaffRollJob6appearEv	StaffRollJob::appear()	

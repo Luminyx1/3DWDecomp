@@ -4736,3 +4736,14 @@
 0x7101A0F140 8 object _ZN12_GLOBAL__N_121NrvDokanAppearOutOnlyE
 0x7101A0F148 8 object _ZN12_GLOBAL__N_117NrvDokanDisappearE
 0x7101A0F160 8 object _ZN12_GLOBAL__N_137NrvDokanPlayerOutWithCameraTicketWaitE
+
+# src/Game/Layout/SimpleAppearWaitEndParts
+0x71019E3688 8 object _ZN12_GLOBAL__N_131NrvSimpleAppearWaitEndPartsWaitE
+0x71019E36B0 8 object _ZN12_GLOBAL__N_133NrvSimpleAppearWaitEndPartsAppearE
+0x71019E36D8 8 object _ZN12_GLOBAL__N_130NrvSimpleAppearWaitEndPartsEndE
+
+# src/Game/Layout/StaffRollFin
+0x71019E4238 8 object _ZN12_GLOBAL__N_119NrvStaffRollFinHideE
+0x71019E4260 8 object _ZN12_GLOBAL__N_121NrvStaffRollFinAppearE
+0x71019E4288 8 object _ZN12_GLOBAL__N_119NrvStaffRollFinWaitE
+0x71019E42B0 8 object _ZN12_GLOBAL__N_118NrvStaffRollFinEndE
