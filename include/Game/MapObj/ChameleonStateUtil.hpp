@@ -6,6 +6,7 @@ namespace al { class LiveActor; class SensorMsg; class HitSensor; }
 class ChameleonStateHipDrop;
 class ChameleonStateGiantPlayer;
 namespace ChameleonStateUtil {
+void updateIndirectParam(RenderMaterialIndirectParam*, float, float, float);
 void setRenderMaterialIndirectParam(al::LiveActor*, const RenderMaterialIndirectParam*);
 bool tryRequestHipDropAppearChameleon(const al::SensorMsg*, al::HitSensor*, ChameleonStateHipDrop*);
 bool tryRequestGiantPlayerAppearChameleon(const al::SensorMsg*, al::HitSensor*, ChameleonStateGiantPlayer*);
