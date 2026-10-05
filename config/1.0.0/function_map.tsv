@@ -360,8 +360,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710000D480			FALSE	_ZN15BossWackunFrame7revivalEv	BossWackunFrame::revival()	
 0x710000D4C0			FALSE	_ZN15BossWackunFrameD1Ev	BossWackunFrame::~BossWackunFrame()	
 0x710000D4D0			FALSE	_ZN15BossWackunFrameD0Ev	BossWackunFrame::~BossWackunFrame()	
-0x710000D500			FALSE	sub_710000D500	sub_710000D500	
-0x710000D510			FALSE	sub_710000D510	sub_710000D510	
+0x710000D500			FALSE	_ZNK12_GLOBAL__N_122BossWackunFrameNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::BossWackunFrameNrvWait::execute(al::NerveKeeper*) const	matched nerve
+0x710000D510			FALSE	_ZNK12_GLOBAL__N_124BossWackunFrameNrvDamage7executeEPN2al11NerveKeeperE	(anonymous namespace)::BossWackunFrameNrvDamage::execute(al::NerveKeeper*) const	matched nerve
 0x710000D520		BossWackunHand.o	FALSE	_ZN14BossWackunHandC2EP10BossWackun	BossWackunHand::BossWackunHand(BossWackun*)	
 0x710000D5C0			FALSE	_ZN14BossWackunHandC1EP10BossWackun	BossWackunHand::BossWackunHand(BossWackun*)	
 0x710000D660			FALSE	_ZN14BossWackunHand4initERKN2al13ActorInitInfoE	BossWackunHand::init(al::ActorInitInfo const&)	

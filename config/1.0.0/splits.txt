@@ -109,7 +109,7 @@ src/Game/Boss/BossWackun.cpp:
     .text   start:0x00008A10 end:0x0000B434
 src/Game/Boss/BossWackunBody.cpp:
     .text   start:0x0000B440 end:0x0000D268
-src/Game/Boss/BossWackunFrame.cpp:
+src/Game/Boss/BossWackunFrame.cpp: done
     .text   start:0x0000D270 end:0x0000D51C
 src/Game/Boss/BossWackunHand.cpp:
     .text   start:0x0000D520 end:0x0000DD78

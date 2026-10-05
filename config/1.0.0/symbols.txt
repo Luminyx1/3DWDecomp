@@ -4733,3 +4733,7 @@
 
 # KoopaLastAttack
 0x7101955188 8 object _ZN12_GLOBAL__N_128NrvKoopaLastAttackFireAttackE
+
+# BossWackunFrame
+0x710194EBC8 8 object _ZN12_GLOBAL__N_122NrvBossWackunFrameWaitE
+0x710194EBF0 8 object _ZN12_GLOBAL__N_124NrvBossWackunFrameDamageE
