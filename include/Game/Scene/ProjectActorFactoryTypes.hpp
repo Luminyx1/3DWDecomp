@@ -1,3 +1,4 @@
+#include "MapObj/BreakMapParts.hpp"
 #include "MapObj/BoxKuribo.hpp"
 #include "MapObj/PlessieTerrain.hpp"
 #include "MapObj/DokanWorldWarp.hpp"
@@ -354,14 +355,7 @@ private:
 };
 static_assert(sizeof(BoxLight) == 0x1c0);
 
-class BreakMapParts : public al::LiveActor {
-public:
-    explicit BreakMapParts(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x1c];
-};
-static_assert(sizeof(BreakMapParts) == 0x160);
 
 class Bubble : public al::LiveActor {
 public:

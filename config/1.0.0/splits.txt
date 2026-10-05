@@ -1456,7 +1456,7 @@ src/Game/MapObj/BoxPropeller.cpp:
     .text   start:0x0025DFA0 end:0x0025F834
 src/Game/MapObj/BoxPropellerPropeller.cpp: done
     .text   start:0x0025F840 end:0x0025FD10
-src/Game/MapObj/BreakMapParts.cpp:
+src/Game/MapObj/BreakMapParts.cpp: done
     .text   start:0x0025FD10 end:0x00260804
 src/Game/MapObj/Bush.cpp:
     .text   start:0x00260810 end:0x00261B18
