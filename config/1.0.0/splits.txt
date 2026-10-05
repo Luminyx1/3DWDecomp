@@ -987,7 +987,7 @@ src/Game/MapObj/Fury/CoinStackMoving.cpp: done
     .text   start:0x001959A0 end:0x001960F8
 src/Game/MapObj/Fury/DisasterBlockDeadWatcher.cpp: done
     .text   start:0x00196100 end:0x00196370
-src/Game/MapObj/Fury/DisasterBlockDirector.cpp:
+src/Game/MapObj/Fury/DisasterBlockDirector.cpp: done
     .text   start:0x00196370 end:0x001969E8
 src/Game/MapObj/Fury/DisasterFixMapParts.cpp:
     .text   start:0x001969F0 end:0x001975AC

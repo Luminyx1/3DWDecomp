@@ -5,6 +5,10 @@ public:
     explicit BlockHardLaserOnly(const char*);
     bool isBreaking(bool);
     s32 getFileID();
+    bool canChainBreak();
+    bool isDisabled() const;
+    f32 getMaxChainBreakDistance() const;
+    void breakBlock(int);
 private:
     u8 mUnreconstructed[0x64];
 };
