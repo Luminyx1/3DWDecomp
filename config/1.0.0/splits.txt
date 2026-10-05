@@ -597,7 +597,7 @@ src/Game/Enemy/ChorobonHolder.cpp:
     .text   start:0x000E7070 end:0x000E7868
 src/Game/Enemy/ChorobonItem.cpp:
     .text   start:0x000E7870 end:0x000E7E38
-src/Game/Enemy/ChorobonNode.cpp:
+src/Game/Enemy/ChorobonNode.cpp: done
     .text   start:0x000E7E40 end:0x000E7FC0
 src/Game/Enemy/Crawler.cpp:
     .text   start:0x000E7FC0 end:0x000E98F4
