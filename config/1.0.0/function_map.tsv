@@ -19418,15 +19418,15 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100300B70			FALSE	_ZN14KoopaSignBoard15exeBreakEndBackEv	KoopaSignBoard::exeBreakEndBack()	
 0x7100300BE0			FALSE	_ZN14KoopaSignBoardD1Ev	KoopaSignBoard::~KoopaSignBoard()	
 0x7100300BF0			FALSE	_ZN14KoopaSignBoardD0Ev	KoopaSignBoard::~KoopaSignBoard()	
-0x7100300C20			FALSE	sub_7100300C20	sub_7100300C20	
+0x7100300C20			FALSE	_ZNK12_GLOBAL__N_121KoopaSignBoardNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_121KoopaSignBoardNrvWait7executeEPN2al11NerveKeeperE	
 0x7100300C60			FALSE	_ZNK12_GLOBAL__N_127KoopaSignBoardNrvBreakFront7executeEPN2al11NerveKeeperE	(anonymous namespace)::KoopaSignBoardNrvBreakFront::execute(al::NerveKeeper*) const	
 0x7100300C70			FALSE	_ZNK12_GLOBAL__N_126KoopaSignBoardNrvBreakBack7executeEPN2al11NerveKeeperE	(anonymous namespace)::KoopaSignBoardNrvBreakBack::execute(al::NerveKeeper*) const	
-0x7100300C80			FALSE	sub_7100300C80	sub_7100300C80	
-0x7100300CE0			FALSE	sub_7100300CE0	sub_7100300CE0	
-0x7100300D40			FALSE	sub_7100300D40	sub_7100300D40	
-0x7100300DB0			FALSE	sub_7100300DB0	sub_7100300DB0	
-0x7100300E30			FALSE	sub_7100300E30	sub_7100300E30	
-0x7100300EB0			FALSE	sub_7100300EB0	sub_7100300EB0	
+0x7100300C80			FALSE	_ZNK12_GLOBAL__N_130KoopaSignBoardNrvBreakSignBack7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_130KoopaSignBoardNrvBreakSignBack7executeEPN2al11NerveKeeperE	
+0x7100300CE0			FALSE	_ZNK12_GLOBAL__N_131KoopaSignBoardNrvBreakSignFront7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_131KoopaSignBoardNrvBreakSignFront7executeEPN2al11NerveKeeperE	
+0x7100300D40			FALSE	_ZNK12_GLOBAL__N_130KoopaSignBoardNrvBreakAttacked7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_130KoopaSignBoardNrvBreakAttacked7executeEPN2al11NerveKeeperE	
+0x7100300DB0			FALSE	_ZNK12_GLOBAL__N_130KoopaSignBoardNrvBreakEndFront7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_130KoopaSignBoardNrvBreakEndFront7executeEPN2al11NerveKeeperE	
+0x7100300E30			FALSE	_ZNK12_GLOBAL__N_129KoopaSignBoardNrvBreakEndBack7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_129KoopaSignBoardNrvBreakEndBack7executeEPN2al11NerveKeeperE	
+0x7100300EB0			FALSE	_ZNK12_GLOBAL__N_125KoopaSignBoardNrvBreakEnd7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_125KoopaSignBoardNrvBreakEnd7executeEPN2al11NerveKeeperE	
 0x7100300F30		Koura.o	FALSE	_ZN5KouraC2EPKc	Koura::Koura(char const*)	
 0x7100301110			FALSE	_ZN5KouraC1EPKc	Koura::Koura(char const*)	
 0x7100301300			FALSE	_ZN5Koura4initERKN2al13ActorInitInfoE	Koura::init(al::ActorInitInfo const&)	

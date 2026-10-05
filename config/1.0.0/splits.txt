@@ -1805,7 +1805,7 @@ src/Game/MapObj/KoopaFireBallGiant.cpp:
     .text   start:0x002FB820 end:0x002FE458
 src/Game/MapObj/KoopaGraffiti.cpp:
     .text   start:0x002FE460 end:0x003000FC
-src/Game/MapObj/KoopaSignBoard.cpp:
+src/Game/MapObj/KoopaSignBoard.cpp: done
     .text   start:0x00300100 end:0x00300F24
 src/Game/MapObj/Koura.cpp:
     .text   start:0x00300F30 end:0x00307054

@@ -1,3 +1,4 @@
+#include "MapObj/KoopaSignBoard.hpp"
 #include "MapObj/SingleModeCheckpoint.hpp"
 #include "MapObj/FlowerRhythm.hpp"
 #include "MapObj/IllustItem.hpp"
@@ -1665,14 +1666,7 @@ private:
 };
 static_assert(sizeof(KoopaLastWallClimbDown) == 0x180);
 
-class KoopaSignBoard : public al::LiveActor {
-public:
-    explicit KoopaSignBoard(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x14];
-};
-static_assert(sizeof(KoopaSignBoard) == 0x158);
 
 class Kuribo : public al::LiveActor {
 public:
