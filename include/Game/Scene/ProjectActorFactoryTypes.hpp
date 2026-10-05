@@ -1,3 +1,4 @@
+#include "MapObj/MultiLift.hpp"
 #include "MapObj/BlockBrickBig.hpp"
 #include "MapObj/BlockSwitch.hpp"
 #include "MapObj/GoalDoor.hpp"
@@ -2023,14 +2024,7 @@ private:
 };
 static_assert(sizeof(MoamoaHolder) == 0x158);
 
-class MultiLift : public al::LiveActor {
-public:
-    explicit MultiLift(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x2c];
-};
-static_assert(sizeof(MultiLift) == 0x170);
 
 class MysteryBox : public al::LiveActor {
 public:

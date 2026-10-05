@@ -1841,7 +1841,7 @@ src/Game/MapObj/LuckyIslandHolder.cpp:
     .text   start:0x0031CE30 end:0x0031D0EC
 src/Game/MapObj/Mirror.cpp: done
     .text   start:0x0031D0F0 end:0x0031D534
-src/Game/MapObj/MultiLift.cpp:
+src/Game/MapObj/MultiLift.cpp: done
     .text   start:0x0031D540 end:0x0031DE2C
 src/Game/MapObj/MusicalItem.cpp: done
     .text   start:0x0031DE30 end:0x0031E11C

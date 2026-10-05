@@ -20086,12 +20086,12 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710031DB20			FALSE	_ZN9MultiLift10receiveMsgEPKN2al9SensorMsgEPNS0_9HitSensorES5_	MultiLift::receiveMsg(al::SensorMsg const*, al::HitSensor*, al::HitSensor*)	
 0x710031DB80			FALSE	_ZN9MultiLiftD1Ev	MultiLift::~MultiLift()	
 0x710031DB90			FALSE	_ZN9MultiLiftD0Ev	MultiLift::~MultiLift()	
-0x710031DBC0			FALSE	sub_710031DBC0	sub_710031DBC0	
-0x710031DC40			FALSE	sub_710031DC40	sub_710031DC40	
-0x710031DCB0			FALSE	sub_710031DCB0	sub_710031DCB0	
+0x710031DBC0			FALSE	_ZNK12_GLOBAL__N_123MultiLiftNrvWaitForRide7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_123MultiLiftNrvWaitForRide7executeEPN2al11NerveKeeperE	
+0x710031DC40			FALSE	_ZNK12_GLOBAL__N_121MultiLiftNrvRideCheck7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_121MultiLiftNrvRideCheck7executeEPN2al11NerveKeeperE	
+0x710031DCB0			FALSE	_ZNK12_GLOBAL__N_119MultiLiftNrvPreMove7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_119MultiLiftNrvPreMove7executeEPN2al11NerveKeeperE	
 0x710031DD30			FALSE	_ZNK12_GLOBAL__N_116MultiLiftNrvMove7executeEPN2al11NerveKeeperE	(anonymous namespace)::MultiLiftNrvMove::execute(al::NerveKeeper*) const	
-0x710031DD40			FALSE	sub_710031DD40	sub_710031DD40	
-0x710031DDB0			FALSE	sub_710031DDB0	sub_710031DDB0	
+0x710031DD40			FALSE	_ZNK12_GLOBAL__N_116MultiLiftNrvStop7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_116MultiLiftNrvStop7executeEPN2al11NerveKeeperE	
+0x710031DDB0			FALSE	_ZNK12_GLOBAL__N_116MultiLiftNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_116MultiLiftNrvWait7executeEPN2al11NerveKeeperE	
 0x710031DE30		MusicalItem.o	FALSE	_ZN11MusicalItemC2EPKc	MusicalItem::MusicalItem(char const*)	
 0x710031DED0			FALSE	_ZN11MusicalItemC1EPKc	MusicalItem::MusicalItem(char const*)	
 0x710031DF70			FALSE	_ZN11MusicalItem4initERKN2al13ActorInitInfoE	MusicalItem::init(al::ActorInitInfo const&)	
