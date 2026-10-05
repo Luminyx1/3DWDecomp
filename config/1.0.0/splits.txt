@@ -2163,7 +2163,7 @@ src/Game/MapObj/TreeStumpWatcher.cpp: done
     .text   start:0x003A0520 end:0x003A0988
 src/Game/MapObj/WarpCube.cpp:
     .text   start:0x003A0990 end:0x003A2EB4
-src/Game/MapObj/WarpCubeBindPuppeteer.cpp:
+src/Game/MapObj/WarpCubeBindPuppeteer.cpp: done
     .text   start:0x003A2EC0 end:0x003A32C0
 src/Game/MapObj/WarpCubeLockedPiece.cpp:
     .text   start:0x003A32C0 end:0x003A3BD8

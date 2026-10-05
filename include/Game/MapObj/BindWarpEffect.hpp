@@ -21,6 +21,7 @@ public:
 
     void start(const al::HitSensor* pPlayerSensor, const sead::Vector3f& rEndPos, bool isFast);
     void cancel();
+    bool isMoving() const;
     bool isEnd() const;
 
 private:

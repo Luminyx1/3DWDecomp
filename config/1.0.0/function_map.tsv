@@ -23117,8 +23117,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71003A3220			FALSE	_ZN21WarpCubeBindPuppeteer9exeInWaitEv	WarpCubeBindPuppeteer::exeInWait()	
 0x71003A3230			FALSE	_ZNK21WarpCubeBindPuppeteer13isEnableStartEv	WarpCubeBindPuppeteer::isEnableStart() const	
 0x71003A3240			FALSE	_ZN21WarpCubeBindPuppeteerD0Ev	WarpCubeBindPuppeteer::~WarpCubeBindPuppeteer()	
-0x71003A3270			FALSE	nullsub_255	nullsub_255	
-0x71003A3280			FALSE	sub_71003A3280	sub_71003A3280	
+0x71003A3270			FALSE	_ZNK12_GLOBAL__N_130WarpCubeBindPuppeteerNrvInWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_130WarpCubeBindPuppeteerNrvInWait7executeEPN2al11NerveKeeperE	
+0x71003A3280			FALSE	_ZNK12_GLOBAL__N_133WarpCubeBindPuppeteerNrvBindForce7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_133WarpCubeBindPuppeteerNrvBindForce7executeEPN2al11NerveKeeperE	
 0x71003A32C0		WarpCubeLockedPiece.o	FALSE	_ZN19WarpCubeLockedPieceC2EPKc	WarpCubeLockedPiece::WarpCubeLockedPiece(char const*)	renamed from War[pCubeLockedPiece.o (spelling)
 0x71003A3380			FALSE	_ZN19WarpCubeLockedPieceC1EPKc	WarpCubeLockedPiece::WarpCubeLockedPiece(char const*)	
 0x71003A3440			FALSE	_ZN19WarpCubeLockedPiece4initERKN2al13ActorInitInfoE	WarpCubeLockedPiece::init(al::ActorInitInfo const&)	
