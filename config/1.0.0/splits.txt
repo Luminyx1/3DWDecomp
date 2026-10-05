@@ -1899,7 +1899,7 @@ src/Game/MapObj/PanelNotePaintGroup.cpp:
     .text   start:0x00342250 end:0x003438E8
 src/Game/MapObj/PlayerCrown.cpp:
     .text   start:0x003438F0 end:0x00345638
-src/Game/MapObj/PlayerPointLightingObj.cpp:
+src/Game/MapObj/PlayerPointLightingObj.cpp: done
     .text   start:0x00345640 end:0x00345A10
 src/Game/MapObj/PlayerSpotLightingObj.cpp:
     .text   start:0x00345A10 end:0x00345F10
@@ -1979,7 +1979,7 @@ src/Game/MapObj/Stamp.cpp:
     .text   start:0x003613E0 end:0x003630B8
 src/Game/MapObj/StampDirector.cpp:
     .text   start:0x003630C0 end:0x00364D3C
-src/Game/MapObj/StepScrollParts.cpp:
+src/Game/MapObj/StepScrollParts.cpp: done
     .text   start:0x00364D40 end:0x003650E0
 src/Game/MapObj/StepScrollWatcher.cpp:
     .text   start:0x003650E0 end:0x00365CB4
