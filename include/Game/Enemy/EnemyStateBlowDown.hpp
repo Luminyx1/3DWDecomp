@@ -37,7 +37,7 @@ public:
     void setBlowDownParam(const EnemyStateBlowDownParam* pParam);
     void exeDown();
 
-private:
+protected:
     const EnemyStateBlowDownParam* mParam;
     sead::Vector3f mBlowDir = sead::Vector3f::ez;
     bool mIsKeepClippingInvalid = false;
