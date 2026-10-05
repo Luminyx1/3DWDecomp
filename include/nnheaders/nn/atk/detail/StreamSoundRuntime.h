@@ -6,17 +6,32 @@
 #pragma once
 
 #include <nn/types.h>
+#include <nn/atk/atk_LoaderManager.h>
+#include <nn/atk/atk_StreamBufferPool.h>
 
 namespace nn {
 namespace atk {
 namespace detail {
+namespace driver {
+class StreamSoundLoader;
+}
 class StreamSoundRuntime {
-public:
+  public:
     StreamSoundRuntime();
     ~StreamSoundRuntime();
 
-    u8 _0[0xB0];
+  private:
+    void* mInstanceMemory;
+    size_t mInstanceMemorySize;
+    u8 _10[8];
+    util::IntrusiveListNode mActiveSounds;
+    util::IntrusiveListNode mFreeSounds;
+    LoaderManager<driver::StreamSoundLoader> mLoaders;
+    driver::StreamBufferPool mStreamBufferPool;
+    driver::StreamBufferPool* mCurrentStreamBufferPool;
+    int mStreamBufferTimes;
 };
-}  // namespace detail
-}  // namespace atk
-}  // namespace nn
+static_assert(sizeof(StreamSoundRuntime) == 0xb8, "StreamSoundRuntime size");
+} // namespace detail
+} // namespace atk
+} // namespace nn

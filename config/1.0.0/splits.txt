@@ -3477,7 +3477,7 @@ src/nw/atk/atk_SoundArchivePlayer.cpp:
     .text   start:0x0055DEA0 end:0x005615F4
 src/nw/atk/atk_StartInfoReader.cpp: done
     .text   start:0x00561600 end:0x005617A0
-src/nw/atk/detail/seq/atk_SequenceSoundRuntime.cpp:
+src/nw/atk/detail/seq/atk_SequenceSoundRuntime.cpp: done
     .text   start:0x005617A0 end:0x00561804
 src/nw/atk/detail/strm/atk_StreamSoundRuntime.cpp:
     .text   start:0x00561810 end:0x00563140
