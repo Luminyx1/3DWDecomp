@@ -1759,7 +1759,7 @@ src/Game/MapObj/ItemStatePopUpFront.cpp:
     .text   start:0x002EDAD0 end:0x002EF228
 src/Game/MapObj/IUseTimer.cpp: done
     .text   start:0x002EF230 end:0x002EF32C
-src/Game/MapObj/JumpFlipPanel.cpp:
+src/Game/MapObj/JumpFlipPanel.cpp: done
     .text   start:0x002EF330 end:0x002EFD74
 src/Game/MapObj/JumpFlipSweetsCream.cpp: done
     .text   start:0x002EFD80 end:0x002F0308

@@ -20,6 +20,7 @@ public:
     void startMove(const sead::Vector3f&, float, float);
     void startBreak();
     bool isPlayerInside() const;
+    bool isJumpStart() const;
     void exeUpper();
 private:
     u8 mUnreconstructed[0x12c];

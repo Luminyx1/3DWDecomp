@@ -1,3 +1,4 @@
+#include "MapObj/JumpFlipPanel.hpp"
 #include "MapObj/SignBoard.hpp"
 #include "MapObj/FrameOutChecker.hpp"
 #include "MapObj/LiftMikeSlide.hpp"
@@ -1501,14 +1502,7 @@ static_assert(sizeof(IslandKeyMoveMapParts) == 0x220);
 
 static_assert(sizeof(ItemBubbleSingleMode) == 0x168);
 
-class JumpFlipPanel : public al::LiveActor {
-public:
-    explicit JumpFlipPanel(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x6c];
-};
-static_assert(sizeof(JumpFlipPanel) == 0x1b0);
 
 class JumpFlipSweetsCream : public al::LiveActor {
 public:
