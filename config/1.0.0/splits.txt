@@ -2155,7 +2155,7 @@ src/Game/MapObj/Tree.cpp:
     .text   start:0x0039B6E0 end:0x0039E0BC
 src/Game/MapObj/TreeBindPuppeteer.cpp:
     .text   start:0x0039E0C0 end:0x0039F828
-src/Game/MapObj/TreeFarLodWatcher.cpp:
+src/Game/MapObj/TreeFarLodWatcher.cpp: done
     .text   start:0x0039F830 end:0x003A0000
 src/Game/MapObj/TreeStump.cpp: done
     .text   start:0x003A0000 end:0x003A051C

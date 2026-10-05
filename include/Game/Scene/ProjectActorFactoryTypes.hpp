@@ -1,3 +1,5 @@
+#include "MapObj/TreeFarLodWatcher.hpp"
+#include "MapObj/Tree.hpp"
 #include "MapObj/CoinBlowGenerator.hpp"
 #include "MapObj/NeedleTrap.hpp"
 #include "MapObj/KouraGold.hpp"
@@ -3030,23 +3032,9 @@ private:
 };
 static_assert(sizeof(Trapeze) == 0x1c8);
 
-class Tree : public al::LiveActor {
-public:
-    explicit Tree(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x13c];
-};
-static_assert(sizeof(Tree) == 0x280);
 
-class TreeFarLodWatcher : public al::LiveActor {
-public:
-    explicit TreeFarLodWatcher(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x34];
-};
-static_assert(sizeof(TreeFarLodWatcher) == 0x178);
 
 class TreeStump : public al::LiveActor {
 public:
