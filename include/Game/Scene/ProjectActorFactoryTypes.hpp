@@ -1,3 +1,4 @@
+#include "MapObj/FlowerCactus.hpp"
 #include "MapObj/CoinRing.hpp"
 #include "MapObj/SuperbViewArea.hpp"
 #include "MapObj/GuideObj.hpp"
@@ -1103,14 +1104,7 @@ static_assert(sizeof(FloatingIslandRailPart) == 0x328);
 
 
 
-class FlowerCactus : public al::LiveActor {
-public:
-    explicit FlowerCactus(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x1c];
-};
-static_assert(sizeof(FlowerCactus) == 0x160);
 
 class FlowerRhythm : public al::LiveActor {
 public:
