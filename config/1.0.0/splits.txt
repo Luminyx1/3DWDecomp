@@ -1635,8 +1635,9 @@ src/Game/MapObj/FlipPanel.cpp:
     .text   start:0x002B0EE0 end:0x002B1F14
 src/Game/MapObj/FlowerCactus.cpp: done
     .text   start:0x002B1F20 end:0x002B2B3C
-src/Game/MapObj/FlowerRhythm.cpp:
+src/Game/MapObj/FlowerRhythm.cpp: done
     .text   start:0x002B2B40 end:0x002B3938
+    .rodata start:0x016B55BC end:0x016B55C8
 src/Game/MapObj/FortressGoal.cpp: done
     .text   start:0x002B3940 end:0x002B3BC0
 src/Game/MapObj/FrameOutChecker.cpp: done

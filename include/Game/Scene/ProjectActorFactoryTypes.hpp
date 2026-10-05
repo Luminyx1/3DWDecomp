@@ -1,3 +1,4 @@
+#include "MapObj/FlowerRhythm.hpp"
 #include "MapObj/IllustItem.hpp"
 #include "MapObj/LavaGeyser.hpp"
 #include "MapObj/Fury/BlockHardLaserOnly.hpp"
@@ -1083,14 +1084,7 @@ static_assert(sizeof(FloatingIslandRailPart) == 0x328);
 
 
 
-class FlowerRhythm : public al::LiveActor {
-public:
-    explicit FlowerRhythm(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x34];
-};
-static_assert(sizeof(FlowerRhythm) == 0x178);
 
 class FlyOverCamera : public al::LiveActor {
 public:

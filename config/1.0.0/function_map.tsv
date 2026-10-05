@@ -17535,7 +17535,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71002B3800			FALSE	_ZN12FlowerRhythm17exeReactionAttackEv	FlowerRhythm::exeReactionAttack()	
 0x71002B38A0			FALSE	_ZN12FlowerRhythmD1Ev	FlowerRhythm::~FlowerRhythm()	
 0x71002B38B0			FALSE	_ZN12FlowerRhythmD0Ev	FlowerRhythm::~FlowerRhythm()	
-0x71002B38E0			FALSE	sub_71002B38E0	sub_71002B38E0	
+0x71002B38E0			FALSE	_ZNK12_GLOBAL__N_119FlowerRhythmNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_119FlowerRhythmNrvWait7executeEPN2al11NerveKeeperE	
 0x71002B3920			FALSE	_ZNK12_GLOBAL__N_123FlowerRhythmNrvReaction7executeEPN2al11NerveKeeperE	(anonymous namespace)::FlowerRhythmNrvReaction::execute(al::NerveKeeper*) const	
 0x71002B3930			FALSE	_ZNK12_GLOBAL__N_129FlowerRhythmNrvReactionAttack7executeEPN2al11NerveKeeperE	(anonymous namespace)::FlowerRhythmNrvReactionAttack::execute(al::NerveKeeper*) const	
 0x71002B3940		FortressGoal.o	FALSE	_ZN12FortressGoalC2EPKc	FortressGoal::FortressGoal(char const*)	
