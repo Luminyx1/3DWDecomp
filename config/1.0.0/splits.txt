@@ -1461,7 +1461,7 @@ src/Game/MapObj/Bush.cpp:
     .text   start:0x00260810 end:0x00261B18
 src/Game/MapObj/CameraInSwitchOnAreaWatcher.cpp: done
     .text   start:0x00261B20 end:0x00261D90
-src/Game/MapObj/CameraRailObserver.cpp:
+src/Game/MapObj/CameraRailObserver.cpp: done
     .text   start:0x00261D90 end:0x002622D4
 src/Game/MapObj/CameraWall.cpp:
     .text   start:0x002622E0 end:0x00262980
