@@ -9051,7 +9051,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710015E4E0			FALSE	_ZN23TeresaConveyorTeresaBig7exeWaitEv	TeresaConveyorTeresaBig::exeWait()	
 0x710015E560			FALSE	_ZN23TeresaConveyorTeresaBigD1Ev	TeresaConveyorTeresaBig::~TeresaConveyorTeresaBig()	
 0x710015E570			FALSE	_ZN23TeresaConveyorTeresaBigD0Ev	TeresaConveyorTeresaBig::~TeresaConveyorTeresaBig()	
-0x710015E5A0			FALSE	sub_710015E5A0	sub_710015E5A0	
+0x710015E5A0			FALSE	_ZNK12_GLOBAL__N_130TeresaConveyorTeresaBigNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::TeresaConveyorTeresaBigNrvWait::execute(al::NerveKeeper*) const	
 0x710015E620		TeresaWall.o	FALSE	_ZN10TeresaWallC2EPKc	TeresaWall::TeresaWall(char const*)	
 0x710015E6D0			FALSE	_ZN10TeresaWallC1EPKc	TeresaWall::TeresaWall(char const*)	
 0x710015E780			FALSE	_ZN10TeresaWall4initERKN2al13ActorInitInfoE	TeresaWall::init(al::ActorInitInfo const&)	

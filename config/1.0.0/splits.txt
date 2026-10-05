@@ -825,7 +825,7 @@ src/Game/Enemy/Teren.cpp:
     .text   start:0x0015B580 end:0x0015C444
 src/Game/Enemy/Teresa.cpp:
     .text   start:0x0015C450 end:0x0015E360
-src/Game/Enemy/TeresaConveyorTeresaBig.cpp:
+src/Game/Enemy/TeresaConveyorTeresaBig.cpp: done
     .text   start:0x0015E360 end:0x0015E620
 src/Game/Enemy/TeresaWall.cpp:
     .text   start:0x0015E620 end:0x0015EEC8
