@@ -2117,7 +2117,7 @@ src/Game/MapObj/TouchReactionMapParts.cpp:
     .text   start:0x0038CF20 end:0x0038DED4
 src/Game/MapObj/TouchPointTransparent.cpp: done
     .text   start:0x0038DEE0 end:0x0038E2F4
-src/Game/MapObj/TouchTrackDrawer.cpp:
+src/Game/MapObj/TouchTrackDrawer.cpp: done
     .text   start:0x0038E300 end:0x0038E820
 src/Game/MapObj/TractorBubble.cpp:
     .text   start:0x0038E820 end:0x0039039C
