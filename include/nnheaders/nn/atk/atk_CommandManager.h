@@ -46,6 +46,8 @@ public:
     u32 PushCommand(Command* command);
     void FinalizeCommandList(Command* command);
     bool IsFinishCommand(u32 sequence) const;
+    /** @brief Checks whether driver command storage is initialized. @return True when commands may be submitted. */
+    bool IsInitialized() const { return mInitialized; }
     size_t GetCommandBufferSize() const;
     size_t GetAllocatableCommandSize() const;
     size_t GetAllocatedCommandBufferSize() const;

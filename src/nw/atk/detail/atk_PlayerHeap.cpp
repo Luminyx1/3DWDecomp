@@ -5,11 +5,6 @@
 
 namespace nn::atk::detail {
 namespace {
-struct ReleaseHeapMemoryCommand : Command {
-    const void* pMemory;
-    size_t size;
-};
-
 /**
  * @brief Round a heap cursor upward to the next audio-memory page boundary.
  * @param pAddress Cursor to align; must allow rounding without address overflow.

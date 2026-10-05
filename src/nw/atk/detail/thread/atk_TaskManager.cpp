@@ -1,18 +1,8 @@
 #include <nn/atk/atk_TaskManager.h>
+#include <nn/atk/atkfnd_ScopedLock.h>
 
 namespace nn::atk::detail {
-namespace {
-class ScopedMutexLock {
-  public:
-    /** @brief Acquires a mutex for the enclosing scope. @param rMutex Mutex to lock. */
-    explicit ScopedMutexLock(os::Mutex& rMutex) : mMutex(rMutex) { mMutex.Lock(); }
-    /** @brief Releases the mutex acquired at construction. */
-    ~ScopedMutexLock() { mMutex.Unlock(); }
-
-  private:
-    os::Mutex& mMutex;
-};
-} // namespace
+using fnd::ScopedMutexLock;
 
 /** @brief Initializes empty priority queues, a recursive queue mutex, and task profiling. */
 TaskManager::TaskManager() : mWaitCancelled(false), mMutex(true), mWakeQueue(mWakeMessages, 32) {}

@@ -70,6 +70,8 @@ public:
     static bool Initialize(const SoundSystemParam& rParam, uintptr_t workMem, size_t workMemSize);
     static void Finalize();
     static bool IsInitialized();
+    static void AttachMemoryPool(audio::MemoryPoolType* pPool, void* pMemory, size_t size);
+    static void DetachMemoryPool(audio::MemoryPoolType* pPool);
     static size_t GetPerformanceFrameBufferSize();
     static size_t GetRequiredEffectAuxBufferSize(const EffectAux* pEffect);
     static bool AppendEffect(AuxBus bus, EffectAux* pEffect, void* buffer, size_t bufferSize,

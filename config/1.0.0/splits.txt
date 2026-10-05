@@ -3589,7 +3589,7 @@ src/nw/atk/fnd/io/atkfnd_FileStreamProxy.cpp: done
     .text   start:0x0057FDA0 end:0x00580000
 src/nw/atk/atk_MemorySoundArchive.cpp:
     .text   start:0x00580000 end:0x005802E8
-src/nw/atk/atk_SoundHeap.cpp:
+src/nw/atk/atk_SoundHeap.cpp: done
     .text   start:0x005802F0 end:0x00580878
 src/nw/atk/detail/util/atk_FrameHeap.cpp:
     .text   start:0x00580880 end:0x00581534
