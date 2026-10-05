@@ -20228,8 +20228,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100322690			FALSE	_ZN12NeedleRollerD1Ev	NeedleRoller::~NeedleRoller()	
 0x71003226A0			FALSE	_ZN12NeedleRollerD0Ev	NeedleRoller::~NeedleRoller()	
 0x71003226D0			FALSE	_ZNK12_GLOBAL__N_123NeedleRollerNrvFreeMove7executeEPN2al11NerveKeeperE	(anonymous namespace)::NeedleRollerNrvFreeMove::execute(al::NerveKeeper*) const	
-0x71003226E0			FALSE	sub_71003226E0	sub_71003226E0	
-0x7100322740			FALSE	sub_7100322740	sub_7100322740	
+0x71003226E0			FALSE	_ZNK12_GLOBAL__N_119NeedleRollerNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_119NeedleRollerNrvWait7executeEPN2al11NerveKeeperE	
+0x7100322740			FALSE	_ZNK12_GLOBAL__N_128NeedleRollerNrvSupportFreeze7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_128NeedleRollerNrvSupportFreeze7executeEPN2al11NerveKeeperE	
 0x71003227E0			FALSE	_ZNK12_GLOBAL__N_119NeedleRollerNrvMove7executeEPN2al11NerveKeeperE	(anonymous namespace)::NeedleRollerNrvMove::execute(al::NerveKeeper*) const	
 0x71003227F0		NeedleRollerFall.o	FALSE	_ZN16NeedleRollerFallC2EPKc	NeedleRollerFall::NeedleRollerFall(char const*)	
 0x71003228F0			FALSE	_ZN16NeedleRollerFallC1EPKc	NeedleRollerFall::NeedleRollerFall(char const*)	

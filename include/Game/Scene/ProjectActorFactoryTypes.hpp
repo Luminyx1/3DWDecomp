@@ -1,3 +1,4 @@
+#include "MapObj/NeedleRoller.hpp"
 #include "MapObj/KoopaSignBoard.hpp"
 #include "MapObj/SingleModeCheckpoint.hpp"
 #include "MapObj/FlowerRhythm.hpp"
@@ -1846,14 +1847,7 @@ private:
 };
 static_assert(sizeof(NeedleBarRoot) == 0x158);
 
-class NeedleRoller : public al::LiveActor {
-public:
-    explicit NeedleRoller(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x44];
-};
-static_assert(sizeof(NeedleRoller) == 0x188);
 
 
 class NeedleRollerSwing : public al::LiveActor {
