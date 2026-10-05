@@ -10,6 +10,7 @@ public:
     void appear() override;
     void exeCountDown();
     void forceReset();
+    bool isComplete() const { return mIsComplete; }
 private:
     al::DeriveActorGroup<TimerCoin>* mCoins;
     int mCoinCount = 0;

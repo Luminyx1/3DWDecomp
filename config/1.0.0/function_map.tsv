@@ -20823,9 +20823,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100347A30			FALSE	_ZN23PSwitchTimerCoinWatcherD1Ev	PSwitchTimerCoinWatcher::~PSwitchTimerCoinWatcher()	
 0x7100347A40			FALSE	_ZN23PSwitchTimerCoinWatcherD0Ev	PSwitchTimerCoinWatcher::~PSwitchTimerCoinWatcher()	
 0x7100347A70			FALSE	_ZNK12_GLOBAL__N_130PSwitchTimerCoinWatcherNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::PSwitchTimerCoinWatcherNrvWait::execute(al::NerveKeeper*) const	
-0x7100347A80			FALSE	sub_7100347A80	sub_7100347A80	
-0x7100347B20			FALSE	sub_7100347B20	sub_7100347B20	
-0x7100347B70			FALSE	nullsub_216	nullsub_216	
+0x7100347A80			FALSE	_ZNK12_GLOBAL__N_144PSwitchTimerCoinWatcherNrvWaitToInstantReset7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_144PSwitchTimerCoinWatcherNrvWaitToInstantReset7executeEPN2al11NerveKeeperE	
+0x7100347B20			FALSE	_ZNK12_GLOBAL__N_137PSwitchTimerCoinWatcherNrvWaitToReset7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_137PSwitchTimerCoinWatcherNrvWaitToReset7executeEPN2al11NerveKeeperE	
+0x7100347B70			FALSE	_ZNK12_GLOBAL__N_133PSwitchTimerCoinWatcherNrvSuccess7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_133PSwitchTimerCoinWatcherNrvSuccess7executeEPN2al11NerveKeeperE	
 0x7100347B80			FALSE	_ZNK2al10FunctorV0MIP23PSwitchTimerCoinWatcherMS1_FvvEEclEv	al::FunctorV0M<PSwitchTimerCoinWatcher*, void (PSwitchTimerCoinWatcher::*)()>::operator()() const	
 0x7100347BA0			FALSE	_ZNK2al10FunctorV0MIP23PSwitchTimerCoinWatcherMS1_FvvEE5cloneEv	al::FunctorV0M<PSwitchTimerCoinWatcher*, void (PSwitchTimerCoinWatcher::*)()>::clone() const	
 0x7100347BF0		PuppetStickRouteSelecter.o	FALSE	_ZN24PuppetStickRouteSelecterC2Ei	PuppetStickRouteSelecter::PuppetStickRouteSelecter(int)	renamed from PuppetStickRouteSelector.o (spelling)

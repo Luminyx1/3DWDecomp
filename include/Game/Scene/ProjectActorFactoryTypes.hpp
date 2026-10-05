@@ -1,3 +1,4 @@
+#include "MapObj/PSwitchTimerCoinWatcher.hpp"
 #include "MapObj/TreeFarLodWatcher.hpp"
 #include "MapObj/Tree.hpp"
 #include "MapObj/CoinBlowGenerator.hpp"
@@ -2240,14 +2241,7 @@ private:
 };
 static_assert(sizeof(PressureDeathObj) == 0x178);
 
-class PSwitchTimerCoinWatcher : public al::LiveActor {
-public:
-    explicit PSwitchTimerCoinWatcher(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x24];
-};
-static_assert(sizeof(PSwitchTimerCoinWatcher) == 0x168);
 
 
 class PlayerNpc : public al::LiveActor {
