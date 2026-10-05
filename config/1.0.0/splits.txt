@@ -2017,7 +2017,7 @@ src/Game/MapObj/TeresaFakeDokan.cpp: done
     .text   start:0x0036D2D0 end:0x0036D550
 src/Game/MapObj/TeresaFakeObject.cpp: done
     .text   start:0x0036D550 end:0x0036D880
-src/Game/MapObj/TestAlphaMaskMapObj.cpp:
+src/Game/MapObj/TestAlphaMaskMapObj.cpp: done
     .text   start:0x0036D880 end:0x0036DC0C
 src/Game/MapObj/TestAndoChainDynamics.cpp:
     .text   start:0x0036DC10 end:0x0036E6E8
@@ -2069,7 +2069,7 @@ src/Game/MapObj/TestKitaharaRouteBazookaRider.cpp:
     .text   start:0x0037E2F0 end:0x0037F89C
 src/Game/MapObj/TestKitazonoBlockBrick.cpp:
     .text   start:0x0037F8A0 end:0x0037FF00
-src/Game/MapObj/TestKitazonoBlockBrickBreak.cpp:
+src/Game/MapObj/TestKitazonoBlockBrickBreak.cpp: done
     .text   start:0x0037FF00 end:0x003801DC
 src/Game/MapObj/TestMatsudaFlashlight.cpp:
     .text   start:0x003801E0 end:0x00380A98

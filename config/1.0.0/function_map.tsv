@@ -21800,9 +21800,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710036DAC0			FALSE	_ZN19TestAlphaMaskMapObj16exeAlphaMaskWaitEv	TestAlphaMaskMapObj::exeAlphaMaskWait()	
 0x710036DAD0			FALSE	_ZN19TestAlphaMaskMapObjD1Ev	TestAlphaMaskMapObj::~TestAlphaMaskMapObj()	
 0x710036DAE0			FALSE	_ZN19TestAlphaMaskMapObjD0Ev	TestAlphaMaskMapObj::~TestAlphaMaskMapObj()	
-0x710036DB10			FALSE	sub_710036DB10	sub_710036DB10	
-0x710036DB50			FALSE	sub_710036DB50	sub_710036DB50	
-0x710036DBB0			FALSE	sub_710036DBB0	sub_710036DBB0	
+0x710036DB10			FALSE	_ZNK12_GLOBAL__N_126TestAlphaMaskMapObjNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_126TestAlphaMaskMapObjNrvWait7executeEPN2al11NerveKeeperE	
+0x710036DB50			FALSE	_ZNK12_GLOBAL__N_134TestAlphaMaskMapObjNrvAlphaMaskOut7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_134TestAlphaMaskMapObjNrvAlphaMaskOut7executeEPN2al11NerveKeeperE	
+0x710036DBB0			FALSE	_ZNK12_GLOBAL__N_133TestAlphaMaskMapObjNrvAlphaMaskIn7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_133TestAlphaMaskMapObjNrvAlphaMaskIn7executeEPN2al11NerveKeeperE	
 0x710036DC10		TestAndoChainDynamics.o	FALSE	_ZN21TestAndoChainDynamicsC2EPKc	TestAndoChainDynamics::TestAndoChainDynamics(char const*)	
 0x710036DCD0			FALSE	_ZN21TestAndoChainDynamicsC1EPKc	TestAndoChainDynamics::TestAndoChainDynamics(char const*)	
 0x710036DDA0			FALSE	_ZN21TestAndoChainDynamics4initERKN2al13ActorInitInfoE	TestAndoChainDynamics::init(al::ActorInitInfo const&)	
@@ -22207,8 +22207,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71003800D0			FALSE	_ZN27TestKitazonoBlockBrickBreak8exeBreakEv	TestKitazonoBlockBrickBreak::exeBreak()	
 0x7100380130			FALSE	_ZN27TestKitazonoBlockBrickBreakD1Ev	TestKitazonoBlockBrickBreak::~TestKitazonoBlockBrickBreak()	
 0x7100380140			FALSE	_ZN27TestKitazonoBlockBrickBreakD0Ev	TestKitazonoBlockBrickBreak::~TestKitazonoBlockBrickBreak()	
-0x7100380170			FALSE	nullsub_233	nullsub_233	
-0x7100380180			FALSE	sub_7100380180	sub_7100380180	
+0x7100380170			FALSE	_ZNK12_GLOBAL__N_134TestKitazonoBlockBrickBreakNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_134TestKitazonoBlockBrickBreakNrvWait7executeEPN2al11NerveKeeperE	
+0x7100380180			FALSE	_ZNK12_GLOBAL__N_135TestKitazonoBlockBrickBreakNrvBreak7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_135TestKitazonoBlockBrickBreakNrvBreak7executeEPN2al11NerveKeeperE	
 0x71003801E0		TestMatsudaFlashlight.o	FALSE	_ZN21TestMatsudaFlashlightC2EPKc	TestMatsudaFlashlight::TestMatsudaFlashlight(char const*)	
 0x7100380260			FALSE	_ZN21TestMatsudaFlashlightC1EPKc	TestMatsudaFlashlight::TestMatsudaFlashlight(char const*)	
 0x71003802F0			FALSE	_ZN21TestMatsudaFlashlight4initERKN2al13ActorInitInfoE	TestMatsudaFlashlight::init(al::ActorInitInfo const&)	
