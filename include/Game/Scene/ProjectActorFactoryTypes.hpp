@@ -1,4 +1,5 @@
 #pragma once
+#include "MapObj/NeedleRollerGenerator.hpp"
 #include "MapObj/Seaweed.hpp"
 #include "MapObj/KinopioBrigadeNpc.hpp"
 #include "MapObj/KinopioBrigadeWatcher.hpp"
@@ -2194,14 +2195,6 @@ private:
 };
 static_assert(sizeof(NeedleRoller) == 0x188);
 
-class NeedleRollerGenerator : public al::LiveActor {
-public:
-    explicit NeedleRollerGenerator(const char* pName);
-
-private:
-    u8 mUnreconstructed[0x14];
-};
-static_assert(sizeof(NeedleRollerGenerator) == 0x158);
 
 class NeedleRollerSwing : public al::LiveActor {
 public:

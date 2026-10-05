@@ -1859,7 +1859,7 @@ src/Game/MapObj/NeedleRoller.cpp:
     .text   start:0x003219A0 end:0x003227E8
 src/Game/MapObj/NeedleRollerFall.cpp:
     .text   start:0x003227F0 end:0x003236D0
-src/Game/MapObj/NeedleRollerGenerator.cpp:
+src/Game/MapObj/NeedleRollerGenerator.cpp: done
     .text   start:0x003236D0 end:0x00323BF4
 src/Game/MapObj/NeedleRollerSwing.cpp:
     .text   start:0x00323C00 end:0x00324F14

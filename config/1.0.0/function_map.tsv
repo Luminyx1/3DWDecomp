@@ -20265,8 +20265,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100323AA0			FALSE	_ZN21NeedleRollerGenerator11exeGenerateEv	NeedleRollerGenerator::exeGenerate()	
 0x7100323AF0			FALSE	_ZN21NeedleRollerGeneratorD1Ev	NeedleRollerGenerator::~NeedleRollerGenerator()	
 0x7100323B00			FALSE	_ZN21NeedleRollerGeneratorD0Ev	NeedleRollerGenerator::~NeedleRollerGenerator()	
-0x7100323B30			FALSE	nullsub_212	nullsub_212	
-0x7100323B40			FALSE	sub_7100323B40	sub_7100323B40	
+0x7100323B30			FALSE	_ZNK12_GLOBAL__N_131NeedleRollerGeneratorNrvStandBy7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_131NeedleRollerGeneratorNrvStandBy7executeEPN2al11NerveKeeperE	
+0x7100323B40			FALSE	_ZNK12_GLOBAL__N_132NeedleRollerGeneratorNrvGenerate7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_132NeedleRollerGeneratorNrvGenerate7executeEPN2al11NerveKeeperE	
 0x7100323B90			FALSE	_ZNK2al10FunctorV0MIP21NeedleRollerGeneratorMS1_FvvEEclEv	al::FunctorV0M<NeedleRollerGenerator*, void (NeedleRollerGenerator::*)()>::operator()() const	
 0x7100323BB0			FALSE	_ZNK2al10FunctorV0MIP21NeedleRollerGeneratorMS1_FvvEE5cloneEv	al::FunctorV0M<NeedleRollerGenerator*, void (NeedleRollerGenerator::*)()>::clone() const	
 0x7100323C00		NeedleRollerSwing.o	FALSE	_ZN17NeedleRollerSwingC2EPKc	NeedleRollerSwing::NeedleRollerSwing(char const*)	
