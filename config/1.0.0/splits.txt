@@ -1261,7 +1261,7 @@ src/Game/Layout/TitleLogo.cpp:
     .text   start:0x001FA340 end:0x001FB478
 src/Game/Layout/TopMenu.cpp:
     .text   start:0x001FB480 end:0x001FC530
-src/Game/Layout/TouchEffect.cpp:
+src/Game/Layout/TouchEffect.cpp: done
     .text   start:0x001FC530 end:0x001FC93C
 src/Game/Layout/Utl.cpp:
     .text   start:0x001FC940 end:0x001FD6EC
