@@ -1,3 +1,4 @@
+#include "MapObj/DokanWorldWarp.hpp"
 #include "MapObj/WoodLogBridge.hpp"
 #include "MapObj/PressureDeathObj.hpp"
 #include "MapObj/LiftMikeBlockRail.hpp"
@@ -889,14 +890,7 @@ private:
 };
 static_assert(sizeof(DoorLock) == 0x188);
 
-class DokanWorldWarp : public al::LiveActor {
-public:
-    explicit DokanWorldWarp(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x34];
-};
-static_assert(sizeof(DokanWorldWarp) == 0x178);
 
 class Donketsu : public al::LiveActor {
 public:

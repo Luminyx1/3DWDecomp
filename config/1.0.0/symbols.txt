@@ -5431,3 +5431,6 @@
 
 0x7101A71660 8 object _ZN12_GLOBAL__N_125NrvWoodLogBridgePartsWaitE
 0x7101A716A8 16 object _ZN12_GLOBAL__N_121NrvWoodLogBridgePartsE
+
+0x7101A0FA78 8 object _ZN12_GLOBAL__N_121NrvDokanWorldWarpWaitE
+0x7101A0FAC0 16 object _ZN12_GLOBAL__N_117NrvDokanWorldWarpE

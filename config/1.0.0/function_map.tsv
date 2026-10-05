@@ -16847,9 +16847,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100295CF0			FALSE	_ZThn328_NK14DokanWorldWarp11isUseResultEv	non-virtual thunk to DokanWorldWarp::isUseResult() const	
 0x7100295D00			FALSE	_ZNK8IGoalObj12isRetireGoalEv	IGoalObj::isRetireGoal() const	
 0x7100295D10			FALSE	_ZNK8IGoalObj11isUseResultEv	IGoalObj::isUseResult() const	
-0x7100295D20			FALSE	sub_7100295D20	sub_7100295D20	
+0x7100295D20			FALSE	_ZNK12_GLOBAL__N_121DokanWorldWarpNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_121DokanWorldWarpNrvWait7executeEPN2al11NerveKeeperE	
 0x7100295D90			FALSE	_ZNK12_GLOBAL__N_125DokanWorldWarpNrvPlayerIn7executeEPN2al11NerveKeeperE	(anonymous namespace)::DokanWorldWarpNrvPlayerIn::execute(al::NerveKeeper*) const	
-0x7100295DA0			FALSE	nullsub_174	nullsub_174	
+0x7100295DA0			FALSE	_ZNK12_GLOBAL__N_135DokanWorldWarpNrvWaitStartWorldWarp7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_135DokanWorldWarpNrvWaitStartWorldWarp7executeEPN2al11NerveKeeperE	
 0x7100295DB0		DoorKey.o	FALSE	_ZN7DoorKeyC2EPKc	DoorKey::DoorKey(char const*)	
 0x7100295EA0			FALSE	_ZN7DoorKeyC1EPKc	DoorKey::DoorKey(char const*)	
 0x7100295FA0			FALSE	_ZN7DoorKey4initERKN2al13ActorInitInfoE	DoorKey::init(al::ActorInitInfo const&)	

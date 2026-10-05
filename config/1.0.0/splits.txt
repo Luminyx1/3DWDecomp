@@ -1573,7 +1573,7 @@ src/Game/MapObj/Dokan.cpp:
     .text   start:0x00290C00 end:0x00293724
 src/Game/MapObj/DokanBindPuppeteer.cpp:
     .text   start:0x00293730 end:0x00295354
-src/Game/MapObj/DokanWorldWarp.cpp:
+src/Game/MapObj/DokanWorldWarp.cpp: done
     .text   start:0x00295360 end:0x00295DA4
 src/Game/MapObj/DoorKey.cpp:
     .text   start:0x00295DB0 end:0x00298D20
