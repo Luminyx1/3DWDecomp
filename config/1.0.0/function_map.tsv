@@ -14909,8 +14909,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710024A930			FALSE	_ZN10BlockBrick8exeEmptyEv	BlockBrick::exeEmpty()	
 0x710024A970			FALSE	_ZN10BlockBrickD1Ev	BlockBrick::~BlockBrick()	
 0x710024A980			FALSE	_ZN10BlockBrickD0Ev	BlockBrick::~BlockBrick()	
-0x710024A9B0			FALSE	sub_710024A9B0	sub_710024A9B0	
-0x710024AA20			FALSE	sub_710024AA20	sub_710024AA20	
+0x710024A9B0			FALSE	_ZNK12_GLOBAL__N_118BlockBrickNrvState7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_118BlockBrickNrvState7executeEPN2al11NerveKeeperE	
+0x710024AA20			FALSE	_ZNK12_GLOBAL__N_118BlockBrickNrvEmpty7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_118BlockBrickNrvEmpty7executeEPN2al11NerveKeeperE	
 0x710024AA60		BlockBrickBig.o	FALSE	_ZN13BlockBrickBigC2EPKc	BlockBrickBig::BlockBrickBig(char const*)	
 0x710024AB20			FALSE	_ZN13BlockBrickBigC1EPKc	BlockBrickBig::BlockBrickBig(char const*)	
 0x710024ABE0			FALSE	_ZN13BlockBrickBig4initERKN2al13ActorInitInfoE	BlockBrickBig::init(al::ActorInitInfo const&)	

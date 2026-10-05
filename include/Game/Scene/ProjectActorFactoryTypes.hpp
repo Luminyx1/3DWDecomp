@@ -1,3 +1,4 @@
+#include "MapObj/BlockBrick.hpp"
 #include "MapObj/SuperSkateShoes.hpp"
 #include "MapObj/SuperSkateRail.hpp"
 #pragma once
@@ -112,14 +113,7 @@ private:
 };
 static_assert(sizeof(BlockAssistLeaf) == 0x158);
 
-class BlockBrick : public al::LiveActor {
-public:
-    explicit BlockBrick(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x34];
-};
-static_assert(sizeof(BlockBrick) == 0x178);
 
 class BlockBrickBig : public al::LiveActor {
 public:
