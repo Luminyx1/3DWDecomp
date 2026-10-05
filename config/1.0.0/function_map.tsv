@@ -15856,17 +15856,17 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710026CC20			FALSE	_ZN19ClimbHandleMapParts14setNerveToDownEv	ClimbHandleMapParts::setNerveToDown()	
 0x710026CC30			FALSE	_ZN19ClimbHandleMapPartsD1Ev	ClimbHandleMapParts::~ClimbHandleMapParts()	
 0x710026CC40			FALSE	_ZN19ClimbHandleMapPartsD0Ev	ClimbHandleMapParts::~ClimbHandleMapParts()	
-0x710026CC70			FALSE	nullsub_160	nullsub_160	
-0x710026CC80			FALSE	sub_710026CC80	sub_710026CC80	
-0x710026CC90			FALSE	nullsub_161	nullsub_161	
-0x710026CCA0			FALSE	sub_710026CCA0	sub_710026CCA0	
-0x710026CCB0			FALSE	nullsub_162	nullsub_162	
-0x710026CCC0			FALSE	sub_710026CCC0	sub_710026CCC0	
-0x710026CCD0			FALSE	nullsub_163	nullsub_163	
-0x710026CCE0			FALSE	sub_710026CCE0	sub_710026CCE0	
-0x710026CCF0			FALSE	nullsub_164	nullsub_164	
-0x710026CD00			FALSE	sub_710026CD00	sub_710026CD00	
-0x710026CD10			FALSE	sub_710026CD10	sub_710026CD10	
+0x710026CC70			FALSE	_ZNK12_GLOBAL__N_126ClimbHandleMapPartsNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_126ClimbHandleMapPartsNrvWait7executeEPN2al11NerveKeeperE	
+0x710026CC80			FALSE	_ZNK12_GLOBAL__N_126ClimbHandleMapPartsNrvWait13getActionNameEv	_ZNK12_GLOBAL__N_126ClimbHandleMapPartsNrvWait13getActionNameEv	
+0x710026CC90			FALSE	_ZNK12_GLOBAL__N_126ClimbHandleMapPartsNrvStop7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_126ClimbHandleMapPartsNrvStop7executeEPN2al11NerveKeeperE	
+0x710026CCA0			FALSE	_ZNK12_GLOBAL__N_126ClimbHandleMapPartsNrvStop13getActionNameEv	_ZNK12_GLOBAL__N_126ClimbHandleMapPartsNrvStop13getActionNameEv	
+0x710026CCB0			FALSE	_ZNK12_GLOBAL__N_124ClimbHandleMapPartsNrvUp7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_124ClimbHandleMapPartsNrvUp7executeEPN2al11NerveKeeperE	
+0x710026CCC0			FALSE	_ZNK12_GLOBAL__N_124ClimbHandleMapPartsNrvUp13getActionNameEv	_ZNK12_GLOBAL__N_124ClimbHandleMapPartsNrvUp13getActionNameEv	
+0x710026CCD0			FALSE	_ZNK12_GLOBAL__N_126ClimbHandleMapPartsNrvDown7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_126ClimbHandleMapPartsNrvDown7executeEPN2al11NerveKeeperE	
+0x710026CCE0			FALSE	_ZNK12_GLOBAL__N_126ClimbHandleMapPartsNrvDown13getActionNameEv	_ZNK12_GLOBAL__N_126ClimbHandleMapPartsNrvDown13getActionNameEv	
+0x710026CCF0			FALSE	_ZNK12_GLOBAL__N_126ClimbHandleMapPartsNrvMove7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_126ClimbHandleMapPartsNrvMove7executeEPN2al11NerveKeeperE	
+0x710026CD00			FALSE	_ZNK12_GLOBAL__N_126ClimbHandleMapPartsNrvMove13getActionNameEv	_ZNK12_GLOBAL__N_126ClimbHandleMapPartsNrvMove13getActionNameEv	
+0x710026CD10			FALSE	_GLOBAL__sub_I_ClimbHandleMapParts.cpp	_GLOBAL__sub_I_ClimbHandleMapParts.cpp	
 0x710026CDA0		CloudBonusLauncher.o	FALSE	_ZN18CloudBonusLauncherC2EPKc	CloudBonusLauncher::CloudBonusLauncher(char const*)	
 0x710026CF30			FALSE	_ZN18CloudBonusLauncherC1EPKc	CloudBonusLauncher::CloudBonusLauncher(char const*)	
 0x710026D0D0			FALSE	_ZN18CloudBonusLauncher4initERKN2al13ActorInitInfoE	CloudBonusLauncher::init(al::ActorInitInfo const&)	
@@ -18404,7 +18404,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71002DA260			FALSE	_ZN4Gong8exeSoundEv	Gong::exeSound()	
 0x71002DA390			FALSE	_ZN4GongD1Ev	Gong::~Gong()	
 0x71002DA3A0			FALSE	_ZN4GongD0Ev	Gong::~Gong()	
-0x71002DA3D0			FALSE	nullsub_189	nullsub_189	
+0x71002DA3D0			FALSE	_ZNK12_GLOBAL__N_111GongNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_111GongNrvWait7executeEPN2al11NerveKeeperE	
 0x71002DA3E0			FALSE	_ZNK12_GLOBAL__N_112GongNrvSound7executeEPN2al11NerveKeeperE	(anonymous namespace)::GongNrvSound::execute(al::NerveKeeper*) const	
 0x71002DA3F0		Gotogoton.o	FALSE	_ZN9GotogotonC2EPKc	Gotogoton::Gotogoton(char const*)	
 0x71002DA510			FALSE	_ZN9GotogotonC1EPKc	Gotogoton::Gotogoton(char const*)	

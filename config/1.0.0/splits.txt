@@ -1499,7 +1499,7 @@ src/Game/MapObj/ChikuwaBlock.cpp: done
     .text   start:0x0026B3C0 end:0x0026B650
 src/Game/MapObj/ClimbHandle.cpp:
     .text   start:0x0026B650 end:0x0026C948
-src/Game/MapObj/ClimbHandleMapParts.cpp:
+src/Game/MapObj/ClimbHandleMapParts.cpp: done
     .text   start:0x0026C950 end:0x0026CDA0
 src/Game/MapObj/CloudBonusLauncher.cpp:
     .text   start:0x0026CDA0 end:0x0026FCE8
@@ -1687,7 +1687,7 @@ src/Game/MapObj/GoalPoleWing.cpp: done
     .text   start:0x002D8CA0 end:0x002D8F80
 src/Game/MapObj/Gondola.cpp:
     .text   start:0x002D8F80 end:0x002D9E84
-src/Game/MapObj/Gong.cpp:
+src/Game/MapObj/Gong.cpp: done
     .text   start:0x002D9E90 end:0x002DA3E8
 src/Game/MapObj/Gotogoton.cpp:
     .text   start:0x002DA3F0 end:0x002DBE18
