@@ -14989,7 +14989,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710024D400			FALSE	_ZN10BlockEmpty18onConnectRailBlockEv	BlockEmpty::onConnectRailBlock()	
 0x710024D430			FALSE	_ZN10BlockEmptyD1Ev	BlockEmpty::~BlockEmpty()	
 0x710024D440			FALSE	_ZN10BlockEmptyD0Ev	BlockEmpty::~BlockEmpty()	
-0x710024D470			FALSE	sub_710024D470	sub_710024D470	
+0x710024D470			FALSE	_ZNK12_GLOBAL__N_117BlockEmptyNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_117BlockEmptyNrvWait7executeEPN2al11NerveKeeperE	
 0x710024D4D0		BlockHard.o	FALSE	_ZN9BlockHardC2EPKc	BlockHard::BlockHard(char const*)	
 0x710024D560			FALSE	_ZN9BlockHardC1EPKc	BlockHard::BlockHard(char const*)	
 0x710024D5F0			FALSE	_ZN9BlockHardD2Ev	BlockHard::~BlockHard()	
@@ -20863,7 +20863,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710034A390			FALSE	_ZN12RedBlueBlock7exeFlipEv	RedBlueBlock::exeFlip()	
 0x710034A530			FALSE	_ZN12RedBlueBlockD1Ev	RedBlueBlock::~RedBlueBlock()	
 0x710034A540			FALSE	_ZN12RedBlueBlockD0Ev	RedBlueBlock::~RedBlueBlock()	
-0x710034A570			FALSE	sub_710034A570	sub_710034A570	
+0x710034A570			FALSE	_ZNK12_GLOBAL__N_119RedBlueBlockNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_119RedBlueBlockNrvWait7executeEPN2al11NerveKeeperE	
 0x710034A5C0			FALSE	_ZNK12_GLOBAL__N_119RedBlueBlockNrvFlip7executeEPN2al11NerveKeeperE	(anonymous namespace)::RedBlueBlockNrvFlip::execute(al::NerveKeeper*) const	
 0x710034A5D0		RideUserInfoKeeper.o	FALSE	_ZN18RideUserInfoKeeperC2Ev	RideUserInfoKeeper::RideUserInfoKeeper()	
 0x710034A660			FALSE	_ZN18RideUserInfoKeeper9resetInfoEPKN2al9LiveActorE	RideUserInfoKeeper::resetInfo(al::LiveActor const*)	
