@@ -1,3 +1,4 @@
+#include "MapObj/Fury/FlowerCat.hpp"
 #include "MapObj/GrassHigh.hpp"
 #include "MapObj/CoinCirclePlacement.hpp"
 #include "MapObj/Coin.hpp"
@@ -1157,14 +1158,7 @@ private:
 };
 static_assert(sizeof(FloatingIslandRailPart) == 0x328);
 
-class FlowerCat : public al::LiveActor {
-public:
-    explicit FlowerCat(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x14];
-};
-static_assert(sizeof(FlowerCat) == 0x158);
 
 class FlowerCactus : public al::LiveActor {
 public:

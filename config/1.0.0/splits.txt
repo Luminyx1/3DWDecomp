@@ -1019,7 +1019,7 @@ src/Game/MapObj/Fury/FloatingIslandRailPart.cpp:
     .text   start:0x001A2180 end:0x001A2880
 src/Game/MapObj/Fury/FloatingTerrain.cpp:
     .text   start:0x001A2880 end:0x001A3394
-src/Game/MapObj/Fury/FlowerCat.cpp:
+src/Game/MapObj/Fury/FlowerCat.cpp: done
     .text   start:0x001A33A0 end:0x001A3AD8
 src/Game/MapObj/Fury/GameSkyProjection.cpp: done
     .text   start:0x001A3AE0 end:0x001A3CA0
