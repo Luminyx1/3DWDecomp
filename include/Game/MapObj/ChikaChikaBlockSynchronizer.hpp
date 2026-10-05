@@ -9,6 +9,9 @@ public:
     void initAudioKeeper(al::ActorInitInfo&);
     void initAfterPlacementSceneObj(const al::ActorInitInfo&) override;
     void update();
+    int getFrame() const { return mFrame; }
+    int getPhase() const { return mPhase; }
+    bool isFirstMeasure() const { return mIsFirstMeasure; }
     void updateSceneStop();
     void registerWatcher(ChikaChikaBlockWatcher*);
     const char* getSceneObjName() const override;
