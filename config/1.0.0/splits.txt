@@ -1528,7 +1528,7 @@ src/Game/MapObj/CoinFallGenerator.cpp: done
     .text   start:0x00276F10 end:0x00277738
 src/Game/MapObj/CoinFalls.cpp:
     .text   start:0x00277740 end:0x00279008
-src/Game/MapObj/CoinHolder.cpp:
+src/Game/MapObj/CoinHolder.cpp: done
     .text   start:0x00279010 end:0x00279304
 src/Game/MapObj/CoinLine.cpp: done
     .text   start:0x00279310 end:0x00279D70
