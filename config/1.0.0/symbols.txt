@@ -4730,3 +4730,6 @@
 0x7101A0F140 8 object _ZN12_GLOBAL__N_121NrvDokanAppearOutOnlyE
 0x7101A0F148 8 object _ZN12_GLOBAL__N_117NrvDokanDisappearE
 0x7101A0F160 8 object _ZN12_GLOBAL__N_137NrvDokanPlayerOutWithCameraTicketWaitE
+
+# KoopaLastAttack
+0x7101955188 8 object _ZN12_GLOBAL__N_128NrvKoopaLastAttackFireAttackE

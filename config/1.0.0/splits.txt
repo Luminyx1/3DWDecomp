@@ -189,7 +189,7 @@ src/Game/Boss/KoopaChaseStateWarp.cpp:
     .text   start:0x000305B0 end:0x000308D8
 src/Game/Boss/KoopaChaseWarpDummy.cpp:
     .text   start:0x000308E0 end:0x00030EB8
-src/Game/Boss/KoopaLastAttack.cpp:
+src/Game/Boss/KoopaLastAttack.cpp: done
     .text   start:0x00030EC0 end:0x000310F8
 src/Game/Boss/KoopaLastBeforeCheckPoint.cpp:
     .text   start:0x00031100 end:0x00031E60

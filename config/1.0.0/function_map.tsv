@@ -1185,7 +1185,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71000310A0			FALSE	_ZN19KoopaLastAttackFire9exeAttackEv	KoopaLastAttackFire::exeAttack()	
 0x71000310B0			FALSE	_ZN19KoopaLastAttackFireD1Ev	KoopaLastAttackFire::~KoopaLastAttackFire()	
 0x71000310C0			FALSE	_ZN19KoopaLastAttackFireD0Ev	KoopaLastAttackFire::~KoopaLastAttackFire()	
-0x71000310F0			FALSE	sub_71000310F0	sub_71000310F0	
+0x71000310F0			FALSE	_ZNK12_GLOBAL__N_128KoopaLastAttackFireNrvAttack7executeEPN2al11NerveKeeperE	(anonymous namespace)::KoopaLastAttackFireNrvAttack::execute(al::NerveKeeper*) const	matched nerve
 0x7100031100		KoopaLastBeforeCheckPoint.o	FALSE	_ZN25KoopaLastBeforeCheckPointC2EPKc	KoopaLastBeforeCheckPoint::KoopaLastBeforeCheckPoint(char const*)	note: sorts before the previous object (folder boundary or misnamed object?)
 0x71000311D0			FALSE	_ZN25KoopaLastBeforeCheckPointC1EPKc	KoopaLastBeforeCheckPoint::KoopaLastBeforeCheckPoint(char const*)	
 0x71000312B0			FALSE	_ZN25KoopaLastBeforeCheckPoint4initERKN2al13ActorInitInfoE	KoopaLastBeforeCheckPoint::init(al::ActorInitInfo const&)	
