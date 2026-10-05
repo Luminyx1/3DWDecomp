@@ -1,3 +1,4 @@
+#include "MapObj/SignBoard.hpp"
 #include "MapObj/FrameOutChecker.hpp"
 #include "MapObj/LiftMikeSlide.hpp"
 #include "MapObj/MysteryHouseChecker.hpp"
@@ -2311,14 +2312,7 @@ private:
 };
 static_assert(sizeof(ShadowMarioPlayer) == 0x1b0);
 
-class SignBoard : public al::LiveActor {
-public:
-    explicit SignBoard(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x34];
-};
-static_assert(sizeof(SignBoard) == 0x178);
 
 class SingleModeCheckpoint : public al::LiveActor {
 public:
