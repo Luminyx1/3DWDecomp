@@ -2103,7 +2103,7 @@ src/Game/MapObj/TimerClock.cpp: done
     .text   start:0x003884C0 end:0x00388974
 src/Game/MapObj/TimerCoin.cpp:
     .text   start:0x00388980 end:0x00389204
-src/Game/MapObj/TimerCoinHolder.cpp:
+src/Game/MapObj/TimerCoinHolder.cpp: done
     .text   start:0x00389210 end:0x00389848
 src/Game/MapObj/TimerGate.cpp:
     .text   start:0x00389850 end:0x0038C0A4
