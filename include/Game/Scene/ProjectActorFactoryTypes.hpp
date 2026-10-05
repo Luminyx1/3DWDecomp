@@ -1,3 +1,4 @@
+#include "MapObj/LiftMikeBlockRail.hpp"
 #include "MapObj/JumpFlipPanel.hpp"
 #include "MapObj/SignBoard.hpp"
 #include "MapObj/FrameOutChecker.hpp"
@@ -1846,14 +1847,7 @@ private:
 };
 static_assert(sizeof(LiftMike) == 0x190);
 
-class LiftMikeBlockRail : public al::LiveActor {
-public:
-    explicit LiftMikeBlockRail(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x6c];
-};
-static_assert(sizeof(LiftMikeBlockRail) == 0x1b0);
 
 
 
