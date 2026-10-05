@@ -469,7 +469,7 @@ src/Game/CourseSelect/TicoCourseSelect.cpp:
     .text   start:0x000B7960 end:0x000B7B10
 src/Game/Demo/DemoActionList.cpp: done
     .text   start:0x000B7B10 end:0x000B7DA4
-src/Game/Demo/DemoActorGroup.cpp:
+src/Game/Demo/DemoActorGroup.cpp: done
     .text   start:0x000B7DB0 end:0x000B7DF4
 src/Game/Demo/DemoAnimatic.cpp:
     .text   start:0x000B7E00 end:0x000B8110
