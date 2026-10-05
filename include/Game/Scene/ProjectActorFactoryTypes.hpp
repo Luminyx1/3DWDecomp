@@ -1,5 +1,8 @@
 #pragma once
 
+#include "MapObj/AssistSlideMapParts.hpp"
+#include "MapObj/AssistSlideMapPartsGroup.hpp"
+
 #include "MapObj/ChikaChikaBlockWatcher.hpp"
 
 #include "Enemy/AllDeadWatcher.hpp"
@@ -28,23 +31,6 @@ class CandlestandWatcher;
 class CourseSelectMiniature;
 namespace alSeFunction { enum DemoType : s32; }
 
-class AssistSlideMapParts : public al::LiveActor {
-public:
-    explicit AssistSlideMapParts(const char* pName);
-
-private:
-    u8 mUnreconstructed[0x94];
-};
-static_assert(sizeof(AssistSlideMapParts) == 0x1d8);
-
-class AssistSlideMapPartsGroup : public al::LiveActor {
-public:
-    explicit AssistSlideMapPartsGroup(const char* pName);
-
-private:
-    u8 mUnreconstructed[0xc];
-};
-static_assert(sizeof(AssistSlideMapPartsGroup) == 0x150);
 
 class BalanceTruck : public al::LiveActor {
 public:

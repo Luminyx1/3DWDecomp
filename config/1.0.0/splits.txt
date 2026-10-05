@@ -1357,7 +1357,7 @@ src/Game/MapObj/AssistLeaf.cpp:
     .text   start:0x0023C130 end:0x0023CD8C
 src/Game/MapObj/AssistSlideMapParts.cpp:
     .text   start:0x0023CD90 end:0x0023DC00
-src/Game/MapObj/AssistSlideMapPartsGroup.cpp:
+src/Game/MapObj/AssistSlideMapPartsGroup.cpp: done
     .text   start:0x0023DC00 end:0x0023DEE0
 src/Game/MapObj/BalanceTruck.cpp:
     .text   start:0x0023DEE0 end:0x0023F9B0
