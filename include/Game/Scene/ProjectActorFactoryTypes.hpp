@@ -1,3 +1,4 @@
+#include "MapObj/CoinLine.hpp"
 #include "MapObj/DestructableMapParts.hpp"
 #include "MapObj/GreenRing.hpp"
 #include "MapObj/GreenCoin.hpp"
@@ -596,14 +597,7 @@ private:
 };
 static_assert(sizeof(CoinFalls) == 0x1c8);
 
-class CoinLine : public al::LiveActor {
-public:
-    explicit CoinLine(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x24];
-};
-static_assert(sizeof(CoinLine) == 0x168);
 
 class CoinRail : public al::LiveActor {
 public:

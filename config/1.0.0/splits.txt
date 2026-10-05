@@ -1529,7 +1529,7 @@ src/Game/MapObj/CoinFalls.cpp:
     .text   start:0x00277740 end:0x00279008
 src/Game/MapObj/CoinHolder.cpp:
     .text   start:0x00279010 end:0x00279304
-src/Game/MapObj/CoinLine.cpp:
+src/Game/MapObj/CoinLine.cpp: done
     .text   start:0x00279310 end:0x00279D70
 src/Game/MapObj/CoinRail.cpp:
     .text   start:0x00279D70 end:0x0027A6F4
