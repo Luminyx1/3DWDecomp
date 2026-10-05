@@ -4742,3 +4742,7 @@
 
 # ProjectActorFactory registration table.
 0x7101A96B30 7344 object _ZN12_GLOBAL__N_113sActorEntriesE
+
+# NeonDrawer uniform layout and shader variation.
+0x71016B7604 108 object _ZN12_GLOBAL__N_111sNeonLayoutE
+0x7101A95E38 16 object _ZN12_GLOBAL__N_114sNeonVariationE
