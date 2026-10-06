@@ -2033,7 +2033,7 @@ src/Game/MapObj/TestAndoGoalPole.cpp:
     .text   start:0x0036E8B0 end:0x00370328
 src/Game/MapObj/TestAndoManyCoin.cpp:
     .text   start:0x00370330 end:0x00372158
-src/Game/MapObj/TestAndoManyDrawActor.cpp:
+src/Game/MapObj/TestAndoManyDrawActor.cpp: done
     .text   start:0x00372160 end:0x003724C8
 src/Game/MapObj/TestAndoRigidDoll.cpp:
     .text   start:0x003724D0 end:0x00373278
