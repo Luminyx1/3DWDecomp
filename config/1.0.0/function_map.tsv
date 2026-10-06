@@ -21626,13 +21626,13 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71003690B0			FALSE	_ZN9SuperLeaf24exeWaitAndCheckCollisionEv	SuperLeaf::exeWaitAndCheckCollision()	
 0x7100369130			FALSE	_ZN9SuperLeafD1Ev	SuperLeaf::~SuperLeaf()	
 0x7100369140			FALSE	_ZN9SuperLeafD0Ev	SuperLeaf::~SuperLeaf()	
-0x7100369170			FALSE	sub_7100369170	sub_7100369170	
-0x71003691C0			FALSE	sub_71003691C0	sub_71003691C0	
-0x7100369210			FALSE	sub_7100369210	sub_7100369210	
-0x7100369260			FALSE	sub_7100369260	sub_7100369260	
-0x71003692B0			FALSE	sub_71003692B0	sub_71003692B0	
-0x7100369330			FALSE	sub_7100369330	sub_7100369330	
-0x71003693A0			FALSE	sub_71003693A0	sub_71003693A0	
+0x7100369170			FALSE	_ZNK12_GLOBAL__N_116SuperLeafNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_116SuperLeafNrvWait7executeEPN2al11NerveKeeperE	
+0x71003691C0			FALSE	_ZNK12_GLOBAL__N_122SuperLeafNrvPopUpAbove7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_122SuperLeafNrvPopUpAbove7executeEPN2al11NerveKeeperE	
+0x7100369210			FALSE	_ZNK12_GLOBAL__N_122SuperLeafNrvPopUpFront7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_122SuperLeafNrvPopUpFront7executeEPN2al11NerveKeeperE	
+0x7100369260			FALSE	_ZNK12_GLOBAL__N_118SuperLeafNrvHoming7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_118SuperLeafNrvHoming7executeEPN2al11NerveKeeperE	
+0x71003692B0			FALSE	_ZNK12_GLOBAL__N_133SuperLeafNrvWaitAndCheckCollision7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_133SuperLeafNrvWaitAndCheckCollision7executeEPN2al11NerveKeeperE	
+0x7100369330			FALSE	_ZNK12_GLOBAL__N_124SuperLeafNrvAttachBubble7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_124SuperLeafNrvAttachBubble7executeEPN2al11NerveKeeperE	
+0x71003693A0			FALSE	_GLOBAL__sub_I_SuperLeaf.cpp	_GLOBAL__sub_I_SuperLeaf.cpp	
 0x71003694B0		SuperSkateRail.o	FALSE	_ZN14SuperSkateRailC2EPKc	SuperSkateRail::SuperSkateRail(char const*)	
 0x7100369530			FALSE	_ZN14SuperSkateRailC1EPKc	SuperSkateRail::SuperSkateRail(char const*)	
 0x71003695C0			FALSE	_ZN14SuperSkateRail4initERKN2al13ActorInitInfoE	SuperSkateRail::init(al::ActorInitInfo const&)	
