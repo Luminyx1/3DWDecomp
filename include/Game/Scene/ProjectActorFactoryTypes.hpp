@@ -1,3 +1,4 @@
+#include "MapObj/WaterAreaMoveModel.hpp"
 #include "MapObj/NeedleBarRoot.hpp"
 #include "MapObj/BlockRailMover.hpp"
 #include "MapObj/StepScrollWatcher.hpp"
@@ -2698,14 +2699,7 @@ private:
 };
 static_assert(sizeof(WarpDoor) == 0x178);
 
-class WaterAreaMoveModel : public al::LiveActor {
-public:
-    explicit WaterAreaMoveModel(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x44];
-};
-static_assert(sizeof(WaterAreaMoveModel) == 0x188);
 
 class WheelWatcher : public al::LiveActor {
 public:

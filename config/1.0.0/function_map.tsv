@@ -23190,9 +23190,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71003A6130			FALSE	_ZN18WaterAreaMoveModel7controlEv	WaterAreaMoveModel::control()	
 0x71003A61D0			FALSE	_ZN18WaterAreaMoveModelD1Ev	WaterAreaMoveModel::~WaterAreaMoveModel()	
 0x71003A61E0			FALSE	_ZN18WaterAreaMoveModelD0Ev	WaterAreaMoveModel::~WaterAreaMoveModel()	
-0x71003A6210			FALSE	nullsub_256	nullsub_256	
-0x71003A6220			FALSE	sub_71003A6220	sub_71003A6220	
-0x71003A6270			FALSE	sub_71003A6270	sub_71003A6270	
+0x71003A6210			FALSE	_ZNK12_GLOBAL__N_125WaterAreaMoveModelNrvStop7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_125WaterAreaMoveModelNrvStop7executeEPN2al11NerveKeeperE	
+0x71003A6220			FALSE	_ZNK12_GLOBAL__N_126WaterAreaMoveModelNrvDelay7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_126WaterAreaMoveModelNrvDelay7executeEPN2al11NerveKeeperE	
+0x71003A6270			FALSE	_ZNK12_GLOBAL__N_125WaterAreaMoveModelNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_125WaterAreaMoveModelNrvWait7executeEPN2al11NerveKeeperE	
 0x71003A62D0			FALSE	_ZNK12_GLOBAL__N_125WaterAreaMoveModelNrvMove7executeEPN2al11NerveKeeperE	(anonymous namespace)::WaterAreaMoveModelNrvMove::execute(al::NerveKeeper*) const	
 0x71003A62E0			FALSE	_ZNK2al10FunctorV0MIP18WaterAreaMoveModelMS1_FvvEEclEv	al::FunctorV0M<WaterAreaMoveModel*, void (WaterAreaMoveModel::*)()>::operator()() const	
 0x71003A6300			FALSE	_ZNK2al10FunctorV0MIP18WaterAreaMoveModelMS1_FvvEE5cloneEv	al::FunctorV0M<WaterAreaMoveModel*, void (WaterAreaMoveModel::*)()>::clone() const	
