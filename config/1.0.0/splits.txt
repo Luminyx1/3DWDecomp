@@ -1411,7 +1411,7 @@ src/Game/MapObj/BlockHard.cpp:
     .text   start:0x0024D4D0 end:0x0024E424
 src/Game/MapObj/BlockPow.cpp:
     .text   start:0x0024E430 end:0x0024F284
-src/Game/MapObj/BlockQuestion.cpp:
+src/Game/MapObj/BlockQuestion.cpp: done
     .text   start:0x0024F290 end:0x0024F864
 src/Game/MapObj/BlockQuestionChameleon.cpp: done
     .text   start:0x0024F870 end:0x00250094
@@ -1572,7 +1572,7 @@ src/Game/MapObj/DisasterSpike.cpp:
     .text   start:0x00289ED0 end:0x00290BF4
 src/Game/MapObj/Dokan.cpp:
     .text   start:0x00290C00 end:0x00293724
-src/Game/MapObj/DokanBindPuppeteer.cpp:
+src/Game/MapObj/DokanBindPuppeteer.cpp: done
     .text   start:0x00293730 end:0x00295354
 src/Game/MapObj/DokanWorldWarp.cpp: done
     .text   start:0x00295360 end:0x00295DA4
