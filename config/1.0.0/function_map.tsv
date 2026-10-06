@@ -19232,12 +19232,12 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71002F7700			FALSE	_ZN14KinokoTreasure7exeLandEv	KinokoTreasure::exeLand()	
 0x71002F77A0			FALSE	_ZN14KinokoTreasureD1Ev	KinokoTreasure::~KinokoTreasure()	
 0x71002F77B0			FALSE	_ZN14KinokoTreasureD0Ev	KinokoTreasure::~KinokoTreasure()	
-0x71002F77E0			FALSE	sub_71002F77E0	sub_71002F77E0	
-0x71002F7860			FALSE	sub_71002F7860	sub_71002F7860	
+0x71002F77E0			FALSE	_ZNK12_GLOBAL__N_121KinokoTreasureNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_121KinokoTreasureNrvWait7executeEPN2al11NerveKeeperE	
+0x71002F7860			FALSE	_ZNK12_GLOBAL__N_127KinokoTreasureNrvPopUpFront7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_127KinokoTreasureNrvPopUpFront7executeEPN2al11NerveKeeperE	
 0x71002F78B0			FALSE	_ZNK12_GLOBAL__N_124KinokoTreasureNrvRunaway7executeEPN2al11NerveKeeperE	(anonymous namespace)::KinokoTreasureNrvRunaway::execute(al::NerveKeeper*) const	
-0x71002F78C0			FALSE	sub_71002F78C0	sub_71002F78C0	
+0x71002F78C0			FALSE	_ZNK12_GLOBAL__N_129KinokoTreasureNrvAttachBubble7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_129KinokoTreasureNrvAttachBubble7executeEPN2al11NerveKeeperE	
 0x71002F7930			FALSE	_ZNK12_GLOBAL__N_127KinokoTreasureNrvPopUpAbove7executeEPN2al11NerveKeeperE	(anonymous namespace)::KinokoTreasureNrvPopUpAbove::execute(al::NerveKeeper*) const	
-0x71002F7940			FALSE	sub_71002F7940	sub_71002F7940	
+0x71002F7940			FALSE	_ZNK12_GLOBAL__N_121KinokoTreasureNrvLand7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_121KinokoTreasureNrvLand7executeEPN2al11NerveKeeperE	
 0x71002F79F0			FALSE	_ZNK2al10FunctorV0MIP14KinokoTreasureMS1_FvvEEclEv	al::FunctorV0M<KinokoTreasure*, void (KinokoTreasure::*)()>::operator()() const	
 0x71002F7A10			FALSE	_ZNK2al10FunctorV0MIP14KinokoTreasureMS1_FvvEE5cloneEv	al::FunctorV0M<KinokoTreasure*, void (KinokoTreasure::*)()>::clone() const	
 0x71002F7A60		KinopioBrigadeChecker.o	FALSE	_ZN21KinopioBrigadeCheckerC2EPKc	KinopioBrigadeChecker::KinopioBrigadeChecker(char const*)	

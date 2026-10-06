@@ -1,3 +1,4 @@
+#include "MapObj/KinokoTreasure.hpp"
 #include "MapObj/WaterAreaMoveModel.hpp"
 #include "MapObj/NeedleBarRoot.hpp"
 #include "MapObj/BlockRailMover.hpp"
@@ -1482,14 +1483,7 @@ static_assert(sizeof(KinokoOneUpCourseSelect) == 0x148);
 
 
 
-class KinokoTreasure : public al::LiveActor {
-public:
-    explicit KinokoTreasure(const char* pName, ItemBubble* = nullptr);
 
-private:
-    u8 mUnreconstructed[0x44];
-};
-static_assert(sizeof(KinokoTreasure) == 0x188);
 
 
 

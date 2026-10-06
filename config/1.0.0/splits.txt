@@ -1790,7 +1790,7 @@ src/Game/MapObj/KinokoStateRunaway.cpp:
     .text   start:0x002F5240 end:0x002F5848
 src/Game/MapObj/KinokoSuper.cpp: done
     .text   start:0x002F5850 end:0x002F68F4
-src/Game/MapObj/KinokoTreasure.cpp:
+src/Game/MapObj/KinokoTreasure.cpp: done
     .text   start:0x002F6900 end:0x002F7A54
 src/Game/MapObj/KinopioBrigadeChecker.cpp:
     .text   start:0x002F7A60 end:0x002F8424
