@@ -1,3 +1,4 @@
+#include "MapObj/NeedleBarRoot.hpp"
 #include "MapObj/BlockRailMover.hpp"
 #include "MapObj/StepScrollWatcher.hpp"
 #include "MapObj/SinkedItem.hpp"
@@ -1783,14 +1784,7 @@ static_assert(sizeof(MoamoaHolder) == 0x158);
 
 
 
-class NeedleBarRoot : public al::LiveActor {
-public:
-    explicit NeedleBarRoot(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x14];
-};
-static_assert(sizeof(NeedleBarRoot) == 0x158);
 
 
 
