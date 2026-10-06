@@ -15005,9 +15005,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710024E120			FALSE	_ZN9BlockHard7exeWaitEv	BlockHard::exeWait()	
 0x710024E180			FALSE	_ZN9BlockHard11exeReactionEv	BlockHard::exeReaction()	
 0x710024E1F0			FALSE	_ZN9BlockHard13exeBreakStartEv	BlockHard::exeBreakStart()	
-0x710024E2D0			FALSE	sub_710024E2D0	sub_710024E2D0	
+0x710024E2D0			FALSE	_ZNK12_GLOBAL__N_116BlockHardNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_116BlockHardNrvWait7executeEPN2al11NerveKeeperE	
 0x710024E340			FALSE	_ZNK12_GLOBAL__N_122BlockHardNrvBreakStart7executeEPN2al11NerveKeeperE	(anonymous namespace)::BlockHardNrvBreakStart::execute(al::NerveKeeper*) const	
-0x710024E350			FALSE	sub_710024E350	sub_710024E350	
+0x710024E350			FALSE	_ZNK12_GLOBAL__N_120BlockHardNrvReaction7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_120BlockHardNrvReaction7executeEPN2al11NerveKeeperE	
 0x710024E3C0			FALSE	_ZNK2al10FunctorV0MIP9BlockHardMS1_FvvEEclEv	al::FunctorV0M<BlockHard*, void (BlockHard::*)()>::operator()() const	
 0x710024E3E0			FALSE	_ZNK2al10FunctorV0MIP9BlockHardMS1_FvvEE5cloneEv	al::FunctorV0M<BlockHard*, void (BlockHard::*)()>::clone() const	
 0x710024E430		BlockPow.o	FALSE	_ZN8BlockPowC2EPKc	BlockPow::BlockPow(char const*)	

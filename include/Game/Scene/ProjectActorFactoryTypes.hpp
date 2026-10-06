@@ -220,14 +220,7 @@ private:
 };
 static_assert(sizeof(BlockChoiceWatcher) == 0x158);
 
-class BlockHard : public al::LiveActor {
-public:
-    explicit BlockHard(const char* pName);
-
-private:
-    u8 mUnreconstructed[0x24];
-};
-static_assert(sizeof(BlockHard) == 0x168);
+#include "MapObj/BlockHard.hpp"
 
 
 
