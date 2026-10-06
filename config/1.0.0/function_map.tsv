@@ -19157,16 +19157,16 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71002F4D20			FALSE	_ZN11KinokoOneUp11exeForceGetEv	KinokoOneUp::exeForceGet()	
 0x71002F4DB0			FALSE	_ZN11KinokoOneUpD1Ev	KinokoOneUp::~KinokoOneUp()	
 0x71002F4DC0			FALSE	_ZN11KinokoOneUpD0Ev	KinokoOneUp::~KinokoOneUp()	
-0x71002F4DF0			FALSE	sub_71002F4DF0	sub_71002F4DF0	
-0x71002F4E40			FALSE	sub_71002F4E40	sub_71002F4E40	
-0x71002F4E70			FALSE	sub_71002F4E70	sub_71002F4E70	
-0x71002F4EA0			FALSE	sub_71002F4EA0	sub_71002F4EA0	
-0x71002F4F50			FALSE	sub_71002F4F50	sub_71002F4F50	
-0x71002F4FC0			FALSE	sub_71002F4FC0	sub_71002F4FC0	
-0x71002F5030			FALSE	sub_71002F5030	sub_71002F5030	
+0x71002F4DF0			FALSE	_ZNK12_GLOBAL__N_118KinokoOneUpNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_118KinokoOneUpNrvWait7executeEPN2al11NerveKeeperE	
+0x71002F4E40			FALSE	_ZNK12_GLOBAL__N_124KinokoOneUpNrvPopUpFront7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_124KinokoOneUpNrvPopUpFront7executeEPN2al11NerveKeeperE	
+0x71002F4E70			FALSE	_ZNK12_GLOBAL__N_124KinokoOneUpNrvPopUpAbove7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_124KinokoOneUpNrvPopUpAbove7executeEPN2al11NerveKeeperE	
+0x71002F4EA0			FALSE	_ZNK12_GLOBAL__N_121KinokoOneUpNrvRunaway7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_121KinokoOneUpNrvRunaway7executeEPN2al11NerveKeeperE	
+0x71002F4F50			FALSE	_ZNK12_GLOBAL__N_126KinokoOneUpNrvAttachBubble7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_126KinokoOneUpNrvAttachBubble7executeEPN2al11NerveKeeperE	
+0x71002F4FC0			FALSE	_ZNK12_GLOBAL__N_124KinokoOneUpNrvAppearWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_124KinokoOneUpNrvAppearWait7executeEPN2al11NerveKeeperE	
+0x71002F5030			FALSE	_ZNK12_GLOBAL__N_122KinokoOneUpNrvForceGet7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_122KinokoOneUpNrvForceGet7executeEPN2al11NerveKeeperE	
 0x71002F50C0			FALSE	_ZNK2al10FunctorV0MIP11KinokoOneUpMS1_FvvEEclEv	al::FunctorV0M<KinokoOneUp*, void (KinokoOneUp::*)()>::operator()() const	
 0x71002F50E0			FALSE	_ZNK2al10FunctorV0MIP11KinokoOneUpMS1_FvvEE5cloneEv	al::FunctorV0M<KinokoOneUp*, void (KinokoOneUp::*)()>::clone() const	
-0x71002F5130			FALSE	sub_71002F5130	sub_71002F5130	
+0x71002F5130			FALSE	_GLOBAL__sub_I_KinokoOneUp.cpp	_GLOBAL__sub_I_KinokoOneUp.cpp	
 0x71002F5240		KinokoStateRunaway.o	FALSE	_ZN18KinokoStateRunawayC2EPN2al9LiveActorE	KinokoStateRunaway::KinokoStateRunaway(al::LiveActor*)	
 0x71002F5290			FALSE	_ZN18KinokoStateRunaway4initEv	KinokoStateRunaway::init()	
 0x71002F52A0			FALSE	_ZN18KinokoStateRunaway6appearEv	KinokoStateRunaway::appear()	

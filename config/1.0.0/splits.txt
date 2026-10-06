@@ -1784,7 +1784,7 @@ src/Game/MapObj/KinokoBig.cpp: done
     .text   start:0x002F33E0 end:0x002F3BD0
 src/Game/MapObj/KinokoGiga.cpp: done
     .text   start:0x002F3BD0 end:0x002F4304
-src/Game/MapObj/KinokoOneUp.cpp:
+src/Game/MapObj/KinokoOneUp.cpp: done
     .text   start:0x002F4310 end:0x002F523C
 src/Game/MapObj/KinokoStateRunaway.cpp:
     .text   start:0x002F5240 end:0x002F5848
