@@ -11,6 +11,7 @@ enum SceneObjID : s32 {
     SceneObjID_PlayerGroup = 16,
     SceneObjID_PlayerStocker = 18,
     SceneObjID_ScoreHolder = 20,
+    SceneObjID_FurEnv = 33,
     SceneObjID_ControllerEventWatcher = 34,
     SceneObjID_GoalItemHolder = 36,
     SceneObjID_OceanScenarioList = 42,

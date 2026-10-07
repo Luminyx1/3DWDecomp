@@ -38,6 +38,7 @@ public:
     bool isEnableShadowPrePass() const;
     bool isEnableShadowForLightPrePass() const;
     bool isEnableVarianceShadow() const;
+    bool isEnableDepthShadow() const;
 
     ShadowMaskKeeper* getShadowMaskKeeper() const { return mShadowMaskKeeper; }
 

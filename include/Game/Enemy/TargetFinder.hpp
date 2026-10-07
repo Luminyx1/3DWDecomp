@@ -9,6 +9,7 @@ namespace al {
 
 class TargetFinderParam {
 public:
+    TargetFinderParam();
     TargetFinderParam(f32, f32, f32, u32, f32, f32, f32, f32, bool);
 
     f32 _0;
@@ -27,6 +28,11 @@ public:
     TargetFinder(al::LiveActor*, const TargetFinderParam*);
 
     void refindTarget();
+    void update();
+    void setFrontDir(sead::Vector3f* pFrontDir);
+    const sead::Vector3f& getTargetPos() const;
+
+    bool isExistTarget() const { return _8 != nullptr; }
 
     al::LiveActor* mActor;  // 0x00
     al::LiveActor* _8;

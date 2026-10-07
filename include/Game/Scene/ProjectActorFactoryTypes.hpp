@@ -311,14 +311,7 @@ static_assert(sizeof(BoomerangBros) == 0x1d0);
 
 
 
-class BossGorobon : public al::LiveActor {
-public:
-    explicit BossGorobon(const char* pName);
-
-private:
-    u8 mUnreconstructed[0xb4];
-};
-static_assert(sizeof(BossGorobon) == 0x1f8);
+#include "Boss/BossGorobon.hpp"
 
 class BossWackun : public al::LiveActor {
 public:
@@ -1205,14 +1198,7 @@ private:
 };
 static_assert(sizeof(Gong) == 0x148);
 
-class Gorobon : public al::LiveActor {
-public:
-    explicit Gorobon(const char* pName);
-
-private:
-    u8 mUnreconstructed[0xe4];
-};
-static_assert(sizeof(Gorobon) == 0x228);
+#include "Enemy/Gorobon.hpp"
 
 class Gotogoton : public al::LiveActor {
 public:
@@ -1725,14 +1711,7 @@ static_assert(sizeof(MagmaFish) == 0x198);
 
 
 
-class MeraWanwan : public al::LiveActor {
-public:
-    explicit MeraWanwan(const char* pName);
-
-private:
-    u8 mUnreconstructed[0xac];
-};
-static_assert(sizeof(MeraWanwan) == 0x1f0);
+#include "Enemy/MeraWanwan.hpp"
 
 class Mirror : public al::LiveActor {
 public:

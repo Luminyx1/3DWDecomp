@@ -7,6 +7,7 @@ namespace detail::driver {
 class MultiVoice {
 public:
     void AppendWaveBuffer(int channel, WaveBuffer* buffer, bool last);
+    void Pause(bool isPause);
 };
 class StreamChannel {
 public:
