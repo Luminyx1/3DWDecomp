@@ -10,9 +10,15 @@
 
 namespace al {
 class ComboCounter;
+class LayoutInitInfo;
+class PadRumbleKeeper;
 }  // namespace al
 
 class IUsePlayerKeyConfig;
+class IUsePlayerRetargettingInfoCreator;
+class IUsePlayerRetargettingSelector;
+class IUsePlayerActionGraphBuilder;
+class PlayerInvincibleBgmController;
 class IUsePlayerModelVisibility;
 class IUsePlayerPuppet;
 class Player;
@@ -27,6 +33,17 @@ struct PlayerProperty;
 /// The actor of a playable character (Mario, Luigi, ...).
 class PlayerActor : public al::LiveActor {
 public:
+    explicit PlayerActor(const sead::Matrix34f* pViewMtx);
+    void initSpecial(const al::ActorInitInfo& rInfo, s32 port, const char* pCharacterName,
+                     IUsePlayerRetargettingInfoCreator* pCreator,
+                     IUsePlayerRetargettingSelector* pSelector,
+                     IUsePlayerActionGraphBuilder* pBuilder, const char* pName,
+                     u32 playerType, s32 index, const char* pSuffix);
+    void initNameplate(const al::LayoutInitInfo& rInfo);
+    void setInvincibleBgmController(PlayerInvincibleBgmController* pController) {
+        mInvincibleBgmController = pController;
+    }
+    al::PadRumbleKeeper* getPadRumbleKeeper() const { return mPadRumbleKeeper; }
     virtual void permitBind();
     virtual void clearBindable();
     virtual void cancelBind();
@@ -122,6 +139,7 @@ public:
     PlayerProperty* getProperty();
     const PlayerProperty* getProperty() const;
     void updatePosture();
+    void copyNameplate(al::LiveActor* pActor);
     s32 getInputPort() const;
     void replaceInputPort(s32 port);
     const IUsePlayerKeyConfig* getKeyConfig() const;
@@ -204,7 +222,9 @@ private:
     u8 _338[0x382 - 0x338];
     bool mIsDamageTrigOn;  // 0x382
     bool mIsValidGetItem;  // 0x383
-    u8 _384[0x3e8 - 0x384];
+    u8 _384[0x398 - 0x384];
+    al::PadRumbleKeeper* mPadRumbleKeeper; // 0x398
+    u8 _3a0[0x3e8 - 0x3a0];
     al::HitSensor* mHoldingSensor;  // 0x3e8
     u8 _3f0[0x418 - 0x3f0];
     al::HitSensor* mHoldedSensor;  // 0x418
@@ -213,11 +233,16 @@ private:
     u8 _4ca[0x4d4 - 0x4ca];
     sead::Color4f mInvincibleColor;  // 0x4d4
     bool mIsGiantLanding;  // 0x4e4
-    u8 _4e5[0x5d8 - 0x4e5];
+    u8 _4e5[0x530 - 0x4e5];
+    PlayerInvincibleBgmController* mInvincibleBgmController; // 0x530
+    u8 _538[0x5d8 - 0x538];
     al::LiveActor* mKoopaJr;  // 0x5d8
     u8 _5e0[0x610 - 0x5e0];
     bool mIsSingleMode;  // 0x610
     bool mIsRaidonExist;  // 0x611
     u8 _612[0x63c - 0x612];
     bool mIsUseInputForHold;  // 0x63c
+    u8 _63d[0x648 - 0x63d];
 };
+
+static_assert(sizeof(PlayerActor) == 0x648);

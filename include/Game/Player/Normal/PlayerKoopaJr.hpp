@@ -7,6 +7,10 @@
 /// Bowser Jr. when controlled by a second player in Bowser's Fury.
 class PlayerKoopaJr : public al::LiveActor, public al::ISceneObj {
 public:
+    static PlayerKoopaJr* tryGetPlayerKoopaJr(const al::IUseSceneObjHolder* pUser);
+    bool tryPraiseReaction(int);
+    void hideForDemo();
+    void showFromDemo();
     PlayerProperty* getProperty() { return &mProperty; }
 
 private:

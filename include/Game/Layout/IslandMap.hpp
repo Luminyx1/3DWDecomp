@@ -12,6 +12,7 @@
  */
 class IslandMap : public al::LayoutActor, public al::ISceneObj, public al::IUseCamera_RS {
 public:
+    static void setIslandWarpEnable(const al::IUseSceneObjHolder* pUser, bool isEnable);
     void updatePlayerTrackerForBonusArea(sead::Vector3f trans);
 
     /**

@@ -22,6 +22,9 @@ public:
 
     bool isUseScreenPos() const { return mIsUseScreenPos; }
 
+    /// Position used by the touch cursor, in layout space.
+    const sead::Vector2f& getLayoutPos() const { return _1c; }
+
     bool mIsTouch;              // 0x00
     bool _1;                    // 0x01
     bool _2;                    // 0x02
@@ -39,3 +42,5 @@ public:
     bool mIsUseScreenPos;       // 0x4A
     bool _4b;                   // 0x4B
 };
+
+static_assert(sizeof(DrcTouchAssistInfo) == 0x4c);

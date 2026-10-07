@@ -28,6 +28,7 @@ public:
 
     void activateStamp(Stamp* pStamp, s32);
     void releaseStamp(Stamp* pStamp);
+    void setCollectStamp(s32 stampId);
     Stamp* getStampFromModel(alModelCafe* pModel) const;
 
     const al::Resource* getStampResource() const { return mStampResource; }

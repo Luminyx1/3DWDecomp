@@ -138,6 +138,7 @@ public:
     const CubeMapInfo* getForceCubeMapInfo() const { return mForceCubeMapInfo; }
 
     f32 getModelLightIntensity() const { return mModelLightIntensity; }
+    void setModelLightIntensity(f32 intensity) { mModelLightIntensity = intensity; }
 
 private:
     const char* mCubeMapName = nullptr;

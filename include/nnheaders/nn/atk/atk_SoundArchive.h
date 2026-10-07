@@ -80,6 +80,20 @@ class SoundArchive {
         u32 fileSize;
     };
 
+    struct SoundArchivePlayerInfo {
+        s32 sequenceSoundCount;
+        s32 sequenceTrackCount;
+        s32 streamSoundCount;
+        s32 streamTrackCount;
+        s32 streamChannelCount;
+        s32 waveSoundCount;
+        s32 waveTrackCount;
+        u32 streamBufferTimes;
+        s32 advancedWaveSoundCount;
+        s32 advancedWaveTrackCount;
+    };
+    bool ReadSoundArchivePlayerInfo(SoundArchivePlayerInfo* pInfo) const;
+
     struct WaveArchiveInfo {
         /** @brief Initializes an unresolved wave archive with individual loading disabled. */
         WaveArchiveInfo() : fileId(InvalidId), isLoadIndividual(false) {}
