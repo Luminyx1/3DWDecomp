@@ -22,6 +22,7 @@ public:
     void setEndSpeed(float speed);
     void setRouteSelecter(al::BlockRailRouteSelecter* pSelecter);
     void forceCalcMoveDirection();
+    const sead::Vector3f& getMoveDirection() const { return mMoveDirection; }
 private:
     al::BlockRailRider* mRailRider = nullptr;
     RouteDokanInOutEffect* mEffect = nullptr;

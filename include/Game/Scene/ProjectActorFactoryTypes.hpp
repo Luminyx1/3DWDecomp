@@ -260,14 +260,7 @@ static_assert(sizeof(BobsledDashPanel) == 0x190);
 
 
 
-class BombBound : public al::LiveActor {
-public:
-    explicit BombBound(const char* pName);
-
-private:
-    u8 mUnreconstructed[0x44];
-};
-static_assert(sizeof(BombBound) == 0x188);
+#include "Boss/BombBound.hpp"
 
 class BombBoundGenerator : public al::LiveActor {
 public:
@@ -1706,14 +1699,7 @@ static_assert(sizeof(LiftMike) == 0x190);
 
 
 
-class Lighthouse : public al::LiveActor {
-public:
-    explicit Lighthouse(const char* pName);
-
-private:
-    u8 mUnreconstructed[0x1b4];
-};
-static_assert(sizeof(Lighthouse) == 0x2f8);
+#include "MapObj/Lighthouse.hpp"
 
 class LightningController : public al::LiveActor {
 public:
@@ -2737,14 +2723,7 @@ private:
 };
 static_assert(sizeof(WindowMessageAppear) == 0x160);
 
-class IslandHolder : public al::LiveActor {
-public:
-    explicit IslandHolder(const char* pName);
-
-private:
-    u8 mUnreconstructed[0x414];
-};
-static_assert(sizeof(IslandHolder) == 0x558);
+#include "NPC/IslandHolder.hpp"
 
 class TestAndoGoalPole : public al::LiveActor {
 public:

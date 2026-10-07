@@ -24,6 +24,8 @@ public:
     void setFinalPos();
     void exeThrow();
     bool isItemThrow() const;
+    const sead::Vector3f& getThrowVelocity() const { return mThrowVelocity; }
+    const sead::Vector3f& getReleaseVelocity() const { return mReleaseVelocity; }
 private:
     const DrcTouchPointer* mPointer = nullptr;
     sead::Vector3f mThrowVelocity = sead::Vector3f::zero;

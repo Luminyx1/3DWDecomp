@@ -23,4 +23,5 @@ namespace rc {
                                                      const al::ScreenPointer*);
     bool tryCalcTouchPointerSlideDirOnWorldByPointer(sead::Vector3f*, const al::LiveActor*);
     void releaseAllTouchPointerHoldItem(const al::LiveActor* pActor);
+    void releaseTouchPointerHoldItem(const al::LiveActor* pActor, const al::LiveActor* pPointer);
 };

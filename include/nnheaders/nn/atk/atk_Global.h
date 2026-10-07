@@ -26,6 +26,13 @@ enum OutputDevice {
     OutputDevice_Count
 };
 
+enum SampleRateConverterType {
+    SampleRateConverterType_None,
+    SampleRateConverterType_Linear,
+    SampleRateConverterType_4Tap,
+    SampleRateConverterType_Count
+};
+
 enum ChannelIndex {
     ChannelIndex_FrontLeft = 0,
     ChannelIndex_FrontRight = 1,

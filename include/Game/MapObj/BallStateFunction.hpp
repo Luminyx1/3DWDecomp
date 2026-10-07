@@ -15,4 +15,8 @@ void rotateOnAir(al::LiveActor*, float, bool);
 void sendMsgToCollision(al::LiveActor*, bool);
 void reboundCollisionWallOrCeiling(al::LiveActor*);
 bool reboundCollisionGround(al::LiveActor*, const BallStateFallParam*, bool);
+void calcReflectSpeed(al::LiveActor*, const al::LiveActor*, const BallStateFallParam*);
+al::HitSensor* tryGetRelativePlayerSensor(al::LiveActor*, al::HitSensor*);
+bool getCollidedNormalAndPos(al::LiveActor*, sead::Vector3f*, sead::Vector3f*);
+void setColliderReturnedSlowly(al::LiveActor*, s32, s32);
 }

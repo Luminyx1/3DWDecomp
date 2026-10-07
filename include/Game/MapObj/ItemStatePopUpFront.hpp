@@ -40,6 +40,8 @@ public:
     void setParam(const ItemStatePopUpFrontParam&, const al::HitSensor*);
     void setParamDefault();
     void setParamOnCollide();
+    void setParamBallPopUp();
+    void setParamBallAbove();
     void setParamAnimName(const char*);
     void setParamHoming(const al::HitSensor*);
     void setParamInvalidateKillByArea(bool);

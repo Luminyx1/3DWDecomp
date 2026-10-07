@@ -25,6 +25,7 @@ class Player;
 class PlayerActionObserver;
 class PlayerAmiiboDirector;
 class PlayerAudio;
+class PlayerGigaDirector;
 class PlayerConstParam;
 class PlayerInput;
 class PlayerModelHolder;
@@ -181,6 +182,7 @@ public:
 
     PlayerConstParam* getConstParam() const { return mConstParam; }
     Player* getPlayer() const { return mPlayer; }
+    PlayerGigaDirector* getPlayerGigaDirector() const;
     PlayerAudio* getAudio() const { return mAudio; }
     void setViewMtx(const sead::Matrix34f* pViewMtx) { mViewMtx = pViewMtx; }
     void setUseInputForHold(bool isUseInput) { mIsUseInputForHold = isUseInput; }

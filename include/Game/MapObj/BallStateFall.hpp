@@ -9,6 +9,7 @@ public:
     BallStateFall(al::LiveActor* pActor, const BallStateFallParam* pParam);
     void appear() override;
     void exeFall();
+    void setIsRotate(bool isRotate) { mIsRotate = isRotate; }
 
 private:
     const BallStateFallParam* mParam;
