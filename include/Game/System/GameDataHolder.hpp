@@ -104,6 +104,12 @@ class GameDataHolder : public al::ISceneObj {
     bool isSingleMode() const { return mSingleMode; }
 
     /**
+     * @brief Switch between the Super Mario 3D World and Bowser's Fury modes.
+     * @param isSingleMode True for Bowser's Fury.
+     */
+    void setSingleMode(bool isSingleMode) { mSingleMode = isSingleMode; }
+
+    /**
      * @brief Access the common play-log storage.
      * @return The allocated play-log storage.
      */

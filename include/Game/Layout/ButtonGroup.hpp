@@ -41,6 +41,12 @@ public:
     void select(CursorTarget* pButton);
     void updateAndCursorDefault(s32 port);
     bool isDecide(const char* pButtonName) const;
+    bool isDecideEnd(const char* pButtonName) const;
+    bool isSelect(const char* pButtonName) const;
+    void decide(const char* pButtonName);
+    void update();
+    void tryMove(s32 direction);
+    const char* getSelectedButtonName() const;
 
     /**
      * @brief Access the cursor layout.
@@ -74,11 +80,18 @@ public:
      */
     CursorTarget* getSelectedButton() const { return mSelectedButton; }
 
+    /**
+     * @brief Check whether the group ignores directional / decide input this frame.
+     * @return True while input is locked (e.g. while the cursor is still moving).
+     */
+    bool isInputLocked() const { return mIsInputLocked; }
+
 private:
     al::LayoutActor* mCursor;
     sead::PtrArray<CursorTarget> mButtons;
     u8 mUnreconstructed18[0x210];
     CursorTarget* mSelectedButton;
-    u8 mUnreconstructed230[0x20];
+    bool mIsInputLocked;
+    u8 mUnreconstructed231[0x1f];
 };
 static_assert(sizeof(ButtonGroup) == 0x250);

@@ -23,4 +23,5 @@ enum SceneObjID : s32 {
     SceneObjID_CloudBonusWatcher = 52,
     SceneObjID_SingleModeSceneLayout = 53,
     SceneObjID_PlayerKoopaJr = 56,
+    SceneObjID_NekoParentHolder = 59,
 };

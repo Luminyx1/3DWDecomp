@@ -602,6 +602,8 @@ public:
 
     /// Make the getters ask the override parameter set (or stop doing so).
     void setOverride(bool isOverride) { mIsOverride = isOverride; }
+    /// Whether the getters currently ask the override parameter set.
+    bool isOverride() const { return mIsOverride; }
 
 private:
     f32 mGravity;  // 0x8

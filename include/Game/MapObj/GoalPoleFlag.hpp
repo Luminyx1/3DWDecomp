@@ -15,6 +15,8 @@ public:
     void exeWait();
     void exeUpward();
     void exeReachTop();
+    /** @brief Sets the Y rotation of the flag. @param rotateY Rotation in degrees. */
+    void setRotateY(float rotateY) { mRotateY = rotateY; }
 private:
     GoalPole* mPole;
     float mTargetHeight = 700.0f;

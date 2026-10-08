@@ -91,6 +91,8 @@ public:
 
     s32 getStampId() const { return mStampId; }
 
+    s32 getDepth() const { return mDepth; }
+
     const char* getTextureName() const { return mTextureName; }
 
     bool isHidden() const { return mIsHidden; }

@@ -20,6 +20,7 @@ class IUsePlayerRetargettingSelector;
 class IUsePlayerActionGraphBuilder;
 class PlayerInvincibleBgmController;
 class IUsePlayerModelVisibility;
+class IUsePlayerFlagSwitch;
 class IUsePlayerPuppet;
 class Player;
 class PlayerActionObserver;
@@ -140,6 +141,13 @@ public:
     PlayerProperty* getProperty();
     const PlayerProperty* getProperty() const;
     void updatePosture();
+    IUsePlayerFlagSwitch* createInterfaceSilhouetteHiddenFlag();
+
+    /**
+     * @brief Sets whether the title scene plays a change demo with this player.
+     * @param isChange True while the change demo plays.
+     */
+    void setTitleDemoChange(bool isChange) { mIsTitleDemoChange = isChange; }
     void copyNameplate(al::LiveActor* pActor);
     s32 getInputPort() const;
     void replaceInputPort(s32 port);
@@ -221,7 +229,9 @@ private:
     PlayerModelHolder* mModelHolder;  // 0x240
     u8 _248[0x330 - 0x248];
     IUsePlayerModelVisibility* mModelVisibility;  // 0x330
-    u8 _338[0x382 - 0x338];
+    u8 _338[0x380 - 0x338];
+    bool mIsTitleDemoChange;  // 0x380, set by the title scene while a change demo plays
+    u8 _381[0x382 - 0x381];
     bool mIsDamageTrigOn;  // 0x382
     bool mIsValidGetItem;  // 0x383
     u8 _384[0x398 - 0x384];

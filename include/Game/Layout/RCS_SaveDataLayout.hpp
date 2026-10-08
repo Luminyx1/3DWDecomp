@@ -45,6 +45,18 @@ public:
     bool isEndBack() const;
     bool isEnding() const;
 
+    /**
+     * @brief Register the pause menu layout hidden while this layout is shown.
+     * @param pLayout Pause menu frame layout.
+     */
+    void setPauseMenuLayout(al::LayoutActor* pLayout) { mPauseMenuLayout = pLayout; }
+
+    /**
+     * @brief Sets the control guide bar driven by the file select.
+     * @param pGuideBar The control guide bar.
+     */
+    void setGuideBar(RCSControlGuideBar* pGuideBar) { mGuideBar = pGuideBar; }
+
     void exeAppear();
     void exeSelect();
     void exeConfirm();

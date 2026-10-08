@@ -10,4 +10,5 @@ public:
     bool isStop() const;
     void requestStop(const void*);
     void requestRestart(const void*);
+    s32 calcDisplayCount() const;
 };

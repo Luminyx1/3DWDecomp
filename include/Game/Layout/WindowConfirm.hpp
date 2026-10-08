@@ -28,6 +28,8 @@ public:
     void appearWithSystemMessage(const char* pFileName, const char* pLabel, s32 port,
                                  const char* pArg);
     bool isDecideLeft() const;
+    bool isDecideRight() const;
+    bool isDecideLeftEnd() const;
     bool isDecideRightEnd() const;
     bool isEnding() const;
     void forceExit();

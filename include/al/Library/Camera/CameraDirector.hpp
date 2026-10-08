@@ -1,6 +1,7 @@
 #pragma once
 
 #include <basis/seadTypes.h>
+#include <math/seadMatrix.h>
 
 namespace sead {
 class LookAtCamera;
@@ -39,6 +40,11 @@ public:
     sead::PerspectiveProjection* mProjection;
     u8 _20[0x8];
     SceneCameraInfo* mSceneCameraInfo;
-    u8 _30[0x1f0 - 0x30];
+    u8 _30[0xa0 - 0x30];
+    sead::Matrix34f mMainViewMtx;  // 0xa0
+    sead::Matrix34f mSubViewMtx;   // 0xd0
+    u8 _100[0x161 - 0x100];
+    bool mIsTitleFlag;  // 0x161, cleared by the title scene (meaning unknown)
+    u8 _162[0x1f0 - 0x162];
 };
 }  // namespace al

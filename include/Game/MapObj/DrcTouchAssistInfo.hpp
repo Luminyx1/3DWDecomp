@@ -36,7 +36,7 @@ public:
     sead::Vector2f _2c;         // 0x2C
     sead::Vector2f _34;         // 0x34
     sead::Vector2f _3c;         // 0x3C
-    f32 _44;                    // 0x44
+    s32 _44;                    // 0x44
     bool _48;                   // 0x48
     bool _49;                   // 0x49
     bool mIsUseScreenPos;       // 0x4A

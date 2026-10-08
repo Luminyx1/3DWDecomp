@@ -30,6 +30,14 @@ class DisasterModeController : public al::LiveActor, public al::ISceneObj {
     };
     void registerStateListener(IUseEventReceiver* listener) { if (!mStateListeners.isFull()) mStateListeners.pushBack(listener); }
     static DisasterModeController* tryGetController(const al::IUseSceneObjHolder* pUser);
+    State getState();
+    s32 getStateFrame();
+
+    /**
+     * @brief Get the step of the disaster flow.
+     * @return The step of the disaster flow.
+     */
+    s32 getFlowStep() const { return mFlowStep; }
     static bool isLastBowserBattle(GameDataHolderAccessor accessor);
 
     DisasterBlockDirector* getBlockDirector() const { return mBlockDirector; }
@@ -84,6 +92,65 @@ class DisasterModeController : public al::LiveActor, public al::ISceneObj {
     bool isDisasterMode() const { return mIsDisasterMode; }
 
     /**
+     * @brief Check whether objects should show their disaster mode animations.
+     * @return Whether the disaster mode animations are active.
+     */
+    bool isDisasterModeAnim() const { return mIsDisasterModeAnim; }
+
+    s32 calcProsperityStartAdditionalFramesMax();
+    s32 calcFramesOfProsperity() const;
+    void triggerAnticipationSwitch();
+    void startRain();
+    void clearTimeJumpFlags();
+
+    /**
+     * @brief Count the frames of peace elapsed before the next disaster.
+     * @return The elapsed peace frames.
+     */
+    s32 getPeaceFrames() const { return mPeaceFrames; }
+
+    /**
+     * @brief Count the frames of rain that precede the disaster.
+     * @return The pre-disaster rain frames.
+     */
+    s32 getPreRainFrames() const { return mPreRainFrames; }
+
+    /**
+     * @brief Get the disaster-mode frames elapsed (without the saved offset).
+     * @return The elapsed disaster-mode frames.
+     */
+    s32 getDisasterFrames() const { return mDisasterFrames; }
+
+    /**
+     * @brief Jump the disaster timer to a frame.
+     * @param frames The new elapsed disaster-mode frames.
+     */
+    void setDisasterFrames(s32 frames) {
+        mDisasterFrames = frames;
+        mDisasterFramesSync = frames;
+    }
+
+    /**
+     * @brief Set the saved disaster-mode frame offset.
+     * @param frames The new offset.
+     */
+    void setDisasterFramesOffset(s32 frames) { mDisasterFramesOffset = frames; }
+
+    s32 getDisasterFramesOffset() const { return mDisasterFramesOffset; }
+
+    /**
+     * @brief Check whether the Black Sun only floats in place instead of rising.
+     * @return True while the Black Sun floats.
+     */
+    bool isBlackSunFloating() const { return mIsBlackSunFloating; }
+
+    /**
+     * @brief Check whether the disaster timer is stopped.
+     * @return True while the timer is stopped.
+     */
+    bool isTimeStopped() const { return mIsTimeStopped; }
+
+    /**
      * @brief Check whether the disaster foreshadowing (the calm before Fury Bowser) is active.
      * @return True while the disaster is foreshadowed.
      */
@@ -99,20 +166,29 @@ class DisasterModeController : public al::LiveActor, public al::ISceneObj {
     u8 mUnknown150[0x158 - 0x150];
     DisasterSpikeDirector* mSpikeDirector;  // 0x158
     DisasterBlockDirector* mBlockDirector;
-    u8 mUnknown168[0x1c4 - 0x168];
+    u8 mUnknown168[0x1ac - 0x168];
+    s32 mPeaceFrames;  // 0x1ac
+    u8 mUnknown1B0[0x1c0 - 0x1b0];
+    s32 mDisasterFramesSync;  // 0x1c0
     s32 mDisasterFrames;
     u8 mUnknown1C8[0x20];
     SuperBowser* mpSuperBowser;
     al::LiveActor* mDemoSubActor;  // 0x1f0
     u8 mUnknown1F8;
     bool mIsDisasterMode;
-    u8 mUnknown1FA[0x23c - 0x1fa];
+    bool mIsDisasterModeAnim;  // 0x1fa
+    bool mIsBlackSunFloating;  // 0x1fb
+    u8 mUnknown1FC[0x23b - 0x1fc];
+    bool mIsTimeStopped;  // 0x23b
     bool mGoalItemDisasterTrigger;  // 0x23c
     u8 mUnknown23D[0x25b - 0x23d];
     bool mIsDisasterForeshadow;  // 0x25b
-    u8 mUnknown25C[0x2d0 - 0x25c];
+    u8 mUnknown25C[0x29c - 0x25c];
+    s32 mFlowStep;  // 0x29c
+    u8 mUnknown2A0[0x2d0 - 0x2a0];
     s32 mDisasterFramesOffset;
-    u8 mUnknown2D4[0x370 - 0x2d4];
+    s32 mPreRainFrames;  // 0x2d4
+    u8 mUnknown2D8[0x370 - 0x2d8];
     al::FunctorBase* mFadeInDoneFunctor;  // 0x370
     u8 mUnknown378[0x390 - 0x378];
     sead::PtrArray<IUseEventReceiver> mStateListeners;

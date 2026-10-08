@@ -295,6 +295,12 @@ class GameDataFile : public GameDataFileBase {
      */
     void resetAfterEnding() { mIsStartEnding = false; }
 
+    /** @brief Requests a return to the world map when the current stage is left. */
+    void requestReturnToMap() { mUnknownF3 = true; }
+
+    /** @brief Requests a restart of the current stage when it is left. */
+    void requestRestartStage() { mUnknownF4 = true; }
+
   private:
     friend inline void GameDataFileInternal::resetKinopioHouse(GameDataFile* pFile);
     friend class GameDataHolder;

@@ -24,6 +24,12 @@ class GameSystem : public al::NerveExecutor {
      */
     al::GamePadSystem* getGamePadSystem() const { return mpGamePad; }
 
+    /**
+     * @brief Access the running root sequence.
+     * @return The root sequence.
+     */
+    al::Sequence* getSequence() const { return mpSequence; }
+
   private:
     al::Sequence* mpSequence;
     al::GameSystemInfo* mpInfo;

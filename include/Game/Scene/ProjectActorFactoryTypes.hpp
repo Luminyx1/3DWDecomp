@@ -302,6 +302,7 @@ static_assert(sizeof(BoomerangBros) == 0x1d0);
 #include "Boss/BossGorobon.hpp"
 
 #include "Boss/BossWackun.hpp"
+#include "Boss/SuperBowserShell.hpp"
 
 
 
@@ -1900,14 +1901,7 @@ private:
 };
 static_assert(sizeof(RaftConveyer) == 0x180);
 
-class Raidon : public al::LiveActor {
-public:
-    explicit Raidon(const char* pName);
-
-private:
-    u8 mUnreconstructed[0x144];
-};
-static_assert(sizeof(Raidon) == 0x288);
+#include "Raidon/Raidon.hpp"
 
 class RaidonNpc : public al::LiveActor {
 public:
@@ -2192,14 +2186,6 @@ private:
 };
 static_assert(sizeof(GigaRock) == 0x1e0);
 
-class SuperBowserShell : public al::LiveActor {
-public:
-    explicit SuperBowserShell(const char* pName);
-
-private:
-    u8 mUnreconstructed[0xcc];
-};
-static_assert(sizeof(SuperBowserShell) == 0x210);
 
 
 

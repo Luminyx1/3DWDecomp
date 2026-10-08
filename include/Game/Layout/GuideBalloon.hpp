@@ -8,6 +8,10 @@ class LayoutInitInfo;
 class DemoDirector;
 }
 
+namespace neko {
+enum ColorType : s32;
+}  // namespace neko
+
 class GuideBalloon : public al::LayoutActor {
 public:
     GuideBalloon(const char* pName, const al::LayoutInitInfo& rInfo,
@@ -20,6 +24,7 @@ public:
     void startShowGoalItem(int count);
     void startShowDrcTouch(bool);
     void startShowNew();
+    void startShowNeko(neko::ColorType colorType, int foundNum, int maxNum);
     void endShow();
 
     /**

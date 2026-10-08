@@ -1,6 +1,7 @@
 #pragma once
 
 #include <basis/seadTypes.h>
+#include <math/seadVector.h>
 
 #include "Library/Scene/ISceneObj.hpp"
 
@@ -28,6 +29,8 @@ public:
 
     void activateStamp(Stamp* pStamp, s32);
     void releaseStamp(Stamp* pStamp);
+    Stamp* getNewStamp();
+    void throwStamp(Stamp* pStamp, const sead::Vector3f& rVelocity);
     void setCollectStamp(s32 stampId);
     Stamp* getStampFromModel(alModelCafe* pModel) const;
 

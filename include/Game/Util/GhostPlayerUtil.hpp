@@ -10,4 +10,7 @@ struct GhostPlayerUserInfo {
 
 const GhostPlayerUserInfo* findGhostPlayerUserInfo(const char* pKey);
 void endRecordGhostPlayerRecorder(const al::IUseSceneObjHolder*, bool);
+void notifyGoalKillGhostPlayerRecorder(const al::IUseSceneObjHolder* pHolder);
+void stopAndHideGhostPlayerAll(const al::IUseSceneObjHolder* pHolder);
+void restartGhostPlayerAll(const al::IUseSceneObjHolder* pHolder);
 }

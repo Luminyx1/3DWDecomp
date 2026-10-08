@@ -16,4 +16,7 @@ namespace PlayerActionFunc {
     bool isMapCodeSkate(const IUsePlayerCollision*);
     bool isRaccoonDog(const PlayerFigureDirector*);
     bool isClimb(const PlayerFigureDirector*);
+    f32 brake(f32 speed, u32 frame, f32 maxSpeed);
+    f32 accel(f32 speed, f32 maxSpeed, f32 accel);
+    f32 cutOff(f32 speed, f32 threshold);
 }  // namespace PlayerActionFunc

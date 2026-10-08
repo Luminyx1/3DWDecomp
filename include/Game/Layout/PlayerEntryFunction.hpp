@@ -5,4 +5,7 @@
 namespace PlayerEntryFunction {
 void entryPlayer(GameDataHolderWriter writer, int userId, int characterType);
 void retirePlayer(GameDataHolderWriter writer, int userId);
+int calcNextPlayerCharacterType(int characterType, const GameDataHolder* pHolder);
+int calcPrevPlayerCharacterType(int characterType, const GameDataHolder* pHolder);
+int calcNotUsePlayerCharacterTypeList(int* pList, const GameDataHolder* pHolder);
 }  // namespace PlayerEntryFunction

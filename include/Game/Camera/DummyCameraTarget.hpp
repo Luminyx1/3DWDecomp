@@ -18,6 +18,7 @@ public:
     void onTarget();
     void offTarget();
     void setRequestDistance(f32 distance);
+    void setNoCameraReset(bool isNoReset);
     void setTrans(sead::Vector3f& rTrans);
 
 private:
