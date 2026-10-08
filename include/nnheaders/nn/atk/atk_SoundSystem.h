@@ -4,6 +4,9 @@
 #include <nn/atk/atk_Global.h>
 
 namespace nn::atk {
+namespace detail {
+struct SoundInstanceConfig;
+}  // namespace detail
 enum WarningId : int;
 class IWarningCallbackInfo {};
 class SoundSystem {
@@ -72,6 +75,7 @@ public:
     static bool Initialize(const SoundSystemParam& rParam, uintptr_t workMem, size_t workMemSize);
     static void Finalize();
     static bool IsInitialized();
+    static detail::SoundInstanceConfig GetSoundInstanceConfig();
     static void CallWarningCallback(WarningId id, IWarningCallbackInfo* pInfo);
     static void AttachMemoryPool(audio::MemoryPoolType* pPool, void* pMemory, size_t size);
     static void DetachMemoryPool(audio::MemoryPoolType* pPool);

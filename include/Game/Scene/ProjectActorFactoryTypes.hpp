@@ -614,18 +614,32 @@ private:
 };
 static_assert(sizeof(CourseSelectDokan) == 0x1a8);
 
+class CourseSelectFairy;
+
 class CourseSelectMiniature : public al::LiveActor {
 public:
     explicit CourseSelectMiniature(const char* pName);
 
+    s32 getCourseId() const;
+    s32 getWorldId() const;
+    s32 getStageId() const;
+    bool isNeedClearDemo() const;
+
+    /** @brief Gets the fairy shown next to this miniature. @return The fairy, or nullptr. */
+    CourseSelectFairy* getFairy() const { return mFairy; }
+
 private:
-    u8 mUnreconstructed[0xd4];
+    u8 mUnreconstructed[0x158 - 0x144];
+    CourseSelectFairy* mFairy;  // 0x158
+    u8 _160[0x218 - 0x160];
 };
 static_assert(sizeof(CourseSelectMiniature) == 0x218);
 
 class CourseSelectNode : public al::LiveActor {
 public:
     explicit CourseSelectNode(const char* pName, const CourseSelectMiniature* = nullptr);
+
+    void initAfterConnect(const al::ActorInitInfo& rInfo);
 
 private:
     u8 mUnreconstructed[0xac];

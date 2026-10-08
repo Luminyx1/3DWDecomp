@@ -149,6 +149,8 @@ public:
      */
     void setTitleDemoChange(bool isChange) { mIsTitleDemoChange = isChange; }
     void copyNameplate(al::LiveActor* pActor);
+    void setNameplateVisible(bool isVisible, bool isForce);
+    void setEnableSingleJoyCamera(bool isEnable);
     s32 getInputPort() const;
     void replaceInputPort(s32 port);
     const IUsePlayerKeyConfig* getKeyConfig() const;

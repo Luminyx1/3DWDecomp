@@ -25,6 +25,7 @@ public:
     void startShowDrcTouch(bool);
     void startShowNew();
     void startShowNeko(neko::ColorType colorType, int foundNum, int maxNum);
+    void startShow(const char16_t* pMessage);
     void endShow();
 
     /**

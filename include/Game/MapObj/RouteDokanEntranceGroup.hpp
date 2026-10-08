@@ -14,6 +14,8 @@ public:
     void deactive();
     RouteDokanEntrance* getEntrance(int) const;
     void setHost(IUseRouteDokan*);
+
+    s32 getEntranceCount() const { return mEntranceCount; }
 private:
     RouteDokanEntrance** mEntrances = nullptr;
     int mEntranceCount = 0;

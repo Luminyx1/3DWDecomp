@@ -13,6 +13,7 @@ class LayoutInitInfo;
  */
 enum WindowConfirmType : s64 {
     WindowConfirmType_Report = 0,  ///< Single acknowledgement button.
+    WindowConfirmType_Notice = 1,  ///< Notice that closes on its own (e.g. auto power down).
     WindowConfirmType_Double = 2,  ///< Two choice (left/right) buttons.
 };
 

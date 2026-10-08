@@ -27,6 +27,12 @@ public:
     const char* getNextGoalItemGuideMessage(const al::LiveActor*) const;
     bool isLastShineNeko() const;
     bool isLastShineDisaster() const;
+
+    /**
+     * @brief Get the goal item currently being collected.
+     * @return The goal item, or nullptr.
+     */
+    GoalItem* getCurrentGoalItem() const { return mCurrentGoalItem; }
 private:
     sead::PtrArray<GoalItem> mGoalItems;
     GoalItem* mCurrentGoalItem = nullptr;

@@ -1,17 +1,39 @@
 #pragma once
 
 #include <nn/atk/atk_Global.h>
+#include <nn/os.h>
 #include <nn/util/util_IntrusiveList.h>
 #include <nn/types.h>
 
 namespace nn::atk {
+class SoundArchive;
 class SoundHandle;
 class SoundActor;
 class SoundPlayer;
+typedef void (*SoundStopCallback)();
 struct SoundParamCalculationValues;
 struct SoundAmbientParam;
 } // namespace nn::atk
 namespace nn::atk {
+enum PanMode {
+    PanMode_Dual,
+    PanMode_Balance,
+    PanMode_Invalid,
+};
+
+enum PanCurve {
+    PanCurve_Sqrt,
+    PanCurve_Sqrt0Db,
+    PanCurve_Sqrt0DbClamp,
+    PanCurve_SinCos,
+    PanCurve_SinCos0Db,
+    PanCurve_SinCos0DbClamp,
+    PanCurve_Linear,
+    PanCurve_Linear0Db,
+    PanCurve_Linear0DbClamp,
+    PanCurve_Invalid,
+};
+
 enum MixMode {
     MixMode_Pan,
     MixMode_MixParameter,
@@ -132,6 +154,27 @@ public:
     void SetBiquadFilter(int type, f32 value);
     void SetMixMode(MixMode mode);
     void SetOutputChannelMixParameter(OutputDevice device, u32 channel, MixParameter param);
+    static int GetAmbientPriority(const AmbientInfo& rAmbientInfo, u32 soundId);
+    void SetInitialVolume(f32 volume);
+    void SetPanMode(PanMode mode);
+    void SetPanCurve(PanCurve curve);
+    void AttachSoundActor(SoundActor* pActor);
+    void SetPlayerPriority(int priority);
+    void SetSoundArchive(const SoundArchive* pArchive);
+    void SetSetupTick(const os::Tick& rTick);
+    void ResetOutputLine();
+
+    /** @brief Gets the archive the sound was started from. @return Sound archive, or nullptr. */
+    const SoundArchive* GetSoundArchive() const { return m_pSoundArchive; }
+    /** @brief Gets when the sound was set up. @return Tick passed to SetSetupTick. */
+    const os::Tick& GetSetupTick() const { return m_SetupTick; }
+    /**
+     * @brief Sets the callback invoked when the sound stops.
+     * @param callback Stop callback, or nullptr.
+     */
+    void SetSoundStopCallback(SoundStopCallback callback) {
+        *reinterpret_cast<SoundStopCallback*>(reinterpret_cast<char*>(this) + 0x1d8) = callback;
+    }
 
     u32 GetId() const { return m_Id; }
 
@@ -143,13 +186,16 @@ private:
     SoundPlayer* mSoundPlayer;
     SoundActor* mSoundActor;
     ExternalSoundPlayer* mExternalSoundPlayer;
-    u8 _38[0x7c - 0x38];
+    const SoundArchive* m_pSoundArchive;
+    u8 _40[0x7c - 0x40];
     int mAmbientPriority;
     u8 _80[0xf8 - 0x80];
     u8 mPlayerPriority;
     u8 _f9[0x110 - 0xf9];
     u32 m_Id;
-    u8 _114[0x210 - 0x114];
+    u8 _114[0x118 - 0x114];
+    os::Tick m_SetupTick;
+    u8 _120[0x210 - 0x120];
 };
 static_assert(sizeof(BasicSound) == 0x210);
 } // namespace nn::atk::detail

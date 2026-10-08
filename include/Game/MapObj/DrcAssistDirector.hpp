@@ -11,6 +11,8 @@ namespace rc {
 class StampDirector;
 }  // namespace rc
 
+class DrcTouchAssistInfo;
+
 /**
  * @brief Scene object driving the touch-screen (DRC) assist: touch pointers, gyro pointing and
  *        the stamp director.
@@ -22,6 +24,7 @@ public:
 
     bool tryCalcTouchPointerSlideDirOnWorld(sead::Vector3f* pDir, const al::IUseCamera* pCamera);
     bool tryCalcTouchPointerSlideDirOnScreen(sead::Vector2f* pDir);
+    const DrcTouchAssistInfo* getTouchAssistInfo();
 
     s32 getTouchPadPort() const { return mTouchPadPort; }
 

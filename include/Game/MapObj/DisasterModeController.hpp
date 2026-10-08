@@ -55,6 +55,9 @@ class DisasterModeController : public al::LiveActor, public al::ISceneObj {
     void forceKillSuperBowserAttacks();
     void endInstantly(bool, bool);
     void tryJumpToRainWithFlash();
+    bool isDisasterNerve();
+    void forceKillSuperBowserLaser();
+    bool setPostCutsceneDisasterFreezeTime();
 
     /**
      * @brief Set the callback run once the screen faded back in after ending disaster mode.

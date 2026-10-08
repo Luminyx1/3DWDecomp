@@ -15,6 +15,7 @@ public:
     void setEndAtCutscenePos(const sead::Vector3f& rTrans, const sead::Vector3f& rFront);
     bool isWipeCloseEnd() const;
     bool isFadedOut();
+    void createWipeFade(const al::ActorInitInfo& rInfo, bool isBlack, s32 frames);
 
     /** @brief Keep the player where it stands when the cutscene ends. */
     void setKeepPlayerPos() { mIsKeepPlayerPos = true; }
@@ -34,6 +35,12 @@ public:
      */
     void setFollowedByDemo(bool isFollowed) { mIsFollowedByDemo = isFollowed; }
 
+    /**
+     * @brief Set the id of the cutscene saved as seen once it played.
+     * @param cutsceneId The cutscene id.
+     */
+    void setCutsceneId(s32 cutsceneId) { mCutsceneId = cutsceneId; }
+
 private:
     u8 _300[0x304 - 0x300];
     bool mIsKeepPlayerPos;  // 0x304
@@ -43,6 +50,8 @@ private:
     bool mIsUseBaseMtx;  // 0x308
     u8 _309[0x32c - 0x309];
     bool mIsFollowedByDemo;  // 0x32C
-    u8 _32d[0x368 - 0x32d];
+    u8 _32d[0x330 - 0x32d];
+    s32 mCutsceneId;  // 0x330
+    u8 _334[0x368 - 0x334];
 };
 static_assert(sizeof(DemoCutscene) == 0x368);

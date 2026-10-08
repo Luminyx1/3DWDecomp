@@ -136,6 +136,12 @@ public:
      */
     void setPedestal(GigaBellPedestal* pPedestal) { mPedestal = pPedestal; }
 
+    /**
+     * @brief Set the manager owning the bell.
+     * @param pManager The manager.
+     */
+    void setManager(GigaBellManager* pManager) { mManager = pManager; }
+
 private:
     bool mIsDebugCollect = false;
     void* _148 = nullptr;

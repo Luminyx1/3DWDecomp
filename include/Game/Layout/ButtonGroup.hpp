@@ -35,6 +35,7 @@ public:
     void setPort(s32 port);
     void hideCursor();
     void showCursor();
+    void showCursorAppear();
     void reset();
     void select(const char* pButtonName);
     void select(s32 index);

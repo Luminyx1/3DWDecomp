@@ -16,7 +16,7 @@ public:
     WalkerStateFindPlayerParam(s32 turnTime, f32 turnDegree, bool isJump, const char* pTurnAction);
 
 private:
-    u8 _0[0x48];
+    alignas(8) u8 _0[0x48];
 };
 
 static_assert(sizeof(WalkerStateFindPlayerParam) == 0x48);

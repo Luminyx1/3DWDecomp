@@ -17,7 +17,7 @@ public:
                            const char* pWaitAction);
 
 private:
-    u8 _0[0x90];
+    alignas(8) u8 _0[0x90];
 };
 
 static_assert(sizeof(WalkerStateWanderParam) == 0x90);

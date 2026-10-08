@@ -20,7 +20,15 @@ public:
 
 class StreamSoundFileLoader : public IRegionInfoReadable {
 public:
+    /**
+     * @brief Creates a loader reading from an opened stream.
+     * @param pFileStream Opened stream of the stream sound file; not owned.
+     */
+    explicit StreamSoundFileLoader(fnd::FileStream* pFileStream)
+        : mFileStream(pFileStream), mSeekBlockOffset(0), mRegionBlockOffset(0),
+          mRegionInfoBytes(0) {}
     ~StreamSoundFileLoader() override;
+    bool LoadFileHeader(StreamSoundFileReader* pReader, void* pBuffer, size_t bufferSize);
     bool ReadRegionInfo(StreamSoundFile::RegionInfo* pInfo, u32 index) const override;
 
 private:

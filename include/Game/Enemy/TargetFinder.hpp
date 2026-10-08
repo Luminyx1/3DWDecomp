@@ -34,9 +34,16 @@ public:
 
     bool isExistTarget() const { return _8 != nullptr; }
 
+    /**
+     * @brief Checks whether a target exists and has been found (not only kept).
+     * @return Whether a found target exists.
+     */
+    bool isFoundTarget() const { return _8 != nullptr && mIsFound; }
+
     al::LiveActor* mActor;  // 0x00
     al::LiveActor* _8;
-    u64 _10;
+    bool mIsFound;  // 0x10
+    u8 _11[7];
     sead::Vector3f* mFrontDir;      // 0x18
     sead::Vector3f* mSupportUpDir;  // 0x20
     u64 _28;

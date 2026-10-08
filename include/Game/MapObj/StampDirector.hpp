@@ -26,6 +26,7 @@ class StampDirector : public al::ISceneObj {
 public:
     StampDirector(const al::ActorInitInfo& rInfo, const char* pArchiveName,
                   const DrcTouchAssistInfo* pTouchInfo, s32, s32);
+    virtual ~StampDirector();
 
     void activateStamp(Stamp* pStamp, s32);
     void releaseStamp(Stamp* pStamp);
@@ -40,6 +41,8 @@ public:
 
     bool isUseNoCodeWallFilter() const { return _49; }
 
+    void setUseNoCodeWallFilter(bool isUse) { _49 = isUse; }
+
     const al::IUseAudioKeeper* getAudioKeeperUser() const { return mAudioKeeperUser; }
 
 private:
@@ -50,5 +53,8 @@ private:
     bool _48;                                  // 0x48
     bool _49;                                  // 0x49
     al::IUseAudioKeeper* mAudioKeeperUser;     // 0x50
+    u8 _58[0x3f8 - 0x58];
 };
+
+static_assert(sizeof(StampDirector) == 0x3f8);
 }  // namespace rc

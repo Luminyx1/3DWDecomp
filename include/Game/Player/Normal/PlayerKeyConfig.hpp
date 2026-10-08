@@ -9,7 +9,7 @@ class PlayerKeyConfig : public IUsePlayerKeyConfig {
 public:
     PlayerKeyConfig(s32 port);
 
-    bool isPadTriggerDecide(s32 port, bool isIgnoreAssist);
+    static bool isPadTriggerDecide(s32 port, bool isIgnoreAssist);
     void update();
 
     s32 getPort() const override;

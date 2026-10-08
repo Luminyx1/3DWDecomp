@@ -163,6 +163,8 @@ class HardwareManager : public Util::Singleton<HardwareManager> {
         CircularBufferSinkState_Stopped,
     };
 
+    HardwareManager();
+
     void ResetParameters();
     audio::MemoryPoolState GetMemoryPoolState(audio::MemoryPoolType* pPool);
     void SetupAudioRendererParameter(audio::AudioRendererParameter* pParameter,
@@ -259,6 +261,10 @@ class HardwareManager : public Util::Singleton<HardwareManager> {
      * @return Mode currently selected for the device.
      */
     OutputMode GetOutputMode(OutputDevice device) const { return m_OutputMode[device]; }
+    /** @brief Checks whether sub mixes are in use. @return True when sub mixes are enabled. */
+    bool IsSubMixEnabled() const { return m_IsSubMixEnabled; }
+    /** @brief Access the final mix. @return Final mix owned by this manager. */
+    FinalMix& GetFinalMix() { return m_FinalMix; }
 
   private:
     static const int BiquadFilterCallbackCount = 128;

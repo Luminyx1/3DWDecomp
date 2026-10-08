@@ -14,6 +14,7 @@ class ActorInitInfo;
 class Resource;
 class AreaObjDirector;
 class CollisionDirector;
+class IUseAudioKeeper;
 class PlayerHolder;
 class SceneCameraInfo;
 
@@ -29,10 +30,17 @@ public:
     void setCameraAspect(const sead::Viewport* pMainViewport, const sead::Viewport* pSubViewport);
     void setStageName(const char* pStageName);
     void update(bool isPaused);
+    s32 getCameraMode() const;
+    void setCameraMode(s32 mode);
+    void setSnapShotAudioKeeper(IUseAudioKeeper* pAudioKeeper);
+    void validUserCameraControlByPortOnly(s32 port);
 
     SceneCameraInfo* getSceneCameraInfo() const { return mSceneCameraInfo; }
     sead::LookAtCamera* getLookAtCamera() const { return mLookAtCamera; }
     sead::PerspectiveProjection* getProjection() const { return mProjection; }
+    void setMainPlayerIndex(s32 index) { mMainPlayerIndex = index; }
+    void setReverseHorizontal(bool isReverse) { mIsReverseHorizontal = isReverse; }
+    void setReverseVertical(bool isReverse) { mIsReverseVertical = isReverse; }
 
     u8 _0[0x8];
     sead::LookAtCamera* mLookAtCamera;
@@ -43,8 +51,13 @@ public:
     u8 _30[0xa0 - 0x30];
     sead::Matrix34f mMainViewMtx;  // 0xa0
     sead::Matrix34f mSubViewMtx;   // 0xd0
-    u8 _100[0x161 - 0x100];
+    u8 _100[0x15c - 0x100];
+    bool mIsReverseHorizontal;  // 0x15c
+    bool mIsReverseVertical;  // 0x15d
+    u8 _15e[0x161 - 0x15e];
     bool mIsTitleFlag;  // 0x161, cleared by the title scene (meaning unknown)
-    u8 _162[0x1f0 - 0x162];
+    u8 _162[0x1c8 - 0x162];
+    s32 mMainPlayerIndex;  // 0x1c8
+    u8 _1cc[0x1f0 - 0x1cc];
 };
 }  // namespace al

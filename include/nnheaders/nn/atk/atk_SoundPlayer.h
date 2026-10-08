@@ -112,6 +112,12 @@ public:
      */
     detail::BasicSound* GetLowestPrioritySound() { return &m_PriorityList.front(); }
 
+    /**
+     * @brief Gets the sounds currently attached to this player.
+     * @return Sound list in attachment order.
+     */
+    SoundList& detail_GetSoundList() { return m_SoundList; }
+
     void detail_SortPriorityList(bool reverse);
     void detail_SortPriorityList(detail::BasicSound* pSound);
     bool detail_AppendSound(detail::BasicSound* pSound);

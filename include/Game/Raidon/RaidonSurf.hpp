@@ -33,6 +33,9 @@ public:
     virtual f32 getPuppetInputStickY();
 
     void forceSpawn(bool isForce);
+    void getClosestSpawnPosFront(sead::Vector3f pos, sead::Vector3f* pSpawnPos,
+                                 sead::Vector3f* pSpawnFront);
+    void plessieChaseHitBells(al::HitSensor* pSensor);
     void updateSpawns(bool);
     bool isUnderwater();
     void doJump(bool isPerfect);

@@ -17,7 +17,7 @@ public:
                           const char* pRunAction, const char* pWaitAction, f32 chaseTime);
 
 private:
-    u8 _0[0x90];
+    alignas(8) u8 _0[0x90];
 };
 
 static_assert(sizeof(WalkerStateChaseParam) == 0x90);

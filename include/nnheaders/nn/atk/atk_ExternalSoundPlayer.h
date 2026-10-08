@@ -38,7 +38,7 @@ public:
     bool AppendSound(BasicSound* pSound);
     BasicSound* GetLowestPrioritySound();
     void SetPlayableSoundCount(int count);
-    bool CanPlaySound(int priority);
+    virtual bool CanPlaySound(int priority);
 
 private:
     using SoundList = util::IntrusiveList<BasicSound, ExternalSoundNodeTraits>;

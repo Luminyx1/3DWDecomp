@@ -222,6 +222,18 @@ class GameDataHolder : public al::ISceneObj {
      */
     preport::PlayReportManager* getPlayReportManager() const { return mpPlayReportManager; }
 
+    bool isSaveDataRead() const { return mIsSaveDataRead; }
+
+    void setSaveDataRead(bool isRead) { mIsSaveDataRead = isRead; }
+
+    bool isCourseSelectVisited() const { return mUnknown6A; }
+
+    void setCourseSelectVisited(bool isVisited) { mUnknown6A = isVisited; }
+
+    bool isNeedCourseSelectPlayReport() const { return mUnknown6B; }
+
+    void setNeedCourseSelectPlayReport(bool isNeed) { mUnknown6B = isNeed; }
+
   private:
     friend class PlayReport;
 

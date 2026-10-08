@@ -10,4 +10,5 @@ const char16_t* getPictureFontPlayer(int characterType);
 const char16_t* getPictureFontKinopioBrigade(int index);
 const char16_t* getSystemFontBtnDecide(int port);
 const char16_t* getSystemFontBtnCancel(int port);
+const char16_t* getMessageFontButtonDecide(int port);
 }
