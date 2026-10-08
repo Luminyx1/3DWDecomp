@@ -20403,7 +20403,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100330010			FALSE	_ZN10OceanWater16calculateNormalsERN3agl11GPUMemBlockI11OceanVertexEE	OceanWater::calculateNormals(agl::GPUMemBlock<OceanVertex>&)	
 0x7100330020			FALSE	_ZN10OceanWater12calculateUVsEv	OceanWater::calculateUVs()	
 0x7100330030			FALSE	_ZNK10OceanWater20bindTexturesDeferredEPKN3agl13ShaderProgramE	OceanWater::bindTexturesDeferred(agl::ShaderProgram const*) const	
-0x71003306D0		OceanWaveDirector.o	FALSE	_ZN2al17OceanWaveDirector4hideEv	al::OceanWaveDirector::hide()	
+0x71003306D0			FALSE	_ZN2al17OceanWaveDirector4hideEv	al::OceanWaveDirector::hide()	
 0x71003306E0			FALSE	_ZN2al17OceanWaveDirector4showEv	al::OceanWaveDirector::show()	
 0x71003306F0			FALSE	_ZN2al17OceanWaveDirector7executeEv	al::OceanWaveDirector::execute()	
 0x7100330700			FALSE	_ZN2al17OceanWaveDirector10createWaveEPKNS_9LiveActorEPKNS_13OceanWaveInfoE	al::OceanWaveDirector::createWave(al::LiveActor const*, al::OceanWaveInfo const*)	
@@ -20434,7 +20434,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100330CE0			FALSE	_ZNK4sead15RuntimeTypeInfo6DeriveINS_15GameFrameworkNxEE9isDerivedEPKNS0_9InterfaceE	sead::RuntimeTypeInfo::Derive<sead::GameFrameworkNx>::isDerived(sead::RuntimeTypeInfo::Interface const*) const	
 0x7100330D70			FALSE	_ZNK4sead15RuntimeTypeInfo6DeriveINS_13GameFrameworkEE9isDerivedEPKNS0_9InterfaceE	sead::RuntimeTypeInfo::Derive<sead::GameFramework>::isDerived(sead::RuntimeTypeInfo::Interface const*) const	
 0x7100330E00			FALSE	_ZNK4sead15RuntimeTypeInfo6DeriveINS_9FrameworkEE9isDerivedEPKNS0_9InterfaceE	sead::RuntimeTypeInfo::Derive<sead::Framework>::isDerived(sead::RuntimeTypeInfo::Interface const*) const	
-0x7100330E90			FALSE	_ZN18OceanWaterDeferredC2EPKc	OceanWaterDeferred::OceanWaterDeferred(char const*)	
+0x7100330E90		OceanWaterDeferred.o	FALSE	_ZN18OceanWaterDeferredC2EPKc	OceanWaterDeferred::OceanWaterDeferred(char const*)	
 0x7100330F90			FALSE	_ZN18OceanWaterDeferredC1EPKc	OceanWaterDeferred::OceanWaterDeferred(char const*)	
 0x7100331090			FALSE	_ZN18OceanWaterDeferredD2Ev	OceanWaterDeferred::~OceanWaterDeferred()	
 0x7100331160			FALSE	_ZN18OceanWaterDeferredD1Ev	OceanWaterDeferred::~OceanWaterDeferred()	
