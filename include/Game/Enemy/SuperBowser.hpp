@@ -4,6 +4,8 @@
 
 #include "Library/LiveActor/LiveActor.hpp"
 
+class SuperBowserLaserState;
+
 /**
  * @brief Fury Bowser, the giant Bowser of Bowser's Fury.
  * @note Only the members used by reconstructed code are declared.
@@ -17,6 +19,15 @@ class SuperBowser : public al::LiveActor {
     };
 
     bool isLastPhase3Bowser();
+    void disappear(bool isInstant);
+    void tryDamageDarkBowser();
+    void setFacingDirection(sead::Vector3f& rDir);
+    void startBowserExitCamera(bool, bool, bool);
+    void endBowserExitCamera(bool isSkip);
+    bool isHidden();
+    f32 getJumpRate();
+    SuperBowserLaserState* getLaserState();
+    void forceKillFireballs();
     bool isDoingEndingPreparations();
     s32 getLastPhase3CurrentIndex() const;
     bool isPlessieChaseBigRamp() const;

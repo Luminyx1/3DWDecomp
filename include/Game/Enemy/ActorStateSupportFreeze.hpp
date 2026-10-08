@@ -45,6 +45,12 @@ public:
     /** @brief Allows another stroke item to appear after the host is reused. */
     void resetAppearItem() { mIsItemAppeared = false; }
 
+    /** @brief Gets the actor that is currently freezing the host. */
+    al::LiveActor* getTouchActor() const { return mTouchActor; }
+
+    /** @brief Directly sets the actor freezing the host, e.g. one relayed from a linked actor. */
+    void forceSetTouchActor(al::LiveActor* pActor) { mTouchActor = pActor; }
+
 private:
     al::LiveActor* mTouchActor = nullptr;
     al::AnimScaleController* mScaleController = nullptr;

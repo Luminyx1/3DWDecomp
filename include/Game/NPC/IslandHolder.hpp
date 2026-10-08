@@ -54,6 +54,18 @@ public:
     GoalItem* findGoalItem(s32 shineId);
     void startIntro();
 
+    /**
+     * @brief Access the island's flag actor.
+     * @return The flag actor, or nullptr when the island has none.
+     */
+    al::LiveActor* getIslandFlag() const { return mIslandFlag; }
+
+    /**
+     * @brief Access the island's lighthouse.
+     * @return The lighthouse, or nullptr when the island has none.
+     */
+    Lighthouse* getLighthouse() const { return mLighthouse; }
+
 private:
     typedef sead::PtrArray<al::LiveActor> ActorArray;
     typedef sead::PtrArray<al::AreaObj> AreaArray;

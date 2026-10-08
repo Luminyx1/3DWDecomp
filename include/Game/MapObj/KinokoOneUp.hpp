@@ -22,6 +22,8 @@ public:
     void appearItemTakeOut();
     void appearForceGet(const al::HitSensor*);
     void setPopUpFrontParam(const ItemStatePopUpFrontParam*);
+    void setInRouteDokan() { mIsInRouteDokan = true; }
+    void setPopUpOnCollide() { mCollideOnPopUp = true; }
     void exeWait();
     void exeAttachBubble();
     void exeAppearWait();

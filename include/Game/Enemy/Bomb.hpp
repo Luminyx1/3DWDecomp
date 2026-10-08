@@ -4,6 +4,7 @@ class ItemBubble;
 class Bomb : public al::LiveActor {
 public:
     explicit Bomb(const char* pName, bool = false);
+    void appearPopUpFront();
 
 private:
     u8 mUnreconstructed[0x5c];

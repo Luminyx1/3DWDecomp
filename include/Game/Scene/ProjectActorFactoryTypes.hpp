@@ -1,4 +1,7 @@
 #include "MapObj/KinokoTreasure.hpp"
+#include "MapObj/Ball.hpp"
+#include "NPC/Rabbit.hpp"
+#include "MapObj/Bush.hpp"
 #include "MapObj/WaterAreaMoveModel.hpp"
 #include "MapObj/NeedleBarRoot.hpp"
 #include "MapObj/BlockRailMover.hpp"
@@ -154,15 +157,6 @@ private:
 };
 static_assert(sizeof(BalanceTruck) == 0x1c8);
 
-class Ball : public al::LiveActor {
-public:
-    explicit Ball(const char* pName);
-
-private:
-    u8 mUnreconstructed[0xa4];
-};
-static_assert(sizeof(Ball) == 0x1e8);
-
 class BallGimmick : public al::LiveActor {
 public:
     explicit BallGimmick(const char* pName);
@@ -172,14 +166,7 @@ private:
 };
 static_assert(sizeof(BallGimmick) == 0x1b0);
 
-class BallSnow : public al::LiveActor {
-public:
-    explicit BallSnow(const char* pName);
-
-private:
-    u8 mUnreconstructed[0x9c];
-};
-static_assert(sizeof(BallSnow) == 0x1e0);
+#include "MapObj/BallSnow.hpp"
 
 class BallYarn : public al::LiveActor {
 public:
@@ -366,15 +353,6 @@ private:
     u8 mUnreconstructed[0x7c];
 };
 static_assert(sizeof(Bunbun) == 0x1c0);
-
-class Bush : public al::LiveActor {
-public:
-    explicit Bush(const char* pName);
-
-private:
-    u8 mUnreconstructed[0x2c];
-};
-static_assert(sizeof(Bush) == 0x170);
 
 class Byugo : public al::LiveActor {
 public:
@@ -1904,15 +1882,6 @@ private:
 };
 static_assert(sizeof(Punpun) == 0x1d8);
 
-class Rabbit : public al::LiveActor {
-public:
-    explicit Rabbit(const char* pName);
-
-private:
-    u8 mUnreconstructed[0x114];
-};
-static_assert(sizeof(Rabbit) == 0x258);
-
 class RabbitNpc : public al::LiveActor {
 public:
     explicit RabbitNpc(const char* pName);
@@ -2012,14 +1981,7 @@ private:
 };
 static_assert(sizeof(SaveDataChecker) == 0x148);
 
-class SamboSnowHead : public al::LiveActor {
-public:
-    explicit SamboSnowHead(const char* pName);
-
-private:
-    u8 mUnreconstructed[0xbc];
-};
-static_assert(sizeof(SamboSnowHead) == 0x200);
+#include "Enemy/SamboSnowHead.hpp"
 
 class SePlayObj : public al::LiveActor {
 public:

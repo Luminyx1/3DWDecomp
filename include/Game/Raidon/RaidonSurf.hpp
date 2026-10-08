@@ -27,7 +27,34 @@ public:
     virtual void updateRide();
     virtual void clearGroundCount();
     virtual bool isAllGetOffPlayer() const;
+    virtual void startPuppetSe(const char* pName);
+    virtual bool isNotChangeBgm() const;
+    virtual const char* getMaterialCode();
+    virtual f32 getPuppetInputStickY();
 
     void forceSpawn(bool isForce);
     void updateSpawns(bool);
+    bool isUnderwater();
+    void doJump(bool isPerfect);
+    void doDive(bool);
+
+    /** @return Whether Plessie is standing on ground she slides down. */
+    bool isOnSlideGround() const { return mIsOnSlideGround; }
+
+    /** @return Height of the water surface Plessie is swimming in. */
+    s32 getWaterSurfaceY() const { return mWaterSurfaceY; }
+
+    /** @return Depth below which Plessie starts surfacing again. */
+    f32 getDiveDepthLimit() const { return mDiveDepthLimit; }
+
+    /** @return Current depth below the water surface. */
+    f32 getDiveDepth() const { return mDiveDepth; }
+
+private:
+    u8 _178[0x29d - 0x178];
+    bool mIsOnSlideGround;  // 0x29d
+    u8 _29e[0x354 - 0x29e];
+    s32 mWaterSurfaceY;     // 0x354
+    f32 mDiveDepthLimit;    // 0x358
+    f32 mDiveDepth;         // 0x35c
 };

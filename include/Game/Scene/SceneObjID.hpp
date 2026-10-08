@@ -15,6 +15,7 @@ enum SceneObjID : s32 {
     SceneObjID_FurEnv = 33,
     SceneObjID_ControllerEventWatcher = 34,
     SceneObjID_GoalItemHolder = 36,
+    SceneObjID_CatGullHolder = 37,
     SceneObjID_OceanScenarioList = 42,
     SceneObjID_IslandKeeper = 44,
     SceneObjID_IslandMap = 45,

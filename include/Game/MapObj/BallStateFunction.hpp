@@ -19,4 +19,5 @@ void calcReflectSpeed(al::LiveActor*, const al::LiveActor*, const BallStateFallP
 al::HitSensor* tryGetRelativePlayerSensor(al::LiveActor*, al::HitSensor*);
 bool getCollidedNormalAndPos(al::LiveActor*, sead::Vector3f*, sead::Vector3f*);
 void setColliderReturnedSlowly(al::LiveActor*, s32, s32);
+float calcRotateSpeed(al::LiveActor*, const sead::Vector3f&);
 }

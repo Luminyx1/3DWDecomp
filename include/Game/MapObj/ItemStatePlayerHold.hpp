@@ -16,6 +16,10 @@ public:
     void initColliderControl();
     void updateCollider(al::HitSensor*);
     void exeHold();
+
+    /** @brief Sets the flag at 0x23 (Gorobon enables it on gatekeeper stages). */
+    void setFlag23(bool isEnable) { _23 = isEnable; }
+
 private:
     bool mInvalidateSensors;
     bool _21;

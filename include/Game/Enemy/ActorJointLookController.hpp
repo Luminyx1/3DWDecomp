@@ -34,6 +34,12 @@ public:
     void setLookAtNearestPlayer(f32 distance);
     void resetRotate(bool isStopLook);
 
+    /** @brief Stops looking at anything and forgets the current target player. */
+    void stopLook() {
+        mIsLook = false;
+        mTargetPlayer = nullptr;
+    }
+
     const al::LiveActor* mActor;                                  // 0x00
     al::LiveActor* mTargetPlayer;                                 // 0x08
     s32 mSearchTimer;                                             // 0x10

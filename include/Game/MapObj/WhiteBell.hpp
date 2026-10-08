@@ -19,6 +19,7 @@ public:
     void appearItemTakeOut();
     void appearItemHoming(const al::HitSensor*);
     void setPopUpFrontParam(const ItemStatePopUpFrontParam*);
+    void setPopUpOnCollide() { mPopUpOnCollide = true; }
     void exeWait();
     void exeAttachBubble();
     void exePopUpFront();

@@ -251,6 +251,12 @@ class GameDataFile : public GameDataFileBase {
     StockItemList* getStockItemList() const { return mpStockItems; }
 
     /**
+     * @brief Read the green star total recorded at the last save.
+     * @return The saved green star total.
+     */
+    s32 getTotalAcquireGreenStarNumSaved() const { return mTotalAcquireGreenStarNumSaved; }
+
+    /**
      * @brief Count a stage restart chosen from the pause menu.
      */
     void incMenuRestartCount() { mUnknown98++; }

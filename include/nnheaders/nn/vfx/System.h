@@ -53,6 +53,8 @@ struct RenderingInfo {
 
 class System {
 public:
+    struct SortEmitterSetData;
+
     System(nn::vfx::Config const&);
 
     virtual ~System();

@@ -11,6 +11,12 @@ public:
     void exePunch();
     void exeFall();
 
+    /**
+     * @brief Set the speed scale of the pop-up motion.
+     * @param scale The scale.
+     */
+    void setSpeedScale(float scale) { mSpeedScale = scale; }
+
 private:
     bool mIsInWater;
     float mSpeedScale = 1.0f;

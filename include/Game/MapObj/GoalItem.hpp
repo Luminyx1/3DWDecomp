@@ -1,6 +1,7 @@
 #pragma once
 #include "Library/LiveActor/LiveActor.hpp"
 class IGoalItemCollectListener;
+class Lighthouse;
 class GoalItem : public al::LiveActor {
 public:
     explicit GoalItem(const char*);
@@ -16,6 +17,15 @@ public:
     bool isNekoShine() const { return mIsNekoShine; }
     bool isDisasterShine() const { return mIsDisasterShine; }
     void setRegistration(int index, int islandId) { mIndex = index; mIslandId = islandId; }
+    void setIslandId(int islandId) { mIslandId = islandId; }
+    void setLighthouse(Lighthouse* pLighthouse) { mLighthouse = pLighthouse; }
+    void lighthouseLightShone();
+    void lighthouseDarkBowserGone(bool isGone);
+    void tryTriggerGoalItemLightStart(int step);
+    void lighthouseLightSequenceSkipped();
+    void lighthouseSequenceAlmostEnded();
+    void lighthouseSequenceCompletelyEnded(bool isInstant);
+    void finishGoalItemCutscene();
 private:
     u8 mUnknown144[0x24];
     int mIslandId;
@@ -24,7 +34,9 @@ private:
     bool mIsDisasterShine;
     u8 mUnknown172[0x46];
     int mIndex;
-    u8 mUnknown1bc[0x7c];
+    u8 mUnknown1bc[0x6c];
+    Lighthouse* mLighthouse;  // 0x228
+    u8 mUnknown230[0x8];
     bool mCollectionFlag;
     u8 mUnknown239[0x5c];
     bool mCollectedBySensor;

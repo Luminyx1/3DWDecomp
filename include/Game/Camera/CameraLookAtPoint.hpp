@@ -5,6 +5,7 @@ public:
     explicit CameraLookAtPoint(const char* name);
     void interpolate(u32, u32, float, sead::Vector3f*, sead::Vector3f*) const;
     void interpolateIn(u32, const sead::Vector3f&, const sead::Vector3f&, float, sead::Vector3f*, sead::Vector3f*) const;
+    void interpolateInOut(u32, const sead::Vector3f&, const sead::Vector3f&, float, sead::Vector3f*, sead::Vector3f*) const;
     u32 getPointCount() const { return mPointCount; }
     int getWaitTime(u32 point) const { return mPoints[point].waitTime; }
     int getMoveTime(u32 point) const { return mPoints[point].moveTime; }

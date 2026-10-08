@@ -46,6 +46,20 @@ public:
     void registerEndDemoHook(const al::FunctorBase& rCallback);
     void registerCancelDemoHook(const al::FunctorBase& rCallback);
 
+    /**
+     * @brief Set the base matrix the demo is placed at.
+     * @param pMtx The matrix.
+     */
+    void setPlacementBaseMtx(const sead::Matrix34f* pMtx) { mPlacementBaseMtx = pMtx; }
+    /** @brief Sets the actor hidden while the demo plays. */
+    void setHideActor(al::LiveActor* pActor) { mHideActor = pActor; }
+    /** @brief Sets whether the demo audio is cancelled when the demo ends. */
+    void setCancelAudioFlag(bool isCancel) { mCancelAudioFlag = isCancel; }
+    /** @brief Sets whether all effects are killed when the demo starts. */
+    void setKillAllEffects(bool isKill) { mKillAllEffects = isKill; }
+    /** @brief Sets whether Bowser Jr. is hidden while the demo plays. */
+    void setHideKoopaJr(bool isHide) { mHideKoopaJr = isHide; }
+
 protected:
     const char* mDemoName = nullptr;
     DemoSceneActorHolder* mDemo = nullptr;

@@ -6,6 +6,7 @@ public:
     explicit DoorKey(const char* name);
     void triggerKillForce(bool isForce);
     void updateOpenThrowPose(int step);
+    void appearPopUpFront();
     void startUnlock() { mIsUsed = true; mIsHeld = false; }
 private:
     bool mIsUsed;

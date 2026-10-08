@@ -11,6 +11,7 @@ public:
     static PlayerAliveWatcher* getPlayerAliveWatcher(const al::IUseSceneObjHolder* pHolder);
 
     void deactivatePlayer(int index);
+    bool isEnableIslandWarp(int index) const;
     void setDisableReviveBubble(al::LiveActor* pActor);
     void resetDisableReviveBubble(al::LiveActor* pActor);
     void setDisableBubbleFrameOut(al::LiveActor* pActor);

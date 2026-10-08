@@ -64,6 +64,15 @@ public:
     void storeCamera();
     void restoreCamera();
     void clearStoredCamera();
+
+    /** @brief Whether a camera pose is stored. @return The flag. */
+    bool isStoredCamera() const { return mIsStoredCamera; }
+
+    /** @brief Position of the stored camera pose. @return The position. */
+    const sead::Vector3f& getStoredCameraPos() const { return mStoredCameraPos; }
+
+    /** @brief Look-at point of the stored camera pose. @return The look-at point. */
+    const sead::Vector3f& getStoredLookAtPos() const { return mStoredLookAtPos; }
     bool isTargetOnGround();
     bool isTargetInWater();
     bool isTargetDummy();
@@ -164,9 +173,8 @@ public:
     CameraInSwitchOnAreaDirector* mCameraSwitchOnArea;
     u64 _a8;
     ClippingDirectorBase* mClippingDirectorBase;
-    u64 _b8;
-    u64 _c0;
-    u64 _c8;
+    sead::Vector3f mStoredCameraPos;  // 0xb8
+    sead::Vector3f mStoredLookAtPos;  // 0xc4
     u64 _d0;
     u64 _d8;
     u64 _e0;
@@ -177,6 +185,6 @@ public:
     u8 _101;
     u8 _102;
     u8 _103;
-    u8 _104;
+    bool mIsStoredCamera;  // 0x104
 };
 }  // namespace al

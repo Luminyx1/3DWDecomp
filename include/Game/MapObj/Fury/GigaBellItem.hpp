@@ -16,6 +16,8 @@ public:
     void exePopUpAbove();
     void exeHidden();
     void stopForCutscene();
+    /** @brief Sets whether the bell respawns after being collected. */
+    void setIsRespawn(bool isRespawn) { mIsRespawn = isRespawn; }
 private:
     bool mIsRespawn = false;
 };

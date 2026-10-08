@@ -11,6 +11,12 @@ class PlayerGigaDirector {
 public:
     void start(const al::LiveActor* pBell, bool isClimb, bool isFirst);
     f32 getScaleRate() const;
+    f32 getScaleMax() const;
+    void forceEnd();
+    void resetScale();
+
+    /// Whether the giga form is kept until told otherwise (see stay()).
+    bool isStaying() const { return mTimer < 0; }
 
     bool isGiga() const { return mTimer > 0 || mIsGiga; }
 

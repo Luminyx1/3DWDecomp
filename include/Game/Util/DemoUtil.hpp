@@ -6,6 +6,8 @@ namespace al {
 class LiveActor;
 }  // namespace al
 
+class PlayerActor;
+
 namespace alSeFunction {
 enum DemoType : s32;
 }  // namespace alSeFunction
@@ -25,9 +27,16 @@ void requestEndDemoInGameCutscene(const al::LiveActor* pActor);
 void setUpdateItemsInDemo(const al::LiveActor* pActor);
 bool requestStartDemoPlayerCutscene(const al::LiveActor* pActor);
 void requestEndDemoPlayerCutscene(const al::LiveActor* pActor);
+bool requestStartDemoPlayer(const al::LiveActor* pActor);
+void requestEndDemoPlayer(const al::LiveActor* pActor);
 bool isAnyActiveDemo(const al::LiveActor* pActor);
+bool isActiveDemo(const al::LiveActor* pActor);
+bool isActiveDemoInGameCutscene(const al::LiveActor* pActor);
 void addDemoActor(al::LiveActor* pActor);
 void removeDemoActor(al::LiveActor* pActor);
 void setDemoAudioType(const al::LiveActor* pActor, alSeFunction::DemoType type);
 void setDemoFullEffectUpdate(const al::LiveActor* pActor, bool isFull);
+void addDemoPlayer(PlayerActor* pPlayer);
+void removeDemoPlayer(PlayerActor* pPlayer);
+void changeActiveDemoAudioType(const al::LiveActor* pActor, alSeFunction::DemoType type);
 }  // namespace rc
