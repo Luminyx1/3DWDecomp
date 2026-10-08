@@ -1358,9 +1358,9 @@ src/Game/MapObj/AssistSlideMapParts.cpp:
 src/Game/MapObj/AssistSlideMapPartsGroup.cpp: done
     .text   start:0x0023DC00 end:0x0023DEE0
 src/Game/MapObj/BalanceTruck.cpp:
-    .text   start:0x0023DEE0 end:0x0023F9B0
+    .text   start:0x0023DEE0 end:0x0023F7E8
 src/Game/MapObj/Ball.cpp:
-    .text   start:0x0023F9B0 end:0x002421A8
+    .text   start:0x0023F7F0 end:0x002421A8
 src/Game/MapObj/BallGimmick.cpp:
     .text   start:0x002421B0 end:0x00243338
 src/Game/MapObj/BallSnow.cpp:
@@ -2254,9 +2254,9 @@ src/Game/NPC/NpcStateRunAway.cpp:
 src/Game/NPC/NpcStateWait.cpp:
     .text   start:0x003CB970 end:0x003CCAB4
 src/Game/NPC/NpcStateWanderParam.cpp:
-    .text   start:0x003CCAC0 end:0x003CDB0C
+    .text   start:0x003CCAC0 end:0x003CD48C
 src/Game/NPC/NpcTargetFinder.cpp:
-    .text   start:0x003CDB10 end:0x003CF0F8
+    .text   start:0x003CD490 end:0x003CF0F8
 src/Game/NPC/NpcTerritoryMover.cpp:
     .text   start:0x003CF100 end:0x003CF5DC
 src/Game/NPC/PlayerNpc.cpp:

@@ -14604,9 +14604,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710023F7C0			FALSE	_ZNK12_GLOBAL__N_119BalanceTruckNrvFall7executeEPN2al11NerveKeeperE	(anonymous namespace)::BalanceTruckNrvFall::execute(al::NerveKeeper*) const	
 0x710023F7D0			FALSE	_ZNK12_GLOBAL__N_126BalanceTruckNrvOnBlockRail7executeEPN2al11NerveKeeperE	(anonymous namespace)::BalanceTruckNrvOnBlockRail::execute(al::NerveKeeper*) const	
 0x710023F7E0			FALSE	_ZNK12_GLOBAL__N_120BalanceTruckNrvReset7executeEPN2al11NerveKeeperE	(anonymous namespace)::BalanceTruckNrvReset::execute(al::NerveKeeper*) const	
-0x710023F7F0			FALSE	_ZN4BallC2EPKc	Ball::Ball(char const*)	
+0x710023F7F0		Ball.o	FALSE	_ZN4BallC2EPKc	Ball::Ball(char const*)	
 0x710023F8D0			FALSE	_ZN4BallC1EPKc	Ball::Ball(char const*)	
-0x710023F9B0		Ball.o	FALSE	_ZN4Ball4initERKN2al13ActorInitInfoE	Ball::init(al::ActorInitInfo const&)	
+0x710023F9B0			FALSE	_ZN4Ball4initERKN2al13ActorInitInfoE	Ball::init(al::ActorInitInfo const&)	
 0x710023FC80			FALSE	_ZN4Ball12attackSensorEPN2al9HitSensorES2_	Ball::attackSensor(al::HitSensor*, al::HitSensor*)	
 0x7100240310			FALSE	_ZN4Ball23isEnablePlayerKnockDownEPN2al9HitSensorES2_	Ball::isEnablePlayerKnockDown(al::HitSensor*, al::HitSensor*)	
 0x7100240490			FALSE	_ZN4Ball10receiveMsgEPKN2al9SensorMsgEPNS0_9HitSensorES5_	Ball::receiveMsg(al::SensorMsg const*, al::HitSensor*, al::HitSensor*)	
@@ -24180,7 +24180,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71003CD460			FALSE	_ZNK12_GLOBAL__N_121NpcStateWanderNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::NpcStateWanderNrvWait::execute(al::NerveKeeper*) const	
 0x71003CD470			FALSE	_ZNK12_GLOBAL__N_121NpcStateWanderNrvWalk7executeEPN2al11NerveKeeperE	(anonymous namespace)::NpcStateWanderNrvWalk::execute(al::NerveKeeper*) const	
 0x71003CD480			FALSE	sub_71003CD480	sub_71003CD480	
-0x71003CD490			FALSE	_ZN3npc12isSensorBallEPKN2al9HitSensorE	npc::isSensorBall(al::HitSensor const*)	
+0x71003CD490		NpcTargetFinder.o	FALSE	_ZN3npc12isSensorBallEPKN2al9HitSensorE	npc::isSensorBall(al::HitSensor const*)	
 0x71003CD530			FALSE	_ZN3npc12isSensorBirdEPKN2al9HitSensorE	npc::isSensorBird(al::HitSensor const*)	
 0x71003CD570			FALSE	_ZN3npc12isSensorNekoEPKN2al9HitSensorE	npc::isSensorNeko(al::HitSensor const*)	
 0x71003CD5B0			FALSE	_ZN3npc20isSensorNekoDisasterEPKN2al9HitSensorE	npc::isSensorNekoDisaster(al::HitSensor const*)	
@@ -24188,7 +24188,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71003CD6C0			FALSE	_ZN3npc19calcIsTargetInSightEPK15NpcTargetFinderPKN2al9LiveActorEPK20NpcTargetFinderParam	npc::calcIsTargetInSight(NpcTargetFinder const*, al::LiveActor const*, NpcTargetFinderParam const*)	
 0x71003CD820			FALSE	sub_71003CD820	sub_71003CD820	
 0x71003CD9F0			FALSE	_ZN3npc24calcIsTargetInChaseRangeEPK15NpcTargetFinderPKN2al9LiveActorEPK20NpcTargetFinderParam	npc::calcIsTargetInChaseRange(NpcTargetFinder const*, al::LiveActor const*, NpcTargetFinderParam const*)	
-0x71003CDB10		NpcTargetFinder.o	FALSE	_ZN20NpcTargetFinderParamC2Ev	NpcTargetFinderParam::NpcTargetFinderParam()	
+0x71003CDB10			FALSE	_ZN20NpcTargetFinderParamC2Ev	NpcTargetFinderParam::NpcTargetFinderParam()	
 0x71003CDB50			FALSE	_ZN20NpcTargetFinderParamC2Efffjffffbj	NpcTargetFinderParam::NpcTargetFinderParam(float, float, float, unsigned int, float, float, float, float, bool, unsigned int)	
 0x71003CDB90			FALSE	_ZN15NpcTargetFinderC2EPN2al9LiveActorEPK20NpcTargetFinderParam	NpcTargetFinder::NpcTargetFinder(al::LiveActor*, NpcTargetFinderParam const*)	
 0x71003CDCD0			FALSE	_ZN15NpcTargetFinder10changeHostEPN2al9LiveActorEPKcPK22IUseTargetFinderFilter	NpcTargetFinder::changeHost(al::LiveActor*, char const*, IUseTargetFinderFilter const*)	
