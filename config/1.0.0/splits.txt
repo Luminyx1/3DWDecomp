@@ -1521,7 +1521,7 @@ src/Game/MapObj/CoinCirclePlacement.cpp: done
 src/Game/MapObj/CoinCollectWatcher.cpp: done
     .text   start:0x00275290 end:0x00275788
 src/Game/MapObj/CoinConcentricCircle.cpp:
-    .text   start:0x00275790 end:0x002768C8
+    .text   start:0x00275790 end:0x002768C0
 src/Game/MapObj/CoinCountUp.cpp: done
     .text   start:0x002768D0 end:0x00276F0C
 src/Game/MapObj/CoinFallGenerator.cpp: done
@@ -3196,9 +3196,7 @@ src/Game/Scene/StageSceneStateGameOver.cpp:
 src/Game/Scene/TitleDemoInfo.cpp: done
     .text   start:0x004DAE70 end:0x004DAE9C
 src/Game/Scene/TitleScene.cpp:
-    .text   start:0x004DAEA0 end:0x004DDC6C
-src/Game/Scene/TitleSceneFunction.cpp:
-    .text   start:0x004DDC70 end:0x004DE01C
+    .text   start:0x004DAEA0 end:0x004DE01C
 src/Game/Scene/TitleStateFileSelect.cpp:
     .text   start:0x004DE020 end:0x004DE770
 src/Game/Scene/TopMenuScene.cpp:
