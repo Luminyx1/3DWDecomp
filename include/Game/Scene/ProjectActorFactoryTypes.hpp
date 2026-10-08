@@ -79,6 +79,8 @@
 #include "MapObj/KouraGold.hpp"
 #include "MapObj/Koura.hpp"
 #include "Demo/DemoAnimatic.hpp"
+#include "Demo/DemoObjBase.hpp"
+#include "MapObj/SplatterPlotter.hpp"
 #include "MapObj/KinokoGiga.hpp"
 #include "MapObj/GraphicsAreaController.hpp"
 #include "MapObj/Fury/FlowerCat.hpp"
@@ -757,14 +759,6 @@ private:
 };
 static_assert(sizeof(DemoKoopaW7) == 0x168);
 
-class DemoObjBase : public al::LiveActor {
-public:
-    explicit DemoObjBase(const char* pName);
-
-private:
-    u8 mUnreconstructed[0x1bc];
-};
-static_assert(sizeof(DemoObjBase) == 0x300);
 
 class DemoOpeningSwitch : public al::LiveActor {
 public:
@@ -791,14 +785,7 @@ static_assert(sizeof(DemoTimerStageSwitchController) == 0x158);
 
 
 
-class Donketsu : public al::LiveActor {
-public:
-    explicit Donketsu(const char* pName);
-
-private:
-    u8 mUnreconstructed[0x5c];
-};
-static_assert(sizeof(Donketsu) == 0x1a0);
+#include "Enemy/Donketsu.hpp"
 
 class Dossun : public al::LiveActor {
 public:
@@ -2041,14 +2028,6 @@ private:
 };
 static_assert(sizeof(Spinner) == 0x178);
 
-class SplatterPlotter : public al::LiveActor {
-public:
-    explicit SplatterPlotter(const char* pName);
-
-private:
-    u8 mUnreconstructed[0xe4];
-};
-static_assert(sizeof(SplatterPlotter) == 0x228);
 
 class SpotLightPatroller : public al::LiveActor {
 public:

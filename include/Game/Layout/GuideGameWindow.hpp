@@ -6,6 +6,7 @@
 
 namespace al {
 class IUseSceneObjHolder;
+class LayoutInitInfo;
 }  // namespace al
 
 /** @brief Priority of a guide message; a higher one replaces a lower one already shown. */
@@ -14,8 +15,16 @@ enum GuideMessagePriority : s32 {};
 /** @brief Scene object (SceneObjID_GuideGameWindow) showing the in-game guide messages. */
 class GuideGameWindow : public al::ISceneObj {
 public:
+    GuideGameWindow(const al::LayoutInitInfo& rInfo, bool isSingleMode);
+
     bool isWaitConfirm() const;
+    void endHide(const void* pUser);
+
+private:
+    u8 _8[0x28 - 0x8];
 };
+
+static_assert(sizeof(GuideGameWindow) == 0x28);
 
 namespace rc {
 void appearGuideGameWindow(const al::IUseSceneObjHolder* pHolder, const char* pCategory,
@@ -30,4 +39,6 @@ bool isCurrentGuideGameWindowUser(const al::IUseSceneObjHolder* pHolder);
 void unHideGuideGameWindow(const al::IUseSceneObjHolder* pHolder);
 bool isGuideGameWindowWaitConfirm(const al::IUseSceneObjHolder* pHolder);
 bool isGuideGameWindowActive(const al::IUseSceneObjHolder* pHolder);
+void disableGuideGameWindowPriority(const al::IUseSceneObjHolder* pHolder);
+void enableGuideGameWindowPriority(const al::IUseSceneObjHolder* pHolder);
 }  // namespace rc

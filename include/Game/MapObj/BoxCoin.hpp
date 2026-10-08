@@ -5,6 +5,8 @@ public:
     explicit BoxCoin(const char*);
     void applyVisDark();
     void appearHipDrop(bool);
+    void disappear(bool);
+    bool isCarried() const;
 private:
     u8 mUnreconstructed[0x6c];
 };

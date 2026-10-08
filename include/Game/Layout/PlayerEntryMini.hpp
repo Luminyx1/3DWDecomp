@@ -31,4 +31,14 @@ public:
     void playerCancel(s32 userId);
     void requestStartLrAssignMode();
     void requestStopLrAssignMode();
+    void setItemActive(s32 userId);
+    void startPlayerEntry(bool isSkipAppear);
+    void startDemo();
+    void endDemo();
+    void hide();
+
+private:
+    u8 _128[0x150 - sizeof(al::LayoutActor)];
 };
+
+static_assert(sizeof(PlayerEntryMini) == 0x150);

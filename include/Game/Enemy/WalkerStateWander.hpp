@@ -16,8 +16,15 @@ public:
                            f32 searchRange, bool isUseTargetFinder, const char* pWalkAction,
                            const char* pWaitAction);
 
+    s32 mWaitTime;     // 0x00
+    s32 mWalkTime;     // 0x04
+    f32 mAccel;        // 0x08
+    f32 mTurnRate;     // 0x0C
+    f32 mRange;        // 0x10
+    f32 mSearchRange;  // 0x14
+
 private:
-    alignas(8) u8 _0[0x90];
+    alignas(8) u8 _18[0x78];
 };
 
 static_assert(sizeof(WalkerStateWanderParam) == 0x90);

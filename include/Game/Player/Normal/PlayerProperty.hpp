@@ -5,6 +5,7 @@
 
 /// The player's physical state shared by the actions.
 struct PlayerProperty {
+    PlayerProperty();
     void setFrontVec(const sead::Vector3f& rFront);
     void setUpVec(const sead::Vector3f& rUp);
 

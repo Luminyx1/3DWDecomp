@@ -109,7 +109,7 @@ struct TierView {
     sead::Vector3f mCenter;     // 0x40
     AABB mAABB;                 // 0x4c
     AABB mGridAABB;             // 0x5c
-    bool mIsVisible;            // 0x6c
+    bool mIsVisible = false;    // 0x6c
 };
 
 static_assert(sizeof(TierView) == 0x70);
@@ -131,13 +131,13 @@ static_assert(sizeof(MeshData) == 0x28);
  */
 struct TierData {
     QuadPotential mNodes[cNodeMax];   // 0x00000
-    u32 mNodeNum;                     // 0x7d000
-    QuadPotential* mHead;             // 0x7d008
-    QuadPotential* mTail;             // 0x7d010
+    u32 mNodeNum = 0;                 // 0x7d000
+    QuadPotential* mHead = nullptr;   // 0x7d008
+    QuadPotential* mTail = nullptr;   // 0x7d010
     Patch mPatches[cPatchMax];        // 0x7d018
-    u32 mPatchNum;                    // 0x90898
+    u32 mPatchNum = 0;                // 0x90898
     Triangle mTriangles[cTriangleMax];  // 0x9089c
-    u32 mTriangleNum;                 // 0x11d29c
+    u32 mTriangleNum = 0;             // 0x11d29c
 };
 
 static_assert(sizeof(TierData) == 0x11d2a0);
@@ -162,12 +162,12 @@ static_assert(sizeof(RenderData) == 0x1548);
  * @brief Whole state of a wave grid.
  */
 struct Data {
-    f32 mTierHeights[cTierNum];             // 0x000000
+    f32 mTierHeights[cTierNum] = {0.0f, 2501.0f};  // 0x000000
     sead::Vector3f mCameraPos;              // 0x000008
     sead::Vector3f mCameraAt;               // 0x000014
     sead::Vector3f mFrustumPoints[8];       // 0x000020
     TierView mTierViews[cTierNum];          // 0x000080
-    bool mIsSingleTier;                     // 0x000160
+    bool mIsSingleTier = false;             // 0x000160
     MeshData mMeshData;                     // 0x000168
     TierData mTiers[cTierNum];              // 0x000190
     void* _23a6d0;                          // 0x23a6d0

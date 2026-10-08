@@ -63,6 +63,17 @@ bool isInChaseRange(const IUseNekoModeActor* pActor, const sead::Vector3f& rPos)
 bool isInRange(const al::LiveActor* pActor, const sead::Vector3f& rCenter, f32 range);
 bool checkGround(const al::LiveActor* pActor);
 void scaleHitSensors(al::LiveActor* pActor, f32 scale);
+s32 calcUID(al::PlacementHolder holder);
+bool attackSensor(const al::HitSensor* pSelf, const al::HitSensor* pOther);
+bool isSensorMapObjReactAttack(const al::HitSensor* pSensor);
+bool isHitSensorRadius(f32 radius, const al::HitSensor* pSelf, const al::HitSensor* pOther);
+bool tryReceiveMsgPushAndAddVelocityH(al::LiveActor* pActor, const al::SensorMsg* pMsg,
+                                      const al::HitSensor* pOther, const al::HitSensor* pSelf,
+                                      f32 pushSpeed, f32 radius, bool isCheckFall,
+                                      bool isCheckAvoidArea);
+bool isInPuddle(const al::LiveActor* pActor);
+bool isInMotion(const al::LiveActor* pActor);
+void setOnGroundFlag(const al::LiveActor* pActor, bool& rIsOnGround);
 
 }  // namespace neko
 

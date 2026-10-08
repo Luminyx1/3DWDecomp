@@ -136,6 +136,18 @@ public:
     /** @brief Turns gravity back on (e.g. after being knocked away). */
     void validateGravity() { mIsApplyGravity = true; }
 
+    /** @brief The battle phase (1 to 4). */
+    s32 getPhase() const { return mPhase; }
+
+    /** @brief Index of the current section of the health bar. */
+    s32 getHealthStage() const { return mHealthStage; }
+
+    /** @brief Remaining hit points. */
+    s32 getHitPoint() const { return mHitPoint; }
+
+    /** @brief Where the shell dive landing warning is shown (tracked by the battle camera). */
+    const sead::Vector3f* getShellLandWarningPosPtr() const { return &mShellLandWarningPos; }
+
 private:
     DarkBowserStateDemo* mStateDemo = nullptr;                         // 0x148
     DarkBowserBattle* mBattle = nullptr;                               // 0x150

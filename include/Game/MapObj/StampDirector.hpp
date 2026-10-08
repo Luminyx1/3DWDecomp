@@ -6,6 +6,10 @@
 #include "Library/Scene/ISceneObj.hpp"
 
 class alModelCafe;
+
+namespace agl {
+class RenderBuffer;
+}  // namespace agl
 class DrcTouchAssistInfo;
 
 namespace al {
@@ -34,6 +38,7 @@ public:
     void throwStamp(Stamp* pStamp, const sead::Vector3f& rVelocity);
     void setCollectStamp(s32 stampId);
     Stamp* getStampFromModel(alModelCafe* pModel) const;
+    void draw2D(const agl::RenderBuffer* pRenderBuffer);
 
     const al::Resource* getStampResource() const { return mStampResource; }
 

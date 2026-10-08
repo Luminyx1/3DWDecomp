@@ -23,6 +23,7 @@ public:
     void setRouteSelecter(al::BlockRailRouteSelecter* pSelecter);
     void forceCalcMoveDirection();
     const sead::Vector3f& getMoveDirection() const { return mMoveDirection; }
+    const sead::Vector3f& getFrontDirection() const { return mFrontDirection; }
 private:
     al::BlockRailRider* mRailRider = nullptr;
     RouteDokanInOutEffect* mEffect = nullptr;

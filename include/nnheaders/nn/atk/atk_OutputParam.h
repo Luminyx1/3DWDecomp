@@ -3,7 +3,7 @@
 #include <nn/atk/atk_BasicSound.h>
 #include <nn/atk/atk_Global.h>
 
-namespace nn::atk {
+namespace nn::atk::detail {
 /**
  * @brief Per-output mixing parameters (volume, mix matrix, pan and sends) for one output device.
  */
@@ -28,4 +28,8 @@ struct OutputParam {
     float fxSend[AuxBus_Count];
 };
 static_assert(sizeof(OutputParam) == 0x50, "OutputParam size");
+}  // namespace nn::atk::detail
+
+namespace nn::atk {
+using detail::OutputParam;
 }  // namespace nn::atk

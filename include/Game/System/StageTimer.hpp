@@ -11,4 +11,11 @@ public:
     void requestStop(const void*);
     void requestRestart(const void*);
     s32 calcDisplayCount() const;
+    al::LayoutActor* getTimeUpLayout() const;
+    void deactivate();
+    void setTimerCheckpoint();
+    void clearStage();
+    bool isTimeUp() const;
+    void startDemo();
+    void endDemo();
 };

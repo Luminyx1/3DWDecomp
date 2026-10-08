@@ -41,14 +41,36 @@ public:
      */
     void setCutsceneId(s32 cutsceneId) { mCutsceneId = cutsceneId; }
 
+    /**
+     * @brief Set the flag at 0x302 (cleared before starting cutscenes that must not wait).
+     * @param isSet The flag.
+     */
+    void setUnk302(bool isSet) { _302 = isSet; }
+
+    /**
+     * @brief Set the flag at 0x32a.
+     * @param isSet The flag.
+     */
+    void setUnk32a(bool isSet) { _32a = isSet; }
+
+    /**
+     * @brief Set the flag at 0x32b.
+     * @param isSet The flag.
+     */
+    void setUnk32b(bool isSet) { _32b = isSet; }
+
 private:
-    u8 _300[0x304 - 0x300];
+    u8 _300[0x302 - 0x300];
+    bool _302;
+    u8 _303;
     bool mIsKeepPlayerPos;  // 0x304
     u8 _305;
     bool mIsHidePlayer;  // 0x306
     bool mIsSkipEndWipe;  // 0x307
     bool mIsUseBaseMtx;  // 0x308
-    u8 _309[0x32c - 0x309];
+    u8 _309[0x32a - 0x309];
+    bool _32a;
+    bool _32b;
     bool mIsFollowedByDemo;  // 0x32C
     u8 _32d[0x330 - 0x32d];
     s32 mCutsceneId;  // 0x330

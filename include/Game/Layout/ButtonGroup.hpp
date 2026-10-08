@@ -119,6 +119,12 @@ public:
     al::LayoutActor* getCursor() const { return mCursor; }
 
     /**
+     * @brief Access the cursor layout with its concrete type.
+     * @return The button cursor parts.
+     */
+    ButtonCursorParts* getCursorParts() const { return mCursor; }
+
+    /**
      * @brief Read the number of registered buttons.
      * @return The button count.
      */

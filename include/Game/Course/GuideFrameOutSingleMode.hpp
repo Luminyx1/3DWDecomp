@@ -45,8 +45,27 @@ public:
      */
     void setUnk148(f32 value) { _148 = value; }
 
+    /** @brief Sets the unidentified flag at 0x142. */
+    void onUnk142() { _142 = true; }
+
+    /** @brief Sets the unidentified flag at 0x143. */
+    void onUnk143() { _143 = true; }
+
+    /** @brief Sets the unidentified flag at 0x145. */
+    void onUnk145() { _145 = true; }
+
+    /**
+     * @brief Sets whether the target is in the air (high above the ground).
+     * @param isAerial Whether the target is airborne.
+     */
+    void setAerial(bool isAerial) { mIsAerial = isAerial; }
+
 private:
-    u8 _121[0x148 - 0x121];
+    u8 _121[0x142 - 0x121];
+    bool _142;  // 0x142
+    bool _143;  // 0x143
+    bool mIsAerial;  // 0x144
+    bool _145;  // 0x145
     f32 _148;
 };
 

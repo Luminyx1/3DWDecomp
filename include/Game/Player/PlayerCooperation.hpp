@@ -11,6 +11,8 @@ class PlayerCooperation : public al::ISceneObj {
 public:
     explicit PlayerCooperation(u32 num);
 
+    void update();
+
 private:
     u8 _8[0x48 - 0x8];
 };

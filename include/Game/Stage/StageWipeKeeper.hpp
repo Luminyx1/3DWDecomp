@@ -12,6 +12,8 @@ public:
     bool isCloseEndNoResultWipe() const;
     bool isActiveNoResultWipe() const;
     bool isActiveBootWipe() const;
+    bool isActiveStartWipe() const;
+    bool isActiveRetryWipe() const;
     void closeWipeFadeBlack(s32 frame);
     bool isCloseEndFadeBlack() const;
     void closeRetryWipe(bool isSkip);

@@ -10,4 +10,5 @@ class SuperBowserLaserState : public al::ActorStateBase {
 public:
     void appear() override;
     virtual void forceKill();
+    bool isEnableLaserLightEffects() const;
 };

@@ -67,6 +67,7 @@ public:
     void enableSSR();
 
     SimpleModelEnv* getSimpleModelEnv() const { return mSimpleModelEnv; }
+    void setForceFilterAA(bool isForce) { mIsForceFilterAA = isForce; }
 
 protected:
     GraphicsSystemInfo* mGraphicsSystemInfo;

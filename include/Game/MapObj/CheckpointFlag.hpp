@@ -24,6 +24,12 @@ public:
      * @return The placement id.
      */
     const al::PlacementId* getPlacementId() const { return mPlacementId; }
+
+    /**
+     * @brief Init info of the players restarting at the flag.
+     * @return The player init info.
+     */
+    const al::ActorInitInfo* getPlayerInfo() const { return mPlayerInfo; }
 private:
     al::ActorInitInfo* mPlayerInfo = nullptr;
     al::PlacementId* mPlacementId;

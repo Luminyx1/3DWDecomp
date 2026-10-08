@@ -2,11 +2,13 @@
 
 #include <basis/seadTypes.h>
 
+#include "Library/Nerve/NerveStateBase.hpp"
+
 /**
  * @brief Fury Bowser's state that rains giant fireballs (KoopaFireBallGiant) on the player.
  * @note Only the members used by reconstructed code are declared.
  */
-class SuperBowserGiantFireballState {
+class SuperBowserGiantFireballState : public al::ActorStateBase {
 public:
     /// Tuning parameters shared by all giant fireballs of one attack.
     struct Param {
@@ -33,5 +35,6 @@ public:
     };
 
     const Param* getParam();
+    bool isShootNowAndForever();
     f32 getAngleOffset();
 };

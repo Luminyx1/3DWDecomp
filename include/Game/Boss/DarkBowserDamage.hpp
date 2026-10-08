@@ -29,7 +29,8 @@ public:
     void appear() override;
     void kill() override;
     void pushReleasePlayer();
-    bool receiveMsg(const al::SensorMsg* pMsg, al::HitSensor* pOther, al::HitSensor* pSelf);
+    virtual bool receiveMsg(const al::SensorMsg* pMsg, al::HitSensor* pOther,
+                            al::HitSensor* pSelf);
     bool checkDefeat() const;
     void calcEffectMtx(const al::HitSensor* pOther, const al::HitSensor* pSelf, bool isJr);
     void startDamageHitReaction(bool isJr) const;
@@ -45,6 +46,18 @@ public:
     bool checkScratchCountChanceTime() const;
     bool receiveMsgResult();
     ~DarkBowserDamage() override;
+
+    /** @brief Whether the last damage was a side kick. */
+    bool isSideKicked() const { return mIsSideKicked; }
+
+    /** @brief Whether the last damage was a bomb hit. */
+    bool isBombHit() const { return mIsBombHit; }
+
+    /** @brief Whether the last stomp finished. */
+    bool isStompEnd() const { return mIsStompEnd; }
+
+    /** @brief Resets the number of scratches taken. */
+    void resetScratchCount() { mScratchCount = 0; }
 
 private:
     DarkBowser* mHost = nullptr;                        // 0x18

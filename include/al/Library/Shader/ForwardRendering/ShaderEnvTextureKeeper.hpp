@@ -109,6 +109,8 @@ public:
 
     void setIndirectTexture(const agl::TextureData* pTexture) { mIndirectTexture = pTexture; }
 
+    const agl::TextureData* getIndirectTexture() const { return mIndirectTexture; }
+
 private:
     GraphicsSystemInfo* mGraphicsSystemInfo;
     bool mIsEnable = false;

@@ -18,6 +18,7 @@ class IUsePlayerKeyConfig;
 class IUsePlayerRetargettingInfoCreator;
 class IUsePlayerRetargettingSelector;
 class IUsePlayerActionGraphBuilder;
+class PlayerBigBgmController;
 class PlayerInvincibleBgmController;
 class IUsePlayerModelVisibility;
 class IUsePlayerFlagSwitch;
@@ -47,6 +48,7 @@ public:
         mInvincibleBgmController = pController;
     }
     al::PadRumbleKeeper* getPadRumbleKeeper() const { return mPadRumbleKeeper; }
+    void setBigBgmController(PlayerBigBgmController* pController);
     virtual void permitBind();
     virtual void clearBindable();
     virtual void cancelBind();
@@ -213,6 +215,7 @@ public:
     al::HitSensor* getHoldingSensor() const { return mHoldingSensor; }
     al::HitSensor* getHoldedSensor() const { return mHoldedSensor; }
     al::LiveActor* getKoopaJr() const { return mKoopaJr; }
+    void setKoopaJr(al::LiveActor* pKoopaJr) { mKoopaJr = pKoopaJr; }
     bool isInvincibleModelAppear() const { return mIsInvincibleModelAppear; }
     const sead::Color4f& getInvincibleColor() const { return mInvincibleColor; }
     void setValidGetItem(bool isValid) { mIsValidGetItem = isValid; }

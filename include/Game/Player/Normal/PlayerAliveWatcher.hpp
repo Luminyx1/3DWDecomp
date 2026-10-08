@@ -2,8 +2,12 @@
 
 #include <basis/seadTypes.h>
 
+#include "Library/Scene/ISceneObj.hpp"
+
 namespace al {
+class ActorInitInfo;
 class IUseSceneObjHolder;
+class PlayerHolder;
 class LiveActor;
 }  // namespace al
 
@@ -11,7 +15,7 @@ class PlayerAliveWatcherGroup;
 class PlayerAmiiboDirectorWatcher;
 
 /// Scene object that revives dead players in bubbles during multiplayer.
-class PlayerAliveWatcher {
+class PlayerAliveWatcher : public al::ISceneObj {
 public:
     static PlayerAliveWatcher* getPlayerAliveWatcher(const al::IUseSceneObjHolder* pHolder);
     static PlayerAliveWatcher* tryGetPlayerAliveWatcher(const al::IUseSceneObjHolder* pHolder);
@@ -28,7 +32,20 @@ public:
     s32 isActivePlayerPort(s32 port) const;
     bool isEnableBubbleWithInput(PlayerAliveWatcherGroup* pGroup) const;
 
-    u8 _0[0x30];
+    PlayerAliveWatcher(const al::ActorInitInfo& rInfo, al::PlayerHolder* pPlayerHolder,
+                       bool isSingleMode, bool isKinopioBrigade, bool isNoAmiibo);
+    void appear();
+    void update();
+    void startDemo();
+    void endDemo();
+    void startPause();
+    void endPause();
+    void onGameOver();
+    bool isGameOver() const;
+    bool isEnableGyroCamera() const;
+    bool isWaitBubbleForRevive(s32 characterType) const;
+
+    u8 _8[0x30 - 0x8];
     bool mIsEnableBubbleRevive;                                 // 0x30
     bool mIsEnableBubbleScreenOut;                              // 0x31
     bool mIsAbyss;                                              // 0x32, last player loss was a fall

@@ -5,6 +5,10 @@ class PlayerAction;
 /// The graph of the player's actions and the shifts between them.
 class PlayerActionGraph {
 public:
+    void init();
     const PlayerAction* getAction() const;
-    void checkShift();
+    bool checkShift();
+    void checkShiftCondition();
+    void move();
+    void update();
 };

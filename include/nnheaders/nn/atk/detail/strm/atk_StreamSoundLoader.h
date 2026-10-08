@@ -219,6 +219,27 @@ public:
 
     static u8 g_LoadBuffer[LoadBufferSize];
 
+    /**
+     * @brief Sets the player the loaded data is handed to.
+     * @param pPlayer Player owning the loader.
+     */
+    void SetPlayer(StreamSoundPlayer* pPlayer) { mPlayer = pPlayer; }
+
+    /**
+     * @brief Sets where the stream parameters read from the header are stored.
+     * @param pDataInfo Stream parameters of the player.
+     */
+    void SetStreamDataInfo(StreamDataInfoDetail* pDataInfo) { mDataInfo = pDataInfo; }
+
+    /** @brief Sets the container format of the file. @param fileType Container format. */
+    void SetFileType(StreamFileType fileType) { mFileType = fileType; }
+
+    /** @brief Sets where compressed data is decoded. @param decodeMode Decode mode. */
+    void SetDecodeMode(DecodeMode decodeMode) { mDecodeMode = decodeMode; }
+
+    /** @brief Sets whether data is decoded ahead of playback. @param isEnabled Whether it is. */
+    void SetPreDecodeEnabled(bool isEnabled) { mIsPreDecodeEnabled = isEnabled; }
+
 private:
     /** @brief Checks whether file reads go through the stream cache. @return True when cached. */
     bool IsCacheEnabled() const { return mCacheBuffer != nullptr && mCacheSize != 0; }

@@ -85,5 +85,8 @@ public:
                              OutputDevice device);
     static void ClearEffect(AuxBus bus, OutputDevice device);
     static bool IsClearEffectFinished(AuxBus bus, OutputDevice device);
+
+    static bool g_IsStreamLoadWait;
+    static bool g_IsStreamOpenFailureHalt;
 };
 }  // namespace nn::atk

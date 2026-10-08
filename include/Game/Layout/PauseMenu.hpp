@@ -71,6 +71,12 @@ public:
     bool isWait() const;
     bool isEnd() const;
     bool isEndAssistMode() const;
+
+    /**
+     * Gets whether the menu was closed because its controller was disconnected.
+     * @return true if the menu was force exited.
+     */
+    bool isForceExit() const { return mIsForceExit; }
     void setPauseMenuHeader(s32 islandNo);
 
     /** @brief The menu is only opened through appear(s32), which knows the controller port. */

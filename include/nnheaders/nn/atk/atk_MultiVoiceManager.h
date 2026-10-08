@@ -1,5 +1,6 @@
 #pragma once
 
+#include <nn/atk/atk_StreamTrack.h>
 #include <nn/types.h>
 
 namespace nn::atk::detail::driver {
@@ -7,6 +8,8 @@ namespace nn::atk::detail::driver {
 class MultiVoiceManager {
   public:
     static MultiVoiceManager& GetInstance();
+    MultiVoice* AllocVoice(int channelCount, int priority, MultiVoice::VoiceCallback callback,
+                           void* pCallbackArg);
     /**
      * @brief Synchronously refresh parameters of all voices.
      * @param updateFlag Bit set selecting which parameters to recompute.

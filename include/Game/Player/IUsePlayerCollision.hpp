@@ -45,4 +45,7 @@ public:
     virtual bool getCeilingInfo(Info*) const = 0;
     virtual bool getRightWallInfo(Info*) const = 0;
     virtual bool getLeftWallInfo(Info*) const = 0;
+    virtual void shrinkBody() = 0;
+    virtual void growBody() = 0;
+    virtual void cutVelocity(u32) = 0;
 };

@@ -2,6 +2,7 @@
 
 #include <attributes.h>
 #include <nn/atk/atk_DecodeAdpcm.h>
+#include <nn/atk/atk_SoundStartable.h>
 #include <nn/types.h>
 
 namespace nn::atk::detail {
@@ -26,6 +27,17 @@ public:
     bool TryMoveNextRegion(IRegionInfoReadable* pReader, StreamDataInfoDetail* pInfo);
     void SetPosition(long position);
     void AddPosition(long samples);
+    bool IsInFirstRegion() const;
+
+    /**
+     * @brief Sets the callback that picks the next region.
+     * @param callback Region callback, or nullptr to play the regions in order.
+     * @param pArg Argument passed to the callback.
+     */
+    void SetRegionCallback(StreamRegionCallback callback, void* pArg) {
+        mRegionCallback = callback;
+        mRegionCallbackArg = pArg;
+    }
 
     /** @brief Gets the current sample position. @return Position in samples. */
     s64 GetCurrentPosition() const { return mCurrentPosition; }
@@ -56,7 +68,10 @@ public:
 
 private:
     // Region selection state preceding the position awaits reconstruction.
-    u8 _0[0x28];
+    u8 _0[8];
+    StreamRegionCallback mRegionCallback;
+    void* mRegionCallbackArg;
+    u8 _18[0x10];
     s64 mCurrentPosition;
     s64 mRegionStartPosition;
     s64 mRegionEndPosition;

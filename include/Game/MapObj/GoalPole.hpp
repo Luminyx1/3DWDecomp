@@ -57,6 +57,17 @@ public:
     const sead::Vector3f& getPoleTrans() const;
     void fixCamera(const sead::Vector3f& rLookAt);
     bool isGoalDemoPlaying() const;
+
+    /**
+     * Sets the stage timer stopped by the goal.
+     * @param pStageTimer The stage timer.
+     */
+    void setStageTimer(StageTimer* pStageTimer) { mStageTimer = pStageTimer; }
+
+    /**
+     * Prevents the players from catching the pole, e.g. once the time is up.
+     */
+    void invalidateBind() { mIsInvalidBind = true; }
     bool isSuperWithFairyBottle() const;
     bool isCatchSuccess(s32 index) const;
     f32 calcCatchHeightRate(s32 index) const;

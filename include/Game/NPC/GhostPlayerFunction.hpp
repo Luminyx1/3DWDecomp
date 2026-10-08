@@ -4,12 +4,14 @@
 #include <math/seadVector.h>
 #include <prim/seadSafeString.h>
 
+class GameDataHolder;
 class GameDataHolderAccessor;
 class GhostPlayerDirector;
 
 namespace al {
 class IUseSceneObjHolder;
 class LiveActor;
+class NetworkSystem;
 }  // namespace al
 
 /** @brief A checkpoint (warp object) record stored in recorded ghost play data. */
@@ -36,3 +38,9 @@ void calcGhostPlayDataRotate(sead::Vector3f* pRotate, const void* pData, s32 fra
 void calcGhostPlayDataSklAnimFrame(f32* pFrame, const void* pData, s32 frame, bool isOneTime);
 void calcGhostPlayDataActionName(const char** pName, const void* pData, s32 frame);
 }  // namespace GhostPlayerFunction
+
+namespace rc {
+bool tryRequestDownloadGhostData(al::NetworkSystem* pNetworkSystem,
+                                 const GameDataHolder* pGameDataHolder, const char* pStageName,
+                                 s32 fileId, bool isWorldWarp);
+}  // namespace rc

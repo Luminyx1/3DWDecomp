@@ -23,6 +23,7 @@ public:
     bool isDecideEnd() const;
     bool isTrigerDecide() const;
     void setPort(int port);
+    void startDecide();
 private:
     al::IUseLayout* mLayout;
     al::IUseLayoutAction* mLayoutAction;

@@ -160,6 +160,9 @@ public:
     /** @brief Clear the camera return request. */
     void clearCameraReturn() { mIsCameraReturn = false; }
 
+    /** @brief Smallest number of goal items needed to unlock the bells. @return The count. */
+    s32 getLockCountMin() const { return mLockCountMin; }
+
 private:
     s32 calcIndexOfGigaBellClosestTo(const sead::Vector3f& rPos) const;
 

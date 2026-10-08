@@ -44,7 +44,8 @@ protected:
     bool mStartedFlag;
     bool mPauseFlag;
     bool mFinishFlag;
-    u8 _3c[4];
+    bool mIsFinalizedForCannotAllocateResource;
+    u8 _3d[3];
     float mBaseVolume;
     float mBasePitch;
     float mBaseLpfFreq;
