@@ -4,6 +4,7 @@
 #include <math/seadVector.h>
 
 #include "Library/LiveActor/LiveActor.hpp"
+#include "MapObj/DisasterModeController.hpp"
 #include "NPC/NpcTargetFinder.hpp"
 
 namespace al {
@@ -16,6 +17,7 @@ class SensorMsg;
 
 class IUseNekoModeActor;
 class NpcHeadController;
+struct NekoAttachReason;
 
 namespace neko {
 
@@ -60,40 +62,59 @@ bool isInChaseRange(const IUseNekoModeActor* pActor, const al::LiveActor* pTarge
 bool isInChaseRange(const IUseNekoModeActor* pActor, const sead::Vector3f& rPos);
 bool isInRange(const al::LiveActor* pActor, const sead::Vector3f& rCenter, f32 range);
 bool checkGround(const al::LiveActor* pActor);
+void scaleHitSensors(al::LiveActor* pActor, f32 scale);
 
 }  // namespace neko
 
 /**
  * @brief Host actor of a cat; its behavior is implemented by IUseNekoModeActor modes.
- * @note Only what reconstructed code needs is declared so far.
+ *
+ * Every cat owns a regular mode actor (NekoNormal, or NekoParent for a mother cat) and a
+ * disaster mode actor (NekoDisaster) and switches between them when Fury Bowser shows up.
  */
-class Neko : public al::LiveActor {
+class Neko : public al::LiveActor, public DisasterModeController::IUseEventReceiver {
 public:
     /**
      * @brief Behavior modes of a cat.
-     * @note Only the values used by reconstructed code are named.
      */
     enum Mode : s32 {
-        Mode_Parent = 0,
+        Mode_Normal = 0,
+        Mode_Parent = Mode_Normal,  ///< A mother cat uses the regular mode slot.
+        Mode_Disaster = 1,
+        Mode_None = 2,
     };
 
-    Neko(const char* pName, Neko* pParent = nullptr);
+    Neko(const char* pName, Neko* pRideNeko = nullptr);
 
     void init(const al::ActorInitInfo& rInfo) override;
 
     void initAsModelName(const al::ActorInitInfo& rInfo, const char* pModelName);
     void startAppearNormal();
-    bool tryStartClipped();
+    void tryStartClipped();
+    bool isHidden() const;
     void tryEndClipped();
+    void movementPaused(bool isPaused) override;
     bool isMode(Mode mode) const;
+    void attachNormal(const NekoAttachReason& rReason);
+    void attachDisaster(const NekoAttachReason& rReason);
+    void exeWait();
     bool tryStartHide();
+    void exeHide();
+    void exeRespawn();
+    bool isActiveInView() const;
+    Mode getMode() const;
+    al::LiveActor* tryGetNearestPlayerInRange(f32 range);
     void startKill();
     void startSeekTarget(const neko::Target* pTarget, bool isForce);
     void setActivePosition(const sead::Vector3f& rTrans);
+    void setActiveFace(const sead::Vector3f& rDir);
+    void onDisasterModeStateChange(DisasterModeController::State state) override;
 
     s32 getUID() const { return mUID; }
 
     IUseNekoModeActor* getNormalModeActor() const { return mNormalModeActor; }
+
+    IUseNekoModeActor* getDisasterModeActor() const { return mDisasterModeActor; }
 
     IUseNekoModeActor* getModeActor() const { return mModeActor; }
 
@@ -102,13 +123,30 @@ public:
     void setRideNeko(Neko* pNeko) { mRideNeko = pNeko; }
 
 private:
-    u8 _144[0x150 - 0x144];
+    /**
+     * @brief Bits of mFlags.
+     */
+    enum Flag : u32 {
+        Flag_Disaster = 1 << 0,  ///< Fury Bowser is rampaging, the cat should be in disaster mode.
+        Flag_DisasterAnticipation = 1 << 3,  ///< Fury Bowser is about to show up.
+        Flag_AttachedNormal = 1 << 5,
+        Flag_AttachedDisaster = 1 << 6,
+    };
+
+    inline void initDisasterModeActor(const al::ActorInitInfo& rInfo, s32 colorType);
+    inline void initNormalModeActor(const al::ActorInitInfo& rInfo, IUseNekoModeActor* pModeActor,
+                                    s32 colorType);
+
     Neko* mRideNeko;  // 0x150
-    s32 mUID;  // 0x158
-    IUseNekoModeActor* mNormalModeActor;  // 0x160
-    u8 _168[0x170 - 0x168];
-    IUseNekoModeActor* mModeActor;  // 0x170
-    u8 _178[0x1a0 - 0x178];
+    s32 mUID = 0;  // 0x158
+    IUseNekoModeActor* mNormalModeActor = nullptr;  // 0x160
+    IUseNekoModeActor* mDisasterModeActor = nullptr;  // 0x168
+    IUseNekoModeActor* mModeActor = nullptr;  // 0x170
+    u32 mFlags = 0;  // 0x178
+    NpcTargetFinder* mTargetFinder;  // 0x180
+    sead::Vector3f mPlacementTrans = sead::Vector3f::zero;  // 0x188
+    s32 mHideCheckTime = 0;  // 0x194
+    bool mIsRequestHide = false;  // 0x198
 };
 
 static_assert(sizeof(Neko) == 0x1a0);
