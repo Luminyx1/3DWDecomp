@@ -18,6 +18,12 @@ public:
     void exeShake();
     void exeShakeEnd();
     void setStateAfter();
+
+    /**
+     * @brief Placement id of the flag.
+     * @return The placement id.
+     */
+    const al::PlacementId* getPlacementId() const { return mPlacementId; }
 private:
     al::ActorInitInfo* mPlayerInfo = nullptr;
     al::PlacementId* mPlacementId;

@@ -95,6 +95,10 @@ public:
 
     const sead::Vector3f& getHitNormal() const { return mHitNormal; }
 
+    bool isGyroStarted() const { return mIsGyroStarted; }
+
+    bool isSnapshotMode() const { return mIsSnapshotMode; }
+
 private:
     void showModel();
     void tryDeleteTraceEffect();

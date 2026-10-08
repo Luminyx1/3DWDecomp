@@ -69,13 +69,24 @@ public:
     static void Initialize();
     static void Finalize();
 
-    u8 _0[0x8];
+    /** @return the next entry of the shared random vector table */
+    const util::Vector3fType& GetVec3() { return g_Vec3Table[m_Vec3RndIdx++ & 0x1ff]; }
+
+    static util::Vector3fType* g_Vec3Table;
+
+    u16 m_Vec3RndIdx;
+    u8 _2[0x8 - 0x2];
 };
 
 /** Arrays holding the per-particle simulation data. */
 struct ParticleProperty {
     util::Float4* pPos;
     util::Float4* pVec;
+    u8 _10[0x18 - 0x10];
+    util::Float4* pRandom;
+    util::Float4* pAnimRandom;
+    u8 _28[0x40 - 0x28];
+    util::Float4* pEmitterMatrixRow[3];
 };
 }  // namespace detail
 
@@ -85,6 +96,11 @@ public:
 
     f32 GetFrame() const { return m_Frame; }
     Emitter* GetNextEmitter() const { return m_Next; }
+
+    /** @return the rotation and translation matrix (its translation is m_EmitterLocalPos) */
+    const util::Matrix4x3fType& GetMatrixRt() const {
+        return *reinterpret_cast<const util::Matrix4x3fType*>(m_MatrixRtAxis);
+    }
 
     /** @return the particle arrays kept in CPU memory */
     detail::ParticleProperty* GetCpuParticleProperty() {
@@ -97,7 +113,9 @@ public:
     s32 m_ParticleNum;
     u8 _2c[0x44 - 0x2c];
     f32 m_Frame;
-    u8 _48[0x70 - 0x48];
+    u8 _48[0x4c - 0x48];
+    f32 m_FrameRate;
+    u8 _50[0x70 - 0x50];
     f32 m_EmitterAnimScale;
     f32 m_EmitterSetScale;
     EmitterSet* m_EmitterSet;
@@ -114,13 +132,14 @@ public:
     util::Float4* m_ParticlePos;
     u8 _1d8[0x1e8 - 0x1d8];
     util::Float4* m_ParticleRandom;
-    u8 _1f0[0x210 - 0x1f0];
+    util::Float4* m_ParticleAnimRandom;
+    u8 _1f8[0x210 - 0x1f8];
     util::Float4* m_ParticleEmitterMatrixRow[3];
     u8 _228[0x238 - 0x228];
     EmitterResource* m_pEmitterRes;
     u8 _240[0x340 - 0x240];
     util::Matrix4x3fType m_MatrixSrt;
-    u8 _380[0x3b0 - 0x380];
+    util::Vector3fType m_MatrixRtAxis[3];
     util::Vector3fType m_EmitterLocalPos;
     u8 _3c0[0x3f8 - 0x3c0];
     DrawPathRenderStateSetCallback m_RenderStateSetCallback;
@@ -131,7 +150,9 @@ public:
     Emitter* m_ChildEmitter[16];
     u8 _4c0[0x5e4 - 0x4c0];
     u32 m_GroupBitFlag;
-    u8 _5e8[0x6c0 - 0x5e8];
+    u8 _5e8[0x69c - 0x5e8];
+    f32 m_GravityScale;
+    u8 _6a0[0x6c0 - 0x6a0];
     void* m_ConstantBuffer[3];
     detail::Buffer* m_pConstantBuffer;
     u8 _6e0[0x700 - 0x6e0];

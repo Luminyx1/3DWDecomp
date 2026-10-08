@@ -40,6 +40,7 @@ public:
     bool isUnderwater();
     void doJump(bool isPerfect);
     void doDive(bool);
+    void toggleGameWindow(bool isShow);
 
     /** @return Whether Plessie is standing on ground she slides down. */
     bool isOnSlideGround() const { return mIsOnSlideGround; }

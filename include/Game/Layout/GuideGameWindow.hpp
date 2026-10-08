@@ -2,12 +2,20 @@
 
 #include <basis/seadTypes.h>
 
+#include "Library/Scene/ISceneObj.hpp"
+
 namespace al {
 class IUseSceneObjHolder;
 }  // namespace al
 
 /** @brief Priority of a guide message; a higher one replaces a lower one already shown. */
 enum GuideMessagePriority : s32 {};
+
+/** @brief Scene object (SceneObjID_GuideGameWindow) showing the in-game guide messages. */
+class GuideGameWindow : public al::ISceneObj {
+public:
+    bool isWaitConfirm() const;
+};
 
 namespace rc {
 void appearGuideGameWindow(const al::IUseSceneObjHolder* pHolder, const char* pCategory,

@@ -4,7 +4,11 @@
 #include <math/seadVector.h>
 #include <prim/seadSafeString.h>
 
+class GameDataHolderAccessor;
+class GhostPlayerDirector;
+
 namespace al {
+class IUseSceneObjHolder;
 class LiveActor;
 }  // namespace al
 
@@ -17,6 +21,10 @@ struct GhostWarpObjData {
 
 namespace GhostPlayerFunction {
 u32 getGhostPlayerRecorderBufferSize();
+bool isExistGhostPlayerDirector(const al::IUseSceneObjHolder* pHolder);
+GhostPlayerDirector* getGhostPlayerDirector(const al::IUseSceneObjHolder* pHolder);
+bool isEnablePlayGhostPlayer(GameDataHolderAccessor accessor, s32 courseId);
+bool isCurrentCourseGhostPlayer(GameDataHolderAccessor accessor);
 void makeGhostActionName(sead::BufferedSafeString* pOut, const char* pActionName,
                          const al::LiveActor* pActor);
 bool isValidGhostPlayerDataVersion(const void* pData);

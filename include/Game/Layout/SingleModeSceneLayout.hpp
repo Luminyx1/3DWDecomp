@@ -125,6 +125,12 @@ public:
     al::WipeSimple* getWipe() const { return mWipe; }
 
     /**
+     * @brief Get the black full-screen wipe.
+     * @return The black wipe.
+     */
+    al::WipeSimple* getWipeBlack() const { return mWipeBlack; }
+
+    /**
      * @brief Get the number of frames the wipe takes to close or open.
      * @return The wipe duration in frames.
      */

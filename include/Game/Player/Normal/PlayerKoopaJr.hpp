@@ -19,6 +19,7 @@ public:
     PlayerProperty* getProperty() { return &mProperty; }
     bool isThrowingItem() const;
     bool tryThrowStockItem(int itemType, const char* pItemName, al::LiveActor* pPlayer);
+    bool tryStartAmiiboAttack();
 
     /**
      * @brief Check whether Bowser Jr. is driven by the AI instead of a second player.

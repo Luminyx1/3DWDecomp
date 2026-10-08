@@ -17,6 +17,7 @@ namespace vfx {
 
 class Emitter;
 class System;
+struct EmitterResource;
 
 namespace detail {
 class EmitterCalculator;
@@ -24,6 +25,8 @@ class Shader;
 struct ParticleProperty;
 struct ResFieldCustom;
 struct ResAnim8KeyParamSet;
+struct ResAnim8KeyParam;
+struct ParticleData;
 }  // namespace detail
 
 /** Number of per-frame copies kept of multi-buffered GPU data. */
@@ -251,6 +254,85 @@ public:
     void DrawEmitterUsingBoundShader(gfx::CommandBuffer* pCommandBuffer, Emitter* pEmitter,
                                      Shader* pShader, void* pUserParam,
                                      DrawParameterArg* pDrawParameterArg);
+
+    void CalculateField8KeyAnim(util::Float3* pOut, const Emitter* pEmitter,
+                                const ResAnim8KeyParamSet& rAnim, int particleIndex,
+                                f32 time);
+    void Calculate8KeyAnim(util::Float3* pOut, const ResAnim8KeyParam& rAnim, int keyNum,
+                           f32 random, f32 time, f32 loopRate, f32 startRandom, f32 life);
+
+    void CalculateParticleBehaviorFieldGpuNoise(util::Vector3fType* pVec, Emitter* pEmitter,
+                                                const ParticleProperty* pProperty,
+                                                int particleIndex, f32 time);
+    void CalculateParticleBehaviorFieldRandomSimple(util::Vector3fType* pVec,
+                                                    Emitter* pEmitter, int particleIndex,
+                                                    f32 time);
+    void CalculateParticleBehaviorFieldMagnet(util::Vector3fType* pPos,
+                                              util::Vector3fType* pVec, Emitter* pEmitter,
+                                              const ParticleProperty* pProperty,
+                                              int particleIndex, f32 time);
+    void CalculateParticleBehaviorFieldSpin(util::Vector3fType* pPos,
+                                            const Emitter* pEmitter,
+                                            ParticleProperty* pProperty, int particleIndex,
+                                            f32 time);
+    void CalculateParticleBehaviorFieldCollision(util::Vector3fType* pPos,
+                                                 util::Vector3fType* pVec, f32* pLife,
+                                                 Emitter* pEmitter,
+                                                 ParticleProperty* pProperty,
+                                                 int particleIndex,
+                                                 ParticleData* pParticleData, f32 time);
+    void CalculateParticleBehaviorFieldConvergence(util::Vector3fType* pPos,
+                                                   Emitter* pEmitter,
+                                                   const ParticleProperty* pProperty,
+                                                   int particleIndex, f32 time);
+    void CalculateParticleBehaviorFieldPosAdd(util::Vector3fType* pPos, Emitter* pEmitter,
+                                              const ParticleProperty* pProperty,
+                                              int particleIndex, f32 time);
+    void CalculateParticleBehavior(util::Vector3fType* pPos, util::Vector3fType* pVec,
+                                   f32* pTime, f32* pLife, Emitter* pEmitter,
+                                   int particleIndex, f32 time,
+                                   const util::Vector3fType& rPos,
+                                   const util::Vector3fType& rVec);
+
+    void CalculateParticleScaleVecFromTime(util::Vector3fType* pOut,
+                                           const EmitterResource* pEmitterRes,
+                                           const util::Vector4fType& rScale,
+                                           const util::Vector4fType& rRandom, f32 life,
+                                           f32 time);
+    void CalculateParticleScaleVecFromFrame(util::Vector3fType* pOut,
+                                            const EmitterResource* pEmitterRes,
+                                            const util::Vector4fType& rScale,
+                                            const util::Vector4fType& rRandom, f32 life,
+                                            f32 time);
+    void CalculateParticleColor0VecFromTime(util::Vector4fType* pOut,
+                                            const EmitterResource* pEmitterRes,
+                                            const util::Vector4fType& rRandom,
+                                            const util::Vector4fType& rColor,
+                                            const util::Vector3fType& rEmitterColor,
+                                            f32 alpha, f32 life, f32 time);
+    void CalculateParticleColor0RawValue(util::Vector4fType* pOut,
+                                         const EmitterResource* pEmitterRes,
+                                         const util::Vector4fType& rRandom, f32 life,
+                                         f32 time);
+    void CalculateParticleColor1VecFromTime(util::Vector4fType* pOut,
+                                            const EmitterResource* pEmitterRes,
+                                            const util::Vector4fType& rRandom,
+                                            const util::Vector4fType& rColor,
+                                            const util::Vector3fType& rEmitterColor,
+                                            f32 alpha, f32 life, f32 time);
+    void CalculateParticleColor1RawValue(util::Vector4fType* pOut,
+                                         const EmitterResource* pEmitterRes,
+                                         const util::Vector4fType& rRandom, f32 life,
+                                         f32 time);
+    void CalculateRotationMatrix(util::Vector3fType* pOut,
+                                 const EmitterResource* pEmitterRes,
+                                 const util::Vector4fType& rRotate,
+                                 const util::Vector4fType& rRandom, f32 time);
+    void CalculateRotationMatrix(util::Vector3fType* pOut,
+                                 const EmitterResource* pEmitterRes,
+                                 const util::Vector4fType& rRotate);
+    static void MakeRotationMatrixXYZ(util::neon::MatrixRowMajor4x4fType* pOutMatrix,
+                                      const util::Vector3fType& rRotate);
 
     u8 _0[0x60];
 };

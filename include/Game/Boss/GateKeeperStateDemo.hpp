@@ -1,6 +1,7 @@
 #pragma once
 
 #include <basis/seadTypes.h>
+#include <math/seadVector.h>
 
 #include "Library/Nerve/NerveStateBase.hpp"
 
@@ -43,10 +44,29 @@ public:
      */
     void setIsControlPlayer(bool isControlPlayer) { mIsControlPlayer = isControlPlayer; }
 
+    /**
+     * @brief Sets the offset added to the demo camera's look-at position.
+     * @param rOffset Look-at offset.
+     */
+    void setLookAtOffset(const sead::Vector3f& rOffset) { mLookAtOffset.e = rOffset.e; }
+
+    /** @brief Marks the demo camera as an RS camera ticket (single mode). */
+    void setIsCameraTicket() { mIsCameraTicket = true; }
+
+    /**
+     * @brief Checks whether the demo itself has started.
+     * @return Whether the demo has started.
+     */
+    bool isDemoStarted() const { return mIsDemoStarted; }
+
 private:
-    u8 mUnknown20[0xcd - 0x20];
+    u8 mUnknown20[0xa8 - 0x20];
+    sead::Vector3f mLookAtOffset;  // 0xa8
+    u8 mUnknownB4[0xcd - 0xb4];
     bool mIsControlPlayer;  // 0xcd
-    u8 mUnknownCE[0xd8 - 0xce];
+    bool mIsCameraTicket;   // 0xce
+    bool mIsDemoStarted;    // 0xcf
+    u8 mUnknownD0[0xd8 - 0xd0];
 };
 
 static_assert(sizeof(GateKeeperStateDemo) == 0xd8);

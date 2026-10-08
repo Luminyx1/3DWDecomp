@@ -112,6 +112,12 @@ public:
      */
     void setIsPlayerInBonusArea(bool isInBonusArea) { mIsPlayerInBonusArea = isInBonusArea; }
 
+    /**
+     * @brief Check whether a player is in a cloud bonus area.
+     * @return True while a player is in a bonus area.
+     */
+    bool isPlayerInBonusArea() const { return mIsPlayerInBonusArea; }
+
 private:
     bool isIconBlinkTiming();
     bool isSelectFlagIcon() const;

@@ -31,6 +31,18 @@ public:
     void tryEndPlay();
     const char* getSceneObjName() const override;
 
+    /**
+     * @brief The ghost recorder of the stage.
+     * @return The recorder, or nullptr if none was created.
+     */
+    GhostPlayerRecorder* getRecorder() const { return mRecorder; }
+
+    /**
+     * @brief The ghost player of the stage.
+     * @return The ghost player, or nullptr if none was created.
+     */
+    GhostPlayerPlayer* getPlayer() const { return mPlayer; }
+
 private:
     al::NetworkSystem* mNetworkSystem = nullptr;
     const GameDataHolder* mGameDataHolder;

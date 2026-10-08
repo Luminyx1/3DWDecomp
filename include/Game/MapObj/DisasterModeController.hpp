@@ -42,6 +42,8 @@ class DisasterModeController : public al::LiveActor, public al::ISceneObj {
 
     DisasterBlockDirector* getBlockDirector() const { return mBlockDirector; }
     void begin(bool);
+    void beginImmediate(bool);
+    bool needToPlayFirstDisasterModeCutscene();
     void end();
     void endImmediate();
     void setSuperBowserV2(bool);

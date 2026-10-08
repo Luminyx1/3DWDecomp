@@ -17,6 +17,8 @@ public:
 
     void createBubble(const al::ActorInitInfo& rInfo);
     void initCourseSelectPlayer(const al::LayoutInitInfo& rInfo, bool isKiosk);
+    void hidePlayer();
+    void showPlayer();
 
 private:
     u8 _648[0x680 - 0x648];

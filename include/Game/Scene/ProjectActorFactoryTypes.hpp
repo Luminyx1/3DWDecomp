@@ -304,6 +304,7 @@ static_assert(sizeof(BoomerangBros) == 0x1d0);
 #include "Boss/BossWackun.hpp"
 #include "Boss/SuperBowserShell.hpp"
 #include "Boss/Punpun.hpp"
+#include "Boss/Bunbun.hpp"
 
 
 
@@ -338,23 +339,7 @@ private:
 };
 static_assert(sizeof(Bubble) == 0x188);
 
-class Bull : public al::LiveActor {
-public:
-    explicit Bull(const char* pName);
-
-private:
-    u8 mUnreconstructed[0x54];
-};
-static_assert(sizeof(Bull) == 0x198);
-
-class Bunbun : public al::LiveActor {
-public:
-    explicit Bunbun(const char* pName);
-
-private:
-    u8 mUnreconstructed[0x7c];
-};
-static_assert(sizeof(Bunbun) == 0x1c0);
+#include "Enemy/Bull.hpp"
 
 class Byugo : public al::LiveActor {
 public:
@@ -1093,6 +1078,10 @@ public:
     void update();
     bool tryStartPlay();
     bool tryEndPlay();
+    void tryStartFromObj(const char* pName);
+    void stopAndHideGhostPlayerAll();
+    void restartGhostPlayerAll();
+    void waitForStartFromWarpObj();
 
 private:
     u8 mUnreconstructed[0x5c];

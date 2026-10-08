@@ -23,11 +23,13 @@ class CourseSelectScene;
 class CourseSelectWindowHolder;
 class DemoOpeningSwitch;
 class DemoTimerStageSwitchController;
+class PlayerCrown;
 
 class CourseSelectDirector : public al::ISceneObj {
 public:
     explicit CourseSelectDirector(CourseSelectScene* pScene);
 
+    static CourseSelectDirector* getCourseSelectDirector(const al::IUseSceneObjHolder* pUser);
     static CourseSelectDirector* tryGetCourseSelectDirector(const al::IUseSceneObjHolder* pUser);
     /** @brief Registers the opening-demo switch actor. @param pSwitch Switch controller. */
     void setDemoOpeningSwitch(DemoOpeningSwitch* pSwitch) { mDemoOpeningSwitch = pSwitch; }
@@ -51,6 +53,7 @@ public:
     CourseSelectMiniature* tryFindMiniatureObj(s32 courseId) const;
     CourseSelectMiniature* findMiniatureObj(s32 courseId) const;
     CourseSelectMiniature* findKoopaCastle(s32 worldId) const;
+    al::LiveActor* tryFindNearestActor() const;
     void setAfterOpeningDemo();
     void startDemo(bool isSkipLayout);
     void endDemo(bool isAppearLayout);
@@ -83,6 +86,10 @@ public:
     bool isEventGateKeeper() const { return mIsEventGateKeeper; }
     /** @brief Gets the main player of the map. @return The main player actor. */
     al::LiveActor* getMainPlayer() const { return mMainPlayer; }
+    /** @brief Gets the crown of the best-score player. @return The crown actor. */
+    PlayerCrown* getPlayerCrown() const { return mPlayerCrown; }
+    /** @brief Gets the lock shown when a road is unlocked. @return The lock actor. */
+    al::LiveActor* getUnLockActor() const { return mUnLockActor; }
 
 private:
     unsigned char _8[0x10 - 0x8];
@@ -92,7 +99,9 @@ private:
     s32 mNodeNum;  // 0x158
     unsigned char _15c[0x160 - 0x15c];
     al::LiveActor* mMainPlayer;  // 0x160
-    unsigned char _168[0x1b8 - 0x168];
+    PlayerCrown* mPlayerCrown;  // 0x168
+    unsigned char _170[0x1b0 - 0x170];
+    al::LiveActor* mUnLockActor;  // 0x1b0
     DemoTimerStageSwitchController* mDemoTimerStageSwitchController;
     DemoOpeningSwitch* mDemoOpeningSwitch;
     s32 mActiveWorldId;  // 0x1c8
@@ -103,4 +112,5 @@ static_assert(sizeof(CourseSelectDirector) == 0x1d0);
 
 namespace rc {
 s32 getSelectMiniatureCourseId(CourseSelectDirector* pDirector);
+bool isPlayerMove(CourseSelectDirector* pDirector);
 }  // namespace rc

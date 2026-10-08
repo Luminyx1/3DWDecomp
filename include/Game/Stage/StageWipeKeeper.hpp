@@ -17,4 +17,7 @@ public:
     void closeRetryWipe(bool isSkip);
     bool isCloseEndRetryWipe() const;
     void openRetryWipe();
+    void tryOpenFadeBlack();
+    void tryOpenStartOrRetryWipe();
+    void tryOpenNoResultWipe();
 };

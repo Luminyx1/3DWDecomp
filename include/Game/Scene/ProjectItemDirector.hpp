@@ -46,6 +46,12 @@ public:
      */
     ItemHolder* getItemHolder() const { return mItemHolder; }
 
+    /**
+     * @brief Get the HUD layout the items report to.
+     * @return The scene layout, or nullptr before setSceneLayout().
+     */
+    SceneLayoutBase* getSceneLayout() const { return mSceneLayout; }
+
 private:
     ItemHolder* mItemHolder = nullptr;           // 0x10
     SceneLayoutBase* mSceneLayout = nullptr;     // 0x18

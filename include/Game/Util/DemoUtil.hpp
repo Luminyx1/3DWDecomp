@@ -20,6 +20,8 @@ void setUpdateFreeze(const al::LiveActor*, bool);
 void setOtherActiveDemo(al::LiveActor*, bool);
 bool requestStartDemoIntro(al::LiveActor*, const char*, bool);
 bool requestStartDemoCamera(al::LiveActor*, const char*);
+bool requestStartDemoMovingCamera(al::LiveActor* pActor, const char* pName, bool isKeepPlayer);
+void requestEndDemoMovingCamera(const al::LiveActor* pActor);
 bool isActiveSpecificDemo(const al::LiveActor*);
 bool isActiveDemoCamera(const al::LiveActor*);
 bool isAnyActiveButDemoCameraDemo(const al::LiveActor* pActor);

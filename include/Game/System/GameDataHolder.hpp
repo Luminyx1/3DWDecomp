@@ -116,6 +116,12 @@ class GameDataHolder : public al::ISceneObj {
     PlayLogData* getPlayLog() const { return mpCommon->mpPlayLog; }
 
     /**
+     * @brief Access the data shared by every save file.
+     * @return The common save data.
+     */
+    GameDataCommon* getCommon() const { return mpCommon; }
+
+    /**
      * @brief Access the active 3D World save file.
      * @return The active 3D World save file.
      */

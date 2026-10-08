@@ -15,6 +15,8 @@ public:
     void init(const al::ActorInitInfo&) override;
     void initWithParam(const InitParam&, const al::ActorInitInfo&);
     void exeBlow();
+    /** @brief Makes the next blow spread the coins concentrically. */
+    void setConcentric() { mIsConcentric = true; }
 private:
     bool mIsConcentric = false;
     al::DeriveActorGroup<CoinBlow>* mCoins = nullptr;

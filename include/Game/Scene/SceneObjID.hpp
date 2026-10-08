@@ -15,6 +15,7 @@ enum SceneObjID : s32 {
     SceneObjID_PlayerStocker = 18,
     SceneObjID_ScoreHolder = 20,
     SceneObjID_PlayerRetargettingSelector = 25,
+    SceneObjID_GuideGameWindow = 28,
     SceneObjID_FurEnv = 33,
     SceneObjID_ControllerEventWatcher = 34,
     SceneObjID_GoalItemHolder = 36,

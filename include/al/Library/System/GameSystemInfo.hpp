@@ -26,6 +26,7 @@ struct GameSystemInfo {
     GamePadSystem* getGamePadSystem() const { return static_cast<GamePadSystem*>(_30); }
     DrawSystemInfo* getDrawSystemInfo() const { return static_cast<DrawSystemInfo*>(_38); }
     FontHolder* getFontHolder() const { return static_cast<FontHolder*>(_40); }
+    NfpDirector* getNfpDirector() const { return static_cast<NfpDirector*>(_48); }
     WaveVibrationHolder* getWaveVibrationHolder() const {
         return static_cast<WaveVibrationHolder*>(_58);
     }
