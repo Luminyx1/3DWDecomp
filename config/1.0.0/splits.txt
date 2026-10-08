@@ -416,9 +416,7 @@ src/Game/CourseSelect/CourseSelectPlayerActor.cpp:
 src/Game/CourseSelect/CourseSelectPlayerFunction.cpp:
     .text   start:0x000A0E70 end:0x000A0F90
 src/Game/CourseSelect/CourseSelectPuppeteer.cpp:
-    .text   start:0x000A0F90 end:0x000A4D9C
-src/Game/CourseSelect/Local.cpp:
-    .text   start:0x000A4DA0 end:0x000A5EE8
+    .text   start:0x000A0F90 end:0x000A5EE8
 src/Game/CourseSelect/CourseSelectPuppeteerGroup.cpp:
     .text   start:0x000A5EF0 end:0x000A7514
 src/Game/CourseSelect/CourseSelectRhythmObject.cpp:
@@ -2773,10 +2771,8 @@ src/Game/Player/Normal/PlayerAliveWatcherCharacter.cpp:
     .text   start:0x00438590 end:0x00438B98
 src/Game/Player/Normal/PlayerAliveWatcherGroup.cpp:
     .text   start:0x00438BA0 end:0x0043A928
-src/Game/Player/Normal/PlayerAmiiboDirector.cpp:
-    .text   start:0x0043A930 end:0x0043AB38
 src/Game/Player/Normal/PlayerAmiiboDirectorWatcher.cpp:
-    .text   start:0x0043AB40 end:0x0043C630
+    .text   start:0x0043A930 end:0x0043C630
 src/Game/Player/Normal/PlayerAnimator.cpp:
     .text   start:0x0043C630 end:0x0043EACC
 src/Game/Player/Normal/PlayerAnimatorMock.cpp:

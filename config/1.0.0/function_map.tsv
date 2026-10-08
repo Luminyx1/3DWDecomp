@@ -3913,7 +3913,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71000A49F0			FALSE	_ZN21CourseSelectPuppeteer18exeReviveUserDelayEv	CourseSelectPuppeteer::exeReviveUserDelay()	
 0x71000A4A80			FALSE	_ZN21CourseSelectPuppeteer13exeReviveUserEv	CourseSelectPuppeteer::exeReviveUser()	
 0x71000A4C10			FALSE	_ZN21CourseSelectPuppeteer12exeEnterUserEv	CourseSelectPuppeteer::exeEnterUser()	
-0x71000A4DA0		Local.o	FALSE	_ZN5Local18turnVecToVecDegreeEPN4sead7Vector3IfEERKS2_S5_f	Local::turnVecToVecDegree(sead::Vector3<float>*, sead::Vector3<float> const&, sead::Vector3<float> const&, float)	object (class)
+0x71000A4DA0			FALSE	_ZN5Local18turnVecToVecDegreeEPN4sead7Vector3IfEERKS2_S5_f	Local::turnVecToVecDegree(sead::Vector3<float>*, sead::Vector3<float> const&, sead::Vector3<float> const&, float)	object (class)
 0x71000A4EB0			FALSE	_ZN21CourseSelectPuppeteer12exeLeaveUserEv	CourseSelectPuppeteer::exeLeaveUser()	
 0x71000A5150			FALSE	_ZN21CourseSelectPuppeteer17exeBindEndLandingEv	CourseSelectPuppeteer::exeBindEndLanding()	
 0x71000A5200			FALSE	_ZN21CourseSelectPuppeteer10exeBindEndEv	CourseSelectPuppeteer::exeBindEnd()	
@@ -27021,9 +27021,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710043A900			FALSE	_ZNK12_GLOBAL__N_148PlayerAliveWatcherCharacterNrvBubbleWaitForInput7executeEPN2al11NerveKeeperE	(anonymous namespace)::PlayerAliveWatcherCharacterNrvBubbleWaitForInput::execute(al::NerveKeeper*) const	
 0x710043A910			FALSE	_ZNK12_GLOBAL__N_134PlayerAliveWatcherCharacterNrvDead7executeEPN2al11NerveKeeperE	(anonymous namespace)::PlayerAliveWatcherCharacterNrvDead::execute(al::NerveKeeper*) const	
 0x710043A920			FALSE	_ZNK12_GLOBAL__N_135PlayerAliveWatcherCharacterNrvAbyss7executeEPN2al11NerveKeeperE	(anonymous namespace)::PlayerAliveWatcherCharacterNrvAbyss::execute(al::NerveKeeper*) const	
-0x710043A930		PlayerAmiiboDirector.o	FALSE	_ZN20PlayerAmiiboDirector14initRandomSeedEv	PlayerAmiiboDirector::initRandomSeed()	object (class)
+0x710043A930		PlayerAmiiboDirectorWatcher.o	FALSE	_ZN20PlayerAmiiboDirector14initRandomSeedEv	PlayerAmiiboDirector::initRandomSeed()	object (class)
 0x710043A960			FALSE	_ZN20PlayerAmiiboDirectorC1EPK11PlayerActorP27PlayerAmiiboDirectorWatcherRKN2al13ActorInitInfoE	PlayerAmiiboDirector::PlayerAmiiboDirector(PlayerActor const*, PlayerAmiiboDirectorWatcher*, al::ActorInitInfo const&)	
-0x710043AB40		PlayerAmiiboDirectorWatcher.o	FALSE	_ZN27PlayerAmiiboDirectorWatcher19tryRegisterDirectorEP20PlayerAmiiboDirector	PlayerAmiiboDirectorWatcher::tryRegisterDirector(PlayerAmiiboDirector*)	object (class)
+0x710043AB40			FALSE	_ZN27PlayerAmiiboDirectorWatcher19tryRegisterDirectorEP20PlayerAmiiboDirector	PlayerAmiiboDirectorWatcher::tryRegisterDirector(PlayerAmiiboDirector*)	object (class)
 0x710043AC40			FALSE	_ZN20PlayerAmiiboDirector6updateEv	PlayerAmiiboDirector::update()	
 0x710043AD10			FALSE	_ZN20PlayerAmiiboDirector5resetEb	PlayerAmiiboDirector::reset(bool)	
 0x710043AD50			FALSE	_ZN20PlayerAmiiboDirector5clearEv	PlayerAmiiboDirector::clear()	
