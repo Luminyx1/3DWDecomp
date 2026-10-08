@@ -4,6 +4,7 @@
 
 #include "Library/LiveActor/LiveActor.hpp"
 
+class SuperBowserGiantFireballState;
 class SuperBowserLaserState;
 
 /**
@@ -33,6 +34,8 @@ class SuperBowser : public al::LiveActor {
     bool isHidden();
     f32 getJumpRate();
     SuperBowserLaserState* getLaserState();
+    SuperBowserGiantFireballState* getGiantFireballState();
+    s32 getGiantFireballShootCount();
     void forceKillFireballs();
     bool isDoingEndingPreparations();
     s32 getLastPhase3CurrentIndex() const;

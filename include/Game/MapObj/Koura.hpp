@@ -22,6 +22,9 @@ public:
     bool isPlayerInside() const;
     bool isJumpStart() const;
     void exeUpper();
+    bool isSlide() const;
+    bool isAttachableWithNokonoko();
+    void appearFromNokonoko(al::LiveActor* pNokonoko, bool isUpper);
 private:
     u8 mUnreconstructed[0x12c];
 };

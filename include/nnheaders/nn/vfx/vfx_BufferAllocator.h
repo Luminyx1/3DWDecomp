@@ -5,8 +5,12 @@
 
 #pragma once
 
+#include <nn/gfx/gfx_Buffer.h>
 #include <nn/gfx/gfx_GpuAddress.h>
+#include <nn/gfx/gfx_MemoryPool.h>
+#include <nn/gfx/gfx_Types.h>
 #include <nn/types.h>
+#include <nn/util/util_IntrusiveList.h>
 
 namespace nn {
 namespace vfx {
@@ -18,6 +22,36 @@ namespace detail {
  */
 class BufferAllocator {
 public:
+    /** Parameters for Initialize(). */
+    struct InitializeArg {
+        InitializeArg()
+            : pDevice(nullptr), memoryPoolProperty(0), gpuAccessFlag(0), pWorkMemory(nullptr),
+              workMemorySize(0), pPoolMemory(nullptr), poolMemorySize(0) {}
+
+        nn::gfx::Device* pDevice;
+        int memoryPoolProperty;
+        int gpuAccessFlag;
+        void* pWorkMemory;
+        size_t workMemorySize;
+        void* pPoolMemory;
+        size_t poolMemorySize;
+    };
+
+    BufferAllocator() {
+        m_1a8 = 0;
+        m_pBufferTop = nullptr;
+        m_1b0 = 0;
+        m_GpuAddress.ToData()->impl = 0;
+        m_GpuAddress.ToData()->value = 0;
+        m_1d0 = 0;
+    }
+
+    virtual ~BufferAllocator() {}
+
+    bool Initialize(InitializeArg& rArg);
+    void Finalize(nn::gfx::Device* pDevice);
+    void FlushFreeList();
+
     void* Alloc(size_t size, size_t alignment);
     void Free(void* pMemory, bool isImmediate);
 
@@ -36,13 +70,22 @@ public:
     }
 
 private:
-    u8 _0[0x170];
+    nn::gfx::Buffer m_Buffer;
+    nn::gfx::MemoryPool m_MemoryPool;
     void* m_pBufferTop;
-    u8 _178[0x1C8 - 0x178];
+    u8 _178[0x180 - 0x178];
+    nn::util::IntrusiveListNode m_UsedList;
+    nn::util::IntrusiveListNode m_FreeList;
+    u8 _1a0[0x1A8 - 0x1A0];
+    u64 m_1a8;
+    u32 m_1b0;
+    u8 _1b4[0x1C8 - 0x1B4];
     size_t m_Alignment;
-    u8 _1d0[0x1D8 - 0x1D0];
+    u64 m_1d0;
     nn::gfx::GpuAddress m_GpuAddress;
 };
+
+static_assert(sizeof(BufferAllocator) == 0x1E8);
 
 }  // namespace detail
 }  // namespace vfx

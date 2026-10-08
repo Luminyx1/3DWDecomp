@@ -54,6 +54,12 @@ bool isMsgHitReaction(const IUseNekoModeActor* pActor, const al::SensorMsg* pMsg
                       const al::HitSensor* pOther, const al::HitSensor* pSelf);
 bool isMsgMeraWanwanTrackAttack(const IUseNekoModeActor* pActor, const al::SensorMsg* pMsg,
                                 const al::HitSensor* pOther, const al::HitSensor* pSelf);
+void setAnimationRate(IUseNekoModeActor* pActor);
+bool isActive(const IUseNekoModeActor* pActor, f32 range);
+bool isInChaseRange(const IUseNekoModeActor* pActor, const al::LiveActor* pTarget);
+bool isInChaseRange(const IUseNekoModeActor* pActor, const sead::Vector3f& rPos);
+bool isInRange(const al::LiveActor* pActor, const sead::Vector3f& rCenter, f32 range);
+bool checkGround(const al::LiveActor* pActor);
 
 }  // namespace neko
 

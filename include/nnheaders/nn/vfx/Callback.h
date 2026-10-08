@@ -5,10 +5,12 @@
 
 #pragma once
 
+#include <nn/gfx/gfx_DescriptorSlot.h>
 #include <nn/gfx/gfx_GpuAddress.h>
 #include <nn/gfx/gfx_Types.h>
 #include <nn/types.h>
 #include <nn/util/util_MathTypes.h>
+#include <nn/vfx/vfx_Buffer.h>
 
 namespace nn {
 namespace vfx {
@@ -24,10 +26,29 @@ struct ResFieldCustom;
 struct ResAnim8KeyParamSet;
 }  // namespace detail
 
+/** Number of per-frame copies kept of multi-buffered GPU data. */
+enum BufferingMode {
+    BufferingMode_Single = 1,
+    BufferingMode_Double = 2,
+    BufferingMode_Triple = 3,
+};
+
 class TemporaryBuffer {
 public:
+    TemporaryBuffer() { Invalidate(); }
+
+    void Initialize(gfx::Device* pDevice, size_t size, BufferingMode bufferingMode);
+    void Invalidate();
+    void Finalize(gfx::Device* pDevice);
+    void Swap();
     void* Map(gfx::GpuAddress* pAddress, size_t size);
+    void Unmap();
+
+    u8 _0[0x38];
+    detail::Buffer m_Buffer[3];
 };
+
+static_assert(sizeof(TemporaryBuffer) == 0x548);
 
 enum CustomShaderConstantBufferIndex {
     CustomShaderConstantBufferIndex_0,
@@ -59,13 +80,26 @@ enum DrawPathCallbackId {
     DrawPathCallbackId_1,
 };
 
-enum DrawPathFlag {
+enum DrawPathFlag : u64 {
     DrawPathFlag_None = 0,
 };
 
+struct ViewParam;
+
+namespace detail {
+struct SortData;
+}  // namespace detail
+
 struct DrawParameterArg {
-    u8 _0[0x30];
+    s32 m_ProcessingIndex;
+    ViewParam* m_pViewParam;
+    u32 m_ViewFlag;
+    s32 m_14;
+    gfx::DescriptorSlot m_FrameBufferTextureSlot;
+    gfx::DescriptorSlot m_DepthBufferTextureSlot;
+    gfx::GpuAddress* m_pViewGpuAddress;
     TemporaryBuffer* m_pTemporaryBuffer;
+    detail::SortData* m_pParticleSortBuffer;
 };
 
 struct EndianFlipArg;
@@ -115,9 +149,11 @@ public:
     Emitter* pEmitter;
     s32 shaderType;
     void* pUserParam;
-    u8 _20[0x28 - 0x20];
+    bool isComputeShader;
     DrawParameterArg* pDrawParameterArg;
 };
+
+bool InvokeRenderStateSetCallback(RenderStateSetArg& rArg);
 
 typedef void (*EndianFlipCallback)(EndianFlipArg& rArg);
 typedef bool (*EmitterInitializeCallback)(EmitterInitializeArg& rArg);
@@ -192,11 +228,31 @@ public:
     s32 m_CustomTextureLocation[32][2];
 };
 
+/** Compute shader of a GPU stream-out emitter. */
+class ComputeShader {
+public:
+    s32 GetViewParamLocation() const { return m_ViewParamLocation; }
+
+    u8 _0[0x8];
+    s32 m_ViewParamLocation;
+};
+
 class EmitterCalculator {
 public:
+    explicit EmitterCalculator(System* pSystem);
+    ~EmitterCalculator();
+
+    void CalculateComputeShader(gfx::CommandBuffer* pCommandBuffer, Emitter* pEmitter,
+                                const ComputeShader* pComputeShader, int bufferIndex,
+                                bool isDoComputeShaderProcess, void* pUserParam, bool isBatch);
+    void Draw(gfx::CommandBuffer* pCommandBuffer, Emitter* pEmitter, void* pUserParam,
+              DrawParameterArg* pDrawParameterArg);
+
     void DrawEmitterUsingBoundShader(gfx::CommandBuffer* pCommandBuffer, Emitter* pEmitter,
                                      Shader* pShader, void* pUserParam,
                                      DrawParameterArg* pDrawParameterArg);
+
+    u8 _0[0x60];
 };
 
 }  // namespace detail

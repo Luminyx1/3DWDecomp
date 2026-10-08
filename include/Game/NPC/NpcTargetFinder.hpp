@@ -2,8 +2,13 @@
 
 #include <basis/seadTypes.h>
 
+#include <math/seadVector.h>
+
 namespace al {
 class HitSensor;
+class ScreenPointer;
+class ScreenPointTarget;
+class SensorMsg;
 class LiveActor;
 }  // namespace al
 
@@ -40,8 +45,13 @@ public:
     NpcTargetFinderParam(f32 sightRange, f32 _4, f32 _8, u32 _c, f32 _10, f32 _14, f32 _18,
                          f32 _1c, bool _20, u32 _24);
 
+    /** @return Range within which a found target keeps being chased. */
+    f32 getChaseRange() const { return mChaseRange; }
+
 private:
-    u8 _0[0x2c];
+    u8 _0[0x1c];
+    f32 mChaseRange;  // 0x1c
+    u8 _20[0x2c - 0x20];
 };
 
 static_assert(sizeof(NpcTargetFinderParam) == 0x2c);
@@ -57,6 +67,11 @@ public:
     void attackSensor(al::HitSensor* pSelf, al::HitSensor* pOther);
     void forceUpdate();
     void clearTarget();
+    void update();
+    const sead::Vector3f& getTargetPos() const;
+    bool isInSenseAreaTarget() const;
+    bool receiveMsgScreenPoint(const al::SensorMsg* pMsg, al::ScreenPointer* pPointer,
+                               al::ScreenPointTarget* pTarget);
     void setTargetTypePriority(const npc::NpcFindTargetType& rType, const u8& rPriority);
 
     /**
@@ -86,6 +101,18 @@ public:
 
     al::HitSensor* getEyeSensor() const { return mEyeSensor; }
 
+    /** @return The current target, whatever its kind, or nullptr. */
+    al::LiveActor* getTarget() const { return mTarget; }
+
+    /** @return Whether the current target is valid. */
+    bool isTargetValid() const { return mIsTargetValid; }
+
+    /** @return Whether the current target is within chase range. */
+    bool isTargetInChaseRange() const { return mIsTargetInChaseRange; }
+
+    /** @return The search parameters. */
+    const NpcTargetFinderParam* getParam() const { return mParam; }
+
 private:
     u8 _0[0x10];
     al::LiveActor* mTarget;  // 0x10
@@ -94,7 +121,8 @@ private:
     u8 _24[0x28 - 0x24];
     u32 mSearchTypes;  // 0x28
     bool mIsTargetValid;  // 0x2c
-    u8 _2d[0x48 - 0x2d];
+    bool mIsTargetInChaseRange;  // 0x2d
+    u8 _2e[0x48 - 0x2e];
     const NpcTargetFinderParam* mParam;  // 0x48
     u8 _50[0xf0 - 0x50];
     al::HitSensor* mEyeSensor;  // 0xf0

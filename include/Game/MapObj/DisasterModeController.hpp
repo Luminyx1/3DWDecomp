@@ -49,6 +49,15 @@ class DisasterModeController : public al::LiveActor, public al::ISceneObj {
     void setGoalItemDisasterTrigger() { mGoalItemDisasterTrigger = true; }
 
     void forceDisasterForeshadowOff(bool isForce, s32 step);
+    void setSkyEnable(bool isEnable);
+
+    /**
+     * @brief Set whether the disaster cycle may progress (cleared while a player is in a cloud
+     * bonus area).
+     * @param isEnable Whether the disaster cycle may progress.
+     */
+    void setDisasterProgressEnable(bool isEnable) { mIsDisasterProgressEnable = isEnable; }
+
     bool isSuperHardMode() const;
     bool isBowserHidden();
     bool isSuperBowserLeaving();
@@ -181,7 +190,9 @@ class DisasterModeController : public al::LiveActor, public al::ISceneObj {
     bool mIsDisasterMode;
     bool mIsDisasterModeAnim;  // 0x1fa
     bool mIsBlackSunFloating;  // 0x1fb
-    u8 mUnknown1FC[0x23b - 0x1fc];
+    u8 mUnknown1FC[0x204 - 0x1fc];
+    bool mIsDisasterProgressEnable;  // 0x204
+    u8 mUnknown205[0x23b - 0x205];
     bool mIsTimeStopped;  // 0x23b
     bool mGoalItemDisasterTrigger;  // 0x23c
     u8 mUnknown23D[0x25b - 0x23d];

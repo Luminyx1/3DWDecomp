@@ -24,6 +24,8 @@ public:
     WalkerStateRailMove(al::LiveActor* pHost, const WalkerStateParam* pParam,
                         const WalkerStateRailMoveParam* pRailMoveParam);
 
+    void setPositionToStart();
+
 private:
     u8 _20[0x30];
 };

@@ -18,6 +18,9 @@ public:
     void exeWaitKeyDisappear();
     void exeOpen();
     void exeOpenWait();
+
+    /** @return The placement zone ID of the door. */
+    int getZoneId() const { return mZoneId; }
 private:
     al::LiveActor* mCollision = nullptr;
     al::MtxConnector* mConnector = nullptr;

@@ -74,7 +74,7 @@ public:
                            const TextureArrayRange*);
     void Resolve(TTexture<TTarget>*, int, int, const TColorTargetView<TTarget>*,
                  const TextureArrayRange*);
-    void FlushMemory(int);
+    void FlushMemory(int gpuAccessFlags) { return Impl::FlushMemory(gpuAccessFlags); }
     void InvalidateMemory(int);
     void CallCommandBuffer(const TCommandBuffer<TTarget>*);
     void CopyCommandBuffer(const TCommandBuffer<TTarget>*);

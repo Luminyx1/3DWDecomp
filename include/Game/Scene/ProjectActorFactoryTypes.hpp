@@ -303,6 +303,7 @@ static_assert(sizeof(BoomerangBros) == 0x1d0);
 
 #include "Boss/BossWackun.hpp"
 #include "Boss/SuperBowserShell.hpp"
+#include "Boss/Punpun.hpp"
 
 
 
@@ -1744,14 +1745,7 @@ private:
 };
 static_assert(sizeof(Neko) == 0x1a0);
 
-class Nokonoko : public al::LiveActor {
-public:
-    explicit Nokonoko(const char* pName);
-
-private:
-    u8 mUnreconstructed[0x1c];
-};
-static_assert(sizeof(Nokonoko) == 0x160);
+#include "Enemy/Nokonoko.hpp"
 
 namespace al {
 class OccludedEffectRequester : public al::LiveActor {
@@ -1887,15 +1881,6 @@ private:
     u8 mUnreconstructed[0x24];
 };
 static_assert(sizeof(PukupukuFly) == 0x168);
-
-class Punpun : public al::LiveActor {
-public:
-    explicit Punpun(const char* pName);
-
-private:
-    u8 mUnreconstructed[0x94];
-};
-static_assert(sizeof(Punpun) == 0x1d8);
 
 class RabbitNpc : public al::LiveActor {
 public:

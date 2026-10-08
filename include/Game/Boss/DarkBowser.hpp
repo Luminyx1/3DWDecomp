@@ -111,6 +111,31 @@ public:
      */
     bool isRetreatPhase() const { return mPhase != 1 && mHealthStage == 0 && mPhase != 4; }
 
+    /**
+     * @brief Whether the current section of the health bar has been fully drained.
+     * @return True if no hit points are left in the current section.
+     */
+    bool isHealthSectionEmpty() const {
+        if (mPhase == 4 || mIsV2) {
+            if (mHitPoint <= 0) {
+                return true;
+            }
+        } else if (mHitPoint - (sead::Mathi::clamp(mPhase, 0, 2) - mHealthStage - 1) * 100 <= 0) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /** @brief Whether this is the final battle (where damage is not capped per section). */
+    bool isFinalBattle() const { return mIsFinalBattle; }
+
+    /** @brief The player actor Fury Bowser is fighting. */
+    al::LiveActor* getPlayer() const { return mPlayer; }
+
+    /** @brief Turns gravity back on (e.g. after being knocked away). */
+    void validateGravity() { mIsApplyGravity = true; }
+
 private:
     DarkBowserStateDemo* mStateDemo = nullptr;                         // 0x148
     DarkBowserBattle* mBattle = nullptr;                               // 0x150

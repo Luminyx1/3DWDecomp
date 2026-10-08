@@ -22,6 +22,7 @@ bool requestStartDemoIntro(al::LiveActor*, const char*, bool);
 bool requestStartDemoCamera(al::LiveActor*, const char*);
 bool isActiveSpecificDemo(const al::LiveActor*);
 bool isActiveDemoCamera(const al::LiveActor*);
+bool isAnyActiveButDemoCameraDemo(const al::LiveActor* pActor);
 void requestEndDemoIntro(const al::LiveActor*);
 void requestEndDemoCamera(const al::LiveActor*);
 bool requestStartDemoCutscene(const al::LiveActor* pActor);

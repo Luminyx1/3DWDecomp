@@ -36,5 +36,7 @@ void setSkyToNight(al::LiveActor* pActor, al::SkyProjection* pSkyDay,
 void setSkyToDay(al::LiveActor* pActor, al::SkyProjection* pSkyDay, al::SkyProjection* pSkyNight,
                  bool isInstant);
 void hideDarkBowser(DarkBowser* pDarkBowser);
+sead::Vector3f calculateArc(sead::Vector3f start, sead::Vector3f end, f32 height, f32 rate,
+                            s32 arg4, s32 arg5);
 
 }  // namespace DarkBowserUtil

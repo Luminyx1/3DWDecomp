@@ -22,6 +22,7 @@ void FreeFromDynamicHeap(void* ptr, bool isImmediate);
  */
 class DynamicHeap : public Heap {
 public:
+    DynamicHeap() : m_AllocatedSize(0), m_AllocatedCount(0) {}
     ~DynamicHeap() override;
     void* Alloc(size_t size, size_t alignment) override;
     void Free(void* ptr) override;

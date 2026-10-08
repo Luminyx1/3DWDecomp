@@ -16,8 +16,16 @@ public:
                           f32 moveAnimRate, bool isKeepChase, bool isUseRunAction,
                           const char* pRunAction, const char* pWaitAction, f32 chaseTime);
 
+    /**
+     * @brief Gets the fourth constructor value, which hosts also use as a turn speed in degrees.
+     * @return Turn speed in degrees.
+     */
+    f32 getRunAnimRate() const { return mRunAnimRate; }
+
 private:
-    alignas(8) u8 _0[0x90];
+    alignas(8) u8 _0[0xc];
+    f32 mRunAnimRate;  // 0x0C
+    u8 _10[0x80];
 };
 
 static_assert(sizeof(WalkerStateChaseParam) == 0x90);

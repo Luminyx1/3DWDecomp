@@ -51,6 +51,18 @@ public:
     void exeStock();
     void exeTrySpawnItem();
     void exeWaitReleaseButton();
+
+    /**
+     * @brief Get the controller port that opened the tray.
+     * @return The port, or -1 if none.
+     */
+    s32 getPort() const { return mPort; }
+
+    /**
+     * @brief Check whether the tray is idle (closed and waiting).
+     * @return True if idle.
+     */
+    bool isIdle() const { return mIsIdle; }
     void exeEnd();
 
 private:

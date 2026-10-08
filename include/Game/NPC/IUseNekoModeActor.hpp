@@ -77,16 +77,37 @@ public:
     virtual neko::ColorType getNekoType() const = 0;
     virtual f32 getChaseRange() const = 0;
     virtual const neko::Param* getParam() const = 0;
-    void startBindNpc(al::HitSensor* pSelf, al::HitSensor* pOther) override;
-    void endBindNpc(NpcPuppetBindEndType type) override;
-    void setTransVec(const sead::Vector3f& rTrans) override;
-    void setFrontVec(const sead::Vector3f& rFront) override;
-    void setUpVec(const sead::Vector3f& rUp) override;
-    void setMtx(const sead::Matrix34f* pMtx) override;
-    void setPlayerPuppetInputTurnStick(f32 x, f32 y) override;
-    const sead::Vector3f& getTransVec() const override;
-    const sead::Vector3f& getFrontVec() const override;
-    const sead::Vector3f& getUpVec() const override;
+
+    /** @brief Does nothing, cat modes are never bound as NPC puppets. */
+    void startBindNpc(al::HitSensor* pSelf, al::HitSensor* pOther) override {}
+
+    /** @brief Does nothing, cat modes are never bound as NPC puppets. */
+    void endBindNpc(NpcPuppetBindEndType type) override {}
+
+    /** @brief Does nothing, cat modes are never bound as NPC puppets. */
+    void setTransVec(const sead::Vector3f& rTrans) override {}
+
+    /** @brief Does nothing, cat modes are never bound as NPC puppets. */
+    void setFrontVec(const sead::Vector3f& rFront) override {}
+
+    /** @brief Does nothing, cat modes are never bound as NPC puppets. */
+    void setUpVec(const sead::Vector3f& rUp) override {}
+
+    /** @brief Does nothing, cat modes are never bound as NPC puppets. */
+    void setMtx(const sead::Matrix34f* pMtx) override {}
+
+    /** @brief Does nothing, cat modes are never bound as NPC puppets. */
+    void setPlayerPuppetInputTurnStick(f32 x, f32 y) override {}
+
+    /** @return Always the zero vector. */
+    const sead::Vector3f& getTransVec() const override { return sead::Vector3f::zero; }
+
+    /** @return Always the zero vector. */
+    const sead::Vector3f& getFrontVec() const override { return sead::Vector3f::zero; }
+
+    /** @return Always the zero vector. */
+    const sead::Vector3f& getUpVec() const override { return sead::Vector3f::zero; }
+
     virtual void onStartHide() = 0;
 };
 

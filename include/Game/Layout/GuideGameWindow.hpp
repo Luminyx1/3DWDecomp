@@ -19,4 +19,5 @@ void disappearGuideGameWindow(const al::IUseSceneObjHolder* pHolder);
 bool isCurrentGuideGameWindowUser(const al::IUseSceneObjHolder* pHolder);
 void unHideGuideGameWindow(const al::IUseSceneObjHolder* pHolder);
 bool isGuideGameWindowWaitConfirm(const al::IUseSceneObjHolder* pHolder);
+bool isGuideGameWindowActive(const al::IUseSceneObjHolder* pHolder);
 }  // namespace rc

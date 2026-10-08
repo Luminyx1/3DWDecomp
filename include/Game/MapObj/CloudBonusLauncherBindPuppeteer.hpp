@@ -14,6 +14,8 @@ public:
     void startBonusEndBind(al::HitSensor*, al::HitSensor*);
     bool tryTemporaryWarp();
     bool isBonusStartWarp() const;
+    /** @return Whether the bound player reached the launcher and waits inside it. */
+    bool isInWait() const { return mInWait; }
     void exeNothing();
     void exeBindForce();
     void exeInWait();

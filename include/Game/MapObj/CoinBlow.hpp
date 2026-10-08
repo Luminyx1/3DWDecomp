@@ -7,6 +7,7 @@ public:
     void setOffSensor(int);
     void appearWithHitReaction();
     void setHideModel(int);
+    void setWaiting();
     void setLifeTime(int frames) { mLifeTime = frames; }
     bool isCounted() const { return mCounted; }
     void setCounted() { mCounted = true; }

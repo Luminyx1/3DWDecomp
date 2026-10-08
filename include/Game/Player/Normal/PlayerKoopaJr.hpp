@@ -13,6 +13,8 @@ public:
     void hideForDemo();
     void startMidBossDemo();
     void showFromDemo();
+    void startCloudBonusLauncher();
+    void endCloudBonusLauncher();
     void resetTransformPostCutscene(const sead::Vector3f& rTrans, const sead::Vector3f& rFront);
     PlayerProperty* getProperty() { return &mProperty; }
     bool isThrowingItem() const;

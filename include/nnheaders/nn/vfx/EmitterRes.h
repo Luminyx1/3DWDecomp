@@ -5,6 +5,7 @@
 
 #pragma once
 
+#include <nn/gfx/gfx_Types.h>
 #include <nn/types.h>
 
 namespace nn {
@@ -12,9 +13,13 @@ namespace vfx {
 
 namespace detail {
 class Shader;
+class ComputeShader;
 
 struct ResEmitter {
-    u8 _0[0x753];
+    u8 _0[0x10];
+    char name[0x40];
+    u8 _50[0x752 - 0x50];
+    u8 calcType;
     u8 followType;
     u8 _754[0x7f0 - 0x754];
     bool isLoop;
@@ -61,9 +66,20 @@ struct ParticleAttribute {
 }  // namespace detail
 
 struct EmitterResource {
+    void InitializeRenderState(gfx::Device* pDevice);
+    void FinalizeRenderState(gfx::Device* pDevice);
+
+    /** @return the compute shader, stored in the slot of ShaderType_Compute */
+    detail::ComputeShader* GetComputeShader() const {
+        return reinterpret_cast<detail::ComputeShader*>(m_Shader[3]);
+    }
+
     u8 _0[0x10];
     detail::ResEmitter* m_pResEmitter;
-    u8 _18[0x300 - 0x18];
+    u8 _18[0x88 - 0x18];
+    s32 m_ChildEmitterResNum;
+    EmitterResource* m_ChildEmitterResSet[16];
+    u8 _110[0x300 - 0x110];
     void* m_CustomShaderParam;
     size_t m_CustomShaderParamSize;
     void* m_CustomActionParam;

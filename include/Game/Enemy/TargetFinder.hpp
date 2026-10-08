@@ -35,6 +35,12 @@ public:
     bool isExistTarget() const { return _8 != nullptr; }
 
     /**
+     * @brief Gets the current target actor.
+     * @return Target actor, or nullptr if there is none.
+     */
+    al::LiveActor* getTarget() const { return _8; }
+
+    /**
      * @brief Checks whether a target exists and has been found (not only kept).
      * @return Whether a found target exists.
      */
