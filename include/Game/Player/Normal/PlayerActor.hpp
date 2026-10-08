@@ -171,6 +171,7 @@ public:
     bool isInDokanNotRouteDokan() const;
     bool isInInkLimiter() const;
     bool isInKoura() const;
+    void logGetItem(const al::HitSensor* pItemSensor);
     bool isTreeClimbing() const;
     bool isOnFloor(const al::LiveActor* pFloorActor) const;
     bool isHoldingAnotherPlayer() const;

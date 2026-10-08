@@ -42,5 +42,6 @@ EchoEmitterHolder* tryGetEmitterHolder(const al::IUseSceneObjHolder* pHolder);
 void initEchoEmitterHolder(const al::LiveActor* pActor, const al::ActorInitInfo& rInfo);
 bool emitEcho(const al::LiveActor* pActor, const sead::Vector3f& rPos, f32 radius, s32 frame,
               bool isForce);
+void emitKeepEcho(const al::LiveActor* pActor, const sead::Vector3f& rPos, f32 radius, s32 frame);
 void killAllEcho(const al::LiveActor* pActor);
 }

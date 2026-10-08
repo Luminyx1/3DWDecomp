@@ -59,6 +59,9 @@ public:
     void exeDown();
     ~BossWackun() override;
 
+    /** @return Axis the body tumbles around during the current rotation. */
+    const sead::Vector3f& getRotateAxis() const { return mRotateAxis; }
+
 private:
     BossWackunBody* mBody = nullptr;                             // 0x148
     BossWackunFrame* mFrame = nullptr;                           // 0x150

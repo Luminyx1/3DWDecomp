@@ -361,6 +361,28 @@ public:
     bool isBlackSunFloating() const { return mIsBlackSunFloating; }
 
     /**
+     * @brief Set whether the black sun floats.
+     * @param isFloating Whether the black sun floats.
+     */
+    void setBlackSunFloating(bool isFloating) { mIsBlackSunFloating = isFloating; }
+
+    /**
+     * @brief Mark disaster mode as ended immediately by a goal item.
+     */
+    void setGoalItemEndImmediate() { _249 = true; }
+
+    /**
+     * @brief Mark the running demo as skipped.
+     */
+    void setDemoSkipped() { _385 = true; }
+
+    /**
+     * @brief Check whether the pre-disaster mode setup is done.
+     * @return True once done.
+     */
+    bool isPreDisasterModeDone() const { return mIsPreDisasterModeDone; }
+
+    /**
      * @brief Check whether the disaster timer is stopped.
      * @return True while the timer is stopped.
      */

@@ -27,6 +27,10 @@ public:
     s32 getWorldId() const { return mWorldId; }
     /** @brief Gets the course. @return The course id. */
     s32 getCourseId() const { return mCourseId; }
+    /** @brief Gets the stage number of the course in its world. @return The stage number. */
+    s32 getStageNo() const { return mStageNo; }
+    /** @brief Gets the stage database entry of the course. @return The entry. */
+    StageDatabaseInfo* getStageDatabaseInfo() const { return mStageDatabaseInfo; }
 
 private:
     al::LiveActor* mActor;  // 0x0

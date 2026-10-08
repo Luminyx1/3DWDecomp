@@ -39,15 +39,6 @@ bool RegisterCurlNoiseTextureViewToDescriptorPool(RegisterTextureViewSlot pFunc,
 void UnRegisterCurlNoiseTextureViewToDescriptorPool(UnregisterTextureViewSlot pFunc,
                                                     void* pUserData);
 
-/** Sampler key read from the emitter resource. */
-struct ResTextureSampler {
-    u8 _0[0x8];
-    u8 filter;
-    u8 wrapU;
-    u8 wrapV;
-    u8 _b[0x20 - 0xb];
-};
-
 /** A gfx sampler shared between every emitter using the same settings. */
 class TextureSampler {
 public:
@@ -65,6 +56,7 @@ public:
 
 class StripeSystem {
 public:
+    static int GetExtendedEndTimeForOneTimeEmitter(Emitter* pEmitter);
     static void InitializeSystem(Heap* pHeap, System* pSystem, BufferingMode bufferingMode,
                                  int stripeNum);
     static void FinalizeSystem(Heap* pHeap);
@@ -72,6 +64,7 @@ public:
 
 class SuperStripeSystem {
 public:
+    static int GetExtendedEndTimeForOneTimeEmitter(Emitter* pEmitter);
     static void InitializeSystem(Heap* pHeap, System* pSystem, BufferingMode bufferingMode,
                                  int stripeNum);
     static void FinalizeSystem(Heap* pHeap);

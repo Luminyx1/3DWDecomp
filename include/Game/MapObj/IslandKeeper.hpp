@@ -18,6 +18,8 @@ public:
     bool getIslandStartPos(int islandId, sead::Vector3f& rPos, sead::Vector3f& rFront);
     /** @brief Id of the island the player is currently on. @return The island id. */
     int getCurrentIslandId() const { return mCurrentIslandId; }
+    void setIslandLODDisable(int islandId, bool isDisable);
+    void tryUpdateLastIslandScenario();
 private:
     int mCurrentIslandId;
     u8 mUnknownC[4];

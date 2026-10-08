@@ -18,9 +18,14 @@ namespace vfx {
 class Emitter;
 class System;
 struct EmitterResource;
+struct EmitterAnimValue;
+struct EmitReservationInfo;
 
 namespace detail {
 class EmitterCalculator;
+class TextureSampler;
+struct Particle;
+struct ParentParticleData;
 class Shader;
 struct ParticleProperty;
 struct ResFieldCustom;
@@ -28,6 +33,13 @@ struct ResAnim8KeyParamSet;
 struct ResAnim8KeyParam;
 struct ParticleData;
 }  // namespace detail
+
+/** How the buffers of an emitter are swapped before it is calculated. */
+enum BufferSwapMode {
+    BufferSwapMode_None = 0,
+    BufferSwapMode_Swap = 1,
+    BufferSwapMode_Auto = 2,
+};
 
 /** Number of per-frame copies kept of multi-buffered GPU data. */
 enum BufferingMode {
@@ -111,7 +123,16 @@ struct EmitterInitializeArg {
     Emitter* pEmitter;
 };
 
+struct EmitterPreCalculateArg {
+    Emitter* pEmitter;
+    bool isBufferSwapped;
+};
+
 struct EmitterPostCalculateArg {
+    Emitter* pEmitter;
+};
+
+struct EmitterMatrixSetArg {
     Emitter* pEmitter;
 };
 
@@ -136,7 +157,7 @@ struct EmitterDrawArg {
 
 struct ParticleCalculateArgImpl {
     void* pUserData;
-    u8 _8[0x10 - 0x8];
+    void* pUserData2;
     Emitter* pEmitter;
     f32 time;
     f32 life;
@@ -160,7 +181,8 @@ bool InvokeRenderStateSetCallback(RenderStateSetArg& rArg);
 
 typedef void (*EndianFlipCallback)(EndianFlipArg& rArg);
 typedef bool (*EmitterInitializeCallback)(EmitterInitializeArg& rArg);
-typedef void (*EmitterPreCalculateCallback)(EmitterPostCalculateArg& rArg);
+typedef void (*EmitterPreCalculateCallback)(EmitterPreCalculateArg& rArg);
+typedef void (*EmitterMatrixSetCallback)(EmitterMatrixSetArg& rArg);
 typedef void (*EmitterPostCalculateCallback)(EmitterPostCalculateArg& rArg);
 typedef bool (*EmitterDrawCallback)(EmitterDrawArg& rArg);
 typedef void (*EmitterFinalizeCallback)(EmitterFinalizeArg& rArg);
@@ -180,14 +202,14 @@ void BindReservedCustomShaderConstantBuffer(RenderStateSetArg& rArg);
 struct CallbackSet {
     CallbackSet()
         : endianFlip(nullptr), emitterInitialize(nullptr), emitterPreCalculate(nullptr),
-          _18(nullptr), emitterPostCalculate(nullptr), emitterDraw(nullptr),
+          emitterMatrixSet(nullptr), emitterPostCalculate(nullptr), emitterDraw(nullptr),
           emitterFinalize(nullptr), particleEmit(nullptr), particleRemove(nullptr),
           particleCalculate(nullptr), renderStateSet(nullptr) {}
 
     EndianFlipCallback endianFlip;
     EmitterInitializeCallback emitterInitialize;
     EmitterPreCalculateCallback emitterPreCalculate;
-    void* _18;
+    EmitterMatrixSetCallback emitterMatrixSet;
     EmitterPostCalculateCallback emitterPostCalculate;
     EmitterDrawCallback emitterDraw;
     EmitterFinalizeCallback emitterFinalize;
@@ -240,10 +262,65 @@ public:
     s32 m_ViewParamLocation;
 };
 
+/** Sampler key read from the emitter resource. */
+struct ResTextureSampler {
+    u8 _0[0x8];
+    u8 filter;
+    u8 wrapU;
+    u8 wrapV;
+    u8 wrapW;
+    f32 maxLod;
+    f32 lodBias;
+    u8 _14[0x20 - 0x14];
+};
+
 class EmitterCalculator {
 public:
+    /** Emits from a shape: position and velocity of one particle. */
+    typedef bool (*EmitFunction)(util::Vector3fType* pOutPos, util::Vector3fType* pOutVec,
+                                 Emitter* pEmitter, int emitIndex, int emitCount, f32 random,
+                                 EmitterAnimValue* pAnimValue);
+
     explicit EmitterCalculator(System* pSystem);
     ~EmitterCalculator();
+
+    void ApplyEmitterAnimation(Emitter* pEmitter, util::Matrix4x3fType* pOutMatrixSrt,
+                               util::Matrix4x3fType* pOutMatrixRt);
+    void TryEmitParticle(f32* pIntervalCounter, f32* pEmitCounter, f32* pInterval,
+                         u8* pIsEmitted, Emitter* pEmitter, f32 frameRate, bool isSearchFreeSlot);
+    void UpdateEmitterLocalVec(util::Vector3fType* pOut, Emitter* pEmitter) const;
+    void UpdateCurrentParticleGpuBufferForCpuEmitter(Emitter* pEmitter);
+    void UpdateEmitterMatrix(Emitter* pEmitter);
+    bool Calculate(Emitter* pEmitter, f32 frameRate, BufferSwapMode swapMode, bool isFade,
+                   bool isEmit, bool isCalculateParticle);
+    void CalculateParticle(Emitter* pEmitter);
+    void MakeDynamicConstantBuffer(Emitter* pEmitter, f32 frameRate, f32 accumulatedFrameRate);
+    void CalculateParticleInfo(Particle* pParticle, Emitter* pEmitter, f32 time, f32 life,
+                               int particleIndex);
+    void InheritParentParticleInfo(Emitter* pEmitter, int particleIndex);
+    int EmitBySearchOrder(u8* pIsEmitted, Emitter* pEmitter, int emitCount,
+                          bool isSearchFreeSlot, const EmitReservationInfo* pReservationInfo);
+    bool InitializeParticle(Emitter* pEmitter, int particleIndex, ParticleData* pData,
+                            ParentParticleData* pParentData, ParticleProperty* pProperty,
+                            int propertyIndex, int emitIndex, int emitCount, f32 random,
+                            const EmitReservationInfo* pReservationInfo);
+    int Emit(u8* pIsEmitted, Emitter* pEmitter, int emitCount, bool isSearchFreeSlot,
+             const EmitReservationInfo* pReservationInfo);
+
+    static bool CalculateEmitPoint(util::Vector3fType* pOutPos, util::Vector3fType* pOutVec,
+                                   Emitter* pEmitter, int emitIndex, int emitCount, f32 random,
+                                   EmitterAnimValue* pAnimValue);
+    static bool CalculateEmitCircle(util::Vector3fType* pOutPos, util::Vector3fType* pOutVec,
+                                    Emitter* pEmitter, int emitIndex, int emitCount, f32 random,
+                                    EmitterAnimValue* pAnimValue);
+
+    static EmitFunction g_EmitFunctions[];
+
+private:
+    void SetEmitterLocalMatrix(Emitter* pEmitter);
+    void ApplyParentEmitterMatrix(Emitter* pEmitter);
+
+public:
 
     void CalculateComputeShader(gfx::CommandBuffer* pCommandBuffer, Emitter* pEmitter,
                                 const ComputeShader* pComputeShader, int bufferIndex,
@@ -334,8 +411,15 @@ public:
     static void MakeRotationMatrixXYZ(util::neon::MatrixRowMajor4x4fType* pOutMatrix,
                                       const util::Vector3fType& rRotate);
 
-    u8 _0[0x60];
+    System* m_pSystem;
+    TextureSampler* m_pDefaultSampler;
+    TextureSampler* m_pMirrorSampler;
+    ResTextureSampler m_DefaultSamplerRes;
+    ResTextureSampler m_MirrorSamplerRes;
+    u8 _58[0x60 - 0x58];
 };
+
+static_assert(sizeof(EmitterCalculator) == 0x60);
 
 }  // namespace detail
 

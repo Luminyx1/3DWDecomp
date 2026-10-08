@@ -31,6 +31,7 @@ bool requestStartDemoCutscene(const al::LiveActor* pActor);
 void requestEndDemoCutscene(const al::LiveActor* pActor);
 bool requestStartDemoInGameCutscene(const al::LiveActor* pActor);
 void requestEndDemoInGameCutscene(const al::LiveActor* pActor);
+void resetImmediateSwitchFlag(const al::LiveActor* pActor);
 void setUpdateItemsInDemo(const al::LiveActor* pActor);
 bool requestStartDemoPlayerCutscene(const al::LiveActor* pActor);
 void requestEndDemoPlayerCutscene(const al::LiveActor* pActor);

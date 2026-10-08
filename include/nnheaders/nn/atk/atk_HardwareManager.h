@@ -104,6 +104,19 @@ class HardwareManager : public Util::Singleton<HardwareManager> {
         ~SubMixListScopedLock();
     };
     struct HardwareManagerParameter {
+        /**
+         * @brief Construct the default renderer setup: one preset sub mix, 30 mix channels.
+         * The feature switches the sound system always fills are left uninitialized.
+         */
+        HardwareManagerParameter()
+            : rendererSampleRate(48000), userEffectCount(10), voiceCount(96),
+              recordingAudioFrameCount(8), subMixCount(1), subMixTotalChannelCount(30),
+              enableAdditionalEffectBus(false), enableAdditionalSubMix(false), enableSubMix(true),
+              enableCompatibleDownMixSetting(false), _23(false),
+              enableUnusedEffectChannelMuting(false), enableAutoEffectBusMute(false), _26(false),
+              enableManualRendering(false), enableCustomSubMix(false),
+              enableRenderingOverloadAbort(false), _2a(false) {}
+
         void SetSubMixParameter(bool enableStereoMode, bool enableEffect, bool enableSubMix,
                                 bool enableAdditionalEffectBus, bool enableAdditionalSubMix,
                                 bool enableCustomSubMix, int customSubMixCount, int customChannelCount);
@@ -265,11 +278,28 @@ class HardwareManager : public Util::Singleton<HardwareManager> {
     bool IsSubMixEnabled() const { return m_IsSubMixEnabled; }
     /** @brief Access the final mix. @return Final mix owned by this manager. */
     FinalMix& GetFinalMix() { return m_FinalMix; }
+    /** @brief Access the sub mix reserved for additional effects. @return Additional sub mix. */
+    SubMix& GetAdditionalSubMix() { return m_SubMix[2]; }
+    /** @brief Checks whether the manager is initialized. @return True after Initialize. */
+    bool IsInitialized() const { return m_IsInitialized; }
+    /** @brief Read the audio renderer frame length. @return Samples rendered per audio frame. */
+    int GetRendererSampleCount() const { return m_RendererParameter.sampleCount; }
+    /** @brief Read the user circular buffer size. @return Buffer size, or 0 before Initialize. */
+    size_t GetUserCircularBufferSinkBufferSize() const {
+        return m_IsInitialized ? m_UserCircularBufferSize : 0;
+    }
+    /** @brief Read the user circular buffer sink state. @return Current sink state. */
+    CircularBufferSinkState GetUserCircularBufferSinkState() const {
+        return m_UserCircularBufferSinkState;
+    }
+    /** @brief Number of aux buses usable with additional effects. @return Bus count. */
+    int GetAuxBusCountForAdditionalEffect() const { return AuxBusCountForAdditionalEffect; }
 
   private:
     static const int BiquadFilterCallbackCount = 128;
     static const int OutputLineCount = 32;
     static const int SubMixCount = 3;
+    static const int AuxBusCountForAdditionalEffect = 2;
 
     bool m_IsInitialized;
     audio::AudioRendererHandle m_RendererHandle;

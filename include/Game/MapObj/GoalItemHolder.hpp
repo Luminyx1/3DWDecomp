@@ -33,6 +33,18 @@ public:
      * @return The goal item, or nullptr.
      */
     GoalItem* getCurrentGoalItem() const { return mCurrentGoalItem; }
+
+    /**
+     * @brief Set the goal item being collected.
+     * @param pGoalItem The goal item, or nullptr once done.
+     */
+    void setCurrentGoalItem(GoalItem* pGoalItem) { mCurrentGoalItem = pGoalItem; }
+
+    /**
+     * @brief Set whether a collect demo is running.
+     * @param isDemo Whether a collect demo is running.
+     */
+    void setCollectDemo(bool isDemo) { mUnknown38 = isDemo; }
 private:
     sead::PtrArray<GoalItem> mGoalItems;
     GoalItem* mCurrentGoalItem = nullptr;

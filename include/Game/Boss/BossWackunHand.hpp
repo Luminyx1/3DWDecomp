@@ -11,6 +11,11 @@ class BossWackunHand : public al::LiveActor {
 public:
     explicit BossWackunHand(BossWackun* pBoss);
 
+    void startWait();
+    void startMove(s32 targetIndex);
+    bool isEndMove() const;
+    void startControled();
+
 private:
     u8 _144[0x24];
 };

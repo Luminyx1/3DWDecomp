@@ -38,6 +38,7 @@ public:
     void invalidUserCameraControlByPort(s32 port);
     void setSingleJoyconCameraValid(bool isValid);
     void setGoalPosPtr(const sead::Vector3f* pGoalPos);
+    void reviseCameraInfo(SceneCameraInfo* pSceneCameraInfo);
 
     SceneCameraInfo* getSceneCameraInfo() const { return mSceneCameraInfo; }
     sead::LookAtCamera* getLookAtCamera() const { return mLookAtCamera; }

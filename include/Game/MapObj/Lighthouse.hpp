@@ -298,6 +298,40 @@ public:
     void turnOnInk(s32 finishedCount);
     void setActiveScenario(s32 scenario);
     void setGoalItemArrived(bool isSkip);
+
+    /**
+     * @brief Block or unblock the end of the goal item cutscene.
+     * @param isBlocked Whether the end is blocked.
+     */
+    void setFinishBlocked(bool isBlocked) { mIsFinishBlocked = isBlocked; }
+
+    /**
+     * @brief Set the camera area of the goal item cutscene and the return step of the flag camera.
+     * @param pArea The camera area.
+     * @param returnStep The return step of the flag camera.
+     */
+    void setCameraArea(al::AreaObj* pArea, f32 returnStep) {
+        mCameraArea = pArea;
+        mFlagReturnStep = returnStep;
+    }
+
+    /**
+     * @brief Get the number of finished main scenarios.
+     * @return The finished main scenario count.
+     */
+    s32 getFinishedMainNum() const { return mFinishedMainNum; }
+
+    /**
+     * @brief Set the actor that landed with the goal item.
+     * @param pActor The landed actor.
+     */
+    void setLandedActor(al::LiveActor* pActor) { mLandedActor = pActor; }
+
+    /**
+     * @brief Check whether the lighthouse is inked.
+     * @return True while inked.
+     */
+    bool isInked() const { return mIsInked; }
     void logIslandVisit(s32 islandId, bool, bool isPlayTime);
 
 private:

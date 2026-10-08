@@ -109,9 +109,12 @@ struct ResFieldPosAdd {
 
 /** CPU-side state of one particle. */
 struct ParticleData {
-    u8 _0[0x4];
+    s32 createId;
     s32 collisionCount;
-    u8 _8[0x20 - 0x8];
+    f32 createTime;
+    f32 life;
+    void* pUserData;
+    void* pUserData2;
 };
 
 void MakrRtMatrix(util::Matrix4x3fType* pOutMatrix, const util::Matrix4x3fType& rSrcMatrix);

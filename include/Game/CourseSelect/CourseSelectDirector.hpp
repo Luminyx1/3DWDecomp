@@ -19,10 +19,13 @@ class NetworkSystem;
 class CourseSelectLayout;
 class CourseSelectMiniature;
 class CourseSelectNode;
+class CourseSelectPuppeteerGroup;
 class CourseSelectScene;
+class CourseSelectSensor;
 class CourseSelectWindowHolder;
 class DemoOpeningSwitch;
 class DemoTimerStageSwitchController;
+class ICourseSelectActorController;
 class PlayerCrown;
 
 class CourseSelectDirector : public al::ISceneObj {
@@ -71,7 +74,20 @@ public:
     void prepareFrame();
     void update();
     void updateActiveWorld(const sead::BitFlag32& rWorldFlag);
+    bool isAllwaysOpenCourse(s32 courseId) const;
+    s32 tryFindNextCourse(CourseSelectMiniature** pMiniatures, s32 maxNum, s32 courseId) const;
+    CourseSelectNode* tryFindNodeFromTrans(const sead::Vector3f& rTrans);
+    void checkDrcTouch(CourseSelectSensor* pSensor);
+    void touchPlayer(CourseSelectSensor* pSensor, al::LiveActor* pPlayer);
+    bool isEnableEnterSelectedSensor() const;
+    bool isTriggerDecideMainPlayer() const;
 
+    /** @brief Gets the course select scene. @return The scene. */
+    CourseSelectScene* getScene() const { return mScene; }
+    /** @brief Gets the controller of the object the main player stands on. @return The controller. */
+    ICourseSelectActorController* getSelectedController() const { return mSelectedController; }
+    /** @brief Gets the puppeteers of the players. @return The puppeteer group. */
+    CourseSelectPuppeteerGroup* getPuppeteerGroup() const { return mPuppeteerGroup; }
     /** @brief Gets the course select layouts. @return The layout holder. */
     CourseSelectLayout* getLayout() const { return mLayout; }
     /** @brief Gets the course select nodes. @return The node array. */
@@ -92,7 +108,7 @@ public:
     al::LiveActor* getUnLockActor() const { return mUnLockActor; }
 
 private:
-    unsigned char _8[0x10 - 0x8];
+    CourseSelectScene* mScene;  // 0x8
     CourseSelectLayout* mLayout;  // 0x10
     unsigned char _18[0x150 - 0x18];
     CourseSelectNode** mNodes;  // 0x150
@@ -100,7 +116,11 @@ private:
     unsigned char _15c[0x160 - 0x15c];
     al::LiveActor* mMainPlayer;  // 0x160
     PlayerCrown* mPlayerCrown;  // 0x168
-    unsigned char _170[0x1b0 - 0x170];
+    unsigned char _170[0x178 - 0x170];
+    ICourseSelectActorController* mSelectedController;  // 0x178
+    unsigned char _180[0x188 - 0x180];
+    CourseSelectPuppeteerGroup* mPuppeteerGroup;  // 0x188
+    unsigned char _190[0x1b0 - 0x190];
     al::LiveActor* mUnLockActor;  // 0x1b0
     DemoTimerStageSwitchController* mDemoTimerStageSwitchController;
     DemoOpeningSwitch* mDemoOpeningSwitch;

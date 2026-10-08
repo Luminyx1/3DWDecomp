@@ -21,6 +21,9 @@ public:
     void jumpToFinish();
     void exePlayEnd();
     void exeDone();
+
+    /** @brief Play the camera without starting a demo. */
+    void setNoDemo() { mNoDemo = true; }
 private:
     const char* mCameraName;
     const CameraLookAtPoint* mCameraPoints;

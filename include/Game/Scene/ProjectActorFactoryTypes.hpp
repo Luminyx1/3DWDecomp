@@ -2256,14 +2256,7 @@ private:
 };
 static_assert(sizeof(TentackLv3) == 0x238);
 
-class TentenGenerator : public al::LiveActor {
-public:
-    explicit TentenGenerator(const char* pName);
-
-private:
-    u8 mUnreconstructed[0x8c];
-};
-static_assert(sizeof(TentenGenerator) == 0x1d0);
+#include "Enemy/TentenGenerator.hpp"
 
 class Teren : public al::LiveActor {
 public:

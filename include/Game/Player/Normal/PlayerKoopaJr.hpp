@@ -18,6 +18,8 @@ public:
     void resetTransformPostCutscene(const sead::Vector3f& rTrans, const sead::Vector3f& rFront);
     PlayerProperty* getProperty() { return &mProperty; }
     bool isThrowingItem() const;
+    void startGoalItemDemo(const sead::Vector3f& rTrans);
+    void endGoalItemDemo();
     bool tryThrowStockItem(int itemType, const char* pItemName, al::LiveActor* pPlayer);
     bool tryStartAmiiboAttack();
 

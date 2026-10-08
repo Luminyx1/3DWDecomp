@@ -17,6 +17,11 @@ public:
                     int destinationChannelCount, bool isEffectEnabled, bool isInternalCall,
                     void* buffer, size_t bufferSize);
     void Finalize();
+    bool AppendEffect(EffectBase* pEffect, int bus, void* pBuffer, size_t bufferSize);
+    bool AppendEffect(EffectAux* pEffect, int bus, void* pBuffer, size_t bufferSize);
+    bool RemoveEffect(EffectBase* pEffect, int bus);
+    bool RemoveEffect(EffectAux* pEffect, int bus);
+    bool ClearEffect(int bus);
     void Update(int audioFrameCount);
     void SetDestination(OutputReceiver* pReceiver);
     void SetSend(int sourceBus, int destinationBus, float volume);
