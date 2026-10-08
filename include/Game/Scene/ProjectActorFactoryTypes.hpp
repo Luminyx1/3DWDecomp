@@ -1119,6 +1119,9 @@ static_assert(sizeof(Gesso) == 0x178);
 class GhostPlayerPlayer : public al::LiveActor {
 public:
     explicit GhostPlayerPlayer(const char* pName);
+    void update();
+    bool tryStartPlay();
+    bool tryEndPlay();
 
 private:
     u8 mUnreconstructed[0x5c];

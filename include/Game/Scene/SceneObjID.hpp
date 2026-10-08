@@ -8,6 +8,7 @@
  */
 enum SceneObjID : s32 {
     SceneObjID_GameDataHolder = 8,
+    SceneObjID_GhostPlayerDirector = 9,
     SceneObjID_PlayerGroup = 16,
     SceneObjID_PlayerStocker = 18,
     SceneObjID_ScoreHolder = 20,

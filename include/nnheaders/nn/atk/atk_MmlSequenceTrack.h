@@ -25,6 +25,8 @@ template <typename T> struct MmlMoveValue {
     s16 frame, counter;
     /** @brief Creates a zeroed, finished transition. */
     MmlMoveValue() : origin(0), target(0), frame(0), counter(0) {}
+    /** @brief Creates a finished transition resting at a value. @param value Origin and target. */
+    explicit MmlMoveValue(T value) : origin(value), target(value), frame(0), counter(0) {}
     /** @brief Jumps to a value with no transition. @param value Value used as origin and target. */
     void InitValue(T value) {
         origin = value;
@@ -46,50 +48,7 @@ template <typename T> struct MmlMoveValue {
         origin = GetValue(); target = value; frame = frames; counter = 0;
     }
 };
-class SequenceSoundPlayer {
-public:
-    virtual ~SequenceSoundPlayer();
-    virtual void Initialize(OutputReceiver* pReceiver);
-    virtual void Finalize();
-    virtual void Start();
-    virtual void Stop();
-    virtual void Pause(bool isPause);
-    virtual void SetActiveFlag(bool isActive);
-    virtual void InvalidateData(const void* pStart, const void* pEnd);
-    virtual void ChannelCallback(Channel* pChannel);
-    Channel* NoteOn(u8 bankIndex, const NoteOnInfo& rInfo);
-    s16* GetVariablePtr(int index);
-    SequenceTrack* GetPlayerTrack(int index);
-    void CallSequenceUserprocCallback(u16 id, SequenceTrack* track);
-private:
-    friend class MmlParser;
-    friend class SequenceTrack;
-    u8 _8[0x30 - 8];
-    OutputReceiver* mOutputReceiver;
-    u8 _38[0x40 - 0x38];
-    float mBaseVolume;
-    float mBasePitch;
-    float mBaseLpfFreq;
-    float mBaseBiquadValue;
-    u8 mBaseBiquadType;
-    u8 _51[3];
-    int mPanMode;
-    int mPanCurve;
-    int mBaseOutputLine;
-    OutputParam mTvParam;
-    OutputAdditionalParam* mTvAdditionalParam;
-    u8 _b8[0xf0 - 0xb8];
-    bool mReleasePriorityFix;
-    u8 _f1[3];
-    float mPanRange;
-    u8 _f8[0x110 - 0xf8];
-    u8 mPriority;
-    u8 mParamB0;
-    u16 mTempo;
-    MmlMoveValue<u8> mVolume;
-    u8 _11a[0x360 - 0x11a];
-    UpdateType mUpdateType;
-};
+class SequenceSoundPlayer;
 class MmlSequenceTrack;
 class MmlParser {
 public:
@@ -104,7 +63,7 @@ public:
     u32 Read24(const u8** position) const;
     u16 Read16(const u8** position) const;
     u32 ReadVar(const u8** position) const;
-    s16* GetVariablePtr(SequenceSoundPlayer* player, SequenceTrack* track, int index) const;
+    vs16* GetVariablePtr(SequenceSoundPlayer* player, SequenceTrack* track, int index) const;
     static u32 ParseAllocTrack(const void* data, u32 offset, u32* trackMask);
 };
 class SequenceTrack {
@@ -144,6 +103,25 @@ public:
     void SetTvMixParameter(u32 srcChannel, int dstChannel, float param);
     s16 GetTrackVariable(int index) const;
     void SetTrackVariable(int index, s16 value);
+
+    /** @brief Tests whether the track is still playing its sequence. @return Whether the track is open. */
+    bool IsOpened() const { return mOpenFlag; }
+    /** @brief Sets the volume applied on top of the sequence's own. @param volume Linear gain. */
+    void SetExtVolume(float volume) { mExtVolume = volume; }
+    /** @brief Sets the pitch applied on top of the sequence's own. @param pitch Frequency ratio. */
+    void SetExtPitch(float pitch) { mExtPitch = pitch; }
+    /** @brief Sets the low-pass filter cutoff. @param lpfFreq Relative cutoff. */
+    void SetLpfFreq(float lpfFreq) { mParamD8 = lpfFreq; }
+    /** @brief Gets the TV output parameters. @return Mutable TV output parameters. */
+    OutputParam& GetTvParam() { return mTvParam; }
+    /** @brief Gets the start of the sequence data being parsed. @return Sequence data, or nullptr. */
+    const u8* GetSequenceData() const { return mContext.mSequenceData; }
+    /** @brief Gets the compare flag set by sequence conditionals. @return Compare flag. */
+    bool GetCmpFlag() const { return mContext.mCondition; }
+    /** @brief Sets the compare flag tested by sequence conditionals. @param flag Compare flag. */
+    void SetCmpFlag(bool flag) { mContext.mCondition = flag; }
+    /** @brief Gets the first channel the track is playing. @return Channel list head, or nullptr. */
+    Channel* GetChannelList() const { return mChannelList; }
 
     static const int VariableCount = 16;
     static const int LfoCount = 4;
@@ -263,3 +241,6 @@ static_assert(sizeof(SequenceTrack) == 0x1e8, "Sequence track size");
 static_assert(sizeof(MmlSequenceTrack) == 0x1f0, "MML sequence track size");
 static_assert(sizeof(MmlSequenceTrackAllocator) == 0x28, "MML track allocator size");
 }
+
+// SequenceSoundPlayer needs MmlMoveValue and SequenceTrackAllocator from this header.
+#include <nn/atk/detail/seq/atk_SequenceSoundPlayer.h>

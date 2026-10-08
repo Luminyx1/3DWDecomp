@@ -19,10 +19,26 @@ class SoundThread {
       private:
         util::IntrusiveListNode mNode;
     };
+    /** @brief Player hooked into the sound thread's per-frame update. */
+    class PlayerCallback {
+      public:
+        /** @brief Constructs an unregistered player callback. */
+        PlayerCallback() = default;
+        /** @brief Destroys the callback without changing its registration. */
+        virtual ~PlayerCallback() = default;
+        virtual void OnUpdateFrameSoundThread(int frame) = 0;
+        virtual void OnUpdateFrameSoundThreadWithAudioFrameFrequency(int frame) = 0;
+        virtual void OnShutdownSoundThread() = 0;
+
+      private:
+        util::IntrusiveListNode mNode;
+    };
     typedef void (*SoundFrameUserCallback)(uintptr_t arg);
 
     static SoundThread& GetInstance();
     void ForceWakeup();
+    void RegisterPlayerCallback(PlayerCallback* pCallback);
+    void UnregisterPlayerCallback(PlayerCallback* pCallback);
 
     void RegisterSoundFrameUserCallback(SoundFrameUserCallback callback, uintptr_t arg);
     void ClearSoundFrameUserCallback();

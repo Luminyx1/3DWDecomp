@@ -62,6 +62,8 @@ class alignas(8) Channel {
     void SetLength(int length) { mLength = length; }
     /** @brief Gets the next channel in the owning track's list. @return Next channel, or null. */
     Channel* GetNextTrackChannel() const { return mNextTrackChannel; }
+    /** @brief Gets the driver voice playing the channel. @return Voice, or null when none is attached. */
+    const MultiVoice* GetVoice() const { return mVoice; }
     /** @brief Sets the next channel in the owning track's list. @param pChannel Next channel. */
     void SetNextTrackChannel(Channel* pChannel) { mNextTrackChannel = pChannel; }
     /** @brief Gets the exclusive note group. @return Group identifier. */

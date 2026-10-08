@@ -12,6 +12,7 @@ class NfpDirector;
 class GamePadSystem;
 class LayoutSystem;
 class MessageSystem;
+class NetworkSystem;
 class WaveVibrationHolder;
 struct DrawSystemInfo;
 
@@ -21,6 +22,7 @@ struct GameSystemInfo {
     EffectSystem* getEffectSystem() const { return static_cast<EffectSystem*>(_8); }
     LayoutSystem* getLayoutSystem() const { return static_cast<LayoutSystem*>(_10); }
     MessageSystem* getMessageSystem() const { return static_cast<MessageSystem*>(_18); }
+    NetworkSystem* getNetworkSystem() const { return static_cast<NetworkSystem*>(_20); }
     GamePadSystem* getGamePadSystem() const { return static_cast<GamePadSystem*>(_30); }
     DrawSystemInfo* getDrawSystemInfo() const { return static_cast<DrawSystemInfo*>(_38); }
     FontHolder* getFontHolder() const { return static_cast<FontHolder*>(_40); }

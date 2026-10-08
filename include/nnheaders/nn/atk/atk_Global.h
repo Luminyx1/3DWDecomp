@@ -4,6 +4,9 @@
 
 namespace nn::atk {
 
+/** @brief Sequence variable storage, which NW4F declares volatile. */
+typedef volatile s16 vs16;
+
 /** @brief Pause policy shared by sound players and individual sounds. */
 enum PauseMode {};
 enum OutputMode {
