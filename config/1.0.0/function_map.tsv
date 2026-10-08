@@ -341,11 +341,11 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710000CE20			FALSE	_ZN14BossWackunBody7exeDownEv	BossWackunBody::exeDown()	
 0x710000CF30			FALSE	_ZN14BossWackunBodyD1Ev	BossWackunBody::~BossWackunBody()	
 0x710000CF40			FALSE	_ZN14BossWackunBodyD0Ev	BossWackunBody::~BossWackunBody()	
-0x710000CF70			FALSE	sub_710000CF70	sub_710000CF70	
+0x710000CF70			FALSE	_ZNK12_GLOBAL__N_121BossWackunBodyNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::BossWackunBodyNrvWait::execute(al::NerveKeeper*) const	
 0x710000D050			FALSE	_ZNK12_GLOBAL__N_123BossWackunBodyNrvDamage7executeEPN2al11NerveKeeperE	(anonymous namespace)::BossWackunBodyNrvDamage::execute(al::NerveKeeper*) const	
-0x710000D060			FALSE	sub_710000D060	sub_710000D060	
+0x710000D060			FALSE	_ZNK12_GLOBAL__N_124BossWackunBodyNrvRecover7executeEPN2al11NerveKeeperE	(anonymous namespace)::BossWackunBodyNrvRecover::execute(al::NerveKeeper*) const	
 0x710000D140			FALSE	_ZNK12_GLOBAL__N_124BossWackunBodyNrvMoveEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::BossWackunBodyNrvMoveEnd::execute(al::NerveKeeper*) const	
-0x710000D150			FALSE	sub_710000D150	sub_710000D150	
+0x710000D150			FALSE	_ZNK12_GLOBAL__N_126BossWackunBodyNrvStartDemo7executeEPN2al11NerveKeeperE	(anonymous namespace)::BossWackunBodyNrvStartDemo::execute(al::NerveKeeper*) const	
 0x710000D230			FALSE	_ZNK12_GLOBAL__N_121BossWackunBodyNrvDown7executeEPN2al11NerveKeeperE	(anonymous namespace)::BossWackunBodyNrvDown::execute(al::NerveKeeper*) const	
 0x710000D240			FALSE	_ZNK12_GLOBAL__N_121BossWackunBodyNrvTurn7executeEPN2al11NerveKeeperE	(anonymous namespace)::BossWackunBodyNrvTurn::execute(al::NerveKeeper*) const	
 0x710000D250			FALSE	_ZNK12_GLOBAL__N_126BossWackunBodyNrvMoveStart7executeEPN2al11NerveKeeperE	(anonymous namespace)::BossWackunBodyNrvMoveStart::execute(al::NerveKeeper*) const	
@@ -3601,24 +3601,24 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100099110			TRUE	_ZN4sead15FixedSafeStringILi20EEaSERKNS_14SafeStringBaseIcEE	sead::FixedSafeString<20>::operator=(sead::SafeStringBase<char> const&)	
 0x7100099200			TRUE	_ZN4sead19FixedSafeStringBaseIcLi20EED0Ev	sead::FixedSafeStringBase<char, 20>::~FixedSafeStringBase()	
 0x7100099210			TRUE	_ZN4sead19FixedSafeStringBaseIcLi20EEaSERKNS_14SafeStringBaseIcEE	sead::FixedSafeStringBase<char, 20>::operator=(sead::SafeStringBase<char> const&)	
-0x7100099300			FALSE	sub_7100099300	sub_7100099300	
+0x7100099300			FALSE	_ZNK12_GLOBAL__N_128CourseSelectMiniatureNrvHide7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectMiniatureNrvHide::execute(al::NerveKeeper*) const	
 0x7100099360			FALSE	_ZNK12_GLOBAL__N_143CourseSelectMiniatureNrvClearKinopioBrigade7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectMiniatureNrvClearKinopioBrigade::execute(al::NerveKeeper*) const	
-0x7100099370			FALSE	sub_7100099370	sub_7100099370	
-0x7100099380			FALSE	sub_7100099380	sub_7100099380	
-0x7100099390			FALSE	sub_7100099390	sub_7100099390	
-0x71000993A0			FALSE	sub_71000993A0	sub_71000993A0	
-0x71000993B0			FALSE	sub_71000993B0	sub_71000993B0	
-0x7100099420			FALSE	sub_7100099420	sub_7100099420	
-0x7100099430			FALSE	sub_7100099430	sub_7100099430	
-0x7100099440			FALSE	sub_7100099440	sub_7100099440	
-0x7100099450			FALSE	sub_7100099450	sub_7100099450	
+0x7100099370			FALSE	_ZNK12_GLOBAL__N_137CourseSelectMiniatureNrvWaitClearDemo7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectMiniatureNrvWaitClearDemo::execute(al::NerveKeeper*) const	
+0x7100099380			FALSE	_ZNK12_GLOBAL__N_132CourseSelectMiniatureNrvLockWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectMiniatureNrvLockWait::execute(al::NerveKeeper*) const	
+0x7100099390			FALSE	_ZNK12_GLOBAL__N_139CourseSelectMiniatureNrvLockWaitDisable7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectMiniatureNrvLockWaitDisable::execute(al::NerveKeeper*) const	
+0x71000993A0			FALSE	_ZNK12_GLOBAL__N_138CourseSelectMiniatureNrvClearWaitHouse7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectMiniatureNrvClearWaitHouse::execute(al::NerveKeeper*) const	
+0x71000993B0			FALSE	_ZNK12_GLOBAL__N_133CourseSelectMiniatureNrvClearHide7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectMiniatureNrvClearHide::execute(al::NerveKeeper*) const	
+0x7100099420			FALSE	_ZNK12_GLOBAL__N_133CourseSelectMiniatureNrvClearWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectMiniatureNrvClearWait::execute(al::NerveKeeper*) const	
+0x7100099430			FALSE	_ZNK12_GLOBAL__N_128CourseSelectMiniatureNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectMiniatureNrvWait::execute(al::NerveKeeper*) const	
+0x7100099440			FALSE	_ZNK12_GLOBAL__N_133CourseSelectMiniatureNrvCloseWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectMiniatureNrvCloseWait::execute(al::NerveKeeper*) const	
+0x7100099450			FALSE	_ZNK12_GLOBAL__N_147CourseSelectMiniatureNrvKinopioBrigadeWaitEnter7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectMiniatureNrvKinopioBrigadeWaitEnter::execute(al::NerveKeeper*) const	
 0x71000994C0			FALSE	_ZNK12_GLOBAL__N_129CourseSelectMiniatureNrvEnter7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectMiniatureNrvEnter::execute(al::NerveKeeper*) const	
-0x71000994D0			FALSE	sub_71000994D0	sub_71000994D0	
+0x71000994D0			FALSE	_ZNK12_GLOBAL__N_137CourseSelectMiniatureNrvClearWithHide7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectMiniatureNrvClearWithHide::execute(al::NerveKeeper*) const	
 0x71000994E0			FALSE	_ZNK12_GLOBAL__N_139CourseSelectMiniatureNrvClearGateKeeper7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectMiniatureNrvClearGateKeeper::execute(al::NerveKeeper*) const	
-0x71000994F0			FALSE	sub_71000994F0	sub_71000994F0	
+0x71000994F0			FALSE	_ZNK12_GLOBAL__N_129CourseSelectMiniatureNrvClear7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectMiniatureNrvClear::execute(al::NerveKeeper*) const	
 0x7100099500			FALSE	_ZNK12_GLOBAL__N_130CourseSelectMiniatureNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectMiniatureNrvAppear::execute(al::NerveKeeper*) const	
-0x7100099510			FALSE	sub_7100099510	sub_7100099510	
-0x71000995B0			FALSE	sub_71000995B0	sub_71000995B0	
+0x7100099510			FALSE	_ZNK12_GLOBAL__N_132CourseSelectMiniatureNrvEnterEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectMiniatureNrvEnterEnd::execute(al::NerveKeeper*) const	
+0x71000995B0			FALSE	_ZNK12_GLOBAL__N_143CourseSelectMiniatureNrvKinopioBrigadeEnter7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectMiniatureNrvKinopioBrigadeEnter::execute(al::NerveKeeper*) const	
 0x7100099600		CourseSelectNode.o	FALSE	_ZN16CourseSelectNodeC2EPKcPK21CourseSelectMiniature	CourseSelectNode::CourseSelectNode(char const*, CourseSelectMiniature const*)	
 0x71000996D0			FALSE	_ZN16CourseSelectNodeC1EPKcPK21CourseSelectMiniature	CourseSelectNode::CourseSelectNode(char const*, CourseSelectMiniature const*)	
 0x71000997A0			FALSE	_ZN16CourseSelectNode4initERKN2al13ActorInitInfoE	CourseSelectNode::init(al::ActorInitInfo const&)	
@@ -7092,24 +7092,24 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100110B20			FALSE	_ZN6Kuribo18exeRouteDokanDeathEv	Kuribo::exeRouteDokanDeath()	
 0x7100110B70			FALSE	_ZN6Kuribo17exeJumpTrampolineEv	Kuribo::exeJumpTrampoline()	
 0x7100110BE0			FALSE	_ZN6Kuribo16exeJumpJumpPanelEv	Kuribo::exeJumpJumpPanel()	
-0x7100110C60			FALSE	sub_7100110C60	sub_7100110C60	
+0x7100110C60			FALSE	_ZNK12_GLOBAL__N_122KuriboNrvSupportFreeze7executeEPN2al11NerveKeeperE	(anonymous namespace)::KuriboNrvSupportFreeze::execute(al::NerveKeeper*) const	
 0x7100110CA0			FALSE	_ZNK12_GLOBAL__N_118KuriboNrvPressDown7executeEPN2al11NerveKeeperE	(anonymous namespace)::KuriboNrvPressDown::execute(al::NerveKeeper*) const	
 0x7100110CB0			FALSE	_ZNK12_GLOBAL__N_117KuriboNrvBlowDown7executeEPN2al11NerveKeeperE	(anonymous namespace)::KuriboNrvBlowDown::execute(al::NerveKeeper*) const	
-0x7100110CC0			FALSE	sub_7100110CC0	sub_7100110CC0	
-0x7100110D10			FALSE	sub_7100110D10	sub_7100110D10	
+0x7100110CC0			FALSE	_ZNK12_GLOBAL__N_114KuriboNrvChase7executeEPN2al11NerveKeeperE	(anonymous namespace)::KuriboNrvChase::execute(al::NerveKeeper*) const	
+0x7100110D10			FALSE	_ZNK12_GLOBAL__N_128KuriboNrvJumpTrampolineChase7executeEPN2al11NerveKeeperE	(anonymous namespace)::KuriboNrvJumpTrampolineChase::execute(al::NerveKeeper*) const	
 0x7100110D80			FALSE	_ZNK12_GLOBAL__N_113KuriboNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::KuriboNrvWait::execute(al::NerveKeeper*) const	
-0x7100110D90			FALSE	sub_7100110D90	sub_7100110D90	
-0x7100110E00			FALSE	sub_7100110E00	sub_7100110E00	
-0x7100110E20			FALSE	sub_7100110E20	sub_7100110E20	
-0x7100110E90			FALSE	sub_7100110E90	sub_7100110E90	
-0x7100110EB0			FALSE	sub_7100110EB0	sub_7100110EB0	
-0x7100110F30			FALSE	sub_7100110F30	sub_7100110F30	
-0x7100110FB0			FALSE	sub_7100110FB0	sub_7100110FB0	
-0x7100110FD0			FALSE	sub_7100110FD0	sub_7100110FD0	
-0x7100111010			FALSE	sub_7100111010	sub_7100111010	
+0x7100110D90			FALSE	_ZNK12_GLOBAL__N_115KuriboNrvWander7executeEPN2al11NerveKeeperE	(anonymous namespace)::KuriboNrvWander::execute(al::NerveKeeper*) const	
+0x7100110E00			FALSE	_ZNK12_GLOBAL__N_119KuriboNrvFindPlayer7executeEPN2al11NerveKeeperE	(anonymous namespace)::KuriboNrvFindPlayer::execute(al::NerveKeeper*) const	
+0x7100110E20			FALSE	_ZNK12_GLOBAL__N_123KuriboNrvJumpTrampoline7executeEPN2al11NerveKeeperE	(anonymous namespace)::KuriboNrvJumpTrampoline::execute(al::NerveKeeper*) const	
+0x7100110E90			FALSE	_ZNK12_GLOBAL__N_115KuriboNrvAttack7executeEPN2al11NerveKeeperE	(anonymous namespace)::KuriboNrvAttack::execute(al::NerveKeeper*) const	
+0x7100110EB0			FALSE	_ZNK12_GLOBAL__N_122KuriboNrvJumpJumpPanel7executeEPN2al11NerveKeeperE	(anonymous namespace)::KuriboNrvJumpJumpPanel::execute(al::NerveKeeper*) const	
+0x7100110F30			FALSE	_ZNK12_GLOBAL__N_127KuriboNrvJumpJumpPanelChase7executeEPN2al11NerveKeeperE	(anonymous namespace)::KuriboNrvJumpJumpPanelChase::execute(al::NerveKeeper*) const	
+0x7100110FB0			FALSE	_ZNK12_GLOBAL__N_113KuriboNrvFall7executeEPN2al11NerveKeeperE	(anonymous namespace)::KuriboNrvFall::execute(al::NerveKeeper*) const	
+0x7100110FD0			FALSE	_ZNK12_GLOBAL__N_119KuriboNrvRouteDokan7executeEPN2al11NerveKeeperE	(anonymous namespace)::KuriboNrvRouteDokan::execute(al::NerveKeeper*) const	
+0x7100111010			FALSE	_ZNK12_GLOBAL__N_124KuriboNrvRouteDokanDeath7executeEPN2al11NerveKeeperE	(anonymous namespace)::KuriboNrvRouteDokanDeath::execute(al::NerveKeeper*) const	
 0x7100111060			FALSE	_ZNK2al10FunctorV0MIP6KuriboMS1_FvvEEclEv	al::FunctorV0M<Kuribo*, void (Kuribo::*)()>::operator()() const	
 0x7100111080			FALSE	_ZNK2al10FunctorV0MIP6KuriboMS1_FvvEE5cloneEv	al::FunctorV0M<Kuribo*, void (Kuribo::*)()>::clone() const	
-0x71001110D0			FALSE	sub_71001110D0	sub_71001110D0	
+0x71001110D0			FALSE	_GLOBAL__sub_I_Kuribo.cpp	_GLOBAL__sub_I_Kuribo.cpp	
 0x71001112D0		KuriboClimb.o	FALSE	_ZN11KuriboClimbC2EPKc	KuriboClimb::KuriboClimb(char const*)	
 0x7100111370			FALSE	_ZN11KuriboClimbC1EPKc	KuriboClimb::KuriboClimb(char const*)	
 0x7100111410			FALSE	_ZN11KuriboClimb4initERKN2al13ActorInitInfoE	KuriboClimb::init(al::ActorInitInfo const&)	
@@ -8926,7 +8926,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100159390		TentenGenerator.o	FALSE	_ZN15TentenGeneratorC2EPKc	TentenGenerator::TentenGenerator(char const*)	
 0x71001594B0			FALSE	_ZN15TentenGeneratorC1EPKc	TentenGenerator::TentenGenerator(char const*)	
 0x71001595D0			FALSE	_ZN15TentenGenerator4initERKN2al13ActorInitInfoE	TentenGenerator::init(al::ActorInitInfo const&)	
-0x7100159F10			FALSE	sub_7100159F10	sub_7100159F10	
+0x7100159F10			FALSE	_ZN12_GLOBAL__N_128setRailPosToNearestRailPointEPN2al9LiveActorE	(anonymous namespace)::setRailPosToNearestRailPoint(al::LiveActor*)	
 0x710015A050			FALSE	_ZN15TentenGenerator14reverseRailAllEv	TentenGenerator::reverseRailAll()	
 0x710015A0E0			FALSE	_ZNK15TentenGenerator16tryFindTopTentenEi	TentenGenerator::tryFindTopTenten(int) const	
 0x710015A150			FALSE	_ZN15TentenGenerator9startMoveEv	TentenGenerator::startMove()	
@@ -8956,15 +8956,15 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710015B280			FALSE	_ZN15TentenGenerator23isBgmSingleModeIsland04Ev	TentenGenerator::isBgmSingleModeIsland04()	
 0x710015B350			FALSE	_ZN15TentenGeneratorD1Ev	TentenGenerator::~TentenGenerator()	
 0x710015B360			FALSE	_ZN15TentenGeneratorD0Ev	TentenGenerator::~TentenGenerator()	
-0x710015B390			FALSE	nullsub_77	nullsub_77	
+0x710015B390			FALSE	_ZNK12_GLOBAL__N_123TentenGeneratorNrvWatch7executeEPN2al11NerveKeeperE	(anonymous namespace)::TentenGeneratorNrvWatch::execute(al::NerveKeeper*) const	
 0x710015B3A0			FALSE	_ZNK12_GLOBAL__N_122TentenGeneratorNrvMove7executeEPN2al11NerveKeeperE	(anonymous namespace)::TentenGeneratorNrvMove::execute(al::NerveKeeper*) const	
-0x710015B3B0			FALSE	nullsub_78	nullsub_78	
-0x710015B3C0			FALSE	sub_710015B3C0	sub_710015B3C0	
-0x710015B480			FALSE	nullsub_79	nullsub_79	
-0x710015B490			FALSE	sub_710015B490	sub_710015B490	
-0x710015B4A0			FALSE	sub_710015B4A0	sub_710015B4A0	
-0x710015B4E0			FALSE	sub_710015B4E0	sub_710015B4E0	
-0x710015B500			FALSE	sub_710015B500	sub_710015B500	
+0x710015B3B0			FALSE	_ZNK12_GLOBAL__N_122TentenGeneratorNrvStop7executeEPN2al11NerveKeeperE	(anonymous namespace)::TentenGeneratorNrvStop::execute(al::NerveKeeper*) const	
+0x710015B3C0			FALSE	_ZNK12_GLOBAL__N_131TentenGeneratorNrvSupportFreeze7executeEPN2al11NerveKeeperE	(anonymous namespace)::TentenGeneratorNrvSupportFreeze::execute(al::NerveKeeper*) const	
+0x710015B480			FALSE	_ZNK12_GLOBAL__N_135TentenGeneratorNrvSyncSupportFreeze7executeEPN2al11NerveKeeperE	(anonymous namespace)::TentenGeneratorNrvSyncSupportFreeze::execute(al::NerveKeeper*) const	
+0x710015B490			FALSE	_ZNK12_GLOBAL__N_122TentenGeneratorNrvTurn7executeEPN2al11NerveKeeperE	(anonymous namespace)::TentenGeneratorNrvTurn::execute(al::NerveKeeper*) const	
+0x710015B4A0			FALSE	_ZNK12_GLOBAL__N_122TentenGeneratorNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::TentenGeneratorNrvWait::execute(al::NerveKeeper*) const	
+0x710015B4E0			FALSE	_ZNK12_GLOBAL__N_129TentenGeneratorNrvWaitHipDrop7executeEPN2al11NerveKeeperE	(anonymous namespace)::TentenGeneratorNrvWaitHipDrop::execute(al::NerveKeeper*) const	
+0x710015B500			FALSE	_ZNK12_GLOBAL__N_130TentenGeneratorNrvTurnContinue7executeEPN2al11NerveKeeperE	(anonymous namespace)::TentenGeneratorNrvTurnContinue::execute(al::NerveKeeper*) const	
 0x710015B510			FALSE	_ZNK2al10FunctorV0MIP15TentenGeneratorMS1_FvvEEclEv	al::FunctorV0M<TentenGenerator*, void (TentenGenerator::*)()>::operator()() const	
 0x710015B530			FALSE	_ZNK2al10FunctorV0MIP15TentenGeneratorMS1_FvvEE5cloneEv	al::FunctorV0M<TentenGenerator*, void (TentenGenerator::*)()>::clone() const	
 0x710015B580		Teren.o	FALSE	_ZN5TerenC2EPKc	Teren::Teren(char const*)	
@@ -11858,18 +11858,18 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001C83E0			FALSE	_ZN12GuideMessage19exeWaitToChangeTextEv	GuideMessage::exeWaitToChangeText()	
 0x71001C8460			FALSE	_ZN12GuideMessage13exeChangeTextEv	GuideMessage::exeChangeText()	
 0x71001C8590			FALSE	_ZN12GuideMessage6exeEndEv	GuideMessage::exeEnd()	
-0x71001C8630			FALSE	sub_71001C8630	sub_71001C8630	
-0x71001C86D0			FALSE	sub_71001C86D0	sub_71001C86D0	
-0x71001C8750			FALSE	sub_71001C8750	sub_71001C8750	
-0x71001C87C0			FALSE	sub_71001C87C0	sub_71001C87C0	
-0x71001C8860			FALSE	sub_71001C8860	sub_71001C8860	
-0x71001C8870			FALSE	sub_71001C8870	sub_71001C8870	
-0x71001C8880			FALSE	sub_71001C8880	sub_71001C8880	
-0x71001C8900			FALSE	sub_71001C8900	sub_71001C8900	
-0x71001C8910			FALSE	sub_71001C8910	sub_71001C8910	
-0x71001C8920			FALSE	sub_71001C8920	sub_71001C8920	
-0x71001C8930			FALSE	sub_71001C8930	sub_71001C8930	
-0x71001C89D0			FALSE	sub_71001C89D0	sub_71001C89D0	
+0x71001C8630			FALSE	_ZNK12_GLOBAL__N_121GuideMessageNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::GuideMessageNrvAppear::execute(al::NerveKeeper*) const	
+0x71001C86D0			FALSE	_ZNK12_GLOBAL__N_131GuideMessageNrvWaitToChangeText7executeEPN2al11NerveKeeperE	(anonymous namespace)::GuideMessageNrvWaitToChangeText::execute(al::NerveKeeper*) const	
+0x71001C8750			FALSE	_ZNK12_GLOBAL__N_119GuideMessageNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::GuideMessageNrvWait::execute(al::NerveKeeper*) const	
+0x71001C87C0			FALSE	_ZNK12_GLOBAL__N_118GuideMessageNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::GuideMessageNrvEnd::execute(al::NerveKeeper*) const	
+0x71001C8860			FALSE	_ZNK12_GLOBAL__N_125GuideMessageNrvChangeText7executeEPN2al11NerveKeeperE	(anonymous namespace)::GuideMessageNrvChangeText::execute(al::NerveKeeper*) const	
+0x71001C8870			FALSE	_ZNK12_GLOBAL__N_125GuideMessageNrvHideAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::GuideMessageNrvHideAppear::execute(al::NerveKeeper*) const	
+0x71001C8880			FALSE	_ZNK12_GLOBAL__N_137GuideMessageNrvWaitToChangeTextAssist7executeEPN2al11NerveKeeperE	(anonymous namespace)::GuideMessageNrvWaitToChangeTextAssist::execute(al::NerveKeeper*) const	
+0x71001C8900			FALSE	_ZNK12_GLOBAL__N_131GuideMessageNrvChangeTextAssist7executeEPN2al11NerveKeeperE	(anonymous namespace)::GuideMessageNrvChangeTextAssist::execute(al::NerveKeeper*) const	
+0x71001C8910			FALSE	_ZNK12_GLOBAL__N_123GuideMessageNrvHideWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::GuideMessageNrvHideWait::execute(al::NerveKeeper*) const	
+0x71001C8920			FALSE	_ZNK12_GLOBAL__N_122GuideMessageNrvHideEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::GuideMessageNrvHideEnd::execute(al::NerveKeeper*) const	
+0x71001C8930			FALSE	_ZNK12_GLOBAL__N_129GuideMessageNrvAppearFromHide7executeEPN2al11NerveKeeperE	(anonymous namespace)::GuideMessageNrvAppearFromHide::execute(al::NerveKeeper*) const	
+0x71001C89D0			FALSE	_ZNK12_GLOBAL__N_126GuideMessageNrvEndFromHide7executeEPN2al11NerveKeeperE	(anonymous namespace)::GuideMessageNrvEndFromHide::execute(al::NerveKeeper*) const	
 0x71001C8A70		GuideObj.o	FALSE	_ZN8GuideObjC2EPKc	GuideObj::GuideObj(char const*)	
 0x71001C8AF0			FALSE	_ZN8GuideObjC1EPKc	GuideObj::GuideObj(char const*)	
 0x71001C8B80			FALSE	_ZN8GuideObj4initERKN2al13ActorInitInfoE	GuideObj::init(al::ActorInitInfo const&)	
@@ -12951,11 +12951,11 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001F36E0			FALSE	_ZNK21StaffRollLayoutHolder15getSceneObjNameEv	StaffRollLayoutHolder::getSceneObjName() const	
 0x71001F36F0			FALSE	_ZThn16_NK21StaffRollLayoutHolder16getMessageSystemEv	non-virtual thunk to StaffRollLayoutHolder::getMessageSystem() const	
 0x71001F3700			FALSE	_ZThn24_NK21StaffRollLayoutHolder15getSceneObjNameEv	non-virtual thunk to StaffRollLayoutHolder::getSceneObjName() const	
-0x71001F3710			FALSE	nullsub_135	nullsub_135	
+0x71001F3710			FALSE	_ZNK12_GLOBAL__N_128StaffRollLayoutHolderNrvHide7executeEPN2al11NerveKeeperE	(anonymous namespace)::StaffRollLayoutHolderNrvHide::execute(al::NerveKeeper*) const	
 0x71001F3720			FALSE	_ZNK12_GLOBAL__N_130StaffRollLayoutHolderNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::StaffRollLayoutHolderNrvAppear::execute(al::NerveKeeper*) const	
-0x71001F3730			FALSE	nullsub_136	nullsub_136	
-0x71001F3740			FALSE	sub_71001F3740	sub_71001F3740	
-0x71001F3790			FALSE	sub_71001F3790	sub_71001F3790	
+0x71001F3730			FALSE	_ZNK12_GLOBAL__N_127StaffRollLayoutHolderNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::StaffRollLayoutHolderNrvEnd::execute(al::NerveKeeper*) const	
+0x71001F3740			FALSE	_ZNK12_GLOBAL__N_133StaffRollLayoutHolderNrvPreAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::StaffRollLayoutHolderNrvPreAppear::execute(al::NerveKeeper*) const	
+0x71001F3790			FALSE	_ZNK12_GLOBAL__N_127StaffRollLayoutHolderNrvFin7executeEPN2al11NerveKeeperE	(anonymous namespace)::StaffRollLayoutHolderNrvFin::execute(al::NerveKeeper*) const	
 0x71001F37F0		StaffRollName.o	FALSE	_ZN13StaffRollNameC2ERKN2al14LayoutInitInfoE	StaffRollName::StaffRollName(al::LayoutInitInfo const&)	
 0x71001F38C0			FALSE	_ZN13StaffRollNameC1ERKN2al14LayoutInitInfoE	StaffRollName::StaffRollName(al::LayoutInitInfo const&)	
 0x71001F3990			FALSE	_ZN13StaffRollName6appearEv	StaffRollName::appear()	
@@ -14638,20 +14638,20 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100241B90			FALSE	_ZN4BallD1Ev	Ball::~Ball()	
 0x7100241BA0			FALSE	_ZN4BallD0Ev	Ball::~Ball()	
 0x7100241BD0			FALSE	_ZNK12_GLOBAL__N_111BallNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::BallNrvWait::execute(al::NerveKeeper*) const	
-0x7100241BE0			FALSE	sub_7100241BE0	sub_7100241BE0	
+0x7100241BE0			FALSE	_ZNK12_GLOBAL__N_117BallNrvPopUpFront7executeEPN2al11NerveKeeperE	(anonymous namespace)::BallNrvPopUpFront::execute(al::NerveKeeper*) const	
 0x7100241C30			FALSE	_ZNK12_GLOBAL__N_114BallNrvDRCHold7executeEPN2al11NerveKeeperE	(anonymous namespace)::BallNrvDRCHold::execute(al::NerveKeeper*) const	
-0x7100241C40			FALSE	sub_7100241C40	sub_7100241C40	
+0x7100241C40			FALSE	_ZNK12_GLOBAL__N_117BallNrvPlayerHold7executeEPN2al11NerveKeeperE	(anonymous namespace)::BallNrvPlayerHold::execute(al::NerveKeeper*) const	
 0x7100241CB0			FALSE	_ZNK12_GLOBAL__N_111BallNrvFall7executeEPN2al11NerveKeeperE	(anonymous namespace)::BallNrvFall::execute(al::NerveKeeper*) const	
-0x7100241CC0			FALSE	sub_7100241CC0	sub_7100241CC0	
+0x7100241CC0			FALSE	_ZNK12_GLOBAL__N_114BallNrvRolling7executeEPN2al11NerveKeeperE	(anonymous namespace)::BallNrvRolling::execute(al::NerveKeeper*) const	
 0x7100241D50			FALSE	_ZNK12_GLOBAL__N_112BallNrvThrow7executeEPN2al11NerveKeeperE	(anonymous namespace)::BallNrvThrow::execute(al::NerveKeeper*) const	
-0x7100241D60			FALSE	sub_7100241D60	sub_7100241D60	
+0x7100241D60			FALSE	_ZNK12_GLOBAL__N_111BallNrvKick7executeEPN2al11NerveKeeperE	(anonymous namespace)::BallNrvKick::execute(al::NerveKeeper*) const	
 0x7100241DF0			FALSE	_ZNK12_GLOBAL__N_118BallNrvDamageThrow7executeEPN2al11NerveKeeperE	(anonymous namespace)::BallNrvDamageThrow::execute(al::NerveKeeper*) const	
 0x7100241E00			FALSE	_ZNK12_GLOBAL__N_117BallNrvRouteDokan7executeEPN2al11NerveKeeperE	(anonymous namespace)::BallNrvRouteDokan::execute(al::NerveKeeper*) const	
-0x7100241E10			FALSE	sub_7100241E10	sub_7100241E10	
-0x7100241EA0			FALSE	sub_7100241EA0	sub_7100241EA0	
+0x7100241E10			FALSE	_ZNK12_GLOBAL__N_122BallNrvRouteDokanThrow7executeEPN2al11NerveKeeperE	(anonymous namespace)::BallNrvRouteDokanThrow::execute(al::NerveKeeper*) const	
+0x7100241EA0			FALSE	_ZNK12_GLOBAL__N_118BallNrvWaterBottom7executeEPN2al11NerveKeeperE	(anonymous namespace)::BallNrvWaterBottom::execute(al::NerveKeeper*) const	
 0x7100241EF0			FALSE	_ZNK2al10FunctorV0MIP4BallMS1_FvvEEclEv	al::FunctorV0M<Ball*, void (Ball::*)()>::operator()() const	
 0x7100241F10			FALSE	_ZNK2al10FunctorV0MIP4BallMS1_FvvEE5cloneEv	al::FunctorV0M<Ball*, void (Ball::*)()>::clone() const	
-0x7100241F60			FALSE	sub_7100241F60	sub_7100241F60	
+0x7100241F60			FALSE	_GLOBAL__sub_I_Ball.cpp	_GLOBAL__sub_I_Ball.cpp	
 0x71002421B0		BallGimmick.o	FALSE	_ZN11BallGimmickC2EPKc	BallGimmick::BallGimmick(char const*)	
 0x71002422A0			FALSE	_ZN11BallGimmickC1EPKc	BallGimmick::BallGimmick(char const*)	
 0x71002423A0			FALSE	_ZN11BallGimmick4initERKN2al13ActorInitInfoE	BallGimmick::init(al::ActorInitInfo const&)	
@@ -18083,46 +18083,46 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71002CE3E0			FALSE	_ZN8GoalItemD1Ev	GoalItem::~GoalItem()	
 0x71002CE3F0			FALSE	_ZN8GoalItemD0Ev	GoalItem::~GoalItem()	
 0x71002CE420			FALSE	_ZNK12_GLOBAL__N_115GoalItemNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::GoalItemNrvWait::execute(al::NerveKeeper*) const	
-0x71002CE430			FALSE	nullsub_182	nullsub_182	
-0x71002CE440			FALSE	sub_71002CE440	sub_71002CE440	
+0x71002CE430			FALSE	_ZNK12_GLOBAL__N_121GoalItemNrvCameraPlay7executeEPN2al11NerveKeeperE	(anonymous namespace)::GoalItemNrvCameraPlay::execute(al::NerveKeeper*) const	
+0x71002CE440			FALSE	_ZNK12_GLOBAL__N_124GoalItemNrvCleanUpFinish7executeEPN2al11NerveKeeperE	(anonymous namespace)::GoalItemNrvCleanUpFinish::execute(al::NerveKeeper*) const	
 0x71002CE450			FALSE	_ZNK12_GLOBAL__N_123GoalItemNrvGuideMessage7executeEPN2al11NerveKeeperE	(anonymous namespace)::GoalItemNrvGuideMessage::execute(al::NerveKeeper*) const	
-0x71002CE460			FALSE	sub_71002CE460	sub_71002CE460	
+0x71002CE460			FALSE	_ZNK12_GLOBAL__N_115GoalItemNrvDone7executeEPN2al11NerveKeeperE	(anonymous namespace)::GoalItemNrvDone::execute(al::NerveKeeper*) const	
 0x71002CE4B0			FALSE	_ZNK12_GLOBAL__N_121GoalItemNrvAppearAnim7executeEPN2al11NerveKeeperE	(anonymous namespace)::GoalItemNrvAppearAnim::execute(al::NerveKeeper*) const	
-0x71002CE4C0			FALSE	sub_71002CE4C0	sub_71002CE4C0	
-0x71002CE4D0			FALSE	sub_71002CE4D0	sub_71002CE4D0	
+0x71002CE4C0			FALSE	_ZNK12_GLOBAL__N_124GoalItemNrvCollectedIdle7executeEPN2al11NerveKeeperE	(anonymous namespace)::GoalItemNrvCollectedIdle::execute(al::NerveKeeper*) const	
+0x71002CE4D0			FALSE	_ZNK12_GLOBAL__N_129GoalItemNrvWaitInstantCollect7executeEPN2al11NerveKeeperE	(anonymous namespace)::GoalItemNrvWaitInstantCollect::execute(al::NerveKeeper*) const	
 0x71002CE510			FALSE	_ZNK12_GLOBAL__N_120GoalItemNrvDisappear7executeEPN2al11NerveKeeperE	(anonymous namespace)::GoalItemNrvDisappear::execute(al::NerveKeeper*) const	
-0x71002CE520			FALSE	sub_71002CE520	sub_71002CE520	
+0x71002CE520			FALSE	_ZNK12_GLOBAL__N_115GoalItemNrvSpin7executeEPN2al11NerveKeeperE	(anonymous namespace)::GoalItemNrvSpin::execute(al::NerveKeeper*) const	
 0x71002CE5C0			FALSE	_ZNK12_GLOBAL__N_124GoalItemNrvSpinSpeedDown7executeEPN2al11NerveKeeperE	(anonymous namespace)::GoalItemNrvSpinSpeedDown::execute(al::NerveKeeper*) const	
-0x71002CE5D0			FALSE	sub_71002CE5D0	sub_71002CE5D0	
+0x71002CE5D0			FALSE	_ZNK12_GLOBAL__N_124GoalItemNrvSpinSpeedDown12executeOnEndEPN2al11NerveKeeperE	(anonymous namespace)::GoalItemNrvSpinSpeedDown::executeOnEnd(al::NerveKeeper*) const	
 0x71002CE5F0			FALSE	_ZNK12_GLOBAL__N_126GoalItemNrvAnimateMoveRail7executeEPN2al11NerveKeeperE	(anonymous namespace)::GoalItemNrvAnimateMoveRail::execute(al::NerveKeeper*) const	
-0x71002CE600			FALSE	sub_71002CE600	sub_71002CE600	
-0x71002CE610			FALSE	sub_71002CE610	sub_71002CE610	
+0x71002CE600			FALSE	_ZNK12_GLOBAL__N_121GoalItemNrvPreAnimate7executeEPN2al11NerveKeeperE	(anonymous namespace)::GoalItemNrvPreAnimate::execute(al::NerveKeeper*) const	
+0x71002CE610			FALSE	_ZNK12_GLOBAL__N_128GoalItemNrvPreAnimateInstant7executeEPN2al11NerveKeeperE	(anonymous namespace)::GoalItemNrvPreAnimateInstant::execute(al::NerveKeeper*) const	
 0x71002CE620			FALSE	_ZNK12_GLOBAL__N_118GoalItemNrvAnimate7executeEPN2al11NerveKeeperE	(anonymous namespace)::GoalItemNrvAnimate::execute(al::NerveKeeper*) const	
 0x71002CE630			FALSE	_ZNK12_GLOBAL__N_132GoalItemNrvAnimateMoveRailFinish7executeEPN2al11NerveKeeperE	(anonymous namespace)::GoalItemNrvAnimateMoveRailFinish::execute(al::NerveKeeper*) const	
 0x71002CE640			FALSE	_ZNK12_GLOBAL__N_129GoalItemNrvCleanUpFinishNoBGM7executeEPN2al11NerveKeeperE	(anonymous namespace)::GoalItemNrvCleanUpFinishNoBGM::execute(al::NerveKeeper*) const	
 0x71002CE650			FALSE	_ZNK12_GLOBAL__N_131GoalItemNrvWaitStartCollectDemo7executeEPN2al11NerveKeeperE	(anonymous namespace)::GoalItemNrvWaitStartCollectDemo::execute(al::NerveKeeper*) const	
 0x71002CE660			FALSE	_ZNK12_GLOBAL__N_126GoalItemNrvCollectRepeated7executeEPN2al11NerveKeeperE	(anonymous namespace)::GoalItemNrvCollectRepeated::execute(al::NerveKeeper*) const	
-0x71002CE670			FALSE	sub_71002CE670	sub_71002CE670	
-0x71002CE680			FALSE	sub_71002CE680	sub_71002CE680	
+0x71002CE670			FALSE	_ZNK12_GLOBAL__N_125GoalItemNrvCollectInstant7executeEPN2al11NerveKeeperE	(anonymous namespace)::GoalItemNrvCollectInstant::execute(al::NerveKeeper*) const	
+0x71002CE680			FALSE	_ZNK12_GLOBAL__N_118GoalItemNrvCollect7executeEPN2al11NerveKeeperE	(anonymous namespace)::GoalItemNrvCollect::execute(al::NerveKeeper*) const	
 0x71002CE690			FALSE	_ZNK12_GLOBAL__N_123GoalItemNrvWaitCameraIn7executeEPN2al11NerveKeeperE	(anonymous namespace)::GoalItemNrvWaitCameraIn::execute(al::NerveKeeper*) const	
 0x71002CE6A0			FALSE	_ZNK12_GLOBAL__N_124GoalItemNrvWaitCameraOut7executeEPN2al11NerveKeeperE	(anonymous namespace)::GoalItemNrvWaitCameraOut::execute(al::NerveKeeper*) const	
 0x71002CE6B0			FALSE	_ZNK12_GLOBAL__N_133GoalItemNrvFinishAnimateOceanCase7executeEPN2al11NerveKeeperE	(anonymous namespace)::GoalItemNrvFinishAnimateOceanCase::execute(al::NerveKeeper*) const	
 0x71002CE6C0			FALSE	_ZNK12_GLOBAL__N_130GoalItemNrvAnimateCodeMoveRail7executeEPN2al11NerveKeeperE	(anonymous namespace)::GoalItemNrvAnimateCodeMoveRail::execute(al::NerveKeeper*) const	
 0x71002CE6D0			FALSE	_ZNK12_GLOBAL__N_139GoalItemNrvAnimateOceanCaseCameraReturn7executeEPN2al11NerveKeeperE	(anonymous namespace)::GoalItemNrvAnimateOceanCaseCameraReturn::execute(al::NerveKeeper*) const	
 0x71002CE6E0			FALSE	_ZNK12_GLOBAL__N_128GoalItemNrvFinalizeOceanCase7executeEPN2al11NerveKeeperE	(anonymous namespace)::GoalItemNrvFinalizeOceanCase::execute(al::NerveKeeper*) const	
-0x71002CE6F0			FALSE	sub_71002CE6F0	sub_71002CE6F0	
-0x71002CE700			FALSE	sub_71002CE700	sub_71002CE700	
-0x71002CE710			FALSE	sub_71002CE710	sub_71002CE710	
-0x71002CE720			FALSE	sub_71002CE720	sub_71002CE720	
-0x71002CE730			FALSE	sub_71002CE730	sub_71002CE730	
+0x71002CE6F0			FALSE	_ZNK12_GLOBAL__N_130GoalItemNrvWaitOceanBowserExit7executeEPN2al11NerveKeeperE	(anonymous namespace)::GoalItemNrvWaitOceanBowserExit::execute(al::NerveKeeper*) const	
+0x71002CE700			FALSE	_ZNK12_GLOBAL__N_138GoalItemNrvWaitDisasterFadeOutDoneSkip7executeEPN2al11NerveKeeperE	(anonymous namespace)::GoalItemNrvWaitDisasterFadeOutDoneSkip::execute(al::NerveKeeper*) const	
+0x71002CE710			FALSE	_ZNK12_GLOBAL__N_134GoalItemNrvWaitDisasterFadeOutDone7executeEPN2al11NerveKeeperE	(anonymous namespace)::GoalItemNrvWaitDisasterFadeOutDone::execute(al::NerveKeeper*) const	
+0x71002CE720			FALSE	_ZNK12_GLOBAL__N_138GoalItemNrvWaitOceanBowserExitGigaBell7executeEPN2al11NerveKeeperE	(anonymous namespace)::GoalItemNrvWaitOceanBowserExitGigaBell::execute(al::NerveKeeper*) const	
+0x71002CE730			FALSE	_ZNK12_GLOBAL__N_144GoalItemNrvWaitOceanBowserExitGigaBellDamage7executeEPN2al11NerveKeeperE	(anonymous namespace)::GoalItemNrvWaitOceanBowserExitGigaBellDamage::execute(al::NerveKeeper*) const	
 0x71002CE740			FALSE	_ZNK12_GLOBAL__N_136GoalItemNrvWaitOceanBowserExitReturn7executeEPN2al11NerveKeeperE	(anonymous namespace)::GoalItemNrvWaitOceanBowserExitReturn::execute(al::NerveKeeper*) const	
-0x71002CE750			FALSE	sub_71002CE750	sub_71002CE750	
-0x71002CE7C0			FALSE	sub_71002CE7C0	sub_71002CE7C0	
-0x71002CE810			FALSE	sub_71002CE810	sub_71002CE810	
-0x71002CE820			FALSE	sub_71002CE820	sub_71002CE820	
-0x71002CE860			FALSE	sub_71002CE860	sub_71002CE860	
-0x71002CE870			FALSE	sub_71002CE870	sub_71002CE870	
-0x71002CE880			FALSE	sub_71002CE880	sub_71002CE880	
+0x71002CE750			FALSE	_ZNK12_GLOBAL__N_132GoalItemNrvEndLighthouseCutscene7executeEPN2al11NerveKeeperE	(anonymous namespace)::GoalItemNrvEndLighthouseCutscene::execute(al::NerveKeeper*) const	
+0x71002CE7C0			FALSE	_ZNK12_GLOBAL__N_125GoalItemNrvDoneLighthouse7executeEPN2al11NerveKeeperE	(anonymous namespace)::GoalItemNrvDoneLighthouse::execute(al::NerveKeeper*) const	
+0x71002CE810			FALSE	_ZNK12_GLOBAL__N_145GoalItemNrvWaitForLighthouseShineCutsceneSkip7executeEPN2al11NerveKeeperE	(anonymous namespace)::GoalItemNrvWaitForLighthouseShineCutsceneSkip::execute(al::NerveKeeper*) const	
+0x71002CE820			FALSE	_ZNK12_GLOBAL__N_134GoalItemNrvLighthouseShoneCutscene7executeEPN2al11NerveKeeperE	(anonymous namespace)::GoalItemNrvLighthouseShoneCutscene::execute(al::NerveKeeper*) const	
+0x71002CE860			FALSE	_ZNK12_GLOBAL__N_148GoalItemNrvWaitForLighthouseShineCutsceneInstant7executeEPN2al11NerveKeeperE	(anonymous namespace)::GoalItemNrvWaitForLighthouseShineCutsceneInstant::execute(al::NerveKeeper*) const	
+0x71002CE870			FALSE	_ZNK12_GLOBAL__N_137GoalItemNrvWaitOceanBowserExitLeaving7executeEPN2al11NerveKeeperE	(anonymous namespace)::GoalItemNrvWaitOceanBowserExitLeaving::execute(al::NerveKeeper*) const	
+0x71002CE880			FALSE	_ZNK12_GLOBAL__N_141GoalItemNrvWaitForLighthouseShineCutscene7executeEPN2al11NerveKeeperE	(anonymous namespace)::GoalItemNrvWaitForLighthouseShineCutscene::execute(al::NerveKeeper*) const	
 0x71002CE890			FALSE	_ZNK2al10FunctorV0MIP8GoalItemMS1_FvvEEclEv	al::FunctorV0M<GoalItem*, void (GoalItem::*)()>::operator()() const	
 0x71002CE8B0		GoalItemBindPuppeteer.o	FALSE	_ZN21GoalItemBindPuppeteerC1EPKcP8GoalItem	GoalItemBindPuppeteer::GoalItemBindPuppeteer(char const*, GoalItem*)	
 0x71002CE920			FALSE	_ZN21GoalItemBindPuppeteer13setActionNameEPKc	GoalItemBindPuppeteer::setActionName(char const*)	
@@ -19498,25 +19498,25 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100306D60			FALSE	_ZNK12_GLOBAL__N_118KouraNrvRouteDokan7executeEPN2al11NerveKeeperE	(anonymous namespace)::KouraNrvRouteDokan::execute(al::NerveKeeper*) const	
 0x7100306D70			FALSE	_ZNK12_GLOBAL__N_115KouraNrvRelease7executeEPN2al11NerveKeeperE	(anonymous namespace)::KouraNrvRelease::execute(al::NerveKeeper*) const	
 0x7100306D80			FALSE	_ZNK12_GLOBAL__N_118KouraNrvKouraSlide7executeEPN2al11NerveKeeperE	(anonymous namespace)::KouraNrvKouraSlide::execute(al::NerveKeeper*) const	
-0x7100306D90			FALSE	sub_7100306D90	sub_7100306D90	
-0x7100306E00			FALSE	sub_7100306E00	sub_7100306E00	
-0x7100306E10			FALSE	sub_7100306E10	sub_7100306E10	
-0x7100306E20			FALSE	sub_7100306E20	sub_7100306E20	
-0x7100306E30			FALSE	sub_7100306E30	sub_7100306E30	
+0x7100306D90			FALSE	_ZNK12_GLOBAL__N_117KouraNrvKouraWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::KouraNrvKouraWait::execute(al::NerveKeeper*) const	
+0x7100306E00			FALSE	_ZNK12_GLOBAL__N_113KouraNrvUpper7executeEPN2al11NerveKeeperE	(anonymous namespace)::KouraNrvUpper::execute(al::NerveKeeper*) const	
+0x7100306E10			FALSE	_ZNK12_GLOBAL__N_121KouraNrvBindEndDamage7executeEPN2al11NerveKeeperE	(anonymous namespace)::KouraNrvBindEndDamage::execute(al::NerveKeeper*) const	
+0x7100306E20			FALSE	_ZNK12_GLOBAL__N_117KouraNrvKouraJump7executeEPN2al11NerveKeeperE	(anonymous namespace)::KouraNrvKouraJump::execute(al::NerveKeeper*) const	
+0x7100306E30			FALSE	_ZNK12_GLOBAL__N_112KouraNrvBlow7executeEPN2al11NerveKeeperE	(anonymous namespace)::KouraNrvBlow::execute(al::NerveKeeper*) const	
 0x7100306E40			FALSE	_ZNK12_GLOBAL__N_119KouraNrvWaitRelease7executeEPN2al11NerveKeeperE	(anonymous namespace)::KouraNrvWaitRelease::execute(al::NerveKeeper*) const	
-0x7100306E50			FALSE	sub_7100306E50	sub_7100306E50	
-0x7100306EA0			FALSE	sub_7100306EA0	sub_7100306EA0	
-0x7100306EB0			FALSE	sub_7100306EB0	sub_7100306EB0	
+0x7100306E50			FALSE	_ZNK12_GLOBAL__N_117KouraNrvKouraStop7executeEPN2al11NerveKeeperE	(anonymous namespace)::KouraNrvKouraStop::execute(al::NerveKeeper*) const	
+0x7100306EA0			FALSE	_ZNK12_GLOBAL__N_116KouraNrvBlowGoal7executeEPN2al11NerveKeeperE	(anonymous namespace)::KouraNrvBlowGoal::execute(al::NerveKeeper*) const	
+0x7100306EB0			FALSE	_ZNK12_GLOBAL__N_125KouraNrvUpperFromNokonoko7executeEPN2al11NerveKeeperE	(anonymous namespace)::KouraNrvUpperFromNokonoko::execute(al::NerveKeeper*) const	
 0x7100306EC0			FALSE	_ZNK12_GLOBAL__N_117KouraNrvBindStart7executeEPN2al11NerveKeeperE	(anonymous namespace)::KouraNrvBindStart::execute(al::NerveKeeper*) const	
 0x7100306ED0			FALSE	_ZNK12_GLOBAL__N_116KouraNrvDemoKill7executeEPN2al11NerveKeeperE	(anonymous namespace)::KouraNrvDemoKill::execute(al::NerveKeeper*) const	
 0x7100306EE0			FALSE	_ZNK12_GLOBAL__N_119KouraNrvWaitForBind7executeEPN2al11NerveKeeperE	(anonymous namespace)::KouraNrvWaitForBind::execute(al::NerveKeeper*) const	
-0x7100306EF0			FALSE	sub_7100306EF0	sub_7100306EF0	
-0x7100306F30			FALSE	sub_7100306F30	sub_7100306F30	
+0x7100306EF0			FALSE	_ZNK12_GLOBAL__N_121KouraNrvRouteDokanEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::KouraNrvRouteDokanEnd::execute(al::NerveKeeper*) const	
+0x7100306F30			FALSE	_ZNK12_GLOBAL__N_121KouraNrvKouraJumpFall7executeEPN2al11NerveKeeperE	(anonymous namespace)::KouraNrvKouraJumpFall::execute(al::NerveKeeper*) const	
 0x7100306F40			FALSE	_ZNK12_GLOBAL__N_122KouraNrvKouraJumpBreak7executeEPN2al11NerveKeeperE	(anonymous namespace)::KouraNrvKouraJumpBreak::execute(al::NerveKeeper*) const	
-0x7100306F50			FALSE	sub_7100306F50	sub_7100306F50	
-0x7100306F60			FALSE	sub_7100306F60	sub_7100306F60	
-0x7100306F70			FALSE	sub_7100306F70	sub_7100306F70	
-0x7100306F80			FALSE	sub_7100306F80	sub_7100306F80	
+0x7100306F50			FALSE	_ZNK12_GLOBAL__N_119KouraNrvBindEndStop7executeEPN2al11NerveKeeperE	(anonymous namespace)::KouraNrvBindEndStop::execute(al::NerveKeeper*) const	
+0x7100306F60			FALSE	_ZNK12_GLOBAL__N_119KouraNrvBindEndExit7executeEPN2al11NerveKeeperE	(anonymous namespace)::KouraNrvBindEndExit::execute(al::NerveKeeper*) const	
+0x7100306F70			FALSE	_ZNK12_GLOBAL__N_123KouraNrvBindEndExitStay7executeEPN2al11NerveKeeperE	(anonymous namespace)::KouraNrvBindEndExitStay::execute(al::NerveKeeper*) const	
+0x7100306F80			FALSE	_GLOBAL__sub_I_Koura.cpp	_GLOBAL__sub_I_Koura.cpp	
 0x7100307060		KourabindPuppeteer.o	FALSE	_ZN18KouraBindPuppeteerC1EP5Koura	KouraBindPuppeteer::KouraBindPuppeteer(Koura*)	
 0x71003070E0			FALSE	_ZN18KouraBindPuppeteer14isTargetSensorEPN2al9HitSensorE	KouraBindPuppeteer::isTargetSensor(al::HitSensor*)	
 0x7100307130			FALSE	_ZN18KouraBindPuppeteer10startEnterEPN2al9HitSensorEb	KouraBindPuppeteer::startEnter(al::HitSensor*, bool)	
@@ -24186,14 +24186,14 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71003CD5B0			FALSE	_ZN3npc20isSensorNekoDisasterEPKN2al9HitSensorE	npc::isSensorNekoDisaster(al::HitSensor const*)	
 0x71003CD5F0			FALSE	_ZN3npc25NpcFindTargetTypeToStringERKNS_17NpcFindTargetTypeE	npc::NpcFindTargetTypeToString(npc::NpcFindTargetType const&)	
 0x71003CD6C0			FALSE	_ZN3npc19calcIsTargetInSightEPK15NpcTargetFinderPKN2al9LiveActorEPK20NpcTargetFinderParam	npc::calcIsTargetInSight(NpcTargetFinder const*, al::LiveActor const*, NpcTargetFinderParam const*)	
-0x71003CD820			FALSE	sub_71003CD820	sub_71003CD820	
+0x71003CD820			FALSE	_ZN3npc19calcTargetCheckInfoEP18NpcTargetCheckInfoPKN2al9LiveActorERKN4sead7Vector3IfEESA_S5_	npc::calcTargetCheckInfo(NpcTargetCheckInfo*, al::LiveActor const*, sead::Vector3<float> const&, sead::Vector3<float> const&, al::LiveActor const*)	
 0x71003CD9F0			FALSE	_ZN3npc24calcIsTargetInChaseRangeEPK15NpcTargetFinderPKN2al9LiveActorEPK20NpcTargetFinderParam	npc::calcIsTargetInChaseRange(NpcTargetFinder const*, al::LiveActor const*, NpcTargetFinderParam const*)	
 0x71003CDB10			FALSE	_ZN20NpcTargetFinderParamC2Ev	NpcTargetFinderParam::NpcTargetFinderParam()	
 0x71003CDB50			FALSE	_ZN20NpcTargetFinderParamC2Efffjffffbj	NpcTargetFinderParam::NpcTargetFinderParam(float, float, float, unsigned int, float, float, float, float, bool, unsigned int)	
 0x71003CDB90			FALSE	_ZN15NpcTargetFinderC2EPN2al9LiveActorEPK20NpcTargetFinderParam	NpcTargetFinder::NpcTargetFinder(al::LiveActor*, NpcTargetFinderParam const*)	
 0x71003CDCD0			FALSE	_ZN15NpcTargetFinder10changeHostEPN2al9LiveActorEPKcPK22IUseTargetFinderFilter	NpcTargetFinder::changeHost(al::LiveActor*, char const*, IUseTargetFinderFilter const*)	
 0x71003CDD30			FALSE	_ZN15NpcTargetFinder12attackSensorEPN2al9HitSensorES2_	NpcTargetFinder::attackSensor(al::HitSensor*, al::HitSensor*)	
-0x71003CE080			FALSE	sub_71003CE080	sub_71003CE080	
+0x71003CE080			FALSE	_ZN12_GLOBAL__N_117tryGetValidTargetEPK15NpcTargetFinderPN2al9LiveActorERKN3npc17NpcFindTargetTypeE	(anonymous namespace)::tryGetValidTarget(NpcTargetFinder const*, al::LiveActor*, npc::NpcFindTargetType const&)	
 0x71003CE190			FALSE	_ZN15NpcTargetFinder10receiveMsgEPKN2al9SensorMsgEPNS0_9HitSensorES5_	NpcTargetFinder::receiveMsg(al::SensorMsg const*, al::HitSensor*, al::HitSensor*)	
 0x71003CE1A0			FALSE	_ZN15NpcTargetFinder21receiveMsgScreenPointEPKN2al9SensorMsgEPNS0_13ScreenPointerEPNS0_17ScreenPointTargetE	NpcTargetFinder::receiveMsgScreenPoint(al::SensorMsg const*, al::ScreenPointer*, al::ScreenPointTarget*)	
 0x71003CE280			FALSE	_ZN15NpcTargetFinder10findTargetEv	NpcTargetFinder::findTarget()	
@@ -27365,7 +27365,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710044BFC0			FALSE	_ZNK14PlayerCollider8isGroundERKN4sead7Vector3IfEE	PlayerCollider::isGround(sead::Vector3<float> const&) const	
 0x710044C000			FALSE	_ZN14PlayerCollider24recordFloorCollisionInfoEjf	PlayerCollider::recordFloorCollisionInfo(unsigned int, float)	
 0x710044C0E0			FALSE	_ZN14PlayerCollider18registerPartsArrayEPN4sead13ConstPtrArrayIN2al14CollisionPartsEEEPKS3_	PlayerCollider::registerPartsArray(sead::ConstPtrArray<al::CollisionParts>*, al::CollisionParts const*)	
-0x710044C140			FALSE	sub_710044C140	sub_710044C140	
+0x710044C140			FALSE	_ZN12_GLOBAL__N_116checkSubLegArrowEP14PlayerColliderRKN4sead7Vector3IfEES6_S6_PNS_10LegHitListES8_ff	(anonymous namespace)::checkSubLegArrow(PlayerCollider*, sead::Vector3<float> const&, sead::Vector3<float> const&, sead::Vector3<float> const&, (anonymous namespace)::LegHitList*, (anonymous namespace)::LegHitList*, float, float)	
 0x710044C450			FALSE	_ZNK14PlayerCollider6isWallERKN4sead7Vector3IfEE	PlayerCollider::isWall(sead::Vector3<float> const&) const	
 0x710044C4A0			FALSE	_ZN14PlayerCollider12calcWallInfoERN4sead7Vector3IfEES3_S3_S3_jRKS2_	PlayerCollider::calcWallInfo(sead::Vector3<float>&, sead::Vector3<float>&, sead::Vector3<float>&, sead::Vector3<float>&, unsigned int, sead::Vector3<float> const&)	
 0x710044C840			FALSE	_ZNK14PlayerCollider13isWallForHeadERKN4sead7Vector3IfEE	PlayerCollider::isWallForHead(sead::Vector3<float> const&) const	
@@ -27389,15 +27389,15 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710044D330			FALSE	_ZThn8_NK14PlayerCollider18getFrontPartsArrayEv	non-virtual thunk to PlayerCollider::getFrontPartsArray() const	
 0x710044D340			FALSE	_ZThn8_NK14PlayerCollider28getFrontHemispherePartsArrayEv	non-virtual thunk to PlayerCollider::getFrontHemispherePartsArray() const	
 0x710044D350			FALSE	_ZThn8_NK14PlayerCollider27getBackHemispherePartsArrayEv	non-virtual thunk to PlayerCollider::getBackHemispherePartsArray() const	
-0x710044D360			FALSE	sub_710044D360	sub_710044D360	
-0x710044D370			FALSE	sub_710044D370	sub_710044D370	
-0x710044D3B0			FALSE	sub_710044D3B0	sub_710044D3B0	
-0x710044D3C0			FALSE	sub_710044D3C0	sub_710044D3C0	
-0x710044D3D0			FALSE	sub_710044D3D0	sub_710044D3D0	
-0x710044D3E0			FALSE	sub_710044D3E0	sub_710044D3E0	
-0x710044D3F0			FALSE	sub_710044D3F0	sub_710044D3F0	
-0x710044D400			FALSE	sub_710044D400	sub_710044D400	
-0x710044D410			FALSE	sub_710044D410	sub_710044D410	
+0x710044D360			FALSE	_ZN12_GLOBAL__N_119PlayerCollisionInfo5clearEv	(anonymous namespace)::PlayerCollisionInfo::clear()	
+0x710044D370			FALSE	_ZN12_GLOBAL__N_119PlayerCollisionInfo6recordERKN4sead7Vector3IfEEfPKN2al14CollisionPartsEPKcSB_SB_	(anonymous namespace)::PlayerCollisionInfo::record(sead::Vector3<float> const&, float, al::CollisionParts const*, char const*, char const*, char const*)	
+0x710044D3B0			FALSE	_ZNK12_GLOBAL__N_119PlayerCollisionInfo7isValidEv	(anonymous namespace)::PlayerCollisionInfo::isValid() const	
+0x710044D3C0			FALSE	_ZNK12_GLOBAL__N_119PlayerCollisionInfo9getNormalEv	(anonymous namespace)::PlayerCollisionInfo::getNormal() const	
+0x710044D3D0			FALSE	_ZNK12_GLOBAL__N_119PlayerCollisionInfo8getDepthEv	(anonymous namespace)::PlayerCollisionInfo::getDepth() const	
+0x710044D3E0			FALSE	_ZNK12_GLOBAL__N_119PlayerCollisionInfo17getCollisionPartsEv	(anonymous namespace)::PlayerCollisionInfo::getCollisionParts() const	
+0x710044D3F0			FALSE	_ZNK12_GLOBAL__N_119PlayerCollisionInfo14getMapCodeNameEv	(anonymous namespace)::PlayerCollisionInfo::getMapCodeName() const	
+0x710044D400			FALSE	_ZNK12_GLOBAL__N_119PlayerCollisionInfo15getWallCodeNameEv	(anonymous namespace)::PlayerCollisionInfo::getWallCodeName() const	
+0x710044D410			FALSE	_ZNK12_GLOBAL__N_119PlayerCollisionInfo19getMaterialCodeNameEv	(anonymous namespace)::PlayerCollisionInfo::getMaterialCodeName() const	
 0x710044D420			FALSE	_ZN4sead15FixedRingBufferIN2al24CollisionMultiSphereBase6ResultELi64EEC2Ev	sead::FixedRingBuffer<al::CollisionMultiSphereBase::Result, 64>::FixedRingBuffer()	
 0x710044D9F0			FALSE	_ZN2al20CollisionMultiSphereILi64EE19getResultRingBufferEv	al::CollisionMultiSphere<64>::getResultRingBuffer()	
 0x710044DA00			FALSE	_ZNK2al20CollisionMultiSphereILi64EE19getResultRingBufferEv	al::CollisionMultiSphere<64>::getResultRingBuffer() const	
