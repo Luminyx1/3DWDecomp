@@ -3,12 +3,7 @@
 #include <basis/seadTypes.h>
 #include <prim/seadSafeString.h>
 
-/** @brief Display information for one loaded ghost (owner name and flags). */
-struct GhostPlayerDisplayInfo {
-    sead::WFixedSafeString<32> mUserName;
-    bool mIsMii;
-    bool mIsValid;
-};
+#include "NPC/GhostPlayerDisplayInfo.hpp"
 
 /** @brief Source of recorded ghost play data (ROM data or network data store). */
 class GhostPlayerLoaderBase {

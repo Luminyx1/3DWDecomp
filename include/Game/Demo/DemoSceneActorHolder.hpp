@@ -5,6 +5,7 @@
 class DemoSceneActorHolder {
 public:
     void startAction(int index, bool loop);
+    void kill();
     bool isActionEndCamera(int frames) const;
     bool isContainKoopaJr() const;
     void overrideBaseMtx(const sead::Matrix34f* pMtx);

@@ -11,6 +11,7 @@ class IUseSceneObjHolder;
 
 class SuperBowser;
 class DisasterBlockDirector;
+class GameDataHolderAccessor;
 
 /**
  * @brief Controls Bowser's Fury disaster mode (Fury Bowser's rampages).
@@ -26,6 +27,7 @@ class DisasterModeController : public al::LiveActor {
     };
     void registerStateListener(IUseEventReceiver* listener) { if (!mStateListeners.isFull()) mStateListeners.pushBack(listener); }
     static DisasterModeController* tryGetController(const al::IUseSceneObjHolder* pUser);
+    static bool isLastBowserBattle(GameDataHolderAccessor accessor);
 
     DisasterBlockDirector* getBlockDirector() const { return mBlockDirector; }
     void endImmediate();

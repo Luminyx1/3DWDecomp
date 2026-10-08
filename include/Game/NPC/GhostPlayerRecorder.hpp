@@ -46,6 +46,9 @@ void setPlacementIdObjGhostPlayerRecorder(const al::IUseSceneObjHolder* pUser,
                                           const al::PlacementId* pPlacementId, bool isStart);
 void tryStartFromObjGhostPlayerRecorder(const al::IUseSceneObjHolder* pUser,
                                         const al::PlacementId* pPlacementId);
+void setPlacementIdObjGhostPlayerRecorder(const al::IUseSceneObjHolder* pUser, const char* pId,
+                                          bool isStart);
+void tryStartFromObjGhostPlayerRecorder(const al::IUseSceneObjHolder* pUser, const char* pId);
 bool isFlagShakeAfterGhostPlayerRecorder(const al::IUseSceneObjHolder* pUser);
 const al::PlacementId* tryGetPlacementIdFlagGhostPlayerRecorder(const al::IUseSceneObjHolder* pUser);
 }  // namespace rc

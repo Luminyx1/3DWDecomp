@@ -217,6 +217,8 @@ class GameDataHolder : public al::ISceneObj {
     preport::PlayReportManager* getPlayReportManager() const { return mpPlayReportManager; }
 
   private:
+    friend class PlayReport;
+
     GameDataCommon* mpCommon;
     GameDataPlayReportCommon* mpPlayReportCommon;
     GameDataFile** mppFiles;

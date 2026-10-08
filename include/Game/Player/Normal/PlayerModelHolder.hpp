@@ -38,6 +38,7 @@ public:
     void setShadowLength(f32 length);
 
     al::LiveActor* getCurrentModel() const { return mModels[mCurrentIndex]; }
+    al::LiveActor* getModel(s32 index) const { return mModels[index]; }
     f32 getShadowLength() const { return mShadowLength; }
 
 private:

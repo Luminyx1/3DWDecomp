@@ -4,6 +4,7 @@ class IslandKeeper : public al::ISceneObj {
 public:
     explicit IslandKeeper(int);
     int getActiveIslandIndex() const { return mActiveIslandIndex; }
+    void* findIsland(int index) const;
 private:
     u8 mUnknown8[8];
     int mActiveIslandIndex;

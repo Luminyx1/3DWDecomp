@@ -14,6 +14,7 @@
 #include "MapObj/LuckyIsland.hpp"
 #include "Camera/CameraLookAtPoint.hpp"
 #include "MapObj/Fury/FloatingIslandRailPart.hpp"
+#include "MapObj/Fury/DisasterSpikeBouncy.hpp"
 #include "MapObj/Fury/DisasterFixMapParts.hpp"
 #include "MapObj/GoalPole.hpp"
 #include "MapObj/NeedleRoller.hpp"
@@ -313,14 +314,7 @@ static_assert(sizeof(BoomerangBros) == 0x1d0);
 
 #include "Boss/BossGorobon.hpp"
 
-class BossWackun : public al::LiveActor {
-public:
-    explicit BossWackun(const char* pName);
-
-private:
-    u8 mUnreconstructed[0x114];
-};
-static_assert(sizeof(BossWackun) == 0x258);
+#include "Boss/BossWackun.hpp"
 
 
 
@@ -811,23 +805,6 @@ private:
 };
 static_assert(sizeof(DemoTimerStageSwitchController) == 0x158);
 
-class DisasterSpike : public al::LiveActor {
-public:
-    explicit DisasterSpike(const char* pName);
-
-private:
-    u8 mUnreconstructed[0x1d4];
-};
-static_assert(sizeof(DisasterSpike) == 0x318);
-
-class DisasterSpikeBouncy : public al::LiveActor {
-public:
-    explicit DisasterSpikeBouncy(const char* pName);
-
-private:
-    u8 mUnreconstructed[0x1fc];
-};
-static_assert(sizeof(DisasterSpikeBouncy) == 0x340);
 
 
 

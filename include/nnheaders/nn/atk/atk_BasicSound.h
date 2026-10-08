@@ -92,6 +92,23 @@ public:
     util::IntrusiveListNode& GetExternalPlayerNode() {
         return *reinterpret_cast<util::IntrusiveListNode*>(reinterpret_cast<char*>(this) + 0x200);
     }
+    /**
+     * @brief Gets the owning sound player's sound-list linkage.
+     * @return Node initialized by the sound constructor.
+     */
+    util::IntrusiveListNode& GetSoundPlayerPlayNode() {
+        return *reinterpret_cast<util::IntrusiveListNode*>(reinterpret_cast<char*>(this) + 0x1e0);
+    }
+    /**
+     * @brief Gets the owning sound player's priority-list linkage.
+     * @return Node initialized by the sound constructor.
+     */
+    util::IntrusiveListNode& GetSoundPlayerPriorityNode() {
+        return *reinterpret_cast<util::IntrusiveListNode*>(reinterpret_cast<char*>(this) + 0x1f0);
+    }
+    void Update();
+    void AttachSoundPlayer(SoundPlayer* pPlayer);
+    void DetachSoundPlayer(SoundPlayer* pPlayer);
     void Stop(int fadeFrames);
     void Pause(bool flag, int fadeFrames);
     void SetVolume(f32 volume, int frames);

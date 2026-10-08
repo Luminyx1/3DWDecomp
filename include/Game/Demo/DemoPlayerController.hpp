@@ -9,6 +9,7 @@ public:
     void setPlayerActor(PlayerActor* pActor);
     bool tryStartDemo();
     void endDemo();
+    void stopSklAnimAndDeleteEffect();
 
     /** @brief Gets the assigned player. @return Player actor, or nullptr when unassigned. */
     PlayerActor* getPlayerActor() const { return mPlayerActor; }
