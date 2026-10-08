@@ -250,10 +250,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100008660			TRUE	_ZN2al14NerveStateBase4initEv	al::NerveStateBase::init()	
 0x7100008670			TRUE	_ZN2al14NerveStateBase4killEv	al::NerveStateBase::kill()	
 0x7100008680			TRUE	_ZN2al14NerveStateBase7controlEv	al::NerveStateBase::control()	
-0x7100008690			FALSE	sub_7100008690	sub_7100008690	
+0x7100008690			FALSE	_ZNK12_GLOBAL__N_130BossStateDemoStartNrvDemoStart7executeEPN2al11NerveKeeperE	(anonymous namespace)::BossStateDemoStartNrvDemoStart::execute(al::NerveKeeper*) const	
 0x7100008730			FALSE	_ZNK12_GLOBAL__N_125BossStateDemoStartNrvDemo7executeEPN2al11NerveKeeperE	(anonymous namespace)::BossStateDemoStartNrvDemo::execute(al::NerveKeeper*) const	
-0x7100008740			FALSE	sub_7100008740	sub_7100008740	
-0x71000087B0			FALSE	sub_71000087B0	sub_71000087B0	
+0x7100008740			FALSE	_ZNK12_GLOBAL__N_125BossStateDemoStartNrvFade7executeEPN2al11NerveKeeperE	(anonymous namespace)::BossStateDemoStartNrvFade::execute(al::NerveKeeper*) const	
+0x71000087B0			FALSE	_ZNK12_GLOBAL__N_127BossStateDemoStartNrvCancel7executeEPN2al11NerveKeeperE	(anonymous namespace)::BossStateDemoStartNrvCancel::execute(al::NerveKeeper*) const	
 0x7100008800			TRUE	_ZN4sead15FixedSafeStringILi32EED0Ev	sead::FixedSafeString<32>::~FixedSafeString()	
 0x7100008810			TRUE	_ZN4sead15FixedSafeStringILi32EEaSERKNS_14SafeStringBaseIcEE	sead::FixedSafeString<32>::operator=(sead::SafeStringBase<char> const&)	
 0x7100008900			TRUE	_ZN4sead19FixedSafeStringBaseIcLi32EED0Ev	sead::FixedSafeStringBase<char, 32>::~FixedSafeStringBase()	
@@ -290,9 +290,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710000B0B0			FALSE	_ZN10BossWackunD0Ev	BossWackun::~BossWackun()	
 0x710000B0E0			FALSE	_ZNK12_GLOBAL__N_117BossWackunNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::BossWackunNrvWait::execute(al::NerveKeeper*) const	
 0x710000B0F0			FALSE	_ZNK12_GLOBAL__N_122BossWackunNrvDemoStart7executeEPN2al11NerveKeeperE	(anonymous namespace)::BossWackunNrvDemoStart::execute(al::NerveKeeper*) const	
-0x710000B100			FALSE	nullsub_2	nullsub_2	
-0x710000B110			FALSE	sub_710000B110	sub_710000B110	
-0x710000B160			FALSE	sub_710000B160	sub_710000B160	
+0x710000B100			FALSE	_ZNK12_GLOBAL__N_122BossWackunNrvWaitStart7executeEPN2al11NerveKeeperE	(anonymous namespace)::BossWackunNrvWaitStart::execute(al::NerveKeeper*) const	
+0x710000B110			FALSE	_ZNK12_GLOBAL__N_126BossWackunNrvWaitDemoStart7executeEPN2al11NerveKeeperE	(anonymous namespace)::BossWackunNrvWaitDemoStart::execute(al::NerveKeeper*) const	
+0x710000B160			FALSE	_ZNK12_GLOBAL__N_124BossWackunNrvBattleStart7executeEPN2al11NerveKeeperE	(anonymous namespace)::BossWackunNrvBattleStart::execute(al::NerveKeeper*) const	
 0x710000B1D0			FALSE	_ZNK12_GLOBAL__N_119BossWackunNrvDamage7executeEPN2al11NerveKeeperE	(anonymous namespace)::BossWackunNrvDamage::execute(al::NerveKeeper*) const	
 0x710000B1E0			FALSE	_ZNK12_GLOBAL__N_123BossWackunNrvRotateSign7executeEPN2al11NerveKeeperE	(anonymous namespace)::BossWackunNrvRotateSign::execute(al::NerveKeeper*) const	
 0x710000B1F0			FALSE	_ZNK12_GLOBAL__N_125BossWackunNrvDamageRotate7executeEPN2al11NerveKeeperE	(anonymous namespace)::BossWackunNrvDamageRotate::execute(al::NerveKeeper*) const	
@@ -301,11 +301,11 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710000B220			FALSE	_ZNK12_GLOBAL__N_117BossWackunNrvDown7executeEPN2al11NerveKeeperE	(anonymous namespace)::BossWackunNrvDown::execute(al::NerveKeeper*) const	
 0x710000B230			FALSE	_ZNK12_GLOBAL__N_127BossWackunNrvRecoverStandUp7executeEPN2al11NerveKeeperE	(anonymous namespace)::BossWackunNrvRecoverStandUp::execute(al::NerveKeeper*) const	
 0x710000B240			FALSE	_ZNK12_GLOBAL__N_124BossWackunNrvRecoverJump7executeEPN2al11NerveKeeperE	(anonymous namespace)::BossWackunNrvRecoverJump::execute(al::NerveKeeper*) const	
-0x710000B250			FALSE	sub_710000B250	sub_710000B250	
-0x710000B2C0			FALSE	sub_710000B2C0	sub_710000B2C0	
+0x710000B250			FALSE	_ZNK12_GLOBAL__N_125BossWackunNrvRecoverFrame7executeEPN2al11NerveKeeperE	(anonymous namespace)::BossWackunNrvRecoverFrame::execute(al::NerveKeeper*) const	
+0x710000B2C0			FALSE	_ZNK12_GLOBAL__N_126BossWackunNrvRecoverRotate7executeEPN2al11NerveKeeperE	(anonymous namespace)::BossWackunNrvRecoverRotate::execute(al::NerveKeeper*) const	
 0x710000B330			FALSE	_ZNK12_GLOBAL__N_128BossWackunNrvRecoverFallSign7executeEPN2al11NerveKeeperE	(anonymous namespace)::BossWackunNrvRecoverFallSign::execute(al::NerveKeeper*) const	
 0x710000B340			FALSE	_ZNK12_GLOBAL__N_124BossWackunNrvRecoverFall7executeEPN2al11NerveKeeperE	(anonymous namespace)::BossWackunNrvRecoverFall::execute(al::NerveKeeper*) const	
-0x710000B350			FALSE	sub_710000B350	sub_710000B350	
+0x710000B350			FALSE	_ZNK12_GLOBAL__N_124BossWackunNrvRecoverLand7executeEPN2al11NerveKeeperE	(anonymous namespace)::BossWackunNrvRecoverLand::execute(al::NerveKeeper*) const	
 0x710000B3D0			FALSE	_ZNK2al10FunctorV0MIP10BossWackunMS1_FvvEEclEv	al::FunctorV0M<BossWackun*, void (BossWackun::*)()>::operator()() const	
 0x710000B3F0			FALSE	_ZNK2al10FunctorV0MIP10BossWackunMS1_FvvEE5cloneEv	al::FunctorV0M<BossWackun*, void (BossWackun::*)()>::clone() const	
 0x710000B440		BossWackunBody.o	FALSE	_ZN14BossWackunBodyC2EP10BossWackunP14BossWackunHand	BossWackunBody::BossWackunBody(BossWackun*, BossWackunHand*)	
@@ -5267,9 +5267,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71000CC3D0			FALSE	_ZN14AllDeadWatcher7exeWaitEv	AllDeadWatcher::exeWait()	
 0x71000CC430			FALSE	_ZN14AllDeadWatcherD1Ev	AllDeadWatcher::~AllDeadWatcher()	
 0x71000CC440			FALSE	_ZN14AllDeadWatcherD0Ev	AllDeadWatcher::~AllDeadWatcher()	
-0x71000CC470			FALSE	sub_71000CC470	sub_71000CC470	
-0x71000CC480			FALSE	sub_71000CC480	sub_71000CC480	
-0x71000CC490			FALSE	sub_71000CC490	sub_71000CC490	
+0x71000CC470			FALSE	_ZNK12_GLOBAL__N_122AllDeadWatcherNrvWatch7executeEPN2al11NerveKeeperE	(anonymous namespace)::AllDeadWatcherNrvWatch::execute(al::NerveKeeper*) const	
+0x71000CC480			FALSE	_ZNK12_GLOBAL__N_129AllDeadWatcherNrvWatchPartial7executeEPN2al11NerveKeeperE	(anonymous namespace)::AllDeadWatcherNrvWatchPartial::execute(al::NerveKeeper*) const	
+0x71000CC490			FALSE	_ZNK12_GLOBAL__N_121AllDeadWatcherNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::AllDeadWatcherNrvWait::execute(al::NerveKeeper*) const	
 0x71000CC4A0		AnimTest.o	FALSE	_ZN8AnimTestC2EPKc	AnimTest::AnimTest(char const*)	
 0x71000CC520			FALSE	_ZN8AnimTestC1EPKc	AnimTest::AnimTest(char const*)	
 0x71000CC5A0			FALSE	_ZN8AnimTest4initERKN2al13ActorInitInfoE	AnimTest::init(al::ActorInitInfo const&)	
@@ -5277,7 +5277,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71000CC620			FALSE	_ZN8AnimTest7exeWaitEv	AnimTest::exeWait()	
 0x71000CC630			FALSE	_ZN8AnimTestD1Ev	AnimTest::~AnimTest()	
 0x71000CC640			FALSE	_ZN8AnimTestD0Ev	AnimTest::~AnimTest()	
-0x71000CC670			FALSE	sub_71000CC670	sub_71000CC670	
+0x71000CC670			FALSE	_ZNK12_GLOBAL__N_115AnimTestNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::AnimTestNrvWait::execute(al::NerveKeeper*) const	
 0x71000CC680			FALSE	_ZN24ItemStatePopUpFrontParamD2Ev	ItemStatePopUpFrontParam::~ItemStatePopUpFrontParam()	
 0x71000CC690		Bomb.o	FALSE	_ZN4BombC2EPKcb	Bomb::Bomb(char const*, bool)	
 0x71000CC740			FALSE	_ZN4BombC1EPKcb	Bomb::Bomb(char const*, bool)	
@@ -10116,10 +10116,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100184840			FALSE	_ZN19ChallengeTimerParts6exeEndEv	ChallengeTimerParts::exeEnd()	
 0x7100184850			FALSE	_ZN19ChallengeTimerParts7exeHideEv	ChallengeTimerParts::exeHide()	
 0x71001848B0			FALSE	_ZN19ChallengeTimerParts10exeDisplayEv	ChallengeTimerParts::exeDisplay()	
-0x7100184970			FALSE	nullsub_90	nullsub_90	
+0x7100184970			FALSE	_ZNK12_GLOBAL__N_125ChallengeTimerPartsNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::ChallengeTimerPartsNrvEnd::execute(al::NerveKeeper*) const	
 0x7100184980			FALSE	_ZNK12_GLOBAL__N_131ChallengeTimerPartsNrvCountDown7executeEPN2al11NerveKeeperE	(anonymous namespace)::ChallengeTimerPartsNrvCountDown::execute(al::NerveKeeper*) const	
-0x7100184990			FALSE	sub_7100184990	sub_7100184990	
-0x7100184A00			FALSE	sub_7100184A00	sub_7100184A00	
+0x7100184990			FALSE	_ZNK12_GLOBAL__N_126ChallengeTimerPartsNrvHide7executeEPN2al11NerveKeeperE	(anonymous namespace)::ChallengeTimerPartsNrvHide::execute(al::NerveKeeper*) const	
+0x7100184A00			FALSE	_ZNK12_GLOBAL__N_128ChallengeTimerPartsNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::ChallengeTimerPartsNrvAppear::execute(al::NerveKeeper*) const	
 0x7100184A50			FALSE	_ZNK12_GLOBAL__N_129ChallengeTimerPartsNrvDisplay7executeEPN2al11NerveKeeperE	(anonymous namespace)::ChallengeTimerPartsNrvDisplay::execute(al::NerveKeeper*) const	
 0x7100184A60		CounterCoinInfo.o	FALSE	_ZN15CounterCoinInfoC2ERKN2al14LayoutInitInfoEPK14GameDataHolder	CounterCoinInfo::CounterCoinInfo(al::LayoutInitInfo const&, GameDataHolder const*)	
 0x7100184B50			FALSE	_ZN15CounterCoinInfoC1ERKN2al14LayoutInitInfoEPK14GameDataHolder	CounterCoinInfo::CounterCoinInfo(al::LayoutInitInfo const&, GameDataHolder const*)	
@@ -10130,12 +10130,12 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100184E30			FALSE	_ZN15CounterCoinInfo8exeIntroEv	CounterCoinInfo::exeIntro()	
 0x7100184ED0			FALSE	_ZN15CounterCoinInfo8exeOutroEv	CounterCoinInfo::exeOutro()	
 0x7100184F80			FALSE	_ZN15CounterCoinInfo6exeEndEv	CounterCoinInfo::exeEnd()	
-0x7100184FF0			FALSE	sub_7100184FF0	sub_7100184FF0	
+0x7100184FF0			FALSE	_ZNK12_GLOBAL__N_122CounterCoinInfoNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::CounterCoinInfoNrvWait::execute(al::NerveKeeper*) const	
 0x7100185040			FALSE	_ZNK12_GLOBAL__N_124CounterCoinInfoNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::CounterCoinInfoNrvAppear::execute(al::NerveKeeper*) const	
-0x7100185050			FALSE	sub_7100185050	sub_7100185050	
+0x7100185050			FALSE	_ZNK12_GLOBAL__N_123CounterCoinInfoNrvIntro7executeEPN2al11NerveKeeperE	(anonymous namespace)::CounterCoinInfoNrvIntro::execute(al::NerveKeeper*) const	
 0x71001850F0			FALSE	_ZNK12_GLOBAL__N_126CounterCoinInfoNrvShowMiss7executeEPN2al11NerveKeeperE	(anonymous namespace)::CounterCoinInfoNrvShowMiss::execute(al::NerveKeeper*) const	
-0x7100185100			FALSE	sub_7100185100	sub_7100185100	
-0x71001851B0			FALSE	sub_71001851B0	sub_71001851B0	
+0x7100185100			FALSE	_ZNK12_GLOBAL__N_123CounterCoinInfoNrvOutro7executeEPN2al11NerveKeeperE	(anonymous namespace)::CounterCoinInfoNrvOutro::execute(al::NerveKeeper*) const	
+0x71001851B0			FALSE	_ZNK12_GLOBAL__N_121CounterCoinInfoNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::CounterCoinInfoNrvEnd::execute(al::NerveKeeper*) const	
 0x7100185220		CounterLockGigaBell.o	FALSE	_ZN19CounterLockGigaBellC2EPKcRKN2al14LayoutInitInfoEPKN4sead7Vector3IfEEPNS2_12DemoDirectorE	CounterLockGigaBell::CounterLockGigaBell(char const*, al::LayoutInitInfo const&, sead::Vector3<float> const*, al::DemoDirector*)	
 0x71001852F0			FALSE	_ZN19CounterLockGigaBellC1EPKcRKN2al14LayoutInitInfoEPKN4sead7Vector3IfEEPNS2_12DemoDirectorE	CounterLockGigaBell::CounterLockGigaBell(char const*, al::LayoutInitInfo const&, sead::Vector3<float> const*, al::DemoDirector*)	
 0x71001853D0			FALSE	_ZN19CounterLockGigaBell9startShowEi	CounterLockGigaBell::startShow(int)	
@@ -10479,10 +10479,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100195430			FALSE	_ZN18CoinBlowConcentricD1Ev	CoinBlowConcentric::~CoinBlowConcentric()	
 0x7100195440			FALSE	_ZN18CoinBlowConcentricD0Ev	CoinBlowConcentric::~CoinBlowConcentric()	
 0x7100195470			FALSE	_ZNK12_GLOBAL__N_127CoinBlowConcentricNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::CoinBlowConcentricNrvAppear::execute(al::NerveKeeper*) const	
-0x7100195480			FALSE	sub_7100195480	sub_7100195480	
-0x71001954B0			FALSE	sub_71001954B0	sub_71001954B0	
-0x7100195560			FALSE	sub_7100195560	sub_7100195560	
-0x7100195930			FALSE	sub_7100195930	sub_7100195930	
+0x7100195480			FALSE	_ZN12_GLOBAL__N_120CoinConcentricCircleD0Ev	(anonymous namespace)::CoinConcentricCircle::~CoinConcentricCircle()	
+0x71001954B0			FALSE	_ZNK12_GLOBAL__N_127CoinConcentricCircleNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::CoinConcentricCircleNrvWait::execute(al::NerveKeeper*) const	
+0x7100195560			FALSE	_ZNK12_GLOBAL__N_129CoinConcentricCircleNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::CoinConcentricCircleNrvAppear::execute(al::NerveKeeper*) const	
+0x7100195930			FALSE	_ZNK12_GLOBAL__N_127CoinConcentricCircleNrvBlow7executeEPN2al11NerveKeeperE	(anonymous namespace)::CoinConcentricCircleNrvBlow::execute(al::NerveKeeper*) const	
 0x7100195990			FALSE	_ZNK12_GLOBAL__N_125CoinBlowConcentricNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::CoinBlowConcentricNrvWait::execute(al::NerveKeeper*) const	
 0x71001959A0		CoinStackMoving.o	FALSE	_ZN15CoinStackMovingC2EPKc	CoinStackMoving::CoinStackMoving(char const*)	
 0x7100195A30			FALSE	_ZN15CoinStackMovingC1EPKc	CoinStackMoving::CoinStackMoving(char const*)	
@@ -29894,8 +29894,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100490F10			TRUE	_ZN4sead15FixedSafeStringILi63EEaSERKNS_14SafeStringBaseIcEE	sead::FixedSafeString<63>::operator=(sead::SafeStringBase<char> const&)	
 0x7100491000			TRUE	_ZN4sead19FixedSafeStringBaseIcLi63EED0Ev	sead::FixedSafeStringBase<char, 63>::~FixedSafeStringBase()	
 0x7100491010			TRUE	_ZN4sead19FixedSafeStringBaseIcLi63EEaSERKNS_14SafeStringBaseIcEE	sead::FixedSafeStringBase<char, 63>::operator=(sead::SafeStringBase<char> const&)	
-0x7100491100			FALSE	nullsub_344	nullsub_344	
-0x7100491110			FALSE	sub_7100491110	sub_7100491110	
+0x7100491100			FALSE	__cxx_global_array_dtor	__cxx_global_array_dtor	
+0x7100491110			FALSE	_GLOBAL__sub_I_PlayReport.cpp	_GLOBAL__sub_I_PlayReport.cpp	
 0x71004928F0		preport.o	FALSE	_ZN7preport17PlayReportManagerC2Ev	preport::PlayReportManager::PlayReportManager()	object (class)
 0x7100492910			FALSE	_ZN7preport17PlayReportManager10InitializeEP14GameDataHolderi	preport::PlayReportManager::Initialize(GameDataHolder*, int)	
 0x7100492980			FALSE	_ZN7preport17PlayReportManager6UpdateEv	preport::PlayReportManager::Update()	
@@ -30531,7 +30531,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71004B0980			FALSE	_ZN15DemoEndingScene19initPlacementObjectEPKN2al9StageInfoERKNS0_13ActorInitInfoEPKc	DemoEndingScene::initPlacementObject(al::StageInfo const*, al::ActorInitInfo const&, char const*)	
 0x71004B0A30			FALSE	_ZN15DemoEndingScene17initPlacementDemoEPKN2al9StageInfoERKNS0_13ActorInitInfoE	DemoEndingScene::initPlacementDemo(al::StageInfo const*, al::ActorInitInfo const&)	
 0x71004B0B40			FALSE	_ZNK12_GLOBAL__N_125DemoEndingSceneNrvEndRoll7executeEPN2al11NerveKeeperE	(anonymous namespace)::DemoEndingSceneNrvEndRoll::execute(al::NerveKeeper*) const	
-0x71004B0B50			FALSE	sub_71004B0B50	sub_71004B0B50	
+0x71004B0B50			FALSE	_ZNK12_GLOBAL__N_124DemoEndingSceneNrvCancel7executeEPN2al11NerveKeeperE	(anonymous namespace)::DemoEndingSceneNrvCancel::execute(al::NerveKeeper*) const	
 0x71004B0BE0			FALSE	_ZNK12_GLOBAL__N_128DemoEndingSceneNrvEndRollEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::DemoEndingSceneNrvEndRollEnd::execute(al::NerveKeeper*) const	
 0x71004B0BF0		DemoOpeningScene.o	FALSE	_ZN16DemoOpeningSceneC2Ev	DemoOpeningScene::DemoOpeningScene()	
 0x71004B0CA0			FALSE	_ZN16DemoOpeningSceneD2Ev	DemoOpeningScene::~DemoOpeningScene()	
