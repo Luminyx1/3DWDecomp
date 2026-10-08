@@ -1877,9 +1877,9 @@ src/Game/MapObj/OceanData.cpp:
 src/Game/MapObj/OceanWaveWake.cpp:
     .text   start:0x003295C0 end:0x0032A1A8
 src/Game/MapObj/OceanWater.cpp:
-    .text   start:0x0032A1B0 end:0x003306D0
-src/Game/MapObj/OceanWaveDirector.cpp:
-    .text   start:0x003306D0 end:0x0033C068
+    .text   start:0x0032A1B0 end:0x00330E8C
+src/Game/MapObj/OceanWaterDeferred.cpp:
+    .text   start:0x00330E90 end:0x0033C068
 src/Game/MapObj/OceanWaveGenerator.cpp:
     .text   start:0x0033C070 end:0x0033D11C
 src/Game/MapObj/OceanWaveRipple.cpp:
