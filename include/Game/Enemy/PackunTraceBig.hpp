@@ -16,6 +16,9 @@ public:
     void initAfterPlacement() override;
     void control() override;
     void appear() override;
+
+    /** @brief Sets the rotation applied on top of the collision pose. */
+    void setBaseQuat(const sead::Quatf& rQuat) { mBaseQuat = rQuat; }
     void attackSensor(al::HitSensor* pSelf, al::HitSensor* pOther) override;
     bool receiveMsg(const al::SensorMsg* pMsg, al::HitSensor* pOther,
                     al::HitSensor* pSelf) override;

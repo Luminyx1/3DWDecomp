@@ -57,6 +57,7 @@ public:
     bool isDemo() const;
     bool isPlayPuppeterDemoAll() const;
     bool isPlayPuppeterDemoAny() const;
+    bool isPlayPuppeterDemo(s32 userId) const;
     bool isPlayEntryDemoAny() const;
     bool isPlayLeaveDemo(s32 userId) const;
     bool isInCourseSelectBubbleAny() const;
@@ -80,6 +81,8 @@ public:
     s32 getActiveWorldId() const { return mActiveWorldId; }
     /** @brief Gets whether the event gate keeper is talking. @return true while it talks. */
     bool isEventGateKeeper() const { return mIsEventGateKeeper; }
+    /** @brief Gets the main player of the map. @return The main player actor. */
+    al::LiveActor* getMainPlayer() const { return mMainPlayer; }
 
 private:
     unsigned char _8[0x10 - 0x8];
@@ -87,7 +90,9 @@ private:
     unsigned char _18[0x150 - 0x18];
     CourseSelectNode** mNodes;  // 0x150
     s32 mNodeNum;  // 0x158
-    unsigned char _15c[0x1b8 - 0x15c];
+    unsigned char _15c[0x160 - 0x15c];
+    al::LiveActor* mMainPlayer;  // 0x160
+    unsigned char _168[0x1b8 - 0x168];
     DemoTimerStageSwitchController* mDemoTimerStageSwitchController;
     DemoOpeningSwitch* mDemoOpeningSwitch;
     s32 mActiveWorldId;  // 0x1c8
@@ -95,3 +100,7 @@ private:
 };
 
 static_assert(sizeof(CourseSelectDirector) == 0x1d0);
+
+namespace rc {
+s32 getSelectMiniatureCourseId(CourseSelectDirector* pDirector);
+}  // namespace rc

@@ -42,6 +42,7 @@ struct NekoAttachReason {
      * @note Only the values used by reconstructed code are named.
      */
     enum Type : s32 {
+        Type_StartDisaster = 1,
         Type_Hide = 2,
         Type_AppearAtHost = 3,
     };

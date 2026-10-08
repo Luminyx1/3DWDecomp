@@ -9,6 +9,14 @@ typedef volatile s16 vs16;
 
 /** @brief Pause policy shared by sound players and individual sounds. */
 enum PauseMode {};
+
+/** @brief Encoding of wave and stream sample data. */
+enum SampleFormat : int {
+    SampleFormat_PcmS8,
+    SampleFormat_PcmS16,
+    SampleFormat_DspAdpcm,
+};
+
 enum OutputMode {
     OutputMode_Monaural,
     OutputMode_Stereo,

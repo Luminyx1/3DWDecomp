@@ -2005,14 +2005,7 @@ static_assert(sizeof(ShadowMarioPlayer) == 0x1b0);
 
 
 
-class SkateShoes : public al::LiveActor {
-public:
-    explicit SkateShoes(const char* pName);
-
-private:
-    u8 mUnreconstructed[0x2c];
-};
-static_assert(sizeof(SkateShoes) == 0x170);
+#include "Raidon/SkateShoes.hpp"
 
 class Skatis : public al::LiveActor {
 public:

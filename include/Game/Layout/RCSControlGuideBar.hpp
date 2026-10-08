@@ -17,6 +17,7 @@ public:
     enum GuideBarMsgType : s32 {
         GuideBarMsgType_Default = 0,     ///< Guide text shown after a save file was chosen.
         GuideBarMsgType_PauseMenu = 4,   ///< Guide text of the pause menu.
+        GuideBarMsgType_PauseMenuMap = 5,  ///< Guide text of the course select map's pause menu.
         GuideBarMsgType_ControlGuide = 6,  ///< Guide text of the pause menu's control guide.
         GuideBarMsgType_FileSelect = 7,  ///< Guide text of the save file select.
         GuideBarMsgType_Title = 8,  ///< Guide text of the title screen.

@@ -17,6 +17,9 @@ public:
     void control() override;
     void appear() override;
 
+    /** @brief Sets the rotation applied on top of the collision pose. */
+    void setBaseQuat(const sead::Quatf& rQuat) { mBaseQuat = rQuat; }
+
 private:
     al::LiveActor* mOwner;
     al::MtxConnector* mConnector = nullptr;

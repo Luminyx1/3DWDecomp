@@ -10,6 +10,8 @@ class IUseSceneObjHolder;
 enum GuideMessagePriority : s32 {};
 
 namespace rc {
+void appearGuideGameWindow(const al::IUseSceneObjHolder* pHolder, const char* pCategory,
+                           const char* pLabel, s32 frame, f32 delay);
 void appearGuideGameWindowWithConfirm(const al::IUseSceneObjHolder* pHolder, const char* pMessage,
                                       bool isConfirm);
 bool appearGuideGameWindowWithPriority(const al::IUseSceneObjHolder* pHolder,

@@ -41,6 +41,7 @@ class SuperBowser : public al::LiveActor {
     s32 getLastPhase3CurrentIndex() const;
     bool isPlessieChaseBigRamp() const;
     SpawnInfo* getCurrentSpawnInfo();
+    void notifyPlayerHit();
     void setLaunchSpikeQueueCount(s32 count);
     void clearLaunchSpikeAmbientFrameCount();
     void tryLaunchSpike();

@@ -73,6 +73,9 @@ public:
     bool receiveMsgScreenPoint(const al::SensorMsg* pMsg, al::ScreenPointer* pPointer,
                                al::ScreenPointTarget* pTarget);
     void setTargetTypePriority(const npc::NpcFindTargetType& rType, const u8& rPriority);
+    void changeHost(al::LiveActor* pHost, const char* pSensorName,
+                    const IUseTargetFinderFilter* pFilter);
+    void clearPriorityMap();
 
     /**
      * @brief Get the current target if it is of one of the given kinds.
@@ -126,7 +129,10 @@ private:
     const NpcTargetFinderParam* mParam;  // 0x48
     u8 _50[0xf0 - 0x50];
     al::HitSensor* mEyeSensor;  // 0xf0
+    u8 _f8[0x298 - 0xf8];
 };
+
+static_assert(sizeof(NpcTargetFinder) == 0x298);
 
 namespace npc {
 bool calcIsTargetInSight(const NpcTargetFinder* pFinder, const al::LiveActor* pTarget,

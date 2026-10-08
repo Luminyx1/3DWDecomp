@@ -41,6 +41,8 @@ class DisasterModeController : public al::LiveActor, public al::ISceneObj {
     static bool isLastBowserBattle(GameDataHolderAccessor accessor);
 
     DisasterBlockDirector* getBlockDirector() const { return mBlockDirector; }
+    void begin(bool);
+    void end();
     void endImmediate();
     void setSuperBowserV2(bool);
     void pause(bool);

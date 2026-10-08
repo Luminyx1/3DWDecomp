@@ -25,6 +25,7 @@ class IUsePlayerPuppet;
 class Player;
 class PlayerActionObserver;
 class PlayerAmiiboDirector;
+class PlayerAmiiboDirectorWatcher;
 class PlayerAudio;
 class PlayerGigaDirector;
 class PlayerConstParam;
@@ -189,6 +190,12 @@ public:
     PlayerAmiiboDirector* getAmiiboDirector();
     void pausePlayerAmiiboDirector(bool isPause);
     void endPausePlayerAmiiboDirector();
+    void setAmiiboDirector(PlayerAmiiboDirector* pDirector);
+    void createPlayerAmiiboDirector(PlayerAmiiboDirectorWatcher* pWatcher,
+                                    const al::ActorInitInfo& rInfo);
+    bool isValidCircleShadow() const;
+    void validateCircleShadow();
+    void invalidateCircleShadow();
 
     PlayerConstParam* getConstParam() const { return mConstParam; }
     Player* getPlayer() const { return mPlayer; }

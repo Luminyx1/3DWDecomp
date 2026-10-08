@@ -1,5 +1,6 @@
 #pragma once
 
+#include <math/seadMatrix.h>
 #include <math/seadVector.h>
 
 /// The player's physical state shared by the actions.
@@ -18,7 +19,7 @@ struct PlayerProperty {
     sead::Vector3f mFront;     // 0xc
     sead::Vector3f mGroundUp;  // 0x18
     sead::Vector3f mVelocity;  // 0x24
-    unsigned char _30[0x30];
+    sead::Matrix34f mTurnMtx;  // 0x30, extra model rotation while turning in mid-air
     sead::Vector3f mGravity;   // 0x60
     sead::Vector3f mUpDir;     // 0x6c
     f32 _78;  // 0.9 while the player squeezes into a side pipe, 1.0 otherwise

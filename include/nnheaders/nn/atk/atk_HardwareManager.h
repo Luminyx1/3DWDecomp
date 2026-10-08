@@ -231,7 +231,7 @@ class HardwareManager : public Util::Singleton<HardwareManager> {
                                                    int destinationChannel);
     f32 GetAuxBusChannelVolumeForAdditionalEffect(AuxBus bus, int sourceChannel,
                                                   int destinationChannel) const;
-    void FlushDataCache(void* pAddress, size_t size);
+    static void FlushDataCache(void* pAddress, size_t size);
     void LockEffectAuxList();
     void UnlockEffectAuxList();
     void LockEffectAuxListForFinalMix();

@@ -15,6 +15,7 @@ public:
     static const char ItemTypeWaveSound[];
     static const char FileTypeSequenceBinary[];
     static const char FileTypeWaveSoundBinary[];
+    static const char FileTypeStreamBinary[];
 
     virtual ~SoundArchiveFilesHook() {}
 
@@ -53,12 +54,28 @@ public:
         return GetFileAddressImpl(pItemLabel, pItemType, pFileType, fileIndex);
     }
 
+    /**
+     * @brief Opens the replacement file of an item.
+     * @param pBuffer Storage the hook constructs the returned stream in.
+     * @param bufferSize Size of pBuffer in bytes.
+     * @param pCacheBuffer Read cache for the stream, or nullptr for none.
+     * @param cacheSize Size of pCacheBuffer in bytes.
+     * @param pItemLabel Label of the archive item.
+     * @param pFileType File type name, such as FileTypeStreamBinary.
+     * @return Opened stream inside pBuffer, or nullptr when the hook has no file.
+     */
+    fnd::FileStream* OpenFile(void* pBuffer, size_t bufferSize, void* pCacheBuffer,
+                              size_t cacheSize, const char* pItemLabel, const char* pFileType) {
+        return OpenFileImpl(pBuffer, bufferSize, pCacheBuffer, cacheSize, pItemLabel, pFileType);
+    }
+
 protected:
     virtual bool IsTargetItemImpl(const char* pItemLabel) = 0;
     virtual void LockImpl() = 0;
     virtual void UnlockImpl() = 0;
-    virtual fnd::FileStream* OpenFileImpl(void* pBuffer, size_t bufferSize,
-                                          const char* pItemLabel, const char* pFileType) = 0;
+    virtual fnd::FileStream* OpenFileImpl(void* pBuffer, size_t bufferSize, void* pCacheBuffer,
+                                          size_t cacheSize, const char* pItemLabel,
+                                          const char* pFileType) = 0;
     virtual const void* GetFileAddressImpl(const char* pItemLabel, const char* pItemType,
                                            const char* pFileType, u32 fileIndex) = 0;
 

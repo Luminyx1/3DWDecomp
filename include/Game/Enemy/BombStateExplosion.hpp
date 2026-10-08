@@ -29,7 +29,12 @@ public:
     void attackSensor(al::HitSensor* pSelf, al::HitSensor* pOther, al::ComboCounter* pCounter);
     void attackSensorGiga(al::HitSensor* pSelf, al::HitSensor* pOther, al::ComboCounter* pCounter);
 
+    /** @brief Sets whether the explosion also damages players. */
+    void setIsAttackToPlayer(bool isAttackToPlayer) { mIsAttackToPlayer = isAttackToPlayer; }
+
 private:
-    u8 mUnreconstructed[0x10];
+    bool _20;
+    bool mIsAttackToPlayer;  // 0x21
+    u8 mUnreconstructed[0xe];
 };
 static_assert(sizeof(BombStateExplosion) == 0x30);

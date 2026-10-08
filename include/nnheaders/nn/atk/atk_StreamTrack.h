@@ -1,4 +1,5 @@
 #pragma once
+#include <nn/atk/atk_DecodeAdpcm.h>
 #include <nn/types.h>
 
 namespace nn::atk {
@@ -36,6 +37,8 @@ public:
 
     void AppendWaveBuffer(int channel, WaveBuffer* buffer, bool last);
     void Pause(bool isPause);
+    static void CalcOffsetAdpcmParam(AdpcmContext* pContext, const audio::AdpcmParameter& rParam,
+                                     long offset, const void* pData);
 
     /** @brief Gets the number of wave channels in use. @return Channel count. */
     int GetChannelCount() const { return mChannelCount; }

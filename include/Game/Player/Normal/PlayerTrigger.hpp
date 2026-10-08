@@ -10,4 +10,6 @@ public:
 
     bool isOn(ESensorTrigger) const;
     bool isOn(ECollisionTrigger) const;
+    void set(ESensorTrigger);
+    void set(ECollisionTrigger);
 };

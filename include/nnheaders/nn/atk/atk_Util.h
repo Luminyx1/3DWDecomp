@@ -3,6 +3,7 @@
 
 namespace nn::atk {
 class SoundArchive;
+enum SampleFormat : int;
 namespace detail {
 class SoundArchiveLoader;
 struct LoadItemInfo;
@@ -20,6 +21,7 @@ const void* GetWaveFileOfWaveSound(const void* pWaveSoundFile, u32 index, const 
 WaveArchiveLoadStatus GetWaveArchiveOfBank(LoadItemInfo& rWarcInfo, bool& rIsLoadIndividual,
                                            const void* pBankFile, const SoundArchive& rArchive,
                                            const SoundArchiveLoader& rLoader);
+size_t GetByteBySample(size_t samples, SampleFormat format);
 } // namespace Util
 } // namespace detail
 } // namespace nn::atk
