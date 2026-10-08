@@ -1,18 +1,19 @@
 #pragma once
 
 #include "Library/Layout/LayoutActor.hpp"
+#include "System/ScenarioInfo.hpp"
 
 namespace al {
 class LayoutInitInfo;
+class LiveActor;
 class PlayerHolder;
 class WipeSimple;
 }  // namespace al
 
-class ScenarioInfo;
+class SingleModeSceneLayout;
 
 /**
  * @brief Bowser's Fury HUD banner showing the name of the island / scenario the player enters.
- * @note Only what reconstructed code needs is declared so far.
  */
 class AreaNameParts : public al::LayoutActor {
 public:
@@ -35,7 +36,15 @@ public:
     void exeFadeOut();
 
 private:
-    u8 _121[0x160 - 0x121];
+    const al::PlayerHolder* mPlayerHolder;  // 0x128
+    al::LiveActor* mPlayerActor;            // 0x130
+    SingleModeSceneLayout* mParent;         // 0x138
+    ScenarioInfo mScenarioInfo;             // 0x140
+    bool mIsFadeOutRequested;               // 0x148
+    bool mIsForceEndAppear;                 // 0x149
+    bool mIsForceEndAppearPhaseStart;       // 0x14A
+    u8 _14b[0x158 - 0x14b];
+    al::WipeSimple* mWipeFadeWhite;  // 0x158
 };
 
 static_assert(sizeof(AreaNameParts) == 0x160);
