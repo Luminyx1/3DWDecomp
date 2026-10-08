@@ -8,10 +8,14 @@ class CameraDirector;
 class CameraDirector_RS;
 class LayoutInitInfo;
 }  // namespace al
+class ButtonGroup;
+class ButtonTextScrollParts;
 
 /**
- * @brief Options sub-menu of the pause menu (camera, controls and the Bowser Jr. assist demo).
- * @note Only the members used by already-decompiled callers are declared.
+ * @brief Options sub-menu of the pause menu (camera inversion, camera sensitivity and the
+ *        Bowser's Fury assist mode).
+ * @note Built with a CameraDirector for Super Mario 3D World and with a CameraDirector_RS for
+ *       Bowser's Fury, which additionally shows the sensitivity and assist mode buttons.
  */
 class OptionsMenu : public al::LayoutActor {
 public:
@@ -19,11 +23,17 @@ public:
                 bool isKinopioBrigade);
     OptionsMenu(const al::LayoutInitInfo& rInfo, al::CameraDirector_RS* pCameraDirector);
 
+    void exeAppear();
+    void exeAppearKoopaJrDemo();
+    void exeWait();
+    void exeWaitKoopaJrDemo();
+    void exeEnd();
+    void exeFullEndKoopaJrDemo();
+    bool isKoopaJrDemoEnd();
     void appear(s32 port);
     void appearKoopaJrDemo(s32 port);
-    bool isKoopaJrDemoEnd();
-    bool isEnding();
     void forceExit();
+    bool isEnding();
 
     /**
      * @brief Access the Bowser's Fury camera director.
@@ -32,8 +42,16 @@ public:
     al::CameraDirector_RS* getCameraDirectorRS() const { return mCameraDirectorRS; }
 
 private:
-    u8 mUnreconstructed128[0x38];
+    ButtonGroup* mButtonGroup = nullptr;
+    ButtonTextScrollParts* mSensitivityButton = nullptr;
+    ButtonTextScrollParts* mHorizontalButton = nullptr;
+    ButtonTextScrollParts* mVerticalButton = nullptr;
+    ButtonTextScrollParts* mAssistModeButton = nullptr;
+    s32 mPort = -1;
+    s32 mMainControllerPort;
+    al::CameraDirector* mCameraDirector;
     al::CameraDirector_RS* mCameraDirectorRS;
-    u8 mUnreconstructed168[0x8];
+    bool mIsKinopioBrigade;
+    s32 mSideInputDelay = 10;
 };
 static_assert(sizeof(OptionsMenu) == 0x170);
