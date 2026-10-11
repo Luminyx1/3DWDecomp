@@ -605,7 +605,7 @@ src/Game/Enemy/CrawlerLaunchState.cpp:
     .text   start:0x000EA140 end:0x000EA784
 src/Game/Enemy/CrawlerWalkState.cpp:
     .text   start:0x000EA790 end:0x000EB8E8
-src/Game/Enemy/DarkBowserRingBeam.cpp:
+src/Game/Enemy/DarkBowserRingBeam.cpp: done
     .text   start:0x000EB8F0 end:0x000EC668
 src/Game/Enemy/Donketsu.cpp:
     .text   start:0x000EC670 end:0x000EE9BC

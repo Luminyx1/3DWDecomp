@@ -6136,7 +6136,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71000EC520			FALSE	_ZN18DarkBowserRingBeam11exeDeactiveEv	DarkBowserRingBeam::exeDeactive()	
 0x71000EC590			FALSE	_ZN18DarkBowserRingBeamD1Ev	DarkBowserRingBeam::~DarkBowserRingBeam()	
 0x71000EC5A0			FALSE	_ZN18DarkBowserRingBeamD0Ev	DarkBowserRingBeam::~DarkBowserRingBeam()	
-0x71000EC5D0			FALSE	sub_71000EC5D0	sub_71000EC5D0	
+0x71000EC5D0			FALSE	_ZNK12_GLOBAL__N_129DarkBowserRingBeamNrvDeactive7executeEPN2al11NerveKeeperE	(anonymous namespace)::DarkBowserRingBeamNrvDeactive::execute(al::NerveKeeper*) const	
 0x71000EC650			FALSE	_ZNK12_GLOBAL__N_127DarkBowserRingBeamNrvActive7executeEPN2al11NerveKeeperE	(anonymous namespace)::DarkBowserRingBeamNrvActive::execute(al::NerveKeeper*) const	
 0x71000EC660			FALSE	_ZNK12_GLOBAL__N_128DarkBowserRingBeamNrvFadeOut7executeEPN2al11NerveKeeperE	(anonymous namespace)::DarkBowserRingBeamNrvFadeOut::execute(al::NerveKeeper*) const	
 0x71000EC670		Donketsu.o	FALSE	_ZN8DonketsuC2EPKc	Donketsu::Donketsu(char const*)	
