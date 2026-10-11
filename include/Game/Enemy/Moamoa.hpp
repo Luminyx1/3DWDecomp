@@ -2,6 +2,7 @@
 #include "Library/LiveActor/LiveActor.hpp"
 #include <math/seadVector.h>
 class MoamoaHolder;
+class ActorJointLookController;
 
 class Moamoa : public al::LiveActor {
 public:
@@ -14,8 +15,17 @@ public:
                                al::ScreenPointTarget* pTarget) override;
     /** @brief Sets the offset within the holder's grid. @param rOffset Local placement offset. */
     void setOffset(const sead::Vector3f& rOffset) { mOffset.set(rOffset); }
+    void exeWait();
+    void exeDie();
+    void exeMicWeakInit();
+    void exeWeak();
+    void exeWeakWait();
+    void exeRevivalSign();
+    void exeRevival();
 private:
-    u8 _144[0x14];
+    const MoamoaHolder* mHolder;
+    ActorJointLookController* mLookController;
     sead::Vector3f mOffset;
+    s32 mMicDelay;
 };
 static_assert(sizeof(Moamoa) == 0x168);

@@ -7700,17 +7700,17 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001281C0			FALSE	_ZN6Moamoa10exeRevivalEv	Moamoa::exeRevival()	
 0x7100128290			FALSE	_ZN6MoamoaD1Ev	Moamoa::~Moamoa()	
 0x71001282A0			FALSE	_ZN6MoamoaD0Ev	Moamoa::~Moamoa()	
-0x71001282D0			FALSE	sub_71001282D0	sub_71001282D0	
-0x7100128330			FALSE	sub_7100128330	sub_7100128330	
-0x7100128380			FALSE	sub_7100128380	sub_7100128380	
-0x7100128390			FALSE	sub_7100128390	sub_7100128390	
-0x7100128410			FALSE	sub_7100128410	sub_7100128410	
-0x7100128420			FALSE	sub_7100128420	sub_7100128420	
-0x7100128430			FALSE	sub_7100128430	sub_7100128430	
-0x71001284A0			FALSE	sub_71001284A0	sub_71001284A0	
-0x7100128510			FALSE	sub_7100128510	sub_7100128510	
+0x71001282D0			FALSE	_ZNK12_GLOBAL__N_113MoamoaNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::MoamoaNrvWait::execute(al::NerveKeeper*) const	
+0x7100128330			FALSE	_ZNK12_GLOBAL__N_120MoamoaNrvMicWeakInit7executeEPN2al11NerveKeeperE	(anonymous namespace)::MoamoaNrvMicWeakInit::execute(al::NerveKeeper*) const	
+0x7100128380			FALSE	_ZNK12_GLOBAL__N_118MoamoaNrvShockwave7executeEPN2al11NerveKeeperE	(anonymous namespace)::MoamoaNrvShockwave::execute(al::NerveKeeper*) const	
+0x7100128390			FALSE	_ZNK12_GLOBAL__N_112MoamoaNrvDie7executeEPN2al11NerveKeeperE	(anonymous namespace)::MoamoaNrvDie::execute(al::NerveKeeper*) const	
+0x7100128410			FALSE	_ZNK12_GLOBAL__N_113MoamoaNrvWeak7executeEPN2al11NerveKeeperE	(anonymous namespace)::MoamoaNrvWeak::execute(al::NerveKeeper*) const	
+0x7100128420			FALSE	_ZNK12_GLOBAL__N_118MoamoaNrvTouchWeak7executeEPN2al11NerveKeeperE	(anonymous namespace)::MoamoaNrvTouchWeak::execute(al::NerveKeeper*) const	
+0x7100128430			FALSE	_ZNK12_GLOBAL__N_122MoamoaNrvTouchWeakWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::MoamoaNrvTouchWeakWait::execute(al::NerveKeeper*) const	
+0x71001284A0			FALSE	_ZNK12_GLOBAL__N_117MoamoaNrvWeakWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::MoamoaNrvWeakWait::execute(al::NerveKeeper*) const	
+0x7100128510			FALSE	_ZNK12_GLOBAL__N_120MoamoaNrvRevivalSign7executeEPN2al11NerveKeeperE	(anonymous namespace)::MoamoaNrvRevivalSign::execute(al::NerveKeeper*) const	
 0x7100128570			FALSE	_ZNK12_GLOBAL__N_116MoamoaNrvRevival7executeEPN2al11NerveKeeperE	(anonymous namespace)::MoamoaNrvRevival::execute(al::NerveKeeper*) const	
-0x7100128580			FALSE	sub_7100128580	sub_7100128580	
+0x7100128580			FALSE	_GLOBAL__sub_I_Moamoa.cpp	_GLOBAL__sub_I_Moamoa.cpp	
 0x7100128630		MoamoaHolder.o	FALSE	_ZN12MoamoaHolderC2EPKc	MoamoaHolder::MoamoaHolder(char const*)	
 0x71001286C0			FALSE	_ZN12MoamoaHolderC1EPKc	MoamoaHolder::MoamoaHolder(char const*)	
 0x7100128760			FALSE	_ZN12MoamoaHolder4initERKN2al13ActorInitInfoE	MoamoaHolder::init(al::ActorInitInfo const&)	
