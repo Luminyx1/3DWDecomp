@@ -5851,3 +5851,8 @@
 0x71019E5E80 8 object _ZN12_GLOBAL__N_129NrvTestAoyagiLayoutTextAppearE
 0x71019E5EA8 8 object _ZN12_GLOBAL__N_127NrvTestAoyagiLayoutTextWaitE
 0x71019E5ED0 8 object _ZN12_GLOBAL__N_126NrvTestAoyagiLayoutTextEndE
+
+# src/Game/Layout/ButtonConfigParts
+0x71019D06D8 8 object _ZN12_GLOBAL__N_124NrvButtonConfigPartsWaitE
+0x71019D06E8 8 object _ZN12_GLOBAL__N_126NrvButtonConfigPartsDecideE
+0x71019D0700 8 object _ZN12_GLOBAL__N_127NrvButtonConfigPartsDisableE

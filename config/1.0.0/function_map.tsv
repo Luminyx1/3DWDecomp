@@ -11013,12 +11013,12 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001AAB30			FALSE	_ZN17ButtonConfigParts4downEv	ButtonConfigParts::down()	
 0x71001AAB40			FALSE	_ZN17ButtonConfigParts4leftEv	ButtonConfigParts::left()	
 0x71001AAB50			FALSE	_ZN17ButtonConfigParts5rightEv	ButtonConfigParts::right()	
-0x71001AAB60			FALSE	sub_71001AAB60	sub_71001AAB60	
+0x71001AAB60			FALSE	_ZNK12_GLOBAL__N_124ButtonConfigPartsNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::ButtonConfigPartsNrvWait::execute(al::NerveKeeper*) const	
 0x71001AABE0			FALSE	_ZNK12_GLOBAL__N_125ButtonConfigPartsNrvTouch7executeEPN2al11NerveKeeperE	(anonymous namespace)::ButtonConfigPartsNrvTouch::execute(al::NerveKeeper*) const	
-0x71001AABF0			FALSE	sub_71001AABF0	sub_71001AABF0	
+0x71001AABF0			FALSE	_ZNK12_GLOBAL__N_126ButtonConfigPartsNrvDecide7executeEPN2al11NerveKeeperE	(anonymous namespace)::ButtonConfigPartsNrvDecide::execute(al::NerveKeeper*) const	
 0x71001AAC40			FALSE	_ZNK12_GLOBAL__N_131ButtonConfigPartsNrvOutsideHold7executeEPN2al11NerveKeeperE	(anonymous namespace)::ButtonConfigPartsNrvOutsideHold::execute(al::NerveKeeper*) const	
 0x71001AAC50			FALSE	_ZNK12_GLOBAL__N_126ButtonConfigPartsNrvSelect7executeEPN2al11NerveKeeperE	(anonymous namespace)::ButtonConfigPartsNrvSelect::execute(al::NerveKeeper*) const	
-0x71001AAC60			FALSE	sub_71001AAC60	sub_71001AAC60	
+0x71001AAC60			FALSE	_ZNK12_GLOBAL__N_127ButtonConfigPartsNrvDisable7executeEPN2al11NerveKeeperE	(anonymous namespace)::ButtonConfigPartsNrvDisable::execute(al::NerveKeeper*) const	
 0x71001AACB0		ButtonCursorParts.o	FALSE	_ZN17ButtonCursorPartsC2ERKN2al14LayoutInitInfoEPKcS5_PNS0_11LayoutActorE	ButtonCursorParts::ButtonCursorParts(al::LayoutInitInfo const&, char const*, char const*, al::LayoutActor*)	
 0x71001AADA0			FALSE	_ZN17ButtonCursorPartsC1ERKN2al14LayoutInitInfoEPKcS5_PNS0_11LayoutActorE	ButtonCursorParts::ButtonCursorParts(al::LayoutInitInfo const&, char const*, char const*, al::LayoutActor*)	
 0x71001AAEA0			FALSE	_ZN17ButtonCursorParts9exeAppearEv	ButtonCursorParts::exeAppear()	
