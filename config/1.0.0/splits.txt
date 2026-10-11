@@ -135,7 +135,7 @@ src/Game/Boss/DarkBowserStateDemo.cpp:
     .text   start:0x00018E10 end:0x00019858
 src/Game/Boss/DarkBowserLaserIndicator.cpp:
     .text   start:0x00019860 end:0x0001A184
-src/Game/Boss/DarkBowserHealth.cpp:
+src/Game/Boss/DarkBowserHealth.cpp: done
     .text   start:0x0001A190 end:0x0001AD4C
 src/Game/Boss/DarkBowserInkBomb.cpp:
     .text   start:0x0001AD50 end:0x0001D038

@@ -674,13 +674,13 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710001AB80			FALSE	_ZThn32_NK2rc9HealthBar18getSceneCameraInfoEv	non-virtual thunk to rc::HealthBar::getSceneCameraInfo() const	
 0x710001AB90			TRUE	_ZThn40_NK2al11LayoutActor14getAudioKeeperEv	non-virtual thunk to al::LayoutActor::getAudioKeeper() const	
 0x710001ABA0			TRUE	_ZThn48_NK2al11LayoutActor15getEffectKeeperEv	non-virtual thunk to al::LayoutActor::getEffectKeeper() const	
-0x710001ABB0			FALSE	sub_710001ABB0	sub_710001ABB0	
-0x710001AC20			FALSE	sub_710001AC20	sub_710001AC20	
-0x710001AC30			FALSE	sub_710001AC30	sub_710001AC30	
+0x710001ABB0			FALSE	_ZNK12_GLOBAL__N_115HealthBarNrvEnd7executeEPN2al11NerveKeeperE	sub_710001ABB0	matched nerve
+0x710001AC20			FALSE	_ZNK12_GLOBAL__N_125HealthBarNrvAppearInstant7executeEPN2al11NerveKeeperE	sub_710001AC20	matched nerve
+0x710001AC30			FALSE	_ZNK12_GLOBAL__N_116HealthBarNrvWait7executeEPN2al11NerveKeeperE	sub_710001AC30	matched nerve
 0x710001AC40			FALSE	_ZNK12_GLOBAL__N_118HealthBarNrvDamage7executeEPN2al11NerveKeeperE	(anonymous namespace)::HealthBarNrvDamage::execute(al::NerveKeeper*) const	
-0x710001AC50			FALSE	sub_710001AC50	sub_710001AC50	
-0x710001AC60			FALSE	sub_710001AC60	sub_710001AC60	
-0x710001ACE0			FALSE	sub_710001ACE0	sub_710001ACE0	
+0x710001AC50			FALSE	_ZNK12_GLOBAL__N_118HealthBarNrvAppear7executeEPN2al11NerveKeeperE	sub_710001AC50	matched nerve
+0x710001AC60			FALSE	_ZNK12_GLOBAL__N_116HealthBarNrvHeal7executeEPN2al11NerveKeeperE	sub_710001AC60	matched nerve
+0x710001ACE0			FALSE	_ZNK12_GLOBAL__N_123HealthBarNrvDamageStart7executeEPN2al11NerveKeeperE	sub_710001ACE0	matched nerve
 0x710001AD50		DarkBowserInkBomb.o	FALSE	_ZN7InkBombC2EPKcPKN2al9LiveActorE	InkBomb::InkBomb(char const*, al::LiveActor const*)	
 0x710001AE20			FALSE	_ZN7InkBombC1EPKcPKN2al9LiveActorE	InkBomb::InkBomb(char const*, al::LiveActor const*)	
 0x710001AEF0			FALSE	_ZN7InkBomb4initERKN2al13ActorInitInfoE	InkBomb::init(al::ActorInitInfo const&)	
