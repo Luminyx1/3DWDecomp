@@ -3466,11 +3466,11 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100094950			FALSE	_ZN17CourseSelectFairyD1Ev	CourseSelectFairy::~CourseSelectFairy()	
 0x7100094960			FALSE	_ZN17CourseSelectFairyD0Ev	CourseSelectFairy::~CourseSelectFairy()	
 0x7100094990			FALSE	_ZNK12_GLOBAL__N_124CourseSelectFairyNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectFairyNrvWait::execute(al::NerveKeeper*) const	
-0x71000949A0			FALSE	sub_71000949A0	sub_71000949A0	
-0x71000949F0			FALSE	sub_71000949F0	sub_71000949F0	
+0x71000949A0			FALSE	_ZNK12_GLOBAL__N_125CourseSelectFairyNrvHappy7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectFairyNrvHappy::execute(al::NerveKeeper*) const	
+0x71000949F0			FALSE	_ZNK12_GLOBAL__N_128CourseSelectFairyNrvWaitDemo7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectFairyNrvWaitDemo::execute(al::NerveKeeper*) const	
 0x7100094A30			FALSE	_ZNK12_GLOBAL__N_132CourseSelectFairyNrvBackToCastle7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectFairyNrvBackToCastle::execute(al::NerveKeeper*) const	
-0x7100094A40			FALSE	sub_7100094A40	sub_7100094A40	
-0x7100094AE0			FALSE	sub_7100094AE0	sub_7100094AE0	
+0x7100094A40			FALSE	_ZNK12_GLOBAL__N_127CourseSelectFairyNrvBackEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectFairyNrvBackEnd::execute(al::NerveKeeper*) const	
+0x7100094AE0			FALSE	_ZNK12_GLOBAL__N_132CourseSelectFairyNrvBackFromDemo7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectFairyNrvBackFromDemo::execute(al::NerveKeeper*) const	
 0x7100094B90			FALSE	_ZNK12_GLOBAL__N_134CourseSelectFairyNrvWorldStartDemo7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectFairyNrvWorldStartDemo::execute(al::NerveKeeper*) const	
 0x7100094BA0		CourseSelectFlag.o	FALSE	_ZN16CourseSelectFlagC2EPKcP21CourseSelectMiniature	CourseSelectFlag::CourseSelectFlag(char const*, CourseSelectMiniature*)	
 0x7100094C30			FALSE	_ZN16CourseSelectFlagC1EPKcP21CourseSelectMiniature	CourseSelectFlag::CourseSelectFlag(char const*, CourseSelectMiniature*)	

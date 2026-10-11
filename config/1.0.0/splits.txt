@@ -369,7 +369,7 @@ src/Game/CourseSelect/CourseSelectDokan.cpp: done
     .text   start:0x000927B0 end:0x000939BC
 src/Game/CourseSelect/CourseSelectDokanHolder.cpp: done
     .text   start:0x000939C0 end:0x00093C2C
-src/Game/CourseSelect/CourseSelectFairy.cpp:
+src/Game/CourseSelect/CourseSelectFairy.cpp: done
     .text   start:0x00093C30 end:0x00094B98
 src/Game/CourseSelect/CourseSelectFlag.cpp: done
     .text   start:0x00094BA0 end:0x000954E0
