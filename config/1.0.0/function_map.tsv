@@ -4821,8 +4821,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71000BFCF0			FALSE	_ZN20DemoSceneActorPlayer7exeWaitEv	DemoSceneActorPlayer::exeWait()	
 0x71000BFD00			FALSE	_ZN20DemoSceneActorPlayerD1Ev	DemoSceneActorPlayer::~DemoSceneActorPlayer()	
 0x71000BFD10			FALSE	_ZN20DemoSceneActorPlayerD0Ev	DemoSceneActorPlayer::~DemoSceneActorPlayer()	
-0x71000BFD40			FALSE	nullsub_46	nullsub_46	
-0x71000BFD50			FALSE	sub_71000BFD50	sub_71000BFD50	
+0x71000BFD40			FALSE	_ZNK12_GLOBAL__N_127DemoSceneActorPlayerNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::DemoSceneActorPlayerNrvWait::execute(al::NerveKeeper*) const	
+0x71000BFD50			FALSE	_ZNK12_GLOBAL__N_127DemoSceneActorPlayerNrvPlay7executeEPN2al11NerveKeeperE	(anonymous namespace)::DemoSceneActorPlayerNrvPlay::execute(al::NerveKeeper*) const	
 0x71000BFD60		DemoSceneCamera.o	FALSE	_ZN15DemoSceneCameraC1EPK14GameDataHolder	DemoSceneCamera::DemoSceneCamera(GameDataHolder const*)	
 0x71000BFDE0			FALSE	_ZN15DemoSceneCamera18initDemoSceneActorERKN2al13ActorInitInfoES3_PKN4sead8Matrix34IfEE	DemoSceneCamera::initDemoSceneActor(al::ActorInitInfo const&, al::ActorInitInfo const&, sead::Matrix34<float> const*)	
 0x71000C0010			FALSE	_ZN15DemoSceneCamera19setPlacementBaseMtxEPKN4sead8Matrix34IfEE	DemoSceneCamera::setPlacementBaseMtx(sead::Matrix34<float> const*)	
