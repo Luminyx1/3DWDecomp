@@ -11388,9 +11388,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001B7330			FALSE	_ZN22CounterGreenStarAppend6exeAddEv	CounterGreenStarAppend::exeAdd()	
 0x71001B7420			FALSE	_ZN22CounterGreenStarAppend6exeEndEv	CounterGreenStarAppend::exeEnd()	
 0x71001B7490			FALSE	_ZNK22CounterGreenStarAppend5isEndEv	CounterGreenStarAppend::isEnd() const	
-0x71001B74E0			FALSE	sub_71001B74E0	sub_71001B74E0	
-0x71001B7530			FALSE	sub_71001B7530	sub_71001B7530	
-0x71001B75C0			FALSE	sub_71001B75C0	sub_71001B75C0	
+0x71001B74E0			FALSE	_ZNK12_GLOBAL__N_131CounterGreenStarAppendNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::CounterGreenStarAppendNrvAppear::execute(al::NerveKeeper*) const	
+0x71001B7530			FALSE	_ZNK12_GLOBAL__N_129CounterGreenStarAppendNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::CounterGreenStarAppendNrvWait::execute(al::NerveKeeper*) const	
+0x71001B75C0			FALSE	_ZNK12_GLOBAL__N_128CounterGreenStarAppendNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::CounterGreenStarAppendNrvEnd::execute(al::NerveKeeper*) const	
 0x71001B7630			FALSE	_ZNK12_GLOBAL__N_128CounterGreenStarAppendNrvAdd7executeEPN2al11NerveKeeperE	(anonymous namespace)::CounterGreenStarAppendNrvAdd::execute(al::NerveKeeper*) const	
 0x71001B7640			TRUE	_ZN4sead22WFormatFixedSafeStringILi8EED0Ev	sead::WFormatFixedSafeString<8>::~WFormatFixedSafeString()	
 0x71001B7650		CounterGreenStarParts.o	FALSE	_ZN21CounterGreenStarPartsC2ERKN2al14LayoutInitInfoEPKcS5_PNS0_11LayoutActorEPK15GreenStarKeeper	CounterGreenStarParts::CounterGreenStarParts(al::LayoutInitInfo const&, char const*, char const*, al::LayoutActor*, GreenStarKeeper const*)	

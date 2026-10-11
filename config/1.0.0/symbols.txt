@@ -5833,3 +5833,8 @@
 0x71019D4D28 8 object _ZN12_GLOBAL__N_126NrvCounterPlayerInfoAppearE
 0x71019D4D50 8 object _ZN12_GLOBAL__N_128NrvCounterPlayerInfoShowMissE
 0x71019D4D78 8 object _ZN12_GLOBAL__N_123NrvCounterPlayerInfoEndE
+
+# src/Game/Layout/CounterGreenStarAppend
+0x71019D4210 8 object _ZN12_GLOBAL__N_131NrvCounterGreenStarAppendAppearE
+0x71019D4238 8 object _ZN12_GLOBAL__N_129NrvCounterGreenStarAppendWaitE
+0x71019D42B0 8 object _ZN12_GLOBAL__N_128NrvCounterGreenStarAppendEndE
