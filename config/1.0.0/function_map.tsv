@@ -8878,11 +8878,11 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100157900			FALSE	_ZN12TakoboBullet16exeSupportFreezeEv	TakoboBullet::exeSupportFreeze()	
 0x7100157970			FALSE	_ZN12TakoboBulletD1Ev	TakoboBullet::~TakoboBullet()	
 0x7100157980			FALSE	_ZN12TakoboBulletD0Ev	TakoboBullet::~TakoboBullet()	
-0x71001579B0			FALSE	sub_71001579B0	sub_71001579B0	
-0x7100157A40			FALSE	sub_7100157A40	sub_7100157A40	
-0x7100157AB0			FALSE	sub_7100157AB0	sub_7100157AB0	
+0x71001579B0			FALSE	_ZNK12_GLOBAL__N_119TakoboBulletNrvMove7executeEPN2al11NerveKeeperE	(anonymous namespace)::TakoboBulletNrvMove::execute(al::NerveKeeper*) const	
+0x7100157A40			FALSE	_ZNK12_GLOBAL__N_128TakoboBulletNrvSupportFreeze7executeEPN2al11NerveKeeperE	(anonymous namespace)::TakoboBulletNrvSupportFreeze::execute(al::NerveKeeper*) const	
+0x7100157AB0			FALSE	_ZNK12_GLOBAL__N_122TakoboBulletNrvExplode7executeEPN2al11NerveKeeperE	(anonymous namespace)::TakoboBulletNrvExplode::execute(al::NerveKeeper*) const	
 0x7100157B10			FALSE	_ZNK12_GLOBAL__N_123TakoboBulletNrvFallDown7executeEPN2al11NerveKeeperE	(anonymous namespace)::TakoboBulletNrvFallDown::execute(al::NerveKeeper*) const	
-0x7100157B20			FALSE	sub_7100157B20	sub_7100157B20	
+0x7100157B20			FALSE	_ZNK12_GLOBAL__N_127TakoboBulletNrvExplodeSmall7executeEPN2al11NerveKeeperE	(anonymous namespace)::TakoboBulletNrvExplodeSmall::execute(al::NerveKeeper*) const	
 0x7100157B70		TargetFinder.o	FALSE	_ZN17TargetFinderParamC2Ev	TargetFinderParam::TargetFinderParam()	
 0x7100157BA0			FALSE	_ZN17TargetFinderParamC2Efffjffffb	TargetFinderParam::TargetFinderParam(float, float, float, unsigned int, float, float, float, float, bool)	
 0x7100157BD0			FALSE	_ZN12TargetFinderC2EPN2al9LiveActorEPK17TargetFinderParam	TargetFinder::TargetFinder(al::LiveActor*, TargetFinderParam const*)	

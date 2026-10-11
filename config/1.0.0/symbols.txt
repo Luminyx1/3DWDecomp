@@ -1671,7 +1671,6 @@
 0x71019AD248 8 object _ZN12_GLOBAL__N_118NrvTakoboPressDownE
 0x71019AD260 8 object _ZN12_GLOBAL__N_119NrvTakoboAttackSignE
 0x71019AD7F0 32 object _ZTVN12_GLOBAL__N_123TakoboBulletNrvFallDownE
-0x71019AD848 8 object _ZN12_GLOBAL__N_123NrvTakoboBulletFallDownE
 0x71019ADD98 32 object _ZTVN12_GLOBAL__N_122TentenNrvSupportFreezeE
 0x71019ADE20 8 object _ZN12_GLOBAL__N_122NrvTentenSupportFreezeE
 0x71019AE380 32 object _ZTVN12_GLOBAL__N_122TentenGeneratorNrvMoveE
@@ -5733,3 +5732,4 @@
 0x71019986F8 8 object _ZN12_GLOBAL__N_126NrvKuribonStateReverseLandE
 
 0x71019A7368 8 object _ZN12_GLOBAL__N_125NrvRunnerStateJumpJumpEndE
+0x71019AD830 40 object _ZN12_GLOBAL__N_115NrvTakoboBulletE

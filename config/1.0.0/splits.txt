@@ -811,7 +811,7 @@ src/Game/Enemy/SyumockUtil.cpp: done
     .text   start:0x00155680 end:0x00155B8C
 src/Game/Enemy/Takobo.cpp:
     .text   start:0x00155B90 end:0x00157074
-src/Game/Enemy/TakoboBullet.cpp:
+src/Game/Enemy/TakoboBullet.cpp: done
     .text   start:0x00157080 end:0x00157B70
 src/Game/Enemy/TargetFinder.cpp: done
     .text   start:0x00157B70 end:0x00158218
