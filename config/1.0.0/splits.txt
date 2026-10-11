@@ -427,7 +427,7 @@ src/Game/CourseSelect/CourseSelectRoad.cpp:
     .text   start:0x000A79A0 end:0x000A8208
 src/Game/CourseSelect/CourseSelectRocket.cpp:
     .text   start:0x000A8210 end:0x000AA568
-src/Game/CourseSelect/CourseSelectRouteDokan.cpp:
+src/Game/CourseSelect/CourseSelectRouteDokan.cpp: done
     .text   start:0x000AA570 end:0x000AA934
 src/Game/CourseSelect/CourseSelectRouteDokanEntrance.cpp:
     .text   start:0x000AA940 end:0x000AB1B8
