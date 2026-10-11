@@ -7197,13 +7197,13 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100114010			FALSE	_ZN26KuriboClimbStateBodyAttack9exeAttackEv	KuriboClimbStateBodyAttack::exeAttack()	
 0x71001140F0			FALSE	_ZN26KuriboClimbStateBodyAttack12exeAttackEndEv	KuriboClimbStateBodyAttack::exeAttackEnd()	
 0x7100114150			FALSE	_ZN26KuriboClimbStateBodyAttackD0Ev	KuriboClimbStateBodyAttack::~KuriboClimbStateBodyAttack()	
-0x7100114180			FALSE	sub_7100114180	sub_7100114180	
-0x71001141A0			FALSE	sub_71001141A0	sub_71001141A0	
+0x7100114180			FALSE	_ZNK12_GLOBAL__N_133KuriboClimbStateBodyAttackNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::KuriboClimbStateBodyAttackNrvWait::execute(al::NerveKeeper*) const	
+0x71001141A0			FALSE	_ZNK12_GLOBAL__N_138KuriboClimbStateBodyAttackNrvAttackEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::KuriboClimbStateBodyAttackNrvAttackEnd::execute(al::NerveKeeper*) const	
 0x7100114200			FALSE	_ZNK12_GLOBAL__N_135KuriboClimbStateBodyAttackNrvAttack7executeEPN2al11NerveKeeperE	(anonymous namespace)::KuriboClimbStateBodyAttackNrvAttack::execute(al::NerveKeeper*) const	
 0x7100114210			FALSE	_ZNK12_GLOBAL__N_144KuriboClimbStateBodyAttackNrvAttackJumpStart7executeEPN2al11NerveKeeperE	(anonymous namespace)::KuriboClimbStateBodyAttackNrvAttackJumpStart::execute(al::NerveKeeper*) const	
-0x7100114220			FALSE	sub_7100114220	sub_7100114220	
-0x71001142A0			FALSE	sub_71001142A0	sub_71001142A0	
-0x7100114310			FALSE	sub_7100114310	sub_7100114310	
+0x7100114220			FALSE	_ZNK12_GLOBAL__N_139KuriboClimbStateBodyAttackNrvAttackJump7executeEPN2al11NerveKeeperE	(anonymous namespace)::KuriboClimbStateBodyAttackNrvAttackJump::execute(al::NerveKeeper*) const	
+0x71001142A0			FALSE	_ZNK12_GLOBAL__N_140KuriboClimbStateBodyAttackNrvAttackStart7executeEPN2al11NerveKeeperE	(anonymous namespace)::KuriboClimbStateBodyAttackNrvAttackStart::execute(al::NerveKeeper*) const	
+0x7100114310			FALSE	_ZNK12_GLOBAL__N_139KuriboClimbStateBodyAttackNrvAttackWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::KuriboClimbStateBodyAttackNrvAttackWait::execute(al::NerveKeeper*) const	
 0x7100114330		KuriboClimbSyncObj.o	FALSE	_ZN18KuriboClimbSyncObjC2EPKc	KuriboClimbSyncObj::KuriboClimbSyncObj(char const*)	
 0x71001143B0			FALSE	_ZN18KuriboClimbSyncObjC1EPKc	KuriboClimbSyncObj::KuriboClimbSyncObj(char const*)	
 0x7100114440			FALSE	_ZN18KuriboClimbSyncObj4initERKN2al13ActorInitInfoE	KuriboClimbSyncObj::init(al::ActorInitInfo const&)	
