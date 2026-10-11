@@ -3151,7 +3151,7 @@ src/Game/Scene/Phase0Scene.cpp: done
     .text   start:0x004B5FE0 end:0x004B6128
 src/Game/Scene/PhaseBossScene.cpp:
     .text   start:0x004B6130 end:0x004B7758
-src/Game/Scene/PhasePlessieChaseScene.cpp:
+src/Game/Scene/PhasePlessieChaseScene.cpp: done
     .text   start:0x004B7760 end:0x004B79F8
 src/Game/Scene/PhaseScene.cpp:
     .text   start:0x004B7A00 end:0x004B7EF8
