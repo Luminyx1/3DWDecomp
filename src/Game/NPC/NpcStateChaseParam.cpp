@@ -88,11 +88,11 @@ void NpcStateChase::exeStart() {
     }
     mTargetFinder->update();
     if (mRequireVisibleTarget) {
-        if (mTargetFinder->mIsTargetReached) {
+        if (mTargetFinder->mHasTargetChanged) {
             al::setNerve(this, &NrvNpcStateChaseEnd);
             return;
         }
-        if (mTargetFinder->mTarget && mTargetFinder->mIsTargetVisible) {
+        if (mTargetFinder->mTarget && mTargetFinder->mIsInChaseRange) {
             al::turnDirectionToTargetDegree(mHostActor, mDirection,
                                             mTargetFinder->getTargetPos(), mChaseParam->mTurnDegrees);
             if (mIsGrounded ? *mIsGrounded : al::isOnGround(mHostActor, 0, 0.0f)) {
@@ -104,7 +104,7 @@ void NpcStateChase::exeStart() {
             return;
         }
     } else {
-        if (mTargetFinder->mTarget && mTargetFinder->mIsTargetVisible) {
+        if (mTargetFinder->mTarget && mTargetFinder->mIsInChaseRange) {
             al::turnDirectionToTargetDegree(mHostActor, mDirection,
                                             mTargetFinder->getTargetPos(), mChaseParam->mTurnDegrees);
         } else if (mTargetFinder->mTarget || mTargetFinder->mLastTarget) {

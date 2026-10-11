@@ -105,11 +105,11 @@ void NpcStateRunAway::exeStart() {
     mIsAvoiding = false;
     const float accelerationScale = al::isLessStep(this, mRunAwayParam->mFastFrames) ? 2.0f : 1.0f;
     if (mRequireVisibleTarget) {
-        if (mTargetFinder->mIsTargetReached) {
+        if (mTargetFinder->mHasTargetChanged) {
             al::setNerve(this, &NrvNpcStateRunAwayEnd);
             return;
         }
-        if (mTargetFinder->mTarget && mTargetFinder->mIsTargetVisible) {
+        if (mTargetFinder->mTarget && mTargetFinder->mIsInChaseRange) {
             updateDirectionPtr();
             if (mIsGrounded ? *mIsGrounded : al::isOnGround(mHostActor, 0, 0.0f)) {
                 al::addVelocity(mHostActor, (*mDirection * mRunAwayParam->mAcceleration) * accelerationScale);
@@ -120,7 +120,7 @@ void NpcStateRunAway::exeStart() {
             return;
         }
     } else {
-        if (mTargetFinder->mTarget && mTargetFinder->mIsTargetVisible) {
+        if (mTargetFinder->mTarget && mTargetFinder->mIsInChaseRange) {
             updateDirectionPtr();
         } else if (mTargetFinder->mTarget || mTargetFinder->mLastTarget) {
             mTargetPosition = mTargetFinder->getLastTargetPos();

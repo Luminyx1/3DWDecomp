@@ -4769,3 +4769,6 @@
 0x7101A7B438 8 object _ZN12_GLOBAL__N_123NrvRabbitStateSwoonTurnE
 0x71003D5340 124 func _ZNK12_GLOBAL__N_123RabbitStateSwoonNrvTurn7executeEPN2al11NerveKeeperE
 0x7101A7B440 16 object _ZN12_GLOBAL__N_123NrvRabbitStateSwoonEndsE
+
+# Recovered NPC target-filter helper
+0x71003CE080 260 func _ZNK15NpcTargetFinder15tryFilterTargetEPKN2al9LiveActorERKN3npc17NpcFindTargetTypeE

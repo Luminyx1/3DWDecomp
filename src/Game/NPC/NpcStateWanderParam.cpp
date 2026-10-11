@@ -1,3 +1,4 @@
+#include "NPC/NpcTargetMetrics.hpp"
 #include "NPC/NpcTargetFunction.hpp"
 #include "NPC/NpcStateWanderParam.hpp"
 #include "NPC/NpcStateWander.hpp"
@@ -269,19 +270,7 @@ const char* NpcFindTargetTypeToString(const NpcFindTargetType& rType) {
     }
     return "Unknown";
 }
-struct TargetMetrics {
-    bool unknown0 = true;
-    const void* unknown8 = nullptr;
-    float unknown10 = FLT_MAX;
-    bool unknown14 = false;
-    bool unknown15 = false;
-    bool unknown16 = false;
-    float unknown18 = 0;
-    sead::Vector3f delta;
-    float distance;
-    float horizontalCos;
-    float verticalCos;
-};
+
 /**
  * @brief Calculates target displacement, distance, and facing measures.
  * @param pOut Receives the calculated target measures.
