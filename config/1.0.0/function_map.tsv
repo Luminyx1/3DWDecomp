@@ -4516,7 +4516,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71000B78A0			FALSE	_ZN23KinokoOneUpCourseSelect7exeWaitEv	KinokoOneUpCourseSelect::exeWait()	
 0x71000B78E0			FALSE	_ZN23KinokoOneUpCourseSelectD1Ev	KinokoOneUpCourseSelect::~KinokoOneUpCourseSelect()	
 0x71000B78F0			FALSE	_ZN23KinokoOneUpCourseSelectD0Ev	KinokoOneUpCourseSelect::~KinokoOneUpCourseSelect()	
-0x71000B7920			FALSE	sub_71000B7920	sub_71000B7920	
+0x71000B7920			FALSE	_ZNK12_GLOBAL__N_130KinokoOneUpCourseSelectNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::KinokoOneUpCourseSelectNrvWait::execute(al::NerveKeeper*) const	
 0x71000B7960		TicoCourseSelect.o	FALSE	_ZN16TicoCourseSelectC2EPKc	TicoCourseSelect::TicoCourseSelect(char const*)	
 0x71000B79E0			FALSE	_ZN16TicoCourseSelectC1EPKc	TicoCourseSelect::TicoCourseSelect(char const*)	
 0x71000B7A60			FALSE	_ZN16TicoCourseSelect4initERKN2al13ActorInitInfoE	TicoCourseSelect::init(al::ActorInitInfo const&)	
