@@ -991,7 +991,7 @@ src/Game/MapObj/Fury/DisasterFixMapParts.cpp: done
     .text   start:0x001969F0 end:0x001975AC
 src/Game/MapObj/Fury/DisasterLightning.cpp: done
     .text   start:0x001975B0 end:0x00197938
-src/Game/MapObj/Fury/DisasterSpikeBouncy.cpp:
+src/Game/MapObj/Fury/DisasterSpikeBouncy.cpp: done
     .text   start:0x00197940 end:0x00198090
 src/Game/MapObj/Fury/DisasterSpikeDirector.cpp:
     .text   start:0x00198090 end:0x0019D350
