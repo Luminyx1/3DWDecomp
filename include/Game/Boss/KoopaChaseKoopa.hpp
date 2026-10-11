@@ -3,6 +3,8 @@
 
 class KoopaChaseKoopa : public al::LiveActor {
 public:
+    void doDamage();
+    void doDamageSmall();
     bool isStateDamage() const;
     void setStateWarpProvocation();
     bool isStateWarpProvocation() const;

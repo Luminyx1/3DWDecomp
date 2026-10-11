@@ -1083,9 +1083,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710002D850			FALSE	_ZN21KoopaChaseStateDamage9exeDamageEv	KoopaChaseStateDamage::exeDamage()	
 0x710002D8C0			FALSE	_ZN21KoopaChaseStateDamage14exeSmallDamageEv	KoopaChaseStateDamage::exeSmallDamage()	
 0x710002D920			FALSE	_ZN21KoopaChaseStateDamageD0Ev	KoopaChaseStateDamage::~KoopaChaseStateDamage()	
-0x710002D950			FALSE	nullsub_5	nullsub_5	
-0x710002D960			FALSE	sub_710002D960	sub_710002D960	
-0x710002D9D0			FALSE	sub_710002D9D0	sub_710002D9D0	
+0x710002D950			FALSE	_ZNK12_GLOBAL__N_128KoopaChaseStateDamageNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::KoopaChaseStateDamageNrvWait::execute(al::NerveKeeper*) const	matched nerve
+0x710002D960			FALSE	_ZNK12_GLOBAL__N_130KoopaChaseStateDamageNrvDamage7executeEPN2al11NerveKeeperE	(anonymous namespace)::KoopaChaseStateDamageNrvDamage::execute(al::NerveKeeper*) const	matched nerve
+0x710002D9D0			FALSE	_ZNK12_GLOBAL__N_135KoopaChaseStateDamageNrvSmallDamage7executeEPN2al11NerveKeeperE	(anonymous namespace)::KoopaChaseStateDamageNrvSmallDamage::execute(al::NerveKeeper*) const	matched nerve
 0x710002DA30		KoopaChaseDemoInfo.o	FALSE	_ZN18KoopaChaseDemoInfoC2EPN2al10CameraInfoEPNS0_9LiveActorEPKciiiS6_	KoopaChaseDemoInfo::KoopaChaseDemoInfo(al::CameraInfo*, al::LiveActor*, char const*, int, int, int, char const*)	note: sorts before the previous object (folder boundary or misnamed object?)
 0x710002DA50		KoopaChaseStateDemo.o	FALSE	_ZN19KoopaChaseStateDemoC1EPKcPN2al9LiveActorERKNS2_13ActorInitInfoEP18KoopaChaseDemoInfo	KoopaChaseStateDemo::KoopaChaseStateDemo(char const*, al::LiveActor*, al::ActorInitInfo const&, KoopaChaseDemoInfo*)	object (class)
 0x710002DD70			FALSE	_ZN19KoopaChaseStateDemo6appearEv	KoopaChaseStateDemo::appear()	

@@ -5708,3 +5708,6 @@
 0x71019F5DE0 32 object _ZTVN12_GLOBAL__N_116BlockHardNrvWaitE
 0x71019F5E00 8 object _ZN12_GLOBAL__N_116NrvBlockHardWaitE
 0x71019F5E28 32 object _ZTVN12_GLOBAL__N_120BlockHardNrvReactionE
+
+# KoopaChaseStateDamage
+0x7101954140 24 object _ZN12_GLOBAL__N_124NrvKoopaChaseStateDamageE
