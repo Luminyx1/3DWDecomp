@@ -5344,8 +5344,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71000CF4C0			FALSE	_ZN18BombBoundGenerator11exeIntervalEv	BombBoundGenerator::exeInterval()	
 0x71000CF580			FALSE	_ZN18BombBoundGeneratorD1Ev	BombBoundGenerator::~BombBoundGenerator()	
 0x71000CF590			FALSE	_ZN18BombBoundGeneratorD0Ev	BombBoundGenerator::~BombBoundGenerator()	
-0x71000CF5C0			FALSE	sub_71000CF5C0	sub_71000CF5C0	
-0x71000CF640			FALSE	nullsub_49	nullsub_49	
+0x71000CF5C0			FALSE	_ZNK12_GLOBAL__N_133BombBoundGeneratorNrvWaitStarting7executeEPN2al11NerveKeeperE	(anonymous namespace)::BombBoundGeneratorNrvWaitStarting::execute(al::NerveKeeper*) const	
+0x71000CF640			FALSE	_ZNK12_GLOBAL__N_125BombBoundGeneratorNrvIdle7executeEPN2al11NerveKeeperE	(anonymous namespace)::BombBoundGeneratorNrvIdle::execute(al::NerveKeeper*) const	
 0x71000CF650			FALSE	_ZNK12_GLOBAL__N_129BombBoundGeneratorNrvInterval7executeEPN2al11NerveKeeperE	(anonymous namespace)::BombBoundGeneratorNrvInterval::execute(al::NerveKeeper*) const	
 0x71000CF660			FALSE	_ZNK12_GLOBAL__N_127BombBoundGeneratorNrvReload7executeEPN2al11NerveKeeperE	(anonymous namespace)::BombBoundGeneratorNrvReload::execute(al::NerveKeeper*) const	
 0x71000CF670			FALSE	_ZNK12_GLOBAL__N_127BombBoundGeneratorNrvLaunch7executeEPN2al11NerveKeeperE	(anonymous namespace)::BombBoundGeneratorNrvLaunch::execute(al::NerveKeeper*) const	

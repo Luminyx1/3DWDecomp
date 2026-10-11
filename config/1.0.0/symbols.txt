@@ -5720,3 +5720,6 @@
 0x71019857C8 8 object _ZN12_GLOBAL__N_121NrvBrosStateAttackEndE
 
 0x7101981D90 32 object _ZN12_GLOBAL__N_113sDefaultParamE
+
+0x7101981070 8 object _ZN12_GLOBAL__N_133NrvBombBoundGeneratorWaitStartingE
+0x7101981078 8 object _ZN12_GLOBAL__N_125NrvBombBoundGeneratorIdleE

@@ -46,6 +46,9 @@ public:
     /** @brief Waits in the generator until launched. */
     void exeWait() {}
 
+    /** @brief Disables the armed fuse. */
+    void disableFuse() { mIsFuseEnabled = false; }
+
 private:
     BombStateExplosion* mStateExplosion = nullptr;
     BombStateExplosion* mStateBreak = nullptr;
