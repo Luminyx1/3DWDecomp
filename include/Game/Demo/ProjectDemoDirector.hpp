@@ -6,16 +6,23 @@ namespace al {
 class PlayerHolder;
 }  // namespace al
 
+class DemoActorGroup;
+class DemoScenePlayerModel;
 class DemoPlayerControllerHolder;
 class DemoPlayerModelDirector;
 
 /**
  * @brief Project-side demo director: knows the names of the game's demo kinds.
- * @note Only the constructor and the demo-name getters are declared so far.
  */
 class ProjectDemoDirector : public al::DemoDirector {
 public:
     ProjectDemoDirector(al::PlayerHolder* pPlayerHolder, s32 maxActors);
+
+    void endInit(const al::ActorInitInfo& rInfo) override;
+    void registerActorWithGroup(al::LiveActor* pActor, const char* pName) override;
+    bool startDemo(const al::LiveActor* pActor, const char* pName) override;
+    void endDemo(const al::LiveActor* pActor, const char* pName) override;
+    DemoScenePlayerModel* getDemoPlayerModel(int character) const;
 
     static const char* getDemoNameCamera();
     static const char* getDemoNameMovingCamera();
@@ -62,7 +69,7 @@ public:
 private:
     DemoPlayerControllerHolder* mPlayerControllerHolder;
     DemoPlayerModelDirector* mPlayerModelDirector;
-    u8 _100[0x108 - 0x100];
+    DemoActorGroup* mActorGroups;
 };
 
 static_assert(sizeof(ProjectDemoDirector) == 0x108);

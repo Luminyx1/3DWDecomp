@@ -469,15 +469,15 @@ src/Game/Demo/DemoActionList.cpp: done
     .text   start:0x000B7B10 end:0x000B7DA4
 src/Game/Demo/DemoActorGroup.cpp: done
     .text   start:0x000B7DB0 end:0x000B7DF4
-src/Game/Demo/DemoAnimatic.cpp:
+src/Game/Demo/DemoAnimatic.cpp: done
     .text   start:0x000B7E00 end:0x000B8110
 src/Game/Demo/DemoCutscene.cpp:
     .text   start:0x000B8110 end:0x000B9AA8
-src/Game/Demo/DemoCutsceneSequence.cpp:
+src/Game/Demo/DemoCutsceneSequence.cpp: done
     .text   start:0x000B9AB0 end:0x000BA390
 src/Game/Demo/DemoEffectObj.cpp: done
     .text   start:0x000BA390 end:0x000BA944
-src/Game/Demo/DemoKoopaW7.cpp:
+src/Game/Demo/DemoKoopaW7.cpp: done
     .text   start:0x000BA950 end:0x000BB25C
 src/Game/Demo/DemoLayoutObj.cpp: done
     .text   start:0x000BB260 end:0x000BB694
@@ -485,7 +485,7 @@ src/Game/Demo/DemoObjBase.cpp: done
     .text   start:0x000BB6A0 end:0x000BC054
 src/Game/Demo/DemoOpeningSwitch.cpp: done
     .text   start:0x000BC060 end:0x000BC254
-src/Game/Demo/DemoPlayerController.cpp:
+src/Game/Demo/DemoPlayerController.cpp: done
     .text   start:0x000BC260 end:0x000BCBCC
 src/Game/Demo/DemoPlayerControllerHolder.cpp: done
     .text   start:0x000BCBD0 end:0x000BCF34
@@ -493,17 +493,17 @@ src/Game/Demo/DemoPlayerLocator.cpp: done
     .text   start:0x000BCF40 end:0x000BD4D4
 src/Game/Demo/DemoPlayerModelDirector.cpp: done
     .text   start:0x000BD4E0 end:0x000BD7A8
-src/Game/Demo/DemoSceneActor.cpp:
+src/Game/Demo/DemoSceneActor.cpp: done
     .text   start:0x000BD7B0 end:0x000BE2A8
-src/Game/Demo/DemoSceneActorHolder.cpp:
+src/Game/Demo/DemoSceneActorHolder.cpp: done
     .text   start:0x000BE2B0 end:0x000BF4D0
-src/Game/Demo/DemoSceneActorPlayer.cpp:
+src/Game/Demo/DemoSceneActorPlayer.cpp: done
     .text   start:0x000BF4D0 end:0x000BFD5C
 src/Game/Demo/DemoSceneCamera.cpp: done
     .text   start:0x000BFD60 end:0x000C0724
-src/Game/Demo/DemoScenePlayer.cpp:
+src/Game/Demo/DemoScenePlayer.cpp: done
     .text   start:0x000C0730 end:0x000C1740
-src/Game/Demo/DemoScenePlayerModel.cpp:
+src/Game/Demo/DemoScenePlayerModel.cpp: done
     .text   start:0x000C1740 end:0x000C2298
 src/Game/Demo/DemoStartPosition.cpp: done
     .text   start:0x000C22A0 end:0x000C24D0
@@ -511,17 +511,17 @@ src/Game/Demo/DemoTimerStageSwitchController.cpp: done
     .text   start:0x000C24D0 end:0x000C29D0
 src/Game/Demo/DemoTimerStageSwitchInfo.cpp:
     .text   start:0x000C29D0 end:0x000C41EC
-src/Game/Demo/DemoWorldClear.cpp:
+src/Game/Demo/DemoWorldClear.cpp: done
     .text   start:0x000C41F0 end:0x000C4C28
-src/Game/Demo/ProjectDemoDirector.cpp:
+src/Game/Demo/ProjectDemoDirector.cpp: done
     .text   start:0x000C4C30 end:0x000C5424
 src/Game/Demo/StageStartBindDemoCasinoRoom.cpp: done
     .text   start:0x000C5430 end:0x000C5C18
 src/Game/Demo/StageStartBindDemoKinopioBrigade.cpp:
     .text   start:0x000C5C20 end:0x000C7BB4
-src/Game/Demo/StageStartBindDemoKinopioHouse.cpp:
+src/Game/Demo/StageStartBindDemoKinopioHouse.cpp: done
     .text   start:0x000C7BC0 end:0x000C83D8
-src/Game/Demo/StageStartBindDemoMysteryHouse.cpp:
+src/Game/Demo/StageStartBindDemoMysteryHouse.cpp: done
     .text   start:0x000C83E0 end:0x000C8E38
 src/Game/Demo/StageStartEventCamera.cpp: done
     .text   start:0x000C8E40 end:0x000C9384
@@ -991,13 +991,13 @@ src/Game/MapObj/Fury/DisasterFixMapParts.cpp: done
     .text   start:0x001969F0 end:0x001975AC
 src/Game/MapObj/Fury/DisasterLightning.cpp: done
     .text   start:0x001975B0 end:0x00197938
-src/Game/MapObj/Fury/DisasterSpikeBouncy.cpp:
+src/Game/MapObj/Fury/DisasterSpikeBouncy.cpp: done
     .text   start:0x00197940 end:0x00198090
 src/Game/MapObj/Fury/DisasterSpikeDirector.cpp:
     .text   start:0x00198090 end:0x0019D350
 src/Game/MapObj/Fury/DisasterSpikeDirt.cpp: done
     .text   start:0x0019D350 end:0x0019DA00
-src/Game/MapObj/Fury/DisasterSpikeLaunch.cpp:
+src/Game/MapObj/Fury/DisasterSpikeLaunch.cpp: done
     .text   start:0x0019DA00 end:0x0019E008
 src/Game/MapObj/Fury/DisasterSpikeTorpedo.cpp:
     .text   start:0x0019E010 end:0x001A0A98
@@ -1367,7 +1367,7 @@ src/Game/MapObj/BallSnow.cpp:
     .text   start:0x00243340 end:0x002459E8
 src/Game/MapObj/BallStateFallParam.cpp:
     .text   start:0x002459F0 end:0x00245C18
-src/Game/MapObj/BallStateFunction.cpp:
+src/Game/MapObj/BallStateFunction.cpp: done
     .text   start:0x00245C20 end:0x00246834
 src/Game/MapObj/BallStateRolling.cpp:
     .text   start:0x00246840 end:0x00246AA8
@@ -1407,7 +1407,7 @@ src/Game/MapObj/BlockEmpty.cpp: done
     .text   start:0x0024CFC0 end:0x0024D4D0
 src/Game/MapObj/BlockHard.cpp: done
     .text   start:0x0024D4D0 end:0x0024E424
-src/Game/MapObj/BlockPow.cpp:
+src/Game/MapObj/BlockPow.cpp: done
     .text   start:0x0024E430 end:0x0024F284
 src/Game/MapObj/BlockQuestion.cpp: done
     .text   start:0x0024F290 end:0x0024F864
@@ -1504,11 +1504,11 @@ src/Game/MapObj/CloudBonusLauncher.cpp:
     .text   start:0x0026CDA0 end:0x0026FCE8
 src/Game/MapObj/CloudBonusLauncherBindPuppeteer.cpp: done
     .text   start:0x0026FCF0 end:0x00270688
-src/Game/MapObj/Coin.cpp:
+src/Game/MapObj/Coin.cpp: done
     .text   start:0x00270690 end:0x00271494
 src/Game/MapObj/CoinAttach.cpp: done
     .text   start:0x002714A0 end:0x00271EE8
-src/Game/MapObj/CoinBlow.cpp:
+src/Game/MapObj/CoinBlow.cpp: done
     .text   start:0x00271EF0 end:0x00272E38
 src/Game/MapObj/CoinBlowGenerator.cpp: done
     .text   start:0x00272E40 end:0x002735E8
@@ -1623,13 +1623,13 @@ src/Game/MapObj/FireworksEffectObj.cpp: done
     .text   start:0x002AA3C0 end:0x002AAD14
 src/Game/MapObj/Fish.cpp: done
     .text   start:0x002AAD20 end:0x002AAEB0
-src/Game/MapObj/FishColony.cpp:
+src/Game/MapObj/FishColony.cpp: done
     .text   start:0x002AAEB0 end:0x002ABD08
 src/Game/MapObj/FlingPole.cpp:
     .text   start:0x002ABD10 end:0x002B0C88
 src/Game/MapObj/FlipCircusDoor.cpp: done
     .text   start:0x002B0C90 end:0x002B0ED8
-src/Game/MapObj/FlipPanel.cpp:
+src/Game/MapObj/FlipPanel.cpp: done
     .text   start:0x002B0EE0 end:0x002B1F14
 src/Game/MapObj/FlowerCactus.cpp: done
     .text   start:0x002B1F20 end:0x002B2B3C
@@ -1686,7 +1686,7 @@ src/Game/MapObj/GoalPoleStateRunaway.cpp:
     .text   start:0x002D8090 end:0x002D8C94
 src/Game/MapObj/GoalPoleWing.cpp: done
     .text   start:0x002D8CA0 end:0x002D8F80
-src/Game/MapObj/Gondola.cpp:
+src/Game/MapObj/Gondola.cpp: done
     .text   start:0x002D8F80 end:0x002D9E84
 src/Game/MapObj/Gong.cpp: done
     .text   start:0x002D9E90 end:0x002DA3E8
@@ -1872,7 +1872,7 @@ src/Game/MapObj/Ocean.cpp:
     .text   start:0x00325690 end:0x00325A9C
 src/Game/MapObj/WaveGrid.cpp:
     .text   start:0x00325AA0 end:0x00328DD4
-src/Game/MapObj/OceanData.cpp:
+src/Game/MapObj/OceanData.cpp: done
     .text   start:0x00328DE0 end:0x003295B4
 src/Game/MapObj/OceanWaveWake.cpp:
     .text   start:0x003295C0 end:0x0032A1A8
@@ -2055,7 +2055,7 @@ src/Game/MapObj/TestGoldenKoura.cpp:
     .text   start:0x00379B70 end:0x0037B430
 src/Game/MapObj/TestGraphicObj.cpp: done
     .text   start:0x0037B430 end:0x0037B5C8
-src/Game/MapObj/TestIshiokaTrapRock.cpp:
+src/Game/MapObj/TestIshiokaTrapRock.cpp: done
     .text   start:0x0037B5D0 end:0x0037BEE4
 src/Game/MapObj/TestIshiokaTrapWall.cpp: done
     .text   start:0x0037BEF0 end:0x0037C624
@@ -2128,7 +2128,7 @@ src/Game/MapObj/TouchTrackDrawer.cpp: done
     .text   start:0x0038E300 end:0x0038E820
 src/Game/MapObj/TractorBubble.cpp:
     .text   start:0x0038E820 end:0x0039039C
-src/Game/MapObj/TractorBubblePuppeteer.cpp:
+src/Game/MapObj/TractorBubblePuppeteer.cpp: done
     .text   start:0x003903A0 end:0x00390C44
 src/Game/MapObj/TrampleSwitch.cpp: done
     .text   start:0x00390C50 end:0x003914B4
@@ -2144,8 +2144,9 @@ src/Game/MapObj/TrampleSwitchTogether.cpp: done
     .text   start:0x00394650 end:0x00394CB4
 src/Game/MapObj/TrampleSwitchTogetherWatcher.cpp: done
     .text   start:0x00394CC0 end:0x003950A4
-src/Game/MapObj/Trampoline.cpp:
+src/Game/MapObj/Trampoline.cpp: done
     .text   start:0x003950B0 end:0x00395F98
+    .data   start:0x01A6AD10 end:0x01A6AD58
 src/Game/MapObj/TransparentWall.cpp: done
     .text   start:0x00395FA0 end:0x00396300
 src/Game/MapObj/Trapeze.cpp:
@@ -3895,7 +3896,7 @@ src/nw/vfx/vfx_TemporaryBuffer.cpp:
     .text   start:0x0064BB10 end:0x0064BE94
 src/nw/vfx/vfx_TextureSampler.cpp:
     .text   start:0x0064BEA0 end:0x0064C590
-src/nw/vfx/vfx_UniformBlock.cpp:
+src/nw/vfx/vfx_UniformBlock.cpp: done
     .text   start:0x0064C590 end:0x0064C784
 src/nw/vfx/vfx_VertexBuffer.cpp:
     .text   start:0x0064C790 end:0x00650BBC
@@ -4049,7 +4050,7 @@ src/sead/gfx/seadFrameBuffer.cpp: done
     .text   start:0x00696AF0 end:0x00696FD0
 src/sead/gfx/seadGraphics.cpp: done
     .text   start:0x00696FD0 end:0x00697108
-src/sead/gfx/seadDrawLockContext.cpp:
+src/sead/gfx/seadDrawLockContext.cpp: cflags=-O2 done
     .text   start:0x00697110 end:0x00697164
 src/sead/gfx/seadGraphicsContext.cpp:
     .text   start:0x00697170 end:0x00697B74
@@ -4241,7 +4242,7 @@ src/agl/common/aglTextureData.cpp:
     .text   start:0x006DB6E0 end:0x006DE00C
 src/agl/detail/aglTextureDetail.cpp: done
     .text   start:0x006DE010 end:0x006DE598
-src/agl/detail/SamplerObject.cpp:
+src/agl/detail/SamplerObject.cpp: done
     .text   start:0x006DE5A0 end:0x006DE5C8
 src/agl/common/aglTextureDataImageAccessor.cpp:
     .text   start:0x006DE5D0 end:0x006DF580
@@ -4463,7 +4464,7 @@ src/eui/lytex/euiWindowEx.cpp: done
     .text   start:0x007B9F30 end:0x007BA188
 src/eui/lytex/euiMultiFilterPictureEx.cpp: done
     .text   start:0x007BA190 end:0x007BA588
-src/eui/lytex/euiScalableFontTextBoxEx.cpp:
+src/eui/lytex/euiScalableFontTextBoxEx.cpp: cflags=-fno-strict-aliasing done
     .text   start:0x007BA590 end:0x007BABB8
 src/eui/message/euiScalableFontMgr.cpp:
     .text   start:0x007BABC0 end:0x007BC02C
@@ -4785,7 +4786,7 @@ src/al/Library/LiveActor/SubActorKeeper.cpp:
     .text   start:0x0084A4F0 end:0x0084ADF0
 src/al/Library/LiveActor/LiveActorFunction_dup2.cpp: done
     .text   start:0x0084ADF0 end:0x0084B14C
-src/al/Library/MapObj/ClockMapParts.cpp:
+src/al/Library/MapObj/ClockMapParts.cpp: done
     .text   start:0x0084B150 end:0x0084C09C
 src/al/Library/MapObj/ChildStep.cpp:
     .text   start:0x0084C0A0 end:0x0084C57C
@@ -4801,7 +4802,7 @@ src/al/Library/MapObj/FallMapParts.cpp:
     .text   start:0x0084E080 end:0x0084E8E0
 src/al/Library/MapObj/FixMapParts.cpp: done
     .text   start:0x0084E8E0 end:0x0084EBF8
-src/al/Library/MapObj/FloaterMapParts.cpp:
+src/al/Library/MapObj/FloaterMapParts.cpp: done
     .text   start:0x0084EC00 end:0x0084F428
 src/al/Library/MapObj/GateMapParts.cpp:
     .text   start:0x0084F430 end:0x0084FE2C
@@ -4811,7 +4812,7 @@ src/al/Library/MapObj/KeyMoveMapPartsGenerator.cpp:
     .text   start:0x008515B0 end:0x00851AB8
 src/al/Library/MapObj/RailMoveMapParts.cpp:
     .text   start:0x00851AC0 end:0x00852148
-src/al/Library/MapObj/RollingCubeMapParts.cpp:
+src/al/Library/MapObj/RollingCubeMapParts.cpp: done
     .text   start:0x00852150 end:0x00853924
 src/al/Library/MapObj/RollingCubeMapPartsGenerator.cpp:
     .text   start:0x00853930 end:0x00853E98
@@ -4825,7 +4826,7 @@ src/al/Library/MapObj/SurfMapParts.cpp: done
     .text   start:0x00856030 end:0x008564D8
 src/al/Library/MapObj/SwingMapParts.cpp: done
     .text   start:0x008564E0 end:0x00856CAC
-src/al/Library/MapObj/VisibleSwitchMapParts.cpp:
+src/al/Library/MapObj/VisibleSwitchMapParts.cpp: done
     .text   start:0x00856CB0 end:0x00857344
 src/al/Library/MapObj/WheelMapParts.cpp:
     .text   start:0x00857350 end:0x00857DD0
