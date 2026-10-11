@@ -9,6 +9,6 @@ public:
     ~ChorobonNode() override = default;
     void setRailCoord(float coord);
 
-private:
+protected:
     const float* mParam;
 };

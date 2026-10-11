@@ -6022,7 +6022,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71000E7CC0			FALSE	_ZN12ChorobonItem11exeRailMoveEv	ChorobonItem::exeRailMove()	
 0x71000E7D60			FALSE	_ZN12ChorobonItemD1Ev	ChorobonItem::~ChorobonItem()	
 0x71000E7D70			FALSE	_ZN12ChorobonItemD0Ev	ChorobonItem::~ChorobonItem()	
-0x71000E7DA0			FALSE	sub_71000E7DA0	sub_71000E7DA0	
+0x71000E7DA0			FALSE	_ZNK12_GLOBAL__N_123ChorobonItemNrvRailMove7executeEPN2al11NerveKeeperE	(anonymous namespace)::ChorobonItemNrvRailMove::execute(al::NerveKeeper*) const	
 0x71000E7E40		ChorobonNode.o	FALSE	_ZN12ChorobonNodeC2EPKcPKf	ChorobonNode::ChorobonNode(char const*, float const*)	
 0x71000E7ED0			FALSE	_ZN12ChorobonNodeC1EPKcPKf	ChorobonNode::ChorobonNode(char const*, float const*)	
 0x71000E7F60			FALSE	_ZN12ChorobonNode12setRailCoordEf	ChorobonNode::setRailCoord(float)	
