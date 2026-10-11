@@ -5750,3 +5750,4 @@
 0x7101996B60 24 object _ZN12_GLOBAL__N_129NrvKuriboClimbStateBodyAttackE
 0x7101988040 32 object _ZN12_GLOBAL__N_117NrvChorobonColonyE
 0x710198A558 24 object _ZN12_GLOBAL__N_121NrvCrawlerLaunchStateE
+0x71019A59E0 24 object _ZN12_GLOBAL__N_114NrvPukupukuFlyE

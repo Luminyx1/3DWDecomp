@@ -8286,9 +8286,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710013EF70			FALSE	_ZN11PukupukuFly10receiveMsgEPKN2al9SensorMsgEPNS0_9HitSensorES5_	PukupukuFly::receiveMsg(al::SensorMsg const*, al::HitSensor*, al::HitSensor*)	
 0x710013F090			FALSE	_ZN11PukupukuFlyD1Ev	PukupukuFly::~PukupukuFly()	
 0x710013F0A0			FALSE	_ZN11PukupukuFlyD0Ev	PukupukuFly::~PukupukuFly()	
-0x710013F0D0			FALSE	sub_710013F0D0	sub_710013F0D0	
-0x710013F110			FALSE	sub_710013F110	sub_710013F110	
-0x710013F160			FALSE	sub_710013F160	sub_710013F160	
+0x710013F0D0			FALSE	_ZNK12_GLOBAL__N_121PukupukuFlyNrvFlyWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::PukupukuFlyNrvFlyWait::execute(al::NerveKeeper*) const	
+0x710013F110			FALSE	_ZNK12_GLOBAL__N_122PukupukuFlyNrvBlowDown7executeEPN2al11NerveKeeperE	(anonymous namespace)::PukupukuFlyNrvBlowDown::execute(al::NerveKeeper*) const	
+0x710013F160			FALSE	_ZNK12_GLOBAL__N_123PukupukuFlyNrvPressDown7executeEPN2al11NerveKeeperE	(anonymous namespace)::PukupukuFlyNrvPressDown::execute(al::NerveKeeper*) const	
 0x710013F1E0		RingBeamer.o	FALSE	_ZN10RingBeamerC2EPKc	RingBeamer::RingBeamer(char const*)	
 0x710013F280			FALSE	_ZN10RingBeamerC1EPKc	RingBeamer::RingBeamer(char const*)	
 0x710013F330			FALSE	_ZN10RingBeamer4initERKN2al13ActorInitInfoE	RingBeamer::init(al::ActorInitInfo const&)	

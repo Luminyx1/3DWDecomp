@@ -767,7 +767,7 @@ src/Game/Enemy/Prominence.cpp:
     .text   start:0x0013C7A0 end:0x0013D7C4
 src/Game/Enemy/Pukupuku.cpp:
     .text   start:0x0013D7D0 end:0x0013EA88
-src/Game/Enemy/PukupukuFly.cpp:
+src/Game/Enemy/PukupukuFly.cpp: done
     .text   start:0x0013EA90 end:0x0013F1D4
 src/Game/Enemy/RingBeamer.cpp:
     .text   start:0x0013F1E0 end:0x0013FE24
