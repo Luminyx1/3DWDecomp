@@ -2211,7 +2211,7 @@ src/Game/NPC/FairyMii.cpp:
     .text   start:0x003B1920 end:0x003B26D0
 src/Game/NPC/FairyMiiController.cpp:
     .text   start:0x003B26D0 end:0x003B29D8
-src/Game/NPC/FairyNpc.cpp:
+src/Game/NPC/FairyNpc.cpp: done
     .text   start:0x003B29E0 end:0x003B2D20
 src/Game/NPC/FairyNpcWithGlasses.cpp:
     .text   start:0x003B2D20 end:0x003B333C
