@@ -13145,7 +13145,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001F9DF0			FALSE	_ZN14TestMusaLayout7exeWaitEv	TestMusaLayout::exeWait()	
 0x71001F9E80			FALSE	_ZN14TestMusaLayout8exeScaleEv	TestMusaLayout::exeScale()	
 0x71001F9E90			FALSE	_ZN14TestMusaLayout9setStringEPKDs	TestMusaLayout::setString(char16_t const*)	
-0x71001F9EB0			FALSE	sub_71001F9EB0	sub_71001F9EB0	
+0x71001F9EB0			FALSE	_ZNK12_GLOBAL__N_121TestMusaLayoutNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::TestMusaLayoutNrvWait::execute(al::NerveKeeper*) const	
 0x71001F9F40		TimerClockNumber.o	FALSE	_ZN16TimerClockNumberC2ERKN2al14LayoutInitInfoEi	TimerClockNumber::TimerClockNumber(al::LayoutInitInfo const&, int)	
 0x71001FA080			FALSE	_ZN16TimerClockNumberC1ERKN2al14LayoutInitInfoEi	TimerClockNumber::TimerClockNumber(al::LayoutInitInfo const&, int)	
 0x71001FA1C0			FALSE	_ZN16TimerClockNumber18appearWithWorldPosERKN4sead7Vector3IfEE	TimerClockNumber::appearWithWorldPos(sead::Vector3<float> const&)	

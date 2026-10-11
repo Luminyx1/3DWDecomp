@@ -1251,7 +1251,7 @@ src/Game/Layout/TestAoyagiPlayerEntryStateSelect.cpp:
     .text   start:0x001F9010 end:0x001F9904
 src/Game/Layout/TestLayoutPartsActor.cpp: done
     .text   start:0x001F9910 end:0x001F9B34
-src/Game/Layout/TestMusaLayout.cpp:
+src/Game/Layout/TestMusaLayout.cpp: done
     .text   start:0x001F9B40 end:0x001F9F38
 src/Game/Layout/TimerClockNumber.cpp: done
     .text   start:0x001F9F40 end:0x001FA338
