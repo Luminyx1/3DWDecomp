@@ -8186,7 +8186,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710013B330			FALSE	_ZNK14PipePackunBody18calcClippingSphereEPN4sead7Vector3IfEEPfRKS2_f	PipePackunBody::calcClippingSphere(sead::Vector3<float>*, float*, sead::Vector3<float> const&, float) const	
 0x710013B3F0			FALSE	_ZN14PipePackunBodyD1Ev	PipePackunBody::~PipePackunBody()	
 0x710013B400			FALSE	_ZN14PipePackunBodyD0Ev	PipePackunBody::~PipePackunBody()	
-0x710013B430			FALSE	nullsub_68	nullsub_68	
+0x710013B430			FALSE	_ZNK12_GLOBAL__N_121PipePackunBodyNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::PipePackunBodyNrvWait::execute(al::NerveKeeper*) const	
 0x710013B440		PipePackunBodyParts.o	FALSE	_ZN19PipePackunBodyPartsC2EP10PipePackunPKc	PipePackunBodyParts::PipePackunBodyParts(PipePackun*, char const*)	
 0x710013B500			FALSE	_ZN19PipePackunBodyPartsC1EP10PipePackunPKc	PipePackunBodyParts::PipePackunBodyParts(PipePackun*, char const*)	
 0x710013B5B0			FALSE	_ZN19PipePackunBodyParts4initERKN2al13ActorInitInfoE	PipePackunBodyParts::init(al::ActorInitInfo const&)	
