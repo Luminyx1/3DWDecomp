@@ -1,6 +1,7 @@
 #pragma once
 
 #include <prim/seadSafeString.h>
+#include "NPC/GhostPlayerDisplayInfo.hpp"
 
 class GhostPlayerDisplayInfo;
 

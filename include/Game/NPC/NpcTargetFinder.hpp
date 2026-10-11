@@ -12,13 +12,7 @@ class SensorMsg;
 class ScreenPointer;
 class ScreenPointTarget;
 } // namespace al
-class IUseTargetFinderFilter {
-public:
-    /** @brief Approves a candidate. @param pActor Candidate actor. @param rType Candidate category.
-     * @return Whether the candidate is accepted. */
-    virtual bool acceptTarget(const al::LiveActor* pActor,
-                              const npc::NpcFindTargetType& rType) const = 0;
-};
+class IUseTargetFinderFilter;
 
 class NpcTargetFinder {
 public:
@@ -44,6 +38,39 @@ public:
     bool isInSightTarget(float) const;
     bool isInChaseRangeTarget(float) const;
     bool isInSenseAreaTarget() const;
+    /** @brief Gets a valid target in the requested categories. @param types Category mask. @return Target, or nullptr. */
+    al::LiveActor* tryGetTarget(int types) const {
+        if ((mType & types) != 0 && mTarget && mInSight) { return const_cast<al::LiveActor*>(mTarget); }
+        return nullptr;
+    }
+    /** @brief Changes search settings. @param pParam Search settings. */
+    void setParam(const NpcTargetFinderParam* pParam) { mParam = pParam; }
+    /** @brief Changes accepted categories. @param types Category mask. */
+    void setSearchTypes(unsigned int types) { mAllowedTypes = types; }
+    /** @brief Gets the candidate collection sensor. @return the candidate collection sensor. */
+    al::HitSensor* getEyeSensor() const { return mSensor; }
+    /** @brief Gets the host actor. @return the host actor. */
+    al::LiveActor* getHost() const { return mHostActor; }
+    /** @brief Gets the optional target filter. @return the optional target filter. */
+    const IUseTargetFinderFilter* getFilter() const { return mFilter; }
+    /** @brief Gets the accepted category mask. @return the accepted category mask. */
+    unsigned int getSearchTypes() const { return mAllowedTypes; }
+    /** @brief Gets the current target. @return the current target. */
+    al::LiveActor* getTarget() const { return const_cast<al::LiveActor*>(mTarget); }
+    /** @brief Gets the previous target. @return the previous target. */
+    al::LiveActor* getLastTarget() const { return const_cast<al::LiveActor*>(mLastTarget); }
+    /** @brief Gets the current target category. @return the current target category. */
+    unsigned int getTargetType() const { return mType; }
+    /** @brief Gets the previous target category. @return the previous target category. */
+    unsigned int getLastTargetType() const { return mLastType; }
+    /** @brief Gets whether the target changed. @return whether the target changed. */
+    bool isTargetChanged() const { return mHasTargetChanged; }
+    /** @brief Gets whether the target is in sight. @return whether the target is in sight. */
+    bool isTargetValid() const { return mInSight; }
+    /** @brief Gets whether the target remains in chase range. @return whether the target remains in chase range. */
+    bool isTargetInChaseRange() const { return mIsInChaseRange; }
+    /** @brief Gets the search settings. @return the search settings. */
+    const NpcTargetFinderParam* getParam() const { return mParam; }
     al::LiveActor* mHostActor;
     const IUseTargetFinderFilter* mFilter;
     const al::LiveActor* mTarget;

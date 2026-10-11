@@ -6,7 +6,7 @@ class LiveActor;
 class NpcTargetFinder;
 class NpcTargetFinderParam;
 namespace npc {
-enum class NpcFindTargetType : unsigned int {
+enum NpcFindTargetType : unsigned int {
     None = 0,
     PlayerRegular = 1,
     PlayerClimb = 2,
@@ -18,6 +18,18 @@ enum class NpcFindTargetType : unsigned int {
     Neko = 128,
     Player = PlayerRegular | PlayerClimb,
     ChaseObj = Ball | Koura | Bird,
+    NpcFindTargetType_All = 0xffffffff,
+    NpcFindTargetType_None = None,
+    NpcFindTargetType_PlayerRegular = PlayerRegular,
+    NpcFindTargetType_PlayerClimb = PlayerClimb,
+    NpcFindTargetType_KoopaJr = KoopaJr,
+    NpcFindTargetType_Cursor = Cursor,
+    NpcFindTargetType_Ball = Ball,
+    NpcFindTargetType_Koura = Koura,
+    NpcFindTargetType_Bird = Bird,
+    NpcFindTargetType_Neko = Neko,
+    NpcFindTargetType_Player = Player,
+
 };
 bool isSensorBall(const al::HitSensor* pSensor);
 bool isSensorBird(const al::HitSensor* pSensor);

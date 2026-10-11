@@ -24,8 +24,10 @@ public:
 
     bool hitCheckSegment(const sead::Vector3f& rStart, const sead::Vector3f& rEnd);
     bool hitCheckScreenCircle(const sead::Vector2f& rPos, f32 radius);
+    ScreenPointTarget* getHitTargetAndSetPosAndNormal(s32 index);
 
-    /** @brief Gets the pointer host. @return Actor owning this pointer. */
+    s32 getHitTargetNum() const { return mHitInfos.size(); }
+
     const LiveActor* getHost() const { return mHost; }
     const sead::Vector3f& getHitPos() const { return mHitPos; }
     const sead::Vector3f& getHitNormal() const { return mHitNormal; }

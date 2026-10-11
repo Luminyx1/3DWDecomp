@@ -3,6 +3,10 @@
 
 class NpcStateWanderParam {
 public:
+    /** @brief Gets walking acceleration. @return walking acceleration. */
+    float getWalkAccel() const { return mAcceleration; }
+    /** @brief Gets the turn limit in degrees. @return the turn limit in degrees. */
+    float getTurnDegree() const { return mTurnDegrees; }
     NpcStateWanderParam();
     ~NpcStateWanderParam();
     NpcStateWanderParam(int waitFrames, int walkFrames, float acceleration, float turnDegrees,

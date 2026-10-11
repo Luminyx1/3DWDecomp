@@ -7,16 +7,16 @@
  * @param pFileName Recording filename used to find its user-information entry.
  */
 GhostPlayerDisplayInfo::GhostPlayerDisplayInfo(const char* pFileName)
-    : mIsFlagged(false), mIsInitialized(false) {
+    : mIsMii(false), mIsValid(false) {
     const auto* pInfo = rc::findGhostPlayerUserInfo(pFileName);
     const char* pName = pInfo->mName;
-    sead::StringUtil::convertSjisToUtf16(mName.getBuffer(), mName.getBufferSize(), pName, -1);
-    mIsFlagged = pInfo->mIsFlagged;
-    mIsInitialized = true;
+    sead::StringUtil::convertSjisToUtf16(mUserName.getBuffer(), mUserName.getBufferSize(), pName, -1);
+    mIsMii = pInfo->mIsFlagged;
+    mIsValid = true;
 }
 
 /** @brief Creates an empty, uninitialized ghost display record. */
-GhostPlayerDisplayInfo::GhostPlayerDisplayInfo() : mIsFlagged(false), mIsInitialized(false) {}
+GhostPlayerDisplayInfo::GhostPlayerDisplayInfo() : mIsMii(false), mIsValid(false) {}
 
 /**
  * @brief Marks a downloaded ghost's display record as initialized.
@@ -24,6 +24,6 @@ GhostPlayerDisplayInfo::GhostPlayerDisplayInfo() : mIsFlagged(false), mIsInitial
  * @param isFlagged Flag to associate with the downloaded ghost.
  */
 void GhostPlayerDisplayInfo::init(const al::NexDataStoreDownloadInfo& rInfo, bool isFlagged) {
-    mIsFlagged = isFlagged;
-    mIsInitialized = true;
+    mIsMii = isFlagged;
+    mIsValid = true;
 }

@@ -1,4 +1,6 @@
 #include "NPC/NpcTargetFinder.hpp"
+#include "NPC/IUseTargetFinderFilter.hpp"
+#include "Library/Math/MathUtil.hpp"
 #include "Library/LiveActor/LiveActor.hpp"
 #include "Library/LiveActor/Util/ActorPoseUtil.hpp"
 #include "Library/LiveActor/Util/ActorMovementUtil.hpp"
@@ -500,3 +502,202 @@ void NpcTargetFinder::updateTarget() {
         findTarget();
     }
 }
+
+namespace npc {
+
+/**
+ * @brief Checks for a supported ball body sensor.
+ * @param pSensor Sensor to inspect.
+ * @return Whether the sensor belongs to a supported ball.
+ */
+bool isSensorBall(const al::HitSensor* pSensor) {
+    if (!al::isSensorMapObj(pSensor)) {
+        return false;
+    }
+    if (!al::isSensorName(pSensor, "Body")) {
+        return false;
+    }
+    return al::isSensorHostName(pSensor, "BallNeko") ||
+           al::isSensorHostName(pSensor, "\u30dc\u30fc\u30eb") ||
+           al::isSensorHostName(pSensor, "\u96ea\u7389");
+}
+/**
+ * @brief Checks for a cat gull sensor.
+ * @param pSensor Sensor to inspect.
+ * @return Whether the sensor belongs to a cat gull.
+ */
+bool isSensorBird(const al::HitSensor* pSensor) {
+    return al::isSensorMapObj(pSensor) && al::isSensorHostName(pSensor, "CatGull");
+}
+/**
+ * @brief Checks for a normal cat sensor.
+ * @param pSensor Sensor to inspect.
+ * @return Whether the sensor belongs to a normal cat.
+ */
+bool isSensorNeko(const al::HitSensor* pSensor) {
+    return al::isSensorNpc(pSensor) && al::isSensorHostName(pSensor, "NekoNormal");
+}
+/**
+ * @brief Checks for a disaster cat sensor.
+ * @param pSensor Sensor to inspect.
+ * @return Whether the sensor belongs to a disaster cat.
+ */
+bool isSensorNekoDisaster(const al::HitSensor* pSensor) {
+    return al::isSensorEnemy(pSensor) && al::isSensorHostName(pSensor, "NekoDisaster");
+}
+/**
+ * @brief Gets the first applicable target-type label.
+ * @param rType Target-type flags to describe.
+ * @return Target label, or Unknown for unrecognized flags.
+ */
+const char* NpcFindTargetTypeToString(const NpcFindTargetType& rType) {
+    unsigned int bits = static_cast<unsigned int>(rType);
+    if (!bits) {
+        return "None";
+    }
+    if (bits & 1) {
+        return "PlayerRegular";
+    }
+    if (bits & 2) {
+        return "PlayerClimb";
+    }
+    if (bits & 4) {
+        return "KoopaJr";
+    }
+    if (bits & 8) {
+        return "Cursor";
+    }
+    if (bits & 16) {
+        return "Ball";
+    }
+    if (bits & 32) {
+        return "Koura";
+    }
+    if (bits & 64) {
+        return "Bird";
+    }
+    if (bits & 128) {
+        return "Neko";
+    }
+    if (bits & 3) {
+        return "Player";
+    }
+    if (bits & 0x70) {
+        return "ChaseObj";
+    }
+    return "Unknown";
+}
+
+/**
+ * @brief Calculates target displacement, distance, and facing measures.
+ * @param pOut Receives the calculated target measures.
+ * @param pHost Actor searching for a target.
+ * @param rFront Host facing direction.
+ * @param rGravity Host gravity direction.
+ * @param pTarget Candidate target actor.
+ * @return Whether the displacement and projected direction are usable.
+ */
+bool calcTargetMetrics(TargetMetrics* pOut, const al::LiveActor* pHost,
+                       const sead::Vector3f& rFront, const sead::Vector3f& rGravity,
+                       const al::LiveActor* pTarget) {
+    sead::Vector3f delta = al::getTrans(pTarget) - al::getTrans(pHost);
+    float lengthSquared = delta.squaredLength();
+    pOut->delta = delta;
+    if (al::isNearZero(lengthSquared)) {
+        pOut->distance = 0.0f;
+        return false;
+    }
+    pOut->distance = sead::Mathf::sqrt(lengthSquared);
+    sead::Vector3f up;
+    al::verticalizeVec(&up, rFront, rGravity);
+    if (al::normalizeOrZero(&up)) {
+        return false;
+    }
+    delta *= 1.0f / pOut->distance;
+    float dot = up.dot(delta);
+    float cosV = 0.0f;
+    if (!al::isNearZero((dot > 0.0f ? dot : -dot) - 1.0f)) {
+        cosV = sead::Mathf::sqrt(1.0f - dot * dot);
+    }
+    pOut->verticalCos = cosV;
+    sead::Vector3f flat = delta - up * cosV;
+    float cosH = 0.0f;
+    if (!al::normalizeOrZero(&flat)) {
+        cosH = rFront.dot(flat);
+    }
+    pOut->horizontalCos = cosH;
+    return true;
+}
+/**
+ * @brief Checks a candidate against sight and height limits.
+ * @param pFinder Finder supplying the host and direction overrides.
+ * @param pTarget Candidate target actor.
+ * @param pParam Optional settings override; nullptr uses the finder settings.
+ * @return Whether the target is within the sight limits.
+ */
+bool calcIsTargetInSight(const NpcTargetFinder* pFinder, const al::LiveActor* pTarget,
+                         const NpcTargetFinderParam* pParam) {
+    TargetMetrics metrics;
+    const al::LiveActor* pHost = pFinder->mHostActor;
+    const sead::Vector3f* pFront = pFinder->mFront;
+    if (!pFront) {
+        pFront = &al::getFront(pHost);
+    }
+    const sead::Vector3f* pGravity = pFinder->mGravity;
+    if (!pGravity) {
+        pGravity = &al::getGravity(pFinder->mHostActor);
+    }
+    if (!calcTargetMetrics(&metrics, pHost, *pFront, *pGravity, pTarget)) {
+        return false;
+    }
+    if (!pParam) {
+        pParam = pFinder->mParam;
+    }
+    if (metrics.distance > pParam->mSightDistance) {
+        return false;
+    }
+    if (metrics.horizontalCos < std::cos(pParam->mHorizontalAngle * 0.017453292f)) {
+        return false;
+    }
+    if (metrics.verticalCos < std::cos(pParam->mVerticalAngle * 0.017453292f)) {
+        return false;
+    }
+    if (metrics.delta.y >= 0.0f) {
+        return pParam->mMaxHeight < 0.0f || metrics.delta.y <= pParam->mMaxHeight;
+    }
+    return pParam->mMaxDepth < 0.0f || pParam->mMaxDepth >= -metrics.delta.y;
+}
+/**
+ * @brief Checks a candidate against chase distance and height limits.
+ * @param pFinder Finder supplying the host and direction overrides.
+ * @param pTarget Candidate target actor.
+ * @param pParam Optional settings override; nullptr uses the finder settings.
+ * @return Whether the target is within chase range.
+ */
+bool calcIsTargetInChaseRange(const NpcTargetFinder* pFinder, const al::LiveActor* pTarget,
+                              const NpcTargetFinderParam* pParam) {
+    TargetMetrics metrics;
+    const al::LiveActor* pHost = pFinder->mHostActor;
+    const sead::Vector3f* pFront = pFinder->mFront;
+    if (!pFront) {
+        pFront = &al::getFront(pHost);
+    }
+    const sead::Vector3f* pGravity = pFinder->mGravity;
+    if (!pGravity) {
+        pGravity = &al::getGravity(pFinder->mHostActor);
+    }
+    if (!calcTargetMetrics(&metrics, pHost, *pFront, *pGravity, pTarget)) {
+        return false;
+    }
+    if (!pParam) {
+        pParam = pFinder->mParam;
+    }
+    if (metrics.distance > pParam->mChaseDistance) {
+        return false;
+    }
+    if (metrics.delta.y >= 0.0f) {
+        return pParam->mMaxHeight < 0.0f || metrics.delta.y <= pParam->mMaxHeight;
+    }
+    return pParam->mMaxDepth < 0.0f || pParam->mMaxDepth >= -metrics.delta.y;
+}
+} // namespace npc

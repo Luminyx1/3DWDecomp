@@ -2,6 +2,8 @@
 
 class NpcTargetFinderParam {
 public:
+    /** @brief Gets the maximum chase distance. @return the maximum chase distance. */
+    float getChaseRange() const { return mChaseDistance; }
     NpcTargetFinderParam();
     NpcTargetFinderParam(float sightDistance, float horizontalAngle, float verticalAngle,
                         unsigned int targetGraceFrames, float senseDistance, float maxHeight,

@@ -4,6 +4,8 @@
 
 class NpcStateRunAwayParam {
 public:
+    /** @brief Gets the turn limit in degrees. @return the turn limit in degrees. */
+    float getTurnDegree() const { return mTurnDegrees; }
     NpcStateRunAwayParam();
     NpcStateRunAwayParam(float acceleration, int fastFrames, float param8, float maxFrames,
                          float turnDegrees, float randomTurnDegrees, float endFrames,

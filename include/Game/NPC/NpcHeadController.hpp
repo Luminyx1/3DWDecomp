@@ -24,6 +24,10 @@ public:
                       const NpcHeadControllerParam* pSecond, int maxActions,
                       NpcTargetFinder* pFinder, npc::NpcFindTargetType type, int keepFrames,
                       const sead::Vector3f& rOffset);
+    /** @param pTarget Target position, or nullptr. */
+    void setLookAtTarget(const sead::Vector3f* pTarget) { mTarget = pTarget; }
+    /** @brief Resets head tracking on the next update. */
+    void requestResetLook() { mSkipFrame = true; }
     void update();
     bool validateLookAt();
     void addAction(const char* pAction, bool first, bool second);

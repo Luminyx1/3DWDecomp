@@ -11,5 +11,5 @@
 NekoStateWaitParam::NekoStateWaitParam(const char* pAction1, const char* pAction2,
                                      const char* pAction3, const char* pAction4,
                                      const char* pAction5)
-    : mAction2(pAction2), mAction3(pAction3), mAction1(pAction1),
-      mAction4(pAction4), mAction5(pAction5) {}
+    : mStartAction(pAction2), mEndAction(pAction3), mWaitAction(pAction1),
+      mSubAction1(pAction4), mSubAction2(pAction5) {}

@@ -63,6 +63,8 @@ public:
     ~NpcStateWait() override;
     void appear() override;
     void control() override;
+    /** @brief Gets whether turning is disabled. @return whether turning is disabled. */
+    bool isInvalidTurn() const { return mIsTurnDisabled; }
     void setWaitAfter();
     void setWait();
     void startWait();

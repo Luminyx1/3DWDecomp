@@ -1,4 +1,5 @@
 #pragma once
+#include "NPC/NpcStateWanderParam.hpp"
 #include "Library/Nerve/NerveStateBase.hpp"
 #include <math/seadVector.h>
 class NpcStateParam;

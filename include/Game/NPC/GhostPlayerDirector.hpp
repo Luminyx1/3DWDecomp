@@ -12,6 +12,10 @@ class GhostPlayerRecorder;
 class GhostPlayerPlayer;
 class GhostPlayerDirector : public al::ISceneObj, public al::IUseExecutor {
 public:
+    /** @brief Gets the stage recorder. @return the stage recorder. */
+    GhostPlayerRecorder* getRecorder() const { return mRecorder; }
+    /** @brief Gets the stage ghost player. @return the stage ghost player. */
+    GhostPlayerPlayer* getPlayer() const { return mPlayer; }
     GhostPlayerDirector(const al::IUseSceneObjHolder* pUser, const al::SceneInitInfo& rInfo,
                         al::ExecuteDirector* pExecute, al::PlayerHolder* pPlayers,
                         const GameDataHolder* pData);

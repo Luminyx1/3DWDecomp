@@ -11,6 +11,10 @@ class ScreenPointTarget;
 
 class ActorStateSupportStroke : public al::ActorStateBase {
 public:
+    /** @return Whether stroking triggered an item this frame. */
+    bool isTrigStroke() const { return mShouldAppearItem; }
+    /** @brief Disables stroke feedback. */
+    void resetFlags() { disableFeedback(); }
     explicit ActorStateSupportStroke(al::LiveActor* pActor);
     ~ActorStateSupportStroke() override;
     void kill() override;

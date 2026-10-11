@@ -9,6 +9,14 @@ class IUseRabbitRoutePoint;
 
 class RabbitRouteRider : public al::NerveExecutor {
 public:
+    /** @brief Gets the current route point. @return the current route point. */
+    const IUseRabbitRoutePoint* getCurrentPoint() const { return mCurrentPoint; }
+    /** @brief Gets the next route point. @return the next route point. */
+    const IUseRabbitRoutePoint* getNextPoint() const { return mNextPoint; }
+    /** @brief Gets the current route position. @return the current route position. */
+    const sead::Vector3f& getPos() const { return mPosition; }
+    /** @brief Gets the route movement direction. @return the route movement direction. */
+    const sead::Vector3f& getFront() const { return mDirection; }
     RabbitRouteRider(const al::LiveActor* pActor, const RabbitRoute* pRoute, bool isFastJump);
     /** @brief Releases the rider's nerve executor. */
     ~RabbitRouteRider() override = default;
