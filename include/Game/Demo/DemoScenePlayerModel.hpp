@@ -1,5 +1,9 @@
 #pragma once
 
+#include <math/seadMatrix.h>
+
+class PlayerModel;
+
 namespace al {
 class ActorInitInfo;
 class IUseHioNode;
@@ -18,4 +22,13 @@ public:
     void initialize();
     void releaseDemoActor();
     void kill();
+    void setFigure(int figure);
+    PlayerModel* getPlayerModel();
+    al::LiveActor* getModel();
+    void startDemo(const sead::Matrix34f& rMtx);
+    void startAction(const char* pName);
+    void showShadow();
+    void hideShadow();
+    void killAllEffect();
+    void update(al::LiveActor* pActor);
 };
