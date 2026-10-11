@@ -1309,12 +1309,12 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100035810			FALSE	_ZN19KoopaLastDemoAppear10exeJumpEndEv	KoopaLastDemoAppear::exeJumpEnd()	
 0x7100035840			FALSE	_ZN19KoopaLastDemoAppearD1Ev	KoopaLastDemoAppear::~KoopaLastDemoAppear()	
 0x7100035850			FALSE	_ZN19KoopaLastDemoAppearD0Ev	KoopaLastDemoAppear::~KoopaLastDemoAppear()	
-0x7100035880			FALSE	nullsub_7	nullsub_7	
+0x7100035880			FALSE	_ZNK12_GLOBAL__N_126KoopaLastDemoAppearNrvHide7executeEPN2al11NerveKeeperE	nullsub_7	matched nerve
 0x7100035890			FALSE	_ZNK12_GLOBAL__N_126KoopaLastDemoAppearNrvDemo7executeEPN2al11NerveKeeperE	(anonymous namespace)::KoopaLastDemoAppearNrvDemo::execute(al::NerveKeeper*) const	
 0x71000358A0			FALSE	_ZNK12_GLOBAL__N_126KoopaLastDemoAppearNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::KoopaLastDemoAppearNrvWait::execute(al::NerveKeeper*) const	
-0x71000358B0			FALSE	sub_71000358B0	sub_71000358B0	
+0x71000358B0			FALSE	_ZNK12_GLOBAL__N_131KoopaLastDemoAppearNrvJumpStart7executeEPN2al11NerveKeeperE	sub_71000358B0	matched nerve
 0x7100035910			FALSE	_ZNK12_GLOBAL__N_126KoopaLastDemoAppearNrvJump7executeEPN2al11NerveKeeperE	(anonymous namespace)::KoopaLastDemoAppearNrvJump::execute(al::NerveKeeper*) const	
-0x7100035920			FALSE	sub_7100035920	sub_7100035920	
+0x7100035920			FALSE	_ZNK12_GLOBAL__N_129KoopaLastDemoAppearNrvJumpEnd7executeEPN2al11NerveKeeperE	sub_7100035920	matched nerve
 0x7100035950			FALSE	_ZNK2al10FunctorV0MIP19KoopaLastDemoAppearMS1_FvvEEclEv	al::FunctorV0M<KoopaLastDemoAppear*, void (KoopaLastDemoAppear::*)()>::operator()() const	
 0x7100035970			FALSE	_ZNK2al10FunctorV0MIP19KoopaLastDemoAppearMS1_FvvEE5cloneEv	al::FunctorV0M<KoopaLastDemoAppear*, void (KoopaLastDemoAppear::*)()>::clone() const	
 0x71000359C0		KoopaLastDemoEndActorHolder.o	FALSE	_ZN27KoopaLastDemoEndActorHolderC2EPN2al9LiveActorE	KoopaLastDemoEndActorHolder::KoopaLastDemoEndActorHolder(al::LiveActor*)	
