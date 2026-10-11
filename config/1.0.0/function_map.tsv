@@ -4614,7 +4614,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71000BA330			FALSE	_ZN20DemoCutsceneSequenceD1Ev	DemoCutsceneSequence::~DemoCutsceneSequence()	
 0x71000BA340			FALSE	_ZN20DemoCutsceneSequenceD0Ev	DemoCutsceneSequence::~DemoCutsceneSequence()	
 0x71000BA370			FALSE	_ZNK12_GLOBAL__N_146DemoCutsceneSequenceNrvSkipToUnskippableAction7executeEPN2al11NerveKeeperE	(anonymous namespace)::DemoCutsceneSequenceNrvSkipToUnskippableAction::execute(al::NerveKeeper*) const	
-0x71000BA380			FALSE	sub_71000BA380	sub_71000BA380	
+0x71000BA380			FALSE	_ZNK12_GLOBAL__N_127DemoCutsceneSequenceNrvPlay7executeEPN2al11NerveKeeperE	(anonymous namespace)::DemoCutsceneSequenceNrvPlay::execute(al::NerveKeeper*) const	
 0x71000BA390		DemoEffectObj.o	FALSE	_ZN13DemoEffectObjC2EPKc	DemoEffectObj::DemoEffectObj(char const*)	
 0x71000BA480			FALSE	_ZN13DemoEffectObjC1EPKc	DemoEffectObj::DemoEffectObj(char const*)	
 0x71000BA580			FALSE	_ZN13DemoEffectObj18initDemoSceneActorERKN2al13ActorInitInfoES3_PKN4sead8Matrix34IfEE	DemoEffectObj::initDemoSceneActor(al::ActorInitInfo const&, al::ActorInitInfo const&, sead::Matrix34<float> const*)	

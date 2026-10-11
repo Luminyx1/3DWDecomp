@@ -9,6 +9,8 @@ class IUseSceneObjHolder;
 class LayoutInitInfo;
 }  // namespace al
 
+class WindowMessage;
+
 /** @brief Priority of a guide message; a higher one replaces a lower one already shown. */
 enum GuideMessagePriority : s32 {};
 
@@ -25,14 +27,21 @@ public:
     /** @brief Sets the lowest priority a guide message needs to be shown. */
     void setPriorityLimit(GuideMessagePriority priority) { mPriorityLimit = priority; }
 
+    /** @brief Gets the message layout. @return The active message layout. */
+    WindowMessage* getWindowMessage() const { return mWindowMessage; }
+
 private:
-    u8 _8[0x24 - 0x8];
+    u8 _8[8];
+    WindowMessage* mWindowMessage;
+    u8 _18[0x24 - 0x18];
     GuideMessagePriority mPriorityLimit;  // 0x24
 };
 
 static_assert(sizeof(GuideGameWindow) == 0x28);
 
 namespace rc {
+GuideGameWindow* getGuideGameWindow(const al::IUseSceneObjHolder* pHolder);
+void forceEndGuideGameWindow(const al::IUseSceneObjHolder* pHolder);
 void appearGuideGameWindow(const al::IUseSceneObjHolder* pHolder, const char* pCategory,
                            const char* pLabel, s32 frame, f32 delay);
 void appearGuideGameWindowWithConfirm(const al::IUseSceneObjHolder* pHolder, const char* pMessage,
