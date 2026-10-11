@@ -5856,3 +5856,8 @@
 0x71019D06D8 8 object _ZN12_GLOBAL__N_124NrvButtonConfigPartsWaitE
 0x71019D06E8 8 object _ZN12_GLOBAL__N_126NrvButtonConfigPartsDecideE
 0x71019D0700 8 object _ZN12_GLOBAL__N_127NrvButtonConfigPartsDisableE
+
+# src/Game/Layout/CounterTimerGate
+0x71019C1718 8 object _ZN12_GLOBAL__N_122NrvCounterTimerGateEndE
+0x71019C1720 8 object _ZN12_GLOBAL__N_123NrvCounterTimerGateHideE
+0x71019C1728 8 object _ZN12_GLOBAL__N_125NrvCounterTimerGateAppearE

@@ -949,7 +949,7 @@ src/Game/Layout/Switch/CounterCoinInfo.cpp:
     .text   start:0x00184A60 end:0x0018521C
 src/Game/Layout/Switch/CounterLockGigaBell.cpp: done
     .text   start:0x00185220 end:0x00185874
-src/Game/Layout/Switch/CounterTimerGate.cpp:
+src/Game/Layout/Switch/CounterTimerGate.cpp: done
     .text   start:0x00185880 end:0x00186084
 src/Game/Layout/Switch/CourseSelectMenuHeader.cpp: done
     .text   start:0x00186090 end:0x001866D8

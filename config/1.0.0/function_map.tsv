@@ -10168,10 +10168,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100185FE0			FALSE	_ZN16CounterTimerGate6exeEndEv	CounterTimerGate::exeEnd()	
 0x7100185FF0			FALSE	_ZN16CounterTimerGate7exeHideEv	CounterTimerGate::exeHide()	
 0x7100186000			FALSE	_ZN16CounterTimerGate12setTimerGateEP9TimerGate	CounterTimerGate::setTimerGate(TimerGate*)	
-0x7100186010			FALSE	nullsub_91	nullsub_91	
+0x7100186010			FALSE	_ZNK12_GLOBAL__N_122CounterTimerGateNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::CounterTimerGateNrvEnd::execute(al::NerveKeeper*) const	
 0x7100186020			FALSE	_ZNK12_GLOBAL__N_128CounterTimerGateNrvCountDown7executeEPN2al11NerveKeeperE	(anonymous namespace)::CounterTimerGateNrvCountDown::execute(al::NerveKeeper*) const	
-0x7100186030			FALSE	nullsub_92	nullsub_92	
-0x7100186040			FALSE	sub_7100186040	sub_7100186040	
+0x7100186030			FALSE	_ZNK12_GLOBAL__N_123CounterTimerGateNrvHide7executeEPN2al11NerveKeeperE	(anonymous namespace)::CounterTimerGateNrvHide::execute(al::NerveKeeper*) const	
+0x7100186040			FALSE	_ZNK12_GLOBAL__N_125CounterTimerGateNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::CounterTimerGateNrvAppear::execute(al::NerveKeeper*) const	
 0x7100186090		CourseSelectMenuHeader.o	FALSE	_ZN22CourseSelectMenuHeaderC2ERKN2al14LayoutInitInfoE	CourseSelectMenuHeader::CourseSelectMenuHeader(al::LayoutInitInfo const&)	
 0x7100186180			FALSE	_ZN22CourseSelectMenuHeaderC1ERKN2al14LayoutInitInfoE	CourseSelectMenuHeader::CourseSelectMenuHeader(al::LayoutInitInfo const&)	
 0x7100186270			FALSE	_ZN22CourseSelectMenuHeader6appearEv	CourseSelectMenuHeader::appear()	
