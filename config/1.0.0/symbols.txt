@@ -5730,3 +5730,6 @@
 # src/Game/Layout/TestLayoutPartsActor
 0x71019E6C98 8 object _ZN12_GLOBAL__N_127NrvTestLayoutPartsActorWaitE
 0x71019E6CC0 8 object _ZN12_GLOBAL__N_130NrvTestLayoutPartsActorWarningE
+
+# src/Game/Layout/CourseSelectStartInfo
+0x71019D7FC8 8 object _ZN12_GLOBAL__N_128NrvCourseSelectStartInfoWaitE

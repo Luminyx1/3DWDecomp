@@ -1115,7 +1115,7 @@ src/Game/Layout/CourseSelectMiniatureCursor.cpp:
     .text   start:0x001BDEF0 end:0x001BE910
 src/Game/Layout/CourseSelectSceneLayout.cpp:
     .text   start:0x001BE910 end:0x001C03A4
-src/Game/Layout/CourseSelectStartInfo.cpp:
+src/Game/Layout/CourseSelectStartInfo.cpp: done
     .text   start:0x001C03B0 end:0x001C06F4
 src/Game/Layout/CursorTarget.cpp: done
     .text   start:0x001C0700 end:0x001C07F8

@@ -11639,7 +11639,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001C0620			FALSE	_ZN21CourseSelectStartInfo7exeWaitEv	CourseSelectStartInfo::exeWait()	
 0x71001C0660			FALSE	_ZN21CourseSelectStartInfo6exeEndEv	CourseSelectStartInfo::exeEnd()	
 0x71001C06A0			FALSE	_ZNK12_GLOBAL__N_130CourseSelectStartInfoNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectStartInfoNrvAppear::execute(al::NerveKeeper*) const	
-0x71001C06B0			FALSE	sub_71001C06B0	sub_71001C06B0	
+0x71001C06B0			FALSE	_ZNK12_GLOBAL__N_128CourseSelectStartInfoNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectStartInfoNrvWait::execute(al::NerveKeeper*) const	
 0x71001C0700		CursorTarget.o	FALSE	_ZN12CursorTargetC2ERKN2al14LayoutInitInfoEPKcS5_PNS0_11LayoutActorE	CursorTarget::CursorTarget(al::LayoutInitInfo const&, char const*, char const*, al::LayoutActor*)	
 0x71001C07B0			FALSE	_ZN12CursorTarget7setPortEi	CursorTarget::setPort(int)	
 0x71001C07E0			FALSE	_ZNK12CursorTarget7getPortEv	CursorTarget::getPort() const	
