@@ -3413,7 +3413,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71000935F0			FALSE	_ZN17CourseSelectDokan10exeDemoOutEv	CourseSelectDokan::exeDemoOut()	
 0x7100093740			FALSE	_ZN17CourseSelectDokanD1Ev	CourseSelectDokan::~CourseSelectDokan()	
 0x7100093750			FALSE	_ZN17CourseSelectDokanD0Ev	CourseSelectDokan::~CourseSelectDokan()	
-0x7100093780			FALSE	nullsub_19	nullsub_19	
+0x7100093780			FALSE	_ZNK12_GLOBAL__N_124CourseSelectDokanNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectDokanNrvWait::execute(al::NerveKeeper*) const	
 0x7100093790		CourseSelectDokanController.o	FALSE	_ZN15DokanController8getActorEv	DokanController::getActor()	
 0x71000937A0			FALSE	_ZNK15DokanController19getCursorLayoutTypeEv	DokanController::getCursorLayoutType() const	
 0x71000937B0			FALSE	_ZNK15DokanController24getCourseSelectActorInfoEv	DokanController::getCourseSelectActorInfo() const	
@@ -3430,9 +3430,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71000938F0			FALSE	_ZNK28ICourseSelectActorController16isEnableOpenRoadEv	ICourseSelectActorController::isEnableOpenRoad() const	
 0x7100093900			FALSE	_ZNK12_GLOBAL__N_132CourseSelectDokanNrvOpenPrevRoad7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectDokanNrvOpenPrevRoad::execute(al::NerveKeeper*) const	
 0x7100093910			FALSE	_ZNK12_GLOBAL__N_126CourseSelectDokanNrvDemoIn7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectDokanNrvDemoIn::execute(al::NerveKeeper*) const	
-0x7100093920			FALSE	sub_7100093920	sub_7100093920	
+0x7100093920			FALSE	_ZNK12_GLOBAL__N_130CourseSelectDokanNrvHideToShow7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectDokanNrvHideToShow::execute(al::NerveKeeper*) const	
 0x7100093960			FALSE	_ZNK12_GLOBAL__N_127CourseSelectDokanNrvDemoOut7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectDokanNrvDemoOut::execute(al::NerveKeeper*) const	
-0x7100093970			FALSE	sub_7100093970	sub_7100093970	
+0x7100093970			FALSE	_ZNK12_GLOBAL__N_124CourseSelectDokanNrvHide7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectDokanNrvHide::execute(al::NerveKeeper*) const	
 0x71000939C0		CourseSelectDokanHolder.o	FALSE	_ZN23CourseSelectDokanHolderC2Ev	CourseSelectDokanHolder::CourseSelectDokanHolder()	
 0x7100093A20			FALSE	_ZN23CourseSelectDokanHolder26initAfterPlacementSceneObjERKN2al13ActorInitInfoE	CourseSelectDokanHolder::initAfterPlacementSceneObj(al::ActorInitInfo const&)	
 0x7100093B00			FALSE	_ZN23CourseSelectDokanHolder16registerDokanSrcEP17CourseSelectDokan	CourseSelectDokanHolder::registerDokanSrc(CourseSelectDokan*)	

@@ -365,10 +365,8 @@ src/Game/CourseSelect/CourseSelectConst.cpp: done
     .text   start:0x00090090 end:0x000900BC
 src/Game/CourseSelect/CourseSelectDirector.cpp:
     .text   start:0x000900C0 end:0x000927AC
-src/Game/CourseSelect/CourseSelectDokan.cpp:
-    .text   start:0x000927B0 end:0x00093784
-src/Game/CourseSelect/CourseSelectDokanController.cpp:
-    .text   start:0x00093790 end:0x000939BC
+src/Game/CourseSelect/CourseSelectDokan.cpp: done
+    .text   start:0x000927B0 end:0x000939BC
 src/Game/CourseSelect/CourseSelectDokanHolder.cpp: done
     .text   start:0x000939C0 end:0x00093C2C
 src/Game/CourseSelect/CourseSelectFairy.cpp:
