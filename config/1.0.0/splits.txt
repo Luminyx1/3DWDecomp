@@ -157,7 +157,7 @@ src/Game/Boss/DarkBowserWheel.cpp:
     .text   start:0x00026830 end:0x00027BD8
 src/Game/Boss/GateKeeperStateDemo.cpp:
     .text   start:0x00027BE0 end:0x00028788
-src/Game/Boss/KoopaChase.cpp:
+src/Game/Boss/KoopaChase.cpp: done
     .text   start:0x00028790 end:0x0002923C
 src/Game/Boss/KoopaChaseBattleLv1.cpp:
     .text   start:0x00029240 end:0x0002A718

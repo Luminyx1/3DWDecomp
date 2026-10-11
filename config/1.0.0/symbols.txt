@@ -5752,3 +5752,4 @@
 0x7101951E80 8 object _ZN12_GLOBAL__N_118NrvHealthBarAppearE
 0x7101951E88 8 object _ZN12_GLOBAL__N_116NrvHealthBarHealE
 0x7101951E90 8 object _ZN12_GLOBAL__N_123NrvHealthBarDamageStartE
+0x7101953430 8 object _ZN12_GLOBAL__N_119NrvKoopaChaseBattleE

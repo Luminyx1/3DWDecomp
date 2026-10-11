@@ -928,7 +928,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100029140			FALSE	_ZN10KoopaChase9exeBattleEv	KoopaChase::exeBattle()	
 0x71000291A0			FALSE	_ZN10KoopaChaseD1Ev	KoopaChase::~KoopaChase()	
 0x71000291B0			FALSE	_ZN10KoopaChaseD0Ev	KoopaChase::~KoopaChase()	
-0x71000291E0			FALSE	sub_71000291E0	sub_71000291E0	
+0x71000291E0			FALSE	_ZNK12_GLOBAL__N_119KoopaChaseNrvBattle7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_119KoopaChaseNrvBattle7executeEPN2al11NerveKeeperE	matched nerve
 0x7100029240		KoopaChaseBattleLv1.o	FALSE	_ZN19KoopaChaseBattleLv1C1EP10KoopaChaseRKN2al13ActorInitInfoE	KoopaChaseBattleLv1::KoopaChaseBattleLv1(KoopaChase*, al::ActorInitInfo const&)	
 0x7100029680			FALSE	_ZN19KoopaChaseBattleLv110receiveMsgEPKN2al9SensorMsgEPNS0_9HitSensorES5_	KoopaChaseBattleLv1::receiveMsg(al::SensorMsg const*, al::HitSensor*, al::HitSensor*)	
 0x7100029780			FALSE	_ZN19KoopaChaseBattleLv118tryGoDemoBattleEndEv	KoopaChaseBattleLv1::tryGoDemoBattleEnd()	
