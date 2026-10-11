@@ -5822,3 +5822,7 @@
 # src/Game/Layout/SimpleMenuLayout
 0x71019E5B00 8 object _ZN12_GLOBAL__N_126NrvSimpleMenuLayoutDecidedE
 0x71019E5B08 8 object _ZN12_GLOBAL__N_122NrvSimpleMenuLayoutEndE
+
+# src/Game/Layout/GuideObj
+0x71019DAC58 8 object _ZN12_GLOBAL__N_115NrvGuideObjWaitE
+0x71019DAC80 8 object _ZN12_GLOBAL__N_117NrvGuideObjAppearE

@@ -1137,7 +1137,7 @@ src/Game/Layout/GuideGameWindow.cpp:
     .text   start:0x001C68F0 end:0x001C751C
 src/Game/Layout/GuideMessage.cpp:
     .text   start:0x001C7520 end:0x001C8A68
-src/Game/Layout/GuideObj.cpp:
+src/Game/Layout/GuideObj.cpp: done
     .text   start:0x001C8A70 end:0x001C9168
 src/Game/Layout/GuideWindowParts.cpp: done
     .text   start:0x001C9170 end:0x001C9534

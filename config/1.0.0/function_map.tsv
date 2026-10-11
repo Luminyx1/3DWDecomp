@@ -11887,8 +11887,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001C9010			FALSE	_ZN8GuideObjD1Ev	GuideObj::~GuideObj()	
 0x71001C9020			FALSE	_ZN8GuideObjD0Ev	GuideObj::~GuideObj()	
 0x71001C9050			FALSE	_ZNK14GuideObjHolder15getSceneObjNameEv	GuideObjHolder::getSceneObjName() const	
-0x71001C9060			FALSE	sub_71001C9060	sub_71001C9060	
-0x71001C90D0			FALSE	sub_71001C90D0	sub_71001C90D0	
+0x71001C9060			FALSE	_ZNK12_GLOBAL__N_115GuideObjNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::GuideObjNrvWait::execute(al::NerveKeeper*) const	
+0x71001C90D0			FALSE	_ZNK12_GLOBAL__N_117GuideObjNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::GuideObjNrvAppear::execute(al::NerveKeeper*) const	
 0x71001C9170		GuideWindowParts.o	FALSE	_ZN16GuideWindowPartsC2ERKN2al14LayoutInitInfoEPKcS5_PNS0_11LayoutActorE	GuideWindowParts::GuideWindowParts(al::LayoutInitInfo const&, char const*, char const*, al::LayoutActor*)	
 0x71001C9230			FALSE	_ZN16GuideWindowPartsC1ERKN2al14LayoutInitInfoEPKcS5_PNS0_11LayoutActorE	GuideWindowParts::GuideWindowParts(al::LayoutInitInfo const&, char const*, char const*, al::LayoutActor*)	
 0x71001C92E0			FALSE	_ZN16GuideWindowParts6appearEPKc	GuideWindowParts::appear(char const*)	
