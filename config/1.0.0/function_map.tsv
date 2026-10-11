@@ -3229,8 +3229,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710008DB70			FALSE	_ZN25CoinChameleonCourseSelect9setRotateEf	CoinChameleonCourseSelect::setRotate(float)	
 0x710008DCD0			FALSE	_ZN25CoinChameleonCourseSelectD1Ev	CoinChameleonCourseSelect::~CoinChameleonCourseSelect()	
 0x710008DCE0			FALSE	_ZN25CoinChameleonCourseSelectD0Ev	CoinChameleonCourseSelect::~CoinChameleonCourseSelect()	
-0x710008DD10			FALSE	sub_710008DD10	sub_710008DD10	
-0x710008DD60			FALSE	sub_710008DD60	sub_710008DD60	
+0x710008DD10			FALSE	_ZNK12_GLOBAL__N_132CoinChameleonCourseSelectNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::CoinChameleonCourseSelectNrvWait::execute(al::NerveKeeper*) const	
+0x710008DD60			FALSE	_ZNK12_GLOBAL__N_139CoinChameleonCourseSelectNrvMicReaction7executeEPN2al11NerveKeeperE	(anonymous namespace)::CoinChameleonCourseSelectNrvMicReaction::execute(al::NerveKeeper*) const	
 0x710008DD80			FALSE	_ZNK12_GLOBAL__N_141CoinChameleonCourseSelectNrvContactAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::CoinChameleonCourseSelectNrvContactAppear::execute(al::NerveKeeper*) const	
 0x710008DD90			FALSE	_ZNK12_GLOBAL__N_139CoinChameleonCourseSelectNrvInterpolate7executeEPN2al11NerveKeeperE	(anonymous namespace)::CoinChameleonCourseSelectNrvInterpolate::execute(al::NerveKeeper*) const	
 0x710008DDA0		CoinCourseSelect.o	FALSE	_ZN16CoinCourseSelectC2EPKc	CoinCourseSelect::CoinCourseSelect(char const*)	
@@ -3260,7 +3260,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710008ED20			FALSE	_ZN11CounterLock7exeHideEv	CounterLock::exeHide()	
 0x710008ED30			FALSE	_ZNK11CounterLock18getSceneCameraInfoEv	CounterLock::getSceneCameraInfo() const	
 0x710008ED40			FALSE	_ZThn32_NK11CounterLock18getSceneCameraInfoEv	non-virtual thunk to CounterLock::getSceneCameraInfo() const	
-0x710008ED50			FALSE	sub_710008ED50	sub_710008ED50	
+0x710008ED50			FALSE	_ZNK12_GLOBAL__N_117CounterLockNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::CounterLockNrvEnd::execute(al::NerveKeeper*) const	
 0x710008EE00			FALSE	_ZN21CounterLockController14setTouchSelectEb	CounterLockController::setTouchSelect(bool)	
 0x710008EE10			FALSE	_ZN21CounterLockController11startAppearEP28ICourseSelectActorController	CounterLockController::startAppear(ICourseSelectActorController*)	
 0x710008EF20			FALSE	_ZN21CounterLockController14startDisappearEv	CounterLockController::startDisappear()	
@@ -3272,9 +3272,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710008F040			FALSE	_ZN21CounterLockController10startPauseEv	CounterLockController::startPause()	
 0x710008F050			FALSE	_ZN21CounterLockController8endPauseEv	CounterLockController::endPause()	
 0x710008F060			FALSE	_ZNK12_GLOBAL__N_120CounterLockNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::CounterLockNrvAppear::execute(al::NerveKeeper*) const	
-0x710008F070			FALSE	sub_710008F070	sub_710008F070	
+0x710008F070			FALSE	_ZNK12_GLOBAL__N_118CounterLockNrvHide7executeEPN2al11NerveKeeperE	(anonymous namespace)::CounterLockNrvHide::execute(al::NerveKeeper*) const	
 0x710008F080			FALSE	_ZNK12_GLOBAL__N_118CounterLockNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::CounterLockNrvWait::execute(al::NerveKeeper*) const	
-0x710008F090			FALSE	sub_710008F090	sub_710008F090	
+0x710008F090			FALSE	_ZNK12_GLOBAL__N_122CounterLockNrvReaction7executeEPN2al11NerveKeeperE	(anonymous namespace)::CounterLockNrvReaction::execute(al::NerveKeeper*) const	
 0x710008F140			TRUE	_ZN4sead16WFixedSafeStringILi8EED0Ev	sead::WFixedSafeString<8>::~WFixedSafeString()	
 0x710008F150			TRUE	_ZN4sead16WFixedSafeStringILi8EEaSERKNS_14SafeStringBaseIDsEE	sead::WFixedSafeString<8>::operator=(sead::SafeStringBase<char16_t> const&)	
 0x710008F240			TRUE	_ZN4sead22WFormatFixedSafeStringILi4EED0Ev	sead::WFormatFixedSafeString<4>::~WFormatFixedSafeString()	
@@ -3290,7 +3290,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710008F6C0			FALSE	_ZN30CourseSelectBgmEventController22exeCheckWorldStartDemoEv	CourseSelectBgmEventController::exeCheckWorldStartDemo()	
 0x710008F720			FALSE	_ZN30CourseSelectBgmEventControllerD1Ev	CourseSelectBgmEventController::~CourseSelectBgmEventController()	
 0x710008F730			FALSE	_ZN30CourseSelectBgmEventControllerD0Ev	CourseSelectBgmEventController::~CourseSelectBgmEventController()	
-0x710008F760			FALSE	sub_710008F760	sub_710008F760	
+0x710008F760			FALSE	_ZNK12_GLOBAL__N_152CourseSelectBgmEventControllerNrvCheckWorldStartDemo7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectBgmEventControllerNrvCheckWorldStartDemo::execute(al::NerveKeeper*) const	
 0x710008F7C0		CourseSelectBubble.o	FALSE	_ZN18CourseSelectBubbleC2EPN2al9LiveActorE	CourseSelectBubble::CourseSelectBubble(al::LiveActor*)	
 0x710008F850			FALSE	_ZN18CourseSelectBubbleC1EPN2al9LiveActorE	CourseSelectBubble::CourseSelectBubble(al::LiveActor*)	
 0x710008F8E0			FALSE	_ZN18CourseSelectBubble4initERKN2al13ActorInitInfoE	CourseSelectBubble::init(al::ActorInitInfo const&)	
@@ -3302,10 +3302,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710008FC60			FALSE	_ZN18CourseSelectBubble7exeHideEv	CourseSelectBubble::exeHide()	
 0x710008FC70			FALSE	_ZN18CourseSelectBubbleD1Ev	CourseSelectBubble::~CourseSelectBubble()	
 0x710008FC80			FALSE	_ZN18CourseSelectBubbleD0Ev	CourseSelectBubble::~CourseSelectBubble()	
-0x710008FCB0			FALSE	sub_710008FCB0	sub_710008FCB0	
+0x710008FCB0			FALSE	_ZNK12_GLOBAL__N_125CourseSelectBubbleNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectBubbleNrvWait::execute(al::NerveKeeper*) const	
 0x710008FD30			FALSE	_ZNK12_GLOBAL__N_127CourseSelectBubbleNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectBubbleNrvAppear::execute(al::NerveKeeper*) const	
-0x710008FD40			FALSE	sub_710008FD40	sub_710008FD40	
-0x710008FDE0			FALSE	sub_710008FDE0	sub_710008FDE0	
+0x710008FD40			FALSE	_ZNK12_GLOBAL__N_126CourseSelectBubbleNrvBurst7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectBubbleNrvBurst::execute(al::NerveKeeper*) const	
+0x710008FDE0			FALSE	_ZNK12_GLOBAL__N_125CourseSelectBubbleNrvHide7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectBubbleNrvHide::execute(al::NerveKeeper*) const	
 0x710008FDF0		CourseSelectCloud.o	FALSE	_ZN17CourseSelectCloudC2EPKc	CourseSelectCloud::CourseSelectCloud(char const*)	
 0x710008FE70			FALSE	_ZN17CourseSelectCloudC1EPKc	CourseSelectCloud::CourseSelectCloud(char const*)	
 0x710008FF00			FALSE	_ZN17CourseSelectCloud4initERKN2al13ActorInitInfoE	CourseSelectCloud::init(al::ActorInitInfo const&)	
@@ -3313,7 +3313,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710008FFC0			FALSE	_ZN17CourseSelectCloud10endClippedEv	CourseSelectCloud::endClipped()	
 0x710008FFF0			FALSE	_ZN17CourseSelectCloudD1Ev	CourseSelectCloud::~CourseSelectCloud()	
 0x7100090000			FALSE	_ZN17CourseSelectCloudD0Ev	CourseSelectCloud::~CourseSelectCloud()	
-0x7100090030			FALSE	sub_7100090030	sub_7100090030	
+0x7100090030			FALSE	_ZNK12_GLOBAL__N_124CourseSelectCloudNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectCloudNrvWait::execute(al::NerveKeeper*) const	
 0x7100090090		CourseSelectConst.o	FALSE	_ZN17CourseSelectConst24getPlayerOffsetMiniatureEv	CourseSelectConst::getPlayerOffsetMiniature()	
 0x71000900A0			FALSE	_ZN17CourseSelectConst20getPlayerOffsetKoopaEv	CourseSelectConst::getPlayerOffsetKoopa()	
 0x71000900B0			FALSE	_ZN17CourseSelectConst19getPlayerOffsetSideEv	CourseSelectConst::getPlayerOffsetSide()	
@@ -3414,7 +3414,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71000935F0			FALSE	_ZN17CourseSelectDokan10exeDemoOutEv	CourseSelectDokan::exeDemoOut()	
 0x7100093740			FALSE	_ZN17CourseSelectDokanD1Ev	CourseSelectDokan::~CourseSelectDokan()	
 0x7100093750			FALSE	_ZN17CourseSelectDokanD0Ev	CourseSelectDokan::~CourseSelectDokan()	
-0x7100093780			FALSE	nullsub_19	nullsub_19	
+0x7100093780			FALSE	_ZNK12_GLOBAL__N_124CourseSelectDokanNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectDokanNrvWait::execute(al::NerveKeeper*) const	
 0x7100093790		CourseSelectDokanController.o	FALSE	_ZN15DokanController8getActorEv	DokanController::getActor()	
 0x71000937A0			FALSE	_ZNK15DokanController19getCursorLayoutTypeEv	DokanController::getCursorLayoutType() const	
 0x71000937B0			FALSE	_ZNK15DokanController24getCourseSelectActorInfoEv	DokanController::getCourseSelectActorInfo() const	
@@ -3431,9 +3431,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71000938F0			FALSE	_ZNK28ICourseSelectActorController16isEnableOpenRoadEv	ICourseSelectActorController::isEnableOpenRoad() const	
 0x7100093900			FALSE	_ZNK12_GLOBAL__N_132CourseSelectDokanNrvOpenPrevRoad7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectDokanNrvOpenPrevRoad::execute(al::NerveKeeper*) const	
 0x7100093910			FALSE	_ZNK12_GLOBAL__N_126CourseSelectDokanNrvDemoIn7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectDokanNrvDemoIn::execute(al::NerveKeeper*) const	
-0x7100093920			FALSE	sub_7100093920	sub_7100093920	
+0x7100093920			FALSE	_ZNK12_GLOBAL__N_130CourseSelectDokanNrvHideToShow7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectDokanNrvHideToShow::execute(al::NerveKeeper*) const	
 0x7100093960			FALSE	_ZNK12_GLOBAL__N_127CourseSelectDokanNrvDemoOut7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectDokanNrvDemoOut::execute(al::NerveKeeper*) const	
-0x7100093970			FALSE	sub_7100093970	sub_7100093970	
+0x7100093970			FALSE	_ZNK12_GLOBAL__N_124CourseSelectDokanNrvHide7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectDokanNrvHide::execute(al::NerveKeeper*) const	
 0x71000939C0		CourseSelectDokanHolder.o	FALSE	_ZN23CourseSelectDokanHolderC2Ev	CourseSelectDokanHolder::CourseSelectDokanHolder()	
 0x7100093A20			FALSE	_ZN23CourseSelectDokanHolder26initAfterPlacementSceneObjERKN2al13ActorInitInfoE	CourseSelectDokanHolder::initAfterPlacementSceneObj(al::ActorInitInfo const&)	
 0x7100093B00			FALSE	_ZN23CourseSelectDokanHolder16registerDokanSrcEP17CourseSelectDokan	CourseSelectDokanHolder::registerDokanSrc(CourseSelectDokan*)	
@@ -3467,34 +3467,34 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100094950			FALSE	_ZN17CourseSelectFairyD1Ev	CourseSelectFairy::~CourseSelectFairy()	
 0x7100094960			FALSE	_ZN17CourseSelectFairyD0Ev	CourseSelectFairy::~CourseSelectFairy()	
 0x7100094990			FALSE	_ZNK12_GLOBAL__N_124CourseSelectFairyNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectFairyNrvWait::execute(al::NerveKeeper*) const	
-0x71000949A0			FALSE	sub_71000949A0	sub_71000949A0	
-0x71000949F0			FALSE	sub_71000949F0	sub_71000949F0	
+0x71000949A0			FALSE	_ZNK12_GLOBAL__N_125CourseSelectFairyNrvHappy7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectFairyNrvHappy::execute(al::NerveKeeper*) const	
+0x71000949F0			FALSE	_ZNK12_GLOBAL__N_128CourseSelectFairyNrvWaitDemo7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectFairyNrvWaitDemo::execute(al::NerveKeeper*) const	
 0x7100094A30			FALSE	_ZNK12_GLOBAL__N_132CourseSelectFairyNrvBackToCastle7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectFairyNrvBackToCastle::execute(al::NerveKeeper*) const	
-0x7100094A40			FALSE	sub_7100094A40	sub_7100094A40	
-0x7100094AE0			FALSE	sub_7100094AE0	sub_7100094AE0	
+0x7100094A40			FALSE	_ZNK12_GLOBAL__N_127CourseSelectFairyNrvBackEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectFairyNrvBackEnd::execute(al::NerveKeeper*) const	
+0x7100094AE0			FALSE	_ZNK12_GLOBAL__N_132CourseSelectFairyNrvBackFromDemo7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectFairyNrvBackFromDemo::execute(al::NerveKeeper*) const	
 0x7100094B90			FALSE	_ZNK12_GLOBAL__N_134CourseSelectFairyNrvWorldStartDemo7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectFairyNrvWorldStartDemo::execute(al::NerveKeeper*) const	
 0x7100094BA0		CourseSelectFlag.o	FALSE	_ZN16CourseSelectFlagC2EPKcP21CourseSelectMiniature	CourseSelectFlag::CourseSelectFlag(char const*, CourseSelectMiniature*)	
 0x7100094C30			FALSE	_ZN16CourseSelectFlagC1EPKcP21CourseSelectMiniature	CourseSelectFlag::CourseSelectFlag(char const*, CourseSelectMiniature*)	
 0x7100094CC0			FALSE	_ZN16CourseSelectFlag4initERKN2al13ActorInitInfoE	CourseSelectFlag::init(al::ActorInitInfo const&)	
 0x7100094D30			FALSE	_ZN16CourseSelectFlag16updateVisibilityEb	CourseSelectFlag::updateVisibility(bool)	
 0x7100094DA0			FALSE	_ZN16CourseSelectFlag11startAppearEv	CourseSelectFlag::startAppear()	
-0x7100094E10			FALSE	sub_7100094E10	sub_7100094E10	
+0x7100094E10			FALSE	_ZNK16CourseSelectFlag13calcFlagStateEv	CourseSelectFlag::calcFlagState() const	
 0x7100095000			FALSE	_ZN16CourseSelectFlag9startShowEv	CourseSelectFlag::startShow()	
 0x71000950E0			FALSE	_ZN16CourseSelectFlag18startWaitClearDemoEv	CourseSelectFlag::startWaitClearDemo()	
 0x71000951A0			FALSE	_ZN16CourseSelectFlag14startClearDemoEv	CourseSelectFlag::startClearDemo()	
 0x71000951E0			FALSE	_ZN16CourseSelectFlag7exeHideEv	CourseSelectFlag::exeHide()	
 0x71000951F0			FALSE	_ZN16CourseSelectFlag9exeAppearEv	CourseSelectFlag::exeAppear()	
 0x7100095200			FALSE	_ZN16CourseSelectFlag7exeWaitEv	CourseSelectFlag::exeWait()	
-0x7100095240			FALSE	sub_7100095240	sub_7100095240	
+0x7100095240			FALSE	_ZN16CourseSelectFlag16updateFlagActionEjb	CourseSelectFlag::updateFlagAction(unsigned int, bool)	
 0x7100095350			FALSE	_ZN16CourseSelectFlag16exeWaitClearDemoEv	CourseSelectFlag::exeWaitClearDemo()	
 0x7100095360			FALSE	_ZN16CourseSelectFlag12exeClearDemoEv	CourseSelectFlag::exeClearDemo()	
 0x71000953C0			FALSE	_ZN16CourseSelectFlagD1Ev	CourseSelectFlag::~CourseSelectFlag()	
 0x71000953D0			FALSE	_ZN16CourseSelectFlagD0Ev	CourseSelectFlag::~CourseSelectFlag()	
-0x7100095400			FALSE	nullsub_20	nullsub_20	
-0x7100095410			FALSE	sub_7100095410	sub_7100095410	
-0x7100095430			FALSE	nullsub_21	nullsub_21	
-0x7100095440			FALSE	sub_7100095440	sub_7100095440	
-0x71000954A0			FALSE	sub_71000954A0	sub_71000954A0	
+0x7100095400			FALSE	_ZNK12_GLOBAL__N_123CourseSelectFlagNrvHide7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectFlagNrvHide::execute(al::NerveKeeper*) const	
+0x7100095410			FALSE	_ZNK12_GLOBAL__N_125CourseSelectFlagNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectFlagNrvAppear::execute(al::NerveKeeper*) const	
+0x7100095430			FALSE	_ZNK12_GLOBAL__N_132CourseSelectFlagNrvWaitClearDemo7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectFlagNrvWaitClearDemo::execute(al::NerveKeeper*) const	
+0x7100095440			FALSE	_ZNK12_GLOBAL__N_128CourseSelectFlagNrvClearDemo7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectFlagNrvClearDemo::execute(al::NerveKeeper*) const	
+0x71000954A0			FALSE	_ZNK12_GLOBAL__N_123CourseSelectFlagNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectFlagNrvWait::execute(al::NerveKeeper*) const	
 0x71000954E0		CourseSelectLock.o	FALSE	_ZN16CourseSelectLockC2EPKcP21CourseSelectMiniaturei	CourseSelectLock::CourseSelectLock(char const*, CourseSelectMiniature*, int)	
 0x7100095580			FALSE	_ZN16CourseSelectLockC1EPKcP21CourseSelectMiniaturei	CourseSelectLock::CourseSelectLock(char const*, CourseSelectMiniature*, int)	
 0x7100095620			FALSE	_ZN16CourseSelectLock4initERKN2al13ActorInitInfoE	CourseSelectLock::init(al::ActorInitInfo const&)	
@@ -3515,9 +3515,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100095CC0			FALSE	_ZN16CourseSelectLock6exeEndEv	CourseSelectLock::exeEnd()	
 0x7100095CD0			FALSE	_ZN16CourseSelectLockD1Ev	CourseSelectLock::~CourseSelectLock()	
 0x7100095CE0			FALSE	_ZN16CourseSelectLockD0Ev	CourseSelectLock::~CourseSelectLock()	
-0x7100095D10			FALSE	nullsub_22	nullsub_22	
-0x7100095D20			FALSE	nullsub_23	nullsub_23	
-0x7100095D30			FALSE	nullsub_24	nullsub_24	
+0x7100095D10			FALSE	_ZNK12_GLOBAL__N_123CourseSelectLockNrvHide7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectLockNrvHide::execute(al::NerveKeeper*) const	
+0x7100095D20			FALSE	_ZNK12_GLOBAL__N_123CourseSelectLockNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectLockNrvWait::execute(al::NerveKeeper*) const	
+0x7100095D30			FALSE	_ZNK12_GLOBAL__N_126CourseSelectLockNrvDisable7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectLockNrvDisable::execute(al::NerveKeeper*) const	
 0x7100095D40			FALSE	_ZN26CourseSelectLockController8getActorEv	CourseSelectLockController::getActor()	
 0x7100095D50			FALSE	_ZNK26CourseSelectLockController19getCursorLayoutTypeEv	CourseSelectLockController::getCursorLayoutType() const	
 0x7100095D60			FALSE	_ZNK26CourseSelectLockController24getCourseSelectActorInfoEv	CourseSelectLockController::getCourseSelectActorInfo() const	
@@ -3530,10 +3530,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100095DD0			FALSE	_ZN26CourseSelectLockController9startOpenEv	CourseSelectLockController::startOpen()	
 0x7100095DE0			FALSE	_ZN26CourseSelectLockController20startOpenImmediatelyEv	CourseSelectLockController::startOpenImmediately()	
 0x7100095DF0			FALSE	_ZNK26CourseSelectLockController9isEndOpenEv	CourseSelectLockController::isEndOpen() const	
-0x7100095E00			FALSE	sub_7100095E00	sub_7100095E00	
-0x7100095E60			FALSE	sub_7100095E60	sub_7100095E60	
-0x7100095EB0			FALSE	sub_7100095EB0	sub_7100095EB0	
-0x7100095EC0			FALSE	sub_7100095EC0	sub_7100095EC0	
+0x7100095E00			FALSE	_ZNK12_GLOBAL__N_125CourseSelectLockNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectLockNrvAppear::execute(al::NerveKeeper*) const	
+0x7100095E60			FALSE	_ZNK12_GLOBAL__N_125CourseSelectLockNrvUnlock7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectLockNrvUnlock::execute(al::NerveKeeper*) const	
+0x7100095EB0			FALSE	_ZNK12_GLOBAL__N_122CourseSelectLockNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectLockNrvEnd::execute(al::NerveKeeper*) const	
+0x7100095EC0			FALSE	_ZNK12_GLOBAL__N_128CourseSelectLockNrvDisappear7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectLockNrvDisappear::execute(al::NerveKeeper*) const	
 0x7100095F20		MiniatureController.o	FALSE	_ZNK19MiniatureController19getCursorLayoutTypeEv	MiniatureController::getCursorLayoutType() const	object (class)
 0x7100095F80		CourseSelectMiniature.o	FALSE	_ZN21CourseSelectMiniatureC2EPKc	CourseSelectMiniature::CourseSelectMiniature(char const*)	
 0x7100096050			FALSE	_ZN21CourseSelectMiniatureC1EPKc	CourseSelectMiniature::CourseSelectMiniature(char const*)	
@@ -3678,9 +3678,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710009C2A0			FALSE	_ZN21CourseSelectNodeParts7exeWaitEv	CourseSelectNodeParts::exeWait()	
 0x710009C300			FALSE	_ZN21CourseSelectNodePartsD1Ev	CourseSelectNodeParts::~CourseSelectNodeParts()	
 0x710009C310			FALSE	_ZN21CourseSelectNodePartsD0Ev	CourseSelectNodeParts::~CourseSelectNodeParts()	
-0x710009C340			FALSE	nullsub_25	nullsub_25	
-0x710009C350			FALSE	sub_710009C350	sub_710009C350	
-0x710009C3B0			FALSE	sub_710009C3B0	sub_710009C3B0	
+0x710009C340			FALSE	_ZNK12_GLOBAL__N_132CourseSelectNodePartsNrvDeactive7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectNodePartsNrvDeactive::execute(al::NerveKeeper*) const	
+0x710009C350			FALSE	_ZNK12_GLOBAL__N_128CourseSelectNodePartsNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectNodePartsNrvWait::execute(al::NerveKeeper*) const	
+0x710009C3B0			FALSE	_ZNK12_GLOBAL__N_128CourseSelectNodePartsNrvGrow7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectNodePartsNrvGrow::execute(al::NerveKeeper*) const	
 0x710009C3F0		CourseSelectObjKeeper.o	FALSE	_ZN21CourseSelectObjKeeperC2Eii	CourseSelectObjKeeper::CourseSelectObjKeeper(int, int)	
 0x710009C4C0			FALSE	_ZN21CourseSelectObjKeeper14registerObjectEPN2al9LiveActorEi	CourseSelectObjKeeper::registerObject(al::LiveActor*, int)	
 0x710009C580			FALSE	_ZN21CourseSelectObjKeeper18initAfterPlacementEv	CourseSelectObjKeeper::initAfterPlacement()	
@@ -4035,7 +4035,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71000A8180			FALSE	_ZN16CourseSelectRoad11subDistanceEf	CourseSelectRoad::subDistance(float)	
 0x71000A81A0			FALSE	_ZN16CourseSelectRoadD1Ev	CourseSelectRoad::~CourseSelectRoad()	
 0x71000A81B0			FALSE	_ZN16CourseSelectRoadD0Ev	CourseSelectRoad::~CourseSelectRoad()	
-0x71000A81E0			FALSE	nullsub_32	nullsub_32	
+0x71000A81E0			FALSE	_ZNK12_GLOBAL__N_123CourseSelectRoadNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectRoadNrvWait::execute(al::NerveKeeper*) const	
 0x71000A81F0			FALSE	_ZNK12_GLOBAL__N_123CourseSelectRoadNrvStop7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectRoadNrvStop::execute(al::NerveKeeper*) const	
 0x71000A8200			FALSE	_ZNK12_GLOBAL__N_123CourseSelectRoadNrvOpen7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectRoadNrvOpen::execute(al::NerveKeeper*) const	
 0x71000A8210		CourseSelectRocket.o	FALSE	_ZN18CourseSelectRocketC2EPKc	CourseSelectRocket::CourseSelectRocket(char const*)	
@@ -4255,7 +4255,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71000B0870			FALSE	_ZN33CourseSelectStateAfterEndingEvent7exeDemoEv	CourseSelectStateAfterEndingEvent::exeDemo()	
 0x71000B08E0			FALSE	_ZN33CourseSelectStateAfterEndingEvent7exeWipeEv	CourseSelectStateAfterEndingEvent::exeWipe()	
 0x71000B0990			FALSE	_ZN33CourseSelectStateAfterEndingEventD0Ev	CourseSelectStateAfterEndingEvent::~CourseSelectStateAfterEndingEvent()	
-0x71000B09C0			FALSE	sub_71000B09C0	sub_71000B09C0	
+0x71000B09C0			FALSE	_ZNK12_GLOBAL__N_140CourseSelectStateAfterEndingEventNrvDemo7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectStateAfterEndingEventNrvDemo::execute(al::NerveKeeper*) const	
 0x71000B0A30			FALSE	_ZNK12_GLOBAL__N_140CourseSelectStateAfterEndingEventNrvWipe7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectStateAfterEndingEventNrvWipe::execute(al::NerveKeeper*) const	
 0x71000B0A40		RouteOpenCursor.o	FALSE	_ZN15RouteOpenCursorC1EP20CourseSelectDirector	RouteOpenCursor::RouteOpenCursor(CourseSelectDirector*)	
 0x71000B0AB0			FALSE	_ZN15RouteOpenCursor10initializeEP16CourseSelectNodeS1_	RouteOpenCursor::initialize(CourseSelectNode*, CourseSelectNode*)	
@@ -4310,7 +4310,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71000B2840			FALSE	_ZN29CourseSelectStateRevivePlayerD0Ev	CourseSelectStateRevivePlayer::~CourseSelectStateRevivePlayer()	
 0x71000B2870			FALSE	_ZNK12_GLOBAL__N_137CourseSelectStateRevivePlayerNrvStart7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectStateRevivePlayerNrvStart::execute(al::NerveKeeper*) const	
 0x71000B2880			FALSE	_ZNK12_GLOBAL__N_136CourseSelectStateRevivePlayerNrvPlay7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectStateRevivePlayerNrvPlay::execute(al::NerveKeeper*) const	
-0x71000B2890			FALSE	sub_71000B2890	sub_71000B2890	
+0x71000B2890			FALSE	_ZNK12_GLOBAL__N_135CourseSelectStateRevivePlayerNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectStateRevivePlayerNrvEnd::execute(al::NerveKeeper*) const	
 0x71000B28E0		CourseSelectStateStageEnter.o	FALSE	_ZN27CourseSelectStateStageEnterC1EP17CourseSelectSceneRKN2al14LayoutInitInfoEPNS2_15SceneCameraInfoEPKNS2_14GameSystemInfoE	CourseSelectStateStageEnter::CourseSelectStateStageEnter(CourseSelectScene*, al::LayoutInitInfo const&, al::SceneCameraInfo*, al::GameSystemInfo const*)	
 0x71000B2990			FALSE	_ZN27CourseSelectStateStageEnter4initEv	CourseSelectStateStageEnter::init()	
 0x71000B29D0			FALSE	_ZN27CourseSelectStateStageEnter6appearEv	CourseSelectStateStageEnter::appear()	
@@ -4351,14 +4351,14 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71000B3EB0			FALSE	_ZN30CourseSelectStateStartMiiverse8exeErrorEv	CourseSelectStateStartMiiverse::exeError()	
 0x71000B3F10			FALSE	_ZN30CourseSelectStateStartMiiverse9exeDecideEv	CourseSelectStateStartMiiverse::exeDecide()	
 0x71000B3F70			FALSE	_ZN30CourseSelectStateStartMiiverseD0Ev	CourseSelectStateStartMiiverse::~CourseSelectStateStartMiiverse()	
-0x71000B3FA0			FALSE	sub_71000B3FA0	sub_71000B3FA0	
-0x71000B4000			FALSE	sub_71000B4000	sub_71000B4000	
-0x71000B4060			FALSE	sub_71000B4060	sub_71000B4060	
+0x71000B3FA0			FALSE	_ZNK12_GLOBAL__N_145CourseSelectStateStartMiiverseNrvInfoMiiverse7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectStateStartMiiverseNrvInfoMiiverse::execute(al::NerveKeeper*) const	
+0x71000B4000			FALSE	_ZNK12_GLOBAL__N_153CourseSelectStateStartMiiverseNrvInfoLocalActMiiverse7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectStateStartMiiverseNrvInfoLocalActMiiverse::execute(al::NerveKeeper*) const	
+0x71000B4060			FALSE	_ZNK12_GLOBAL__N_142CourseSelectStateStartMiiverseNrvInfoGhost7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectStateStartMiiverseNrvInfoGhost::execute(al::NerveKeeper*) const	
 0x71000B40C0			FALSE	_ZNK12_GLOBAL__N_140CourseSelectStateStartMiiverseNrvConfirm7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectStateStartMiiverseNrvConfirm::execute(al::NerveKeeper*) const	
-0x71000B40D0			FALSE	sub_71000B40D0	sub_71000B40D0	
-0x71000B4130			FALSE	sub_71000B4130	sub_71000B4130	
-0x71000B41B0			FALSE	sub_71000B41B0	sub_71000B41B0	
-0x71000B4220			FALSE	sub_71000B4220	sub_71000B4220	
+0x71000B40D0			FALSE	_ZNK12_GLOBAL__N_150CourseSelectStateStartMiiverseNrvInfoLocalActGhost7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectStateStartMiiverseNrvInfoLocalActGhost::execute(al::NerveKeeper*) const	
+0x71000B4130			FALSE	_ZNK12_GLOBAL__N_145CourseSelectStateStartMiiverseNrvConfirmLocal7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectStateStartMiiverseNrvConfirmLocal::execute(al::NerveKeeper*) const	
+0x71000B41B0			FALSE	_ZNK12_GLOBAL__N_138CourseSelectStateStartMiiverseNrvError7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectStateStartMiiverseNrvError::execute(al::NerveKeeper*) const	
+0x71000B4220			FALSE	_ZNK12_GLOBAL__N_139CourseSelectStateStartMiiverseNrvDecide7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectStateStartMiiverseNrvDecide::execute(al::NerveKeeper*) const	
 0x71000B4280		CourseSelectStateWorldStartDemo.o	FALSE	_ZN31CourseSelectStateWorldStartDemoC2EP17CourseSelectSceneRKN2al13ActorInitInfoEPNS2_15SceneCameraInfoE	CourseSelectStateWorldStartDemo::CourseSelectStateWorldStartDemo(CourseSelectScene*, al::ActorInitInfo const&, al::SceneCameraInfo*)	
 0x71000B4360			FALSE	_ZN31CourseSelectStateWorldStartDemo4initEv	CourseSelectStateWorldStartDemo::init()	
 0x71000B43A0			FALSE	_ZN31CourseSelectStateWorldStartDemo6appearEv	CourseSelectStateWorldStartDemo::appear()	
@@ -4421,11 +4421,11 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71000B5BF0			FALSE	_ZN26CourseSelectWallController9startOpenEv	CourseSelectWallController::startOpen()	
 0x71000B5C60			FALSE	_ZN26CourseSelectWallController20startOpenImmediatelyEv	CourseSelectWallController::startOpenImmediately()	
 0x71000B5CC0			FALSE	_ZNK26CourseSelectWallController9isEndOpenEv	CourseSelectWallController::isEndOpen() const	
-0x71000B5D10			FALSE	nullsub_37	nullsub_37	
-0x71000B5D20			FALSE	sub_71000B5D20	sub_71000B5D20	
-0x71000B5D80			FALSE	sub_71000B5D80	sub_71000B5D80	
+0x71000B5D10			FALSE	_ZNK12_GLOBAL__N_123CourseSelectWallNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectWallNrvWait::execute(al::NerveKeeper*) const	
+0x71000B5D20			FALSE	_ZNK12_GLOBAL__N_132CourseSelectWallNrvAppearPrevEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectWallNrvAppearPrevEnd::execute(al::NerveKeeper*) const	
+0x71000B5D80			FALSE	_ZNK12_GLOBAL__N_122CourseSelectWallNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectWallNrvEnd::execute(al::NerveKeeper*) const	
 0x71000B5DE0			FALSE	_ZNK12_GLOBAL__N_125CourseSelectWallNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectWallNrvAppear::execute(al::NerveKeeper*) const	
-0x71000B5DF0			FALSE	sub_71000B5DF0	sub_71000B5DF0	
+0x71000B5DF0			FALSE	_ZNK12_GLOBAL__N_134CourseSelectWallNrvAppearNextStart7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectWallNrvAppearNextStart::execute(al::NerveKeeper*) const	
 0x71000B5E50		CourseSelectWindowHolder.o	FALSE	_ZN24CourseSelectWindowHolderC1EPK17CourseSelectScene	CourseSelectWindowHolder::CourseSelectWindowHolder(CourseSelectScene const*)	
 0x71000B5E70			FALSE	_ZN24CourseSelectWindowHolder4initERKN2al14LayoutInitInfoE	CourseSelectWindowHolder::init(al::LayoutInitInfo const&)	
 0x71000B5FA0			FALSE	_ZN24CourseSelectWindowHolder14startFadeWhiteEi	CourseSelectWindowHolder::startFadeWhite(int)	
@@ -4469,10 +4469,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71000B6680			FALSE	_ZN24WorldWarpDokanController9startOpenEv	WorldWarpDokanController::startOpen()	
 0x71000B6690			FALSE	_ZN24WorldWarpDokanController20startOpenImmediatelyEv	WorldWarpDokanController::startOpenImmediately()	
 0x71000B66A0			FALSE	_ZNK24WorldWarpDokanController9isEndOpenEv	WorldWarpDokanController::isEndOpen() const	
-0x71000B66B0			FALSE	nullsub_38	nullsub_38	
-0x71000B66C0			FALSE	sub_71000B66C0	sub_71000B66C0	
-0x71000B6710			FALSE	nullsub_39	nullsub_39	
-0x71000B6720			FALSE	sub_71000B6720	sub_71000B6720	
+0x71000B66B0			FALSE	_ZNK12_GLOBAL__N_133CourseSelectWorldWarpDokanNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectWorldWarpDokanNrvWait::execute(al::NerveKeeper*) const	
+0x71000B66C0			FALSE	_ZNK12_GLOBAL__N_133CourseSelectWorldWarpDokanNrvDemo7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectWorldWarpDokanNrvDemo::execute(al::NerveKeeper*) const	
+0x71000B6710			FALSE	_ZNK12_GLOBAL__N_132CourseSelectWorldWarpDokanNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectWorldWarpDokanNrvEnd::execute(al::NerveKeeper*) const	
+0x71000B6720			FALSE	_ZNK12_GLOBAL__N_138CourseSelectWorldWarpDokanNrvDisappear7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectWorldWarpDokanNrvDisappear::execute(al::NerveKeeper*) const	
 0x71000B6790		DemoEventGateKeeperChecker.o	FALSE	_ZN26DemoEventGateKeeperCheckerC2EPKc	DemoEventGateKeeperChecker::DemoEventGateKeeperChecker(char const*)	
 0x71000B6840			FALSE	_ZN26DemoEventGateKeeperCheckerC1EPKc	DemoEventGateKeeperChecker::DemoEventGateKeeperChecker(char const*)	
 0x71000B6900			FALSE	_ZN26DemoEventGateKeeperChecker4initERKN2al13ActorInitInfoE	DemoEventGateKeeperChecker::init(al::ActorInitInfo const&)	
@@ -4517,7 +4517,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71000B78A0			FALSE	_ZN23KinokoOneUpCourseSelect7exeWaitEv	KinokoOneUpCourseSelect::exeWait()	
 0x71000B78E0			FALSE	_ZN23KinokoOneUpCourseSelectD1Ev	KinokoOneUpCourseSelect::~KinokoOneUpCourseSelect()	
 0x71000B78F0			FALSE	_ZN23KinokoOneUpCourseSelectD0Ev	KinokoOneUpCourseSelect::~KinokoOneUpCourseSelect()	
-0x71000B7920			FALSE	sub_71000B7920	sub_71000B7920	
+0x71000B7920			FALSE	_ZNK12_GLOBAL__N_130KinokoOneUpCourseSelectNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::KinokoOneUpCourseSelectNrvWait::execute(al::NerveKeeper*) const	
 0x71000B7960		TicoCourseSelect.o	FALSE	_ZN16TicoCourseSelectC2EPKc	TicoCourseSelect::TicoCourseSelect(char const*)	
 0x71000B79E0			FALSE	_ZN16TicoCourseSelectC1EPKc	TicoCourseSelect::TicoCourseSelect(char const*)	
 0x71000B7A60			FALSE	_ZN16TicoCourseSelect4initERKN2al13ActorInitInfoE	TicoCourseSelect::init(al::ActorInitInfo const&)	

@@ -1,24 +1,34 @@
 #pragma once
-
 #include "Library/LiveActor/LiveActor.hpp"
-
 class CourseSelectMiniature;
-
-/**
- * @brief Green star lock closing a course miniature until enough green stars are collected.
- * @note Minimal declaration: only what the reconstructed code uses is declared so far.
- */
+class CourseSelectSensor;
+class CourseSelectLockController;
+class CourseSelectDirector;
 class CourseSelectLock : public al::LiveActor {
 public:
-    CourseSelectLock(const char* pName, CourseSelectMiniature* pMiniature, s32 greenStarNum);
-
+    CourseSelectLock(const char* pName, CourseSelectMiniature* pMiniature, int requiredStars);
+    ~CourseSelectLock() override;
+    void init(const al::ActorInitInfo& rInfo) override;
+    void appear() override;
+    void kill() override;
+    void control() override;
+    void attackSensor(al::HitSensor* pSender, al::HitSensor* pReceiver) override;
     void startAppear();
+    void startUnlock();
     void startShow();
     void startDisable();
+    bool tryDecide(const CourseSelectDirector* pDirector);
     bool isUnlock() const;
-
+    void exeAppear();
+    void exeWait();
+    void exeUnlock();
+    void exeDisappear();
+    void exeEnd();
 private:
-    u8 _144[0x168 - 0x144];
+    int mRequiredStars;
+    CourseSelectSensor* mpSensor = nullptr;
+    CourseSelectSensor* mpTouchSensor = nullptr;
+    CourseSelectMiniature* mpMiniature;
+    CourseSelectLockController* mpController = nullptr;
 };
-
 static_assert(sizeof(CourseSelectLock) == 0x168);

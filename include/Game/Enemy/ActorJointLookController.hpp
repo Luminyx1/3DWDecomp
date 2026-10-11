@@ -26,6 +26,7 @@ public:
 /** @brief Rotates a set of joints so the actor looks at a target point. */
 class ActorJointLookController {
 public:
+    void clearTarget() { mIsLook = false; mTargetPlayer = nullptr; }
     ActorJointLookController(const al::LiveActor* pActor, s32 jointNumMax);
 
     void appendJoint(const char* pJointName, const sead::Vector3f& rAxis,

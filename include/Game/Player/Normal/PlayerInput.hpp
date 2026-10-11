@@ -22,6 +22,8 @@ class PlayerInput : public IUsePlayerInput,
 public:
     PlayerInput(const IUsePlayerKeyConfig* pKeyConfig);
 
+    u32 getInvalidationFrames() const { return mInvalidFrame; }
+
     void setActorForAreaSearch(al::LiveActor* pActor);
     void update(const sead::Matrix34f& rCameraMtx);
     void clearAll();

@@ -341,129 +341,121 @@ src/Game/CourseSelect/_8B0F0.cpp:
     .text   start:0x0008B0F0 end:0x0008B124
 src/Game/CourseSelect/BgmBeatAnimeController.cpp:
     .text   start:0x0008B130 end:0x0008C308
-src/Game/CourseSelect/BlockBrickBreakableCourseSelect.cpp:
+src/Game/CourseSelect/BlockBrickBreakableCourseSelect.cpp: done
     .text   start:0x0008C310 end:0x0008C85C
 src/Game/CourseSelect/BlockEmptyCourseSelect.cpp: done
     .text   start:0x0008C860 end:0x0008CA90
-src/Game/CourseSelect/BlockQuestionCourseSelect.cpp:
+src/Game/CourseSelect/BlockQuestionCourseSelect.cpp: done
     .text   start:0x0008CA90 end:0x0008D020
-src/Game/CourseSelect/CoinChameleonCourseSelect.cpp:
+src/Game/CourseSelect/CoinChameleonCourseSelect.cpp: done
     .text   start:0x0008D020 end:0x0008DD98
-src/Game/CourseSelect/CoinCourseSelect.cpp:
+src/Game/CourseSelect/CoinCourseSelect.cpp: done
     .text   start:0x0008DDA0 end:0x0008E150
-src/Game/CourseSelect/CounterLock.cpp:
+src/Game/CourseSelect/CounterLock.cpp: done
     .text   start:0x0008E150 end:0x0008F33C
-src/Game/CourseSelect/CourseSelectActorInfo.cpp:
+src/Game/CourseSelect/CourseSelectActorInfo.cpp: done
     .text   start:0x0008F340 end:0x0008F448
-src/Game/CourseSelect/CourseSelectBgmEventController.cpp:
+src/Game/CourseSelect/CourseSelectBgmEventController.cpp: done
     .text   start:0x0008F450 end:0x0008F7B8
-src/Game/CourseSelect/CourseSelectBubble.cpp:
+src/Game/CourseSelect/CourseSelectBubble.cpp: done
     .text   start:0x0008F7C0 end:0x0008FDF0
-src/Game/CourseSelect/CourseSelectCloud.cpp:
+src/Game/CourseSelect/CourseSelectCloud.cpp: done
     .text   start:0x0008FDF0 end:0x00090084
-src/Game/CourseSelect/CourseSelectConst.cpp:
+src/Game/CourseSelect/CourseSelectConst.cpp: done
     .text   start:0x00090090 end:0x000900BC
 src/Game/CourseSelect/CourseSelectDirector.cpp:
     .text   start:0x000900C0 end:0x000927AC
-src/Game/CourseSelect/CourseSelectDokan.cpp:
-    .text   start:0x000927B0 end:0x00093784
-src/Game/CourseSelect/CourseSelectDokanController.cpp:
-    .text   start:0x00093790 end:0x000939BC
-src/Game/CourseSelect/CourseSelectDokanHolder.cpp:
+src/Game/CourseSelect/CourseSelectDokan.cpp: done
+    .text   start:0x000927B0 end:0x000939BC
+src/Game/CourseSelect/CourseSelectDokanHolder.cpp: done
     .text   start:0x000939C0 end:0x00093C2C
-src/Game/CourseSelect/CourseSelectFairy.cpp:
+src/Game/CourseSelect/CourseSelectFairy.cpp: done
     .text   start:0x00093C30 end:0x00094B98
-src/Game/CourseSelect/CourseSelectFlag.cpp:
+src/Game/CourseSelect/CourseSelectFlag.cpp: done
     .text   start:0x00094BA0 end:0x000954E0
-src/Game/CourseSelect/CourseSelectLock.cpp:
+src/Game/CourseSelect/CourseSelectLock.cpp: done
     .text   start:0x000954E0 end:0x00095F1C
-src/Game/CourseSelect/MiniatureController.cpp:
-    .text   start:0x00095F20 end:0x00095F7C
 src/Game/CourseSelect/CourseSelectMiniature.cpp:
-    .text   start:0x00095F80 end:0x000995F8
+    .text   start:0x00095F20 end:0x000995F8
 src/Game/CourseSelect/CourseSelectNode.cpp:
     .text   start:0x00099600 end:0x0009BF14
-src/Game/CourseSelect/CourseSelectNodeParts.cpp:
+src/Game/CourseSelect/CourseSelectNodeParts.cpp: done
     .text   start:0x0009BF20 end:0x0009C3F0
-src/Game/CourseSelect/CourseSelectObjKeeper.cpp:
+src/Game/CourseSelect/CourseSelectObjKeeper.cpp: done
     .text   start:0x0009C3F0 end:0x0009C7D4
 src/Game/CourseSelect/CourseSelectPlayerActionBubble.cpp:
     .text   start:0x0009C7E0 end:0x0009CCBC
-src/Game/CourseSelect/CourseSelectPlayerActionConditionBubble.cpp:
+src/Game/CourseSelect/CourseSelectPlayerActionConditionBubble.cpp: done
     .text   start:0x0009CCC0 end:0x0009CDF4
-src/Game/CourseSelect/CourseSelectPlayerActionConditionBubbleEnd.cpp:
+src/Game/CourseSelect/CourseSelectPlayerActionConditionBubbleEnd.cpp: done
     .text   start:0x0009CE00 end:0x0009D064
-src/Game/CourseSelect/CourseSelectPlayerActionConditionMainPlayer.cpp:
+src/Game/CourseSelect/CourseSelectPlayerActionConditionMainPlayer.cpp: done
     .text   start:0x0009D070 end:0x0009D0D4
-src/Game/CourseSelect/CourseSelectPlayerActionConditionNearFollowPlayer.cpp:
+src/Game/CourseSelect/CourseSelectPlayerActionConditionNearFollowPlayer.cpp: done
     .text   start:0x0009D0E0 end:0x0009D1C4
-src/Game/CourseSelect/CourseSelectPlayerActionConditionPush.cpp:
+src/Game/CourseSelect/CourseSelectPlayerActionConditionPush.cpp: done
     .text   start:0x0009D1D0 end:0x0009D204
 src/Game/CourseSelect/CourseSelectPlayerActionFollow.cpp:
     .text   start:0x0009D210 end:0x0009DC94
 src/Game/CourseSelect/CourseSelectPlayerActionGroundMove.cpp:
     .text   start:0x0009DCA0 end:0x0009F2D8
-src/Game/CourseSelect/CourseSelectPlayerActionJump.cpp:
+src/Game/CourseSelect/CourseSelectPlayerActionJump.cpp: done
     .text   start:0x0009F2E0 end:0x0009F7B4
-src/Game/CourseSelect/CourseSelectPlayerActionLand.cpp:
+src/Game/CourseSelect/CourseSelectPlayerActionLand.cpp: done
     .text   start:0x0009F7C0 end:0x0009FAA4
-src/Game/CourseSelect/CourseSelectPlayerActionPush.cpp:
+src/Game/CourseSelect/CourseSelectPlayerActionPush.cpp: done
     .text   start:0x0009FAB0 end:0x0009FDA4
-src/Game/CourseSelect/CourseSelectPlayerActionWait.cpp:
+src/Game/CourseSelect/CourseSelectPlayerActionWait.cpp: done
     .text   start:0x0009FDB0 end:0x000A0184
 src/Game/CourseSelect/CourseSelectPlayerActor.cpp:
     .text   start:0x000A0190 end:0x000A0E68
-src/Game/CourseSelect/CourseSelectPlayerFunction.cpp:
+src/Game/CourseSelect/CourseSelectPlayerFunction.cpp: done
     .text   start:0x000A0E70 end:0x000A0F90
 src/Game/CourseSelect/CourseSelectPuppeteer.cpp:
     .text   start:0x000A0F90 end:0x000A5EE8
 src/Game/CourseSelect/CourseSelectPuppeteerGroup.cpp:
     .text   start:0x000A5EF0 end:0x000A7514
-src/Game/CourseSelect/CourseSelectRhythmObject.cpp:
+src/Game/CourseSelect/CourseSelectRhythmObject.cpp: done
     .text   start:0x000A7520 end:0x000A7994
-src/Game/CourseSelect/CourseSelectRoad.cpp:
+src/Game/CourseSelect/CourseSelectRoad.cpp: done
     .text   start:0x000A79A0 end:0x000A8208
 src/Game/CourseSelect/CourseSelectRocket.cpp:
     .text   start:0x000A8210 end:0x000AA568
-src/Game/CourseSelect/CourseSelectRouteDokan.cpp:
+src/Game/CourseSelect/CourseSelectRouteDokan.cpp: done
     .text   start:0x000AA570 end:0x000AA934
-src/Game/CourseSelect/CourseSelectRouteDokanEntrance.cpp:
+src/Game/CourseSelect/CourseSelectRouteDokanEntrance.cpp: done
     .text   start:0x000AA940 end:0x000AB1B8
-src/Game/CourseSelect/CourseSelectRouteDokanEntranceGroup.cpp:
+src/Game/CourseSelect/CourseSelectRouteDokanEntranceGroup.cpp: done
     .text   start:0x000AB1C0 end:0x000AB728
 src/Game/CourseSelect/CourseSelectScene.cpp:
     .text   start:0x000AB730 end:0x000B077C
-src/Game/CourseSelect/CourseSelectSensor.cpp:
+src/Game/CourseSelect/CourseSelectSensor.cpp: done
     .text   start:0x000B0780 end:0x000B07C0
-src/Game/CourseSelect/CourseSelectStateAfterEndingEvent.cpp:
+src/Game/CourseSelect/CourseSelectStateAfterEndingEvent.cpp: done
     .text   start:0x000B07C0 end:0x000B0A38
-src/Game/CourseSelect/RouteOpenCursor.cpp:
-    .text   start:0x000B0A40 end:0x000B0D44
 src/Game/CourseSelect/CourseSelectStateClearDemo.cpp:
-    .text   start:0x000B0D50 end:0x000B2558
-src/Game/CourseSelect/CourseSelectStateRevivePlayer.cpp:
+    .text   start:0x000B0A40 end:0x000B2558
+src/Game/CourseSelect/CourseSelectStateRevivePlayer.cpp: done
     .text   start:0x000B2560 end:0x000B28D4
 src/Game/CourseSelect/CourseSelectStateStageEnter.cpp:
     .text   start:0x000B28E0 end:0x000B34B4
 src/Game/CourseSelect/CourseSelectStateStageExit.cpp:
     .text   start:0x000B34C0 end:0x000B3AF8
-src/Game/CourseSelect/CourseSelectStateStartMiiverse.cpp:
+src/Game/CourseSelect/CourseSelectStateStartMiiverse.cpp: done
     .text   start:0x000B3B00 end:0x000B427C
 src/Game/CourseSelect/CourseSelectStateWorldStartDemo.cpp:
     .text   start:0x000B4280 end:0x000B518C
-src/Game/CourseSelect/CourseSelectWall.cpp:
+src/Game/CourseSelect/CourseSelectWall.cpp: done
     .text   start:0x000B5190 end:0x000B5E44
-src/Game/CourseSelect/CourseSelectWindowHolder.cpp:
+src/Game/CourseSelect/CourseSelectWindowHolder.cpp: done
     .text   start:0x000B5E50 end:0x000B61CC
-src/Game/CourseSelect/CourseSelectWorldWarpDokan.cpp:
-    .text   start:0x000B61D0 end:0x000B65A0
-src/Game/CourseSelect/CourseSelectWorldWarpDokanController.cpp:
-    .text   start:0x000B65A0 end:0x000B678C
+src/Game/CourseSelect/CourseSelectWorldWarpDokan.cpp: done
+    .text   start:0x000B61D0 end:0x000B678C
 src/Game/CourseSelect/DemoEventGateKeeperChecker.cpp:
     .text   start:0x000B6790 end:0x000B7614
-src/Game/CourseSelect/KinokoOneUpCourseSelect.cpp:
+src/Game/CourseSelect/KinokoOneUpCourseSelect.cpp: done
     .text   start:0x000B7620 end:0x000B7960
-src/Game/CourseSelect/TicoCourseSelect.cpp:
+src/Game/CourseSelect/TicoCourseSelect.cpp: done
     .text   start:0x000B7960 end:0x000B7B10
 src/Game/Demo/DemoActionList.cpp: done
     .text   start:0x000B7B10 end:0x000B7DA4

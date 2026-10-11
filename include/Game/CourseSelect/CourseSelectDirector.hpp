@@ -126,6 +126,10 @@ public:
     const char* getSceneObjName() const override { return "コースセレクトデータ管理"; }
 
     /** @brief Gets the course select scene. @return The scene. */
+    al::LiveActor* getMainPlayerActor() const { return mMainPlayer; }
+    CourseSelectNode* getNode(int index) const { return mNodes[index]; }
+    int getCurrentWorldId() const { return mActiveWorldId; }
+
     CourseSelectScene* getScene() const { return mScene; }
     /** @brief Gets the message windows of the map. @return The window holder. */
     CourseSelectWindowHolder* getWindowHolder() const { return mWindowHolder; }

@@ -12,6 +12,13 @@ class ICourseSelectActorController;
  */
 class CourseSelectPuppeteerGroup : public al::LiveActor {
 public:
+    void startWaitDemo(int userId);
+    void startDokanDemo(ICourseSelectActorController* pController);
+    void startUnLockDemo(ICourseSelectActorController* pController);
+    void startWorldWarpDokanDemo(ICourseSelectActorController* pController);
+    bool isDemoEnd() const;
+    void startRouteDokan(ICourseSelectActorController* pController);
+    int getPuppeteerCount() const { return mPuppeteerNum; }
     explicit CourseSelectPuppeteerGroup(CourseSelectScene* pScene);
 
     void startEnterDemo(ICourseSelectActorController* pController);
