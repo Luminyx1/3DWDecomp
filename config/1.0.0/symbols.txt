@@ -5861,3 +5861,9 @@
 0x71019C1718 8 object _ZN12_GLOBAL__N_122NrvCounterTimerGateEndE
 0x71019C1720 8 object _ZN12_GLOBAL__N_123NrvCounterTimerGateHideE
 0x71019C1728 8 object _ZN12_GLOBAL__N_125NrvCounterTimerGateAppearE
+
+# src/Game/Layout/ShowCourseSelect
+0x71019E3298 8 object _ZN12_GLOBAL__N_125NrvShowCourseSelectAppearE
+0x71019E32C0 8 object _ZN12_GLOBAL__N_129NrvShowCourseSelectWaitCursorE
+0x71019E32E8 8 object _ZN12_GLOBAL__N_125NrvShowCourseSelectDecideE
+0x71019E3310 8 object _ZN12_GLOBAL__N_123NrvShowCourseSelectBackE

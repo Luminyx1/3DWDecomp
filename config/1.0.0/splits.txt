@@ -1211,7 +1211,7 @@ src/Game/Layout/RingPlayerSelectParts.cpp:
     .text   start:0x001EC4D0 end:0x001ECE28
 src/Game/Layout/ScoreNumber.cpp:
     .text   start:0x001ECE30 end:0x001EDB58
-src/Game/Layout/ShowCourseSelect.cpp:
+src/Game/Layout/ShowCourseSelect.cpp: done
     .text   start:0x001EDB60 end:0x001EE358
 src/Game/Layout/SimpleAppearWaitEndParts.cpp: done
     .text   start:0x001EE360 end:0x001EE6D4

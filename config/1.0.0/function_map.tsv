@@ -12796,10 +12796,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001EE080			FALSE	_ZN16ShowCourseSelect19lockButtonEachOtherEv	ShowCourseSelect::lockButtonEachOther()	
 0x71001EE0C0			FALSE	_ZNK16ShowCourseSelect21findDecideCourseIndexEv	ShowCourseSelect::findDecideCourseIndex() const	
 0x71001EE190			FALSE	_ZN16ShowCourseSelect6exeEndEv	ShowCourseSelect::exeEnd()	
-0x71001EE1D0			FALSE	sub_71001EE1D0	sub_71001EE1D0	
-0x71001EE240			FALSE	sub_71001EE240	sub_71001EE240	
-0x71001EE2B0			FALSE	sub_71001EE2B0	sub_71001EE2B0	
-0x71001EE300			FALSE	sub_71001EE300	sub_71001EE300	
+0x71001EE1D0			FALSE	_ZNK12_GLOBAL__N_125ShowCourseSelectNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::ShowCourseSelectNrvAppear::execute(al::NerveKeeper*) const	
+0x71001EE240			FALSE	_ZNK12_GLOBAL__N_129ShowCourseSelectNrvWaitCursor7executeEPN2al11NerveKeeperE	(anonymous namespace)::ShowCourseSelectNrvWaitCursor::execute(al::NerveKeeper*) const	
+0x71001EE2B0			FALSE	_ZNK12_GLOBAL__N_125ShowCourseSelectNrvDecide7executeEPN2al11NerveKeeperE	(anonymous namespace)::ShowCourseSelectNrvDecide::execute(al::NerveKeeper*) const	
+0x71001EE300			FALSE	_ZNK12_GLOBAL__N_123ShowCourseSelectNrvBack7executeEPN2al11NerveKeeperE	(anonymous namespace)::ShowCourseSelectNrvBack::execute(al::NerveKeeper*) const	
 0x71001EE350			FALSE	_ZNK12_GLOBAL__N_123ShowCourseSelectNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::ShowCourseSelectNrvWait::execute(al::NerveKeeper*) const	
 0x71001EE360		SimpleAppearWaitEndParts.o	FALSE	_ZN24SimpleAppearWaitEndPartsC2ERKN2al14LayoutInitInfoEPKcS5_PNS0_11LayoutActorE	SimpleAppearWaitEndParts::SimpleAppearWaitEndParts(al::LayoutInitInfo const&, char const*, char const*, al::LayoutActor*)	
 0x71001EE420			FALSE	_ZN24SimpleAppearWaitEndPartsC1ERKN2al14LayoutInitInfoEPKcS5_PNS0_11LayoutActorE	SimpleAppearWaitEndParts::SimpleAppearWaitEndParts(al::LayoutInitInfo const&, char const*, char const*, al::LayoutActor*)	
