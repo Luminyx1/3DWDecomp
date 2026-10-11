@@ -8887,7 +8887,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100157BA0			FALSE	_ZN17TargetFinderParamC2Efffjffffb	TargetFinderParam::TargetFinderParam(float, float, float, unsigned int, float, float, float, float, bool)	
 0x7100157BD0			FALSE	_ZN12TargetFinderC2EPN2al9LiveActorEPK17TargetFinderParam	TargetFinder::TargetFinder(al::LiveActor*, TargetFinderParam const*)	
 0x7100157BF0			FALSE	_ZN12TargetFinder10findTargetEv	TargetFinder::findTarget()	
-0x7100157E00			FALSE	sub_7100157E00	sub_7100157E00	
+0x7100157E00			FALSE	_ZN12_GLOBAL__N_114calcTargetInfoEPNS_10TargetInfoEPKN2al9LiveActorERKN4sead7Vector3IfEESA_S5_	(anonymous namespace)::calcTargetInfo((anonymous namespace)::TargetInfo*, al::LiveActor const*, sead::Vector3<float> const&, sead::Vector3<float> const&, al::LiveActor const*)	
 0x7100157FD0			FALSE	_ZN12TargetFinder6updateEv	TargetFinder::update()	
 0x71001581C0			FALSE	_ZN12TargetFinder12refindTargetEv	TargetFinder::refindTarget()	
 0x71001581D0			FALSE	_ZN12TargetFinder11setFrontDirEPN4sead7Vector3IfEE	TargetFinder::setFrontDir(sead::Vector3<float>*)	

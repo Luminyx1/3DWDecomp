@@ -813,7 +813,7 @@ src/Game/Enemy/Takobo.cpp:
     .text   start:0x00155B90 end:0x00157074
 src/Game/Enemy/TakoboBullet.cpp:
     .text   start:0x00157080 end:0x00157B70
-src/Game/Enemy/TargetFinder.cpp:
+src/Game/Enemy/TargetFinder.cpp: done
     .text   start:0x00157B70 end:0x00158218
 src/Game/Enemy/Tenten.cpp:
     .text   start:0x00158220 end:0x00159390
