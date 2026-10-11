@@ -3677,9 +3677,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710009C2A0			FALSE	_ZN21CourseSelectNodeParts7exeWaitEv	CourseSelectNodeParts::exeWait()	
 0x710009C300			FALSE	_ZN21CourseSelectNodePartsD1Ev	CourseSelectNodeParts::~CourseSelectNodeParts()	
 0x710009C310			FALSE	_ZN21CourseSelectNodePartsD0Ev	CourseSelectNodeParts::~CourseSelectNodeParts()	
-0x710009C340			FALSE	nullsub_25	nullsub_25	
-0x710009C350			FALSE	sub_710009C350	sub_710009C350	
-0x710009C3B0			FALSE	sub_710009C3B0	sub_710009C3B0	
+0x710009C340			FALSE	_ZNK12_GLOBAL__N_132CourseSelectNodePartsNrvDeactive7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectNodePartsNrvDeactive::execute(al::NerveKeeper*) const	
+0x710009C350			FALSE	_ZNK12_GLOBAL__N_128CourseSelectNodePartsNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectNodePartsNrvWait::execute(al::NerveKeeper*) const	
+0x710009C3B0			FALSE	_ZNK12_GLOBAL__N_128CourseSelectNodePartsNrvGrow7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectNodePartsNrvGrow::execute(al::NerveKeeper*) const	
 0x710009C3F0		CourseSelectObjKeeper.o	FALSE	_ZN21CourseSelectObjKeeperC2Eii	CourseSelectObjKeeper::CourseSelectObjKeeper(int, int)	
 0x710009C4C0			FALSE	_ZN21CourseSelectObjKeeper14registerObjectEPN2al9LiveActorEi	CourseSelectObjKeeper::registerObject(al::LiveActor*, int)	
 0x710009C580			FALSE	_ZN21CourseSelectObjKeeper18initAfterPlacementEv	CourseSelectObjKeeper::initAfterPlacement()	
