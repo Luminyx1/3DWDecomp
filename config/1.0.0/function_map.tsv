@@ -1483,8 +1483,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710003AAB0			FALSE	_ZN15KoopaNeedleBall6launchEv	KoopaNeedleBall::launch()	
 0x710003AB60			FALSE	_ZN15KoopaNeedleBall7exeWaitEv	KoopaNeedleBall::exeWait()	
 0x710003AB70			FALSE	_ZN15KoopaNeedleBall7exeFallEv	KoopaNeedleBall::exeFall()	
-0x710003AC10			FALSE	sub_710003AC10	sub_710003AC10	
-0x710003AE40			FALSE	sub_710003AE40	sub_710003AE40	
+0x710003AC10			FALSE	_ZN15KoopaNeedleBall14updateVelocityEb	_ZN15KoopaNeedleBall14updateVelocityEb	matched helper/nerve
+0x710003AE40			FALSE	_ZN15KoopaNeedleBall13updateRollingEb	_ZN15KoopaNeedleBall13updateRollingEb	matched helper/nerve
 0x710003AF00			FALSE	_ZN15KoopaNeedleBall7exeMoveEv	KoopaNeedleBall::exeMove()	
 0x710003AFA0			FALSE	_ZN15KoopaNeedleBall8exeBreakEv	KoopaNeedleBall::exeBreak()	
 0x710003B000			FALSE	_ZN15KoopaNeedleBallD1Ev	KoopaNeedleBall::~KoopaNeedleBall()	
@@ -1492,10 +1492,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710003B040			FALSE	_ZN2al12ComboCounterD2Ev	al::ComboCounter::~ComboCounter()	
 0x710003B050			FALSE	_ZN2al12ComboCounterD0Ev	al::ComboCounter::~ComboCounter()	
 0x710003B060			FALSE	_ZN2al12ComboCounter9incrementEv	al::ComboCounter::increment()	
-0x710003B070			FALSE	nullsub_9	nullsub_9	
-0x710003B080			FALSE	sub_710003B080	sub_710003B080	
-0x710003B0F0			FALSE	sub_710003B0F0	sub_710003B0F0	
-0x710003B190			FALSE	sub_710003B190	sub_710003B190	
+0x710003B070			FALSE	_ZNK12_GLOBAL__N_122KoopaNeedleBallNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_122KoopaNeedleBallNrvWait7executeEPN2al11NerveKeeperE	matched helper/nerve
+0x710003B080			FALSE	_ZNK12_GLOBAL__N_123KoopaNeedleBallNrvBreak7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_123KoopaNeedleBallNrvBreak7executeEPN2al11NerveKeeperE	matched helper/nerve
+0x710003B0F0			FALSE	_ZNK12_GLOBAL__N_122KoopaNeedleBallNrvFall7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_122KoopaNeedleBallNrvFall7executeEPN2al11NerveKeeperE	matched helper/nerve
+0x710003B190			FALSE	_ZNK12_GLOBAL__N_122KoopaNeedleBallNrvMove7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_122KoopaNeedleBallNrvMove7executeEPN2al11NerveKeeperE	matched helper/nerve
 0x710003B230		Kyuppon.o	FALSE	_ZN7KyupponC2EPKc	Kyuppon::Kyuppon(char const*)	renamed from Kyruppon.o (spelling)
 0x710003B380			FALSE	_ZN7KyupponC1EPKc	Kyuppon::Kyuppon(char const*)	
 0x710003B4D0			FALSE	_ZN7Kyuppon4initERKN2al13ActorInitInfoE	Kyuppon::init(al::ActorInitInfo const&)	

@@ -225,7 +225,7 @@ src/Game/Boss/KoopaLastWallClimb.cpp:
     .text   start:0x000389B0 end:0x00039F48
 src/Game/Boss/KoopaLastWallClimbDown.cpp:
     .text   start:0x00039F50 end:0x0003A874
-src/Game/Boss/KoopaNeedleBall.cpp:
+src/Game/Boss/KoopaNeedleBall.cpp: done
     .text   start:0x0003A880 end:0x0003B22C
 src/Game/Boss/Kyuppon.cpp:
     .text   start:0x0003B230 end:0x0003F654
