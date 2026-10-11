@@ -13125,14 +13125,14 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001F9440			FALSE	_ZN32TestAoyagiPlayerEntryStateSelect9exeDecideEv	TestAoyagiPlayerEntryStateSelect::exeDecide()	
 0x71001F94C0			FALSE	_ZN32TestAoyagiPlayerEntryStateSelect12exeDecideEndEv	TestAoyagiPlayerEntryStateSelect::exeDecideEnd()	
 0x71001F9540			FALSE	_ZN32TestAoyagiPlayerEntryStateSelectD0Ev	TestAoyagiPlayerEntryStateSelect::~TestAoyagiPlayerEntryStateSelect()	
-0x71001F9570			FALSE	sub_71001F9570	sub_71001F9570	
-0x71001F9600			FALSE	sub_71001F9600	sub_71001F9600	
+0x71001F9570			FALSE	_ZNK12_GLOBAL__N_149TestAoyagiPlayerEntryStateSelectNrvAppearFromHide7executeEPN2al11NerveKeeperE	(anonymous namespace)::TestAoyagiPlayerEntryStateSelectNrvAppearFromHide::execute(al::NerveKeeper*) const	
+0x71001F9600			FALSE	_ZNK12_GLOBAL__N_149TestAoyagiPlayerEntryStateSelectNrvAppearFromShow7executeEPN2al11NerveKeeperE	(anonymous namespace)::TestAoyagiPlayerEntryStateSelectNrvAppearFromShow::execute(al::NerveKeeper*) const	
 0x71001F9690			FALSE	_ZNK12_GLOBAL__N_139TestAoyagiPlayerEntryStateSelectNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::TestAoyagiPlayerEntryStateSelectNrvWait::execute(al::NerveKeeper*) const	
-0x71001F96A0			FALSE	sub_71001F96A0	sub_71001F96A0	
-0x71001F9700			FALSE	sub_71001F9700	sub_71001F9700	
-0x71001F9780			FALSE	sub_71001F9780	sub_71001F9780	
-0x71001F9810			FALSE	sub_71001F9810	sub_71001F9810	
-0x71001F9880			FALSE	sub_71001F9880	sub_71001F9880	
+0x71001F96A0			FALSE	_ZNK12_GLOBAL__N_141TestAoyagiPlayerEntryStateSelectNrvChange7executeEPN2al11NerveKeeperE	(anonymous namespace)::TestAoyagiPlayerEntryStateSelectNrvChange::execute(al::NerveKeeper*) const	
+0x71001F9700			FALSE	_ZNK12_GLOBAL__N_141TestAoyagiPlayerEntryStateSelectNrvDecide7executeEPN2al11NerveKeeperE	(anonymous namespace)::TestAoyagiPlayerEntryStateSelectNrvDecide::execute(al::NerveKeeper*) const	
+0x71001F9780			FALSE	_ZNK12_GLOBAL__N_138TestAoyagiPlayerEntryStateSelectNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::TestAoyagiPlayerEntryStateSelectNrvEnd::execute(al::NerveKeeper*) const	
+0x71001F9810			FALSE	_ZNK12_GLOBAL__N_139TestAoyagiPlayerEntryStateSelectNrvHide7executeEPN2al11NerveKeeperE	(anonymous namespace)::TestAoyagiPlayerEntryStateSelectNrvHide::execute(al::NerveKeeper*) const	
+0x71001F9880			FALSE	_ZNK12_GLOBAL__N_144TestAoyagiPlayerEntryStateSelectNrvDecideEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::TestAoyagiPlayerEntryStateSelectNrvDecideEnd::execute(al::NerveKeeper*) const	
 0x71001F9910		TestLayoutPartsActor.o	FALSE	_ZN20TestLayoutPartsActorC2ERKN2al14LayoutInitInfoEPKcS5_PNS0_11LayoutActorE	TestLayoutPartsActor::TestLayoutPartsActor(al::LayoutInitInfo const&, char const*, char const*, al::LayoutActor*)	
 0x71001F99D0			FALSE	_ZN20TestLayoutPartsActorC1ERKN2al14LayoutInitInfoEPKcS5_PNS0_11LayoutActorE	TestLayoutPartsActor::TestLayoutPartsActor(al::LayoutInitInfo const&, char const*, char const*, al::LayoutActor*)	
 0x71001F9A80			FALSE	_ZN20TestLayoutPartsActor5startEv	TestLayoutPartsActor::start()	
