@@ -421,7 +421,7 @@ src/Game/CourseSelect/Local.cpp:
     .text   start:0x000A4DA0 end:0x000A5EE8
 src/Game/CourseSelect/CourseSelectPuppeteerGroup.cpp:
     .text   start:0x000A5EF0 end:0x000A7514
-src/Game/CourseSelect/CourseSelectRhythmObject.cpp:
+src/Game/CourseSelect/CourseSelectRhythmObject.cpp: done
     .text   start:0x000A7520 end:0x000A7994
 src/Game/CourseSelect/CourseSelectRoad.cpp:
     .text   start:0x000A79A0 end:0x000A8208
