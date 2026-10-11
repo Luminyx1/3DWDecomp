@@ -197,7 +197,7 @@ src/Game/Boss/KoopaLastBlockPow.cpp:
     .text   start:0x00031E60 end:0x00032B44
 src/Game/Boss/KoopaLastBlockPowStateDemo.cpp:
     .text   start:0x00032B50 end:0x00033410
-src/Game/Boss/KoopaLastBreakWall.cpp:
+src/Game/Boss/KoopaLastBreakWall.cpp: done
     .text   start:0x00033410 end:0x00034094
 src/Game/Boss/KoopaLastDefendeBlockPow.cpp:
     .text   start:0x000340A0 end:0x00034F1C

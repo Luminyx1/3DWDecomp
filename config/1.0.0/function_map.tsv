@@ -1257,7 +1257,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100033E00			FALSE	_ZN18KoopaLastBreakWall7exeWaitEv	KoopaLastBreakWall::exeWait()	
 0x7100033F50			FALSE	_ZN18KoopaLastBreakWallD1Ev	KoopaLastBreakWall::~KoopaLastBreakWall()	
 0x7100033F60			FALSE	_ZN18KoopaLastBreakWallD0Ev	KoopaLastBreakWall::~KoopaLastBreakWall()	
-0x7100033F90			FALSE	sub_7100033F90	sub_7100033F90	
+0x7100033F90			FALSE	_ZNK12_GLOBAL__N_131KoopaLastBreakWallNrvInsideWall7executeEPN2al11NerveKeeperE	sub_7100033F90	matched nerve
 0x7100033FE0			FALSE	_ZNK12_GLOBAL__N_130KoopaLastBreakWallNrvBreakWall7executeEPN2al11NerveKeeperE	(anonymous namespace)::KoopaLastBreakWallNrvBreakWall::execute(al::NerveKeeper*) const	
 0x7100033FF0			FALSE	_ZNK12_GLOBAL__N_127KoopaLastBreakWallNrvAttack7executeEPN2al11NerveKeeperE	(anonymous namespace)::KoopaLastBreakWallNrvAttack::execute(al::NerveKeeper*) const	
 0x7100034000			FALSE	_ZNK12_GLOBAL__N_130KoopaLastBreakWallNrvAttackEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::KoopaLastBreakWallNrvAttackEnd::execute(al::NerveKeeper*) const	
