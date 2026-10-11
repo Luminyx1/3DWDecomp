@@ -5792,7 +5792,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71000E0220			FALSE	_ZNK12_GLOBAL__N_122BrosStateAttackNrvTurn7executeEPN2al11NerveKeeperE	(anonymous namespace)::BrosStateAttackNrvTurn::execute(al::NerveKeeper*) const	
 0x71000E0230			FALSE	_ZNK12_GLOBAL__N_122BrosStateAttackNrvSign7executeEPN2al11NerveKeeperE	(anonymous namespace)::BrosStateAttackNrvSign::execute(al::NerveKeeper*) const	
 0x71000E0240			FALSE	_ZNK12_GLOBAL__N_124BrosStateAttackNrvAttack7executeEPN2al11NerveKeeperE	(anonymous namespace)::BrosStateAttackNrvAttack::execute(al::NerveKeeper*) const	
-0x71000E0250			FALSE	sub_71000E0250	sub_71000E0250	
+0x71000E0250			FALSE	_ZNK12_GLOBAL__N_121BrosStateAttackNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::BrosStateAttackNrvEnd::execute(al::NerveKeeper*) const	
 0x71000E02D0		BrosStateJump.o	FALSE	_ZN13BrosStateJumpC2EPN2al9LiveActorEPNS0_13KeyPoseKeeperEPK18BrosMoveStepKeeper	BrosStateJump::BrosStateJump(al::LiveActor*, al::KeyPoseKeeper*, BrosMoveStepKeeper const*)	
 0x71000E0350			FALSE	_ZN13BrosStateJump6appearEv	BrosStateJump::appear()	
 0x71000E0380			FALSE	_ZN13BrosStateJump8exeStartEv	BrosStateJump::exeStart()	

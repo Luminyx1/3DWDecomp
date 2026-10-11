@@ -5716,3 +5716,5 @@
 0x710198D9E0 8 object _ZN12_GLOBAL__N_129NrvFlyerStateReturnAreaReturnE
 0x710198D9E8 8 object _ZN12_GLOBAL__N_128NrvFlyerStateReturnAreaBrakeE
 0x710198D9F0 24 object _ZN12_GLOBAL__N_113cDefaultParamE
+
+0x71019857C8 8 object _ZN12_GLOBAL__N_121NrvBrosStateAttackEndE
