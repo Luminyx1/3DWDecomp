@@ -513,7 +513,7 @@ src/Game/Demo/DemoTimerStageSwitchInfo.cpp:
     .text   start:0x000C29D0 end:0x000C41EC
 src/Game/Demo/DemoWorldClear.cpp: done
     .text   start:0x000C41F0 end:0x000C4C28
-src/Game/Demo/ProjectDemoDirector.cpp:
+src/Game/Demo/ProjectDemoDirector.cpp: done
     .text   start:0x000C4C30 end:0x000C5424
 src/Game/Demo/StageStartBindDemoCasinoRoom.cpp: done
     .text   start:0x000C5430 end:0x000C5C18
