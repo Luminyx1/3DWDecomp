@@ -1961,11 +1961,11 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100054310			FALSE	_ZNK20SuperBowserFireFlame9getSpeedHEv	SuperBowserFireFlame::getSpeedH() const	
 0x7100054320			FALSE	_ZN20SuperBowserFireFlameD1Ev	SuperBowserFireFlame::~SuperBowserFireFlame()	
 0x7100054330			FALSE	_ZN20SuperBowserFireFlameD0Ev	SuperBowserFireFlame::~SuperBowserFireFlame()	
-0x7100054360			FALSE	nullsub_11	nullsub_11	
-0x7100054370			FALSE	sub_7100054370	sub_7100054370	
+0x7100054360			FALSE	_ZNK12_GLOBAL__N_127SuperBowserFireFlameNrvWait7executeEPN2al11NerveKeeperE	nullsub_11	matched nerve
+0x7100054370			FALSE	_ZNK12_GLOBAL__N_130SuperBowserFireFlameNrvExplode7executeEPN2al11NerveKeeperE	sub_7100054370	matched nerve
 0x71000543F0			FALSE	_ZNK12_GLOBAL__N_129SuperBowserFireFlameNrvAttack7executeEPN2al11NerveKeeperE	(anonymous namespace)::SuperBowserFireFlameNrvAttack::execute(al::NerveKeeper*) const	
 0x7100054400			FALSE	_ZNK12_GLOBAL__N_132SuperBowserFireFlameNrvLandStart7executeEPN2al11NerveKeeperE	(anonymous namespace)::SuperBowserFireFlameNrvLandStart::execute(al::NerveKeeper*) const	
-0x7100054410			FALSE	sub_7100054410	sub_7100054410	
+0x7100054410			FALSE	_ZNK12_GLOBAL__N_127SuperBowserFireFlameNrvLand7executeEPN2al11NerveKeeperE	sub_7100054410	matched nerve
 0x7100054470			FALSE	_ZNK12_GLOBAL__N_130SuperBowserFireFlameNrvLandEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::SuperBowserFireFlameNrvLandEnd::execute(al::NerveKeeper*) const	
 0x7100054480		SuperBowserFireFlamePlessieChase.o	FALSE	_ZN32SuperBowserFireFlamePlessieChaseC2EPKcP37SuperBowserPlessieChaseFireFlameState	SuperBowserFireFlamePlessieChase::SuperBowserFireFlamePlessieChase(char const*, SuperBowserPlessieChaseFireFlameState*)	
 0x7100054510			FALSE	_ZN32SuperBowserFireFlamePlessieChaseC1EPKcP37SuperBowserPlessieChaseFireFlameState	SuperBowserFireFlamePlessieChase::SuperBowserFireFlamePlessieChase(char const*, SuperBowserPlessieChaseFireFlameState*)	
