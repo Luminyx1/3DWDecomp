@@ -5873,3 +5873,10 @@
 0x71019C1EA8 8 object _ZN12_GLOBAL__N_123NrvDemoSkipLayoutAppearE
 0x71019C1EB0 8 object _ZN12_GLOBAL__N_120NrvDemoSkipLayoutEndE
 0x71019C1EB8 8 object _ZN12_GLOBAL__N_121NrvDemoSkipLayoutWaitE
+
+# src/Game/Layout/SingleModeTitle
+0x71019E3EC8 8 object _ZN12_GLOBAL__N_124NrvSingleModeTitleResumeE
+0x71019E3ED0 8 object _ZN12_GLOBAL__N_125NrvSingleModeTitleNewGameE
+0x71019E3ED8 8 object _ZN12_GLOBAL__N_122NrvSingleModeTitleBackE
+0x71019E3EE0 8 object _ZN12_GLOBAL__N_130NrvSingleModeTitleStartNewGameE
+0x71019E3EE8 8 object _ZN12_GLOBAL__N_121NrvSingleModeTitleEndE

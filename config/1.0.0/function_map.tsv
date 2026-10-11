@@ -12888,11 +12888,11 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001F1350			FALSE	_ZN15SingleModeTitle5isEndEv	SingleModeTitle::isEnd()	
 0x71001F1360			FALSE	_ZNK12_GLOBAL__N_124SingleModeTitleNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::SingleModeTitleNrvAppear::execute(al::NerveKeeper*) const	
 0x71001F1370			FALSE	_ZNK12_GLOBAL__N_122SingleModeTitleNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::SingleModeTitleNrvWait::execute(al::NerveKeeper*) const	
-0x71001F1380			FALSE	sub_71001F1380	sub_71001F1380	
-0x71001F1430			FALSE	sub_71001F1430	sub_71001F1430	
-0x71001F14E0			FALSE	sub_71001F14E0	sub_71001F14E0	
-0x71001F1590			FALSE	nullsub_133	nullsub_133	
-0x71001F15A0			FALSE	nullsub_134	nullsub_134	
+0x71001F1380			FALSE	_ZNK12_GLOBAL__N_124SingleModeTitleNrvResume7executeEPN2al11NerveKeeperE	(anonymous namespace)::SingleModeTitleNrvResume::execute(al::NerveKeeper*) const	
+0x71001F1430			FALSE	_ZNK12_GLOBAL__N_125SingleModeTitleNrvNewGame7executeEPN2al11NerveKeeperE	(anonymous namespace)::SingleModeTitleNrvNewGame::execute(al::NerveKeeper*) const	
+0x71001F14E0			FALSE	_ZNK12_GLOBAL__N_122SingleModeTitleNrvBack7executeEPN2al11NerveKeeperE	(anonymous namespace)::SingleModeTitleNrvBack::execute(al::NerveKeeper*) const	
+0x71001F1590			FALSE	_ZNK12_GLOBAL__N_130SingleModeTitleNrvStartNewGame7executeEPN2al11NerveKeeperE	(anonymous namespace)::SingleModeTitleNrvStartNewGame::execute(al::NerveKeeper*) const	
+0x71001F15A0			FALSE	_ZNK12_GLOBAL__N_121SingleModeTitleNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::SingleModeTitleNrvEnd::execute(al::NerveKeeper*) const	
 0x71001F15B0		StaffRollFin.o	FALSE	_ZN12StaffRollFinC2ERKN2al14LayoutInitInfoE	StaffRollFin::StaffRollFin(al::LayoutInitInfo const&)	
 0x71001F1680			FALSE	_ZN12StaffRollFinC1ERKN2al14LayoutInitInfoE	StaffRollFin::StaffRollFin(al::LayoutInitInfo const&)	
 0x71001F1750			FALSE	_ZN12StaffRollFin6appearEv	StaffRollFin::appear()	
