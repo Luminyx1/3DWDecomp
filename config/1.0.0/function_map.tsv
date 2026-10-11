@@ -1385,10 +1385,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100037E10			FALSE	_ZN24KoopaLastStateAttackFire9exeAttackEv	KoopaLastStateAttackFire::exeAttack()	
 0x7100037F00			FALSE	_ZN24KoopaLastStateAttackFire7exeWaitEv	KoopaLastStateAttackFire::exeWait()	
 0x7100037FA0			FALSE	_ZN24KoopaLastStateAttackFireD0Ev	KoopaLastStateAttackFire::~KoopaLastStateAttackFire()	
-0x7100037FD0			FALSE	sub_7100037FD0	sub_7100037FD0	
+0x7100037FD0			FALSE	_ZNK12_GLOBAL__N_133KoopaLastStateAttackFireNrvSearch7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_133KoopaLastStateAttackFireNrvSearch7executeEPN2al11NerveKeeperE	matched helper/nerve
 0x7100038050			FALSE	_ZNK12_GLOBAL__N_133KoopaLastStateAttackFireNrvAttack7executeEPN2al11NerveKeeperE	(anonymous namespace)::KoopaLastStateAttackFireNrvAttack::execute(al::NerveKeeper*) const	
-0x7100038060			FALSE	sub_7100038060	sub_7100038060	
-0x7100038100			FALSE	sub_7100038100	sub_7100038100	
+0x7100038060			FALSE	_ZNK12_GLOBAL__N_131KoopaLastStateAttackFireNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_131KoopaLastStateAttackFireNrvWait7executeEPN2al11NerveKeeperE	matched helper/nerve
+0x7100038100			FALSE	_GLOBAL__sub_I_KoopaLastStateAttack.cpp	_GLOBAL__sub_I_KoopaLastStateAttack.cpp	matched helper/nerve
 0x7100038150		KoopaLastStateTop.o	FALSE	_ZN17KoopaLastStateTopC2EPN2al9LiveActorE	KoopaLastStateTop::KoopaLastStateTop(al::LiveActor*)	
 0x7100038230			FALSE	_ZN17KoopaLastStateTop6appearEv	KoopaLastStateTop::appear()	
 0x7100038240			FALSE	_ZN17KoopaLastStateTop11exeClimbEndEv	KoopaLastStateTop::exeClimbEnd()	

@@ -30,6 +30,7 @@ public:
     void refindTarget();
     void update();
     void setFrontDir(sead::Vector3f* pFrontDir);
+    void setSupportUpDir(sead::Vector3f* pUpDir);
     const sead::Vector3f& getTargetPos() const;
 
     bool isExistTarget() const { return _8 != nullptr; }

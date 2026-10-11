@@ -21,11 +21,18 @@ public:
     KoopaLastStateAttackFire(al::LiveActor* pActor, const al::ActorInitInfo& rInfo,
                             const KoopaLastStateAttackFireParam* pParam);
 
+    ~KoopaLastStateAttackFire() override;
+    void appear() override;
+    void exeSearch();
+    void exeAttack();
+    void exeWait();
 private:
     const KoopaLastStateAttackFireParam* mParam;
     TargetFinder* mTargetFinder;
     al::DeriveActorGroup<KoopaFireBall>* mFireBalls;
     sead::Vector3f mFrontDir;
     sead::Vector3f mUpDir;
-    int mValue50;
+    int mAttackCount;
 };
+
+static_assert(sizeof(KoopaLastStateAttackFire) == 0x58);

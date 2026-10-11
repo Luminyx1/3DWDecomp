@@ -5715,3 +5715,6 @@
 # KoopaChaseStateThrow
 0x7101954540 32 object _ZN12_GLOBAL__N_110sThrowSignE
 0x7101954560 32 object _ZN12_GLOBAL__N_16sThrowE
+
+# KoopaLastStateAttack
+0x7101B1C9E0 36 object _ZN12_GLOBAL__N_118sTargetFinderParamE
