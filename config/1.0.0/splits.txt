@@ -719,7 +719,7 @@ src/Game/Enemy/MarchGenerator.cpp:
     .text   start:0x00123950 end:0x00124DA8
 src/Game/Enemy/MeraWanwan.cpp:
     .text   start:0x00124DB0 end:0x001270A0
-src/Game/Enemy/MeraWanwanTrack.cpp:
+src/Game/Enemy/MeraWanwanTrack.cpp: done
     .text   start:0x001270A0 end:0x00127680
 src/Game/Enemy/Moamoa.cpp:
     .text   start:0x00127680 end:0x0012862C

@@ -7681,9 +7681,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100127470			FALSE	_ZN15MeraWanwanTrack12exeDisappearEv	MeraWanwanTrack::exeDisappear()	
 0x71001274E0			FALSE	_ZN15MeraWanwanTrackD1Ev	MeraWanwanTrack::~MeraWanwanTrack()	
 0x71001274F0			FALSE	_ZN15MeraWanwanTrackD0Ev	MeraWanwanTrack::~MeraWanwanTrack()	
-0x7100127520			FALSE	sub_7100127520	sub_7100127520	
-0x7100127590			FALSE	sub_7100127590	sub_7100127590	
-0x7100127610			FALSE	sub_7100127610	sub_7100127610	
+0x7100127520			FALSE	_ZNK12_GLOBAL__N_124MeraWanwanTrackNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::MeraWanwanTrackNrvAppear::execute(al::NerveKeeper*) const	
+0x7100127590			FALSE	_ZNK12_GLOBAL__N_122MeraWanwanTrackNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::MeraWanwanTrackNrvWait::execute(al::NerveKeeper*) const	
+0x7100127610			FALSE	_ZNK12_GLOBAL__N_127MeraWanwanTrackNrvDisappear7executeEPN2al11NerveKeeperE	(anonymous namespace)::MeraWanwanTrackNrvDisappear::execute(al::NerveKeeper*) const	
 0x7100127680		Moamoa.o	FALSE	_ZN6MoamoaC2EPKcPK12MoamoaHolder	Moamoa::Moamoa(char const*, MoamoaHolder const*)	
 0x7100127730			FALSE	_ZN6MoamoaC1EPKcPK12MoamoaHolder	Moamoa::Moamoa(char const*, MoamoaHolder const*)	
 0x71001277E0			FALSE	_ZN6Moamoa4initERKN2al13ActorInitInfoE	Moamoa::init(al::ActorInitInfo const&)	
