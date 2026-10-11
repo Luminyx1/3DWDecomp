@@ -7275,8 +7275,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001170B0			FALSE	_ZN19KuriboMiniGenerator16exeAfterGenerateEv	KuriboMiniGenerator::exeAfterGenerate()	
 0x7100117120			FALSE	_ZN19KuriboMiniGeneratorD1Ev	KuriboMiniGenerator::~KuriboMiniGenerator()	
 0x7100117130			FALSE	_ZN19KuriboMiniGeneratorD0Ev	KuriboMiniGenerator::~KuriboMiniGenerator()	
-0x7100117160			FALSE	nullsub_67	nullsub_67	
-0x7100117170			FALSE	sub_7100117170	sub_7100117170	
+0x7100117160			FALSE	_ZNK12_GLOBAL__N_126KuriboMiniGeneratorNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::KuriboMiniGeneratorNrvWait::execute(al::NerveKeeper*) const	
+0x7100117170			FALSE	_ZNK12_GLOBAL__N_135KuriboMiniGeneratorNrvAfterGenerate7executeEPN2al11NerveKeeperE	(anonymous namespace)::KuriboMiniGeneratorNrvAfterGenerate::execute(al::NerveKeeper*) const	
 0x71001171E0			FALSE	_ZNK2al10FunctorV0MIP19KuriboMiniGeneratorMS1_FvvEEclEv	al::FunctorV0M<KuriboMiniGenerator*, void (KuriboMiniGenerator::*)()>::operator()() const	
 0x7100117200			FALSE	_ZNK2al10FunctorV0MIP19KuriboMiniGeneratorMS1_FvvEE5cloneEv	al::FunctorV0M<KuriboMiniGenerator*, void (KuriboMiniGenerator::*)()>::clone() const	
 0x7100117250		Kuribon.o	FALSE	_ZN7KuribonC2EPKc	Kuribon::Kuribon(char const*)	
