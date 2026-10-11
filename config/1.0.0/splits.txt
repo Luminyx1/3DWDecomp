@@ -691,7 +691,7 @@ src/Game/Enemy/KuriboClimbRail.cpp:
     .text   start:0x001124C0 end:0x00113D64
 src/Game/Enemy/KuriboClimbStateBodyAttack.cpp:
     .text   start:0x00113D70 end:0x00114324
-src/Game/Enemy/KuriboClimbSyncObj.cpp:
+src/Game/Enemy/KuriboClimbSyncObj.cpp: done
     .text   start:0x00114330 end:0x001146D0
 src/Game/Enemy/KuriboMini.cpp:
     .text   start:0x001146D0 end:0x00116ABC

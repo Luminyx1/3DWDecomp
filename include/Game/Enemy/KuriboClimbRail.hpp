@@ -13,6 +13,7 @@ class ActorMicRumbler;
 class ActorStateSupportFreeze;
 class EnemyStateBlowDown;
 class KuriboClimbStateBodyAttack;
+class KuriboClimbSyncObj;
 
 /**
  * @brief Goomba that climbs along a rail on walls and slopes, turns around at the rail ends and
@@ -45,6 +46,9 @@ public:
 
     bool isEnableBodyAttack() const;
     void startBodyAttack();
+
+    /** @brief Assigns the synchronized attack controller. @param pController Group controller. */
+    void setBodyAttackController(KuriboClimbSyncObj* pController) { mBodyAttackController = pController; }
 
 private:
     void appearItemToAttacker();
