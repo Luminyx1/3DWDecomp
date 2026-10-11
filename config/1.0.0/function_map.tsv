@@ -5124,8 +5124,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71000C82C0			FALSE	_ZNK30StageStartBindDemoKinopioHouse12getEventTypeEv	StageStartBindDemoKinopioHouse::getEventType() const	
 0x71000C82D0			FALSE	_ZN30StageStartBindDemoKinopioHouse9startDemoEv	StageStartBindDemoKinopioHouse::startDemo()	
 0x71000C82E0			FALSE	_ZN30StageStartBindDemoKinopioHouse7endDemoEv	StageStartBindDemoKinopioHouse::endDemo()	
-0x71000C82F0			FALSE	sub_71000C82F0	sub_71000C82F0	
-0x71000C8350			FALSE	sub_71000C8350	sub_71000C8350	
+0x71000C82F0			FALSE	_ZNK12_GLOBAL__N_141StageStartBindDemoKinopioHouseNrvBindWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::StageStartBindDemoKinopioHouseNrvBindWait::execute(al::NerveKeeper*) const	
+0x71000C8350			FALSE	_ZNK12_GLOBAL__N_140StageStartBindDemoKinopioHouseNrvBindEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::StageStartBindDemoKinopioHouseNrvBindEnd::execute(al::NerveKeeper*) const	
 0x71000C83D0			FALSE	_ZNK12_GLOBAL__N_140StageStartBindDemoKinopioHouseNrvMessage7executeEPN2al11NerveKeeperE	(anonymous namespace)::StageStartBindDemoKinopioHouseNrvMessage::execute(al::NerveKeeper*) const	
 0x71000C83E0		StageStartBindDemoMysteryHouse.o	FALSE	_ZN30StageStartBindDemoMysteryHouseC2EPKc	StageStartBindDemoMysteryHouse::StageStartBindDemoMysteryHouse(char const*)	
 0x71000C84B0			FALSE	_ZN30StageStartBindDemoMysteryHouseC1EPKc	StageStartBindDemoMysteryHouse::StageStartBindDemoMysteryHouse(char const*)	
