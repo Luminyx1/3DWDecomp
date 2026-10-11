@@ -2269,7 +2269,7 @@ src/Game/NPC/RabbitStateReverse.cpp: done
     .text   start:0x003D4D00 end:0x003D4FD8
 src/Game/NPC/RabbitStateSwoon.cpp: done
     .text   start:0x003D4FE0 end:0x003D53BC
-src/Game/NPC/RaidonNpc.cpp:
+src/Game/NPC/RaidonNpc.cpp: done
     .text   start:0x003D53C0 end:0x003D5774
 src/Game/NPC/RosettaNpc.cpp:
     .text   start:0x003D5780 end:0x003D6398

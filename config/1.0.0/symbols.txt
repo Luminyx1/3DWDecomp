@@ -4772,3 +4772,8 @@
 
 # Recovered NPC target-filter helper
 0x71003CE080 260 func _ZNK15NpcTargetFinder15tryFilterTargetEPKN2al9LiveActorERKN3npc17NpcFindTargetTypeE
+
+# Recovered RaidonNpc wait nerve
+0x7101A7BB98 32 object _ZTVN12_GLOBAL__N_116RaidonNpcNrvWaitE
+0x7101A7BBB8 8 object _ZN12_GLOBAL__N_116NrvRaidonNpcWaitE
+0x71003D56E0 148 func _ZNK12_GLOBAL__N_116RaidonNpcNrvWait7executeEPN2al11NerveKeeperE

@@ -7,7 +7,7 @@ class AnimScaleController;
 class SensorMsg;
 class ScreenPointer;
 class ScreenPointTarget;
-}
+} // namespace al
 
 class ActorStateSupportStroke : public al::ActorStateBase {
 public:
@@ -23,6 +23,11 @@ public:
     bool isTouch() const;
     /** @brief Reports the item trigger for this frame. @return Whether an item should appear. */
     bool shouldAppearItem() const { return mShouldAppearItem; }
+    /** @brief Disables scale and effect feedback for riding actors. */
+    void disableFeedback() {
+        mIsScaleEnabled = false;
+        mIsEffectEnabled = false;
+    }
     void exeWait();
     void exeTouch();
 
