@@ -1661,11 +1661,11 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100042D90			FALSE	_ZN14PunpunShuriken8exeShootEv	PunpunShuriken::exeShoot()	
 0x7100042EA0			FALSE	_ZN14PunpunShurikenD1Ev	PunpunShuriken::~PunpunShuriken()	
 0x7100042EB0			FALSE	_ZN14PunpunShurikenD0Ev	PunpunShuriken::~PunpunShuriken()	
-0x7100042EE0			FALSE	sub_7100042EE0	sub_7100042EE0	
-0x7100042F20			FALSE	sub_7100042F20	sub_7100042F20	
-0x7100042F80			FALSE	sub_7100042F80	sub_7100042F80	
-0x7100042FE0			FALSE	sub_7100042FE0	sub_7100042FE0	
-0x7100042FF0			FALSE	sub_7100042FF0	sub_7100042FF0	
+0x7100042EE0			FALSE	_ZNK12_GLOBAL__N_121PunpunShurikenNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_121PunpunShurikenNrvWait7executeEPN2al11NerveKeeperE	matched helper/nerve
+0x7100042F20			FALSE	_ZNK12_GLOBAL__N_123PunpunShurikenNrvAppear7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_123PunpunShurikenNrvAppear7executeEPN2al11NerveKeeperE	matched helper/nerve
+0x7100042F80			FALSE	_ZNK12_GLOBAL__N_127PunpunShurikenNrvDemoAppear7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_127PunpunShurikenNrvDemoAppear7executeEPN2al11NerveKeeperE	matched helper/nerve
+0x7100042FE0			FALSE	_ZNK12_GLOBAL__N_122PunpunShurikenNrvShoot7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_122PunpunShurikenNrvShoot7executeEPN2al11NerveKeeperE	matched helper/nerve
+0x7100042FF0			FALSE	_ZNK12_GLOBAL__N_125PunpunShurikenNrvShootLv27executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_125PunpunShurikenNrvShootLv27executeEPN2al11NerveKeeperE	matched helper/nerve
 0x7100043000		SuperBowser.o	FALSE	_ZN11SuperBowserC2EPKc	SuperBowser::SuperBowser(char const*)	
 0x71000434C0			FALSE	_ZN11SuperBowserC1EPKc	SuperBowser::SuperBowser(char const*)	
 0x7100043990			FALSE	_ZN11SuperBowserD2Ev	SuperBowser::~SuperBowser()	

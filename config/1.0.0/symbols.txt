@@ -5718,3 +5718,7 @@
 
 # KoopaLastStateAttack
 0x7101B1C9E0 36 object _ZN12_GLOBAL__N_118sTargetFinderParamE
+
+# PunpunShuriken
+0x710195BC08 16 object _ZN12_GLOBAL__N_117NrvPunpunShurikenE
+0x710140A054 12 object _ZN12_GLOBAL__N_112sShootOffsetE
