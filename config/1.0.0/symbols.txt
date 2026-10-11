@@ -5867,3 +5867,9 @@
 0x71019E32C0 8 object _ZN12_GLOBAL__N_129NrvShowCourseSelectWaitCursorE
 0x71019E32E8 8 object _ZN12_GLOBAL__N_125NrvShowCourseSelectDecideE
 0x71019E3310 8 object _ZN12_GLOBAL__N_123NrvShowCourseSelectBackE
+
+# src/Game/Layout/DemoSkipLayout
+0x71019C1EA0 8 object _ZN12_GLOBAL__N_123NrvDemoSkipLayoutHiddenE
+0x71019C1EA8 8 object _ZN12_GLOBAL__N_123NrvDemoSkipLayoutAppearE
+0x71019C1EB0 8 object _ZN12_GLOBAL__N_120NrvDemoSkipLayoutEndE
+0x71019C1EB8 8 object _ZN12_GLOBAL__N_121NrvDemoSkipLayoutWaitE

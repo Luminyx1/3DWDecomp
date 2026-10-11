@@ -10199,10 +10199,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100186C50			FALSE	_ZN14DemoSkipLayout7exeWaitEv	DemoSkipLayout::exeWait()	
 0x7100186C90			FALSE	_ZN14DemoSkipLayout9exeHiddenEv	DemoSkipLayout::exeHidden()	
 0x7100186CF0			FALSE	_ZN14DemoSkipLayout6exeEndEv	DemoSkipLayout::exeEnd()	
-0x7100186D60			FALSE	sub_7100186D60	sub_7100186D60	
-0x7100186DC0			FALSE	sub_7100186DC0	sub_7100186DC0	
-0x7100186E60			FALSE	sub_7100186E60	sub_7100186E60	
-0x7100186ED0			FALSE	sub_7100186ED0	sub_7100186ED0	
+0x7100186D60			FALSE	_ZNK12_GLOBAL__N_123DemoSkipLayoutNrvHidden7executeEPN2al11NerveKeeperE	(anonymous namespace)::DemoSkipLayoutNrvHidden::execute(al::NerveKeeper*) const	
+0x7100186DC0			FALSE	_ZNK12_GLOBAL__N_123DemoSkipLayoutNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::DemoSkipLayoutNrvAppear::execute(al::NerveKeeper*) const	
+0x7100186E60			FALSE	_ZNK12_GLOBAL__N_120DemoSkipLayoutNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::DemoSkipLayoutNrvEnd::execute(al::NerveKeeper*) const	
+0x7100186ED0			FALSE	_ZNK12_GLOBAL__N_121DemoSkipLayoutNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::DemoSkipLayoutNrvWait::execute(al::NerveKeeper*) const	
 0x7100186F20		IslandCounterParts.o	FALSE	_ZN18IslandCounterPartsC2ERKN2al14LayoutInitInfoEPKcS5_PNS0_11LayoutActorES5_	IslandCounterParts::IslandCounterParts(al::LayoutInitInfo const&, char const*, char const*, al::LayoutActor*, char const*)	
 0x7100187360			FALSE	_ZN18IslandCounterPartsC1ERKN2al14LayoutInitInfoEPKcS5_PNS0_11LayoutActorES5_	IslandCounterParts::IslandCounterParts(al::LayoutInitInfo const&, char const*, char const*, al::LayoutActor*, char const*)	
 0x71001877A0			FALSE	_ZN18IslandCounterPartsD2Ev	IslandCounterParts::~IslandCounterParts()	

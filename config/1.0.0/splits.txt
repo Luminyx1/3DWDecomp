@@ -953,7 +953,7 @@ src/Game/Layout/Switch/CounterTimerGate.cpp: done
     .text   start:0x00185880 end:0x00186084
 src/Game/Layout/Switch/CourseSelectMenuHeader.cpp: done
     .text   start:0x00186090 end:0x001866D8
-src/Game/Layout/Switch/DemoSkipLayout.cpp:
+src/Game/Layout/Switch/DemoSkipLayout.cpp: done
     .text   start:0x001866E0 end:0x00186F14
 src/Game/Layout/Switch/IslandCounterParts.cpp:
     .text   start:0x00186F20 end:0x001881E8
