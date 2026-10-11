@@ -4865,12 +4865,12 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71000C14B0			FALSE	_ZNK19DemoScenePlayerInfo18getActivePlayerNumEv	DemoScenePlayerInfo::getActivePlayerNum() const	
 0x71000C14C0			FALSE	_ZNK19DemoScenePlayerInfo16getCharacterTypeEi	DemoScenePlayerInfo::getCharacterType(int) const	
 0x71000C14D0			FALSE	_ZNK19DemoScenePlayerInfo13getFigureTypeEi	DemoScenePlayerInfo::getFigureType(int) const	
-0x71000C14E0			FALSE	nullsub_47	nullsub_47	
+0x71000C14E0			FALSE	_ZNK12_GLOBAL__N_122DemoScenePlayerNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::DemoScenePlayerNrvWait::execute(al::NerveKeeper*) const	
 0x71000C14F0			TRUE	_ZN4sead15FixedSafeStringILi34EED0Ev	sead::FixedSafeString<34>::~FixedSafeString()	
 0x71000C1500			TRUE	_ZN4sead15FixedSafeStringILi34EEaSERKNS_14SafeStringBaseIcEE	sead::FixedSafeString<34>::operator=(sead::SafeStringBase<char> const&)	
 0x71000C15F0			TRUE	_ZN4sead19FixedSafeStringBaseIcLi34EED0Ev	sead::FixedSafeStringBase<char, 34>::~FixedSafeStringBase()	
 0x71000C1600			TRUE	_ZN4sead19FixedSafeStringBaseIcLi34EEaSERKNS_14SafeStringBaseIcEE	sead::FixedSafeStringBase<char, 34>::operator=(sead::SafeStringBase<char> const&)	
-0x71000C16F0			FALSE	sub_71000C16F0	sub_71000C16F0	
+0x71000C16F0			FALSE	_ZNK12_GLOBAL__N_122DemoScenePlayerNrvPlay7executeEPN2al11NerveKeeperE	(anonymous namespace)::DemoScenePlayerNrvPlay::execute(al::NerveKeeper*) const	
 0x71000C1740		DemoScenePlayerModel.o	FALSE	_ZN20DemoScenePlayerModelC2Ev	DemoScenePlayerModel::DemoScenePlayerModel()	
 0x71000C17C0			FALSE	_ZN20DemoScenePlayerModel9createAllERKN2al13ActorInitInfoEPKcP26PlayerRetargettingSelectorPNS0_11IUseHioNodeES5_	DemoScenePlayerModel::createAll(al::ActorInitInfo const&, char const*, PlayerRetargettingSelector*, al::IUseHioNode*, char const*)	
 0x71000C1AA0			FALSE	_ZN20DemoScenePlayerModel12createSingleERKN2al13ActorInitInfoEPKciP26PlayerRetargettingSelectorPNS0_11IUseHioNodeES5_	DemoScenePlayerModel::createSingle(al::ActorInitInfo const&, char const*, int, PlayerRetargettingSelector*, al::IUseHioNode*, char const*)	

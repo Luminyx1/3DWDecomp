@@ -29,6 +29,8 @@ public:
     void setFigure(int figure);
     PlayerModel* getPlayerModel();
     al::LiveActor* getModel();
+    /** @brief Sets the animated placement to follow. @param pMtx Locator transform. */
+    void setFollowMtx(const sead::Matrix34f* pMtx) { mFollowMtx = pMtx; }
     void startDemo(const sead::Matrix34f& rMtx);
     void startAction(const char* pName);
     void showShadow();
@@ -43,6 +45,7 @@ public:
     al::PartsModel* getClimbCloth();
 
 private:
+    friend class DemoScenePlayer;
     PlayerRetargettingSelector* mSelector = nullptr;
     PlayerModelHolder* mModels = nullptr;
     al::PartsModel* mClimbCloth = nullptr;
