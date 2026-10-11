@@ -5907,3 +5907,11 @@
 0x71019D00C0 8 object _ZN12_GLOBAL__N_121NrvButtonBackPartsEndE
 0x71019D00C8 8 object _ZN12_GLOBAL__N_124NrvButtonBackPartsDecideE
 0x71019D00D0 8 object _ZN12_GLOBAL__N_127NrvButtonBackPartsDecideEndE
+
+# src/Game/Layout/ButtonTouch
+0x71019D2570 8 object _ZN12_GLOBAL__N_118NrvButtonTouchHideE
+0x71019D25C0 8 object _ZN12_GLOBAL__N_117NrvButtonTouchEndE
+0x71019D2660 8 object _ZN12_GLOBAL__N_120NrvButtonTouchDecideE
+0x71019D2628 8 object _ZN12_GLOBAL__N_123NrvButtonTouchDecideEndE
+
+0x71019D24F8 16 object _ZN12_GLOBAL__N_113sDefaultParamE

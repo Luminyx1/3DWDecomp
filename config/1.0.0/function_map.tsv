@@ -11256,12 +11256,12 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001B2830			FALSE	_ZN11ButtonTouch12exeDecideEndEv	ButtonTouch::exeDecideEnd()	
 0x71001B2840			FALSE	_ZN11ButtonTouchD0Ev	ButtonTouch::~ButtonTouch()	
 0x71001B2870			FALSE	_ZNK12_GLOBAL__N_118ButtonTouchNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::ButtonTouchNrvWait::execute(al::NerveKeeper*) const	
-0x71001B2880			FALSE	sub_71001B2880	sub_71001B2880	
+0x71001B2880			FALSE	_ZNK12_GLOBAL__N_118ButtonTouchNrvHide7executeEPN2al11NerveKeeperE	(anonymous namespace)::ButtonTouchNrvHide::execute(al::NerveKeeper*) const	
 0x71001B28D0			FALSE	_ZNK12_GLOBAL__N_120ButtonTouchNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::ButtonTouchNrvAppear::execute(al::NerveKeeper*) const	
-0x71001B28E0			FALSE	sub_71001B28E0	sub_71001B28E0	
+0x71001B28E0			FALSE	_ZNK12_GLOBAL__N_117ButtonTouchNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::ButtonTouchNrvEnd::execute(al::NerveKeeper*) const	
 0x71001B2950			FALSE	_ZNK12_GLOBAL__N_119ButtonTouchNrvTouch7executeEPN2al11NerveKeeperE	(anonymous namespace)::ButtonTouchNrvTouch::execute(al::NerveKeeper*) const	
-0x71001B2960			FALSE	sub_71001B2960	sub_71001B2960	
-0x71001B2A00			FALSE	nullsub_108	nullsub_108	
+0x71001B2960			FALSE	_ZNK12_GLOBAL__N_120ButtonTouchNrvDecide7executeEPN2al11NerveKeeperE	(anonymous namespace)::ButtonTouchNrvDecide::execute(al::NerveKeeper*) const	
+0x71001B2A00			FALSE	_ZNK12_GLOBAL__N_123ButtonTouchNrvDecideEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::ButtonTouchNrvDecideEnd::execute(al::NerveKeeper*) const	
 0x71001B2A10			FALSE	_ZNK12_GLOBAL__N_125ButtonTouchNrvOutsideHold7executeEPN2al11NerveKeeperE	(anonymous namespace)::ButtonTouchNrvOutsideHold::execute(al::NerveKeeper*) const	
 0x71001B2A20		CameraChangeLayout.o	FALSE	_ZN18CameraChangeLayoutC2ERKN2al14LayoutInitInfoEPNS0_14CameraDirectorEP15GuideGameWindowb	CameraChangeLayout::CameraChangeLayout(al::LayoutInitInfo const&, al::CameraDirector*, GuideGameWindow*, bool)	
 0x71001B2B10			FALSE	_ZN18CameraChangeLayout4hideEb	CameraChangeLayout::hide(bool)	
