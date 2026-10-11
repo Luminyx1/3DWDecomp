@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Library/Layout/LayoutActor.hpp"
+#include "Layout/TextBoxTextInfo.hpp"
 
 namespace al {
 class LayoutInitInfo;
@@ -25,8 +26,10 @@ public:
     void exeMiss();
 
 private:
-    // TODO: layout not decompiled yet.
-    u8 _128[0x170 - 0x128];
+    s32 mCount = 0;
+    al::LayoutActor* mParent;
+    fix::TextBoxTextInfo mTextInfo;
+    fix::TextBoxTextInfo mShadowTextInfo;
 };
 
 static_assert(sizeof(CounterCoinParts) == 0x170);

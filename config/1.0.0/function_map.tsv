@@ -11366,7 +11366,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001B67E0			FALSE	_ZN16CounterCoinParts9startDemoEv	CounterCoinParts::startDemo()	
 0x71001B6850			FALSE	_ZN16CounterCoinParts7endDemoEv	CounterCoinParts::endDemo()	
 0x71001B6860			FALSE	_ZNK12_GLOBAL__N_123CounterCoinPartsNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::CounterCoinPartsNrvWait::execute(al::NerveKeeper*) const	
-0x71001B6870			FALSE	nullsub_109	nullsub_109	
+0x71001B6870			FALSE	_ZNK12_GLOBAL__N_123CounterCoinPartsNrvMiss7executeEPN2al11NerveKeeperE	(anonymous namespace)::CounterCoinPartsNrvMiss::execute(al::NerveKeeper*) const	
 0x71001B6880		CounterGoalItemParts.o	FALSE	_ZN20CounterGoalItemPartsC2ERKN2al14LayoutInitInfoEPKcS5_P21SingleModeSceneLayout	CounterGoalItemParts::CounterGoalItemParts(al::LayoutInitInfo const&, char const*, char const*, SingleModeSceneLayout*)	
 0x71001B6A20			FALSE	_ZN20CounterGoalItemPartsC1ERKN2al14LayoutInitInfoEPKcS5_P21SingleModeSceneLayout	CounterGoalItemParts::CounterGoalItemParts(al::LayoutInitInfo const&, char const*, char const*, SingleModeSceneLayout*)	
 0x71001B6BC0			FALSE	_ZN20CounterGoalItemParts7controlEv	CounterGoalItemParts::control()	

@@ -1073,7 +1073,7 @@ src/Game/Layout/CollectNumber.cpp:
     .text   start:0x001B4590 end:0x001B4C18
 src/Game/Layout/ControlGuide.cpp:
     .text   start:0x001B4C20 end:0x001B60B8
-src/Game/Layout/CounterCoinParts.cpp:
+src/Game/Layout/CounterCoinParts.cpp: done
     .text   start:0x001B60C0 end:0x001B6874
 src/Game/Layout/CounterGoalItemParts.cpp: done
     .text   start:0x001B6880 end:0x001B6ED8
