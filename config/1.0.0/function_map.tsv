@@ -14481,10 +14481,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710023AD10			FALSE	_ZN20ActorStateDemoCamera10exePlayEndEv	ActorStateDemoCamera::exePlayEnd()	
 0x710023ADB0			FALSE	_ZN20ActorStateDemoCameraD2Ev	ActorStateDemoCamera::~ActorStateDemoCamera()	
 0x710023ADC0			FALSE	_ZN20ActorStateDemoCameraD0Ev	ActorStateDemoCamera::~ActorStateDemoCamera()	
-0x710023ADF0			FALSE	sub_710023ADF0	sub_710023ADF0	
+0x710023ADF0			FALSE	_ZNK12_GLOBAL__N_130ActorStateDemoCameraNrvPrepare7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_130ActorStateDemoCameraNrvPrepare7executeEPN2al11NerveKeeperE	
 0x710023AE60			FALSE	_ZNK12_GLOBAL__N_130ActorStateDemoCameraNrvPlayEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::ActorStateDemoCameraNrvPlayEnd::execute(al::NerveKeeper*) const	
 0x710023AE70			FALSE	_ZNK12_GLOBAL__N_127ActorStateDemoCameraNrvPlay7executeEPN2al11NerveKeeperE	(anonymous namespace)::ActorStateDemoCameraNrvPlay::execute(al::NerveKeeper*) const	
-0x710023AE80			FALSE	sub_710023AE80	sub_710023AE80	
+0x710023AE80			FALSE	_ZNK12_GLOBAL__N_131ActorStateDemoCameraNrvPlayWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_131ActorStateDemoCameraNrvPlayWait7executeEPN2al11NerveKeeperE	
 0x710023AED0		ActorStateDemoCameraProto.o	FALSE	_ZN25ActorStateDemoCameraProtoC1EPN2al9LiveActorERKNS0_13ActorInitInfoEPKciib	ActorStateDemoCameraProto::ActorStateDemoCameraProto(al::LiveActor*, al::ActorInitInfo const&, char const*, int, int, bool)	
 0x710023B040			FALSE	_ZN25ActorStateDemoCameraProto6appearEv	ActorStateDemoCameraProto::appear()	
 0x710023B0D0			FALSE	_ZNK25ActorStateDemoCameraProto11getPlayStepEv	ActorStateDemoCameraProto::getPlayStep() const	
