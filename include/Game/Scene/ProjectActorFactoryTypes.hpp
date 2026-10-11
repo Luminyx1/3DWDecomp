@@ -1458,6 +1458,7 @@ static_assert(sizeof(KoopaLastBreakWall) == 0x188);
 class KoopaLastDefendeBlockPow : public al::LiveActor {
 public:
     explicit KoopaLastDefendeBlockPow(const char* pName);
+    void startEndDemo();
 
 private:
     u8 mUnreconstructed[0x6c];
