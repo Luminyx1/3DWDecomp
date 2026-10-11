@@ -30746,8 +30746,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71004B7EB0			FALSE	_ZNK10PhaseScene13isChangePhaseEv	PhaseScene::isChangePhase() const	
 0x71004B7EC0			FALSE	_ZNK10PhaseScene10isPhaseEndEv	PhaseScene::isPhaseEnd() const	
 0x71004B7ED0			FALSE	_ZNK10PhaseScene9isGameEndEv	PhaseScene::isGameEnd() const	
-0x71004B7EE0			FALSE	sub_71004B7EE0	sub_71004B7EE0	
-0x71004B7EF0			FALSE	sub_71004B7EF0	sub_71004B7EF0	
+0x71004B7EE0			FALSE	_ZNK12_GLOBAL__N_120PhaseSceneNrvGameEnd7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_120PhaseSceneNrvGameEnd7executeEPN2al11NerveKeeperE	
+0x71004B7EF0			FALSE	_ZNK12_GLOBAL__N_121PhaseSceneNrvPhaseEnd7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_121PhaseSceneNrvPhaseEnd7executeEPN2al11NerveKeeperE	
 0x71004B7F00		PlayerStocker.o	FALSE	_ZN13PlayerStockerC2Ei	PlayerStocker::PlayerStocker(int)	
 0x71004B7FF0			FALSE	_ZN13PlayerStocker20tryCreateDoubleMarioERKN2al13ActorInitInfoEP26PlayerRetargettingSelectorP29PlayerInvincibleBgmControllerb	PlayerStocker::tryCreateDoubleMario(al::ActorInitInfo const&, PlayerRetargettingSelector*, PlayerInvincibleBgmController*, bool)	
 0x71004B8250			FALSE	_ZN13PlayerStocker23createAndRegisterPlayerERKN2al13ActorInitInfoEiPKcP26PlayerRetargettingSelectorP29PlayerInvincibleBgmControllerb	PlayerStocker::createAndRegisterPlayer(al::ActorInitInfo const&, int, char const*, PlayerRetargettingSelector*, PlayerInvincibleBgmController*, bool)	

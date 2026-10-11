@@ -5708,3 +5708,7 @@
 0x71019F5DE0 32 object _ZTVN12_GLOBAL__N_116BlockHardNrvWaitE
 0x71019F5E00 8 object _ZN12_GLOBAL__N_116NrvBlockHardWaitE
 0x71019F5E28 32 object _ZTVN12_GLOBAL__N_120BlockHardNrvReactionE
+
+# PhaseScene state instances.
+0x7101a96830 8 object _ZN12_GLOBAL__N_120NrvPhaseSceneGameEndE
+0x7101a96838 8 object _ZN12_GLOBAL__N_121NrvPhaseScenePhaseEndE
