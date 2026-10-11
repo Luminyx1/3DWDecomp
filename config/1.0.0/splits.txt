@@ -1872,7 +1872,7 @@ src/Game/MapObj/Ocean.cpp:
     .text   start:0x00325690 end:0x00325A9C
 src/Game/MapObj/WaveGrid.cpp:
     .text   start:0x00325AA0 end:0x00328DD4
-src/Game/MapObj/OceanData.cpp:
+src/Game/MapObj/OceanData.cpp: done
     .text   start:0x00328DE0 end:0x003295B4
 src/Game/MapObj/OceanWaveWake.cpp:
     .text   start:0x003295C0 end:0x0032A1A8
