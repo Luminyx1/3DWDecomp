@@ -3143,7 +3143,7 @@ src/Game/Scene/InGameSceneBase.cpp: done
     .text   start:0x004B4C60 end:0x004B4D34
 src/Game/Scene/IslandScene.cpp: done
     .text   start:0x004B4D40 end:0x004B5058
-src/Game/Scene/IslandWarpState.cpp:
+src/Game/Scene/IslandWarpState.cpp: done
     .text   start:0x004B5060 end:0x004B5988
 src/Game/Scene/NeonDrawer.cpp:
     .text   start:0x004B5990 end:0x004B5FE0

@@ -5750,3 +5750,5 @@
 
 0x71016b7690 12 object _ZN12_GLOBAL__N_121sCoinBlowJumpVelocityE
 0x71016b769c 12 object _ZN12_GLOBAL__N_128sCoinBlowJumpVelocityInWaterE
+
+0x7101a95e20 8 object _ZN12_GLOBAL__N_126NrvIslandWarpStateBindWaitE

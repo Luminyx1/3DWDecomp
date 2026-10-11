@@ -1,22 +1,30 @@
 #pragma once
-
-#include <basis/seadTypes.h>
 #include "Demo/StageStartEventBase.hpp"
-
 class SingleModeScene;
-
-/**
- * @brief Demo warping the player to another island from the island map.
- * @note Only what reconstructed code needs is declared so far.
- */
+class BindPuppeteerGroup;
 class IslandWarpState : public StageStartEventBase {
 public:
-    explicit IslandWarpState(SingleModeScene* pScene);
-
+    explicit IslandWarpState(SingleModeScene* scene);
+    void init(const al::ActorInitInfo& info) override;
+    void appear() override;
+    void kill() override;
     void setIslandWarpDest(s32 islandId);
-
-    s64 getEventType() const override;
-    void startDemo() override;
-    void endDemo() override;
+    bool receiveMsg(const al::SensorMsg* msg, al::HitSensor* sender,
+                    al::HitSensor* receiver) override;
+    s64 getEventType() const override { return 4; }
+    void startDemo() override { appear(); }
+    void endDemo() override { kill(); }
     bool isEndDemo() const override;
+    bool isEnableOpenStartWipe() const override;
+    void exeBindWait();
+    void exeDoWarp();
+    void exeFadeWait();
+
+private:
+    BindPuppeteerGroup* mPuppeteers;
+    SingleModeScene* mScene;
+    s32 mIslandId = -1;
+    sead::Vector3f mDestination = sead::Vector3f::zero;
+    sead::Vector3f mFront = sead::Vector3f::ez;
 };
+static_assert(sizeof(IslandWarpState) == 0x178);

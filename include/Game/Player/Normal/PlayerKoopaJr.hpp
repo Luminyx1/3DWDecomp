@@ -17,6 +17,7 @@ public:
     bool isWaitingForOptionsMenu();
     void endOptionsIntro();
     bool canDoIslandWarp() const;
+    void doIslandWarp();
     bool tryPraiseReaction(int);
     void hideForDemo();
     void startMidBossDemo();

@@ -30673,7 +30673,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71004B5930			FALSE	_ZNK15IslandWarpState12getEventTypeEv	IslandWarpState::getEventType() const	
 0x71004B5940			FALSE	_ZN15IslandWarpState9startDemoEv	IslandWarpState::startDemo()	
 0x71004B5950			FALSE	_ZN15IslandWarpState7endDemoEv	IslandWarpState::endDemo()	
-0x71004B5960			FALSE	sub_71004B5960	sub_71004B5960	
+0x71004B5960			FALSE	_ZNK12_GLOBAL__N_126IslandWarpStateNrvBindWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::IslandWarpStateNrvBindWait::execute(al::NerveKeeper*) const	
 0x71004B5970			FALSE	_ZNK12_GLOBAL__N_124IslandWarpStateNrvDoWarp7executeEPN2al11NerveKeeperE	(anonymous namespace)::IslandWarpStateNrvDoWarp::execute(al::NerveKeeper*) const	
 0x71004B5980			FALSE	_ZNK12_GLOBAL__N_126IslandWarpStateNrvFadeWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::IslandWarpStateNrvFadeWait::execute(al::NerveKeeper*) const	
 0x71004B5990		NeonDrawer.o	FALSE	_ZN10NeonDrawerC2Ev	NeonDrawer::NeonDrawer()	
