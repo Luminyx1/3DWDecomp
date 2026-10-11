@@ -12,6 +12,9 @@ class PlayerRetargettingSelector;
 
 class DemoSceneActorHolder {
 public:
+    void setCameraFovyDegree(float degree);
+    al::LiveActor* tryFindPlayerModel(int index);
+    void killAllEffect();
     explicit DemoSceneActorHolder(int maxPlayers);
     void initPlacementDemoActor(const al::PlacementInfo& rPlacement, const al::ActorInitInfo& rInfo,
                                 PlayerRetargettingSelector* pSelector,

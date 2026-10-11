@@ -8,6 +8,8 @@ class PlayerActor;
 /** @brief Controls one player's participation in a demo. */
 class DemoPlayerController {
 public:
+    void setTrans(const sead::Vector3f& rTrans);
+    void setFrontUpVec(const sead::Vector3f& rFront, const sead::Vector3f& rUp);
     DemoPlayerController();
     void setPlayerActor(PlayerActor* pActor);
     bool tryStartDemo();

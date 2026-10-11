@@ -3129,7 +3129,7 @@ src/Game/Scene/DemoEndingScene.cpp:
     .text   start:0x004AFA70 end:0x004B0BE8
 src/Game/Scene/DemoOpeningScene.cpp: done
     .text   start:0x004B0BF0 end:0x004B17B0
-src/Game/Scene/DemoOpeningState.cpp:
+src/Game/Scene/DemoOpeningState.cpp: done
     .text   start:0x004B17B0 end:0x004B24B8
 src/Game/Scene/DemoScene.cpp:
     .text   start:0x004B24C0 end:0x004B35B4

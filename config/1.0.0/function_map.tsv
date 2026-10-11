@@ -30556,17 +30556,17 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71004B1B00			FALSE	_ZN16DemoOpeningState8exeStartEv	DemoOpeningState::exeStart()	
 0x71004B1DA0			FALSE	_ZN16DemoOpeningState13exeRouteDokanEv	DemoOpeningState::exeRouteDokan()	
 0x71004B1E90			FALSE	_ZN16DemoOpeningState15exeCourseSelectEv	DemoOpeningState::exeCourseSelect()	
-0x71004B2020			FALSE	sub_71004B2020	sub_71004B2020	
+0x71004B2020			FALSE	_ZN16DemoOpeningState33setDemoPlayerCourseSelectStartPosEv	DemoOpeningState::setDemoPlayerCourseSelectStartPos()	
 0x71004B20E0			FALSE	_ZN16DemoOpeningState10exeDemoEndEv	DemoOpeningState::exeDemoEnd()	
 0x71004B2270			FALSE	_ZN16DemoOpeningState13exeCancelDemoEv	DemoOpeningState::exeCancelDemo()	
 0x71004B23B0			FALSE	_ZN16DemoOpeningStateD0Ev	DemoOpeningState::~DemoOpeningState()	
-0x71004B23E0			FALSE	sub_71004B23E0	sub_71004B23E0	
+0x71004B23E0			FALSE	_ZNK12_GLOBAL__N_124DemoOpeningStateNrvStart7executeEPN2al11NerveKeeperE	(anonymous namespace)::DemoOpeningStateNrvStart::execute(al::NerveKeeper*) const	
 0x71004B23F0			FALSE	_ZNK12_GLOBAL__N_129DemoOpeningStateNrvCancelDemo7executeEPN2al11NerveKeeperE	(anonymous namespace)::DemoOpeningStateNrvCancelDemo::execute(al::NerveKeeper*) const	
-0x71004B2400			FALSE	sub_71004B2400	sub_71004B2400	
-0x71004B2470			FALSE	sub_71004B2470	sub_71004B2470	
+0x71004B2400			FALSE	_ZNK12_GLOBAL__N_123DemoOpeningStateNrvFade7executeEPN2al11NerveKeeperE	(anonymous namespace)::DemoOpeningStateNrvFade::execute(al::NerveKeeper*) const	
+0x71004B2470			FALSE	_ZNK12_GLOBAL__N_130DemoOpeningStateNrvStartSecond7executeEPN2al11NerveKeeperE	(anonymous namespace)::DemoOpeningStateNrvStartSecond::execute(al::NerveKeeper*) const	
 0x71004B2480			FALSE	_ZNK12_GLOBAL__N_129DemoOpeningStateNrvRouteDokan7executeEPN2al11NerveKeeperE	(anonymous namespace)::DemoOpeningStateNrvRouteDokan::execute(al::NerveKeeper*) const	
-0x71004B2490			FALSE	sub_71004B2490	sub_71004B2490	
-0x71004B24A0			FALSE	sub_71004B24A0	sub_71004B24A0	
+0x71004B2490			FALSE	_ZNK12_GLOBAL__N_131DemoOpeningStateNrvCourseSelect7executeEPN2al11NerveKeeperE	(anonymous namespace)::DemoOpeningStateNrvCourseSelect::execute(al::NerveKeeper*) const	
+0x71004B24A0			FALSE	_ZNK12_GLOBAL__N_137DemoOpeningStateNrvCourseSelectSecond7executeEPN2al11NerveKeeperE	(anonymous namespace)::DemoOpeningStateNrvCourseSelectSecond::execute(al::NerveKeeper*) const	
 0x71004B24B0			FALSE	_ZNK12_GLOBAL__N_126DemoOpeningStateNrvDemoEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::DemoOpeningStateNrvDemoEnd::execute(al::NerveKeeper*) const	
 0x71004B24C0		DemoScene.o	FALSE	_ZN9DemoSceneC2Ebb	DemoScene::DemoScene(bool, bool)	
 0x71004B2580			FALSE	_ZN9DemoSceneD2Ev	DemoScene::~DemoScene()	
