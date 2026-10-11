@@ -167,7 +167,7 @@ src/Game/Boss/KoopaChaseFunction.cpp:
     .text   start:0x0002BCE0 end:0x0002C180
 src/Game/Boss/KoopaChaseKoopa.cpp:
     .text   start:0x0002C180 end:0x0002CA7C
-src/Game/Boss/KoopaChaseMovePos.cpp:
+src/Game/Boss/KoopaChaseMovePos.cpp: done
     .text   start:0x0002CA80 end:0x0002CF28
 src/Game/Boss/KoopaChaseMover.cpp: done
     .text   start:0x0002CF30 end:0x0002D2D8
