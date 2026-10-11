@@ -1,4 +1,5 @@
 #pragma once
+#include "prim/seadEnum.h"
 
 namespace al {
 class HitSensor;
@@ -6,7 +7,7 @@ class LiveActor;
 }
 class ICourseSelectActorController;
 
-enum CourseSelectSensorType {};
+SEAD_ENUM(CourseSelectSensorType, Touch, Lock, Dokan, RouteDokan, Category4)
 
 class CourseSelectSensor {
 public:

@@ -19,6 +19,8 @@ public:
     CourseSelectNode* tryFindFirstCrossingNode(const CourseSelectNode* pStart, int depth) const;
     void tryResetSelectedActorController(const ICourseSelectActorController* pController);
     CourseSelectNode* getNode(int index) const { return mpNodes[index]; }
+    void checkDrcTouch(CourseSelectSensor* pSensor);
+    int getCurrentWorldId() const { return mCurrentWorldId; }
     void touchPlayer(CourseSelectSensor* pSensor, al::LiveActor* pPlayer);
 
     CourseSelectPuppeteerGroup* getPuppeteerGroup() const { return mpPuppeteerGroup; }
@@ -29,7 +31,9 @@ private:
     CourseSelectNode** mpNodes;
     unsigned char _158[0x30];
     CourseSelectPuppeteerGroup* mpPuppeteerGroup;
-    unsigned char _190[0x40];
+    unsigned char _190[0x38];
+    int mCurrentWorldId;
+    unsigned char _1cc[4];
 };
 
 static_assert(sizeof(CourseSelectDirector) == 0x1d0);

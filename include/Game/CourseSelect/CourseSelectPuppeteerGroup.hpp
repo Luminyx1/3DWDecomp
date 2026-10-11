@@ -10,6 +10,7 @@ public:
     void startDokanDemo(ICourseSelectActorController* pController);
     int getPuppeteerCount() const { return mPuppeteerCount; }
     CourseSelectPuppeteer* getPuppeteer(int index) const { return mpPuppeteers[index]; }
+    void startUnLockDemo(ICourseSelectActorController* pController);
     void startWorldWarpDokanDemo(ICourseSelectActorController* pController);
     bool isDemoEnd() const;
     void startRouteDokan(ICourseSelectActorController* pController);

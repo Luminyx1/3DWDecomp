@@ -373,7 +373,7 @@ src/Game/CourseSelect/CourseSelectFairy.cpp:
     .text   start:0x00093C30 end:0x00094B98
 src/Game/CourseSelect/CourseSelectFlag.cpp: done
     .text   start:0x00094BA0 end:0x000954E0
-src/Game/CourseSelect/CourseSelectLock.cpp:
+src/Game/CourseSelect/CourseSelectLock.cpp: done
     .text   start:0x000954E0 end:0x00095F1C
 src/Game/CourseSelect/MiniatureController.cpp:
     .text   start:0x00095F20 end:0x00095F7C

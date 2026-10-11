@@ -4735,3 +4735,6 @@
 
 0x7101969D60 0x20 object _ZN12_GLOBAL__N_128NrvCoinChameleonCourseSelectE
 0x710140A428 0x38 object _ZN12_GLOBAL__N_19sMicParamE
+
+# CourseSelectLock local nerve collection.
+0x710196D130 40 object _ZN12_GLOBAL__N_119NrvCourseSelectLockE

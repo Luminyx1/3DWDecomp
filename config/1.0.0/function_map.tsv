@@ -3514,9 +3514,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100095CC0			FALSE	_ZN16CourseSelectLock6exeEndEv	CourseSelectLock::exeEnd()	
 0x7100095CD0			FALSE	_ZN16CourseSelectLockD1Ev	CourseSelectLock::~CourseSelectLock()	
 0x7100095CE0			FALSE	_ZN16CourseSelectLockD0Ev	CourseSelectLock::~CourseSelectLock()	
-0x7100095D10			FALSE	nullsub_22	nullsub_22	
-0x7100095D20			FALSE	nullsub_23	nullsub_23	
-0x7100095D30			FALSE	nullsub_24	nullsub_24	
+0x7100095D10			FALSE	_ZNK12_GLOBAL__N_123CourseSelectLockNrvHide7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectLockNrvHide::execute(al::NerveKeeper*) const	
+0x7100095D20			FALSE	_ZNK12_GLOBAL__N_123CourseSelectLockNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectLockNrvWait::execute(al::NerveKeeper*) const	
+0x7100095D30			FALSE	_ZNK12_GLOBAL__N_126CourseSelectLockNrvDisable7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectLockNrvDisable::execute(al::NerveKeeper*) const	
 0x7100095D40			FALSE	_ZN26CourseSelectLockController8getActorEv	CourseSelectLockController::getActor()	
 0x7100095D50			FALSE	_ZNK26CourseSelectLockController19getCursorLayoutTypeEv	CourseSelectLockController::getCursorLayoutType() const	
 0x7100095D60			FALSE	_ZNK26CourseSelectLockController24getCourseSelectActorInfoEv	CourseSelectLockController::getCourseSelectActorInfo() const	
@@ -3529,10 +3529,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100095DD0			FALSE	_ZN26CourseSelectLockController9startOpenEv	CourseSelectLockController::startOpen()	
 0x7100095DE0			FALSE	_ZN26CourseSelectLockController20startOpenImmediatelyEv	CourseSelectLockController::startOpenImmediately()	
 0x7100095DF0			FALSE	_ZNK26CourseSelectLockController9isEndOpenEv	CourseSelectLockController::isEndOpen() const	
-0x7100095E00			FALSE	sub_7100095E00	sub_7100095E00	
-0x7100095E60			FALSE	sub_7100095E60	sub_7100095E60	
-0x7100095EB0			FALSE	sub_7100095EB0	sub_7100095EB0	
-0x7100095EC0			FALSE	sub_7100095EC0	sub_7100095EC0	
+0x7100095E00			FALSE	_ZNK12_GLOBAL__N_125CourseSelectLockNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectLockNrvAppear::execute(al::NerveKeeper*) const	
+0x7100095E60			FALSE	_ZNK12_GLOBAL__N_125CourseSelectLockNrvUnlock7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectLockNrvUnlock::execute(al::NerveKeeper*) const	
+0x7100095EB0			FALSE	_ZNK12_GLOBAL__N_122CourseSelectLockNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectLockNrvEnd::execute(al::NerveKeeper*) const	
+0x7100095EC0			FALSE	_ZNK12_GLOBAL__N_128CourseSelectLockNrvDisappear7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectLockNrvDisappear::execute(al::NerveKeeper*) const	
 0x7100095F20		MiniatureController.o	FALSE	_ZNK19MiniatureController19getCursorLayoutTypeEv	MiniatureController::getCursorLayoutType() const	object (class)
 0x7100095F80		CourseSelectMiniature.o	FALSE	_ZN21CourseSelectMiniatureC2EPKc	CourseSelectMiniature::CourseSelectMiniature(char const*)	
 0x7100096050			FALSE	_ZN21CourseSelectMiniatureC1EPKc	CourseSelectMiniature::CourseSelectMiniature(char const*)	
