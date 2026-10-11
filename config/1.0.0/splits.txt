@@ -1235,7 +1235,7 @@ src/Game/Layout/StageTimer.cpp:
     .text   start:0x001F5570 end:0x001F6824
 src/Game/Layout/StockBlurEffect.cpp: done
     .text   start:0x001F6830 end:0x001F6BF8
-src/Game/Layout/SimpleMenuLayout.cpp:
+src/Game/Layout/SimpleMenuLayout.cpp: done
     .text   start:0x001F6C00 end:0x001F7308
 src/Game/Layout/TestAoyagiLayout.cpp:
     .text   start:0x001F7310 end:0x001F7AC4

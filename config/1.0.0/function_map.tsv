@@ -13058,8 +13058,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001F71C0			FALSE	_ZN16SimpleMenuLayout6exeEndEv	SimpleMenuLayout::exeEnd()	
 0x71001F7240			FALSE	_ZNK12_GLOBAL__N_123SimpleMenuLayoutNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::SimpleMenuLayoutNrvWait::execute(al::NerveKeeper*) const	
 0x71001F7250			FALSE	_ZNK12_GLOBAL__N_125SimpleMenuLayoutNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::SimpleMenuLayoutNrvAppear::execute(al::NerveKeeper*) const	
-0x71001F7260			FALSE	sub_71001F7260	sub_71001F7260	
-0x71001F7290			FALSE	sub_71001F7290	sub_71001F7290	
+0x71001F7260			FALSE	_ZNK12_GLOBAL__N_126SimpleMenuLayoutNrvDecided7executeEPN2al11NerveKeeperE	(anonymous namespace)::SimpleMenuLayoutNrvDecided::execute(al::NerveKeeper*) const	
+0x71001F7290			FALSE	_ZNK12_GLOBAL__N_122SimpleMenuLayoutNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::SimpleMenuLayoutNrvEnd::execute(al::NerveKeeper*) const	
 0x71001F7310		TestAoyagiLayout.o	FALSE	_ZN16TestAoyagiLayoutC2ERKN2al14LayoutInitInfoE	TestAoyagiLayout::TestAoyagiLayout(al::LayoutInitInfo const&)	
 0x71001F7530			FALSE	_ZN16TestAoyagiLayoutC1ERKN2al14LayoutInitInfoE	TestAoyagiLayout::TestAoyagiLayout(al::LayoutInitInfo const&)	
 0x71001F7750			FALSE	_ZN16TestAoyagiLayout7controlEv	TestAoyagiLayout::control()	

@@ -21,6 +21,7 @@ public:
     void hide();
     void reset();
     bool isWait();
+    bool isHide() const;
 
 private:
     u8 mUnreconstructed128[0x8];

@@ -5818,3 +5818,7 @@
 
 # src/Game/Layout/CounterLockGigaBell
 0x71019C1360 8 object _ZN12_GLOBAL__N_126NrvCounterLockGigaBellWaitE
+
+# src/Game/Layout/SimpleMenuLayout
+0x71019E5B00 8 object _ZN12_GLOBAL__N_126NrvSimpleMenuLayoutDecidedE
+0x71019E5B08 8 object _ZN12_GLOBAL__N_122NrvSimpleMenuLayoutEndE
