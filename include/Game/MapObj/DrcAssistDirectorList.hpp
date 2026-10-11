@@ -1,6 +1,8 @@
 #pragma once
 
 #include <basis/seadTypes.h>
+#include <container/seadObjList.h>
+#include "MapObj/DrcAssistDirector.hpp"
 
 #include "Library/Scene/ISceneObj.hpp"
 
@@ -18,12 +20,14 @@ class PlayerHolder;
 
 /**
  * @brief Scene object holding the touch-screen (DRC) assist director of every pad port.
- * @note Minimal declaration: only what the reconstructed code uses is declared so far.
  */
 class DrcAssistDirectorList : public al::ISceneObj {
 public:
     explicit DrcAssistDirectorList(s32 maxNum);
 
+    const char* getSceneObjName() const override;
+    void invalidate(bool);
+    sead::ObjList<DrcAssistDirector>& getDirectors() { return mDirectors; }
     void addTouchAssist(s32 port, bool isEnable);
     void setEnable(bool isEnable);
     DrcAssistDirector* getDrcAssist(s32 port);
@@ -36,7 +40,8 @@ public:
     void disappearTouchPointerImmediately();
 
 private:
-    u8 _8[0x40 - 0x8];
+    sead::ObjList<DrcAssistDirector> mDirectors;
+    u8 _38[8];
 };
 
 static_assert(sizeof(DrcAssistDirectorList) == 0x40);
