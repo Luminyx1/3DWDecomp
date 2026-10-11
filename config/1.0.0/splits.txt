@@ -1165,7 +1165,7 @@ src/Game/Layout/LockOnButton.cpp:
     .text   start:0x001D2490 end:0x001D3050
 src/Game/Layout/MapMenu.cpp:
     .text   start:0x001D3050 end:0x001D4518
-src/Game/Layout/MapMenuPlayerParts.cpp:
+src/Game/Layout/MapMenuPlayerParts.cpp: done
     .text   start:0x001D4520 end:0x001D4A38
 src/Game/Layout/MiiverseBalloon.cpp:
     .text   start:0x001D4A40 end:0x001D54DC

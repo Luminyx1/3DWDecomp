@@ -12150,7 +12150,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001D4990			FALSE	_ZN18MapMenuPlayerParts8startEndEv	MapMenuPlayerParts::startEnd()	
 0x71001D49A0			FALSE	_ZN18MapMenuPlayerParts4hideEv	MapMenuPlayerParts::hide()	
 0x71001D49B0			FALSE	_ZN18MapMenuPlayerParts4showEv	MapMenuPlayerParts::show()	
-0x71001D49C0			FALSE	sub_71001D49C0	sub_71001D49C0	
+0x71001D49C0			FALSE	_ZNK12_GLOBAL__N_125MapMenuPlayerPartsNrvHide7executeEPN2al11NerveKeeperE	(anonymous namespace)::MapMenuPlayerPartsNrvHide::execute(al::NerveKeeper*) const	
 0x71001D4A10			FALSE	_ZNK12_GLOBAL__N_125MapMenuPlayerPartsNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::MapMenuPlayerPartsNrvWait::execute(al::NerveKeeper*) const	
 0x71001D4A20			FALSE	_ZNK12_GLOBAL__N_127MapMenuPlayerPartsNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::MapMenuPlayerPartsNrvAppear::execute(al::NerveKeeper*) const	
 0x71001D4A30			FALSE	_ZNK12_GLOBAL__N_124MapMenuPlayerPartsNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::MapMenuPlayerPartsNrvEnd::execute(al::NerveKeeper*) const	

@@ -5738,3 +5738,6 @@
 
 # src/Game/Layout/ListStampResult
 0x71019DD270 8 object _ZN12_GLOBAL__N_121NrvListStampResultEndE
+
+# src/Game/Layout/MapMenuPlayerParts
+0x71019DDEB0 8 object _ZN12_GLOBAL__N_125NrvMapMenuPlayerPartsHideE
