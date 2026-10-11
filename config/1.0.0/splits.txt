@@ -2205,7 +2205,7 @@ src/Game/NPC/GhostPresentBox.cpp:
     .text   start:0x003B0350 end:0x003B0F00
 src/Game/NPC/ActorStateSupportStroke.cpp:
     .text   start:0x003B0F00 end:0x003B14C8
-src/Game/NPC/Bottle.cpp:
+src/Game/NPC/Bottle.cpp: done
     .text   start:0x003B14D0 end:0x003B1920
 src/Game/NPC/FairyMii.cpp:
     .text   start:0x003B1920 end:0x003B26D0
