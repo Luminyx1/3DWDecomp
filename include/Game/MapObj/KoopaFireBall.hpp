@@ -31,6 +31,9 @@ public:
     bool receiveMsg(const al::SensorMsg* pMsg, al::HitSensor* pOther,
                     al::HitSensor* pSelf) override;
     void extinguish();
+    void setLandType(LandType type) { mLandType = type; }
+    void setKoopaLastAction(bool enabled) { mIsKoopaLastAction = enabled; }
+    void setLifeFrame(s32 frames) { mLifeFrame = frames; }
     void setExtinguishOnSlope(bool enabled) { mIsExtinguishOnSlope = enabled; }
     void setKillOnCollide(bool enabled) { mIsKillOnCollide = enabled; }
     void attackSensor(al::HitSensor* pSelf, al::HitSensor* pOther) override;
