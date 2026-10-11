@@ -21,6 +21,7 @@ public:
     void exeWait();
 
 private:
+    friend class DemoSceneActorHolder;
     DemoSceneActorHolder* mHolder;
     DemoActionList* mActions = nullptr;
     sead::Matrix34f mPlacementMtx;
