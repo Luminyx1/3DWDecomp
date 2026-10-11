@@ -31,6 +31,9 @@ public:
     void setKinopioBrigadeFlag(bool isKinopioBrigade);
     void setPlayerHolder(al::PlayerHolder* pPlayerHolder);
     void setPlayerAliveWatcher(PlayerAliveWatcher* pPlayerAliveWatcher);
+    void startSnapshotMode();
+    void endSnapshotMode();
+    bool isPlayerHoldingStamp();
     void disappearTouchPointer();
     void disappearTouchPointerEffect();
     void disappearTouchPointerImmediately();

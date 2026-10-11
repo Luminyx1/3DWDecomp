@@ -3183,7 +3183,7 @@ src/Game/Scene/SingleModeStateGameOver.cpp:
     .text   start:0x004D1E60 end:0x004D2D58
 src/Game/Scene/SingleModeTitleScene.cpp: done
     .text   start:0x004D2D60 end:0x004D38A0
-src/Game/Scene/SnapshotState.cpp:
+src/Game/Scene/SnapshotState.cpp: done
     .text   start:0x004D38A0 end:0x004D42D8
 src/Game/Scene/StageScene.cpp:
     .text   start:0x004D42E0 end:0x004DA344

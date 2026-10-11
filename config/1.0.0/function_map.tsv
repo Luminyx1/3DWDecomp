@@ -31546,7 +31546,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71004D4200			FALSE	_ZN13SnapshotState9exeFinishEv	SnapshotState::exeFinish()	
 0x71004D4250			FALSE	_ZN13SnapshotStateD0Ev	SnapshotState::~SnapshotState()	
 0x71004D4280			FALSE	_ZNK12_GLOBAL__N_120SnapshotStateNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::SnapshotStateNrvWait::execute(al::NerveKeeper*) const	
-0x71004D4290			FALSE	sub_71004D4290	sub_71004D4290	
+0x71004D4290			FALSE	_ZNK12_GLOBAL__N_122SnapshotStateNrvFinish7executeEPN2al11NerveKeeperE	(anonymous namespace)::SnapshotStateNrvFinish::execute(al::NerveKeeper*) const	
 0x71004D42E0		StageScene.o	FALSE	_ZN10StageSceneC1EP15StageWipeKeeper	StageScene::StageScene(StageWipeKeeper*)	object (class)
 0x71004D4570			FALSE	_ZN10StageSceneD2Ev	StageScene::~StageScene()	
 0x71004D46C0			FALSE	_ZN10StageSceneD0Ev	StageScene::~StageScene()	

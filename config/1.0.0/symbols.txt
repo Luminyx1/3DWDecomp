@@ -5756,3 +5756,6 @@
 0x7101a9c008 8 object _ZN12_GLOBAL__N_124NrvStageSceneCaptureModeE
 0x7101a9c070 8 object _ZN12_GLOBAL__N_130NrvStageSceneDeadGoldenExpressE
 0x7101a9c088 8 object _ZN12_GLOBAL__N_120NrvStageSceneGameEndE
+
+0x7101a9bb38 8 object _ZN12_GLOBAL__N_120NrvSnapshotStateWaitE
+0x7101a9bb60 8 object _ZN12_GLOBAL__N_122NrvSnapshotStateFinishE
