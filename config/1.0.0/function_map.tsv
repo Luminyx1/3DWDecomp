@@ -4648,12 +4648,12 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71000BB050			FALSE	_ZNK26DemoKoopaW7ScenePlayerInfo13getFigureTypeEi	DemoKoopaW7ScenePlayerInfo::getFigureType(int) const	
 0x71000BB060			FALSE	_ZN11DemoKoopaW7D1Ev	DemoKoopaW7::~DemoKoopaW7()	
 0x71000BB070			FALSE	_ZN11DemoKoopaW7D0Ev	DemoKoopaW7::~DemoKoopaW7()	
-0x71000BB0A0			FALSE	sub_71000BB0A0	sub_71000BB0A0	
-0x71000BB110			FALSE	nullsub_40	nullsub_40	
-0x71000BB120			FALSE	sub_71000BB120	sub_71000BB120	
+0x71000BB0A0			FALSE	_ZNK12_GLOBAL__N_123DemoKoopaW7NrvCloseFade7executeEPN2al11NerveKeeperE	(anonymous namespace)::DemoKoopaW7NrvCloseFade::execute(al::NerveKeeper*) const	
+0x71000BB110			FALSE	_ZNK12_GLOBAL__N_118DemoKoopaW7NrvDone7executeEPN2al11NerveKeeperE	(anonymous namespace)::DemoKoopaW7NrvDone::execute(al::NerveKeeper*) const	
+0x71000BB120			FALSE	_ZNK12_GLOBAL__N_122DemoKoopaW7NrvWaitFade7executeEPN2al11NerveKeeperE	(anonymous namespace)::DemoKoopaW7NrvWaitFade::execute(al::NerveKeeper*) const	
 0x71000BB1A0			FALSE	_ZNK12_GLOBAL__N_118DemoKoopaW7NrvPlay7executeEPN2al11NerveKeeperE	(anonymous namespace)::DemoKoopaW7NrvPlay::execute(al::NerveKeeper*) const	
-0x71000BB1B0			FALSE	sub_71000BB1B0	sub_71000BB1B0	
-0x71000BB210			FALSE	sub_71000BB210	sub_71000BB210	
+0x71000BB1B0			FALSE	_ZNK12_GLOBAL__N_121DemoKoopaW7NrvEndFade7executeEPN2al11NerveKeeperE	(anonymous namespace)::DemoKoopaW7NrvEndFade::execute(al::NerveKeeper*) const	
+0x71000BB210			FALSE	_ZNK12_GLOBAL__N_121DemoKoopaW7NrvWaitEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::DemoKoopaW7NrvWaitEnd::execute(al::NerveKeeper*) const	
 0x71000BB260		DemoLayoutObj.o	FALSE	_ZN13DemoLayoutObjC2Ev	DemoLayoutObj::DemoLayoutObj()	
 0x71000BB2E0			FALSE	_ZN13DemoLayoutObjC1Ev	DemoLayoutObj::DemoLayoutObj()	
 0x71000BB370			FALSE	_ZN13DemoLayoutObj19initDemoSceneLayoutERKN2al13ActorInitInfoEPKc	DemoLayoutObj::initDemoSceneLayout(al::ActorInitInfo const&, char const*)	
