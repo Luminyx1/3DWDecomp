@@ -7,6 +7,8 @@ class BrosStateWait : public al::ActorStateBase {
 public:
     explicit BrosStateWait(al::LiveActor* pHost);
 
+    /** @brief Destroys the waiting state. */
+    ~BrosStateWait() override = default;
     void exeWait();
 };
 
