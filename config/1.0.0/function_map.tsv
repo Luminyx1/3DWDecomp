@@ -7990,9 +7990,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100132210			FALSE	_ZN16PackunFlowerHead10exeEatBackEv	PackunFlowerHead::exeEatBack()	
 0x7100132300			FALSE	_ZN16PackunFlowerHeadD1Ev	PackunFlowerHead::~PackunFlowerHead()	
 0x7100132310			FALSE	_ZN16PackunFlowerHeadD0Ev	PackunFlowerHead::~PackunFlowerHead()	
-0x7100132340			FALSE	sub_7100132340	sub_7100132340	
+0x7100132340			FALSE	_ZNK12_GLOBAL__N_123PackunFlowerHeadNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::PackunFlowerHeadNrvWait::execute(al::NerveKeeper*) const	
 0x7100132380			FALSE	_ZNK12_GLOBAL__N_124PackunFlowerHeadNrvEatGo7executeEPN2al11NerveKeeperE	(anonymous namespace)::PackunFlowerHeadNrvEatGo::execute(al::NerveKeeper*) const	
-0x7100132390			FALSE	sub_7100132390	sub_7100132390	
+0x7100132390			FALSE	_ZNK12_GLOBAL__N_122PackunFlowerHeadNrvEat7executeEPN2al11NerveKeeperE	(anonymous namespace)::PackunFlowerHeadNrvEat::execute(al::NerveKeeper*) const	
 0x71001323E0			FALSE	_ZNK12_GLOBAL__N_126PackunFlowerHeadNrvEatBack7executeEPN2al11NerveKeeperE	(anonymous namespace)::PackunFlowerHeadNrvEatBack::execute(al::NerveKeeper*) const	
 0x71001323F0		PackunFlowerWithPot.o	FALSE	_ZN19PackunFlowerWithPot3PotC2EPKcPS_	PackunFlowerWithPot::Pot::Pot(char const*, PackunFlowerWithPot*)	
 0x7100132480			FALSE	_ZN19PackunFlowerWithPot3PotC1EPKcPS_	PackunFlowerWithPot::Pot::Pot(char const*, PackunFlowerWithPot*)	

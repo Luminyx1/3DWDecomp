@@ -30,7 +30,7 @@ public:
 
 private:
     al::HitSensor* mHolderSensor = nullptr;
-    void* _150 = nullptr;
+    al::HitSensor* mTargetSensor = nullptr;
     const sead::Matrix34f* mFollowMtx = nullptr;
 };
 
