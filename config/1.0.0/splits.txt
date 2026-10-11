@@ -1367,7 +1367,7 @@ src/Game/MapObj/BallSnow.cpp:
     .text   start:0x00243340 end:0x002459E8
 src/Game/MapObj/BallStateFallParam.cpp:
     .text   start:0x002459F0 end:0x00245C18
-src/Game/MapObj/BallStateFunction.cpp:
+src/Game/MapObj/BallStateFunction.cpp: done
     .text   start:0x00245C20 end:0x00246834
 src/Game/MapObj/BallStateRolling.cpp:
     .text   start:0x00246840 end:0x00246AA8
