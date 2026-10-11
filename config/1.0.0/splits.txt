@@ -3895,7 +3895,7 @@ src/nw/vfx/vfx_TemporaryBuffer.cpp:
     .text   start:0x0064BB10 end:0x0064BE94
 src/nw/vfx/vfx_TextureSampler.cpp:
     .text   start:0x0064BEA0 end:0x0064C590
-src/nw/vfx/vfx_UniformBlock.cpp:
+src/nw/vfx/vfx_UniformBlock.cpp: done
     .text   start:0x0064C590 end:0x0064C784
 src/nw/vfx/vfx_VertexBuffer.cpp:
     .text   start:0x0064C790 end:0x00650BBC
@@ -4049,7 +4049,7 @@ src/sead/gfx/seadFrameBuffer.cpp: done
     .text   start:0x00696AF0 end:0x00696FD0
 src/sead/gfx/seadGraphics.cpp: done
     .text   start:0x00696FD0 end:0x00697108
-src/sead/gfx/seadDrawLockContext.cpp:
+src/sead/gfx/seadDrawLockContext.cpp: cflags=-O2 done
     .text   start:0x00697110 end:0x00697164
 src/sead/gfx/seadGraphicsContext.cpp:
     .text   start:0x00697170 end:0x00697B74
@@ -4241,7 +4241,7 @@ src/agl/common/aglTextureData.cpp:
     .text   start:0x006DB6E0 end:0x006DE00C
 src/agl/detail/aglTextureDetail.cpp: done
     .text   start:0x006DE010 end:0x006DE598
-src/agl/detail/SamplerObject.cpp:
+src/agl/detail/SamplerObject.cpp: done
     .text   start:0x006DE5A0 end:0x006DE5C8
 src/agl/common/aglTextureDataImageAccessor.cpp:
     .text   start:0x006DE5D0 end:0x006DF580
@@ -4463,7 +4463,7 @@ src/eui/lytex/euiWindowEx.cpp: done
     .text   start:0x007B9F30 end:0x007BA188
 src/eui/lytex/euiMultiFilterPictureEx.cpp: done
     .text   start:0x007BA190 end:0x007BA588
-src/eui/lytex/euiScalableFontTextBoxEx.cpp:
+src/eui/lytex/euiScalableFontTextBoxEx.cpp: cflags=-fno-strict-aliasing done
     .text   start:0x007BA590 end:0x007BABB8
 src/eui/message/euiScalableFontMgr.cpp:
     .text   start:0x007BABC0 end:0x007BC02C
