@@ -2237,7 +2237,7 @@ src/Game/NPC/NpcHeadController.cpp:
     .text   start:0x003C9490 end:0x003C9AD4
 src/Game/NPC/NpcStateChaseParam.cpp:
     .text   start:0x003C9AE0 end:0x003CA3EC
-src/Game/NPC/NpcStateFunction.cpp:
+src/Game/NPC/NpcStateFunction.cpp: done
     .text   start:0x003CA3F0 end:0x003CAB90
 src/Game/NPC/NpcStateParam.cpp:
     .text   start:0x003CAB90 end:0x003CABE4
