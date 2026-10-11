@@ -5733,3 +5733,5 @@
 
 # src/Game/Layout/CourseSelectStartInfo
 0x71019D7FC8 8 object _ZN12_GLOBAL__N_128NrvCourseSelectStartInfoWaitE
+
+0x710140AB90 12 object _ZN12_GLOBAL__N_118sMultiplayerEndPosE
