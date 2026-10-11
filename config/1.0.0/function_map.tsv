@@ -1471,10 +1471,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710003A6E0			FALSE	_ZN22KoopaLastWallClimbDownD0Ev	KoopaLastWallClimbDown::~KoopaLastWallClimbDown()	
 0x710003A710			FALSE	_ZNK12_GLOBAL__N_131KoopaLastWallClimbDownNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::KoopaLastWallClimbDownNrvAppear::execute(al::NerveKeeper*) const	
 0x710003A720			FALSE	_ZNK12_GLOBAL__N_129KoopaLastWallClimbDownNrvDown7executeEPN2al11NerveKeeperE	(anonymous namespace)::KoopaLastWallClimbDownNrvDown::execute(al::NerveKeeper*) const	
-0x710003A730			FALSE	sub_710003A730	sub_710003A730	
+0x710003A730			FALSE	_ZNK12_GLOBAL__N_129KoopaLastWallClimbDownNrvHide7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_129KoopaLastWallClimbDownNrvHide7executeEPN2al11NerveKeeperE	matched nerve
 0x710003A790			FALSE	_ZNK12_GLOBAL__N_134KoopaLastWallClimbDownNrvDownStart7executeEPN2al11NerveKeeperE	(anonymous namespace)::KoopaLastWallClimbDownNrvDownStart::execute(al::NerveKeeper*) const	
-0x710003A7A0			FALSE	sub_710003A7A0	sub_710003A7A0	
-0x710003A800			FALSE	sub_710003A800	sub_710003A800	
+0x710003A7A0			FALSE	_ZNK12_GLOBAL__N_132KoopaLastWallClimbDownNrvDownEnd7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_132KoopaLastWallClimbDownNrvDownEnd7executeEPN2al11NerveKeeperE	matched nerve
+0x710003A800			FALSE	_ZNK12_GLOBAL__N_129KoopaLastWallClimbDownNrvFall7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_129KoopaLastWallClimbDownNrvFall7executeEPN2al11NerveKeeperE	matched nerve
 0x710003A880		KoopaNeedleBall.o	FALSE	_ZN15KoopaNeedleBallC2EPKc	KoopaNeedleBall::KoopaNeedleBall(char const*)	
 0x710003A920			FALSE	_ZN15KoopaNeedleBallC1EPKc	KoopaNeedleBall::KoopaNeedleBall(char const*)	
 0x710003A9C0			FALSE	_ZN15KoopaNeedleBall4initERKN2al13ActorInitInfoE	KoopaNeedleBall::init(al::ActorInitInfo const&)	
