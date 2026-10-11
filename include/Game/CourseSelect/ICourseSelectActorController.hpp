@@ -10,7 +10,7 @@ class CourseSelectDirector;
 class ICourseSelectActorController {
 public:
     virtual al::LiveActor* getActor() = 0;
-    virtual int getCursorLayoutType() const = 0;
+    virtual int getCursorLayoutType() const { return 0; }
     virtual const CourseSelectActorInfo* getCourseSelectActorInfo() const = 0;
     virtual CourseSelectNode* getCourseSelectNode() const = 0;
     virtual void startRouteDokanRider(al::BlockRailRider* pRider) {}

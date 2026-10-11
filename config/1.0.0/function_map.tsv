@@ -4420,11 +4420,11 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71000B5BF0			FALSE	_ZN26CourseSelectWallController9startOpenEv	CourseSelectWallController::startOpen()	
 0x71000B5C60			FALSE	_ZN26CourseSelectWallController20startOpenImmediatelyEv	CourseSelectWallController::startOpenImmediately()	
 0x71000B5CC0			FALSE	_ZNK26CourseSelectWallController9isEndOpenEv	CourseSelectWallController::isEndOpen() const	
-0x71000B5D10			FALSE	nullsub_37	nullsub_37	
-0x71000B5D20			FALSE	sub_71000B5D20	sub_71000B5D20	
-0x71000B5D80			FALSE	sub_71000B5D80	sub_71000B5D80	
+0x71000B5D10			FALSE	_ZNK12_GLOBAL__N_123CourseSelectWallNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectWallNrvWait::execute(al::NerveKeeper*) const	
+0x71000B5D20			FALSE	_ZNK12_GLOBAL__N_132CourseSelectWallNrvAppearPrevEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectWallNrvAppearPrevEnd::execute(al::NerveKeeper*) const	
+0x71000B5D80			FALSE	_ZNK12_GLOBAL__N_122CourseSelectWallNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectWallNrvEnd::execute(al::NerveKeeper*) const	
 0x71000B5DE0			FALSE	_ZNK12_GLOBAL__N_125CourseSelectWallNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectWallNrvAppear::execute(al::NerveKeeper*) const	
-0x71000B5DF0			FALSE	sub_71000B5DF0	sub_71000B5DF0	
+0x71000B5DF0			FALSE	_ZNK12_GLOBAL__N_134CourseSelectWallNrvAppearNextStart7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectWallNrvAppearNextStart::execute(al::NerveKeeper*) const	
 0x71000B5E50		CourseSelectWindowHolder.o	FALSE	_ZN24CourseSelectWindowHolderC1EPK17CourseSelectScene	CourseSelectWindowHolder::CourseSelectWindowHolder(CourseSelectScene const*)	
 0x71000B5E70			FALSE	_ZN24CourseSelectWindowHolder4initERKN2al14LayoutInitInfoE	CourseSelectWindowHolder::init(al::LayoutInitInfo const&)	
 0x71000B5FA0			FALSE	_ZN24CourseSelectWindowHolder14startFadeWhiteEi	CourseSelectWindowHolder::startFadeWhite(int)	
