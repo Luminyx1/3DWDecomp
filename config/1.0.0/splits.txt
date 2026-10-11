@@ -385,7 +385,7 @@ src/Game/CourseSelect/CourseSelectNode.cpp:
     .text   start:0x00099600 end:0x0009BF14
 src/Game/CourseSelect/CourseSelectNodeParts.cpp:
     .text   start:0x0009BF20 end:0x0009C3F0
-src/Game/CourseSelect/CourseSelectObjKeeper.cpp:
+src/Game/CourseSelect/CourseSelectObjKeeper.cpp: done
     .text   start:0x0009C3F0 end:0x0009C7D4
 src/Game/CourseSelect/CourseSelectPlayerActionBubble.cpp:
     .text   start:0x0009C7E0 end:0x0009CCBC
