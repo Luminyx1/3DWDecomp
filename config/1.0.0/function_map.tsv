@@ -31327,7 +31327,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71004C7460			FALSE	_ZNK2rc27SensorMsgStartDemoBossStart18getRuntimeTypeInfoEv	rc::SensorMsgStartDemoBossStart::getRuntimeTypeInfo() const	
 0x71004C74D0			FALSE	_ZN2rc27SensorMsgStartDemoBossStartD0Ev	rc::SensorMsgStartDemoBossStart::~SensorMsgStartDemoBossStart()	
 0x71004C74E0		SceneObjFactory.o	FALSE	_ZN15SceneObjFactory20createSceneObjHolderEv	SceneObjFactory::createSceneObjHolder()	object (class)
-0x71004C7520			FALSE	sub_71004C7520	sub_71004C7520	
+0x71004C7520			FALSE	_ZN12_GLOBAL__N_114createSceneObjEi	(anonymous namespace)::createSceneObj(int)	
 0x71004C7800		SingleModeDrawer3D.o	FALSE	_ZN18SingleModeDrawer3DC1EPN2al18GraphicsSystemInfoE	SingleModeDrawer3D::SingleModeDrawer3D(al::GraphicsSystemInfo*)	object (class)
 0x71004C7840			FALSE	_ZN18SingleModeDrawer3DD2Ev	SingleModeDrawer3D::~SingleModeDrawer3D()	
 0x71004C7850			FALSE	_ZN18SingleModeDrawer3DD0Ev	SingleModeDrawer3D::~SingleModeDrawer3D()	
