@@ -4034,7 +4034,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71000A8180			FALSE	_ZN16CourseSelectRoad11subDistanceEf	CourseSelectRoad::subDistance(float)	
 0x71000A81A0			FALSE	_ZN16CourseSelectRoadD1Ev	CourseSelectRoad::~CourseSelectRoad()	
 0x71000A81B0			FALSE	_ZN16CourseSelectRoadD0Ev	CourseSelectRoad::~CourseSelectRoad()	
-0x71000A81E0			FALSE	nullsub_32	nullsub_32	
+0x71000A81E0			FALSE	_ZNK12_GLOBAL__N_123CourseSelectRoadNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectRoadNrvWait::execute(al::NerveKeeper*) const	
 0x71000A81F0			FALSE	_ZNK12_GLOBAL__N_123CourseSelectRoadNrvStop7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectRoadNrvStop::execute(al::NerveKeeper*) const	
 0x71000A8200			FALSE	_ZNK12_GLOBAL__N_123CourseSelectRoadNrvOpen7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectRoadNrvOpen::execute(al::NerveKeeper*) const	
 0x71000A8210		CourseSelectRocket.o	FALSE	_ZN18CourseSelectRocketC2EPKc	CourseSelectRocket::CourseSelectRocket(char const*)	
