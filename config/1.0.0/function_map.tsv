@@ -13075,7 +13075,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001F7C40			FALSE	_ZN21TestAoyagiPlayerEntryC1ERKN2al14LayoutInitInfoE	TestAoyagiPlayerEntry::TestAoyagiPlayerEntry(al::LayoutInitInfo const&)	
 0x71001F7DB0			FALSE	_ZN21TestAoyagiPlayerEntry6appearEv	TestAoyagiPlayerEntry::appear()	
 0x71001F7DC0			FALSE	_ZN21TestAoyagiPlayerEntry7exeWaitEv	TestAoyagiPlayerEntry::exeWait()	
-0x71001F7DD0			FALSE	nullsub_139	nullsub_139	
+0x71001F7DD0			FALSE	_ZNK12_GLOBAL__N_128TestAoyagiPlayerEntryNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::TestAoyagiPlayerEntryNrvWait::execute(al::NerveKeeper*) const	
 0x71001F7DE0		TestAoyagiPlayerEntryItem.o	FALSE	_ZN25TestAoyagiPlayerEntryItemC2ERKN2al14LayoutInitInfoEPKcS5_PNS0_11LayoutActorE	TestAoyagiPlayerEntryItem::TestAoyagiPlayerEntryItem(al::LayoutInitInfo const&, char const*, char const*, al::LayoutActor*)	
 0x71001F7F60			FALSE	_ZN25TestAoyagiPlayerEntryItemC1ERKN2al14LayoutInitInfoEPKcS5_PNS0_11LayoutActorE	TestAoyagiPlayerEntryItem::TestAoyagiPlayerEntryItem(al::LayoutInitInfo const&, char const*, char const*, al::LayoutActor*)	
 0x71001F80D0			FALSE	_ZN25TestAoyagiPlayerEntryItem7exeWaitEv	TestAoyagiPlayerEntryItem::exeWait()	

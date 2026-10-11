@@ -1239,7 +1239,7 @@ src/Game/Layout/SimpleMenuLayout.cpp:
     .text   start:0x001F6C00 end:0x001F7308
 src/Game/Layout/TestAoyagiLayout.cpp:
     .text   start:0x001F7310 end:0x001F7AC4
-src/Game/Layout/TestAoyagiPlayerEntry.cpp:
+src/Game/Layout/TestAoyagiPlayerEntry.cpp: done
     .text   start:0x001F7AD0 end:0x001F7DD4
 src/Game/Layout/TestAoyagiPlayerEntryItem.cpp:
     .text   start:0x001F7DE0 end:0x001F8680
