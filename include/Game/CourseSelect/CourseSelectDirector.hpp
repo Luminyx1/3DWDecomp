@@ -12,6 +12,8 @@ class CourseSelectDirector : public al::ISceneObj {
 public:
     static CourseSelectDirector* getCourseSelectDirector(const al::IUseSceneObjHolder* pUser);
     const char* getSceneObjName() const override;
+    int getMainPlayerPortNum() const;
+    al::LiveActor* getMainPlayerActor() const { return mpMainPlayer; }
     bool isEnableEnterSelectedSensor() const;
     bool isTriggerDecideMainPlayer() const;
     bool isPlayLeaveDemo(int userId) const;
@@ -29,7 +31,9 @@ private:
     // Scene, layout, actor collections, and selection state; names still unrecovered.
     unsigned char _008[0x148];
     CourseSelectNode** mpNodes;
-    unsigned char _158[0x30];
+    unsigned char _158[8];
+    al::LiveActor* mpMainPlayer;
+    unsigned char _168[0x20];
     CourseSelectPuppeteerGroup* mpPuppeteerGroup;
     unsigned char _190[0x38];
     int mCurrentWorldId;

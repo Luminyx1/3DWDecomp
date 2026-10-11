@@ -351,7 +351,7 @@ src/Game/CourseSelect/CoinChameleonCourseSelect.cpp: done
     .text   start:0x0008D020 end:0x0008DD98
 src/Game/CourseSelect/CoinCourseSelect.cpp: done
     .text   start:0x0008DDA0 end:0x0008E150
-src/Game/CourseSelect/CounterLock.cpp:
+src/Game/CourseSelect/CounterLock.cpp: done
     .text   start:0x0008E150 end:0x0008F33C
 src/Game/CourseSelect/CourseSelectActorInfo.cpp: done
     .text   start:0x0008F340 end:0x0008F448

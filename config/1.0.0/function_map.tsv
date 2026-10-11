@@ -3259,7 +3259,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710008ED20			FALSE	_ZN11CounterLock7exeHideEv	CounterLock::exeHide()	
 0x710008ED30			FALSE	_ZNK11CounterLock18getSceneCameraInfoEv	CounterLock::getSceneCameraInfo() const	
 0x710008ED40			FALSE	_ZThn32_NK11CounterLock18getSceneCameraInfoEv	non-virtual thunk to CounterLock::getSceneCameraInfo() const	
-0x710008ED50			FALSE	sub_710008ED50	sub_710008ED50	
+0x710008ED50			FALSE	_ZNK12_GLOBAL__N_117CounterLockNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::CounterLockNrvEnd::execute(al::NerveKeeper*) const	
 0x710008EE00			FALSE	_ZN21CounterLockController14setTouchSelectEb	CounterLockController::setTouchSelect(bool)	
 0x710008EE10			FALSE	_ZN21CounterLockController11startAppearEP28ICourseSelectActorController	CounterLockController::startAppear(ICourseSelectActorController*)	
 0x710008EF20			FALSE	_ZN21CounterLockController14startDisappearEv	CounterLockController::startDisappear()	
@@ -3271,9 +3271,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710008F040			FALSE	_ZN21CounterLockController10startPauseEv	CounterLockController::startPause()	
 0x710008F050			FALSE	_ZN21CounterLockController8endPauseEv	CounterLockController::endPause()	
 0x710008F060			FALSE	_ZNK12_GLOBAL__N_120CounterLockNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::CounterLockNrvAppear::execute(al::NerveKeeper*) const	
-0x710008F070			FALSE	sub_710008F070	sub_710008F070	
+0x710008F070			FALSE	_ZNK12_GLOBAL__N_118CounterLockNrvHide7executeEPN2al11NerveKeeperE	(anonymous namespace)::CounterLockNrvHide::execute(al::NerveKeeper*) const	
 0x710008F080			FALSE	_ZNK12_GLOBAL__N_118CounterLockNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::CounterLockNrvWait::execute(al::NerveKeeper*) const	
-0x710008F090			FALSE	sub_710008F090	sub_710008F090	
+0x710008F090			FALSE	_ZNK12_GLOBAL__N_122CounterLockNrvReaction7executeEPN2al11NerveKeeperE	(anonymous namespace)::CounterLockNrvReaction::execute(al::NerveKeeper*) const	
 0x710008F140			TRUE	_ZN4sead16WFixedSafeStringILi8EED0Ev	sead::WFixedSafeString<8>::~WFixedSafeString()	
 0x710008F150			TRUE	_ZN4sead16WFixedSafeStringILi8EEaSERKNS_14SafeStringBaseIDsEE	sead::WFixedSafeString<8>::operator=(sead::SafeStringBase<char16_t> const&)	
 0x710008F240			TRUE	_ZN4sead22WFormatFixedSafeStringILi4EED0Ev	sead::WFormatFixedSafeString<4>::~WFormatFixedSafeString()	
