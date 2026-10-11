@@ -2625,9 +2625,6 @@
 0x7101A05138 32 object _ZTVN12_GLOBAL__N_115CoinBlowNrvBlowE
 0x7101A05158 32 object _ZTVN12_GLOBAL__N_118CoinBlowNrvSpinDrcE
 0x7101A05178 32 object _ZTVN12_GLOBAL__N_115CoinBlowNrvWaitE
-0x7101A05198 8 object _ZN12_GLOBAL__N_115NrvCoinBlowBlowE
-0x7101A051A0 8 object _ZN12_GLOBAL__N_118NrvCoinBlowSpinDrcE
-0x7101A051A8 8 object _ZN12_GLOBAL__N_115NrvCoinBlowWaitE
 0x7101A056D0 32 object _ZTVN12_GLOBAL__N_124CoinBlowGeneratorNrvBlowE
 0x7101A056F0 8 object _ZN12_GLOBAL__N_124NrvCoinBlowGeneratorBlowE
 0x7101A05CD0 32 object _ZTVN12_GLOBAL__N_129CoinChameleonNrvContactAppearE
@@ -5727,3 +5724,4 @@
 
 # DemoScenePlayer sound-material enum cache
 0x7101B1CFE0 8 object _ZZN12_GLOBAL__N_114SeMaterialCode5text_EiE9spTextPtr
+0x7101A05198 24 object _ZN12_GLOBAL__N_111NrvCoinBlowE
