@@ -4254,7 +4254,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71000B0870			FALSE	_ZN33CourseSelectStateAfterEndingEvent7exeDemoEv	CourseSelectStateAfterEndingEvent::exeDemo()	
 0x71000B08E0			FALSE	_ZN33CourseSelectStateAfterEndingEvent7exeWipeEv	CourseSelectStateAfterEndingEvent::exeWipe()	
 0x71000B0990			FALSE	_ZN33CourseSelectStateAfterEndingEventD0Ev	CourseSelectStateAfterEndingEvent::~CourseSelectStateAfterEndingEvent()	
-0x71000B09C0			FALSE	sub_71000B09C0	sub_71000B09C0	
+0x71000B09C0			FALSE	_ZNK12_GLOBAL__N_140CourseSelectStateAfterEndingEventNrvDemo7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectStateAfterEndingEventNrvDemo::execute(al::NerveKeeper*) const	
 0x71000B0A30			FALSE	_ZNK12_GLOBAL__N_140CourseSelectStateAfterEndingEventNrvWipe7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectStateAfterEndingEventNrvWipe::execute(al::NerveKeeper*) const	
 0x71000B0A40		RouteOpenCursor.o	FALSE	_ZN15RouteOpenCursorC1EP20CourseSelectDirector	RouteOpenCursor::RouteOpenCursor(CourseSelectDirector*)	
 0x71000B0AB0			FALSE	_ZN15RouteOpenCursor10initializeEP16CourseSelectNodeS1_	RouteOpenCursor::initialize(CourseSelectNode*, CourseSelectNode*)	

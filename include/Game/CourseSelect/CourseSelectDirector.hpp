@@ -4,6 +4,7 @@
 
 namespace al { class IUseSceneObjHolder; class LiveActor; }
 class CourseSelectNode;
+class CourseSelectWindowHolder;
 class ICourseSelectActorController;
 class CourseSelectSensor;
 class CourseSelectPuppeteerGroup;
@@ -11,6 +12,9 @@ class CourseSelectPuppeteerGroup;
 class CourseSelectDirector : public al::ISceneObj {
 public:
     static CourseSelectDirector* getCourseSelectDirector(const al::IUseSceneObjHolder* pUser);
+    CourseSelectWindowHolder* getWindowHolder() const { return mpWindows; }
+    void startOpenRocketDemo();
+    bool isEndOpenRocketDemo() const;
     const char* getSceneObjName() const override;
     int getMainPlayerPortNum() const;
     al::LiveActor* getMainPlayerActor() const { return mpMainPlayer; }
@@ -29,7 +33,9 @@ public:
 
 private:
     // Scene, layout, actor collections, and selection state; names still unrecovered.
-    unsigned char _008[0x148];
+    unsigned char _008[0x10];
+    CourseSelectWindowHolder* mpWindows;
+    unsigned char _020[0x130];
     CourseSelectNode** mpNodes;
     unsigned char _158[8];
     al::LiveActor* mpMainPlayer;
