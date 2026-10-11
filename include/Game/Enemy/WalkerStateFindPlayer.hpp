@@ -2,12 +2,14 @@
 
 #include <basis/seadTypes.h>
 #include <math/seadVector.h>
+#include <prim/seadSafeString.h>
 
 #include "Library/Nerve/NerveStateBase.hpp"
 
 struct WalkerStateParam;
 class TargetFinder;
 class WalkerStateJumpParam;
+class WalkerStateJump;
 
 /** @brief Tuning for WalkerStateFindPlayer (turn time and action). */
 class WalkerStateFindPlayerParam {
@@ -18,8 +20,8 @@ public:
     s32 mTurnTime;    // 0x00
     f32 mTurnDegree;  // 0x04
 
-private:
-    alignas(8) u8 _8[0x40];
+    bool mIsJump;
+    sead::FixedSafeString<32> mTurnAction;
 };
 
 static_assert(sizeof(WalkerStateFindPlayerParam) == 0x48);
@@ -31,9 +33,20 @@ public:
                           const TargetFinder* pTargetFinder, const WalkerStateParam* pParam,
                           const WalkerStateFindPlayerParam* pFindParam,
                           const WalkerStateJumpParam* pJumpParam);
+    /** @brief Destroys the player-detection state. */
+    ~WalkerStateFindPlayer() override = default;
+    void appear() override;
+    void exeFind();
+    void exeFindJump();
+    void exeJump();
 
 private:
-    u8 _20[0x30];
+    sead::Vector3f* mFrontDir;
+    const TargetFinder* mTargetFinder;
+    const WalkerStateParam* mParam;
+    const WalkerStateFindPlayerParam* mFindParam;
+    void* mUnused;
+    WalkerStateJump* mJumpState;
 };
 
 static_assert(sizeof(WalkerStateFindPlayer) == 0x50);

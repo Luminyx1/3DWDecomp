@@ -146,9 +146,9 @@ void DisasterSpikeBouncy::control() {
 
         sead::Vector3f dir;
         if (!al::normalizeOrZero(&dir, velocity)) {
-            dir.x += (sead::Vector3f::ey.x - dir.x) * 0.5f;
-            dir.y += (sead::Vector3f::ey.y - dir.y) * 0.5f;
-            dir.z += (sead::Vector3f::ey.z - dir.z) * 0.5f;
+            dir.x = dir.x + (sead::Vector3f::ey.x - dir.x) * 0.5f;
+            dir.y = dir.y + (sead::Vector3f::ey.y - dir.y) * 0.5f;
+            dir.z = dir.z + (sead::Vector3f::ey.z - dir.z) * 0.5f;
             velocity = dir * velocity.length();
         }
 
@@ -165,10 +165,10 @@ void DisasterSpikeBouncy::control() {
             mIsBouncing = false;
         }
     } else if (mIsBouncing) {
-        if (mIsBounceStarted) {
-            mIsBounceStarted = false;
-        } else {
+        if (!mIsBounceStarted) {
             mIsBouncing = false;
+        } else {
+            mIsBounceStarted = false;
         }
     }
 

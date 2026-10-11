@@ -108,6 +108,8 @@ public:
     DemoWorldClear* getDemoWorldClear() const { return mDemoWorldClear; }
     /** @brief Gets the branch node placed on the miniature. @return The node. */
     CourseSelectNode* getNode() const { return mNode; }
+    /** @brief Gets the map director. @return Course-select director. */
+    CourseSelectDirector* getDirector() const { return mDirector; }
     /** @brief Gets the controller the puppeteers use. @return The controller. */
     MiniatureController* getController() const { return mController; }
     /** @brief Gets the number of courses opened by clearing this one. @return The count. */

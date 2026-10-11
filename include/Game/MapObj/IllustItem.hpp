@@ -17,6 +17,8 @@ public:
     void exeAppear();
     void exeSpinDrc();
     void exeGot();
+    /** @brief Reports whether the stamp has been collected. @return Collection state. */
+    bool isGot() const { return mGot; }
 private:
     bool mInRouteDokan = false;
     bool mAlreadyAcquired = false;

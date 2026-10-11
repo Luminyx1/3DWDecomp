@@ -143,6 +143,10 @@ public:
     bool isManekinekoAlive() const;
     void requestRelease();
     PlayerProperty* getProperty();
+    bool startDemo();
+    void endDemo();
+    void restartOnGround(const sead::Vector3f& rTrans);
+    void killManekineko();
     const PlayerProperty* getProperty() const;
     void updatePosture();
     IUsePlayerFlagSwitch* createInterfaceSilhouetteHiddenFlag();

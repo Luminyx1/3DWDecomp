@@ -60,6 +60,7 @@ public:
     bool isDamageAction() const;
     bool isDemoEnd() const;
     void cancelDemoAppear();
+    ActorJointLookController* getJointLookController() const { return mJointLook; }
     static f32 getHeadRadius();
 
 private:

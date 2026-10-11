@@ -8,8 +8,6 @@ class PlayerActor;
 /** @brief Controls one player's participation in a demo. */
 class DemoPlayerController {
 public:
-    void setTrans(const sead::Vector3f& rTrans);
-    void setFrontUpVec(const sead::Vector3f& rFront, const sead::Vector3f& rUp);
     DemoPlayerController();
     void setPlayerActor(PlayerActor* pActor);
     bool tryStartDemo();
@@ -21,6 +19,16 @@ public:
     void setActionFrame(int frame);
     void setQuat(const sead::Quatf& rQuat);
     void setTransAndResetDynamics(const sead::Vector3f& rTrans);
+    const sead::Vector3f& getTrans() const;
+    const sead::Vector3f& getFrontVec() const;
+    const sead::Vector3f& getUpVec() const;
+    void setScale(float scale);
+    void setTrans(const sead::Vector3f& rTrans);
+    void resetPosition(const sead::Vector3f& rTrans);
+    void setFrontUpVec(const sead::Vector3f& rFront, const sead::Vector3f& rUp);
+    void setRotate(const sead::Vector3f& rRotate);
+    void setVelocity(const sead::Vector3f& rVelocity);
+    bool isActionEnd() const;
 
     /** @brief Gets the assigned player. @return Player actor, or nullptr when unassigned. */
     PlayerActor* getPlayerActor() const { return mPlayerActor; }

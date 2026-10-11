@@ -11,6 +11,8 @@ public:
                   const char* pLayoutName, const char* pGroupName);
     void appearWithSystemMessage(const char* pFile, const char* pMessage, int port);
 
+    int getCurrentPageNum() const;
+
 private:
     u8 _121[0x1f];
 };

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <math/seadVector.h>
+#include <gfx/seadColor.h>
 
 #include "Library/Nerve/NerveStateBase.hpp"
 
@@ -15,8 +15,7 @@ struct BombStateExplosionParam {
     f32 radiusMax;               // 0x0
     f32 radiusMin;               // 0x4
     f32 radiusSpeed;             // 0x8
-    sead::Vector3f effectScale;  // 0xc
-    f32 rate;                    // 0x18
+    sead::Color4f lightColor;    // 0xc
     s32 attackStep;              // 0x1c
 };
 static_assert(sizeof(BombStateExplosionParam) == 0x20);
@@ -25,7 +24,10 @@ class BombStateExplosion : public al::ActorStateBase {
 public:
     BombStateExplosion(al::LiveActor* pActor, bool isUseExplosionSensor,
                        const BombStateExplosionParam* pParam);
+    void init() override;
+    void appear() override;
     void reset();
+    void exeExplosion();
     void attackSensor(al::HitSensor* pSelf, al::HitSensor* pOther, al::ComboCounter* pCounter);
     void attackSensorGiga(al::HitSensor* pSelf, al::HitSensor* pOther, al::ComboCounter* pCounter);
 
@@ -33,8 +35,8 @@ public:
     void setIsAttackToPlayer(bool isAttackToPlayer) { mIsAttackToPlayer = isAttackToPlayer; }
 
 private:
-    bool _20;
+    bool mIsUseExplosionSensor;
     bool mIsAttackToPlayer;  // 0x21
-    u8 mUnreconstructed[0xe];
+    const BombStateExplosionParam* mParam;
 };
 static_assert(sizeof(BombStateExplosion) == 0x30);

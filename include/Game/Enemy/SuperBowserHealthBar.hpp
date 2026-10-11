@@ -33,6 +33,6 @@ public:
     void setState(OffsetState state, f32 frame);
 
 private:
-    u8 _128[0x188 - 0x128];
+    u8 _158[0x188 - 0x158];
 };
 static_assert(sizeof(SuperBowserHealthBar) == 0x188);

@@ -1,12 +1,19 @@
 #pragma once
-
 #include <basis/seadTypes.h>
+#include <prim/seadSafeString.h>
 
+/** @brief Settings for flying pursuit and its stopping phase. */
 struct FlyerStateChaseParam {
-    FlyerStateChaseParam(f32, s32, f32, f32, s32, s32, const char* pChaseAction,
-                         const char* pWaitAction);
-
-    u64 _0[0x88 / 8];  // two FixedSafeString<32> (chase and wait actions) at 0x18 and 0x50
+    FlyerStateChaseParam();
+    FlyerStateChaseParam(f32 accel, s32 chaseTime, f32 turnDegree, f32 endFriction,
+                        s32 endTime, s32 accelTime, const char* pChaseAction, const char* pWaitAction);
+    f32 mAccel;
+    s32 mChaseTime;
+    f32 mTurnDegree;
+    f32 mEndFriction;
+    s32 mEndTime;
+    s32 mAccelTime;
+    sead::FixedSafeString<32> mChaseAction;
+    sead::FixedSafeString<32> mWaitAction;
 };
-
 static_assert(sizeof(FlyerStateChaseParam) == 0x88);

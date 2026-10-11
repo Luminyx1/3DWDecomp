@@ -1,3 +1,5 @@
+#include "Demo/DemoCutscene.hpp"
+#include "MapObj/Trampoline.hpp"
 #include "MapObj/KinokoTreasure.hpp"
 #include "MapObj/Ball.hpp"
 #include "NPC/Rabbit.hpp"
@@ -729,14 +731,7 @@ static_assert(sizeof(DemoEventGateKeeperChecker) == 0x180);
 
 
 
-class DemoCutscene : public al::LiveActor {
-public:
-    explicit DemoCutscene(const char* pName, alSeFunction::DemoType = static_cast<alSeFunction::DemoType>(5));
 
-private:
-    u8 mUnreconstructed[0x224];
-};
-static_assert(sizeof(DemoCutscene) == 0x368);
 
 class DemoKoopaW7 : public al::LiveActor {
 public:
@@ -1458,6 +1453,7 @@ static_assert(sizeof(KoopaLastBreakWall) == 0x188);
 class KoopaLastDefendeBlockPow : public al::LiveActor {
 public:
     explicit KoopaLastDefendeBlockPow(const char* pName);
+    void startEndDemo();
 
 private:
     u8 mUnreconstructed[0x6c];
@@ -2387,14 +2383,6 @@ private:
 };
 static_assert(sizeof(TrampleSwitchTogetherWatcher) == 0x150);
 
-class Trampoline : public al::LiveActor {
-public:
-    explicit Trampoline(const char* pName);
-
-private:
-    u8 mUnreconstructed[0xfc];
-};
-static_assert(sizeof(Trampoline) == 0x240);
 
 class TransparentWall : public al::LiveActor {
 public:

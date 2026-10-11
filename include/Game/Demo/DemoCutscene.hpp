@@ -27,7 +27,7 @@ class BindPuppeteerGroup;
  */
 class DemoCutscene : public DemoObjBase {
 public:
-    DemoCutscene(const char* pName, alSeFunction::DemoType type);
+    DemoCutscene(const char* pName, alSeFunction::DemoType type = static_cast<alSeFunction::DemoType>(5));
 
     void init(const al::ActorInitInfo& rInfo) override;
     void initPuppets(const al::ActorInitInfo& rInfo);
@@ -125,6 +125,7 @@ private:
     /** @brief End the current phase if requested, otherwise end the cutscene. */
     void endPhaseOrCutscene();
 
+protected:
     bool mIsRequireOnGround = false;  // 0x300
     bool mIsInvalidatePlayerInput = false;  // 0x301
     bool mIsBindPlayer;  // 0x302
