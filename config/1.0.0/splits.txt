@@ -1241,7 +1241,7 @@ src/Game/Layout/TestAoyagiLayout.cpp: done
     .text   start:0x001F7310 end:0x001F7AC4
 src/Game/Layout/TestAoyagiPlayerEntry.cpp: done
     .text   start:0x001F7AD0 end:0x001F7DD4
-src/Game/Layout/TestAoyagiPlayerEntryItem.cpp:
+src/Game/Layout/TestAoyagiPlayerEntryItem.cpp: done
     .text   start:0x001F7DE0 end:0x001F8680
 src/Game/Layout/TestAoyagiPlayerEntryStateEntry.cpp: done
     .text   start:0x001F8680 end:0x001F8C08

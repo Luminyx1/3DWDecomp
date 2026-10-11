@@ -5880,3 +5880,6 @@
 0x71019E3ED8 8 object _ZN12_GLOBAL__N_122NrvSingleModeTitleBackE
 0x71019E3EE0 8 object _ZN12_GLOBAL__N_130NrvSingleModeTitleStartNewGameE
 0x71019E3EE8 8 object _ZN12_GLOBAL__N_121NrvSingleModeTitleEndE
+
+# src/Game/Layout/TestAoyagiPlayerEntryItem
+0x71019E65F0 24 object _ZN12_GLOBAL__N_128NrvTestAoyagiPlayerEntryItemE

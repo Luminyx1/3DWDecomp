@@ -12,6 +12,8 @@ public:
     void exeEnd();
     void exeHide();
     bool tryEnd(bool isHidden);
+    /** @brief Reports whether selection should enter from the hidden panel. */
+    bool isHidden() const { return mIsHidden; }
 private:
     TestAoyagiPlayerEntryItem* mHost;
     bool mIsHidden = false;

@@ -13090,9 +13090,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001F8400			FALSE	_ZN25TestAoyagiPlayerEntryItem23incrementCharactorIndexEv	TestAoyagiPlayerEntryItem::incrementCharactorIndex()	
 0x71001F84D0			FALSE	_ZN25TestAoyagiPlayerEntryItem26setModelFontCurrentCurrentEv	TestAoyagiPlayerEntryItem::setModelFontCurrentCurrent()	
 0x71001F8540			FALSE	_ZN25TestAoyagiPlayerEntryItem29setColorCharactorModelCurrentEv	TestAoyagiPlayerEntryItem::setColorCharactorModelCurrent()	
-0x71001F85B0			FALSE	sub_71001F85B0	sub_71001F85B0	
-0x71001F85F0			FALSE	sub_71001F85F0	sub_71001F85F0	
-0x71001F8640			FALSE	sub_71001F8640	sub_71001F8640	
+0x71001F85B0			FALSE	_ZNK12_GLOBAL__N_132TestAoyagiPlayerEntryItemNrvPlay7executeEPN2al11NerveKeeperE	(anonymous namespace)::TestAoyagiPlayerEntryItemNrvPlay::execute(al::NerveKeeper*) const	
+0x71001F85F0			FALSE	_ZNK12_GLOBAL__N_133TestAoyagiPlayerEntryItemNrvEntry7executeEPN2al11NerveKeeperE	(anonymous namespace)::TestAoyagiPlayerEntryItemNrvEntry::execute(al::NerveKeeper*) const	
+0x71001F8640			FALSE	_ZNK12_GLOBAL__N_134TestAoyagiPlayerEntryItemNrvSelect7executeEPN2al11NerveKeeperE	(anonymous namespace)::TestAoyagiPlayerEntryItemNrvSelect::execute(al::NerveKeeper*) const	
 0x71001F8680		TestAoyagiPlayerEntryStateEntry.o	FALSE	_ZN31TestAoyagiPlayerEntryStateEntryC2EPKcP25TestAoyagiPlayerEntryItem	TestAoyagiPlayerEntryStateEntry::TestAoyagiPlayerEntryStateEntry(char const*, TestAoyagiPlayerEntryItem*)	
 0x71001F86D0			FALSE	_ZN31TestAoyagiPlayerEntryStateEntry6appearEv	TestAoyagiPlayerEntryStateEntry::appear()	
 0x71001F8730			FALSE	_ZN31TestAoyagiPlayerEntryStateEntry9exeAppearEv	TestAoyagiPlayerEntryStateEntry::exeAppear()	
