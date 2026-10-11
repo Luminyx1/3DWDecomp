@@ -847,7 +847,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71000247A0			FALSE	_ZNK19DarkBowserShellSpin12getMaxSpeedHEv	DarkBowserShellSpin::getMaxSpeedH() const	
 0x71000247B0			FALSE	_ZNK19DarkBowserShellSpin12getMaxSpeedVEv	DarkBowserShellSpin::getMaxSpeedV() const	
 0x71000247C0			FALSE	_ZN19DarkBowserShellSpinD0Ev	DarkBowserShellSpin::~DarkBowserShellSpin()	
-0x71000247F0			FALSE	sub_71000247F0	sub_71000247F0	
+0x71000247F0			FALSE	_ZNK12_GLOBAL__N_127DarkBowserShellSpinNrvBegin7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_127DarkBowserShellSpinNrvBegin7executeEPN2al11NerveKeeperE	matched nerve
 0x7100024840			FALSE	_ZNK12_GLOBAL__N_126DarkBowserShellSpinNrvSpin7executeEPN2al11NerveKeeperE	(anonymous namespace)::DarkBowserShellSpinNrvSpin::execute(al::NerveKeeper*) const	
 0x7100024850			FALSE	_ZNK12_GLOBAL__N_129DarkBowserShellSpinNrvReverse7executeEPN2al11NerveKeeperE	(anonymous namespace)::DarkBowserShellSpinNrvReverse::execute(al::NerveKeeper*) const	
 0x7100024860		DarkBowserUtil.o	FALSE	_ZN14DarkBowserUtil12calculateArcEN4sead7Vector3IfEES2_ffii	DarkBowserUtil::calculateArc(sead::Vector3<float>, sead::Vector3<float>, float, float, int, int)	

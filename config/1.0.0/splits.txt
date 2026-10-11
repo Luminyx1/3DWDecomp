@@ -149,7 +149,7 @@ src/Game/Boss/DarkBowserShellDive.cpp:
     .text   start:0x00021B30 end:0x00023418
 src/Game/Boss/DarkBowserShellSpike.cpp:
     .text   start:0x00023420 end:0x00023FD8
-src/Game/Boss/DarkBowserShellSpin.cpp:
+src/Game/Boss/DarkBowserShellSpin.cpp: done
     .text   start:0x00023FE0 end:0x00024858
 src/Game/Boss/DarkBowserUtil.cpp:
     .text   start:0x00024860 end:0x00026830
