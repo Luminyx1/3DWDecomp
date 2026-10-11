@@ -1075,7 +1075,7 @@ src/Game/Layout/ControlGuide.cpp:
     .text   start:0x001B4C20 end:0x001B60B8
 src/Game/Layout/CounterCoinParts.cpp:
     .text   start:0x001B60C0 end:0x001B6874
-src/Game/Layout/CounterGoalItemParts.cpp:
+src/Game/Layout/CounterGoalItemParts.cpp: done
     .text   start:0x001B6880 end:0x001B6ED8
 src/Game/Layout/CounterGreenStarAppend.cpp:
     .text   start:0x001B6EE0 end:0x001B7644

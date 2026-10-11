@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Library/Layout/LayoutActor.hpp"
+#include "Layout/TextBoxTextInfo.hpp"
 
 namespace al {
 class LayoutInitInfo;
@@ -10,7 +11,6 @@ class SingleModeSceneLayout;
 
 /**
  * @brief Bowser's Fury HUD counter of the goal items (cat shines) needed to light a lighthouse.
- * @note Only what reconstructed code needs is declared so far.
  */
 class CounterGoalItemParts : public al::LayoutActor {
 public:
@@ -26,7 +26,10 @@ public:
     void exeDemoWaitEnd();
 
 private:
-    u8 _121[0x158 - 0x121];
+    int mCount = 0;
+    SingleModeSceneLayout* mParent;
+    bool mHasPendingAdd = false;
+    fix::TextBoxTextInfo mTextInfo;
 };
 
 static_assert(sizeof(CounterGoalItemParts) == 0x158);

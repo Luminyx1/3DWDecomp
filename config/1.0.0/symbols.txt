@@ -5795,3 +5795,6 @@
 # src/Game/Layout/CourseSelectLayout
 0x71019D7708 8 object _ZN12_GLOBAL__N_125NrvCourseSelectLayoutPlayE
 0x71019D7730 8 object _ZN12_GLOBAL__N_125NrvCourseSelectLayoutDemoE
+
+# src/Game/Layout/CounterGoalItemParts
+0x71019D3EB8 8 object _ZN12_GLOBAL__N_127NrvCounterGoalItemPartsDemoE

@@ -11376,7 +11376,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001B6DF0			FALSE	_ZN20CounterGoalItemParts7exeDemoEv	CounterGoalItemParts::exeDemo()	
 0x71001B6E00			FALSE	_ZN20CounterGoalItemParts14exeDemoWaitEndEv	CounterGoalItemParts::exeDemoWaitEnd()	
 0x71001B6EB0			FALSE	_ZNK12_GLOBAL__N_127CounterGoalItemPartsNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::CounterGoalItemPartsNrvWait::execute(al::NerveKeeper*) const	
-0x71001B6EC0			FALSE	nullsub_110	nullsub_110	
+0x71001B6EC0			FALSE	_ZNK12_GLOBAL__N_127CounterGoalItemPartsNrvDemo7executeEPN2al11NerveKeeperE	(anonymous namespace)::CounterGoalItemPartsNrvDemo::execute(al::NerveKeeper*) const	
 0x71001B6ED0			FALSE	_ZNK12_GLOBAL__N_134CounterGoalItemPartsNrvDemoWaitEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::CounterGoalItemPartsNrvDemoWaitEnd::execute(al::NerveKeeper*) const	
 0x71001B6EE0		CounterGreenStarAppend.o	FALSE	_ZN22CounterGreenStarAppendC2ERKN2al14LayoutInitInfoE	CounterGreenStarAppend::CounterGreenStarAppend(al::LayoutInitInfo const&)	
 0x71001B6FD0			FALSE	_ZN22CounterGreenStarAppendC1ERKN2al14LayoutInitInfoE	CounterGreenStarAppend::CounterGreenStarAppend(al::LayoutInitInfo const&)	
