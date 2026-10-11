@@ -22,6 +22,7 @@ public:
 private:
     CourseSelectRouteDokanEntrance** mpEntrances = nullptr;
     int mEntranceCount = 0;
+    int mEntranceCapacity = 0;
 };
 
 static_assert(sizeof(CourseSelectRouteDokanEntranceGroup) == 0x10);
