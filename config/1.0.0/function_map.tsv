@@ -12055,9 +12055,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001D0EE0			FALSE	_ZN9ListStamp8startEndEbb	ListStamp::startEnd(bool, bool)	
 0x71001D0F40			FALSE	_ZNK9ListStamp5isEndEv	ListStamp::isEnd() const	
 0x71001D0FA0			FALSE	_ZNK9ListStamp14isInTransitionEv	ListStamp::isInTransition() const	
-0x71001D1050			FALSE	nullsub_121	nullsub_121	
-0x71001D1060			FALSE	sub_71001D1060	sub_71001D1060	
-0x71001D10B0			FALSE	sub_71001D10B0	sub_71001D10B0	
+0x71001D1050			FALSE	_ZNK12_GLOBAL__N_115ListStampNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::ListStampNrvEnd::execute(al::NerveKeeper*) const	
+0x71001D1060			FALSE	_ZNK12_GLOBAL__N_116ListStampNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::ListStampNrvWait::execute(al::NerveKeeper*) const	
+0x71001D10B0			FALSE	_ZNK12_GLOBAL__N_118ListStampNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::ListStampNrvAppear::execute(al::NerveKeeper*) const	
 0x71001D1100		ListStampDemoParts.o	FALSE	_ZN18ListStampDemoPartsC2ERKN2al14LayoutInitInfoEPKcS5_PNS0_11LayoutActorEP14ListStampParts	ListStampDemoParts::ListStampDemoParts(al::LayoutInitInfo const&, char const*, char const*, al::LayoutActor*, ListStampParts*)	
 0x71001D1260			FALSE	_ZN18ListStampDemoPartsC1ERKN2al14LayoutInitInfoEPKcS5_PNS0_11LayoutActorEP14ListStampParts	ListStampDemoParts::ListStampDemoParts(al::LayoutInitInfo const&, char const*, char const*, al::LayoutActor*, ListStampParts*)	
 0x71001D13C0			FALSE	_ZN18ListStampDemoParts6appearEv	ListStampDemoParts::appear()	
