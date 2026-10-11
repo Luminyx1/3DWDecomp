@@ -12693,7 +12693,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001EA570			FALSE	_ZN4sead22WFormatFixedSafeStringILi5EED0Ev	sead::WFormatFixedSafeString<5>::~WFormatFixedSafeString()	
 0x71001EA580			FALSE	_ZN4sead16WFixedSafeStringILi5EEaSERKNS_14SafeStringBaseIDsEE	sead::WFixedSafeString<5>::operator=(sead::SafeStringBase<char16_t> const&)	
 0x71001EA670		RescueButton.o	FALSE	_ZN12RescueButtonC2ERKN2al14LayoutInitInfoE	RescueButton::RescueButton(al::LayoutInitInfo const&)	
-0x71001EA870			FALSE	sub_71001EA870	sub_71001EA870	
+0x71001EA870			FALSE	_ZN12_GLOBAL__N_115formatHoldMeterEPN4sead22BufferedSafeStringBaseIDsEEf	(anonymous namespace)::formatHoldMeter(sead::BufferedSafeStringBase<char16_t>*, float)	
 0x71001EAA60			FALSE	_ZN12RescueButtonC1ERKN2al14LayoutInitInfoE	RescueButton::RescueButton(al::LayoutInitInfo const&)	
 0x71001EAC60			FALSE	_ZN12RescueButton11startAppearEv	RescueButton::startAppear()	
 0x71001EACA0			FALSE	_ZN12RescueButton3endEv	RescueButton::end()	
@@ -12707,10 +12707,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001EAFB0			FALSE	_ZNK12RescueButton5isEndEv	RescueButton::isEnd() const	
 0x71001EB020			FALSE	_ZNK12RescueButton18getSceneCameraInfoEv	RescueButton::getSceneCameraInfo() const	
 0x71001EB030			FALSE	_ZThn32_NK12RescueButton18getSceneCameraInfoEv	non-virtual thunk to RescueButton::getSceneCameraInfo() const	
-0x71001EB040			FALSE	sub_71001EB040	sub_71001EB040	
+0x71001EB040			FALSE	_ZNK12_GLOBAL__N_118RescueButtonNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::RescueButtonNrvEnd::execute(al::NerveKeeper*) const	
 0x71001EB0D0			FALSE	_ZNK12_GLOBAL__N_121RescueButtonNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::RescueButtonNrvAppear::execute(al::NerveKeeper*) const	
-0x71001EB0E0			FALSE	sub_71001EB0E0	sub_71001EB0E0	
-0x71001EB170			FALSE	sub_71001EB170	sub_71001EB170	
+0x71001EB0E0			FALSE	_ZNK12_GLOBAL__N_121RescueButtonNrvFinish7executeEPN2al11NerveKeeperE	(anonymous namespace)::RescueButtonNrvFinish::execute(al::NerveKeeper*) const	
+0x71001EB170			FALSE	_ZNK12_GLOBAL__N_119RescueButtonNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::RescueButtonNrvWait::execute(al::NerveKeeper*) const	
 0x71001EB220		ResultTimerCount.o	FALSE	_ZN16ResultTimerCountC2EP10StageTimerP15StageDataHolderPN2al13AudioDirectorE	ResultTimerCount::ResultTimerCount(StageTimer*, StageDataHolder*, al::AudioDirector*)	
 0x71001EB2B0			FALSE	_ZN16ResultTimerCount6updateEv	ResultTimerCount::update()	
 0x71001EB2E0			FALSE	_ZN16ResultTimerCount6appearEv	ResultTimerCount::appear()	

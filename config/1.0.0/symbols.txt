@@ -5933,3 +5933,8 @@
 0x71019D1E00 8 object _ZN12_GLOBAL__N_130NrvButtonSquareIconPartsDecideE
 0x71019D1E18 8 object _ZN12_GLOBAL__N_131NrvButtonSquareIconPartsDisableE
 0x71019D1E20 8 object _ZN12_GLOBAL__N_128NrvButtonSquareIconPartsHideE
+
+# src/Game/Layout/RescueButton
+0x71019E22E8 8 object _ZN12_GLOBAL__N_118NrvRescueButtonEndE
+0x71019E22F0 8 object _ZN12_GLOBAL__N_121NrvRescueButtonFinishE
+0x71019E22E0 8 object _ZN12_GLOBAL__N_119NrvRescueButtonWaitE

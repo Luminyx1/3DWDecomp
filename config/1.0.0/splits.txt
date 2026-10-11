@@ -1201,7 +1201,7 @@ src/Game/Layout/RCSControlGuideBar.cpp:
     .text   start:0x001E5960 end:0x001E6774
 src/Game/Layout/RCS_SaveDataLayout.cpp:
     .text   start:0x001E6780 end:0x001EA66C
-src/Game/Layout/RescueButton.cpp:
+src/Game/Layout/RescueButton.cpp: done
     .text   start:0x001EA670 end:0x001EB220
 src/Game/Layout/ResultTimerCount.cpp: done
     .text   start:0x001EB220 end:0x001EB554
