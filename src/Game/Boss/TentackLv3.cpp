@@ -669,7 +669,7 @@ void TentackLv3::makeTentacleGroupAndTurnNext(bool isReset) {
         TentackTentacle* tentacle = getTentacle(i);
         TentackTentacleInfo* info = tentacle->getInfo();
         info->reset();
-        tentacle->setSwingYRate(*param->mSwingYRate[i]);
+        tentacle->setSwingYRate(*param->mSwingYRate.unsafeAt(i));
         param->setUpTentacleInfo(info, i);
     }
 

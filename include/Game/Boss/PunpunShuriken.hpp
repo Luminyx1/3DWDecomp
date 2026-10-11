@@ -18,5 +18,9 @@ public:
     bool receiveMsg(const al::SensorMsg* pMsg, al::HitSensor* pOther,
                     al::HitSensor* pSelf) override;
     void shoot(const sead::Vector3f& rDir, bool isLv2);
+    ~PunpunShuriken() override;
     void exeWait();
+    void exeAppear();
+    void exeDemoAppear();
+    void exeShoot();
 };

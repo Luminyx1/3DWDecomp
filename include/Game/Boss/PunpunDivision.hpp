@@ -4,17 +4,28 @@
 
 #include "Library/LiveActor/LiveActor.hpp"
 
+class PunpunShuriken;
+class ActorJointLookController;
+struct RenderMaterialIndirectParam;
+
 /** @brief One of the clones Punpun (Motley Bossblob) splits into. */
 class PunpunDivision : public al::LiveActor {
 public:
     explicit PunpunDivision(const char* pName);
 
+    ~PunpunDivision() override;
+    void kill() override;
+    bool receiveMsg(const al::SensorMsg*, al::HitSensor*, al::HitSensor*) override;
+    void exeDivide();
+    void updateShurikenPose();
+    void exeThrowEnd();
+    void exeAttackSuccess();
     void init(const al::ActorInitInfo& rInfo) override;
     void control() override;
     void attackSensor(al::HitSensor* pSelf, al::HitSensor* pOther) override;
     void startDivide();
     void startDivideAppear();
-    bool tryStartThrow();
+    void tryStartThrow();
     void exeAppear();
     void exeDivideAppear();
     void exeThrowWait();
@@ -31,9 +42,10 @@ public:
     const sead::Vector3f& getDivideTargetTrans() const { return mDivideTargetTrans; }
 
 private:
-    u8 mUnknown144[0x158 - 0x144];
-    sead::Vector3f mDivideTargetTrans;  // 0x158
-    u8 mUnknown164[0x170 - 0x164];
+    PunpunShuriken* mShuriken;
+    ActorJointLookController* mLookController = nullptr;
+    sead::Vector3f mDivideTargetTrans = {0.0f, 0.0f, 0.0f};  // 0x158
+    RenderMaterialIndirectParam* mMaterialParam;
 };
 
 static_assert(sizeof(PunpunDivision) == 0x170);

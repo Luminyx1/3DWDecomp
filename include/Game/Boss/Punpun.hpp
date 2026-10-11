@@ -53,7 +53,7 @@ public:
     void exePressDown();
     void exeDiePressDown();
     void exeDie();
-    f32 getThrowWaitTurnSpeed();
+    static f32 getThrowWaitTurnSpeed();
 
 private:
     s32 getDivisionNum() const;

@@ -10,6 +10,7 @@ public:
     DemoSkipLayout(const al::LayoutInitInfo& rInfo, bool isSingleMode);
     bool isSkip(sead::BitFlag<u16> ports);
     void startHidden();
+    void setForcedEnd(bool isForced);
     void end();
 
 private:

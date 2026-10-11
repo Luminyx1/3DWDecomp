@@ -4,6 +4,7 @@ namespace al { class ActorInitInfo; class LiveActor; }
 class KoopaChase;
 class KoopaChaseKoopa;
 namespace KoopaChaseFunction {
+void vanishAllBombBounds(KoopaChase* pActor);
 al::LiveActor* tryCreateLinkObj(const al::ActorInitInfo& rInfo, const char* pLinkName, int index);
 void startActionWithKoopa(KoopaChase* pActor, const char* pAction);
 void startActionWithKoopa(KoopaChase* pActor, const char* pAction, const char* pKoopaAction);

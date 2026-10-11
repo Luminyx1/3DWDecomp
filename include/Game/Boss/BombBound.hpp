@@ -1,6 +1,7 @@
 #pragma once
 
 #include <math/seadVector.h>
+#include <prim/seadEnum.h>
 
 #include "Library/LiveActor/LiveActor.hpp"
 
@@ -9,10 +10,9 @@ class BombStateExplosion;
 class BombBound : public al::LiveActor {
 public:
     /** @brief How a launched bomb moves before it settles. */
-    enum Type {
-        Type_Roll = 0,
-        Type_Bound = 1,
-    };
+    SEAD_ENUM(Type, Roll, Bound);
+    static constexpr Type::ValueType Type_Roll = Type::Roll;
+    static constexpr Type::ValueType Type_Bound = Type::Bound;
 
     explicit BombBound(const char* pName);
     void init(const al::ActorInitInfo& rInfo) override;

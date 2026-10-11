@@ -1,47 +1,48 @@
 #pragma once
-#include <basis/seadTypes.h>
-
+#include <container/seadObjArray.h>
+#include <container/seadPtrArray.h>
+namespace al { class ByamlIter; }
 class TentackTentacleInfo;
-
-/** @brief Tentacle grouping of one damage stage. */
-struct TentackResourceParamInfo {
-    /**
-     * @brief Gets the group that attacks at a position of the attack order.
-     * @param index Position in the attack order.
-     * @return Group index.
-     */
-    s32 getGroupOrder(s32 index) const { return mGroupOrder[index]; }
-
-    unsigned char mUnknown0[0x10];
-    s32 mSwingTentacleNum;   // 0x10 tentacles that swing in the attack
-    s32 mPeriodNum;          // 0x14 rounds through all groups before the attack ends
-    s32 mGroupNum;           // 0x18
-    s32* mGroupTentacleNum;  // 0x20 tentacles per group
-    s32* mGroupOrder;        // 0x28 order the groups attack in
-};
-
 /** @brief Tentacle swing parameters of one attack pattern. */
 class TentackResourceParam {
 public:
-    void setUpTentacleInfo(TentackTentacleInfo* pInfo, s32 index) const;
-
-private:
-    unsigned char mUnknown0[0x8];
-
-public:
-    f32** mSwingYRate;  // 0x8
+    TentackResourceParam(const al::ByamlIter* pIter, int tentacleNum);
+    void setUpTentacleInfo(TentackTentacleInfo* pInfo, int index) const;
+    sead::ObjArray<float> mSwingYRate;
+    sead::ObjArray<int> mBiteIndices;
+    sead::ObjArray<int> mBreakableIndices;
+    sead::ObjArray<int> mItemTypes;
 };
-
+/** @brief Tentacle grouping and patterns for one damage stage. */
+struct TentackResourceParamInfo {
+    explicit TentackResourceParamInfo(const al::ByamlIter& rIter);
+    void addParam(TentackResourceParam* pParam);
+    TentackResourceParam* getParam() const;
+    TentackResourceParam* getParamAndTurnNext();
+    int getGroupOrder(int index) const { return mGroupOrder[index]; }
+    int mCurrentPattern = 0;
+    int mDamage = 0;
+    int mLevel = 1;
+    int mSuffixId = 0;
+    int mSwingTentacleNum = 7;
+    int mPeriodNum = 3;
+    int mGroupNum = 1;
+    int* mGroupTentacleNum = nullptr;
+    int* mGroupOrder = nullptr;
+    sead::PtrArray<TentackResourceParam> mPatterns;
+};
 /** @brief Loads and cycles Tentack's attack parameters from its resource. */
 class TentackResourceParamHolder {
 public:
     explicit TentackResourceParamHolder(const char* pSuffix);
-    s32 getTentacleGroupNumMax(s32 level) const;
-    s32 getSwingTentacleNumMax(s32 level) const;
-    TentackResourceParam* getParamAndTurnNext(s32 damage, s32 level, s32 deadHeadType);
-    const TentackResourceParamInfo* getParamInfo(s32 damage, s32 level, s32 deadHeadType) const;
-
+    int getTentacleGroupNumMax(int level) const;
+    int getSwingTentacleNumMax(int level) const;
+    TentackResourceParam* getParamAndTurnNext(int damage, int level, int deadHeadType);
+    TentackResourceParam* getParam(int damage, int level, int deadHeadType) const;
+    const TentackResourceParamInfo* getParamInfo(int damage, int level, int deadHeadType) const;
 private:
-    unsigned char mUnknown[0x10];
+    sead::PtrArray<TentackResourceParamInfo> mInfos;
 };
+static_assert(sizeof(TentackResourceParam) == 0x80);
+static_assert(sizeof(TentackResourceParamInfo) == 0x40);
 static_assert(sizeof(TentackResourceParamHolder) == 0x10);

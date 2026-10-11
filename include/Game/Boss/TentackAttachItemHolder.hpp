@@ -1,6 +1,7 @@
 #pragma once
 
 #include <basis/seadTypes.h>
+#include <container/seadPtrArray.h>
 
 namespace al {
 class ActorInitInfo;
@@ -17,6 +18,6 @@ public:
     TentackAttachItem* tryAttachItem(al::LiveActor* pHost, s32 type);
 
 private:
-    unsigned char mUnknown[0x10];
+    sead::PtrArray<TentackAttachItem> mItems;
 };
 static_assert(sizeof(TentackAttachItemHolder) == 0x10);

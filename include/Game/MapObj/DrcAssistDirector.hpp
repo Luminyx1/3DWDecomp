@@ -1,6 +1,8 @@
 #pragma once
 
 #include <basis/seadTypes.h>
+#include <attributes.h>
+#include "Util/ControlUserUtil.hpp"
 #include <math/seadMatrix.h>
 #include <math/seadVector.h>
 
@@ -37,7 +39,17 @@ public:
     /// Frames a touch is kept alive after the panel / gyro button is released.
     static constexpr s32 cTouchKeepFrame = 5;
 
-    DrcAssistDirector(s32 port, bool isLongRange);
+    // Retain the constructor entry point as well as its inlined call sites.
+    USED DrcAssistDirector(s32 port, bool isLongRange)
+        : mIsLongRange(isLongRange), mPort(port),
+          mTouchPadPort(rc::calcTouchPanelPortByPortNum(port)) {
+        mStampDirector = nullptr;
+        mIgnoreTriggerFrames = 0;
+        mIsDisappearGyro = false;
+        mIsPrevGyroTouch = false;
+        mIsPlayerExist = true;
+        mTouchEffect = nullptr;
+    }
 
     al::SceneObjHolder* getSceneObjHolder() const override;
     virtual void initAfterPlacementSceneObj(const al::ActorInitInfo& rInfo,
@@ -115,8 +127,24 @@ public:
     void setIgnoreTriggerFrames(s32 frames) { mIgnoreTriggerFrames = frames; }
 
     bool isPlayerExist() const { return mIsPlayerExist; }
+    void setMiddleRange(bool enable) { mIsMiddleRange = enable; }
+    void setEnableUpdate(bool enable) { mIsEnableUpdate = enable; }
+    void setValidFlag(bool valid) { mIsValid = valid; }
+    bool getValidFlag() const { return mIsValid; }
+    s32 getTouchFrame() const { return mTouchFrame; }
+    DrcTouchPointer* getTouchPointerActor() const { return mTouchPointer; }
+    DrcTouchAssistInfo* getTouchInfo() const { return mTouchAssistInfo; }
+    TouchEffect* getTouchEffect() const { return mTouchEffect; }
+    al::PlayerHolder* getPlayerHolder() const { return mPlayerHolder; }
+    const sead::Vector2f& getTouchScreenPos() const { return mTouchScreenPos; }
+    const sead::Vector2f& getPrevTouchScreenPos() const { return mPrevTouchScreenPos; }
+    float getMinPoseDiff() const { return mMinPoseDiff; }
+    void setMinPoseDiff(float value) { mMinPoseDiff = value; }
+    void setPoseChecked() { mIsPoseChecked = true; }
+
 
 private:
+    friend class DrcAssistDirectorList;
     bool isTriggerTouchPanel() const;
     bool isHoldTouchPanel() const;
 

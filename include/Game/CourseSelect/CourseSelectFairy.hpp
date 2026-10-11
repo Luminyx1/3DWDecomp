@@ -11,6 +11,8 @@ public:
     CourseSelectFairy(const char* pName, s32 worldId, bool isHide);
 
     void startWorldClearDemo();
+    void startBackToCastleDemo(const sead::Matrix34f* pMtx);
+    void forceBackToCastle();
     void startWorldStartDemo();
     void endWorldStartDemo();
     void startPause();
