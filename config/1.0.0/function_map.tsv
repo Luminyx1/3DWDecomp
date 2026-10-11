@@ -9794,8 +9794,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001779B0			FALSE	_ZN25WalkerStateRouteDokanMoveD0Ev	WalkerStateRouteDokanMove::~WalkerStateRouteDokanMove()	
 0x71001779E0			FALSE	_ZNK12_GLOBAL__N_133WalkerStateRouteDokanMoveNrvStart7executeEPN2al11NerveKeeperE	(anonymous namespace)::WalkerStateRouteDokanMoveNrvStart::execute(al::NerveKeeper*) const	
 0x71001779F0			FALSE	_ZNK12_GLOBAL__N_132WalkerStateRouteDokanMoveNrvMove7executeEPN2al11NerveKeeperE	(anonymous namespace)::WalkerStateRouteDokanMoveNrvMove::execute(al::NerveKeeper*) const	
-0x7100177A00			FALSE	sub_7100177A00	sub_7100177A00	
-0x7100177A80			FALSE	sub_7100177A80	sub_7100177A80	
+0x7100177A00			FALSE	_ZNK12_GLOBAL__N_133WalkerStateRouteDokanMoveNrvEject7executeEPN2al11NerveKeeperE	(anonymous namespace)::WalkerStateRouteDokanMoveNrvEject::execute(al::NerveKeeper*) const	
+0x7100177A80			FALSE	_ZNK12_GLOBAL__N_132WalkerStateRouteDokanMoveNrvLand7executeEPN2al11NerveKeeperE	(anonymous namespace)::WalkerStateRouteDokanMoveNrvLand::execute(al::NerveKeeper*) const	
 0x7100177AF0		WalkerStateWander.o	FALSE	_ZN22WalkerStateWanderParamC2Ev	WalkerStateWanderParam::WalkerStateWanderParam()	
 0x7100177CF0			FALSE	_ZN22WalkerStateWanderParamC2EiiffffbPKcS1_	WalkerStateWanderParam::WalkerStateWanderParam(int, int, float, float, float, float, bool, char const*, char const*)	
 0x7100177EF0			FALSE	_ZN17WalkerStateWanderC1EPN2al9LiveActorEPN4sead7Vector3IfEEPK16WalkerStateParamPK22WalkerStateWanderParamP12TargetFinder	WalkerStateWander::WalkerStateWander(al::LiveActor*, sead::Vector3<float>*, WalkerStateParam const*, WalkerStateWanderParam const*, TargetFinder*)	
