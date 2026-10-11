@@ -1109,7 +1109,7 @@ src/Game/Layout/CourseSelectInfoMystery10.cpp: done
     .text   start:0x001BD5E0 end:0x001BD71C
 src/Game/Layout/CourseSelectInfoMysteryMax.cpp: done
     .text   start:0x001BD720 end:0x001BD864
-src/Game/Layout/CourseSelectLayout.cpp:
+src/Game/Layout/CourseSelectLayout.cpp: done
     .text   start:0x001BD870 end:0x001BDEE8
 src/Game/Layout/CourseSelectMiniatureCursor.cpp:
     .text   start:0x001BDEF0 end:0x001BE910

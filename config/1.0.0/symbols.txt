@@ -5791,3 +5791,7 @@
 
 # src/Game/Layout/TestMusaLayout
 0x71019E7010 8 object _ZN12_GLOBAL__N_121NrvTestMusaLayoutWaitE
+
+# src/Game/Layout/CourseSelectLayout
+0x71019D7708 8 object _ZN12_GLOBAL__N_125NrvCourseSelectLayoutPlayE
+0x71019D7730 8 object _ZN12_GLOBAL__N_125NrvCourseSelectLayoutDemoE

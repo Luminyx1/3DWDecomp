@@ -11575,8 +11575,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001BDE30			FALSE	_ZN18CourseSelectLayout7exePlayEv	CourseSelectLayout::exePlay()	
 0x71001BDE40			FALSE	_ZN18CourseSelectLayout19isAfterOpeningStateEv	CourseSelectLayout::isAfterOpeningState()	
 0x71001BDE90			FALSE	_ZN18CourseSelectLayoutD0Ev	CourseSelectLayout::~CourseSelectLayout()	
-0x71001BDEC0			FALSE	nullsub_114	nullsub_114	
-0x71001BDED0			FALSE	nullsub_115	nullsub_115	
+0x71001BDEC0			FALSE	_ZNK12_GLOBAL__N_125CourseSelectLayoutNrvPlay7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectLayoutNrvPlay::execute(al::NerveKeeper*) const	
+0x71001BDED0			FALSE	_ZNK12_GLOBAL__N_125CourseSelectLayoutNrvDemo7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectLayoutNrvDemo::execute(al::NerveKeeper*) const	
 0x71001BDEE0			FALSE	_ZNK12_GLOBAL__N_133CourseSelectLayoutNrvAfterOpening7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectLayoutNrvAfterOpening::execute(al::NerveKeeper*) const	
 0x71001BDEF0		CourseSelectMiniatureCursor.o	FALSE	_ZN27CourseSelectMiniatureCursorC1ERKN2al14LayoutInitInfoEP20CourseSelectDirectorPKNS0_13NetworkSystemE	CourseSelectMiniatureCursor::CourseSelectMiniatureCursor(al::LayoutInitInfo const&, CourseSelectDirector*, al::NetworkSystem const*)	
 0x71001BE000			FALSE	_ZN27CourseSelectMiniatureCursor9startDemoEv	CourseSelectMiniatureCursor::startDemo()	

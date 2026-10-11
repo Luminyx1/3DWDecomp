@@ -1,6 +1,7 @@
 #pragma once
 
 #include <basis/seadTypes.h>
+#include "Library/Nerve/NerveExecutor.hpp"
 
 namespace al {
 class ErrorViewer;
@@ -12,16 +13,27 @@ class PlayerHolder;
 
 class CourseSelectDirector;
 class CourseSelectSceneLayout;
+class CourseSelectMiniatureCursor;
+class PlayerEntryMini;
+class GuideCourse;
 class GameDataHolder;
 class ICourseSelectActorController;
 
 /**
  * @brief Holder of the course select map layouts.
- * @note Minimal declaration: only what the reconstructed code uses is declared so far.
  */
-class CourseSelectLayout {
+class CourseSelectLayout : public al::NerveExecutor {
 public:
     CourseSelectLayout();
+    ~CourseSelectLayout() override = default;
+    void validateButton();
+    bool isDecide() const;
+    bool isShowPlayGuide() const;
+    void changeUserPort(int srcPort, int dstPort);
+    void exeAfterOpening();
+    void exeDemo();
+    void exePlay();
+    bool isAfterOpeningState();
 
     void init(const al::LayoutInitInfo& rInfo, GameDataHolder* pGameDataHolder,
               al::PlayerHolder* pPlayerHolder, CourseSelectDirector* pDirector,
@@ -52,11 +64,12 @@ public:
     void setAfterOpening() { mIsAfterOpening = true; }
 
 private:
-    u8 _0[0x10];
-    CourseSelectSceneLayout* mSceneLayout;  // 0x10
-    u8 _18[0x32 - 0x18];
-    bool mIsAfterOpening;  // 0x32
-    u8 _33[0x38 - 0x33];
+    CourseSelectSceneLayout* mSceneLayout = nullptr;
+    CourseSelectMiniatureCursor* mCursor = nullptr;
+    PlayerEntryMini* mPlayerEntry = nullptr;
+    GuideCourse* mGuide = nullptr;
+    bool mIsDemo = false;
+    bool mHasStartedEntry = false;
+    bool mIsAfterOpening = false;
 };
-
 static_assert(sizeof(CourseSelectLayout) == 0x38);
