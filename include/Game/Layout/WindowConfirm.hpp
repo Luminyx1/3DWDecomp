@@ -13,9 +13,9 @@ class LayoutInitInfo;
  * @note Passed as a 64-bit value by the callers (`mov x1, xzr`).
  */
 SEAD_ENUM(WindowConfirmType, Report, OneButton, TwoButton)
-inline const WindowConfirmType WindowConfirmType_Report = WindowConfirmType::Report;
-inline const WindowConfirmType WindowConfirmType_Notice = WindowConfirmType::OneButton;
-inline const WindowConfirmType WindowConfirmType_Double = WindowConfirmType::TwoButton;
+inline constexpr auto WindowConfirmType_Report = WindowConfirmType::Report;
+inline constexpr auto WindowConfirmType_Notice = WindowConfirmType::OneButton;
+inline constexpr auto WindowConfirmType_Double = WindowConfirmType::TwoButton;
 
 /**
  * @brief Pop-up confirmation window with one or two choice buttons.

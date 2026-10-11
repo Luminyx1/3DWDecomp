@@ -8,8 +8,8 @@ class LiveActor;
 class ICourseSelectActorController;
 
 SEAD_ENUM(CourseSelectSensorType, Touch, Lock, Dokan, RouteDokan, Category4)
-inline const CourseSelectSensorType cCourseSelectSensorType_Actor = CourseSelectSensorType::Touch;
-inline const CourseSelectSensorType cCourseSelectSensorType_Rocket = CourseSelectSensorType::Category4;
+inline constexpr auto cCourseSelectSensorType_Actor = CourseSelectSensorType::Touch;
+inline constexpr auto cCourseSelectSensorType_Rocket = CourseSelectSensorType::Category4;
 
 class CourseSelectSensor {
 public:

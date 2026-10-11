@@ -1721,7 +1721,7 @@ src/Game/MapObj/IllustItemKeeper.cpp: done
     .text   start:0x002E50C0 end:0x002E5238
 src/Game/MapObj/IslandAreaWatcher.cpp:
     .text   start:0x002E5240 end:0x002E5440
-src/Game/MapObj/IslandFlag.cpp:
+src/Game/MapObj/IslandFlag.cpp: done
     .text   start:0x002E5440 end:0x002E6484
 src/Game/MapObj/IslandKeeper.cpp:
     .text   start:0x002E6490 end:0x002E79FC

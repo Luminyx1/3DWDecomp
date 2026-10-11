@@ -1,4 +1,3 @@
-#include "CourseSelect/MiniatureController.hpp"
 #include "CourseSelect/CourseSelectStateRevivePlayer.hpp"
 #include "CourseSelect/CourseSelectScene.hpp"
 #include "CourseSelect/CourseSelectDirector.hpp"

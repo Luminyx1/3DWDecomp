@@ -113,7 +113,7 @@ public:
     /** @brief Gets the map director. @return Course-select director. */
     CourseSelectDirector* getDirector() const { return mDirector; }
     /** @brief Gets the controller the puppeteers use. @return The controller. */
-    MiniatureController* getController() const { return mController; }
+    ICourseSelectActorController* getController() const { return mController; }
     /** @brief Gets the number of courses opened by clearing this one. @return The count. */
     s32 getNextCourseNum() const { return mNextCourseNum; }
     /** @brief Gets the ids of the courses opened by clearing this one. @return The id array. */
@@ -147,7 +147,7 @@ private:
     CourseSelectSensor* mDrcSensor = nullptr;
     CourseSelectActorInfo* mActorInfo = nullptr;
     CourseSelectPuppeteerGroup* mPuppeteerGroup = nullptr;
-    MiniatureController* mController = nullptr;
+    ICourseSelectActorController* mController = nullptr;
     al::RumbleCalculator* mRumble;
     sead::Vector3f mAppearTrans;
     bool mHasDokanLink = false;
