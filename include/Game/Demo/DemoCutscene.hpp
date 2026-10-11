@@ -125,6 +125,7 @@ private:
     /** @brief End the current phase if requested, otherwise end the cutscene. */
     void endPhaseOrCutscene();
 
+protected:
     bool mIsRequireOnGround = false;  // 0x300
     bool mIsInvalidatePlayerInput = false;  // 0x301
     bool mIsBindPlayer;  // 0x302
