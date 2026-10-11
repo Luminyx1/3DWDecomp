@@ -12093,7 +12093,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001D2470			FALSE	_ZNK12_GLOBAL__N_122ListStampResultNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::ListStampResultNrvWait::execute(al::NerveKeeper*) const	
 0x71001D2480			FALSE	_ZNK12_GLOBAL__N_124ListStampResultNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::ListStampResultNrvAppear::execute(al::NerveKeeper*) const	
 0x71001D2490		LockOnButton.o	FALSE	_ZN12LockOnButtonC2ERKN2al14LayoutInitInfoE	LockOnButton::LockOnButton(al::LayoutInitInfo const&)	
-0x71001D2690			FALSE	sub_71001D2690	sub_71001D2690	
+0x71001D2690			FALSE	_ZN12_GLOBAL__N_115formatHoldMeterEPN4sead22BufferedSafeStringBaseIDsEEf	(anonymous namespace)::formatHoldMeter(sead::BufferedSafeStringBase<char16_t>*, float)	
 0x71001D2880			FALSE	_ZN12LockOnButtonC1ERKN2al14LayoutInitInfoE	LockOnButton::LockOnButton(al::LayoutInitInfo const&)	
 0x71001D2A90			FALSE	_ZN12LockOnButton11startAppearEv	LockOnButton::startAppear()	
 0x71001D2AD0			FALSE	_ZN12LockOnButton3endEv	LockOnButton::end()	
@@ -12107,10 +12107,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001D2DE0			FALSE	_ZNK12LockOnButton5isEndEv	LockOnButton::isEnd() const	
 0x71001D2E50			FALSE	_ZNK12LockOnButton18getSceneCameraInfoEv	LockOnButton::getSceneCameraInfo() const	
 0x71001D2E60			FALSE	_ZThn32_NK12LockOnButton18getSceneCameraInfoEv	non-virtual thunk to LockOnButton::getSceneCameraInfo() const	
-0x71001D2E70			FALSE	sub_71001D2E70	sub_71001D2E70	
+0x71001D2E70			FALSE	_ZNK12_GLOBAL__N_118LockOnButtonNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::LockOnButtonNrvEnd::execute(al::NerveKeeper*) const	
 0x71001D2F00			FALSE	_ZNK12_GLOBAL__N_121LockOnButtonNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::LockOnButtonNrvAppear::execute(al::NerveKeeper*) const	
-0x71001D2F10			FALSE	sub_71001D2F10	sub_71001D2F10	
-0x71001D2FA0			FALSE	sub_71001D2FA0	sub_71001D2FA0	
+0x71001D2F10			FALSE	_ZNK12_GLOBAL__N_121LockOnButtonNrvFinish7executeEPN2al11NerveKeeperE	(anonymous namespace)::LockOnButtonNrvFinish::execute(al::NerveKeeper*) const	
+0x71001D2FA0			FALSE	_ZNK12_GLOBAL__N_119LockOnButtonNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::LockOnButtonNrvWait::execute(al::NerveKeeper*) const	
 0x71001D3050		MapMenu.o	FALSE	_ZN7MapMenuC2ERKN2al14LayoutInitInfoEPK14GameDataHolderPNS0_15SceneCameraInfoEP20CourseSelectDirectorPNS0_18GraphicsSystemInfoEP18RCSControlGuideBar	MapMenu::MapMenu(al::LayoutInitInfo const&, GameDataHolder const*, al::SceneCameraInfo*, CourseSelectDirector*, al::GraphicsSystemInfo*, RCSControlGuideBar*)	
 0x71001D3210			FALSE	_ZN7MapMenuC1ERKN2al14LayoutInitInfoEPK14GameDataHolderPNS0_15SceneCameraInfoEP20CourseSelectDirectorPNS0_18GraphicsSystemInfoEP18RCSControlGuideBar	MapMenu::MapMenu(al::LayoutInitInfo const&, GameDataHolder const*, al::SceneCameraInfo*, CourseSelectDirector*, al::GraphicsSystemInfo*, RCSControlGuideBar*)	
 0x71001D33D0			FALSE	_ZN7MapMenu4killEv	MapMenu::kill()	

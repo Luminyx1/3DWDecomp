@@ -5938,3 +5938,8 @@
 0x71019E22E8 8 object _ZN12_GLOBAL__N_118NrvRescueButtonEndE
 0x71019E22F0 8 object _ZN12_GLOBAL__N_121NrvRescueButtonFinishE
 0x71019E22E0 8 object _ZN12_GLOBAL__N_119NrvRescueButtonWaitE
+
+# src/Game/Layout/LockOnButton
+0x71019DD680 8 object _ZN12_GLOBAL__N_118NrvLockOnButtonEndE
+0x71019DD688 8 object _ZN12_GLOBAL__N_121NrvLockOnButtonFinishE
+0x71019DD678 8 object _ZN12_GLOBAL__N_119NrvLockOnButtonWaitE
