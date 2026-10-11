@@ -2655,10 +2655,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71000730C0			FALSE	_ZN20TentackTentacleGroup6exeEndEv	TentackTentacleGroup::exeEnd()	
 0x7100073150			FALSE	_ZNK20TentackTentacleGroup7getHeadEv	TentackTentacleGroup::getHead() const	
 0x7100073170			FALSE	_ZNK20TentackTentacleGroup14getNerveKeeperEv	TentackTentacleGroup::getNerveKeeper() const	
-0x7100073180			FALSE	nullsub_15	nullsub_15	
-0x7100073190			FALSE	nullsub_16	nullsub_16	
-0x71000731A0			FALSE	sub_71000731A0	sub_71000731A0	
-0x7100073270			FALSE	sub_7100073270	sub_7100073270	
+0x7100073180			FALSE	_ZNK12_GLOBAL__N_131TentackTentacleGroupNrvDeactive7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_131TentackTentacleGroupNrvDeactive7executeEPN2al11NerveKeeperE	matched helper/nerve
+0x7100073190			FALSE	_ZNK12_GLOBAL__N_127TentackTentacleGroupNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_127TentackTentacleGroupNrvWait7executeEPN2al11NerveKeeperE	matched helper/nerve
+0x71000731A0			FALSE	_ZNK12_GLOBAL__N_133TentackTentacleGroupNrvEndRequest7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_133TentackTentacleGroupNrvEndRequest7executeEPN2al11NerveKeeperE	matched helper/nerve
+0x7100073270			FALSE	_ZNK12_GLOBAL__N_126TentackTentacleGroupNrvEnd7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_126TentackTentacleGroupNrvEnd7executeEPN2al11NerveKeeperE	matched helper/nerve
 0x7100073300		TentackTentacleStep.o	FALSE	_ZN19TentackTentacleStepC2EPKcP15TentackTentaclePKN4sead7Vector3IfEE	TentackTentacleStep::TentackTentacleStep(char const*, TentackTentacle*, sead::Vector3<float> const*)	
 0x71000733A0			FALSE	_ZN19TentackTentacleStepC1EPKcP15TentackTentaclePKN4sead7Vector3IfEE	TentackTentacleStep::TentackTentacleStep(char const*, TentackTentacle*, sead::Vector3<float> const*)	
 0x7100073440			FALSE	_ZN19TentackTentacleStep4initERKN2al13ActorInitInfoE	TentackTentacleStep::init(al::ActorInitInfo const&)	
