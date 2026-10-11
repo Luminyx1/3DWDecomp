@@ -31668,12 +31668,12 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71004DAB80			FALSE	_ZN23StageSceneStateGameOver7exeSaveEv	StageSceneStateGameOver::exeSave()	
 0x71004DAC00			FALSE	_ZN23StageSceneStateGameOver7exeDoneEv	StageSceneStateGameOver::exeDone()	
 0x71004DAC80			FALSE	_ZN23StageSceneStateGameOverD0Ev	StageSceneStateGameOver::~StageSceneStateGameOver()	
-0x71004DACB0			FALSE	nullsub_278	nullsub_278	
+0x71004DACB0			FALSE	_ZNK12_GLOBAL__N_130StageSceneStateGameOverNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::StageSceneStateGameOverNrvWait::execute(al::NerveKeeper*) const	
 0x71004DACC0			FALSE	_ZNK12_GLOBAL__N_130StageSceneStateGameOverNrvMiss7executeEPN2al11NerveKeeperE	(anonymous namespace)::StageSceneStateGameOverNrvMiss::execute(al::NerveKeeper*) const	
 0x71004DACD0			FALSE	_ZNK12_GLOBAL__N_138StageSceneStateGameOverNrvDemoGameOver7executeEPN2al11NerveKeeperE	(anonymous namespace)::StageSceneStateGameOverNrvDemoGameOver::execute(al::NerveKeeper*) const	
-0x71004DACE0			FALSE	sub_71004DACE0	sub_71004DACE0	
-0x71004DAD00			FALSE	sub_71004DAD00	sub_71004DAD00	
-0x71004DAD80			FALSE	sub_71004DAD80	sub_71004DAD80	
+0x71004DACE0			FALSE	_ZNK12_GLOBAL__N_138StageSceneStateGameOverNrvGameOverMenu7executeEPN2al11NerveKeeperE	(anonymous namespace)::StageSceneStateGameOverNrvGameOverMenu::execute(al::NerveKeeper*) const	
+0x71004DAD00			FALSE	_ZNK12_GLOBAL__N_138StageSceneStateGameOverNrvDemoContinue7executeEPN2al11NerveKeeperE	(anonymous namespace)::StageSceneStateGameOverNrvDemoContinue::execute(al::NerveKeeper*) const	
+0x71004DAD80			FALSE	_ZNK12_GLOBAL__N_130StageSceneStateGameOverNrvDone7executeEPN2al11NerveKeeperE	(anonymous namespace)::StageSceneStateGameOverNrvDone::execute(al::NerveKeeper*) const	
 0x71004DAE00			FALSE	_Z24OldPlayerDemoAdjustSpeedf	OldPlayerDemoAdjustSpeed(float)	
 0x71004DAE40			FALSE	_Z21KuriboMiniKillCheckeri	KuriboMiniKillChecker(int)	
 0x71004DAE70		TitleDemoInfo.o	FALSE	_ZN13TitleDemoInfoC2EiPKiPKc	TitleDemoInfo::TitleDemoInfo(int, int const*, char const*)	object (class)
