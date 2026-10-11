@@ -5815,3 +5815,6 @@
 0x71019E66A0 8 object _ZN12_GLOBAL__N_138NrvTestAoyagiPlayerEntryStateEntryWaitE
 0x71019E66C8 8 object _ZN12_GLOBAL__N_137NrvTestAoyagiPlayerEntryStateEntryEndE
 0x71019E66F0 8 object _ZN12_GLOBAL__N_138NrvTestAoyagiPlayerEntryStateEntryHideE
+
+# src/Game/Layout/CounterLockGigaBell
+0x71019C1360 8 object _ZN12_GLOBAL__N_126NrvCounterLockGigaBellWaitE

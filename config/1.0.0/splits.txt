@@ -947,7 +947,7 @@ src/Game/Layout/Switch/ChallengeTimerParts.cpp:
     .text   start:0x00184060 end:0x00184A58
 src/Game/Layout/Switch/CounterCoinInfo.cpp:
     .text   start:0x00184A60 end:0x0018521C
-src/Game/Layout/Switch/CounterLockGigaBell.cpp:
+src/Game/Layout/Switch/CounterLockGigaBell.cpp: done
     .text   start:0x00185220 end:0x00185874
 src/Game/Layout/Switch/CounterTimerGate.cpp:
     .text   start:0x00185880 end:0x00186084

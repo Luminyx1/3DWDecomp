@@ -11,7 +11,6 @@ class LayoutInitInfo;
 
 /**
  * @brief Counter shown over a locked Giga Bell with the Cat Shines still needed to unlock it.
- * @note Only what reconstructed code needs is declared so far.
  */
 class CounterLockGigaBell : public al::LayoutActor {
 public:
@@ -20,9 +19,16 @@ public:
 
     void startShow(s32 count);
     void endShow();
+    bool isDemoOn();
+    void exeAppear();
+    void exeWait();
+    void exeEnd();
+    al::SceneCameraInfo* getSceneCameraInfo() const override;
 
 private:
-    u8 _128[0x140 - 0x128];
+    al::SceneCameraInfo* mSceneCameraInfo;
+    al::DemoDirector* mDemoDirector;
+    const sead::Vector3f* mTrans;
 };
 
 static_assert(sizeof(CounterLockGigaBell) == 0x140);

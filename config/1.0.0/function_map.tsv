@@ -10149,7 +10149,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100185780			FALSE	_ZThn32_NK19CounterLockGigaBell18getSceneCameraInfoEv	non-virtual thunk to CounterLockGigaBell::getSceneCameraInfo() const	
 0x7100185790			FALSE	_ZNK12_GLOBAL__N_128CounterLockGigaBellNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::CounterLockGigaBellNrvAppear::execute(al::NerveKeeper*) const	
 0x71001857A0			FALSE	_ZNK12_GLOBAL__N_125CounterLockGigaBellNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::CounterLockGigaBellNrvEnd::execute(al::NerveKeeper*) const	
-0x71001857B0			FALSE	sub_71001857B0	sub_71001857B0	
+0x71001857B0			FALSE	_ZNK12_GLOBAL__N_126CounterLockGigaBellNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::CounterLockGigaBellNrvWait::execute(al::NerveKeeper*) const	
 0x7100185880		CounterTimerGate.o	FALSE	_ZN16CounterTimerGateC2ERKN2al14LayoutInitInfoEPKcS5_PNS0_11LayoutActorE	CounterTimerGate::CounterTimerGate(al::LayoutInitInfo const&, char const*, char const*, al::LayoutActor*)	
 0x7100185950			FALSE	_ZN16CounterTimerGateC1ERKN2al14LayoutInitInfoEPKcS5_PNS0_11LayoutActorE	CounterTimerGate::CounterTimerGate(al::LayoutInitInfo const&, char const*, char const*, al::LayoutActor*)	
 0x7100185A20			FALSE	_ZN16CounterTimerGate8setTimerEii	CounterTimerGate::setTimer(int, int)	
