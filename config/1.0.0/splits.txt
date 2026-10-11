@@ -439,7 +439,7 @@ src/Game/CourseSelect/CourseSelectSensor.cpp: done
     .text   start:0x000B0780 end:0x000B07C0
 src/Game/CourseSelect/CourseSelectStateAfterEndingEvent.cpp:
     .text   start:0x000B07C0 end:0x000B0A38
-src/Game/CourseSelect/RouteOpenCursor.cpp:
+src/Game/CourseSelect/RouteOpenCursor.cpp: done
     .text   start:0x000B0A40 end:0x000B0D44
 src/Game/CourseSelect/CourseSelectStateClearDemo.cpp:
     .text   start:0x000B0D50 end:0x000B2558

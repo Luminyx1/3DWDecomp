@@ -3,6 +3,7 @@
 #include "Library/Scene/ISceneObj.hpp"
 
 namespace al { class IUseSceneObjHolder; class LiveActor; }
+class CourseSelectNode;
 class CourseSelectSensor;
 class CourseSelectPuppeteerGroup;
 
@@ -13,6 +14,8 @@ public:
     bool isEnableEnterSelectedSensor() const;
     bool isTriggerDecideMainPlayer() const;
     bool isPlayLeaveDemo(int userId) const;
+    int tryFindNodeList(CourseSelectNode** ppNodes, int capacity, CourseSelectNode* pStart, CourseSelectNode* pEnd) const;
+    CourseSelectNode* tryFindFirstCrossingNode(const CourseSelectNode* pStart, int depth) const;
     void touchPlayer(CourseSelectSensor* pSensor, al::LiveActor* pPlayer);
 
     CourseSelectPuppeteerGroup* getPuppeteerGroup() const { return mpPuppeteerGroup; }

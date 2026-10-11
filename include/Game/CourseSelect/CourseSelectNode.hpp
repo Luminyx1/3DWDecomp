@@ -5,6 +5,9 @@
 class CourseSelectNode : public al::LiveActor {
 public:
     bool isCurve() const;
+    int getNextNodeNum() const;
+    bool isWait() const;
+    void openRoadToNextNode(CourseSelectNode* pNext, bool isImmediately);
 private:
     unsigned char _148[0xa8];
 };
