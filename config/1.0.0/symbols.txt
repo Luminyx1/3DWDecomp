@@ -6230,3 +6230,10 @@
 0x7101A741B8 8 object _ZN12_GLOBAL__N_114NrvBottleBreakE
 0x71003B1840 92 func _ZNK12_GLOBAL__N_121BottleNrvWaitGoalPole7executeEPN2al11NerveKeeperE
 0x71003B18A0 128 func _ZNK12_GLOBAL__N_114BottleNrvBreak7executeEPN2al11NerveKeeperE
+
+# Island flag nerve and constant tables
+0x7101A287C8 32 object _ZTVN12_GLOBAL__N_122IslandFlagNrvCameraOutE
+0x7101A287E8 8 object _ZN12_GLOBAL__N_122NrvIslandFlagCameraOutE
+0x71016B56E0 144 object _ZN12_GLOBAL__N_117cFlagSpringParamsE
+0x7101A28318 64 object _ZN12_GLOBAL__N_112cFlagEffectsE
+0x7101A28358 40 object _ZN12_GLOBAL__N_112cFlagActionsE
