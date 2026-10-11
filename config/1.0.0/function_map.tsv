@@ -3228,8 +3228,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710008DB70			FALSE	_ZN25CoinChameleonCourseSelect9setRotateEf	CoinChameleonCourseSelect::setRotate(float)	
 0x710008DCD0			FALSE	_ZN25CoinChameleonCourseSelectD1Ev	CoinChameleonCourseSelect::~CoinChameleonCourseSelect()	
 0x710008DCE0			FALSE	_ZN25CoinChameleonCourseSelectD0Ev	CoinChameleonCourseSelect::~CoinChameleonCourseSelect()	
-0x710008DD10			FALSE	sub_710008DD10	sub_710008DD10	
-0x710008DD60			FALSE	sub_710008DD60	sub_710008DD60	
+0x710008DD10			FALSE	_ZNK12_GLOBAL__N_132CoinChameleonCourseSelectNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::CoinChameleonCourseSelectNrvWait::execute(al::NerveKeeper*) const	
+0x710008DD60			FALSE	_ZNK12_GLOBAL__N_139CoinChameleonCourseSelectNrvMicReaction7executeEPN2al11NerveKeeperE	(anonymous namespace)::CoinChameleonCourseSelectNrvMicReaction::execute(al::NerveKeeper*) const	
 0x710008DD80			FALSE	_ZNK12_GLOBAL__N_141CoinChameleonCourseSelectNrvContactAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::CoinChameleonCourseSelectNrvContactAppear::execute(al::NerveKeeper*) const	
 0x710008DD90			FALSE	_ZNK12_GLOBAL__N_139CoinChameleonCourseSelectNrvInterpolate7executeEPN2al11NerveKeeperE	(anonymous namespace)::CoinChameleonCourseSelectNrvInterpolate::execute(al::NerveKeeper*) const	
 0x710008DDA0		CoinCourseSelect.o	FALSE	_ZN16CoinCourseSelectC2EPKc	CoinCourseSelect::CoinCourseSelect(char const*)	

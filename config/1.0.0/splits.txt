@@ -347,7 +347,7 @@ src/Game/CourseSelect/BlockEmptyCourseSelect.cpp: done
     .text   start:0x0008C860 end:0x0008CA90
 src/Game/CourseSelect/BlockQuestionCourseSelect.cpp: done
     .text   start:0x0008CA90 end:0x0008D020
-src/Game/CourseSelect/CoinChameleonCourseSelect.cpp:
+src/Game/CourseSelect/CoinChameleonCourseSelect.cpp: done
     .text   start:0x0008D020 end:0x0008DD98
 src/Game/CourseSelect/CoinCourseSelect.cpp: done
     .text   start:0x0008DDA0 end:0x0008E150
