@@ -2144,8 +2144,9 @@ src/Game/MapObj/TrampleSwitchTogether.cpp: done
     .text   start:0x00394650 end:0x00394CB4
 src/Game/MapObj/TrampleSwitchTogetherWatcher.cpp: done
     .text   start:0x00394CC0 end:0x003950A4
-src/Game/MapObj/Trampoline.cpp:
+src/Game/MapObj/Trampoline.cpp: done
     .text   start:0x003950B0 end:0x00395F98
+    .data   start:0x01A6AD10 end:0x01A6AD58
 src/Game/MapObj/TransparentWall.cpp: done
     .text   start:0x00395FA0 end:0x00396300
 src/Game/MapObj/Trapeze.cpp:

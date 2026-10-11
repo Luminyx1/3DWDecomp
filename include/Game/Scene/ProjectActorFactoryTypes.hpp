@@ -1,3 +1,4 @@
+#include "MapObj/Trampoline.hpp"
 #include "MapObj/KinokoTreasure.hpp"
 #include "MapObj/Ball.hpp"
 #include "NPC/Rabbit.hpp"
@@ -2387,14 +2388,6 @@ private:
 };
 static_assert(sizeof(TrampleSwitchTogetherWatcher) == 0x150);
 
-class Trampoline : public al::LiveActor {
-public:
-    explicit Trampoline(const char* pName);
-
-private:
-    u8 mUnreconstructed[0xfc];
-};
-static_assert(sizeof(Trampoline) == 0x240);
 
 class TransparentWall : public al::LiveActor {
 public:

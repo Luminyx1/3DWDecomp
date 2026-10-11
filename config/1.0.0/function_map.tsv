@@ -22827,9 +22827,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100395EB0			FALSE	_ZN10Trampoline7exeStopEv	Trampoline::exeStop()	
 0x7100395EC0			FALSE	_ZN10TrampolineD1Ev	Trampoline::~Trampoline()	
 0x7100395ED0			FALSE	_ZN10TrampolineD0Ev	Trampoline::~Trampoline()	
-0x7100395F00			FALSE	sub_7100395F00	sub_7100395F00	
-0x7100395F70			FALSE	nullsub_247	nullsub_247	
-0x7100395F80			FALSE	nullsub_248	nullsub_248	
+0x7100395F00			FALSE	_ZNK12_GLOBAL__N_117TrampolineNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_117TrampolineNrvWait7executeEPN2al11NerveKeeperE	
+0x7100395F70			FALSE	_ZNK12_GLOBAL__N_117TrampolineNrvStop7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_117TrampolineNrvStop7executeEPN2al11NerveKeeperE	
+0x7100395F80			FALSE	_ZNK12_GLOBAL__N_118TrampolineNrvReady7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_118TrampolineNrvReady7executeEPN2al11NerveKeeperE	
 0x7100395F90			FALSE	_ZNK12_GLOBAL__N_117TrampolineNrvMove7executeEPN2al11NerveKeeperE	(anonymous namespace)::TrampolineNrvMove::execute(al::NerveKeeper*) const	
 0x7100395FA0		TransparentWall.o	FALSE	_ZN15TransparentWallC2EPKc	TransparentWall::TransparentWall(char const*)	
 0x7100396020			FALSE	_ZN15TransparentWallC1EPKc	TransparentWall::TransparentWall(char const*)	
