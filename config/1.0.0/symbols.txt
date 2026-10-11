@@ -5896,3 +5896,7 @@
 # src/Game/Layout/WindowMessage
 0x71019E9080 8 object _ZN12_GLOBAL__N_123NrvWindowMessagePageEndE
 0x71019E9070 8 object _ZN12_GLOBAL__N_125NrvWindowMessagePageStartE
+
+# src/Game/Layout/ListStampParts
+0x71019DCEF8 8 object _ZN12_GLOBAL__N_121NrvListStampPartsWaitE
+0x71019DCF20 8 object _ZN12_GLOBAL__N_123NrvListStampPartsDecideE

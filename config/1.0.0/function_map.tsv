@@ -12078,8 +12078,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001D1DD0			FALSE	_ZN14ListStampParts39setAcquiredStampNameByCharacterCompleteEi	ListStampParts::setAcquiredStampNameByCharacterComplete(int)	
 0x71001D1ED0			FALSE	_ZN14ListStampParts7exeWaitEv	ListStampParts::exeWait()	
 0x71001D1EE0			FALSE	_ZN14ListStampParts9exeDecideEv	ListStampParts::exeDecide()	
-0x71001D1F50			FALSE	nullsub_122	nullsub_122	
-0x71001D1F60			FALSE	sub_71001D1F60	sub_71001D1F60	
+0x71001D1F50			FALSE	_ZNK12_GLOBAL__N_121ListStampPartsNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::ListStampPartsNrvWait::execute(al::NerveKeeper*) const	
+0x71001D1F60			FALSE	_ZNK12_GLOBAL__N_123ListStampPartsNrvDecide7executeEPN2al11NerveKeeperE	(anonymous namespace)::ListStampPartsNrvDecide::execute(al::NerveKeeper*) const	
 0x71001D1FD0		ListStampResult.o	FALSE	_ZN15ListStampResultC2ERKN2al14LayoutInitInfoEPK14GameDataHolder	ListStampResult::ListStampResult(al::LayoutInitInfo const&, GameDataHolder const*)	
 0x71001D20C0			FALSE	_ZN15ListStampResultC1ERKN2al14LayoutInitInfoEPK14GameDataHolder	ListStampResult::ListStampResult(al::LayoutInitInfo const&, GameDataHolder const*)	
 0x71001D21C0			FALSE	_ZN15ListStampResult9exeAppearEv	ListStampResult::exeAppear()	
