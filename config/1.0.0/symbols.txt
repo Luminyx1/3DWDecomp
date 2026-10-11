@@ -5732,3 +5732,5 @@
 0x7101952c78 8 object _ZN12_GLOBAL__N_126NrvDarkBowserShellSpinSpinE
 0x7101952ca0 8 object _ZN12_GLOBAL__N_129NrvDarkBowserShellSpinReverseE
 0x7101409EA8 80 object _ZN12_GLOBAL__N_111sSpinParamsE
+0x7101951398 8 object _ZN12_GLOBAL__N_126NrvDarkBowserJumpJumpStartE
+0x7101951400 24 object _ZN12_GLOBAL__N_117NrvDarkBowserJumpE

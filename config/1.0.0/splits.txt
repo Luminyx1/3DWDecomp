@@ -129,7 +129,7 @@ src/Game/Boss/DarkBowser.cpp:
     .text   start:0x00012E90 end:0x0001665C
 src/Game/Boss/DarkBowserBattle.cpp:
     .text   start:0x00016660 end:0x00018568
-src/Game/Boss/DarkBowserJump.cpp:
+src/Game/Boss/DarkBowserJump.cpp: done
     .text   start:0x00018570 end:0x00018E0C
 src/Game/Boss/DarkBowserStateDemo.cpp:
     .text   start:0x00018E10 end:0x00019858

@@ -4,6 +4,7 @@
 #include <math/seadVector.h>
 
 #include "Library/Nerve/NerveStateBase.hpp"
+#include "Library/Math/ParabolicPath.hpp"
 
 namespace al {
 class ActorInitInfo;
@@ -13,9 +14,8 @@ class DarkBowser;
 
 /**
  * @brief Fury Bowser's jump to another spot of the arena, done before some attacks.
- * @note Only what reconstructed code needs is declared so far.
  */
-class DarkBowserJump : public al::NerveStateBase {
+class DarkBowserJump : public al::HostStateBase<DarkBowser> {
 public:
     /**
      * @brief Scores a candidate landing spot; the best scoring spot is jumped to.
@@ -30,6 +30,7 @@ public:
 
     DarkBowserJump(DarkBowser* pHost, const al::ActorInitInfo& rInfo);
 
+    ~DarkBowserJump() override;
     void appear() override;
     void kill() override;
     void exeJumpStart();
@@ -48,9 +49,13 @@ public:
     void setIgnoreTarget() { mIsIgnoreTarget = true; }
 
 private:
-    u8 _11[0x60 - 0x11];  // starts in the tail padding of al::NerveStateBase
-    SpotScoreFunc mSpotScoreFunc;  // 0x60
-    bool mIsCenterJump;            // 0x68
-    bool mIsIgnoreTarget;          // 0x69
+    struct JumpSpot { sead::Vector3f position; int priority; };
+    JumpSpot* mSpots = nullptr;
+    int mSpotCount = 0;
+    int mSpotIndex = 0;
+    al::ParabolicPath mPath;
+    SpotScoreFunc mSpotScoreFunc = nullptr;  // 0x60
+    bool mIsCenterJump = false;            // 0x68
+    bool mIsIgnoreTarget = false;          // 0x69
 };
 static_assert(sizeof(DarkBowserJump) == 0x70);

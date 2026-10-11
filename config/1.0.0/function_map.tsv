@@ -611,9 +611,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100018D40			FALSE	_ZN14DarkBowserJump13setCenterJumpEv	DarkBowserJump::setCenterJump()	
 0x7100018D50			FALSE	_ZN14DarkBowserJumpD0Ev	DarkBowserJump::~DarkBowserJump()	
 0x7100018D80			FALSE	_ZNK12_GLOBAL__N_126DarkBowserJumpNrvJumpStart7executeEPN2al11NerveKeeperE	(anonymous namespace)::DarkBowserJumpNrvJumpStart::execute(al::NerveKeeper*) const	
-0x7100018D90			FALSE	sub_7100018D90	sub_7100018D90	
-0x7100018DA0			FALSE	sub_7100018DA0	sub_7100018DA0	
-0x7100018DB0			FALSE	sub_7100018DB0	sub_7100018DB0	
+0x7100018D90			FALSE	_ZNK12_GLOBAL__N_123DarkBowserJumpNrvJumpUp7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_123DarkBowserJumpNrvJumpUp7executeEPN2al11NerveKeeperE	matched nerve
+0x7100018DA0			FALSE	_ZNK12_GLOBAL__N_125DarkBowserJumpNrvJumpDown7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_125DarkBowserJumpNrvJumpDown7executeEPN2al11NerveKeeperE	matched nerve
+0x7100018DB0			FALSE	_ZNK12_GLOBAL__N_121DarkBowserJumpNrvLand7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_121DarkBowserJumpNrvLand7executeEPN2al11NerveKeeperE	matched nerve
 0x7100018E10		DarkBowserStateDemo.o	FALSE	_ZN19DarkBowserStateDemoC1EP10DarkBowserRKN2al13ActorInitInfoE	DarkBowserStateDemo::DarkBowserStateDemo(DarkBowser*, al::ActorInitInfo const&)	
 0x7100018FE0			FALSE	_ZN19DarkBowserStateDemo6appearEv	DarkBowserStateDemo::appear()	
 0x7100019040			FALSE	_ZN19DarkBowserStateDemo4killEv	DarkBowserStateDemo::kill()	
