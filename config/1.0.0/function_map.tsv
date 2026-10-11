@@ -6093,9 +6093,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71000EA5D0			FALSE	_ZN18CrawlerLaunchState12exeAppearEndEv	CrawlerLaunchState::exeAppearEnd()	
 0x71000EA640			FALSE	_ZN18CrawlerLaunchStateD0Ev	CrawlerLaunchState::~CrawlerLaunchState()	
 0x71000EA670			FALSE	_ZNK12_GLOBAL__N_130CrawlerLaunchStateNrvLaunchSet7executeEPN2al11NerveKeeperE	(anonymous namespace)::CrawlerLaunchStateNrvLaunchSet::execute(al::NerveKeeper*) const	
-0x71000EA680			FALSE	sub_71000EA680	sub_71000EA680	
+0x71000EA680			FALSE	_ZNK12_GLOBAL__N_131CrawlerLaunchStateNrvAppearSign7executeEPN2al11NerveKeeperE	(anonymous namespace)::CrawlerLaunchStateNrvAppearSign::execute(al::NerveKeeper*) const	
 0x71000EA700			FALSE	_ZNK12_GLOBAL__N_127CrawlerLaunchStateNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::CrawlerLaunchStateNrvAppear::execute(al::NerveKeeper*) const	
-0x71000EA710			FALSE	sub_71000EA710	sub_71000EA710	
+0x71000EA710			FALSE	_ZNK12_GLOBAL__N_130CrawlerLaunchStateNrvAppearEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::CrawlerLaunchStateNrvAppearEnd::execute(al::NerveKeeper*) const	
 0x71000EA790		CrawlerWalkState.o	FALSE	_ZN21CrawlerWalkStateParamC2Ev	CrawlerWalkStateParam::CrawlerWalkStateParam()	
 0x71000EA7D0			FALSE	_ZN21CrawlerWalkStateParamC1Effffffffffi	CrawlerWalkStateParam::CrawlerWalkStateParam(float, float, float, float, float, float, float, float, float, float, int)	
 0x71000EA810			FALSE	_ZN16CrawlerWalkStateC2EPN2al9LiveActorEPNS0_13KeyPoseKeeperERKN4sead7Vector3IfEEPK21CrawlerWalkStateParam	CrawlerWalkState::CrawlerWalkState(al::LiveActor*, al::KeyPoseKeeper*, sead::Vector3<float> const&, CrawlerWalkStateParam const*)	
