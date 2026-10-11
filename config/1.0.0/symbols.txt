@@ -5723,3 +5723,7 @@
 
 0x7101981070 8 object _ZN12_GLOBAL__N_133NrvBombBoundGeneratorWaitStartingE
 0x7101981078 8 object _ZN12_GLOBAL__N_125NrvBombBoundGeneratorIdleE
+
+0x7101988B70 8 object _ZN12_GLOBAL__N_125NrvChorobonCubeHolderStopE
+0x7101988B78 8 object _ZN12_GLOBAL__N_126NrvChorobonCubeHolderDelayE
+0x7101988B80 8 object _ZN12_GLOBAL__N_125NrvChorobonCubeHolderWaitE

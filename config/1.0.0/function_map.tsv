@@ -5999,9 +5999,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71000E6EA0			FALSE	_ZN18ChorobonCubeHolderD1Ev	ChorobonCubeHolder::~ChorobonCubeHolder()	
 0x71000E6EB0			FALSE	_ZN18ChorobonCubeHolderD0Ev	ChorobonCubeHolder::~ChorobonCubeHolder()	
 0x71000E6EE0			FALSE	_ZNK12_GLOBAL__N_125ChorobonCubeHolderNrvMove7executeEPN2al11NerveKeeperE	(anonymous namespace)::ChorobonCubeHolderNrvMove::execute(al::NerveKeeper*) const	
-0x71000E6EF0			FALSE	nullsub_57	nullsub_57	
-0x71000E6F00			FALSE	sub_71000E6F00	sub_71000E6F00	
-0x71000E6F70			FALSE	sub_71000E6F70	sub_71000E6F70	
+0x71000E6EF0			FALSE	_ZNK12_GLOBAL__N_125ChorobonCubeHolderNrvStop7executeEPN2al11NerveKeeperE	(anonymous namespace)::ChorobonCubeHolderNrvStop::execute(al::NerveKeeper*) const	
+0x71000E6F00			FALSE	_ZNK12_GLOBAL__N_126ChorobonCubeHolderNrvDelay7executeEPN2al11NerveKeeperE	(anonymous namespace)::ChorobonCubeHolderNrvDelay::execute(al::NerveKeeper*) const	
+0x71000E6F70			FALSE	_ZNK12_GLOBAL__N_125ChorobonCubeHolderNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::ChorobonCubeHolderNrvWait::execute(al::NerveKeeper*) const	
 0x71000E7000			FALSE	_ZNK2al10FunctorV0MIP18ChorobonCubeHolderMS1_FvvEEclEv	al::FunctorV0M<ChorobonCubeHolder*, void (ChorobonCubeHolder::*)()>::operator()() const	
 0x71000E7020			FALSE	_ZNK2al10FunctorV0MIP18ChorobonCubeHolderMS1_FvvEE5cloneEv	al::FunctorV0M<ChorobonCubeHolder*, void (ChorobonCubeHolder::*)()>::clone() const	
 0x71000E7070		ChorobonHolder.o	FALSE	_ZN14ChorobonHolderC2EPKc	ChorobonHolder::ChorobonHolder(char const*)	
