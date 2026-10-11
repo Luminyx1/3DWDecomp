@@ -1053,7 +1053,7 @@ src/Game/Layout/ButtonGroup.cpp:
     .text   start:0x001AB330 end:0x001AD9D4
 src/Game/Layout/ButtonItemStockParts.cpp:
     .text   start:0x001AD9E0 end:0x001AF218
-src/Game/Layout/ButtonShortCutAndTouchParts.cpp:
+src/Game/Layout/ButtonShortCutAndTouchParts.cpp: done
     .text   start:0x001AF220 end:0x001AFC38
 src/Game/Layout/ButtonShortCutParts.cpp: done
     .text   start:0x001AFC40 end:0x001B01D4

@@ -11124,13 +11124,13 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001AF8D0			FALSE	_ZN27ButtonShortCutAndTouchParts9exeDecideEv	ButtonShortCutAndTouchParts::exeDecide()	
 0x71001AF980			FALSE	_ZN27ButtonShortCutAndTouchParts7exeHideEv	ButtonShortCutAndTouchParts::exeHide()	
 0x71001AF9C0			FALSE	_ZN27ButtonShortCutAndTouchParts6exeEndEv	ButtonShortCutAndTouchParts::exeEnd()	
-0x71001AFA20			FALSE	nullsub_105	nullsub_105	
-0x71001AFA30			FALSE	sub_71001AFA30	sub_71001AFA30	
-0x71001AFAA0			FALSE	sub_71001AFAA0	sub_71001AFAA0	
-0x71001AFAF0			FALSE	sub_71001AFAF0	sub_71001AFAF0	
+0x71001AFA20			FALSE	_ZNK12_GLOBAL__N_138ButtonShortCutAndTouchPartsNrvDeactive7executeEPN2al11NerveKeeperE	(anonymous namespace)::ButtonShortCutAndTouchPartsNrvDeactive::execute(al::NerveKeeper*) const	
+0x71001AFA30			FALSE	_ZNK12_GLOBAL__N_136ButtonShortCutAndTouchPartsNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::ButtonShortCutAndTouchPartsNrvAppear::execute(al::NerveKeeper*) const	
+0x71001AFAA0			FALSE	_ZNK12_GLOBAL__N_134ButtonShortCutAndTouchPartsNrvHide7executeEPN2al11NerveKeeperE	(anonymous namespace)::ButtonShortCutAndTouchPartsNrvHide::execute(al::NerveKeeper*) const	
+0x71001AFAF0			FALSE	_ZNK12_GLOBAL__N_133ButtonShortCutAndTouchPartsNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::ButtonShortCutAndTouchPartsNrvEnd::execute(al::NerveKeeper*) const	
 0x71001AFB60			FALSE	_ZNK12_GLOBAL__N_134ButtonShortCutAndTouchPartsNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::ButtonShortCutAndTouchPartsNrvWait::execute(al::NerveKeeper*) const	
-0x71001AFB70			FALSE	sub_71001AFB70	sub_71001AFB70	
-0x71001AFC20			FALSE	nullsub_106	nullsub_106	
+0x71001AFB70			FALSE	_ZNK12_GLOBAL__N_136ButtonShortCutAndTouchPartsNrvDecide7executeEPN2al11NerveKeeperE	(anonymous namespace)::ButtonShortCutAndTouchPartsNrvDecide::execute(al::NerveKeeper*) const	
+0x71001AFC20			FALSE	_ZNK12_GLOBAL__N_139ButtonShortCutAndTouchPartsNrvDecideEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::ButtonShortCutAndTouchPartsNrvDecideEnd::execute(al::NerveKeeper*) const	
 0x71001AFC30			FALSE	_ZNK12_GLOBAL__N_135ButtonShortCutAndTouchPartsNrvTouch7executeEPN2al11NerveKeeperE	(anonymous namespace)::ButtonShortCutAndTouchPartsNrvTouch::execute(al::NerveKeeper*) const	
 0x71001AFC40		ButtonShortCutParts.o	FALSE	_ZN19ButtonShortCutPartsC2ERKN2al14LayoutInitInfoEPKcS5_PNS0_11LayoutActorEiNS_12ShortCutTypeE	ButtonShortCutParts::ButtonShortCutParts(al::LayoutInitInfo const&, char const*, char const*, al::LayoutActor*, int, ButtonShortCutParts::ShortCutType)	
 0x71001AFD10			FALSE	_ZN19ButtonShortCutPartsC1ERKN2al14LayoutInitInfoEPKcS5_PNS0_11LayoutActorEiNS_12ShortCutTypeE	ButtonShortCutParts::ButtonShortCutParts(al::LayoutInitInfo const&, char const*, char const*, al::LayoutActor*, int, ButtonShortCutParts::ShortCutType)	
