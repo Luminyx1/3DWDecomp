@@ -8336,7 +8336,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001409D0			FALSE	_ZN14RingBeamerBeam11exeDeactiveEv	RingBeamerBeam::exeDeactive()	
 0x7100140A30			FALSE	_ZN14RingBeamerBeamD1Ev	RingBeamerBeam::~RingBeamerBeam()	
 0x7100140A40			FALSE	_ZN14RingBeamerBeamD0Ev	RingBeamerBeam::~RingBeamerBeam()	
-0x7100140A70			FALSE	sub_7100140A70	sub_7100140A70	
+0x7100140A70			FALSE	_ZNK12_GLOBAL__N_125RingBeamerBeamNrvDeactive7executeEPN2al11NerveKeeperE	(anonymous namespace)::RingBeamerBeamNrvDeactive::execute(al::NerveKeeper*) const	
 0x7100140AD0			FALSE	_ZNK12_GLOBAL__N_123RingBeamerBeamNrvActive7executeEPN2al11NerveKeeperE	(anonymous namespace)::RingBeamerBeamNrvActive::execute(al::NerveKeeper*) const	
 0x7100140AE0			FALSE	_ZNK12_GLOBAL__N_124RingBeamerBeamNrvFadeOut7executeEPN2al11NerveKeeperE	(anonymous namespace)::RingBeamerBeamNrvFadeOut::execute(al::NerveKeeper*) const	
 0x7100140AF0			FALSE	_ZN20RunnerStateJumpParamD2Ev	RunnerStateJumpParam::~RunnerStateJumpParam()	
