@@ -3207,9 +3207,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710008CF00			FALSE	_ZN25BlockQuestionCourseSelect6exeEndEv	BlockQuestionCourseSelect::exeEnd()	
 0x710008CF10			FALSE	_ZN25BlockQuestionCourseSelectD1Ev	BlockQuestionCourseSelect::~BlockQuestionCourseSelect()	
 0x710008CF20			FALSE	_ZN25BlockQuestionCourseSelectD0Ev	BlockQuestionCourseSelect::~BlockQuestionCourseSelect()	
-0x710008CF50			FALSE	sub_710008CF50	sub_710008CF50	
-0x710008CF90			FALSE	sub_710008CF90	sub_710008CF90	
-0x710008D010			FALSE	sub_710008D010	sub_710008D010	
+0x710008CF50			FALSE	_ZNK12_GLOBAL__N_132BlockQuestionCourseSelectNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::BlockQuestionCourseSelectNrvWait::execute(al::NerveKeeper*) const	
+0x710008CF90			FALSE	_ZNK12_GLOBAL__N_138BlockQuestionCourseSelectNrvAppearItem7executeEPN2al11NerveKeeperE	(anonymous namespace)::BlockQuestionCourseSelectNrvAppearItem::execute(al::NerveKeeper*) const	
+0x710008D010			FALSE	_ZNK12_GLOBAL__N_131BlockQuestionCourseSelectNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::BlockQuestionCourseSelectNrvEnd::execute(al::NerveKeeper*) const	
 0x710008D020		CoinChameleonCourseSelect.o	FALSE	_ZN25CoinChameleonCourseSelectC2EPKc	CoinChameleonCourseSelect::CoinChameleonCourseSelect(char const*)	
 0x710008D0D0			FALSE	_ZN25CoinChameleonCourseSelectC1EPKc	CoinChameleonCourseSelect::CoinChameleonCourseSelect(char const*)	
 0x710008D180			FALSE	_ZN25CoinChameleonCourseSelect4initERKN2al13ActorInitInfoE	CoinChameleonCourseSelect::init(al::ActorInitInfo const&)	
