@@ -117,7 +117,7 @@ src/Game/Boss/Bunbun.cpp:
     .text   start:0x0000DD80 end:0x0000FCD8
 src/Game/Boss/BunbunArm.cpp: done
     .text   start:0x0000FCE0 end:0x000100B0
-src/Game/Boss/BunbunChameleon.cpp:
+src/Game/Boss/BunbunChameleon.cpp: done
     .text   start:0x000100B0 end:0x000104F0
 src/Game/Boss/BunbunShell.cpp:
     .text   start:0x000104F0 end:0x00010C98
