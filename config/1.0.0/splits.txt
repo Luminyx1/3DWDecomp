@@ -3141,7 +3141,7 @@ src/Game/Scene/DrcCameraScene.cpp: done
     .text   start:0x004B4A20 end:0x004B4C54
 src/Game/Scene/InGameSceneBase.cpp: done
     .text   start:0x004B4C60 end:0x004B4D34
-src/Game/Scene/IslandScene.cpp:
+src/Game/Scene/IslandScene.cpp: done
     .text   start:0x004B4D40 end:0x004B5058
 src/Game/Scene/IslandWarpState.cpp:
     .text   start:0x004B5060 end:0x004B5988
