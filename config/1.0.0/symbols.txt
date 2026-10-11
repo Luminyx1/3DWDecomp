@@ -5779,3 +5779,7 @@
 
 # src/Game/Layout/ListStampDemoParts
 0x71019DCB80 8 object _ZN12_GLOBAL__N_125NrvListStampDemoPartsWaitE
+
+# src/Game/Layout/CameraGyroDrc
+0x71019D2B20 8 object _ZN12_GLOBAL__N_122NrvCameraGyroDrcAppearE
+0x71019D2B48 8 object _ZN12_GLOBAL__N_119NrvCameraGyroDrcEndE

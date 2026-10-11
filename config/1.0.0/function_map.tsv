@@ -11303,8 +11303,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001B3A40			FALSE	_ZN13CameraGyroDrc6exeEndEv	CameraGyroDrc::exeEnd()	
 0x71001B3AB0			FALSE	_ZN13CameraGyroDrc9setGyroOnEv	CameraGyroDrc::setGyroOn()	
 0x71001B3AD0			FALSE	_ZN13CameraGyroDrc10setGyroOffEv	CameraGyroDrc::setGyroOff()	
-0x71001B3AF0			FALSE	sub_71001B3AF0	sub_71001B3AF0	
-0x71001B3B50			FALSE	sub_71001B3B50	sub_71001B3B50	
+0x71001B3AF0			FALSE	_ZNK12_GLOBAL__N_122CameraGyroDrcNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::CameraGyroDrcNrvAppear::execute(al::NerveKeeper*) const	
+0x71001B3B50			FALSE	_ZNK12_GLOBAL__N_119CameraGyroDrcNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::CameraGyroDrcNrvEnd::execute(al::NerveKeeper*) const	
 0x71001B3BC0			FALSE	_ZNK12_GLOBAL__N_120CameraGyroDrcNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::CameraGyroDrcNrvWait::execute(al::NerveKeeper*) const	
 0x71001B3BD0		CameraIcon.o	FALSE	_ZN10CameraIconC2ERKN2al14LayoutInitInfoEb	CameraIcon::CameraIcon(al::LayoutInitInfo const&, bool)	
 0x71001B3CB0			FALSE	_ZN10CameraIconC1ERKN2al14LayoutInitInfoEb	CameraIcon::CameraIcon(al::LayoutInitInfo const&, bool)	
