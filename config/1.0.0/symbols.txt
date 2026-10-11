@@ -5774,3 +5774,5 @@
 0x71019CF4D8 8 object _ZN12_GLOBAL__N_119NrvAmiiboLayoutWaitE
 
 0x71019C32A0 32 object _ZN12_GLOBAL__N_114sQuadrantNamesE
+
+0x710140AB00 12 object _ZN12_GLOBAL__N_116sNameplateOffsetE
