@@ -13,6 +13,7 @@ public:
     void calcFarthestPosOnRoute(sead::Vector3f* pPosition, const sead::Vector3f& rPosition) const;
 
 private:
+    friend class RabbitRouteRider;
     sead::PtrArray<RabbitRoutePoint> mPoints;
     RabbitRoutePoint* mStartPoint;
 };
