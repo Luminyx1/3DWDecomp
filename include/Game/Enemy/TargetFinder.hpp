@@ -31,6 +31,7 @@ public:
     void update();
     void setFrontDir(sead::Vector3f* pFrontDir);
     const sead::Vector3f& getTargetPos() const;
+    const sead::Vector3f& getLastTargetPos() const;
 
     bool isExistTarget() const { return _8 != nullptr; }
 
