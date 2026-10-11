@@ -5015,12 +5015,12 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71000C49C0			FALSE	_ZN14DemoWorldClear9exeCancelEv	DemoWorldClear::exeCancel()	
 0x71000C4A90			FALSE	_ZN14DemoWorldClearD1Ev	DemoWorldClear::~DemoWorldClear()	
 0x71000C4AA0			FALSE	_ZN14DemoWorldClearD0Ev	DemoWorldClear::~DemoWorldClear()	
-0x71000C4AD0			FALSE	nullsub_48	nullsub_48	
+0x71000C4AD0			FALSE	_ZNK12_GLOBAL__N_121DemoWorldClearNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::DemoWorldClearNrvWait::execute(al::NerveKeeper*) const	
 0x71000C4AE0			FALSE	_ZNK12_GLOBAL__N_121DemoWorldClearNrvPlay7executeEPN2al11NerveKeeperE	(anonymous namespace)::DemoWorldClearNrvPlay::execute(al::NerveKeeper*) const	
-0x71000C4AF0			FALSE	sub_71000C4AF0	sub_71000C4AF0	
+0x71000C4AF0			FALSE	_ZNK12_GLOBAL__N_121DemoWorldClearNrvFade7executeEPN2al11NerveKeeperE	(anonymous namespace)::DemoWorldClearNrvFade::execute(al::NerveKeeper*) const	
 0x71000C4B90			FALSE	_ZNK12_GLOBAL__N_129DemoWorldClearNrvFadeOpenWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::DemoWorldClearNrvFadeOpenWait::execute(al::NerveKeeper*) const	
 0x71000C4BA0			FALSE	_ZNK12_GLOBAL__N_131DemoWorldClearNrvOpenRouteDokan7executeEPN2al11NerveKeeperE	(anonymous namespace)::DemoWorldClearNrvOpenRouteDokan::execute(al::NerveKeeper*) const	
-0x71000C4BB0			FALSE	sub_71000C4BB0	sub_71000C4BB0	
+0x71000C4BB0			FALSE	_ZNK12_GLOBAL__N_123DemoWorldClearNrvEnding7executeEPN2al11NerveKeeperE	(anonymous namespace)::DemoWorldClearNrvEnding::execute(al::NerveKeeper*) const	
 0x71000C4C20			FALSE	_ZNK12_GLOBAL__N_123DemoWorldClearNrvCancel7executeEPN2al11NerveKeeperE	(anonymous namespace)::DemoWorldClearNrvCancel::execute(al::NerveKeeper*) const	
 0x71000C4C30		ProjectDemoDirector.o	FALSE	_ZN19ProjectDemoDirector17getDemoNameCameraEv	ProjectDemoDirector::getDemoNameCamera()	
 0x71000C4C40			FALSE	_ZN19ProjectDemoDirector23getDemoNameMovingCameraEv	ProjectDemoDirector::getDemoNameMovingCamera()	

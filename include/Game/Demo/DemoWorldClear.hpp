@@ -3,6 +3,9 @@
 #include "Library/LiveActor/LiveActor.hpp"
 
 class CourseSelectMiniature;
+class DemoSceneActorHolder;
+class DemoSkipLayout;
+namespace al { class WipeSimple; }
 
 /**
  * @brief World clear demo played at Bowser's castle miniature of the course-select map.
@@ -11,12 +14,25 @@ class CourseSelectMiniature;
 class DemoWorldClear : public al::LiveActor {
 public:
     explicit DemoWorldClear(CourseSelectMiniature* pMiniature);
-
+    void init(const al::ActorInitInfo& rInfo) override;
+    void control() override;
     void startDemo();
+    void endDemo();
     bool isEndDemo() const;
+    void checkCancel();
+    void exeWait();
+    void exePlay();
+    void exeFade();
+    void exeFadeOpenWait();
+    void exeOpenRouteDokan();
+    void exeEnding();
+    void exeCancel();
 
 private:
-    u8 _144[0x168 - 0x144];
+    CourseSelectMiniature* mMiniature;
+    DemoSceneActorHolder* mDemo = nullptr;
+    al::WipeSimple* mWipe = nullptr;
+    DemoSkipLayout* mSkipLayout = nullptr;
 };
 
 static_assert(sizeof(DemoWorldClear) == 0x168);

@@ -511,7 +511,7 @@ src/Game/Demo/DemoTimerStageSwitchController.cpp: done
     .text   start:0x000C24D0 end:0x000C29D0
 src/Game/Demo/DemoTimerStageSwitchInfo.cpp:
     .text   start:0x000C29D0 end:0x000C41EC
-src/Game/Demo/DemoWorldClear.cpp:
+src/Game/Demo/DemoWorldClear.cpp: done
     .text   start:0x000C41F0 end:0x000C4C28
 src/Game/Demo/ProjectDemoDirector.cpp:
     .text   start:0x000C4C30 end:0x000C5424

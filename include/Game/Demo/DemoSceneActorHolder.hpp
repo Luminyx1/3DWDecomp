@@ -33,13 +33,18 @@ public:
     void tryCancelAudio(int frames, bool flag);
     void tryCancel(bool flag);
     void setForceIgnoreCharId();
+    void setGraphicsAreaFindByPlayerPos();
+    void setCameraFovyDegree(float fovy);
+    /** @brief Gets the actor count. @return Number of demo actors. */
+    int getActorCount() const { return mActorCount; }
     /** @brief Gets the player actor count. @return Number of demo players. */
     int getPlayerCount() const { return mPlayerCount; }
     /** @brief Checks whether startup has completed. @return Startup completion flag. */
     bool isFullyStarted() const { return mIsFullyStarted; }
 
 private:
-    unsigned char _0[0x74];
+    unsigned char _0[0x70];
+    int mActorCount;
     int mPlayerCount;
     unsigned char _78[8];
     bool mIsFullyStarted;
