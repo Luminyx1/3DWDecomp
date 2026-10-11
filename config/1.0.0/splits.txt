@@ -1155,7 +1155,7 @@ src/Game/Layout/ListClearStarMaxParts.cpp:
     .text   start:0x001CFCC0 end:0x001D0BC8
 src/Game/Layout/ListStamp.cpp: done
     .text   start:0x001D0BD0 end:0x001D10F4
-src/Game/Layout/ListStampDemoParts.cpp:
+src/Game/Layout/ListStampDemoParts.cpp: done
     .text   start:0x001D1100 end:0x001D16C8
 src/Game/Layout/ListStampParts.cpp:
     .text   start:0x001D16D0 end:0x001D1FC4

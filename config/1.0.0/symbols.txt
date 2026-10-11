@@ -5776,3 +5776,6 @@
 0x71019C32A0 32 object _ZN12_GLOBAL__N_114sQuadrantNamesE
 
 0x710140AB00 12 object _ZN12_GLOBAL__N_116sNameplateOffsetE
+
+# src/Game/Layout/ListStampDemoParts
+0x71019DCB80 8 object _ZN12_GLOBAL__N_125NrvListStampDemoPartsWaitE

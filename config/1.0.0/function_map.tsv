@@ -12065,7 +12065,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001D1570			FALSE	_ZNK18ListStampDemoParts11isDecideEndEv	ListStampDemoParts::isDecideEnd() const	
 0x71001D1580			FALSE	_ZN18ListStampDemoParts7exeWaitEv	ListStampDemoParts::exeWait()	
 0x71001D15C0			FALSE	_ZN18ListStampDemoParts9exeDecideEv	ListStampDemoParts::exeDecide()	
-0x71001D1680			FALSE	sub_71001D1680	sub_71001D1680	
+0x71001D1680			FALSE	_ZNK12_GLOBAL__N_125ListStampDemoPartsNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::ListStampDemoPartsNrvWait::execute(al::NerveKeeper*) const	
 0x71001D16C0			FALSE	_ZNK12_GLOBAL__N_127ListStampDemoPartsNrvDecide7executeEPN2al11NerveKeeperE	(anonymous namespace)::ListStampDemoPartsNrvDecide::execute(al::NerveKeeper*) const	
 0x71001D16D0		ListStampParts.o	FALSE	_ZN14ListStampPartsC2ERKN2al14LayoutInitInfoEPKcS5_PNS0_11LayoutActorEPK14GameDataHolder	ListStampParts::ListStampParts(al::LayoutInitInfo const&, char const*, char const*, al::LayoutActor*, GameDataHolder const*)	
 0x71001D1880			FALSE	_ZN14ListStampPartsC1ERKN2al14LayoutInitInfoEPKcS5_PNS0_11LayoutActorEPK14GameDataHolder	ListStampParts::ListStampParts(al::LayoutInitInfo const&, char const*, char const*, al::LayoutActor*, GameDataHolder const*)	
