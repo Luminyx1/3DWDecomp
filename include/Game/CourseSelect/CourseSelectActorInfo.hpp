@@ -14,6 +14,7 @@ public:
     bool isEnterKinopioBrigade() const;
     bool isEnterHide() const;
 
+    const StageDatabaseInfo* getStageInfo() const { return mpStageInfo; }
     int getCourseId() const { return mCourseId; }
 private:
     al::LiveActor* mpActor;
