@@ -10981,13 +10981,13 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001AA030			FALSE	_ZN15ButtonBackParts8exeTouchEv	ButtonBackParts::exeTouch()	
 0x71001AA190			FALSE	_ZN15ButtonBackParts9exeDecideEv	ButtonBackParts::exeDecide()	
 0x71001AA240			FALSE	_ZN15ButtonBackParts6exeEndEv	ButtonBackParts::exeEnd()	
-0x71001AA2A0			FALSE	nullsub_102	nullsub_102	
-0x71001AA2B0			FALSE	sub_71001AA2B0	sub_71001AA2B0	
+0x71001AA2A0			FALSE	_ZNK12_GLOBAL__N_126ButtonBackPartsNrvDeactive7executeEPN2al11NerveKeeperE	(anonymous namespace)::ButtonBackPartsNrvDeactive::execute(al::NerveKeeper*) const	
+0x71001AA2B0			FALSE	_ZNK12_GLOBAL__N_124ButtonBackPartsNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::ButtonBackPartsNrvAppear::execute(al::NerveKeeper*) const	
 0x71001AA320			FALSE	_ZNK12_GLOBAL__N_122ButtonBackPartsNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::ButtonBackPartsNrvWait::execute(al::NerveKeeper*) const	
 0x71001AA330			FALSE	_ZNK12_GLOBAL__N_123ButtonBackPartsNrvTouch7executeEPN2al11NerveKeeperE	(anonymous namespace)::ButtonBackPartsNrvTouch::execute(al::NerveKeeper*) const	
-0x71001AA340			FALSE	sub_71001AA340	sub_71001AA340	
-0x71001AA3B0			FALSE	sub_71001AA3B0	sub_71001AA3B0	
-0x71001AA460			FALSE	nullsub_103	nullsub_103	
+0x71001AA340			FALSE	_ZNK12_GLOBAL__N_121ButtonBackPartsNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::ButtonBackPartsNrvEnd::execute(al::NerveKeeper*) const	
+0x71001AA3B0			FALSE	_ZNK12_GLOBAL__N_124ButtonBackPartsNrvDecide7executeEPN2al11NerveKeeperE	(anonymous namespace)::ButtonBackPartsNrvDecide::execute(al::NerveKeeper*) const	
+0x71001AA460			FALSE	_ZNK12_GLOBAL__N_127ButtonBackPartsNrvDecideEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::ButtonBackPartsNrvDecideEnd::execute(al::NerveKeeper*) const	
 0x71001AA470		ButtonConfigParts.o	FALSE	_ZN17ButtonConfigPartsC2ERKN2al14LayoutInitInfoEPKcS5_PNS0_11LayoutActorE	ButtonConfigParts::ButtonConfigParts(al::LayoutInitInfo const&, char const*, char const*, al::LayoutActor*)	
 0x71001AA500			FALSE	_ZN17ButtonConfigPartsC1ERKN2al14LayoutInitInfoEPKcS5_PNS0_11LayoutActorE	ButtonConfigParts::ButtonConfigParts(al::LayoutInitInfo const&, char const*, char const*, al::LayoutActor*)	
 0x71001AA5A0			FALSE	_ZN17ButtonConfigParts7exeWaitEv	ButtonConfigParts::exeWait()	

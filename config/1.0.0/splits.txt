@@ -1043,7 +1043,7 @@ src/Game/Layout/AreaNameParts.cpp:
     .text   start:0x001A7C80 end:0x001A95C8
 src/Game/Layout/ButtonArrowParts.cpp:
     .text   start:0x001A95D0 end:0x001A9ABC
-src/Game/Layout/ButtonBackParts.cpp:
+src/Game/Layout/ButtonBackParts.cpp: done
     .text   start:0x001A9AC0 end:0x001AA464
 src/Game/Layout/ButtonConfigParts.cpp: done
     .text   start:0x001AA470 end:0x001AACA8

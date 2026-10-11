@@ -5900,3 +5900,10 @@
 # src/Game/Layout/ListStampParts
 0x71019DCEF8 8 object _ZN12_GLOBAL__N_121NrvListStampPartsWaitE
 0x71019DCF20 8 object _ZN12_GLOBAL__N_123NrvListStampPartsDecideE
+
+# src/Game/Layout/ButtonBackParts
+0x71019D00A0 8 object _ZN12_GLOBAL__N_126NrvButtonBackPartsDeactiveE
+0x71019D00A8 8 object _ZN12_GLOBAL__N_124NrvButtonBackPartsAppearE
+0x71019D00C0 8 object _ZN12_GLOBAL__N_121NrvButtonBackPartsEndE
+0x71019D00C8 8 object _ZN12_GLOBAL__N_124NrvButtonBackPartsDecideE
+0x71019D00D0 8 object _ZN12_GLOBAL__N_127NrvButtonBackPartsDecideEndE

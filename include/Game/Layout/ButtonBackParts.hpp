@@ -9,7 +9,6 @@ class LayoutInitInfo;
 
 /**
  * @brief "Back" button parts of a menu layout, decided with the cancel button or by touch.
- * @note Only the members used by already-decompiled callers are declared.
  */
 class ButtonBackParts : public al::LayoutActor {
 public:
@@ -17,7 +16,7 @@ public:
                     al::LayoutActor* pParent, s32 port);
 
     void appear() override;
-    void tryAppear();
+    bool tryAppear();
     bool isActive() const;
     void reactivate();
     void setPort(s32 port);
