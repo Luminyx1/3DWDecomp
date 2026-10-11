@@ -4812,7 +4812,7 @@ src/al/Library/MapObj/KeyMoveMapPartsGenerator.cpp:
     .text   start:0x008515B0 end:0x00851AB8
 src/al/Library/MapObj/RailMoveMapParts.cpp:
     .text   start:0x00851AC0 end:0x00852148
-src/al/Library/MapObj/RollingCubeMapParts.cpp:
+src/al/Library/MapObj/RollingCubeMapParts.cpp: done
     .text   start:0x00852150 end:0x00853924
 src/al/Library/MapObj/RollingCubeMapPartsGenerator.cpp:
     .text   start:0x00853930 end:0x00853E98

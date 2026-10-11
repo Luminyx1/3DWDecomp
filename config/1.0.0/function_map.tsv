@@ -51873,35 +51873,35 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100853320			FALSE	_ZNK2al19RollingCubeMapParts6isStopEv	al::RollingCubeMapParts::isStop() const	
 0x7100853330			FALSE	_ZN2al19RollingCubeMapPartsD1Ev	al::RollingCubeMapParts::~RollingCubeMapParts()	
 0x7100853340			FALSE	_ZN2al19RollingCubeMapPartsD0Ev	al::RollingCubeMapParts::~RollingCubeMapParts()	
-0x7100853370			FALSE	nullsub_326	nullsub_326	
-0x7100853380			FALSE	sub_7100853380	sub_7100853380	
-0x7100853390			FALSE	sub_7100853390	sub_7100853390	
-0x71008533F0			FALSE	sub_71008533F0	sub_71008533F0	
+0x7100853370			FALSE	_ZNK12_GLOBAL__N_126RollingCubeMapPartsNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::RollingCubeMapPartsNrvWait::execute(al::NerveKeeper*) const	
+0x7100853380			FALSE	_ZNK12_GLOBAL__N_126RollingCubeMapPartsNrvWait13getActionNameEv	(anonymous namespace)::RollingCubeMapPartsNrvWait::getActionName() const	
+0x7100853390			FALSE	_ZNK12_GLOBAL__N_127RollingCubeMapPartsNrvStart7executeEPN2al11NerveKeeperE	(anonymous namespace)::RollingCubeMapPartsNrvStart::execute(al::NerveKeeper*) const	
+0x71008533F0			FALSE	_ZNK12_GLOBAL__N_127RollingCubeMapPartsNrvStart13getActionNameEv	(anonymous namespace)::RollingCubeMapPartsNrvStart::getActionName() const	
 0x7100853400			FALSE	_ZNK12_GLOBAL__N_128RollingCubeMapPartsNrvRotate7executeEPN2al11NerveKeeperE	(anonymous namespace)::RollingCubeMapPartsNrvRotate::execute(al::NerveKeeper*) const	
-0x7100853410			FALSE	sub_7100853410	sub_7100853410	
+0x7100853410			FALSE	_ZNK12_GLOBAL__N_128RollingCubeMapPartsNrvRotate13getActionNameEv	(anonymous namespace)::RollingCubeMapPartsNrvRotate::getActionName() const	
 0x7100853420			FALSE	_ZNK12_GLOBAL__N_126RollingCubeMapPartsNrvFall7executeEPN2al11NerveKeeperE	(anonymous namespace)::RollingCubeMapPartsNrvFall::execute(al::NerveKeeper*) const	
-0x7100853430			FALSE	sub_7100853430	sub_7100853430	
-0x7100853440			FALSE	sub_7100853440	sub_7100853440	
-0x7100853450			FALSE	sub_7100853450	sub_7100853450	
-0x7100853460			FALSE	sub_7100853460	sub_7100853460	
-0x7100853470			FALSE	sub_7100853470	sub_7100853470	
-0x7100853480			FALSE	sub_7100853480	sub_7100853480	
-0x7100853490			FALSE	sub_7100853490	sub_7100853490	
-0x71008534A0			FALSE	sub_71008534A0	sub_71008534A0	
-0x7100853500			FALSE	sub_7100853500	sub_7100853500	
-0x7100853510			FALSE	sub_7100853510	sub_7100853510	
-0x7100853570			FALSE	sub_7100853570	sub_7100853570	
-0x7100853580			FALSE	sub_7100853580	sub_7100853580	
-0x71008535E0			FALSE	sub_71008535E0	sub_71008535E0	
-0x71008535F0			FALSE	sub_71008535F0	sub_71008535F0	
-0x7100853650			FALSE	sub_7100853650	sub_7100853650	
-0x7100853660			FALSE	sub_7100853660	sub_7100853660	
-0x71008536C0			FALSE	sub_71008536C0	sub_71008536C0	
-0x71008536D0			FALSE	sub_71008536D0	sub_71008536D0	
-0x7100853730			FALSE	sub_7100853730	sub_7100853730	
-0x7100853740			FALSE	sub_7100853740	sub_7100853740	
-0x71008537D0			FALSE	sub_71008537D0	sub_71008537D0	
-0x71008537E0			FALSE	sub_71008537E0	sub_71008537E0	
+0x7100853430			FALSE	_ZNK12_GLOBAL__N_126RollingCubeMapPartsNrvFall13getActionNameEv	(anonymous namespace)::RollingCubeMapPartsNrvFall::getActionName() const	
+0x7100853440			FALSE	_ZNK12_GLOBAL__N_128RollingCubeMapPartsNrvSlideX7executeEPN2al11NerveKeeperE	(anonymous namespace)::RollingCubeMapPartsNrvSlideX::execute(al::NerveKeeper*) const	
+0x7100853450			FALSE	_ZNK12_GLOBAL__N_128RollingCubeMapPartsNrvSlideX13getActionNameEv	(anonymous namespace)::RollingCubeMapPartsNrvSlideX::getActionName() const	
+0x7100853460			FALSE	_ZNK12_GLOBAL__N_128RollingCubeMapPartsNrvSlideY7executeEPN2al11NerveKeeperE	(anonymous namespace)::RollingCubeMapPartsNrvSlideY::execute(al::NerveKeeper*) const	
+0x7100853470			FALSE	_ZNK12_GLOBAL__N_128RollingCubeMapPartsNrvSlideY13getActionNameEv	(anonymous namespace)::RollingCubeMapPartsNrvSlideY::getActionName() const	
+0x7100853480			FALSE	_ZNK12_GLOBAL__N_128RollingCubeMapPartsNrvSlideZ7executeEPN2al11NerveKeeperE	(anonymous namespace)::RollingCubeMapPartsNrvSlideZ::execute(al::NerveKeeper*) const	
+0x7100853490			FALSE	_ZNK12_GLOBAL__N_128RollingCubeMapPartsNrvSlideZ13getActionNameEv	(anonymous namespace)::RollingCubeMapPartsNrvSlideZ::getActionName() const	
+0x71008534A0			FALSE	_ZNK12_GLOBAL__N_127RollingCubeMapPartsNrvLandX7executeEPN2al11NerveKeeperE	(anonymous namespace)::RollingCubeMapPartsNrvLandX::execute(al::NerveKeeper*) const	
+0x7100853500			FALSE	_ZNK12_GLOBAL__N_127RollingCubeMapPartsNrvLandX13getActionNameEv	(anonymous namespace)::RollingCubeMapPartsNrvLandX::getActionName() const	
+0x7100853510			FALSE	_ZNK12_GLOBAL__N_127RollingCubeMapPartsNrvLandY7executeEPN2al11NerveKeeperE	(anonymous namespace)::RollingCubeMapPartsNrvLandY::execute(al::NerveKeeper*) const	
+0x7100853570			FALSE	_ZNK12_GLOBAL__N_127RollingCubeMapPartsNrvLandY13getActionNameEv	(anonymous namespace)::RollingCubeMapPartsNrvLandY::getActionName() const	
+0x7100853580			FALSE	_ZNK12_GLOBAL__N_127RollingCubeMapPartsNrvLandZ7executeEPN2al11NerveKeeperE	(anonymous namespace)::RollingCubeMapPartsNrvLandZ::execute(al::NerveKeeper*) const	
+0x71008535E0			FALSE	_ZNK12_GLOBAL__N_127RollingCubeMapPartsNrvLandZ13getActionNameEv	(anonymous namespace)::RollingCubeMapPartsNrvLandZ::getActionName() const	
+0x71008535F0			FALSE	_ZNK12_GLOBAL__N_131RollingCubeMapPartsNrvFallLandX7executeEPN2al11NerveKeeperE	(anonymous namespace)::RollingCubeMapPartsNrvFallLandX::execute(al::NerveKeeper*) const	
+0x7100853650			FALSE	_ZNK12_GLOBAL__N_131RollingCubeMapPartsNrvFallLandX13getActionNameEv	(anonymous namespace)::RollingCubeMapPartsNrvFallLandX::getActionName() const	
+0x7100853660			FALSE	_ZNK12_GLOBAL__N_131RollingCubeMapPartsNrvFallLandY7executeEPN2al11NerveKeeperE	(anonymous namespace)::RollingCubeMapPartsNrvFallLandY::execute(al::NerveKeeper*) const	
+0x71008536C0			FALSE	_ZNK12_GLOBAL__N_131RollingCubeMapPartsNrvFallLandY13getActionNameEv	(anonymous namespace)::RollingCubeMapPartsNrvFallLandY::getActionName() const	
+0x71008536D0			FALSE	_ZNK12_GLOBAL__N_131RollingCubeMapPartsNrvFallLandZ7executeEPN2al11NerveKeeperE	(anonymous namespace)::RollingCubeMapPartsNrvFallLandZ::execute(al::NerveKeeper*) const	
+0x7100853730			FALSE	_ZNK12_GLOBAL__N_131RollingCubeMapPartsNrvFallLandZ13getActionNameEv	(anonymous namespace)::RollingCubeMapPartsNrvFallLandZ::getActionName() const	
+0x7100853740			FALSE	_ZNK12_GLOBAL__N_126RollingCubeMapPartsNrvStop7executeEPN2al11NerveKeeperE	(anonymous namespace)::RollingCubeMapPartsNrvStop::execute(al::NerveKeeper*) const	
+0x71008537D0			FALSE	_ZNK12_GLOBAL__N_126RollingCubeMapPartsNrvStop13getActionNameEv	(anonymous namespace)::RollingCubeMapPartsNrvStop::getActionName() const	
+0x71008537E0			FALSE	_GLOBAL__sub_I_RollingCubeMapParts.cpp	_GLOBAL__sub_I_RollingCubeMapParts.cpp	
 0x7100853930		RollingCubeMapPartsGenerator.o	FALSE	_ZN2al28RollingCubeMapPartsGeneratorC2EPKc	al::RollingCubeMapPartsGenerator::RollingCubeMapPartsGenerator(char const*)	object (class)
 0x71008539D0			FALSE	_ZN2al28RollingCubeMapPartsGeneratorC1EPKc	al::RollingCubeMapPartsGenerator::RollingCubeMapPartsGenerator(char const*)	
 0x7100853A80			FALSE	_ZN2al28RollingCubeMapPartsGenerator4initERKNS_13ActorInitInfoE	al::RollingCubeMapPartsGenerator::init(al::ActorInitInfo const&)	
