@@ -17398,12 +17398,12 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71002AB4D0			FALSE	_ZN10FishColony10receiveMsgEPKN2al9SensorMsgEPNS0_9HitSensorES5_	FishColony::receiveMsg(al::SensorMsg const*, al::HitSensor*, al::HitSensor*)	
 0x71002AB5F0			FALSE	_ZN10FishColony21receiveMsgScreenPointEPKN2al9SensorMsgEPNS0_13ScreenPointerEPNS0_17ScreenPointTargetE	FishColony::receiveMsgScreenPoint(al::SensorMsg const*, al::ScreenPointer*, al::ScreenPointTarget*)	
 0x71002AB720			FALSE	_ZN10FishColony8exeGroupEv	FishColony::exeGroup()	
-0x71002ABA10			FALSE	sub_71002ABA10	sub_71002ABA10	
+0x71002ABA10			FALSE	_ZL15updateFishGroupP4FishPN2al16DeriveActorGroupIS_EEf	updateFishGroup(Fish*, al::DeriveActorGroup<Fish>*, float)	TRUE
 0x71002ABCA0			FALSE	_ZN10FishColonyD1Ev	FishColony::~FishColony()	
 0x71002ABCB0			FALSE	_ZN10FishColonyD0Ev	FishColony::~FishColony()	
-0x71002ABCE0			FALSE	sub_71002ABCE0	sub_71002ABCE0	
-0x71002ABCF0			FALSE	sub_71002ABCF0	sub_71002ABCF0	
-0x71002ABD00			FALSE	sub_71002ABD00	sub_71002ABD00	
+0x71002ABCE0			FALSE	_ZNK12_GLOBAL__N_118FishColonyNrvGroup7executeEPN2al11NerveKeeperE	(anonymous namespace)::FishColonyNrvGroup::execute(al::NerveKeeper*) const	TRUE
+0x71002ABCF0			FALSE	_ZNK12_GLOBAL__N_120FishColonyNrvScatter7executeEPN2al11NerveKeeperE	(anonymous namespace)::FishColonyNrvScatter::execute(al::NerveKeeper*) const	TRUE
+0x71002ABD00			FALSE	_ZNK12_GLOBAL__N_120FishColonyNrvRegroup7executeEPN2al11NerveKeeperE	(anonymous namespace)::FishColonyNrvRegroup::execute(al::NerveKeeper*) const	TRUE
 0x71002ABD10		FlingPole.o	FALSE	_ZN9FlingPoleC2EPKcb	FlingPole::FlingPole(char const*, bool)	
 0x71002ABF00			FALSE	_ZN9FlingPoleC1EPKcb	FlingPole::FlingPole(char const*, bool)	
 0x71002AC0F0			FALSE	_ZN9FlingPole4initERKN2al13ActorInitInfoE	FlingPole::init(al::ActorInitInfo const&)	

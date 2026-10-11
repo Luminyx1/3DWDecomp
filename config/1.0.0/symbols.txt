@@ -5766,3 +5766,11 @@
 0x7101A22CC8 8 object _ZN12_GLOBAL__N_119NrvGondolaDisappearE
 0x7101A22CD0 32 object _ZTVN12_GLOBAL__N_124GondolaNrvDisappearSoundE
 0x7101A22CF0 8 object _ZN12_GLOBAL__N_124NrvGondolaDisappearSoundE
+
+# Fish colony reconstructed state names
+0x7101A17620 32 object _ZTVN12_GLOBAL__N_118FishColonyNrvGroupE
+0x7101A17698 8 object _ZN12_GLOBAL__N_118NrvFishColonyGroupE
+0x7101A17640 32 object _ZTVN12_GLOBAL__N_120FishColonyNrvScatterE
+0x7101A176A0 8 object _ZN12_GLOBAL__N_120NrvFishColonyScatterE
+0x7101A17660 32 object _ZTVN12_GLOBAL__N_120FishColonyNrvRegroupE
+0x7101A176A8 8 object _ZN12_GLOBAL__N_120NrvFishColonyRegroupE
