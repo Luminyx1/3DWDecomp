@@ -1159,7 +1159,7 @@ src/Game/Layout/ListStampDemoParts.cpp:
     .text   start:0x001D1100 end:0x001D16C8
 src/Game/Layout/ListStampParts.cpp:
     .text   start:0x001D16D0 end:0x001D1FC4
-src/Game/Layout/ListStampResult.cpp:
+src/Game/Layout/ListStampResult.cpp: done
     .text   start:0x001D1FD0 end:0x001D2488
 src/Game/Layout/LockOnButton.cpp:
     .text   start:0x001D2490 end:0x001D3050

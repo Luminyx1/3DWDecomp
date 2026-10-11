@@ -12089,7 +12089,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001D2370			FALSE	_ZN15ListStampResult28startAppearCharacterCompleteEi	ListStampResult::startAppearCharacterComplete(int)	
 0x71001D23B0			FALSE	_ZN15ListStampResult8startEndEv	ListStampResult::startEnd()	
 0x71001D23C0			FALSE	_ZNK15ListStampResult5isEndEv	ListStampResult::isEnd() const	
-0x71001D2420			FALSE	sub_71001D2420	sub_71001D2420	
+0x71001D2420			FALSE	_ZNK12_GLOBAL__N_121ListStampResultNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::ListStampResultNrvEnd::execute(al::NerveKeeper*) const	
 0x71001D2470			FALSE	_ZNK12_GLOBAL__N_122ListStampResultNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::ListStampResultNrvWait::execute(al::NerveKeeper*) const	
 0x71001D2480			FALSE	_ZNK12_GLOBAL__N_124ListStampResultNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::ListStampResultNrvAppear::execute(al::NerveKeeper*) const	
 0x71001D2490		LockOnButton.o	FALSE	_ZN12LockOnButtonC2ERKN2al14LayoutInitInfoE	LockOnButton::LockOnButton(al::LayoutInitInfo const&)	
