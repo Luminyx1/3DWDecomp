@@ -4882,7 +4882,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71000C1D10			FALSE	_ZN20DemoScenePlayerModel8getModelEv	DemoScenePlayerModel::getModel()	
 0x71000C1D30			FALSE	_ZN20DemoScenePlayerModel9startDemoERKN4sead8Matrix34IfEE	DemoScenePlayerModel::startDemo(sead::Matrix34<float> const&)	
 0x71000C1DA0			FALSE	_ZN20DemoScenePlayerModel11startActionEPKc	DemoScenePlayerModel::startAction(char const*)	
-0x71000C1EB0			FALSE	sub_71000C1EB0	sub_71000C1EB0	
+0x71000C1EB0			FALSE	_ZN12_GLOBAL__N_117startPlayerActionEP11PlayerModelPKcP30IUsePlayerRetargettingSelector	(anonymous namespace)::startPlayerAction(PlayerModel*, char const*, IUsePlayerRetargettingSelector*)	
 0x71000C1FF0			FALSE	_ZN20DemoScenePlayerModel6updateEPN2al9LiveActorE	DemoScenePlayerModel::update(al::LiveActor*)	
 0x71000C2130			FALSE	_ZN20DemoScenePlayerModel9setFigureEi	DemoScenePlayerModel::setFigure(int)	
 0x71000C21A0			FALSE	_ZN20DemoScenePlayerModel17setSeMaterialCodeEPKc	DemoScenePlayerModel::setSeMaterialCode(char const*)	

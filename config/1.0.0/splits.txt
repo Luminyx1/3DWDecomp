@@ -503,7 +503,7 @@ src/Game/Demo/DemoSceneCamera.cpp: done
     .text   start:0x000BFD60 end:0x000C0724
 src/Game/Demo/DemoScenePlayer.cpp:
     .text   start:0x000C0730 end:0x000C1740
-src/Game/Demo/DemoScenePlayerModel.cpp:
+src/Game/Demo/DemoScenePlayerModel.cpp: done
     .text   start:0x000C1740 end:0x000C2298
 src/Game/Demo/DemoStartPosition.cpp: done
     .text   start:0x000C22A0 end:0x000C24D0
