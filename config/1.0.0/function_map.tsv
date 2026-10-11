@@ -2461,8 +2461,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710006C240			FALSE	_ZN16TentackMagmaBallD0Ev	TentackMagmaBall::~TentackMagmaBall()	
 0x710006C270			FALSE	_ZNK12_GLOBAL__N_123TentackMagmaBallNrvFall7executeEPN2al11NerveKeeperE	(anonymous namespace)::TentackMagmaBallNrvFall::execute(al::NerveKeeper*) const	
 0x710006C280			FALSE	_ZNK12_GLOBAL__N_128TentackMagmaBallNrvLandStart7executeEPN2al11NerveKeeperE	(anonymous namespace)::TentackMagmaBallNrvLandStart::execute(al::NerveKeeper*) const	
-0x710006C290			FALSE	sub_710006C290	sub_710006C290	
-0x710006C310			FALSE	sub_710006C310	sub_710006C310	
+0x710006C290			FALSE	_ZNK12_GLOBAL__N_123TentackMagmaBallNrvLand7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_123TentackMagmaBallNrvLand7executeEPN2al11NerveKeeperE	matched nerve
+0x710006C310			FALSE	_ZNK12_GLOBAL__N_126TentackMagmaBallNrvLandEnd7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_126TentackMagmaBallNrvLandEnd7executeEPN2al11NerveKeeperE	matched nerve
 0x710006C370		TentackResourceParam.o	FALSE	_ZN20TentackResourceParamC2EPKN2al9ByamlIterEi	TentackResourceParam::TentackResourceParam(al::ByamlIter const*, int)	
 0x710006C770			FALSE	sub_710006C770	sub_710006C770	
 0x710006C910			FALSE	_ZNK20TentackResourceParam17setUpTentacleInfoEP19TentackTentacleInfoi	TentackResourceParam::setUpTentacleInfo(TentackTentacleInfo*, int) const	

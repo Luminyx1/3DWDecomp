@@ -269,7 +269,7 @@ src/Game/Boss/TentackHill.cpp: done
     .text   start:0x00068520 end:0x00068A7C
 src/Game/Boss/TentackLv3.cpp:
     .text   start:0x00068A80 end:0x0006B9F8
-src/Game/Boss/TentackMagmaBall.cpp:
+src/Game/Boss/TentackMagmaBall.cpp: done
     .text   start:0x0006BA00 end:0x0006C36C
 src/Game/Boss/TentackResourceParam.cpp:
     .text   start:0x0006C370 end:0x0006D114

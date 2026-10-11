@@ -5722,3 +5722,5 @@
 # PunpunShuriken
 0x710195BC08 16 object _ZN12_GLOBAL__N_117NrvPunpunShurikenE
 0x710140A054 12 object _ZN12_GLOBAL__N_112sShootOffsetE
+0x7101961240 8 object _ZN12_GLOBAL__N_123NrvTentackMagmaBallLandE
+0x7101961268 8 object _ZN12_GLOBAL__N_126NrvTentackMagmaBallLandEndE
