@@ -7348,9 +7348,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710011A210			FALSE	_ZN19KuribonStateReverseD0Ev	KuribonStateReverse::~KuribonStateReverse()	
 0x710011A240			FALSE	_ZNK12_GLOBAL__N_127KuribonStateReverseNrvStart7executeEPN2al11NerveKeeperE	(anonymous namespace)::KuribonStateReverseNrvStart::execute(al::NerveKeeper*) const	
 0x710011A250			FALSE	_ZNK12_GLOBAL__N_126KuribonStateReverseNrvLoop7executeEPN2al11NerveKeeperE	(anonymous namespace)::KuribonStateReverseNrvLoop::execute(al::NerveKeeper*) const	
-0x710011A260			FALSE	sub_710011A260	sub_710011A260	
-0x710011A2D0			FALSE	sub_710011A2D0	sub_710011A2D0	
-0x710011A340			FALSE	sub_710011A340	sub_710011A340	
+0x710011A260			FALSE	_ZNK12_GLOBAL__N_129KuribonStateReverseNrvRecover7executeEPN2al11NerveKeeperE	(anonymous namespace)::KuribonStateReverseNrvRecover::execute(al::NerveKeeper*) const	
+0x710011A2D0			FALSE	_ZNK12_GLOBAL__N_126KuribonStateReverseNrvLand7executeEPN2al11NerveKeeperE	(anonymous namespace)::KuribonStateReverseNrvLand::execute(al::NerveKeeper*) const	
+0x710011A340			FALSE	_ZNK12_GLOBAL__N_127KuribonStateReverseNrvSwoon7executeEPN2al11NerveKeeperE	(anonymous namespace)::KuribonStateReverseNrvSwoon::execute(al::NerveKeeper*) const	
 0x710011A3B0		KuriboTower.o	FALSE	_ZN11KuriboTowerC2EPKc	KuriboTower::KuriboTower(char const*)	
 0x710011A4A0			FALSE	_ZN11KuriboTowerC1EPKc	KuriboTower::KuriboTower(char const*)	
 0x710011A5A0			FALSE	_ZN11KuriboTower24calcAppearDoubleMarioNumERKN2al13ActorInitInfoE	KuriboTower::calcAppearDoubleMarioNum(al::ActorInitInfo const&)	
