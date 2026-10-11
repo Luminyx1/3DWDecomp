@@ -5776,3 +5776,5 @@
 0x7101956210 32 object _ZN12_GLOBAL__N_113sBreakActionsE
 0x7101956230 32 object _ZN12_GLOBAL__N_114sAttackActionsE
 0x7101956250 32 object _ZN12_GLOBAL__N_111sEndActionsE
+0x7101962F60 8 object _ZN12_GLOBAL__N_126NrvTentackTentacleStepWaitE
+0x7101963028 8 object _ZN12_GLOBAL__N_131NrvTentackTentacleStepBreakLandE

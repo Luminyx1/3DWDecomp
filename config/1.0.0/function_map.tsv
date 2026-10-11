@@ -2682,12 +2682,12 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100073E40			FALSE	_ZN19TentackTentacleStep11exeBreakAirEv	TentackTentacleStep::exeBreakAir()	
 0x7100073EF0			FALSE	_ZN19TentackTentacleStepD1Ev	TentackTentacleStep::~TentackTentacleStep()	
 0x7100073F00			FALSE	_ZN19TentackTentacleStepD0Ev	TentackTentacleStep::~TentackTentacleStep()	
-0x7100073F30			FALSE	sub_7100073F30	sub_7100073F30	
+0x7100073F30			FALSE	_ZNK12_GLOBAL__N_126TentackTentacleStepNrvWait7executeEPN2al11NerveKeeperE	sub_7100073F30	matched nerve
 0x7100073F80			FALSE	_ZNK12_GLOBAL__N_130TentackTentacleStepNrvBreakAir7executeEPN2al11NerveKeeperE	(anonymous namespace)::TentackTentacleStepNrvBreakAir::execute(al::NerveKeeper*) const	
 0x7100073F90			FALSE	_ZNK12_GLOBAL__N_127TentackTentacleStepNrvBreak7executeEPN2al11NerveKeeperE	(anonymous namespace)::TentackTentacleStepNrvBreak::execute(al::NerveKeeper*) const	
 0x7100073FA0			FALSE	_ZNK12_GLOBAL__N_127TentackTentacleStepNrvThrow7executeEPN2al11NerveKeeperE	(anonymous namespace)::TentackTentacleStepNrvThrow::execute(al::NerveKeeper*) const	
 0x7100073FB0			FALSE	_ZNK12_GLOBAL__N_126TentackTentacleStepNrvFall7executeEPN2al11NerveKeeperE	(anonymous namespace)::TentackTentacleStepNrvFall::execute(al::NerveKeeper*) const	
-0x7100073FC0			FALSE	sub_7100073FC0	sub_7100073FC0	
+0x7100073FC0			FALSE	_ZNK12_GLOBAL__N_131TentackTentacleStepNrvBreakLand7executeEPN2al11NerveKeeperE	sub_7100073FC0	matched nerve
 0x7100074040	Camera/Unknown	CameraLookAtPoint.o	FALSE	_ZN17CameraLookAtPointC2EPKc	CameraLookAtPoint::CameraLookAtPoint(char const*)	
 0x71000740D0			FALSE	_ZN17CameraLookAtPointC1EPKc	CameraLookAtPoint::CameraLookAtPoint(char const*)	
 0x7100074170			FALSE	_ZN17CameraLookAtPoint4initERKN2al13ActorInitInfoE	CameraLookAtPoint::init(al::ActorInitInfo const&)	
