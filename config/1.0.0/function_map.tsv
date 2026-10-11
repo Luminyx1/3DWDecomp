@@ -4771,7 +4771,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71000BDF60			FALSE	_ZN14DemoSceneActor20tryStartActionByNameEPKc	DemoSceneActor::tryStartActionByName(char const*)	
 0x71000BE130			FALSE	_ZN14DemoSceneActor7endDemoEv	DemoSceneActor::endDemo()	
 0x71000BE140			FALSE	_ZN14DemoSceneActor7exeWaitEv	DemoSceneActor::exeWait()	
-0x71000BE150			FALSE	nullsub_45	nullsub_45	
+0x71000BE150			FALSE	_ZNK12_GLOBAL__N_121DemoSceneActorNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::DemoSceneActorNrvWait::execute(al::NerveKeeper*) const	
 0x71000BE160			FALSE	_ZN22DemoSceneActorFunction20calcPlacementBaseMtxEPN4sead8Matrix34IfEERKN2al13ActorInitInfoES7_PKS2_S3_	DemoSceneActorFunction::calcPlacementBaseMtx(sead::Matrix34<float>*, al::ActorInitInfo const&, al::ActorInitInfo const&, sead::Matrix34<float> const*, sead::Matrix34<float>*)	
 0x71000BE270			FALSE	_ZN22DemoSceneActorFunction12isHideActionEPKc	DemoSceneActorFunction::isHideAction(char const*)	
 0x71000BE290			FALSE	_ZN22DemoSceneActorFunction12isShowActionEPKc	DemoSceneActorFunction::isShowAction(char const*)	
