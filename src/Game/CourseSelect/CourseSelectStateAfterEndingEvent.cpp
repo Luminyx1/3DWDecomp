@@ -43,7 +43,7 @@ void CourseSelectStateAfterEndingEvent::exeWipe() {
         alSeFunction::setRequestKeeperVolumeSetting(mpScene->getAudioDirector(), "メイン", "エンディング後デモワイプ", 60, false);
     }
     if (mpWindows->isCloseFadeBlack() && !al::isLessStep(this, 240)) {
-        GameDataFlagFunction::setShowSpecialWorldOpenDemo(GameDataHolderWriter(mpScene->getGameDataHolder()));
+        GameDataFlagFunction::setShowSpecialWorldOpenDemo(GameDataHolderWriter(mpScene->getGameDataHolderDirect()));
         kill();
     }
 }

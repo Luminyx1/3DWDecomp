@@ -1,3 +1,4 @@
+#include "CourseSelect/MiniatureController.hpp"
 #include "CourseSelect/CourseSelectLock.hpp"
 #include "CourseSelect/CourseSelectMiniature.hpp"
 #include "CourseSelect/CourseSelectDirector.hpp"

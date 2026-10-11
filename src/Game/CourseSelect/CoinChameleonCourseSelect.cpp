@@ -1,6 +1,7 @@
 #include "CourseSelect/CoinChameleonCourseSelect.hpp"
 #include "CourseSelect/CoinCourseSelect.hpp"
 #include "MapObj/ChameleonStateMic.hpp"
+#include "MapObj/ChameleonStateUtil.hpp"
 #include "Library/ActorUtil.hpp"
 #include "Library/Audio/System/AudioVolumeCtrl.hpp"
 #include "Library/Math/MathUtil.hpp"

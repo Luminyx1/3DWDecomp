@@ -82,5 +82,3 @@ float CourseSelectPlayerActionJump::getJumpPow() const {
 float CourseSelectPlayerActionJump::getJumpPowLow() const {
     return mArg->mConstParam->getJumpPowLow();
 }
-
-

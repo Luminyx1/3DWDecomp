@@ -29,7 +29,7 @@ void CourseSelectStateStartMiiverse::init() {
 /** @brief Select the notices appropriate to the user's account type. */
 void CourseSelectStateStartMiiverse::appear() {
     al::NerveStateBase::appear();
-    if (GameDataFunction::isNetworkAccount(GameDataHolderAccessor(getHost()->getGameDataHolder())))
+    if (GameDataFunction::isNetworkAccount(GameDataHolderAccessor(getHost()->getGameDataHolderDirect())))
         al::setNerve(this, &NrvCourseSelectStateStartMiiverseInfoMiiverse);
     else al::setNerve(this, &NrvCourseSelectStateStartMiiverseInfoLocalActMiiverse);
 }
@@ -57,16 +57,16 @@ void CourseSelectStateStartMiiverse::exeInfoLocalActGhost() {
 void CourseSelectStateStartMiiverse::exeConfirm() {
     if (al::isFirstStep(this)) mpWindows->appearConfirmTwoBtn("StartNetwork", true);
     if (mpWindows->isConfirmActive()) return;
-    GameDataFlagFunction::setOpenNetworkSetting(GameDataHolderWriter(getHost()->getGameDataHolder()));
+    GameDataFlagFunction::setOpenNetworkSetting(GameDataHolderWriter(getHost()->getGameDataHolderDirect()));
     if (mpWindows->isConfirmDecideLeft()) {
-        GameDataFunction::setNetworkSettingInit(GameDataHolderWriter(getHost()->getGameDataHolder()), false);
+        GameDataFunction::setNetworkSettingInit(GameDataHolderWriter(getHost()->getGameDataHolderDirect()), false);
         kill();
     } else if (mpWindows->isConfirmDecideRight()) {
-        if (GameDataFunction::isMiiverseForbidden(GameDataHolderAccessor(getHost()->getGameDataHolder()))
-            || GameDataFunction::isInGameNetworkForbidden(GameDataHolderAccessor(getHost()->getGameDataHolder())))
+        if (GameDataFunction::isMiiverseForbidden(GameDataHolderAccessor(getHost()->getGameDataHolderDirect()))
+            || GameDataFunction::isInGameNetworkForbidden(GameDataHolderAccessor(getHost()->getGameDataHolderDirect())))
             al::setNerve(this, &NrvCourseSelectStateStartMiiverseError);
         else {
-            GameDataFunction::setNetworkSettingInit(GameDataHolderWriter(getHost()->getGameDataHolder()), true);
+            GameDataFunction::setNetworkSettingInit(GameDataHolderWriter(getHost()->getGameDataHolderDirect()), true);
             al::setNerve(this, &NrvCourseSelectStateStartMiiverseDecide);
         }
     }
@@ -75,8 +75,8 @@ void CourseSelectStateStartMiiverse::exeConfirm() {
 void CourseSelectStateStartMiiverse::exeConfirmLocal() {
     if (al::isFirstStep(this)) mpWindows->appearConfirmOneBtn("StartNetworkLocal", nullptr);
     if (!mpWindows->isConfirmActive()) {
-        GameDataFlagFunction::setOpenNetworkSetting(GameDataHolderWriter(getHost()->getGameDataHolder()));
-        GameDataFunction::setNetworkSettingInit(GameDataHolderWriter(getHost()->getGameDataHolder()), false);
+        GameDataFlagFunction::setOpenNetworkSetting(GameDataHolderWriter(getHost()->getGameDataHolderDirect()));
+        GameDataFunction::setNetworkSettingInit(GameDataHolderWriter(getHost()->getGameDataHolderDirect()), false);
         kill();
     }
 }

@@ -15,6 +15,9 @@ public:
     bool isEnterHide() const;
 
     const StageDatabaseInfo* getStageInfo() const { return mpStageInfo; }
+    int getWorldId() const { return mWorldId; }
+    int getStageNo() const { return mStageId; }
+    StageDatabaseInfo* getStageDatabaseInfo() const { return mpStageInfo; }
     int getCourseId() const { return mCourseId; }
 private:
     al::LiveActor* mpActor;

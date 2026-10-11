@@ -1,3 +1,4 @@
+#include "CourseSelect/MiniatureController.hpp"
 #include "CourseSelect/CourseSelectStateRevivePlayer.hpp"
 #include "CourseSelect/CourseSelectScene.hpp"
 #include "CourseSelect/CourseSelectDirector.hpp"
@@ -31,7 +32,7 @@ void CourseSelectStateRevivePlayer::exeStart() {
     if (al::isFirstStep(this)) {
         mDeadPlayerCount = 0;
         for (int i = rc::getControlUserNumMax() - 1; i >= 0; --i)
-            if (rc::isDeadControlUserInStage(GameDataHolderAccessor(mpScene->getGameDataHolder()), i))
+            if (rc::isDeadControlUserInStage(GameDataHolderAccessor(mpScene->getGameDataHolderDirect()), i))
                 ++mDeadPlayerCount;
         if (mDeadPlayerCount == 0) { kill(); return; }
     }
@@ -40,20 +41,20 @@ void CourseSelectStateRevivePlayer::exeStart() {
 /** @brief Restore dead users at the last course and wait for their entry demos. */
 void CourseSelectStateRevivePlayer::exePlay() {
     if (al::isFirstStep(this)) {
-        int courseId = GameDataFunction::getLastPlayCourseId(GameDataHolderAccessor(mpScene->getGameDataHolder()));
+        int courseId = GameDataFunction::getLastPlayCourseId(GameDataHolderAccessor(mpScene->getGameDataHolderDirect()));
         CourseSelectMiniature* pMiniature = mpScene->getCourseSelectDirector()->tryFindMiniatureObj(courseId);
         if (!pMiniature) { kill(); return; }
         ICourseSelectActorController* pController;
-        if (GameDataFunction::isLastPlayCourseClearWorldWarp(GameDataHolderAccessor(mpScene->getGameDataHolder())))
+        if (GameDataFunction::isLastPlayCourseClearWorldWarp(GameDataHolderAccessor(mpScene->getGameDataHolderDirect())))
             pController = pMiniature->getWorldWarpDokan()->getController();
         else pController = pMiniature->getController();
         for (int i = rc::getControlUserNumMax() - 1; i >= 0; --i) {
-            bool isDead = rc::isDeadControlUserInStage(GameDataHolderAccessor(mpScene->getGameDataHolder()), i);
+            bool isDead = rc::isDeadControlUserInStage(GameDataHolderAccessor(mpScene->getGameDataHolderDirect()), i);
             CourseSelectDirector* pDirector = mpScene->getCourseSelectDirector();
             if (isDead) {
                 pDirector->reviveUser(i, pController, mIsEntryDemo);
-                rc::resetDeadFlagControlUserInStage(GameDataHolderWriter(mpScene->getGameDataHolder()), i);
-                GameDataFunction::addPlayerLife(GameDataHolderWriter(mpScene->getGameDataHolder()), 5);
+                rc::resetDeadFlagControlUserInStage(GameDataHolderWriter(mpScene->getGameDataHolderDirect()), i);
+                GameDataFunction::addPlayerLife(GameDataHolderWriter(mpScene->getGameDataHolderDirect()), 5);
             } else pDirector->getPuppeteerGroup()->startWaitDemo(i);
         }
     } else if (!mpScene->getCourseSelectDirector()->isPlayEntryDemoAny()) {

@@ -7,6 +7,7 @@ class CourseSelectRouteDokanEntranceGroup;
 
 class CourseSelectRouteDokan : public al::LiveActor {
 public:
+    bool isDeactive() const { return mIsDeactive; }
     explicit CourseSelectRouteDokan(const char* pName);
     ~CourseSelectRouteDokan() override;
     void init(const al::ActorInitInfo& rInfo) override;

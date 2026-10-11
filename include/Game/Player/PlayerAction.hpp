@@ -2,13 +2,15 @@
 
 #include <prim/seadRuntimeTypeInfo.h>
 
+/// Base class of every action the player's action graph can run.
 class PlayerAction {
     SEAD_RTTI_BASE(PlayerAction)
 
 public:
-    virtual ~PlayerAction() = default;
+    virtual ~PlayerAction() {}
+
     virtual void move() = 0;
     virtual void update() = 0;
-    virtual void setup() = 0;
-    virtual void teardown() = 0;
+    virtual void setup();
+    virtual void teardown();
 };

@@ -1,19 +1,19 @@
 #pragma once
-
 #include "Library/LiveActor/LiveActor.hpp"
-
 class CoinCountUp : public al::LiveActor {
 public:
-    explicit CoinCountUp(const char* pName);
+    CoinCountUp(const char*);
     ~CoinCountUp() override;
-    void init(const al::ActorInitInfo& rInfo) override;
+    void init(const al::ActorInitInfo&) override;
     void appear() override;
     void kill() override;
     void appearQuick();
-    void appearDelayQuick(int delay);
-
+    void appearDelayQuick(int);
+    void appearFront(const sead::Vector3f&);
+    void exeDelayQuickStandby();
+    void exeUp();
+    void exeUpQuick();
+    void exeUpFront();
 private:
-    int mDelay = 0;
+    int mDelayFrames = 0;
 };
-
-static_assert(sizeof(CoinCountUp) == 0x148);

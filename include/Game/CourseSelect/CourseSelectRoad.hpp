@@ -3,6 +3,7 @@
 class CourseSelectNode;
 class CourseSelectRoad : public al::LiveActor {
 public:
+    const sead::Vector3f& getTargetTrans() const { return mEndPos; }
     CourseSelectRoad(const char* pName, const CourseSelectNode* pNode, const sead::Vector3f& rEndPos);
     ~CourseSelectRoad() override;
     void initRoad(const al::ActorInitInfo& rInfo, const sead::Vector3f* pOffset);

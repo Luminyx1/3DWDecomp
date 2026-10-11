@@ -2,6 +2,7 @@
 #include "Library/LiveActor/LiveActor.hpp"
 class CourseSelectNodeParts : public al::LiveActor {
 public:
+    bool isCurve() const { return mIsRoadCurve; }
     CourseSelectNodeParts(const char* pName, const char* pGrowAction, const char* pWaitAction);
     ~CourseSelectNodeParts() override;
     void initPartsWithArchiveName(const al::ActorInitInfo& rInfo, const char* pArchiveName);
