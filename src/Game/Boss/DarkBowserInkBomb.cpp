@@ -64,7 +64,7 @@ void updateMaterialCode(InkBomb& rActor, const char* pMaterial) {
 }
 
 const BombStateExplosionParam cExplosionParam = {
-    4500.0f, 2250.0f, 500.0f, {4.0f, 2.0f, 1.0f}, 1.0f, 8,
+    4500.0f, 2250.0f, 500.0f, {4.0f, 2.0f, 1.0f, 1.0f}, 8,
 };
 }  // namespace
 

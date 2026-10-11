@@ -5718,3 +5718,5 @@
 0x710198D9F0 24 object _ZN12_GLOBAL__N_113cDefaultParamE
 
 0x71019857C8 8 object _ZN12_GLOBAL__N_121NrvBrosStateAttackEndE
+
+0x7101981D90 32 object _ZN12_GLOBAL__N_113sDefaultParamE
