@@ -9738,9 +9738,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100175070			FALSE	_ZN21WalkerStateFindPlayer7exeJumpEv	WalkerStateFindPlayer::exeJump()	
 0x71001750B0			FALSE	_ZN21WalkerStateFindPlayerD0Ev	WalkerStateFindPlayer::~WalkerStateFindPlayer()	
 0x71001750E0			FALSE	_ZNK12_GLOBAL__N_128WalkerStateFindPlayerNrvFind7executeEPN2al11NerveKeeperE	(anonymous namespace)::WalkerStateFindPlayerNrvFind::execute(al::NerveKeeper*) const	
-0x71001750F0			FALSE	sub_71001750F0	sub_71001750F0	
-0x7100175130			FALSE	sub_7100175130	sub_7100175130	
-0x71001751A0			FALSE	sub_71001751A0	sub_71001751A0	
+0x71001750F0			FALSE	_ZNK12_GLOBAL__N_128WalkerStateFindPlayerNrvJump7executeEPN2al11NerveKeeperE	(anonymous namespace)::WalkerStateFindPlayerNrvJump::execute(al::NerveKeeper*) const	
+0x7100175130			FALSE	_ZNK12_GLOBAL__N_132WalkerStateFindPlayerNrvFindJump7executeEPN2al11NerveKeeperE	(anonymous namespace)::WalkerStateFindPlayerNrvFindJump::execute(al::NerveKeeper*) const	
+0x71001751A0			FALSE	_GLOBAL__sub_I_WalkerStateFindPlayer.cpp	_GLOBAL__sub_I_WalkerStateFindPlayer.cpp	
 0x71001752C0		WalkerStateFunction.o	FALSE	_ZN19WalkerStateFunction19calcPassiveMovementEPN2al9LiveActorEPK16WalkerStateParam	WalkerStateFunction::calcPassiveMovement(al::LiveActor*, WalkerStateParam const*)	object (class)
 0x7100175330			FALSE	_ZN19WalkerStateFunction19calcPassiveMovementEPN2al9LiveActorEPK16WalkerStateParamb	WalkerStateFunction::calcPassiveMovement(al::LiveActor*, WalkerStateParam const*, bool)	
 0x7100175380			FALSE	_ZN19WalkerStateFunction14isFallNextMoveEPKN2al9LiveActorERKN4sead7Vector3IfEES8_S8_fffb	WalkerStateFunction::isFallNextMove(al::LiveActor const*, sead::Vector3<float> const&, sead::Vector3<float> const&, sead::Vector3<float> const&, float, float, float, bool)	
