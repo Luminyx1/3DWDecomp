@@ -15031,8 +15031,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710024F140			FALSE	_ZN8BlockPowD1Ev	BlockPow::~BlockPow()	
 0x710024F150			FALSE	_ZN8BlockPowD0Ev	BlockPow::~BlockPow()	
 0x710024F180			FALSE	_ZNK12_GLOBAL__N_115BlockPowNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::BlockPowNrvWait::execute(al::NerveKeeper*) const	
-0x710024F1C0			FALSE	_ZNK12_GLOBAL__N_118BlockPowNrvWaitEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::BlockPowNrvWaitEnd::execute(al::NerveKeeper*) const	
-0x710024F1D0			FALSE	_ZNK12_GLOBAL__N_119BlockPowNrvReaction7executeEPN2al11NerveKeeperE	(anonymous namespace)::BlockPowNrvReaction::execute(al::NerveKeeper*) const	
+0x710024F1C0			FALSE	_ZNK12_GLOBAL__N_119BlockPowNrvReaction7executeEPN2al11NerveKeeperE	(anonymous namespace)::BlockPowNrvReaction::execute(al::NerveKeeper*) const	
+0x710024F1D0			FALSE	_ZNK12_GLOBAL__N_118BlockPowNrvWaitEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::BlockPowNrvWaitEnd::execute(al::NerveKeeper*) const	
 0x710024F1E0			FALSE	_ZNK12_GLOBAL__N_116BlockPowNrvEmpty7executeEPN2al11NerveKeeperE	(anonymous namespace)::BlockPowNrvEmpty::execute(al::NerveKeeper*) const	
 0x710024F220			FALSE	_ZNK2al10FunctorV0MIP8BlockPowMS1_FvvEEclEv	al::FunctorV0M<BlockPow*, void (BlockPow::*)()>::operator()() const	
 0x710024F240			FALSE	_ZNK2al10FunctorV0MIP8BlockPowMS1_FvvEE5cloneEv	al::FunctorV0M<BlockPow*, void (BlockPow::*)()>::clone() const	
