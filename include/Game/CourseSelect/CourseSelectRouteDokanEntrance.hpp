@@ -6,7 +6,7 @@
 
 namespace al { class BlockRailRider; }
 class CourseSelectDirector;
-class CourseSelectDokanController;
+class RouteDokanController;
 class CourseSelectSensor;
 
 class CourseSelectRouteDokanEntrance : public al::BlockRailParts {
@@ -27,7 +27,7 @@ public:
 
 private:
     CourseSelectDirector* mpDirector = nullptr;
-    CourseSelectDokanController* mpController = nullptr;
+    RouteDokanController* mpController = nullptr;
     CourseSelectSensor* mpSensor = nullptr;
     sead::Quatf mInitQuat = sead::Quatf::unit;
     sead::Vector3f mInitTrans = sead::Vector3f::zero;

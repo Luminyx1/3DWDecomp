@@ -55,7 +55,7 @@ void CourseSelectRouteDokan::createStopper(const al::ActorInitInfo& rInfo) {
 
 /**
  * @brief Update the entrance stoppers' appearance.
- * @param isAppear Whether to show the stoppers.
+ * @param isAppear Whether to play the stoppers' appearance reaction.
  */
 void CourseSelectRouteDokan::appearStopper(bool isAppear) {
     mpEntrances->appearStopper(isAppear);
