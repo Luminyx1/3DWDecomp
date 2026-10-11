@@ -31765,13 +31765,13 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71004DE520			FALSE	_ZN20TitleStateFileSelect15exeDeleteResultEv	TitleStateFileSelect::exeDeleteResult()	
 0x71004DE580			FALSE	_ZN20TitleStateFileSelect12exeDeleteEndEv	TitleStateFileSelect::exeDeleteEnd()	
 0x71004DE5A0			FALSE	_ZN20TitleStateFileSelectD0Ev	TitleStateFileSelect::~TitleStateFileSelect()	
-0x71004DE5D0			FALSE	sub_71004DE5D0	sub_71004DE5D0	
+0x71004DE5D0			FALSE	_ZNK12_GLOBAL__N_129TitleStateFileSelectNrvSelect7executeEPN2al11NerveKeeperE	(anonymous namespace)::TitleStateFileSelectNrvSelect::execute(al::NerveKeeper*) const	
 0x71004DE630			FALSE	_ZNK12_GLOBAL__N_127TitleStateFileSelectNrvCopy7executeEPN2al11NerveKeeperE	(anonymous namespace)::TitleStateFileSelectNrvCopy::execute(al::NerveKeeper*) const	
-0x71004DE640			FALSE	sub_71004DE640	sub_71004DE640	
-0x71004DE6B0			FALSE	sub_71004DE6B0	sub_71004DE6B0	
+0x71004DE640			FALSE	_ZNK12_GLOBAL__N_133TitleStateFileSelectNrvCopyResult7executeEPN2al11NerveKeeperE	(anonymous namespace)::TitleStateFileSelectNrvCopyResult::execute(al::NerveKeeper*) const	
+0x71004DE6B0			FALSE	_ZNK12_GLOBAL__N_130TitleStateFileSelectNrvCopyEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::TitleStateFileSelectNrvCopyEnd::execute(al::NerveKeeper*) const	
 0x71004DE6D0			FALSE	_ZNK12_GLOBAL__N_129TitleStateFileSelectNrvDelete7executeEPN2al11NerveKeeperE	(anonymous namespace)::TitleStateFileSelectNrvDelete::execute(al::NerveKeeper*) const	
-0x71004DE6E0			FALSE	sub_71004DE6E0	sub_71004DE6E0	
-0x71004DE750			FALSE	sub_71004DE750	sub_71004DE750	
+0x71004DE6E0			FALSE	_ZNK12_GLOBAL__N_135TitleStateFileSelectNrvDeleteResult7executeEPN2al11NerveKeeperE	(anonymous namespace)::TitleStateFileSelectNrvDeleteResult::execute(al::NerveKeeper*) const	
+0x71004DE750			FALSE	_ZNK12_GLOBAL__N_132TitleStateFileSelectNrvDeleteEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::TitleStateFileSelectNrvDeleteEnd::execute(al::NerveKeeper*) const	
 0x71004DE770		TopMenuScene.o	FALSE	_ZN12TopMenuSceneC1EP15StageWipeKeeper	TopMenuScene::TopMenuScene(StageWipeKeeper*)	object (class)
 0x71004DE7F0			FALSE	_ZN12TopMenuSceneD1Ev	TopMenuScene::~TopMenuScene()	
 0x71004DE860			FALSE	_ZN12TopMenuSceneD0Ev	TopMenuScene::~TopMenuScene()	

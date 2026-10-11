@@ -3193,7 +3193,7 @@ src/Game/Scene/TitleDemoInfo.cpp: done
     .text   start:0x004DAE70 end:0x004DAE9C
 src/Game/Scene/TitleScene.cpp:
     .text   start:0x004DAEA0 end:0x004DE01C
-src/Game/Scene/TitleStateFileSelect.cpp:
+src/Game/Scene/TitleStateFileSelect.cpp: done
     .text   start:0x004DE020 end:0x004DE770
 src/Game/Scene/TopMenuScene.cpp:
     .text   start:0x004DE770 end:0x004DFBE8
