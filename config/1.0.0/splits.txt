@@ -203,7 +203,7 @@ src/Game/Boss/KoopaLastDefendeBlockPow.cpp:
     .text   start:0x000340A0 end:0x00034F1C
 src/Game/Boss/KoopaLastDemoAppear.cpp:
     .text   start:0x00034F20 end:0x000359B4
-src/Game/Boss/KoopaLastDemoEndActorHolder.cpp:
+src/Game/Boss/KoopaLastDemoEndActorHolder.cpp: done
     .text   start:0x000359C0 end:0x00035FDC
 src/Game/Boss/KoopaLastFireBreath.cpp: done
     .text   start:0x00035FE0 end:0x00036434
@@ -235,7 +235,7 @@ src/Game/Boss/PunpunDivision.cpp:
     .text   start:0x00041840 end:0x00042498
 src/Game/Boss/PunpunParam.cpp: done
     .text   start:0x000424A0 end:0x000427BC
-src/Game/Boss/PunpunShuriken.cpp:
+src/Game/Boss/PunpunShuriken.cpp: done
     .text   start:0x000427C0 end:0x00042FF8
 src/Game/Boss/SuperBowser.cpp:
     .text   start:0x00043000 end:0x00052C78
@@ -277,7 +277,7 @@ src/Game/Boss/TentackRock.cpp: done
     .text   start:0x0006D120 end:0x0006D768
 src/Game/Boss/TentackRockFaller.cpp:
     .text   start:0x0006D770 end:0x0006DA5C
-src/Game/Boss/TentackStateAttackShot.cpp:
+src/Game/Boss/TentackStateAttackShot.cpp: done
     .text   start:0x0006DA60 end:0x0006E18C
 src/Game/Boss/TentackStateAttackTentacle.cpp:
     .text   start:0x0006E190 end:0x0006F8EC
@@ -285,7 +285,7 @@ src/Game/Boss/TentackStateFallRock.cpp: done
     .text   start:0x0006F8F0 end:0x0006FE98
 src/Game/Boss/TentackTentacle.cpp:
     .text   start:0x0006FEA0 end:0x00072B68
-src/Game/Boss/TentackTentacleGroup.cpp:
+src/Game/Boss/TentackTentacleGroup.cpp: done
     .text   start:0x00072B70 end:0x000732FC
 src/Game/Boss/TentackTentacleStep.cpp:
     .text   start:0x00073300 end:0x00074034
