@@ -4,5 +4,6 @@
 // Course-map player interface; the derived actor's fields remain unrecovered.
 class CourseSelectPlayerActor : public PlayerActor {
 public:
+    void onPushAction();
     bool isReceivePush() const;
 };
