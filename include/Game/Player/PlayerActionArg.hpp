@@ -3,6 +3,8 @@
 class IUsePlayerAnimator;
 class IUsePlayerCollision;
 class IUsePlayerInput;
+class IUsePlayerInputArranger;
+class PlayerConstParam;
 class IUsePlayerSubAction;
 struct PlayerProperty;
 
@@ -16,6 +18,8 @@ struct PlayerActionArg {
     IUsePlayerCollision* mCollision;   // 0x20
     unsigned char _28[0x8];
     const IUsePlayerInput* mInput;     // 0x30
-    unsigned char _38[0x8];
+    IUsePlayerInputArranger* mInputArranger;  // 0x38
     IUsePlayerSubAction* mSubAction;   // 0x40
+    unsigned char _48[0x10];
+    const PlayerConstParam* mConstParam;  // 0x58
 };

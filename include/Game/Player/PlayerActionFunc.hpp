@@ -8,6 +8,7 @@ class PlayerFigureDirector;
 struct PlayerProperty;
 
 namespace PlayerActionFunc {
+    void setupJump(PlayerProperty*, IUsePlayerCollision*, float, bool);
     bool isUpperVelocity(const PlayerProperty*);
     void calcDownward(sead::Vector3f*, const PlayerProperty*, const sead::Vector3f&);
     bool checkMapCode(const IUsePlayerCollision*, const char*);
