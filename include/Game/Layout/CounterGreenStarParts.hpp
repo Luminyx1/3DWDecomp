@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Library/Layout/LayoutActor.hpp"
+#include "Layout/TextBoxTextInfo.hpp"
 
 namespace al {
 class LayoutInitInfo;
@@ -10,7 +11,6 @@ class GreenStarKeeper;
 
 /**
  * @brief Counter of the green stars collected in the current stage.
- * @note Minimal declaration: only what the reconstructed code uses is declared so far.
  */
 class CounterGreenStarParts : public al::LayoutActor {
 public:
@@ -18,8 +18,16 @@ public:
                           const char* pPaneName, al::LayoutActor* pParent,
                           const GreenStarKeeper* pGreenStarKeeper);
 
+    void control() override;
+    void exeWait();
+    void setPaneAcquiredGreenStar();
+
 private:
-    u8 _121[0x180 - 0x121];  // members start in al::LayoutActor's tail padding
+    al::LayoutActor* mParent;
+    const GreenStarKeeper* mGreenStarKeeper;
+    int mAcquiredCount = 0;
+    fix::TextBoxTextInfo mTextInfo;
+    fix::TextBoxTextInfo mBaseTextInfo;
 };
 
 static_assert(sizeof(CounterGreenStarParts) == 0x180);

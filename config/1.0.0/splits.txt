@@ -1079,7 +1079,7 @@ src/Game/Layout/CounterGoalItemParts.cpp: done
     .text   start:0x001B6880 end:0x001B6ED8
 src/Game/Layout/CounterGreenStarAppend.cpp: done
     .text   start:0x001B6EE0 end:0x001B7644
-src/Game/Layout/CounterGreenStarParts.cpp:
+src/Game/Layout/CounterGreenStarParts.cpp: done
     .text   start:0x001B7650 end:0x001B812C
 src/Game/Layout/CounterMysteryBox.cpp: done
     .text   start:0x001B8130 end:0x001B8304

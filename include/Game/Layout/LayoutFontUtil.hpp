@@ -1,6 +1,9 @@
 #pragma once
 
 namespace LayoutFontUtil {
+const char16_t* getIconFontGreenStar();
+const char16_t* getIconFontGreenStarBase();
+const char16_t* getIconFontGreenStarEmpty();
 const char16_t* getIconFontShard();
 const char16_t* getMessageFontButtonCancel(int port);
 const char16_t* getIconFontCoin();
