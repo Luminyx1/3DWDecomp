@@ -1686,7 +1686,7 @@ src/Game/MapObj/GoalPoleStateRunaway.cpp:
     .text   start:0x002D8090 end:0x002D8C94
 src/Game/MapObj/GoalPoleWing.cpp: done
     .text   start:0x002D8CA0 end:0x002D8F80
-src/Game/MapObj/Gondola.cpp:
+src/Game/MapObj/Gondola.cpp: done
     .text   start:0x002D8F80 end:0x002D9E84
 src/Game/MapObj/Gong.cpp: done
     .text   start:0x002D9E90 end:0x002DA3E8

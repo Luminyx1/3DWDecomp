@@ -18391,8 +18391,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71002D9D10			FALSE	_ZNK12_GLOBAL__N_127GondolaNrvRailRunBeforeWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::GondolaNrvRailRunBeforeWait::execute(al::NerveKeeper*) const	
 0x71002D9D20			FALSE	_ZNK12_GLOBAL__N_117GondolaNrvRailRun7executeEPN2al11NerveKeeperE	(anonymous namespace)::GondolaNrvRailRun::execute(al::NerveKeeper*) const	
 0x71002D9D30			FALSE	_ZNK12_GLOBAL__N_123GondolaNrvRailReachGoal7executeEPN2al11NerveKeeperE	(anonymous namespace)::GondolaNrvRailReachGoal::execute(al::NerveKeeper*) const	
-0x71002D9D40			FALSE	sub_71002D9D40	sub_71002D9D40	
-0x71002D9DB0			FALSE	sub_71002D9DB0	sub_71002D9DB0	
+0x71002D9D40			FALSE	_ZNK12_GLOBAL__N_119GondolaNrvDisappear7executeEPN2al11NerveKeeperE	(anonymous namespace)::GondolaNrvDisappear::execute(al::NerveKeeper*) const	
+0x71002D9DB0			FALSE	_ZNK12_GLOBAL__N_124GondolaNrvDisappearSound7executeEPN2al11NerveKeeperE	(anonymous namespace)::GondolaNrvDisappearSound::execute(al::NerveKeeper*) const	
 0x71002D9E20			FALSE	_ZNK2al10FunctorV0MIP7GondolaMS1_FvvEEclEv	al::FunctorV0M<Gondola*, void (Gondola::*)()>::operator()() const	
 0x71002D9E40			FALSE	_ZNK2al10FunctorV0MIP7GondolaMS1_FvvEE5cloneEv	al::FunctorV0M<Gondola*, void (Gondola::*)()>::clone() const	
 0x71002D9E90		Gong.o	FALSE	_ZN4GongC2EPKc	Gong::Gong(char const*)	

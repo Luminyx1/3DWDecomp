@@ -5760,3 +5760,9 @@
 0x7101AF0138 40 object _ZTVN12_GLOBAL__N_131RollingCubeMapPartsNrvFallLandZE
 0x7101AF0160 40 object _ZTVN12_GLOBAL__N_126RollingCubeMapPartsNrvStopE
 0x71021242A0 248 object _ZN12_GLOBAL__N_122NrvRollingCubeMapPartsE
+
+# Gondola disappearance nerves
+0x7101A22CA8 32 object _ZTVN12_GLOBAL__N_119GondolaNrvDisappearE
+0x7101A22CC8 8 object _ZN12_GLOBAL__N_119NrvGondolaDisappearE
+0x7101A22CD0 32 object _ZTVN12_GLOBAL__N_124GondolaNrvDisappearSoundE
+0x7101A22CF0 8 object _ZN12_GLOBAL__N_124NrvGondolaDisappearSoundE
