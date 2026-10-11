@@ -11146,11 +11146,11 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001AFFC0			FALSE	_ZN19ButtonShortCutParts9exeDecideEv	ButtonShortCutParts::exeDecide()	
 0x71001AFFD0			FALSE	_ZN19ButtonShortCutParts7exeHideEv	ButtonShortCutParts::exeHide()	
 0x71001B0010			FALSE	_ZN19ButtonShortCutParts6exeEndEv	ButtonShortCutParts::exeEnd()	
-0x71001B0050			FALSE	sub_71001B0050	sub_71001B0050	
-0x71001B00C0			FALSE	sub_71001B00C0	sub_71001B00C0	
-0x71001B0130			FALSE	sub_71001B0130	sub_71001B0130	
-0x71001B0180			FALSE	sub_71001B0180	sub_71001B0180	
-0x71001B01D0			FALSE	nullsub_107	nullsub_107	
+0x71001B0050			FALSE	_ZNK12_GLOBAL__N_126ButtonShortCutPartsNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::ButtonShortCutPartsNrvWait::execute(al::NerveKeeper*) const	
+0x71001B00C0			FALSE	_ZNK12_GLOBAL__N_128ButtonShortCutPartsNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::ButtonShortCutPartsNrvAppear::execute(al::NerveKeeper*) const	
+0x71001B0130			FALSE	_ZNK12_GLOBAL__N_125ButtonShortCutPartsNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::ButtonShortCutPartsNrvEnd::execute(al::NerveKeeper*) const	
+0x71001B0180			FALSE	_ZNK12_GLOBAL__N_126ButtonShortCutPartsNrvHide7executeEPN2al11NerveKeeperE	(anonymous namespace)::ButtonShortCutPartsNrvHide::execute(al::NerveKeeper*) const	
+0x71001B01D0			FALSE	_ZNK12_GLOBAL__N_128ButtonShortCutPartsNrvDecide7executeEPN2al11NerveKeeperE	(anonymous namespace)::ButtonShortCutPartsNrvDecide::execute(al::NerveKeeper*) const	
 0x71001B01E0		ButtonSquareIconParts.o	FALSE	_ZN21ButtonSquareIconPartsC2ERKN2al14LayoutInitInfoEPKcS5_PNS0_11LayoutActorEb	ButtonSquareIconParts::ButtonSquareIconParts(al::LayoutInitInfo const&, char const*, char const*, al::LayoutActor*, bool)	
 0x71001B0280			FALSE	_ZN21ButtonSquareIconPartsC1ERKN2al14LayoutInitInfoEPKcS5_PNS0_11LayoutActorEb	ButtonSquareIconParts::ButtonSquareIconParts(al::LayoutInitInfo const&, char const*, char const*, al::LayoutActor*, bool)	
 0x71001B0330			FALSE	_ZN21ButtonSquareIconParts7exeWaitEv	ButtonSquareIconParts::exeWait()	

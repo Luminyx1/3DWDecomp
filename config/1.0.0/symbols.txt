@@ -5741,3 +5741,10 @@
 
 # src/Game/Layout/MapMenuPlayerParts
 0x71019DDEB0 8 object _ZN12_GLOBAL__N_125NrvMapMenuPlayerPartsHideE
+
+# src/Game/Layout/ButtonShortCutParts
+0x71019D1728 8 object _ZN12_GLOBAL__N_126NrvButtonShortCutPartsWaitE
+0x71019D1750 8 object _ZN12_GLOBAL__N_128NrvButtonShortCutPartsAppearE
+0x71019D1778 8 object _ZN12_GLOBAL__N_125NrvButtonShortCutPartsEndE
+0x71019D17A0 8 object _ZN12_GLOBAL__N_126NrvButtonShortCutPartsHideE
+0x71019D17C8 8 object _ZN12_GLOBAL__N_128NrvButtonShortCutPartsDecideE
