@@ -447,7 +447,7 @@ src/Game/CourseSelect/CourseSelectStateStageEnter.cpp:
     .text   start:0x000B28E0 end:0x000B34B4
 src/Game/CourseSelect/CourseSelectStateStageExit.cpp:
     .text   start:0x000B34C0 end:0x000B3AF8
-src/Game/CourseSelect/CourseSelectStateStartMiiverse.cpp:
+src/Game/CourseSelect/CourseSelectStateStartMiiverse.cpp: done
     .text   start:0x000B3B00 end:0x000B427C
 src/Game/CourseSelect/CourseSelectStateWorldStartDemo.cpp:
     .text   start:0x000B4280 end:0x000B518C

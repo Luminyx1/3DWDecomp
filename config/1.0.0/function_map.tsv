@@ -4350,14 +4350,14 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71000B3EB0			FALSE	_ZN30CourseSelectStateStartMiiverse8exeErrorEv	CourseSelectStateStartMiiverse::exeError()	
 0x71000B3F10			FALSE	_ZN30CourseSelectStateStartMiiverse9exeDecideEv	CourseSelectStateStartMiiverse::exeDecide()	
 0x71000B3F70			FALSE	_ZN30CourseSelectStateStartMiiverseD0Ev	CourseSelectStateStartMiiverse::~CourseSelectStateStartMiiverse()	
-0x71000B3FA0			FALSE	sub_71000B3FA0	sub_71000B3FA0	
-0x71000B4000			FALSE	sub_71000B4000	sub_71000B4000	
-0x71000B4060			FALSE	sub_71000B4060	sub_71000B4060	
+0x71000B3FA0			FALSE	_ZNK12_GLOBAL__N_145CourseSelectStateStartMiiverseNrvInfoMiiverse7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectStateStartMiiverseNrvInfoMiiverse::execute(al::NerveKeeper*) const	
+0x71000B4000			FALSE	_ZNK12_GLOBAL__N_153CourseSelectStateStartMiiverseNrvInfoLocalActMiiverse7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectStateStartMiiverseNrvInfoLocalActMiiverse::execute(al::NerveKeeper*) const	
+0x71000B4060			FALSE	_ZNK12_GLOBAL__N_142CourseSelectStateStartMiiverseNrvInfoGhost7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectStateStartMiiverseNrvInfoGhost::execute(al::NerveKeeper*) const	
 0x71000B40C0			FALSE	_ZNK12_GLOBAL__N_140CourseSelectStateStartMiiverseNrvConfirm7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectStateStartMiiverseNrvConfirm::execute(al::NerveKeeper*) const	
-0x71000B40D0			FALSE	sub_71000B40D0	sub_71000B40D0	
-0x71000B4130			FALSE	sub_71000B4130	sub_71000B4130	
-0x71000B41B0			FALSE	sub_71000B41B0	sub_71000B41B0	
-0x71000B4220			FALSE	sub_71000B4220	sub_71000B4220	
+0x71000B40D0			FALSE	_ZNK12_GLOBAL__N_150CourseSelectStateStartMiiverseNrvInfoLocalActGhost7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectStateStartMiiverseNrvInfoLocalActGhost::execute(al::NerveKeeper*) const	
+0x71000B4130			FALSE	_ZNK12_GLOBAL__N_145CourseSelectStateStartMiiverseNrvConfirmLocal7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectStateStartMiiverseNrvConfirmLocal::execute(al::NerveKeeper*) const	
+0x71000B41B0			FALSE	_ZNK12_GLOBAL__N_138CourseSelectStateStartMiiverseNrvError7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectStateStartMiiverseNrvError::execute(al::NerveKeeper*) const	
+0x71000B4220			FALSE	_ZNK12_GLOBAL__N_139CourseSelectStateStartMiiverseNrvDecide7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectStateStartMiiverseNrvDecide::execute(al::NerveKeeper*) const	
 0x71000B4280		CourseSelectStateWorldStartDemo.o	FALSE	_ZN31CourseSelectStateWorldStartDemoC2EP17CourseSelectSceneRKN2al13ActorInitInfoEPNS2_15SceneCameraInfoE	CourseSelectStateWorldStartDemo::CourseSelectStateWorldStartDemo(CourseSelectScene*, al::ActorInitInfo const&, al::SceneCameraInfo*)	
 0x71000B4360			FALSE	_ZN31CourseSelectStateWorldStartDemo4initEv	CourseSelectStateWorldStartDemo::init()	
 0x71000B43A0			FALSE	_ZN31CourseSelectStateWorldStartDemo6appearEv	CourseSelectStateWorldStartDemo::appear()	
