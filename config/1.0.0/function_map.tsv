@@ -1984,11 +1984,11 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100054E20			FALSE	_ZN32SuperBowserFireFlamePlessieChase10exeLandEndEv	SuperBowserFireFlamePlessieChase::exeLandEnd()	
 0x7100054EE0			FALSE	_ZN32SuperBowserFireFlamePlessieChaseD1Ev	SuperBowserFireFlamePlessieChase::~SuperBowserFireFlamePlessieChase()	
 0x7100054EF0			FALSE	_ZN32SuperBowserFireFlamePlessieChaseD0Ev	SuperBowserFireFlamePlessieChase::~SuperBowserFireFlamePlessieChase()	
-0x7100054F20			FALSE	nullsub_12	nullsub_12	
-0x7100054F30			FALSE	sub_7100054F30	sub_7100054F30	
+0x7100054F20			FALSE	_ZNK12_GLOBAL__N_139SuperBowserFireFlamePlessieChaseNrvWait7executeEPN2al11NerveKeeperE	nullsub_12	matched nerve
+0x7100054F30			FALSE	_ZNK12_GLOBAL__N_142SuperBowserFireFlamePlessieChaseNrvExplode7executeEPN2al11NerveKeeperE	sub_7100054F30	matched nerve
 0x7100054FC0			FALSE	_ZNK12_GLOBAL__N_144SuperBowserFireFlamePlessieChaseNrvLandStart7executeEPN2al11NerveKeeperE	(anonymous namespace)::SuperBowserFireFlamePlessieChaseNrvLandStart::execute(al::NerveKeeper*) const	
 0x7100054FD0			FALSE	_ZNK12_GLOBAL__N_141SuperBowserFireFlamePlessieChaseNrvAttack7executeEPN2al11NerveKeeperE	(anonymous namespace)::SuperBowserFireFlamePlessieChaseNrvAttack::execute(al::NerveKeeper*) const	
-0x7100054FE0			FALSE	sub_7100054FE0	sub_7100054FE0	
+0x7100054FE0			FALSE	_ZNK12_GLOBAL__N_139SuperBowserFireFlamePlessieChaseNrvLand7executeEPN2al11NerveKeeperE	sub_7100054FE0	matched nerve
 0x7100055040			FALSE	_ZNK12_GLOBAL__N_142SuperBowserFireFlamePlessieChaseNrvLandEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::SuperBowserFireFlamePlessieChaseNrvLandEnd::execute(al::NerveKeeper*) const	
 0x7100055050		SuperBowserGiantFireballState.o	FALSE	_ZN29SuperBowserGiantFireballStateC1EP11SuperBowserRKN2al13ActorInitInfoE	SuperBowserGiantFireballState::SuperBowserGiantFireballState(SuperBowser*, al::ActorInitInfo const&)	
 0x71000551E0			FALSE	_ZN29SuperBowserGiantFireballState18createFireballPoolERKN2al13ActorInitInfoE	SuperBowserGiantFireballState::createFireballPool(al::ActorInitInfo const&)	

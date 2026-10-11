@@ -243,7 +243,7 @@ src/Game/Boss/SuperBowserFirebreathState.cpp:
     .text   start:0x00052C80 end:0x000537A8
 src/Game/Boss/SuperBowserFireFlame.cpp: done
     .text   start:0x000537B0 end:0x00054478
-src/Game/Boss/SuperBowserFireFlamePlessieChase.cpp:
+src/Game/Boss/SuperBowserFireFlamePlessieChase.cpp: done
     .text   start:0x00054480 end:0x00055048
 src/Game/Boss/SuperBowserGiantFireballState.cpp:
     .text   start:0x00055050 end:0x00055D98
