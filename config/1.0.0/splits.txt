@@ -3133,7 +3133,7 @@ src/Game/Scene/DemoOpeningState.cpp:
     .text   start:0x004B17B0 end:0x004B24B8
 src/Game/Scene/DemoScene.cpp:
     .text   start:0x004B24C0 end:0x004B35B4
-src/Game/Scene/DemoSceneSingleMode.cpp:
+src/Game/Scene/DemoSceneSingleMode.cpp: done
     .text   start:0x004B35C0 end:0x004B3868
 src/Game/Scene/DemoSingleModeEndingScene.cpp:
     .text   start:0x004B3870 end:0x004B4A18
