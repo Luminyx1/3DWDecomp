@@ -123,22 +123,6 @@ al::SceneCameraInfo* DrcAssistDirector::getSceneCameraInfo() const {
 }
 
 /**
- * @brief Constructs the assist of one pad port.
- * @param port player pad port
- * @param isLongRange whether the pointer checks collisions further away
- */
-DrcAssistDirector::DrcAssistDirector(s32 port, bool isLongRange)
-    : mIsLongRange(isLongRange), mPort(port),
-      mTouchPadPort(rc::calcTouchPanelPortByPortNum(port)) {
-    mStampDirector = nullptr;
-    mIgnoreTriggerFrames = 0;
-    mIsDisappearGyro = false;
-    mIsPrevGyroTouch = false;
-    mIsPlayerExist = true;
-    mTouchEffect = nullptr;
-}
-
-/**
  * @brief Checks whether a sensor belongs to the touch pointer.
  * @param pSensor sensor to check
  * @return true if the sensor is the pointer's
