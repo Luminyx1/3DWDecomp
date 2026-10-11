@@ -4786,7 +4786,7 @@ src/al/Library/LiveActor/SubActorKeeper.cpp:
     .text   start:0x0084A4F0 end:0x0084ADF0
 src/al/Library/LiveActor/LiveActorFunction_dup2.cpp: done
     .text   start:0x0084ADF0 end:0x0084B14C
-src/al/Library/MapObj/ClockMapParts.cpp:
+src/al/Library/MapObj/ClockMapParts.cpp: done
     .text   start:0x0084B150 end:0x0084C09C
 src/al/Library/MapObj/ChildStep.cpp:
     .text   start:0x0084C0A0 end:0x0084C57C
@@ -4802,7 +4802,7 @@ src/al/Library/MapObj/FallMapParts.cpp:
     .text   start:0x0084E080 end:0x0084E8E0
 src/al/Library/MapObj/FixMapParts.cpp: done
     .text   start:0x0084E8E0 end:0x0084EBF8
-src/al/Library/MapObj/FloaterMapParts.cpp:
+src/al/Library/MapObj/FloaterMapParts.cpp: done
     .text   start:0x0084EC00 end:0x0084F428
 src/al/Library/MapObj/GateMapParts.cpp:
     .text   start:0x0084F430 end:0x0084FE2C
@@ -4826,7 +4826,7 @@ src/al/Library/MapObj/SurfMapParts.cpp: done
     .text   start:0x00856030 end:0x008564D8
 src/al/Library/MapObj/SwingMapParts.cpp: done
     .text   start:0x008564E0 end:0x00856CAC
-src/al/Library/MapObj/VisibleSwitchMapParts.cpp:
+src/al/Library/MapObj/VisibleSwitchMapParts.cpp: done
     .text   start:0x00856CB0 end:0x00857344
 src/al/Library/MapObj/WheelMapParts.cpp:
     .text   start:0x00857350 end:0x00857DD0
