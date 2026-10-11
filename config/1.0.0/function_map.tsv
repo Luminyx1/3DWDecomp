@@ -8552,8 +8552,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710014A100			FALSE	_ZN10SkatisHeadD1Ev	SkatisHead::~SkatisHead()	
 0x710014A110			FALSE	_ZN10SkatisHeadD0Ev	SkatisHead::~SkatisHead()	
 0x710014A140			FALSE	_ZNK12_GLOBAL__N_117SkatisHeadNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::SkatisHeadNrvWait::execute(al::NerveKeeper*) const	
-0x710014A150			FALSE	sub_710014A150	sub_710014A150	
-0x710014A1C0			FALSE	sub_710014A1C0	sub_710014A1C0	
+0x710014A150			FALSE	_ZNK12_GLOBAL__N_121SkatisHeadNrvBlowDown7executeEPN2al11NerveKeeperE	(anonymous namespace)::SkatisHeadNrvBlowDown::execute(al::NerveKeeper*) const	
+0x710014A1C0			FALSE	_GLOBAL__sub_I_SkatisHead.cpp	_GLOBAL__sub_I_SkatisHead.cpp	
 0x710014A1E0		Skipper.o	FALSE	_ZN7SkipperC2EPKc	Skipper::Skipper(char const*)	
 0x710014A270			FALSE	_ZN7SkipperC1EPKc	Skipper::Skipper(char const*)	
 0x710014A300			FALSE	_ZN7Skipper4initERKN2al13ActorInitInfoE	Skipper::init(al::ActorInitInfo const&)	
