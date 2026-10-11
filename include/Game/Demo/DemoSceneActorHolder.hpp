@@ -21,6 +21,8 @@ public:
     al::LiveActor* tryFindDemoSceneActor(const char* pName);
     void appear();
     void startAction(int index, bool loop);
+    void tryStartActionByName(const char* pName);
+    bool isAllActionEnd() const;
     void kill();
     bool isActionEndCamera(int frames) const;
     al::LiveActor* getDemoSceneActor(int index) const;

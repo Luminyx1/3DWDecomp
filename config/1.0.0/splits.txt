@@ -473,7 +473,7 @@ src/Game/Demo/DemoAnimatic.cpp: done
     .text   start:0x000B7E00 end:0x000B8110
 src/Game/Demo/DemoCutscene.cpp:
     .text   start:0x000B8110 end:0x000B9AA8
-src/Game/Demo/DemoCutsceneSequence.cpp:
+src/Game/Demo/DemoCutsceneSequence.cpp: done
     .text   start:0x000B9AB0 end:0x000BA390
 src/Game/Demo/DemoEffectObj.cpp: done
     .text   start:0x000BA390 end:0x000BA944
@@ -513,15 +513,15 @@ src/Game/Demo/DemoTimerStageSwitchInfo.cpp:
     .text   start:0x000C29D0 end:0x000C41EC
 src/Game/Demo/DemoWorldClear.cpp: done
     .text   start:0x000C41F0 end:0x000C4C28
-src/Game/Demo/ProjectDemoDirector.cpp:
+src/Game/Demo/ProjectDemoDirector.cpp: done
     .text   start:0x000C4C30 end:0x000C5424
 src/Game/Demo/StageStartBindDemoCasinoRoom.cpp: done
     .text   start:0x000C5430 end:0x000C5C18
 src/Game/Demo/StageStartBindDemoKinopioBrigade.cpp:
     .text   start:0x000C5C20 end:0x000C7BB4
-src/Game/Demo/StageStartBindDemoKinopioHouse.cpp:
+src/Game/Demo/StageStartBindDemoKinopioHouse.cpp: done
     .text   start:0x000C7BC0 end:0x000C83D8
-src/Game/Demo/StageStartBindDemoMysteryHouse.cpp:
+src/Game/Demo/StageStartBindDemoMysteryHouse.cpp: done
     .text   start:0x000C83E0 end:0x000C8E38
 src/Game/Demo/StageStartEventCamera.cpp: done
     .text   start:0x000C8E40 end:0x000C9384
@@ -1504,7 +1504,7 @@ src/Game/MapObj/CloudBonusLauncher.cpp:
     .text   start:0x0026CDA0 end:0x0026FCE8
 src/Game/MapObj/CloudBonusLauncherBindPuppeteer.cpp: done
     .text   start:0x0026FCF0 end:0x00270688
-src/Game/MapObj/Coin.cpp:
+src/Game/MapObj/Coin.cpp: done
     .text   start:0x00270690 end:0x00271494
 src/Game/MapObj/CoinAttach.cpp: done
     .text   start:0x002714A0 end:0x00271EE8
@@ -1872,7 +1872,7 @@ src/Game/MapObj/Ocean.cpp:
     .text   start:0x00325690 end:0x00325A9C
 src/Game/MapObj/WaveGrid.cpp:
     .text   start:0x00325AA0 end:0x00328DD4
-src/Game/MapObj/OceanData.cpp:
+src/Game/MapObj/OceanData.cpp: done
     .text   start:0x00328DE0 end:0x003295B4
 src/Game/MapObj/OceanWaveWake.cpp:
     .text   start:0x003295C0 end:0x0032A1A8
@@ -2128,7 +2128,7 @@ src/Game/MapObj/TouchTrackDrawer.cpp: done
     .text   start:0x0038E300 end:0x0038E820
 src/Game/MapObj/TractorBubble.cpp:
     .text   start:0x0038E820 end:0x0039039C
-src/Game/MapObj/TractorBubblePuppeteer.cpp:
+src/Game/MapObj/TractorBubblePuppeteer.cpp: done
     .text   start:0x003903A0 end:0x00390C44
 src/Game/MapObj/TrampleSwitch.cpp: done
     .text   start:0x00390C50 end:0x003914B4
@@ -2144,8 +2144,9 @@ src/Game/MapObj/TrampleSwitchTogether.cpp: done
     .text   start:0x00394650 end:0x00394CB4
 src/Game/MapObj/TrampleSwitchTogetherWatcher.cpp: done
     .text   start:0x00394CC0 end:0x003950A4
-src/Game/MapObj/Trampoline.cpp:
+src/Game/MapObj/Trampoline.cpp: done
     .text   start:0x003950B0 end:0x00395F98
+    .data   start:0x01A6AD10 end:0x01A6AD58
 src/Game/MapObj/TransparentWall.cpp: done
     .text   start:0x00395FA0 end:0x00396300
 src/Game/MapObj/Trapeze.cpp:
