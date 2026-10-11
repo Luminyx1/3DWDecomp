@@ -1055,12 +1055,12 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710002C7C0			FALSE	_ZN15KoopaChaseKoopa18exeWarpProvocationEv	KoopaChaseKoopa::exeWarpProvocation()	
 0x710002C820			FALSE	_ZN15KoopaChaseKoopaD1Ev	KoopaChaseKoopa::~KoopaChaseKoopa()	
 0x710002C830			FALSE	_ZN15KoopaChaseKoopaD0Ev	KoopaChaseKoopa::~KoopaChaseKoopa()	
-0x710002C860			FALSE	nullsub_4	nullsub_4	
-0x710002C870			FALSE	sub_710002C870	sub_710002C870	
-0x710002C8D0			FALSE	sub_710002C8D0	sub_710002C8D0	
-0x710002C930			FALSE	sub_710002C930	sub_710002C930	
-0x710002C970			FALSE	sub_710002C970	sub_710002C970	
-0x710002C9D0			FALSE	sub_710002C9D0	sub_710002C9D0	
+0x710002C860			FALSE	_ZNK12_GLOBAL__N_122KoopaChaseKoopaNrvStop7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_122KoopaChaseKoopaNrvStop7executeEPN2al11NerveKeeperE	matched helper
+0x710002C870			FALSE	_ZNK12_GLOBAL__N_124KoopaChaseKoopaNrvDamage7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_124KoopaChaseKoopaNrvDamage7executeEPN2al11NerveKeeperE	matched helper
+0x710002C8D0			FALSE	_ZNK12_GLOBAL__N_129KoopaChaseKoopaNrvDamageSmall7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_129KoopaChaseKoopaNrvDamageSmall7executeEPN2al11NerveKeeperE	matched helper
+0x710002C930			FALSE	_ZNK12_GLOBAL__N_122KoopaChaseKoopaNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_122KoopaChaseKoopaNrvWait7executeEPN2al11NerveKeeperE	matched helper
+0x710002C970			FALSE	_ZNK12_GLOBAL__N_133KoopaChaseKoopaNrvWarpProvocation7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_133KoopaChaseKoopaNrvWarpProvocation7executeEPN2al11NerveKeeperE	matched helper
+0x710002C9D0			FALSE	_GLOBAL__sub_I_KoopaChaseKoopa.cpp	_GLOBAL__sub_I_KoopaChaseKoopa.cpp	matched helper
 0x710002CA80		KoopaChaseMovePos.o	FALSE	_ZN17KoopaChaseMovePosC2ERKN2al13PlacementInfoERKNS0_13ActorInitInfoEPS_PN4sead8PtrArrayIS_EE	KoopaChaseMovePos::KoopaChaseMovePos(al::PlacementInfo const&, al::ActorInitInfo const&, KoopaChaseMovePos*, sead::PtrArray<KoopaChaseMovePos>*)	
 0x710002CCC0			FALSE	_ZN17KoopaChaseMovePosC1ERKN2al13PlacementInfoERKNS0_13ActorInitInfoEPS_PN4sead8PtrArrayIS_EE	KoopaChaseMovePos::KoopaChaseMovePos(al::PlacementInfo const&, al::ActorInitInfo const&, KoopaChaseMovePos*, sead::PtrArray<KoopaChaseMovePos>*)	
 0x710002CEE0			FALSE	_ZN17KoopaChaseMovePos21initStageSwitchKeeperEv	KoopaChaseMovePos::initStageSwitchKeeper()	
