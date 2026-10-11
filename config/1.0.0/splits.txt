@@ -807,7 +807,7 @@ src/Game/Enemy/SyumockRailMove.cpp:
     .text   start:0x00153A30 end:0x00154A68
 src/Game/Enemy/SyumockRotate.cpp:
     .text   start:0x00154A70 end:0x00155678
-src/Game/Enemy/SyumockUtil.cpp:
+src/Game/Enemy/SyumockUtil.cpp: done
     .text   start:0x00155680 end:0x00155B8C
 src/Game/Enemy/Takobo.cpp:
     .text   start:0x00155B90 end:0x00157074
