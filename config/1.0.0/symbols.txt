@@ -5712,3 +5712,5 @@
 # PhaseScene state instances.
 0x7101a96830 8 object _ZN12_GLOBAL__N_120NrvPhaseSceneGameEndE
 0x7101a96838 8 object _ZN12_GLOBAL__N_121NrvPhaseScenePhaseEndE
+
+0x7101a94808 8 object _ZN12_GLOBAL__N_123NrvDemoOpeningScenePlayE

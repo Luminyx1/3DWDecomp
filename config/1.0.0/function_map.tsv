@@ -30548,7 +30548,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71004B15F0			FALSE	_ZNK16DemoOpeningScene9drawMain_Ev	DemoOpeningScene::drawMain_() const	
 0x71004B1720			FALSE	_ZNK16DemoOpeningScene8drawSub_Ev	DemoOpeningScene::drawSub_() const	
 0x71004B1730			FALSE	_ZN16DemoOpeningScene7exePlayEv	DemoOpeningScene::exePlay()	
-0x71004B1770			FALSE	sub_71004B1770	sub_71004B1770	
+0x71004B1770			FALSE	_ZNK12_GLOBAL__N_123DemoOpeningSceneNrvPlay7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_123DemoOpeningSceneNrvPlay7executeEPN2al11NerveKeeperE	
 0x71004B17B0		DemoOpeningState.o	FALSE	_ZN16DemoOpeningStateC1EPN2al5SceneERKNS0_13ActorInitInfoEPNS0_18GraphicsSystemInfoEPN4sead8Matrix34IfEE	DemoOpeningState::DemoOpeningState(al::Scene*, al::ActorInitInfo const&, al::GraphicsSystemInfo*, sead::Matrix34<float>*)	
 0x71004B19F0			FALSE	_ZN16DemoOpeningState6appearEv	DemoOpeningState::appear()	
 0x71004B1A00			FALSE	_ZN16DemoOpeningState7controlEv	DemoOpeningState::control()	
