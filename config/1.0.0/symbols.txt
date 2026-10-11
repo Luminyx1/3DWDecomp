@@ -5732,3 +5732,5 @@
 0x7101998698 8 object _ZN12_GLOBAL__N_129NrvKuribonStateReverseRecoverE
 0x71019986E0 8 object _ZN12_GLOBAL__N_127NrvKuribonStateReverseSwoonE
 0x71019986F8 8 object _ZN12_GLOBAL__N_126NrvKuribonStateReverseLandE
+
+0x71019A7368 8 object _ZN12_GLOBAL__N_125NrvRunnerStateJumpJumpEndE
