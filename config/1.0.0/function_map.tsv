@@ -1634,12 +1634,12 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100042230			FALSE	_ZN14PunpunDivision13tryStartThrowEv	PunpunDivision::tryStartThrow()	
 0x71000422A0			FALSE	_ZN14PunpunDivisionD1Ev	PunpunDivision::~PunpunDivision()	
 0x71000422B0			FALSE	_ZN14PunpunDivisionD0Ev	PunpunDivision::~PunpunDivision()	
-0x71000422E0			FALSE	nullsub_10	nullsub_10	
-0x71000422F0			FALSE	sub_71000422F0	sub_71000422F0	
+0x71000422E0			FALSE	_ZNK12_GLOBAL__N_123PunpunDivisionNrvAppear7executeEPN2al11NerveKeeperE	nullsub_10	matched nerve
+0x71000422F0			FALSE	_ZNK12_GLOBAL__N_123PunpunDivisionNrvDivide7executeEPN2al11NerveKeeperE	sub_71000422F0	matched nerve
 0x7100042350			FALSE	_ZNK12_GLOBAL__N_130PunpunDivisionNrvAttackSuccess7executeEPN2al11NerveKeeperE	(anonymous namespace)::PunpunDivisionNrvAttackSuccess::execute(al::NerveKeeper*) const	
 0x7100042360			FALSE	_ZNK12_GLOBAL__N_126PunpunDivisionNrvThrowWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::PunpunDivisionNrvThrowWait::execute(al::NerveKeeper*) const	
-0x7100042370			FALSE	sub_7100042370	sub_7100042370	
-0x7100042410			FALSE	sub_7100042410	sub_7100042410	
+0x7100042370			FALSE	_ZNK12_GLOBAL__N_122PunpunDivisionNrvThrow7executeEPN2al11NerveKeeperE	sub_7100042370	matched nerve
+0x7100042410			FALSE	_ZNK12_GLOBAL__N_125PunpunDivisionNrvThrowEnd7executeEPN2al11NerveKeeperE	sub_7100042410	matched nerve
 0x7100042480			FALSE	_ZNK12_GLOBAL__N_129PunpunDivisionNrvDivideAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::PunpunDivisionNrvDivideAppear::execute(al::NerveKeeper*) const	
 0x7100042490			FALSE	_ZNK12_GLOBAL__N_126PunpunDivisionNrvThrowSign7executeEPN2al11NerveKeeperE	(anonymous namespace)::PunpunDivisionNrvThrowSign::execute(al::NerveKeeper*) const	
 0x71000424A0		PunpunParam.o	FALSE	_ZN11PunpunParam22getDividePosPatternNumEi	PunpunParam::getDividePosPatternNum(int)	
