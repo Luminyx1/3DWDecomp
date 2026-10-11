@@ -52,6 +52,16 @@ public:
     bool invalidJoint(s32 jointIndex);
     void validAllJoint();
 
+    /** @brief Gets a configured joint. @param index Joint order. @return Joint information. */
+    JointLookAtInfo* getJointInfo(int index) { return &mJointInfos[index]; }
+    /** @brief Controls whether the target rotation is retained. @param keep Retain rotation. */
+    void setKeepTargetQuat(bool keep) { mIsKeepTargetQuat = keep; }
+    /** @brief Transfers the current look request to the animation update. */
+    void update() {
+        mIsLookAt = mIsRequestLookAt;
+        mIsRequestLookAt = false;
+    }
+
 private:
     sead::Vector3f mTargetPos = {0.0f, 0.0f, 0.0f};
     const sead::Matrix34f* mBaseMtx;
