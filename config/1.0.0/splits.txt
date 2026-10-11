@@ -2265,7 +2265,7 @@ src/Game/NPC/RabbitRoutePoint.cpp: done
     .text   start:0x003D3DA0 end:0x003D4138
 src/Game/NPC/RabbitRouteRider.cpp: done
     .text   start:0x003D4140 end:0x003D4CF8
-src/Game/NPC/RabbitStateReverse.cpp:
+src/Game/NPC/RabbitStateReverse.cpp: done
     .text   start:0x003D4D00 end:0x003D4FD8
 src/Game/NPC/RabbitStateSwoon.cpp:
     .text   start:0x003D4FE0 end:0x003D53BC

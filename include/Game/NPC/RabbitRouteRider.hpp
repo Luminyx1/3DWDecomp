@@ -22,6 +22,8 @@ public:
     void reverse();
     void updateNextPointReversePlayer(const IUseRabbitRoutePoint* pPreviousPoint);
     void updateRotate();
+    /** @brief Gets the route direction. @return Current movement direction. */
+    const sead::Vector3f& getDirection() const { return mDirection; }
     void setSpeed(float speed);
     bool tryStartJump();
     void exeMove();
