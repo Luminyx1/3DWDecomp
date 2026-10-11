@@ -2259,7 +2259,7 @@ src/Game/NPC/RabbitInitPlacePoint.cpp: done
     .text   start:0x003D3530 end:0x003D3618
 src/Game/NPC/RabbitNpc.cpp:
     .text   start:0x003D3620 end:0x003D3A7C
-src/Game/NPC/RabbitRoute.cpp:
+src/Game/NPC/RabbitRoute.cpp: done
     .text   start:0x003D3A80 end:0x003D3D9C
 src/Game/NPC/RabbitRoutePoint.cpp: done
     .text   start:0x003D3DA0 end:0x003D4138
