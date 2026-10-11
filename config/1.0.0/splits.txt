@@ -951,7 +951,7 @@ src/Game/Layout/Switch/CounterLockGigaBell.cpp:
     .text   start:0x00185220 end:0x00185874
 src/Game/Layout/Switch/CounterTimerGate.cpp:
     .text   start:0x00185880 end:0x00186084
-src/Game/Layout/Switch/CourseSelectMenuHeader.cpp:
+src/Game/Layout/Switch/CourseSelectMenuHeader.cpp: done
     .text   start:0x00186090 end:0x001866D8
 src/Game/Layout/Switch/DemoSkipLayout.cpp:
     .text   start:0x001866E0 end:0x00186F14

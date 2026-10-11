@@ -5798,3 +5798,9 @@
 
 # src/Game/Layout/CounterGoalItemParts
 0x71019D3EB8 8 object _ZN12_GLOBAL__N_127NrvCounterGoalItemPartsDemoE
+
+# src/Game/Layout/CourseSelectMenuHeader
+0x71019C1A78 8 object _ZN12_GLOBAL__N_129NrvCourseSelectMenuHeaderWaitE
+0x71019C1AA0 8 object _ZN12_GLOBAL__N_131NrvCourseSelectMenuHeaderAppearE
+0x71019C1AC8 8 object _ZN12_GLOBAL__N_128NrvCourseSelectMenuHeaderEndE
+0x71019C1AF0 8 object _ZN12_GLOBAL__N_135NrvCourseSelectMenuHeaderTextChangeE

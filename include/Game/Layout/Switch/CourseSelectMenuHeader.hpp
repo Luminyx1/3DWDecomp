@@ -10,18 +10,24 @@ class LayoutInitInfo;
 
 /**
  * @brief Header of the course select map menus (title and L/R button guides).
- * @note Minimal declaration: only what the reconstructed code uses is declared so far.
  */
 class CourseSelectMenuHeader : public al::LayoutActor {
 public:
     explicit CourseSelectMenuHeader(const al::LayoutInitInfo& rInfo);
 
+    void appear() override;
+    void exeAppear();
+    void exeWait();
+    void exeTextChange();
+    void exeEnd();
+
     void setButtonType(bool isJoySingle);
-    void setHeader(const char* pName, bool isSkipAnim);
+    void setHeader(const char* pName, bool isAnimate);
     void end();
 
 private:
-    u8 _121[0x138 - 0x121];
+    al::LayoutActor* mHeader = nullptr;
+    const char* mMessageName = nullptr;
 };
 
 static_assert(sizeof(CourseSelectMenuHeader) == 0x138);

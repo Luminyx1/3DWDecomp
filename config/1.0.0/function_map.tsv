@@ -10182,10 +10182,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100186430			FALSE	_ZN22CourseSelectMenuHeader7exeWaitEv	CourseSelectMenuHeader::exeWait()	
 0x7100186470			FALSE	_ZN22CourseSelectMenuHeader13exeTextChangeEv	CourseSelectMenuHeader::exeTextChange()	
 0x7100186500			FALSE	_ZN22CourseSelectMenuHeader6exeEndEv	CourseSelectMenuHeader::exeEnd()	
-0x7100186540			FALSE	sub_7100186540	sub_7100186540	
-0x7100186590			FALSE	sub_7100186590	sub_7100186590	
-0x7100186600			FALSE	sub_7100186600	sub_7100186600	
-0x7100186650			FALSE	sub_7100186650	sub_7100186650	
+0x7100186540			FALSE	_ZNK12_GLOBAL__N_129CourseSelectMenuHeaderNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectMenuHeaderNrvWait::execute(al::NerveKeeper*) const	
+0x7100186590			FALSE	_ZNK12_GLOBAL__N_131CourseSelectMenuHeaderNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectMenuHeaderNrvAppear::execute(al::NerveKeeper*) const	
+0x7100186600			FALSE	_ZNK12_GLOBAL__N_128CourseSelectMenuHeaderNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectMenuHeaderNrvEnd::execute(al::NerveKeeper*) const	
+0x7100186650			FALSE	_ZNK12_GLOBAL__N_135CourseSelectMenuHeaderNrvTextChange7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectMenuHeaderNrvTextChange::execute(al::NerveKeeper*) const	
 0x71001866E0		DemoSkipLayout.o	FALSE	_ZN14DemoSkipLayoutC2ERKN2al14LayoutInitInfoEb	DemoSkipLayout::DemoSkipLayout(al::LayoutInitInfo const&, bool)	
 0x71001867A0			FALSE	_ZN14DemoSkipLayoutC1ERKN2al14LayoutInitInfoEb	DemoSkipLayout::DemoSkipLayout(al::LayoutInitInfo const&, bool)	
 0x7100186860			FALSE	_ZN14DemoSkipLayout11startHiddenEv	DemoSkipLayout::startHidden()	
