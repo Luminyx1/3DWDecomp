@@ -3170,7 +3170,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710008BE40			FALSE	_ZN22BgmBeatAnimeController20exeWaitSyncBeatLightEv	BgmBeatAnimeController::exeWaitSyncBeatLight()	
 0x710008C0D0			FALSE	_ZN22BgmBeatAnimeController16exeSyncBeatLightEv	BgmBeatAnimeController::exeSyncBeatLight()	
 0x710008C270			FALSE	_ZN22BgmBeatAnimeControllerD0Ev	BgmBeatAnimeController::~BgmBeatAnimeController()	
-0x710008C2A0			FALSE	sub_710008C2A0	sub_710008C2A0	
+0x710008C2A0			FALSE	_ZNK12_GLOBAL__N_129BgmBeatAnimeControllerNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::BgmBeatAnimeControllerNrvWait::execute(al::NerveKeeper*) const	
 0x710008C2B0			FALSE	_ZNK12_GLOBAL__N_148BgmBeatAnimeControllerNrvWaitSyncBeatBySyncAnime7executeEPN2al11NerveKeeperE	(anonymous namespace)::BgmBeatAnimeControllerNrvWaitSyncBeatBySyncAnime::execute(al::NerveKeeper*) const	
 0x710008C2C0			FALSE	_ZNK12_GLOBAL__N_147BgmBeatAnimeControllerNrvWaitSyncBeatLightStart7executeEPN2al11NerveKeeperE	(anonymous namespace)::BgmBeatAnimeControllerNrvWaitSyncBeatLightStart::execute(al::NerveKeeper*) const	
 0x710008C2D0			FALSE	_ZNK12_GLOBAL__N_148BgmBeatAnimeControllerNrvWaitSyncBeatByWaitAnime7executeEPN2al11NerveKeeperE	(anonymous namespace)::BgmBeatAnimeControllerNrvWaitSyncBeatByWaitAnime::execute(al::NerveKeeper*) const	
