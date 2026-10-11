@@ -391,7 +391,7 @@ src/Game/CourseSelect/CourseSelectPlayerActionConditionBubble.cpp:
     .text   start:0x0009CCC0 end:0x0009CDF4
 src/Game/CourseSelect/CourseSelectPlayerActionConditionBubbleEnd.cpp: done
     .text   start:0x0009CE00 end:0x0009D064
-src/Game/CourseSelect/CourseSelectPlayerActionConditionMainPlayer.cpp:
+src/Game/CourseSelect/CourseSelectPlayerActionConditionMainPlayer.cpp: done
     .text   start:0x0009D070 end:0x0009D0D4
 src/Game/CourseSelect/CourseSelectPlayerActionConditionNearFollowPlayer.cpp: done
     .text   start:0x0009D0E0 end:0x0009D1C4
