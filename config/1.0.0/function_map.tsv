@@ -3477,23 +3477,23 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100094CC0			FALSE	_ZN16CourseSelectFlag4initERKN2al13ActorInitInfoE	CourseSelectFlag::init(al::ActorInitInfo const&)	
 0x7100094D30			FALSE	_ZN16CourseSelectFlag16updateVisibilityEb	CourseSelectFlag::updateVisibility(bool)	
 0x7100094DA0			FALSE	_ZN16CourseSelectFlag11startAppearEv	CourseSelectFlag::startAppear()	
-0x7100094E10			FALSE	sub_7100094E10	sub_7100094E10	
+0x7100094E10			FALSE	_ZNK16CourseSelectFlag13calcFlagStateEv	CourseSelectFlag::calcFlagState() const	
 0x7100095000			FALSE	_ZN16CourseSelectFlag9startShowEv	CourseSelectFlag::startShow()	
 0x71000950E0			FALSE	_ZN16CourseSelectFlag18startWaitClearDemoEv	CourseSelectFlag::startWaitClearDemo()	
 0x71000951A0			FALSE	_ZN16CourseSelectFlag14startClearDemoEv	CourseSelectFlag::startClearDemo()	
 0x71000951E0			FALSE	_ZN16CourseSelectFlag7exeHideEv	CourseSelectFlag::exeHide()	
 0x71000951F0			FALSE	_ZN16CourseSelectFlag9exeAppearEv	CourseSelectFlag::exeAppear()	
 0x7100095200			FALSE	_ZN16CourseSelectFlag7exeWaitEv	CourseSelectFlag::exeWait()	
-0x7100095240			FALSE	sub_7100095240	sub_7100095240	
+0x7100095240			FALSE	_ZN16CourseSelectFlag16updateFlagActionEjb	CourseSelectFlag::updateFlagAction(unsigned int, bool)	
 0x7100095350			FALSE	_ZN16CourseSelectFlag16exeWaitClearDemoEv	CourseSelectFlag::exeWaitClearDemo()	
 0x7100095360			FALSE	_ZN16CourseSelectFlag12exeClearDemoEv	CourseSelectFlag::exeClearDemo()	
 0x71000953C0			FALSE	_ZN16CourseSelectFlagD1Ev	CourseSelectFlag::~CourseSelectFlag()	
 0x71000953D0			FALSE	_ZN16CourseSelectFlagD0Ev	CourseSelectFlag::~CourseSelectFlag()	
-0x7100095400			FALSE	nullsub_20	nullsub_20	
-0x7100095410			FALSE	sub_7100095410	sub_7100095410	
-0x7100095430			FALSE	nullsub_21	nullsub_21	
-0x7100095440			FALSE	sub_7100095440	sub_7100095440	
-0x71000954A0			FALSE	sub_71000954A0	sub_71000954A0	
+0x7100095400			FALSE	_ZNK12_GLOBAL__N_123CourseSelectFlagNrvHide7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectFlagNrvHide::execute(al::NerveKeeper*) const	
+0x7100095410			FALSE	_ZNK12_GLOBAL__N_125CourseSelectFlagNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectFlagNrvAppear::execute(al::NerveKeeper*) const	
+0x7100095430			FALSE	_ZNK12_GLOBAL__N_132CourseSelectFlagNrvWaitClearDemo7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectFlagNrvWaitClearDemo::execute(al::NerveKeeper*) const	
+0x7100095440			FALSE	_ZNK12_GLOBAL__N_128CourseSelectFlagNrvClearDemo7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectFlagNrvClearDemo::execute(al::NerveKeeper*) const	
+0x71000954A0			FALSE	_ZNK12_GLOBAL__N_123CourseSelectFlagNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectFlagNrvWait::execute(al::NerveKeeper*) const	
 0x71000954E0		CourseSelectLock.o	FALSE	_ZN16CourseSelectLockC2EPKcP21CourseSelectMiniaturei	CourseSelectLock::CourseSelectLock(char const*, CourseSelectMiniature*, int)	
 0x7100095580			FALSE	_ZN16CourseSelectLockC1EPKcP21CourseSelectMiniaturei	CourseSelectLock::CourseSelectLock(char const*, CourseSelectMiniature*, int)	
 0x7100095620			FALSE	_ZN16CourseSelectLock4initERKN2al13ActorInitInfoE	CourseSelectLock::init(al::ActorInitInfo const&)	
