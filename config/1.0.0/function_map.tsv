@@ -453,7 +453,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100010A50			FALSE	_ZN11BunbunShell7exeSpinEv	BunbunShell::exeSpin()	
 0x7100010BF0			FALSE	_ZN11BunbunShellD1Ev	BunbunShell::~BunbunShell()	
 0x7100010C00			FALSE	_ZN11BunbunShellD0Ev	BunbunShell::~BunbunShell()	
-0x7100010C30			FALSE	sub_7100010C30	sub_7100010C30	
+0x7100010C30			FALSE	_ZNK12_GLOBAL__N_120BunbunShellNrvAppear7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_120BunbunShellNrvAppear7executeEPN2al11NerveKeeperE	matched nerve
 0x7100010C90			FALSE	_ZNK12_GLOBAL__N_118BunbunShellNrvSpin7executeEPN2al11NerveKeeperE	(anonymous namespace)::BunbunShellNrvSpin::execute(al::NerveKeeper*) const	
 0x7100010CA0		BunbunStateShellAttack.o	FALSE	_ZN22BunbunStateShellAttackC1EPN2al9LiveActorERKNS0_13ActorInitInfoE	BunbunStateShellAttack::BunbunStateShellAttack(al::LiveActor*, al::ActorInitInfo const&)	
 0x7100010E70			FALSE	_ZN22BunbunStateShellAttack6appearEv	BunbunStateShellAttack::appear()	
