@@ -407,7 +407,7 @@ src/Game/CourseSelect/CourseSelectPlayerActionLand.cpp: done
     .text   start:0x0009F7C0 end:0x0009FAA4
 src/Game/CourseSelect/CourseSelectPlayerActionPush.cpp: done
     .text   start:0x0009FAB0 end:0x0009FDA4
-src/Game/CourseSelect/CourseSelectPlayerActionWait.cpp:
+src/Game/CourseSelect/CourseSelectPlayerActionWait.cpp: done
     .text   start:0x0009FDB0 end:0x000A0184
 src/Game/CourseSelect/CourseSelectPlayerActor.cpp:
     .text   start:0x000A0190 end:0x000A0E68
