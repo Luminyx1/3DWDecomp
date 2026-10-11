@@ -5724,3 +5724,6 @@
 0x71019EE290 8 object _ZN12_GLOBAL__N_130NrvActorStateDemoCameraPrepareE
 0x71019EE2D8 32 object _ZTVN12_GLOBAL__N_131ActorStateDemoCameraNrvPlayWaitE
 0x71019EE2F8 24 object _ZN12_GLOBAL__N_123NrvActorStateDemoCameraE
+
+# DemoScenePlayer sound-material enum cache
+0x7101B1CFE0 8 object _ZZN12_GLOBAL__N_114SeMaterialCode5text_EiE9spTextPtr
