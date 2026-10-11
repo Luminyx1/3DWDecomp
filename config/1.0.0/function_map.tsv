@@ -9757,9 +9757,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001763B0			FALSE	_ZN15WalkerStateJump10exeJumpEndEv	WalkerStateJump::exeJumpEnd()	
 0x7100176450			FALSE	_ZN15WalkerStateJumpD0Ev	WalkerStateJump::~WalkerStateJump()	
 0x7100176480			FALSE	_ZNK12_GLOBAL__N_127WalkerStateJumpNrvJumpStart7executeEPN2al11NerveKeeperE	(anonymous namespace)::WalkerStateJumpNrvJumpStart::execute(al::NerveKeeper*) const	
-0x7100176490			FALSE	sub_7100176490	sub_7100176490	
-0x7100176530			FALSE	sub_7100176530	sub_7100176530	
-0x71001765D0			FALSE	sub_71001765D0	sub_71001765D0	
+0x7100176490			FALSE	_ZNK12_GLOBAL__N_126WalkerStateJumpNrvJumpLoop7executeEPN2al11NerveKeeperE	(anonymous namespace)::WalkerStateJumpNrvJumpLoop::execute(al::NerveKeeper*) const	
+0x7100176530			FALSE	_ZNK12_GLOBAL__N_125WalkerStateJumpNrvJumpEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::WalkerStateJumpNrvJumpEnd::execute(al::NerveKeeper*) const	
+0x71001765D0			FALSE	_GLOBAL__sub_I_WalkerStateJump.cpp	_GLOBAL__sub_I_WalkerStateJump.cpp	
 0x71001765E0		WalkerStateParam.o	FALSE	_ZN16WalkerStateParamC2Ev	WalkerStateParam::WalkerStateParam()	
 0x7100176600			FALSE	_ZN16WalkerStateParamC2Effffffff	WalkerStateParam::WalkerStateParam(float, float, float, float, float, float, float, float)	
 0x7100176620		WalkerStateRailMove.o	FALSE	_ZN24WalkerStateRailMoveParamC2Ev	WalkerStateRailMoveParam::WalkerStateRailMoveParam()	

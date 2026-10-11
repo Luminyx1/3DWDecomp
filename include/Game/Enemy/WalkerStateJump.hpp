@@ -1,37 +1,41 @@
 #pragma once
 
-#include <basis/seadTypes.h>
-
 #include "Library/Nerve/NerveStateBase.hpp"
+#include <prim/seadSafeString.h>
 
 struct WalkerStateParam;
 
-/** @brief Tuning for WalkerStateJump (jump speed and actions). */
 class WalkerStateJumpParam {
 public:
     WalkerStateJumpParam();
-    WalkerStateJumpParam(f32 jumpSpeed, bool isUseAction);
-    WalkerStateJumpParam(f32 jumpSpeed, const char* pJumpAction, bool isUseAction);
-    WalkerStateJumpParam(f32 jumpSpeed, const char* pJumpAction, const char* pFallAction,
-                         const char* pLandAction, bool isUseAction);
+    WalkerStateJumpParam(float speed, bool replaceVelocity);
+    WalkerStateJumpParam(float speed, const char* pAction, bool replaceVelocity);
+    WalkerStateJumpParam(float speed, const char* pStart, const char* pLoop,
+                         const char* pEnd, bool replaceVelocity);
 
-private:
-    alignas(8) u8 _0[0xB0];
+    float mJumpSpeed;
+    bool mReplaceVelocity;
+    bool mUseAnimation;
+    sead::FixedSafeString<32> mActionStart;
+    sead::FixedSafeString<32> mActionLoop;
+    sead::FixedSafeString<32> mActionEnd;
 };
 
-static_assert(sizeof(WalkerStateJumpParam) == 0xB0);
-
-/**
- * @brief Walker state that makes the host jump.
- * @note Only what reconstructed code needs is declared so far.
- */
 class WalkerStateJump : public al::ActorStateBase {
 public:
     WalkerStateJump(al::LiveActor* pHost, const WalkerStateParam* pParam,
                     const WalkerStateJumpParam* pJumpParam);
+    /** @brief Destroys the jumping state. */
+    ~WalkerStateJump() override = default;
+    void appear() override;
+    void exeJumpStart();
+    void exeJumpLoop();
+    void exeJumpEnd();
 
 private:
-    u8 _20[0x30 - 0x20];
+    const WalkerStateParam* mParam;
+    const WalkerStateJumpParam* mJumpParam;
 };
 
+static_assert(sizeof(WalkerStateJumpParam) == 0xb0);
 static_assert(sizeof(WalkerStateJump) == 0x30);
