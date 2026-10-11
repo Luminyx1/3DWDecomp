@@ -1,12 +1,14 @@
 #pragma once
 #include "Library/LiveActor/LiveActor.hpp"
 class StageDatabaseInfo;
+class CourseSelectWorldWarpDokan;
 class CourseSelectActorInfo;
 class ICourseSelectActorController;
 
 // Only the interface and fields used by flags and locks are recovered here.
 class CourseSelectMiniature : public al::LiveActor {
 public:
+    CourseSelectWorldWarpDokan* getWorldWarpDokan() const { return mpWorldWarpDokan; }
     int getCourseId() const;
     int getWorldId() const;
     const StageDatabaseInfo* getStageInfo() const;
@@ -14,7 +16,9 @@ public:
     const CourseSelectActorInfo* getCourseSelectActorInfo() const { return mpActorInfo; }
     ICourseSelectActorController* getController() const { return mpController; }
 private:
-    unsigned char _144[0x7c];
+    unsigned char _144[0x3c];
+    CourseSelectWorldWarpDokan* mpWorldWarpDokan;
+    unsigned char _188[0x38];
     CourseSelectActorInfo* mpActorInfo;
     unsigned char _1c8[8];
     ICourseSelectActorController* mpController;

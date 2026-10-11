@@ -1,9 +1,11 @@
 #pragma once
 #include "Library/Scene/Scene.hpp"
 class GameDataHolder;
+class CourseSelectDirector;
 
 class CourseSelectScene : public al::Scene {
 public:
+    CourseSelectDirector* getCourseSelectDirector() const;
     int getMainPlayerInputPort() const;
     GameDataHolder* getGameDataHolder() const { return mpGameData; }
 private:

@@ -7,6 +7,8 @@ class ICourseSelectActorController;
 // Only the interface needed by course-select pipes is recovered here.
 class CourseSelectPuppeteerGroup : public al::LiveActor {
 public:
+    void startWaitDemo(int userId);
+    void endDemo();
     void startDokanDemo(ICourseSelectActorController* pController);
     int getPuppeteerCount() const { return mPuppeteerCount; }
     CourseSelectPuppeteer* getPuppeteer(int index) const { return mpPuppeteers[index]; }

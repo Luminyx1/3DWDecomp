@@ -1,7 +1,7 @@
 #pragma once
 #include "Library/LiveActor/LiveActor.hpp"
 
-class WorldWarpDokanController;
+class ICourseSelectActorController;
 class CourseSelectPuppeteerGroup;
 class CourseSelectWorldWarpDokan : public al::LiveActor {
 public:
@@ -12,13 +12,14 @@ public:
     bool receiveMsg(const al::SensorMsg* pMsg, al::HitSensor* pSender, al::HitSensor* pReceiver) override;
     void startPuppetDemo(CourseSelectPuppeteerGroup* pGroup);
     void endPuppetDemo();
+    ICourseSelectActorController* getController() const { return mpController; }
     void startDemo();
     bool isEndDemo() const;
     void exeWait();
     void exeDemo();
     void exeDisappear();
 private:
-    WorldWarpDokanController* mpController = nullptr;
+    ICourseSelectActorController* mpController = nullptr;
     CourseSelectPuppeteerGroup* mpPuppeteerGroup = nullptr;
 };
 static_assert(sizeof(CourseSelectWorldWarpDokan) == 0x158);

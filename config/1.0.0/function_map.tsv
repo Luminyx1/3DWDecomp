@@ -4309,7 +4309,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71000B2840			FALSE	_ZN29CourseSelectStateRevivePlayerD0Ev	CourseSelectStateRevivePlayer::~CourseSelectStateRevivePlayer()	
 0x71000B2870			FALSE	_ZNK12_GLOBAL__N_137CourseSelectStateRevivePlayerNrvStart7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectStateRevivePlayerNrvStart::execute(al::NerveKeeper*) const	
 0x71000B2880			FALSE	_ZNK12_GLOBAL__N_136CourseSelectStateRevivePlayerNrvPlay7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectStateRevivePlayerNrvPlay::execute(al::NerveKeeper*) const	
-0x71000B2890			FALSE	sub_71000B2890	sub_71000B2890	
+0x71000B2890			FALSE	_ZNK12_GLOBAL__N_135CourseSelectStateRevivePlayerNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectStateRevivePlayerNrvEnd::execute(al::NerveKeeper*) const	
 0x71000B28E0		CourseSelectStateStageEnter.o	FALSE	_ZN27CourseSelectStateStageEnterC1EP17CourseSelectSceneRKN2al14LayoutInitInfoEPNS2_15SceneCameraInfoEPKNS2_14GameSystemInfoE	CourseSelectStateStageEnter::CourseSelectStateStageEnter(CourseSelectScene*, al::LayoutInitInfo const&, al::SceneCameraInfo*, al::GameSystemInfo const*)	
 0x71000B2990			FALSE	_ZN27CourseSelectStateStageEnter4initEv	CourseSelectStateStageEnter::init()	
 0x71000B29D0			FALSE	_ZN27CourseSelectStateStageEnter6appearEv	CourseSelectStateStageEnter::appear()	

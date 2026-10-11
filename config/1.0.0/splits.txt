@@ -441,7 +441,7 @@ src/Game/CourseSelect/RouteOpenCursor.cpp: done
     .text   start:0x000B0A40 end:0x000B0D44
 src/Game/CourseSelect/CourseSelectStateClearDemo.cpp:
     .text   start:0x000B0D50 end:0x000B2558
-src/Game/CourseSelect/CourseSelectStateRevivePlayer.cpp:
+src/Game/CourseSelect/CourseSelectStateRevivePlayer.cpp: done
     .text   start:0x000B2560 end:0x000B28D4
 src/Game/CourseSelect/CourseSelectStateStageEnter.cpp:
     .text   start:0x000B28E0 end:0x000B34B4

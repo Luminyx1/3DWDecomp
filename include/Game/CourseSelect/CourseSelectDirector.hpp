@@ -4,6 +4,7 @@
 
 namespace al { class IUseSceneObjHolder; class LiveActor; }
 class CourseSelectNode;
+class CourseSelectMiniature;
 class CourseSelectWindowHolder;
 class ICourseSelectActorController;
 class CourseSelectSensor;
@@ -13,6 +14,9 @@ class CourseSelectDirector : public al::ISceneObj {
 public:
     static CourseSelectDirector* getCourseSelectDirector(const al::IUseSceneObjHolder* pUser);
     CourseSelectWindowHolder* getWindowHolder() const { return mpWindows; }
+    CourseSelectMiniature* tryFindMiniatureObj(int courseId) const;
+    bool isPlayEntryDemoAny() const;
+    void reviveUser(int userId, ICourseSelectActorController* pController, bool isEntryDemo);
     void startOpenRocketDemo();
     bool isEndOpenRocketDemo() const;
     const char* getSceneObjName() const override;
