@@ -1,30 +1,38 @@
 #pragma once
 
-#include <basis/seadTypes.h>
+#include "Library/Nerve/IUseNerve.hpp"
+#include "Project/Audio/IUseAudioKeeper.hpp"
 
+class StageTimer;
+class StageDataHolder;
 namespace al {
 class AudioDirector;
 }  // namespace al
 
-class StageDataHolder;
-class StageTimer;
-
-/**
- * @brief Counts the remaining time of the stage timer into the score after the goal.
- * @note Minimal declaration: only what the reconstructed code uses is declared so far.
- */
-class ResultTimerCount {
+/** @brief Converts the remaining stage time into team score after the goal. */
+class ResultTimerCount : public al::IUseNerve, public al::IUseAudioKeeper {
 public:
-    ResultTimerCount(StageTimer* pStageTimer, StageDataHolder* pStageDataHolder,
-                     al::AudioDirector* pAudioDirector);
-
+    ResultTimerCount(StageTimer* pTimer, StageDataHolder* pStageData, al::AudioDirector* pAudio);
+    void update();
     void appear();
     void start();
-    void update();
     bool isWait() const;
+    void exeWait();
+    void exeTimerCount();
+    void exeEndWait();
+    /** @brief Returns the state controller.
+     * @return Owned nerve keeper. */
+    al::NerveKeeper* getNerveKeeper() const override { return mNerveKeeper; }
+    /** @brief Returns the countdown audio controller.
+     * @return Owned audio keeper. */
+    al::AudioKeeper* getAudioKeeper() const override { return mAudioKeeper; }
 
 private:
-    u8 _0[0x38];
+    al::NerveKeeper* mNerveKeeper = nullptr;
+    StageTimer* mTimer;
+    StageDataHolder* mStageData;
+    int mInitialCount = 0;
+    al::AudioKeeper* mAudioKeeper = nullptr;
 };
 
 static_assert(sizeof(ResultTimerCount) == 0x38);

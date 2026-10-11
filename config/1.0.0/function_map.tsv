@@ -12722,9 +12722,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001EB4C0			FALSE	_ZNK16ResultTimerCount14getNerveKeeperEv	ResultTimerCount::getNerveKeeper() const	
 0x71001EB4D0			FALSE	_ZNK16ResultTimerCount14getAudioKeeperEv	ResultTimerCount::getAudioKeeper() const	
 0x71001EB4E0			FALSE	_ZThn8_NK16ResultTimerCount14getAudioKeeperEv	non-virtual thunk to ResultTimerCount::getAudioKeeper() const	
-0x71001EB4F0			FALSE	nullsub_131	nullsub_131	
+0x71001EB4F0			FALSE	_ZNK12_GLOBAL__N_123ResultTimerCountNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::ResultTimerCountNrvWait::execute(al::NerveKeeper*) const	
 0x71001EB500			FALSE	_ZNK12_GLOBAL__N_129ResultTimerCountNrvTimerCount7executeEPN2al11NerveKeeperE	(anonymous namespace)::ResultTimerCountNrvTimerCount::execute(al::NerveKeeper*) const	
-0x71001EB510			FALSE	sub_71001EB510	sub_71001EB510	
+0x71001EB510			FALSE	_ZNK12_GLOBAL__N_126ResultTimerCountNrvEndWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::ResultTimerCountNrvEndWait::execute(al::NerveKeeper*) const	
 0x71001EB560		RingPlayerSelect.o	FALSE	_ZN16RingPlayerSelectC2ERKN2al14LayoutInitInfoEPK14GameDataHolderPNS0_15SceneCameraInfoEPNS0_12PlayerHolderEPNS0_18GraphicsSystemInfoEb	RingPlayerSelect::RingPlayerSelect(al::LayoutInitInfo const&, GameDataHolder const*, al::SceneCameraInfo*, al::PlayerHolder*, al::GraphicsSystemInfo*, bool)	
 0x71001EB8A0			FALSE	_ZN16RingPlayerSelectC1ERKN2al14LayoutInitInfoEPK14GameDataHolderPNS0_15SceneCameraInfoEPNS0_12PlayerHolderEPNS0_18GraphicsSystemInfoEb	RingPlayerSelect::RingPlayerSelect(al::LayoutInitInfo const&, GameDataHolder const*, al::SceneCameraInfo*, al::PlayerHolder*, al::GraphicsSystemInfo*, bool)	
 0x71001EBBE0			FALSE	_ZN16RingPlayerSelect4killEv	RingPlayerSelect::kill()	

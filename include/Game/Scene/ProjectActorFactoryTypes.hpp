@@ -730,14 +730,7 @@ static_assert(sizeof(DemoEventGateKeeperChecker) == 0x180);
 
 
 
-class DemoCutscene : public al::LiveActor {
-public:
-    explicit DemoCutscene(const char* pName, alSeFunction::DemoType = static_cast<alSeFunction::DemoType>(5));
-
-private:
-    u8 mUnreconstructed[0x224];
-};
-static_assert(sizeof(DemoCutscene) == 0x368);
+#include "Demo/DemoCutscene.hpp"
 
 class DemoKoopaW7 : public al::LiveActor {
 public:
