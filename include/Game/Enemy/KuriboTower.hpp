@@ -13,6 +13,7 @@ public:
     explicit KuriboTower(const char* pName);
 
     s32 getChildNum() const;
+    KuriboTowerNode* getChild(s32 index) const;
     KuriboTowerNode* getBottom() const;
     KuriboTowerNode* getTop() const;
     bool isHipDropping() const;
@@ -42,10 +43,14 @@ public:
     /** @brief Marks this tower as a platform for a Bros enemy. */
     void setBrosOnTower() { mIsBrosOnTower = true; }
 
+    /** @brief Sets synchronized assist freezing. @param isFreeze Whether to freeze the tower. */
+    void setSupportFreezeSync(bool isFreeze) { mIsSupportFreezeSync = isFreeze; }
+
 private:
     u8 _144[0x30];
     bool mIsStartSleep;
-    u8 _175[0x1c];
+    u8 _175[0x1b];
+    bool mIsSupportFreezeSync;
     bool mIsBrosOnTower;
     u8 _192[0x26];
 };

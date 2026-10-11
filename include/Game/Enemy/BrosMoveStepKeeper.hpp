@@ -32,6 +32,9 @@ public:
     bool isNextStepPoseFixed() const;
     KuriboTower* tryGetStepKuribo(s32 index) const;
 
+    /** @brief Gets the key poses. @return Platform key pose controller. */
+    al::KeyPoseKeeper* getKeyPoseKeeper() const { return mKeyPoseKeeper; }
+
 private:
     struct Step {
         KuriboTower* pTower;
