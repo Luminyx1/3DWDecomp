@@ -805,7 +805,7 @@ src/Game/Enemy/SyumockConveyerGenerator.cpp:
     .text   start:0x001533E0 end:0x00153A30
 src/Game/Enemy/SyumockRailMove.cpp:
     .text   start:0x00153A30 end:0x00154A68
-src/Game/Enemy/SyumockRotate.cpp:
+src/Game/Enemy/SyumockRotate.cpp: done
     .text   start:0x00154A70 end:0x00155678
 src/Game/Enemy/SyumockUtil.cpp: done
     .text   start:0x00155680 end:0x00155B8C

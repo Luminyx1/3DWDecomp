@@ -5733,3 +5733,7 @@
 
 0x71019A7368 8 object _ZN12_GLOBAL__N_125NrvRunnerStateJumpJumpEndE
 0x71019AD830 40 object _ZN12_GLOBAL__N_115NrvTakoboBulletE
+
+0x71019ACB70 0x10 object _ZN12_GLOBAL__N_116NrvSyumockRotateE
+0x71019ACB28 0x8 object _ZN12_GLOBAL__N_124NrvSyumockRotateReactionE
+0x7101B203B0 0x1c object _ZN12_GLOBAL__N_119sSupportFreezeParamE

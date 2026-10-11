@@ -8817,10 +8817,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100155460			FALSE	_ZN13SyumockRotate16exeSupportFreezeEv	SyumockRotate::exeSupportFreeze()	
 0x71001554C0			FALSE	_ZN13SyumockRotateD1Ev	SyumockRotate::~SyumockRotate()	
 0x71001554D0			FALSE	_ZN13SyumockRotateD0Ev	SyumockRotate::~SyumockRotate()	
-0x7100155500			FALSE	sub_7100155500	sub_7100155500	
-0x7100155580			FALSE	sub_7100155580	sub_7100155580	
-0x71001555E0			FALSE	sub_71001555E0	sub_71001555E0	
-0x7100155630			FALSE	sub_7100155630	sub_7100155630	
+0x7100155500			FALSE	_ZNK12_GLOBAL__N_124SyumockRotateNrvReaction7executeEPN2al11NerveKeeperE	(anonymous namespace)::SyumockRotateNrvReaction::execute(al::NerveKeeper*) const	
+0x7100155580			FALSE	_ZNK12_GLOBAL__N_129SyumockRotateNrvSupportFreeze7executeEPN2al11NerveKeeperE	(anonymous namespace)::SyumockRotateNrvSupportFreeze::execute(al::NerveKeeper*) const	
+0x71001555E0			FALSE	_ZNK12_GLOBAL__N_122SyumockRotateNrvRotate7executeEPN2al11NerveKeeperE	(anonymous namespace)::SyumockRotateNrvRotate::execute(al::NerveKeeper*) const	
+0x7100155630			FALSE	_GLOBAL__sub_I_SyumockRotate.cpp	_GLOBAL__sub_I_SyumockRotate.cpp	
 0x7100155680		SyumockUtil.o	FALSE	_ZN11SyumockUtil25createSyumockEyeJointInfoEPN2al9LiveActorE	SyumockUtil::createSyumockEyeJointInfo(al::LiveActor*)	object (class)
 0x71001557B0			FALSE	_ZN11SyumockUtil37initJointSyumockJointSpringControllerEPN2al9LiveActorE	SyumockUtil::initJointSyumockJointSpringController(al::LiveActor*)	
 0x7100155800			FALSE	_ZN11SyumockUtil17isMsgSyumockDeathEPKN2al9SensorMsgE	SyumockUtil::isMsgSyumockDeath(al::SensorMsg const*)	
