@@ -17,5 +17,6 @@ namespace rc {
     al::LiveActor* findDrcAssistDirectorTouchPointer(const al::IUseSceneObjHolder*,
                                                      const al::ScreenPointer*);
     bool tryCalcTouchPointerSlideDirOnWorldByPointer(sead::Vector3f*, const al::LiveActor*);
+    float tryCalcTouchPointerSlideSpeedOnScreenByPointer(const al::LiveActor* pPointer);
     void releaseAllTouchPointerHoldItem(const al::LiveActor* pActor);
 };
