@@ -5974,9 +5974,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71000E64C0			FALSE	_ZN14ChorobonColony7exeStopEv	ChorobonColony::exeStop()	
 0x71000E64D0			FALSE	_ZN14ChorobonColonyD1Ev	ChorobonColony::~ChorobonColony()	
 0x71000E64E0			FALSE	_ZN14ChorobonColonyD0Ev	ChorobonColony::~ChorobonColony()	
-0x71000E6510			FALSE	sub_71000E6510	sub_71000E6510	
-0x71000E6580			FALSE	nullsub_55	nullsub_55	
-0x71000E6590			FALSE	sub_71000E6590	sub_71000E6590	
+0x71000E6510			FALSE	_ZNK12_GLOBAL__N_121ChorobonColonyNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::ChorobonColonyNrvWait::execute(al::NerveKeeper*) const	
+0x71000E6580			FALSE	_ZNK12_GLOBAL__N_121ChorobonColonyNrvStop7executeEPN2al11NerveKeeperE	(anonymous namespace)::ChorobonColonyNrvStop::execute(al::NerveKeeper*) const	
+0x71000E6590			FALSE	_ZNK12_GLOBAL__N_122ChorobonColonyNrvDelay7executeEPN2al11NerveKeeperE	(anonymous namespace)::ChorobonColonyNrvDelay::execute(al::NerveKeeper*) const	
 0x71000E65E0			FALSE	_ZNK12_GLOBAL__N_121ChorobonColonyNrvMove7executeEPN2al11NerveKeeperE	(anonymous namespace)::ChorobonColonyNrvMove::execute(al::NerveKeeper*) const	
 0x71000E65F0			FALSE	_ZNK2al10FunctorV0MIP14ChorobonColonyMS1_FvvEEclEv	al::FunctorV0M<ChorobonColony*, void (ChorobonColony::*)()>::operator()() const	
 0x71000E6610			FALSE	_ZNK2al10FunctorV0MIP14ChorobonColonyMS1_FvvEE5cloneEv	al::FunctorV0M<ChorobonColony*, void (ChorobonColony::*)()>::clone() const	
