@@ -3289,7 +3289,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710008F6C0			FALSE	_ZN30CourseSelectBgmEventController22exeCheckWorldStartDemoEv	CourseSelectBgmEventController::exeCheckWorldStartDemo()	
 0x710008F720			FALSE	_ZN30CourseSelectBgmEventControllerD1Ev	CourseSelectBgmEventController::~CourseSelectBgmEventController()	
 0x710008F730			FALSE	_ZN30CourseSelectBgmEventControllerD0Ev	CourseSelectBgmEventController::~CourseSelectBgmEventController()	
-0x710008F760			FALSE	sub_710008F760	sub_710008F760	
+0x710008F760			FALSE	_ZNK12_GLOBAL__N_152CourseSelectBgmEventControllerNrvCheckWorldStartDemo7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectBgmEventControllerNrvCheckWorldStartDemo::execute(al::NerveKeeper*) const	
 0x710008F7C0		CourseSelectBubble.o	FALSE	_ZN18CourseSelectBubbleC2EPN2al9LiveActorE	CourseSelectBubble::CourseSelectBubble(al::LiveActor*)	
 0x710008F850			FALSE	_ZN18CourseSelectBubbleC1EPN2al9LiveActorE	CourseSelectBubble::CourseSelectBubble(al::LiveActor*)	
 0x710008F8E0			FALSE	_ZN18CourseSelectBubble4initERKN2al13ActorInitInfoE	CourseSelectBubble::init(al::ActorInitInfo const&)	
