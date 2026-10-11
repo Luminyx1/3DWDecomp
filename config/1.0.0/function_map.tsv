@@ -22079,7 +22079,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710037BE10			FALSE	_ZN19TestIshiokaTrapRockD1Ev	TestIshiokaTrapRock::~TestIshiokaTrapRock()	
 0x710037BE20			FALSE	_ZN19TestIshiokaTrapRockD0Ev	TestIshiokaTrapRock::~TestIshiokaTrapRock()	
 0x710037BE50			FALSE	_ZN19TestIshiokaTrapRock14updateColliderEv	TestIshiokaTrapRock::updateCollider()	
-0x710037BE60			FALSE	nullsub_231	nullsub_231	
+0x710037BE60			FALSE	_ZNK12_GLOBAL__N_126TestIshiokaTrapRockNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_126TestIshiokaTrapRockNrvWait7executeEPN2al11NerveKeeperE	
 0x710037BE70			FALSE	_ZNK12_GLOBAL__N_126TestIshiokaTrapRockNrvMove7executeEPN2al11NerveKeeperE	(anonymous namespace)::TestIshiokaTrapRockNrvMove::execute(al::NerveKeeper*) const	
 0x710037BE80			FALSE	_ZNK2al10FunctorV0MIP19TestIshiokaTrapRockMS1_FvvEEclEv	al::FunctorV0M<TestIshiokaTrapRock*, void (TestIshiokaTrapRock::*)()>::operator()() const	
 0x710037BEA0			FALSE	_ZNK2al10FunctorV0MIP19TestIshiokaTrapRockMS1_FvvEE5cloneEv	al::FunctorV0M<TestIshiokaTrapRock*, void (TestIshiokaTrapRock::*)()>::clone() const	
