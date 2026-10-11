@@ -11414,11 +11414,11 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001B8690			FALSE	_ZN17CounterPlayerInfo7exeWaitEv	CounterPlayerInfo::exeWait()	
 0x71001B86F0			FALSE	_ZN17CounterPlayerInfo11exeShowMissEv	CounterPlayerInfo::exeShowMiss()	
 0x71001B8790			FALSE	_ZN17CounterPlayerInfo6exeEndEv	CounterPlayerInfo::exeEnd()	
-0x71001B87F0			FALSE	sub_71001B87F0	sub_71001B87F0	
-0x71001B8860			FALSE	sub_71001B8860	sub_71001B8860	
-0x71001B88D0			FALSE	sub_71001B88D0	sub_71001B88D0	
-0x71001B8940			FALSE	sub_71001B8940	sub_71001B8940	
-0x71001B89E0			FALSE	sub_71001B89E0	sub_71001B89E0	
+0x71001B87F0			FALSE	_ZNK12_GLOBAL__N_124CounterPlayerInfoNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::CounterPlayerInfoNrvWait::execute(al::NerveKeeper*) const	
+0x71001B8860			FALSE	_ZNK12_GLOBAL__N_130CounterPlayerInfoNrvAppearWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::CounterPlayerInfoNrvAppearWait::execute(al::NerveKeeper*) const	
+0x71001B88D0			FALSE	_ZNK12_GLOBAL__N_126CounterPlayerInfoNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::CounterPlayerInfoNrvAppear::execute(al::NerveKeeper*) const	
+0x71001B8940			FALSE	_ZNK12_GLOBAL__N_128CounterPlayerInfoNrvShowMiss7executeEPN2al11NerveKeeperE	(anonymous namespace)::CounterPlayerInfoNrvShowMiss::execute(al::NerveKeeper*) const	
+0x71001B89E0			FALSE	_ZNK12_GLOBAL__N_123CounterPlayerInfoNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::CounterPlayerInfoNrvEnd::execute(al::NerveKeeper*) const	
 0x71001B8A50		CounterPlayerParts.o	FALSE	_ZN18CounterPlayerPartsC2ERKN2al14LayoutInitInfoEPKcS5_PNS0_11LayoutActorEPK18PlayerAliveWatcherb	CounterPlayerParts::CounterPlayerParts(al::LayoutInitInfo const&, char const*, char const*, al::LayoutActor*, PlayerAliveWatcher const*, bool)	
 0x71001B8B40			FALSE	_ZN18CounterPlayerPartsC1ERKN2al14LayoutInitInfoEPKcS5_PNS0_11LayoutActorEPK18PlayerAliveWatcherb	CounterPlayerParts::CounterPlayerParts(al::LayoutInitInfo const&, char const*, char const*, al::LayoutActor*, PlayerAliveWatcher const*, bool)	
 0x71001B8C20			FALSE	_ZN18CounterPlayerParts16initShowMissDataEPK22GameDataHolderAccessor	CounterPlayerParts::initShowMissData(GameDataHolderAccessor const*)	

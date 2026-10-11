@@ -5826,3 +5826,10 @@
 # src/Game/Layout/GuideObj
 0x71019DAC58 8 object _ZN12_GLOBAL__N_115NrvGuideObjWaitE
 0x71019DAC80 8 object _ZN12_GLOBAL__N_117NrvGuideObjAppearE
+
+# src/Game/Layout/CounterPlayerInfo
+0x71019D4CD8 8 object _ZN12_GLOBAL__N_124NrvCounterPlayerInfoWaitE
+0x71019D4D00 8 object _ZN12_GLOBAL__N_130NrvCounterPlayerInfoAppearWaitE
+0x71019D4D28 8 object _ZN12_GLOBAL__N_126NrvCounterPlayerInfoAppearE
+0x71019D4D50 8 object _ZN12_GLOBAL__N_128NrvCounterPlayerInfoShowMissE
+0x71019D4D78 8 object _ZN12_GLOBAL__N_123NrvCounterPlayerInfoEndE
