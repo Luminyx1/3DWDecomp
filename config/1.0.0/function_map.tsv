@@ -12501,7 +12501,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001E20E0			FALSE	_ZN20PlayerEntryMiniParts15setupControllerEi	PlayerEntryMiniParts::setupController(int)	
 0x71001E2370			FALSE	_ZN20PlayerEntryMiniParts22setStageKinopioBrigadeEv	PlayerEntryMiniParts::setStageKinopioBrigade()	
 0x71001E2380			FALSE	_ZN20PlayerEntryMiniParts18appearWithAnimNameEiPKc	PlayerEntryMiniParts::appearWithAnimName(int, char const*)	
-0x71001E23C0			FALSE	nullsub_128	nullsub_128	
+0x71001E23C0			FALSE	_ZNK12_GLOBAL__N_127PlayerEntryMiniPartsNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::PlayerEntryMiniPartsNrvWait::execute(al::NerveKeeper*) const	
 0x71001E23D0		PlayerEntryParts.o	FALSE	_ZN16PlayerEntryPartsC2ERKN2al14LayoutInitInfoEPKcS5_iP11PlayerEntry	PlayerEntryParts::PlayerEntryParts(al::LayoutInitInfo const&, char const*, char const*, int, PlayerEntry*)	
 0x71001E24B0			FALSE	_ZN16PlayerEntryPartsC1ERKN2al14LayoutInitInfoEPKcS5_iP11PlayerEntry	PlayerEntryParts::PlayerEntryParts(al::LayoutInitInfo const&, char const*, char const*, int, PlayerEntry*)	
 0x71001E2590			FALSE	_ZN16PlayerEntryParts6appearEv	PlayerEntryParts::appear()	
