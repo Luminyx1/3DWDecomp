@@ -833,7 +833,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100023DF0			FALSE	_ZN20DarkBowserShellSpike6exeEndEv	DarkBowserShellSpike::exeEnd()	
 0x7100023F20			FALSE	_ZN20DarkBowserShellSpikeD0Ev	DarkBowserShellSpike::~DarkBowserShellSpike()	
 0x7100023F50			FALSE	_ZNK12_GLOBAL__N_128DarkBowserShellSpikeNrvBegin7executeEPN2al11NerveKeeperE	(anonymous namespace)::DarkBowserShellSpikeNrvBegin::execute(al::NerveKeeper*) const	
-0x7100023F60			FALSE	sub_7100023F60	sub_7100023F60	
+0x7100023F60			FALSE	_ZNK12_GLOBAL__N_134DarkBowserShellSpikeNrvLaunchSpike7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_134DarkBowserShellSpikeNrvLaunchSpike7executeEPN2al11NerveKeeperE	matched nerve
 0x7100023FD0			FALSE	_ZNK12_GLOBAL__N_126DarkBowserShellSpikeNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::DarkBowserShellSpikeNrvEnd::execute(al::NerveKeeper*) const	
 0x7100023FE0		DarkBowserShellSpin.o	FALSE	_ZN19DarkBowserShellSpinC1EP10DarkBowserRKN2al13ActorInitInfoE	DarkBowserShellSpin::DarkBowserShellSpin(DarkBowser*, al::ActorInitInfo const&)	object (class)
 0x7100024090			FALSE	_ZN19DarkBowserShellSpin6appearEv	DarkBowserShellSpin::appear()	

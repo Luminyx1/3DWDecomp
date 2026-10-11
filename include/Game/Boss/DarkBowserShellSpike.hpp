@@ -1,36 +1,32 @@
 #pragma once
-
-#include <basis/seadTypes.h>
-
 #include "Library/Nerve/NerveStateBase.hpp"
-
-namespace al {
-class ActorInitInfo;
-class HitSensor;
-}  // namespace al
-
+#include <container/seadPtrArray.h>
+#include <math/seadVector.h>
 class DarkBowser;
-
-/**
- * @brief Fury Bowser's shell spike attack state.
- * @note Only what reconstructed code needs is declared so far.
- */
-class DarkBowserShellSpike : public al::NerveStateBase {
+class BowserSpike;
+namespace al { class ActorInitInfo; class HitSensor; }
+class DarkBowserShellSpike : public al::HostStateBase<DarkBowser> {
 public:
-    DarkBowserShellSpike(DarkBowser* pHost, const al::ActorInitInfo& rInfo);
-
+    DarkBowserShellSpike(DarkBowser*, const al::ActorInitInfo&);
+    ~DarkBowserShellSpike() override;
+    void appear() override;
+    void kill() override;
     void forceKill();
-    void attackSensor(al::HitSensor* pSelf, al::HitSensor* pOther);
-
-    /**
-     * @brief Sets the attack level (how aggressive the attack is).
-     * @param level Attack level.
-     */
+    void attackSensor(al::HitSensor*, al::HitSensor*);
+    void exeBegin();
+    void shuffle();
+    void exeLaunchSpike();
+    void launchRandom();
+    void exeEnd();
     void setLevel(s32 level) { mLevel = level; }
-
 private:
-    u8 _11[0x20 - 0x11];  // starts in the tail padding of al::NerveStateBase
-    s32 mLevel;  // 0x20
-    u8 _24[0xB8 - 0x24];
+    int mLevel = 0;
+    sead::PtrArray<BowserSpike> mSpikes;
+    int mLaunchCount = 0;
+    int mPoolGroup = 0;
+    int mAttackCount = 0;
+    sead::Vector3f mTarget;
+    int mBatchCount = 3;
+    int mOrder[24];
 };
 static_assert(sizeof(DarkBowserShellSpike) == 0xb8);
