@@ -15,6 +15,7 @@ public:
     void exeEnd();
     bool isStartNewGame() const;
     bool isEnd();
+    bool isReturnToTopMenu() const { return mIsBack; }
 private:
     const GameDataHolder* mGameData;
     bool mIsBack = false;

@@ -223,7 +223,7 @@ void TentackStateAttackTentacle::prepareTentacleGroups() {
     for (s32 i = 0; i < mSwingTentacles.size(); i++) {
         TentackTentacleInfo* info = mSwingTentacles.at(i)->getInfo();
         info->reset();
-        mSwingTentacles.at(i)->setSwingYRate(*param->mSwingYRate[i]);
+        mSwingTentacles.at(i)->setSwingYRate(*param->mSwingYRate.unsafeAt(i));
         param->setUpTentacleInfo(info, i);
     }
 }

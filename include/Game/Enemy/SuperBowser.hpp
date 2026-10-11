@@ -17,6 +17,8 @@ class SuperBowser : public al::LiveActor {
     struct SpawnInfo {
         sead::Vector3f mTrans;     // 0x0
         sead::Vector3f mFrontDir;  // 0xc
+        u8 _18[0x4c - 0x18];
+        bool mUsePreviousHeight;  // 0x4c
     };
 
     /// State of the Plessie chase of the last battle.
@@ -66,6 +68,8 @@ class SuperBowser : public al::LiveActor {
     s32 getLastPhase3CurrentIndex() const;
     bool isPlessieChaseBigRamp() const;
     SpawnInfo* getCurrentSpawnInfo();
+    SpawnInfo* getPreviousSpawnInfo();
+    bool isInkPuddleEnabled() const { return mIsInkPuddleEnabled; }
     void notifyPlayerHit();
     void setLaunchSpikeQueueCount(s32 count);
     void clearLaunchSpikeAmbientFrameCount();
@@ -169,6 +173,8 @@ private:
     s32 mBowserType;  // 0x208
     u8 _20c[0x210 - 0x20c];
     PlessieChaseState* mPlessieChaseState;  // 0x210
-    u8 _218[0x50f - 0x218];
+    u8 _218[0x221 - 0x218];
+    bool mIsInkPuddleEnabled;
+    u8 _222[0x50f - 0x222];
     bool mIsIgnoreBellOffsetY;  // 0x50f
 };

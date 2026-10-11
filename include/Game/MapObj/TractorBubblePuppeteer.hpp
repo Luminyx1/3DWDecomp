@@ -26,6 +26,12 @@ public:
     void startBubbleWithInput(al::LiveActor* pPlayer);
     void endBubble();
     void endBubblePunch();
+    void endBindForce();
+    void exeActivatePlayer();
+    void exeBindWait();
+    void exeBubbleStart();
+    void exeBubble();
+    void exeEnd();
 
     /** @brief Gets the player carried by the bubble. @return The player actor, or nullptr. */
     al::LiveActor* getPlayerActor() const { return mPlayerActor; }

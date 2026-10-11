@@ -19,7 +19,7 @@ TestAoyagiPlayerEntry::TestAoyagiPlayerEntry(const al::LayoutInitInfo& rInfo)
     for (int i = 0; i < mItemCount; i++) {
         mItems[i] = new TestAoyagiPlayerEntryItem(rInfo, "プレーヤーエントリー", sPartsNames[i], this);
         al::startAction(mItems[i], sControllerNames[i], "Controller");
-        mItems[i]->setPort(i);
+        mItems[i]->setCharacterIndex(i);
     }
     initNerve(&NrvTestAoyagiPlayerEntryWait, 0);
 }

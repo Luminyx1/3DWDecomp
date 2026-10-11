@@ -38,6 +38,8 @@ public:
     void setIslandStartPos(const al::StageResourceList* pList, const al::ActorInitInfo& rInfo);
     int getHolderNum() const;
     void update(int islandIndex);
+    void setIslandStartPosArea(s32 islandId);
+    void resetCurrentIsland();
 private:
     int mCurrentIslandId;
     u8 mUnknownC[4];

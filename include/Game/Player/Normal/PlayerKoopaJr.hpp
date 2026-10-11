@@ -17,6 +17,7 @@ public:
     bool isWaitingForOptionsMenu();
     void endOptionsIntro();
     bool canDoIslandWarp() const;
+    void doIslandWarp();
     bool tryPraiseReaction(int);
     void hideForDemo();
     void startMidBossDemo();
@@ -62,4 +63,7 @@ private:
     al::HitSensor* mTouchGraffitiSensor;  // 0x2c8
     u8 _2d0[0x2dc - 0x2d0];
     bool mIsUseAIMovement;  // 0x2dc
+    u8 _2dd[0x428 - 0x2dd];
 };
+
+static_assert(sizeof(PlayerKoopaJr) == 0x428);

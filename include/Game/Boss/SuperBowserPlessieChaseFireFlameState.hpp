@@ -65,6 +65,9 @@ class SuperBowserPlessieChaseFireFlameState : public al::HostStateBase<SuperBows
 public:
     SuperBowserPlessieChaseFireFlameState(SuperBowser* pHost, const al::ActorInitInfo& rInfo);
 
+    bool isRingSePlaying() const { return mIsRingSePlaying; }
+    bool isSweepSePlaying() const { return mIsSweepSePlaying; }
+
     void createFireFlamePool(const al::ActorInitInfo& rInfo);
     void initFromYaml();
     al::SceneObjHolder* getSceneObjHolder() const override;

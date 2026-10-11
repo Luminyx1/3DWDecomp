@@ -1,8 +1,23 @@
 #pragma once
 #include "Library/LiveActor/LiveActor.hpp"
+#include <math/seadQuat.h>
+namespace al { class FlashingCtrl; class CollisionPartsConnector; }
+class ItemStateAssistRotate;
 class CoinBlow : public al::LiveActor {
 public:
     explicit CoinBlow(const char*);
+    void init(const al::ActorInitInfo&) override;
+    void initAfterPlacement() override;
+    void appear() override;
+    void control() override;
+    bool receiveMsg(const al::SensorMsg*, al::HitSensor*, al::HitSensor*) override;
+    bool receiveMsgScreenPoint(const al::SensorMsg*, al::ScreenPointer*, al::ScreenPointTarget*) override;
+    void rotate();
+    void exeBlow();
+    void exeWait();
+    void exeSpinDrc();
+    void setBound(bool);
+    void setBoundOnArea();
     void setOffCollide(int);
     void setOffSensor(int);
     void appearWithHitReaction();
@@ -13,10 +28,17 @@ public:
     void setCounted() { mCounted = true; }
     void disableCollider() { mUseCollider = false; }
 private:
-    bool mCounted;
-    u8 _145[2];
-    bool mUseCollider;
-    int mLifeTime;
-    u8 mUnreconstructed14C[0x34];
+    bool mCounted = false;
+    bool mSpinFromWait = false;
+    bool mConnected = false;
+    bool mUseCollider = true;
+    int mLifeTime = 0;
+    int mOffCollideStep = 0;
+    int mOffSensorStep = 28;
+    int mHideModelStep = 0;
+    sead::Quatf mBaseQuat = sead::Quatf::unit;
+    al::FlashingCtrl* mFlashing = nullptr;
+    ItemStateAssistRotate* mAssistRotate = nullptr;
+    al::CollisionPartsConnector* mConnector;
 };
 static_assert(sizeof(CoinBlow) == 0x180);

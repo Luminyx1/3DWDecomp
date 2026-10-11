@@ -1,13 +1,12 @@
 #pragma once
-
 #include <basis/seadTypes.h>
+#include <prim/seadSafeString.h>
 
+/** @brief Turning and discovery animation settings for a flying enemy. */
 struct FlyerStateFindPlayerParam {
-    FlyerStateFindPlayerParam(f32, char* pAction);
-
+    FlyerStateFindPlayerParam();
+    FlyerStateFindPlayerParam(f32 turnDegree, char* pAction);
     f32 _0;
-    u32 _4;
-    u64 _8[(0x40 - 0x8) / 8];
+    sead::FixedSafeString<32> mAction;
 };
-
 static_assert(sizeof(FlyerStateFindPlayerParam) == 0x40);

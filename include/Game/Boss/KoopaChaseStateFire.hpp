@@ -6,18 +6,26 @@ namespace al { class ActorInitInfo; }
 class KoopaChase;
 class KoopaFireBall;
 
-class KoopaChaseStateFire : public al::NerveStateBase {
+class KoopaChaseStateFire : public al::HostStateBase<KoopaChase> {
 public:
     KoopaChaseStateFire(KoopaChase* pHost, const al::ActorInitInfo& rInfo, bool isProvocation);
+    ~KoopaChaseStateFire() override;
+    void appear() override;
+    void calcMouthPos(sead::Vector3f* pOut) const;
+    bool calcFireDir(sead::Vector3f* pOut) const;
+    KoopaFireBall* getFireBall() const;
+    void exeWait();
+    void exeFireStart();
+    void exeFireEnd();
     void setFireNum(int fireNum);
 
 private:
-    KoopaChase* mHost;
-    sead::FixedPtrArray<KoopaFireBall, 6> mFireBalls;
+    sead::PtrArray<KoopaFireBall> mFireBalls;
+    KoopaFireBall* mFireBallStorage[6];
     sead::Vector3f mDirection;
     int mFireNum;
-    int mValue70;
+    int mFireCount;
     bool mIsProvocation;
-    bool mValue75;
+    bool mKillOnCollide;
 };
 static_assert(sizeof(KoopaChaseStateFire) == 0x78);

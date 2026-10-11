@@ -78,8 +78,7 @@ ItemStatePopUpFrontParam sThrowParam(sead::Vector3f(0.0f, 25.0f, 10.0f), 0.8f, 0
 ItemStatePopUpFrontParam sPopUpParam(sead::Vector3f(0.0f, 20.0f, 6.0f), 1.2f, 1.0f, 15, 0.0f, true,
                                      "PopUp", false, nullptr);
 /// Explosion of the bomb.
-BombStateExplosionParam sExplosionParam = {500.0f, 150.0f, 30.0f, sead::Vector3f(4.0f, 3.0f, 1.0f),
-                                           1.0f, 2};
+BombStateExplosionParam sExplosionParam = {500.0f, 150.0f, 30.0f, sead::Color4f(4.0f, 3.0f, 1.0f, 1.0f), 2};
 /// Hold offsets of the bomb for each player size and pose.
 ItemStatePlayerHoldParam sPlayerHoldParam(
     sead::Vector3f(7.0f, 0.0f, 0.0f), sead::Vector3f(9.0f, 0.0f, 0.0f),

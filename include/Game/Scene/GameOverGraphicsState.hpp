@@ -7,6 +7,11 @@
 #include "Library/Fog/YFogParam.hpp"
 #include "Library/Light/DirectionalLightKeeper.hpp"
 #include "Library/Light/LightIntensityDirector.hpp"
+#include "Library/PostProcessing/HdrCompose.hpp"
+#include "Library/PostProcessing/DepthOfFieldDrawer.hpp"
+#include "Library/PostProcessing/LightStreakDirector.hpp"
+#include <postfx/aglColorCorrection.h>
+#include <cmath>
 #include "Library/LiveActor/Common/LiveActorKit.hpp"
 #include "Library/Scene/Scene.hpp"
 #include "Library/Shader/ForwardRendering/CubeMapKeeper.hpp"
@@ -44,6 +49,24 @@ public:
      */
     void setGraphicsState() {
         al::GraphicsSystemInfo* pInfo = mScene->getLiveActorKit()->getGraphicsSystemInfo();
+        al::LightIntensityDirector* intensity = pInfo->getLightIntensityDirector();
+        intensity->setForceBloomParam(&mBloomParam);
+        intensity->setForceExposure(fmaxf(mExposure, 0.0001f));
+        al::ShaderCubeMapKeeper* pCubeMapKeeper = pInfo->getShaderCubeMapKeeper();
+        pCubeMapKeeper->setForceCubeMapInfo(pCubeMapKeeper->findCubeMapInfoByName("GameOver"));
+        pInfo->getDirectionalLightKeeper()->requestDirectionalLight(10000, 0, mDirLightParam);
+        pInfo->getFogDirector()->requestFog(10000, 0, mFogParam);
+        pInfo->getFogDirector()->requestYFog(10000, 0, mYFogParam);
+        pInfo->getShadowDirector()->requestDepthShadowParam(10000, 0, mDepthShadowParam);
+        pInfo->mHdrCompose->setDisableCameraIndirect(true);
+        pInfo->mDepthOfFieldDrawer->disable();
+        pInfo->mColorCorrectionParamKeeper->getParam()->setEnable(false);
+        pInfo->mLightStreakDirector->setIntensity(0.0f);
+    }
+
+    // Single mode keeps the scene exposure and post-processing settings.
+    void setGraphicsStateSingleMode() {
+        al::GraphicsSystemInfo* pInfo = mScene->getLiveActorKit()->getGraphicsSystemInfo();
         pInfo->getLightIntensityDirector()->setForceBloomParam(&mBloomParam);
         al::ShaderCubeMapKeeper* pCubeMapKeeper = pInfo->getShaderCubeMapKeeper();
         pCubeMapKeeper->setForceCubeMapInfo(pCubeMapKeeper->findCubeMapInfoByName("GameOver"));
@@ -60,7 +83,7 @@ private:
     al::FogParam mFogParam;
     al::YFogParam mYFogParam;
     al::DepthShadowParam mDepthShadowParam;
-    f32 _860 = 2.0f;
+    f32 mExposure = 2.0f;
 };
 
 static_assert(sizeof(GameOverGraphicsState) == 0x868);

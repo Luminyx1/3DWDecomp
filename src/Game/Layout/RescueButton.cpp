@@ -18,7 +18,7 @@ NERVES_MAKE_NOSTRUCT(RescueButton, End, Appear, Finish, Wait)
  * @param pText Output buffer.
  * @param rate Filled proportion.
  * @return The formatted meter text. */
-const char16_t* formatHoldMeter(sead::WBufferedSafeString* pText, float rate) {
+const char16_t* formatRescueHoldMeter(sead::WBufferedSafeString* pText, float rate) {
     int count = sead::Mathi::min(static_cast<int>(rate * 20.0f), 20);
     pText->clear();
     int i = 0;
@@ -30,7 +30,7 @@ const char16_t* formatHoldMeter(sead::WBufferedSafeString* pText, float rate) {
 /** @brief Creates the rescue prompt and an empty meter. @param rInfo Layout initialization context. */
 RescueButton::RescueButton(const al::LayoutInitInfo& rInfo) : al::LayoutActor("RescueButton") {
     al::initLayoutActor(this, rInfo, "RescueButton", nullptr);
-    al::setPaneString(this, "TxtCharge", formatHoldMeter(&mMeterText, 0.0f), 0, -1);
+    al::setPaneString(this, "TxtCharge", formatRescueHoldMeter(&mMeterText, 0.0f), 0, -1);
     initNerve(&NrvRescueButtonEnd, 0);
 }
 /** @brief Shows the prompt and resets charge tracking. */
@@ -48,14 +48,14 @@ void RescueButton::startFinish() { al::setNerve(this, &NrvRescueButtonFinish); }
 void RescueButton::setHoldTime(float time) {
     if (mDisplayedHold < time) mDisplayedHold = time;
     mHoldTime = time;
-    al::setPaneString(this, "TxtCharge", formatHoldMeter(&mMeterText, mDisplayedHold), 0, -1);
+    al::setPaneString(this, "TxtCharge", formatRescueHoldMeter(&mMeterText, mDisplayedHold), 0, -1);
 }
 /** @brief Smoothly decreases the displayed meter toward the requested charge. */
 void RescueButton::updateHoldMeter() {
     if (mDisplayedHold > mHoldTime) {
         mDisplayedHold -= 0.05f;
         if (mDisplayedHold < mHoldTime) mDisplayedHold = mHoldTime;
-        al::setPaneString(this, "TxtCharge", formatHoldMeter(&mMeterText, mDisplayedHold), 0, -1);
+        al::setPaneString(this, "TxtCharge", formatRescueHoldMeter(&mMeterText, mDisplayedHold), 0, -1);
     }
 }
 /** @brief Hides the rescue prompt. */

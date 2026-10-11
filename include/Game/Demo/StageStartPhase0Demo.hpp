@@ -22,7 +22,7 @@ public:
     void setSkipped() { mIsSkipped = true; }
 
 private:
-    u8 _148[0x175 - 0x148];
+    alignas(8) u8 _148[0x175 - 0x148];
     bool mIsSkipped;  // 0x175
     u8 _176[0x178 - 0x176];
 };

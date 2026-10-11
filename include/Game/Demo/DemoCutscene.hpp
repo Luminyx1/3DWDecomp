@@ -27,8 +27,7 @@ class BindPuppeteerGroup;
  */
 class DemoCutscene : public DemoObjBase {
 public:
-    DemoCutscene(const char* pName,
-                 alSeFunction::DemoType type = static_cast<alSeFunction::DemoType>(5));
+    DemoCutscene(const char* pName, alSeFunction::DemoType type = static_cast<alSeFunction::DemoType>(5));
 
     void init(const al::ActorInitInfo& rInfo) override;
     void initPuppets(const al::ActorInitInfo& rInfo);

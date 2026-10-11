@@ -21,6 +21,8 @@ public:
     void incrementCharactorIndex();
     void setModelFontCurrentCurrent();
     void setColorCharactorModelCurrent();
+    /** @brief Assigns the initial character selection. */
+    void setCharacterIndex(int character) { mCharacterIndex = character; }
     /** @brief Selects the controller port for this panel. */
     void setPort(int port) { mPort = port; }
     /** @brief Returns the controller port assigned to this panel. */

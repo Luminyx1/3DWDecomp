@@ -114,6 +114,9 @@ public:
 
     void setUseNoCodeWallFilter(bool isUse) { mIsUseNoCodeWallFilter = isUse; }
 
+    void setAudioKeeperUser(al::IUseAudioKeeper* user) { mAudioKeeperUser = user; }
+    void setSnapshotLayout(SnapshotLayout* layout) { mSnapshotLayout = layout; }
+
     const al::IUseAudioKeeper* getAudioKeeperUser() const { return mAudioKeeperUser; }
 
 private:

@@ -1,3 +1,4 @@
+#include "Demo/DemoCutscene.hpp"
 #include "MapObj/Trampoline.hpp"
 #include "MapObj/KinokoTreasure.hpp"
 #include "MapObj/Ball.hpp"
@@ -730,7 +731,7 @@ static_assert(sizeof(DemoEventGateKeeperChecker) == 0x180);
 
 
 
-#include "Demo/DemoCutscene.hpp"
+
 
 class DemoKoopaW7 : public al::LiveActor {
 public:
@@ -1452,6 +1453,7 @@ static_assert(sizeof(KoopaLastBreakWall) == 0x188);
 class KoopaLastDefendeBlockPow : public al::LiveActor {
 public:
     explicit KoopaLastDefendeBlockPow(const char* pName);
+    void startEndDemo();
 
 private:
     u8 mUnreconstructed[0x6c];

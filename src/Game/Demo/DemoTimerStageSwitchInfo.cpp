@@ -156,8 +156,8 @@ DemoSceneActorHolder* tryCreateDemoSceneHolder(const char* pName, const al::Acto
 
         if (al::tryGetPlacementInfo(&placement, resource, fileName.cstr(), "DemoObjList")) {
             holder->initPlacementDemoActor(placement, rInfo, pSelector, pBaseMtx, isUseFigure);
-            return holder;
         }
+        return holder;
     }
 
     return nullptr;

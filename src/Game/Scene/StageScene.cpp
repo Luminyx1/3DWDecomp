@@ -201,7 +201,6 @@ constexpr u32 cPlayerType = 31;
 /** Player type of the players of a stage when Double Mario (Double Cherry) can be used. */
 constexpr u32 cPlayerTypeDoubleMario = 19;
 /** Number of player entry items shown in the Captain Toad stages. */
-constexpr s32 cPlayerEntryItemNumKinopioBrigade = 3;
 /** Distance between two players placed side by side at the start of the stage. */
 constexpr f32 cPlayerPlacementInterval = 150.0f;
 /** Side offset of the players placed in a narrow place. */
@@ -321,7 +320,7 @@ StageScene::StageScene(StageWipeKeeper* pStageWipeKeeper)
     : InGameSceneBase("ステージシーン"), mStageWipeKeeper(pStageWipeKeeper) {
     mMainViewport.set(0.0f, 0.0f, 1280.0f, 720.0f);
     mSubViewport.set(0.0f, 0.0f, 854.0f, 480.0f);
-    mStereoMainViewport.set(0.0f, 0.0f, 1280.0f, 720.0f);
+    mStereoMainViewport.set(0.0f, 0.0f, 640.0f, 720.0f);
     mStereoSubViewport.set(640.0f, 0.0f, 1280.0f, 720.0f);
 }
 
@@ -565,9 +564,15 @@ void StageScene::init(const al::SceneInitInfo& rInfo) {
     mCameraChangeLayout =
         al::getSceneObj<CameraChangeLayout>(this, SceneObjID_CameraChangeLayout);
     bool isKinopioBrigade = mIsKinopioBrigade;
-    mPlayerEntryMini =
-        new PlayerEntryMini(layoutInfo, mGameDataHolder, mLiveActorKit->getPlayerHolder(),
-                            isKinopioBrigade ? cPlayerEntryItemNumKinopioBrigade : 0);
+    if (isKinopioBrigade) {
+        mPlayerEntryMini = new PlayerEntryMini(
+            layoutInfo, mGameDataHolder, mLiveActorKit->getPlayerHolder(),
+            PlayerEntryMini::SceneType_KinopioStage);
+    } else {
+        mPlayerEntryMini = new PlayerEntryMini(
+            layoutInfo, mGameDataHolder, mLiveActorKit->getPlayerHolder(),
+            PlayerEntryMini::SceneType_Stage);
+    }
     mResultTimerCount = new ResultTimerCount(
         mStageTimer, mGameDataHolder->getStageDataHolderPtr(), mAudioDirector);
     mPauseMenu = new PauseMenu(layoutInfo, mGameDataHolder, mPlayerAliveWatcher,
@@ -758,8 +763,7 @@ void StageScene::decidePlayerPlacement() {
             } else {
                 const sead::Vector3f& trans = player->getProperty()->getTrans();
                 f32 center = (activeNum - 1) * 0.5f * cPlayerPlacementInterval;
-                f32 offset = -order * cPlayerPlacementInterval;
-                pos = trans + side * center + side * offset;
+                pos = side * center + trans + side * (-order * cPlayerPlacementInterval);
             }
 
             player->getProperty()->mTrans = pos;

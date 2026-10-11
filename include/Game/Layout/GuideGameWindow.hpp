@@ -49,6 +49,7 @@ void appearGuideGameWindowWithConfirm(const al::IUseSceneObjHolder* pHolder, con
 bool appearGuideGameWindowWithPriority(const al::IUseSceneObjHolder* pHolder,
                                        const char* pCategory, const char* pMessage,
                                        GuideMessagePriority priority, s32 frame, f32 delay);
+void forceDisappearGuideGameWindow(const al::IUseSceneObjHolder* pHolder);
 void disappearGuideGameWindow(const al::IUseSceneObjHolder* pHolder);
 bool isCurrentGuideGameWindowUser(const al::IUseSceneObjHolder* pHolder);
 void unHideGuideGameWindow(const al::IUseSceneObjHolder* pHolder);

@@ -1,35 +1,44 @@
 #pragma once
 #include <math/seadVector.h>
+#include <container/seadPtrArray.h>
 #include "Library/Nerve/NerveStateBase.hpp"
 
 namespace al {
 class ActorInitInfo;
+template <class T> class DeriveActorGroup;
 }
 class ITentackSwingTentacleHolder;
+class TentackHeadAttackBall;
 class TentackHead;
 class TentackTentacle;
 class TentackTentacleGroup;
 
 /** @brief State where a head breathes fire while its tentacle group retreats. */
-class TentackStateAttackShot : public al::ActorStateBase {
+class TentackStateAttackShot : public al::HostStateBase<TentackHead> {
 public:
     TentackStateAttackShot(TentackHead* pHead, const al::ActorInitInfo& rInfo,
                            const ITentackSwingTentacleHolder* pSwingHolder);
+    ~TentackStateAttackShot() override;
+    void appear() override;
+    void kill() override;
+    void exeTurn();
+    void exeShotSign();
+    void exeShot();
     void receiveDamage();
     void registerTentacleGroup(TentackTentacleGroup* pGroup);
     void registerTentacle(TentackTentacle* pTentacle);
     const sead::Vector3f& getFirstTarget() const;
 
     /** @brief Forgets all registered targets. */
-    void clearTarget() { mTargetNum = 0; }
+    void clearTarget() { mTargets.clear(); }
 
     /** @brief Checks whether any target is registered. @return True if a target exists. */
-    bool isExistTarget() const { return mTargetNum != 0; }
+    bool isExistTarget() const { return !mTargets.isEmpty(); }
 
 private:
-    unsigned char mUnknown20[0x8];
-    s32 mTargetNum;  // 0x28 number of registered targets
-    unsigned char mUnknown2C[0x14];
+    const ITentackSwingTentacleHolder* mSwingHolder;
+    sead::PtrArray<TentackTentacle> mTargets;
+    al::DeriveActorGroup<TentackHeadAttackBall>* mBalls;
 
 public:
     f32 _40;  // 0x40

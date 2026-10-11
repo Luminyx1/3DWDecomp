@@ -9,6 +9,7 @@ public:
                       const char* pArchiveName, const sead::Matrix34f* pMtx, const char* pSuffix);
     void makeActorAppeared() override;
     void updatePose();
+    void disableHostMatrix() { mIsUseMatrix = false; }
     void control() override;
 
 private:
