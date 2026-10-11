@@ -233,7 +233,7 @@ src/Game/Boss/Punpun.cpp:
     .text   start:0x0003F660 end:0x00041838
 src/Game/Boss/PunpunDivision.cpp:
     .text   start:0x00041840 end:0x00042498
-src/Game/Boss/PunpunParam.cpp:
+src/Game/Boss/PunpunParam.cpp: done
     .text   start:0x000424A0 end:0x000427BC
 src/Game/Boss/PunpunShuriken.cpp:
     .text   start:0x000427C0 end:0x00042FF8

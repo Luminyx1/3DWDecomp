@@ -1644,7 +1644,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100042490			FALSE	_ZNK12_GLOBAL__N_126PunpunDivisionNrvThrowSign7executeEPN2al11NerveKeeperE	(anonymous namespace)::PunpunDivisionNrvThrowSign::execute(al::NerveKeeper*) const	
 0x71000424A0		PunpunParam.o	FALSE	_ZN11PunpunParam22getDividePosPatternNumEi	PunpunParam::getDividePosPatternNum(int)	
 0x71000424C0			FALSE	_ZN11PunpunParam12getDividePosEiii	PunpunParam::getDividePos(int, int, int)	
-0x7100042520			FALSE	sub_7100042520	sub_7100042520	
+0x7100042520			FALSE	_GLOBAL__sub_I_PunpunParam.cpp	_GLOBAL__sub_I_PunpunParam.cpp	matched initializer
 0x71000427C0		PunpunShuriken.o	FALSE	_ZN14PunpunShurikenC2EPKc	PunpunShuriken::PunpunShuriken(char const*)	
 0x7100042840			FALSE	_ZN14PunpunShurikenC1EPKc	PunpunShuriken::PunpunShuriken(char const*)	
 0x71000428C0			FALSE	_ZN14PunpunShuriken4initERKN2al13ActorInitInfoE	PunpunShuriken::init(al::ActorInitInfo const&)	
