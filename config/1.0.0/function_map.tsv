@@ -6392,9 +6392,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71000F63F0			FALSE	_ZN20FlyerStateReturnArea15exeReturnRotateEv	FlyerStateReturnArea::exeReturnRotate()	
 0x71000F6440			FALSE	_ZN20FlyerStateReturnArea9exeReturnEv	FlyerStateReturnArea::exeReturn()	
 0x71000F64D0			FALSE	_ZN20FlyerStateReturnAreaD0Ev	FlyerStateReturnArea::~FlyerStateReturnArea()	
-0x71000F6500			FALSE	sub_71000F6500	sub_71000F6500	
-0x71000F6560			FALSE	sub_71000F6560	sub_71000F6560	
-0x71000F65B0			FALSE	sub_71000F65B0	sub_71000F65B0	
+0x71000F6500			FALSE	_ZNK12_GLOBAL__N_128FlyerStateReturnAreaNrvBrake7executeEPN2al11NerveKeeperE	(anonymous namespace)::FlyerStateReturnAreaNrvBrake::execute(al::NerveKeeper*) const	
+0x71000F6560			FALSE	_ZNK12_GLOBAL__N_135FlyerStateReturnAreaNrvReturnRotate7executeEPN2al11NerveKeeperE	(anonymous namespace)::FlyerStateReturnAreaNrvReturnRotate::execute(al::NerveKeeper*) const	
+0x71000F65B0			FALSE	_ZNK12_GLOBAL__N_129FlyerStateReturnAreaNrvReturn7executeEPN2al11NerveKeeperE	(anonymous namespace)::FlyerStateReturnAreaNrvReturn::execute(al::NerveKeeper*) const	
 0x71000F6630		FlyerStateWanderParam.o	FALSE	_ZN21FlyerStateWanderParamC2EiiiPKcPKN2al14ActorParamMoveE	FlyerStateWanderParam::FlyerStateWanderParam(int, int, int, char const*, al::ActorParamMove const*)	object (class)
 0x71000F6750		FlyerStateWander.o	FALSE	_ZN16FlyerStateWanderC1EPN2al9LiveActorEPN4sead7Vector3IfEEP12TargetFinderPK15FlyerStateParamPK21FlyerStateWanderParam	FlyerStateWander::FlyerStateWander(al::LiveActor*, sead::Vector3<float>*, TargetFinder*, FlyerStateParam const*, FlyerStateWanderParam const*)	
 0x71000F67D0			FALSE	_ZN16FlyerStateWander6appearEv	FlyerStateWander::appear()	
