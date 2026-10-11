@@ -15966,7 +15966,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100271340			FALSE	_ZN4CoinD1Ev	Coin::~Coin()	
 0x7100271350			FALSE	_ZN4CoinD0Ev	Coin::~Coin()	
 0x7100271380			FALSE	_ZNK12_GLOBAL__N_111CoinNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::CoinNrvWait::execute(al::NerveKeeper*) const	
-0x7100271390			FALSE	sub_7100271390	sub_7100271390	
+0x7100271390			FALSE	_ZNK12_GLOBAL__N_111CoinNrvSpin7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_111CoinNrvSpin7executeEPN2al11NerveKeeperE	
 0x7100271410			FALSE	_ZNK12_GLOBAL__N_121CoinNrvAppearJumpRise7executeEPN2al11NerveKeeperE	(anonymous namespace)::CoinNrvAppearJumpRise::execute(al::NerveKeeper*) const	
 0x7100271420			FALSE	_ZNK12_GLOBAL__N_121CoinNrvAppearJumpFall7executeEPN2al11NerveKeeperE	(anonymous namespace)::CoinNrvAppearJumpFall::execute(al::NerveKeeper*) const	
 0x7100271430			FALSE	_ZNK2al10FunctorV0MIP4CoinMS1_FvvEEclEv	al::FunctorV0M<Coin*, void (Coin::*)()>::operator()() const	
