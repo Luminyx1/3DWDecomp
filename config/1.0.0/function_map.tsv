@@ -17490,12 +17490,12 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71002B1C50			FALSE	_ZN14FlipPanelPartsD0Ev	FlipPanelParts::~FlipPanelParts()	
 0x71002B1C80			FALSE	_ZNK12_GLOBAL__N_117FlipPanelNrvWatch7executeEPN2al11NerveKeeperE	(anonymous namespace)::FlipPanelNrvWatch::execute(al::NerveKeeper*) const	
 0x71002B1C90			FALSE	_ZNK12_GLOBAL__N_115FlipPanelNrvFix7executeEPN2al11NerveKeeperE	(anonymous namespace)::FlipPanelNrvFix::execute(al::NerveKeeper*) const	
-0x71002B1CA0			FALSE	sub_71002B1CA0	sub_71002B1CA0	
-0x71002B1D60			FALSE	sub_71002B1D60	sub_71002B1D60	
-0x71002B1DC0			FALSE	sub_71002B1DC0	sub_71002B1DC0	
+0x71002B1CA0			FALSE	_ZNK12_GLOBAL__N_125FlipPanelPartsNrvQuestion7executeEPN2al11NerveKeeperE	(anonymous namespace)::FlipPanelPartsNrvQuestion::execute(al::NerveKeeper*) const	
+0x71002B1D60			FALSE	_ZNK12_GLOBAL__N_124FlipPanelPartsNrvPrevEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::FlipPanelPartsNrvPrevEnd::execute(al::NerveKeeper*) const	
+0x71002B1DC0			FALSE	_ZNK12_GLOBAL__N_120FlipPanelPartsNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::FlipPanelPartsNrvEnd::execute(al::NerveKeeper*) const	
 0x71002B1E40			FALSE	_ZNK12_GLOBAL__N_130FlipPanelPartsNrvExclamationOn7executeEPN2al11NerveKeeperE	(anonymous namespace)::FlipPanelPartsNrvExclamationOn::execute(al::NerveKeeper*) const	
 0x71002B1E50			FALSE	_ZNK12_GLOBAL__N_127FlipPanelPartsNrvQuestionOn7executeEPN2al11NerveKeeperE	(anonymous namespace)::FlipPanelPartsNrvQuestionOn::execute(al::NerveKeeper*) const	
-0x71002B1E60			FALSE	sub_71002B1E60	sub_71002B1E60	
+0x71002B1E60			FALSE	_ZNK12_GLOBAL__N_128FlipPanelPartsNrvExclamation7executeEPN2al11NerveKeeperE	(anonymous namespace)::FlipPanelPartsNrvExclamation::execute(al::NerveKeeper*) const	
 0x71002B1F20		FlowerCactus.o	FALSE	_ZN12FlowerCactusC2EPKc	FlowerCactus::FlowerCactus(char const*)	
 0x71002B1FC0			FALSE	_ZN12FlowerCactusC1EPKc	FlowerCactus::FlowerCactus(char const*)	
 0x71002B2060			FALSE	_ZN12FlowerCactus4initERKN2al13ActorInitInfoE	FlowerCactus::init(al::ActorInitInfo const&)	

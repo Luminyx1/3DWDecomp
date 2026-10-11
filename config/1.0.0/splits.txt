@@ -1629,7 +1629,7 @@ src/Game/MapObj/FlingPole.cpp:
     .text   start:0x002ABD10 end:0x002B0C88
 src/Game/MapObj/FlipCircusDoor.cpp: done
     .text   start:0x002B0C90 end:0x002B0ED8
-src/Game/MapObj/FlipPanel.cpp:
+src/Game/MapObj/FlipPanel.cpp: done
     .text   start:0x002B0EE0 end:0x002B1F14
 src/Game/MapObj/FlowerCactus.cpp: done
     .text   start:0x002B1F20 end:0x002B2B3C
