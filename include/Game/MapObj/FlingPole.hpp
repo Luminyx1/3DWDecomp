@@ -110,10 +110,12 @@ private:
     void holdWobbleSe();
     void validateBindSensors();
 
+protected:
     sead::PtrArray<al::JointLocalAxisRotator> mStickRotators;  // 0x150
     f32 mStickXAngle = 0.0f;                                   // 0x160
     sead::Vector3f mRotateAxis = sead::Vector3f::ez;           // 0x164
     f32 mRotateAngle = 0.0f;                                   // 0x170
+private:
     void* _178 = nullptr;
     void* _180 = nullptr;
     Param* mParam = new Param();                                // 0x188
