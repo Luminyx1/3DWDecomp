@@ -11778,10 +11778,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001C59E0			FALSE	_ZN11GuideCourse7exeHideEv	GuideCourse::exeHide()	
 0x71001C59F0			FALSE	_ZNK11GuideCourse18getSceneCameraInfoEv	GuideCourse::getSceneCameraInfo() const	
 0x71001C5A00			FALSE	_ZThn32_NK11GuideCourse18getSceneCameraInfoEv	non-virtual thunk to GuideCourse::getSceneCameraInfo() const	
-0x71001C5A10			FALSE	sub_71001C5A10	sub_71001C5A10	
-0x71001C5A20			FALSE	sub_71001C5A20	sub_71001C5A20	
-0x71001C5A90			FALSE	sub_71001C5A90	sub_71001C5A90	
-0x71001C5B00			FALSE	sub_71001C5B00	sub_71001C5B00	
+0x71001C5A10			FALSE	_ZNK12_GLOBAL__N_118GuideCourseNrvHide7executeEPN2al11NerveKeeperE	(anonymous namespace)::GuideCourseNrvHide::execute(al::NerveKeeper*) const	
+0x71001C5A20			FALSE	_ZNK12_GLOBAL__N_120GuideCourseNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::GuideCourseNrvAppear::execute(al::NerveKeeper*) const	
+0x71001C5A90			FALSE	_ZNK12_GLOBAL__N_117GuideCourseNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::GuideCourseNrvEnd::execute(al::NerveKeeper*) const	
+0x71001C5B00			FALSE	_ZNK12_GLOBAL__N_118GuideCourseNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::GuideCourseNrvWait::execute(al::NerveKeeper*) const	
 0x71001C5B50		GuideFrameOut.o	FALSE	_ZN13GuideFrameOutC2ERKN2al14LayoutInitInfoEPKNS0_9LiveActorE	GuideFrameOut::GuideFrameOut(al::LayoutInitInfo const&, al::LiveActor const*)	
 0x71001C5C40			FALSE	_ZN13GuideFrameOut8initIconEv	GuideFrameOut::initIcon()	
 0x71001C5D10			FALSE	_ZN13GuideFrameOutC1ERKN2al14LayoutInitInfoEPKNS0_9LiveActorE	GuideFrameOut::GuideFrameOut(al::LayoutInitInfo const&, al::LiveActor const*)	

@@ -5756,3 +5756,9 @@
 0x71019DC7E0 8 object _ZN12_GLOBAL__N_115NrvListStampEndE
 0x71019DC808 8 object _ZN12_GLOBAL__N_116NrvListStampWaitE
 0x71019DC830 8 object _ZN12_GLOBAL__N_118NrvListStampAppearE
+
+# src/Game/Layout/GuideCourse
+0x71019D9D78 8 object _ZN12_GLOBAL__N_118NrvGuideCourseHideE
+0x71019D9DE8 8 object _ZN12_GLOBAL__N_120NrvGuideCourseAppearE
+0x71019D9DC0 8 object _ZN12_GLOBAL__N_117NrvGuideCourseEndE
+0x71019D9DF0 8 object _ZN12_GLOBAL__N_118NrvGuideCourseWaitE

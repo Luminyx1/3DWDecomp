@@ -1129,7 +1129,7 @@ src/Game/Layout/GhostMiiNameplate.cpp:
     .text   start:0x001C42A0 end:0x001C47A4
 src/Game/Layout/GuideBalloon.cpp:
     .text   start:0x001C47B0 end:0x001C55D8
-src/Game/Layout/GuideCourse.cpp:
+src/Game/Layout/GuideCourse.cpp: done
     .text   start:0x001C55E0 end:0x001C5B44
 src/Game/Layout/GuideFrameOut.cpp:
     .text   start:0x001C5B50 end:0x001C68E4
