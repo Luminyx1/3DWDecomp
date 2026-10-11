@@ -707,7 +707,7 @@ src/Game/Enemy/KuriboTowerChild.cpp:
     .text   start:0x0011BC10 end:0x0011E594
 src/Game/Enemy/KuriboTowerItem.cpp:
     .text   start:0x0011E5A0 end:0x0011EEB8
-src/Game/Enemy/KuriboTowerNode.cpp:
+src/Game/Enemy/KuriboTowerNode.cpp: done
     .text   start:0x0011EEC0 end:0x0011F2C4
 src/Game/Enemy/KyoroHei.cpp:
     .text   start:0x0011F2D0 end:0x00120808

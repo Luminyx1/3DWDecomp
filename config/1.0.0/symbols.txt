@@ -5744,3 +5744,5 @@
 0x71019AC5D8 0x10 object _ZN12_GLOBAL__N_118NrvSyumockRailMoveE
 0x71019AC5D0 0x8 object _ZN12_GLOBAL__N_126NrvSyumockRailMoveReactionE
 0x7101B20394 0x1c object _ZN12_GLOBAL__N_116sRailFreezeParamE
+
+0x7101B1F350 0x10 object _ZN12_GLOBAL__N_115sTowerWalkParamE

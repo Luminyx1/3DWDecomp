@@ -13,6 +13,9 @@ public:
     explicit KuriboTower(const char* pName);
 
     s32 getChildNum() const;
+    void killedChild(KuriboTowerNode* pNode);
+    const KuriboTowerNode* getParent(const KuriboTowerNode* pNode) const;
+    s32 getTowerChildIndex(const KuriboTowerNode* pNode) const;
     KuriboTowerNode* getChild(s32 index) const;
     KuriboTowerNode* getBottom() const;
     KuriboTowerNode* getTop() const;

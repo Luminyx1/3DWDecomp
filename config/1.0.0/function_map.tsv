@@ -7492,7 +7492,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710011F040			FALSE	_ZN15KuriboTowerNode13updatePostureEb	KuriboTowerNode::updatePosture(bool)	
 0x710011F0F0			FALSE	_ZN15KuriboTowerNode14updateVelocityEv	KuriboTowerNode::updateVelocity()	
 0x710011F190			FALSE	_ZN15KuriboTowerNode23restrictToTowerPositionEv	KuriboTowerNode::restrictToTowerPosition()	
-0x710011F280			FALSE	sub_710011F280	sub_710011F280	
+0x710011F280			FALSE	_GLOBAL__sub_I_KuriboTowerNode.cpp	_GLOBAL__sub_I_KuriboTowerNode.cpp	
 0x710011F2D0		KyoroHei.o	FALSE	_ZN8KyoroHeiC2EPKc	KyoroHei::KyoroHei(char const*)	
 0x710011F3B0			FALSE	_ZN8KyoroHeiC1EPKc	KyoroHei::KyoroHei(char const*)	
 0x710011F490			FALSE	_ZN8KyoroHei4initERKN2al13ActorInitInfoE	KyoroHei::init(al::ActorInitInfo const&)	
