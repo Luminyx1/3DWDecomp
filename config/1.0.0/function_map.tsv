@@ -4468,10 +4468,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71000B6680			FALSE	_ZN24WorldWarpDokanController9startOpenEv	WorldWarpDokanController::startOpen()	
 0x71000B6690			FALSE	_ZN24WorldWarpDokanController20startOpenImmediatelyEv	WorldWarpDokanController::startOpenImmediately()	
 0x71000B66A0			FALSE	_ZNK24WorldWarpDokanController9isEndOpenEv	WorldWarpDokanController::isEndOpen() const	
-0x71000B66B0			FALSE	nullsub_38	nullsub_38	
-0x71000B66C0			FALSE	sub_71000B66C0	sub_71000B66C0	
-0x71000B6710			FALSE	nullsub_39	nullsub_39	
-0x71000B6720			FALSE	sub_71000B6720	sub_71000B6720	
+0x71000B66B0			FALSE	_ZNK12_GLOBAL__N_133CourseSelectWorldWarpDokanNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectWorldWarpDokanNrvWait::execute(al::NerveKeeper*) const	
+0x71000B66C0			FALSE	_ZNK12_GLOBAL__N_133CourseSelectWorldWarpDokanNrvDemo7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectWorldWarpDokanNrvDemo::execute(al::NerveKeeper*) const	
+0x71000B6710			FALSE	_ZNK12_GLOBAL__N_132CourseSelectWorldWarpDokanNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectWorldWarpDokanNrvEnd::execute(al::NerveKeeper*) const	
+0x71000B6720			FALSE	_ZNK12_GLOBAL__N_138CourseSelectWorldWarpDokanNrvDisappear7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectWorldWarpDokanNrvDisappear::execute(al::NerveKeeper*) const	
 0x71000B6790		DemoEventGateKeeperChecker.o	FALSE	_ZN26DemoEventGateKeeperCheckerC2EPKc	DemoEventGateKeeperChecker::DemoEventGateKeeperChecker(char const*)	
 0x71000B6840			FALSE	_ZN26DemoEventGateKeeperCheckerC1EPKc	DemoEventGateKeeperChecker::DemoEventGateKeeperChecker(char const*)	
 0x71000B6900			FALSE	_ZN26DemoEventGateKeeperChecker4initERKN2al13ActorInitInfoE	DemoEventGateKeeperChecker::init(al::ActorInitInfo const&)	

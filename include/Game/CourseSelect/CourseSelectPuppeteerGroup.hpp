@@ -2,8 +2,10 @@
 
 class ICourseSelectActorController;
 
-// Only the interface needed by pipe entrances is recovered here.
+// Only the interface needed by course-select pipes is recovered here.
 class CourseSelectPuppeteerGroup {
 public:
+    void startWorldWarpDokanDemo(ICourseSelectActorController* pController);
+    bool isDemoEnd() const;
     void startRouteDokan(ICourseSelectActorController* pController);
 };

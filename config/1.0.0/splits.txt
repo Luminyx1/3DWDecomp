@@ -457,10 +457,8 @@ src/Game/CourseSelect/CourseSelectWall.cpp:
     .text   start:0x000B5190 end:0x000B5E44
 src/Game/CourseSelect/CourseSelectWindowHolder.cpp:
     .text   start:0x000B5E50 end:0x000B61CC
-src/Game/CourseSelect/CourseSelectWorldWarpDokan.cpp:
-    .text   start:0x000B61D0 end:0x000B65A0
-src/Game/CourseSelect/CourseSelectWorldWarpDokanController.cpp:
-    .text   start:0x000B65A0 end:0x000B678C
+src/Game/CourseSelect/CourseSelectWorldWarpDokan.cpp: done
+    .text   start:0x000B61D0 end:0x000B678C
 src/Game/CourseSelect/DemoEventGateKeeperChecker.cpp:
     .text   start:0x000B6790 end:0x000B7614
 src/Game/CourseSelect/KinokoOneUpCourseSelect.cpp: done
