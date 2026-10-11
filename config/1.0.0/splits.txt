@@ -413,7 +413,7 @@ src/Game/CourseSelect/CourseSelectPlayerActionWait.cpp:
     .text   start:0x0009FDB0 end:0x000A0184
 src/Game/CourseSelect/CourseSelectPlayerActor.cpp:
     .text   start:0x000A0190 end:0x000A0E68
-src/Game/CourseSelect/CourseSelectPlayerFunction.cpp:
+src/Game/CourseSelect/CourseSelectPlayerFunction.cpp: done
     .text   start:0x000A0E70 end:0x000A0F90
 src/Game/CourseSelect/CourseSelectPuppeteer.cpp:
     .text   start:0x000A0F90 end:0x000A4D9C

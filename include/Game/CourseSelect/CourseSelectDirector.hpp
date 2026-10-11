@@ -12,6 +12,7 @@ public:
     const char* getSceneObjName() const override;
     bool isEnableEnterSelectedSensor() const;
     bool isTriggerDecideMainPlayer() const;
+    bool isPlayLeaveDemo(int userId) const;
     void touchPlayer(CourseSelectSensor* pSensor, al::LiveActor* pPlayer);
 
     CourseSelectPuppeteerGroup* getPuppeteerGroup() const { return mpPuppeteerGroup; }
