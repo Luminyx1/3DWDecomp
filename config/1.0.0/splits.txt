@@ -1057,7 +1057,7 @@ src/Game/Layout/ButtonShortCutAndTouchParts.cpp: done
     .text   start:0x001AF220 end:0x001AFC38
 src/Game/Layout/ButtonShortCutParts.cpp: done
     .text   start:0x001AFC40 end:0x001B01D4
-src/Game/Layout/ButtonSquareIconParts.cpp:
+src/Game/Layout/ButtonSquareIconParts.cpp: done
     .text   start:0x001B01E0 end:0x001B0CF0
 src/Game/Layout/ButtonTextScrollParts.cpp:
     .text   start:0x001B0CF0 end:0x001B2058

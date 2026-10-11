@@ -11179,11 +11179,11 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001B0B70			FALSE	_ZN21ButtonSquareIconParts5rightEv	ButtonSquareIconParts::right()	
 0x71001B0B80			FALSE	_ZNK12_GLOBAL__N_128ButtonSquareIconPartsNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::ButtonSquareIconPartsNrvWait::execute(al::NerveKeeper*) const	
 0x71001B0B90			FALSE	_ZNK12_GLOBAL__N_129ButtonSquareIconPartsNrvTouch7executeEPN2al11NerveKeeperE	(anonymous namespace)::ButtonSquareIconPartsNrvTouch::execute(al::NerveKeeper*) const	
-0x71001B0BA0			FALSE	sub_71001B0BA0	sub_71001B0BA0	
+0x71001B0BA0			FALSE	_ZNK12_GLOBAL__N_130ButtonSquareIconPartsNrvDecide7executeEPN2al11NerveKeeperE	(anonymous namespace)::ButtonSquareIconPartsNrvDecide::execute(al::NerveKeeper*) const	
 0x71001B0C10			FALSE	_ZNK12_GLOBAL__N_135ButtonSquareIconPartsNrvOutsideHold7executeEPN2al11NerveKeeperE	(anonymous namespace)::ButtonSquareIconPartsNrvOutsideHold::execute(al::NerveKeeper*) const	
 0x71001B0C20			FALSE	_ZNK12_GLOBAL__N_130ButtonSquareIconPartsNrvSelect7executeEPN2al11NerveKeeperE	(anonymous namespace)::ButtonSquareIconPartsNrvSelect::execute(al::NerveKeeper*) const	
-0x71001B0C30			FALSE	sub_71001B0C30	sub_71001B0C30	
-0x71001B0C80			FALSE	sub_71001B0C80	sub_71001B0C80	
+0x71001B0C30			FALSE	_ZNK12_GLOBAL__N_131ButtonSquareIconPartsNrvDisable7executeEPN2al11NerveKeeperE	(anonymous namespace)::ButtonSquareIconPartsNrvDisable::execute(al::NerveKeeper*) const	
+0x71001B0C80			FALSE	_ZNK12_GLOBAL__N_128ButtonSquareIconPartsNrvHide7executeEPN2al11NerveKeeperE	(anonymous namespace)::ButtonSquareIconPartsNrvHide::execute(al::NerveKeeper*) const	
 0x71001B0CF0		ButtonTextScrollParts.o	FALSE	_ZN21ButtonTextScrollPartsC2ERKN2al14LayoutInitInfoEPKcS5_PNS0_11LayoutActorES5_PS5_i	ButtonTextScrollParts::ButtonTextScrollParts(al::LayoutInitInfo const&, char const*, char const*, al::LayoutActor*, char const*, char const**, int)	
 0x71001B0DF0			FALSE	_ZN21ButtonTextScrollPartsC1ERKN2al14LayoutInitInfoEPKcS5_PNS0_11LayoutActorES5_PS5_i	ButtonTextScrollParts::ButtonTextScrollParts(al::LayoutInitInfo const&, char const*, char const*, al::LayoutActor*, char const*, char const**, int)	
 0x71001B0F00			FALSE	_ZN21ButtonTextScrollParts7controlEv	ButtonTextScrollParts::control()	
