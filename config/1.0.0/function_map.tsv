@@ -1117,9 +1117,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710002EE00			FALSE	_ZN19KoopaChaseStateFire12exeFireStartEv	KoopaChaseStateFire::exeFireStart()	
 0x710002EFC0			FALSE	_ZN19KoopaChaseStateFire10exeFireEndEv	KoopaChaseStateFire::exeFireEnd()	
 0x710002F040			FALSE	_ZN19KoopaChaseStateFireD0Ev	KoopaChaseStateFire::~KoopaChaseStateFire()	
-0x710002F070			FALSE	sub_710002F070	sub_710002F070	
+0x710002F070			FALSE	_ZNK12_GLOBAL__N_126KoopaChaseStateFireNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_126KoopaChaseStateFireNrvWait7executeEPN2al11NerveKeeperE	matched nerve
 0x710002F0C0			FALSE	_ZNK12_GLOBAL__N_131KoopaChaseStateFireNrvFireStart7executeEPN2al11NerveKeeperE	(anonymous namespace)::KoopaChaseStateFireNrvFireStart::execute(al::NerveKeeper*) const	
-0x710002F0D0			FALSE	sub_710002F0D0	sub_710002F0D0	
+0x710002F0D0			FALSE	_ZNK12_GLOBAL__N_129KoopaChaseStateFireNrvFireEnd7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_129KoopaChaseStateFireNrvFireEnd7executeEPN2al11NerveKeeperE	matched nerve
 0x710002F150		KoopaStateChaseJump.o	FALSE	_ZN19KoopaChaseStateJumpC1EP10KoopaChaseRKN2al13ActorInitInfoE	KoopaChaseStateJump::KoopaChaseStateJump(KoopaChase*, al::ActorInitInfo const&)	note: sorts before the previous object (folder boundary or misnamed object?); renamed from KooapStateChaseJump.o (spelling)
 0x710002F1F0			FALSE	_ZN19KoopaChaseStateJump9startJumpERKN4sead7Vector3IfEE	KoopaChaseStateJump::startJump(sead::Vector3<float> const&)	
 0x710002F250			FALSE	_ZN19KoopaChaseStateJump9startWarpERKN4sead7Vector3IfEE	KoopaChaseStateJump::startWarp(sead::Vector3<float> const&)	

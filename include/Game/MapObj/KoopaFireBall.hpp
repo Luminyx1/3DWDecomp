@@ -31,6 +31,8 @@ public:
     bool receiveMsg(const al::SensorMsg* pMsg, al::HitSensor* pOther,
                     al::HitSensor* pSelf) override;
     void extinguish();
+    void setExtinguishOnSlope(bool enabled) { mIsExtinguishOnSlope = enabled; }
+    void setKillOnCollide(bool enabled) { mIsKillOnCollide = enabled; }
     void attackSensor(al::HitSensor* pSelf, al::HitSensor* pOther) override;
     void kill() override;
     void appearAttack(const sead::Vector3f& rPos, const sead::Vector3f& rTarget, f32 speed);
