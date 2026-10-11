@@ -34,7 +34,7 @@ namespace al {
     public:
         ActorStateBase(const char*, LiveActor*);
 
-        virtual ~ActorStateBase();
+        ~ActorStateBase() override = default;
 
         LiveActor* mHostActor;  // 0x18
     };

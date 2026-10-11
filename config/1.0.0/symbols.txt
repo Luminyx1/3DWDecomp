@@ -4734,3 +4734,7 @@
 # Default spatial sound engine (atk_Sound3DManager)
 0x710211D8E8 24 object _ZN12_GLOBAL__N_121sDefaultSound3DEngineE
 0x710057E5F0 12 func _GLOBAL__sub_I_atk_Sound3DManager.cpp
+
+# NPC state default parameter initializers
+0x71003CA3E0 12 func _GLOBAL__sub_I_NpcStateChaseParam.cpp
+0x71003CB960 12 func _GLOBAL__sub_I_NpcStateRunAway.cpp
