@@ -6380,7 +6380,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71000F6090			FALSE	_ZN20FlyerStateFindPlayerD0Ev	FlyerStateFindPlayer::~FlyerStateFindPlayer()	
 0x71000F60C0			FALSE	_ZNK12_GLOBAL__N_133FlyerStateFindPlayerNrvTurnPlayer7executeEPN2al11NerveKeeperE	(anonymous namespace)::FlyerStateFindPlayerNrvTurnPlayer::execute(al::NerveKeeper*) const	
 0x71000F60D0			FALSE	_ZNK12_GLOBAL__N_127FlyerStateFindPlayerNrvFind7executeEPN2al11NerveKeeperE	(anonymous namespace)::FlyerStateFindPlayerNrvFind::execute(al::NerveKeeper*) const	
-0x71000F60E0			FALSE	sub_71000F60E0	sub_71000F60E0	
+0x71000F60E0			FALSE	_GLOBAL__sub_I_FlyerStateFindPlayer.cpp	_GLOBAL__sub_I_FlyerStateFindPlayer.cpp	
 0x71000F6200		FlyerStateFunction.o	FALSE	_ZN18FlyerStateFunction13recoverHeightEPN2al9LiveActorEfPK15FlyerStateParam	FlyerStateFunction::recoverHeight(al::LiveActor*, float, FlyerStateParam const*)	object (class)
 0x71000F6270		FlyerStateParam.o	FALSE	_ZN15FlyerStateParamC2Ev	FlyerStateParam::FlyerStateParam()	
 0x71000F6290			FALSE	_ZN15FlyerStateParamC2Eff	FlyerStateParam::FlyerStateParam(float, float)	
