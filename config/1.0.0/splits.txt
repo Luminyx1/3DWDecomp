@@ -465,7 +465,7 @@ src/Game/CourseSelect/DemoEventGateKeeperChecker.cpp:
     .text   start:0x000B6790 end:0x000B7614
 src/Game/CourseSelect/KinokoOneUpCourseSelect.cpp:
     .text   start:0x000B7620 end:0x000B7960
-src/Game/CourseSelect/TicoCourseSelect.cpp:
+src/Game/CourseSelect/TicoCourseSelect.cpp: done
     .text   start:0x000B7960 end:0x000B7B10
 src/Game/Demo/DemoActionList.cpp: done
     .text   start:0x000B7B10 end:0x000B7DA4
