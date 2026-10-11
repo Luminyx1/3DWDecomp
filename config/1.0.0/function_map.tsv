@@ -5143,9 +5143,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71000C8C90			FALSE	_ZNK30StageStartBindDemoMysteryHouse12getEventTypeEv	StageStartBindDemoMysteryHouse::getEventType() const	
 0x71000C8CA0			FALSE	_ZN30StageStartBindDemoMysteryHouse9startDemoEv	StageStartBindDemoMysteryHouse::startDemo()	
 0x71000C8CB0			FALSE	_ZN30StageStartBindDemoMysteryHouse7endDemoEv	StageStartBindDemoMysteryHouse::endDemo()	
-0x71000C8CC0			FALSE	sub_71000C8CC0	sub_71000C8CC0	
-0x71000C8D10			FALSE	sub_71000C8D10	sub_71000C8D10	
-0x71000C8D90			FALSE	sub_71000C8D90	sub_71000C8D90	
+0x71000C8CC0			FALSE	_ZNK12_GLOBAL__N_141StageStartBindDemoMysteryHouseNrvBindWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::StageStartBindDemoMysteryHouseNrvBindWait::execute(al::NerveKeeper*) const	
+0x71000C8D10			FALSE	_ZNK12_GLOBAL__N_140StageStartBindDemoMysteryHouseNrvBindEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::StageStartBindDemoMysteryHouseNrvBindEnd::execute(al::NerveKeeper*) const	
+0x71000C8D90			FALSE	_ZNK12_GLOBAL__N_138StageStartBindDemoMysteryHouseNrvSound7executeEPN2al11NerveKeeperE	(anonymous namespace)::StageStartBindDemoMysteryHouseNrvSound::execute(al::NerveKeeper*) const	
 0x71000C8E30			FALSE	_ZNK12_GLOBAL__N_140StageStartBindDemoMysteryHouseNrvMessage7executeEPN2al11NerveKeeperE	(anonymous namespace)::StageStartBindDemoMysteryHouseNrvMessage::execute(al::NerveKeeper*) const	
 0x71000C8E40		StageStartEventCamera.o	FALSE	_ZN21StageStartEventCameraC2EPKc	StageStartEventCamera::StageStartEventCamera(char const*)	
 0x71000C8F10			FALSE	_ZN21StageStartEventCameraC1EPKc	StageStartEventCamera::StageStartEventCamera(char const*)	
