@@ -6,6 +6,7 @@ namespace al {
 class ActorInitInfo;
 class KeyPoseKeeper;
 class LiveActor;
+class MtxConnector;
 }  // namespace al
 
 class KuriboTower;
@@ -32,9 +33,16 @@ public:
     KuriboTower* tryGetStepKuribo(s32 index) const;
 
 private:
-    void* _0;
-    void* _8;
-    void* _10;
+    struct Step {
+        KuriboTower* pTower;
+        al::MtxConnector* pConnector;
+        bool isRouteDokan;
+        bool isPoseFixed;
+        bool isTowerGone;
+    };
+    al::LiveActor* mHost;
+    al::KeyPoseKeeper* mKeyPoseKeeper;
+    Step* mSteps = nullptr;
 };
 
 static_assert(sizeof(BrosMoveStepKeeper) == 0x18);

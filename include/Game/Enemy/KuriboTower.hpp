@@ -14,6 +14,7 @@ public:
 
     s32 getChildNum() const;
     KuriboTowerNode* getBottom() const;
+    KuriboTowerNode* getTop() const;
     bool isHipDropping() const;
     void requestAttackReaction(al::HitSensor* pSensor);
     void startHipDrop(al::LiveActor* pAttacker);
@@ -37,6 +38,9 @@ public:
      * @return Whether the bottom Goomba uses the "RunBrosOnTower" run action.
      */
     bool isBrosOnTower() const { return mIsBrosOnTower; }
+
+    /** @brief Marks this tower as a platform for a Bros enemy. */
+    void setBrosOnTower() { mIsBrosOnTower = true; }
 
 private:
     u8 _144[0x30];

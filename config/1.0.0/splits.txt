@@ -569,7 +569,7 @@ src/Game/Enemy/BowserSpike.cpp:
     .text   start:0x000DC9F0 end:0x000DE7E8
 src/Game/Enemy/BoxKillerLauncher.cpp:
     .text   start:0x000DE7F0 end:0x000DF228
-src/Game/Enemy/BrosMoveStepKeeper.cpp:
+src/Game/Enemy/BrosMoveStepKeeper.cpp: done
     .text   start:0x000DF230 end:0x000DF9F4
 src/Game/Enemy/BrosStateAttack.cpp:
     .text   start:0x000DFA00 end:0x000E02C8
