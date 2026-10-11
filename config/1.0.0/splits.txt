@@ -403,7 +403,7 @@ src/Game/CourseSelect/CourseSelectPlayerActionGroundMove.cpp:
     .text   start:0x0009DCA0 end:0x0009F2D8
 src/Game/CourseSelect/CourseSelectPlayerActionJump.cpp:
     .text   start:0x0009F2E0 end:0x0009F7B4
-src/Game/CourseSelect/CourseSelectPlayerActionLand.cpp:
+src/Game/CourseSelect/CourseSelectPlayerActionLand.cpp: done
     .text   start:0x0009F7C0 end:0x0009FAA4
 src/Game/CourseSelect/CourseSelectPlayerActionPush.cpp:
     .text   start:0x0009FAB0 end:0x0009FDA4
