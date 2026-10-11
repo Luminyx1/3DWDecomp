@@ -5838,3 +5838,8 @@
 0x71019D4210 8 object _ZN12_GLOBAL__N_131NrvCounterGreenStarAppendAppearE
 0x71019D4238 8 object _ZN12_GLOBAL__N_129NrvCounterGreenStarAppendWaitE
 0x71019D42B0 8 object _ZN12_GLOBAL__N_128NrvCounterGreenStarAppendEndE
+
+# src/Game/Layout/WipeCurtainStart
+0x71019EB138 8 object _ZN12_GLOBAL__N_123NrvWipeCurtainStartWaitE
+0x71019EB160 8 object _ZN12_GLOBAL__N_125NrvWipeCurtainStartAppearE
+0x71019EB188 8 object _ZN12_GLOBAL__N_122NrvWipeCurtainStartEndE

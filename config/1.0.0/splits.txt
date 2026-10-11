@@ -1285,7 +1285,7 @@ src/Game/Layout/WipeCurtainRankingParts.cpp:
     .text   start:0x00203E00 end:0x00204A20
 src/Game/Layout/WipeCurtainResult.cpp:
     .text   start:0x00204A20 end:0x00205AF4
-src/Game/Layout/WipeCurtainStart.cpp:
+src/Game/Layout/WipeCurtainStart.cpp: done
     .text   start:0x00205B00 end:0x00206268
 src/Game/LuigiBros/Backup.cpp:
     .text   start:0x00206270 end:0x00207214

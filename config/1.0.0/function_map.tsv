@@ -13463,9 +13463,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100205F40			FALSE	_ZN16WipeCurtainStart9exeAppearEv	WipeCurtainStart::exeAppear()	
 0x7100205FE0			FALSE	_ZN16WipeCurtainStart7exeWaitEv	WipeCurtainStart::exeWait()	
 0x7100206020			FALSE	_ZN16WipeCurtainStart6exeEndEv	WipeCurtainStart::exeEnd()	
-0x71002060D0			FALSE	sub_71002060D0	sub_71002060D0	
-0x7100206120			FALSE	sub_7100206120	sub_7100206120	
-0x71002061C0			FALSE	sub_71002061C0	sub_71002061C0	
+0x71002060D0			FALSE	_ZNK12_GLOBAL__N_123WipeCurtainStartNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::WipeCurtainStartNrvWait::execute(al::NerveKeeper*) const	
+0x7100206120			FALSE	_ZNK12_GLOBAL__N_125WipeCurtainStartNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::WipeCurtainStartNrvAppear::execute(al::NerveKeeper*) const	
+0x71002061C0			FALSE	_ZNK12_GLOBAL__N_122WipeCurtainStartNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::WipeCurtainStartNrvEnd::execute(al::NerveKeeper*) const	
 0x7100206270	LuigiBros	Backup.o	FALSE	_ZN6Backup10InitializeEmy	Backup::Initialize(unsigned long, unsigned long long)	
 0x7100206300			FALSE	_ZN6Backup8FinalizeEv	Backup::Finalize()	
 0x7100206340			FALSE	_ZN6Backup4MainEv	Backup::Main()	
