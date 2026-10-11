@@ -13305,8 +13305,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100200DF0			FALSE	_ZNK12_GLOBAL__N_122WindowMessageNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::WindowMessageNrvAppear::execute(al::NerveKeeper*) const	
 0x7100200E00			FALSE	_ZNK12_GLOBAL__N_120WindowMessageNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::WindowMessageNrvWait::execute(al::NerveKeeper*) const	
 0x7100200E10			FALSE	_ZNK12_GLOBAL__N_119WindowMessageNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::WindowMessageNrvEnd::execute(al::NerveKeeper*) const	
-0x7100200E20			FALSE	sub_7100200E20	sub_7100200E20	
-0x7100200E90			FALSE	sub_7100200E90	sub_7100200E90	
+0x7100200E20			FALSE	_ZNK12_GLOBAL__N_123WindowMessageNrvPageEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::WindowMessageNrvPageEnd::execute(al::NerveKeeper*) const	
+0x7100200E90			FALSE	_ZNK12_GLOBAL__N_125WindowMessageNrvPageStart7executeEPN2al11NerveKeeperE	(anonymous namespace)::WindowMessageNrvPageStart::execute(al::NerveKeeper*) const	
 0x7100200F20		WindowMiiSetUp.o	FALSE	_ZN14WindowMiiSetUpC2ERKN2al14LayoutInitInfoEPKc	WindowMiiSetUp::WindowMiiSetUp(al::LayoutInitInfo const&, char const*)	
 0x7100201180			FALSE	_ZN14WindowMiiSetUpC1ERKN2al14LayoutInitInfoEPKc	WindowMiiSetUp::WindowMiiSetUp(al::LayoutInitInfo const&, char const*)	
 0x71002013E0			FALSE	_ZN14WindowMiiSetUp9exeAppearEv	WindowMiiSetUp::exeAppear()	

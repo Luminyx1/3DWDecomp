@@ -5892,3 +5892,7 @@
 0x71019E6948 8 object _ZN12_GLOBAL__N_138NrvTestAoyagiPlayerEntryStateSelectEndE
 0x71019E68F8 8 object _ZN12_GLOBAL__N_139NrvTestAoyagiPlayerEntryStateSelectHideE
 0x71019E6920 8 object _ZN12_GLOBAL__N_144NrvTestAoyagiPlayerEntryStateSelectDecideEndE
+
+# src/Game/Layout/WindowMessage
+0x71019E9080 8 object _ZN12_GLOBAL__N_123NrvWindowMessagePageEndE
+0x71019E9070 8 object _ZN12_GLOBAL__N_125NrvWindowMessagePageStartE

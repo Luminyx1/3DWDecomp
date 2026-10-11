@@ -1269,7 +1269,7 @@ src/Game/Layout/WindowConfirm.cpp:
     .text   start:0x001FE730 end:0x001FF500
 src/Game/Layout/WindowControllerChange.cpp:
     .text   start:0x001FF500 end:0x00200618
-src/Game/Layout/WindowMessage.cpp:
+src/Game/Layout/WindowMessage.cpp: done
     .text   start:0x00200620 end:0x00200F18
 src/Game/Layout/WindowMiiSetUp.cpp:
     .text   start:0x00200F20 end:0x00201AC4
