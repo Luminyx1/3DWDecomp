@@ -3,6 +3,8 @@
 #include "System/GameDataHolderWriter.hpp"
 
 namespace PlayerEntryFunction {
+int calcNotUsePlayerCharacterTypeNum(const GameDataHolder* pHolder);
+void resetPlayerAll(GameDataHolderWriter writer);
 bool entryPlayer(GameDataHolderWriter writer, int userId, int characterType);
 void startCharacterSelect(GameDataHolderWriter writer);
 void shufflePlayerModel(GameDataHolderWriter writer);

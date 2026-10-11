@@ -1181,7 +1181,7 @@ src/Game/Layout/PauseMenuMap.cpp:
     .text   start:0x001DA140 end:0x001DC068
 src/Game/Layout/PlayerEntry.cpp:
     .text   start:0x001DC070 end:0x001DD0C8
-src/Game/Layout/PlayerEntryFunction.cpp:
+src/Game/Layout/PlayerEntryFunction.cpp: done
     .text   start:0x001DD0D0 end:0x001DD584
 src/Game/Layout/PlayerEntryItem.cpp:
     .text   start:0x001DD590 end:0x001E0CEC
