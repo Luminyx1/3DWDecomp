@@ -349,7 +349,7 @@ src/Game/CourseSelect/BlockQuestionCourseSelect.cpp:
     .text   start:0x0008CA90 end:0x0008D020
 src/Game/CourseSelect/CoinChameleonCourseSelect.cpp:
     .text   start:0x0008D020 end:0x0008DD98
-src/Game/CourseSelect/CoinCourseSelect.cpp:
+src/Game/CourseSelect/CoinCourseSelect.cpp: done
     .text   start:0x0008DDA0 end:0x0008E150
 src/Game/CourseSelect/CounterLock.cpp:
     .text   start:0x0008E150 end:0x0008F33C
