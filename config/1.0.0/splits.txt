@@ -1249,7 +1249,7 @@ src/Game/Layout/TestAoyagiPlayerEntryStatePlay.cpp:
     .text   start:0x001F8C10 end:0x001F9004
 src/Game/Layout/TestAoyagiPlayerEntryStateSelect.cpp:
     .text   start:0x001F9010 end:0x001F9904
-src/Game/Layout/TestLayoutPartsActor.cpp:
+src/Game/Layout/TestLayoutPartsActor.cpp: done
     .text   start:0x001F9910 end:0x001F9B34
 src/Game/Layout/TestMusaLayout.cpp:
     .text   start:0x001F9B40 end:0x001F9F38

@@ -5726,3 +5726,7 @@
 0x71019D2F80 8 object _ZN12_GLOBAL__N_121NrvCameraIconNoCameraE
 
 0x71019D2D38 32 object _ZN12_GLOBAL__N_113sOwnerActionsE
+
+# src/Game/Layout/TestLayoutPartsActor
+0x71019E6C98 8 object _ZN12_GLOBAL__N_127NrvTestLayoutPartsActorWaitE
+0x71019E6CC0 8 object _ZN12_GLOBAL__N_130NrvTestLayoutPartsActorWarningE
