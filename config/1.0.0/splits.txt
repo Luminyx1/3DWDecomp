@@ -1067,7 +1067,7 @@ src/Game/Layout/CameraChangeLayout.cpp:
     .text   start:0x001B2A20 end:0x001B35E8
 src/Game/Layout/CameraGyroDrc.cpp:
     .text   start:0x001B35F0 end:0x001B3BC8
-src/Game/Layout/CameraIcon.cpp:
+src/Game/Layout/CameraIcon.cpp: done
     .text   start:0x001B3BD0 end:0x001B4584
 src/Game/Layout/CollectNumber.cpp:
     .text   start:0x001B4590 end:0x001B4C18

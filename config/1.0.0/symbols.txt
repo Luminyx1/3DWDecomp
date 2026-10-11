@@ -5718,3 +5718,11 @@
 # src/Game/Layout/ResultTimerCount
 0x71019E2350 8 object _ZN12_GLOBAL__N_123NrvResultTimerCountWaitE
 0x71019E23A0 8 object _ZN12_GLOBAL__N_126NrvResultTimerCountEndWaitE
+
+# src/Game/Layout/CameraIcon
+0x71019D2F68 8 object _ZN12_GLOBAL__N_124NrvCameraIconSwitchOwnerE
+0x71019D2F70 8 object _ZN12_GLOBAL__N_117NrvCameraIconWaitE
+0x71019D2F78 8 object _ZN12_GLOBAL__N_116NrvCameraIconEndE
+0x71019D2F80 8 object _ZN12_GLOBAL__N_121NrvCameraIconNoCameraE
+
+0x71019D2D38 32 object _ZN12_GLOBAL__N_113sOwnerActionsE

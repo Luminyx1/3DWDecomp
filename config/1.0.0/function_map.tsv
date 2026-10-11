@@ -11319,10 +11319,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001B41D0			FALSE	_ZN10CameraIcon6exeEndEv	CameraIcon::exeEnd()	
 0x71001B4260			FALSE	_ZN10CameraIcon14exeSwitchOwnerEv	CameraIcon::exeSwitchOwner()	
 0x71001B4310			FALSE	_ZNK12_GLOBAL__N_119CameraIconNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::CameraIconNrvAppear::execute(al::NerveKeeper*) const	
-0x71001B4320			FALSE	sub_71001B4320	sub_71001B4320	
-0x71001B43D0			FALSE	sub_71001B43D0	sub_71001B43D0	
-0x71001B4450			FALSE	sub_71001B4450	sub_71001B4450	
-0x71001B44F0			FALSE	sub_71001B44F0	sub_71001B44F0	
+0x71001B4320			FALSE	_ZNK12_GLOBAL__N_124CameraIconNrvSwitchOwner7executeEPN2al11NerveKeeperE	(anonymous namespace)::CameraIconNrvSwitchOwner::execute(al::NerveKeeper*) const	
+0x71001B43D0			FALSE	_ZNK12_GLOBAL__N_117CameraIconNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::CameraIconNrvWait::execute(al::NerveKeeper*) const	
+0x71001B4450			FALSE	_ZNK12_GLOBAL__N_116CameraIconNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::CameraIconNrvEnd::execute(al::NerveKeeper*) const	
+0x71001B44F0			FALSE	_ZNK12_GLOBAL__N_121CameraIconNrvNoCamera7executeEPN2al11NerveKeeperE	(anonymous namespace)::CameraIconNrvNoCamera::execute(al::NerveKeeper*) const	
 0x71001B4590		CollectNumber.o	FALSE	_ZN13CollectNumberC2ERKN2al14LayoutInitInfoEPKcS5_	CollectNumber::CollectNumber(al::LayoutInitInfo const&, char const*, char const*)	
 0x71001B4670			FALSE	_ZN13CollectNumberC1ERKN2al14LayoutInitInfoEPKcS5_	CollectNumber::CollectNumber(al::LayoutInitInfo const&, char const*, char const*)	
 0x71001B4750			FALSE	_ZN13CollectNumber6appearEv	CollectNumber::appear()	
