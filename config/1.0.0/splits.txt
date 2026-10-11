@@ -3147,7 +3147,7 @@ src/Game/Scene/IslandWarpState.cpp:
     .text   start:0x004B5060 end:0x004B5988
 src/Game/Scene/NeonDrawer.cpp:
     .text   start:0x004B5990 end:0x004B5FE0
-src/Game/Scene/Phase0Scene.cpp:
+src/Game/Scene/Phase0Scene.cpp: done
     .text   start:0x004B5FE0 end:0x004B6128
 src/Game/Scene/PhaseBossScene.cpp:
     .text   start:0x004B6130 end:0x004B7758
