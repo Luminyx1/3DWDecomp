@@ -2187,7 +2187,7 @@ src/Game/NPC/IslandHolder.cpp:
     .text   start:0x003A8BB0 end:0x003AB430
 src/Game/NPC/GhostPlayer.cpp:
     .text   start:0x003AB430 end:0x003ACEC4
-src/Game/NPC/GhostPlayerDirector.cpp:
+src/Game/NPC/GhostPlayerDirector.cpp: done
     .text   start:0x003ACED0 end:0x003AD11C
 src/Game/NPC/GhostPlayerDisplayInfo.cpp: done
     .text   start:0x003AD120 end:0x003AD264
