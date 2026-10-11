@@ -2128,7 +2128,7 @@ src/Game/MapObj/TouchTrackDrawer.cpp: done
     .text   start:0x0038E300 end:0x0038E820
 src/Game/MapObj/TractorBubble.cpp:
     .text   start:0x0038E820 end:0x0039039C
-src/Game/MapObj/TractorBubblePuppeteer.cpp:
+src/Game/MapObj/TractorBubblePuppeteer.cpp: done
     .text   start:0x003903A0 end:0x00390C44
 src/Game/MapObj/TrampleSwitch.cpp: done
     .text   start:0x00390C50 end:0x003914B4

@@ -22672,12 +22672,12 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71003909F0			FALSE	_ZN22TractorBubblePuppeteer9exeBubbleEv	TractorBubblePuppeteer::exeBubble()	
 0x7100390A80			FALSE	_ZN22TractorBubblePuppeteer6exeEndEv	TractorBubblePuppeteer::exeEnd()	
 0x7100390A90			FALSE	_ZN22TractorBubblePuppeteerD0Ev	TractorBubblePuppeteer::~TractorBubblePuppeteer()	
-0x7100390AC0			FALSE	nullsub_244	nullsub_244	
-0x7100390AD0			FALSE	sub_7100390AD0	sub_7100390AD0	
-0x7100390B30			FALSE	sub_7100390B30	sub_7100390B30	
+0x7100390AC0			FALSE	_ZNK12_GLOBAL__N_128TractorBubblePuppeteerNrvEnd7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_128TractorBubblePuppeteerNrvEnd7executeEPN2al11NerveKeeperE	
+0x7100390AD0			FALSE	_ZNK12_GLOBAL__N_142TractorBubblePuppeteerNrvBindWaitScreenOut7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_142TractorBubblePuppeteerNrvBindWaitScreenOut7executeEPN2al11NerveKeeperE	
+0x7100390B30			FALSE	_ZNK12_GLOBAL__N_138TractorBubblePuppeteerNrvBindWaitInput7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_138TractorBubblePuppeteerNrvBindWaitInput7executeEPN2al11NerveKeeperE	
 0x7100390B90			FALSE	_ZNK12_GLOBAL__N_139TractorBubblePuppeteerNrvActivatePlayer7executeEPN2al11NerveKeeperE	(anonymous namespace)::TractorBubblePuppeteerNrvActivatePlayer::execute(al::NerveKeeper*) const	
 0x7100390BA0			FALSE	_ZNK12_GLOBAL__N_136TractorBubblePuppeteerNrvBubbleStart7executeEPN2al11NerveKeeperE	(anonymous namespace)::TractorBubblePuppeteerNrvBubbleStart::execute(al::NerveKeeper*) const	
-0x7100390BB0			FALSE	sub_7100390BB0	sub_7100390BB0	
+0x7100390BB0			FALSE	_ZNK12_GLOBAL__N_131TractorBubblePuppeteerNrvBubble7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_131TractorBubblePuppeteerNrvBubble7executeEPN2al11NerveKeeperE	
 0x7100390C50		TrampleSwitch.o	FALSE	_ZN13TrampleSwitchC2EPKc	TrampleSwitch::TrampleSwitch(char const*)	
 0x7100390CD0			FALSE	_ZN13TrampleSwitchC1EPKc	TrampleSwitch::TrampleSwitch(char const*)	
 0x7100390D60			FALSE	_ZN13TrampleSwitch4initERKN2al13ActorInitInfoE	TrampleSwitch::init(al::ActorInitInfo const&)	
