@@ -6804,7 +6804,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100106410			FALSE	_ZN16HammerBrosHammerD1Ev	HammerBrosHammer::~HammerBrosHammer()	
 0x7100106420			FALSE	_ZN16HammerBrosHammerD0Ev	HammerBrosHammer::~HammerBrosHammer()	
 0x7100106450			FALSE	_ZNK12_GLOBAL__N_123HammerBrosHammerNrvMove7executeEPN2al11NerveKeeperE	(anonymous namespace)::HammerBrosHammerNrvMove::execute(al::NerveKeeper*) const	
-0x7100106460			FALSE	sub_7100106460	sub_7100106460	
+0x7100106460			FALSE	_ZNK12_GLOBAL__N_123HammerBrosHammerNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::HammerBrosHammerNrvWait::execute(al::NerveKeeper*) const	
 0x7100106480		Imozo.o	FALSE	_ZN5ImozoC2EPKc	Imozo::Imozo(char const*)	
 0x7100106580			FALSE	_ZN5ImozoC1EPKc	Imozo::Imozo(char const*)	
 0x7100106690			FALSE	_ZN5Imozo4initERKN2al13ActorInitInfoE	Imozo::init(al::ActorInitInfo const&)	
