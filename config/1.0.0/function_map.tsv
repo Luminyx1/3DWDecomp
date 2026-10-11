@@ -8800,10 +8800,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100154840			FALSE	_ZN15SyumockRailMove16exeSupportFreezeEv	SyumockRailMove::exeSupportFreeze()	
 0x71001548A0			FALSE	_ZN15SyumockRailMoveD1Ev	SyumockRailMove::~SyumockRailMove()	
 0x71001548B0			FALSE	_ZN15SyumockRailMoveD0Ev	SyumockRailMove::~SyumockRailMove()	
-0x71001548E0			FALSE	sub_71001548E0	sub_71001548E0	
-0x7100154940			FALSE	sub_7100154940	sub_7100154940	
-0x71001549A0			FALSE	sub_71001549A0	sub_71001549A0	
-0x7100154A20			FALSE	sub_7100154A20	sub_7100154A20	
+0x71001548E0			FALSE	_ZNK12_GLOBAL__N_122SyumockRailMoveNrvMove7executeEPN2al11NerveKeeperE	(anonymous namespace)::SyumockRailMoveNrvMove::execute(al::NerveKeeper*) const	
+0x7100154940			FALSE	_ZNK12_GLOBAL__N_131SyumockRailMoveNrvSupportFreeze7executeEPN2al11NerveKeeperE	(anonymous namespace)::SyumockRailMoveNrvSupportFreeze::execute(al::NerveKeeper*) const	
+0x71001549A0			FALSE	_ZNK12_GLOBAL__N_126SyumockRailMoveNrvReaction7executeEPN2al11NerveKeeperE	(anonymous namespace)::SyumockRailMoveNrvReaction::execute(al::NerveKeeper*) const	
+0x7100154A20			FALSE	_GLOBAL__sub_I_SyumockRailMove.cpp	_GLOBAL__sub_I_SyumockRailMove.cpp	
 0x7100154A70		SyumockRotate.o	FALSE	_ZN13SyumockRotateC2EPKc	SyumockRotate::SyumockRotate(char const*)	
 0x7100154B70			FALSE	_ZN13SyumockRotateC1EPKc	SyumockRotate::SyumockRotate(char const*)	
 0x7100154C70			FALSE	_ZN13SyumockRotate12attackSensorEPN2al9HitSensorES2_	SyumockRotate::attackSensor(al::HitSensor*, al::HitSensor*)	
