@@ -6234,10 +6234,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71000F0740			FALSE	_ZN15EnemyAttachItemD1Ev	EnemyAttachItem::~EnemyAttachItem()	
 0x71000F0750			FALSE	_ZN15EnemyAttachItemD0Ev	EnemyAttachItem::~EnemyAttachItem()	
 0x71000F0780			FALSE	_ZNK12_GLOBAL__N_124EnemyAttachItemNrvAttach7executeEPN2al11NerveKeeperE	(anonymous namespace)::EnemyAttachItemNrvAttach::execute(al::NerveKeeper*) const	
-0x71000F0790			FALSE	sub_71000F0790	sub_71000F0790	
-0x71000F0800			FALSE	sub_71000F0800	sub_71000F0800	
+0x71000F0790			FALSE	_ZNK12_GLOBAL__N_123EnemyAttachItemNrvPopUp7executeEPN2al11NerveKeeperE	(anonymous namespace)::EnemyAttachItemNrvPopUp::execute(al::NerveKeeper*) const	
+0x71000F0800			FALSE	_ZNK12_GLOBAL__N_129EnemyAttachItemNrvBreakBubble7executeEPN2al11NerveKeeperE	(anonymous namespace)::EnemyAttachItemNrvBreakBubble::execute(al::NerveKeeper*) const	
 0x71000F0840			FALSE	_ZNK12_GLOBAL__N_122EnemyAttachItemNrvFall7executeEPN2al11NerveKeeperE	(anonymous namespace)::EnemyAttachItemNrvFall::execute(al::NerveKeeper*) const	
-0x71000F0850			FALSE	nullsub_61	nullsub_61	
+0x71000F0850			FALSE	_ZNK12_GLOBAL__N_122EnemyAttachItemNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::EnemyAttachItemNrvWait::execute(al::NerveKeeper*) const	
 0x71000F0860		EnemyEffectBullet.o	FALSE	_ZN17EnemyEffectBulletC2EPKcPK21EnemyEffectBulletInfo	EnemyEffectBullet::EnemyEffectBullet(char const*, EnemyEffectBulletInfo const*)	
 0x71000F0920			FALSE	_ZN17EnemyEffectBulletC1EPKcPK21EnemyEffectBulletInfo	EnemyEffectBullet::EnemyEffectBullet(char const*, EnemyEffectBulletInfo const*)	
 0x71000F09E0			FALSE	_ZN17EnemyEffectBullet4initERKN2al13ActorInitInfoE	EnemyEffectBullet::init(al::ActorInitInfo const&)	

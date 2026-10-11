@@ -611,7 +611,7 @@ src/Game/Enemy/Donketsu.cpp:
     .text   start:0x000EC670 end:0x000EE9BC
 src/Game/Enemy/Dossun.cpp:
     .text   start:0x000EE9C0 end:0x000EFD28
-src/Game/Enemy/EnemyAttachItem.cpp:
+src/Game/Enemy/EnemyAttachItem.cpp: done
     .text   start:0x000EFD30 end:0x000F0854
 src/Game/Enemy/EnemyEffectBullet.cpp: done
     .text   start:0x000F0860 end:0x000F1028
