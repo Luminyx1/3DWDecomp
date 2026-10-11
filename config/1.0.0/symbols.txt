@@ -5772,3 +5772,5 @@
 
 # src/Game/Layout/AmiiboLayout
 0x71019CF4D8 8 object _ZN12_GLOBAL__N_119NrvAmiiboLayoutWaitE
+
+0x71019C32A0 32 object _ZN12_GLOBAL__N_114sQuadrantNamesE

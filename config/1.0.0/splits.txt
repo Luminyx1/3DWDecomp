@@ -963,7 +963,7 @@ src/Game/Layout/Switch/OptionsMenu.cpp:
     .text   start:0x0018AB40 end:0x0018C3A0
 src/Game/Layout/Switch/PlayerUserNameplate.cpp:
     .text   start:0x0018C3A0 end:0x0018D0AC
-src/Game/Layout/Switch/QuadrantMapParts.cpp:
+src/Game/Layout/Switch/QuadrantMapParts.cpp: done
     .text   start:0x0018D0B0 end:0x0018D450
 src/Game/Layout/Switch/ShardCounterParts.cpp:
     .text   start:0x0018D450 end:0x0018DEA8
