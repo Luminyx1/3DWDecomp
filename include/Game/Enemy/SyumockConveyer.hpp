@@ -1,6 +1,8 @@
 #pragma once
 #include "Library/LiveActor/LiveActor.hpp"
-namespace al { class ConveyerKeyKeeper; }
+#include <math/seadVector.h>
+class ActorStateSupportFreeze;
+namespace al { class ConveyerKeyKeeper; class JointAimInfo; class JointSpringControllerHolder; }
 
 class SyumockConveyer : public al::LiveActor {
 public:
@@ -18,6 +20,13 @@ public:
     void exeSupportFreeze();
     void exeEnd();
 private:
-    u8 _144[0x3c];
+    const al::ConveyerKeyKeeper* mKeys = nullptr;
+    ActorStateSupportFreeze* mSupportFreeze = nullptr;
+    al::JointAimInfo* mEyeInfo = nullptr;
+    al::JointSpringControllerHolder* mJointSpring;
+    sead::Vector3f mSide = sead::Vector3f::ex;
+    f32 mCoord = 0.0f;
+    f32 mMaxCoord = 0.0f;
+    s32 mReactionStep = 600;
 };
 static_assert(sizeof(SyumockConveyer) == 0x180);

@@ -799,7 +799,7 @@ src/Game/Enemy/Spinner.cpp:
     .text   start:0x0014F750 end:0x00150F58
 src/Game/Enemy/Swimmer.cpp:
     .text   start:0x00150F60 end:0x001528DC
-src/Game/Enemy/SyumockConveyer.cpp:
+src/Game/Enemy/SyumockConveyer.cpp: done
     .text   start:0x001528E0 end:0x001533D8
 src/Game/Enemy/SyumockConveyerGenerator.cpp:
     .text   start:0x001533E0 end:0x00153A30

@@ -5737,3 +5737,6 @@
 0x71019ACB70 0x10 object _ZN12_GLOBAL__N_116NrvSyumockRotateE
 0x71019ACB28 0x8 object _ZN12_GLOBAL__N_124NrvSyumockRotateReactionE
 0x7101B203B0 0x1c object _ZN12_GLOBAL__N_119sSupportFreezeParamE
+
+0x71019ABAD0 0x20 object _ZN12_GLOBAL__N_118NrvSyumockConveyerE
+0x7101B20378 0x1c object _ZN12_GLOBAL__N_120sConveyerFreezeParamE
