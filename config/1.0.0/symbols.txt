@@ -5711,3 +5711,7 @@
 
 # KoopaChaseStateDamage
 0x7101954140 24 object _ZN12_GLOBAL__N_124NrvKoopaChaseStateDamageE
+
+# KoopaChaseStateThrow
+0x7101954540 32 object _ZN12_GLOBAL__N_110sThrowSignE
+0x7101954560 32 object _ZN12_GLOBAL__N_16sThrowE
