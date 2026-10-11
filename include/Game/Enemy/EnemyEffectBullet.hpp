@@ -7,24 +7,24 @@
 /** @brief Archive, action and timing settings shared by a set of EnemyEffectBullet actors. */
 class EnemyEffectBulletInfo {
 public:
-    EnemyEffectBulletInfo(const char* pArchiveName, s32 lifeFrame, const char* pSensorName,
-                          const char* pAppearAction, const char* pDisappearAction,
-                          const char* pFlyAction, const char* pVanishSe, const char* pSuffix,
-                          bool isUnk40, bool isUnk41, s32 unk44, f32 unk48, f32 unk4C);
+    EnemyEffectBulletInfo(const char* pArchiveName, s32 lifeFrame, const char* pBodyEffect,
+                          const char* pAppearEffect, const char* pDisappearEffect,
+                          const char* pFlySe, const char* pVanishSe, const char* pSuffix,
+                          bool isFire, bool isHoming, s32 homingStartFrame, f32 maxTurnDegree, f32 turnAcceleration);
 
     const char* mArchiveName;
-    s32 mLifeFrame;
-    const char* mSensorName;
-    const char* mAppearAction;
-    const char* mDisappearAction;
-    const char* mFlyAction;
-    const char* mVanishSe;
     const char* mSuffix;
-    bool mIsUnk40;
-    bool mIsUnk41;
-    s32 mUnk44;
-    f32 mUnk48;
-    f32 mUnk4C;
+    s32 mLifeFrame;
+    const char* mBodyEffect;
+    const char* mAppearEffect;
+    const char* mDisappearEffect;
+    const char* mFlySe;
+    const char* mVanishSe;
+    bool mIsFire;
+    bool mIsHoming;
+    s32 mHomingStartFrame;
+    f32 mMaxTurnDegree;
+    f32 mTurnAcceleration;
 };
 
 static_assert(sizeof(EnemyEffectBulletInfo) == 0x50);
@@ -37,10 +37,19 @@ public:
     void init(const al::ActorInitInfo& rInfo) override;
     void appear() override;
     void kill() override;
+    void control() override;
+    void attackSensor(al::HitSensor* pSelf, al::HitSensor* pOther) override;
+    bool receiveMsg(const al::SensorMsg* pMsg, al::HitSensor* pOther, al::HitSensor* pSelf) override;
+    /** @brief Gets the effect's pose matrix. @return Current effect pose. */
+    const sead::Matrix34f* getBaseMtx() const override { return &mEffectMtx; }
     void shot(const sead::Vector3f& rDir, f32 speed);
 
 private:
-    u8 mUnreconstructed[0x198 - sizeof(al::LiveActor)];
+    const EnemyEffectBulletInfo* mInfo;
+    sead::Matrix34f mEffectMtx = sead::Matrix34f::ident;
+    s32 mLifeStep = 0;
+    al::LiveActor* mTarget = nullptr;
+    f32 mTurnDegree = 0.0f;
 };
 
 static_assert(sizeof(EnemyEffectBullet) == 0x198);

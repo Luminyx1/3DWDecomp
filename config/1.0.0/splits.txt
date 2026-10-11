@@ -613,7 +613,7 @@ src/Game/Enemy/Dossun.cpp:
     .text   start:0x000EE9C0 end:0x000EFD28
 src/Game/Enemy/EnemyAttachItem.cpp:
     .text   start:0x000EFD30 end:0x000F0854
-src/Game/Enemy/EnemyEffectBullet.cpp:
+src/Game/Enemy/EnemyEffectBullet.cpp: done
     .text   start:0x000F0860 end:0x000F1028
 src/Game/Enemy/EnemyGenerator.cpp:
     .text   start:0x000F1030 end:0x000F2034
