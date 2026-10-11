@@ -341,7 +341,7 @@ src/Game/CourseSelect/_8B0F0.cpp:
     .text   start:0x0008B0F0 end:0x0008B124
 src/Game/CourseSelect/BgmBeatAnimeController.cpp:
     .text   start:0x0008B130 end:0x0008C308
-src/Game/CourseSelect/BlockBrickBreakableCourseSelect.cpp:
+src/Game/CourseSelect/BlockBrickBreakableCourseSelect.cpp: done
     .text   start:0x0008C310 end:0x0008C85C
 src/Game/CourseSelect/BlockEmptyCourseSelect.cpp: done
     .text   start:0x0008C860 end:0x0008CA90

@@ -3187,9 +3187,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710008C6F0			FALSE	_ZN31BlockBrickBreakableCourseSelect8exeBreakEv	BlockBrickBreakableCourseSelect::exeBreak()	
 0x710008C730			FALSE	_ZN31BlockBrickBreakableCourseSelectD1Ev	BlockBrickBreakableCourseSelect::~BlockBrickBreakableCourseSelect()	
 0x710008C740			FALSE	_ZN31BlockBrickBreakableCourseSelectD0Ev	BlockBrickBreakableCourseSelect::~BlockBrickBreakableCourseSelect()	
-0x710008C770			FALSE	sub_710008C770	sub_710008C770	
-0x710008C7B0			FALSE	sub_710008C7B0	sub_710008C7B0	
-0x710008C800			FALSE	sub_710008C800	sub_710008C800	
+0x710008C770			FALSE	_ZNK12_GLOBAL__N_138BlockBrickBreakableCourseSelectNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::BlockBrickBreakableCourseSelectNrvWait::execute(al::NerveKeeper*) const	
+0x710008C7B0			FALSE	_ZNK12_GLOBAL__N_139BlockBrickBreakableCourseSelectNrvBreak7executeEPN2al11NerveKeeperE	(anonymous namespace)::BlockBrickBreakableCourseSelectNrvBreak::execute(al::NerveKeeper*) const	
+0x710008C800			FALSE	_ZNK12_GLOBAL__N_142BlockBrickBreakableCourseSelectNrvReaction7executeEPN2al11NerveKeeperE	(anonymous namespace)::BlockBrickBreakableCourseSelectNrvReaction::execute(al::NerveKeeper*) const	
 0x710008C860		BlockEmptyCourseSelect.o	FALSE	_ZN22BlockEmptyCourseSelectC2EPKc	BlockEmptyCourseSelect::BlockEmptyCourseSelect(char const*)	
 0x710008C8E0			FALSE	_ZN22BlockEmptyCourseSelectC1EPKc	BlockEmptyCourseSelect::BlockEmptyCourseSelect(char const*)	
 0x710008C970			FALSE	_ZN22BlockEmptyCourseSelect4initERKN2al13ActorInitInfoE	BlockEmptyCourseSelect::init(al::ActorInitInfo const&)	
