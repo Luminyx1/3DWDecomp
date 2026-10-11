@@ -10326,9 +10326,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710018E100			FALSE	_ZN21SingleModeCounterBase9exeAppearEv	SingleModeCounterBase::exeAppear()	
 0x710018E170			FALSE	_ZN21SingleModeCounterBase7exeWaitEv	SingleModeCounterBase::exeWait()	
 0x710018E180			FALSE	_ZN21SingleModeCounterBase7exeHideEv	SingleModeCounterBase::exeHide()	
-0x710018E1E0			FALSE	sub_710018E1E0	sub_710018E1E0	
-0x710018E250			FALSE	sub_710018E250	sub_710018E250	
-0x710018E2C0			FALSE	nullsub_96	nullsub_96	
+0x710018E1E0			FALSE	_ZNK12_GLOBAL__N_128SingleModeCounterBaseNrvHide7executeEPN2al11NerveKeeperE	(anonymous namespace)::SingleModeCounterBaseNrvHide::execute(al::NerveKeeper*) const	
+0x710018E250			FALSE	_ZNK12_GLOBAL__N_130SingleModeCounterBaseNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::SingleModeCounterBaseNrvAppear::execute(al::NerveKeeper*) const	
+0x710018E2C0			FALSE	_ZNK12_GLOBAL__N_128SingleModeCounterBaseNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::SingleModeCounterBaseNrvWait::execute(al::NerveKeeper*) const	
 0x710018E2D0		SnapshotLayout.o	FALSE	_ZN14SnapshotLayoutC2ERKN2al14LayoutInitInfoEPN2rc13StampDirectorE	SnapshotLayout::SnapshotLayout(al::LayoutInitInfo const&, rc::StampDirector*)	
 0x710018E3C0			FALSE	_ZN14SnapshotLayoutC1ERKN2al14LayoutInitInfoEPN2rc13StampDirectorE	SnapshotLayout::SnapshotLayout(al::LayoutInitInfo const&, rc::StampDirector*)	
 0x710018E4C0			FALSE	_ZN14SnapshotLayout6appearEv	SnapshotLayout::appear()	

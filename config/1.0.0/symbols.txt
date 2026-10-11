@@ -5783,3 +5783,8 @@
 # src/Game/Layout/CameraGyroDrc
 0x71019D2B20 8 object _ZN12_GLOBAL__N_122NrvCameraGyroDrcAppearE
 0x71019D2B48 8 object _ZN12_GLOBAL__N_119NrvCameraGyroDrcEndE
+
+# src/Game/Layout/SingleModeCounterBase
+0x71019C3CC0 8 object _ZN12_GLOBAL__N_128NrvSingleModeCounterBaseHideE
+0x71019C3CC8 8 object _ZN12_GLOBAL__N_130NrvSingleModeCounterBaseAppearE
+0x71019C3CB8 8 object _ZN12_GLOBAL__N_128NrvSingleModeCounterBaseWaitE

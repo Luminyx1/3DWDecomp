@@ -20,8 +20,6 @@ public:
     void exeWait();
     void exeHide();
 
-private:
-    bool mIsHide;
 };
 
 static_assert(sizeof(SingleModeCounterBase) == 0x128);
