@@ -669,7 +669,7 @@ src/Game/Enemy/ImozoStateBlockRailMove.cpp:
     .text   start:0x00107860 end:0x00108178
 src/Game/Enemy/InkPuddle.cpp:
     .text   start:0x00108180 end:0x00108E40
-src/Game/Enemy/JointAimUtil.cpp:
+src/Game/Enemy/JointAimUtil.cpp: done
     .text   start:0x00108E40 end:0x00108EA0
 src/Game/Enemy/Kameck.cpp:
     .text   start:0x00108EA0 end:0x0010A2CC
