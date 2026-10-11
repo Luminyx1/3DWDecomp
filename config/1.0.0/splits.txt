@@ -725,7 +725,7 @@ src/Game/Enemy/Moamoa.cpp:
     .text   start:0x00127680 end:0x0012862C
 src/Game/Enemy/MoamoaHolder.cpp:
     .text   start:0x00128630 end:0x00128B84
-src/Game/Enemy/ModelHolder.cpp:
+src/Game/Enemy/ModelHolder.cpp: done
     .text   start:0x00128B90 end:0x00128F34
 src/Game/Enemy/ModelHolderActor.cpp: done
     .text   start:0x00128F40 end:0x001290D0
