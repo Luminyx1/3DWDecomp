@@ -10314,9 +10314,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710018DDC0			FALSE	_ZN17ShardCounterParts12endShardDemoEv	ShardCounterParts::endShardDemo()	
 0x710018DDD0			FALSE	_ZN17ShardCounterParts14exeCompleteEndEv	ShardCounterParts::exeCompleteEnd()	
 0x710018DDE0			FALSE	_ZN17ShardCounterParts7endDemoEv	ShardCounterParts::endDemo()	
-0x710018DE00			FALSE	sub_710018DE00	sub_710018DE00	
-0x710018DE10			FALSE	sub_710018DE10	sub_710018DE10	
-0x710018DE20			FALSE	sub_710018DE20	sub_710018DE20	
+0x710018DE00			FALSE	_ZNK12_GLOBAL__N_131ShardCounterPartsNrvAddComplete7executeEPN2al11NerveKeeperE	(anonymous namespace)::ShardCounterPartsNrvAddComplete::execute(al::NerveKeeper*) const	
+0x710018DE10			FALSE	_ZNK12_GLOBAL__N_123ShardCounterPartsNrvAdd7executeEPN2al11NerveKeeperE	(anonymous namespace)::ShardCounterPartsNrvAdd::execute(al::NerveKeeper*) const	
+0x710018DE20			FALSE	_ZNK12_GLOBAL__N_128ShardCounterPartsNrvComplete7executeEPN2al11NerveKeeperE	(anonymous namespace)::ShardCounterPartsNrvComplete::execute(al::NerveKeeper*) const	
 0x710018DEA0			FALSE	_ZNK12_GLOBAL__N_128SingleModeCounterBaseNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::SingleModeCounterBaseNrvWait::execute(al::NerveKeeper*) const	
 0x710018DEB0		SingleModeCounterBase.o	FALSE	_ZN21SingleModeCounterBaseC2ERKN2al14LayoutInitInfoEPKcS5_PNS0_11LayoutActorE	SingleModeCounterBase::SingleModeCounterBase(al::LayoutInitInfo const&, char const*, char const*, al::LayoutActor*)	
 0x710018DF70			FALSE	_ZN21SingleModeCounterBaseC1ERKN2al14LayoutInitInfoEPKcS5_PNS0_11LayoutActorE	SingleModeCounterBase::SingleModeCounterBase(al::LayoutInitInfo const&, char const*, char const*, al::LayoutActor*)	
