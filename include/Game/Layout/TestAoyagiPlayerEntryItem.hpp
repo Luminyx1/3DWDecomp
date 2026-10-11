@@ -6,6 +6,8 @@ class TestAoyagiPlayerEntryItem : public al::LayoutActor {
 public:
     TestAoyagiPlayerEntryItem(const al::LayoutInitInfo& rInfo, const char* pName,
                              const char* pPartsName, al::LayoutActor* pParent);
+    void setModelFontCurrentCurrent();
+    void setColorCharactorModelCurrent();
     /** @brief Selects the controller port for this panel. */
     void setPort(int port) { mPort = port; }
 private:

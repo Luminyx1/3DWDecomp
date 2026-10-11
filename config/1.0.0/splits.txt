@@ -1245,7 +1245,7 @@ src/Game/Layout/TestAoyagiPlayerEntryItem.cpp:
     .text   start:0x001F7DE0 end:0x001F8680
 src/Game/Layout/TestAoyagiPlayerEntryStateEntry.cpp:
     .text   start:0x001F8680 end:0x001F8C08
-src/Game/Layout/TestAoyagiPlayerEntryStatePlay.cpp:
+src/Game/Layout/TestAoyagiPlayerEntryStatePlay.cpp: done
     .text   start:0x001F8C10 end:0x001F9004
 src/Game/Layout/TestAoyagiPlayerEntryStateSelect.cpp:
     .text   start:0x001F9010 end:0x001F9904
