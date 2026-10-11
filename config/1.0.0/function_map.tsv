@@ -7763,7 +7763,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100129AE0			FALSE	_ZN8Nokonoko7exeWaitEv	Nokonoko::exeWait()	
 0x7100129B30			FALSE	_ZN8NokonokoD1Ev	Nokonoko::~Nokonoko()	
 0x7100129B40			FALSE	_ZN8NokonokoD0Ev	Nokonoko::~Nokonoko()	
-0x7100129B70			FALSE	sub_7100129B70	sub_7100129B70	
+0x7100129B70			FALSE	_ZNK12_GLOBAL__N_115NokonokoNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::NokonokoNrvWait::execute(al::NerveKeeper*) const	
 0x7100129BC0			FALSE	_ZNK2al10FunctorV0MIP8NokonokoMS1_FvvEEclEv	al::FunctorV0M<Nokonoko*, void (Nokonoko::*)()>::operator()() const	
 0x7100129BE0			FALSE	_ZNK2al10FunctorV0MIP8NokonokoMS1_FvvEE5cloneEv	al::FunctorV0M<Nokonoko*, void (Nokonoko::*)()>::clone() const	
 0x7100129C30		NokonokoNaked.o	FALSE	_ZN13NokonokoNakedC2EPKcP8Nokonoko	NokonokoNaked::NokonokoNaked(char const*, Nokonoko*)	

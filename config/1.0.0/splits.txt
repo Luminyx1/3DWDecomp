@@ -731,7 +731,7 @@ src/Game/Enemy/ModelHolderActor.cpp: done
     .text   start:0x00128F40 end:0x001290D0
 src/Game/Enemy/NeedleSeed.cpp: done
     .text   start:0x001290D0 end:0x001295EC
-src/Game/Enemy/Nokonoko.cpp:
+src/Game/Enemy/Nokonoko.cpp: done
     .text   start:0x001295F0 end:0x00129C24
 src/Game/Enemy/NokonokoNaked.cpp:
     .text   start:0x00129C30 end:0x0012C248
