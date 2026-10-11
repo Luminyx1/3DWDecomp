@@ -31529,14 +31529,14 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71004D34A0			FALSE	_ZN20SingleModeTitleScene13exeDeleteFileEv	SingleModeTitleScene::exeDeleteFile()	
 0x71004D3510			FALSE	_ZN20SingleModeTitleScene12exeWipeCloseEv	SingleModeTitleScene::exeWipeClose()	
 0x71004D35B0			FALSE	_ZN20SingleModeTitleScene7exeKillEv	SingleModeTitleScene::exeKill()	
-0x71004D3620			FALSE	sub_71004D3620	sub_71004D3620	
-0x71004D3690			FALSE	sub_71004D3690	sub_71004D3690	
+0x71004D3620			FALSE	_ZNK12_GLOBAL__N_127SingleModeTitleSceneNrvLoad7executeEPN2al11NerveKeeperE	(anonymous namespace)::SingleModeTitleSceneNrvLoad::execute(al::NerveKeeper*) const	
+0x71004D3690			FALSE	_ZNK12_GLOBAL__N_127SingleModeTitleSceneNrvKill7executeEPN2al11NerveKeeperE	(anonymous namespace)::SingleModeTitleSceneNrvKill::execute(al::NerveKeeper*) const	
 0x71004D3700			FALSE	_ZNK12_GLOBAL__N_128SingleModeTitleSceneNrvTitle7executeEPN2al11NerveKeeperE	(anonymous namespace)::SingleModeTitleSceneNrvTitle::execute(al::NerveKeeper*) const	
-0x71004D3710			FALSE	sub_71004D3710	sub_71004D3710	
+0x71004D3710			FALSE	_ZNK12_GLOBAL__N_133SingleModeTitleSceneNrvAppearWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::SingleModeTitleSceneNrvAppearWait::execute(al::NerveKeeper*) const	
 0x71004D3770			FALSE	_ZNK12_GLOBAL__N_137SingleModeTitleSceneNrvNewGameWarning7executeEPN2al11NerveKeeperE	(anonymous namespace)::SingleModeTitleSceneNrvNewGameWarning::execute(al::NerveKeeper*) const	
-0x71004D3780			FALSE	sub_71004D3780	sub_71004D3780	
+0x71004D3780			FALSE	_ZNK12_GLOBAL__N_132SingleModeTitleSceneNrvWipeClose7executeEPN2al11NerveKeeperE	(anonymous namespace)::SingleModeTitleSceneNrvWipeClose::execute(al::NerveKeeper*) const	
 0x71004D3820			FALSE	_ZNK12_GLOBAL__N_133SingleModeTitleSceneNrvFileSelect7executeEPN2al11NerveKeeperE	(anonymous namespace)::SingleModeTitleSceneNrvFileSelect::execute(al::NerveKeeper*) const	
-0x71004D3830			FALSE	sub_71004D3830	sub_71004D3830	
+0x71004D3830			FALSE	_ZNK12_GLOBAL__N_133SingleModeTitleSceneNrvDeleteFile7executeEPN2al11NerveKeeperE	(anonymous namespace)::SingleModeTitleSceneNrvDeleteFile::execute(al::NerveKeeper*) const	
 0x71004D38A0		SnapshotState.o	FALSE	_ZN13SnapshotStateC2EP14SnapshotLayoutPN2al5SceneEP21DrcAssistDirectorListPN2rc13StampDirectorEP18PlayerAliveWatcher	SnapshotState::SnapshotState(SnapshotLayout*, al::Scene*, DrcAssistDirectorList*, rc::StampDirector*, PlayerAliveWatcher*)	object (class)
 0x71004D3930			FALSE	_ZN13SnapshotState4initEv	SnapshotState::init()	
 0x71004D3940			FALSE	_ZN13SnapshotState6appearEv	SnapshotState::appear()	
