@@ -8,6 +8,8 @@ public:
     void initAfterPlacement() override;
     void updateItemPosture();
     void exeRailMove();
+    /** @brief Gets the carried item. @return Item actor. */
+    al::LiveActor* getItem() const { return mItem; }
 private:
     al::LiveActor* mItem = nullptr;
     s32 mItemType = -1;
