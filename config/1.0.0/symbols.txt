@@ -5746,3 +5746,5 @@
 0x7101B20394 0x1c object _ZN12_GLOBAL__N_116sRailFreezeParamE
 
 0x7101B1F350 0x10 object _ZN12_GLOBAL__N_115sTowerWalkParamE
+
+0x7101B1FA10 0x48 object _ZN12_GLOBAL__N_130NrvPipePackunWaterSurfaceModelE
