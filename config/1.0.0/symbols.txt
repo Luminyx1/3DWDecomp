@@ -5769,3 +5769,6 @@
 0x71019E6038 32 object _ZN12_GLOBAL__N_111sPartsNamesE
 
 0x71019E6058 32 object _ZN12_GLOBAL__N_116sControllerNamesE
+
+# src/Game/Layout/AmiiboLayout
+0x71019CF4D8 8 object _ZN12_GLOBAL__N_119NrvAmiiboLayoutWaitE

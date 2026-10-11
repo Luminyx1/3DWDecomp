@@ -10928,7 +10928,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001A7AE0			FALSE	_ZN12AmiiboLayout6exeEndEv	AmiiboLayout::exeEnd()	
 0x71001A7BB0			FALSE	_ZNK12_GLOBAL__N_118AmiiboLayoutNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::AmiiboLayoutNrvEnd::execute(al::NerveKeeper*) const	
 0x71001A7BC0			FALSE	_ZNK12_GLOBAL__N_121AmiiboLayoutNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::AmiiboLayoutNrvAppear::execute(al::NerveKeeper*) const	
-0x71001A7BD0			FALSE	sub_71001A7BD0	sub_71001A7BD0	
+0x71001A7BD0			FALSE	_ZNK12_GLOBAL__N_119AmiiboLayoutNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::AmiiboLayoutNrvWait::execute(al::NerveKeeper*) const	
 0x71001A7C80		AreaNameParts.o	FALSE	_ZN13AreaNamePartsC2ERKN2al14LayoutInitInfoEPKcS5_PNS0_11LayoutActorEPKNS0_12PlayerHolderE	AreaNameParts::AreaNameParts(al::LayoutInitInfo const&, char const*, char const*, al::LayoutActor*, al::PlayerHolder const*)	
 0x71001A7DA0			FALSE	_ZN13AreaNamePartsC1ERKN2al14LayoutInitInfoEPKcS5_PNS0_11LayoutActorEPKNS0_12PlayerHolderE	AreaNameParts::AreaNameParts(al::LayoutInitInfo const&, char const*, char const*, al::LayoutActor*, al::PlayerHolder const*)	
 0x71001A7EC0			FALSE	_ZN13AreaNameParts10changeNameERK12ScenarioInfo	AreaNameParts::changeName(ScenarioInfo const&)	
