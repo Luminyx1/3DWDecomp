@@ -3301,10 +3301,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710008FC60			FALSE	_ZN18CourseSelectBubble7exeHideEv	CourseSelectBubble::exeHide()	
 0x710008FC70			FALSE	_ZN18CourseSelectBubbleD1Ev	CourseSelectBubble::~CourseSelectBubble()	
 0x710008FC80			FALSE	_ZN18CourseSelectBubbleD0Ev	CourseSelectBubble::~CourseSelectBubble()	
-0x710008FCB0			FALSE	sub_710008FCB0	sub_710008FCB0	
+0x710008FCB0			FALSE	_ZNK12_GLOBAL__N_125CourseSelectBubbleNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectBubbleNrvWait::execute(al::NerveKeeper*) const	
 0x710008FD30			FALSE	_ZNK12_GLOBAL__N_127CourseSelectBubbleNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectBubbleNrvAppear::execute(al::NerveKeeper*) const	
-0x710008FD40			FALSE	sub_710008FD40	sub_710008FD40	
-0x710008FDE0			FALSE	sub_710008FDE0	sub_710008FDE0	
+0x710008FD40			FALSE	_ZNK12_GLOBAL__N_126CourseSelectBubbleNrvBurst7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectBubbleNrvBurst::execute(al::NerveKeeper*) const	
+0x710008FDE0			FALSE	_ZNK12_GLOBAL__N_125CourseSelectBubbleNrvHide7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectBubbleNrvHide::execute(al::NerveKeeper*) const	
 0x710008FDF0		CourseSelectCloud.o	FALSE	_ZN17CourseSelectCloudC2EPKc	CourseSelectCloud::CourseSelectCloud(char const*)	
 0x710008FE70			FALSE	_ZN17CourseSelectCloudC1EPKc	CourseSelectCloud::CourseSelectCloud(char const*)	
 0x710008FF00			FALSE	_ZN17CourseSelectCloud4initERKN2al13ActorInitInfoE	CourseSelectCloud::init(al::ActorInitInfo const&)	
