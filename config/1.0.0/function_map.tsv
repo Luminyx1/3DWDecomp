@@ -3312,7 +3312,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710008FFC0			FALSE	_ZN17CourseSelectCloud10endClippedEv	CourseSelectCloud::endClipped()	
 0x710008FFF0			FALSE	_ZN17CourseSelectCloudD1Ev	CourseSelectCloud::~CourseSelectCloud()	
 0x7100090000			FALSE	_ZN17CourseSelectCloudD0Ev	CourseSelectCloud::~CourseSelectCloud()	
-0x7100090030			FALSE	sub_7100090030	sub_7100090030	
+0x7100090030			FALSE	_ZNK12_GLOBAL__N_124CourseSelectCloudNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectCloudNrvWait::execute(al::NerveKeeper*) const	
 0x7100090090		CourseSelectConst.o	FALSE	_ZN17CourseSelectConst24getPlayerOffsetMiniatureEv	CourseSelectConst::getPlayerOffsetMiniature()	
 0x71000900A0			FALSE	_ZN17CourseSelectConst20getPlayerOffsetKoopaEv	CourseSelectConst::getPlayerOffsetKoopa()	
 0x71000900B0			FALSE	_ZN17CourseSelectConst19getPlayerOffsetSideEv	CourseSelectConst::getPlayerOffsetSide()	

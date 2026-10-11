@@ -359,7 +359,7 @@ src/Game/CourseSelect/CourseSelectBgmEventController.cpp: done
     .text   start:0x0008F450 end:0x0008F7B8
 src/Game/CourseSelect/CourseSelectBubble.cpp:
     .text   start:0x0008F7C0 end:0x0008FDF0
-src/Game/CourseSelect/CourseSelectCloud.cpp:
+src/Game/CourseSelect/CourseSelectCloud.cpp: done
     .text   start:0x0008FDF0 end:0x00090084
 src/Game/CourseSelect/CourseSelectConst.cpp:
     .text   start:0x00090090 end:0x000900BC
