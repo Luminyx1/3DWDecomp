@@ -2768,10 +2768,8 @@ openWipe:
     updateDemoCutscene(true, false);
     updateAudioDemoType(&mAudioDemoType, this);
 
-    if (!mWipeFadeBlack->isAlive()) {
-        if (!mDemoCutscene->isFullyStarted() && !mDemoCutscene->isEndDemo()) {
-            return;
-        }
+    if (!mWipeFadeBlack->isAlive() &&
+        (mDemoCutscene->isFullyStarted() || mDemoCutscene->isEndDemo())) {
 
         if (!SingleModeDataFunction::hasSeenCutscene(GameDataHolderAccessor(mGameDataHolder),
                                                      mDemoCutscene->getCutsceneId())) {
@@ -2836,10 +2834,10 @@ openWipe:
 
     if (mUnlockedPhase == 3) {
         islandMapCutsceneId = 21;
-    } else if (mUnlockedPhase == 8) {
-        islandMapCutsceneId = 23;
     } else if (mUnlockedPhase == 5) {
         islandMapCutsceneId = 22;
+    } else if (mUnlockedPhase == 8) {
+        islandMapCutsceneId = 23;
     }
 
     if (islandMapCutsceneId >= 0 &&
@@ -3603,7 +3601,8 @@ void SingleModeScene::exeGameEnd() {
         al::disableBgmStart(this);
         al::changeAudioEffect(this, nullptr);
 
-        for (s32 i = 0; i < al::getPlayerNumMax(mLiveActorKit->getPlayerHolder()); i++) {
+        s32 playerNum = al::getPlayerNumMax(mLiveActorKit->getPlayerHolder());
+        for (s32 i = 0; i < playerNum; i++) {
             al::setCameraCalcTargetFlag(al::getPlayerActor(mLiveActorKit->getPlayerHolder(), i),
                                         false);
         }
