@@ -887,7 +887,7 @@ src/Game/Enemy/TuccondorGlass.cpp: done
     .text   start:0x00170350 end:0x00170760
 src/Game/Enemy/TuccondorGlassBlower.cpp:
     .text   start:0x00170760 end:0x001709D0
-src/Game/Enemy/TuccondorTrap.cpp:
+src/Game/Enemy/TuccondorTrap.cpp: done
     .text   start:0x001709D0 end:0x001716D8
 src/Game/Enemy/Ukibo.cpp:
     .text   start:0x001716E0 end:0x00173540

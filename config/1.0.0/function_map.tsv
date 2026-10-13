@@ -9651,13 +9651,13 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100171390			FALSE	_ZN13TuccondorTrap16exeSupportFreezeEv	TuccondorTrap::exeSupportFreeze()	
 0x71001713D0			FALSE	_ZN13TuccondorTrapD1Ev	TuccondorTrap::~TuccondorTrap()	
 0x71001713E0			FALSE	_ZN13TuccondorTrapD0Ev	TuccondorTrap::~TuccondorTrap()	
-0x7100171410			FALSE	sub_7100171410	sub_7100171410	
-0x7100171450			FALSE	sub_7100171450	sub_7100171450	
-0x7100171490			FALSE	sub_7100171490	sub_7100171490	
-0x7100171520			FALSE	sub_7100171520	sub_7100171520	
-0x71001715A0			FALSE	sub_71001715A0	sub_71001715A0	
-0x7100171610			FALSE	sub_7100171610	sub_7100171610	
-0x7100171690			FALSE	sub_7100171690	sub_7100171690	
+0x7100171410			FALSE	_ZNK12_GLOBAL__N_120TuccondorTrapNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::TuccondorTrapNrvWait::execute(al::NerveKeeper*) const	
+0x7100171450			FALSE	_ZNK12_GLOBAL__N_129TuccondorTrapNrvSupportFreeze7executeEPN2al11NerveKeeperE	(anonymous namespace)::TuccondorTrapNrvSupportFreeze::execute(al::NerveKeeper*) const	
+0x7100171490			FALSE	_ZNK12_GLOBAL__N_122TuccondorTrapNrvAttack7executeEPN2al11NerveKeeperE	(anonymous namespace)::TuccondorTrapNrvAttack::execute(al::NerveKeeper*) const	
+0x7100171520			FALSE	_ZNK12_GLOBAL__N_126TuccondorTrapNrvAttackSign7executeEPN2al11NerveKeeperE	(anonymous namespace)::TuccondorTrapNrvAttackSign::execute(al::NerveKeeper*) const	
+0x71001715A0			FALSE	_ZNK12_GLOBAL__N_125TuccondorTrapNrvAttackEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::TuccondorTrapNrvAttackEnd::execute(al::NerveKeeper*) const	
+0x7100171610			FALSE	_ZNK12_GLOBAL__N_126TuccondorTrapNrvAttackWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::TuccondorTrapNrvAttackWait::execute(al::NerveKeeper*) const	
+0x7100171690			FALSE	_GLOBAL__sub_I_TuccondorTrap.cpp	_GLOBAL__sub_I_TuccondorTrap.cpp	
 0x71001716E0		Ukibo.o	FALSE	_ZN5UkiboC2EPKc	Ukibo::Ukibo(char const*)	
 0x71001717B0			FALSE	_ZN5UkiboC1EPKc	Ukibo::Ukibo(char const*)	
 0x7100171890			FALSE	_ZN5Ukibo4initERKN2al13ActorInitInfoE	Ukibo::init(al::ActorInitInfo const&)	
