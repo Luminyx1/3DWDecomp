@@ -1723,7 +1723,7 @@ void SingleModeScene::exeStartEvent() {
         alSeFunction::changeListenerPoserDemo(mAudioDirector);
         rc::hideGuideGameWindow(this);
 
-        if (mStartEvent->getEventType() == cStartEventTypeTimer) {
+        if (static_cast<s32>(mStartEvent->getEventType()) == cStartEventTypeTimer) {
             mSceneLayout->startDemo(false, false);
         } else {
             mSceneLayout->startDemo(true, true);
@@ -1737,7 +1737,7 @@ void SingleModeScene::exeStartEvent() {
     if (mStartEvent->isEndDemo()) {
         rc::unHideGuideGameWindow(this);
 
-        if (mStartEvent->getEventType() == cStartEventTypeTimer) {
+        if (static_cast<s32>(mStartEvent->getEventType()) == cStartEventTypeTimer) {
             mSceneLayout->endDemo(false, false);
         } else {
             mSceneLayout->endDemo(true, false);
@@ -1763,7 +1763,7 @@ void SingleModeScene::updateStartEvent() {
         al::updateKitList(this, "デモプレイヤーロケーター");
         al::updateKitList(this, "デモプレイヤー前処理");
 
-        if (mStartEvent->getEventType() == cStartEventTypeTimer) {
+        if (static_cast<s32>(mStartEvent->getEventType()) == cStartEventTypeTimer) {
             al::updateKitList(this, "プレイヤー[Movement]");
         }
 
@@ -2441,7 +2441,7 @@ void SingleModeScene::exeDemoIntro() {
         SaveDataAccessFunction::startSaveDataWriteSync(mGameDataHolder, true);
         mWindowProcessing->appearWithSystemMessage("SaveSequence", "WindowProcessing_Save", 90,
                                                    false);
-        mWindowProcessing->setUnknown121(true);
+        mWindowProcessing->requestClose();
         mSceneLayout->endDemo(true, true);
         rc::unHideGuideGameWindow(this);
         finishDemoIntro();
@@ -2937,7 +2937,7 @@ void SingleModeScene::exeDemoIslandMapPreGame() {
     }
 
     mWindowProcessing->appearWithSystemMessage("SaveSequence", "WindowProcessing_Save", 90, false);
-    mWindowProcessing->setUnknown121(true);
+    mWindowProcessing->requestClose();
     updateLayout();
 }
 
@@ -3212,7 +3212,7 @@ void SingleModeScene::exeDemoFadeTransition() {
             rc::unHideGuideGameWindow(this);
             mWindowProcessing->appearWithSystemMessage("SaveSequence", "WindowProcessing_Save", 90,
                                                        false);
-            mWindowProcessing->setUnknown121(true);
+            mWindowProcessing->requestClose();
             al::endPausePadRumble(this);
             al::setNerve(this, &NrvSingleModeScenePlay);
         }
@@ -3674,7 +3674,7 @@ void SingleModeScene::exeIslandWarp() {
     mInvalidateInputFrames = 60;
     DisasterModeController* disasterController = DisasterModeController::tryGetController(this);
 
-    if (disasterController == nullptr || !disasterController->isDisasterMode()) {
+    if (disasterController != nullptr && !disasterController->isDisasterMode()) {
         al::changeIslandMapBgmVolume(this, -1, -1, false);
     }
 
@@ -4148,62 +4148,60 @@ struct ZoneInfo {
 void SingleModeScene::initPlacementZoneHolders(const al::ActorInitInfo& rInfo) {
     const al::StageInfo* stageInfo = al::getStageInfoMap(this, 0);
 
-    if (mIslandKeeper->createIslandHolders(stageInfo, rInfo)) {
-        return;
-    }
+    if (!mIslandKeeper->createIslandHolders(stageInfo, rInfo)) {
+        ProjectActorFactory factory;
+        al::PlacementInfo listInfo;
+        s32 count = 0;
+        al::getPlacementInfoAndCount(&listInfo, &count, stageInfo, "ZoneList");
+        count++;
+        al::LiveActor* holders[32] = {};
+        al::tryInitPlacementCategory(this, rInfo, 0, "ZoneHolderList", factory, holders, count);
 
-    ProjectActorFactory factory;
-    al::PlacementInfo listInfo;
-    s32 count = 0;
-    al::getPlacementInfoAndCount(&listInfo, &count, stageInfo, "ZoneList");
-    al::LiveActor* holders[32] = {};
-    count++;
-    al::tryInitPlacementCategory(this, rInfo, 0, "ZoneHolderList", factory, holders, count);
+        sead::FixedObjArray<ZoneInfo, 32> zones;
 
-    sead::FixedObjArray<ZoneInfo, 32> zones;
+        for (s32 i = 0; i < count; i++) {
+            al::PlacementInfo placementInfo;
+            al::tryGetPlacementInfoByIndex(&placementInfo, listInfo, i);
+            const char* objectName = nullptr;
 
-    for (s32 i = 0; i < count; i++) {
-        al::PlacementInfo placementInfo;
-        al::tryGetPlacementInfoByIndex(&placementInfo, listInfo, i);
-        const char* objectName = nullptr;
+            if (!al::tryGetObjectName(&objectName, placementInfo)) {
+                continue;
+            }
 
-        if (!al::tryGetObjectName(&objectName, placementInfo)) {
-            continue;
+            sead::Vector3f rotate = sead::Vector3f::ones;
+            sead::Vector3f scale = sead::Vector3f::zero;
+            sead::Vector3f trans = sead::Vector3f::zero;
+            al::tryGetRotate(&rotate, placementInfo);
+            al::tryGetScale(&scale, placementInfo);
+            al::tryGetTrans(&trans, placementInfo);
+            s32 zoneId = 0;
+            placementInfo.getZoneIter().tryGetIntByKey(&zoneId, "ZoneID");
+            placementInfo.getPlacementIter().tryGetIntByKey(&zoneId, "ZoneID");
+
+            zones.birthInsert(i);
+            zones.unsafeAt(i)->mName = objectName;
+            zones.at(i)->mTrans = trans;
+            zones.unsafeAt(i)->mZoneId = zoneId;
         }
 
-        sead::Vector3f rotate = sead::Vector3f::ones;
-        sead::Vector3f scale = sead::Vector3f::zero;
-        sead::Vector3f trans = sead::Vector3f::zero;
-        al::tryGetRotate(&rotate, placementInfo);
-        al::tryGetScale(&scale, placementInfo);
-        al::tryGetTrans(&trans, placementInfo);
-        s32 zoneId = 0;
-        placementInfo.getZoneIter().tryGetIntByKey(&zoneId, "ZoneID");
-        placementInfo.getPlacementIter().tryGetIntByKey(&zoneId, "ZoneID");
+        for (s32 i = 0; i < count; i++) {
+            auto* holder = static_cast<IslandHolder*>(holders[i]);
 
-        zones.birthInsert(i);
-        zones.unsafeAt(i)->mName = objectName;
-        zones.at(i)->mTrans = trans;
-        zones.unsafeAt(i)->mZoneId = zoneId;
-    }
-
-    for (s32 i = 0; i < count; i++) {
-        auto* holder = static_cast<IslandHolder*>(holders[i]);
-
-        if (holder == nullptr) {
-            break;
-        }
-
-        for (s32 j = 0; j < count; j++) {
-            if (al::isEqualString(zones.unsafeAt(j)->mName, holder->getObjectName())) {
-                holder->setAppearEffectPos(zones.unsafeAt(j)->mTrans);
-                holder->setIslandId(zones.unsafeAt(j)->mZoneId);
-                mIslandKeeper->push(holder);
+            if (holder == nullptr) {
                 break;
+            }
+
+            const char* objectName = holder->getObjectName();
+            for (s32 j = 0; j < count; j++) {
+                if (al::isEqualString(zones.unsafeAt(j)->mName, objectName)) {
+                    holder->setAppearEffectPos(zones.unsafeAt(j)->mTrans);
+                    holder->setIslandId(zones.unsafeAt(j)->mZoneId);
+                    mIslandKeeper->push(holder);
+                    break;
+                }
             }
         }
     }
-
     mIslandKeeper->setIslandStartPos(mStageResourceKeeper->getMapStageInfo(), rInfo);
 }
 
