@@ -18353,11 +18353,11 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71002D89A0			FALSE	_ZN20GoalPoleStateRunaway17exeWaitNearPlayerEv	GoalPoleStateRunaway::exeWaitNearPlayer()	
 0x71002D8AA0			FALSE	_ZN20GoalPoleStateRunaway7exeStopEv	GoalPoleStateRunaway::exeStop()	
 0x71002D8B30			FALSE	_ZN20GoalPoleStateRunawayD0Ev	GoalPoleStateRunaway::~GoalPoleStateRunaway()	
-0x71002D8B60			FALSE	nullsub_188	nullsub_188	
+0x71002D8B60			FALSE	_ZNK12_GLOBAL__N_130GoalPoleStateRunawayNrvStandBy7executeEPN2al11NerveKeeperE	(anonymous namespace)::GoalPoleStateRunawayNrvStandBy::execute(al::NerveKeeper*) const	TRUE
 0x71002D8B70			FALSE	_ZNK12_GLOBAL__N_127GoalPoleStateRunawayNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::GoalPoleStateRunawayNrvWait::execute(al::NerveKeeper*) const	
 0x71002D8B80			FALSE	_ZNK12_GLOBAL__N_127GoalPoleStateRunawayNrvMove7executeEPN2al11NerveKeeperE	(anonymous namespace)::GoalPoleStateRunawayNrvMove::execute(al::NerveKeeper*) const	
 0x71002D8B90			FALSE	_ZNK12_GLOBAL__N_137GoalPoleStateRunawayNrvWaitNearPlayer7executeEPN2al11NerveKeeperE	(anonymous namespace)::GoalPoleStateRunawayNrvWaitNearPlayer::execute(al::NerveKeeper*) const	
-0x71002D8BA0			FALSE	sub_71002D8BA0	sub_71002D8BA0	
+0x71002D8BA0			FALSE	_ZNK12_GLOBAL__N_127GoalPoleStateRunawayNrvStop7executeEPN2al11NerveKeeperE	(anonymous namespace)::GoalPoleStateRunawayNrvStop::execute(al::NerveKeeper*) const	TRUE
 0x71002D8C30			FALSE	_ZNK2al10FunctorV0MIP20GoalPoleStateRunawayMS1_FvvEEclEv	al::FunctorV0M<GoalPoleStateRunaway*, void (GoalPoleStateRunaway::*)()>::operator()() const	
 0x71002D8C50			FALSE	_ZNK2al10FunctorV0MIP20GoalPoleStateRunawayMS1_FvvEE5cloneEv	al::FunctorV0M<GoalPoleStateRunaway*, void (GoalPoleStateRunaway::*)()>::clone() const	
 0x71002D8CA0		GoalPoleWing.o	FALSE	_ZN12GoalPoleWingC2EPN2al9LiveActorE	GoalPoleWing::GoalPoleWing(al::LiveActor*)	
