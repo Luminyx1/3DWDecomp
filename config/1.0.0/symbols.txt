@@ -6292,3 +6292,6 @@
 0x71003B0E80 112 function _ZNK12_GLOBAL__N_122GhostPresentBoxNrvOpen7executeEPN2al11NerveKeeperE
 0x7101A73B60 32 object _ZTVN12_GLOBAL__N_121GhostPresentBoxNrvEndE
 0x71003B0EF0 16 function _ZNK12_GLOBAL__N_121GhostPresentBoxNrvEnd7executeEPN2al11NerveKeeperE
+
+# Ghost action power-up prefixes
+0x7101A728B8 40 object _ZN12_GLOBAL__N_120sGhostActionPrefixesE

@@ -2192,7 +2192,7 @@ src/Game/NPC/GhostPlayerDirector.cpp: done
     .text   start:0x003ACED0 end:0x003AD11C
 src/Game/NPC/GhostPlayerDisplayInfo.cpp: done
     .text   start:0x003AD120 end:0x003AD264
-src/Game/NPC/GhostPlayerFunction.cpp:
+src/Game/NPC/GhostPlayerFunction.cpp: done
     .text   start:0x003AD270 end:0x003AD7C8
 src/Game/NPC/GhostPlayerLoaderBase.cpp: done
     .text   start:0x003AD7D0 end:0x003AD804
