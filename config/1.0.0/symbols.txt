@@ -1441,7 +1441,6 @@
 0x710199FEB0 8 object _ZN12_GLOBAL__N_121NrvPackunFireBlowDownE
 0x710199FEC0 8 object _ZN12_GLOBAL__N_122NrvPackunFirePressDownE
 0x71019A0410 32 object _ZTVN12_GLOBAL__N_131PackunFireFireBallNrvRouteDokanE
-0x71019A0438 8 object _ZN12_GLOBAL__N_131NrvPackunFireFireBallRouteDokanE
 0x71019A0980 32 object _ZTVN12_GLOBAL__N_123PackunFlowerNrvBlowDownE
 0x71019A09E0 32 object _ZTVN12_GLOBAL__N_119PackunFlowerNrvWaitE
 0x71019A0A00 32 object _ZTVN12_GLOBAL__N_124PackunFlowerNrvPressDownE
@@ -6244,3 +6243,4 @@
 0x71019BBB70 24 object _ZN12_GLOBAL__N_116NrvTuccondorBaseE
 
 0x71019AFDE0 24 object _ZN12_GLOBAL__N_113NrvTeresaWallE
+0x71019A0430 16 object _ZN12_GLOBAL__N_121NrvPackunFireFireBallE

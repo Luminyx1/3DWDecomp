@@ -7922,11 +7922,11 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710012F320			FALSE	_ZN18PackunFireFireBall8setParamEPKN4sead8Matrix34IfEERKNS0_4QuatIfEEf	PackunFireFireBall::setParam(sead::Matrix34<float> const*, sead::Quat<float> const&, float)	
 0x710012F420			FALSE	_ZN18PackunFireFireBall6appearEv	PackunFireFireBall::appear()	
 0x710012F4C0			FALSE	_ZN18PackunFireFireBall7exeMoveEv	PackunFireFireBall::exeMove()	
-0x710012F570			FALSE	sub_710012F570	sub_710012F570	
+0x710012F570			FALSE	_ZN18PackunFireFireBall7tryKillEi	PackunFireFireBall::tryKill(int)	
 0x710012F610			FALSE	_ZN18PackunFireFireBall13exeRouteDokanEv	PackunFireFireBall::exeRouteDokan()	
 0x710012F6E0			FALSE	_ZN18PackunFireFireBallD1Ev	PackunFireFireBall::~PackunFireFireBall()	
 0x710012F6F0			FALSE	_ZN18PackunFireFireBallD0Ev	PackunFireFireBall::~PackunFireFireBall()	
-0x710012F720			FALSE	sub_710012F720	sub_710012F720	
+0x710012F720			FALSE	_ZNK12_GLOBAL__N_125PackunFireFireBallNrvMove7executeEPN2al11NerveKeeperE	(anonymous namespace)::PackunFireFireBallNrvMove::execute(al::NerveKeeper*) const	
 0x710012F7D0			FALSE	_ZNK12_GLOBAL__N_131PackunFireFireBallNrvRouteDokan7executeEPN2al11NerveKeeperE	(anonymous namespace)::PackunFireFireBallNrvRouteDokan::execute(al::NerveKeeper*) const	
 0x710012F7E0		PackunFlower.o	FALSE	_ZN12PackunFlowerC2EPKc	PackunFlower::PackunFlower(char const*)	
 0x710012F8E0			FALSE	_ZN12PackunFlowerC1EPKc	PackunFlower::PackunFlower(char const*)	
