@@ -6187,3 +6187,8 @@
 
 # src/Game/Layout/CourseSelectInfoBase
 0x71019D6CB0 48 object _ZN12_GLOBAL__N_123NrvCourseSelectInfoBaseE
+
+# src/Game/Layout/WindowMiiverseDetail
+0x71019E97E0 8 object _ZN12_GLOBAL__N_129NrvWindowMiiverseDetailAppearE
+0x71019E9808 8 object _ZN12_GLOBAL__N_132NrvWindowMiiverseDetailDisappearE
+0x71019E9830 8 object _ZN12_GLOBAL__N_130NrvWindowMiiverseDetailDecidedE

@@ -13336,9 +13336,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100202290			FALSE	_ZNK20WindowMiiverseDetail16isDecidedCommentEv	WindowMiiverseDetail::isDecidedComment() const	
 0x71002022E0			FALSE	_ZNK20WindowMiiverseDetail16invalidateButtonEv	WindowMiiverseDetail::invalidateButton() const	
 0x71002022F0			FALSE	_ZNK12_GLOBAL__N_127WindowMiiverseDetailNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::WindowMiiverseDetailNrvWait::execute(al::NerveKeeper*) const	
-0x7100202300			FALSE	sub_7100202300	sub_7100202300	
-0x7100202360			FALSE	sub_7100202360	sub_7100202360	
-0x71002023D0			FALSE	sub_71002023D0	sub_71002023D0	
+0x7100202300			FALSE	_ZNK12_GLOBAL__N_129WindowMiiverseDetailNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::WindowMiiverseDetailNrvAppear::execute(al::NerveKeeper*) const	
+0x7100202360			FALSE	_ZNK12_GLOBAL__N_132WindowMiiverseDetailNrvDisappear7executeEPN2al11NerveKeeperE	(anonymous namespace)::WindowMiiverseDetailNrvDisappear::execute(al::NerveKeeper*) const	
+0x71002023D0			FALSE	_ZNK12_GLOBAL__N_130WindowMiiverseDetailNrvDecided7executeEPN2al11NerveKeeperE	(anonymous namespace)::WindowMiiverseDetailNrvDecided::execute(al::NerveKeeper*) const	
 0x71002023E0			FALSE	_ZN4sead10Delegate2RI20WindowMiiverseDetailRKNS_14SafeStringBaseIDsEEjbE6invokeES5_j	sead::Delegate2R<WindowMiiverseDetail, sead::SafeStringBase<char16_t> const&, unsigned int, bool>::invoke(sead::SafeStringBase<char16_t> const&, unsigned int)	
 0x7100202420			FALSE	_ZNK4sead10Delegate2RI20WindowMiiverseDetailRKNS_14SafeStringBaseIDsEEjbE5cloneEPNS_4HeapE	sead::Delegate2R<WindowMiiverseDetail, sead::SafeStringBase<char16_t> const&, unsigned int, bool>::clone(sead::Heap*) const	
 0x7100202480			FALSE	_ZNK4sead11IDelegate2RIRKNS_14SafeStringBaseIDsEEjbE9isNoDummyEv	sead::IDelegate2R<sead::SafeStringBase<char16_t> const&, unsigned int, bool>::isNoDummy() const	

@@ -1273,7 +1273,7 @@ src/Game/Layout/WindowMessage.cpp: done
     .text   start:0x00200620 end:0x00200F18
 src/Game/Layout/WindowMiiSetUp.cpp:
     .text   start:0x00200F20 end:0x00201AC4
-src/Game/Layout/WindowMiiverseDetail.cpp:
+src/Game/Layout/WindowMiiverseDetail.cpp: done
     .text   start:0x00201AD0 end:0x00202498
 src/Game/Layout/WindowProcessing.cpp: done
     .text   start:0x002024A0 end:0x002029E4
