@@ -2,6 +2,7 @@
 
 #include <basis/seadTypes.h>
 #include "Scene/SingleModeScene.hpp"
+#include "Project/Memory/MemorySystem.hpp"
 
 namespace sead {
 class Heap;
@@ -15,18 +16,17 @@ class PhaseBossScene : public SingleModeScene {
     /**
      * @brief Custom scene heap allocator of the boss scenes.
      * @note Keeps the assets of the phase that follows the boss fight resident in a dedicated
-     *       heap. Derives from al::MemorySceneHeapCustomAlloc in the game, whose virtual
-     *       interface is declared under other names in the al headers.
+     *       heap.
      */
-    class MemorySceneHeapCustomAlloc {
+    class MemorySceneHeapCustomAlloc : public al::MemorySceneHeapCustomAlloc {
       public:
         MemorySceneHeapCustomAlloc();
 
-        virtual bool createCustomSceneHeap(bool isCreate);
-        virtual bool destroyCustomSceneHeap(bool isDestroy);
-        virtual bool isDestroySceneResourceHeap() const;
-        virtual size_t adjustStageResourceSize(size_t size);
-        virtual void forceDestroySceneResourceHeap();
+        bool createCustomSceneHeap(bool isCreate) override;
+        bool destroyCustomSceneHeap(bool isDestroy) override;
+        bool isDestroySceneResourceHeap() const override;
+        size_t adjustStageResourceSize(size_t size) override;
+        void forceDestroySceneResourceHeap() override;
 
         /**
          * @brief Enable or disable the custom allocation.

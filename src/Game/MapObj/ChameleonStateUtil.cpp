@@ -127,6 +127,3 @@ void changeDrawTransparentObject() {
     sDrawTransparentObject = !sDrawTransparentObject;
 }
 }
-
-
-

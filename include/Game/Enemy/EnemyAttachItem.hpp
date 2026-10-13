@@ -34,6 +34,9 @@ public:
     /** @brief Gets the item actor created for this attachment (nullptr before init). */
     al::LiveActor* getItemActor() const { return mItemActor; }
 
+/** @brief Gets the attached item kind. @return Item type identifier. */
+    s32 getItemType() const { return mItemType; }
+
 private:
     al::LiveActor* mItemActor;
     al::LiveActor* mHost;

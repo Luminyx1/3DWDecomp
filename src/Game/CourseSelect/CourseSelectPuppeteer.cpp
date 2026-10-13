@@ -470,9 +470,9 @@ static sead::Vector3f calcLineUpTrans(PlayerActor* pActor,
 
     sead::Vector3f hitPos;
     sead::Vector3f arrowStart(trans.x, trans.y + 100.0f, trans.z);
+    sead::Vector3f arrowDir(0.0f, -200.0f, 0.0f);
     if (alCollisionUtil::getFirstPolyOnArrow(pActor, &hitPos, nullptr, arrowStart,
-                                             sead::Vector3f(0.0f, -200.0f, 0.0f), nullptr,
-                                             nullptr)) {
+                                             arrowDir, nullptr, nullptr)) {
         trans.y = hitPos.y;
     }
 
@@ -833,14 +833,17 @@ static void setJumpVelocity(IUsePlayerPuppet* pPuppet, const sead::Vector3f& rTa
     }
 
     const sead::Vector3f& trans = rc::getPuppetTrans(pPuppet);
-    sead::Vector3f front(rTarget.x - trans.x, 0.0f, rTarget.z - trans.z);
+    f32 targetY = rTarget.y;
+    f32 transY = trans.y;
+    sead::Vector3f front = rTarget - trans;
+    front.y = 0.0f;
     f32 distance = sead::Mathf::sqrt(front.x * front.x + front.z * front.z);
     if (al::isNearZero(distance, 0.001f)) {
         rc::setPuppetVelocity(pPuppet, sead::Vector3f(0.0f, speedY, 0.0f));
         return;
     }
 
-    f32 fallSq = speedY * speedY + (rTarget.y - trans.y) * (2.0f * cGravity);
+    f32 fallSq = speedY * speedY + (targetY - transY) * (2.0f * cGravity);
     f32 speedH = 0.0f;
     if (fallSq > 0.0f) {
         f32 fallSpeed = sead::Mathf::sqrt(fallSq);
@@ -853,7 +856,10 @@ static void setJumpVelocity(IUsePlayerPuppet* pPuppet, const sead::Vector3f& rTa
     front.x = invDistance * front.x;
     front.z = invDistance * front.z;
     rc::setPuppetFrontVec(pPuppet, front);
-    rc::setPuppetVelocity(pPuppet, sead::Vector3f(speedH * front.x, speedY, speedH * front.z));
+    front.x *= speedH;
+    front.y = speedY;
+    front.z *= speedH;
+    rc::setPuppetVelocity(pPuppet, front);
 }
 
 /**
@@ -1203,13 +1209,26 @@ static void setPuppetPoseOnRail(IUsePlayerPuppet* pPuppet, const sead::Vector3f&
     sead::Quatf rotation;
     sead::Quatf quat(1.0f, 0.0f, 0.0f, 0.0f);
     if (al::isReverseDirection(front, rDir, 0.01f)) {
-        quat.setAxisAngle(sead::Vector3f::ex, 180.0f);
+        // A half-turn around the X axis has a unit sine component.
+        quat.x = sead::Vector3f::ex.x;
+        quat.y = sead::Vector3f::ex.y;
+        quat.z = sead::Vector3f::ex.z;
+        quat.w = sead::Mathf::cos(sead::Mathf::pi() * 0.5f);
     } else {
         al::normalizeOrZero(&front);
         al::normalizeOrZero(&dir, rDir);
         al::makeQuatRotationRate(&rotation, front, dir, 1.0f);
         quat = rotation * sead::Quatf::unit;
-        quat.normalize();
+        f32 sum = quat.w * quat.w + quat.x * quat.x + quat.y * quat.y;
+        f32 z2 = quat.z * quat.z;
+        f32 length = sead::Mathf::sqrt(z2 + sum);
+        if (length > 0.0f) {
+            f32 inverse = 1.0f / length;
+            quat.w *= inverse;
+            quat.x *= inverse;
+            quat.y *= inverse;
+            quat.z *= inverse;
+        }
     }
 
     rc::setPuppetQuat(pPuppet, quat);

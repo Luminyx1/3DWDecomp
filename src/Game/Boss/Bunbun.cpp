@@ -45,7 +45,8 @@ NERVE_DECL(Bunbun, DiePressDown)
 NERVE_DECL(Bunbun, WarpWait)
 NERVE_DECL(Bunbun, PreDemoDelay)
 
-NERVES_MAKE_NOSTRUCT(Bunbun, Demo, ShellAttack, SpinAttack, MysteryBoxWait, Recover, Tired,
+NERVES_MAKE_STRUCT(Bunbun, Demo, ShellAttack, SpinAttack)
+NERVES_MAKE_NOSTRUCT(Bunbun, MysteryBoxWait, Recover, Tired,
                      RecoverSign, PressDown, Die, Down, Wait, Warp, DiePressDown, WarpWait,
                      PreDemoDelay)
 
@@ -88,25 +89,24 @@ void Bunbun::init(const al::ActorInitInfo& rInfo) {
         s32 zoneNo = mPlacementHolder->getZoneNo();
         isAppear = !SingleModeDataFunction::isScenarioComplete(GameDataHolderAccessor(this),
                                                                zoneNo - 1, scenarioId - 1);
-        // Scenario battles in single mode play the demo through an RS camera ticket.
-        isUseAnimCamera = !mIsSingleMode;
     }
+    isUseAnimCamera = !mIsSingleMode;
 
-    al::initNerve(this, &NrvBunbunDemo, 3);
-    if (isUseAnimCamera) {
-        mStateDemo =
-            new GateKeeperStateDemo(this, rInfo, &sDemoParam, al::initAnimCamera(this, rInfo));
-    } else {
+    al::initNerve(this, &NrvBunbun.Demo, 3);
+    if (!isUseAnimCamera) {
         mStateDemo = new GateKeeperStateDemo(this, rInfo, &sDemoParam,
                                              al::initAnimCamera_RS(this, rInfo, "Anim"));
         mStateDemo->setIsCameraTicket();
+    } else {
+        mStateDemo = new GateKeeperStateDemo(this, rInfo, &sDemoParam,
+                                             al::initAnimCamera(this, rInfo));
     }
 
     mStateShellAttack = new BunbunStateShellAttack(this, rInfo);
     mStateSpinAttack = new BunbunStateSpinAttack(this, rInfo);
-    al::initNerveState(this, mStateDemo, &NrvBunbunDemo, "[状態]開始デモ");
-    al::initNerveState(this, mStateShellAttack, &NrvBunbunShellAttack, "[状態]コウラアタック");
-    al::initNerveState(this, mStateSpinAttack, &NrvBunbunSpinAttack, "[状態]スピンアタック");
+    al::initNerveState(this, mStateDemo, &NrvBunbun.Demo, "[状態]開始デモ");
+    al::initNerveState(this, mStateShellAttack, &NrvBunbun.ShellAttack, "[状態]コウラアタック");
+    al::initNerveState(this, mStateSpinAttack, &NrvBunbun.SpinAttack, "[状態]スピンアタック");
 
     if (al::calcLinkChildNum(rInfo, "Punpun") != 0) {
         mPunpun = new Punpun("プンプン");
@@ -200,11 +200,11 @@ void Bunbun::attackSensor(al::HitSensor* pSelf, al::HitSensor* pOther) {
     if (al::isSensorEnemyAttack(pSelf)) {
         al::sendMsgPush(pOther, pSelf);
 
-        if (al::isNerve(this, &NrvBunbunShellAttack) && !mStateShellAttack->isEnableAttack()) {
+        if (al::isNerve(this, &NrvBunbun.ShellAttack) && !mStateShellAttack->isEnableAttack()) {
             return;
         }
 
-        if (al::isNerve(this, &NrvBunbunSpinAttack) && !mStateSpinAttack->isEnableAttack()) {
+        if (al::isNerve(this, &NrvBunbun.SpinAttack) && !mStateSpinAttack->isEnableAttack()) {
             return;
         }
 
@@ -241,11 +241,10 @@ void Bunbun::attackSensor(al::HitSensor* pSelf, al::HitSensor* pOther) {
  * @return Whether Bunbun is in an attackable nerve.
  */
 bool Bunbun::isEnableAttack() const {
-    bool isNotDemo;
+    bool isNotDemo = true;
     if (mIsSingleMode) {
-        isNotDemo = !al::isNerve(this, &NrvBunbunPreDemoDelay);
-    } else {
-        isNotDemo = !al::isNerve(this, &NrvBunbunDemo);
+        if (al::isNerve(this, &NrvBunbunPreDemoDelay)) isNotDemo = false;
+        else isNotDemo = !al::isNerve(this, &NrvBunbun.Demo);
     }
 
     if (al::isNerve(this, &NrvBunbunPressDown) || al::isNerve(this, &NrvBunbunDown) ||
@@ -268,7 +267,7 @@ bool Bunbun::receiveMsg(const al::SensorMsg* pMsg, al::HitSensor* pOther, al::Hi
         return false;
     }
 
-    if (al::isNerve(this, &NrvBunbunShellAttack)) {
+    if (al::isNerve(this, &NrvBunbun.ShellAttack)) {
         return mStateShellAttack->receiveMsg(pMsg, pOther, pSelf);
     }
 
@@ -451,7 +450,7 @@ void Bunbun::setInvalidateClippingFlag() {
 /** @brief Waits a moment before the opening demo. */
 void Bunbun::exePreDemoDelay() {
     if (al::isGreaterEqualStep(this, 20)) {
-        al::setNerve(this, &NrvBunbunDemo);
+        al::setNerve(this, &NrvBunbun.Demo);
     }
 }
 
@@ -482,7 +481,7 @@ void Bunbun::exeWait() {
     walkAndTurnToPlayer();
 
     if (al::isGreaterEqualStep(this, 5)) {
-        al::setNerve(this, &NrvBunbunSpinAttack);
+        al::setNerve(this, &NrvBunbun.SpinAttack);
     }
 }
 
@@ -490,7 +489,7 @@ void Bunbun::exeWait() {
 void Bunbun::exeMysteryBoxWait() {
     setInvalidateClippingFlag();
     al::setAdditionalCameraLookAtPosPtr(this, this, al::getTransPtr(this));
-    al::setNerve(this, &NrvBunbunSpinAttack);
+    al::setNerve(this, &NrvBunbun.SpinAttack);
 }
 
 /** @brief Runs the spin attack state, then gets tired. */
@@ -549,7 +548,7 @@ void Bunbun::exeRecover() {
     if (al::isActionEnd(this)) {
         switch (mAttackType) {
         case AttackType_Spin:
-            al::setNerve(this, &NrvBunbunSpinAttack);
+            al::setNerve(this, &NrvBunbun.SpinAttack);
             break;
         case AttackType_KouraThrow:
             al::setNerve(this, &NrvBunbunWarp);
@@ -588,7 +587,7 @@ void Bunbun::exePressDown() {
         if (mHp <= 0) {
             al::setNerve(this, &NrvBunbunDiePressDown);
         } else {
-            al::setNerve(this, &NrvBunbunShellAttack);
+            al::setNerve(this, &NrvBunbun.ShellAttack);
         }
     }
 }
@@ -608,7 +607,7 @@ void Bunbun::exeDown() {
     walkAndTurnToPlayer();
 
     if (al::isActionEnd(this)) {
-        al::setNerve(this, &NrvBunbunShellAttack);
+        al::setNerve(this, &NrvBunbun.ShellAttack);
     }
 }
 
@@ -724,7 +723,7 @@ void Bunbun::exeShellAttack() {
 
         switch (mAttackType) {
         case AttackType_Spin:
-            al::setNerve(this, &NrvBunbunSpinAttack);
+            al::setNerve(this, &NrvBunbun.SpinAttack);
             break;
         case AttackType_KouraThrow:
             al::setNerve(this, &NrvBunbunWarp);
@@ -779,7 +778,7 @@ void Bunbun::exeWarpWait() {
     }
 
     if (al::isActionEnd(this)) {
-        al::setNerve(this, &NrvBunbunSpinAttack);
+        al::setNerve(this, &NrvBunbun.SpinAttack);
     }
 }
 

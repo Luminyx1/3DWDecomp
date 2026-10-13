@@ -29,11 +29,17 @@ public:
 
 class MemorySceneHeapCustomAlloc {
 public:
-    virtual void createSceneHeap(bool isCreatedResourceHeap) = 0;
-    virtual bool isFreeSceneResource(bool isRemoveCategory) = 0;
-    virtual bool isReallyFreeSceneResource() const = 0;
-    virtual s64 adjustStageResourceSize(s64 size) = 0;
-    virtual void setForceSceneHeapResourceDestroy() = 0;
+    virtual bool createCustomSceneHeap(bool isCreatedResourceHeap) = 0;
+    virtual bool destroyCustomSceneHeap(bool isRemoveCategory) = 0;
+    virtual bool isDestroySceneResourceHeap() const = 0;
+    virtual size_t adjustStageResourceSize(size_t size) = 0;
+    virtual void forceDestroySceneResourceHeap() = 0;
+
+    // Preserve the names used by the reconstructed memory-system callers.
+    void createSceneHeap(bool createdResourceHeap) { createCustomSceneHeap(createdResourceHeap); }
+    bool isFreeSceneResource(bool removeCategory) { return destroyCustomSceneHeap(removeCategory); }
+    bool isReallyFreeSceneResource() const { return isDestroySceneResourceHeap(); }
+    void setForceSceneHeapResourceDestroy() { forceDestroySceneResourceHeap(); }
 };
 
 class MemorySystem {

@@ -1,3 +1,9 @@
+#include "MapObj/FlipPanel.hpp"
+#include "Enemy/SuperBowser.hpp"
+#include "MapObj/DisasterModeController.hpp"
+#include "MapObj/OceanWaterDeferred.hpp"
+#include "Raidon/RaidonSurf.hpp"
+#include "Player/Normal/PlayerKoopaJr.hpp"
 #include "Library/Factory/ActorFactory.hpp"
 #include "Scene/ProjectActorFactoryLightActors.hpp"
 #include "Scene/ProjectActorFactoryTypes.hpp"
@@ -471,3 +477,17 @@ template al::LiveActor* al::createActorFunction<al::PrePassProjOrthoLight>(const
 template al::LiveActor* al::createActorFunction<BgmPlayObj>(const char*);
 template al::LiveActor* al::createActorFunction<BgmRegionChanger>(const char*);
 template al::LiveActor* al::createActorFunction<DemoStartPosition>(const char*);
+
+template al::LiveActor* al::createActorFunction<DisasterModeController>(const char*);
+
+template al::LiveActor* al::createActorFunction<OceanWaterIndirect>(const char*);
+
+template al::LiveActor* al::createActorFunction<OceanWaterDeferred>(const char*);
+
+template al::LiveActor* al::createActorFunction<RaidonSurf>(const char*);
+
+template al::LiveActor* al::createActorFunction<PlayerKoopaJr>(const char*);
+
+template al::LiveActor* al::createActorFunction<FlipPanel>(const char*);
+
+template al::LiveActor* al::createActorFunction<SuperBowser>(const char*);

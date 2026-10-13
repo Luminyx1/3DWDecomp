@@ -123,11 +123,12 @@ NekoDisaster::NekoDisaster(Neko* pHost) : IUseNekoModeActor("NekoDisaster"), mHo
 void NekoDisaster::init(const al::ActorInitInfo& rInfo, neko::ColorType colorType,
                         NpcTargetFinder* pTargetFinder) {
     NekoDisasterParam* param = mParam;
-    s32 startBehavior;
-    if (al::tryGetArg(&startBehavior, rInfo, "StartBehavior")) {
-        param->mStartBehavior = static_cast<NekoDisasterParam::StartBehavior>(startBehavior);
+    {
+        s32 startBehavior;
+        if (al::tryGetArg(&startBehavior, rInfo, "StartBehavior")) {
+            param->mStartBehavior = static_cast<NekoDisasterParam::StartBehavior>(startBehavior);
+        }
     }
-
     al::tryGetArg(&param->mWanderRange, rInfo, "WanderRange");
     al::tryGetArg(&param->mChaseRange, rInfo, "ChaseRange");
     al::tryGetArg(&param->mIsEnableCliffCheck, rInfo, "IsEnableCliffCheck");
@@ -136,25 +137,29 @@ void NekoDisaster::init(const al::ActorInitInfo& rInfo, neko::ColorType colorTyp
     al::tryGetArg(&param->mIsDisablePlessieChase, rInfo, "isDisablePlessieChase");
     al::tryGetStringArg(&param->mComment, rInfo, "Comment");
     mColorType = colorType;
-    al::initActorWithArchiveName(this, rInfo,
-                                 mColorType == 7 ? "NekoParentDisaster" : "NekoDisaster", nullptr);
+    if (mColorType == 7) {
+        al::initActorWithArchiveName(this, rInfo, "NekoParentDisaster", nullptr);
+    } else {
+        al::initActorWithArchiveName(this, rInfo, "NekoDisaster", nullptr);
+    }
 
-    const al::Resource* modelResource = al::getModelResource(this);
-    al::ByamlIter initIter;
-    al::tryGetActorInitFileIter(&initIter, modelResource, "InitNeko", nullptr);
-
+    {
+        const al::Resource* modelResource = al::getModelResource(this);
+        al::ByamlIter initIter;
+        al::tryGetActorInitFileIter(&initIter, modelResource, "InitNeko", nullptr);
+    }
     mTargetFinder = pTargetFinder;
     pTargetFinder->setSearchTypes(npc::NpcFindTargetType_Player);
     mTargetFinder->setTargetTypePriority(npc::NpcFindTargetType_Player, 1);
     al::initNerve(this, &NrvNekoDisasterWander, 5);
 
-    mWanderParam = new NpcStateWanderParam(
-        300, 400, 0.33f, 4.0f, 20.0f, 800.0f, 0.5f, 150.0f, 1.0f, mParam->mIsEnableCliffCheck,
-        mParam->mIsEnableShoreCheck, "Walk", "StartleWait", true, 110, 3000.0f);
-    mChaseParam = new NpcStateChaseParam(1.2f, 130.0f, 500.0f, 5.5f, -1.0f, false,
-                                         mParam->mIsEnableCliffCheck, mParam->mIsEnableShoreCheck,
-                                         "Run", "StartleWait",
-                                         mTargetFinder->getParam()->getChaseRange());
+    mWanderParam = new NpcStateWanderParam(300, 400, 0.33f, 4.0f, 20.0f, 800.0f, 0.5f, 150.0f, 1.0f,
+                                           mParam->mIsEnableCliffCheck, mParam->mIsEnableShoreCheck,
+                                           "Walk", "StartleWait", true, 110, 3000.0f);
+    mChaseParam =
+        new NpcStateChaseParam(1.2f, 130.0f, 500.0f, 5.5f, -1.0f, false,
+                               mParam->mIsEnableCliffCheck, mParam->mIsEnableShoreCheck, "Run",
+                               "StartleWait", mTargetFinder->getParam()->getChaseRange());
     mStateWander = new NpcStateWander(this, al::getFrontPtr(this), &sStateParam, mWanderParam);
     mStateChase = new NpcStateChase(this, al::getFrontPtr(this), mTargetFinder, &sStateParam,
                                     mChaseParam, false, nullptr);

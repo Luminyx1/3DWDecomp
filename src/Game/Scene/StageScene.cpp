@@ -1132,13 +1132,20 @@ void StageScene::prepareDestroy() {
             GameDataFunction::retireStage(GameDataHolderWriter(mGameDataHolder));
         } else if (mBlockChoiceWatcher != nullptr && !mBlockChoiceWatcher->isReleasedItem()) {
             GameDataFunction::retireStageExitDoor(GameDataHolderWriter(mGameDataHolder));
-        } else if (GameDataFunction::isStageFairyHouse(GameDataHolderAccessor(mGameDataHolder),
-                                                       mCourseId) &&
-                   !GameDataFunction::isAcquireIllustItem(
-                       GameDataHolderAccessor(mGameDataHolder))) {
-            GameDataFunction::retireStageExitDoor(GameDataHolderWriter(mGameDataHolder));
         } else {
-            GameDataFunction::clearStage(GameDataHolderWriter(mGameDataHolder));
+            bool isFairyHouse = GameDataFunction::isStageFairyHouse(
+                GameDataHolderAccessor(mGameDataHolder), mCourseId);
+            GameDataHolder* holder = mGameDataHolder;
+            if (isFairyHouse) {
+                bool isAcquireIllustItem =
+                    GameDataFunction::isAcquireIllustItem(GameDataHolderAccessor(holder));
+                holder = mGameDataHolder;
+                if (!isAcquireIllustItem) {
+                    GameDataFunction::retireStageExitDoor(GameDataHolderWriter(holder));
+                    return;
+                }
+            }
+            GameDataFunction::clearStage(GameDataHolderWriter(holder));
             GameDataFunction::playReportStageEvent(GameDataHolderWriter(mGameDataHolder), 0);
 
             if (mIsKinopioBrigade) {
@@ -1154,8 +1161,7 @@ void StageScene::prepareDestroy() {
                     userId = rc::findControlUserId(mPlayerCrown->getHost());
                 }
 
-                GameDataFunction::setBestScoreUserId(GameDataHolderWriter(mGameDataHolder),
-                                                     userId);
+                GameDataFunction::setBestScoreUserId(GameDataHolderWriter(mGameDataHolder), userId);
             }
         }
     } else if (al::isNerve(this, &NrvStageSceneRetire)) {

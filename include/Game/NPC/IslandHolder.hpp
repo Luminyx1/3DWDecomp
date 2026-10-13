@@ -88,7 +88,7 @@ public:
      * Sets the position of the effect played when the island appears.
      * @param rPos The effect position.
      */
-    void setAppearEffectPos(const sead::Vector3f& rPos) { mAppearEffectPos = rPos; }
+    void setAppearEffectPos(const sead::Vector3f& rPos) { mAppearEffectPos = sead::Vector3f(rPos); }
 
     /**
      * @brief Access the island's lighthouse.

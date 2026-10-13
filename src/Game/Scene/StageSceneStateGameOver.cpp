@@ -278,16 +278,15 @@ void StageSceneStateGameOver::exeDone() {
 extern s32 gFrameCount;
 extern bool sWasSet;
 f32 OldPlayerDemoAdjustSpeed(f32 speed) {
-    switch (gFrameCount) {
-    case 1003:
-    case 1002:
-        if (!sWasSet) {
-            sWasSet = true;
-            return 9.0f;
-        }
-        break;
-    default:
-        break;
+    if (gFrameCount == 1002) {
+        if (sWasSet)
+            return speed;
+        sWasSet = true;
+        return 9.0f;
+    }
+    if (gFrameCount == 1003 && !sWasSet) {
+        sWasSet = true;
+        return 9.0f;
     }
     return speed;
 }

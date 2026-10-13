@@ -40,6 +40,8 @@ public:
                                al::ScreenPointTarget* pTarget) override;
     bool isEnableSupportFreeze() const;
     void control() override;
+    /** @brief Checks whether stem collisions project into the host's movement plane. @return Whether 2D damage is enabled. */
+    bool isDamageType2D() const { return mIsDamageType2D; }
 
     void exeWait();
     void exeSleepStart();

@@ -40,11 +40,10 @@ public:
                      const sead::Vector2f& rPitchRange, const sead::Vector3f& rLocalFront,
                      const sead::Vector3f& rLocalUp);
     void appendJointLocalJudge(s32 jointIndex, f32 rate, const sead::Vector2f& rYawRange,
-                               const sead::Vector2f& rPitchRange,
-                               const sead::Vector3f& rLocalFront, const sead::Vector3f& rLocalUp,
-                               const sead::Matrix34f* pJudgeMtx,
-                               const sead::Vector3f& rJudgeFront,
-                               const sead::Vector3f& rJudgeUp, bool isNoJudge);
+                               const sead::Vector2f& rPitchRange, const sead::Vector3f& rLocalFront,
+                               const sead::Vector3f& rLocalUp, const sead::Matrix34f* pJudgeMtx,
+                               const sead::Vector3f& rJudgeFront, const sead::Vector3f& rJudgeUp,
+                               bool isNoJudge);
     void appendJointNoJudge(s32 jointIndex, f32 rate, const sead::Vector2f& rYawRange,
                             const sead::Vector2f& rPitchRange, const sead::Vector3f& rLocalFront,
                             const sead::Vector3f& rLocalUp);
@@ -58,8 +57,9 @@ public:
     void setKeepTargetQuat(bool keep) { mIsKeepTargetQuat = keep; }
     /** @brief Transfers the current look request to the animation update. */
     void update() {
-        mIsLookAt = mIsRequestLookAt;
+        bool wasRequested = mIsRequestLookAt;
         mIsRequestLookAt = false;
+        mIsLookAt = wasRequested;
     }
 
 private:
@@ -74,4 +74,4 @@ private:
 
 static_assert(sizeof(JointLookAtController) == 0xe0);
 
-}  // namespace al
+} // namespace al

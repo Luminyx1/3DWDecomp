@@ -1,24 +1,32 @@
 #pragma once
-
-#include <basis/seadTypes.h>
-
-#include "Library/LiveActor/LiveActor.hpp"
-
-namespace al {
-class ActorInitInfo;
-}  // namespace al
-
-/**
- * @brief Rosalina (ロゼッタNPC), who waits at the goal pole of the course she unlocks.
- */
-class RosettaNpc : public al::LiveActor {
+#include "Player/Normal/PlayerModel.hpp"
+class PlayerRetargettingSelector;
+class ActorStateSupportStroke;
+class RosettaNpc : public PlayerModel {
 public:
     RosettaNpc(const char* pName, const al::ActorInitInfo& rInfo);
-
-    void startGoalPose(s32 catchNum);
+    ~RosettaNpc() override;
+    void control() override;
+    void attackSensor(al::HitSensor* pSelf, al::HitSensor* pOther) override;
+    bool receiveMsg(const al::SensorMsg* pMessage, al::HitSensor* pOther,
+                    al::HitSensor* pSelf) override;
+    bool receiveMsgScreenPoint(const al::SensorMsg* pMessage, al::ScreenPointer* pPointer,
+                               al::ScreenPointTarget* pTarget) override;
+    bool tryStartGuard();
+    void exeWait();
+    void exeGoalPose();
+    void exeBarrier();
+    void exeBarrierLoop();
+    void exeGuard();
+    void startGoalPose(int rank);
 
 private:
-    u8 mUnreconstructed148[0xd0];
+    PlayerRetargettingSelector* mSelector;
+    ActorStateSupportStroke* mStroke;
+    sead::Vector3f mInitialFront;
+    bool mJointFlag;
+    sead::Quatf mQuat;
+    int mGoalRank;
+    int mGuardCooldown;
 };
-
 static_assert(sizeof(RosettaNpc) == 0x218);

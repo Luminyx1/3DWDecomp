@@ -8,11 +8,11 @@ class CatGull;
 
 /**
  * @brief Scene object listing every seagull flock of the scene.
- * @note Only what reconstructed code needs is declared so far.
  */
 class CatGullHolder : public al::ISceneObj {
 public:
     CatGullHolder();
+    ~CatGullHolder();
 
     /**
      * @brief Get the registered seagull flocks.

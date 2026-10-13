@@ -2,6 +2,7 @@
 
 #include <basis/seadTypes.h>
 #include <math/seadVector.h>
+#include <prim/seadSafeString.h>
 
 #include "Library/Nerve/NerveStateBase.hpp"
 
@@ -10,27 +11,31 @@ class ActorInitInfo;
 class CameraInfo;
 class CameraTicket;
 class LiveActor;
-}  // namespace al
+} // namespace al
 
 /** @brief Name and settings of a gate keeper boss's opening demo. */
 class GateKeeperStateDemoParam {
-public:
-    GateKeeperStateDemoParam(const char* pActionName, s32 unk);
+  public:
+    GateKeeperStateDemoParam(const char *pActionName, s32 unk);
 
-    const char* mActionName;
-    u8 mUnknown08[0x20 - 0x08];
+    const char *mActionName;
+    const char *mPlayerAction;
+    const char *mCameraAction;
+    s32 mCameraStartFrames;
+    s32 mCameraEndFrames;
 };
 
 static_assert(sizeof(GateKeeperStateDemoParam) == 0x20);
 
 /** @brief Opening demo shared by the gate keeper bosses (Punpun, Bunbun, ...). */
 class GateKeeperStateDemo : public al::ActorStateBase {
-public:
-    GateKeeperStateDemo(al::LiveActor* pHost, const al::ActorInitInfo& rInfo,
-                        const GateKeeperStateDemoParam* pParam, al::CameraInfo* pCamera);
-    GateKeeperStateDemo(al::LiveActor* pHost, const al::ActorInitInfo& rInfo,
-                        const GateKeeperStateDemoParam* pParam, al::CameraTicket* pCamera);
+  public:
+    GateKeeperStateDemo(al::LiveActor *pHost, const al::ActorInitInfo &rInfo,
+                        const GateKeeperStateDemoParam *pParam, al::CameraInfo *pCamera);
+    GateKeeperStateDemo(al::LiveActor *pHost, const al::ActorInitInfo &rInfo,
+                        const GateKeeperStateDemoParam *pParam, al::CameraTicket *pCamera);
 
+    ~GateKeeperStateDemo() override;
     void appear() override;
     void kill() override;
     bool isDemoFirstStep() const;
@@ -48,7 +53,7 @@ public:
      * @brief Sets the offset added to the demo camera's look-at position.
      * @param rOffset Look-at offset.
      */
-    void setLookAtOffset(const sead::Vector3f& rOffset) { mLookAtOffset.e = rOffset.e; }
+    void setLookAtOffset(const sead::Vector3f &rOffset) { mLookAtOffset = sead::Vector3f(rOffset); }
 
     /** @brief Marks the demo camera as an RS camera ticket (single mode). */
     void setIsCameraTicket() { mIsCameraTicket = true; }
@@ -59,14 +64,20 @@ public:
      */
     bool isDemoStarted() const { return mIsDemoStarted; }
 
-private:
-    u8 mUnknown20[0xa8 - 0x20];
-    sead::Vector3f mLookAtOffset;  // 0xa8
-    u8 mUnknownB4[0xcd - 0xb4];
-    bool mIsControlPlayer;  // 0xcd
-    bool mIsCameraTicket;   // 0xce
-    bool mIsDemoStarted;    // 0xcf
-    u8 mUnknownD0[0xd8 - 0xd0];
+  private:
+    const GateKeeperStateDemoParam *mParam;
+    al::CameraInfo *mCameraInfo = nullptr;
+    al::CameraTicket *mCameraTicket = nullptr;
+    sead::FixedSafeString<32> mStartRecorderId;
+    sead::FixedSafeString<32> mEndRecorderId;
+    sead::Vector3f mLookAtOffset = sead::Vector3f::zero;
+    sead::Vector3f mPlayerPos = sead::Vector3f::zero;
+    sead::Vector3f mPlayerFront = sead::Vector3f::zero;
+    bool mHasPlayerPos = false;
+    bool mIsControlPlayer = true;
+    bool mIsCameraTicket = false;
+    bool mIsDemoStarted = false;
+    bool mCancelPlayerKoura;
 };
 
 static_assert(sizeof(GateKeeperStateDemo) == 0xd8);

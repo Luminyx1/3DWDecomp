@@ -17,8 +17,7 @@ public:
           _29(value29), _2a(value2a), _2c(value2c), _30(value30), _34(value34),
           mIsInhibitWall(inhibitWall), _39(reserved39), _44(value44) {}
 
-    virtual bool checkDerivedRuntimeTypeInfo(const sead::RuntimeTypeInfo::Interface*) const;
-    virtual const sead::RuntimeTypeInfo::Interface* getRuntimeTypeInfo() const;
+    SEAD_RTTI_BASE(PlayerBindEndParam)
 
     bool isInhibitWall() const { return mIsInhibitWall; }
 

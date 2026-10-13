@@ -31,6 +31,7 @@ public:
                           s32 userId);
     ~CourseSelectPuppeteer() override;
 
+    int getUserId() const { return mUserId; }
     void setActor(PlayerActor* pActor);
     void startDemoWithNextNerve(ICourseSelectActorController* pController,
                                 const al::Nerve* pNextNerve);

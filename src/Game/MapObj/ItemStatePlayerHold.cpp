@@ -143,4 +143,3 @@ void ItemStatePlayerHold::exeHold() {
     holdMtx.setTranslation(pos);
     al::updatePoseMtx(mHostActor, &holdMtx);
 }
-

@@ -12,7 +12,7 @@ namespace al {
 class JointLookAtController;
 class JointRumbler;
 class JointSpringController;
-}  // namespace al
+} // namespace al
 
 class FurKeeper;
 class IUsePlayerRetargettingSelector;
@@ -76,17 +76,28 @@ public:
     /** @brief Gets the foot IK (created by createIK). @return IK, or nullptr. */
     PlayerModelIK* getIK() const { return mIK; }
 
-    /** @brief Gets the hair controller (created by createHairCtrl). @return Controller, or nullptr. */
+    /** @brief Gets the hair controller (created by createHairCtrl). @return Controller, or nullptr.
+     */
     PlayerModelHair* getHairCtrl() const { return mHairCtrl; }
+
+protected:
+    /** @brief Sets the NPC model and animation names. @param pModel Model name. @param pAction
+     * Action suffix. */
+    void setNpcNames(const char* pModel, const char* pAction) {
+        mModelName = pModel;
+        mAnimSetName = pAction;
+    }
+    /** @brief Gets the model's joint look controller. @return Joint controller. */
+    al::JointLookAtController* getJointLookController() const { return mLookAtCtrl; }
 
 private:
     s32 mRetargettingIndex = 0;                       // 0x144
     s32 _148 = 0;                                     // 0x148
-    void* _150 = nullptr;                             // 0x150
+    const char* mModelName = nullptr;                 // 0x150
     const char* mAnimSetName = nullptr;               // 0x158
     void* _160 = nullptr;                             // 0x160
     al::JointRumbler* mRumblers[2] = {};              // 0x168
-    al::JointLookAtController* mLookAtCtrl = nullptr;  // 0x178
+    al::JointLookAtController* mLookAtCtrl = nullptr; // 0x178
     sead::PtrArray<FurKeeper> mFurKeepers;            // 0x180
     PlayerModelIK* mIK = nullptr;                     // 0x190
     PlayerModelHair* mHairCtrl = nullptr;             // 0x198
