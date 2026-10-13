@@ -1578,18 +1578,18 @@ void SingleModeScene::updatePlay() {
             SingleModeDataFunction::setPlayReportData(GameDataHolderAccessor(mGameDataHolder),
                                                       static_cast<preport::Key>(10),
                                                       singleModeData->getName());
-            SingleModeDataFunction::setPlayReportData(
-                GameDataHolderAccessor(mGameDataHolder), static_cast<preport::Key>(11),
-                gameDataFile->getTotalPlayTimePR(false));
-            SingleModeDataFunction::setPlayReportData(
-                GameDataHolderAccessor(mGameDataHolder), static_cast<preport::Key>(12),
-                singleModeData->getTotalPlayTimePR(true));
             SingleModeDataFunction::setPlayReportData(GameDataHolderAccessor(mGameDataHolder),
-                                                      static_cast<preport::Key>(3),
-                                                      SingleModeData::sOptions.mIsCameraReverseHorizontal);
+                                                      static_cast<preport::Key>(11),
+                                                      gameDataFile->getTotalPlayTimePR(false));
             SingleModeDataFunction::setPlayReportData(GameDataHolderAccessor(mGameDataHolder),
-                                                      static_cast<preport::Key>(4),
-                                                      SingleModeData::sOptions.mIsCameraReverseVertical);
+                                                      static_cast<preport::Key>(12),
+                                                      singleModeData->getTotalPlayTimePR(true));
+            SingleModeDataFunction::setPlayReportData(
+                GameDataHolderAccessor(mGameDataHolder), static_cast<preport::Key>(3),
+                SingleModeData::sOptions.mIsCameraReverseHorizontal);
+            SingleModeDataFunction::setPlayReportData(
+                GameDataHolderAccessor(mGameDataHolder), static_cast<preport::Key>(4),
+                SingleModeData::sOptions.mIsCameraReverseVertical);
             SingleModeDataFunction::setPlayReportData(GameDataHolderAccessor(mGameDataHolder),
                                                       static_cast<preport::Key>(7),
                                                       SingleModeData::sOptions.mCameraSensitivity);
@@ -1599,9 +1599,9 @@ void SingleModeScene::updatePlay() {
             SingleModeDataFunction::setPlayReportData(GameDataHolderAccessor(mGameDataHolder),
                                                       static_cast<preport::Key>(34),
                                                       singleModeData->getGoalItemNum());
-            SingleModeDataFunction::setPlayReportData(
-                GameDataHolderAccessor(mGameDataHolder), static_cast<preport::Key>(35),
-                singleModeData->getCurValidIslandVisited());
+            SingleModeDataFunction::setPlayReportData(GameDataHolderAccessor(mGameDataHolder),
+                                                      static_cast<preport::Key>(35),
+                                                      singleModeData->getCurValidIslandVisited());
             mGameDataHolder->endPlayReport();
         }
     }
@@ -1636,14 +1636,13 @@ void SingleModeScene::updatePlay() {
         updateFreezeMode(false);
     } else {
         al::updateKit(this);
+        mLiveActorKit->getExecuteDirector()->finishExecute();
     }
 
-    mLiveActorKit->getExecuteDirector()->finishExecute();
     mPlayerAliveWatcher->update();
 
     if (al::isNerve(this, &NrvSingleModeScenePlay)) {
         s32 islandIndex = mIslandAreaWatcher->getActiveIslandIndex();
-        bool isLeaveIsland = islandIndex == -1;
 
         if (islandIndex >= 0) {
             PlayerActor* player = mPlayers[0];
@@ -1655,7 +1654,7 @@ void SingleModeScene::updatePlay() {
             }
 
             if (islandIndex == 16) {
-                isLeaveIsland = true;
+                goto leaveIsland;
             } else if (player != nullptr && rc::isPlayerOnGround(player) &&
                        !rc::isPlayerOnRaidon(player) && !rc::isPlayerInWater(player)) {
                 if (SingleModeDataFunction::getScenarioNum(this, islandIndex) != 0) {
@@ -1677,9 +1676,8 @@ void SingleModeScene::updatePlay() {
             } else {
                 mAudioDirector->setBgmChangeWatcher(-1);
             }
-        }
-
-        if (isLeaveIsland) {
+        } else if (islandIndex == -1) {
+        leaveIsland:
             mIslandKeeper->setActiveIslandIndex(islandIndex);
             mSceneLayout->fadeOutAreaName(true);
             mSceneLayout->updateCounters(-1);
@@ -1691,8 +1689,8 @@ void SingleModeScene::updatePlay() {
 
     mLiveActorKit->getClippingDirector()->executeRequestAsyncUpdate();
 
-    s32 zoneIndex;
     s32 checkpointIndex;
+    s32 zoneIndex;
     SingleModeDataFunction::getLastCheckpointPass(this, &zoneIndex, &checkpointIndex);
 
     if (checkpointIndex != mLastCheckpointIndex || zoneIndex != mLastCheckpointZoneIndex) {
