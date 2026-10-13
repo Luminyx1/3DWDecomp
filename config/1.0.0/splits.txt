@@ -3158,7 +3158,7 @@ src/Game/Scene/ProjectActorFactoryEntries.cpp: done
     .text   start:0x004B8F70 end:0x004C1338
 src/Game/Scene/ProjectItemDirector.cpp:
     .text   start:0x004C1340 end:0x004C6458
-src/Game/Scene/ProjectSceneFactory.cpp:
+src/Game/Scene/ProjectSceneFactory.cpp: done
     .text   start:0x004C6460 end:0x004C6528
 src/Game/Scene/ProjectSceneFactoryEntries.cpp: done
     .text   start:0x004C6530 end:0x004C6834

@@ -6237,3 +6237,6 @@
 0x71016B56E0 144 object _ZN12_GLOBAL__N_117cFlagSpringParamsE
 0x7101A28318 64 object _ZN12_GLOBAL__N_112cFlagEffectsE
 0x7101A28358 40 object _ZN12_GLOBAL__N_112cFlagActionsE
+
+# Project scene creation table.
+0x7101a9a870 288 object _ZN12_GLOBAL__N_113sSceneEntriesE
