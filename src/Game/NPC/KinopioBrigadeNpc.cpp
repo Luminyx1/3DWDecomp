@@ -304,9 +304,8 @@ void KinopioBrigadeNpc::init(const al::ActorInitInfo& rInfo, bool isDiscoveredLo
             mGoalItem = new GoalItem("GoalItem");
             al::initLinksActor(mGoalItem, rInfo, "GoalItem", 0);
             al::copyPose(mGoalItem, this);
-            GameDataHolderAccessor accessor(this);
             mIsScenarioComplete = SingleModeDataFunction::isScenarioComplete(
-                accessor, mGoalItem->getIslandId() - 1, mGoalItem->getShineId() - 1);
+                GameDataHolderAccessor(this), mGoalItem->getIslandId() - 1, mGoalItem->getShineId() - 1);
             mGoalItem->makeActorDead();
             if (al::isValidStageSwitch(this, "SwitchAllowGoalItemCollect") &&
                 !mIsScenarioComplete) {
