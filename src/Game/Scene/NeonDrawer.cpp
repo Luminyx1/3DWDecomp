@@ -14,21 +14,17 @@
 
 namespace {
 const al::UniformBlockLayout sNeonLayout[] = {
-    {0, agl::UniformBlock::cType_Float, 1},
-    {1, agl::UniformBlock::cType_Float, 1},
-    {2, agl::UniformBlock::cType_Float, 1},
-    {3, agl::UniformBlock::cType_Float, 1},
-    {4, agl::UniformBlock::cType_Float, 1},
-    {5, agl::UniformBlock::cType_Float, 1},
-    {6, agl::UniformBlock::cType_Float, 1},
-    {7, agl::UniformBlock::cType_Vec4, 1},
+    {0, agl::UniformBlock::cType_Float, 1}, {1, agl::UniformBlock::cType_Float, 1},
+    {2, agl::UniformBlock::cType_Float, 1}, {3, agl::UniformBlock::cType_Float, 1},
+    {4, agl::UniformBlock::cType_Float, 1}, {5, agl::UniformBlock::cType_Float, 1},
+    {6, agl::UniformBlock::cType_Float, 1}, {7, agl::UniformBlock::cType_Vec4, 1},
     {8, agl::UniformBlock::cType_Vec4, 1},
 };
 struct {
     const char* values[1];
     const char* macros[1];
 } sNeonVariation = {{"0"}, {"COLOR_TYPE"}};
-}
+} // namespace
 
 NeonDrawer::NeonDrawer() : mQuad(new al::FullScreenQuadModel) {}
 
@@ -45,10 +41,11 @@ void NeonDrawer::setColor(const sead::Color4f& rMainColor, const sead::Color4f& 
 
 agl::ShaderMode NeonDrawer::draw(const agl::RenderBuffer* pOutput, agl::RenderBuffer* pNeon,
                                  al::GBufferArray* pGBuffer, agl::ShaderMode shaderMode,
-                                 s32 displayIndex, f32 nearClip, f32 farClip, bool isColorOnly) const {
+                                 s32 displayIndex, f32 nearClip, f32 farClip,
+                                 bool isColorOnly) const {
     sNeonVariation.values[0] = isColorOnly ? "1" : "0";
-    const agl::ShaderProgram* shader = mShader->searchVariation(
-        1, sNeonVariation.macros, sNeonVariation.values);
+    const agl::ShaderProgram* shader =
+        mShader->searchVariation(1, sNeonVariation.macros, sNeonVariation.values);
     pOutput->bind(al::GameFrameworkNx::getAglDrawContext());
     sead::Viewport viewport(*pNeon);
     viewport.apply(al::GameFrameworkNx::getAglDrawContext(), *pNeon);
@@ -64,6 +61,7 @@ agl::ShaderMode NeonDrawer::draw(const agl::RenderBuffer* pOutput, agl::RenderBu
         agl::TextureSampler sampler(*pNeon->getRenderTargetColor());
         sampler.activate(al::GameFrameworkNx::getAglDrawContext(), neon, -1, false);
     }
+    al::UniformBlock* const& rawUniform = mUniformBlocks(displayIndex);
     al::UniformBlock* const& uniform = mUniformBlocks[displayIndex];
     uniform->swap();
     uniform->setValue(0, nearClip);
@@ -73,18 +71,14 @@ agl::ShaderMode NeonDrawer::draw(const agl::RenderBuffer* pOutput, agl::RenderBu
     uniform->setValue(4, 3.9f);
     if (displayIndex == 0) {
         uniform->setValue(5, 1.0f / static_cast<u32>(al::getDisplayWidth()));
-        uniform->setValue(6, 1.0f / static_cast<u32>(al::getDisplayHeight()));
+        rawUniform->setValue(6, 1.0f / static_cast<u32>(al::getDisplayHeight()));
     } else {
         uniform->setValue(5, 1.0f / al::getSubDisplayWidth());
         uniform->setValue(6, 1.0f / al::getSubDisplayHeight());
     }
     uniform->setValueRef(7, mMainColor);
     uniform->setValueRef(8, mEdgeColor);
-    auto* blockToFlush = uniform;
-    const u32 offset = blockToFlush->getCurrentBlockOffset(0);
-    const u32 size = blockToFlush->getBlockSize();
-    agl::GPUMemVoidAddr addr = blockToFlush->getBuffer();
-    agl::GPUMemVoidAddr(addr, offset).flushCPUCache(size);
+    uniform->flushCurrentBuffer();
     agl::UniformBlockLocation block("RenderNeon");
     block.search(*shader);
     uniform->activate(al::GameFrameworkNx::getAglDrawContext(), block);
