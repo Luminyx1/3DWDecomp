@@ -6,9 +6,11 @@ namespace al {
 class HitSensor;
 }
 
-/// Hold offsets of an item carried by the player, one per player size and pose.
+/// Hold offsets of an item carried by the player, including offsets selected by player character and size.
 class ItemStatePlayerHoldParam {
 public:
+    ItemStatePlayerHoldParam();
+    ItemStatePlayerHoldParam(const sead::Vector3f&, const sead::Vector3f&);
     ItemStatePlayerHoldParam(const sead::Vector3f&, const sead::Vector3f&, const sead::Vector3f&,
                              const sead::Vector3f&, const sead::Vector3f&, const sead::Vector3f&,
                              const sead::Vector3f&, const sead::Vector3f&, const sead::Vector3f&,
@@ -20,7 +22,8 @@ public:
     const sead::Vector3f& getHoldRotate() const { return mHoldRotate; }
 
 private:
-    sead::Vector3f mOffsets[10];       // 0x0
-    unsigned char _78[0x90 - 0x78];
+    sead::Vector3f mOffsets[12];       // 0x0
     sead::Vector3f mHoldRotate;        // 0x90 (last constructor argument)
 };
+
+static_assert(sizeof(ItemStatePlayerHoldParam) == 0x9c);

@@ -18933,7 +18933,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71002ED3F0			FALSE	_ZN19ItemStatePlayerHold14updateColliderEPN2al9HitSensorE	ItemStatePlayerHold::updateCollider(al::HitSensor*)	
 0x71002ED410			FALSE	_ZN19ItemStatePlayerHold7exeHoldEv	ItemStatePlayerHold::exeHold()	
 0x71002ED7D0			FALSE	_ZN19ItemStatePlayerHoldD0Ev	ItemStatePlayerHold::~ItemStatePlayerHold()	
-0x71002ED800			FALSE	sub_71002ED800	sub_71002ED800	
+0x71002ED800			FALSE	_ZNK12_GLOBAL__N_126ItemStatePlayerHoldNrvHold7executeEPN2al11NerveKeeperE	(anonymous namespace)::ItemStatePlayerHoldNrvHold::execute(al::NerveKeeper*) const	TRUE
 0x71002ED810		ItemStatePopUpAbove.o	FALSE	_ZN19ItemStatePopUpAboveC2EPN2al9LiveActorE	ItemStatePopUpAbove::ItemStatePopUpAbove(al::LiveActor*)	
 0x71002ED860			FALSE	_ZN19ItemStatePopUpAbove4initEv	ItemStatePopUpAbove::init()	
 0x71002ED870			FALSE	_ZN19ItemStatePopUpAbove6appearEv	ItemStatePopUpAbove::appear()	
