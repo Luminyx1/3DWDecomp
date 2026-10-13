@@ -149,6 +149,7 @@ public:
     s32 getActiveWorldId() const { return mActiveWorldId; }
     /** @brief Gets whether the event gate keeper is talking. @return true while it talks. */
     bool isEventGateKeeper() const { return mIsEventGateKeeper; }
+    void setEventGateKeeper(bool active) { mIsEventGateKeeper = active; }
     /** @brief Gets the main player of the map. @return The main player actor. */
     al::LiveActor* getMainPlayer() const { return mMainPlayer; }
     /** @brief Gets the crown of the best-score player. @return The crown actor. */

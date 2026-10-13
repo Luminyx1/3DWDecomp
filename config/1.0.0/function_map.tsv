@@ -4501,11 +4501,11 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71000B7420			FALSE	_ZN29DemoEventGateKeeperController20startOpenImmediatelyEv	DemoEventGateKeeperController::startOpenImmediately()	
 0x71000B7430			FALSE	_ZNK29DemoEventGateKeeperController9isEndOpenEv	DemoEventGateKeeperController::isEndOpen() const	
 0x71000B7440			FALSE	_ZNK12_GLOBAL__N_133DemoEventGateKeeperCheckerNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::DemoEventGateKeeperCheckerNrvWait::execute(al::NerveKeeper*) const	
-0x71000B7450			FALSE	sub_71000B7450	sub_71000B7450	
+0x71000B7450			FALSE	_ZNK12_GLOBAL__N_137DemoEventGateKeeperCheckerNrvBindWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::DemoEventGateKeeperCheckerNrvBindWait::execute(al::NerveKeeper*) const	
 0x71000B74F0			FALSE	_ZNK12_GLOBAL__N_135DemoEventGateKeeperCheckerNrvCamera7executeEPN2al11NerveKeeperE	(anonymous namespace)::DemoEventGateKeeperCheckerNrvCamera::execute(al::NerveKeeper*) const	
 0x71000B7500			FALSE	_ZNK12_GLOBAL__N_138DemoEventGateKeeperCheckerNrvDemoStart7executeEPN2al11NerveKeeperE	(anonymous namespace)::DemoEventGateKeeperCheckerNrvDemoStart::execute(al::NerveKeeper*) const	
 0x71000B7510			FALSE	_ZNK12_GLOBAL__N_142DemoEventGateKeeperCheckerNrvCameraStopper7executeEPN2al11NerveKeeperE	(anonymous namespace)::DemoEventGateKeeperCheckerNrvCameraStopper::execute(al::NerveKeeper*) const	
-0x71000B7520			FALSE	sub_71000B7520	sub_71000B7520	
+0x71000B7520			FALSE	_ZNK12_GLOBAL__N_142DemoEventGateKeeperCheckerNrvAppearStopper7executeEPN2al11NerveKeeperE	(anonymous namespace)::DemoEventGateKeeperCheckerNrvAppearStopper::execute(al::NerveKeeper*) const	
 0x71000B75A0			FALSE	_ZNK12_GLOBAL__N_136DemoEventGateKeeperCheckerNrvDemoEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::DemoEventGateKeeperCheckerNrvDemoEnd::execute(al::NerveKeeper*) const	
 0x71000B75B0			FALSE	_ZNK2al10FunctorV0MIP26DemoEventGateKeeperCheckerMS1_FvvEEclEv	al::FunctorV0M<DemoEventGateKeeperChecker*, void (DemoEventGateKeeperChecker::*)()>::operator()() const	
 0x71000B75D0			FALSE	_ZNK2al10FunctorV0MIP26DemoEventGateKeeperCheckerMS1_FvvEE5cloneEv	al::FunctorV0M<DemoEventGateKeeperChecker*, void (DemoEventGateKeeperChecker::*)()>::clone() const	
