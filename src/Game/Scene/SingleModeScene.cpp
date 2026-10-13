@@ -2374,10 +2374,10 @@ void SingleModeScene::exeDemoIntro() {
     updateDemoMovingCamera(true);
     updateAudioDemoType(&mAudioDemoType, this);
 
-    if (mUnlockedPhase == 5) {
+    if (mUnlockedPhase == 1) {
         s32 step = al::getNerveStep(this);
 
-        if (oceanWater != nullptr && step == 450) {
+        if (oceanWater != nullptr && step == 510) {
             oceanWater->setHeightMapScale(1.0f, false);
         }
     } else if (mUnlockedPhase == 3) {
@@ -2386,10 +2386,10 @@ void SingleModeScene::exeDemoIntro() {
         if (oceanWater != nullptr && step == 440) {
             oceanWater->setHeightMapScale(1.0f, false);
         }
-    } else if (mUnlockedPhase == 1) {
+    } else if (mUnlockedPhase == 5) {
         s32 step = al::getNerveStep(this);
 
-        if (oceanWater != nullptr && step == 510) {
+        if (oceanWater != nullptr && step == 450) {
             oceanWater->setHeightMapScale(1.0f, false);
         }
     }
@@ -2407,10 +2407,10 @@ void SingleModeScene::exeDemoIntro() {
 
         if (mUnlockedPhase == 3) {
             cutsceneId = 24;
-        } else if (mUnlockedPhase == 8) {
-            cutsceneId = 27;
         } else if (mUnlockedPhase == 5) {
             cutsceneId = 26;
+        } else if (mUnlockedPhase == 8) {
+            cutsceneId = 27;
         } else {
             mScreenCoverCtrl->requestCaptureScreenCover(10);
             cutsceneId = -1;
@@ -3193,7 +3193,7 @@ void SingleModeScene::exeDemoFadeTransition() {
         return;
     }
 
-    bool isKeepClosed;
+    s32 isKeepClosed;
 
     if (isFromIntro) {
         if (mIntroFlyOverCamera != nullptr) {
@@ -3202,7 +3202,7 @@ void SingleModeScene::exeDemoFadeTransition() {
 
         finishDemoIntro();
         mScreenCaptureExecutor->resetRequest(1);
-        isKeepClosed = true;
+        isKeepClosed = 1;
         al::setNerve(this, &NrvSingleModeSceneDemoKoopaJrPhaseIntro);
     } else {
         if (al::isNerve(this, &NrvSingleModeSceneDemoFadeTransitionToIslandMap)) {
@@ -3217,7 +3217,7 @@ void SingleModeScene::exeDemoFadeTransition() {
             al::setNerve(this, &NrvSingleModeScenePlay);
         }
 
-        isKeepClosed = false;
+        isKeepClosed = 0;
     }
 
     if (mDemoCutscene->getCutsceneId() != 25) {
@@ -3226,7 +3226,7 @@ void SingleModeScene::exeDemoFadeTransition() {
         al::CameraTurnInfo turnInfo;
         turnInfo.mRequesterName = getName();
         turnInfo.mDir = sPlayerFrontDir;
-        turnInfo._14 = 0.0f;
+        turnInfo._14 = 1.0f;
         turnInfo._18 = 1.0f;
         turnInfo._1c = true;
         turnInfo._1d = false;
@@ -4196,10 +4196,10 @@ void SingleModeScene::initPlacementZoneHolders(const al::ActorInitInfo& rInfo) {
                 if (al::isEqualString(zones.unsafeAt(j)->mName, objectName)) {
                     holder->setAppearEffectPos(zones.unsafeAt(j)->mTrans);
                     holder->setIslandId(zones.unsafeAt(j)->mZoneId);
-                    mIslandKeeper->push(holder);
                     break;
                 }
             }
+            mIslandKeeper->push(holder);
         }
     }
     mIslandKeeper->setIslandStartPos(mStageResourceKeeper->getMapStageInfo(), rInfo);
