@@ -2202,7 +2202,7 @@ src/Game/NPC/GhostPlayerPlayer.cpp: done
     .text   start:0x003AE540 end:0x003AEB40
 src/Game/NPC/GhostPlayerRecorder.cpp:
     .text   start:0x003AEB40 end:0x003B0348
-src/Game/NPC/GhostPresentBox.cpp:
+src/Game/NPC/GhostPresentBox.cpp: done
     .text   start:0x003B0350 end:0x003B0F00
 src/Game/NPC/ActorStateSupportStroke.cpp:
     .text   start:0x003B0F00 end:0x003B14C8
