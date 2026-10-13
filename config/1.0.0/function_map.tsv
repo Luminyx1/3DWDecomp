@@ -4500,13 +4500,13 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71000B7410			FALSE	_ZN29DemoEventGateKeeperController9startOpenEv	DemoEventGateKeeperController::startOpen()	
 0x71000B7420			FALSE	_ZN29DemoEventGateKeeperController20startOpenImmediatelyEv	DemoEventGateKeeperController::startOpenImmediately()	
 0x71000B7430			FALSE	_ZNK29DemoEventGateKeeperController9isEndOpenEv	DemoEventGateKeeperController::isEndOpen() const	
-0x71000B7440			FALSE	_ZNK12_GLOBAL__N_133DemoEventGateKeeperCheckerNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::DemoEventGateKeeperCheckerNrvWait::execute(al::NerveKeeper*) const	
+0x71000B7440			FALSE	_ZNK12_GLOBAL__N_133DemoEventGateKeeperCheckerNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::DemoEventGateKeeperCheckerNrvWait::execute(al::NerveKeeper*) const	TRUE
 0x71000B7450			FALSE	sub_71000B7450	sub_71000B7450	
-0x71000B74F0			FALSE	_ZNK12_GLOBAL__N_135DemoEventGateKeeperCheckerNrvCamera7executeEPN2al11NerveKeeperE	(anonymous namespace)::DemoEventGateKeeperCheckerNrvCamera::execute(al::NerveKeeper*) const	
-0x71000B7500			FALSE	_ZNK12_GLOBAL__N_138DemoEventGateKeeperCheckerNrvDemoStart7executeEPN2al11NerveKeeperE	(anonymous namespace)::DemoEventGateKeeperCheckerNrvDemoStart::execute(al::NerveKeeper*) const	
-0x71000B7510			FALSE	_ZNK12_GLOBAL__N_142DemoEventGateKeeperCheckerNrvCameraStopper7executeEPN2al11NerveKeeperE	(anonymous namespace)::DemoEventGateKeeperCheckerNrvCameraStopper::execute(al::NerveKeeper*) const	
+0x71000B74F0			FALSE	_ZNK12_GLOBAL__N_135DemoEventGateKeeperCheckerNrvCamera7executeEPN2al11NerveKeeperE	(anonymous namespace)::DemoEventGateKeeperCheckerNrvCamera::execute(al::NerveKeeper*) const	TRUE
+0x71000B7500			FALSE	_ZNK12_GLOBAL__N_138DemoEventGateKeeperCheckerNrvDemoStart7executeEPN2al11NerveKeeperE	(anonymous namespace)::DemoEventGateKeeperCheckerNrvDemoStart::execute(al::NerveKeeper*) const	TRUE
+0x71000B7510			FALSE	_ZNK12_GLOBAL__N_142DemoEventGateKeeperCheckerNrvCameraStopper7executeEPN2al11NerveKeeperE	(anonymous namespace)::DemoEventGateKeeperCheckerNrvCameraStopper::execute(al::NerveKeeper*) const	TRUE
 0x71000B7520			FALSE	sub_71000B7520	sub_71000B7520	
-0x71000B75A0			FALSE	_ZNK12_GLOBAL__N_136DemoEventGateKeeperCheckerNrvDemoEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::DemoEventGateKeeperCheckerNrvDemoEnd::execute(al::NerveKeeper*) const	
+0x71000B75A0			FALSE	_ZNK12_GLOBAL__N_136DemoEventGateKeeperCheckerNrvDemoEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::DemoEventGateKeeperCheckerNrvDemoEnd::execute(al::NerveKeeper*) const	TRUE
 0x71000B75B0			FALSE	_ZNK2al10FunctorV0MIP26DemoEventGateKeeperCheckerMS1_FvvEEclEv	al::FunctorV0M<DemoEventGateKeeperChecker*, void (DemoEventGateKeeperChecker::*)()>::operator()() const	
 0x71000B75D0			FALSE	_ZNK2al10FunctorV0MIP26DemoEventGateKeeperCheckerMS1_FvvEE5cloneEv	al::FunctorV0M<DemoEventGateKeeperChecker*, void (DemoEventGateKeeperChecker::*)()>::clone() const	
 0x71000B7620		KinokoOneUpCourseSelect.o	FALSE	_ZN23KinokoOneUpCourseSelectC2EPKc	KinokoOneUpCourseSelect::KinokoOneUpCourseSelect(char const*)	
@@ -17567,9 +17567,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71002B46B0			FALSE	_ZN17GateKeeperChecker6exeEndEv	GateKeeperChecker::exeEnd()	
 0x71002B46C0			FALSE	_ZN17GateKeeperCheckerD1Ev	GateKeeperChecker::~GateKeeperChecker()	
 0x71002B46D0			FALSE	_ZN17GateKeeperCheckerD0Ev	GateKeeperChecker::~GateKeeperChecker()	
-0x71002B4700			FALSE	_ZNK12_GLOBAL__N_128GateKeeperCheckerNrvChecking7executeEPN2al11NerveKeeperE	(anonymous namespace)::GateKeeperCheckerNrvChecking::execute(al::NerveKeeper*) const	
-0x71002B4750			FALSE	_ZNK12_GLOBAL__N_128GateKeeperCheckerNrvGoalDemo7executeEPN2al11NerveKeeperE	(anonymous namespace)::GateKeeperCheckerNrvGoalDemo::execute(al::NerveKeeper*) const	
-0x71002B4790			FALSE	_ZNK12_GLOBAL__N_123GateKeeperCheckerNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::GateKeeperCheckerNrvEnd::execute(al::NerveKeeper*) const	
+0x71002B4700			FALSE	_ZNK12_GLOBAL__N_128GateKeeperCheckerNrvChecking7executeEPN2al11NerveKeeperE	(anonymous namespace)::GateKeeperCheckerNrvChecking::execute(al::NerveKeeper*) const	TRUE
+0x71002B4750			FALSE	_ZNK12_GLOBAL__N_128GateKeeperCheckerNrvGoalDemo7executeEPN2al11NerveKeeperE	(anonymous namespace)::GateKeeperCheckerNrvGoalDemo::execute(al::NerveKeeper*) const	TRUE
+0x71002B4790			FALSE	_ZNK12_GLOBAL__N_123GateKeeperCheckerNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::GateKeeperCheckerNrvEnd::execute(al::NerveKeeper*) const	TRUE
 0x71002B47A0		GeneralHeadgear.o	FALSE	_ZN15GeneralHeadgearC2EPKc	GeneralHeadgear::GeneralHeadgear(char const*)	
 0x71002B4870			FALSE	_ZN15GeneralHeadgearC1EPKc	GeneralHeadgear::GeneralHeadgear(char const*)	
 0x71002B4940			FALSE	_ZN15GeneralHeadgear4initERKN2al13ActorInitInfoE	GeneralHeadgear::init(al::ActorInitInfo const&)	
