@@ -11287,9 +11287,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001B34E0			FALSE	_ZThn16_NK18CameraChangeLayout16getMessageSystemEv	non-virtual thunk to CameraChangeLayout::getMessageSystem() const	
 0x71001B34F0			FALSE	_ZThn24_NK18CameraChangeLayout15getSceneObjNameEv	non-virtual thunk to CameraChangeLayout::getSceneObjName() const	
 0x71001B3500			FALSE	_ZNK12_GLOBAL__N_133CameraChangeLayoutNrvNormalCamera7executeEPN2al11NerveKeeperE	(anonymous namespace)::CameraChangeLayoutNrvNormalCamera::execute(al::NerveKeeper*) const	
-0x71001B3510			FALSE	sub_71001B3510	sub_71001B3510	
-0x71001B3550			FALSE	sub_71001B3550	sub_71001B3550	
-0x71001B3590			FALSE	sub_71001B3590	sub_71001B3590	
+0x71001B3510			FALSE	_ZNK12_GLOBAL__N_141CameraChangeLayoutNrvKinopioBrigadeCamera7executeEPN2al11NerveKeeperE	(anonymous namespace)::CameraChangeLayoutNrvKinopioBrigadeCamera::execute(al::NerveKeeper*) const	
+0x71001B3550			FALSE	_ZNK12_GLOBAL__N_125CameraChangeLayoutNrvHide7executeEPN2al11NerveKeeperE	(anonymous namespace)::CameraChangeLayoutNrvHide::execute(al::NerveKeeper*) const	
+0x71001B3590			FALSE	_ZNK12_GLOBAL__N_140CameraChangeLayoutNrvSwitchCameraByStick7executeEPN2al11NerveKeeperE	(anonymous namespace)::CameraChangeLayoutNrvSwitchCameraByStick::execute(al::NerveKeeper*) const	
 0x71001B35D0			FALSE	_ZNK12_GLOBAL__N_131CameraChangeLayoutNrvGyroCamera7executeEPN2al11NerveKeeperE	(anonymous namespace)::CameraChangeLayoutNrvGyroCamera::execute(al::NerveKeeper*) const	
 0x71001B35E0			FALSE	_ZNK12_GLOBAL__N_141CameraChangeLayoutNrvSwitchCameraByButton7executeEPN2al11NerveKeeperE	(anonymous namespace)::CameraChangeLayoutNrvSwitchCameraByButton::execute(al::NerveKeeper*) const	
 0x71001B35F0		CameraGyroDrc.o	FALSE	_ZN13CameraGyroDrcC2ERKN2al14LayoutInitInfoE	CameraGyroDrc::CameraGyroDrc(al::LayoutInitInfo const&)	

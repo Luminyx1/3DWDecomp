@@ -1,6 +1,7 @@
 #pragma once
 
 #include <basis/seadTypes.h>
+#include "Project/Audio/IUseAudioKeeper.hpp"
 #include <math/seadMatrix.h>
 
 namespace sead {
@@ -18,7 +19,7 @@ class IUseAudioKeeper;
 class PlayerHolder;
 class SceneCameraInfo;
 
-class CameraDirector {
+class CameraDirector : public IUseAudioKeeper {
 public:
     CameraDirector(s32 viewNum, AreaObjDirector* pAreaObjDirector,
                    CollisionDirector* pCollisionDirector);
@@ -30,6 +31,18 @@ public:
     void setCameraAspect(const sead::Viewport* pMainViewport, const sead::Viewport* pSubViewport);
     void setStageName(const char* pStageName);
     void update(bool isPaused);
+    bool isUserControlMoveLimited() const;
+    bool isValidGyroMode() const;
+    bool isInCameraIconDisplayArea() const;
+    bool isValidUserCameraControlMode() const;
+    bool isSubCameraGyroMode() const;
+    bool isRequestGyroMode() const;
+    bool isRequestOffGyroMode() const;
+    bool isDisplayCameraIcon() const;
+    void resetRequestGyroModeFlag();
+    void resetRequestOffGyroMode();
+    void switchCameraMode();
+    s32 getCameraOwnerID() const { return mCameraOwnerID; }
     s32 getCameraMode() const;
     void setCameraMode(s32 mode);
     void startSnapshotMode();
@@ -56,7 +69,7 @@ public:
         mIsKinopioBrigadeReverseVertical = isReverse;
     }
 
-    u8 _0[0x8];
+    AudioKeeper* getAudioKeeper() const override;
     sead::LookAtCamera* mLookAtCamera;
     u8 _10[0x8];
     sead::PerspectiveProjection* mProjection;
@@ -85,6 +98,8 @@ public:
     bool _162;          // 0x162, set while the camera is rotated by a player
     u8 _163[0x1c8 - 0x163];
     s32 mMainPlayerIndex;  // 0x1c8
-    u8 _1cc[0x1f0 - 0x1cc];
+    u8 _1cc[0x1e0 - 0x1cc];
+    s32 mCameraOwnerID;
+    u8 _1e4[0x1f0 - 0x1e4];
 };
 }  // namespace al

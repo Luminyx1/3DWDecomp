@@ -6205,3 +6205,8 @@
 
 # src/Game/Layout/WindowMiiSetUp
 0x71019E9430 64 object _ZN12_GLOBAL__N_117NrvWindowMiiSetUpE
+
+# src/Game/Layout/CameraChangeLayout
+0x71019D27B0 8 object _ZN12_GLOBAL__N_141NrvCameraChangeLayoutKinopioBrigadeCameraE
+0x71019D27B8 8 object _ZN12_GLOBAL__N_125NrvCameraChangeLayoutHideE
+0x71019D27C0 8 object _ZN12_GLOBAL__N_140NrvCameraChangeLayoutSwitchCameraByStickE

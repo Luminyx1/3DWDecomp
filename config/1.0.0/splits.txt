@@ -1063,7 +1063,7 @@ src/Game/Layout/ButtonTextScrollParts.cpp:
     .text   start:0x001B0CF0 end:0x001B2058
 src/Game/Layout/ButtonTouch.cpp: done
     .text   start:0x001B2060 end:0x001B2A18
-src/Game/Layout/CameraChangeLayout.cpp:
+src/Game/Layout/CameraChangeLayout.cpp: done
     .text   start:0x001B2A20 end:0x001B35E8
 src/Game/Layout/CameraGyroDrc.cpp: done
     .text   start:0x001B35F0 end:0x001B3BC8
