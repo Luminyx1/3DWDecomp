@@ -1,5 +1,7 @@
 #include "Scene/SingleModeScene.hpp"
 
+#include <prim/seadBitFlag.h>
+
 #include <nn/oe.h>
 #include "AreaObj/ProjectAreaObjFactory.hpp"
 #include "Bgm/PlayerBigBgmController.hpp"
@@ -1288,16 +1290,14 @@ bool SingleModeScene::isTriggerPause(s32* pPort) const {
         return false;
     }
 
-    u16 portList = rc::getActiveInputPortList(GameDataHolderAccessor(mGameDataHolder));
+    sead::BitFlag16 portList = rc::getActiveInputPortList(GameDataHolderAccessor(mGameDataHolder));
     s32 mainPort = al::getMainControllerPort();
     s32 subPort = rc::getPadPortByUserId(1);
 
-    if ((portList & (1 << mainPort)) == 0 || !al::isPadConnected(mainPort) ||
+    if (portList.isOffBit(mainPort) || !al::isPadConnected(mainPort) ||
         rc::isDeadControlUserInStage(this, mainPort)) {
         return false;
     }
-
-    s32 port;
 
     if (SingleModeDataFunction::getIs2PAssistMode(this)) {
         if (al::isPadTypeJoyLeft(mainPort)) {
@@ -1306,37 +1306,41 @@ bool SingleModeScene::isTriggerPause(s32* pPort) const {
                     return false;
                 }
 
-                port = mainPort;
+                if (pPort != nullptr)
+                    *pPort = mainPort;
+                return true;
             } else {
                 if (!al::isPadTriggerPlus(subPort)) {
                     return false;
                 }
 
-                port = subPort;
+                if (pPort != nullptr)
+                    *pPort = subPort;
+                return true;
             }
         } else if (al::isPadTriggerPlus(mainPort)) {
-            port = mainPort;
+            if (pPort != nullptr)
+                *pPort = mainPort;
+            return true;
         } else {
             if (!al::isPadTriggerPlus(subPort) ||
                 (al::isPadTypeJoyRight(mainPort) && al::isPadTypeJoyRight(subPort))) {
                 return false;
             }
 
-            port = subPort;
+            if (pPort != nullptr)
+                *pPort = subPort;
+            return true;
         }
     } else {
         if (!rc::isPadTriggerStart(mainPort)) {
             return false;
         }
 
-        port = mainPort;
+        if (pPort != nullptr)
+            *pPort = mainPort;
+        return true;
     }
-
-    if (pPort != nullptr) {
-        *pPort = port;
-    }
-
-    return true;
 }
 
 /**
@@ -1370,7 +1374,6 @@ bool SingleModeScene::isTriggerMapMenu(s32* pPort) const {
 
     s32 mainPort = al::getMainControllerPort();
     s32 subPort = rc::getPadPortByUserId(1);
-    s32 port;
 
     if (SingleModeDataFunction::getIs2PAssistMode(this)) {
         if (al::isPadTypeJoyRight(mainPort)) {
@@ -1379,8 +1382,9 @@ bool SingleModeScene::isTriggerMapMenu(s32* pPort) const {
                     return false;
                 }
 
-                port = subPort;
-                goto trigger;
+                if (pPort != nullptr)
+                    *pPort = subPort;
+                return true;
             }
         } else if (al::isPadTypeJoyLeft(mainPort)) {
             if (al::isPadTriggerMinus(mainPort)) {
@@ -1388,35 +1392,34 @@ bool SingleModeScene::isTriggerMapMenu(s32* pPort) const {
                     return false;
                 }
 
-                port = mainPort;
-                goto trigger;
+                if (pPort != nullptr)
+                    *pPort = mainPort;
+                return true;
             }
         } else if (al::isPadTriggerRight(al::getMainControllerPort()) ||
                    al::isPadTriggerMinus(al::getMainControllerPort())) {
-            port = mainPort;
-            goto trigger;
+            if (pPort != nullptr)
+                *pPort = mainPort;
+            return true;
         }
 
         if (!al::isPadTriggerMinus(subPort)) {
             return false;
         }
 
-        port = subPort;
+        if (pPort != nullptr)
+            *pPort = subPort;
+        return true;
     } else {
         if (!al::isPadTriggerRight(al::getMainControllerPort()) &&
             !al::isPadTriggerMinus(al::getMainControllerPort())) {
             return false;
         }
 
-        port = al::getMainControllerPort();
+        if (pPort != nullptr)
+            *pPort = al::getMainControllerPort();
+        return true;
     }
-
-trigger:
-    if (pPort != nullptr) {
-        *pPort = port;
-    }
-
-    return true;
 }
 
 /**
@@ -1473,10 +1476,12 @@ bool SingleModeScene::isTriggerItemSpawn(s32 port) const {
     }
 
     if (al::isPadTypeJoySingle(port)) {
-        return al::isPadHoldX(port);
+        if (!al::isPadHoldX(port))
+            return false;
+    } else if (!al::isPadHoldUp(port)) {
+        return false;
     }
-
-    return al::isPadHoldUp(port);
+    return true;
 }
 
 /**
