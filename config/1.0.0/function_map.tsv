@@ -15761,11 +15761,11 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100269F80			FALSE	_ZNK12_GLOBAL__N_121CheckPointStarNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::CheckPointStarNrvWait::execute(al::NerveKeeper*) const	
 0x7100269F90			FALSE	_ZNK12_GLOBAL__N_130CheckPointStarNrvSpinSpeedDown7executeEPN2al11NerveKeeperE	(anonymous namespace)::CheckPointStarNrvSpinSpeedDown::execute(al::NerveKeeper*) const	
 0x7100269FA0			FALSE	_ZNK12_GLOBAL__N_121CheckPointStarNrvSpin7executeEPN2al11NerveKeeperE	(anonymous namespace)::CheckPointStarNrvSpin::execute(al::NerveKeeper*) const	
-0x7100269FB0			FALSE	sub_7100269FB0	sub_7100269FB0	
+0x7100269FB0			FALSE	_ZNK12_GLOBAL__N_123CheckPointStarNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::CheckPointStarNrvAppear::execute(al::NerveKeeper*) const	TRUE
 0x7100269FC0			FALSE	_ZNK12_GLOBAL__N_124CheckPointStarNrvMoveArc7executeEPN2al11NerveKeeperE	(anonymous namespace)::CheckPointStarNrvMoveArc::execute(al::NerveKeeper*) const	
 0x7100269FD0			FALSE	_ZNK12_GLOBAL__N_127CheckPointStarNrvMoveLinear7executeEPN2al11NerveKeeperE	(anonymous namespace)::CheckPointStarNrvMoveLinear::execute(al::NerveKeeper*) const	
 0x7100269FE0			FALSE	_ZNK12_GLOBAL__N_121CheckPointStarNrvFail7executeEPN2al11NerveKeeperE	(anonymous namespace)::CheckPointStarNrvFail::execute(al::NerveKeeper*) const	
-0x7100269FF0			FALSE	sub_7100269FF0	sub_7100269FF0	
+0x7100269FF0			FALSE	_ZNK12_GLOBAL__N_125CheckPointStarNrvReappear7executeEPN2al11NerveKeeperE	(anonymous namespace)::CheckPointStarNrvReappear::execute(al::NerveKeeper*) const	TRUE
 0x710026A000		ChikaChikaBlock.o	FALSE	_ZN15ChikaChikaBlockC2EPKc	ChikaChikaBlock::ChikaChikaBlock(char const*)	
 0x710026A090			FALSE	_ZN15ChikaChikaBlockC1EPKc	ChikaChikaBlock::ChikaChikaBlock(char const*)	
 0x710026A120			FALSE	_ZN15ChikaChikaBlock4initERKN2al13ActorInitInfoE	ChikaChikaBlock::init(al::ActorInitInfo const&)	

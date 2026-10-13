@@ -105,6 +105,7 @@
 #include "MapObj/SuperSkateShoes.hpp"
 #include "MapObj/SuperSkateRail.hpp"
 #pragma once
+#include "MapObj/CheckPoint.hpp"
 #include "MapObj/Lantern.hpp"
 
 #include "MapObj/TouchReactionMapParts.hpp"
@@ -379,14 +380,7 @@ static_assert(sizeof(Candlestand) == 0x180);
 static_assert(sizeof(CandlestandWatcher) == 0x150);
 
 
-class CheckPoint : public al::LiveActor {
-public:
-    explicit CheckPoint(const char* pName);
 
-private:
-    u8 mUnreconstructed[0xb4];
-};
-static_assert(sizeof(CheckPoint) == 0x1f8);
 
 
 class ChikuwaBlock : public al::LiveActor {
