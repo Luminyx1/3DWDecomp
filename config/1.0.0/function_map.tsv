@@ -6869,17 +6869,17 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001089B0			FALSE	_ZN9InkPuddle6exeEndEv	InkPuddle::exeEnd()	
 0x7100108A60			FALSE	_ZN9InkPuddleD1Ev	InkPuddle::~InkPuddle()	
 0x7100108A70			FALSE	_ZN9InkPuddleD0Ev	InkPuddle::~InkPuddle()	
-0x7100108AA0			FALSE	sub_7100108AA0	sub_7100108AA0	
-0x7100108B50			FALSE	sub_7100108B50	sub_7100108B50	
-0x7100108B60			FALSE	sub_7100108B60	sub_7100108B60	
-0x7100108BB0			FALSE	sub_7100108BB0	sub_7100108BB0	
-0x7100108BC0			FALSE	sub_7100108BC0	sub_7100108BC0	
-0x7100108C10			FALSE	sub_7100108C10	sub_7100108C10	
-0x7100108C20			FALSE	sub_7100108C20	sub_7100108C20	
-0x7100108CD0			FALSE	sub_7100108CD0	sub_7100108CD0	
-0x7100108CE0			FALSE	sub_7100108CE0	sub_7100108CE0	
-0x7100108DA0			FALSE	sub_7100108DA0	sub_7100108DA0	
-0x7100108DB0			FALSE	sub_7100108DB0	sub_7100108DB0	
+0x7100108AA0			FALSE	_ZNK12_GLOBAL__N_117InkPuddleNrvStart7executeEPN2al11NerveKeeperE	(anonymous namespace)::InkPuddleNrvStart::execute(al::NerveKeeper*) const	
+0x7100108B50			FALSE	_ZNK12_GLOBAL__N_117InkPuddleNrvStart13getActionNameEv	(anonymous namespace)::InkPuddleNrvStart::getActionName() const	
+0x7100108B60			FALSE	_ZNK12_GLOBAL__N_116InkPuddleNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::InkPuddleNrvWait::execute(al::NerveKeeper*) const	
+0x7100108BB0			FALSE	_ZNK12_GLOBAL__N_116InkPuddleNrvWait13getActionNameEv	(anonymous namespace)::InkPuddleNrvWait::getActionName() const	
+0x7100108BC0			FALSE	_ZNK12_GLOBAL__N_118InkPuddleNrvIgnite7executeEPN2al11NerveKeeperE	(anonymous namespace)::InkPuddleNrvIgnite::execute(al::NerveKeeper*) const	
+0x7100108C10			FALSE	_ZNK12_GLOBAL__N_118InkPuddleNrvIgnite13getActionNameEv	(anonymous namespace)::InkPuddleNrvIgnite::getActionName() const	
+0x7100108C20			FALSE	_ZNK12_GLOBAL__N_120InkPuddleNrvQuickEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::InkPuddleNrvQuickEnd::execute(al::NerveKeeper*) const	
+0x7100108CD0			FALSE	_ZNK12_GLOBAL__N_120InkPuddleNrvQuickEnd13getActionNameEv	(anonymous namespace)::InkPuddleNrvQuickEnd::getActionName() const	
+0x7100108CE0			FALSE	_ZNK12_GLOBAL__N_115InkPuddleNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::InkPuddleNrvEnd::execute(al::NerveKeeper*) const	
+0x7100108DA0			FALSE	_ZNK12_GLOBAL__N_115InkPuddleNrvEnd13getActionNameEv	(anonymous namespace)::InkPuddleNrvEnd::getActionName() const	
+0x7100108DB0			FALSE	_GLOBAL__sub_I_InkPuddle.cpp	_GLOBAL__sub_I_InkPuddle.cpp	
 0x7100108E40		JointAimUtil.o	FALSE	_ZN12JointAimUtil18updateEyeJointInfoEPN2al9LiveActorEPNS0_12JointAimInfoEff	JointAimUtil::updateEyeJointInfo(al::LiveActor*, al::JointAimInfo*, float, float)	object (class)
 0x7100108EA0		Kameck.o	FALSE	_ZN6KameckC2EPKc	Kameck::Kameck(char const*)	
 0x7100108F50			FALSE	_ZN6KameckC1EPKc	Kameck::Kameck(char const*)	
