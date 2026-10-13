@@ -15292,14 +15292,14 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71002580C0			FALSE	_ZN7BoxCoin15updateCarryPoseEv	BoxCoin::updateCarryPose()	
 0x7100258130			FALSE	_ZN7BoxCoin8exeCarryEv	BoxCoin::exeCarry()	
 0x7100258780			FALSE	_ZNK19BoxCoinReleaseParam17isEqualActionNameEPKc	BoxCoinReleaseParam::isEqualActionName(char const*) const	
-0x7100258790			FALSE	sub_7100258790	sub_7100258790	
+0x7100258790			FALSE	_ZN12_GLOBAL__N_112isNormalJumpEPK19HeadgearPoseBuilder	_ZN12_GLOBAL__N_112isNormalJumpEPK19HeadgearPoseBuilder	TRUE
 0x71002588E0			FALSE	_ZNK19BoxCoinReleaseParam14getReleaseStepEv	BoxCoinReleaseParam::getReleaseStep() const	
 0x7100258900			FALSE	_ZN7BoxCoin7exeBlowEv	BoxCoin::exeBlow()	
 0x7100258960			FALSE	_ZN19BoxCoinReleaseParamC1EPKcifb	BoxCoinReleaseParam::BoxCoinReleaseParam(char const*, int, float, bool)	
 0x7100258980			FALSE	_ZN7BoxCoinD1Ev	BoxCoin::~BoxCoin()	
 0x7100258990			FALSE	_ZN7BoxCoinD0Ev	BoxCoin::~BoxCoin()	
 0x71002589C0			FALSE	_ZNK12_GLOBAL__N_114BoxCoinNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::BoxCoinNrvWait::execute(al::NerveKeeper*) const	
-0x71002589D0			FALSE	sub_71002589D0	sub_71002589D0	
+0x71002589D0			FALSE	_ZNK12_GLOBAL__N_114BoxCoinNrvBlow7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_114BoxCoinNrvBlow7executeEPN2al11NerveKeeperE	TRUE
 0x7100258A30			FALSE	_ZNK12_GLOBAL__N_116BoxCoinNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::BoxCoinNrvAppear::execute(al::NerveKeeper*) const	
 0x7100258A40			FALSE	_ZNK12_GLOBAL__N_116BoxCoinNrvAttach7executeEPN2al11NerveKeeperE	(anonymous namespace)::BoxCoinNrvAttach::execute(al::NerveKeeper*) const	
 0x7100258A50			FALSE	_ZNK12_GLOBAL__N_115BoxCoinNrvCarry7executeEPN2al11NerveKeeperE	(anonymous namespace)::BoxCoinNrvCarry::execute(al::NerveKeeper*) const	

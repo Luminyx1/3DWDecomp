@@ -9,6 +9,8 @@ public:
     void update();
     void updateAndCalcAnimDirect();
     bool isPlayerRaidonActionPlaying() const;
+    bool isPlayerActionPlaying(const char*) const;
+    const char* getPlayerActionName() const;
     al::HitSensor* getPlayerSensor() const { return mPlayerSensor; }
     void clearPlayerSensor() { mPlayerSensor = nullptr; }
 private:
