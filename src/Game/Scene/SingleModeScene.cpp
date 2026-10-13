@@ -3364,15 +3364,15 @@ void SingleModeScene::exePause() {
         al::pausePadRumble(this);
         rc::pauseAllPlayerAmiiboDirector(mLiveActorKit->getPlayerHolder(), false);
         alAudioSystemFunction::pauseSystem(mAudioDirector, this, true, 0);
-        s32 islandIndex;
+        s32 islandIndex = -1;
 
-        if (mUnlockedPhase == 0) {
-            islandIndex = -1;
-        } else if (mUnlockedPhase == cPhasePlessieChase2 ||
-                   mUnlockedPhase == cPhasePlessieChase1) {
-            islandIndex = mIslandKeeper->getUnknown14();
-        } else {
-            islandIndex = mIslandKeeper->getCurrentIslandId();
+        if (mUnlockedPhase != 0) {
+            IslandKeeper* keeper = mIslandKeeper;
+            if (mUnlockedPhase == cPhasePlessieChase2 || mUnlockedPhase == cPhasePlessieChase1) {
+                islandIndex = keeper->getUnknown14();
+            } else {
+                islandIndex = keeper->getCurrentIslandId();
+            }
         }
 
         mGameDataHolder->updatePlayerFigures(-1);
@@ -3387,13 +3387,11 @@ void SingleModeScene::exePause() {
         if (mGuideGameWindow != nullptr) {
             mGuideGameWindow->startHide(this);
         }
+        updateLayout();
     }
 
-    updateLayout();
     updatePauseLayout();
-    s32 port = -1;
-
-    if (isTriggerPause(&port) && (!al::isPadConnected(mPausePort) || port == mPausePort)) {
+    if (isTriggerBack()) {
         if (mPauseMenu->isWait()) {
             mPauseMenu->decideBack();
         }
