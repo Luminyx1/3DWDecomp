@@ -785,7 +785,7 @@ src/Game/Enemy/Skipper.cpp:
     .text   start:0x0014A1E0 end:0x0014BE64
 src/Game/Enemy/SkipperTrampoline.cpp:
     .text   start:0x0014BE70 end:0x0014E954
-src/Game/Enemy/SkipperWeak.cpp:
+src/Game/Enemy/SkipperWeak.cpp: done
     .text   start:0x0014E960 end:0x0014F750
 src/Game/Enemy/Spinner.cpp:
     .text   start:0x0014F750 end:0x00150F58

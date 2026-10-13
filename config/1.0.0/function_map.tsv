@@ -8672,14 +8672,14 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710014F3E0			FALSE	_ZN11SkipperWeakD1Ev	SkipperWeak::~SkipperWeak()	
 0x710014F3F0			FALSE	_ZN11SkipperWeakD0Ev	SkipperWeak::~SkipperWeak()	
 0x710014F420			FALSE	_ZNK12_GLOBAL__N_120SkipperWeakNrvWander7executeEPN2al11NerveKeeperE	(anonymous namespace)::SkipperWeakNrvWander::execute(al::NerveKeeper*) const	
-0x710014F430			FALSE	sub_710014F430	sub_710014F430	
-0x710014F4A0			FALSE	sub_710014F4A0	sub_710014F4A0	
+0x710014F430			FALSE	_ZNK12_GLOBAL__N_119SkipperWeakNrvChase7executeEPN2al11NerveKeeperE	(anonymous namespace)::SkipperWeakNrvChase::execute(al::NerveKeeper*) const	
+0x710014F4A0			FALSE	_ZNK12_GLOBAL__N_127SkipperWeakNrvSupportFreeze7executeEPN2al11NerveKeeperE	(anonymous namespace)::SkipperWeakNrvSupportFreeze::execute(al::NerveKeeper*) const	
 0x710014F500			FALSE	_ZNK12_GLOBAL__N_127SkipperWeakNrvAttackSuccess7executeEPN2al11NerveKeeperE	(anonymous namespace)::SkipperWeakNrvAttackSuccess::execute(al::NerveKeeper*) const	
 0x710014F510			FALSE	_ZNK12_GLOBAL__N_126SkipperWeakNrvTurnToPlayer7executeEPN2al11NerveKeeperE	(anonymous namespace)::SkipperWeakNrvTurnToPlayer::execute(al::NerveKeeper*) const	
-0x710014F520			FALSE	sub_710014F520	sub_710014F520	
+0x710014F520			FALSE	_ZNK12_GLOBAL__N_118SkipperWeakNrvFind7executeEPN2al11NerveKeeperE	(anonymous namespace)::SkipperWeakNrvFind::execute(al::NerveKeeper*) const	
 0x710014F580			FALSE	_ZNK2al10FunctorV0MIP11SkipperWeakMS1_FvvEEclEv	al::FunctorV0M<SkipperWeak*, void (SkipperWeak::*)()>::operator()() const	
 0x710014F5A0			FALSE	_ZNK2al10FunctorV0MIP11SkipperWeakMS1_FvvEE5cloneEv	al::FunctorV0M<SkipperWeak*, void (SkipperWeak::*)()>::clone() const	
-0x710014F5F0			FALSE	sub_710014F5F0	sub_710014F5F0	
+0x710014F5F0			FALSE	_GLOBAL__sub_I_SkipperWeak.cpp	_GLOBAL__sub_I_SkipperWeak.cpp	
 0x710014F750		Spinner.o	FALSE	_ZN7SpinnerC2EPKc	Spinner::Spinner(char const*)	
 0x710014F7E0			FALSE	_ZN7SpinnerC1EPKc	Spinner::Spinner(char const*)	
 0x710014F880			FALSE	_ZN7Spinner4initERKN2al13ActorInitInfoE	Spinner::init(al::ActorInitInfo const&)	
