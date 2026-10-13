@@ -13383,13 +13383,13 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100203B00			FALSE	_ZN18WipeCurtainRanking10exeEndInitEv	WipeCurtainRanking::exeEndInit()	
 0x7100203B10			FALSE	_ZN18WipeCurtainRanking6exeEndEv	WipeCurtainRanking::exeEnd()	
 0x7100203BC0			FALSE	_ZNK12_GLOBAL__N_127WipeCurtainRankingNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::WipeCurtainRankingNrvAppear::execute(al::NerveKeeper*) const	
-0x7100203BD0			FALSE	sub_7100203BD0	sub_7100203BD0	
-0x7100203C80			FALSE	sub_7100203C80	sub_7100203C80	
-0x7100203D20			FALSE	nullsub_145	nullsub_145	
-0x7100203D30			FALSE	nullsub_146	nullsub_146	
+0x7100203BD0			FALSE	_ZNK12_GLOBAL__N_124WipeCurtainRankingNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::WipeCurtainRankingNrvEnd::execute(al::NerveKeeper*) const	
+0x7100203C80			FALSE	_ZNK12_GLOBAL__N_131WipeCurtainRankingNrvSkipAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::WipeCurtainRankingNrvSkipAppear::execute(al::NerveKeeper*) const	
+0x7100203D20			FALSE	_ZNK12_GLOBAL__N_128WipeCurtainRankingNrvEndInit7executeEPN2al11NerveKeeperE	(anonymous namespace)::WipeCurtainRankingNrvEndInit::execute(al::NerveKeeper*) const	
+0x7100203D30			FALSE	_ZNK12_GLOBAL__N_130WipeCurtainRankingNrvSkipReady7executeEPN2al11NerveKeeperE	(anonymous namespace)::WipeCurtainRankingNrvSkipReady::execute(al::NerveKeeper*) const	
 0x7100203D40			FALSE	_ZNK12_GLOBAL__N_125WipeCurtainRankingNrvRise7executeEPN2al11NerveKeeperE	(anonymous namespace)::WipeCurtainRankingNrvRise::execute(al::NerveKeeper*) const	
 0x7100203D50			FALSE	_ZNK12_GLOBAL__N_129WipeCurtainRankingNrvSkipWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::WipeCurtainRankingNrvSkipWait::execute(al::NerveKeeper*) const	
-0x7100203D60			FALSE	sub_7100203D60	sub_7100203D60	
+0x7100203D60			FALSE	_ZNK12_GLOBAL__N_128WipeCurtainRankingNrvSkipEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::WipeCurtainRankingNrvSkipEnd::execute(al::NerveKeeper*) const	
 0x7100203E00		WipeCurtainRankingParts.o	FALSE	_ZN23WipeCurtainRankingPartsC2ERKN2al14LayoutInitInfoEPKcS5_iP18WipeCurtainRanking	WipeCurtainRankingParts::WipeCurtainRankingParts(al::LayoutInitInfo const&, char const*, char const*, int, WipeCurtainRanking*)	
 0x7100203ED0			FALSE	_ZN23WipeCurtainRankingPartsC1ERKN2al14LayoutInitInfoEPKcS5_iP18WipeCurtainRanking	WipeCurtainRankingParts::WipeCurtainRankingParts(al::LayoutInitInfo const&, char const*, char const*, int, WipeCurtainRanking*)	
 0x7100203FA0			FALSE	_ZN23WipeCurtainRankingParts6appearEv	WipeCurtainRankingParts::appear()	
