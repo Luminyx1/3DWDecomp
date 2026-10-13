@@ -59249,8 +59249,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100980440			FALSE	_ZThn312_N2al16ReplayControllerD1Ev	non-virtual thunk to al::ReplayController::~ReplayController()	
 0x7100980450			FALSE	_ZThn312_N2al16ReplayControllerD0Ev	non-virtual thunk to al::ReplayController::~ReplayController()	
 0x7100980480			FALSE	_ZN2al16ReplayController33checkDerivedRuntimeTypeInfoStaticEPKN4sead15RuntimeTypeInfo9InterfaceE	al::ReplayController::checkDerivedRuntimeTypeInfoStatic(sead::RuntimeTypeInfo::Interface const*)	
-0x71009806A0			FALSE	_ZN2al19WaveVibrationHolderC1EPKNS_13GamePadSystemE	al::WaveVibrationHolder::WaveVibrationHolder(al::GamePadSystem const*)	
-0x7100980DC0		GamePadWaveVibrationData.o	FALSE	_ZN2al19WaveVibrationHolder8loadDataEv	al::WaveVibrationHolder::loadData()	object/folder from OdysseyDecomp file list
+0x71009806A0		GamePadWaveVibrationData.o	FALSE	_ZN2al19WaveVibrationHolderC1EPKNS_13GamePadSystemE	al::WaveVibrationHolder::WaveVibrationHolder(al::GamePadSystem const*)	
+0x7100980DC0			FALSE	_ZN2al19WaveVibrationHolder8loadDataEv	al::WaveVibrationHolder::loadData()	object/folder from OdysseyDecomp file list
 0x7100981100			FALSE	_ZN2al19WaveVibrationHolder6updateEv	al::WaveVibrationHolder::update()	
 0x7100981A20			FALSE	_ZNK2al19WaveVibrationHolder21findWaveVibrationDataEPKc	al::WaveVibrationHolder::findWaveVibrationData(char const*) const	
 0x7100981AB0			FALSE	_ZNK2al19WaveVibrationHolder27findPlayableVibrationPlayerEi	al::WaveVibrationHolder::findPlayableVibrationPlayer(int) const	

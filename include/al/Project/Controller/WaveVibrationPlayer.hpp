@@ -4,9 +4,9 @@
 
 namespace al {
 struct WaveVibrationData {
-    const void* data;
-    s32 size;
-    const char* name;
+    const void* data = nullptr;
+    s32 size = 0;
+    const char* name = nullptr;
     bool operator<(const WaveVibrationData& rOther) const;
 };
 
@@ -31,6 +31,7 @@ public:
     bool isPauseLocked() const { return mPauseLocked; }
 
 private:
+    friend class WaveVibrationHolder;
     nn::hid::VibrationPlayer* mPlayer = nullptr;
     nn::hid::VibrationNodeConnection* mLeft = nullptr;
     nn::hid::VibrationNodeConnection* mRight = nullptr;
