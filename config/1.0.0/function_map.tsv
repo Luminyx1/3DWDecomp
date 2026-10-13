@@ -5761,10 +5761,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71000DEEA0			FALSE	_ZN17BoxKillerLauncher15exeRotateSearchEv	BoxKillerLauncher::exeRotateSearch()	
 0x71000DF060			FALSE	_ZN17BoxKillerLauncherD1Ev	BoxKillerLauncher::~BoxKillerLauncher()	
 0x71000DF070			FALSE	_ZN17BoxKillerLauncherD0Ev	BoxKillerLauncher::~BoxKillerLauncher()	
-0x71000DF0A0			FALSE	sub_71000DF0A0	sub_71000DF0A0	
-0x71000DF130			FALSE	sub_71000DF130	sub_71000DF130	
-0x71000DF180			FALSE	sub_71000DF180	sub_71000DF180	
-0x71000DF1D0			FALSE	sub_71000DF1D0	sub_71000DF1D0	
+0x71000DF0A0			FALSE	_ZNK12_GLOBAL__N_124BoxKillerLauncherNrvShot7executeEPN2al11NerveKeeperE	(anonymous namespace)::BoxKillerLauncherNrvShot::execute(al::NerveKeeper*) const	
+0x71000DF130			FALSE	_ZNK12_GLOBAL__N_129BoxKillerLauncherNrvDelayWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::BoxKillerLauncherNrvDelayWait::execute(al::NerveKeeper*) const	
+0x71000DF180			FALSE	_ZNK12_GLOBAL__N_136BoxKillerLauncherNrvRotateSearchWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::BoxKillerLauncherNrvRotateSearchWait::execute(al::NerveKeeper*) const	
+0x71000DF1D0			FALSE	_ZNK12_GLOBAL__N_124BoxKillerLauncherNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::BoxKillerLauncherNrvWait::execute(al::NerveKeeper*) const	
 0x71000DF220			FALSE	_ZNK12_GLOBAL__N_132BoxKillerLauncherNrvRotateSearch7executeEPN2al11NerveKeeperE	(anonymous namespace)::BoxKillerLauncherNrvRotateSearch::execute(al::NerveKeeper*) const	
 0x71000DF230		BrosMoveStepKeeper.o	FALSE	_ZN18BrosMoveStepKeeperC2EPN2al9LiveActorEPNS0_13KeyPoseKeeperERKNS0_13ActorInitInfoE	BrosMoveStepKeeper::BrosMoveStepKeeper(al::LiveActor*, al::KeyPoseKeeper*, al::ActorInitInfo const&)	
 0x71000DF400			FALSE	_ZN18BrosMoveStepKeeper7endInitEv	BrosMoveStepKeeper::endInit()	
