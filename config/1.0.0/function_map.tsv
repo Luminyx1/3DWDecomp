@@ -12173,7 +12173,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001D5170			FALSE	_ZN15MiiverseBalloon12exeDisappearEv	MiiverseBalloon::exeDisappear()	
 0x71001D51D0			FALSE	_ZNK15MiiverseBalloon18getSceneCameraInfoEv	MiiverseBalloon::getSceneCameraInfo() const	
 0x71001D51E0			FALSE	_ZThn32_NK15MiiverseBalloon18getSceneCameraInfoEv	non-virtual thunk to MiiverseBalloon::getSceneCameraInfo() const	
-0x71001D51F0			FALSE	sub_71001D51F0	sub_71001D51F0	
+0x71001D51F0			FALSE	_ZNK12_GLOBAL__N_124MiiverseBalloonNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::MiiverseBalloonNrvAppear::execute(al::NerveKeeper*) const	
 0x71001D5240			FALSE	_ZN25MiiverseBalloonController14setTouchSelectEb	MiiverseBalloonController::setTouchSelect(bool)	
 0x71001D5250			FALSE	_ZN25MiiverseBalloonController11startAppearEP28ICourseSelectActorController	MiiverseBalloonController::startAppear(ICourseSelectActorController*)	
 0x71001D5260			FALSE	_ZN25MiiverseBalloonController14startDisappearEv	MiiverseBalloonController::startDisappear()	
@@ -12184,10 +12184,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001D5360			FALSE	_ZNK25MiiverseBalloonController19isEnableEnterCourseEv	MiiverseBalloonController::isEnableEnterCourse() const	
 0x71001D5380			FALSE	_ZN25MiiverseBalloonController10startPauseEv	MiiverseBalloonController::startPause()	
 0x71001D5390			FALSE	_ZN25MiiverseBalloonController8endPauseEv	MiiverseBalloonController::endPause()	
-0x71001D53A0			FALSE	sub_71001D53A0	sub_71001D53A0	
-0x71001D5400			FALSE	sub_71001D5400	sub_71001D5400	
-0x71001D5460			FALSE	sub_71001D5460	sub_71001D5460	
-0x71001D54B0			FALSE	sub_71001D54B0	sub_71001D54B0	
+0x71001D53A0			FALSE	_ZNK12_GLOBAL__N_124MiiverseBalloonNrvDecide7executeEPN2al11NerveKeeperE	(anonymous namespace)::MiiverseBalloonNrvDecide::execute(al::NerveKeeper*) const	
+0x71001D5400			FALSE	_ZNK12_GLOBAL__N_127MiiverseBalloonNrvDisappear7executeEPN2al11NerveKeeperE	(anonymous namespace)::MiiverseBalloonNrvDisappear::execute(al::NerveKeeper*) const	
+0x71001D5460			FALSE	_ZNK12_GLOBAL__N_124MiiverseBalloonNrvDecomp7executeEPN2al11NerveKeeperE	(anonymous namespace)::MiiverseBalloonNrvDecomp::execute(al::NerveKeeper*) const	
+0x71001D54B0			FALSE	_ZNK12_GLOBAL__N_122MiiverseBalloonNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::MiiverseBalloonNrvWait::execute(al::NerveKeeper*) const	
 0x71001D54C0			FALSE	_ZNK2al10FunctorV0MIP15MiiverseBalloonMS1_FvvEEclEv	al::FunctorV0M<MiiverseBalloon*, void (MiiverseBalloon::*)()>::operator()() const	
 0x71001D54E0		MiiverseBalloonParts.o	FALSE	_ZN20MiiverseBalloonPartsC2ERKN2al14LayoutInitInfoEPKcS5_PNS0_11LayoutActorEf	MiiverseBalloonParts::MiiverseBalloonParts(al::LayoutInitInfo const&, char const*, char const*, al::LayoutActor*, float)	
 0x71001D5640			FALSE	_ZN20MiiverseBalloonPartsC1ERKN2al14LayoutInitInfoEPKcS5_PNS0_11LayoutActorEf	MiiverseBalloonParts::MiiverseBalloonParts(al::LayoutInitInfo const&, char const*, char const*, al::LayoutActor*, float)	
