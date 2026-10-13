@@ -175,7 +175,8 @@ void PanelNotePaintGroup::exeComplete() {
     bool complete = true;
     for (int i = 0; i < mPanelCount; ++i) {
         if (!mEffectStarted[i]) {
-            if ((al::getTrans(mPanels[i]) - origin).length() < mCompleteRadius) {
+            sead::Vector3f position = al::getTrans(mPanels[i]);
+            if ((position - origin).length() < mCompleteRadius) {
                 mEffectStarted[i] = true;
                 mPanels[i]->setCompleteEffect();
             }
