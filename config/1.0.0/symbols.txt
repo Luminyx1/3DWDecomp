@@ -6239,3 +6239,6 @@
 0x7101A28358 40 object _ZN12_GLOBAL__N_112cFlagActionsE
 
 0x7101B1D980 76 object _ZN12_GLOBAL__N_115sGeneratorParamE
+
+0x7101B218C0 48 object _ZN12_GLOBAL__N_115sTuccondorParamE
+0x71019BBB70 24 object _ZN12_GLOBAL__N_116NrvTuccondorBaseE

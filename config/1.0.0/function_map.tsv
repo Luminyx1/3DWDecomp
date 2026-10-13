@@ -9615,10 +9615,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710016FF10			FALSE	_ZN13TuccondorBase22exePressDownAttackWaitEv	TuccondorBase::exePressDownAttackWait()	
 0x710016FF90			FALSE	_ZN13TuccondorBase24requestHitReactionAttackEv	TuccondorBase::requestHitReactionAttack()	
 0x7100170160			FALSE	_ZNK13TuccondorBase11isNerveDeadEv	TuccondorBase::isNerveDead() const	
-0x71001701C0			FALSE	sub_71001701C0	sub_71001701C0	
-0x7100170210			FALSE	sub_7100170210	sub_7100170210	
-0x7100170290			FALSE	sub_7100170290	sub_7100170290	
-0x7100170310			FALSE	sub_7100170310	sub_7100170310	
+0x71001701C0			FALSE	_ZNK12_GLOBAL__N_124TuccondorBaseNrvBlowDown7executeEPN2al11NerveKeeperE	(anonymous namespace)::TuccondorBaseNrvBlowDown::execute(al::NerveKeeper*) const	
+0x7100170210			FALSE	_ZNK12_GLOBAL__N_125TuccondorBaseNrvPressDown7executeEPN2al11NerveKeeperE	(anonymous namespace)::TuccondorBaseNrvPressDown::execute(al::NerveKeeper*) const	
+0x7100170290			FALSE	_ZNK12_GLOBAL__N_135TuccondorBaseNrvPressDownAttackWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::TuccondorBaseNrvPressDownAttackWait::execute(al::NerveKeeper*) const	
+0x7100170310			FALSE	_GLOBAL__sub_I_TuccondorBase.cpp	_GLOBAL__sub_I_TuccondorBase.cpp	
 0x7100170350		TuccondorGlass.o	FALSE	_ZN14TuccondorGlassC2EPKc	TuccondorGlass::TuccondorGlass(char const*)	
 0x71001703D0			FALSE	_ZN14TuccondorGlassC1EPKc	TuccondorGlass::TuccondorGlass(char const*)	
 0x7100170450			FALSE	_ZN14TuccondorGlass4initERKN2al13ActorInitInfoE	TuccondorGlass::init(al::ActorInitInfo const&)	
