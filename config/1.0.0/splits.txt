@@ -2130,7 +2130,7 @@ src/Game/MapObj/TrampleSwitchGoalItem.cpp: done
     .text   start:0x00391B00 end:0x00392324
 src/Game/MapObj/TrampleSwitchGold.cpp: done
     .text   start:0x00392330 end:0x00392470
-src/Game/MapObj/TrampleSwitchTimer.cpp:
+src/Game/MapObj/TrampleSwitchTimer.cpp: done
     .text   start:0x00392470 end:0x00394644
 src/Game/MapObj/TrampleSwitchTogether.cpp: done
     .text   start:0x00394650 end:0x00394CB4
