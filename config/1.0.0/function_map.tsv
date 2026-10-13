@@ -6420,8 +6420,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71000F7440			FALSE	_ZN10FugumannenD1Ev	Fugumannen::~Fugumannen()	
 0x71000F7450			FALSE	_ZN10FugumannenD0Ev	Fugumannen::~Fugumannen()	
 0x71000F7480			FALSE	_ZNK12_GLOBAL__N_123FugumannenNrvAccelerate7executeEPN2al11NerveKeeperE	(anonymous namespace)::FugumannenNrvAccelerate::execute(al::NerveKeeper*) const	
-0x71000F7490			FALSE	sub_71000F7490	sub_71000F7490	
-0x71000F74E0			FALSE	sub_71000F74E0	sub_71000F74E0	
+0x71000F7490			FALSE	_ZNK12_GLOBAL__N_125FugumannenNrvSwimBlowDown7executeEPN2al11NerveKeeperE	(anonymous namespace)::FugumannenNrvSwimBlowDown::execute(al::NerveKeeper*) const	
+0x71000F74E0			FALSE	_ZNK12_GLOBAL__N_126FugumannenNrvSupportFreeze7executeEPN2al11NerveKeeperE	(anonymous namespace)::FugumannenNrvSupportFreeze::execute(al::NerveKeeper*) const	
 0x71000F7520			FALSE	_ZNK12_GLOBAL__N_117FugumannenNrvTurn7executeEPN2al11NerveKeeperE	(anonymous namespace)::FugumannenNrvTurn::execute(al::NerveKeeper*) const	
 0x71000F7530			FALSE	_ZNK12_GLOBAL__N_118FugumannenNrvBrake7executeEPN2al11NerveKeeperE	(anonymous namespace)::FugumannenNrvBrake::execute(al::NerveKeeper*) const	
 0x71000F7540			FALSE	_ZNK12_GLOBAL__N_121FugumannenNrvSwimWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::FugumannenNrvSwimWait::execute(al::NerveKeeper*) const	

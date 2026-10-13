@@ -1154,7 +1154,6 @@
 0x710198E048 32 object _ZTVN12_GLOBAL__N_118FugumannenNrvBrakeE
 0x710198E068 32 object _ZTVN12_GLOBAL__N_121FugumannenNrvSwimWaitE
 0x710198E088 8 object _ZN12_GLOBAL__N_121NrvFugumannenSwimWaitE
-0x710198E090 8 object _ZN12_GLOBAL__N_123NrvFugumannenAccelerateE
 0x710198E0A8 8 object _ZN12_GLOBAL__N_117NrvFugumannenTurnE
 0x710198E0B0 8 object _ZN12_GLOBAL__N_118NrvFugumannenBrakeE
 0x710198E698 32 object _ZTVN12_GLOBAL__N_117GabonNrvThrowSignE
@@ -6244,3 +6243,4 @@
 
 0x71019AFDE0 24 object _ZN12_GLOBAL__N_113NrvTeresaWallE
 0x71019A0430 16 object _ZN12_GLOBAL__N_121NrvPackunFireFireBallE
+0x710198E090 24 object _ZN12_GLOBAL__N_113NrvFugumannenE

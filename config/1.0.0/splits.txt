@@ -633,7 +633,7 @@ src/Game/Enemy/FlyerStateWanderParam.cpp: done
     .text   start:0x000F6630 end:0x000F6750
 src/Game/Enemy/FlyerStateWander.cpp:
     .text   start:0x000F6750 end:0x000F69F0
-src/Game/Enemy/Fugumannen.cpp:
+src/Game/Enemy/Fugumannen.cpp: done
     .text   start:0x000F69F0 end:0x000F7548
 src/Game/Enemy/Gabon.cpp:
     .text   start:0x000F7550 end:0x000F8AB0
