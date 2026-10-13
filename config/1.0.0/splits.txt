@@ -3180,7 +3180,7 @@ src/Game/Scene/SnapshotState.cpp: done
     .text   start:0x004D38A0 end:0x004D42D8
 src/Game/Scene/StageScene.cpp:
     .text   start:0x004D42E0 end:0x004DA344
-src/Game/Scene/StageSceneStateGameOver.cpp:
+src/Game/Scene/StageSceneStateGameOver.cpp: done
     .text   start:0x004DA350 end:0x004DAE64
 src/Game/Scene/TitleDemoInfo.cpp: done
     .text   start:0x004DAE70 end:0x004DAE9C
