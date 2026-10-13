@@ -1,7 +1,12 @@
 #pragma once
 #include "Library/Nerve/NerveExecutor.hpp"
 namespace al { class LiveActor; class HitSensor; }
-struct HeadgearPoseBuilderParam;
+struct HeadgearPoseBuilderParam {
+    bool _0;
+    bool _1;
+    bool _2;
+};
+static_assert(sizeof(HeadgearPoseBuilderParam) == 3);
 class HeadgearPoseBuilder : public al::NerveExecutor {
 public:
     HeadgearPoseBuilder(al::LiveActor*, const HeadgearPoseBuilderParam*);

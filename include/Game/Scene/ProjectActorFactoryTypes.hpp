@@ -1,3 +1,4 @@
+#include "MapObj/BoxLight.hpp"
 #include "MapObj/CoinConcentricCircle.hpp"
 #include "MapObj/CatGull.hpp"
 #include "MapObj/ThrowMapParts.hpp"
@@ -319,15 +320,6 @@ private:
 static_assert(sizeof(BoxKillerLauncher) == 0x168);
 
 
-
-class BoxLight : public al::LiveActor {
-public:
-    explicit BoxLight(const char* pName);
-
-private:
-    u8 mUnreconstructed[0x7c];
-};
-static_assert(sizeof(BoxLight) == 0x1c0);
 
 
 

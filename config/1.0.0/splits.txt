@@ -1438,10 +1438,9 @@ src/Game/MapObj/BoxKillerBullet.cpp:
 src/Game/MapObj/BoxKuribo.cpp: done
     .text   start:0x0025BF50 end:0x0025C968
     .rodata start:0x016B4FF8 end:0x016B5004
-src/Game/MapObj/BoxLightCollisionChecker.cpp: done
-    .text   start:0x0025C970 end:0x0025CB28
-src/Game/MapObj/BoxLight.cpp:
-    .text   start:0x0025CB30 end:0x0025DF98
+src/Game/MapObj/BoxLight.cpp: done
+    .text   start:0x0025C970 end:0x0025DF98
+    .rodata start:0x016B5004 end:0x016B5013
 src/Game/MapObj/BoxPropeller.cpp:
     .text   start:0x0025DFA0 end:0x0025F834
 src/Game/MapObj/BoxPropellerPropeller.cpp: done

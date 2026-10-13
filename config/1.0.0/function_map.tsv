@@ -15409,13 +15409,13 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710025C940			FALSE	_ZNK12_GLOBAL__N_118BoxKuriboNrvAttach7executeEPN2al11NerveKeeperE	(anonymous namespace)::BoxKuriboNrvAttach::execute(al::NerveKeeper*) const	
 0x710025C950			FALSE	_ZNK12_GLOBAL__N_118BoxKuriboNrvRaidon7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_118BoxKuriboNrvRaidon7executeEPN2al11NerveKeeperE	
 0x710025C960			FALSE	_ZNK12_GLOBAL__N_116BoxKuriboNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_116BoxKuriboNrvWait7executeEPN2al11NerveKeeperE	
-0x710025C970		BoxLightCollisionChecker.o	FALSE	_ZN24BoxLightCollisionCheckerC2Ev	BoxLightCollisionChecker::BoxLightCollisionChecker()	
+0x710025C970		BoxLight.o	FALSE	_ZN24BoxLightCollisionCheckerC2Ev	BoxLightCollisionChecker::BoxLightCollisionChecker()
 0x710025C9C0			FALSE	_ZN24BoxLightCollisionChecker8exeNoHitEv	BoxLightCollisionChecker::exeNoHit()	
 0x710025C9E0			FALSE	_ZN24BoxLightCollisionChecker13exeToHitCheckEv	BoxLightCollisionChecker::exeToHitCheck()	
 0x710025CA50			FALSE	_ZN24BoxLightCollisionChecker6exeHitEv	BoxLightCollisionChecker::exeHit()	
 0x710025CA70			FALSE	_ZN24BoxLightCollisionChecker15exeToNoHitCheckEv	BoxLightCollisionChecker::exeToNoHitCheck()	
 0x710025CAE0			FALSE	_ZNK24BoxLightCollisionChecker5isHitEv	BoxLightCollisionChecker::isHit() const	
-0x710025CB30		BoxLight.o	FALSE	_ZN8BoxLightC2EPKc	BoxLight::BoxLight(char const*)	note: sorts before the previous object (folder boundary or misnamed object?)
+0x710025CB30			FALSE	_ZN8BoxLightC2EPKc	BoxLight::BoxLight(char const*)	note: sorts before the previous object (folder boundary or misnamed object?)
 0x710025CC30			FALSE	_ZN8BoxLightC1EPKc	BoxLight::BoxLight(char const*)	
 0x710025CD30			FALSE	_ZN8BoxLight4initERKN2al13ActorInitInfoE	BoxLight::init(al::ActorInitInfo const&)	
 0x710025CF50			FALSE	_ZN8BoxLight6appearEv	BoxLight::appear()	
@@ -15436,13 +15436,13 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710025DC60			FALSE	_ZN8BoxLightD1Ev	BoxLight::~BoxLight()	
 0x710025DC70			FALSE	_ZN8BoxLightD0Ev	BoxLight::~BoxLight()	
 0x710025DCA0			FALSE	_ZN24BoxLightCollisionCheckerD0Ev	BoxLightCollisionChecker::~BoxLightCollisionChecker()	
-0x710025DCD0			FALSE	sub_710025DCD0	sub_710025DCD0	
-0x710025DCF0			FALSE	sub_710025DCF0	sub_710025DCF0	
-0x710025DD60			FALSE	sub_710025DD60	sub_710025DD60	
-0x710025DD80			FALSE	sub_710025DD80	sub_710025DD80	
-0x710025DDF0			FALSE	sub_710025DDF0	sub_710025DDF0	
-0x710025DE90			FALSE	sub_710025DE90	sub_710025DE90	
-0x710025DEF0			FALSE	sub_710025DEF0	sub_710025DEF0	
+0x710025DCD0			FALSE	_ZNK12_GLOBAL__N_132BoxLightCollisionCheckerNrvNoHit7executeEPN2al11NerveKeeperE	(anonymous namespace)::BoxLightCollisionCheckerNrvNoHit::execute(al::NerveKeeper*) const	TRUE
+0x710025DCF0			FALSE	_ZNK12_GLOBAL__N_137BoxLightCollisionCheckerNrvToHitCheck7executeEPN2al11NerveKeeperE	(anonymous namespace)::BoxLightCollisionCheckerNrvToHitCheck::execute(al::NerveKeeper*) const	TRUE
+0x710025DD60			FALSE	_ZNK12_GLOBAL__N_130BoxLightCollisionCheckerNrvHit7executeEPN2al11NerveKeeperE	(anonymous namespace)::BoxLightCollisionCheckerNrvHit::execute(al::NerveKeeper*) const	TRUE
+0x710025DD80			FALSE	_ZNK12_GLOBAL__N_139BoxLightCollisionCheckerNrvToNoHitCheck7executeEPN2al11NerveKeeperE	(anonymous namespace)::BoxLightCollisionCheckerNrvToNoHitCheck::execute(al::NerveKeeper*) const	TRUE
+0x710025DDF0			FALSE	_ZNK12_GLOBAL__N_115BoxLightNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::BoxLightNrvWait::execute(al::NerveKeeper*) const	TRUE
+0x710025DE90			FALSE	_ZNK12_GLOBAL__N_115BoxLightNrvKill7executeEPN2al11NerveKeeperE	(anonymous namespace)::BoxLightNrvKill::execute(al::NerveKeeper*) const	TRUE
+0x710025DEF0			FALSE	_ZNK12_GLOBAL__N_117BoxLightNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::BoxLightNrvAppear::execute(al::NerveKeeper*) const	TRUE
 0x710025DF70			FALSE	_ZNK12_GLOBAL__N_116BoxLightNrvCarry7executeEPN2al11NerveKeeperE	(anonymous namespace)::BoxLightNrvCarry::execute(al::NerveKeeper*) const	
 0x710025DF80			FALSE	_ZNK12_GLOBAL__N_124BoxLightNrvCarryLighting7executeEPN2al11NerveKeeperE	(anonymous namespace)::BoxLightNrvCarryLighting::execute(al::NerveKeeper*) const	
 0x710025DF90			FALSE	_ZNK12_GLOBAL__N_121BoxLightNrvCarryStart7executeEPN2al11NerveKeeperE	(anonymous namespace)::BoxLightNrvCarryStart::execute(al::NerveKeeper*) const	
