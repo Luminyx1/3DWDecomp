@@ -3499,7 +3499,8 @@ void SingleModeScene::exeRestart() {
         al::disableLineChange(this, true);
         al::changeAudioEffect(this, nullptr);
 
-        for (s32 i = 0; i < al::getPlayerNumMax(mLiveActorKit->getPlayerHolder()); i++) {
+        s32 playerNum = al::getPlayerNumMax(mLiveActorKit->getPlayerHolder());
+        for (s32 i = 0; i < playerNum; i++) {
             al::setCameraCalcTargetFlag(al::getPlayerActor(mLiveActorKit->getPlayerHolder(), i),
                                         false);
         }
@@ -3512,8 +3513,9 @@ void SingleModeScene::exeRestart() {
     if (al::isStep(this, 119)) {
         mWipeMiss->startClose(-1);
 
-        if (mAudioDirector->getSeDirector() != nullptr) {
-            al::startSe(this, "PgBowserVoice", nullptr);
+        al::IUseAudioKeeper* audioUser = mAudioDirector->getUpperLayerAudioUser();
+        if (audioUser != nullptr) {
+            al::startSe(audioUser, "PgBowserVoice", nullptr);
         }
     }
 
@@ -3557,7 +3559,8 @@ void SingleModeScene::updateMissDemo(bool isUpdateGraphics, bool isSkipVehicle) 
         al::updateKitList(this, "２Ｄ");
         al::updateKitList(this, "2D StopScene");
     } else {
-        for (s32 i = 0; i < al::getPlayerNumMax(mLiveActorKit->getPlayerHolder()); i++) {
+        s32 playerNum = al::getPlayerNumMax(mLiveActorKit->getPlayerHolder());
+        for (s32 i = 0; i < playerNum; i++) {
             al::setCameraCalcTargetFlag(al::getPlayerActor(mLiveActorKit->getPlayerHolder(), i),
                                         false);
         }
