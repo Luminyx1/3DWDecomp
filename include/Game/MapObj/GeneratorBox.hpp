@@ -31,8 +31,8 @@ public:
     void init(const al::ActorInitInfo& rInfo) override;
     GeneratorBoxChild* getChild(s32 index) const;
     void updateChildPos();
-    void offTimer();
-    void onTimer();
+    void offTimer() { mIsTimerOff = true; }
+    void onTimer() { mIsTimerOff = false; }
     void calcAppearDirection(sead::Vector3f* pDir);
     void updateLinkedTrans(const sead::Vector3f& rTrans) override;
     void kill() override;

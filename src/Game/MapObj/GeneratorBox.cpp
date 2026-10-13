@@ -205,20 +205,6 @@ void GeneratorBox::updateChildPos() {
 }
 
 /**
- * @brief Stop the disappear timer (switch on).
- */
-void GeneratorBox::offTimer() {
-    mIsTimerOff = true;
-}
-
-/**
- * @brief Resume the disappear timer (switch off).
- */
-void GeneratorBox::onTimer() {
-    mIsTimerOff = false;
-}
-
-/**
  * @brief Calculate the direction the children are stacked in.
  * @param pDir The calculated direction.
  */
