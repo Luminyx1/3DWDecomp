@@ -75,8 +75,8 @@ void DisasterSpikeTorpedo::appearSetup() {
     al::invalidateCollisionParts(this);
     al::setQuat(this, sead::Quatf::unit);
 
-    mIsFirst = false;
     mID = -1;
+    mIsFirst = false;
     mShootDir = sead::Vector3f::ez;
     mAppearStartPos = sead::Vector3f::zero;
     mShootStartPos = sead::Vector3f::zero;
@@ -212,11 +212,12 @@ void DisasterSpikeTorpedo::attackSensor(al::HitSensor* pSelf, al::HitSensor* pOt
 
     if (al::isSensorRide(pOther) && al::isSensorName(pOther, "PlayerSensor")) {
         bool isDamageSensor = al::isSensorName(pSelf, "PlayerDamage");
-        if (al::getTrans(al::getSensorHost(pOther)).y <=
-                al::getSensorPos(pSelf).y + al::getSensorRadius(pSelf) ||
-            isDamageSensor) {
-            damage(pSelf, pOther);
+        if ((al::getTrans(al::getSensorHost(pOther)).y >
+                 al::getSensorPos(pSelf).y + al::getSensorRadius(pSelf)) &
+            !isDamageSensor) {
+            return;
         }
+        damage(pSelf, pOther);
         return;
     }
 
@@ -400,11 +401,11 @@ void DisasterSpikeTorpedo::updateDashPanel() {
 
 /**
  * @brief Make the spike sink or explode when it enters a TorpedoSpikeRestrictionArea.
- * @param isCheckSink Whether sink areas are checked.
  * @param isCheckExplode Whether explode areas are checked.
+ * @param isCheckSink Whether sink areas are checked.
  */
-void DisasterSpikeTorpedo::checkTorpedoSpikeRestrictionAreas(bool isCheckSink,
-                                                             bool isCheckExplode) {
+void DisasterSpikeTorpedo::checkTorpedoSpikeRestrictionAreas(bool isCheckExplode,
+                                                             bool isCheckSink) {
     al::AreaObjGroup* group =
         rc::tryFindAreaObjGroup(this, rc::AreaObjType::TorpedoSpikeRestrictionArea);
     if (group == nullptr) {
