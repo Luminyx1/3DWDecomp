@@ -1099,7 +1099,7 @@ src/Game/Layout/CourseSelectInfo.cpp: done
     .text   start:0x001BB4B0 end:0x001BB638
 src/Game/Layout/CourseSelectInfoA.cpp: done
     .text   start:0x001BB640 end:0x001BB78C
-src/Game/Layout/CourseSelectInfoBase.cpp:
+src/Game/Layout/CourseSelectInfoBase.cpp: done
     .text   start:0x001BB790 end:0x001BBF3C
 src/Game/Layout/CourseSelectInfoLayoutFunction.cpp:
     .text   start:0x001BBF40 end:0x001BCE94

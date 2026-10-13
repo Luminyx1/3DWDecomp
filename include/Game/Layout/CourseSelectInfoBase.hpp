@@ -17,6 +17,20 @@ public:
      * @return Associated scene camera information. */
     al::SceneCameraInfo* getSceneCameraInfo() const override { return mSceneCameraInfo; }
     void control() override;
+    void updateScreenPos();
+    void setTouchSelect(bool isTouch);
+    void startAppear(ICourseSelectActorController* pController);
+    void startDisappear();
+    void startDecide();
+    bool isAppear() const;
+    bool isDisappear() const;
+    bool isEnableEnterCourse() const;
+    void exeAppear();
+    void exeAppearWait();
+    void exeDecide();
+    void exeFrameOut();
+    void exeEnd();
+    void exeHide();
     /** @brief Updates course-specific controller information. */
     virtual void updateControllerInfo() {}
     /** @brief Updates course-specific green-star information. */

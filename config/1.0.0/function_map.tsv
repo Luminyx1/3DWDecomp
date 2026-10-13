@@ -11509,7 +11509,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001BBF40		CourseSelectInfoLayoutFunction.o	FALSE	_ZN30CourseSelectInfoLayoutFunction16setPaneGreenStarEP20CourseSelectInfoBasei	CourseSelectInfoLayoutFunction::setPaneGreenStar(CourseSelectInfoBase*, int)	object (class)
 0x71001BC620			FALSE	_ZN30CourseSelectInfoLayoutFunction18setPaneClearPlayerEP20CourseSelectInfoBaseb	CourseSelectInfoLayoutFunction::setPaneClearPlayer(CourseSelectInfoBase*, bool)	
 0x71001BCAA0			FALSE	_ZN30CourseSelectInfoLayoutFunction12setPaneStampEP20CourseSelectInfoBase	CourseSelectInfoLayoutFunction::setPaneStamp(CourseSelectInfoBase*)	
-0x71001BCBD0			FALSE	sub_71001BCBD0	sub_71001BCBD0	
+0x71001BCBD0			FALSE	_ZNK12_GLOBAL__N_126CourseSelectInfoBaseNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectInfoBaseNrvEnd::execute(al::NerveKeeper*) const	
 0x71001BCC40			FALSE	_ZN26CourseSelectInfoController14setTouchSelectEb	CourseSelectInfoController::setTouchSelect(bool)	
 0x71001BCC50			FALSE	_ZN26CourseSelectInfoController11startAppearEP28ICourseSelectActorController	CourseSelectInfoController::startAppear(ICourseSelectActorController*)	
 0x71001BCCA0			FALSE	_ZN26CourseSelectInfoController14startDisappearEv	CourseSelectInfoController::startDisappear()	
@@ -11520,11 +11520,11 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001BCD70			FALSE	_ZNK26CourseSelectInfoController19isEnableEnterCourseEv	CourseSelectInfoController::isEnableEnterCourse() const	
 0x71001BCD80			FALSE	_ZN26CourseSelectInfoController10startPauseEv	CourseSelectInfoController::startPause()	
 0x71001BCD90			FALSE	_ZN26CourseSelectInfoController8endPauseEv	CourseSelectInfoController::endPause()	
-0x71001BCDA0			FALSE	sub_71001BCDA0	sub_71001BCDA0	
+0x71001BCDA0			FALSE	_ZNK12_GLOBAL__N_129CourseSelectInfoBaseNrvDecide7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectInfoBaseNrvDecide::execute(al::NerveKeeper*) const	
 0x71001BCE00			FALSE	_ZNK12_GLOBAL__N_129CourseSelectInfoBaseNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectInfoBaseNrvAppear::execute(al::NerveKeeper*) const	
-0x71001BCE10			FALSE	sub_71001BCE10	sub_71001BCE10	
-0x71001BCE20			FALSE	sub_71001BCE20	sub_71001BCE20	
-0x71001BCE30			FALSE	sub_71001BCE30	sub_71001BCE30	
+0x71001BCE10			FALSE	_ZNK12_GLOBAL__N_133CourseSelectInfoBaseNrvAppearWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectInfoBaseNrvAppearWait::execute(al::NerveKeeper*) const	
+0x71001BCE20			FALSE	_ZNK12_GLOBAL__N_127CourseSelectInfoBaseNrvHide7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectInfoBaseNrvHide::execute(al::NerveKeeper*) const	
+0x71001BCE30			FALSE	_ZNK12_GLOBAL__N_131CourseSelectInfoBaseNrvFrameOut7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectInfoBaseNrvFrameOut::execute(al::NerveKeeper*) const	
 0x71001BCEA0		CourseSelectInfoDecideButton.o	FALSE	_ZN28CourseSelectInfoDecideButtonC1EPN2al11LayoutActorE	CourseSelectInfoDecideButton::CourseSelectInfoDecideButton(al::LayoutActor*)	
 0x71001BCEF0			FALSE	_ZN28CourseSelectInfoDecideButton18setDecideButtonTxtEi	CourseSelectInfoDecideButton::setDecideButtonTxt(int)	
 0x71001BCF10			FALSE	_ZN28CourseSelectInfoDecideButton11startActiveEb	CourseSelectInfoDecideButton::startActive(bool)	

@@ -25,7 +25,7 @@ public:
     bool setSelectedActorController(ICourseSelectActorController* pController, bool isDrc, bool isForce);
     void startDecide();
     void update();
-    static void calcMiniatureLayoutPos(sead::Vector2f* pOut, al::IUseCamera* pCamera,
+    static bool calcMiniatureLayoutPos(sead::Vector2f* pOut, al::IUseCamera* pCamera,
                                        const al::LiveActor* pActor,
                                        const sead::Vector3f& rOffset, float scale);
     bool isAppearGreenStarLock() const;
