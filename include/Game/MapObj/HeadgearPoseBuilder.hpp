@@ -17,10 +17,11 @@ public:
     bool isPlayerActionPlaying(const char*) const;
     const char* getPlayerActionName() const;
     al::HitSensor* getPlayerSensor() const { return mPlayerSensor; }
+    void setChildActor(al::LiveActor* actor) { mChildActor = actor; }
     void clearPlayerSensor() { mPlayerSensor = nullptr; }
 private:
     al::LiveActor* mHost;
-    void* mUnreconstructed18;
+    al::LiveActor* mChildActor;
     al::HitSensor* mPlayerSensor;
     u8 mUnreconstructed28[0x20];
 };

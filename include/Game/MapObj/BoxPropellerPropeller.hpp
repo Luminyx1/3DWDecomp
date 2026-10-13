@@ -6,6 +6,8 @@ public:
     BoxPropellerPropeller(const al::LiveActor*, const char*, const al::ActorInitInfo&, const char*);
     ~BoxPropellerPropeller() override;
     void control() override;
+    void setAlignUp(bool value) { mAlignUp = value; }
+    bool isPaused() const { return mPaused; }
     void addToFrontDraw();
     void removeFromFrontDraw();
     void pause() override;

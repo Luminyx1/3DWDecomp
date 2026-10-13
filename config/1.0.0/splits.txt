@@ -1443,6 +1443,7 @@ src/Game/MapObj/BoxLight.cpp: done
     .rodata start:0x016B5004 end:0x016B5013
 src/Game/MapObj/BoxPropeller.cpp:
     .text   start:0x0025DFA0 end:0x0025F834
+    .rodata start:0x016B5013 end:0x016B5016
 src/Game/MapObj/BoxPropellerPropeller.cpp: done
     .text   start:0x0025F840 end:0x0025FD10
 src/Game/MapObj/BreakMapParts.cpp: done
