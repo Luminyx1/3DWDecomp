@@ -1169,7 +1169,7 @@ src/Game/Layout/MapMenuPlayerParts.cpp: done
     .text   start:0x001D4520 end:0x001D4A38
 src/Game/Layout/MiiverseBalloon.cpp:
     .text   start:0x001D4A40 end:0x001D54DC
-src/Game/Layout/MiiverseBalloonParts.cpp:
+src/Game/Layout/MiiverseBalloonParts.cpp: done
     .text   start:0x001D54E0 end:0x001D5E38
 src/Game/Layout/MiiverseStateDetail.cpp:
     .text   start:0x001D5E40 end:0x001D6360
