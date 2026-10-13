@@ -14673,7 +14673,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71002432C0			FALSE	_ZNK12_GLOBAL__N_127BallGimmickNrvSupportFreeze7executeEPN2al11NerveKeeperE	(anonymous namespace)::BallGimmickNrvSupportFreeze::execute(al::NerveKeeper*) const	
 0x71002432D0			FALSE	_ZNK12_GLOBAL__N_118BallGimmickNrvFall7executeEPN2al11NerveKeeperE	(anonymous namespace)::BallGimmickNrvFall::execute(al::NerveKeeper*) const	
 0x71002432E0			FALSE	_ZNK12_GLOBAL__N_121BallGimmickNrvPreFall7executeEPN2al11NerveKeeperE	(anonymous namespace)::BallGimmickNrvPreFall::execute(al::NerveKeeper*) const	
-0x71002432F0			FALSE	sub_71002432F0	sub_71002432F0	
+0x71002432F0			FALSE	_GLOBAL__sub_I_BallGimmick.cpp	_GLOBAL__sub_I_BallGimmick.cpp	TRUE
 0x7100243340		BallSnow.o	FALSE	_ZN8BallSnowC2EPKc	BallSnow::BallSnow(char const*)	
 0x7100243460			FALSE	_ZN8BallSnowC1EPKc	BallSnow::BallSnow(char const*)	
 0x7100243580			FALSE	_ZN8BallSnow4initERKN2al13ActorInitInfoE	BallSnow::init(al::ActorInitInfo const&)	

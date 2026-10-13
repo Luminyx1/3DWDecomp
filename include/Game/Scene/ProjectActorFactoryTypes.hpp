@@ -172,14 +172,7 @@ private:
 };
 static_assert(sizeof(BalanceTruck) == 0x1c8);
 
-class BallGimmick : public al::LiveActor {
-public:
-    explicit BallGimmick(const char* pName);
-
-private:
-    u8 mUnreconstructed[0x6c];
-};
-static_assert(sizeof(BallGimmick) == 0x1b0);
+#include "MapObj/BallGimmick.hpp"
 
 #include "MapObj/BallSnow.hpp"
 
