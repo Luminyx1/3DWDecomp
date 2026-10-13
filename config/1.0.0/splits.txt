@@ -337,7 +337,7 @@ src/Game/Course/MapPlayerTrackerParts.cpp:
     .text   start:0x00089A00 end:0x00089FB8
 src/Game/Course/ScenarioShineCounterParts.cpp:
     .text   start:0x00089FC0 end:0x0008B0E4
-src/Game/CourseSelect/_8B0F0.cpp:
+src/Game/CourseSelect/CatGullHolder.cpp: done
     .text   start:0x0008B0F0 end:0x0008B124
 src/Game/CourseSelect/BgmBeatAnimeController.cpp:
     .text   start:0x0008B130 end:0x0008C308
