@@ -8308,14 +8308,14 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710013F9A0			FALSE	_ZN10RingBeamer7exeStopEv	RingBeamer::exeStop()	
 0x710013FA20			FALSE	_ZN10RingBeamerD1Ev	RingBeamer::~RingBeamer()	
 0x710013FA30			FALSE	_ZN10RingBeamerD0Ev	RingBeamer::~RingBeamer()	
-0x710013FA60			FALSE	sub_710013FA60	sub_710013FA60	
-0x710013FAD0			FALSE	sub_710013FAD0	sub_710013FAD0	
-0x710013FB30			FALSE	sub_710013FB30	sub_710013FB30	
-0x710013FBA0			FALSE	sub_710013FBA0	sub_710013FBA0	
-0x710013FC00			FALSE	sub_710013FC00	sub_710013FC00	
-0x710013FC60			FALSE	sub_710013FC60	sub_710013FC60	
-0x710013FCD0			FALSE	sub_710013FCD0	sub_710013FCD0	
-0x710013FD40			FALSE	sub_710013FD40	sub_710013FD40	
+0x710013FA60			FALSE	_ZNK12_GLOBAL__N_119RingBeamerNrvActive7executeEPN2al11NerveKeeperE	(anonymous namespace)::RingBeamerNrvActive::execute(al::NerveKeeper*) const	
+0x710013FAD0			FALSE	_ZNK12_GLOBAL__N_126RingBeamerNrvBeginDeactive7executeEPN2al11NerveKeeperE	(anonymous namespace)::RingBeamerNrvBeginDeactive::execute(al::NerveKeeper*) const	
+0x710013FB30			FALSE	_ZNK12_GLOBAL__N_124RingBeamerNrvBeginActive7executeEPN2al11NerveKeeperE	(anonymous namespace)::RingBeamerNrvBeginActive::execute(al::NerveKeeper*) const	
+0x710013FBA0			FALSE	_ZNK12_GLOBAL__N_121RingBeamerNrvInterval7executeEPN2al11NerveKeeperE	(anonymous namespace)::RingBeamerNrvInterval::execute(al::NerveKeeper*) const	
+0x710013FC00			FALSE	_ZNK12_GLOBAL__N_124RingBeamerNrvEndInterval7executeEPN2al11NerveKeeperE	(anonymous namespace)::RingBeamerNrvEndInterval::execute(al::NerveKeeper*) const	
+0x710013FC60			FALSE	_ZNK12_GLOBAL__N_121RingBeamerNrvEmitBeam7executeEPN2al11NerveKeeperE	(anonymous namespace)::RingBeamerNrvEmitBeam::execute(al::NerveKeeper*) const	
+0x710013FCD0			FALSE	_ZNK12_GLOBAL__N_121RingBeamerNrvDeactive7executeEPN2al11NerveKeeperE	(anonymous namespace)::RingBeamerNrvDeactive::execute(al::NerveKeeper*) const	
+0x710013FD40			FALSE	_ZNK12_GLOBAL__N_117RingBeamerNrvStop7executeEPN2al11NerveKeeperE	(anonymous namespace)::RingBeamerNrvStop::execute(al::NerveKeeper*) const	
 0x710013FDC0			FALSE	_ZNK2al10FunctorV0MIP10RingBeamerMS1_FvvEEclEv	al::FunctorV0M<RingBeamer*, void (RingBeamer::*)()>::operator()() const	
 0x710013FDE0			FALSE	_ZNK2al10FunctorV0MIP10RingBeamerMS1_FvvEE5cloneEv	al::FunctorV0M<RingBeamer*, void (RingBeamer::*)()>::clone() const	
 0x710013FE30		RingBeamerBeam.o	FALSE	_ZN15RingBeamerParamC2Ev	RingBeamerParam::RingBeamerParam()	
