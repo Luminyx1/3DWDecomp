@@ -1488,7 +1488,7 @@ src/Game/MapObj/ChikaChikaBlockWatcher.cpp: done
     .text   start:0x0026ABD0 end:0x0026B3BC
 src/Game/MapObj/ChikuwaBlock.cpp: done
     .text   start:0x0026B3C0 end:0x0026B650
-src/Game/MapObj/ClimbHandle.cpp:
+src/Game/MapObj/ClimbHandle.cpp: done
     .text   start:0x0026B650 end:0x0026C948
 src/Game/MapObj/ClimbHandleMapParts.cpp: done
     .text   start:0x0026C950 end:0x0026CDA0

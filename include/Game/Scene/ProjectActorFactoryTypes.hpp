@@ -439,14 +439,7 @@ private:
 };
 static_assert(sizeof(ChorobonHolder) == 0x160);
 
-class ClimbHandle : public al::LiveActor {
-public:
-    explicit ClimbHandle(const char* pName);
-
-private:
-    u8 mUnreconstructed[0x6c];
-};
-static_assert(sizeof(ClimbHandle) == 0x1b0);
+#include "MapObj/ClimbHandle.hpp"
 
 class ClimbHandleMapParts : public al::LiveActor {
 public:

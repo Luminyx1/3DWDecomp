@@ -15834,16 +15834,16 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710026C660			FALSE	_ZN11ClimbHandle12exeStopAtTopEv	ClimbHandle::exeStopAtTop()	
 0x710026C6A0			FALSE	_ZN11ClimbHandleD1Ev	ClimbHandle::~ClimbHandle()	
 0x710026C6B0			FALSE	_ZN11ClimbHandleD0Ev	ClimbHandle::~ClimbHandle()	
-0x710026C6E0			FALSE	sub_710026C6E0	sub_710026C6E0	
+0x710026C6E0			FALSE	_ZNK12_GLOBAL__N_118ClimbHandleNrvStop7executeEPN2al11NerveKeeperE	(anonymous namespace)::ClimbHandleNrvStop::execute(al::NerveKeeper*) const	TRUE
 0x710026C720			FALSE	_ZNK12_GLOBAL__N_117ClimbHandleNrvTop7executeEPN2al11NerveKeeperE	(anonymous namespace)::ClimbHandleNrvTop::execute(al::NerveKeeper*) const	
 0x710026C730			FALSE	_ZNK12_GLOBAL__N_122ClimbHandleNrvTopFirst7executeEPN2al11NerveKeeperE	(anonymous namespace)::ClimbHandleNrvTopFirst::execute(al::NerveKeeper*) const	
 0x710026C740			FALSE	_ZNK12_GLOBAL__N_123ClimbHandleNrvTopRotate7executeEPN2al11NerveKeeperE	(anonymous namespace)::ClimbHandleNrvTopRotate::execute(al::NerveKeeper*) const	
 0x710026C750			FALSE	_ZNK12_GLOBAL__N_116ClimbHandleNrvUp7executeEPN2al11NerveKeeperE	(anonymous namespace)::ClimbHandleNrvUp::execute(al::NerveKeeper*) const	
-0x710026C760			FALSE	sub_710026C760	sub_710026C760	
+0x710026C760			FALSE	_ZNK12_GLOBAL__N_118ClimbHandleNrvSkid7executeEPN2al11NerveKeeperE	(anonymous namespace)::ClimbHandleNrvSkid::execute(al::NerveKeeper*) const	TRUE
 0x710026C7C0			FALSE	_ZNK12_GLOBAL__N_118ClimbHandleNrvDown7executeEPN2al11NerveKeeperE	(anonymous namespace)::ClimbHandleNrvDown::execute(al::NerveKeeper*) const	
-0x710026C7D0			FALSE	sub_710026C7D0	sub_710026C7D0	
-0x710026C860			FALSE	sub_710026C860	sub_710026C860	
-0x710026C8A0			FALSE	sub_710026C8A0	sub_710026C8A0	
+0x710026C7D0			FALSE	_ZNK12_GLOBAL__N_118ClimbHandleNrvKeep7executeEPN2al11NerveKeeperE	(anonymous namespace)::ClimbHandleNrvKeep::execute(al::NerveKeeper*) const	TRUE
+0x710026C860			FALSE	_ZNK12_GLOBAL__N_123ClimbHandleNrvStopAtTop7executeEPN2al11NerveKeeperE	(anonymous namespace)::ClimbHandleNrvStopAtTop::execute(al::NerveKeeper*) const	TRUE
+0x710026C8A0			FALSE	_ZNK12_GLOBAL__N_128ClimbHandleNrvSkidBeforeDown7executeEPN2al11NerveKeeperE	(anonymous namespace)::ClimbHandleNrvSkidBeforeDown::execute(al::NerveKeeper*) const	TRUE
 0x710026C940			FALSE	_ZNK12_GLOBAL__N_119ClimbHandleNrvBound7executeEPN2al11NerveKeeperE	(anonymous namespace)::ClimbHandleNrvBound::execute(al::NerveKeeper*) const	
 0x710026C950		ClimbHandleMapParts.o	FALSE	_ZN19ClimbHandleMapPartsC2EPKc	ClimbHandleMapParts::ClimbHandleMapParts(char const*)	
 0x710026CA10			FALSE	_ZN19ClimbHandleMapPartsC1EPKc	ClimbHandleMapParts::ClimbHandleMapParts(char const*)	
