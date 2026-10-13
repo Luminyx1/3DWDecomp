@@ -18658,9 +18658,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71002E28A0			FALSE	_ZN19HeadgearPoseBuilder5startEPN2al9HitSensorE	HeadgearPoseBuilder::start(al::HitSensor*)	
 0x71002E28F0			FALSE	_ZN19HeadgearPoseBuilder6updateEv	HeadgearPoseBuilder::update()	
 0x71002E33F0			FALSE	_ZNK19HeadgearPoseBuilder21isPlayerActionPlayingEPKc	HeadgearPoseBuilder::isPlayerActionPlaying(char const*) const	
-0x71002E3400			FALSE	sub_71002E3400	sub_71002E3400	
+0x71002E3400			FALSE	_ZN12_GLOBAL__N_125isPlayerTreeActionPlayingEPKN2al9HitSensorE	_ZN12_GLOBAL__N_125isPlayerTreeActionPlayingEPKN2al9HitSensorE	TRUE
 0x71002E34E0			FALSE	_ZNK19HeadgearPoseBuilder27isPlayerRaidonActionPlayingEv	HeadgearPoseBuilder::isPlayerRaidonActionPlaying() const	
-0x71002E3530			FALSE	sub_71002E3530	sub_71002E3530	
+0x71002E3530			FALSE	_ZN12_GLOBAL__N_121isPlayerActionPlayingEPKcPKN2al9HitSensorE	_ZN12_GLOBAL__N_121isPlayerActionPlayingEPKcPKN2al9HitSensorE	TRUE
 0x71002E36F0			FALSE	_ZNK19HeadgearPoseBuilder19getPlayerActionNameEv	HeadgearPoseBuilder::getPlayerActionName() const	
 0x71002E3710			FALSE	_ZNK19HeadgearPoseBuilder10isSnappingEv	HeadgearPoseBuilder::isSnapping() const	
 0x71002E3760			FALSE	_ZN19HeadgearPoseBuilder7exeWaitEv	HeadgearPoseBuilder::exeWait()	
@@ -18668,10 +18668,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71002E39F0			FALSE	_ZN19HeadgearPoseBuilder7exeSnapEv	HeadgearPoseBuilder::exeSnap()	
 0x71002E3BB0			FALSE	_ZN19HeadgearPoseBuilder23updateAndCalcAnimDirectEv	HeadgearPoseBuilder::updateAndCalcAnimDirect()	
 0x71002E3BE0			FALSE	_ZN19HeadgearPoseBuilderD0Ev	HeadgearPoseBuilder::~HeadgearPoseBuilder()	
-0x71002E3C10			FALSE	sub_71002E3C10	sub_71002E3C10	
-0x71002E3C20			FALSE	sub_71002E3C20	sub_71002E3C20	
-0x71002E3C30			FALSE	sub_71002E3C30	sub_71002E3C30	
-0x71002E3C40			FALSE	sub_71002E3C40	sub_71002E3C40	
+0x71002E3C10			FALSE	_ZNK12_GLOBAL__N_126HeadgearPoseBuilderNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_126HeadgearPoseBuilderNrvWait7executeEPN2al11NerveKeeperE	TRUE
+0x71002E3C20			FALSE	_ZNK12_GLOBAL__N_131HeadgearPoseBuilderNrvSnapRight7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_131HeadgearPoseBuilderNrvSnapRight7executeEPN2al11NerveKeeperE	TRUE
+0x71002E3C30			FALSE	_ZNK12_GLOBAL__N_130HeadgearPoseBuilderNrvSnapLeft7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_130HeadgearPoseBuilderNrvSnapLeft7executeEPN2al11NerveKeeperE	TRUE
+0x71002E3C40			FALSE	_ZNK12_GLOBAL__N_130HeadgearPoseBuilderNrvSnapWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_130HeadgearPoseBuilderNrvSnapWait7executeEPN2al11NerveKeeperE	TRUE
 0x71002E3C50		HeadgearStateBlow.o	FALSE	_ZN22HeadgearStateBlowParamC2Ev	HeadgearStateBlowParam::HeadgearStateBlowParam()	
 0x71002E3CA0			FALSE	_ZN17HeadgearStateBlowC2EPN2al9LiveActorEPK22HeadgearStateBlowParam	HeadgearStateBlow::HeadgearStateBlow(al::LiveActor*, HeadgearStateBlowParam const*)	
 0x71002E3D20			FALSE	_ZN17HeadgearStateBlow8tryStartEPKN2al9SensorMsgEPNS0_9HitSensorE	HeadgearStateBlow::tryStart(al::SensorMsg const*, al::HitSensor*)	

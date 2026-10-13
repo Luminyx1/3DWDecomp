@@ -1708,6 +1708,7 @@ src/Game/MapObj/GustWind.cpp: done
     .text   start:0x002E1E20 end:0x002E27EC
 src/Game/MapObj/HeadgearPoseBuilder.cpp:
     .text   start:0x002E27F0 end:0x002E3C48
+    .rodata start:0x016B56A0 end:0x016B56D3
 src/Game/MapObj/HeadgearStateBlow.cpp: done
     .text   start:0x002E3C50 end:0x002E4018
 src/Game/MapObj/HexScrollAppearParts.cpp: done
