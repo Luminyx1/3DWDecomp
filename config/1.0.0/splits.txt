@@ -2216,7 +2216,7 @@ src/Game/NPC/FairyNpc.cpp: done
     .text   start:0x003B29E0 end:0x003B2D20
 src/Game/NPC/FairyNpcWithGlasses.cpp: done
     .text   start:0x003B2D20 end:0x003B333C
-src/Game/NPC/FairyPrincess.cpp:
+src/Game/NPC/FairyPrincess.cpp: done
     .text   start:0x003B3340 end:0x003B3F44
 src/Game/NPC/KinopioBrigadeNpc.cpp:
     .text   start:0x003B3F50 end:0x003B6B8C
