@@ -1197,7 +1197,7 @@ src/Game/Layout/PlayerEntryPlayerHolder.cpp: done
     .text   start:0x001E5570 end:0x001E58C8
 src/Game/Layout/ProjectReplaceTagProcessor.cpp:
     .text   start:0x001E58D0 end:0x001E5958
-src/Game/Layout/RCSControlGuideBar.cpp:
+src/Game/Layout/RCSControlGuideBar.cpp: done
     .text   start:0x001E5960 end:0x001E6774
 src/Game/Layout/RCS_SaveDataLayout.cpp:
     .text   start:0x001E6780 end:0x001EA66C

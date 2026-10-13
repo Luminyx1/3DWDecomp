@@ -12603,7 +12603,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001E5BB0			FALSE	_ZN18RCSControlGuideBar4showEv	RCSControlGuideBar::show()	
 0x71001E5BD0			FALSE	_ZN18RCSControlGuideBar3endEv	RCSControlGuideBar::end()	
 0x71001E5BE0			FALSE	_ZN18RCSControlGuideBar12overridePortEi	RCSControlGuideBar::overridePort(int)	
-0x71001E5C40			FALSE	sub_71001E5C40	sub_71001E5C40	
+0x71001E5C40			FALSE	_ZN12_GLOBAL__N_118getGuideBarMessageEPKN2al11LayoutActorEN18RCSControlGuideBar15GuideBarMsgTypeEi	(anonymous namespace)::getGuideBarMessage(al::LayoutActor const*, RCSControlGuideBar::GuideBarMsgType, int)	
 0x71001E5DE0			FALSE	_ZN18RCSControlGuideBar17appearWithMessageENS_15GuideBarMsgTypeEi	RCSControlGuideBar::appearWithMessage(RCSControlGuideBar::GuideBarMsgType, int)	
 0x71001E5E70			FALSE	_ZN18RCSControlGuideBar10changeTextENS_15GuideBarMsgTypeEib	RCSControlGuideBar::changeText(RCSControlGuideBar::GuideBarMsgType, int, bool)	
 0x71001E5ED0			FALSE	_ZN18RCSControlGuideBar15changeTextTitleENS_15GuideBarMsgTypeEi	RCSControlGuideBar::changeTextTitle(RCSControlGuideBar::GuideBarMsgType, int)	
@@ -12628,12 +12628,12 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001E64F0			FALSE	_ZN18RCSControlGuideBar8hideTextEv	RCSControlGuideBar::hideText()	
 0x71001E6510			FALSE	_ZN18RCSControlGuideBar10fadeTextInEv	RCSControlGuideBar::fadeTextIn()	
 0x71001E6570			FALSE	_ZN18RCSControlGuideBar14isChangingTextEv	RCSControlGuideBar::isChangingText()	
-0x71001E6580			FALSE	sub_71001E6580	sub_71001E6580	
-0x71001E65F0			FALSE	sub_71001E65F0	sub_71001E65F0	
-0x71001E6660			FALSE	sub_71001E6660	sub_71001E6660	
-0x71001E66D0			FALSE	sub_71001E66D0	sub_71001E66D0	
-0x71001E66E0			FALSE	sub_71001E66E0	sub_71001E66E0	
-0x71001E66F0			FALSE	sub_71001E66F0	sub_71001E66F0	
+0x71001E6580			FALSE	_ZNK12_GLOBAL__N_125RCSControlGuideBarNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::RCSControlGuideBarNrvWait::execute(al::NerveKeeper*) const	
+0x71001E65F0			FALSE	_ZNK12_GLOBAL__N_127RCSControlGuideBarNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::RCSControlGuideBarNrvAppear::execute(al::NerveKeeper*) const	
+0x71001E6660			FALSE	_ZNK12_GLOBAL__N_124RCSControlGuideBarNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::RCSControlGuideBarNrvEnd::execute(al::NerveKeeper*) const	
+0x71001E66D0			FALSE	_ZNK12_GLOBAL__N_132RCSControlGuideBarNrvFadeTextOut7executeEPN2al11NerveKeeperE	(anonymous namespace)::RCSControlGuideBarNrvFadeTextOut::execute(al::NerveKeeper*) const	
+0x71001E66E0			FALSE	_ZNK12_GLOBAL__N_137RCSControlGuideBarNrvFadeTextOutTitle7executeEPN2al11NerveKeeperE	(anonymous namespace)::RCSControlGuideBarNrvFadeTextOutTitle::execute(al::NerveKeeper*) const	
+0x71001E66F0			FALSE	_ZNK12_GLOBAL__N_131RCSControlGuideBarNrvFadeTextIn7executeEPN2al11NerveKeeperE	(anonymous namespace)::RCSControlGuideBarNrvFadeTextIn::execute(al::NerveKeeper*) const	
 0x71001E6780		RCS_SaveDataLayout.o	FALSE	_ZN18RCS_SaveDataLayoutC2ERKN2al14LayoutInitInfoEP14GameDataHolderPNS0_21ScreenCaptureExecutorEP18RCSControlGuideBarb	RCS_SaveDataLayout::RCS_SaveDataLayout(al::LayoutInitInfo const&, GameDataHolder*, al::ScreenCaptureExecutor*, RCSControlGuideBar*, bool)	
 0x71001E6C80			FALSE	_ZN18RCS_SaveDataLayoutC1ERKN2al14LayoutInitInfoEP14GameDataHolderPNS0_21ScreenCaptureExecutorEP18RCSControlGuideBarb	RCS_SaveDataLayout::RCS_SaveDataLayout(al::LayoutInitInfo const&, GameDataHolder*, al::ScreenCaptureExecutor*, RCSControlGuideBar*, bool)	
 0x71001E7190			FALSE	_ZN18RCS_SaveDataLayout6appearEv	RCS_SaveDataLayout::appear()	
