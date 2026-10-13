@@ -2112,7 +2112,7 @@ src/Game/MapObj/TimerStageSwitch.cpp: done
     .text   start:0x0038C5B0 end:0x0038C8C4
 src/Game/MapObj/TouchCarryItemState.cpp:
     .text   start:0x0038C8D0 end:0x0038CF18
-src/Game/MapObj/TouchReactionMapParts.cpp:
+src/Game/MapObj/TouchReactionMapParts.cpp: done
     .text   start:0x0038CF20 end:0x0038DED4
 src/Game/MapObj/TouchPointTransparent.cpp: done
     .text   start:0x0038DEE0 end:0x0038E2F4

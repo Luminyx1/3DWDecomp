@@ -22600,15 +22600,15 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710038DC00			FALSE	_ZN21TouchReactionMapParts9exeFinishEv	TouchReactionMapParts::exeFinish()	
 0x710038DC70			FALSE	_ZN21TouchReactionMapPartsD1Ev	TouchReactionMapParts::~TouchReactionMapParts()	
 0x710038DC80			FALSE	_ZN21TouchReactionMapPartsD0Ev	TouchReactionMapParts::~TouchReactionMapParts()	
-0x710038DCB0			FALSE	sub_710038DCB0	sub_710038DCB0	
-0x710038DD00			FALSE	sub_710038DD00	sub_710038DD00	
-0x710038DD10			FALSE	sub_710038DD10	sub_710038DD10	
-0x710038DDA0			FALSE	sub_710038DDA0	sub_710038DDA0	
+0x710038DCB0			FALSE	_ZNK12_GLOBAL__N_128TouchReactionMapPartsNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::TouchReactionMapPartsNrvWait::execute	TRUE
+0x710038DD00			FALSE	_ZNK12_GLOBAL__N_128TouchReactionMapPartsNrvWait13getActionNameEv	(anonymous namespace)::TouchReactionMapPartsNrvWait::getActionName	TRUE
+0x710038DD10			FALSE	_ZNK12_GLOBAL__N_131TouchReactionMapPartsNrvTouched7executeEPN2al11NerveKeeperE	(anonymous namespace)::TouchReactionMapPartsNrvTouched::execute	TRUE
+0x710038DDA0			FALSE	_ZNK12_GLOBAL__N_131TouchReactionMapPartsNrvTouched13getActionNameEv	(anonymous namespace)::TouchReactionMapPartsNrvTouched::getActionName	TRUE
 0x710038DDB0			FALSE	_ZNK12_GLOBAL__N_132TouchReactionMapPartsNrvReaction7executeEPN2al11NerveKeeperE	(anonymous namespace)::TouchReactionMapPartsNrvReaction::execute(al::NerveKeeper*) const	
-0x710038DDC0			FALSE	sub_710038DDC0	sub_710038DDC0	
-0x710038DDD0			FALSE	sub_710038DDD0	sub_710038DDD0	
-0x710038DE40			FALSE	sub_710038DE40	sub_710038DE40	
-0x710038DE50			FALSE	sub_710038DE50	sub_710038DE50	
+0x710038DDC0			FALSE	_ZNK12_GLOBAL__N_132TouchReactionMapPartsNrvReaction13getActionNameEv	(anonymous namespace)::TouchReactionMapPartsNrvReaction::getActionName	TRUE
+0x710038DDD0			FALSE	_ZNK12_GLOBAL__N_130TouchReactionMapPartsNrvFinish7executeEPN2al11NerveKeeperE	(anonymous namespace)::TouchReactionMapPartsNrvFinish::execute	TRUE
+0x710038DE40			FALSE	_ZNK12_GLOBAL__N_130TouchReactionMapPartsNrvFinish13getActionNameEv	(anonymous namespace)::TouchReactionMapPartsNrvFinish::getActionName	TRUE
+0x710038DE50			FALSE	_GLOBAL__sub_I_TouchReactionMapParts.cpp	_GLOBAL__sub_I_TouchReactionMapParts.cpp	TRUE
 0x710038DEE0		TouchPointTransparent.o	FALSE	_ZN21TouchPointTransparentC2EPKc	TouchPointTransparent::TouchPointTransparent(char const*)	note: sorts before the previous object (folder boundary or misnamed object?)
 0x710038DF70			FALSE	_ZN21TouchPointTransparentC1EPKc	TouchPointTransparent::TouchPointTransparent(char const*)	
 0x710038E000			FALSE	_ZN21TouchPointTransparent4initERKN2al13ActorInitInfoE	TouchPointTransparent::init(al::ActorInitInfo const&)	

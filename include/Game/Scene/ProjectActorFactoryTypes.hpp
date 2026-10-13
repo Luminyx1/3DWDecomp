@@ -98,6 +98,8 @@
 #include "MapObj/SuperSkateShoes.hpp"
 #include "MapObj/SuperSkateRail.hpp"
 #pragma once
+
+#include "MapObj/TouchReactionMapParts.hpp"
 #include "MapObj/BoxKiller.hpp"
 #include "MapObj/BoxPropeller.hpp"
 #include "MapObj/BoxCoin.hpp"
@@ -2314,14 +2316,7 @@ private:
 };
 static_assert(sizeof(Togezo) == 0x198);
 
-class TouchReactionMapParts : public al::LiveActor {
-public:
-    explicit TouchReactionMapParts(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x3c];
-};
-static_assert(sizeof(TouchReactionMapParts) == 0x180);
 
 class TrampleSwitchTimer : public al::LiveActor {
 public:
