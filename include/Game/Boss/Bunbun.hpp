@@ -43,6 +43,7 @@ public:
     void control() override;
     void attackSensor(al::HitSensor* pSelf, al::HitSensor* pOther) override;
     bool isEnableAttack() const;
+    s32 getHp() const { return mHp; }
     bool receiveMsg(const al::SensorMsg* pMsg, al::HitSensor* pOther,
                     al::HitSensor* pSelf) override;
     void startDown(al::HitSensor* pOther);
