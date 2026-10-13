@@ -9,7 +9,7 @@ class ItemStateGigaPlayerHold : public ItemStatePlayerHold {
 public:
     ItemStateGigaPlayerHold(al::LiveActor* pActor, const ItemStatePlayerHoldParam* pParam,
                             bool, bool);
-    void exeHold();
+    void exeHold() override;
     void calcPlayerHoldMtx(sead::Matrix34f* pMtx);
 };
 

@@ -15,12 +15,12 @@ public:
     bool tryStartCarryFront(const al::SensorMsg*, al::HitSensor*, bool);
     void initColliderControl();
     void updateCollider(al::HitSensor*);
-    void exeHold();
+    virtual void exeHold();
 
     /** @brief Sets the flag at 0x23 (Gorobon enables it on gatekeeper stages). */
     void setFlag23(bool isEnable) { _23 = isEnable; }
 
-private:
+protected:
     bool mInvalidateSensors;
     bool _21;
     bool _22;
