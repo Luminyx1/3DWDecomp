@@ -1219,8 +1219,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100032A40			FALSE	_ZN17KoopaLastBlockPow7exeDemoEv	KoopaLastBlockPow::exeDemo()	
 0x7100032A90			FALSE	_ZN17KoopaLastBlockPowD1Ev	KoopaLastBlockPow::~KoopaLastBlockPow()	
 0x7100032AA0			FALSE	_ZN17KoopaLastBlockPowD0Ev	KoopaLastBlockPow::~KoopaLastBlockPow()	
-0x7100032AD0			FALSE	nullsub_6	nullsub_6	
-0x7100032AE0			FALSE	sub_7100032AE0	sub_7100032AE0	
+0x7100032AD0			FALSE	_ZNK12_GLOBAL__N_124KoopaLastBlockPowNrvWait7executeEPN2al11NerveKeeperE	KoopaLastBlockPowNrvWait::execute	matched nerve
+0x7100032AE0			FALSE	_ZNK12_GLOBAL__N_124KoopaLastBlockPowNrvDemo7executeEPN2al11NerveKeeperE	KoopaLastBlockPowNrvDemo::execute	matched nerve
 0x7100032B30			FALSE	_ZNK12_GLOBAL__N_128KoopaLastBlockPowNrvReaction7executeEPN2al11NerveKeeperE	(anonymous namespace)::KoopaLastBlockPowNrvReaction::execute(al::NerveKeeper*) const	
 0x7100032B40			TRUE	_ZN2al9StringTmpILi32EED0Ev	al::StringTmp<32>::~StringTmp()	
 0x7100032B50		KoopaLastBlockPowStateDemo.o	FALSE	_ZN29KoopaLastBlockPowStateDemoEndC2EP17KoopaLastBlockPowP24KoopaLastDefendeBlockPowRKN2al13ActorInitInfoE	KoopaLastBlockPowStateDemoEnd::KoopaLastBlockPowStateDemoEnd(KoopaLastBlockPow*, KoopaLastDefendeBlockPow*, al::ActorInitInfo const&)	

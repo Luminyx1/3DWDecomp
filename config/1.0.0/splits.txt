@@ -193,7 +193,7 @@ src/Game/Boss/KoopaLastAttack.cpp: done
     .text   start:0x00030EC0 end:0x000310F8
 src/Game/Boss/KoopaLastBeforeCheckPoint.cpp: done
     .text   start:0x00031100 end:0x00031E60
-src/Game/Boss/KoopaLastBlockPow.cpp:
+src/Game/Boss/KoopaLastBlockPow.cpp: done
     .text   start:0x00031E60 end:0x00032B44
 src/Game/Boss/KoopaLastBlockPowStateDemo.cpp:
     .text   start:0x00032B50 end:0x00033410
