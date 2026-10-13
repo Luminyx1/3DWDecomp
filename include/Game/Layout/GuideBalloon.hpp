@@ -27,6 +27,7 @@ public:
     void startShowNeko(neko::ColorType colorType, int foundNum, int maxNum);
     void startShow(const char16_t* pMessage);
     void endShow();
+    const sead::Vector3f& getOffset() const { return mOffset; }
 
     /**
      * @brief Sets the position the balloon follows.
@@ -37,7 +38,8 @@ public:
 private:
     u8 _128[0x8];
     const sead::Vector3f* mTrans;  // 0x130
-    u8 _138[0x20];
+    sead::Vector3f mOffset;  // 0x138
+    u8 _144[0x14];
 };
 
 static_assert(sizeof(GuideBalloon) == 0x158);

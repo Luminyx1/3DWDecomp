@@ -14569,16 +14569,16 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710023D9B0			FALSE	_ZN19AssistSlideMapPartsD1Ev	AssistSlideMapParts::~AssistSlideMapParts()	
 0x710023D9C0			FALSE	_ZN19AssistSlideMapPartsD0Ev	AssistSlideMapParts::~AssistSlideMapParts()	
 0x710023D9F0			FALSE	_ZNK12_GLOBAL__N_129AssistSlideMapPartsNrvOffWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::AssistSlideMapPartsNrvOffWait::execute(al::NerveKeeper*) const	
-0x710023DA00			FALSE	sub_710023DA00	sub_710023DA00	
+0x710023DA00			FALSE	_ZNK12_GLOBAL__N_129AssistSlideMapPartsNrvOffWait13getActionNameEv	(anonymous namespace)::AssistSlideMapPartsNrvOffWait::getActionName	TRUE
 0x710023DA10			FALSE	_ZNK12_GLOBAL__N_124AssistSlideMapPartsNrvOn7executeEPN2al11NerveKeeperE	(anonymous namespace)::AssistSlideMapPartsNrvOn::execute(al::NerveKeeper*) const	
-0x710023DA20			FALSE	sub_710023DA20	sub_710023DA20	
-0x710023DA30			FALSE	sub_710023DA30	sub_710023DA30	
-0x710023DAD0			FALSE	sub_710023DAD0	sub_710023DAD0	
+0x710023DA20			FALSE	_ZNK12_GLOBAL__N_124AssistSlideMapPartsNrvOn13getActionNameEv	(anonymous namespace)::AssistSlideMapPartsNrvOn::getActionName	TRUE
+0x710023DA30			FALSE	_ZNK12_GLOBAL__N_128AssistSlideMapPartsNrvOnWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::AssistSlideMapPartsNrvOnWait::execute	TRUE
+0x710023DAD0			FALSE	_ZNK12_GLOBAL__N_128AssistSlideMapPartsNrvOnWait13getActionNameEv	(anonymous namespace)::AssistSlideMapPartsNrvOnWait::getActionName	TRUE
 0x710023DAE0			FALSE	_ZNK12_GLOBAL__N_125AssistSlideMapPartsNrvOff7executeEPN2al11NerveKeeperE	(anonymous namespace)::AssistSlideMapPartsNrvOff::execute(al::NerveKeeper*) const	
-0x710023DAF0			FALSE	sub_710023DAF0	sub_710023DAF0	
-0x710023DB00			FALSE	sub_710023DB00	sub_710023DB00	
-0x710023DB60			FALSE	sub_710023DB60	sub_710023DB60	
-0x710023DB70			FALSE	sub_710023DB70	sub_710023DB70	
+0x710023DAF0			FALSE	_ZNK12_GLOBAL__N_125AssistSlideMapPartsNrvOff13getActionNameEv	(anonymous namespace)::AssistSlideMapPartsNrvOff::getActionName	TRUE
+0x710023DB00			FALSE	_ZNK12_GLOBAL__N_129AssistSlideMapPartsNrvOffSign7executeEPN2al11NerveKeeperE	(anonymous namespace)::AssistSlideMapPartsNrvOffSign::execute	TRUE
+0x710023DB60			FALSE	_ZNK12_GLOBAL__N_129AssistSlideMapPartsNrvOffSign13getActionNameEv	(anonymous namespace)::AssistSlideMapPartsNrvOffSign::getActionName	TRUE
+0x710023DB70			FALSE	_GLOBAL__sub_I_AssistSlideMapParts.cpp	_GLOBAL__sub_I_AssistSlideMapParts.cpp	TRUE
 0x710023DC00		AssistSlideMapPartsGroup.o	FALSE	_ZN24AssistSlideMapPartsGroupC2EPKc	AssistSlideMapPartsGroup::AssistSlideMapPartsGroup(char const*)	
 0x710023DC80			FALSE	_ZN24AssistSlideMapPartsGroupC1EPKc	AssistSlideMapPartsGroup::AssistSlideMapPartsGroup(char const*)	
 0x710023DD10			FALSE	_ZN24AssistSlideMapPartsGroup4initERKN2al13ActorInitInfoE	AssistSlideMapPartsGroup::init(al::ActorInitInfo const&)	
