@@ -1,3 +1,4 @@
+#include "MapObj/CatGull.hpp"
 #include "MapObj/ThrowMapParts.hpp"
 #include "MapObj/BlockSlot.hpp"
 #include "MapObj/GoalBonusGameBlockSlot.hpp"
@@ -391,14 +392,6 @@ static_assert(sizeof(Candlestand) == 0x180);
 
 static_assert(sizeof(CandlestandWatcher) == 0x150);
 
-class CatGull : public al::LiveActor {
-public:
-    explicit CatGull(const char* pName);
-
-private:
-    u8 mUnreconstructed[0x4c];
-};
-static_assert(sizeof(CatGull) == 0x190);
 
 class CheckPoint : public al::LiveActor {
 public:

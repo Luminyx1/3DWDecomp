@@ -19,6 +19,7 @@ public:
      * @return The flock list.
      */
     const sead::PtrArray<CatGull>& getCatGulls() const { return mCatGulls; }
+    void registerCatGull(CatGull* gull) { if (!mCatGulls.isFull()) mCatGulls.pushBack(gull); }
 
 private:
     sead::PtrArray<CatGull> mCatGulls;  // 0x8

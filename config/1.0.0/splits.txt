@@ -1460,7 +1460,7 @@ src/Game/MapObj/Candlestand.cpp: done
     .text   start:0x00262980 end:0x0026316C
 src/Game/MapObj/CandlestandWatcher.cpp: done
     .text   start:0x00263170 end:0x00263594
-src/Game/MapObj/CatGull.cpp:
+src/Game/MapObj/CatGull.cpp: done
     .text   start:0x002635A0 end:0x002647C4
 src/Game/MapObj/ChainModel.cpp: done
     .text   start:0x002647D0 end:0x00264B38
