@@ -17953,21 +17953,21 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71002C6B70			FALSE	_ZThn328_NK22GoalBonusGameBlockSlot11isUseResultEv	non-virtual thunk to GoalBonusGameBlockSlot::isUseResult() const	
 0x71002C6B80			FALSE	_ZN22GoalBonusGameBlockSlotD1Ev	GoalBonusGameBlockSlot::~GoalBonusGameBlockSlot()	
 0x71002C6B90			FALSE	_ZN22GoalBonusGameBlockSlotD0Ev	GoalBonusGameBlockSlot::~GoalBonusGameBlockSlot()	
-0x71002C6BC0			FALSE	sub_71002C6BC0	sub_71002C6BC0	
-0x71002C6C10			FALSE	sub_71002C6C10	sub_71002C6C10	
+0x71002C6BC0			FALSE	_ZNK12_GLOBAL__N_129GoalBonusGameBlockSlotNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::GoalBonusGameBlockSlotNrvWait::execute	TRUE
+0x71002C6C10			FALSE	_ZNK12_GLOBAL__N_129GoalBonusGameBlockSlotNrvWait13getActionNameEv	(anonymous namespace)::GoalBonusGameBlockSlotNrvWait::getActionName	TRUE
 0x71002C6C20			FALSE	_ZNK12_GLOBAL__N_132GoalBonusGameBlockSlotNrvRolling7executeEPN2al11NerveKeeperE	(anonymous namespace)::GoalBonusGameBlockSlotNrvRolling::execute(al::NerveKeeper*) const	
-0x71002C6C30			FALSE	sub_71002C6C30	sub_71002C6C30	
+0x71002C6C30			FALSE	_ZNK12_GLOBAL__N_132GoalBonusGameBlockSlotNrvRolling13getActionNameEv	(anonymous namespace)::GoalBonusGameBlockSlotNrvRolling::getActionName	TRUE
 0x71002C6C40			FALSE	_ZNK12_GLOBAL__N_131GoalBonusGameBlockSlotNrvResult7executeEPN2al11NerveKeeperE	(anonymous namespace)::GoalBonusGameBlockSlotNrvResult::execute(al::NerveKeeper*) const	
-0x71002C6C50			FALSE	sub_71002C6C50	sub_71002C6C50	
+0x71002C6C50			FALSE	_ZNK12_GLOBAL__N_131GoalBonusGameBlockSlotNrvResult13getActionNameEv	(anonymous namespace)::GoalBonusGameBlockSlotNrvResult::getActionName	TRUE
 0x71002C6C60			FALSE	_ZNK12_GLOBAL__N_135GoalBonusGameBlockSlotNrvSplashCoin7executeEPN2al11NerveKeeperE	(anonymous namespace)::GoalBonusGameBlockSlotNrvSplashCoin::execute(al::NerveKeeper*) const	
-0x71002C6C70			FALSE	sub_71002C6C70	sub_71002C6C70	
-0x71002C6C80			FALSE	sub_71002C6C80	sub_71002C6C80	
-0x71002C6CD0			FALSE	sub_71002C6CD0	sub_71002C6CD0	
+0x71002C6C70			FALSE	_ZNK12_GLOBAL__N_135GoalBonusGameBlockSlotNrvSplashCoin13getActionNameEv	(anonymous namespace)::GoalBonusGameBlockSlotNrvSplashCoin::getActionName	TRUE
+0x71002C6C80			FALSE	_ZNK12_GLOBAL__N_138GoalBonusGameBlockSlotNrvSplashCoinEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::GoalBonusGameBlockSlotNrvSplashCoinEnd::execute	TRUE
+0x71002C6CD0			FALSE	_ZNK12_GLOBAL__N_138GoalBonusGameBlockSlotNrvSplashCoinEnd13getActionNameEv	(anonymous namespace)::GoalBonusGameBlockSlotNrvSplashCoinEnd::getActionName	TRUE
 0x71002C6CE0			FALSE	_ZNK12_GLOBAL__N_129GoalBonusGameBlockSlotNrvHead7executeEPN2al11NerveKeeperE	(anonymous namespace)::GoalBonusGameBlockSlotNrvHead::execute(al::NerveKeeper*) const	
-0x71002C6CF0			FALSE	sub_71002C6CF0	sub_71002C6CF0	
-0x71002C6D00			FALSE	nullsub_180	nullsub_180	
-0x71002C6D10			FALSE	sub_71002C6D10	sub_71002C6D10	
-0x71002C6D20			FALSE	sub_71002C6D20	sub_71002C6D20	
+0x71002C6CF0			FALSE	_ZNK12_GLOBAL__N_129GoalBonusGameBlockSlotNrvHead13getActionNameEv	(anonymous namespace)::GoalBonusGameBlockSlotNrvHead::getActionName	TRUE
+0x71002C6D00			FALSE	_ZNK12_GLOBAL__N_128GoalBonusGameBlockSlotNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::GoalBonusGameBlockSlotNrvEnd::execute	TRUE
+0x71002C6D10			FALSE	_ZNK12_GLOBAL__N_128GoalBonusGameBlockSlotNrvEnd13getActionNameEv	(anonymous namespace)::GoalBonusGameBlockSlotNrvEnd::getActionName	TRUE
+0x71002C6D20			FALSE	_GLOBAL__sub_I_GoalBonusGameBlockSlot.cpp	_GLOBAL__sub_I_GoalBonusGameBlockSlot.cpp	TRUE
 0x71002C6DE0		GoalDoor.o	FALSE	_ZN8GoalDoorC2EPKc	GoalDoor::GoalDoor(char const*)	
 0x71002C6E80			FALSE	_ZN8GoalDoorC1EPKc	GoalDoor::GoalDoor(char const*)	
 0x71002C6F10			FALSE	_ZN8GoalDoor4initERKN2al13ActorInitInfoE	GoalDoor::init(al::ActorInitInfo const&)	

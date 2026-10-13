@@ -1,3 +1,5 @@
+#include "MapObj/BlockSlot.hpp"
+#include "MapObj/GoalBonusGameBlockSlot.hpp"
 #include "MapObj/JumpPanel.hpp"
 #include "MapObj/Fury/FloatingTerrain.hpp"
 #include "Demo/DemoCutscene.hpp"
@@ -235,14 +237,6 @@ static_assert(sizeof(BlockQuestionCourseSelect) == 0x158);
 
 
 
-class BlockSlot : public al::LiveActor {
-public:
-    explicit BlockSlot(const char* pName);
-
-private:
-    u8 mUnreconstructed[0x2c];
-};
-static_assert(sizeof(BlockSlot) == 0x170);
 
 
 
@@ -1058,14 +1052,6 @@ private:
 static_assert(sizeof(GiantTouchBreakMapParts) == 0x148);
 
 
-class GoalBonusGameBlockSlot : public al::LiveActor {
-public:
-    explicit GoalBonusGameBlockSlot(const char* pName);
-
-private:
-    u8 mUnreconstructed[0x3c];
-};
-static_assert(sizeof(GoalBonusGameBlockSlot) == 0x180);
 
 
 

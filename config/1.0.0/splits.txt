@@ -1650,7 +1650,7 @@ src/Game/MapObj/GigaBellManager.cpp:
     .text   start:0x002C0310 end:0x002C3708
 src/Game/MapObj/GigaRock.cpp:
     .text   start:0x002C3710 end:0x002C5E60
-src/Game/MapObj/GoalBonusGameBlockSlot.cpp:
+src/Game/MapObj/GoalBonusGameBlockSlot.cpp: done
     .text   start:0x002C5E60 end:0x002C6DD8
 src/Game/MapObj/GoalDoor.cpp: done
     .text   start:0x002C6DE0 end:0x002C7684
