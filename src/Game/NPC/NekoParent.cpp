@@ -379,7 +379,7 @@ void NekoParent::startAttach(const NekoAttachReason& rReason) {
     mTargetFinder->setTargetTypePriority(npc::NpcFindTargetType_Player, 1);
     mTargetFinder->setTargetTypePriority(npc::NpcFindTargetType_Neko, 0);
 
-    switch (rReason.mType) {
+    switch (rReason) {
     case NekoAttachReason::Type_AppearAtHost:
         al::resetPosition(this, al::getTrans(mHost), false);
         al::faceToDirection(this, al::getFront(mHost));
