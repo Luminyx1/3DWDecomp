@@ -1934,7 +1934,7 @@ src/Game/MapObj/RouteDokanLauncher.cpp:
     .text   start:0x003510F0 end:0x003525F4
 src/Game/MapObj/RouteDokanLauncherPUppeteer.cpp: done
     .text   start:0x00352600 end:0x003528D0
-src/Game/MapObj/RouteDokanRider.cpp:
+src/Game/MapObj/RouteDokanRider.cpp: done
     .text   start:0x003528D0 end:0x00353D48
 src/Game/MapObj/SaveDataChecker.cpp: done
     .text   start:0x00353D50 end:0x00354154
