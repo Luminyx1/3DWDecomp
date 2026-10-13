@@ -9823,14 +9823,14 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100178D10			FALSE	_ZN8Zuruzuru10exeStandUpEv	Zuruzuru::exeStandUp()	
 0x7100178DA0			FALSE	_ZN8ZuruzuruD1Ev	Zuruzuru::~Zuruzuru()	
 0x7100178DB0			FALSE	_ZN8ZuruzuruD0Ev	Zuruzuru::~Zuruzuru()	
-0x7100178DE0			FALSE	sub_7100178DE0	sub_7100178DE0	
+0x7100178DE0			FALSE	_ZNK12_GLOBAL__N_115ZuruzuruNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::ZuruzuruNrvWait::execute(al::NerveKeeper*) const	
 0x7100178E80			FALSE	_ZNK12_GLOBAL__N_121ZuruzuruNrvTumbleSign7executeEPN2al11NerveKeeperE	(anonymous namespace)::ZuruzuruNrvTumbleSign::execute(al::NerveKeeper*) const	
 0x7100178E90			FALSE	_ZNK12_GLOBAL__N_115ZuruzuruNrvWalk7executeEPN2al11NerveKeeperE	(anonymous namespace)::ZuruzuruNrvWalk::execute(al::NerveKeeper*) const	
 0x7100178EA0			FALSE	_ZNK12_GLOBAL__N_115ZuruzuruNrvTurn7executeEPN2al11NerveKeeperE	(anonymous namespace)::ZuruzuruNrvTurn::execute(al::NerveKeeper*) const	
 0x7100178EB0			FALSE	_ZNK12_GLOBAL__N_115ZuruzuruNrvFind7executeEPN2al11NerveKeeperE	(anonymous namespace)::ZuruzuruNrvFind::execute(al::NerveKeeper*) const	
-0x7100178EC0			FALSE	sub_7100178EC0	sub_7100178EC0	
-0x7100178F20			FALSE	sub_7100178F20	sub_7100178F20	
-0x7100178FA0			FALSE	sub_7100178FA0	sub_7100178FA0	
+0x7100178EC0			FALSE	_ZNK12_GLOBAL__N_117ZuruzuruNrvTumble7executeEPN2al11NerveKeeperE	(anonymous namespace)::ZuruzuruNrvTumble::execute(al::NerveKeeper*) const	
+0x7100178F20			FALSE	_ZNK12_GLOBAL__N_121ZuruzuruNrvTumbleWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::ZuruzuruNrvTumbleWait::execute(al::NerveKeeper*) const	
+0x7100178FA0			FALSE	_ZNK12_GLOBAL__N_118ZuruzuruNrvStandUp7executeEPN2al11NerveKeeperE	(anonymous namespace)::ZuruzuruNrvStandUp::execute(al::NerveKeeper*) const	
 0x7100179040	GhostPlayer	GhostPlayerLoaderRomData.o	FALSE	_ZN24GhostPlayerLoaderRomData12createIDNameERN4sead14SafeStringBaseIcEEi	GhostPlayerLoaderRomData::createIDName(sead::SafeStringBase<char>&, int)	
 0x71001790F0			FALSE	_ZN24GhostPlayerLoaderRomData12createIDNameERN4sead14SafeStringBaseIcEEii	GhostPlayerLoaderRomData::createIDName(sead::SafeStringBase<char>&, int, int)	
 0x71001791B0			FALSE	_ZN24GhostPlayerLoaderRomDataC2Eii	GhostPlayerLoaderRomData::GhostPlayerLoaderRomData(int, int)	
