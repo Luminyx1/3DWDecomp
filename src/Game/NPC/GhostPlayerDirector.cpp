@@ -1,119 +1,70 @@
 #include "NPC/GhostPlayerDirector.hpp"
-
-#include "Library/Execute/ExecuteUtil.hpp"
-#include "Library/Scene/SceneObjUtil.hpp"
-#include "Library/System/GameSystemInfo.hpp"
 #include "NPC/GhostPlayerRecorder.hpp"
+#include "NPC/GhostPlayerPlayer.hpp"
+#include "Library/Scene/SceneObjUtil.hpp"
+#include "Library/Execute/ExecuteUtil.hpp"
+#include "Library/System/GameSystemInfo.hpp"
 #include "Project/Scene/SceneInitInfo.hpp"
-#include "Scene/ProjectActorFactoryTypes.hpp"
-#include "Scene/SceneObjID.hpp"
-#include "System/Data/StageDataHolder.hpp"
+#include "System/GameDataHolder.hpp"
 #include "System/GameDataFile.hpp"
 #include "System/GameDataFunction.hpp"
-#include "System/GameDataHolder.hpp"
-
-/**
- * @brief Register the director as a scene object and create the ghost recorder.
- * @param pHolder Scene object holder the director is registered in.
- * @param rInfo Scene initialization info.
- * @param pExecuteDirector Execute director the director is updated by.
- * @param pPlayerHolder Holder of the players to record.
- * @param pGameDataHolder Game data holder of the running game.
- */
-GhostPlayerDirector::GhostPlayerDirector(const al::IUseSceneObjHolder* pHolder,
+#include "System/Data/StageDataHolder.hpp"
+/** @brief Registers recording and playback execution. @param pUser Scene object access. @param
+ * rInfo Scene initialization. @param pExecute Execution director. @param pPlayers Player holder.
+ * @param pData Game data. */
+GhostPlayerDirector::GhostPlayerDirector(const al::IUseSceneObjHolder* pUser,
                                          const al::SceneInitInfo& rInfo,
-                                         al::ExecuteDirector* pExecuteDirector,
-                                         al::PlayerHolder* pPlayerHolder,
-                                         const GameDataHolder* pGameDataHolder)
-    : mGameDataHolder(pGameDataHolder) {
-    al::setSceneObj(pHolder, this, SceneObjID_GhostPlayerDirector);
-    al::registerExecutorUser(this, pExecuteDirector, getSceneObjName());
-
-    al::NetworkSystem* pNetworkSystem = rInfo.mGameSystemInfo->getNetworkSystem();
-    if (pNetworkSystem != nullptr) {
-        mNetworkSystem = pNetworkSystem;
+                                         al::ExecuteDirector* pExecute, al::PlayerHolder* pPlayers,
+                                         const GameDataHolder* pData)
+    : mNetwork(nullptr), mData(pData), mRecorder(nullptr), mPlayer(nullptr) {
+    al::setSceneObj(pUser, this, 9);
+    al::registerExecutorUser(this, pExecute, getSceneObjName());
+    if (rInfo.mGameSystemInfo->_20) {
+        mNetwork = rInfo.mGameSystemInfo->_20;
     }
-
-    mRecorder = new GhostPlayerRecorder(pHolder, rInfo, mGameDataHolder, pPlayerHolder);
+    mRecorder = new GhostPlayerRecorder(pUser, rInfo, mData, pPlayers);
 }
-
-/** @brief Update the recorder and the ghost player, when present. */
+/** @brief Updates active recording and playback. */
 void GhostPlayerDirector::execute() {
-    if (mRecorder != nullptr) {
+    if (mRecorder) {
         mRecorder->update();
     }
-
-    if (mPlayer != nullptr) {
+    if (mPlayer) {
         mPlayer->update();
     }
 }
-
-/**
- * @brief Start recording the player.
- * @return True if the recording started.
- */
-bool GhostPlayerDirector::tryStartRecord() {
-    return mRecorder->tryStartRecord();
-}
-
-/**
- * @brief Check whether the recording has ended.
- * @return True when nothing is being recorded.
- */
-bool GhostPlayerDirector::isEndRecord() const {
-    return !mRecorder->isRecording();
-}
-
-/**
- * @brief End the recording and store its clear time.
- * @param isClear Whether the stage was cleared; the ghost base time of the stage is stored then,
- * otherwise the time attack count of the play.
- * @return Always true.
- */
-bool GhostPlayerDirector::tryEndRecord(bool isClear) {
+/** @brief Attempts to start recording. @return Whether recording started. */
+bool GhostPlayerDirector::tryStartRecord() { return mRecorder->tryStartRecord(); }
+/** @brief Reports the recording state. @return Whether recording has ended. */
+bool GhostPlayerDirector::isEndRecord() const { return mRecorder->isEndRecord(); }
+/** @brief Ends recording and sets its clear time. @param useBaseTime Use the course reference time.
+ * @return True after processing the request. */
+bool GhostPlayerDirector::tryEndRecord(bool useBaseTime) {
     mRecorder->endRecord();
-
-    const StageDataHolder* pStageDataHolder =
-        mGameDataHolder->getPlayingFile()->getStageDataHolder();
-    s32 courseId = pStageDataHolder->getCourseId();
-    s32 time = pStageDataHolder->calcTimeAttackCount();
-
-    if (isClear) {
-        GameDataHolderAccessor accessor(const_cast<GameDataHolder*>(mGameDataHolder));
-        const char* pStageName = GameDataFunction::findStageName(accessor, courseId);
-        time = GameDataFunction::findGhostBaseTime(accessor, pStageName);
+    const StageDataHolder* pStage = mData->getPlayingFile()->getStageDataHolder();
+    int courseId = pStage->getCourseId();
+    int clearTime = pStage->calcTimeAttackCount();
+    if (useBaseTime) {
+        GameDataHolderAccessor data(const_cast<GameDataHolder*>(mData));
+        clearTime = GameDataFunction::findGhostBaseTime(
+            data, GameDataFunction::findStageName(data, courseId));
     }
-
-    mRecorder->setClearTime(time);
+    mRecorder->setClearTime(clearTime);
     return true;
 }
-
-/**
- * @brief Save the recorded ghost data.
- * @return True if the data was saved.
- */
-bool GhostPlayerDirector::trySaveRecord() {
-    return mRecorder->saveRecord();
-}
-
-/** @brief Start replaying the ghost, when a ghost player exists. */
+/** @brief Attempts to save the recording. @return Recorder save result. */
+bool GhostPlayerDirector::trySaveRecord() { return mRecorder->saveRecord(); }
+/** @brief Starts playback if a player is registered. */
 void GhostPlayerDirector::tryStartPlay() {
-    if (mPlayer != nullptr) {
+    if (mPlayer) {
         mPlayer->tryStartPlay();
     }
 }
-
-/** @brief Stop replaying the ghost, when a ghost player exists. */
+/** @brief Ends playback if a player is registered. */
 void GhostPlayerDirector::tryEndPlay() {
-    if (mPlayer != nullptr) {
+    if (mPlayer) {
         mPlayer->tryEndPlay();
     }
 }
-
-/**
- * @brief Name of the scene object.
- * @return The debug name of the director.
- */
-const char* GhostPlayerDirector::getSceneObjName() const {
-    return "ゴーストディレクター";
-}
+/** @brief Gets the execution and scene object name. @return Scene object name. */
+const char* GhostPlayerDirector::getSceneObjName() const { return "GhostPlayerDirector"; }

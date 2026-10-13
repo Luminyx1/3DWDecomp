@@ -33,7 +33,7 @@ public:
     void exeAppear();
     void updateShootInfo();
     void updateDashPanel();
-    void checkTorpedoSpikeRestrictionAreas(bool isCheckSink, bool isCheckExplode);
+    void checkTorpedoSpikeRestrictionAreas(bool isCheckExplode, bool isCheckSink);
     void exeFall();
     void exeShoot();
     void enforceFollowAngleLimit();

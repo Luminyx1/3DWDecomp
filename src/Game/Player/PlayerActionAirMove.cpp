@@ -1,3 +1,4 @@
+#include "Player/IUsePlayerInputArranger.hpp"
 #include "Player/PlayerActionAirMove.hpp"
 
 #include <math/seadMathCalcCommon.h>
@@ -392,7 +393,7 @@ void PlayerActionAirMove::setup() {
     mSide.setCross(mArg->mProperty->getGroundUp(), mFront);
     al::normalize(&mSide);
 
-    mArg->mHorizontalSpeedAverage->resetHorizontalSpeedAverage();
+    mArg->mInputArranger->resetPrecedingJump();
     mStickOnFrame = 0;
     mIsTurning = false;
     mLongFallCheck->resetLongFall();

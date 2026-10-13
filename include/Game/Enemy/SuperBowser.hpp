@@ -177,4 +177,7 @@ private:
     bool mIsInkPuddleEnabled;
     u8 _222[0x50f - 0x222];
     bool mIsIgnoreBellOffsetY;  // 0x50f
+    u8 _510[0x6d0 - 0x510];
 };
+
+static_assert(sizeof(SuperBowser) == 0x6d0);

@@ -1,3 +1,4 @@
+#include "Scene/ProjectSceneFactoryEntries.hpp"
 #include "Scene/BootScene.hpp"
 #include "CourseSelect/CourseSelectScene.hpp"
 #include "Scene/DemoEndingScene.hpp"

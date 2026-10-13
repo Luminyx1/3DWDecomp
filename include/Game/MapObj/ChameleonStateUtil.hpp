@@ -19,4 +19,8 @@ bool isVisible(const RenderMaterialIndirectParam*, const RenderMaterialIndirectP
 void updateIndirectParam(RenderMaterialIndirectParam* pParam, float blendRate, float intensity,
                          const sead::Vector4f& rVector0, const sead::Vector4f& rVector1,
                          const sead::Vector4f& rVector2);
+void updateIndirectParam(RenderMaterialIndirectParam*, float, float,
+                         const sead::Vector4f&, const sead::Vector4f&, const sead::Vector4f&,
+                         float, const sead::Vector4f&, const sead::Vector4f&, const sead::Vector4f&);
+void changeDrawTransparentObject();
 }

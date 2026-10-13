@@ -29,6 +29,8 @@ class RabbitStateSwoon;
  */
 class Rabbit : public al::LiveActor {
 public:
+    /** @brief Gets the rabbit route rider. @return the rabbit route rider. */
+    RabbitRouteRider* getRouteRider() const { return mRouteRider; }
     Rabbit(const char* pName);
 
     void init(const al::ActorInitInfo& rInfo) override;

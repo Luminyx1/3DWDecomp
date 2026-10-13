@@ -798,8 +798,8 @@ bool GigaBellManager::isInUnlockCutscene() {
  * @brief Reset the bells once their return cutscene was seen.
  */
 void GigaBellManager::resetGigaBells() {
-    if (SingleModeDataFunction::getUnlockedPhase(this) == 1 &&
-        SingleModeDataFunction::hasSeenCutscene(this, cCutsceneIdGigaBellReturn) &&
+    if ((SingleModeDataFunction::getUnlockedPhase(this) != 1 ||
+         SingleModeDataFunction::hasSeenCutscene(this, cCutsceneIdGigaBellReturn)) &&
         mLockState == GigaBell::LockState::Unlocked) {
         for (s32 i = 0; i < mGigaBellNum; i++) {
             mGigaBells[i]->startReset();

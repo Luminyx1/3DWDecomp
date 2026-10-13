@@ -1,12 +1,11 @@
 #include "CourseSelect/BgmBeatAnimeController.hpp"
+#include "Library/ActorUtil.hpp"
 #include "Library/Bgm/BgmLineFunction.hpp"
 #include "Library/LiveActor/LiveActor.hpp"
-#include "Library/LiveActor/Util/ActorActionUtil.hpp"
-#include "Library/LiveActor/Util/ActorAnimUtil.hpp"
 #include "Library/Math/MathUtil.hpp"
 #include "Library/Nerve/NerveSetup.hpp"
-#include "Library/Nerve/NerveUtil.hpp"
 #include "Project/Base/StringUtil.hpp"
+#include <math/seadMathCalcCommon.h>
 
 namespace {
 NERVE_DECL(BgmBeatAnimeController, Wait);
@@ -18,115 +17,95 @@ NERVE_DECL(BgmBeatAnimeController, WaitSyncBeatLight);
 NERVE_DECL(BgmBeatAnimeController, SyncBeatLight);
 NERVES_MAKE_NOSTRUCT(BgmBeatAnimeController, Wait, WaitSyncBeatBySyncAnime, WaitSyncBeatLightStart,
                      WaitSyncBeatByWaitAnime, SyncBeat, WaitSyncBeatLight, SyncBeatLight)
-
-/** Number of animation frames in one beat. */
-constexpr f32 cFramesPerBeat = 30.0f;
-
-/**
- * @brief Checks whether a skeletal animation can be driven.
- * @param pActor Animated actor.
- * @param isDisabled Whether driving the skeletal animation is disabled.
- * @return Whether the animation exists and is not disabled.
- */
-inline bool isEnableSklAnime(const al::LiveActor* pActor, bool isDisabled) {
-    return al::isSklAnimExist(pActor) && !isDisabled;
 }
 
 /**
- * @brief Checks whether a texture-pattern animation can be driven.
- * @param pActor Animated actor.
- * @param isDisabled Whether driving the texture-pattern animation is disabled.
- * @return Whether the animation exists and is not disabled.
+ * @brief Convert an animation beat index to a frame position.
+ * @param beatIndex Animation's whole-beat index.
+ * @return Position including the current fractional beat.
  */
-inline bool isEnableMtsAnime(const al::LiveActor* pActor, bool isDisabled) {
-    return al::isMtsAnimExist(pActor) && !isDisabled;
+inline float BgmBeatAnimeController::calcAnimeFrame(int beatIndex) const {
+    return (mBeatRate + beatIndex) * 30.0f;
 }
 
-/**
- * @brief Checks whether a color animation can be driven.
- * @param pActor Animated actor.
- * @param isDisabled Whether driving the color animation is disabled.
- * @return Whether the animation exists and is not disabled.
- */
-inline bool isEnableMclAnime(const al::LiveActor* pActor, bool isDisabled) {
-    return al::isMclAnimExist(pActor) && !isDisabled;
+/** @brief Advance and wrap each animation's beat index. */
+inline void BgmBeatAnimeController::advanceBeatIndices() {
+    if (++mSklBeatIndex >= mSklBeatCount)
+        mSklBeatIndex = 0;
+    if (++mMtsBeatIndex >= mMtsBeatCount)
+        mMtsBeatIndex = 0;
+    if (++mMclBeatIndex >= mMclBeatCount)
+        mMclBeatIndex = 0;
 }
-}  // namespace
 
-/**
- * @brief Checks whether the current BGM can drive rhythm animations (special BGMs such as
- * hurry-up, giant and invincible are excluded).
- * @return Whether beat sync is possible.
- */
-inline bool BgmBeatAnimeController::isEnableSyncBgm() const {
-    if (!al::isEnableRhythmAnim(mActor, nullptr)) {
+/** @brief Recover the current beat index from every available animation. */
+inline void BgmBeatAnimeController::readBeatIndices() {
+    mSklBeatIndex = al::isSklAnimExist(mpActor) ? static_cast<int>(al::getSklAnimFrame(mpActor, 0) / 30.0f) : 0;
+    mMtsBeatIndex = al::isMtsAnimExist(mpActor) ? static_cast<int>(al::getMtsAnimFrame(mpActor) / 30.0f) : 0;
+    mMclBeatIndex = al::isMclAnimExist(mpActor) ? static_cast<int>(al::getMclAnimFrame(mpActor) / 30.0f) : 0;
+}
+
+/** @brief Check music eligibility for animation synchronization. @return Whether beat synchronization is available. */
+inline bool BgmBeatAnimeController::isSyncBgm() const {
+    if (!al::isEnableRhythmAnim(mpActor, nullptr))
         return false;
-    }
-
-    const char* pBgmName = al::getCurPlayingBgmPlayName(mActor);
-    if (pBgmName == nullptr) {
-        return false;
-    }
-
-    return !al::isEqualString(pBgmName, "HurryUp") && !al::isEqualString(pBgmName, "Giant") &&
-           !al::isEqualString(pBgmName, "Invincible");
+    const char* pName = al::getCurPlayingBgmPlayName(mpActor);
+    return pName && !al::isEqualString(pName, "HurryUp") && !al::isEqualString(pName, "Giant") &&
+           !al::isEqualString(pName, "Invincible");
 }
 
 /**
- * @brief Checks whether the BGM can drive rhythm animations and the actor plays an action.
- * @return Whether beat sync is possible.
+ * @brief Check skeletal animation participation.
+ * @param pActor Actor to inspect.
+ * @param isIgnore Whether this channel is excluded.
+ * @return Whether an enabled skeletal animation exists.
  */
-inline bool BgmBeatAnimeController::isEnableSyncAnime() const {
-    return isEnableSyncBgm() && al::isExistAction(mActor);
-}
-
-/** @brief Advances every animation by one beat, wrapping around at its beat count. */
-inline void BgmBeatAnimeController::advanceBeat() {
-    mSklBeat = mSklBeat + 1 >= mSklBeatNum ? 0 : mSklBeat + 1;
-    mMtsBeat = mMtsBeat + 1 >= mMtsBeatNum ? 0 : mMtsBeat + 1;
-    mMclBeat = mMclBeat + 1 >= mMclBeatNum ? 0 : mMclBeat + 1;
-}
-
-/** @brief Recomputes the current beat of every animation from its current frame. */
-inline void BgmBeatAnimeController::updateBeatFromAnime() {
-    mSklBeat = al::isSklAnimExist(mActor) ?
-                   static_cast<s32>(al::getSklAnimFrame(mActor, 0) / cFramesPerBeat) :
-                   0;
-    mMtsBeat = al::isMtsAnimExist(mActor) ?
-                   static_cast<s32>(al::getMtsAnimFrame(mActor) / cFramesPerBeat) :
-                   0;
-    mMclBeat = al::isMclAnimExist(mActor) ?
-                   static_cast<s32>(al::getMclAnimFrame(mActor) / cFramesPerBeat) :
-                   0;
+inline bool BgmBeatAnimeController::isSklEnabled(const al::LiveActor* pActor, bool isIgnore) {
+    return al::isSklAnimExist(pActor) && !isIgnore;
 }
 
 /**
- * @brief Creates the controller in the wait state.
- * @param pActor Actor whose animations are driven.
+ * @brief Check texture animation participation.
+ * @param pActor Actor to inspect.
+ * @param isIgnore Whether this channel is excluded.
+ * @return Whether an enabled texture animation exists.
  */
+inline bool BgmBeatAnimeController::isMtsEnabled(const al::LiveActor* pActor, bool isIgnore) {
+    return al::isMtsAnimExist(pActor) && !isIgnore;
+}
+
+/**
+ * @brief Check color animation participation.
+ * @param pActor Actor to inspect.
+ * @param isIgnore Whether this channel is excluded.
+ * @return Whether an enabled color animation exists.
+ */
+inline bool BgmBeatAnimeController::isMclEnabled(const al::LiveActor* pActor, bool isIgnore) {
+    return al::isMclAnimExist(pActor) && !isIgnore;
+}
+
+/** @brief Create an actor's music-synchronized animation controller. @param pActor Actor to animate. */
 BgmBeatAnimeController::BgmBeatAnimeController(al::LiveActor* pActor)
-    : al::NerveExecutor("BGM ビート同期アニメコントローラ"), mActor(pActor) {
+    : al::NerveExecutor("BGM ビート同期アニメコントローラ"), mpActor(pActor) {
     initNerve(&NrvBgmBeatAnimeControllerWait, 0);
 }
 
 /**
- * @brief Starts the controller.
- * @param pActionName Action synchronized with the beat, or nullptr to only drive the
- * light (animation) beat.
- * @param isSklAnimeDisabled Whether the skeletal animation frame is left alone.
- * @param isMtsAnimeDisabled Whether the texture-pattern animation frame is left alone.
- * @param isMclAnimeDisabled Whether the color animation frame is left alone.
+ * @brief Set up the animation channels and choose the synchronization transition.
+ * @param pActionName Action to start, or null to synchronize the existing action gently.
+ * @param isIgnoreSkl Whether to leave skeletal animation unchanged.
+ * @param isIgnoreMts Whether to leave texture animation unchanged.
+ * @param isIgnoreMcl Whether to leave color animation unchanged.
+ * @note Non-matching: initialization assignment scheduling differs from the original.
  */
-void BgmBeatAnimeController::init(const char* pActionName, bool isSklAnimeDisabled,
-                                  bool isMtsAnimeDisabled, bool isMclAnimeDisabled) {
-    mIsSklAnimeDisabled = isSklAnimeDisabled;
-    mIsTriggerBeat = false;
-    mActionName = pActionName;
-    mIsMtsAnimeDisabled = isMtsAnimeDisabled;
-    mIsMclAnimeDisabled = isMclAnimeDisabled;
-
-    if (pActionName != nullptr) {
-        al::startAction(mActor, pActionName);
+void BgmBeatAnimeController::init(const char* pActionName, bool isIgnoreSkl, bool isIgnoreMts, bool isIgnoreMcl) {
+    mIsIgnoreSkl = isIgnoreSkl;
+    mIsIgnoreMts = isIgnoreMts;
+    mIsIgnoreMcl = isIgnoreMcl;
+    mIsBeatTriggered = false;
+    mpActionName = pActionName;
+    if (pActionName) {
+        al::startAction(mpActor, mpActionName);
         initAnimeInfo();
         al::setNerve(this, &NrvBgmBeatAnimeControllerWaitSyncBeatBySyncAnime);
     } else {
@@ -135,237 +114,191 @@ void BgmBeatAnimeController::init(const char* pActionName, bool isSklAnimeDisabl
     }
 }
 
-/** @brief Reads the beat count and current beat of each existing animation. */
+/** @brief Read animation lengths and frame positions as counts of 30-frame beats. */
 void BgmBeatAnimeController::initAnimeInfo() {
-    if (al::isSklAnimExist(mActor)) {
-        al::modf(al::getSklAnimFrameMax(mActor, 0) + 1.0f, cFramesPerBeat);
-        mSklBeatNum =
-            static_cast<s32>((al::getSklAnimFrameMax(mActor, 0) + 1.0f) / cFramesPerBeat);
-        mSklBeat = static_cast<s32>(al::getSklAnimFrame(mActor, 0) / cFramesPerBeat);
+    if (al::isSklAnimExist(mpActor)) {
+        al::modf(al::getSklAnimFrameMax(mpActor, 0) + 1.0f, 30.0f);
+        mSklBeatCount = static_cast<int>((al::getSklAnimFrameMax(mpActor, 0) + 1.0f) / 30.0f);
+        mSklBeatIndex = static_cast<int>(al::getSklAnimFrame(mpActor, 0) / 30.0f);
     }
-
-    if (al::isMtsAnimExist(mActor)) {
-        al::modf(al::getMtsAnimFrameMax(mActor) + 1.0f, cFramesPerBeat);
-        mMtsBeatNum = static_cast<s32>((al::getMtsAnimFrameMax(mActor) + 1.0f) / cFramesPerBeat);
-        mMtsBeat = static_cast<s32>(al::getMtsAnimFrame(mActor) / cFramesPerBeat);
+    if (al::isMtsAnimExist(mpActor)) {
+        al::modf(al::getMtsAnimFrameMax(mpActor) + 1.0f, 30.0f);
+        mMtsBeatCount = static_cast<int>((al::getMtsAnimFrameMax(mpActor) + 1.0f) / 30.0f);
+        mMtsBeatIndex = static_cast<int>(al::getMtsAnimFrame(mpActor) / 30.0f);
     }
-
-    if (al::isMclAnimExist(mActor)) {
-        al::modf(al::getMclAnimFrameMax(mActor) + 1.0f, cFramesPerBeat);
-        mMclBeatNum = static_cast<s32>((al::getMclAnimFrameMax(mActor) + 1.0f) / cFramesPerBeat);
-        mMclBeat = static_cast<s32>(al::getMclAnimFrame(mActor) / cFramesPerBeat);
+    if (al::isMclAnimExist(mpActor)) {
+        al::modf(al::getMclAnimFrameMax(mpActor) + 1.0f, 30.0f);
+        mMclBeatCount = static_cast<int>((al::getMclAnimFrameMax(mpActor) + 1.0f) / 30.0f);
+        mMclBeatIndex = static_cast<int>(al::getMclAnimFrame(mpActor) / 30.0f);
     }
 }
 
-/** @brief Restarts waiting for a beat. */
+/** @brief Restart synchronization using the configured transition mode. */
 void BgmBeatAnimeController::reset() {
-    if (mActionName != nullptr) {
+    if (mpActionName)
         al::setNerve(this, &NrvBgmBeatAnimeControllerWaitSyncBeatBySyncAnime);
-    } else {
+    else
         al::setNerve(this, &NrvBgmBeatAnimeControllerWaitSyncBeatLightStart);
-    }
 }
 
-/** @brief Runs the current state. */
-void BgmBeatAnimeController::update() {
-    updateNerve();
-}
+/** @brief Advance the synchronization state. */
+void BgmBeatAnimeController::update() { updateNerve(); }
 
-/**
- * @brief Checks whether the action is catching up with the beat.
- * @return Whether the junction animation is playing.
- */
+/** @brief Check whether the controller is aligning animation timing. @return Whether the junction state is active. */
 bool BgmBeatAnimeController::isPlayingJunctionAnime() const {
     return al::isNerve(this, &NrvBgmBeatAnimeControllerWaitSyncBeatByWaitAnime);
 }
 
-/** @brief Does nothing. */
-void BgmBeatAnimeController::exeWait() {
-    mIsTriggerBeat = false;
-}
+/** @brief Clear the beat event while idle. */
+void BgmBeatAnimeController::exeWait() { mIsBeatTriggered = false; }
 
-/**
- * @brief Waits for a beat, then either joins the beat directly or plays the rest of the
- * current action faster to catch up with it.
- */
+/** @brief Wait for a music beat, then align or begin catching up the animation. */
 void BgmBeatAnimeController::exeWaitSyncBeatBySyncAnime() {
-    mIsTriggerBeat = false;
-
-    if (!isEnableSyncAnime() || !al::isTriggerBeat(mActor, 1)) {
+    mIsBeatTriggered = false;
+    if (!isSyncBgm() || !al::isExistAction(mpActor) || !al::isTriggerBeat(mpActor, 1))
         return;
-    }
-
-    f32 frame = al::getActionFrame(mActor);
-    f32 frameMax = al::getActionFrameMax(mActor, al::getActionName(mActor));
-    f32 restFrame;
-    if (frame > 0.0f && (restFrame = frameMax - (frame + 1.0f)) > 0.0f) {
-        f32 restBeat = restFrame / 6.0f;
-        s32 restFrameRem = static_cast<s32>(restFrame) % 6;
-        s32 restBeatInt = static_cast<s32>(restBeat);
-        f32 beat = frame / cFramesPerBeat;
-        mJunctionBeatCount =
-            restBeatInt + (restBeat != static_cast<f32>(restBeatInt) && restBeat >= 0.0f);
-        mBeatRate = beat - static_cast<s32>(beat);
-
-        f32 beatPerFrame = al::getBeatPerFrame(mActor);
-        f32 nextScale = (restFrameRem + cFramesPerBeat) / cFramesPerBeat;
-        mBeatStep = beatPerFrame * 1.2f;
+    float frame = al::getActionFrame(mpActor);
+    float frameMax = al::getActionFrameMax(mpActor, al::getActionName(mpActor));
+    if (!(frame <= 0.0f || frameMax - (frame + 1.0f) <= 0.0f)) {
+        float remaining = frameMax - (frame + 1.0f);
+        mJunctionStepCount = sead::Mathf::ceil(remaining / 6.0f);
+        int remainder = static_cast<int>(remaining) % 6;
+        float beat = frame / 30.0f;
+        mBeatRate = beat - static_cast<int>(beat);
+        float beatPerFrame = al::getBeatPerFrame(mpActor);
+        mBeatAdvance = beatPerFrame * 1.2f;
         mFrameRateScale = 1.2f;
-        mNextBeatStep = nextScale * beatPerFrame;
-        mNextFrameRateScale = nextScale;
-        updateBeatFromAnime();
-        setActionFrameRateWithSklAnimeCheck(al::getFrameRate(mActor) * 1.2f);
+        mFinalFrameRateScale = (30.0f + remainder) / 30.0f;
+        mFinalBeatAdvance = mFinalFrameRateScale * beatPerFrame;
+        readBeatIndices();
+        setActionFrameRateWithSklAnimeCheck(al::getFrameRate(mpActor) * 1.2f);
         setAnimeFrame();
         al::setNerve(this, &NrvBgmBeatAnimeControllerWaitSyncBeatByWaitAnime);
-        mIsTriggerBeat = true;
+        mIsBeatTriggered = true;
     } else {
-        advanceBeat();
-        mBeatRate = al::getBeatRate(mActor);
-        setActionFrameRateWithSklAnimeCheck(al::getFrameRate(mActor));
+        advanceBeatIndices();
+        mBeatRate = al::getBeatRate(mpActor);
+        setActionFrameRateWithSklAnimeCheck(al::getFrameRate(mpActor));
         setAnimeFrame();
         al::setNerve(this, &NrvBgmBeatAnimeControllerSyncBeat);
     }
 }
 
+/** @brief Set action speed when skeletal animation participates. @param rate Desired animation frame rate. */
+void BgmBeatAnimeController::setActionFrameRateWithSklAnimeCheck(float rate) {
+    if (isSklEnabled(mpActor, mIsIgnoreSkl) && al::isSklAnimExist(mpActor))
+        al::setActionFrameRate(mpActor, rate);
+}
+
 /**
- * @brief Sets the action frame rate unless the skeletal animation is disabled or missing.
- * @param frameRate New action frame rate.
+ * @brief Set participating animation frames from their beat indices and fractional beat.
+ * @note Non-matching: the final color-frame calculation uses different registers.
  */
-void BgmBeatAnimeController::setActionFrameRateWithSklAnimeCheck(f32 frameRate) {
-    if (isEnableSklAnime(mActor, mIsSklAnimeDisabled) && al::isSklAnimExist(mActor)) {
-        al::setActionFrameRate(mActor, frameRate);
-    }
-}
-
-/** @brief Moves each enabled animation to the frame matching its beat and the beat rate. */
 void BgmBeatAnimeController::setAnimeFrame() {
-    if (isEnableSklAnime(mActor, mIsSklAnimeDisabled)) {
-        al::setSklAnimFrame(mActor, (mBeatRate + mSklBeat) * cFramesPerBeat, 0);
-    }
-
-    if (isEnableMtsAnime(mActor, mIsMtsAnimeDisabled)) {
-        al::setMtsAnimFrame(mActor, (mBeatRate + mMtsBeat) * cFramesPerBeat);
-    }
-
-    if (isEnableMclAnime(mActor, mIsMclAnimeDisabled)) {
-        al::setMclAnimFrame(mActor, (mBeatRate + mMclBeat) * cFramesPerBeat);
-    }
+    if (isSklEnabled(mpActor, mIsIgnoreSkl))
+        al::setSklAnimFrame(mpActor, calcAnimeFrame(mSklBeatIndex), 0);
+    if (isMtsEnabled(mpActor, mIsIgnoreMts))
+        al::setMtsAnimFrame(mpActor, calcAnimeFrame(mMtsBeatIndex));
+    if (isMclEnabled(mpActor, mIsIgnoreMcl))
+        al::setMclAnimFrame(mpActor, calcAnimeFrame(mMclBeatIndex));
 }
 
-/** @brief Follows the BGM beat; restarts waiting when the BGM can no longer be followed. */
+/** @brief Keep the animations on the current music beat. */
 void BgmBeatAnimeController::exeSyncBeat() {
-    mIsTriggerBeat = false;
-
-    if (!isEnableSyncAnime()) {
+    mIsBeatTriggered = false;
+    if (!isSyncBgm() || !al::isExistAction(mpActor)) {
         reset();
         return;
     }
-
-    if (al::isTriggerBeat(mActor, 1)) {
-        advanceBeat();
-        mIsTriggerBeat = true;
+    if (al::isTriggerBeat(mpActor, 1)) {
+        advanceBeatIndices();
+        mIsBeatTriggered = true;
     }
-
-    mBeatRate = al::getBeatRate(mActor);
-    setActionFrameRateWithSklAnimeCheck(al::getFrameRate(mActor));
+    mBeatRate = al::getBeatRate(mpActor);
+    setActionFrameRateWithSklAnimeCheck(al::getFrameRate(mpActor));
     setAnimeFrame();
 }
 
-/** @brief Plays the end of the current action at a modified speed until it meets the beat. */
+/** @brief Gradually align the animation with the music before entering full synchronization. */
 void BgmBeatAnimeController::exeWaitSyncBeatByWaitAnime() {
-    mIsTriggerBeat = false;
-
-    if (!isEnableSyncAnime()) {
+    mIsBeatTriggered = false;
+    if (!isSyncBgm() || !al::isExistAction(mpActor)) {
         al::setNerve(this, &NrvBgmBeatAnimeControllerWaitSyncBeatBySyncAnime);
         return;
     }
-
-    mBeatRate = mBeatStep + mBeatRate;
+    mBeatRate = mBeatAdvance + mBeatRate;
     if (mBeatRate >= 1.0f) {
-        advanceBeat();
+        advanceBeatIndices();
         mBeatRate -= 1.0f;
     }
-
-    if (al::isTriggerBeat(mActor, 1)) {
-        mIsTriggerBeat = true;
-        if (mJunctionBeatCount != 0) {
-            mJunctionBeatCount--;
-            if (mJunctionBeatCount == 0) {
-                mBeatStep = mNextBeatStep;
-                mFrameRateScale = mNextFrameRateScale;
+    if (al::isTriggerBeat(mpActor, 1)) {
+        mIsBeatTriggered = true;
+        if (mJunctionStepCount != 0) {
+            if (--mJunctionStepCount == 0) {
+                mBeatAdvance = mFinalBeatAdvance;
+                mFrameRateScale = mFinalFrameRateScale;
             }
         } else {
-            updateBeatFromAnime();
-            f32 bgmBeatRate = al::getBeatRate(mActor);
-            f32 beatRate = mBeatRate;
-            f32 minBeatRate = 1.0f - al::getBeatPerFrame(mActor) * 4.0f;
-            f32 maxBgmBeatRate = al::getBeatPerFrame(mActor) * 4.0f;
-            if (beatRate >= minBeatRate && bgmBeatRate <= maxBgmBeatRate) {
-                advanceBeat();
-            }
-
-            mBeatRate = al::getBeatRate(mActor);
+            readBeatIndices();
+            float rate = al::getBeatRate(mpActor);
+            float currentRate = mBeatRate;
+            float endThreshold = 1.0f - al::getBeatPerFrame(mpActor) * 4.0f;
+            float startThreshold = al::getBeatPerFrame(mpActor) * 4.0f;
+            if (currentRate >= endThreshold && rate <= startThreshold)
+                advanceBeatIndices();
+            mBeatRate = al::getBeatRate(mpActor);
             al::setNerve(this, &NrvBgmBeatAnimeControllerSyncBeat);
         }
     }
-
-    setActionFrameRateWithSklAnimeCheck(mFrameRateScale * al::getFrameRate(mActor));
+    setActionFrameRateWithSklAnimeCheck(mFrameRateScale * al::getFrameRate(mpActor));
     setAnimeFrame();
 }
 
-/** @brief Waits for a beat to start driving the animations without an action. */
+/** @brief Wait for a beat before starting the gentle synchronization transition. */
 void BgmBeatAnimeController::exeWaitSyncBeatLightStart() {
-    mIsTriggerBeat = false;
-
-    if (isEnableSyncBgm() && al::isTriggerBeat(mActor, 1)) {
+    mIsBeatTriggered = false;
+    if (isSyncBgm() && al::isTriggerBeat(mpActor, 1)) {
         al::setNerve(this, &NrvBgmBeatAnimeControllerWaitSyncBeatLight);
-        mIsTriggerBeat = true;
+        mIsBeatTriggered = true;
     }
 }
 
-/** @brief Plays the animations from their current frame until the next beat. */
+/** @brief Slow the current animation to reach its next boundary on a music beat. */
 void BgmBeatAnimeController::exeWaitSyncBeatLight() {
-    mIsTriggerBeat = false;
-
-    if (!isEnableSyncAnime()) {
+    mIsBeatTriggered = false;
+    if (!isSyncBgm() || !al::isExistAction(mpActor)) {
         al::setNerve(this, &NrvBgmBeatAnimeControllerWaitSyncBeatLightStart);
         return;
     }
-
     if (al::isFirstStep(this)) {
-        f32 beat = al::getActionFrame(mActor) / cFramesPerBeat;
-        mBeatRate = beat - static_cast<s32>(beat);
+        float beat = al::getActionFrame(mpActor) / 30.0f;
+        mBeatRate = beat - static_cast<int>(beat);
         mFrameRateScale = 1.0f - mBeatRate;
-        mBeatStep = al::getBeatPerFrame(mActor) * mFrameRateScale;
-        updateBeatFromAnime();
+        mBeatAdvance = al::getBeatPerFrame(mpActor) * mFrameRateScale;
+        readBeatIndices();
     }
-
-    mBeatRate = mBeatStep + mBeatRate;
-    setActionFrameRateWithSklAnimeCheck(mFrameRateScale * al::getFrameRate(mActor));
+    mBeatRate = mBeatAdvance + mBeatRate;
+    setActionFrameRateWithSklAnimeCheck(mFrameRateScale * al::getFrameRate(mpActor));
     setAnimeFrame();
-
-    if (al::isTriggerBeat(mActor, 1)) {
-        advanceBeat();
+    if (al::isTriggerBeat(mpActor, 1)) {
+        advanceBeatIndices();
         al::setNerve(this, &NrvBgmBeatAnimeControllerSyncBeatLight);
-        mIsTriggerBeat = true;
+        mIsBeatTriggered = true;
     }
 }
 
-/** @brief Follows the BGM beat without an action; restarts waiting when it can't. */
+/** @brief Keep the gently synchronized animations on the music beat. */
 void BgmBeatAnimeController::exeSyncBeatLight() {
-    mIsTriggerBeat = false;
-
-    if (!isEnableSyncAnime()) {
+    mIsBeatTriggered = false;
+    if (!isSyncBgm() || !al::isExistAction(mpActor)) {
         reset();
         return;
     }
-
-    if (al::isTriggerBeat(mActor, 1)) {
-        advanceBeat();
-        mIsTriggerBeat = true;
+    if (al::isTriggerBeat(mpActor, 1)) {
+        advanceBeatIndices();
+        mIsBeatTriggered = true;
     }
-
-    mBeatRate = al::getBeatRate(mActor);
-    setActionFrameRateWithSklAnimeCheck(al::getFrameRate(mActor));
+    mBeatRate = al::getBeatRate(mpActor);
+    setActionFrameRateWithSklAnimeCheck(al::getFrameRate(mpActor));
     setAnimeFrame();
 }

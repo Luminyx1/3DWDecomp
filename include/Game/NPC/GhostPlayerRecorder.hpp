@@ -57,6 +57,8 @@ static_assert(sizeof(GhostPlayDataHeader) == 0x24);
 /** @brief Records the player's movement during a stage so it can be replayed as a ghost. */
 class GhostPlayerRecorder {
 public:
+    /** @return Whether recording has stopped. */
+    bool isEndRecord() const { return !mIsRecording; }
     /** @brief Maximum number of recorded warp objects (checkpoints). */
     static constexpr s32 cWarpObjNumMax = 64;
     /** @brief Maximum number of recorded frames. */

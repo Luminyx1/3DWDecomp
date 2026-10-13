@@ -32,6 +32,8 @@ class StageDatabaseInfo;
  */
 class CourseSelectMiniature : public al::LiveActor {
 public:
+    const CourseSelectActorInfo* getCourseSelectActorInfo() const { return mActorInfo; }
+    CourseSelectWorldWarpDokan* getWorldWarpDokan() const { return mWorldWarpDokan; }
     /** @brief Flags read from the stage database and the placement of the miniature. */
     enum Flag : u32 {
         cFlag_NoRotate = 1 << 0,
@@ -111,7 +113,7 @@ public:
     /** @brief Gets the map director. @return Course-select director. */
     CourseSelectDirector* getDirector() const { return mDirector; }
     /** @brief Gets the controller the puppeteers use. @return The controller. */
-    MiniatureController* getController() const { return mController; }
+    ICourseSelectActorController* getController() const { return mController; }
     /** @brief Gets the number of courses opened by clearing this one. @return The count. */
     s32 getNextCourseNum() const { return mNextCourseNum; }
     /** @brief Gets the ids of the courses opened by clearing this one. @return The id array. */
@@ -145,7 +147,7 @@ private:
     CourseSelectSensor* mDrcSensor = nullptr;
     CourseSelectActorInfo* mActorInfo = nullptr;
     CourseSelectPuppeteerGroup* mPuppeteerGroup = nullptr;
-    MiniatureController* mController = nullptr;
+    ICourseSelectActorController* mController = nullptr;
     al::RumbleCalculator* mRumble;
     sead::Vector3f mAppearTrans;
     bool mHasDokanLink = false;

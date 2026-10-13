@@ -10,6 +10,7 @@ public:
     ~SpotLightPatrollerHolder() override;
     const char* getSceneObjName() const override { return "スポットライト監視者の管理"; }
     void movement() override;
+    void registerPatroller(SpotLightPatroller* actor) { if (mPatrollers.size() < mPatrollers.capacity()) mPatrollers.pushBack(actor); }
 private:
     sead::FixedPtrArray<SpotLightPatroller, 64> mPatrollers;
     sead::PtrArray<SpotLightPatroller> mAlertPatrollers;

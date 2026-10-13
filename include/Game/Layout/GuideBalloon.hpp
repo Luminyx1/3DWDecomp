@@ -64,6 +64,8 @@ public:
   /** @brief Selects the standard entrance state. */
   void setAppear();
 
+  const sead::Vector3f& getOffset() const { return mOffset; }
+
 private:
   /** @brief Projects the followed position and offset into layout coordinates.
    */

@@ -15,6 +15,8 @@ class CourseSelectPlayerActor : public PlayerActor {
 public:
     explicit CourseSelectPlayerActor(const sead::Matrix34f* pViewMtx);
 
+    void onPushAction();
+    bool isReceivePush() const;
     void createBubble(const al::ActorInitInfo& rInfo);
     void initCourseSelectPlayer(const al::LayoutInitInfo& rInfo, bool isKiosk);
     void hidePlayer();

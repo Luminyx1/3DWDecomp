@@ -4,6 +4,10 @@ class BoxKiller : public al::LiveActor {
 public:
     explicit BoxKiller(const char*, int = 0, int = 0);
     bool isCarrying() const;
+    bool isWait() const;
+    void shiftItemChange();
+    void startShot(f32 speed, s32 flyTime);
+    bool tryShiftRotate(f32 angle);
     void setAppearFromHipDrop() { mAppearFromHipDrop = true; }
 private:
     u8 mUnknown144[0x2c];

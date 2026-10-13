@@ -53,6 +53,7 @@ public:
     void exePressDown();
     void exeDiePressDown();
     void exeDie();
+    Bunbun* getBunbun() const { return mBunbun; }
     static f32 getThrowWaitTurnSpeed();
 
 private:

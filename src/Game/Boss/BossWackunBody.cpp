@@ -388,9 +388,18 @@ void BossWackunBody::exeTurn() {
 ALWAYS_INLINE void BossWackunBody::startMoveAction(const char* pRight, const char* pLeft,
                                                    const char* pDown, const char* pUp) {
     sead::Vector3f moveDir = mMoveTargetTrans - mMoveStartTrans;
-    sead::Quatf invQuat(mLocalQuat.w, -mLocalQuat.x, -mLocalQuat.y, -mLocalQuat.z);
+    // Rotate into body-local space with conjugate(q) * moveDir * q.
+    const auto& q = mLocalQuat;
+    const auto& v = moveDir;
+    sead::Quatf r;
+    r.x = -(q.y * v.z) + q.z * v.y + q.w * v.x;
+    r.y = q.x * v.z - q.z * v.x + q.w * v.y;
+    r.z = -(q.x * v.y) + q.y * v.x + q.w * v.z;
+    r.w = q.x * v.x + q.y * v.y + q.z * v.z;
     sead::Vector3f localDir;
-    localDir.setRotated(invQuat, moveDir);
+    localDir.x = q.w * r.x + q.z * r.y - q.y * r.z + q.x * r.w;
+    localDir.y = -(q.z * r.x) + q.w * r.y + q.x * r.z + q.y * r.w;
+    localDir.z = q.w * r.z + q.y * r.x - q.x * r.y + q.z * r.w;
 
     if (sead::Mathf::abs(localDir.x) > sead::Mathf::abs(localDir.y)) {
         al::startAction(this, localDir.x > 0.0f ? pLeft : pRight);

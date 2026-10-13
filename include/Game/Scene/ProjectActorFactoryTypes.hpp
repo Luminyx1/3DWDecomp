@@ -1,3 +1,13 @@
+#include "MapObj/BoxLight.hpp"
+#include "MapObj/CoinConcentricCircle.hpp"
+#include "MapObj/CatGull.hpp"
+#include "MapObj/ThrowMapParts.hpp"
+#include "MapObj/BlockSlot.hpp"
+#include "MapObj/GoalBonusGameBlockSlot.hpp"
+#include "MapObj/JumpPanel.hpp"
+#include "MapObj/Fury/FloatingTerrain.hpp"
+#include "Boss/KoopaLastDefendeBlockPow.hpp"
+#include "Boss/KoopaLastBlockPow.hpp"
 #include "Demo/DemoCutscene.hpp"
 #include "MapObj/Trampoline.hpp"
 #include "MapObj/KinokoTreasure.hpp"
@@ -97,6 +107,12 @@
 #include "MapObj/SuperSkateShoes.hpp"
 #include "MapObj/SuperSkateRail.hpp"
 #pragma once
+#include "MapObj/LiftMike.hpp"
+#include "MapObj/GateKeeperChecker.hpp"
+#include "MapObj/CheckPoint.hpp"
+#include "MapObj/Lantern.hpp"
+
+#include "MapObj/TouchReactionMapParts.hpp"
 #include "MapObj/BoxKiller.hpp"
 #include "MapObj/BoxPropeller.hpp"
 #include "MapObj/BoxCoin.hpp"
@@ -163,14 +179,7 @@ private:
 };
 static_assert(sizeof(BalanceTruck) == 0x1c8);
 
-class BallGimmick : public al::LiveActor {
-public:
-    explicit BallGimmick(const char* pName);
-
-private:
-    u8 mUnreconstructed[0x6c];
-};
-static_assert(sizeof(BallGimmick) == 0x1b0);
+#include "MapObj/BallGimmick.hpp"
 
 #include "MapObj/BallSnow.hpp"
 
@@ -230,14 +239,6 @@ static_assert(sizeof(BlockQuestionCourseSelect) == 0x158);
 
 
 
-class BlockSlot : public al::LiveActor {
-public:
-    explicit BlockSlot(const char* pName);
-
-private:
-    u8 mUnreconstructed[0x2c];
-};
-static_assert(sizeof(BlockSlot) == 0x170);
 
 
 
@@ -325,15 +326,6 @@ static_assert(sizeof(BoxKillerLauncher) == 0x168);
 
 
 
-class BoxLight : public al::LiveActor {
-public:
-    explicit BoxLight(const char* pName);
-
-private:
-    u8 mUnreconstructed[0x7c];
-};
-static_assert(sizeof(BoxLight) == 0x1c0);
-
 
 
 class Bubble : public al::LiveActor {
@@ -391,23 +383,8 @@ static_assert(sizeof(Candlestand) == 0x180);
 
 static_assert(sizeof(CandlestandWatcher) == 0x150);
 
-class CatGull : public al::LiveActor {
-public:
-    explicit CatGull(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x4c];
-};
-static_assert(sizeof(CatGull) == 0x190);
 
-class CheckPoint : public al::LiveActor {
-public:
-    explicit CheckPoint(const char* pName);
-
-private:
-    u8 mUnreconstructed[0xb4];
-};
-static_assert(sizeof(CheckPoint) == 0x1f8);
 
 
 class ChikuwaBlock : public al::LiveActor {
@@ -446,14 +423,7 @@ private:
 };
 static_assert(sizeof(ChorobonHolder) == 0x160);
 
-class ClimbHandle : public al::LiveActor {
-public:
-    explicit ClimbHandle(const char* pName);
-
-private:
-    u8 mUnreconstructed[0x6c];
-};
-static_assert(sizeof(ClimbHandle) == 0x1b0);
+#include "MapObj/ClimbHandle.hpp"
 
 class ClimbHandleMapParts : public al::LiveActor {
 public:
@@ -514,15 +484,6 @@ private:
     u8 mUnreconstructed[0x2c];
 };
 static_assert(sizeof(CoinCollectWatcher) == 0x170);
-
-class CoinConcentricCircle : public al::LiveActor {
-public:
-    explicit CoinConcentricCircle(const char* pName);
-
-private:
-    u8 mUnreconstructed[0x3c];
-};
-static_assert(sizeof(CoinConcentricCircle) == 0x180);
 
 class CoinCourseSelect : public al::LiveActor {
 public:
@@ -960,14 +921,7 @@ private:
 };
 static_assert(sizeof(FlingPole) == 0x248);
 
-class FloatingTerrain : public al::LiveActor {
-public:
-    explicit FloatingTerrain(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x2c];
-};
-static_assert(sizeof(FloatingTerrain) == 0x170);
 
 
 
@@ -1016,14 +970,7 @@ private:
 };
 static_assert(sizeof(Gamane) == 0x1b0);
 
-class GateKeeperChecker : public al::LiveActor {
-public:
-    explicit GateKeeperChecker(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x24];
-};
-static_assert(sizeof(GateKeeperChecker) == 0x168);
 
 class Gesso : public al::LiveActor {
 public:
@@ -1060,14 +1007,6 @@ private:
 static_assert(sizeof(GiantTouchBreakMapParts) == 0x148);
 
 
-class GoalBonusGameBlockSlot : public al::LiveActor {
-public:
-    explicit GoalBonusGameBlockSlot(const char* pName);
-
-private:
-    u8 mUnreconstructed[0x3c];
-};
-static_assert(sizeof(GoalBonusGameBlockSlot) == 0x180);
 
 
 
@@ -1300,14 +1239,6 @@ private:
 };
 static_assert(sizeof(JumpFlipSweetsCream) == 0x150);
 
-class JumpPanel : public al::LiveActor {
-public:
-    explicit JumpPanel(const char* pName);
-
-private:
-    u8 mUnreconstructed[0xc4];
-};
-static_assert(sizeof(JumpPanel) == 0x208);
 
 class Kameck : public al::LiveActor {
 public:
@@ -1432,14 +1363,7 @@ private:
 };
 static_assert(sizeof(KoopaLastBeforeCheckPoint) == 0x190);
 
-class KoopaLastBlockPow : public al::LiveActor {
-public:
-    explicit KoopaLastBlockPow(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x44];
-};
-static_assert(sizeof(KoopaLastBlockPow) == 0x188);
 
 class KoopaLastBreakWall : public al::LiveActor {
 public:
@@ -1450,15 +1374,7 @@ private:
 };
 static_assert(sizeof(KoopaLastBreakWall) == 0x188);
 
-class KoopaLastDefendeBlockPow : public al::LiveActor {
-public:
-    explicit KoopaLastDefendeBlockPow(const char* pName);
-    void startEndDemo();
 
-private:
-    u8 mUnreconstructed[0x6c];
-};
-static_assert(sizeof(KoopaLastDefendeBlockPow) == 0x1b0);
 
 class KoopaLastDemoAppear : public al::LiveActor {
 public:
@@ -1490,6 +1406,7 @@ static_assert(sizeof(KoopaLastWall) == 0x150);
 class KoopaLastWallClimb : public al::LiveActor {
 public:
     explicit KoopaLastWallClimb(const char* pName);
+    void startLastPowDamage();
 
 private:
     u8 mUnreconstructed[0x74];
@@ -1572,25 +1489,11 @@ private:
 };
 static_assert(sizeof(Kyuppon) == 0x270);
 
-class Lantern : public al::LiveActor {
-public:
-    explicit Lantern(const char* pName);
-
-private:
-    u8 mUnreconstructed[0x64];
-};
-static_assert(sizeof(Lantern) == 0x1a8);
 
 
 
-class LiftMike : public al::LiveActor {
-public:
-    explicit LiftMike(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x4c];
-};
-static_assert(sizeof(LiftMike) == 0x190);
+
 
 
 
@@ -1653,14 +1556,8 @@ static_assert(sizeof(MoamoaHolder) == 0x158);
 
 
 
-class NeedleRollerSwing : public al::LiveActor {
-public:
-    explicit NeedleRollerSwing(const char* pName);
+#include "MapObj/NeedleRollerSwing.hpp"
 
-private:
-    u8 mUnreconstructed[0x74];
-};
-static_assert(sizeof(NeedleRollerSwing) == 0x1b8);
 
 class NeedleSeed : public al::LiveActor {
 public:
@@ -1990,14 +1887,7 @@ private:
 static_assert(sizeof(Spinner) == 0x178);
 
 
-class SpotLightPatroller : public al::LiveActor {
-public:
-    explicit SpotLightPatroller(const char* pName);
-
-private:
-    u8 mUnreconstructed[0x19c];
-};
-static_assert(sizeof(SpotLightPatroller) == 0x2e0);
+#include "MapObj/SpotLightPatroller.hpp"
 
 class SpotLightPatrollerObserver : public al::LiveActor {
 public:
@@ -2320,14 +2210,7 @@ private:
 };
 static_assert(sizeof(Togezo) == 0x198);
 
-class TouchReactionMapParts : public al::LiveActor {
-public:
-    explicit TouchReactionMapParts(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x3c];
-};
-static_assert(sizeof(TouchReactionMapParts) == 0x180);
 
 class TrampleSwitchTimer : public al::LiveActor {
 public:
@@ -2495,14 +2378,6 @@ private:
 };
 static_assert(sizeof(ZigzagBuildingCover) == 0x148);
 
-class ThrowMapParts : public al::LiveActor {
-public:
-    explicit ThrowMapParts(const char* pName);
-
-private:
-    u8 mUnreconstructed[0x9c];
-};
-static_assert(sizeof(ThrowMapParts) == 0x1e0);
 
 class TimeLimitStepSwitch : public al::LiveActor {
 public:

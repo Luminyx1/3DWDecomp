@@ -761,7 +761,8 @@ void TrampleSwitchTimer::exeOnWait() {
         mTimer = 0;
         mIsAllEnemiesDead = false;
         if (isPlayingBgm()) {
-            al::BgmPlayingRequest request(mBgmName, 3);
+            al::BgmPlayingRequest request(mBgmName);
+            request.fadeInFrames = 3;
             request._18 = cChallengeBgmStartSample;
             al::startBgm(this, request);
             al::resumeOceanBgm(this, -1);

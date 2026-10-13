@@ -12,6 +12,8 @@ public:
     void setPrevTrans();
     void setPrevQuat();
     void exeWait();
+    const sead::Vector3f& getPrevTrans() const { return mPrevTrans; }
+    const sead::Quatf& getPrevQuat() const { return mPrevQuat; }
 
 private:
     sead::Vector3f mPrevTrans{0.0f, 0.0f, 0.0f};

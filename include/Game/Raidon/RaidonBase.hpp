@@ -11,14 +11,14 @@ public:
     /** @param pName Actor name. */
     RaidonBase(const char* pName) : RaidonActor(pName, nullptr) {}
 
-    void startPuppetActionAll(const char* pActionName) override = 0;
-    void setPuppetInputBlendAnimWeight() override = 0;
-    void setInputBlendAnimWeight() override = 0;
-    bool isOnGroundRaidon() const override = 0;
-    bool isInWater() const override = 0;
+    virtual void startPuppetActionAll(const char* pActionName) = 0;
+    virtual void setPuppetInputBlendAnimWeight() = 0;
+    virtual void setInputBlendAnimWeight() = 0;
+    virtual bool isOnGroundRaidon() const = 0;
+    virtual bool isInWater() const = 0;
 
     /** @return Whether Plessie stands on ground (water does not count here). */
-    bool isOnGroundOrWaterRaidon() const override { return isOnGroundRaidon(); }
+    virtual bool isOnGroundOrWaterRaidon() const { return isOnGroundRaidon(); }
 
     virtual const sead::Vector3f& getDashBlurCenter() const = 0;
     virtual const sead::Vector3f& getBaseFrontDir() const = 0;

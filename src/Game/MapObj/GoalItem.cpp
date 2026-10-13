@@ -513,10 +513,10 @@ void GoalItem::init(const al::ActorInitInfo& rInfo) {
         al::tryGetArg(&mExitAngleV, rInfo, "ExitAngleV");
         al::tryGetArg(&mExitDirRate, rInfo, "ExitDirRate");
         al::tryGetArg(&mExitZoomInRate, rInfo, "ExitZoomInRate");
-        al::tryGetArg(&mExitTgtOffsetY, rInfo, "ExitTgtOffsetY");
-        al::tryGetArg(&mExitCamBlendCount, rInfo, "ExitCamBlendCount");
-        al::tryGetArg(&mIsSetExitInterpolate, rInfo, "IsSetExitInterpolate");
     }
+    al::tryGetArg(&mExitTgtOffsetY, rInfo, "ExitTgtOffsetY");
+    al::tryGetArg(&mExitCamBlendCount, rInfo, "ExitCamBlendCount");
+    al::tryGetArg(&mIsSetExitInterpolate, rInfo, "IsSetExitInterpolate");
 
     if (al::calcLinkChildNum(rInfo, "BuriedObject") == 1) {
         auto* info = tryCreateLinksActorInitInfo(rInfo, "BuriedObject");
@@ -1616,7 +1616,11 @@ void GoalItem::exeCollect() {
                 mCollectListener = nullptr;
             }
 
-            SingleModeDataFunction::completeScenario(this, {mIslandId - 1, mShineId - 1});
+            GameDataHolderAccessor accessor(this);
+            s32 islandId = mIslandId - 1;
+            s32 scenarioIndex = mShineId - 1;
+            ScenarioInfo scenario{islandId, scenarioIndex};
+            SingleModeDataFunction::completeScenario(accessor, scenario);
             SingleModeDataFunction::recordDisasterMode(
                 this, SingleModeDataFunction::DisasterForceSetting(mDisasterModeSetting), this);
             if (mRestartInfo != nullptr) {
@@ -2314,7 +2318,7 @@ void GoalItem::exeAnimateMoveRail() {
         auto* controller = DisasterModeController::tryGetController(this);
         bool isLastPhase3Bowser = isLastPhase3DarkBowser(controller);
         if (controller != nullptr && controller->isDisasterMode() &&
-            !controller->isSuperHardMode() && !(isLastPhase3Bowser | mIsPhase0)) {
+            !controller->isSuperHardMode() && !(isLastPhase3Bowser | (mIsPhase0 != 0))) {
             controller->startBgmRequest(DisasterModeController::BGM_REQUEST_NONE, false);
             al::startBgm(this, "DarkBowserScaredLong", -1, 0, -1, -1);
             al::changeLineAutoStopMode(this, "DarkBowserScaredLong", true);
@@ -2347,7 +2351,7 @@ void GoalItem::jumpRailToFinish() {
     auto* controller = DisasterModeController::tryGetController(this);
     bool isLastPhase3Bowser = isLastPhase3DarkBowser(controller);
     if (controller != nullptr && controller->isDisasterMode() && !controller->isSuperHardMode() &&
-        !(isLastPhase3Bowser | mIsPhase0)) {
+        !(isLastPhase3Bowser | (mIsPhase0 != 0))) {
         controller->startBgmRequest(DisasterModeController::BGM_REQUEST_NONE, false);
         al::startBgm(this, "DarkBowserScaredLong", -1, 0, -1, -1);
         al::changeLineAutoStopMode(this, "DarkBowserScaredLong", true);
@@ -2417,7 +2421,7 @@ void GoalItem::exeAnimateCodeMoveRail() {
         auto* controller = DisasterModeController::tryGetController(this);
         bool isLastPhase3Bowser = isLastPhase3DarkBowser(controller);
         if (controller != nullptr && controller->isDisasterMode() &&
-            !controller->isSuperHardMode() && !(isLastPhase3Bowser | mIsPhase0) &&
+            !controller->isSuperHardMode() && !(isLastPhase3Bowser | (mIsPhase0 != 0)) &&
             !mIsFixedCamera) {
             controller->startBgmRequest(DisasterModeController::BGM_REQUEST_NONE, false);
             al::startBgm(this, "DarkBowserScaredLong", -1, 0, -1, -1);

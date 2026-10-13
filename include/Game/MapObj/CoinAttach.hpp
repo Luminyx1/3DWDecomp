@@ -17,6 +17,7 @@ public:
     void exePopUpFront();
     void exeLand();
     void exeSpinDrc();
+    void setCheckWaterEntryOnly(bool enabled) { mCheckWaterEntryOnly = enabled; }
 private:
     ItemStateAssistRotate* mAssistRotate = nullptr;
     ItemBubble* mBubble;

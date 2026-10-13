@@ -1,5 +1,7 @@
 #include "Scene/SingleModeScene.hpp"
 
+#include <prim/seadBitFlag.h>
+
 #include <nn/oe.h>
 #include "AreaObj/ProjectAreaObjFactory.hpp"
 #include "Bgm/PlayerBigBgmController.hpp"
@@ -1288,16 +1290,14 @@ bool SingleModeScene::isTriggerPause(s32* pPort) const {
         return false;
     }
 
-    u16 portList = rc::getActiveInputPortList(GameDataHolderAccessor(mGameDataHolder));
+    sead::BitFlag16 portList = rc::getActiveInputPortList(GameDataHolderAccessor(mGameDataHolder));
     s32 mainPort = al::getMainControllerPort();
     s32 subPort = rc::getPadPortByUserId(1);
 
-    if ((portList & (1 << mainPort)) == 0 || !al::isPadConnected(mainPort) ||
+    if (portList.isOffBit(mainPort) || !al::isPadConnected(mainPort) ||
         rc::isDeadControlUserInStage(this, mainPort)) {
         return false;
     }
-
-    s32 port;
 
     if (SingleModeDataFunction::getIs2PAssistMode(this)) {
         if (al::isPadTypeJoyLeft(mainPort)) {
@@ -1306,37 +1306,41 @@ bool SingleModeScene::isTriggerPause(s32* pPort) const {
                     return false;
                 }
 
-                port = mainPort;
+                if (pPort != nullptr)
+                    *pPort = mainPort;
+                return true;
             } else {
                 if (!al::isPadTriggerPlus(subPort)) {
                     return false;
                 }
 
-                port = subPort;
+                if (pPort != nullptr)
+                    *pPort = subPort;
+                return true;
             }
         } else if (al::isPadTriggerPlus(mainPort)) {
-            port = mainPort;
+            if (pPort != nullptr)
+                *pPort = mainPort;
+            return true;
         } else {
             if (!al::isPadTriggerPlus(subPort) ||
                 (al::isPadTypeJoyRight(mainPort) && al::isPadTypeJoyRight(subPort))) {
                 return false;
             }
 
-            port = subPort;
+            if (pPort != nullptr)
+                *pPort = subPort;
+            return true;
         }
     } else {
         if (!rc::isPadTriggerStart(mainPort)) {
             return false;
         }
 
-        port = mainPort;
+        if (pPort != nullptr)
+            *pPort = mainPort;
+        return true;
     }
-
-    if (pPort != nullptr) {
-        *pPort = port;
-    }
-
-    return true;
 }
 
 /**
@@ -1370,7 +1374,6 @@ bool SingleModeScene::isTriggerMapMenu(s32* pPort) const {
 
     s32 mainPort = al::getMainControllerPort();
     s32 subPort = rc::getPadPortByUserId(1);
-    s32 port;
 
     if (SingleModeDataFunction::getIs2PAssistMode(this)) {
         if (al::isPadTypeJoyRight(mainPort)) {
@@ -1379,8 +1382,9 @@ bool SingleModeScene::isTriggerMapMenu(s32* pPort) const {
                     return false;
                 }
 
-                port = subPort;
-                goto trigger;
+                if (pPort != nullptr)
+                    *pPort = subPort;
+                return true;
             }
         } else if (al::isPadTypeJoyLeft(mainPort)) {
             if (al::isPadTriggerMinus(mainPort)) {
@@ -1388,35 +1392,34 @@ bool SingleModeScene::isTriggerMapMenu(s32* pPort) const {
                     return false;
                 }
 
-                port = mainPort;
-                goto trigger;
+                if (pPort != nullptr)
+                    *pPort = mainPort;
+                return true;
             }
         } else if (al::isPadTriggerRight(al::getMainControllerPort()) ||
                    al::isPadTriggerMinus(al::getMainControllerPort())) {
-            port = mainPort;
-            goto trigger;
+            if (pPort != nullptr)
+                *pPort = mainPort;
+            return true;
         }
 
         if (!al::isPadTriggerMinus(subPort)) {
             return false;
         }
 
-        port = subPort;
+        if (pPort != nullptr)
+            *pPort = subPort;
+        return true;
     } else {
         if (!al::isPadTriggerRight(al::getMainControllerPort()) &&
             !al::isPadTriggerMinus(al::getMainControllerPort())) {
             return false;
         }
 
-        port = al::getMainControllerPort();
+        if (pPort != nullptr)
+            *pPort = al::getMainControllerPort();
+        return true;
     }
-
-trigger:
-    if (pPort != nullptr) {
-        *pPort = port;
-    }
-
-    return true;
 }
 
 /**
@@ -1473,10 +1476,12 @@ bool SingleModeScene::isTriggerItemSpawn(s32 port) const {
     }
 
     if (al::isPadTypeJoySingle(port)) {
-        return al::isPadHoldX(port);
+        if (!al::isPadHoldX(port))
+            return false;
+    } else if (!al::isPadHoldUp(port)) {
+        return false;
     }
-
-    return al::isPadHoldUp(port);
+    return true;
 }
 
 /**
@@ -1573,18 +1578,18 @@ void SingleModeScene::updatePlay() {
             SingleModeDataFunction::setPlayReportData(GameDataHolderAccessor(mGameDataHolder),
                                                       static_cast<preport::Key>(10),
                                                       singleModeData->getName());
-            SingleModeDataFunction::setPlayReportData(
-                GameDataHolderAccessor(mGameDataHolder), static_cast<preport::Key>(11),
-                gameDataFile->getTotalPlayTimePR(false));
-            SingleModeDataFunction::setPlayReportData(
-                GameDataHolderAccessor(mGameDataHolder), static_cast<preport::Key>(12),
-                singleModeData->getTotalPlayTimePR(true));
             SingleModeDataFunction::setPlayReportData(GameDataHolderAccessor(mGameDataHolder),
-                                                      static_cast<preport::Key>(3),
-                                                      SingleModeData::sOptions.mIsCameraReverseHorizontal);
+                                                      static_cast<preport::Key>(11),
+                                                      gameDataFile->getTotalPlayTimePR(false));
             SingleModeDataFunction::setPlayReportData(GameDataHolderAccessor(mGameDataHolder),
-                                                      static_cast<preport::Key>(4),
-                                                      SingleModeData::sOptions.mIsCameraReverseVertical);
+                                                      static_cast<preport::Key>(12),
+                                                      singleModeData->getTotalPlayTimePR(true));
+            SingleModeDataFunction::setPlayReportData(
+                GameDataHolderAccessor(mGameDataHolder), static_cast<preport::Key>(3),
+                SingleModeData::sOptions.mIsCameraReverseHorizontal);
+            SingleModeDataFunction::setPlayReportData(
+                GameDataHolderAccessor(mGameDataHolder), static_cast<preport::Key>(4),
+                SingleModeData::sOptions.mIsCameraReverseVertical);
             SingleModeDataFunction::setPlayReportData(GameDataHolderAccessor(mGameDataHolder),
                                                       static_cast<preport::Key>(7),
                                                       SingleModeData::sOptions.mCameraSensitivity);
@@ -1594,9 +1599,9 @@ void SingleModeScene::updatePlay() {
             SingleModeDataFunction::setPlayReportData(GameDataHolderAccessor(mGameDataHolder),
                                                       static_cast<preport::Key>(34),
                                                       singleModeData->getGoalItemNum());
-            SingleModeDataFunction::setPlayReportData(
-                GameDataHolderAccessor(mGameDataHolder), static_cast<preport::Key>(35),
-                singleModeData->getCurValidIslandVisited());
+            SingleModeDataFunction::setPlayReportData(GameDataHolderAccessor(mGameDataHolder),
+                                                      static_cast<preport::Key>(35),
+                                                      singleModeData->getCurValidIslandVisited());
             mGameDataHolder->endPlayReport();
         }
     }
@@ -1631,14 +1636,13 @@ void SingleModeScene::updatePlay() {
         updateFreezeMode(false);
     } else {
         al::updateKit(this);
+        mLiveActorKit->getExecuteDirector()->finishExecute();
     }
 
-    mLiveActorKit->getExecuteDirector()->finishExecute();
     mPlayerAliveWatcher->update();
 
     if (al::isNerve(this, &NrvSingleModeScenePlay)) {
         s32 islandIndex = mIslandAreaWatcher->getActiveIslandIndex();
-        bool isLeaveIsland = islandIndex == -1;
 
         if (islandIndex >= 0) {
             PlayerActor* player = mPlayers[0];
@@ -1650,7 +1654,7 @@ void SingleModeScene::updatePlay() {
             }
 
             if (islandIndex == 16) {
-                isLeaveIsland = true;
+                goto leaveIsland;
             } else if (player != nullptr && rc::isPlayerOnGround(player) &&
                        !rc::isPlayerOnRaidon(player) && !rc::isPlayerInWater(player)) {
                 if (SingleModeDataFunction::getScenarioNum(this, islandIndex) != 0) {
@@ -1672,9 +1676,8 @@ void SingleModeScene::updatePlay() {
             } else {
                 mAudioDirector->setBgmChangeWatcher(-1);
             }
-        }
-
-        if (isLeaveIsland) {
+        } else if (islandIndex == -1) {
+        leaveIsland:
             mIslandKeeper->setActiveIslandIndex(islandIndex);
             mSceneLayout->fadeOutAreaName(true);
             mSceneLayout->updateCounters(-1);
@@ -1686,8 +1689,8 @@ void SingleModeScene::updatePlay() {
 
     mLiveActorKit->getClippingDirector()->executeRequestAsyncUpdate();
 
-    s32 zoneIndex;
     s32 checkpointIndex;
+    s32 zoneIndex;
     SingleModeDataFunction::getLastCheckpointPass(this, &zoneIndex, &checkpointIndex);
 
     if (checkpointIndex != mLastCheckpointIndex || zoneIndex != mLastCheckpointZoneIndex) {
@@ -1720,7 +1723,7 @@ void SingleModeScene::exeStartEvent() {
         alSeFunction::changeListenerPoserDemo(mAudioDirector);
         rc::hideGuideGameWindow(this);
 
-        if (mStartEvent->getEventType() == cStartEventTypeTimer) {
+        if (static_cast<s32>(mStartEvent->getEventType()) == cStartEventTypeTimer) {
             mSceneLayout->startDemo(false, false);
         } else {
             mSceneLayout->startDemo(true, true);
@@ -1734,7 +1737,7 @@ void SingleModeScene::exeStartEvent() {
     if (mStartEvent->isEndDemo()) {
         rc::unHideGuideGameWindow(this);
 
-        if (mStartEvent->getEventType() == cStartEventTypeTimer) {
+        if (static_cast<s32>(mStartEvent->getEventType()) == cStartEventTypeTimer) {
             mSceneLayout->endDemo(false, false);
         } else {
             mSceneLayout->endDemo(true, false);
@@ -1760,7 +1763,7 @@ void SingleModeScene::updateStartEvent() {
         al::updateKitList(this, "デモプレイヤーロケーター");
         al::updateKitList(this, "デモプレイヤー前処理");
 
-        if (mStartEvent->getEventType() == cStartEventTypeTimer) {
+        if (static_cast<s32>(mStartEvent->getEventType()) == cStartEventTypeTimer) {
             al::updateKitList(this, "プレイヤー[Movement]");
         }
 
@@ -1950,34 +1953,48 @@ void SingleModeScene::handlePhaseEnd() {
  * @return Whether a demo state starts.
  */
 bool SingleModeScene::checkDemoChange() {
-    const al::Nerve* nerve;
-
     if (rc::isPlayerChangeDemoAny(mLiveActorKit->getPlayerHolder())) {
-        nerve = &NrvSingleModeSceneDemoChangePlayer;
-    } else if (rc::isActiveDemoCamera(this)) {
-        cancelRaidonSurfBind(this);
-        nerve = &NrvSingleModeSceneDemoCamera;
-    } else if (rc::isActiveDemoMovingCamera(this)) {
-        cancelRaidonSurfBind(this);
-        nerve = &NrvSingleModeSceneDemoMovingCamera;
-    } else if (rc::isActiveDemoPlayer(this) || rc::isActiveDemoBinding(this)) {
-        cancelRaidonSurfBind(this);
-        nerve = &NrvSingleModeSceneDemoScene;
-    } else if (rc::isActiveDemoCutscene(this)) {
-        cancelRaidonSurfBind(this);
-        nerve = &NrvSingleModeSceneDemoCutscene;
-    } else if (rc::isActiveDemoInGameCutscene(this)) {
-        cancelRaidonSurfBind(this);
-        nerve = &NrvSingleModeSceneDemoInGameCutscene;
-    } else if (rc::isActiveDemoPlayerCutscene(this)) {
-        cancelRaidonSurfBind(this);
-        nerve = &NrvSingleModeSceneDemoPlayerScene;
-    } else {
-        return false;
+        al::setNerve(this, &NrvSingleModeSceneDemoChangePlayer);
+        return true;
     }
 
-    al::setNerve(this, nerve);
-    return true;
+    if (rc::isActiveDemoCamera(this)) {
+        cancelRaidonSurfBind(this);
+        al::setNerve(this, &NrvSingleModeSceneDemoCamera);
+        return true;
+    }
+
+    if (rc::isActiveDemoMovingCamera(this)) {
+        cancelRaidonSurfBind(this);
+        al::setNerve(this, &NrvSingleModeSceneDemoMovingCamera);
+        return true;
+    }
+
+    if (rc::isActiveDemoPlayer(this) || rc::isActiveDemoBinding(this)) {
+        cancelRaidonSurfBind(this);
+        al::setNerve(this, &NrvSingleModeSceneDemoScene);
+        return true;
+    }
+
+    if (rc::isActiveDemoCutscene(this)) {
+        cancelRaidonSurfBind(this);
+        al::setNerve(this, &NrvSingleModeSceneDemoCutscene);
+        return true;
+    }
+
+    if (rc::isActiveDemoInGameCutscene(this)) {
+        cancelRaidonSurfBind(this);
+        al::setNerve(this, &NrvSingleModeSceneDemoInGameCutscene);
+        return true;
+    }
+
+    if (rc::isActiveDemoPlayerCutscene(this)) {
+        cancelRaidonSurfBind(this);
+        al::setNerve(this, &NrvSingleModeSceneDemoPlayerScene);
+        return true;
+    }
+
+    return false;
 }
 
 /**
@@ -2248,12 +2265,10 @@ void SingleModeScene::exeDemoMovingCamera() {
     alSeFunction::changeListenerPoserLast(mAudioDirector);
     al::setNerve(this, &NrvSingleModeScenePlay);
 
-    if (checkDemoChange()) {
-        return;
+    if (!checkDemoChange()) {
+        mSceneLayout->endDemo(true, false);
+        rc::unHideGuideGameWindow(this);
     }
-
-    mSceneLayout->endDemo(true, false);
-    rc::unHideGuideGameWindow(this);
     rc::tryResumeAllPlayerInvincible(mLiveActorKit->getPlayerHolder(), false);
 }
 
@@ -2359,10 +2374,10 @@ void SingleModeScene::exeDemoIntro() {
     updateDemoMovingCamera(true);
     updateAudioDemoType(&mAudioDemoType, this);
 
-    if (mUnlockedPhase == 5) {
+    if (mUnlockedPhase == 1) {
         s32 step = al::getNerveStep(this);
 
-        if (oceanWater != nullptr && step == 450) {
+        if (oceanWater != nullptr && step == 510) {
             oceanWater->setHeightMapScale(1.0f, false);
         }
     } else if (mUnlockedPhase == 3) {
@@ -2371,10 +2386,10 @@ void SingleModeScene::exeDemoIntro() {
         if (oceanWater != nullptr && step == 440) {
             oceanWater->setHeightMapScale(1.0f, false);
         }
-    } else if (mUnlockedPhase == 1) {
+    } else if (mUnlockedPhase == 5) {
         s32 step = al::getNerveStep(this);
 
-        if (oceanWater != nullptr && step == 510) {
+        if (oceanWater != nullptr && step == 450) {
             oceanWater->setHeightMapScale(1.0f, false);
         }
     }
@@ -2392,10 +2407,10 @@ void SingleModeScene::exeDemoIntro() {
 
         if (mUnlockedPhase == 3) {
             cutsceneId = 24;
-        } else if (mUnlockedPhase == 8) {
-            cutsceneId = 27;
         } else if (mUnlockedPhase == 5) {
             cutsceneId = 26;
+        } else if (mUnlockedPhase == 8) {
+            cutsceneId = 27;
         } else {
             mScreenCoverCtrl->requestCaptureScreenCover(10);
             cutsceneId = -1;
@@ -2426,7 +2441,7 @@ void SingleModeScene::exeDemoIntro() {
         SaveDataAccessFunction::startSaveDataWriteSync(mGameDataHolder, true);
         mWindowProcessing->appearWithSystemMessage("SaveSequence", "WindowProcessing_Save", 90,
                                                    false);
-        mWindowProcessing->setUnknown121(true);
+        mWindowProcessing->requestClose();
         mSceneLayout->endDemo(true, true);
         rc::unHideGuideGameWindow(this);
         finishDemoIntro();
@@ -2751,10 +2766,8 @@ openWipe:
     updateDemoCutscene(true, false);
     updateAudioDemoType(&mAudioDemoType, this);
 
-    if (!mWipeFadeBlack->isAlive()) {
-        if (!mDemoCutscene->isFullyStarted() && !mDemoCutscene->isEndDemo()) {
-            return;
-        }
+    if (!mWipeFadeBlack->isAlive() &&
+        (mDemoCutscene->isFullyStarted() || mDemoCutscene->isEndDemo())) {
 
         if (!SingleModeDataFunction::hasSeenCutscene(GameDataHolderAccessor(mGameDataHolder),
                                                      mDemoCutscene->getCutsceneId())) {
@@ -2819,10 +2832,10 @@ openWipe:
 
     if (mUnlockedPhase == 3) {
         islandMapCutsceneId = 21;
-    } else if (mUnlockedPhase == 8) {
-        islandMapCutsceneId = 23;
     } else if (mUnlockedPhase == 5) {
         islandMapCutsceneId = 22;
+    } else if (mUnlockedPhase == 8) {
+        islandMapCutsceneId = 23;
     }
 
     if (islandMapCutsceneId >= 0 &&
@@ -2924,7 +2937,7 @@ void SingleModeScene::exeDemoIslandMapPreGame() {
     }
 
     mWindowProcessing->appearWithSystemMessage("SaveSequence", "WindowProcessing_Save", 90, false);
-    mWindowProcessing->setUnknown121(true);
+    mWindowProcessing->requestClose();
     updateLayout();
 }
 
@@ -3180,7 +3193,7 @@ void SingleModeScene::exeDemoFadeTransition() {
         return;
     }
 
-    bool isKeepClosed;
+    s32 isKeepClosed;
 
     if (isFromIntro) {
         if (mIntroFlyOverCamera != nullptr) {
@@ -3189,7 +3202,7 @@ void SingleModeScene::exeDemoFadeTransition() {
 
         finishDemoIntro();
         mScreenCaptureExecutor->resetRequest(1);
-        isKeepClosed = true;
+        isKeepClosed = 1;
         al::setNerve(this, &NrvSingleModeSceneDemoKoopaJrPhaseIntro);
     } else {
         if (al::isNerve(this, &NrvSingleModeSceneDemoFadeTransitionToIslandMap)) {
@@ -3199,12 +3212,12 @@ void SingleModeScene::exeDemoFadeTransition() {
             rc::unHideGuideGameWindow(this);
             mWindowProcessing->appearWithSystemMessage("SaveSequence", "WindowProcessing_Save", 90,
                                                        false);
-            mWindowProcessing->setUnknown121(true);
+            mWindowProcessing->requestClose();
             al::endPausePadRumble(this);
             al::setNerve(this, &NrvSingleModeScenePlay);
         }
 
-        isKeepClosed = false;
+        isKeepClosed = 0;
     }
 
     if (mDemoCutscene->getCutsceneId() != 25) {
@@ -3213,7 +3226,7 @@ void SingleModeScene::exeDemoFadeTransition() {
         al::CameraTurnInfo turnInfo;
         turnInfo.mRequesterName = getName();
         turnInfo.mDir = sPlayerFrontDir;
-        turnInfo._14 = 0.0f;
+        turnInfo._14 = 1.0f;
         turnInfo._18 = 1.0f;
         turnInfo._1c = true;
         turnInfo._1d = false;
@@ -3351,15 +3364,15 @@ void SingleModeScene::exePause() {
         al::pausePadRumble(this);
         rc::pauseAllPlayerAmiiboDirector(mLiveActorKit->getPlayerHolder(), false);
         alAudioSystemFunction::pauseSystem(mAudioDirector, this, true, 0);
-        s32 islandIndex;
+        s32 islandIndex = -1;
 
-        if (mUnlockedPhase == 0) {
-            islandIndex = -1;
-        } else if (mUnlockedPhase == cPhasePlessieChase2 ||
-                   mUnlockedPhase == cPhasePlessieChase1) {
-            islandIndex = mIslandKeeper->getUnknown14();
-        } else {
-            islandIndex = mIslandKeeper->getCurrentIslandId();
+        if (mUnlockedPhase != 0) {
+            IslandKeeper* keeper = mIslandKeeper;
+            if (mUnlockedPhase == cPhasePlessieChase2 || mUnlockedPhase == cPhasePlessieChase1) {
+                islandIndex = keeper->getUnknown14();
+            } else {
+                islandIndex = keeper->getCurrentIslandId();
+            }
         }
 
         mGameDataHolder->updatePlayerFigures(-1);
@@ -3374,13 +3387,11 @@ void SingleModeScene::exePause() {
         if (mGuideGameWindow != nullptr) {
             mGuideGameWindow->startHide(this);
         }
+        updateLayout();
     }
 
-    updateLayout();
     updatePauseLayout();
-    s32 port = -1;
-
-    if (isTriggerPause(&port) && (!al::isPadConnected(mPausePort) || port == mPausePort)) {
+    if (isTriggerBack()) {
         if (mPauseMenu->isWait()) {
             mPauseMenu->decideBack();
         }
@@ -3484,7 +3495,8 @@ void SingleModeScene::exeRestart() {
         al::disableLineChange(this, true);
         al::changeAudioEffect(this, nullptr);
 
-        for (s32 i = 0; i < al::getPlayerNumMax(mLiveActorKit->getPlayerHolder()); i++) {
+        s32 playerNum = al::getPlayerNumMax(mLiveActorKit->getPlayerHolder());
+        for (s32 i = 0; i < playerNum; i++) {
             al::setCameraCalcTargetFlag(al::getPlayerActor(mLiveActorKit->getPlayerHolder(), i),
                                         false);
         }
@@ -3497,8 +3509,9 @@ void SingleModeScene::exeRestart() {
     if (al::isStep(this, 119)) {
         mWipeMiss->startClose(-1);
 
-        if (mAudioDirector->getSeDirector() != nullptr) {
-            al::startSe(this, "PgBowserVoice", nullptr);
+        al::IUseAudioKeeper* audioUser = mAudioDirector->getUpperLayerAudioUser();
+        if (audioUser != nullptr) {
+            al::startSe(audioUser, "PgBowserVoice", nullptr);
         }
     }
 
@@ -3542,7 +3555,8 @@ void SingleModeScene::updateMissDemo(bool isUpdateGraphics, bool isSkipVehicle) 
         al::updateKitList(this, "２Ｄ");
         al::updateKitList(this, "2D StopScene");
     } else {
-        for (s32 i = 0; i < al::getPlayerNumMax(mLiveActorKit->getPlayerHolder()); i++) {
+        s32 playerNum = al::getPlayerNumMax(mLiveActorKit->getPlayerHolder());
+        for (s32 i = 0; i < playerNum; i++) {
             al::setCameraCalcTargetFlag(al::getPlayerActor(mLiveActorKit->getPlayerHolder(), i),
                                         false);
         }
@@ -3586,7 +3600,8 @@ void SingleModeScene::exeGameEnd() {
         al::disableBgmStart(this);
         al::changeAudioEffect(this, nullptr);
 
-        for (s32 i = 0; i < al::getPlayerNumMax(mLiveActorKit->getPlayerHolder()); i++) {
+        s32 playerNum = al::getPlayerNumMax(mLiveActorKit->getPlayerHolder());
+        for (s32 i = 0; i < playerNum; i++) {
             al::setCameraCalcTargetFlag(al::getPlayerActor(mLiveActorKit->getPlayerHolder(), i),
                                         false);
         }
@@ -3659,7 +3674,7 @@ void SingleModeScene::exeIslandWarp() {
     mInvalidateInputFrames = 60;
     DisasterModeController* disasterController = DisasterModeController::tryGetController(this);
 
-    if (disasterController == nullptr || !disasterController->isDisasterMode()) {
+    if (disasterController != nullptr && !disasterController->isDisasterMode()) {
         al::changeIslandMapBgmVolume(this, -1, -1, false);
     }
 
@@ -4133,62 +4148,60 @@ struct ZoneInfo {
 void SingleModeScene::initPlacementZoneHolders(const al::ActorInitInfo& rInfo) {
     const al::StageInfo* stageInfo = al::getStageInfoMap(this, 0);
 
-    if (mIslandKeeper->createIslandHolders(stageInfo, rInfo)) {
-        return;
-    }
+    if (!mIslandKeeper->createIslandHolders(stageInfo, rInfo)) {
+        ProjectActorFactory factory;
+        al::PlacementInfo listInfo;
+        s32 count = 0;
+        al::getPlacementInfoAndCount(&listInfo, &count, stageInfo, "ZoneList");
+        count++;
+        al::LiveActor* holders[32] = {};
+        al::tryInitPlacementCategory(this, rInfo, 0, "ZoneHolderList", factory, holders, count);
 
-    ProjectActorFactory factory;
-    al::PlacementInfo listInfo;
-    s32 count = 0;
-    al::getPlacementInfoAndCount(&listInfo, &count, stageInfo, "ZoneList");
-    al::LiveActor* holders[32] = {};
-    count++;
-    al::tryInitPlacementCategory(this, rInfo, 0, "ZoneHolderList", factory, holders, count);
+        sead::FixedObjArray<ZoneInfo, 32> zones;
 
-    sead::FixedObjArray<ZoneInfo, 32> zones;
+        for (s32 i = 0; i < count; i++) {
+            al::PlacementInfo placementInfo;
+            al::tryGetPlacementInfoByIndex(&placementInfo, listInfo, i);
+            const char* objectName = nullptr;
 
-    for (s32 i = 0; i < count; i++) {
-        al::PlacementInfo placementInfo;
-        al::tryGetPlacementInfoByIndex(&placementInfo, listInfo, i);
-        const char* objectName = nullptr;
+            if (!al::tryGetObjectName(&objectName, placementInfo)) {
+                continue;
+            }
 
-        if (!al::tryGetObjectName(&objectName, placementInfo)) {
-            continue;
+            sead::Vector3f rotate = sead::Vector3f::ones;
+            sead::Vector3f scale = sead::Vector3f::zero;
+            sead::Vector3f trans = sead::Vector3f::zero;
+            al::tryGetRotate(&rotate, placementInfo);
+            al::tryGetScale(&scale, placementInfo);
+            al::tryGetTrans(&trans, placementInfo);
+            s32 zoneId = 0;
+            placementInfo.getZoneIter().tryGetIntByKey(&zoneId, "ZoneID");
+            placementInfo.getPlacementIter().tryGetIntByKey(&zoneId, "ZoneID");
+
+            zones.birthInsert(i);
+            zones.unsafeAt(i)->mName = objectName;
+            zones.at(i)->mTrans = trans;
+            zones.unsafeAt(i)->mZoneId = zoneId;
         }
 
-        sead::Vector3f rotate = sead::Vector3f::ones;
-        sead::Vector3f scale = sead::Vector3f::zero;
-        sead::Vector3f trans = sead::Vector3f::zero;
-        al::tryGetRotate(&rotate, placementInfo);
-        al::tryGetScale(&scale, placementInfo);
-        al::tryGetTrans(&trans, placementInfo);
-        s32 zoneId = 0;
-        placementInfo.getZoneIter().tryGetIntByKey(&zoneId, "ZoneID");
-        placementInfo.getPlacementIter().tryGetIntByKey(&zoneId, "ZoneID");
+        for (s32 i = 0; i < count; i++) {
+            auto* holder = static_cast<IslandHolder*>(holders[i]);
 
-        zones.birthInsert(i);
-        zones.unsafeAt(i)->mName = objectName;
-        zones.at(i)->mTrans = trans;
-        zones.unsafeAt(i)->mZoneId = zoneId;
-    }
-
-    for (s32 i = 0; i < count; i++) {
-        auto* holder = static_cast<IslandHolder*>(holders[i]);
-
-        if (holder == nullptr) {
-            break;
-        }
-
-        for (s32 j = 0; j < count; j++) {
-            if (al::isEqualString(zones.unsafeAt(j)->mName, holder->getObjectName())) {
-                holder->setAppearEffectPos(zones.unsafeAt(j)->mTrans);
-                holder->setIslandId(zones.unsafeAt(j)->mZoneId);
-                mIslandKeeper->push(holder);
+            if (holder == nullptr) {
                 break;
             }
+
+            const char* objectName = holder->getObjectName();
+            for (s32 j = 0; j < count; j++) {
+                if (al::isEqualString(zones.unsafeAt(j)->mName, objectName)) {
+                    holder->setAppearEffectPos(zones.unsafeAt(j)->mTrans);
+                    holder->setIslandId(zones.unsafeAt(j)->mZoneId);
+                    break;
+                }
+            }
+            mIslandKeeper->push(holder);
         }
     }
-
     mIslandKeeper->setIslandStartPos(mStageResourceKeeper->getMapStageInfo(), rInfo);
 }
 

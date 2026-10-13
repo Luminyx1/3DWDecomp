@@ -8,12 +8,30 @@ class ICourseSelectActorController;
 
 /**
  * @brief Actor owning the course-select puppeteers, one per control user.
- * @note Minimal declaration: only what the reconstructed code uses is declared so far.
  */
 class CourseSelectPuppeteerGroup : public al::LiveActor {
 public:
+    ~CourseSelectPuppeteerGroup() override;
+    void init(const al::ActorInitInfo&) override;
+    bool receiveMsg(const al::SensorMsg*, al::HitSensor*, al::HitSensor*) override;
+    void control() override;
+    void startEventGateKeeperDemo(ICourseSelectActorController*);
+    void startWorldStartDemo();
+    void startWorldStartDemoW8();
+    bool isPlayDemo() const;
+    bool isPlayEntryDemo() const;
+    void exeWait();
+    void exeSave();
+    void startWaitDemo(int userId);
+    void startDokanDemo(ICourseSelectActorController* pController);
+    void startUnLockDemo(ICourseSelectActorController* pController);
+    void startWorldWarpDokanDemo(ICourseSelectActorController* pController);
+    bool isDemoEnd() const;
+    void startRouteDokan(ICourseSelectActorController* pController);
+    int getPuppeteerCount() const { return mPuppeteerNum; }
     explicit CourseSelectPuppeteerGroup(CourseSelectScene* pScene);
 
+    void startExitDemo(ICourseSelectActorController* pController);
     void startEnterDemo(ICourseSelectActorController* pController);
     void startLockAppearDemo(ICourseSelectActorController* pController);
     void startOpenGateKeeperDemo(ICourseSelectActorController* pController);
@@ -40,10 +58,11 @@ public:
     s32 getPuppeteerNum() const { return mPuppeteerNum; }
 
 private:
-    u8 _144[0x158 - 0x144];  // starts in the tail padding of al::LiveActor
-    s32 mPuppeteerNum;  // 0x158
+    CourseSelectScene* mScene;
+    ICourseSelectActorController* mController = nullptr;
+    s32 mPuppeteerNum = 0;  // 0x158
     u8 _15c[0x160 - 0x15c];
-    CourseSelectPuppeteer** mPuppeteers;  // 0x160
+    CourseSelectPuppeteer** mPuppeteers = nullptr;  // 0x160
 };
 
 static_assert(sizeof(CourseSelectPuppeteerGroup) == 0x168);

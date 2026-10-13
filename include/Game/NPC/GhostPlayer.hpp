@@ -1,6 +1,7 @@
 #pragma once
 
 #include <prim/seadSafeString.h>
+#include <prim/seadEnum.h>
 
 #include "Library/LiveActor/LiveActor.hpp"
 
@@ -18,13 +19,7 @@ struct GhostPlayerDisplayInfo;
 class GhostPlayer : public al::LiveActor {
 public:
     /** @brief What the replayed ghost is currently doing, derived from its action name. */
-    enum class State : s32 {
-        Normal = 0,
-        KouraRiding = 1,
-        Jump = 2,
-        EnterDoor = 3,
-        ExitDoor = 4,
-    };
+    SEAD_ENUM(State, Normal, KouraRiding, Jump, EnterDoor, ExitDoor)
 
     GhostPlayer(const char* pName, s32 index, bool isTimeAttack, bool isEnablePresent);
     /** @brief Destroys the ghost player. */

@@ -126,6 +126,10 @@ public:
     const char* getSceneObjName() const override { return "コースセレクトデータ管理"; }
 
     /** @brief Gets the course select scene. @return The scene. */
+    al::LiveActor* getMainPlayerActor() const { return mMainPlayer; }
+    CourseSelectNode* getNode(int index) const { return mNodes[index]; }
+    int getCurrentWorldId() const { return mActiveWorldId; }
+
     CourseSelectScene* getScene() const { return mScene; }
     /** @brief Gets the message windows of the map. @return The window holder. */
     CourseSelectWindowHolder* getWindowHolder() const { return mWindowHolder; }
@@ -145,6 +149,7 @@ public:
     s32 getActiveWorldId() const { return mActiveWorldId; }
     /** @brief Gets whether the event gate keeper is talking. @return true while it talks. */
     bool isEventGateKeeper() const { return mIsEventGateKeeper; }
+    void setEventGateKeeper(bool active) { mIsEventGateKeeper = active; }
     /** @brief Gets the main player of the map. @return The main player actor. */
     al::LiveActor* getMainPlayer() const { return mMainPlayer; }
     /** @brief Gets the crown of the best-score player. @return The crown actor. */

@@ -127,8 +127,9 @@ void TentackTentacle::init(const al::ActorInitInfo& rInfo) {
     al::initActorWithArchiveName(
         this, rInfo, sead::SafeString(isLv2 ? "TentackTentacleLv2" : "TentackTentacle"), nullptr);
     al::initNerve(this, &NrvTentackTentacleAppearDelay, 0);
+    auto& crackPos = mCrackPos;
     const sead::Vector3f& trans = al::getTrans(this);
-    mCrackPos.set(trans);
+    crackPos.set(trans);
     mBasePos.set(trans);
     mBasePos.y += -1400.0f;
     al::calcFrontDir(&mFrontDir, this);
@@ -139,7 +140,8 @@ void TentackTentacle::init(const al::ActorInitInfo& rInfo) {
     mHill->initActorWithModelName(rInfo, "TentackTentacleHill", nullptr);
     mHillAttack->initActorWithModelName(rInfo, "TentackTentacleHill", "Attack");
 
-    mCrackBreakMtx = *getBaseMtx();
+    auto& crackBreakMtx = mCrackBreakMtx;
+    crackBreakMtx = *getBaseMtx();
     mCrackBreak = new al::BreakModel(this, "テンタック子蛇の出現時ひび割れ壊れモデル",
                                      "TentackTentacleCrackBreak", nullptr, &mCrackBreakMtx,
                                      "Break", false);

@@ -11,10 +11,10 @@ class LayoutInitInfo;
 class ButtonGroup;
 
 /** @brief Button layout of a confirmation window. */
-SEAD_ENUM(WindowConfirmType, Report, Notice, Double)
+SEAD_ENUM(WindowConfirmType, Report, OneButton, TwoButton)
 constexpr auto WindowConfirmType_Report = WindowConfirmType::Report;
-constexpr auto WindowConfirmType_Notice = WindowConfirmType::Notice;
-constexpr auto WindowConfirmType_Double = WindowConfirmType::Double;
+constexpr auto WindowConfirmType_Notice = WindowConfirmType::OneButton;
+constexpr auto WindowConfirmType_Double = WindowConfirmType::TwoButton;
 
 /**
  * @brief Pop-up confirmation window with one or two choice buttons.
