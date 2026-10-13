@@ -1955,34 +1955,48 @@ void SingleModeScene::handlePhaseEnd() {
  * @return Whether a demo state starts.
  */
 bool SingleModeScene::checkDemoChange() {
-    const al::Nerve* nerve;
-
     if (rc::isPlayerChangeDemoAny(mLiveActorKit->getPlayerHolder())) {
-        nerve = &NrvSingleModeSceneDemoChangePlayer;
-    } else if (rc::isActiveDemoCamera(this)) {
-        cancelRaidonSurfBind(this);
-        nerve = &NrvSingleModeSceneDemoCamera;
-    } else if (rc::isActiveDemoMovingCamera(this)) {
-        cancelRaidonSurfBind(this);
-        nerve = &NrvSingleModeSceneDemoMovingCamera;
-    } else if (rc::isActiveDemoPlayer(this) || rc::isActiveDemoBinding(this)) {
-        cancelRaidonSurfBind(this);
-        nerve = &NrvSingleModeSceneDemoScene;
-    } else if (rc::isActiveDemoCutscene(this)) {
-        cancelRaidonSurfBind(this);
-        nerve = &NrvSingleModeSceneDemoCutscene;
-    } else if (rc::isActiveDemoInGameCutscene(this)) {
-        cancelRaidonSurfBind(this);
-        nerve = &NrvSingleModeSceneDemoInGameCutscene;
-    } else if (rc::isActiveDemoPlayerCutscene(this)) {
-        cancelRaidonSurfBind(this);
-        nerve = &NrvSingleModeSceneDemoPlayerScene;
-    } else {
-        return false;
+        al::setNerve(this, &NrvSingleModeSceneDemoChangePlayer);
+        return true;
     }
 
-    al::setNerve(this, nerve);
-    return true;
+    if (rc::isActiveDemoCamera(this)) {
+        cancelRaidonSurfBind(this);
+        al::setNerve(this, &NrvSingleModeSceneDemoCamera);
+        return true;
+    }
+
+    if (rc::isActiveDemoMovingCamera(this)) {
+        cancelRaidonSurfBind(this);
+        al::setNerve(this, &NrvSingleModeSceneDemoMovingCamera);
+        return true;
+    }
+
+    if (rc::isActiveDemoPlayer(this) || rc::isActiveDemoBinding(this)) {
+        cancelRaidonSurfBind(this);
+        al::setNerve(this, &NrvSingleModeSceneDemoScene);
+        return true;
+    }
+
+    if (rc::isActiveDemoCutscene(this)) {
+        cancelRaidonSurfBind(this);
+        al::setNerve(this, &NrvSingleModeSceneDemoCutscene);
+        return true;
+    }
+
+    if (rc::isActiveDemoInGameCutscene(this)) {
+        cancelRaidonSurfBind(this);
+        al::setNerve(this, &NrvSingleModeSceneDemoInGameCutscene);
+        return true;
+    }
+
+    if (rc::isActiveDemoPlayerCutscene(this)) {
+        cancelRaidonSurfBind(this);
+        al::setNerve(this, &NrvSingleModeSceneDemoPlayerScene);
+        return true;
+    }
+
+    return false;
 }
 
 /**
@@ -2253,12 +2267,10 @@ void SingleModeScene::exeDemoMovingCamera() {
     alSeFunction::changeListenerPoserLast(mAudioDirector);
     al::setNerve(this, &NrvSingleModeScenePlay);
 
-    if (checkDemoChange()) {
-        return;
+    if (!checkDemoChange()) {
+        mSceneLayout->endDemo(true, false);
+        rc::unHideGuideGameWindow(this);
     }
-
-    mSceneLayout->endDemo(true, false);
-    rc::unHideGuideGameWindow(this);
     rc::tryResumeAllPlayerInvincible(mLiveActorKit->getPlayerHolder(), false);
 }
 
