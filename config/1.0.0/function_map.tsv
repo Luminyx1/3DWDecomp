@@ -1202,13 +1202,13 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100031B40			FALSE	_ZN25KoopaLastBeforeCheckPoint9exeDamageEv	KoopaLastBeforeCheckPoint::exeDamage()	
 0x7100031C30			FALSE	_ZN25KoopaLastBeforeCheckPointD1Ev	KoopaLastBeforeCheckPoint::~KoopaLastBeforeCheckPoint()	
 0x7100031C40			FALSE	_ZN25KoopaLastBeforeCheckPointD0Ev	KoopaLastBeforeCheckPoint::~KoopaLastBeforeCheckPoint()	
-0x7100031C70			FALSE	sub_7100031C70	sub_7100031C70	
+0x7100031C70			FALSE	_ZNK12_GLOBAL__N_132KoopaLastBeforeCheckPointNrvWait7executeEPN2al11NerveKeeperE	sub_7100031C70	matched nerve
 0x7100031CD0			FALSE	_ZNK12_GLOBAL__N_134KoopaLastBeforeCheckPointNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::KoopaLastBeforeCheckPointNrvAppear::execute(al::NerveKeeper*) const	
 0x7100031CE0			FALSE	_ZNK12_GLOBAL__N_134KoopaLastBeforeCheckPointNrvDamage7executeEPN2al11NerveKeeperE	(anonymous namespace)::KoopaLastBeforeCheckPointNrvDamage::execute(al::NerveKeeper*) const	
-0x7100031CF0			FALSE	sub_7100031CF0	sub_7100031CF0	
-0x7100031D50			FALSE	sub_7100031D50	sub_7100031D50	
+0x7100031CF0			FALSE	_ZNK12_GLOBAL__N_132KoopaLastBeforeCheckPointNrvLand7executeEPN2al11NerveKeeperE	sub_7100031CF0	matched nerve
+0x7100031D50			FALSE	_ZNK12_GLOBAL__N_139KoopaLastBeforeCheckPointNrvAttackStart7executeEPN2al11NerveKeeperE	sub_7100031D50	matched nerve
 0x7100031DC0			FALSE	_ZNK12_GLOBAL__N_140KoopaLastBeforeCheckPointNrvAttackCircle7executeEPN2al11NerveKeeperE	(anonymous namespace)::KoopaLastBeforeCheckPointNrvAttackCircle::execute(al::NerveKeeper*) const	
-0x7100031DD0			FALSE	sub_7100031DD0	sub_7100031DD0	
+0x7100031DD0			FALSE	_ZNK12_GLOBAL__N_137KoopaLastBeforeCheckPointNrvAttackEnd7executeEPN2al11NerveKeeperE	sub_7100031DD0	matched nerve
 0x7100031E60		KoopaLastBlockPow.o	FALSE	_ZN17KoopaLastBlockPowC2EPKc	KoopaLastBlockPow::KoopaLastBlockPow(char const*)	
 0x7100031F10			FALSE	_ZN17KoopaLastBlockPowC1EPKc	KoopaLastBlockPow::KoopaLastBlockPow(char const*)	
 0x7100031FC0			FALSE	_ZN17KoopaLastBlockPow4initERKN2al13ActorInitInfoE	KoopaLastBlockPow::init(al::ActorInitInfo const&)	
