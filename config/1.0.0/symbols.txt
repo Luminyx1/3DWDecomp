@@ -3721,8 +3721,8 @@
 0x7101A798F0 32 object _ZTVN12_GLOBAL__N_124NekoParentNrvDemoTakeOutE
 0x7101A79910 32 object _ZTVN12_GLOBAL__N_125NekoParentNrvDemoCoinGiveE
 0x7101A79930 32 object _ZTVN12_GLOBAL__N_121NekoParentNrvGoalWaitE
-0x7101A79950 8 object _ZN12_GLOBAL__N_117NrvNekoParentWaitE
-0x7101A79958 8 object _ZN12_GLOBAL__N_119NrvNekoParentStrokeE
+
+
 0x7101A79960 8 object _ZN12_GLOBAL__N_119NrvNekoParentAppearE
 0x7101A79968 8 object _ZN12_GLOBAL__N_121NrvNekoParentHitReactE
 0x7101A79970 8 object _ZN12_GLOBAL__N_127NrvNekoParentDemoTargetWaitE
@@ -6318,3 +6318,5 @@
 
 0x7101A77E38 8 object _ZN12_GLOBAL__N_121NrvNekoDisasterWanderE
 0x710210ECA8 16 object _ZN12_GLOBAL__N_117sWalkerStateParamE
+
+0x7101A79950 16 object _ZN12_GLOBAL__N_113NrvNekoParentE
