@@ -28,6 +28,9 @@ public:
     void tryEndPlay();
     const char* getSceneObjName() const override;
 
+    /** @brief Registers scene playback. @param pPlayer Playback actor. */
+    void setPlayer(GhostPlayerPlayer* pPlayer) { mPlayer = pPlayer; }
+
 private:
     void* mNetwork;
     const GameDataHolder* mData;

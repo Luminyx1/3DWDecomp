@@ -790,7 +790,7 @@ void CourseSelectDirector::initAfterPlacement() {
 
         s32 nextNum = tryFindNextCourse(nextMiniatures, cNextCourseNumMax, miniature->getCourseId());
         for (s32 j = 0; j < nextNum; j++) {
-            CourseSelectMiniature* next = nextMiniatures[j];
+            CourseSelectMiniature*& next = nextMiniatures[j];
             s32 num = tryFindNodeList(nodes, cNodeListNumMax, miniature->getNode(), next->getNode());
             if (num <= 1) {
                 CourseSelectNode* crossing =

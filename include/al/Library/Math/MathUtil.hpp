@@ -446,7 +446,7 @@ f32 calcSquaredDistanceSegmentToSegment(const sead::Vector3f&, const sead::Vecto
 f32 calcSquaredDistancePointToSegment(const sead::Vector3f&, const sead::Vector3f&,
                                       const sead::Vector3f&);
 f32 calcDistancePointToSegment(const sead::Vector3f&, const sead::Vector3f&, const sead::Vector3f&);
-void calcPerpendicFootToLineInside(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f&,
+f32 calcPerpendicFootToLineInside(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f&,
                                    const sead::Vector3f&);
 void calcClosestSegmentPoint(sead::Vector3f*, const sead::Vector3f&, const sead::Vector3f&,
                              const sead::Vector3f&);

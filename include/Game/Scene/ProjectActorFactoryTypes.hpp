@@ -1,3 +1,5 @@
+#include "Boss/KoopaLastDefendeBlockPow.hpp"
+#include "Boss/KoopaLastBlockPow.hpp"
 #include "Demo/DemoCutscene.hpp"
 #include "MapObj/Trampoline.hpp"
 #include "MapObj/KinokoTreasure.hpp"
@@ -1432,14 +1434,7 @@ private:
 };
 static_assert(sizeof(KoopaLastBeforeCheckPoint) == 0x190);
 
-class KoopaLastBlockPow : public al::LiveActor {
-public:
-    explicit KoopaLastBlockPow(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x44];
-};
-static_assert(sizeof(KoopaLastBlockPow) == 0x188);
 
 class KoopaLastBreakWall : public al::LiveActor {
 public:
@@ -1450,15 +1445,7 @@ private:
 };
 static_assert(sizeof(KoopaLastBreakWall) == 0x188);
 
-class KoopaLastDefendeBlockPow : public al::LiveActor {
-public:
-    explicit KoopaLastDefendeBlockPow(const char* pName);
-    void startEndDemo();
 
-private:
-    u8 mUnreconstructed[0x6c];
-};
-static_assert(sizeof(KoopaLastDefendeBlockPow) == 0x1b0);
 
 class KoopaLastDemoAppear : public al::LiveActor {
 public:
@@ -1490,6 +1477,7 @@ static_assert(sizeof(KoopaLastWall) == 0x150);
 class KoopaLastWallClimb : public al::LiveActor {
 public:
     explicit KoopaLastWallClimb(const char* pName);
+    void startLastPowDamage();
 
 private:
     u8 mUnreconstructed[0x74];

@@ -17,7 +17,7 @@ class SensorMsg;
 
 class IUseNekoModeActor;
 class NpcHeadController;
-struct NekoAttachReason;
+enum class NekoAttachReason : s32;
 
 namespace neko {
 

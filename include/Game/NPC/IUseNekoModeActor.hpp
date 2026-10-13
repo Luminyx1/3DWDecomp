@@ -36,18 +36,10 @@ struct Param {
 /**
  * @brief Why a cat mode actor gets attached to its host cat.
  */
-struct NekoAttachReason {
-    /**
-     * @brief Kinds of attach reasons.
-     * @note Only the values used by reconstructed code are named.
-     */
-    enum Type : s32 {
-        Type_StartDisaster = 1,
-        Type_Hide = 2,
-        Type_AppearAtHost = 3,
-    };
-
-    Type mType;
+enum class NekoAttachReason : s32 {
+    Type_StartDisaster = 1,
+    Type_Hide = 2,
+    Type_AppearAtHost = 3,
 };
 
 /**

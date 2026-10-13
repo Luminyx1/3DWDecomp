@@ -50,16 +50,22 @@ enum BufferingMode {
 
 class TemporaryBuffer {
 public:
+    /** @brief Creates an invalid buffer with cleared allocation statistics. */
     TemporaryBuffer() { Invalidate(); }
 
-    void Initialize(gfx::Device* pDevice, size_t size, BufferingMode bufferingMode);
+    bool Initialize(gfx::Device* pDevice, size_t size, BufferingMode bufferingMode);
     void Invalidate();
     void Finalize(gfx::Device* pDevice);
     void Swap();
     void* Map(gfx::GpuAddress* pAddress, size_t size);
     void Unmap();
 
-    u8 _0[0x38];
+    int m_CurrentBuffer;
+    BufferingMode m_BufferingMode;
+    size_t m_PeakUsage;
+    size_t m_UsedSize[3];
+    size_t m_BufferSize;
+    bool m_IsInitialized;
     detail::Buffer m_Buffer[3];
 };
 

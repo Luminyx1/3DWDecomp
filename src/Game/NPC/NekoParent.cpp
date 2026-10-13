@@ -65,18 +65,35 @@ NERVE_DECL(NekoParent, DemoTakeOut)
 NERVE_DECL(NekoParent, DemoCoinGive)
 NERVE_DECL(NekoParent, GoalWait)
 
-NERVES_MAKE_NOSTRUCT(NekoParent, Wait, Stroke, Appear, WaitDisasterAnticipation, HitReact,
-                     DemoIntro, DemoTargetWait, DemoTakeOut, DemoCoinGive, GoalWait)
+const struct {
+    NekoParentNrvWait Wait;
+    NekoParentNrvStroke Stroke;
+} NrvNekoParent;
+NERVES_MAKE_NOSTRUCT(NekoParent, Appear, WaitDisasterAnticipation, HitReact, DemoIntro,
+                     DemoTargetWait, DemoTakeOut, DemoCoinGive, GoalWait)
 
 sead::Vector3f sReactSensorOffset(0.0f, 100.0f, 150.0f);
 sead::Vector3f sGuideBalloonOffset(0.0f, 120.0f, 0.0f);
 NpcTargetFinderParam sTargetFinderParam(550.0f, 100.0f, 30.0f, -1, 700.0f, 300.0f, 100.0f, 700.0f,
                                         false, 10);
-NpcTargetFinderParam sCollectFinderParam(650.0f, 100.0f, 50.0f, -1, 800.0f, 500.0f, 100.0f,
-                                         800.0f, false, 1);
+NpcTargetFinderParam sCollectFinderParam(650.0f, 100.0f, 50.0f, -1, 800.0f, 500.0f, 100.0f, 800.0f,
+                                         false, 1);
 NpcStateParam sStateParam(2.25f, 0.98f, 0.89f, 300.0f, 800.0f, 80.0f, 40.0f, 150.0f, 0, 0.0f);
 const sead::BitFlag32 sSearchTargetTypes(npc::NpcFindTargetType_Player |
                                          npc::NpcFindTargetType_Neko);
+
+/** @brief Tests whether a kitten occupies a saved drop target. @param rTargets Parent targets.
+ * @param pKitten Kitten to find. @return Whether a saved target belongs to the kitten. */
+inline bool isKittenAtDropTarget(const sead::PtrArray<neko::Target>& rTargets,
+                                 const Neko* pKitten) {
+    for (s32 i = 0; i < rTargets.size(); ++i) {
+        const auto* pTarget = rTargets.unsafeAt(i);
+        if (!pTarget->mIsActive && pTarget->mId == pKitten->getUID()) {
+            return true;
+        }
+    }
+    return false;
+}
 
 /**
  * @brief Get the regular cat mode of a cat.
@@ -159,9 +176,9 @@ void NekoParent::init(const al::ActorInitInfo& rInfo, neko::ColorType colorType,
     }
 
     al::tryGetSceneObj<NekoParentHolder>(this, SceneObjID_NekoParentHolder)->add(this);
-    al::initNerve(this, &NrvNekoParentWait, 2);
+    al::initNerve(this, &NrvNekoParent.Wait, 2);
     mStateSupportStroke = new ActorStateSupportStroke(this);
-    al::initNerveState(this, mStateSupportStroke, &NrvNekoParentStroke, "[state]Stroke");
+    al::initNerveState(this, mStateSupportStroke, &NrvNekoParent.Stroke, "[state]Stroke");
 
     s32 targetNum = al::calcLinkChildNum(al::getPlacementInfo(rInfo), "GoalSeekTarget");
     al::calcLinkChildNum(al::getPlacementInfo(rInfo), "GoalItem");
@@ -190,7 +207,7 @@ void NekoParent::init(const al::ActorInitInfo& rInfo, neko::ColorType colorType,
             kitten->initAsModelName(kittenInfo, "NekoE");
             kitten->startKill();
             mKittens.pushBack(kitten);
-            if (isKittenAtDropTarget(kitten)) {
+            if (::isKittenAtDropTarget(mDropTargets, kitten)) {
                 mFoundKittens.pushBack(kitten);
             }
         }
@@ -244,11 +261,11 @@ void NekoParent::init(const al::ActorInitInfo& rInfo, neko::ColorType colorType,
  */
 bool NekoParent::tryStartDefaultBehavior() {
     if (!isAllKittensFound()) {
-        if (al::isNerve(this, &NrvNekoParentWait)) {
+        if (al::isNerve(this, &NrvNekoParent.Wait)) {
             return false;
         }
 
-        al::setNerve(this, &NrvNekoParentWait);
+        al::setNerve(this, &NrvNekoParent.Wait);
         return true;
     }
 
@@ -379,7 +396,7 @@ void NekoParent::startAttach(const NekoAttachReason& rReason) {
     mTargetFinder->setTargetTypePriority(npc::NpcFindTargetType_Player, 1);
     mTargetFinder->setTargetTypePriority(npc::NpcFindTargetType_Neko, 0);
 
-    switch (rReason.mType) {
+    switch (rReason) {
     case NekoAttachReason::Type_AppearAtHost:
         al::resetPosition(this, al::getTrans(mHost), false);
         al::faceToDirection(this, al::getFront(mHost));
@@ -591,8 +608,8 @@ bool NekoParent::receiveMsgScreenPoint(const al::SensorMsg* pMsg, al::ScreenPoin
         return false;
     }
 
-    if (!al::isNerve(this, &NrvNekoParentStroke)) {
-        al::setNerve(this, &NrvNekoParentStroke);
+    if (!al::isNerve(this, &NrvNekoParent.Stroke)) {
+        al::setNerve(this, &NrvNekoParent.Stroke);
     }
 
     return true;
