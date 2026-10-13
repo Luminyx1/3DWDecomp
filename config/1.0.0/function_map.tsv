@@ -20033,7 +20033,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710031C400			FALSE	_ZN11LuckyIsland16disableCollisionEv	LuckyIsland::disableCollision()	
 0x710031C450			FALSE	_ZN11LuckyIsland25onDisasterModeStateChangeEN22DisasterModeController5StateE	LuckyIsland::onDisasterModeStateChange(DisasterModeController::State)	
 0x710031C460			FALSE	_ZThn328_N11LuckyIsland25onDisasterModeStateChangeEN22DisasterModeController5StateE	non-virtual thunk to LuckyIsland::onDisasterModeStateChange(DisasterModeController::State)	
-0x710031C470			FALSE	sub_710031C470	sub_710031C470	
+0x710031C470			FALSE	_ZNK12_GLOBAL__N_118LuckyIslandNrvWait7executeEPN2al11NerveKeeperE	_ZNK12_GLOBAL__N_118LuckyIslandNrvWait7executeEPN2al11NerveKeeperE	TRUE
 0x710031C520			FALSE	_ZNK12_GLOBAL__N_123LuckyIslandNrvDemoIntro7executeEPN2al11NerveKeeperE	(anonymous namespace)::LuckyIslandNrvDemoIntro::execute(al::NerveKeeper*) const	
 0x710031C530			FALSE	_ZNK12_GLOBAL__N_118LuckyIslandNrvFade7executeEPN2al11NerveKeeperE	(anonymous namespace)::LuckyIslandNrvFade::execute(al::NerveKeeper*) const	
 0x710031C540			FALSE	_ZNK12_GLOBAL__N_121LuckyIslandNrvDescend7executeEPN2al11NerveKeeperE	(anonymous namespace)::LuckyIslandNrvDescend::execute(al::NerveKeeper*) const	

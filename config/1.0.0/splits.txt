@@ -1830,7 +1830,7 @@ src/Game/MapObj/LighthouseSimple.cpp: done
     .text   start:0x00318FC0 end:0x003196E0
 src/Game/MapObj/LightningController.cpp:
     .text   start:0x003196E0 end:0x0031B244
-src/Game/MapObj/LuckyIsland.cpp:
+src/Game/MapObj/LuckyIsland.cpp: done
     .text   start:0x0031B250 end:0x0031C548
 src/Game/MapObj/LuckyIslandController.cpp:
     .text   start:0x0031C550 end:0x0031CE2C
