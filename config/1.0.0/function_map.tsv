@@ -19020,7 +19020,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71002F1350			FALSE	_ZN9JumpPanelD0Ev	JumpPanel::~JumpPanel()	
 0x71002F1380			FALSE	_ZNK12_GLOBAL__N_116JumpPanelNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::JumpPanelNrvWait::execute(al::NerveKeeper*) const	
 0x71002F1390			FALSE	_ZNK12_GLOBAL__N_121JumpPanelNrvTouchWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::JumpPanelNrvTouchWait::execute(al::NerveKeeper*) const	
-0x71002F13A0			FALSE	sub_71002F13A0	sub_71002F13A0	
+0x71002F13A0			FALSE	_ZNK12_GLOBAL__N_116JumpPanelNrvJump7executeEPN2al11NerveKeeperE	(anonymous namespace)::JumpPanelNrvJump::execute	TRUE
 0x71002F1400			FALSE	_ZNK12_GLOBAL__N_120JumpPanelNrvBindWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::JumpPanelNrvBindWait::execute(al::NerveKeeper*) const	
 0x71002F1410			FALSE	_ZNK2al10FunctorV0MIP9JumpPanelMS1_FvvEEclEv	al::FunctorV0M<JumpPanel*, void (JumpPanel::*)()>::operator()() const	
 0x71002F1430			FALSE	_ZNK2al10FunctorV0MIP9JumpPanelMS1_FvvEE5cloneEv	al::FunctorV0M<JumpPanel*, void (JumpPanel::*)()>::clone() const	

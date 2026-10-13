@@ -1,3 +1,4 @@
+#include "MapObj/JumpPanel.hpp"
 #include "MapObj/Fury/FloatingTerrain.hpp"
 #include "Demo/DemoCutscene.hpp"
 #include "MapObj/Trampoline.hpp"
@@ -1297,14 +1298,6 @@ private:
 };
 static_assert(sizeof(JumpFlipSweetsCream) == 0x150);
 
-class JumpPanel : public al::LiveActor {
-public:
-    explicit JumpPanel(const char* pName);
-
-private:
-    u8 mUnreconstructed[0xc4];
-};
-static_assert(sizeof(JumpPanel) == 0x208);
 
 class Kameck : public al::LiveActor {
 public:
