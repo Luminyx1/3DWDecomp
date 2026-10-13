@@ -568,12 +568,13 @@ void KoopaFireBall::updateConnection() {
 
             bool isRouteDokan =
                 al::isEqualString(mConnectedHost->getName(), "ルート土管パーツ★");
+            isHostHidden |= isRouteDokan;
             bool isRaidonOnly =
                 al::isEqualString(mConnectedHost->getName(), "TransparentWallRaidonOnly") ||
                 al::isEqualString(mConnectedHost->getName(), "TransparentCubeRaidonOnlySkate") ||
                 al::isEqualString(mConnectedHost->getName(), "TransparentWallRaidonOnlySkate") ||
                 al::isEqualString(mConnectedHost->getName(), "TransparentSphereRaidonOnlySkate");
-            isHostGone = isRouteDokan || isHostHidden || isRaidonOnly;
+            isHostGone = isHostHidden || isRaidonOnly;
         }
 
         if (isHostGone) {
