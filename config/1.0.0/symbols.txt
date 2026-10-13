@@ -6358,3 +6358,5 @@
 0x71016B56B8 12 object _ZN12_GLOBAL__N_116sClimbWalkOffsetE
 0x71016B56C4 12 object _ZN12_GLOBAL__N_119sKinopioClimbOffsetE
 0x71016B56D0 3 object _ZN12_GLOBAL__N_121sHeadgearDefaultParamE
+0x7101A2A910 32 object _ZTVN12_GLOBAL__N_124ItemStateLeafNrvLandLeafE
+0x7101A2A930 8 object _ZN12_GLOBAL__N_124NrvItemStateLeafLandLeafE
