@@ -230,7 +230,7 @@ private:
     bool mIsAppearWaitDefault;                                   // 0x280
     bool mIsAppearWait = false;                                  // 0x281
     bool mIsConsistentAngle = false;                             // 0x282
-    bool mIsPhase0 = false;                                      // 0x283
+    u8 mIsPhase0 = false;                                        // 0x283
     bool mIsBeforeFlashy = false;                                // 0x284
     bool mIsSetDistance = false;                                 // 0x285
     bool mIsSetExitAngle = false;                                // 0x286
