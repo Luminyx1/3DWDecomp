@@ -25,6 +25,9 @@ public:
     void hide();
     void unHide();
 
+    /** @brief Whether guide messages are hidden. */
+    bool isHide() const { return mIsHide; }
+
     void exeAppear();
     void exeHide();
     void exeWait();
