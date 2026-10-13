@@ -17567,9 +17567,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71002B46B0			FALSE	_ZN17GateKeeperChecker6exeEndEv	GateKeeperChecker::exeEnd()	
 0x71002B46C0			FALSE	_ZN17GateKeeperCheckerD1Ev	GateKeeperChecker::~GateKeeperChecker()	
 0x71002B46D0			FALSE	_ZN17GateKeeperCheckerD0Ev	GateKeeperChecker::~GateKeeperChecker()	
-0x71002B4700			FALSE	sub_71002B4700	sub_71002B4700	
-0x71002B4750			FALSE	sub_71002B4750	sub_71002B4750	
-0x71002B4790			FALSE	nullsub_175	nullsub_175	
+0x71002B4700			FALSE	_ZNK12_GLOBAL__N_128GateKeeperCheckerNrvChecking7executeEPN2al11NerveKeeperE	(anonymous namespace)::GateKeeperCheckerNrvChecking::execute(al::NerveKeeper*) const	
+0x71002B4750			FALSE	_ZNK12_GLOBAL__N_128GateKeeperCheckerNrvGoalDemo7executeEPN2al11NerveKeeperE	(anonymous namespace)::GateKeeperCheckerNrvGoalDemo::execute(al::NerveKeeper*) const	
+0x71002B4790			FALSE	_ZNK12_GLOBAL__N_123GateKeeperCheckerNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::GateKeeperCheckerNrvEnd::execute(al::NerveKeeper*) const	
 0x71002B47A0		GeneralHeadgear.o	FALSE	_ZN15GeneralHeadgearC2EPKc	GeneralHeadgear::GeneralHeadgear(char const*)	
 0x71002B4870			FALSE	_ZN15GeneralHeadgearC1EPKc	GeneralHeadgear::GeneralHeadgear(char const*)	
 0x71002B4940			FALSE	_ZN15GeneralHeadgear4initERKN2al13ActorInitInfoE	GeneralHeadgear::init(al::ActorInitInfo const&)	

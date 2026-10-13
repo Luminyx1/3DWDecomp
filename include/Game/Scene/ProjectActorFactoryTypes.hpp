@@ -105,6 +105,7 @@
 #include "MapObj/SuperSkateShoes.hpp"
 #include "MapObj/SuperSkateRail.hpp"
 #pragma once
+#include "MapObj/GateKeeperChecker.hpp"
 #include "MapObj/CheckPoint.hpp"
 #include "MapObj/Lantern.hpp"
 
@@ -966,14 +967,7 @@ private:
 };
 static_assert(sizeof(Gamane) == 0x1b0);
 
-class GateKeeperChecker : public al::LiveActor {
-public:
-    explicit GateKeeperChecker(const char* pName);
 
-private:
-    u8 mUnreconstructed[0x24];
-};
-static_assert(sizeof(GateKeeperChecker) == 0x168);
 
 class Gesso : public al::LiveActor {
 public:
