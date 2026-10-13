@@ -13,6 +13,7 @@ public:
     void exeAppear();
     void exeAppearWait();
     void exeEnd();
+    void setAppearDelay(u32 delay) { mAppearDelay = delay; }
     void resetAppearDelay() { mAppearDelay = 0; }
 
 private:

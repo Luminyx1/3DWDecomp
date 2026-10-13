@@ -12,6 +12,7 @@ public:
                         const RenderMaterialIndirectParam* pFarParam,
                         float nearDistance, float farDistance);
     void exeGiantPlayer();
+    void setPlayerSensor(al::HitSensor* sensor) { mPlayerSensor = sensor; }
 
 private:
     RenderMaterialIndirectParam* mParam;

@@ -6262,3 +6262,4 @@
 0x71019CBCD0 8 object _ZN12_GLOBAL__N_124NrvFloatingTerrainHiddenE
 0x71019CBC20 32 object _ZTVN12_GLOBAL__N_122FloatingTerrainNrvStayE
 0x71019CBC40 8 object _ZN12_GLOBAL__N_122NrvFloatingTerrainStayE
+0x710210935C 1 object _ZN12_GLOBAL__N_122sDrawTransparentObjectE
