@@ -6075,13 +6075,13 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71000E9EB0			FALSE	_ZN16CrawlerGenerator9exeLaunchEv	CrawlerGenerator::exeLaunch()	
 0x71000E9F00			FALSE	_ZN16CrawlerGeneratorD1Ev	CrawlerGenerator::~CrawlerGenerator()	
 0x71000E9F10			FALSE	_ZN16CrawlerGeneratorD0Ev	CrawlerGenerator::~CrawlerGenerator()	
-0x71000E9F40			FALSE	sub_71000E9F40	sub_71000E9F40	
-0x71000E9F90			FALSE	nullsub_60	nullsub_60	
-0x71000E9FA0			FALSE	sub_71000E9FA0	sub_71000E9FA0	
-0x71000EA000			FALSE	sub_71000EA000	sub_71000EA000	
+0x71000E9F40			FALSE	_ZNK12_GLOBAL__N_125CrawlerGeneratorNrvLaunch7executeEPN2al11NerveKeeperE	(anonymous namespace)::CrawlerGeneratorNrvLaunch::execute(al::NerveKeeper*) const	
+0x71000E9F90			FALSE	_ZNK12_GLOBAL__N_123CrawlerGeneratorNrvStop7executeEPN2al11NerveKeeperE	(anonymous namespace)::CrawlerGeneratorNrvStop::execute(al::NerveKeeper*) const	
+0x71000E9FA0			FALSE	_ZNK12_GLOBAL__N_129CrawlerGeneratorNrvLaunchSign7executeEPN2al11NerveKeeperE	(anonymous namespace)::CrawlerGeneratorNrvLaunchSign::execute(al::NerveKeeper*) const	
+0x71000EA000			FALSE	_ZNK12_GLOBAL__N_133CrawlerGeneratorNrvLaunchInterval7executeEPN2al11NerveKeeperE	(anonymous namespace)::CrawlerGeneratorNrvLaunchInterval::execute(al::NerveKeeper*) const	
 0x71000EA070			FALSE	_ZNK2al10FunctorV0MIP16CrawlerGeneratorMS1_FvvEEclEv	al::FunctorV0M<CrawlerGenerator*, void (CrawlerGenerator::*)()>::operator()() const	
 0x71000EA090			FALSE	_ZNK2al10FunctorV0MIP16CrawlerGeneratorMS1_FvvEE5cloneEv	al::FunctorV0M<CrawlerGenerator*, void (CrawlerGenerator::*)()>::clone() const	
-0x71000EA0E0			FALSE	sub_71000EA0E0	sub_71000EA0E0	
+0x71000EA0E0			FALSE	_GLOBAL__sub_I_CrawlerGenerator.cpp	_GLOBAL__sub_I_CrawlerGenerator.cpp	
 0x71000EA140		CrawlerLaunchState.o	FALSE	_ZN23CrawlerLaunchStateParamC2Ev	CrawlerLaunchStateParam::CrawlerLaunchStateParam()	
 0x71000EA170			FALSE	_ZN23CrawlerLaunchStateParamC2Effffiii	CrawlerLaunchStateParam::CrawlerLaunchStateParam(float, float, float, float, int, int, int)	
 0x71000EA190			FALSE	_ZN18CrawlerLaunchStateC2EPN2al9LiveActorEPK23CrawlerLaunchStateParamPNS0_16DeriveActorGroupI7CrawlerEE	CrawlerLaunchState::CrawlerLaunchState(al::LiveActor*, CrawlerLaunchStateParam const*, al::DeriveActorGroup<Crawler>*)	
