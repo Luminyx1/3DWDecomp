@@ -6210,3 +6210,9 @@
 0x71019D27B0 8 object _ZN12_GLOBAL__N_141NrvCameraChangeLayoutKinopioBrigadeCameraE
 0x71019D27B8 8 object _ZN12_GLOBAL__N_125NrvCameraChangeLayoutHideE
 0x71019D27C0 8 object _ZN12_GLOBAL__N_140NrvCameraChangeLayoutSwitchCameraByStickE
+
+0x71019E2F20 32 object _ZN12_GLOBAL__N_114sBrigadeColorsE
+
+# src/Game/Layout/ScoreNumber
+0x71019E2F40 8 object _ZN12_GLOBAL__N_120NrvScoreNumberAppearE
+0x71019E2F48 8 object _ZN12_GLOBAL__N_119NrvScoreNumberDelayE

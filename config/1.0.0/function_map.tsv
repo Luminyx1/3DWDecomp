@@ -12781,8 +12781,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001ED9E0			FALSE	_ZN11ScoreNumber9exeAppearEv	ScoreNumber::exeAppear()	
 0x71001EDA50			FALSE	_ZNK11ScoreNumber18getSceneCameraInfoEv	ScoreNumber::getSceneCameraInfo() const	
 0x71001EDA60			FALSE	_ZThn32_NK11ScoreNumber18getSceneCameraInfoEv	non-virtual thunk to ScoreNumber::getSceneCameraInfo() const	
-0x71001EDA70			FALSE	sub_71001EDA70	sub_71001EDA70	
-0x71001EDAE0			FALSE	sub_71001EDAE0	sub_71001EDAE0	
+0x71001EDA70			FALSE	_ZNK12_GLOBAL__N_120ScoreNumberNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::ScoreNumberNrvAppear::execute(al::NerveKeeper*) const	
+0x71001EDAE0			FALSE	_ZNK12_GLOBAL__N_119ScoreNumberNrvDelay7executeEPN2al11NerveKeeperE	(anonymous namespace)::ScoreNumberNrvDelay::execute(al::NerveKeeper*) const	
 0x71001EDB60		ShowCourseSelect.o	FALSE	_ZN16ShowCourseSelectC2ERKN2al14LayoutInitInfoE	ShowCourseSelect::ShowCourseSelect(al::LayoutInitInfo const&)	
 0x71001EDC70			FALSE	_ZN16ShowCourseSelectC1ERKN2al14LayoutInitInfoE	ShowCourseSelect::ShowCourseSelect(al::LayoutInitInfo const&)	
 0x71001EDD90			FALSE	_ZN16ShowCourseSelect6appearEv	ShowCourseSelect::appear()	
