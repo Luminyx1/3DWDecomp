@@ -1103,7 +1103,7 @@ src/Game/Layout/CourseSelectInfoBase.cpp:
     .text   start:0x001BB790 end:0x001BBF3C
 src/Game/Layout/CourseSelectInfoLayoutFunction.cpp:
     .text   start:0x001BBF40 end:0x001BCE94
-src/Game/Layout/CourseSelectInfoDecideButton.cpp:
+src/Game/Layout/CourseSelectInfoDecideButton.cpp: done
     .text   start:0x001BCEA0 end:0x001BD5D4
 src/Game/Layout/CourseSelectInfoMystery10.cpp: done
     .text   start:0x001BD5E0 end:0x001BD71C

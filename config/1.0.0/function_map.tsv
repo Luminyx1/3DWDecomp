@@ -11539,12 +11539,12 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001BD2A0			FALSE	_ZN28CourseSelectInfoDecideButton9exeDecideEv	CourseSelectInfoDecideButton::exeDecide()	
 0x71001BD320			FALSE	_ZN28CourseSelectInfoDecideButton6exeEndEv	CourseSelectInfoDecideButton::exeEnd()	
 0x71001BD330			FALSE	_ZN28CourseSelectInfoDecideButtonD0Ev	CourseSelectInfoDecideButton::~CourseSelectInfoDecideButton()	
-0x71001BD360			FALSE	sub_71001BD360	sub_71001BD360	
-0x71001BD3C0			FALSE	sub_71001BD3C0	sub_71001BD3C0	
-0x71001BD450			FALSE	sub_71001BD450	sub_71001BD450	
-0x71001BD4E0			FALSE	sub_71001BD4E0	sub_71001BD4E0	
-0x71001BD540			FALSE	sub_71001BD540	sub_71001BD540	
-0x71001BD5D0			FALSE	nullsub_113	nullsub_113	
+0x71001BD360			FALSE	_ZNK12_GLOBAL__N_143CourseSelectInfoDecideButtonNrvDeactiveWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectInfoDecideButtonNrvDeactiveWait::execute(al::NerveKeeper*) const	
+0x71001BD3C0			FALSE	_ZNK12_GLOBAL__N_137CourseSelectInfoDecideButtonNrvDecide7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectInfoDecideButtonNrvDecide::execute(al::NerveKeeper*) const	
+0x71001BD450			FALSE	_ZNK12_GLOBAL__N_143CourseSelectInfoDecideButtonNrvActiveAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectInfoDecideButtonNrvActiveAppear::execute(al::NerveKeeper*) const	
+0x71001BD4E0			FALSE	_ZNK12_GLOBAL__N_141CourseSelectInfoDecideButtonNrvActiveWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectInfoDecideButtonNrvActiveWait::execute(al::NerveKeeper*) const	
+0x71001BD540			FALSE	_ZNK12_GLOBAL__N_145CourseSelectInfoDecideButtonNrvDeactiveAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectInfoDecideButtonNrvDeactiveAppear::execute(al::NerveKeeper*) const	
+0x71001BD5D0			FALSE	_ZNK12_GLOBAL__N_134CourseSelectInfoDecideButtonNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::CourseSelectInfoDecideButtonNrvEnd::execute(al::NerveKeeper*) const	
 0x71001BD5E0		CourseSelectInfoMystery10.o	FALSE	_ZN25CourseSelectInfoMystery10C2ERKN2al14LayoutInitInfoEP20CourseSelectDirector	CourseSelectInfoMystery10::CourseSelectInfoMystery10(al::LayoutInitInfo const&, CourseSelectDirector*)	
 0x71001BD660			FALSE	_ZN25CourseSelectInfoMystery10C1ERKN2al14LayoutInitInfoEP20CourseSelectDirector	CourseSelectInfoMystery10::CourseSelectInfoMystery10(al::LayoutInitInfo const&, CourseSelectDirector*)	
 0x71001BD6F0			FALSE	_ZN25CourseSelectInfoMystery1020updateControllerInfoEv	CourseSelectInfoMystery10::updateControllerInfo()	
