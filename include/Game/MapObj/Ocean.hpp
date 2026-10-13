@@ -15,7 +15,9 @@ struct WavePatch;
  */
 struct OceanWavePoint {
     s16 mHeight;
+    s16 mVelocity;
 };
+static_assert(sizeof(OceanWavePoint) == 4);
 
 /**
  * @brief Object list that keeps its node storage inline, right after the list header.
