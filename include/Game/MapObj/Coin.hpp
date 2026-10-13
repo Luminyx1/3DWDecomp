@@ -20,6 +20,7 @@ public:
     void resetBaseQuat();
     void appearJump();
     void rotate();
+    void setEnableAppear(bool enable) { mEnableAppear = enable; }
     void exeAppearJumpRise();
     void exeAppearJumpFall();
     void exeWait();

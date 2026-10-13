@@ -16078,17 +16078,17 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100275DF0			FALSE	_ZN20CoinConcentricCircle16calcHeightOffsetEf	CoinConcentricCircle::calcHeightOffset(float)	
 0x7100275E90			FALSE	_ZN20CoinConcentricCircle6appearEv	CoinConcentricCircle::appear()	
 0x7100275FA0			FALSE	_ZN20CoinConcentricCircle4killEv	CoinConcentricCircle::kill()	
-0x7100275FF0			FALSE	sub_7100275FF0	sub_7100275FF0	
+0x7100275FF0			FALSE	_ZN12_GLOBAL__N_110CoinCircle4killEv	CoinCircle::kill()	TRUE
 0x71002760E0			FALSE	_ZN20CoinConcentricCircle9exeAppearEv	CoinConcentricCircle::exeAppear()	
 0x71002762B0			FALSE	_ZN20CoinConcentricCircle7exeWaitEv	CoinConcentricCircle::exeWait()	
 0x71002764C0			FALSE	_ZN20CoinConcentricCircle7controlEv	CoinConcentricCircle::control()	
 0x71002764D0			FALSE	_ZN20CoinConcentricCircleD1Ev	CoinConcentricCircle::~CoinConcentricCircle()	
 0x71002764E0			FALSE	_ZN20CoinConcentricCircleD0Ev	CoinConcentricCircle::~CoinConcentricCircle()	
 0x7100276510			FALSE	_ZNK12_GLOBAL__N_129CoinConcentricCircleNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::CoinConcentricCircleNrvAppear::execute(al::NerveKeeper*) const	
-0x7100276520			FALSE	sub_7100276520	sub_7100276520	
-0x7100276550			FALSE	nullsub_166	nullsub_166	
-0x7100276560			FALSE	sub_7100276560	sub_7100276560	
-0x7100276860			FALSE	sub_7100276860	sub_7100276860	
+0x7100276520			FALSE	_ZN12_GLOBAL__N_110CoinCircleD0Ev	CoinCircle::~CoinCircle()	TRUE
+0x7100276550			FALSE	_ZNK12_GLOBAL__N_117CoinCircleNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::CoinCircleNrvWait::execute(al::NerveKeeper*) const	TRUE
+0x7100276560			FALSE	_ZNK12_GLOBAL__N_119CoinCircleNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::CoinCircleNrvAppear::execute(al::NerveKeeper*) const	TRUE
+0x7100276860			FALSE	_ZNK12_GLOBAL__N_116CoinCircleNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::CoinCircleNrvEnd::execute(al::NerveKeeper*) const	TRUE
 0x71002768C0			FALSE	_ZNK12_GLOBAL__N_127CoinConcentricCircleNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::CoinConcentricCircleNrvWait::execute(al::NerveKeeper*) const	
 0x71002768D0		CoinCountUp.o	FALSE	_ZN11CoinCountUpC2EPKc	CoinCountUp::CoinCountUp(char const*)	
 0x7100276950			FALSE	_ZN11CoinCountUpC1EPKc	CoinCountUp::CoinCountUp(char const*)	

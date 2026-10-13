@@ -1,3 +1,4 @@
+#include "MapObj/CoinConcentricCircle.hpp"
 #include "MapObj/CatGull.hpp"
 #include "MapObj/ThrowMapParts.hpp"
 #include "MapObj/BlockSlot.hpp"
@@ -493,15 +494,6 @@ private:
     u8 mUnreconstructed[0x2c];
 };
 static_assert(sizeof(CoinCollectWatcher) == 0x170);
-
-class CoinConcentricCircle : public al::LiveActor {
-public:
-    explicit CoinConcentricCircle(const char* pName);
-
-private:
-    u8 mUnreconstructed[0x3c];
-};
-static_assert(sizeof(CoinConcentricCircle) == 0x180);
 
 class CoinCourseSelect : public al::LiveActor {
 public:
