@@ -390,10 +390,16 @@ void GhostPlayer::exePlay() {
             mState = State::Normal;
         }
 
-        if (mState != State::EnterDoor && mIsActionEnd) {
-            mShowDelay = 5;
-            mIsActionEnd = false;
-            mPresentStartDelay = 15;
+        switch (mState) {
+        case State::EnterDoor:
+            break;
+        default:
+            if (mIsActionEnd) {
+                mShowDelay = 5;
+                mIsActionEnd = false;
+                mPresentStartDelay = 15;
+            }
+            break;
         }
     }
 
