@@ -2274,7 +2274,7 @@ src/Game/NPC/RaidonNpc.cpp: done
     .text   start:0x003D53C0 end:0x003D5774
 src/Game/NPC/RosettaNpc.cpp:
     .text   start:0x003D5780 end:0x003D6398
-src/Game/NPC/TestAndoBowserJr.cpp:
+src/Game/NPC/TestAndoBowserJr.cpp: done
     .text   start:0x003D63A0 end:0x003D6978
 src/Game/NPC/TestKinopioLeader.cpp:
     .text   start:0x003D6980 end:0x003D7188
