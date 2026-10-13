@@ -11757,14 +11757,14 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001C5400			FALSE	_ZN12GuideBalloon6exeEndEv	GuideBalloon::exeEnd()	
 0x71001C5510			FALSE	_ZN12GuideBalloon13setUpsideDownEv	GuideBalloon::setUpsideDown()	
 0x71001C5550			FALSE	_ZN12GuideBalloon9setAppearEv	GuideBalloon::setAppear()	
-0x71001C5560			FALSE	sub_71001C5560	sub_71001C5560	
-0x71001C5570			FALSE	sub_71001C5570	sub_71001C5570	
-0x71001C5580			FALSE	sub_71001C5580	sub_71001C5580	
-0x71001C5590			FALSE	sub_71001C5590	sub_71001C5590	
-0x71001C55A0			FALSE	sub_71001C55A0	sub_71001C55A0	
-0x71001C55B0			FALSE	sub_71001C55B0	sub_71001C55B0	
-0x71001C55C0			FALSE	sub_71001C55C0	sub_71001C55C0	
-0x71001C55D0			FALSE	sub_71001C55D0	sub_71001C55D0	
+0x71001C5560			FALSE	_ZNK12_GLOBAL__N_121GuideBalloonNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::GuideBalloonNrvAppear::execute(al::NerveKeeper*) const	
+0x71001C5570			FALSE	_ZNK12_GLOBAL__N_124GuideBalloonNrvAppearDRC7executeEPN2al11NerveKeeperE	(anonymous namespace)::GuideBalloonNrvAppearDRC::execute(al::NerveKeeper*) const	
+0x71001C5580			FALSE	_ZNK12_GLOBAL__N_128GuideBalloonNrvAppearThought7executeEPN2al11NerveKeeperE	(anonymous namespace)::GuideBalloonNrvAppearThought::execute(al::NerveKeeper*) const	
+0x71001C5590			FALSE	_ZNK12_GLOBAL__N_118GuideBalloonNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::GuideBalloonNrvEnd::execute(al::NerveKeeper*) const	
+0x71001C55A0			FALSE	_ZNK12_GLOBAL__N_125GuideBalloonNrvEndThought7executeEPN2al11NerveKeeperE	(anonymous namespace)::GuideBalloonNrvEndThought::execute(al::NerveKeeper*) const	
+0x71001C55B0			FALSE	_ZNK12_GLOBAL__N_126GuideBalloonNrvWaitThought7executeEPN2al11NerveKeeperE	(anonymous namespace)::GuideBalloonNrvWaitThought::execute(al::NerveKeeper*) const	
+0x71001C55C0			FALSE	_ZNK12_GLOBAL__N_122GuideBalloonNrvWaitDRC7executeEPN2al11NerveKeeperE	(anonymous namespace)::GuideBalloonNrvWaitDRC::execute(al::NerveKeeper*) const	
+0x71001C55D0			FALSE	_ZNK12_GLOBAL__N_119GuideBalloonNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::GuideBalloonNrvWait::execute(al::NerveKeeper*) const	
 0x71001C55E0		GuideCourse.o	FALSE	_ZN11GuideCourseC2ERKN2al14LayoutInitInfoEPKc	GuideCourse::GuideCourse(al::LayoutInitInfo const&, char const*)	
 0x71001C56A0			FALSE	_ZN11GuideCourseC1ERKN2al14LayoutInitInfoEPKc	GuideCourse::GuideCourse(al::LayoutInitInfo const&, char const*)	
 0x71001C5760			FALSE	_ZN11GuideCourse7controlEv	GuideCourse::control()	

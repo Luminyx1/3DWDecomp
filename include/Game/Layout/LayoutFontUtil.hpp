@@ -26,3 +26,8 @@ namespace LayoutFontUtil {
 const char16_t* getIconFontWarpCubeLockedPiece();
 const char16_t* getIconFontWarpCubeLockedPieceEmpty();
 }
+
+namespace LayoutFontUtil {
+const char16_t* getSystemFontBtnY();
+const char16_t* getSystemFontBtnYSingleJoy();
+}
