@@ -541,7 +541,7 @@ src/Game/Enemy/BombBoundGenerator.cpp:
     .text   start:0x000CECA0 end:0x000CF714
 src/Game/Enemy/BombHei.cpp:
     .text   start:0x000CF720 end:0x000D15E4
-src/Game/Enemy/BombHeiLauncher.cpp:
+src/Game/Enemy/BombHeiLauncher.cpp: done
     .text   start:0x000D15F0 end:0x000D1EC4
 src/Game/Enemy/BombStateExplosion.cpp:
     .text   start:0x000D1ED0 end:0x000D22C8

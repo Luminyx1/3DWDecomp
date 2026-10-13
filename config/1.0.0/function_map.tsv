@@ -5416,10 +5416,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71000D1C60			FALSE	_ZN15BombHeiLauncherD1Ev	BombHeiLauncher::~BombHeiLauncher()	
 0x71000D1C70			FALSE	_ZN15BombHeiLauncherD0Ev	BombHeiLauncher::~BombHeiLauncher()	
 0x71000D1CA0			FALSE	_ZNK12_GLOBAL__N_129BombHeiLauncherNrvLaunchReady7executeEPN2al11NerveKeeperE	(anonymous namespace)::BombHeiLauncherNrvLaunchReady::execute(al::NerveKeeper*) const	
-0x71000D1CB0			FALSE	sub_71000D1CB0	sub_71000D1CB0	
-0x71000D1CF0			FALSE	sub_71000D1CF0	sub_71000D1CF0	
-0x71000D1D40			FALSE	sub_71000D1D40	sub_71000D1D40	
-0x71000D1DB0			FALSE	sub_71000D1DB0	sub_71000D1DB0	
+0x71000D1CB0			FALSE	_ZNK12_GLOBAL__N_127BombHeiLauncherNrvWaitStart7executeEPN2al11NerveKeeperE	(anonymous namespace)::BombHeiLauncherNrvWaitStart::execute(al::NerveKeeper*) const	
+0x71000D1CF0			FALSE	_ZNK12_GLOBAL__N_132BombHeiLauncherNrvLaunchInterval7executeEPN2al11NerveKeeperE	(anonymous namespace)::BombHeiLauncherNrvLaunchInterval::execute(al::NerveKeeper*) const	
+0x71000D1D40			FALSE	_ZNK12_GLOBAL__N_124BombHeiLauncherNrvLaunch7executeEPN2al11NerveKeeperE	(anonymous namespace)::BombHeiLauncherNrvLaunch::execute(al::NerveKeeper*) const	
+0x71000D1DB0			FALSE	_ZNK12_GLOBAL__N_122BombHeiLauncherNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::BombHeiLauncherNrvWait::execute(al::NerveKeeper*) const	
 0x71000D1E60			FALSE	_ZNK2al10FunctorV0MIP15BombHeiLauncherMS1_FvvEEclEv	al::FunctorV0M<BombHeiLauncher*, void (BombHeiLauncher::*)()>::operator()() const	
 0x71000D1E80			FALSE	_ZNK2al10FunctorV0MIP15BombHeiLauncherMS1_FvvEE5cloneEv	al::FunctorV0M<BombHeiLauncher*, void (BombHeiLauncher::*)()>::clone() const	
 0x71000D1ED0		BombStateExplosion.o	FALSE	_ZN18BombStateExplosionC2EPN2al9LiveActorEbPK23BombStateExplosionParam	BombStateExplosion::BombStateExplosion(al::LiveActor*, bool, BombStateExplosionParam const*)	
