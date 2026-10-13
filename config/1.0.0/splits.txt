@@ -575,7 +575,7 @@ src/Game/Enemy/Bull.cpp:
     .text   start:0x000E2140 end:0x000E44E0
 src/Game/Enemy/Byugo.cpp:
     .text   start:0x000E44E0 end:0x000E56AC
-src/Game/Enemy/Chorobon.cpp:
+src/Game/Enemy/Chorobon.cpp: done
     .text   start:0x000E56B0 end:0x000E6054
 src/Game/Enemy/ChorobonColony.cpp: done
     .text   start:0x000E6060 end:0x000E6654

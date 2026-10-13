@@ -5947,7 +5947,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71000E5910			FALSE	_ZN8Chorobon12killBySwitchEv	Chorobon::killBySwitch()	
 0x71000E5960			FALSE	_ZN8Chorobon7controlEv	Chorobon::control()	
 0x71000E5970			FALSE	_ZN8Chorobon12attackSensorEPN2al9HitSensorES2_	Chorobon::attackSensor(al::HitSensor*, al::HitSensor*)	
-0x71000E5AB0			FALSE	sub_71000E5AB0	sub_71000E5AB0	
+0x71000E5AB0			FALSE	_ZN8Chorobon11tryReactionEPKN2al9SensorMsgE	Chorobon::tryReaction(al::SensorMsg const*)	
 0x71000E5B60			FALSE	_ZN8Chorobon10receiveMsgEPKN2al9SensorMsgEPNS0_9HitSensorES5_	Chorobon::receiveMsg(al::SensorMsg const*, al::HitSensor*, al::HitSensor*)	
 0x71000E5D40			FALSE	_ZN8Chorobon21receiveMsgScreenPointEPKN2al9SensorMsgEPNS0_13ScreenPointerEPNS0_17ScreenPointTargetE	Chorobon::receiveMsgScreenPoint(al::SensorMsg const*, al::ScreenPointer*, al::ScreenPointTarget*)	
 0x71000E5DC0			FALSE	_ZN8Chorobon7exeMoveEv	Chorobon::exeMove()	
@@ -5957,8 +5957,8 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71000E5EF0			FALSE	_ZN12ChorobonNodeD0Ev	ChorobonNode::~ChorobonNode()	
 0x71000E5F20			FALSE	_ZN8ChorobonD1Ev	Chorobon::~Chorobon()	
 0x71000E5F30			FALSE	_ZN8ChorobonD0Ev	Chorobon::~Chorobon()	
-0x71000E5F60			FALSE	nullsub_54	nullsub_54	
-0x71000E5F70			FALSE	sub_71000E5F70	sub_71000E5F70	
+0x71000E5F60			FALSE	_ZNK12_GLOBAL__N_115ChorobonNrvMove7executeEPN2al11NerveKeeperE	(anonymous namespace)::ChorobonNrvMove::execute(al::NerveKeeper*) const	
+0x71000E5F70			FALSE	_ZNK12_GLOBAL__N_117ChorobonNrvVanish7executeEPN2al11NerveKeeperE	(anonymous namespace)::ChorobonNrvVanish::execute(al::NerveKeeper*) const	
 0x71000E5FE0			FALSE	_ZNK12_GLOBAL__N_119ChorobonNrvReaction7executeEPN2al11NerveKeeperE	(anonymous namespace)::ChorobonNrvReaction::execute(al::NerveKeeper*) const	
 0x71000E5FF0			FALSE	_ZNK2al10FunctorV0MIP8ChorobonMS1_FvvEEclEv	al::FunctorV0M<Chorobon*, void (Chorobon::*)()>::operator()() const	
 0x71000E6010			FALSE	_ZNK2al10FunctorV0MIP8ChorobonMS1_FvvEE5cloneEv	al::FunctorV0M<Chorobon*, void (Chorobon::*)()>::clone() const	
