@@ -1586,14 +1586,8 @@ static_assert(sizeof(MoamoaHolder) == 0x158);
 
 
 
-class NeedleRollerSwing : public al::LiveActor {
-public:
-    explicit NeedleRollerSwing(const char* pName);
+#include "MapObj/NeedleRollerSwing.hpp"
 
-private:
-    u8 mUnreconstructed[0x74];
-};
-static_assert(sizeof(NeedleRollerSwing) == 0x1b8);
 
 class NeedleSeed : public al::LiveActor {
 public:

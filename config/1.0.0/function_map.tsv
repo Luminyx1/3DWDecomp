@@ -20287,9 +20287,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100324DB0			FALSE	_ZN17NeedleRollerSwingD1Ev	NeedleRollerSwing::~NeedleRollerSwing()	
 0x7100324DC0			FALSE	_ZN17NeedleRollerSwingD0Ev	NeedleRollerSwing::~NeedleRollerSwing()	
 0x7100324DF0			FALSE	_ZNK12_GLOBAL__N_124NeedleRollerSwingNrvMove7executeEPN2al11NerveKeeperE	(anonymous namespace)::NeedleRollerSwingNrvMove::execute(al::NerveKeeper*) const	
-0x7100324E00			FALSE	sub_7100324E00	sub_7100324E00	
-0x7100324E10			FALSE	sub_7100324E10	sub_7100324E10	
-0x7100324E70			FALSE	sub_7100324E70	sub_7100324E70	
+0x7100324E00			FALSE	_ZNK12_GLOBAL__N_127NeedleRollerSwingNrvStandBy7executeEPN2al11NerveKeeperE	(anonymous namespace)::NeedleRollerSwingNrvStandBy::execute(al::NerveKeeper*) const	TRUE
+0x7100324E10			FALSE	_ZNK12_GLOBAL__N_133NeedleRollerSwingNrvSupportFreeze7executeEPN2al11NerveKeeperE	(anonymous namespace)::NeedleRollerSwingNrvSupportFreeze::execute(al::NerveKeeper*) const	TRUE
+0x7100324E70			FALSE	_ZNK12_GLOBAL__N_137NeedleRollerSwingNrvSupportFreezeSync7executeEPN2al11NerveKeeperE	(anonymous namespace)::NeedleRollerSwingNrvSupportFreezeSync::execute(al::NerveKeeper*) const	TRUE
 0x7100324EB0			FALSE	_ZNK2al10FunctorV0MIP17NeedleRollerSwingMS1_FvvEEclEv	al::FunctorV0M<NeedleRollerSwing*, void (NeedleRollerSwing::*)()>::operator()() const	
 0x7100324ED0			FALSE	_ZNK2al10FunctorV0MIP17NeedleRollerSwingMS1_FvvEE5cloneEv	al::FunctorV0M<NeedleRollerSwing*, void (NeedleRollerSwing::*)()>::clone() const	
 0x7100324F20		NeedleTrap.o	FALSE	_ZN10NeedleTrapC2EPKc	NeedleTrap::NeedleTrap(char const*)	
