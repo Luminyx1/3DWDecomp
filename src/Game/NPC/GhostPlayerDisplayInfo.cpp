@@ -1,29 +1,29 @@
 #include "NPC/GhostPlayerDisplayInfo.hpp"
-#include "Util/GhostPlayerUtil.hpp"
+#include "NPC/GhostPlayerUserInfo.hpp"
 #include <prim/seadStringUtil.h>
 
 /**
- * @brief Builds the display info of a built-in (ROM) ghost from its user table entry.
- * @param pUserName Key of the ghost owner in the built-in user table.
+ * @brief Loads the display name and flag for a built-in ghost recording.
+ * @param pFileName Recording filename used to find its user-information entry.
  */
-GhostPlayerDisplayInfo::GhostPlayerDisplayInfo(const char* pUserName) {
-    const rc::GhostPlayerUserInfo* pInfo = rc::findGhostPlayerUserInfo(pUserName);
-    const char* pName = pInfo->mUserName;
-    sead::StringUtil::convertSjisToUtf16(mUserName.getBuffer(), mUserName.getBufferSize(), pName,
-                                         -1);
-    mIsMii = pInfo->mIsMii;
+GhostPlayerDisplayInfo::GhostPlayerDisplayInfo(const char* pFileName)
+    : mIsMii(false), mIsValid(false) {
+    const auto* pInfo = rc::findGhostPlayerUserInfo(pFileName);
+    const char* pName = pInfo->mName;
+    sead::StringUtil::convertSjisToUtf16(mUserName.getBuffer(), mUserName.getBufferSize(), pName, -1);
+    mIsMii = pInfo->mIsFlagged;
     mIsValid = true;
 }
 
-/** @brief Creates an empty, invalid display info. */
-GhostPlayerDisplayInfo::GhostPlayerDisplayInfo() = default;
+/** @brief Creates an empty, uninitialized ghost display record. */
+GhostPlayerDisplayInfo::GhostPlayerDisplayInfo() : mIsMii(false), mIsValid(false) {}
 
 /**
- * @brief Fills the display info from a downloaded data store entry.
- * @param rInfo Download info of the data store entry.
- * @param isMii Whether the ghost owner is shown with a Mii.
+ * @brief Marks a downloaded ghost's display record as initialized.
+ * @param rInfo Download metadata; unused by this implementation.
+ * @param isFlagged Flag to associate with the downloaded ghost.
  */
-void GhostPlayerDisplayInfo::init(const al::NexDataStoreDownloadInfo& rInfo, bool isMii) {
-    mIsMii = isMii;
+void GhostPlayerDisplayInfo::init(const al::NexDataStoreDownloadInfo& rInfo, bool isFlagged) {
+    mIsMii = isFlagged;
     mIsValid = true;
 }

@@ -73,6 +73,7 @@
 #include "Library/Camera/CameraTurnInfo.hpp"
 #include "Library/Camera/CameraUtil.hpp"
 #include "Library/Camera/SceneCameraCtrl.hpp"
+#include "Project/Camera/Holder/CameraRequestParamHolder.hpp"
 #include "Library/Se/Function/SeFunction.hpp"
 #include "Library/Stage/StageInfo.hpp"
 #include "Library/Stage/StageResourceKeeper.hpp"
@@ -284,7 +285,8 @@ al::GameFrameworkNx* getFramework() {
  */
 al::GameFrameworkNx* getFrameworkAlive() {
     sead::Framework& framework = *Application::instance()->getFramework();
-    return sead::DynamicCast<al::GameFrameworkNx>(&framework);
+    return framework.checkDerivedRuntimeTypeInfo(al::GameFrameworkNx::getRuntimeTypeInfoStatic())
+               ? static_cast<al::GameFrameworkNx*>(&framework) : nullptr;
 }
 
 /**
@@ -335,15 +337,6 @@ void setPlayerChangeDemoAll(al::PlayerHolder* pHolder, bool isChange) {
     }
 }
 
-/**
- * Sets the camera input sensitivity of the camera director.
- * @param pDirector The camera director.
- * @param sensitivity The sensitivity from the options.
- */
-void setCameraSensitivity(al::CameraDirector_RS* pDirector, s32 sensitivity) {
-    // The request parameter holder starts with the sensitivity.
-    *reinterpret_cast<s32*>(pDirector->getSceneCameraCtrl()->getRequestParamHolder()) = sensitivity;
-}
 }  // namespace
 
 /**
@@ -362,16 +355,14 @@ SingleModeScene::SingleModeScene(const char* pName)
       mBigBgmController(nullptr), mPauseMenu(nullptr), mPausePort(-1),
       mScreenCaptureExecutor(nullptr), mNetworkSystem(nullptr), mNfpDirector(nullptr),
       mPlayerCameraTarget(nullptr), _320(-1), _328(nullptr), mStampDirector(nullptr),
-      mSnapshotState(nullptr), mSnapshotLayout(nullptr), mUnlockedPhase(0), mIsLastBowserBattle(false),
+      mSnapshotState(nullptr), mSnapshotLayout(nullptr), mShadowMarioDirector(nullptr),
+      mGuideGameWindow(nullptr), mWindowProcessing(nullptr), mUnlockedPhase(0), mIsLastBowserBattle(false),
       mIsPhase0Start(false), mIsInGameCutsceneSwitch(false), mDrawer3D(nullptr), mIsGigaBellUnlockCutscene(false) {
-    mWindowProcessing = nullptr;
-    mGuideGameWindow = nullptr;
-    mShadowMarioDirector = nullptr;
+    mDemoBaseMtx.makeIdentity();
     mAudioDemoType = 0;
     mRaidonSurf = nullptr;
     mIslandMap = nullptr;
     mIslandDataList = nullptr;
-    mDemoBaseMtx.makeIdentity();
     mViewport.set(0.0f, 0.0f, 1280.0f, 720.0f);
     mIslandKeeper = new IslandKeeper(256);
     mShardsWatcherHolder = new ShardsWatcherHolder(48);
@@ -502,9 +493,11 @@ const al::StageInfo* SingleModeScene::findOceanStageInfo() {
  * Creates the scenario lists of the ocean quadrants from the ocean scenarios of the ocean stage.
  */
 void SingleModeScene::initOceanScenarios() {
-    al::ByamlIter rootIter(findOceanStageInfo()->getResource()->tryGetByml("OceanScenarios"));
+    const u8* oceanScenarios = findOceanStageInfo()->getResource()->tryGetByml("OceanScenarios");
+    al::ByamlIter rootIter(oceanScenarios);
     al::ByamlIter quadrantIter;
     al::ByamlIter scenarioIter;
+    const char* scenarioName;
     const char* displayName = "";
     s32 quadrantNum = rootIter.getSize();
     mOceanScenarioList = new OceanScenarioList(quadrantNum);
@@ -517,11 +510,11 @@ void SingleModeScene::initOceanScenarios() {
 
         for (s32 j = 0; j < scenarioNum; j++) {
             quadrantIter.tryGetIterByIndex(&scenarioIter, j);
-            const char* scenarioName = "MissingName";
+            scenarioName = "MissingName";
             const char* scenarioType = "InvalidType";
-            displayName = "";
             s32 scenarioId = -1;
             s32 unlockScenarioId = -1;
+            displayName = "";
             bool isDisasterDisable = false;
             bool isUpdateLevelData = false;
             scenarioIter.tryGetIntByKey(&scenarioId, "ScenarioID");
@@ -609,7 +602,8 @@ void SingleModeScene::init(const al::SceneInitInfo& rInfo) {
     const char* stageName = mStageName.cstr();
     mGameDataHolder = GameDataFunction::getGameDataHolder(rInfo.mGameDataHolder);
     mGameDataHolder->initIsPhase0();
-    mGameDataHolder->setUnknownFlags61And62(false, false);
+    mGameDataHolder->setUnknown62(false);
+    mGameDataHolder->setFreezeMode(false);
     mUnlockedPhase = SingleModeDataFunction::getUnlockedPhase(GameDataHolderAccessor(mGameDataHolder));
     mIsLastBowserBattle = DisasterModeController::isLastBowserBattle(GameDataHolderAccessor(mGameDataHolder));
     mGameDataHolder->setSingleMode(true);
@@ -741,12 +735,15 @@ void SingleModeScene::init(const al::SceneInitInfo& rInfo) {
     initPlacement(actorInfo);
     initSceneAudioAfterInitPlacement(rInfo);
     mScreenCaptureExecutor = rInfo.mScreenCaptureExecutor;
-    setCameraSensitivity(mLiveActorKit->getCameraDirector_RS(),
-                         SingleModeDataFunction::getCameraSensitiviy(this));
-    mLiveActorKit->getCameraDirector_RS()->setReverseRightAndLeftFlag(
-        SingleModeDataFunction::getCameraReverseHorizontal(GameDataHolderAccessor(this)));
-    mLiveActorKit->getCameraDirector_RS()->setReverseUpAndDownFlag(
-        SingleModeDataFunction::getCameraReverseVertical(GameDataHolderAccessor(this)));
+    auto* cameraParams = mLiveActorKit->getCameraDirector_RS()->getSceneCameraCtrl()->getRequestParamHolder();
+    GameDataHolderAccessor sensitivityAccessor(this);
+    cameraParams->setStickSensitivityLevel(SingleModeDataFunction::getCameraSensitiviy(sensitivityAccessor));
+    auto* horizontalCamera = mLiveActorKit->getCameraDirector_RS();
+    GameDataHolderAccessor horizontalAccessor(this);
+    horizontalCamera->setReverseRightAndLeftFlag(SingleModeDataFunction::getCameraReverseHorizontal(horizontalAccessor));
+    auto* verticalCamera = mLiveActorKit->getCameraDirector_RS();
+    GameDataHolderAccessor verticalAccessor(this);
+    verticalCamera->setReverseUpAndDownFlag(SingleModeDataFunction::getCameraReverseVertical(verticalAccessor));
     initIslandKeeper();
 
     if (al::isExistSceneObj(this, SceneObjID_ChikaChikaBlockSynchronizer)) {
@@ -797,21 +794,24 @@ void SingleModeScene::init(const al::SceneInitInfo& rInfo) {
                                mLiveActorKit->getPlayerHolder(),
                                rInfo.mGameSystemInfo->getGamePadSystem(), mScreenCaptureExecutor,
                                mWipeFadeBlack);
-    rInfo.mGameSystemInfo->getGamePadSystem()->setPadName(
-        0, sead::WSafeString(
-               al::getSystemMessageString(mSceneLayout, "SingleMode_PlayerName", 0)));
-    rInfo.mGameSystemInfo->getGamePadSystem()->setPadName(
-        1, sead::WSafeString(
-               al::getSystemMessageString(mSceneLayout, "SingleMode_PlayerName", 1)));
+    {
+        sead::WSafeString name(al::getSystemMessageString(mSceneLayout, "SingleMode_PlayerName", 0));
+        rInfo.mGameSystemInfo->getGamePadSystem()->setPadName(0, name);
+    }
+    {
+        sead::WSafeString name(al::getSystemMessageString(mSceneLayout, "SingleMode_PlayerName", 1));
+        rInfo.mGameSystemInfo->getGamePadSystem()->setPadName(1, name);
+    }
     rInfo.mGameSystemInfo->getGamePadSystem()->set40(true);
 
     if (!mIsLastBowserBattle) {
-        const char* demoName =
-            phase == 5 && SingleModeDataFunction::isFirstPhase3BossDefeated(this) ?
-                "DemoSingleModeGenericDialogueP3" :
-                "DemoSingleModeGenericDialogue";
-        mDemoCutscene = new DemoCutscene(demoName, static_cast<alSeFunction::DemoType>(2));
-        mDemoCutscene->setDemoName(demoName);
+        if (phase == 5 && SingleModeDataFunction::isFirstPhase3BossDefeated(this)) {
+            mDemoCutscene = new DemoCutscene("DemoSingleModeGenericDialogueP3", static_cast<alSeFunction::DemoType>(2));
+            mDemoCutscene->setDemoName("DemoSingleModeGenericDialogueP3");
+        } else {
+            mDemoCutscene = new DemoCutscene("DemoSingleModeGenericDialogue", static_cast<alSeFunction::DemoType>(2));
+            mDemoCutscene->setDemoName("DemoSingleModeGenericDialogue");
+        }
         mDemoCutscene->init(actorInfo);
         mDemoCutscene->setDisableCapture(true);
         mDemoCutscene->setAllowSkip(false);
@@ -857,9 +857,11 @@ void SingleModeScene::init(const al::SceneInitInfo& rInfo) {
             SingleModeDataFunction::getIsDisasterMode(GameDataHolderAccessor(mGameDataHolder)));
     }
 
-    SingleModeDataFunction::setPhaseEnd(GameDataHolderAccessor(this), false);
+    GameDataHolderAccessor phaseEndAccessor(this);
+    SingleModeDataFunction::setPhaseEnd(phaseEndAccessor, false);
     mLiveActorKit->getGraphicsSystemInfo()->getViewRenderer()->setSingleModeRendering();
-    BoxPropeller::resetPropellerJumpGuideMessage(GameDataHolderAccessor(this));
+    GameDataHolderAccessor propellerAccessor(this);
+    BoxPropeller::resetPropellerJumpGuideMessage(propellerAccessor);
 
     if (!mGameDataHolder->isCourseSelectVisited()) {
         mGameDataHolder->setCourseSelectVisited(true);
@@ -3891,6 +3893,8 @@ void SingleModeScene::initPlacementPlayer(const al::StageInfo* pStageInfo,
     s32 count = 0;
     al::tryGetPlacementInfoAndCount(&listInfo, &count, pStageInfo, "PlayerList");
     al::PlacementInfo playerInfo;
+    s32 zoneIndex;
+    s32 checkpointIndex;
 
     for (s32 i = 0; i < count; i++) {
         al::getPlacementInfoByIndex(&playerInfo, listInfo, i);
@@ -3900,7 +3904,7 @@ void SingleModeScene::initPlacementPlayer(const al::StageInfo* pStageInfo,
         }
     }
 
-    al::getSceneObj<PlayerGroupSceneObj>(this, SceneObjID_PlayerGroup)->initGroup(128);
+    static_cast<PlayerGroupSceneObj*>(al::createSceneObj(this, SceneObjID_PlayerGroup))->initGroup(128);
     al::setSceneObj(this, new PlayerProcess(mLiveActorKit->getPlayerHolder()),
                     SceneObjID_PlayerProcess);
 
@@ -3909,8 +3913,6 @@ void SingleModeScene::initPlacementPlayer(const al::StageInfo* pStageInfo,
     bool isGenericRespawn = false;
 
     if (allowRestartPoint() && mUnlockedPhase != 0 && !mIsLastBowserBattle) {
-        s32 zoneIndex;
-        s32 checkpointIndex;
         SingleModeDataFunction::getLastCheckpointPass(this, &zoneIndex, &checkpointIndex);
 
         if ((zoneIndex | checkpointIndex) >= 0 && zoneIndex < mCheckpointLists.size()) {
@@ -3970,7 +3972,7 @@ void SingleModeScene::initPlacementPlayer(const al::StageInfo* pStageInfo,
 placePlayers:
     s32 cutscenePosNum = al::calcLinkChildNum(actorInfo, "CutscenePos");
 
-    if (!isGigaBellRespawn && cutscenePosNum != 0) {
+    if (cutscenePosNum != 0 && !isGigaBellRespawn) {
         al::getLinksMatrix(&mDemoBaseMtx, actorInfo, "CutscenePos");
     } else {
         al::tryGetMatrixTR(&mDemoBaseMtx, actorInfo);
@@ -4024,9 +4026,11 @@ placePlayers:
         const char* archiveName = isBossScene() ? "SMBoss" : nullptr;
         const char* characterName = rc::getPlayerCharacterName(i);
         auto* player = new PlayerActor(viewMtx);
-        PlayerActionGraphBuilder builder(false);
-        player->initSpecial(actorInfo, 0, characterName, pSelector, pSelector, &builder, "プレイヤー",
-                            31, 0, archiveName);
+        {
+            PlayerActionGraphBuilder builder(false);
+            player->initSpecial(actorInfo, 0, characterName, pSelector, pSelector, &builder,
+                                "プレイヤー", 31, 0, archiveName);
+        }
         rc::deactivatePlayer(player);
 
         if (isGigaBellRespawn) {
@@ -4071,9 +4075,8 @@ placePlayers:
 
         if (SingleModeDataFunction::isDemoWasCancelled(GameDataHolderAccessor(mGameDataHolder))) {
             phase0StartDemo->setSkipped();
-            SingleModeDataFunction::setDemoWasCancelled(GameDataHolderAccessor(mGameDataHolder),
-                                                        false);
         }
+        SingleModeDataFunction::setDemoWasCancelled(GameDataHolderAccessor(mGameDataHolder), false);
     }
 }
 

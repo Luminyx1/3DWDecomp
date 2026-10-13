@@ -16,6 +16,10 @@ public:
     bool isEnd() const { return mFrame >= mMaxFrame; }
     float getValueY() const { return mOut.y; }
     const sead::Vector3f& getValue() const { return mOut; }
+    /** @brief Gets the current displacement. @return Calculated rumble displacement. */
+    const sead::Vector3f& getOutput() const { return mOut; }
+    /** @brief Checks the rumble duration. @return Whether frames remain. */
+    bool isRumbling() const { return mFrame < mMaxFrame; }
 
     virtual void calcValues(sead::Vector3f* out, const sead::Vector3f& in) = 0;
 

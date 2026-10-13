@@ -3,13 +3,13 @@
 #include <basis/seadTypes.h>
 #include "Library/Layout/LayoutActor.hpp"
 
+class ButtonGroup;
 namespace al {
 class LayoutInitInfo;
 }
 
 /**
  * @brief Generic vertical list of menu buttons (e.g. the pause menu's save data sub-menu).
- * @note Only the members used by already-decompiled callers are declared.
  */
 class SimpleMenuLayout : public al::LayoutActor {
 public:
@@ -17,6 +17,10 @@ public:
                      const char* pSuffix);
 
     void appear(s32 port);
+    void exeAppear();
+    void exeWait();
+    void exeDecided();
+    void exeEnd();
     void end();
     void reset(const char* pButtonName);
     bool isDecided();
@@ -30,8 +34,9 @@ public:
     const char* getDecidedButtonName() const { return mDecidedButtonName; }
 
 private:
-    u8 mUnreconstructed128[0x8];
-    const char* mDecidedButtonName;
-    u8 mUnreconstructed138[0x8];
+    ButtonGroup* mButtons = nullptr;
+    const char* mDecidedButtonName = nullptr;
+    int mPort = -1;
+    bool mHasAppeared = false;
 };
 static_assert(sizeof(SimpleMenuLayout) == 0x140);

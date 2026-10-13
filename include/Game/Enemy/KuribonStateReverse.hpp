@@ -10,11 +10,13 @@ struct WalkerStateParam;
 class KuribonStateReverseParam {
 public:
     KuribonStateReverseParam();
-    KuribonStateReverseParam(f32 recoverJumpSpeed, f32 airFriction, f32 groundFriction,
+    KuribonStateReverseParam(f32 gravity, f32 airFriction, f32 groundFriction,
                              s32 swoonTime);
 
-private:
-    u8 _0[0x10];
+    f32 gravity;
+    f32 airFriction;
+    f32 groundFriction;
+    s32 swoonTime;
 };
 
 static_assert(sizeof(KuribonStateReverseParam) == 0x10);
@@ -30,8 +32,16 @@ public:
     bool isInAir() const;
     bool isRecover() const;
 
+    void exeStart();
+    void exeLoop();
+    void exeLand();
+    void exeSwoon();
+    void exeRecover();
+
 private:
-    u8 _20[0x18];
+    const KuribonStateReverseParam* mReverseParam;
+    const WalkerStateParam* mWalkerParam;
+    const al::Nerve* mResumeNerve = nullptr;
 };
 
 static_assert(sizeof(KuribonStateReverse) == 0x38);

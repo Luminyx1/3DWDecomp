@@ -21,6 +21,8 @@ public:
     void startDisappear();
     bool isEnableGetPlayerSensor() const;
     al::HitSensor* getHitPlayerSensor() const;
+    /** @brief Returns the actor carried inside the bubble. @return Carried item. */
+    al::LiveActor* getItemActor() const { return mItemActor; }
 protected:
     al::LiveActor* mItemActor = nullptr;
     al::HitSensor* mHitPlayerSensor = nullptr;

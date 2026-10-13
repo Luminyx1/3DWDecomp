@@ -1,26 +1,26 @@
 #pragma once
 
-#include <basis/seadTypes.h>
+#include "Library/Nerve/NerveExecutor.hpp"
 #include <math/seadVector.h>
 
-#include "Library/Nerve/NerveExecutor.hpp"
-
-namespace al {
-class LiveActor;
-}
-
-class IUseRabbitRoutePoint;
+namespace al { class LiveActor; }
 class RabbitRoute;
+class IUseRabbitRoutePoint;
 
-/**
- * @brief Moves a position along a RabbitRoute, jumping between points where needed.
- * @note Only what reconstructed code needs is declared so far.
- */
 class RabbitRouteRider : public al::NerveExecutor {
 public:
-    RabbitRouteRider(const al::LiveActor* pActor, const RabbitRoute* pRoute, bool isBig);
-
-    void updatePoint(const IUseRabbitRoutePoint* pCurrent, const IUseRabbitRoutePoint* pNext);
+    /** @brief Gets the current route point. @return the current route point. */
+    const IUseRabbitRoutePoint* getCurrentPoint() const { return mCurrentPoint; }
+    /** @brief Gets the next route point. @return the next route point. */
+    const IUseRabbitRoutePoint* getNextPoint() const { return mNextPoint; }
+    /** @brief Gets the current route position. @return the current route position. */
+    const sead::Vector3f& getPos() const { return mPosition; }
+    /** @brief Gets the route movement direction. @return the route movement direction. */
+    const sead::Vector3f& getFront() const { return mDirection; }
+    RabbitRouteRider(const al::LiveActor* pActor, const RabbitRoute* pRoute, bool isFastJump);
+    /** @brief Releases the rider's nerve executor. */
+    ~RabbitRouteRider() override = default;
+    void updatePoint(const IUseRabbitRoutePoint* pPoint, const IUseRabbitRoutePoint* pNextPoint);
     void move();
     bool isJumping() const;
     bool isJumpStart() const;
@@ -28,33 +28,23 @@ public:
     bool isNearNextPoint() const;
     const sead::Vector3f& getNextPointPos() const;
     void reverse();
-    void updateNextPointReversePlayer(const IUseRabbitRoutePoint* pPlayerPoint);
+    void updateNextPointReversePlayer(const IUseRabbitRoutePoint* pPreviousPoint);
     void updateRotate();
-    void setSpeed(f32 speed);
+    /** @brief Gets the route direction. @return Current movement direction. */
+    const sead::Vector3f& getDirection() const { return mDirection; }
+    void setSpeed(float speed);
     bool tryStartJump();
     void exeMove();
     void exeJump();
 
-    /** @return The point the rider last passed. */
-    const IUseRabbitRoutePoint* getCurrentPoint() const { return mCurrentPoint; }
-
-    /** @return The point the rider is heading to. */
-    const IUseRabbitRoutePoint* getNextPoint() const { return mNextPoint; }
-
-    /** @return The current position on the route. */
-    const sead::Vector3f& getPos() const { return mPos; }
-
-    /** @return The current moving direction. */
-    const sead::Vector3f& getFront() const { return mFront; }
-
 private:
     const al::LiveActor* mActor;
-    const RabbitRoute* mRoute;
+    bool mIsFastJump;
     const IUseRabbitRoutePoint* mCurrentPoint;
     const IUseRabbitRoutePoint* mNextPoint;
-    sead::Vector3f mPos;
-    sead::Vector3f mFront;
-    u8 _48[0x58 - 0x48];
+    sead::Vector3f mPosition;
+    sead::Vector3f mDirection;
+    float mSpeed;
+    int mJumpSteps;
+    int mJumpHeight;
 };
-
-static_assert(sizeof(RabbitRouteRider) == 0x58);

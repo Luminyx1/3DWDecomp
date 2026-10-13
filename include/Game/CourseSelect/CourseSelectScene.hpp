@@ -120,6 +120,8 @@ public:
     void initPlacementNodeItem(const al::ActorInitInfo& rInfo);
 
     /** @brief Gets the world the map shows. @return The world id. */
+    GameDataHolder* getGameDataHolderDirect() const { return mGameDataHolder; }
+    CourseSelectWindowHolder* getWindowHolder() const { return mWindowHolder; }
     s32 getWorldId() const { return mWorldId; }
 
 private:

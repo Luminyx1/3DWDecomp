@@ -10,14 +10,13 @@ class TimerGate;
 
 /**
  * @brief Bowser's Fury HUD countdown shown while a timer gate (Plessie ring course) is running.
- * @note Only what reconstructed code needs is declared so far.
  */
 class CounterTimerGate : public al::LayoutActor {
 public:
     CounterTimerGate(const al::LayoutInitInfo& rInfo, const char* pName, const char* pPartsName,
                      al::LayoutActor* pParent);
 
-    void setTimer(s32 frames, s32 maxFrames);
+    void setTimer(s32 frames, s32 warningFrames);
     void startTimer();
     void pauseTimer();
     void unpauseTimer();
@@ -36,7 +35,12 @@ public:
     void exeHide();
 
 private:
-    u8 _121[0x140 - 0x121];
+    s32 _124 = 0;
+    s32 mFrames = 0;
+    s32 mWarningFrames = 0;
+    bool mIsPaused = true;
+    bool mIsRed = false;
+    TimerGate* mTimerGate = nullptr;
 };
 
 static_assert(sizeof(CounterTimerGate) == 0x140);

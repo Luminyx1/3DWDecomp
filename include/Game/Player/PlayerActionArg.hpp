@@ -7,6 +7,7 @@ class IUsePlayerEffect;
 class IUsePlayerEventReceiver;
 class IUsePlayerHorizontalSpeedAverage;
 class IUsePlayerInput;
+class IUsePlayerInputArranger;
 class IUsePlayerReaction;
 class IUsePlayerSubAction;
 class PlayerConstParam;
@@ -23,7 +24,7 @@ struct PlayerActionArg {
     IUsePlayerCollision* mCollision;          // 0x20
     unsigned char _28[0x30 - 0x28];
     const IUsePlayerInput* mInput;            // 0x30
-    IUsePlayerHorizontalSpeedAverage* mHorizontalSpeedAverage;  // 0x38
+    IUsePlayerInputArranger* mInputArranger;  // 0x38
     IUsePlayerSubAction* mSubAction;          // 0x40
     IUsePlayerReaction* mReaction;            // 0x48
     IUsePlayerEventReceiver* mEventReceiver;  // 0x50

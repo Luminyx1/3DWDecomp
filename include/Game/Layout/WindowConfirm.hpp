@@ -1,6 +1,7 @@
 #pragma once
 
 #include <basis/seadTypes.h>
+#include <prim/seadEnum.h>
 #include "Library/Layout/LayoutActor.hpp"
 
 namespace al {
@@ -11,11 +12,10 @@ class LayoutInitInfo;
  * @brief Button layout of a confirmation window.
  * @note Passed as a 64-bit value by the callers (`mov x1, xzr`).
  */
-enum WindowConfirmType : s64 {
-    WindowConfirmType_Report = 0,  ///< Single acknowledgement button.
-    WindowConfirmType_Notice = 1,  ///< Notice that closes on its own (e.g. auto power down).
-    WindowConfirmType_Double = 2,  ///< Two choice (left/right) buttons.
-};
+SEAD_ENUM(WindowConfirmType, Report, OneButton, TwoButton)
+inline constexpr auto WindowConfirmType_Report = WindowConfirmType::Report;
+inline constexpr auto WindowConfirmType_Notice = WindowConfirmType::OneButton;
+inline constexpr auto WindowConfirmType_Double = WindowConfirmType::TwoButton;
 
 /**
  * @brief Pop-up confirmation window with one or two choice buttons.
@@ -28,6 +28,7 @@ public:
 
     void appearWithSystemMessage(const char* pFileName, const char* pLabel, s32 port,
                                  const char* pArg);
+    bool isDecideOne() const;
     bool isDecideLeft() const;
     bool isDecideRight() const;
     bool isDecideLeftEnd() const;

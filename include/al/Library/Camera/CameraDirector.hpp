@@ -32,6 +32,9 @@ public:
     void update(bool isPaused);
     s32 getCameraMode() const;
     void setCameraMode(s32 mode);
+    void startSnapshotMode();
+    void endSnapshotMode();
+    f32 getSnapshotRollDeg();
     void setSnapShotAudioKeeper(IUseAudioKeeper* pAudioKeeper);
     void validUserCameraControlByPortOnly(s32 port);
     void validUserCameraControlByPort(s32 port);

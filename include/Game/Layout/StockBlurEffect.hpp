@@ -2,12 +2,12 @@
 
 #include <basis/seadTypes.h>
 #include <math/seadVector.h>
+#include <prim/seadSafeString.h>
 
 class ItemStockLayoutBase;
 
 /**
  * @brief Blur trail that flies from a stocked item to its slot in the item stock layout.
- * @note Only what reconstructed code needs is declared so far.
  */
 class StockBlurEffect {
 public:
@@ -30,9 +30,12 @@ public:
 
 private:
     ItemStockLayoutBase* mLayout;     // 0x00
-    u8 _8[0x30 - 0x8];
+    sead::Vector3f mStartPos;
+    sead::Vector3f mPos;
+    sead::Vector3f mEndPos;
+    s32 mIndex;
     s32 mStep;                        // 0x30
-    u8 _34[0x70 - 0x34];
+    sead::FixedSafeString<32> mEffectName;
 };
 
 static_assert(sizeof(StockBlurEffect) == 0x70);

@@ -17,6 +17,8 @@ public:
     void end(bool isImmediate);
     void exeAppear();
     void updateTrans();
+    void exeWait();
+    void exeEnd();
 
     /**
      * @brief Set the player the layout follows.

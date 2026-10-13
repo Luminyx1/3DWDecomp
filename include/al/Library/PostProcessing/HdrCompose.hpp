@@ -183,6 +183,8 @@ public:
                          const sead::Viewport& rViewport, const agl::TextureData& rTexture,
                          const agl::pfx::Bloom* pBloom, agl::ShaderMode shaderMode) const;
 
+    void setDisableCameraIndirect(bool disabled) { mIsDisableCameraIndirect = disabled; }
+
     void setEnableDangerIndicator(bool isEnable) { mIsEnableDangerIndicator = isEnable; }
 
 private:

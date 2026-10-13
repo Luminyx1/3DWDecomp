@@ -6,6 +6,7 @@
 #include "Library/LiveActor/LiveActor.hpp"
 
 class PipePackun;
+class PipePackunBodyParts;
 
 /** @brief Stem of a Pipe Piranha Plant; positions the head along its curved body. */
 class PipePackunBody : public al::LiveActor {
@@ -26,8 +27,10 @@ public:
     f32 getTotalLength() const { return mTotalLength; }
 
 private:
-    u8 _144[0x15c - 0x144];
-    f32 mTotalLength;
+    PipePackun* mHost;
+    PipePackunBodyParts** mParts = nullptr;
+    s32 mPartCount = 0;
+    f32 mTotalLength = 0.0f;
 };
 
 static_assert(sizeof(PipePackunBody) == 0x160);

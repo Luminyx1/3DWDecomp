@@ -692,19 +692,19 @@ void NekoNormal::startAttach(const NekoAttachReason& rReason) {
     mTargetFinder->setSearchTypes(sSearchTargetTypes.getDirect());
     mTargetFinder->setTargetTypePriority(npc::NpcFindTargetType_Player, 1);
 
-    if (rReason.mType == NekoAttachReason::Type_AppearAtHost) {
+    if (rReason == NekoAttachReason::Type_AppearAtHost) {
         al::resetPosition(this, al::getTrans(mHost), false);
         al::faceToDirection(this, al::getFront(mHost));
         al::hideModelIfShow(this);
         mCoolTime = 5;
         al::setNerve(this, &NrvNekoNormalAppear);
-    } else if (rReason.mType == NekoAttachReason::Type_Hide && mIsAtGoal) {
+    } else if (rReason == NekoAttachReason::Type_Hide && mIsAtGoal) {
         mHost->tryStartHide();
     } else {
         tryStartDefaultBehavior(al::param::NekoBehavior_Default);
     }
 
-    if (rReason.mType == NekoAttachReason::Type_Hide) {
+    if (rReason == NekoAttachReason::Type_Hide) {
         tryEmitDisasterAnticipationEffect(this);
     }
 }

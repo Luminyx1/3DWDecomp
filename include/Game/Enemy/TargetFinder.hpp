@@ -27,11 +27,13 @@ class TargetFinder {
 public:
     TargetFinder(al::LiveActor*, const TargetFinderParam*);
 
+    void findTarget();
     void refindTarget();
     void update();
     void setFrontDir(sead::Vector3f* pFrontDir);
-    void setSupportUpDir(sead::Vector3f* pUpDir);
+    void setSupportUpDir(sead::Vector3f* pSupportUpDir);
     const sead::Vector3f& getTargetPos() const;
+    const sead::Vector3f& getLastTargetPos() const;
 
     bool isExistTarget() const { return _8 != nullptr; }
 
@@ -57,10 +59,13 @@ public:
     al::LiveActor* _8;
     bool mIsFound;  // 0x10
     bool _11;
-    u8 _12[6];
+    union {
+        bool mIsNewTarget;
+        u8 _12[6];
+    };
     sead::Vector3f* mFrontDir;      // 0x18
     sead::Vector3f* mSupportUpDir;  // 0x20
-    u64 _28;
-    TargetFinderParam* mParams;  // 0x30
+    u32 _28;
+    const TargetFinderParam* mParams;  // 0x30
     al::LiveActor* _38;
 };

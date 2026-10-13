@@ -3,35 +3,46 @@
 #include "Library/Nerve/NerveStateBase.hpp"
 
 namespace al {
-class LiveActor;
+class AnimScaleController;
+class SensorMsg;
 class ScreenPointer;
 class ScreenPointTarget;
-class SensorMsg;
-}  // namespace al
+} // namespace al
 
-/// Shared state that lets players stroke (pet) an actor with the touch screen.
-class ActorStateSupportStroke : public al::NerveStateBase {
+class ActorStateSupportStroke : public al::ActorStateBase {
 public:
-    ActorStateSupportStroke(al::LiveActor* pActor);
-
-    bool receiveMsgScreenPoint(const al::SensorMsg* pMsg, al::ScreenPointer* pPointer,
+    /** @return Whether stroking triggered an item this frame. */
+    bool isTrigStroke() const { return mShouldAppearItem; }
+    /** @brief Disables stroke feedback. */
+    void resetFlags() { disableFeedback(); }
+    explicit ActorStateSupportStroke(al::LiveActor* pActor);
+    ~ActorStateSupportStroke() override;
+    void kill() override;
+    void stopAndReset();
+    bool receiveMsgScreenPoint(const al::SensorMsg* pMessage, al::ScreenPointer* pPointer,
                                al::ScreenPointTarget* pTarget);
+    void updateScaleAnim();
+    void updateAppearItemTiming();
+    void updateStrokeTime();
     bool isTouch() const;
-
-    /** @return Whether the actor was stroked this frame. */
-    bool isTrigStroke() const { return mIsTrigStroke; }
-
-    /** @brief Clears both stroke option flags. */
-    void resetFlags() {
-        _3e = false;
-        _3f = false;
+    /** @brief Reports the item trigger for this frame. @return Whether an item should appear. */
+    bool shouldAppearItem() const { return mShouldAppearItem; }
+    /** @brief Disables scale and effect feedback for riding actors. */
+    void disableFeedback() {
+        mIsScaleEnabled = false;
+        mIsEffectEnabled = false;
     }
+    void exeWait();
+    void exeTouch();
 
 private:
-    u8 _11[0x3d - 0x11];
-    bool mIsTrigStroke;  // 0x3d
-    bool _3e;
-    bool _3f;
+    al::LiveActor* mTouchActor;
+    al::AnimScaleController* mScaleController;
+    int mTouchFrames;
+    int mStrokeGraceFrames;
+    int mStrokeFrames;
+    bool mHasAppearedItem;
+    bool mShouldAppearItem;
+    bool mIsScaleEnabled;
+    bool mIsEffectEnabled;
 };
-
-static_assert(sizeof(ActorStateSupportStroke) == 0x40);

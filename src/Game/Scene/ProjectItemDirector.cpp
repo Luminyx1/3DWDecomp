@@ -331,11 +331,11 @@ void ProjectItemDirector::appearItem(const char* pName, const sead::Vector3f& rT
 
         if (al::isEqualString(pName, "コインx1[自動取得＆高速出現]")) {
             coin->appearQuick();
+            al::startSe(coin, "PgGet");
         } else {
             coin->appear();
+            al::startSe(coin, "PgGet");
         }
-
-        al::startSe(coin, "PgGet");
         acquirerItem(coin, sensor, "コインx1[自動取得]");
     } else if (al::isEqualString(pName, "コインx3[自動取得]")) {
         CoinCountUp* coin = mItemHolder->getCoinCountUp();
@@ -430,14 +430,16 @@ void ProjectItemDirector::appearItem(const char* pName, const sead::Vector3f& rT
         al::startSe(kinoko, "PgAppear");
     } else if (al::isEqualString(pName, "1UPキノコ[強制取得]")) {
         KinokoOneUp* kinoko = mItemHolder->getKinokoOneUp();
-        sead::Quatf* quat = al::getQuatPtr(kinoko);
-        sead::Vector3f side;
-        side.setCross(sead::Vector3f::ey, rFront);
+        {
+            sead::Quatf* quat = al::getQuatPtr(kinoko);
+            sead::Vector3f side;
+            side.setCross(sead::Vector3f::ey, rFront);
 
-        if (al::isNearZero(side, 0.001f)) {
-            al::makeQuatUpFront(quat, sead::Vector3f::ey, sead::Vector3f::ez);
-        } else {
-            al::makeQuatUpFront(quat, sead::Vector3f::ey, rFront);
+            if (al::isNearZero(side, 0.001f)) {
+                al::makeQuatUpFront(quat, sead::Vector3f::ey, sead::Vector3f::ez);
+            } else {
+                al::makeQuatUpFront(quat, sead::Vector3f::ey, rFront);
+            }
         }
 
         kinoko->appearForceGet(pSensor);
@@ -709,6 +711,24 @@ void ProjectItemDirector::appearItem(const char* pName, const sead::Vector3f& rT
 
 namespace {
 
+// Unrecognized item types do not contribute an item to stock.
+inline s32 getStockTypeForFigure(s32 itemType, s32 figureItemType) {
+    switch (itemType) {
+    case 1:
+        return 1;
+    case 2:
+    case 3:
+    case 4:
+    case 5:
+    case 6:
+    case 7:
+    case 8:
+        return figureItemType;
+    default:
+        return 0;
+    }
+}
+
 /**
  * @brief Put the power-up a player loses into the item stock.
  * @param pPlayer The player that collected the item.
@@ -743,30 +763,31 @@ bool tryStockItem(const al::LiveActor* pPlayer, const al::LiveActor* pItem,
                 stockType = itemType == 1 ? 1 : 0;
                 break;
             case 2:
-                stockType = itemType == 1 ? 1 : 3;
+                stockType = getStockTypeForFigure(itemType, 3);
                 break;
             case 3:
             case 8:
             case 9:
-                stockType = itemType == 1 ? 1 : 2;
+                stockType = getStockTypeForFigure(itemType, 2);
                 break;
             case 4:
-                stockType = itemType == 1 ? 1 : 4;
+                stockType = getStockTypeForFigure(itemType, 4);
                 break;
             case 5:
-                stockType = itemType == 1 ? 1 : 5;
+                stockType = getStockTypeForFigure(itemType, 5);
                 break;
             case 6:
                 if (GameDataFunction::isSingleMode(pPlayer)) {
-                    stockType = itemType == 1 ? 1 : 4;
+                    stockType = getStockTypeForFigure(itemType, 4);
                 } else {
-                    stockType = itemType == 8 && !GameDataFunction::isSingleMode(pPlayer) ?
+                    bool singleMode = GameDataFunction::isSingleMode(pPlayer);
+                    stockType = itemType == 8 && !singleMode ?
                                     6 :
                                     itemType;
                 }
                 break;
             case 7:
-                stockType = itemType == 1 ? 1 : 7;
+                stockType = getStockTypeForFigure(itemType, 7);
                 break;
             default:
                 break;

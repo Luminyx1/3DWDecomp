@@ -3,13 +3,14 @@
 #include <basis/seadTypes.h>
 #include "Library/Layout/LayoutActor.hpp"
 
+class GameDataHolder;
+
 namespace al {
 class LayoutInitInfo;
 }
 
 /**
  * @brief Button parts decided by a shortcut button (+ / -) or by touch.
- * @note Only the members used by already-decompiled callers are declared.
  */
 class ButtonShortCutAndTouchParts : public al::LayoutActor {
 public:
@@ -31,7 +32,7 @@ public:
     void hide();
     void end();
     void wait();
-    void tryDecide();
+    bool tryDecide();
     bool isTouch() const;
     bool isDecide() const;
     bool isDecideEnd() const;
@@ -54,10 +55,10 @@ public:
     void setInputEnable(bool isEnable) { mIsInputEnable = isEnable; }
 
 private:
+    s32 mShortCutType;
     s32 mPort;
     s32 mTouchPort;
-    s32 mShortCutType;
     bool mIsInputEnable;
-    u8 mUnreconstructed131[0xf];
+    GameDataHolder* mGameData = nullptr;
 };
 static_assert(sizeof(ButtonShortCutAndTouchParts) == 0x140);

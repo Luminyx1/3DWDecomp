@@ -29,8 +29,8 @@ public:
     /** @brief World the rocket leads to, read from the "RocketType" placement argument. */
     enum RocketType : s32 {
         cRocketType_SpecialWorld = 0,
-        cRocketType_ChampionshipWorld = 1,
-        cRocketType_ArrangeWorld = 2,
+        cRocketType_ChampionshipWorld = 2,
+        cRocketType_ArrangeWorld = 1,
     };
 
     explicit CourseSelectRocket(const char* pName);

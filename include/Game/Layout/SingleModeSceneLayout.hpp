@@ -148,6 +148,9 @@ public:
      */
     bool isDisablePause() const { return mIsDisablePause; }
 
+    /** @brief Returns the players represented by this HUD. */
+    const al::PlayerHolder* getPlayerHolder() const { return mPlayerHolder; }
+
 private:
     CounterCoinParts* mCounterCoin = nullptr;             // 0x138
     CounterGoalItemParts* mCounterGoalItem;               // 0x140

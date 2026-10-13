@@ -118,6 +118,7 @@ public:
      * @brief Locks the current graphics area (used when the player dies).
      */
     void lockArea() { mIsLockArea = true; }
+    void unlockArea() { mIsLockArea = false; }
 
 private:
     const GraphicsSystemInfo* mSystemInfo;

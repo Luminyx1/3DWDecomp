@@ -1113,7 +1113,7 @@ bool LayoutEx::isScalableFontTextBox_(const nn::ui2d::ResTextBox* pResource,
     const nn::ui2d::BuildResSet* resSet;
 
     if (pOverride != nullptr) {
-        bool isOverride = (static_cast<u8>(rArgs.overridePaneUsageFlag) & 1) == 0;
+        bool isOverride = (rArgs.GetPaneUsageFlags() & 1) == 0;
         resSet = isOverride ? rArgs.pOverrideBuildResSet : rArgs.pCurrentBuildResSet;
         pResource = isOverride ? pOverride : pResource;
     } else {

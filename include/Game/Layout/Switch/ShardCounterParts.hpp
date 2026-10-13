@@ -1,6 +1,8 @@
 #pragma once
 
 #include "Layout/Switch/SingleModeCounterBase.hpp"
+#include "Layout/TextBoxTextInfo.hpp"
+class SingleModeSceneLayout;
 
 namespace al {
 class LayoutInitInfo;
@@ -8,7 +10,6 @@ class LayoutInitInfo;
 
 /**
  * @brief Bowser's Fury HUD counter of the cat shine shards collected on the current island.
- * @note Only what reconstructed code needs is declared so far.
  */
 class ShardCounterParts : public SingleModeCounterBase {
 public:
@@ -19,7 +20,7 @@ public:
     void control() override;
     virtual void endDemo();
     void addShard(s32 islandId, s32 shardIndex, bool isComplete, bool isDemo);
-    void updateString(s32 count, s32 max);
+    void updateString(s32 islandId, s32 excludedShard);
     void updateCount(s32 islandId);
     void endShardDemo();
 
@@ -37,9 +38,12 @@ public:
     bool isShardDemo() const { return mIsShardDemo; }
 
 private:
-    u8 _122[0x130 - 0x122];
-    bool mIsShardDemo;  // 0x130
-    u8 _131[0x180 - 0x131];
+    SingleModeSceneLayout* mParent;
+    bool mIsShardDemo = false;
+    s32 mPendingShard = -1;
+    fix::TextBoxTextInfo mTextInfo;
+    u8 mUnreconstructed158[0x20];
+    s32 mIslandId = -1;
 };
 
 static_assert(sizeof(ShardCounterParts) == 0x180);

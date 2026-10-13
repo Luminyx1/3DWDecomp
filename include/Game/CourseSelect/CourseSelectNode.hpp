@@ -22,6 +22,7 @@ class ICourseSelectActorController;
  */
 class CourseSelectNode : public al::LiveActor {
 public:
+    int getFirstNextNodeId() const { return *mLinkedList.front(); }
     explicit CourseSelectNode(const char* pName, const CourseSelectMiniature* pMiniature = nullptr);
 
     void init(const al::ActorInitInfo& rInfo) override;

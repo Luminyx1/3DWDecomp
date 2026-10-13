@@ -1,29 +1,24 @@
 #pragma once
 
-#include <basis/seadTypes.h>
+#include <container/seadBuffer.h>
+#include <container/seadPtrArray.h>
 #include <prim/seadBitFlag.h>
 
-namespace al {
-class LiveActor;
-}  // namespace al
+namespace al { class LiveActor; }
 
-/**
- * @brief Keeps the objects of the course-select map sorted by world, so only the objects of the
- * active worlds are shown.
- * @note Minimal declaration: only what the reconstructed code uses is declared so far.
- */
 class CourseSelectObjKeeper {
 public:
-    CourseSelectObjKeeper(s32 worldNum, s32 objNumMax);
-
-    void registerObject(al::LiveActor* pActor, s32 worldId);
+    CourseSelectObjKeeper(int worldNum, int maxObjectsPerWorld);
+    void registerObject(al::LiveActor* pActor, int worldId);
     void initAfterPlacement();
-    void updateActiveWorld(const sead::BitFlag32& rWorldFlag);
-    void appearWorldObj(s32 worldId);
-    void killWorldObj(s32 worldId);
+    void updateActiveWorld(const sead::BitFlag<u32>& rActiveWorlds);
+    void appearWorldObj(int worldId);
+    void killWorldObj(int worldId);
 
 private:
-    u8 _0[0x18];
+    sead::Buffer<sead::PtrArray<al::LiveActor>> mWorldObjects;
+    int _10;
+    sead::BitFlag<u32> mActiveWorlds;
 };
 
 static_assert(sizeof(CourseSelectObjKeeper) == 0x18);

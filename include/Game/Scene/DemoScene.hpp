@@ -45,7 +45,7 @@ public:
     /** @brief Whether the demo was skipped by the player. @return The flag. */
     bool isSkipped() const { return mIsSkipped; }
 
-private:
+protected:
     sead::FixedSafeString<64> mStageName;
     sead::Viewport* mMainViewport = nullptr;
     sead::Viewport* mSubViewport = nullptr;

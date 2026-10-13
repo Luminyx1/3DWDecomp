@@ -1,9 +1,12 @@
 #pragma once
 
+#include <math/seadVector.h>
+
 #include "Library/Nerve/NerveStateBase.hpp"
 
 namespace al {
 class KeyPoseKeeper;
+class ParabolicPath;
 }
 
 class BrosMoveStepKeeper;
@@ -21,7 +24,10 @@ public:
     bool isLand() const;
 
 private:
-    unsigned char _20[0x28];
+    al::KeyPoseKeeper* mKeyPoseKeeper;
+    const BrosMoveStepKeeper* mMoveStepKeeper;
+    al::ParabolicPath* mPath = nullptr;
+    sead::Vector3f mStartPos;
 };
 
 static_assert(sizeof(BrosStateJump) == 0x48);

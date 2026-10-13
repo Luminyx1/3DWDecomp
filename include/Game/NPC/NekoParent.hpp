@@ -165,6 +165,10 @@ public:
      * @param pParent The cat parent.
      */
     void add(NekoParent* pParent) { mParents.pushBack(pParent); }
+    s32 getParentNum() const { return mParents.size(); }
+    NekoParent* getParent(size_t index) const {
+        return index < static_cast<u32>(mParents.size()) ? mParents.unsafeAt(index) : nullptr;
+    }
 
     /**
      * @brief Set the cat parent whose kittens are currently searched.

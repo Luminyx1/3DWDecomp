@@ -1,33 +1,32 @@
 #pragma once
-
-#include <basis/seadTypes.h>
-
 #include "Library/Nerve/NerveStateBase.hpp"
-
 namespace al {
 class Scene;
-}  // namespace al
-
+}
 namespace rc {
 class StampDirector;
-}  // namespace rc
-
+}
 class DrcAssistDirectorList;
 class PlayerAliveWatcher;
 class SnapshotLayout;
-
-/**
- * @brief Scene state of the snapshot mode.
- * @note Minimal declaration: only what the reconstructed code uses is declared so far.
- */
 class SnapshotState : public al::NerveStateBase {
 public:
-    SnapshotState(SnapshotLayout* pLayout, al::Scene* pScene,
-                  DrcAssistDirectorList* pDrcAssistDirectorList, rc::StampDirector* pStampDirector,
-                  PlayerAliveWatcher* pPlayerAliveWatcher);
+    SnapshotState(SnapshotLayout* layout, al::Scene* scene, DrcAssistDirectorList* assist,
+                  rc::StampDirector* stamps, PlayerAliveWatcher* players);
+    ~SnapshotState() override = default;
+    void init() override;
+    void appear() override;
+    void kill() override;
+    void exeWait();
+    void exeFinish();
+    void updateGraphics();
 
 private:
-    u8 _pad[0x48 - sizeof(al::NerveStateBase)];
+    al::Scene* mScene;
+    SnapshotLayout* mLayout;
+    DrcAssistDirectorList* mAssist;
+    rc::StampDirector* mStamps;
+    PlayerAliveWatcher* mPlayers;
+    s32 mDefaultFilter = 0;
 };
-
 static_assert(sizeof(SnapshotState) == 0x48);

@@ -13,6 +13,8 @@ public:
     void declareId(const al::LiveActor*, int);
     void acquireId(const al::LiveActor*, int);
     int countAcquiredNum() const;
+    /** @brief Returns the number of green stars in this stage. */
+    int getStarCount() const { return mStarCount; }
 private:
     struct StarInfo { bool isDeclared = false; bool isAcquired = false; };
     al::SceneObjHolder* mSceneObjHolder = nullptr;

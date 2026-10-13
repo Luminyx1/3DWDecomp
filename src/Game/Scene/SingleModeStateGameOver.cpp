@@ -190,7 +190,7 @@ void SingleModeStateGameOver::exeMiss() {
  * Game over demo: moves the demo players away and plays the game over demo.
  */
 void SingleModeStateGameOver::exeDemoGameOver() {
-    mGraphicsState->setGraphicsState();
+    mGraphicsState->setGraphicsStateSingleMode();
 
     if (al::isFirstStep(this) && mDemoHolder != nullptr) {
         al::LiveActor* pDemoActor = mDemoHolder->getDemoSceneActor(0);
@@ -226,7 +226,7 @@ void SingleModeStateGameOver::exeDemoGameOver() {
  * Game over menu: waits for the player to choose between continue and quit.
  */
 void SingleModeStateGameOver::exeGameOverMenu() {
-    mGraphicsState->setGraphicsState();
+    mGraphicsState->setGraphicsStateSingleMode();
 
     if (al::isFirstStep(this)) {
         mDemoHolder->startAction(1, false);
@@ -248,7 +248,7 @@ void SingleModeStateGameOver::exeGameOverMenu() {
  * Continue demo: plays the continue demo.
  */
 void SingleModeStateGameOver::exeDemoContinue() {
-    mGraphicsState->setGraphicsState();
+    mGraphicsState->setGraphicsStateSingleMode();
 
     if (al::isFirstStep(this)) {
         mDemoHolder->startAction(2, false);
@@ -263,7 +263,7 @@ void SingleModeStateGameOver::exeDemoContinue() {
  * Save: writes the save data.
  */
 void SingleModeStateGameOver::exeSave() {
-    mGraphicsState->setGraphicsState();
+    mGraphicsState->setGraphicsStateSingleMode();
 
     if (al::isFirstStep(this)) {
         mScene->prepareDestroy();
@@ -279,7 +279,7 @@ void SingleModeStateGameOver::exeSave() {
  * Done: fades to black and ends the state.
  */
 void SingleModeStateGameOver::exeDone() {
-    mGraphicsState->setGraphicsState();
+    mGraphicsState->setGraphicsStateSingleMode();
 
     if (al::isFirstStep(this)) {
         mWipeFadeBlack->startClose(30);

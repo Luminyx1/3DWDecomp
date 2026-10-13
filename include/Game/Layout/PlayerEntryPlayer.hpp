@@ -4,12 +4,17 @@
 
 #include "Library/LiveActor/LiveActor.hpp"
 
+class PlayerEntryPlayerHolder;
+class PlayerModelHolder;
+
 /**
  * @brief 3D player model that jumps in when a player decides a character in the entry window.
  * @note Only the members used by already-decompiled callers are declared.
  */
 class PlayerEntryPlayer : public al::LiveActor {
 public:
+    PlayerEntryPlayer(const char* pName, PlayerEntryPlayerHolder* pHolder);
+    void setPlayerModel(PlayerModelHolder* pModel);
     void appearPlayer(s32 userId);
     void startDecision();
     void startJumpOut();

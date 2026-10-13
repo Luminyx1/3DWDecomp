@@ -1,28 +1,27 @@
 #pragma once
 
-#include <basis/seadTypes.h>
+#include "Library/Layout/LayoutActor.hpp"
 
-namespace al {
-class LayoutInitInfo;
-}  // namespace al
-
+namespace al { class LayoutInitInfo; }
 class GameDataHolder;
+class ListStampParts;
 
-/**
- * @brief List of the collected stamps shown from the map menu.
- * @note Minimal declaration: only what the reconstructed code uses is declared so far.
- */
-class ListStamp {
+/** @brief Stamp collection page shown from the map menu. */
+class ListStamp : public al::LayoutActor {
 public:
     ListStamp(const al::LayoutInitInfo& rInfo, const GameDataHolder* pGameDataHolder);
-
-    void startAppear(s32 port, bool isTransition, bool isRight);
-    void startEnd(bool isTransition, bool isRight);
-    bool isInTransition() const;
+    void exeAppear();
+    void exeWait();
+    void exeEnd();
+    void startAppear(s32 port, bool isTransition, bool isLeft);
+    void startEnd(bool isTransition, bool isLeft);
     bool isEnd() const;
+    bool isInTransition() const;
 
 private:
-    u8 _0[0x138];
+    int mPort = -1;
+    const GameDataHolder* mGameDataHolder;
+    ListStampParts* mStampParts = nullptr;
 };
 
 static_assert(sizeof(ListStamp) == 0x138);

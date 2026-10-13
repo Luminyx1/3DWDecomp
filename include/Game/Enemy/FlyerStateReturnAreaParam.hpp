@@ -2,7 +2,9 @@
 
 #include <basis/seadTypes.h>
 
+/** @brief Braking, steering, and return timing settings. */
 struct FlyerStateReturnAreaParam {
+    FlyerStateReturnAreaParam();
     FlyerStateReturnAreaParam(f32, s32, f32, f32, f32, s32);
 
     f32 _0;

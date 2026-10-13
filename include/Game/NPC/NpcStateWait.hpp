@@ -1,94 +1,112 @@
 #pragma once
 
-#include <basis/seadTypes.h>
+#include "Library/Nerve/NerveStateBase.hpp"
 #include <math/seadVector.h>
 
-#include "Library/Nerve/NerveStateBase.hpp"
-
 namespace al {
-class ActorInitInfo;
+struct ActorInitInfo;
 class HitSensor;
-class LiveActor;
-class RumbleCalculatorCosMultLinear;
+class SensorMsg;
 class ScreenPointer;
 class ScreenPointTarget;
-class SensorMsg;
-}  // namespace al
-
+class RumbleCalculatorCosMultLinear;
+} // namespace al
 class ActorStateSupportStroke;
-class NpcStateRumbleParam;
-class NpcStateTurnParam;
 
-/**
- * @brief Parameters of the NPC wait state: the action names it plays and how it reacts.
- */
 class NpcStateWaitParam {
 public:
-    NpcStateWaitParam(const char* pWaitActionName, const char* pWaitAfterActionName,
-                      const char* pTurnActionName, const char* pReactionActionName,
-                      const char* pReactionMicActionName, const char* pTouchActionName,
-                      const char* pTrampledActionName, bool isAppearItemOnStroke,
-                      const sead::Vector3f* pItemOffset, bool isReactOnlyBlowDown);
-
-    const char* mWaitActionName;         // 0x0
-    const char* mWaitAfterActionName;    // 0x8
-    const char* mTurnActionName;         // 0x10
-    const char* mReactionActionName;     // 0x18
-    const char* mReactionMicActionName;  // 0x20
-    const char* mTouchActionName;        // 0x28
-    const char* mTrampledActionName;     // 0x30
-    bool mIsAppearItemOnStroke;          // 0x38
-    sead::Vector3f mItemOffset;          // 0x3c
-    bool mIsReactOnlyBlowDown;           // 0x48
+    NpcStateWaitParam(const char* pWaitAction, const char* pWaitAfterAction,
+                      const char* pTurnAction, const char* pReactionAction,
+                      const char* pMicReactionAction, const char* pStrokeAction,
+                      const char* pTrampledAction, bool appearItem,
+                      const sead::Vector3f* pItemOffset, bool restrictReaction);
+    const char* mWaitAction;
+    const char* mWaitAfterAction;
+    const char* mTurnAction;
+    const char* mReactionAction;
+    const char* mMicReactionAction;
+    const char* mStrokeAction;
+    const char* mTrampledAction;
+    bool mAppearItem;
+    sead::Vector3f mItemOffset;
+    bool mRestrictReaction;
 };
 
-static_assert(sizeof(NpcStateWaitParam) == 0x50);
+class NpcStateTurnParam {
+public:
+    NpcStateTurnParam(float startAngle, float endAngle, float turnDegrees, float searchRadius,
+                      bool isEnabled, bool onlyAfter, int endFrames);
+    float mStartAngle;
+    float mEndAngle;
+    float mTurnDegrees;
+    float mSearchRadius;
+    bool mIsEnabled;
+    bool mOnlyAfter;
+    int mEndFrames;
+};
 
-/**
- * @brief NPC state that waits in place, turning to and reacting at the player.
- */
+class NpcStateRumbleParam {
+public:
+    NpcStateRumbleParam(int frames, float frequency, float angleOffset, float amplitude,
+                        float scale);
+    int mFrames;
+    float mFrequency;
+    float mAngleOffset;
+    float mAmplitude;
+    float mScale;
+};
+
 class NpcStateWait : public al::ActorStateBase {
 public:
-    NpcStateWait(al::LiveActor* pHost, const al::ActorInitInfo& rInfo,
+    NpcStateWait(al::LiveActor* pActor, const al::ActorInitInfo& rInitInfo,
                  const NpcStateWaitParam* pWaitParam, const NpcStateTurnParam* pTurnParam,
                  const NpcStateRumbleParam* pRumbleParam);
-
+    ~NpcStateWait() override;
+    void appear() override;
+    void control() override;
+    /** @brief Gets whether turning is disabled. @return whether turning is disabled. */
+    bool isInvalidTurn() const { return mIsTurnDisabled; }
     void setWaitAfter();
     void setWait();
-    void appear() override;
+    /** @brief Reports whether searching turns are disabled. @return Whether the actor should face
+     * its initial direction. */
+    bool isTurnDisabled() const { return mIsTurnDisabled; }
+    /** @brief Reports the alternate waiting phase. @return Whether the alternate phase is active.
+     */
+    bool isWaitAfter() const { return mIsWaitAfter; }
+    /** @brief Changes waiting behavior. @param pParam Waiting parameters, kept alive by the caller.
+     */
+    void setWaitParam(const NpcStateWaitParam* pParam) { mWaitParam = pParam; }
+    /** @brief Changes turning behavior. @param pParam Turning parameters, kept alive by the caller.
+     */
+    void setTurnParam(const NpcStateTurnParam* pParam) { mTurnParam = pParam; }
     void startWait();
-    void control() override;
     void invalidateTurn();
     void attackSensor(al::HitSensor* pSelf, al::HitSensor* pOther);
-    bool receiveMsg(const al::SensorMsg* pMsg, al::HitSensor* pSelf, al::HitSensor* pOther);
+    bool receiveMsg(const al::SensorMsg* pMessage, al::HitSensor* pOther, al::HitSensor* pSelf);
     bool tryStartReaction();
-    bool receiveMsgScreenPoint(const al::SensorMsg* pMsg, al::ScreenPointer* pPointer,
+    bool receiveMsgScreenPoint(const al::SensorMsg* pMessage, al::ScreenPointer* pPointer,
                                al::ScreenPointTarget* pTarget);
+    void startTurnEnd();
+    bool tryStartTurn(const NpcStateTurnParam* pParam);
+    bool tryStartMicReaction();
     void exeWait();
+    void exeStroke();
     void exeWaitAfter();
     void exeTurn();
-    void startTurnEnd();
-    void exeTurnEnd();
+    void exeTrampled();
     void exeReaction();
     void exeMicReaction();
-    void exeStroke();
-    void exeTrampled();
-
-    /** @return Whether turning to the player has been disabled. */
-    bool isInvalidTurn() const { return mIsInvalidTurn; }
+    void exeTurnEnd();
 
 private:
-    bool tryStartMicReaction();
-
-    ActorStateSupportStroke* mStateStroke = nullptr;   // 0x20
-    const NpcStateWaitParam* mWaitParam;               // 0x28
-    const NpcStateTurnParam* mTurnParam;               // 0x30
-    const NpcStateRumbleParam* mRumbleParam;           // 0x38
-    al::RumbleCalculatorCosMultLinear* mRumble = nullptr;  // 0x40
-    s32 mRumbleFrame = -1;                             // 0x48
-    s32 mReactionCooldown = 0;                         // 0x4c
-    bool mIsWaitAfter = false;                         // 0x50
-    bool mIsInvalidTurn = false;                       // 0x51
+    ActorStateSupportStroke* mStrokeState;
+    const NpcStateWaitParam* mWaitParam;
+    const NpcStateTurnParam* mTurnParam;
+    const NpcStateRumbleParam* mRumbleParam;
+    al::RumbleCalculatorCosMultLinear* mRumbleCalculator;
+    int mRumbleFrame;
+    int mReactionCooldown;
+    bool mIsWaitAfter;
+    bool mIsTurnDisabled;
 };
-
-static_assert(sizeof(NpcStateWait) == 0x58);

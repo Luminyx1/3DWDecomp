@@ -1,33 +1,20 @@
 #pragma once
-
-#include <basis/seadTypes.h>
-
 #include "Library/LiveActor/LiveActor.hpp"
-
-namespace al {
-class ActorInitInfo;
-}  // namespace al
-
-/**
- * @brief Road part placed at a course-select node: start or end of a road, or a curve joining
- * two roads.
- * @note Minimal declaration: only what the reconstructed code uses is declared so far.
- */
 class CourseSelectNodeParts : public al::LiveActor {
 public:
+    bool isCurve() const { return mIsRoadCurve; }
     CourseSelectNodeParts(const char* pName, const char* pGrowAction, const char* pWaitAction);
-
+    ~CourseSelectNodeParts() override;
     void initPartsWithArchiveName(const al::ActorInitInfo& rInfo, const char* pArchiveName);
     void startOpen();
     void startOpenImmediately();
     bool isEndGrow() const;
-
-    /** @brief Gets whether the part is a curve. @return true for a curve. */
-    bool isCurve() const { return mIsCurve; }
-
+    void exeDeactive();
+    void exeGrow();
+    void exeWait();
 private:
-    u8 _144[0x158 - 0x144];
-    bool mIsCurve;  // 0x158
+    const char* mpGrowAction;
+    const char* mpWaitAction;
+    bool mIsRoadCurve = false;
 };
-
 static_assert(sizeof(CourseSelectNodeParts) == 0x160);

@@ -78,6 +78,8 @@ public:
 
     bool isLoadedBloomParam() const { return mIsLoadedBloomParam; }
 
+    void setForceExposure(f32 exposure) { mForceExposure = exposure; }
+
     void setForceBloomParam(const BloomNamedParam* pParam) { mForceBloomParam = pParam; }
 
 private:

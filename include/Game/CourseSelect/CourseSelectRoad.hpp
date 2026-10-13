@@ -1,40 +1,27 @@
 #pragma once
-
-#include <basis/seadTypes.h>
-#include <math/seadVector.h>
-
 #include "Library/LiveActor/LiveActor.hpp"
-
-namespace al {
-class ActorInitInfo;
-}  // namespace al
-
 class CourseSelectNode;
-
-/**
- * @brief Road connecting the courses of the course select map.
- * @note Minimal declaration: only what the reconstructed code uses is declared so far.
- */
 class CourseSelectRoad : public al::LiveActor {
 public:
-    CourseSelectRoad(const char* pName, const CourseSelectNode* pNode,
-                     const sead::Vector3f& rTargetTrans);
-
-    static void setRoadOpenSuperSpeed(bool isSuperSpeed);
-
+    const sead::Vector3f& getTargetTrans() const { return mEndPos; }
+    CourseSelectRoad(const char* pName, const CourseSelectNode* pNode, const sead::Vector3f& rEndPos);
+    ~CourseSelectRoad() override;
     void initRoad(const al::ActorInitInfo& rInfo, const sead::Vector3f* pOffset);
-    void subDistance(f32 distance);
+    static void setRoadOpenSuperSpeed(bool isSuperSpeed);
+    void kill() override;
+    void exeWait();
+    void exeOpen();
+    void exeStop();
     void startOpen(bool isImmediately);
+    void endEarly();
     bool isEndOpen() const;
     bool isWait() const;
-
-    /** @brief Gets the position the road grows to. @return The target position. */
-    const sead::Vector3f& getTargetTrans() const { return mTargetTrans; }
-
+    void subDistance(float distance);
 private:
-    u8 _144[0x150 - 0x144];
-    sead::Vector3f mTargetTrans;  // 0x150
-    u8 _15c[0x178 - 0x15c];
+    const CourseSelectNode* mpNode;
+    sead::Vector3f mEndPos;
+    float mDistance = 0.0f;
+    sead::Vector3f mClippingCenter = {0.0f, 0.0f, 0.0f};
+    sead::Vector3f mEffectPos = {0.0f, 0.0f, 0.0f};
 };
-
 static_assert(sizeof(CourseSelectRoad) == 0x178);

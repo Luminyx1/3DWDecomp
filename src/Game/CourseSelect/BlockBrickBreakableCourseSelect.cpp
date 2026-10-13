@@ -1,116 +1,96 @@
 #include "CourseSelect/BlockBrickBreakableCourseSelect.hpp"
-#include "CourseSelect/CourseSelectFunction.hpp"
 #include "Library/ActorUtil.hpp"
 #include "Library/Nerve/NerveSetup.hpp"
 #include "Library/Obj/BreakModel.hpp"
 #include "Library/Obj/PartsFunction.hpp"
 #include "System/GameDataHolderAccessor.hpp"
 #include "System/GameDataHolderWriter.hpp"
+#include "Util/CourseSelectUtil.hpp"
 #include "Util/PlayerUtil.hpp"
 
 namespace {
 NERVE_DECL(BlockBrickBreakableCourseSelect, Wait);
-NERVE_DECL(BlockBrickBreakableCourseSelect, Break);
 NERVE_DECL(BlockBrickBreakableCourseSelect, Reaction);
-NERVES_MAKE_NOSTRUCT(BlockBrickBreakableCourseSelect, Wait)
-NERVES_MAKE_STRUCT(BlockBrickBreakableCourseSelect, Break, Reaction)
-}  // namespace
+NERVE_DECL(BlockBrickBreakableCourseSelect, Break);
+NERVES_MAKE_NOSTRUCT(BlockBrickBreakableCourseSelect, Wait, Reaction, Break)
+}
 
 /**
- * @brief Constructs the block.
+ * @brief Create a breakable course-select brick block.
  * @param pName Actor name.
  */
-BlockBrickBreakableCourseSelect::BlockBrickBreakableCourseSelect(const char* pName)
-    : al::LiveActor(pName) {}
+BlockBrickBreakableCourseSelect::BlockBrickBreakableCourseSelect(const char* pName) : al::LiveActor(pName) {}
 
 /**
- * @brief Initializes the model, nerve and break model; stays dead if the block was already
- * broken in this save.
- * @param rInfo Actor init info.
+ * @brief Restore the block's saved state and create its debris model.
+ * @param rInfo Actor placement and scene initialization data.
  */
 void BlockBrickBreakableCourseSelect::init(const al::ActorInitInfo& rInfo) {
     al::initActorWithArchiveName(this, rInfo, sead::SafeString("BlockBrick"), "CourseSelect");
     al::initNerve(this, &NrvBlockBrickBreakableCourseSelectWait, 0);
     mObjectId = rc::getCourseSelectObjectID(this, rInfo);
-
     if (rc::isDisappearCourseSelectObject(GameDataHolderAccessor(this), mObjectId)) {
         makeActorDead();
-        return;
+    } else {
+        mpBreakModel = new al::BreakModel(this, "コースセレクトレンガブロック壊れモデル", "BlockBrickBreak",
+                                         "CourseSelect", nullptr, "Break", true);
+        al::initCreateActorNoPlacementInfo(mpBreakModel, rInfo);
+        makeActorAppeared();
     }
-
-    mBreakModel = new al::BreakModel(this, "コースセレクトレンガブロック壊れモデル", "BlockBrickBreak",
-                                     "CourseSelect", nullptr, "Break", true);
-    al::initCreateActorNoPlacementInfo(mBreakModel, rInfo);
-    makeActorAppeared();
 }
 
 /**
- * @brief Breaks the block on an upper punch (mini players only make it react).
- * @param pMsg Received message.
- * @param pSender Sender sensor.
- * @param pReceiver Receiver sensor.
- * @return Whether the message was handled.
+ * @brief React to a small player's punch or break and save the block's removal.
+ * @param pMsg Sensor message to inspect.
+ * @param pSender Punching player's sensor.
+ * @param pReceiver Receiving block sensor; unused.
+ * @return Whether the punch was handled.
  */
 bool BlockBrickBreakableCourseSelect::receiveMsg(const al::SensorMsg* pMsg, al::HitSensor* pSender,
-                                                 al::HitSensor* pReceiver) {
-    if (al::isNerve(this, &NrvBlockBrickBreakableCourseSelect.Break)) {
+                                               al::HitSensor* pReceiver) {
+    if (al::isNerve(this, &NrvBlockBrickBreakableCourseSelectBreak))
         return false;
-    }
-
-    if (!al::isMsgPlayerUpperPunch(pMsg)) {
-        return false;
-    }
-
-    if (rc::isPlayerMini(pSender)) {
-        al::setNerve(this, &NrvBlockBrickBreakableCourseSelect.Reaction);
+    if (al::isMsgPlayerUpperPunch(pMsg)) {
+        if (rc::isPlayerMini(pSender)) {
+            al::setNerve(this, &NrvBlockBrickBreakableCourseSelectReaction);
+        } else {
+            al::appearBreakModelRandomRotateY(mpBreakModel);
+            al::hideModel(this);
+            al::invalidateCollisionParts(this);
+            al::invalidateClipping(this);
+            al::setNerve(this, &NrvBlockBrickBreakableCourseSelectBreak);
+            rc::acquirerCourseSelectObject(GameDataHolderWriter(this), mObjectId);
+        }
         return true;
     }
-
-    al::appearBreakModelRandomRotateY(mBreakModel);
-    al::hideModel(this);
-    al::invalidateCollisionParts(this);
-    al::invalidateClipping(this);
-    al::setNerve(this, &NrvBlockBrickBreakableCourseSelect.Break);
-    rc::acquirerCourseSelectObject(GameDataHolderWriter(this), mObjectId);
-    return true;
+    return false;
 }
 
-/**
- * @brief Appears unless the block was already broken in this save.
- */
+/** @brief Appear only if this block has not already been broken. */
 void BlockBrickBreakableCourseSelect::appear() {
-    if (!rc::isDisappearCourseSelectObject(GameDataHolderAccessor(this), mObjectId)) {
+    if (!rc::isDisappearCourseSelectObject(GameDataHolderAccessor(this), mObjectId))
         al::LiveActor::appear();
-    }
 }
 
-/**
- * @brief Idle state.
- */
+/** @brief Start the idle action when entering the waiting state. */
 void BlockBrickBreakableCourseSelect::exeWait() {
-    if (al::isFirstStep(this)) {
+    if (al::isFirstStep(this))
         al::startAction(this, "Wait");
-    }
 }
 
-/**
- * @brief Bump reaction; returns to Wait when the action ends.
- */
+/** @brief Play the punch reaction and return to the waiting state. */
 void BlockBrickBreakableCourseSelect::exeReaction() {
-    if (al::isFirstStep(this)) {
+    if (al::isFirstStep(this))
         al::startAction(this, "Reaction");
-    }
-
-    if (al::isActionEnd(this)) {
+    if (al::isActionEnd(this))
         al::setNerve(this, &NrvBlockBrickBreakableCourseSelectWait);
-    }
 }
 
-/**
- * @brief Broken state; the actor is killed a few frames after breaking.
- */
+/** @brief Remove the block five steps after it breaks. */
 void BlockBrickBreakableCourseSelect::exeBreak() {
-    if (al::isStep(this, 5)) {
+    if (al::isStep(this, 5))
         kill();
-    }
 }
+
+/** @brief Destroy the course-select brick block. */
+BlockBrickBreakableCourseSelect::~BlockBrickBreakableCourseSelect() = default;

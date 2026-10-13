@@ -7,6 +7,7 @@ class LayoutInitInfo;
 }  // namespace al
 
 class PlayerAliveWatcher;
+class GameDataHolderAccessor;
 
 /**
  * @brief Player-count (lives) counter parts layout.
@@ -18,11 +19,15 @@ public:
                        al::LayoutActor* pParent, const PlayerAliveWatcher* pWatcher,
                        bool isUnknown);
 
+    void initShowMissData(const GameDataHolderAccessor* pGameData);
+    void showMiss(const GameDataHolderAccessor* pGameData);
     void startDemo();
     void endDemo();
 
     /** @brief Show the counter in its Toad Brigade (Captain Toad stage) style. */
     void setKinopioBrigade() { mIsKinopioBrigade = true; }
+    /** @brief Selects whether the counter uses the Captain Toad stage style. */
+    void setKinopioBrigade(bool isKinopioBrigade) { mIsKinopioBrigade = isKinopioBrigade; }
 
 private:
     unsigned char _padding[0x144 - 0x121];  // members start in al::LayoutActor's tail padding

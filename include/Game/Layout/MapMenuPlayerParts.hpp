@@ -1,30 +1,26 @@
 #pragma once
 
-#include <basis/seadTypes.h>
-
 #include "Library/Layout/LayoutActor.hpp"
 
-namespace al {
-class IUseLayout;
-class LayoutInitInfo;
-}  // namespace al
+namespace al { class LayoutInitInfo; }
 
-/**
- * @brief Player icon of the map menu, placed on the button of the world the player is in.
- * @note Minimal declaration: only what the reconstructed code uses is declared so far.
- */
+/** @brief Player icon attached to the player's current world on the map menu. */
 class MapMenuPlayerParts : public al::LayoutActor {
 public:
-    MapMenuPlayerParts(const al::LayoutInitInfo& rInfo, const char* pName, const char* pPartsName,
-                       al::LayoutActor* pParent);
-
+    MapMenuPlayerParts(const al::LayoutInitInfo& rInfo, const char* pName,
+                       const char* pPartsName, al::LayoutActor* pParent);
+    void exeAppear();
+    void exeWait();
+    void exeEnd();
+    void exeHide();
     void startAppear(const char* pCharacterName, const al::IUseLayout* pTarget);
     void startEnd();
-    void show();
     void hide();
+    void show();
 
 private:
-    u8 _128[0x138 - 0x128];
+    const al::IUseLayout* mTarget = nullptr;
+    const char* mCharacterName = nullptr;
 };
 
 static_assert(sizeof(MapMenuPlayerParts) == 0x138);

@@ -27,18 +27,7 @@ public:
      * course.
      * @return The cursor layout type.
      */
-    s32 getCursorLayoutType() const override {
-        if (!mActorInfo->isUseCourseInfo()) {
-            return 5;
-        }
-
-        s32 greenStarNum = mActorInfo->getStageDatabaseInfo()->getGreenStarNum();
-        if (greenStarNum > 29) {
-            return 3;
-        }
-
-        return greenStarNum > 9 ? 2 : 1;
-    }
+    s32 getCursorLayoutType() const override;
 
     /** @brief Gets the course data of the miniature. @return The course data. */
     const CourseSelectActorInfo* getCourseSelectActorInfo() const override { return mActorInfo; }
