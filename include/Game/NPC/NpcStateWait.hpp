@@ -10,7 +10,7 @@ class SensorMsg;
 class ScreenPointer;
 class ScreenPointTarget;
 class RumbleCalculatorCosMultLinear;
-}
+} // namespace al
 class ActorStateSupportStroke;
 
 class NpcStateWaitParam {
@@ -34,8 +34,8 @@ public:
 
 class NpcStateTurnParam {
 public:
-    NpcStateTurnParam(float startAngle, float endAngle, float turnDegrees,
-                      float searchRadius, bool isEnabled, bool onlyAfter, int endFrames);
+    NpcStateTurnParam(float startAngle, float endAngle, float turnDegrees, float searchRadius,
+                      bool isEnabled, bool onlyAfter, int endFrames);
     float mStartAngle;
     float mEndAngle;
     float mTurnDegrees;
@@ -47,7 +47,8 @@ public:
 
 class NpcStateRumbleParam {
 public:
-    NpcStateRumbleParam(int frames, float frequency, float angleOffset, float amplitude, float scale);
+    NpcStateRumbleParam(int frames, float frequency, float angleOffset, float amplitude,
+                        float scale);
     int mFrames;
     float mFrequency;
     float mAngleOffset;
@@ -67,8 +68,18 @@ public:
     bool isInvalidTurn() const { return mIsTurnDisabled; }
     void setWaitAfter();
     void setWait();
-    /** @brief Reports whether searching turns are disabled. @return Whether the actor should face its initial direction. */
+    /** @brief Reports whether searching turns are disabled. @return Whether the actor should face
+     * its initial direction. */
     bool isTurnDisabled() const { return mIsTurnDisabled; }
+    /** @brief Reports the alternate waiting phase. @return Whether the alternate phase is active.
+     */
+    bool isWaitAfter() const { return mIsWaitAfter; }
+    /** @brief Changes waiting behavior. @param pParam Waiting parameters, kept alive by the caller.
+     */
+    void setWaitParam(const NpcStateWaitParam* pParam) { mWaitParam = pParam; }
+    /** @brief Changes turning behavior. @param pParam Turning parameters, kept alive by the caller.
+     */
+    void setTurnParam(const NpcStateTurnParam* pParam) { mTurnParam = pParam; }
     void startWait();
     void invalidateTurn();
     void attackSensor(al::HitSensor* pSelf, al::HitSensor* pOther);
