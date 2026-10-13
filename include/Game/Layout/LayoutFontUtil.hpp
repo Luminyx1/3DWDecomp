@@ -21,3 +21,8 @@ const char16_t* getMessageFontButtonDecide(int port);
 const char16_t* getMessageFontButtonPlus();
 const char16_t* getMessageFontButtonMinus();
 }
+
+namespace LayoutFontUtil {
+const char16_t* getIconFontWarpCubeLockedPiece();
+const char16_t* getIconFontWarpCubeLockedPieceEmpty();
+}

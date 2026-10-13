@@ -6222,3 +6222,7 @@
 0x71019DA1A8 8 object _ZN12_GLOBAL__N_130NrvGuideFrameOutStartDisappearE
 0x71019DA1B0 8 object _ZN12_GLOBAL__N_127NrvGuideFrameOutStartAppearE
 0x71019DA1B8 8 object _ZN12_GLOBAL__N_122NrvGuideFrameOutAppearE
+
+# src/Game/Layout/CounterWarpCube
+0x71019D5EE0 8 object _ZN12_GLOBAL__N_122NrvCounterWarpCubeWaitE
+0x71019D5FA0 8 object _ZN12_GLOBAL__N_121NrvCounterWarpCubeEndE

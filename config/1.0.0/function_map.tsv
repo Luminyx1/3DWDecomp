@@ -11467,14 +11467,14 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001BB050			FALSE	_ZN15CounterWarpCube6exeAddEv	CounterWarpCube::exeAdd()	
 0x71001BB0F0			FALSE	_ZN15CounterWarpCube11exeCompleteEv	CounterWarpCube::exeComplete()	
 0x71001BB190			FALSE	_ZN15CounterWarpCube6exeEndEv	CounterWarpCube::exeEnd()	
-0x71001BB1F0			FALSE	sub_71001BB1F0	sub_71001BB1F0	
+0x71001BB1F0			FALSE	_ZNK12_GLOBAL__N_122CounterWarpCubeNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::CounterWarpCubeNrvWait::execute(al::NerveKeeper*) const	
 0x71001BB240			TRUE	_ZN4sead22WFormatFixedSafeStringILi10EEC2EPKDsz	sead::WFormatFixedSafeString<10>::WFormatFixedSafeString(char16_t const*, ...)	
 0x71001BB310			TRUE	_ZN4sead22WFormatFixedSafeStringILi10EED0Ev	sead::WFormatFixedSafeString<10>::~WFormatFixedSafeString()	
 0x71001BB320			TRUE	_ZN4sead16WFixedSafeStringILi10EEaSERKNS_14SafeStringBaseIDsEE	sead::WFixedSafeString<10>::operator=(sead::SafeStringBase<char16_t> const&)	
 0x71001BB410			FALSE	_ZNK12_GLOBAL__N_124CounterWarpCubeNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::CounterWarpCubeNrvAppear::execute(al::NerveKeeper*) const	
 0x71001BB420			FALSE	_ZNK12_GLOBAL__N_126CounterWarpCubeNrvComplete7executeEPN2al11NerveKeeperE	(anonymous namespace)::CounterWarpCubeNrvComplete::execute(al::NerveKeeper*) const	
 0x71001BB430			FALSE	_ZNK12_GLOBAL__N_121CounterWarpCubeNrvAdd7executeEPN2al11NerveKeeperE	(anonymous namespace)::CounterWarpCubeNrvAdd::execute(al::NerveKeeper*) const	
-0x71001BB440			FALSE	sub_71001BB440	sub_71001BB440	
+0x71001BB440			FALSE	_ZNK12_GLOBAL__N_121CounterWarpCubeNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::CounterWarpCubeNrvEnd::execute(al::NerveKeeper*) const	
 0x71001BB4B0		CourseSelectInfo.o	FALSE	_ZN16CourseSelectInfoC2ERKN2al14LayoutInitInfoEP20CourseSelectDirector	CourseSelectInfo::CourseSelectInfo(al::LayoutInitInfo const&, CourseSelectDirector*)	
 0x71001BB530			FALSE	_ZN16CourseSelectInfoC1ERKN2al14LayoutInitInfoEP20CourseSelectDirector	CourseSelectInfo::CourseSelectInfo(al::LayoutInitInfo const&, CourseSelectDirector*)	
 0x71001BB5C0			FALSE	_ZN16CourseSelectInfo20updateControllerInfoEv	CourseSelectInfo::updateControllerInfo()	
