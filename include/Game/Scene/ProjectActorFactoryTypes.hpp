@@ -1946,14 +1946,7 @@ private:
 static_assert(sizeof(Spinner) == 0x178);
 
 
-class SpotLightPatroller : public al::LiveActor {
-public:
-    explicit SpotLightPatroller(const char* pName);
-
-private:
-    u8 mUnreconstructed[0x19c];
-};
-static_assert(sizeof(SpotLightPatroller) == 0x2e0);
+#include "MapObj/SpotLightPatroller.hpp"
 
 class SpotLightPatrollerObserver : public al::LiveActor {
 public:
