@@ -1891,7 +1891,7 @@ src/Game/MapObj/PanelNoteGroup.cpp: done
     .text   start:0x003409B0 end:0x00340F18
 src/Game/MapObj/PanelNotePaint.cpp:
     .text   start:0x00340F20 end:0x00342248
-src/Game/MapObj/PanelNotePaintGroup.cpp:
+src/Game/MapObj/PanelNotePaintGroup.cpp: done
     .text   start:0x00342250 end:0x003438E8
 src/Game/MapObj/PlayerCrown.cpp:
     .text   start:0x003438F0 end:0x00345638

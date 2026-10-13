@@ -20702,7 +20702,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100342630			FALSE	_ZN19PanelNotePaintGroupC1EPKc	PanelNotePaintGroup::PanelNotePaintGroup(char const*)	
 0x7100342A10			FALSE	_ZN19PanelNotePaintGroup4initERKN2al13ActorInitInfoE	PanelNotePaintGroup::init(al::ActorInitInfo const&)	
 0x7100342C20			FALSE	_ZN19PanelNotePaintGroup7controlEv	PanelNotePaintGroup::control()	
-0x7100342D70			FALSE	sub_7100342D70	sub_7100342D70	
+0x7100342D70			FALSE	_ZL19changePanelBgmPhasePN2al9LiveActorEi	changePanelBgmPhase(al::LiveActor*, int)	TRUE
 0x7100342E10			FALSE	_ZN19PanelNotePaintGroup7exeWaitEv	PanelNotePaintGroup::exeWait()	
 0x71003430C0			FALSE	_ZN19PanelNotePaintGroup11updatePitchEv	PanelNotePaintGroup::updatePitch()	
 0x7100343120			FALSE	_ZN19PanelNotePaintGroup11exeCompleteEv	PanelNotePaintGroup::exeComplete()	
@@ -20712,7 +20712,7 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100343880			FALSE	_ZN19PanelNotePaintGroupD1Ev	PanelNotePaintGroup::~PanelNotePaintGroup()	
 0x7100343890			FALSE	_ZN19PanelNotePaintGroupD0Ev	PanelNotePaintGroup::~PanelNotePaintGroup()	
 0x71003438C0			FALSE	_ZNK12_GLOBAL__N_126PanelNotePaintGroupNrvWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::PanelNotePaintGroupNrvWait::execute(al::NerveKeeper*) const	
-0x71003438D0			FALSE	nullsub_214	nullsub_214	
+0x71003438D0			FALSE	_ZNK12_GLOBAL__N_125PanelNotePaintGroupNrvEnd7executeEPN2al11NerveKeeperE	(anonymous namespace)::PanelNotePaintGroupNrvEnd::execute(al::NerveKeeper*) const	
 0x71003438E0			FALSE	_ZNK12_GLOBAL__N_130PanelNotePaintGroupNrvComplete7executeEPN2al11NerveKeeperE	(anonymous namespace)::PanelNotePaintGroupNrvComplete::execute(al::NerveKeeper*) const	
 0x71003438F0		PlayerCrown.o	FALSE	_ZN11PlayerCrownC2ERKN2al13ActorInitInfoEPKc	PlayerCrown::PlayerCrown(al::ActorInitInfo const&, char const*)	
 0x7100343AE0			FALSE	_ZN11PlayerCrownC1ERKN2al13ActorInitInfoEPKc	PlayerCrown::PlayerCrown(al::ActorInitInfo const&, char const*)	
