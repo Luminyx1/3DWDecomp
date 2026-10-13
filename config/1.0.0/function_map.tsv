@@ -11802,10 +11802,10 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x71001C6690			FALSE	_ZN13GuideFrameOut9exeAppearEv	GuideFrameOut::exeAppear()	
 0x71001C66D0			FALSE	_ZN13GuideFrameOut17exeStartDisappearEv	GuideFrameOut::exeStartDisappear()	
 0x71001C6730			FALSE	_ZN13GuideFrameOut12exeDisappearEv	GuideFrameOut::exeDisappear()	
-0x71001C6770			FALSE	sub_71001C6770	sub_71001C6770	
-0x71001C67B0			FALSE	sub_71001C67B0	sub_71001C67B0	
-0x71001C6820			FALSE	sub_71001C6820	sub_71001C6820	
-0x71001C68A0			FALSE	sub_71001C68A0	sub_71001C68A0	
+0x71001C6770			FALSE	_ZNK12_GLOBAL__N_125GuideFrameOutNrvDisappear7executeEPN2al11NerveKeeperE	(anonymous namespace)::GuideFrameOutNrvDisappear::execute(al::NerveKeeper*) const	
+0x71001C67B0			FALSE	_ZNK12_GLOBAL__N_130GuideFrameOutNrvStartDisappear7executeEPN2al11NerveKeeperE	(anonymous namespace)::GuideFrameOutNrvStartDisappear::execute(al::NerveKeeper*) const	
+0x71001C6820			FALSE	_ZNK12_GLOBAL__N_127GuideFrameOutNrvStartAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::GuideFrameOutNrvStartAppear::execute(al::NerveKeeper*) const	
+0x71001C68A0			FALSE	_ZNK12_GLOBAL__N_122GuideFrameOutNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::GuideFrameOutNrvAppear::execute(al::NerveKeeper*) const	
 0x71001C68F0		GuideGameWindow.o	FALSE	_ZN15GuideGameWindowC1ERKN2al14LayoutInitInfoEb	GuideGameWindow::GuideGameWindow(al::LayoutInitInfo const&, bool)	
 0x71001C6980			FALSE	_ZNK15GuideGameWindow8isActiveEv	GuideGameWindow::isActive() const	
 0x71001C69C0			FALSE	_ZNK15GuideGameWindow21isWindowMessageActiveEv	GuideGameWindow::isWindowMessageActive() const	
