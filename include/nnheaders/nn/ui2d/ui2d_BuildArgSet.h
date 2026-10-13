@@ -40,6 +40,14 @@ struct BuildResSet {
 };
 
 struct BuildArgSet {
+    /**
+     * @brief Reads the low byte of the parts-pane override usage flags.
+     * @return Usage bits for the text, position, and shadow overrides.
+     */
+    u8 GetPaneUsageFlags() const {
+        return *reinterpret_cast<const u8*>(&overridePaneUsageFlag);
+    }
+
     nn::util::Float2 magnify;
     nn::util::Float2 partsSize;
     ControlCreator* pControlCreator;

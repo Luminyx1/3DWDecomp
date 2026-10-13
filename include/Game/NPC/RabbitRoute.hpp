@@ -1,32 +1,22 @@
 #pragma once
 
 #include <container/seadPtrArray.h>
+#include "NPC/RabbitRoutePoint.hpp"
 #include <math/seadVector.h>
 
-namespace al {
-struct PlacementInfo;
-}
-
-class IUseRabbitRoutePoint;
+namespace al { struct PlacementInfo; }
 class RabbitRoutePoint;
 
-/**
- * @brief The network of route points a rabbit runs along.
- * @note Only what reconstructed code needs is declared so far.
- */
 class RabbitRoute {
 public:
-    RabbitRoute(const al::PlacementInfo& rInfo);
-
-    void calcNearestPosOnRoute(sead::Vector3f* pPos, const sead::Vector3f& rTarget) const;
-    void calcFarthestPosOnRoute(sead::Vector3f* pPos, const sead::Vector3f& rTarget) const;
-
-    /** @return The first point of the route. */
+    /** @brief Gets the initial route point. @return the initial route point. */
     const IUseRabbitRoutePoint* getStartPoint() const { return mStartPoint; }
+    explicit RabbitRoute(const al::PlacementInfo& rInfo);
+    void calcNearestPosOnRoute(sead::Vector3f* pPosition, const sead::Vector3f& rPosition) const;
+    void calcFarthestPosOnRoute(sead::Vector3f* pPosition, const sead::Vector3f& rPosition) const;
 
 private:
+    friend class RabbitRouteRider;
     sead::PtrArray<RabbitRoutePoint> mPoints;
-    const IUseRabbitRoutePoint* mStartPoint;
+    RabbitRoutePoint* mStartPoint;
 };
-
-static_assert(sizeof(RabbitRoute) == 0x18);

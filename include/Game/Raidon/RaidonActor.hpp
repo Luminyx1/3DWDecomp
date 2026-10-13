@@ -6,14 +6,9 @@
 class RaidonActor : public al::LiveActor {
 public:
     RaidonActor(const char* pName, const char* pSuffix);
-
+    /** @brief Releases the Plessie actor. */
+    ~RaidonActor() override = default;
     virtual void init(const al::ActorInitInfo& rInfo, const char* pName);
-    virtual void startPuppetActionAll(const char* pActionName);
-    virtual void setPuppetInputBlendAnimWeight();
-    virtual void setInputBlendAnimWeight();
-    virtual bool isOnGroundRaidon() const;
-    virtual bool isInWater() const;
-    virtual bool isOnGroundOrWaterRaidon() const;
 
     void convergeHeadRotate(f32, f32);
     void convergeNeckRotate(f32, f32);

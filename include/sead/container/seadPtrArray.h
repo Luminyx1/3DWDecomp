@@ -187,7 +187,12 @@ protected:
     void heapSort(CompareCallbackImpl cmp);
 
 public:
-    /// Bidirectional bubble (shaker) sort with a statically known comparer (inlined).
+    /**
+     * @brief Sorts pointers with a stable bidirectional bubble sort and an inline comparer.
+     * @tparam T Type of object stored in the pointer array.
+     * @tparam Compare Callable accepting two T pointers and returning their ordering.
+     * @param cmp Comparer returning a negative, zero, or positive value for less, equal, or greater.
+     */
     template <typename T, typename Compare>
     void shakerSort_(Compare&& cmp)
     {

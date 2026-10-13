@@ -7,6 +7,7 @@
 class GameDataHolder;
 class GameDataHolderAccessor;
 class GhostPlayerDirector;
+class GhostPlayerPlayer;
 
 namespace al {
 class IUseSceneObjHolder;
@@ -22,6 +23,7 @@ struct GhostWarpObjData {
 };
 
 namespace GhostPlayerFunction {
+void registerGhostPlayerPlayer(GhostPlayerPlayer* pPlayer);
 u32 getGhostPlayerRecorderBufferSize();
 bool isExistGhostPlayerDirector(const al::IUseSceneObjHolder* pHolder);
 GhostPlayerDirector* getGhostPlayerDirector(const al::IUseSceneObjHolder* pHolder);

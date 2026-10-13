@@ -1,791 +1,703 @@
 #include "NPC/NpcTargetFinder.hpp"
-
-#include <math/seadMathCalcCommon.h>
-#include <nerd/nerdMath.h>
-
 #include "NPC/IUseTargetFinderFilter.hpp"
-#include "NPC/NekoNormal.hpp"
-#include "NPC/NpcFunction.hpp"
+#include "Library/Math/MathUtil.hpp"
+#include "Library/LiveActor/LiveActor.hpp"
+#include "Library/LiveActor/Util/ActorPoseUtil.hpp"
+#include "Library/LiveActor/Util/ActorMovementUtil.hpp"
+#include "Library/LiveActor/Util/ActorSensorUtil.hpp"
 #include "Util/PlayerUtil.hpp"
+#include "Library/Screen/ScreenPointer.hpp"
+#include "Library/Screen/ScreenPointTarget.hpp"
+#include "NPC/NekoNormal.hpp"
 #include "Library/LiveActor/Util/ActorFlagUtil.hpp"
 #include "Library/LiveActor/Util/ActorModelUtil.hpp"
-#include "Library/LiveActor/Util/ActorMovementUtil.hpp"
-#include "Library/LiveActor/Util/ActorPoseUtil.hpp"
-#include "Library/LiveActor/Util/ActorSensorUtil.hpp"
-#include "Library/Math/MathUtil.hpp"
-#include "Library/Screen/ScreenPointTarget.hpp"
-#include "Library/Screen/ScreenPointer.hpp"
-
-namespace {
-
-al::LiveActor* tryGetValidTarget(const NpcTargetFinder* pFinder, al::LiveActor* pActor,
-                                 const npc::NpcFindTargetType& rType);
+#include <cmath>
 
 /**
- * @brief Check whether the height difference to a target is within the allowed range.
- * @param rInfo Relation to the target.
- * @param pParam Search parameters.
- * @return Whether the height difference is acceptable.
- */
-inline bool isInHeightRange(const NpcTargetCheckInfo& rInfo, const NpcTargetFinderParam* pParam) {
-    f32 dy = rInfo.mDirToTarget.y;
-    if (dy >= 0.0f) {
-        return pParam->mUpperRange < 0.0f || dy <= pParam->mUpperRange;
-    }
-
-    return pParam->mLowerRange < 0.0f || pParam->mLowerRange >= -dy;
-}
-
-/**
- * @brief Check whether a target is in the sight cone.
- * @param rInfo Relation to the target.
- * @param pParam Search parameters.
- * @return Whether the target is in sight.
- */
-inline bool isInSight(const NpcTargetCheckInfo& rInfo, const NpcTargetFinderParam* pParam) {
-    if (rInfo.mDistance > pParam->mSightRange) {
-        return false;
-    }
-
-    if (rInfo.mFrontDot < cosf(pParam->mSightAngleH * (sead::Mathf::pi() / 180.0f))) {
-        return false;
-    }
-
-    if (rInfo.mUpDot < cosf(pParam->mSightAngleV * (sead::Mathf::pi() / 180.0f))) {
-        return false;
-    }
-
-    return isInHeightRange(rInfo, pParam);
-}
-
-/**
- * @brief Check whether a target is within chase range.
- * @param rInfo Relation to the target.
- * @param pParam Search parameters.
- * @return Whether the target can be chased.
- */
-inline bool isInChaseRange(const NpcTargetCheckInfo& rInfo, const NpcTargetFinderParam* pParam) {
-    if (rInfo.mDistance > pParam->mChaseRange) {
-        return false;
-    }
-
-    return isInHeightRange(rInfo, pParam);
-}
-
-}  // namespace
-
-/**
- * @return Front direction used for the sight cone.
- */
-inline const sead::Vector3f& NpcTargetFinder::getFrontDir() const {
-    return mFrontDir != nullptr ? *mFrontDir : al::getFront(mHost);
-}
-
-/**
- * @return Up direction used for the sight cone.
- */
-inline const sead::Vector3f& NpcTargetFinder::getUpDir() const {
-    return mSupportUpDir != nullptr ? *mSupportUpDir : al::getGravity(mHost);
-}
-
-namespace npc {
-
-/**
- * @brief Check whether a sensor is the body of a ball (cat ball, ball or snowball).
- * @param pSensor Sensor to check.
- * @return Whether the sensor belongs to a ball.
- */
-bool isSensorBall(const al::HitSensor* pSensor) {
-    if (!al::isSensorMapObj(pSensor) || !al::isSensorName(pSensor, "Body")) {
-        return false;
-    }
-
-    return al::isSensorHostName(pSensor, "BallNeko") || al::isSensorHostName(pSensor, "ボール") ||
-           al::isSensorHostName(pSensor, "雪玉");
-}
-
-/**
- * @brief Check whether a sensor belongs to a cat gull.
- * @param pSensor Sensor to check.
- * @return Whether the sensor belongs to a bird.
- */
-bool isSensorBird(const al::HitSensor* pSensor) {
-    return al::isSensorMapObj(pSensor) && al::isSensorHostName(pSensor, "CatGull");
-}
-
-/**
- * @brief Check whether a sensor belongs to a regular cat.
- * @param pSensor Sensor to check.
- * @return Whether the sensor belongs to a cat.
- */
-bool isSensorNeko(const al::HitSensor* pSensor) {
-    return al::isSensorNpc(pSensor) && al::isSensorHostName(pSensor, "NekoNormal");
-}
-
-/**
- * @brief Check whether a sensor belongs to a disaster cat.
- * @param pSensor Sensor to check.
- * @return Whether the sensor belongs to a disaster cat.
- */
-bool isSensorNekoDisaster(const al::HitSensor* pSensor) {
-    return al::isSensorEnemy(pSensor) && al::isSensorHostName(pSensor, "NekoDisaster");
-}
-
-/**
- * @brief Get a readable name for a kind of target.
- * @param rType Kind of target (bit flags).
- * @return Name of the first kind set in the flags.
- */
-const char* NpcFindTargetTypeToString(const NpcFindTargetType& rType) {
-    if (rType == NpcFindTargetType_None) {
-        return "None";
-    }
-
-    if ((rType & NpcFindTargetType_PlayerRegular) != 0) {
-        return "PlayerRegular";
-    }
-
-    if ((rType & NpcFindTargetType_PlayerClimb) != 0) {
-        return "PlayerClimb";
-    }
-
-    if ((rType & NpcFindTargetType_KoopaJr) != 0) {
-        return "KoopaJr";
-    }
-
-    if ((rType & NpcFindTargetType_Cursor) != 0) {
-        return "Cursor";
-    }
-
-    if ((rType & NpcFindTargetType_Ball) != 0) {
-        return "Ball";
-    }
-
-    if ((rType & NpcFindTargetType_Koura) != 0) {
-        return "Koura";
-    }
-
-    if ((rType & NpcFindTargetType_Bird) != 0) {
-        return "Bird";
-    }
-
-    if ((rType & NpcFindTargetType_Neko) != 0) {
-        return "Neko";
-    }
-
-    if ((rType & NpcFindTargetType_Player) != 0) {
-        return "Player";
-    }
-
-    if ((rType & (NpcFindTargetType_Ball | NpcFindTargetType_Koura | NpcFindTargetType_Bird)) !=
-        0) {
-        return "ChaseObj";
-    }
-
-    return "Unknown";
-}
-
-/**
- * @brief Check whether a target is in the sight of a finder.
- * @param pFinder Finder searching for targets.
- * @param pTarget Target to check.
- * @param pParam Search parameters, or nullptr to use the ones of the finder.
- * @return Whether the target is in sight.
- */
-bool calcIsTargetInSight(const NpcTargetFinder* pFinder, const al::LiveActor* pTarget,
-                         const NpcTargetFinderParam* pParam) {
-    NpcTargetCheckInfo info;
-    if (!calcTargetCheckInfo(&info, pFinder->getHost(), pFinder->getFrontDir(),
-                             pFinder->getUpDir(), pTarget)) {
-        return false;
-    }
-
-    if (pParam == nullptr) {
-        pParam = pFinder->getParam();
-    }
-
-    return isInSight(info, pParam);
-}
-
-/**
- * @brief Compute the relation between a host and a target.
- * @param pInfo Receives the direction, distance and sight cone dots.
- * @param pHost Searching actor.
- * @param rFront Front direction of the host.
- * @param rUp Up direction of the host.
- * @param pTarget Target actor.
- * @return Whether the relation could be computed (target not at the host position).
- */
-bool calcTargetCheckInfo(NpcTargetCheckInfo* pInfo, const al::LiveActor* pHost,
-                         const sead::Vector3f& rFront, const sead::Vector3f& rUp,
-                         const al::LiveActor* pTarget) {
-    sead::Vector3f dir = al::getTrans(pTarget) - al::getTrans(pHost);
-    pInfo->mDirToTarget = dir;
-
-    f32 squaredDistance = dir.squaredLength();
-    if (al::isNearZero(squaredDistance)) {
-        pInfo->mDistance = 0.0f;
-        return false;
-    }
-
-    pInfo->mDistance = nerd::sqrt(squaredDistance);
-
-    sead::Vector3f side;
-    al::verticalizeVec(&side, rFront, rUp);
-    if (al::normalizeOrZero(&side)) {
-        return false;
-    }
-
-    dir *= 1.0f / pInfo->mDistance;
-    f32 sideDot = side.dot(dir);
-
-    f32 upDot = 0.0f;
-    if (!al::isNearZero(sead::Mathf::abs(sideDot) - 1.0f)) {
-        upDot = nerd::sqrt(1.0f - sideDot * sideDot);
-    }
-
-    pInfo->mUpDot = upDot;
-
-    sead::Vector3f frontDir = dir - side * upDot;
-    f32 frontDot = 0.0f;
-    if (!al::normalizeOrZero(&frontDir)) {
-        frontDot = rFront.dot(frontDir);
-    }
-
-    pInfo->mFrontDot = frontDot;
-    return true;
-}
-
-/**
- * @brief Check whether a target is within the chase range of a finder.
- * @param pFinder Finder searching for targets.
- * @param pTarget Target to check.
- * @param pParam Search parameters, or nullptr to use the ones of the finder.
- * @return Whether the target can be chased.
- */
-bool calcIsTargetInChaseRange(const NpcTargetFinder* pFinder, const al::LiveActor* pTarget,
-                              const NpcTargetFinderParam* pParam) {
-    NpcTargetCheckInfo info;
-    if (!calcTargetCheckInfo(&info, pFinder->getHost(), pFinder->getFrontDir(),
-                             pFinder->getUpDir(), pTarget)) {
-        return false;
-    }
-
-    if (pParam == nullptr) {
-        pParam = pFinder->getParam();
-    }
-
-    return isInChaseRange(info, pParam);
-}
-
-}  // namespace npc
-
-namespace {
-
-/**
- * @brief Check whether a target is within the chase range of a finder.
- * @note Same as npc::calcIsTargetInChaseRange with the parameters of the finder, but inlined.
- * @param pFinder Finder searching for targets.
- * @param pTarget Target to check.
- * @return Whether the target can be chased.
- */
-inline bool canChaseTarget(const NpcTargetFinder* pFinder, const al::LiveActor* pTarget) {
-    NpcTargetCheckInfo info;
-    if (!npc::calcTargetCheckInfo(&info, pFinder->getHost(), pFinder->getFrontDir(),
-                                  pFinder->getUpDir(), pTarget)) {
-        return false;
-    }
-
-    return isInChaseRange(info, pFinder->getParam());
-}
-
-}  // namespace
-
-/**
- * @brief Construct the default parameters.
+ * @brief Initializes default sight, chase, and scan settings.
  */
 NpcTargetFinderParam::NpcTargetFinderParam()
-    : mSightRange(500.0f), mSightAngleH(80.0f), mSightAngleV(80.0f), mKeepTargetFrame(60),
-      mSenseRange(-1.0f), mUpperRange(-1.0f), mLowerRange(-1.0f), mChaseRange(-1.0f),
-      mIsIgnoreDisregardPlayer(false), _24(5), mCandidateClearFrame(1) {}
-
+    : mSightDistance(500.0f), mHorizontalAngle(80.0f), mVerticalAngle(80.0f),
+      mTargetGraceFrames(60), mSenseDistance(-1.0f), mMaxHeight(-1.0f), mMaxDepth(-1.0f),
+      mChaseDistance(-1.0f), mParam20(false), mCandidateCapacity(5), mScanInterval(1) {}
 /**
- * @brief Construct the parameters.
- * @param sightRange Distance within which targets can be seen.
- * @param sightAngleH Horizontal half angle of the sight cone, in degrees.
- * @param sightAngleV Vertical half angle of the sight cone, in degrees.
- * @param keepTargetFrame Frames a found target is kept before searching again.
- * @param senseRange Distance within which targets are sensed without sight.
- * @param upperRange Height above the host targets can be at (negative: unlimited).
- * @param lowerRange Depth below the host targets can be at (negative: unlimited).
- * @param chaseRange Distance within which a target keeps being chased.
- * @param isIgnoreDisregardPlayer Whether players the NPCs should disregard are ignored.
- * @param candidateClearFrame Frames between two clears of the seen candidates.
+ * @brief Stores target search and retention settings.
+ * @param sightDistance Maximum distance for sight checks.
+ * @param horizontalAngle Horizontal sight angle in degrees.
+ * @param verticalAngle Vertical sight angle in degrees.
+ * @param targetGraceFrames Frames to retain a target before searching again.
+ * @param senseDistance Radius of the sense area.
+ * @param maxHeight Maximum positive height difference; negative disables the limit.
+ * @param maxDepth Maximum negative height difference; negative disables the limit.
+ * @param chaseDistance Maximum chase distance.
+ * @param param20 Whether to reject players reported as disregarded by their equipment.
+ * @param scanInterval Frame interval between sensor candidate collections.
  */
-NpcTargetFinderParam::NpcTargetFinderParam(f32 sightRange, f32 sightAngleH, f32 sightAngleV,
-                                           u32 keepTargetFrame, f32 senseRange, f32 upperRange,
-                                           f32 lowerRange, f32 chaseRange,
-                                           bool isIgnoreDisregardPlayer, u32 candidateClearFrame)
-    : mSightRange(sightRange), mSightAngleH(sightAngleH), mSightAngleV(sightAngleV),
-      mKeepTargetFrame(keepTargetFrame), mSenseRange(senseRange), mUpperRange(upperRange),
-      mLowerRange(lowerRange), mChaseRange(chaseRange),
-      mIsIgnoreDisregardPlayer(isIgnoreDisregardPlayer), _24(5),
-      mCandidateClearFrame(candidateClearFrame) {}
-
+NpcTargetFinderParam::NpcTargetFinderParam(float sightDistance, float horizontalAngle,
+                                           float verticalAngle, unsigned int targetGraceFrames,
+                                           float senseDistance, float maxHeight, float maxDepth,
+                                           float chaseDistance, bool param20,
+                                           unsigned int scanInterval)
+    : mSightDistance(sightDistance), mHorizontalAngle(horizontalAngle),
+      mVerticalAngle(verticalAngle), mTargetGraceFrames(targetGraceFrames),
+      mSenseDistance(senseDistance), mMaxHeight(maxHeight), mMaxDepth(maxDepth),
+      mChaseDistance(chaseDistance), mParam20(param20), mCandidateCapacity(5),
+      mScanInterval(scanInterval) {}
 /**
- * @brief Construct a target finder.
- * @param pHost Actor that searches for targets.
- * @param pParam Search parameters; must outlive the finder.
+ * @brief Creates candidate storage and target-priority tracking.
+ * @param pHost Actor searching for targets.
+ * @param pParam Search settings; must not be null.
  */
 NpcTargetFinder::NpcTargetFinder(al::LiveActor* pHost, const NpcTargetFinderParam* pParam)
-    : mHost(pHost), mCandidateClearTime(pParam->mCandidateClearFrame), mParam(pParam),
-      mCheckInfo(new NpcTargetCheckInfo()) {
-    mCheckInfo->reset();
+    : mHostActor(pHost), mFilter(nullptr), mTarget(nullptr), mLastTarget(nullptr),
+      mType(npc::NpcFindTargetType::None), mLastType(npc::NpcFindTargetType::None),
+      mAllowedTypes(-1), mInSight(false), mIsInChaseRange(false), mHasTargetChanged(false),
+      mFront(nullptr), mGravity(nullptr), mGraceFrames(0), mScanFrames(pParam->mScanInterval),
+      mParam(pParam), mMetrics(new npc::TargetMetrics()), mSensor(nullptr) {
+    mMetrics->reset();
 }
-
 /**
- * @brief Change the actor that searches for targets.
- * @param pHost New host actor.
- * @param pSensorName Name of the eye sensor of the host.
- * @param pFilter Filter that can reject targets, or nullptr.
+ * @brief Changes the host, sensor, and target filter.
+ * @param pHost New searching actor.
+ * @param pSensor Name of its search sensor.
+ * @param pFilter Filter that approves candidate actors.
  */
-void NpcTargetFinder::changeHost(al::LiveActor* pHost, const char* pSensorName,
+void NpcTargetFinder::changeHost(al::LiveActor* pHost, const char* pSensor,
                                  const IUseTargetFinderFilter* pFilter) {
-    mHost = pHost;
+    mHostActor = pHost;
     mFilter = pFilter;
-    mEyeSensor = al::getHitSensor(pHost, pSensorName);
-
-    f32 sightRange = mParam->mSightRange;
-    f32 senseRange = mParam->mSenseRange;
-    al::setSensorRadius(pHost, pSensorName, sightRange > senseRange ? sightRange : senseRange);
+    mSensor = al::getHitSensor(pHost, pSensor);
+    al::setSensorRadius(pHost, pSensor,
+                        mParam->mSightDistance > mParam->mSenseDistance ? mParam->mSightDistance
+                                                                        : mParam->mSenseDistance);
 }
-
 /**
- * @brief Add an actor to the candidates if it can be a target.
- * @param pActor Actor seen by the eye sensor.
- * @param type Kind of the actor.
+ * @brief Leaves ordinary sensor messages unhandled.
+ * @param pMessage Message; unused.
+ * @param pSelf Sender sensor; unused.
+ * @param pOther Other sensor; unused.
+ * @return Always false.
  */
-inline void NpcTargetFinder::addCandidate(al::LiveActor* pActor, npc::NpcFindTargetType type) {
-    // The check gets its own copy of the type, the candidate is built from the parameter.
-    al::LiveActor* target = tryGetValidTarget(this, pActor, npc::NpcFindTargetType(type));
-    if (target != nullptr) {
-        mCandidates.emplaceBack(target, type);
+bool NpcTargetFinder::receiveMsg(const al::SensorMsg* pMessage, al::HitSensor* pSelf,
+                                 al::HitSensor* pOther) {
+    return false;
+}
+/**
+ * @brief Looks up a target category priority.
+ * @param rType Target category to find.
+ * @return Configured priority, or zero if absent.
+ */
+unsigned char NpcTargetFinder::getTargetPriority(const npc::NpcFindTargetType& rType) const {
+    auto* pNode = mPriorities.find(rType);
+    return pNode ? pNode->value() : 0;
+}
+/**
+ * @brief Updates the current target and periodically clears collected candidates.
+ */
+void NpcTargetFinder::update() {
+    mHasTargetChanged = false;
+    updateTarget();
+    if (static_cast<unsigned int>(mType) & 3) {
+        mType = rc::isPlayerClimbOrClimbSpecial(mTarget) ? npc::NpcFindTargetType::PlayerClimb
+                                                         : npc::NpcFindTargetType::PlayerRegular;
+    }
+    if (--mScanFrames <= 0) {
+        mCandidates.clear();
+        mScanFrames = mParam->mScanInterval;
     }
 }
+/**
+ * @brief Searches immediately, refreshes the target, and clears candidates.
+ */
+void NpcTargetFinder::forceUpdate() {
+    findTarget();
+    mGraceFrames = mGraceFrames > 1 ? mGraceFrames : 1;
+    update();
+    mCandidates.clear();
+    mScanFrames = mParam->mScanInterval;
+}
+/**
+ * @brief Discards current and previous targets before searching again.
+ */
+void NpcTargetFinder::refindTarget() {
+    mTarget = nullptr;
+    mLastTarget = nullptr;
+    mType = npc::NpcFindTargetType::None;
+    mLastType = npc::NpcFindTargetType::None;
+    findTarget();
+}
+/**
+ * @brief Assigns a priority to a target category.
+ * @param rType Target category.
+ * @param rPriority Priority value; higher values are preferred.
+ */
+void NpcTargetFinder::setTargetTypePriority(const npc::NpcFindTargetType& rType,
+                                            const unsigned char& rPriority) {
+    mPriorities.find(rType);
+    mPriorities.insert(rType, rPriority);
+}
+/**
+ * @brief Removes all target-category priorities.
+ */
+void NpcTargetFinder::clearPriorityMap() { mPriorities.clear(); }
+/**
+ * @brief Retains the previous target and resets the current search.
+ */
+void NpcTargetFinder::clearTarget() {
+    if (mTarget) {
+        mLastTarget = mTarget;
+        mLastType = mType;
+    }
+    mTarget = nullptr;
+    mType = npc::NpcFindTargetType::None;
+    mCandidates.clear();
+    mScanFrames = mParam->mScanInterval;
+}
+/**
+ * @brief Sets the optional facing-direction override.
+ * @param pDirection Direction override, or nullptr to use the host front.
+ */
+void NpcTargetFinder::setFrontDir(sead::Vector3f* pDirection) { mFront = pDirection; }
+/**
+ * @brief Sets the optional support-direction override.
+ * @param pDirection Direction override, or nullptr to use host gravity.
+ */
+void NpcTargetFinder::setSupportUpDir(sead::Vector3f* pDirection) { mGravity = pDirection; }
+/**
+ * @brief Gets the current target position.
+ * @return Position of the current target; a current target is required.
+ */
+const sead::Vector3f& NpcTargetFinder::getTargetPos() const { return al::getTrans(mTarget); }
+/**
+ * @brief Gets the current or most recent target position.
+ * @return Current target position, falling back to the previous target; one must exist.
+ */
+const sead::Vector3f& NpcTargetFinder::getLastTargetPos() const {
+    if (mTarget) {
+        return al::getTrans(mTarget);
+    }
+    return al::getTrans(mLastTarget);
+}
+/**
+ * @brief Checks sight visibility and horizontal distance.
+ * @param distance Maximum horizontal distance.
+ * @return Whether the current target satisfies both checks.
+ */
+bool NpcTargetFinder::isInSightTarget(float distance) const {
+    if (!mTarget) {
+        return false;
+    }
+    if (!mInSight) {
+        return false;
+    }
+    return al::calcDistanceH(mHostActor, mTarget) <= distance;
+}
+/**
+ * @brief Checks chase validity and horizontal distance.
+ * @param distance Maximum horizontal distance.
+ * @return Whether the current target satisfies both checks.
+ */
+bool NpcTargetFinder::isInChaseRangeTarget(float distance) const {
+    if (!mTarget) {
+        return false;
+    }
+    if (!mIsInChaseRange) {
+        return false;
+    }
+    return al::calcDistanceH(mHostActor, mTarget) <= distance;
+}
+/**
+ * @brief Checks the current target against the configured sense radius.
+ * @return Whether a valid chase target is inside the sense area.
+ */
+bool NpcTargetFinder::isInSenseAreaTarget() const {
+    if (!mTarget) {
+        return false;
+    }
+    if (!mIsInChaseRange) {
+        return false;
+    }
+    const float distance = mParam->mSenseDistance;
+    return al::calcDistanceH(mHostActor, mTarget) <= distance;
+}
 
 /**
- * @brief Collect candidates seen by the eye sensor.
- * @param pSelf Sensor of the host.
- * @param pOther Sensor that was hit.
+ * @brief Collects eligible actors seen by the search sensor.
+ * @param pSelf The searching actor sensor.
+ * @param pOther Potential target sensor.
  */
 void NpcTargetFinder::attackSensor(al::HitSensor* pSelf, al::HitSensor* pOther) {
-    if (mCandidateClearTime != mParam->mCandidateClearFrame || mCandidates.isFull() ||
-        !al::isSensorEye(pSelf)) {
+    if (mScanFrames != mParam->mScanInterval || mCandidates.isFull() || !al::isSensorEye(pSelf)) {
         return;
     }
-
-    if ((mSearchTypes & npc::NpcFindTargetType_Player) != 0 && al::isSensorPlayer(pOther) &&
-        al::isSensorName(pOther, "Body")) {
-        addCandidate(al::getSensorHost(pOther), npc::NpcFindTargetType_Player);
-    } else if ((mSearchTypes & npc::NpcFindTargetType_KoopaJr) != 0 &&
-               al::isSensorKoopaJr(pOther)) {
-        addCandidate(al::getSensorHost(pOther), npc::NpcFindTargetType_KoopaJr);
-    } else if ((mSearchTypes & npc::NpcFindTargetType_Koura) != 0 &&
-               al::isSensorKickKoura(pOther)) {
-        addCandidate(al::getSensorHost(pOther), npc::NpcFindTargetType_Koura);
-    } else if ((mSearchTypes & npc::NpcFindTargetType_Ball) != 0 && npc::isSensorBall(pOther)) {
-        addCandidate(al::getSensorHost(pOther), npc::NpcFindTargetType_Ball);
-    } else if ((mSearchTypes & npc::NpcFindTargetType_Bird) != 0 && npc::isSensorBird(pOther)) {
-        addCandidate(al::getSensorHost(pOther), npc::NpcFindTargetType_Bird);
-    } else if ((mSearchTypes & npc::NpcFindTargetType_Neko) != 0 && npc::isSensorNeko(pOther)) {
-        addCandidate(al::getSensorHost(pOther), npc::NpcFindTargetType_Neko);
+    if ((mAllowedTypes & 3) && al::isSensorPlayer(pOther) && al::isSensorName(pOther, "Body")) {
+        if (const al::LiveActor* pCandidate =
+                tryFilterTarget(al::getSensorHost(pOther), npc::NpcFindTargetType::Player)) {
+            mCandidates.emplaceBack(pCandidate, npc::NpcFindTargetType::Player);
+        }
+    } else if ((mAllowedTypes & 4) && al::isSensorKoopaJr(pOther)) {
+        if (const al::LiveActor* pCandidate =
+                tryFilterTarget(al::getSensorHost(pOther), npc::NpcFindTargetType::KoopaJr)) {
+            mCandidates.emplaceBack(pCandidate, npc::NpcFindTargetType::KoopaJr);
+        }
+    } else if ((mAllowedTypes & 32) && al::isSensorKickKoura(pOther)) {
+        if (const al::LiveActor* pCandidate =
+                tryFilterTarget(al::getSensorHost(pOther), npc::NpcFindTargetType::Koura)) {
+            mCandidates.emplaceBack(pCandidate, npc::NpcFindTargetType::Koura);
+        }
+    } else if ((mAllowedTypes & 16) && al::isSensorMapObj(pOther) &&
+               al::isSensorName(pOther, "Body") &&
+               (al::isSensorHostName(pOther, "BallNeko") ||
+                al::isSensorHostName(pOther, "\u30dc\u30fc\u30eb") ||
+                al::isSensorHostName(pOther, "\u96ea\u7389"))) {
+        if (const al::LiveActor* pCandidate =
+                tryFilterTarget(al::getSensorHost(pOther), npc::NpcFindTargetType::Ball)) {
+            mCandidates.emplaceBack(pCandidate, npc::NpcFindTargetType::Ball);
+        }
+    } else if ((mAllowedTypes & 64) && al::isSensorMapObj(pOther) &&
+               al::isSensorHostName(pOther, "CatGull")) {
+        if (const al::LiveActor* pCandidate =
+                tryFilterTarget(al::getSensorHost(pOther), npc::NpcFindTargetType::Bird)) {
+            mCandidates.emplaceBack(pCandidate, npc::NpcFindTargetType::Bird);
+        }
+    } else if ((mAllowedTypes & 128) && al::isSensorNpc(pOther) &&
+               al::isSensorHostName(pOther, "NekoNormal")) {
+        if (const al::LiveActor* pCandidate =
+                tryFilterTarget(al::getSensorHost(pOther), npc::NpcFindTargetType::Neko)) {
+            mCandidates.emplaceBack(pCandidate, npc::NpcFindTargetType::Neko);
+        }
     }
 }
-
-namespace {
+/**
+ * @brief Collects an eligible touch pointer as a cursor target.
+ * @param pMessage Touch-assist message to inspect.
+ * @param pPointer Pointer whose host may become a candidate.
+ * @param pTarget Screen target; must be named Eye to collect a candidate.
+ * @return Always false, allowing other receivers to process the message.
+ */
+bool NpcTargetFinder::receiveMsgScreenPoint(const al::SensorMsg* pMessage,
+                                            al::ScreenPointer* pPointer,
+                                            al::ScreenPointTarget* pTarget) {
+    if ((mAllowedTypes & 8) && mScanFrames == mParam->mScanInterval && !mCandidates.isFull() &&
+        al::isMsgTouchAssist(pMessage) && al::isScreenPointTargetName(pTarget, "Eye")) {
+        if (const al::LiveActor* pCandidate =
+                tryFilterTarget(pPointer->getHost(), npc::NpcFindTargetType::Cursor)) {
+            mCandidates.emplaceBack(pCandidate, npc::NpcFindTargetType::Cursor);
+        }
+    }
+    return false;
+}
 
 /**
- * @brief Check whether an actor can be a target of a finder.
- * @param pFinder Finder searching for targets.
- * @param pActor Actor to check.
- * @param rType Kind of the actor.
- * @return The actor if it can be a target, nullptr otherwise.
+ * @brief Applies target masks, actor state checks, and the host filter.
+ * @param pActor Candidate actor, or nullptr.
+ * @param rType Candidate category.
+ * @return The candidate actor if accepted, otherwise nullptr.
  */
-al::LiveActor* tryGetValidTarget(const NpcTargetFinder* pFinder, al::LiveActor* pActor,
-                                 const npc::NpcFindTargetType& rType) {
-    if (pActor == nullptr) {
-        return nullptr;
+const al::LiveActor* NpcTargetFinder::tryFilterTarget(const al::LiveActor* pActor,
+                                                      const npc::NpcFindTargetType& rType) const {
+    if (!pActor) {
+        goto done;
     }
-
     if (al::isDead(pActor)) {
-        return nullptr;
+        goto rejected;
     }
-
-    if ((pFinder->getSearchTypes() & rType) == 0) {
-        return nullptr;
+    if (!(mAllowedTypes & static_cast<unsigned int>(rType))) {
+        goto rejected;
     }
-
-    // the switch compares signed values while the priority map compares unsigned ones
-    switch (static_cast<s32>(rType)) {
-    case npc::NpcFindTargetType_None:
-        return nullptr;
-    case npc::NpcFindTargetType_PlayerRegular:
-    case npc::NpcFindTargetType_PlayerClimb:
-    case npc::NpcFindTargetType_Player:
+    switch (rType) {
+    case npc::NpcFindTargetType::None:
+        goto rejected;
+    case npc::NpcFindTargetType::PlayerRegular:
+    case npc::NpcFindTargetType::PlayerClimb:
+    case npc::NpcFindTargetType::Player:
         if (rc::isPlayerDeadOrBubble(pActor)) {
-            return nullptr;
+            goto rejected;
         }
-
-        if (pFinder->getParam()->mIsIgnoreDisregardPlayer && rc::isPlayerEquipDisregard(pActor)) {
-            return nullptr;
+        if (mParam->mParam20 && rc::isPlayerEquipDisregard(pActor)) {
+            goto rejected;
         }
-
         break;
-    case npc::NpcFindTargetType_Cursor:
+    case npc::NpcFindTargetType::Cursor:
         if (al::isHideModel(pActor)) {
-            return nullptr;
+            goto rejected;
         }
-
         break;
-    case npc::NpcFindTargetType_Neko: {
-        if (al::isHideModel(pActor)) {
-            return nullptr;
+    case npc::NpcFindTargetType::Neko: {
+        const NekoNormal* pNeko = static_cast<const NekoNormal*>(pActor);
+        if (al::isHideModel(pActor) || pNeko->isHold() || pNeko->isEnableGoal()) {
+            goto rejected;
         }
-
-        auto* neko = static_cast<NekoNormal*>(pActor);
-        if (neko->isHold() || neko->isEnableGoal()) {
-            return nullptr;
-        }
-
         break;
     }
     default:
         break;
     }
-
-    const IUseTargetFinderFilter* filter = pFinder->getFilter();
-    if (filter != nullptr && filter->acceptTarget(pActor, rType)) {
-        return pActor;
+    if (!mFilter || !mFilter->acceptTarget(pActor, rType)) {
+        goto rejected;
     }
-
-    return nullptr;
+    goto done;
+rejected:
+    pActor = nullptr;
+done:
+    return pActor;
 }
-
-}  // namespace
-
+namespace {
 /**
- * @brief Does nothing.
- * @param pMsg Received message.
- * @param pSelf Sensor of the host.
- * @param pOther Sensor that sent the message.
- * @return Always false.
+ * @brief Tests the permitted vertical separation.
+ * @param rMetrics Calculated target geometry.
+ * @param rParam Height and depth limits.
+ * @return Whether the target is inside the vertical limits.
  */
-bool NpcTargetFinder::receiveMsg(const al::SensorMsg* pMsg, al::HitSensor* pSelf,
-                                 al::HitSensor* pOther) {
-    return false;
-}
-
-/**
- * @brief Collect the touch cursor as a candidate when it points at the eye of the host.
- * @param pMsg Received message.
- * @param pPointer Pointer that sent the message.
- * @param pTarget Screen point target that was hit.
- * @return Always false.
- */
-bool NpcTargetFinder::receiveMsgScreenPoint(const al::SensorMsg* pMsg, al::ScreenPointer* pPointer,
-                                            al::ScreenPointTarget* pTarget) {
-    if ((mSearchTypes & npc::NpcFindTargetType_Cursor) != 0 &&
-        mCandidateClearTime == mParam->mCandidateClearFrame && !mCandidates.isFull() &&
-        al::isMsgTouchAssist(pMsg) && al::isScreenPointTargetName(pTarget, "Eye")) {
-        addCandidate(const_cast<al::LiveActor*>(pPointer->getHost()),
-                     npc::NpcFindTargetType_Cursor);
+bool isWithinHeight(const npc::TargetMetrics& rMetrics, const NpcTargetFinderParam& rParam) {
+    if (rMetrics.delta.y >= 0.0f) {
+        return rParam.mMaxHeight < 0.0f || rMetrics.delta.y <= rParam.mMaxHeight;
     }
-
-    return false;
+    return rParam.mMaxDepth < 0.0f || rParam.mMaxDepth >= -rMetrics.delta.y;
 }
-
 /**
- * @brief Forget the current target and the best target found so far.
+ * @brief Tests sight distance, facing, and vertical limits.
+ * @param rMetrics Calculated target geometry.
+ * @param rParam Sight settings.
+ * @return Whether the target passes the sight checks.
  */
-inline void NpcTargetFinder::resetTarget() {
-    mTarget = nullptr;
-    mTargetType = npc::NpcFindTargetType_None;
-    mCheckInfo->reset();
+bool isWithinSight(const npc::TargetMetrics& rMetrics, const NpcTargetFinderParam& rParam) {
+    if (rMetrics.distance > rParam.mSightDistance) {
+        return false;
+    }
+    if (rMetrics.horizontalCos < std::cos(rParam.mHorizontalAngle * 0.017453292f)) {
+        return false;
+    }
+    if (rMetrics.verticalCos < std::cos(rParam.mVerticalAngle * 0.017453292f)) {
+        return false;
+    }
+    return isWithinHeight(rMetrics, rParam);
 }
-
 /**
- * @brief Pick the best target among the candidates.
+ * @brief Tests chase distance and vertical limits.
+ * @param rMetrics Calculated target geometry.
+ * @param rParam Chase settings.
+ * @return Whether the target passes the chase checks.
+ */
+bool isWithinChase(const npc::TargetMetrics& rMetrics, const NpcTargetFinderParam& rParam) {
+    if (rMetrics.distance > rParam.mChaseDistance) {
+        return false;
+    }
+    return isWithinHeight(rMetrics, rParam);
+}
+} // namespace
+/**
+ * @brief Chooses the best valid candidate by priority and distance.
  */
 void NpcTargetFinder::findTarget() {
-    if (mTarget == nullptr) {
-        resetTarget();
+    if (!mTarget) {
+        mTarget = nullptr;
+        mType = npc::NpcFindTargetType::None;
+        mMetrics->reset();
     }
-
-    for (s32 i = 0; i < mCandidates.size(); i++) {
-        NpcTargetCandidate* candidate = mCandidates.at(i);
-        if (candidate == nullptr || candidate->mActor == nullptr) {
+    for (int i = 0; i < mCandidates.size(); ++i) {
+        Candidate* pCandidate = mCandidates[i];
+        if (!pCandidate || !pCandidate->mActor) {
             continue;
         }
-
-        NpcTargetCheckInfo* info = mCheckInfo;
-        u8 priority = getTargetPriority(candidate->mType);
-        al::LiveActor* target = tryGetValidTarget(this, candidate->mActor, candidate->mType);
-        if (target == nullptr) {
+        npc::TargetMetrics* pMetrics = mMetrics;
+        unsigned int priority = getTargetPriority(pCandidate->mType);
+        const al::LiveActor* pTarget = tryFilterTarget(pCandidate->mActor, pCandidate->mType);
+        if (!pTarget) {
             continue;
         }
-
-        if (!npc::calcTargetCheckInfo(info, mHost, getFrontDir(), getUpDir(), target)) {
+        const al::LiveActor* pHost = mHostActor;
+        const sead::Vector3f* pFront = mFront;
+        if (!pFront) {
+            pFront = &al::getFront(pHost);
+        }
+        const sead::Vector3f* pGravity = mGravity;
+        if (!pGravity) {
+            pGravity = &al::getGravity(mHostActor);
+        }
+        if (!npc::calcTargetMetrics(pMetrics, pHost, *pFront, *pGravity, pTarget)) {
             continue;
         }
-
-        bool isNearer = info->mDistance < info->mNearestDistance;
-        if (!(priority > info->mPriority || (isNearer && priority >= info->mPriority))) {
+        const bool closer = pMetrics->distance < pMetrics->mBestDistance;
+        const bool acceptablePriority = priority >= pMetrics->mBestPriority;
+        if (!((closer & acceptablePriority) || priority > pMetrics->mBestPriority)) {
             continue;
         }
-
-        bool isInSightTarget;
-        if (isInSight(*info, mParam)) {
-            isInSightTarget = true;
-        } else if (isInChaseRange(*info, mParam)) {
-            isInSightTarget = false;
-        } else {
+        bool inSight = isWithinSight(*pMetrics, *mParam);
+        if (!inSight && !isWithinChase(*pMetrics, *mParam)) {
             continue;
         }
-
-        info->mNearestDistance = info->mDistance;
-        info->mTarget = target;
-        info->mIsInSight = isInSightTarget;
-        info->mIsFound = true;
-        info->mPriority = priority;
-        info->mTargetType = candidate->mType;
+        pMetrics->mBestDistance = pMetrics->distance;
+        pMetrics->mBestTarget = pTarget;
+        pMetrics->mBestInSight = inSight;
+        pMetrics->mHasCandidate = true;
+        pMetrics->mBestPriority = priority;
+        pMetrics->mBestType = pCandidate->mType;
     }
-
-    NpcTargetCheckInfo* info = mCheckInfo;
-    if (info->mTarget != nullptr && info->mIsFound) {
-        if (mTarget != nullptr) {
+    if (mMetrics->mBestTarget && mMetrics->mHasCandidate) {
+        if (mTarget) {
             mLastTarget = mTarget;
-            mLastTargetType = mTargetType;
+            mLastType = mType;
         }
-
-        mTarget = info->mTarget;
-        mTargetType = info->mTargetType;
-        mIsTargetInChaseRange = true;
-        mIsTargetValid = info->mIsInSight;
-        mKeepTargetTime = mParam->mKeepTargetFrame;
+        mTarget = mMetrics->mBestTarget;
+        mType = mMetrics->mBestType;
+        mIsInChaseRange = true;
+        mInSight = mMetrics->mBestInSight;
+        mGraceFrames = mParam->mTargetGraceFrames;
     }
-
-    if (mTarget != nullptr) {
-        mIsTargetChanged = mLastTarget != mTarget;
+    if (mTarget) {
+        mHasTargetChanged = mLastTarget != mTarget;
     }
 }
-
 /**
- * @brief Get the priority of a kind of target.
- * @param rType Kind of target.
- * @return The priority set with setTargetTypePriority, or 0.
- */
-u8 NpcTargetFinder::getTargetPriority(const npc::NpcFindTargetType& rType) const {
-    PriorityMap::Node* node = mPriorityMap.find(rType);
-    if (node == nullptr) {
-        return 0;
-    }
-
-    return node->value();
-}
-
-/**
- * @brief Clear the candidates and restart the candidate clear timer.
- */
-inline void NpcTargetFinder::clearCandidates() {
-    mCandidates.clear();
-    mCandidateClearTime = mParam->mCandidateClearFrame;
-}
-
-/**
- * @brief Update the target and the candidates, once per frame.
- */
-void NpcTargetFinder::update() {
-    mIsTargetChanged = false;
-    updateTarget();
-
-    if ((mTargetType & npc::NpcFindTargetType_Player) != 0) {
-        mTargetType = rc::isPlayerClimbOrClimbSpecial(mTarget) ?
-                          npc::NpcFindTargetType_PlayerClimb :
-                          npc::NpcFindTargetType_PlayerRegular;
-    }
-
-    mCandidateClearTime--;
-    if (mCandidateClearTime <= 0) {
-        clearCandidates();
-    }
-}
-
-/**
- * @brief Remember the current target as the last one and drop it.
- */
-inline void NpcTargetFinder::loseTarget() {
-    mLastTarget = mTarget;
-    mTarget = nullptr;
-    mLastTargetType = mTargetType;
-}
-
-/**
- * @brief Check whether the current target is still valid and search for a new one if needed.
+ * @brief Retains a valid target or searches again when necessary.
  */
 void NpcTargetFinder::updateTarget() {
-    if (mTarget != nullptr && (tryGetValidTarget(this, mTarget, mTargetType) == nullptr ||
-                               !canChaseTarget(this, mTarget))) {
-        loseTarget();
+    if (mTarget) {
+        bool keep = false;
+        if (tryFilterTarget(mTarget, mType)) {
+            const al::LiveActor* pTarget = mTarget;
+            npc::TargetMetrics metrics;
+            const al::LiveActor* pHost = mHostActor;
+            const sead::Vector3f* pFront = mFront;
+            if (!pFront) {
+                pFront = &al::getFront(pHost);
+            }
+            const sead::Vector3f* pGravity = mGravity;
+            if (!pGravity) {
+                pGravity = &al::getGravity(mHostActor);
+            }
+            keep = npc::calcTargetMetrics(&metrics, pHost, *pFront, *pGravity, pTarget) &&
+                   isWithinChase(metrics, *mParam);
+        }
+        if (!keep) {
+            mLastTarget = mTarget;
+            mTarget = nullptr;
+            mLastType = mType;
+        }
     }
-
-    if (mTarget == nullptr) {
+    if (!mTarget) {
         findTarget();
         return;
     }
-
-    if (!npc::calcTargetCheckInfo(mCheckInfo, mHost, getFrontDir(), al::getGravity(mHost),
-                                  mTarget)) {
+    const al::LiveActor* pHost = mHostActor;
+    npc::TargetMetrics* pMetrics = mMetrics;
+    const sead::Vector3f* pFront = mFront;
+    if (!pFront) {
+        pFront = &al::getFront(pHost);
+    }
+    const sead::Vector3f& rGravity = al::getGravity(mHostActor);
+    if (!npc::calcTargetMetrics(pMetrics, pHost, *pFront, rGravity, mTarget)) {
         findTarget();
         return;
     }
-
-    bool isInSightTarget;
-    if (isInSight(*mCheckInfo, mParam)) {
-        isInSightTarget = true;
-    } else if (isInChaseRange(*mCheckInfo, mParam)) {
-        isInSightTarget = false;
-    } else {
+    bool inSight = isWithinSight(*mMetrics, *mParam);
+    if (!inSight && !isWithinChase(*mMetrics, *mParam)) {
         findTarget();
         return;
     }
-
-    mIsTargetValid = isInSightTarget;
-    mIsTargetInChaseRange = true;
-
-    if (mTarget != nullptr && mKeepTargetTime-- <= 0) {
+    mInSight = inSight;
+    mIsInChaseRange = true;
+    if (mTarget && mGraceFrames-- <= 0) {
         findTarget();
     }
 }
 
-/**
- * @brief Search for a target right away and update the finder.
- */
-void NpcTargetFinder::forceUpdate() {
-    findTarget();
-
-    mKeepTargetTime = mKeepTargetTime > 1 ? mKeepTargetTime : 1;
-
-    update();
-    clearCandidates();
-}
+namespace npc {
 
 /**
- * @brief Forget the current and last targets and search again.
+ * @brief Checks for a supported ball body sensor.
+ * @param pSensor Sensor to inspect.
+ * @return Whether the sensor belongs to a supported ball.
  */
-void NpcTargetFinder::refindTarget() {
-    mTarget = nullptr;
-    mLastTarget = nullptr;
-    mTargetType = npc::NpcFindTargetType_None;
-    mLastTargetType = npc::NpcFindTargetType_None;
-    findTarget();
-}
-
-/**
- * @brief Set the priority of a kind of target; higher priorities win over nearer targets.
- * @param rType Kind of target.
- * @param rPriority Priority.
- */
-void NpcTargetFinder::setTargetTypePriority(const npc::NpcFindTargetType& rType,
-                                            const u8& rPriority) {
-    // The result of this lookup is unused, insert() overwrites the priority of an existing type.
-    mPriorityMap.find(rType);
-    mPriorityMap.insert(rType, rPriority);
-}
-
-/**
- * @brief Remove every target priority.
- */
-void NpcTargetFinder::clearPriorityMap() {
-    mPriorityMap.clear();
-}
-
-/**
- * @brief Drop the current target and the candidates.
- */
-void NpcTargetFinder::clearTarget() {
-    if (mTarget != nullptr) {
-        mLastTarget = mTarget;
-        mLastTargetType = mTargetType;
-    }
-
-    mTarget = nullptr;
-    mTargetType = npc::NpcFindTargetType_None;
-    clearCandidates();
-}
-
-/**
- * @brief Set the front direction used for the sight cone.
- * @param pFrontDir Front direction, or nullptr to use the front of the host.
- */
-void NpcTargetFinder::setFrontDir(sead::Vector3f* pFrontDir) {
-    mFrontDir = pFrontDir;
-}
-
-/**
- * @brief Set the up direction used for the sight cone.
- * @param pUpDir Up direction, or nullptr to use the gravity of the host.
- */
-void NpcTargetFinder::setSupportUpDir(sead::Vector3f* pUpDir) {
-    mSupportUpDir = pUpDir;
-}
-
-/**
- * @return Position of the current target.
- */
-const sead::Vector3f& NpcTargetFinder::getTargetPos() const {
-    return al::getTrans(mTarget);
-}
-
-/**
- * @return Position of the current target, or of the last one if there is none.
- */
-const sead::Vector3f& NpcTargetFinder::getLastTargetPos() const {
-    if (mTarget != nullptr) {
-        return al::getTrans(mTarget);
-    }
-
-    return al::getTrans(mLastTarget);
-}
-
-/**
- * @brief Check whether the target is in sight and horizontally near the host.
- * @param distance Maximum horizontal distance.
- * @return Whether the target is in sight and near.
- */
-bool NpcTargetFinder::isInSightTarget(f32 distance) const {
-    if (mTarget == nullptr || !mIsTargetValid) {
+bool isSensorBall(const al::HitSensor* pSensor) {
+    if (!al::isSensorMapObj(pSensor)) {
         return false;
     }
-
-    return al::calcDistanceH(mHost, mTarget) <= distance;
-}
-
-/**
- * @brief Check whether the target is chased and horizontally near the host.
- * @param distance Maximum horizontal distance.
- * @return Whether the target is chased and near.
- */
-bool NpcTargetFinder::isInChaseRangeTarget(f32 distance) const {
-    if (mTarget == nullptr || !mIsTargetInChaseRange) {
+    if (!al::isSensorName(pSensor, "Body")) {
         return false;
     }
-
-    return al::calcDistanceH(mHost, mTarget) <= distance;
+    return al::isSensorHostName(pSensor, "BallNeko") ||
+           al::isSensorHostName(pSensor, "\u30dc\u30fc\u30eb") ||
+           al::isSensorHostName(pSensor, "\u96ea\u7389");
+}
+/**
+ * @brief Checks for a cat gull sensor.
+ * @param pSensor Sensor to inspect.
+ * @return Whether the sensor belongs to a cat gull.
+ */
+bool isSensorBird(const al::HitSensor* pSensor) {
+    return al::isSensorMapObj(pSensor) && al::isSensorHostName(pSensor, "CatGull");
+}
+/**
+ * @brief Checks for a normal cat sensor.
+ * @param pSensor Sensor to inspect.
+ * @return Whether the sensor belongs to a normal cat.
+ */
+bool isSensorNeko(const al::HitSensor* pSensor) {
+    return al::isSensorNpc(pSensor) && al::isSensorHostName(pSensor, "NekoNormal");
+}
+/**
+ * @brief Checks for a disaster cat sensor.
+ * @param pSensor Sensor to inspect.
+ * @return Whether the sensor belongs to a disaster cat.
+ */
+bool isSensorNekoDisaster(const al::HitSensor* pSensor) {
+    return al::isSensorEnemy(pSensor) && al::isSensorHostName(pSensor, "NekoDisaster");
+}
+/**
+ * @brief Gets the first applicable target-type label.
+ * @param rType Target-type flags to describe.
+ * @return Target label, or Unknown for unrecognized flags.
+ */
+const char* NpcFindTargetTypeToString(const NpcFindTargetType& rType) {
+    unsigned int bits = static_cast<unsigned int>(rType);
+    if (!bits) {
+        return "None";
+    }
+    if (bits & 1) {
+        return "PlayerRegular";
+    }
+    if (bits & 2) {
+        return "PlayerClimb";
+    }
+    if (bits & 4) {
+        return "KoopaJr";
+    }
+    if (bits & 8) {
+        return "Cursor";
+    }
+    if (bits & 16) {
+        return "Ball";
+    }
+    if (bits & 32) {
+        return "Koura";
+    }
+    if (bits & 64) {
+        return "Bird";
+    }
+    if (bits & 128) {
+        return "Neko";
+    }
+    if (bits & 3) {
+        return "Player";
+    }
+    if (bits & 0x70) {
+        return "ChaseObj";
+    }
+    return "Unknown";
 }
 
 /**
- * @return Whether the target is chased and horizontally within the sense range.
+ * @brief Calculates target displacement, distance, and facing measures.
+ * @param pOut Receives the calculated target measures.
+ * @param pHost Actor searching for a target.
+ * @param rFront Host facing direction.
+ * @param rGravity Host gravity direction.
+ * @param pTarget Candidate target actor.
+ * @return Whether the displacement and projected direction are usable.
  */
-bool NpcTargetFinder::isInSenseAreaTarget() const {
-    return isInChaseRangeTarget(mParam->mSenseRange);
+bool calcTargetMetrics(TargetMetrics* pOut, const al::LiveActor* pHost,
+                       const sead::Vector3f& rFront, const sead::Vector3f& rGravity,
+                       const al::LiveActor* pTarget) {
+    sead::Vector3f delta = al::getTrans(pTarget) - al::getTrans(pHost);
+    float lengthSquared = delta.squaredLength();
+    pOut->delta = delta;
+    if (al::isNearZero(lengthSquared)) {
+        pOut->distance = 0.0f;
+        return false;
+    }
+    pOut->distance = sead::Mathf::sqrt(lengthSquared);
+    sead::Vector3f up;
+    al::verticalizeVec(&up, rFront, rGravity);
+    if (al::normalizeOrZero(&up)) {
+        return false;
+    }
+    delta *= 1.0f / pOut->distance;
+    float dot = up.dot(delta);
+    float cosV = 0.0f;
+    if (!al::isNearZero((dot > 0.0f ? dot : -dot) - 1.0f)) {
+        cosV = sead::Mathf::sqrt(1.0f - dot * dot);
+    }
+    pOut->verticalCos = cosV;
+    sead::Vector3f flat = delta - up * cosV;
+    float cosH = 0.0f;
+    if (!al::normalizeOrZero(&flat)) {
+        cosH = rFront.dot(flat);
+    }
+    pOut->horizontalCos = cosH;
+    return true;
 }
+/**
+ * @brief Checks a candidate against sight and height limits.
+ * @param pFinder Finder supplying the host and direction overrides.
+ * @param pTarget Candidate target actor.
+ * @param pParam Optional settings override; nullptr uses the finder settings.
+ * @return Whether the target is within the sight limits.
+ */
+bool calcIsTargetInSight(const NpcTargetFinder* pFinder, const al::LiveActor* pTarget,
+                         const NpcTargetFinderParam* pParam) {
+    TargetMetrics metrics;
+    const al::LiveActor* pHost = pFinder->mHostActor;
+    const sead::Vector3f* pFront = pFinder->mFront;
+    if (!pFront) {
+        pFront = &al::getFront(pHost);
+    }
+    const sead::Vector3f* pGravity = pFinder->mGravity;
+    if (!pGravity) {
+        pGravity = &al::getGravity(pFinder->mHostActor);
+    }
+    if (!calcTargetMetrics(&metrics, pHost, *pFront, *pGravity, pTarget)) {
+        return false;
+    }
+    if (!pParam) {
+        pParam = pFinder->mParam;
+    }
+    if (metrics.distance > pParam->mSightDistance) {
+        return false;
+    }
+    if (metrics.horizontalCos < std::cos(pParam->mHorizontalAngle * 0.017453292f)) {
+        return false;
+    }
+    if (metrics.verticalCos < std::cos(pParam->mVerticalAngle * 0.017453292f)) {
+        return false;
+    }
+    if (metrics.delta.y >= 0.0f) {
+        return pParam->mMaxHeight < 0.0f || metrics.delta.y <= pParam->mMaxHeight;
+    }
+    return pParam->mMaxDepth < 0.0f || pParam->mMaxDepth >= -metrics.delta.y;
+}
+/**
+ * @brief Checks a candidate against chase distance and height limits.
+ * @param pFinder Finder supplying the host and direction overrides.
+ * @param pTarget Candidate target actor.
+ * @param pParam Optional settings override; nullptr uses the finder settings.
+ * @return Whether the target is within chase range.
+ */
+bool calcIsTargetInChaseRange(const NpcTargetFinder* pFinder, const al::LiveActor* pTarget,
+                              const NpcTargetFinderParam* pParam) {
+    TargetMetrics metrics;
+    const al::LiveActor* pHost = pFinder->mHostActor;
+    const sead::Vector3f* pFront = pFinder->mFront;
+    if (!pFront) {
+        pFront = &al::getFront(pHost);
+    }
+    const sead::Vector3f* pGravity = pFinder->mGravity;
+    if (!pGravity) {
+        pGravity = &al::getGravity(pFinder->mHostActor);
+    }
+    if (!calcTargetMetrics(&metrics, pHost, *pFront, *pGravity, pTarget)) {
+        return false;
+    }
+    if (!pParam) {
+        pParam = pFinder->mParam;
+    }
+    if (metrics.distance > pParam->mChaseDistance) {
+        return false;
+    }
+    if (metrics.delta.y >= 0.0f) {
+        return pParam->mMaxHeight < 0.0f || metrics.delta.y <= pParam->mMaxHeight;
+    }
+    return pParam->mMaxDepth < 0.0f || pParam->mMaxDepth >= -metrics.delta.y;
+}
+} // namespace npc
