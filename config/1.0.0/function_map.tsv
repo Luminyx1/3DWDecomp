@@ -1285,14 +1285,14 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x7100034BB0			FALSE	_ZN24KoopaLastDefendeBlockPow7exeDemoEv	KoopaLastDefendeBlockPow::exeDemo()	
 0x7100034C70			FALSE	_ZN24KoopaLastDefendeBlockPowD1Ev	KoopaLastDefendeBlockPow::~KoopaLastDefendeBlockPow()	
 0x7100034C80			FALSE	_ZN24KoopaLastDefendeBlockPowD0Ev	KoopaLastDefendeBlockPow::~KoopaLastDefendeBlockPow()	
-0x7100034CB0			FALSE	sub_7100034CB0	sub_7100034CB0	
-0x7100034D10			FALSE	sub_7100034D10	sub_7100034D10	
-0x7100034D80			FALSE	sub_7100034D80	sub_7100034D80	
+0x7100034CB0			FALSE	_ZNK12_GLOBAL__N_131KoopaLastDefendeBlockPowNrvWait7executeEPN2al11NerveKeeperE	KoopaLastDefendeBlockPowNrvWait::execute	matched nerve
+0x7100034D10			FALSE	_ZNK12_GLOBAL__N_136KoopaLastDefendeBlockPowNrvPowDamage7executeEPN2al11NerveKeeperE	KoopaLastDefendeBlockPowNrvPowDamage::execute	matched nerve
+0x7100034D80			FALSE	_ZNK12_GLOBAL__N_140KoopaLastDefendeBlockPowNrvLastPowDamage7executeEPN2al11NerveKeeperE	KoopaLastDefendeBlockPowNrvLastPowDamage::execute	matched nerve
 0x7100034DE0			FALSE	_ZNK12_GLOBAL__N_131KoopaLastDefendeBlockPowNrvDemo7executeEPN2al11NerveKeeperE	(anonymous namespace)::KoopaLastDefendeBlockPowNrvDemo::execute(al::NerveKeeper*) const	
-0x7100034DF0			FALSE	sub_7100034DF0	sub_7100034DF0	
-0x7100034E50			FALSE	sub_7100034E50	sub_7100034E50	
+0x7100034DF0			FALSE	_ZNK12_GLOBAL__N_132KoopaLastDefendeBlockPowNrvShout7executeEPN2al11NerveKeeperE	KoopaLastDefendeBlockPowNrvShout::execute	matched nerve
+0x7100034E50			FALSE	_ZNK12_GLOBAL__N_145KoopaLastDefendeBlockPowNrvAttackCurtainStart7executeEPN2al11NerveKeeperE	KoopaLastDefendeBlockPowNrvAttackCurtainStart::execute	matched nerve
 0x7100034EB0			FALSE	_ZNK12_GLOBAL__N_140KoopaLastDefendeBlockPowNrvAttackCurtain7executeEPN2al11NerveKeeperE	(anonymous namespace)::KoopaLastDefendeBlockPowNrvAttackCurtain::execute(al::NerveKeeper*) const	
-0x7100034EC0			FALSE	sub_7100034EC0	sub_7100034EC0	
+0x7100034EC0			FALSE	_ZNK12_GLOBAL__N_143KoopaLastDefendeBlockPowNrvAttackCurtainEnd7executeEPN2al11NerveKeeperE	KoopaLastDefendeBlockPowNrvAttackCurtainEnd::execute	matched nerve
 0x7100034F20		KoopaLastDemoAppear.o	FALSE	_ZN19KoopaLastDemoAppearC2EPKc	KoopaLastDemoAppear::KoopaLastDemoAppear(char const*)	
 0x7100034FB0			FALSE	_ZN19KoopaLastDemoAppearC1EPKc	KoopaLastDemoAppear::KoopaLastDemoAppear(char const*)	
 0x7100035040			FALSE	_ZN19KoopaLastDemoAppear4initERKN2al13ActorInitInfoE	KoopaLastDemoAppear::init(al::ActorInitInfo const&)	

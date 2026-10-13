@@ -1,3 +1,4 @@
+#include "Boss/KoopaLastDefendeBlockPow.hpp"
 #include "Boss/KoopaLastBlockPow.hpp"
 #include "Demo/DemoCutscene.hpp"
 #include "MapObj/Trampoline.hpp"
@@ -1444,16 +1445,7 @@ private:
 };
 static_assert(sizeof(KoopaLastBreakWall) == 0x188);
 
-class KoopaLastDefendeBlockPow : public al::LiveActor {
-public:
-    explicit KoopaLastDefendeBlockPow(const char* pName);
-    void startLastPowDamage();
-    void startEndDemo();
 
-private:
-    u8 mUnreconstructed[0x6c];
-};
-static_assert(sizeof(KoopaLastDefendeBlockPow) == 0x1b0);
 
 class KoopaLastDemoAppear : public al::LiveActor {
 public:
