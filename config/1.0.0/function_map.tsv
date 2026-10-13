@@ -9063,9 +9063,9 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710015ECE0			FALSE	_ZN10TeresaWall7exeMoveEv	TeresaWall::exeMove()	
 0x710015ED50			FALSE	_ZN10TeresaWallD1Ev	TeresaWall::~TeresaWall()	
 0x710015ED60			FALSE	_ZN10TeresaWallD0Ev	TeresaWall::~TeresaWall()	
-0x710015ED90			FALSE	sub_710015ED90	sub_710015ED90	
-0x710015EDF0			FALSE	sub_710015EDF0	sub_710015EDF0	
-0x710015EE60			FALSE	sub_710015EE60	sub_710015EE60	
+0x710015ED90			FALSE	_ZNK12_GLOBAL__N_117TeresaWallNrvStop7executeEPN2al11NerveKeeperE	(anonymous namespace)::TeresaWallNrvStop::execute(al::NerveKeeper*) const	
+0x710015EDF0			FALSE	_ZNK12_GLOBAL__N_117TeresaWallNrvMove7executeEPN2al11NerveKeeperE	(anonymous namespace)::TeresaWallNrvMove::execute(al::NerveKeeper*) const	
+0x710015EE60			FALSE	_ZNK12_GLOBAL__N_121TeresaWallNrvMoveSign7executeEPN2al11NerveKeeperE	(anonymous namespace)::TeresaWallNrvMoveSign::execute(al::NerveKeeper*) const	
 0x710015EED0		TerritoryMover.o	FALSE	_ZN14TerritoryMoverC2Ef	TerritoryMover::TerritoryMover(float)	
 0x710015EF00			FALSE	_ZN14TerritoryMover19decideNextTargetPosEPKN2al9LiveActorE	TerritoryMover::decideNextTargetPos(al::LiveActor const*)	
 0x710015EF90			FALSE	_ZNK14TerritoryMover15isReachedTargetEPKN2al9LiveActorEf	TerritoryMover::isReachedTarget(al::LiveActor const*, float) const	
