@@ -8986,12 +8986,12 @@ Start Address	Folder	Object	Not In Obj	Mangled Name	Demangled Name	Inferred
 0x710015C190			FALSE	_ZN5Teren6exeDieEv	Teren::exeDie()	
 0x710015C210			FALSE	_ZN5TerenD1Ev	Teren::~Teren()	
 0x710015C220			FALSE	_ZN5TerenD0Ev	Teren::~Teren()	
-0x710015C250			FALSE	sub_710015C250	sub_710015C250	
-0x710015C290			FALSE	sub_710015C290	sub_710015C290	
-0x710015C2D0			FALSE	sub_710015C2D0	sub_710015C2D0	
+0x710015C250			FALSE	_ZNK12_GLOBAL__N_112TerenNrvMove7executeEPN2al11NerveKeeperE	(anonymous namespace)::TerenNrvMove::execute(al::NerveKeeper*) const	
+0x710015C290			FALSE	_ZNK12_GLOBAL__N_114TerenNrvAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::TerenNrvAppear::execute(al::NerveKeeper*) const	
+0x710015C2D0			FALSE	_ZNK12_GLOBAL__N_111TerenNrvDie7executeEPN2al11NerveKeeperE	(anonymous namespace)::TerenNrvDie::execute(al::NerveKeeper*) const	
 0x710015C360			FALSE	_ZNK12_GLOBAL__N_119TerenNrvDamageLight7executeEPN2al11NerveKeeperE	(anonymous namespace)::TerenNrvDamageLight::execute(al::NerveKeeper*) const	
 0x710015C370			FALSE	_ZNK12_GLOBAL__N_116TerenNrvReaction7executeEPN2al11NerveKeeperE	(anonymous namespace)::TerenNrvReaction::execute(al::NerveKeeper*) const	
-0x710015C380			FALSE	sub_710015C380	sub_710015C380	
+0x710015C380			FALSE	_ZNK12_GLOBAL__N_120TerenNrvReactionWait7executeEPN2al11NerveKeeperE	(anonymous namespace)::TerenNrvReactionWait::execute(al::NerveKeeper*) const	
 0x710015C3D0			FALSE	_ZNK12_GLOBAL__N_122TerenNrvReactionAppear7executeEPN2al11NerveKeeperE	(anonymous namespace)::TerenNrvReactionAppear::execute(al::NerveKeeper*) const	
 0x710015C3E0			FALSE	_ZNK2al10FunctorV0MIP5TerenMS1_FvvEEclEv	al::FunctorV0M<Teren*, void (Teren::*)()>::operator()() const	
 0x710015C400			FALSE	_ZNK2al10FunctorV0MIP5TerenMS1_FvvEE5cloneEv	al::FunctorV0M<Teren*, void (Teren::*)()>::clone() const	
